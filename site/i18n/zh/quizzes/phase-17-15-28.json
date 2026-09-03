@@ -1,0 +1,915 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/17-infrastructure-and-production/15-batch-apis": {
+      "sourceSha256": "542281e7a517b0f15633c2cc662bb6423bb9e84ef1937cbbe369ea6cdeb18929",
+      "questions": [
+        {
+          "question": "2026 年，OpenAI、Anthropic 和 Google 普遍提供哪种批量 API 优惠？",
+          "options": [
+            "享受 90% 折扣，7 天内返回",
+            "享受 50% 折扣，24 小时内返回",
+            "享受 10% 折扣，1 小时内返回",
+            "少于 1k token 时免费"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "按照本课的定义，“24-hour turnaround”实际保证了什么？",
+          "options": [
+            "24h 是缓存 TTL",
+            "提供商承诺在 24 小时内返回，典型 P50 约为 2–6 小时",
+            "批处理总是耗时 24 小时",
+            "仅少于 1k 个请求的批次符合条件"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于共享 system prompt 的工作负载，将批处理与输入缓存叠加使用后，费用相比同步且无缓存的方式会如何变化？",
+          "options": [
+            "只有模型部署在 Vertex 上时才有帮助",
+            "费用可降至同步且无缓存基准的大约 10%",
+            "费用会增加 50%",
+            "没有影响，因为缓存是自动完成的"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 2026 年，内容流水线和离线标注不应默认选择哪种工作负载分流方式？",
+          "options": [
+            "批处理与缓存混合使用",
+            "交互式处理，因为听起来很紧急",
+            "批处理，因为用户看不到 24h 的延迟",
+            "通过异步队列实现半交互式处理"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "不同提供商之间存在哪种输出 schema 陷阱？",
+          "options": [
+            "所有提供商都使用相同的 OpenAI JSONL 格式",
+            "各提供商的批处理文件格式不同（OpenAI JSONL、Anthropic JSONL、Vertex BigQuery/GCS），因此可移植客户端需要为每个提供商配备适配器",
+            "Vertex 只支持 Parquet",
+            "Anthropic 不支持 JSONL"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "按照本课内容，将工作负载分流到批处理的最简单决策规则是什么？",
+          "options": [
+            "如果 prompt 少于 1k token，就使用批处理",
+            "如果用户不会注意到 24 小时后才交付，就一律使用批处理（并叠加缓存）",
+            "仅当网关要求时才使用批处理",
+            "如果使用了工具，就使用批处理"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/16-model-routing": {
+      "sourceSha256": "7962b39562be5b6cea56f3edb4911e4a2f963a90e9d8ef8bfd4c79758eaf1caf",
+      "questions": [
+        {
+          "question": "模型级联的核心思想是什么？",
+          "options": [
+            "始终按随机权重路由",
+            "并行运行两个模型并对输出取平均值",
+            "每个请求都先运行最昂贵的模型",
+            "先运行低成本模型，仅在置信度低或模型拒答时升级到前沿模型"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课列出了哪四种路由决策信号？",
+          "options": [
+            "仅用户层级",
+            "仅 token 数",
+            "任务分类、prompt 长度、与已知困难样本集的 embedding 相似度，以及第一次处理给出的自置信度",
+            "GPU 温度、风扇转速、室内湿度、一天中的时间"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "级联路由器的预期延迟特征是什么？",
+          "options": [
+            "始终比预路由更快",
+            "中位延迟约为 1.2x（低成本模型运行加验证），升级请求的延迟约为 2x（约占流量的 10%）",
+            "始终慢 10x",
+            "与前沿模型完全相同"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪种路由模式会在前置环节增加 5–10ms 延迟，但总体速度最快？",
+          "options": [
+            "级联",
+            "集成路由",
+            "随机轮询",
+            "使用分类器进行预路由"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "路由中的低成本模型漂移是什么？",
+          "options": [
+            "低成本模型变得更加昂贵",
+            "级联在 100% 的情况下都会转到前沿模型",
+            "低成本模型出现延迟漂移",
+            "任务分布已经变化，但训练好的路由器仍不断将请求发送给低成本模型，导致质量悄然下降"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课建议使用哪种防护措施来发现路由漂移？",
+          "options": [
+            "在线质量指标——按路由统计点赞／点踩、在留出样本上使用 LLM judge，并监控升级率和拒答率",
+            "仅每季度进行一次工程评审",
+            "仅使用离线评估集",
+            "在生产环境中禁用路由"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/17-disaggregated-prefill-decode": {
+      "sourceSha256": "bc4c1c6ded269f2208dc91cf3030934ca74fec7a3038caa96431d00765e07c64",
+      "questions": [
+        {
+          "question": "为什么 prefill 和 decode 适合不同的最优 GPU 配置？",
+          "options": [
+            "prefill 必须在 AMD 上运行，decode 必须在 NVIDIA 上运行",
+            "它们使用不同的模型权重",
+            "prefill 受限于矩阵乘法吞吐量，是计算密集型任务；decode 受限于 HBM 带宽，是内存密集型任务，因此将二者部署在一起会浪费其中一种资源",
+            "decode 需要更多网络带宽"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "NVIDIA Dynamo 使用哪种传输方式在 prefill 池与 decode 池之间移动 KV cache？",
+          "options": [
+            "仅使用双向 gRPC",
+            "NIXL（可用时采用 RDMA/InfiniBand，否则回退到 TCP）",
+            "普通 HTTP",
+            "NFS 上的共享文件系统"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "按照本课内容，在哪种情况下使用解耦架构得不偿失？",
+          "options": [
+            "使用 8K+ 前缀的 RAG",
+            "Blackwell 上的 MoE 工作负载",
+            "共享 system prompt 的多租户服务",
+            "prompt 少于 512 token 且输出少于 200 token，此时 KV 传输开销大于收益"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Dynamo 与 llm-d 的核心架构差异是什么？",
+          "options": [
+            "Dynamo 是开源的，llm-d 是闭源的",
+            "Dynamo 在 CPU 上运行，llm-d 在 GPU 上运行",
+            "Dynamo 是构建在 vLLM/SGLang/TRT-LLM 之上的上层编排栈；llm-d 是 Kubernetes 原生架构，将 prefill、decode 和 router 作为独立 Service",
+            "Dynamo 要求使用 AMD，llm-d 要求使用 NVIDIA"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Dynamo 中的哪些组件会自动调整 prefill:decode 比例以满足 SLO？",
+          "options": [
+            "Marlin kernel",
+            "Planner Profiler 和 SLA Planner",
+            "Cluster Autoscaler",
+            "sidecar proxy 和 Envoy filter"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "解耦架构如何与 Phase 17 · 11 中的缓存感知路由协同工作？",
+          "options": [
+            "解耦架构会彻底禁用 KV cache 复用",
+            "缓存感知路由器可以将请求分配到已持有其前缀的 decode 池；缓存未命中时，请求按 prefill -> decode 流转，因此两种机制的收益可以叠加",
+            "两者互斥",
+            "缓存感知路由仅适用于混合部署的服务"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache": {
+      "sourceSha256": "bc5c2cd2a1b3ed3a8a8aacf1007f2bc8de421820d2994a543dbb9ee2e6fe417d",
+      "questions": [
+        {
+          "question": "在 vLLM 部署中，LMCache 主要解决什么问题？",
+          "options": [
+            "tokenizer 的 GIL 争用",
+            "网络出口过滤",
+            "冷启动时拉取镜像",
+            "HBM 中的 KV cache 压力会造成抢占，并对相同前缀重新执行 prefill"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "vLLM 的哪个 API 引入了可插拔的 KV cache 后端？",
+          "options": [
+            "prefix-caching flag",
+            "vLLM v0.9.0 中的 Connector API",
+            "PagedAttention v2",
+            "ChunkedPrefill API"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "vLLM 0.11.0（2026 年 1 月）版本为 KV offload 路径增加了什么？",
+          "options": [
+            "移除 LMCache 支持",
+            "强制使用 FP8 KV cache",
+            "增加异步 offload 路径，使引擎在常见情况下不会因 offload 而阻塞",
+            "仅支持同步 offload"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "什么情况下应选择 LMCache，而不是原生 CPU offload？",
+          "options": [
+            "仅在 CPU 上运行时",
+            "多个引擎在租户、LoRA 变体或重复的 RAG 上下文之间共享前缀，使跨引擎复用产生收益时",
+            "单个引擎面临 HBM 压力且没有前缀共享时",
+            "想要彻底禁用 KV cache 时"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "当 KV 占用量始终远低于 HBM 容量时，LMCache 的收益会怎样？",
+          "options": [
+            "LMCache 会自动禁用",
+            "配置效果与基准相当，却会产生约 3–5% 的开销，没有实际收益",
+            "引擎会崩溃",
+            "它仍会让吞吐量翻倍"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 LMCache 能与解耦服务（Phase 17 · 17）组合使用？",
+          "options": [
+            "从 prefill 传输到 decode 的 KV 会写入 LMCache；后续查询可以从 LMCache 读取并跳过 prefill，因此缓存感知路由器可以选择本地缓存或 LMCache 共享缓存匹配的引擎",
+            "无法组合——两者互斥",
+            "因为 LMCache 会取代 NIXL",
+            "因为 LMCache 与引擎运行在同一块 GPU 上"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/19-ai-gateways": {
+      "sourceSha256": "ee577dfa5e307c98753a543acfb3850517b8d68923c4c4a5f42706701c4046f1",
+      "questions": [
+        {
+          "question": "本课所述 AI gateway 的核心作用是什么？",
+          "options": [
+            "用于检索的向量数据库",
+            "模型微调服务",
+            "位于应用与模型提供商之间的进程，在统一 API 背后整合路由、故障转移、重试、速率限制、secret 引用、可观测性和 guardrail",
+            "仅用于日志记录的 sidecar"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Kong 的基准测试报告指出 LiteLLM 的扩展上限是多少？",
+          "options": [
+            "无法对 LiteLLM 进行基准测试",
+            "超过 10k RPS 后仍能线性扩展",
+            "在 8 GB 内存下，约达到 2000 RPS 时开始崩溃，并在持续负载下引发级联故障",
+            "上限为 50 RPS"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "根据 Kong 在同等 CPU 条件下的基准测试，Kong AI Gateway 比 Portkey 和 LiteLLM 快多少？",
+          "options": [
+            "完全相同",
+            "分别快约 10% 和 20%",
+            "比 Portkey 快 228%，比 LiteLLM 快 859%",
+            "比两者都慢"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课将哪个网关定位为会增加 20–40 ms 延迟开销，并侧重 guardrail、PII 脱敏和 jailbreak 检测？",
+          "options": [
+            "Cloudflare AI Gateway",
+            "Portkey",
+            "Kong AI Gateway",
+            "LiteLLM"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课认为，决定采用自托管还是托管式网关的强制性因素是什么？",
+          "options": [
+            "支持的提供商数量",
+            "单次请求成本",
+            "数据驻留要求",
+            "网关是否开源"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "当 SLA 要求 TTFT P99 < 100 ms 时，哪些网关仍满足延迟预算？",
+          "options": [
+            "只有 Portkey",
+            "任意网关",
+            "只有 LiteLLM",
+            "Kong（约 3–8 ms）或 Cloudflare/Vercel 边缘网关（约 1–3 ms）；Portkey 的 20–40 ms 开销过大"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/20-shadow-canary-progressive": {
+      "sourceSha256": "de3b04a9b8303c4d3aac138ccadc3fc060ae3139815d0cd39fe7e1cc82bca215",
+      "questions": [
+        {
+          "question": "在 LLM 发布中，shadow、canary 和 A/B testing 的正确顺序是什么？",
+          "options": [
+            "完全跳过 shadow",
+            "先进行 shadow（零影响对比），再进行 canary（设置门禁并逐步引入真实流量），确认稳定后再通过 A/B testing 比较不同方案",
+            "先进行 canary，再进行 shadow，最后进行 A/B testing",
+            "先进行 A/B testing，再进行 shadow，最后进行 canary"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课使用哪组五项指标作为 canary 推进的门禁？",
+          "options": [
+            "GPU 温度、风扇转速、队列深度、成本、延迟",
+            "仅吞吐量",
+            "延迟百分位数、每请求成本、错误率／拒答率、输出长度分布、用户反馈率",
+            "仅离线评估准确率"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课指出，LLM 对相同输入的多次运行，其准确率差异大约可达多少？",
+          "options": [
+            "低于 0.1%",
+            "最高约 15%，原因包括 GPU 浮点运算的非结合性和 batch size 差异",
+            "始终为 50%",
+            "每次运行的输出都完全相同"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "按照本课的定义，shadow 模式有什么用途？",
+          "options": [
+            "替代评估的完整质量测试",
+            "一种 smoke test，用于发现成本暴涨、长度退化、拒答变化和严重错误，但不保证质量",
+            "替代回滚",
+            "生产发布的最后一步"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课所述的正确回滚设计是什么？",
+          "options": [
+            "通过 SSH 手动登录每个 pod",
+            "使用新的模型 digest 重新部署，耗时数小时",
+            "切换 policy flag，并在几秒内恢复固定的模型 digest，无需重新部署",
+            "等待下一个发布窗口"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么成本要与延迟和质量一起作为门禁指标？",
+          "options": [
+            "效果好 20% 的模型，每次调用成本可能高出 3x；如果没有成本门禁就直接发布，会破坏单位经济性",
+            "所有提供商的成本都相同",
+            "每个提供商都会自动限制成本",
+            "成本只是虚荣指标"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/21-ab-testing-llm-features": {
+      "sourceSha256": "878b19f91a06bc81337cb1423b4743e9bf329ff438232f86974c0b8a01ea91b4",
+      "questions": [
+        {
+          "question": "本课如何准确区分 eval 与 A/B test？",
+          "options": [
+            "只需要 A/B test",
+            "eval 在带标注的数据集上回答“模型能完成这项工作吗？”；A/B test 通过线上随机流量回答“用户在意吗？”",
+            "eval 面向用户，A/B test 在线下进行",
+            "两者可以互换"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "CUPED 对实验有什么作用？",
+          "options": [
+            "禁用多重比较校正",
+            "在比较实验期数据前，通过回归剔除实验前方差，通常可将方差降低 30–70%，并提高有效样本量",
+            "通过招募更多用户来扩大样本量",
+            "完全取代序贯检验"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "同时运行许多 A/B test 时，为什么需要使用多重比较校正（Bonferroni 或 Benjamini-Hochberg）？",
+          "options": [
+            "它们可以加快实验速度",
+            "只有序贯检验才需要它们",
+            "GDPR 要求使用它们",
+            "以 95% 置信度运行 20 项测试，仅凭偶然就会产生一个假阳性；校正可以控制族错误率或错误发现率"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "SRM（sample ratio mismatch）检测什么问题？",
+          "options": [
+            "tokenizer 性能缓慢",
+            "PII 泄露",
+            "分配哈希错误导致实际流量比例偏离预期比例（例如目标为 50/50，实际却是 47/53）",
+            "实验平台中的内存泄漏"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 LLM 的非确定性要求为样本量预留余量？",
+          "options": [
+            "非确定性会减少所需样本量",
+            "它违反 IID 假设，使有效样本量下降，因此应将所需样本量乘以约 1.3–1.5x 作为安全余量",
+            "它与功效计算无关",
+            "它只影响离线实验"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课如何对比 Statsig 与 GrowthBook？",
+          "options": [
+            "GrowthBook 是闭源软件",
+            "两者功能集完全相同",
+            "Statsig 仅采用 warehouse-native 架构",
+            "Statsig 是一体化 SaaS（OpenAI 于 2025 年 9 月以 $1.1B 收购）；GrowthBook 采用开源 MIT 许可证和 warehouse-native 架构，提供 Bayesian/Frequentist/Sequential 引擎及 CUPED/SRM/BH"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/22-load-testing-llm-apis": {
+      "sourceSha256": "e8787b920cd79563403538d45d650012effd8c742e0dad8649ba9df645f61715",
+      "questions": [
+        {
+          "question": "基于 Locust 的 LLM 负载测试中，GIL 陷阱是什么？",
+          "options": [
+            "客户端 tokenization 在 Python GIL 下运行，并排在请求生成之后等待，从而夸大所报告的 token 间延迟",
+            "Locust 要求使用 CUDA",
+            "Locust 只能在 Windows 上运行",
+            "Locust 不支持 HTTP"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "prompt 单一性陷阱是什么？",
+          "options": [
+            "单一的 prompt 总会拖慢服务器",
+            "从真实分布中采样会导致长 prompt 代表不足",
+            "循环使用同一个 prompt 会让前缀缓存看起来像完整的并发 decode，从而夸大所报告的吞吐量",
+            "单一的 prompt 要求使用流式传输"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课建议使用哪四种负载模式？",
+          "options": [
+            "仅突发负载",
+            "手动点击测试",
+            "稳态、渐增、突发、浸泡",
+            "连续 10 天保持 1 RPS"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课建议如何构建真实的 prompt 分布？",
+          "options": [
+            "每个请求使用随机字符",
+            "始终使用同一个 prompt，以最大限度提高缓存命中率",
+            "手写 5 个 prompt 并打乱顺序",
+            "利用均值和标准差从真实分布中采样（例如使用 LLMPerf 的 --mean-input-tokens / --stddev-input-tokens），或重放真实流量"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪种 2026 年工具组合被定位为最适合 CI/CD SLA 门禁和 Kubernetes 原生分布式运行？",
+          "options": [
+            "仅 guidellm",
+            "仅 Vegeta",
+            "k6 v2026.1.0 与已 GA 的 k6 Operator 1.0（TestRun / PrivateLoadZone CRD）",
+            "原生 Locust 2.43.3"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "浸泡负载模式可以发现哪种故障模式？",
+          "options": [
+            "冷启动长尾",
+            "tokenizer GIL 争用",
+            "运行数小时后出现的内存泄漏、连接池漂移和可观测性数据溢出",
+            "缓存逐出风暴"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/23-sre-for-ai": {
+      "sourceSha256": "8645bc32abf2cfd0ce9ca5d3668f25f52d008cd2b9a7471370e59a5e0b0d01ea",
+      "questions": [
+        {
+          "question": "本课建议 AI SRE 采用什么样的多 agent 架构？",
+          "options": [
+            "由 supervisor agent 将事故拆分为多个子查询，交给专门处理日志、指标和 runbook 的 agent，再汇总结果并呈现给人类",
+            "由一个单体 agent 负责一切",
+            "从三个 agent 中随机选择一个",
+            "串行使用两个 agent，且不设 supervisor"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课认为哪组自动修复操作是安全的？",
+          "options": [
+            "修改 IAM policy",
+            "更改数据库",
+            "重新设计服务拓扑",
+            "重启 pod、回滚某次特定部署、在预先批准的范围内扩缩容资源池、启用预先批准的 feature flag"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "NeuBird Hawkeye 如何使用对抗式评估过滤幻觉出来的根因？",
+          "options": [
+            "始终选择置信度更高的模型给出的答案",
+            "让同一个模型对相同输入运行两次",
+            "两个模型独立分析同一事故；结论一致表示高置信度，结论不一致则将两种假设一并升级给人类",
+            "使用 GAN 式训练"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "运维记忆在 AI SRE 中解决什么问题？",
+          "options": [
+            "团队人员变动造成的隐性知识流失——将 runbook 和 post-mortem 存入向量数据库，供 agent 在每次事故中检索",
+            "网络出口过滤",
+            "推理 pod 的冷启动",
+            "token 成本归因"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课引用了 MIT 在 2025 年取得的哪项事故前预测结果？",
+          "options": [
+            "预测问题仍未解决",
+            "提前 1 秒实现 100% 预测",
+            "结合日志、GPU 温度和 API 错误模式，提前 10–15 分钟预测出 89% 的故障",
+            "无提前量时达到 10%"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课强调了预测性检测的哪项运维约束？",
+          "options": [
+            "预测可以取代 runbook",
+            "无法触发行动的预测只是仪表盘——运维上的关键问题是预测会触发什么操作（预先排空、通知值班人员、自动扩缩容）",
+            "预测绝不应与操作联动",
+            "预测始终准确"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/24-chaos-engineering-llm": {
+      "sourceSha256": "f6e9178f18d4f8ffdc6dfa1c506bb8aa2f1765e0f17d9f71dc05c650ae182760",
+      "questions": [
+        {
+          "question": "本课要求在生产环境中开展混沌实验前具备哪五项前提条件？",
+          "options": [
+            "Slack 频道、贴纸包、吉祥物、话题标签、博客文章",
+            "只有向量数据库",
+            "SLI/SLO、可观测性、自动回滚、结构化 runbook、值班机制",
+            "三个前沿模型"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "混沌架构包含哪四个平面，以及哪种反馈回路？",
+          "options": [
+            "前端、后端、移动端、Web",
+            "摄取、转换、存储、服务",
+            "训练、评估、部署、归档",
+            "控制、目标、安全、可观测性四个平面，并将反馈用于调整 SLO"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在混沌实验期间，燃烧率告警 guardrail 有什么作用？",
+          "options": [
+            "当每日错误预算燃烧率超过预期的约 2x 时暂停实验",
+            "自动将实验推广到生产环境",
+            "禁用可观测性",
+            "加快实验速度"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "下列哪项是本课列出的 LLM 特有混沌实验？",
+          "options": [
+            "随机降低风扇转速",
+            "重启整个数据中心",
+            "触发 KV 逐出风暴，迫使 vLLM 的 block budget 达到饱和",
+            "阻断所有 DNS"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课建议混沌演练采用什么频率？",
+          "options": [
+            "仅每年一次",
+            "每天在完整生产环境制造故障",
+            "从不开展",
+            "每周进行小规模 canary，每月开展附带 postmortem 的 game day，每季度进行跨团队韧性审计"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "畸形 prompt 实验能发现哪种 LLM 特有故障模式？",
+          "options": [
+            "面对深度嵌套的 Unicode 或超大 UTF-8 codepoint 等输入时，tokenizer 停滞并锁死 worker",
+            "GPU 欠压",
+            "网络丢包",
+            "磁盘 I/O 争用"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/25-security-secrets-audit": {
+      "sourceSha256": "2b81b70d8dd92d2a1213802b2e5aaeab84a950e0808511efc509bda0530e9c10",
+      "questions": [
+        {
+          "question": "2026 年，LLM 服务凭证的标准模式是什么？",
+          "options": [
+            "为了速度，将 API key 硬编码在配置文件中",
+            "通过电子邮件将 key 发给每位工程师",
+            "将 key 存储在 Slack 频道中",
+            "使用集中式 vault，由 AI gateway 在运行时通过 IAM role 拉取；在 vault 中轮换后，所有应用会在几分钟内获取新凭证"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于 API key、vault root token 和 CI/CD 凭证，本课建议采用什么轮换周期？",
+          "options": [
+            "90 天内完成；尽可能实现自动化，手动轮换时应记录并跟踪",
+            "仅在泄露后轮换",
+            "从不轮换",
+            "每 5 年轮换一次"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么在 PII 清理中使用一致 tokenization（Mesh 方法）？",
+          "options": [
+            "它会对发给模型的 prompt 进行加密",
+            "ISO 27001 要求采用这种方法",
+            "同一个源值会映射为同一个占位符，因此 LLM 可以在整个 prompt 中保留代码语义和关系语义",
+            "它比正则表达式占用更少内存"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课建议 LLM 服务子网采用什么出口策略？",
+          "options": [
+            "仅允许少量域名（api.openai.com、api.anthropic.com、向量数据库、vault），阻断其他一切，并使用仅允许列表中的域名解析器",
+            "阻断包括提供商在内的所有出口流量",
+            "允许 DNS，但阻断 HTTP",
+            "允许所有出站流量"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "2026 年 Vercel 供应链事件对 CI/CD 凭证有何启示？",
+          "options": [
+            "CI/CD 凭证风险很低，可以一直保存在 env 文件中",
+            "CI/CD secret 不可能被窃取",
+            "Vercel 未受影响",
+            "CI/CD 凭证等同于生产环境凭证——应存入 vault、严格限制权限范围并积极轮换"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课建议为每次 LLM 调用保留哪些审计日志字段？",
+          "options": [
+            "仅成本",
+            "时间戳、用户／租户、prompt hash（而非原文）、模型及版本、token 数、成本、response hash，以及任何 guardrail 触发记录",
+            "只保留原始 prompt",
+            "仅保留 response"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/26-compliance-frameworks": {
+      "sourceSha256": "bb50c670a9e7cd250a35f8d3fb42d9895c36473ad2e6a5623be537eb1e753d15",
+      "questions": [
+        {
+          "question": "EU AI Act 对高风险系统的执法何时开始？",
+          "options": [
+            "已于 2024 年全面实施",
+            "2026 年 8 月 2 日",
+            "2025 年 2 月 2 日",
+            "2030 年 1 月 1 日"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "EU AI Act 规定了哪两档罚款上限？",
+          "options": [
+            "任何违规行为最高罚款 €100K",
+            "违反高风险系统义务，最高罚款 €15M 或全球年营业额的 3%（Art. 99(4)）；实施被禁止的 AI 行为，最高罚款 €35M 或全球年营业额的 7%（Art. 99(3)）",
+            "任何违规行为统一最高罚款 €1M",
+            "没有经济处罚，只有下架命令"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么事后处理 PII 清理不属于站得住脚的 GDPR 合规方案？",
+          "options": [
+            "模型已经看到了数据，因此在调用 LLM 之前于实时推理层进行脱敏，才是 2026 年站得住脚的标准",
+            "GDPR 完全禁止脱敏",
+            "这种方法在规模扩大后太慢",
+            "事后处理与实时处理完全相同"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "SOC 2 Type I 与 Type II 的实际区别是什么？",
+          "options": [
+            "Type I 要求签署 HIPAA BAA",
+            "Type I 比 Type II 更严格",
+            "Type I 证明控制措施已设计并记录；Type II 证明控制措施在 6–12 个月内持续有效运行",
+            "Type II 仅适用于初创公司"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "跨框架控制映射旨在实现什么目标？",
+          "options": [
+            "消除审计",
+            "用 ISO 42001 取代所有框架",
+            "用一项控制 policy 满足多个框架要求（例如访问日志可映射到 ISO 27001 A.5.15-5.18、GDPR Art. 32、HIPAA §164.312(a)）",
+            "为每个框架设置更多互不相同的控制措施"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于 HIPAA + LLM 工作负载，本课有何建议？",
+          "options": [
+            "只能使用本地部署模型，绝不使用托管服务",
+            "可以将 PHI 发送给任意提供商；BAA 可有可无",
+            "HIPAA 不适用于 LLM",
+            "未签署 BAA 时，绝不要将 PHI 发送给外部 AI 服务；三大云服务商和主要 LLM API 提供商均提供 BAA"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/27-finops-llms": {
+      "sourceSha256": "4449dccab9143ca1d22bc0d32330a9254e06ea28f8748a781af7382b39380815",
+      "questions": [
+        {
+          "question": "为什么传统 FinOps 不适用于 LLM 支出？",
+          "options": [
+            "LLM 不产生成本",
+            "云服务商拒绝提供费用明细",
+            "LLM 账单始终免费",
+            "成本来自 token 交易，而不是资源运行时长；标签不会从 API 调用中自动传播，因此必须在调用点标记用户、任务和租户"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课要求从第一天起检测哪三个归因维度？",
+          "options": [
+            "提供商、模型、API 版本",
+            "Region、AZ、数据中心",
+            "按用户（user_id）、按任务（task_id + route）、按租户（tenant_id）",
+            "GPU、CPU、RAM"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "成本归因应该细分哪四层 token？",
+          "options": [
+            "GPU、CPU、RAM、存储",
+            "缓存、模型、网关、可观测性",
+            "输入、输出、网络、磁盘",
+            "prompt、tool、memory、response"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "执行阶梯中的 kill switch 触发条件是什么？",
+          "options": [
+            "一分钟内支出超过 $1",
+            "出现任何 5xx response",
+            "租户支出相对于基准的 z-score > 4；自动暂停该租户并通知值班人员",
+            "延迟 P50 > 2s"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课建议用哪项单位指标取代 $/M tokens？",
+          "options": [
+            "每秒成本",
+            "每 GPU-hour 成本",
+            "每项产品成果的成本（例如每张已解决支持工单的成本、每篇生成文章的成本、每项成功 agent 任务的成本）",
+            "每个网关的成本"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课认为成熟团队使用的最高准确度归因模式是哪一种？",
+          "options": [
+            "仅标记后聚合",
+            "基于模型的分配",
+            "遥测 joiner——通过 trace ID 关联 trace 与账单",
+            "采样和外推"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/28-self-hosted-serving-selection": {
+      "sourceSha256": "179ffe7757879b07929d5f9840c17303b0113419a54d99a8cad36a95381b05a3",
+      "questions": [
+        {
+          "question": "本课将哪个引擎选为开发笔记本上的默认一条命令方案？",
+          "options": [
+            "llama.cpp",
+            "vLLM",
+            "TGI",
+            "Ollama"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "2025 年发生的哪件事使新项目不再默认选择 TGI？",
+          "options": [
+            "TGI 于 2025 年 12 月 11 日进入维护模式，此后仅修复 bug",
+            "TGI 放弃 CUDA 支持",
+            "TGI 提高了价格",
+            "TGI 被 Anthropic 收购"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪项硬件限制会迫使你选择 llama.cpp，并排除 vLLM / TRT-LLM？",
+          "options": [
+            "仅有 CPU（没有加速器）",
+            "AMD MI300X",
+            "NVIDIA Hopper",
+            "Apple M4"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "得益于 RadixAttention，本课将哪个引擎定位用于 agentic 多轮和前缀密集型工作负载？",
+          "options": [
+            "SGLang",
+            "Ollama",
+            "TGI",
+            "llama.cpp"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于相同的 GGUF 或 HF weights，本课建议采用哪条从开发到生产的流水线？",
+          "options": [
+            "始终使用 TGI",
+            "开发环境使用 Ollama，生产环境也使用 Ollama",
+            "开发环境使用 Ollama，预发布环境使用 llama.cpp，生产环境使用 vLLM（前缀密集型工作负载则使用 SGLang）",
+            "从开发到生产只使用 TRT-LLM"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么不建议在共享生产环境中使用 Ollama？",
+          "options": [
+            "它无法加载 GGUF",
+            "它只能在 Windows 上运行",
+            "它是闭源软件",
+            "Go HTTP 序列化会增加开销，并发管理比 vLLM 简单，OpenTelemetry 支持也较落后"
+          ],
+          "explanation": ""
+        }
+      ]
+    }
+  }
+}

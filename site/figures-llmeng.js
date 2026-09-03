@@ -11,7 +11,7 @@
   if (!LF) { return; }
   var el = LF.el, svgEl = LF.svgEl, slider = LF.slider, clamp = LF.clamp;
 
-  // ── few-shot-curve: accuracy vs number of in-context examples k ─────────────
+  // ── few-shot-curve: illustrative utility vs in-context examples k ──────────
   function fewShotCurve(host) {
     var state = { k: 4 };
     var W = 520, H = 220, PAD = 32, KMAX = 16;
@@ -19,28 +19,27 @@
     var num = el('span', { class: 'lf-num' });
     var meta = el('div', { class: 'lf-meta' });
     var formula = el('div', { class: 'lf-formula' });
-    var A0 = 0.42, AMAX = 0.92;
-    function acc(k) { return A0 + (AMAX - A0) * (1 - Math.exp(-k / 3.5)); }
+    var U0 = 0.18, UMAX = 0.88;
+    function utility(k) { return U0 + (UMAX - U0) * (1 - Math.exp(-k / 3.5)); }
     function px(k) { return PAD + k / KMAX * (W - 2 * PAD); }
     function py(a) { return H - PAD - (a - 0.3) / 0.7 * (H - 2 * PAD); }
     state._render = function () {
       while (svg.firstChild) svg.removeChild(svg.firstChild);
-      svg.appendChild(svgEl('line', { x1: PAD, y1: py(AMAX), x2: W - PAD, y2: py(AMAX), stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1', 'stroke-dasharray': '3 3' }));
+      svg.appendChild(svgEl('line', { x1: PAD, y1: py(UMAX), x2: W - PAD, y2: py(UMAX), stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1', 'stroke-dasharray': '3 3' }));
       var d = '', i;
-      for (i = 0; i <= 120; i++) { var k = KMAX * i / 120; d += (i ? 'L' : 'M') + px(k).toFixed(1) + ' ' + py(acc(k)).toFixed(1) + ' '; }
+      for (i = 0; i <= 120; i++) { var k = KMAX * i / 120; d += (i ? 'L' : 'M') + px(k).toFixed(1) + ' ' + py(utility(k)).toFixed(1) + ' '; }
       svg.appendChild(svgEl('path', { d: d, fill: 'none', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '2' }));
-      svg.appendChild(svgEl('circle', { cx: px(0), cy: py(acc(0)), r: '3.5', fill: 'var(--ink-mute,#777)' }));
-      svg.appendChild(svgEl('circle', { cx: px(state.k), cy: py(acc(state.k)), r: '5', fill: 'var(--blueprint,#3553ff)' }));
-      var a = acc(state.k), gap = a - acc(0);
-      num.innerHTML = (a * 100).toFixed(1) + ' <small>% accuracy</small>';
-      meta.textContent = (state.k === 0 ? 'zero-shot baseline' : state.k + '-shot') + '  ·  +' + (gap * 100).toFixed(1) + ' pts over zero-shot  ·  ' + (state.k >= 8 ? 'plateau: more examples barely help' : 'still climbing');
-      formula.textContent = 'accuracy(k) = ' + (A0 * 100).toFixed(0) + '% + (' + ((AMAX - A0) * 100).toFixed(0) + ' pts)(1 − e^(−k/3.5))  ·  diminishing returns';
+      svg.appendChild(svgEl('circle', { cx: px(0), cy: py(utility(0)), r: '3.5', fill: 'var(--ink-mute,#777)' }));
+      svg.appendChild(svgEl('circle', { cx: px(state.k), cy: py(utility(state.k)), r: '5', fill: 'var(--blueprint,#3553ff)' }));
+      num.innerHTML = (state.k === 0 ? 'zero-shot' : state.k + '-shot') + ' <small>illustrative curve</small>';
+      meta.textContent = state.k === 0 ? 'no demonstrations: establish the held-out baseline' : 'demonstrations added: measure the held-out result';
+      formula.textContent = 'conceptual utility only — replace this curve with measurements from your model, prompt, and held-out set';
     };
     var grid = el('div', {}, [slider(state, 'k', 'in-context examples k', 0, KMAX, 1)]);
     host.appendChild(el('div', { class: 'lf' }, [
       el('div', { class: 'lf-head' }, [el('span', { class: 'lf-label' }, ['FEW-SHOT CURVE']), el('span', {}, ['drag the example count'])]),
       el('div', { class: 'lf-body' }, [grid, el('div', { class: 'lf-out' }, [svg, el('div', { style: 'margin-top:10px' }, [num]), meta, formula])]),
-      el('div', { class: 'lf-cap' }, ['Adding labeled examples to the prompt lifts accuracy fast at first, then flattens. The grey dot is zero-shot; the first few demonstrations close most of the gap, and beyond a handful each new example earns almost nothing while still costing tokens. The skill is picking the smallest set that reaches the plateau.'])
+      el('div', { class: 'lf-cap' }, ['This synthetic curve illustrates a diminishing-returns hypothesis, not benchmark data. Measure the zero-shot baseline and each example count on a held-out set; choose the smallest set that reaches an observed plateau without wasting context tokens.'])
     ]));
     state._render();
   }

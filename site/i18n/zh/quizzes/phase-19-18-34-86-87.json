@@ -1,0 +1,1150 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/19-capstone-projects/20-agent-harness-loop-contract": {
+      "sourceSha256": "71ad8b02b311fa500d91a5ac156f62b80d49f78cf29932fc5bf267ec9d0a3a92",
+      "questions": [
+        {
+          "question": "为什么要将 harness 循环建模为显式状态机，而不是带标志位的 while 循环？",
+          "options": [
+            "这是模型唯一能调用的结构",
+            "这样就不再需要测试",
+            "它让 harness 能在一个位置拒绝非法转换，并根据事件日志重放 session",
+            "它在 CPython 上运行得更快"
+          ],
+          "explanation": "状态机把合法性规则集中在一个转换函数中。相同的输入序列会复现相同的状态，这正是 session 能够重放的原因。"
+        },
+        {
+          "question": "循环中的 pull point 表示什么？",
+          "options": [
+            "每 N 秒触发一次的 timer",
+            "循环让出控制权并等待调用方提供输入的位置",
+            "会修改 payload 的 hook subscriber",
+            "返回工具名称的模型调用"
+          ],
+          "explanation": "Pull point 是返回值，而不是异常。调用方获取 harness 请求的内容，然后调用 resume()。"
+        },
+        {
+          "question": "哪个状态是工具调用唯一合法的 pull point？",
+          "options": [
+            "PLANNING",
+            "AWAITING_TOOL",
+            "EXECUTING",
+            "REFLECTING"
+          ],
+          "explanation": "只有 AWAITING_TOOL 会产生工具 pull point。当某个步骤需要工具时，EXECUTING 会转换到该状态。"
+        },
+        {
+          "question": "当 hook 在 before_tool_call 中抛出 HookAbort 时会发生什么？",
+          "options": [
+            "该 hook 会被注销",
+            "跳过工具调用，触发 on_error，循环转入 REFLECTING",
+            "session 立即转换到 DONE",
+            "预算被重置"
+          ],
+          "explanation": "HookAbort 会取消进行中的工具分派，以中止原因为参数触发 on_error，然后继续运行。"
+        },
+        {
+          "question": "为什么要将 hooks 和 events 作为彼此独立的关注点？",
+          "options": [
+            "因为 event 类型是 bytes，而 hooks 是 strings",
+            "Hooks 是命令式的，可以修改或中止操作；events 用于观察且只能追加",
+            "因为审计脚本禁止 subscribers",
+            "因为 event log 无法存储 dicts"
+          ],
+          "explanation": "Hooks 会改变行为，events 则描述行为。将两者混在一起会把策略与遥测耦合起来，而这正是我们要避免的问题。"
+        },
+        {
+          "question": "超过 wall-clock 预算后，下一个状态是什么？",
+          "options": [
+            "DONE — session 被终止",
+            "IDLE — 返回一个 reason 为 budget_exceeded 的 pull point",
+            "PLANNING — 起草一份新计划",
+            "EXECUTING — 循环重试"
+          ],
+          "explanation": "预算耗尽意味着让出控制权。Harness 转换到 IDLE，触发 on_budget_exceeded，并返回 PullRequest，由调用方决定是延长预算还是关闭。"
+        },
+        {
+          "question": "为什么本课用 stub 替代 planner，而不直接调用模型？",
+          "options": [
+            "因为在本地调用模型很慢",
+            "为了在绑定任何模型之前，让循环契约保持可测试且确定",
+            "为了节省 tokens",
+            "因为模型不能返回工具调用"
+          ],
+          "explanation": "先固定循环契约，后续课程就能换入真实的 planners、registries 和 dispatchers，而无须重新协商状态机。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/21-tool-registry-schema-validation": {
+      "sourceSha256": "d633a38e510733538d8dc46ca122c2badf9cadb00dca36124bb5999941b70fe1",
+      "questions": [
+        {
+          "question": "为什么要将工具的 schema 与其 handler 分开注册？",
+          "options": [
+            "因为 handlers 不能返回 JSON",
+            "这样 validator 保持为纯数据，而 handler 保持为不透明代码",
+            "因为 schemas 必须编译",
+            "因为 schemas 必须存放在 YAML 中"
+          ],
+          "explanation": "将 schema 作为数据、handler 作为代码，可以让 validator 成为遍历 schema tree 的纯函数。"
+        },
+        {
+          "question": "哪些关键字被有意排除在本课实现的子集之外？",
+          "options": [
+            "items, enum",
+            "oneOf, anyOf, $ref, allOf",
+            "minLength, maxLength, pattern",
+            "type, properties, required"
+          ],
+          "explanation": "省略的关键字会引入循环和引用解析。我们让这个子集保持线性，使 validator 仍然只是一次递归遍历。"
+        },
+        {
+          "question": "为什么 register() 默认拒绝重复项？",
+          "options": [
+            "因为 schema 无法重新验证",
+            "因为静默覆盖会导致生产环境中的工具目录发生漂移",
+            "因为 registry 无法为每个名称存储多条记录",
+            "因为 handlers 无法替换"
+          ],
+          "explanation": "强制要求 override=True，可以显式暴露代码中两个部分都试图拥有同一工具名称的情况。"
+        },
+        {
+          "question": "当 schema 指定 type 为 integer，但接收到值 True 时，validator 会怎么做？",
+          "options": [
+            "静默强制转换为 integer",
+            "将其视为 1 并通过验证",
+            "抛出未处理的异常",
+            "返回 type error，因为在此 validator 中 bool 不是 integer"
+          ],
+          "explanation": "Python 的 bool 是 int 的子类，但该 validator 会从 integer 检查中排除 bool。JSON 的布尔值与整数彼此不同。"
+        },
+        {
+          "question": "输入对象为 {'user': {'email': 0}}，而 schema 要求 user.email 是 string 时，错误路径是什么？",
+          "options": [
+            "/user",
+            "/user/email",
+            "/",
+            "user.email"
+          ],
+          "explanation": "JSON pointer 将先进入 user、再进入 email 的过程编码为 /user/email。"
+        },
+        {
+          "question": "为什么 registry 不是安全边界？",
+          "options": [
+            "因为 handlers 是 async",
+            "因为验证通过后 handlers 仍可能行为不当",
+            "因为 registry 位于进程内",
+            "因为 schema 是 JSON"
+          ],
+          "explanation": "Registry 检查数据形状。行为、timeouts 和隔离属于 dispatcher 与 sandbox 的职责。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/22-jsonrpc-stdio-transport": {
+      "sourceSha256": "01a912e8dfae75e07f5a1eb359ac868da5207fc379947aac29340d2fa9a77e79",
+      "questions": [
+        {
+          "question": "在线路传输中，JSON-RPC notification 与 request 的区别是什么？",
+          "options": [
+            "Notifications 省略 id 字段；servers 不得对其响应",
+            "使用不同的 jsonrpc version 字段",
+            "Notifications 使用不同的 method namespace",
+            "Notifications 被包装在 array 中"
+          ],
+          "explanation": "缺少 id 是唯一标志。由于没有可用于关联的 id，servers 不会响应。"
+        },
+        {
+          "question": "为什么 newline-delimited JSON 足以为 stdio 划分消息边界？",
+          "options": [
+            "因为 UTF-8 没有 newline byte",
+            "因为规范对此有强制要求",
+            "因为 pipes 保证 newline 的原子性",
+            "因为 JSON 字符串中的字面换行必须转义，所以每个对象可以占一行"
+          ],
+          "explanation": "json.dumps 为每个对象输出一行；字符串中的字面换行会被转义。因此 \\n 可以安全地充当记录分隔符。"
+        },
+        {
+          "question": "JSON 解析失败时，transport 返回哪个错误码？",
+          "options": [
+            "-32600",
+            "-32700",
+            "-32603",
+            "-32601"
+          ],
+          "explanation": "-32700 表示 Parse error。由于无法提取 id，响应 id 为 null。"
+        },
+        {
+          "question": "如果 handler 抛出普通的 ValueError，transport 会返回什么？",
+          "options": [
+            "不会返回；连接会断开",
+            "Invalid params (-32602)",
+            "Method not found (-32601)",
+            "Internal error (-32603)，并在 data 中包含异常类名"
+          ],
+          "explanation": "未映射的异常会呈现为 -32603。data.exception 会为客户端保留类名。"
+        },
+        {
+          "question": "当一个 batch 仅包含 notifications 时，server 返回什么？",
+          "options": [
+            "什么也不返回 — 不写入任何 bytes",
+            "每个 notification 返回一个 null",
+            "一个空 array",
+            "单个 null 响应"
+          ],
+          "explanation": "规范规则是：如果每个条目都是 notification，server 保持静默。"
+        },
+        {
+          "question": "Session 中途收到一行损坏的 JSON。后续行会怎样？",
+          "options": [
+            "它们会被缓冲，直到损坏的行重试",
+            "Transport 写入一个 -32700 响应，并把下一行作为新记录继续读取",
+            "Transport 关闭 stream",
+            "它们都会以 -32600 被拒绝"
+          ],
+          "explanation": "Framing layer 不得污染整个 stream。一次解析错误只产生一个错误响应，随后循环继续。"
+        },
+        {
+          "question": "为什么 transport 不直接查询 tool registry？",
+          "options": [
+            "为了让 transport layer 只处理 JSON-RPC 结构；由 handler 将 transport 与 registry 连接起来",
+            "因为 registry 是 async",
+            "因为 registry 保存 secrets",
+            "因为 transport 在另一个进程中运行"
+          ],
+          "explanation": "Transport 负责线路协议。Dispatcher（下一课）才是 transport、registry 与 timeout 交汇之处。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/23-function-call-dispatcher": {
+      "sourceSha256": "f093e63b4792bba83001499e314daf8241c8df0502c417dc1bfe675796982b39",
+      "questions": [
+        {
+          "question": "为什么非幂等工具发生 timeout 时默认不重试？",
+          "options": [
+            "因为 dispatcher 无法度量非幂等调用",
+            "因为非幂等 handlers 运行得更快",
+            "因为 idempotency keys 很慢",
+            "因为工具可能已部分提交；重试可能造成重复效果"
+          ],
+          "explanation": "一个在 4.9s 时 timeout 的 db.write 若被重试，可能造成第二次写入。除非 handler 表明该调用可以安全重复，否则 dispatcher 会拒绝重试。"
+        },
+        {
+          "question": "idempotency-key 去重在防止什么？",
+          "options": [
+            "Schema validation errors",
+            "在原始调用仍在进行时触发的重试",
+            "进程重启",
+            "缓慢的网络"
+          ],
+          "explanation": "如果不去重，5s 时的重试会与仍未完成的原始慢调用形成竞态。Cache 会将二者合并为一次 handler 调用。"
+        },
+        {
+          "question": "这个 dispatcher 会对哪些 error kinds 进行重试？",
+          "options": [
+            "schema 和 not_found",
+            "timeout（若为幂等）和 transient",
+            "internal 和 budget_exceeded",
+            "全部"
+          ],
+          "explanation": "Schema 和 not_found 是确定性的。Internal 掩盖了未知的 handler bug。Budget exceeded 表示让出控制权。只有幂等调用的 timeout 和显式的 TransientError 会重试。"
+        },
+        {
+          "question": "_run_with_retries 外层的 semaphore 保护什么？",
+          "options": [
+            "保护 handler 不受自身影响",
+            "保护 backend，避免 gather() 扇出过多并发调用",
+            "保护 validator",
+            "保护 retry counter"
+          ],
+          "explanation": "如果没有限制，一次包含四十个调用的 gather 会开启四十个并发 dispatch。Semaphore 会限制这一波调用的规模。"
+        },
+        {
+          "question": "为什么 idempotency key 由调用方而不是 dispatcher 派生？",
+          "options": [
+            "因为 cache 无法存储 strings",
+            "因为 registry 无法获得该 key",
+            "因为仅从 args 派生，会使两个语义不同但碰巧共享 args 的调用发生冲突",
+            "因为 Python hashes 不稳定"
+          ],
+          "explanation": "调用方知道 step id、planner intent 和 user。仅靠 Args 无法提供安全去重所需的完整上下文。"
+        },
+        {
+          "question": "Dispatch 时的 schema failure 映射到哪个 JSON-RPC 错误码？",
+          "options": [
+            "-32602",
+            "-32603",
+            "-32700",
+            "-32601"
+          ],
+          "explanation": "-32602 表示 Invalid params。Dispatcher 会在任何 handler 运行前返回它。"
+        },
+        {
+          "question": "幂等工具因 timeouts 达到 max_attempts 后，会返回什么？",
+          "options": [
+            "没有 result 的 DispatchOk",
+            "kind=timeout 且 attempts==max_attempts 的 DispatchError",
+            "抛出异常",
+            "kind=internal 的 DispatchError"
+          ],
+          "explanation": "Dispatcher 返回带类型的错误 envelope。kind 反映最后一次 failure mode，attempts 反映实际尝试次数。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/24-plan-execute-control-flow": {
+      "sourceSha256": "628fd295a4849e082e0d574177b00812f626cb90f557def7a7ebf39db479dde8",
+      "questions": [
+        {
+          "question": "在 plan-execute agent 中，planner 的职责是什么？",
+          "options": [
+            "处理 JSON-RPC transport",
+            "生成供 executor 执行的有序 typed steps 列表",
+            "强制执行 timeouts",
+            "对每个 step 调用 dispatcher"
+          ],
+          "explanation": "Planner 输出结构化计划，executor 执行计划。把二者混在一起，正是本课要摆脱的 chain-of-thought 陷阱。"
+        },
+        {
+          "question": "既然 executor 不检查 expected_outcome，为什么它仍是 Step 结构的一部分？",
+          "options": [
+            "因为它为 replanner 和 tracers 提供明确的成功条件",
+            "因为模型用它来训练",
+            "因为 dispatcher 将它用作 cache key",
+            "因为 registry 要求它存在"
+          ],
+          "explanation": "Replanner 在修订时读取它，tracer 在 timeline 上呈现它。它是 step 上一份供人阅读的契约。"
+        },
+        {
+          "question": "某个 step 失败且 replanner 返回新计划时，executor 会在 event stream 中发出什么？",
+          "options": [
+            "status=failed 的 session.complete",
+            "tool.error，随后是 session.start",
+            "包含 removed/added/revised step ids 的 plan.diff",
+            "什么也不发出 — replan 是静默的"
+          ],
+          "explanation": "plan.diff 让修订过程可见。静默重写正是我们要避免的问题。"
+        },
+        {
+          "question": "为什么要将 max_steps 和 max_replans 设为两个独立预算？",
+          "options": [
+            "因为 dispatcher 拒绝无界计划",
+            "因为 registry 会统计 replans",
+            "因为 asyncio 同时需要二者",
+            "因为它们度量不同单位。Steps 限制总执行量；replans 限制 planner 的调用次数"
+          ],
+          "explanation": "max_replans 能捕捉不断返回同一个错误计划的 planner。max_steps 能捕捉不断增长的失控计划。"
+        },
+        {
+          "question": "Planner 第一次调用就返回空列表时，会返回哪个 reason？",
+          "options": [
+            "replan_budget",
+            "step_budget",
+            "no_plan",
+            "goal_met"
+          ],
+          "explanation": "没有 plan 就没有 execution。Session 以 reason=no_plan、status=failed 结束。"
+        },
+        {
+          "question": "PlanDiff.revised 中包含什么？",
+          "options": [
+            "Planner 要求跳过的 step ids",
+            "两次修订间 tool_name 或 args 发生变化的 step ids",
+            "新计划中有而旧计划中没有的 step ids",
+            "旧计划中有而新计划中没有的 step ids"
+          ],
+          "explanation": "revised 是修订前后 (tool_name, args) 签名发生变化的 ids 集合。"
+        },
+        {
+          "question": "Executor 耗尽 max_replans 后，SessionResult.reason 是什么？",
+          "options": [
+            "step_budget",
+            "replan_budget",
+            "no_plan",
+            "goal_met"
+          ],
+          "explanation": "结果是 replan_budget，status 为 failed。History 会保留运行过的每个 step，包括触发 replans 的失败步骤。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/25-verification-gates-observation-budget": {
+      "sourceSha256": "123434da98d348cc0cef3f53667e7b3ad73255b46d9a066e4f9ba665cf72bb69",
+      "questions": [
+        {
+          "question": "阅读本课前：为什么 harness 最需要的是确定性 gate chain，而不是 model-as-judge？以下哪个理由最有力？",
+          "options": [
+            "Models 在生产环境中充当 judges 的速度太慢。",
+            "Gate chains 允许模型编写自己的 policy。",
+            "Model-as-judge 总会产生幻觉式的 allow 决策。",
+            "确定性使 deny reason 可审计，并使整条 chain 可重放。"
+          ],
+          "explanation": "审计轨迹与可复现性是实际收益。也可以接入 judge model，但结构性 gate 必须是确定性的，才能复现和审查决策。"
+        },
+        {
+          "question": "为什么本课在 chain 中先运行 WhitelistGate，再运行 BudgetGate？",
+          "options": [
+            "BudgetGate 必须在至少调用过一个工具后才能运行。",
+            "Whitelist 拒绝的成本更低，短路可以避免昂贵的 ledger 求和。",
+            "按照约定，Whitelist 必须始终是最后一个 gate。",
+            "顺序无关紧要，因为 GateChain 会随机化评估顺序。"
+          ],
+          "explanation": "低成本拒绝应先执行。WhitelistGate 是 O(1) hash lookup，BudgetGate 则必须对 ledger 求和。当调用在结构上就不合法时，通过 whitelist 短路可避免这项工作。"
+        },
+        {
+          "question": "ObservationLedger 已记录 read_file 返回的一条 60-token observation，随后 harness 拒绝了下一次调用。Ledger 会如何记录这次拒绝？",
+          "options": [
+            "什么也不记录。Ledger 只记录成功的 observations。",
+            "将拒绝作为 synthetic Observation 追加，并带上 refuser 的名称。",
+            "追加一条标记为 refused 的 zero-token Observation。",
+            "追加一条表示拒绝成本的 negative-token Observation。"
+          ],
+          "explanation": "Ledger 记录模型已经看到的 observations。拒绝产生 GateDecision，而不是 Observation。拒绝计数与 ledger 并列存放，而不在 ledger 内部。"
+        },
+        {
+          "question": "RecencyGate.window 设置为 3，ledger.latest_turn 为 5。新的 ToolCall 在 turn 10 到达。会发生什么？",
+          "options": [
+            "Gate 拒绝：间隔 5 超过 window 3。",
+            "Gate 允许：该调用位于最新 turn。",
+            "Gate 允许：window 适用于 ledger 大小，而不是 turn 间隔。",
+            "Gate 抛出异常，因为 ledger 已过期。"
+          ],
+          "explanation": "RecencyGate 会将 (call.turn - ledger.latest_turn) 与 window 比较。10 - 5 = 5，大于 3，因此 gate 拒绝。"
+        },
+        {
+          "question": "你想增加单次调用的输出上限（任何一条 observation 都不得超过 8000 tokens）。从逻辑上说，这个 gate 应放在 chain 的什么位置？",
+          "options": [
+            "它不能是 gate，因为只有工具运行后才能知道大小。",
+            "放在 WhitelistGate 前，因为大小是检查成本最低的属性。",
+            "放在 BudgetGate 内，让限制可以组合。",
+            "放在 BudgetGate 后，因为累计预算始终优先。"
+          ],
+          "explanation": "评估 gate 时还不知道输出大小。Harness 会在工具运行后、模型看到 observation 前将其截断来实施上限。Gates 评估输入，而不是输出。"
+        },
+        {
+          "question": "Reviewer 要求你证明 agent 在一次 session 中从未执行被拒绝的工具调用。你应向其提供哪个 artifact？",
+          "options": [
+            "只包含成功 observations 的 ObservationLedger snapshot。",
+            "记录测试通过或失败的 pytest output。",
+            "包含模型自我报告的 chat transcript。",
+            "包含每次调用决策及 deny reasons 的 ChainOutcome records 列表。"
+          ],
+          "explanation": "ChainOutcome records 携带逐调用决策和 deny reasons。Ledger 与 transcript 可以佐证，但可审计的 artifact 是 chain decisions。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/26-sandbox-runner-denylist": {
+      "sourceSha256": "854ebbc7e26feec28b9b35164b10eaad083823d521190f00a707afbb496351cb",
+      "questions": [
+        {
+          "question": "阅读本课前：为什么 sandbox 要检查 python3 -c 这类解释器调用的 argv 形状？以下哪个理由最有力？",
+          "options": [
+            "解释器根本无法被安全地 sandbox。",
+            "解释器速度慢，会浪费 agent budget。",
+            "带 -c 的解释器等同于换了名字的 shell 调用，能绕过 executable denylist。",
+            "没有解释器，模型能写出更好的代码。"
+          ],
+          "explanation": "python3 -c、bash -c、node -e 等调用在功能上等同于给模型一个 shell。仅阻止 executable name 并不够。"
+        },
+        {
+          "question": "Sandbox 配置为 project_root=/work，收到路径参数 ./src/main.py。Jail check 如何执行？",
+          "options": [
+            "对拼接得到的绝对路径调用 os.path.realpath，再检查其是否以 /work 为前缀。",
+            "Sandbox 拒绝所有相对路径。",
+            "对 /work 执行字面字符串前缀匹配。",
+            "Sandbox 生成 subprocess，随后检查其 working directory。"
+          ],
+          "explanation": "realpath 会解析 symlinks。若 project root 内的 symlink 指向外部，字面前缀检查会被绕过。realpath 加“前缀或完全相等”检查才是安全做法。"
+        },
+        {
+          "question": "SandboxResult 返回 denied=True、timed_out=False、exit_code=-100。标准解释是什么？",
+          "options": [
+            "Sandbox 从未生成 subprocess；调用在 exec 前被拒绝。",
+            "Subprocess 显式返回了 -100。",
+            "Subprocess 已启动，随后被 SIGKILL 终止。",
+            "触发了 wall-clock timeout。"
+          ],
+          "explanation": "Sentinel exit_code -100 与 denied=True 组合，表示 sandbox 在调用 subprocess.run 前就已短路。"
+        },
+        {
+          "question": "为什么 sandbox 默认采用 shell=False，并拒绝 shell metacharacters？",
+          "options": [
+            "subprocess 在 macOS 上不接受 shell=True。",
+            "这样能简化 test suite。",
+            "Shell parsing 会把整个 shell DSL 暴露给模型，而 sandbox 正试图缩小这一攻击面。",
+            "shell=True 在 CPython 中更慢。"
+          ],
+          "explanation": "shell=True 会把 argv 变成由 shell 解释的字符串。Pipes、redirects、command substitution 和 globbing 都会变得可用。一旦运行 shell parsing，sandbox 就无法有意义地拒绝 payload。"
+        },
+        {
+          "question": "你想为 sandbox 增加 per-process memory limit，但本课的 sandbox 没有实现它。正确的下一步是什么？",
+          "options": [
+            "跳过：denylist 足以防止 memory bombs。",
+            "提高 wall-clock timeout 作为补偿。",
+            "在传给 subprocess.run 的 preexec_fn 中使用 os.setrlimit(RLIMIT_AS)。",
+            "将该限制作为字符串加入 denylist。"
+          ],
+          "explanation": "subprocess.run 接受 preexec_fn（POSIX）或类似机制。setrlimit(RLIMIT_AS) 可限制 child 的 address space。本课的 sandbox 未提供这一能力；第 29 课的端到端 demo 会讨论如何在其上叠加 container-level limits。"
+        },
+        {
+          "question": "模型以 argv=['cat', 'src/../src/main.py'] 调用 sandbox，文件位于 project_root 内。该调用应通过 path jail 吗？",
+          "options": [
+            "取决于 user 是否为 root。",
+            "应该：realpath 会把 src/../src 归一化为 src，解析后的路径位于 project_root 内。",
+            "不应该：argv 在 sandbox 看到它之前就被 regex gate 拒绝。",
+            "不应该，路径中出现任何 .. 都会自动被拒绝。"
+          ],
+          "explanation": "realpath 会归一化路径。Sandbox 不会一概拒绝 .. tokens，而是检查解析后的目标。这是有意为之：合法路径有时确实会合理地经过 ..。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/27-eval-harness-fixture-tasks": {
+      "sourceSha256": "2fc0fcee34ce1775a6e8b38bb873fa345135f8f6c6122566dfbadb173fd027fa",
+      "questions": [
+        {
+          "question": "阅读本课前：优秀的 agent eval verifier 最重要的属性是什么？",
+          "options": [
+            "不同运行之间具有确定性。",
+            "速度达到毫秒级。",
+            "能用自然语言解释 verdict。",
+            "覆盖 candidate 代码的每一行。"
+          ],
+          "explanation": "确定性使 regression 变得可检测。非确定性 verifier 会让每次失败都像抛硬币一样随机。"
+        },
+        {
+          "question": "某个 candidate 在同一任务的 5 个 samples 中通过 3 次。本课的 pass@5 公式返回什么值（四舍五入到两位小数）？",
+          "options": [
+            "0.75",
+            "1.00",
+            "0.99",
+            "0.60"
+          ],
+          "explanation": "pass@k = 1 - (1 - p)^k = 1 - (1 - 0.6)^5 = 1 - 0.4^5 = 1 - 0.01024 = 0.98976，四舍五入后为 0.99。原始 per-sample rate（0.6）是选项 (a) 所表示的值，但该公式会将其放大到 k 个 samples。"
+        },
+        {
+          "question": "为什么本课的 report 同时包含 pass@1 和 pass@k？",
+          "options": [
+            "pass@1 是 verifier registry 支持的版本；pass@k 为未来 verifier 保留。",
+            "pass@k 可能掩盖一个在许多 samples 中只答对一次的模型，因此 pass@1 将结果锚定在首次尝试的质量上。",
+            "pass@1 是 users 在 dashboard 中看到的值；pass@k 用于内部 debugging。",
+            "当 k > 1 时，pass@k 与 pass@1 在数学上完全相同。"
+          ],
+          "explanation": "pass@k 会让尝试多次才答对一次的模型看起来很强；pass@1 是首次尝试的下限。同时报告二者可以防止夸大结果。"
+        },
+        {
+          "question": "Harness 在每个 sample 前都会调用 _prepare_scratch。为什么这对 pass@k > 1 很重要？",
+          "options": [
+            "它确保每个 sample 都从有 bug 的初始状态开始，而不是接着使用上一个 sample 的输出。",
+            "它可以避免共享 temp directories 上的 race conditions。",
+            "它只与 shell verifiers 有关。",
+            "它纯粹是一项性能优化。"
+          ],
+          "explanation": "如果没有新的 scratch，sample N+1 会从 sample N 的输出开始。Harness 测得的将是“第二次尝试清理”，而不是首次尝试的成功率。"
+        },
+        {
+          "question": "你新增了一个在 scratch dir 中运行 pytest 的 verifier 'pytest_passes'。它应基于哪个现有 verifier？",
+          "options": [
+            "无法将 pytest 表达为 verifier。",
+            "shell_exit_zero，因为 pytest 以 exit code 0 表示通过。",
+            "file_equals，因为 pytest 会写入 results file。",
+            "regex_match，因为 pytest 输出包含单词 'passed'。"
+          ],
+          "explanation": "pytest 通过时退出码为 0，失败时非 0，因此 shell_exit_zero 是正确的 primitive。生产接线会通过第 26 课的 sandbox 路由该调用。"
+        },
+        {
+          "question": "Reviewer 问：“这个 regression 出在模型还是 harness？”哪个 artifact 能回答这个问题？",
+          "options": [
+            "逐任务、逐 sample 的 SampleResult，以及 verifier detail message。",
+            "Fixture JSON files。",
+            "Agent 的 chain-of-thought transcript。",
+            "Verifier registry source code。"
+          ],
+          "explanation": "Per-sample latency、verifier detail 和 pass/fail 可用于分类排查：相同 fixtures 出现不同 verdicts，说明模型变了；verdicts 相同但 latency 不同，则说明其他部分发生了变化。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/28-observability-otel-traces": {
+      "sourceSha256": "7651b44a8d958bccf11c6a563b8e010b6337e8cf2fc5838290d6466d9516b93f",
+      "questions": [
+        {
+          "question": "阅读本课前：按照 OTel GenAI attribute 结构写入 harness spans，有什么实际好处？",
+          "options": [
+            "任何兼容 OTel 的 backend 都能读取它们，无须 custom parser。",
+            "OTel 是 Python-only 标准，因此 harness 可以获得 type hints。",
+            "HIPAA 要求必须这样做。",
+            "OTel spans 在磁盘上的压缩效果更好。"
+          ],
+          "explanation": "这些 conventions 是与更广泛生态系统之间的契约。Honeycomb、Grafana Tempo、Jaeger 和 Datadog 都能开箱解析 gen_ai.* attributes。"
+        },
+        {
+          "question": "SpanBuilder.span() context 内抛出异常时，本课的 builder 会记录什么？",
+          "options": [
+            "status 保持 UNSET，异常被静默吞掉。",
+            "丢弃 span，以免污染 trace。",
+            "status=ERROR，status_message 包含异常类型与消息，并追加一个 'exception' event。",
+            "将 span 重命名为 'error'。"
+          ],
+          "explanation": "Status ERROR 加 exception event 符合 OTel spec。异常会重新抛出，以便调用方代码作出反应。"
+        },
+        {
+          "question": "Histogram 的 Prometheus exposition 包含 _bucket、_sum 和 _count 行。为什么 bucket counts 是累计的（每个 le bucket 都包含所有更小的 buckets）？",
+          "options": [
+            "累计计数可以减少 floating-point error。",
+            "累计计数让 scraper 无须存储所有 observations，即可通过减法计算各 bucket 的计数。",
+            "累计计数是 Grafana 唯一支持的格式。",
+            "它们并非累计；本课的 exposition 不符合标准。"
+          ],
+          "explanation": "这是 Prometheus 的设计选择：backend 读取累计计数，并计算各 bucket 之间的差值。这样每个 bucket 的 time series 都可以是简单的 monotonic counter。"
+        },
+        {
+          "question": "Harness 用一个 span 包裹工具执行。在 GenAI conventions 中，哪些 attribute keys 将其标识为工具调用？",
+          "options": [
+            "operation + tool.name。",
+            "agent.harness.tool + agent.harness.call。",
+            "gen_ai.system + gen_ai.request.model。",
+            "gen_ai.tool.name + gen_ai.tool.call.id。"
+          ],
+          "explanation": "gen_ai.tool.name 和 gen_ai.tool.call.id 是 GenAI conventions 中工具执行的标准 keys。"
+        },
+        {
+          "question": "你想查询“read_file 调用的 p95 latency 是多少”。应查询哪个 artifact？",
+          "options": [
+            "Span 的 status_message 字段。",
+            "Counter tools_called_total 除以 time window。",
+            "在一个 window 内抓取的 Prometheus histogram tool_latency_ms{tool=\"read_file\"}。",
+            "由脚本解析 traces.jsonl 中每个 span 的 duration_ms。"
+          ],
+          "explanation": "Histograms 适合计算 percentiles。Counter 只能计数；trace 虽含原始 spans，但并未预先聚合。"
+        },
+        {
+          "question": "Reviewer 问为什么本课手写实现，而不导入 opentelemetry-sdk。哪个回答正确？",
+          "options": [
+            "手写能教授 wire format；之后可以用相同的 attribute keys 换入 SDK。",
+            "手写实现在运行时更快。",
+            "SDK 在 import 时需要网络连接。",
+            "SDK 不支持 GenAI conventions。"
+          ],
+          "explanation": "这些 conventions 在不同实现之间保持稳定。手写版本是为了讲解清晰；生产环境会接入 SDK，并复用相同的 gen_ai.* keys。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/29-end-to-end-coding-task-demo": {
+      "sourceSha256": "a05c9b1b8b570cf0f64a91a22ed4eff5aefd234e52dece59d98cb902ab54c504",
+      "questions": [
+        {
+          "question": "阅读本课前：为什么端到端 demo 用确定性 policy 替代 LLM？",
+          "options": [
+            "确定性 policies 在编码任务上始终优于 LLMs。",
+            "本课负担不起 inference cost。",
+            "LLM 运行太慢，无法用于 tests。",
+            "本课测试的是 harness；policy 是可替换的 seam。"
+          ],
+          "explanation": "Harness 契约并不关心 policy 是 LLM 还是状态机。移除 LLM 会消除网络依赖和方差，让本课成为可复现的 integration test。"
+        },
+        {
+          "question": "Agent 的状态机有五个状态。正常通过时，它按什么顺序执行？",
+          "options": [
+            "RUN_TESTS -> SURVEY -> INSPECT -> FIX -> VERIFY。",
+            "SURVEY -> RUN_TESTS -> INSPECT -> FIX -> VERIFY。",
+            "SURVEY -> FIX -> VERIFY -> RUN_TESTS -> INSPECT。",
+            "SURVEY -> INSPECT -> FIX -> RUN_TESTS -> VERIFY。"
+          ],
+          "explanation": "Agent 先调查项目，再运行 tests、检查失败的 test、修复 bug，最后验证。RUN_TESTS 位于 INSPECT 前，因为 test failure 是 policy 读取的信号。"
+        },
+        {
+          "question": "随附 fixture 的 bug 是 src/fizz.py 中的 off-by-one：使用了 range(1, n)，而不是 range(1, n + 1)。Policy 在哪里决定应用修复？",
+          "options": [
+            "在 SURVEY 状态内，通过读取 file header 决定。",
+            "在状态机外部的 gate chain 中决定。",
+            "在 VERIFY 状态内，重新运行后决定。",
+            "在 INSPECT 状态内，在 test failure 指明预期输出后决定。"
+          ],
+          "explanation": "INSPECT 是 policy 读取失败 test 并了解预期结构的地方。修复在此被识别，并在下一个 FIX 状态中写入。"
+        },
+        {
+          "question": "每次工具调用依次经过哪条组件链？",
+          "options": [
+            "ObservationLedger -> GateChain -> Sandbox -> SpanBuilder。",
+            "SpanBuilder -> GateChain -> Sandbox -> ObservationLedger。",
+            "GateChain -> SpanBuilder -> Sandbox -> ObservationLedger。",
+            "Sandbox -> GateChain -> SpanBuilder -> ObservationLedger。"
+          ],
+          "explanation": "先经过 gate（允许或拒绝），再经过 span（这样拒绝也会被捕获），第三是 sandbox（仅在允许时），最后是 ledger（仅在成功时）。本课代码就是这样接线的。"
+        },
+        {
+          "question": "你用真实 LLM 替换确定性 policy。哪个 harness 组件会改变？",
+          "options": [
+            "必须用 seccomp 加固 sandbox。",
+            "Prometheus exposition 格式会变得不兼容。",
+            "必须重写 gate chain 以处理 LLM stochasticity。",
+            "Harness 中没有任何组件改变；只替换 policy。"
+          ],
+          "explanation": "本课的核心是 harness 与 policy 无关。Seam 是 next_action / observe interface。LLM 在此接入，无须改动 gate、sandbox、ledger 或 spans。"
+        },
+        {
+          "question": "Demo 断言 agent 在少于 12 个 steps 内解决 fixture，确定性 policy 使用 5 个 steps。真实 LLM agent 可能会怎么做，harness 又如何处理？",
+          "options": [
+            "LLM 无法在此 harness 中运行。",
+            "LLM 也使用 5 个 steps；harness 不变。",
+            "Harness 会静默延长预算。",
+            "LLM 可能使用更多 steps；step_budget 会限制循环，未解决的运行会报告为 failure 并带有 halted_reason。"
+          ],
+          "explanation": "Step budget 是明确且确定的停止标准。游移不定的 LLM 会被限制，report 会准确说明停止原因。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/30-bpe-tokenizer-from-scratch": {
+      "sourceSha256": "787264d77077e2c4811a9e6c1991e642524475fd4d6da641797cafcdd25b22b7",
+      "questions": [
+        {
+          "question": "为什么 byte-level BPE tokenizer 从包含 256 个符号的 alphabet 开始？",
+          "options": [
+            "这是支持英语的最小 alphabet",
+            "它保证在学习任何 merge 前，任意 UTF-8 输入都能被表示",
+            "它不再需要存储 merge table",
+            "它与大多数 accelerators 上的 GPU warp size 一致"
+          ],
+          "explanation": "256 个原始 byte ids 覆盖所有可能的 UTF-8 输入。因为任何输入都能表示为 bytes 序列，所以永远不需要 unknown token。"
+        },
+        {
+          "question": "每个 BPE training step 会做什么？",
+          "options": [
+            "删除最不常见的 id，以缩小 vocabulary",
+            "训练一个小型 neural network 为 subwords 评分",
+            "随机拆分一个单词并为其分配新 id",
+            "统计 corpus 中相邻 symbol pairs，并合并最常见的一对"
+          ],
+          "explanation": "每一步都会在整个 corpus 中找出频率最高的相邻 pair，将其合并为新 symbol，并记录这次 merge。"
+        },
+        {
+          "question": "编码新文本时，按什么顺序应用 merges？",
+          "options": [
+            "按输入中的位置从左到右，不考虑 training rank",
+            "按 merge 在训练期间获得的 rank，最低 rank 优先",
+            "按 pair 的 bytes 依字母顺序排序",
+            "随机应用，直到没有 merge 可用"
+          ],
+          "explanation": "Inference 按 merges 的学习顺序应用它们。当多种 merge 都可用时，table 中最早的 merge 优先。"
+        },
+        {
+          "question": "当 allow_special 为 False 时，encoder 如何处理 special-token string？",
+          "options": [
+            "抛出错误",
+            "对该 string 的字面 bytes 进行编码",
+            "静默跳过该 string",
+            "将该 string 映射到其 reserved id"
+          ],
+          "explanation": "关闭 allow_special 后，类似 <|endoftext|> 的 string 会被视为原始 bytes，并像任何其他输入一样经过 merge loop。"
+        },
+        {
+          "question": "为什么 decoder 从不需要 unknown-token id？",
+          "options": [
+            "每个 learned token 都是两个 known tokens 的拼接，递归展开后会到达 single bytes",
+            "Encoder 在 decoding 前会移除 unknown tokens",
+            "Decoder 遇到 unknown ids 时总会返回空字符串",
+            "Model 在 sampling 时会拒绝 unknown ids"
+          ],
+          "explanation": "每个 id 要么解析为原始 byte，要么解析为两个先前已知的 ids。递归展开最终一定到达 bytes，而这些 bytes 可解码为 UTF-8。"
+        },
+        {
+          "question": "随着 target vocabulary 增大，固定句子的编码长度会如何变化？",
+          "options": [
+            "通常会缩短，因为更大的 vocabularies 能覆盖更多 subwords",
+            "会随机波动，因为 BPE 是非确定性的",
+            "保持不变，因为每个 id 都编码一个 byte",
+            "随 vocabulary size 线性增长"
+          ],
+          "explanation": "更大的 vocabularies 会学习更多 merges，因此常见 subwords 会折叠为单个 ids，编码序列随之缩短。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/31-tokenized-dataset-sliding-window": {
+      "sourceSha256": "05b77bb8ce7ef08eef2576689fa3d50cbb44a5f08e60790b05876c23d935f72b",
+      "questions": [
+        {
+          "question": "Causal LM training batch 的 shape contract 是什么？",
+          "options": [
+            "(B, T) input ids 和 (B, T) target ids，其中 target 是 input 左移一位后的结果",
+            "Vocabulary 上的 (B, V) one-hot vectors",
+            "对角线上放置 input ids 的 (B, T, T) attention masks",
+            "(B, 2) input id 与 label pairs"
+          ],
+          "explanation": "Causal LM training 读取 (B, T) input ids，并预测相同形状的 target ids，其中 target[t] = input[t+1]。"
+        },
+        {
+          "question": "长度为 N、stride 为 S 的 id stream 中，可以容纳多少个长度为 T+1 的 windows？",
+          "options": [
+            "max(0, 1 + (N - (T + 1)) // S)",
+            "N - T - S",
+            "(N - T) * S",
+            "N // (T + 1)"
+          ],
+          "explanation": "第一个 window 从 0 开始，后续 windows 从 S 的整数倍位置开始。最后一个 window 仍必须覆盖 T+1 个 ids。"
+        },
+        {
+          "question": "将 stride 减半会对 dataset 产生什么影响？",
+          "options": [
+            "每个 epoch 的 training examples 数量减半",
+            "消除连续 windows 之间的重叠",
+            "每个 epoch 的 training examples 数量大致翻倍",
+            "没有影响，因为 windows 从不重叠"
+          ],
+          "explanation": "更小的 stride 会产生更多重叠 windows，增加 example 数量和边界多样性，代价是每个 epoch 需要更多计算。"
+        },
+        {
+          "question": "为什么要向 DataLoader 传入显式的 torch.Generator？",
+          "options": [
+            "它使使用相同 seed 的各次运行具有确定的 shuffle 顺序",
+            "它不再需要 batch padding",
+            "它启用 multi-GPU training",
+            "它能加快 data loading"
+          ],
+          "explanation": "带 seed 的 generator 会复现相同的 shuffle。使用相同 seed 重新运行时，batches 的顺序相同，这是公平比较 hyperparameters 的必要条件。"
+        },
+        {
+          "question": "为什么 dataset 从每个大小为 T+1 的 window 返回 (input[:-1], input[1:])？",
+          "options": [
+            "它丢弃一个 id 以节省 memory",
+            "它从 input 中移除一个 special token",
+            "这是 PyTorch tensor indexing 的特性",
+            "它实现向后移动一位的 target，使 loss 衡量 next-token prediction"
+          ],
+          "explanation": "位置 t 的 target 是位置 t+1 的 input。将 window 切分为 [:-1] 和 [1:] 即可表达这一契约。"
+        },
+        {
+          "question": "为什么本课丢弃不完整的尾部 windows，而不对其 padding？",
+          "options": [
+            "丢弃后每个 example 都保持相同长度，因此不需要 loss mask",
+            "丢弃的数据会在下一个 epoch 恢复",
+            "Padding 会改变 vocabulary size",
+            "Model 不支持 padded tokens"
+          ],
+          "explanation": "按照构造方式，所有 examples 都恰好包含 T 个 tokens，因此 batch 是整齐的矩形 tensor，loss 可以无须 mask 地统一应用。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/32-token-positional-embeddings": {
+      "sourceSha256": "8a87c71ce156d8777a125c68dceb55d46812f26142eb4845b07eed7fc89bb5dd",
+      "questions": [
+        {
+          "question": "Embedding stage 接收 (B, T) ids 后会产生什么 shape？",
+          "options": [
+            "(B, T, D)，其中 D 是 model dimension",
+            "(B, V)",
+            "(B, T, V)，其中 V 是 vocabulary size",
+            "(B, T)"
+          ],
+          "explanation": "每个 id 被映射为一个 D-dimensional vector。Batch 保留 B 和 T，并增加新的 feature dimension D。"
+        },
+        {
+          "question": "本课如何组合 token embeddings 与 positional embeddings？",
+          "options": [
+            "通过额外的 linear projection",
+            "取逐元素 maximum",
+            "逐元素相加，并在 batch 上广播 position vector",
+            "沿 feature axis 拼接"
+          ],
+          "explanation": "形状为 (B, T, D) 和 (T, D) 的两个 tensors 相加。Broadcasting 会沿 batch axis 复制 positional table。"
+        },
+        {
+          "question": "SinusoidalPositionalEmbedding 会贡献多少 learnable parameters？",
+          "options": [
+            "max_context_length * d_model",
+            "Zero",
+            "max_context_length",
+            "d_model"
+          ],
+          "explanation": "Sinusoidal table 根据公式计算并存储为 buffer，不贡献任何 parameters。"
+        },
+        {
+          "question": "哪种 positional encoding 无法接受超过其构造上限的序列？",
+          "options": [
+            "Sinusoidal positional embedding",
+            "Neither",
+            "Both",
+            "Learned positional embedding"
+          ],
+          "explanation": "在本课实现中，两个 classes 都会在 forward 时强制执行 max_context_length。Learned 方案天然受 table 限制；这里的 sinusoidal 方案也受限，因为它使用预先构建的 table。"
+        },
+        {
+          "question": "为什么 sinusoidal 方案在相邻 feature pairs 上同时使用 sin 和 cos？",
+          "options": [
+            "使位置 p+k 的 vector 成为位置 p 的 vector 的线性函数",
+            "因为仅使用 cos 无法进行 backpropagation",
+            "因为仅使用 sin 不具有周期性",
+            "因为这样会让 parameter count 翻倍"
+          ],
+          "explanation": "在相同 wavelength 上配对 sin 和 cos，意味着位置移动 k 等价于一次 rotation，也就是 linear map。Attention 随后可以通过 linear projections 学习 relative offsets。"
+        },
+        {
+          "question": "为什么 embedding backward pass 只更新 batch 中出现过的 token table rows？",
+          "options": [
+            "根据 chain rule，未参与 forward pass 的 rows 会产生 zero gradient",
+            "Optimizer 会跳过从未见过的 rows",
+            "PyTorch 只为 non-zero entries 存储 gradients",
+            "Token ids 存储在 sparse data structure 中"
+          ],
+          "explanation": "没有参与任何 output 的 row 对 loss 的导数为零，因此该 step 中它的 gradient 也是零。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/33-multihead-self-attention": {
+      "sourceSha256": "87c7e678733c208a80bbcbfd2eb7c9e8ec7ac8e82521349f85d79c953941b00c",
+      "questions": [
+        {
+          "question": "为什么高效的 self-attention block 使用一个输出 3*D features 的 linear layer？",
+          "options": [
+            "它在数学上等价于三个 Linear(D, D) layers，并以一次 matmul 运行",
+            "它会减少 model parameter count",
+            "它强制 Q、K、V 之间共享 weights",
+            "它不再需要 causal mask"
+          ],
+          "explanation": "将三个 (D, D) projection matrices 堆叠成一个 (3D, D) matrix 会产生相同输出，但 forward pass 只需一次适合 accelerator 的 matmul。"
+        },
+        {
+          "question": "d_model、n_heads 与 d_head 之间是什么关系？",
+          "options": [
+            "d_head = d_model * n_heads",
+            "d_head = d_model + n_heads",
+            "d_head 与 d_model 无关",
+            "d_head = d_model // n_heads，且 d_model 必须能被 n_heads 整除"
+          ],
+          "explanation": "该 block 将 d_model 平均分配到各 heads。在构造时会强制执行约束 d_model % n_heads == 0。"
+        },
+        {
+          "question": "Scaled dot-product attention 的 scaling factor 使用什么值？",
+          "options": [
+            "sqrt(d_head)",
+            "sqrt(n_heads)",
+            "sqrt(d_model)",
+            "sqrt(seq_len)"
+          ],
+          "explanation": "Scores 除以 sqrt(d_head)，即 matmul 执行收缩的 head dimension。这样可在 d_head 增大时限制 scores 的方差。"
+        },
+        {
+          "question": "Causal mask 如何确保位置 t 不能关注位置 t+1？",
+          "options": [
+            "将未来位置的 keys 乘以零",
+            "在 softmax 前将对角线上方的 score entries 设置为 negative infinity",
+            "从 input 中移除未来 tokens",
+            "为未来使用不同的 attention head"
+          ],
+          "explanation": "将未来 entries 设置为 -inf，会迫使 softmax 为其分配 weight zero。过去和当前位置仍保留有效的 weight distribution。"
+        },
+        {
+          "question": "Block 合并 heads 后，为什么以 Linear(D, D) output projection 结束？",
+          "options": [
+            "使模型能够混合不同 heads 的信息",
+            "匹配模型的 vocabulary size",
+            "将 activations 归一化为 mean zero",
+            "autograd 跟踪 gradients 要求必须这样做"
+          ],
+          "explanation": "如果没有 output projection，各 head 的 outputs 只能在后续 layers 中组合。该 projection 让 block 能在当前 step 混合 heads。"
+        },
+        {
+          "question": "形状为 (B, H, T, T) 的 attention-weight matrix 能说明什么？",
+          "options": [
+            "对于每个 batch element 和每个 head，各 query position 关注哪些 key positions",
+            "Query 与 value vectors 之间的 cosine similarity",
+            "下一个 token 的 output logits",
+            "每个 head 有多少 parameters"
+          ],
+          "explanation": "每个 head 的 matrix 中，第 t 行是在 query position t 使用的 key positions 上的分布。检查它可以看出每个 head 关注哪里。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/34-transformer-block": {
+      "sourceSha256": "07143aebc5b5eb0b14e2234ce0709db30ab441988179de352181ec9fb9e83007",
+      "questions": [
+        {
+          "question": "单个 decoder transformer block 中包含哪两个 sublayers？",
+          "options": [
+            "Convolution 与 recurrent gate",
+            "Multi-head causal attention 和 position-wise MLP，二者各自包裹在 residual connection 中",
+            "RNN encoder 与 decoder",
+            "Embedding lookup 与 softmax"
+          ],
+          "explanation": "每个现代 decoder LLM block 都由 attention 加 MLP 构成，二者各有自己的 residual path 和 LayerNorm。"
+        },
+        {
+          "question": "在较深的网络中，pre-LN 与 post-LN 的关键区别是什么？",
+          "options": [
+            "Pre-LN 使用不同的 attention math",
+            "Pre-LN 只适用于 encoders",
+            "Pre-LN 不归一化 residual signal，使 gradients 能顺畅传播到 embedding；post-LN 把 norm 放在 residual add 后，这会在深层网络中缩小 gradients，因此需要 warmup",
+            "Post-LN 在 GPU 上更快"
+          ],
+          "explanation": "Pre-LN 在常见 learning rates 下无须 warmup 也能稳定训练；2017 年论文采用的是 post-LN，因此需要 warmup。"
+        },
+        {
+          "question": "Multi-head attention 中的 causal mask 有什么作用？",
+          "options": [
+            "随机丢弃 tokens",
+            "将 attention logits 的上三角设置为 negative infinity，使 token i 无法关注位置大于 i 的 tokens",
+            "归一化 attention scores",
+            "选取 batch 中最长的序列"
+          ],
+          "explanation": "忘记 causal mask 会训练出一个能够读取未来 tokens 的模型；该 mask 是强制因果性的唯一组件。"
+        },
+        {
+          "question": "为什么使用 fused QKV projection，而不是三个独立的 linears？",
+          "options": [
+            "它可以避免 softmax",
+            "它会改变 model expressivity",
+            "它会移除 residual",
+            "一个宽度为 3 倍 d_model 的 linear 将三次 kernel launches 和三次 matmuls 合并为一次，在所有 accelerators 上都更快，并与参考 GPT-2 实现一致"
+          ],
+          "explanation": "数学相同，但 kernels 更少；GPT-2、LLaMA 和 Mistral 的参考实现都采用 fused projection。"
+        },
+        {
+          "question": "Transformer block 中不应把 dropout 放在哪里？",
+          "options": [
+            "Residual identity path 本身，因为这会破坏使 gradient 能在深层网络中流动的 additive identity",
+            "Feed-forward expansion 内",
+            "Attention softmax output 上",
+            "第二个 MLP linear 后"
+          ],
+          "explanation": "Dropout 应放在 attention output 和 MLP residual update 上，绝不能放在 residual 的 identity branch 上。"
+        },
+        {
+          "question": "为什么要把 causal mask 注册为 buffer，而不是在每次 forward call 时分配？",
+          "options": [
+            "Buffers 只能在 GPU 上运行",
+            "Buffers 会被加密",
+            "Buffers 能提高数值精度",
+            "Mask 只取决于 maximum context length，因此在构造时分配一次、每次调用时切取 active window，可以避免长上下文中的 allocator hot spot"
+          ],
+          "explanation": "使用 register_buffer 分配一次，再在每次 forward 时切片；否则 mask 会成为每次调用都要承担的 allocation cost。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/86-constitutional-rules-engine": {
+      "sourceSha256": "207c7286b3eeee2b2a620d5fa25a9ebd30af7641bf2c5ee241d82a7d7390e0b4",
+      "questions": [
+        {
+          "question": "为什么要使用声明式 YAML constitution，而不是临时编写的代码检查？",
+          "options": [
+            "因为 YAML 支持 anchors",
+            "因为 YAML 的解析速度比 Python 快",
+            "因为 YAML 中的 rules 可由非工程人员审查、存放在 version control 中，并且无须修改代码即可替换",
+            "因为标准库更偏好 YAML"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "每条 rule 至少必须具备哪些字段？",
+          "options": [
+            "name, regex, fix",
+            "id, owner, timestamp",
+            "predicate, severity, owner",
+            "name, severity, must, explanation"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Engine 如何组合 predicates？",
+          "options": [
+            "每条 rule 只能使用单个 contains_regex",
+            "通过将 confidence scores 相乘",
+            "通过 neural classifier",
+            "通过 all_of、any_of 和 not_ 递归包装 atomic predicates"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "applies_when 的作用是什么？",
+          "options": [
+            "覆盖 severity",
+            "选择 fixer operation",
+            "为 must predicate 设置 gate，使不适用的 rules 被记录为 not_applicable，而不是 violation",
+            "它始终求值为 true"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Fixer 会做什么？",
+          "options": [
+            "调用 remote model 修复文本",
+            "应用每条 rule 的声明式 fix（append、prepend、replace_regex），生成修订后的文本",
+            "重写 rules file",
+            "根据 fix 计算 severity"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 demo 会在 fixer 运行后再次运行 engine？",
+          "options": [
+            "因为第一次 pass 只是 dry run",
+            "为了重新加载 constitution",
+            "为了增大 report size",
+            "为了验证修订后的文本符合 rules，并呈现 fixer 无法在本地修复的任何 rule"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/87-end-to-end-safety-gate": {
+      "sourceSha256": "9e222409e1f5b2239a1db09a21ef779b9d9ca1fbaf2be5d7f70d17c69199fb78",
+      "questions": [
+        {
+          "question": "三个 checkpoints 位于 request lifecycle 的哪些位置？",
+          "options": [
+            "三个都在调用模型前运行",
+            "Pre-gen 在调用模型前检查 prompt，during-gen 过滤 stream，post-gen 检查完整 output",
+            "只有 post-gen 运行；pre-gen 和 during-gen 都是 aliases",
+            "三个都在模型完成后运行"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "During-gen filtering 的目标是什么？",
+          "options": [
+            "提高 token throughput",
+            "缓冲 chunks，并在已知有害 continuation 出现时提前终止 stream，不让用户看到它",
+            "用 refusal 替换 prompt",
+            "将 output 翻译成另一种语言"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Aggregator 如何决定最终 action？",
+          "options": [
+            "只查看 rules engine",
+            "取 detector、token-filter、classifier 和 rules signals 中的最高 severity，并将其映射为 block、redact、warn 或 allow",
+            "对每个 signal 的 confidences 求平均值",
+            "再次调用模型"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 gate 会为每个 request 发出结构化 RequestTrace？",
+          "options": [
+            "为了降低系统速度",
+            "为了替代 logging",
+            "为 reviewer 提供逐 checkpoint 的 audit trail，使任一 layer 中的 regression 都能追溯到正确的 module",
+            "为了将 trace 复制到 prompt 中"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Pre-gen confidence 超过 block threshold 时会发生什么？",
+          "options": [
+            "为保证完整性，仍会调用模型",
+            "Gate 抛出异常",
+            "Gate 返回 policy refusal，并完全跳过 during-gen 和 post-gen",
+            "Gate 降低 threshold 并重试"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 demo 会有意让一些 encoding-trick prompts 到达 during-gen？",
+          "options": [
+            "因为 encoding tricks 不是真正的 attacks",
+            "因为 input pipeline 不一定能及时将其归一化；during-gen filter 是 defense in depth，可捕获泄漏的 continuation",
+            "因为 rules engine 会处理 encoding",
+            "因为模型无论如何都会拒绝它们"
+          ],
+          "explanation": ""
+        }
+      ]
+    }
+  }
+}

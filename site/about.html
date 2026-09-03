@@ -101,6 +101,7 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </button>
+      <div id="langPicker"></div>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
         <span class="theme-icon" id="themeIcon">N</span>
       </button>
@@ -112,7 +113,7 @@
       <div class="about-eyebrow">About</div>
       <h1>About this project</h1>
 
-      <p class="lede">AI Engineering from Scratch is a free, open-source curriculum that builds every core AI algorithm by hand. The curriculum spans <span id="aboutLessonCount">every published lesson</span> across 20 phases, from linear algebra to autonomous agents, in Python, TypeScript, Rust, and Julia.</p>
+      <p class="lede" id="aboutCurriculumSummary">AI Engineering from Scratch is a free, open-source curriculum that builds every core AI algorithm by hand. The core curriculum has 20 phases and 523 lessons. Beyond it are 12 focused paths and 4 Claude certification tracks with 33 certification lessons.</p>
 
       <h2>Why it exists</h2>
       <p>Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a framework demo somewhere else. You can ship a chatbot without being able to explain its loss curve, or wire a tool to an agent without knowing what attention does inside the model calling it.</p>
@@ -179,16 +180,20 @@
 
       updateIcon();
 
+      function populateCurriculumSummary() {
+        var summary = typeof CURRICULUM_SUMMARY !== 'undefined' ? CURRICULUM_SUMMARY : null;
+        var target = document.getElementById('aboutCurriculumSummary');
+        if (!summary || !target) return;
+        var source = 'AI Engineering from Scratch is a free, open-source curriculum that builds every core AI algorithm by hand. The core curriculum has {corePhases} phases and {coreLessons} lessons. Beyond it are {focusedLearningPaths} focused paths and {certificationTracks} Claude certification tracks with {certificationLessons} certification lessons.';
+        var expanded = source.replace(/\{([A-Za-z0-9_]+)\}/g, function (token, name) {
+          return Object.prototype.hasOwnProperty.call(summary, name) ? summary[name] : token;
+        });
+        target.textContent = window.AIFS_I18n ? window.AIFS_I18n.t(source, summary) : expanded;
+      }
+
       document.addEventListener('DOMContentLoaded', function () {
         updateIcon();
-
-        var lessonCount = document.getElementById('aboutLessonCount');
-        if (lessonCount && typeof PHASES !== 'undefined' && Array.isArray(PHASES)) {
-          var totalLessons = PHASES.reduce(function (total, phase) {
-            return total + (Array.isArray(phase.lessons) ? phase.lessons.length : 0);
-          }, 0);
-          if (totalLessons > 0) lessonCount.textContent = totalLessons + ' lessons';
-        }
+        setTimeout(populateCurriculumSummary, 0);
 
         var btn = document.getElementById('themeToggle');
         if (btn) {
@@ -200,12 +205,19 @@
           });
         }
       });
+      window.addEventListener('aifs:language-change', function () {
+        setTimeout(populateCurriculumSummary, 0);
+      });
     })();
   </script>
-  <script src="data.js?v=20260821c"></script>
-  <script src="progress.js?v=20260822a"></script>
-  <script src="header.js?v=20260829b" defer></script>
-  <script src="cmdpalette.js?v=20260821a" defer></script>
+  <script src="langs.js?v=fb2840c8aa0a"></script>
+  <script src="i18n-data.js?v=7e2dd86ccaad"></script>
+  <script src="ui-i18n.js?v=ed1be68f31e1"></script>
+  <script src="lang-picker.js?v=853069504587" defer></script>
+  <script src="data.js?v=5c1c014aea05"></script>
+  <script src="progress.js?v=20260828a"></script>
+  <script src="header.js?v=191a713c8dc5" defer></script>
+  <script src="cmdpalette.js?v=42dbbdb18dee" defer></script>
   <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
 </body>
 </html>

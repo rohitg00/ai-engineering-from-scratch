@@ -4,7 +4,7 @@ Use this template when creating a new lesson. Copy the folder structure and fill
 
 ## Folder Structure
 
-```
+```text
 NN-lesson-name/
 ├── code/
 │   ├── main.py            (primary implementation)
@@ -96,7 +96,8 @@ Include it here and save it in the outputs/ folder.]
 ## Code File Guidelines
 
 - Code must run without errors
-- No comments — code should be self-explanatory
+- Start every `code/main.*` file with the required 4-6 line lesson/source header
+- Beyond that header, keep comments purposeful and prefer self-explanatory code
 - Use the language that fits best for the topic
 - Include a `requirements.txt` or equivalent if there are dependencies
 - Start simple, build up complexity

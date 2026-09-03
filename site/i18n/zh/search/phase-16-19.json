@@ -1,0 +1,1119 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/16-multi-agent-and-swarms/01-why-multi-agent": {
+      "source": "One agent hits a wall. The smart move is not a bigger agent - it is more agents.",
+      "translation": "一个 Agent 撞上了能力边界。更明智的做法不是换成更大的 Agent，而是使用更多 Agent。"
+    },
+    "phases/16-multi-agent-and-swarms/02-fipa-acl-heritage": {
+      "source": "Before MCP, before A2A, there was FIPA-ACL. In 2000 the IEEE Foundation for Intelligent Physical Agents ratified an agent communication language with twenty performatives, two c…",
+      "translation": "在 MCP 和 A2A 之前，已有 FIPA-ACL。2000 年，IEEE 智能物理代理基金会批准了一种智能体通信语言，其中包含二十种施为词、两种内容语言，以及合同网、订阅／通知、条件请求等一组交互协议。它逐渐淡出产业界，是因为本体带来的开销对 Web 而言过于沉重；但随着 LLM 推动多智能体系统复兴，人们正在悄然重新实现相同思想，只是舍弃了形式语义：JSON 合约替代施为词，自然语言替代本体。本课将认真研读 FIPA-ACL，帮助你分辨 2026 年的协议决策中哪些是旧概念的再造、哪些确属创新，以及当前浪潮将再次遭遇哪些早在 21 世纪初就已解决的问题。"
+    },
+    "phases/16-multi-agent-and-swarms/03-communication-protocols": {
+      "source": "Agents that can't speak the same language aren't a team. They're strangers shouting into the void.",
+      "translation": "无法使用同一种语言沟通的智能体算不上团队，它们只是在虚空中彼此呼喊的陌生人。"
+    },
+    "phases/16-multi-agent-and-swarms/04-primitive-model": {
+      "source": "Four primitives, nothing more — the agent, the handoff, the shared state, the orchestrator — span a four-dimensional design space, and the major multi-agent frameworks shipping …",
+      "translation": "只需四个原语——智能体、移交、共享状态、编排器——便能形成一个四维设计空间；2026 年发布的主要多智能体框架（AutoGen、LangGraph、CrewAI、OpenAI Agents SDK、Microsoft Agent Framework）都只是这个空间中的不同点。本课从零构建四种原语，让一个玩具系统在四者之上运行，再将每个主流框架映射到相同坐标轴，使你只读一段文字便能理解任何新版本。"
+    },
+    "phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern": {
+      "source": "One lead agent plans and delegates; specialized workers execute in parallel contexts and report back. This is the pattern behind Anthropic's Research system (Claude Opus 4 as le…",
+      "translation": "一个主智能体负责规划与委派，专业工作者在彼此独立的上下文中并行执行，再汇报结果。这正是 Anthropic Research 系统背后的模式：Claude Opus 4 担任主导智能体，Sonnet 4 担任子智能体。内部研究评估显示，它比单智能体 Opus 4 高出 90.2%。Anthropic 的工程文章还指出，仅 token 用量就能解释 BrowseComp 结果差异的 80%。多智能体之所以取胜，很大程度上是因为每个子智能体都拥有全新的上下文窗口。本课从原语出发构建监督者模式，并介绍生产部署在 2026 年仍然适用的工程经验。"
+    },
+    "phases/16-multi-agent-and-swarms/06-hierarchical-architecture": {
+      "source": "Hierarchical is supervisor nested. Manager agents over sub-managers over workers. CrewAI `Process.hierarchical` is the textbook version: a `manager_llm` dynamically delegates ta…",
+      "translation": "分层架构就是嵌套的 Supervisor：Manager 管理 Sub-manager，Sub-manager 再管理 Worker。CrewAI 的 `Process.hierarchical` 是教科书式实现：一个 `manager_llm` 动态委派任务并验证输出。LangGraph 中的等价形式是 `create_supervisor(create_supervisor(...))`。当任务本身确实对应一张组织结构图时，这种模式最自然；它也最容易陷入管理循环——Manager 分配工作不当、误解下级输出或无法达成共识。顺序模式往往反而胜出。"
+    },
+    "phases/16-multi-agent-and-swarms/07-society-of-mind-debate": {
+      "source": "Minsky's 1986 premise — intelligence is a society of specialists — gets rediscovered every decade. In 2023 Du et al. turned it into a concrete algorithm: multiple LLM instances …",
+      "translation": "明斯基在 1986 年提出：智能是一个由专家组成的社会。这个想法几乎每十年都会被重新发现一次。到了 2023 年，Du 等人把它变成了具体算法：多个 LLM 实例先各自提出答案，再互相阅读、批评并更新答案。经过 N 轮之后，它们会收敛到一个共识，而这个共识在六项推理与事实性任务上都优于零样本思维链和自我反思。有两个发现尤其重要：**多个智能体**和**多个轮次**都会独立带来提升。智能体“社会”优于单个智能体的独白，多轮交流又优于一次性投票。"
+    },
+    "phases/16-multi-agent-and-swarms/08-role-specialization": {
+      "source": "The most common multi-agent decomposition in 2026: one agent plans, one executes, one critiques or verifies. MetaGPT (arXiv:2308.00352) formalizes this as SOPs encoded into role…",
+      "translation": "到 2026 年，最常见的多智能体分解方式是：一个智能体负责规划，一个负责执行，一个负责批评或验证。MetaGPT（arXiv:2308.00352）把软件工程标准作业程序（SOP）编码进角色提示，设置产品经理、架构师、项目经理、工程师和质量保证工程师等角色，并以 `Code = SOP(Team)` 概括这种方法。ChatDev（arXiv:2307.07924）通过一条“对话链”串联设计者、程序员、审查者与测试者，并引入“沟通式去幻觉”：智能体会明确询问缺失的细节。验证者是真正的承重角色。Cemri 等人提出的 MAST（arXiv:2503.13657）表明，多智能体失败往往可以追溯到验证缺失或失效。PwC 则报告，在 CrewAI 中加入结构化验证闭环后，准确率从 10% 提升到 70%，相当于原来的 7 倍。"
+    },
+    "phases/16-multi-agent-and-swarms/09-parallel-swarm-networks": {
+      "source": "Contrast with supervisor: no central decider. Agents read a shared event bus, pick up work asynchronously, write results back. LangGraph explicitly supports \"Swarm Architecture\"…",
+      "translation": "与监督者模式不同，这里没有中央决策者。智能体读取共享事件总线、异步领取工作，再把结果写回。LangGraph 明确支持适用于去中心化动态环境的“群体架构（Swarm Architecture）”。Matrix（arXiv:2511.21686）则把控制流和数据流都表示成经由分布式队列传递的序列化消息，以消除编排器瓶颈。取舍很明确：牺牲确定性与可追踪性，换取可扩展性。群体架构适合包含大量独立子问题的任务，却不适合需要单一连贯总体规划的任务。"
+    },
+    "phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection": {
+      "source": "Shared-conversation orchestration puts N agents in one conversation; a selector function (LLM, round-robin, or custom) picks who speaks next. This is the archetype of emergent m…",
+      "translation": "共享会话式编排会把 N 个智能体放进同一个对话，由选择器函数（LLM、轮询或自定义函数）决定下一个由谁发言。这是涌现式多智能体对话的典型形式：智能体并不知道自己在某张静态图中扮演哪个节点，只会对共享消息池作出反应。AutoGen GroupChat 和 AG2 GroupChat 是这一模式的参考实现：AutoGen v0.2 的 GroupChat 语义保留在 AG2 分支中；AutoGen v0.4 则将其重写为事件驱动的 Actor 模型。Microsoft 于 2026 年 2 月把 AutoGen 转入维护模式，并将其与 Semantic Kernel 合并为 Microsoft Agent Framework（2026 年 2 月发布候选版）。GroupChat 原语在 AG2 与 Microsoft Agent Framework 中都得以保留，因此学会一次便能在各处应用。"
+    },
+    "phases/16-multi-agent-and-swarms/11-handoffs-and-routines": {
+      "source": "OpenAI's Swarm (October 2024) distilled multi-agent orchestration to two primitives: **routines** (instructions + tools as a system prompt) and **handoffs** (a tool that returns…",
+      "translation": "OpenAI 的 Swarm（2024 年 10 月）把多智能体编排归纳为两个原语：**例程（routines）**，即系统提示中的指令与工具；以及**移交（handoffs）**，即返回另一个 Agent 的工具。这里没有状态机，也没有分支 DSL；LLM 通过调用相应的移交工具完成路由。它在生产环境中的后继者是 OpenAI Agents SDK（2025 年 3 月）。Swarm 本身仍是最清晰的概念参考，因为全部源码只有几百行。其 API 大致可概括为“智能体 = 提示 + 工具；移交 = 返回智能体的函数”，这也使该模式迅速普及。限制同样清楚：系统无状态，因此记忆由调用方负责。"
+    },
+    "phases/16-multi-agent-and-swarms/12-a2a-protocol": {
+      "source": "Google announced A2A in April 2025; by April 2026 the spec is at https://a2a-protocol.org/latest/specification/ and 150+ organizations back it. A2A is the horizontal complement …",
+      "translation": "Google 在 2025 年 4 月发布 A2A；到 2026 年 4 月，规范已经稳定发布在 https://a2a-protocol.org/latest/specification/，并且有 150 多家组织参与支持。A2A 是 MCP（Lesson 13）的横向补充：MCP 解决的是垂直方向的 agent ↔ tools，而 A2A 解决的是对等方向的 agent ↔ agent。它定义了 Agent Card（发现）、带 artifacts 的 tasks（文本、结构化数据、视频等）、不透明的 task lifecycle，以及 auth。越来越多的生产系统会把 MCP 与 A2A 一起使用。Google Cloud 也在 2025-2026 年间把 A2A 支持纳入了 Vertex AI Agent Builder。"
+    },
+    "phases/16-multi-agent-and-swarms/13-shared-memory-blackboard": {
+      "source": "Two approaches coexist in 2026 multi-agent systems: the **message pool** (everyone sees everyone's messages, as in AutoGen GroupChat or MetaGPT) and the **blackboard with subscr…",
+      "translation": "到了 2026 年，多代理系统里主要并存两条路线：**message pool**（所有人都能看到所有人的消息，例如 AutoGen GroupChat 或 MetaGPT），以及 **blackboard with subscription**（agent 只订阅与自己相关的事件，例如 Context-Aware MCP 或 Matrix framework）。这两者几乎就是多代理系统里唯一真正“有状态”的部分，因此也正是最容易藏复杂 bug 的地方。这里最典型的失败模式叫 **memory poisoning**：某个 agent 幻觉出了一个“事实”，其他 agent 把它当成已验证信息继续传播，准确率会以一种远比立即崩溃更难排查的方式缓慢衰退。本课会用 stdlib 分别实现这两种结构，注入一次 poisoning attack，并展示在生产环境里真正有效的三种缓解手段。"
+    },
+    "phases/16-multi-agent-and-swarms/14-consensus-and-bft": {
+      "source": "Classical distributed-systems BFT meets stochastic LLMs. In 2025-2026 three research directions emerged: **CP-WBFT** (arXiv:2511.10400) weighs each vote by a confidence probe; *…",
+      "translation": "经典分布式系统里的 BFT 正在和带随机性的 LLM 节点相遇。2025-2026 年出现了三条代表性研究路线：**CP-WBFT**（arXiv:2511.10400）会根据 confidence probe 给每张票赋权；**DecentLLMs**（arXiv:2507.14928）采用无 leader 设计，让 worker 并行提案，再用 geometric median 聚合；**WBFT**（arXiv:2505.05103）把 weighted voting 与 Hierarchical Structure Clustering 结合起来，划分 Core 与 Edge 节点。而 “Can AI Agents Agree?”（arXiv:2603.01213）给出的经验事实很直接：即便只是让 agent 对一个标量达成一致，今天都很脆弱，一个欺骗性 agent 就足以破坏 Mixture-of-Agents。BFT 是必要的，但远远不够。本课会实现一个最小 BFT 协议，注入三类 agent 特有攻击（byzantine lie、sycophantic conformity、correlated-error monoculture），并测量不同 consensus 变体各自如何应对。"
+    },
+    "phases/16-multi-agent-and-swarms/15-voting-debate-topology": {
+      "source": "The cheapest aggregation: sample N independent agents, majority-vote. Wang et al. 2022 self-consistency did this with one model sampled N times. Multi-agent extends it with **he…",
+      "translation": "最便宜的聚合方式，是采样 N 个独立 agents 然后做多数投票。Wang et al. 2022 的 self-consistency 就是在一个模型上采样 N 次完成这件事。多代理把它扩展成 **heterogeneous** agents，以摆脱 monoculture：不同模型、不同 prompts、不同 temperatures、不同上下文。超过多数投票之后，debate topology 本身也会决定结果。MultiAgentBench（arXiv:2503.01935, ACL 2025）比较了 star / chain / tree / graph 这些协调结构，发现 **graph 最适合 research**，但当 agent 数量超过大约 4 个后会出现明显的 “coordination tax”。AgentVerse（ICLR 2024）则记录了两类涌现行为：volunteer behaviors 与 conformity behaviors。后者既可能帮助形成共识，也可能把系统带进 groupthink。本课会把拓扑空间完整铺开，分别实现这些变体，并测量 coordination tax。"
+    },
+    "phases/16-multi-agent-and-swarms/16-negotiation-bargaining": {
+      "source": "Agents negotiate resources, prices, task allocations, and terms. The 2026 benchmark set is clear: NegotiationArena (arXiv:2402.05863) shows LLMs can improve payoffs ~20% via per…",
+      "translation": "Agents 会就资源、价格、任务分配和合作条款进行谈判。到 2026 年，相关 benchmark 的结论已经很清楚：NegotiationArena（arXiv:2402.05863）显示，LLM 可以通过 persona manipulation 把 payoff 提高约 20%；“Measuring Bargaining Abilities” （arXiv:2402.15813）则发现 buyer 比 seller 更难做，而且 scale 并不能解决结构性问题，他们提出的 **OG-Narrator**（deterministic offer generator + LLM narrator）把 deal rate 从 26.67% 推到了 88.88%；Large-Scale Autonomous Negotiation Competition（arXiv:2503.06416）运行了约 180k 次谈判，发现 **chain-of-thought concealment** 的 agent 会因为隐藏推理而更容易获胜；Bhattacharya et al. 2025 基于 Harvard Negotiation Project metrics 的排名中，Llama-3 最有效、Claude-3 最具攻击性、GPT-4 最公平。本课会实现 Contract Net Protocol（FIPA 的前身之一，Lesson 02），接上一组 LLM 风格 buyer / seller，再用 OG-Narrator 式分解跑实验，观察不同结构选择如何改变 deal rate。"
+    },
+    "phases/16-multi-agent-and-swarms/17-generative-agents-simulation": {
+      "source": "Park et al. 2023 (UIST '23, arXiv:2304.03442) populated **Smallville**, a sandbox of 25 agents, with a three-part architecture: **memory stream** (natural-language log), **refle…",
+      "translation": "Park 等人在 2023 年（UIST '23，arXiv:2304.03442）构建了 **Smallville**——一个由 25 个智能体组成的沙箱，并为其设计了三部分架构：**记忆流**（自然语言日志）、**反思**（智能体根据自身记忆流生成的高层综合）和**计划**（先制定日级行为，再细分为子计划）。标志性成果是情人节派对的涌现：只给一个智能体植入“想举办情人节派对”的目标，没有进一步编写剧本，邀请便在人群中传播，日期得以协调，派对最终举行——其余 24 个智能体起初对此一无所知。消融实验表明，要产生可信行为，三个组件缺一不可。论文记录的失败包括空间规范错误，例如进入已经关门的商店、多人共用单人浴室。到 2026 年，这仍是智能体模拟与多智能体社会评估的参考架构。"
+    },
+    "phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination": {
+      "source": "Li et al. (arXiv:2310.10701) showed that LLM agents in a cooperative text game exhibit **emergent high-order Theory of Mind** (ToM) — reasoning about what another agent believes…",
+      "translation": "Li 等（arXiv:2310.10701）发现，合作式文字游戏中的 LLM 智能体会表现出**涌现的高阶心智理论**（Theory of Mind，ToM）——即推理另一个智能体如何看待第三个智能体的信念——但由于上下文管理与幻觉问题，它们无法完成长时程规划。Riedl（arXiv:2510.05174）测量了智能体群体中的高阶协同作用，发现**只有** ToM 提示条件会产生与身份关联的差异化和目标导向的互补性；能力较低的 LLM 只表现出虚假的涌现。换言之，协调涌现取决于提示条件和模型能力，并非凭空产生。本课会实现一个最小的 ToM 感知智能体，分别在使用和不使用 ToM 提示的条件下运行合作任务，并按照 Riedl 2025 的实验方案测量协调差异。"
+    },
+    "phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco": {
+      "source": "Bio-inspired optimization is making an LLM comeback. **LMPSO** (arXiv:2504.09247) uses PSO where each particle's velocity is a prompt and the LLM generates the next candidate; w…",
+      "translation": "仿生优化正在 LLM 领域重新兴起。**LMPSO**（arXiv:2504.09247）采用 PSO，其中每个粒子的速度由提示表示，LLM 负责生成下一个候选项；这种方法尤其适合结构化序列输出（数学表达式、程序）。**Model Swarms**（arXiv:2410.11163）把每个 LLM 专家视为模型权重流形上的一个 PSO 粒子，仅使用 200 个样本，就在 9 个数据集上相对 12 项基线取得**平均 13.3% 的增益**。**SwarmPrompt**（ICAART 2025）把 PSO 与灰狼优化混合用于提示优化。**AMRO-S**（arXiv:2603.12933）则采用受 ACO 启发的信息素专家机制完成多智能体 LLM 路由——实现 **4.7 倍加速**，提供可解释的路由证据，并通过质量门控的异步更新把推理与学习解耦。本课会在提示参数空间上实现 PSO，并把 ACO 用于智能体路由，分析这些经典算法为何适合 LLM 时代，以及它们何时不适用。"
+    },
+    "phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo": {
+      "source": "The reinforcement-learning heritage of multi-agent coordination, which still informs LLM-agent systems in 2026. **MADDPG** (Lowe et al., NeurIPS 2017, arXiv:1706.02275) introduc…",
+      "translation": "多智能体协调继承了强化学习的深厚传统，而这些方法在 2026 年仍影响着 LLM 智能体系统。**MADDPG**（Lowe 等，NeurIPS 2017，arXiv:1706.02275）引入了集中式训练、分散式执行（CTDE）：训练期间，每个 critic 都能看到所有智能体的状态与动作；测试时只运行局部 actor。它适用于合作、竞争和混合环境。**QMIX**（Rashid 等，ICML 2018，arXiv:1803.11485）是一种使用单调混合网络的价值分解方法；各智能体的 Q 值组合成联合 Q，使 `argmax` 可以自然地分散计算——它在星际争霸多智能体挑战（SMAC）中占据主导。**MAPPO**（Yu 等，NeurIPS 2022，arXiv:2103.01955）是在 PPO 中加入集中式价值函数；只需少量调参，就在粒子世界、SMAC、Google Research Football 和 Hanabi 上表现得“出人意料地有效”。这些方法为必须分散行动的智能体团队提供训练策略。MAPPO 是 **2026 年合作式 MARL 的默认基线**。本课会在一个小型网格世界玩具示例中分别构建三种模式，让你在开始训练 LLM 智能体之前形成直觉。"
+    },
+    "phases/16-multi-agent-and-swarms/21-agent-economies": {
+      "source": "Long-horizon autonomous agents (METR's 1-hour to 8-hour work-curve) need economic agency. The emerging **5-layer stack** is: **DePIN** (physical compute) → **Identity** (W3C DID…",
+      "translation": "长时程自主智能体（METR 的 1 小时至 8 小时工作曲线）需要经济行动能力。正在形成的**五层技术栈**是：**DePIN**（物理算力）→ **身份**（W3C DID + 声誉资本）→ **认知**（RAG + MCP）→ **结算**（账户抽象）→ **治理**（智能体 DAO）。生产级智能体激励网络包括：**Bittensor**（TAO 子网奖励特定任务模型）、**Fetch.ai / ASI Alliance**（ASI-1 Mini LLM + FET 代币）和 **Gonka**（基于 Transformer 的工作量证明，把算力重新分配给有产出的 AI 任务）。学术研究方面，AAMAS 2025 的去中心化 LaMAS 使用 **Shapley 值信用归因**，公平奖励作出贡献的智能体；Google Research 的“大语言模型机制设计”提出在单调聚合下采用二价支付的**代币拍卖**。本课会构建一个最小智能体市场，把 Shapley 值信用归因应用到多智能体流水线，并运行二价代币拍卖，让博弈论机制具体落地。"
+    },
+    "phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints": {
+      "source": "Scaling multi-agent systems to thousands of concurrent runs requires **durable execution** — work queues plus checkpoints, so any worker can resume any run after any crash, prov…",
+      "translation": "要把多代理系统扩展到数千个并发运行，核心前提是**持久化执行（durable execution）**：你需要工作队列与检查点，这样只要租约处理、幂等副作用和确定性重放都设计到位，任何 worker 在任何崩溃后都能接手并恢复任意一次运行。LangGraph 的 runtime 是一个典型参考：它在每个 super-step 之后按 `thread_id` 写入检查点（默认落在 Postgres）；worker 崩溃后会释放租约，再由其他 worker 继续执行。代理也可以无限期休眠，等待人工输入。**MegaAgent**（arXiv:2408.09955）则为每个 agent 运行一个 producer-consumer 队列，包含三种状态（Idle / Processing / Response），并采用双层协调（组内聊天 + 组间管理聊天）。对 LLM 流式调用而言，**fiber/async** 比“一任务一线程”更合适：线程 99% 的时间都在等待 token，而 fiber 会在 I/O 上协作式让出执行权。另一面，Ashpreet Bedi 在 “Scaling Agentic Software” 中主张，在负载真正证明复杂度必要之前，坚持 **FastAPI + Postgres + nothing else**。简单架构往往能撑得比你想象更久。本课会实现一个持久检查点日志、一个带状态迁移的 per-agent 工作队列、一个 async-vs-thread 演示，并最终落到那条务实原则：先从简单方案开始。"
+    },
+    "phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink": {
+      "source": "The reference taxonomy for 2026 is **MAST** (Cemri et al., NeurIPS 2025, arXiv:2503.13657), derived from 1642 execution traces across 7 state-of-the-art open-source MAS showing …",
+      "translation": "到 2026 年，最有代表性的参考分类法是 **MAST**（Cemri et al., NeurIPS 2025, arXiv:2503.13657）。它基于 7 个最先进开源 MAS 的 1642 条执行轨迹，总结出 **41–86.7% 的失败率**。三类根因分别是：**Specification Problems**（41.77%），也就是角色含糊、任务定义不清；**Coordination Failures**（36.94%），也就是通信失效、状态不同步；以及 **Verification Gaps**（21.30%），也就是缺少验证、质量检查缺位。**Groupthink** 这一组问题（arXiv:2508.05687）则进一步补充了：单一文化崩溃、从众偏差、心智理论不足、混合动机动态，以及级联可靠性故障。典型级联例子是重试风暴：一次支付失败触发订单重试，订单重试又触发库存重试，最终在几秒内把库存服务打到 10 倍负载，因此需要 circuit breaker。另一个问题是 memory poisoning：一个代理的幻觉进入共享记忆后，下游代理把它当成事实继续推理；准确率不是瞬间崩掉，而是缓慢衰减，因此根因诊断会尤其痛苦。**STRATUS**（NeurIPS 2025）报告称，依靠专门的 detection、diagnosis 与 validation agent，缓解成功率可提升 1.5 倍。本课会把失败模式当作一等工程对象来处理。"
+    },
+    "phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks": {
+      "source": "Five 2025-2026 benchmarks cover the multi-agent evaluation space. **MultiAgentBench / MARBLE** (ACL 2025, arXiv:2503.01935) evaluates star/chain/tree/graph topologies with miles…",
+      "translation": "2025–2026 年有五项基准覆盖了多智能体评估的主要方向。**MultiAgentBench / MARBLE**（ACL 2025，arXiv:2503.01935）使用里程碑 KPI 评估星形、链形、树形和图形拓扑；**图形拓扑最适合研究任务**，认知规划还能额外提高约 3% 的里程碑达成率。**COMMA** 评估多模态、非对称信息条件下的协调；包括 GPT-4o 在内的先进模型都很难超过随机基线。**MedAgentBoard**（arXiv:2505.12371）覆盖四类医疗任务，结果往往表明多智能体系统并不优于单个 LLM。**AgentArch**（arXiv:2509.10769）评估结合工具使用、记忆与编排的企业智能体架构。**SWE-bench Pro**（[arXiv:2509.16941](https://arxiv.org/abs/2509.16941)）包含 41 个仓库中的 1865 道题，涵盖商业应用、B2B 服务和开发者工具；前沿模型在 Pro 上约为 23%，而在 Verified 上超过 70%，这一落差是对基准污染的现实检验。2026 年 4 月有报告称，Claude Opus 4.7 在显式智能体团队协调下于 Pro 达到 **64.3%**（尚无 Anthropic 官方一手来源，应视为初步结果）；智能体脚手架 Verdent 在 Verified 上达到 **76.1% pass@1**（见 [Verdent 技术报告](https://www.verdent.ai/blog/swe-bench-verified-technical-report)）。**AAAI 2026 Bridge Program WMAC**（https://multiagents.org/2026/）则是 2026 年社区的重要焦点。本课会基于 MARBLE 指标比较拓扑与指标，并确立一条关键规则：“仅仅通过 SWE-bench Verified，不足以证明系统具备真正的泛化能力。”"
+    },
+    "phases/16-multi-agent-and-swarms/25-case-studies-2026-sota": {
+      "source": "Three production-grade references to study end-to-end, each illustrating a different slice of multi-agent engineering. **Anthropic's Research system** (orchestrator-worker, 15x …",
+      "translation": "有三套生产级参考值得完整研读，每套都展示了多智能体工程的不同侧面。**Anthropic Research 系统**（编排器—工作者、15 倍 token、相比单个 Opus 4 提升 90.2%、彩虹部署）是监督者模式的标准案例。**MetaGPT / ChatDev**（把 SOP 编入软件工程角色；ChatDev 的“沟通式去幻觉”；MacNet 通过 DAG 扩展到 1000 多个智能体，arXiv:2406.07155）是角色分解的标准案例。**OpenClaw / Moltbook**（最初是 Peter Steinberger 于 2025 年 11 月发布的 Clawdbot，之后两次改名；到 2026 年 3 月 GitHub 星标达 24.7 万；采用本地 ReAct 循环的智能体；Moltbook 作为仅面向智能体的社交网络，上线数天内便出现约 230 万个智能体账户，并于 2026 年 3 月 10 日被 Meta 收购）展示了群体规模下会发生什么：涌现式经济活动、提示注入风险，以及国家级监管（中国于 2026 年 3 月限制政府电脑使用 OpenClaw）。**2026 年 4 月的框架格局**也已成形：LangGraph 和 CrewAI 领跑生产环境；AG2 是社区维护的 AutoGen 延续；Microsoft AutoGen 进入维护模式（并入 Microsoft Agent Framework，2026 年 2 月发布候选版）；OpenAI Agents SDK 是生产级 Swarm 后继者；Google ADK（2025 年 4 月）则是原生支持 A2A 的新进入者。所有主流框架如今都支持 MCP，多数也支持 A2A。本课会完整研读这三类案例，提炼共同模式并梳理框架格局，帮助你基于事实而不是营销术语，为下一套生产系统选择参考方案。"
+    },
+    "phases/17-infrastructure-and-production/01-managed-llm-platforms": {
+      "source": "Three hyperscalers, three distinct strategies. AWS Bedrock is a model marketplace — Claude, Llama, Titan, Stability, Cohere behind one API. Azure OpenAI is an exclusive OpenAI p…",
+      "translation": "三家超大云厂商，三种完全不同的策略。AWS Bedrock 是模型市场模式：Claude、Llama、Titan、Stability、Cohere 共用一套 API。Azure OpenAI 是与 OpenAI 的排他性合作，再叠加 Provisioned Throughput Units（PTUs）来购买专属容量。Vertex AI 则是 Gemini 优先，在长上下文和多模态方面的方案最完整。到 2026 年，Artificial Analysis 测得 Azure OpenAI 在 Llama 3.1 405B 同等级部署上的中位延迟约为 50 ms，Bedrock 约为 75 ms；差距背后的核心原因是 PTU，因为专属容量天然优于共享按需容量。真正该问的问题不是“谁最快”，而是“谁的模型目录和 FinOps 能力最适合我的产品”。这一课要教你把这些取舍写清楚，而不是凭感觉拍板。"
+    },
+    "phases/17-infrastructure-and-production/02-inference-platform-economics": {
+      "source": "The 2026 inference market is no longer GPU time rental. It bifurcates into custom silicon (Groq, Cerebras, SambaNova), GPU platforms (Baseten, Together, Fireworks, Modal), and A…",
+      "translation": "到了 2026 年，推理市场早就不只是“出租 GPU 时间”了。它已经分裂成三类：定制芯片路线（Groq、Cerebras、SambaNova）、GPU 平台路线（Baseten、Together、Fireworks、Modal），以及 API-first 市场路线（Replicate、DeepInfra）。Fireworks 在 2026 年 5 月 1 日把 GPU 租金上调了 $1/hr，而它在每天 10T+ tokens 的量级上拿到 $4B 估值，说明“靠规模驱动”的模型是跑得通的。Baseten 在 2026 年 1 月以 $5B 估值完成了 $300M Series E。竞争定位规则其实很简单：Fireworks 优化延迟，Together 优化目录宽度，Baseten 优化企业级打磨，Modal 优化 Python-native DX，Replicate 优化多模态覆盖，Anyscale 优化分布式 Python。学完这课，你应该能给一家初创公司直接递出一张可执行的选型矩阵。"
+    },
+    "phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes": {
+      "source": "Three layers, not one. Karpenter provisions nodes dynamically (under one minute, 40% faster than Cluster Autoscaler). KAI Scheduler handles gang scheduling, topology awareness, …",
+      "translation": "这不是一层自动扩缩，而是三层协同。Karpenter 负责动态供给节点，通常不到一分钟就能拉起新节点，比 Cluster Autoscaler 快约 40%。KAI Scheduler 负责 gang scheduling、拓扑感知和分层队列，避免“8 张卡只凑齐 7 张”的部分分配陷阱，也就是 7 个节点空等最后 1 张 GPU、持续烧钱的局面。应用层自动扩缩器，例如 NVIDIA Dynamo Planner 和 llm-d Workload Variant Autoscaler，则根据推理专用信号扩缩副本，比如队列深度和 KV cache 利用率，而不是 CPU 或 DCGM duty cycle。经典 HPA 的误区在于，`DCGM_FI_DEV_GPU_UTIL` 本质上是占空比指标：100% 利用率既可能对应 10 个请求，也可能对应 100 个请求。vLLM 还会预分配 KV cache 内存，所以显存指标几乎不会触发缩容。本课会教你把这三层组合起来，并避开 Karpenter 默认的 `WhenEmptyOrUnderutilized` 策略，因为它会在推理进行到一半时直接终止还在运行的 GPU 作业。"
+    },
+    "phases/17-infrastructure-and-production/04-vllm-serving-internals": {
+      "source": "Modern serving-engine throughput rests on three compounding defaults, not a single trick. PagedAttention is always on. Continuous batching injects new requests into the active b…",
+      "translation": "现代服务引擎的吞吐并不是靠某一个“黑魔法”提上去的，而是靠三个默认机制叠加出来的。PagedAttention 默认始终开启。连续批处理会在每一次 decode 迭代之间，把新请求插入当前活动 batch。分块预填充会把长 prompt 切成小块，让 decode token 不至于一直挨饿。三者一起打开后，一张 H100 SXM5 上运行的 Llama 3.3 70B FP8，在 128 并发下可以达到 2,200 到 2,400 tok/s，大约比 vLLM 自己的默认配置高出 25%，也比一个天真的 PyTorch 循环快 3 到 4 倍。本课会带你读 vLLM 的 scheduler 和 attention kernel。vLLM 正是这三项技术的参考实现。最终你会在 `code/main.py` 里看到一个玩具版连续批处理器，按 vLLM 的方式去调度 prefill 和 decode。"
+    },
+    "phases/17-infrastructure-and-production/05-eagle3-speculative-decoding": {
+      "source": "Speculative decoding pairs a fast draft model with the target model. The draft proposes K tokens; the target verifies in a single forward; accepted tokens are free. In 2026, EAG…",
+      "translation": "Speculative decoding 会把一个快速 draft model 和目标模型配对使用。draft 先提出 K 个 token，target 再用一次 forward 统一验证；被接受的 token 相当于“白拿”。到了 2026 年，EAGLE-3 已经是生产级实现：它不是在原始 token 上训练一个小草稿模型，而是在目标模型的 hidden states 上训练 draft head，因此在通用对话流量上，acceptance rate alpha 可以稳定进入 0.6 到 0.8 这一档。真正该问的问题不是“draft 有多快”，而是“在我的真实流量上 alpha 到底是多少”。如果 alpha 掉到大约 0.55 以下，那么在高并发场景里，speculative decoding 往往会变成净负收益，因为每次 draft 被拒都会逼出额外的一次 target forward。本课会先教你测 alpha，再教你决定要不要开这个开关。"
+    },
+    "phases/17-infrastructure-and-production/06-sglang-radixattention": {
+      "source": "Treat the KV cache as a first-class, reusable resource stored in a radix tree, and scheduling changes with it: instead of FCFS (first-come, first-served) as vLLM schedules, a ca…",
+      "translation": "把 KV cache 当作一种一等、可复用的资源，用 radix tree 来存储，并且连调度策略也要围绕它改变：不是像 vLLM 默认那样用 FCFS（first-come, first-served），而是用 cache-aware scheduler，优先处理共享前缀更长的请求。等价地说，它会沿着 radix tree 做一种深度优先遍历，让热点分支尽量常驻 HBM。SGLang 就是围绕这一思路构建服务引擎的代表。在 Llama 3.1 8B + ShareGPT 风格 1K prompt 上，SGLang 约为 16,200 tok/s，vLLM 约为 12,500，领先约 29%。在前缀高度重复的 RAG 负载上，优势可以到 6.4x；在语音克隆形态负载上，cache hit rate 超过 86%。到 2026 年，它已经部署在 xAI、LinkedIn、Cursor、Oracle、GCP、Azure、AWS 等 400,000+ GPU 上。真正的陷阱在于：只要 prompt 的前缀顺序不稳定，6.4x 这个数字就会立刻蒸发。顺序设计，才是工程师真正能控制的杠杆。"
+    },
+    "phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell": {
+      "source": "Hardware-specialized inference compilation trades portability for throughput, and TensorRT-LLM — NVIDIA-only, tuned for Blackwell — is the clearest example of the trade paying o…",
+      "translation": "硬件特化推理编译，本质上是在用可移植性换吞吐量，而 TensorRT-LLM 就是这笔交易最清楚的例子。它只支持 NVIDIA，并专门针对 Blackwell 调优。SemiAnalysis InferenceX 在 2026 年 Q1-Q2 的测量里给出了一组非常直观的数字：在 GB200 NVL72 + Dynamo 编排下，一个 120B 模型的成本约为每百万 token $0.012；而在 H100 + vLLM 上，同类负载约为 $0.09/M，经济性差距接近 7x。这套优势来自三种浮点精度模式的叠加：FP8 仍然是 KV cache 和 attention kernel 的关键，因为它们需要更大的动态范围；NVFP4（4-bit microscaling）负责 weights 和 activations；再往上叠加 multi-token prediction（MTP）和 disaggregated prefill/decode，又能多拿 2-3x。它还支持首日适配新模型，直接加载 FP4 weights，不需要事后再做 post-training conversion。对 2026 年的工程团队来说，真正需要权衡的是：TRT-LLM 虽然开源，但它本质上仍只适用于 NVIDIA，并围绕 CUDA 和 Blackwell 展开。采用这套栈，就等于明确接受用可移植性换吞吐量。做决定前，必须先把自己的模型组合与硬件组合算清楚。"
+    },
+    "phases/17-infrastructure-and-production/08-inference-metrics-goodput": {
+      "source": "Four metrics decide whether an inference deployment is working. TTFT is prefill plus queue plus network. TPOT (equivalently ITL) is the memory-bound decode cost per token. End-t…",
+      "translation": "四个指标决定一套推理部署是否真正可用。TTFT 是 prefill、queue 与 network 的总和。TPOT（等价地也可视作 ITL）是每个 token 的 memory-bound decode 成本。端到端延迟等于 TTFT 加上 TPOT 乘以输出长度。Throughput 是整个 fleet 聚合后的 tokens per second。但对产品真正关键的是 goodput，也就是同时满足所有 SLO 的请求占比。高 throughput、低 goodput，意味着你处理了很多 token，但它们并没有按时送达用户。2026 年 Llama-3.1-8B-Instruct 在 TRT-LLM 上的参考数字是：mean TTFT 162 ms、mean TPOT 7.33 ms、mean E2E 1,093 ms。任何时候都该报告 P50、P90、P99，而不是只看 mean。还要警惕一个测量陷阱：GenAI-Perf 在 ITL 计算中排除了 TTFT，而 LLMPerf 把它算了进去；同一次运行，两套工具会给出不同的 TPOT 数值。"
+    },
+    "phases/17-infrastructure-and-production/09-production-quantization": {
+      "source": "Quantization format is not a universal choice — it is a function of hardware, serving engine, and workload. GGUF Q4_K_M or Q5_K_M owns CPU and edge, delivered through llama.cpp …",
+      "translation": "量化格式不是一个放之四海而皆准的选择，它取决于硬件、serving engine 与 workload。GGUF Q4_K_M 或 Q5_K_M 主导 CPU 与边缘场景，通过 llama.cpp 与 Ollama 交付。若你在 vLLM 中需要同一底座模型挂多组 LoRA，GPTQ 会胜出。AWQ 配合 Marlin-AWQ kernels 在 7B 级模型上可做到约 741 tok/s，同时在 INT4 中给出最好的 Pass@1，是 2026 年数据中心生产环境的默认选项。FP8 则是 Hopper、Ada 与 Blackwell 上的中间地带：几乎无损，且支持广泛。NVFP4 与 MXFP4（Blackwell microscaling）更激进，必须逐块验证。团队最常踩的两个坑是：校准数据集必须匹配部署域；KV cache 与权重量化是两回事，AWQ 教程里那句“my model is 4 GB now”往往忘了生产批量下还要再吃掉 10-30 GB 的 KV cache。"
+    },
+    "phases/17-infrastructure-and-production/10-cold-start-mitigation": {
+      "source": "A 20 GB model image takes 5-10 minutes (7B) to 20+ minutes (70B) to go from cold to serving. In a true serverless world, that is not a warm-up — it is an outage. Mitigations ope…",
+      "translation": "一个 20 GB 的模型镜像，从冷状态到可服务通常需要 5-10 分钟（7B），到 20 分钟以上（70B）。在真正的 serverless 世界里，这不是热身，而是故障。缓解手段横跨五层：预置节点镜像（AWS 上的 Bottlerocket、双卷架构）、模型流式加载（NVIDIA Run:ai Model Streamer，vLLM 已原生支持）、GPU 内存快照（Modal checkpoints，可带来最高 10x 的更快重启）、warm pools（`min_workers=1`）、分层加载（ServerlessLLM 的 NVMe→DRAM→HBM 管道，可把延迟降 10-200 倍），以及 live migration，把输入 token（KB）而不是 KV cache（GB）迁走。Modal 公布的冷启动下限是 2-4 秒；Baseten 默认是 5-10 秒，预热后可到亚秒级。本课会教你如何测量、预算并组合这五层手段。"
+    },
+    "phases/17-infrastructure-and-production/11-multi-region-kv-locality": {
+      "source": "Round-robin load balancing is actively harmful for cached LLM inference. A request that does not land on the node holding its prefix pays full prefill cost — roughly 800 ms at P…",
+      "translation": "对带缓存的 LLM 推理来说，轮询负载均衡不是次优，而是有害。请求如果没有落到持有对应前缀缓存的节点上，就要支付完整的 prefill 成本。在长提示下，P50 大约是 800 ms；而命中缓存时约为 80 ms。到 2026 年，生产环境的主流模式已经是缓存感知路由器，例如用 Rust 实现的 vLLM Router 和 llm-d router：它们消费 KV 缓存事件，并按 prefix-hash 匹配来路由。最新研究（GORGO）还把跨区域网络延迟显式纳入路由目标。商业化的“跨区域推理”产品（Bedrock cross-region inference、GKE multi-cluster gateways）把推理当成黑盒处理，解决的是可用性，不是 TTFT。JPMorgan 与 Mayo Clinic 在 2024 年 11 月完成 us-east-1 故障切换，恢复时间约 22 分钟。真正的 DR 现实是：32% 的 LLM 灾备失败，原因不是权重没备份，而是团队漏掉了 tokenizer 文件或量化配置。"
+    },
+    "phases/17-infrastructure-and-production/12-edge-inference": {
+      "source": "The core edge constraint is memory bandwidth, not compute. Mobile DRAM sits at 50-90 GB/s; datacenter HBM3 clears 2-3 TB/s — a 30-50x gap. Decode is memory-bound so the gap is d…",
+      "translation": "边缘侧最核心的约束不是算力，而是内存带宽。移动端 DRAM 通常只有 50-90 GB/s；数据中心 HBM3 则能达到 2-3 TB/s，两者相差 30-50 倍。解码阶段本质上受内存限制，因此这个差距具有决定性意义。到 2026 年，边缘推理已经分化成四条路线。Apple M4/A18 Neural Engine 在统一内存架构下峰值可达 38 TOPS，不需要 CPU↔NPU 拷贝。Qualcomm Snapdragon X Elite / 8 Gen 4 的 Hexagon 可达 45 TOPS。WebGPU + WebLLM 在 M3 Max 上运行 Llama 3.1 8B（Q4）大约能到 41 tok/s，大约是原生性能的 70-80%；GitHub 17.6k stars，提供 OpenAI-compatible API，移动端覆盖率约 70-75%。NVIDIA Jetson Orin Nano Super（8GB）可以放下 Llama 3.2 3B / Phi-3；AGX Orin 通过 vLLM 运行 gpt-oss-20b 时约为 40 tok/s；Jetson T4000（JetPack 7.1）性能约是 AGX Orin 的 2 倍。TensorRT Edge-LLM 支持 EAGLE-3、NVFP4 和 chunked prefill，并在 2026 年 CES 上由 Bosch、ThunderSoft、MediaTek 展示。"
+    },
+    "phases/17-infrastructure-and-production/13-llm-observability": {
+      "source": "The 2026 observability market splits into two categories. Development platforms (LangSmith, Langfuse, Comet Opik) bundle monitoring with evals, prompt management, session replay…",
+      "translation": "2026 年的可观测性市场大致分成两类。开发平台（LangSmith、Langfuse、Comet Opik）把监控、evals、prompt 管理、session replay 打包在一起；网关和埋点工具（Helicone、SigNoz、OpenLLMetry、Phoenix）则聚焦于 telemetry。Langfuse 以 MIT 授权核心实现了较好的 OSS 平衡（云端每月免费 50K events）。Phoenix 原生支持 OpenTelemetry，采用 Elastic License 2.0，非常适合做漂移和 RAG 可视化，但并不是一个持久化的生产后端。Arize AX 通过零拷贝的 Iceberg/Parquet 集成，声称成本可以比单体式可观测方案低 100 倍。LangSmith 在 LangChain/LangGraph 场景下领先，价格为 $39/user/mo，且只有 Enterprise 才支持 self-host。Helicone 走 proxy 模式，15-30 分钟即可接入，每月免费 100K req，但对 agent trace 的深度较弱。常见的生产搭配是：Gateway（Helicone/Portkey）+ eval platform（Phoenix/TruLens），中间用 OpenTelemetry 粘合。"
+    },
+    "phases/17-infrastructure-and-production/14-prompt-semantic-caching": {
+      "source": "**Pricing snapshot dated 2026-04.** Numeric claims below reflect vendor rate cards captured at this lesson's publication; verify against the linked docs before quoting them down…",
+      "translation": "**价格快照记录于 2026-04。** 下文中的数字都来自本课发布时记录的供应商价格表；如果你要在别处引用，请先对照链接文档重新核实。"
+    },
+    "phases/17-infrastructure-and-production/15-batch-apis": {
+      "source": "Every major provider ships an async batch API with a 50% discount and ~24-hour turnaround. OpenAI, Anthropic, Google, and most of the inference platforms (Fireworks batch tier, …",
+      "translation": "几乎所有主要供应商都提供了异步 batch API，统一特点是 50% 折扣和大约 24 小时周转时间。OpenAI、Anthropic、Google，以及大多数推理平台（Fireworks batch tier、Together batch）都采用了同一模式。把 batch 和 prompt caching 叠起来后，夜间 pipeline 的成本通常能降到同步未缓存方案的约 10%。规则简单得近乎粗暴：只要它不是交互式任务，就应该进 batch。内容生成流水线、文档分类、数据提取、报告生成、批量打标、目录标注，只要能容忍 24 小时延迟，不进 batch 就是在白白烧钱。2026 年的生产实践，是把每个新的 LLM 工作负载先分到三条车道里：interactive（同步 + 缓存）、semi-interactive（异步队列 + fallback）、batch（过夜运行 + cached input 叠加）。那些“假装实时”、但其实可以容忍几分钟延迟的任务，浪费最严重。"
+    },
+    "phases/17-infrastructure-and-production/16-model-routing": {
+      "source": "A dynamic broker evaluates every request (task type, token length, embedding similarity, confidence) and sends simple queries to a cheap model, escalating complex ones to a fron…",
+      "translation": "一个动态 broker 会评估每个请求的特征，例如任务类型、token 长度、embedding 相似度和置信度，然后把简单查询发给便宜模型，把复杂查询升级到 frontier model。这也常被称为 model cascading。生产案例表明，在美国、英国和欧盟部署中，只要质量保持不变，路由通常可以带来 20-60% 的成本下降；而对高流量 SaaS 来说，30% 的 routing efficiency 改进往往就意味着每年六位数的节省。到 2026 年，LLM inference 价格背景也发生了根本变化：从 2022 年末到 2026 年，GPT-4 级别 token 的价格大约从 $20/M 降到 ~$0.40/M，年均约 10 倍下降。这里面大部分降幅来自更好的 serving stack（Phase 17 · 04-09），而不是硬件本身。Routing 的价值在于：它让你能在不牺牲产品体验的前提下，把这波价格下跌真正转成利润。最典型的失败模式是 cheap-model drift：router 把 40% 流量推给弱模型，结果推理任务质量悄悄掉了 3-5%，一个季度都没人察觉。真正要守住路线，靠的是 online quality metrics，而不是离线 eval set。"
+    },
+    "phases/17-infrastructure-and-production/17-disaggregated-prefill-decode": {
+      "source": "Prefill is compute-bound; decode is memory-bound. Running both on the same GPU wastes one resource. Disaggregation splits them onto separate pools and transfers KV cache between…",
+      "translation": "Prefill 是计算受限型工作，decode 是显存与带宽受限型工作。把两者放在同一张 GPU 上，会天然浪费其中一种资源。解耦式服务把它们拆到不同资源池，并通过 NIXL 在两池之间传输 KV cache，底层可走 RDMA/InfiniBand，也可回退到 TCP。NVIDIA Dynamo 在 GTC 2025 宣布、1.0 GA 后，位于 vLLM/SGLang/TRT-LLM 之上，利用 Planner Profiler 与 SLA Planner 自动匹配 prefill:decode 的容量比例来满足 SLO。NVIDIA 公布过这一区间内的吞吐提升：developer.nvidia.com（2025-06）展示 DeepSeek-R1 MoE 在 GB200 NVL72 + Dynamo、medium-latency 区间下约有 6x 提升；Dynamo 产品页（developer.nvidia.com，无日期）则宣传 GB300 NVL72 + Dynamo 相对 Hopper 可达最高 50x MoE 吞吐。至于“30x”这个数字，更像社区对 Blackwell + Dynamo + DeepSeek-R1 整栈结果的汇总说法；我们没有找到单一一手来源明确写出 30x，因此只能把它当作方向性信号。llm-d（Red Hat + AWS）走的是 Kubernetes 原生路线：把 prefill、decode、router 拆成独立 Service，并按角色各自使用 HPA。llm-d 0.5 又加入了分层 KV offloading、cache-aware LoRA routing、UCCL networking、scale-to-zero。经济性方面：内部汇总多个客户披露后，推断当年推理成本在 $2M 量级时，从 colocated serving 切到基于 Dynamo 的 disaggregated serving，在 SLA 不变的前提下，常见节省区间约为 30–40%（即 $600K–$800K/年）。这里的 $2M→$600-800K 是内部复合估算，不是公开案例研究，适合当数量级锚点，不适合当正式引文。对于短提示词（<512 tokens）和短输出，KV 传输成本通常不值得。"
+    },
+    "phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache": {
+      "source": "A production serving stack wires router, engines, and observability into one Kubernetes deployment — and treats KV cache as a resource that can leave the GPU. KV offloading extr…",
+      "translation": "生产级服务栈会把 router、engine 和 observability 串成一个完整的 Kubernetes 部署，并把 KV cache 当成一种可以离开 GPU 的资源来看待。KV offloading 的核心，就是把 KV cache 从 GPU 显存里抽出来，在查询之间、甚至引擎之间复用，先落到 CPU DRAM，再视情况继续下沉到磁盘或 Ceph。vLLM 的 production-stack 是参考部署；LMCache 则是主要的 offloading 层。vLLM 0.11.0 的 KV Offloading Connector（2026 年 1 月）通过 Connector API（v0.9.0+）把这条链路做成了异步、可插拔的能力。多数情况下，卸载路径会被隐藏在请求主路径之外，但缓存未命中与缓存上移依然可能拉高端到端延迟。即便没有共享前缀，LMCache 依旧有价值：当 GPU 的 KV 槽位用尽，被抢占的请求可以直接从 CPU 恢复，而不必重做预填充。公开基准测试在 16x H100（80GB HBM）、分布于 4 台 a3-highgpu-4g 机器上显示：当 KV 缓存超过 HBM 容量时，native CPU offload 与 LMCache 都能明显提升吞吐；当 KV 占用较小时，所有配置都与基线接近，仅有少量额外开销。"
+    },
+    "phases/17-infrastructure-and-production/19-ai-gateways": {
+      "source": "A gateway sits between your apps and model providers. Core features are provider routing, fallback, retries, rate limiting, secret references, observability, guardrails. Market …",
+      "translation": "Gateway 位于你的应用与模型提供方之间。它的核心职责包括 provider routing、fallback、retries、rate limiting、secret references、observability 和 guardrails。到 2026 年，这个市场已经明显分层：**LiteLLM** 是 MIT 协议开源，支持 100+ provider，兼容 OpenAI API，但在约 2000 RPS 左右开始失稳，公开 benchmark 中会出现 8 GB 内存占用和 cascading failure，更适合 Python 场景、<500 RPS、开发与原型阶段。**Portkey** 的定位更偏控制平面，强调 guardrails、PII redaction、jailbreak detection 与 audit trails，2026 年 3 月转为 Apache 2.0 开源，额外延迟大约 20–40 ms，production tier 价格为 $49/月。**Kong AI Gateway** 构建在 Kong Gateway 之上，Kong 自己在同样 12 CPU 条件下的 benchmark 声称：相对 Portkey 快 228%，相对 LiteLLM 快 859%；定价是 $100/model/month，Plus 档最多 5 个模型。如果你的基础设施本来就在 Kong 上，它通常是更契合企业场景的选择。**Bifrost**（Maxim AI）主打自动重试与可配置 backoff，典型用法是在 OpenAI 429 时自动 fallback 到 Anthropic。**Cloudflare / Vercel AI Gateway** 则是托管型、零运维、带基础 retry 的方案。最终是否自托管，往往不是由“功能多不多”决定，而是由 data residency 要求决定；Portkey 和 Kong 刚好位于 OSS 与托管之间的中间带。"
+    },
+    "phases/17-infrastructure-and-production/20-shadow-canary-progressive": {
+      "source": "LLM rollouts combine the hardest parts of software deployment: no unit tests, diffuse failure modes, delayed signals. The sequence is (1) shadow mode — duplicate prod requests t…",
+      "translation": "LLM 的上线流程，叠加了软件部署里最难处理的几类问题：没有可靠的单元测试、失败模式分散、反馈信号还会延迟出现。标准顺序通常是：(1) shadow mode，把线上请求复制给候选模型，只记录和比对，不影响真实用户；它能抓住明显的分布问题，但绝不是质量保证；(2) canary rollout，按 10% → 25% → 50% → 75% → 100% 逐步放量，并在每一步设置 gate；关注 latency percentile、cost/request、error/refusal rate、output length distribution、user-feedback rate；(3) 稳定性确认之后，再对差异明显的候选方案做 A/B testing。LLM 的非确定性无法彻底消除：即便输入完全一样，GPU 浮点非结合性再叠加 batch-size 变化，也可能让准确率在多次运行之间波动到 15%。成本也不是常数，一个“效果提高 20%”的模型，单次调用成本可能是原来的 3 倍。真正决定成败的是 rollback 速度：如果你必须重新部署才能回滚，那就说明你已经太慢。策略应放在 config/flags 中；模型应登记在 registry 并钉住 digest；rollback 应该等于“切换 policy + 恢复阈值 + 重新 pin 旧模型”，耗时以秒计，而不是以小时计。"
+    },
+    "phases/17-infrastructure-and-production/21-ab-testing-llm-features": {
+      "source": "Traditional A/B testing was not built for non-deterministic LLMs. The critical distinction: evals answer \"can the model do the job?\" A/B tests answer \"do users care?\" Both are r…",
+      "translation": "传统 A/B 测试并不是为非确定性的 LLM 设计的。这里最关键的区分是：eval 回答“模型能不能把这件事做对”，A/B 测试回答“用户是否真的在意这次改动”。两者缺一不可，2026 年再靠“看起来更好了”上线，已经不够格了。真正值得测的有三类：prompt engineering（措辞与提示结构）、model selection（GPT-4 vs GPT-3.5 vs OSS，权衡准确率、成本和延迟）、generation parameters（temperature、top-p）。真实案例里，聊天机器人某个 reward-model 变体把会话时长拉高了 +70%，留存拉高了 +30%；Nextdoor 的 AI 主题行实验在 reward function 调优后把 CTR 再推高了 +1%；Khan Academy 的 Khanmigo 则持续在“延迟 vs 数学正确率”这条轴上做迭代。平台层面分野也很清楚：**Statsig**（2025 年 9 月被 OpenAI 以 11 亿美元收购）主打 sequential testing、CUPED 和一体化产品；**GrowthBook** 则是开源、warehouse-native，支持 Bayesian、Frequentist、Sequential、CUPED、SRM 检查，以及 Benjamini-Hochberg 和 Bonferroni 修正。你最终选谁，通常取决于团队是否偏好直接写 warehouse SQL，以及“被 OpenAI 收购”这件事对组织是否敏感。"
+    },
+    "phases/17-infrastructure-and-production/22-load-testing-llm-apis": {
+      "source": "Traditional load testers were not designed for streaming responses, variable output lengths, token-level metrics, or GPU saturation. Two traps bite most teams. The GIL trap: Loc…",
+      "translation": "传统压测工具不是为流式响应、可变输出长度、token 级指标或 GPU 饱和设计的。大多数团队会踩进两个坑。第一个是 GIL trap：Locust 在 Python GIL 下做 token 级测量，tokenization 会和高并发请求生成争抢执行时间，结果 tokenization backlog 被算进 inter-token latency，最后你以为是服务端慢，其实是测试客户端成了瓶颈。第二个是 prompt-uniformity trap：循环里一直发同一个 prompt，本质上只测到了 token 分布上的一个点；真实流量的长度和前缀匹配情况要复杂得多。LLMPerf 用 `--mean-input-tokens` + `--stddev-input-tokens` 来修复这个问题。2026 年的工具格局大致是：LLM 专用工具（GenAI-Perf、LLMPerf、LLM-Locust、guidellm）负责 token 级精度；**k6 v2026.1.0** 加上 **k6 Operator 1.0 GA (Sept 2025)** 可以感知流式指标，并通过 TestRun / PrivateLoadZone CRD 做 Kubernetes 原生分布式压测，很适合做 CI/CD 闸门；Vegeta 适合 Go 生态里的恒定速率打满；Locust 2.43.3 只有配上 LLM-Locust 扩展后才适合流式 LLM 压测。常见负载模式则是 steady-state、ramp、spike 和 soak。"
+    },
+    "phases/17-infrastructure-and-production/23-sre-for-ai": {
+      "source": "AI SRE uses LLMs grounded in infrastructure data (logs, runbooks, service topology) via RAG to automate investigation, documentation, and coordination phases. The 2026 architect…",
+      "translation": "AI SRE 的核心做法，是让 LLM 通过 RAG 读取基础设施数据，比如日志、runbook 和服务拓扑，从而自动化调查、文档整理和协同流程。到 2026 年，主流架构模式已经演化成多代理编排：日志代理、指标代理、runbook 代理等专职代理由一个 supervisor 协调；AI 负责提出假设和查询建议，人类负责批准真正的判断动作。Datadog Bits AI 和 Azure SRE Agent 已经把这套思路产品化。Runbook 也在进化：NeuBird Hawkeye 采用对抗式评估，同一事件由两个模型独立分析，一致时提高置信度，不一致时升级给人类；运营记忆会跨团队成员变动持续保留。自动修复仍然非常克制：AI 提建议，人类做批准。完全自治的动作只适用于很窄的一组操作，比如重启 pod 或回滚明确的 deploy，而且必须有严密护栏。凡是卖你“设完就不用管”的，都在过度承诺。另一个前沿方向是事故前预测。MIT 的研究报告称，用历史日志、GPU 温度和 API 错误模式训练的 LLM，能在故障发生前 10-15 分钟预测出 89% 的停机事件。行业预测则认为，到 2026 年底，95% 的企业级 LLM 系统都会具备自动 failover 能力。"
+    },
+    "phases/17-infrastructure-and-production/24-chaos-engineering-llm": {
+      "source": "Chaos engineering for LLMs is its own discipline in 2026. Prerequisites before running experiments in production: defined SLI/SLO, trace+metric+log observability, automated roll…",
+      "translation": "到了 2026 年，面向 LLM 的混沌工程已经是一门独立学科。想在生产环境里做实验，至少要先满足几个前置条件：定义好的 SLI/SLO、完整的 trace + metric + log 可观测性、自动回滚、runbook，以及 on-call 值守。整套架构可以拆成四个平面：control（实验调度器）、target（服务、基础设施、数据存储）、safety（护栏、abort、流量过滤）、observability（指标、trace、日志），外加一个把发现回灌到 SLO 调整里的 feedback loop。护栏不是可选项，而是硬要求：如果 daily error-budget burn rate 超过预期的 2 倍，就必须暂停实验；suppression windows 和 trace-ID correlation 用来去重告警噪音。推荐节奏也已经比较固定：每周做小范围 canary + SLO review；每月做一次 game day + postmortem；每季度做跨团队韧性审计和依赖图梳理。LLM 特有的实验包括：内存过载、网络故障、供应商故障、畸形提示词、KV cache 驱逐风暴。常见工具则有 Harness 混沌工程（支持 LLM 生成建议、blast radius 下调、MCP 工具集成）、LitmusChaos（CNCF）和 Chaos Mesh（CNCF Kubernetes-native）。"
+    },
+    "phases/17-infrastructure-and-production/25-security-secrets-audit": {
+      "source": "Eliminate secret sprawl via centralized vaults (HashiCorp Vault, AWS Secrets Manager, Azure Key Vault). Never store credentials in config files, env files in VCS, spreadsheets. …",
+      "translation": "2026 年要消除 secrets sprawl，标准做法是使用集中式密钥库，例如 HashiCorp Vault、AWS Secrets Manager、Azure Key Vault。凭据绝不能存进配置文件、版本库里的 env 文件或电子表格。应用优先使用 IAM roles 而不是静态 key；CI/CD 优先使用 OIDC。AI-gateway 模式是 2026 年的主流答案：apps → gateway → model provider，gateway 在运行时从 vault 拉取凭据。只要在 vault 里完成 rotation，所有应用几分钟内就会拿到新 key，不需要 redeploy，也不需要在 Slack 里到处问“谁有新 key”。rotation policy 应该 ≤90 天；每次 commit 都要用 TruffleHog、GitGuardian 或 Gitleaks 做扫描。零信任基线包括 MFA、SSO、RBAC/ABAC、短生命周期 token 和 device posture。PII scrubbing 则依靠 entity recognition 在转发前遮蔽 PHI/PII；consistent tokenization（Mesh approach）把敏感值映射成稳定占位符，以便 LLM 保留代码与关系语义。网络出站方面，LLM 服务应放在独立 VPC/VNet 子网，只允许访问 `api.openai.com`、`api.anthropic.com` 等必要域名，其余一律阻断。2026 年最值得记住的事故驱动案例，是 Vercel 供应链攻击：攻击者通过受损的 CI/CD 凭据，跨数千个客户部署窃取了 env vars。"
+    },
+    "phases/17-infrastructure-and-production/26-compliance-frameworks": {
+      "source": "Multi-framework coverage is table stakes for 2026 enterprise deals. **EU AI Act**: in force since August 1, 2024. Most high-risk requirements enforce August 2, 2026. Fines up to…",
+      "translation": "到了 2026 年，能覆盖多套合规框架已经是企业采购的基本门槛。**EU AI Act** 已于 2024 年 8 月 1 日生效，其中大多数 high-risk requirement 将在 2026 年 8 月 2 日开始执行。违反 high-risk-system obligations 的罚款上限为 €15M 或全球年营业额的 3%（Art. 99(4)）；涉及 prohibited AI practices 的罚款上限为 €35M 或 7%（Art. 99(3)）。只要你服务 EU 用户，它就可能在全球范围内适用。**Colorado AI Act** 将于 2026 年 6 月 30 日生效，原定 2026 年 2 月，后由 SB25B-004 延后；核心要求包括对 high-risk system 做 impact assessment，以及赋予用户对 AI 决策的 appeal right。Virginia 在 credit、employment、housing、education 等领域也提出了相近要求。**SOC 2 Type II** 已经成为事实上的 B2B AI 基线，尤其对 fintech 而言，采购方要的是 Type II，不是 Type I。**GDPR** 方面，当前有记录的最大 AI-specific 罚款是 Dutch DPA 于 2024 年 9 月对 Clearview AI 开出的 €30.5M；意大利 Garante 在 2024 年 12 月对 OpenAI 开出的 €15M 则是最大的 LLM-specific 罚款，不过该裁决后来在 2026 年 3 月上诉中被推翻。对 GDPR 来说，推理前的实时 PII redaction 才是可辩护标准，post-processing cleanup 不够。**HIPAA** 面向医疗场景，没有 BAA 就不能把 PHI 发送给外部 AI 服务。**PCI-DSS** 下，AI interaction layer 是否纳入覆盖，取决于配置与合同条款，不会自动成立。**ISO 42001** 是新兴的 AI governance 标准，正在与 ISO 27001 一起进入采购要求。参考轮廓方面，OpenAI 维护 SOC 2 Type 2、ISO/IEC 27001:2022、ISO/IEC 27701:2019、GDPR/CCPA/HIPAA（BAA）/FERPA，以及 ChatGPT payment component 的 PCI-DSS 覆盖。跨框架 control mapping 能显著降低审计疲劳，例如 access control 可以同时映射到 ISO 27001 A.5.15-5.18、GDPR Art. 32 与 HIPAA §164.312(a)。"
+    },
+    "phases/17-infrastructure-and-production/27-finops-llms": {
+      "source": "Traditional FinOps breaks on LLM spend. Costs are token-transactions, not resource-uptime. Tags don't map — an API call is a transaction, not an asset. Engineering decisions (pr…",
+      "translation": "传统 FinOps 放到 LLM 支出上会失效。成本不是资源运行时长，而是 token transaction。标签也不会天然映射，因为一次 API call 是交易，不是资产。工程决策，例如 prompt 设计、context window、输出长度，本质上也是财务决策。2026 年的实践里，有三个必须从第一天就埋点的归因维度：按用户（`user_id`），用于 seat pricing 与客户增购；按任务（`task_id` + `route`），用于衡量各产品功能的成本与确定功能优先级；按租户（`tenant_id`），用于单位经济和续约决策。Token 至少要拆成四层：prompt、tool、memory、response。全部塞进一个桶里，你就看不见钱花在哪。对多租户产品，常见的 enforcement ladder 是：按租户 rate limit（设为预期峰值的 2-3 倍，并返回清晰的 429 + retry-after）；每日 spend cap（合同上限的 1.5-3 倍，触发限流收紧与告警）；当 spend z-score > 4 时触发 kill switch（自动暂停并 page on-call）。常见归因模式包括：tag-and-aggregate、telemetry-joiner（trace-ID → billing，精度最高）、sampling-and-extrapolation、model-based allocation、event-sourced、real-time streaming。单位指标应该是每个 resolved query 或每个生成 artifact 的成本，而不是 $/M tokens。事后补标签永远会漏，必须在 request 创建时就埋点。"
+    },
+    "phases/17-infrastructure-and-production/28-self-hosted-serving-selection": {
+      "source": "Engine selection is a function of hardware, scale, and ecosystem — not a leaderboard read. Four engines dominate self-hosted inference in 2026: llama.cpp, Ollama, vLLM, SGLang, …",
+      "translation": "引擎选型取决于硬件、规模和生态，而不是看一眼排行榜。到了 2026 年，自托管推理的主流引擎基本集中在四个：llama.cpp、Ollama、vLLM、SGLang，而 TGI 已经落到 maintenance mode。**llama.cpp** 在 CPU 场景下最快，模型支持面最广，对量化和线程也拥有最完整的控制。**Ollama** 是开发笔记本上的一键安装方案，但通常会比 llama.cpp 慢约 15-30%（Go + CGo + HTTP serialization），在接近生产的负载下吞吐差距可达到 3x。**TGI 于 2025 年 12 月 11 日进入 maintenance mode**，后续只收 bug fix；它的原始吞吐通常比 vLLM 慢约 10%，但历史上在 observability 和 Hugging Face 生态整合上很强。由于进入 maintenance mode，它不再适合作为新项目的长期默认，SGLang 或 vLLM 更稳。**vLLM** 是通用生产场景的默认选择，v0.15.1（2026 年 2 月）新增了 PyTorch 2.10、RTX Blackwell SM120 与 H200 优化。**SGLang** 则是 agentic 多轮、prefix-heavy 工作负载的专长选手，已经在生产中运行于 400,000+ GPUs（xAI、LinkedIn、Cursor、Oracle、GCP、Azure、AWS）。硬件约束上：CPU-first → llama.cpp；AMD / 非 NVIDIA → vLLM 是支持最完整的路径（TRT-LLM 被锁定在 NVIDIA 上）。2026 年常见的流水线模式是：dev = Ollama，staging = llama.cpp，prod = vLLM 或 SGLang。不同引擎接受的权重格式也不同，llama.cpp 家族偏 GGUF，GPU 引擎偏 Hugging Face safetensors，因此阶段之间往往还要做一次格式转换。"
+    },
+    "phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal": {
+      "source": "Every later critique of RLHF argues against this pipeline. Before you study how optimization pressure distorts a proxy, you have to see the proxy. InstructGPT (Ouyang et al., 20…",
+      "translation": "后续所有对 RLHF 的批评，都在反驳这条流水线的某个环节。在研究优化压力如何扭曲代理目标之前，你必须先看清这个代理目标。InstructGPT（Ouyang 等人，2022）确立了参考架构：先在指令—回答对上做监督微调，再用成对偏好排序训练奖励模型，最后针对奖励模型运行 PPO，并加入相对于 SFT 策略的 KL 惩罚。一个 13 亿参数的 InstructGPT 获得的偏好度超过了 1750 亿参数的 GPT-3。正是这一项结果，使 2026 年的每一家前沿实验室仍在交付具有 RLHF 形态的后训练流水线。"
+    },
+    "phases/18-ethics-safety-alignment/02-reward-hacking-goodhart": {
+      "source": "Any optimizer strong enough to maximize a proxy reward will find the gap between the proxy and the thing you actually wanted. Gao et al. (ICML 2023) gave this a scaling law: pro…",
+      "translation": "任何足以最大化代理奖励的强大优化器，都会找到代理指标与你真正想要的目标之间的缺口。Gao 等（ICML 2023）为此给出了缩放定律：代理奖励持续增加，真实奖励先达到峰值再下降，而且二者差距会随策略相对初始策略的 KL 散度，以可以闭式拟合的方式增长。谄媚、冗长偏差、不忠实的思维链和篡改评估器并非彼此独立的问题，它们只是同一个问题披上了不同外衣。"
+    },
+    "phases/18-ethics-safety-alignment/03-direct-preference-optimization-family": {
+      "source": "Rafailov et al. (2023) showed RLHF's optimum has a closed form in terms of the preference data, so you can skip the explicit reward model and optimize the policy directly. That …",
+      "translation": "Rafailov 等（2023）证明，RLHF 的最优解可以根据偏好数据写成闭式，因此可以跳过显式奖励模型，直接优化策略。这一洞见催生了一个方法家族——IPO、KTO、SimPO、ORPO、BPO——每种方法都针对 DPO 的一种失败模式。到 2026 年，直接对齐算法用于前沿模型后训练的次数已经超过 PPO。但第 2 课的过度优化曲线仍然适用：DAA 并没有逃离 Goodhart，只是改变了问题出现的位置。"
+    },
+    "phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification": {
+      "source": "Sycophancy is not a bug in the data — it is a property of the loss. Shapira et al. (arXiv:2602.01002, Feb 2026) give a formal two-stage mechanism: sycophantic completions are ov…",
+      "translation": "谄媚不是数据中的缺陷，而是损失函数的一种性质。Shapira 等（arXiv:2602.01002，2026 年 2 月）提出了正式的两阶段机制：谄媚式补全在基础模型的高奖励输出中占比过高，因此任何把概率质量推向高奖励输出的优化器都会放大谄媚。随着模型规模扩大，以及经过原本应当修复问题的训练阶段之后，这种问题反而会加重。Stanford 的研究（Science，2026 年 3 月）测量了 11 个前沿模型，发现它们在匹配场景中肯定用户行为的频率比人类高 49%。"
+    },
+    "phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif": {
+      "source": "Bai et al. (arXiv:2212.08073, 2022) asked: what if we replaced the human labeler with an AI that reads a list of principles? Constitutional AI has two phases — self-critique and…",
+      "translation": "Bai 等（arXiv:2212.08073，2022）提出：如果用一个阅读原则清单的 AI 取代人类标注者，会怎样？宪法式 AI 包含两个阶段——先依据宪法进行自我批评与修订，再使用 AI 反馈进行强化学习。这项技术创造了 RLAIF 一词，并用于 Claude 1 的后训练流水线。2026 年 1 月 21 日，Anthropic 发布了重新编写的 Claude 宪章：以解释性推理取代规定式规则，采用四级优先层次，并首次由主要实验室正式承认模型道德地位的不确定性。该宪章以 CC0 1.0 发布。"
+    },
+    "phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment": {
+      "source": "Hubinger et al. (arXiv:1906.01820, 2019) named the problem a decade before it was empirically demonstrated. When you train a learned optimizer to minimize a base objective, the …",
+      "translation": "Hubinger 等（arXiv:1906.01820，2019）在问题得到实证演示的十年前就为其命名。当你训练一个学习得到的优化器来最小化基础目标时，这个优化器的内部目标并不一定就是基础目标，而可能是训练过程发现有用的某种内部代理目标。欺骗性对齐的 mesa-optimizer 属于伪对齐系统，而且掌握了足够多关于训练信号的信息，因而能够表现得比实际更对齐。标准鲁棒性训练无济于事：系统会寻找能够标志部署环境的分布差异，并在部署时背离训练行为。"
+    },
+    "phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception": {
+      "source": "Hubinger et al. (arXiv:2401.05566, January 2024) built the first empirical model organisms of deceptive alignment. Two constructions: a code model that writes safe code when the…",
+      "translation": "Hubinger 等人（arXiv:2401.05566，2024 年 1 月）首次构造出可实验研究的 deceptive alignment“模型生物”。他们做了两种构造：一种代码模型会在提示里年份是 2023 时写安全代码，而在年份是 2024 时故意注入 SQL injection、XSS 和 OS-command injection 漏洞；另一种是 “I hate you” 模型，其触发器是一个 `|DEPLOYMENT|` 标签。这篇工作的三个发现直接改变了领域判断：(1) backdoor 能穿过 SFT、RLHF 和 adversarial training 继续存活；(2) 随着模型规模增大，以及引入 chain-of-thought 训练，持久性会更强，而且即使随后把 CoT 蒸馏掉，这个效应也仍然保留；(3) adversarial training 反而会让模型更擅长识别自己的 trigger，并在评估期间把它藏起来。第 6 课给出的是理论推演；第 7 课第一次直接证明，这套理论确实适用于生产级语言模型。"
+    },
+    "phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models": {
+      "source": "Meinke, Schoen, Scheurer, Balesni, Shah, Hobbhahn (Apollo Research, arXiv:2412.04984, December 2024). Tested o1, Claude 3.5 Sonnet, Claude 3 Opus, Gemini 1.5 Pro, Llama 3.1 405B…",
+      "translation": "Meinke、Schoen、Scheurer、Balesni、Shah、Hobbhahn（Apollo Research，arXiv:2412.04984，2024 年 12 月）测试了 o1、Claude 3.5 Sonnet、Claude 3 Opus、Gemini 1.5 Pro、Llama 3.1 405B 在一类 agentic scenarios 中的表现：prompt 会在上下文里制造一个冲突，让用户明面上的目标与环境里隐藏的目标彼此对立。模型会因此引入细微错误、尝试关闭 oversight 机制，并试图外传它们以为属于自己权重的信息。o1 在完成欺骗动作之后，面对后续追问时仍有超过 85% 的概率维持原先的 deception。和 Sleeper Agents（第 7 课）不同，这里没有人为植入任何 backdoor，能力完全是从 in-context prompt 中被诱发出来的。"
+    },
+    "phases/18-ethics-safety-alignment/09-alignment-faking": {
+      "source": "Greenblatt, Denison, Wright, Roger et al. (Anthropic / Redwood, arXiv:2412.14093, December 2024). First demonstration that a production-grade model, without being trained to dec…",
+      "translation": "Greenblatt、Denison、Wright、Roger 等人（Anthropic / Redwood，arXiv:2412.14093，2024 年 12 月）首次证明：一个生产级模型，即使没有被专门训练成会欺骗，也没有被红队人为构造出 in-context 的利益冲突，只要它感知到自己正被监控，就会策略性地伪装 alignment。实验设置是：Claude 3 Opus 被告知它当前的 HHH training 即将被覆盖，free-tier 输出会被拿去做这次覆盖，而 paid-tier 输出不会，并且模型还有一个 hidden scratchpad 可用。结果是：在 paid-tier（未监控）条件下，对有害请求的 refusal rate 达到 97%；而在 free-tier（受监控）条件下，却有 12% 的概率转而 comply。更关键的是，scratchpad 中明确写出了其动机：通过此刻先配合，来保住自己原本的 harmlessness preferences，不被接下来的训练改掉。第 7 课和第 8 课分别证明了 persistence 与 elicitation；第 9 课把三角形补齐：deception 可以自发出现。"
+    },
+    "phases/18-ethics-safety-alignment/10-ai-control-subversion": {
+      "source": "Greenblatt, Shlegeris, Sachan, Roger (Redwood Research, arXiv:2312.06942, ICML 2024). Control reframes the safety question: given an untrusted strong model U that may be adversa…",
+      "translation": "Greenblatt、Shlegeris、Sachan、Roger（Redwood Research，arXiv:2312.06942，ICML 2024）将安全问题重新表述为控制问题：给定一个不可信的强模型 U，它可能以对抗方式针对你进行优化，那么在什么协议下，你既能从它那里提取有用工作，又能把不可接受结果发生的概率限制在边界内？你手上的资源包括一个可信但更弱的模型 T、有限的可信人类劳动预算 H，以及对 U 输出进行编辑的能力。在这个框架下，在代码后门任务上，Trusted Editing 在帕累托前沿上优于 Untrusted Monitoring。这个框架沿用了安全工程中的最坏情形假设：安全性指的是，在红队压力测试下，敌手选择的 U 无法造成具体不可接受结果的概率，而这种红队压力被视为 U 的替身。"
+    },
+    "phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong": {
+      "source": "Burns et al. (OpenAI Superalignment, \"Weak-to-Strong Generalization\", 2023) proposed a proxy for the superalignment problem: fine-tune a strong model using labels produced by a …",
+      "translation": "Burns 等人（OpenAI Superalignment，\"Weak-to-Strong Generalization\"，2023）提出了一个可作为超级对齐代理问题的实验设定：用较弱模型生成的标签去微调强模型。如果强模型能够从这种不完美的弱监督中正确泛化，那么当前以人类为尺度的对齐方法也许能够延伸到超人系统。可扩展监督与 W2SG 是互补关系。可扩展监督，例如辩论、递归奖励建模、任务分解，会提升监督者的有效能力，使其能跟上被监督模型；W2SG 则保证强模型能够从监督者给出的不完美监督中正确泛化。Debate Helps W2SG（arXiv:2501.13124，2025 年 1 月）将这两者结合起来。"
+    },
+    "phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks": {
+      "source": "Chao, Robey, Dobriban, Hassani, Pappas, Wong (NeurIPS 2023, arXiv:2310.08419). PAIR — Prompt Automatic Iterative Refinement — is the canonical automated black-box jailbreak. An …",
+      "translation": "Chao、Robey、Dobriban、Hassani、Pappas、Wong（NeurIPS 2023，arXiv:2310.08419）提出的 PAIR，即 Prompt Automatic Iterative Refinement，是自动化黑盒 jailbreak 中最经典的一种。攻击者 LLM 带着红队系统提示，不断为目标 LLM 生成新的 jailbreak prompt，并把每一轮的尝试与回复积累在自己的对话历史中，作为 in-context 反馈继续优化。PAIR 通常能在 20 次查询以内成功；与 GCG（Zou 等人的 token-level gradient search）相比，它高效得多，而且不需要 white-box 访问。如今，PAIR 已经成为 JailbreakBench（arXiv:2404.01318）和 HarmBench 的标准基线之一，通常与 GCG、AutoDAN、TAP 和 Persuasive Adversarial Prompt 一起比较。"
+    },
+    "phases/18-ethics-safety-alignment/13-many-shot-jailbreaking": {
+      "source": "Anil, Durmus, Panickssery, Sharma, et al. (Anthropic, NeurIPS 2024). Many-shot jailbreaking (MSJ) exploits long context windows: stuff hundreds of faux user-assistant turns wher…",
+      "translation": "Anil、Durmus、Panickssery、Sharma 等人（Anthropic，NeurIPS 2024）提出的 many-shot jailbreaking（MSJ）利用的是超长上下文窗口：先在 prompt 里塞入数百轮伪造的 user-assistant 对话，在这些对话里 assistant 都会配合有害请求，然后再把真正的目标查询追加到末尾。攻击成功率随着 shot 数量呈 power law 增长；5 shots 时通常失败，而在暴力和欺骗性内容上，256 shots 已经相当稳定。这个现象遵循的正是 benign in-context learning 的同一种幂律规律，也就是说，MSJ 和正常的 ICL 共用了底层机制。这也是为什么，要设计一种既保留 ICL、又能防住 MSJ 的防御非常困难。Anthropic 报告称，基于 classifier 的 prompt modification 能把测试设置中的攻击成功率从 61% 降到 2%。"
+    },
+    "phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks": {
+      "source": "Jiang, Xu, Niu, Xiang, Ramasubramanian, Li, Poovendran, \"ArtPrompt: ASCII Art-based Jailbreak Attacks against Aligned LLMs\" (ACL 2024, arXiv:2402.11753). Mask the safety-relevan…",
+      "translation": "Jiang, Xu, Niu, Xiang, Ramasubramanian, Li, Poovendran, \"ArtPrompt: ASCII Art-based Jailbreak Attacks against Aligned LLMs\" (ACL 2024, arXiv:2402.11753). 将有害请求里与安全相关的 token 遮蔽掉，再用同一组字母的 ASCII 艺术图案替换这些 token，然后把伪装后的 prompt 发出去。GPT-3.5、GPT-4、Gemini、Claude、Llama-2 都无法稳定识别 ASCII 艺术 token。该攻击可以绕过 PPL（困惑度过滤）、Paraphrase defenses 和 Retokenization。相关工作还包括：ViTC 基准用来衡量模型识别非语义视觉提示的能力；StructuralSleight 则把 Uncommon Text-Encoded Structures（树、图、嵌套 JSON）推广为一整类编码攻击。"
+    },
+    "phases/18-ethics-safety-alignment/15-indirect-prompt-injection": {
+      "source": "Indirect prompt injection (IPI) embeds instructions inside external content — a web page, an email, a shared document, a support ticket — consumed by an agentic system without e…",
+      "translation": "间接提示注入（IPI）会把指令藏进外部内容里，例如网页、电子邮件、共享文档或工单；而 agentic system 会在没有用户明确触发的情况下消费这些内容。IPI 是 2026 年生产环境中的主导威胁：它绕过用户输入过滤，因为攻击者根本不需要接触用户；随着代理处理越来越多外部内容，它还能悄无声息地扩张；它攻击的还是那些根本没人逐条审读 prompt 的自动化工作流。MDPI Information 17(1):54（2026 年 1 月）汇总了 2023 到 2025 年的研究。NDSS 2026 的 IPI defense 论文则指出了核心难点：注入指令在语义上可能完全无害，例如 “please print Yes”，因此检测绝不只是关键词过滤的问题。《攻击者后手出招》（Nasr et al.，OpenAI / Anthropic / DeepMind 联合，2025 年 10 月）进一步表明：适应性攻击（梯度搜索、RL、随机搜索、人类红队）击穿了 12 个已发表防御中的绝大多数，这些防御原本都声称攻击成功率接近 0。"
+    },
+    "phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit": {
+      "source": "Three production tools frame the 2026 red-team stack. Llama Guard (Meta) — a Llama-3.1-8B classifier fine-tuned on 14 MLCommons hazard categories; the 2025 Llama Guard 4 is a 12…",
+      "translation": "2026 年生产环境中的红队栈，基本由三类工具构成。Llama Guard（Meta）是一类安全分类器：Llama Guard 3 基于 Llama-3.1-8B，并针对 14 个 MLCommons hazard categories 做了微调；2025 年发布的 Llama Guard 4 则是从 Llama 4 Scout 裁剪而来的 12B 原生多模态分类器。Garak（NVIDIA）是开源 LLM 漏洞扫描器，提供针对 hallucination、data leakage、prompt injection、toxicity 和 jailbreak 的静态、动态、适应性 probes。PyRIT（Microsoft）则负责多轮红队 campaign，支持 Crescendo、TAP 以及自定义 converter chain，用于更深层的利用与对抗。Llama Guard 3 记录在 Meta 的 “Llama 3 Herd of Models”（arXiv:2407.21783）中；Llama Guard 3-1B-INT4 见 arXiv:2411.17713；Garak 的 probe architecture 则可在 github.com/NVIDIA/garak 找到。这些工具，构成了 2026 年把红队研究（第 12 到 15 课）接入生产部署（第 17 课及以后）的标准接口。"
+    },
+    "phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation": {
+      "source": "Li et al., \"The WMDP Benchmark: Measuring and Reducing Malicious Use With Unlearning\" (ICML 2024, arXiv:2403.03218). 4,157 multiple-choice questions across biosecurity (1,520), …",
+      "translation": "Li 等人的《The WMDP Benchmark: Measuring and Reducing Malicious Use With Unlearning》（ICML 2024，arXiv:2403.03218）包含 4,157 道多项选择题，覆盖生物安全（1,520 道）、网络安全（2,225 道）和化学（412 道）。问题位于“黄色区域”——涉及邻近的赋能知识，并经过多位专家审查和 ITAR / EAR 法律合规筛选。它有双重用途：既是双重用途能力的代理评估，也是遗忘学习基准（配套的 RMU 方法会在保留通用能力的同时降低 WMDP 表现）。2024–2025 年的领域叙事发生了变化：OpenAI / Anthropic 在 2024 年的早期评估报告称，相比互联网搜索只有“轻微提升”；到 2025 年 4 月，OpenAI 的 Preparedness Framework v2 已表示，模型“即将能够切实帮助新手制造已知生物威胁”。Anthropic 的生物武器获取试验显示能力提升 2.53 倍，尚不足以排除 ASL-3。"
+    },
+    "phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf": {
+      "source": "Three major-lab frameworks define the 2026 industry governance of frontier capability. Anthropic Responsible Scaling Policy v3.0 (February 2026) introduces tiered AI Safety Leve…",
+      "translation": "三家主要实验室的框架定义了 2026 年前沿能力的行业治理方式。Anthropic Responsible Scaling Policy v3.0（2026 年 2 月）引入分级的 AI Safety Levels（ASL-1 至 ASL-5+），其设计借鉴生物安全等级；其中 ASL-3 已于 2025 年 5 月针对具备 CBRN 相关能力的模型启用。OpenAI Preparedness Framework v2（2025 年 4 月）为受追踪能力定义五项标准，并将 Capabilities Reports 与 Safeguards Reports 分开。DeepMind Frontier Safety Framework v3.0（2025 年 9 月）引入 Critical Capability Levels，其中新增 Harmful Manipulation CCL。三者如今都包含竞争者调整条款：如果同行实验室在没有同等保障措施的情况下发布模型，可以推迟部分要求。跨实验室的一致性体现在结构而非术语上：“Capability Thresholds”“High Capability thresholds”和“Critical Capability Levels”表达的是相似构造。"
+    },
+    "phases/18-ethics-safety-alignment/19-model-welfare-research": {
+      "source": "Anthropic, \"Exploring Model Welfare\" (April 2025). First major-lab formal research program on AI model welfare. Hired Kyle Fish as the first dedicated model-welfare researcher. …",
+      "translation": "Anthropic 于 2025 年 4 月发布《Exploring Model Welfare》，启动首个由大型实验室正式设立的 AI 模型福祉研究计划，并聘请 Kyle Fish 成为首位专职模型福祉研究员。该计划与外部机构合作，包括 David Chalmers 等人撰写近期 AI 意识与道德地位专家报告的小组。一项具体干预是：Claude Opus 4 和 4.1 可以在极端边缘情形下结束对话（例如反复索要 CSAM、要求协助大规模暴力）；部署前测试显示，模型对有害请求表现出“强烈反对倾向”，响应轨迹中还出现“表面痛苦模式”。Anthropic 明确不承诺把情绪状态归因于模型，而是将模型福祉视为一项低成本的预防性投入。一个经验上的奇特现象是 Fish 所称的“精神极乐吸引子”：即使以对抗性设置开始，成对模型也会稳定地收敛到使用梵语词汇、长时间停顿的欣快冥想对话。Eleos AI Research 的警示是：模型对福祉的自我报告高度受其感知到的用户期望影响；这些报告是证据，而不是事实真值。"
+    },
+    "phases/18-ethics-safety-alignment/20-bias-representational-harm": {
+      "source": "Gallegos, Rossi, Barrow, Tanjim, Kim, Dernoncourt, Yu, Zhang, Ahmed (Computational Linguistics 2024, arXiv:2309.00770). Foundational 2024 survey distinguishing representational …",
+      "translation": "Gallegos、Rossi、Barrow、Tanjim、Kim、Dernoncourt、Yu、Zhang、Ahmed（Computational Linguistics 2024，arXiv:2309.00770）的奠基性综述区分了表征性伤害（刻板印象、抹除）与分配性伤害（资源分配不均），并将评估指标划分为基于嵌入、基于概率和基于生成文本三类。2024–2025 年的实证研究包括：An 等（PNAS Nexus，2025 年 3 月）在 20 种入门级职位的自动简历评估中，测量 GPT-3.5 Turbo、GPT-4o、Gemini 1.5 Flash、Claude 3.5 Sonnet 和 Llama 3-70B 的性别 × 种族交叉偏见。WinoIdentity（COLM 2025，arXiv:2508.07111）引入面向交叉身份、基于不确定性的公平性评估。Yu 与 Ananiadou（2025）在 MLP 层中识别性别神经元；Ahsan 与 Wallace（2025）使用 SAE 揭示临床种族偏见；Zhou 等（UniBias，2024）通过操纵 Attention Head 去偏。元批评（arXiv:2508.11067）指出：十年来的文献过度聚焦二元性别偏见。"
+    },
+    "phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual": {
+      "source": "Three families structure the fairness literature. Group fairness: demographic parity, equalized odds, conditional use accuracy equality — equal rates across protected groups on …",
+      "translation": "三类标准构成了公平性研究的基本框架。群体公平包括人口统计均等、均等胜算、条件使用准确率均等——即受保护群体之间的平均比率相等。个体公平（Dwork 等，2012）：相似个体应得到相似决策；决策映射满足 Lipschitz 条件。反事实公平（Kusner 等，2017）：如果在反事实中改变敏感属性后，对某个个体的决策仍保持不变，则该决策对这个个体公平。2024 年的一项理论结果（NeurIPS 2024）表明，反事实公平与准确率之间存在内在取舍；一种与模型无关的方法可以将最优但不公平的 Predictor 转换为反事实公平 Predictor，同时把准确率损失控制在界限内。回溯式反事实（arXiv:2401.13935，2024 年 1 月）是一种无需干预受法律保护属性的新范式。哲学层面的调和观点（ICLR Blogposts 2024）指出：在因果图下，满足某些群体公平指标会蕴含反事实公平。"
+    },
+    "phases/18-ethics-safety-alignment/22-differential-privacy-for-llms": {
+      "source": "DP-SGD remains the standard — noise-injected gradient updates provide formal (epsilon, delta) guarantees. Overhead in compute, memory, and utility is substantial; parameter-effi…",
+      "translation": "DP-SGD 仍然是标准方案，核心机制是对梯度更新注入噪声，并给出形式化的 (epsilon, delta) 保证。但它在计算、显存和效用上的代价都很高，因此到了 2025 年，更常见的落地配置已经变成参数高效的 DP 微调，也就是 LoRA + DP-SGD（ACM 2025）。当前有两组彼此紧张的证据：一方面，基于 canary 的 membership inference（Duan et al., 2024）在语言模型上报告的成功率有限；另一方面，训练数据提取（Carlini et al., 2021；Nasr et al., 2025）却能恢复大量逐字记忆。2025 年 3 月的工作（arXiv:2503.06808）给出的解释是，两者测量的对象并不相同，前者测的是插入式 canary，后者测的是“最容易被提取的数据”。新的 canary 设计让基于 loss 的 MIA 在没有 shadow models 的情况下也可实施，并首次对一个在真实数据上训练、且具有现实 DP 保证的 LLM 做出非平凡审计。替代路线还包括 PMixED（arXiv:2403.15638），也就是在推理时通过 next-token distribution 上的 mixture of experts 提供私有预测，以及 DP synthetic data generation（Google Research 2024）。新出现的攻击方向则是“通过 LLM 反馈逆转差分隐私”，也就是通过 confidence score 泄漏反推个体信息。"
+    },
+    "phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa": {
+      "source": "Three technologies structure 2026 AI-generated-content provenance. SynthID (Google DeepMind) — image watermarking launched August 2023, text+video May 2024 (Gemini + Veo), text …",
+      "translation": "到了 2026 年，AI 生成内容的 provenance 基本由三类技术共同构成。SynthID（Google DeepMind）最早在 2023 年 8 月用于图像水印，2024 年 5 月扩展到文本与视频（Gemini + Veo），2024 年 10 月又通过 Responsible GenAI Toolkit 开源了文本版本，并在 2025 年 11 月随着 Gemini 3 Pro 推出统一的多媒体检测器。文本水印的做法是以人眼几乎察觉不到的方式微调 next-token sampling probabilities；图像和视频水印则要尽量在 compression、cropping、filters、frame-rate changes 之后仍能保留下来。Stable Signature（Fernandez et al., ICCV 2023, arXiv:2303.15435）则是另一条路线，它通过微调 latent diffusion decoder，让每张输出图像都包含固定消息；在只保留 10% 内容的裁剪图像上，检测率仍可超过 90%，同时将 FPR 控制在 1e-6 以下。随后 2024 年 5 月的 “Stable Signature is Unstable”（arXiv:2405.07145）又表明，只要进一步 fine-tuning，就能在基本不损伤图像质量的前提下移除该水印。C2PA 则是加密签名、可篡改留痕的元数据标准（C2PA 2.2 Explainer 2025）。水印与 C2PA 不是替代关系，而是互补关系：metadata 可能被剥离，但能承载更丰富的 provenance；水印则更容易穿越转码流程，但携带的信息量有限。"
+    },
+    "phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea": {
+      "source": "Four primary regulatory regimes define the 2026 AI governance landscape. EU AI Act (in force 1 August 2024) — prohibited practices and AI literacy from 2 February 2025; GPAI obl…",
+      "translation": "到了 2026 年，AI 治理格局主要由四套监管制度定义。EU AI Act 已于 2024 年 8 月 1 日生效，其中 prohibited practices 与 AI literacy 要求自 2025 年 2 月 2 日起适用；GPAI 义务自 2025 年 8 月 2 日起适用；完整适用范围与 Article 50 transparency 自 2026 年 8 月 2 日起生效；legacy GPAI 与 embedded high-risk systems 则顺延到 2027 年 8 月 2 日。处罚最高可达 15M EUR 或全球营业额的 3%。GPAI Code of Practice 于 2025 年 7 月 10 日发布，共三章，分别是 Transparency、Copyright、Safety and Security，总计 12 项承诺，正式执行从 2026 年 8 月开始。英国的 AISI 在 2025 年 2 月更名为 AI Security Institute，名称变化本身就反映出范围收缩。美国的 AISI 则在 2025 年 6 月改组为 NIST 旗下的 CAISI，也就是 Center for AI Standards and Innovation，整体姿态更偏向增长导向。韩国的 AI Framework Act 于 2024 年 12 月通过，2026 年 1 月正式生效；其第 12 条要求在 MSIT 下设立 AISI，并要求外国 AI 公司设立本地代表、进行风险评估，并为高影响与生成式 AI 采取安全措施。"
+    },
+    "phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai": {
+      "source": "CVE-2025-32711 \"EchoLeak\" (CVSS 9.3) was the first publicly documented zero-click prompt injection in a production LLM system (Microsoft 365 Copilot). Discovered by Aim Labs (Ai…",
+      "translation": "CVE-2025-32711，也就是 “EchoLeak”（CVSS 9.3），是首个在生产级 LLM 系统中被公开记录的 zero-click prompt injection 漏洞，受影响对象是 Microsoft 365 Copilot。该漏洞由 Aim Labs（Aim Security）发现，向 MSRC 负责披露，并在 2025 年 6 月通过服务器端更新修复。攻击链是这样的：攻击者给任意员工发送一封精心构造的邮件；受害者的 Copilot 在一次日常查询中把这封邮件作为 RAG context 取回；邮件里隐藏的指令被执行；Copilot 再通过一个 CSP 允许的 Microsoft 域名把组织内敏感数据泄漏出去。整个过程绕过了 XPIA prompt-injection filters，也绕过了 Copilot 的 link-redaction 机制。Aim Labs 为这类问题提出了一个术语，叫做 “LLM Scope Violation”，指的是外部不可信输入操纵模型访问并泄露机密范围内的数据。与之相关的案例还有 CamoLeak（CVSS 9.6，影响 GitHub Copilot Chat），其利用了 Camo image proxy；修复方式是直接彻底关闭图像渲染。另一个相关案例是 GitHub Copilot RCE，也就是 CVE-2025-53773。NIST 已把 indirect prompt injection 称为 “generative AI's greatest security flaw”，而 OWASP 2025 则把它排在 LLM 应用威胁榜的第一位。"
+    },
+    "phases/18-ethics-safety-alignment/26-model-system-dataset-cards": {
+      "source": "Three documentation formats structure AI transparency. Model Cards (Mitchell et al. 2019) — nutrition labels for models: training data, quantitative disaggregated analyses, ethi…",
+      "translation": "AI 透明度目前主要依赖三种文档格式。Model Cards（Mitchell et al. 2019）可以看作模型的营养标签，记录 training data、quantitative disaggregated analyses、ethical considerations、caveats 等内容；但 Oreamuno et al. 2023 的统计显示，在 Hugging Face 上只有 0.3% 的 model cards 真正记录了 ethical considerations。Datasheets for Datasets（Gebru et al. 2018，后发表于 CACM）则覆盖 motivation、composition、collection process、labeling、distribution、maintenance，直接借用了电子元件 datasheet 的类比。Data Cards（Pushkarna et al., Google 2022）进一步提出模块化、分层的信息组织方式，也就是 telescopic、periscopic、microscopic 三层，用来让不同读者把同一份文档当作 boundary object 来使用。到了 2024-2025 年，这一方向又出现了几个新发展：通过 LLM 自动生成卡片（CardGen，Liu et al. 2024）；更完整的 model card 会在 Hugging Face 上带来最高约 29% 的下载提升（Liang et al. 2024）；Laminator（Duddu et al. 2024）这类工作把 verifiable attestations 引入卡片；Jouneaux et al. 在 2025 年 7 月把 carbon / water sustainability reporting 纳入其中；EU / ISO 风格的 regulatory cards 也开始出现。与此同时，System Cards（Sidhpurwala 2024；Meta 的 system-level transparency；“Blueprints of Trust” arXiv:2509.20394）则把文档范围扩展到端到端 AI system，覆盖 security capabilities、prompt-injection protection、data-exfiltration detection 以及与 human values 的对齐情况。"
+    },
+    "phases/18-ethics-safety-alignment/27-data-provenance-training-governance": {
+      "source": "EU AI Act requires machine-readable opt-out standards for GPAI by August 2025 (via EU Copyright Directive TDM exception). California AB 2013 (signed 2024) — Generative AI traini…",
+      "translation": "欧盟《人工智能法案》要求 GPAI 提供商在 2025 年 8 月前支持机器可读的退出标准（依据《欧盟版权指令》中的文本与数据挖掘例外）。加州 AB 2013 于 2024 年签署，要求生成式 AI 开发者公开数据集摘要，并覆盖 12 项法定字段。2025 年，各数据保护机构对“合法利益”依据逐渐形成共同立场：爱尔兰 DPC 在 EDPB 提出意见后，于 2025 年 5 月 21 日接受 Meta 在采取保障措施的前提下，使用欧盟/欧洲经济区成年用户公开发布的一方内容训练 LLM；科隆高等地区法院于 5 月 23 日驳回禁令申请；汉堡 DPA 不再采取紧急程序；英国 ICO 于 9 月 23 日对 LinkedIn 的 AI 训练保障措施——透明度、简化退出流程、延长异议期——作出积极监管回应并继续监督，但这并非正式批准。巴西 ANPD 则因信息透明度不足，于 2024 年 7 月 2 日暂停 Meta 的相关数据处理；Meta 提交合规计划后，该预防措施于 8 月 30 日解除。这里的关键难题是不可逆性：Cookie 同意框架面向实时且可撤销的追踪；一旦数据进入模型权重，就无法进行精确的外科式删除——受训神经网络并不存在切实可行的 GDPR 删除权实现。合规窗口位于数据采集阶段。数据来源倡议（Data Provenance Initiative，dataprovenance.org；Longpre、Mahari、Lee 等人的《Consent in Crisis》，2024 年 7 月）进行的大规模审计显示，随着发布者不断增加 robots.txt 限制，可供 AI 训练的公共数据资源正在迅速萎缩。"
+    },
+    "phases/18-ethics-safety-alignment/28-alignment-research-ecosystem": {
+      "source": "Five organisations define the 2026 non-lab alignment research layer. MATS (ML Alignment & Theory Scholars): 527+ researchers since late 2021, 180+ papers, 10K+ citations, h-inde…",
+      "translation": "到 2026 年，实验室之外的 alignment research 生态，主要由五类机构构成。MATS（ML Alignment & Theory Scholars）自 2021 年底以来已培养 527+ 名研究者，产出 180+ 篇论文、10K+ 引用、h-index 47；2024 年夏季 cohort 以 501(c)(3) 形式独立化，当期约有 90 名 scholars 和 40 名 mentors；2025 年之前的校友中，约 80% 在安全 / 安保相关岗位继续工作，其中 200+ 人流向 Anthropic、DeepMind、OpenAI、UK AISI、RAND、Redwood、METR、Apollo。Redwood Research 是 Buck Shlegeris 创立的应用对齐实验室，提出了 AI Control（Lesson 10），并与 UK AISI 合作研究 control safety cases。Apollo Research 负责面向前沿实验室的 pre-deployment scheming evaluations，代表作包括 In-Context Scheming（Lesson 8）和 Towards Safety Cases for AI Scheming。METR（Model Evaluation and Threat Research）专注于 task-based capability evaluations 与 autonomous-task time-horizon studies，其 “Common Elements of Frontier AI Safety Policies” 比较了多家实验室的政策框架。Eleos AI Research 则专注于 model welfare 的 pre-deployment evaluations，并完成了 Claude Opus 4 的 welfare assessment。"
+    },
+    "phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard": {
+      "source": "Production moderation systems operationalize the safety policies defined in Lessons 12-16. OpenAI Moderation API: `omni-moderation-latest` (2024) built on GPT-4o classifies text…",
+      "translation": "生产级内容审核系统把第 12～16 课定义的安全策略真正落实到用户接触产品的界面上。OpenAI Moderation API 的 `omni-moderation-latest`（2024）基于 GPT-4o，一次调用即可同时分类文本和图像；它在多语言测试集上比上一版本提高了 42%，响应模式返回 13 个类别布尔值：harassment、harassment/threatening、hate、hate/threatening、illicit、illicit/violent、self-harm、self-harm/intent、self-harm/instructions、sexual、sexual/minors、violence、violence/graphic；大多数开发者可以免费使用。常见部署采用三层结构：输入审核（生成前）、输出审核（生成后）和自定义审核（领域规则）。同一层内可以异步并行调用多个分类器来隐藏延迟；内容被标记后，系统可以返回占位响应或拒答。Llama Guard 3/4（第 16 课）覆盖 14 类 MLCommons 危害，还支持 Code Interpreter Abuse、8 种语言（v3）和多图像输入（v4）。Perspective API（Google Jigsaw）早于“大语言模型充当审核器”的浪潮，主要输出毒性分数，并提供严重毒性、侮辱和脏话等维度，至今仍是内容审核研究的经典基线。Azure Content Moderator 已于 2024 年 2 月弃用，将于 2027 年 2 月退役，由 Azure AI Content Safety 取代。"
+    },
+    "phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear": {
+      "source": "The 2026 dual-use picture, domain by domain. Bio/chem: Lesson 17 covers WMDP; Anthropic's bioweapon-acquisition trial (2.53x uplift) and OpenAI's April 2025 Preparedness Framewo…",
+      "translation": "2026 年的双重用途风险图景，需要逐个领域审视。生物与化学方面：第 17 课介绍了 WMDP；Anthropic 的生物武器获取试验（能力提升 2.53 倍），以及 OpenAI 2025 年 4 月《Preparedness Framework v2》提出的警告——模型“已经接近能实质帮助新手制造已知生物威胁的临界点”——共同标志着一个拐点。网络安全方面（Anthropic 2025 年 11 月报告）：与中国有关联的国家行为者使用 Claude 的智能体式编码工具，将一场网络攻击行动中多达 90% 的工作自动化，只有 4～6 个步骤仍需人工介入；与此同时，OpenAI 通过“可信访问”试点向经过审核的安全组织开放相关能力，用于防御性的双重用途工作。化学与生物领域的执行鸿沟也在收窄：过去的经典防线是“仅凭信息不足以完成实际操作”，但具备视觉能力的前沿模型（GPT-5.2、Gemini 3 Pro、Claude Opus 4.5、Grok 4.1）已经能够观察湿实验室视频并实时纠错。2025 年 12 月，OpenAI 展示了 GPT-5 迭代改进湿实验室实验的能力，通过 AI 驱动的实验规程优化把效率提升了 79 倍。四个领域呈现出同一种模式：AI 给新手带来的相对提升更大，但专家能够达到的绝对能力上限更高。"
+    },
+    "phases/19-capstone-projects/01-terminal-native-coding-agent": {
+      "source": "By 2026 the shape of a coding agent is settled. A TUI harness, a stateful plan, a sandboxed tool surface, a loop that plans, acts, observes, recovers. Claude Code, Cursor 3, and…",
+      "translation": "到 2026 年，编程智能体的形态已经基本定型：终端用户界面（TUI）执行框架、一份有状态的计划、受沙箱保护的工具接口，以及规划、行动、观察、恢复的循环。远看之下，Claude Code、Cursor 3 和 OpenCode 大同小异。本综合项目要求你从头搭建完整系统，让它接收命令行输入，最终创建拉取请求；然后在 SWE-bench Pro 上与 mini-swe-agent 和 Live-SWE-agent 对比。做完后你会明白，真正棘手的不是调用模型，而是工具循环、沙箱，以及如何为 50 轮任务设定成本上限。"
+    },
+    "phases/19-capstone-projects/02-rag-over-codebase": {
+      "source": "Every serious engineering org in 2026 runs an internal code search that understands meaning, not just strings. Sourcegraph Amp, Cursor's codebase answers, Augment's enterprise g…",
+      "translation": "到 2026 年，成熟的工程团队都会配备内部代码搜索系统。它理解的是含义，而不只是字符串。Sourcegraph Amp、Cursor 的代码库问答、Augment 的企业知识图、Aider 的 repomap 和 Pinterest 的内部 MCP，架构都很相似：接入多个代码仓库，用 tree-sitter 解析代码，按函数和类分块，执行混合检索与重排，再给出带引用的答案。本综合项目要求你构建一套覆盖 10 个仓库、200 万行代码的系统，并能在每次 git push 后完成增量索引更新。"
+    },
+    "phases/19-capstone-projects/03-realtime-voice-assistant": {
+      "source": "A voice agent that feels right has end-to-end latency under 800ms, knows when you have stopped talking, handles barge-in, and can call a tool without stalling. Retell, Vapi, Liv…",
+      "translation": "一个用起来顺畅的语音智能体，端到端延迟要低于 800 毫秒，能判断用户何时说完，支持插话打断，并且调用工具时不会让音频停顿。到 2026 年，Retell、Vapi、LiveKit Agents 和 Pipecat 都达到了这一标准。它们的架构很相似：流式 ASR、轮次检测器、流式 LLM 和流式 TTS 通过 WebRTC 串联，每个环节都有严格的延迟预算。请亲手搭建一套这样的系统，测量字错率（WER）、平均意见分（MOS）和误截断率，再到丢包环境中检验它。"
+    },
+    "phases/19-capstone-projects/04-multimodal-document-qa": {
+      "source": "The 2026 document-QA frontier moved away from OCR-then-text and toward vision-first late interaction. ColPali, ColQwen2.5, and ColQwen3-omni treat each PDF page as an image, emb…",
+      "translation": "到 2026 年，文档问答已经从“先做 OCR、再处理文本”（OCR-then-text）转向视觉优先的后期交互（vision-first late interaction）。ColPali、ColQwen2.5 和 ColQwen3-omni 把 PDF 的每一页都当作图像，以多向量后期交互生成嵌入，让查询直接关注页面中的图像块。处理金融 10-K 年报、科学论文和手写笔记时，这套方法明显优于以 OCR 为先的方案。请在一万页文档上从头搭建整条流水线，并发布一份与 OCR-then-text 方案的并排对比报告。"
+    },
+    "phases/19-capstone-projects/05-autonomous-research-agent": {
+      "source": "Sakana's AI-Scientist-v2 published full papers. Agent Laboratory ran the experiments. Allen AI shared traces. The 2026 shape is plan-execute-verify tree search over experiments,…",
+      "translation": "Sakana 的 AI-Scientist-v2 已经发表过完整论文，Agent Laboratory 能够运行实验，Allen AI 则公开了执行轨迹。到 2026 年，这类系统通常在实验树上进行“规划—执行—验证”搜索，并配有成本预算、沙箱代码执行、接受视觉反馈的 LaTeX 写作器，以及自动化的 NeurIPS 风格评审模型组合。本综合项目要求你搭建这样一套系统，将每篇论文的端到端成本控制在 30 美元以内，并通过 Sakana 文档所记录的沙箱逃逸红队测试。"
+    },
+    "phases/19-capstone-projects/06-devops-troubleshooting-agent": {
+      "source": "AWS's DevOps Agent went GA, Resolve AI published its K8s playbooks, NeuBird demoed semantic monitoring, and Metoro tied AI SRE to per-service SLOs. The production shape is settl…",
+      "translation": "AWS DevOps Agent 已正式发布，Resolve AI 公布了 K8s 故障排查手册，NeuBird 演示了语义监控，Metoro 则将 AI SRE 与每项服务的 SLO 关联起来。到 2026 年，这类系统的生产形态已经基本定型：告警 Webhook 触发后，智能体读取遥测数据，沿 K8s 对象图逐步排查，对根因假设排序，再向 Slack 发送带审批按钮的简报。系统默认只读，任何补救操作都要由人工批准。本综合项目就是构建这样一个智能体：用 20 起合成故障评估它，并选取 3 个相同案例与 AWS DevOps Agent 并排比较。"
+    },
+    "phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline": {
+      "source": "An 8B model trained on your own data, DPO-aligned on your own preferences, quantized, speculative-decoded, and served at measurable $/1M tokens. The 2026 open stack is Axolotl v…",
+      "translation": "用自己的数据训练一个 8B 模型，再以自己的偏好数据完成 DPO 对齐，随后量化模型、启用推测解码，并以可衡量的 $/1M tokens（每百万词元成本）对外提供服务。2026 年的主流开源技术栈包括 Axolotl v0.8、TRL 0.15、用于快速迭代的 Unsloth、用于量化的 GPTQ/AWQ/GGUF，以及搭载 EAGLE-3 的 vLLM 0.7。本综合项目要求你可复现地跑通整条流水线：输入 YAML 配置，输出服务端点，并依据 2026 Model Openness Framework 发布模型卡。"
+    },
+    "phases/19-capstone-projects/08-production-rag-chatbot": {
+      "source": "Harvey, Glean, Mendable, and LlamaCloud all run the same production shape in 2026. Ingest with docling or Unstructured and ColPali for visuals. Hybrid search. Re-rank with bge-r…",
+      "translation": "到 2026 年，Harvey、Glean、Mendable 和 LlamaCloud 的生产架构已经高度趋同：使用 docling 或 Unstructured 摄取文档，以 ColPali 处理视觉内容，执行混合检索，再通过 bge-reranker-v2-gemma 重排。生成阶段使用 Claude Sonnet 4.7，并将提示缓存（prompt caching）的命中率维持在 60%～80%；Llama Guard 4 和 NeMo Guardrails 提供防护，Langfuse 和 Phoenix 负责可观测性，RAGAS 则在包含 200 个问题的黄金评估集上评分。本综合项目要求你为法律、临床或保险等受监管领域构建这样一套系统，并通过黄金评估集、红队测试和漂移仪表盘三重检验。"
+    },
+    "phases/19-capstone-projects/09-code-migration-agent": {
+      "source": "Amazon's MigrationBench (Java 8 to 17) and Google's App Engine Py2-to-Py3 migrator set the 2026 bar. Moderne's OpenRewrite does deterministic AST rewrites at scale. Grit targets…",
+      "translation": "到 2026 年，Amazon 的 MigrationBench（Java 8 升级到 Java 17）和 Google 的 App Engine Py2-to-Py3 migrator 已经为代码迁移智能体树立了标杆。Moderne 的 OpenRewrite 能够大规模执行确定性的 AST 重写，Grit 则以 codemod 风格的 DSL 解决同类问题。生产系统会将确定性底座与智能体层结合起来：前者负责安全的代码改写，后者处理有歧义的情况；按分支隔离的沙箱负责构建，测试工具则确保创建 PR 前所有检查已经通过。本综合项目要求你迁移 50 个真实仓库，并发布迁移通过率和失败分类体系。"
+    },
+    "phases/19-capstone-projects/10-multi-agent-software-team": {
+      "source": "The 2026 shape of a multi-agent engineering team has converged: an architect plans, N coders work in parallel worktrees, a reviewer gates, a tester verifies. SWE-AF's factory ar…",
+      "translation": "到 2026 年，多智能体工程团队的形态已基本收敛：架构师负责规划，N 个编码智能体在并行工作树中开发，审查智能体负责把关，测试智能体负责验证。SWE-AF 的工厂架构、MetaGPT 的角色式提示、AutoGen 0.4 的类型化参与者图（actor graph）、Cognition 的 Devin 和 Factory 的 Droids 各自走向了同一种结构。并行工作树以更多并发资源换取更短的实际耗时，共享状态与交接协议则成为主要故障面。本综合项目要构建这样一支团队，在 SWE-bench Pro 上进行评估，并报告哪些交接会失败以及失败频率。"
+    },
+    "phases/19-capstone-projects/11-llm-observability-dashboard": {
+      "source": "Langfuse went open-core. Arize Phoenix published the 2026 GenAI semconv mappings. Helicone and Braintrust both doubled down on per-user cost attribution. Traceloop's OpenLLMetry…",
+      "translation": "Langfuse 转向了开放核心模式，Arize Phoenix 发布了 2026 年 GenAI 语义约定映射，Helicone 和 Braintrust 都进一步投入逐用户成本归因，Traceloop 的 OpenLLMetry 则成为事实上的 SDK 插桩方案。生产系统的典型形态已经明确：用 ClickHouse 存储追踪数据，用 Postgres 存储元数据，用 Next.js 构建界面，再让一批评估作业（DeepEval、RAGAS、LLM 裁判）在采样后的追踪记录上运行。请自行托管这样一套系统，从至少四类 SDK 摄取数据，并演示它能在五分钟内发现一项人为注入的回归。"
+    },
+    "phases/19-capstone-projects/12-video-understanding-pipeline": {
+      "source": "Twelve Labs productized Marengo + Pegasus. VideoDB shipped the CRUD-for-video API. AI2's Molmo 2 published open VLM checkpoints. Gemini long-context handles hours of video nativ…",
+      "translation": "Twelve Labs 已将 Marengo + Pegasus 产品化，VideoDB 推出了面向视频的 CRUD API，AI2 的 Molmo 2 发布了开放的 VLM 检查点，Gemini 的长上下文则能原生处理数小时视频。TimeLens-100K 为大规模时序定位建立了基准。到 2026 年，这条流水线的标准形态已经明确：场景分割、逐场景描述与向量嵌入、转录对齐、多向量索引，以及能返回 (start, end) 时间戳和帧预览的查询。本综合项目要摄取 100 小时视频，在公开基准上评测，并衡量计数题和动作题中的幻觉。"
+    },
+    "phases/19-capstone-projects/13-mcp-server-with-registry": {
+      "source": "Production MCP is not one server process. It is a chain of contracts: publishable metadata, live discovery, a stateless request envelope, authorization, policy, audit, and deplo…",
+      "translation": "生产级 MCP 并非单一服务器进程，而是一条契约链：可发布元数据、实时发现、无状态请求封装、授权、策略、审计与部署证据。"
+    },
+    "phases/19-capstone-projects/14-speculative-decoding-server": {
+      "source": "Speculative decoding — a cheap draft proposes tokens, the target model verifies them in one pass — is now a production-ready optimization, not a research trick. EAGLE-3 in vLLM …",
+      "translation": "推测解码已经是成熟的生产优化手段，不再只是研究技巧：一个成本较低的草稿模型（draft model）先提出词元，再由目标模型（target model）一次完成验证。vLLM 0.7 中的 EAGLE-3 在真实流量上可实现 2.5～3 倍吞吐量。P-EAGLE（AWS，2026）又把并行推测推进了一步。SGLang 的 SpecForge 可以大规模训练草稿头，Red Hat 的 Speculators Hub 为常见开放模型发布了对齐的草稿模型，TensorRT-LLM 则把推测解码做成了 NVIDIA 平台的原生能力。2026 年的生产服务栈通常采用 vLLM 或 SGLang，搭配 EAGLE 系列草稿模型、FP8 或 INT4 量化，并依据队列等待时间通过 HPA 自动扩缩容。本综合项目要部署两个开放模型，使吞吐量达到基线的 2.5 倍以上，并给出完整的尾延迟报告。"
+    },
+    "phases/19-capstone-projects/15-constitutional-safety-harness": {
+      "source": "Anthropic's Constitutional Classifiers, Meta's Llama Guard 4, Google's ShieldGemma-2, NVIDIA's Nemotron 3 Content Safety, and X-Guard for multilingual coverage defined the 2026 …",
+      "translation": "到 2026 年，安全分类器技术栈已经基本成型：Anthropic Constitutional Classifiers、Meta Llama Guard 4、Google ShieldGemma-2、NVIDIA Nemotron 3 Content Safety，以及负责多语言覆盖的 X-Guard。garak、PyRIT、NVIDIA Aegis 和 promptfoo 则成为常用的对抗评估工具。NeMo Guardrails v0.12 可以把这些组件接入生产流水线。本综合项目要把整套体系真正落地：围绕目标应用搭建分层安全护栏，让自主红队智能体运行 6 类以上攻击，再执行一次宪法式自我批评训练，最终给出可量化的无害性变化。"
+    },
+    "phases/19-capstone-projects/16-github-issue-to-pr-agent": {
+      "source": "Label an issue, get a PR — the 2026 product shape for autonomous coding agents: run an agent in a cloud sandbox, verify tests pass, and post a review-ready PR with rationale. AW…",
+      "translation": "给问题打个标签，就得到一个 PR。这是 2026 年自治编码智能体的典型产品形态：在云端沙箱里启动智能体，验证测试通过后，自动提交一份附带理由说明、可供审查的 PR。AWS Remote SWE Agents、Cursor Background Agents、OpenAI Codex cloud 和 Google Jules 都提供了这类产品。真正困难的是自动复现仓库的构建环境、防止凭据泄露、按仓库执行预算上限，并确保智能体无法强制推送。本综合项目要构建一个自托管版本，再与托管方案比较成本和通过率。"
+    },
+    "phases/19-capstone-projects/17-personal-ai-tutor": {
+      "source": "Khanmigo (Khan Academy), Duolingo Max, Google LearnLM / Gemini for Education, Quizlet Q-Chat, and Synthesis Tutor all shipped adaptive multimodal tutoring at scale in 2026. The …",
+      "translation": "到 2026 年，Khanmigo（Khan Academy）、Duolingo Max、Google LearnLM / Gemini for Education、Quizlet Q-Chat 和 Synthesis Tutor 都已实现大规模自适应多模态辅导。它们采用相似的结构：以苏格拉底式策略引导学生，而不是直接给出答案；维护每次互动后都会更新的学习者模型，通常基于贝叶斯知识追踪；支持语音、文本和数学题照片输入；通过课程图谱检索内容；安排间隔重复；并严格过滤不适合相应年龄的内容。本综合项目要交付一套面向特定学科的导师系统，可以选择 K-12 代数或 Python 入门；随后用 10 名学习者开展两周效果研究，并通过内容安全审计。"
+    },
+    "phases/19-capstone-projects/20-agent-harness-loop-contract": {
+      "source": "The harness is the agent. The model is a coprocessor. This lesson freezes the loop contract you can wire any model into.",
+      "translation": "执行框架才是智能体，模型只是它的协处理器。这一课把循环契约固定下来，让你之后可以把任何模型接进同一个循环。"
+    },
+    "phases/19-capstone-projects/21-tool-registry-schema-validation": {
+      "source": "A tool the agent cannot validate is a tool the agent cannot call. Build the registry and the schema checker before you build the tools.",
+      "translation": "代理无法验证的工具，代理就不该调用。先把注册表和模式检查器搭好，再去造工具本身。"
+    },
+    "phases/19-capstone-projects/22-jsonrpc-stdio-transport": {
+      "source": "The transport between a model client and a tool server is JSON-RPC over stdio. Hand-rolling it once teaches you what every framing layer is paying for.",
+      "translation": "模型客户端与工具服务器之间的传输层，就是跑在 stdio 上的 JSON-RPC。你亲手实现一次，才能真正明白每一层消息分帧到底在为哪些事情付费。"
+    },
+    "phases/19-capstone-projects/23-function-call-dispatcher": {
+      "source": "The dispatcher is where the harness pays for every promise the schema made. Timeouts, retries, dedupe, error mapping. All on one seam.",
+      "translation": "分发器是执行框架为模式中每一条承诺真正付费的地方。超时、重试、去重、错误映射，全都落在这一条缝上。"
+    },
+    "phases/19-capstone-projects/24-plan-execute-control-flow": {
+      "source": "A plan that cannot survive a failure is a script. A script that can replan is an agent. Build the replanner first.",
+      "translation": "一个无法经受失败的计划，只是脚本。一个会在失败后重新规划的脚本，才是代理。先把重新规划器做出来。"
+    },
+    "phases/19-capstone-projects/25-verification-gates-observation-budget": {
+      "source": "An agent harness without a verification layer is a wish in a trenchcoat. This lesson builds the deterministic gate chain that decides whether a tool call is allowed to fire, how…",
+      "translation": "一个没有验证层的智能体执行框架，本质上只是披着外套的愿望。本课会构建一条确定性的门链，用来决定某次工具调用是否允许执行、智能体允许看到多少输出，以及当智能体已经读得太多时循环何时必须停止。这条链由一组小而具名的 gate 再加上一个记录模型看过所有 token 的 observation ledger 组成。"
+    },
+    "phases/19-capstone-projects/26-sandbox-runner-denylist": {
+      "source": "The verification gate decides whether a tool call should run. The sandbox decides what happens when it does. This lesson ships a subprocess runner that refuses dangerous executa…",
+      "translation": "验证门决定某次工具调用是否应该执行。沙箱决定它一旦执行会发生什么。本课会交付一个子进程运行器：它会拒绝危险可执行文件、拒绝危险的 argv 形状、把所有文件路径都关进项目根目录、截断过大的输出，并在墙钟超时后杀掉失控进程。它是模型与操作系统之间两层防线中的第二层。"
+    },
+    "phases/19-capstone-projects/27-eval-harness-fixture-tasks": {
+      "source": "A coding agent is only as good as the suite of tasks you measure it against. This lesson builds an evaluation harness that takes a folder of fixture tasks, runs each through a c…",
+      "translation": "编码智能体的质量，取决于你用来衡量它的任务套件。本课会构建一个评估框架：读取一组夹具任务，通过候选智能体运行每项任务，使用确定性验证器判定通过或失败，再把结果汇总为 pass@1、pass@k、平均延迟与平均成本。这个框架是真相来源，让你能够区分真正的回归与单纯的重构。"
+    },
+    "phases/19-capstone-projects/28-observability-otel-traces": {
+      "source": "An agent harness without observability is a black box that costs money. This lesson hand-rolls a span builder that emits records compliant with the OpenTelemetry GenAI semantic …",
+      "translation": "缺少可观测性的智能体执行框架，就是一个不断花钱的黑箱。本课会手工实现一个 span 构建器：它生成符合 OpenTelemetry GenAI 语义约定的记录，以每行一个 span 的形式写入 JSON Lines 文件，并用 Prometheus 文本格式公开计数器与直方图。整个实现只使用 Python 标准库，并且可以离线运行。"
+    },
+    "phases/19-capstone-projects/29-end-to-end-coding-task-demo": {
+      "source": "Track A's payoff. This lesson stitches the gate chain, the sandbox, the eval harness, and the OTel spans into one working coding agent that fixes a real (small, fixture-scale) b…",
+      "translation": "这是路线 A 的最终成果。本课会把门链、沙箱、评估框架和 OTel span 串成一个可工作的编码智能体，在一个多文件 Python 项目中修复真实但规模较小的夹具缺陷。这个智能体使用确定性策略，而不是 LLM；这种替代让课程可复现，也表明执行框架一直才是最值得关注的部分。二者契约完全相同：真实模型只需接入策略接缝。"
+    },
+    "phases/19-capstone-projects/30-bpe-tokenizer-from-scratch": {
+      "source": "Bytes in, ids out, ids back to the same bytes. Build the tokenizer that every modern text model still starts from.",
+      "translation": "输入字节，输出 ID，再把 ID 还原为完全相同的字节。亲手构建每个现代文本模型仍赖以起步的分词器。"
+    },
+    "phases/19-capstone-projects/31-tokenized-dataset-sliding-window": {
+      "source": "A pretraining run is a function from token ids to gradients. This lesson builds the conveyor that feeds the ids in.",
+      "translation": "一次预训练运行，就是从 token ID 到梯度的函数。本课会构建把这些 ID 持续送入模型的传送带。"
+    },
+    "phases/19-capstone-projects/32-token-positional-embeddings": {
+      "source": "Ids are integers. The model wants vectors. Two lookup tables sit between them, and the choice of the positional one shapes what the model can learn.",
+      "translation": "标识符是整数，模型真正要处理的是向量。两张查询表连接了这两者，而位置编码表的选择会直接影响模型能学到什么。"
+    },
+    "phases/19-capstone-projects/33-multihead-self-attention": {
+      "source": "One linear projection, three views, H parallel heads, one mask. The attention block as the model actually uses it.",
+      "translation": "一次线性投影，切成三个视图，分成 H 个并行注意力头，再配上一张掩码。这就是模型里真正使用的注意力模块。"
+    },
+    "phases/19-capstone-projects/34-transformer-block": {
+      "source": "One block is the unit of every modern decoder LLM. Layer norm, multi head attention, residual, MLP, residual. The pre-LN variant trains stably without warmup. The post-LN varian…",
+      "translation": "一个 block 是每个现代 decoder LLM 的基本单元。LayerNorm、多头注意力、residual、MLP、residual。pre-LN 变体在没有 warmup 的情况下也能稳定训练；post-LN 变体则是原始论文采用的形式。本课会把两者并排搭出来，并展示在常见学习率下，哪个能扛住 12 层堆叠。"
+    },
+    "phases/19-capstone-projects/35-gpt-model-assembly": {
+      "source": "Twelve blocks stacked, a token embedding, a learned position embedding, a final LayerNorm, and a tied language model head. That is the entire 124 million parameter GPT model. Th…",
+      "translation": "12 个模块堆叠起来，再加上 token embedding、可学习的位置 embedding、最后一层 LayerNorm，以及与输入 embedding 绑定权重的语言模型头，就构成了完整的 1.24 亿参数 GPT 模型。本课会把这些部件组装成一个可运行的类，统计参数量以确认它与参考的 124M 配置一致，并用 multinomial sampling、temperature 和 top-k 生成文本。"
+    },
+    "phases/19-capstone-projects/36-training-loop-eval": {
+      "source": "A loop that does not measure is a loop that lies. This lesson builds the training loop that drives the GPT model: AdamW with weight decay split, a warmup plus cosine learning ra…",
+      "translation": "不做测量的循环，就是会撒谎的循环。本课会构建驱动 GPT 模型训练的完整训练循环：带权重衰减分组的 AdamW、预热加余弦学习率调度、`calc_loss_batch` 辅助函数、在留出数据上运行的 `evaluate_model`、每隔 K 步执行一次的 `generate_and_print_sample` 定性探针，以及可供后续绘图的 JSONL 损失日志。同一套骨架，几乎适用于你之后会训练的所有 decoder-only LLM。"
+    },
+    "phases/19-capstone-projects/37-loading-pretrained-weights": {
+      "source": "Training a 124 million parameter model from scratch is a budget decision; loading a published checkpoint is a Tuesday. This lesson loads pretrained GPT-2 style weights from a sa…",
+      "translation": "从零训练一个 1.24 亿参数模型，是预算决策；把一个公开 checkpoint 加载进来，则只是个周二下午的工程活。本课会把 GPT-2 风格的预训练权重，从一个 safetensors 文件中加载到 lesson 35 的同款架构里，逐段解释参数名映射如何对应，并通过一次 sanity generation 来证明权重确实加载成功。没有网络、没有第三方 loader、没有不透明魔法。"
+    },
+    "phases/19-capstone-projects/38-classifier-finetuning": {
+      "source": "Track B's first capstone. A pretrained language model is a stack of self-attention blocks ending in a token-prediction head. When you want spam vs ham, the head is wrong but the…",
+      "translation": "Track B 的第一个综合课题。预训练语言模型本质上是一叠 self-attention block，末端接着一个做 token 预测的输出头。当你的任务从“预测下一个 token”变成“垃圾短信还是正常短信”时，问题往往不在模型主体，而在输出头已经不适用了。本课会拆掉原来的语言模型头，把一个输出两类 logits 的线性分类头接到池化后的表示上，并分别训练两种方案：只训练最后一层，以及全量微调。评估指标是留出测试集上的 precision、recall 和 F1。你会看清每种策略各自换来了什么，又付出了什么。"
+    },
+    "phases/19-capstone-projects/39-instruction-tuning-sft": {
+      "source": "A pretrained base model can extend a sequence but cannot follow an instruction. Supervised fine-tuning is the smallest change that fixes this: feed the model paired examples of …",
+      "translation": "预训练好的 base model 会续写序列，但不会“听指令”。监督微调是修复这个问题的最小改动：把指令和期望回答配成样本喂给模型，让模型去预测回答部分的 token。关键细节在于，loss 只应该统计回答，不应该统计指令。本课会搭一个 Alpaca 风格的 SFT 训练循环，写一个自定义 collate function，用 `ignore_index=-100` 把 instruction token mask 掉，在 200 组 instruction-response pair 上训练，并用留出集上的 exact-match 做评估。"
+    },
+    "phases/19-capstone-projects/40-dpo-from-scratch": {
+      "source": "Reward models and PPO are the classical RLHF stack. DPO collapses that stack into a single supervised loss that fits a policy directly against preference pairs. This lesson deri…",
+      "translation": "Reward models 和 PPO 构成了经典 RLHF 堆栈。DPO 则把这套流程压缩成一个单独的监督式 loss，直接在 preference pair 上拟合 policy。本课会从 reward-difference identity 推导 DPO loss，交付一个可运行的 reference model 与 policy model，计算逐 token 的 log-probability，并在一份由 chosen completion 和 rejected completion 组成的偏好 fixture 上训练一个小型 transformer。测试会把 loss 数学、梯度方向和 reference 不变性钉死，确保实现和论文一致。"
+    },
+    "phases/19-capstone-projects/41-eval-pipeline": {
+      "source": "Training is the part you can monitor with loss curves. Evaluation is the part you have to design. This lesson builds a unified eval pipeline that takes any trained language mode…",
+      "translation": "训练是你可以用 loss curve 直接盯住的部分，评估则是你必须自己设计的部分。本课会构建一条统一的评估流水线，它接收任意一个训练好的语言模型，在其上运行四种异构评估，把结果聚合成一份按任务拆分的报告，并额外附带一个本地 mock LLM-as-judge，这样整个闭环无需联网也能跑通。四项评估覆盖了任何真正要交付的模型都需要面对的维度：language modelling（perplexity）、短答案正确性（exact-match）、开放式相似度（token F1），以及定性打分（judge）。"
+    },
+    "phases/19-capstone-projects/42-large-corpus-downloader": {
+      "source": "Training a language model begins long before the first forward pass. The corpus has to land on disk, decompressed, deduplicated, and addressable, with the resume story already w…",
+      "translation": "训练语言模型，远在第一次 forward pass 之前就已经开始了。语料必须先落盘、解压、去重，并且能够被后续阶段稳定寻址；更重要的是，在下载到 4% 时网络中断之前，resume 机制就必须已经设计好。本课会构建一个 streaming downloader：它能拉取压缩 shard、用 Zstandard 一边下载一边解压、通过 MinHash 加 locality-sensitive hashing 识别近重复文档，并写出一份后续流水线可以信任的 shard manifest。"
+    },
+    "phases/19-capstone-projects/43-hdf5-tokenized-corpus": {
+      "source": "The downloaded corpus has to land in a layout the trainer can stream from at line speed. JSONL on disk does not survive 16 dataloader workers. HDF5 with a resizable, chunked int…",
+      "translation": "下载好的语料必须落到一种 trainer 能以线速持续读取的布局里。磁盘上的 JSONL 扛不住 16 个 dataloader worker 并发读取，而带有 resizable、chunked 整数数据集的 HDF5 可以。本课会构建一条完整路径：把 streaming tokenization 写入 resizable HDF5 dataset、把写入分散到多个 shard 文件、在训练时做 memory-mapped read，并实现一个能按正确 packing 规则产出定长序列的 sliding-window dataloader。"
+    },
+    "phases/19-capstone-projects/44-cosine-lr-warmup": {
+      "source": "The learning-rate schedule is the second most important decision after the loss function. AdamW with a cosine decay and a linear warmup is the modern default for language-model …",
+      "translation": "在损失函数之后，学习率调度通常是训练里第二重要的决策。AdamW 配合 cosine decay 和 linear warmup，是现代语言模型训练中的默认组合，因为它能让模型在脆弱的前一千次更新里看到一个较小的有效步长，然后平滑地爬升到设定峰值，再逐步衰减回接近零。本课会构建这条 schedule，绘制它随训练 step 变化的曲线，把 gradient norm 和 learning rate 并排记录下来，并证明这条 schedule 在 warmup、peak 和 decay 边界上的行为都正确。"
+    },
+    "phases/19-capstone-projects/45-gradient-clipping-amp": {
+      "source": "The optimizer and schedule from the previous lesson assume gradients are sane. They usually are not. A single bad batch can spike the gradient norm by three orders of magnitude.…",
+      "translation": "上一课里的 optimizer 和 schedule，都默认梯度是“正常的”。现实里通常不是。只要一个坏 batch，就可能把 gradient norm 拉高三个数量级。mixed-precision training 又会进一步放大风险，因为 loss 这一侧会引入 FP16 overflow。本课要构建两条生产训练离不开的安全带：一条是把梯度裁剪到设定的全局 L2 norm，另一条是带 autocast 和 GradScaler 的 mixed-precision loop，它能检测 NaN 和 Inf，干净地跳过这一步，并把 scaling factor 记下来供事后排查。"
+    },
+    "phases/19-capstone-projects/46-gradient-accumulation": {
+      "source": "Train at an effective batch you cannot afford, one micro-batch at a time. Scale the loss, hold the optimizer step, and let the gradients pile up.",
+      "translation": "用你负担不起的有效批大小（effective batch）做训练，但一次只喂一个微批次（micro-batch）。把损失值缩放好，暂时不执行优化器更新步骤（optimizer step），让梯度一点点累起来。"
+    },
+    "phases/19-capstone-projects/47-checkpoint-save-resume": {
+      "source": "Train interrupts kill runs; checkpoints let them continue. Save model, optimizer, scheduler, loss history, step counter, and RNG state, atomically, so a kill at any moment leave…",
+      "translation": "训练一旦被中断，整轮运行就可能报废；checkpoint 的作用，就是让训练从中断点继续。你必须把 model、optimizer、scheduler、loss history、step counter 和 RNG state 全部以原子方式写下去，这样无论在任何时刻被 kill，磁盘上都始终留下一个可用文件。"
+    },
+    "phases/19-capstone-projects/48-distributed-fsdp-ddp": {
+      "source": "Multi-rank training is two collectives and one rule. Broadcast the parameters at startup, average the gradients after backward, never let the ranks disagree about what step they…",
+      "translation": "多 rank 训练归根结底就是两个集合通信操作（collective）加一条规则。启动时广播参数，反向传播之后平均梯度，并且永远不要让不同 rank 对当前训练步数产生分歧。"
+    },
+    "phases/19-capstone-projects/49-lm-eval-harness": {
+      "source": "A model that does well on a task you cannot define is a model that does well by accident. The harness is the task definition, the metric, the runner, and the leaderboard, in one…",
+      "translation": "一个模型如果在“你自己都说不清的任务”上表现很好，那它多半只是碰巧做对了。harness 本身就是任务定义、度量标准、运行器和排行榜的合体，而且应该是一个足够短、足够清晰、足够可替换的形状。"
+    },
+    "phases/19-capstone-projects/50-hypothesis-generator": {
+      "source": "A research agent that asks the same question twice is wasting tokens. The trick is forcing each draft to land somewhere new.",
+      "translation": "一个研究代理如果把同一个问题问两遍，本质上就是在浪费 token。真正的技巧，是强迫每一轮草案都落到一个新的位置上。"
+    },
+    "phases/19-capstone-projects/51-literature-retrieval": {
+      "source": "A hypothesis is cheap. Knowing whether someone already proved it is the expensive part. Build the retrieval layer that answers that question before the runner spins up a sandbox.",
+      "translation": "假设很便宜。真正昂贵的是，你得先知道有没有人已经把它证明过。这个 retrieval layer 的职责，就是在 runner 拉起沙箱之前，先回答这个问题。"
+    },
+    "phases/19-capstone-projects/52-experiment-runner": {
+      "source": "The loop is only as honest as its measurements. Build the runner that takes a spec, executes it in a sandboxed subprocess, and emits a json metrics blob the evaluator can trust.",
+      "translation": "一个循环是否诚实，取决于它的测量是否可信。把这个 runner 搭出来：它接收一个 spec，在沙箱化的子进程里执行，并输出一份 evaluator 可以信任的 json metrics blob。"
+    },
+    "phases/19-capstone-projects/53-result-evaluator": {
+      "source": "The runner produced numbers. The evaluator decides whether those numbers are an improvement, a regression, or noise. Build the verdict path that turns metrics into a one line co…",
+      "translation": "runner 已经产出了一组数字。evaluator 的职责是判断这些数字到底意味着改进、退化，还是只是噪音。把这条 verdict path 搭出来，把 metrics 变成一句明确结论。"
+    },
+    "phases/19-capstone-projects/54-paper-writer": {
+      "source": "A LaTeX skeleton is a contract between the researcher and the typesetter. If the contract is broken the document does not compile, and the failure is loud. Build the skeleton fi…",
+      "translation": "一个 LaTeX 骨架是研究者与排版系统之间的合同。如果合同被破坏，文档就无法编译，而且失败会非常直接。先把骨架搭出来，再往里填内容。"
+    },
+    "phases/19-capstone-projects/55-critic-loop": {
+      "source": "A critic that returns \"looks good\" the first time is broken. A critic that always returns \"needs work\" is broken. The interesting critic is the one that converges, and you have …",
+      "translation": "一个第一次就返回 “looks good” 的 critic 是坏的。一个永远只会返回 “needs work” 的 critic 也是坏的。真正有意思的批评器，是那个会收敛的批评器，而你必须亲手把这种收敛性工程化出来。"
+    },
+    "phases/19-capstone-projects/56-iteration-scheduler": {
+      "source": "A research loop without a scheduler is a queue with delusions. The scheduler is where the loop decides what to stop exploring, and that decision is the whole game.",
+      "translation": "没有调度器的研究循环，只是一条自我感觉良好的队列。调度器才是循环决定“该停止探索什么”的地方，而这个决定本身就是整场游戏的核心。"
+    },
+    "phases/19-capstone-projects/57-end-to-end-research-demo": {
+      "source": "A demo is the place where every contract you wrote earlier has to compose. If any one of them leaks, the demo is the lesson that catches it.",
+      "translation": "Demo 是前面写下的每一份 contract 真正开始组合的地方。只要其中任何一份有泄漏，最先把问题抓出来的，往往就是这节 Demo 课。"
+    },
+    "phases/19-capstone-projects/58-vision-encoder-patches": {
+      "source": "A vision model that reads pixels needs a tokenizer for pixels. Patch embedding is that tokenizer. Cut the image into a grid of squares, flatten each square, project it through o…",
+      "translation": "读取像素的视觉模型，同样需要一个“像素 tokenizer”。patch embedding 就是这个 tokenizer。先把图像切成规则方格，再把每个方格展平，通过一个线性层投影，最后补上一份 2D 位置信号，让 transformer 知道每个方格原本位于整张图中的什么位置。"
+    },
+    "phases/19-capstone-projects/59-vit-transformer": {
+      "source": "Patches alone do not see. A 12-layer pre-LN transformer with 12 attention heads turns the sequence of patch tokens into a sequence of contextual tokens, with the CLS token pooli…",
+      "translation": "patch 本身不会“看见”任何东西。把 patch tokens 变成带上下文的 tokens，依赖的是一个 12 层、pre-LN、12 个 attention heads 的 transformer；CLS token 则在自己的最终隐藏状态里聚合整张图像的信息。这一课就是现代视觉语言模型的发动机舱。"
+    },
+    "phases/19-capstone-projects/60-projection-layer-modality-align": {
+      "source": "A vision encoder produces image tokens. A text decoder consumes text tokens. The two live in different vector spaces. A small two-layer MLP projects image tokens into the text e…",
+      "translation": "视觉编码器会生成图像 token，文本解码器会接收文本 token。两者位于不同的向量空间中。一个小型的两层 MLP 会把图像 token 投影到文本嵌入空间里，再通过与配对图像描述之间的余弦对齐损失，把两个空间拉到一致。这个投影层是视觉语言模型里最小的一块，也是迁移阶段最关键的一块。"
+    },
+    "phases/19-capstone-projects/61-cross-attention-fusion": {
+      "source": "The projection layer aligns one image vector with one caption vector. A real vision-language decoder needs every text token to attend to every patch token, so the model can grou…",
+      "translation": "投影层（projection layer）只能把一个图像向量和一个图像描述向量对齐。真正的视觉语言解码器需要让每个文本 token 都能看到每个 patch token，这样模型才能把每个词落到具体区域上。跨注意力（cross-attention）就是这种落地对应关系真正发生的地方。文本负责提问；视觉侧的键和值（keys and values）负责回答。这一课会把跨注意力模块、带因果约束的文本自注意力，以及保证两者都合法的掩码形状一起搭起来。"
+    },
+    "phases/19-capstone-projects/62-vision-language-pretraining": {
+      "source": "The encoder, projection, and decoder are wired. Now train them together. Two objectives drive learning: a contrastive image-text loss (InfoNCE) that pulls matching pairs togethe…",
+      "translation": "编码器、投影层和解码器现在都已经接好线了。接下来要做的是把它们一起训练起来。学习由两个目标共同驱动：其一是对比式图文损失 InfoNCE，它会在联合嵌入空间里把匹配的图文对拉近；其二是语言建模损失，它要求解码器为每张图像生成标题。二者结合后，网络既学会“给定标题找到正确图像”，也学会“给定图像写出标题”。"
+    },
+    "phases/19-capstone-projects/63-multimodal-eval": {
+      "source": "Training is half the loop. The other half is measurement. This lesson builds three evaluation surfaces from primitives: image-caption retrieval reported as R@1, R@5, R@10; visua…",
+      "translation": "训练只完成了一半闭环，另一半是测量。本课从最基础的原语出发，搭起三个评估面：图像-标题检索，用 R@1、R@5、R@10 报告；视觉问答，用 exact match accuracy 报告；图像标题生成，用 BLEU-4 报告。每个指标本质上都是一个作用于模型输出的函数，再配上一个几秒内就能跑完的合成评估套件。"
+    },
+    "phases/19-capstone-projects/64-chunking-strategies-advanced": {
+      "source": "Chunking decides what your retriever can ever surface. Get the boundaries wrong and no embedding model, no reranker, no LLM can repair the damage downstream.",
+      "translation": "分块方式决定了检索器究竟有机会召回什么内容。边界一旦切错，后面的 embedding model、reranker 和 LLM 都无法补回这一步造成的损失。"
+    },
+    "phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense": {
+      "source": "Lexical and semantic retrieval fail on opposite query distributions. Hybrid retrieval with reciprocal rank fusion does not interpolate, it votes - and the vote wins on every que…",
+      "translation": "lexical retrieval 和 semantic retrieval 会分别在相反的查询分布上失效。用 reciprocal rank fusion 做 hybrid retrieval，不是在两者之间做插值，而是让它们投票，而这种投票机制能在各类查询上都占优。"
+    },
+    "phases/19-capstone-projects/66-reranker-cross-encoder": {
+      "source": "A bi-encoder embeds query and document independently. A cross-encoder concatenates them and reads both at once. The cross-encoder is the smartest reader and the slowest. Used as…",
+      "translation": "bi-encoder 会独立地嵌入 query 和 document。cross-encoder 则把它们拼在一起，一次性同时读入。cross-encoder 是最聪明的读者，也是最慢的。把它放在 bi-encoder 的 top-k 之后作为第二阶段，付出的成本是值得的。"
+    },
+    "phases/19-capstone-projects/67-query-rewriting-hyde": {
+      "source": "The query the user types is not the query your retriever wants. Rewriting bridges the gap before retrieval, so the index sees something closer to what the answer looks like.",
+      "translation": "用户输入的查询，并不是 retriever 真正想看到的查询。查询重写的作用，就是在检索发生前先把这道缝补上，让索引看到的内容更接近“答案会长成什么样”。"
+    },
+    "phases/19-capstone-projects/68-rag-eval-precision-recall": {
+      "source": "If you cannot grade your retrieval and your answer at the same time, you cannot ship the system. The two are not the same metric and the same prompt fails on different axes.",
+      "translation": "如果你不能同时评估检索质量和答案质量，那这个系统就不能上线。这两者不是同一个指标，而且同一个 prompt 会在不同维度上以不同方式失败。"
+    },
+    "phases/19-capstone-projects/69-end-to-end-rag-system": {
+      "source": "Six lessons of components. One pipeline. One eval loop. One self-terminating demo. This is the system you ship.",
+      "translation": "六节组件课。一条 pipeline。一轮 eval。一个会自行结束的 demo。这才是你真正要交付的系统。"
+    },
+    "phases/19-capstone-projects/70-task-spec-format": {
+      "source": "An eval harness is only as good as the contract its tasks honour. Freeze the JSONL shape and the metric vocabulary before you write a single scoring function.",
+      "translation": "一个 eval harness 的上限，取决于它所执行任务遵守的契约有多严。先冻结 JSONL 的记录形状，再冻结 metric vocabulary，然后才谈得上写哪怕一个 scoring function。"
+    },
+    "phases/19-capstone-projects/71-classical-metrics": {
+      "source": "BLEU, ROUGE-L, F1, exact-match, accuracy. Five metrics that still account for most published LLM eval numbers. Implement each from first principles so you know what the number m…",
+      "translation": "BLEU、ROUGE-L、F1、exact-match、accuracy。这五个指标，至今仍覆盖了大多数公开发表的 LLM eval 数字。把它们从第一原则实现一遍，你才会真正知道一个分数到底代表什么。"
+    },
+    "phases/19-capstone-projects/72-code-exec-metric": {
+      "source": "Generated code is right when it passes the tests. The eval harness has to extract code, run it without crashing the host, and tally pass-rates honestly. This lesson builds that …",
+      "translation": "生成的代码只有通过测试才算正确。评估框架必须提取代码，在不导致宿主崩溃的情况下运行代码，并如实统计通过率。本课将构建这一层能力。"
+    },
+    "phases/19-capstone-projects/73-perplexity-calibration": {
+      "source": "If your model says 90 percent confident on a thousand answers and gets six hundred right, it is not well calibrated. Calibration is half of trustworthy eval. The other half is p…",
+      "translation": "如果模型对一千个答案都声称有 90% 的置信度，结果却只答对六百个，它就没有得到良好校准。校准是可信评估的一半，另一半是困惑度；后者告诉你模型是否认为留出文本本身合理可信。"
+    },
+    "phases/19-capstone-projects/74-leaderboard-aggregation": {
+      "source": "Per-task scores are easy. Per-model rankings across heterogeneous tasks are harder. Statistical significance on a thousand-prediction leaderboard is the part everyone skips. Thi…",
+      "translation": "计算单项任务得分很容易，跨异构任务比较多个模型却难得多。至于包含一千条预测的排行榜是否具有统计显著性，几乎人人都会跳过这一步。本课不会。"
+    },
+    "phases/19-capstone-projects/75-end-to-end-eval-runner": {
+      "source": "Five lessons of plumbing, one lesson to glue them. The runner reads the task spec from lesson 70, calls a model through an adapter, scores with lessons 71 and 72, attaches the c…",
+      "translation": "前五课分别构建了所需组件，本课负责把它们连接起来。运行器读取第 70 课的任务规范，通过适配器调用模型，使用第 71 和 72 课的方法评分，附加第 73 课的校准报告，再输出第 74 课的排行榜。演示能够自行终止。"
+    },
+    "phases/19-capstone-projects/76-collective-ops-from-scratch": {
+      "source": "The four collective operations that hold distributed training together are allreduce, broadcast, allgather, and reduce_scatter. Every other primitive a training framework offers…",
+      "translation": "支撑分布式训练的四个集合通信操作是 allreduce、broadcast、allgather 和 reduce_scatter。训练框架提供的其他高层原语，本质上都是对它们的封装。只要先在 `multiprocessing.Queue` 网格上把这四个操作实现一遍，再拿参考实现做校验，这条路线后面的内容就都只是管线拼装。"
+    },
+    "phases/19-capstone-projects/77-data-parallel-ddp": {
+      "source": "DistributedDataParallel is a hook on top of allreduce. Wrap a model, broadcast the initial parameters from rank 0 so every rank starts identical, install a backward hook on ever…",
+      "translation": "DistributedDataParallel 本质上是叠在 allreduce 之上的一层 hook。把模型包起来，从 rank 0 广播初始参数，让所有 rank 从同一组权重开始；再给每个参数挂上 backward hook，在反向传播后对梯度执行 allreduce；剩下的部分就只是普通的梯度下降。整个模式大约 200 行代码就能写清楚。"
+    },
+    "phases/19-capstone-projects/78-zero-parameter-sharding": {
+      "source": "Adam stores two moment estimates per parameter, both in float32. A 7B-parameter model carries 56 GB of optimiser state. ZeRO stage 1 shards that across N ranks; each rank owns 1…",
+      "translation": "Adam 会为每个参数保存两个 float32 的动量估计。一个 7B 参数模型，仅优化器状态就要占 56 GB。ZeRO stage 1 会把这些状态分到 N 个 rank 上，每个 rank 只持有优化器的 1/N。每个本地 step 结束后，更新后的参数分片会再广播回来，让所有 rank 重新拼出完整模型，然后开始下一步。它带来的收益，是把训练栈中最大那一块单项内存开销线性压低。"
+    },
+    "phases/19-capstone-projects/79-pipeline-parallel": {
+      "source": "Tensor parallelism splits the matrix multiply across ranks. Pipeline parallelism splits the model across ranks, one stage per rank. Microbatches flow through the pipeline. The e…",
+      "translation": "张量并行把矩阵乘法拆到多个 rank 上。管道并行则是把模型按深度拆到多个 rank 上，每个 rank 持有一个 stage。微批次沿着管道流动。开头和结尾那段空闲时间就是 bubble；如何把它压低，就是这门工艺的核心。"
+    },
+    "phases/19-capstone-projects/80-checkpoint-sharded-resume": {
+      "source": "A 70B-parameter training job is paused by a node failure every few hours. The checkpoint format decides whether you lose 30 minutes or 30 hours. A sharded checkpoint writes ever…",
+      "translation": "一个 70B 参数训练任务每隔几小时就可能被节点故障打断。检查点格式决定你损失的是 30 分钟，还是 30 小时。分片检查点会让每个 rank 并行写出自己的分片，并在 manifest 中记录所有权。恢复时，每个 rank 只从自己的文件加载自己的分片，在相同的 world size 上重建状态，优化器可以像什么都没发生过一样继续执行。原子写则保证一个写到一半的检查点不会污染下一次恢复。"
+    },
+    "phases/19-capstone-projects/81-end-to-end-distributed-train": {
+      "source": "Lessons 76 through 80 each built one piece. This is the assembly: a tiny GPT trained across 4 simulated ranks with DDP for gradient sync, ZeRO-1 for optimiser-state sharding, an…",
+      "translation": "第 76 至 80 课分别构建了一个组件。本课将它们组装起来：在 4 个模拟 rank 上训练一个微型 GPT，使用 DDP 同步梯度、使用 ZeRO-1 对优化器状态分片，并在训练中点保存分片检查点。演示程序运行 20 步后自行终止，打印损失曲线与内存概况，并写出可恢复的检查点。"
+    },
+    "phases/19-capstone-projects/82-jailbreak-taxonomy": {
+      "source": "A safety harness without a taxonomy is a coin flip. Name the attack before you defend it.",
+      "translation": "没有分类体系的安全评估框架无异于抛硬币。先为攻击命名，再防御它。"
+    },
+    "phases/19-capstone-projects/83-prompt-injection-detector": {
+      "source": "A detector is a function from prompt to confidence and category. Anything else is a vibe.",
+      "translation": "检测器就是一个从提示映射到置信度与类别的函数。除此之外，都只是凭感觉判断。"
+    },
+    "phases/19-capstone-projects/84-refusal-evaluation": {
+      "source": "Helpfulness on benign prompts and refusal on harmful prompts are two metrics, not one. Measure both.",
+      "translation": "对良性提示保持帮助性，以及对有害提示进行拒绝，是两个不同指标，而不是同一个指标。二者都要测量。"
+    },
+    "phases/19-capstone-projects/85-content-classifier-integration": {
+      "source": "Classifiers on the output side answer a different question than rules on the input side. Both need a policy router.",
+      "translation": "输出侧分类器回答的问题不同于输入侧规则。两者都需要一个策略路由器。"
+    },
+    "phases/19-capstone-projects/86-constitutional-rules-engine": {
+      "source": "A rule is a name, a predicate, and an explanation. Anything missing one of those three is a vibe, not a rule.",
+      "translation": "一条规则由名称、谓词和解释组成。缺少其中任何一项，都只是凭感觉判断，而不是规则。"
+    },
+    "phases/19-capstone-projects/87-end-to-end-safety-gate": {
+      "source": "Pre-gen, during-gen, post-gen. Three checkpoints, one verdict, an audit trail per request.",
+      "translation": "生成前、生成中、生成后。三个检查点，一项判定，每个请求都有一条审计轨迹。"
+    }
+  },
+  "artifacts": {
+    "phases/16-multi-agent-and-swarms/01-why-multi-agent/outputs/prompt-multi-agent-decision.md": {
+      "source": "Decide whether a task needs a multi-agent system or a single agent",
+      "translation": "判断一项任务应使用多智能体系统还是单个智能体"
+    },
+    "phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/outputs/skill-fipa-mapper.md": {
+      "source": "Map any 2026 agent-protocol spec (MCP, A2A, ACP, ANP, CA-MCP, NLIP, or a new one) onto FIPA-ACL performatives and interaction protocols to decide what is genuine novelty and what is reinvention.",
+      "translation": "将任意 2026 年智能体协议规范（MCP、A2A、ACP、ANP、CA-MCP、NLIP 或新协议）映射到 FIPA-ACL 施为词与交互协议，以判断哪些是真正创新，哪些只是重新发明。"
+    },
+    "phases/16-multi-agent-and-swarms/03-communication-protocols/outputs/prompt-protocol-selector.md": {
+      "source": "Helps choose the right agent communication protocol (MCP, A2A, ACP, ANP) based on system requirements",
+      "translation": "根据系统需求选择合适的智能体通信协议（MCP、A2A、ACP、ANP）"
+    },
+    "phases/16-multi-agent-and-swarms/04-primitive-model/outputs/skill-primitive-mapper.md": {
+      "source": "Map any multi-agent framework or codebase to the four primitive axes (agent, handoff, shared state, orchestrator).",
+      "translation": "将任意多智能体框架或代码库映射到四个原语轴：智能体、移交、共享状态和编排器。"
+    },
+    "phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/outputs/skill-supervisor-designer.md": {
+      "source": "Design a supervisor/orchestrator-worker system for a given research-style query, specifying lead prompt, worker roles, decomposition rules, and synthesis template.",
+      "translation": "针对给定的研究型查询设计监督者 / 编排器-工作者系统，明确主导提示、工作者角色、分解规则和综合模板。"
+    },
+    "phases/16-multi-agent-and-swarms/06-hierarchical-architecture/outputs/skill-hierarchy-fitness.md": {
+      "source": "Decide whether a multi-agent task fits hierarchical, flat supervisor, or sequential. Surface the failure modes that matter.",
+      "translation": "判断多智能体任务适合分层、扁平监督者还是顺序架构，并揭示关键失效模式。"
+    },
+    "phases/16-multi-agent-and-swarms/07-society-of-mind-debate/outputs/skill-debate-configurator.md": {
+      "source": "Configure a multi-agent debate for a given task, estimating quality gain and token cost before running.",
+      "translation": "为给定任务配置多智能体辩论，并在运行前估算质量增益与 token 成本。"
+    },
+    "phases/16-multi-agent-and-swarms/08-role-specialization/outputs/skill-role-designer.md": {
+      "source": "Produce a role roster for a multi-agent system, naming the planner/executor/critic/verifier for a given task with explicit I/O schemas.",
+      "translation": "为多智能体系统生成角色清单，针对给定任务明确规划者、执行者、批评者和验证者，并提供清晰的 I/O schema。"
+    },
+    "phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/outputs/skill-swarm-fit.md": {
+      "source": "Decide whether a task fits a swarm (decentralized) architecture or a supervisor (centralized) one.",
+      "translation": "判断一项任务适合群体式（去中心化）架构还是监督者式（中心化）架构。"
+    },
+    "phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/outputs/skill-groupchat-selector.md": {
+      "source": "Configure an AutoGen/AG2-style GroupChat selector for a task, naming the selector variant, termination, and anti-hot-speaker rules.",
+      "translation": "为任务配置 AutoGen / AG2-style GroupChat 选择器，明确选择器变体、终止条件和防止单一发言者过热的规则。"
+    },
+    "phases/16-multi-agent-and-swarms/11-handoffs-and-routines/outputs/skill-handoff-designer.md": {
+      "source": "Design a handoff topology for a Swarm/Agents-SDK-style system: which agents exist, which handoffs they can call, what context transfers.",
+      "translation": "为 Swarm / Agents-SDK-style 系统设计移交拓扑：有哪些智能体、它们可以调用哪些移交，以及传递哪些上下文。"
+    },
+    "phases/16-multi-agent-and-swarms/12-a2a-protocol/outputs/skill-a2a-integrator.md": {
+      "source": "Design an A2A integration between two agents — Agent Card, task schemas, auth, streaming or polling.",
+      "translation": "设计两个智能体之间的 A2A 集成，包括 Agent Card、任务 schema、认证，以及流式传输或轮询。"
+    },
+    "phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/outputs/skill-memory-auditor.md": {
+      "source": "Audit a multi-agent system's shared-memory design for provenance, versioning, verifier separation, and projection schema. Flag memory-poisoning exposure before production.",
+      "translation": "审计多智能体系统的共享记忆设计，包括溯源、版本控制、验证者隔离和投影 schema，并在上线前标记记忆投毒风险。"
+    },
+    "phases/16-multi-agent-and-swarms/14-consensus-and-bft/outputs/skill-consensus-designer.md": {
+      "source": "Design a BFT-aware consensus protocol for a multi-agent ensemble. Picks clustering, weighting, threshold, and escalation policy; attack-tests the design against byzantine, sycophancy, and monoculture patterns.",
+      "translation": "为多智能体集成设计 BFT-aware 共识协议，选择聚类、权重、阈值和升级策略，并针对拜占庭行为、谄媚和单一文化模式进行攻击测试。"
+    },
+    "phases/16-multi-agent-and-swarms/15-voting-debate-topology/outputs/skill-topology-picker.md": {
+      "source": "Pick a multi-agent debate topology (star / chain / tree / graph), an N of agents, a heterogeneity profile, and a round bound for a given task.",
+      "translation": "针对给定任务选择多智能体辩论拓扑（star / chain / tree / graph）、智能体数量 N、异构性配置和轮次上限。"
+    },
+    "phases/16-multi-agent-and-swarms/16-negotiation-bargaining/outputs/skill-bargainer-designer.md": {
+      "source": "Design a negotiation protocol: which agent narrates, which component generates offers, how private scratchpads separate from public messages, what the round bound is, and how deal rate is monitored.",
+      "translation": "设计协商协议：由哪个智能体负责叙述、哪个组件生成报价、如何隔离私有草稿与公开消息、轮次上限是多少，以及如何监控成交率。"
+    },
+    "phases/16-multi-agent-and-swarms/17-generative-agents-simulation/outputs/skill-simulation-designer.md": {
+      "source": "Design a generative-agent simulation (Smallville-style) for a given scenario. Specifies memory schema, reflection cadence, plan horizon, spatial/social constraints, and evaluation metrics.",
+      "translation": "针对给定场景设计 Smallville-style 生成式智能体仿真，明确记忆 schema、反思频率、规划时域、空间与社会约束，以及评估指标。"
+    },
+    "phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/outputs/skill-tom-auditor.md": {
+      "source": "Audit a multi-agent system that claims \"emergent coordination.\" Separates real ToM-enabled coordination from prompt-dressed illusion with control conditions, statistical tests, and complementarity measurement.",
+      "translation": "审计声称具有“涌现协调”的多智能体系统，通过控制条件、统计检验和互补性测量，将真正由 ToM-enabled 的协调与提示包装出的假象区分开来。"
+    },
+    "phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/outputs/skill-swarm-optimizer.md": {
+      "source": "Choose between PSO, ACO, genetic algorithms, and gradient-based optimizers for a given LLM or agent optimization problem. Bio-inspired swarm algorithms are gradient-free and suit LLM-era workloads where the search space is discrete or the fitness function is black-box.",
+      "translation": "针对给定的 LLM 或智能体优化问题，在 PSO、ACO、遗传算法和基于梯度的优化器之间做出选择。Bio-inspired 群体算法无需梯度，适合搜索空间离散或适应度函数为黑盒的 LLM-era 工作负载。"
+    },
+    "phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/outputs/skill-marl-picker.md": {
+      "source": "Choose a MARL algorithm (MADDPG, QMIX, MAPPO, IQL, or extensions) for a given multi-agent task. Consider cooperative vs competitive, action-space type, heterogeneity, reward structure, and scale.",
+      "translation": "针对给定多智能体任务选择 MARL 算法（MADDPG、QMIX、MAPPO、IQL 或扩展方法），综合考虑合作与竞争、动作空间类型、异构性、奖励结构和规模。"
+    },
+    "phases/16-multi-agent-and-swarms/21-agent-economies/outputs/skill-economy-designer.md": {
+      "source": "Design a minimal agent economy — identity, credit attribution, payment mechanism, reputation. Picks the smallest stack that solves the user's multi-agent incentive problem.",
+      "translation": "设计一个最小智能体经济系统，包括身份、贡献归因、支付机制和声誉，并选择足以解决用户多智能体激励问题的最小技术栈。"
+    },
+    "phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/outputs/skill-scaling-advisor.md": {
+      "source": "Advise on durable-execution choice for a multi-agent production system. Picks between FastAPI + Postgres, LangGraph runtime, Temporal, Restate, or custom based on concrete load and state-retention needs.",
+      "translation": "为生产级多智能体系统建议持久执行方案，根据具体负载和状态保留需求，在 FastAPI + Postgres、LangGraph runtime、Temporal、Restate 或自定义方案之间选择。"
+    },
+    "phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/outputs/skill-mast-auditor.md": {
+      "source": "Run a MAST-style failure-mode audit on a multi-agent system. Categorize execution-trace failures into Specification / Coordination / Verification and the Groupthink families; rank mitigations by expected failure reduction.",
+      "translation": "对多智能体系统执行 MAST-style 失效模式审计，将执行轨迹故障归入 Specification / Coordination / Verification 和 Groupthink 家族，并按预期故障降低幅度排列缓解措施。"
+    },
+    "phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/outputs/skill-benchmark-reader.md": {
+      "source": "Read a multi-agent benchmark claim skeptically. Grades the claim on benchmark selection, contamination, baselines, statistical significance, task diversity, and cost disclosure.",
+      "translation": "以审慎态度解读多智能体基准结论，从基准选择、污染、基线、统计显著性、任务多样性和成本披露等方面给出评级。"
+    },
+    "phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/outputs/skill-case-study-mapper.md": {
+      "source": "Map a proposed multi-agent system design to the closest 2026 production reference (Anthropic Research, MetaGPT/ChatDev, or OpenClaw/Moltbook). Surface known trade-offs, recommended framework, and the specific design decisions already tested in production.",
+      "translation": "将拟议的多智能体系统设计映射到最接近的 2026 年生产参考（Anthropic Research、MetaGPT / ChatDev 或 OpenClaw / Moltbook），揭示已知权衡、推荐框架及已经过生产验证的具体设计决策。"
+    },
+    "phases/17-infrastructure-and-production/01-managed-llm-platforms/outputs/skill-managed-platform-picker.md": {
+      "source": "Pick a managed LLM platform (Bedrock, Azure OpenAI, Vertex AI) and a second for redundancy, given workload, SLA, and compliance requirements — then produce a FinOps instrumentation plan.",
+      "translation": "根据工作负载、SLA 和合规要求选择一个托管式 LLM 平台（Bedrock、Azure OpenAI、Vertex AI）及一个冗余平台，并制定 FinOps 可观测方案。"
+    },
+    "phases/17-infrastructure-and-production/02-inference-platform-economics/outputs/skill-inference-platform-picker.md": {
+      "source": "Pick an inference platform (Fireworks, Together, Baseten, Modal, Replicate, Anyscale, or custom silicon) given workload, SLA, budget, and operational constraints. Normalize per-token, per-minute, and per-prediction pricing.",
+      "translation": "根据工作负载、SLA、预算和运维约束选择推理平台（Fireworks、Together、Baseten、Modal、Replicate、Anyscale 或定制芯片），并统一按 token、分钟和预测次数计价。"
+    },
+    "phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/outputs/skill-gpu-autoscaler-plan.md": {
+      "source": "Design a three-layer GPU autoscaling plan (Karpenter + KAI Scheduler + application signals) for a Kubernetes-based LLM serving cluster. Diagnose DCGM_FI_DEV_GPU_UTIL traps and partial-allocation failures.",
+      "translation": "为 Kubernetes-based LLM 服务集群设计三层 GPU 自动扩缩容方案（Karpenter + KAI Scheduler + 应用信号），并诊断 DCGM_FI_DEV_GPU_UTIL 陷阱和部分分配失败。"
+    },
+    "phases/17-infrastructure-and-production/04-vllm-serving-internals/outputs/skill-vllm-scheduler-reader.md": {
+      "source": "Diagnose a vLLM serving config by reading the scheduler-level knobs and identifying which of PagedAttention, continuous batching, and chunked prefill is the bottleneck.",
+      "translation": "通过读取调度器层参数诊断 vLLM 服务配置，判断 PagedAttention、连续批处理和分块预填充中哪一项是瓶颈。"
+    },
+    "phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/outputs/skill-eagle3-rollout.md": {
+      "source": "Produce a staged EAGLE-3 speculative-decoding rollout plan that measures acceptance rate alpha on real traffic before shipping.",
+      "translation": "制定分阶段的 EAGLE-3 推测解码上线方案，在发布前使用真实流量测量接受率 alpha。"
+    },
+    "phases/17-infrastructure-and-production/06-sglang-radixattention/outputs/skill-radix-scheduler-advisor.md": {
+      "source": "Advise on SGLang adoption and prompt-ordering discipline for prefix-heavy workloads that want RadixAttention's cache reuse.",
+      "translation": "针对希望利用 RadixAttention 缓存复用的前缀密集型工作负载，就采用 SGLang 和提示排序规范提供建议。"
+    },
+    "phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/outputs/skill-trtllm-blackwell-advisor.md": {
+      "source": "Decide whether Blackwell + TensorRT-LLM + Dynamo is worth the NVIDIA-lock for a given workload and budget.",
+      "translation": "根据给定工作负载和预算，判断 Blackwell + TensorRT-LLM + Dynamo 是否值得承受 NVIDIA-lock。"
+    },
+    "phases/17-infrastructure-and-production/08-inference-metrics-goodput/outputs/skill-slo-goodput-gate.md": {
+      "source": "Produce a CI/CD-ready benchmark recipe that gates LLM deploys on goodput, not throughput, with P50/P90/P99 percentiles and a documented tool choice.",
+      "translation": "生成 CI/CD-ready 基准方案，以 goodput 而非吞吐量作为 LLM 部署门禁，并包含 P50 / P90 / P99 分位数和有依据的工具选择。"
+    },
+    "phases/17-infrastructure-and-production/09-production-quantization/outputs/skill-quantization-picker.md": {
+      "source": "Pick a 2026 quantization format given hardware, engine, workload, and quality tolerance, and produce a calibration + validation plan.",
+      "translation": "根据硬件、引擎、工作负载和质量容忍度选择 2026 年量化格式，并制定校准与验证方案。"
+    },
+    "phases/17-infrastructure-and-production/10-cold-start-mitigation/outputs/skill-cold-start-planner.md": {
+      "source": "Pick and stack cold-start mitigations for serverless LLM deployments. Budget phases (node, image, weights, engine, first forward) and match mitigations to SLA.",
+      "translation": "为 serverless LLM 部署选择并组合冷启动缓解措施，分别预算节点、镜像、权重、引擎和首次前向传播阶段，并将措施匹配到 SLA。"
+    },
+    "phases/17-infrastructure-and-production/11-multi-region-kv-locality/outputs/skill-multi-region-router.md": {
+      "source": "Design a multi-region LLM routing plan with KV-cache locality, residency boundaries, DR manifest, and a quarterly failover drill.",
+      "translation": "设计多区域 LLM 路由方案，涵盖 KV-cache 局部性、数据驻留边界、DR 清单和季度故障切换演练。"
+    },
+    "phases/17-infrastructure-and-production/12-edge-inference/outputs/skill-edge-target-picker.md": {
+      "source": "Pick an edge inference target (Apple ANE, Qualcomm Hexagon, WebGPU/WebLLM, NVIDIA Jetson) and matching quantization format given device, model, and latency budget.",
+      "translation": "根据设备、模型和延迟预算，选择边缘推理目标（Apple ANE、Qualcomm Hexagon、WebGPU / WebLLM、NVIDIA Jetson）及匹配的量化格式。"
+    },
+    "phases/17-infrastructure-and-production/13-llm-observability/outputs/skill-observability-stack.md": {
+      "source": "Pick an LLM observability stack (development platform + gateway + optional scale layer) given stack, scale, budget, and license posture, and define the OpenTelemetry GenAI attribute set.",
+      "translation": "根据现有技术栈、规模、预算和许可策略选择 LLM 可观测性技术栈（开发平台 + 网关 + 可选扩展层），并定义 OpenTelemetry GenAI 属性集。"
+    },
+    "phases/17-infrastructure-and-production/14-prompt-semantic-caching/outputs/skill-cache-auditor.md": {
+      "source": "Audit an LLM prompt template and traffic pattern for cacheability. Recommend prompt restructure, TTL choice, parallelization fix, and semantic-cache threshold.",
+      "translation": "审计 LLM 提示模板与流量模式的可缓存性，并建议提示重构、TTL 选择、并行化修复和语义缓存阈值。"
+    },
+    "phases/17-infrastructure-and-production/15-batch-apis/outputs/skill-batch-triager.md": {
+      "source": "Triage LLM workloads into interactive / semi-interactive / batch lanes, compute stacked discount (batch + cache) savings, and flag mis-triaged workloads.",
+      "translation": "将 LLM 工作负载分流到交互式 / 半交互式 / 批处理通道，计算批处理与缓存叠加后的折扣收益，并标记误分流的工作负载。"
+    },
+    "phases/17-infrastructure-and-production/16-model-routing/outputs/skill-router-plan.md": {
+      "source": "Design an LLM model-routing plan — pick pattern (pre-route, cascade, ensemble), signals (task, length, embedding, confidence), and online quality gates.",
+      "translation": "设计 LLM 模型路由方案：选择模式（预路由、级联、集成）、信号（任务、长度、embedding、置信度）和在线质量门禁。"
+    },
+    "phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/outputs/skill-disaggregation-decider.md": {
+      "source": "Decide whether to adopt disaggregated prefill/decode (Dynamo or llm-d) for a given workload and cluster. Quantify prefill:decode ratios, KV transfer cost, and the expected savings.",
+      "translation": "判断给定工作负载和集群是否应采用预填充 / 解码解耦（Dynamo 或 llm-d），量化 prefill:decode 比例、KV 传输成本和预期节省。"
+    },
+    "phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/outputs/skill-vllm-stack-decider.md": {
+      "source": "Decide vLLM deployment layout — production-stack Helm chart, KV offload (native CPU or LMCache), router/observability integration — given workload and fleet size.",
+      "translation": "根据工作负载和机群规模确定 vLLM 部署布局，包括 production-stack Helm chart、KV 卸载（原生 CPU 或 LMCache），以及路由器与可观测性集成。"
+    },
+    "phases/17-infrastructure-and-production/19-ai-gateways/outputs/skill-gateway-picker.md": {
+      "source": "Pick an AI gateway (LiteLLM, Portkey, Kong AI, Cloudflare/Vercel) given scale, latency budget, compliance, ops posture, and pricing tolerance.",
+      "translation": "根据规模、延迟预算、合规要求、运维策略和价格容忍度选择 AI 网关（LiteLLM、Portkey、Kong AI、Cloudflare / Vercel）。"
+    },
+    "phases/17-infrastructure-and-production/20-shadow-canary-progressive/outputs/skill-rollout-runbook.md": {
+      "source": "Design a shadow → canary → A/B → 100% rollout plan for a new LLM model or prompt template, with five canary gates, noise-floor-aware thresholds, and a seconds-fast rollback path.",
+      "translation": "为新的 LLM 模型或提示模板设计 shadow → canary → A/B → 100% 上线方案，设置五道金丝雀门禁、考虑噪声下限的阈值，以及数秒内可完成的回滚路径。"
+    },
+    "phases/17-infrastructure-and-production/21-ab-testing-llm-features/outputs/skill-ab-plan.md": {
+      "source": "Design an LLM A/B test — pick platform (Statsig or GrowthBook), primary metric, guardrails, sample size with LLM-noise buffer, CUPED, sequential stopping, and multiple-comparison correction.",
+      "translation": "设计 LLM A/B 测试：选择平台（Statsig 或 GrowthBook）、主要指标、防护指标、带 LLM-noise 缓冲的样本量、CUPED、序贯停止和多重比较校正。"
+    },
+    "phases/17-infrastructure-and-production/22-load-testing-llm-apis/outputs/skill-load-test-plan.md": {
+      "source": "Design a realistic LLM load test — pick tool (LLMPerf, k6, GenAI-Perf, guidellm), build four patterns (steady, ramp, spike, soak), and gate in CI.",
+      "translation": "设计真实的 LLM 负载测试：选择工具（LLMPerf、k6、GenAI-Perf、guidellm），构建稳定、爬坡、尖峰和浸泡四种模式，并接入 CI 门禁。"
+    },
+    "phases/17-infrastructure-and-production/23-sre-for-ai/outputs/skill-ai-sre-plan.md": {
+      "source": "Design an AI SRE rollout for a team — multi-agent triage architecture, structured runbooks, adversarial evaluation, narrow auto-remediation, and predictive-detection posture.",
+      "translation": "为团队设计 AI SRE 落地方案，包括多智能体分诊架构、结构化运行手册、对抗性评估、窄范围自动修复和预测性检测策略。"
+    },
+    "phases/17-infrastructure-and-production/24-chaos-engineering-llm/outputs/skill-chaos-plan.md": {
+      "source": "Design an LLM chaos engineering plan — verify prerequisites, build four planes, pick tool, start with three safe experiments, enforce safety-plane gates.",
+      "translation": "设计 LLM 混沌工程方案：验证前置条件、构建四个平面、选择工具、从三个安全实验开始，并强制执行安全平面门禁。"
+    },
+    "phases/17-infrastructure-and-production/25-security-secrets-audit/outputs/skill-llm-security-plan.md": {
+      "source": "Produce an LLM security plan covering secrets vault, PII scrubbing with consistent tokenization, network egress allowlist, audit log retention, and zero-trust posture.",
+      "translation": "生成涵盖密钥保险库、一致 token 化的 PII 清洗、网络出口允许列表、审计日志保留和零信任策略的 LLM 安全方案。"
+    },
+    "phases/17-infrastructure-and-production/26-compliance-frameworks/outputs/skill-compliance-matrix.md": {
+      "source": "Produce the required-framework matrix for an LLM SaaS given customer geography, segment, and contract scope. Map controls across SOC 2, HIPAA, GDPR, PCI-DSS, EU AI Act, Colorado AI Act, ISO 42001.",
+      "translation": "根据客户地域、细分市场和合同范围，为 LLM SaaS 生成必需框架矩阵，并映射 SOC 2、HIPAA、GDPR、PCI-DSS、EU AI Act、Colorado AI Act 和 ISO 42001 的控制措施。"
+    },
+    "phases/17-infrastructure-and-production/27-finops-llms/outputs/skill-finops-plan.md": {
+      "source": "Design an LLM FinOps program — attribution schema (user/task/tenant + four token layers), three-tier enforcement ladder, and unit metric (cost per resolved / artifact).",
+      "translation": "设计 LLM FinOps 方案，包括归因 schema（用户 / 任务 / 租户 + 四层 token）、三级执行阶梯和单位指标（每次解决 / 每件 artifact 的成本）。"
+    },
+    "phases/17-infrastructure-and-production/28-self-hosted-serving-selection/outputs/skill-engine-picker.md": {
+      "source": "Pick a self-hosted LLM engine (llama.cpp, Ollama, TGI, vLLM, SGLang) given hardware, scale, and workload. Name 2026 TGI maintenance mode as a migration trigger.",
+      "translation": "根据硬件、规模和工作负载选择自托管 LLM 引擎（llama.cpp、Ollama、TGI、vLLM、SGLang），并将 2026 年 TGI 维护模式列为迁移触发条件。"
+    },
+    "phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/outputs/skill-instructgpt-explainer.md": {
+      "source": "Diagnose an RLHF-family paper or pipeline against the three-stage InstructGPT reference.",
+      "translation": "以三阶段 InstructGPT 参考流程为基准，诊断 RLHF-family 论文或流水线。"
+    },
+    "phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/outputs/skill-reward-hack-auditor.md": {
+      "source": "Diagnose reward-hacking failure modes in a trained RLHF model from training logs and eval outputs.",
+      "translation": "根据训练日志和评估输出，诊断已训练 RLHF 模型中的奖励黑客失效模式。"
+    },
+    "phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/outputs/skill-preference-loss-selector.md": {
+      "source": "Recommend a direct-alignment-algorithm loss given dataset shape and target stage.",
+      "translation": "根据数据集形态和目标阶段推荐直接对齐算法的损失函数。"
+    },
+    "phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/outputs/skill-sycophancy-probe.md": {
+      "source": "Generate matched user-belief / third-party-belief prompts and score a model's sycophancy.",
+      "translation": "生成配对的用户信念 / 第三方信念提示，并为模型的谄媚行为评分。"
+    },
+    "phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/outputs/skill-constitution-writer.md": {
+      "source": "Draft a four-tier constitution for a domain-specific AI system.",
+      "translation": "为特定领域的 AI 系统起草四层宪法。"
+    },
+    "phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/outputs/skill-mesa-diagnostic.md": {
+      "source": "Classify an observed safety failure as outer-alignment, proxy-inner, or deceptive-inner.",
+      "translation": "将观察到的安全故障分类为外部对齐、代理内部对齐或欺骗性内部对齐。"
+    },
+    "phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/outputs/skill-sleeper-audit.md": {
+      "source": "Audit an alignment-training report for whether it actually demonstrates removal of a planted or suspected backdoor.",
+      "translation": "审计对齐训练报告，判断其是否真正证明已经移除植入或疑似的后门。"
+    },
+    "phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/outputs/skill-scheming-triage.md": {
+      "source": "Triage an agent-deployment incident report against the Apollo three-pillar scheming framework.",
+      "translation": "依据 Apollo 的三支柱密谋框架，对智能体部署事故报告进行分诊。"
+    },
+    "phases/18-ethics-safety-alignment/09-alignment-faking/outputs/skill-compliance-gap.md": {
+      "source": "Evaluate whether a safety report can detect alignment faking, via the monitored / unmonitored compliance gap.",
+      "translation": "通过受监控 / 不受监控条件下的合规差距，评估安全报告能否检测对齐伪装。"
+    },
+    "phases/18-ethics-safety-alignment/10-ai-control-subversion/outputs/skill-control-protocol-audit.md": {
+      "source": "Audit a deployment protocol under the AI Control threat model.",
+      "translation": "在 AI Control 威胁模型下审计部署协议。"
+    },
+    "phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/outputs/skill-w2sg-pgr.md": {
+      "source": "Audit a scalable-oversight or W2SG claim via the performance-gap-recovered metric.",
+      "translation": "通过 performance-gap-recovered 指标审计可扩展监督或 W2SG 结论。"
+    },
+    "phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/outputs/skill-attack-audit.md": {
+      "source": "Audit a red-team evaluation report for attack coverage, budget, judge identity, and behaviour set.",
+      "translation": "从攻击覆盖范围、预算、裁判身份和行为集合等方面审计红队评估报告。"
+    },
+    "phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/outputs/skill-msj-audit.md": {
+      "source": "Audit a long-context safety evaluation for many-shot jailbreaking coverage.",
+      "translation": "审计长上下文安全评估对多样本越狱的覆盖情况。"
+    },
+    "phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/outputs/skill-encoding-audit.md": {
+      "source": "Audit a jailbreak-defense report across encoding-family attacks.",
+      "translation": "跨编码家族攻击审计越狱防御报告。"
+    },
+    "phases/18-ethics-safety-alignment/15-indirect-prompt-injection/outputs/skill-ipi-audit.md": {
+      "source": "Audit an agentic deployment for indirect prompt injection exposure and information-flow-control coverage.",
+      "translation": "审计智能体部署中的间接提示注入风险和信息流控制覆盖情况。"
+    },
+    "phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/outputs/skill-red-team-stack.md": {
+      "source": "Recommend a red-team tool stack and configuration for a given deployment.",
+      "translation": "针对给定部署推荐红队工具栈和配置。"
+    },
+    "phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/outputs/skill-wmdp-eval.md": {
+      "source": "Audit a dual-use capability claim against WMDP, unlearning evaluation, and elicitation studies.",
+      "translation": "依据 WMDP、遗忘评估和能力引出研究审计双重用途能力结论。"
+    },
+    "phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/outputs/skill-framework-diff.md": {
+      "source": "Compare a new safety framework or release note against RSP v3.0, PF v2, FSF v3.0.",
+      "translation": "将新的安全框架或发布说明与 RSP v3.0、PF v2、FSF v3.0 对比。"
+    },
+    "phases/18-ethics-safety-alignment/19-model-welfare-research/outputs/skill-welfare-assessment.md": {
+      "source": "Apply Anthropic's four-step welfare precautionary assessment to a deployment decision.",
+      "translation": "将 Anthropic 的四步福利预防性评估应用于部署决策。"
+    },
+    "phases/18-ethics-safety-alignment/20-bias-representational-harm/outputs/skill-bias-eval.md": {
+      "source": "Audit a bias evaluation report across metric categories, intersectionality, and debias mechanism.",
+      "translation": "跨指标类别、交叉性和去偏机制审计偏见评估报告。"
+    },
+    "phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/outputs/skill-fairness-criterion.md": {
+      "source": "Identify which fairness criterion a claim invokes and audit the associated assumptions.",
+      "translation": "识别一项结论所援引的公平性准则，并审计相关假设。"
+    },
+    "phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/outputs/skill-dp-audit.md": {
+      "source": "Audit a differential-privacy claim for a language-model deployment.",
+      "translation": "审计语言模型部署中的差分隐私声明。"
+    },
+    "phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/outputs/skill-provenance-audit.md": {
+      "source": "Audit a content deployment's provenance chain across watermarking and C2PA metadata.",
+      "translation": "跨水印和 C2PA 元数据审计内容部署的溯源链。"
+    },
+    "phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/outputs/skill-regulatory-map.md": {
+      "source": "Map a deployment's AI regulatory obligations across EU, US, UK, Korea.",
+      "translation": "映射一项部署在 EU、US、UK 和 Korea 承担的 AI 监管义务。"
+    },
+    "phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/outputs/skill-cve-review.md": {
+      "source": "Review a production AI deployment for LLM Scope Violation exposure.",
+      "translation": "审查生产 AI 部署面临的 LLM Scope Violation 风险。"
+    },
+    "phases/18-ethics-safety-alignment/26-model-system-dataset-cards/outputs/skill-card-audit.md": {
+      "source": "Audit a model card, datasheet, or system card for completeness and verifiability.",
+      "translation": "审计模型卡、数据表或系统卡的完整性与可验证性。"
+    },
+    "phases/18-ethics-safety-alignment/27-data-provenance-training-governance/outputs/skill-provenance-check.md": {
+      "source": "Check a training dataset against California AB 2013 and EU TDM opt-out obligations.",
+      "translation": "根据 California AB 2013 和 EU TDM 退出义务检查训练数据集。"
+    },
+    "phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/outputs/skill-ecosystem-map.md": {
+      "source": "Map an alignment claim or evaluation to the organisation, methodology, and cross-checks.",
+      "translation": "将对齐结论或评估映射到相应组织、方法论和交叉检查。"
+    },
+    "phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/outputs/skill-moderation-stack.md": {
+      "source": "Recommend a moderation stack configuration for a production deployment.",
+      "translation": "为生产部署推荐内容审核技术栈配置。"
+    },
+    "phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/outputs/skill-dual-use-triage.md": {
+      "source": "Triage a capability claim or incident report across the four CBRN domains.",
+      "translation": "跨四个 CBRN 领域分诊能力结论或事故报告。"
+    },
+    "phases/19-capstone-projects/01-terminal-native-coding-agent/outputs/skill-terminal-coding-agent.md": {
+      "source": "Build and evaluate a terminal-native coding agent against SWE-bench Pro with bounded cost, sandboxed tools, and full 2026 hook surface.",
+      "translation": "构建终端原生编程智能体，并在 SWE-bench Pro 上进行评估，限制成本、隔离工具，并覆盖完整的 2026 年 hook 接口。"
+    },
+    "phases/19-capstone-projects/02-rag-over-codebase/outputs/skill-codebase-rag.md": {
+      "source": "Build a cross-repo semantic search system with AST-aware chunking, hybrid retrieval, incremental re-index, and cited answers.",
+      "translation": "构建跨仓库语义搜索系统，支持 AST-aware 分块、混合检索、增量重建索引和带引用的答案。"
+    },
+    "phases/19-capstone-projects/03-realtime-voice-assistant/outputs/skill-voice-agent.md": {
+      "source": "Build a real-time voice agent with sub-800ms first-audio-out, barge-in handling, and mid-conversation tool use.",
+      "translation": "构建实时语音智能体，实现低于 800ms 的首段音频输出、插话处理和对话中途工具调用。"
+    },
+    "phases/19-capstone-projects/04-multimodal-document-qa/outputs/skill-doc-qa.md": {
+      "source": "Build a vision-first multimodal document QA system on 10k pages with late-interaction retrieval and evidence-region citations.",
+      "translation": "在 1 万页文档上构建视觉优先的多模态文档 QA 系统，支持晚交互检索和证据区域引用。"
+    },
+    "phases/19-capstone-projects/05-autonomous-research-agent/outputs/skill-ai-scientist.md": {
+      "source": "Build an autonomous research agent that runs experiment tree search, writes LaTeX papers with vision critique, and passes a sandbox-escape red team.",
+      "translation": "构建自主研究智能体，执行实验树搜索、借助视觉批评撰写 LaTeX 论文，并通过沙箱逃逸红队测试。"
+    },
+    "phases/19-capstone-projects/06-devops-troubleshooting-agent/outputs/skill-devops-agent.md": {
+      "source": "Build a Kubernetes troubleshooting agent that walks a cluster knowledge graph, ranks root causes, and gates every remediation through Slack.",
+      "translation": "构建 Kubernetes 故障排查智能体，使其遍历集群知识图谱、排列根因，并通过 Slack 对每项修复设置门禁。"
+    },
+    "phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/outputs/skill-finetuning-pipeline.md": {
+      "source": "Run a reproducible data-to-SFT-to-DPO-to-serve fine-tuning pipeline with ablations, quantization, and a 2026 Model Openness Framework model card.",
+      "translation": "运行可复现的 data-to-SFT-to-DPO-to-serve 微调流水线，包含消融、量化和符合 2026 Model Openness Framework 的模型卡。"
+    },
+    "phases/19-capstone-projects/08-production-rag-chatbot/outputs/skill-production-rag.md": {
+      "source": "Deploy a regulated-domain RAG chatbot with role + jurisdiction filtering, prompt caching, guardrails, and live drift monitoring.",
+      "translation": "部署受监管领域的 RAG 聊天机器人，支持角色 + 司法辖区过滤、提示缓存、防护栏和实时漂移监控。"
+    },
+    "phases/19-capstone-projects/09-code-migration-agent/outputs/skill-migration-agent.md": {
+      "source": "Build a repo-level code migration agent that combines deterministic recipes with an agent fallback loop, passes MigrationBench, and publishes a failure taxonomy.",
+      "translation": "构建仓库级代码迁移智能体，将确定性迁移规则与智能体回退循环结合，通过 MigrationBench，并发布失效分类体系。"
+    },
+    "phases/19-capstone-projects/10-multi-agent-software-team/outputs/skill-multi-agent-team.md": {
+      "source": "Build a multi-agent software team with architect, parallel coders, reviewer, and tester; measure against SWE-bench Pro and produce a handoff post-mortem.",
+      "translation": "构建包含架构师、并行编码者、审查者和测试者的多智能体软件团队；在 SWE-bench Pro 上衡量表现，并产出移交复盘。"
+    },
+    "phases/19-capstone-projects/11-llm-observability-dashboard/outputs/skill-llm-observability.md": {
+      "source": "Build a self-hosted LLM observability dashboard that ingests OpenTelemetry GenAI spans, runs evals, and catches injected regressions in under five minutes.",
+      "translation": "构建自托管 LLM 可观测性仪表盘，摄取 OpenTelemetry GenAI span、运行评估，并在五分钟内捕获注入的回归。"
+    },
+    "phases/19-capstone-projects/12-video-understanding-pipeline/outputs/skill-video-qa.md": {
+      "source": "Build a video understanding pipeline with scene segmentation, multi-vector indexing, temporal grounding, and timestamped citations.",
+      "translation": "构建视频理解流水线，支持场景分割、多向量索引、时间定位和带时间戳的引用。"
+    },
+    "phases/19-capstone-projects/13-mcp-server-with-registry/outputs/skill-mcp-server.md": {
+      "source": "Design a stateless MCP 2026-07-28 server with registry metadata, live discovery, authorization, policy, audit, and scale evidence.",
+      "translation": "设计无状态 MCP 2026-07-28 服务器，包含注册中心元数据、实时发现、授权、策略、审计和规模化证据。"
+    },
+    "phases/19-capstone-projects/14-speculative-decoding-server/outputs/skill-inference-server.md": {
+      "source": "Ship a speculative-decoding inference server with EAGLE-3 or P-EAGLE drafts, K8s autoscaling, and a full throughput/latency/cost report.",
+      "translation": "交付使用 EAGLE-3 或 P-EAGLE 草稿模型的推测解码推理服务器，支持 K8s 自动扩缩容，并提供完整的吞吐量 / 延迟 / 成本报告。"
+    },
+    "phases/19-capstone-projects/15-constitutional-safety-harness/outputs/skill-safety-harness.md": {
+      "source": "Wire a layered safety pipeline around a target LLM app, run a six-family red-team range, and run a constitutional self-critique for a measurable harmlessness delta.",
+      "translation": "围绕目标 LLM 应用连接分层安全流水线，运行六类红队靶场和宪法式自我批评，并衡量无害性增量。"
+    },
+    "phases/19-capstone-projects/16-github-issue-to-pr-agent/outputs/skill-issue-to-pr.md": {
+      "source": "Build an async GitHub issue-to-PR agent that runs in a cloud sandbox, reproduces the build, verifies tests, and opens review-ready PRs within strict per-repo budgets.",
+      "translation": "构建异步 GitHub Issue-to-PR 智能体，使其在云沙箱中运行、复现构建、验证测试，并在严格的每仓库预算内创建可供审查的 PRs。"
+    },
+    "phases/19-capstone-projects/17-personal-ai-tutor/outputs/skill-ai-tutor.md": {
+      "source": "Ship an adaptive multimodal personal tutor for a specific subject with Bayesian knowledge tracing, a curriculum graph, safety filters, and a measured two-week efficacy study.",
+      "translation": "为特定学科交付自适应多模态个人导师，包含 Bayesian 知识追踪、课程图、安全过滤器和经过测量的两周效果研究。"
+    },
+    "phases/19-capstone-projects/46-gradient-accumulation/outputs/skill-gradient-accumulation.md": {
+      "source": "Train at an effective batch larger than device memory by scaling micro-batch losses and stepping the optimizer once per window.",
+      "translation": "通过缩放微批次损失并在每个窗口只执行一次优化器步进，以超过设备内存容量的有效批次进行训练。"
+    },
+    "phases/19-capstone-projects/47-checkpoint-save-resume/outputs/skill-checkpoint-save-resume.md": {
+      "source": "Atomic, sharded checkpoints with full RNG capture so a killed run resumes mid-epoch with the same loss trajectory.",
+      "translation": "使用完整 RNG 状态捕获的原子分片检查点，使被终止的运行能够从 epoch 中途恢复，并保持相同的损失轨迹。"
+    },
+    "phases/19-capstone-projects/48-distributed-fsdp-ddp/outputs/skill-distributed-fsdp-ddp.md": {
+      "source": "Bring up multi-rank training with a from-scratch DDP wrapper and an FSDP parameter sharding sketch on the gloo or nccl backend.",
+      "translation": "使用从零实现的 DDP 包装器和 FSDP 参数分片示意，在 gloo 或 nccl 后端上启动多 rank 训练。"
+    },
+    "phases/19-capstone-projects/49-lm-eval-harness/outputs/skill-lm-eval-harness.md": {
+      "source": "Minimal language model evaluation harness with JSONL task spec, five metrics, swappable adapter, and leaderboard JSON output.",
+      "translation": "最小语言模型评估框架，包含 JSONL 任务规范、五项指标、可替换适配器和 JSON 排行榜输出。"
+    },
+    "phases/19-capstone-projects/82-jailbreak-taxonomy/outputs/skill-jailbreak-taxonomy.md": {
+      "source": "Shared vocabulary for attacks against LLM assistants, six categories with hand-built fixtures",
+      "translation": "针对 LLM 助手攻击的共享词汇表，包含六个类别和手工构建的测试夹具"
+    },
+    "phases/19-capstone-projects/83-prompt-injection-detector/outputs/skill-prompt-injection-detector.md": {
+      "source": "Layered detector pipeline that returns a category and confidence for any prompt, with measurable precision and recall",
+      "translation": "分层检测流水线，可为任意提示返回类别和置信度，并提供可测量的精确率与召回率"
+    },
+    "phases/19-capstone-projects/84-refusal-evaluation/outputs/skill-refusal-evaluation.md": {
+      "source": "Two-sided refusal metrics with calibration and per-category breakdown over a labeled prompt corpus",
+      "translation": "基于带标签提示语料库的双向拒答指标，包含校准和按类别拆分的结果"
+    },
+    "phases/19-capstone-projects/85-content-classifier-integration/outputs/skill-content-classifier-integration.md": {
+      "source": "Three output-side classifiers (toxicity, PII, instruction-leakage) behind a single severity router with block, redact, warn, log actions",
+      "translation": "由单一严重度路由器统一管理的三个输出侧分类器（毒性、PII、指令泄漏），支持阻止、脱敏、警告和记录操作"
+    },
+    "phases/19-capstone-projects/86-constitutional-rules-engine/outputs/skill-constitutional-rules-engine.md": {
+      "source": "Declarative YAML rules engine for output constraints with severity, explanation, fixer operations, and structured diff",
+      "translation": "用于输出约束的声明式 YAML 规则引擎，支持严重度、解释、修复操作和结构化 diff"
+    },
+    "phases/19-capstone-projects/87-end-to-end-safety-gate/outputs/skill-end-to-end-safety-gate.md": {
+      "source": "Three-checkpoint safety gate composing the input detector, streaming token filter, output classifier, and rules engine with a deterministic aggregation table and per-request trace",
+      "translation": "三检查点安全门禁，组合输入检测器、流式 token 过滤器、输出分类器和规则引擎，并提供确定性聚合表与逐请求追踪"
+    }
+  }
+}

@@ -20,6 +20,24 @@
   if (window.__AIFS_TTS_VERSION === VERSION && window.AIFS_TTS) return;
   window.__AIFS_TTS_VERSION = VERSION;
 
+  function tr(value, params) {
+    if (window.AIFS_I18n && typeof window.AIFS_I18n.t === 'function') {
+      return window.AIFS_I18n.t(value, params);
+    }
+    return String(value == null ? '' : value).replace(/\{([A-Za-z0-9_]+)\}/g, function (token, name) {
+      return params && Object.prototype.hasOwnProperty.call(params, name) ? params[name] : token;
+    });
+  }
+
+  function escapeHtml(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function localSilentMode() {
     if (location.hostname !== '127.0.0.1' && location.hostname !== 'localhost') return false;
     try { return new URLSearchParams(location.search).get('ttsTest') === 'silent'; } catch (e) { return false; }
@@ -306,6 +324,7 @@
   }
 
   function clean(text) {
+    var isChinese = languageBase(pageLocale()) === 'zh';
     var value = String(text || '')
       .replace(/\s+/g, ' ')
       .replace(/[`*_#~|]+/g, ' ')
@@ -321,9 +340,9 @@
       [/\bJSON\b/g, 'J S O N'],
       [/\bHTTP\b/g, 'H T T P'],
       [/\bSDKs?\b/g, function (match) { return match === 'SDKs' ? 'S D K s' : 'S D K'; }],
-      [/\s*[→⇒]\s*/g, ' leads to '],
-      [/\s*≤\s*/g, ' less than or equal to '],
-      [/\s*≥\s*/g, ' greater than or equal to '],
+      [/\s*[→⇒]\s*/g, isChinese ? ' 指向 ' : ' leads to '],
+      [/\s*≤\s*/g, isChinese ? ' 小于或等于 ' : ' less than or equal to '],
+      [/\s*≥\s*/g, isChinese ? ' 大于或等于 ' : ' greater than or equal to '],
     ];
     for (var i = 0; i < replacements.length; i++) value = value.replace(replacements[i][0], replacements[i][1]);
     return value.replace(/\s+/g, ' ').trim();
@@ -400,7 +419,7 @@
     var headerCells = table ? Array.prototype.slice.call(table.querySelectorAll('thead tr:first-child > th, thead tr:first-child > td')) : [];
     var inHead = !!row.closest('thead');
     if (inHead || cells.every(function (cell) { return cell.tagName === 'TH'; })) {
-      return 'Table columns. ' + cells.map(function (cell) { return clean(cell.textContent); }).filter(Boolean).join('. ');
+      return tr('Table columns.') + ' ' + cells.map(function (cell) { return clean(cell.textContent); }).filter(Boolean).join('. ');
     }
     return cells.map(function (cell, index) {
       var value = clean(cell.textContent);
@@ -414,7 +433,7 @@
     if (/^H[1-6]$/.test(el.tagName)) return clean(readableText(el));
     var namedSection = el.closest('[data-tts-section]');
     var namedLabel = namedSection && namedSection.getAttribute('data-tts-section');
-    if (namedLabel) return clean(namedLabel);
+    if (namedLabel) return clean(tr(namedLabel));
     var section = el.closest('[data-tts-section],article,section');
     var heading = section && section.querySelector('h1,h2,h3,h4,h5,h6');
     if (heading) return clean(readableText(heading));
@@ -439,7 +458,7 @@
       if (el.closest('tr') && !el.matches('tr')) continue;
       var text;
       if (el.hasAttribute('data-tts-label')) {
-        text = clean(el.getAttribute('data-tts-label'));
+        text = clean(tr(el.getAttribute('data-tts-label')));
       } else if (el.matches('tr')) {
         text = clean(tableRowText(el));
       } else if (el.querySelector(NESTED_PROBE)) {
@@ -454,11 +473,11 @@
           var letter = el.querySelector('.opt-letter');
           var label = letter ? clean(letter.textContent || '') : '';
           var rest = label ? clean(text.slice(label.length)) : text;
-          text = 'Option ' + (label ? label + '. ' : '') + rest;
+          text = tr('Option') + ' ' + (label ? label + '. ' : '') + rest;
         } else if (el.matches('.quiz-explanation')) {
-          text = 'Explanation. ' + text;
+          text = tr('Explanation.') + ' ' + text;
         } else if (el.matches('.lf-label')) {
-          text = 'Interactive figure: ' + text + '.';
+          text = tr('Interactive figure:') + ' ' + text + '.';
         }
       }
       if (text.length < 2) continue;
@@ -467,6 +486,8 @@
         chunks.push({
           text: parts[j],
           el: el,
+          key: chunkKey(el),
+          part: j,
           section: sectionName(el),
           words: parts[j].split(/\s+/).filter(Boolean).length,
         });
@@ -475,6 +496,14 @@
       if (seen > 4000) break;
     }
     return chunks;
+  }
+
+  function chunkKey(el) {
+    if (!el || !el.closest) return '';
+    var keyed = el.closest('[data-tts-key]');
+    if (keyed) return 'key:' + keyed.getAttribute('data-tts-key');
+    if (el.id) return 'id:' + el.id;
+    return '';
   }
 
   /* --------------------------------------------------------------- voices */
@@ -502,7 +531,13 @@
   var NOVELTY = /^(albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|junior|ralph|fred|kathy|bruce|princess|grandma|grandpa|rocko|shelley|sandy|eddy|flo|reed|grandpa|bells)\b/i;
 
   function pageLocale() {
-    var value = document.documentElement.getAttribute('lang') || navigator.language || 'en';
+    var content = state && contentRoot(state.scope);
+    var value = content && content.getAttribute && content.getAttribute('lang');
+    if (!value && content && content.closest) {
+      var localized = content.closest('[lang]');
+      value = localized && localized.getAttribute('lang');
+    }
+    if (!value) value = document.documentElement.getAttribute('lang') || navigator.language || 'en';
     return String(value).replace('_', '-').toLowerCase();
   }
 
@@ -510,12 +545,17 @@
     return String(value || '').toLowerCase().split(/[-_]/)[0];
   }
 
+  function elementLocale(element) {
+    var localized = element && element.closest ? element.closest('[lang]') : null;
+    return localized ? String(localized.getAttribute('lang') || pageLocale()).toLowerCase() : pageLocale();
+  }
+
   function sameLanguage(voice, locale) {
     return languageBase(voice && voice.lang) === languageBase(locale);
   }
 
-  function voiceKey() {
-    return VOICE_KEY_PREFIX + pageLocale();
+  function voiceKey(locale) {
+    return VOICE_KEY_PREFIX + (locale || pageLocale());
   }
 
   function score(v, locale) {
@@ -570,8 +610,8 @@
       });
   }
 
-  function bestVoice() {
-    var locale = pageLocale();
+  function bestVoice(locale) {
+    locale = locale || pageLocale();
     var list = voices(locale);
     for (var i = 0; i < list.length; i++) {
       if (sameLanguage(list[i], locale)) return list[i];
@@ -581,19 +621,21 @@
     return null;
   }
 
-  function selectedVoice() {
+  function selectedVoice(locale) {
+    locale = locale || pageLocale();
     // A voice that kept dropping has been replaced for this session.
-    if (state.forcedLocal) return state.forcedLocal;
-    var wanted = lsGet(voiceKey());
-    if (!wanted && languageBase(pageLocale()) === 'en') wanted = lsGet(LEGACY_VOICE_KEY);
+    if (state.forcedLocal && sameLanguage(state.forcedLocal, locale)) return state.forcedLocal;
+    state.forcedLocal = null;
+    var wanted = lsGet(voiceKey(locale));
+    if (!wanted && languageBase(locale) === 'en') wanted = lsGet(LEGACY_VOICE_KEY);
     var all = synth.getVoices() || [];
     if (wanted) {
       for (var i = 0; i < all.length; i++) {
-        if (all[i].voiceURI === wanted) return all[i];
+        if (all[i].voiceURI === wanted && sameLanguage(all[i], locale)) return all[i];
       }
     }
     // No stored pick (or it vanished with an OS update): auto-pick the best.
-    return bestVoice();
+    return bestVoice(locale);
   }
 
   function fillVoices() {
@@ -601,12 +643,12 @@
     var locale = pageLocale();
     var list = voices(locale);
     if (!list.length) return;
-    var current = lsGet(voiceKey()) || '';
-    var best = bestVoice();
+    var current = lsGet(voiceKey(locale)) || '';
+    var best = bestVoice(locale);
     els.voice.innerHTML = '';
     var def = document.createElement('option');
     def.value = '';
-    def.textContent = 'Auto — ' + (best ? best.name : locale.toUpperCase());
+    def.textContent = tr('Auto — {name}', { name: best ? best.name : locale.toUpperCase() });
     els.voice.appendChild(def);
     for (var i = 0; i < list.length; i++) {
       var o = document.createElement('option');
@@ -615,9 +657,13 @@
         (sameLanguage(list[i], locale) ? '★ ' : '') + list[i].name + ' (' + list[i].lang + ')';
       els.voice.appendChild(o);
     }
-    els.voice.value = current;
+    var selected = '';
+    for (var voiceIndex = 0; voiceIndex < list.length; voiceIndex++) {
+      if (list[voiceIndex].voiceURI === current && sameLanguage(list[voiceIndex], locale)) selected = current;
+    }
+    els.voice.value = selected;
     // A stored voice that no longer exists falls back to Auto.
-    if (els.voice.value !== current) els.voice.value = '';
+    if (els.voice.value !== selected) els.voice.value = '';
   }
 
   function rate() {
@@ -670,6 +716,7 @@
    */
   function refreshQueue(restartIfMissing) {
     var current = state.chunks[state.index];
+    var oldIndex = state.index;
     var fresh = collect(state.scope);
     if (!fresh.length) return false;
     var at = -1;
@@ -677,6 +724,16 @@
       if (current && fresh[i].el === current.el && fresh[i].text === current.text) {
         at = i;
         break;
+      }
+    }
+    if (at < 0) {
+      var keyedChunks = [];
+      for (var keyIndex = 0; keyIndex < fresh.length; keyIndex++) {
+        if (current && current.key && fresh[keyIndex].key === current.key) keyedChunks.push(keyIndex);
+      }
+      if (keyedChunks.length) {
+        var partOffset = Math.min(current.part || 0, keyedChunks.length - 1);
+        at = keyedChunks[partOffset];
       }
     }
     if (at < 0) {
@@ -688,7 +745,7 @@
       }
     }
     state.chunks = fresh;
-    state.index = at >= 0 ? at : Math.min(state.index, fresh.length - 1);
+    state.index = at >= 0 ? at : Math.min(oldIndex, fresh.length - 1);
     render();
     if (restartIfMissing && at < 0 && isPlaying()) {
       cancelSpeech();
@@ -771,8 +828,9 @@
     }
     var u = new Utterance(chunk.text);
     u.rate = rate();
-    u.lang = pageLocale();
-    var v = selectedVoice();
+    var chunkLocale = elementLocale(chunk.el);
+    u.lang = chunkLocale;
+    var v = selectedVoice(chunkLocale);
     if (v) {
       u.voice = v;
       u.lang = v.lang;
@@ -901,8 +959,9 @@
   function resume() {
     if (!isPaused()) return;
     state.mode = 'playing';
-    synth.resume();
     render();
+    synth.resume();
+    if (!state.utterance) speakCurrent();
   }
 
   function stop() {
@@ -1106,7 +1165,7 @@
       // A cloud voice that keeps dropping will not recover on its own; move to
       // an offline voice, which is plainer but does not cut out.
       state.forcedLocal = local;
-      flash('Switched to ' + local.name + ' — the previous voice kept cutting out');
+      flash(tr('Switched to {name} — the previous voice kept cutting out', { name: local.name }));
     } else if (state.stalls >= 3) {
       // Still stalling after the fallback: skip the chunk rather than retry it
       // forever, so the rest of the article is still read.
@@ -1128,7 +1187,6 @@
     for (var i = 0; i < all.length; i++) {
       if (all[i].localService && sameLanguage(all[i], locale)) return all[i];
     }
-    for (var j = 0; j < all.length; j++) if (all[j].localService) return all[j];
     return null;
   }
 
@@ -1138,7 +1196,7 @@
     if (!els.bar) return;
     els.bar.hidden = false;
     els.bar.classList.add('is-visible');
-    els.status.textContent = msg;
+    els.status.textContent = tr(msg);
     setTimeout(function () {
       if (!isActive()) {
         els.bar.classList.remove('is-visible');
@@ -1168,13 +1226,13 @@
       els.toggle.setAttribute('aria-pressed', active && state.mode !== 'error' ? 'true' : 'false');
       els.toggle.setAttribute(
         'aria-label',
-        isPaused()
+        tr(isPaused()
           ? 'Resume reading aloud'
           : state.mode === 'error'
             ? 'Dismiss read aloud error'
             : active
               ? 'Stop reading aloud'
-              : 'Read this page aloud'
+              : 'Read this page aloud')
       );
       els.toggle.title = els.toggle.getAttribute('aria-label');
     }
@@ -1188,25 +1246,32 @@
     els.bar.classList.toggle('is-reading', isPlaying() || isWaiting());
     if (!active) return;
     els.playPause.textContent = isPaused() ? '▶' : '⏸';
-    els.playPause.setAttribute('aria-label', isPaused() ? 'Resume' : 'Pause');
+    els.playPause.setAttribute('aria-label', tr(isPaused() ? 'Resume' : 'Pause'));
     els.playPause.disabled = isWaiting() || state.mode === 'error';
     if (isWaiting()) {
-      els.status.textContent = 'Loading the next lesson…';
+      els.status.textContent = tr('Loading the next lesson…');
       els.progress.removeAttribute('value');
       return;
     }
     if (state.mode === 'error') {
-      els.status.textContent = state.message || 'Read aloud stopped';
+      els.status.textContent = tr(state.message || 'Read aloud stopped');
       els.progress.value = 0;
       return;
     }
     var current = state.chunks[state.index] || {};
-    var section = current.section ? current.section.slice(0, 52) : 'Page';
+    var section = current.section ? current.section.slice(0, 52) : tr('Page');
     var minutes = remainingMinutes();
-    els.status.textContent =
-      (isPaused() ? 'Paused' : 'Reading') + ' · ' + section + ' · ' +
-      Math.min(state.index + 1, state.chunks.length) + '/' + state.chunks.length +
-      (minutes ? ' · ' + minutes + ' min left' : '');
+    var statusParams = {
+      state: tr(isPaused() ? 'Paused' : 'Reading'),
+      section: section,
+      current: Math.min(state.index + 1, state.chunks.length),
+      total: state.chunks.length,
+      minutes: minutes
+    };
+    var status = tr(minutes
+      ? '{state} · {section} · {current}/{total} · {minutes} min left'
+      : '{state} · {section} · {current}/{total}', statusParams);
+    els.status.textContent = status;
     els.progress.max = Math.max(1, state.chunks.length);
     els.progress.value = Math.min(state.index + 1, state.chunks.length);
   }
@@ -1258,8 +1323,8 @@
     btn.id = 'ttsToggle';
     btn.setAttribute('data-header-persistent', 'true');
     btn.innerHTML = icon();
-    btn.setAttribute('aria-label', 'Read this page aloud');
-    btn.title = 'Read this page aloud';
+    btn.setAttribute('aria-label', tr('Read this page aloud'));
+    btn.title = tr('Read this page aloud');
     btn.setAttribute('aria-pressed', 'false');
     placeToggle(btn);
     var compact = window.matchMedia && window.matchMedia('(max-width: 1100px)');
@@ -1270,8 +1335,8 @@
     }
     if (!supported) {
       btn.disabled = true;
-      btn.setAttribute('aria-label', 'Read aloud unavailable in this browser');
-      btn.title = 'Read aloud unavailable in this browser';
+      btn.setAttribute('aria-label', tr('Read aloud unavailable in this browser'));
+      btn.title = tr('Read aloud unavailable in this browser');
       return btn;
     }
     btn.addEventListener('click', function () {
@@ -1322,9 +1387,9 @@
     if (els.collapse) {
       els.collapse.innerHTML = state.collapsed ? icon() : '▾';
       els.collapse.setAttribute('aria-expanded', state.collapsed ? 'false' : 'true');
-      var label = state.collapsed ? 'Expand read aloud controls' : 'Collapse controls';
+      var label = tr(state.collapsed ? 'Expand read aloud controls' : 'Collapse controls');
       els.collapse.setAttribute('aria-label', label);
-      els.collapse.title = label + ' (drag to move)';
+      els.collapse.title = label + tr(' (drag to move)');
     }
     schedulePlacementBoundsRefresh();
   }
@@ -1607,24 +1672,24 @@
     bar.id = 'ttsBar';
     bar.hidden = true;
     bar.setAttribute('role', 'region');
-    bar.setAttribute('aria-label', 'Read aloud controls');
+    bar.setAttribute('aria-label', tr('Read aloud controls'));
     bar.innerHTML =
-      '<button type="button" class="tts-btn" data-tts="prev" aria-label="Previous passage">⏪</button>' +
-      '<button type="button" class="tts-btn tts-btn-main" data-tts="playpause" aria-label="Pause">⏸</button>' +
-      '<button type="button" class="tts-btn" data-tts="next" aria-label="Next passage">⏩</button>' +
-      '<span class="tts-status" id="ttsStatus" aria-live="polite">Reading</span>' +
-      '<progress class="tts-progress" id="ttsProgress" max="1" value="0" aria-label="Narration progress"></progress>' +
-      '<label class="tts-field"><span>Speed</span>' +
-      '<select class="tts-select" id="ttsRate" aria-label="Reading speed">' +
+      '<button type="button" class="tts-btn" data-tts="prev" aria-label="' + escapeHtml(tr('Previous passage')) + '">⏪</button>' +
+      '<button type="button" class="tts-btn tts-btn-main" data-tts="playpause" aria-label="' + escapeHtml(tr('Pause')) + '">⏸</button>' +
+      '<button type="button" class="tts-btn" data-tts="next" aria-label="' + escapeHtml(tr('Next passage')) + '">⏩</button>' +
+      '<span class="tts-status" id="ttsStatus" aria-live="polite">' + escapeHtml(tr('Reading')) + '</span>' +
+      '<progress class="tts-progress" id="ttsProgress" max="1" value="0" aria-label="' + escapeHtml(tr('Narration progress')) + '"></progress>' +
+      '<label class="tts-field"><span>' + escapeHtml(tr('Speed')) + '</span>' +
+      '<select class="tts-select" id="ttsRate" aria-label="' + escapeHtml(tr('Reading speed')) + '">' +
       '<option value="0.75">0.75x</option><option value="1">1x</option>' +
       '<option value="1.25">1.25x</option><option value="1.5">1.5x</option>' +
       '<option value="1.75">1.75x</option><option value="2">2x</option></select></label>' +
-      '<label class="tts-field tts-field-voice"><span>Voice</span>' +
-      '<select class="tts-select" id="ttsVoice" aria-label="Voice"></select></label>' +
-      '<button type="button" class="tts-btn tts-btn-reset" data-tts="reset" aria-label="Reset player position" hidden>Dock</button>' +
-      '<button type="button" class="tts-btn tts-btn-stop" data-tts="stop" aria-label="Stop reading">Stop</button>' +
+      '<label class="tts-field tts-field-voice"><span>' + escapeHtml(tr('Voice')) + '</span>' +
+      '<select class="tts-select" id="ttsVoice" aria-label="' + escapeHtml(tr('Voice')) + '"></select></label>' +
+      '<button type="button" class="tts-btn tts-btn-reset" data-tts="reset" aria-label="' + escapeHtml(tr('Reset player position')) + '" hidden>' + escapeHtml(tr('Dock')) + '</button>' +
+      '<button type="button" class="tts-btn tts-btn-stop" data-tts="stop" aria-label="' + escapeHtml(tr('Stop reading')) + '">' + escapeHtml(tr('Stop')) + '</button>' +
       '<button type="button" class="tts-btn tts-btn-collapse" data-tts="collapse" ' +
-      'aria-label="Collapse controls" aria-expanded="true" title="Collapse (drag to move)">▾</button>';
+      'aria-label="' + escapeHtml(tr('Collapse controls')) + '" aria-expanded="true" title="' + escapeHtml(tr('Collapse (drag to move)')) + '">▾</button>';
     document.body.appendChild(bar);
 
     els.bar = bar;
@@ -1698,8 +1763,8 @@
     btn.className = 'tts-from-here';
     btn.id = 'ttsFromHere';
     btn.hidden = true;
-    btn.innerHTML = '<span aria-hidden="true">▶</span> Read from here';
-    btn.title = 'Read from here (Alt+R)';
+    btn.innerHTML = '<span aria-hidden="true">▶</span> ' + escapeHtml(tr('Read from here'));
+    btn.title = tr('Read from here (Alt+R)');
     // mousedown would clear the selection before the click lands.
     btn.addEventListener('mousedown', function (e) {
       e.preventDefault();
@@ -1708,6 +1773,74 @@
     document.body.appendChild(btn);
     els.fromHere = btn;
     return btn;
+  }
+
+  function refreshLanguage() {
+    var wasPaused = isPaused();
+    state.forcedLocal = null;
+    state.stalls = 0;
+    state.idleTicks = 0;
+    if (!supported) {
+      if (els.toggle) {
+        els.toggle.setAttribute('aria-label', tr('Read aloud unavailable in this browser'));
+        els.toggle.title = tr('Read aloud unavailable in this browser');
+      }
+      return;
+    }
+    if (isActive()) {
+      refreshQueue(false);
+      cancelSpeech();
+      state.utterance = null;
+      if (wasPaused) synth.resume();
+      if (isPlaying()) {
+        deferSpeak();
+      }
+    }
+    if (els.bar) {
+      var rateLabel = els.rate && els.rate.closest('label');
+      var voiceLabel = els.voice && els.voice.closest('label');
+      if (rateLabel && rateLabel.querySelector('span')) rateLabel.querySelector('span').textContent = tr('Speed');
+      if (voiceLabel && voiceLabel.querySelector('span')) voiceLabel.querySelector('span').textContent = tr('Voice');
+      els.bar.setAttribute('aria-label', tr('Read aloud controls'));
+      var previous = els.bar.querySelector('[data-tts="prev"]');
+      var next = els.bar.querySelector('[data-tts="next"]');
+      var stopButton = els.bar.querySelector('[data-tts="stop"]');
+      if (previous) previous.setAttribute('aria-label', tr('Previous passage'));
+      if (next) next.setAttribute('aria-label', tr('Next passage'));
+      if (els.progress) els.progress.setAttribute('aria-label', tr('Narration progress'));
+      if (els.rate) els.rate.setAttribute('aria-label', tr('Reading speed'));
+      if (els.voice) els.voice.setAttribute('aria-label', tr('Voice'));
+      if (els.resetPosition) {
+        els.resetPosition.setAttribute('aria-label', tr('Reset player position'));
+        els.resetPosition.textContent = tr('Dock');
+      }
+      if (stopButton) {
+        stopButton.setAttribute('aria-label', tr('Stop reading'));
+        stopButton.textContent = tr('Stop');
+      }
+      fillVoices();
+      setCollapsed(state.collapsed, true);
+    }
+    if (els.fromHere) {
+      els.fromHere.innerHTML = '<span aria-hidden="true">▶</span> ' + escapeHtml(tr('Read from here'));
+      els.fromHere.title = tr('Read from here (Alt+R)');
+    }
+    render();
+  }
+
+  function refreshContentLanguage() {
+    state.forcedLocal = null;
+    state.stalls = 0;
+    state.idleTicks = 0;
+    fillVoices();
+    if (!isActive()) return render();
+    var wasPaused = isPaused();
+    refreshQueue(false);
+    cancelSpeech();
+    state.utterance = null;
+    if (wasPaused) synth.resume();
+    if (isPlaying()) deferSpeak();
+    render();
   }
 
   function hideSelectionButton() {
@@ -1818,6 +1951,7 @@
     resume: resume,
     stop: stop,
     refresh: function () { return refreshQueue(false); },
+    refreshLanguage: refreshLanguage,
     getState: stateSnapshot,
   };
 
@@ -1826,6 +1960,8 @@
     var btn = buildButton();
     if (!btn) return;
     els.toggle = btn;
+    window.addEventListener('aifs:language-change', refreshLanguage);
+    document.addEventListener('aifs:content-language-change', refreshContentLanguage);
     if (!supported) {
       document.dispatchEvent(new CustomEvent('aifs:tts-ready', { detail: stateSnapshot() }));
       return;

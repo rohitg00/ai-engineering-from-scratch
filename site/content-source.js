@@ -2,8 +2,8 @@
  * Resolve repository content for static pages.
  *
  * Local previews are served from the repository root, so ../ reaches lesson
- * and assessment source files directly. Deploys keep the existing branch-aware
- * raw GitHub behavior through build-meta.js.
+ * and assessment source files directly. Deploys keep branch-aware English
+ * source and separately configured published translations through build-meta.js.
  */
 (function () {
   'use strict';
@@ -23,26 +23,79 @@
     });
   }
 
-  function rawRepoUrl(path) {
-    var safe = clean(path);
+  function validOwner(value) {
+    return /^[A-Za-z0-9-]+$/.test(value || '');
+  }
+
+  function validRepo(value) {
+    return /^[A-Za-z0-9_.-]+$/.test(value || '') && !hasDotSegment(value);
+  }
+
+  function validRef(value) {
+    var ref = String(value || '');
+    if (!ref || ref === '@' || ref.charAt(0) === '-' || ref.indexOf('refs/') === 0) return false;
+    if (/[\x00-\x20\x7f~^:?*\[\\]/.test(ref) || ref.indexOf('@{') !== -1) return false;
+    if (ref.indexOf('..') !== -1 || ref.indexOf('//') !== -1 || /[/.]$/.test(ref)) return false;
+    return ref.split('/').every(function (segment) {
+      return segment && segment.charAt(0) !== '.' && !/\.lock$/i.test(segment);
+    });
+  }
+
+  function encodeRef(ref) {
+    return String(ref || 'main').split('/').map(encodeURIComponent).join('/');
+  }
+
+  function parseRepository(value) {
+    var parts = String(value || '').split('/');
+    if (parts.length !== 2 || !validOwner(parts[0]) || !validRepo(parts[1])) return null;
+    return { owner: parts[0], repo: parts[1], repository: parts[0] + '/' + parts[1] };
+  }
+
+  function activeSource() {
     var configured = window.__AIFS_SOURCE || {};
-    var owner = /^[A-Za-z0-9-]+$/.test(configured.owner || '') ? configured.owner : 'rohitg00';
-    var repo = /^[A-Za-z0-9_.-]+$/.test(configured.repo || '') && !hasDotSegment(configured.repo)
-      ? configured.repo
-      : 'ai-engineering-from-scratch';
-    var fallbackRevision = /^[A-Za-z0-9._/-]+$/.test(window.__AIFS_REF || '') && !hasDotSegment(window.__AIFS_REF)
+    var repository = parseRepository(window.__AIFS_REPOSITORY);
+    if (!repository) {
+      var owner = validOwner(configured.owner) ? configured.owner : 'rohitg00';
+      var repo = validRepo(configured.repo) ? configured.repo : 'ai-engineering-from-scratch';
+      repository = {
+        owner: owner,
+        repo: repo,
+        repository: owner + '/' + repo,
+      };
+    }
+
+    var revision = validRef(window.__AIFS_REF)
       ? window.__AIFS_REF
-      : 'main';
-    var revision = /^[A-Za-z0-9._/-]+$/.test(configured.revision || '') && !hasDotSegment(configured.revision)
-      ? configured.revision
-      : fallbackRevision;
-    return 'https://raw.githubusercontent.com/' + owner + '/' + repo + '/' + revision + '/' + safe;
+      : (validRef(configured.revision) ? configured.revision : 'main');
+    repository.revision = revision;
+    return repository;
+  }
+
+  function translationSource() {
+    var active = activeSource();
+    var configured = parseRepository(window.__AIFS_TRANSLATION_REPOSITORY);
+    return {
+      repository: configured ? configured.repository : active.repository,
+      ref: validRef(window.__AIFS_TRANSLATION_REF) ? window.__AIFS_TRANSLATION_REF : 'translations',
+    };
+  }
+
+  function rawRepoUrl(path) {
+    var source = activeSource();
+    return 'https://raw.githubusercontent.com/' + source.repository + '/'
+      + encodeRef(source.revision) + '/' + clean(path);
   }
 
   function repoUrl(path) {
     var safe = clean(path);
     if (isLocal()) return '../' + safe;
     return rawRepoUrl(safe);
+  }
+
+  function translationUrl(path) {
+    var source = translationSource();
+    return 'https://raw.githubusercontent.com/' + source.repository + '/'
+      + encodeRef(source.ref) + '/' + clean(path);
   }
 
   function localDirectoryFiles(path) {
@@ -158,6 +211,7 @@
     isLocal: isLocal,
     repoUrl: repoUrl,
     rawRepoUrl: rawRepoUrl,
+    translationUrl: translationUrl,
     localDirectoryFiles: localDirectoryFiles,
     mergeLessonOutputs: mergeLessonOutputs,
   };

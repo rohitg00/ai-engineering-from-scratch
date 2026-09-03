@@ -119,6 +119,21 @@ test('plain static preview rewrites every route-producing site surface', () => {
   assert.match(fs.readFileSync(path.join(__dirname, 'learning-paths.html'), 'utf8'), />Study specialist lessons<\/a>/);
 });
 
+test('GitHub project Pages rewrites shared routes to static files', () => {
+  const routes = runtimeRouteLinks('certifications.html');
+  assert.equal(routes.some(route => route.startsWith('lesson?')), true);
+  assert.equal(routes.some(route => route.startsWith('certification?')), true);
+  const links = routes.map(testLink);
+  const runtime = loadRouteRuntime(
+    'https://example.github.io/ai-engineering-from-scratch/certifications.html',
+    links
+  );
+
+  assert.equal(runtime.api.isStaticPreview(), true);
+  assert.equal(links.length > 0, true);
+  assert.equal(links.every(link => /^(?:lesson|certification)\.html\?/.test(link.value())), true);
+});
+
 test('shared adapter covers dynamically inserted links, click races, and command palette navigation', () => {
   const runtime = loadRouteRuntime('http://localhost:8000/site/index.html');
   const inserted = testLink('lesson?path=phases%2F00-setup-and-tooling%2F01-dev-environment');

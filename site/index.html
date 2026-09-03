@@ -2091,7 +2091,7 @@
         <span class="right">open source · MIT</span>
       </div>
       <h1 class="manual-title">AI Engineering<br>from Scratch</h1>
-      <p class="manual-tagline reveal"><span id="mastheadLessonCount">Every published lesson</span>. <span id="mastheadPhaseCount">Every phase</span>. Every algorithm built from raw math before a single framework gets imported.</p>
+      <p class="manual-tagline reveal" id="mastheadSummary">556 published lessons. 20 core phases. 16 guided routes.</p>
       <p class="manual-attribution reveal" style="--stagger-delay: 40ms;">Maintained by Rohit Ghumare and contributors. Run on your own machine.</p>
       <div class="masthead-cta reveal" style="--stagger-delay: 80ms;">
         <a class="masthead-btn masthead-btn--primary" href="lesson?path=phases/00-setup-and-tooling/01-dev-environment">
@@ -2306,7 +2306,8 @@
         <div class="preface-eyebrow reveal reveal--left">How this works</div>
         <div class="preface-body reveal" style="--stagger-delay: 120ms;">
           <p>Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't explain its loss curve. You hook a function to an agent but can't say what attention does inside the model that's calling it.</p>
-          <p>This curriculum is the spine. <span id="prefacePhaseCount">Every phase</span>, <span id="prefaceLessonCount">every published lesson</span>, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it's doing under the hood.</p>
+          <p id="prefaceCurriculumSummary">The core curriculum has 20 phases and 523 lessons in four languages. Beyond it are 12 focused paths and 4 Claude certification tracks with 33 certification lessons.</p>
+          <p>Linear algebra sits at one end and autonomous swarms at the other. Every algorithm gets built from raw math first: backprop, tokenizer, attention, agent loop. By the time PyTorch shows up, you already know what it is doing under the hood.</p>
           <p>Each lesson runs the same loop: read the problem, derive the math, write the code, run the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding. Free, open source, and built to run on your own laptop.</p>
         </div>
       </div>
@@ -2328,8 +2329,12 @@
           <span>4 connected domains</span>
         </figcaption>
         <picture>
-          <source media="(max-width: 600px)" srcset="assets/figures/006-ai-engineering-learning-paths-mobile.svg">
-          <img src="assets/figures/006-ai-engineering-learning-paths.svg" alt="AI Engineering connects building and deploying AI applications, software engineering fundamentals, agent-assisted engineering, and product judgment and delivery." loading="lazy">
+          <source media="(max-width: 600px)"
+                  srcset="assets/figures/006-ai-engineering-learning-paths-mobile.svg"
+                  data-i18n-srcset-zh="assets/figures/006-ai-engineering-learning-paths-mobile.zh-CN.svg">
+          <img src="assets/figures/006-ai-engineering-learning-paths.svg"
+               data-i18n-src-zh="assets/figures/006-ai-engineering-learning-paths.zh-CN.svg"
+               alt="AI Engineering connects building and deploying AI applications, software engineering fundamentals, agent-assisted engineering, and product judgment and delivery." loading="lazy">
         </picture>
         <a class="learning-paths-node learning-paths-node--applications" href="learning-paths.html#building-and-deploying" aria-label="Explore the competencies for Building and Deploying AI Applications">
           <span class="learning-paths-node-label">Building and Deploying AI Applications</span>
@@ -2415,14 +2420,19 @@
       <div class="stat-block-title reveal reveal--left">Current Progress</div>
       <div class="stat-rows reveal" style="--stagger-delay: 100ms;" id="statRows">
         <div class="stat-row">
-          <span class="stat-row-label">Finished Lessons</span>
+          <span class="stat-row-label">Finished Core Lessons</span>
           <span class="stat-row-bar" data-bar="complete" style="--bar-scale:0;" aria-hidden="true">bar</span>
           <span class="stat-row-value" data-stat="complete-frac">0 / 0</span>
         </div>
         <div class="stat-row">
-          <span class="stat-row-label">Phases</span>
+          <span class="stat-row-label">Core Phases</span>
           <span class="stat-row-bar" data-bar="phases" style="--bar-scale:0;" aria-hidden="true">bar</span>
           <span class="stat-row-value" data-stat="phases-frac">0 / 0</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-row-label">Guided Routes</span>
+          <span class="stat-row-bar" data-bar="routes" style="--bar-scale:0;" aria-hidden="true">bar</span>
+          <span class="stat-row-value" data-stat="routes-count">0</span>
         </div>
         <div class="stat-row">
           <span class="stat-row-label">Languages</span>
@@ -2438,7 +2448,7 @@
     </section>
 
     <section class="toc container" id="contents">
-      <div class="toc-title reveal reveal--left">Curriculum · 20 phases · 523 lessons</div>
+      <div class="toc-title reveal reveal--left" id="curriculumTocTitle">Curriculum · 20 phases · 523 lessons</div>
       <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">Tap a phase to expand its lessons. Each one ships when its math, code, and test are all written.</div>
       <div class="toc-list" id="phasesGrid"></div>
       <div class="legend">
@@ -2579,6 +2589,7 @@
         var track = marquee.querySelector('.marquee-track');
         var half = track && track.querySelector('.marquee-half:not([aria-hidden="true"])');
         if (!track || !half) return;
+        if (!marquee._aifsSourceHalf) marquee._aifsSourceHalf = half.cloneNode(true);
 
         track.querySelectorAll('.marquee-half[aria-hidden="true"]').forEach(function (node) {
           node.remove();
@@ -2589,7 +2600,7 @@
 
         var groupSize = Math.max(1, Math.ceil(marquee.clientWidth / half.offsetWidth));
         for (var i = 0; i < groupSize * 2 - 1; i += 1) {
-          var clone = half.cloneNode(true);
+          var clone = marquee._aifsSourceHalf.cloneNode(true);
           clone.setAttribute('aria-hidden', 'true');
           track.appendChild(clone);
         }
@@ -2637,13 +2648,15 @@
     })();
   </script>
 
-  <script src="langs.js?v=20260802a"></script>
-  <script src="lang-picker.js?v=20260808d" defer></script>
-  <script src="data.js?v=20260821c"></script>
-  <script src="progress.js?v=20260822a"></script>
-  <script src="header.js?v=20260829b" defer></script>
-  <script src="cmdpalette.js?v=20260821a" defer></script>
-  <script src="app.js?v=20260822a"></script>
+  <script src="langs.js?v=fb2840c8aa0a"></script>
+  <script src="i18n-data.js?v=7e2dd86ccaad"></script>
+  <script src="ui-i18n.js?v=ed1be68f31e1"></script>
+  <script src="lang-picker.js?v=853069504587" defer></script>
+  <script src="data.js?v=5c1c014aea05"></script>
+  <script src="progress.js?v=20260828a"></script>
+  <script src="header.js?v=191a713c8dc5" defer></script>
+  <script src="cmdpalette.js?v=42dbbdb18dee" defer></script>
+  <script src="app.js?v=80509a5244d4"></script>
   <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
 </body>
 </html>

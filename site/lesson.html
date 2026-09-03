@@ -360,6 +360,13 @@
       background: var(--blueprint-tint);
     }
 
+    .lesson-article img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 24px auto;
+    }
+
     .lesson-article hr {
       border: none;
       height: 6px;
@@ -2520,9 +2527,12 @@
   </div>
 
   <script src="build-meta.js"></script>
-  <script src="langs.js?v=20260802a"></script>
-  <script src="lang-picker.js?v=20260808d"></script>
-  <script src="data.js?v=20260821c"></script>
+  <script src="langs.js?v=fb2840c8aa0a"></script>
+  <script src="i18n-data.js?v=7e2dd86ccaad"></script>
+  <script src="i18n-figures.js?v=f71df57dd7dd"></script>
+  <script src="ui-i18n.js?v=ed1be68f31e1"></script>
+  <script src="lang-picker.js?v=853069504587"></script>
+  <script src="data.js?v=5c1c014aea05"></script>
   <script>
     (function () {
       var path = '';
@@ -2543,8 +2553,8 @@
       });
     }());
   </script>
-  <script src="content-source.js?v=20260821a"></script>
-  <script src="progress.js?v=20260822a"></script>
+  <script src="content-source.js?v=815fe47a1484"></script>
+  <script src="progress.js?v=20260828a"></script>
   <script id="learningPathProgressRuntime">
     (function (root) {
       'use strict';
@@ -2644,10 +2654,10 @@
       root.AIFSLearningPathProgress = createStore(root.localStorage);
     }(window));
   </script>
-  <script src="header.js?v=20260829b" defer></script>
-  <script src="cmdpalette.js?v=20260821a" defer></script>
+  <script src="header.js?v=191a713c8dc5" defer></script>
+  <script src="cmdpalette.js?v=42dbbdb18dee" defer></script>
   <script src="lesson-figures.js?v=843871fd2942"></script>
-  <script src="figure-manifest.js?v=0980822a99ac"></script>
+  <script src="figure-manifest.js?v=8e970f6acbf8"></script>
   <script>
     (function () {
       var root = document.documentElement;
@@ -2682,7 +2692,7 @@
       }
 
       // lang-picker.js renders the switcher into #langPicker; when the reader
-      // chooses a language, re-fetch the current lesson in it (quiz stays English).
+      // chooses a language, re-fetch the lesson and its language-specific quiz.
       window.AIFS_onLangChange = function () {
         if (typeof lessonPath !== 'undefined' && lessonPath) fetchLesson(lessonPath);
       };
@@ -2723,11 +2733,45 @@
       var currentPhaseIndex = -1;
       var currentLessonIndex = -1;
       var flatLessons = [];
-      var ACTIVE_REF = (typeof window !== 'undefined' && window.__AIFS_REF) ? window.__AIFS_REF : 'main';
       var SOURCE_CONFIG = (typeof window !== 'undefined' && window.__AIFS_SOURCE) ? window.__AIFS_SOURCE : {};
       var SOURCE_OWNER = /^[A-Za-z0-9-]+$/.test(SOURCE_CONFIG.owner || '') ? SOURCE_CONFIG.owner : 'rohitg00';
-      var SOURCE_REPO = /^[A-Za-z0-9_.-]+$/.test(SOURCE_CONFIG.repo || '') ? SOURCE_CONFIG.repo : 'ai-engineering-from-scratch';
-      var REPO_TREE = 'https://github.com/' + SOURCE_OWNER + '/' + SOURCE_REPO + '/tree/' + encodeURIComponent(ACTIVE_REF) + '/';
+      var SOURCE_REPO = /^[A-Za-z0-9_.-]+$/.test(SOURCE_CONFIG.repo || '') && SOURCE_CONFIG.repo !== '.' && SOURCE_CONFIG.repo !== '..'
+        ? SOURCE_CONFIG.repo
+        : 'ai-engineering-from-scratch';
+      function validRepositoryRef(value) {
+        var ref = String(value || '');
+        if (!ref || ref === '@' || ref.charAt(0) === '-' || ref.indexOf('refs/') === 0) return false;
+        if (/[\x00-\x20\x7f~^:?*\[\\]/.test(ref) || ref.indexOf('@{') !== -1) return false;
+        if (ref.indexOf('..') !== -1 || ref.indexOf('//') !== -1 || /[/.]$/.test(ref)) return false;
+        return ref.split('/').every(function (segment) {
+          return segment && segment.charAt(0) !== '.' && !/\.lock$/i.test(segment);
+        });
+      }
+      function validRepository(value) {
+        var parts = String(value || '').split('/');
+        return parts.length === 2 && /^[A-Za-z0-9-]+$/.test(parts[0])
+          && /^[A-Za-z0-9_.-]+$/.test(parts[1]) && parts[1] !== '.' && parts[1] !== '..';
+      }
+      var ACTIVE_REF = (typeof window !== 'undefined' && validRepositoryRef(window.__AIFS_REF))
+        ? window.__AIFS_REF
+        : (validRepositoryRef(SOURCE_CONFIG.revision) ? SOURCE_CONFIG.revision : 'main');
+      var ACTIVE_REPOSITORY = (typeof window !== 'undefined' && window.__AIFS_REPOSITORY)
+        && validRepository(window.__AIFS_REPOSITORY)
+        ? window.__AIFS_REPOSITORY
+        : SOURCE_OWNER + '/' + SOURCE_REPO;
+      var TRANSLATION_REPOSITORY = (typeof window !== 'undefined' && window.__AIFS_TRANSLATION_REPOSITORY)
+        && validRepository(window.__AIFS_TRANSLATION_REPOSITORY)
+        ? window.__AIFS_TRANSLATION_REPOSITORY
+        : ACTIVE_REPOSITORY;
+      var TRANSLATION_REF = (typeof window !== 'undefined' && validRepositoryRef(window.__AIFS_TRANSLATION_REF))
+        ? window.__AIFS_TRANSLATION_REF
+        : 'translations';
+      function encodeRepositoryRef(ref) {
+        return String(ref || 'main').split('/').map(encodeURIComponent).join('/');
+      }
+      var ENCODED_ACTIVE_REF = encodeRepositoryRef(ACTIVE_REF);
+      var ENCODED_TRANSLATION_REF = encodeRepositoryRef(TRANSLATION_REF);
+      var REPO_TREE = 'https://github.com/' + ACTIVE_REPOSITORY + '/tree/' + ENCODED_ACTIVE_REF + '/';
       var certificationTrack = null;
       var certificationOriginTrack = null;
       var certificationLesson = null;
@@ -3298,7 +3342,8 @@
           var pathHtml = '<div class="sidebar-phase-nav"><a href="' + pathReturnHref + '">&larr; ' + pathReturnLabel + '</a></div>';
           var requiredPathLessons = flatLessons.filter(function (item) { return item.required !== false; });
           var optionalPathLessons = flatLessons.filter(function (item) { return item.required === false; });
-          pathHtml += '<div class="sidebar-phase-header">' + escapeHtml(learningPath.title || learningPath.id) + ' · ' + requiredPathLessons.length + ' lessons</div>';
+          pathHtml += '<div class="sidebar-phase-header">' + escapeHtml(learningPath.title || learningPath.id) + ' · ' +
+            escapeHtml(requiredPathLessons.length + lessonUiText(' lessons')) + '</div>';
           for (var lpi = 0; lpi < requiredPathLessons.length; lpi++) {
             var pathLesson = requiredPathLessons[lpi];
             var pathActive = pathLesson.path === lessonPath;
@@ -3426,14 +3471,164 @@
         return window.AIFS_currentLang ? window.AIFS_currentLang() : 'en';
       }
 
-      function applyRenderedLanguage(lang) {
-        var actual = lang || 'en';
+      function lessonUiFormat(value, params, lang) {
+        var text = value == null ? '' : String(value);
+        var targetLang = lang || currentLang();
+        if (window.AIFS_I18n && typeof window.AIFS_I18n.t === 'function') {
+          return window.AIFS_I18n.t(text, params, targetLang);
+        }
+        return text.replace(/\{([A-Za-z0-9_]+)\}/g, function (token, name) {
+          return params && Object.prototype.hasOwnProperty.call(params, name) ? params[name] : token;
+        });
+      }
+
+      function lessonUiText(value, lang) {
+        return lessonUiFormat(value, null, lang);
+      }
+
+      function applyLessonUiLanguage(lang, rootNode) {
+        if (!window.AIFS_I18n || typeof window.AIFS_I18n.apply !== 'function') return;
+        window.AIFS_I18n.apply(rootNode || document.documentElement, lang || currentLang());
+      }
+
+      function lessonPositionText(current, total, title) {
+        var params = { current: current, total: total, title: lessonUiText(title || '') };
+        var source = title ? 'Lesson {current} of {total}: {title}' : 'Lesson {current} of {total}';
+        var translated = lessonUiFormat(source, params);
+        var expanded = source.replace(/\{([A-Za-z0-9_]+)\}/g, function (token, name) { return params[name]; });
+        if (!title || translated !== expanded) return translated;
+        return lessonUiFormat('Lesson {current} of {total}', params) + ': ' + params.title;
+      }
+
+      function relativeLessonCountText(count, direction, includeLessons) {
+        var suffix = direction === 'earlier'
+          ? (includeLessons ? ' earlier lessons' : ' earlier')
+          : (includeLessons ? ' later lessons' : ' later');
+        return lessonUiFormat('{count}' + suffix, { count: count });
+      }
+
+      function quizQuestionList(data) {
+        if (Array.isArray(data)) return data;
+        return data && Array.isArray(data.questions) ? data.questions : null;
+      }
+
+      function isPlainQuizObject(value) {
+        if (!value || Object.prototype.toString.call(value) !== '[object Object]') return false;
+        var prototype = Object.getPrototypeOf(value);
+        return prototype === Object.prototype || prototype === null;
+      }
+
+      // Generated localized quizzes contain the canonical behavior metadata and
+      // translated text. Reject the whole asset instead of mixing languages if
+      // any answer, stage, id, ordering, or top-level metadata drifts.
+      function validateQuizOverlay(canonicalQuiz, overlayPayload, path) {
+        var canonical = quizQuestionList(canonicalQuiz);
+        if (!canonical || !canonical.length || !isPlainQuizObject(overlayPayload)) return false;
+        if (overlayPayload.schemaVersion !== 1 || overlayPayload.locale !== 'zh'
+            || !isPlainQuizObject(overlayPayload.quizByLesson)) return false;
+        var overlayQuiz = overlayPayload.quizByLesson[path];
+        var translated = quizQuestionList(overlayQuiz);
+        if (!translated || translated.length !== canonical.length) return false;
+        if (Array.isArray(canonicalQuiz) !== Array.isArray(overlayQuiz)) return false;
+        if (!Array.isArray(canonicalQuiz)) {
+          if (!isPlainQuizObject(canonicalQuiz) || !isPlainQuizObject(overlayQuiz)) return false;
+          var topKeys = Object.keys(canonicalQuiz).sort();
+          if (JSON.stringify(topKeys) !== JSON.stringify(Object.keys(overlayQuiz).sort())) return false;
+          for (var topIndex = 0; topIndex < topKeys.length; topIndex++) {
+            var topKey = topKeys[topIndex];
+            if (topKey !== 'questions'
+                && JSON.stringify(canonicalQuiz[topKey]) !== JSON.stringify(overlayQuiz[topKey])) return false;
+          }
+        }
+
+        for (var i = 0; i < canonical.length; i++) {
+          var canonicalQuestion = canonical[i];
+          var translatedQuestion = translated[i];
+          if (!isPlainQuizObject(canonicalQuestion) || !Array.isArray(canonicalQuestion.options)) return false;
+          if (!isPlainQuizObject(translatedQuestion)) return false;
+          var keys = Object.keys(canonicalQuestion).sort();
+          if (JSON.stringify(keys) !== JSON.stringify(Object.keys(translatedQuestion).sort())) return false;
+          for (var keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+            var key = keys[keyIndex];
+            if (key !== 'question' && key !== 'options' && key !== 'explanation'
+                && JSON.stringify(canonicalQuestion[key]) !== JSON.stringify(translatedQuestion[key])) return false;
+          }
+          if (typeof translatedQuestion.question !== 'string' || !translatedQuestion.question.trim()) return false;
+          if (!Array.isArray(translatedQuestion.options) || translatedQuestion.options.length !== canonicalQuestion.options.length) return false;
+          if (translatedQuestion.options.some(function (option) {
+            return typeof option !== 'string' || !option.trim();
+          })) return false;
+          if (typeof translatedQuestion.explanation !== 'string') return false;
+          if (canonicalQuestion.explanation && !translatedQuestion.explanation.trim()) return false;
+          if (!canonicalQuestion.explanation && translatedQuestion.explanation !== '') return false;
+        }
+        return true;
+      }
+
+      function mergeQuizOverlay(canonicalQuiz, overlayPayload, path) {
+        if (!validateQuizOverlay(canonicalQuiz, overlayPayload, path)) return canonicalQuiz;
+        var canonical = quizQuestionList(canonicalQuiz);
+        var translated = quizQuestionList(overlayPayload.quizByLesson[path]);
+        var questions = canonical.map(function (question, index) {
+          return Object.assign({}, question, {
+            question: translated[index].question,
+            options: translated[index].options.slice(),
+            explanation: translated[index].explanation
+          });
+        });
+        if (Array.isArray(canonicalQuiz)) return questions;
+        return Object.assign({}, canonicalQuiz, { questions: questions });
+      }
+
+      function sha256Text(value) {
+        if (!window.crypto || !window.crypto.subtle || typeof window.TextEncoder !== 'function') {
+          return Promise.reject(new Error('sha256-unavailable'));
+        }
+        return window.crypto.subtle.digest('SHA-256', new window.TextEncoder().encode(value)).then(function (buffer) {
+          return Array.prototype.map.call(new Uint8Array(buffer), function (byte) {
+            return byte.toString(16).padStart(2, '0');
+          }).join('');
+        });
+      }
+
+      function zhQuizAsset(path) {
+        var locale = window.AIFS_I18N && window.AIFS_I18N.zh;
+        var quizzes = locale && locale.assets && locale.assets.quizzes;
+        var entry = quizzes && isPlainQuizObject(quizzes.lessons) ? quizzes.lessons[path] : null;
+        if (!quizzes || quizzes.manifestVersion !== 1 || !isPlainQuizObject(entry)) return null;
+        if (typeof entry.url !== 'string' || !entry.url || !/^[a-f0-9]{64}$/.test(entry.sourceSha256 || '')) return null;
+        return entry;
+      }
+
+      function loadLocalizedQuiz(canonicalQuiz, canonicalSource, path, lang) {
+        if (lang !== 'zh' || !/^phases\/[^/]+\/[^/]+$/.test(path || '') || certificationLesson) {
+          return Promise.resolve({ quiz: canonicalQuiz, lang: 'en' });
+        }
+        var asset = zhQuizAsset(path);
+        if (!asset) return Promise.resolve({ quiz: canonicalQuiz, lang: 'en' });
+
+        return sha256Text(canonicalSource).then(function (sourceSha256) {
+          if (sourceSha256 !== asset.sourceSha256) return { quiz: canonicalQuiz, lang: 'en' };
+          return fetch(asset.url, { cache: 'no-store' }).then(function (response) {
+            if (!response.ok) throw new Error('quiz-overlay-fetch-failed');
+            return response.json();
+          }).then(function (payload) {
+            if (!validateQuizOverlay(canonicalQuiz, payload, path)) return { quiz: canonicalQuiz, lang: 'en' };
+            return { quiz: mergeQuizOverlay(canonicalQuiz, payload, path), lang: 'zh' };
+          });
+        }).catch(function () {
+          return { quiz: canonicalQuiz, lang: 'en' };
+        });
+      }
+
+      function applySelectedLanguage() {
+        var selected = currentLang();
         if (window.AIFS_applyLangDir) {
-          window.AIFS_applyLangDir(actual);
+          window.AIFS_applyLangDir(selected);
           return;
         }
-        document.documentElement.lang = actual;
-        document.documentElement.dir = /^(ar|he|fa|ur)$/i.test(actual) ? 'rtl' : 'ltr';
+        document.documentElement.lang = selected;
+        document.documentElement.dir = /^(ar|he|fa|ur)$/i.test(selected) ? 'rtl' : 'ltr';
       }
 
       function fetchRepositoryFile(relativePath) {
@@ -3442,7 +3637,7 @@
         var fetchOptions = localPreview ? { cache: 'no-store' } : undefined;
         var primary = source && source.repoUrl
           ? source.repoUrl(relativePath)
-          : 'https://raw.githubusercontent.com/' + SOURCE_OWNER + '/' + SOURCE_REPO + '/' + ACTIVE_REF + '/' + relativePath;
+          : 'https://raw.githubusercontent.com/' + ACTIVE_REPOSITORY + '/' + ENCODED_ACTIVE_REF + '/' + relativePath;
         var fallback = source && source.rawRepoUrl ? source.rawRepoUrl(relativePath) : primary;
 
         return fetch(primary, fetchOptions).then(function (response) {
@@ -3462,18 +3657,18 @@
       function fetchLesson(path, retried, requestSequence) {
         if (!retried || !requestSequence) requestSequence = ++lessonFetchSequence;
         if (certificationLesson && path === certificationLesson.path && typeof certificationLesson.markdown === 'string') {
-          applyRenderedLanguage('en');
-          lessonQuizPromise = Promise.resolve(certificationLesson.quiz || null);
+          applySelectedLanguage();
+          lessonQuizPromise = Promise.resolve({ quiz: certificationLesson.quiz || null, lang: 'en' });
           try {
-            renderLesson(certificationLesson.markdown);
+            renderLesson(certificationLesson.markdown, 'en');
           } catch (embeddedError) {
             console.error('renderLesson failed', embeddedError);
             showError('Render error', 'Loaded the certification lesson but failed to render it. Details are in the browser console.');
             return;
           }
           lessonQuizPromise.then(function (embeddedQuiz) {
-            if (!embeddedQuiz || requestSequence !== lessonFetchSequence) return;
-            try { renderQuiz(embeddedQuiz); }
+            if (!embeddedQuiz || !embeddedQuiz.quiz || requestSequence !== lessonFetchSequence) return;
+            try { renderQuiz(embeddedQuiz.quiz, embeddedQuiz.lang); }
             catch (quizError) { console.error('renderQuiz failed', quizError); }
           });
           return;
@@ -3483,12 +3678,20 @@
         // missing local file use the branch-aware raw source from build-meta.
         var enPath = path + '/docs/en.md';
         var lang = currentLang();
-        var translatedUrl = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/'
-          + lang + '/' + path + '/docs/' + lang + '.md';
+        var translatedPath = 'i18n/' + lang + '/' + path + '/docs/' + lang + '.md';
+        var source = window.AIFSContentSource;
+        var translatedUrl = source && typeof source.translationUrl === 'function'
+          ? source.translationUrl(translatedPath)
+          : 'https://raw.githubusercontent.com/' + TRANSLATION_REPOSITORY + '/'
+            + ENCODED_TRANSLATION_REF + '/' + translatedPath;
 
         if (!retried || !lessonQuizPromise) {
           lessonQuizPromise = fetchRepositoryFile(path + '/quiz.json')
-            .then(function (res) { return res.json(); })
+            .then(function (res) { return res.text(); })
+            .then(function (sourceText) {
+              var canonicalQuiz = JSON.parse(sourceText);
+              return loadLocalizedQuiz(canonicalQuiz, sourceText, path, lang);
+            })
             .catch(function () { return null; });
         }
         var quizPromiseForRequest = lessonQuizPromise;
@@ -3514,18 +3717,18 @@
           })
           .then(function (documentResult) {
             if (requestSequence !== lessonFetchSequence) return;
-            applyRenderedLanguage(documentResult.lang);
+            applySelectedLanguage();
             try {
-              renderLesson(documentResult.markdown);
+              renderLesson(documentResult.markdown, documentResult.lang);
             } catch (err) {
               console.error('renderLesson failed', err);
               showError('Render error', 'Loaded the lesson markdown but failed to render it. Details in the browser console.');
               return;
             }
             quizPromiseForRequest
-              .then(function (data) {
-                if (!data || requestSequence !== lessonFetchSequence) return;
-                try { renderQuiz(data); }
+              .then(function (result) {
+                if (!result || !result.quiz || requestSequence !== lessonFetchSequence) return;
+                try { renderQuiz(result.quiz, result.lang); }
                 catch (err) { console.error('renderQuiz failed', err); }
               });
           })
@@ -3572,7 +3775,9 @@
           : '523 lessons. 20 phases. Build it from raw math, by hand.';
       }
 
-      function updateLessonSeo(title, md) {
+      // Build-time manifests provide crawler discovery; this keeps the live
+      // document metadata aligned with the language actually rendered.
+      function updateLessonSeo(title, md, contentLang) {
         var ORIGIN = 'https://aiengineeringfromscratch.com';
         var path = new URLSearchParams(location.search).get('path') || '';
         var url = ORIGIN + '/lesson?path=' + encodeURIComponent(path);
@@ -3618,7 +3823,7 @@
           '@context': 'https://schema.org',
           '@graph': [
             { '@type': 'LearningResource', name: title, description: desc, url: url,
-              inLanguage: document.documentElement.lang || 'en', isAccessibleForFree: true,
+              inLanguage: contentLang || document.documentElement.lang || 'en', isAccessibleForFree: true,
               isPartOf: { '@type': 'Course', name: courseName, url: contextTrack ? ORIGIN + '/certification?id=' + encodeURIComponent(contextTrack.id) : ORIGIN } },
             { '@type': 'BreadcrumbList', itemListElement: breadcrumbs }
           ]
@@ -3669,9 +3874,13 @@
         });
       }
 
-      function renderLesson(md) {
+      function renderLesson(md, contentLang) {
         var el = document.getElementById('lessonContent');
         disposeRenderedLesson(el);
+        var actualLang = contentLang || 'en';
+        el.setAttribute('lang', actualLang);
+        if (actualLang === currentLang()) el.removeAttribute('data-no-i18n');
+        else el.setAttribute('data-no-i18n', '');
         var html = parseMd(md);
         html += '<div class="ai-panels" id="aiPanels"></div>';
         html = addBottomNav(html);
@@ -3681,9 +3890,10 @@
         document.title = extractTitle(md) + (certificationLesson
           ? ' - ' + certificationTrackLabel(contextTrack)
           : ' - AI Engineering from Scratch');
-        updateLessonSeo(extractTitle(md), md);
+        updateLessonSeo(extractTitle(md), md, actualLang);
 
         var article = el.querySelector('.lesson-article');
+        article.setAttribute('lang', actualLang);
         renderLessonActionPanel(article);
         initCodeCopy();
         renderMermaidBlocks(article);
@@ -3696,6 +3906,10 @@
         });
         renderAIPanels();
         buildTOC();
+        applyLessonUiLanguage(actualLang === currentLang() ? currentLang() : 'en', el);
+        document.dispatchEvent(new CustomEvent('aifs:content-language-change', {
+          detail: { lang: actualLang }
+        }));
         restoreHeadingHash();
 
         document.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -4391,17 +4605,67 @@
         return cells.map(function (c) { return c.trim(); });
       }
 
+      function lessonMarkdownBaseUrl() {
+        var safeLessonPath = String(lessonPath || '').replace(/^\/+/, '').replace(/\/+$/, '');
+        var source = window.AIFSContentSource;
+        if (source && typeof source.rawRepoUrl === 'function') {
+          return source.rawRepoUrl(safeLessonPath + '/docs/');
+        }
+        return 'https://raw.githubusercontent.com/' + ACTIVE_REPOSITORY + '/' + ENCODED_ACTIVE_REF + '/' + safeLessonPath + '/docs/';
+      }
+
+      function resolveMarkdownImageUrl(href) {
+        var trimmed = String(href || '').trim();
+        if (!trimmed || /^\/\//.test(trimmed) || trimmed.charAt(0) === '/') return null;
+        if (/^https:\/\//i.test(trimmed)) return trimmed;
+        if (/^[a-z][a-z0-9+.-]*:/i.test(trimmed)) return null;
+
+        try {
+          var source = window.AIFSContentSource;
+          var repositoryRoot = new URL(
+            source && typeof source.rawRepoUrl === 'function'
+              ? source.rawRepoUrl('')
+              : 'https://raw.githubusercontent.com/' + ACTIVE_REPOSITORY + '/' + ENCODED_ACTIVE_REF + '/'
+          );
+          var resolved = new URL(trimmed, lessonMarkdownBaseUrl());
+          if (resolved.protocol !== 'https:') return null;
+          if (resolved.hostname !== 'raw.githubusercontent.com') return null;
+          if (resolved.pathname.indexOf(repositoryRoot.pathname) !== 0) return null;
+          return resolved.href;
+        } catch (error) {
+          return null;
+        }
+      }
+
       function inlineFormat(text) {
+        var inlineTokens = [];
+        function stashInline(html) {
+          var id = '\x00INLINE' + inlineTokens.length + '\x00';
+          inlineTokens.push(html);
+          return id;
+        }
+
+        text = text.replace(/`([^`]+)`/g, function (m, code) {
+          return stashInline('<code>' + escapeHtml(code) + '</code>');
+        });
+        text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, function (m, alt, href) {
+          var src = resolveMarkdownImageUrl(href);
+          if (!src) return stashInline(escapeHtml(alt || ''));
+          return stashInline('<img src="' + escapeAttr(src) + '" alt="' + escapeAttr(alt || '') + '" loading="lazy" decoding="async">');
+        });
+
         text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         text = text.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
         text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
         text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
-        text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
         text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function (m, label, href) {
           if (/^https?:\/\/|^mailto:/i.test(href)) {
             return '<a href="' + href + '" target="_blank" rel="noopener">' + label + '</a>';
           }
           return label;
+        });
+        text = text.replace(/\x00INLINE(\d+)\x00/g, function (m, index) {
+          return inlineTokens[Number(index)] || '';
         });
         return text;
       }
@@ -4743,7 +5007,7 @@
         }
       }
 
-      function renderQuiz(data) {
+      function renderQuiz(data, quizLang) {
         var questions = data.questions || data;
         if (!questions || !questions.length) return;
         lessonQuizCorrectAnswers = Object.create(null);
@@ -4755,18 +5019,20 @@
         var buildH2 = article.querySelector('#build-it, #build');
         var keyTermsH2 = article.querySelector('#key-terms');
 
-        var preQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'pre'; }), 'pre', 'Pre-Lesson Check');
-        var checkQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'check'; }), 'check', 'Mid-Lesson Check');
-        var postQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'post'; }), 'post', 'Post-Lesson Quiz');
+        var actualQuizLang = quizLang || 'en';
+        var preQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'pre'; }), 'pre', 'Pre-Lesson Check', actualQuizLang);
+        var checkQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'check'; }), 'check', 'Mid-Lesson Check', actualQuizLang);
+        var postQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'post'; }), 'post', 'Post-Lesson Quiz', actualQuizLang);
 
         if (!preQuizHtml && !checkQuizHtml && !postQuizHtml) {
-          var allHtml = buildQuizHtml(questions, 'all', 'Quiz');
+          var allHtml = buildQuizHtml(questions, 'all', 'Quiz', actualQuizLang);
           if (allHtml && keyTermsH2) {
             keyTermsH2.insertAdjacentHTML('beforebegin', allHtml);
           } else if (allHtml) {
             article.insertAdjacentHTML('beforeend', allHtml);
           }
           restoreQuizAnswers();
+          applyLessonUiLanguage(currentLang(), article);
           restoreHeadingHash();
           return;
         }
@@ -4798,13 +5064,15 @@
         }
 
         restoreQuizAnswers();
+        applyLessonUiLanguage(currentLang(), article);
         restoreHeadingHash();
       }
 
-      function buildQuizHtml(questions, id, title) {
+      function buildQuizHtml(questions, id, title, quizLang) {
         if (!questions.length) return '';
-        var html = '<div class="quiz-section" id="quiz-' + id + '">';
-        html += '<div class="quiz-title">&#9989; ' + escapeHtml(title) + '</div>';
+        var actualQuizLang = quizLang || 'en';
+        var html = '<div class="quiz-section" id="quiz-' + id + '" lang="' + escapeAttr(actualQuizLang) + '" data-no-i18n>';
+        html += '<div class="quiz-title">&#9989; ' + escapeHtml(lessonUiText(title, actualQuizLang)) + '</div>';
         html += '<div class="quiz-reset-status" role="status" aria-live="polite"></div>';
         for (var qi = 0; qi < questions.length; qi++) {
           var q = questions[qi];
@@ -4814,21 +5082,21 @@
           var hasExplanation = !!q.explanation || !!certificationLesson;
           lessonQuizCorrectAnswers[qid] = q.correct;
           html += '<div class="quiz-question" id="' + qid + '">';
-          html += '<div class="quiz-question-text" id="' + questionLabelId + '">' + (qi + 1) + '. ' + escapeHtml(q.question) + '</div>';
+          html += '<div class="quiz-question-text" id="' + questionLabelId + '" data-no-i18n>' + (qi + 1) + '. ' + escapeHtml(q.question) + '</div>';
           html += '<div class="quiz-options" role="group" aria-labelledby="' + questionLabelId + '">';
           for (var oi = 0; oi < q.options.length; oi++) {
             html += '<button type="button" class="quiz-option" data-index="' + oi + '" aria-pressed="false"' + (hasExplanation ? ' aria-describedby="' + explanationId + '"' : '') + ' onclick="handleQuizClick(this)">';
             html += '<span class="quiz-marker" aria-hidden="true"></span>';
-            html += '<span class="quiz-option-text">' + escapeHtml(q.options[oi]) + '</span>';
+            html += '<span class="quiz-option-text" data-no-i18n>' + escapeHtml(q.options[oi]) + '</span>';
             html += '</button>';
           }
           html += '</div>';
           if (hasExplanation) {
-            html += '<div class="quiz-explanation" id="' + explanationId + '" role="status" aria-live="polite">' + escapeHtml(q.explanation || '') + '</div>';
+            html += '<div class="quiz-explanation" id="' + explanationId + '" role="status" aria-live="polite" data-no-i18n>' + escapeHtml(q.explanation || '') + '</div>';
           }
           html += '</div>';
         }
-        html += '<div class="quiz-score" id="quiz-' + id + '-score"><div class="quiz-score-result" role="status" aria-live="polite"></div><button type="button" class="quiz-retry" onclick="resetLessonQuizSection(this)">Retry this check</button></div>';
+        html += '<div class="quiz-score" id="quiz-' + id + '-score"><div class="quiz-score-result" role="status" aria-live="polite"></div><button type="button" class="quiz-retry" onclick="resetLessonQuizSection(this)">' + escapeHtml(lessonUiText('Retry this check', actualQuizLang)) + '</button></div>';
         html += '</div>';
         return html;
       }
@@ -4842,6 +5110,7 @@
       function applyQuizAnswer(questionDiv, chosen, persist) {
         if (!questionDiv || isNaN(chosen)) return;
         var correct = lessonQuizCorrectAnswers[questionDiv.id];
+        var quizLang = questionDiv.closest('.quiz-section').getAttribute('lang') || 'en';
         var options = questionDiv.querySelectorAll('.quiz-option');
         if (chosen < 0 || chosen >= options.length || !Number.isInteger(correct)) return;
         questionDiv.classList.add('answered');
@@ -4861,11 +5130,11 @@
           }
           if (i === chosen) option.classList.add('selected');
           if (i === chosen && i === correct) {
-            option.setAttribute('aria-label', accessibleLabel + ', selected, correct');
+            option.setAttribute('aria-label', accessibleLabel + lessonUiText(', selected, correct', quizLang));
           } else if (i === chosen) {
-            option.setAttribute('aria-label', accessibleLabel + ', selected, incorrect');
+            option.setAttribute('aria-label', accessibleLabel + lessonUiText(', selected, incorrect', quizLang));
           } else if (i === correct) {
-            option.setAttribute('aria-label', accessibleLabel + ', correct answer');
+            option.setAttribute('aria-label', accessibleLabel + lessonUiText(', correct answer', quizLang));
           }
         }
         if (chosen !== correct) {
@@ -4881,7 +5150,7 @@
         if (exp) {
           if (certificationLesson) {
             if (!exp.hasAttribute('data-base-explanation')) exp.setAttribute('data-base-explanation', exp.textContent || '');
-            exp.textContent = (chosen === correct ? 'Correct. ' : 'Not quite. ') + exp.getAttribute('data-base-explanation');
+            exp.textContent = lessonUiText(chosen === correct ? 'Correct. ' : 'Not quite. ', quizLang) + exp.getAttribute('data-base-explanation');
           }
           exp.classList.add('visible');
         }
@@ -4897,6 +5166,7 @@
 
       function updateSectionScore(section) {
         if (!section) return;
+        var quizLang = section.getAttribute('lang') || 'en';
         var allQs = section.querySelectorAll('.quiz-question');
         var answeredQs = section.querySelectorAll('.quiz-question.answered');
         var correctCount = 0;
@@ -4911,8 +5181,8 @@
           var resultEl = scoreEl.querySelector('.quiz-score-result');
           if (!resultEl) return;
           resultEl.textContent = complete
-            ? correctCount + '/' + allQs.length + ' correct'
-            : answeredQs.length + '/' + allQs.length + ' answered. Review the feedback, then retry when ready.';
+            ? correctCount + '/' + allQs.length + lessonUiText(' correct', quizLang)
+            : answeredQs.length + '/' + allQs.length + lessonUiText(' answered. Review the feedback, then retry when ready.', quizLang);
           scoreEl.classList.add('visible');
         }
       }
@@ -4965,7 +5235,7 @@
           if (result) result.textContent = '';
         }
         var status = section.querySelector('.quiz-reset-status');
-        if (status) status.textContent = 'This check was reset. Choose a new answer for each question.';
+        if (status) status.textContent = lessonUiText('This check was reset. Choose a new answer for each question.', section.getAttribute('lang') || 'en');
         var firstOption = section.querySelector('.quiz-option:not(:disabled)');
         if (firstOption) firstOption.focus();
       }
@@ -5035,7 +5305,7 @@
       var repositoryDirectoryCache = {};
 
       function githubDirectoryFetch(apiPath) {
-        return fetch('https://api.github.com/repos/' + SOURCE_OWNER + '/' + SOURCE_REPO + '/contents/' + apiPath + '?ref=' + encodeURIComponent(ACTIVE_REF), {
+        return fetch('https://api.github.com/repos/' + ACTIVE_REPOSITORY + '/contents/' + apiPath + '?ref=' + encodeURIComponent(ACTIVE_REF), {
           headers: { 'Accept': 'application/vnd.github.v3+json' }
         }).then(function (res) {
           if (!res.ok) throw new Error(res.status);
@@ -5353,7 +5623,7 @@
         });
       }
 
-      function getQuizQuestions() {
+      function getEnglishFallbackQuizQuestions() {
         var pathLower = (lessonPath || '').toLowerCase();
         var lessonName = '';
         if (currentLessonIndex >= 0) lessonName = flatLessons[currentLessonIndex].lessonName;
@@ -5421,6 +5691,24 @@
         ];
       }
 
+      function getQuizQuestions(lang) {
+        return getEnglishFallbackQuizQuestions().map(function (question) {
+          return {
+            q: lessonUiText(question.q, lang || 'en'),
+            opts: question.opts.map(function (option) { return lessonUiText(option, lang || 'en'); }),
+            answer: question.answer,
+            explain: lessonUiText(question.explain, lang || 'en')
+          };
+        });
+      }
+
+      function fallbackQuizLanguage() {
+        var selected = currentLang();
+        if (selected === 'en') return 'en';
+        var probe = 'What does \"from scratch\" mean in this course?';
+        return lessonUiText(probe, selected) === probe ? 'en' : selected;
+      }
+
       function lessonQuizPanelQuestions(data) {
         var source = data && (data.questions || data);
         if (!Array.isArray(source)) return [];
@@ -5441,24 +5729,31 @@
         container.appendChild(panel);
 
         if (lessonQuizPromise) {
-          lessonQuizPromise.then(function (data) {
-            var questions = lessonQuizPanelQuestions(data);
-            if (!questions.length) questions = getQuizQuestions();
-            fillQuizPanel(panel.querySelector('#quizContent'), questions);
+          lessonQuizPromise.then(function (result) {
+            if (!panel.isConnected) return;
+            var questions = lessonQuizPanelQuestions(result && result.quiz);
+            if (questions.length) {
+              fillQuizPanel(panel.querySelector('#quizContent'), questions, result.lang);
+              return;
+            }
+            var fallbackLang = fallbackQuizLanguage();
+            fillQuizPanel(panel.querySelector('#quizContent'), getQuizQuestions(fallbackLang), fallbackLang);
           });
         } else {
-          fillQuizPanel(panel.querySelector('#quizContent'), getQuizQuestions());
+          var fallbackLang = fallbackQuizLanguage();
+          fillQuizPanel(panel.querySelector('#quizContent'), getQuizQuestions(fallbackLang), fallbackLang);
         }
       }
 
-      function fillQuizPanel(body, questions) {
+      function fillQuizPanel(body, questions, quizLang) {
+        var actualQuizLang = quizLang || 'en';
         var phase = '';
         if (currentLessonIndex >= 0) {
           var fl = flatLessons[currentLessonIndex];
           phase = fl.phaseSlug || '';
         }
 
-        var html = '<div class="ai-panel-subtitle">Did you get it?</div>';
+        var html = '<div class="ai-panel-subtitle">' + escapeHtml(lessonUiText('Did you get it?', actualQuizLang)) + '</div>';
         html += '<div class="quiz-container" id="quizContainer">';
 
         var letters = ['A', 'B', 'C', 'D'];
@@ -5466,31 +5761,47 @@
           var panelQuestionLabel = 'quiz-q-' + qi + '-label';
           var panelExplanation = 'quiz-explain-' + qi;
           html += '<div class="quiz-question" id="quiz-q-' + qi + '">';
-          html += '<div class="quiz-question-num">Question ' + (qi + 1) + ' of ' + questions.length + '</div>';
-          html += '<div class="quiz-question-text" id="' + panelQuestionLabel + '">' + escapeHtml(q.q) + '</div>';
+          html += '<div class="quiz-question-num">' + escapeHtml(lessonUiFormat(
+            'Question {current} of {total}',
+            { current: qi + 1, total: questions.length },
+            actualQuizLang
+          )) + '</div>';
+          html += '<div class="quiz-question-text" id="' + panelQuestionLabel + '" data-no-i18n>' + escapeHtml(q.q) + '</div>';
           html += '<div class="quiz-options" role="group" aria-labelledby="' + panelQuestionLabel + '">';
           q.opts.forEach(function (opt, oi) {
             html += '<button type="button" class="quiz-option" data-qi="' + qi + '" data-oi="' + oi + '" aria-pressed="false" aria-describedby="' + panelExplanation + '" onclick="handleQuizAnswer(' + qi + ',' + oi + ')">';
             html += '<span class="opt-letter" aria-hidden="true">' + letters[oi] + '</span>';
-            html += '<span class="quiz-option-text">' + escapeHtml(opt) + '</span>';
+            html += '<span class="quiz-option-text" data-no-i18n>' + escapeHtml(opt) + '</span>';
             html += '</button>';
           });
           html += '</div>';
-          html += '<div class="quiz-explanation" id="' + panelExplanation + '" role="status" aria-live="polite">' + escapeHtml(q.explain) + '</div>';
+          html += '<div class="quiz-explanation" id="' + panelExplanation + '" role="status" aria-live="polite" data-no-i18n>' + escapeHtml(q.explain) + '</div>';
           html += '</div>';
         });
 
-        html += '<div class="quiz-score" id="quizScore"><div class="quiz-score-number" id="quizScoreNum">0/' + questions.length + '</div><div class="quiz-score-label">Complete all questions to see your score</div></div>';
+        html += '<div class="quiz-score" id="quizScore"><div class="quiz-score-number" id="quizScoreNum">0/' + questions.length + '</div><div class="quiz-score-label">' + escapeHtml(lessonUiText('Complete all questions to see your score', actualQuizLang)) + '</div></div>';
         var phaseArgumentMatch = phase.match(/^(\d+)/);
         var phaseArgument = phaseArgumentMatch ? phaseArgumentMatch[1] : phase || 'current phase';
-        html += '<div class="quiz-deeper">Want a deeper quiz? In Codex use <code>check-understanding ' + escapeHtml(phaseArgument) + '</code> or choose it from <code>/skills</code>. In Claude Code use <code>/check-understanding ' + escapeHtml(phaseArgument) + '</code>. In another compatible host say: <code>Use check-understanding to quiz me on Phase ' + escapeHtml(phaseArgument) + '.</code></div>';
+        html += '<div class="quiz-deeper">' + lessonUiFormat(
+          'Want a deeper quiz? In Codex use {codexCommand} or choose it from {skillsCommand}. In Claude Code use {claudeCommand}. In another compatible host say: {portableCommand}',
+          {
+            codexCommand: '<code>check-understanding ' + escapeHtml(phaseArgument) + '</code>',
+            skillsCommand: '<code>/skills</code>',
+            claudeCommand: '<code>/check-understanding ' + escapeHtml(phaseArgument) + '</code>',
+            portableCommand: '<code>Use check-understanding to quiz me on Phase ' + escapeHtml(phaseArgument) + '.</code>'
+          },
+          actualQuizLang
+        ) + '</div>';
         html += '</div>';
 
+        body.setAttribute('lang', actualQuizLang);
+        body.setAttribute('data-no-i18n', '');
         body.innerHTML = html;
 
         window._quizData = questions;
         window._quizAnswered = 0;
         window._quizCorrect = 0;
+        applyLessonUiLanguage(currentLang(), body);
       }
 
       window.handleQuizAnswer = function (qi, oi) {
@@ -5499,6 +5810,7 @@
 
         var qEl = document.getElementById('quiz-q-' + qi);
         if (!qEl) return;
+        var quizLang = (qEl.closest('[lang]') && qEl.closest('[lang]').getAttribute('lang')) || 'en';
         var opts = qEl.querySelectorAll('.quiz-option');
         if (opts[0].classList.contains('disabled')) return;
 
@@ -5513,17 +5825,17 @@
           if (i === oi) {
             opt.classList.add('selected');
             opt.classList.add(i === correct ? 'correct' : 'wrong');
-            opt.setAttribute('aria-label', accessibleLabel + (i === correct ? ', selected, correct' : ', selected, incorrect'));
+            opt.setAttribute('aria-label', accessibleLabel + lessonUiText(i === correct ? ', selected, correct' : ', selected, incorrect', quizLang));
           }
           if (i === correct) {
             opt.classList.add('is-answer');
-            if (i !== oi) opt.setAttribute('aria-label', accessibleLabel + ', correct answer');
+            if (i !== oi) opt.setAttribute('aria-label', accessibleLabel + lessonUiText(', correct answer', quizLang));
           }
         });
 
         var explain = document.getElementById('quiz-explain-' + qi);
         if (explain) {
-          explain.textContent = (oi === correct ? 'Correct. ' : 'Not quite. ') + explain.textContent;
+          explain.textContent = lessonUiText(oi === correct ? 'Correct. ' : 'Not quite. ', quizLang) + explain.textContent;
           explain.classList.add('visible');
         }
 
@@ -5536,8 +5848,8 @@
           if (scoreEl && scoreNum) {
             scoreNum.textContent = window._quizCorrect + '/' + questions.length;
             scoreEl.querySelector('.quiz-score-label').textContent =
-              window._quizCorrect === questions.length ? 'Perfect score!' :
-              window._quizCorrect >= 2 ? 'Great work!' : 'Keep studying!';
+              lessonUiText(window._quizCorrect === questions.length ? 'Perfect score!' :
+                window._quizCorrect >= 2 ? 'Great work!' : 'Keep studying!', quizLang);
             scoreEl.classList.add('visible');
           }
         }
@@ -5689,21 +6001,21 @@
           var certEnd = Math.min(certTotal, certStart + 3);
           certStart = Math.max(0, certEnd - 3);
           var certHtml = '<div class="ai-panel-header"><div class="ai-panel-icon">C</div><div class="ai-panel-title">Certification Path</div></div>';
-          certHtml += '<div class="path-panel-context"><div class="ai-panel-subtitle">' + escapeHtml(certificationTrack.examCode || certificationTrack.shortName || 'Certification') + ': ' + escapeHtml(certificationTrack.credential || certificationTrack.title || 'Study path') + '</div><span class="path-position">Lesson ' + (currentLessonIndex + 1) + ' of ' + certTotal + '</span></div>';
+          certHtml += '<div class="path-panel-context"><div class="ai-panel-subtitle">' + escapeHtml(certificationTrack.examCode || certificationTrack.shortName || 'Certification') + ': ' + escapeHtml(certificationTrack.credential || certificationTrack.title || 'Study path') + '</div><span class="path-position">' + escapeHtml(lessonPositionText(currentLessonIndex + 1, certTotal)) + '</span></div>';
           certHtml += '<div class="learning-timeline">';
           var certLessonDoneAt = function (index) {
             return !!(window.AIFSProgress && flatLessons[index] && window.AIFSProgress.isLessonComplete(flatLessons[index].path));
           };
           if (certStart > 0) {
-            certHtml += '<span class="timeline-ellipsis" data-timeline-key="before">' + certStart + ' earlier</span>';
+            certHtml += '<span class="timeline-ellipsis" data-timeline-key="before">' + escapeHtml(relativeLessonCountText(certStart, 'earlier', false)) + '</span>';
           }
           for (var cv = certStart; cv < certEnd; cv++) {
             var certItem = flatLessons[cv];
             var certItemDone = certLessonDoneAt(cv);
             var certClass = cv === currentLessonIndex ? 'current' : certItemDone ? 'done' : '';
-            certHtml += '<a class="timeline-item ' + certClass + '" data-path-step="' + escapeAttr(certItem.path) + '" href="lesson?path=' + encodeURIComponent(certItem.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '" title="' + escapeAttr(certItem.lessonName) + '" aria-label="Lesson ' + (cv + 1) + ' of ' + certTotal + ': ' + escapeAttr(certItem.lessonName) + '"' + (cv === currentLessonIndex ? ' aria-current="step"' : '') + '><div class="timeline-step-meta"><div class="timeline-dot"></div><span class="timeline-index">' + String(cv + 1).padStart(2, '0') + '</span></div><div class="timeline-label">' + escapeHtml(certItem.lessonName) + '</div></a>';
+            certHtml += '<a class="timeline-item ' + certClass + '" data-path-step="' + escapeAttr(certItem.path) + '" href="lesson?path=' + encodeURIComponent(certItem.path) + '&track=' + encodeURIComponent(certificationTrack.id) + '" title="' + escapeAttr(certItem.lessonName) + '" aria-label="' + escapeAttr(lessonPositionText(cv + 1, certTotal, certItem.lessonName)) + '"' + (cv === currentLessonIndex ? ' aria-current="step"' : '') + '><div class="timeline-step-meta"><div class="timeline-dot"></div><span class="timeline-index">' + String(cv + 1).padStart(2, '0') + '</span></div><div class="timeline-label">' + escapeHtml(certItem.lessonName) + '</div></a>';
           }
-          if (certEnd < certTotal) certHtml += '<span class="timeline-ellipsis" data-timeline-key="after">' + (certTotal - certEnd) + ' later</span>';
+          if (certEnd < certTotal) certHtml += '<span class="timeline-ellipsis" data-timeline-key="after">' + escapeHtml(relativeLessonCountText(certTotal - certEnd, 'later', false)) + '</span>';
           certHtml += '</div><div class="phase-progress-bar"><div class="phase-progress-fill" style="--lesson-progress:' + (certPct / 100) + '"></div></div>';
           certHtml += '<div class="phase-progress-text">' + certDone + ' of ' + certTotal + ' lessons completed in this certification path</div><div class="path-panel-tail"></div>';
           certPanel.innerHTML = certHtml;
@@ -5723,11 +6035,14 @@
             if (window.AIFSProgress && window.AIFSProgress.isLessonComplete(focusedLessons[fp].path)) focusedDone++;
           }
           var focusedPct = focusedLessons.length ? Math.round((focusedDone / focusedLessons.length) * 100) : 0;
+          var focusedPosition = focusedIndex >= 0
+            ? 'Lesson ' + (focusedIndex + 1) + ' of ' + focusedLessons.length
+            : '';
           var focusedHtml = '<div class="ai-panel-header"><div class="ai-panel-icon">P</div><div class="ai-panel-title">Focused Learning Path</div></div>';
           focusedHtml += '<div class="path-panel-context"><div class="ai-panel-subtitle">' + escapeHtml(learningPath.title || learningPath.id) + '</div><span class="path-position">';
           focusedHtml += focusedIndex >= 0
-            ? 'Lesson ' + (focusedIndex + 1) + ' of ' + focusedLessons.length
-            : 'Optional lesson';
+            ? escapeHtml(lessonUiText(focusedPosition))
+            : escapeHtml(lessonUiText('Optional lesson'));
           focusedHtml += '</span></div>';
           focusedHtml += learningPathPreflightHtml();
           focusedHtml += '<div class="learning-timeline">';
@@ -5737,25 +6052,36 @@
             : Math.max(0, focusedLessons.length - focusedWindowSize);
           var focusedEnd = Math.min(focusedLessons.length, focusedStart + focusedWindowSize);
           focusedStart = Math.max(0, focusedEnd - focusedWindowSize);
-          if (focusedStart > 0) focusedHtml += '<span class="timeline-ellipsis" data-timeline-key="before">' + focusedStart + ' earlier</span>';
+          if (focusedStart > 0) focusedHtml += '<span class="timeline-ellipsis" data-timeline-key="before">' + escapeHtml(relativeLessonCountText(focusedStart, 'earlier', false)) + '</span>';
           for (var fpi = focusedStart; fpi < focusedEnd; fpi++) {
             var focusedLesson = focusedLessons[fpi];
             var focusedLessonDone = !!(window.AIFSProgress && window.AIFSProgress.isLessonComplete(focusedLesson.path));
             var focusedClass = focusedLesson.path === lessonPath ? 'current' : focusedLessonDone ? 'done' : '';
-            focusedHtml += '<a class="timeline-item ' + focusedClass + learningPathGateClass(focusedLesson) + '" data-path-step="' + escapeAttr(focusedLesson.path) + '" href="' + learningPathLessonHref(focusedLesson.path) + '" title="' + escapeAttr(focusedLesson.lessonName) + '"' + learningPathGateAttributes(focusedLesson) + ' aria-label="Lesson ' + (fpi + 1) + ' of ' + focusedLessons.length + ': ' + escapeAttr(focusedLesson.lessonName) + '"' + (focusedLesson.path === lessonPath ? ' aria-current="step"' : '') + '>';
+            focusedHtml += '<a class="timeline-item ' + focusedClass + learningPathGateClass(focusedLesson) + '" data-path-step="' + escapeAttr(focusedLesson.path) + '" href="' + learningPathLessonHref(focusedLesson.path) + '" title="' + escapeAttr(focusedLesson.lessonName) + '"' + learningPathGateAttributes(focusedLesson) + ' aria-label="' + escapeAttr(lessonPositionText(fpi + 1, focusedLessons.length, focusedLesson.lessonName)) + '"' + (focusedLesson.path === lessonPath ? ' aria-current="step"' : '') + '>';
             focusedHtml += '<div class="timeline-step-meta"><div class="timeline-dot"></div><span class="timeline-index">' + String(fpi + 1).padStart(2, '0') + '</span></div><div class="timeline-label">' + escapeHtml(focusedLesson.lessonName) + '</div></a>';
           }
-          if (focusedEnd < focusedLessons.length) focusedHtml += '<span class="timeline-ellipsis" data-timeline-key="after">' + (focusedLessons.length - focusedEnd) + ' later</span>';
+          if (focusedEnd < focusedLessons.length) focusedHtml += '<span class="timeline-ellipsis" data-timeline-key="after">' + escapeHtml(relativeLessonCountText(focusedLessons.length - focusedEnd, 'later', false)) + '</span>';
           focusedHtml += '</div><div class="phase-progress-bar"><div class="phase-progress-fill" style="--lesson-progress:' + (focusedPct / 100) + '"></div></div>';
           focusedHtml += '<div class="phase-progress-text">';
           focusedHtml += focusedIndex >= 0
-            ? focusedDone + ' of ' + focusedLessons.length + ' lessons completed in this path.'
-            : 'Optional lesson. ' + focusedDone + ' of ' + focusedLessons.length + ' required lessons completed.';
+            ? escapeHtml(lessonUiFormat('{done} of {total} lessons completed in this path.', {
+                done: focusedDone,
+                total: focusedLessons.length
+              }))
+            : escapeHtml(lessonUiFormat('Optional lesson. {done} of {total} required lessons completed.', {
+                done: focusedDone,
+                total: focusedLessons.length
+              }));
           var focusedChecks = learningPathPreflightDefinitions();
           var focusedChecksDone = focusedChecks.filter(function (check) {
             return window.AIFSLearningPathProgress && window.AIFSLearningPathProgress.isConfirmed(learningPath.id, check.id);
           }).length;
-          if (focusedChecks.length) focusedHtml += ' ' + focusedChecksDone + ' of ' + focusedChecks.length + ' knowledge preflights confirmed.';
+          if (focusedChecks.length) {
+            focusedHtml += ' ' + escapeHtml(lessonUiFormat('{done} of {total} knowledge preflights confirmed.', {
+              done: focusedChecksDone,
+              total: focusedChecks.length
+            }));
+          }
           focusedHtml += '</div>';
           focusedHtml += '<div class="path-panel-tail">';
           if (focusedEntry) {
@@ -5806,7 +6132,7 @@
         }
 
         var html = '<div class="ai-panel-header"><div class="ai-panel-icon">P</div><div class="ai-panel-title">Learning Path</div></div>';
-        html += '<div class="path-panel-context"><div class="ai-panel-subtitle">Phase ' + String(phase.id).padStart(2, '0') + ': ' + escapeHtml(phase.name) + '</div><span class="path-position">Lesson ' + (currentIdxInPhase + 1) + ' of ' + lessonsInPhase.length + '</span></div>';
+        html += '<div class="path-panel-context"><div class="ai-panel-subtitle">' + escapeHtml(lessonUiText('Phase ' + String(phase.id).padStart(2, '0') + ': ' + phase.name)) + '</div><span class="path-position">' + escapeHtml(lessonPositionText(currentIdxInPhase + 1, lessonsInPhase.length)) + '</span></div>';
 
         // Keep the route readable in the available column: one before, current, one after.
         var windowSize = 3;
@@ -5822,7 +6148,7 @@
 
         html += '<div class="learning-timeline">';
         if (hiddenBefore > 0) {
-          html += '<span class="timeline-ellipsis" data-timeline-key="before" title="' + hiddenBefore + ' earlier lessons">' + hiddenBefore + ' earlier</span>';
+          html += '<span class="timeline-ellipsis" data-timeline-key="before" title="' + escapeAttr(relativeLessonCountText(hiddenBefore, 'earlier', true)) + '">' + escapeHtml(relativeLessonCountText(hiddenBefore, 'earlier', false)) + '</span>';
         }
         visible.forEach(function (item, vIdx) {
           var idx = startIdx + vIdx;
@@ -5831,7 +6157,7 @@
           var cls = (isCurrent ? 'current ' : '') + (isDone ? 'done' : '');
 
           if (item.flat.isReadable) {
-            html += '<a class="timeline-item ' + cls + '" data-path-step="' + escapeAttr(item.flat.path) + '" href="lesson?path=' + item.flat.path + '" title="' + escapeAttr(item.flat.lessonName) + '" aria-label="Lesson ' + (idx + 1) + ' of ' + lessonsInPhase.length + ': ' + escapeAttr(item.flat.lessonName) + '"' + (isCurrent ? ' aria-current="step"' : '') + '>';
+            html += '<a class="timeline-item ' + cls + '" data-path-step="' + escapeAttr(item.flat.path) + '" href="lesson?path=' + item.flat.path + '" title="' + escapeAttr(item.flat.lessonName) + '" aria-label="' + escapeAttr(lessonPositionText(idx + 1, lessonsInPhase.length, item.flat.lessonName)) + '"' + (isCurrent ? ' aria-current="step"' : '') + '>';
           } else {
             html += '<span class="timeline-item ' + cls + ' disabled" data-path-step="' + escapeAttr(item.flat.path) + '" title="' + escapeAttr(item.flat.lessonName) + '">';
           }
@@ -5840,7 +6166,7 @@
           html += item.flat.isReadable ? '</a>' : '</span>';
         });
         if (hiddenAfter > 0) {
-          html += '<span class="timeline-ellipsis" data-timeline-key="after" title="' + hiddenAfter + ' later lessons">' + hiddenAfter + ' later</span>';
+          html += '<span class="timeline-ellipsis" data-timeline-key="after" title="' + escapeAttr(relativeLessonCountText(hiddenAfter, 'later', true)) + '">' + escapeHtml(relativeLessonCountText(hiddenAfter, 'later', false)) + '</span>';
         }
         html += '</div>';
 
@@ -5852,12 +6178,19 @@
         var pct = totalCount ? Math.round((completedCount / totalCount) * 100) : 0;
 
         html += '<div class="phase-progress-bar"><div class="phase-progress-fill" style="--lesson-progress:' + (pct / 100) + '"></div></div>';
-        html += '<div class="phase-progress-text">You\'ve completed ' + completedCount + ' of ' + totalCount + ' lessons in this phase</div>';
+        html += '<div class="phase-progress-text">' + escapeHtml(lessonUiFormat(
+          "You've completed {done} of {total} lessons in this phase",
+          { done: completedCount, total: totalCount }
+        )) + '</div>';
 
         html += '<div class="path-panel-tail">';
         if (completedCount >= totalCount && phaseIdx < PHASES.length - 1) {
           var nextPhase = PHASES[phaseIdx + 1];
-          html += '<div class="phase-complete-callout visible">Ready for Phase ' + String(nextPhase.id).padStart(2, '0') + ': ' + escapeHtml(nextPhase.name) + '</div>';
+          var readyForNextPhase = lessonUiFormat('Ready for Phase {number}: {name}', {
+            number: String(nextPhase.id).padStart(2, '0'),
+            name: lessonUiText(nextPhase.name)
+          });
+          html += '<div class="phase-complete-callout visible">' + escapeHtml(readyForNextPhase) + '</div>';
         }
         html += '</div>';
 
@@ -5915,7 +6248,7 @@
 
         var phaseSlug = extractPhaseSlug(phase, phaseIdx);
         var firstLesson = phase.lessons[0] ? extractLessonSlug(phase.lessons[0], 0) : '';
-        html += '<a class="continue-link" href="lesson?path=phases/' + phaseSlug + '/' + firstLesson + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
+        html += '<a class="continue-link" href="lesson?path=phases/' + phaseSlug + '/' + firstLesson + '">' + escapeHtml(lessonUiFormat('Browse all Phase {number} lessons', { number: String(phase.id).padStart(2, '0') })) + '</a>';
         html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
         html += '</div>';
 

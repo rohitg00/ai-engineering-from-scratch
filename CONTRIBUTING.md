@@ -28,7 +28,7 @@ should show only the timestamp change if your edit was structural-safe.
 
 Each lesson lives in `phases/XX-phase-name/NN-lesson-name/` with this structure:
 
-```
+```text
 NN-lesson-name/
 ├── code/           At least one runnable implementation
 ├── notebook/       Jupyter notebook for experimentation (optional)
@@ -73,19 +73,18 @@ The prompt, skill, agent, or tool this lesson produces.
 
 ### 2. Add a Translation
 
-Create a new file in any lesson's `docs/` folder:
+English lesson files stay on `main`. Publish lesson translations on the
+repository's configured `translations` branch using this layout:
 
-```
-docs/
-├── en.md    (English — always required)
-├── zh.md    (Chinese)
-├── ja.md    (Japanese)
-├── es.md    (Spanish)
-├── hi.md    (Hindi)
-└── ...
+```text
+i18n/<lang>/phases/<phase>/<lesson>/docs/<lang>.md
 ```
 
-Keep the same structure as the English version. Translate content, not code.
+Keep the same structure as the English source and translate prose, not code.
+Translations must include the cache provenance described in
+[`docs/i18n.md`](docs/i18n.md). Simplified Chinese (`zh`) is reviewed and
+maintained manually; do not run the machine-translation CLI for it. Landing-page
+translations such as `i18n/zh/README.md` are the exception and remain on `main`.
 
 ### 3. Add an Output
 
@@ -136,7 +135,9 @@ More exercises and projects are always welcome, especially ones that connect mul
 ## Guidelines
 
 - **Code must run.** Every code file should execute without errors with the listed dependencies.
-- **No comments in code.** Code should be self-explanatory. Use the docs for explanation.
+- **Keep comments purposeful.** Every `code/main.*` file needs the required
+  4-6 line lesson/source header; beyond that, prefer self-explanatory code and
+  keep detailed teaching in the docs.
 - **Best language for the job.** Don't force Python where TypeScript or Rust is the better choice.
 - **Build from scratch first.** Always implement the concept from first principles before showing the framework version.
 - **Keep it practical.** Theory serves practice, not the other way around.

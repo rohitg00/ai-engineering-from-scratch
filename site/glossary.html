@@ -836,6 +836,7 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </button>
+      <div id="langPicker"></div>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
         <span class="theme-icon" id="themeIcon">N</span>
       </button>
@@ -925,10 +926,15 @@
     </div>
   </footer>
 
-  <script src="data.js?v=20260821c"></script>
-  <script src="progress.js?v=20260822a"></script>
-  <script src="header.js?v=20260829b" defer></script>
-  <script src="cmdpalette.js?v=20260821a" defer></script>
+  <script src="langs.js?v=fb2840c8aa0a"></script>
+  <script src="i18n-data.js?v=7e2dd86ccaad"></script>
+  <script src="i18n-glossary.js?v=7d658b539e6d"></script>
+  <script src="ui-i18n.js?v=ed1be68f31e1"></script>
+  <script src="lang-picker.js?v=853069504587" defer></script>
+  <script src="data.js?v=5c1c014aea05"></script>
+  <script src="progress.js?v=20260828a"></script>
+  <script src="header.js?v=191a713c8dc5" defer></script>
+  <script src="cmdpalette.js?v=42dbbdb18dee" defer></script>
   <script>
     (function () {
       var root = document.documentElement;
@@ -979,9 +985,7 @@
         var announceTimer = 0;
         var BATCH_SIZE = 32;
         var visibleLimit = BATCH_SIZE;
-        var collator = typeof Intl !== 'undefined' && Intl.Collator
-          ? new Intl.Collator(undefined, { sensitivity: 'base', numeric: true })
-          : null;
+        var collator = null;
 
         function text(value) {
           return value == null ? '' : String(value).trim();
@@ -993,6 +997,17 @@
             result = result.normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
           } catch (_) {}
           return result.replace(/\s+/g, ' ');
+        }
+
+        function localized(value) {
+          if (!window.AIFS_I18n || typeof window.AIFS_I18n.t !== 'function') return text(value);
+          return text(window.AIFS_I18n.t(value == null ? '' : String(value)));
+        }
+
+        function refreshCollator() {
+          collator = typeof Intl !== 'undefined' && Intl.Collator
+            ? new Intl.Collator(document.documentElement.lang || undefined, { sensitivity: 'base', numeric: true })
+            : null;
         }
 
         function slugify(value) {
@@ -1066,13 +1081,46 @@
         });
 
         var entryByKey = Object.create(null);
-        entries.forEach(function (entry) {
-          entryByKey[normalize(entry.term)] = entry;
-          entryByKey[normalize(entry.slug)] = entry;
-          entry.aliases.forEach(function (alias) {
-            if (!entryByKey[normalize(alias)]) entryByKey[normalize(alias)] = entry;
+
+        function refreshLocalizedEntries() {
+          entryByKey = Object.create(null);
+          entries.forEach(function (entry) {
+            entry.displayTerm = localized(entry.term);
+            entry.displayCategory = localized(entry.category);
+            entry.displaySays = localized(entry.says);
+            entry.displayMeans = localized(entry.means);
+            entry.displayWhyItMatters = localized(entry.whyItMatters);
+            entry.displayExample = localized(entry.example);
+            entry.displayConfusion = localized(entry.confusion);
+            entry.displayWhyCalled = localized(entry.whyCalled);
+            entry.displayAliases = entry.aliases.map(localized);
+            var searchValues = [
+              entry.term, entry.category, entry.says, entry.means, entry.whyItMatters,
+              entry.example, entry.confusion, entry.whyCalled, entry.aliases.join(' '),
+              entry.related.map(function (related) {
+                return typeof related === 'object' ? text(related.label || related.term || related.slug) : text(related);
+              }).join(' '),
+              entry.lessons.map(function (lesson) { return text(lesson.label); }).join(' '),
+              entry.sources.map(function (source) { return text(source.label); }).join(' '),
+              entry.displayTerm, entry.displayCategory, entry.displaySays, entry.displayMeans,
+              entry.displayWhyItMatters, entry.displayExample, entry.displayConfusion,
+              entry.displayWhyCalled, entry.displayAliases.join(' '),
+              entry.related.map(function (related) {
+                return localized(typeof related === 'object' ? related.label || related.term || related.slug : related);
+              }).join(' '),
+              entry.lessons.map(function (lesson) { return localized(lesson.label); }).join(' '),
+              entry.sources.map(function (source) { return localized(source.label); }).join(' ')
+            ];
+            entry.searchText = normalize(window.AIFS_I18n && typeof window.AIFS_I18n.searchText === 'function'
+              ? window.AIFS_I18n.searchText(searchValues)
+              : searchValues.join(' '));
+            [entry.term, entry.displayTerm, entry.slug].concat(entry.aliases, entry.displayAliases).forEach(function (key) {
+              key = normalize(key);
+              if (key && !entryByKey[key]) entryByKey[key] = entry;
+            });
           });
-        });
+          refreshCollator();
+        }
 
         var categoryCounts = Object.create(null);
         entries.forEach(function (entry) {
@@ -1096,42 +1144,27 @@
         var currentQuery = '';
         var currentCategory = 'all';
         var currentLetterFocus = '';
+        refreshLocalizedEntries();
 
         function termSearchText(entry) {
-          var relatedText = entry.related.map(function (related) {
-            return typeof related === 'object' ? text(related.label || related.term || related.slug) : text(related);
-          }).join(' ');
-          var lessonText = entry.lessons.map(function (lesson) { return text(lesson.label); }).join(' ');
-          var sourceText = entry.sources.map(function (source) { return text(source.label); }).join(' ');
-          return normalize([
-            entry.category,
-            entry.says,
-            entry.means,
-            entry.whyItMatters,
-            entry.example,
-            entry.confusion,
-            entry.whyCalled,
-            entry.aliases.join(' '),
-            relatedText,
-            lessonText,
-            sourceText
-          ].join(' '));
+          return entry.searchText;
         }
 
         function scoreEntry(entry, query) {
           if (!query) return 0;
-          var term = normalize(entry.term);
-          if (term === query) return 0;
-          if (term.indexOf(query) === 0) return 1;
-          if (term.indexOf(query) !== -1) return 2;
-          var aliasMatch = entry.aliases.some(function (alias) {
+          var terms = [normalize(entry.term), normalize(entry.displayTerm)];
+          if (terms.some(function (term) { return term === query; })) return 0;
+          if (terms.some(function (term) { return term.indexOf(query) === 0; })) return 1;
+          if (terms.some(function (term) { return term.indexOf(query) !== -1; })) return 2;
+          var aliases = entry.aliases.concat(entry.displayAliases || []);
+          var aliasMatch = aliases.some(function (alias) {
             return normalize(alias).indexOf(query) !== -1;
           });
           if (aliasMatch) return 3;
           var teachingText = termSearchText(entry);
           if (teachingText.indexOf(query) !== -1) return 4;
           var words = query.split(/\s+/).filter(Boolean);
-          var completeText = term + ' ' + entry.aliases.map(normalize).join(' ') + ' ' + teachingText;
+          var completeText = terms.join(' ') + ' ' + aliases.map(normalize).join(' ') + ' ' + teachingText;
           return words.length > 1 && words.every(function (word) {
             return completeText.indexOf(word) !== -1;
           }) ? 5 : -1;
@@ -1146,7 +1179,7 @@
             return categoryMatches && result.score !== -1;
           }).sort(function (a, b) {
             if (a.score !== b.score) return a.score - b.score;
-            return compareText(a.entry.term, b.entry.term);
+            return compareText(a.entry.displayTerm, b.entry.displayTerm);
           });
         }
 
@@ -1155,7 +1188,7 @@
           html += '<span>All terms</span><span class="glossary-filter-count">' + entries.length + '</span></button>';
           categories.forEach(function (category) {
             html += '<button class="glossary-filter" type="button" data-category="' + escapeHtml(category) + '" aria-pressed="' + (currentCategory === category) + '" tabindex="' + (currentCategory === category ? '0' : '-1') + '">';
-            html += '<span>' + escapeHtml(category) + '</span><span class="glossary-filter-count">' + categoryCounts[category] + '</span></button>';
+            html += '<span>' + escapeHtml(localized(category)) + '</span><span class="glossary-filter-count">' + categoryCounts[category] + '</span></button>';
           });
           categoriesEl.innerHTML = html;
         }
@@ -1223,7 +1256,7 @@
           if (!resources.length) return '';
           var items = '';
           resources.forEach(function (resource) {
-            var resourceLabel = text(resource.label || resource.title);
+            var resourceLabel = localized(resource.label || resource.title);
             var rawUrl = text(resource.url || resource.href);
             var lessonMatch = !sourceKind && rawUrl.match(/(?:^|\.\.\/|\/)(phases\/[^/?#]+\/[^/?#]+)/);
             var url = lessonMatch
@@ -1235,7 +1268,7 @@
             items += '<li><a class="glossary-resource-link" href="' + escapeHtml(url) + '"' + (external ? ' target="_blank" rel="noopener"' : '') + '>' + escapeHtml(resourceLabel) + (sourceKind && external ? ' ↗' : '') + '</a></li>';
           });
           if (!items) return '';
-          return '<div class="glossary-resource-block"><span class="glossary-resource-label">' + escapeHtml(label) + '</span><ul class="glossary-resource-list">' + items + '</ul></div>';
+          return '<div class="glossary-resource-block"><span class="glossary-resource-label">' + escapeHtml(localized(label)) + '</span><ul class="glossary-resource-list">' + items + '</ul></div>';
         }
 
         function relatedDescriptor(related) {
@@ -1245,7 +1278,7 @@
           var explicitSlug = typeof related === 'object' ? text(related.slug) : '';
           var match = entryByKey[normalize(explicitSlug)] || entryByKey[normalize(label)];
           return {
-            label: label,
+            label: localized(label),
             slug: match ? match.slug : (slugify(explicitSlug || label) || '')
           };
         }
@@ -1253,11 +1286,11 @@
         function entryHtml(entry) {
           var referenceNumber = String(entry.sourceIndex + 1).padStart(3, '0');
           var details = '';
-          if (entry.confusion) {
-            details += '<div><span class="glossary-entry-label">Do not confuse it with</span><p>' + escapeHtml(entry.confusion) + '</p></div>';
+          if (entry.displayConfusion) {
+            details += '<div><span class="glossary-entry-label">' + escapeHtml(localized('Do not confuse it with')) + '</span><p>' + escapeHtml(entry.displayConfusion) + '</p></div>';
           }
-          if (entry.whyCalled) {
-            details += '<div><span class="glossary-entry-label">Why it is called this</span><p>' + escapeHtml(entry.whyCalled) + '</p></div>';
+          if (entry.displayWhyCalled) {
+            details += '<div><span class="glossary-entry-label">' + escapeHtml(localized('Why it is called this')) + '</span><p>' + escapeHtml(entry.displayWhyCalled) + '</p></div>';
           }
           details += resourceHtml('Learn it in the course', entry.lessons, false);
           details += resourceHtml('Primary sources', entry.sources, true);
@@ -1271,33 +1304,33 @@
 
           var html = '<article class="glossary-entry" id="' + escapeHtml(entry.slug) + '" tabindex="-1" aria-labelledby="' + escapeHtml(entry.slug) + '-title" data-tts-section>';
           html += '<div class="glossary-entry-topline"><div class="glossary-entry-meta">';
-          html += '<span class="glossary-entry-index">REF ' + referenceNumber + '</span>';
-          html += '<span class="glossary-entry-category">' + escapeHtml(entry.category) + '</span></div>';
-          html += '<div class="glossary-entry-actions"><button class="glossary-read-aloud" type="button" data-tts-start aria-label="Read ' + escapeHtml(entry.term) + ' aloud">Read term</button>';
-          html += '<button class="glossary-copy-link" type="button" data-copy-slug="' + escapeHtml(entry.slug) + '" aria-label="Copy link to ' + escapeHtml(entry.term) + '">Copy link</button></div></div>';
-          html += '<h4 class="glossary-term-heading" id="' + escapeHtml(entry.slug) + '-title" dir="auto">' + escapeHtml(entry.term) + '</h4>';
-          if (entry.aliases.length) {
-            html += '<p class="glossary-aliases">Also called · ' + escapeHtml(entry.aliases.join(' · ')) + '</p>';
+          html += '<span class="glossary-entry-index">' + escapeHtml(localized('REF ' + referenceNumber)) + '</span>';
+          html += '<span class="glossary-entry-category">' + escapeHtml(entry.displayCategory) + '</span></div>';
+          html += '<div class="glossary-entry-actions"><button class="glossary-read-aloud" type="button" data-tts-start aria-label="' + escapeHtml(localized('Read ' + entry.displayTerm + ' aloud')) + '">' + escapeHtml(localized('Read term')) + '</button>';
+          html += '<button class="glossary-copy-link" type="button" data-copy-slug="' + escapeHtml(entry.slug) + '" aria-label="' + escapeHtml(localized('Copy link to ' + entry.displayTerm)) + '">' + escapeHtml(localized('Copy link')) + '</button></div></div>';
+          html += '<h4 class="glossary-term-heading" id="' + escapeHtml(entry.slug) + '-title" dir="auto">' + escapeHtml(entry.displayTerm) + '</h4>';
+          if (entry.displayAliases.length) {
+            html += '<p class="glossary-aliases">' + escapeHtml(localized('Also called · ')) + ' ' + escapeHtml(entry.displayAliases.join(' · ')) + '</p>';
           }
-          html += '<div class="glossary-meaning"><span class="glossary-entry-label">Working definition</span><p>' + escapeHtml(entry.means || 'Definition in progress.') + '</p></div>';
+          html += '<div class="glossary-meaning"><span class="glossary-entry-label">' + escapeHtml(localized('Working definition')) + '</span><p>' + escapeHtml(entry.displayMeans || localized('Definition in progress.')) + '</p></div>';
 
           var teaching = '';
-          if (entry.whyItMatters) {
-            teaching += '<div class="glossary-teaching-block"><span class="glossary-entry-label">Why it matters</span><p>' + escapeHtml(entry.whyItMatters) + '</p></div>';
+          if (entry.displayWhyItMatters) {
+            teaching += '<div class="glossary-teaching-block"><span class="glossary-entry-label">' + escapeHtml(localized('Why it matters')) + '</span><p>' + escapeHtml(entry.displayWhyItMatters) + '</p></div>';
           }
-          if (entry.example) {
-            teaching += '<div class="glossary-teaching-block"><span class="glossary-entry-label">In practice</span><p>' + escapeHtml(entry.example) + '</p></div>';
+          if (entry.displayExample) {
+            teaching += '<div class="glossary-teaching-block"><span class="glossary-entry-label">' + escapeHtml(localized('In practice')) + '</span><p>' + escapeHtml(entry.displayExample) + '</p></div>';
           }
-          if (entry.says) {
-            teaching += '<div class="glossary-teaching-block glossary-shortcut"><span class="glossary-entry-label">Common shortcut</span><p>“' + escapeHtml(entry.says) + '”</p></div>';
+          if (entry.displaySays) {
+            teaching += '<div class="glossary-teaching-block glossary-shortcut"><span class="glossary-entry-label">' + escapeHtml(localized('Common shortcut')) + '</span><p>“' + escapeHtml(entry.displaySays) + '”</p></div>';
           }
           if (teaching) html += '<div class="glossary-teaching-grid">' + teaching + '</div>';
 
           if (details) {
-            html += '<details class="glossary-details"><summary>Distinctions and evidence</summary><div class="glossary-details-body">' + details + '</div></details>';
+            html += '<details class="glossary-details"><summary>' + escapeHtml(localized('Distinctions and evidence')) + '</summary><div class="glossary-details-body">' + details + '</div></details>';
           }
           if (relatedItems) {
-            html += '<nav class="glossary-related" aria-label="Terms related to ' + escapeHtml(entry.term) + '"><span class="glossary-resource-label">Related terms</span><ul class="glossary-related-list">' + relatedItems + '</ul></nav>';
+            html += '<nav class="glossary-related" aria-label="' + escapeHtml(localized('Terms related to ' + entry.displayTerm)) + '"><span class="glossary-resource-label">' + escapeHtml(localized('Related terms')) + '</span><ul class="glossary-related-list">' + relatedItems + '</ul></nav>';
           }
           html += '</article>';
           return html;
@@ -1334,7 +1367,7 @@
           });
 
           var countMessage = 'Showing ' + shownResults.length + ' of ' + results.length + ' matching terms. ' + entries.length + ' total';
-          if (currentCategory !== 'all') countMessage += ' · ' + currentCategory;
+          if (currentCategory !== 'all') countMessage += ' · ' + localized(currentCategory);
           countEl.textContent = countMessage;
           announce(countMessage + ' shown.');
           listEl.setAttribute('aria-busy', 'false');
@@ -1619,6 +1652,11 @@
           visibleLimit = Number.POSITIVE_INFINITY;
           renderGlossary();
           countEl.focus();
+        });
+
+        window.addEventListener('aifs:language-change', function () {
+          refreshLocalizedEntries();
+          renderGlossary();
         });
 
         window.addEventListener('popstate', function () {

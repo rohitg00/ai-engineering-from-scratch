@@ -1,0 +1,426 @@
+{
+  "strings": {
+    "Infrastructure & serving": "基础设施与服务",
+    "Models & inference": "模型与推理",
+    "Evaluation & safety": "评估与安全",
+    "AI-native development": "AI 原生开发",
+    "Multimodal systems": "多模态系统",
+    "Agents & tools": "智能体与工具",
+    "Reliability & operations": "可靠性与运维",
+    "Prompting & context": "提示与上下文",
+    "Security & governance": "安全与治理",
+    "Math & training": "数学与训练",
+    "Retrieval & generation": "检索与生成",
+    "Data & representations": "数据与表征",
+
+    "A KV-cache memory manager that stores attention state in fixed-size blocks and maps logical sequence positions to physical blocks instead of requiring one contiguous allocation per sequence.": "一种 KV-cache 内存管理器，将 attention state 存储在固定大小的块中，并把逻辑序列位置映射到物理块，而不是要求每条序列都对应一段连续分配的内存。",
+    "Variable sequence lengths create fragmentation and unpredictable growth, so block-based allocation can improve usable memory and enable flexible sharing.": "可变序列长度会造成碎片化和不可预测的增长，因此基于块的分配能够提升可用内存，并支持更灵活的共享。",
+    "Select block size from workload measurements, track allocation and eviction, isolate state between requests, and test cancellation and prefix sharing under memory pressure.": "根据工作负载测量结果选择块大小，跟踪分配与驱逐，在请求之间隔离状态，并在内存压力下测试取消和前缀共享。",
+    "Paged KV cache manages runtime attention-state memory. It does not move model parameters to disk or extend the model's trained context limit.": "Paged KV cache 管理的是运行时的 attention-state 内存。它不会把模型参数移到磁盘，也不会扩展模型训练时的上下文上限。",
+
+    "A number used to describe model size.": "一个用来描述模型规模的数字。",
+    "A value learned during training, commonly a weight, bias, embedding element, or normalization parameter. Parameter count is one measure of model capacity, but it does not directly determine quality, memory, or serving cost.": "训练过程中学到的一个数值，常见形式包括 weight、bias、embedding 元素或 normalization parameter。参数量是衡量模型容量的一种指标，但它并不能直接决定质量、内存占用或服务成本。",
+    "Memory per parameter depends on numerical format, quantization metadata, sharding, optimizer state, activations, and runtime overhead.": "每个参数对应的内存开销取决于数值格式、量化元数据、分片方式、optimizer state、activations 以及运行时额外开销。",
+
+    "Across a task set, the fraction of tasks for which at least one of k sampled candidates passes a defined correctness test.": "在一组任务上，至少有 1 个来自 k 个采样候选的结果通过既定正确性测试的任务占比。",
+    "It measures the value of sampling several attempts for tasks such as code generation where an automatic verifier can check each candidate.": "它衡量的是在代码生成这类可由自动验证器检查每个候选结果的任务中，多次采样尝试所带来的价值。",
+    "Generate candidates independently under a fixed configuration, run the same isolated tests on each, and report k with the sampling and estimator details.": "在固定配置下独立生成候选结果，对每个候选运行相同且隔离的测试，并在报告中同时给出 k 以及采样和估计器的细节。",
+    "Pass@k is not single-attempt accuracy, and a higher score can reflect a larger attempt budget rather than a better first answer.": "Pass@k 不是单次尝试的准确率，更高的分数也可能只是反映了更大的尝试预算，而不是更好的首答质量。",
+
+    "A reviewable representation of changes to one or more files, usually expressed as additions and deletions against a known base revision.": "一种可供审阅的一个或多个文件变更表示形式，通常体现为相对于某个已知基线版本的新增与删除。",
+    "A patch gives people and agents a narrow artifact to inspect, test, apply, or reject without accepting an entire working directory.": "patch 为人和智能体提供了一个边界明确的工件，可在不接收整个工作目录的前提下进行审查、测试、应用或拒绝。",
+    "Ask a coding agent to return a unified diff, then verify that it touches only allowed files and applies cleanly to the expected commit.": "要求 coding agent 返回 unified diff，然后验证它只修改了允许触碰的文件，并且能够干净地应用到预期的 commit 上。",
+    "A patch captures file changes, not the reasoning, test evidence, or approval needed to ship them.": "patch 记录的是文件变更，而不是发布这些变更所需的推理过程、测试证据或审批。",
+
+    "A learned projection that converts an image patch into a fixed-width vector used as one element of a transformer input sequence.": "一种学习得到的投影，把图像 patch 转换为固定宽度的向量，并作为 transformer 输入序列中的一个元素。",
+    "It creates the interface between a spatial image grid and a sequence model, with patch size controlling token count and retained local detail.": "它建立了空间图像网格与序列模型之间的接口，其中 patch 大小决定 token 数量以及保留的局部细节。",
+    "Record patch and image dimensions, handle padding or resizing explicitly, add position information, and measure how resolution changes affect both accuracy and token cost.": "记录 patch 和图像尺寸，显式处理 padding 或 resizing，加入位置信息，并测量分辨率变化对准确率与 token 成本的影响。",
+    "A patch embedding is the vector representation of a patch, not a semantic object detector or a guarantee that patch boundaries match visual entities.": "patch embedding 是 patch 的向量表示，不是语义目标检测器，也不保证 patch 边界会与视觉实体边界对齐。",
+
+    "How surprised a language model is by a dataset.": "语言模型对某个数据集有多“惊讶”。",
+    "The exponentiated average negative log-likelihood under a stated tokenization and logarithm convention. Lower values mean the model assigned higher probability to the evaluated sequence.": "在既定 tokenization 与对数约定下，平均负对数似然取指数后的结果。数值越低，表示模型给被评估序列分配的概率越高。",
+    "Perplexity is not comparable across different tokenizers or evaluation setups and does not directly measure factuality or usefulness.": "Perplexity 不能在不同 tokenizer 或不同评测设置之间直接比较，也不能直接衡量事实正确性或实用性。",
+
+    "Partitioning sequential groups of model layers across devices and moving microbatches or requests through those stages as a pipeline.": "将模型中按顺序排列的一组组层切分到不同设备上，并让 microbatch 或请求像流水线一样通过这些阶段。",
+    "It lets models exceed one device's memory, but stage imbalance, pipeline bubbles, activation transfers, and failure coordination affect usable performance.": "它让模型可以突破单个设备的内存限制，但阶段不均衡、pipeline bubbles、activation 传输以及故障协同都会影响可用性能。",
+    "Balance stage cost, choose a microbatch schedule, measure idle time and interconnect traffic, and keep model and checkpoint partition metadata versioned.": "平衡各阶段成本，选择合适的 microbatch 调度方案，测量空闲时间和互连流量，并对模型与 checkpoint 的分片元数据进行版本管理。",
+    "Pipeline parallelism divides layers by depth. Tensor parallelism divides tensor operations within a layer.": "Pipeline parallelism 按深度切分层；Tensor parallelism 则切分单层内部的 tensor 运算。",
+
+    "Constructing, selecting, or revising a sequence of actions and dependencies intended to move from the current state to a goal.": "构建、选择或修订一组行动及其依赖关系，以便从当前状态推进到目标状态。",
+    "Explicit plans make assumptions and ordering visible before an agent commits to expensive or irreversible actions.": "显式计划会在智能体执行昂贵或不可逆操作之前，把前提假设和步骤顺序暴露出来。",
+    "Ask for a short dependency-aware plan, validate it against available tools and permissions, then re-plan when observations invalidate an assumption.": "先要求给出一个简短且考虑依赖关系的计划，再用可用工具和权限对其进行校验；当观测结果推翻某个假设时，再重新规划。",
+    "A generated plan is a proposal, not proof that the steps are feasible, sufficient, or safe.": "生成出的计划只是一个提案，并不能证明这些步骤一定可行、充分或安全。",
+
+    "A durable incident record that explains impact, detection, response, contributing conditions, recovery, and owned follow-up actions without assigning blame as a substitute for analysis.": "一种可长期保留的事故记录，说明影响范围、发现方式、响应过程、促成条件、恢复过程以及后续责任行动，而不是用追责替代分析。",
+    "A resolved outage still has value as evidence. Capturing system conditions and decisions turns one event into improvements that reduce recurrence and response time.": "一次已经恢复的故障仍然具有证据价值。记录系统状态和决策过程，能把单次事件转化为减少复发和缩短响应时间的改进。",
+    "Build the timeline from traces and logs, distinguish triggering events from contributing conditions, assign dated actions, and review whether each action changed the relevant control.": "基于 traces 和 logs 构建时间线，区分触发事件与促成条件，分配带日期的后续行动，并复盘每项行动是否真正改变了相关控制点。",
+    "A postmortem is not a meeting transcript or a search for one person's mistake. It should produce testable system improvements.": "postmortem 不是会议纪要，也不是追查某个人错误的过程。它应当产出可验证的系统改进。",
+
+    "Two metrics for classification or retrieval quality.": "用于衡量分类或检索质量的两个指标。",
+    "Precision asks how many flagged items were correct; recall asks how many relevant items were found. When you change the decision threshold for one fixed scoring model, improving recall often lowers precision and vice versa. A better model can improve both. F1 is their harmonic mean.": "Precision 关注被标记出来的项中有多少是正确的；recall 关注所有相关项中有多少被找到了。对于同一个固定评分模型，当你调整决策阈值时，提高 recall 往往会降低 precision，反之亦然。更好的模型则可能同时提升两者。F1 是它们的调和平均数。",
+    "The right threshold and metric depend on the cost of each error and the prevalence of the target class.": "合适的阈值和评价指标取决于各类错误的代价，以及目标类别本身的基数。",
+
+    "The initial inference stage that processes all supplied input tokens to produce their representations and the attention state required for subsequent autoregressive generation.": "推理开始阶段，负责处理所有输入 token，生成它们的表示以及后续 autoregressive generation 所需的 attention state。",
+    "Prompt shape, queueing, and cache reuse affect prefill cost, and prefill competes differently for compute than decode, so it strongly influences startup latency and serving schedules.": "prompt 形状、排队情况与缓存复用都会影响 prefill 成本；而且 prefill 与 decode 对算力的竞争方式不同，因此它会显著影响启动延迟和服务调度。",
+    "Record prompt tokens and prefill latency, separate queue time from execution time, compare cached and uncached prefixes, and test long prompts beside active decode traffic.": "记录 prompt token 数和 prefill 延迟，区分排队时间与执行时间，比较有缓存和无缓存前缀的差异，并在有活跃 decode 流量时测试长 prompt。",
+    "Prefill is the runtime prompt-processing stage, not the first generated token itself. The first token appears only after prefill and any queueing complete.": "Prefill 是运行时处理 prompt 的阶段，不是生成出的第一个 token 本身。只有在 prefill 和所有排队完成之后，第一个 token 才会出现。",
+
+    "Reusing KV-cache blocks produced for an identical eligible token prefix across requests so the serving runtime can skip repeated prefix computation.": "在不同请求之间复用由相同且符合条件的 token 前缀生成的 KV-cache 块，从而让服务运行时跳过重复的前缀计算。",
+    "Shared system instructions, templates, or documents can consume substantial prefill work, but reuse only helps when token sequences and cache eligibility match.": "共享的 system instructions、模板或文档会消耗大量 prefill 计算，但只有当 token 序列和缓存资格都匹配时，复用才会真正带来收益。",
+    "Place stable tokens before request-specific content, include model and tokenizer versions in cache identity, isolate tenant-sensitive state, monitor hit rate, and treat eviction as normal.": "把稳定 token 放在请求特定内容之前，将模型和 tokenizer 版本纳入缓存标识，隔离租户敏感状态，监控命中率，并把缓存驱逐视为正常现象。",
+    "Prefix caching reuses runtime attention state for exact token prefixes. Prompt caching is a broader provider or application contract, while semantic caching reuses a prior result for a similar request.": "Prefix caching 复用的是精确 token 前缀对应的运行时 attention state。Prompt caching 是更宽泛的 provider 或应用层契约，而 semantic caching 复用的是相似请求的历史结果。",
+
+    "Supplying a person or model with the minimum useful context first, then revealing deeper detail when the task or evidence requires it.": "先向人或模型提供最小但足够有用的上下文，再在任务或证据确实需要时逐步揭示更深层细节。",
+    "It limits context noise and cost while keeping authoritative detail available on demand.": "它能在保留权威细节可按需获取的同时，控制上下文噪声与成本。",
+    "Give a coding agent repository rules and a map first; load full implementation files only after it identifies the relevant module.": "先给 coding agent 仓库规则和整体地图；只有在它识别出相关模块之后，再加载完整实现文件。",
+    "Progressive disclosure is staged access to detail, not deliberate withholding of information required for a decision.": "Progressive disclosure 是分阶段开放细节，而不是故意隐瞒做出决策所必需的信息。",
+
+    "Reuse of provider-side or application-side computation for an identical or eligible prompt prefix so repeated inference avoids some preprocessing work.": "对相同或符合条件的 prompt 前缀复用 provider 侧或应用侧的计算结果，从而让重复推理跳过部分预处理工作。",
+    "Stable instructions and large shared documents can become cheaper or faster across repeated calls when the provider's cache contract is satisfied.": "当满足 provider 的缓存契约时，稳定的指令和大型共享文档在重复调用中会变得更便宜或更快。",
+    "Place stable policy text before request-specific content, monitor cache-hit metadata, and treat misses as normal because eligibility and lifetime vary by provider.": "把稳定的策略文本放在请求特定内容之前，监控缓存命中元数据，并把未命中视为正常现象，因为不同 provider 的资格条件和生存期并不相同。",
+    "A prompt cache is a provider or application reuse contract and may use prefix caching internally. Prefix caching specifically reuses eligible exact-token KV state, while semantic caching reuses a prior result for a sufficiently similar request.": "prompt cache 是 provider 或应用层的复用契约，内部可能会用到 prefix caching。Prefix caching 专指复用符合条件的精确 token KV state，而 semantic caching 复用的是对足够相似请求的历史结果。",
+
+    "Wording instructions so a model follows the task.": "通过措辞让模型按任务要求行事。",
+    "Designing model-facing instructions, examples, constraints, and output requirements to improve behavior on a defined task.": "为模型设计面向任务的指令、示例、约束和输出要求，以提升其在特定任务上的表现。",
+    "Prompt wording cannot compensate for missing evidence, unsafe permissions, poor tool contracts, or absent evaluation.": "prompt 的措辞无法弥补证据缺失、不安全的权限设置、糟糕的工具契约或缺位的评估。",
+
+    "An adversarial instruction that redirects a model.": "一种会把模型带偏的对抗性指令。",
+    "An attack or failure mode in which untrusted content influences a model to disregard intended instructions, expose data, misuse tools, or take actions outside the user's goal. The content can arrive directly from a user or indirectly through retrieved pages, files, messages, or tool output.": "一种攻击或失效模式，其中不受信内容会影响模型，使其无视原定指令、泄露数据、滥用工具，或采取超出用户目标的行动。这些内容可能直接来自用户，也可能间接来自检索页面、文件、消息或工具输出。",
+    "Models process instructions and data through the same language channel, so input filtering alone cannot reliably separate every malicious instruction from legitimate content.": "模型通过同一语言通道同时处理指令和数据，因此仅靠输入过滤，无法可靠地区分所有恶意指令与合法内容。",
+    "Treat external content as untrusted, isolate it from authority-bearing instructions, minimize tool permissions, require approval for consequential writes, and verify outputs and actions.": "把外部内容视为不可信，将其与带有授权性质的指令隔离，尽量收紧工具权限，对重要写操作要求审批，并验证输出与动作。",
+    "Prompt injection is not technically the same mechanism as SQL injection, and a stronger system prompt is not a complete defense.": "Prompt injection 在技术机制上并不等同于 SQL injection，而更强的 system prompt 也不是完整防线。",
+
+    "Variation in model output or measured performance caused by changes to prompt wording, order, formatting, or examples that preserve the intended task.": "在任务意图不变的前提下，prompt 的措辞、顺序、格式或示例发生变化所引起的模型输出或测量表现差异。",
+    "A system that succeeds under one convenient phrasing may be unreliable for real users or misleading in evaluation.": "一个只在某种顺手表述下表现良好的系统，对真实用户来说可能并不可靠，也可能在评估中造成误导。",
+    "Create semantically equivalent prompt variants, measure variance by case, and keep variants in regression tests instead of optimizing one prompt against one eval set.": "构造语义等价的 prompt 变体，按案例测量波动，并把这些变体保留在 regression tests 中，而不是只针对单个 eval set 优化一条 prompt。",
+    "Sensitivity is not always a prompt defect; it can reveal ambiguity, weak model robustness, unstable decoding, or an inadequate scoring rule.": "Sensitivity 并不总是 prompt 本身的缺陷；它也可能暴露出歧义、模型鲁棒性不足、解码不稳定，或评分规则不充分。",
+
+    "Authenticated, machine-readable metadata that binds an artifact to claims about how, where, when, and from which inputs it was produced.": "一种经过认证、机器可读的元数据，用来把某个工件与其生成方式、生成地点、生成时间以及所用输入等声明绑定起来。",
+    "It lets automated policy and reviewers verify supply-chain claims instead of trusting an unsigned build note.": "它让自动化策略和审阅者能够验证供应链声明，而不是仅仅相信一条未签名的构建说明。",
+    "Generate an attestation in the build system, bind it to artifact digests, sign it with a controlled identity, and verify it before release.": "在构建系统中生成 attestation，将其绑定到 artifact digest，使用受控身份进行签名，并在发布前完成验证。",
+    "A signature identifies the attester and protects integrity; it does not prove that every claim inside the attestation is true.": "签名能够标识 attester 并保护完整性，但它并不能证明 attestation 中的每一项声明都为真。",
+
+    "For personal data, collecting and using it only for specified, explicit purposes unless a new use has an appropriate compatible or authorized basis.": "对于个人数据，只能为已明确说明且具体的目的进行收集和使用；若要用于新目的，则必须具备适当的兼容性或授权依据。",
+    "Data that was acceptable for one workflow can create privacy and governance risk when silently reused for model training, evaluation, personalization, or unrelated analytics.": "某些数据在一个工作流中是可接受的，但若被悄悄复用于模型训练、评估、个性化或无关分析，就可能引发隐私与治理风险。",
+    "Record the purpose with each dataset, check new pipelines against it before access, separate incompatible uses, and require a documented decision when the purpose changes.": "为每个数据集记录使用目的，在开放访问前用它校验新 pipeline，将不兼容的用途隔离开来，并在用途发生变化时要求有书面决策记录。",
+    "Purpose limitation governs why data is used. Data minimization governs how much data that purpose actually requires.": "Purpose limitation 约束的是为什么使用数据；Data minimization 约束的是这个目的实际需要多少数据。",
+
+    "LoRA with a quantized base model.": "带量化基座模型的 LoRA。",
+    "A parameter-efficient fine-tuning method that keeps a pretrained base model frozen in a low-bit quantized representation while training LoRA adapters with higher-precision computation where needed.": "一种参数高效的 fine-tuning 方法：将预训练基座模型冻结在低比特量化表示中，同时在需要的地方以更高精度计算来训练 LoRA adapters。",
+    "It can reduce the memory needed to adapt large models, but savings and quality depend on model, rank, optimizer, sequence length, hardware, and implementation.": "它可以减少适配大模型所需的内存，但节省幅度和效果质量取决于模型、本征 rank、optimizer、序列长度、硬件和具体实现。",
+    "QLoRA does not guarantee a particular memory footprint or a fixed quality gap from full fine-tuning.": "QLoRA 并不保证特定的内存占用，也不保证与 full fine-tuning 之间存在固定的质量差距。",
+
+    "Storing or computing model values with fewer bits.": "用更少的 bit 来存储或计算模型数值。",
+    "Representing weights, activations, or caches with lower-precision formats to reduce memory, bandwidth, or compute cost. Methods differ in calibration, granularity, data type, and whether conversion happens before, during, or after training.": "用更低精度的格式表示 weights、activations 或 caches，以降低内存、带宽或计算成本。不同方法在校准方式、粒度、数据类型，以及转换发生在训练前、训练中还是训练后等方面各不相同。",
+    "Moving from one nominal bit width to another does not guarantee the same end-to-end memory or speed ratio because metadata, kernels, caches, and hardware support also matter.": "从一种标称 bit 宽度切换到另一种，并不保证端到端内存或速度会按同样比例变化，因为元数据、kernel、cache 和硬件支持也会产生影响。",
+
+    "A model answering with retrieved knowledge.": "一种借助检索到的知识来回答问题的模型。",
+    "A system pattern that retrieves evidence relevant to a request and supplies selected content to a generative model before it answers or acts. Retrieval can use lexical, vector, structured, or hybrid methods.": "一种系统模式：先检索与请求相关的证据，再在模型回答或行动之前，把选出的内容提供给生成模型。检索可以采用 lexical、vector、structured 或 hybrid 方法。",
+    "RAG can make current or private evidence available without encoding it into model weights, but retrieval and grounding must be evaluated separately.": "RAG 能在不把信息写进模型权重的前提下，让当前或私有证据可被利用，但 retrieval 和 grounding 必须分别评估。",
+    "Retrieval finds evidence, augmentation adds selected evidence to context, and generation produces the response.": "Retrieval 负责找到证据，augmentation 负责把选中的证据加入上下文，generation 负责产出响应。",
+
+    "A policy that caps requests, tokens, concurrent work, or another resource within a defined time or capacity window.": "一种策略，用于在既定时间窗口或容量窗口内限制请求数、token 数、并发工作量或其他资源使用。",
+    "It protects providers and your own system from overload, uncontrolled spend, and unfair resource use.": "它能保护 provider 和你自己的系统，避免过载、失控的成本以及不公平的资源占用。",
+    "Enforce per-tenant token and concurrency limits, read provider retry metadata, and queue or reject excess work predictably.": "按租户执行 token 和并发限制，读取 provider 的重试元数据，并以可预期的方式对超量工作进行排队或拒绝。",
+    "A rate limit controls allowed usage. Backpressure propagates downstream capacity constraints through a system.": "rate limit 控制的是允许使用多少；backpressure 传播的是系统中下游容量约束。",
+
+    "An agent pattern that interleaves task reasoning, a concrete action, and an observation returned by the environment before deciding the next step.": "一种智能体模式：在决定下一步之前，交替进行任务推理、执行具体动作，并接收环境返回的 observation。",
+    "Environment feedback can correct assumptions and ground later decisions instead of forcing the model to complete the entire task from internal generation alone.": "环境反馈能够修正假设，并为后续决策提供 grounding，而不是迫使模型只依赖内部生成把整个任务一次性做完。",
+    "Expose a small set of typed tools, return concise observations, cap the loop, and verify the final artifact rather than storing private reasoning traces.": "提供一小组带类型的工具，返回简洁 observation，限制循环次数，并验证最终工件，而不是保存私有推理轨迹。",
+    "ReAct is a prompting and control pattern, not a guarantee of autonomy, correctness, or safe tool use.": "ReAct 是一种 prompting 与控制模式，并不保证自治性、正确性或工具使用的安全性。",
+
+    "A diagnostic that tells the traffic-routing layer whether a service instance is currently able to accept requests.": "一种诊断机制，用来告诉流量路由层某个服务实例当前是否能够接收请求。",
+    "A process can be alive while its model is unloaded, dependencies are unavailable, or warmup is incomplete, so sending traffic too early creates avoidable failures.": "一个进程即便还活着，也可能尚未加载模型、依赖不可用，或 warmup 尚未完成，因此过早送入流量会带来本可避免的失败。",
+    "Check the minimum dependencies required to serve, fail readiness during startup and draining, keep the probe inexpensive, and do not restart the process solely because readiness is false.": "检查提供服务所需的最低依赖，在启动和摘流期间让 readiness 失败，保持 probe 足够轻量，并且不要仅仅因为 readiness 为 false 就重启进程。",
+    "Readiness controls traffic eligibility. Liveness decides whether the process should be restarted, and neither proves that every model response will be correct.": "Readiness 决定流量是否可以进入；Liveness 决定进程是否应被重启，而两者都不能证明每次模型响应都是正确的。",
+
+    "For one query, Recall@K is `|relevant items intersecting the top k| / |relevant items|`. A dataset score aggregates those per-query values under a stated rule.": "对于单个 query，Recall@K 定义为 `|relevant items intersecting the top k| / |relevant items|`。数据集得分则是在既定规则下对各 query 得分进行汇总。",
+    "It tells you whether a retrieval stage supplies downstream generation or reranking with enough relevant candidates.": "它告诉你某个 retrieval 阶段是否为下游 generation 或 reranking 提供了足够多的相关候选项。",
+    "Define relevance judgments, k, the aggregation method, and a policy for queries with no judged relevant items, then inspect queries with zero recalled evidence.": "定义相关性判定、k、聚合方式，以及对没有任何已判定相关项的 query 的处理策略，然后重点检查那些一条相关证据都没召回的 query。",
+    "High Recall@K does not mean the top result is good, the ranking is well ordered, or the final answer is grounded. Queries with no relevant items require an explicit exclusion or assigned-value policy because the denominator is zero.": "高 Recall@K 并不意味着首条结果足够好、排序足够合理，或最终答案已经 grounded。对于没有相关项的 query，由于分母为零，必须显式规定是排除还是赋值。",
+
+    "A rank-fusion method that combines several result lists by summing contributions that decrease with each item's rank in each list.": "一种 rank 融合方法，通过累加多个结果列表中各条目的贡献值来进行合并，而该贡献值会随着条目在各列表中的排名下降而递减。",
+    "It can merge lexical, dense, or multi-query rankings without assuming their raw scores share the same scale.": "它能融合 lexical、dense 或多 query 排名，而不要求它们的原始分数处在同一量纲上。",
+    "Retrieve independent candidate lists, deduplicate by stable document identity, apply one versioned fusion constant, and evaluate against each individual retriever.": "先检索出彼此独立的候选列表，再基于稳定的文档标识去重，应用一个带版本控制的融合常数，并将结果与每个单独的 retriever 分别对比评估。",
+    "RRF combines ranks, not embeddings or relevance scores, and it cannot recover an item absent from every input list.": "RRF 融合的是 rank，而不是 embeddings 或 relevance scores；对于所有输入列表里都不存在的条目，它也无能为力。",
+
+    "A structured adversarial testing process in which authorized testers seek failures using documented objectives, threat assumptions, cases, and evidence.": "一种结构化的对抗测试流程，由经授权的测试者依据已记录的目标、威胁假设、测试案例和证据来寻找失败点。",
+    "Ordinary quality tests rarely explore how a system behaves under manipulation, misuse, conflicting goals, or determined attempts to bypass controls.": "常规质量测试很少会探索系统在遭遇操纵、误用、目标冲突或有意绕过控制时会如何表现。",
+    "Derive attacks from a threat model, run them in an isolated environment, record reproducible cases, remediate by layer, and convert confirmed failures into regression evals.": "从 threat model 推导攻击路径，在隔离环境中执行，记录可复现案例，按层修复问题，并把已确认的失败转化为 regression evals。",
+    "A list of jailbreak prompts is not a complete red-team program, and red teaming cannot prove the absence of unknown failures.": "一组 jailbreak prompts 并不能构成完整的 red-team 方案，red teaming 也无法证明不存在未知失败。",
+
+    "A repeatable check that protects behavior known to work, especially after code, prompt, model, retrieval, or tool changes.": "一种可重复执行的检查，用来保护那些已经被证明可正常工作的行为，尤其是在代码、prompt、模型、retrieval 或工具发生变化之后。",
+    "AI system changes can improve average quality while silently reintroducing a previously fixed failure.": "AI 系统的改动可能会提升平均质量，但同时悄悄把之前修复过的问题重新带回来。",
+    "Turn a corrected prompt-injection incident into a permanent eval case that must pass before the next deployment.": "把已经修复的 prompt-injection 事故转化为一个永久 eval case，并要求它在下一次部署前必须通过。",
+    "A regression test guards a specific expected behavior. A broad benchmark estimates performance across a wider task distribution.": "regression test 保护的是某个具体的预期行为；广义 benchmark 则是在更广的任务分布上估计性能。",
+
+    "A simple activation function.": "一种简单的 activation function。",
+    "Rectified Linear Unit, defined as `f(x) = max(0, x)`. It is inexpensive and has a non-saturating positive branch, though zero gradients on negative inputs can create inactive units.": "Rectified Linear Unit，定义为 `f(x) = max(0, x)`。它计算代价低，并且正半轴不易饱和；但在负输入上梯度为零，可能导致神经元失活。",
+
+    "Version-controlled guidance that tells coding agents how a repository is organized, which commands and conventions apply, what boundaries to respect, and how to verify work.": "一种受版本控制的说明，告诉 coding agents 仓库如何组织、适用哪些命令与约定、需要遵守哪些边界，以及如何验证工作结果。",
+    "It turns repeated tribal knowledge into local context that travels with the code and can vary by subproject.": "它把反复口耳相传的经验知识转化为伴随代码存在的本地上下文，并且可以按子项目分别定义。",
+    "Keep an `AGENTS.md` at the repository root, add narrower files for subdirectories, and include exact build, test, generated-file, security, and contribution rules.": "在仓库根目录放置 `AGENTS.md`，为子目录补充更窄范围的说明文件，并写清楚构建、测试、生成文件、安全和贡献规则。",
+    "Repository instructions complement source code and human documentation; they do not override the user's current request or guarantee that an agent follows them correctly.": "Repository instructions 是对源码和人工文档的补充；它们不会覆盖用户当前请求，也不能保证智能体一定会正确遵守。",
+
+    "A compact, maintained description of a repository's important directories, ownership boundaries, entry points, build commands, tests, generated files, and local instructions.": "一种紧凑且持续维护的仓库说明，涵盖重要目录、职责边界、入口点、构建命令、测试、生成文件以及本地说明。",
+    "It helps a coding agent find the right evidence before loading large files or editing the wrong subsystem.": "它能帮助 coding agent 在加载大文件或误改错误子系统之前，先找到正确的证据和入口。",
+    "Generate an index from the tree and manifests, then enrich it with authoritative notes about module boundaries and validation commands.": "先根据目录树和清单生成索引，再补充关于模块边界和验证命令的权威说明。",
+    "A raw file tree shows names. A repository map explains which paths matter and how they relate to a task.": "原始文件树只能展示名字；repository map 会解释哪些路径真正重要，以及它们与当前任务的关系。",
+
+    "A build whose declared source, environment, and instructions can be independently rerun to produce bit-for-bit identical specified artifacts.": "一种构建过程：其声明的源码、环境和指令都可以被独立重跑，并产出逐位一致的指定工件。",
+    "It makes an artifact verifiable beyond the machine or agent that originally produced it and exposes hidden build inputs.": "它让工件不再只能依赖最初产出它的机器或智能体来验证，同时还能暴露隐藏的构建输入。",
+    "Pin toolchains and dependencies, remove timestamps and unstable ordering, capture the environment, then compare independently rebuilt artifact digests.": "固定 toolchain 和依赖，去除时间戳与不稳定排序，记录环境信息，然后比较独立重建后的 artifact digest。",
+    "A build that succeeds twice is repeatable evidence, but reproducibility requires the declared independent conditions and identical outputs.": "一个构建连续成功两次，只能说明它具备可重复的证据；而 reproducibility 还要求满足所声明的独立条件，并得到完全相同的输出。",
+
+    "A second-stage model or scoring function that reorders a small candidate set using a richer comparison between the query and each candidate.": "一种第二阶段模型或评分函数，通过更丰富的 query 与候选项比较方式，对一个较小的候选集重新排序。",
+    "Fast first-stage retrieval maximizes candidate coverage, while reranking can improve which evidence reaches the limited context window.": "快速的一阶段 retrieval 用来尽量覆盖候选项，而 reranking 则能改善最终进入有限 context window 的证据质量。",
+    "Retrieve 50 candidates with hybrid search, score each query-document pair with a cross-encoder, and pass the top 5 supported chunks to generation.": "先用 hybrid search 检索出 50 个候选，再用 cross-encoder 为每个 query-document 对打分，最后把前 5 个有支持性的 chunk 送入 generation。",
+    "A reranker does not search the entire corpus. It only reorders candidates that retrieval already found.": "reranker 并不会搜索整个语料库；它只会重排 retrieval 已经找出来的候选项。",
+
+    "A bound on retry traffic, usually expressed relative to original requests or over a time window, that prevents retries from consuming unbounded capacity.": "对重试流量施加的上限，通常以相对于原始请求的比例或某个时间窗口内的额度来表示，用于防止重试无限吞噬容量。",
+    "When a dependency slows or fails, unrestricted retries multiply load exactly when the system has the least spare capacity.": "当某个依赖变慢或失败时，不受限制的重试会在系统最缺冗余容量的时候成倍放大负载。",
+    "Count retries separately from first attempts, cap them by service and tenant, honor deadlines, use jittered backoff, and stop retrying non-transient or non-idempotent failures.": "把重试与首次尝试分开计数，按服务和租户设置上限，遵守截止时间，采用带 jitter 的 backoff，并且对非瞬时性或非幂等失败停止重试。",
+    "A retry budget limits extra attempts. An error budget measures user-visible unreliability allowed by an SLO.": "retry budget 限制的是额外尝试次数；error budget 衡量的是在 SLO 下允许用户可见的不可靠性额度。",
+
+    "Repeating a failed transient operation after progressively longer delays, usually with randomized jitter and a strict retry limit.": "对失败的瞬时性操作进行重试，并在每次之间使用越来越长的延迟，通常还会加入随机 jitter 和严格的重试上限。",
+    "Immediate synchronized retries can worsen an outage, consume rate limits, and duplicate side effects.": "立即且同步的重试会加剧故障、耗尽 rate limits，并重复产生副作用。",
+    "Retry a provider timeout after bounded exponential delays, honor server retry guidance, and reuse an idempotency key for any write.": "对 provider timeout 采用有上限的指数退避重试，遵循服务器给出的重试建议，并为任何写操作复用同一个 idempotency key。",
+    "Do not retry permanent validation or permission errors, and do not retry non-idempotent operations without a duplication strategy.": "不要重试永久性的校验错误或权限错误；对于非幂等操作，如果没有去重策略，也不要重试。",
+
+    "An agent assigned to inspect another agent's artifact or decision against explicit criteria and return findings or a verdict.": "一种被指派去审查另一个智能体产出物或决策的智能体，它依据明确标准返回问题发现或结论。",
+    "Separation of roles can catch omissions, but it only helps when the reviewer receives independent evidence and a concrete rubric.": "角色分离有助于发现遗漏，但前提是 reviewer 拿到的是独立证据和具体 rubric，否则效果有限。",
+    "After one agent produces a patch, give a separate reviewer the diff, scope contract, repository rules, and test output, then require line-specific findings.": "当一个 agent 产出 patch 后，把 diff、scope contract、repository rules 和测试输出交给独立 reviewer，并要求给出精确到行的发现。",
+    "A second model call is not automatically independent or correct. Shared context, model bias, and vague criteria can reproduce the same mistake.": "第二次模型调用并不会自动变得独立或正确。共享上下文、模型偏差和模糊标准，都可能把同样的错误再复现一遍。",
+
+    "Training a model from human preferences.": "用人类偏好来训练模型。",
+    "A family of pipelines that uses human feedback to learn a reward or preference signal and then optimizes a model policy against that signal. Implementations vary and need not all use the same reinforcement-learning algorithm.": "一类 pipeline：先利用人类反馈学习 reward 或 preference signal，再据此优化模型策略。具体实现各不相同，也不一定都采用同一种 reinforcement-learning algorithm。",
+    "RLHF optimizes a proxy learned from collected feedback. It does not guarantee broad alignment with every user or situation.": "RLHF 优化的是从收集到的反馈中学得的代理目标，它并不能保证对所有用户或所有情境都实现广义 alignment。",
+
+    "Restoring a previously known deployment or configuration when the current release violates operational, quality, or safety criteria.": "当当前发布违反运维、质量或安全标准时，将系统恢复到先前已知状态的部署版本或配置。",
+    "Agent and model changes can fail in production despite pre-deployment evaluation, so recovery must be designed before rollout.": "即便经过上线前评估，agent 和模型的改动仍可能在生产环境中失败，因此恢复路径必须在 rollout 之前就设计好。",
+    "Retain versioned artifacts and configuration, define rollback triggers, rehearse the command and data implications, and verify service health after restoration.": "保留带版本的工件和配置，定义 rollback 触发条件，演练相关命令及其对数据的影响，并在恢复后验证服务健康状况。",
+    "Code rollback does not automatically reverse database migrations, external side effects, cached outputs, or data written by the bad release.": "代码回滚并不会自动撤销数据库迁移、外部副作用、缓存输出，或错误版本已经写入的数据。",
+
+    "A reference-overlap metric often used for summaries.": "一种常用于摘要任务的参考文本重叠指标。",
+    "A family of metrics that compares generated text with reference text using units such as n-gram overlap or longest common subsequence.": "一类指标族，用 n-gram overlap、longest common subsequence 等单位来比较生成文本与参考文本。",
+    "Surface overlap can miss semantic equivalence and can reward copied wording without proving factual quality.": "表层重叠可能错过语义等价的情况，也可能奖励照抄措辞，却无法证明事实质量。",
+
+    "An isolated execution environment that restricts an agent's access to files, processes, network destinations, credentials, and host resources.": "一种隔离执行环境，用来限制智能体访问文件、进程、网络目标、凭证和宿主资源的能力。",
+    "Generated code and tool calls can be wrong or malicious. Isolation limits their reach and makes disposable verification practical.": "生成出的代码和工具调用可能出错，也可能带有恶意。隔离能限制其影响范围，并让一次性验证变得可行。",
+    "Run tests in an ephemeral container with a read-only base, a scoped writable workspace, no production secrets, and an explicit network allowlist.": "在一个临时容器里运行测试，底层环境只读、工作区可写但范围受限、不含生产密钥，并设置明确的网络 allowlist。",
+    "A sandbox reduces impact. It does not establish that the code inside is correct or harmless.": "sandbox 能降低影响范围，但并不能证明其中运行的代码就是正确或无害的。",
+
+    "The degree to which a constrained resource or service has exhausted its capacity, including queued work that cannot begin promptly.": "受限资源或服务耗尽其容量的程度，其中也包括那些无法及时开始处理的排队工作。",
+    "Utilization alone can appear acceptable while memory, accelerator slots, queue depth, or a downstream quota is already limiting useful throughput.": "单看 utilization 也许还算正常，但内存、加速卡槽位、队列深度或下游 quota 可能已经开始限制有效吞吐。",
+    "Identify each critical resource, measure active and waiting work, relate saturation to tail latency and errors, and alert before the queue enters an unstable growth regime.": "识别每个关键资源，测量活跃与等待中的工作量，把 saturation 与 tail latency 和错误关联起来，并在队列进入不稳定增长区间之前发出告警。",
+    "Saturation is not one universal percentage. The limiting resource and its queueing behavior depend on the workload and architecture.": "Saturation 不是一个通用百分比。真正的瓶颈资源及其排队行为取决于工作负载和系统架构。",
+
+    "A concrete agreement that defines a task's goal, allowed and forbidden surfaces, expected artifacts, verification requirements, and stopping conditions.": "一种具体约定，用来定义任务目标、允许和禁止触碰的范围、预期产出物、验证要求以及停止条件。",
+    "It prevents an agent from turning a narrow fix into an unreviewable refactor or from claiming completion without evidence.": "它能防止智能体把一个小修小补扩展成无法审查的重构，也能防止其在没有证据的情况下声称任务完成。",
+    "State that only the parser module and its tests may change, public APIs must remain compatible, and the named test suite must pass.": "明确说明只有 parser 模块及其测试可以修改，公共 API 必须保持兼容，并且指定的测试套件必须通过。",
+    "A task description says what you want. A scope contract also defines boundaries and proof.": "任务描述只说明你想要什么；scope contract 还会定义边界与证明标准。",
+
+    "Tokens deciding which other tokens matter.": "token 决定哪些其他 token 更重要。",
+    "Attention in which queries, keys, and values are derived from the same sequence representation. Scaled similarity scores are normalized and used to combine values, subject to causal, padding, local, or other masks.": "一种 attention，其中 queries、keys 和 values 都来自同一序列表示。缩放后的相似度分数会被归一化，并在 causal、padding、local 或其他 mask 的约束下用于加权组合 values。",
+    "It builds context-sensitive token representations, but the permitted attention pattern depends on the architecture.": "它能构建对上下文敏感的 token 表示，但允许的 attention 模式取决于具体架构。",
+    "Not every token can always attend to every other token. Causal and sparse models intentionally restrict connections.": "并不是每个 token 在任何时候都能关注所有其他 token。Causal 和 sparse 模型会刻意限制这些连接。",
+
+    "A cache that reuses a previous result when a new request is judged sufficiently similar under a chosen representation and threshold.": "一种缓存：当新的请求在选定表示和阈值下被判断为足够相似时，就复用之前的结果。",
+    "It can reduce latency and cost for repeated intents, but an incorrect match can return stale or user-inappropriate output.": "它能为重复意图降低延迟和成本，但一旦匹配错误，也可能返回过时或不适合当前用户的输出。",
+    "Cache low-risk FAQ answers by normalized intent, include tenant and policy version in the key, and bypass the cache for personalized or time-sensitive requests.": "按归一化后的意图缓存低风险 FAQ 答案，在 key 中加入租户和策略版本，并对个性化或时效性请求绕过缓存。",
+    "Semantic similarity does not guarantee that two requests have the same correct answer. A semantic cache reuses a prior result, while prefix caching reuses exact-token KV state and prompt caching follows provider or application eligibility rules.": "语义相似并不保证两个请求拥有相同的正确答案。semantic cache 复用的是历史结果；prefix caching 复用的是精确 token 的 KV state；prompt caching 则遵循 provider 或应用层的资格规则。",
+
+    "Search by meaning instead of exact words.": "按语义而不是精确词面进行搜索。",
+    "Retrieval that represents a query and candidates in an embedding space and ranks candidates using a vector-similarity function.": "一种 retrieval 方法：把 query 与候选项表示到 embedding space 中，再用向量相似度函数对候选项排序。",
+    "It can retrieve paraphrases and conceptually related text, but exact identifiers and rare strings may still need lexical search.": "它能检索到改写表达和概念相关文本，但精确标识符和稀有字符串仍然可能需要 lexical search。",
+
+    "Dividing conflicting responsibilities or authority across independent roles so one principal cannot complete a high-risk action without another authorized decision.": "把彼此冲突的职责或权限拆分到独立角色上，使单一主体无法在没有另一方授权决策的情况下独自完成高风险操作。",
+    "A compromised account or mistaken agent should not be able to propose, approve, execute, and conceal the same consequential change.": "一个被攻陷的账号或出错的 agent，不应同时具备提出、审批、执行并掩盖同一项重要变更的能力。",
+    "Separate artifact creation from release approval, use distinct identities, preserve both decisions in the audit log, and define emergency access with later review.": "将工件创建与发布审批分离，使用不同身份，保留两边决策到 audit log 中，并为紧急访问定义事后复审机制。",
+    "Separation of duties is about conflicting authority, not simply assigning work to several people or agents that share the same credentials.": "Separation of duties 关注的是相互制衡的权限，而不只是把工作分配给几个共享同一套凭证的人或 agents。",
+
+    "A quantitative measure of service behavior at a defined user-relevant boundary, such as successful request ratio or latency below a threshold.": "在某个与用户相关的明确边界上，对服务行为进行量化测量的指标，例如成功请求比例或低于某阈值的延迟比例。",
+    "Reliability discussions become actionable only when the observed behavior, eligible events, and measurement point are explicit.": "只有当被观测的行为、纳入统计的事件以及测量点都明确时，关于可靠性的讨论才真正具备可操作性。",
+    "Define numerator, denominator, exclusions, data source, and aggregation window, then validate that the indicator tracks an outcome users actually experience.": "定义分子、分母、排除项、数据来源和聚合窗口，然后验证这个指标是否真的追踪到了用户实际感受到的结果。",
+    "An SLI is the measurement. An SLO is the target applied to that measurement over a defined period.": "SLI 是测量值；SLO 是在既定时间范围内施加在该测量值上的目标。",
+
+    "A target range or threshold for a service-level indicator over a stated population and measurement window.": "针对某个已定义人群和测量窗口，为 service-level indicator 设定的目标区间或阈值。",
+    "It translates an expected user outcome into an operating boundary for monitoring, capacity, release risk, and incident decisions.": "它把期望的用户结果转化为监控、容量、发布风险和事故决策的运行边界。",
+    "Choose an indicator users care about, set the target from product needs rather than current performance, define the window and exclusions, and attach an error-budget policy.": "选择用户真正关心的指标，根据产品需求而非当前表现设定目标，定义统计窗口和排除项，并配套 error-budget 策略。",
+    "An SLO is an internal reliability objective. A contractual service-level agreement can include remedies and may use different definitions.": "SLO 是内部的可靠性目标；合同层面的 service-level agreement 可能包含补偿条款，并且采用不同定义。",
+
+    "Training on example inputs and desired outputs.": "基于示例输入和期望输出进行训练。",
+    "Fine-tuning a pretrained model on paired inputs and desired responses so it learns the demonstrated behavior under the training distribution.": "在成对的输入与期望响应上对预训练模型进行 fine-tuning，使其学会训练分布中展示出来的行为。",
+    "SFT can adapt many behaviors beyond chat, and example quality determines what behavior is reinforced.": "SFT 能适配的行为远不止聊天场景，而示例质量决定了什么样的行为会被强化。",
+
+    "A copy of live request traffic sent to a candidate system for observation while the candidate response remains outside the primary user response path. Because the copied request still executes, its side effects must be isolated.": "把线上真实请求流量复制一份发送到候选系统进行观察，而候选系统的响应不进入主用户响应路径。由于复制过去的请求仍会执行，因此它的副作用必须被隔离。",
+    "It exposes the candidate to real input shapes and load while limiting user impact, which can reveal failures absent from synthetic tests.": "它让候选系统在尽量不影响用户的前提下承受真实输入形态和真实负载，从而暴露合成测试中看不到的问题。",
+    "Remove or tokenize sensitive fields, route tools and dependencies to sandboxed or no-op targets, block writes at capability boundaries, preserve request correlation, and prevent shadow load from competing with user traffic.": "移除或 token 化敏感字段，把工具和依赖路由到 sandboxed 或 no-op 目标，在能力边界上阻断写操作，保留请求关联性，并避免 shadow 流量与用户流量争抢资源。",
+    "Keeping a candidate response off the primary path does not make execution side-effect-free. A canary release differs because it serves real users from the candidate for a controlled share of traffic.": "把候选响应隔离在主路径之外，并不意味着执行过程就没有副作用。canary release 的不同之处在于，它会让候选系统为真实用户承接一部分受控流量。",
+
+    "A common vector space in which representations from different modalities can be compared with the same similarity function.": "一个共享向量空间，在其中，不同模态的表示可以使用同一个相似度函数进行比较。",
+    "It enables cross-modal retrieval and matching, such as finding images from text, without requiring both items to share a raw representation.": "它使跨模态检索与匹配成为可能，例如用文本找图片，而不要求两者拥有相同的原始表示。",
+    "Train paired and unpaired negatives deliberately, normalize vectors when the objective requires it, evaluate both retrieval directions, and inspect subgroup and language performance.": "有意识地构造配对和非配对负样本，在目标需要时对向量做归一化，同时评估两个检索方向，并检查不同子群体和语言上的表现。",
+    "Sharing a vector dimension does not create a shared semantic space. The training objective and data must establish cross-modal comparability.": "共享同样的向量维度，并不会自动形成共享语义空间。跨模态可比性必须由训练目标和训练数据来建立。",
+
+    "The complete installable skill directory, including `SKILL.md` and every reference, script, asset, fixture, or companion file required by the workflow.": "一个完整、可安装的 skill 目录，包含 `SKILL.md` 以及工作流所需的所有 reference、script、asset、fixture 和配套文件。",
+    "Copying only the entry file can leave valid-looking instructions that point to missing resources or lose the deterministic code the workflow depends on.": "如果只复制入口文件，可能会留下表面看似有效、实际上指向缺失资源的说明，或者丢失工作流依赖的确定性代码。",
+    "Install the tree as one unit, record hashes and source revision, validate the installed copy, and show collisions before replacing an existing bundle.": "把整棵目录作为一个整体安装，记录 hash 和源码版本，校验已安装副本，并在替换已有 bundle 前展示冲突情况。",
+    "`SKILL.md` is the entry point, not necessarily the entire artifact.": "`SKILL.md` 是入口点，但不一定就是完整工件。",
+
+    "The compact model-visible inventory of eligible skills, usually containing routing metadata such as name, description, and an internal source identifier rather than every skill body.": "一种对模型可见的紧凑型可用技能清单，通常包含名称、描述、内部来源标识等路由元数据，而不是每个 skill 的完整内容。",
+    "A catalog lets an agent discover relevant procedures without loading every installed package into the working context.": "catalog 让智能体在无需把所有已安装包都载入工作上下文的情况下，发现相关流程。",
+    "Validate packages first, apply an explicit duplicate-name policy, measure the serialized catalog budget, and retain diagnostics for entries that were shortened, omitted, or shadowed.": "先校验包，再应用明确的重名策略，衡量序列化后的 catalog 预算，并为那些被截短、被省略或被遮蔽的条目保留诊断信息。",
+    "A catalog entry means the skill is discoverable. It does not mean the body is active or its tools are authorized.": "catalog 中存在某条目，只表示这个 skill 可以被发现；并不意味着其正文已激活，或其工具已被授权。",
+
+    "A runtime pipeline that searches configured roots, identifies candidate skill directories, validates their package contract, attaches scope and provenance, resolves collisions, and publishes eligible catalog entries.": "一种运行时 pipeline：搜索已配置根路径，识别候选 skill 目录，校验其 package contract，附加 scope 与 provenance，解决冲突，并发布符合条件的 catalog entries。",
+    "Deterministic discovery makes missing, malformed, shadowed, and unsafe packages diagnosable before model routing begins.": "确定性的发现流程能在模型开始路由之前，就把缺失、格式错误、被遮蔽或不安全的 package 诊断出来。",
+    "Declare search scopes and duplicate behavior, decide how symlinks are handled, reject resource escapes, and log why each candidate was accepted or rejected.": "明确搜索范围和重名处理策略，决定如何处理 symlink，拒绝资源逃逸，并记录每个候选项为何被接受或拒绝。",
+    "Skill discovery is not an unrestricted recursive search for filenames called `SKILL.md`; installation locations and precedence are runtime policy.": "Skill discovery 不是对所有名为 `SKILL.md` 的文件做无限制递归搜索；安装位置和优先级属于运行时策略的一部分。",
+
+    "The runtime-mediated process in which an eligible human, model, application, or other skill selects a skill and causes its instructions to enter the working context.": "一种由运行时介导的过程：合格的人、模型、应用或其他 skill 选择某个 skill，并使其指令进入当前工作上下文。",
+    "Explicit user access, implicit model routing, activation, argument binding, tool permission, and execution are separate decisions with different failure modes.": "显式用户访问、隐式模型路由、激活、参数绑定、工具权限和实际执行，都是彼此独立且具有不同失败模式的决策。",
+    "Define actor policy, evaluate descriptions with positive and near-miss requests, record the selected package identity, and keep host-specific invocation fields in tested adapters.": "定义 actor policy，用正例和近似误触请求评估描述文案，记录被选中的 package 身份，并把宿主相关的 invocation 字段保存在经过测试的 adapter 中。",
+    "Invocation activates instructions. It does not automatically execute a command or bypass approval and sandbox policy.": "Invocation 会激活指令，但不会自动执行命令，也不会绕过审批与 sandbox 策略。",
+
+    "A function that turns logits into normalized positive values.": "一种把 logits 转成归一化正值的函数。",
+    "A function defined by `softmax(x_i) = exp(x_i) / sum(exp(x_j))`, implemented with numerical stabilization. Its outputs are positive and sum to one, so they can parameterize a categorical distribution.": "一个定义为 `softmax(x_i) = exp(x_i) / sum(exp(x_j))` 的函数，实际实现时会加入数值稳定化处理。它的输出都为正且总和为一，因此可以参数化 categorical distribution。",
+    "Softmax values are not automatically calibrated probabilities about real-world correctness.": "Softmax 的输出值并不会自动成为关于现实世界正确性的校准概率。",
+
+    "A structured inventory of software components and relationships associated with a product or artifact, often including versions, suppliers, licenses, and identifiers.": "一种结构化清单，用来记录与某个产品或工件相关的软件组件及其关系，通常包含版本、供应方、许可证和标识符等信息。",
+    "You need a component inventory to assess affected dependencies, license obligations, and supply-chain exposure when software changes or vulnerabilities emerge.": "当软件发生变化或暴露漏洞时，你需要一份组件清单，才能评估受影响依赖、许可证义务以及供应链暴露面。",
+    "Generate the SBOM during the trusted build, bind it to the release artifact, verify it in policy checks, and update it whenever dependencies or packaging change.": "在可信构建过程中生成 SBOM，将其绑定到发布工件，在策略检查中验证它，并在依赖或打包方式变化时及时更新。",
+    "An SBOM is an inventory, not proof that components are secure, correctly licensed, or actually present unless generation and provenance are trustworthy.": "SBOM 是一份清单，而不是安全性、许可证合规性或组件真实存在性的证明；除非其生成过程和 provenance 本身可信。",
+
+    "An inference method in which a cheaper draft process proposes several tokens and the target model scores those draft positions in parallel. In exact sampling variants, an acceptance and correction rule preserves the target model's output distribution.": "一种推理方法：由更便宜的 draft 过程先提出若干 token，再由目标模型并行地为这些 draft 位置打分。在 exact sampling 变体中，接受与修正规则会保持目标模型的输出分布不变。",
+    "It can reduce serial target-model decoding work when drafts are accepted, without requiring a change to the target model's trained weights.": "当 draft token 被接受时，它能减少目标模型串行 decoding 的工作量，而且无需改动目标模型已经训练好的权重。",
+    "Measure acceptance rate and end-to-end latency on real prompts, include draft-model overhead, and verify that the implementation preserves the intended decoding distribution.": "在真实 prompt 上测量接受率和端到端延迟，把 draft model 的开销也算进去，并验证实现确实保持了目标的 decoding distribution。",
+    "Speculative decoding is not ordinary model routing or unverified autocomplete. Exact variants preserve the target distribution through acceptance and correction, while approximate variants may trade that guarantee for speed.": "Speculative decoding 不是普通的模型路由，也不是未经验证的自动补全。exact 变体通过接受与修正规则保持目标分布；approximate 变体则可能用放弃这种保证来换取速度。",
+
+    "The MCP 2026-07-28 request model in which every request carries the protocol version and client capabilities in `params._meta`, while results carry an explicit `resultType`; no protocol state is keyed by an initialization handshake, connection, or `Mcp-Session-Id`.": "MCP 2026-07-28 的一种请求模型：每个请求都在 `params._meta` 中携带协议版本和客户端能力，结果则带有显式 `resultType`；协议状态不再依赖 initialization handshake、连接或 `Mcp-Session-Id` 来建立。",
+    "Any worker can validate and process a request from its contents and authorization context, which avoids hidden connection affinity and makes horizontal routing easier to reason about.": "任何 worker 都可以仅根据请求内容和授权上下文来验证并处理请求，这避免了隐式连接亲和，也让水平路由更容易被推理和维护。",
+    "Implement `server/discover`, rebuild request metadata on every call, validate transport headers against the JSON-RPC body, and pass server-minted application handles as ordinary tool arguments when continuity is required.": "实现 `server/discover`，在每次调用时重建请求元数据，对照 JSON-RPC body 验证传输头，并在需要连续性时，把 server 签发的应用句柄作为普通工具参数传递下去。",
+    "Stateless MCP removes protocol sessions, not application state, transport connections, streaming responses, tasks, or explicit handles.": "Stateless MCP 去掉的是协议层 session，而不是应用状态、传输连接、streaming responses、tasks 或显式 handles。",
+
+    "An optimizer family that updates parameters from a gradient estimated on a sampled example or minibatch rather than the complete training dataset.": "一类 optimizer：用从采样样本或 minibatch 估计出的梯度来更新参数，而不是依赖完整训练数据集上的梯度。",
+    "It is the baseline for understanding gradient noise, momentum, batch scaling, and the adaptive optimizers used in modern training.": "它是理解 gradient noise、momentum、batch scaling 以及现代训练中各类自适应 optimizer 的基础。",
+    "Record batch sampling, learning rate, momentum if used, and schedule, then compare validation behavior under equal update or token budgets.": "记录 batch 采样方式、learning rate、是否使用 momentum 以及调度策略，再在相同更新预算或 token 预算下比较验证表现。",
+    "In current practice, SGD usually means minibatch SGD, and its useful learning rate does not follow one universal batch-scaling rule.": "在当前实践里，SGD 通常指的是 minibatch SGD，而且它有效的 learning rate 并不遵循某一条通用的 batch scaling 规律。",
+
+    "An application-specified token or text pattern that causes generation to stop when the decoding system encounters it.": "一种由应用指定的 token 或文本模式，当解码系统遇到它时就会停止生成。",
+    "Stop sequences bound output protocols and multi-part generation without waiting for the model to decide semantically that it is finished.": "Stop sequence 可以为输出协议和多段式生成设定边界，而不必等待模型在语义上自己判断“已经结束”。",
+    "Choose unambiguous delimiters, test tokenization and partial streaming matches, and still enforce output length and schema validation.": "选择无歧义的分隔符，测试 tokenization 与部分 streaming 匹配情况，并且仍然要执行输出长度和 schema validation。",
+    "A stop sequence is a mechanical decoding condition, not proof that the answer is complete or that an agent goal is satisfied.": "stop sequence 是一种机械性的解码停止条件，而不是答案完整或智能体目标已完成的证明。",
+
+    "Showing output as it is generated.": "边生成边展示输出。",
+    "Delivering incremental response events before the complete result is ready. A stream may contain token text, structured deltas, tool-call arguments, usage metadata, or status events depending on the API.": "在完整结果尚未准备好之前，就持续发送增量响应事件。具体 stream 内容可能包括 token 文本、structured deltas、tool-call arguments、usage metadata 或状态事件，这取决于 API 设计。",
+    "It improves perceived responsiveness, but it does not reduce the model's actual time to produce a complete answer.": "它能提升用户感知到的响应速度，但并不会减少模型产出完整答案的真实耗时。",
+    "Network transport, event shape, and chunk boundaries are provider-specific and are not guaranteed to align with words or tokens.": "网络传输方式、事件形态和 chunk 边界都具有 provider 特性，不能保证恰好与单词或 token 对齐。",
+
+    "Model output constrained or validated against a machine-readable schema so application code can consume fields without parsing free-form prose.": "对模型输出施加机器可读 schema 的约束或验证，使应用代码无需解析自由文本，就能直接消费结构化字段。",
+    "It reduces format ambiguity at the model-to-software boundary and enables field-level validation and retries.": "它能减少模型到软件边界处的格式歧义，并支持字段级验证与重试。",
+    "Require an incident triage result with an allowed severity enum, evidence array, and nullable escalation reason, then reject any response that fails the schema.": "要求 incident triage 结果必须包含允许的 severity enum、evidence array 和可空的 escalation reason；凡是不符合 schema 的响应，一律拒绝。",
+    "Schema-valid output can still contain incorrect values. Structure is not factual verification.": "即便输出通过了 schema 校验，里面的值仍可能是错的。结构化不等于事实验证。",
+
+    "Many agents collaborating without one fixed controller.": "多个智能体协作，但没有固定的单一控制者。",
+    "A loosely coordinated multi-agent pattern in which local agent decisions and message exchange produce system-level behavior. The term is used inconsistently, so the actual topology, state ownership, and termination rules must be specified.": "一种松耦合的 multi-agent 模式：局部 agent 的决策和消息交换共同产生系统级行为。这个术语使用并不统一，因此必须明确说明具体拓扑、状态归属以及终止规则。",
+    "Multiple named agents do not guarantee useful specialization or emergent coordination.": "光有多个具名 agents，并不保证真的形成有效分工或涌现式协作。",
+
+    "Developer-controlled instructions for a model interaction.": "由开发者控制、用于约束模型交互的指令。",
+    "A provider-defined instruction message or configuration supplied by the application to establish behavior and constraints within that provider's instruction hierarchy.": "一种由 provider 定义的 instruction message 或配置项，由应用提供，用于在该 provider 的指令层级中建立行为规范与约束。",
+    "System instructions can guide behavior, but they are not guaranteed to remain secret and should not be treated as a security boundary.": "system instructions 可以引导模型行为，但并不能保证始终保密，也不应被视为安全边界。",
+    "Priority rules, message roles, persistence, and visibility differ across APIs. Check the current provider contract.": "不同 API 在优先级规则、消息角色、持久性和可见性上都可能不同，应以当前 provider contract 为准。",
+
+    "The latency experienced by the slowest portion of requests, commonly summarized with a high percentile under a stated workload and time window.": "请求中最慢那一部分所经历的延迟，通常在给定工作负载和时间窗口下用高百分位数来概括。",
+    "Averages can look healthy while a meaningful group of users waits much longer because of queueing, contention, retries, or variable request cost.": "平均值看起来可能很健康，但由于排队、竞争、重试或请求成本差异，一部分用户实际等待时间会明显更长。",
+    "Report several percentiles by route and workload, retain timeouts as censored or failed observations according to a documented rule, and trace slow requests across dependencies.": "按路由和工作负载报告多个百分位数，根据书面规则把 timeout 记为删失观测或失败观测，并沿依赖链追踪慢请求。",
+    "Tail latency is not the single slowest request and has no meaning without the percentile, population, and measurement boundary.": "Tail latency 不是单个最慢请求；如果没有百分位、统计人群和测量边界，它本身没有意义。",
+
+    "A creativity setting.": "一个“创造力”设置。",
+    "A decoding parameter that rescales logits before a probability distribution is formed. Higher positive values usually flatten the distribution; lower positive values sharpen it.": "一种 decoding 参数，会在形成概率分布之前对 logits 做缩放。更高的正值通常会让分布更平坦；更低的正值则会让分布更尖锐。",
+    "Temperature changes sampling behavior, not the model's knowledge or factuality.": "Temperature 改变的是采样行为，而不是模型的知识储备或事实正确性。",
+    "A zero setting is often implemented as greedy decoding, but exact behavior and determinism depend on the provider, sampler, seed support, and serving system.": "temperature 设为零时，通常会实现为 greedy decoding，但具体行为和是否确定性，仍取决于 provider、sampler、seed 支持以及 serving system。",
+
+    "A multidimensional array used for numerical computation.": "一种用于数值计算的多维数组。",
+    "A typed array with a shape, data type, and device placement that frameworks use to represent inputs, parameters, activations, and gradients. Automatic-differentiation metadata is framework- and operation-dependent, not an inherent property of every tensor.": "一种带有 shape、data type 和 device placement 的 typed array，框架用它来表示输入、参数、activations 和 gradients。Automatic-differentiation metadata 取决于框架和具体操作，并不是每个 tensor 天然自带的属性。",
+
+    "Partitioning tensor operations within a model layer across devices, with collective communication combining partial results during the layer computation.": "把模型单层内部的 tensor 运算切分到多个设备上执行，并在该层计算过程中通过 collective communication 合并部分结果。",
+    "It lets one layer use memory and compute from several devices, but frequent communication can dominate when the interconnect or partition is unsuitable.": "它让单层可以同时利用多个设备的内存和算力，但如果互连或切分方式不合适，频繁通信就会反过来主导总开销。",
+    "Match partition dimensions to model shapes, benchmark collective traffic, keep ranks on a fast interconnect, and record the sharding layout with checkpoints and serving configuration.": "让切分维度匹配模型形状，基准测试 collective 流量，把各 rank 放在高速互连上，并把 sharding 布局与 checkpoints 和 serving 配置一起记录下来。",
+    "Tensor parallelism splits work inside layers. Pipeline parallelism places different layer groups on different devices.": "Tensor parallelism 切分的是层内计算；Pipeline parallelism 则是把不同的层组放到不同设备上。",
+
+    "An explicit rule that ends or pauses an agent run when it succeeds, fails, exhausts a budget, reaches a safe boundary, or requires escalation.": "一种显式规则：当智能体运行成功、失败、耗尽预算、触及安全边界或需要升级处理时，用来结束或暂停运行。",
+    "Without a termination condition, an agent can loop, repeat side effects, waste budget, or claim completion without satisfying the goal.": "没有 termination condition，智能体就可能陷入循环、重复产生副作用、浪费预算，或在目标尚未满足时误报完成。",
+    "Define success evidence, maximum steps and cost, non-retryable errors, and escalation states before starting the loop.": "在启动循环之前，先定义成功证据、最大步数与成本、不可重试错误以及升级状态。",
+    "A stop sequence ends text generation; a termination condition decides whether the task or workflow should stop.": "stop sequence 结束的是文本生成；termination condition 决定的是任务或工作流是否该停止。",
+
+    "The mechanism, specification, reference, invariant, or human judgment used to decide whether observed program behavior is correct.": "一种机制、规范、参考实现、不变量或人工判断，用来决定观察到的程序行为是否正确。",
+    "Generating test inputs is not enough; automated verification requires an independent basis for classifying each result.": "仅仅生成测试输入还不够；自动化验证还需要一个独立依据来判定每个结果是否正确。",
+    "Prefer executable invariants, reference implementations, schemas, and deterministic expected outputs, then document where human judgment remains necessary.": "优先使用可执行不变量、reference implementation、schema 和确定性的期望输出；对于仍需人工判断的部分，要明确记录。",
+    "The model that wrote the code should not be treated as an independent oracle merely because you ask it whether its own output is correct.": "写出代码的那个模型，不应仅仅因为被问了一句“你自己写得对吗”，就被当作独立 oracle。",
+
+    "A documented account of protected assets, trust boundaries, potential adversaries, assumed capabilities, attack paths, impacts, and planned controls.": "一份成文记录，用来说明受保护资产、trust boundaries、潜在对手、假定能力、攻击路径、影响范围以及计划中的控制措施。",
+    "Security controls cannot be judged without stating what they defend, against whom, and under which assumptions.": "如果不先说清楚这些控制要保护什么、对抗谁，以及基于哪些假设，就无法评价它们是否合理。",
+    "Map data and authority across model, retrieval, tools, users, and external services, then turn credible abuse paths into red-team cases and mitigations.": "梳理数据和权限在模型、retrieval、工具、用户与外部服务之间的流动，然后把可信的滥用路径转化为 red-team 案例与缓解措施。",
+    "A threat model prioritizes plausible risks; it is not a checklist that proves the system secure or predicts every future attack.": "threat model 用于给可信风险排优先级；它不是一份能证明系统安全或预测所有未来攻击的检查表。",
+
+    "For one request with `N > 1` output tokens, the average post-first-token interval: `(t_N - t_1) / (N - 1)`. System distributions then aggregate those per-request averages.": "对于一个输出 token 数为 `N > 1` 的请求，其首 token 之后的平均间隔定义为 `(t_N - t_1) / (N - 1)`。系统级分布则是在此基础上对各请求平均值进行聚合。",
+    "Users can receive the first token quickly while the rest of the answer streams slowly, so startup latency alone does not describe generation responsiveness.": "用户可能很快就收到第一个 token，但之后的内容却慢慢流出来，因此仅看启动延迟并不能完整描述生成响应性。",
+    "Compute TPOT separately for each request, report percentiles across requests by output length and concurrency, and avoid pooling all token intervals or comparing systems with different tokenizers and measurement boundaries.": "为每个请求单独计算 TPOT，按输出长度和并发度报告跨请求的百分位数，并避免把所有 token 间隔混在一起统计，也不要直接比较 tokenizer 或测量边界不同的系统。",
+    "TPOT is a per-request average. An individual inter-token latency is one gap between consecutive tokens, while time to first token includes the wait before output starts.": "TPOT 是按请求计算的平均值；单个 inter-token latency 指的是相邻两个 token 之间的一次间隔，而 time to first token 还包括输出开始前的等待时间。",
+
+    "The elapsed time from submitting a generation request until the client receives the first output token or content event under a defined measurement boundary.": "在既定测量边界下，从提交生成请求到客户端收到第一个输出 token 或内容事件所经历的时间。",
+    "TTFT strongly affects perceived responsiveness and can reveal queueing, prompt processing, cache, or network delays.": "TTFT 会显著影响用户感知到的响应速度，也能暴露排队、prompt 处理、缓存或网络延迟问题。",
+    "Record client-side TTFT by model, prompt length, region, and cache status, then separate it from total completion time.": "按模型、prompt 长度、地域和缓存状态记录客户端侧 TTFT，并把它与总完成时间区分开来。",
+    "TTFT is not tokens per second. One measures startup latency; the other measures generation throughput after output begins.": "TTFT 不是 tokens per second。前者衡量启动延迟，后者衡量输出开始后的生成吞吐。",
+
+    "A word-sized piece of model input or output.": "模型输入或输出中一个接近“词大小”的片段。",
+    "An integer identifier produced by a model-specific tokenizer from text, bytes, images, audio, or another input representation. A token can be a whole word, part of a word, punctuation, whitespace, a byte sequence, or a special control symbol.": "一种由特定模型 tokenizer 从文本、字节、图像、音频或其他输入表示生成的整数标识。一个 token 可以是整个单词、词的一部分、标点、空白、字节序列，或特殊控制符号。",
+    "Character-to-token ratios vary by language, content, and tokenizer, so count with the target model's tokenizer or provider tools.": "字符与 token 的换算比例会因语言、内容和 tokenizer 而异，因此应使用目标模型的 tokenizer 或 provider 工具来统计。",
+
+    "An explicit allocation of token capacity across instructions, evidence, history, tool results, reasoning or working space, and output.": "一种对 token 容量的显式分配方案，把容量划分给 instructions、evidence、history、tool results、reasoning 或工作空间以及输出。",
+    "Every included token competes for context capacity, latency, and cost. Budgeting forces you to preserve high-value evidence first.": "每一个被纳入的 token 都会争抢上下文容量、延迟预算和成本预算。做预算规划会迫使你优先保留高价值证据。",
+    "Reserve output capacity, cap retrieved chunks, summarize old tool results into state, and stop or compact before the model limit is reached.": "预留输出容量，限制检索 chunk 数量，把旧的工具结果总结进状态里，并在达到模型上限之前停止或压缩上下文。",
+    "A token budget is a planning constraint. It is not the same as the model's maximum context window.": "token budget 是一种规划约束，不等同于模型的最大 context window。",
+
+    "Converting an input representation into the ordered token identifiers a specific model or tokenizer accepts.": "把输入表示转换为某个特定模型或 tokenizer 能接受的有序 token 标识序列。",
+    "Tokenization determines sequence length, vocabulary boundaries, cost accounting, truncation behavior, and how text or code is represented before embedding.": "Tokenization 决定了序列长度、词表边界、成本计量、截断行为，以及文本或代码在 embedding 之前如何被表示。",
+    "Use the exact tokenizer for the target model, version it with artifacts, and test multilingual text, code, whitespace, and special tokens.": "使用目标模型对应的精确 tokenizer，对 tokenizer 与相关工件一起做版本管理，并测试多语言文本、代码、空白字符和特殊 tokens。",
+    "Tokenization is not always word splitting, and two models can assign different token counts and IDs to the same input.": "Tokenization 并不总是“按词切分”；两个模型也可能对同一输入给出不同的 token 数量和 ID。",
+
+    "A throughput measure reporting how many output tokens a serving system produces per unit time under a stated scope and workload.": "一种吞吐指标，用来报告某个 serving system 在给定范围与工作负载下，每单位时间产出多少 output tokens。",
+    "It complements startup latency by showing how quickly generation proceeds after output begins and how serving behaves under load.": "它补充了启动延迟指标，展示输出开始后生成推进得有多快，以及服务在负载下的表现。",
+    "State whether TPS is per request or aggregate, exclude or identify prefill, and report batch, concurrency, sequence lengths, hardware, and percentile latency.": "说明 TPS 是按请求统计还是聚合统计，排除或单独标识 prefill，并报告 batch、大并发、序列长度、硬件和百分位延迟。",
+    "TPS is not directly comparable across different tokenizers, workloads, quality settings, or measurement boundaries.": "TPS 不能在不同 tokenizer、工作负载、质量设置或测量边界之间直接比较。",
+
+    "The complete agreement for a tool boundary: purpose, typed inputs, outputs, validation, permissions, side effects, errors, timeouts, idempotency, and evidence returned to the caller.": "围绕某个工具边界形成的完整约定，涵盖目的、typed inputs、outputs、校验、权限、副作用、错误、超时、幂等性，以及返回给调用方的证据。",
+    "A schema tells a model what fields exist; a contract tells the system when the tool is safe and how failures must be handled.": "schema 告诉模型有哪些字段；contract 告诉整个系统这个工具在什么条件下才算安全，以及失败必须如何处理。",
+    "Define a file-write tool with an allowed root, expected base revision, maximum size, dry-run mode, explicit conflict errors, and a returned patch hash.": "定义一个文件写入工具时，应明确允许的根目录、预期基线版本、最大尺寸、dry-run 模式、显式冲突错误，以及返回的 patch hash。",
+    "A JSON Schema is part of a tool contract, not the whole contract.": "JSON Schema 只是 tool contract 的一部分，而不是全部。",
+
+    "A decoding method that restricts the next-token distribution to the k highest-scoring candidates, renormalizes their probabilities, and samples from that set.": "一种 decoding 方法：把下一 token 的分布限制在得分最高的 k 个候选上，对它们的概率重新归一化，再从中采样。",
+    "It removes the long low-probability tail from sampling while keeping a fixed maximum candidate count.": "它在保留固定候选数上限的同时，去掉了采样分布中那条很长的低概率尾部。",
+    "Evaluate k together with temperature, top-p, and stop settings, and record the complete sampler configuration with generated results.": "把 k 与 temperature、top-p 和 stop 设置一起评估，并把完整采样器配置与生成结果一起记录下来。",
+    "Top-k uses a fixed candidate count, while top-p uses a probability-mass threshold whose candidate count changes by step.": "Top-k 使用固定候选数；top-p 使用概率质量阈值，因此候选数会随着每一步而变化。",
+
+    "A correlated record of one request or task across model calls, retrieval, tools, state transitions, retries, approvals, and evaluations.": "围绕单个请求或任务形成的一条关联记录，覆盖 model calls、retrieval、tools、状态迁移、重试、审批与评估。",
+    "It lets you reconstruct where time, cost, and failure entered a multi-step workflow.": "它能帮助你重建在多步骤工作流中，时间、成本和失败究竟是从哪里进入系统的。",
+    "Propagate one trace identifier through the agent harness and attach redacted spans for each model and tool operation.": "在 agent harness 中传递同一个 trace identifier，并为每次模型调用和工具操作附加经过脱敏的 spans。",
+    "A trace should record operational evidence, not expose hidden model reasoning, secrets, or unredacted sensitive content.": "trace 应记录运维证据，而不是暴露隐藏的模型推理、密钥或未经脱敏的敏感内容。",
+
+    "Reusing a pretrained model for a new task.": "把预训练模型复用于新任务。",
+    "Starting from representations or parameters learned on one data distribution or objective and adapting them for another. The transferable components and update strategy depend on architecture and task.": "从一个数据分布或训练目标上学到的表示或参数出发，再将其适配到另一个任务。哪些部分可迁移、如何更新，取决于架构和任务本身。",
+    "Transfer is not limited to later layers, and successful transfer is not guaranteed when source and target tasks differ sharply.": "Transfer 并不只发生在后层；当源任务与目标任务差异很大时，也不能保证迁移一定成功。",
+
+    "The architecture behind many modern language models.": "许多现代语言模型背后的基础架构。",
+    "A neural-network architecture built from attention, position information, feed-forward sublayers, residual connections, and normalization. Encoder, decoder, and encoder-decoder variants use different masks and information flows.": "一种由 attention、位置信息、feed-forward sublayers、residual connections 和 normalization 组成的神经网络架构。Encoder、decoder 和 encoder-decoder 变体会使用不同的 mask 和信息流方式。",
+    "Training can process many sequence positions in parallel, while autoregressive generation still produces outputs step by step.": "训练阶段可以并行处理许多序列位置，而 autoregressive generation 仍然需要逐步产出输出。",
+    "Self-attention does not imply unrestricted all-to-all attention in every transformer.": "Self-attention 并不意味着每个 transformer 都支持毫无限制的全连接 attention。",
+
+    "An interface where data, instructions, identity, or authority crosses between components or principals that operate under different trust assumptions.": "一种接口：数据、指令、身份或权限在不同信任假设下运行的组件或主体之间跨越时，就发生在这里。",
+    "A boundary crossing is where the system must authenticate actors, validate data, constrain permissions, and decide which claims can influence action.": "边界跨越之处，正是系统必须完成身份认证、数据验证、权限约束，并决定哪些声明可以影响行为的地方。",
+    "Draw boundaries around users, model context, retrieval sources, tools, networks, and data stores, then specify validation and authorization for every crossing.": "围绕用户、model context、retrieval sources、tools、networks 和 data stores 画出边界，并为每一次跨越指定验证与授权规则。",
+    "A network boundary is only one kind of trust boundary. Untrusted document text entering a privileged agent context also crosses one.": "网络边界只是 trust boundary 的一种。不受信的文档文本进入高权限 agent 上下文时，同样是在跨越 trust boundary。"
+  },
+  "patterns": []
+}

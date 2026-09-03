@@ -19,7 +19,7 @@
   }
 
   function supported(code) {
-    return !!code && code !== 'en' && LANGS.some(function (l) { return l.code === code; });
+    return !!code && LANGS.some(function (l) { return l.code === code; });
   }
   function current() {
     if (isCertificationLesson()) return 'en';
@@ -143,6 +143,11 @@
       applyDir(lang);
       updateButton();
       close(true);
+      if (typeof window.CustomEvent === 'function') {
+        window.dispatchEvent(new CustomEvent('aifs:language-change', {
+          detail: { lang: lang }
+        }));
+      }
       if (typeof window.AIFS_onLangChange === 'function') window.AIFS_onLangChange(lang);
     }
 

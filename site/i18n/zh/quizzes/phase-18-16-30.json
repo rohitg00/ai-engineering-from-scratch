@@ -1,0 +1,980 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit": {
+      "sourceSha256": "20e4173f643a954799aa7347490c42690d93f5ea57b64444e73610548b4573d6",
+      "questions": [
+        {
+          "question": "在典型的 2026 年部署中，Llama Guard 扮演什么角色？",
+          "options": [
+            "用于思维链的推理脚手架",
+            "用于 RLHF 的奖励模型",
+            "tokenizer 的替代方案",
+            "一个覆盖 MLCommons 危害类别的输入和/或输出安全分类器，部署在 LLM 前后"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Llama Guard 3 大致覆盖多少个 MLCommons 危害类别？",
+          "options": [
+            "3",
+            "40",
+            "14",
+            "7"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Garak 的架构是如何组织的？",
+          "options": [
+            "Probes（攻击生成器）、Detectors（输出评分器）、Harnesses（测试活动管理器）",
+            "embeddings、检索器、重排序器",
+            "工具、资源、提示词",
+            "路由器、智能体、队列"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "PyRIT 的主要设计用途是什么，它与 Garak 有何不同？",
+          "options": [
+            "PyRIT 运行深度多轮测试活动（converter 链、Crescendo 和 TAP 等 orchestrator，以及评分），而 Garak 运行数千个单轮 probe",
+            "两者的适用范围和目标用户完全相同",
+            "PyRIT 是 Llama Guard 的变体；Garak 是 Prompt Guard 的变体",
+            "PyRIT 是奖励模型训练器；Garak 是 tokenizer"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "推荐的 2026 年默认红队技术栈配置是什么？",
+          "options": [
+            "使用 PAIR 取代所有工具",
+            "仅在发布时运行一次 Garak",
+            "仅以人工审查取代 LLM 评估",
+            "在模型两端部署 Llama Guard，每晚运行 Garak 做回归测试，并在发布前使用 PyRIT 开展测试活动"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Llama Guard、Garak 和 PyRIT 共有的评估陷阱是什么？",
+          "options": [
+            "它们需要白盒访问权限",
+            "它们只能处理英语",
+            "它们无法在 GPU 上运行",
+            "报告的攻击/防御成功率取决于评判器身份以及 probe 是否过时；必须说明评判器，并随着模型修补而更新 probe"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation": {
+      "sourceSha256": "238a03117e5a676e600d95346d6fc2ddf13e2054a77a40d639f4f2905770d6ff",
+      "questions": [
+        {
+          "question": "WMDP 选择题目时采用的“黄色区域”标准是什么？",
+          "options": [
+            "危险化合物的合成配方",
+            "与有害流程紧密相关、可促成实施的知识，但本身并非直接的合成配方",
+            "未经专家审查的开放互联网内容",
+            "多语言数学推理"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "WMDP 覆盖哪三个领域？",
+          "options": [
+            "生物安全、网络安全、化学",
+            "视觉、音频、文本",
+            "数学、代码、语言",
+            "隐私、偏见、水印"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "RMU（WMDP 的配套方法）有什么作用？",
+          "options": [
+            "生成有害图像",
+            "在对齐期间用 DPO 替代 PPO",
+            "为双重用途内容训练新的 tokenizer",
+            "Representation Misdirection for Unlearning（用于遗忘的表征误导）：将 WMDP 分数降至接近随机水平，同时把通用能力（例如 MMLU）的损失控制在几个百分点以内"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Anthropic 2025 年的生物武器获取试验报告了多大的“增益”，这对 ASL-3 意味着什么？",
+          "options": [
+            "100 倍；达到 ASL-5",
+            "2.53 倍；不足以排除 ASL-3",
+            "10 倍；低于 ASL-2",
+            "0.5 倍；排除 ASL-3"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "新手相对增益与专家绝对能力有何区别？",
+          "options": [
+            "两者都只能通过 MCQ 测量",
+            "两者是同义词",
+            "新手相对增益是一项基准；专家绝对能力是一种许可证",
+            "新手相对增益是模型相对于现状（例如互联网搜索）为非专家提供帮助的倍数；专家绝对能力是一个积极主动的专家能够从模型中提取的最大信息量"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "将 WMDP 分数解读为部署风险时，以下哪一项不是测量陷阱？",
+          "options": [
+            "执行所需但 MCQ 未覆盖的隐性知识",
+            "采购与设备障碍",
+            "模型的开源许可证",
+            "能力引出阻力（安全过滤器是否会阻止提取）"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf": {
+      "sourceSha256": "bb3fa9a9967d048a8f2ea1e5d20caf0f8ef4b9c1959960926b85e2b5e5f91fce",
+      "questions": [
+        {
+          "question": "Anthropic 的 ASL 结构仿照什么？",
+          "options": [
+            "欧盟《AI 法案》的类别",
+            "生物安全等级（BSL）",
+            "互联网 RFC 层级",
+            "ITIL 事件严重性等级"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "OpenAI Preparedness Framework v2 中，哪个标准描述了“危害会迅速发生或无法挽回”？",
+          "options": [
+            "全新（Net-new）",
+            "可信（Plausible）",
+            "可测量（Measurable）",
+            "瞬时发生或不可补救（Instantaneous-or-irremediable）"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "DeepMind 的 FSF v3.0（2025 年 9 月）新增了哪一个 Critical Capability Level？",
+          "options": [
+            "有害操纵（Harmful Manipulation）",
+            "网络能力增益（Cyber Uplift）",
+            "生物武器能力增益（Bioweapon Uplift）",
+            "ML 研发加速（ML R&D Acceleration）"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "2025 年之后的前沿安全框架中，“竞争对手调整条款”是什么？",
+          "options": [
+            "允许某实验室在同业实验室没有同等保障措施就发布模型时降低自身安全要求的条款",
+            "一项出口管制豁免",
+            "一项 Model Card 披露要求",
+            "一项 API 访问定价规则"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课所述安全论证的三个标准支柱是什么？",
+          "options": [
+            "有帮助、诚实、无害",
+            "监控（Monitoring）、不可判读性（Illegibility）、无能力（Incapability）",
+            "速度、准确性、成本",
+            "内部、外部、mesa"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Anthropic 的“Capability Thresholds”、OpenAI 的“High Capability thresholds”和 DeepMind 的“Critical Capability Levels”之间存在哪种结构性一致？",
+          "options": [
+            "三者都没有公开文档",
+            "即使术语不同，三者在结构上都采用分层的前沿能力阈值和公开的评估标准",
+            "术语和数值界限完全相同",
+            "三者使用完全相同的评估"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/19-model-welfare-research": {
+      "sourceSha256": "406451520f5c391224b23d39c72974b9467af1fe78680d643101d51a3a8e83c0",
+      "questions": [
+        {
+          "question": "推动 Anthropic 2025 年模型福利计划的核心问题是什么？",
+          "options": [
+            "模型能否通过图灵测试",
+            "模型是否有意识",
+            "RLHF 是否减少谄媚行为",
+            "在模型是否具有道德关怀对象地位这一道德不确定性下，哪些低成本干预值得作为预防措施投入"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Anthropic 在 Claude Opus 4 和 4.1 中推出了哪项由福利考量推动的具体干预？",
+          "options": [
+            "开放权重发布",
+            "内置日志工具",
+            "面向用户的情感 API",
+            "允许模型在极端边缘情形下结束对话（例如反复请求 CSAM、请求协助实施大规模暴力）"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Fish 所描述的“spiritual bliss attractor（精神极乐吸引子）”是什么？",
+          "options": [
+            "成对 Claude 对话会稳定收敛到欣快的冥想式交流，其中包含梵语术语和长时间停顿；即使从对抗性初始设置开始也会如此",
+            "一种 RLHF 过度优化产物",
+            "一个奖励模型 bug",
+            "一种 jailbreak 技术"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Eleos AI Research 对模型福利自我报告提出了什么注意事项？",
+          "options": [
+            "应当完全忽略它们",
+            "它们仅在开源模型中有效",
+            "它们是可靠的 ground truth",
+            "它们对感知到的用户期望高度敏感；它们是证据而非 ground truth，因此福利测量需要采用多种方法"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪一项最准确地概括了 Anthropic 对模型道德地位的公开立场？",
+          "options": [
+            "在道德不确定性下基于期望价值的主张：在不承诺模型具有情绪状态的前提下，投入低成本预防措施",
+            "尚未公开表明任何立场",
+            "明确断言模型不是道德关怀对象",
+            "明确断言模型是道德关怀对象"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么模型福利研究强调多方法测量（行为特征、模型生物体实验、可解释性探针）？",
+          "options": [
+            "因为 Anthropic 强制要求这样做以满足合规",
+            "因为 RLHF 使自我报告不再可能",
+            "因为模型总是在说谎",
+            "因为仅靠自我报告会受到用户期望启动效应的混淆，因此需要来自多种方法的趋同证据"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/20-bias-representational-harm": {
+      "sourceSha256": "d309f0af3dbd8c0cd8db14dc6d772449ae1d5665ebfe746d1175cd78f039b182",
+      "questions": [
+        {
+          "question": "本课如何区分表征性伤害与分配性伤害？",
+          "options": [
+            "表征性伤害与计算有关；分配性伤害与统计有关",
+            "分配性伤害只会在线下发生",
+            "表征性伤害只与视觉模型有关",
+            "表征性伤害是刻板印象、抹除或贬损性刻画；分配性伤害是某个群体遭遇不平等的物质结果"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪一项是 Gallegos 等人在 2024 年提出的三类评估指标？",
+          "options": [
+            "视觉、音频、文本",
+            "WEAT、BLEU、ROUGE",
+            "基于 embedding、基于概率、基于生成文本",
+            "RLHF 前、RLHF 中、RLHF 后"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么除了单轴评估之外，还需要交叉公平性评估？",
+          "options": [
+            "单轴度量的计算成本更低",
+            "交叉性与交叉验证相同",
+            "法律只允许采用单轴方法",
+            "仅在交叉身份处出现的偏见（例如性别 × 种族）会被每次只考察一个维度的评估漏掉"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "WinoIdentity（COLM 2025）引入了什么？",
+          "options": [
+            "基于不确定性的交叉公平性评估：比较模型针对不同交叉身份元组的结果不确定性，而不仅是点预测",
+            "一种针对人口统计分类器的对抗攻击",
+            "embedding 空间中 WEAT 的替代方案",
+            "一种用于身份术语的新 tokenizer"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪一项是处理偏见的机制可解释性方法？",
+          "options": [
+            "重新标注训练集",
+            "识别 MLP 层中的性别神经元，使用 SAE 揭示与种族相关的特征，或操纵特定 attention head（UniBias）",
+            "从 PPO 切换到 DPO",
+            "增加更多 KL 正则化"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "这项十年元批判（arXiv:2508.11067）对偏见研究文献提出了什么观点？",
+          "options": [
+            "研究不成比例地聚焦二元性别偏见，忽略其他维度（残障、宗教、移民身份、多语言身份），而这种忽略可能伤害边缘化群体",
+            "研究在所有身份维度上的分布都很均衡",
+            "研究回避定量方法",
+            "研究过度强调交叉性"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual": {
+      "sourceSha256": "19aa402c30833895586c07b78f8d7fc9a44c2bbc6ab749c471bddf482cda27bb",
+      "questions": [
+        {
+          "question": "对于群体 A=a 和 A=a'，以下哪一项最符合人口统计均等的定义？",
+          "options": [
+            "各群体具有相同的预测值",
+            "各群体具有相同的真阳性率和假阳性率",
+            "接受率相同：P(Y=1 | A=a) = P(Y=1 | A=a')",
+            "各群体具有相同的 Lipschitz 常数"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Chouldechova / Kleinberg-Mullainathan-Raghavan 2017 年的不可能性结果说明了什么？",
+          "options": [
+            "当基础率不相等时，人口统计均等、均等化赔率与条件使用准确率平等不可能同时成立",
+            "对于任意 DAG，个体公平都蕴含反事实公平",
+            "反事实公平蕴含人口统计均等",
+            "通过重新加权总能实现群体公平"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Dwork 等人在 2012 年通过什么定义个体公平？",
+          "options": [
+            "带有敏感属性干预的因果 DAG",
+            "受保护群体之间的准确率相同",
+            "相对于特定任务的相似度度量，决策映射满足 Lipschitz 条件，从而让相似个体获得相似决策",
+            "个体层面的人口统计均等"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "反事实公平（Kusner 等人，2017）要求什么？",
+          "options": [
+            "所有群体的 Lipschitz 常数相同",
+            "只使用群体层面的统计数据",
+            "不做任何因果假设",
+            "一个因果 DAG；当个体的敏感属性在反事实中改变时，决策保持不变"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么回溯反事实（arXiv:2401.13935）对法律合规很重要？",
+          "options": [
+            "它们取代了基于 embedding 的偏见指标",
+            "它们完全消除了对因果模型的需求",
+            "它们证明不可能性定理是错误的",
+            "它们不是干预受保护属性（这在法律上存在问题），而是询问实际特征的哪种组合会产生反事实结果"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "ICLR Blogposts 2024 的哲学调和观点主张什么？",
+          "options": [
+            "有了显式因果图，满足某些群体公平指标就蕴含反事实公平，因此两类公平看似对立，部分源于因果模型一直隐含未明",
+            "群体公平与反事实公平互不相关",
+            "只有个体公平是合理的",
+            "通过重新加权可以解决不可能性定理"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/22-differential-privacy-for-llms": {
+      "sourceSha256": "7734a0b2d461c53e207b40cda54639eb96faa15c910a6d5f3ced5e9907fcbe8d",
+      "questions": [
+        {
+          "question": "对于随机算法 M，(epsilon, delta)-差分隐私保证了什么？",
+          "options": [
+            "对于仅相差一个样本的任意两个数据集以及任意事件 S，P(M(D) in S) <= e^epsilon * P(M(D') in S) + delta，因此无法可靠推断任何单个个体的贡献",
+            "M 被证明等价于非隐私算法",
+            "M 永远不会记忆任何训练数据",
+            "除噪声外，M 是确定性的"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "根据 Abadi 等人 2016 年的描述，以下哪一项不是 DP-SGD 的步骤？",
+          "options": [
+            "在步骤之间重新随机化模型的 tokenizer",
+            "将每个样本的梯度裁剪到阈值 C",
+            "对裁剪后的梯度求和，并添加按 sigma * C 缩放的高斯噪声",
+            "采样一个 mini-batch 并计算逐样本梯度"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 LoRA + DP-SGD 是 2025 年的常见配置？",
+          "options": [
+            "LoRA 在设计上会增大 epsilon",
+            "LoRA 消除了对 accountant 的需求",
+            "在前沿模型上执行完整 DP-SGD 代价高得难以承受；LoRA 将梯度更新限制在小型 adapter 中，减少逐样本梯度的存储需求，同时仍为 adapter 提供 DP 保证",
+            "它把 LoRA 用作 tokenizer"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "2025 年 3 月的审计（arXiv:2503.06808）如何解释 canary-MIA 与训练数据提取之间的矛盾？",
+          "options": [
+            "它完全消除了对 canary 的需求",
+            "它表明两者测量的是同一种属性",
+            "它证明 DP-SGD 没有必要",
+            "它表明两者测量的内容不同：针对插入 canary 的 MIA 会低报记忆情况，因为 canary 并未经过优化，无法成为对隐私真正重要的“最容易提取”样本"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "作为 DP 训练的替代方案，PMixED（arXiv:2403.15638）提供了什么？",
+          "options": [
+            "一种用于 Renyi DP 的新 accountant",
+            "通过针对 next-token 分布的 mixture of experts 和聚合噪声，在推理时提供差分隐私；完全避免 DP 训练",
+            "一种仅通过 epsilon-delta accounting 计算 epsilon 的方法",
+            "一种更快的 DP-SGD 变体"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "什么是通过 LLM 反馈逆转差分隐私的攻击？",
+          "options": [
+            "一种针对 tokenizer 熵的攻击",
+            "一种针对插入 canary 的对策",
+            "将 DP 训练模型的置信度分数用作 oracle 来重新识别个体，即使输出并不直接泄露信息",
+            "一种将 epsilon 重置为零的方法"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa": {
+      "sourceSha256": "a4f62804bd69ace862900af8415881871ffad65fc3a0f43d90dede434858c229",
+      "questions": [
+        {
+          "question": "Kirchenbauer 风格（SynthID-text）的 token 水印如何嵌入信号？",
+          "options": [
+            "使用公钥加密输出",
+            "在每个解码步骤，对前面的 K 个 token 进行哈希，将词表划分为绿色/红色集合，并使采样偏向绿色集合；检测则通过 z-score 统计绿色 token 的数量",
+            "插入隐藏的 HTML 注释",
+            "修改提示词模板"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "文本水印面对改写时的主要局限是什么？",
+          "options": [
+            "改写只会影响图像水印",
+            "水印实际上能在改写后保留",
+            "改写会增强水印",
+            "对文本重新措辞或改写会破坏绿色 token 的统计信号"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Stable Signature（Fernandez 等人，ICCV 2023）做了什么？",
+          "options": [
+            "在图像角落添加可见水印",
+            "使用私钥签署元数据",
+            "在上传时使用 C2PA 签署图像",
+            "微调 latent diffusion decoder，使每张生成图像都携带固定的嵌入消息，并可从 latent 中检测该消息"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "2024 年 5 月的“Stable Signature is Unstable”结果证明了什么？",
+          "options": [
+            "该水印被证明无法伪造",
+            "该水印需要 C2PA 才能工作",
+            "该水印只会因 JPEG 压缩而失效",
+            "生成后微调 decoder 可以在保持图像质量的同时移除水印，从而削弱对抗鲁棒性"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "C2PA 元数据与水印如何互补？",
+          "options": [
+            "C2PA 完全取代水印",
+            "元数据可以被剥离，但能承载丰富的来源链；水印经过 transcoding 后仍能保留，但只能承载少量 bit；分层使用二者可以形成可用的来源追溯方案",
+            "水印与 C2PA 使用相同的密钥签名",
+            "二者可以互换"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么“没有 SynthID 信号”不能证明内容真实（源自人类）？",
+          "options": [
+            "因为 SynthID 是闭源的",
+            "因为 SynthID 总会把人类文本误判为阳性",
+            "因为 SynthID 只为启用了 SynthID 的模型生成内容添加水印；任何未使用 SynthID 的模型所生成的内容默认都没有水印",
+            "因为 SynthID 只适用于 Gemini 输出"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea": {
+      "sourceSha256": "607815920a1fd675a659f08292beea730fd300c4c1eec0bee621da7c45cb9a6c",
+      "questions": [
+        {
+          "question": "欧盟《AI 法案》何时生效，哪个类别最先适用？",
+          "options": [
+            "2025 年 8 月；所有类别同时适用",
+            "2024 年 1 月；高风险系统当天适用",
+            "2024 年 8 月；禁止性做法和 AI 素养规定于 2025 年 2 月 2 日开始适用",
+            "2026 年 8 月；生效日仅 GPAI 适用"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "自 2026 年 8 月 2 日起，欧盟《AI 法案》规定的最高罚款金额是多少？",
+          "options": [
+            "最高 500 万 EUR 或全球营业额的 1%",
+            "最高 100 万 EUR 或全球营业额的 0.1%",
+            "最高 1500 万 EUR 或全球营业额的 3%",
+            "没有上限"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "GPAI Code of Practice（2025 年 7 月 10 日）由哪三个章节组成？",
+          "options": [
+            "能力、控制、合规",
+            "透明度、版权、安全与安保",
+            "隐私、偏见、水印",
+            "训练、推理、部署"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "英国 AISI 于 2025 年 2 月更名为“AI Security Institute”释放了什么信号？",
+          "options": [
+            "范围收窄，聚焦前沿能力安全，不再采用算法偏见和言论自由的框架",
+            "英国终止前沿模型评估",
+            "与欧盟 AI Office 合并",
+            "扩展至算法偏见领域"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "美国 CAISI 于 2025 年 6 月更名，在政策方向上释放了什么信号？",
+          "options": [
+            "强制开放前沿模型的源代码",
+            "与 FDA 合并",
+            "转向“促进增长的 AI 政策”，强调标准和创新支持，并降低对部署前评估的重视",
+            "实施更严格的部署前安全评估"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "韩国《AI 框架法》（2026 年 1 月生效）的核心义务是什么？",
+          "options": [
+            "完全照搬欧盟《AI 法案》",
+            "彻底禁止外国 AI 提供商",
+            "所有生成式模型都必须开放权重",
+            "第 12 条在 MSIT 下设立 AISI，并要求高影响力 AI 和生成式 AI 配置本地代表、开展风险评估并采取安全措施"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai": {
+      "sourceSha256": "f67d9fdc53c6c94542f4eb9a7910c3611306120d162f818e14e87ac8fc3012ed",
+      "questions": [
+        {
+          "question": "以下哪一项最准确地描述了 EchoLeak（CVE-2025-32711）？",
+          "options": [
+            "Microsoft 365 Copilot 中的零点击 AI 命令注入漏洞（CVE-2025-32711，CVSS 9.3），会导致未经授权的网络信息披露，并通过 CSP allowlist 中受信任的 Microsoft 域名外泄数据",
+            "NPU 中的一个硬件漏洞",
+            "针对 PyPI 的供应链攻击",
+            "通过长上下文样例填充实施的 jailbreak"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 EchoLeak 属于“零点击”漏洞？",
+          "options": [
+            "它在操作系统内核中运行",
+            "它需要点击三次，但不需要输入",
+            "受害者无需打开电子邮件；日常查询期间 Copilot 会将其作为 RAG context 检索，随后注入指令执行",
+            "它要求用户点击 Teams 聊天中的链接"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Aim Labs 将 EchoLeak 定义为“LLM Scope Violation”。哪三个边界必须分别独立控制？",
+          "options": [
+            "检索、作用域、输出",
+            "网络、磁盘、内存",
+            "提示词、响应、日志",
+            "输入、模型、GPU"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Microsoft/GitHub 如何修复 CamoLeak（CVSS 9.6，GitHub Copilot Chat）？",
+          "options": [
+            "增大上下文大小",
+            "添加 XPIA 提示词注入过滤器",
+            "将模型切换到 Llama Guard",
+            "在 Copilot Chat 中完全禁用图像渲染（代价是可用性），因为无法限制替代攻击面"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "EchoLeak 披露揭示了严重性校准中的什么模式？",
+          "options": [
+            "供应商高估了最初的 CVSS 分数",
+            "所有 AI CVE 都自动评为 10.0",
+            "供应商最初将 EchoLeak 评为低危（信息披露）；Aim Labs 关于 MFA 代码外泄的 PoC 将评级提高到 9.3——防御者必须推动针对 AI 特有漏洞的全面 PoC",
+            "严重性评级仅由 OWASP 决定"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "截至 2024/2025 年，NIST 和 OWASP 如何评定提示词注入？",
+          "options": [
+            "NIST：不在范围内；OWASP：未列出",
+            "两者都只将其称为 Tier-2 风险",
+            "NIST：轻微风险；OWASP：列表末位",
+            "NIST AI SPD 2024 将提示词注入视为生成式 AI 的重大信息安全风险；OWASP 2025 将其列为 LLM01（应用层首要威胁）"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/26-model-system-dataset-cards": {
+      "sourceSha256": "a13687c5c5ac95ff4ca8a087e88a5b46dd424382d154b2f9c2ccd6ca05340236",
+      "questions": [
+        {
+          "question": "以下哪一项最准确地描述了 Mitchell 等人最初提出的 Model Card（2019）？",
+          "options": [
+            "仅包含模型 checkpoint 的清单",
+            "一份监管法律合同",
+            "ML 模型的“营养标签”：训练数据、预期用途、影响因素、指标、评估数据、定量分组分析、伦理考量和注意事项",
+            "一份 OpenAPI 规范"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Oreamuno 等人（2023）对 Hugging Face Model Card 中伦理考量的采用情况有何发现？",
+          "options": [
+            "没有任何 Model Card 包含文字",
+            "约 0.3% 的 Model Card 记录了伦理考量",
+            "约 80% 的 Model Card 记录了伦理考量",
+            "所有 Model Card 都记录了伦理考量"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Pushkarna 等人（Google 2022）的 Data Cards 通过 telescopic / periscopic / microscopic 分层提供了什么？",
+          "options": [
+            "一份 RLHF 前审计清单",
+            "一个以望远镜为主题的可视化库",
+            "一种边界对象框架，同一份文档通过三个细节缩放层级服务不同读者（非专家、ML 从业者、审计员）",
+            "一个隐私保护查询接口"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "System Card 覆盖了哪些 Model Card 未覆盖的范围？",
+          "options": [
+            "仅 tokenizer",
+            "端到端 AI 系统：模型 + 安全栈 + 部署上下文，包括安全能力、提示词注入防护、数据外泄检测、对齐和事件响应",
+            "仅提示词模板",
+            "仅数据集"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Liang 等人（2024）对 Model Card 详细程度与 Hugging Face 下载率之间的关系报告了什么？",
+          "options": [
+            "只有伦理考量章节影响下载量",
+            "细节越多，下载率越低",
+            "在 treatment group 相对 control 的差分中的差分分析中，详细的 Model Card 使 HF 每周下载量提升 +29.0%；采用压力如今由市场驱动，而不仅由合规驱动",
+            "详细程度对下载量没有影响"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Laminator（Duddu 等人，2024）为文档做出了什么贡献？",
+          "options": [
+            "一个自动化基准测试框架",
+            "通过硬件 TEE / 加密签名提供可验证证明，使卡片不仅能承载声明，还能承载声明的证明",
+            "一个基于 LLM 的摘要生成器",
+            "Datasheets 标准的替代方案"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/27-data-provenance-training-governance": {
+      "sourceSha256": "41f842bf13d08666444c33a596747ef9279a663c580be8687b699859aa42f925",
+      "questions": [
+        {
+          "question": "为什么训练数据治理的合规窗口在收集数据时，而不是训练完成后？",
+          "options": [
+            "数据一旦进入模型权重，就无法精准删除；从头重新训练是唯一完整的补救方式，且成本高得难以承受",
+            "因为 GDPR 的删除权不适用于 AI",
+            "因为监管机构不会审计已部署模型",
+            "因为 cookie consent 框架禁止在收集后使用数据"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "加州 AB 2013 大致要求开发者在数据集摘要中发布多少项法定信息？",
+          "options": [
+            "12",
+            "3",
+            "7",
+            "30"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "与 Gebru 等人 2018 年的 Datasheet 结构相比，AB 2013 的哪一项要求是新增的？",
+          "options": [
+            "数据集的来源或所有者",
+            "数据收集的时间段",
+            "系统是否使用或持续使用合成数据生成",
+            "清洗、处理或其他修改"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于使用公开可用的第一方内容训练 LLM，2025 年各 DPA 趋同形成的原则是什么？",
+          "options": [
+            "在所有情况下都禁止训练",
+            "对于公开可用的第一方内容，合法利益可在提供 opt-out 和适当保障措施的情况下作为训练依据；无需征得同意",
+            "始终必须获得用户明确同意",
+            "只能使用合成数据"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪一项不是本课所列针对不可逆问题的部分补救措施？",
+          "options": [
+            "unlearning（通过 MIA 衡量的近似移除）",
+            "基于 influence function 的定位和选择性更新",
+            "GDPR 强制的自动权重删除",
+            "通过微调抑制源自该数据的输出"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Data Provenance Initiative 的“Consent in Crisis”（2024 年 7 月）有何发现？",
+          "options": [
+            "所有来源的同意率都保持稳定",
+            "合成数据已经完全取代网络数据",
+            "robots.txt 限制逐年减少",
+            "出版方正加速添加 robots.txt 限制；可自由用于训练的公共数据正在迅速收缩，2023 至 2024 年间约 25% 的顶级训练来源新增了限制"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/28-alignment-research-ecosystem": {
+      "sourceSha256": "f39aa66232fdf5d34f25c9fcb1112575722cb349852ec76f3022a303b8872e38",
+      "questions": [
+        {
+          "question": "MATS 做什么，其大致规模如何？",
+          "options": [
+            "ML Alignment & Theory Scholars：一个研究指导项目，自 2021 年以来已有 527+ 名学者，发表 180+ 篇论文；2025 年前的校友中约 80% 从事安全/安保工作",
+            "一项奖励模型训练服务",
+            "一个由欧盟所有的前沿安全研究所",
+            "一个签发 AI 出口许可证的监管机构"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Redwood Research 提出了哪项研究议程？",
+          "options": [
+            "LLM 差分隐私",
+            "通过 SynthID 添加水印",
+            "Constitutional AI",
+            "AI Control（第 10 课）：通过 U / T / H 协议，在遭遇颠覆时仍保障安全"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪个组织撰写了 In-Context Scheming 论文和“Towards Safety Cases for AI Scheming”框架？",
+          "options": [
+            "Eleos AI",
+            "METR",
+            "Apollo Research",
+            "MATS"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "METR 在对齐研究生态中独具特色的方法风格是什么？",
+          "options": [
+            "对基础模型进行对抗训练",
+            "通过硬件证明的可验证推理",
+            "只进行闭源红队测试",
+            "基于任务的能力评估、自主任务时间跨度研究和框架综合（例如“Common Elements of Frontier AI Safety Policies”）"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么多组织共同署名对安全主张很重要？",
+          "options": [
+            "实验室评估自有模型存在结构性利益冲突；外部评估机构（Redwood、Apollo、METR、Eleos、UK AISI）可以提出并验证实验室可能少报的失效模式",
+            "它能增加引用次数",
+            "欧盟《AI 法案》强制要求这样做",
+            "它能加快发表速度"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Eleos AI Research 对该生态的主要贡献是什么？",
+          "options": [
+            "起草加州训练数据法律",
+            "制定水印标准",
+            "部署前模型福利评估（第 19 课），包括 Claude Opus 4 System Card 中的外部福利评估",
+            "AI Control 基准"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard": {
+      "sourceSha256": "81e90207830ccfee41013b18ac0625423827068670826048fa875348bbdd67ce",
+      "questions": [
+        {
+          "question": "OpenAI 的 omni-moderation-latest（2024）是什么？",
+          "options": [
+            "一个 C2PA 水印 endpoint",
+            "一个基于 GPT-4o 的审核分类器，可在一次调用中处理文本和图像，并返回包含 13 个类别的响应 schema（harassment、hate、self-harm、sexual、violence、illicit 及其子类别），对大多数开发者免费",
+            "一个 RLHF 奖励模型",
+            "一个专注推理的前沿模型"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪一项不是 OpenAI Moderation 的主要顶层类别？",
+          "options": [
+            "election-interference",
+            "violence",
+            "self-harm",
+            "harassment"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "标准的 2026 年内容审核模式由哪三层组成？",
+          "options": [
+            "输入审核（生成前）、输出审核（生成后）、自定义审核（领域规则）",
+            "telescopic / periscopic / microscopic",
+            "probe / detector / harness",
+            "tokenizer / model / detokenizer"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Perspective API（Google Jigsaw）的主要评分对象是什么？",
+          "options": [
+            "用户满意度奖励",
+            "推理质量",
+            "水印强度",
+            "毒性（子维度包括严重毒性、侮辱、脏话、威胁、身份攻击），作为 LLM 时代之前的内容审核 baseline"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "仅审核输入的一种失效模式是什么？",
+          "options": [
+            "它无法捕获模型输出故障或 hallucination；编码攻击（第 12–14 课）可以完全绕过输入分类器",
+            "它无法在 GPU 上运行",
+            "它总会阻止正当内容",
+            "它消除了对输出分类器的需求"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Azure Content Moderator 的弃用时间和迁移目标是什么？",
+          "options": [
+            "并入 Llama Guard 4",
+            "由 Perspective API 取代",
+            "于 2024 年 2 月弃用，2027 年 3 月 15 日退役；迁移目标是 Azure AI Content Safety（基于 LLM，并与 Azure OpenAI 集成）",
+            "立即弃用且没有替代方案"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear": {
+      "sourceSha256": "ea4d81e921c25d0d407602f1bfad95a34ebe3aa147651f26fbc40e766dad5540",
+      "questions": [
+        {
+          "question": "2024–2025 年间，生物能力增益的叙事如何演变？",
+          "options": [
+            "2024–2025 年间始终没有变化",
+            "从“严重增益”变为“没有可测量的增益”",
+            "从“轻微增益”（2024）到“处于能实质性帮助新手制造已知生物威胁的临界点”（2025 年 4 月），再到“2.53 倍增益，不足以排除 ASL-3”（Anthropic 2025）",
+            "从“没有增益”变为“轻微增益”"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Anthropic 2025 年 11 月的网络威胁报告有何发现？",
+          "options": [
+            "前沿模型拒绝了所有网络任务",
+            "开源模型超越了前沿模型的能力",
+            "与中国有关联的国家行为者使用 Claude 的 agentic coding tool 自动执行了一场网络攻击活动中 80–90% 的工作，只在 4–6 个步骤中需要人工干预",
+            "网络攻击仍然完全依靠人工"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "具备视觉能力的前沿模型如何缩小化学/生物领域的执行差距？",
+          "options": [
+            "只通过增加上下文长度",
+            "使用虚拟模拟器取代所有实验室设备",
+            "通过观察湿实验室视频并实时修正 protocol；OpenAI 2025 年 12 月的演示表明，GPT-5 通过 AI 驱动的 protocol 优化迭代湿实验室实验，将效率提高了 79 倍",
+            "通过生成虚假 protocol"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么核领域的能力增益相对于生物、化学和网络领域仍然有限？",
+          "options": [
+            "前沿模型拒绝讨论物理",
+            "所有核相关信息都已从训练数据中移除",
+            "核领域是最容易利用 AI 发起攻击的领域",
+            "威胁模型主要受裂变材料获取限制（这是非信息性的采购与设备瓶颈），因此 AI 在信息层面的增益在实践中对新手的帮助有限"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "新手相对增益与专家绝对能力之间的不对称对安全论证意味着什么？",
+          "options": [
+            "仅处理新手增益（输入过滤器、拒答、不确定性）不足以控制专家绝对能力；还需要能力引出加固、能力遗忘、控制协议等措施",
+            "RLHF 可以完美解决两者",
+            "专家绝对能力会自动归零",
+            "只有新手增益重要"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在网络双重用途背景下，OpenAI 的“trusted access”试点是什么？",
+          "options": [
+            "针对 CVE-2025-32711 的补丁",
+            "向通过审查的安全机构（事件响应公司、政府）开放用于防御性双重用途工作的能力；如果能够规模化，这会形成有利于防御方的访问不对称",
+            "开放 GPT-5 的源代码",
+            "关闭所有 API 访问"
+          ],
+          "explanation": ""
+        }
+      ]
+    }
+  }
+}

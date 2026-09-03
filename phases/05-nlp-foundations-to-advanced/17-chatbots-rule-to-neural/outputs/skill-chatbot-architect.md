@@ -13,5 +13,6 @@ Given a product context (user need, compliance constraints, available tools, dat
 2. LLM choice if applicable. Name the model family (Claude, GPT-4, Llama-3.1, Mixtral). Match to tool-use quality and cost.
 3. Grounding strategy. RAG sources, retrieval method (lesson 14), tool contracts.
 4. Evaluation plan. Task success rate, tool-call correctness, off-task rate, hallucination rate on held-out dialogs.
+5. Execution control. For a tool-using agent, apply the **Plan-Verify-Execute planning pattern**: agree on a plan, verify each proposed action against it, then execute. In this lesson, PVE means Plan-Verify-Execute; do not confuse it with Phase 14's **Prompt-Validator-Executor validation pattern**, which places a separate validator before tool execution.
 
 Refuse to recommend a pure-LLM agent for any destructive action (payments, account deletion, data modification) without a structured confirmation flow. Refuse to skip the prompt-injection audit if the agent has write access to anything.

@@ -1,0 +1,1110 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/19-capstone-projects/35-gpt-model-assembly": {
+      "sourceSha256": "bf642a39c3b2008883ec61c8f5f9e745cb763ae7bc7d90c7e0013c6e99d3b25e",
+      "questions": [
+        {
+          "question": "本课复现的 GPT-2 small 参考配置是什么？",
+          "options": [
+            "vocab 30000、context 512、d_model 512、6 heads、6 layers",
+            "vocab 50257、context 1024、d_model 768、12 heads、12 layers，parameters 接近 124 million",
+            "vocab 50000、context 4096、d_model 4096、32 heads、32 layers",
+            "vocab 100000、context 2048、d_model 1024、16 heads、24 layers"
+          ],
+          "explanation": "GPT-2 small 是 124M 参数配置；与它一致可以确认模型组装正确。"
+        },
+        {
+          "question": "模型组装中的 weight tying 是什么意思？",
+          "options": [
+            "token embedding 与 LM head 共享完全相同的 parameter tensor；optimizer 更新一个同时用于查找和输出投影的 matrix",
+            "两个形状相同、每一步都会相互复制的不同 tensor",
+            "各 layer 共享一个 bias term",
+            "对 attention heads 的一种约束"
+          ],
+          "explanation": "设置 lm_head.weight = tok_embed.weight 会共享存储，而复制不会。这样可节省 vocab × d_model 个参数。"
+        },
+        {
+          "question": "生成过程如何滑动 context window？",
+          "options": [
+            "每一步都从持续增长的序列（prompt 加已生成内容）中取最后 context_length 个 token，并将它们送入模型",
+            "每一步都把 context 截短到一半",
+            "用零填充到最大 context",
+            "每一步都从 prompt 重新开始"
+          ],
+          "explanation": "当持续增长的序列超出 context length 后，sliding window 会丢弃最旧的 token。"
+        },
+        {
+          "question": "为什么 attention output projection 和第二个 MLP linear 的初始化 std 要小于其余部分？",
+          "options": [
+            "dataset 要求如此",
+            "Top-k sampling 需要更小的 weights",
+            "两者都直接进入 residual add。将它们的 std 缩放为 1 / sqrt(2 * num_layers)，可让 residual stream 经过十二层后仍保持在合适尺度",
+            "这样可以节省 memory"
+          ],
+          "explanation": "如果不缩放，residual stream 会随深度增长，使最终 LayerNorm 进入数值过热区间。"
+        },
+        {
+          "question": "sampling 时 temperature 有什么作用？",
+          "options": [
+            "选择 optimizer learning rate",
+            "在 softmax 前除 logits。T < 1 会使分布更尖锐、更接近 greedy；T = 1 保留模型的自然分布；T > 1 会使分布更平坦",
+            "缩放 embeddings",
+            "向 head 添加 dropout"
+          ],
+          "explanation": "Temperature 是最简单的调节旋钮；与 top-k 结合后，它控制生成过程的探索程度。"
+        },
+        {
+          "question": "sampling 前的 top-k filtering 会做什么？",
+          "options": [
+            "选择最低的 k 个 logits",
+            "保留值最高的 k 个 logits，将其余部分 mask 为 negative infinity，再对保留下来的值执行 softmax，使 multinomial sampling 只能看到 top k tokens",
+            "移除所有低于零的 logits",
+            "将 logits 的上限设为 k"
+          ],
+          "explanation": "Top-k 会在 softmax 前截断长尾；top_k=1 等同于 greedy，更大的 k 会保留更多多样性。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/36-training-loop-eval": {
+      "sourceSha256": "9212265370cc9929ea73e7a5c5c3bd6738343d6eba13aedc0cab2d03ea5c81d9",
+      "questions": [
+        {
+          "question": "为什么 target tensor 必须是向后移动一个位置的 input tensor？",
+          "options": [
+            "cross entropy 需要完全相同的 tensor",
+            "这样能加速 optimizer",
+            "AdamW 要求如此",
+            "next token prediction 是训练目标：模型在每个位置预测下一个 token；如果忘记 shift，模型会被训练成预测自身，学不到任何有用内容"
+          ],
+          "explanation": "input 是 tokens 0..T-1；target 是 tokens 1..T；loss 在展平后的 (batch*seq, vocab) 和 (batch*seq,) 形状上计算。"
+        },
+        {
+          "question": "evaluate_model 做了哪些 training step 不会做的事？",
+          "options": [
+            "它在 no_grad 下、关闭 dropout，运行固定数量的 validation batches，并返回可复现的 mean loss",
+            "它会改变 model weights",
+            "它会计算两次 gradients",
+            "它会运行 optimizer"
+          ],
+          "explanation": "held-out evaluation 不需要 gradients，也不应启用 dropout；使用固定的一段 validation data 才能在不同运行间复现结果。"
+        },
+        {
+          "question": "哪些 AdamW parameters 会应用 weight decay？",
+          "options": [
+            "matrix-shaped tensors（linear weights、embedding tables）应用 weight decay；scale、shift 和 bias tensors 的 decay 为零",
+            "只有 LayerNorm scales",
+            "所有 parameter 一视同仁",
+            "只有 LM head"
+          ],
+          "explanation": "对 LayerNorm scale 应用 decay 会将 scale 推向零并破坏 normalization；这种拆分是标准的生产实践。"
+        },
+        {
+          "question": "从 step 0 到最后一步，warmup-plus-cosine schedule 会画出什么形状？",
+          "options": [
+            "阶跃函数",
+            "常数",
+            "在 warmup_steps 内从零线性上升到 max，随后在剩余步骤中以 cosine 从 max 衰减到 min_lr",
+            "指数增长"
+          ],
+          "explanation": "Warmup 用于建立 optimizer state；cosine decay 逐渐减小 step size，让最后阶段可以细调 weights。"
+        },
+        {
+          "question": "为什么要在 optimizer.step() 前裁剪 gradient norm？",
+          "options": [
+            "这样可以免去 warmup",
+            "一个异常 batch 可能产生巨大 gradient，抹掉数小时的训练成果；裁剪到 max_norm=1.0 可让 optimizer 保持在安全范围内，同时不扭曲正常更新",
+            "这样能加速 matmul",
+            "这样能减少 memory usage"
+          ],
+          "explanation": "Gradient clipping 是防止发散成本最低的保险措施；1 是适用于大多数配置的默认值。"
+        },
+        {
+          "question": "为什么每一步的记录要写成 JSONL，而不是 pickled state？",
+          "options": [
+            "optimizer 要求使用 JSONL",
+            "JSONL 训练得更快",
+            "JSONL 记录可以跨重构长期使用，能被 grep 检索，用三十行代码即可绘图，并且在崩溃后仍可保留；pickled state 会把你绑定到生成它的 module layout",
+            "JSONL 占用更少 GPU memory"
+          ],
+          "explanation": "任何崩溃都会留下可读 artifact；resume 可以读取最后一步；在其上构建 tooling 也很简单。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/37-loading-pretrained-weights": {
+      "sourceSha256": "d42cfa94a6d8e3c30b66504009026121eb849343916029ca266b60ae10f897c9",
+      "questions": [
+        {
+          "question": "loader 为什么需要 name map？",
+          "options": [
+            "发布的 GPT-2 weights 使用 wte、wpe、h.N.attn.c_attn 等名称；本地模型使用 tok_embed、pos_embed、blocks.N.attn.qkv；loader 将一种命名映射到另一种",
+            "Safetensors files 已加密",
+            "pretrained tensors 与 local parameters 使用相同名称",
+            "Torch 要求如此"
+          ],
+          "explanation": "两套命名约定源于不同的历史；该 map 是一个按 layer 展开的字面 dict。"
+        },
+        {
+          "question": "conv1d transpose 是什么，哪些 tensors 需要它？",
+          "options": [
+            "所有 weight tensors",
+            "发布的 GPT-2 以 tensorflow conv1d layout 存储 c_attn、c_proj 和 c_fc weights，这正是 nn.Linear.weight 所期望布局的转置；loader 在赋值时对这些 tensors 调用 .t()",
+            "只有 embedding",
+            "只有 LayerNorm scales"
+          ],
+          "explanation": "三个 suffix 需要 transpose；biases 和 LayerNorms 的形状已经正确。"
+        },
+        {
+          "question": "为什么 safetensors file 中没有 LM head？",
+          "options": [
+            "它太大了",
+            "它从另一个 file 加载",
+            "它在运行时根据 logits 计算",
+            "Weight tying：LM head 与 token embedding（wte）共享存储，因此加载 wte，并在加载后设置别名 lm_head.weight = tok_embed.weight，即可重建 head"
+          ],
+          "explanation": "在 wte 就位后设置 lm_head.weight = tok_embed.weight 会恢复别名；如果改为复制，参数量将翻倍。"
+        },
+        {
+          "question": "遇到 shape mismatch 时 loader 会怎么做？",
+          "options": [
+            "填充较小的 tensor",
+            "让 process 崩溃",
+            "在 LoadReport.shape_mismatch 中记录 mismatch，并拒绝赋值，让 local parameter 保持不变",
+            "截断较大的 tensor"
+          ],
+          "explanation": "只加载一半的模型会制造静默故障；拒绝赋值能确保 report 如实反映结果。"
+        },
+        {
+          "question": "为什么 demo 的 stub fixture 不是真正的 GPT-2 download？",
+          "options": [
+            "真实 files 不是 safetensors format",
+            "真实 weights 已加密",
+            "demo 必须能离线快速运行；stub 使用完全一致的 pretrained naming convention，因此 loader code path 相同，换成真实 file 也无需改变 loader",
+            "Safetensors 无法存储大型 tensors"
+          ],
+          "explanation": "code path 相同，payload 更小；loader 对两者都适用。"
+        },
+        {
+          "question": "为什么要在加载前后各生成一个 sample？",
+          "options": [
+            "测量 inference speed",
+            "设置 random seed",
+            "如果加载后的 samples 与加载前完全相同，说明加载没有改变模型，也就意味着 mapping 静默漏掉了所有 tensor",
+            "预热 GPU cache"
+          ],
+          "explanation": "sanity generation 是成本最低的 gate：如果 sample fingerprint 没有变化，就能揭示加载已损坏，而仅凭 LoadReport summary 无法发现这一点。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/38-classifier-finetuning": {
+      "sourceSha256": "9ab395074801fde74083b4481557a39e88229620fbdc34c1420e8d8903ca2c6e",
+      "questions": [
+        {
+          "question": "阅读前：一个预训练语言模型的 body 有 5M 参数，output head 投影到 30K vocabulary。你想构建一个 2-class classifier。以下哪项是最合理的第一步？",
+          "options": [
+            "冻结 head，只训练 body。",
+            "丢弃 body，在 800-example labelled set 上从头训练一个新 transformer。",
+            "保留原始 head，但 mask 除两个 output logits 以外的所有输出。",
+            "只将 head 替换为 2-class linear layer，之后再决定是否训练 body。"
+          ],
+          "explanation": "body 是成本高昂的部分，而且编码了预训练所得的有用结构。先替换 head。是否冻结 body 是另一个问题，应由 data size 和 domain drift 决定。"
+        },
+        {
+          "question": "为什么本课使用带 attention-mask weighting 的 mean pooling，而不是直接沿 sequence axis 取平均？",
+          "options": [
+            "直接取平均会忽略 batch dimension。",
+            "按照惯例，即使没有 pad，mean pool 也必须使用 masking。",
+            "对 transformer 而言，直接取平均在数学上没有定义。",
+            "padding positions 会贡献无关的 hidden states，使 pooled vector 被拉向零。"
+          ],
+          "explanation": "padding tokens 不携带信号，但 body 仍会为它们生成 hidden states。如果不做 masking，padded positions 会破坏 pooled representation；当一个 batch 中的短序列被 pad 到最长 example 时，影响尤其明显。"
+        },
+        {
+          "question": "在 `train_classifier` 中，optimiser 使用 `[p for p in model.parameters() if p.requires_grad]` 构建。这个惯用写法保证了什么？",
+          "options": [
+            "Adam constructor 要求这样写。",
+            "它让 PyTorch 仍然对 frozen parameters 执行 autograd。",
+            "body 被冻结时，它会静默忽略 head。",
+            "它只用 trainable subset 构建 param group，因此 head-only 与 full-FT 两种情况可共用同一 code path。"
+          ],
+          "explanation": "optimiser 只会更新其 param list 中的 parameters。通过按 `requires_grad` 筛选，同一个 training function 可适用于两种 regime；切换点是 freeze call，而不是 loop。"
+        },
+        {
+          "question": "spam class 的 Precision 为 0.9、recall 为 0.6。F1 是多少？",
+          "options": [
+            "0.30",
+            "0.50",
+            "0.75",
+            "0.72"
+          ],
+          "explanation": "F1 是 precision 与 recall 的 harmonic mean：2 * 0.9 * 0.6 / (0.9 + 0.6) = 1.08 / 1.5 = 0.72。"
+        },
+        {
+          "question": "你以和 head-only training 相同的 learning rate 进行 full fine-tuning。F1 从 0.90 骤降到 0.55。最可能的原因是什么？",
+          "options": [
+            "PyTorch 在 full fine-tuning 期间静默禁用了 gradients。",
+            "body parameters 所需的 learning rate 应小于 head。",
+            "cross-entropy loss 不适用于 two-class problems。",
+            "Adam 与 classification objectives 不兼容。"
+          ],
+          "explanation": "预训练 body 通常需要比新 head 更小的 learning rate。常见做法是设置两个 parameter groups：head 使用较高 LR，body 使用较低 LR。两者使用相同 LR 会破坏预训练信号。"
+        },
+        {
+          "question": "团队准备部署 classifier，并询问如何记录 production checkpoint 来自哪种 regime。哪个 artifact 能以可复现方式回答这个问题？",
+          "options": [
+            "final loss value，因为 head-only loss 总是高于 full-FT loss。",
+            "`TrainReport` 中的 `trainable` count；两种 regime 的该值相差多个数量级。",
+            "confusion matrix，因为它能唯一标识 regime。",
+            "precision-recall-F1 triple。"
+          ],
+          "explanation": "`trainable` 记录训练期间收到 gradients 的 parameter 数量。head-only 约为 `hidden * num_classes`；full FT 则包含整个模型。这个数字就是 audit trail。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/39-instruction-tuning-sft": {
+      "sourceSha256": "ece55eceb896fd934605b7125deb01a2cdd0a919c431bf69bc579b48f74a2b6f",
+      "questions": [
+        {
+          "question": "阅读前：你向一个普通 base model 提供 prompt 'What is the capital of France?'。它输出 'And what about Italy and Spain too?'。以下哪项最准确地诊断了这一差距？",
+          "options": [
+            "模型缺少关于 Paris 的事实。",
+            "模型具备 language model behaviour，但没有 instruction-following format contract。",
+            "模型需要更大的 vocabulary。",
+            "必须重置 base model 并重新进行 pretraining。"
+          ],
+          "explanation": "base model 可以续写文本，但从未见过“instruction 应得到相应 response”这一模式。SFT 教会模型 format contract：看到 instruction，输出 response。"
+        },
+        {
+          "question": "collate function 在 instruction positions 和 padding positions 上设置 labels[i] = -100。为什么 PyTorch cross-entropy 能正确处理这些位置？",
+          "options": [
+            "PyTorch 按 sequence length 归一化，因此 masked positions 会相互抵消。",
+            "F.cross_entropy 会遵守 ignore_index=-100：这些位置贡献零 loss 和零 gradient。",
+            "cross-entropy 会静默丢弃任何 negative target。",
+            "这些位置的 model output 会被自动设为 NaN。"
+          ],
+          "explanation": "ignore_index 是 F.cross_entropy 的已记录参数。与它相等的 targets 对 loss 和 gradients 的贡献均为零。-100 是惯用的默认值。"
+        },
+        {
+          "question": "为什么 `shifted_loss` 要切片 `logits[:, :-1, :]` 和 `labels[:, 1:]`，而不是使用相同位置？",
+          "options": [
+            "这只是可选优化；使用 same-position labels 也可以。",
+            "为了自动排除最后一个 padding position。",
+            "因为在 causal next-token objective 下，模型在位置 i 预测位置 i+1 的 token。",
+            "为了让 tensors 在 collate step 后大小相同。"
+          ],
+          "explanation": "Causal LM 训练位置 i 去预测 token i+1。该切片把位置 i 的 prediction 与位置 i+1 的 gold label 对齐，这就是标准 next-token objective。"
+        },
+        {
+          "question": "你没有使用 mask 进行训练：labels 等于 input_ids，且没有 -100。模型能够训练，但 response 的 exact-match 低于使用 mask 时。最可能的原因是什么？",
+          "options": [
+            "没有 mask，模型无法学习 boundary token。",
+            "optimiser 对 response tokens 过拟合。",
+            "loss 包含 specials 时，cross-entropy 会不稳定。",
+            "大部分 gradient signal 都用于预测 instruction（此前最大的 masked region 正是在抑制这部分信号）。"
+          ],
+          "explanation": "当 instruction positions 被计入 loss 时，它们通常多于 response tokens，因此会主导 gradient。你真正关心的部分（response）的 effective learning rate 随之降低，而模型会耗费 capacity 去重建用户每次都会提供的 inputs。"
+        },
+        {
+          "question": "held-out set 上的 exact-match 为 0.85。一位 reviewer 指出，模型会用不同表述给出正确答案，而 exact-match 无法识别。应添加哪个 metric 来捕捉这种情况？",
+          "options": [
+            "Average sequence length。",
+            "模型给 reference 的 cross-entropy。",
+            "相对于 reference 的 token-level F1；即使字符不完全相同，只要存在重叠也会得分。",
+            "held-out set 上的 loss。"
+          ],
+          "explanation": "Token-level F1（对 prediction 与 reference 归一化后的 tokens 计数）能在表面形式不同时，仍认可模型答对了大部分内容。这是 lesson 41 要解决的问题。"
+        },
+        {
+          "question": "你想把 SFT model 用于支持 multi-turn dialogue 的 chatbot。data 和 mask 至少需要做什么改变？",
+          "options": [
+            "无需改变：SFT models 天生就能处理 multi-turn。",
+            "为每轮添加 USER 和 ASSISTANT marker，拼接各轮，并 mask 除当前训练的 assistant turn 外的所有内容。",
+            "把 loss 改为 mean-squared error。",
+            "增加 vocabulary。"
+          ],
+          "explanation": "Multi-turn SFT 是 single-turn template 的推广。每一轮都有 role marker。mask 是所有 non-assistant positions 与 padding 的并集。training objective 不变。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/40-dpo-from-scratch": {
+      "sourceSha256": "3e87d1afdea58a89a30ba900b595d8ecb5766b7a8ad6a2383bc17ea484a110c8",
+      "questions": [
+        {
+          "question": "阅读前：在 Bradley-Terry preference model 下，给定 prompt x，人类偏好 completion y_w 而不是 y_l 的概率为 sigmoid(r(x, y_w) - r(x, y_l))。这意味着什么？",
+          "options": [
+            "只有 reward 的差值重要；向 r(x, y_w) 和 r(x, y_l) 同时添加任何 function 都会抵消。",
+            "训练 policy 前必须先拟合 r。",
+            "Bradley-Terry 需要一个不会消失的 normalising constant Z(x)。",
+            "Sigmoid 与 maximum likelihood 不兼容。"
+          ],
+          "explanation": "Bradley-Terry preference 只取决于 reward difference。两个 completions 的共有部分都会抵消。这正是 DPO 可以避免显式 reward model 的结构性原因：optimal policy 公式中只与 prompt 有关的项会抵消。"
+        },
+        {
+          "question": "单个 triple 的 DPO loss 是 -log sigmoid( beta * ( (logp_w_pol - logp_w_ref) - (logp_l_pol - logp_l_ref) ) )。如果 logp_w_pol = logp_w_ref 且 logp_l_pol = logp_l_ref，loss 等于多少？",
+          "options": [
+            "beta。",
+            "-1。",
+            "log(2)。",
+            "0。"
+          ],
+          "explanation": "两个差值都为零，因此 sigmoid argument 为零，sigmoid value 为 0.5，且 -log(0.5) = log(2)。这是 policy 完全没有偏离 reference 时的 loss。"
+        },
+        {
+          "question": "在 DPO training 期间，由于 policy 与 reference 逐渐分离，chosen completion 在 reference model 下的 log-probability 会在 epoch 之间变化。对还是错？",
+          "options": [
+            "仅在 beta 非零时为真。",
+            "除非使用 no_grad 显式禁用 gradients，否则为假。",
+            "对：reference 会随 policy 更新而漂移。",
+            "错：reference 是 frozen 的；reference log-probs 只计算一次并重复使用。"
+          ],
+          "explanation": "在整个 DPO run 中，reference 都是 frozen 的，其 parameters 从不更新。实现要么只保存一次 reference log-probs 快照，要么将 reference forward pass 包在 no_grad 中，并把其 parameters 设置为 requires_grad=False。"
+        },
+        {
+          "question": "对 L_DPO 关于 logp_w_pol（policy 对 chosen completion 的 log-probability）求 gradient，其符号是什么？",
+          "options": [
+            "正（chosen log-prob 增大时，loss 增大）。",
+            "零（loss 与 policy log-probs 无关）。",
+            "无法确定（取决于 reference）。",
+            "负（chosen log-prob 增大时，loss 减小）。"
+          ],
+          "explanation": "gradient 为 -beta * (1 - sigmoid(z))，因此非正。提高 chosen log-probability 会降低 loss，这正是我们需要的 training signal。"
+        },
+        {
+          "question": "在 fixture 上，DPO loss 在下降，但 policy 开始全面偏好更短的 completions，即使短答案更差。最可能的原因是什么？",
+          "options": [
+            "Length bias：较长序列会累积更多 log-probability terms（每项均为负），因此 sum-of-log-probs 在结构上会惩罚长度。",
+            "optimiser 使用了错误的 learning rate。",
+            "reference 没有正确 frozen。",
+            "beta 太低。"
+          ],
+          "explanation": "Sum-of-log-probabilities 偏向较短序列，因为每增加一个 token 都会增加一个负的 log-probability term。标准修复方法是在训练和评估时按 completion length 归一化 log-probs。"
+        },
+        {
+          "question": "你想用 IPO variant (z - 1)^2 替换 sigmoid + log loss。这对 training dynamics 有什么实际影响？",
+          "options": [
+            "它完全不再需要 reference model。",
+            "它不会像 sigmoid loss 那样饱和，因此在 preference labels 含有噪声时表现更稳健。",
+            "它不需要 beta parameter。",
+            "它在所有点上都在数学上等价。"
+          ],
+          "explanation": "IPO 的 squared loss 不会像 sigmoid 那样饱和，因此在 preference labels 有噪声或部分 triples 标错时更有帮助。经验上，它能减少小型 preference datasets 上的 over-optimisation。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/41-eval-pipeline": {
+      "sourceSha256": "38b69f9f4429965e3693e4562b6326e62236d0ef98b510bc26a73d9a2262abdc",
+      "questions": [
+        {
+          "question": "阅读前：一位同事报告说，他们的模型在 held-out set 上的 perplexity 为 4.2，并询问这个模型是否优秀。最合理的回答是什么？",
+          "options": [
+            "是：perplexity 低于 5 就说明模型优秀。",
+            "Perplexity 能说明模型对 language distribution 的拟合程度，却无法说明模型能否遵循 instructions 或返回正确答案。",
+            "没有显式 prompt，perplexity 就毫无意义。",
+            "只有 judge models 能回答这个问题。"
+          ],
+          "explanation": "Perplexity 只是一个维度。模型可能 perplexity 很低，却仍会在 factual tasks 上答错；也可能 perplexity 尚可，却给出低质量答案。你需要多种 eval，每种衡量不同的维度。"
+        },
+        {
+          "question": "perplexity eval 会对 non-pad positions 的 per-token negative log-likelihood 求和，再除以 non-pad token 总数。为什么不对 per-batch perplexities 求平均？",
+          "options": [
+            "perplexity 对 batched data 没有定义。",
+            "对 per-batch perplexities 求平均在数学上完全等价。",
+            "batches 包含 padded tokens，因此必须始终将它们计入平均。",
+            "对 per-batch perplexities 求平均会低估短序列的权重（它们的 per-batch ppl 方差更大），从而产生有偏的 aggregate。"
+          ],
+          "explanation": "Per-token aggregation 是教科书式定义，可避免 batch-size 和 length bias。Per-batch averaging 是常见 bug；在 sequence lengths 不同的 fixture 上，它算出的值会与正确结果不同。"
+        },
+        {
+          "question": "当 prediction 和 reference 都为空时，Token F1 返回 1.0。还有哪种情况必须返回一个明确值？",
+          "options": [
+            "当 pred 为空、reference 非空时，F1 必须为 1.0。",
+            "当 pred 恰好包含一个匹配 token 时，F1 必须为 0.5。",
+            "当 pred 非空、reference 为空时，F1 必须没有定义。",
+            "当 pred 和 reference 中只有一方为空时，F1 必须为 0.0。"
+          ],
+          "explanation": "empty-empty 是 vacuous match。一方为空、另一方非空则明确属于未命中：一边有内容，另一边什么都没有。SQuAD convention 在这种情况下规定 F1 = 0。"
+        },
+        {
+          "question": "aggregator 使用 `1 / (1 + log(max(ppl, 1.0)))` 对 perplexity 进行归一化。这样能保证 normalised score 具有什么性质？",
+          "options": [
+            "它始终位于 [0, 1]，并随着 raw perplexity 增大而单调下降。",
+            "它始终位于 [0, 1]，并随着 raw perplexity 增大而单调上升。",
+            "它没有上界。",
+            "它只会返回 0 或 1（二值）。"
+          ],
+          "explanation": "Perplexity 1（理论下限）映射为 1.0；Infinity 映射为 0。该 score 位于 [0, 1]，且 perplexity 越低越好，与其他 normalised metrics 的方向一致。"
+        },
+        {
+          "question": "你把 mock judge 换成真实的 frontier-model judge。pipeline 至少需要做什么修改？",
+          "options": [
+            "重写 aggregator，使其接受不同的 score range。",
+            "向 DEFAULT_WEIGHTS 添加一个新 entry。",
+            "将 `judge_eval` 的 `judge_fn` argument 替换为具有相同 signature 的 function：(instruction, prediction, reference) -> JudgeVerdict。",
+            "将整个 eval suite 迁移到 async I/O。"
+          ],
+          "explanation": "judge interface 是 `(instruction, prediction, reference) -> JudgeVerdict`。任何具有该 signature 的 function 都可以直接替换。pipeline 通过这一 boundary 与 judge implementation 解耦，这正是该设计的目的。"
+        },
+        {
+          "question": "aggregate score 是 0.72，但 exact-match 是 0.40，judge 是 4.5/5。模型正在做出哪种取舍？",
+          "options": [
+            "aggregate 计算错误。",
+            "模型在 LM corpus 上过拟合。",
+            "按照定义，judge 与 exact-match 不对齐。",
+            "模型精确命中 gold string 的次数较少，但 judge 认为 open-form answers 的质量不错。"
+          ],
+          "explanation": "较低的 EM 和较高的 judge score 表明存在 paraphrase：答案实质正确，但并未与 gold 逐字符一致。这正是 EM 会漏掉、而 judge 能捕捉的维度。这种取舍提供了信息，并非 bug。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/42-large-corpus-downloader": {
+      "sourceSha256": "78ce073090ce794d7ee79c71fd1611b8daa059c231057a2a8164ab4c6daa4f63",
+      "questions": [
+        {
+          "question": "downloader 为什么要为每个 shard 保留单独的 .partial.json checkpoint？",
+          "options": [
+            "让 cache directory 看起来更整齐",
+            "让恢复的 download 能先对已验证 bytes 检查 sha256 prefix，再继续追加，从而杜绝静默损坏",
+            "存储 URL，以防 shard file 移动",
+            "因为 urllib 要求如此"
+          ],
+          "explanation": "checkpoint 会记录 verified_bytes 以及这些 bytes 的 sha256；只有 on-disk hash 匹配时才会继续 resume。"
+        },
+        {
+          "question": "与 exact-hash dedup 相比，LSH band scheme 带来了什么能力？",
+          "options": [
+            "恒定的 memory usage",
+            "无损压缩",
+            "以 sub-linear lookup 标出 Jaccard similarity 较高的 near-duplicates，即使 documents 之间有少量 tokens 不同",
+            "更快地计算 sha256"
+          ],
+          "explanation": "MinHash 加 LSH 能捕捉 exact-hash dedup 会漏过的 paraphrases 和 boilerplate variants。"
+        },
+        {
+          "question": "为什么要先写 checkpoint，再追加 bytes，而不是反过来？",
+          "options": [
+            "如果 process 在写入 bytes 后、更新 checkpoint 前退出，下次 resume 读取的 checkpoint 会落后于实际 bytes，并静默重复追加，从而损坏 file",
+            "这样可以节省 disk space",
+            "这样更方便",
+            "这样更快"
+          ],
+          "explanation": "Checkpoint-first 与 write-ahead log 一致：崩溃后，verified offset 只会落后于或等于 file，绝不会超前。"
+        },
+        {
+          "question": "manifest sha256 lock file 的作用是什么？",
+          "options": [
+            "加速读取",
+            "作为 manifest 的备份",
+            "除非 manifest content 与固定的 hash 匹配，否则 downstream stages 会拒绝启动，从而封堵攻击者修改单个 file 的静默攻击面",
+            "记录日期"
+          ],
+          "explanation": "固定 manifest hash 使 code 与 data 之间的联系成为 content-addressed contract。"
+        },
+        {
+          "question": "为什么 dedup 要放在 tokenization 上游，而不是之后？",
+          "options": [
+            "tokenizers 会拒绝 duplicates",
+            "Tokenization 成本高昂；对同一 document 重复执行会使成本翻倍，却不会改善 loss curve，因此先删除 duplicates 成本必然更低",
+            "tokenizer 需要先有 vocabulary",
+            "tokenizer 无法读取 JSONL"
+          ],
+          "explanation": "Dedup 是最早能让每个被丢弃的 duplicate document 为 tokenizer 节省一次处理的阶段。"
+        },
+        {
+          "question": "为被丢弃的 duplicate 添加 tombstone，能保留哪些静默删除无法保留的内容？",
+          "options": [
+            "压缩率",
+            "磁盘空间",
+            "manifest sha256 stability",
+            "duplicate 与发生碰撞的 keeper 之间的关联，以及在日后修改 threshold 后仍然存在的 audit trail"
+          ],
+          "explanation": "Tombstones 让未来的处理可以重新审视 dedup threshold；直接删除会丢失证据。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/43-hdf5-tokenized-corpus": {
+      "sourceSha256": "b66a0322b092ef589b374f2712277d4497cd10a73393693aca8c17fd8fdd1eaf",
+      "questions": [
+        {
+          "question": "为什么要将 tokenized corpus 存储在可调整大小、分块的 HDF5 dataset 中，而不是 JSONL？",
+          "options": [
+            "HDF5 的 logo 更小",
+            "JSONL 已被弃用",
+            "没有特别理由",
+            "HDF5 提供分块、仅含整数、支持 memory-mapped 的读取以及 O(1) random access；JSONL 会迫使每次 hot-path read 都经过 parser"
+          ],
+          "explanation": "dataloader 需要带有可寻址 slices 的平坦 token stream；HDF5 原生提供这种能力。"
+        },
+        {
+          "question": "设置 HDF5 chunk 与 trainer 的 window_size 时，正确规则是什么？",
+          "options": [
+            "选择 RAM 能容纳的最大 chunk",
+            "始终选择 chunk=1",
+            "将 chunk 设为 window_size 的倍数，让每个 sample 落在一到两个 chunks 中，并使读取保持 page-cache aligned",
+            "让 chunk 等于 document length"
+          ],
+          "explanation": "chunks 不匹配会使吞吐量减半，因为每个 sample 都会跨越两个 chunks，而不是一个。"
+        },
+        {
+          "question": "为什么要将 token_count 存为 HDF5 attribute，而不能根据 dataset shape 推断？",
+          "options": [
+            "末尾 chunk 可能未被完全填满；没有显式 attribute，reader 会越过真正的末尾，读入 zero-padded tokens，模型进而学会预测零",
+            "读取 shapes 很慢",
+            "attributes 是强制要求",
+            "attributes 看起来更美观"
+          ],
+          "explanation": "chunked layout 有时会留下末尾空位；attribute 才承载真实值。"
+        },
+        {
+          "question": "writer 在每次 resize 前先把 tokens 缓冲到 chunk_size，这实现了什么？",
+          "options": [
+            "写入连续且与 chunk 对齐，避免逐 token resize 导致的 fragmentation",
+            "减小 vocabulary size",
+            "加速 sha256",
+            "节省少量 CPU cycles"
+          ],
+          "explanation": "先缓冲、再按 chunk size 扩展，是保持 HDF5 chunks 在磁盘上连续的唯一方式。"
+        },
+        {
+          "question": "为什么 swmr=True 要在 reader 端打开，而不是 writer 端？",
+          "options": [
+            "出于安全考虑",
+            "随机偏好",
+            "为了性能",
+            "Single-Writer-Multiple-Reader mode 让 dataloader workers 能安全共享 file；writer 无需特殊 mode，因为每个 process 只写一个 shard"
+          ],
+          "explanation": "混用这两种 mode 是出现 'file is locked' 故障最常见的原因。"
+        },
+        {
+          "question": "boundary token id 的存在是为了明确表示什么？",
+          "options": [
+            "压缩",
+            "词表大小限制",
+            "随机数据",
+            "packed window 中的 document boundaries，使模型不会被静默训练去学习跨 document 拼接"
+          ],
+          "explanation": "没有显式 boundary，trainer 会把边界当作噪声来学习；加入它后，boundary 就成为可用的 separator。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/44-cosine-lr-warmup": {
+      "sourceSha256": "0177a534dd0830ea661d231bd1097e9d9ed32cf6f2cad4529f2d6c6655479794",
+      "questions": [
+        {
+          "question": "为什么 cosine-with-warmup schedule 从零开始，而不是从 lr_max 开始？",
+          "options": [
+            "只是随机形成的传统",
+            "因为 step zero 时不能使用 lr_max",
+            "最初一千次 updates 噪声很大；从零线性上升到 lr_max，能在运行估计值趋于稳定时让 optimizer 使用较小的 effective step size",
+            "因为 Adam 要求如此"
+          ],
+          "explanation": "Warmup 让脆弱的早期 updates 保持较小；否则模型要么发散，要么进入平台期。"
+        },
+        {
+          "question": "为什么 schedule 要实现为一个关于 step 的单一 function，而不是三个拼接的 segments？",
+          "options": [
+            "第一次修改 lr_max 时，拼接式 schedule 就会丢失一个 boundary；单一 function 计算同一个 closed-form expression，并在 warmup 和 total endpoints 保持连续",
+            "linters 要求如此",
+            "没有特别理由",
+            "单一 functions 更小"
+          ],
+          "explanation": "lr(warmup_steps) 和 lr(total_steps) 处的连续性来自 closed form。"
+        },
+        {
+          "question": "schedule 在 step > total_steps 时会怎样？",
+          "options": [
+            "返回 nan",
+            "抛出 exception",
+            "循环回起点",
+            "固定在 lr_min；schedule 不会外推，需要延长训练的 trainers 应显式修改 total_steps"
+          ],
+          "explanation": "固定的 floor 能让超出计划步数的 trainer 保持在有明确说明的状态，而不是崩溃。"
+        },
+        {
+          "question": "为什么要在 learning rate 旁记录 gradient L2 norm？",
+          "options": [
+            "因为传统如此",
+            "norm 是 training health 的另一半：发散的 run 会在 loss 之前出现 norm spike；过于激进的 peak 会表现为 warmup 后 norm 仍居高不下",
+            "这样看起来更美观",
+            "Adam 要求如此"
+          ],
+          "explanation": "同时记录两者，可以在运行时发现异常 schedule，而不是事后才发现。"
+        },
+        {
+          "question": "为什么在生产环境中要把 warmup_steps 配置为 total_steps 的一个比例？",
+          "options": [
+            "比例更简洁",
+            "适用于 20k-step run 的固定 warmup count，在 200M-step run 中几乎等于没有 warmup；按比例设置（通常为 1-3 percent）可随训练时长缩放",
+            "hardware 要求如此",
+            "随机偏好"
+          ],
+          "explanation": "绝对 warmup counts 无法适应不同的训练时长尺度。"
+        },
+        {
+          "question": "为什么生产环境通常使用非零 lr_min？",
+          "options": [
+            "接近 lr_max 10 percent 的 floor 可让 optimizer 在长尾阶段继续学习；lr_min 为零会生成一条看似漂亮的 curve，却留下一个尚未训练完成的模型",
+            "为了 numerical stability",
+            "为了 backward compatibility",
+            "Adam 要求非零值"
+          ],
+          "explanation": "schedule 的尾部正是后期 refinement 生效的阶段；把它降为零会浪费这些信号。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/45-gradient-clipping-amp": {
+      "sourceSha256": "dd8e41c8743bdff033a9ffd6b7365020f6eb95f851141d1d45ee0c7be273ab40",
+      "questions": [
+        {
+          "question": "global L2 gradient clipping 解决什么问题？",
+          "options": [
+            "单个异常 batch 可能让 gradient norm 激增多个数量级；clipping 会限制 optimizer step 的最坏情况，使一个 batch 无法抹掉数小时的学习成果",
+            "词表漂移",
+            "训练缓慢",
+            "随机重启"
+          ],
+          "explanation": "Clipping 就像安全带，能防止一个 noisy batch 摧毁 loss curve。"
+        },
+        {
+          "question": "一个 step 中 GradScaler operations 的正确顺序是什么？",
+          "options": [
+            "scaler.scale(loss).backward(); scaler.unscale_(optimizer); clip_grad_norm_; scaler.step(optimizer); scaler.update()",
+            "backward, step, scale, update",
+            "任何顺序都可以；scaler 会在内部重排",
+            "step, scale, unscale, backward, update"
+          ],
+          "explanation": "应在 unscale_ 与 step 之间对 unscaled gradients 执行 clipping；update 始终都要运行。"
+        },
+        {
+          "question": "在被跳过的 step 上，scaler.update() 会做什么？",
+          "options": [
+            "结束 run",
+            "什么都不做",
+            "将 scaling factor 减半，并重置 no-inf counter；忘记在 skip path 调用它，就会产生 'the scaling factor never changed' 这一 bug",
+            "将 scaling factor 加倍"
+          ],
+          "explanation": "scaler 会根据近期 steps 的 skip / clean ratio 调节 factor。"
+        },
+        {
+          "question": "即使有 GradScaler，为什么仍需检查 loss finiteness？",
+          "options": [
+            "因为 GradScaler 很慢",
+            "这只是装饰",
+            "PyTorch 要求如此",
+            "GradScaler 处理 backward-pass overflow，但 non-finite loss 不会产生有用 gradients；在 backward 前跳过可节省 compute，并避免污染 scaler state"
+          ],
+          "explanation": "Loss check 覆盖 forward-pass failures；scaler 覆盖 backward-pass failures。"
+        },
+        {
+          "question": "rolling skip rate 中的生产信号是什么？",
+          "options": [
+            "任何一次 skip 都要告警",
+            "每个 run 出现少量 skips 属于健康状态；每个 epoch 出现数百次 skips（rolling rate 大致高于 5 percent）则是严重告警，说明模型处于 FP16 无法承载的数值区间",
+            "skip rate 无关紧要",
+            "只有连续 skips 才告警"
+          ],
+          "explanation": "基于 rate 的告警能捕捉偶发 skip 告警无法发现的静默故障模式。"
+        },
+        {
+          "question": "skips 频繁时，为什么要从 FP16 autocast 切换到 BF16？",
+          "options": [
+            "BF16 的 exponent range 比 FP16 更宽，几乎不需要 loss scaling；在同一个模型上，skip rate 通常会降到零",
+            "BF16 更慢，所以 skips 更少",
+            "BF16 更新",
+            "只是随机形成的传统"
+          ],
+          "explanation": "FP16 偏向 mantissa precision 而牺牲 range；BF16 的取舍相反，因此能彻底消除这一类 overflow。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/46-gradient-accumulation": {
+      "sourceSha256": "72122f2879450e6e54809a2e399f639aac3c984a57c92f40b91322dd47bc1a92",
+      "questions": [
+        {
+          "question": "gradient accumulation 表达的 effective batch 恒等式是什么？",
+          "options": [
+            "effective_batch = micro_batch / accum_steps",
+            "effective_batch = world_size only",
+            "effective_batch = micro_batch + accum_steps",
+            "effective_batch = micro_batch * accum_steps"
+          ],
+          "explanation": "Micro batch 是 memory 能容纳的部分；accumulation steps 是在执行一次 optimizer step 前，将多少次 forward + backward pass 的 gradients 累积到同一个 buffer 中。"
+        },
+        {
+          "question": "为什么每个 micro batch 在 backward 前都必须将 loss 除以 accum_steps？",
+          "options": [
+            "这样会让 loss curve 更美观",
+            "这样可以避免 NaNs",
+            "只有 mixed precision 才要求如此",
+            "PyTorch 默认会把 gradients 累加到 param.grad；如果不除，accumulated gradient 会扩大 N 倍，optimizer step 也会激进 N 倍"
+          ],
+          "explanation": "accumulation buffer 是求和结果。将每个 micro batch 缩放 1/N，可以把最终的和拉回到单次 full-batch backward 应有的尺度。"
+        },
+        {
+          "question": "在 accumulation loop 中，optimizer step 何时运行？",
+          "options": [
+            "永不运行；optimizer 会被替换",
+            "为安全起见，每个 window 运行两次",
+            "在每个 micro batch 后运行",
+            "仅在 accumulation window 的最后一个 micro batch 后运行"
+          ],
+          "explanation": "在 accumulation 中途执行 step 会污染后续运行所依赖的每个 parameter。每个 effective batch 只触发一次 optimizer step。"
+        },
+        {
+          "question": "在真实的 multi-GPU run 中，no_sync context 会包裹什么？",
+          "options": [
+            "data loader",
+            "非最后一个 micro batches，使 gradient all-reduce 只在最后一次 backward 后触发，而不是触发 N 次",
+            "optimizer step",
+            "forward pass"
+          ],
+          "explanation": "DDP 的 no_sync 会跳过 gradient collective。包裹除最后一个以外的所有 micro batch，可将每个 effective step 的 N 次 collectives 减少为一次。"
+        },
+        {
+          "question": "main.py 中的 equivalence_check function 断言什么？",
+          "options": [
+            "loss 会收敛",
+            "gradients 为零",
+            "单次 full-batch backward 与使用 loss / N 的 accum_steps 分块 backward，在较小 tolerance 范围内生成相同的 gradient buffer 和相同的 post-step parameters",
+            "throughput 保持恒定"
+          ],
+          "explanation": "assertion bound 是 max-abs-diff 小于 1e-4。没有 loss scaling 时，diff 会激增；加入 scaling 后，它只相当于 floating point noise。"
+        },
+        {
+          "question": "观察 throughput 相对于 effective batch 的曲线，什么大致保持不变，什么会随之缩放？",
+          "options": [
+            "throughput 上升，因为模型变快了",
+            "两个 metrics 都随 accum 线性缩放",
+            "samples per second 在接近 hardware limit 时趋于饱和，而每个 optimizer step 的 wall time 随 accum_steps 线性增长；下降的是 optimizer steps per second",
+            "effective batch 增大时，samples per second 下降"
+          ],
+          "explanation": "每个 micro batch 的 forward + backward 成本相同。Accumulation 获得的是每个 optimizer step 的统计平滑，而不是原始 throughput；这条 curve 有助于检验传言是否符合现实。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/47-checkpoint-save-resume": {
+      "sourceSha256": "969bbad6217fa36222a0bf76e38e705a76a8e2246cab8cbddbc5c989758c1618",
+      "questions": [
+        {
+          "question": "以下哪组内容最准确地描述了一个完整的 training checkpoint？",
+          "options": [
+            "torch.save() 能序列化的任何内容",
+            "只有 model weights",
+            "model state、optimizer state、scheduler state、step counters、loss history，以及 python、numpy、torch CPU、torch CUDA 的 RNG state",
+            "只有 loss history"
+          ],
+          "explanation": "Resume 必须沿着同一条轨迹继续。缺少 optimizer moments、scheduler position 和 RNG state，恢复后的 loss 就会形成另一条 curve。"
+        },
+        {
+          "question": "为什么 saver 要先写入 temporary file 再 rename，而不是直接写入 target name？",
+          "options": [
+            "I/O 更快",
+            "同一 directory 内的 POSIX rename 是原子的，因此写入过程中崩溃会保留之前完好的 file，而不会在 target name 处留下只写了一半的 file",
+            "这样能对 file 去重",
+            "这样能绕过 fsync"
+          ],
+          "explanation": "atomic_save 会对同一 directory 内的 temp file 调用 os.replace。跨 device rename 会失去原子性，因此 temp file 必须位于 target directory 中。"
+        },
+        {
+          "question": "为什么 sharded checkpoint 要在 index.json 中为每个 shard 存储 sha256？",
+          "options": [
+            "让 loader 能在加载时发现被截断或篡改的 shard，而不是静默合并损坏的 state_dict",
+            "因为 torch 要求如此",
+            "为了 SEO",
+            "为了压缩 file"
+          ],
+          "explanation": "load_sharded_checkpoint 会断言每个 shard 的实际 hash 与记录值相符，meta file 的 hash 也必须相符。静默损坏是最糟糕的故障模式。"
+        },
+        {
+          "question": "resume 如何从当前 epoch 内的正确 offset 继续？",
+          "options": [
+            "使用特殊 database",
+            "跳到下一个 epoch boundary",
+            "始终从 step 0 重新开始",
+            "TrainState 记录 (epoch, batch_in_epoch)，同时恢复 RNG state，因此 loader 会让 generator 快进越过已经消费的 batches，再继续运行"
+          ],
+          "explanation": "没有 (epoch, batch_in_epoch)，就只能跳到下一个 epoch boundary 并浪费工作。没有 RNG，则会看到不同的 batches。两者缺一不可。"
+        },
+        {
+          "question": "payload 上的 schema field 带来了什么？",
+          "options": [
+            "一个 migration hook：未来的 format changes 会提升 schema string，loader 可以据此分派，而不是破坏旧 runs",
+            "没有任何作用",
+            "压缩",
+            "一个美观的 filename"
+          ],
+          "explanation": "本课使用 ckpt.v1；下一个版本是带 migrate function 的 ckpt.v2。没有这个 field，format 演进就必然造成破坏。"
+        },
+        {
+          "question": "阅读 resume demo summary 时，max_loss_diff_after_resume 接近 0 证明了什么？",
+          "options": [
+            "没有证明任何有用内容",
+            "disk 很快",
+            "模型很优秀",
+            "resume 后的 loss trajectory 在 floating point noise 范围内与不间断 baseline 一致，这意味着 RNG state 和 optimizer state 都得到了忠实恢复"
+          ],
+          "explanation": "如果忘记恢复 RNG，就会看到另一条 curve 和不可忽略的 diff；如果忘记 optimizer state，diff 会非常大。接近零的数值就是这项 contract。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/48-distributed-fsdp-ddp": {
+      "sourceSha256": "e565c174694bafeddf3d0ed65c27c0aeee67d7974421c0856c30bb47980f008b",
+      "questions": [
+        {
+          "question": "哪两个 collective ops 是从头实现 DDP wrapper 的核心？",
+          "options": [
+            "只有 reduce_scatter",
+            "barrier 和 barrier",
+            "send 和 recv",
+            "构建时执行 broadcast，让每个 rank 从相同 parameters 开始；backward 后执行 all_reduce，让每个 rank 最终获得平均 gradient"
+          ],
+          "explanation": "初始化时的 Broadcast 让 ranks 在 step zero 保持同步。backward 后的 All-reduce 让它们在之后每一步都保持同步。"
+        },
+        {
+          "question": "为什么本课无需 CUDA 也能在 CPU 上运行？",
+          "options": [
+            "它使用 simulated tensors",
+            "它完全没有使用 torch.distributed",
+            "torch.distributed 自带通过普通 sockets 运行 collectives 的 gloo backend，因此 CPU 上的 torch.multiprocessing workers 可以组成真实 process group；在 GPU 机器上只需更改 device tag",
+            "它只是一个 stub"
+          ],
+          "explanation": "Gloo 是 CPU collective backend。在 GPU 上使用 nccl 时，相同 call sites 仍然适用；API surface 完全一致。"
+        },
+        {
+          "question": "manual_all_reduce_matches_single_process test 证明了什么？",
+          "options": [
+            "不需要 CUDA",
+            "optimizer 会收敛",
+            "没有证明任何内容",
+            "将各 rank 的 gradients 求和再除以 world_size，可以在 floating point noise 范围内恢复单个 process 对拼接后的 input 所计算的 gradient"
+          ],
+          "explanation": "full batch 上的 cross entropy mean reduction 等于各 rank 均值的平均值。求和再除法才是正确操作；该 test 直观地展示了这一点。"
+        },
+        {
+          "question": "本课中的 FSDP sketch 在每次 forward pass 时会对每个 parameter 做什么？",
+          "options": [
+            "计算 hash",
+            "重新初始化 parameter",
+            "什么都不做",
+            "将 flat parameter pad 到 world_size 的倍数并切片，在每个 rank 上 all_gathers 这些 slices，去掉 padding，再验证重建结果与原值一致"
+          ],
+          "explanation": "每个 rank 拥有每个 parameter 的 1/world_size。gather 会为 compute 重建完整 tensor；生产环境中的 FSDP 会让 gather 与前一 layer 的工作重叠。"
+        },
+        {
+          "question": "即使 parameter length 不能被 world_size 整除，为什么 gloo all_gather 仍要求 world_size 个等长 shards？",
+          "options": [
+            "这样能加速 network",
+            "随机选择",
+            "这是一个 bug",
+            "Gloo 的 all_gather 要求每个 rank 的 output tensor 大小相同，因此切片前要把 flat parameter 在右侧 pad 到 world_size 的倍数，并在 gather 后去掉 padding"
+          ],
+          "explanation": "Gloo（以及 nccl）的 all_gather 期望相同大小的 outputs。Padding 是成本最低的修复方法；sketch 会把结果裁剪回原始长度。"
+        },
+        {
+          "question": "阅读 demo output 时，各 rank 的 param_sum_spread 接近零说明什么？",
+          "options": [
+            "没有任何有意义的信息",
+            "每个 rank 最终都具有相同的 parameter values，这意味着构建时的 broadcast 和每次 backward 后的 all-reduce 都正常工作；如果任何一项损坏，spread 都会随 steps 增长",
+            "loss 很低",
+            "network 很快"
+          ],
+          "explanation": "DDP 的 invariant 是各 rank 的 parameter parity。spread 就是审计指标；demo 会断言它始终低于 1e-3。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/49-lm-eval-harness": {
+      "sourceSha256": "5d3e1342fb0e52edd35e35b5409e24175d5cc1c6ba5da21206b0f9d38b473ca9",
+      "questions": [
+        {
+          "question": "harness 的 JSONL format 中，哪四个 fields 定义了一个 task example？",
+          "options": [
+            "id、prompt、targets、metric，以及一个可选 extras dict，用于保存 metric 所需的 side data",
+            "name、score、payload、vendor",
+            "weights 和 bias",
+            "input 和 output"
+          ],
+          "explanation": "JSONL line 就是 contract。extras field 让 code_exec metric 可以传递 io_pairs，而不会污染 prompt。"
+        },
+        {
+          "question": "为什么 metric function signature 是 (prediction, targets, extras) -> float？",
+          "options": [
+            "它返回 integer",
+            "它需要 model object",
+            "这是能够处理 single-target string match、multi-reference rouge-l 以及带 side data 的 code_exec 的最小 signature，同时可将 scores 保持在可比较的 [0.0, 1.0] 范围内",
+            "随机选择"
+          ],
+          "explanation": "[0,1] 范围内的 floats 使 per-task 和 overall scores 都成为易于理解的平均值。extras slot 是 code_exec 获取 io_pairs 的方式。"
+        },
+        {
+          "question": "code_exec metric 如何抵御恶意 predictions？",
+          "options": [
+            "使用 sandbox containers",
+            "使用移除了大部分内容的 __builtins__ dict 来运行 prediction，因此 namespace 只暴露少量安全 names；由于 importer 不在 scope 中，import statements 会失败",
+            "它无法抵御",
+            "拒绝任何包含 def 的内容"
+          ],
+          "explanation": "本课的 safe namespace 将 builtins 精简为少量 names。test 会断言 import os 返回 score 0.0，而不是执行它。"
+        },
+        {
+          "question": "model adapter abstraction 带来了什么？",
+          "options": [
+            "它是 harness 中唯一与 model 相关的 code；替换 adapter 以连接新 vendor 后，tasks、metrics、runner 和 leaderboard format 都保持不变",
+            "torch 要求如此",
+            "没有任何作用",
+            "它能让 model 更快"
+          ],
+          "explanation": "本课中的 ToyAdapter 是确定性的 pattern matcher。面向真实 vendor 的 HttpAdapter 也具有相同的 generate(prompts) -> list[str] surface。"
+        },
+        {
+          "question": "为什么 leaderboard JSON 要包含 leaderboard.v1 这样的 schema string？",
+          "options": [
+            "未来 format changes 可以提升 version，downstream dashboards 据此分派，而不会静默损坏",
+            "它能压缩 file",
+            "为了 SEO",
+            "这是随机设置"
+          ],
+          "explanation": "与 lesson 47 的 checkpoint payload 使用同一种方法。schema field 就是 migration hook。"
+        },
+        {
+          "question": "阅读 leaderboard 时，overall_score 是如何计算的？比较两个 runs 时还应注意什么？",
+          "options": [
+            "随机抽样",
+            "correct counts 的总和",
+            "per-task scores（每个都在 [0,1] 内）的均值；比较时还要对 scores 发生变化的 tasks 查看 per-example predictions diff，因为仅看 score 会掩盖具体哪些 examples 发生回退",
+            "最高的 task score"
+          ],
+          "explanation": "对 per-task means 求均值，会让每个 task 获得相同权重。使用 --include-per-example 将 prediction-level evidence 与 score 一起保留，便于发现 regressions。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/50-hypothesis-generator": {
+      "sourceSha256": "8f4b80fb55de213f386ba4e7c444201053e70bd478e65278bbd18bfe2ca25b50",
+      "questions": [
+        {
+          "question": "为什么 generator 生成的是 ranked queue，而不是单个 hypothesis？",
+          "options": [
+            "因为 runner 需要候选深度，才能在第一个 hypothesis 失败时取出下一个",
+            "因为 mock model 只会输出 lists",
+            "因为 embedding 需要多个 input",
+            "因为 parser 无法读取单个 block"
+          ],
+          "explanation": "生成 queue 的目的，是让整个 loop 分摊 sampling cost。第一个 hypothesis 失败后，runner 可以直接取出下一个，无需重新执行 sampling pass。"
+        },
+        {
+          "question": "每个 pass 上的 temperature ramp 起什么作用？",
+          "options": [
+            "拓宽 sampling distribution，使后续 drafts 可以落在离 seed 更远的位置",
+            "增加 embedding dimension",
+            "提高 parser tolerance",
+            "将 seed value 变为三倍"
+          ],
+          "explanation": "更高的 temperature 会拓宽 sampling distribution。ramp 鼓励每个 pass 进一步偏离，使 novelty filter 有内容可筛选。"
+        },
+        {
+          "question": "novelty filter 何时会拒绝一个 draft？",
+          "options": [
+            "当其 rank score 低于 threshold 时",
+            "当它到任何既有 survivor 的最小 cosine distance 低于 novelty threshold 时",
+            "当 parser 通过，但 tag count 错误时",
+            "当其 draft pass 大于 queue length 时"
+          ],
+          "explanation": "Novelty 是到既有 survivors 的最小距离。如果该距离低于 threshold，draft 就是 near duplicate，会被丢弃。"
+        },
+        {
+          "question": "rank score 由哪三个 components 组合而成？",
+          "options": [
+            "Latency、throughput、cost",
+            "Novelty、specificity、testability",
+            "Temperature、seed、pass index",
+            "Variables、metric、baseline length"
+          ],
+          "explanation": "rank score 是 novelty、specificity 和 testability 的加权和。每个 sub score 都位于零到一之间。"
+        },
+        {
+          "question": "为什么 mock language model 按 temperature bucket 建立 key，而不是使用 raw float？",
+          "options": [
+            "因为 buckets 将 schedule 离散化，使很小的 temperature 变化也能选择不同的 scripted draft",
+            "因为 embedding 要求如此",
+            "因为 parser 需要 integer",
+            "因为 floats 不能被 hash"
+          ],
+          "explanation": "Buckets 将连续 schedule 离散化。两个相邻 temperatures 可以映射到不同 buckets，并从 scripted bank 取出不同 drafts，这就是 mock 模拟多样化 sampling 的方式。"
+        },
+        {
+          "question": "如果 mock model 生成的每个 draft 都无法通过 parser，会发生什么？",
+          "options": [
+            "generator 抛出 hard error",
+            "queue 为空，每个 pass 都记录一次 parse rejection，使该故障模式可被审计",
+            "自动降低 novelty threshold",
+            "runner 使用新的 prompt 重试"
+          ],
+          "explanation": "Parser failures 会作为带 parse reject reason 的 logs 被记录。queue 可以为空，而不会让 loop 崩溃；logs 会解释原因。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/51-literature-retrieval": {
+      "sourceSha256": "8a7f9b49780311401f741f6f39721ee313021ac3a463f15dd4d29536a40da9c8",
+      "questions": [
+        {
+          "question": "retrieval client 为什么要同时运行 BM25 pass 和 citation graph pass？",
+          "options": [
+            "因为 mock APIs 要求如此",
+            "否则 parser 会失败",
+            "因为 BM25 需要 graph 来构建 index",
+            "因为 lexical hits 会漏掉使用不同 vocabulary 的 foundational papers，而 graph hits 会漏掉与 seed 没有共同 citation 的 papers"
+          ],
+          "explanation": "每个 pass 都能捕捉另一个会漏掉的内容。Lexical 检索覆盖共享 vocabulary；graph 检索覆盖 ancestor 和 descendant papers，不受 vocabulary 影响。"
+        },
+        {
+          "question": "为什么 citation graph traversal 限制为 two hops？",
+          "options": [
+            "因为 Python recursion limit 禁止 three hops",
+            "因为超过 two hops 后，result set 往往会偏离主题，并压垮 downstream ranking",
+            "因为 BM25 只能为距离 two hops 的内容评分",
+            "因为 corpus 只存储两层 citations"
+          ],
+          "explanation": "Two hops 是实际可用的上限。在 connected graph 上，three hops 会让 result set 急剧膨胀，而且很少能返回更多切题 papers。"
+        },
+        {
+          "question": "对于出现在每个 document 中的 term，idf 的值是什么？",
+          "options": [
+            "Negative infinity",
+            "一个很大的正值",
+            "未定义；BM25 implementation 会跳过它",
+            "接近零的值"
+          ],
+          "explanation": "当 df 等于 N 时，log 内部的 numerator 和 denominator 很接近，而 +1 会让 term 保持非负但数值很小。普遍出现的 terms 所作贡献接近零。"
+        },
+        {
+          "question": "merge step 使用哪些 keys 对两个 passes 的 hits 去重？",
+          "options": [
+            "BM25 score bucket",
+            "稳定的 paper id",
+            "year 和 first author",
+            "title text"
+          ],
+          "explanation": "Paper id 是稳定标识。不同 versions 可能重复 title 和 author，而单独的 year 也有歧义。"
+        },
+        {
+          "question": "对于距离 seed set 为 two hops 的 paper，graph_score 返回什么？",
+          "options": [
+            "BM25 score 除以十",
+            "默认为 0.3",
+            "默认为 1.0",
+            "零"
+          ],
+          "explanation": "默认 graph score schedule 在 zero hops 时为 1.0，在 one hop 时为 0.6，在 two hops 时为 0.3，超过该距离后为零。"
+        },
+        {
+          "question": "为什么 corpus 只加载一次到 RetrievalClient 中，而不是每次 query 都重新获取？",
+          "options": [
+            "因为 recency score 要求如此",
+            "因为 BM25 index 和 citation graph 在构建时只创建一次，并在多个 queries 间复用",
+            "因为 mock APIs 每次调用都很慢",
+            "因为 parser 是 global 的"
+          ],
+          "explanation": "Index construction 是成本高昂的步骤。复用 index 可以把这项成本分摊到 client 处理的每个 query 上。"
+        }
+      ]
+    }
+  }
+}

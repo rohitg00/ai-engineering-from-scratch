@@ -1,0 +1,1035 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/16-multi-agent-and-swarms/01-why-multi-agent": {
+      "sourceSha256": "4538fab5ef2ddbb7bd6ab44fb0cd595a386ac20a90a6d07b5834c92e9a00769a",
+      "questions": [
+        {
+          "question": "什么是“单智能体上限”？",
+          "options": [
+            "单个智能体因任务超出一个上下文窗口、需要不同领域的专业能力或需要并行工作而无法胜任的临界点",
+            "单块 GPU 能运行的最大模型规模",
+            "智能体可以使用的最大工具数量",
+            "智能体每分钟可以发出的 API 调用次数上限"
+          ],
+          "explanation": "单个智能体只有一个上下文窗口、一条 system prompt，并且按顺序处理任务。当任务需要读取 50 个文件（上下文溢出）、在研究与编码之间切换（专业能力混杂），或同时执行彼此独立的工作（并行）时，单个智能体就难以应对。"
+        },
+        {
+          "question": "为什么可能要使用多个专业智能体，而不是一个强大的通用智能体？",
+          "options": [
+            "每个智能体都可以拥有聚焦的 system prompt、更小的上下文和专用工具，从而在特定子任务上表现更好",
+            "多个智能体总是比单个大模型成本更低",
+            "通用智能体无法使用工具",
+            "多个智能体可以共享同一个上下文窗口"
+          ],
+          "explanation": "针对搜索优化的研究智能体、针对实现优化的编码智能体，以及针对代码质量优化的审查智能体，各自都能比一个试图同时扮演三种角色的智能体更好地完成本职工作。"
+        },
+        {
+          "question": "什么时候流水线式（顺序）多智能体模式比并行扇出模式更合适？",
+          "options": [
+            "当每个阶段都依赖上一阶段的输出时，例如先研究、再编码、最后审查",
+            "当 GPU 数量多于任务数量时",
+            "当你想把总延迟降到最低时",
+            "当所有子任务都彼此独立时"
+          ],
+          "explanation": "当工作本质上必须按顺序进行时，流水线模式更合适：编码智能体需要研究智能体的输出，审查智能体又需要编码智能体的输出。当子任务彼此独立时，并行扇出更合适。"
+        },
+        {
+          "question": "多智能体系统中的监督者模式是什么？",
+          "options": [
+            "由人类手动向每个智能体分配任务",
+            "由多个智能体投票选出最佳回答的模式",
+            "一个中央编排智能体负责拆解任务、委派给工作智能体、汇总结果并决定后续步骤",
+            "记录智能体操作以便调试的监控系统"
+          ],
+          "explanation": "监督者智能体扮演项目经理的角色：它把任务拆成子任务，分配给专业工作智能体，审查它们的输出，并决定是继续迭代还是完成任务。这样可以对工作流实施集中控制。"
+        },
+        {
+          "question": "与单智能体相比，多智能体系统的主要权衡是什么？",
+          "options": [
+            "多智能体系统产生的结果质量总是更低",
+            "多智能体系统无法使用外部工具",
+            "多智能体系统需要更多训练数据",
+            "多次 LLM 调用和智能体间通信会增加复杂度、延迟与成本，换来处理复杂任务的更强能力"
+          ],
+          "explanation": "每增加一个智能体，就意味着更多 LLM 调用（成本）、更多往返过程（延迟）和更多故障模式（调试复杂度）。只有当任务确实超出单个智能体的处理能力时，多智能体方案才值得采用。"
+        }
+      ]
+    },
+    "phases/16-multi-agent-and-swarms/03-communication-protocols": {
+      "sourceSha256": "2b22aa7d31b30d2f7f00c5910a60c4a56ae38a7e0d1c90485f6c5ed49c3c128e",
+      "questions": [
+        {
+          "question": "MCP（Model Context Protocol）为 AI 智能体解决了什么问题？",
+          "options": [
+            "加密智能体之间的通信",
+            "压缩大型上下文窗口，使其能装入较小的模型",
+            "让智能体能以标准方式发现和使用外部服务器暴露的工具，而无需硬编码工具实现",
+            "提供训练数据的标准格式"
+          ],
+          "explanation": "MCP 标准化了工具访问方式：服务器通过 JSON schema 暴露工具，任何兼容 MCP 的智能体都能发现并调用这些工具。这使工具实现与智能体代码解耦。"
+        },
+        {
+          "question": "MCP 与 A2A 有什么区别？",
+          "options": [
+            "MCP 面向 Python 智能体，而 A2A 面向 JavaScript 智能体",
+            "MCP 是开源协议，而 A2A 是专有协议",
+            "MCP 将智能体连接到工具（agent-to-tool），而 A2A 将智能体连接到其他智能体（agent-to-agent）以委派任务",
+            "MCP 是同步协议，而 A2A 是异步协议"
+          ],
+          "explanation": "MCP 是工具访问协议（智能体调用工具）。A2A 是智能体协作协议（一个智能体把任务委派给另一个智能体）。两者解决的是通信问题中的不同层次。"
+        },
+        {
+          "question": "在 A2A 中，什么是“agent card”，它为什么重要？",
+          "options": [
+            "用于验证智能体身份的安全凭证",
+            "用于设置智能体 system prompt 的配置文件",
+            "展示智能体性能指标的可视化仪表盘",
+            "位于约定 URL 的 JSON 文档，用于描述智能体的能力、技能和 endpoint，使其他智能体能够发现它并向它委派任务"
+          ],
+          "explanation": "agent card（托管在 /.well-known/agent.json）是智能体介绍自身的方式。它会列出技能、支持的输入/输出格式以及任务 endpoint。其他智能体读取这张卡片，以判断是否以及如何委派工作。"
+        },
+        {
+          "question": "为什么多智能体系统需要结构化通信协议，而不能只在智能体之间传递字符串？",
+          "options": [
+            "LLM 解析字符串的计算成本很高",
+            "结构化协议提供类型安全、可发现性、错误处理，以及不同团队用不同框架构建的智能体之间的互操作性",
+            "字符串太大，无法通过 HTTP 发送",
+            "所有云服务提供商都要求使用结构化协议"
+          ],
+          "explanation": "如果没有结构化契约，不同团队的智能体就会误解彼此的输出，错误处理也只能临时拼凑，而且无法发现另一个智能体能做什么。协议提供了一种共享语言，使多智能体系统更加可靠。"
+        },
+        {
+          "question": "ACP（Agent Communication Protocol）与 A2A 的设计目标有何不同？",
+          "options": [
+            "ACP 使用 WebSockets，而 A2A 使用 HTTP",
+            "ACP 在实时应用中比 A2A 更快",
+            "ACP 只能在单个组织内部工作，而 A2A 可以跨组织工作",
+            "ACP 强调企业级可审计性，保留完整消息历史并跟踪合规情况；A2A 则强调轻量级任务委派"
+          ],
+          "explanation": "ACP 面向企业环境设计，在这类环境中，每次智能体交互都必须可审计、可追踪且合规。A2A 更简单，重点在于完成任务。ACP 增加了受监管行业所需的治理层。"
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/01-managed-llm-platforms": {
+      "sourceSha256": "449cfc444f6a9a7daae2d4b0cd33cdeb0fc06964a39ca6af78c1ebc37c929d8d",
+      "questions": [
+        {
+          "question": "学习本课之前，如果客户需要通过一个 API 使用 Claude、Llama 和 Cohere，你会首先选择哪个平台？",
+          "options": [
+            "AWS Bedrock",
+            "Vertex AI",
+            "Anthropic 直连 API",
+            "Azure OpenAI Service"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪家超大规模云服务商的布局被描述为独家合作，而非模型市场？",
+          "options": [
+            "Vertex AI",
+            "AWS Bedrock",
+            "OCI Generative AI",
+            "Azure OpenAI"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 Llama 3.1 405B 同等模型上，Azure OpenAI（使用 PTU）与 Bedrock 按需服务之间实测的 TTFT 中位数差距大约是多少？",
+          "options": [
+            "~250 ms",
+            "~5 ms",
+            "~100 ms",
+            "~25 ms"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Bedrock 2025 的哪项功能能在 CloudWatch 中原生提供最清晰的产品级成本归因？",
+          "options": [
+            "Bedrock Agents",
+            "Bedrock Knowledge Bases",
+            "Application Inference Profiles",
+            "Bedrock Guardrails"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "与按需计费相比，Azure PTU 通常在什么持续利用率区间达到盈亏平衡？",
+          "options": [
+            "40-60%",
+            "80-95%",
+            "5-10%",
+            "20-30%"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么本课建议 2026 年对产品关键型 LLM 调用至少采用两家提供商？",
+          "options": [
+            "除非同时使用竞争对手，否则超大规模云服务商拒绝签署 BAA",
+            "单一供应商的价格总是更贵",
+            "这是 SOC 2 Type II 的要求",
+            "前沿模型的领先地位每月都在轮换，因此锁定单一供应商会让你错失三分之二的前沿能力"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪项最准确地描述了这三个平台的 FinOps 能力？",
+          "options": [
+            "三者提供完全相同的单请求归因能力",
+            "Bedrock 的原生能力最清晰，Vertex 通过 BigQuery 实现的灵活性最高，而 Azure 在缺少插桩时最不透明",
+            "Vertex 完全没有归因能力",
+            "Azure 的原生能力最清晰，而 Bedrock 不透明"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/02-inference-platform-economics": {
+      "sourceSha256": "18755cc93169ffb58313de925bfa5b2eeab3d0f542aaa20fb1405bc01f72b08d",
+      "questions": [
+        {
+          "question": "本课用哪三个细分市场来划分 2026 年的推理服务商？",
+          "options": [
+            "单租户、多租户、本地部署",
+            "免费、付费、企业版",
+            "开源、商业、混合",
+            "定制芯片、GPU 平台、API 优先的模型市场"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "持续 GPU 利用率大约达到多少时，按分钟计费（Baseten、Modal）开始比按 token 计费（Fireworks、Together）更划算？",
+          "options": [
+            "5%",
+            "90%",
+            "60%",
+            "30%"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪个平台被描述为 Python 原生 serverless 平台，采用按秒计费，并且预热后的冷启动时间为 2-4s？",
+          "options": [
+            "Anyscale",
+            "Baseten",
+            "Fireworks",
+            "Modal"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Fireworks 在 LoRA 定价方面的显著差异化优势是什么？",
+          "options": [
+            "LoRA 请求需要单独签订专用 GPU 合同",
+            "通过 LoRA 提供服务的请求按基础模型的每 token 费率计费",
+            "通过 LoRA 提供服务的请求比基础模型更贵",
+            "完全不支持 LoRA"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪个平台适合需要 SOC 2 Type II、HIPAA-ready 安全态势和专用 GPU 的受监管医疗客户？",
+          "options": [
+            "Together",
+            "Anyscale",
+            "Baseten",
+            "Replicate"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么本课认为，在平台层面，所谓“定制引擎”主要只是营销话术？",
+          "options": [
+            "定制引擎从不优于 vLLM",
+            "按 token 定价是唯一真正的差异化因素",
+            "vLLM 和 SGLang 约占生产级开源推理的 80%，因此平台的差异化更多来自开发者体验、归因能力和 SLA，而非引擎",
+            "所有定制引擎都是 TensorRT-LLM 的分支"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes": {
+      "sourceSha256": "c04d02480b74db4023a55ac856c75db6afe8661e87c38e67337768b4281a7b71",
+      "questions": [
+        {
+          "question": "HPA 默认通常依据哪个信号扩缩容，而本课认为该信号不适合 vLLM 式服务？",
+          "options": [
+            "P99 TTFT",
+            "DCGM_FI_DEV_GPU_UTIL 占空比",
+            "队列深度",
+            "KV cache 利用率"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "KAI Scheduler 中的 gang scheduling 主要防止什么问题？",
+          "options": [
+            "分词器的 GIL 争用",
+            "部分分配陷阱：8 块 GPU 中有 7 块闲置，只因仍在等待第 8 块",
+            "冷启动延迟",
+            "GPU 内存碎片"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 Karpenter 默认的 consolidationPolicy WhenEmptyOrUnderutilized 对推理 GPU 池有风险？",
+          "options": [
+            "它只整合 spot 实例",
+            "它会阻止 Karpenter 配置新节点",
+            "它会终止正在运行的 GPU 节点以迁移 pod，导致运行中的请求被驱逐并重新加载权重",
+            "它拒绝在流量突增时扩容"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "与 Cluster Autoscaler 相比，Karpenter 配置 GPU 节点大约快多少？",
+          "options": [
+            "大约快 5%",
+            "速度相同",
+            "大约快 40%（~45-60s 对比 ~90-120s）",
+            "大约慢 10 倍"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于解耦的 prefill / decode pod（Phase 17 · 17），本课推荐使用哪些扩缩容信号？",
+          "options": [
+            "两者都使用 Cluster Autoscaler",
+            "用一个基于占空比的 HPA 同时覆盖两类 pod",
+            "只进行手动扩缩容",
+            "prefill pod 使用队列深度，decode pod 使用 KV cache 压力，分别配置按角色划分的 HPA"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为了避免驱逐运行中的作业，本课建议推理 GPU 池采用哪项 Karpenter disruption 设置？",
+          "options": [
+            "始终使用 spot 实例且不进行整合",
+            "完全禁用 Karpenter",
+            "consolidationPolicy: WhenEmptyOrUnderutilized，consolidateAfter: 0s",
+            "consolidationPolicy: WhenEmpty，consolidateAfter: 1h"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/04-vllm-serving-internals": {
+      "sourceSha256": "9b59420a43b80bc1426b282e29b966adbe60f49e993b95be015e2520e793702e",
+      "questions": [
+        {
+          "question": "传统静态批处理在处理长度不一的请求时，主要问题是什么？",
+          "options": [
+            "它只能使用 FP4",
+            "它完全无法使用 GPU",
+            "按最长 prompt 和最长输出进行 padding 会浪费内存，而且整个 batch 都会被最慢的序列拖住",
+            "它要求每块 GPU 之间都有 NVLink"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "PagedAttention 如何把 KV cache 碎片率从 60-80% 降至 4% 以下？",
+          "options": [
+            "完全禁用 KV cache",
+            "把完整 prompt 保存在 CPU RAM 中",
+            "把权重量化为 INT4",
+            "以固定大小的 block（默认 16 个 token）分配 KV cache，并通过每个序列各自的 block table 引用"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "vLLM V1 scheduler 中的 continuous batching 由哪条不变式定义？",
+          "options": [
+            "每个请求都有专用的 GPU stream",
+            "scheduler 等待 10 ms 的窗口来凑满 batch，然后再运行",
+            "scheduler 对每个请求只运行一次，而且 batch 永不变化",
+            "scheduler 在每轮 decode 迭代时运行一次，移出已完成的序列，并纳入正在等待的序列"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在混合负载下，chunked prefill 主要保护哪项延迟指标？",
+          "options": [
+            "平均吞吐量",
+            "冷启动时间",
+            "网络 RTT",
+            "P99 token 间延迟（ITL）"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 vLLM v0.18.0 中，哪种 speculative decoding 变体仍与 --enable-chunked-prefill 兼容？",
+          "options": [
+            "没有任何 speculative decoding 与之兼容",
+            "V1 scheduler 中的 N-gram GPU speculative decoding",
+            "draft-model speculative decoding",
+            "仅 EAGLE-1"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 chunked prefill 本身并不会提高平均吞吐量？",
+          "options": [
+            "它会更激进地压缩权重",
+            "它只降低 decode 阶段的抖动；实践中的吞吐量提升来自在长 prefill 期间维持 decode 序列活跃，而不是减少实际工作量",
+            "它在与 decode 不同的 GPU 上运行",
+            "它在底层使用 speculative decoding"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/05-eagle3-speculative-decoding": {
+      "sourceSha256": "d95ff962479bb990ecbf873493c605641c4df61599ee828f0d9813001031bfa6",
+      "questions": [
+        {
+          "question": "为什么 speculative decoding 能利用普通 decode 中存在的性能空档？",
+          "options": [
+            "decode 无法从 batching 中获益",
+            "decode 受内存带宽限制，因此 GPU 大部分时间都在空闲等待从 HBM 读取权重",
+            "decode 受计算能力限制，因此增加计算量没有成本",
+            "decode 比 prefill 需要更多网络带宽"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "接受率 alpha 衡量什么？",
+          "options": [
+            "draft model 的延迟开销",
+            "draft model 提议的 token 中被 target model 接受的比例",
+            "KV cache 的命中率",
+            "decode 期间使用的 GPU 内存比例"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "与 EAGLE-2 相比，EAGLE-3 做了什么改变，使通用聊天场景下的 alpha 提升到大约 0.6-0.8？",
+          "options": [
+            "draft head 使用 target model 的多个层进行训练，而不只使用最后一层",
+            "它使用同系列的全尺寸 draft model",
+            "它在 CPU 而非 GPU 上运行",
+            "它完全移除了 verify 步骤"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课指出，在大多数 2026 年硬件上进行高并发推理时，alpha 低于大约多少会让 speculative decoding 产生净负收益？",
+          "options": [
+            "0.85",
+            "0.95",
+            "0.05",
+            "0.55"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "启用 EAGLE-3 后，即使平均 ITL 下降，最应密切关注哪项指标？",
+          "options": [
+            "GPU 内存利用率",
+            "冷启动时间",
+            "平均 E2E 延迟",
+            "P99 ITL，因为 batch 满载时，被拒绝的 draft 所需的两次 pass 可能会串行执行"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "根据本课，为什么 speculative decoding 在 2026 年的 vLLM 中需要显式启用，而不是默认开启？",
+          "options": [
+            "它与 PagedAttention 不兼容",
+            "它只能在 Blackwell GPU 上工作",
+            "它需要单独的许可证",
+            "接受率取决于工作负载，未测量 alpha 就直接启用是生产环境中的反模式"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/06-sglang-radixattention": {
+      "sourceSha256": "96a9a71652ca49ab7d9e83d6ac60b6b3b700a484a2ce95328638e8c5ab4b5c54",
+      "questions": [
+        {
+          "question": "SGLang 的 KV cache 复用以哪种核心数据结构为基础？",
+          "options": [
+            "一棵 radix tree，每个节点都拥有一段 token 范围及其 KV block",
+            "以 request id 为 key 的 skip list",
+            "以完整 prompt 为 key 的 hash table",
+            "由 attention score 构成的 B-tree"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 FCFS 调度不适合 SGLang 上前缀占比较高的流量？",
+          "options": [
+            "FCFS 是 SGLang 推荐的策略",
+            "FCFS 可能在下一个长前缀请求命中之前驱逐热门前缀分支，从而破坏 radix tree 复用",
+            "FCFS 只能在 AMD GPU 上工作",
+            "FCFS 与 PagedAttention 不兼容"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为了匹配 radix tree 的形状，SGLang 的 cache-aware scheduler 使用哪种驱逐粒度？",
+          "options": [
+            "仅按请求驱逐",
+            "随机驱逐",
+            "单个 token",
+            "整条分支，从使用次数最少的叶节点开始"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "工程师要让 radix tree 中的共享前缀保持可发现，最直接的手段是什么？",
+          "options": [
+            "始终使用静态 batching",
+            "固定 prompt template 的内容顺序，确保不可变内容（system、tools、schemas）始终位于最前面",
+            "降低 GPU 内存利用率参数",
+            "禁用 continuous batching"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课预计 RadixAttention 不会在哪种工作负载模式中占优？",
+          "options": [
+            "共享 tool schema 的智能体",
+            "prompt 各不相同且没有共享 system prompt 的单次生成",
+            "共享检索前导内容的 RAG",
+            "重复使用前导内容的语音工作负载"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "ProjectDiscovery 的部署通过什么做法将 prefix-cache 命中率从 7% 提升到 74%？",
+          "options": [
+            "将 GPU 数量从 8 增加到 16",
+            "禁用 continuous batching",
+            "把动态内容移出可缓存前缀",
+            "不做任何 prompt 调整，直接从 vLLM 切换到 SGLang"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell": {
+      "sourceSha256": "e9d22306a73815c3e55881a19366691e26f7d923839582232463f39127fce96d",
+      "questions": [
+        {
+          "question": "对于相当的 120B 级工作负载，本课给出的 Blackwell + TRT-LLM + Dynamo 与 H100 + vLLM 之间每百万 token 成本差距大约是多少？",
+          "options": [
+            "大约 2 倍",
+            "大约 7 倍",
+            "大约 1.1 倍",
+            "大约 100 倍"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么本课建议在 Blackwell 上将 KV cache 保持为 FP8，而不是 NVFP4？",
+          "options": [
+            "尚无任何引擎支持 NVFP4 KV cache",
+            "KV cache 的动态范围很宽；FP4 量化会使 attention score 的准确率遭受灾难性损失",
+            "FP8 比 FP4 占用更少内存",
+            "FP8 是 NVLink 5 唯一支持的精度"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "TRT-LLM 利用了 Blackwell 的哪项特性，使模型无需经过训练后转换步骤即可加载？",
+          "options": [
+            "BF16 KV cache",
+            "FP64 attention",
+            "通过 bitsandbytes 实现的 INT2 权重",
+            "模型提供商发布的 Day-0 FP4 权重"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "根据本课，选择 TRT-LLM 技术栈的主要权衡是什么？",
+          "options": [
+            "它要求完全自主的修复机制",
+            "它无法服务 MoE 模型",
+            "它只能在小规模场景下工作",
+            "它会将你锁定在 NVIDIA 硬件上——不支持 AMD、Intel 或 ARM"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课所描述的典型 Blackwell 精度配置是哪一种？",
+          "options": [
+            "所有内容都使用 BF16",
+            "权重 NVFP4、activation NVFP4、KV cache FP8、attention accumulator FP32",
+            "权重 INT8、activation FP32、KV cache INT4",
+            "权重 FP4、KV cache FP4、attention 使用 INT8"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于 NVFP4 权重转换会使 MATH 准确率下降几个百分点的高推理强度工作负载，本课有何建议？",
+          "options": [
+            "切换到 AMD MI300X",
+            "禁用 speculative decoding",
+            "针对每个模型，在自己的 eval set 上验证任务质量；团队通常会采用 FP8 权重 + FP4 activation，或继续使用全程 FP8 的 H200",
+            "仍然发布 NVFP4，因为成本优势最重要"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/08-inference-metrics-goodput": {
+      "sourceSha256": "0e12df338317843484644b68a690af8ba3f9be38505b093a56ce7fe2a32c0ac3",
+      "questions": [
+        {
+          "question": "哪些组成部分主导 TTFT（time to first token）？",
+          "options": [
+            "读取权重的磁盘 I/O",
+            "排队时间、网络请求时间和 prefill 时间",
+            "分词器的 GIL 开销",
+            "仅 decode 的前向计算时间"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课认为哪项指标才是对产品真正重要的指标？",
+          "options": [
+            "Goodput——同时满足所有 SLO 约束的请求比例",
+            "每秒 token 数表示的聚合吞吐量",
+            "平均 ITL",
+            "GPU 占空比"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么平均值不适合用来报告 LLM 延迟？",
+          "options": [
+            "LLM 延迟分布是右偏的；用户经常遇到被平均值掩盖的 P99 异常值",
+            "流式响应永远无法计算平均值",
+            "平均值只适用于 prefill，不适用于 decode",
+            "GenAI-Perf 不支持平均值"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 GenAI-Perf 与 LLMPerf 对同一次运行给出的 TPOT 不一致？",
+          "options": [
+            "它们对不同请求进行采样",
+            "GenAI-Perf 只能在 Blackwell 上运行",
+            "LLMPerf 使用微秒，而 GenAI-Perf 使用毫秒",
+            "GenAI-Perf 在 ITL 计算中排除 TTFT，而 LLMPerf 将其计入，因此选择不同工具会改变数值"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于长输出请求（>500 tokens），哪项指标主导端到端延迟？",
+          "options": [
+            "网络响应时间",
+            "TPOT 乘以输出长度",
+            "TTFT",
+            "冷启动时间"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪组指标最符合本课所说的 2026 年面向消费者的 70B 聊天模型合理 SLO？",
+          "options": [
+            "只看 P50，不看更高百分位",
+            "TTFT P99 800 ms、TPOT P99 25 ms、少于 300-token 输出的 E2E P99 3 s、goodput >= 99%",
+            "TTFT P99 8s、TPOT P99 200ms、goodput 50%",
+            "平均 TTFT 10 ms、平均 TPOT 1 ms"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/09-production-quantization": {
+      "sourceSha256": "5e8e8f531d44a5f097e92ba3bebb6a1ee4a5cc7d9535cfebd9955c5032296d93",
+      "questions": [
+        {
+          "question": "本课认为哪种量化格式是 CPU 和边缘端推理的生产环境默认选择？",
+          "options": [
+            "GGUF Q4_K_M / Q5_K_M",
+            "NVFP4",
+            "FP8",
+            "AWQ INT4"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 vLLM 中需要 multi-LoRA 时，本课为数据中心 GPU 推理选择哪种格式？",
+          "options": [
+            "NVFP4",
+            "GGUF Q4_K_M",
+            "采用 Marlin kernel 的 GPTQ",
+            "AWQ"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "AWQ 中“我的模型现在只有 4 GB 了”这一陷阱指什么？",
+          "options": [
+            "AWQ 实际上不会缩小权重",
+            "AWQ 与 vLLM 不兼容",
+            "AWQ 只会缩小权重；KV cache 和 activation 是独立的，在生产 batch size 下可能额外占用 30-50 GB",
+            "AWQ 要求使用 INT8 KV cache"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么使用通用网页文本校准 AWQ 会损害领域模型？",
+          "options": [
+            "它会增加模型大小",
+            "它只能在 AMD GPU 上工作",
+            "算法会错误判断应保护哪些权重，导致领域准确率下降（例如 HumanEval 的 Pass@1 下降几个百分点）",
+            "它会禁用 Marlin kernel"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于质量不可妥协的高推理强度工作负载，本课默认推荐哪种精度？",
+          "options": [
+            "NVFP4 权重",
+            "GPTQ INT4",
+            "FP8 权重",
+            "INT2 GGUF"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课指出，截至 2026 年初，NVFP4 存在哪项量化限制？",
+          "options": [
+            "不能与 FP8 KV cache 结合使用",
+            "只能在 CPU 上运行",
+            "尚不支持 LoRA",
+            "H100 不支持"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/10-cold-start-mitigation": {
+      "sourceSha256": "45d3463dd3726a826c8a2a296dc7378087524672295159055ddca56caef1256a",
+      "questions": [
+        {
+          "question": "在没有缓解措施的新节点上，70B 模型的冷启动通常大约需要多长时间？",
+          "options": [
+            "3-8 分钟",
+            "超过 1 小时",
+            "不到 10 秒",
+            "30-60 秒"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课建议使用 AWS 侧的哪项功能预先植入容器镜像，从而省去第 2 步的镜像拉取？",
+          "options": [
+            "从 EC2NodeClass 引用的 Bottlerocket 双卷架构",
+            "spot fleet placement",
+            "仅使用 EBS volume snapshot",
+            "ECS task definition"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Modal 的哪项功能通过将加载后的状态直接反序列化到 HBM，最接近“数秒内完成 GPU 热启动”？",
+          "options": [
+            "GPU memory snapshot（checkpoint）",
+            "NVMe 到 DRAM 的分层加载",
+            "Run:ai Model Streamer",
+            "live migration"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 live migration 在节点之间传输输入 token，而不是 KV cache？",
+          "options": [
+            "KV cache 已加密，无法迁移",
+            "GDPR 要求使用 live migration",
+            "输入 token 的熵更高",
+            "在目标节点重新计算 KV，比通过网络传输数 GB 的 KV cache 成本更低"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "serverless 的哪一层通过维持至少一个存活副本，以直接 GPU 成本换取可预测的就绪状态？",
+          "options": [
+            "分层加载",
+            "live migration",
+            "min_workers >= 1 的 warm pool",
+            "Bottlerocket 预植入"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么本课指出，冷启动缓解措施必须跨层叠加，而不能只选一种工具？",
+          "options": [
+            "Modal 拥有完整技术栈",
+            "vLLM 捆绑了全部五层",
+            "这是监管要求",
+            "没有任何单层能够消除所有步骤（节点配置、镜像拉取、权重加载、引擎初始化）；叠加多层可以压缩每一步的耗时"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/11-multi-region-kv-locality": {
+      "sourceSha256": "d9321d92db55334a225c68eaedf1c8e24e8c506394d2eba08447a5e5f10d85b8",
+      "questions": [
+        {
+          "question": "为什么轮询负载均衡会对带缓存的 LLM 推理造成明显损害？",
+          "options": [
+            "轮询会破坏 TLS",
+            "轮询只适用于有状态数据库",
+            "轮询要求使用粘性会话",
+            "如果请求没有落到持有其前缀的节点上，就必须付出完整的 prefill 成本，而无法命中缓存"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "cache-aware router 会使用哪两项输入？",
+          "options": [
+            "仅 user_id 和 tenant_id",
+            "轮询计数器和 TLS key",
+            "来自副本的 KV-cache 事件，以及传入请求的前缀 hash",
+            "随机打乱结果和请求大小"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于 Llama 3.3 70B FP8 上包含 2K-token prompt 的请求，缓存命中与冷 prefill 之间的 TTFT 差距大约是多少？",
+          "options": [
+            "大约 1000 倍",
+            "大约 10 倍（~80 ms 对比 ~800 ms）",
+            "大约 1.1 倍",
+            "完全相同"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么为了缓存命中进行跨区域路由并不总是优于区域内路由？",
+          "options": [
+            "跨区域无法实现 cache-aware routing",
+            "所有超大规模云服务商都禁止跨区域路由",
+            "GORGO 研究发现缓存命中对延迟没有帮助",
+            "节省的 prefill 时间可能远小于网络 RTT，例如 440 ms 的往返时间会显著削弱 prefill 从 800 ms 降至 80 ms 所带来的收益"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课指出，32% 的 LLM 灾难恢复失败由什么因素导致？",
+          "options": [
+            "备份包含权重，但遗漏分词器文件或量化配置",
+            "区域配额耗尽",
+            "负载均衡器配置错误",
+            "备份未加密"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于 Bedrock CRI 等商业跨区域推理产品，本课持什么观点？",
+          "options": [
+            "它们优化的是可用性，而非 TTFT，并且把推理视为不透明服务——你仍需要应用层的 cache-aware router",
+            "GDPR 禁止使用它们",
+            "它们能感知 KV cache，可以取代应用层路由",
+            "它们只能在 us-east-1 中工作"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/12-edge-inference": {
+      "sourceSha256": "52a7959734c52da4593d84b7ac82fa76ad0df9f1e5b0cacf3456140b5bbc1881",
+      "questions": [
+        {
+          "question": "根据本课，导致移动端 LLM 推理慢于数据中心的核心约束是什么？",
+          "options": [
+            "存储容量",
+            "Wi-Fi 延迟",
+            "计算吞吐量",
+            "内存带宽（移动 DRAM 为 50-90 GB/s，而 HBM3 为 2-3 TB/s）"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 Apple Neural Engine 可以避免 CPU-NPU 复制开销？",
+          "options": [
+            "Apple Silicon 采用统一内存——CPU 和 ANE 共享同一个内存池",
+            "它使用 PCIe 5.0",
+            "Core ML 禁用 KV cache",
+            "它在复制前将权重转码为 FP4"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课建议浏览器中的 WebGPU + WebLLM 使用哪种量化格式？",
+          "options": [
+            "GGUF Q4_K_M",
+            "NVFP4",
+            "FP8",
+            "通过 mlc_llm convert_weight 编译的 Q4 MLC（q4f16_1）"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课给出的 2026 年移动端 WebGPU 覆盖率大约是多少？",
+          "options": [
+            "不到 10%",
+            "仅 iOS Safari",
+            "大约 70-75%，Firefox Android 仍在追赶",
+            "所有浏览器均达到 100%"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么在普通手机上保留 128K 上下文并不现实？",
+          "options": [
+            "超过 8K 后分词器会失效",
+            "模型权重、32K token 的 KV cache 以及操作系统开销很容易超过 8 GB RAM 预算",
+            "WebGPU 将上下文上限设为 4K",
+            "iOS 禁止使用长上下文"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么语音被强调为边缘推理的杀手级应用？",
+          "options": [
+            "语音模型不需要 KV cache",
+            "语音模型始终可以装入 50 MB",
+            "语音智能体对延迟敏感（first token < 500 ms），而本地推理可以完全消除网络延迟",
+            "语音只能在 WebAssembly 中运行"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/13-llm-observability": {
+      "sourceSha256": "f0ae301248818c070382324e9b0b5f811a773b7a44e8ecb9b6202109ef91a8c2",
+      "questions": [
+        {
+          "question": "本课如何划分 2026 年的 LLM 可观测性市场？",
+          "options": [
+            "开发平台（捆绑 eval、prompt 和 session）与 gateway/telemetry 工具",
+            "Python 与 TypeScript",
+            "商业产品与开源产品",
+            "本地部署与云端部署"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课将哪个工具定位为核心采用 MIT 许可、拥有强大的自托管能力，并提供每月 50K 个事件的免费云端套餐？",
+          "options": [
+            "Phoenix",
+            "Arize AX",
+            "LangSmith",
+            "Langfuse"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "相较于 Datadog 等单体可观测性技术栈，Arize AX 的主要规模化优势主张是什么？",
+          "options": [
+            "价格总是更高",
+            "通过 zero-copy Iceberg/Parquet 集成，在大规模场景下成本大约低 100 倍",
+            "每天少于 1M 个事件时免费",
+            "便宜 10%"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课认为哪一层插桩不利于可移植性？",
+          "options": [
+            "在 HTTP/OpenAI-SDK 层插桩",
+            "对成功请求按 5% 采样",
+            "使用 OpenTelemetry GenAI semantic conventions",
+            "在智能体框架内部插桩，因为这会使你与该框架耦合"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课指出，哪套 OpenTelemetry conventions 是 2026 年可观测性工具之间的互操作层？",
+          "options": [
+            "GenAI semantic conventions（gen_ai.system、gen_ai.request.model、gen_ai.usage.input_tokens）",
+            "OTel HTTP semantic conventions",
+            "OTel messaging semantic conventions",
+            "OTel database semantic conventions"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么本课认为，日请求量超过 1M 后，保留完整 trace 无法扩展？",
+          "options": [
+            "供应商会阻止这种做法",
+            "Phoenix 只支持 1M 条 trace",
+            "保留数据的存储成本会超过 LLM 调用本身；团队必须进行采样（例如 100% 错误、100% 高成本请求、5% 成功请求）",
+            "OpenTelemetry 限制 trace 数量"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/14-prompt-semantic-caching": {
+      "sourceSha256": "abed0d781e712d1189775c0523ec995bc10f67bb9d313c5138e400bc36ac5dcd",
+      "questions": [
+        {
+          "question": "L1 semantic caching 与 L2 prompt/prefix caching 有什么区别？",
+          "options": [
+            "L2 存储 embedding；L1 存储 attention KV",
+            "L1 位于提供商侧，L2 位于客户端侧",
+            "L1 与 L2 完全相同",
+            "L1 在 embedding 相似度命中时完全跳过 LLM；L2 针对重复前缀复用提供商侧的 attention KV"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Anthropic 使用哪种机制将 block 标记为可供 L2 prompt caching 缓存？",
+          "options": [
+            "请求 block 上显式设置的 cache_control 属性",
+            "tool definition 中的文件名后缀",
+            "隐式 prompt 长度阈值",
+            "单独的 /caches endpoint"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "并行化的哪种反模式会抬高账单？",
+          "options": [
+            "并行请求会绕过 batching",
+            "并行化会触发逐请求 guardrail 费用",
+            "所有并行请求会自动共享一个缓存条目",
+            "N 个具有相同前缀的并行请求在第一次缓存写入完成前到达，因此每个请求都要支付写入溢价，而且得不到任何折扣"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "可缓存前缀中的动态内容反模式是什么？",
+          "options": [
+            "在可缓存前缀中包含每次请求都会变化的内容（精确到分钟的当前时间、request ID、随机化的示例顺序），导致命中率崩溃",
+            "使用过短的 system prompt",
+            "始终以流式方式返回响应",
+            "把 tool schema 放入前缀"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "batch 与 cached input 如何叠加，从而降低夜间任务的成本？",
+          "options": [
+            "batch 与 caching 不兼容",
+            "caching 会使请求失去 batch 资格",
+            "batch 只能节省输出成本",
+            "Batch API 提供 50% 折扣，cached input 再带来约 10 倍优惠；两者结合后，夜间流水线成本可降至同步且未缓存方案的约 10%"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "本课如何看待 semantic cache 的“95% accuracy”说法？",
+          "options": [
+            "95% 意味着可以期待 95% 的缓存命中率",
+            "95% 是 OpenAI 的默认缓存命中率",
+            "95% 是供应商文档给出的命中率基线",
+            "95% 指匹配正确率，而不是命中率；公开报告的生产环境命中率从约 10%（开放式聊天）到约 70%（结构化 FAQ）不等"
+          ],
+          "explanation": ""
+        }
+      ]
+    }
+  }
+}

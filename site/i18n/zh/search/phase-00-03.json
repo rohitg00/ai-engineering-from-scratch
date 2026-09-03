@@ -1,0 +1,523 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/00-setup-and-tooling/01-dev-environment": {
+      "source": "Your tools shape your thinking. Set them up once, set them up right.",
+      "translation": "工具会塑造你的思考方式。一次配置到位，并把它配置正确。"
+    },
+    "phases/00-setup-and-tooling/02-git-and-collaboration": {
+      "source": "Version control is not optional. Every experiment, every model, every lesson you build here gets tracked.",
+      "translation": "版本控制不是可选项。你在这里完成的每个实验、每个模型和每节课程都应该留下记录。"
+    },
+    "phases/00-setup-and-tooling/03-gpu-setup-and-cloud": {
+      "source": "Training on CPU is fine for learning. Training for real needs a GPU.",
+      "translation": "用 CPU 训练足以满足学习需要。真正进行训练时，则需要 GPU。"
+    },
+    "phases/00-setup-and-tooling/04-apis-and-keys": {
+      "source": "Every AI API works the same way: send a request, get a response. The details change, the pattern doesn't.",
+      "translation": "所有 AI API 的工作方式都一样：发送请求，接收响应。细节会变化，模式始终不变。"
+    },
+    "phases/00-setup-and-tooling/05-jupyter-notebooks": {
+      "source": "Notebooks are the lab bench of AI engineering. You prototype here, then move what works into production.",
+      "translation": "Notebook 是 AI 工程的实验台。你在这里制作原型，再将可行的方案转入生产环境。"
+    },
+    "phases/00-setup-and-tooling/06-python-environments": {
+      "source": "Dependency hell is real. Virtual environments are the cure.",
+      "translation": "依赖地狱确实存在，而虚拟环境就是解药。"
+    },
+    "phases/00-setup-and-tooling/07-docker-for-ai": {
+      "source": "Containers make \"works on my machine\" a thing of the past.",
+      "translation": "容器让“在我的机器上明明可以运行”成为过去式。"
+    },
+    "phases/00-setup-and-tooling/08-editor-setup": {
+      "source": "Your editor is your co-pilot. Configure it once so it stays out of your way and starts pulling its weight.",
+      "translation": "编辑器是你的副驾驶。一次配置妥当，让它不再妨碍你，并真正开始发挥作用。"
+    },
+    "phases/00-setup-and-tooling/09-data-management": {
+      "source": "Data is the fuel. How you manage it determines how fast you go.",
+      "translation": "数据是燃料。管理数据的方式决定了你能前进多快。"
+    },
+    "phases/00-setup-and-tooling/10-terminal-and-shell": {
+      "source": "The terminal is where AI engineers live. Get comfortable here.",
+      "translation": "终端是 AI 工程师工作的主场。请熟练掌握它。"
+    },
+    "phases/00-setup-and-tooling/11-linux-for-ai": {
+      "source": "Most AI runs on Linux. You need to know enough to not be stuck.",
+      "translation": "大多数 AI 工作负载都运行在 Linux 上。你至少要掌握足够的知识，确保自己不会被卡住。"
+    },
+    "phases/00-setup-and-tooling/12-debugging-and-profiling": {
+      "source": "The worst AI bugs don't crash. They train silently on garbage and report a beautiful loss curve.",
+      "translation": "最糟糕的 AI 缺陷不会让程序崩溃，而是悄无声息地用垃圾数据训练，最后给你一条漂亮的损失曲线。"
+    },
+    "phases/01-math-foundations/01-linear-algebra-intuition": {
+      "source": "Every AI model is just matrix math wearing a fancy hat.",
+      "translation": "每个 AI 模型，本质上都只是戴了一顶华丽帽子的矩阵运算。"
+    },
+    "phases/01-math-foundations/02-vectors-matrices-operations": {
+      "source": "Every neural network is just matrix multiplication with extra steps.",
+      "translation": "每个神经网络，本质上都只是多了几道步骤的矩阵乘法。"
+    },
+    "phases/01-math-foundations/03-matrix-transformations": {
+      "source": "A matrix is a machine that reshapes space. Learn what it does to every point, and you understand the whole transformation.",
+      "translation": "矩阵是一台重塑空间的机器。理解它如何作用于每一个点，你就理解了整个变换。"
+    },
+    "phases/01-math-foundations/04-calculus-for-ml": {
+      "source": "Derivatives tell you which way is downhill. That is all a neural network needs to learn.",
+      "translation": "导数告诉你下坡的方向。神经网络学习所需的，不过如此。"
+    },
+    "phases/01-math-foundations/05-chain-rule-and-autodiff": {
+      "source": "The chain rule is the engine behind every neural network that learns.",
+      "translation": "链式法则是每个能够学习的神经网络背后的引擎。"
+    },
+    "phases/01-math-foundations/06-probability-and-distributions": {
+      "source": "Probability is the language AI uses to express uncertainty.",
+      "translation": "概率是 AI 用来表达不确定性的语言。"
+    },
+    "phases/01-math-foundations/07-bayes-theorem": {
+      "source": "Probability is about what you expect. Bayes' theorem is about what you learn.",
+      "translation": "概率描述你的预期，Bayes 定理描述你如何根据证据学习。"
+    },
+    "phases/01-math-foundations/08-optimization": {
+      "source": "Training a neural network is nothing more than finding the bottom of a valley.",
+      "translation": "训练神经网络，不过是在寻找山谷的最低点。"
+    },
+    "phases/01-math-foundations/09-information-theory": {
+      "source": "Information theory measures surprise. Loss functions are built on it.",
+      "translation": "信息论衡量意外程度，损失函数就建立在它之上。"
+    },
+    "phases/01-math-foundations/10-dimensionality-reduction": {
+      "source": "High-dimensional data has structure. You find it by looking from the right angle.",
+      "translation": "高维数据自有其结构。你需要从正确的角度观察，才能发现它。"
+    },
+    "phases/01-math-foundations/11-singular-value-decomposition": {
+      "source": "SVD is the Swiss Army knife of linear algebra. Every matrix has one. Every data scientist needs one.",
+      "translation": "SVD 是线性代数中的瑞士军刀。每个矩阵都有 SVD，每位数据科学家都需要掌握它。"
+    },
+    "phases/01-math-foundations/12-tensor-operations": {
+      "source": "Tensors are the common language between data and deep learning. Every image, every sentence, every gradient flows through them.",
+      "translation": "张量是数据与深度学习之间的通用语言。每张图像、每个句子和每份梯度都会流经张量。"
+    },
+    "phases/01-math-foundations/13-numerical-stability": {
+      "source": "Floating point is a leaky abstraction. It will bite you during training, and you will not see it coming.",
+      "translation": "浮点数是一种会泄漏细节的抽象。它会在训练过程中反噬你，而且往往毫无征兆。"
+    },
+    "phases/01-math-foundations/14-norms-and-distances": {
+      "source": "Your distance function defines what \"similar\" means. Choose wrong and everything downstream breaks.",
+      "translation": "距离函数定义了“相似”的含义。选错了，后续所有环节都会出问题。"
+    },
+    "phases/01-math-foundations/15-statistics-for-ml": {
+      "source": "Statistics is how you know if your model actually works or just got lucky.",
+      "translation": "统计学帮助你判断模型是真的有效，还是仅仅运气好。"
+    },
+    "phases/01-math-foundations/16-sampling-methods": {
+      "source": "Sampling is how AI explores the space of possibilities.",
+      "translation": "采样是 AI 探索可能性空间的方式。"
+    },
+    "phases/01-math-foundations/17-linear-systems": {
+      "source": "Solving Ax = b is the oldest problem in mathematics that still runs your neural network.",
+      "translation": "求解 Ax = b 是数学中最古老的问题之一，却至今仍在驱动你的神经网络。"
+    },
+    "phases/01-math-foundations/18-convex-optimization": {
+      "source": "Convex problems have one valley. Neural networks have millions. Knowing the difference matters.",
+      "translation": "凸问题只有一个山谷，神经网络却有数百万个。理解二者的区别十分重要。"
+    },
+    "phases/01-math-foundations/19-complex-numbers": {
+      "source": "The square root of -1 is not imaginary. It is the key to rotations, frequencies, and half of signal processing.",
+      "translation": "-1 的平方根并非虚幻之物，而是旋转、频率以及半个信号处理领域的关键。"
+    },
+    "phases/01-math-foundations/20-fourier-transform": {
+      "source": "Every signal is a sum of sine waves. The Fourier transform tells you which ones.",
+      "translation": "每个信号都是若干正弦波之和，Fourier 变换会告诉你其中有哪些波。"
+    },
+    "phases/01-math-foundations/21-graph-theory": {
+      "source": "Graphs are the data structure of relationships. If your data has connections, you need graph theory.",
+      "translation": "图是表达关系的数据结构。只要数据中存在连接，就需要图论。"
+    },
+    "phases/01-math-foundations/22-stochastic-processes": {
+      "source": "Randomness with structure. The math behind random walks, Markov chains, and diffusion models.",
+      "translation": "具有结构的随机性：随机游走、Markov 链和扩散模型背后的数学。"
+    },
+    "phases/02-ml-fundamentals/01-what-is-machine-learning": {
+      "source": "Machine learning is teaching computers to find patterns in data instead of writing rules by hand.",
+      "translation": "机器学习不是手工编写规则，而是教计算机从数据中发现模式。"
+    },
+    "phases/02-ml-fundamentals/02-linear-regression": {
+      "source": "Linear regression draws the best straight line through your data. It is the \"hello world\" of machine learning.",
+      "translation": "线性回归会在数据中画出最佳直线，是机器学习的“Hello, world”。"
+    },
+    "phases/02-ml-fundamentals/03-logistic-regression": {
+      "source": "Logistic regression bends a straight line into an S-curve to answer yes-or-no questions with probabilities.",
+      "translation": "逻辑回归把直线弯成 S 形曲线，用概率回答“是或否”的问题。"
+    },
+    "phases/02-ml-fundamentals/04-decision-trees": {
+      "source": "A decision tree is just a flowchart. But a forest of them is one of the most powerful tools in ML.",
+      "translation": "决策树不过是一张流程图，但由许多树组成的森林，却是机器学习中最强大的工具之一。"
+    },
+    "phases/02-ml-fundamentals/05-support-vector-machines": {
+      "source": "Find the widest street between two classes. That is the entire idea.",
+      "translation": "在两个类别之间找出最宽间隔，这就是支持向量机的核心思想。"
+    },
+    "phases/02-ml-fundamentals/06-knn-and-distances": {
+      "source": "Store everything. Predict by looking at your neighbors. The simplest algorithm that actually works.",
+      "translation": "保存所有数据，通过观察邻居进行预测。这是最简单、却真正有效的算法。"
+    },
+    "phases/02-ml-fundamentals/07-unsupervised-learning": {
+      "source": "No labels, no teacher. The algorithm finds structure on its own.",
+      "translation": "没有标签，也没有老师，算法自行发现结构。"
+    },
+    "phases/02-ml-fundamentals/08-feature-engineering": {
+      "source": "A good feature is worth a thousand data points.",
+      "translation": "一个好特征胜过一千个数据点。"
+    },
+    "phases/02-ml-fundamentals/09-model-evaluation": {
+      "source": "A model is only as good as the way you measure it.",
+      "translation": "模型好不好，取决于你如何衡量它。"
+    },
+    "phases/02-ml-fundamentals/10-bias-variance": {
+      "source": "Every model error comes from one of three sources: bias, variance, or noise. You can only control the first two.",
+      "translation": "模型误差只来自三个来源：偏差、方差或噪声，而你只能控制前两者。"
+    },
+    "phases/02-ml-fundamentals/11-ensemble-methods": {
+      "source": "A group of weak learners, combined correctly, becomes a strong learner. This is not a metaphor. It is a theorem.",
+      "translation": "一组弱学习器只要组合得当，就能成为强学习器。这并非比喻，而是一个定理。"
+    },
+    "phases/02-ml-fundamentals/12-hyperparameter-tuning": {
+      "source": "Hyperparameters are the knobs you turn before training starts. Turning them well is the difference between a mediocre model and a great one.",
+      "translation": "超参数是在训练开始前由你调节的旋钮。能否把它们调好，决定了最终得到的是一个平庸模型，还是一个优秀模型。"
+    },
+    "phases/02-ml-fundamentals/13-ml-pipelines": {
+      "source": "A model is not a product. A pipeline is. The pipeline is everything from raw data to deployed prediction, and every step must be reproducible.",
+      "translation": "模型本身不是产品，流水线才是。流水线涵盖从原始数据到部署后预测的全部过程，而且每个步骤都必须可复现。"
+    },
+    "phases/02-ml-fundamentals/14-naive-bayes": {
+      "source": "The \"naive\" assumption is wrong, and it works anyway. That's the beauty of it.",
+      "translation": "“朴素”的假设明明不成立，算法却依然有效。这正是它的精妙之处。"
+    },
+    "phases/02-ml-fundamentals/15-time-series": {
+      "source": "Past performance does predict future results -- if you check for stationarity first.",
+      "translation": "过去的表现的确可以预测未来的结果——前提是你先检查平稳性。"
+    },
+    "phases/02-ml-fundamentals/16-anomaly-detection": {
+      "source": "Normal is easy to define. Abnormal is whatever doesn't fit.",
+      "translation": "正常很容易定义，不符合正常模式的就是异常。"
+    },
+    "phases/02-ml-fundamentals/17-imbalanced-data": {
+      "source": "When 99% of your data is \"normal,\" accuracy is a lie.",
+      "translation": "当 99% 的数据都属于“正常”类别时，准确率就是一个谎言。"
+    },
+    "phases/02-ml-fundamentals/18-feature-selection": {
+      "source": "More features is not better. The right features is better.",
+      "translation": "特征并非越多越好，选对特征才更好。"
+    },
+    "phases/03-deep-learning-core/01-the-perceptron": {
+      "source": "The perceptron is the atom of neural networks. Split it open and you find weights, a bias, and a decision.",
+      "translation": "感知机是神经网络的原子。把它拆开来看，里面只有权重、偏置和一次决策。"
+    },
+    "phases/03-deep-learning-core/02-multi-layer-networks": {
+      "source": "One neuron draws a line. Stack them, and you can draw anything.",
+      "translation": "一个神经元只能画出一条直线。把它们堆叠起来，就能画出任何形状。"
+    },
+    "phases/03-deep-learning-core/03-backpropagation": {
+      "source": "Backpropagation is the algorithm that makes learning possible. Without it, neural networks are just expensive random number generators.",
+      "translation": "反向传播是让学习成为可能的算法。没有它，神经网络只是一台昂贵的随机数生成器。"
+    },
+    "phases/03-deep-learning-core/04-activation-functions": {
+      "source": "Without nonlinearity, your 100-layer network is a fancy matrix multiply. Activations are the gates that let neural networks think in curves.",
+      "translation": "没有非线性，100 层网络也不过是一次华丽的矩阵乘法。激活函数打开了一扇门，让神经网络得以用曲线思考。"
+    },
+    "phases/03-deep-learning-core/05-loss-functions": {
+      "source": "Your network makes a prediction. The ground truth says otherwise. How wrong is it? That number is the loss. Pick the wrong loss function and your model optimizes for the wrong t…",
+      "translation": "网络给出一个预测，真实答案却并非如此。它错得有多离谱？这个数值就是损失。选错损失函数，模型就会优化一个完全错误的目标。"
+    },
+    "phases/03-deep-learning-core/06-optimizers": {
+      "source": "Gradient descent tells you which direction to move. It says nothing about how far or how fast. SGD is a compass. Adam is GPS with traffic data.",
+      "translation": "梯度下降告诉你应该朝哪个方向移动，却没有说明应该走多远、走多快。SGD 像指南针，Adam 则像掌握实时路况的 GPS。"
+    },
+    "phases/03-deep-learning-core/07-regularization": {
+      "source": "Your model gets 99% on training data and 60% on test data. It memorized instead of learning. Regularization is the tax you impose on complexity to force generalization.",
+      "translation": "模型在训练数据上达到 99%，在测试数据上却只有 60%。它记住了数据，而非学会了规律。正则化就是向复杂度征税，迫使模型具备泛化能力。"
+    },
+    "phases/03-deep-learning-core/08-weight-initialization": {
+      "source": "Initialize wrong and training never starts. Initialize right and 50 layers train as smoothly as 3.",
+      "translation": "初始化错误，训练根本不会开始；初始化正确，50 层网络也能像 3 层网络一样平稳训练。"
+    },
+    "phases/03-deep-learning-core/09-learning-rate-schedules": {
+      "source": "The learning rate is the single most important hyperparameter. Not the architecture. Not the dataset size. Not the activation function. The learning rate. If you tune nothing el…",
+      "translation": "学习率是最重要的单个超参数。不是架构，不是数据集大小，也不是激活函数，而是学习率。如果只调一个参数，就调它。"
+    },
+    "phases/03-deep-learning-core/10-mini-framework": {
+      "source": "You have built neurons, layers, networks, backprop, activations, loss functions, optimizers, regularization, initialization, and LR schedules. All as separate pieces. Now wire t…",
+      "translation": "你已经分别构建了神经元、层、网络、反向传播、激活函数、损失函数、优化器、正则化、初始化和学习率调度。现在把它们连接成一个框架。不是 PyTorch，也不是 TensorFlow，而是属于你自己的框架。"
+    },
+    "phases/03-deep-learning-core/11-intro-to-pytorch": {
+      "source": "You built the engine from pistons and crankshafts. Now learn the one everyone actually drives.",
+      "translation": "你已经从活塞和曲轴开始造出了引擎。现在来学习所有人真正使用的那一款。"
+    },
+    "phases/03-deep-learning-core/12-intro-to-jax": {
+      "source": "PyTorch mutates tensors. TensorFlow builds graphs. JAX compiles pure functions. That last one changes how you think about deep learning.",
+      "translation": "PyTorch 会修改张量，TensorFlow 会构建计算图，JAX 则会编译纯函数。最后这一点会改变你思考深度学习的方式。"
+    },
+    "phases/03-deep-learning-core/13-debugging-neural-networks": {
+      "source": "Your network compiled. It ran. It produced a number. The number is wrong and nothing crashed. Welcome to the hardest kind of debugging -- the kind where there is no error message.",
+      "translation": "网络编译成功，也运行完毕，还输出了一个数值。但这个数值是错的，程序却没有崩溃。欢迎来到最棘手的调试领域——这里根本没有错误消息。"
+    }
+  },
+  "artifacts": {
+    "phases/00-setup-and-tooling/01-dev-environment/outputs/prompt-env-check.md": {
+      "source": "Diagnose and fix AI engineering environment setup issues",
+      "translation": "诊断并修复 AI 工程环境配置问题"
+    },
+    "phases/00-setup-and-tooling/04-apis-and-keys/outputs/prompt-api-troubleshooter.md": {
+      "source": "Diagnose and fix common AI API errors (auth, rate limits, timeouts)",
+      "translation": "诊断并修复常见的 AI API 错误（身份认证、速率限制、超时）"
+    },
+    "phases/00-setup-and-tooling/05-jupyter-notebooks/outputs/prompt-notebook-helper.md": {
+      "source": "Debug Jupyter notebook issues including kernel crashes, memory problems, and display failures",
+      "translation": "调试 Jupyter Notebook 问题，包括 kernel 崩溃、内存问题和显示故障"
+    },
+    "phases/00-setup-and-tooling/09-data-management/outputs/prompt-data-helper.md": {
+      "source": "Find and load the right dataset for an AI/ML task",
+      "translation": "为 AI/ML 任务查找并加载合适的数据集"
+    },
+    "phases/00-setup-and-tooling/12-debugging-and-profiling/outputs/prompt-debug-ai-code.md": {
+      "source": "Diagnose AI-specific bugs including NaN loss, shape errors, training failures, and OOM",
+      "translation": "诊断 AI 特有的缺陷，包括 loss 为 NaN、shape 错误、训练失败和 OOM"
+    },
+    "phases/01-math-foundations/01-linear-algebra-intuition/outputs/prompt-linear-algebra-tutor.md": {
+      "source": "Teach linear algebra through geometric intuition and AI applications",
+      "translation": "通过几何直觉和 AI 应用讲解线性代数"
+    },
+    "phases/01-math-foundations/02-vectors-matrices-operations/outputs/prompt-matrix-operations.md": {
+      "source": "Teaches matrix operations through geometric intuition, connecting abstract math to neural network mechanics",
+      "translation": "通过几何直觉讲解矩阵运算，将抽象数学与神经网络的运行机制联系起来"
+    },
+    "phases/01-math-foundations/03-matrix-transformations/outputs/prompt-transformation-visualizer.md": {
+      "source": "Explain what a matrix transformation does geometrically given its entries",
+      "translation": "根据矩阵元素，从几何角度解释矩阵变换的作用"
+    },
+    "phases/01-math-foundations/04-calculus-for-ml/outputs/skill-gradient-computation.md": {
+      "source": "Compute gradients of common ML loss functions and choose the right derivative approach",
+      "translation": "计算常见 ML 损失函数的梯度，并选择合适的求导方法"
+    },
+    "phases/01-math-foundations/05-chain-rule-and-autodiff/outputs/skill-autodiff.md": {
+      "source": "Build, debug, and reason about automatic differentiation systems",
+      "translation": "构建、调试并推理自动微分系统"
+    },
+    "phases/01-math-foundations/06-probability-and-distributions/outputs/skill-probability-reasoning.md": {
+      "source": "Choose the right probability distribution for a given ML problem",
+      "translation": "为给定 ML 问题选择合适的概率分布"
+    },
+    "phases/01-math-foundations/07-bayes-theorem/outputs/prompt-bayesian-reasoning.md": {
+      "source": "Walk through Bayesian reasoning step by step for any scenario",
+      "translation": "针对任意场景逐步推演贝叶斯推理"
+    },
+    "phases/01-math-foundations/08-optimization/outputs/prompt-optimizer-guide.md": {
+      "source": "Guides the user through choosing the right optimizer for their specific machine learning problem",
+      "translation": "引导用户为具体的机器学习问题选择合适的优化器"
+    },
+    "phases/01-math-foundations/09-information-theory/outputs/skill-information-theory.md": {
+      "source": "Apply information theory concepts to ML loss functions, model evaluation, and feature selection",
+      "translation": "将信息论概念应用于 ML 损失函数、模型评估和特征选择"
+    },
+    "phases/01-math-foundations/10-dimensionality-reduction/outputs/skill-dimensionality-reduction.md": {
+      "source": "Choose the right dimensionality reduction technique for a given task based on data size, goal, and downstream use",
+      "translation": "根据数据规模、目标和下游用途，为给定任务选择合适的降维技术"
+    },
+    "phases/01-math-foundations/11-singular-value-decomposition/outputs/skill-svd.md": {
+      "source": "Apply SVD to real problems including compression, denoising, recommendations, and least-squares solving",
+      "translation": "将 SVD 应用于压缩、去噪、推荐和最小二乘求解等实际问题"
+    },
+    "phases/01-math-foundations/12-tensor-operations/outputs/prompt-tensor-debugger.md": {
+      "source": "Step-by-step debugging prompt for tensor shape errors in deep learning code",
+      "translation": "用于逐步调试深度学习代码中 tensor shape 错误的 prompt"
+    },
+    "phases/01-math-foundations/12-tensor-operations/outputs/prompt-tensor-shapes.md": {
+      "source": "Debug tensor shape mismatches and recommend fixes for common deep learning operations",
+      "translation": "调试 tensor shape 不匹配问题，并为常见深度学习运算推荐修复方案"
+    },
+    "phases/01-math-foundations/13-numerical-stability/outputs/prompt-numerical-debugger.md": {
+      "source": "Diagnoses NaN, Inf, and numerical stability issues in neural network training",
+      "translation": "诊断神经网络训练中的 NaN、Inf 和数值稳定性问题"
+    },
+    "phases/01-math-foundations/14-norms-and-distances/outputs/prompt-distance-chooser.md": {
+      "source": "Guides the user through choosing the right distance metric for their specific task",
+      "translation": "引导用户根据具体任务选择合适的距离度量"
+    },
+    "phases/01-math-foundations/15-statistics-for-ml/outputs/skill-statistical-testing.md": {
+      "source": "Choose the right statistical test for comparing ML models and evaluating experiments",
+      "translation": "为比较 ML 模型和评估实验选择合适的统计检验"
+    },
+    "phases/01-math-foundations/16-sampling-methods/outputs/skill-sampling-strategy.md": {
+      "source": "Choose the right sampling method for generation, estimation, or inference",
+      "translation": "为生成、估计或推理选择合适的采样方法"
+    },
+    "phases/01-math-foundations/17-linear-systems/outputs/prompt-linear-solver.md": {
+      "source": "Recommend the right algorithm for solving a linear system Ax=b based on matrix properties",
+      "translation": "根据矩阵性质，为求解线性系统 Ax=b 推荐合适的算法"
+    },
+    "phases/01-math-foundations/18-convex-optimization/outputs/skill-convexity-checker.md": {
+      "source": "Determine if an optimization problem is convex and choose the right solver",
+      "translation": "判断优化问题是否为凸问题，并选择合适的求解器"
+    },
+    "phases/01-math-foundations/19-complex-numbers/outputs/skill-complex-arithmetic.md": {
+      "source": "Quick reference for complex number operations in ML and signal processing contexts",
+      "translation": "ML 与信号处理场景中的复数运算速查"
+    },
+    "phases/01-math-foundations/20-fourier-transform/outputs/prompt-spectral-analyzer.md": {
+      "source": "Guides analysis of frequency content in signals using Fourier transform techniques",
+      "translation": "使用 Fourier 变换技术分析信号的频率成分"
+    },
+    "phases/01-math-foundations/21-graph-theory/outputs/skill-graph-analysis.md": {
+      "source": "Analyze graph-structured data and choose the right graph algorithm for ML tasks",
+      "translation": "分析图结构数据，并为 ML 任务选择合适的图算法"
+    },
+    "phases/01-math-foundations/22-stochastic-processes/outputs/prompt-stochastic-process-advisor.md": {
+      "source": "Identify which stochastic process framework applies to a given problem and recommend implementation",
+      "translation": "识别适用于给定问题的随机过程框架，并推荐实现方案"
+    },
+    "phases/02-ml-fundamentals/01-what-is-machine-learning/outputs/prompt-ml-problem-framer.md": {
+      "source": "Frame a real-world business problem as a machine learning task",
+      "translation": "将现实业务问题转化为机器学习任务"
+    },
+    "phases/02-ml-fundamentals/02-linear-regression/outputs/skill-regression.md": {
+      "source": "Choose the right regression approach based on data characteristics and problem constraints",
+      "translation": "根据数据特征和问题约束选择合适的回归方法"
+    },
+    "phases/02-ml-fundamentals/03-logistic-regression/outputs/skill-classification-baseline.md": {
+      "source": "Establish a strong classification baseline before reaching for complex models",
+      "translation": "在采用复杂模型前建立可靠的分类 baseline"
+    },
+    "phases/02-ml-fundamentals/04-decision-trees/outputs/prompt-tree-interpreter.md": {
+      "source": "Interpret decision tree results and diagnose potential issues",
+      "translation": "解读决策树结果并诊断潜在问题"
+    },
+    "phases/02-ml-fundamentals/05-support-vector-machines/outputs/skill-svm-kernel-chooser.md": {
+      "source": "Choose the right SVM kernel and tune C and gamma for your problem",
+      "translation": "选择合适的 SVM kernel，并针对问题调优 C 和 gamma"
+    },
+    "phases/02-ml-fundamentals/06-knn-and-distances/outputs/prompt-distance-metric-advisor.md": {
+      "source": "Recommend the right distance metric based on data type and problem characteristics",
+      "translation": "根据数据类型和问题特征推荐合适的距离度量"
+    },
+    "phases/02-ml-fundamentals/07-unsupervised-learning/outputs/skill-clustering-guide.md": {
+      "source": "Choose the right clustering algorithm based on data shape, noise, and constraints",
+      "translation": "根据数据形态、噪声和约束选择合适的聚类算法"
+    },
+    "phases/02-ml-fundamentals/08-feature-engineering/outputs/prompt-feature-engineer.md": {
+      "source": "Systematic prompt for engineering features from raw tabular data",
+      "translation": "从原始表格数据构造特征的系统化 prompt"
+    },
+    "phases/02-ml-fundamentals/09-model-evaluation/outputs/skill-evaluation.md": {
+      "source": "Evaluation strategy checklist for classification and regression models",
+      "translation": "分类与回归模型的评估策略检查清单"
+    },
+    "phases/02-ml-fundamentals/10-bias-variance/outputs/prompt-model-diagnostics.md": {
+      "source": "Diagnose model performance issues using train/test metrics and learning curves",
+      "translation": "使用训练/测试指标和学习曲线诊断模型性能问题"
+    },
+    "phases/02-ml-fundamentals/11-ensemble-methods/outputs/prompt-ensemble-selector.md": {
+      "source": "Pick the right ensemble method for a given dataset and problem",
+      "translation": "为给定数据集和问题选择合适的集成方法"
+    },
+    "phases/02-ml-fundamentals/11-ensemble-methods/outputs/skill-ensemble-builder.md": {
+      "source": "Choose the right ensemble method and configure it for your problem",
+      "translation": "选择合适的集成方法，并根据问题完成配置"
+    },
+    "phases/02-ml-fundamentals/12-hyperparameter-tuning/outputs/prompt-tuning-strategy.md": {
+      "source": "Recommend a hyperparameter tuning strategy based on model type, data size, and compute budget",
+      "translation": "根据模型类型、数据规模和算力预算推荐超参数调优策略"
+    },
+    "phases/02-ml-fundamentals/13-ml-pipelines/outputs/prompt-ml-pipeline.md": {
+      "source": "Build, debug, and deploy reproducible ML pipelines",
+      "translation": "构建、调试并部署可复现的 ML pipeline"
+    },
+    "phases/02-ml-fundamentals/14-naive-bayes/outputs/skill-naive-bayes-chooser.md": {
+      "source": "Choose the right Naive Bayes variant for your classification task",
+      "translation": "为分类任务选择合适的 Naive Bayes 变体"
+    },
+    "phases/02-ml-fundamentals/15-time-series/outputs/prompt-time-series-advisor.md": {
+      "source": "Frame time series problems and recommend approaches",
+      "translation": "定义时间序列问题并推荐解决方法"
+    },
+    "phases/02-ml-fundamentals/16-anomaly-detection/outputs/skill-anomaly-detector.md": {
+      "source": "Choose the right anomaly detection approach for your problem",
+      "translation": "为问题选择合适的异常检测方法"
+    },
+    "phases/02-ml-fundamentals/17-imbalanced-data/outputs/skill-imbalanced-data.md": {
+      "source": "Decision checklist for handling imbalanced classification problems",
+      "translation": "处理类别不平衡分类问题的决策检查清单"
+    },
+    "phases/02-ml-fundamentals/18-feature-selection/outputs/skill-feature-selector.md": {
+      "source": "Quick reference decision tree for choosing the right feature selection method",
+      "translation": "用于选择合适特征选择方法的速查决策树"
+    },
+    "phases/03-deep-learning-core/01-the-perceptron/outputs/skill-perceptron.md": {
+      "source": "Understand the perceptron pattern and when to use single-layer vs multi-layer architectures",
+      "translation": "理解感知机模式，以及何时使用单层或多层架构"
+    },
+    "phases/03-deep-learning-core/02-multi-layer-networks/outputs/prompt-network-architect.md": {
+      "source": "Guides the user through designing neural network architectures by choosing layer counts, neuron counts, and activation functions for a given problem",
+      "translation": "引导用户针对给定问题，通过选择层数、神经元数量和激活函数来设计神经网络架构"
+    },
+    "phases/03-deep-learning-core/03-backpropagation/outputs/prompt-gradient-debugger.md": {
+      "source": "Diagnose and fix gradient problems in neural networks -- vanishing gradients, exploding gradients, and NaN values",
+      "translation": "诊断并修复神经网络中的梯度问题——梯度消失、梯度爆炸和 NaN 值"
+    },
+    "phases/03-deep-learning-core/04-activation-functions/outputs/prompt-activation-selector.md": {
+      "source": "A decision prompt for choosing the right activation function for any neural network architecture",
+      "translation": "为任意神经网络架构选择合适激活函数的决策 prompt"
+    },
+    "phases/03-deep-learning-core/05-loss-functions/outputs/prompt-loss-debugger.md": {
+      "source": "A diagnostic prompt for debugging loss curves and training failures",
+      "translation": "用于调试 loss 曲线和训练失败的诊断 prompt"
+    },
+    "phases/03-deep-learning-core/05-loss-functions/outputs/prompt-loss-function-selector.md": {
+      "source": "A decision prompt for choosing the right loss function for any ML task",
+      "translation": "为任意 ML 任务选择合适损失函数的决策 prompt"
+    },
+    "phases/03-deep-learning-core/06-optimizers/outputs/prompt-optimizer-selector.md": {
+      "source": "A decision prompt for choosing the right optimizer and learning rate for any architecture",
+      "translation": "为任意架构选择合适 optimizer 和 learning rate 的决策 prompt"
+    },
+    "phases/03-deep-learning-core/07-regularization/outputs/prompt-regularization-advisor.md": {
+      "source": "A diagnostic prompt for choosing regularization strategies based on overfitting symptoms",
+      "translation": "根据过拟合症状选择正则化策略的诊断 prompt"
+    },
+    "phases/03-deep-learning-core/08-weight-initialization/outputs/prompt-init-strategy.md": {
+      "source": "Diagnose weight initialization problems and recommend the right strategy for any neural network architecture",
+      "translation": "诊断权重初始化问题，并为任意神经网络架构推荐合适的初始化策略"
+    },
+    "phases/03-deep-learning-core/09-learning-rate-schedules/outputs/prompt-lr-schedule-advisor.md": {
+      "source": "Recommend the right learning rate schedule and hyperparameters for any training setup",
+      "translation": "为任意训练设置推荐合适的 learning rate schedule 和超参数"
+    },
+    "phases/03-deep-learning-core/10-mini-framework/outputs/prompt-framework-architect.md": {
+      "source": "Design neural network architectures using framework abstractions -- modules, containers, losses, and optimizers",
+      "translation": "使用框架抽象——模块、容器、损失函数和优化器——设计神经网络架构"
+    },
+    "phases/03-deep-learning-core/11-intro-to-pytorch/outputs/prompt-pytorch-debugger.md": {
+      "source": "Diagnose and fix common PyTorch training failures from symptoms",
+      "translation": "根据症状诊断并修复常见的 PyTorch 训练失败"
+    },
+    "phases/03-deep-learning-core/11-intro-to-pytorch/outputs/skill-pytorch-patterns.md": {
+      "source": "Reference patterns for PyTorch training, evaluation, and deployment",
+      "translation": "PyTorch 训练、评估和部署的参考模式"
+    },
+    "phases/03-deep-learning-core/12-intro-to-jax/outputs/prompt-jax-optimizer.md": {
+      "source": "Choose and configure the right JAX/Optax optimizer for a given training scenario",
+      "translation": "为给定训练场景选择并配置合适的 JAX/Optax optimizer"
+    },
+    "phases/03-deep-learning-core/12-intro-to-jax/outputs/skill-jax-patterns.md": {
+      "source": "Functional programming patterns in JAX -- when and how to use grad, jit, vmap, and pmap",
+      "translation": "JAX 函数式编程模式——何时以及如何使用 grad、jit、vmap 和 pmap"
+    },
+    "phases/03-deep-learning-core/13-debugging-neural-networks/outputs/prompt-nn-debugger.md": {
+      "source": "Diagnose neural network training failures from symptoms -- loss curves, gradient stats, and activation patterns",
+      "translation": "根据 loss 曲线、梯度统计和激活模式等症状诊断神经网络训练失败"
+    },
+    "phases/03-deep-learning-core/13-debugging-neural-networks/outputs/skill-debug-checklist.md": {
+      "source": "Decision-tree checklist for debugging neural network training failures",
+      "translation": "调试神经网络训练失败的决策树检查清单"
+    }
+  }
+}

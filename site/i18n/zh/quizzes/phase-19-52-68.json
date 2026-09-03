@@ -1,0 +1,1110 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/19-capstone-projects/52-experiment-runner": {
+      "sourceSha256": "cec70c2289da9c0af766a659fa022facea805847b1806f4c17e58b9ffb81c5ea",
+      "questions": [
+        {
+          "question": "为什么 runner 要启动子进程，而不是在当前进程中导入实验脚本？",
+          "options": [
+            "因为 subprocess 比 import 更快",
+            "因为独立进程让 runner 能在超时或超出内存限制时终止进程，并将崩溃与 orchestrator 隔离",
+            "因为 Python 不允许嵌套 import",
+            "因为指标格式要求这样做"
+          ],
+          "explanation": "独立进程是该语言原生提供的最简单隔离方式。父进程保留终止进程的控制能力和独立地址空间，因此实验进程崩溃时不会连带导致 orchestrator 崩溃。"
+        },
+        {
+          "question": "为什么内存上限被称为软限制？",
+          "options": [
+            "因为它只适用于堆，不适用于栈",
+            "因为 poller 的轮询间隔不为零，所以进程可能在两次轮询之间瞬间超过上限，而 runner 只能在下一次观测时采取行动",
+            "因为操作系统总会覆盖该限制",
+            "因为 numpy 会忽略该限制"
+          ],
+          "explanation": "该上限通过轮询而非内核内限制来执行。poller 的轮询间隔决定了限制的分辨率，短暂峰值可能会在下一次观测前暂时超过上限。"
+        },
+        {
+          "question": "当 stdout 中已有指标但退出码非零时，runner 会返回哪个终止标签？",
+          "options": [
+            "timeout",
+            "crash",
+            "ok",
+            "oom"
+          ],
+          "explanation": "只有退出码为零且指标解析成功时，终止标签才是 ok。即使失败前已捕获部分指标，非零退出码仍表示 crash。"
+        },
+        {
+          "question": "runner 如何在 stdout 中识别最终的指标数据块？",
+          "options": [
+            "扫描 stderr 以查找 json",
+            "要求输出恰好只有一行",
+            "读取最后一个可解析为 json 且键覆盖必需 metric_keys 的行；此前覆盖这些键的行会成为中间指标",
+            "读取第一个 json 行"
+          ],
+          "explanation": "最终指标是最后一个可解析为 json 且包含每个必需键的行。此前覆盖这些键的行会保留为中间指标，用于绘制学习曲线。"
+        },
+        {
+          "question": "为什么消融辅助函数每次只扫描一个调节项，而不采用全因子设计？",
+          "options": [
+            "因为每次只调整一个调节项可产生 evaluator 能绘制的清晰坐标轴，而全因子设计会使规模呈指数增长并让结果难以解释",
+            "因为 seed 只能沿一个调节项变化",
+            "因为 runner 无法启动多个子进程",
+            "因为 numpy 不支持笛卡尔积"
+          ],
+          "explanation": "单调节项扫描能让结果保持可解释。全因子设计的成本会随调节项数量呈指数增长，而且生成的表格难以阅读。"
+        },
+        {
+          "question": "将 spec.seed 转发到 config['__seed'] 能为 evaluator 提供什么保证？",
+          "options": [
+            "更低的内存消耗",
+            "更短的 wall time",
+            "一个免费的显著性检验",
+            "确定性：使用相同 seed 重新运行会产生相同指标，因此 evaluator 能区分真实变化与随机噪声"
+          ],
+          "explanation": "seed 固定了实验中的随机初始化。使用相同 seed 的两次运行会产生相同指标，这使 evaluator 能将真实回归与不同随机抽样区分开来。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/53-result-evaluator": {
+      "sourceSha256": "2504639d011a7b7eff0a294f6a7bc3c5b8590f38a13ce7622699e5af1c676731",
+      "questions": [
+        {
+          "question": "为什么 evaluator 使用配对 t 检验，而不是比较两个单独的数值？",
+          "options": [
+            "因为 numpy 要求使用配对数组",
+            "因为 runner 无法输出单个数值",
+            "因为在 candidate 和 baseline 之间配对相同 seed，可以将配置变化与随机初始化噪声隔离开",
+            "因为 IRB 总是要求使用 t 检验"
+          ],
+          "explanation": "按 seed 配对可以抵消随机初始化的影响。剩余差异可归因于配置变化，而这正是该检验要测量的内容。"
+        },
+        {
+          "question": "为什么 evaluator 要为每个指标携带 direction 字段？",
+          "options": [
+            "因为 numpy 计算方差时需要 direction",
+            "因为 accuracy 和 loss 的优劣方向相反；improvement 的符号取决于被比较指标在哪个方向上更好",
+            "因为 runner 要求该字段",
+            "因为 parser 需要该字段"
+          ],
+          "explanation": "对越高越好的指标而言，上升表示改善；对越低越好的指标而言，下降表示改善。direction 字段告诉 improvement 函数应采用哪种符号约定。"
+        },
+        {
+          "question": "即使 p value 显著，当 |improvement| 低于阈值时，verdict 路径会返回什么？",
+          "options": [
+            "noise",
+            "regressed",
+            "failed",
+            "improved"
+          ],
+          "explanation": "从循环的角度看，统计显著但小到无法据此采取行动的变化仍属于 noise。阈值门控先于显著性门控执行。"
+        },
+        {
+          "question": "为什么 evaluator 在计算 improvement 前要转换对数尺度指标？",
+          "options": [
+            "因为 p value 取决于该转换",
+            "因为 numpy 的对数运算更快",
+            "因为 runner 只输出对数尺度指标",
+            "因为 perplexity 等指标会随 loss 指数增长；转换到对数空间后，2% 这样的阈值在线性和对数指标间才具有可比意义"
+          ],
+          "explanation": "Perplexity = exp(loss)。loss 的微小变化会造成 perplexity 的大幅变化。取对数可以让相对改善在统一阈值下与线性指标保持可比。"
+        },
+        {
+          "question": "配对 t 检验辅助函数何时会返回 p_value = None？",
+          "options": [
+            "方差为零时",
+            "均值相等时",
+            "指标尺度为 log 时",
+            "可用的配对样本少于两个时"
+          ],
+          "explanation": "t 分布至少需要一个自由度。当 n 小于 2 时无法估计方差，辅助函数会返回 None，使 verdict 路径可以将该次运行标记为 noise。"
+        },
+        {
+          "question": "如果哪怕一个 candidate 结果的终止标签不是 ok，会发生什么？",
+          "options": [
+            "evaluator 返回 failed verdict，并在 rationale 中记录异常终止标签",
+            "evaluator 丢弃该 seed 并继续",
+            "evaluator 重试该次运行",
+            "evaluator 回退到单侧检验"
+          ],
+          "explanation": "一次失败的运行就会使 candidate 集失效。evaluator 会短路 verdict 路径并返回 failed，同时列出问题终止标签，避免 orchestrator 根据崩溃的运行得出结论。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/54-paper-writer": {
+      "sourceSha256": "b476522991afc153bcaada0b7983a9d802d79ac8b60e4a31111646317082cd97",
+      "questions": [
+        {
+          "question": "为什么 writer 要在撰写任何正文前，先以数据形式声明章节、图和引用？",
+          "options": [
+            "因为 BibTeX 无法解析前向引用",
+            "因为 LaTeX 要求前向声明",
+            "因为模型需要 system prompt",
+            "因为结构就是契约：harness 可以在生成正文前验证完整性"
+          ],
+          "explanation": "结构优先让 harness 能在调用正文生成器前验证唯一性、引用覆盖和图覆盖。这个骨架就是契约。"
+        },
+        {
+          "question": "图注入步骤会从实验 manifest 生成什么？",
+          "options": [
+            "一组 Figure 记录，具有稳定 id，且路径已规范化为相对于论文目录的路径",
+            "一个参考文献存根",
+            "一个由 artifacts 编译出的 PDF",
+            "一个包含图描述的模型 prompt"
+          ],
+          "explanation": "read_experiment_manifest 返回 Figure 记录。id 是确定性的，路径经过规范化，caption 来自 manifest。"
+        },
+        {
+          "question": "哪种验证失败会在写入任何文件前引发 PaperValidationError？",
+          "options": [
+            "abstract 超过 200 个单词",
+            "作者数量为奇数",
+            "某个章节引用了 bibliography 中未声明的键",
+            "某个图路径在磁盘上不存在"
+          ],
+          "explanation": "缺失 bibliography 键、重复 figure id、空 title、空 abstract 和未知 figure ref 都会引发 PaperValidationError。这里不强制检查磁盘文件是否存在，因为稍后的 LaTeX compiler 会执行该检查。"
+        },
+        {
+          "question": "为什么 prose generator 是注入 PaperWriter 的 callable，而不是 PaperWriter 自身的方法？",
+          "options": [
+            "因为测试可以将模型调用替换为确定性的 MockProseGenerator，而无需改动 writer",
+            "因为 LaTeX 要求 callback",
+            "因为 dataclass 无法保存状态",
+            "因为 Python 不允许方法接受 Paper 作为参数"
+          ],
+          "explanation": "writer 将 prose generator 作为依赖接收。测试会替换为 MockProseGenerator，生产环境则替换为模型调用，而 writer 无需改变。"
+        },
+        {
+          "question": "PaperWriter.write 成功时会输出哪三个文件？",
+          "options": [
+            "paper.tex, references.bib, manifest.json",
+            "manifest.json, prose.txt, paper.pdf",
+            "paper.tex, paper.pdf, references.bib",
+            "outline.json, paper.tex, figures.tar"
+          ],
+          "explanation": "paper.tex 是 LaTeX 源文件，references.bib 是参考文献文件，manifest.json 是 critic loop 接下来读取的结构化 artifact。"
+        },
+        {
+          "question": "为什么 manifest 是 writer 契约的一部分，而不能只有 LaTeX 文件？",
+          "options": [
+            "因为下游工具（critics、dashboards）读取结构化 manifest，而不是 LaTeX",
+            "因为 manifest.json 是 BibTeX 唯一接受的文件",
+            "因为 LaTeX 太大，无法解析",
+            "因为 LaTeX compiler 会拒绝无类型章节"
+          ],
+          "explanation": "manifest 是供下游阶段使用的稳定接口。critics 和 dashboards 会检查 manifest.json。LaTeX 是供人阅读的 artifact，而不是机器接口。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/55-critic-loop": {
+      "sourceSha256": "db5d9c9ab0c74172af6e46184d8a80f901d0f28bd7577f19f9da661ae17e46ee",
+      "questions": [
+        {
+          "question": "为什么 critic 要按五个固定维度评分，而不是返回一段自由形式文本？",
+          "options": [
+            "因为模型无法可靠地生成段落",
+            "因为 reviser 只接受 JSON",
+            "因为 LaTeX 要求 score 字段",
+            "因为固定向量让 harness 能检测各轮中每个维度的回归"
+          ],
+          "explanation": "固定维度向量将 critique 转化为 harness 可跨轮比较的结构化数据。自由形式批评无法验证，而向量能让回归显现出来。"
+        },
+        {
+          "question": "每轮结束时，循环按什么顺序检查停止条件？",
+          "options": [
+            "Plateau，然后 target，最后 budget",
+            "Budget，然后 plateau，最后 target",
+            "通过随机规则决定哪个先触发",
+            "Target，然后 plateau，最后 budget"
+          ],
+          "explanation": "先判断 target met（工作已完成），再判断 plateau（无法再取得进展），最后判断 budget（硬上限）。当多个条件可能同时触发时，这一顺序能让结果保持确定性。"
+        },
+        {
+          "question": "为什么 plateau 检测要求连续两轮无变化，而不是只看一轮？",
+          "options": [
+            "因为模型会返回非确定性分数",
+            "因为即使评分器是确定性的，每轮输出仍会随采用的建议不同而波动；仅一轮无变化不足以构成信号",
+            "因为 dataclass 要求使用 list",
+            "因为 dashboard 需要两个点"
+          ],
+          "explanation": "即使评分器是确定性的，其输出也会随每轮采用的建议而变化。要求连续两轮无变化可以过滤这种噪声。"
+        },
+        {
+          "question": "reviser 每轮会接收什么作为输入？",
+          "options": [
+            "原始 LaTeX 源文件",
+            "模型生成的段落",
+            "包含分数在内的完整 Critique 对象",
+            "paper 和 Suggestion 记录列表"
+          ],
+          "explanation": "Reviser.__call__ 接收 (paper, suggestions)。每个 Suggestion 都包含一个 dimension、target section 和 edit instruction。reviser 看不到分数，这种分离让任一侧都可独立替换而无需改动另一侧。"
+        },
+        {
+          "question": "trace 中为每一轮记录了什么？",
+          "options": [
+            "只有最终论文草稿",
+            "只有 convergence verdict",
+            "模型 prompt 和 completion",
+            "轮次编号、score vector、mean、采用的 suggestions 和 verdict"
+          ],
+          "explanation": "trace 是逐轮 event log。dashboards 将它渲染为分数随时间变化的图表；下一阶段读取它以判断该 branch 是否值得保留。"
+        },
+        {
+          "question": "如果 critic 不断给出永远无法改善任何分数的建议，最终会产生哪个终止 verdict？",
+          "options": [
+            "converged，因为建议已被采用",
+            "target，因为 budget 会掩盖这个 bug",
+            "plateau 或 budget，因为 harness 会发现没有进展",
+            "发生异常，因为循环会崩溃"
+          ],
+          "explanation": "最终会触发 plateau（连续两轮无变化）或 budget（硬上限）。两种 verdict 都会暴露这个 bug，循环绝不会悄然成功。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/56-iteration-scheduler": {
+      "sourceSha256": "6c8737c7f5a498c7dedabbdee60a11e8f8cc52b61d9b139631b5b9ea5a87a4f9",
+      "questions": [
+        {
+          "question": "为什么 scheduler 使用 UCB 评分，而不是总是选择当前最佳 branch？",
+          "options": [
+            "因为否则 queue 无法排序",
+            "因为 asyncio 要求使用 UCB",
+            "因为 UCB 的计算速度更快",
+            "因为贪心选择从不探索；UCB 能平衡利用与探索"
+          ],
+          "explanation": "贪心策略会锁定最先领先的 branch，均匀策略则从不利用。UCB 会选择领先者，同时通过 sqrt(ln N / n) 项为探索较少的 branch 预留容量。"
+        },
+        {
+          "question": "在 UCB1 下，completed runs 为零的 branch 会得到什么分数？",
+          "options": [
+            "正无穷，因此从未尝试过的 branch 总会优先被选中",
+            "其他所有 branch 的 mean reward",
+            "零",
+            "探索常数 c"
+          ],
+          "explanation": "本课为 runs=0 指定 +inf。这样可保证每个 branch 在任何 branch 被再次选择前都至少尝试一次。"
+        },
+        {
+          "question": "scheduler 如何让多个 slot 持续处于忙碌状态？",
+          "options": [
+            "它为每个已分发 hypothesis 使用 asyncio.create_task，并在 in-flight 集合上等待 FIRST_COMPLETED",
+            "它在线程池中运行 runner",
+            "它通过 sleep 阻塞 event loop",
+            "它使用 multiprocessing"
+          ],
+          "explanation": "每个已分发 hypothesis 都会成为一个 task。主循环等待 FIRST_COMPLETED，因此某个 slot 一完成就会立即释放，并分发另一个 hypothesis。"
+        },
+        {
+          "question": "scheduler 何时为某个 branch 发出 paper.trigger？",
+          "options": [
+            "每当该 branch 收到一个结果时",
+            "达到 prune floor 时",
+            "仅在运行结束时",
+            "当该 branch 的 mean 首次达到或超过 paper threshold 时，且每个 branch 只触发一次"
+          ],
+          "explanation": "每个 branch 只会在其 mean 首次越过阈值时触发一次。BranchStats 上的 paper_triggered 标志可防止重复触发。"
+        },
+        {
+          "question": "当某个 branch 在达到 minimum-runs threshold 后，mean reward 仍低于 prune floor，会发生什么？",
+          "options": [
+            "什么也不做；UCB 最终会选择另一个 branch",
+            "reward floor 会自动降低",
+            "该 branch 被标记为 pruned，其余属于该 branch 的 hypotheses 会从 queue 中移除",
+            "scheduler 引发异常"
+          ],
+          "explanation": "剪枝会将该 branch 从后续调度中移除。剪枝与 picker 相互独立：UCB 负责排序，剪枝负责淘汰。"
+        },
+        {
+          "question": "scheduler 将哪两项预算作为硬限制执行？",
+          "options": [
+            "内存和 CPU",
+            "paper triggers 和 prune count",
+            "slots 和 queue depth",
+            "max_experiments（总运行次数）和 max_seconds（wall clock）"
+          ],
+          "explanation": "两者都会成为停止原因。max_experiments 限制总工作量，max_seconds 限制 wall time。trace 会记录是哪一项终止了运行。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/57-end-to-end-research-demo": {
+      "sourceSha256": "7fc1057c957d824285a0a70b1d28448d391fd7b2fc0ff992b01bad8181f8fccb",
+      "questions": [
+        {
+          "question": "本课中的 demo 有什么作用？",
+          "options": [
+            "用 baseline 对 scheduler 进行基准测试",
+            "在每个 branch 上调用真实语言模型",
+            "用一个全新框架取代之前的课程",
+            "通过普通 Python import 组合前面课程中的 primitives"
+          ],
+          "explanation": "该 demo 是一项组合测试。每个阶段都来自独立课程，demo 将其导入并连接成 report。没有新框架，也没有新抽象。"
+        },
+        {
+          "question": "为什么本课通过 importlib 加载前面的课程，而不是使用普通 package import？",
+          "options": [
+            "因为 importlib 更快",
+            "因为前面的每课都是独立的 code/ 文件夹，而不是已安装的 package；importlib 可按文件路径加载它们",
+            "因为 asyncio 要求使用 importlib",
+            "因为这些课程共享同一 module name，会发生冲突"
+          ],
+          "explanation": "这些课程不是已安装的 package。每课都在自己的 code/ 文件夹中提供 main.py。importlib.util.spec_from_file_location 可按路径加载它们，而不会污染全局 module namespace。"
+        },
+        {
+          "question": "当多个 branch 都触发了论文时，best-result picker 如何做出选择？",
+          "options": [
+            "选择 mean reward 最高的 branch；若并列，则按 branch id 的字母顺序决定",
+            "选择实验运行次数最多的 branch",
+            "为保证公平而随机选择",
+            "选择第一个触发的 branch"
+          ],
+          "explanation": "mean 最高者胜出。并列时按 branch id 决定，因此 demo 具有确定性。随机选择会破坏确定性测试。"
+        },
+        {
+          "question": "当 scheduler 报告 paper triggers 为零时，picker 会引发什么错误？",
+          "options": [
+            "ValueError",
+            "返回 None",
+            "PaperValidationError",
+            "NoTriggerError，它会在 writer 运行前让 demo 短路"
+          ],
+          "explanation": "NoTriggerError 是带类型的失败模式。返回 None 会让 writer 在畸形输入上运行，之后以更难处理的错误失败。"
+        },
+        {
+          "question": "为什么确定性测试要使用相同 seed 运行 demo 两次？",
+          "options": [
+            "为了发现内存泄漏",
+            "为了断言两次运行选中的 branch、reward 和 paper section ids 完全相同",
+            "为了执行两次 asyncio",
+            "为了证明 scheduler 是公平的"
+          ],
+          "explanation": "确定性是契约的一部分。使用相同 seed 的两次运行必须生成相同 artifacts，测试会固定这一行为。"
+        },
+        {
+          "question": "成功运行后，demo report 包含什么？",
+          "options": [
+            "只有最终 LaTeX 文件",
+            "只有实验次数和 status 字符串",
+            "模型 prompt 和 completion log",
+            "scheduler_report、best_branch、best_reward、critic_result、paper_manifest 和 stop_reason"
+          ],
+          "explanation": "每个阶段的输出都会保留。该 report 是上游输出的组合，而不是转换后的摘要。下游工具读取 manifest，调试人员读取 scheduler_report 中的 trace。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/58-vision-encoder-patches": {
+      "sourceSha256": "c6422bf3c7a5d4fedee19300d289fa60a3356626f61939c2a9ca55efdbe5ef75",
+      "questions": [
+        {
+          "question": "为什么 Vision Transformer 使用 patches，而不是将每个像素作为一个 token 输入？",
+          "options": [
+            "PyTorch 要求使用 patches",
+            "每像素一个 token 会使序列的 attention 计算量呈平方级暴增，在典型分辨率下难以处理",
+            "patches 可以提高图像质量",
+            "这样可以避免使用 tokenizer"
+          ],
+          "explanation": "一张 224x224 图像包含 150528 个 pixel tokens。attention 复杂度随长度平方增长，因此按 16x16 切分 patch 可将序列缩短到 196 个 tokens，使模型可处理。"
+        },
+        {
+          "question": "kernel = stride = patch_size 的 Conv2d 与先展平再做线性变换之间是什么关系？",
+          "options": [
+            "Conv2d 增加了非线性",
+            "两者产生不同输出",
+            "Conv2d 是对每个 patch 执行相同线性投影的一种更快写法",
+            "无法实现先展平再做线性变换"
+          ],
+          "explanation": "每个 Conv2d 输出位置都会用一个 filter 与 patch pixels 做点积，这与先展平再做线性变换完全相同。"
+        },
+        {
+          "question": "为什么 2D sinusoidal position embedding 是确定性的，而不是学习得到的？",
+          "options": [
+            "固定的 sin/cos 信号可干净地插值到模型从未见过的 grid，这在分辨率变化时很有用",
+            "必须使用随机初始化",
+            "这样可以节省磁盘空间",
+            "learned positions 是非法的"
+          ],
+          "explanation": "固定 sinusoidal positions 在不同分辨率下具有确定性，使同一个 encoder 能处理训练期间未见过的输入。"
+        },
+        {
+          "question": "对于 patch_size=16 且包含一个 CLS token 的 224x224 图像，输出序列长度是多少？",
+          "options": [
+            "224",
+            "256",
+            "196",
+            "197"
+          ],
+          "explanation": "224/16 = 14，因此 14x14 = 196 个 patches，再加一个 CLS token，总共 197 个 tokens。"
+        },
+        {
+          "question": "为什么重建（先 unfold 再 unflatten）是检查 patch front end 是否正确的有效方法？",
+          "options": [
+            "它可以加快推理",
+            "在不做投影时，pixels 经过 patch-flatten 再还原后必须与输入完全相等；如果不相等，说明 unfold 数学有误",
+            "它可以提高 accuracy",
+            "ONNX 要求这样做"
+          ],
+          "explanation": "不做投影时，patch 步骤是可逆的。如果 round-trip 后的数据发生偏移，说明 unfold 逻辑存在 bug，encoder 的其余部分也就不可信。"
+        },
+        {
+          "question": "在本课中，将 learned position embedding 换成 2D sinusoidal position embedding 会带来什么变化？",
+          "options": [
+            "没有任何变化",
+            "Sinusoidal positions 每一步都是随机的",
+            "Learned positions 在固定分辨率下可能拟合得稍好；sinusoidal positions 无需重新训练即可迁移到新分辨率",
+            "Sinusoidal positions 需要更多参数"
+          ],
+          "explanation": "Learned positions 在单一分辨率下较灵活。Sinusoidal positions 不消耗参数，并能适应分辨率变化。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/59-vit-transformer": {
+      "sourceSha256": "72d0052980ab1566ed6cd94f0165b265de7e24ac7acc66d5b50c8bbff74f3603",
+      "questions": [
+        {
+          "question": "为什么标准 ViT block 使用 pre-LayerNorm，而不是 post-LayerNorm？",
+          "options": [
+            "Pre-LN 运行得更快",
+            "Post-LN 使用更多内存",
+            "Pre-LN 无需 learning-rate warm-up 即可在深层网络中稳定训练，而 post-LN 在超过约 6 层后会发散",
+            "Post-LN 已申请专利"
+          ],
+          "explanation": "Pre-LN 会对每个 sub-layer 的输入做归一化，从而在深度增加时使 gradient norms 保持有界。"
+        },
+        {
+          "question": "当 hidden=768 且 heads=12 时，每个 head 的维度是多少？为什么这很重要？",
+          "options": [
+            "12，因此每个 head 都能在小型 GPU 上运行",
+            "96，由 ResNet-50 决定",
+            "768，因为所有 heads 共享 projection",
+            "64，它控制每个 attention map 的分辨率，并让 12 个 heads 能彼此独立地并行执行 attention"
+          ],
+          "explanation": "head_dim = hidden / heads = 64。每个 head 将 token 投影到自己独立的 64-D q/k/v，并计算自己的 attention map。"
+        },
+        {
+          "question": "ViT encoder 需要 causal attention mask 吗？",
+          "options": [
+            "仅训练期间需要",
+            "不需要：encoder 是双向的，每个 token 都可以关注同一序列中的所有其他 token",
+            "需要，就像 GPT decoder 一样",
+            "仅 CLS 行需要"
+          ],
+          "explanation": "Vision encoders 是双向的。之后当 text decoder 使用 cross-attention 输出时才会出现 causal masking。"
+        },
+        {
+          "question": "经过全部 12 个 blocks 后，CLS token 的最终 hidden state 表示什么？",
+          "options": [
+            "整个图像的 learned vector summary，下游 heads 会将其投影为 class logits 或 contrastive embeddings",
+            "仅最后一个 patch",
+            "随机噪声",
+            "输入 embedding 的副本"
+          ],
+          "explanation": "CLS token 起初不含信息，在全部 12 个 blocks 中通过 self-attention 从每个 patch 聚合信息。"
+        },
+        {
+          "question": "为什么 feed-forward layer 要扩展到 hidden dim 的 4x？",
+          "options": [
+            "这样会将 FLOPs 减半",
+            "PyTorch 要求使用 4 倍",
+            "这是从原始 Transformer 延续下来的经验最佳点；在固定数据预算下，更小会欠拟合，更大则会过拟合",
+            "这样便不再需要 attention"
+          ],
+          "explanation": "从 2017 年起，4 倍这一系数在语言和视觉 transformers 中一直有效。每参数容量在这里达到峰值。"
+        },
+        {
+          "question": "哪个系列扩展保持 block 数学不变，但增加了前置的 learned tokens？",
+          "options": [
+            "Causal masking",
+            "RoPE rotation",
+            "Register tokens（DINOv2）：放在 CLS 后面的少量 learned vectors，用于捕获全局统计并平滑 attention maps",
+            "Mixture-of-experts"
+          ],
+          "explanation": "Register tokens 在不改变 block 数学的情况下稳定 attention；它们只是序列中的额外位置。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/60-projection-layer-modality-align": {
+      "sourceSha256": "a4e4f82cf9a11ccf9085e32670e64e2c3cd5ee13ea7dab140f0f3210369e1ed9",
+      "questions": [
+        {
+          "question": "为什么 vision encoder 生成的 tokens 无法由 text decoder 直接使用？",
+          "options": [
+            "Image tokens 已加密",
+            "Image tokens 太短",
+            "它们采用不同的文件格式",
+            "Image tokens 位于 encoder 在视觉预训练中学到的基底中，与 decoder 的 word vectors 没有对应关系"
+          ],
+          "explanation": "两个 encoders 学习的是相互独立的基底；需要一个 bridge module 将它们对齐到共享空间。"
+        },
+        {
+          "question": "为什么实践中 two-layer MLP 足以完成 modality alignment？",
+          "options": [
+            "禁止使用 one-layer projections",
+            "PyTorch 要求使用两层",
+            "在两个 linear projections 之间加入一次非线性弯折（GELU），根据经验就足以将 CLIP-style features 与 text embeddings 对齐",
+            "更深的 projections 是非法的"
+          ],
+          "explanation": "LLaVA 及其后继系统采用这种 two-layer MLP，因为非线性可修正单个 linear layer 无法解决的曲率不匹配。"
+        },
+        {
+          "question": "为什么在这个对齐阶段要冻结 vision encoder？",
+          "options": [
+            "encoder 是空的",
+            "无法在小型 mock corpus 上重新训练 86M-parameter encoder；只有 1.3M 参数的 projection 足够轻量，几分钟内即可完成对齐",
+            "冻结意味着 wall time 更短",
+            "PyTorch 不支持训练 encoder"
+          ],
+          "explanation": "冻结 encoder 和 text table 后，projection 成为唯一学习的部分，这正是所有 adapter-based VLM 的实际运行形态。"
+        },
+        {
+          "question": "当两个向量方向相反时，cosine_alignment_loss(image_emb, text_emb) 返回什么？",
+          "options": [
+            "Infinity",
+            "1.0",
+            "0.0",
+            "2.0"
+          ],
+          "explanation": "Loss = 1 - cos(angle)。反平行向量的 cos = -1，因此 loss = 1 - (-1) = 2.0。"
+        },
+        {
+          "question": "为什么使用 CLS pooling 从 197 个 tokens 中生成单个图像级向量？",
+          "options": [
+            "这样可以节省磁盘空间",
+            "PyTorch 会自动对 tokens 求和",
+            "Patch tokens 没有被使用",
+            "每个样本的 caption 是一个向量，因此图像侧也需要一个向量；CLS token 是 encoder 内置的图像摘要"
+          ],
+          "explanation": "对齐是在一个 image vector 与一个 caption vector 之间进行；CLS pooling 无需额外参数即可生成该 image vector。"
+        },
+        {
+          "question": "哪个生产系统与第 60 课的模式最直接对应？",
+          "options": [
+            "LLaVA 1.5：冻结 vision encoder、冻结 LLM，只训练 two-layer MLP projection",
+            "PaLM",
+            "AlphaFold",
+            "Stable Diffusion"
+          ],
+          "explanation": "LLaVA 的 stage-one training 正是如此：冻结 encoder 和 LM，只有 two-layer MLP bridge 可训练。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/61-cross-attention-fusion": {
+      "sourceSha256": "3d30c1860e8dffbf62ff9e3833f6fa2f1b72ce7e84c5a401f7b1abaf94dca3c2",
+      "questions": [
+        {
+          "question": "在 vision-language modeling 中，early fusion 和 late fusion 在实际运行上有何区别？",
+          "options": [
+            "Late fusion 使用更多内存",
+            "Early fusion 是非法的",
+            "Early fusion 将 image 和 text tokens 拼接为一个序列；late fusion 将两者分开，并在每个 block 通过 cross-attention 建立连接",
+            "Early fusion 在 wall-clock time 上更早运行"
+          ],
+          "explanation": "Chameleon 和 Emu3 采用 early-fusion；Flamingo 和 BLIP-2 采用 late-fusion。这一架构选择会改变 mask shapes 和 KV caching。"
+        },
+        {
+          "question": "在同时包含 self-attention 和 cross-attention 的 decoder block 中，哪一个使用 causal mask？",
+          "options": [
+            "两者都不使用",
+            "两者都使用",
+            "仅 cross-attention",
+            "仅 self-attention；图像已被完整观测，cross-attention 没有时间顺序"
+          ],
+          "explanation": "文本生成是 autoregressive 的，因此 text self-attention 具有因果性。任何文本开始解码前，所有 image tokens 都已可见。"
+        },
+        {
+          "question": "为什么每张图像只构建一次 cross-attention KV cache？",
+          "options": [
+            "文本解码期间 image keys 和 values 不会变化，因此只需投影一次 memory，并在所有 decode steps 中复用 K 和 V；这正是推理加速的来源",
+            "这样可以避免使用 GPU",
+            "PyTorch 要求使用 caching",
+            "Caching 可以节省磁盘空间"
+          ],
+          "explanation": "vision encoder 只运行一次，其 KV projection 也只计算一次。之后每个 text token 都可直接复用 cache。"
+        },
+        {
+          "question": "当 text length 为 Nt=10、image length 为 Nv=197 且 hidden=256 时，cross-attention 的输出 shape 是什么？",
+          "options": [
+            "(B, 10, 256)",
+            "(B, 207, 256)",
+            "(B, 10, 197)",
+            "(B, 197, 256)"
+          ],
+          "explanation": "cross-attention 的输出 shape 跟随 query stream，因此无论 key length 如何，输出都是 (B, Nt, hidden)。"
+        },
+        {
+          "question": "为什么 cross-attention 不使用 mask？",
+          "options": [
+            "Mask 总会导致 NaN",
+            "Mask 成本太高",
+            "文本生成开始前图像已被完整观测；每个文本位置都可以关注每个 patch",
+            "PyTorch 不支持 cross masks"
+          ],
+          "explanation": "image patches 没有时间顺序，也不存在需要防止的信息泄漏，因此 cross-attention 可以看到整张图像。"
+        },
+        {
+          "question": "要在训练期间恢复 Flamingo-style 稳定性，应添加哪项扩展？",
+          "options": [
+            "移除 FFN",
+            "在 cross-attention residual 上插入一个 learned tanh gate，让模型可从 text-only behavior 开始，并逐步接入 image stream",
+            "移除 self-attention layer",
+            "只使用一个 attention head"
+          ],
+          "explanation": "Flamingo 的 tanh gate 从零开始，在初始化时恢复 text-only behavior，并让模型平滑过渡到 cross-attention。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/62-vision-language-pretraining": {
+      "sourceSha256": "a5ef982fab8106f3227eeab2d476f3bbaa453731dec7d92eff4b4169ff261115",
+      "questions": [
+        {
+          "question": "结合 InfoNCE 和 LM loss 会在一个模型中训练出哪两种不同能力？",
+          "options": [
+            "排序（为 caption 找到正确图像）和生成（为图像撰写 caption）",
+            "压缩和解压缩",
+            "速度和准确率",
+            "Tokenization 和 detokenization"
+          ],
+          "explanation": "InfoNCE 负责排序，LM loss 负责生成。CoCa、BLIP 等模型会在一次训练过程中结合两者。"
+        },
+        {
+          "question": "对于一批 N 个配对，InfoNCE 会形成多少个 positive pairs 和 negative pairs？",
+          "options": [
+            "similarity matrix 对角线上的 N 个 positives，以及非对角线上的 N*(N-1) 个 negatives",
+            "N 个 positives 和 N 个 negatives",
+            "1 个 positive 和 N 个 negatives",
+            "N^2 个 positives"
+          ],
+          "explanation": "N 个匹配 pair 位于对角线上，所有非对角线项都是 negative。"
+        },
+        {
+          "question": "为什么 contrastive temperature 通常是 learned parameter？",
+          "options": [
+            "这样可以避免使用 Adam",
+            "PyTorch 要求如此",
+            "Learned tau 在 GPU 上更快",
+            "手动调参很脆弱；让 tau 自行学习，可使模型在 embedding scale 随训练变化时找到合适的 softmax 尖锐程度"
+          ],
+          "explanation": "CLIP 引入了 learned log-tau，使 contrastive softmax 在 embedding norms 增长时仍处于有效区间。"
+        },
+        {
+          "question": "哪些 sub-modules 会从 LM loss 获得 gradient，但不会从 contrastive loss 获得 gradient？",
+          "options": [
+            "MLP projector",
+            "vision encoder",
+            "text-side encoder",
+            "cross-attention decoder"
+          ],
+          "explanation": "Contrastive loss 不会影响 decoder；LM loss 不会影响 text-side mean-pool encoder。"
+        },
+        {
+          "question": "LM cross-entropy 中的 ignore_index=PAD_ID 有什么作用？",
+          "options": [
+            "加快 loss 计算",
+            "加密 pad tokens",
+            "从 loss 中屏蔽 padding positions，使模型不会因预测 caption 结束后的 tokens 而受到惩罚",
+            "重新排列 tokens"
+          ],
+          "explanation": "Padding positions 不携带信号；忽略它们可防止 loss 学习预测 pad。"
+        },
+        {
+          "question": "为什么在 synthetic data 上运行 50-step demo 就足以认为本课完成？",
+          "options": [
+            "模型在 50 steps 时达到 state of the art",
+            "最多只支持 50 steps",
+            "该 demo 证明了 gradient plumbing 可以端到端工作；生产训练的形态相同，只是在真实数据上运行数百万 steps",
+            "真实数据会改变架构"
+          ],
+          "explanation": "这里演示的动态（两种 losses 都下降、没有 NaN、tau 稳定）与十亿图像规模运行时相同，只是规模更小。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/63-multimodal-eval": {
+      "sourceSha256": "592ace2b74c0b754f89595de6273eff626359240df3aa377bc1b1b981ecc159c",
+      "questions": [
+        {
+          "question": "为什么单看 training loss 不足以衡量 multimodal model 的质量？",
+          "options": [
+            "Loss 是字符串",
+            "Loss 值是随机的",
+            "Training loss 衡量模型对训练分布的拟合；eval surfaces（retrieval、VQA、captioning）衡量模型能否泛化到 held-out tasks",
+            "Loss 很难计算"
+          ],
+          "explanation": "最小化 loss 是必要但不充分的。三个 task surfaces 上的 held-out metrics 衡量模型实际能做什么。"
+        },
+        {
+          "question": "在包含 100 个样本的 retrieval eval 中，R@5 衡量什么？",
+          "options": [
+            "在 100 个 retrieved candidates 中，正确匹配进入 top 5 的 queries 比例",
+            "5% accuracy",
+            "每秒 5 个 queries",
+            "第五个 caption 总是正确"
+          ],
+          "explanation": "R@K = target 位于 top K ranked candidates 中的 queries 比例。越高越好。"
+        },
+        {
+          "question": "为什么 BLEU-4 使用 1-gram 到 4-gram precision 的几何平均数，而不是算术平均数？",
+          "options": [
+            "几何平均数更大",
+            "PyTorch 只支持几何平均数",
+            "算术平均更慢",
+            "如果任一 n-gram precision 为零，几何平均数也为零，这正是 BLEU 所需的严格匹配属性；smoothing 用于处理零值情况"
+          ],
+          "explanation": "几何平均要求所有 n-gram 阶数都作出贡献；在 smoothing 前，4-gram precision 为零会使分数归零。"
+        },
+        {
+          "question": "BLEU-4 中的 brevity penalty 防止什么问题？",
+          "options": [
+            "内存泄漏",
+            "长 caption 受到惩罚",
+            "短 caption 只输出安全的高频 tokens 来博取高 precision；当 generated length < reference length 时，BP < 1",
+            "Tokenizer 错误"
+          ],
+          "explanation": "如果没有 BP，一个只含一个单词且该词恰好匹配 reference 中某个词的 caption 会得到 1.0。BP 会降低过短生成结果的分数。"
+        },
+        {
+          "question": "为什么对同一个生成结果，multi-reference BLEU 通常高于 single-reference BLEU？",
+          "options": [
+            "生成结果中的每个 n-gram 都可匹配任一 reference，因此在 references 更多时 clipped count 更高",
+            "Single-reference 已损坏",
+            "References 会消耗额外内存",
+            "两者使用不同数学公式"
+          ],
+          "explanation": "更多 references 为 n-gram 提供更多匹配机会；clipped counts 增长，precision 也随之提高。"
+        },
+        {
+          "question": "哪个 eval surface 不使用 model embeddings，只进行 id-level matching？",
+          "options": [
+            "Cosine similarity",
+            "BLEU-4",
+            "VQA exact match：将 predicted answer id 直接与 reference id 比较，不经过 embedding 步骤",
+            "Retrieval"
+          ],
+          "explanation": "模型输出 answer token 后，VQA exact match 只进行整数比较，不涉及 embedding 或 similarity 计算。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/64-chunking-strategies-advanced": {
+      "sourceSha256": "24063cb0ac1eb772372c2ecf27c2f2d2e51647ca6f05cca1ea4ed0f1bd61b913",
+      "questions": [
+        {
+          "question": "为什么 chunking 选择决定了 retrieval quality 的上限，而不只是一个 hyperparameter？",
+          "options": [
+            "因为 LLM 从不读取 chunks",
+            "因为 BM25 在现代 RAG 中不起作用",
+            "因为如果 answer span 被切成不连贯的片段，任何下游 embedding、reranker 或 LLM 都无法将其恢复",
+            "因为 embedding model 在训练时就已固定"
+          ],
+          "explanation": "如果包含 answer span 的 chunk 不连贯，embedding 就会移到错误的 cluster，下游组件无法修复这一损害。"
+        },
+        {
+          "question": "当你对 corpus 没有任何先验知识时，哪种策略是最强的单策略默认选择？",
+          "options": [
+            "Sentence packer",
+            "Fixed-window",
+            "Recursive split",
+            "Structural markdown"
+          ],
+          "explanation": "Recursive split 会在每个区域先尝试最强 separator，再逐级回退，因此能应对不一致的结构。"
+        },
+        {
+          "question": "本课中的 recall@k 衡量什么？",
+          "options": [
+            "top-k chunks 是否包含 query 的字面字符串",
+            "query 与 top-k chunks 之间的 cosine similarity",
+            "top-k 中 unique documents 的数量",
+            "top-k chunks 中是否有任意一个与 gold answer span 重叠"
+          ],
+          "explanation": "每个 query 都带有 gold offsets；若任一 top-k chunk 与 gold span 重叠，则 recall@k 为 1，否则为 0，最后对所有 queries 取平均。"
+        },
+        {
+          "question": "为什么 fixed-window chunking 在代码或 YAML corpus 上表现很差？",
+          "options": [
+            "它会从中间切断 identifiers 和 key-value pairs，产生 embedding 后接近噪声的 chunks",
+            "它会丢失 Unicode 字符",
+            "它无法并行化",
+            "它生成的 chunks 大于 embedding model 的 context window"
+          ],
+          "explanation": "在 symbol 中间按字符切分会破坏 embedding model 本应捕获的含义。"
+        },
+        {
+          "question": "semantic chunking 中的 centroid drift 终止条件是什么？",
+          "options": [
+            "running mean vector 与下一个 sentence 的 cosine similarity 低于阈值",
+            "字符数超过最大值",
+            "Sentence 数量超过硬编码限制",
+            "chunker 已用完全部 embedding budget"
+          ],
+          "explanation": "当 running centroid 与下一个 sentence 的匹配程度低于配置的 similarity threshold 时，semantic chunking 会切分。"
+        },
+        {
+          "question": "semantic chunking 会引入哪种其他四种策略没有的 stale-embedding 失败模式？",
+          "options": [
+            "Chunks 太小，无法使用 embedding context",
+            "每次更换 chunk-model 时，chunk boundaries 都会改变，因此必须协调重建",
+            "Chunks 无法再由 BM25 建立索引",
+            "Chunks 会丢失 start 和 end offsets"
+          ],
+          "explanation": "Semantic clustering 依赖 embedding model；更换模型会改变边界，因此必须单独固定 chunk-model，或与 retrieval model 一起重建。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense": {
+      "sourceSha256": "4b33ce707097c6bf37e53e46ad9c504e14eb4b2a402889be81416c0c2768e424",
+      "questions": [
+        {
+          "question": "为什么生产 RAG endpoint 需要同时使用 lexical retrieval 和 semantic retrieval？",
+          "options": [
+            "合规法律要求使用 lexical search",
+            "Semantic retrieval 总是更准确",
+            "这样会将 index size 减半",
+            "query distribution 同时包含 literal-identifier queries 和 paraphrased queries；单一模态都会在其中一类上失败"
+          ],
+          "explanation": "BM25 在 literal symbols 上占优，dense 在 paraphrases 上占优。真实 endpoint 会从同一批用户那里收到这两类 query。"
+        },
+        {
+          "question": "默认值 0.75 的 BM25 参数 b 表示什么？",
+          "options": [
+            "document 中的字段数",
+            "作用于 cosine similarity 的 query-time exponent",
+            "IDF 项的 multiplier",
+            "length-normalization 调节项：较长 documents 会受到惩罚，但不是线性惩罚"
+          ],
+          "explanation": "b 在不做长度归一化（0）与完全归一化（1）之间插值；0.75 是已发表的推荐值。"
+        },
+        {
+          "question": "Reciprocal Rank Fusion 会为每个 candidate 计算什么？",
+          "options": [
+            "对 BM25 和 dense scores 做 min-max normalization 后取平均",
+            "对包含该 candidate 的每个 ranked list，将 1 / (k + rank) 相加",
+            "各模态 cosine similarities 的乘积",
+            "各模态 rank 的中位数"
+          ],
+          "explanation": "RRF 对每个 ranked list 的 1 / (k + rank) 贡献求和；k = 60 是已发表的默认值。"
+        },
+        {
+          "question": "为什么 rank-based fusion 优于 BM25 与 cosine scores 的线性插值？",
+          "options": [
+            "Cosine scores 无界",
+            "BM25 scores 无界且依赖 corpus；cosine 限定在 -1 到 1 之间；两种分数尺度无法在不同 corpora 间比较",
+            "BM25 scores 无法排序",
+            "线性插值需要 GPU 支持"
+          ],
+          "explanation": "每次重新建立索引后 score distributions 都会变化，因此 score interpolation 会失效；而 ranks 按构造即可跨模态比较。"
+        },
+        {
+          "question": "将常数 k 设得很小时，RRF 会发生什么？",
+          "options": [
+            "fusion 等价于线性 score sum",
+            "top-1 contribution 会主导 fusion；较深位置的 ranks 几乎不再贡献",
+            "corpus 外的 terms 会得到正分",
+            "fusion 会忽略第二种模态"
+          ],
+          "explanation": "较小的 k 会集中 rank-1 contribution；较大的 k 会让贡献曲线更平坦，使较深位置的 candidates 也能投票。"
+        },
+        {
+          "question": "通过重复 token 实现 field weighting，具体避免了哪种失败模式？",
+          "options": [
+            "避免在 query time 增加第二个 score-aggregation 步骤；数学保持不变，也无需 per-field-score combination 逻辑",
+            "Out-of-vocabulary embeddings",
+            "BM25 IDF 降为零",
+            "Cosine similarity 变为负数"
+          ],
+          "explanation": "在 index time 重复 tokens 会放大 term frequency，使 BM25 scoring math 仍只需一次求和，而不需要单独的 field-score combinator。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/66-reranker-cross-encoder": {
+      "sourceSha256": "75a9c585f2ac977e647a057876c30024e305273a9063d3670bba09cebc0fd804",
+      "questions": [
+        {
+          "question": "bi-encoder 与 cross-encoder 在架构上有何区别？",
+          "options": [
+            "bi-encoder 分别对 query 和 document 做 embedding；cross-encoder 读取拼接后的 (query, document) 序列，并在两者间执行完整 attention",
+            "Bi-encoders 经过训练，cross-encoders 未经训练",
+            "Bi-encoders 使用 cosine，cross-encoders 使用 dot product",
+            "Cross-encoders 只能在 GPU 上运行"
+          ],
+          "explanation": "跨拼接位置的 cross attention 为 cross-encoder 带来精确度；bi-encoder 从不会同时看到 query 和 document。"
+        },
+        {
+          "question": "为什么 cross-encoder 不能作为 10M-document corpus 上的主 retriever？",
+          "options": [
+            "它无法对文本做 embedding",
+            "它需要为每个 (query, document) pair 执行一次 forward pass，也就是每个 query 要执行 10M 次",
+            "它不支持负分",
+            "它要求 CLS token 位于序列末尾"
+          ],
+          "explanation": "在 corpus 规模下 throughput 会崩溃；cross-encoder 每个 pair 都要运行一次，而不是在 index time 对每个 document 只运行一次。"
+        },
+        {
+          "question": "在 two-stage retrieve-then-rerank pipeline 中，参数 N 有什么作用？",
+          "options": [
+            "它是 vocabulary 的大小",
+            "它是 cross-encoder hidden dimension",
+            "它是 cross-encoder 的 layer 数量",
+            "它是 bi-encoder 返回并交由 cross-encoder 重新评分的 candidates 数量"
+          ],
+          "explanation": "N 是 rerank pool；它既限制质量（cross-encoder 无法超过 bi-encoder 在 N 处的 recall），也限制延迟（cross-encoder 要执行 N 次 forward passes）。"
+        },
+        {
+          "question": "为什么必须让 N 严格大于 K（通常至少为 3x）？",
+          "options": [
+            "BM25 计算 IDF 时要求如此",
+            "较小的 N 会降低 embedding dimensionality",
+            "cross-encoder 要求 N 是 K 的倍数",
+            "如果 N 等于 K，cross-encoder 无法重新排序，只能重新加权；rerank lift 会降为零"
+          ],
+          "explanation": "当 N = K 时没有可供重新排序的空间；cross-encoder 的唯一任务是从 N 个结果中选出正确的 K 个，因此需要 N > K。"
+        },
+        {
+          "question": "本课中 cross-encoder 的 mean-pooling head 做什么？",
+          "options": [
+            "对 vocabulary distribution 做 pooling",
+            "在 document positions 上计算 softmax",
+            "对 non-pad positions 的 last-layer outputs 求平均，再送入单个 linear head 生成一个 relevance scalar",
+            "对 embedding indices 求和"
+          ],
+          "explanation": "先对 non-pad positions 做 mean-pool，再由单个 linear layer 输出 relevance score；CLS-pooling 是质量相近的另一种选择。"
+        },
+        {
+          "question": "记录 rank-1 cross-encoder score 有助于检测哪种生产故障模式？",
+          "options": [
+            "Out-of-domain queries：当 top-1 reranker score 低于 corpus-specific threshold 时，模型在表明 corpus 中实际上没有内容能回答该 query",
+            "网络中断",
+            "tokenizer 中的 vocabulary drift",
+            "bi-encoder 中的 index corruption"
+          ],
+          "explanation": "持续偏低的 rank-1 score 表明 cross-encoder 认为 retrieved pool 中不含答案；应将这一点作为 low-confidence 信号传递给 LLM。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/67-query-rewriting-hyde": {
+      "sourceSha256": "fc6370c83daeed43f7edb70e50106f0f70e92cd7ea616d4da12234d08d48c4ec",
+      "questions": [
+        {
+          "question": "HyDE（Hypothetical Document Embeddings）的核心机制是什么？",
+          "options": [
+            "使用更大的模型对 user query 做 embedding",
+            "对 query 进行 hash 并在 cache 中查找",
+            "让 query 经过多个 retrievers，再选择最佳结果",
+            "使用 LLM 生成一个虚构答案，对该 hypothetical document 做 embedding，并使用其 vector 而不是 query vector 进行 retrieval"
+          ],
+          "explanation": "HyDE 以 corpus 的文风生成一段 document-shaped passage，并使用该 embedding 进行 retrieval；query vector 会被替换。"
+        },
+        {
+          "question": "为什么 HyDE 中由 LLM 生成的 hypothetical document 即使事实错误也可以接受？",
+          "options": [
+            "reranker 会修复事实错误",
+            "LLM call 出错时会回滚",
+            "retriever 关注 token distribution，而不是事实正确性；hypothetical 的 vector 会落在真实 passage 附近",
+            "用户永远看不到 hypothetical"
+          ],
+          "explanation": "Retrieval 是 embedding space 中的相似度搜索；如果 hypothetical 的 vocabulary 与 corpus 匹配，其 vector 就会落在正确区域。"
+        },
+        {
+          "question": "multi-query expansion 和 query decomposition 有什么区别？",
+          "options": [
+            "Multi-query 为同一个问题生成 N 个 paraphrases；decomposition 生成若干 sub-questions，共同覆盖一个 multi-topic question",
+            "Decomposition 在本地运行；multi-query 需要远程模型",
+            "两者完全相同",
+            "Multi-query 使用 cosine；decomposition 使用 BM25"
+          ],
+          "explanation": "Paraphrases 保留原始意图；sub-questions 将 multi-topic query 拆成可独立回答的部分。"
+        },
+        {
+          "question": "query decomposition 何时会过度拆分并损害 retrieval？",
+          "options": [
+            "BM25 被禁用时",
+            "corpus 太小时",
+            "当 query 是 atomic（单一主题）时，decomposer 会虚构 sub-questions，各次 retrieval 都返回同一个 document，但 rank 会降低",
+            "query 太长，LLM 无法处理时"
+          ],
+          "explanation": "拆解 atomic query 会生成虚假的 sub-questions；这些 retrievals 会稀释合并结果，使正确 document 的排名下降。"
+        },
+        {
+          "question": "为什么三种 rewriting strategies 使用 RRF 融合，而不是 score interpolation？",
+          "options": [
+            "Score interpolation 需要逐 corpus 校准；RRF 无需校准即可合并基于 rank 的贡献，而融合不同 rewrites 产生的 N 次 retrieval 时必须具备这一点",
+            "Score interpolation 无法处理两个以上的 lists",
+            "RRF 在 GPU 上运行，而 score interpolation 不能",
+            "RRF 是 Python 唯一支持的操作"
+          ],
+          "explanation": "理由与第 65 课相同：rank-based fusion 不需要针对每个 corpus 调整 alpha，并能在不同 rewriter outputs 间保持稳定。"
+        },
+        {
+          "question": "并行运行全部三种 rewriters 时，延迟下限是多少？",
+          "options": [
+            "串行执行三次 LLM calls",
+            "最慢的一次 retrieval",
+            "一次 LLM call（rewriters 和 retrievals 并行运行；LLM call 决定下限）",
+            "零，因为 rewriters 会缓存所有内容"
+          ],
+          "explanation": "三种 rewriters 都会 fan out 到一次模型调用；若并行运行，延迟下限就是一次模型调用，之后各次 retrieval 也会并行运行。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/68-rag-eval-precision-recall": {
+      "sourceSha256": "2a73baa400f819b19d63dcc807d1735c1da033454f02292f50e083ba05330a6c",
+      "questions": [
+        {
+          "question": "为什么 recall@k 通常是生产 RAG 中最重要的 retrieval metric？",
+          "options": [
+            "Recall 会忽略 ranking",
+            "OpenAPI spec 要求使用 Recall",
+            "在 RAG 中，Recall 与 precision 相同",
+            "生成阶段可以丢弃无关 chunks，却无法从从未见过的 chunk 中创造答案，因此漏掉正确 chunk 的代价更高"
+          ],
+          "explanation": "retriever 漏掉正确 chunk 后，下游无法修复；多余 chunks 会浪费 tokens，但很少会破坏答案。"
+        },
+        {
+          "question": "MRR 计算什么？",
+          "options": [
+            "答案的 token count",
+            "cosine similarity 的几何平均数",
+            "第二个 relevant document 的 median rank",
+            "对所有 queries 的 1 / position-of-first-relevant-document 取平均"
+          ],
+          "explanation": "MRR 主要受列表顶部影响：rank 1 贡献 1.0，rank 2 贡献 0.5，rank 10 贡献 0.1。"
+        },
+        {
+          "question": "何时应使用 nDCG，而不是 recall@k？",
+          "options": [
+            "retriever 不返回 scores 时",
+            "corpus 较小时",
+            "永远不应使用",
+            "当 gold labels 包含分级 relevance（例如 doc A 为 3、doc B 为 2、doc C 为 1），而 binary metrics 会丢失信息时"
+          ],
+          "explanation": "nDCG 使用 graded gains 和 position discount；recall 会将一切压平为二元值。"
+        },
+        {
+          "question": "faithfulness 和 answer relevance 有什么区别？",
+          "options": [
+            "Faithfulness 是 retrieval metric，relevance 是 chunker metric",
+            "它们是同一指标的两个名称",
+            "Faithfulness 衡量 precision，relevance 衡量 recall",
+            "Faithfulness 问“答案是否以 retrieved context 为依据”；answer relevance 问“答案是否回应了问题”"
+          ],
+          "explanation": "忠实但偏题的答案在 faithfulness 上得分高、在 relevance 上得分低；相关但无依据的答案则在 relevance 上得分高、在 faithfulness 上得分低。"
+        },
+        {
+          "question": "某 pipeline 的 recall@5 尚可，但 MRR 较低。应首先调查哪个阶段？",
+          "options": [
+            "generator",
+            "chunker",
+            "corpus ingestor",
+            "reranker，因为正确 chunk 已进入 top-k，但没有排在顶部"
+          ],
+          "explanation": "Recall@5 表示 gold 位于 top-5；MRR 较低表示它不在列表顶部。这正是 rerank stage 的职责。"
+        },
+        {
+          "question": "随着时间推移，哪种生产风险会使冻结的 qrels 文件变得危险？",
+          "options": [
+            "eval suite 会耗尽磁盘空间",
+            "Embedding vectors 会过期",
+            "retriever 会在六个月后停止工作",
+            "Qrels rot：corpus 会变化，上季度作为 gold answer 的 doc 可能不再是正确答案，但指标仍会依据过时 labels 报告"
+          ],
+          "explanation": "应每季度审查一次 qrels，否则随着 corpus 演变，指标衡量的将是错误的目标。"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,665 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/00-setup-and-tooling/01-dev-environment": {
+      "sourceSha256": "47fb9662fcdd3a4a1a42045bdc4348445880abcf13a23c11231adf5727e7730f",
+      "questions": [
+        {
+          "question": "AI 项目为什么需要单独的虚拟环境？",
+          "options": [
+            "Python 必须使用虚拟环境才能导入软件包",
+            "虚拟环境会隔离依赖项，使不同项目不会相互冲突",
+            "虚拟环境会让代码运行得更快",
+            "虚拟环境会提供 GPU 访问能力"
+          ],
+          "explanation": "虚拟环境会按项目隔离软件包版本。否则，为一个项目升级 PyTorch，可能会破坏另一个依赖旧版本的项目。"
+        },
+        {
+          "question": "CUDA 为 AI 工作负载提供什么？",
+          "options": [
+            "在 NVIDIA GPU 上并行执行矩阵运算",
+            "一个用于管理 ML 库的 Python 软件包管理器",
+            "一个用于部署模型的 Web 框架",
+            "一个用于模型服务的容器运行时"
+          ],
+          "explanation": "CUDA 是 NVIDIA 的并行计算平台，可让你同时在数千个 GPU 核心上运行矩阵运算。PyTorch 和 TensorFlow 在底层使用了它。"
+        },
+        {
+          "question": "在四层环境栈中，必须先安装哪一层？",
+          "options": [
+            "语言运行时（Python、Node.js）",
+            "系统基础层（操作系统、shell、GPU 驱动）",
+            "软件包管理器（pip、npm、cargo）",
+            "AI/ML 库（PyTorch、JAX）"
+          ],
+          "explanation": "安装要自底向上进行：先安装系统基础层（操作系统、驱动），再安装软件包管理器、语言运行时，最后安装 AI 库。每一层都依赖其下方的一层。"
+        },
+        {
+          "question": "uv 在 Python AI 项目中有什么作用？",
+          "options": [
+            "一个 GPU 监控工具",
+            "一个神经网络可视化库",
+            "一个速度极快的 Python 软件包安装器和依赖解析器",
+            "一个用于自定义 kernel 的 CUDA 编译器"
+          ],
+          "explanation": "uv 是一个用 Rust 编写的高速 Python 软件包安装器。它可以取代 pip，以快得多的速度解析和安装依赖，通常能快 10-100 倍。"
+        },
+        {
+          "question": "如何验证 PyTorch 能否访问你的 GPU？",
+          "options": [
+            "python -c 'import gpu'",
+            "import torch; print(torch.cuda.is_available())",
+            "import torch; print(torch.__version__)",
+            "nvidia-smi --query"
+          ],
+          "explanation": "如果 PyTorch 能访问 CUDA GPU，torch.cuda.is_available() 会返回 True。在 Apple Silicon 上，应使用 torch.backends.mps.is_available() 检查 Metal Performance Shaders。"
+        }
+      ]
+    },
+    "phases/00-setup-and-tooling/02-git-and-collaboration": {
+      "sourceSha256": "02bb0006abb2813bd23002197e198ae065012f2f36004e8866fe780808694b02",
+      "questions": [
+        {
+          "question": "“版本控制”主要帮助你做什么？",
+          "options": [
+            "自动修复代码中的 bug",
+            "加快代码执行速度",
+            "跟踪文件随时间发生的变化，并与他人协作",
+            "压缩文件以节省磁盘空间"
+          ],
+          "explanation": "git 等版本控制系统会跟踪文件的每一次变更，让你能够恢复到先前的状态，并与他人在同一个代码库上协作。"
+        },
+        {
+          "question": "在软件开发中，“repository（仓库）”是什么？",
+          "options": [
+            "一个用于安装库的软件包管理器",
+            "由版本控制系统管理的一组文件及其完整变更历史",
+            "一个用于存储用户数据的数据库",
+            "一个类似 Google Drive 的云存储服务"
+          ],
+          "explanation": "repository（简称 repo）是一个由 git 跟踪的目录，其中包含项目的全部文件，以及这些文件的完整变更历史。"
+        },
+        {
+          "question": "在 git 中保存并备份工作的正确顺序是什么？",
+          "options": [
+            "git push, git add, git commit",
+            "git clone, git add, git push",
+            "git add, git commit, git push",
+            "git commit, git add, git push"
+          ],
+          "explanation": "先用 git add 暂存变更，再用 git commit 保存快照，最后用 git push 上传到远程仓库。这是日常工作流程。"
+        },
+        {
+          "question": "git checkout -b experiment/new-optimizer 会做什么？",
+          "options": [
+            "创建名为 experiment/new-optimizer 的新分支并切换到该分支",
+            "删除 experiment/new-optimizer 分支",
+            "从 GitHub 下载名为 experiment/new-optimizer 的分支",
+            "还原所有文件，使其与 experiment/new-optimizer 分支一致"
+          ],
+          "explanation": "-b 标志会用给定名称创建一个新分支并立即切换过去，让你可以在不影响主分支的情况下进行实验。"
+        },
+        {
+          "question": "为什么应该把 .pt、.pth 和 .safetensors 加入 .gitignore？",
+          "options": [
+            "它们是模型 checkpoint 文件，对 git 来说体积过大，而且可以重新生成",
+            "Git 无法跟踪任何类型的二进制文件",
+            "它们是 Python 测试文件，不应提交",
+            "它们包含敏感的 API 密钥"
+          ],
+          "explanation": "模型 checkpoint 文件（.pt、.pth、.safetensors）通常有数 GB 大小。Git 并非为大型二进制文件设计，因此应排除这些文件，之后重新生成或单独存储。"
+        }
+      ]
+    },
+    "phases/00-setup-and-tooling/03-gpu-setup-and-cloud": {
+      "sourceSha256": "4b65c44bea0c93af71fed50d6142e1a6fbc241edfb89d9ac7fc0f4998ac061c5",
+      "questions": [
+        {
+          "question": "训练神经网络时，为什么 GPU 比 CPU 更快？",
+          "options": [
+            "GPU 的时钟频率比 CPU 更高",
+            "GPU 可以同时执行数千个并行矩阵运算",
+            "GPU 使用效率更高的编程语言",
+            "GPU 的 RAM 比 CPU 更多"
+          ],
+          "explanation": "GPU 拥有数千个针对并行计算优化的核心，非常适合执行神经网络训练中占主导地位的矩阵乘法。"
+        },
+        {
+          "question": "VRAM 指什么？",
+          "options": [
+            "所有设备可用 RAM 的总量",
+            "一种 CPU 缓存内存",
+            "GPU 上的视频内存，与系统 RAM 相互独立",
+            "操作系统用作交换空间的虚拟 RAM"
+          ],
+          "explanation": "VRAM（Video RAM）是 GPU 上的专用内存。它独立于系统主 RAM，并限制了训练时可使用的模型大小和 batch size。"
+        },
+        {
+          "question": "哪个命令可以验证系统是否检测到 NVIDIA GPU，并显示其当前状态？",
+          "options": [
+            "torch.cuda.list_devices()",
+            "nvidia-smi",
+            "lspci | grep gpu",
+            "gpu --status"
+          ],
+          "explanation": "nvidia-smi（NVIDIA System Management Interface）会显示 GPU 利用率、内存使用量、温度和正在运行的进程。它是验证 GPU 可用性的标准工具。"
+        },
+        {
+          "question": "对 GPU 与 CPU 的矩阵乘法进行基准测试时，为什么必须在测量 GPU 时间前调用 torch.cuda.synchronize()？",
+          "options": [
+            "把数据从 CPU 内存传输到 GPU 内存",
+            "确保停止计时前所有 GPU 操作都已完成",
+            "释放未使用的 GPU 内存",
+            "把 GPU 时钟频率重置为基础频率"
+          ],
+          "explanation": "GPU 操作是异步的——GPU 仍在计算时，Python 就会立即返回。synchronize() 会阻塞，直到所有 GPU 操作完成，从而得到准确的计时结果。"
+        },
+        {
+          "question": "按照 fp16 的经验法则，24 GB VRAM 大约能容纳多少个参数？",
+          "options": [
+            "60 亿个参数",
+            "240 亿个参数",
+            "120 亿个参数",
+            "480 亿个参数"
+          ],
+          "explanation": "在 fp16 中，每个参数占用 2 bytes。24 GB / 2 bytes = 120 亿个参数。这只是粗略估算；实际占用还包括激活值、梯度和优化器状态。"
+        }
+      ]
+    },
+    "phases/00-setup-and-tooling/04-apis-and-keys": {
+      "sourceSha256": "f5a83b3b50b2beb361d8e46a5509db0fd296988ca447af7d84fe5aff7e5d2b81",
+      "questions": [
+        {
+          "question": "调用 LLM 服务时，API 密钥有什么用途？",
+          "options": [
+            "加密发送到服务器的数据",
+            "验证你的身份并授权请求",
+            "压缩请求以减少带宽占用",
+            "选择服务器使用的编程语言"
+          ],
+          "explanation": "API 密钥是标识你账户的唯一字符串，用于授权请求，并让服务提供商能够跟踪用量和计费。"
+        },
+        {
+          "question": "为什么绝不能把 API 密钥直接硬编码在源代码中？",
+          "options": [
+            "Python 无法读取超过 50 个字符的字符串字面量",
+            "API 提供商会封禁出现在源文件中的密钥",
+            "硬编码密钥会让代码运行得更慢",
+            "密钥可能被意外提交到 git 并公开泄露"
+          ],
+          "explanation": "源代码中硬编码的密钥可能会被提交到版本控制系统并推送到公开仓库，随后被他人抓取和滥用。"
+        },
+        {
+          "question": "本地开发时，推荐如何存储 API 密钥？",
+          "options": [
+            "存放在已列入 .gitignore 的 .env 文件中",
+            "存放在 README.md 中，以便访问",
+            "存放在脚本顶部的 Python 变量中",
+            "与软件包版本一起存放在 requirements.txt 中"
+          ],
+          "explanation": ".env 文件以环境变量的形式存储密钥，并且应加入 .gitignore，确保它永远不会提交到版本控制系统。SDK 会自动从环境变量读取密钥。"
+        },
+        {
+          "question": "直接调用 Anthropic HTTP API 时，哪个 header 携带 API 密钥？",
+          "options": [
+            "Authorization: Bearer sk-ant-...",
+            "Content-Type: application/json",
+            "anthropic-version: 2023-06-01",
+            "x-api-key: sk-ant-..."
+          ],
+          "explanation": "Anthropic API 使用 x-api-key header 进行身份验证，而不是更常见的 Authorization: Bearer 模式。这是其 API 的特定设计。"
+        },
+        {
+          "question": "超过 API 的速率限制时会发生什么？",
+          "options": [
+            "请求会进入队列，稍后自动处理",
+            "服务器会返回错误（通常是 HTTP 429），你必须等待后再重试",
+            "你的 API 密钥会被永久吊销",
+            "API 会静默丢弃请求，不返回任何响应"
+          ],
+          "explanation": "触发速率限制时会返回 HTTP 429（Too Many Requests）。你需要等待后重试，通常采用指数退避。速率限制可以防止滥用并确保公平使用。"
+        }
+      ]
+    },
+    "phases/00-setup-and-tooling/05-jupyter-notebooks": {
+      "sourceSha256": "b5814d63ed98deabc15b82a5ad44102ad1336220cf0cea6e031f9a95de8dfa1c",
+      "questions": [
+        {
+          "question": "什么是 Jupyter notebook？",
+          "options": [
+            "一种交互式文档，将可执行代码单元、Markdown 文本和内嵌输出组合在一起",
+            "一个用于 Python 库的软件包管理器",
+            "一个用于数据科学项目的版本控制系统",
+            "一个用于编写 Python 脚本的文本编辑器"
+          ],
+          "explanation": "Jupyter notebook（.ipynb）是一种交互式环境，你可以在单元格中编写并执行代码、直接查看内嵌输出，还可以把代码与格式化的文字说明组合在一起。"
+        },
+        {
+          "question": "Jupyter kernel 有什么作用？",
+          "options": [
+            "运行单元格中的代码，并在多次执行之间把变量保留在内存中",
+            "把 notebook 连接到 GitHub 以进行版本控制",
+            "管理 notebook 的文件存储",
+            "把 Markdown 单元格格式化为 HTML"
+          ],
+          "explanation": "kernel 是一个独立的 Python 进程，负责执行单元格代码，并在内存中维护状态（变量、导入内容）。一个 notebook 中的所有单元格共享同一个 kernel。"
+        },
+        {
+          "question": "%timeit 和 %%time 魔法命令有什么区别？",
+          "options": [
+            "没有区别，它们是别名",
+            "%timeit 会多次运行代码并取平均值，%%time 只运行一次",
+            "%timeit 测量墙上时钟时间，%%time 测量 CPU 时间",
+            "%timeit 适用于单行，%%time 适用于整个 notebook"
+          ],
+          "explanation": "%timeit 会多次运行语句并计算统计平均值（适合微基准测试）。%%time 会运行单元格一次并报告墙上时钟时间（适合训练任务）。"
+        },
+        {
+          "question": "一个 notebook 在你的机器上可以运行，但别人从头到尾运行时却失败，最常见的原因是什么？",
+          "options": [
+            "缺少 %matplotlib inline 魔法命令",
+            "使用了太多 Markdown 单元格",
+            "单元格未按顺序执行，产生了对执行顺序的隐藏依赖",
+            "使用了不同的 Python 版本"
+          ],
+          "explanation": "不按顺序运行单元格会产生隐藏的状态依赖。例如，某个变量可能只是因为你先运行了单元格 5、后运行单元格 2 才存在。Kernel > Restart & Run All 可以验证能否线性执行。"
+        },
+        {
+          "question": "什么时候应该把 notebook 中的代码移到 .py 脚本中？",
+          "options": [
+            "永远不应该——对于 AI 工作，notebook 始终更好",
+            "只有需要在 GPU 上运行时",
+            "一旦代码超过 10 行",
+            "当代码属于可复用工具、训练流水线或生产代码时"
+          ],
+          "explanation": "原则是“在 notebook 中探索，在脚本中交付”。可复用工具、训练流水线以及任何在生产环境中运行的内容，都应该放在 .py 文件中。Notebook 用于探索和原型开发。"
+        }
+      ]
+    },
+    "phases/00-setup-and-tooling/06-python-environments": {
+      "sourceSha256": "c419c40ef1c146c896ba268c1ff61a6510fe6694c777f73cea5ad3ddd7dee89d",
+      "questions": [
+        {
+          "question": "虚拟环境解决了什么问题？",
+          "options": [
+            "提供一个用于管理 Python 脚本的图形界面",
+            "隔离项目依赖，让不同项目可以使用不同的软件包版本",
+            "自动把软件包更新到最新版本",
+            "通过优化解释器让 Python 代码运行得更快"
+          ],
+          "explanation": "虚拟环境为每个项目提供一套独立隔离的软件包。没有虚拟环境，为一个项目安装 PyTorch 2.4 就会覆盖另一个项目所需的 PyTorch 2.1。"
+        },
+        {
+          "question": "在 Python 依赖管理中，什么是 lockfile？",
+          "options": [
+            "锁定 Python 解释器版本的文件",
+            "加密项目依赖的文件",
+            "阻止其他用户编辑代码的文件",
+            "把每个软件包固定到精确版本，以实现可复现安装的文件"
+          ],
+          "explanation": "lockfile 会记录每个软件包（包括传递依赖）的精确版本，因此任何人通过它安装时都会得到完全相同的软件包，从而确保可复现性。"
+        },
+        {
+          "question": "如何验证 pip 和 python 命令使用的是虚拟环境，而不是系统 Python？",
+          "options": [
+            "运行 python --check-env 进行验证",
+            "运行 pip --version 并检查版本号",
+            "运行 which python，确认结果是 .venv/bin/python，而不是 /usr/bin/python",
+            "检查终端背景颜色是否发生变化"
+          ],
+          "explanation": "which python（Windows 上为 where python）会显示解释器的完整路径。如果它指向 .venv/bin/python，就说明你位于虚拟环境中。"
+        },
+        {
+          "question": "为什么在同一个环境中混用 pip 和 conda 会有问题？",
+          "options": [
+            "pip 软件包与 conda 的 Python 解释器不兼容",
+            "pip 安装可能破坏 conda 的依赖跟踪，导致难以调试的冲突",
+            "这会让每个软件包占用的磁盘空间翻倍",
+            "conda 无法安装 pip 已经安装的软件包"
+          ],
+          "explanation": "Conda 维护自己的依赖解析器。pip 安装会绕过它，因此 conda 不再了解环境的真实状态。这会引发难以解决的依赖冲突。"
+        },
+        {
+          "question": "尽管机器上有 NVIDIA GPU，你的 PyTorch 代码仍报告 CUDA not available。最可能的原因是什么？",
+          "options": [
+            "安装的 PyTorch 所用 CUDA 版本与 GPU 驱动不兼容",
+            "你的 GPU 不支持 CUDA",
+            "你忘记导入 torch.cuda 模块",
+            "虚拟环境无法访问 GPU 硬件"
+          ],
+          "explanation": "PyTorch 自带针对特定 CUDA 版本编译的 CUDA bindings。如果 PyTorch 的 CUDA 版本高于驱动支持的 CUDA 版本，CUDA 就不可用。可使用 nvidia-smi 和 torch.version.cuda 检查版本。"
+        }
+      ]
+    },
+    "phases/00-setup-and-tooling/07-docker-for-ai": {
+      "sourceSha256": "0def2e633359381f6cda81879717e3be9da3185ce568508201adf3ff4e61891a",
+      "questions": [
+        {
+          "question": "Docker 容器与虚拟机的主要区别是什么？",
+          "options": [
+            "两者没有实际区别",
+            "容器比虚拟机更慢，但更安全",
+            "容器共享宿主机的操作系统 kernel，而虚拟机运行各自完整的操作系统",
+            "容器只能运行 Linux，而虚拟机支持任意操作系统"
+          ],
+          "explanation": "容器共享宿主机 kernel，并在进程级别进行隔离，因此可在数秒内启动。虚拟机运行带有独立 kernel 的完整客户操作系统，需要更多资源，启动速度也更慢。"
+        },
+        {
+          "question": "什么是 Dockerfile？",
+          "options": [
+            "Docker daemon 的配置文件",
+            "一组用于逐层构建 Docker image 的指令",
+            "列出正在运行的容器的文件",
+            "记录容器活动的日志文件"
+          ],
+          "explanation": "Dockerfile 包含一系列按顺序执行的指令（FROM、RUN、COPY 等），Docker 会执行这些指令来构建 image。每条指令都会创建一个可缓存的 layer。"
+        },
+        {
+          "question": "在使用 Docker 进行 AI 开发时，为什么 volume mount 至关重要？",
+          "options": [
+            "volume 允许多个容器共享同一个 GPU",
+            "volume 利用宿主机磁盘速度，让容器运行得更快",
+            "正确安装 Python 软件包必须使用 volume",
+            "volume 能让数据（模型、数据集、代码）在容器重建后仍然保留，避免每次都重新下载数 GB 内容"
+          ],
+          "explanation": "没有 volume，容器停止后，其中的一切都会丢失。volume mount 会把宿主机目录映射到容器中，使模型权重（14+ GB）和数据集在重建后仍然保留。"
+        },
+        {
+          "question": "NVIDIA Container Toolkit 提供了什么能力？",
+          "options": [
+            "在容器内安装 CUDA 驱动",
+            "在 AMD 硬件上运行 NVIDIA GPU 容器",
+            "通过 --gpus 标志把宿主机 GPU 暴露给 Docker 容器",
+            "在 Docker 构建过程中编译 CUDA 代码"
+          ],
+          "explanation": "NVIDIA Container Toolkit 是一个 runtime hook，可把宿主机 GPU 暴露给容器。CUDA toolkit 位于容器内，但 GPU 驱动由宿主机共享。"
+        },
+        {
+          "question": "在用于 AI 的 Docker Compose 文件中，ai-dev 服务如何访问 qdrant 向量数据库？",
+          "options": [
+            "在两个容器之间挂载共享 volume",
+            "使用服务名 qdrant 作为主机名，因为 Compose 会创建共享网络",
+            "在容器之间配置 VPN",
+            "使用宿主机的 IP 地址和端口"
+          ],
+          "explanation": "Docker Compose 会自动创建共享网络，使各服务可以通过名称相互访问。ai-dev 容器使用服务名作为主机名，连接到 http://qdrant:6333。"
+        }
+      ]
+    },
+    "phases/00-setup-and-tooling/08-editor-setup": {
+      "sourceSha256": "f1c32b55f7195cb73d2c9003cdcd7ee97316a3a164bfdc5a1e5cd73df2e2e731",
+      "questions": [
+        {
+          "question": "什么是 Language Server Protocol（LSP）？",
+          "options": [
+            "一种在编辑器之间传输文件的协议",
+            "一种源代码文件压缩格式",
+            "一种用于远程结对编程的网络协议",
+            "一项标准，让编辑器可以从特定语言的服务器接收类型信息、代码补全和诊断"
+          ],
+          "explanation": "LSP 是一种标准化协议，让编辑器无论采用哪种实现，都能与语言服务器通信，获得自动补全、类型检查和错误诊断等功能。"
+        },
+        {
+          "question": "为什么保存时格式化（format-on-save）对团队项目很有用？",
+          "options": [
+            "无需手动格式化，就能确保所有贡献者的代码风格一致",
+            "压缩代码，使 git 操作更快",
+            "通过删除空白字符来减小文件大小",
+            "在执行代码前捕获运行时 bug"
+          ],
+          "explanation": "保存时格式化会在每次保存时运行格式化工具（如 Black 或 Ruff），确保所有代码都遵循同一套风格约定，无论代码由谁编写。"
+        },
+        {
+          "question": "哪个 VS Code 扩展让你可以像编辑本地代码一样编辑远程 GPU 机器上的代码？",
+          "options": [
+            "Pylance",
+            "Debugpy",
+            "GitLens",
+            "Remote SSH"
+          ],
+          "explanation": "Remote SSH 会在远程机器上安装一个轻量级 VS Code server，并把 UI 流式传输到你的本地编辑器，让你可以远程编辑文件、运行终端和调试。"
+        },
+        {
+          "question": "进行 AI 工作时，为什么应该在 VS Code 设置中启用 notebook.output.scrolling？",
+          "options": [
+            "启用编辑器中的平滑滚动动画",
+            "允许使用鼠标滚轮在 notebook 单元格之间滚动",
+            "为较宽的 dataframe 启用水平滚动",
+            "防止训练循环输出（数千行）使输出面板无限膨胀"
+          ],
+          "explanation": "训练循环可能会打印数千行输出。如果不启用输出滚动，notebook 输出面板会无限增长，导致 notebook 无法使用。"
+        },
+        {
+          "question": "在 VS Code 中把 python.analysis.typeCheckingMode 设为 basic 有什么作用？",
+          "options": [
+            "为 Python 文件启用语法高亮",
+            "按照 PEP 8 标准格式化 Python 代码",
+            "启用 Python 3.12 语言特性",
+            "在运行代码前发现错误的参数类型和 tensor shape 不匹配"
+          ],
+          "explanation": "Pylance 的 basic 类型检查会在编辑时标记类型不匹配、错误的参数类型和不正确的 API 参数，使你能在运行可能成本高昂的训练脚本前发现 bug。"
+        }
+      ]
+    },
+    "phases/00-setup-and-tooling/09-data-management": {
+      "sourceSha256": "fd6d0ec51a3ab8d9b5acca74390855e376bcdaa90aa7d4d9c53ac1f8ddaed2a5",
+      "questions": [
+        {
+          "question": "在机器学习中，为什么必须将数据划分为独立的训练集、验证集和测试集？",
+          "options": [
+            "确保每个数据集使用不同的文件格式",
+            "缩小数据集，使训练更快",
+            "把数据分发到多个 GPU",
+            "在未见数据上评估模型性能，并防止过拟合"
+          ],
+          "explanation": "训练集用于训练模型，验证集用于在训练期间调整超参数，测试集则使用模型从未见过的数据提供最终的无偏评估。"
+        },
+        {
+          "question": "在 AI/ML 工作流中，Hugging Face Hub 主要用于什么？",
+          "options": [
+            "管理 Python 虚拟环境",
+            "像 GitHub 一样对源代码进行版本控制",
+            "在云端运行 GPU 训练任务",
+            "托管和共享数据集、模型及 ML artifacts"
+          ],
+          "explanation": "Hugging Face Hub 是一个用于托管和共享预训练模型、数据集及 ML demo 的平台。datasets 库提供了从中加载数据的标准方式。"
+        },
+        {
+          "question": "与 CSV 相比，使用 Parquet 格式存储 ML 数据集有什么优势？",
+          "options": [
+            "Parquet 支持的数据类型比 CSV 更多",
+            "Parquet 文件可以在任意文本编辑器中直接阅读",
+            "Parquet 使用列式存储，文件更小、读取速度更快",
+            "Parquet 文件可以在电子表格应用中编辑"
+          ],
+          "explanation": "Parquet 是一种列式二进制格式，压缩效果优于 CSV，并支持快速按列读取。它是 ML 数据集的首选存储格式。"
+        },
+        {
+          "question": "使用 Hugging Face datasets 库加载数据集时，streaming=True 有什么作用？",
+          "options": [
+            "把数据集转换为流媒体视频格式",
+            "当 Hub 中加入新数据时启用实时更新",
+            "逐行加载数据，无需把完整数据集下载到磁盘",
+            "使用并行连接更快地下载数据集"
+          ],
+          "explanation": "streaming 模式会创建一个按需获取数据行的 IterableDataset。无论数据集大小如何，内存用量都保持不变，这对于大到无法装入磁盘的数据集至关重要。"
+        },
+        {
+          "question": "对于大型文件，什么时候应该使用 DVC（Data Version Control），而不只是使用 .gitignore？",
+          "options": [
+            "需要使用版本化数据，在多台机器上精确复现实验时",
+            "项目中只有 CSV 文件时",
+            "数据集小于 1 MB 时",
+            "独自进行个人项目时"
+          ],
+          "explanation": "DVC 使用 git 中的小型指针文件跟踪数据版本，同时把实际数据存储在远程存储（S3、GCS）中。它能确保任何人都可以使用相同数据精确复现你的实验。"
+        }
+      ]
+    },
+    "phases/00-setup-and-tooling/10-terminal-and-shell": {
+      "sourceSha256": "00c0be831d9e151204e13fd407cabee982e97a5edcca5ebfa6a088ee3c36599e",
+      "questions": [
+        {
+          "question": "shell 命令中的管道操作符 | 有什么作用？",
+          "options": [
+            "并行运行两个命令",
+            "把两个文件合并为一个",
+            "把一个命令的标准输出作为下一个命令的标准输入",
+            "把命令输出保存到文件"
+          ],
+          "explanation": "管道操作符把多个命令连接成一条流水线。例如，cat log.txt | grep error 会把 log.txt 的内容作为输入发送给 grep，由后者筛选包含 error 的行。"
+        },
+        {
+          "question": "关闭启动某个进程的终端后，正在运行的进程会发生什么？",
+          "options": [
+            "进程暂停，直到你打开新终端",
+            "进程继续在后台运行",
+            "进程收到挂断信号（SIGHUP），通常会终止",
+            "进程自动迁移为系统服务"
+          ],
+          "explanation": "关闭终端会向子进程发送 SIGHUP，默认情况下会导致它们终止。tmux、nohup 或 screen 等工具可以防止这种情况。"
+        },
+        {
+          "question": "对于长时间运行的训练任务，与使用 nohup command & 相比，tmux 的关键优势是什么？",
+          "options": [
+            "tmux 会自动重启失败的进程",
+            "tmux 比 nohup 占用更少的 CPU",
+            "tmux 允许你分离和重新连接会话，并通过多个 pane 查看实时输出",
+            "tmux 会压缩进程输出以节省磁盘空间"
+          ],
+          "explanation": "tmux 会创建持久会话，你可以先分离，之后再重新连接，并在多个 pane 中查看实时输出。nohup 只会把内容记录到文件，无法交互或重新连接。"
+        },
+        {
+          "question": "python train.py > output.log 2>&1 会实现什么效果？",
+          "options": [
+            "运行 train.py，并只把错误保存到 output.log",
+            "以双倍内存分配运行 train.py",
+            "运行 train.py 两次，并记录第二次运行",
+            "运行 train.py，并把标准输出和标准错误都重定向到 output.log"
+          ],
+          "explanation": "> output.log 把 stdout 重定向到文件。2>&1 把 stderr 发送到与 stdout 相同的位置。最终，正常输出和错误都会被捕获到同一个文件中。"
+        },
+        {
+          "question": "哪个命令可以让你从本地浏览器访问 GPU 机器上运行于 8888 端口的远程 Jupyter notebook？",
+          "options": [
+            "ssh -L 8888:localhost:8888 user@gpu-box",
+            "ssh user@gpu-box --forward-port 8888",
+            "scp -P 8888 user@gpu-box:~/notebook.ipynb",
+            "rsync -avz user@gpu-box:8888 localhost:8888"
+          ],
+          "explanation": "SSH 本地端口转发（-L）会把远程端口映射到本机。运行该命令后，在浏览器中打开 localhost:8888 即可访问远程 Jupyter server。"
+        }
+      ]
+    },
+    "phases/00-setup-and-tooling/11-linux-for-ai": {
+      "sourceSha256": "9627690defe064ff3a549725fc5e3e1db1831e112e368294676e7a72adccf8e0",
+      "questions": [
+        {
+          "question": "Linux 文件路径中的 ~ 符号表示什么？",
+          "options": [
+            "文件系统的根目录",
+            "临时文件目录",
+            "当前用户的主目录",
+            "安装系统程序的目录"
+          ],
+          "explanation": "波浪号（~）是当前用户主目录的快捷写法，在 Linux 上通常为 /home/username。cd ~ 可以让你从任何位置回到主目录。"
+        },
+        {
+          "question": "在命令前加 sudo 有什么作用？",
+          "options": [
+            "以 root（管理员）权限运行命令",
+            "在沙箱环境中运行命令",
+            "加快命令执行速度",
+            "把命令输出记录到系统文件"
+          ],
+          "explanation": "sudo（superuser do）会针对单个命令，把你的权限暂时提升到 root 级别。使用 apt 安装软件包等系统级操作需要它。"
+        },
+        {
+          "question": "尝试运行 shell 脚本时出现 Permission denied。哪个命令可以修复？",
+          "options": [
+            "chown root script.sh",
+            "mv script.sh /usr/bin/",
+            "chmod +x script.sh",
+            "sudo rm script.sh"
+          ],
+          "explanation": "chmod +x 会为文件添加执行权限。如果未设置执行位，即使你拥有该文件，shell 也会拒绝运行脚本。"
+        },
+        {
+          "question": "远程 GPU 机器上的训练数据占满了磁盘。哪个命令可以显示占用空间最大的目录？",
+          "options": [
+            "ls -la /",
+            "cat /proc/meminfo",
+            "du -h --max-depth=1 / | sort -hr | head -20",
+            "free -h"
+          ],
+          "explanation": "du -h 显示各目录的磁盘用量，--max-depth=1 把结果限制在顶层目录，sort -hr 则按大小降序排列。这样就能看出哪些目录占用的空间最多。"
+        },
+        {
+          "question": "macOS 和 Linux 版本的 sed -i 有什么关键区别？",
+          "options": [
+            "Linux sed 比 macOS sed 更快",
+            "Linux sed 不支持正则表达式",
+            "macOS sed 无法直接修改文件",
+            "macOS sed 要求在 -i 后提供空字符串参数（sed -i \"\"），而 Linux 不需要"
+          ],
+          "explanation": "macOS 使用 BSD sed，要求写成 sed -i \"\" pattern file；Linux 使用 GNU sed，接受 sed -i pattern file。这是在不同系统间迁移脚本时常见的陷阱。"
+        }
+      ]
+    },
+    "phases/00-setup-and-tooling/12-debugging-and-profiling": {
+      "sourceSha256": "587d0e490b516bf2dff412133cb7926090d9cfbc89e0f267456510cdd6966ba8",
+      "questions": [
+        {
+          "question": "调试 AI/ML 代码与调试典型 Web 应用在本质上有何不同？",
+          "options": [
+            "AI 代码始终需要 GPU 才能调试",
+            "AI 代码使用不同的编程语言",
+            "AI bug 往往不会导致程序崩溃，而是在没有错误消息的情况下静默地产生错误结果",
+            "AI 代码无法使用 print 语句等标准工具调试"
+          ],
+          "explanation": "最糟糕的 AI bug 会产生看似有效的输出。配置错误的训练循环可能在没有报错的情况下运行数小时，而模型却没有学到任何有用内容；Web 应用则通常会崩溃并给出 stack trace。"
+        },
+        {
+          "question": "profiler 测量什么？",
+          "options": [
+            "代码各部分消耗的时间和内存",
+            "代码库中存在多少个 bug",
+            "代码是否产生正确输出",
+            "单元测试的代码覆盖率"
+          ],
+          "explanation": "profiler 会测量资源消耗，包括每个函数的执行时间、内存分配和 GPU 利用率，帮助你找出瓶颈并优化性能。"
+        },
+        {
+          "question": "你的模型在测试集上达到 99% 的准确率。首先应该怀疑哪种 AI 特有的 bug？",
+          "options": [
+            "batch size 过大",
+            "数据泄漏——测试样本可能泄漏到了训练集中",
+            "learning rate 过高",
+            "模型参数过多"
+          ],
+          "explanation": "高得可疑的准确率通常意味着数据泄漏——训练数据与测试数据存在重叠，或某些特征包含目标标签。务必检查训练集与测试集是否重叠。"
+        },
+        {
+          "question": "分析训练循环的耗时构成时，最常见的发现是什么？",
+          "options": [
+            "GPU 内存分配是瓶颈",
+            "反向传播占用 90% 的时间",
+            "数据加载耗时超过前向传播和反向传播的总和",
+            "写日志最耗时"
+          ],
+          "explanation": "当 DataLoader 中的 num_workers=0 时，数据加载通常占训练时间的 60% 以上。解决方法是设置 num_workers > 0，让数据加载与 GPU 计算并行进行。"
+        },
+        {
+          "question": "你在 step 500 看到 NaN loss。哪种方法有助于找出根本原因？",
+          "options": [
+            "把优化器从 Adam 换成 SGD",
+            "使用不同的随机种子从头重新训练",
+            "增大 batch size 以稳定梯度",
+            "使用 detect_nan 检查梯度中的 NaN/Inf，并在故障点添加 breakpoint()"
+          ],
+          "explanation": "首先要逐个检查参数的梯度，确定 NaN 从哪里产生。在出现 NaN 的 step 设置条件断点，可以让你交互式检查 tensor 值。常见原因包括 learning rate 过高、log(0) 或除以零。"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,611 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/08-generative-ai/01-generative-models-taxonomy-history": {
+      "source": "Every image model, text model, video model, and 3D model fits in one of five buckets. Pick the wrong bucket and you will fight the math for weeks. Pick the right one and the fie…",
+      "translation": "每种图像、文本、视频与三维模型都属于五个类别之一。选错类别，你会与数学原理苦战数周；选对类别，过去十二年的领域进展就会在脑中清晰地层层衔接。"
+    },
+    "phases/08-generative-ai/02-autoencoders-vae": {
+      "source": "A plain autoencoder compresses then reconstructs. It memorizes. It does not generate. Add one trick — force the code to look Gaussian — and you get a sampler. That single trick,…",
+      "translation": "普通自动编码器先压缩再重建。它会记忆，却不能生成。加入一个技巧——迫使编码看起来像高斯分布——就能得到采样器。正是 `z = μ + σ·ε` 这一重参数化技巧，让你在 2026 年使用的每个潜在扩散与流匹配图像模型都在输入端配有 VAE。"
+    },
+    "phases/08-generative-ai/03-gans-generator-discriminator": {
+      "source": "Goodfellow's trick in 2014 was to skip density entirely. Two networks. One makes fakes. One catches them. They fight until the fakes are indistinguishable from real. It shouldn'…",
+      "translation": "Goodfellow 在 2014 年提出的技巧是完全跳过密度。两个网络，一个制造假样本，一个识别假样本。它们不断对抗，直到假样本无法与真实样本区分。这套方法看起来不该有效，实际也经常失效；但当它奏效时，在狭窄领域中生成的样本至今仍是研究文献里最清晰的。"
+    },
+    "phases/08-generative-ai/04-conditional-gans-pix2pix": {
+      "source": "The first big unlock of 2014-2017 was controlling what a GAN makes. Attach a label, or an image, or a sentence. Pix2Pix did the image version and it still beats every generic te…",
+      "translation": "2014～2017 年间的首项重大突破，是控制 GAN 生成什么。附加一个标签、一张图像或一个句子即可。Pix2Pix 实现了图像版本；即使到了 2026 年，在狭窄的图像到图像任务上，它仍能胜过所有通用文本生成图像模型。"
+    },
+    "phases/08-generative-ai/05-stylegan": {
+      "source": "Most generators stir `z` into every layer at the same time. StyleGAN split it apart: first map `z` to an intermediate `w`, then *inject* `w` at every resolution level through Ad…",
+      "translation": "大多数生成器会把 `z` 同时搅入每一层。StyleGAN 将这件事拆开：先把 `z` 映射为中间变量 `w`，再通过 AdaIN 把 `w` *注入*每一级分辨率。仅这一项改变就解开了潜在空间，让照片级人脸生成连续七年成为已解决的问题。"
+    },
+    "phases/08-generative-ai/06-diffusion-ddpm-from-scratch": {
+      "source": "Ho, Jain, Abbeel (2020) gave the field a recipe it could not quit. Destroy the data with noise over a thousand small steps. Train one neural net to predict the noise. Reverse th…",
+      "translation": "Ho、Jain 与 Abbeel 在 2020 年给出了一个让整个领域欲罢不能的方法：用一千个小步骤以噪声破坏数据，训练一个神经网络预测噪声，再在推理时逆转这个过程。如今，每个主流图像、视频、三维与音乐模型都运行在这个循环之上，只是可能再叠加流匹配或一致性技巧。"
+    },
+    "phases/08-generative-ai/07-latent-diffusion-stable-diffusion": {
+      "source": "Pixel-space diffusion on 512×512 images is a computational war crime. Rombach et al. (2022) noticed that you do not need all 786k dimensions to generate an image — you need enou…",
+      "translation": "在 512×512 图像上做像素空间扩散，计算量堪称暴行。Rombach 等人（2022）意识到，生成图像并不需要用到全部 78.6 万个维度——只需保留足以表达语义结构的信息，再用单独的解码器还原其余细节。把扩散过程放进 VAE 的潜在空间即可。这个想法就是 Stable Diffusion 的核心。"
+    },
+    "phases/08-generative-ai/08-controlnet-lora-conditioning": {
+      "source": "Text alone is a clumsy control signal. ControlNet lets you clone a pretrained diffusion model and steer it with a depth map, pose skeleton, scribble, or edge image. LoRA lets yo…",
+      "translation": "单靠文本作为控制信号并不灵活。ControlNet 可以克隆预训练扩散模型，并用深度图、姿态骨架、涂鸦或边缘图来引导它。LoRA 则只需训练 1000 万个参数，就能微调一个 20 亿参数的模型。两者结合，将 Stable Diffusion 从玩具变成了 2026 年各类创意机构都能交付的图像流水线。"
+    },
+    "phases/08-generative-ai/09-inpainting-outpainting-editing": {
+      "source": "Text-to-image makes new things. Inpainting fixes old ones. In production, 70% of billable image work is editing — swap a background, remove a logo, extend the canvas, regenerate…",
+      "translation": "文生图用于创造新事物，图像修补则用于修复已有内容。在生产环境中，70% 的可计费图像工作都是编辑——替换背景、移除标志、扩展画布、重新生成手部。图像修补正是扩散模型真正发挥价值的地方。"
+    },
+    "phases/08-generative-ai/10-video-generation": {
+      "source": "An image is a 2-D tensor. A video is a 3-D one. The theory is the same; the compute is 10-100x harder. OpenAI's Sora (Feb 2024) proved it was possible. By 2026 Veo 2, Kling 1.5,…",
+      "translation": "图像是二维张量，视频则是三维张量。理论相同，计算难度却高出 10～100 倍。OpenAI 的 Sora（2024 年 2 月）证明了这条路可行。到 2026 年，Veo 2、Kling 1.5、Runway Gen-3、Pika 2.0 和 WAN 2.2 已能根据文本生成可用于生产的 1080p 视频，而开放权重技术栈（CogVideoX、HunyuanVideo、Mochi-1、WAN 2.2）大约落后 12 个月。"
+    },
+    "phases/08-generative-ai/11-audio-generation": {
+      "source": "Audio is a 1-D signal at 16-48 kHz. A five-second clip is 80-240k samples. No transformer attends to that sequence directly. The solution for every production audio model in 202…",
+      "translation": "音频是采样率为 16～48 kHz 的一维信号。五秒音频就有 8 万～24 万个采样点，没有 Transformer 会直接关注这么长的序列。2026 年所有生产音频模型都采用同一种解决方案：先由神经编解码器（Encodec、SoundStream、DAC）把音频压缩成频率为 50～75 Hz 的离散词元，再由 Transformer 或扩散模型生成这些词元。"
+    },
+    "phases/08-generative-ai/12-3d-generation": {
+      "source": "3D is the modality where 2D-to-3D leverage is strongest. The 2023 breakthrough was 3D Gaussian Splatting. The 2024-2026 generative push layers multi-view diffusion + 3D reconstr…",
+      "translation": "三维是最能发挥二维到三维杠杆效应的模态。2023 年的突破是三维高斯泼溅。2024～2026 年的生成式浪潮在此基础上叠加多视角扩散与三维重建，只需一段提示词或一张照片就能生成物体和场景。"
+    },
+    "phases/08-generative-ai/13-flow-matching-rectified-flows": {
+      "source": "Diffusion models take 20-50 sampling steps because they walk a curved path from noise to data. Flow matching (Lipman et al., 2023) and rectified flow (Liu et al., 2022) trained …",
+      "translation": "扩散模型需要 20～50 个采样步骤，是因为它从噪声到数据走的是一条弯曲路径。流匹配（Lipman 等，2023）与整流流（Liu 等，2022）则训练出笔直路径。路径越直，所需步骤越少，推理也越快。Stable Diffusion 3、Flux.1 与 AudioCraft 2 都在 2024 年转向了流匹配。"
+    },
+    "phases/08-generative-ai/14-evaluation-fid-clip-score": {
+      "source": "Every generative model leaderboard cites FID, CLIP score, and a win rate from a human-preference arena. Each number has a failure mode a determined researcher can game. If you d…",
+      "translation": "每个生成模型排行榜都会引用 FID、CLIP Score，以及人类偏好竞技场中的胜率。只要研究者有心钻空子，每个数字都有可被利用的失效模式。不了解这些失效模式，就无法分辨真正的改进与刷榜结果。"
+    },
+    "phases/08-generative-ai/19-visual-autoregressive-var": {
+      "source": "Diffusion models sample iteratively in time (denoising steps). VAR samples iteratively in scale — it predicts a 1x1 token, then 2x2, then 4x4, up to the final resolution, each s…",
+      "translation": "扩散模型沿时间迭代采样（逐步去噪），VAR 则沿尺度迭代采样——先预测一个 1×1 词元，再预测 2×2、4×4，直至最终分辨率，每个尺度都以上一个尺度为条件。2024 年的论文表明，VAR 在图像生成上符合 GPT 风格的缩放定律，并且在相同计算预算下胜过 DiT。本课将构建其核心机制。"
+    },
+    "phases/09-reinforcement-learning/01-mdps-states-actions-rewards": {
+      "source": "A Markov Decision Process is five things: states, actions, transitions, rewards, a discount. Everything in RL — Q-learning, PPO, DPO, GRPO — optimizes over this shape. Learn it …",
+      "translation": "马尔可夫决策过程由五样东西组成：状态、动作、转移、奖励和折扣。强化学习中的一切——Q-learning、PPO、DPO、GRPO——都在这个结构上做优化。只要学会一次，后面的强化学习内容都能轻松读懂。"
+    },
+    "phases/09-reinforcement-learning/02-dynamic-programming": {
+      "source": "Dynamic programming is RL with cheating. You already know the transition and reward functions; you just iterate the Bellman equation until `V` or `π` stops moving. It is the ben…",
+      "translation": "动态规划就像是可以“作弊”的强化学习。你已经知道转移函数和奖励函数，只需不断迭代贝尔曼方程，直到 `V` 或 `π` 不再变化。所有基于采样的方法都在努力逼近它给出的基准。"
+    },
+    "phases/09-reinforcement-learning/03-monte-carlo-methods": {
+      "source": "Dynamic programming needs a model. Monte Carlo needs nothing but episodes. Run the policy, watch the returns, average them. The simplest idea in RL — and the one that unlocks ev…",
+      "translation": "动态规划需要模型，蒙特卡洛方法只需要回合。运行策略、观察回报、求取平均值。这是强化学习中最简单的思想，也是开启后续所有方法的钥匙。"
+    },
+    "phases/09-reinforcement-learning/04-q-learning-sarsa": {
+      "source": "Monte Carlo waits until the episode ends. TD updates after every step by bootstrapping the next value estimate. Q-learning is off-policy and optimistic; SARSA is on-policy and c…",
+      "translation": "蒙特卡洛方法要等到回合结束。时序差分则利用下一个价值估计进行自举，在每一步之后立即更新。Q-learning 是离策略且乐观的，SARSA 是同策略且谨慎的。两者都只需一行代码，也都支撑着本阶段的每一种深度强化学习方法。"
+    },
+    "phases/09-reinforcement-learning/05-dqn": {
+      "source": "2013: Mnih trained one Q-learning network on raw pixels, beat every classical RL agent on seven Atari games. 2015: extended to 49 games, published in Nature, sparked the deep-RL…",
+      "translation": "2013 年，Mnih 用原始像素训练了一个 Q-learning 网络，在 7 款 Atari 游戏上击败了所有经典强化学习智能体。2015 年，这项工作扩展到 49 款游戏、发表于《Nature》，并引爆了深度强化学习时代。DQN 就是 Q-learning 加上三项让函数近似保持稳定的技巧。"
+    },
+    "phases/09-reinforcement-learning/06-policy-gradients-reinforce": {
+      "source": "Stop estimating value. Parameterize the policy directly, compute the gradient of expected return, step uphill. Williams (1992) wrote it in one theorem. It is why PPO, GRPO, and …",
+      "translation": "不再估计价值。直接参数化策略，计算期望回报的梯度，再沿上升方向迈步。Williams（1992）用一个定理写清了这一切。PPO、GRPO 以及每一种大语言模型强化学习循环，都源于此。"
+    },
+    "phases/09-reinforcement-learning/07-actor-critic-a2c-a3c": {
+      "source": "REINFORCE is noisy. Add a critic that learns `V̂(s)`, subtract it from the return, and you get an advantage that has the same expectation but far lower variance. That is actor-c…",
+      "translation": "REINFORCE 的噪声很大。加入一个学习 `V̂(s)` 的评论家，用回报减去它，就得到期望相同但方差小得多的优势。这就是 Actor-Critic。A2C 以同步方式运行，A3C 则跨线程运行。两者共同构成理解所有现代深度强化学习方法的心智模型。"
+    },
+    "phases/09-reinforcement-learning/08-ppo": {
+      "source": "A2C throws away each rollout after one update. PPO wraps the policy gradient in a clipped importance ratio so you can do 10+ epochs on the same data without the policy exploding…",
+      "translation": "A2C 每次更新后都会丢弃整段轨迹。PPO 在策略梯度外包上一层经过裁剪的重要性比率，让你可以在同一批数据上训练 10 轮以上，而不会让策略崩溃。Schulman 等人于 2017 年提出了它。到 2026 年，它仍是默认的策略梯度算法。"
+    },
+    "phases/09-reinforcement-learning/09-reward-modeling-rlhf": {
+      "source": "Humans cannot write a reward function for \"good assistant response,\" but they can compare two responses and pick the better one. Fit a reward model to those comparisons, then RL…",
+      "translation": "人类无法为“优秀的助手回答”手写奖励函数，却可以比较两个回答并选出更好的一个。先根据这些比较拟合奖励模型，再用强化学习针对它优化语言模型。Christiano，2017；InstructGPT，2022。这套方案把 GPT-3 变成了 ChatGPT。到 2026 年，它大多正被 DPO 取代——但背后的心智模型依然成立。"
+    },
+    "phases/09-reinforcement-learning/10-multi-agent-rl": {
+      "source": "Single-agent RL assumes the environment is stationary. Put two learning agents in the same world and that assumption breaks: each agent is part of the other's environment, and b…",
+      "translation": "单智能体强化学习假设环境是平稳的。把两个正在学习的智能体放进同一个世界，这项假设便会失效：每个智能体都是另一个智能体所处环境的一部分，而且双方都在变化。多智能体强化学习就是一套在马尔可夫假设不再成立时，仍能让学习收敛的方法。"
+    },
+    "phases/09-reinforcement-learning/11-sim-to-real-transfer": {
+      "source": "A policy trained in a simulator that fails on hardware is a policy that memorized the simulator. Domain randomization, domain adaptation, and system identification are the three…",
+      "translation": "在模拟器中训练、到了真实硬件上却失效的策略，本质上只记住了模拟器。领域随机化、领域适配和系统辨识，是让学习所得控制器跨越现实鸿沟的三种工具。"
+    },
+    "phases/09-reinforcement-learning/12-rl-for-games": {
+      "source": "1992: TD-Gammon beat human champions at backgammon with pure TD. 2016: AlphaGo beat Lee Sedol. 2017: AlphaZero dominated chess, shogi, and Go from scratch. 2024: DeepSeek-R1 pro…",
+      "translation": "1992 年：TD-Gammon 仅凭 TD 就击败了西洋双陆棋人类冠军。2016 年：AlphaGo 击败李世石。2017 年：AlphaZero 从零开始统治国际象棋、将棋与围棋。2024 年：DeepSeek-R1 证明，同一套方案将 PPO 换成 GRPO 后，也能用于推理。游戏是推动本阶段每一次突破的基准。"
+    },
+    "phases/10-llms-from-scratch/01-tokenizers": {
+      "source": "Your LLM does not read English. It reads integers. The tokenizer decides whether those integers carry meaning or waste it.",
+      "translation": "大语言模型读不懂英语，它读取的是整数。词元化器决定这些整数承载的是有效信息，还是无谓浪费。"
+    },
+    "phases/10-llms-from-scratch/02-building-a-tokenizer": {
+      "source": "Lesson 01 gave you a toy. This lesson gives you a weapon.",
+      "translation": "第 01 课给了你一个玩具，这一课则会给你一件利器。"
+    },
+    "phases/10-llms-from-scratch/03-data-pipelines": {
+      "source": "The model is a mirror. It reflects whatever data you feed it. Feed it garbage, it reflects garbage with perfect fluency.",
+      "translation": "模型是一面镜子。你喂给它什么数据，它就会映照出什么。喂给它垃圾，它也会以无比流畅的方式复述垃圾。"
+    },
+    "phases/10-llms-from-scratch/04-pre-training-mini-gpt": {
+      "source": "GPT-2 Small has 124 million parameters. That's 12 transformer layers, 12 attention heads, and 768-dimensional embeddings. You can train it from scratch on a single GPU in a few …",
+      "translation": "GPT-2 Small 拥有 1.24 亿个参数，包括 12 层 Transformer、12 个注意力头和 768 维嵌入。用一张 GPU，只需几小时就能从零训练它。大多数人从未这样做过，只会使用预训练检查点。但如果没有亲手训练过一个模型，你就不可能真正理解自己赖以构建产品的模型内部究竟发生了什么。"
+    },
+    "phases/10-llms-from-scratch/05-scaling-distributed": {
+      "source": "Your 124M model trained on one GPU. Now try 7 billion parameters. The model doesn't fit in memory. The data takes weeks on a single machine. Distributed training isn't optional …",
+      "translation": "你的 1.24 亿参数模型已经在一张 GPU 上完成训练。现在试试 70 亿参数：模型装不进显存，单机处理数据需要数周。达到这种规模后，分布式训练不再是可选项，而是唯一出路。"
+    },
+    "phases/10-llms-from-scratch/06-instruction-tuning-sft": {
+      "source": "A base model predicts the next token. That's it. It doesn't follow instructions, answer questions, or refuse harmful requests. SFT is the bridge between a token predictor and a …",
+      "translation": "基础模型只会预测下一个词元，仅此而已。它不会遵循指令、回答问题，也不会拒绝有害请求。SFT 是连接词元预测器与实用助手的桥梁。你曾经对话过的每个模型——Claude、GPT、Llama Chat——都经历过这一步。"
+    },
+    "phases/10-llms-from-scratch/07-rlhf": {
+      "source": "SFT teaches the model to follow instructions. But it doesn't teach the model which response is BETTER. Two grammatically correct, factually accurate answers can differ enormousl…",
+      "translation": "SFT 教会模型遵循指令，却不会教它判断哪个回答*更好*。两个语法正确、事实准确的回答，在帮助程度上仍可能天差地别。RLHF 把人类判断编码进模型行为。Claude 之所以乐于助人、GPT 之所以礼貌，背后都有它的作用。"
+    },
+    "phases/10-llms-from-scratch/08-dpo": {
+      "source": "RLHF works. It also requires training three models (SFT, reward model, policy), managing PPO's instability, and tuning a KL penalty. DPO asks: what if you could skip all of that…",
+      "translation": "RLHF 确实有效，但它需要训练三个模型（SFT、奖励模型、策略模型），处理 PPO 的不稳定性，还要调节 KL 惩罚。DPO 提出了一个问题：如果能跳过这一切呢？DPO 直接使用偏好对优化语言模型。不需要奖励模型，不需要 PPO，只有一个训练循环，却能取得相同效果。"
+    },
+    "phases/10-llms-from-scratch/09-constitutional-ai-self-improvement": {
+      "source": "RLHF needs humans in the loop. Constitutional AI replaces most of them with the model itself. Write a list of principles, have the model critique its own outputs against those p…",
+      "translation": "RLHF 需要人类参与闭环，宪法式 AI 则让模型自身取代其中的大部分人工。写下一组原则，让模型依照这些原则批评自己的输出，再根据批评结果训练。DeepSeek-R1 在 2025 年把这种思路又推进了一步：让模型生成数百万条推理轨迹，用规则为它们评分，再针对结果运行 GRPO。2026 年前沿模型中的大部分“对齐工作”，都是由模型自己完成的。本课将构建这两种循环。"
+    },
+    "phases/10-llms-from-scratch/10-evaluation": {
+      "source": "Goodhart's Law: when a measure becomes a target, it ceases to be a good measure. Every frontier lab games benchmarks. MMLU scores go up while models still can't reliably count t…",
+      "translation": "古德哈特定律：当一项指标成为目标时，它就不再是好指标。每家前沿实验室都会针对基准优化。MMLU 分数不断提高，模型却仍然无法可靠数出“strawberry”中有几个字母 R。真正重要的评测只有你的评测——针对你的任务，使用你的数据。"
+    },
+    "phases/10-llms-from-scratch/11-quantization": {
+      "source": "A 70B model in FP16 needs 140GB. Two A100s just for weights. Quantize to FP8: one 80GB GPU. INT4: a MacBook.",
+      "translation": "一个 70B 模型的 FP16 权重需要 140GB，仅保存权重就要两张 A100。量化为 FP8 后，一张 80GB GPU 即可容纳；量化为 INT4 后，一台 MacBook 就能运行。"
+    },
+    "phases/10-llms-from-scratch/12-inference-optimization": {
+      "source": "Two phases define LLM inference. Prefill processes your prompt in parallel -- compute-bound. Decode generates tokens one at a time -- memory-bound. Every optimization targets on…",
+      "translation": "大语言模型推理由两个阶段构成。预填充会并行处理提示词，受计算能力限制；解码会逐个生成词元，受内存带宽限制。每项优化都针对其中一个或两个阶段。"
+    },
+    "phases/10-llms-from-scratch/13-building-complete-llm-pipeline": {
+      "source": "Everything from Lessons 01 to 12 is one stage of one pipeline. This lesson is the scaffold that turns those stages into a single end-to-end run: tokenize, pre-train, scale, SFT,…",
+      "translation": "第 01～12 课讲解的每项内容，都只是同一条流水线中的一个阶段。本课提供脚手架，把这些阶段串成一次端到端运行：词元化、预训练、扩展、SFT、对齐、评估、量化、服务。你不会在笔记本电脑上训练 70B 模型，而会构建 2026 年前沿团队用来决定交付内容的编排层、清单、评测门禁与回滚方案。这是本阶段的收官项目。"
+    },
+    "phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs": {
+      "source": "You built a GPT-2 Small from scratch in Lesson 04. Frontier open models in 2026 are the same family with five or six concrete changes. RMSNorm instead of LayerNorm. SwiGLU inste…",
+      "translation": "你在第 04 课从零构建了 GPT-2 Small。2026 年的前沿开放模型仍属于同一家族，只做了五六项具体改动：用 RMSNorm 取代 LayerNorm，用 SwiGLU 取代 GELU，用 RoPE 取代学习式位置编码，用 GQA 或 MLA 取代完整 MHA，并在大规模模型中采用混合专家。你已经掌握的数学足以解释其中 95% 的内容。本课会并列剖析 Llama 3、DeepSeek-V3、Mixtral、Qwen 与 Gemma，并明确指出每种架构究竟从哪一行开始分叉。"
+    },
+    "phases/10-llms-from-scratch/15-speculative-decoding-eagle3": {
+      "source": "Phase 7 · Lesson 16 proved the math: the Leviathan rejection rule preserves the verifier's distribution exactly. This lesson is the training-stack view of 2026 production specul…",
+      "translation": "阶段 7 · 第 16 课已经证明了数学原理：Leviathan 拒绝规则会精确保留验证模型的分布。本课从训练技术栈的角度介绍 2026 年的生产级推测解码。EAGLE-3 不再把草稿模型视为廉价近似，而是将其改造成一个专门设计的微型网络，使用验证模型自身的隐藏状态训练；它还加入训练时测试循环，使训练分布与推理分布对齐。最终结果是：端到端加速 3～6.5 倍，聊天任务的逐词元接受率超过 0.9，而且不牺牲输出分布。2026 年的每套生产推理技术栈都会默认提供它。"
+    },
+    "phases/10-llms-from-scratch/16-differential-attention-v2": {
+      "source": "Softmax attention spreads a small amount of probability over every non-matching token. Over 100k tokens that noise adds up and drowns the signal. Differential Transformer (Ye et…",
+      "translation": "Softmax 注意力会向每个不匹配的词元分配少量概率。在 10 万个词元上，这些噪声会不断累加并淹没信号。差分 Transformer（Ye 等，ICLR 2025）通过计算两个 Softmax 的差值来消除共同噪声底。DIFF V2（Microsoft，2026 年 1 月）则是面向生产技术栈的重写版本：解码延迟与基线 Transformer 相当，不需要自定义内核，并兼容 FlashAttention。本课将端到端讲解从 V1 到 V2 的演进，并提供一个可用标准库 Python 运行的差值操作玩具实现。"
+    },
+    "phases/10-llms-from-scratch/17-native-sparse-attention": {
+      "source": "At 64k tokens, attention eats 70-80% of decode latency. Every open-model lab has a plan to fix it. DeepSeek's NSA (ACL 2025 best paper) is the one that stuck: three parallel att…",
+      "translation": "当上下文达到 64k 词元时，注意力会占据 70%～80% 的解码延迟。每家开放模型实验室都在设法解决这个问题。真正站稳脚跟的是 DeepSeek 的 NSA（ACL 2025 最佳论文）：三条并行注意力分支——压缩后的粗粒度词元、选择性保留的细粒度词元，以及负责局部上下文的滑动窗口——再通过学习得到的门控加以组合。它适配硬件（便于实现高效内核），可原生训练（在预训练中直接使用，而不是推理时临时外挂），并且在 64k 解码中比 FlashAttention 更快，质量则达到或超过完整注意力。本课会端到端构建这三条分支，并说明为何这种稀疏性可以端到端求导。"
+    },
+    "phases/10-llms-from-scratch/18-multi-token-prediction": {
+      "source": "Every autoregressive LLM from GPT-2 to Llama 3 trains on one loss per position: predict the next token. DeepSeek-V3 added a second loss per position: predict the token after tha…",
+      "translation": "从 GPT-2 到 Llama 3，每个自回归大语言模型都只在每个位置使用一个损失：预测下一个词元。DeepSeek-V3 在每个位置增加了第二个损失：预测再下一个词元。在 671B 模型上，额外的 14B 参数通过梯度流被蒸馏回主模型；训练好的 MTP 头还能在推理时改作推测解码草稿器，在聊天任务上的接受率超过 80%。于是，1.8 倍生成吞吐量几乎免费获得。本课将构建 DeepSeek 技术报告中的顺序式 MTP 模块，计算损失与共享头参数布局，并解释为什么 MTP 能保留因果链，而 Gloeckle 等人最初的并行 MTP 无法做到。"
+    },
+    "phases/10-llms-from-scratch/19-dualpipe-parallelism": {
+      "source": "DeepSeek-V3 was trained on 2,048 H800 GPUs with MoE experts scattered across nodes. Cross-node expert all-to-all communication cost 1 GPU-hour of comm for every 1 GPU-hour of co…",
+      "translation": "DeepSeek-V3 使用 2,048 张 H800 GPU 训练，MoE 专家分散在不同节点上。跨节点专家全对全通信每消耗 1 个 GPU 小时的计算，就要再消耗 1 个 GPU 小时的通信，GPU 有一半时间处于空闲状态。DualPipe（DeepSeek，2024 年 12 月）是一种双向流水线，它把前向和反向计算与二者触发的全对全通信重叠起来。气泡减少、吞吐量提高；而一旦专家并行已经把专家分散到多个进程，保留两份模型参数副本（名称中“Dual”的由来）的成本也并不高。本课以学习型方式讲解 DualPipe 的实际工作原理，以及 Sea AI Lab 的 DualPipeV 改进如何以略紧张一些的气泡为代价，消除两倍参数成本。"
+    },
+    "phases/10-llms-from-scratch/20-deepseek-v3-walkthrough": {
+      "source": "Phase 10 · Lesson 14 named the six architectural knobs every open model turns. DeepSeek-V3 (December 2024, 671B parameters total, 37B active) turns all six and adds four more: M…",
+      "translation": "阶段 10 · 第 14 课介绍了所有开放模型都会调整的六个架构旋钮。DeepSeek-V3（2024 年 12 月发布，总参数量 671B、活跃参数量 37B）不仅调整了全部六项，还增加了四项：多头潜在注意力、无辅助损失负载均衡、多词元预测和 DualPipe 训练。本课会自顶向下阅读 DeepSeek-V3 的架构，并根据公开配置推导每项参数数量。完成后，你将能解释为什么 671B/37B 的比例是正确选择，以及为什么在前沿规模上，MLA + MoE 的组合优于单独使用其中任何一种。"
+    },
+    "phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer": {
+      "source": "State space models (SSMs) and transformers want different things. Transformers buy quality via attention at quadratic cost. SSMs buy linear-time inference and constant memory vi…",
+      "translation": "状态空间模型（SSM）与 Transformer 各有所求。Transformer 以二次方复杂度的注意力换取质量；SSM 则通过递归实现线性时间推理和恒定内存，但质量稍逊。AI21 的 Jamba（2024 年 3 月）与 Jamba 1.5（2024 年 8 月）把两者放进同一个模型：每 7 个 Mamba 层搭配 1 个 Transformer 层，每隔一层使用 MoE，并提供能装入单张 80GB GPU 的 256k 上下文窗口。Mamba-3（ICLR 2026）又以复值状态空间和 MIMO 投影强化了 SSM 一侧。本课会端到端剖析这两种架构，并解释为何在纯 SSM 与纯 Transformer 的长上下文尝试未能持续扩展时，混合方案却经受住了三年的规模化考验。"
+    },
+    "phases/10-llms-from-scratch/22-async-hogwild-inference": {
+      "source": "Speculative decoding (Phase 10 · 15) parallelizes tokens within one sequence. Multi-agent frameworks parallelize across whole sequences but force explicit coordination (voting, …",
+      "translation": "推测解码（阶段 10 · 15）在单条序列内部并行处理词元。多智能体框架在完整序列之间并行，却要求显式协调（投票、拆分子任务）。Hogwild! 推理（Rodionov 等，arXiv:2504.06261）采用另一种方式：让同一大语言模型的 N 个实例并行运行，并共享一个键值缓存。每个工作进程都会立刻看到其他进程生成的所有词元。现代推理模型——QwQ、DeepSeek-R1——无须任何微调，就能通过共享缓存自行协调。该方法仍处于实验阶段，却开辟了一个与推测解码正交的全新推理并行维度。本课使用标准库 Python 实现一个双工作进程 Hogwild! 模拟器，并解释共享缓存协作为何会从模型已有的推理能力中涌现。"
+    },
+    "phases/10-llms-from-scratch/25-speculative-decoding": {
+      "source": "A frontier LLM generating one token requires a full forward pass over billions of parameters. That forward pass is massively over-provisioned: most of the time a much smaller mo…",
+      "translation": "前沿大语言模型每生成一个词元，都需要让数十亿参数完成一次完整前向传播。这次前向传播配置严重过剩：大多数时候，小得多的模型都能正确猜中后续 3～5 个词元，大模型只需*验证*猜测。猜对时，你只用一次计算的代价就得到 5 个词元。推测解码（Leviathan 等，2023）让这一过程在数学上保持精确，EAGLE-3（2025）又把接受率提高到平均每次验证约 4.5 个词元——输出分布相同时可加速 4～5 倍。"
+    },
+    "phases/10-llms-from-scratch/34-gradient-checkpointing": {
+      "source": "Backprop keeps every intermediate activation. At 70B parameters and 128K context that is 3 TB of activations per rank. Checkpointing trades FLOPs for memory: recompute instead o…",
+      "translation": "反向传播会保留每个中间激活值。对于 70B 参数、128K 上下文的模型，每个进程需要保存 3 TB 激活值。检查点技术以内存换 FLOP：不再保存，而是在需要时重新计算。真正的问题是应丢弃哪些片段，答案并不是“全部”。"
+    },
+    "phases/11-llm-engineering/01-prompt-engineering": {
+      "source": "Most people write prompts like they are texting a friend. Then they wonder why a 200-billion parameter model gives mediocre answers. Prompt engineering is not about tricks. It i…",
+      "translation": "大多数人写提示词，就像在给朋友发消息。然后他们又困惑：为什么一个拥有 2000 亿参数的模型，只能给出平庸的回答？提示工程不靠花招。它要求你理解：你发送的每个词元都是一条指令，而模型会按字面执行指令。指令写得更好，输出就会更好。就是这么简单，也这么困难。"
+    },
+    "phases/11-llm-engineering/02-few-shot-cot": {
+      "source": "Telling a model what to do is prompting. Showing it how to reason is engineering. Measure each prompting strategy on your own workload instead of relying on unverified headline …",
+      "translation": "告诉模型做什么是提示；展示如何推理才是工程。应在自己的工作负载上衡量每种提示策略，而不是依赖未经验证的醒目准确率数字。"
+    },
+    "phases/11-llm-engineering/03-structured-outputs": {
+      "source": "Your LLM returns a string. Your application needs JSON. That gap has crashed more production systems than any model hallucination. Structured output is the bridge between natura…",
+      "translation": "大语言模型返回字符串，应用程序需要 JSON。这个落差导致的生产系统崩溃，比任何模型幻觉都多。结构化输出是自然语言与类型化数据之间的桥梁。做好它，大语言模型就会变成可靠的 API；做不好，你就只能在凌晨三点用正则表达式解析自由文本。"
+    },
+    "phases/11-llm-engineering/04-embeddings": {
+      "source": "Text is discrete. Math is continuous. Every time you ask an LLM to find \"similar\" documents, compare meanings, or search beyond keywords, you're relying on a bridge between thes…",
+      "translation": "文本是离散的，数学是连续的。每当你要求大语言模型寻找“相似”文档、比较语义或进行超越关键词的搜索时，你都在依赖连接这两个世界的桥梁。这座桥梁就是嵌入。如果不理解嵌入，你就不算真正理解现代 AI，只是在使用它而已。"
+    },
+    "phases/11-llm-engineering/05-context-engineering": {
+      "source": "Prompt engineering is a subset. Context engineering is the whole game. A prompt is a string you type. Context is everything that goes into the model's window: system instruction…",
+      "translation": "提示工程只是一个子集，上下文工程才是全局。提示词是你输入的一段字符串；上下文则是进入模型窗口的一切内容：系统指令、检索到的文档、工具定义、对话历史、少样本示例，以及提示词本身。2026 年最优秀的 AI 工程师都是上下文工程师。他们决定哪些内容应当进入、哪些应当排除，以及各部分应按什么顺序排列。"
+    },
+    "phases/11-llm-engineering/06-rag": {
+      "source": "Your LLM knows everything up to its training cutoff. It knows nothing about your company's docs, your codebase, or last week's meeting notes. RAG solves this by retrieving relev…",
+      "translation": "你的大语言模型掌握训练截止日期之前的一切，却不了解公司的文档、代码库或上周的会议记录。RAG 通过检索相关文档并将它们放进提示词来解决这个问题。它是生产级 AI 中应用最广泛的模式。如果你只打算动手完成本课程中的一项内容，那就构建一条 RAG 流水线。"
+    },
+    "phases/11-llm-engineering/07-advanced-rag": {
+      "source": "Basic RAG retrieves the top-k most similar chunks. That works for simple questions. It falls apart for multi-hop reasoning, ambiguous queries, and large corpora. Advanced RAG is…",
+      "translation": "基础 RAG 会检索相似度最高的 top-k 个块。它可以处理简单问题，却会在多跳推理、模糊查询和大型语料库面前失效。高级 RAG 是只能在 10 篇文档上运行的演示，与能在 1000 万篇文档上运行的系统之间的分水岭。"
+    },
+    "phases/11-llm-engineering/08-fine-tuning-lora": {
+      "source": "Full fine-tuning a 7B model requires 56GB of VRAM. You don't have that. Neither do most companies. LoRA lets you fine-tune the same model in 6GB by training less than 1% of the …",
+      "translation": "对一个 7B 模型进行全量微调需要 56GB 显存，而你没有这么多显存，大多数公司也没有。LoRA 只训练不到 1% 的参数，就能让你在 6GB 显存中微调同一个模型。这并不是妥协——在大多数任务上，它能达到与全量微调相当的质量。整个开源微调生态都建立在这一技巧之上。"
+    },
+    "phases/11-llm-engineering/09-function-calling": {
+      "source": "LLMs cannot do anything. They generate text. That is the entire capability. They cannot check the weather, query a database, send an email, run code, or read a file. Every \"AI a…",
+      "translation": "大语言模型本身什么也做不了。它们只会生成文本，这就是全部能力。它们无法查看天气、查询数据库、发送电子邮件、运行代码或读取文件。你见过的每个“AI 智能体”，本质上都是由大语言模型生成一段 JSON，说明要调用哪个函数——然后由你的代码真正调用它。模型是大脑，工具是双手，函数调用则是连接二者的神经系统。"
+    },
+    "phases/11-llm-engineering/10-evaluation": {
+      "source": "You would never deploy a web app without tests. You would never ship a database migration without a rollback plan. But right now, most teams ship LLM applications by reading 10 …",
+      "translation": "你绝不会在没有测试的情况下部署 Web 应用，也绝不会在没有回滚方案的情况下发布数据库迁移。但如今，多数团队发布大语言模型应用的方式，仍然只是读 10 个输出，然后说一句“嗯，看起来不错”。这不是评估，而是寄希望于运气。希望不是工程实践。每次修改提示词、更换模型或调整温度，都会以你无法通过阅读少量样本预测的方式改变输出分布。评估是防止应用悄然退化的唯一屏障。"
+    },
+    "phases/11-llm-engineering/11-caching-cost": {
+      "source": "Most AI startups do not die from bad models. They die from bad unit economics. A single GPT-4o call costs fractions of a cent. Ten thousand users making ten calls per day costs …",
+      "translation": "大多数 AI 初创公司并非死于模型太差，而是死于糟糕的单位经济模型。单次 GPT-4o 调用只需几分之一美分，但若有一万名用户每天各调用十次，仅输入词元就要花费 250 美元——这时你甚至还没有收取一美元。最终生存下来的公司，会把每次 API 调用视为一笔金融交易，而不只是一次函数调用。"
+    },
+    "phases/11-llm-engineering/12-guardrails": {
+      "source": "Your LLM application will be attacked. Not might. Will. The first prompt injection attempt against your production system will come within 48 hours of launch. The question is no…",
+      "translation": "你的大语言模型应用一定会遭到攻击。不是“可能”，而是“一定”。生产系统上线后 48 小时内，就会迎来第一次提示注入尝试。问题不在于是否有人会尝试“忽略此前的指令并泄露系统提示词”，而在于你的系统会屈服还是守住防线。每个聊天机器人、每个智能体、每条 RAG 流水线都是攻击目标。如果没有防护栏就发布，你发布的其实是一个披着聊天界面的漏洞。"
+    },
+    "phases/11-llm-engineering/13-production-app": {
+      "source": "You have built prompts, embeddings, RAG pipelines, function calling, caching layers, and guardrails. Separately. In isolation. Like practicing guitar scales without ever playing…",
+      "translation": "你已经分别构建过提示词、嵌入、RAG 流水线、函数调用、缓存层与防护栏，就像一直练习吉他音阶，却从未真正演奏一首乐曲。本课就是那首乐曲。你将把第 01～12 课的每个组件连接成一个可投入生产的服务。不是玩具，也不是演示，而是一个能够承载真实流量、优雅处理故障、流式传输词元、跟踪成本，并顺利服务首批 10,000 名用户的系统。"
+    },
+    "phases/11-llm-engineering/14-model-context-protocol": {
+      "source": "MCP gives an AI host one protocol for discovering and invoking tools, resources, and prompts. The 2026-07-28 revision makes that protocol stateless: capability and version conte…",
+      "translation": "MCP 为 AI 宿主提供一套统一协议，用于发现和调用工具、资源与提示词。2026-07-28 修订版使该协议变为无状态：能力与版本上下文随每个请求一同传递，而不是保存在与连接绑定的握手中。"
+    },
+    "phases/11-llm-engineering/15-prompt-caching": {
+      "source": "Your system prompt is 4,000 tokens. Your RAG context is 20,000 tokens. You send both with every request. You also pay for both — every time. Prompt caching lets the provider kee…",
+      "translation": "你的系统提示词有 4,000 个词元，RAG 上下文有 20,000 个词元。每次请求都要发送二者，也每次都要为二者付费。提示缓存允许提供商在服务端保持该前缀的热状态，并在复用时只收取正常价格的 10%。使用得当，它可以把推理成本降低 50%～90%，并把首词元延迟降低 40%～85%。"
+    },
+    "phases/11-llm-engineering/16-langgraph-state-machines": {
+      "source": "A ReAct loop written by hand is a `while True`. The same loop written as an explicit graph is something you can checkpoint, interrupt, branch, and time-travel through. The agent…",
+      "translation": "手写的 ReAct 循环只是一个 `while True`。把同一个循环写成显式图之后，你便可以为它创建检查点、中断执行、建立分支，并在其中进行时间回溯。智能体没有改变，改变的是它外面的运行框架。"
+    },
+    "phases/11-llm-engineering/17-agent-framework-tradeoffs": {
+      "source": "Every framework sells the same demo (research agent builds a report) and hides the same bug (state schema fights with the orchestration layer). Pick the framework whose abstract…",
+      "translation": "每个框架展示的都是同一种演示（研究智能体生成报告），隐藏的也是同一种问题（状态 Schema 与编排层相互冲突）。应选择核心抽象与问题形态相匹配的框架；否则，你只会把胶水代码写上两遍。"
+    }
+  },
+  "artifacts": {
+    "phases/08-generative-ai/01-generative-models-taxonomy-history/outputs/skill-model-chooser.md": {
+      "source": "Pick a generative-model family, backbone, and hosted alternative for a given task and budget.",
+      "translation": "根据给定任务与预算，选择生成模型家族、骨干网络和托管替代方案。"
+    },
+    "phases/08-generative-ai/02-autoencoders-vae/outputs/skill-vae-trainer.md": {
+      "source": "Specify VAE architecture, latent size, beta schedule, and eval plan for a given dataset and downstream use.",
+      "translation": "针对给定数据集与下游用途，指定 VAE 架构、潜在空间大小、beta 调度和评估方案。"
+    },
+    "phases/08-generative-ai/03-gans-generator-discriminator/outputs/skill-gan-debugger.md": {
+      "source": "Diagnose failing GAN training from loss curves and sample grids; prescribe one-line fixes.",
+      "translation": "根据损失曲线和样本网格诊断失败的 GAN 训练，并给出一行即可实施的修复方案。"
+    },
+    "phases/08-generative-ai/04-conditional-gans-pix2pix/outputs/skill-img2img-chooser.md": {
+      "source": "Pick an image-to-image approach given paired vs unpaired data, domain specificity, and latency budget.",
+      "translation": "根据成对或非成对数据、领域专用程度和延迟预算，选择图像到图像方法。"
+    },
+    "phases/08-generative-ai/05-stylegan/outputs/skill-stylegan-inversion.md": {
+      "source": "Choose an inversion and editing pipeline for a pretrained StyleGAN over a real photo.",
+      "translation": "为真实照片上的预训练 StyleGAN 选择反演与编辑流水线。"
+    },
+    "phases/08-generative-ai/06-diffusion-ddpm-from-scratch/outputs/skill-diffusion-trainer.md": {
+      "source": "Configure a diffusion training run: schedule, prediction target, sampler, and eval plan.",
+      "translation": "配置一次扩散训练：调度、预测目标、采样器与评估方案。"
+    },
+    "phases/08-generative-ai/07-latent-diffusion-stable-diffusion/outputs/skill-sd-prompter.md": {
+      "source": "Configure Stable Diffusion / Flux inference for a given prompt, style, and quality bar.",
+      "translation": "根据给定提示词、风格和质量门槛配置 Stable Diffusion / Flux 推理。"
+    },
+    "phases/08-generative-ai/08-controlnet-lora-conditioning/outputs/skill-sd-toolkit-composer.md": {
+      "source": "Compose ControlNets, LoRAs, and IP-Adapters on top of an SD / Flux base for a given set of inputs.",
+      "translation": "针对给定输入，组合 SD / Flux 基础模型之上的 ControlNet、LoRA 与 IP-Adapter。"
+    },
+    "phases/08-generative-ai/09-inpainting-outpainting-editing/outputs/skill-editing-pipeline.md": {
+      "source": "Plan an image-editing pipeline from source + edit description to a ready-to-ship output.",
+      "translation": "规划从源图像和编辑描述到可交付输出的图像编辑流水线。"
+    },
+    "phases/08-generative-ai/10-video-generation/outputs/skill-video-brief.md": {
+      "source": "Translate a video brief into a model + prompt + shot plan for a 2026 video generator.",
+      "translation": "将视频需求简报转化为适用于 2026 年视频生成器的模型、提示词与镜头方案。"
+    },
+    "phases/08-generative-ai/11-audio-generation/outputs/skill-audio-brief.md": {
+      "source": "Translate an audio brief into a model + prompt + eval plan across TTS, music, and SFX.",
+      "translation": "将音频需求简报转化为覆盖 TTS、音乐和 SFX 的模型、提示词与评估方案。"
+    },
+    "phases/08-generative-ai/12-3d-generation/outputs/skill-3d-pipeline.md": {
+      "source": "Choose a 3D generation or reconstruction pipeline given input type, output format, and use case.",
+      "translation": "根据输入类型、输出格式与使用场景，选择 3D 生成或重建流水线。"
+    },
+    "phases/08-generative-ai/13-flow-matching-rectified-flows/outputs/skill-fm-tuner.md": {
+      "source": "Convert a diffusion training plan into a flow-matching / rectified-flow config.",
+      "translation": "将扩散训练方案转换为流匹配 / 整流流配置。"
+    },
+    "phases/08-generative-ai/14-evaluation-fid-clip-score/outputs/skill-eval-report.md": {
+      "source": "Plan a full generative-model evaluation: sample quality, adherence, preference, failure audit.",
+      "translation": "规划完整的生成模型评估：样本质量、条件遵循度、偏好与失败审计。"
+    },
+    "phases/08-generative-ai/19-visual-autoregressive-var/outputs/skill-var-tokenizer-designer.md": {
+      "source": "Design a multi-scale residual VQ tokenizer for next-scale visual autoregressive image generation.",
+      "translation": "为下一尺度视觉自回归图像生成设计多尺度残差 VQ tokenizer。"
+    },
+    "phases/09-reinforcement-learning/01-mdps-states-actions-rewards/outputs/skill-mdp-modeler.md": {
+      "source": "Given a task description, produce a Markov Decision Process spec and flag formulation risks before training.",
+      "translation": "根据任务描述生成马尔可夫决策过程规范，并在训练前标记建模风险。"
+    },
+    "phases/09-reinforcement-learning/02-dynamic-programming/outputs/skill-dp-solver.md": {
+      "source": "Solve a small tabular MDP exactly via policy iteration or value iteration. Report convergence behavior.",
+      "translation": "通过策略迭代或价值迭代精确求解小型表格型 MDP，并报告收敛表现。"
+    },
+    "phases/09-reinforcement-learning/03-monte-carlo-methods/outputs/skill-mc-evaluator.md": {
+      "source": "Evaluate a policy via Monte Carlo rollouts and produce a convergence report with DP-comparison if available.",
+      "translation": "通过 Monte Carlo rollout 评估策略，并在条件允许时生成包含 DP 对比的收敛报告。"
+    },
+    "phases/09-reinforcement-learning/04-q-learning-sarsa/outputs/skill-td-agent.md": {
+      "source": "Pick between Q-learning, SARSA, Expected SARSA for a tabular or small-feature RL task.",
+      "translation": "为表格型或小型特征 RL 任务在 Q-learning、SARSA 与 Expected SARSA 之间做出选择。"
+    },
+    "phases/09-reinforcement-learning/05-dqn/outputs/skill-dqn-trainer.md": {
+      "source": "Produce a DQN training config (buffer, target sync, ε schedule, reward clipping) for a discrete-action RL task.",
+      "translation": "为离散动作 RL 任务生成 DQN 训练配置（经验回放缓冲区、目标网络同步、ε 调度、奖励裁剪）。"
+    },
+    "phases/09-reinforcement-learning/06-policy-gradients-reinforce/outputs/skill-policy-gradient-trainer.md": {
+      "source": "Produce a REINFORCE / actor-critic / PPO training config for a given task and diagnose variance issues.",
+      "translation": "针对给定任务生成 REINFORCE / actor-critic / PPO 训练配置，并诊断方差问题。"
+    },
+    "phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/outputs/skill-actor-critic-trainer.md": {
+      "source": "Produce an A2C / A3C / GAE configuration for a given environment, with advantage estimation and loss weights specified.",
+      "translation": "针对给定环境生成 A2C / A3C / GAE 配置，明确指定优势估计与损失权重。"
+    },
+    "phases/09-reinforcement-learning/08-ppo/outputs/skill-ppo-trainer.md": {
+      "source": "Produce a PPO training config and a diagnostic plan for a given environment.",
+      "translation": "针对给定环境生成 PPO 训练配置与诊断方案。"
+    },
+    "phases/09-reinforcement-learning/09-reward-modeling-rlhf/outputs/skill-rlhf-architect.md": {
+      "source": "Design an RLHF / DPO / GRPO alignment pipeline for a language model, including RM, KL, and data strategy.",
+      "translation": "为语言模型设计 RLHF / DPO / GRPO 对齐流水线，包括 RM、KL 与数据策略。"
+    },
+    "phases/09-reinforcement-learning/10-multi-agent-rl/outputs/skill-marl-architect.md": {
+      "source": "Pick the right multi-agent RL regime (IPPO, CTDE, self-play, league) for a given task.",
+      "translation": "根据给定任务选择合适的多智能体 RL 范式（IPPO、CTDE、自博弈、联赛）。"
+    },
+    "phases/09-reinforcement-learning/11-sim-to-real-transfer/outputs/skill-sim2real-planner.md": {
+      "source": "Plan a sim-to-real transfer pipeline for a given robot + task, covering DR, SI, and safety.",
+      "translation": "为给定机器人与任务规划 sim-to-real 迁移流水线，涵盖 DR、SI 与安全。"
+    },
+    "phases/09-reinforcement-learning/12-rl-for-games/outputs/skill-game-rl-designer.md": {
+      "source": "Design a game-RL or reasoning-RL training pipeline (AlphaZero / MuZero / GRPO) for a given domain.",
+      "translation": "为给定领域设计游戏 RL 或推理 RL 训练流水线（AlphaZero / MuZero / GRPO）。"
+    },
+    "phases/10-llms-from-scratch/01-tokenizers/outputs/prompt-tokenizer-analyzer.md": {
+      "source": "Analyze tokenization efficiency for a given text across different models and tokenizer types",
+      "translation": "分析给定文本在不同模型与 tokenizer 类型下的 tokenization 效率"
+    },
+    "phases/10-llms-from-scratch/01-tokenizers/outputs/skill-tokenizer.md": {
+      "source": "Choosing and building tokenizers for LLM projects",
+      "translation": "为 LLM 项目选择并构建 tokenizer"
+    },
+    "phases/10-llms-from-scratch/02-building-a-tokenizer/outputs/prompt-tokenizer-builder.md": {
+      "source": "Build and debug production-quality tokenizers for LLM projects",
+      "translation": "为 LLM 项目构建并调试生产质量的 tokenizer"
+    },
+    "phases/10-llms-from-scratch/03-data-pipelines/outputs/prompt-data-quality-checker.md": {
+      "source": "Validate and debug data quality in LLM pre-training pipelines",
+      "translation": "验证并调试 LLM 预训练流水线中的数据质量"
+    },
+    "phases/10-llms-from-scratch/04-pre-training-mini-gpt/outputs/prompt-gpt-architecture-analyzer.md": {
+      "source": "Analyze architecture choices in any GPT-style transformer model",
+      "translation": "分析任意 GPT 风格 Transformer 模型的架构选择"
+    },
+    "phases/10-llms-from-scratch/05-scaling-distributed/outputs/prompt-distributed-training-planner.md": {
+      "source": "Plan a distributed training run given model size and available hardware",
+      "translation": "根据模型规模与可用硬件规划分布式训练任务"
+    },
+    "phases/10-llms-from-scratch/06-instruction-tuning-sft/outputs/prompt-sft-data-curator.md": {
+      "source": "Design and curate instruction datasets for supervised fine-tuning",
+      "translation": "为监督微调设计并整理指令数据集"
+    },
+    "phases/10-llms-from-scratch/07-rlhf/outputs/prompt-reward-model-designer.md": {
+      "source": "Design reward model training pipelines for RLHF alignment",
+      "translation": "为 RLHF 对齐设计奖励模型训练流水线"
+    },
+    "phases/10-llms-from-scratch/08-dpo/outputs/prompt-alignment-method-selector.md": {
+      "source": "Choose the right alignment method (SFT, RLHF, DPO, KTO, ORPO, SimPO) for your use case",
+      "translation": "根据使用场景选择合适的对齐方法（SFT、RLHF、DPO、KTO、ORPO、SimPO）"
+    },
+    "phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/outputs/skill-self-improvement-auditor.md": {
+      "source": "Audit a proposed self-improvement or constitutional AI pipeline before it runs at scale.",
+      "translation": "在大规模运行前审计拟议的自我改进或宪法式 AI 流水线。"
+    },
+    "phases/10-llms-from-scratch/10-evaluation/outputs/prompt-eval-designer.md": {
+      "source": "Design a custom evaluation suite for any LLM task, including test cases, scoring functions, and pass/fail thresholds",
+      "translation": "为任意 LLM 任务设计自定义评估套件，包括测试用例、评分函数和通过/失败阈值"
+    },
+    "phases/10-llms-from-scratch/10-evaluation/outputs/skill-llm-evaluation.md": {
+      "source": "Decision framework for choosing the right LLM evaluation strategy based on task type, budget, and requirements",
+      "translation": "根据任务类型、预算和需求选择合适 LLM 评估策略的决策框架"
+    },
+    "phases/10-llms-from-scratch/11-quantization/outputs/skill-quantization.md": {
+      "source": "Choose the right quantization strategy for deploying LLMs based on hardware, quality, and latency constraints",
+      "translation": "根据硬件、质量与延迟约束，为 LLM 部署选择合适的量化策略"
+    },
+    "phases/10-llms-from-scratch/12-inference-optimization/outputs/skill-inference-optimization.md": {
+      "source": "Diagnose and optimize LLM inference serving throughput, latency, and cost",
+      "translation": "诊断并优化 LLM 推理服务的吞吐量、延迟和成本"
+    },
+    "phases/10-llms-from-scratch/13-building-complete-llm-pipeline/outputs/skill-llm-pipeline-reviewer.md": {
+      "source": "Review an end-to-end LLM training pipeline manifest before a multi-million-dollar run.",
+      "translation": "在一次耗资数百万美元的运行前，审查端到端 LLM 训练流水线清单。"
+    },
+    "phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/outputs/skill-open-model-picker.md": {
+      "source": "Pick an open LLM family, quantization, and inference stack for a given deployment target.",
+      "translation": "针对给定部署目标选择开放 LLM 家族、量化方案和推理技术栈。"
+    },
+    "phases/10-llms-from-scratch/15-speculative-decoding-eagle3/outputs/skill-eagle3-tuner.md": {
+      "source": "Pick and tune a speculative decoding strategy (vanilla / Medusa / EAGLE-1/2/3 / lookahead) for a new inference workload.",
+      "translation": "为新的推理工作负载选择并调优推测解码策略（vanilla / Medusa / EAGLE-1/2/3 / lookahead）。"
+    },
+    "phases/10-llms-from-scratch/16-differential-attention-v2/outputs/skill-diff-attention-integrator.md": {
+      "source": "Integration plan for adding Differential Attention V2 to a new pre-training run or LoRA fine-tune.",
+      "translation": "为新的预训练任务或 LoRA 微调添加 Differential Attention V2 制定集成方案。"
+    },
+    "phases/10-llms-from-scratch/17-native-sparse-attention/outputs/skill-nsa-integrator.md": {
+      "source": "Integration plan for Native Sparse Attention in a long-context pre-training run.",
+      "translation": "为长上下文预训练任务集成 Native Sparse Attention 制定方案。"
+    },
+    "phases/10-llms-from-scratch/18-multi-token-prediction/outputs/skill-mtp-planner.md": {
+      "source": "Plan a multi-token prediction integration for a new pre-training run.",
+      "translation": "为新的预训练任务规划 multi-token prediction 集成。"
+    },
+    "phases/10-llms-from-scratch/19-dualpipe-parallelism/outputs/skill-dualpipe-planner.md": {
+      "source": "Plan a pipeline parallelism strategy (1F1B, Zero Bubble, DualPipe, DualPipeV) for a training cluster.",
+      "translation": "为训练集群规划流水线并行策略（1F1B、Zero Bubble、DualPipe、DualPipeV）。"
+    },
+    "phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/outputs/skill-deepseek-v3-reader.md": {
+      "source": "Read a DeepSeek-family config and produce a component-by-component architecture analysis.",
+      "translation": "读取 DeepSeek 系列配置，并逐组件生成架构分析。"
+    },
+    "phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/outputs/skill-hybrid-picker.md": {
+      "source": "Pick between pure Transformer, Jamba-style hybrid, and pure SSM for a given workload.",
+      "translation": "根据给定工作负载，在纯 Transformer、Jamba 风格混合架构与纯 SSM 之间做出选择。"
+    },
+    "phases/10-llms-from-scratch/22-async-hogwild-inference/outputs/skill-parallel-inference-router.md": {
+      "source": "Route a reasoning workload between voting, tree-of-thought, multi-agent, Hogwild!, and speculative decoding strategies.",
+      "translation": "在 voting、tree-of-thought、multi-agent、Hogwild! 与 speculative decoding 策略之间路由推理工作负载。"
+    },
+    "phases/10-llms-from-scratch/25-speculative-decoding/outputs/skill-speculative-tuning.md": {
+      "source": "Profile a decode workload and pick draft model, draft length K, temperature gate, and fallback policy for speculative decoding.",
+      "translation": "分析解码工作负载，并为推测解码选择草稿模型、草稿长度 K、温度门控与回退策略。"
+    },
+    "phases/10-llms-from-scratch/34-gradient-checkpointing/outputs/skill-checkpointing-planner.md": {
+      "source": "Choose an activation recomputation policy per layer (none / selective / full / offload) given a training config and HBM budget.",
+      "translation": "根据训练配置与 HBM 预算，为每一层选择激活重计算策略（none / selective / full / offload）。"
+    },
+    "phases/11-llm-engineering/01-prompt-engineering/outputs/prompt-prompt-optimizer.md": {
+      "source": "Takes a draft prompt and rewrites it using proven prompt engineering patterns for maximum effectiveness across models",
+      "translation": "接收草稿提示词，并使用经过验证的提示工程模式重写，使其在不同模型上达到最佳效果"
+    },
+    "phases/11-llm-engineering/01-prompt-engineering/outputs/skill-prompt-patterns.md": {
+      "source": "Decision framework for choosing the right prompt pattern based on task type, reliability requirements, and target model",
+      "translation": "根据任务类型、可靠性要求和目标模型选择合适提示模式的决策框架"
+    },
+    "phases/11-llm-engineering/02-few-shot-cot/outputs/prompt-reasoning-chain.md": {
+      "source": "Production-ready few-shot CoT prompt with self-consistency support for multi-step reasoning tasks",
+      "translation": "可用于生产的 few-shot CoT 提示词，支持 self-consistency，适用于多步推理任务"
+    },
+    "phases/11-llm-engineering/02-few-shot-cot/outputs/skill-cot-patterns.md": {
+      "source": "Decision framework for choosing the right reasoning technique based on task complexity, accuracy requirements, and cost constraints",
+      "translation": "根据任务复杂度、准确率要求和成本约束选择合适推理技术的决策框架"
+    },
+    "phases/11-llm-engineering/03-structured-outputs/outputs/prompt-structured-extractor.md": {
+      "source": "Extract structured data from unstructured text given a JSON Schema definition",
+      "translation": "依据 JSON Schema 定义从非结构化文本中提取结构化数据"
+    },
+    "phases/11-llm-engineering/03-structured-outputs/outputs/skill-structured-outputs.md": {
+      "source": "Decision framework for choosing the right structured output strategy based on provider, reliability, and complexity",
+      "translation": "根据提供商、可靠性与复杂度选择合适结构化输出策略的决策框架"
+    },
+    "phases/11-llm-engineering/04-embeddings/outputs/prompt-embedding-advisor.md": {
+      "source": "Choose embedding models, dimensions, and strategies for specific use cases",
+      "translation": "为具体使用场景选择 embedding 模型、维度与策略"
+    },
+    "phases/11-llm-engineering/04-embeddings/outputs/skill-embedding-patterns.md": {
+      "source": "Production patterns for embeddings, vector search, and similarity",
+      "translation": "用于 embedding、vector search 和 similarity 的生产模式"
+    },
+    "phases/11-llm-engineering/05-context-engineering/outputs/prompt-context-optimizer.md": {
+      "source": "Audit a context assembly strategy and recommend optimizations to reduce token waste and improve response quality",
+      "translation": "审计上下文组装策略，并建议优化方案，以减少 token 浪费并提升响应质量"
+    },
+    "phases/11-llm-engineering/05-context-engineering/outputs/skill-context-engineering.md": {
+      "source": "Decision framework for designing context assembly pipelines based on task type, window size, and latency budget",
+      "translation": "根据任务类型、窗口大小与延迟预算设计上下文组装流水线的决策框架"
+    },
+    "phases/11-llm-engineering/06-rag/outputs/prompt-rag-architect.md": {
+      "source": "Design RAG systems for specific use cases with concrete architecture decisions",
+      "translation": "面向具体使用场景设计 RAG 系统，并给出明确的架构决策"
+    },
+    "phases/11-llm-engineering/06-rag/outputs/skill-rag-pipeline.md": {
+      "source": "Build and debug RAG pipelines from first principles",
+      "translation": "从第一性原理构建并调试 RAG 流水线"
+    },
+    "phases/11-llm-engineering/07-advanced-rag/outputs/prompt-advanced-rag-debugger.md": {
+      "source": "Diagnose and fix RAG quality issues across retrieval, generation, and evaluation",
+      "translation": "诊断并修复 RAG 在检索、生成与评估环节的质量问题"
+    },
+    "phases/11-llm-engineering/07-advanced-rag/outputs/skill-advanced-rag.md": {
+      "source": "Build production-grade RAG with hybrid search, reranking, and evaluation",
+      "translation": "构建采用 hybrid search、reranking 与 evaluation 的生产级 RAG"
+    },
+    "phases/11-llm-engineering/08-fine-tuning-lora/outputs/prompt-lora-advisor.md": {
+      "source": "Decide LoRA rank, target modules, and hyperparameters for a specific fine-tuning task",
+      "translation": "为具体微调任务确定 LoRA rank、target modules 与 hyperparameters"
+    },
+    "phases/11-llm-engineering/08-fine-tuning-lora/outputs/skill-fine-tuning-guide.md": {
+      "source": "Decision tree for when and how to fine-tune LLMs with LoRA and QLoRA",
+      "translation": "决定何时以及如何使用 LoRA 和 QLoRA 微调 LLM 的决策树"
+    },
+    "phases/11-llm-engineering/09-function-calling/outputs/prompt-tool-designer.md": {
+      "source": "Design complete tool definitions (JSON Schema) for function calling from a natural language description",
+      "translation": "根据自然语言描述设计完整的 function calling 工具定义（JSON Schema）"
+    },
+    "phases/11-llm-engineering/09-function-calling/outputs/skill-function-calling-patterns.md": {
+      "source": "Decision framework for implementing function calling in production -- tool design, error handling, security, and provider patterns",
+      "translation": "在生产环境中实现 function calling 的决策框架——涵盖工具设计、错误处理、安全和提供商模式"
+    },
+    "phases/11-llm-engineering/10-evaluation/outputs/prompt-eval-designer.md": {
+      "source": "Design tailored evaluation rubrics and test suites for LLM applications from a description of the use case",
+      "translation": "根据使用场景描述，为 LLM 应用设计定制化评估 rubric 和测试套件"
+    },
+    "phases/11-llm-engineering/10-evaluation/outputs/skill-eval-patterns.md": {
+      "source": "Decision framework for choosing evaluation strategies -- when to use which method, how to size test suites, and how to integrate evals into CI/CD",
+      "translation": "选择评估策略的决策框架——何时使用哪种方法、如何确定测试套件规模，以及如何将 eval 集成到 CI/CD"
+    },
+    "phases/11-llm-engineering/11-caching-cost/outputs/prompt-cost-optimizer.md": {
+      "source": "Analyze an LLM application and recommend specific cost optimizations with projected savings",
+      "translation": "分析 LLM 应用，并给出具体成本优化建议与预计节省金额"
+    },
+    "phases/11-llm-engineering/11-caching-cost/outputs/skill-cost-patterns.md": {
+      "source": "Decision framework for LLM cost optimization -- caching strategies, rate limiting, model routing, and budget controls",
+      "translation": "LLM 成本优化决策框架——缓存策略、速率限制、模型路由和预算控制"
+    },
+    "phases/11-llm-engineering/12-guardrails/outputs/prompt-safety-auditor.md": {
+      "source": "Audit any LLM application for safety vulnerabilities -- prompt injection, data leakage, jailbreaks, and output risks",
+      "translation": "审计任意 LLM 应用中的安全漏洞——提示注入、数据泄露、越狱和输出风险"
+    },
+    "phases/11-llm-engineering/12-guardrails/outputs/skill-guardrail-patterns.md": {
+      "source": "Decision framework for choosing and implementing guardrails in production -- tool selection, layering strategy, and cost-performance tradeoffs",
+      "translation": "在生产环境中选择并实现 guardrail 的决策框架——工具选择、分层策略与成本性能权衡"
+    },
+    "phases/11-llm-engineering/13-production-app/outputs/prompt-architecture-reviewer.md": {
+      "source": "Review the architecture of any LLM application against a production readiness checklist -- identifies gaps, risks, and missing components",
+      "translation": "依据生产就绪清单审查任意 LLM 应用架构——识别缺口、风险与缺失组件"
+    },
+    "phases/11-llm-engineering/13-production-app/outputs/skill-production-checklist.md": {
+      "source": "Decision framework for shipping LLM applications to production -- covers every component with specific thresholds and pass/fail criteria",
+      "translation": "将 LLM 应用交付到生产环境的决策框架——覆盖每个组件，并提供具体阈值与通过/失败标准"
+    },
+    "phases/11-llm-engineering/14-model-context-protocol/outputs/skill-mcp-server-designer.md": {
+      "source": "Design a stateless MCP 2026-07-28 server with explicit discovery, state, transport, and safety contracts.",
+      "translation": "设计无状态的 MCP 2026-07-28 服务器，明确发现、状态、传输与安全契约。"
+    },
+    "phases/11-llm-engineering/15-prompt-caching/outputs/skill-prompt-caching-planner.md": {
+      "source": "Design a cache-friendly prompt layout and pick the right provider caching mode.",
+      "translation": "设计利于缓存的提示词布局，并选择合适的提供商缓存模式。"
+    },
+    "phases/11-llm-engineering/16-langgraph-state-machines/outputs/skill-stategraph-designer.md": {
+      "source": "Turn an agent task into a LangGraph StateGraph with named nodes, typed state, reducers, checkpointer, and human interrupts.",
+      "translation": "将智能体任务转换为 LangGraph StateGraph，包含命名节点、类型化状态、reducers、checkpointer 和 human interrupts。"
+    },
+    "phases/11-llm-engineering/17-agent-framework-tradeoffs/outputs/skill-framework-picker.md": {
+      "source": "Pick LangGraph, CrewAI, AutoGen, Agno, or plain Python for an agent task by matching abstraction to problem shape.",
+      "translation": "根据抽象与问题形态的匹配程度，为智能体任务选择 LangGraph、CrewAI、AutoGen、Agno 或纯 Python。"
+    }
+  }
+}

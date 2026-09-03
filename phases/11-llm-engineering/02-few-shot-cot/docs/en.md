@@ -1,6 +1,6 @@
 # Few-Shot, Chain-of-Thought, Tree-of-Thought
 
-> Telling a model what to do is prompting. Showing it how to think is engineering. The gap between 78% and 91% accuracy on the same model, same task, same data is not a better model. It is a better reasoning strategy.
+> Telling a model what to do is prompting. Showing it how to reason is engineering. Measure each prompting strategy on your own workload instead of relying on unverified headline accuracy.
 
 **Type:** Build
 **Languages:** Python
@@ -16,9 +16,9 @@
 
 ## The Problem
 
-You build a math tutoring app. Your prompt says: "Solve this word problem." GPT-5 gets it right 94% of the time on GSM8K, the standard grade-school math benchmark. You think you already peaked. You do not — chain-of-thought still adds 3-4 points.
+You build a math tutoring app. Your prompt says: "Solve this word problem." Direct answers are inconsistent on multi-step problems, so you compare that baseline with an explicit reasoning instruction and with a few worked examples on a held-out set. The variants use the same model weights but can produce meaningfully different behavior.
 
-Add five words -- "Let's think step by step" -- and accuracy jumps to 91%. Add a few worked examples and it reaches 95%. Same model. Same temperature. Same API cost. The only difference is that you gave the model scratch paper.
+Add five words -- "Let's think step by step" -- and the model now externalizes intermediate work. Add a few worked examples and it also sees the reasoning and answer format you expect. The size and even the direction of any accuracy change depends on the model, prompt, decoding settings, and task, so measure it rather than borrowing a headline benchmark number.
 
 This is not a hack. It is how reasoning works. Humans do not solve multi-step problems in one mental leap. Neither do transformers. When you force a model to generate intermediate tokens, those tokens become part of the context for the next token. Each reasoning step feeds the next. The model literally computes its way to the answer.
 
@@ -30,7 +30,7 @@ But "think step by step" is the beginning, not the end. What if you sampled five
 
 Zero-shot prompting gives the model a task and nothing else. Few-shot prompting gives it examples first.
 
-Wei et al. (2022) measured this across 8 benchmarks. For simple tasks like sentiment classification, zero-shot and few-shot performed within 2% of each other. For complex tasks like multi-step arithmetic and symbolic reasoning, few-shot improved accuracy by 10-25%.
+Few-shot prompting can help when examples communicate a format, label boundary, or reasoning pattern that an instruction leaves underspecified. It can also hurt when demonstrations are irrelevant, misleading, or consume context without adding useful signal. Treat zero-shot as the baseline and measure whether a particular example set helps the target task.
 
 The intuition: examples are compressed instructions. Instead of describing the output format, you show it. Instead of explaining the reasoning process, you demonstrate it. The model pattern-matches on the examples more reliably than it interprets abstract instructions.
 
@@ -38,8 +38,8 @@ The intuition: examples are compressed instructions. Instead of describing the o
 graph TD
     subgraph Comparison["Zero-Shot vs Few-Shot"]
         direction LR
-        Z["Zero-Shot\n'Classify this review'\nModel guesses format\n78% on GSM8K"]
-        F["Few-Shot\n'Here are 3 examples...\nNow classify this review'\nModel matches pattern\n85% on GSM8K"]
+        Z["Zero-Shot\n'Classify this review'\nNo demonstrations\nModel infers the format"]
+        F["Few-Shot\n'Here are examples...'\nNow classify this review\nModel can match the shown pattern"]
     end
 
     Z ~~~ F
@@ -54,13 +54,13 @@ graph TD
 
 ### Example Selection: Similar Beats Random
 
-Not all examples are equal. Choosing examples similar to the target input outperforms random selection by 5-15% on classification tasks (Liu et al., 2022). Three principles:
+Not all examples are equal. Choosing examples similar to the target input can outperform random selection on classification tasks (Liu et al., 2022). Three principles:
 
 1. **Semantic similarity**: pick examples closest to the input in embedding space
 2. **Label diversity**: cover all output categories in your examples
 3. **Difficulty matching**: match the complexity level of the target problem
 
-The optimal number of examples for most tasks is 3-5. Below 3, the model does not have enough signal to extract the pattern. Above 5, you hit diminishing returns and waste context window tokens. For classification with many labels, use one example per label.
+There is no universal optimal number of examples. Start with the smallest diverse set that demonstrates the required labels and edge cases, then measure held-out quality as examples are added; stop when the marginal gain no longer justifies the context cost.
 
 ### Chain-of-Thought: Giving Models Scratch Paper
 
@@ -85,19 +85,9 @@ graph LR
 
 Why does this work mechanically? Each token a transformer generates becomes context for the next token. Without CoT, the model must compress all reasoning into the hidden state of a single forward pass. With CoT, the model externalizes intermediate computations as tokens. Each reasoning token extends the effective computation depth.
 
-**GSM8K benchmarks (grade-school math, 8.5K problems):**
+**Reading benchmark evidence correctly.** Wei et al. (2022) evaluated few-shot CoT with worked demonstrations on specific model and benchmark configurations. Kojima et al. (2022) evaluated zero-shot CoT across arithmetic, commonsense, and symbolic tasks. Those controlled results establish that the prompting patterns can help; they do not establish a reusable accuracy table for newer models such as GPT-4o or GPT-5. Record the model snapshot, exact prompt, decoding settings, and dataset split when you compare the variants yourself.
 
-| Model | Zero-Shot | Zero-Shot CoT | Few-Shot CoT |
-|-------|-----------|---------------|--------------|
-| GPT-4o | 78% | 91% | 95% |
-| GPT-5 | 94% | 97% | 98% |
-| o4-mini (reasoning) | 97% | — | — |
-| Claude Opus 4.7 | 93% | 97% | 98% |
-| Gemini 3 Pro | 92% | 96% | 98% |
-| Llama 4 70B | 80% | 89% | 94% |
-| DeepSeek-V3.1 | 89% | 94% | 96% |
-
-**Note on reasoning models.** Models like OpenAI's o-series (o3, o4-mini) and DeepSeek-R1 run chain-of-thought internally before emitting their answer. Adding "Let's think step by step" to a reasoning model is redundant and sometimes counterproductive — they have already done it.
+**Note on reasoning models.** Some providers expose models that allocate internal reasoning before emitting an answer. Follow the provider's current prompting guidance and benchmark both concise instructions and explicit demonstrations; a phrase that helps one model snapshot can be neutral or counterproductive on another.
 
 Two flavors of CoT:
 
@@ -105,7 +95,7 @@ Two flavors of CoT:
 
 **Few-shot CoT**: provide examples that include reasoning steps. More effective than zero-shot CoT because the model sees the exact reasoning format you expect.
 
-**When CoT hurts**: simple factual recall ("What is the capital of France?"), single-step classification, tasks where speed matters more than accuracy. CoT adds 50-200 tokens of reasoning overhead per query. For high-throughput, low-complexity tasks, that is wasted cost.
+**When CoT hurts**: simple factual recall ("What is the capital of France?"), single-step classification, and tasks where speed matters more than accuracy. CoT adds reasoning tokens and latency; for high-throughput, low-complexity tasks, that can be wasted cost.
 
 ### Self-Consistency: Sample Many, Vote Once
 
@@ -136,9 +126,9 @@ graph TD
     style V fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-Self-consistency improved GSM8K accuracy from 56.5% (single CoT) to 74.4% with N=40 on the original PaLM 540B experiments. On GPT-5 the improvement is small (97% to 98%) because base accuracy is already saturated. The technique shines most on models with 60-85% base CoT accuracy -- the sweet spot where single-path errors are frequent but not systematic. For reasoning models (o-series, R1) self-consistency is subsumed by the built-in internal sampling.
+In the original self-consistency paper, PaLM 540B improved from 56.5% with greedy chain-of-thought decoding to 74.4% with self-consistency on GSM8K. Those figures describe that paper's model, prompts, and decoding setup—not a guaranteed lift for a newer model. Self-consistency helps only when independently sampled paths are diverse and their errors are not systematic, so measure the gain on the target workload.
 
-The tradeoff: N samples means Nx the API cost and latency. In practice, N=5 captures most of the benefit. N=3 is the minimum for a meaningful vote. N > 10 has diminishing returns for most tasks.
+The tradeoff: N samples require roughly N generations' worth of inference work, although independent samples can run in parallel. Use an odd sample count for a simple majority vote, start small, and add samples only while the measured quality gain justifies the cost.
 
 ### Tree-of-Thought: Branching Exploration
 
@@ -222,7 +212,7 @@ graph LR
     style F fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-ReAct outperforms pure CoT on knowledge-intensive tasks because it can ground its reasoning in real data. On HotpotQA (multi-hop question answering), ReAct with GPT-4 achieves 35.1% exact match vs 29.4% for CoT alone. The real power is that reasoning errors get corrected by observations -- the model can update its plan mid-execution.
+ReAct can outperform pure CoT on knowledge-intensive tasks because it grounds reasoning in external observations. The exact result depends on the model, prompt, tools, and benchmark setup; measure task success and tool-use errors on the target workload. Its practical advantage is that observations can correct a reasoning path and let the model update its plan mid-execution.
 
 ReAct is the foundation of modern AI agents. Every agent framework (LangChain, CrewAI, AutoGen) implements some variant of the Thought-Action-Observation loop. You will build full agents in Phase 14. This lesson covers the prompting pattern.
 
@@ -231,7 +221,7 @@ ReAct is the foundation of modern AI agents. Every agent framework (LangChain, C
 As prompts get complex, structure prevents the model from confusing sections. Three approaches:
 
 **XML tags** (works best with Claude, solid everywhere):
-```
+```text
 <context>
 You are reviewing a pull request.
 The codebase uses TypeScript and React.
@@ -251,7 +241,7 @@ List each issue with: file, line, severity (critical/warning/info), description.
 ```
 
 **Markdown headers** (universal):
-```
+```text
 ## Role
 Senior security engineer at a fintech company.
 
@@ -268,7 +258,7 @@ Analyze this API endpoint for vulnerabilities.
 ```
 
 **Delimiters** (minimal but effective):
-```
+```text
 ---INPUT---
 {user_text}
 ---END INPUT---
@@ -308,19 +298,19 @@ Chaining beats single-prompt for three reasons:
 
 ### Performance Comparison
 
-| Technique | Best For | GSM8K Accuracy (GPT-5) | API Calls | Token Overhead | Complexity |
-|-----------|----------|------------------------|-----------|----------------|------------|
-| Zero-Shot | Simple tasks | 94% | 1 | None | Trivial |
-| Few-Shot | Format matching | 96% | 1 | 200-500 tokens | Low |
-| Zero-Shot CoT | Quick reasoning boost | 97% | 1 | 50-200 tokens | Trivial |
-| Few-Shot CoT | Maximum single-call accuracy | 98% | 1 | 300-600 tokens | Low |
-| Self-Consistency (N=5) | High-stakes reasoning | 98.5% | 5 | 5x token cost | Medium |
-| Reasoning model (o4-mini) | Drop-in CoT replacement | 97% | 1 | hidden (2-10x internal) | Trivial |
-| Tree-of-Thought | Search/planning problems | N/A (74% on Game of 24) | 10-40+ | 10-40x token cost | High |
-| ReAct | Knowledge-grounded reasoning | N/A (35.1% on HotpotQA) | 3-10+ | Variable | High |
-| Prompt Chaining | Complex multi-step tasks | 96% (pipeline) | 2-5 | 2-5x token cost | Medium |
+| Technique | Best For | What to evaluate | Inference work | Complexity |
+|-----------|----------|------------------|----------------|------------|
+| Zero-Shot | Simple tasks | Establish the held-out baseline | One generation | Trivial |
+| Few-Shot | Format matching | Compare example sets and ordering | One longer generation | Low |
+| Zero-Shot CoT | Multi-step reasoning | Compare with the direct-answer baseline | One longer generation | Trivial |
+| Few-Shot CoT | Reasoning plus a fixed format | Test transfer beyond the demonstrations | One longer generation | Low |
+| Self-Consistency | High-stakes reasoning | Plot quality against sample count | N independent generations | Medium |
+| Provider-native reasoning | Models with a reasoning mode | Follow current provider guidance and measure | Provider-dependent | Low |
+| Tree-of-Thought | Search/planning problems | Track node count, solve rate, and pruning errors | One generation per explored node | High |
+| ReAct | Knowledge-grounded reasoning | Track tool accuracy and task success | Multiple model/tool turns | High |
+| Prompt Chaining | Complex multi-step tasks | Validate every intermediate contract | One generation per chain step | Medium |
 
-The right technique depends on three factors: accuracy requirement, latency budget, and cost tolerance. For most production systems, few-shot CoT with a 3-sample self-consistency fallback covers 90% of use cases.
+The right technique depends on three factors: quality requirements, latency budget, and cost tolerance. Start with the simplest measured baseline, then add examples, explicit reasoning, or multiple samples only when evaluation shows that the extra work helps.
 
 ```figure
 few-shot-curve

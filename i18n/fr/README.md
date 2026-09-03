@@ -17,7 +17,7 @@
   <a href="../../i18n/ar/README.md">العربية</a> ·
   <a href="../../i18n/ru/README.md">Русский</a> ·
   <a href="../../i18n/tr/README.md">Türkçe</a>
-  <br><sub>Translated landing pages, committed to the repo. English is canonical; lesson pages are machine-translated on the <code>translations</code> branch. See <a href="../../docs/i18n.md">docs/i18n.md</a>.</sub>
+  <br><sub>Translated landing pages are committed here; lesson translations live on the <code>translations</code> branch. English is canonical. See <a href="../../docs/i18n.md">docs/i18n.md</a>.</sub>
 </p>
 
 <p align="center">
@@ -44,23 +44,21 @@
 <p align="center"><sub><b>114,584</b> readers &nbsp;·&nbsp; <b>181,995</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-## Start here: choose what you want to build
+## Commencez ici : choisissez ce que vous voulez construire
 
-You do not need to scan 523 lessons before beginning. Pick one goal. Each link
-opens the same curriculum on GitHub or the website, and both versions use the
-same lesson code.
+Vous n'avez pas besoin de parcourir les 523 leçons avant de vous lancer. Choisissez un objectif. Chaque lien mène au même cursus, sur GitHub ou sur le site web ; dans les deux versions, les leçons reposent sur le même code source.
 
-| Your goal | Learn on GitHub | Learn on the website |
+| Votre objectif | Apprendre sur GitHub | Apprendre sur le site web |
 |---|---|---|
-| I am new and want the complete foundation | [Phase 0: Setup and Tooling](../../phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](../../phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| I want to build production LLM applications | [Phase 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| I want to build agents | [Phase 14: Agent Engineering](../../phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| I want to use coding agents on real repositories | [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json) | [Agent-Assisted Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| I want to shape the right build before implementation | [Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json) | [Product Judgment and Delivery](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| I want to prepare for a Claude certification | [Certification onboarding](../../certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |
+| Je débute et je veux acquérir toutes les bases | [Phase 0 : configuration et outillage](../../phases/00-setup-and-tooling/) | [Environnement de développement](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Je connais Python et je veux acquérir les bases en mathématiques et en apprentissage automatique | [Phase 1 : fondements mathématiques](../../phases/01-math-foundations/) | [Approche intuitive de l'algèbre linéaire](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| Je veux développer des applications LLM prêtes pour la production | [Phase 11 : ingénierie des LLM](../../phases/11-llm-engineering/) | [Ingénierie des prompts](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Je veux créer des agents | [Phase 14 : ingénierie des agents](../../phases/14-agent-engineering/) | [La boucle de l'agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Je veux utiliser des agents de programmation sur de véritables dépôts de code | [Parcours d'ingénierie assistée par des agents](../../learning-paths/using-coding-agents.json) | [Ingénierie assistée par des agents](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| Je veux cadrer la bonne solution avant de passer à l'implémentation | [Parcours Sens du produit et livraison](../../learning-paths/shaping-the-build.json) | [Sens du produit et livraison](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Je veux développer avec le Model Context Protocol (MCP) | [Parcours consacré au Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Parcours Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Je veux écrire et publier des Agent Skills | [Parcours ciblé sur les Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Parcours Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| Je veux préparer une certification Claude | [Bien démarrer avec les certifications Claude](../../certifications/claude/GETTING_STARTED.md) | [Académie des certifications Claude](https://aiengineeringfromscratch.com/certifications.html) |
 
 Not sure where you fit? Use the [`start-learning` placement tutor](../../skills/start-learning/SKILL.md)
 or the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).

@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/13-tools-and-protocols/06-mcp-fundamentals": {
+      "sourceSha256": "ebb9f20d33c8099670264fc6148e99bd98f91ad43232b2f4e657ac9c3a4e5dfe",
+      "questions": [
+        {
+          "question": "什么会在两个 MCP 2026-07-28 请求之间创建协议状态？",
+          "options": [
+            "HTTP 连接",
+            "协议核心中没有任何东西",
+            "Mcp-Session-Id",
+            "stdio 进程"
+          ],
+          "explanation": "现代协议核心是无状态的。每个请求都携带自身的版本和能力声明。"
+        },
+        {
+          "question": "每个现代请求都必须包含哪两个 params._meta 字段？",
+          "options": [
+            "clientInfo 和 cacheScope",
+            "protocolVersion 和 clientCapabilities",
+            "sessionId 和 capabilities",
+            "serverInfo 和 ttlMs"
+          ],
+          "explanation": "protocolVersion 和 clientCapabilities 是必需字段。建议提供客户端身份信息。"
+        },
+        {
+          "question": "每个现代 MCP 服务器都必须实现哪种方法来支持前置发现？",
+          "options": [
+            "tools/list",
+            "initialize",
+            "server/discover",
+            "notifications/initialized"
+          ],
+          "explanation": "server/discover 会公布支持的版本、能力、指令和服务器身份。"
+        },
+        {
+          "question": "错误码 -32022 表示什么？",
+          "options": [
+            "内部错误",
+            "请求头不匹配",
+            "找不到方法",
+            "不支持的协议版本"
+          ],
+          "explanation": "UnsupportedProtocolVersionError 会包含请求的版本以及服务器支持的版本。"
+        },
+        {
+          "question": "在 MCP 2026-07-28 中，哪一种结果必须包含 ttlMs 和 cacheScope？",
+          "options": [
+            "JSON-RPC 错误",
+            "tools/list 结果",
+            "tools/call 结果",
+            "取消通知"
+          ],
+          "explanation": "列表结果和 resources/read 都是可缓存结果，必须带有缓存提示。"
+        },
+        {
+          "question": "服务器应如何确定当前请求的能力？",
+          "options": [
+            "从 Mcp-Session-Id 中读取",
+            "根据进程推断",
+            "复用第一个请求的声明",
+            "从当前请求的元数据中读取"
+          ],
+          "explanation": "服务器不得根据连接状态或之前请求的状态推断现代协议能力。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/07-building-an-mcp-server": {
+      "sourceSha256": "6febb7d1c2e7a30cdd09ffbf5c90930d3c0e57008489e78228d9e18a7ec77161",
+      "questions": [
+        {
+          "question": "现代 MCP 服务器从哪里读取客户端能力？",
+          "options": [
+            "从 Mcp-Session-Id 中读取",
+            "从第一次 initialize 调用中读取",
+            "从当前的每个请求中读取",
+            "从进程环境中读取"
+          ],
+          "explanation": "MCP 2026-07-28 在每个请求的 params._meta 中携带客户端能力。"
+        },
+        {
+          "question": "现代服务器必须实现哪种方法？",
+          "options": [
+            "initialize",
+            "server/discover",
+            "resources/subscribe",
+            "shutdown"
+          ],
+          "explanation": "现代服务器必须实现 server/discover，不过客户端可以先调用其他方法。"
+        },
+        {
+          "question": "tools/list 的成功结果必须包含哪些字段？",
+          "options": [
+            "protocolVersion 和 tools",
+            "resultType、ttlMs、cacheScope 和 tools",
+            "initialized 和 tools",
+            "sessionId 和 tools"
+          ],
+          "explanation": "现代列表结果有明确的类型，并且可以缓存。"
+        },
+        {
+          "question": "为什么服务器应以确定性顺序排列工具？",
+          "options": [
+            "为了稳定缓存和模型上下文",
+            "为了创建会话",
+            "为了协商协议",
+            "为了取代授权"
+          ],
+          "explanation": "稳定的顺序可以让等价的注册表产生等价的响应。"
+        },
+        {
+          "question": "一次有效的工具调用已正常运行，但领域操作失败。哪种返回结构合适？",
+          "options": [
+            "notifications/initialized",
+            "HTTP DELETE",
+            "一个 isError 为 true 的完整工具结果",
+            "一个新的服务器请求"
+          ],
+          "explanation": "工具级失败通过 content 和 isError 对模型保持可见。"
+        },
+        {
+          "question": "什么应当终止 stdio 服务器的传输生命周期？",
+          "options": [
+            "stdin 上的 EOF",
+            "一个 GET 请求",
+            "一个强制性的 shutdown RPC",
+            "Mcp-Session-Id 过期"
+          ],
+          "explanation": "EOF 是可移植的 stdio 关闭信号。它并不关闭现代协议会话。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/08-building-an-mcp-client": {
+      "sourceSha256": "812e7aa2995c79271ca6cce0aea6e1e4b5fcc2f287d18eefa64875733ce05cb2",
+      "questions": [
+        {
+          "question": "兼容新旧两个时代的 stdio 客户端首先应发送什么？",
+          "options": [
+            "Mcp-Session-Id",
+            "server/discover",
+            "initialize",
+            "HTTP GET"
+          ],
+          "explanation": "发现探测会在现代的逐请求元数据与旧版初始化之间划出明确边界。"
+        },
+        {
+          "question": "发现探测返回 -32022，并给出一个双方都支持的版本。客户端应怎么做？",
+          "options": [
+            "使用该支持版本重试现代发现",
+            "发送 initialize",
+            "发起 HTTP GET",
+            "忽略服务器"
+          ],
+          "explanation": "-32022 是可识别的现代协议信号，因此客户端应留在现代协议路径并重试。"
+        },
+        {
+          "question": "哪个条件足以选择旧版协议？",
+          "options": [
+            "任何 -32601 错误",
+            "对端位于旧版允许列表中",
+            "对端位于允许列表中，并且一次有界的 initialize 探测返回了有效且受支持的旧版结果",
+            "仅发生一次发现超时"
+          ],
+          "explanation": "允许列表只代表可以发起探测；只有针对已配置旧版修订的、结构有效且肯定的 initialize 结果才能证明对端使用旧版协议。"
+        },
+        {
+          "question": "客户端应如何处理两个都名为 search 的工具？",
+          "options": [
+            "静默覆盖其中一个",
+            "信任启动顺序",
+            "按已声明的策略添加前缀或拒绝",
+            "创建协议会话"
+          ],
+          "explanation": "显式添加前缀或拒绝可以让路由保持可见且具有确定性。"
+        },
+        {
+          "question": "客户端协商使用旧版协议后，旧版结果省略了 resultType。应如何解释？",
+          "options": [
+            "解释为 input_required",
+            "解释为 complete",
+            "解释为传输错误",
+            "解释为 server/discover"
+          ],
+          "explanation": "客户端会把早期协议版本中缺失的 resultType 视为 complete。"
+        },
+        {
+          "question": "现代协议的传输连接丢失后，恢复路由前必须做什么？",
+          "options": [
+            "重新连接、重新发现并重新列出工具",
+            "使用 Last-Event-ID 恢复",
+            "回显 Mcp-Session-Id",
+            "复用旧连接的元数据"
+          ],
+          "explanation": "客户端会重建对端记录，并使用新的请求 ID 只重试安全的操作。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/09-mcp-transports": {
+      "sourceSha256": "ecdc2406a69abdbbc749da7edf52ae2581605a6840128eeae0625c7f835b3ec7",
+      "questions": [
+        {
+          "question": "哪种 HTTP 方法承载所有现代 Streamable HTTP 消息？",
+          "options": [
+            "PATCH",
+            "DELETE",
+            "GET",
+            "POST"
+          ],
+          "explanation": "每个现代 JSON-RPC 请求或通知都是向同一个 MCP 端点发起的一次新 POST。"
+        },
+        {
+          "question": "仅支持现代协议的 MCP 端点应对 GET 和 DELETE 返回什么？",
+          "options": [
+            "301",
+            "200",
+            "202",
+            "405"
+          ],
+          "explanation": "独立的 GET 和 DELETE 不属于 Streamable HTTP 2026-07-28。"
+        },
+        {
+          "question": "每个现代请求中的哪些请求头必须与正文匹配？",
+          "options": [
+            "Mcp-Session-Id 和 Last-Event-ID",
+            "ETag 和 If-None-Match",
+            "MCP-Protocol-Version 和 Mcp-Method",
+            "Cookie 和 Host"
+          ],
+          "explanation": "对于 tools/call、resources/read 和 prompts/get，还必须提供 Mcp-Name。"
+        },
+        {
+          "question": "客户端如何请求长连接形式的变更通知？",
+          "options": [
+            "POST subscriptions/listen",
+            "resources/subscribe",
+            "Mcp-Session-Id",
+            "GET /mcp"
+          ],
+          "explanation": "subscriptions/listen 会打开响应流。其确认消息、通知和最终结果都会把 listen 请求 ID 作为订阅元数据携带。"
+        },
+        {
+          "question": "现代的请求作用域 SSE 流在最终响应到达前中断。接下来应怎么做？",
+          "options": [
+            "DELETE 会话",
+            "复用同一个响应流",
+            "使用 Last-Event-ID 恢复",
+            "使用新的 JSON-RPC ID 安全重试"
+          ],
+          "explanation": "现代 SSE 不支持恢复。安全重试必须是一个使用新 ID 的新请求。"
+        },
+        {
+          "question": "服务器应如何处理 2026-07-28 请求中的 Mcp-Session-Id？",
+          "options": [
+            "忽略它，并且不要回显",
+            "拒绝所有包含它的请求",
+            "用它进行路由",
+            "轮换它"
+          ],
+          "explanation": "现代修订版已经移除了协议会话和会话请求头。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/10-mcp-resources-and-prompts": {
+      "sourceSha256": "ec529fc0f188a902509a4095b61ab93093d1ec56386b952e6116db8b7dc8cae9",
+      "questions": [
+        {
+          "question": "宿主需要通过 URI 获取一份稳定的架构说明。哪种 MCP 原语最合适？",
+          "options": [
+            "资源",
+            "取消通知",
+            "协议会话",
+            "破坏性工具"
+          ],
+          "explanation": "资源通过 URI 暴露可寻址内容。工具用于执行操作，而会话和取消机制并不用于建模可读取内容。"
+        },
+        {
+          "question": "当 resources/read 收到未知的资源 URI 时，2026-07-28 服务器应返回什么？",
+          "options": [
+            "resources/list_changed 通知",
+            "JSON-RPC 错误 -32601",
+            "contents 数组为空的成功结果",
+            "JSON-RPC 错误 -32602"
+          ],
+          "explanation": "当前 Resources 契约针对无效或未知的资源 URI 使用“无效参数”错误码 -32602。返回空的成功结果会掩盖调用方错误。"
+        },
+        {
+          "question": "对于 resources/read 返回的用户自有笔记，哪种缓存策略最安全？",
+          "options": [
+            "因为 URI 稳定，所以使用公共缓存",
+            "当 MIME 类型相同时跨用户共享",
+            "使用具有有限 TTL 的私有缓存",
+            "使用无限 TTL 的公共缓存"
+          ],
+          "explanation": "用户自有的结果不应跨越身份边界。有限期限的私有缓存既能减少重复读取，也能保留授权上下文。"
+        },
+        {
+          "question": "什么标识 subscriptions/listen 响应流上的每一条通知？",
+          "options": [
+            "订阅元数据中的原始 listen 请求 ID",
+            "资源的 MIME 类型",
+            "新生成的协议会话",
+            "服务器进程 ID"
+          ],
+          "explanation": "subscriptions/listen 的 JSON-RPC ID 会成为 io.modelcontextprotocol/subscriptionId，并在确认消息和之后的每个事件中重复出现。"
+        },
+        {
+          "question": "为什么在请求输入相同时，resources/list 和 prompts/list 必须具有确定性？",
+          "options": [
+            "为了向所有返回项授予公共访问权限",
+            "为了避免验证分页游标",
+            "为了稳定缓存、快照和宿主界面",
+            "为了让列表成员关系取决于之前的读取"
+          ],
+          "explanation": "稳定的成员关系和顺序可以避免无意义的缓存未命中和不断变化的界面。授权仍可影响可见性，因为凭据是显式请求输入。"
+        },
+        {
+          "question": "即使客户端可能直接调用 resources/list，当前 MCP 服务器仍必须暴露什么？",
+          "options": [
+            "针对每个 URI 的 resources/subscribe 方法",
+            "创建协议会话的 initialize 方法",
+            "独立的 HTTP GET 事件流",
+            "包含支持修订版与能力的 server/discover"
+          ],
+          "explanation": "服务器必须实现 server/discover，以便客户端获取统一的能力和版本快照。客户端不一定要调用它；客户端可以调用其他方法，并处理结构化的版本错误。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/11-mcp-sampling": {
+      "sourceSha256": "15508c49e349a9b1b520bcd4983f10e916ccac536d31fad5ff56cb144591ad6c",
+      "questions": [
+        {
+          "question": "一个新的 MCP 服务器需要进行模型推理。在 2026-07-28 下，默认架构是什么？",
+          "options": [
+            "直接与模型提供商集成",
+            "在每次工具调用前发送 sampling/createMessage",
+            "把客户端的模型密钥存储在协议会话中",
+            "为 Sampling 打开永久 SSE 流"
+          ],
+          "explanation": "对于新设计，Sampling 已被弃用。服务器需要模型推理时，推荐默认直接集成模型提供商。"
+        },
+        {
+          "question": "2026-07-28 服务器在 tools/call 期间如何请求兼容模式的 Sampling？",
+          "options": [
+            "把提示词写入 server/discover",
+            "把提示词放入 Mcp-Session-Id 请求头",
+            "返回 resultType 为 input_required 的结果，并在 inputRequests 中放入 sampling/createMessage",
+            "在同一连接上发送反向 JSON-RPC 请求"
+          ],
+          "explanation": "MRTR 把服务器到客户端的请求放在 input_required 结果中，从而无需反向请求通道。所公布的 summarize_repo 工具必须先通过具有确定性的 tools/list 提供，并带有有效的 inputSchema。"
+        },
+        {
+          "question": "哪项属性可以证明 MRTR 重试是一个独立的 JSON-RPC 请求？",
+          "options": [
+            "它省略逐请求元数据",
+            "它使用与原始请求相同的 ID",
+            "它使用新的 ID，同时重复原始方法和参数",
+            "它移除原始工具参数"
+          ],
+          "explanation": "客户端使用新的 JSON-RPC ID 重复原始操作，同时携带当前的 inputResponses 和原样返回的 requestState。"
+        },
+        {
+          "question": "当 requestState 会影响资源访问时，必须用什么保护它？",
+          "options": [
+            "与主体、请求和过期时间绑定的 HMAC 或认证加密",
+            "仅使用 Base64 编码",
+            "一个 clientInfo 名称",
+            "一个长生命周期传输会话"
+          ],
+          "explanation": "requestState 会经过不受信任的客户端。完整性保护和绑定可以防止篡改及跨请求重放。"
+        },
+        {
+          "question": "客户端没有在逐请求能力中声明 Sampling。服务器应使用哪种确切的协议响应？",
+          "options": [
+            "仍然发送嵌入式 Sampling 请求",
+            "返回 -32021，并携带 data.requiredCapabilities；或者选择不使用 Sampling 的路径",
+            "把该能力添加到客户端元数据中",
+            "根据之前的请求假定该能力存在"
+          ],
+          "explanation": "服务器不得发出客户端未在当前请求中声明支持的输入请求。确切的缺少能力错误码是 -32021。"
+        },
+        {
+          "question": "哪种迁移方式可以让两轮兼容循环在协议层保持无状态？",
+          "options": [
+            "每次全新重试只携带当前轮次的 inputResponses 和已签名的阶段状态",
+            "把阶段状态存储在 Mcp-Session-Id 下",
+            "在完成前一直复用原始请求 ID",
+            "在隐藏会话中累积所有模型响应"
+          ],
+          "explanation": "每次重试都是自包含的。已签名的 requestState 携带经过验证的中间状态，而 inputResponses 只包含当前轮次的数据。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/12-mcp-roots-and-elicitation": {
+      "sourceSha256": "ca82af19e905c3efe28591d20fd8ce3066c76ec2fc781f9aa784ff1141ffc6e3",
+      "questions": [
+        {
+          "question": "MCP Roots 提供了什么安全保证？",
+          "options": [
+            "提供工作区信息指引，而不是授权或沙箱",
+            "为每个服务器进程提供操作系统隔离",
+            "证明调用方拥有根目录下的每个文件",
+            "自动防止通过符号链接逃逸"
+          ],
+          "explanation": "Roots 只提供信息指引，并已在 2026-07-28 中弃用。服务器仍然需要授权、边界限制和沙箱。"
+        },
+        {
+          "question": "当工作区范围随每次工具调用变化时，最清晰的现代替代方案是什么？",
+          "options": [
+            "存储在传输会话中的隐藏值",
+            "变更后发送 roots/list 请求",
+            "客户端自行报告的 clientInfo 名称",
+            "由服务器授权的显式工作区 URI 参数"
+          ],
+          "explanation": "显式句柄是可见且可重放的，但服务器仍必须针对已认证的主体对其进行授权。"
+        },
+        {
+          "question": "在 MCP 2026-07-28 下，表单模式的 elicitation 如何传递？",
+          "options": [
+            "作为 server/discover 的 HTTP 重定向",
+            "通过 notifications/roots/list_changed",
+            "作为 Mcp-Session-Id 流上的反向请求",
+            "放在 input_required 结果的 inputRequests 中"
+          ],
+          "explanation": "MRTR 把 elicitation/create 嵌入 inputRequests，之后客户端通过 inputResponses 重试原始操作。Elicitation {} 和 elicitation.form 支持表单模式；如果只支持 URL 模式，则返回 -32021，并携带 data.requiredCapabilities.elicitation.form。"
+        },
+        {
+          "question": "哪种值绝不能通过表单模式的 elicitation 收集？",
+          "options": [
+            "破坏性操作的布尔确认值",
+            "从 enum 中选择的笔记 ID",
+            "API 访问令牌",
+            "非敏感的显示偏好"
+          ],
+          "explanation": "秘密信息和凭据不得经过 MCP 客户端。敏感的外部交互应使用经过谨慎绑定的 URL 模式流程。"
+        },
+        {
+          "question": "用户拒绝删除 elicitation 时，什么是安全的结果？",
+          "options": [
+            "因为模型已选择该笔记，所以仍然删除",
+            "把缺失的 content 视为默示同意",
+            "返回 complete 的非错误拒绝结果，并保留笔记",
+            "重复显示同一对话框，直到用户接受"
+          ],
+          "explanation": "拒绝就是明确不同意。不得把它转换成同意、错误循环提示或数据变更。"
+        },
+        {
+          "question": "哪种设计可以把破坏性操作确认安全地绑定到用户看到的内容？",
+          "options": [
+            "对所选笔记 ID 进行 Base64 编码，但不添加签名",
+            "对主体、原始参数摘要、候选 ID、阶段和过期时间签名，然后重新检查实时目标",
+            "把 clientInfo 用作权威用户身份",
+            "信任随 accept 操作返回的任何笔记 ID"
+          ],
+          "explanation": "受完整性保护的状态可以防止篡改。共享的原子式一次性 nonce 领取机制可以防止重放，而变更前的最终实时检查则用于处理竞态条件。"
+        }
+      ]
+    }
+  }
+}

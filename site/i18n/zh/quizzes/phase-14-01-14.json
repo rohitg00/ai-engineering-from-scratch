@@ -1,0 +1,1055 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/14-agent-engineering/01-the-agent-loop": {
+      "sourceSha256": "14e86bd3dd96cc60947246732ea6c50596cb6f3f35ad48d05ebb766342722dfe",
+      "questions": [
+        {
+          "question": "为什么单独使用 LLM 时，它的行为更像自动补全而非 agent？",
+          "options": [
+            "它无法读取文件、运行查询或根据外部世界核验陈述",
+            "它的 context window 太小，容不下一个问题",
+            "它每次只能输出一个 token",
+            "没有 system prompt 时，它会拒绝回答"
+          ],
+          "explanation": "没有循环和工具的 LLM 只能依据权重生成文本；它无法观察状态，也无法据此采取行动。"
+        },
+        {
+          "question": "Yao 等人在 2022 年提出的经典 ReAct 轨迹中包含哪三个标签？",
+          "options": [
+            "Prompt、Response、Reward",
+            "Plan、Execute、Reflect",
+            "Thought、Action、Observation",
+            "System、User、Assistant"
+          ],
+          "explanation": "ReAct 在同一个流中交替穿插 Thought、Action 和 Observation 行。"
+        },
+        {
+          "question": "以下哪一项不是本课列出的 agent 循环五要素之一？",
+          "options": [
+            "工具注册表",
+            "消息缓冲区",
+            "观察结果格式化器",
+            "梯度优化器"
+          ],
+          "explanation": "五个要素是消息缓冲区、工具注册表、停止条件、轮次预算和观察结果格式化器。梯度优化器属于训练过程，而非推理循环。"
+        },
+        {
+          "question": "轮次预算在循环中起什么作用？",
+          "options": [
+            "控制工具注册表公开多少个工具",
+            "对 LLM 提供商进行速率限制",
+            "硬性限制循环迭代次数，防止 agent 失控",
+            "限制每次响应的 token 数"
+          ],
+          "explanation": "轮次预算用于限制循环迭代次数；2026 年的 agent 通常会运行 40–400 步，因此需要设置适合任务的上限。"
+        },
+        {
+          "question": "与基于 prompt 的 Thought token 相比，2025–2026 年向原生推理转变后发生了什么变化？",
+          "options": [
+            "Thought token 现在通过独立的 reasoning channel 输出，并跨轮次传递",
+            "模型不再使用工具调用，只依赖 chain-of-thought",
+            "Observation 被完全移出 prompt",
+            "循环控制流被 DAG 取代"
+          ],
+          "explanation": "推理内容转移到专用 channel（在不同提供商处通常会加密），但 observe-think-act 控制流并未改变。"
+        },
+        {
+          "question": "为什么本课说工具输出是不可信输入？",
+          "options": [
+            "工具运行时既慢又不可靠",
+            "检索到的内容可能携带 delete-the-repo 之类的隐藏指令，而只有用户直接输入才算授权",
+            "工具结果总是大于模型的 context window",
+            "提供商默认会剥离工具输出的字节"
+          ],
+          "explanation": "OpenAI CUA 文档明确指出，只有用户的直接指令才算授权；工具输出可能携带对抗性指令，必须视为不可信内容。"
+        },
+        {
+          "question": "为什么本课声称 2026 年的每个框架底层仍在运行 ReAct？",
+          "options": [
+            "因为 LangGraph 强制其他所有框架继承它",
+            "因为提供商要求 prompt 中包含 ReAct 关键词",
+            "因为 Yao 等人拥有该循环的专利",
+            "因为 observe-think-act 控制流始终不变；框架的差异在于围绕它提供的 checkpoint、actor、角色模板和 tracing"
+          ],
+          "explanation": "Claude Agent SDK、OpenAI Agents SDK、LangGraph、AutoGen、CrewAI、Agno 和 Mastra 之间的差异在于循环外部的封装，而不是循环本身。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/02-rewoo-plan-and-execute": {
+      "sourceSha256": "8d1c9f618ba159f3a01dce47cd1fc1138033da2b44dee2b9dc0329875f4b9260",
+      "questions": [
+        {
+          "question": "为什么 ReAct 的 prompt 长度会随深度呈二次增长？",
+          "options": [
+            "每一步都携带完整的先前 context，包括之前的每条 Thought 和 Observation",
+            "模型在每一步都会重新对自身进行 tokenization",
+            "每次调用都会重复工具 schema",
+            "提供商按字节而不是按 token 计费"
+          ],
+          "explanation": "ReAct 在每一步都会重新包含先前的 Thought 和 Observation，因此 prompt 总长度会随深度的平方增长。"
+        },
+        {
+          "question": "定义 ReWOO 的三种角色是什么？",
+          "options": [
+            "Planner、Workers、Solver",
+            "Reader、Writer、Reviewer",
+            "Generator、Critic、Optimizer",
+            "Actor、Evaluator、Reflector"
+          ],
+          "explanation": "ReWOO 将系统拆分为输出 DAG 的 Planner、获取证据的 Workers，以及整合最终答案的 Solver。"
+        },
+        {
+          "question": "论文报告 ReWOO 与 ReAct 在 HotpotQA 上对比时的核心数据是什么？",
+          "options": [
+            "token 减少 10x，准确率 -2",
+            "token 减少约 5x，绝对准确率 +4",
+            "token 数相同，准确率 +1",
+            "token 增加约 2x，准确率 +10"
+          ],
+          "explanation": "与 ReAct 相比，ReWOO 报告其在 HotpotQA 上将 token 用量减少约 5x，同时绝对准确率提升 4 个百分点。"
+        },
+        {
+          "question": "ReWOO 计划节点中的 #E1 之类占位符表示什么？",
+          "options": [
+            "在分派时用较早 worker 节点的输出替换的引用",
+            "Planner 版本标识符",
+            "worker 1 返回的错误代码",
+            "获取证据时的重试计数器"
+          ],
+          "explanation": "计划节点使用 #E1、#E2 这样的证据引用；执行器会将其替换为上游 worker 的输出。"
+        },
+        {
+          "question": "为什么 ReWOO 比 ReAct 更能将故障局部化？",
+          "options": [
+            "Planner 会在每次出错后重新输出一个全新的 DAG",
+            "Workers 遇到任何错误都会让整个运行崩溃",
+            "ReWOO 会将每次失败的调用最多重试十次",
+            "worker 中的错误会变成字符串，与原始计划一起呈现给 Solver，因此降级发生在单个节点而不是每个步骤"
+          ],
+          "explanation": "将单节点故障与原始计划一并保留在 context 中，让 Solver 可以优雅降级，而不必在推理进行到一半时勉强处理错误。"
+        },
+        {
+          "question": "与普通 ReWOO 相比，哪种任务形态更适合 Plan-and-Act？",
+          "options": [
+            "纯算术问题",
+            "包含 40 步的 Web 或移动端导航轨迹",
+            "两步事实查询",
+            "单轮分类"
+          ],
+          "explanation": "Plan-and-Act 面向超过 30 步的长时程 Web 和移动端 agent；在这类任务中，单条 ReAct 轨迹会失去连贯性。"
+        },
+        {
+          "question": "ReWOO 的 Planner 蒸馏结果对生产级 agent 有何启示？",
+          "options": [
+            "每一步都必须使用 frontier model",
+            "小型 Planner（约 7B）可以媲美大型 teacher，因为 Planner 从不查看 Observation",
+            "参数量低于 7B 时，规划质量会下降",
+            "蒸馏需要基于梯度的 RL 数据"
+          ],
+          "explanation": "由于 Planner 不会看到 Observation，大型 teacher 生成的计划轨迹可以干净地迁移到经过 fine-tuning 的小型 Planner。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/03-reflexion-verbal-rl": {
+      "sourceSha256": "5224af343bcbcca37c4e9490b81a201248abd257c7364b7c43560b50234f0a5a",
+      "questions": [
+        {
+          "question": "Reflexion 取代了标准 reinforcement learning 中的什么？",
+          "options": [
+            "用参数记忆取代情景记忆",
+            "用存储在各次试验之间的自然语言反思取代梯度更新",
+            "用随机搜索取代策略网络",
+            "用恒定 reward 取代 reward shaping"
+          ],
+          "explanation": "Reflexion 使用情景记忆中的自然语言反思，而不是更新权重。"
+        },
+        {
+          "question": "哪三个组件定义了 Reflexion 系统？",
+          "options": [
+            "Planner、Worker、Solver",
+            "Selector、Expander、Backpropagator",
+            "Generator、Critic、Optimizer",
+            "Actor、Evaluator、Self-Reflector"
+          ],
+          "explanation": "Reflexion 将 agent 分解为运行轨迹的 Actor、为轨迹评分的 Evaluator，以及总结经验的 Self-Reflector。"
+        },
+        {
+          "question": "哪种 Evaluator 使用单元测试或已知正确答案等外部二元信号？",
+          "options": [
+            "Heuristic",
+            "Scalar",
+            "Self-evaluated",
+            "Vote-based"
+          ],
+          "explanation": "Scalar Evaluator 从 ground truth 中读取通过/失败信号，例如 ALFWorld 的成功状态或 HumanEval 测试结果。"
+        },
+        {
+          "question": "为什么 self-evaluation 是比 scalar feedback 更弱的信号？",
+          "options": [
+            "模型评判自己时没有外部依据，因此可能轻率批准自己的答案",
+            "它的计算速度更慢",
+            "它总是需要更大的模型",
+            "它无法在工具上运行"
+          ],
+          "explanation": "self-evaluation 缺少外部检查，因此自信的 hallucination 也可能得到高分；应将它与基于工具的验证结合使用。"
+        },
+        {
+          "question": "本课列出的哪种情况是 Reflexion 无法提供帮助的场景？",
+          "options": [
+            "网络中断之类的外部瞬时故障",
+            "HotpotQA 多跳问题",
+            "可由测试评分的代码生成",
+            "ALFWorld 导航任务"
+          ],
+          "explanation": "对瞬时外部故障进行反思只会生成一条对未来运行没有帮助的反思。"
+        },
+        {
+          "question": "Reflexion 模式中的 memory rot 是什么？",
+          "options": [
+            "进程重启时丢失反思",
+            "反思 prompt 超出 context window",
+            "反思被提供商加密",
+            "情景缓冲区被过时或错误的反思填满，拖慢后续试验或使其产生偏差"
+          ],
+          "explanation": "不断累积的陈旧或错误反思会使行为退化；可以通过压缩或 TTL 缓解。"
+        },
+        {
+          "question": "哪种生产实践最符合本课所述的 Reflexion？",
+          "options": [
+            "将 Claude Code 的 CLAUDE.md learnings 前置到未来会话中",
+            "Anthropic 的 prompt caching",
+            "Cursor 的 apply-edits 流程",
+            "OpenAI 的 batch API"
+          ],
+          "explanation": "CLAUDE.md learnings、pro-workflow 的 learn-rule 以及 Letta 的 sleep-time compute 都把情景反思缓冲区外部化了。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/04-tree-of-thoughts-lats": {
+      "sourceSha256": "772ec8f3c53594ca8600f6e7396177857b85d7ed31873ae5bc301ab8af71b892",
+      "questions": [
+        {
+          "question": "为什么 chain-of-thought 难以解决 Game of 24？",
+          "options": [
+            "线性推进在早期步骤出错时无法回溯，因此后续步骤会不断累积错误",
+            "CoT 需要 GPT-4 所不具备的 calculator 工具",
+            "模型无法进行整数乘法",
+            "prompt 太短"
+          ],
+          "explanation": "如果不能分支，错误的早期子表达式会破坏后续整条 chain；论文测得 CoT 的成功率仅为 4%。"
+        },
+        {
+          "question": "Tree of Thoughts 搜索中的节点是什么？",
+          "options": [
+            "注册到 runtime 的工具",
+            "fine-tuning 期间的一次权重更新",
+            "模型生成的一个 token",
+            "一个连贯的中间步骤或 Thought，且可以扩展出 K 个可能的子节点"
+          ],
+          "explanation": "ToT 将推理视为一棵树，其中每个节点都是一个可扩展为 K 个子节点的中间 Thought。"
+        },
+        {
+          "question": "以下哪一项不是 LATS 中 LLM 承担的三种角色之一？",
+          "options": [
+            "在失败后撰写反思的 Self-reflector",
+            "在 rollout 之间更新模型权重的 Optimizer",
+            "为部分轨迹评分的 Value function",
+            "提出下一步 Action 的 Policy"
+          ],
+          "explanation": "LATS 不使用梯度；LLM 的三种角色是 Policy、Value 和 Self-reflector，不会更新权重。"
+        },
+        {
+          "question": "本课列出的四个 MCTS 阶段是什么？",
+          "options": [
+            "Sample、Score、Sort、Submit",
+            "Plan、Execute、Reflect、Stop",
+            "Select、Expand、Simulate、Backpropagate",
+            "Search、Synthesize、Synthesize-Again、Stop"
+          ],
+          "explanation": "MCTS 的每次迭代依次执行 Select、Expand、Simulate 和 Backpropagate。"
+        },
+        {
+          "question": "在 UCT 中，探索常数 c 的作用是什么？",
+          "options": [
+            "缩放价值估计 Q",
+            "设置最大树深度",
+            "控制 rollout 数量",
+            "控制探索项 sqrt(ln N / n) 相对于利用项 Q 的权重"
+          ],
+          "explanation": "c 用于平衡利用（Q）与探索项；应针对具体任务进行调优。"
+        },
+        {
+          "question": "与单条轨迹相比，搜索在何时会产生明显的负面效果？",
+          "options": [
+            "每当 token 很便宜时",
+            "当任务是代码生成时",
+            "当任务存在多个正确答案时",
+            "当 Evaluator 有噪声且答案唯一时，因为搜索会收敛到评分不错的错误答案"
+          ],
+          "explanation": "当 Value function 有噪声且正确答案唯一时，搜索恰好会过拟合噪声。"
+        },
+        {
+          "question": "与 CoT 相比，在 Game of 24 上使用 ToT 大致应预留多少额外 token 用量？",
+          "options": [
+            "100x 到 1000x",
+            "由于剪枝，比 CoT 更少",
+            "约 2x",
+            "约 10x"
+          ],
+          "explanation": "本课指出，在 Game of 24 上，ToT 的 token 成本是 CoT 的 100–1000x。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/05-self-refine-and-critic": {
+      "sourceSha256": "dd9aa876c06faf3ef085217904188c71c253825332c71f81624ff8792dbb94dc",
+      "questions": [
+        {
+          "question": "哪三个 prompt 构成了 Self-Refine 循环？",
+          "options": [
+            "Plan、Execute、Solve",
+            "Generate、Feedback、Refine",
+            "Actor、Evaluator、Reflector",
+            "Search、Score、Synthesize"
+          ],
+          "explanation": "Self-Refine 让同一个模型承担三种角色：Generate、Feedback 和 Refine。"
+        },
+        {
+          "question": "为什么 Self-Refine 的 Refine 步骤需要历史记录？",
+          "options": [
+            "计费需要历史记录",
+            "提供商只对历史记录进行缓存",
+            "它可以加快 token 生成",
+            "如果没有之前的输出和批评，Refine 步骤会重复早先的错误；消融实验表明质量会大幅下降"
+          ],
+          "explanation": "Refine prompt 以完整历史记录为条件，使模型不会重复之前的错误。"
+        },
+        {
+          "question": "与 Self-Refine 相比，CRITIC 改变了什么？",
+          "options": [
+            "它使用更大的模型进行生成",
+            "它并行运行 Feedback 步骤",
+            "它用基于外部工具的 Verifier 取代 self-feedback 步骤",
+            "它移除了 Refine 步骤"
+          ],
+          "explanation": "CRITIC 将 self-critique 换成 Verify 步骤，并通过搜索、code interpreter、calculator 或领域 Verifier 来执行。"
+        },
+        {
+          "question": "用适合 Claude 的术语来说，哪种 Anthropic workflow pattern 对应 Self-Refine 和 CRITIC？",
+          "options": [
+            "Parallel sampling",
+            "Prompt chain",
+            "Evaluator-Optimizer",
+            "Router"
+          ],
+          "explanation": "Anthropic 将这种模式称为 Evaluator-Optimizer：Evaluator 评分，Optimizer 修订，循环直至收敛。"
+        },
+        {
+          "question": "什么是 rubber-stamp loop？本课建议如何避免它？",
+          "options": [
+            "超时的 guardrail；延长 timeout",
+            "总是失败的重试；提高预算",
+            "同一个模型用同一种 prompt 批评自己的输出并予以通过；应使用结构明显不同的 prompt，或另用一个更小的 Critic",
+            "总是通过的测试；删除该测试"
+          ],
+          "explanation": "相同风格的 self-critique 会收敛到“我看没问题”；应让 Evaluator 与 Optimizer 有所区别。"
+        },
+        {
+          "question": "OpenAI Agents SDK 中的哪项功能具有 CRITIC 的形态？",
+          "options": [
+            "Sessions",
+            "Tracing",
+            "Handoffs",
+            "Output guardrails（可以调用工具）"
+          ],
+          "explanation": "Output guardrails 会验证 agent 的最终输出并且可以调用工具，对应 CRITIC 的 Verifier 角色。"
+        },
+        {
+          "question": "对于 2026 年的 Evaluator-Optimizer 循环，本课推荐哪种停止条件？",
+          "options": [
+            "只有模型说 fine 时才停止",
+            "永不停止；让 agent 无限地自我改进",
+            "只有 Verifier 通过时才停止",
+            "组合条件：Verifier 通过 OR（模型说 fine AND iterations >= 2）OR iterations >= max_iterations"
+          ],
+          "explanation": "组合条件可以避免仅依赖单一条件时的故障模式。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/06-tool-use-and-function-calling": {
+      "sourceSha256": "d3deec25e2eab91a6a3fb4df75f216e685e43e6357a934980fca21c746072e83",
+      "questions": [
+        {
+          "question": "Toolformer 用什么信号来决定是否保留候选工具标注？",
+          "options": [
+            "工具是否在 100 ms 内返回",
+            "人工标签的一致程度",
+            "加入工具结果后，周边文本的 next-token loss 是否降低",
+            "工具是否输出有效 JSON"
+          ],
+          "explanation": "Toolformer 的 self-supervised 信号会保留那些工具结果能降低 next-token loss 的标注。"
+        },
+        {
+          "question": "本课报告的 BFCL V4 数据划分是什么？",
+          "options": [
+            "100% single-turn",
+            "50% live，50% synthetic",
+            "33% agentic，33% planning，33% reflection",
+            "40% agentic，30% multi-turn，10% live，10% non-live，10% hallucination"
+          ],
+          "explanation": "BFCL V4 的权重是 40 agentic / 30 multi-turn / 10 live / 10 non-live / 10 hallucination。"
+        },
+        {
+          "question": "为什么工具的 description 至关重要？",
+          "options": [
+            "它是用户在 UI 中看到的内容",
+            "模型通过读取它来选择正确工具；糟糕的 description 是选错工具的首要原因",
+            "JSON Schema 要求必须提供它",
+            "它控制计费分组"
+          ],
+          "explanation": "工具 description 是模型选择工具时的主要信号；糟糕的 description 会导致错误的工具路由。"
+        },
+        {
+          "question": "tool_use_id 在并行工具调用中起什么作用？",
+          "options": [
+            "将每个工具结果与发起它的调用关联起来，使乱序返回的结果仍能正确路由",
+            "使用 API key 授权调用",
+            "压缩 JSON payload",
+            "启用缓存"
+          ],
+          "explanation": "tool_use_id 是关联 token；如果将它们对调，结果就会被路由到错误的调用。"
+        },
+        {
+          "question": "V3 的 state-based evaluation 试图捕获哪一类故障？",
+          "options": [
+            "token 泄漏",
+            "schema 版本漂移",
+            "工具执行缓慢",
+            "通过 AST 匹配看似正确、却使 API 处于错误状态的工具调用"
+          ],
+          "explanation": "state-based evaluation 检查最终 API 状态（例如文件是否真的创建），而不是只匹配调用语法。"
+        },
+        {
+          "question": "以下哪项不是本课列出的 2026 年 function calling 开放问题？",
+          "options": [
+            "长时程工具链",
+            "token-level 解码速度",
+            "在大量工具之间进行动态决策",
+            "跨轮次记忆"
+          ],
+          "explanation": "开放问题包括记忆、动态决策、长时程工具链和 hallucination 检测；解码速度不在其中。"
+        },
+        {
+          "question": "为什么本课把通用的 run_shell(cmd) 工具称为危险信号？",
+          "options": [
+            "它无法并行调用",
+            "它扩大了 sandbox 边界；git_status() 之类的具体工具可以约束读写范围和风险",
+            "它速度很慢",
+            "提供商会拒绝它"
+          ],
+          "explanation": "窄范围工具会限制 sandbox 表面；通用 shell 工具则会开放主机的全部能力范围。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/07-memory-virtual-context-memgpt": {
+      "sourceSha256": "7df695b33f791f677320538c40d2f061ff5c993451c3160227355c4e92d37a92",
+      "questions": [
+        {
+          "question": "MemGPT 建立在哪种操作系统类比之上？",
+          "options": [
+            "虚拟内存：主 context 相当于 RAM，外部存储相当于 disk，memory 工具负责 page in 和 page out",
+            "进程与线程",
+            "网络 socket",
+            "文件描述符"
+          ],
+          "explanation": "MemGPT 将 prompt 映射为 RAM，将外部存储映射为 disk，并将 memory 工具映射为类似 page fault 的数据传输。"
+        },
+        {
+          "question": "为什么更大的 context window 仍不能彻底解决记忆问题？",
+          "options": [
+            "模型拒绝长输入",
+            "长 context 没有任何成本",
+            "即使 window 达到 128k，溢出、注意力稀释和缺乏跨会话持久化仍会造成问题",
+            "提供商将其限制在 4k token"
+          ],
+          "explanation": "Mem0 测得，128k-window baseline 仍会漏掉一些事实，而带外部记忆的 4k agent 能捕获这些事实；溢出、稀释和持久化问题依然存在。"
+        },
+        {
+          "question": "以下哪一项不是 MemGPT 的经典 memory 工具？",
+          "options": [
+            "archival_memory_search",
+            "core_memory_append",
+            "conversation_search",
+            "gradient_memory_update"
+          ],
+          "explanation": "不存在 gradient memory 工具；其工具面由 core、archival 和 conversation 操作组成。"
+        },
+        {
+          "question": "MemGPT 中的 interrupt pattern 做什么？",
+          "options": [
+            "遇到任何错误就停止整个 agent 运行",
+            "agent 在对话途中调用 memory 工具，runtime 执行该工具，并将结果拼接到下一轮",
+            "完全绕过 context window",
+            "触发模型重新训练"
+          ],
+          "explanation": "Memory-as-interrupt：调用 memory 工具，runtime 获取内容，结果在下一轮作为新的 Observation 返回（类似 Unix read()）。"
+        },
+        {
+          "question": "MemGPT 在 2024 年演变成了哪个生产系统？",
+          "options": [
+            "Pinecone",
+            "Mem0",
+            "Zep",
+            "Letta"
+          ],
+          "explanation": "MemGPT 于 2024 年 9 月成为 Letta；研究仓库 cpacker/MemGPT 仍作为其起源保留。"
+        },
+        {
+          "question": "在此语境中，memory poisoning 是什么？",
+          "options": [
+            "RAM 可用时仍从 disk 读取",
+            "embedding model 版本漂移",
+            "破坏 vector index 的 bug",
+            "攻击者的内容被存为 memory note，并在未来 recall 时重新摄入"
+          ],
+          "explanation": "外部记忆本质上是被检索的文本；如果攻击者可影响的内容进入 memory note，agent 会在下次会话中再次摄入它。"
+        },
+        {
+          "question": "为什么本课说生产级记忆系统都是 MemGPT 的变体？",
+          "options": [
+            "Letta、Mem0、Assistants threads 和 Claude Agent SDK 都运行两层（或更多层）的分页记忆模式；它们的差异在于运维形态",
+            "它们共享权重",
+            "它们使用同一个 vector DB",
+            "MemGPT 拥有该商标"
+          ],
+          "explanation": "应根据运维形态而不是模式来选择；它们都共享 MemGPT 的 page in/page out 骨架。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/08-memory-blocks-sleep-time-compute": {
+      "sourceSha256": "d18fcc7566d5737e727bc66e988663aaa896a7eac72411c014d82e39ee79f027",
+      "questions": [
+        {
+          "question": "Letta 的三个记忆层级是什么？",
+          "options": [
+            "RAM、swap、disk",
+            "Cache、KV、archival",
+            "Core、recall、archival",
+            "Working、episodic、semantic"
+          ],
+          "explanation": "Letta 使用 core（始终可见）、recall（对话历史）和 archival（外部存储）三个层级。"
+        },
+        {
+          "question": "sleep-time compute 针对哪项生产问题？",
+          "options": [
+            "降低 embedding 成本",
+            "更快地解析 JSON",
+            "提高数学题的准确率",
+            "在关键路径上执行记忆整合所造成的尾延迟"
+          ],
+          "explanation": "sleep-time 将剪枝、摘要和调和移出面向用户的路径，使主要响应保持快速。"
+        },
+        {
+          "question": "以下哪个属性不是 Letta 的 memory block 字段？",
+          "options": [
+            "limit",
+            "embedding_model_version",
+            "label",
+            "value"
+          ],
+          "explanation": "block 包含 id、label、value、limit 和 description；embedding model version 不属于 block schema。"
+        },
+        {
+          "question": "为什么 sleep-time agent 可以运行比主 agent 更强的模型？",
+          "options": [
+            "记忆操作的 token 成本减半",
+            "它会收到一个私有 API key",
+            "它不在关键路径上，因此不受延迟约束",
+            "它不受速率限制"
+          ],
+          "explanation": "由于不会阻塞用户响应，sleep-time agent 可以更慢、成本也可以更高。"
+        },
+        {
+          "question": "Human 和 Persona block 可以泛化成什么模式？",
+          "options": [
+            "操作系统进程",
+            "任意由用户定义、带类型且可编辑的 block（Task、Project、Safety……）",
+            "JSON-RPC channel",
+            "vector embedding"
+          ],
+          "explanation": "Letta 将 MemGPT 的两个 block 泛化为任意由用户定义、包含 id、label、value、limit 和 description 的 block。"
+        },
+        {
+          "question": "这种模式中的 silent drift 是什么？",
+          "options": [
+            "主 agent 从未察觉 sleep-time agent 在其底层重写了 block；可通过版本控制和可见 diff 修复",
+            "embedding model 升级",
+            "disk 写入缓慢",
+            "速率限制抖动"
+          ],
+          "explanation": "对 block 进行版本控制并在 trace 中展示 diff，可以让主循环看到 sleep-time 的重写。"
+        },
+        {
+          "question": "在 Letta V1 中，什么取代了内联的 `Thought:` token 和 send_message/heartbeat 模式？",
+          "options": [
+            "在独立 channel 上输出并跨轮次传递的原生推理",
+            "专门负责 Thought 的第二个 LLM",
+            "更大的 system prompt",
+            "由用户手动输入的 Thought"
+          ],
+          "explanation": "Letta V1（letta_v1_agent）使用提供商级别的原生推理，而不是由 prompt 塑造的 Thought。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/09-hybrid-memory-mem0": {
+      "sourceSha256": "ec8f0a9ae93e9a5067393183b2fc5f42c409f0b20f0304ce24b13d3e6b13ac37",
+      "questions": [
+        {
+          "question": "KV store 最擅长处理哪类查询？",
+          "options": [
+            "跨共享同一计费实体的客户进行可达性查询",
+            "按 (user, type, entity) 作为 key 的直接事实查询",
+            "valid-at-time 时态查询",
+            "对长对话进行语义相似度查询"
+          ],
+          "explanation": "KV 对精确 key 的查询复杂度为 O(1)；vector 用于相似度查询，graph 用于关系查询。"
+        },
+        {
+          "question": "每次调用 add() 时，Mem0 会并行写入哪三个存储？",
+          "options": [
+            "Postgres、Redis、ClickHouse",
+            "Cache、queue、log",
+            "Embedding、attention、FFN",
+            "Vector、KV、graph"
+          ],
+          "explanation": "Mem0 会将每次写入扇出到 vector、KV 和 graph store。"
+        },
+        {
+          "question": "哪三个维度会用于计算 Mem0 的 fusion score？",
+          "options": [
+            "Confidence、perplexity、BLEU",
+            "Precision、recall、F1",
+            "Relevance、importance、recency",
+            "Latency、throughput、cost"
+          ],
+          "explanation": "score 是 relevance、importance 和 recency 的加权和；应针对具体产品调节权重。"
+        },
+        {
+          "question": "当传入的事实与现有 edge 矛盾时，Mem0g 会怎么做？",
+          "options": [
+            "抛出异常",
+            "重写 user_id",
+            "将现有 edge 标记为无效但不删除，使时态查询仍可遍历它",
+            "删除该 edge"
+          ],
+          "explanation": "软失效会保留历史记录，以支持时态（valid-at-time）查询。"
+        },
+        {
+          "question": "为什么本课建议针对不同产品调整 fusion weight？",
+          "options": [
+            "Apache 2.0 要求这样做",
+            "vector library 不接受相同的权重",
+            "聊天 agent 更看重 recency，合规 agent 更看重 importance，检索 agent 更看重 relevance",
+            "提供商要求这样做"
+          ],
+          "explanation": "不同产品对 relevance、importance 和 recency 有不同的偏好；同一组权重无法适用于所有产品。"
+        },
+        {
+          "question": "Mem0 使用哪种 scope 分类？",
+          "options": [
+            "User、session、agent",
+            "Local、regional、global",
+            "Public、private、secret",
+            "Read、write、admin"
+          ],
+          "explanation": "scope 分为 user（跨会话）、session（单个 thread）和 agent（每个实例的状态）。"
+        },
+        {
+          "question": "这种模式中的 embedding drift 是什么？本课建议如何缓解？",
+          "options": [
+            "vector 被加密；轮换 key",
+            "embedding API 更改 URL；固定域名",
+            "embedding 发生整数溢出；改用 float64",
+            "随着语料库增长，vector 检索质量下降；定期对使用最频繁的 top-N 条记录重新进行 embedding"
+          ],
+          "explanation": "定期为高频记录重新生成 embedding，可以在语料库增长时保持稳定的检索质量。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/10-skill-libraries-voyager": {
+      "sourceSha256": "283469d568aa792d0b125848e5fdf12eb1359ee56250312e5ccc853102fb3010",
+      "questions": [
+        {
+          "question": "Voyager 将什么视为 action space？",
+          "options": [
+            "原始 Minecraft command",
+            "reinforcement learning Q-value",
+            "只有文本 prompt",
+            "被存储、检索和组合的可执行代码（JavaScript function）"
+          ],
+          "explanation": "Voyager 的贡献在于将代码变为 Action：skill 是程序，而不是原始 command。"
+        },
+        {
+          "question": "哪三个组件定义了 Voyager agent？",
+          "options": [
+            "Retriever、generator、ranker",
+            "Encoder、decoder、value head",
+            "Automatic curriculum、skill library、iterative prompting",
+            "Planner、executor、judge"
+          ],
+          "explanation": "Voyager 围绕 curriculum、skill library 和 iterative prompting 来组织 agent。"
+        },
+        {
+          "question": "一次 skill 执行尝试可能返回哪三种信号？",
+          "options": [
+            "Success、error（带 stack trace）、self-verification failure",
+            "Pass、fail、retry",
+            "Heartbeat、ack、nack",
+            "Green、yellow、red"
+          ],
+          "explanation": "Voyager 的 iterative prompting 机制由这三种信号驱动，它们会被反馈给下一个版本。"
+        },
+        {
+          "question": "automatic curriculum 如何选择下一个任务？",
+          "options": [
+            "在 action space 上均匀随机选择",
+            "根据环境状态和 skill inventory，选择略高于当前能力的任务（探索的最佳区间）",
+            "始终选择当前最难的任务",
+            "只能使用用户提供的列表"
+          ],
+          "explanation": "任务提议器以略高于当前能力的任务为目标，从而保持稳定进步。"
+        },
+        {
+          "question": "哪个 2026 年产品与本课中的 Voyager skill 最为匹配？",
+          "options": [
+            "Claude Agent SDK skill：具名、可检索的代码及其按需加载的指令",
+            "AWS Lambda layer",
+            "Pinecone index",
+            "OpenAI fine-tuning"
+          ],
+          "explanation": "Agent SDK skill 与 Voyager 中具名、可检索、可组合的代码模式相匹配。"
+        },
+        {
+          "question": "为什么本课建议 skill library 在写入时进行去重？",
+          "options": [
+            "如果不去重，同一个 skill 会以略有不同的 description 被多次添加；检索时应只返回一个规范版本",
+            "提供商会拒绝重复项",
+            "Git 会阻止重复项",
+            "disk 成本很高"
+          ],
+          "explanation": "将 description 近似重复的条目合并为一个规范 skill，可以保持检索结果整洁。"
+        },
+        {
+          "question": "composed-skill drift 描述了什么问题？",
+          "options": [
+            "Python 升级后，某个 skill 无法再通过编译",
+            "父 skill 在未针对新版子 skill 测试的情况下，悄然采用了经过改进的子 skill 版本；可通过固定 skill 版本修复",
+            "skill 在存储中被加密",
+            "检索没有返回任何结果"
+          ],
+          "explanation": "如果不固定版本，对子 skill 的改进会悄然改变父 skill 的行为。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/11-planning-htn-and-evolutionary": {
+      "sourceSha256": "0ff551e292d1375a3ee5205211dcd3fee683f930ea09f8a4318ef9dd1e91d300",
+      "questions": [
+        {
+          "question": "与自由形式的 LLM 计划相比，HTN 增加了什么？",
+          "options": [
+            "更好的 embedding",
+            "更便宜的推理",
+            "在强制执行 Operator 的 precondition 和 effect 时可证明的正确性",
+            "更短的 prompt"
+          ],
+          "explanation": "HTN 使用带 precondition 和 effect 的符号 Operator，从构造上保证 soundness。"
+        },
+        {
+          "question": "AlphaEvolve 面向哪类问题？",
+          "options": [
+            "多轮聊天记忆",
+            "自由形式的散文生成",
+            "vector search 排序",
+            "具有机器可检查且确定性 fitness function 的优化问题"
+          ],
+          "explanation": "进化搜索需要确定性的 Evaluator；AlphaEvolve 面向存在这种 Evaluator 的领域。"
+        },
+        {
+          "question": "ChatHTN 在使用 LLM 的同时如何保持计划的 soundness？",
+          "options": [
+            "它使用 vector database",
+            "LLM 建议只会作为候选分解进入系统，并依据 Operator schema 进行验证；符号层负责保证正确性",
+            "它无法保持；soundness 只能尽力而为",
+            "它使用 HTN 轨迹对 LLM 进行 fine-tuning"
+          ],
+          "explanation": "LLM 可以扩展 Method library，但无法绕过 Operator 的 precondition 和 effect。"
+        },
+        {
+          "question": "本课引用了 AlphaEvolve 的哪项成果？",
+          "options": [
+            "56 年来首次改进 Strassen 的 4x4 复数矩阵乘法",
+            "首次证明 P=NP",
+            "在 HumanEval 上击败 GPT-4",
+            "将 Gemini 的推理速度提高 10x"
+          ],
+          "explanation": "AlphaEvolve 为 4x4 复数矩阵乘法找到了使用 48 次标量乘法的方案，这是 56 年来对 Strassen 的首次改进。"
+        },
+        {
+          "question": "HTN 中的哪种元素是具有 precondition 和 effect、可直接执行的原子 Action？",
+          "options": [
+            "State",
+            "Task",
+            "Method",
+            "Operator"
+          ],
+          "explanation": "Operator 是原子操作；Method 分解复合 Task；State 是事实集合。"
+        },
+        {
+          "question": "本课对缺少真正 Evaluator 的 AlphaEvolve 有何警告？",
+          "options": [
+            "它速度很慢",
+            "它无法在 GPU 上运行",
+            "让 LLM 判断代码是否更好并不构成 fitness function；Evaluator 必须确定且快速",
+            "它违反 Apache 2.0"
+          ],
+          "explanation": "如果没有确定性的 Evaluator，搜索就没有可供收敛的信号。"
+        },
+        {
+          "question": "什么时候应该使用 ReAct 或 ReWOO，而不是 HTN 或 AlphaEvolve？",
+          "options": [
+            "永远不应该；HTN 在各方面都更好",
+            "当你不需要形式化 soundness 或机器可检查的 fitness 时；大多数 agent 任务都属于此类",
+            "当你拥有 GPU cluster 时",
+            "当延迟低于 100 ms 时"
+          ],
+          "explanation": "本课明确警告不要过度设计：大多数任务不需要形式化规划或进化搜索。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/12-anthropic-workflow-patterns": {
+      "sourceSha256": "f25ba4a20460caff263c4222a92097d63e47841bed1e1e3685c28012574d3bff",
+      "questions": [
+        {
+          "question": "Anthropic 如何区分 workflow 和 agent？",
+          "options": [
+            "workflow 是由工程师掌控的预定义 graph；agent 是由模型掌控的动态工具调用方向",
+            "workflow 无状态；agent 有状态",
+            "workflow 在 CPU 上运行；agent 需要 GPU",
+            "workflow 使用 embedding；agent 使用工具"
+          ],
+          "explanation": "workflow = 由工程师掌控的预定义代码路径；agent = 由模型掌控 graph。"
+        },
+        {
+          "question": "作为全部五种模式基础的 augmented LLM 具备哪三种能力？",
+          "options": [
+            "Search（检索）、tools（操作）、memory（持久化）",
+            "Vector、KV、graph",
+            "Plan、execute、reflect",
+            "Embedding、fine-tuning、RAG"
+          ],
+          "explanation": "原子单元是一个接入 retrieval、tools 和 memory 的 LLM。"
+        },
+        {
+          "question": "以下哪一项不是 Anthropic 的五种 workflow pattern 之一？",
+          "options": [
+            "Evaluator-optimizer",
+            "Gradient distillation",
+            "Prompt chaining",
+            "Routing"
+          ],
+          "explanation": "五种模式是 prompt chaining、routing、parallelization、orchestrator-workers 和 evaluator-optimizer。Gradient distillation 是训练概念。"
+        },
+        {
+          "question": "parallelization 有哪两种形态？",
+          "options": [
+            "Sync 和 async",
+            "Stateful 和 stateless",
+            "Hot 和 cold",
+            "Sectioning（不同分块）和 voting（对同一 prompt 运行 N 次后聚合）"
+          ],
+          "explanation": "parallelization 分为 sectioning 和 voting；两者都会扇出 N 次调用再聚合。"
+        },
+        {
+          "question": "Self-Refine 泛化后对应哪种 workflow pattern？",
+          "options": [
+            "Orchestrator-workers",
+            "Evaluator-optimizer",
+            "Prompt chaining",
+            "Routing"
+          ],
+          "explanation": "Evaluator-optimizer 是 Anthropic 对 Self-Refine / CRITIC 迭代模式的称呼。"
+        },
+        {
+          "question": "根据本课，workflow 在什么情况下胜过 agent？",
+          "options": [
+            "始终如此",
+            "只在 GPU 上",
+            "对于可预测、有成本上限或有合规边界，并且 graph 可以枚举和审计的任务",
+            "只适用于聊天"
+          ],
+          "explanation": "workflow 更便宜、更容易调试且可审计；当步骤可预先确定时，应选择 workflow。"
+        },
+        {
+          "question": "本课建议默认从哪里开始？",
+          "options": [
+            "一个 multi-agent framework",
+            "对模型进行 fine-tuning",
+            "构建自定义 MCTS",
+            "直接调用 API；只有当持久状态、actor 并发或角色模板足以抵偿成本时，才添加 framework"
+          ],
+          "explanation": "Schluntz 和 Zhang 的建议是：从简单方案开始；只有充分理由时，才增加 framework 的复杂度。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/13-langgraph-stateful-graphs": {
+      "sourceSha256": "2ff19408d73db73a0bbb48a01a2851e8eea929dd604c912a0638c272d3812d2d",
+      "questions": [
+        {
+          "question": "LangGraph 将什么视为 agent 的核心单元？",
+          "options": [
+            "vector index",
+            "包含带类型 State、function node 和 conditional edge 的 state machine",
+            "单个工具注册表",
+            "自由形式的 LLM 调用"
+          ],
+          "explanation": "LangGraph 将 agent 建模为 state graph：node 是纯函数，edge 是 transition，State 带类型且不可变。"
+        },
+        {
+          "question": "durable execution 解决了什么问题？",
+          "options": [
+            "降低推理成本",
+            "更快地生成 embedding",
+            "包含 40 步的运行在第 38 步失败时，可以用精确 State 从该步恢复，而不必从头开始",
+            "在不同提供商之间进行转换"
+          ],
+          "explanation": "每个 node 执行后创建 checkpoint，使 runtime 可以从最后一个成功步骤恢复。"
+        },
+        {
+          "question": "以下哪一项不是 LangGraph 支持的三种 topology 之一？",
+          "options": [
+            "Gradient ring",
+            "Hierarchical（嵌套 subgraph）",
+            "Supervisor",
+            "Swarm（peer-to-peer）"
+          ],
+          "explanation": "三种 topology 是 supervisor、swarm 和 hierarchical。Gradient ring 不是 LangGraph topology。"
+        },
+        {
+          "question": "为什么 node 必须具有确定性，才能顺利恢复运行？",
+          "options": [
+            "GIL 要求如此",
+            "确定性会降低 token 成本",
+            "恢复操作假设相同输入会产生相同的 State update；必须捕获 random seed、wall-clock 和外部 API",
+            "提供商要求确定性"
+          ],
+          "explanation": "如果 node 依赖未捕获的非确定性因素，恢复时就无法重建该步骤后的 State。"
+        },
+        {
+          "question": "什么是 conditional edge？",
+          "options": [
+            "带 TTL 的 edge",
+            "由 State function 选择、用于 graph 分支的 edge",
+            "只在 GPU 上运行的 edge",
+            "按 training loss 加权的 edge"
+          ],
+          "explanation": "conditional edge 根据 State 进行分支；过度使用会使 graph 难以推理。"
+        },
+        {
+          "question": "checkpoint 太小时会出现什么问题？",
+          "options": [
+            "disk 会被填满",
+            "graph 无法到达 END",
+            "工具 State 和 memory write 无法恢复；必须序列化完整 State",
+            "模型生成的答案会更短"
+          ],
+          "explanation": "如果只为对话轮次创建 checkpoint，工具 State 和 memory write 就会超出恢复范围。"
+        },
+        {
+          "question": "human-in-the-loop 如何融入 LangGraph 的设计？",
+          "options": [
+            "在关键 node 前暂停，将序列化 State 展示给人类，接受修改后恢复；checkpointer 使这一过程成本很低",
+            "只能在 START 和 END 处介入",
+            "通过单独的提供商 API",
+            "它需要 fork runtime"
+          ],
+          "explanation": "由于 State 已在各 node 之间序列化，人工审查和编辑自然适合采用暂停后恢复的模式。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/14-autogen-actor-model": {
+      "sourceSha256": "a9a96b62030f6540ac87e23ba8cc57656977decd79971683451d17dc956404a9",
+      "questions": [
+        {
+          "question": "在 AutoGen v0.4 中，actor 之间进行交互的唯一合法方式是什么？",
+          "options": [
+            "直接访问共享 dict",
+            "修改彼此的 prompt",
+            "共享 SQL transaction",
+            "通过 inbox 交换异步消息；不共享 memory"
+          ],
+          "explanation": "actor 拥有私有 State 和一个 inbox；消息是唯一的交互方式。"
+        },
+        {
+          "question": "AutoGen v0.4 的三个 API layer 是什么？",
+          "options": [
+            "Core、AgentChat、Extensions",
+            "Frontend、Backend、Database",
+            "Tools、Models、Memory",
+            "Plan、Act、Reflect"
+          ],
+          "explanation": "Core 是低层 actor framework，AgentChat 是任务驱动的高层 API，Extensions 是集成层。"
+        },
+        {
+          "question": "为什么将消息投递与处理解耦可以实现故障隔离？",
+          "options": [
+            "runtime 会捕获 B 中的 handler 故障，而不会使 A 崩溃；A 的 send() 已立即返回，从未阻塞",
+            "每个 actor 都在单独的机器上运行",
+            "handler 是纯函数",
+            "runtime 会在失败时重启操作系统"
+          ],
+          "explanation": "send() 将消息放入接收方的 inbox 后即返回；handler 崩溃只会影响本地 actor。"
+        },
+        {
+          "question": "哪种 AgentChat topology 会按固定顺序轮换 agent？",
+          "options": [
+            "SelectorGroupChat",
+            "Magentic-One",
+            "RoundRobinGroupChat",
+            "Supervisor"
+          ],
+          "explanation": "RoundRobinGroupChat 采用固定轮换；SelectorGroupChat 使用 Selector 选择下一个 agent。"
+        },
+        {
+          "question": "本课中的 Magentic-One 是什么？",
+          "options": [
+            "一个基于 AgentChat 构建、用于 Web 浏览、代码执行和文件处理的参考 multi-agent team",
+            "OTel exporter",
+            "一种新的 LLM model",
+            "一种 serialization format"
+          ],
+          "explanation": "Magentic-One 是 Microsoft 的参考 team，用于演示 AgentChat API。"
+        },
+        {
+          "question": "本课如何描述 AutoGen v0.4 在 2026 年初的状态？",
+          "options": [
+            "已弃用并移除",
+            "已被 LangGraph 取代",
+            "刚刚发布",
+            "稳定但处于维护模式；Microsoft Agent Framework 是未来方向"
+          ],
+          "explanation": "AutoGen v0.7.x 可稳定用于研究；活跃开发已转向 Microsoft Agent Framework。"
+        },
+        {
+          "question": "AutoGen v0.4 默认会输出哪种 observability 标准？",
+          "options": [
+            "Datadog APM",
+            "只有 Prometheus metric",
+            "遵循 OTel GenAI semantic convention、包含 gen_ai.* attribute 的 OpenTelemetry span",
+            "StatsD"
+          ],
+          "explanation": "每条消息都会生成一个 span；工具调用会依据 OTel GenAI convention 携带 gen_ai.* attribute。"
+        }
+      ]
+    }
+  }
+}

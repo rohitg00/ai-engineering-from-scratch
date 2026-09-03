@@ -2,8 +2,8 @@
  * Command palette — global search triggered by Cmd/Ctrl+K or the search button.
  *
  * Searches focused paths, lesson titles, summaries, phase names, languages,
- * types, and glossary terms entirely client-side from data already loaded.
- * No network requests. No external dependencies.
+ * types, and glossary terms. The Chinese search overlay is fetched once, on
+ * demand, when the palette first opens in Chinese. No external dependencies.
  *
  * API (attached to window.CmdPalette):
  *   CmdPalette.open()   — open the palette
@@ -18,12 +18,293 @@
   var PALETTE_ID  = 'cmdPalette';
   var MAX_RESULTS = 12;
   var BODY_ATTR   = 'data-palette-open';
+  var LANGUAGE_EVENT = 'aifs:language-change';
+  var LANG_STORAGE_KEY = 'lang';
 
   // ── Module state ─────────────────────────────────────────────────────
   var _index      = null;   // lazy-built flat array of searchable items
+  var _indexLang  = '';
   var _activeIdx  = -1;
   var _isOpen     = false;
   var _prevFocus  = null;
+  var _zhSearchAsset = null;
+  var _zhSearchAssetPromise = null;
+
+  function isCertificationSurface() {
+    var pathname = typeof window !== 'undefined' && window.location
+      ? String(window.location.pathname || '')
+      : '';
+    if (/(?:^|\/)(?:assessment|certification|certifications)(?:\.html)?\/?$/.test(pathname)) return true;
+    if (!/(?:^|\/)lesson(?:\.html)?\/?$/.test(pathname) || typeof URLSearchParams === 'undefined') return false;
+    try {
+      return new URLSearchParams(window.location.search || '').get('path')
+        .indexOf('certifications/claude/lessons/') === 0;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function currentLang() {
+    var api = (typeof window !== 'undefined') ? window.AIFS_I18n : null;
+    var params;
+    var value = '';
+    if (isCertificationSurface()) return 'en';
+    if (api && typeof api.current === 'string' && api.current) return api.current;
+    if (typeof window !== 'undefined' && typeof window.AIFS_currentLang === 'function') {
+      value = window.AIFS_currentLang();
+      if (value) return value;
+    }
+    if (typeof window !== 'undefined' && window.location && typeof URLSearchParams !== 'undefined') {
+      try {
+        params = new URLSearchParams(window.location.search || '');
+        value = params.get('lang') || '';
+      } catch (_) {
+        value = '';
+      }
+    }
+    if (!value && typeof window !== 'undefined' && window.localStorage) {
+      try { value = window.localStorage.getItem(LANG_STORAGE_KEY) || ''; } catch (_) {}
+    }
+    return value || 'en';
+  }
+
+  function i18nApi() {
+    return (typeof window !== 'undefined' && window.AIFS_I18n) ? window.AIFS_I18n : null;
+  }
+
+  function t(text, params) {
+    var api = i18nApi();
+    if (api && typeof api.t === 'function') {
+      return api.t(text == null ? '' : String(text), params || null);
+    }
+    return interpolate(text == null ? '' : String(text), params || null);
+  }
+
+  function interpolate(text, params) {
+    if (!params || typeof params !== 'object') return text;
+    return String(text).replace(/\{([A-Za-z0-9_]+)\}/g, function (_, name) {
+      return Object.prototype.hasOwnProperty.call(params, name) ? params[name] : _;
+    });
+  }
+
+  function stableArtifactId(artifact, index) {
+    if (artifact && artifact.id) return String(artifact.id);
+    if (artifact && artifact.file) return String(artifact.file);
+    if (artifact && artifact.lessonPath && artifact.name) {
+      return artifact.lessonPath + '::' + artifact.name;
+    }
+    return 'artifact:' + String(index);
+  }
+
+  function stableGlossaryId(entry, index) {
+    if (entry && entry.slug) return String(entry.slug);
+    if (entry && entry.term) return String(entry.term);
+    return 'glossary:' + String(index);
+  }
+
+  function appendUnique(parts, value) {
+    var i;
+    if (!value) return;
+    value = String(value);
+    for (i = 0; i < parts.length; i++) {
+      if (parts[i] === value) return;
+    }
+    parts.push(value);
+  }
+
+  function combinedText() {
+    var parts = [];
+    var i;
+    for (i = 0; i < arguments.length; i++) appendUnique(parts, arguments[i]);
+    return parts.join(' ');
+  }
+
+  function entryString(entry, keys) {
+    var i;
+    if (!entry || typeof entry !== 'object') return '';
+    for (i = 0; i < keys.length; i++) {
+      if (typeof entry[keys[i]] === 'string' && entry[keys[i]]) return entry[keys[i]];
+    }
+    return '';
+  }
+
+  function normalizeSearchPayload(payload) {
+    var normalized = { lessons: {}, artifacts: {}, glossary: {} };
+    var key;
+    if (!payload || typeof payload !== 'object') return normalized;
+    if (payload.payload && typeof payload.payload === 'object') payload = payload.payload;
+
+    if (payload.lessons && typeof payload.lessons === 'object') {
+      for (key in payload.lessons) {
+        if (Object.prototype.hasOwnProperty.call(payload.lessons, key)) {
+          normalized.lessons[key] = payload.lessons[key];
+        }
+      }
+    }
+    if (payload.artifacts && typeof payload.artifacts === 'object') {
+      for (key in payload.artifacts) {
+        if (Object.prototype.hasOwnProperty.call(payload.artifacts, key)) {
+          normalized.artifacts[key] = payload.artifacts[key];
+        }
+      }
+    }
+    if (payload.glossary && typeof payload.glossary === 'object') {
+      for (key in payload.glossary) {
+        if (Object.prototype.hasOwnProperty.call(payload.glossary, key)) {
+          normalized.glossary[key] = payload.glossary[key];
+        }
+      }
+    }
+    return normalized;
+  }
+
+  function mergeSearchPayload(target, source) {
+    var key;
+    if (!source || typeof source !== 'object') return target;
+    source = normalizeSearchPayload(source);
+    for (key in source.lessons) {
+      if (Object.prototype.hasOwnProperty.call(source.lessons, key)) target.lessons[key] = source.lessons[key];
+    }
+    for (key in source.artifacts) {
+      if (Object.prototype.hasOwnProperty.call(source.artifacts, key)) target.artifacts[key] = source.artifacts[key];
+    }
+    for (key in source.glossary) {
+      if (Object.prototype.hasOwnProperty.call(source.glossary, key)) target.glossary[key] = source.glossary[key];
+    }
+    return target;
+  }
+
+  function readJsonAsset(url) {
+    if (typeof fetch !== 'function' || !url) {
+      return Promise.reject(new Error('fetch unavailable'));
+    }
+    return fetch(url, { credentials: 'same-origin' }).then(function (response) {
+      if (!response.ok) throw new Error('search asset request failed');
+      return response.json();
+    });
+  }
+
+  function resolveSearchAssetDescriptor(descriptor) {
+    if (!descriptor) return Promise.reject(new Error('missing search asset descriptor'));
+    if (typeof descriptor === 'function') {
+      try {
+        return Promise.resolve(descriptor()).then(resolveSearchAssetDescriptor);
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    }
+    if (typeof descriptor.then === 'function') {
+      return Promise.resolve(descriptor).then(resolveSearchAssetDescriptor);
+    }
+    if (typeof descriptor === 'string') {
+      return readJsonAsset(descriptor);
+    }
+    if (descriptor.payload || descriptor.data || descriptor.lessons || descriptor.artifacts || descriptor.glossary) {
+      return Promise.resolve(descriptor.payload || descriptor.data || descriptor);
+    }
+    if (descriptor.src || descriptor.url || descriptor.href) {
+      return readJsonAsset(descriptor.src || descriptor.url || descriptor.href);
+    }
+    if (Array.isArray(descriptor.files) || Array.isArray(descriptor.urls) || Array.isArray(descriptor.chunks)) {
+      var files = descriptor.files || descriptor.urls || descriptor.chunks || [];
+      return Promise.all(files.map(function (file) {
+        if (typeof file === 'string') return readJsonAsset(file);
+        return resolveSearchAssetDescriptor(file);
+      })).then(function (parts) {
+        var merged = { lessons: {}, artifacts: {}, glossary: {} };
+        for (var i = 0; i < parts.length; i++) mergeSearchPayload(merged, parts[i]);
+        return merged;
+      });
+    }
+    return Promise.reject(new Error('unsupported search asset descriptor'));
+  }
+
+  function searchAssetDescriptor() {
+    var source = (typeof window !== 'undefined') ? window.AIFS_I18N : null;
+    if (!source || !source.zh || !source.zh.assets) return null;
+    return source.zh.assets.search || null;
+  }
+
+  function ensureZhSearchAsset() {
+    if (currentLang() !== 'zh') return Promise.resolve(null);
+    if (_zhSearchAsset) return Promise.resolve(_zhSearchAsset);
+    if (_zhSearchAssetPromise) return _zhSearchAssetPromise;
+
+    _zhSearchAssetPromise = resolveSearchAssetDescriptor(searchAssetDescriptor())
+      .then(function (payload) {
+        _zhSearchAsset = normalizeSearchPayload(payload);
+        return _zhSearchAsset;
+      })
+      .catch(function () {
+        return null;
+      })
+      .then(function (payload) {
+        _zhSearchAssetPromise = null;
+        if (payload && currentLang() === 'zh') {
+          rebuildIndex();
+          refreshOpenPalette();
+        }
+        return payload;
+      });
+
+    return _zhSearchAssetPromise;
+  }
+
+  function translationForLesson(path) {
+    if (!_zhSearchAsset || !_zhSearchAsset.lessons) return null;
+    return _zhSearchAsset.lessons[path] || null;
+  }
+
+  function translationForArtifact(id) {
+    if (!_zhSearchAsset || !_zhSearchAsset.artifacts) return null;
+    return _zhSearchAsset.artifacts[id] || null;
+  }
+
+  function translationForGlossary(id) {
+    if (!_zhSearchAsset || !_zhSearchAsset.glossary) return null;
+    return _zhSearchAsset.glossary[id] || null;
+  }
+
+  function lessonLocalizedSummary(path, fallback) {
+    var entry = translationForLesson(path);
+    return entryString(entry, ['translation', 'summary', 'description', 'text']) || fallback || '';
+  }
+
+  function artifactLocalizedName(entry, fallback) {
+    return entryString(entry, ['name', 'title', 'translation', 'label']) || fallback || '';
+  }
+
+  function artifactLocalizedSummary(entry, fallback) {
+    return entryString(entry, ['summary', 'description', 'translation', 'text']) || fallback || '';
+  }
+
+  function glossaryLocalizedName(entry, fallback) {
+    return entryString(entry, ['term', 'name', 'title', 'translation', 'label']) || fallback || '';
+  }
+
+  function glossaryLocalizedSummary(entry) {
+    return entryString(entry, ['summary', 'description', 'translation', 'text']);
+  }
+
+  function makeDisplayItem(item, localized) {
+    item.displayName = localized.name || item.name || '';
+    item.displaySummary = localized.summary || item.summary || '';
+    item.displayKeywords = localized.keywords || item.keywords || '';
+    item.displayPhaseName = localized.phaseName || item.phaseName || '';
+    item.displayType = localized.type || item.type || '';
+    item.displayLang = localized.lang || item.lang || '';
+    item.displayLevel = localized.level || item.level || '';
+    item.displayArtKind = localized.artKind || item.artKind || '';
+    item.displayExamCode = localized.examCode || item.examCode || '';
+    item.searchName = combinedText(item.name, localized.name);
+    item.searchSummary = combinedText(item.summary, localized.summary);
+    item.searchKeywords = combinedText(item.keywords, localized.keywords);
+    item.searchPhase = combinedText(item.phaseName, localized.phaseName);
+    item.searchLang = combinedText(item.lang, localized.lang);
+    item.searchType = combinedText(item.type, localized.type);
+    item.searchSays = combinedText(item.says, localized.says);
+    return item;
+  }
 
   function learningPathEntryPath(entry) {
     return typeof entry === 'string' ? entry : entry && entry.path ? entry.path : '';
@@ -73,8 +354,11 @@
    * Idempotent: subsequent calls return the cached array.
    */
   function buildIndex() {
-    if (_index !== null) return _index;
+    var lang = currentLang();
+    var isZh = lang === 'zh';
+    if (_index !== null && _indexLang === lang) return _index;
     _index = [];
+    _indexLang = lang;
 
     if (typeof LEARNING_PATHS !== 'undefined' && Array.isArray(LEARNING_PATHS)) {
       for (var lp = 0; lp < LEARNING_PATHS.length; lp++) {
@@ -100,6 +384,15 @@
           minutes:     Number(learningPath.estimatedMinutes || 0),
           url:         learningPathDestination(firstLessonPath, learningPathId),
         });
+        if (isZh) {
+          makeDisplayItem(_index[_index.length - 1], {
+            name: t(learningPath.title || learningPathId),
+            summary: t(learningPath.summary || ''),
+            keywords: t([learningPath.keywords || '', checkpointKeywords].filter(Boolean).join(' ')),
+          });
+        } else {
+          makeDisplayItem(_index[_index.length - 1], {});
+        }
       }
     }
 
@@ -130,6 +423,18 @@
             lessonPath: lessonPath,
             url:        lesson.url      || '',
           });
+          if (isZh) {
+            makeDisplayItem(_index[_index.length - 1], {
+              name: t(lesson.name || ''),
+              summary: lessonLocalizedSummary(lessonPath, t(lesson.summary || '')),
+              phaseName: t(phase.name || ''),
+              type: t(lesson.type || ''),
+              lang: t(lesson.lang || ''),
+              keywords: t(lesson.keywords || ''),
+            });
+          } else {
+            makeDisplayItem(_index[_index.length - 1], {});
+          }
         }
       }
     }
@@ -154,15 +459,34 @@
             Array.isArray(g.related) ? g.related.join(' ') : '',
           ].filter(Boolean).join(' '),
         });
+        if (isZh) {
+          var glossaryEntry = translationForGlossary(stableGlossaryId(g, k));
+          makeDisplayItem(_index[_index.length - 1], {
+            name: glossaryLocalizedName(glossaryEntry, t(g.term || '')),
+            summary: glossaryLocalizedSummary(glossaryEntry) || g.means || '',
+            says: entryString(glossaryEntry, ['says', 'aliases', 'keywords']),
+            keywords: combinedText(
+              t(g.category || ''),
+              t(g.whyItMatters || ''),
+              t(g.example || ''),
+              t(g.confusion || ''),
+              t(g.whyCalled || ''),
+              entryString(glossaryEntry, ['keywords'])
+            )
+          });
+        } else {
+          makeDisplayItem(_index[_index.length - 1], {});
+        }
       }
     }
 
     if (typeof ARTIFACTS !== 'undefined' && Array.isArray(ARTIFACTS)) {
       for (var a = 0; a < ARTIFACTS.length; a++) {
         var art = ARTIFACTS[a];
+        var artifactId = stableArtifactId(art, a);
         _index.push({
           kind:       'artifact',
-          id:         'a:' + a,
+          id:         'a:' + artifactId,
           artKind:    art.kind || 'artifact',
           name:       art.name || '',
           summary:    art.description || '',
@@ -172,6 +496,17 @@
           lessonPath: art.lessonPath || '',
           file:       art.file || '',
         });
+        if (isZh) {
+          var artifactEntry = translationForArtifact(artifactId);
+          makeDisplayItem(_index[_index.length - 1], {
+            name: t(art.name || ''),
+            summary: artifactLocalizedSummary(artifactEntry, t(art.description || '')),
+            keywords: combinedText(t(Array.isArray(art.tags) ? art.tags.join(' ') : ''), entryString(artifactEntry, ['keywords'])),
+            artKind: t(art.kind || 'artifact'),
+          });
+        } else {
+          makeDisplayItem(_index[_index.length - 1], {});
+        }
       }
     }
 
@@ -181,9 +516,9 @@
     var certs = certificationData();
     if (certs) {
       var tracks = Array.isArray(certs.tracks) ? certs.tracks : [];
-      for (var t = 0; t < tracks.length; t++) {
-        var track = tracks[t] || {};
-        var trackId = track.id || track.slug || track.examCode || String(t);
+      for (var trackIndex = 0; trackIndex < tracks.length; trackIndex++) {
+        var track = tracks[trackIndex] || {};
+        var trackId = track.id || track.slug || track.examCode || String(trackIndex);
         var domainNames = Array.isArray(track.domains)
           ? track.domains.map(function (domain) { return domain.name || domain.id || ''; }).join(' ')
           : '';
@@ -197,6 +532,7 @@
           level:    track.level || '',
           url:      'certification?id=' + encodeURIComponent(trackId),
         });
+        makeDisplayItem(_index[_index.length - 1], {});
       }
 
       var lessonMap = certs.lessonsByPath || {};
@@ -222,6 +558,7 @@
           lang:       certLesson.languages || certLesson.lang || '',
           lessonPath: certPath,
         });
+        makeDisplayItem(_index[_index.length - 1], {});
       }
     }
 
@@ -243,13 +580,13 @@
   // ── Scoring ──────────────────────────────────────────────────────────
   function scoreItem(item, q) {
     // q is already lowercased + trimmed by the caller
-    var name     = item.name.toLowerCase();
-    var summary  = (item.summary  || '').toLowerCase();
-    var keywords = (item.keywords || '').toLowerCase();
-    var phase    = (item.phaseName || '').toLowerCase();
-    var lang     = (item.lang  || '').toLowerCase();
-    var type     = (item.type  || '').toLowerCase();
-    var says     = (item.says  || '').toLowerCase();
+    var name     = (item.searchName || item.name || '').toLowerCase();
+    var summary  = (item.searchSummary  || item.summary  || '').toLowerCase();
+    var keywords = (item.searchKeywords || item.keywords || '').toLowerCase();
+    var phase    = (item.searchPhase || item.phaseName || '').toLowerCase();
+    var lang     = (item.searchLang  || item.lang  || '').toLowerCase();
+    var type     = (item.searchType  || item.type  || '').toLowerCase();
+    var says     = (item.searchSays  || item.says  || '').toLowerCase();
 
     var s = 0;
 
@@ -448,6 +785,7 @@
     _prevFocus = document.activeElement || null;
     _isOpen    = true;
     _activeIdx = -1;
+    if (currentLang() === 'zh') ensureZhSearchAsset();
 
     createPaletteDOM();
     document.body.setAttribute(BODY_ATTR, '');
@@ -517,10 +855,14 @@
       }
       inventoryParts.push(artifactCount + ' outputs');
       inventoryParts.push(glossaryCount + ' glossary terms');
+      var localizedInventory = inventoryParts.map(function (part) { return t(part); });
+      var inventoryMessage = t('Search {items}, and {last}', {
+        items: localizedInventory.slice(0, -1).join('、'),
+        last: localizedInventory[localizedInventory.length - 1]
+      });
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
-        'Search ' + inventoryParts.slice(0, -1).join(', ') + ', and ' +
-        inventoryParts[inventoryParts.length - 1] +
+        escHtml(inventoryMessage) +
         '</li>';
       _activeIdx = -1;
       _clearActiveDescendant();
@@ -528,9 +870,10 @@
     }
 
     if (results.length === 0) {
+      var noResultsHtml = escHtml(t('No results for')) + ' <em>' + escHtml(query) + '</em>';
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
-        'No results for <em>' + escHtml(query) + '</em>' +
+        noResultsHtml +
         '</li>';
       _activeIdx = -1;
       _clearActiveDescendant();
@@ -546,14 +889,14 @@
 
       if (r.kind === 'learning-path') {
         dest = r.url;
-        chip = 'Learning path';
+        chip = t('Learning path');
         chipClass += ' cp-item-chip--alt';
       } else if (r.kind === 'lesson') {
         // Prefer the in-site reader; fall back to GitHub URL
         dest = r.lessonPath
           ? 'lesson?path=' + encodeURIComponent(r.lessonPath)
           : r.url;
-        chip = 'Phase ' + String(r.phaseId).padStart(2, '0');
+        chip = t('Phase ' + String(r.phaseId).padStart(2, '0'));
       } else if (r.kind === 'certification-lesson') {
         dest = 'lesson?path=' + encodeURIComponent(r.lessonPath);
         chip = 'Certification';
@@ -568,35 +911,37 @@
           ? 'lesson?path=' + encodeURIComponent(r.lessonPath)
           : ('https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/' + r.file);
         var ak = (r.artKind || 'artifact');
-        chip = ak.charAt(0).toUpperCase() + ak.slice(1);
+        chip = t(ak.charAt(0).toUpperCase() + ak.slice(1));
         chipClass += ' cp-item-chip--alt';
       } else {
         // Prefer the canonical term anchor. Legacy generated data falls back
         // to the exact-name query until the next site build.
         dest      = r.slug
           ? 'glossary.html#' + encodeURIComponent(r.slug)
-          : 'glossary.html?q=' + encodeURIComponent(r.name);
-        chip      = 'Glossary';
+          : 'glossary.html?q=' + encodeURIComponent(r.displayName || r.name);
+        chip      = t('Glossary');
         chipClass += ' cp-item-chip--alt';
       }
 
-      var snippet = r.summary ? truncate(r.summary, 110) : '';
+      var displayName = r.displayName || r.name || '';
+      var displaySummary = r.displaySummary || r.summary || '';
+      var snippet = displaySummary ? truncate(displaySummary, 110) : '';
       var metaParts = [];
       if (r.kind === 'learning-path') {
-        if (r.lessonCount) metaParts.push(r.lessonCount + ' lessons');
+        if (r.lessonCount) metaParts.push(t('{count} lessons', { count: String(r.lessonCount) }));
         if (r.minutes) {
           var hours = Math.floor(r.minutes / 60);
           var minutes = r.minutes % 60;
-          metaParts.push(((hours ? hours + 'h' : '') + (minutes ? ' ' + minutes + 'm' : '')).trim());
+          metaParts.push(t(((hours ? hours + 'h' : '') + (minutes ? ' ' + minutes + 'm' : '')).trim()));
         }
       } else if (r.kind === 'lesson' || r.kind === 'certification-lesson') {
-        if (r.type && r.type !== '—') metaParts.push(r.type);
-        if (r.lang && r.lang !== '—') metaParts.push(r.lang);
+        if (r.displayType && r.displayType !== '—') metaParts.push(r.displayType);
+        if (r.displayLang && r.displayLang !== '—') metaParts.push(r.displayLang);
       } else if (r.kind === 'certification-track') {
-        if (r.level) metaParts.push(r.level);
+        if (r.displayLevel) metaParts.push(r.displayLevel);
       } else if (r.kind === 'artifact') {
         if (r.phaseId !== undefined && r.phaseId !== null) {
-          metaParts.push('Phase ' + String(r.phaseId).padStart(2, '0'));
+          metaParts.push(t('Phase ' + String(r.phaseId).padStart(2, '0')));
         }
       }
       var meta = metaParts.join(' · '); // ·
@@ -607,7 +952,7 @@
         ' data-href="' + escHtml(dest) + '">' +
           '<div class="cp-item-body">' +
             '<span class="' + chipClass + '">' + escHtml(chip) + '</span>' +
-            '<span class="cp-item-name">'    + highlight(r.name,    query) + '</span>' +
+            '<span class="cp-item-name">'    + highlight(displayName, query) + '</span>' +
             (snippet ? '<span class="cp-item-summary">' + highlight(snippet, query) + '</span>' : '') +
             (meta    ? '<span class="cp-item-meta">'    + escHtml(meta)             + '</span>' : '') +
           '</div>' +
@@ -755,7 +1100,8 @@
       });
     }
 
-    // Build the core index now so the first keystroke is instant. On lesson
+    // Build the core index now so the first keystroke is instant. The Chinese
+    // overlay stays lazy until the user opens the palette. On lesson
     // pages, certification-data.js is loaded on demand and may still be in
     // flight. Rebuild after it settles so an early core-only cache cannot
     // permanently hide certification tracks and lessons.
@@ -771,6 +1117,18 @@
         // certification bundle cannot be loaded.
       });
     }
+
+    window.addEventListener(LANGUAGE_EVENT, function () {
+      if (currentLang() === 'zh' && _isOpen) {
+        ensureZhSearchAsset().then(function () {
+          rebuildIndex();
+          refreshOpenPalette();
+        });
+      } else {
+        rebuildIndex();
+        refreshOpenPalette();
+      }
+    });
   }
 
   if (typeof document !== 'undefined') {

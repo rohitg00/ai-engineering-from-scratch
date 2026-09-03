@@ -1,0 +1,730 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/07-transformers-deep-dive/02-self-attention-from-scratch": {
+      "sourceSha256": "2332fee68960a0434a4fb7b975d65cb910ac2908eed2e4c416430172645206bc",
+      "questions": [
+        {
+          "question": "为什么基础自注意力要用 1/sqrt(d_k) 缩放点积？",
+          "options": [
+            "为了让输出值处于 0 到 1 之间",
+            "为了把 query 和 key 向量归一化为单位长度",
+            "为了防止点积在高维空间中变得过大，导致 softmax 进入梯度极小的区域",
+            "为了降低矩阵乘法的计算成本"
+          ],
+          "explanation": "当 d_k 很大时，随机向量的点积会与 sqrt(d_k) 成比例增长。如果不缩放，softmax 会接收到很大的输入，产生接近 one-hot 的输出，使梯度消失。"
+        },
+        {
+          "question": "自注意力中的三个投影是什么？",
+          "options": [
+            "编码器、解码器和交叉注意力",
+            "query、key 和 value——它们都是对同一输入进行学习得到的线性投影",
+            "embedding、position 和 segment",
+            "输入、隐藏层和输出"
+          ],
+          "explanation": "自注意力通过三个不同的权重矩阵投影输入，生成 query（我在寻找什么？）、key（我包含什么？）和 value（如果匹配，我要输出什么？）。"
+        },
+        {
+          "question": "在拥有 8 个 head 且 d_model=512 的多头注意力中，每个 head 的维度是多少？",
+          "options": [
+            "512——每个 head 都能看到完整维度",
+            "64——d_model 被平均拆分到各个 head（512/8=64）",
+            "4096——每个 head 都会扩展表示",
+            "8——每个 head 一个维度"
+          ],
+          "explanation": "多头注意力把 d_model 拆分为 h 个 head，每个 head 在 d_k = d_model/h 个维度上运算。512/8 = 64，因此每个 head 有 64 个维度，总计算成本与在完整维度上运行的单头注意力相同。"
+        },
+        {
+          "question": "自回归注意力中的因果掩码会阻止什么？",
+          "options": [
+            "它阻止每个位置关注未来位置，确保模型预测下一个 token 时只能使用过去的上下文",
+            "它阻止模型关注当前位置本身",
+            "它阻止模型关注 padding token",
+            "它阻止注意力权重变得过大"
+          ],
+          "explanation": "在自回归生成中，token t 不能看到 token t+1、t+2 等。因果掩码会在 softmax 之前把未来位置设为负无穷，从而将这些位置的注意力权重归零。"
+        },
+        {
+          "question": "为什么自注意力相对于序列长度 n 的复杂度是 O(n^2)？",
+          "options": [
+            "因为模型把 n 层堆叠在一起",
+            "因为对注意力执行反向传播需要 n^2 次梯度计算",
+            "因为注意力之后的前馈层具有平方复杂度",
+            "因为每个 token 都要与其他每个 token 计算注意力分数，从而产生一个 n x n 的注意力矩阵"
+          ],
+          "explanation": "QK^T 矩阵乘法会产生一个 n x n 的注意力矩阵，其中条目 (i,j) 表示 token i 对 token j 的注意力。计算量和内存占用都按 O(n^2) 增长，因此长上下文模型需要 FlashAttention 等技术。"
+        }
+      ]
+    },
+    "phases/08-generative-ai/14-evaluation-fid-clip-score": {
+      "sourceSha256": "165f6467a3e0ce0f64dd7b7c829ccac1bcec47f87dc885fa0c6db95cab7f4ebd",
+      "questions": [
+        {
+          "question": "以下哪组内容涵盖了本课的三个主要评估维度？",
+          "options": [
+            "分辨率、批大小和检查点大小",
+            "训练损失、参数量和延迟",
+            "精确率、召回率和分类准确率",
+            "样本质量、提示遵循度和人类偏好"
+          ],
+          "explanation": "FID 估计样本分布质量，CLIP Score 估计提示遵循度，盲测成对比较衡量人类偏好。"
+        },
+        {
+          "question": "为什么通常应该用大样本集计算 FID？",
+          "options": [
+            "Inception-v3 无法处理小批次",
+            "有限样本下估计的均值和协方差噪声较大，会使分数产生偏差",
+            "CLIP embedding 必须恰好使用 10,000 条提示词",
+            "少于 10,000 次比较时，Elo 评分没有定义"
+          ],
+          "explanation": "FID 依赖于特征均值和协方差的估计。样本量较小时，这些估计的噪声很大：即使两个样本来自同一分布，FID 往往也为正，还可能扭曲模型排名。"
+        },
+        {
+          "question": "对于一张生成图像及其提示词，CLIP Score 主要衡量什么？",
+          "options": [
+            "生成器的似然损失",
+            "人类评审者偏好该图像的概率",
+            "二者像素分布之间的 Fréchet 距离",
+            "图像与文本的 CLIP embedding 之间的余弦相似度"
+          ],
+          "explanation": "CLIP Score 使用生成图像的 CLIP embedding 与提示词的 CLIP 文本 embedding 之间的余弦相似度。"
+        },
+        {
+          "question": "为什么较高的 CLIP Score 仍不能证明模型正确遵循了复杂提示词？",
+          "options": [
+            "CLIP 存在组合性盲区，而且提示词措辞可以人为抬高分数",
+            "CLIP 只接受灰度图像",
+            "CLIP 无法比较图像和文本 embedding",
+            "视觉质量越高，CLIP Score 就一定越低"
+          ],
+          "explanation": "CLIP 可能无法识别属性及空间关系；同时，加入“high quality”等短语可能在没有改善真实图文绑定的情况下抬高分数。"
+        },
+        {
+          "question": "哪一份报告最有力地证明新图像生成器优于其基线？",
+          "options": [
+            "在训练期间见过的提示词上得到更高的 Elo 评分",
+            "用 1,000 个样本和一个随机种子得到更低的 FID",
+            "在样本匹配的条件下报告指标、盲测偏好和定性失败分析",
+            "在人工挑选的简短提示词上得到更高的 CLIP Score"
+          ],
+          "explanation": "综合考察分布质量、提示遵循度、盲测偏好和定性失败更有说服力，因为任何单一指标都存在可被利用的盲区。"
+        },
+        {
+          "question": "一个团队正在评估远离 ImageNet 领域的艺术作品。应如何应对标准 FID 的局限？",
+          "options": [
+            "只报告生成器的训练损失",
+            "继续使用 Inception 特征，但减少样本量",
+            "用生成图像替换留出的真实数据集",
+            "使用适合该领域的特征提取器，或采用 CMMD 等互补指标"
+          ],
+          "explanation": "标准 FID 会继承基于 ImageNet 训练的 Inception 特征的偏差。使用适合目标领域的表征，或采用基于 CLIP 特征的互补指标，会更有参考价值。"
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/01-tokenizers": {
+      "sourceSha256": "bbfa49aa4ae6cd8acb444f3f09e96ac9ec64fb99aa79cc8ff91487517c177f52",
+      "questions": [
+        {
+          "question": "在 LLM 流水线中，分词器的主要用途是什么？",
+          "options": [
+            "在不同语言之间翻译文本",
+            "压缩文本以便存储",
+            "把文本转换为模型可以处理的整数序列",
+            "从文本中删除停用词"
+          ],
+          "explanation": "LLM 处理的是数字，而不是文本。分词器把每个字符、单词和符号转换成固定词表中的整数 ID。这种转换并非中性的——它决定了模型如何“看待”语言。"
+        },
+        {
+          "question": "BPE（Byte Pair Encoding）如何构建词表？",
+          "options": [
+            "为子字符串随机分配 ID",
+            "通过字典查找完整单词",
+            "只把文本拆分为单个字符",
+            "反复合并出现频率最高的相邻 token 对，直到达到目标词表大小"
+          ],
+          "explanation": "BPE 从单个字节或字符开始，反复合并最常见的相邻 pair。'th' + 'e' 会变成 'the'。经过数千次合并后，常见单词会成为单个 token，而罕见单词则会被拆成 subword 片段。"
+        },
+        {
+          "question": "为什么词表大小会在 LLM 设计中形成权衡？",
+          "options": [
+            "词表大小不会影响模型性能",
+            "较小的词表总是更高效",
+            "较大的词表总是表现更好",
+            "词表过小会产生较长序列（计算量更大）；词表过大则会把 embedding 参数浪费在罕见 token 上"
+          ],
+          "explanation": "小词表（例如字符级词表）意味着每个单词都由许多 token 组成，从而增加序列长度和计算量。大词表则会把参数浪费在训练数据中很少出现的 token 上。大多数 LLM 使用包含 32K-100K 个 token 的词表。"
+        },
+        {
+          "question": "字节级回退解决了分词中的什么问题？",
+          "options": [
+            "它确保任何输入（emoji、罕见文字、二进制数据）都能被编码，而不会产生“未知”token",
+            "它提高模型准确率",
+            "它缩小词表",
+            "它加快分词速度"
+          ],
+          "explanation": "借助字节级回退，对于词表中不存在的任何字符，分词器都可以退回到原始字节值（共 256 种可能）。这能保证完整覆盖——任何输入都不会成为“未知”内容。"
+        },
+        {
+          "question": "分词器会如何影响 LLM 的非英语语言表现？",
+          "options": [
+            "分词器对所有语言的处理效果都一样",
+            "非英语文本始终按字符分词",
+            "分词不会影响语言表现",
+            "在训练数据中代表性不足的语言会获得较差的 token 合并结果，每个单词需要更多 token，从而浪费上下文窗口"
+          ],
+          "explanation": "BPE 合并规则是从训练数据中学习的。如果日语文本只占语料库的 5%，日语字符获得的合并次数就更少，每个单词所需的 token 数会是英语的 2-5 倍。这实际上缩小了非英语文本可用的上下文窗口。"
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/02-building-a-tokenizer": {
+      "sourceSha256": "eb81699c7b53b33ad76935fe7cafc528aee14921bd9267c29c93984fe99271d3",
+      "questions": [
+        {
+          "question": "为什么基础 BPE 分词器在处理多语言或代码输入时会出问题？",
+          "options": [
+            "BPE 只能处理 ASCII",
+            "BPE 天生只能处理单一语言",
+            "多语言文本无法分词",
+            "如果没有正确的 Unicode 处理、字节回退和预分词 regex，它会生成错误或低效的 token 序列"
+          ],
+          "explanation": "朴素的 BPE 实现可能无法处理多字节 Unicode 字符，可能错误地跨越单词边界进行合并，也可能没有为训练词表以外的字符提供字节级回退。"
+        },
+        {
+          "question": "预分词 regex 在生产级分词器中起什么作用？",
+          "options": [
+            "它会在 BPE 合并之前按单词边界拆分文本，防止跨空格和单词边界进行合并",
+            "它压缩空白字符",
+            "它把文本转换为小写",
+            "它删除标点符号"
+          ],
+          "explanation": "预分词 regex 会把文本拆成若干块（通常以单词边界、数字和标点为界），使 BPE 合并只发生在块内。如果没有这一步，BPE 可能会把 'end' 与下一个单词前的空格合并。"
+        },
+        {
+          "question": "什么是特殊 token，为什么分词器要专门处理它们？",
+          "options": [
+            "像 <|endoftext|> 或 [PAD] 这样用于控制模型行为的保留 token，必须被编码为单个指定 ID",
+            "embedding 值最高的 token",
+            "只在评估期间使用的 token",
+            "频繁出现的 token"
+          ],
+          "explanation": "特殊 token 承担结构性用途：标记文档边界、填充序列，以及表示生成的开始或结束。它们必须被识别并编码为对应的精确 ID，不能拆成 subword。"
+        },
+        {
+          "question": "如何评估一个自定义分词器是否优秀？",
+          "options": [
+            "在多样化文本上测量压缩率（每个字符对应的 token 数），并与 tiktoken 等成熟分词器比较",
+            "检查它能否对你的名字进行分词",
+            "只测量编码速度",
+            "统计词表大小"
+          ],
+          "explanation": "压缩率（每个 token 对应的字节数或每个单词对应的 token 数）衡量效率。优秀的分词器会用更少的 token 表示同一段文本，这意味着上下文窗口能容纳更多内容。比较时应覆盖不同语言和领域。"
+        },
+        {
+          "question": "为什么现代 LLM 更偏好字节级 BPE，而不是单词级分词？",
+          "options": [
+            "单词级分词更准确",
+            "它可以在不产生未知 token 的情况下表示任何输入，同时仍能针对常见模式学习高效的 subword 合并",
+            "它产生的词表更小",
+            "它速度更快"
+          ],
+          "explanation": "单词级分词器无法处理未见过的单词，会产生 [UNK] token。字节级 BPE 从原始字节开始（确保覆盖任何输入），并针对常见序列学习合并规则，从而在覆盖率与效率之间取得平衡。"
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/03-data-pipelines": {
+      "sourceSha256": "e9ca4f80a82bf78c4dbdfe65d6c985d73694b43cc8863023c97208808fccf796",
+      "questions": [
+        {
+          "question": "为什么不能直接把所有预训练数据加载到内存中？",
+          "options": [
+            "预训练语料库达到 TB 级，远超可用 RAM，因此需要流式流水线",
+            "把数据加载到内存更慢",
+            "只有模型权重需要内存",
+            "Python 不支持大型数组"
+          ],
+          "explanation": "LLM 预训练数据通常包含 1-15 TB 文本。即使有 256GB RAM，也无法容纳完整数据集。流式流水线会即时处理数据，只加载当前 batch 所需的内容。"
+        },
+        {
+          "question": "为什么数据去重对预训练很重要？",
+          "options": [
+            "它可以节省磁盘空间",
+            "重复文档会导致模型逐字记住特定文本，并把训练算力浪费在重复内容上",
+            "它会缩小词表",
+            "它会加快分词速度"
+          ],
+          "explanation": "近似重复的内容（样板文本、重复抓取的数据）会使模型倾向于记忆，而不是泛化。去重能减少训练算力浪费，并通过确保训练信号的多样性来提高模型质量。"
+        },
+        {
+          "question": "把可变长度文档转换为固定长度训练序列的目的是什么？",
+          "options": [
+            "减少 token 总数",
+            "让文本更易于阅读",
+            "GPU 训练需要形状一致的 tensor，因此必须把文档打包或填充为固定长度序列",
+            "固定长度序列更准确"
+          ],
+          "explanation": "GPU 会成批处理形状相同的 tensor。必须把可变长度文档切分为固定长度序列（例如 2048 或 4096 个 token），并在文档边界使用正确的注意力掩码。"
+        },
+        {
+          "question": "如果数据流水线比 GPU 训练速度慢，会发生什么？",
+          "options": [
+            "什么都不会发生——流水线会异步运行",
+            "训练会自动降速以保持一致",
+            "模型会反复训练同一个 batch",
+            "GPU 会空闲等待 batch，浪费昂贵的计算时间"
+          ],
+          "explanation": "如果 dataloader 无法足够快地提供 batch，GPU 就会在训练步骤之间停顿。对于成本为 $30+/hour 的 A100 集群，流水线瓶颈会直接造成资金浪费。因此，分析流水线吞吐量至关重要。"
+        },
+        {
+          "question": "为什么要在分词之前进行数据质量过滤（语言检测、内容过滤）？",
+          "options": [
+            "它会减少分词时间",
+            "低质量数据（垃圾信息、样板文本、有害内容）会按照其在训练数据中的占比削弱模型能力",
+            "分词后无法进行过滤",
+            "分词器无法处理低质量文本"
+          ],
+          "explanation": "模型会从它看到的所有数据中学习。如果 10% 的训练数据是垃圾信息或低质量内容，模型就会把 10% 的容量用于复现这些模式。尽早过滤可确保只有高质量信号进入模型。"
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/04-pre-training-mini-gpt": {
+      "sourceSha256": "6c1a1238c2d40e974c2bc8f27a4c00092688f7e4684959c40c277af27427b88e",
+      "questions": [
+        {
+          "question": "GPT 在预训练期间使用什么训练目标？",
+          "options": [
+            "句子分类",
+            "下一个 token 预测：给定之前的 token，预测下一个 token",
+            "图像与文本对齐",
+            "掩码语言建模（预测被掩盖的 token）"
+          ],
+          "explanation": "GPT 是使用下一个 token 预测训练的因果（自回归）语言模型。给定 token [t1, t2, ..., tn]，它会学习预测 tn+1。损失是预测出的下一个 token 与实际下一个 token 之间的交叉熵。"
+        },
+        {
+          "question": "GPT-2 Small（124M）有多少个 transformer 层、attention head 和 embedding 维度？",
+          "options": [
+            "24 层、16 个 head、1024 维",
+            "6 层、6 个 head、512 维",
+            "48 层、25 个 head、1600 维",
+            "12 层、12 个 head、768 维"
+          ],
+          "explanation": "GPT-2 Small 有 12 个 transformer 层，每层 12 个 attention head，embedding 维度为 768。这个架构有 1.24 亿个参数，可以在单块 GPU 上用几小时完成训练。"
+        },
+        {
+          "question": "因果注意力掩码在 GPT 中起什么作用？",
+          "options": [
+            "它阻止每个 token 关注未来 token，确保模型进行预测时只能使用过去的上下文",
+            "它减少训练期间的内存占用",
+            "它掩盖置信度较低的注意力分数",
+            "它阻止模型关注 padding token"
+          ],
+          "explanation": "因果掩码是一个三角矩阵，会在 softmax 之前把未来位置设为负无穷。位置 5 的 token 可以关注位置 1-5，但不能关注位置 6 及以后。这能确保模型从左到右生成 token。"
+        },
+        {
+          "question": "文本生成期间的“温度”控制什么？",
+          "options": [
+            "token 选择的随机性：温度越低，输出越确定；温度越高，输出越多样",
+            "生成速度",
+            "生成的 token 数量",
+            "模型的置信度阈值"
+          ],
+          "explanation": "在 softmax 之前，用温度除 logits。Temperature=0.1 会让分布非常尖锐（接近确定性）；Temperature=1.0 对应训练分布；Temperature>1.0 会使分布变平，增加随机性。"
+        },
+        {
+          "question": "为什么预训练所需的计算量显著高于微调？",
+          "options": [
+            "预训练从零开始处理数万亿个 token 以学习通用语言模式，而微调只需用数千个示例调整一个已经具备能力的模型",
+            "预训练使用不同的架构",
+            "预训练使用更大的 batch size",
+            "微调不使用梯度"
+          ],
+          "explanation": "预训练从随机权重开始，通过数万亿个 token 构建全部语言知识。微调则从这些已经学习的权重出发，在小得多的数据集（数千到数百万个示例）上进行调整。"
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/05-scaling-distributed": {
+      "sourceSha256": "85bf8ee618407d12af4f03cae9e1529653db49b35c7d3794de17ba2b86c4287d",
+      "questions": [
+        {
+          "question": "一个采用 FP16 的 7B 参数模型，仅权重需要多少 VRAM？",
+          "options": [
+            "14 GB",
+            "28 GB",
+            "7 GB",
+            "56 GB"
+          ],
+          "explanation": "FP16 中每个参数占 2 bytes。7 billion * 2 bytes = 14 GB。加上 Adam optimizer state（2 份）和梯度，在计入 activation 之前，训练总内存大约为 56 GB。"
+        },
+        {
+          "question": "分布式训练使用哪三种并行方式？",
+          "options": [
+            "batch、序列和 token 并行",
+            "前向、反向和 optimizer 并行",
+            "数据并行、tensor 并行和 pipeline 并行",
+            "CPU、GPU 和 TPU 并行"
+          ],
+          "explanation": "数据并行会在每块 GPU 上复制模型并拆分数据。Tensor 并行会把单个层拆分到多个 GPU 上。Pipeline 并行会把模型的不同层分成多个阶段，部署到多个 GPU 上。"
+        },
+        {
+          "question": "FSDP（Fully Sharded Data Parallel）实现了标准 DDP 没有实现的什么能力？",
+          "options": [
+            "它使用不同的 optimizer",
+            "它处理数据的速度更快",
+            "它支持更多 GPU",
+            "它把模型参数、梯度和 optimizer state 分片到多个 GPU 上，而不是在每块 GPU 上复制完整模型"
+          ],
+          "explanation": "标准 DDP 会在每块 GPU 上复制整个模型，造成浪费。FSDP 把参数分片到多个 GPU 上，因此每块 GPU 只保存其中一部分。计算时按需聚合参数，用完后再释放。"
+        },
+        {
+          "question": "什么是 DeepSpeed ZeRO Stage 3？",
+          "options": [
+            "一种学习率调度方案",
+            "它把 optimizer state、梯度以及模型参数全部分区到多个 GPU 上，实现最高的内存效率",
+            "一种量化方法",
+            "一条数据预处理流水线"
+          ],
+          "explanation": "ZeRO Stage 1 对 optimizer state 进行分片，Stage 2 进一步对梯度分片，Stage 3 再加入参数分片。Stage 3 能最大限度地节省内存，使训练远超单块 GPU 内存容量的模型成为可能。"
+        },
+        {
+          "question": "为什么数据并行训练需要同步梯度？",
+          "options": [
+            "为了加快前向传播",
+            "每块 GPU 都在不同数据上计算梯度；对所有 GPU 的梯度求平均，可确保所有副本以完全相同的方式更新",
+            "为了减少内存占用",
+            "为了防止过拟合"
+          ],
+          "explanation": "在数据并行中，每块 GPU 都会处理不同的 batch，并计算出不同的梯度。AllReduce 会对所有 GPU 上的这些梯度求平均，使每个副本应用相同的更新并保持同步。"
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/06-instruction-tuning-sft": {
+      "sourceSha256": "90b1412a2e887229f6dd76c6ae51fb78028a7190d4db3e5a8702a983f2ab53fe",
+      "questions": [
+        {
+          "question": "基础语言模型与指令微调模型之间的根本区别是什么？",
+          "options": [
+            "指令微调模型更大",
+            "基础模型更快",
+            "它们使用不同的架构",
+            "基础模型会续写文本模式；指令微调模型会遵循指令并回答问题"
+          ],
+          "explanation": "通过下一个 token 预测训练的基础模型会续写文本模式。向它提问时，它可能会继续生成更多问题。SFT 通过在（指令，回答）数据对上训练，教会模型生成回答。"
+        },
+        {
+          "question": "在 SFT 期间屏蔽非 assistant token 的损失，目的是什么？",
+          "options": [
+            "减少内存占用",
+            "加快训练速度",
+            "防止过拟合",
+            "只训练模型生成回答，而不是让它记住指令格式或 system prompt"
+          ],
+          "explanation": "在 SFT 期间，我们希望模型学习如何回答，而不是如何复现指令。损失屏蔽会把 system/user token 的损失设为 0，使梯度只来自 assistant 的回答 token。"
+        },
+        {
+          "question": "SFT 训练数据通常采用什么格式？",
+          "options": [
+            "键值对",
+            "使用特殊 token 标记 system、user 和 assistant 角色的聊天模板",
+            "原始文本文档",
+            "SQL 查询和结果"
+          ],
+          "explanation": "SFT 数据使用结构化聊天格式：用于设定行为的 system prompt、user 指令以及 assistant 回答。特殊 token 会标记角色边界，使模型学会对话结构。"
+        },
+        {
+          "question": "为什么 SFT 模型在基准测试上的 perplexity 可能更低，但对话质量反而更差？",
+          "options": [
+            "基准测试有误",
+            "SFT 优化的是对训练示例的模式匹配，而不是人类关心的细致质量判断——后者需要 RLHF/DPO",
+            "学习率设置有误",
+            "模型太小"
+          ],
+          "explanation": "SFT 教模型遵循格式并生成看似合理的回答。当存在多个有效选项时，它不会教模型判断哪个回答更好。人类偏好对齐（RLHF/DPO）弥补了这一缺口。"
+        },
+        {
+          "question": "有效的 SFT 通常需要多少高质量的指令-回答数据对？",
+          "options": [
+            "10,000 到 100,000 个高质量示例",
+            "少于 100 个",
+            "数十亿个",
+            "数百万个"
+          ],
+          "explanation": "SFT 的数据效率高得出人意料。研究表明，10K-100K 个高质量示例（例如 Alpaca 或 LIMA 数据集）就能有效教会模型遵循指令。质量远比数量重要。"
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/07-rlhf": {
+      "sourceSha256": "be4a73bec34f3292a19131366a1fd3e62f31e0450adf97c42da3820187dca4d2",
+      "questions": [
+        {
+          "question": "RLHF 中的奖励模型从什么数据中学习？",
+          "options": [
+            "原始文本文档",
+            "人类偏好数据对：给定两个回答，人类更偏好哪一个",
+            "模型损失曲线",
+            "基准测试分数"
+          ],
+          "explanation": "奖励模型在偏好数据上训练：针对同一个 prompt 的成对回答，由人类标注哪一个更好。它会学习为更符合人类偏好的回答赋予更高分数。"
+        },
+        {
+          "question": "为什么 RLHF 的 PPO 训练要使用 KL divergence 惩罚？",
+          "options": [
+            "为了加快训练速度",
+            "为了减少内存占用",
+            "为了改进分词",
+            "为了防止策略与 SFT 模型偏离过远，否则会导致 reward hacking"
+          ],
+          "explanation": "如果没有 KL 惩罚，模型会找到退化的方法来最大化奖励分数（例如生成重复文本，利用奖励模型的弱点）。KL 会让模型保持接近表现良好的 SFT 基线。"
+        },
+        {
+          "question": "完整的 RLHF 流水线需要多少个独立模型？",
+          "options": [
+            "两个",
+            "四个",
+            "三个：SFT 模型、奖励模型和正在优化的策略模型",
+            "一个"
+          ],
+          "explanation": "RLHF 需要：(1) 作为起点和 KL 参考的 SFT 模型；(2) 在偏好数据上训练的奖励模型；(3) 使用 PPO 优化的策略模型。正是这种复杂性促使人们开发了 DPO（课程 08）。"
+        },
+        {
+          "question": "RLHF 中的“reward hacking”是什么？",
+          "options": [
+            "学习率过高",
+            "训练数据损坏",
+            "策略找到了最大化奖励分数的方法，却没有真正提高回答质量",
+            "奖励模型遭到对手攻击"
+          ],
+          "explanation": "奖励模型只是人类判断的不完美代理。策略可能会发现一些能获得高奖励的模式（例如冗长回答、过度使用保留措辞），实际却没有变得更有帮助。KL 惩罚会限制这种行为。"
+        },
+        {
+          "question": "PPO 的 clipping 机制可以防止什么？",
+          "options": [
+            "梯度溢出",
+            "数据泄漏",
+            "内存溢出",
+            "幅度过大的策略更新导致训练不稳定"
+          ],
+          "explanation": "PPO 会把新旧策略之间的概率比裁剪到类似 [0.8, 1.2] 的范围。这可以防止任何一次更新过度改变策略，使训练比基础策略梯度更加稳定。"
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/08-dpo": {
+      "sourceSha256": "5785953befa127820007b718600a3e55e5cd356c6a6767266a8bc5be600b3eeb",
+      "questions": [
+        {
+          "question": "与 RLHF 相比，DPO 的主要优势是什么？",
+          "options": [
+            "DPO 生成的模型更好",
+            "DPO 使用的训练数据更少",
+            "DPO 不再需要独立的奖励模型和 PPO，而是在单个训练循环中直接使用偏好数据对进行训练",
+            "DPO 无需任何偏好数据即可工作"
+          ],
+          "explanation": "RLHF 需要先独立训练一个奖励模型，再运行 PPO 优化。DPO 把这两个步骤合并为一个训练目标，直接在偏好数据对上优化语言模型。"
+        },
+        {
+          "question": "参考模型在 DPO 中起什么作用？",
+          "options": [
+            "它充当锚点，防止训练后的模型偏离过远，作用类似于 RLHF 中的 KL 惩罚",
+            "它生成训练数据",
+            "它负责分词",
+            "它评估模型质量"
+          ],
+          "explanation": "DPO 损失会比较训练中策略与参考模型（通常是 SFT 模型）给出的 log probability。参考模型会约束策略的漂移幅度，无需显式调整 KL 即可防止 reward hacking。"
+        },
+        {
+          "question": "DPO 中的 beta 参数控制什么？",
+          "options": [
+            "batch size",
+            "学习率",
+            "训练 epoch 数",
+            "策略被约束在参考模型附近的强度——beta 越高，更新越保守"
+          ],
+          "explanation": "Beta 会缩放隐式 KL divergence 惩罚。Beta=0.1 允许模型显著偏离参考模型（可能更好，但风险更高）；Beta=0.5 会使其保持接近参考模型（更安全，但学习幅度更小）。"
+        },
+        {
+          "question": "DPO 如何隐式表示奖励模型？",
+          "options": [
+            "它不会表示——DPO 没有奖励这一概念",
+            "可以推导出 DPO 损失函数：奖励函数下的最优策略能够直接用策略的 log probability 表示",
+            "它在语言模型内部训练一个隐藏的奖励模型",
+            "DPO 把损失函数用作奖励"
+          ],
+          "explanation": "Rafailov 等人证明，RLHF 目标的闭式解会把奖励表示为策略相对于参考模型的 log probability 函数。DPO 直接优化这一表达式，从而隐式学习奖励。"
+        },
+        {
+          "question": "什么情况下可能仍应优先选择 RLHF 而不是 DPO？",
+          "options": [
+            "训练较小模型时",
+            "偏好数据较少时",
+            "始终如此——RLHF 严格优于 DPO",
+            "需要一个可复用的奖励模型来评估多个策略，或者在线数据收集能够带来收益时"
+          ],
+          "explanation": "DPO 是离线方法，使用固定的偏好数据。RLHF 支持在线收集数据，让奖励模型为新生成的内容评分，并发现 reward hacking 模式。独立的奖励模型也可用于评估和其他策略。"
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/10-evaluation": {
+      "sourceSha256": "9ea6e0aa5612f1168ca6827735e12aa973d74eff278f5a186d16f1b9dd8acad6",
+      "questions": [
+        {
+          "question": "为什么 MMLU 等基准测试在比较前沿模型时已经不那么有用了？",
+          "options": [
+            "它们测试了错误的学科",
+            "MMLU 是为较小模型设计的",
+            "前沿模型在 MMLU 上已经趋于饱和（得分为 86-89%），排行榜被压缩到差异只是统计噪声的狭窄区间",
+            "题目太简单"
+          ],
+          "explanation": "当 GPT-4、Claude 3 和 Llama 3 在 MMLU 上都取得 86-89% 的分数时，1 分的差异并没有实际意义。该基准已无法区分这些模型，却仍然主导着排行榜文化。"
+        },
+        {
+          "question": "在 LLM 评估语境中，什么是 Goodhart's Law？",
+          "options": [
+            "当一个指标成为目标时，它就不再是一个好指标——模型和团队会针对基准测试进行优化，而不是提升真实能力",
+            "一条关于模型扩展的定律",
+            "一个关于注意力机制的定理",
+            "一条关于学习率调度的规则"
+          ],
+          "explanation": "研发团队会针对基准分数进行优化（数据污染、基准专用 prompting）。分数提高了，但真实世界能力不一定改善。只有针对你自己的任务进行评估，才是可靠的衡量方式。"
+        },
+        {
+          "question": "什么是 LLM-as-judge 评估方法？",
+          "options": [
+            "让人类评审评估每一个回答",
+            "使用强大的 LLM（例如 GPT-4）依据评分标准为回答打分，以便大规模替代昂贵的人工评估",
+            "为评估单独训练一个分类器",
+            "让模型评估自身"
+          ],
+          "explanation": "LLM-as-judge 使用能力较强的模型，依据明确的标准为回答打分。它比人工评估更便宜、更快速，但也存在必须校准的偏差（例如偏好冗长回答）。"
+        },
+        {
+          "question": "为什么构建自定义评估套件很重要，而不能只依赖公共基准测试？",
+          "options": [
+            "公共基准测试总是错误的",
+            "自定义评估更容易构建",
+            "公共基准测试成本太高",
+            "公共基准测试衡量通用能力；你的应用有特定要求，只有自定义评估才能衡量"
+          ],
+          "explanation": "一个在 MMLU 上得分 90% 的模型，仍可能无法完成你的特定任务（例如按你的格式从法律文档中提取日期）。只有使用你的数据、边界情况和成功标准进行自定义评估，才能衡量真正重要的能力。"
+        },
+        {
+          "question": "在 LLM 基准测试语境中，什么是数据污染？",
+          "options": [
+            "训练数据损坏",
+            "基准测试题出现在模型的预训练数据中，使分数虚高，却不能反映真实能力",
+            "评估数据被错误标注",
+            "模型生成了错误数据"
+          ],
+          "explanation": "如果 MMLU 题目曾出现在训练语料中，模型可能只是记住了答案，而不是通过推理得出答案。这会抬高分数，使基准比较失去可靠性。随着训练语料库不断扩大，这个问题日益严重。"
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/11-quantization": {
+      "sourceSha256": "3e112dd77bf71e41b5f917107e6364400a12c05c238c4b4c17422ffe12628a60",
+      "questions": [
+        {
+          "question": "一个采用 FP16 的 70B 参数模型，仅权重需要多少 VRAM？",
+          "options": [
+            "70 GB",
+            "140 GB",
+            "35 GB",
+            "280 GB"
+          ],
+          "explanation": "70 billion parameters * 2 bytes per FP16 parameter = 140 billion bytes = 140 GB。这超过了单块 A100（80GB）的容量，因此仅加载权重就至少需要两块 GPU。"
+        },
+        {
+          "question": "在 LLM 语境中，什么是量化？",
+          "options": [
+            "降低权重的数值精度（例如从 FP16 降至 INT4），以减少内存占用并提高推理速度",
+            "压缩训练数据",
+            "删除未使用的模型层",
+            "缩小词表"
+          ],
+          "explanation": "量化会把高精度浮点权重映射为较低精度的整数。INT4 量化使用 4 bits 而不是 16 bits 存储每个权重，在准确率损失极小的情况下把内存占用降低 4 倍。"
+        },
+        {
+          "question": "训练后量化（PTQ）与量化感知训练（QAT）的关键区别是什么？",
+          "options": [
+            "QAT 不使用梯度",
+            "PTQ 需要更多数据",
+            "PTQ 在训练完成后直接量化，不重新训练；QAT 在训练期间模拟量化，使模型学会适应精度降低",
+            "PTQ 更准确"
+          ],
+          "explanation": "PTQ 速度快，只需校准并量化，但可能损失准确率。QAT 在训练期间加入伪量化，使模型可以调整权重，更好地抵抗精度损失。QAT 通常能获得更高的准确率。"
+        },
+        {
+          "question": "“per-channel”量化是什么意思，为什么它优于“per-tensor”量化？",
+          "options": [
+            "它分别量化每个输出 channel，并为每个 channel 使用不同的 scale/zero-point，从而减少量化误差",
+            "它一次处理一个颜色 channel",
+            "它是一种数据并行",
+            "它为每个 channel 使用单独的 GPU"
+          ],
+          "explanation": "Per-tensor 对整个权重矩阵使用一个 scale factor。Per-channel 为每个输出 channel（行）使用单独的 scale。由于不同 channel 的取值范围不同，per-channel 可以更准确地表示它们。"
+        },
+        {
+          "question": "为什么 Llama 3 70B 中 95% 的权重落在 -0.1 到 +0.1 之间？",
+          "options": [
+            "权重尚未收敛",
+            "训练期间的权重衰减和归一化会把权重推向较小值，使 FP16 的完整范围显得浪费",
+            "这是 Llama 架构特有的现象",
+            "模型训练质量很差"
+          ],
+          "explanation": "权重衰减正则化会使权重向零收缩。Layer normalization 会使 activation 保持居中。两者共同作用，使权重分布集中在零附近，从而让低精度量化行之有效。"
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/12-inference-optimization": {
+      "sourceSha256": "1d3026beeb854397ff2cb7c89344920f047a98b2271eeba9c7c39e6932f57c42",
+      "questions": [
+        {
+          "question": "LLM 推理分为哪两个阶段？",
+          "options": [
+            "前向和反向",
+            "编码和解码",
+            "训练和评估",
+            "prefill（并行处理 prompt，受计算能力限制）和 decode（逐个生成 token，受内存带宽限制）"
+          ],
+          "explanation": "Prefill 并行处理所有 prompt token，受计算能力限制。Decode 以自回归方式逐个生成 token，受加载模型权重所需的内存带宽限制。这两个阶段分别适用不同的优化。"
+        },
+        {
+          "question": "KV-cache 在自回归生成期间消除了什么？",
+          "options": [
+            "embedding 查找",
+            "对注意力掩码的需求",
+            "softmax 计算",
+            "在每个生成步骤中，为之前所有 token 重复计算 key 和 value 向量"
+          ],
+          "explanation": "如果没有 KV-cache，生成 token N 时，需要为之前的所有 N-1 个 token 重新计算 attention key 和 value。KV-cache 会存储这些向量，因此每个新 token 只需计算自己的 K 和 V，每一步可节省 O(N) 计算量。"
+        },
+        {
+          "question": "什么是 continuous batching，它为什么能提高吞吐量？",
+          "options": [
+            "跨多个模型组成 batch",
+            "使用更大的 batch size",
+            "在一个大型 batch 中处理所有请求",
+            "随着请求开始和完成，在运行中的 batch 里动态加入和移除请求，而不是等待整个 batch 完成"
+          ],
+          "explanation": "在静态 batching 中，短请求会一直占用其 batch 槽位，直到最长的请求结束。Continuous batching 会立即用新请求填补已经完成的槽位，使 GPU 保持忙碌并提高整体吞吐量。"
+        },
+        {
+          "question": "PagedAttention（用于 vLLM）解决了什么问题？",
+          "options": [
+            "它提高分词速度",
+            "它缩小模型体积",
+            "它像虚拟内存一样，以固定大小的块管理 KV-cache 内存，从而消除可变长度序列造成的碎片",
+            "它加快注意力计算"
+          ],
+          "explanation": "可变长度序列的 KV-cache 会造成内存碎片，即分配区域之间存在浪费的空隙。PagedAttention 以固定块分配 KV-cache，并像 OS 虚拟内存一样使用页表进行映射。"
+        },
+        {
+          "question": "什么是 speculative decoding？",
+          "options": [
+            "使用小型 draft model 提议多个 token，再由大型模型并行验证，从而加快生成速度",
+            "预测用户想要哪些 token",
+            "生成多个回答并选择最佳回答",
+            "缓存频繁生成的序列"
+          ],
+          "explanation": "一个小型快速模型会生成 N 个候选 token。大型模型在一次前向传播中并行验证全部 N 个候选。如果有 K 个 token 被接受，你就能用大约 1 个大型模型步骤的时间生成 K 个 token。"
+        }
+      ]
+    }
+  }
+}

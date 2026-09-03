@@ -1,3 +1,8 @@
+# Lesson implementation for phases/04-computer-vision/07-semantic-segmentation-unet/docs/en.md.
+# Builds a compact U-Net, combined cross-entropy/Dice loss, and per-class IoU.
+# Reference: U-Net (Ronneberger et al., 2015), https://arxiv.org/abs/1505.04597.
+# The seeded synthetic dataset keeps the training demonstration self-contained.
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -89,38 +94,58 @@ def combined_loss(logits, targets, num_classes, lam=1.0):
 
 
 @torch.no_grad()
-def iou_per_class(logits, targets, num_classes):
+def intersection_union_per_class(logits, targets, num_classes):
     preds = logits.argmax(dim=1)
-    ious = torch.zeros(num_classes)
+    intersections = torch.zeros(num_classes, device=logits.device)
+    unions = torch.zeros(num_classes, device=logits.device)
     for c in range(num_classes):
         pred_c = (preds == c)
         true_c = (targets == c)
-        inter = (pred_c & true_c).sum().float()
-        union = (pred_c | true_c).sum().float()
-        ious[c] = (inter / union) if float(union) > 0 else float("nan")
+        intersections[c] = (pred_c & true_c).sum()
+        unions[c] = (pred_c | true_c).sum()
+    return intersections, unions
+
+
+def iou_from_counts(intersections, unions):
+    ious = torch.full_like(intersections, float("nan"), dtype=torch.float32)
+    present = unions > 0
+    ious[present] = intersections[present].float() / unions[present].float()
     return ious
 
 
+@torch.no_grad()
+def iou_per_class(logits, targets, num_classes):
+    intersections, unions = intersection_union_per_class(
+        logits, targets, num_classes
+    )
+    return iou_from_counts(intersections, unions)
+
+
 def synthetic_segmentation(num_samples=120, size=64, seed=0):
+    if size < 16:
+        raise ValueError("size must be at least 16 pixels")
+
     rng = np.random.default_rng(seed)
     images = np.zeros((num_samples, size, size, 3), dtype=np.float32)
     masks = np.zeros((num_samples, size, size), dtype=np.int64)
     yy, xx = np.meshgrid(np.arange(size), np.arange(size), indexing="ij")
-    circle_color = np.array([0.9, 0.1, 0.1], dtype=np.float32)
-    square_color = np.array([0.1, 0.2, 0.9], dtype=np.float32)
+    min_radius = max(3, size // 16)
+    max_radius = max(min_radius + 1, size // 5)
     for i in range(num_samples):
-        bg = np.array([0.3, 0.7, 0.3], dtype=np.float32)
-        images[i] = bg
-        cls = int(rng.integers(1, 3))
-        cx, cy = int(rng.integers(14, size - 14)), int(rng.integers(14, size - 14))
-        r = int(rng.integers(8, 14))
-        if cls == 1:
-            mask = (xx - cx) ** 2 + (yy - cy) ** 2 < r ** 2
-            images[i][mask] = circle_color
-        else:
-            mask = (np.abs(xx - cx) < r) & (np.abs(yy - cy) < r)
-            images[i][mask] = square_color
-        masks[i][mask] = cls
+        images[i] = rng.uniform(0.1, 0.9, size=3)
+        num_shapes = int(rng.integers(1, 4))
+        for _ in range(num_shapes):
+            cls = int(rng.integers(1, 3))
+            color = rng.uniform(0.05, 0.95, size=3)
+            radius = int(rng.integers(min_radius, max_radius + 1))
+            cx = int(rng.integers(radius, size - radius))
+            cy = int(rng.integers(radius, size - radius))
+            if cls == 1:
+                mask = (xx - cx) ** 2 + (yy - cy) ** 2 < radius ** 2
+            else:
+                mask = (np.abs(xx - cx) < radius) & (np.abs(yy - cy) < radius)
+            images[i][mask] = color
+            masks[i][mask] = cls
         images[i] += rng.normal(0, 0.02, images[i].shape)
         images[i] = np.clip(images[i], 0, 1)
     return images, masks
@@ -169,12 +194,17 @@ def main():
             total += x.size(0)
 
         model.eval()
-        iou_sum = torch.zeros(num_classes)
+        intersections = torch.zeros(num_classes, device=device)
+        unions = torch.zeros(num_classes, device=device)
         with torch.no_grad():
             for x, y in val_loader:
                 x, y = x.to(device), y.to(device)
-                iou_sum += iou_per_class(model(x), y, num_classes).nan_to_num(0)
-        iou_mean = (iou_sum / len(val_loader)).tolist()
+                batch_intersections, batch_unions = intersection_union_per_class(
+                    model(x), y, num_classes
+                )
+                intersections += batch_intersections
+                unions += batch_unions
+        iou_mean = iou_from_counts(intersections, unions).cpu().tolist()
         print(f"epoch {epoch}  train_loss {loss_sum/total:.3f}  iou {[f'{v:.2f}' for v in iou_mean]}")
 
 

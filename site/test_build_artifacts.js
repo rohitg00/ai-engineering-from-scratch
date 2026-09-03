@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const assert = require('node:assert/strict');
+const { spawnSync } = require('node:child_process');
 const crypto = require('node:crypto');
 const fs = require('node:fs');
 const os = require('node:os');
@@ -10,6 +11,7 @@ const vm = require('node:vm');
 
 const {
   FIGURE_PROVIDER_ORDER,
+  assertAboutCurriculumSummary,
   buildSeoManifests,
   buildFigureProviderManifest,
   discoverFigureProviderOrder,
@@ -22,7 +24,16 @@ const {
   parseRoadmap,
   renderCatalogDiscovery,
   renderCertificationDiscovery,
+  publishedLanguages,
+  requireShortRef,
+  resolveRef,
+  resolveRepository,
+  resolveTranslationSource,
+  serializeBuildMeta,
   serializeFigureProviderManifest,
+  syncI18nAssetVersions,
+  writeBuildMeta,
+  writeI18nData,
 } = require('./build.js');
 const {
   learningPathDestination,
@@ -37,9 +48,12 @@ function loadContentSource(options = {}) {
     window: {
       __AIFS_SOURCE: options.source,
       __AIFS_REF: options.ref,
+      __AIFS_REPOSITORY: options.repository,
+      __AIFS_TRANSLATION_REF: options.translationRef,
+      __AIFS_TRANSLATION_REPOSITORY: options.translationRepository,
       location: {
         hostname: options.hostname || 'localhost',
-        href: 'http://localhost/site/lesson.html',
+        href: options.href || 'http://localhost/site/lesson.html',
       },
     },
   };
@@ -49,6 +63,959 @@ function loadContentSource(options = {}) {
   );
   return context.window.AIFSContentSource;
 }
+
+function createEscapingDocument() {
+  function encode(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  return {
+    createElement() {
+      let html = '';
+      return {
+        set textContent(value) {
+          html = encode(value);
+        },
+        get innerHTML() {
+          return html;
+        },
+        set innerHTML(value) {
+          html = String(value ?? '');
+        },
+      };
+    },
+  };
+}
+
+function extractLessonFunctionSource(name) {
+  const lessonHtml = fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8');
+  const marker = `      function ${name}(`;
+  const start = lessonHtml.indexOf(marker);
+  assert.notEqual(start, -1, `lesson.html is missing ${name}`);
+  const nextFunction = lessonHtml.indexOf('\n      function ', start + marker.length);
+  if (nextFunction === -1) {
+    throw new Error(`Could not extract ${name} from lesson.html`);
+  }
+  return lessonHtml.slice(start, nextFunction).trimEnd();
+}
+
+function loadLessonInlineFormatter(options = {}) {
+  const repository = options.repository || 'example/fork';
+  const ref = options.ref || 'feature-images';
+  const source = Object.prototype.hasOwnProperty.call(options, 'contentSource')
+    ? options.contentSource
+    : loadContentSource({
+        hostname: 'preview.example',
+        href: 'https://preview.example/lesson.html',
+        repository,
+        ref,
+      });
+  const context = {
+    URL,
+    lessonPath: options.lessonPath || 'phases/14-agent-engineering/16-openai-agents-sdk',
+    ACTIVE_REPOSITORY: repository,
+    ACTIVE_REF: ref,
+    ENCODED_ACTIVE_REF: ref.split('/').map(encodeURIComponent).join('/'),
+    document: createEscapingDocument(),
+    window: {
+      AIFSContentSource: source,
+    },
+  };
+  const runtimeSource = [
+    extractLessonFunctionSource('escapeHtml'),
+    extractLessonFunctionSource('escapeAttr'),
+    extractLessonFunctionSource('lessonMarkdownBaseUrl'),
+    extractLessonFunctionSource('resolveMarkdownImageUrl'),
+    extractLessonFunctionSource('inlineFormat'),
+    extractLessonFunctionSource('slugify'),
+    extractLessonFunctionSource('highlightSyntax'),
+    extractLessonFunctionSource('renderCodeBlock'),
+    extractLessonFunctionSource('splitTableRow'),
+    extractLessonFunctionSource('parseMd'),
+    'window.__testInlineFormat = inlineFormat;',
+    'window.__testResolveMarkdownImageUrl = resolveMarkdownImageUrl;',
+    'window.__testParseMd = parseMd;',
+  ].join('\n\n');
+  vm.runInNewContext(runtimeSource, context, { filename: 'lesson.html#inlineFormat' });
+  return {
+    inlineFormat: context.window.__testInlineFormat,
+    parseMd: context.window.__testParseMd,
+    resolveMarkdownImageUrl: context.window.__testResolveMarkdownImageUrl,
+  };
+}
+
+function loadRoadmapLessonPageUrl(options = {}) {
+  const roadmapPath = path.join(__dirname, 'roadmap.js');
+  const source = fs.readFileSync(roadmapPath, 'utf8');
+  const languages = options.languages || [{ code: 'en' }, { code: 'zh' }];
+  const queryLanguage = new URLSearchParams(options.search || '').get('lang');
+  const instrumented = source.replace(
+    /\n\}\)\(\);\s*$/,
+    '\n  window.__testLessonPageUrl = lessonPageUrl;\n})();\n'
+  );
+  assert.notEqual(instrumented, source, 'roadmap.js should expose its closing IIFE for the test seam');
+
+  const window = {
+    AIFS_I18n: { current: options.language || queryLanguage || 'en' },
+    AIFS_LANGS: languages,
+    addEventListener() {},
+    matchMedia() { return { matches: false }; },
+  };
+  const document = {
+    documentElement: { setAttribute() {} },
+    addEventListener() {},
+  };
+  const localStorage = { getItem() { return null; } };
+
+  vm.runInNewContext(
+    instrumented,
+    { window, document, localStorage, URLSearchParams, encodeURI, encodeURIComponent },
+    { filename: roadmapPath }
+  );
+  return window.__testLessonPageUrl;
+}
+
+function loadHomepageTranslator(i18n) {
+  const appPath = path.join(__dirname, 'app.js');
+  const source = fs.readFileSync(appPath, 'utf8');
+  const start = source.indexOf('  function tr(');
+  const end = source.indexOf('\n\n  var stored', start);
+  assert.ok(start >= 0 && end > start, 'app.js is missing its translation helper');
+  const context = { window: { AIFS_I18n: i18n } };
+  vm.runInNewContext(
+    source.slice(start, end) + '\nthis.tr = tr;',
+    context,
+    { filename: appPath }
+  );
+  return context.tr;
+}
+
+function loadCatalogLessonHref(hostname) {
+  const catalogPath = path.join(__dirname, 'catalog.html');
+  const source = fs.readFileSync(catalogPath, 'utf8');
+  const start = source.indexOf('function lessonHref(');
+  const end = source.indexOf('\n\n        function ', start + 1);
+  assert.ok(start >= 0 && end > start, 'catalog.html is missing its lesson route helper');
+  const context = { window: { location: { hostname } }, encodeURIComponent };
+  vm.runInNewContext(
+    source.slice(start, end) + '\nthis.lessonHref = lessonHref;',
+    context,
+    { filename: catalogPath }
+  );
+  return context.lessonHref;
+}
+
+function loadCatalogGroupHeadingHtml(i18n) {
+  const catalogPath = path.join(__dirname, 'catalog.html');
+  const source = fs.readFileSync(catalogPath, 'utf8');
+  const escapeStart = source.indexOf('        function escapeHtml(');
+  const helperStart = source.indexOf('        function catalogGroupHeadingHtml(');
+  const helperEnd = source.indexOf('\n\n        function ', helperStart + 1);
+  assert.ok(escapeStart >= 0 && helperStart > escapeStart && helperEnd > helperStart);
+  const escapeEnd = source.indexOf('\n\n        function ', escapeStart + 1);
+  const context = { document: createEscapingDocument(), window: { AIFS_I18n: i18n } };
+  vm.runInNewContext(
+    source.slice(escapeStart, escapeEnd) + '\n' +
+      source.slice(helperStart, helperEnd) +
+      '\nthis.catalogGroupHeadingHtml = catalogGroupHeadingHtml;',
+    context,
+    { filename: catalogPath }
+  );
+  return context.catalogGroupHeadingHtml;
+}
+
+function renderHomepageModalLessons(hostname, phase) {
+  const appPath = path.join(__dirname, 'app.js');
+  const source = fs.readFileSync(appPath, 'utf8');
+  const start = source.indexOf('  function lessonPageUrl(');
+  const end = source.indexOf('\n  if (window.AIFSProgress)', start);
+  assert.ok(start >= 0 && end > start, 'app.js is missing its modal lesson renderer');
+  const elements = {
+    modalLessons: { innerHTML: '', querySelectorAll() { return []; } },
+    modalProgress: { style: {}, innerHTML: '' },
+    modalProgressBar: { style: {}, setAttribute() {} },
+    modalProgressBarFill: { style: {} },
+  };
+  const context = {
+    window: { location: { hostname } },
+    document: { getElementById(id) { return elements[id] || null; } },
+    encodeURIComponent,
+    escapeHtml(value) { return String(value); },
+    tr(value) { return value; },
+  };
+  vm.runInNewContext(
+    source.slice(start, end) + '\nthis.renderModalLessons = renderModalLessons;',
+    context,
+    { filename: appPath }
+  );
+  context.renderModalLessons(phase);
+  return elements.modalLessons.innerHTML;
+}
+
+function lessonResponse(body, ok = true) {
+  return {
+    ok,
+    text() { return Promise.resolve(body); },
+  };
+}
+
+function loadLessonFetchRuntime(options = {}) {
+  const calls = { fetch: [], lesson: [], quiz: [], localizedQuiz: [] };
+  const lessonPath = options.lessonPath || 'phases/01-math-foundations/01-linear-algebra-intuition';
+  const contentSource = {
+    isLocal() { return false; },
+    repoUrl(relativePath) { return `repo:${relativePath}`; },
+    rawRepoUrl(relativePath) { return `raw:${relativePath}`; },
+    translationUrl(relativePath) { return `translation:${relativePath}`; },
+  };
+  const context = {
+    Promise,
+    console,
+    setTimeout,
+    ACTIVE_REPOSITORY: 'example/repository',
+    ENCODED_ACTIVE_REF: 'main',
+    TRANSLATION_REPOSITORY: 'example/repository',
+    ENCODED_TRANSLATION_REF: 'translations',
+    REPO_TREE: 'https://github.com/example/repository/tree/main/',
+    certificationLesson: null,
+    lessonQuizPromise: null,
+    lessonFetchSequence: 0,
+    currentLessonIndex: -1,
+    flatLessons: [],
+    window: {
+      AIFS_currentLang() { return options.lang || 'zh'; },
+      AIFSContentSource: contentSource,
+    },
+    document: { documentElement: { lang: '', dir: '' } },
+    fetch(url, init) {
+      calls.fetch.push({ url, init });
+      return options.fetch(url, init);
+    },
+    loadLocalizedQuiz(quiz, sourceText, requestedPath, lang) {
+      calls.localizedQuiz.push({ quiz, sourceText, path: requestedPath, lang });
+      return Promise.resolve({
+        quiz: options.localizedQuiz || quiz,
+        lang: options.quizLang || 'zh',
+      });
+    },
+    renderLesson(markdown, lang) { calls.lesson.push({ markdown, lang }); },
+    renderQuiz(quiz, lang) { calls.quiz.push({ quiz, lang }); },
+    showError() { assert.fail('fetchLesson unexpectedly reached showError'); },
+    escapeAttr(value) { return value; },
+    escapeHtml(value) { return value; },
+  };
+  const runtimeSource = [
+    extractLessonFunctionSource('currentLang'),
+    extractLessonFunctionSource('applySelectedLanguage'),
+    extractLessonFunctionSource('fetchRepositoryFile'),
+    extractLessonFunctionSource('fetchLesson'),
+    'window.__testFetchLesson = fetchLesson;',
+  ].join('\n\n');
+  vm.runInNewContext(runtimeSource, context, { filename: 'lesson.html#fetchLesson' });
+  return { calls, document: context.document, fetchLesson: context.window.__testFetchLesson, lessonPath };
+}
+
+function flushLessonFetch() {
+  return new Promise(resolve => setImmediate(resolve));
+}
+
+function loadLessonDynamicI18nRuntime(options = {}) {
+  const lessonStrings = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'i18n', 'zh', 'lesson.json'), 'utf8')
+  ).strings;
+  const fallbackQuizStrings = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'i18n', 'zh', 'fallback-quiz.json'), 'utf8')
+  ).strings;
+  const translations = {
+    ...lessonStrings,
+    ...fallbackQuizStrings,
+    ...(options.translations || {}),
+  };
+
+  function element() {
+    const attributes = new Map();
+    let html = '';
+    const node = {
+      className: '',
+      isConnected: false,
+      parentNode: null,
+      setAttribute(name, value) { attributes.set(name, String(value)); },
+      getAttribute(name) { return attributes.has(name) ? attributes.get(name) : null; },
+      querySelector() { return null; },
+      querySelectorAll() { return []; },
+    };
+    Object.defineProperties(node, {
+      innerHTML: {
+        get() { return html; },
+        set(value) { html = String(value ?? ''); },
+      },
+      textContent: {
+        get() { return html; },
+        set(value) {
+          html = String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+        },
+      },
+    });
+    return node;
+  }
+
+  function container() {
+    return {
+      children: [],
+      appendChild(child) {
+        child.isConnected = true;
+        child.parentNode = this;
+        this.children.push(child);
+        return child;
+      },
+    };
+  }
+
+  const document = {
+    documentElement: {},
+    createElement() {
+      const node = element();
+      node.quizBody = element();
+      node.querySelector = selector => selector === '#quizContent' ? node.quizBody : null;
+      return node;
+    },
+    getElementById() { return null; },
+  };
+  const window = {
+    AIFS_currentLang() { return options.lang || 'zh'; },
+    AIFS_I18n: {
+      t(value, params, lang) {
+        let translated = lang === 'zh' && Object.prototype.hasOwnProperty.call(translations, value)
+          ? translations[value]
+          : value;
+        return String(translated).replace(/\{([A-Za-z0-9_]+)\}/g, (token, name) =>
+          params && Object.prototype.hasOwnProperty.call(params, name) ? params[name] : token
+        );
+      },
+      apply() {},
+    },
+    AIFSProgress: options.progress || null,
+    AIFSLearningPathProgress: options.learningPathProgress || null,
+  };
+  const context = {
+    Promise,
+    window,
+    document,
+    lessonPath: options.lessonPath || 'phases/01-math-foundations/01-linear-algebra-intuition',
+    currentLessonIndex: options.currentLessonIndex ?? 0,
+    flatLessons: options.flatLessons || [{
+      path: 'phases/01-math-foundations/01-linear-algebra-intuition',
+      lessonName: 'Linear Algebra Intuition',
+      phaseSlug: '01-math-foundations',
+      phaseIndex: 0,
+      isReadable: true,
+    }],
+    lessonQuizPromise: options.quizPromise || null,
+    certificationMode: false,
+    certificationTrack: null,
+    learningPathMode: !!options.learningPathMode,
+    learningPath: options.learningPath || null,
+    PHASES: options.phases || [],
+    learningPathPreflightHtml() { return ''; },
+    learningPathPreflightDefinitions() { return options.preflights || []; },
+    learningPathEntryLocked() { return false; },
+    learningPathGateClass() { return ''; },
+    learningPathGateAttributes() { return ''; },
+    learningPathLessonHref(value) { return `lesson?path=${value}`; },
+    learningPathPrerequisiteCallout() { return ''; },
+    mountLearningPathPanel(target, panel) { return target.appendChild(panel); },
+    revealPhaseCompletion() {},
+  };
+  const runtimeSource = [
+    extractLessonFunctionSource('escapeHtml'),
+    extractLessonFunctionSource('escapeAttr'),
+    extractLessonFunctionSource('currentLang'),
+    extractLessonFunctionSource('lessonUiFormat'),
+    extractLessonFunctionSource('lessonUiText'),
+    extractLessonFunctionSource('applyLessonUiLanguage'),
+    extractLessonFunctionSource('lessonPositionText'),
+    extractLessonFunctionSource('relativeLessonCountText'),
+    extractLessonFunctionSource('getEnglishFallbackQuizQuestions'),
+    extractLessonFunctionSource('getQuizQuestions'),
+    extractLessonFunctionSource('fallbackQuizLanguage'),
+    extractLessonFunctionSource('lessonQuizPanelQuestions'),
+    extractLessonFunctionSource('renderQuizPanel'),
+    extractLessonFunctionSource('fillQuizPanel'),
+    extractLessonFunctionSource('renderLearningPathPanel'),
+    'window.__testDynamicI18n = { renderQuizPanel, relativeLessonCountText, renderLearningPathPanel };',
+  ].join('\n\n');
+  vm.runInNewContext(runtimeSource, context, { filename: 'lesson.html#dynamic-i18n' });
+  return {
+    ...window.__testDynamicI18n,
+    container,
+    context,
+  };
+}
+
+test('lesson dynamic fallbacks render in the language of their actual content', async () => {
+  const direct = loadLessonDynamicI18nRuntime({ lang: 'zh' });
+  const directContainer = direct.container();
+  direct.renderQuizPanel(directContainer);
+  const directBody = directContainer.children[0].quizBody;
+  assert.equal(directBody.getAttribute('lang'), 'zh');
+  assert.match(directBody.innerHTML, /两个向量的点积衡量什么/);
+  assert.match(
+    directBody.innerHTML,
+    /想做更深入的测验？在 Codex 中使用 <code>check-understanding 01<\/code>，或从 <code>\/skills<\/code> 中选择/
+  );
+
+  const promised = loadLessonDynamicI18nRuntime({
+    lang: 'zh',
+    quizPromise: Promise.resolve({ quiz: { questions: [] }, lang: 'en' }),
+  });
+  const promisedContainer = promised.container();
+  promised.renderQuizPanel(promisedContainer);
+  await Promise.resolve();
+  const promisedBody = promisedContainer.children[0].quizBody;
+  assert.equal(promisedBody.getAttribute('lang'), 'zh');
+  assert.match(promisedBody.innerHTML, /两个向量的点积衡量什么/);
+
+  const untranslated = loadLessonDynamicI18nRuntime({ lang: 'hi' });
+  const untranslatedContainer = untranslated.container();
+  untranslated.renderQuizPanel(untranslatedContainer);
+  const untranslatedBody = untranslatedContainer.children[0].quizBody;
+  assert.equal(untranslatedBody.getAttribute('lang'), 'en');
+  assert.match(untranslatedBody.innerHTML, /What does a dot product measure between two vectors/);
+});
+
+test('lesson dynamic progress renderers consume complete localized templates', () => {
+  const relative = loadLessonDynamicI18nRuntime({ lang: 'zh' });
+  assert.equal(relative.relativeLessonCountText(3, 'earlier', false), '前面还有 3 节');
+  assert.equal(relative.relativeLessonCountText(4, 'later', true), '后面还有 4 节课程');
+
+  const optionalPath = loadLessonDynamicI18nRuntime({
+    lang: 'zh',
+    lessonPath: 'phases/13-tools-and-protocols/99-optional',
+    learningPathMode: true,
+    learningPath: { id: 'focused', title: 'Focused path' },
+    flatLessons: [
+      { path: 'phases/13-tools-and-protocols/01-required', lessonName: 'Required 1', required: true },
+      { path: 'phases/13-tools-and-protocols/02-required', lessonName: 'Required 2', required: true },
+      { path: 'phases/13-tools-and-protocols/99-optional', lessonName: 'Optional', required: false },
+    ],
+    progress: { isLessonComplete(pathValue) { return pathValue.endsWith('01-required'); } },
+    preflights: [{ id: 'one' }, { id: 'two' }],
+    learningPathProgress: { isConfirmed(_pathId, checkId) { return checkId === 'one'; } },
+  });
+  const optionalContainer = optionalPath.container();
+  optionalPath.renderLearningPathPanel(optionalContainer);
+  assert.match(optionalContainer.children[0].innerHTML, /可选课程。已完成 1 \/ 2 节必修课程。/);
+  assert.match(optionalContainer.children[0].innerHTML, /1 \/ 2 项知识预检已确认。/);
+
+  const completedPhase = loadLessonDynamicI18nRuntime({
+    lang: 'zh',
+    translations: { 'Next Phase': '下一阶段' },
+    progress: { isLessonComplete() { return true; } },
+    phases: [
+      { id: 1, name: 'Math', lessons: [] },
+      { id: 2, name: 'Next Phase', lessons: [] },
+    ],
+  });
+  const phaseContainer = completedPhase.container();
+  completedPhase.renderLearningPathPanel(phaseContainer);
+  assert.match(phaseContainer.children[0].innerHTML, /已准备好进入阶段 02：下一阶段/);
+});
+
+function markupAssetUrls(html) {
+  return Array.from(
+    html.matchAll(/<(?:script|link)\b[^>]*?\b(?:src|href)\s*=\s*(["'])(.*?)\1[^>]*>/gi),
+    match => match[2]
+  );
+}
+
+function assertProjectPagesAssetUrls(page, html, projectRoot) {
+  const pageUrl = new URL(page, projectRoot);
+  for (const target of markupAssetUrls(html)) {
+    if (/^(?:https?:|data:|mailto:|#)/i.test(target)) continue;
+    assert.ok(!target.startsWith('/'), `${page} uses root-relative asset ${target}`);
+    const resolved = new URL(target, pageUrl);
+    assert.equal(resolved.origin, projectRoot.origin, `${page} changes origin via ${target}`);
+    assert.ok(
+      resolved.pathname.startsWith(projectRoot.pathname),
+      `${page} escapes the Pages base path via ${target}`
+    );
+  }
+}
+
+function workflowRunScript(stepName) {
+  const workflow = fs.readFileSync(
+    path.join(__dirname, '..', '.github', 'workflows', 'curriculum.yml'),
+    'utf8'
+  );
+  const lines = workflow.split(/\r?\n/);
+  const marker = `      - name: ${stepName}`;
+  const start = lines.indexOf(marker);
+  assert.ok(start >= 0, `curriculum workflow is missing ${stepName}`);
+  const runLine = lines.indexOf('        run: |', start);
+  assert.ok(runLine > start, `${stepName} is missing a multiline run script`);
+  const body = [];
+  for (const line of lines.slice(runLine + 1)) {
+    if (line && !line.startsWith('          ')) break;
+    body.push(line ? line.slice(10) : '');
+  }
+  return body.join('\n');
+}
+
+function runChecked(command, args, cwd, environment = {}) {
+  const result = spawnSync(command, args, {
+    cwd,
+    encoding: 'utf8',
+    timeout: 30000,
+    env: {
+      ...process.env,
+      GIT_CONFIG_GLOBAL: os.devNull,
+      GIT_CONFIG_NOSYSTEM: '1',
+      GIT_TERMINAL_PROMPT: '0',
+      ...environment,
+    },
+  });
+  if (result.error) {
+    assert.fail(`${command} ${args.join(' ')} failed: ${result.error.message}\n${result.stderr || result.stdout}`);
+  }
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  return result.stdout;
+}
+
+function runCommand(command, args, cwd, environment = {}) {
+  return spawnSync(command, args, {
+    cwd,
+    encoding: 'utf8',
+    timeout: 30000,
+    env: {
+      ...process.env,
+      GIT_CONFIG_GLOBAL: os.devNull,
+      GIT_CONFIG_NOSYSTEM: '1',
+      GIT_TERMINAL_PROMPT: '0',
+      ...environment,
+    },
+  });
+}
+
+test('writeI18nData returns the exact payload written to the core bundle file', t => {
+  const outputDir = fs.mkdtempSync(path.join(os.tmpdir(), 'aifs-i18n-output-'));
+  t.after(() => fs.rmSync(outputDir, { recursive: true, force: true }));
+  const outputPath = path.join(outputDir, 'i18n-data.js');
+  const roadmap = parseRoadmap(fs.readFileSync(path.join(__dirname, '..', 'ROADMAP.md'), 'utf8'));
+  const phases = parseReadme(
+    fs.readFileSync(path.join(__dirname, '..', 'README.md'), 'utf8'),
+    roadmap
+  );
+
+  const returned = writeI18nData(phases, outputPath);
+  const context = { window: {} };
+  vm.runInNewContext(fs.readFileSync(outputPath, 'utf8'), context, { filename: outputPath });
+
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(returned)),
+    JSON.parse(JSON.stringify(context.window.AIFS_I18N))
+  );
+  assert.ok(!Object.keys(returned.zh.bundles).some(name => name.startsWith('figures-')));
+  assert.ok(!Object.keys(returned.zh.bundles).some(name => name.startsWith('glossary-')));
+});
+
+test('content source follows build metadata for fork deployments', () => {
+  const source = loadContentSource({
+    hostname: 'preview.example',
+    href: 'https://preview.example/lesson.html',
+    repository: 'example/fork',
+    ref: 'feature-i18n',
+  });
+
+  assert.equal(
+    source.rawRepoUrl('phases/00-setup-and-tooling'),
+    'https://raw.githubusercontent.com/example/fork/feature-i18n/phases/00-setup-and-tooling'
+  );
+  assert.equal(
+    source.translationUrl('i18n/zh/phases/00-setup-and-tooling/docs/zh.md'),
+    'https://raw.githubusercontent.com/example/fork/translations/i18n/zh/phases/00-setup-and-tooling/docs/zh.md'
+  );
+});
+
+test('translation content can use a published source without changing fork previews', () => {
+  const source = loadContentSource({
+    hostname: 'preview.example',
+    href: 'https://preview.example/lesson.html',
+    repository: 'example/fork',
+    ref: 'feature-i18n',
+    translationRepository: 'publisher/curriculum',
+    translationRef: 'localized-lessons',
+  });
+
+  assert.equal(
+    source.rawRepoUrl('phases/00-setup-and-tooling/docs/en.md'),
+    'https://raw.githubusercontent.com/example/fork/feature-i18n/phases/00-setup-and-tooling/docs/en.md'
+  );
+  assert.equal(
+    source.translationUrl('i18n/zh/phases/00-setup-and-tooling/docs/zh.md'),
+    'https://raw.githubusercontent.com/publisher/curriculum/localized-lessons/i18n/zh/phases/00-setup-and-tooling/docs/zh.md'
+  );
+});
+
+test('translation source defaults to the active repository translations branch', () => {
+  assert.equal(
+    resolveRepository({
+      VERCEL_GIT_REPO_OWNER: 'example',
+      VERCEL_GIT_REPO_SLUG: 'fork',
+    }),
+    'example/fork'
+  );
+  assert.deepEqual(
+    resolveTranslationSource({}, 'example/fork'),
+    { repository: 'example/fork', ref: 'translations' }
+  );
+  assert.deepEqual(
+    resolveTranslationSource({
+      AIFS_TRANSLATION_REPOSITORY: 'publisher/curriculum',
+      AIFS_TRANSLATION_REF: 'localized-lessons',
+    }, 'example/fork'),
+    { repository: 'publisher/curriculum', ref: 'localized-lessons' }
+  );
+});
+
+test('translation refs follow Git short-ref rules in build metadata', () => {
+  for (const ref of ['feature+preview', 'feature@preview', 'release-1/topic']) {
+    assert.equal(requireShortRef(ref, 'test ref'), ref);
+    assert.equal(
+      resolveTranslationSource({ AIFS_TRANSLATION_REF: ref }, 'example/fork').ref,
+      ref
+    );
+  }
+  for (const ref of ['@', '-preview', 'refs/heads/main', 'feature..bad', 'feature/x.lock']) {
+    assert.throws(
+      () => resolveTranslationSource({ AIFS_TRANSLATION_REF: ref }, 'example/fork'),
+      /valid short Git ref/
+    );
+  }
+});
+
+test('build metadata recognizes GitHub Actions repository and branch variables', () => {
+  const previewSha = '0123456789abcdef0123456789abcdef01234567';
+  assert.equal(
+    resolveRepository({ GITHUB_REPOSITORY: 'example/pages-fork' }),
+    'example/pages-fork'
+  );
+  assert.equal(resolveRef({ GITHUB_REF_NAME: 'main' }), 'main');
+  assert.equal(resolveRef({ GITHUB_REF: 'refs/heads/pages-preview' }), 'pages-preview');
+  assert.equal(resolveRef({
+    VERCEL_GIT_COMMIT_REF: 'vercel-preview',
+    GITHUB_REF_NAME: 'main',
+  }), 'vercel-preview');
+  assert.equal(resolveRef({
+    VERCEL_ENV: 'preview',
+    VERCEL_GIT_COMMIT_SHA: previewSha,
+    VERCEL_GIT_COMMIT_REF: 'vercel-preview',
+  }), previewSha);
+  assert.equal(resolveRef({
+    VERCEL_ENV: 'preview',
+    VERCEL_GIT_COMMIT_SHA: 'not-a-sha',
+    VERCEL_GIT_COMMIT_REF: 'vercel-preview',
+  }), 'vercel-preview');
+  assert.equal(resolveRef({
+    VERCEL_ENV: 'production',
+    VERCEL_GIT_COMMIT_SHA: previewSha,
+    VERCEL_GIT_COMMIT_REF: 'vercel-preview',
+  }), 'main');
+  const previewMetadata = serializeBuildMeta({
+    VERCEL_ENV: 'preview',
+    VERCEL_GIT_COMMIT_SHA: previewSha,
+    VERCEL_GIT_COMMIT_REF: 'vercel-preview',
+    GITHUB_REPOSITORY: 'example/pages-fork',
+  });
+  assert.equal(previewMetadata.ref, previewSha);
+  assert.match(previewMetadata.source, new RegExp(`window\.__AIFS_REF = "${previewSha}";`));
+  assert.match(previewMetadata.source, new RegExp(`"revision":"${previewSha}"`));
+  assert.equal(resolveRepository({
+    VERCEL_GIT_REPO_OWNER: 'vercel-owner',
+    VERCEL_GIT_REPO_SLUG: 'vercel-fork',
+    GITHUB_REPOSITORY: 'github/pages-fork',
+  }), 'vercel-owner/vercel-fork');
+
+  const metadata = serializeBuildMeta({
+    GITHUB_REPOSITORY: 'example/pages-fork',
+    GITHUB_REF_NAME: 'main',
+    AIFS_TRANSLATION_REPOSITORY: 'example/translations-publisher',
+    AIFS_TRANSLATION_REF: 'localized-content',
+  });
+  assert.deepEqual(metadata.translationSource, {
+    repository: 'example/translations-publisher',
+    ref: 'localized-content',
+  });
+  assert.match(metadata.source, /window\.__AIFS_REF = "main";/);
+  assert.match(metadata.source, /window\.__AIFS_REPOSITORY = "example\/pages-fork";/);
+  assert.match(
+    metadata.source,
+    /window\.__AIFS_SOURCE = \{"owner":"example","repo":"pages-fork","revision":"main"\};/
+  );
+  assert.match(
+    metadata.source,
+    /window\.__AIFS_TRANSLATION_REPOSITORY = "example\/translations-publisher";/
+  );
+  assert.match(metadata.source, /window\.__AIFS_TRANSLATION_REF = "localized-content";/);
+
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'aifs-build-meta-'));
+  const outputPath = path.join(tempDir, 'build-meta.js');
+  try {
+    writeBuildMeta({
+      GITHUB_REPOSITORY: 'example/pages-fork',
+      GITHUB_REF_NAME: 'main',
+      AIFS_TRANSLATION_REPOSITORY: 'example/translations-publisher',
+      AIFS_TRANSLATION_REF: 'localized-content',
+    }, outputPath);
+    assert.equal(fs.readFileSync(outputPath, 'utf8'), metadata.source);
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('content source URL-encodes ref path segments without flattening slashes', () => {
+  const source = loadContentSource({
+    hostname: 'preview.example',
+    repository: 'example/fork',
+    ref: 'release-1/topic',
+    translationRef: 'localized-1/topic',
+  });
+
+  assert.equal(
+    source.rawRepoUrl('phases/00-setup-and-tooling/docs/en.md'),
+    'https://raw.githubusercontent.com/example/fork/release-1/topic/phases/00-setup-and-tooling/docs/en.md'
+  );
+  assert.equal(
+    source.translationUrl('i18n/zh/phases/00-setup-and-tooling/docs/zh.md'),
+    'https://raw.githubusercontent.com/example/fork/localized-1/topic/i18n/zh/phases/00-setup-and-tooling/docs/zh.md'
+  );
+});
+
+test('content source accepts Git-valid refs and URL-encodes each path segment', () => {
+  const source = loadContentSource({
+    hostname: 'preview.example',
+    repository: 'example/fork',
+    ref: 'release+1/topic@preview',
+    translationRef: 'localized+1/topic@published',
+  });
+
+  assert.equal(
+    source.rawRepoUrl('phases/00-setup-and-tooling/docs/en.md'),
+    'https://raw.githubusercontent.com/example/fork/release%2B1/topic%40preview/phases/00-setup-and-tooling/docs/en.md'
+  );
+  assert.equal(
+    source.translationUrl('i18n/zh/phases/00-setup-and-tooling/docs/zh.md'),
+    'https://raw.githubusercontent.com/example/fork/localized%2B1/topic%40published/i18n/zh/phases/00-setup-and-tooling/docs/zh.md'
+  );
+});
+
+test('lesson reader applies the same Git short-ref contract as content loading', () => {
+  const context = {};
+  vm.runInNewContext(
+    extractLessonFunctionSource('validRepositoryRef') + '\nthis.validRepositoryRef = validRepositoryRef;',
+    context,
+    { filename: 'lesson.html#validRepositoryRef' }
+  );
+
+  for (const ref of ['feature+preview', 'feature@preview', 'release-1/topic']) {
+    assert.equal(context.validRepositoryRef(ref), true, ref);
+  }
+  for (const ref of ['@', '-preview', 'refs/heads/main', 'foo..bar', 'foo//bar', 'foo.lock']) {
+    assert.equal(context.validRepositoryRef(ref), false, ref);
+  }
+});
+
+test('content source rejects refs with unsafe URL syntax', () => {
+  const source = loadContentSource({
+    hostname: 'preview.example',
+    repository: 'example/fork',
+    ref: 'release?1/topic',
+    translationRef: 'localized?1/topic',
+  });
+
+  assert.equal(
+    source.rawRepoUrl('README.md'),
+    'https://raw.githubusercontent.com/example/fork/main/README.md'
+  );
+  assert.equal(
+    source.translationUrl('i18n/zh/README.md'),
+    'https://raw.githubusercontent.com/example/fork/translations/i18n/zh/README.md'
+  );
+});
+
+test('fetchLesson renders a successful Chinese translation and localized quiz as zh', async () => {
+  const localizedQuiz = { questions: [{ question: '中文题目' }] };
+  const runtime = loadLessonFetchRuntime({
+    lang: 'zh',
+    localizedQuiz,
+    fetch(url) {
+      if (url.endsWith('/quiz.json')) {
+        return Promise.resolve(lessonResponse('{"questions":[{"question":"English"}]}'));
+      }
+      if (url.startsWith('translation:')) return Promise.resolve(lessonResponse('# 中文课程'));
+      assert.fail(`unexpected fetch: ${url}`);
+    },
+  });
+
+  runtime.fetchLesson(runtime.lessonPath);
+  await flushLessonFetch();
+
+  assert.deepEqual(runtime.calls.lesson, [{ markdown: '# 中文课程', lang: 'zh' }]);
+  assert.equal(runtime.calls.localizedQuiz[0].lang, 'zh');
+  assert.equal(runtime.calls.quiz.length, 1);
+  assert.equal(runtime.calls.quiz[0].quiz, localizedQuiz);
+  assert.equal(runtime.calls.quiz[0].lang, 'zh');
+  assert.equal(runtime.document.documentElement.lang, 'zh');
+});
+
+test('fetchLesson falls back to English prose without losing localized quiz language', async () => {
+  const localizedQuiz = { questions: [{ question: '中文题目' }] };
+  const runtime = loadLessonFetchRuntime({
+    lang: 'zh',
+    localizedQuiz,
+    fetch(url) {
+      if (url.endsWith('/quiz.json')) {
+        return Promise.resolve(lessonResponse('{"questions":[{"question":"English"}]}'));
+      }
+      if (url.startsWith('translation:')) return Promise.resolve(lessonResponse('', false));
+      if (url.endsWith('/docs/en.md')) return Promise.resolve(lessonResponse('# English lesson'));
+      assert.fail(`unexpected fetch: ${url}`);
+    },
+  });
+
+  runtime.fetchLesson(runtime.lessonPath);
+  await flushLessonFetch();
+
+  assert.deepEqual(runtime.calls.lesson, [{ markdown: '# English lesson', lang: 'en' }]);
+  assert.equal(runtime.calls.quiz.length, 1);
+  assert.equal(runtime.calls.quiz[0].quiz, localizedQuiz);
+  assert.equal(runtime.calls.quiz[0].lang, 'zh');
+});
+
+test('lesson markdown renders relative images against the active fork repository and ref', () => {
+  const { inlineFormat, resolveMarkdownImageUrl } = loadLessonInlineFormatter({
+    repository: 'example/fork',
+    ref: 'feature-i18n',
+    lessonPath: 'phases/14-agent-engineering/16-openai-agents-sdk',
+  });
+
+  assert.equal(
+    resolveMarkdownImageUrl('../assets/diagram.svg'),
+    'https://raw.githubusercontent.com/example/fork/feature-i18n/phases/14-agent-engineering/16-openai-agents-sdk/assets/diagram.svg'
+  );
+  assert.equal(
+    inlineFormat('![Actor flow](../assets/diagram.svg)'),
+    '<img src="https://raw.githubusercontent.com/example/fork/feature-i18n/phases/14-agent-engineering/16-openai-agents-sdk/assets/diagram.svg" alt="Actor flow" loading="lazy" decoding="async">'
+  );
+});
+
+test('lesson markdown falls back to the active repository root for certification assets', () => {
+  const { inlineFormat, resolveMarkdownImageUrl } = loadLessonInlineFormatter({
+    repository: 'example/fork',
+    ref: 'feature-certifications',
+    lessonPath: 'certifications/claude/lessons/16-multi-agent-orchestration-and-delegation',
+    contentSource: undefined,
+  });
+
+  assert.equal(
+    resolveMarkdownImageUrl('../assets/orchestration.svg'),
+    'https://raw.githubusercontent.com/example/fork/feature-certifications/certifications/claude/lessons/16-multi-agent-orchestration-and-delegation/assets/orchestration.svg'
+  );
+  assert.equal(
+    inlineFormat('![Orchestration flow](../assets/orchestration.svg)'),
+    '<img src="https://raw.githubusercontent.com/example/fork/feature-certifications/certifications/claude/lessons/16-multi-agent-orchestration-and-delegation/assets/orchestration.svg" alt="Orchestration flow" loading="lazy" decoding="async">'
+  );
+  assert.equal(resolveMarkdownImageUrl('../../../../../../outside.svg'), null);
+});
+
+test('the production Markdown parser renders lesson images', () => {
+  const { parseMd } = loadLessonInlineFormatter({
+    repository: 'example/fork',
+    ref: 'feature-images',
+    lessonPath: 'phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment',
+  });
+  const html = parseMd('# NLI\n\n![NLI flow](../assets/nli.svg)');
+  assert.match(
+    html,
+    /<p><img src="https:\/\/raw\.githubusercontent\.com\/example\/fork\/feature-images\/phases\/05-nlp-foundations-to-advanced\/21-nli-textual-entailment\/assets\/nli\.svg" alt="NLI flow" loading="lazy" decoding="async"><\/p>/
+  );
+});
+
+test('lesson markdown renders external https images and preserves ordinary links', () => {
+  const { inlineFormat } = loadLessonInlineFormatter();
+
+  assert.equal(
+    inlineFormat('![Remote](https://cdn.example.com/figures/agent.png)'),
+    '<img src="https://cdn.example.com/figures/agent.png" alt="Remote" loading="lazy" decoding="async">'
+  );
+  assert.equal(
+    inlineFormat('[Docs](https://example.com/docs?q=1&lang=en)'),
+    '<a href="https://example.com/docs?q=1&amp;lang=en" target="_blank" rel="noopener">Docs</a>'
+  );
+  assert.equal(
+    inlineFormat('[Local lesson](../README.md)'),
+    'Local lesson'
+  );
+});
+
+test('lesson markdown rejects unsafe image URLs and escapes alt text safely', () => {
+  const { inlineFormat, resolveMarkdownImageUrl } = loadLessonInlineFormatter();
+
+  assert.equal(resolveMarkdownImageUrl('javascript:alert(1)'), null);
+  assert.equal(resolveMarkdownImageUrl('data:image/png;base64,abc'), null);
+  assert.equal(resolveMarkdownImageUrl('//cdn.example.com/agent.png'), null);
+  assert.equal(resolveMarkdownImageUrl('/absolute/path.png'), null);
+  assert.equal(
+    inlineFormat('![x < y & "quoted"](javascript:alert1)'),
+    'x &lt; y &amp; &quot;quoted&quot;'
+  );
+});
+
+test('roadmap lesson links preserve a valid non-English deep-link language', () => {
+  const lesson = {
+    url: 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/01-dev-environment/',
+  };
+
+  assert.equal(
+    loadRoadmapLessonPageUrl({ search: '?lang=zh' })(lesson),
+    'lesson?path=phases/00-setup-and-tooling/01-dev-environment&lang=zh'
+  );
+  assert.equal(
+    loadRoadmapLessonPageUrl({ language: 'en' })(lesson),
+    'lesson?path=phases/00-setup-and-tooling/01-dev-environment'
+  );
+  assert.equal(
+    loadRoadmapLessonPageUrl({ search: '?lang=bogus' })(lesson),
+    'lesson?path=phases/00-setup-and-tooling/01-dev-environment'
+  );
+});
+
+test('site publishes human-maintained locales without machine-translation CI', () => {
+  assert.deepEqual(
+    publishedLanguages({
+      languages: [
+        { code: 'en', native: 'English', source: true },
+        { code: 'zh', native: '简体中文', manual: true },
+        { code: 'fr', native: 'Français', ci: true },
+        { code: 'de', native: 'Deutsch' },
+      ],
+    }),
+    [
+      { code: 'en', native: 'English' },
+      { code: 'zh', native: '简体中文' },
+      { code: 'fr', native: 'Français' },
+    ]
+  );
+});
 
 function createMcpTestDom() {
   const ids = new Map();
@@ -456,10 +1423,192 @@ function writeMarkdown(file, { name, description, version }) {
   ].join('\n'));
 }
 
+test('copy controls reset from stable source labels after a language change', () => {
+  const appSource = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8');
+  const start = appSource.indexOf('function wireCopyButton(');
+  const end = appSource.indexOf('function initCopyButton()', start);
+  assert.ok(start >= 0 && end > start, 'app.js should expose wireCopyButton before initCopyButton');
+  const listeners = new Map();
+  const timers = new Map();
+  let timerId = 0;
+  let language = 'zh';
+  const translations = {
+    zh: {
+      copy: '复制',
+      'Copy command': '复制命令',
+      copied: '已复制',
+      'Command copied': '命令已复制',
+    },
+  };
+  const window = {
+    AIFS_I18n: { t(value) { return translations[language]?.[value] || value; } },
+    addEventListener(type, listener) { listeners.set(type, listener); },
+  };
+  const document = { createElement() { return {}; }, body: { appendChild() {} } };
+  const navigator = { clipboard: { writeText() { return Promise.resolve(); } } };
+  const setTimeout = callback => { const id = ++timerId; timers.set(id, callback); return id; };
+  const clearTimeout = id => timers.delete(id);
+  const tr = value => translations[language]?.[value] || value;
+  const context = { window, document, navigator, setTimeout, clearTimeout, tr };
+  vm.runInNewContext(
+    appSource.slice(start, end) + '\nthis.wireCopyButton = wireCopyButton;',
+    context,
+    { filename: 'site/app.js#copy-control' }
+  );
+  const buttonListeners = {};
+  const button = {
+    id: 'copyBtn',
+    attrs: { 'aria-label': '复制命令' },
+    classList: { add() {}, remove() {} },
+    getAttribute(name) { return this.attrs[name] || null; },
+    setAttribute(name, value) { this.attrs[name] = value; },
+    addEventListener(type, listener) { buttonListeners[type] = listener; },
+  };
+  const label = { textContent: '复制' };
+  context.wireCopyButton(button, label, () => 'command');
+  buttonListeners.click();
+
+  return Promise.resolve().then(() => {
+    assert.equal(label.textContent, '已复制');
+    language = 'en';
+    listeners.get('aifs:language-change')();
+    assert.equal(label.textContent, 'copy');
+    assert.equal(button.attrs['aria-label'], 'Copy command');
+    for (const callback of timers.values()) callback();
+    assert.equal(label.textContent, 'copy');
+    assert.equal(button.attrs['aria-label'], 'Copy command');
+  });
+});
+
+test('homepage lesson links use the static file route on GitHub Pages', () => {
+  const lessonPath = 'phases/00-setup-and-tooling/01-dev-environment';
+  const encodedPath = encodeURIComponent(lessonPath);
+  const phase = {
+    name: 'Setup & Tooling',
+    lessons: [{
+      name: 'Dev Environment',
+      type: 'Build',
+      lang: 'Python',
+      status: 'complete',
+      url: `https://github.com/example/repo/tree/main/${lessonPath}/`,
+    }],
+  };
+
+  assert.ok(
+    renderHomepageModalLessons('example.github.io', phase)
+      .includes(`href="lesson.html?path=${encodedPath}"`)
+  );
+  assert.ok(
+    renderHomepageModalLessons('aiengineeringfromscratch.com', phase)
+      .includes(`href="lesson?path=${encodedPath}"`)
+  );
+  assert.ok(
+    renderHomepageModalLessons('preview.vercel.app', phase)
+      .includes(`href="lesson?path=${encodedPath}"`)
+  );
+});
+
+test('homepage translation fallback interpolates template parameters', () => {
+  const tr = loadHomepageTranslator();
+
+  assert.equal(
+    tr('{publishedLessons} published lessons. {corePhases} core phases.', {
+      publishedLessons: 556,
+      corePhases: 20,
+    }),
+    '556 published lessons. 20 core phases.'
+  );
+  assert.equal(tr('{known} and {missing}', { known: 0 }), '0 and {missing}');
+});
+
+test('about fallback counts stay aligned with the curriculum summary', () => {
+  const root = path.resolve(__dirname, '..');
+  const roadmap = parseRoadmap(fs.readFileSync(path.join(root, 'ROADMAP.md'), 'utf8'));
+  const phases = parseReadme(fs.readFileSync(path.join(root, 'README.md'), 'utf8'), roadmap);
+  const learningPaths = parseLearningPaths(root, phases);
+  const certifications = parseCertifications();
+  const summary = {
+    corePhases: phases.length,
+    coreLessons: phases.reduce((total, phase) => total + phase.lessons.length, 0),
+    focusedLearningPaths: learningPaths.length,
+    certificationTracks: certifications.tracks.length,
+    certificationLessons: Object.keys(certifications.lessonsByPath).length,
+  };
+
+  assert.doesNotThrow(() => assertAboutCurriculumSummary(summary));
+
+  for (const [field, label] of [
+    ['corePhases', 'core phases'],
+    ['coreLessons', 'core lessons'],
+    ['focusedLearningPaths', 'focused paths'],
+    ['certificationTracks', 'certification tracks'],
+    ['certificationLessons', 'certification lessons'],
+  ]) {
+    const drifted = { ...summary, [field]: summary[field] + 1 };
+    assert.throws(
+      () => assertAboutCurriculumSummary(drifted),
+      {
+        name: 'Error',
+        message: `about.html static fallback ${label} drift: expected ${drifted[field]}, found ${summary[field]}`,
+      }
+    );
+  }
+});
+
+test('catalog lesson links use static Pages routes and preserve remote URLs', () => {
+  const lessonPath = 'phases/01-math-foundations/01-linear-algebra-intuition';
+  const sourceUrl = `https://github.com/example/repo/tree/main/${lessonPath}/`;
+  const encodedPath = encodeURIComponent(lessonPath);
+  const remoteUrl = 'https://example.com/resources/external-lesson';
+
+  assert.equal(loadCatalogLessonHref('example.github.io')(sourceUrl), `lesson.html?path=${encodedPath}`);
+  assert.equal(loadCatalogLessonHref('aiengineeringfromscratch.com')(sourceUrl), `lesson?path=${encodedPath}`);
+  assert.equal(loadCatalogLessonHref('preview.vercel.app')(sourceUrl), `lesson?path=${encodedPath}`);
+  assert.equal(loadCatalogLessonHref('example.github.io')(remoteUrl), remoteUrl);
+  assert.match(
+    fs.readFileSync(path.join(__dirname, 'catalog.html'), 'utf8'),
+    /var href = lessonHref\(r\.url\);/,
+    'the catalog renderer should use the deployment-aware route helper'
+  );
+});
+
+test('catalog group headings localize the phase label and lesson count', () => {
+  const english = loadCatalogGroupHeadingHtml(null);
+  assert.equal(
+    english(1, 'Math &amp; Foundations', 3),
+    'Phase 01: Math &amp;amp; Foundations<span class="catalog-group-count">3 lessons</span>'
+  );
+
+  const chinese = loadCatalogGroupHeadingHtml({
+    catalogPhase(phase, name) { return `第 ${String(phase).padStart(2, '0')} 阶段：${name}`; },
+    catalogLesson(count) { return `${count} 节课程`; },
+  });
+  assert.equal(
+    chinese(1, '数学基础', 3),
+    '第 01 阶段：数学基础<span class="catalog-group-count">3 节课程</span>'
+  );
+});
+
 test('shared site asset families use the expected cache keys on every page', () => {
-  const release = '20260822a';
+  const sourceFor = page => fs.readFileSync(path.join(__dirname, page), 'utf8');
+  const versionFor = (source, asset) => {
+    const escaped = asset.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const match = source.match(new RegExp(`(?:src|href)=["'](?:[^"']*/)?${escaped}\\?v=([a-z0-9.-]+)`, 'i'));
+    assert.ok(match, `${asset} is missing a cache key`);
+    return match[1];
+  };
   const styleRelease = '20260824a';
-  const navigationRelease = '20260829b';
+  const contentRelease = asset => crypto.createHash('sha256')
+    .update(fs.readFileSync(path.join(__dirname, asset), 'utf8'))
+    .digest('hex')
+    .slice(0, 12);
+  const dataRelease = versionFor(sourceFor('index.html'), 'data.js');
+  const progressRelease = '20260828a';
+  const navigationRelease = contentRelease('header.js');
+  const cmdPaletteRelease = contentRelease('cmdpalette.js');
+  const appRelease = contentRelease('app.js');
+  const roadmapStyleRelease = '20260822a';
+  const roadmapScriptRelease = contentRelease('roadmap.js');
   const narrationRelease = '20260829a';
   const pages = [
     'about.html',
@@ -472,28 +1621,350 @@ test('shared site asset families use the expected cache keys on every page', () 
     'lesson.html',
     'prereqs.html',
   ];
-  const sourceFor = page => fs.readFileSync(path.join(__dirname, page), 'utf8');
-  const versionFor = (source, asset) => {
-    const escaped = asset.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const match = source.match(new RegExp(`${escaped}\\?v=([a-z0-9.-]+)`, 'i'));
-    assert.ok(match, `${asset} is missing a cache key`);
-    return match[1];
-  };
-
   for (const page of pages) {
     const source = sourceFor(page);
     assert.equal(versionFor(source, 'style.css'), styleRelease, `${page} has stale style.css`);
-    assert.equal(versionFor(source, 'progress.js'), release, `${page} has stale progress.js`);
+    assert.equal(versionFor(source, 'data.js'), dataRelease, `${page} has stale data.js`);
+    assert.equal(versionFor(source, 'progress.js'), progressRelease, `${page} has stale progress.js`);
     assert.equal(versionFor(source, 'header.js'), navigationRelease, `${page} has stale header.js`);
+    assert.equal(versionFor(source, 'cmdpalette.js'), cmdPaletteRelease, `${page} has stale cmdpalette.js`);
   }
 
-  assert.equal(versionFor(sourceFor('index.html'), 'app.js'), release);
-  assert.equal(versionFor(sourceFor('prereqs.html'), 'roadmap.css'), release);
-  assert.equal(versionFor(sourceFor('prereqs.html'), 'roadmap.js'), release);
+  assert.equal(versionFor(sourceFor('index.html'), 'app.js'), appRelease);
+  assert.equal(versionFor(sourceFor('prereqs.html'), 'roadmap.css'), roadmapStyleRelease);
+  assert.equal(versionFor(sourceFor('prereqs.html'), 'roadmap.js'), roadmapScriptRelease);
   assert.match(
     fs.readFileSync(path.join(__dirname, 'header.js'), 'utf8'),
     new RegExp(`NARRATION_VERSION = '${narrationRelease}'`)
   );
+});
+
+test('site build refreshes cache keys after generated data changes and then settles', t => {
+  const siteDir = fs.mkdtempSync(path.join(os.tmpdir(), 'aifs-site-cache-'));
+  t.after(() => fs.rmSync(siteDir, { recursive: true, force: true }));
+  const assets = [
+    'langs.js',
+    'i18n-data.js',
+    'i18n-figures.js',
+    'i18n-glossary.js',
+    'ui-i18n.js',
+    'lang-picker.js',
+    'content-source.js',
+    'header.js',
+    'data.js',
+    'app.js',
+    'cmdpalette.js',
+    'roadmap.js',
+  ];
+  for (const asset of assets) fs.writeFileSync(path.join(siteDir, asset), `first ${asset}\n`);
+  fs.writeFileSync(
+    path.join(siteDir, 'index.html'),
+    assets.map((asset, index) => `<script src=${index % 2 ? "'" : '"'}${asset}?v=stale${index % 2 ? "'" : '"'}></script>`).join('\n')
+  );
+
+  const versions = syncI18nAssetVersions(siteDir);
+  const firstHtml = fs.readFileSync(path.join(siteDir, 'index.html'), 'utf8');
+  assert.equal(versions['data.js'], crypto.createHash('sha256').update('first data.js\n').digest('hex').slice(0, 12));
+  assert.match(firstHtml, new RegExp(`data\\.js\\?v=${versions['data.js']}`));
+  assert.match(firstHtml, new RegExp(`app\\.js\\?v=${versions['app.js']}`));
+  assert.match(firstHtml, new RegExp(`header\\.js\\?v=${versions['header.js']}`));
+
+  fs.writeFileSync(path.join(siteDir, 'data.js'), 'second data.js\n');
+  const changedVersions = syncI18nAssetVersions(siteDir);
+  const changedHtml = fs.readFileSync(path.join(siteDir, 'index.html'), 'utf8');
+  assert.notEqual(changedVersions['data.js'], versions['data.js']);
+  assert.match(changedHtml, new RegExp(`data\\.js\\?v=${changedVersions['data.js']}`));
+  assert.match(changedHtml, new RegExp(`app\\.js\\?v=${versions['app.js']}`));
+
+  syncI18nAssetVersions(siteDir);
+  assert.equal(fs.readFileSync(path.join(siteDir, 'index.html'), 'utf8'), changedHtml);
+});
+
+test('README autosync rebuilds after a push race and stages only README outputs', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'aifs-readme-autosync-'));
+  const origin = path.join(root, 'origin.git');
+  const checkout = path.join(root, 'checkout');
+  const racer = path.join(root, 'racer');
+  const script = workflowRunScript('commit + push if README changed');
+
+  try {
+    runChecked('git', ['init', '--bare', '--initial-branch=main', origin], root);
+    runChecked('git', ['init', '--initial-branch=main', checkout], root);
+    runChecked('git', ['config', 'user.name', 'fixture'], checkout);
+    runChecked('git', ['config', 'user.email', 'fixture@example.com'], checkout);
+    runChecked('git', ['config', 'commit.gpgSign', 'false'], checkout);
+    fs.mkdirSync(path.join(root, 'hooks'));
+    runChecked('git', ['config', 'core.hooksPath', path.join(root, 'hooks')], checkout);
+    fs.mkdirSync(path.join(checkout, 'scripts'));
+    fs.mkdirSync(path.join(checkout, 'i18n', 'zh'), { recursive: true });
+    fs.writeFileSync(path.join(checkout, '.gitignore'), 'catalog.json\n');
+    fs.writeFileSync(path.join(checkout, 'source.txt'), 'first\n');
+    fs.writeFileSync(path.join(checkout, 'README.md'), 'old readme\n');
+    fs.writeFileSync(path.join(checkout, 'i18n', 'zh', 'README.md'), 'old translation\n');
+    fs.writeFileSync(path.join(checkout, 'i18n', 'zh', 'manual.json'), '{"source":true}\n');
+    fs.writeFileSync(
+      path.join(checkout, 'scripts', 'build_catalog.py'),
+      "from pathlib import Path\nPath('catalog.json').write_text('catalog:' + Path('source.txt').read_text())\n"
+    );
+    fs.writeFileSync(
+      path.join(checkout, 'scripts', 'check_readme_counts.py'),
+      [
+        'import sys',
+        'from pathlib import Path',
+        "expected = 'readme:' + Path('source.txt').read_text()",
+        "if '--fix' in sys.argv:",
+        "    Path('README.md').write_text(expected)",
+        "elif Path('README.md').read_text() != expected:",
+        '    raise SystemExit(1)',
+      ].join('\n') + '\n'
+    );
+    fs.writeFileSync(
+      path.join(checkout, 'scripts', 'build_readme_i18n.py'),
+      [
+        'from pathlib import Path',
+        "source = Path('source.txt').read_text()",
+        "Path('i18n/zh/README.md').write_text('zh:' + source)",
+      ].join('\n') + '\n'
+    );
+    runChecked('git', ['add', '.'], checkout);
+    runChecked('git', ['commit', '-m', 'chore(readme): sync counts prior'], checkout);
+    runChecked('git', ['remote', 'add', 'origin', origin], checkout);
+    runChecked('git', ['push', '-u', 'origin', 'main'], checkout);
+
+    runChecked('python3', ['scripts/build_catalog.py'], checkout);
+    runChecked('python3', ['scripts/check_readme_counts.py', '--fix'], checkout);
+    runChecked('python3', ['scripts/build_readme_i18n.py'], checkout);
+    fs.writeFileSync(path.join(checkout, 'i18n', 'zh', 'manual.json'), '{"source":false}\n');
+
+    runChecked('git', ['clone', origin, racer], root);
+    runChecked('git', ['config', 'user.name', 'racer'], racer);
+    runChecked('git', ['config', 'user.email', 'racer@example.com'], racer);
+    runChecked('git', ['config', 'commit.gpgSign', 'false'], racer);
+    runChecked('git', ['config', 'core.hooksPath', path.join(root, 'hooks')], racer);
+    fs.writeFileSync(path.join(racer, 'source.txt'), 'raced\n');
+    runChecked('git', ['add', 'source.txt'], racer);
+    runChecked('git', ['commit', '-m', 'advance main during README build'], racer);
+    runChecked('git', ['push', 'origin', 'main'], racer);
+
+    const syncOutput = runChecked('bash', ['-eu', '-o', 'pipefail', '-c', script], checkout, {
+      BOT_COMMIT_PREFIX: 'chore(readme): sync counts',
+      GITHUB_REF: 'refs/heads/main',
+    });
+    assert.match(syncOutput, /push attempt 1 rejected; rebuilding from origin\/main/);
+    assert.equal(fs.readFileSync(path.join(checkout, 'README.md'), 'utf8'), 'readme:raced\n');
+    assert.equal(fs.readFileSync(path.join(checkout, 'i18n', 'zh', 'README.md'), 'utf8'), 'zh:raced\n');
+    assert.deepEqual(
+      runChecked('git', ['show', '--pretty=format:', '--name-only', 'HEAD'], checkout).trim().split('\n').sort(),
+      ['README.md', 'i18n/zh/README.md']
+    );
+    assert.equal(runChecked('git', ['status', '--short'], checkout).trim(), 'M i18n/zh/manual.json');
+
+    const commitsBefore = runChecked('git', ['rev-list', '--count', 'HEAD'], checkout).trim();
+    const settledOutput = runChecked('bash', ['-eu', '-o', 'pipefail', '-c', script], checkout, {
+      BOT_COMMIT_PREFIX: 'chore(readme): sync counts',
+      GITHUB_REF: 'refs/heads/main',
+    });
+    assert.match(settledOutput, /README.md \+ translations already in sync/);
+    assert.equal(runChecked('git', ['rev-list', '--count', 'HEAD'], checkout).trim(), commitsBefore);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('README autosync fails when every push attempt is rejected', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'aifs-readme-autosync-failure-'));
+  const origin = path.join(root, 'origin.git');
+  const checkout = path.join(root, 'checkout');
+  const bin = path.join(root, 'bin');
+  const script = workflowRunScript('commit + push if README changed');
+
+  try {
+    runChecked('git', ['init', '--bare', '--initial-branch=main', origin], root);
+    runChecked('git', ['init', '--initial-branch=main', checkout], root);
+    fs.mkdirSync(path.join(checkout, 'scripts'));
+    fs.mkdirSync(path.join(checkout, 'i18n', 'zh'), { recursive: true });
+    fs.mkdirSync(bin);
+    runChecked('git', ['config', 'user.name', 'fixture'], checkout);
+    runChecked('git', ['config', 'user.email', 'fixture@example.com'], checkout);
+    runChecked('git', ['config', 'commit.gpgSign', 'false'], checkout);
+    fs.mkdirSync(path.join(root, 'hooks'));
+    runChecked('git', ['config', 'core.hooksPath', path.join(root, 'hooks')], checkout);
+    fs.writeFileSync(path.join(checkout, 'source.txt'), 'new\n');
+    fs.writeFileSync(path.join(checkout, 'README.md'), 'old\n');
+    fs.writeFileSync(path.join(checkout, 'i18n', 'zh', 'README.md'), 'old\n');
+    fs.writeFileSync(path.join(checkout, 'scripts', 'build_catalog.py'), '\n');
+    fs.writeFileSync(
+      path.join(checkout, 'scripts', 'check_readme_counts.py'),
+      "from pathlib import Path\nPath('README.md').write_text('readme:' + Path('source.txt').read_text())\n"
+    );
+    fs.writeFileSync(
+      path.join(checkout, 'scripts', 'build_readme_i18n.py'),
+      "from pathlib import Path\nPath('i18n/zh/README.md').write_text('zh:' + Path('source.txt').read_text())\n"
+    );
+    runChecked('git', ['add', '.'], checkout);
+    runChecked('git', ['commit', '-m', 'initial'], checkout);
+    runChecked('git', ['remote', 'add', 'origin', origin], checkout);
+    runChecked('git', ['push', '-u', 'origin', 'main'], checkout);
+    runChecked('python3', ['scripts/check_readme_counts.py', '--fix'], checkout);
+    runChecked('python3', ['scripts/build_readme_i18n.py'], checkout);
+
+    const realGit = runChecked('sh', ['-c', 'command -v git'], checkout).trim();
+    const gitWrapper = path.join(bin, 'git');
+    fs.writeFileSync(
+      gitWrapper,
+      `#!/bin/sh\nif [ "$1" = push ]; then exit 1; fi\nexec ${JSON.stringify(realGit)} "$@"\n`
+    );
+    fs.chmodSync(gitWrapper, 0o755);
+    const sleepWrapper = path.join(bin, 'sleep');
+    fs.writeFileSync(sleepWrapper, '#!/bin/sh\nexit 0\n');
+    fs.chmodSync(sleepWrapper, 0o755);
+
+    const result = runCommand('bash', ['-eu', '-o', 'pipefail', '-c', script], checkout, {
+      BOT_COMMIT_PREFIX: 'chore(readme): sync counts',
+      GITHUB_REF: 'refs/heads/main',
+      PATH: bin + path.delimiter + process.env.PATH,
+    });
+    assert.equal(result.status, 1, result.stdout + result.stderr);
+    assert.match(result.stderr, /push failed after 5 attempts; README translations remain stale/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('site autosync stages all tracked build outputs, pushes, and then stays clean', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'aifs-site-autosync-'));
+  const origin = path.join(root, 'origin.git');
+  const checkout = path.join(root, 'checkout');
+  const racer = path.join(root, 'racer');
+  const script = workflowRunScript('commit + push if generated site artifacts changed');
+
+  try {
+    runChecked('git', ['init', '--bare', '--initial-branch=main', origin], root);
+    runChecked('git', ['init', '--initial-branch=main', checkout], root);
+    runChecked('git', ['config', 'user.name', 'fixture'], checkout);
+    runChecked('git', ['config', 'user.email', 'fixture@example.com'], checkout);
+    runChecked('git', ['config', 'commit.gpgSign', 'false'], checkout);
+    fs.mkdirSync(path.join(root, 'hooks'));
+    runChecked('git', ['config', 'core.hooksPath', path.join(root, 'hooks')], checkout);
+    fs.mkdirSync(path.join(checkout, 'site'));
+    fs.writeFileSync(path.join(checkout, 'README.md'), 'old count\n');
+    fs.writeFileSync(path.join(checkout, 'site', 'data.js'), 'old data\n');
+    fs.writeFileSync(path.join(checkout, 'site', 'cmdpalette.js'), 'old count\n');
+    fs.writeFileSync(path.join(checkout, 'site', 'index.html'), '<script src="data.js?v=old"></script>\n');
+    fs.writeFileSync(path.join(checkout, 'site', 'deleted.html'), 'obsolete generated page\n');
+    fs.writeFileSync(path.join(checkout, 'site', 'source.js'), 'source code\n');
+    fs.writeFileSync(path.join(checkout, 'source.txt'), 'first\n');
+    fs.writeFileSync(
+      path.join(checkout, 'site', 'build.js'),
+      [
+        "const fs = require('node:fs');",
+        "const crypto = require('node:crypto');",
+        "const source = fs.readFileSync('source.txt', 'utf8').trim();",
+        "const data = 'data:' + source + '\\n';",
+        "fs.writeFileSync('README.md', 'readme:' + source + '\\n');",
+        "fs.writeFileSync('site/data.js', data);",
+        "fs.writeFileSync('site/cmdpalette.js', 'palette:' + source + '\\n');",
+        "const version = crypto.createHash('sha256').update(data).digest('hex').slice(0, 12);",
+        `fs.writeFileSync('site/index.html', '<script src="data.js?v=' + version + '"></script>\\n');`,
+        "fs.rmSync('site/deleted.html', { force: true });",
+      ].join('\n')
+    );
+    runChecked('git', ['add', '.'], checkout);
+    runChecked('git', ['commit', '-m', 'initial'], checkout);
+    runChecked('git', ['remote', 'add', 'origin', origin], checkout);
+    runChecked('git', ['push', '-u', 'origin', 'main'], checkout);
+
+    runChecked('node', ['site/build.js'], checkout);
+    fs.writeFileSync(path.join(checkout, 'site', 'source.js'), 'unrelated edit\n');
+    runChecked('git', ['clone', origin, racer], root);
+    runChecked('git', ['config', 'user.name', 'racer'], racer);
+    runChecked('git', ['config', 'user.email', 'racer@example.com'], racer);
+    runChecked('git', ['config', 'commit.gpgSign', 'false'], racer);
+    runChecked('git', ['config', 'core.hooksPath', path.join(root, 'hooks')], racer);
+    fs.writeFileSync(path.join(racer, 'source.txt'), 'raced\n');
+    runChecked('git', ['add', 'source.txt'], racer);
+    runChecked('git', ['commit', '-m', 'advance main during site build'], racer);
+    runChecked('git', ['push', 'origin', 'main'], racer);
+
+    const syncOutput = runChecked('bash', ['-eu', '-o', 'pipefail', '-c', script], checkout, {
+      BOT_COMMIT_PREFIX: 'chore(site): rebuild generated artifacts',
+      GITHUB_REF: 'refs/heads/main',
+    });
+    assert.match(syncOutput, /push attempt 1 rejected; rebuilding from origin\/main/);
+    assert.equal(runChecked('git', ['log', '-1', '--pretty=%s'], checkout).trim(), 'chore(site): rebuild generated artifacts');
+    assert.equal(
+      runChecked('git', ['rev-parse', 'HEAD'], checkout).trim(),
+      runChecked('git', ['--git-dir', origin, 'rev-parse', 'refs/heads/main'], root).trim()
+    );
+    assert.equal(fs.readFileSync(path.join(checkout, 'site', 'data.js'), 'utf8'), 'data:raced\n');
+    assert.deepEqual(
+      runChecked('git', ['show', '--pretty=format:', '--name-only', 'HEAD'], checkout).trim().split('\n').sort(),
+      ['README.md', 'site/cmdpalette.js', 'site/data.js', 'site/deleted.html', 'site/index.html']
+    );
+    assert.equal(runChecked('git', ['status', '--short'], checkout).trim(), 'M site/source.js');
+
+    const commitsBefore = runChecked('git', ['rev-list', '--count', 'HEAD'], checkout).trim();
+    runChecked('node', ['site/build.js'], checkout);
+    const settledOutput = runChecked('bash', ['-eu', '-o', 'pipefail', '-c', script], checkout, {
+      BOT_COMMIT_PREFIX: 'chore(site): rebuild generated artifacts',
+      GITHUB_REF: 'refs/heads/main',
+    });
+    assert.match(settledOutput, /generated site artifacts already in sync/);
+    assert.equal(runChecked('git', ['rev-list', '--count', 'HEAD'], checkout).trim(), commitsBefore);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('site autosync fails when every push attempt is rejected', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'aifs-site-autosync-failure-'));
+  const origin = path.join(root, 'origin.git');
+  const checkout = path.join(root, 'checkout');
+  const bin = path.join(root, 'bin');
+  const script = workflowRunScript('commit + push if generated site artifacts changed');
+
+  try {
+    runChecked('git', ['init', '--bare', '--initial-branch=main', origin], root);
+    runChecked('git', ['init', '--initial-branch=main', checkout], root);
+    fs.mkdirSync(path.join(checkout, 'site'));
+    fs.mkdirSync(bin);
+    runChecked('git', ['config', 'user.name', 'fixture'], checkout);
+    runChecked('git', ['config', 'user.email', 'fixture@example.com'], checkout);
+    runChecked('git', ['config', 'commit.gpgSign', 'false'], checkout);
+    runChecked('git', ['config', 'core.hooksPath', path.join(root, 'hooks')], checkout);
+    fs.mkdirSync(path.join(root, 'hooks'));
+    fs.writeFileSync(path.join(checkout, 'README.md'), 'old\n');
+    fs.writeFileSync(path.join(checkout, 'site', 'data.js'), 'old\n');
+    fs.writeFileSync(path.join(checkout, 'site', 'cmdpalette.js'), 'old\n');
+    fs.writeFileSync(path.join(checkout, 'site', 'index.html'), 'old\n');
+    fs.writeFileSync(path.join(checkout, 'site', 'build.js'), "require('node:fs').writeFileSync('site/data.js', 'new\\n');\n");
+    runChecked('git', ['add', '.'], checkout);
+    runChecked('git', ['commit', '-m', 'initial'], checkout);
+    runChecked('git', ['remote', 'add', 'origin', origin], checkout);
+    runChecked('git', ['push', '-u', 'origin', 'main'], checkout);
+    fs.writeFileSync(path.join(checkout, 'site', 'data.js'), 'new\n');
+
+    const realGit = runChecked('sh', ['-c', 'command -v git'], checkout).trim();
+    const gitWrapper = path.join(bin, 'git');
+    fs.writeFileSync(
+      gitWrapper,
+      `#!/bin/sh\nif [ "$1" = push ]; then exit 1; fi\nexec ${JSON.stringify(realGit)} "$@"\n`
+    );
+    fs.chmodSync(gitWrapper, 0o755);
+    const sleepWrapper = path.join(bin, 'sleep');
+    fs.writeFileSync(sleepWrapper, '#!/bin/sh\nexit 0\n');
+    fs.chmodSync(sleepWrapper, 0o755);
+
+    const result = runCommand('bash', ['-eu', '-o', 'pipefail', '-c', script], checkout, {
+      BOT_COMMIT_PREFIX: 'chore(site): rebuild generated artifacts',
+      GITHUB_REF: 'refs/heads/main',
+      PATH: bin + path.delimiter + process.env.PATH,
+    });
+    assert.equal(result.status, 1, result.stdout + result.stderr);
+    assert.match(result.stderr, /push failed after 5 attempts; generated site artifacts remain stale/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test('build-time SEO manifests cover every readable lesson and expose canonical no-JavaScript discovery links', () => {
@@ -549,6 +2020,7 @@ test('build-time SEO manifests cover every readable lesson and expose canonical 
     }
   }
   const expectedFromTrackIds = new Map();
+  const expectedSourcePrefix = 'https://github.com/' + resolveRepository(process.env) + '/';
   for (const track of certifications.tracks) {
     for (const lesson of track.lessons) {
       if (lesson.path.startsWith('certifications/')) continue;
@@ -575,7 +2047,10 @@ test('build-time SEO manifests cover every readable lesson and expose canonical 
     assert.ok(entry.excerpt.split(/\s+/).length <= 220);
     assert.match(entry.canonicalUrl, /^https:\/\/aiengineeringfromscratch\.com\/lesson\?path=/);
     assert.doesNotMatch(entry.canonicalUrl, /lesson\.html|[&?](?:track|learningPath)=/);
-    assert.match(entry.sourceUrl, /^https:\/\/github\.com\/rohitg00\/ai-engineering-from-scratch\//);
+    assert.ok(
+      entry.sourceUrl.startsWith(expectedSourcePrefix),
+      'source URL should follow the active repository: ' + entry.sourceUrl
+    );
     assert.ok(['course', 'certification'].includes(entry.context.kind));
     assert.deepEqual(entry.learningPathIds, (expectedLearningPathIds.get(lessonPath) || []).sort());
     assert.deepEqual(entry.fromTrackIds, (expectedFromTrackIds.get(lessonPath) || []).sort());
@@ -641,6 +2116,33 @@ test('build-time SEO manifests cover every readable lesson and expose canonical 
   assert.ok(longDocument.sourceWordCount >= 180);
   assert.ok(longDocument.excerpt.split(/\s+/).length >= 180);
   assert.ok(longDocument.excerpt.split(/\s+/).length <= 220);
+});
+
+test('site startup assets remain inside a GitHub project Pages base path', () => {
+  const projectRoot = new URL('https://example.github.io/ai-engineering-from-scratch/');
+  const requiredAssets = [
+    'build-meta.js',
+    'langs.js',
+    'data.js',
+    'content-source.js',
+  ];
+  const lessonHtml = fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8');
+  const lessonAssets = markupAssetUrls(lessonHtml).map(target => new URL(target, projectRoot).pathname);
+  for (const asset of requiredAssets) {
+    assert.ok(
+      lessonAssets.includes(projectRoot.pathname + asset),
+      'lesson.html is missing a script/link reference for ' + asset
+    );
+  }
+
+  for (const page of fs.readdirSync(__dirname).filter(name => name.endsWith('.html'))) {
+    const html = fs.readFileSync(path.join(__dirname, page), 'utf8');
+    assertProjectPagesAssetUrls(page, html, projectRoot);
+  }
+  assert.throws(
+    () => assertProjectPagesAssetUrls('fixture.html', "<script src='/app.js'></script>", projectRoot),
+    /root-relative asset \/app\.js/
+  );
 });
 
 test('site discovery emits one bundle linked to SKILL.md and preserves flat records', t => {
@@ -1047,6 +2549,45 @@ test('repository Agent Skills path routes 22 to 24 and keeps 23 optional', () =>
   assert.equal(Object.hasOwn(poisoningPreflight, 'path'), false);
 });
 
+test('repository phase directories and README phase inventory stay aligned', () => {
+  const root = path.resolve(__dirname, '..');
+  const roadmap = parseRoadmap(fs.readFileSync(path.join(root, 'ROADMAP.md'), 'utf8'));
+  const phases = parseReadme(fs.readFileSync(path.join(root, 'README.md'), 'utf8'), roadmap);
+  const phaseDirectories = fs.readdirSync(path.join(root, 'phases'), { withFileTypes: true })
+    .filter(entry => entry.isDirectory() && /^\d{2}-/.test(entry.name));
+  const directoryIds = phaseDirectories
+    .map(entry => Number(entry.name.slice(0, 2)))
+    .sort((left, right) => left - right);
+  assert.deepEqual(phases.map(phase => phase.id), directoryIds);
+
+  for (const phase of phases) {
+    const phaseDirectory = phaseDirectories.find(entry => Number(entry.name.slice(0, 2)) === phase.id);
+    assert.ok(phaseDirectory, `README phase ${phase.id} has no phase directory`);
+    const linkedLessonPaths = phase.lessons.map(lesson => {
+      const match = lesson.url && lesson.url.match(/(phases\/[^/?#]+\/[^/?#]+)/);
+      assert.ok(match, `README lesson ${phase.id}/${lesson.name} is missing a canonical lesson link`);
+      return match[1];
+    }).sort();
+    const lessonDirectories = fs.readdirSync(
+      path.join(root, 'phases', phaseDirectory.name),
+      { withFileTypes: true }
+    )
+      .filter(entry => entry.isDirectory() && /^\d{2}-/.test(entry.name))
+      .map(entry => `phases/${phaseDirectory.name}/${entry.name}`)
+      .sort();
+    assert.equal(
+      new Set(linkedLessonPaths).size,
+      linkedLessonPaths.length,
+      `README contains duplicate lesson links in ${phaseDirectory.name}`
+    );
+    assert.deepEqual(
+      linkedLessonPaths,
+      lessonDirectories,
+      `README lesson links do not match ${phaseDirectory.name}`
+    );
+  }
+});
+
 test('optional MCP capstone keeps its prerequisite gate in every lesson reader surface', () => {
   const root = path.resolve(__dirname, '..');
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'learning-paths', 'model-context-protocol.json'), 'utf8'));
@@ -1444,7 +2985,8 @@ test('homepage preserves live GitHub CTAs and the motion-aware learner marquee',
   assert.match(learnerStyles[0], /\.marquee\.is-ready \.marquee-track\s*\{[\s\S]*?animation: marquee-left var\(--marquee-dur, 36s\) linear infinite/);
   assert.match(learnerStyles[0], /@keyframes marquee-left\s*\{\s*to\s*\{\s*transform: translateX\(-50%\)/);
   assert.match(homepage, /querySelectorAll\('\[data-marquee\]'\)/);
-  assert.match(homepage, /clone = half\.cloneNode\(true\);[\s\S]*?clone\.setAttribute\('aria-hidden', 'true'\);[\s\S]*?track\.appendChild\(clone\)/);
+  assert.match(homepage, /marquee\._aifsSourceHalf = half\.cloneNode\(true\)/);
+  assert.match(homepage, /clone = marquee\._aifsSourceHalf\.cloneNode\(true\);[\s\S]*?clone\.setAttribute\('aria-hidden', 'true'\);[\s\S]*?track\.appendChild\(clone\)/);
   assert.match(homepage, /marquee\.classList\.add\('is-ready'\)/);
 
   assert.match(learnerStyles[0], /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.marquee\s*\{[\s\S]*?overflow-x: auto/);
@@ -1566,6 +3108,15 @@ test('website motion contracts keep interaction state stable and compositor-frie
   assert.match(ttsSource, /if \(event\.matches\) commitDragInertiaForReducedMotion\(\)/);
   assert.match(ttsSource, /reducedMotion\.addEventListener\('change', reducedMotionListener\)/);
 
+  assert.match(ttsSource, /function pageLocale\(\)[\s\S]*?contentRoot\(state\.scope\)[\s\S]*?getAttribute\('lang'\)/);
+  assert.match(ttsSource, /function refreshLanguage\(\)[\s\S]*?state\.forcedLocal = null;[\s\S]*?state\.stalls = 0;[\s\S]*?state\.idleTicks = 0;/);
+  assert.match(ttsSource, /function refreshQueue\(restartIfMissing\)[\s\S]*?fresh\[keyIndex\]\.key === current\.key[\s\S]*?Math\.min\(current\.part \|\| 0, keyedChunks\.length - 1\)/);
+  assert.match(ttsSource, /function resume\(\)[\s\S]*?synth\.resume\(\);[\s\S]*?if \(!state\.utterance\) speakCurrent\(\)/);
+  assert.match(ttsSource, /function selectedVoice\(locale\)[\s\S]*?sameLanguage\(all\[i\], locale\)/);
+  assert.match(ttsSource, /function localVoice\(\)[\s\S]*?sameLanguage\(all\[i\], locale\)[\s\S]*?return null;/);
+  assert.match(ttsSource, /aifs:content-language-change', refreshContentLanguage/);
+  assert.match(roadmapSource, /'data-tts-key': 'roadmap-phase-' \+ phase\.id/);
+
   assert.match(roadmapSource, /group\.addEventListener\('keydown'[\s\S]*?togglePhaseSelection\(phase\.id, \{ animate: false \}\)/);
   assert.match(roadmapSource, /jump\.addEventListener\('change'[\s\S]*?selectPhase\(id, \{ updateHistory: true, animate: false \}\)/);
   assert.match(roadmapSource, /event\.key === 'Escape'[\s\S]*?clearSelection\(true, \{ animate: false \}\)/);
@@ -1599,6 +3150,44 @@ test('TTS continuation accepts canonical and legacy lesson routes under one rout
   assert.equal(context.isLessonContinuationLink(link(origin + '/lesson?' + query)), true);
   assert.equal(context.isLessonContinuationLink(link(origin + '/lesson.html?' + query)), true);
   assert.equal(context.isLessonContinuationLink(link(origin + '/certification?id=claude-architect')), false);
+});
+
+test('localized interaction helpers stay language-aware and recoverable', () => {
+  const appSource = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8');
+  const paletteSource = fs.readFileSync(path.join(__dirname, 'cmdpalette.js'), 'utf8');
+  const ttsSource = fs.readFileSync(path.join(__dirname, 'tts.js'), 'utf8');
+
+  assert.match(appSource, /var defaultLabel = 'copy'/);
+  assert.match(appSource, /var defaultAriaLabel = btn\.id === 'installCopy' \? 'Copy the install command' : 'Copy command'/);
+  assert.match(appSource, /function resetCopyState\(\)[\s\S]*?label\.textContent = tr\(defaultLabel\)[\s\S]*?tr\(defaultAriaLabel\)/);
+  assert.match(appSource, /addEventListener\('aifs:language-change'[\s\S]*?clearTimeout\(revertTimer\)[\s\S]*?resetCopyState\(\)/);
+  assert.match(appSource, /function confirmCopied\(\)[\s\S]*?tr\('copied'\)[\s\S]*?tr\('Command copied'\)/);
+  assert.match(appSource, /function reportCopyFailure\(\)[\s\S]*?tr\('retry'\)[\s\S]*?tr\('Copy failed\. Try again'\)/);
+
+  assert.doesNotMatch(paletteSource, /_zhSearchFailed/);
+  assert.match(paletteSource, /function isCertificationSurface\(\)/);
+  assert.match(paletteSource, /if \(isCertificationSurface\(\)\) return 'en'/);
+  assert.match(paletteSource, /function open\(\)[\s\S]*?currentLang\(\) === 'zh'[\s\S]*?ensureZhSearchAsset\(\)/);
+  assert.doesNotMatch(paletteSource, /function _init\(\)[\s\S]*?buildIndex\(\);\s*ensureZhSearchAsset\(\);/);
+
+  assert.match(ttsSource, /var isChinese = languageBase\(pageLocale\(\)\) === 'zh'/);
+  assert.match(ttsSource, /isChinese \? ' 指向 ' : ' leads to '/);
+  assert.match(ttsSource, /isChinese \? ' 小于或等于 ' : ' less than or equal to '/);
+  assert.match(ttsSource, /isChinese \? ' 大于或等于 ' : ' greater than or equal to '/);
+});
+
+test('catalog and glossary rebuild bilingual page indexes after language changes', () => {
+  const catalog = fs.readFileSync(path.join(__dirname, 'catalog.html'), 'utf8');
+  const glossary = fs.readFileSync(path.join(__dirname, 'glossary.html'), 'utf8');
+
+  assert.match(catalog, /function refreshLocalizedRows\(\)[\s\S]*?AIFS_I18n\.searchText\(searchValues\)/);
+  assert.match(catalog, /addEventListener\('aifs:language-change'[\s\S]*?refreshLocalizedRows\(\);[\s\S]*?render\(\)/);
+  assert.match(glossary, /function refreshLocalizedEntries\(\)[\s\S]*?AIFS_I18n\.searchText\(searchValues\)/);
+  assert.match(glossary, /addEventListener\('aifs:language-change'[\s\S]*?refreshLocalizedEntries\(\);[\s\S]*?renderGlossary\(\)/);
+  assert.ok(
+    glossary.indexOf('refreshLocalizedEntries();') < glossary.indexOf("var initialSlug = ''"),
+    'glossary must build its bilingual key map before resolving the initial hash'
+  );
 });
 
 test('learning path query and Enter fallback open the first result predictably', () => {
@@ -1687,8 +3276,19 @@ test('lesson reader keeps learning-path context and renders a copyable full-dept
   assert.doesNotMatch(lessonHtml, /git rev-parse --show-toplevel/);
   assert.match(lessonHtml, /lessonQuizCorrectAnswers\[qid\] = q\.correct/);
   assert.doesNotMatch(lessonHtml, /data-correct=/);
-  assert.match(lessonHtml, /In Codex use <code>check-understanding /);
-  assert.match(lessonHtml, /\/check-understanding/);
+  assert.equal((lessonHtml.match(/getQuizQuestions\(fallbackLang\), fallbackLang/g) || []).length, 2);
+  assert.match(lessonHtml, /function fallbackQuizLanguage\(\)/);
+  assert.doesNotMatch(lessonHtml, /getQuizQuestions\('en'\), 'en'/);
+  assert.match(lessonHtml, /lessonUiFormat\(\s*'Want a deeper quiz\? In Codex use \{codexCommand\}[^']+\{portableCommand\}'/);
+  assert.match(lessonHtml, /codexCommand: '<code>check-understanding /);
+  assert.match(lessonHtml, /claudeCommand: '<code>\/check-understanding /);
+  assert.match(lessonHtml, /lessonUiFormat\('Optional lesson\. \{done\} of \{total\} required lessons completed\.'/);
+  assert.match(lessonHtml, /lessonUiFormat\('\{done\} of \{total\} knowledge preflights confirmed\.'/);
+  assert.doesNotMatch(lessonHtml, /lessonUiText\('Optional lesson\. '\) \+ focusedDone/);
+  assert.doesNotMatch(lessonHtml, /focusedChecksDone \+ lessonUiText\(' of '\)/);
+  assert.match(lessonHtml, /lessonUiFormat\('\{count\}' \+ suffix, \{ count: count \}\)/);
+  assert.match(lessonHtml, /lessonUiFormat\('Ready for Phase \{number\}: \{name\}'/);
+  assert.doesNotMatch(lessonHtml, /currentLang\(\) === 'zh'/);
   assert.match(lessonHtml, /Act on this lesson/);
   assert.match(lessonHtml, /data-checkpoint="read"/);
   assert.match(lessonHtml, /data-checkpoint="built"/);

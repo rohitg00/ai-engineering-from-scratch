@@ -191,6 +191,33 @@ test('production lesson manifest yields one distinct server heading per URL', fu
   });
 });
 
+test('production lesson route preserves human-maintained languages from the registry', function () {
+  const repoRoot = path.join(__dirname, '..');
+  const registry = JSON.parse(fs.readFileSync(path.join(repoRoot, 'languages.json'), 'utf8'));
+  const manualLanguage = registry.languages.find(function (language) {
+    return language.code === 'zh';
+  });
+  const manifest = JSON.parse(fs.readFileSync(path.join(repoRoot, 'site', 'lesson-seo.json'), 'utf8'));
+  const lessonPath = Object.keys(manifest.lessons).find(function (candidate) {
+    return candidate.startsWith('phases/');
+  });
+
+  assert.ok(
+    manualLanguage && manualLanguage.manual && !manualLanguage.source && !manualLanguage.ci,
+    'languages.json should publish zh as a manual-only language'
+  );
+  assert.ok(lessonPath, 'production manifest should contain a phase lesson');
+
+  const query = new URLSearchParams({ path: lessonPath, lang: manualLanguage.code });
+  const response = invoke(lessonApi, {
+    method: 'GET',
+    url: `/lesson?${query.toString()}`,
+  });
+
+  assert.equal(response.statusCode, 200);
+  assert.equal(response.headers.location, undefined);
+});
+
 test('legacy lesson route keeps one navigation mode plus language and local TTS state', function () {
   const assets = makeAssets();
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });

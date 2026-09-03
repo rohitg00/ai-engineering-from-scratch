@@ -4,3 +4,9 @@ reviews:
   changelog: false
   release_notes: false
   collapse_walkthrough: true
+  finishing_touches:
+    docstrings:
+      enabled: false
+  pre_merge_checks:
+    docstrings:
+      mode: "off"

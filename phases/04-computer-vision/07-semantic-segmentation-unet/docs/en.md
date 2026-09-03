@@ -89,7 +89,7 @@ Both appear in the wild. For a first U-Net, bilinear is safer.
 
 For semantic segmentation with C classes, the model output is `(N, C, H, W)`. The target is `(N, H, W)` with integer class IDs. Cross-entropy is identical to the classification case, just applied at every spatial position:
 
-```
+```text
 Loss = mean over (n, h, w) of -log( softmax(logits[n, :, h, w])[target[n, h, w]] )
 ```
 
@@ -101,7 +101,7 @@ Cross-entropy treats every pixel equally. That is wrong when one class dominates
 
 Dice loss solves this by directly optimising the overlap between predicted and true mask:
 
-```
+```text
 Dice(p, y) = 2 * sum(p * y) / (sum(p) + sum(y) + epsilon)
 Dice_loss = 1 - Dice
 ```
@@ -110,7 +110,7 @@ where `p` is the sigmoid/softmax probability map for a class and `y` is the bina
 
 In practice, use the **combined loss**:
 
-```
+```text
 L = L_cross_entropy + lambda * L_dice       (lambda ~ 1)
 ```
 
@@ -261,47 +261,58 @@ Dice is computed per class then averaged (macro Dice). The `eps` prevents divisi
 
 ```python
 @torch.no_grad()
-def iou_per_class(logits, targets, num_classes):
+def intersection_union_per_class(logits, targets, num_classes):
     preds = logits.argmax(dim=1)
-    ious = torch.zeros(num_classes)
+    intersections = torch.zeros(num_classes, device=logits.device)
+    unions = torch.zeros(num_classes, device=logits.device)
     for c in range(num_classes):
         pred_c = (preds == c)
         true_c = (targets == c)
-        inter = (pred_c & true_c).sum().float()
-        union = (pred_c | true_c).sum().float()
-        ious[c] = (inter / union) if union > 0 else torch.tensor(float("nan"))
+        intersections[c] = (pred_c & true_c).sum()
+        unions[c] = (pred_c | true_c).sum()
+    return intersections, unions
+
+
+def iou_from_counts(intersections, unions):
+    ious = torch.full_like(intersections, float("nan"), dtype=torch.float32)
+    present = unions > 0
+    ious[present] = intersections[present].float() / unions[present].float()
     return ious
 ```
 
-Returns a vector of length C. `nan` marks classes absent from the batch — do not average over those when computing mIoU.
+Accumulate the intersection and union vectors across every validation batch, then call `iou_from_counts` once. This weights every pixel equally instead of giving a short final batch the same influence as a full batch. `nan` marks a class absent from the entire evaluated dataset.
 
 ### Step 6: Synthetic dataset for end-to-end verification
 
-Generate shapes on coloured backgrounds so the network has to learn shape, not pixel colour.
+Generate one to three shapes on independently randomised coloured backgrounds. Shape colours are sampled independently of circle/square class, so the model cannot solve the task by memorising a fixed palette. A scene can contain both classes.
 
 ```python
 import numpy as np
 from torch.utils.data import Dataset, DataLoader
 
 def synthetic_segmentation(num_samples=200, size=64, seed=0):
+    if size < 16:
+        raise ValueError("size must be at least 16 pixels")
+
     rng = np.random.default_rng(seed)
     images = np.zeros((num_samples, size, size, 3), dtype=np.float32)
     masks = np.zeros((num_samples, size, size), dtype=np.int64)
+    yy, xx = np.meshgrid(np.arange(size), np.arange(size), indexing="ij")
+    min_radius = max(3, size // 16)
+    max_radius = max(min_radius + 1, size // 5)
     for i in range(num_samples):
-        bg = rng.uniform(0, 1, (3,))
-        images[i] = bg
-        masks[i] = 0
-        num_shapes = rng.integers(1, 4)
+        images[i] = rng.uniform(0.1, 0.9, size=3)
+        num_shapes = int(rng.integers(1, 4))
         for _ in range(num_shapes):
             cls = int(rng.integers(1, 3))
-            color = rng.uniform(0, 1, (3,))
-            cx, cy = rng.integers(10, size - 10, size=2)
-            r = int(rng.integers(4, 12))
-            yy, xx = np.meshgrid(np.arange(size), np.arange(size), indexing="ij")
+            color = rng.uniform(0.05, 0.95, size=3)
+            radius = int(rng.integers(min_radius, max_radius + 1))
+            cx = int(rng.integers(radius, size - radius))
+            cy = int(rng.integers(radius, size - radius))
             if cls == 1:
-                mask = (xx - cx) ** 2 + (yy - cy) ** 2 < r ** 2
+                mask = (xx - cx) ** 2 + (yy - cy) ** 2 < radius ** 2
             else:
-                mask = (np.abs(xx - cx) < r) & (np.abs(yy - cy) < r)
+                mask = (np.abs(xx - cx) < radius) & (np.abs(yy - cy) < radius)
             images[i][mask] = color
             masks[i][mask] = cls
         images[i] += rng.normal(0, 0.02, images[i].shape)
@@ -331,7 +342,6 @@ Three classes: background (0), circles (1), squares (2). The network must learn 
 def train_one_epoch(model, loader, optimizer, device, num_classes):
     model.train()
     loss_sum, total = 0.0, 0
-    iou_sum = torch.zeros(num_classes)
     for x, y in loader:
         x, y = x.to(device), y.to(device)
         logits = model(x)
@@ -341,11 +351,25 @@ def train_one_epoch(model, loader, optimizer, device, num_classes):
         optimizer.step()
         loss_sum += loss.item() * x.size(0)
         total += x.size(0)
-        iou_sum += iou_per_class(logits, y, num_classes).nan_to_num(0)
-    return loss_sum / total, iou_sum / len(loader)
+    return loss_sum / total
+
+
+@torch.no_grad()
+def evaluate_iou(model, loader, device, num_classes):
+    model.eval()
+    intersections = torch.zeros(num_classes, device=device)
+    unions = torch.zeros(num_classes, device=device)
+    for x, y in loader:
+        x, y = x.to(device), y.to(device)
+        batch_intersections, batch_unions = intersection_union_per_class(
+            model(x), y, num_classes
+        )
+        intersections += batch_intersections
+        unions += batch_unions
+    return iou_from_counts(intersections, unions)
 ```
 
-Run this for 10-30 epochs on the synthetic dataset and watch mIoU climb past 0.9 for the shape classes. Note the `nan_to_num(0)` treats classes absent from a batch as zero; for accurate per-class IoU, mask by presence and use `torch.nanmean` across batches at evaluation time rather than averaging here.
+Run this for 10-30 epochs on the synthetic dataset and watch mIoU improve for the shape classes. Dataset-level count aggregation ensures batch size and class absence do not distort the reported IoU.
 
 ## Use It
 

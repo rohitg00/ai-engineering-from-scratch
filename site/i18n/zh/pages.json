@@ -1,0 +1,325 @@
+{
+  "strings": {
+    "every published lesson": "每一节已发布课程",
+    "Skip to content": "跳转到正文",
+    "Contents": "课程",
+    "Catalog": "课程目录",
+    "Roadmap": "路线图",
+    "Glossary": "术语表",
+    "About": "关于",
+    "GitHub stars": "GitHub 星标",
+    "Search (⌘K)": "搜索（⌘K）",
+    "Toggle theme": "切换主题",
+    "Curriculum navigation": "课程导航",
+    "From first principles to production AI.": "从第一性原理走到生产级 AI。",
+    "Twenty connected core phases form one top-to-bottom dependency graph. Follow the route downward, illuminate the prerequisites behind any phase, and continue exactly where your local progress left off.": "20 个相互衔接的核心阶段组成了一张自上而下的依赖图。沿着路线向下推进，点亮任一阶段背后的前置条件，并从你的本地进度中断处准确续上。",
+    "Roadmap summary": "路线图概览",
+    "Core phases": "核心阶段",
+    "Lessons": "课程",
+    "Your progress": "你的进度",
+    "Recommended next": "推荐下一步",
+    "Roadmap stages": "路线图分区",
+    "Four graph zones": "四个图谱分区",
+    "Jump down the map": "快速跳转到图谱下方",
+    "Foundations": "基础",
+    "FOUNDATIONS": "基础",
+    "Model disciplines": "模型专项",
+    "MODEL DISCIPLINES": "模型专项",
+    "Engineering systems": "工程系统",
+    "ENGINEERING SYSTEMS": "工程系统",
+    "Capstone proof": "综合项目验证",
+    "CAPSTONE PROOF": "综合项目验证",
+    "Route inspector": "路径查看器",
+    "NLP: FOUNDATIONS": "NLP：基础",
+    "TO ADVANCED": "进阶",
+    "INFRASTRUCTURE": "基础设施",
+    "& PRODUCTION": "与生产",
+    "ETHICS,": "伦理、",
+    "SAFETY & ALIGNMENT": "安全与对齐",
+    "ZONE 01": "分区 01",
+    "ZONE 02": "分区 02",
+    "ZONE 03": "分区 03",
+    "ZONE 04": "分区 04",
+    "Jump to a roadmap stage": "跳转到某个路线图区段",
+    "Interactive learning map": "交互式学习地图",
+    "Select a node to illuminate its route. Click the selected node or blank space to return to the full graph.": "选择一个节点以点亮它的完整路径。点击已选节点或空白区域即可返回全图。",
+    "Use the arrow keys to move between phase nodes. Press Enter or Space to select a phase. Press Escape to clear the route.": "使用方向键在阶段节点之间移动。按 Enter 或空格选择阶段，按 Escape 清除路径。",
+    "Find a phase": "查找阶段",
+    "Jump to a phase": "跳转到某个阶段",
+    "Graph zoom controls": "图谱缩放控件",
+    "Zoom out": "缩小",
+    "Zoom in": "放大",
+    "Back to full graph": "返回完整图谱",
+    "Scrollable curriculum dependency graph": "可滚动的课程依赖图",
+    "Focused route legend": "聚焦路径图例",
+    "Prerequisite route": "前置依赖路径",
+    "Downstream unlocks": "后续解锁内容",
+    "Scroll down to follow the route · drag sideways across branches": "向下滚动以沿路径查看，横向拖动以跨分支浏览",
+    "Selected phase details": "所选阶段详情",
+    "Roadmap data could not be loaded. Rebuild the site and refresh this page.": "路线图数据无法加载。请重新构建站点并刷新此页面。",
+    "Home": "首页",
+    "Report / Suggest": "报告问题 / 提出建议",
+    "About this project": "关于这个项目",
+    "AI Engineering from Scratch is a free, open-source curriculum that builds every core AI algorithm by hand. The core curriculum has {corePhases} phases and {coreLessons} lessons. Beyond it are {focusedLearningPaths} focused paths and {certificationTracks} Claude certification tracks with {certificationLessons} certification lessons.": "AI Engineering from Scratch 是一套免费、开源的课程体系，核心 AI 算法都要求你亲手实现。核心课程包含 {corePhases} 个阶段、{coreLessons} 节课程；此外还有 {focusedLearningPaths} 条专题路径，以及 {certificationTracks} 条 Claude 认证路线、共 {certificationLessons} 节认证课程。",
+    "AI Engineering from Scratch is a free, open-source curriculum that builds every core AI algorithm by hand. The core curriculum has 20 phases and 523 lessons. Beyond it are 12 focused paths and 4 Claude certification tracks with 33 certification lessons.": "AI Engineering from Scratch 是一套免费、开源的课程体系，核心 AI 算法都要求你亲手实现。核心课程包含 20 个阶段、523 节课程；此外还有 12 条专题路径，以及 4 条 Claude 认证路线、共 33 节认证课程。",
+    "Why it exists": "为什么会有这个项目",
+    "Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a framework demo somewhere else. You can ship a chatbot without being able to explain its loss curve, or wire a tool to an agent without knowing what attention does inside the model calling it.": "大多数 AI 学习资料都是零散拼接的。这里一篇论文，那里一篇微调文章，别处再来一个框架演示。你可以把聊天机器人上线，却解释不清它的损失曲线；也可以给智能体接好工具，却不知道发起调用的模型内部注意力机制到底在做什么。",
+    "This curriculum is the spine. Every algorithm gets written from raw math first, then run through the production library so you can see what the library was doing. By the time PyTorch shows up, you already know what it computes. Each lesson ends with a reusable artifact you keep: a prompt, a skill, an agent, or an MCP server.": "这套课程就是那条主干。每个算法都先从原始数学推导与手写实现开始，然后再通过生产级库跑一遍，让你看清库到底替你做了什么。等到 PyTorch 出场时，你已经知道它在算什么。每节课最后都会产出一个你能留用的可复用成果：提示词、技能、智能体，或一个 MCP server。",
+    "How it is made": "它是如何制作的",
+    "The lessons are authored with AI assistance and reviewed by a human against primary sources. Where a lesson states a fact, it cites the original: an RFC, a spec, or a research paper, not a secondary summary. Corrections are welcome and tracked in the open on GitHub.": "课程内容在 AI 辅助下编写，再由人工对照一手资料审阅。凡是课程中陈述事实的地方，引用的都是原始来源：RFC、规范或研究论文，而不是二手总结。欢迎提交修正，所有修改都在 GitHub 上公开跟踪。",
+    "The site itself is deliberately plain: hand-written HTML, CSS, and vanilla JavaScript, no framework. A single build script (site/build.js) reads the lesson Markdown in the repository and generates the catalog, search index, sitemap, and llms.txt on every deploy. Public curriculum counts are read from that generated data. It is hosted on Vercel.": "站点本身刻意保持朴素：手写 HTML、CSS 和原生 JavaScript，不使用框架。每次部署时，一个构建脚本（site/build.js）会读取仓库中的课程 Markdown，并生成目录、搜索索引、站点地图和 llms.txt。对外展示的课程统计数据也来自这些生成结果。站点托管在 Vercel 上。",
+    "The site itself is deliberately plain: hand-written HTML, CSS, and vanilla JavaScript, no framework. A single build script (": "站点本身刻意保持朴素：手写 HTML、CSS 和原生 JavaScript，不使用框架。一个构建脚本（",
+    ") reads the lesson Markdown in the repository and generates the catalog, search index, sitemap, and": "）会读取仓库中的课程 Markdown，并生成目录、搜索索引、站点地图和",
+    "on every deploy. Public curriculum counts are read from that generated data. It is hosted on Vercel.": "。每次部署都会运行这套构建流程；对外展示的课程统计数据来自生成结果。站点托管在 Vercel 上。",
+    "Who builds it": "谁在维护它",
+    "Maintained by Rohit Ghumare and contributors. It is MIT-licensed and free forever. There is no token, no course upsell, and no gated content.": "项目由 Rohit Ghumare 与贡献者共同维护。采用 MIT 许可证，永久免费。没有代币、没有课程加售，也没有任何门槛内容。",
+    "Maintained by": "维护者：",
+    "and contributors. It is MIT-licensed and free forever. There is no token, no course upsell, and no gated content.": "及其他贡献者。项目采用 MIT 许可证，永久免费。没有代币、没有课程加售，也没有任何门槛内容。",
+    "or": "或",
+    "Report": "反馈",
+    "Get involved": "参与进来",
+    "Read the source:": "阅读源码：",
+    "Found an error or have a lesson idea?": "发现错误，或有新的课程想法？",
+    "Open an issue": "提交 issue",
+    "Start learning:": "开始学习：",
+    "browse the catalog": "浏览课程目录",
+    "follow the roadmap": "沿路线图学习",
+    "Contact": "联系",
+    "Choose the right channel": "选择合适的渠道",
+    "AI Engineering from Scratch is maintained in public. The fastest way to reach the maintainer and contributors is through the project repository, where questions stay attached to the lesson or behavior they describe and can be answered in context.": "AI Engineering from Scratch 以公开方式维护。联系维护者和贡献者最快的方式是通过项目仓库，这样问题会与其对应的课程或行为绑定在一起，也就能在上下文中得到回答。",
+    "Project support": "项目支持",
+    "Report a bug or propose a lesson": "报告缺陷或提出课程建议",
+    "Start a discussion": "发起讨论",
+    "for learning questions, ideas, and community help.": "用于学习问题、想法交流和社区互助。",
+    "Contact the maintainer profile": "联系维护者主页",
+    "Open an issue when a published lesson, code example, quiz, translation, or website feature is incorrect or cannot be used as documented. Use a discussion when you need help understanding a concept, want to compare learning approaches, or have an idea that still needs community input. Keeping those conversations public makes the answer searchable for the next learner with the same question.": "如果已发布的课程、代码示例、测验、翻译或网站功能有误，或无法按文档说明使用，请提交 issue。如果你需要帮助理解某个概念、想比较不同学习方法，或有一个仍需社区讨论的想法，请发起 discussion。让这些交流保持公开，也方便下一位遇到相同问题的学习者搜索到答案。",
+    "The course does not operate learner accounts, paid enrollment, admissions, or an official credential service. Maintainers review public reports as time allows, so there is no guaranteed response time. A specific title, URL, command, environment, and observed result makes a report easier to reproduce and resolve.": "本课程不提供学习者账户、付费报名、招生或官方证书服务。维护者会在时间允许时查看公开反馈，因此不承诺响应时限。报告中若包含明确的标题、URL、命令、运行环境和实际结果，会更便于复现和解决问题。",
+    "for public project matters.": "用于与公开项目相关的事务。",
+    "Responsible reports": "负责任的报告方式",
+    "Do not publish secrets, private learner data, or credentials in an issue. For a security-sensitive report, open a private GitHub security advisory for the repository when the report involves a vulnerability. For ordinary content, accessibility, curriculum, or site issues, include the URL, expected behavior, actual behavior, and a minimal reproduction.": "不要在 issue 中公开秘密信息、学习者私有数据或凭证。若报告涉及漏洞等安全敏感问题，请为该仓库创建私有 GitHub security advisory。对于普通内容、无障碍、课程或站点问题，请附上 URL、预期行为、实际行为以及最小复现步骤。",
+    "Privacy": "隐私",
+    "AI Engineering from Scratch is a public, open-source curriculum. The lesson content is available without an account, payment, or learner profile. The site does not ask for passwords, API keys, or private project files.": "AI Engineering from Scratch 是一个公开的开源课程项目。课程内容无需账户、付费或学习者档案即可访问。站点不会要求你提供密码、API keys 或私有项目文件。",
+    "What the site receives": "站点会接收到什么",
+    "Hosting and analytics providers may receive ordinary request data such as an IP address, browser user agent, referrer, requested URL, and approximate timing. This information is used for delivery, security, aggregate traffic measurement, and diagnosing broken pages. The project does not sell learner data or use lesson activity to build advertising profiles.": "托管和分析服务提供商可能会接收到常规请求数据，例如 IP 地址、浏览器 user agent、来源页、请求 URL 和大致时间信息。这些数据用于内容分发、安全防护、汇总流量统计以及诊断页面故障。项目不会出售学习者数据，也不会利用课程活动构建广告画像。",
+    "Local progress": "本地进度",
+    "Optional reading progress, theme preferences, and quiz state are stored in the browser when the site offers those controls. They are not required to read the curriculum and are not submitted as an account record by the static site. Clearing site storage removes that local state.": "当站点提供相关功能时，可选的阅读进度、主题偏好和测验状态会存储在浏览器中。阅读课程并不依赖这些数据，它们也不会被静态站点提交为账户记录。清除站点存储后，这些本地状态会被移除。",
+    "Third-party links": "第三方链接",
+    "Lessons link to specifications, papers, repositories, and other resources. Those destinations have their own policies. Review them before submitting information. Questions about this policy can be raised through the contact page or the public repository.": "课程会链接到规范、论文、仓库及其他资源。这些目标站点有各自的政策，请在提交信息前先自行查看。若对本隐私说明有疑问，可通过联系页面或公开仓库提出。",
+    "Lessons link to specifications, papers, repositories, and other resources. Those destinations have their own policies. Review them before submitting information. Questions about this policy can be raised through the": "课程会链接到规范、论文、仓库及其他资源。这些目标站点有各自的政策，请在提交信息前先自行查看。若对本隐私说明有疑问，可通过",
+    "contact page": "联系页面",
+    "or the public repository.": "或公开仓库提出。",
+    "Developer resources": "开发者资源",
+    "This is the machine-readable entry point for AI Engineering from Scratch. The project is a static, open-source curriculum rather than a hosted application API. Agents and developer tools should start with llms.txt, which maps the lessons to their canonical pages and raw Markdown sources.": "这里是 AI Engineering from Scratch 面向机器读取的入口。该项目是一个静态开源课程体系，而不是托管型应用 API。智能体和开发工具应从 llms.txt 开始，它会把课程映射到对应的规范页面和原始 Markdown 来源。",
+    "This is the machine-readable entry point for AI Engineering from Scratch. The project is a static, open-source curriculum rather than a hosted application API. Agents and developer tools should start with": "这里是 AI Engineering from Scratch 面向机器读取的入口。该项目是一个静态开源课程体系，而不是托管型应用 API。智能体和开发工具应从",
+    ", which maps the lessons to their canonical pages and raw Markdown sources.": "开始；它会把课程映射到对应的规范页面和原始 Markdown 来源。",
+    "Stable resources": "稳定资源",
+    "/llms.txt is the agent-oriented curriculum map.": "/llms.txt 是面向智能体的课程地图。",
+    "/sitemap.xml lists canonical public URLs.": "/sitemap.xml 列出了规范公开 URL。",
+    "/openapi.json describes the read-only resource surface.": "/openapi.json 描述了只读资源接口面。",
+    "/catalog.html is the searchable human catalog.": "/catalog.html 是供人类检索的课程目录。",
+    "GitHub is the source of truth for lessons, code, quizzes, and reusable artifacts.": "GitHub 是课程、代码、测验和可复用成果的事实来源。",
+    "is the agent-oriented curriculum map.": "是面向智能体的课程地图。",
+    "lists canonical public URLs.": "列出了规范公开 URL。",
+    "describes the read-only resource surface.": "描述了只读资源接口面。",
+    "is the searchable human catalog.": "是供人类检索的课程目录。",
+    "is the source of truth for lessons, code, quizzes, and reusable artifacts.": "是课程、代码、测验和可复用成果的事实来源。",
+    "Markdown negotiation": "Markdown 协商",
+    "Requests for the homepage or major navigation routes with Accept: text/markdown receive the agent map with Content-Type: text/markdown. Responses vary on Accept so a cache cannot mix the HTML and Markdown representations.": "当首页或主要导航路由收到 `Accept: text/markdown` 请求时，会返回智能体地图，并带上 `Content-Type: text/markdown`。响应会随 `Accept` 变化，因此缓存不会把 HTML 与 Markdown 表示混在一起。",
+    "Requests for the homepage or major navigation routes with": "当首页或主要导航路由收到",
+    "receive the agent map with": "请求时，会返回智能体地图，并带上",
+    ". Responses vary on": "。响应会随",
+    "so a cache cannot mix the HTML and Markdown representations.": "变化，因此缓存不会把 HTML 与 Markdown 表示混在一起。",
+    "MCP status": "MCP 状态",
+    "The website does not currently expose a hosted MCP server or authenticated product API. The curriculum does teach how to build and operate MCP servers, and those lesson artifacts live in the repository. A remote Streamable HTTP MCP endpoint would require a separate product decision, authentication policy, and operational owner.": "该网站目前没有对外提供托管型 MCP server，也没有带鉴权的产品 API。不过课程本身会教授如何构建和运维 MCP servers，相应成果都在仓库里。若要提供远程的 Streamable HTTP MCP endpoint，还需要单独的产品决策、鉴权策略和运维责任人。",
+    "Page not found": "页面不存在",
+    "This path does not exist.": "这个路径不存在。",
+    "Try the sitemap: /sitemap.xml": "可尝试站点地图：/sitemap.xml",
+    "Try the agent index: /llms.txt": "可尝试智能体索引：/llms.txt",
+    "Try the catalog: /catalog.html": "可尝试课程目录：/catalog.html",
+    "Try the developer resources: /developer.html": "可尝试开发者资源页：/developer.html",
+    "AI Engineering from Scratch · open source · free forever.": "AI Engineering from Scratch · 开源 · 永久免费。",
+    "© 2026 · open source · free forever": "© 2026 · 开源 · 永久免费",
+    "Developer resources · AI Engineering from Scratch": "开发者资源 · AI Engineering from Scratch",
+    "Privacy · AI Engineering from Scratch": "隐私 · AI Engineering from Scratch",
+    "Contact · AI Engineering from Scratch": "联系 · AI Engineering from Scratch",
+    "About · AI Engineering from Scratch": "关于 · AI Engineering from Scratch",
+    "Roadmap - AI Engineering from Scratch": "路线图 - AI Engineering from Scratch",
+    "About - AI Engineering from Scratch": "关于 - AI Engineering from Scratch",
+    "Roadmap · AI Engineering from Scratch": "路线图 · AI Engineering from Scratch",
+    "Interactive learning roadmap for the complete AI engineering curriculum across 20 connected phases. Trace prerequisites, see what each phase unlocks, and continue from your local progress.": "完整 AI 工程课程的交互式学习路线图，覆盖 20 个彼此相连的阶段。追踪前置依赖，查看每个阶段会解锁什么，并从你的本地进度继续前进。",
+    "Trace every prerequisite, find your next phase, and move from first principles to production AI.": "追踪每一条前置依赖，找到你的下一阶段，从第一性原理走向生产级 AI。",
+    "An interactive learning map across 20 connected phases.": "一张覆盖 20 个相连阶段的交互式学习地图。",
+    "What AI Engineering from Scratch is, why it exists, who builds it, and how the site is made. A free, open-source, MIT-licensed curriculum.": "了解 AI Engineering from Scratch 是什么、为何而做、由谁构建，以及站点如何搭建。这是一套免费、开源、采用 MIT 许可证的课程体系。",
+    "Why this curriculum exists, who builds it, and how the site is made. Free, open source, MIT.": "了解这套课程为何存在、由谁构建，以及站点如何搭建。免费、开源、MIT。",
+    "Why this curriculum exists, who builds it, and how the site is made.": "了解这套课程为何存在、由谁构建，以及站点如何搭建。",
+    "Contact the maintainer and contributors of AI Engineering from Scratch through the public project channels.": "通过公开项目渠道联系 AI Engineering from Scratch 的维护者与贡献者。",
+    "Privacy information for the AI Engineering from Scratch curriculum website.": "AI Engineering from Scratch 课程网站的隐私信息。",
+    "Machine-readable developer resources, public URLs, OpenAPI description, sitemap, and agent integration notes for AI Engineering from Scratch.": "AI Engineering from Scratch 的机器可读开发者资源、公开 URL、OpenAPI 描述、站点地图与智能体集成说明。",
+    "Agents": "智能体",
+    "Zone {number}": "分区 {number}",
+    "ZONE {number}": "分区 {number}",
+    "Phase {number}": "阶段 {number}",
+    "PHASE {number}": "阶段 {number}",
+    "Phase {phase}: {name}": "阶段 {phase}：{name}",
+    "Phase {phase}: {name}.": "阶段 {phase}：{name}。",
+    "{done}/{total} COMPLETE": "{done}/{total} 已完成",
+    "{done} of {total} lessons completed.": "已完成 {total} 节课中的 {done} 节。",
+    "Direct prerequisites: {items}.": "直接前置依赖：{items}。",
+    "Immediately unlocks: {items}.": "会立即解锁：{items}。",
+    "Phase {phase} selected. {ancestors} prerequisite phases and {descendants} downstream phases highlighted.": "已选择阶段 {phase}。已高亮 {ancestors} 个前置阶段和 {descendants} 个后续阶段。"
+  },
+  "patterns": [
+    {
+      "exact": "Zone {number}",
+      "replacement": "分区 {number}"
+    },
+    {
+      "exact": "Phase {number}",
+      "replacement": "阶段 {number}"
+    },
+    {
+      "exact": "PHASE {number}",
+      "replacement": "阶段 {number}"
+    },
+    {
+      "exact": "{phase} · {name}",
+      "replacement": "{phase} · {name}"
+    },
+    {
+      "exact": "Phase {phase} · {name}",
+      "replacement": "阶段 {phase} · {name}"
+    },
+    {
+      "exact": "Phase {phase}: {name}",
+      "replacement": "阶段 {phase}：{name}"
+    },
+    {
+      "exact": "{count} lessons",
+      "replacement": "{count} 节课"
+    },
+    {
+      "exact": "{done} / {total}",
+      "replacement": "{done} / {total}"
+    },
+    {
+      "exact": "{done} / {total} COMPLETE",
+      "replacement": "{done} / {total} 已完成"
+    },
+    {
+      "exact": "{done}/{total} COMPLETE",
+      "replacement": "{done}/{total} 已完成"
+    },
+    {
+      "exact": "{done} of {total} lessons completed.",
+      "replacement": "已完成 {total} 节课中的 {done} 节。"
+    },
+    {
+      "exact": "Direct prerequisites: {items}.",
+      "replacement": "直接前置依赖：{items}。"
+    },
+    {
+      "exact": "Immediately unlocks: {items}.",
+      "replacement": "会立即解锁：{items}。"
+    },
+    {
+      "exact": "This is the starting phase.",
+      "replacement": "这是起始阶段。"
+    },
+    {
+      "exact": "This is a final destination.",
+      "replacement": "这是最终阶段。"
+    },
+    {
+      "exact": "Complete",
+      "replacement": "已完成"
+    },
+    {
+      "exact": "In progress",
+      "replacement": "进行中"
+    },
+    {
+      "exact": "Ready",
+      "replacement": "可开始"
+    },
+    {
+      "exact": "Upcoming",
+      "replacement": "即将开始"
+    },
+    {
+      "exact": "Selected",
+      "replacement": "已选中"
+    },
+    {
+      "exact": "Prerequisite",
+      "replacement": "前置依赖"
+    },
+    {
+      "exact": "Unlocks",
+      "replacement": "后续解锁"
+    },
+    {
+      "exact": "Route focus cleared.",
+      "replacement": "已清除路径聚焦。"
+    },
+    {
+      "exact": "No roadmap phase matches this link.",
+      "replacement": "这个链接没有对应的路线图阶段。"
+    },
+    {
+      "exact": "Choose a phase",
+      "replacement": "选择一个阶段"
+    },
+    {
+      "exact": "Select a node to illuminate the exact route into it, every phase it unlocks, and the best lesson to continue from your local progress.",
+      "replacement": "选择一个节点，以点亮通往它的精确路径、它会解锁的所有阶段，以及最适合从你的本地进度继续的课程。"
+    },
+    {
+      "exact": "Review phase",
+      "replacement": "回顾本阶段"
+    },
+    {
+      "exact": "Continue phase",
+      "replacement": "继续本阶段"
+    },
+    {
+      "exact": "Start phase",
+      "replacement": "开始本阶段"
+    },
+    {
+      "exact": "All prerequisites",
+      "replacement": "全部前置依赖"
+    },
+    {
+      "exact": "Phases unlocked",
+      "replacement": "已解锁阶段"
+    },
+    {
+      "exact": "Direct prerequisites",
+      "replacement": "直接前置依赖"
+    },
+    {
+      "exact": "Immediately unlocks",
+      "replacement": "立即解锁"
+    },
+    {
+      "exact": "This is the starting point.",
+      "replacement": "这是起点。"
+    },
+    {
+      "exact": "View phase on GitHub",
+      "replacement": "在 GitHub 上查看该阶段"
+    },
+    {
+      "exact": "Recommended next",
+      "replacement": "推荐下一步"
+    },
+    {
+      "pattern": "^Phase (?<phase>\\d{2}) selected\\. (?<ancestors>\\d+) prerequisite phases and (?<descendants>\\d+) downstream phases highlighted\\.$",
+      "replacement": "已选择阶段 {phase}。已高亮 {ancestors} 个前置阶段和 {descendants} 个后续阶段。"
+    },
+    {
+      "pattern": "^Phase (?<phase>\\d{2}): (?<name>.+)\\.$",
+      "replacement": "阶段 {phase}：{name}。"
+    }
+  ]
+}

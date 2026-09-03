@@ -17,6 +17,11 @@ const README_PATH = path.join(REPO_ROOT, 'README.md');
 const ROADMAP_PATH = path.join(REPO_ROOT, 'ROADMAP.md');
 const GLOSSARY_PATH = path.join(REPO_ROOT, 'glossary', 'terms.md');
 const OUTPUT_PATH = path.join(__dirname, 'data.js');
+const I18N_SOURCE_PATH = path.join(__dirname, 'i18n');
+const ZH_CATALOG_PATH = path.join(REPO_ROOT, 'i18n', 'zh', 'catalog');
+const I18N_OUTPUT_PATH = path.join(__dirname, 'i18n-data.js');
+const I18N_FIGURES_OUTPUT_PATH = path.join(__dirname, 'i18n-figures.js');
+const I18N_GLOSSARY_OUTPUT_PATH = path.join(__dirname, 'i18n-glossary.js');
 const CERTIFICATIONS_PATH = path.join(REPO_ROOT, 'certifications');
 const CERTIFICATION_OUTPUT_PATH = path.join(__dirname, 'certification-data.js');
 const FIGURE_MANIFEST_OUTPUT_PATH = path.join(__dirname, 'figure-manifest.js');
@@ -1204,9 +1209,120 @@ function writeSeoArtifacts(phases, certifications, learningPaths) {
 // Certifications are a curated overlay, not another curriculum phase. They
 // deliberately live in their own generated data file so PHASES, README counts,
 // the core catalog, and roadmap behavior cannot change when a track is added.
-function readJson(filePath, label) {
+function assertNoDuplicateJsonKeys(source, label) {
+  let index = 0;
+
+  function fail(message) {
+    throw new Error(`${label} ${message} at offset ${index}`);
+  }
+
+  function skipWhitespace() {
+    while (index < source.length && /\s/.test(source[index])) index++;
+  }
+
+  function readString() {
+    if (source[index] !== '"') fail('expected a JSON string');
+    const start = index++;
+    while (index < source.length) {
+      const character = source[index++];
+      if (character === '\\') {
+        if (index >= source.length) fail('contains an unterminated JSON escape');
+        index++;
+      } else if (character === '"') {
+        return JSON.parse(source.slice(start, index));
+      }
+    }
+    fail('contains an unterminated JSON string');
+  }
+
+  function visitValue(jsonPath) {
+    skipWhitespace();
+    const character = source[index];
+    if (character === '{') {
+      visitObject(jsonPath);
+      return;
+    }
+    if (character === '[') {
+      visitArray(jsonPath);
+      return;
+    }
+    if (character === '"') {
+      readString();
+      return;
+    }
+
+    const start = index;
+    while (index < source.length && !/[\s,}\]]/.test(source[index])) index++;
+    if (start === index) fail('contains an invalid JSON value');
+  }
+
+  function visitObject(jsonPath) {
+    index++;
+    skipWhitespace();
+    if (source[index] === '}') {
+      index++;
+      return;
+    }
+
+    const keys = new Set();
+    while (index < source.length) {
+      skipWhitespace();
+      const key = readString();
+      if (keys.has(key)) {
+        throw new Error(
+          `${label} contains duplicate JSON key ${JSON.stringify(key)} in ${jsonPath}`
+        );
+      }
+      keys.add(key);
+
+      skipWhitespace();
+      if (source[index] !== ':') fail(`is missing ':' after ${JSON.stringify(key)}`);
+      index++;
+      visitValue(`${jsonPath}[${JSON.stringify(key)}]`);
+      skipWhitespace();
+      if (source[index] === '}') {
+        index++;
+        return;
+      }
+      if (source[index] !== ',') fail(`is missing ',' after ${JSON.stringify(key)}`);
+      index++;
+    }
+    fail('contains an unterminated JSON object');
+  }
+
+  function visitArray(jsonPath) {
+    index++;
+    skipWhitespace();
+    if (source[index] === ']') {
+      index++;
+      return;
+    }
+
+    let itemIndex = 0;
+    while (index < source.length) {
+      visitValue(`${jsonPath}[${itemIndex}]`);
+      itemIndex++;
+      skipWhitespace();
+      if (source[index] === ']') {
+        index++;
+        return;
+      }
+      if (source[index] !== ',') fail(`is missing ',' after array item ${itemIndex - 1}`);
+      index++;
+    }
+    fail('contains an unterminated JSON array');
+  }
+
+  visitValue('$');
+  skipWhitespace();
+  if (index !== source.length) fail('contains trailing JSON content');
+}
+
+function readJson(filePath, label, options = {}) {
   try {
-    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    const source = fs.readFileSync(filePath, 'utf8');
+    if (options.rejectDuplicateKeys) assertNoDuplicateJsonKeys(source, label);
+    return JSON.parse(source);
   } catch (err) {
     throw new Error(`Could not read ${label || path.relative(REPO_ROOT, filePath)}: ${err.message}`);
   }
@@ -1932,10 +2048,41 @@ function discoverArtifacts(repoRoot = REPO_ROOT) {
 }
 
 // ─── Main build ──────────────────────────────────────────────────────
-// Write the git ref this deploy was built from, so lesson.html fetches docs
-// from the right branch (PR previews render their own edits, not main).
-function resolveRef() {
-  let ref = process.env.VERCEL_GIT_COMMIT_REF || '';
+// Write the active English source plus the independently published translation
+// source. PR previews keep reading their own branch instead of main.
+function validShortRef(value) {
+  const ref = String(value || '');
+  if (!ref || ref === '@' || ref.startsWith('-') || ref.startsWith('refs/')) return false;
+  if (/[\x00-\x20\x7f~^:?*\[\\]/.test(ref) || ref.includes('@{')) return false;
+  if (ref.includes('..') || ref.includes('//') || /[/.]$/.test(ref)) return false;
+  return ref.split('/').every(segment =>
+    segment && !segment.startsWith('.') && !/\.lock$/i.test(segment)
+  );
+}
+
+function requireShortRef(value, label) {
+  const ref = String(value || '').trim();
+  if (!validShortRef(ref)) {
+    throw new Error(`${label} must name a branch using a valid short Git ref`);
+  }
+  return ref;
+}
+
+function resolveRef(environment = process.env) {
+  if (environment.VERCEL_ENV === 'production') return 'main';
+  if (environment.VERCEL_ENV === 'preview') {
+    const sha = String(environment.VERCEL_GIT_COMMIT_SHA || '').trim();
+    if (/^[0-9a-f]{7,40}$/i.test(sha)) return sha;
+  }
+
+  let ref = String(
+    environment.VERCEL_GIT_COMMIT_REF
+      || environment.GITHUB_REF_NAME
+      || ''
+  ).trim();
+  if (!ref && environment.GITHUB_REF) {
+    ref = String(environment.GITHUB_REF).replace(/^refs\/heads\//, '').trim();
+  }
   if (!ref) {
     try {
       ref = require('child_process')
@@ -1947,27 +2094,43 @@ function resolveRef() {
   return ref;
 }
 
-function sourceRevision() {
-  if (process.env.VERCEL_ENV === 'production') return 'main';
-  if (process.env.VERCEL_ENV === 'preview') {
-    const sha = String(process.env.VERCEL_GIT_COMMIT_SHA || '').trim();
-    return /^[0-9a-f]{7,40}$/i.test(sha) ? sha : resolveRef();
+function resolveRepository(environment = process.env) {
+  const slug = String(environment.VERCEL_GIT_REPO_SLUG || '').trim();
+  if (slug) {
+    const owner = String(environment.VERCEL_GIT_REPO_OWNER || 'rohitg00').trim();
+    return owner + '/' + slug;
   }
-  return 'main';
+  return String(environment.GITHUB_REPOSITORY || '').trim()
+    || 'rohitg00/ai-engineering-from-scratch';
 }
 
-function sourceRepository() {
-  const ownerValue = String(process.env.VERCEL_GIT_REPO_OWNER || '').trim();
-  const repoValue = String(process.env.VERCEL_GIT_REPO_SLUG || '').trim();
+function resolveTranslationSource(environment = process.env, activeRepository = resolveRepository(environment)) {
+  const configuredRef = String(environment.AIFS_TRANSLATION_REF || '').trim();
   return {
-    owner: /^[A-Za-z0-9-]+$/.test(ownerValue) ? ownerValue : 'rohitg00',
-    repo: /^[A-Za-z0-9_.-]+$/.test(repoValue) ? repoValue : 'ai-engineering-from-scratch',
+    repository: String(environment.AIFS_TRANSLATION_REPOSITORY || '').trim() || activeRepository,
+    ref: configuredRef
+      ? requireShortRef(configuredRef, 'AIFS_TRANSLATION_REF')
+      : 'translations',
   };
 }
 
-function githubSourceUrl(relativePath, view = 'tree') {
-  const { owner, repo } = sourceRepository();
-  const revision = sourceRevision()
+function sourceIdentity(repository, revision) {
+  const separator = repository.indexOf('/');
+  return {
+    owner: separator > 0 ? repository.slice(0, separator) : 'rohitg00',
+    repo: separator > 0 ? repository.slice(separator + 1) : 'ai-engineering-from-scratch',
+    revision,
+  };
+}
+
+function githubSourceUrl(relativePath, view = 'tree', environment = process.env) {
+  const repository = resolveRepository(environment);
+  // Public SEO links stay on main outside Vercel. Preview deployments use the
+  // immutable SHA selected by resolveRef so links cannot drift after indexing.
+  const sourceRef = environment.VERCEL_ENV === 'preview'
+    ? resolveRef(environment)
+    : 'main';
+  const revision = sourceRef
     .split('/')
     .map(encodeURIComponent)
     .join('/');
@@ -1977,17 +2140,41 @@ function githubSourceUrl(relativePath, view = 'tree') {
     .map(encodeURIComponent)
     .join('/');
   const sourceView = view === 'blob' ? 'blob' : 'tree';
-  return `https://github.com/${owner}/${repo}/${sourceView}/${revision}/${cleanPath}`;
+  return `https://github.com/${repository}/${sourceView}/${revision}/${cleanPath}`;
 }
 
-function writeBuildMeta() {
-  const revision = sourceRevision();
-  const repository = sourceRepository();
-  const js = '// Auto-generated by build.js on each deploy — do not edit.\n'
-    + 'window.__AIFS_REF = ' + JSON.stringify(revision) + ';\n'
-    + 'window.__AIFS_SOURCE = ' + JSON.stringify({ ...repository, revision }) + ';\n';
-  fs.writeFileSync(path.join(__dirname, 'build-meta.js'), js, 'utf8');
-  console.log('   wrote build-meta.js (ref: ' + revision + ')');
+function serializeBuildMeta(environment = process.env) {
+  const ref = resolveRef(environment);
+  const repository = resolveRepository(environment);
+  const translationSource = resolveTranslationSource(environment, repository);
+  return {
+    ref,
+    repository,
+    translationSource,
+    source: '// Auto-generated by build.js on each deploy — do not edit.\n'
+      + 'window.__AIFS_REF = ' + JSON.stringify(ref) + ';\n'
+      + 'window.__AIFS_REPOSITORY = ' + JSON.stringify(repository) + ';\n'
+      + 'window.__AIFS_SOURCE = ' + JSON.stringify(sourceIdentity(repository, ref)) + ';\n'
+      + 'window.__AIFS_TRANSLATION_REPOSITORY = ' + JSON.stringify(translationSource.repository) + ';\n'
+      + 'window.__AIFS_TRANSLATION_REF = ' + JSON.stringify(translationSource.ref) + ';\n',
+  };
+}
+
+function writeBuildMeta(environment = process.env, outputPath = path.join(__dirname, 'build-meta.js')) {
+  const metadata = serializeBuildMeta(environment);
+  fs.writeFileSync(outputPath, metadata.source, 'utf8');
+  console.log(
+    '   wrote build-meta.js (source: ' + metadata.repository + '@' + metadata.ref
+      + '; translations: ' + metadata.translationSource.repository + '@'
+      + metadata.translationSource.ref + ')'
+  );
+  return metadata;
+}
+
+function publishedLanguages(registry) {
+  return registry.languages
+    .filter(language => language.source || language.ci || language.manual)
+    .map(language => ({ code: language.code, native: language.native }));
 }
 
 // ─── langs.js: language switcher options, from the canonical registry ────
@@ -1996,18 +2183,707 @@ function writeLangs() {
   let langs = [{ code: 'en', native: 'English' }];
   if (fs.existsSync(regPath)) {
     const reg = JSON.parse(fs.readFileSync(regPath, 'utf8'));
-    // Only offer languages the site can actually serve: English (source) plus
-    // the ci:true set the translate workflow builds lessons for. The full
-    // registry is 40 languages, but picking an untranslated one just 404s to
-    // English, so it must not appear in the switcher.
-    langs = reg.languages
-      .filter(l => l.source || l.ci)
-      .map(l => ({ code: l.code, native: l.native }));
+    // Only offer languages the site can actually serve: English, automatic CI
+    // locales, and human-maintained published locales. The full registry is
+    // larger, but picking an unpublished locale just 404s to English.
+    langs = publishedLanguages(reg);
   }
   const js = '// Auto-generated by build.js from languages.json — do not edit.\n'
     + 'window.AIFS_LANGS = ' + JSON.stringify(langs) + ';\n';
   fs.writeFileSync(path.join(__dirname, 'langs.js'), js, 'utf8');
   console.log('   wrote langs.js (' + langs.length + ' languages)');
+}
+
+function ensurePlainObject(value, label) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`${label} must be a JSON object`);
+  }
+  return value;
+}
+
+function ensureNonEmptyString(value, label) {
+  if (typeof value !== 'string') {
+    throw new Error(`${label} must be a string`);
+  }
+  const normalized = value.trim();
+  if (!normalized) {
+    throw new Error(`${label} must be a non-empty string`);
+  }
+  return normalized;
+}
+
+function relativeRepoPath(filePath) {
+  return path.relative(REPO_ROOT, filePath).split(path.sep).join('/');
+}
+
+function normalizeLessonCatalogPath(rawPath) {
+  if (typeof rawPath !== 'string') return '';
+  return rawPath.replace(/^\/+|\/+$/g, '');
+}
+
+function phaseCatalogKey(phase) {
+  const phaseKeys = new Set();
+  for (const lesson of phase.lessons || []) {
+    const lessonUrlPath = lessonPath(lesson.url);
+    if (!lessonUrlPath) continue;
+    const parts = lessonUrlPath.split('/');
+    if (parts.length >= 2) phaseKeys.add(parts[1]);
+  }
+  if (!phaseKeys.size) {
+    throw new Error(`Phase ${phase.id} has no canonical lesson path for i18n catalog generation`);
+  }
+  if (phaseKeys.size > 1) {
+    throw new Error(
+      `Phase ${phase.id} resolved to multiple phase catalog keys: ${[...phaseKeys].join(', ')}`
+    );
+  }
+  return [...phaseKeys][0];
+}
+
+function mergeI18nDictionary(bundle, bundleName, field, incoming, label) {
+  const current = bundle[field] || {};
+  const siblingField = field === 'strings' ? 'exact' : field === 'exact' ? 'strings' : null;
+  const sibling = siblingField ? (bundle[siblingField] || {}) : {};
+  for (const [key, value] of Object.entries(incoming)) {
+    if (typeof value !== 'string') {
+      throw new Error(`${label}:${field}.${key} must be a string`);
+    }
+    if (Object.prototype.hasOwnProperty.call(current, key)) {
+      throw new Error(`Duplicate ${field} key "${key}" in i18n bundle "${bundleName}" (${label})`);
+    }
+    if (Object.prototype.hasOwnProperty.call(sibling, key)) {
+      throw new Error(
+        `Conflicting dictionary key "${key}" across ${field} and ${siblingField} in i18n bundle "${bundleName}" (${label})`
+      );
+    }
+    current[key] = value;
+  }
+  bundle[field] = current;
+}
+
+function mergeI18nBundle(target, bundleName, payload, label) {
+  const source = ensurePlainObject(payload, `${label}`);
+  const bundle = target[bundleName] || {};
+  for (const [field, value] of Object.entries(source)) {
+    if (field === 'strings' || field === 'exact') {
+      mergeI18nDictionary(
+        bundle,
+        bundleName,
+        field,
+        ensurePlainObject(value, `${label}:${field}`),
+        label
+      );
+      continue;
+    }
+    if (field === 'patterns') {
+      if (!Array.isArray(value)) {
+        throw new Error(`${label}:patterns must be an array`);
+      }
+      value.forEach((entry, index) => {
+        validateI18nPatternCaptures(entry, `${label}:patterns[${index}]`);
+      });
+      bundle.patterns = (bundle.patterns || []).concat(value);
+      continue;
+    }
+    if (Object.prototype.hasOwnProperty.call(bundle, field)) {
+      if (JSON.stringify(bundle[field]) !== JSON.stringify(value)) {
+        throw new Error(`Conflicting field "${field}" in i18n bundle "${bundleName}" (${label})`);
+      }
+      continue;
+    }
+    bundle[field] = value;
+  }
+  target[bundleName] = bundle;
+}
+
+function i18nPatternReplacement(entry) {
+  if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return null;
+  if (typeof entry.replacement === 'string') return entry.replacement;
+  if (typeof entry.translation === 'string') return entry.translation;
+  if (typeof entry.target === 'string') return entry.target;
+  return null;
+}
+
+function looksLikeI18nRegex(value) {
+  if (!value) return false;
+  return value.startsWith('^')
+    || value.endsWith('$')
+    || value.includes('\\')
+    || value.includes('(?<')
+    || value.includes('(.')
+    || value.includes('[');
+}
+
+function regexCaptureCount(source, label) {
+  try {
+    // The empty alternative guarantees a match while the engine still exposes
+    // every capture slot from the source pattern in the returned match array.
+    return new RegExp(`(?:${source})|`).exec('').length - 1;
+  } catch (err) {
+    throw new Error(`${label} contains an invalid regular expression: ${err.message}`);
+  }
+}
+
+function assertSafeI18nRegex(source, label) {
+  // Reject quantified groups that contain another quantifier. These are the
+  // common catastrophic-backtracking shape, for example `(a+)+` or `(.+)*`.
+  // The site only needs bounded/simple captures, so rejecting this family is
+  // both conservative and easy to audit.
+  if (/\((?:\\.|\[(?:\\.|[^\]\\])*\]|[^()])*[+*}](?:\?(?:[:=!]|<[=!])?)?\)[+*{]/.test(source)) {
+    throw new Error(`${label} contains an unsafe nested-quantifier regular expression`);
+  }
+}
+
+function i18nPatternCaptureCount(entry, label) {
+  if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return null;
+  if (typeof entry.pattern === 'string') {
+    return regexCaptureCount(entry.pattern, label);
+  }
+
+  const source = typeof entry.exact === 'string'
+    ? entry.exact
+    : typeof entry.source === 'string'
+      ? entry.source
+      : null;
+  if (source === null) return null;
+
+  if (/\{[A-Za-z0-9_]+\}/.test(source)) {
+    return Array.from(source.matchAll(/\{[A-Za-z0-9_]+\}/g)).length;
+  }
+  return looksLikeI18nRegex(source) ? regexCaptureCount(source, label) : 0;
+}
+
+function validateI18nPatternCaptures(entry, label) {
+  const captureCount = i18nPatternCaptureCount(entry, label);
+  const replacement = i18nPatternReplacement(entry);
+  if (captureCount === null || replacement === null) return;
+  const regexSource = typeof entry.pattern === 'string'
+    ? entry.pattern
+    : typeof entry.source === 'string' && looksLikeI18nRegex(entry.source)
+      ? entry.source
+      : null;
+  if (regexSource !== null) assertSafeI18nRegex(regexSource, label);
+
+  for (const match of replacement.matchAll(/\$(\d+)/g)) {
+    const captureIndex = Number(match[1]);
+    if (!Number.isSafeInteger(captureIndex) || captureIndex > captureCount) {
+      throw new Error(
+        `${label} replacement references $${match[1]}, but its regex has ${captureCount} capture group(s)`
+      );
+    }
+  }
+}
+
+function loadZhSiteBundles(i18nSourcePath = I18N_SOURCE_PATH) {
+  const zhDir = path.join(i18nSourcePath, 'zh');
+  if (!fs.existsSync(zhDir)) return {};
+
+  const bundles = {};
+  const files = fs.readdirSync(zhDir)
+    .filter(file => file.endsWith('.json'))
+    .sort((a, b) => a.localeCompare(b));
+  for (const file of files) {
+    const fullPath = path.join(zhDir, file);
+    const bundleName = path.basename(file, '.json');
+    mergeI18nBundle(
+      bundles,
+      bundleName,
+      readJson(
+        fullPath,
+        `site i18n bundle ${relativeRepoPath(fullPath)}`,
+        { rejectDuplicateKeys: true }
+      ),
+      relativeRepoPath(fullPath)
+    );
+  }
+  return bundles;
+}
+
+function loadZhCatalogSource(catalogPath = ZH_CATALOG_PATH) {
+  if (!fs.existsSync(catalogPath)) {
+    throw new Error(`Missing zh catalog directory: ${relativeRepoPath(catalogPath)}`);
+  }
+
+  const source = { phases: {}, lessons: {} };
+  const files = fs.readdirSync(catalogPath)
+    .filter(file => file.endsWith('.json'))
+    .sort((a, b) => a.localeCompare(b));
+  for (const file of files) {
+    const fullPath = path.join(catalogPath, file);
+    const payload = ensurePlainObject(
+      readJson(
+        fullPath,
+        `zh catalog ${relativeRepoPath(fullPath)}`,
+        { rejectDuplicateKeys: true }
+      ),
+      relativeRepoPath(fullPath)
+    );
+    const phaseEntries = ensurePlainObject(payload.phases || {}, `${relativeRepoPath(fullPath)}:phases`);
+    const lessonEntries = ensurePlainObject(payload.lessons || {}, `${relativeRepoPath(fullPath)}:lessons`);
+
+    for (const [phaseKey, phaseValue] of Object.entries(phaseEntries)) {
+      if (Object.prototype.hasOwnProperty.call(source.phases, phaseKey)) {
+        throw new Error(`Duplicate zh phase catalog key "${phaseKey}" in ${relativeRepoPath(fullPath)}`);
+      }
+      const normalizedPhase = ensurePlainObject(
+        phaseValue,
+        `${relativeRepoPath(fullPath)}:phases.${phaseKey}`
+      );
+      source.phases[phaseKey] = {
+        ...normalizedPhase,
+        title: ensureNonEmptyString(
+          normalizedPhase.title,
+          `${relativeRepoPath(fullPath)}:phases.${phaseKey}.title`
+        ),
+        description: ensureNonEmptyString(
+          normalizedPhase.description,
+          `${relativeRepoPath(fullPath)}:phases.${phaseKey}.description`
+        ),
+      };
+    }
+
+    for (const [lessonKey, lessonValue] of Object.entries(lessonEntries)) {
+      const normalizedKey = normalizeLessonCatalogPath(lessonKey);
+      if (!normalizedKey) {
+        throw new Error(`Invalid zh lesson catalog key "${lessonKey}" in ${relativeRepoPath(fullPath)}`);
+      }
+      if (Object.prototype.hasOwnProperty.call(source.lessons, normalizedKey)) {
+        throw new Error(`Duplicate zh lesson catalog key "${normalizedKey}" in ${relativeRepoPath(fullPath)}`);
+      }
+      source.lessons[normalizedKey] = ensureNonEmptyString(
+        lessonValue,
+        `${relativeRepoPath(fullPath)}:lessons.${lessonKey}`
+      );
+    }
+  }
+  return source;
+}
+
+function buildZhCatalog(phases, catalogPath = ZH_CATALOG_PATH) {
+  const source = loadZhCatalogSource(catalogPath);
+  const expectedPhaseKeys = new Set();
+  const expectedLessonKeys = new Set();
+  const catalog = { phases: {}, lessons: {} };
+
+  for (const phase of phases) {
+    const phaseKey = phaseCatalogKey(phase);
+    expectedPhaseKeys.add(phaseKey);
+    const localizedPhase = ensurePlainObject(
+      source.phases[phaseKey],
+      `zh catalog phase ${phaseKey}`
+    );
+    const title = localizedPhase.title;
+    const description = localizedPhase.description;
+    catalog.phases[phaseKey] = { title, description };
+
+    for (const lesson of phase.lessons || []) {
+      const lessonUrlPath = lessonPath(lesson.url);
+      if (!lessonUrlPath) continue;
+      const canonicalPath = normalizeLessonCatalogPath(lessonUrlPath);
+      if (expectedLessonKeys.has(canonicalPath)) {
+        throw new Error(`Duplicate lesson path while building zh catalog: ${canonicalPath}`);
+      }
+      expectedLessonKeys.add(canonicalPath);
+      const localizedTitle = source.lessons[canonicalPath];
+      if (typeof localizedTitle === 'undefined') {
+        throw new Error(`Missing zh lesson catalog title for ${canonicalPath}`);
+      }
+      catalog.lessons[canonicalPath] = localizedTitle;
+    }
+  }
+
+  const stalePhaseKeys = Object.keys(source.phases)
+    .filter(key => !expectedPhaseKeys.has(key))
+    .sort((a, b) => a.localeCompare(b));
+  if (stalePhaseKeys.length) {
+    throw new Error(`Stale zh phase catalog entries: ${stalePhaseKeys.join(', ')}`);
+  }
+
+  const staleLessonKeys = Object.keys(source.lessons)
+    .filter(key => !expectedLessonKeys.has(key))
+    .sort((a, b) => a.localeCompare(b));
+  if (staleLessonKeys.length) {
+    throw new Error(`Stale zh lesson catalog entries: ${staleLessonKeys.slice(0, 10).join(', ')}`);
+  }
+
+  return catalog;
+}
+
+function serializeI18nData(i18n) {
+  return '// Auto-generated by build.js from site/i18n/ and i18n/zh/catalog/ — do not edit manually.\n'
+    + `window.AIFS_I18N = ${JSON.stringify(i18n, null, 2)};\n`;
+}
+
+function serializeI18nBundleExtension(locale, bundles) {
+  return '// Auto-generated by build.js from site/i18n/ — do not edit manually.\n'
+    + '(function () {\n'
+    + '  window.AIFS_I18N = window.AIFS_I18N || {};\n'
+    + `  window.AIFS_I18N[${JSON.stringify(locale)}] = window.AIFS_I18N[${JSON.stringify(locale)}] || { bundles: {} };\n`
+    + `  Object.assign(window.AIFS_I18N[${JSON.stringify(locale)}].bundles, ${JSON.stringify(bundles, null, 2)});\n`
+    + '}());\n';
+}
+
+function writeHashedJsonAsset(targetDir, stem, data) {
+  const payload = JSON.stringify(data, null, 2) + '\n';
+  const sha256 = crypto.createHash('sha256').update(payload).digest('hex');
+  const fileName = `${stem}-${sha256.slice(0, 12)}.json`;
+  fs.writeFileSync(path.join(targetDir, fileName), payload, 'utf8');
+  return { fileName, url: fileName, sha256 };
+}
+
+function removeGeneratedI18nAssets(outputDir) {
+  if (!fs.existsSync(outputDir)) return;
+  for (const file of fs.readdirSync(outputDir)) {
+    if (/^i18n-(?:quizzes|search)-zh-[a-z0-9-]+\.json$/.test(file)) {
+      fs.rmSync(path.join(outputDir, file), { force: true });
+    }
+  }
+}
+
+function readI18nJsonDirectory(dirPath, labelPrefix) {
+  if (!fs.existsSync(dirPath)) return [];
+  return fs.readdirSync(dirPath)
+    .filter(file => file.endsWith('.json'))
+    .sort((a, b) => a.localeCompare(b))
+    .map(file => {
+      const fullPath = path.join(dirPath, file);
+      return {
+        file,
+        fullPath,
+        payload: ensurePlainObject(
+          readJson(fullPath, `${labelPrefix} ${relativeRepoPath(fullPath)}`, { rejectDuplicateKeys: true }),
+          relativeRepoPath(fullPath)
+        ),
+      };
+    });
+}
+
+function validateQuizAssetPayload(payload, label) {
+  if (payload.schemaVersion !== 1) {
+    throw new Error(`${label} must declare schemaVersion: 1`);
+  }
+  const lessons = ensurePlainObject(payload.lessons || {}, `${label}:lessons`);
+  for (const [lessonKey, lessonValue] of Object.entries(lessons)) {
+    const canonicalPath = normalizeLessonCatalogPath(lessonKey);
+    if (!canonicalPath) throw new Error(`${label} contains an invalid lesson key`);
+    const entry = ensurePlainObject(lessonValue, `${label}:lessons.${lessonKey}`);
+    ensureNonEmptyString(entry.sourceSha256, `${label}:lessons.${lessonKey}.sourceSha256`);
+    if (!/^[a-f0-9]{64}$/.test(entry.sourceSha256)) {
+      throw new Error(`${label}:lessons.${lessonKey}.sourceSha256 must be a 64-char lowercase sha256`);
+    }
+    if (!Array.isArray(entry.questions) || !entry.questions.length) {
+      throw new Error(`${label}:lessons.${lessonKey}.questions must be a non-empty array`);
+    }
+  }
+  return lessons;
+}
+
+function collectCanonicalQuizFiles(rootDir = path.join(REPO_ROOT, 'phases')) {
+  const files = new Map();
+  if (!fs.existsSync(rootDir)) return files;
+  for (const phase of fs.readdirSync(rootDir, { withFileTypes: true })) {
+    if (!phase.isDirectory() || !/^\d{2}-/.test(phase.name)) continue;
+    const phaseDir = path.join(rootDir, phase.name);
+    for (const lesson of fs.readdirSync(phaseDir, { withFileTypes: true })) {
+      if (!lesson.isDirectory() || !/^\d{2}-/.test(lesson.name)) continue;
+      const quizPath = path.join(phaseDir, lesson.name, 'quiz.json');
+      if (!fs.existsSync(quizPath)) continue;
+      files.set(`phases/${phase.name}/${lesson.name}`, quizPath);
+    }
+  }
+  return files;
+}
+
+function quizQuestions(value, label) {
+  const questions = Array.isArray(value) ? value : value && value.questions;
+  if (!Array.isArray(questions) || !questions.length) {
+    throw new Error(`${label} must contain a non-empty question array`);
+  }
+  return questions;
+}
+
+function mergeCanonicalQuiz(canonical, overlay, label) {
+  const sourceQuestions = quizQuestions(canonical, `${label}:canonical`);
+  if (!Array.isArray(overlay.questions) || overlay.questions.length !== sourceQuestions.length) {
+    throw new Error(`${label} question count does not match canonical quiz`);
+  }
+  const translatedQuestions = sourceQuestions.map((sourceQuestion, index) => {
+    const source = ensurePlainObject(sourceQuestion, `${label}:canonical.questions[${index}]`);
+    const translated = ensurePlainObject(overlay.questions[index], `${label}:questions[${index}]`);
+    const allowed = new Set(['question', 'options', 'explanation']);
+    const unexpected = Object.keys(translated).filter(key => !allowed.has(key));
+    if (unexpected.length) {
+      throw new Error(`${label}:questions[${index}] contains behavior fields: ${unexpected.join(', ')}`);
+    }
+    const question = ensureNonEmptyString(translated.question, `${label}:questions[${index}].question`);
+    if (!Array.isArray(source.options) || !Array.isArray(translated.options)
+        || source.options.length !== translated.options.length) {
+      throw new Error(`${label}:questions[${index}].options must match the canonical option count`);
+    }
+    const options = translated.options.map((option, optionIndex) =>
+      ensureNonEmptyString(option, `${label}:questions[${index}].options[${optionIndex}]`)
+    );
+    if (typeof translated.explanation !== 'string') {
+      throw new Error(`${label}:questions[${index}].explanation must be a string`);
+    }
+    const sourceExplanation = typeof source.explanation === 'string' ? source.explanation : '';
+    if (sourceExplanation && !translated.explanation.trim()) {
+      throw new Error(`${label}:questions[${index}].explanation must be translated`);
+    }
+    if (!sourceExplanation && translated.explanation !== '') {
+      throw new Error(`${label}:questions[${index}].explanation must preserve the canonical empty value`);
+    }
+    return { ...source, question, options, explanation: translated.explanation };
+  });
+  return Array.isArray(canonical)
+    ? translatedQuestions
+    : { ...canonical, questions: translatedQuestions };
+}
+
+function validateSearchAssetPayload(payload, label) {
+  if (payload.schemaVersion !== 1) {
+    throw new Error(`${label} must declare schemaVersion: 1`);
+  }
+  const sections = {
+    lessons: ensurePlainObject(payload.lessons || {}, `${label}:lessons`),
+    artifacts: ensurePlainObject(payload.artifacts || {}, `${label}:artifacts`),
+    glossary: ensurePlainObject(payload.glossary || {}, `${label}:glossary`),
+  };
+  for (const [lessonKey, lessonValue] of Object.entries(sections.lessons)) {
+    const canonicalPath = normalizeLessonCatalogPath(lessonKey);
+    if (!canonicalPath) throw new Error(`${label} contains an invalid lesson key`);
+    const entry = ensurePlainObject(lessonValue, `${label}:lessons.${lessonKey}`);
+    ensureNonEmptyString(entry.source, `${label}:lessons.${lessonKey}.source`);
+    ensureNonEmptyString(entry.translation, `${label}:lessons.${lessonKey}.translation`);
+  }
+  for (const [artifactKey, artifactValue] of Object.entries(sections.artifacts)) {
+    const entry = ensurePlainObject(artifactValue, `${label}:artifacts.${artifactKey}`);
+    ensureNonEmptyString(entry.source, `${label}:artifacts.${artifactKey}.source`);
+    ensureNonEmptyString(entry.translation, `${label}:artifacts.${artifactKey}.translation`);
+  }
+  for (const [glossaryKey, glossaryValue] of Object.entries(sections.glossary)) {
+    const entry = ensurePlainObject(glossaryValue, `${label}:glossary.${glossaryKey}`);
+    ensureNonEmptyString(entry.source, `${label}:glossary.${glossaryKey}.source`);
+    ensureNonEmptyString(entry.translation, `${label}:glossary.${glossaryKey}.translation`);
+  }
+  return sections;
+}
+
+function buildQuizAssetManifest(localeDir, outputDir) {
+  const quizzesDir = path.join(localeDir, 'quizzes');
+  if (!fs.existsSync(quizzesDir)) return null;
+  const files = readI18nJsonDirectory(quizzesDir, 'quiz asset');
+  const canonicalFiles = collectCanonicalQuizFiles();
+  const seen = new Set();
+  const manifest = {
+    manifestVersion: 1,
+    lessons: {},
+  };
+
+  for (const entry of files) {
+    const lessons = validateQuizAssetPayload(entry.payload, relativeRepoPath(entry.fullPath));
+    const quizByLesson = {};
+    for (const [lessonPathKey, lessonValue] of Object.entries(lessons)) {
+      const canonicalPath = normalizeLessonCatalogPath(lessonPathKey);
+      if (seen.has(canonicalPath)) throw new Error(`Duplicate quiz asset lesson entry for ${canonicalPath}`);
+      const sourcePath = canonicalFiles.get(canonicalPath);
+      if (!sourcePath) throw new Error(`Stale quiz translation for ${canonicalPath}`);
+      const sourceRaw = fs.readFileSync(sourcePath);
+      const sourceSha256 = crypto.createHash('sha256').update(sourceRaw).digest('hex');
+      if (lessonValue.sourceSha256 !== sourceSha256) {
+        throw new Error(`Stale quiz source hash for ${canonicalPath}`);
+      }
+      const canonical = JSON.parse(sourceRaw.toString('utf8'));
+      quizByLesson[canonicalPath] = mergeCanonicalQuiz(
+        canonical,
+        lessonValue,
+        `${relativeRepoPath(entry.fullPath)}:${canonicalPath}`
+      );
+      seen.add(canonicalPath);
+    }
+    const asset = writeHashedJsonAsset(
+      outputDir,
+      `i18n-quizzes-zh-${path.basename(entry.file, '.json')}`,
+      { schemaVersion: 1, locale: 'zh', quizByLesson }
+    );
+    for (const [lessonPathKey, lessonValue] of Object.entries(lessons)) {
+      const canonicalPath = normalizeLessonCatalogPath(lessonPathKey);
+      manifest.lessons[canonicalPath] = {
+        url: asset.url,
+        sourceSha256: lessonValue.sourceSha256,
+      };
+    }
+  }
+  const missing = [...canonicalFiles.keys()].filter(key => !seen.has(key));
+  if (missing.length) throw new Error(`Missing quiz translations: ${missing.slice(0, 10).join(', ')}`);
+  return manifest;
+}
+
+function localizedGlossarySearch(glossaryTerms, glossaryBundles) {
+  const exact = {};
+  for (const name of Object.keys(glossaryBundles).sort((a, b) => a.localeCompare(b))) {
+    Object.assign(exact, glossaryBundles[name].strings || {}, glossaryBundles[name].exact || {});
+  }
+  const translate = value => typeof value === 'string' && value
+    ? (Object.prototype.hasOwnProperty.call(exact, value) ? exact[value] : value)
+    : '';
+  return Object.fromEntries(glossaryTerms.map(term => [term.slug, {
+    term: translate(term.term),
+    summary: translate(term.means),
+    says: translate(term.says),
+    keywords: [
+      term.category, term.whyItMatters, term.example, term.confusion, term.whyCalled,
+      ...(term.aliases || []), ...(term.related || []),
+    ].filter(Boolean).map(translate).join(' '),
+  }]));
+}
+
+function buildSearchAssetManifest(localeDir, outputDir, phases, glossaryBundles) {
+  const searchDir = path.join(localeDir, 'search');
+  if (!fs.existsSync(searchDir)) return null;
+  const files = readI18nJsonDirectory(searchDir, 'search asset');
+  const merged = { lessons: {}, artifacts: {} };
+  for (const entry of files) {
+    const sections = validateSearchAssetPayload(entry.payload, relativeRepoPath(entry.fullPath));
+    for (const section of ['lessons', 'artifacts']) {
+      for (const [key, value] of Object.entries(sections[section])) {
+        if (Object.prototype.hasOwnProperty.call(merged[section], key)) {
+          throw new Error(`Duplicate search ${section} entry for ${key}`);
+        }
+        merged[section][key] = value;
+      }
+    }
+  }
+
+  const expectedLessons = {};
+  for (const phase of phases) {
+    for (const lesson of phase.lessons || []) {
+      const canonicalPath = lessonPath(lesson.url);
+      const summary = lesson.summary || (canonicalPath && extractLessonMeta(canonicalPath).summary) || '';
+      if (canonicalPath && summary) expectedLessons[canonicalPath] = summary;
+    }
+  }
+  const expectedArtifacts = Object.fromEntries(
+    discoverArtifacts().filter(artifact => artifact.file && artifact.description)
+      .map(artifact => [artifact.file, artifact.description])
+  );
+  for (const [section, expected] of [['lessons', expectedLessons], ['artifacts', expectedArtifacts]]) {
+    const actualKeys = Object.keys(merged[section]).sort();
+    const expectedKeys = Object.keys(expected).sort();
+    if (JSON.stringify(actualKeys) !== JSON.stringify(expectedKeys)) {
+      throw new Error(`Search ${section} translations do not exactly cover canonical entries`);
+    }
+    for (const key of expectedKeys) {
+      if (merged[section][key].source !== expected[key]) {
+        throw new Error(`Stale search ${section} source for ${key}`);
+      }
+    }
+  }
+
+  const glossaryTerms = parseGlossary(fs.readFileSync(GLOSSARY_PATH, 'utf8'));
+  const payload = {
+    schemaVersion: 1,
+    locale: 'zh',
+    lessons: merged.lessons,
+    artifacts: merged.artifacts,
+    glossary: localizedGlossarySearch(glossaryTerms, glossaryBundles),
+  };
+  const asset = writeHashedJsonAsset(outputDir, 'i18n-search-zh', payload);
+  return { url: asset.url, sha256: asset.sha256 };
+}
+
+function buildLocaleAssets(locale, outputDir, phases, glossaryBundles) {
+  const localeDir = path.join(I18N_SOURCE_PATH, locale);
+  if (!fs.existsSync(localeDir)) return null;
+  removeGeneratedI18nAssets(outputDir);
+  const assets = {};
+  const quizManifest = buildQuizAssetManifest(localeDir, outputDir);
+  if (quizManifest) assets.quizzes = quizManifest;
+  const searchManifest = buildSearchAssetManifest(localeDir, outputDir, phases, glossaryBundles);
+  if (searchManifest) assets.search = searchManifest;
+  return Object.keys(assets).length ? assets : null;
+}
+
+function writeI18nData(phases, outputPath = I18N_OUTPUT_PATH) {
+  const bundles = loadZhSiteBundles();
+  if (Object.prototype.hasOwnProperty.call(bundles, 'catalog')) {
+    throw new Error('The "catalog" i18n bundle name is reserved for the generated zh catalog');
+  }
+
+  const zhCatalog = buildZhCatalog(phases);
+  bundles.catalog = zhCatalog;
+
+  const coreBundles = {};
+  const figureBundles = {};
+  const glossaryBundles = {};
+  for (const [name, bundle] of Object.entries(bundles)) {
+    if (name.startsWith('figures-')) figureBundles[name] = bundle;
+    else if (name.startsWith('glossary-')) glossaryBundles[name] = bundle;
+    else coreBundles[name] = bundle;
+  }
+
+  const outputDir = path.dirname(outputPath);
+  const localeAssets = buildLocaleAssets('zh', outputDir, phases, glossaryBundles);
+  const outputPayload = {
+    zh: { bundles: coreBundles, ...(localeAssets && { assets: localeAssets }) },
+  };
+  fs.writeFileSync(
+    outputPath,
+    serializeI18nData(outputPayload),
+    'utf8'
+  );
+  fs.writeFileSync(
+    path.join(outputDir, path.basename(I18N_FIGURES_OUTPUT_PATH)),
+    serializeI18nBundleExtension('zh', figureBundles),
+    'utf8'
+  );
+  fs.writeFileSync(
+    path.join(outputDir, path.basename(I18N_GLOSSARY_OUTPUT_PATH)),
+    serializeI18nBundleExtension('zh', glossaryBundles),
+    'utf8'
+  );
+  console.log(
+    '   wrote i18n-data.js (' + Object.keys(bundles).length + ' zh bundles, '
+      + Object.keys(zhCatalog.phases).length + ' phases, '
+      + Object.keys(zhCatalog.lessons).length + ' lessons)'
+  );
+  return outputPayload;
+}
+
+function syncI18nAssetVersions(siteDir = __dirname) {
+  const assets = [
+    'langs.js',
+    'i18n-data.js',
+    'i18n-figures.js',
+    'i18n-glossary.js',
+    'ui-i18n.js',
+    'lang-picker.js',
+    'content-source.js',
+    'header.js',
+    'data.js',
+    'app.js',
+    'cmdpalette.js',
+    'roadmap.js',
+  ];
+  const versions = {};
+  for (const asset of assets) {
+    const assetPath = path.join(siteDir, asset);
+    if (!fs.existsSync(assetPath)) throw new Error(`Missing i18n site asset: ${asset}`);
+    versions[asset] = assetVersion(fs.readFileSync(assetPath, 'utf8'));
+  }
+
+  for (const file of fs.readdirSync(siteDir).filter(name => name.endsWith('.html'))) {
+    const filePath = path.join(siteDir, file);
+    const before = fs.readFileSync(filePath, 'utf8');
+    let after = before;
+    for (const asset of assets) {
+      const reference = new RegExp(`(<script\\s+src=["']${escapeRegExp(asset)})(?:\\?v=[^"']*)?(["'])`, 'g');
+      after = after.replace(reference, `$1?v=${versions[asset]}$2`);
+    }
+    if (after !== before) fs.writeFileSync(filePath, after, 'utf8');
+  }
+  console.log('   synced i18n asset versions');
+  return versions;
 }
 
 function build() {
@@ -2026,6 +2902,7 @@ function build() {
   console.log('🔍 Parsing README.md...');
   const phases = parseReadme(readme, roadmapStatuses);
   const roadmapPrereqs = parseCurriculumPrereqs(readme, phases);
+  writeI18nData(phases);
 
   console.log('Parsing focused learning paths...');
   const learningPaths = parseLearningPaths(REPO_ROOT, phases);
@@ -2077,15 +2954,27 @@ function build() {
   console.log(`   Certification lessons: ${Object.keys(certifications.lessonsByPath).length}`);
   console.log(`   Practice assessments: ${Object.keys(certifications.assessmentsById).length}`);
 
+  const curriculumSummary = {
+    corePhases: phases.length,
+    coreLessons: totalLessons,
+    focusedLearningPaths: learningPaths.length,
+    certificationTracks: certifications.tracks.length,
+    certificationLessons: Object.keys(certifications.lessonsByPath).length,
+    guidedRoutes: learningPaths.length + certifications.tracks.length,
+    publishedLessons: totalLessons + Object.keys(certifications.lessonsByPath).length,
+  };
+  assertAboutCurriculumSummary(curriculumSummary);
+
   // Generate data.js
 const output = `// Auto-generated by build.js — do not edit manually.
-// Last built: ${new Date().toISOString()}
 
 const ROADMAP_PREREQS = ${JSON.stringify(roadmapPrereqs, null, 2)};
 
 const PHASES = ${JSON.stringify(phases, null, 2)};
 
 const LEARNING_PATHS = ${JSON.stringify(learningPaths, null, 2)};
+
+const CURRICULUM_SUMMARY = ${JSON.stringify(curriculumSummary, null, 2)};
 
 const GLOSSARY_CATEGORY_ORDER = ${JSON.stringify(GLOSSARY_CATEGORY_ORDER, null, 2)};
 
@@ -2099,6 +2988,7 @@ const ARTIFACTS = ${JSON.stringify(artifacts, null, 2)};
 
   syncCounts(totalLessons, phases.length, artifacts.length);
   syncReadme(totalLessons);
+  syncI18nAssetVersions();
   writeSitemap(seoManifests.lessonManifest, glossaryTerms.length, certifications);
   writeLlms(phases, glossaryTerms.length, artifacts.length, certifications);
 }
@@ -2237,6 +3127,39 @@ function syncReadme(lessons) {
   }
 }
 
+function assertAboutCurriculumSummary(summary, siteDir = __dirname) {
+  const aboutPath = path.join(siteDir, 'about.html');
+  const html = fs.readFileSync(aboutPath, 'utf8');
+  const match = html.match(
+    /<p\b[^>]*\bid=["']aboutCurriculumSummary["'][^>]*>([\s\S]*?)<\/p>/i
+  );
+  if (!match) {
+    throw new Error('about.html is missing the static #aboutCurriculumSummary fallback');
+  }
+
+  const fallback = match[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const checks = [
+    ['corePhases', 'core phases', /\bcore curriculum has (\d+) phases\b/i],
+    ['coreLessons', 'core lessons', /\bcore curriculum has \d+ phases and (\d+) lessons\b/i],
+    ['focusedLearningPaths', 'focused paths', /\bBeyond it are (\d+) focused paths\b/i],
+    ['certificationTracks', 'certification tracks', /\bfocused paths and (\d+) Claude certification tracks\b/i],
+    ['certificationLessons', 'certification lessons', /\bwith (\d+) certification lessons\b/i],
+  ];
+
+  for (const [field, label, pattern] of checks) {
+    const countMatch = fallback.match(pattern);
+    if (!countMatch) {
+      throw new Error(`about.html static fallback is missing its ${label} count`);
+    }
+    const actual = Number(countMatch[1]);
+    if (actual !== summary[field]) {
+      throw new Error(
+        `about.html static fallback ${label} drift: expected ${summary[field]}, found ${actual}`
+      );
+    }
+  }
+}
+
 // ─── Keep marketing counts in sync (single source of truth = this build) ──
 function syncCounts(lessons, phaseCount, outputs) {
   const targets = ['index.html', 'catalog.html', 'lesson.html', 'prereqs.html', 'learning-paths.html', 'cmdpalette.js'];
@@ -2261,6 +3184,12 @@ if (require.main === module) {
 
 module.exports = {
   FIGURE_PROVIDER_ORDER,
+  I18N_OUTPUT_PATH,
+  I18N_FIGURES_OUTPUT_PATH,
+  I18N_GLOSSARY_OUTPUT_PATH,
+  ZH_CATALOG_PATH,
+  assertAboutCurriculumSummary,
+  buildZhCatalog,
   buildFigureProviderManifest,
   discoverFigureProviderOrder,
   discoverArtifacts,
@@ -2270,6 +3199,7 @@ module.exports = {
   canonicalLessonUrl,
   githubSourceUrl,
   lessonDocumentSeo,
+  loadZhSiteBundles,
   parseReadme,
   parseRoadmap,
   parseLearningPaths,
@@ -2277,6 +3207,17 @@ module.exports = {
   parseFrontmatter,
   renderCatalogDiscovery,
   renderCertificationDiscovery,
+  publishedLanguages,
+  requireShortRef,
+  resolveRef,
+  resolveRepository,
+  resolveTranslationSource,
+  serializeBuildMeta,
   serializeFigureProviderManifest,
+  serializeI18nData,
+  serializeI18nBundleExtension,
+  syncI18nAssetVersions,
+  writeBuildMeta,
   writeFigureManifest,
+  writeI18nData,
 };

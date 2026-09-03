@@ -1,0 +1,1055 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/14-agent-engineering/29-production-runtimes": {
+      "sourceSha256": "7adb8e50ca4aa6a64b1cb243308db76c4d7eab04b5ddf4d64d67f67c2b819644",
+      "questions": [
+        {
+          "question": "课程列出的六种运行时形态是什么？",
+          "options": [
+            "Map、filter、reduce、fold、scan、group",
+            "请求-响应、流式、持久执行、基于队列、事件驱动、定时调度",
+            "REST、gRPC、GraphQL、WebSocket、SSE、MQTT",
+            "Read、write、exec、fork、exit、wait"
+          ],
+          "explanation": "这就是六种运行时形态；先选择形态，再选择框架。"
+        },
+        {
+          "question": "请求-响应模式在什么情况下并不适用？",
+          "options": [
+            "用于内部服务时",
+            "任务耗时超过约 30 秒，用户已经断开连接而 worker 仍在不断积压时",
+            "用于 REST API 时",
+            "用于耗时 1 秒的分类任务时"
+          ],
+          "explanation": "同步 HTTP 只适合短任务；长任务需要队列、持久执行或事件驱动形态。"
+        },
+        {
+          "question": "持久执行的核心属性是什么？",
+          "options": [
+            "更低的 token 成本",
+            "更快的推理",
+            "原生语音支持",
+            "每一步之后都会为状态创建检查点，因此发生故障时，运行时可以从上一个成功步骤恢复"
+          ],
+          "explanation": "创建检查点并恢复是它的关键区别；LangGraph 是课程采用的参考实现。"
+        },
+        {
+          "question": "Anthropic 的哪项观察说明了为什么长周期 agent 需要基于队列的运行时？",
+          "options": [
+            "任务必须同步运行",
+            "任务总能在 5 秒内完成",
+            "Computer use 发布说明：每个任务执行数十到数百个步骤属于正常情况",
+            "Cron 可以解决一切问题"
+          ],
+          "explanation": "Anthropic 指出，每个任务执行数十到数百个步骤属于正常情况；这种工作负载需要队列或持久运行时。"
+        },
+        {
+          "question": "课程所说的“可观测性是承重结构”是什么意思？",
+          "options": [
+            "提供商要求借此计费",
+            "日志看起来很美观",
+            "磁盘会被占满",
+            "如果没有 OTel GenAI spans 和 Langfuse/Phoenix/Opik 后端，就无法调试一个在第 40 步失败的多步骤 agent"
+          ],
+          "explanation": "可观测性对多步骤 agent 而言不是可选项；它决定了你究竟能进行调试，还是只能从头重放。"
+        },
+        {
+          "question": "为什么队列 worker 必须配备死信队列（DLQ）？",
+          "options": [
+            "DLQ 能让任务运行得更快",
+            "没有 DLQ，失败的任务会悄无声息地消失",
+            "DLQ 经过加密",
+            "AWS 强制要求使用 DLQ"
+          ],
+          "explanation": "没有 DLQ 的失败任务会直接消失；DLQ 是失败任务的停放区。"
+        },
+        {
+          "question": "课程建议将 cron 形态的 agent 与什么搭配？",
+          "options": [
+            "持久执行，使失败的夜间运行可以在下一个调度周期恢复",
+            "WebRTC",
+            "GPU 自动扩缩容器",
+            "流式 SSE"
+          ],
+          "explanation": "Cron 与持久执行搭配，可以从失败的定时运行中干净地恢复。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/30-eval-driven-agent-development": {
+      "sourceSha256": "8aad8987cc2c69d7905fd6ebdb72d4eb4b1afa413fc4a64a922be673ec8222a3",
+      "questions": [
+        {
+          "question": "课程列出的三个评估层是什么？",
+          "options": [
+            "单元、集成、端到端",
+            "冒烟、回归、验收",
+            "Pre、check、post",
+            "静态基准、自定义离线评估、线上生产评估"
+          ],
+          "explanation": "静态评估（SWE-bench、GAIA）、自定义离线评估（LLM-judge、exec、trajectory）和线上评估（重放、告警、成本/延迟）。"
+        },
+        {
+          "question": "Anthropic 建议从什么起点开始？",
+          "options": [
+            "从多 agent 辩论开始",
+            "从简单 prompt 开始，通过全面评估对其进行优化，并且只在需要时添加多步骤 agent 系统",
+            "只从前沿模型开始",
+            "从分层编排开始"
+          ],
+          "explanation": "Anthropic 明确指出，评估是驱动其他所有选择的外层循环。"
+        },
+        {
+          "question": "什么是“评估者-优化者”紧密循环？",
+          "options": [
+            "提议者生成输出，评估者作出判断，然后持续改进，直到通过评估（Self-Refine 的泛化形式）",
+            "采样、排序、去重",
+            "缓存、重试、失败",
+            "训练、评估、部署"
+          ],
+          "explanation": "它是 Self-Refine 的泛化形式：任何流程都可以包裹在“提议-判断-改进”循环中。"
+        },
+        {
+          "question": "2026 年关于评估存放位置的最佳实践是什么？",
+          "options": [
+            "完全由 QA 团队负责",
+            "每季度才运行一次",
+            "与代码放在一起，在每个 PR 的 CI 中运行，并根据评估分数决定是否允许合并",
+            "只放在单独的供应商仪表盘中"
+          ],
+          "explanation": "与代码共置、通过 CI 把关并跟踪回归，是当前的标准做法。"
+        },
+        {
+          "question": "为什么课程告诫不要使用缺乏依据的 LLM-judge？",
+          "options": [
+            "它违反 Apache 2.0",
+            "评估模型也会产生幻觉；应结合 CRITIC 模式，让判断建立在外部工具提供的依据上",
+            "它速度太慢",
+            "它只能在 GPU 上运行"
+          ],
+          "explanation": "这里同样适用 CRITIC（第 5 课）：基于工具的验证能让评估者保持诚实。"
+        },
+        {
+          "question": "过度拟合评估有什么危险？",
+          "options": [
+            "向量索引会产生碎片",
+            "计算成本会上升",
+            "延迟会降得太低",
+            "针对评估集进行优化会偏离生产环境中的实际效用；应轮换评估用例"
+          ],
+          "explanation": "轮换评估集可以让优化持续贴合生产现实。"
+        },
+        {
+          "question": "为什么不稳定的评估会造成问题？",
+          "options": [
+            "它们会超出上下文窗口",
+            "它们无法访问数据库",
+            "它们会使推理成本翻倍",
+            "非确定性用例会产生误报；应固定随机种子并保存状态快照"
+          ],
+          "explanation": "不稳定性会让回归结果无法解读；必须保证确定性（固定随机种子、保存状态快照）。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/31-agent-workbench-why-models-fail": {
+      "sourceSha256": "9d5dd65d9b8dcd2c84ffbdf16aa3e7f1957e15c6ac445a4a053eb69068b72365",
+      "questions": [
+        {
+          "question": "课程认为，agent 在真实任务中失败的根本原因是什么？",
+          "options": [
+            "训练数据已经过时",
+            "工作台失效：模型周围缺少必要的支撑面，而不是 LLM 本身能力不足",
+            "网络速度太慢",
+            "模型参数不足"
+          ],
+          "explanation": "模型对 Python 的理解没有错；它错在不了解实际工作。模型周围缺少必要的支撑面。"
+        },
+        {
+          "question": "课程列出的七个工作台支撑面是什么？",
+          "options": [
+            "Read、write、exec、fork、exit、wait、kill",
+            "规划、行动、反思、改进、辩论、投票、交付",
+            "指令、状态、范围、反馈、验证、审查、交接",
+            "训练、评估、部署、监控、再训练、扩展、退役"
+          ],
+          "explanation": "七个支撑面是指令、状态、范围、反馈、验证、审查和交接。"
+        },
+        {
+          "question": "以下哪一项不是课程将工作台支撑面映射到的八种分布式系统原语之一？",
+          "options": [
+            "Worker",
+            "反向传播",
+            "函数",
+            "触发器"
+          ],
+          "explanation": "八种原语是函数、worker、触发器、运行时、HTTP/RPC、队列、会话持久化和授权策略。"
+        },
+        {
+          "question": "据 Vercel 报告，一次 harness 调整让成功率从多少提升到了多少？",
+          "options": [
+            "通过添加 RAG，从 50% 提升到 70%",
+            "从 20% 提升到 60%",
+            "通过切换模型，从 0% 提升到 100%",
+            "通过删除 agent 80% 的工具，从 80% 提升到 100%"
+          ],
+          "explanation": "删除 80% 的工具后，Vercel 的 agent 成功率从 80% 提升到了 100%。"
+        },
+        {
+          "question": "Terminal Bench 2.0 说明了模型与 harness 之间的什么关系？",
+          "options": [
+            "同一个模型仅通过更换 harness，就从 30 名以外升至第 5 名",
+            "排名完全由模型决定",
+            "只有 GPU 重要",
+            "更改 harness 不会产生影响"
+          ],
+          "explanation": "LangChain 的《Anatomy of an Agent Harness》表明：同一个模型只更改 harness，排名就跃升了 25 位以上。"
+        },
+        {
+          "question": "当听到新的 harness 术语时，课程建议怎么做？",
+          "options": [
+            "拒绝接受",
+            "等待 OpenAI 将其标准化",
+            "原样采用这套术语",
+            "采用之前，先将其还原为原语（函数、worker、触发器、运行时、HTTP/RPC、队列、持久化、策略）"
+          ],
+          "explanation": "应从原语出发推理，而不是跟随供应商的分类法；术语会变，但工程本质不会变。"
+        },
+        {
+          "question": "相对于工作台而言，聊天历史处于什么位置？",
+          "options": [
+            "聊天记录是事实来源",
+            "聊天记录是易失的；repo 才是事实来源",
+            "两者等价",
+            "两者都不重要"
+          ],
+          "explanation": "循环闭合在状态文件上，而不是聊天历史上。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/32-minimal-agent-workbench": {
+      "sourceSha256": "68f1dcf7e5576d4b33e8d089950184fdfa85b2e8bced68924e329b465458b075",
+      "questions": [
+        {
+          "question": "最小可用工作台由哪三个文件构成？",
+          "options": [
+            "model.py、prompts.py、tools.py",
+            "Dockerfile、Makefile、.gitignore",
+            "AGENTS.md（路由器）、agent_state.json（状态）、task_board.json（队列）",
+            "README.md、CHANGELOG.md、LICENSE"
+          ],
+          "explanation": "简短的路由器、持久状态和任务队列是最低配置。"
+        },
+        {
+          "question": "课程如何定位 AGENTS.md？",
+          "options": [
+            "不纳入 repo 的秘密文件",
+            "纯粹的 prompt 缓存键",
+            "一个简短的路由器，指向更深入的文档、状态文件和任务看板",
+            "一份 3000 行的入门手册"
+          ],
+          "explanation": "AGENTS.md 是路由器，而不是手册；冗长的手册会被忽略。"
+        },
+        {
+          "question": "Augment Code 的数据说明了优质 AGENTS.md 的什么特点？",
+          "options": [
+            "优质 AGENTS.md 带来的质量提升相当于从 Haiku 升级到 Opus；糟糕的文件甚至不如没有文件",
+            "篇幅越长效果越好",
+            "只有 Claude 会读取它",
+            "它没有可衡量的影响"
+          ],
+          "explanation": "Augment Code 的测量结果是：最好的文件能带来类似模型升级的提升，最差的文件则比什么都没有更糟。"
+        },
+        {
+          "question": "为什么课程建议采用基于文件的状态，而不是基于聊天历史的状态？",
+          "options": [
+            "文件更小",
+            "磁盘更便宜",
+            "聊天历史是易失的；即使会话终止、对话被裁剪或工具被重置，文件仍然存在",
+            "SOC 2 强制要求这样做"
+          ],
+          "explanation": "会话会终止，聊天内容会被裁剪；文件才是持久的事实来源。"
+        },
+        {
+          "question": "课程指出，当相互冲突的指令进入 AGENTS.md 时会发生什么？",
+          "options": [
+            "成本会略微上升",
+            "什么都不会发生",
+            "延迟会下降",
+            "相互冲突的指令会悄然让 agent 从交互模式退化为贪心模式（AMBIG-SWE：解决率从 48.8% 降至 28%）"
+          ],
+          "explanation": "AMBIG-SWE 测得，出现矛盾时解决率会大幅下降；因此应给优先级编号。"
+        },
+        {
+          "question": "为什么课程建议使用 CLAUDE.md -> AGENTS.md 这样的跨工具符号链接？",
+          "options": [
+            "为了满足 MIT 要求",
+            "为了通过审计",
+            "让单一事实来源无需分叉就能分发给每一种编码 agent",
+            "为了节省字节"
+          ],
+          "explanation": "符号链接（或 Nx 风格的生成器）可以让 Claude Code、Codex、Cursor、Copilot 等工具共享一个规范来源。"
+        },
+        {
+          "question": "嵌套的 AGENTS.md 文件遵循什么模式？",
+          "options": [
+            "只读取根目录文件",
+            "从工作文件向 repo 根目录逐级查找，拼接沿途找到的每个 AGENTS.md（距离最近者优先；子目录规则扩展根目录规则）",
+            "随机选择",
+            "按字母顺序合并"
+          ],
+          "explanation": "OpenAI 在其主 repo 中放置了 88 个 AGENTS.md；工具会拼接从当前位置向上查找到的文件，并以最近的文件为准。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/33-instructions-as-executable-constraints": {
+      "sourceSha256": "638c7193692d6fd66ac13e7bf890c663f038bfe85e71ea180f7e01c7da9fb2f5",
+      "questions": [
+        {
+          "question": "愿景式规则与操作性规则有什么区别？",
+          "options": [
+            "愿景式规则需要经理参与",
+            "愿景式规则没有检查机制（“要小心”）；操作性规则则带有工作台可以运行的机器可检查函数",
+            "愿景式规则收费，操作性规则免费",
+            "操作性规则更长"
+          ],
+          "explanation": "操作性规则可以测试；愿景式规则只是愿望。"
+        },
+        {
+          "question": "课程用哪五类规则覆盖了大多数情况？",
+          "options": [
+            "规划、行动、反思、改进、交付",
+            "Read、write、exec、fork、exit",
+            "低、中、高、严重、致命",
+            "启动、禁止事项、完成定义、不确定性、审批"
+          ],
+          "explanation": "五类规则是启动、禁止事项、完成定义、不确定性处理和审批边界。"
+        },
+        {
+          "question": "哪一个严重性标签会停止执行，并要求操作人员进行覆盖？",
+          "options": [
+            "soft",
+            "warn",
+            "block",
+            "info"
+          ],
+          "explanation": "block 表示硬失败；warn 添加警告标注；info 仅作报告。"
+        },
+        {
+          "question": "为什么课程建议在编写规则时就标注严重性？",
+          "options": [
+            "Linter 强制要求",
+            "团队早期容易夸大严重性，又会在截止期限压力下将其弱化；预先写明严重性可以强制完成校准",
+            "这样在 Markdown 中更美观",
+            "这样可以节省 token"
+          ],
+          "explanation": "严重性校准必须经过审慎决策，不能在压力下事后补做。"
+        },
+        {
+          "question": "“Markdown 作为源、JSON 作为缓存”的模式有什么作用？",
+          "options": [
+            "取代 Markdown",
+            "加密规则",
+            "禁用审查",
+            "agent-rules.md 是人工编写的文件；agent-rules.lock.json 是由 pre-commit hook 重新生成的热路径缓存（形态与 package.json + lock 相同）"
+          ],
+          "explanation": "Markdown 保持可审查性；JSON 则让热路径无需进行解析。"
+        },
+        {
+          "question": "作为强制机制的规则过期指什么？",
+          "options": [
+            "超过 24 小时的规则默认拒绝执行",
+            "每条规则都带有 expires_at（默认 90 天）；从未触发的规则会引发季度审查，以决定保留、弱化还是删除",
+            "规则自动过期，无需审查",
+            "缓存已满时规则过期"
+          ],
+          "explanation": "Cloudflare 的数据显示，有过期机制的规则集始终少于 30 条；没有过期机制的规则集则膨胀到 80+ 条未使用规则。"
+        },
+        {
+          "question": "规则与框架的 guardrail 是什么关系？",
+          "options": [
+            "规则取代 guardrail",
+            "二者只需要一个",
+            "guardrail 在运行时执行规则；规则集则是这些 guardrail 所实现的人类可读契约",
+            "guardrail 是规则的替代品"
+          ],
+          "explanation": "二者缺一不可：运行时负责捕获违规，规则集则证明运行时执行的是正确规则。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/34-repo-memory-and-state": {
+      "sourceSha256": "5ba78f2da1635c69da41dcda7f3439b3fe1f1a7514601da5c22ab91e398e5bf2",
+      "questions": [
+        {
+          "question": "用来判断一条信息是否应当进入 repo 记忆的持久性测试是什么？",
+          "options": [
+            "用户是否将其标记为重要",
+            "三个月后重新运行 CI 时它是否仍然有用；如果有用，就放入 repo；否则放入遥测",
+            "它是否采用 JSON 格式",
+            "它是否能放进 4 kB"
+          ],
+          "explanation": "Repo 记忆用于保存三个月后仍有用的持久状态；瞬时数据属于遥测。"
+        },
+        {
+          "question": "哪个 schema 字段记录 agent 的契约版本？",
+          "options": [
+            "schema_version",
+            "model_id",
+            "session_uuid",
+            "build_hash"
+          ],
+          "explanation": "schema_version 是表示契约的整数；管理器拒绝加载版本未知的状态。"
+        },
+        {
+          "question": "原子写入如何工作？",
+          "options": [
+            "在同一目录中执行 tempfile.mkstemp，写入并 fsync，然后通过 os.replace（原子重命名）覆盖目标",
+            "采用带 CRC 的仅追加模式",
+            "加密后覆盖",
+            "先截断目标，再写入"
+          ],
+          "explanation": "POSIX 和 Windows 上的原子重命名可以防止部分写入导致的数据损坏。"
+        },
+        {
+          "question": "为什么非幂等工具调用必须使用幂等键？",
+          "options": [
+            "如果 agent 在工具调用后、结果写入检查点前崩溃，可以安全重试；执行前记录调用 ID，重试时跳过该调用",
+            "为了缩短输出",
+            "为了计费",
+            "为了对日志去重"
+          ],
+          "explanation": "pending_calls.jsonl 记录调用 ID；恢复时会检查并跳过已经执行的工作。"
+        },
+        {
+          "question": "相对于状态而言，大型工件（CSV、长篇转录文本、生成的文件）应存放在哪里？",
+          "options": [
+            "拼接到一个巨型日志中",
+            "放在环境变量中",
+            "内联到 agent_state.json 中",
+            "作为单独的文件（或放入对象存储），状态中只保存路径，从而让检查点保持小巧、快速"
+          ],
+          "explanation": "独立工件可以不受状态约束地增长；检查点仍能保持低廉的读写成本。"
+        },
+        {
+          "question": "使用事件溯源进行审计、使用快照进行恢复，能带来什么？",
+          "options": [
+            "读取快照，再重放快照之后的事件，从而逐字重放 agent 的决策；其形态与 Postgres WAL 相同",
+            "更快的推理",
+            "更低的磁盘占用",
+            "原生语音支持"
+          ],
+          "explanation": "每次变更时都追加到 state.events.jsonl；定期将状态快照写入 state.json；然后重放快照时间戳之后的事件。"
+        },
+        {
+          "question": "课程指出，schema_version 不匹配时会发生什么？",
+          "options": [
+            "管理器会静默升级",
+            "状态会被删除",
+            "agent 会重试",
+            "管理器拒绝加载，直到运行 tools/migrate_state.py 中的迁移脚本"
+          ],
+          "explanation": "要么执行 schema 迁移，要么拒绝加载；绝不能静默升级。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/35-initialization-scripts": {
+      "sourceSha256": "ff34bacb64f3e466a849b6057ba9ecf482217f01b06db1e317d37f59bb6d5e78",
+      "questions": [
+        {
+          "question": "初始化脚本消除了什么？",
+          "options": [
+            "Authn tokens",
+            "提供商的速率限制",
+            "推理延迟",
+            "每次会话的设置成本：探测运行时、列出 repo 内容，以及每次新会话都重复执行相同检查"
+          ],
+          "explanation": "脚本只需支付一次这项成本，并将答案写入 agent 随后读取的 init_report.json。"
+        },
+        {
+          "question": "初始化脚本的失败模式契约是什么？",
+          "options": [
+            "明确失败、快速失败、集中失败；工作台损坏时拒绝启动",
+            "始终成功",
+            "永远重试",
+            "软失败并继续"
+          ],
+          "explanation": "它的要点就是在工作台损坏时拒绝启动；静默回退会让整个机制失去意义。"
+        },
+        {
+          "question": "以下哪一项不是课程列出的探测内容？",
+          "options": [
+            "逐 token 采样温度",
+            "测试命令能否解析",
+            "依赖是否可用",
+            "运行时版本"
+          ],
+          "explanation": "探测内容包括运行时版本、依赖、测试命令、路径、环境变量、状态新鲜度和最后已知良好提交。"
+        },
+        {
+          "question": "为什么课程强调初始化过程必须是幂等的？",
+          "options": [
+            "它满足 SOC 2",
+            "JSON Schema 强制要求",
+            "幂等性可以节省成本",
+            "除刷新时间戳外，运行两次应当不产生额外效果，这样才能将其接入 CI、hook 或任务前 slash command"
+          ],
+          "explanation": "幂等性让初始化过程可以安全地从多个入口调用（hook、CI、slash command）。"
+        },
+        {
+          "question": "什么是最后已知良好提交锚定？",
+          "options": [
+            "repo 中最早的提交",
+            "根据 LKG 文件检查当前提交；如果差异超出预算且未经人工批准，就拒绝启动",
+            "团队负责人最近的提交",
+            "HEAD 与 main 的 merge base"
+          ],
+          "explanation": "Cloudflare 的 AI Code Review 以 LKG 为基准限定 reviewer 的审查范围，防止漂移在多次会话间不断累积。"
+        },
+        {
+          "question": "带 TTL 的锁文件模式有什么作用？",
+          "options": [
+            "探测全部成功后写入 prereqs.lock；如果 manifest hash 匹配，后续运行会在 24h 内信任该锁，并跳过昂贵的探测",
+            "锁定 repo，禁止编辑",
+            "禁用 CI",
+            "在 24 小时内阻止所有写入"
+          ],
+          "explanation": "其形态与 Docker 层缓存相同：幂等探测 + 内容哈希 = 跳过。"
+        },
+        {
+          "question": "初始化热路径中绝不能出现什么？",
+          "options": [
+            "网络调用、LLM 调用、外部许可证检查；探测属于确定性的基础工作，耗时应低于 3 秒",
+            "读取锁文件",
+            "读取本地文件系统",
+            "读取环境变量"
+          ],
+          "explanation": "调用 LLM 的探测其实是工作流，而不是探测；初始化过程必须保持确定性。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/36-scope-contracts": {
+      "sourceSha256": "d9b94dceb3ce0f5747befc58bfff6dbacdb3893cd8046c8abbee6b9fc3dd1e46",
+      "questions": [
+        {
+          "question": "为什么范围蔓延被称为监控最不足的失败模式？",
+          "options": [
+            "它很少发生，不值得监控",
+            "测试会自动捕获它",
+            "它会让 agent 明确地崩溃",
+            "每一次触碰在当时都有看似合理的理由；但合在一起，就变成了与已审查内容不同的变更"
+          ],
+          "explanation": "Agent 会真诚地解释每一步；悄然累积的整体变更才是范围蔓延。"
+        },
+        {
+          "question": "课程把哪个契约字段称为契约的一半？",
+          "options": [
+            "approvals_required",
+            "forbidden_files（负空间）",
+            "goal",
+            "task_id"
+          ],
+          "explanation": "没有 forbidden_files 的契约是不完整的；负空间占了契约的一半。"
+        },
+        {
+          "question": "为什么要用 glob 而不是原始路径来固定允许/禁止范围？",
+          "options": [
+            "glob 的加密效果更好",
+            "glob 速度更快",
+            "原始路径无法进行 JSON 序列化",
+            "真实 repo 会移动文件；即使会话之间发生重构，glob 仍然有效"
+          ],
+          "explanation": "glob（app/**/*.py）使契约在重构后仍然有效。"
+        },
+        {
+          "question": "“违规预算”模式有什么作用？",
+          "options": [
+            "按违规次数收费",
+            "允许预算范围内的轻微越界仅触发警告；只有超出预算才拒绝合并——这正是一个能够投入使用的 gate 与一个最终被禁用的 gate 之间的区别",
+            "限制模型调用频率",
+            "为 agent 设定月度预算"
+          ],
+          "explanation": "agent-guardrails 使用 violationBudget，让 gate 在日常工作流中切实可用。"
+        },
+        {
+          "question": "specsmaxxing 实践者报告了什么结果？",
+          "options": [
+            "延迟降低了 90%",
+            "成本上升到 5 倍",
+            "三周内，钻牛角尖率从 52% 降至 21%，且没有更换 agent；发挥作用的是契约，而不是模型",
+            "测试变慢了"
+          ],
+          "explanation": "在调用 agent 之前先用 YAML 定义范围契约，无需更改模型就能让钻牛角尖率降低一半以上。"
+        },
+        {
+          "question": "多个契约如何按最小权限原则合并？",
+          "options": [
+            "以最后一个契约为准",
+            "对 allowed_files 取交集；对 forbidden_files 取并集；对 time_budget 取最小值；累积 approvals；deny-all 始终生效；None 与另一方合并时听从另一方",
+            "随机打破平局",
+            "以第一个契约为准"
+          ],
+          "explanation": "最小权限合并：允许项取交集，禁止项取并集，时间取最严格值，并累积审批要求。"
+        },
+        {
+          "question": "为什么时间和网络预算也应当写进契约？",
+          "options": [
+            "提供商强制要求",
+            "实际运行时间和外部主机访问都是范围维度；仅有文件 glob 是必要条件，但还不充分",
+            "它们能让 JSON 更小",
+            "Apache 2.0 强制要求"
+          ],
+          "explanation": "除了文件 glob，time_budget_minutes 和 network_egress allowlist 也是范围维度。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/37-runtime-feedback-loops": {
+      "sourceSha256": "1d924c422adddff1721f9ed62ab2e06ca8340fb615376409dcad6e4f39b0fdbe",
+      "questions": [
+        {
+          "question": "反馈运行器会强制 agent 做什么？",
+          "options": [
+            "对想象中的输出作出反应",
+            "对事实作出反应：每条命令的结构化 stdout/stderr/exit/duration 记录都会被捕获并送回循环",
+            "跳过验证",
+            "使用另一个模型"
+          ],
+          "explanation": "运行器消除了“测试通过了”（想象）与“测试确实运行且退出码为零”（有记录）之间的差距。"
+        },
+        {
+          "question": "反馈与遥测有什么不同？",
+          "options": [
+            "反馈用于本次运行的下一轮；遥测用于操作人员跨时间审查多次运行（二者使用不同文件，保留周期也不同）",
+            "二者完全相同",
+            "遥测需要付费",
+            "遥测使用 OTel；反馈使用 GraphQL"
+          ],
+          "explanation": "二者虽然共享字段，却存放在不同文件中，保留周期也不同；反馈服务于单次运行内部，遥测则跨越多次运行。"
+        },
+        {
+          "question": "每条反馈记录中必须出现哪个字段？",
+          "options": [
+            "exit_code（如果退出码为 null，必须拒绝让循环继续前进）",
+            "embedding_vector",
+            "model_id",
+            "prompt_cache_token"
+          ],
+          "explanation": "exit_code 是无歧义的成功信号；退出码为 null 意味着不能继续推进。"
+        },
+        {
+          "question": "运行器如何截断大型输出？",
+          "options": [
+            "使用 gzip 压缩",
+            "随机采样",
+            "只保留前 10 行",
+            "以确定性方式保留头部和尾部，并插入 'truncated N lines' 标记，使相同输出始终生成相同记录"
+          ],
+          "explanation": "确定性截断在限制 token 成本的同时保持记录可重放；尾部通常包含失败摘要。"
+        },
+        {
+          "question": "为什么要在写入时脱敏，而不是读取时脱敏？",
+          "options": [
+            "读取时脱敏会破坏 JSON",
+            "攻击者能够获取的是磁盘上的文件；只在读取时脱敏会让秘密仍然留在 JSONL 文件中",
+            "这样速度更快",
+            "为了压缩"
+          ],
+          "explanation": "追加前，应对匹配 Bearer、password=、api_key=、AKIA...、xox[baprs]- 的行进行脱敏；并且每季度审计一次这些模式。"
+        },
+        {
+          "question": "parent_command_id 为工作台带来了什么？",
+          "options": [
+            "更快的文件 I/O",
+            "更低的内存占用",
+            "重试会关联到其父尝试，因此 reviewer 和审计能够看到完整失败链；否则，重试看起来就像彼此独立的成功",
+            "更便宜的推理"
+          ],
+          "explanation": "父级关联让 reviewer（第 39 课）和验证 gate 都能看见重试链。"
+        },
+        {
+          "question": "为什么要将 feedback_record.jsonl 限制在 1 MB，并启用轮转？",
+          "options": [
+            "磁盘速度太慢",
+            "agent 只读取当前文件；轮转可以限制运行时成本，而 CI 工件会捕获完整记录集",
+            "JSON 无法处理更大的文件",
+            "提供商按字节收费"
+          ],
+          "explanation": "限制当前文件大小并轮转历史记录，与 logrotate 采用相同模式；热循环中的成本因此可以预测。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/38-verification-gates": {
+      "sourceSha256": "30f1fb24838d6d29fe6bd84241ffa310459939f08bbe61cb84ca7376074deb16",
+      "questions": [
+        {
+          "question": "验证 gate 回答的唯一问题是什么？",
+          "options": [
+            "这个任务真的完成了吗？（读取范围、规则、反馈和 diff 工件后作答）",
+            "prompt 是否最优？",
+            "模型速度快吗？",
+            "token 预算健康吗？"
+          ],
+          "explanation": "Gate 是一个作用于工作台工件的确定性函数，会输出通过/失败判定。"
+        },
+        {
+          "question": "为什么 gate 必须是确定性的？",
+          "options": [
+            "同一组工件每次都必须产生相同判定；LLM judge 应放在 reviewer（定性判断）中，而不是 gate（状态判断）中",
+            "提供商强制要求",
+            "确定性无需成本",
+            "这样可以省钱"
+          ],
+          "explanation": "将模型判断混入 gate，会破坏确定性判断与定性判断之间的分工。"
+        },
+        {
+          "question": "Gate 对覆盖决定有什么纪律要求？",
+          "options": [
+            "严重性为 block 的发现只能由人类覆盖，并且必须在签名审计日志中记录 override_reason 和 overridden_by 用户 ID",
+            "禁止任何覆盖",
+            "任何人都可以静默覆盖",
+            "覆盖需要经理发送邮件"
+          ],
+          "explanation": "签名覆盖记录写入 outputs/verification/overrides.jsonl；agent 不能自行覆盖。"
+        },
+        {
+          "question": "课程引用的 Hybrid Norm 组合是什么？",
+          "options": [
+            "GPU 与 CPU 拆分",
+            "热 prompt/冷 prompt",
+            "可验证奖励（测试、schema、退出码）回答“它解决问题了吗？”；LLM rubric 回答“它是否易读、安全且符合风格？”",
+            "使用缓存与不使用缓存"
+          ],
+          "explanation": "Anthropic 2026 指南：gate 运行第一类检查；reviewer（第 39 课）运行第二类检查。"
+        },
+        {
+          "question": "纵深防御如何对 gate 进行分层？",
+          "options": [
+            "pre-commit hook -> CI 状态检查 -> 工具调用前 authz hook -> 合并前 gate；每一层都是确定性的，因此某一层遗漏的问题会被下一层捕获",
+            "只在合并时设置一个 gate",
+            "只在聊天中提醒",
+            "只显示 IDE 警告"
+          ],
+          "explanation": "多个不可绕过的层可以捕获单一层可能漏掉的问题。"
+        },
+        {
+          "question": "coverage_floor 检查可以防止什么？",
+          "options": [
+            "热路径延迟",
+            "防止 agent 悄悄删除失败的测试；如果实测覆盖率低于下限，或比上次合并低 1 个百分点以上，gate 就会失败",
+            "冷启动",
+            "过时的锁文件"
+          ],
+          "explanation": "如果没有下限，agent 可以悄悄降低覆盖率，让判定继续保持绿色。"
+        },
+        {
+          "question": "什么时候应使用 --strict 模式，将每个 warn 都提升为 block？",
+          "options": [
+            "始终使用",
+            "永不使用",
+            "只在星期日使用",
+            "发布分支、阻塞交付的 PR、事故后分诊；不应作为日常默认值，因为事事严格会损害工作流"
+          ],
+          "explanation": "--strict 应按分支选择启用；只在高风险时刻使用。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/39-reviewer-agent": {
+      "sourceSha256": "b169774ecb1fe85314e34a7e0c5d503964611a96736b9d489b1c404e0488017f",
+      "questions": [
+        {
+          "question": "为什么构建者无法可靠地为自己的工作评分？",
+          "options": [
+            "它的 token 会耗尽",
+            "模型拒绝自我评分",
+            "通过验收是必要条件，但并不充分；问题契合度、范围纪律、已记录的假设和交接就绪度，需要由输入不同的另一个角色评估",
+            "它会失去认证"
+          ],
+          "explanation": "可靠性存在于构建者与 reviewer 之间的差距中；验收只能证明一个较弱版本的正确性。"
+        },
+        {
+          "question": "以下哪一项不是五个 rubric 维度之一？",
+          "options": [
+            "推理延迟",
+            "问题契合度",
+            "范围纪律",
+            "验证质量"
+          ],
+          "explanation": "五个维度是问题契合度、范围纪律、假设、验证质量和交接就绪度。"
+        },
+        {
+          "question": "角色分离需要什么？",
+          "options": [
+            "不同的 system prompt 和不同的输入；只要工作姿态发生变化，且 reviewer 对 diff 没有写权限，同一个模型就可以扮演两个角色",
+            "不同的模型",
+            "新账户",
+            "不同的物理硬件"
+          ],
+          "explanation": "纪律来自角色姿态和输入，而不是模型身份。"
+        },
+        {
+          "question": "Cloudflare 2026 年的审查架构是什么样的？",
+          "options": [
+            "两个 reviewer 轮询",
+            "最多七个专业 reviewer 在 Review Coordinator 下并行工作，由协调器对发现去重；仅协调器使用顶级模型，专业 reviewer 使用更便宜的层级",
+            "一个大型 reviewer",
+            "单个顺序执行的 LLM"
+          ],
+          "explanation": "Cloudflare 在 30 天内使用“专业 reviewer + 协调器”架构执行了 131,246 次审查。"
+        },
+        {
+          "question": "以下哪一项不是课程列出的四种 LLM-judge 偏差之一？",
+          "options": [
+            "向量局部性",
+            "冗长偏差（更长的输出得分更高）",
+            "自我偏好（同一模型家族）",
+            "位置偏差（A,B 与 B,A 的排序导致结果不一致）"
+          ],
+          "explanation": "四种偏差是位置偏差、冗长偏差、自我偏好和权威偏差；向量局部性不在其中。"
+        },
+        {
+          "question": "什么是校准集？",
+          "options": [
+            "新的训练语料库",
+            "10-20 个已知正确判定的历史任务收尾样本；每次修改 prompt 时重新运行；如果 reviewer 一致率低于 80%，应先修正 rubric 再交付",
+            "A/B 测试 fixture",
+            "向量索引"
+          ],
+          "explanation": "校准集让 reviewer 保持可靠；如果一致率发生漂移，应修正 rubric，而不是修改数据。"
+        },
+        {
+          "question": "Reviewer 的报告如何与工作台的其他部分集成？",
+          "options": [
+            "它取代验证",
+            "它只发送给经理",
+            "它会被打包进交接包（第 40 课）；人工审查从该报告开始，而不是面对空白页面",
+            "它会覆盖 gate"
+          ],
+          "explanation": "审查报告会进入交接材料，让下一个会话和人工 reviewer 都能从书面判定开始。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/40-multi-session-handoff": {
+      "sourceSha256": "0210bc1f8623af8166611b1ad701565ed1ec1bb18973f4da9985cfa81e4d8c1c",
+      "questions": [
+        {
+          "question": "交接包中起承重作用的是哪个字段？",
+          "options": [
+            "next_action（没有它，文档就只是一份状态报告，而不是交接）",
+            "verdict_pointer",
+            "summary",
+            "commands_run"
+          ],
+          "explanation": "如果交接包含除 next_action 以外的一切，它仍然只是一份状态报告；下一项具体行动才是让后续会话富有成效的关键。"
+        },
+        {
+          "question": "为什么交接材料应当生成，而不是手写？",
+          "options": [
+            "在艰难的一天里，手写交接很容易被跳过；生成器会读取工作台工件并输出交接包，因此 agent 只需让工作台处于可供生成器总结的状态",
+            "Apache 2.0 强制要求",
+            "生成器速度更快",
+            "生成器的加密效果更好"
+          ],
+          "explanation": "自动化弥合了意愿与一致执行之间的差距。"
+        },
+        {
+          "question": "交接包以哪两种形式交付？",
+          "options": [
+            "电子邮件和 Slack",
+            "PDF 和 PNG",
+            "YAML 和 TOML",
+            "handoff.md（人类可读）和 handoff.json（机器可读；二者来自相同的源工件，如有分歧以 JSON 为准）"
+          ],
+          "explanation": "Markdown 供人类阅读，JSON 供下一个 agent 使用；二者均由同一个生成器产生。"
+        },
+        {
+          "question": "课程如何区分压缩与交接？",
+          "options": [
+            "二者完全相同",
+            "压缩收费，交接免费",
+            "交接需要 GPU",
+            "压缩用于延长当前会话；交接则干净地结束一个会话，并在全新上下文中开始下一个会话。交接包让这种转换成本很低"
+          ],
+          "explanation": "Hermes Issue 20372 的观点是：在原地压缩导致质量下降之前，先写一份精简交接，然后在新会话中恢复工作。"
+        },
+        {
+          "question": "关于何时结束会话，课程有什么建议？",
+          "options": [
+            "在上下文预算达到 50-75% 之前、上下文仍然完整时结束；在压缩产物污染状态之前写入，成本很低",
+            "等上下文用到 100% 时再慌忙处理",
+            "只在合并之后",
+            "只在午夜"
+          ],
+          "explanation": "提前收尾可以让生成器的输入保持干净。"
+        },
+        {
+          "question": "课程建议如何裁剪交接包中的反馈日志？",
+          "options": [
+            "保留最后 K 条记录，以及所有退出码非零的记录，使交接包保持小巧，同时保留失败历史",
+            "随机保留 N 条记录",
+            "只保留最前面的 K 条记录",
+            "只保留最新记录"
+          ],
+          "explanation": "非对称裁剪：失败记录必须保留；保留尾部的琐碎信息成本很低。"
+        },
+        {
+          "question": "哪些元数据可以让多 agent 会话之间的协调正常运作？",
+          "options": [
+            "branch、last_known_good_commit 和 status（active | superseded | archived）；每个分支和主题只能有一份 active 交接",
+            "共享 Slack 频道",
+            "中央队列",
+            "绝密加密"
+          ],
+          "explanation": "过时的交接是多 agent 协作的主要失败模式；status + branch + LKG 可以让活动集合保持精简。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/41-workbench-for-real-repos": {
+      "sourceSha256": "e4dbeb1f7fd0d44d83e0f983695a1a08c8d1049e5fa37e9a564fd400e9840062",
+      "questions": [
+        {
+          "question": "让同一项任务分别通过“仅 prompt”和“工作台引导”两条流水线运行，目的是什么？",
+          "options": [
+            "对 GPU 进行基准测试",
+            "比较模型",
+            "产出一份包含数字的前后对比报告，可以直接交给持怀疑态度的人，而不是与其争论",
+            "选择供应商"
+          ],
+          "explanation": "让数字来说服人；论据建立在贴近真实的任务上，而不是玩具任务上。"
+        },
+        {
+          "question": "以下哪一项不是所测量的五个结果之一？",
+          "options": [
+            "files_outside_scope",
+            "model_perplexity",
+            "acceptance_met",
+            "tests_actually_run"
+          ],
+          "explanation": "五个结果是 tests_actually_run、acceptance_met、files_outside_scope、handoff_quality 和 reviewer_total。"
+        },
+        {
+          "question": "LangChain 的《Anatomy of an Agent Harness》在 Terminal Bench 2.0 上测得了什么？",
+          "options": [
+            "顶级模型下降了 25 位",
+            "所有模型都收敛到前三名",
+            "更改 harness 没有影响排名",
+            "同一个模型仅通过更改 harness，就从 30 名以外升至第 5 名"
+          ],
+          "explanation": "同一模型产生 25 个名次的差距，是 harness 与模型对比中最醒目的证据。"
+        },
+        {
+          "question": "preprints.org 上的论文称，企业 agent 项目的失败率是多少？",
+          "options": [
+            "8%",
+            "约 88% 未能进入生产环境，并且失败主要集中在运行时，而不是推理环节",
+            "约 50%",
+            "没有项目失败"
+          ],
+          "explanation": "预印本《Harness Engineering for Language Agents》将失败追溯到运行时问题（过时状态、脆弱的重试、过度膨胀的上下文）。"
+        },
+        {
+          "question": "在长上下文条件下，WebAgent 的基线准确率会怎样变化？",
+          "options": [
+            "保持不变",
+            "从 40-50% 降至 10% 以下，主要原因是无限循环和目标丢失",
+            "提高 30%",
+            "减半，但仍高于 30%"
+          ],
+          "explanation": "Ralph Loop 和交接包正是用来吸收长上下文崩溃所造成影响的。"
+        },
+        {
+          "question": "课程如何看待假阴性（仅使用 prompt 反而更快的情况）？",
+          "options": [
+            "单步事实任务、单行 lint、formatter 运行在仅使用 prompt 时更快；应诚实列出这些情况，避免让工作台显得小题大做",
+            "它们证明工作台失败",
+            "它们不存在",
+            "它们推翻了 harness 论点"
+          ],
+          "explanation": "坦诚列出仅使用 prompt 最快的场景，可以让 harness 论点更可信。"
+        },
+        {
+          "question": "在什么情况下应引用本课的报告？",
+          "options": [
+            "内部 HR 审查",
+            "只在黑客松上",
+            "当有人想“只在这个 sprint”取消验证 gate，或者新 agent 产品发布、需要一个可移植的节时基准时",
+            "只在营销演示文稿中"
+          ],
+          "explanation": "数字比解释传播得更远；当压力试图绕过这些支撑面时，就引用这份报告。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/42-agent-workbench-capstone": {
+      "sourceSha256": "2ad50998a6be7b7d5540f49ee829741f0aeaf46c5b41560c257245aed532ec4e",
+      "questions": [
+        {
+          "question": "结课项目会产出什么？",
+          "options": [
+            "监控仪表盘",
+            "一个带版本、可直接放入项目的目录（agent-workbench-pack/），包含七个支撑面以及一个以幂等方式安装它们的 bin/install.sh",
+            "研究论文",
+            "新的 LLM"
+          ],
+          "explanation": "这个 pack 是配方；每次安装都是按配方做出的一份成品。"
+        },
+        {
+          "question": "以下哪一项不属于 pack 的目录布局？",
+          "options": [
+            "vendor_proprietary_weights/",
+            "schemas/",
+            "AGENTS.md + docs/",
+            "scripts/"
+          ],
+          "explanation": "Pack 的布局包括 AGENTS.md、docs/、schemas/、scripts/、bin/ 和 README.md。这个 pack 与框架和供应商无关。"
+        },
+        {
+          "question": "为什么 pack 要带有 VERSION 文件？",
+          "options": [
+            "跟踪 agent 智商",
+            "为了 SEO",
+            "在 Hacker News 上宣传",
+            "需要迁移的 schema/script 变更提升 major 版本；新增内容提升 minor 版本；仅文档变更提升 patch 版本；目标 repo 会记录安装时所依据的版本"
+          ],
+          "explanation": "其形态与 npm、Cargo、pyproject.toml 相同；VERSION 是契约，不是营销材料。"
+        },
+        {
+          "question": "这个 pack 如何实现跨工具分发？",
+          "options": [
+            "使用一个源文件和符号链接（ln -s AGENTS.md CLAUDE.md、.cursor/rules/、.github/copilot-instructions.md），将相同源内容分发给每一种编码 agent",
+            "为每个工具手动复制",
+            "硬编码每个工具的路径",
+            "为每个工具设置一个供应商锁"
+          ],
+          "explanation": "Nx 的 nx ai-setup 是参考实现；pack 的安装器通过符号链接完成相同工作。"
+        },
+        {
+          "question": "课程建议卸载器如何运行？",
+          "options": [
+            "只删除文档",
+            "遇到非平凡状态时拒绝卸载；绝不删除用户的 agent_state.json、task_board.json 或 outputs/；只移除 schemas、scripts、docs 和 AGENTS.md（可选择保留）",
+            "删除包括状态在内的一切内容",
+            "禁用 git"
+          ],
+          "explanation": "状态属于用户；pack 并不拥有它。"
+        },
+        {
+          "question": "哪些内容应留在 pack 之外？",
+          "options": [
+            "脚本",
+            "Schema",
+            "项目特定任务、供应商 SDK 调用、团队入门说明——pack 与框架无关，应放在入门材料旁边，而不是塞进其中",
+            "安装器"
+          ],
+          "explanation": "任务应放在目标 repo 的任务看板上，而不是 pack 中；供应商 SDK 调用会把 pack 锁定到单一框架。"
+        },
+        {
+          "question": "这个 pack 通过什么渠道一次性分发给多个编码 agent？",
+          "options": [
+            "SkillKit 风格的分发（skillkit install agent-workbench-pack）从单一来源将其安装到 32 个 AI agent 中",
+            "电子邮件附件",
+            "手动复制",
+            "仅发布 GitHub release notes"
+          ],
+          "explanation": "Pack repo 是事实来源；SkillKit 是分发渠道；供应商锁定因而消失。"
+        }
+      ]
+    }
+  }
+}

@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lesson Catalog - AI Engineering from Scratch</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
-  <meta name="description" content="Full catalog of AI engineering lessons. Search, filter, and sort every lesson across all 20 phases.">
+  <meta name="description" content="Full catalog of 523 AI engineering lessons across all 20 core phases.">
   <link rel="canonical" href="https://aiengineeringfromscratch.com/catalog.html">
   <meta property="og:title" content="Catalog · AI Engineering from Scratch">
-  <meta property="og:description" content="Search and filter the full curriculum across 20 phases. Python, TypeScript, Rust, Julia.">
+  <meta property="og:description" content="Search and filter the 20-phase core curriculum. Python, TypeScript, Rust, Julia.">
   <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
   <meta property="og:url" content="https://aiengineeringfromscratch.com/catalog.html">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Catalog · AI Engineering from Scratch">
-  <meta name="twitter:description" content="Search and filter the full curriculum across 20 phases.">
+  <meta name="twitter:description" content="Search and filter all 523 lessons across 20 core phases.">
   <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -339,6 +339,7 @@
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </button>
+      <div id="langPicker"></div>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
         <span class="theme-icon" id="themeIcon">N</span>
       </button>
@@ -349,7 +350,7 @@
     <div class="container">
       <div class="catalog-header">
         <h1>Lesson Catalog</h1>
-        <p>Every lesson across all 20 phases. Search, filter, sort.</p>
+        <p>Every lesson across all 20 core phases. Search, filter, sort.</p>
       </div>
       <div class="catalog-controls">
         <input type="text" class="catalog-search" id="catalogSearch" placeholder="Search lessons..." aria-label="Search lessons">
@@ -684,7 +685,7 @@
             <tr data-generated-discovery="lesson"><td>14</td><td><a href="lesson?path=phases%2F14-agent-engineering%2F24-agent-observability-platforms">Agent Observability: Langfuse, Phoenix, Opik</a></td><td>Learn</td><td>Python</td><td>complete</td></tr>
             <tr data-generated-discovery="lesson"><td>14</td><td><a href="lesson?path=phases%2F14-agent-engineering%2F25-multi-agent-debate">Multi-Agent Debate and Collaboration</a></td><td>Build</td><td>Python</td><td>complete</td></tr>
             <tr data-generated-discovery="lesson"><td>14</td><td><a href="lesson?path=phases%2F14-agent-engineering%2F26-failure-modes-agentic">Failure Modes: Why Agents Break</a></td><td>Build</td><td>Python</td><td>complete</td></tr>
-            <tr data-generated-discovery="lesson"><td>14</td><td><a href="lesson?path=phases%2F14-agent-engineering%2F27-prompt-injection-defense">Prompt Injection and the PVE Defense</a></td><td>Build</td><td>Python</td><td>complete</td></tr>
+            <tr data-generated-discovery="lesson"><td>14</td><td><a href="lesson?path=phases%2F14-agent-engineering%2F27-prompt-injection-defense">Prompt Injection and the Prompt-Validator-Executor Defense</a></td><td>Build</td><td>Python</td><td>complete</td></tr>
             <tr data-generated-discovery="lesson"><td>14</td><td><a href="lesson?path=phases%2F14-agent-engineering%2F28-orchestration-patterns">Orchestration Patterns: Supervisor, Swarm, Hierarchical</a></td><td>Build</td><td>Python</td><td>complete</td></tr>
             <tr data-generated-discovery="lesson"><td>14</td><td><a href="lesson?path=phases%2F14-agent-engineering%2F29-production-runtimes">Production Runtimes: Queue, Event, Cron</a></td><td>Learn</td><td>Python</td><td>complete</td></tr>
             <tr data-generated-discovery="lesson"><td>14</td><td><a href="lesson?path=phases%2F14-agent-engineering%2F30-eval-driven-agent-development">Eval-Driven Agent Development</a></td><td>Build</td><td>Python</td><td>complete</td></tr>
@@ -928,10 +929,14 @@
     </div>
   </footer>
 
-  <script src="data.js?v=20260821c"></script>
-  <script src="progress.js?v=20260822a"></script>
-  <script src="header.js?v=20260829b" defer></script>
-  <script src="cmdpalette.js?v=20260821a" defer></script>
+  <script src="langs.js?v=fb2840c8aa0a"></script>
+  <script src="i18n-data.js?v=7e2dd86ccaad"></script>
+  <script src="ui-i18n.js?v=ed1be68f31e1"></script>
+  <script src="lang-picker.js?v=853069504587" defer></script>
+  <script src="data.js?v=5c1c014aea05"></script>
+  <script src="progress.js?v=20260828a"></script>
+  <script src="header.js?v=191a713c8dc5" defer></script>
+  <script src="cmdpalette.js?v=42dbbdb18dee" defer></script>
   <script>
     (function () {
       var root = document.documentElement;
@@ -1040,6 +1045,54 @@
           return div.innerHTML;
         }
 
+        function localized(value) {
+          if (!window.AIFS_I18n || typeof window.AIFS_I18n.t !== 'function') return value || '';
+          return window.AIFS_I18n.t(value || '');
+        }
+
+        function lessonHref(url) {
+          var localMatch = String(url || '').match(/(phases\/[^/]+\/[^/]+)\/?$/);
+          if (!localMatch) return url;
+          var route = /\.github\.io$/i.test(window.location.hostname) ? 'lesson.html' : 'lesson';
+          return route + '?path=' + encodeURIComponent(localMatch[1]);
+        }
+
+        function catalogGroupHeadingHtml(phase, phaseName, lessonCount) {
+          var paddedPhase = String(phase).padStart(2, '0');
+          var phaseLabel = window.AIFS_I18n && typeof window.AIFS_I18n.catalogPhase === 'function'
+            ? window.AIFS_I18n.catalogPhase(phase, phaseName)
+            : 'Phase ' + paddedPhase + ': ' + phaseName;
+          var lessonLabel = window.AIFS_I18n && typeof window.AIFS_I18n.catalogLesson === 'function'
+            ? window.AIFS_I18n.catalogLesson(lessonCount)
+            : lessonCount + ' lessons';
+          return escapeHtml(phaseLabel) + '<span class="catalog-group-count">' + escapeHtml(lessonLabel) + '</span>';
+        }
+
+        function refreshLocalizedRows() {
+          for (var rowIndex = 0; rowIndex < allRows.length; rowIndex++) {
+            var row = allRows[rowIndex];
+            row.displayName = window.AIFS_I18n && typeof window.AIFS_I18n.catalogTitle === 'function'
+              ? window.AIFS_I18n.catalogTitle(row.url, row.name)
+              : localized(row.name);
+            row.displayPhaseName = localized(row.phaseName);
+            row.displayType = localized(row.type);
+            row.displayLang = localized(row.lang);
+            row.displayStatus = localized(row.status);
+            var searchValues = [
+              row.name, row.phaseName, row.type, row.lang, row.status,
+              row.displayName, row.displayPhaseName, row.displayType, row.displayLang, row.displayStatus
+            ];
+            row.searchText = window.AIFS_I18n && typeof window.AIFS_I18n.searchText === 'function'
+              ? window.AIFS_I18n.searchText(searchValues).toLowerCase()
+              : searchValues.join(' ').toLowerCase();
+          }
+          for (var optionIndex = 1; optionIndex < phaseSelect.options.length; optionIndex++) {
+            var option = phaseSelect.options[optionIndex];
+            var phase = PHASES[optionIndex - 1];
+            if (phase) option.textContent = String(phase.id).padStart(2, '0') + ' - ' + localized(phase.name);
+          }
+        }
+
         function render() {
           var query = (searchInput.value || '').toLowerCase().trim();
           var phaseFilter = phaseSelect.value;
@@ -1049,10 +1102,7 @@
             if (phaseFilter && String(r.phase) !== phaseFilter) return false;
             if (statusFilter && r.status !== statusFilter) return false;
             if (query) {
-              return r.name.toLowerCase().indexOf(query) !== -1 ||
-                r.phaseName.toLowerCase().indexOf(query) !== -1 ||
-                r.type.toLowerCase().indexOf(query) !== -1 ||
-                r.lang.toLowerCase().indexOf(query) !== -1;
+              return r.searchText.indexOf(query) !== -1;
             }
             return true;
           });
@@ -1063,14 +1113,14 @@
               va = a.phase;
               vb = b.phase;
             } else if (sortCol === 'name') {
-              va = a.name.toLowerCase();
-              vb = b.name.toLowerCase();
+              va = a.displayName.toLowerCase();
+              vb = b.displayName.toLowerCase();
             } else if (sortCol === 'type') {
-              va = a.type.toLowerCase();
-              vb = b.type.toLowerCase();
+              va = a.displayType.toLowerCase();
+              vb = b.displayType.toLowerCase();
             } else if (sortCol === 'lang') {
-              va = a.lang.toLowerCase();
-              vb = b.lang.toLowerCase();
+              va = a.displayLang.toLowerCase();
+              vb = b.displayLang.toLowerCase();
             } else if (sortCol === 'status') {
               va = a.status;
               vb = b.status;
@@ -1100,21 +1150,25 @@
           for (var i = 0; i < visibleRows.length; i++) {
             var r = visibleRows[i];
             if (sortCol === 'phase' && r.phase !== previousPhase) {
-              html += '<tr class="catalog-group-row"><th colspan="5" scope="rowgroup">Phase ' + String(r.phase).padStart(2, '0') + ': ' + escapeHtml(r.phaseName) + '<span class="catalog-group-count">' + phaseCounts[r.phase] + ' lessons</span></th></tr>';
+              html += '<tr class="catalog-group-row"><th colspan="5" scope="rowgroup">' + catalogGroupHeadingHtml(
+                r.phase,
+                r.displayPhaseName,
+                phaseCounts[r.phase]
+              ) + '</th></tr>';
               previousPhase = r.phase;
             }
             html += '<tr>';
             html += '<td><span class="catalog-phase-label">' + String(r.phase).padStart(2, '0') + '</span></td>';
             if (r.url) {
               var localMatch = String(r.url).match(/(phases\/[^/]+\/[^/]+)\/?$/);
-              var lessonHref = localMatch ? 'lesson?path=' + encodeURIComponent(localMatch[1]) : r.url;
-              html += '<td><a href="' + lessonHref + '"' + (localMatch ? '' : ' target="_blank" rel="noopener"') + '>' + escapeHtml(r.name) + '</a></td>';
+              var href = lessonHref(r.url);
+              html += '<td><a href="' + href + '"' + (localMatch ? '' : ' target="_blank" rel="noopener"') + '>' + escapeHtml(r.displayName) + '</a></td>';
             } else {
-              html += '<td>' + escapeHtml(r.name) + '</td>';
+              html += '<td>' + escapeHtml(r.displayName) + '</td>';
             }
-            html += '<td>' + escapeHtml(r.type) + '</td>';
-            html += '<td><span class="catalog-lang">' + escapeHtml(r.lang) + '</span></td>';
-            html += '<td><span class="catalog-status-dot ' + r.status + '" aria-hidden="true"></span>' + r.status + '</td>';
+            html += '<td>' + escapeHtml(r.displayType) + '</td>';
+            html += '<td><span class="catalog-lang">' + escapeHtml(r.displayLang) + '</span></td>';
+            html += '<td><span class="catalog-status-dot ' + r.status + '" aria-hidden="true"></span>' + escapeHtml(r.displayStatus) + '</td>';
             html += '</tr>';
           }
           bodyEl.innerHTML = html;
@@ -1207,7 +1261,12 @@
           });
         });
 
+        window.addEventListener('aifs:language-change', function () {
+          refreshLocalizedRows();
+          render();
+        });
         window.addEventListener('popstate', function () { applyUrlState(false); });
+        refreshLocalizedRows();
         applyUrlState(true);
       });
     })();

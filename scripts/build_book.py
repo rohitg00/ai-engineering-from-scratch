@@ -20,6 +20,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -34,9 +35,61 @@ CONFIG = json.loads((ROOT / "book" / "volumes.json").read_text(encoding="utf-8")
 SITE = CONFIG["site"].rstrip("/")
 REPO = CONFIG["repo"].rstrip("/")
 
-FENCE = re.compile(r"^```")
+FENCE = re.compile(r"^ {0,3}```(?P<info>.*)$")
 ASSET_IMG = re.compile(r"\]\(\.\./assets/")
 HEADING2 = re.compile(r"^## ")
+CANONICAL_H2_KIND_BY_TITLE = {
+    "Ship It": "artifact",
+    "Shipped Artifact": "artifact",
+    "Exercises": "practice",
+    "Practice Lab": "practice"
+}
+BOOK_SECTION_TITLE_ALIASES = {
+    "ar": {
+        "artifact": frozenset({"أرسله", "الأثاث المُرسل"}),
+        "practice": frozenset({"التمارين", "مختبر التدريب"}),
+    },
+    "es": {
+        "artifact": frozenset({"Envío", "Artículo enviado"}),
+        "practice": frozenset({"Los ejercicios", "Laboratorio de práctica"}),
+    },
+    "fr": {
+        "artifact": frozenset({"La faire partir", "Artéfact expédié"}),
+        "practice": frozenset({"Exercices", "Laboratoire de pratique"}),
+    },
+    "hi": {
+        "artifact": frozenset({"इसे भेजें", "शिप की गई कलाकृतियाँ"}),
+        "practice": frozenset({"व्यायाम", "अभ्यास प्रयोगशाला"}),
+    },
+    "tr": {
+        "artifact": frozenset({"Gönder", "Nakliye edilen Sanatlı"}),
+        "practice": frozenset({"Egzersizler", "Pratik Laboratuvar"}),
+    },
+    "pt": {
+        "artifact": frozenset({"Envia-o", "Artefato enviado"}),
+        "practice": frozenset({"Exercícios", "Laboratório de prática"}),
+    },
+    "vi": {
+        "artifact": frozenset({"Chuyển nó", "Hiện vật đã vận chuyển"}),
+        "practice": frozenset({"Các bài tập", "Phòng thực hành"}),
+    },
+    "zh": {
+        "artifact": frozenset({
+            "交付成果",
+            "交付物",
+            "交付它",
+            "交付上线",
+            "交付产物",
+            "产出",
+            "放进系统里",
+        }),
+        "practice": frozenset({
+            "练习",
+            "动手练习",
+            "实践实验",
+        }),
+    },
+}
 
 MERMAID_OK = shutil.which("mmdc") is not None
 ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
@@ -97,23 +150,179 @@ def fence_end(src, i):
 BOOK_LANG = "en"  # set by --lang; selects translated source when available
 
 
-def _lesson_source(phase, lesson):
-    en = ROOT / "phases" / phase / lesson / "docs" / "en.md"
-    if BOOK_LANG != "en":
-        tr = ROOT / "i18n" / BOOK_LANG / "phases" / phase / lesson / "docs" / f"{BOOK_LANG}.md"
+def _lesson_source(phase, lesson, source_root=ROOT, book_lang=None):
+    book_lang = BOOK_LANG if book_lang is None else book_lang
+    en = source_root / "phases" / phase / lesson / "docs" / "en.md"
+    if book_lang != "en":
+        tr = source_root / "i18n" / book_lang / "phases" / phase / lesson / "docs" / f"{book_lang}.md"
         if tr.is_file():
             return tr
     return en
 
 
-def transform_lesson(phase, lesson_dir):
+def translation_coverage(vol, book_lang=None):
+    """Return ``(localized, total)`` for one volume and selected language."""
+    book_lang = BOOK_LANG if book_lang is None else book_lang
+    localized = total = 0
+    for phase in vol["phases"]:
+        for lesson_dir in lesson_dirs(phase):
+            total += 1
+            canonical = lesson_dir / "docs" / "en.md"
+            if _lesson_source(phase, lesson_dir.name, ROOT, book_lang) != canonical:
+                localized += 1
+    return localized, total
+
+
+def require_translation_coverage(vol, book_lang=None):
+    """Reject mislabeled editions and report any per-lesson fallback."""
+    book_lang = BOOK_LANG if book_lang is None else book_lang
+    if book_lang == "en":
+        return
+    localized, total = translation_coverage(vol, book_lang)
+    if total and localized == 0:
+        raise SystemExit(
+            f"volume {vol['slug']}: no {book_lang} lesson translations found; "
+            "restore the configured translations branch before building"
+        )
+    if localized < total:
+        raise SystemExit(
+            f"volume {vol['slug']}: incomplete {book_lang} translation coverage "
+            f"({localized}/{total}); restore the configured translations branch "
+            "before building"
+        )
+
+
+def require_translation_provenance(volumes, book_lang=None):
+    """Audit every selected translated phase before any book output is written."""
+    book_lang = BOOK_LANG if book_lang is None else book_lang
+    if book_lang == "en":
+        return
+
+    # Keep the translation pipeline dependency off the English build path.
+    # audit_translations is the canonical cache/provenance implementation, so
+    # the book builder deliberately delegates instead of parsing cache records.
+    import audit_translations as translation_audit
+
+    source = translation_audit.LocalTranslationSource(ROOT)
+    phases = dict.fromkeys(
+        phase for volume in volumes for phase in volume["phases"]
+    )
+    for phase in phases:
+        try:
+            result = translation_audit.audit_translations(
+                ROOT, book_lang, source, phase
+            )
+        except (translation_audit.TranslationSourceError, ValueError) as exc:
+            raise SystemExit(
+                f"translation preflight failed for {book_lang} phase {phase}: {exc}"
+            ) from exc
+        if result.issues:
+            raise SystemExit(
+                f"translation preflight failed for {book_lang} phase {phase}:\n"
+                f"{translation_audit.render_report(result)}"
+            )
+
+
+def _canonical_h2_kinds(phase, lesson, source_root=ROOT):
+    """Map each level-two heading to its language-independent book role.
+
+    Translated lessons preserve the canonical heading order, but naturally
+    localize headings such as "Ship It" and "Exercises".  Drive the book
+    transforms from the matching English heading instead of requiring every
+    translation to retain those two English labels.
+    """
+    source = source_root / "phases" / phase / lesson / "docs" / "en.md"
+    return [
+        CANONICAL_H2_KIND_BY_TITLE.get(title)
+        for title in _h2_titles(source.read_text(encoding="utf-8").splitlines())
+    ]
+
+
+def _localized_h2_kind(title, book_lang):
+    """Resolve a special book role without requiring an English title."""
+    canonical_kind = CANONICAL_H2_KIND_BY_TITLE.get(title)
+    if canonical_kind is not None:
+        return canonical_kind
+    for kind, aliases in BOOK_SECTION_TITLE_ALIASES.get(book_lang, {}).items():
+        if title in aliases:
+            return kind
+    return None
+
+
+def _validate_h2_sections(canonical_lines, localized_lines, source, book_lang):
+    """Fail closed when localized sections cannot be aligned safely.
+
+    The translation audit makes heading order and count contractual. Titles may
+    be translated, but special book roles use an explicit per-language alias
+    contract so equal-count deletion/insertion or reordering cannot silently
+    assign a canonical role to the wrong H2. Unknown languages fail closed
+    unless these special headings retain their canonical English titles.
+    """
+    canonical_titles = _h2_titles(canonical_lines)
+    localized_titles = _h2_titles(localized_lines)
+    if len(localized_titles) != len(canonical_titles):
+        raise ValueError(
+            f"H2 structure mismatch in {source}: expected "
+            f"{len(canonical_titles)} H2 headings, found {len(localized_titles)}"
+        )
+
+    canonical_roles = tuple(
+        (index, title, kind)
+        for index, title in enumerate(canonical_titles, start=1)
+        if (kind := CANONICAL_H2_KIND_BY_TITLE.get(title)) is not None
+    )
+    expected = tuple((index, kind) for index, _, kind in canonical_roles)
+    localized_roles = tuple(
+        (
+            index,
+            localized_titles[index - 1],
+            _localized_h2_kind(localized_titles[index - 1], book_lang),
+        )
+        for index, _, _ in canonical_roles
+    )
+    found = tuple((index, kind) for index, _, kind in localized_roles)
+    if found != expected:
+        raise ValueError(
+            f"H2 section mismatch in {source}: expected canonical special "
+            f"sections {canonical_roles!r}, found localized special sections "
+            f"{localized_roles!r}"
+        )
+    return [CANONICAL_H2_KIND_BY_TITLE.get(title) for title in canonical_titles]
+
+
+def _h2_titles(lines):
+    """Return level-two headings outside fenced code blocks."""
+    titles = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if FENCE.match(line):
+            i = fence_end(lines, i) + 1
+            continue
+        i += 1
+        if not HEADING2.match(line):
+            continue
+        titles.append(line[3:].strip())
+    return titles
+
+
+def transform_lesson(phase, lesson_dir, source_root=ROOT, book_lang=None):
     lesson = lesson_dir.name
     u = urls_for(phase, lesson)
     has_quiz = (lesson_dir / "quiz.json").is_file()
-    src = _lesson_source(phase, lesson).read_text(encoding="utf-8").splitlines()
+    source = _lesson_source(phase, lesson, source_root, book_lang)
+    src = source.read_text(encoding="utf-8").splitlines()
+    canonical_source = (
+        source_root / "phases" / phase / lesson / "docs" / "en.md"
+    )
+    canonical_src = canonical_source.read_text(encoding="utf-8").splitlines()
+    canonical_h2_kinds = _validate_h2_sections(
+        canonical_src, src, source, book_lang or BOOK_LANG
+    )
 
     out = []
     balanced = True
+    h2_index = 0
     i = 0
     while i < len(src):
         line = src[i]
@@ -122,7 +331,7 @@ def transform_lesson(phase, lesson_dir):
             end = fence_end(src, i)
             if end >= len(src):
                 balanced = False
-            info = line[3:].strip()
+            info = FENCE.match(line).group("info").strip()
             block = src[i + 1 : end]
             if info == "figure":
                 fig_id = block[0].strip() if block else "figure"
@@ -144,7 +353,13 @@ def transform_lesson(phase, lesson_dir):
             i = end + 1
             continue
 
-        if line.startswith("## Ship It"):
+        section_kind = None
+        if HEADING2.match(line):
+            if h2_index < len(canonical_h2_kinds):
+                section_kind = canonical_h2_kinds[h2_index]
+            h2_index += 1
+
+        if section_kind == "artifact":
             out += fenced_div(
                 "continue-online",
                 f"**This chapter ships an artifact.** The course version of this lesson produces a reusable prompt or agent skill. It lives in the repository, ready to install: <{u['repo']}>",
@@ -162,7 +377,7 @@ def transform_lesson(phase, lesson_dir):
                 i += 1
             continue
 
-        if line.startswith("## Exercises"):
+        if section_kind == "practice":
             out.append(line)
             out.append("")
             out.append(f"Starter code and the lesson's working implementation: <{u['code']}>")
@@ -172,11 +387,62 @@ def transform_lesson(phase, lesson_dir):
         out.append(ASSET_IMG.sub(f"](phases/{phase}/{lesson}/assets/", line))
         i += 1
 
+    if h2_index != len(canonical_h2_kinds):
+        raise ValueError(
+            f"H2 structure mismatch in {source}: expected to transform "
+            f"{len(canonical_h2_kinds)} H2 headings, found {h2_index}"
+        )
+
     if not balanced:
         raise ValueError(f"unbalanced code fence in {lesson_dir / 'docs' / 'en.md'}")
 
     out += continue_box(u, has_quiz)
     return out
+
+
+def _transform_lesson_fixture(fixture):
+    """Exercise the production book transform with isolated lesson sources."""
+    canonical = fixture.get("canonical")
+    localized = fixture.get("localized")
+    if not isinstance(canonical, str) or not isinstance(localized, str):
+        raise ValueError("fixture canonical and localized fields must be strings")
+
+    phase = "99-book-transform-fixture"
+    lesson = "01-localized-sections"
+    book_lang = fixture.get("lang", "zh")
+    if not isinstance(book_lang, str):
+        raise ValueError("fixture lang must be a string")
+    with tempfile.TemporaryDirectory(prefix="build-book-fixture-") as temp_dir:
+        source_root = Path(temp_dir)
+        lesson_dir = source_root / "phases" / phase / lesson
+        docs_dir = lesson_dir / "docs"
+        docs_dir.mkdir(parents=True)
+        (docs_dir / "en.md").write_text(canonical, encoding="utf-8")
+
+        localized_doc = (
+            source_root
+            / "i18n"
+            / book_lang
+            / "phases"
+            / phase
+            / lesson
+            / "docs"
+            / f"{book_lang}.md"
+        )
+        localized_doc.parent.mkdir(parents=True)
+        localized_doc.write_text(localized, encoding="utf-8")
+
+        return {
+            "canonicalH2Kinds": _canonical_h2_kinds(phase, lesson, source_root),
+            "transformed": "\n".join(
+                transform_lesson(
+                    phase,
+                    lesson_dir,
+                    source_root=source_root,
+                    book_lang=book_lang,
+                )
+            ),
+        }
 
 
 @functools.lru_cache(maxsize=None)
@@ -287,6 +553,7 @@ This course is built to be read by agents as well as people. The machine-readabl
 
 
 def assemble(vol):
+    require_translation_coverage(vol)
     BUILD.mkdir(parents=True, exist_ok=True)
     parts = [how_to_use(vol)]
     chapters = 0
@@ -305,14 +572,14 @@ def assemble(vol):
     return md, chapters, len(text.split())
 
 
-def metadata(vol):
+def metadata(vol, book_lang="en"):
     meta = BUILD / f"{vol['slug']}-meta.yaml"
     meta.write_text(
         "---\n"
         f"title: \"{CONFIG['series']}\"\n"
         f"subtitle: \"Volume {vol['number']} — {vol['title']}: {vol['subtitle']}\"\n"
         f"author: \"{CONFIG['author']}\"\n"
-        "lang: en\n"
+        f"lang: {book_lang}\n"
         "toc-title: Contents\n"
         "---\n",
         encoding="utf-8",
@@ -322,7 +589,7 @@ def metadata(vol):
 
 def render(vol, md, chapters, pdf=False):
     DIST.mkdir(parents=True, exist_ok=True)
-    meta = metadata(vol)
+    meta = metadata(vol, BOOK_LANG)
     suffix = "" if BOOK_LANG == "en" else f"-{BOOK_LANG}"
     epub = DIST / f"aiefs-vol{vol['number']}-{vol['slug']}{suffix}.epub"
     cmd = [
@@ -422,9 +689,19 @@ def main():
     ap.add_argument("--volume", help="build one volume by slug")
     ap.add_argument("--pdf", action="store_true", help="also render PDF via xelatex")
     ap.add_argument("--assemble-only", action="store_true", help="skip pandoc")
-    ap.add_argument("--lang", default="en",
-                    help="build a translated edition from i18n/<lang>/ (English fallback per lesson)")
+    ap.add_argument(
+        "--lang",
+        default="en",
+        help="build a complete, audited edition from i18n/<lang>/",
+    )
+    ap.add_argument("--test-transform-fixture", action="store_true",
+                    help=argparse.SUPPRESS)
     args = ap.parse_args()
+    if args.test_transform_fixture:
+        json.dump(_transform_lesson_fixture(json.load(sys.stdin)), sys.stdout, ensure_ascii=False)
+        sys.stdout.write("\n")
+        return
+
     BOOK_LANG = args.lang
 
     check_phases()
@@ -434,6 +711,8 @@ def main():
         vols = [v for v in vols if v["slug"] == args.volume]
         if not vols:
             sys.exit(f"unknown volume: {args.volume}")
+
+    require_translation_provenance(vols)
 
     for vol in vols:
         md, chapters, words = assemble(vol)

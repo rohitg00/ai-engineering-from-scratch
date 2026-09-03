@@ -17,6 +17,7 @@
     var current = locationValue || window.location;
     var hostname = String(current && current.hostname || '').toLowerCase();
     return !!(current && current.protocol === 'file:') ||
+      /\.github\.io$/i.test(hostname) ||
       hostname === 'localhost' ||
       hostname === '127.0.0.1' ||
       hostname === '::1' ||

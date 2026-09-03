@@ -1,0 +1,68 @@
+name: Deploy GitHub Pages mirror
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+
+      - name: Validate the configured translation branch
+        env:
+          AIFS_TRANSLATION_REF: ${{ vars.AIFS_TRANSLATION_REF || 'translations' }}
+        run: |
+          case "$AIFS_TRANSLATION_REF" in
+            ""|@|-*|refs/*)
+              echo "::error title=Invalid translation ref::AIFS_TRANSLATION_REF must name a branch using a short ref"
+              exit 1
+              ;;
+          esac
+          git check-ref-format "refs/heads/$AIFS_TRANSLATION_REF" > /dev/null
+
+      - name: Build the static mirror
+        env:
+          AIFS_TRANSLATION_REPOSITORY: ${{ vars.AIFS_TRANSLATION_REPOSITORY || github.repository }}
+          AIFS_TRANSLATION_REF: ${{ vars.AIFS_TRANSLATION_REF || 'translations' }}
+        run: node site/build.js
+
+      - name: Validate Simplified Chinese site UI
+        run: node --test site/test_ui_i18n.js
+
+      - name: Upload the Pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: site
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

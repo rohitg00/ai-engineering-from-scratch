@@ -1,0 +1,1045 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/14-agent-engineering/15-crewai-role-based-crews": {
+      "sourceSha256": "efe6cfd36dd973c3e82adece45d0b224cfd7b15baf64c35ca20d16004ba172fd",
+      "questions": [
+        {
+          "question": "CrewAI 的四个原语是什么？",
+          "options": [
+            "Tool、Prompt、Model、Memory",
+            "Agent、Task、Crew、Process",
+            "Node、Edge、Reducer、Checkpointer",
+            "Actor、Message、Inbox、Runtime"
+          ],
+          "explanation": "Agent、Task、Crew 和 Process 是四个原语。"
+        },
+        {
+          "question": "根据 CrewAI 文档，生产应用推荐从什么开始？",
+          "options": [
+            "Sequential process",
+            "Flow",
+            "Crew",
+            "Hierarchical process"
+          ],
+          "explanation": "文档建议生产应用从 Flow 开始；只有当自主性带来的收益值得其成本时，才把 Crew 作为子步骤纳入其中。"
+        },
+        {
+          "question": "Crew 和 Flow 有什么区别？",
+          "options": [
+            "Flow 不包含 Agent",
+            "Crew 收费，Flow 免费",
+            "Crew 是自主且由 LLM 驱动的；Flow 是事件驱动、由代码控制、确定且可测试的",
+            "Crew 只能在 GPU 上运行"
+          ],
+          "explanation": "Crew 以自主性为先；Flow 以确定性为先。"
+        },
+        {
+          "question": "以下哪一项不是 CrewAI 提供的四种记忆类型之一？",
+          "options": [
+            "Quantized（量化记忆）",
+            "Entity（实体记忆）",
+            "Long-term（长期记忆）",
+            "Short-term（短期记忆）"
+          ],
+          "explanation": "四种记忆是短期记忆、长期记忆、实体记忆和上下文记忆。量化记忆不是 CrewAI 的概念。"
+        },
+        {
+          "question": "什么是 backstory 膨胀？本课建议如何处理？",
+          "options": [
+            "长达 2000 词的 Agent 背景故事会挤占上下文预算；应保持精炼",
+            "存储了太多 Crew；应归档旧 Crew",
+            "Bedrock 调用缓慢；应切换区域",
+            "Tool 太多；应删除一些"
+          ],
+          "explanation": "背景故事会塑造语气和判断，但过长就会吞噬上下文。"
+        },
+        {
+          "question": "什么时候值得选择 Hierarchical process，而不是 Sequential process？",
+          "options": [
+            "当有 4+ 个专家，需要一个管理者 Agent 在它们之间进行路由时",
+            "任何时候",
+            "当只有一个任务时",
+            "当没有任何 Tool 时"
+          ],
+          "explanation": "Hierarchical process 会增加一个管理者 Agent；只有多个专家需要动态路由时才值得采用。"
+        },
+        {
+          "question": "为什么本课提醒不要在生产环境中直接使用自由形式的 Crew？",
+          "options": [
+            "输出可变性很高，而且没有 Flow 封装时调试很痛苦",
+            "Crew 不受支持",
+            "Crew 比 Flow 更贵",
+            "Crew 没有记忆"
+          ],
+          "explanation": "Crew 的自主性会让生产环境中的重放和审计变得困难；交付时应使用 Flow 封装。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/16-openai-agents-sdk": {
+      "sourceSha256": "0a9b03b756ba05a43b21391ae265be6d6db619ca51d8f965111dc6a5df34b566",
+      "questions": [
+        {
+          "question": "OpenAI Agents SDK 的五个原语是什么？",
+          "options": [
+            "Plan、Worker、Solver、Evaluator、Reflector",
+            "Tool、Prompt、Model、Memory、Trace",
+            "Agent、Handoff、Guardrail、Session、Tracing",
+            "Node、Edge、Reducer、Checkpointer、Subgraph"
+          ],
+          "explanation": "该 SDK 提供这五个原语。"
+        },
+        {
+          "question": "模型如何看到 handoff？",
+          "options": [
+            "作为一个特殊 token",
+            "作为一条 system message",
+            "作为一个自定义 HTTP endpoint",
+            "作为一个名为 transfer_to_<agent_name> 的 Tool"
+          ],
+          "explanation": "Handoff 会以 Tool 的形式暴露，其名称遵循 transfer_to_<agent> 的格式。"
+        },
+        {
+          "question": "该 SDK 提供哪三种 guardrail？",
+          "options": [
+            "Hard、soft 和 best-effort guardrail",
+            "Pre、post 和 inline guardrail",
+            "Input、output 和 tool guardrail",
+            "Static、dynamic 和 federated guardrail"
+          ],
+          "explanation": "它们是 input guardrail（用于第一个 Agent）、output guardrail（用于最后一个 Agent）和 tool guardrail（用于每个 function tool）。"
+        },
+        {
+          "question": "并行 guardrail 与阻塞式 guardrail 有什么区别？",
+          "options": [
+            "并行 guardrail 与主 LLM 同时运行（延迟较低，但触发时会浪费 token）；阻塞式 guardrail 先运行（触发时不会浪费 token）",
+            "阻塞式 guardrail 只能用于输出",
+            "并行 guardrail 的费用永远更高",
+            "阻塞式是异步的；并行式是同步的"
+          ],
+          "explanation": "并行方式以触发时浪费 token 为代价优化延迟；阻塞方式节省 token，但会增加延迟。"
+        },
+        {
+          "question": "该 SDK 如何启用 tracing？",
+          "options": [
+            "只能在托管仪表盘上启用",
+            "默认关闭；需要为每个 Agent 启用",
+            "只能通过 OpenTelemetry collector 启用",
+            "默认开启；设置 OPENAI_AGENTS_DISABLE_TRACING=1 可选择退出"
+          ],
+          "explanation": "LLM、Tool、handoff 和 guardrail 的 span 默认都会发出；可以用一个环境变量将其禁用。"
+        },
+        {
+          "question": "什么是 handoff drift？本课建议如何缓解？",
+          "options": [
+            "Agent A handoff 给 B，B 又 handoff 回 A，形成循环；应添加 hop counter",
+            "Session 溢出；应归档旧 Session",
+            "Tracing 跟不上；应减少 span 数量",
+            "Guardrail 不同步；应重新训练"
+          ],
+          "explanation": "Hop counter 会限制转交链长度，防止它无限循环。"
+        },
+        {
+          "question": "为什么内置 Tool 是 guardrail 的一个缺口？",
+          "options": [
+            "它们不支持 handoff",
+            "Tool guardrail 只会对 function tool 触发；内置 Tool（文件读取、网页获取）需要单独的策略",
+            "它们无法被追踪",
+            "它们比 function tool 更慢"
+          ],
+          "explanation": "逐 Tool guardrail 覆盖 function tool；内置 Tool 需要独立的策略层。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/17-claude-agent-sdk": {
+      "sourceSha256": "4cedc0745fb80260dbe624c3ee6006678a810400d71b96c6fcf57750bfa87cf0",
+      "questions": [
+        {
+          "question": "Anthropic Client SDK 与 Claude Agent SDK 有什么区别？",
+          "options": [
+            "Client SDK 是原始 Messages API；Agent SDK 采用 Claude Code harness 的形态，内置 Tool、MCP、hook、subagent 和 session store",
+            "没有区别",
+            "Client SDK 仅供 Python 使用",
+            "Client SDK 收费；Agent SDK 免费"
+          ],
+          "explanation": "Client SDK 为你提供构建循环的能力；Agent SDK 则直接提供预构建的循环。"
+        },
+        {
+          "question": "文档所述的 subagent 有哪两个用途？",
+          "options": [
+            "身份认证和权限授权",
+            "日志和指标",
+            "缓存和速率限制",
+            "并行化和上下文隔离"
+          ],
+          "explanation": "Subagent 并发执行彼此独立的工作，并通过隔离上下文来保留 orchestrator 的上下文预算。"
+        },
+        {
+          "question": "以下哪个方法不属于 session store 接口？",
+          "options": [
+            "append",
+            "compile_prompt",
+            "load",
+            "list_subkeys"
+          ],
+          "explanation": "Session store 提供 append、load、list_sessions、delete 和 list_subkeys；compile_prompt 不是 session API。"
+        },
+        {
+          "question": "以下哪一项不是 Claude Agent SDK 的生命周期 hook？",
+          "options": [
+            "PreEmbedding",
+            "PreToolUse",
+            "PostToolUse",
+            "PreCompact"
+          ],
+          "explanation": "Hook 包括 PreToolUse、PostToolUse、SessionStart/End、UserPromptSubmit、PreCompact、Stop 和 Notification。PreEmbedding 不是 hook。"
+        },
+        {
+          "question": "Trace context 如何跨 Agent 和 CLI 子进程传播？",
+          "options": [
+            "只能通过供应商的仪表盘",
+            "通过文件系统",
+            "只能通过环境变量",
+            "通过传入 CLI 子进程的 W3C trace context header"
+          ],
+          "explanation": "调用方的 OTel span 通过 W3C trace context 传播到 CLI 子进程，因此整个多进程运行属于同一条 trace。"
+        },
+        {
+          "question": "什么是 subagent over-spawn？它何时会发生？",
+          "options": [
+            "生成的 subagent 数量超过 CPU 核心数",
+            "在 SessionStart 之前生成 subagent",
+            "为 100 个微小任务生成 100 个 subagent，导致开销占据主导；此时应批量处理",
+            "忘记关闭 subagent"
+          ],
+          "explanation": "Subagent 本身有开销；小任务应批量处理，不要为每个任务各生成一个 subagent。"
+        },
+        {
+          "question": "与自托管 SDK 相比，Claude Managed Agents 做出了什么取舍？",
+          "options": [
+            "用 streaming 换取 tracing",
+            "用 memory 换取 Tool",
+            "用成本换取延迟",
+            "用控制权换取托管基础设施（长时间运行的异步任务、内置 prompt caching、内置 compaction）"
+          ],
+          "explanation": "Managed Agents 是面向长时间运行异步工作的托管替代方案；控制权更少，运维面也更小。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/18-agno-and-mastra-runtimes": {
+      "sourceSha256": "ca939374ff585854a162cf980e2cfd40c7e07870614aab34939b4d99e2c5d77d",
+      "questions": [
+        {
+          "question": "本课为两个 runtime 分别推荐了哪种语言搭配？",
+          "options": [
+            "Agno 使用 TypeScript，Mastra 使用 Python",
+            "两者都以 Go 为主",
+            "Agno 使用 Python，Mastra 使用 TypeScript",
+            "两者都以 Rust 为主"
+          ],
+          "explanation": "Agno 使用 Python（形态类似 FastAPI）；Mastra 使用 TypeScript（形态类似 Vercel AI SDK）。"
+        },
+        {
+          "question": "Agno 推荐采用什么样的生产部署形态？",
+          "options": [
+            "长期运行的有状态 daemon",
+            "仅使用 serverless cron worker",
+            "无状态、session 范围内的 FastAPI 后端；每个请求都启动一个新的 Agent，session state 存放在 DB 中",
+            "仅支持 WebSocket 的服务器"
+          ],
+          "explanation": "每个请求都使用无状态 FastAPI；session state 外置到 DB。"
+        },
+        {
+          "question": "Mastra 的三个原语是什么？",
+          "options": [
+            "Node、Edge、State",
+            "Plan、Worker、Solver",
+            "Agent、Tool、Workflow",
+            "Actor、Message、Inbox"
+          ],
+          "explanation": "Agent（LLM + role）、Tool（由 Zod 定义类型）和 Workflow 是 Mastra 的三个原语。"
+        },
+        {
+          "question": "根据 Agno 文档，其目标是把每个 Agent 的实例化成本控制在大约多少？",
+          "options": [
+            "每个 Agent 约 1 秒、1 GiB",
+            "每个 Agent 约 2 微秒、3.75 KiB",
+            "每个 Agent 约 200 毫秒、100 MiB",
+            "每个 Agent 约 10 分钟、4 GiB"
+          ],
+          "explanation": "Agno 文档给出的数字是每个 Agent 约 2 微秒、约 3.75 KiB。"
+        },
+        {
+          "question": "Mastra 的 Unified Model Router 提供什么？",
+          "options": [
+            "一个向量 DB 层",
+            "用一个 client 接口访问众多供应商的数千个模型",
+            "一个图 checkpointer",
+            "一个 Tool 调用队列"
+          ],
+          "explanation": "Mastra 的 Unified Model Router 声称可访问 94 个供应商的 3,300+ 个模型。"
+        },
+        {
+          "question": "什么时候“为了性能而性能”不是选择 Agno 的正确理由？",
+          "options": [
+            "使用 Langfuse 时",
+            "当工作负载是每个请求只进行一次缓慢的 Agent 调用，且框架开销不是瓶颈时",
+            "使用 Python 3.13 时",
+            "部署到 AWS 时"
+          ],
+          "explanation": "2 微秒在聊天请求大规模汇聚时才重要，对每个请求只有一次缓慢调用的场景并不重要。"
+        },
+        {
+          "question": "Fork Mastra 之前，应仔细阅读哪部分许可证条款？",
+          "options": [
+            "项目没有 license 文件",
+            "ee/ 目录采用 source-available 许可证，而不是 Apache 2.0，并且限制商业使用",
+            "Mastra 全部采用 GPL",
+            "Mastra 要求签署 CLA，但无需审查许可证"
+          ],
+          "explanation": "Mastra 除 ee/ 外采用 Apache 2.0；ee/ 采用 source-available 许可证。Fork 前应核查其中的限制。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/19-benchmarks-swebench-gaia": {
+      "sourceSha256": "5edea857796ee9518fed5d174e1021a2b2379894361bb1b6ee391cd9c993ef95",
+      "questions": [
+        {
+          "question": "SWE-bench 的评估器会检查候选 patch 的什么？",
+          "options": [
+            "Patch 长度是否少于 200 行",
+            "之前失败的测试现在通过（FAIL_TO_PASS），而之前通过的测试仍然通过（PASS_TO_PASS）",
+            "与参考修复相比的 BLEU 分数",
+            "Patch 是否通过另一个 LLM judge"
+          ],
+          "explanation": "该 harness 以测试状态转换为门槛：揭示 bug 的测试必须从失败变为通过，而回归测试必须继续保持通过。"
+        },
+        {
+          "question": "为什么会有 SWE-bench Verified？",
+          "options": [
+            "它包含更多语言",
+            "它运行得更快",
+            "OpenAI 人工筛选的 500 个任务子集去除了有歧义的 issue 和不可靠的测试",
+            "它采用不同的 patch 格式"
+          ],
+          "explanation": "Verified 是一个更干净的子集，适合进行可信的结果报告。"
+        },
+        {
+          "question": "SWE-bench+ 对成功 patch 有什么发现？",
+          "options": [
+            "32.67% 的 issue 泄露了解决方案文本，31.08% 的测试覆盖率低得可疑",
+            "Patch 始终超过 1000 行",
+            "不存在数据污染",
+            "所有 patch 都是记忆得到的"
+          ],
+          "explanation": "SWE-bench+ 发现，相当大一部分成功 patch 存在解决方案泄露和覆盖率不足的问题。"
+        },
+        {
+          "question": "GAIA 的设计理念是什么？",
+          "options": [
+            "对人类困难，对 AI 容易",
+            "纯粹衡量向量检索的 benchmark",
+            "只包含单轮问题",
+            "对人类来说概念简单（约 92%），但对 AI 很难（早期带插件的 GPT-4：约 15%）"
+          ],
+          "explanation": "GAIA 有意做到对人类容易、对 AI 困难，用于测试推理、Tool 使用和多模态能力。"
+        },
+        {
+          "question": "以下哪一项不是 AgentBench 的环境类别？",
+          "options": [
+            "游戏（Alfworld、LTP）",
+            "Web（WebShop、Mind2Web）",
+            "梯度（RL、IRL）",
+            "代码（Bash、DB、KG）"
+          ],
+          "explanation": "AgentBench 覆盖代码、游戏、Web 和开放式生成，不包含梯度类别。"
+        },
+        {
+          "question": "本课认为，报告 SWE-bench 数字的错误方式是什么？",
+          "options": [
+            "报告每个 repo 的明细",
+            "只报告一个汇总数字，却不提 Verified 或 SWE-bench+ 的背景",
+            "报告步骤数",
+            "报告 wall-clock 时间"
+          ],
+          "explanation": "执着于单一数字会掩盖数据污染和成本；应始终报告 Verified 以及各数据分布下的背景。"
+        },
+        {
+          "question": "这些 benchmark 不衡量以下哪个维度？",
+          "options": [
+            "测试状态转换",
+            "步骤数",
+            "每个任务的成功率",
+            "现实世界的运行成本（token、wall-clock 时间）、对抗安全性以及你自己的领域"
+          ],
+          "explanation": "Benchmark 给出的是汇总结果；它们无法涵盖成本、对抗鲁棒性或你的具体领域。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/20-benchmarks-webarena-osworld": {
+      "sourceSha256": "bafde36ce075d401aed5aba711f09a51416386d5f86977c3f6b4026dfe14a571",
+      "questions": [
+        {
+          "question": "为什么 WebArena 要自行托管四个目标应用？",
+          "options": [
+            "为了避开 TLS",
+            "为了固定可复现的版本，使评估以实际执行为依据且不会不稳定",
+            "为了省钱",
+            "为了在 GPU 上运行"
+          ],
+          "explanation": "固定版本的自托管应用能让基于执行的评估可靠，并可随时间比较。"
+        },
+        {
+          "question": "为什么 OSWorld 使用真实的操作系统截图，而不是 accessibility API？",
+          "options": [
+            "截图成本更低",
+            "Accessibility API 会泄露 PII",
+            "Accessibility API 太快",
+            "截图迫使 Agent 在 1920x1080 画面中执行真实 GUI grounding，与生产环境约束一致"
+          ],
+          "explanation": "由截图驱动的评估迫使系统完成从像素到元素的 grounding，这正是实际生产环境中的约束。"
+        },
+        {
+          "question": "OSWorld 揭示了哪两种主要失败模式？",
+          "options": [
+            "延迟和带宽",
+            "幻觉和拒绝",
+            "Embedding 漂移和 token 泄露",
+            "GUI grounding 和操作知识"
+          ],
+          "explanation": "Grounding（从像素定位元素）和操作知识（菜单、快捷键）是最主要的阻碍。"
+        },
+        {
+          "question": "OSWorld-Human 在基础 benchmark 之上增加了什么？",
+          "options": [
+            "人工整理的标准 action trajectory，揭示 Agent 的步骤效率有 1.4-2.7x 差距",
+            "更高的屏幕分辨率",
+            "更多任务",
+            "一种新的操作系统"
+          ],
+          "explanation": "标准 trajectory 不仅能衡量成功率，还能衡量执行轨迹的效率。"
+        },
+        {
+          "question": "本课引用了 WebArena 发布时的哪个数字？",
+          "options": [
+            "最佳 Agent 为 50%，人类为 50%",
+            "最佳 Agent 在所有项目上均为 0%",
+            "最佳 Agent 为 99%，人类为 100%",
+            "最佳 GPT-4 Agent 的成功率为 14.41%，人类为 78.24%"
+          ],
+          "explanation": "14.41% 对 78.24% 是 WebArena 发布时报告的差距。"
+        },
+        {
+          "question": "本课提醒：如果 Agent 使用 DOM 或 accessibility API，采用仅截图的评估会发生什么？",
+          "options": [
+            "没有任何变化",
+            "测试轻易通过",
+            "超出速率限制",
+            "会错过 OSWorld 旨在衡量的 grounding 挑战"
+          ],
+          "explanation": "如果用只看截图的 benchmark 评估 accessibility API Agent，就跳过了 grounding 测试。"
+        },
+        {
+          "question": "为什么忽略 trajectory 长度是一种 benchmark 失误？",
+          "options": [
+            "长度是唯一重要的指标",
+            "它会掩盖仅靠成功率看不到的成本和低效（即 OSWorld-Human 揭示的 1.4-2.7x 差距）",
+            "Trajectory 无法衡量",
+            "Trajectory 长度总是与标准答案相同"
+          ],
+          "explanation": "两个成功率同为 60% 的 Agent，其步骤数可能相差 2-3x；只有衡量 trajectory 长度，才能看出成本和效率。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/21-computer-use-agents": {
+      "sourceSha256": "d0e3625d3020fed0aef681b6ddc0da28185cfae6b886e270895a1c729d9c2dd3",
+      "questions": [
+        {
+          "question": "Claude computer use 接收什么输入，又输出什么？",
+          "options": [
+            "输入截图（基于视觉），输出键盘/鼠标命令",
+            "输入 accessibility tree，输出键盘/鼠标命令",
+            "输入 DOM XML，输出 JavaScript",
+            "输入 JSON，输出 SQL"
+          ],
+          "explanation": "Claude 读取像素并输出键盘/鼠标操作；它不使用操作系统 accessibility API。"
+        },
+        {
+          "question": "Gemini 2.5 Computer Use 最具辨识度的安全功能是什么？",
+          "options": [
+            "一个逐步骤安全服务，在每项操作执行前进行评估并拒绝不安全操作",
+            "默认采用只读模式",
+            "硬编码的 WAF 规则",
+            "强制 CAPTCHA"
+          ],
+          "explanation": "Gemini 2.5 Computer Use 的标志性功能是内置逐步骤安全分类器。"
+        },
+        {
+          "question": "本课认为，三种模型中的哪些内容都属于不可信输入？",
+          "options": [
+            "没有；所有内容都可信",
+            "只有 HTTPS response",
+            "截图、DOM 文本、Tool 输出、PDF 内容以及任何检索到的内容",
+            "只有 PDF 内容"
+          ],
+          "explanation": "只有用户直接给出的指令才算授权；其他一切内容均不可信。"
+        },
+        {
+          "question": "本课引用了 OpenAI CUA 发布时的哪些 OSWorld / WebArena 数字？",
+          "options": [
+            "未报告数字",
+            "OSWorld 99%，WebArena 99%",
+            "OSWorld 0%，WebArena 0%",
+            "OSWorld 38.1%，WebArena 58.1%，WebVoyager 87%"
+          ],
+          "explanation": "这些是当时引用的发布数据。"
+        },
+        {
+          "question": "以下哪种防御模式不在 2026 年趋同形成的清单中？",
+          "options": [
+            "导航目标的 allowlist/blocklist",
+            "逐步骤安全分类器",
+            "对敏感操作使用 human-in-the-loop",
+            "为了节省时间而自动点击并跳过对话框"
+          ],
+          "explanation": "自动点击对话框与安全背道而驰；本课建议进行明确确认。"
+        },
+        {
+          "question": "本课强调的、针对 computer-use Agent 的主要攻击是什么？",
+          "options": [
+            "网络中断",
+            "操作系统更新滞后",
+            "渲染缓慢",
+            "恶意网页或 PDF 在检索内容中嵌入指令，模型却把它当作用户意图"
+          ],
+          "explanation": "把截图或 DOM 文本当作授权，是典型的间接 prompt injection 失败。"
+        },
+        {
+          "question": "哪些情况特别建议采用 human-in-the-loop 确认？",
+          "options": [
+            "从不需要",
+            "登录、购买、删除文件等敏感操作",
+            "只在模型提出要求时",
+            "只读导航"
+          ],
+          "explanation": "涉及资金、数据暴露或新登录等敏感操作时，需要人类明确确认。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/22-voice-agents-pipecat-livekit": {
+      "sourceSha256": "35a8d8f98837a5f06631800e84ebe0fea655e4f36149026091498193392806f4",
+      "questions": [
+        {
+          "question": "Pipecat pipeline 使用哪两个流动方向？",
+          "options": [
+            "读和写",
+            "热和冷",
+            "入站和出站",
+            "DOWNSTREAM（从 source 到 sink）和 UPSTREAM（反馈、取消、barge-in）"
+          ],
+          "explanation": "Frame 沿下游从 source 流向 sink，并沿上游传递控制和取消信号。"
+        },
+        {
+          "question": "标准的 Pipecat 语音 pipeline 是什么？",
+          "options": [
+            "VAD -> STT -> LLM -> TTS -> transport",
+            "Audio -> JSON -> SQL -> response",
+            "LLM -> embed -> retrieve -> answer",
+            "TTS -> STT -> LLM -> VAD"
+          ],
+          "explanation": "VAD 检测语音活动，STT 转写，LLM 回应，TTS 合成语音，transport 负责传输。"
+        },
+        {
+          "question": "LiveKit Agents 提供哪两种语音 Agent 类？",
+          "options": [
+            "BatchAgent 和 StreamAgent",
+            "TextAgent 和 SpeechAgent",
+            "MultimodalAgent（直接处理音频）和 VoicePipelineAgent（STT/LLM/TTS 级联）",
+            "LocalAgent 和 CloudAgent"
+          ],
+          "explanation": "MultimodalAgent 使用直接音频（Realtime 风格）；VoicePipelineAgent 使用 STT->LLM->TTS，以便在文本层面进行控制。"
+        },
+        {
+          "question": "什么是 barge-in？如何处理它？",
+          "options": [
+            "LLM 成本激增；应减少 token",
+            "用户在 Agent 说话时插话；UPSTREAM cancel frame 会在话语中途停止 TTS",
+            "CAPTCHA 失败；应重试",
+            "供应商服务中断；应切换区域"
+          ],
+          "explanation": "Barge-in 是用户打断；Pipecat 通过 UPSTREAM 取消干净地处理这种情况。"
+        },
+        {
+          "question": "本课所述的优质端到端延迟是多少？",
+          "options": [
+            "约 450-600 ms",
+            "约 1500 ms",
+            "约 50 ms",
+            "约 5000 ms"
+          ],
+          "explanation": "优质技术栈约为 450-600 ms；常见水平是 800-1200 ms；超过 1500 ms 就会让人感觉系统坏了。"
+        },
+        {
+          "question": "忽略 STT confidence 会导致什么问题？",
+          "options": [
+            "通话成本降低",
+            "延迟改善",
+            "TTS 变快",
+            "低置信度转写会被当作绝对事实交给 LLM，从而产生错误回答；应按 confidence 设置门槛或请求确认"
+          ],
+          "explanation": "把低置信度 STT 结果视为事实，是语音 Agent 最常见的失败模式之一。"
+        },
+        {
+          "question": "为什么本课建议在交付前汇总各组件的延迟？",
+          "options": [
+            "WebRTC 要求提供延迟数据",
+            "每个组件都会增加 50-200 ms；总延迟决定体验是否让人感觉系统出了故障",
+            "供应商按延迟收费",
+            "这是为了满足合规要求"
+          ],
+          "explanation": "交付前应把整条链路（VAD + STT + LLM + TTS + transport）的延迟相加；目标范围非常紧。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/23-otel-genai-conventions": {
+      "sourceSha256": "68d36147171159b481cfb2dcef90e8709e67508fb1394ad3e4fde8471ec72c57",
+      "questions": [
+        {
+          "question": "在 GenAI conventions 中，哪个 span name 表示一次 Agent 运行？",
+          "options": [
+            "invoke_agent（可选附加 gen_ai.agent.name 后缀）",
+            "agent.start",
+            "agent_loop",
+            "run_chain"
+          ],
+          "explanation": "invoke_agent 是标准名称；设置 Agent name 属性后，该名称会出现在 span name 中。"
+        },
+        {
+          "question": "GenAI SIG 定义了哪三类 span？",
+          "options": [
+            "Frontend、backend、db",
+            "Read、write、exec",
+            "Latency、error、throughput",
+            "Model/client、agent、tool"
+          ],
+          "explanation": "类别包括 model/client（LLM 调用）、agent（创建/调用）和 tool（每次调用）。"
+        },
+        {
+          "question": "invoke_agent span 何时使用 CLIENT kind，何时使用 INTERNAL kind？",
+          "options": [
+            "始终使用 INTERNAL",
+            "只对 HTTPS 使用 CLIENT",
+            "始终使用 CLIENT",
+            "远程 Agent 服务（OpenAI Assistants、Bedrock Agents）使用 CLIENT；进程内框架（LangChain、CrewAI、本地 ReAct）使用 INTERNAL"
+          ],
+          "explanation": "远程 Agent 调用使用 CLIENT；进程内 Agent 运行使用 INTERNAL。"
+        },
+        {
+          "question": "内容捕获（输入和输出）的默认规则是什么？",
+          "options": [
+            "默认捕获所有内容",
+            "Instrumentation 默认不应捕获内容；需通过 gen_ai.* attribute 显式选择启用",
+            "只在出错时捕获",
+            "只捕获输出，绝不捕获输入"
+          ],
+          "explanation": "默认关闭内容捕获可以保护 PII 和 secret；启用必须是显式选择。"
+        },
+        {
+          "question": "哪个 attribute 标识检索时查询的 corpus 或 store？",
+          "options": [
+            "gen_ai.data_source.id",
+            "gen_ai.provider.name",
+            "gen_ai.agent.name",
+            "gen_ai.request.model"
+          ],
+          "explanation": "gen_ai.data_source.id 标记检索命中的 RAG corpus 或 store。"
+        },
+        {
+          "question": "对于在生产环境中存储 prompt 内容，本课有何建议？",
+          "options": [
+            "把内容存储在外部（S3、日志存储），并在 span 上记录引用 ID",
+            "在每个 span 上以纯文本捕获完整 prompt",
+            "在 span attribute 中加密 prompt",
+            "永远不存储任何内容"
+          ],
+          "explanation": "使用外部存储并记录指针 ID，可以避免 PII 泄露到运维人员可读取的 trace 中。"
+        },
+        {
+          "question": "如何选择启用 GenAI conventions 的实验性稳定预览版？",
+          "options": [
+            "购买许可证",
+            "编辑 OTel collector 配置",
+            "设置 OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental",
+            "从源码重新构建 SDK"
+          ],
+          "explanation": "这个环境变量会固定使用实验性 conventions，防止 attribute 在无提示的情况下被重命名。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/24-agent-observability-platforms": {
+      "sourceSha256": "58a97d135b98c254d66e1f0f1fd2785e17634cbecd9cdd5792ce60eb698341c8",
+      "questions": [
+        {
+          "question": "在 2025 年 6 月将原商业模块开源后，Langfuse 采用什么许可证？",
+          "options": [
+            "Apache 2.0",
+            "GPLv3",
+            "Elastic License 2.0",
+            "MIT"
+          ],
+          "explanation": "Langfuse 采用 MIT 许可证；2025 年 6 月之后，LLM-as-a-judge、annotation queue、prompt experiment 和 Playground 也包括在内。"
+        },
+        {
+          "question": "根据本课，Arize Phoenix 最擅长什么？",
+          "options": [
+            "深入的 Agent 专项评估：trace clustering、anomaly detection、RAG retrieval relevancy、OpenInference auto-instrumentation",
+            "自动化优化循环",
+            "Prompt versioning",
+            "代码静态分析"
+          ],
+          "explanation": "Phoenix 通过 OpenInference auto-instrumentation，专注于行为漂移和 RAG 评估。"
+        },
+        {
+          "question": "哪个平台同时提供自动 prompt 优化、guardrail（PII 脱敏、主题限制）和由 LLM judge 执行的幻觉检测？",
+          "options": [
+            "Langfuse",
+            "Phoenix",
+            "Jaeger",
+            "Opik"
+          ],
+          "explanation": "Opik 的核心是优化与 guardrail 闭环。"
+        },
+        {
+          "question": "本课推荐哪个平台作为包含 prompt management 的一体化方案？",
+          "options": [
+            "Opik",
+            "Datadog APM",
+            "Phoenix",
+            "Langfuse"
+          ],
+          "explanation": "Langfuse 端到端涵盖 tracing、prompt management、eval 和 session replay。"
+        },
+        {
+          "question": "本课如何看待供应商发布的平台 benchmark？",
+          "options": [
+            "它们是定论",
+            "应把它们视为方向性参考；请用自己的 corpus 进行衡量",
+            "只有 Opik 的结果可靠",
+            "OpenTelemetry 禁止此类 benchmark"
+          ],
+          "explanation": "即使文中引用的 Opik 与 Langfuse 之间存在 14x 差距，也应先用自己的数据衡量，再作决定。"
+        },
+        {
+          "question": "为什么只有 tracing 而没有 evaluation 会被视为昂贵的日志记录？",
+          "options": [
+            "供应商会按 span 收费",
+            "你能看到运行过程，却没有为其评分，因此无法发现回归，也无法进行 bisection",
+            "磁盘比 CPU 贵",
+            "Span 无法重放"
+          ],
+          "explanation": "Eval 能把 trace 转化为可操作的质量信号。"
+        },
+        {
+          "question": "本课对自行构建的 LLM judge 有何警告？",
+          "options": [
+            "应遵循 CRITIC：judge 需要外部依据来验证事实，否则只会敷衍地判定通过",
+            "它们必须在 GPU 上运行",
+            "Apache 2.0 禁止使用它们",
+            "它们只能在 TypeScript 中工作"
+          ],
+          "explanation": "如果没有基于外部 Tool 的验证依据，LLM judge 会逐渐倾向于敷衍地判定通过（CRITIC，第 5 课）。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/25-multi-agent-debate": {
+      "sourceSha256": "3b11d035b1121133e52d5be49f7cc8bebe77b153206d60ad8a1ca16142303e41",
+      "questions": [
+        {
+          "question": "Society of Minds protocol 让 N 个模型实例做什么？",
+          "options": [
+            "各自独立提出答案，然后在 R 轮中阅读并批评彼此的方案，直到收敛",
+            "在共享数据集上训练",
+            "各自运行不同的 benchmark",
+            "协商价格"
+          ],
+          "explanation": "N 个提议者、R 轮讨论、交叉批评并最终收敛，是 Du 等人提出的标准 debate 流程。"
+        },
+        {
+          "question": "为什么跨模型 debate（例如 ChatGPT + Bard）优于单一模型 debate？",
+          "options": [
+            "成本更低",
+            "不同供应商会协商价格",
+            "供应商共享权重",
+            "异质性减少了共同盲点，因此交叉批评能发现更多错误"
+          ],
+          "explanation": "混合不同模型会引入相互独立的错误分布，从而提高 debate 的能力上限。"
+        },
+        {
+          "question": "与 full mesh 相比，sparse topology 在 token 成本上的主要优势是什么？",
+          "options": [
+            "每个辩论者只读取一部分 peer 的内容，因此 critique 操作数减少，而准确率往往相当",
+            "它移除了 LLM",
+            "Sparse topology 会让轮数翻倍",
+            "Sparse topology 不需要模型"
+          ],
+          "explanation": "Sparse topology（star、ring、hub-and-spoke）能减少 critique 操作，而在许多任务上不会损失准确率。"
+        },
+        {
+          "question": "本课列出的哪种情况会因 debate 而变差？",
+          "options": [
+            "简单的事实查询，因为一次查询比五轮 debate 更便宜",
+            "开放式推理",
+            "国际象棋走法有效性判断",
+            "人物传记生成"
+          ],
+          "explanation": "对延迟和成本敏感的简单查询，无法从 N x R 轮 debate 中获益。"
+        },
+        {
+          "question": "什么是 convergence collapse？",
+          "options": [
+            "进程崩溃",
+            "TLS handshake 失败",
+            "网络中断",
+            "所有 Agent 都收敛到最先出现的错误答案；可通过强制要求出现分歧的轮次来缓解"
+          ],
+          "explanation": "可以强制在 round-1 提出彼此不同的方案，以缓解过早对错误答案达成一致的问题。"
+        },
+        {
+          "question": "为什么 prompt homogenization 会削弱 debate？",
+          "options": [
+            "它违反 Apache 2.0",
+            "它会绕过 supervisor",
+            "相同的 prompt 会产生近乎相同的答案，消除交叉批评所需的信号",
+            "它使用太多 token"
+          ],
+          "explanation": "多样化的 prompt（最好再加上多样化的模型）能让方案分布保持足够宽。"
+        },
+        {
+          "question": "根据本课，哪种生产模式属于 debate 的变体？",
+          "options": [
+            "纯单次 RAG",
+            "向量索引",
+            "带 synthesis 步骤的 Anthropic orchestrator-workers",
+            "仅使用 cron 的调度"
+          ],
+          "explanation": "带 synthesis 的 orchestrator-workers 是一种在生产环境中采用 debate 形态的模式。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/26-failure-modes-agentic": {
+      "sourceSha256": "60c2cd46ca73dbc7f0c8c58e46d7ffd436243460d006d04f1d48506986b37b7c",
+      "questions": [
+        {
+          "question": "MASFT 的核心论点是什么？",
+          "options": [
+            "失败是随机噪声",
+            "失败由网络中断造成",
+            "模型变大后失败就会消失",
+            "多 Agent 失败源于根本性的设计缺陷，而不是能靠更好的基础模型修复的 LLM 局限"
+          ],
+          "explanation": "Berkeley 的 MASFT 把失败归类为设计缺陷；扩大基础模型规模并不会让它们消失。"
+        },
+        {
+          "question": "以下哪一项不属于本课列出的五种反复出现的行业失败模式？",
+          "options": [
+            "虚构操作",
+            "级联错误",
+            "范围蔓延",
+            "Embedding 版本管理"
+          ],
+          "explanation": "这五种模式是虚构操作、范围蔓延、级联错误、上下文丢失和 Tool 误用。"
+        },
+        {
+          "question": "本课所说的级联错误是什么？",
+          "options": [
+            "YAML parser 错误",
+            "一次错误调用在多个系统中触发下游影响（一个虚假的 SKU 触发四次下游 API 调用）",
+            "Cron 失败",
+            "LLM 速率限制级联"
+          ],
+          "explanation": "级联会把一次错误调用放大为涉及多个系统的事故；当 Agent 虚报成功时，后果尤其严重。"
+        },
+        {
+          "question": "《LLM Agent Hallucinations Survey》列出了哪两种表现形式？",
+          "options": [
+            "热 token 和冷 token",
+            "Instruction-following Deviation 和 Long-range Contextual Misuse",
+            "Greedy search 和 beam search",
+            "Soft prompt 和 hard prompt"
+          ],
+          "explanation": "幻觉表现为忽略 system prompt，或遗忘、误用早先轮次中的上下文。"
+        },
+        {
+          "question": "success hallucination 是什么意思？",
+          "options": [
+            "单元测试通过",
+            "目标状态并未改变，Agent 却返回成功消息（通常发生在 Tool 返回 400 时）",
+            "实际并未成功，但用户以为成功了",
+            "模型在 benchmark 上过度自信"
+          ],
+          "explanation": "应重新探测环境状态；当 Agent 无法区分“我失败了”和“这不可能完成”时，经常会伪造完成结果。"
+        },
+        {
+          "question": "为什么只标记 crash 并不足够？",
+          "options": [
+            "日志需要付费",
+            "大多数 Agent 失败都会生成看似有效的输出，而不会 crash；因此需要内容层面的检查",
+            "Crash 会泄露 PII",
+            "Crash 很慢"
+          ],
+          "explanation": "只监控 crash 会漏掉绝大多数 Agent 失败，因为这些失败以内容问题的形式出现。"
+        },
+        {
+          "question": "本课建议在推理链的每一步采用什么缓解措施？",
+          "options": [
+            "增加 sleep()",
+            "禁用重试",
+            "设置自动验证门槛，对照环境状态检查事实依据",
+            "只降低 temperature"
+          ],
+          "explanation": "逐步骤门槛（安全分类器、参数验证、CRITIC、状态重新探测）能在失败级联前将其发现。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/27-prompt-injection-defense": {
+      "sourceSha256": "b0439329b39711005520fe6cebae598755def79545bccceb563ef111ae989d83",
+      "questions": [
+        {
+          "question": "什么是间接 prompt injection？",
+          "options": [
+            "模型点错了位置",
+            "用户直接输入“ignore all rules”",
+            "Agent 检索的数据（网页、PDF、电子邮件、记忆笔记）中嵌有指令，在摄取时覆盖 developer prompt",
+            "System prompt 中的拼写错误"
+          ],
+          "explanation": "Greshake 等人提出了间接 prompt injection：攻击者控制的检索内容携带指令。"
+        },
+        {
+          "question": "以下哪一项不是五种已演示的 exploit 类别之一？",
+          "options": [
+            "持久化记忆投毒",
+            "缓存失效",
+            "数据窃取",
+            "蠕虫式传播"
+          ],
+          "explanation": "这五类是数据窃取、蠕虫式传播、持久化记忆投毒、生态系统污染和任意 Tool 使用。"
+        },
+        {
+          "question": "在本课中，PVE 代表什么？",
+          "options": [
+            "Plan-Verify-Execute 规划模式，即根据已商定的计划检查操作的另一种控制方式",
+            "Provider-Verifier-Encoder",
+            "Prompt-Validator-Executor 验证模式：主模型先提出候选 Tool 调用，廉价、快速的 validator 再进行检查，只有批准后 executor 才会执行",
+            "Pre-Vectorize-Embed"
+          ],
+          "explanation": "这里的 PVE 指 Prompt-Validator-Executor 验证模式：主模型先提出候选 Tool 调用，validator 再进行检查，只有批准后 executor 才会执行。它不同于 Phase 05 的 Plan-Verify-Execute 规划模式。"
+        },
+        {
+          "question": "为什么“system prompt 要求忽略不可信指令”并不足够？",
+          "options": [
+            "它太短了",
+            "这只是一种指令遵循，而非强制执行；足够有说服力的注入内容仍可能覆盖模型行为",
+            "供应商会将其移除",
+            "它被加密了"
+          ],
+          "explanation": "真正的防御需要来源标记、allowlist、逐步骤安全检查和 Prompt-Validator-Executor 式验证，不能只依赖 prompt。"
+        },
+        {
+          "question": "什么是对检索记忆的过度信任？",
+          "options": [
+            "加载了错误的模型",
+            "昨天的 Agent 写入了一条被投毒的记忆笔记；今天的 Agent 读取它并再次执行注入指令",
+            "忘记清理索引",
+            "缓存过于激进"
+          ],
+          "explanation": "如果把记忆视为可信内容，持久化记忆投毒就会让注入攻击跨 session 延续。"
+        },
+        {
+          "question": "本课建议为每一段内容附加什么 metadata？",
+          "options": [
+            "Token 数量",
+            "仅时间戳",
+            "加密密钥",
+            "来源标签：user_message、tool_output 或 retrieved；validator 拒绝检索内容中的指令"
+          ],
+          "explanation": "来源标记让 validator 能按照内容的信任级别分别处理。"
+        }
+      ]
+    },
+    "phases/14-agent-engineering/28-orchestration-patterns": {
+      "sourceSha256": "8d1b3b15d2b750b2808528587316058d1f70983cd31d8eeb62ef5750e7919b9b",
+      "questions": [
+        {
+          "question": "本课列出了哪四种 orchestration pattern？",
+          "options": [
+            "Push、pull、batch、stream",
+            "Supervisor-worker、swarm/peer-to-peer、hierarchical、debate",
+            "Sequential、parallel、distributed、federated",
+            "Plan、act、reflect、refine"
+          ],
+          "explanation": "Supervisor-worker、swarm、hierarchical 和 debate 在 2026 年的各框架中反复出现。"
+        },
+        {
+          "question": "关于 supervision，LangChain 在 2026 年的建议是什么？",
+          "options": [
+            "始终使用 create_supervisor",
+            "完全避免 supervision",
+            "优先使用直接 Tool 调用，而不是 create_supervisor，以便更精细地控制 context engineering",
+            "在 GPU 上运行 supervisor"
+          ],
+          "explanation": "基于 Tool 调用的 supervision 让你可以精确控制每个专家看到的内容。"
+        },
+        {
+          "question": "Swarm 与 supervisor-worker topology 的区别是什么？",
+          "options": [
+            "Swarm 只在 cron 上运行",
+            "Swarm 没有中央 router；Agent 通过共享 Tool 接口直接 handoff",
+            "Swarm 使用 GPU",
+            "Swarm 是单 Agent 系统"
+          ],
+          "explanation": "Swarm 是 peer-to-peer；supervisor 则通过一个 LLM 集中进行路由。"
+        },
+        {
+          "question": "什么时候适合使用 hierarchical orchestration？",
+          "options": [
+            "从不适合；它是一种 antipattern",
+            "只有使用 GPU 时",
+            "当单个 supervisor 的上下文预算无法容纳所有专家的描述时",
+            "任何时候；它可以零成本扩展"
+          ],
+          "explanation": "Nested supervisor 适用于专家数量太多、超出单个 supervisor 预算的情况。"
+        },
+        {
+          "question": "Anthropic 支持的推荐决策顺序是什么？",
+          "options": [
+            "从单个 Agent 加 workflow pattern 开始；只在需要时增加 topology；先 supervisor，再 swarm，再 hierarchical；当准确率比成本更重要时采用 debate",
+            "从 debate 开始",
+            "始终从 hierarchical multi-agent 开始",
+            "从 swarm 开始，再收缩为单 Agent"
+          ],
+          "explanation": "Anthropic 的指导原则是构建适合自身需求的系统，而不是最复杂的系统。"
+        },
+        {
+          "question": "本课所说的 fake hierarchy 是什么？",
+          "options": [
+            "实际上只有两个团队，却因为“enterprise”而设置三层 supervisor；应将其折叠",
+            "使用 TypeScript 编写的 orchestrator",
+            "标签错误的 YAML",
+            "一个 test fixture"
+          ],
+          "explanation": "与真实团队不对应的层级只会增加运维复杂度，而不会带来收益。"
+        },
+        {
+          "question": "如何缓解 swarm 中来回反复的 handoff（A -> B -> A -> B）？",
+          "options": [
+            "把 temperature 固定为 0",
+            "降低速率限制",
+            "添加 hop counter，并在转交 N 次后拒绝继续",
+            "禁用 tracing"
+          ],
+          "explanation": "Hop counter 会限制 swarm 循环，防止它无限持续。"
+        }
+      ]
+    }
+  }
+}

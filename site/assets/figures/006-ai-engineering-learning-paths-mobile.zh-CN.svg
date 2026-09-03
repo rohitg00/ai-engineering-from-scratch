@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 820" role="img" aria-labelledby="title desc" lang="zh-CN">
+  <title id="title">AI 工程学习路径</title>
+  <desc id="desc">AI 工程连接四条纵向排列的核心学习路径：构建与部署 AI 应用、软件工程基础、智能体辅助工程，以及产品判断与交付。</desc>
+  <style>
+    .bg{fill:#fafaf5}.line{fill:none;stroke:#3553ff;stroke-width:2}.node{fill:#fafaf5;stroke:#1a1a1a;stroke-width:2}.root{fill:#fafaf5;stroke:#1a1a1a;stroke-width:3}.label{fill:#1a1a1a;font:600 16px ui-monospace,"PingFang SC","Microsoft YaHei",monospace;text-anchor:middle}.small{fill:#555;font:400 11px ui-monospace,"PingFang SC","Microsoft YaHei",monospace;text-anchor:middle}
+    @media(prefers-color-scheme:dark){.bg{fill:#080b18}.node,.root{fill:#10162c;stroke:#d9dded}.label{fill:#f4f1e8}.small{fill:#aab2cf}.line{stroke:#7892ff}}
+  </style>
+  <rect class="bg" width="360" height="820"/>
+  <path class="line" d="M180 112V158M180 282V306M180 430V454M180 578V602"/>
+  <rect class="node root" x="42" y="34" width="276" height="78" rx="4"/>
+  <text class="label" x="180" y="67">AI 工程</text>
+  <text class="small" x="180" y="90">学习系统并理解工作全貌</text>
+  <g>
+    <rect class="node" x="18" y="158" width="324" height="124" rx="4"/>
+    <text class="label" x="180" y="193"><tspan x="180">构建与部署</tspan><tspan x="180" dy="22">AI 应用</tspan></text>
+    <text class="small" x="180" y="247">模型 · 数据 · 评测 · 服务 · 发布</text>
+  </g>
+  <g>
+    <rect class="node" x="18" y="306" width="324" height="124" rx="4"/>
+    <text class="label" x="180" y="341"><tspan x="180">软件工程</tspan><tspan x="180" dy="22">基础</tspan></text>
+    <text class="small" x="180" y="395">仓库 · 接口 · 测试 · 安全</text>
+  </g>
+  <g>
+    <rect class="node" x="18" y="454" width="324" height="124" rx="4"/>
+    <text class="label" x="180" y="489"><tspan x="180">智能体辅助</tspan><tspan x="180" dy="22">工程</tspan></text>
+    <text class="small" x="180" y="543">界定 · 规划 · 委派 · 验证 · 改进</text>
+  </g>
+  <g>
+    <rect class="node" x="18" y="602" width="324" height="124" rx="4"/>
+    <text class="label" x="180" y="637"><tspan x="180">产品判断</tspan><tspan x="180" dy="22">与交付</tspan></text>
+    <text class="small" x="180" y="691">成果 · 证据 · 风险 · 指标 · 反馈</text>
+  </g>
+  <text class="small" x="180" y="780">四大领域 · 一门工程学科</text>
+</svg>

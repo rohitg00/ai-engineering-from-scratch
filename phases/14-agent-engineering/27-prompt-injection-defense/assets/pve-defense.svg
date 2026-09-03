@@ -30,9 +30,9 @@
   <text x="78" y="192" class="step">claim: processing retrieved prompts = arbitrary code execution on the tool-use surface</text>
 
   <rect x="40" y="230" width="440" height="280" class="validator"/>
-  <text x="260" y="252" text-anchor="middle" class="head">PVE pattern  Prompt, Validator, Executor</text>
+  <text x="260" y="252" text-anchor="middle" class="head">PVE validation pattern  Prompt, Validator, Executor</text>
   <rect x="60" y="268" width="400" height="36" class="box"/>
-  <text x="78" y="290" class="step">1. main model proposes tool call</text>
+  <text x="78" y="290" class="step">1. main model proposes candidate tool call</text>
   <rect x="60" y="308" width="400" height="36" class="box"/>
   <text x="78" y="330" class="step">2. cheap fast validator inspects arguments</text>
   <rect x="60" y="348" width="400" height="36" class="box"/>
@@ -40,7 +40,7 @@
   <rect x="60" y="388" width="400" height="36" class="box"/>
   <text x="78" y="410" class="step">4. reject on injection marker or unsafe destination</text>
   <rect x="60" y="428" width="400" height="36" class="box"/>
-  <text x="78" y="450" class="step">5. pass  executor runs; tell main model on reject</text>
+  <text x="78" y="450" class="step">5. executor runs only if approved; else model retries</text>
   <rect x="60" y="468" width="400" height="36" class="box"/>
   <text x="78" y="490" class="step">cost: one extra inference per tool call</text>
 

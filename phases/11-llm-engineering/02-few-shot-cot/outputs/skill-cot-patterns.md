@@ -23,7 +23,7 @@ When you need an LLM to reason through a problem, choose the technique before wr
 
 3. Is a single reasoning error acceptable?
    - Yes: use **few-shot CoT** (single sample, temperature 0.0).
-   - No: use **self-consistency** (N=5, temperature 0.7). Continue to step 4.
+   - No: evaluate **self-consistency** on a held-out set. Treat N=5 and temperature 0.7 only as an experiment starting point, then tune both and keep the technique only when its quality gain justifies the measured inference cost. Continue to step 4.
 
 4. Is the problem a search/planning problem with many possible paths?
    - Yes: use **Tree-of-Thought**.
@@ -35,35 +35,34 @@ When you need an LLM to reason through a problem, choose the technique before wr
 
 ## Technique Matrix
 
-| Technique | Accuracy Lift | Cost Multiplier | Latency | Best For |
-|-----------|--------------|-----------------|---------|----------|
-| Zero-shot | Baseline | 1x | ~1s | Simple tasks, factual Q&A |
-| Few-shot | +5-15% | 1.2x | ~1s | Format matching, classification |
-| Zero-shot CoT | +10-20% | 1.3x | ~1.5s | Quick reasoning boost |
-| Few-shot CoT | +15-25% | 1.5x | ~2s | Math, logic, multi-step |
-| Self-Consistency (N=5) | +2-5% over CoT | 5x | ~5s | High-stakes reasoning |
-| Self-Consistency (N=10) | +1-2% over N=5 | 10x | ~10s | Critical decisions only |
-| Tree-of-Thought | Task-dependent | 10-40x | ~30s+ | Search, planning, puzzles |
-| ReAct | Task-dependent | 3-10x | ~5-15s | Knowledge-grounded tasks |
-| Prompt Chaining | +5-10% over single | 2-5x | ~5-10s | Complex multi-part tasks |
+| Technique | Quality evidence to collect | Relative inference work | Best For |
+|-----------|-----------------------------|-------------------------|----------|
+| Zero-shot | Held-out baseline | One generation | Simple tasks, factual Q&A |
+| Few-shot | Compare example sets and ordering | One longer generation | Format matching, classification |
+| Zero-shot CoT | Compare against direct answers | One longer generation | Quick reasoning experiment |
+| Few-shot CoT | Test transfer beyond demonstrations | One longer generation | Math, logic, multi-step |
+| Self-Consistency | Plot quality against sample count | N independent generations | High-stakes reasoning |
+| Tree-of-Thought | Track node count, solve rate, and pruning errors | One generation per explored node | Search, planning, puzzles |
+| ReAct | Track tool accuracy and task success | Multiple model/tool turns | Knowledge-grounded tasks |
+| Prompt Chaining | Validate each intermediate contract | One generation per chain step | Complex multi-part tasks |
 
 ## Model-Specific Guidance
 
 ### GPT-4o / GPT-4.1
 - Strong baseline reasoning. Zero-shot CoT often sufficient.
-- Few-shot CoT with 3 examples hits 95% on GSM8K.
-- Self-consistency gives marginal gains (95% to 97%) -- only worth it for critical tasks.
+- Benchmark direct answers, explicit reasoning, and few-shot CoT on the target workload; do not transfer accuracy figures from a different model snapshot or prompt.
+- Add self-consistency only when independently sampled paths improve held-out quality enough to justify the extra inference.
 - Supports structured outputs natively for answer extraction.
 
 ### Claude 3.5 Sonnet / Claude 3.7 Sonnet
 - Excellent at following structured prompt formats (XML tags).
 - Few-shot CoT with XML-delimited examples works best.
 - Extended thinking (Claude 3.7) is native CoT -- no need to prompt for it.
-- Self-consistency is effective because Claude's reasoning varies well at temperature 0.7.
+- For self-consistency experiments, temperature 0.7 is a starting point rather than a default; tune for useful path diversity and verify the quality gain and inference cost on held-out tasks.
 
 ### Llama 3.1/3.3 70B
 - Benefits most from few-shot CoT (larger accuracy gap vs zero-shot).
-- Self-consistency with N=5 recommended for reasoning tasks.
+- For reasoning tasks, treat self-consistency with N=5 as an experiment starting point; choose the final sample count from held-out quality and measured inference cost.
 - Needs more explicit format instructions than commercial models.
 - ToT is expensive on local inference -- consider only for batch processing.
 
@@ -77,7 +76,7 @@ When you need an LLM to reason through a problem, choose the technique before wr
 
 **CoT for simple tasks**: asking "What is 2+2? Let's think step by step" wastes tokens. The model gets simple arithmetic right without reasoning traces. CoT helps when there are 3+ steps.
 
-**Self-consistency at temperature 0.0**: all N samples will be identical. You must use temperature > 0 (0.5-0.8 recommended) for diverse reasoning paths.
+**Self-consistency at temperature 0.0**: deterministic decoding does not intentionally create diverse reasoning paths. Start experiments with a nonzero temperature (0.5-0.8 is a useful search range), then tune it against held-out quality, agreement, and inference cost instead of treating the range as a universal recommendation.
 
 **ToT for everything**: ToT requires O(b^d) LLM calls where b=branching factor and d=depth. A tree with b=3, d=3 needs up to 39 calls. Reserve for problems where cheaper techniques fail.
 
@@ -87,16 +86,16 @@ When you need an LLM to reason through a problem, choose the technique before wr
 
 ## Cost Optimization
 
-For a production system handling 10,000 queries/day at GPT-4o pricing ($2.50/1M input, $10/1M output):
+Measure cost with the provider's current prices and the application's observed input, output, and reasoning-token counts. Do not pair a generic accuracy claim with a vendor price: both vary by model snapshot, workload, prompt, and date.
 
-| Technique | Avg Tokens/Query | Daily Cost | Accuracy |
-|-----------|-----------------|------------|----------|
-| Zero-shot | ~200 | ~$5 | 78% |
-| Few-shot CoT | ~600 | ~$15 | 95% |
-| Self-Consistency (N=5) | ~3,000 | ~$75 | 97% |
-| ToT (b=3, d=2) | ~6,000 | ~$150 | Task-dependent |
+| Technique | Cost inputs to record | Quality input to record |
+|-----------|-----------------------|-------------------------|
+| Zero-shot | Input and output tokens for one generation | Held-out baseline |
+| Few-shot CoT | Demonstration tokens plus generated reasoning | Held-out result for the exact example set |
+| Self-Consistency | Per-sample tokens multiplied by sample count | Majority-vote result and agreement rate |
+| Tree-of-Thought | Tokens across every generated and evaluated node | Solve rate and nodes explored |
 
-The cost-optimal strategy for most applications: start with few-shot CoT. Add self-consistency only for queries where confidence is low (the escalation pattern from the Build It section).
+Start with the cheapest measured baseline. Add examples or self-consistency only where the observed quality gain justifies the additional inference work.
 
 ## Integration with Prompt Chaining
 
@@ -104,9 +103,9 @@ Reasoning techniques compose with prompt chaining:
 
 **Chain Step 1** (Extract): zero-shot, temperature 0.0
 **Chain Step 2** (Reason): few-shot CoT, temperature 0.0
-**Chain Step 3** (Verify): self-consistency with N=3, temperature 0.7
+**Chain Step 3** (Verify): self-consistency; N=3 and temperature 0.7 are experiment starting points to tune on held-out tasks
 
-This three-step chain costs ~3x a single CoT call but catches extraction errors, reasoning errors, and provides a confidence score from the verification step.
+This chain can catch extraction and reasoning errors and expose the verification vote's agreement rate. Its cost depends on the tuned sample count and observed token usage, so retain it only when held-out quality gains justify that measured cost.
 
 ## When to Move Beyond Prompting
 

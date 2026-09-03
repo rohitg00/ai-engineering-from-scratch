@@ -1,5 +1,10 @@
+# Phase 05, Lesson 17: chatbots from rules to neural systems.
+# Lesson guide: ../docs/en.md
+# Implements deterministic rule, FAQ-retrieval, and hybrid routing examples.
+# Canonical source: Weizenbaum (1966), "ELIZA--A Computer Program For the
+# Study of Natural Language Communication Between Man and Machine."
+
 import re
-from collections import Counter
 
 
 class RulePattern:

@@ -1,0 +1,1270 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/19-capstone-projects/01-terminal-native-coding-agent": {
+      "sourceSha256": "d4cc09a8c04e8806ba7a38f3a700b29b28f79ce2c53c21a70b29fe1245d7a15c",
+      "questions": [
+        {
+          "question": "2026 年的终端编码智能体共享哪种循环结构？",
+          "options": [
+            "获取、嵌入、排序、综合",
+            "规划、行动、观察、恢复",
+            "训练、评估、部署、监控",
+            "编码、解码、采样、流式传输"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 harness 要在 E2B 或 Daytona sandbox 中运行每个任务？",
+          "options": [
+            "让智能体循环能够使用 GPU",
+            "绕过模型提供商的速率限制",
+            "将文件系统和工具执行与宿主机隔离，以便任务完成后销毁 worktree",
+            "在冷缓存上对 token 吞吐量进行基准测试"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪个内置 hook 最适合在破坏性 shell 命令执行前将其拦截？",
+          "options": [
+            "Stop",
+            "PostToolUse",
+            "PreToolUse",
+            "SessionStart"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "这个综合项目将每次工具结果限制在约 4k token。这样做主要防止哪种失效模式？",
+          "options": [
+            "模型对工具调用 trace 过拟合",
+            "利用恶意 shell 元字符逃逸 sandbox",
+            "恢复 session 后沿用过期的 plan state",
+            "工具返回大量输出时造成上下文投毒和成本失控"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "到达 150k-token 阈值时，PreCompact hook 会做什么？",
+          "options": [
+            "取消运行并退还用户预算",
+            "强制推送当前分支以备份进度",
+            "将较早的轮次总结为 prior-state block，使计划和新观察结果仍能放入上下文",
+            "将底层模型切换为更小的 draft model"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "这个综合项目在 30 个 issue 的 SWE-bench Pro 子集上将自己的 harness 与哪个基线进行比较？",
+          "options": [
+            "Aider",
+            "mini-swe-agent",
+            "Live-SWE-agent",
+            "OpenCode"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "该交付物针对哪组指标进行衡量？",
+          "options": [
+            "WER、MOS 和 first-audio-out",
+            "MRR@10 和 nDCG@10",
+            "Perplexity、BLEU 和 ROUGE",
+            "pass@1、turns-per-task 和 dollar-per-task"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/02-rag-over-codebase": {
+      "sourceSha256": "481e279df3b10b035684413fca697b6cf89b389be904088fe0d0abe05e6529cb",
+      "questions": [
+        {
+          "question": "为什么对原始分块直接进行朴素余弦搜索，不足以支持跨仓库代码检索？",
+          "options": [
+            "向量索引无法存储大于 1KB 的 payload",
+            "代码 embedding 上的余弦相似度没有定义",
+            "Embedding 模型不会把代码视为 token",
+            "生成代码、monorepo 中的重复内容和极少被导入的符号会污染结果"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在摄取 pipeline 中，AST-aware chunking 是什么意思？",
+          "options": [
+            "将代码切分为固定的 256-token 窗口",
+            "存储前使用 gzip 压缩分块",
+            "在函数和类跨度等 tree-sitter 节点边界处切分",
+            "生成 embedding 前删除注释和空白"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在这个 pipeline 中，每个分块会获得哪三种可检索模态？",
+          "options": [
+            "原始文本、gzip 和 hash",
+            "Token ID、语法树和调用图",
+            "AST、IR 和 bytecode",
+            "Dense embedding、BM25 词项和自然语言摘要"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在混合检索步骤之后，cross-encoder reranker 起什么作用？",
+          "options": [
+            "将每个查询与候选项组成一对共同评分，从而获得比单用余弦相似度更高的准确率",
+            "重写分块以移除生成代码",
+            "使用另一种模型重新嵌入查询",
+            "在把分块发送给 synthesizer 前将其压缩"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 synthesizer 会拒绝没有 `(repo/path:start-end)` 锚点的答案？",
+          "options": [
+            "引用忠实度会对答案进行门禁，让用户能够核实每一项主张",
+            "向量数据库 schema 要求必须有锚点",
+            "锚点能降低 synthesis 调用的 token 成本",
+            "下游 BM25 reranking 需要锚点"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "要让增量重建索引在一次包含 50 个文件的 push 上保持在 60 秒以内，需要怎么做？",
+          "options": [
+            "完全丢弃符号图",
+            "丢弃 BM25 索引并从头重建",
+            "每次 commit 都重新嵌入完整的 2M-LOC 语料库",
+            "只重新嵌入文本发生变化的分块，并重新计算受影响的符号边"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪个指标衡量检索到的主张能否在源代码中得到核实？",
+          "options": [
+            "Citation faithfulness",
+            "p95 query latency",
+            "nDCG@10",
+            "MRR@10"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/03-realtime-voice-assistant": {
+      "sourceSha256": "d13c0ed0e5559bffd00b3eff02d0846bb11d0f98928dabfbaf1b7436a1850f46",
+      "questions": [
+        {
+          "question": "为什么不能通过串联三个阻塞式 REST 调用来构建语音智能体？",
+          "options": [
+            "REST 端点有 30 秒的硬超时限制",
+            "REST 与 WebRTC 不兼容",
+            "JSON 序列化对音频数据来说太慢",
+            "要把端到端延迟控制在 800ms 以内，每个阶段都必须采用 pipeline 式流式处理"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "turn-detector 与 VAD 配合时起什么作用？",
+          "options": [
+            "将背景音乐混入输出流",
+            "检测多人通话中正在说话的是哪位发言者",
+            "读取部分转录，并判断用户是否真的说完了当前话语",
+            "为智能体训练自定义声音克隆"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "当智能体还在回答时用户开始说话，要让 barge-in 体验自然，必须发生什么？",
+          "options": [
+            "TTS 先说完当前句子再让出话轮",
+            "智能体提高 TTS 音量以强调优先权",
+            "立即取消 TTS、丢弃剩余 LLM 输出，并重新启用 ASR",
+            "pipeline 缓冲用户音频，直到 TTS 完成"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么工具执行超过约 300ms 时，要播放一句“等一下，让我查一查”之类的简短填充语？",
+          "options": [
+            "触发备用 ASR 模型",
+            "避免出现静默，让对话不会在 side-channel 工具运行时停滞",
+            "改善下一句语音的 WER",
+            "重置 WebRTC jitter buffer"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "首个 LLM token 产生后，第一块音频必须在大约多长时间内离开服务器？",
+          "options": [
+            "200ms",
+            "800ms",
+            "2 秒",
+            "20ms"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪个指标直接衡量不恰当的 barge-in 或过早结束话轮？",
+          "options": [
+            "MOS",
+            "False-cutoff rate",
+            "Acceptance rate",
+            "WER"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 3% 丢包率下，pipeline 依赖哪两种自适应行为？",
+          "options": [
+            "切换到更大的 LLM 并禁用 TTS",
+            "保留部分转录，并提高 VAD speech-gate 阈值",
+            "重新启动 LiveKit room",
+            "回退到 PSTN 音频编解码器"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/04-multimodal-document-qa": {
+      "sourceSha256": "d8d257c61f3b32641c49aebc340c468eaebfde22a2abc21d7298fd57d9dd62aa",
+      "questions": [
+        {
+          "question": "为什么 2026 年的前沿方案在处理金融 PDF 和科学论文时，更倾向于采用 vision-first late interaction，而不是 OCR-then-text？",
+          "options": [
+            "OCR pipeline 会破坏旋转表格、密集公式和图表图像，导致一半信息丢失",
+            "OCR 无法在 GPU 上运行",
+            "视觉模型的单页成本更低",
+            "OCR 比渲染更慢"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 ColPali 风格的检索中，late interaction 是什么意思？",
+          "options": [
+            "每个查询 token 都与每个 patch token 进行评分，再通过 MaxSim 对各 token 的最大值求和",
+            "用户点击结果后才计算 embedding",
+            "Reranker 只对最终候选项运行",
+            "将 embedding 推迟到评估时计算"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "ColQwen embedding 每页大约会产生多少个 patch vector，这会造成什么存储问题？",
+          "options": [
+            "恰好 128 个 vector，可以轻松放入任何向量数据库",
+            "每页约 2048 个 patch vector，与单向量索引相比会使原始存储量急剧膨胀",
+            "每页 1 个 vector，不存在存储问题",
+            "16 个 vector，存储开销可以忽略不计"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "DocPruner 在这个 pipeline 中做什么？",
+          "options": [
+            "摄取前删除重复的 PDF 页面",
+            "保留约 50% 的高信号 patch 来压缩多向量索引，同时几乎不损失准确率",
+            "裁剪证据区域周围的 bounding box",
+            "重写查询 embedding 以缩短 vector"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么某些页面仍会拼接 OCR 文本通道？",
+          "options": [
+            "VLM 无法读取 180 DPI 的图像",
+            "OCR 是主要检索模态",
+            "它可以提高 PDF 渲染质量",
+            "公式密集和表格繁多的页面除了图像外，还能受益于文本 fallback"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "这个综合项目使用哪个 benchmark 评估 vision-first 检索？",
+          "options": [
+            "ViDoRe v3",
+            "RewardBench-2",
+            "MMLU-Pro",
+            "SWE-bench Pro"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "评分标准中的 evidence-region grounding 是什么意思？",
+          "options": [
+            "Reranker 的 p99 尾延迟",
+            "每次查询检索到的总页数",
+            "被引用的 bounding box 中实际包含答案 span 的比例",
+            "DocPruner 达到的压缩率"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/05-autonomous-research-agent": {
+      "sourceSha256": "effd40cc31f4235df123fa06be8a78949973810acbd21947da0473fd57993ea9",
+      "questions": [
+        {
+          "question": "AI-Scientist 级智能体使用哪种搜索结构探索实验？",
+          "options": [
+            "采用随机评分的广度优先扩展",
+            "对 token 输出进行 beam search",
+            "纯粹使用 RLHF",
+            "依据 novelty x quality x budget 分数，对实验节点进行 best-first tree search"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么要用 `--network=none` 和有界资源上限配置 sandbox？",
+          "options": [
+            "强制智能体使用 prompt caching",
+            "阻止网络出站，并将实验副作用限制在可复现的边界内",
+            "强制浮点运算具有确定性",
+            "默认允许 GPU passthrough"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "vision critique 步骤在 writer loop 中起什么作用？",
+          "options": [
+            "根据截图生成新的实验构想",
+            "在渲染时取代 matplotlib",
+            "将图形转换为柱状图",
+            "将 LaTeX 草稿编译为 PDF，然后让 VLM 评判布局、图形可读性以及主张与证据是否一致"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "reviewer ensemble 如何对 pipeline 进行门禁？",
+          "options": [
+            "Reviewer 匿名投票并由多数决定",
+            "五个 judge 按 NeurIPS 风格的评分标准打分，加权汇总分必须超过阈值，否则草稿会退回 writer",
+            "由一个 judge 使用二元标志接受或拒绝",
+            "Review 仅在发布后进行"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "这个综合项目对每篇论文实施哪种成本约束？",
+          "options": [
+            "跟踪 GPU-hours，但从不设置上限",
+            "通过 Langfuse 计数器和运行前估算跟踪 $30 的硬预算",
+            "只优化成本，不做质量检查",
+            "计算资源不设上限，只限制总用时"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪个评分函数对树节点排序，以决定后续扩展顺序？",
+          "options": [
+            "相关论文的引用次数",
+            "均匀随机优先级",
+            "输出长度和 token 数量",
+            "Novelty x quality x remaining budget"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "red-team 报告会针对系统演练什么？",
+          "options": [
+            "fork bomb、网络数据外泄和文件系统逃逸等 sandbox 逃逸尝试",
+            "system prompt 的缓存命中率",
+            "向量数据库中的多租户数据泄漏",
+            "丢包情况下的尾延迟"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/06-devops-troubleshooting-agent": {
+      "sourceSha256": "2e0de7563d6ca3b50a580e89f17e0d95090ca2f269703865a29c97060a49b7bb",
+      "questions": [
+        {
+          "question": "故障排查智能体的 RBAC 权限面默认采用什么姿态？",
+          "options": [
+            "授予 cluster-admin，使它能够自行修复",
+            "默认为只读，破坏性 verb 由独立服务器承载，并要求人工审批",
+            "与值班工程师的权限相同",
+            "只在受影响的 namespace 中授予 namespace-admin"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "智能体在根因分析期间遍历的知识图谱是什么？",
+          "options": [
+            "节点是 K8s 对象和 telemetry source；边表示所有权、调度和观察关系",
+            "按团队组织的 Prometheus metric 名称",
+            "最近重启的 pod 平面列表",
+            "GitHub commit 和 PR review 组成的图"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Slack 简报中的根因假设如何排序？",
+          "options": [
+            "按 alert 名称的字母顺序",
+            "只按模型 log-probability",
+            "按生成顺序",
+            "按综合新近性、特异性、图路径长度和引用数量的证据分数"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么审计日志既要记录智能体考虑过的命令，也要记录实际执行的命令？",
+          "options": [
+            "ArgoCD 只接受考虑过的命令",
+            "重放攻击要求同时提供这两个列表",
+            "Slack API 需要两者才能完成投递",
+            "Reviewer 可以发现智能体险些执行破坏性命令的未遂险情"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪种机制能防止智能体在部署出错时擅自回滚？",
+          "options": [
+            "破坏性工具位于独立 MCP server 上，并受 Slack card 发出的 approval token 保护",
+            "PagerDuty 自动暂停部署",
+            "GitOps repo 上的 branch protection",
+            "由第二个 LLM-judge 对回滚进行投票"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "评分标准衡量的 p50 time-to-hypothesis 目标是多少？",
+          "options": [
+            "1 小时以内",
+            "30 秒以内",
+            "下一个值班班次结束前",
+            "从 alert 到 Slack 简报不超过 5 分钟"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "用于评估 RCA 准确率的合成 incident suite 有多大？",
+          "options": [
+            "5 个场景",
+            "20 个场景，覆盖 OOMKill、DNS flap、HPA thrash、PVC fill 等问题",
+            "1 个脚本化演示 incident",
+            "从生产 alert 中随机抽取的 100 个场景"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline": {
+      "sourceSha256": "307611bcedd4a02c4d6bea6abbf44685153c34f9632e01d35ae66ac6509a6449",
+      "questions": [
+        {
+          "question": "数据准备期间，contamination check 防范什么问题？",
+          "options": [
+            "SFT 和 DPO 阶段之间的 tokenizer 漂移",
+            "MMLU-Pro 和 MT-Bench-v2 等公共 benchmark 的测试集泄漏到训练数据中",
+            "训练环境与服务环境之间的 GPU driver 不匹配",
+            "不同 llama.cpp build 之间的 GGUF 版本偏差"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 pipeline 先进行 SFT，再进行 DPO（或 GRPO），而不是只做 DPO？",
+          "options": [
+            "DPO 无法在量化权重上运行",
+            "Axolotl 没有实现 DPO",
+            "SFT 通过带标签的 completion 建立领域行为，而 DPO 或 GRPO 再根据偏好对或可验证奖励对模型进行对齐",
+            "DPO 需要另一种 base model 架构"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "EAGLE-3 为 vLLM serving 阶段带来了什么？",
+          "options": [
+            "面向工具调用的 OPA policy",
+            "自动数据去重步骤",
+            "新的 prompt-caching 层",
+            "可提前预测 N 个 token 的 draft head；target 一次完成验证，实现 2-3x 吞吐量"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪个指标表示 speculative decoding 的 draft 与 target model 的对齐程度？",
+          "options": [
+            "Acceptance rate",
+            "Perplexity",
+            "PSI",
+            "Coverage delta"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "pipeline 为灵活部署交付哪三种量化格式？",
+          "options": [
+            "GPTQ-INT4-Marlin、AWQ-INT4 和 GGUF-Q4_K_M",
+            "FP32、FP16、BF16",
+            "三个 runtime 均只使用 INT8",
+            "ONNX、CoreML、TFLite"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "这个综合项目中的 2026 model card 遵循哪种框架约定？",
+          "options": [
+            "仅使用 HuggingFace YAML front-matter",
+            "OpenAI 的 model card 格式",
+            "Datasheets for Datasets",
+            "Model Openness Framework (MOF) 2026 模板，涵盖数据、训练、评估、安全、许可证和可复现性"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "使用哪个 HPA metric 自动扩缩 serving replica？",
+          "options": [
+            "GPU temperature",
+            "CPU utilization",
+            "Queue-wait time",
+            "Network egress bytes"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/08-production-rag-chatbot": {
+      "sourceSha256": "6fd04f06d513ee663db8afdf8507658044a8345e61e578ff41bc353830b3f337",
+      "questions": [
+        {
+          "question": "为什么 prompt caching 对受监管领域的 RAG chatbot 如此重要？",
+          "options": [
+            "它可以消除幻觉",
+            "命中率达到 60-80% 时，它通过降低稳定 prefix token 的计费，可将单次查询成本降低 3-5x",
+            "它不再需要向量数据库",
+            "它可以提高 rerank 阶段的 recall"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "每次请求的 cache header 和未缓存 suffix 中分别放什么？",
+          "options": [
+            "用于达到缓存大小的随机文本填充",
+            "只放检索到的文档",
+            "用户问题放在最前，system prompt 放在最后",
+            "System prompt 和静态 policy 放入 cache header，rerank 后的上下文作为 cache extension，用户问题作为未缓存 suffix"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "检索层如何遵守 GDPR 或 HIPAA 等 jurisdiction tag？",
+          "options": [
+            "按 region 重写用户问题",
+            "仅在生成后阻止响应",
+            "为每个国家运行独立索引",
+            "在混合搜索合并前应用 role 和 jurisdiction filter，使用户权限范围外的分块永远不会进入 rerank"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "synthesis 阶段会让输出经过哪种分层 guardrail 组合？",
+          "options": [
+            "只使用输出 PII regex",
+            "只在输入上使用 Llama Guard 4",
+            "Llama Guard 4、NeMo Guardrails policy rail、Presidio PII scrub，再加上引用强制要求",
+            "只使用一个 LLM-judge 忠实度检查"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "drift dashboard 会对什么发出 alert？",
+          "options": [
+            "底层 LLM provider 发生变化",
+            "延迟超过 200ms",
+            "检索质量下降，例如 nDCG 或 citation score 环比上周下跌 5%",
+            "索引中添加了任何新文档"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "用于对交付物正确性评分进行门禁的 golden set 有多大？",
+          "options": [
+            "200 个带引用、由专家标注的 question/answer pair",
+            "5 个演示查询",
+            "2000 个合成问题",
+            "20 个问题"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "每一轮在线跟踪哪些 RAGAS 分数？",
+          "options": [
+            "BLEU、ROUGE 和 METEOR",
+            "Token 数量和 dollar cost",
+            "忠实度、答案相关性和上下文精确率",
+            "吞吐量、GPU utilization 和 queue depth"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/09-code-migration-agent": {
+      "sourceSha256": "9e191ac14851940bbdf4370e8efeffc83d83863b071b2a145e94d60b0ce8fd84",
+      "questions": [
+        {
+          "question": "为什么 pipeline 要把确定性基础层与智能体层结合使用，而不是只使用其中一层？",
+          "options": [
+            "单用智能体比 recipe 更快",
+            "OpenRewrite 或 libcst 能够安全且低成本地处理 70-80% 的机械式重写，把含糊不清的长尾问题留给智能体",
+            "只有 build system 需要确定性",
+            "确定性 recipe 比 LLM 更慢"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "pipeline 使用什么信号作为迁移成功的 ground truth？",
+          "options": [
+            "智能体按评分标准自评",
+            "Reviewer 批准 PR",
+            "Diff 大小低于硬限制",
+            "sandbox 中的 CI 全部通过，且覆盖率回退不超过较小阈值"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "智能体循环为每个 repo 强制执行哪些预算上限？",
+          "options": [
+            "总用时 30 分钟、成本 $8、智能体 20 轮",
+            "总用时 1 小时、100 轮",
+            "时间和成本不设上限，只在出错时中止",
+            "轮数不设上限，成本上限 $100"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "迁移后覆盖率下降超过约 2% 时，会触发哪道门禁？",
+          "options": [
+            "确定性基础层会重放其 recipe",
+            "该 repo 会被归入 `coverage_regression` 失败类别，而不是创建无异常的 PR",
+            "智能体自动强制推送修复",
+            "绕过 reviewer"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 failure taxonomy 被视为交付物，而不只是附带产物？",
+          "options": [
+            "它会取代测试套件",
+            "GitHub branch protection 要求提供它",
+            "它用于满足 compliance checklist",
+            "它按类别归组迁移失败的 repo，使未来编写 recipe 的人可以优先解决最常见的失效模式"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "这个综合项目针对 Java 8 到 17 迁移使用哪个公共 benchmark？",
+          "options": [
+            "MMLU-Pro",
+            "Amazon 的 MigrationBench",
+            "ViDoRe v3",
+            "SWE-bench Pro"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "智能体集成评分标准会衡量修复分布的哪个方面？",
+          "options": [
+            "被固定版本的 dependency 数量",
+            "每个 repo 的 force-push 次数",
+            "由 OpenRewrite 处理的修复与智能体层编写的修复各占多少",
+            "源文件的 tokenization 速度"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/10-multi-agent-software-team": {
+      "sourceSha256": "723c28107d13c46898f2a917fc5c6c90abe02670efbfc170c8c9568c5975635e",
+      "questions": [
+        {
+          "question": "即使有 200k-token 上下文，为什么单智能体 harness 在大型任务上仍会遇到上限？",
+          "options": [
+            "模型不支持 git",
+            "单个智能体无法调用工具",
+            "上下文无法同时容纳架构计划、四个并行代码库分片、reviewer 意见和测试输出",
+            "sandbox 拒绝托管多个进程"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在这种 software factory 结构中，architect 角色负责什么？",
+          "options": [
+            "在干净的 sandbox 中运行测试套件",
+            "阅读 issue，并输出一份由接口明确的子任务组成的计划",
+            "Review 合并后的 diff 是否存在幻觉",
+            "Coder 意见不一致时强制合并分支"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么每个 coder 都在自己的 git worktree 和 Daytona sandbox 中工作？",
+          "options": [
+            "Architect 要求提供 worktree ID",
+            "Daytona 是唯一支持 SSH 的 sandbox",
+            "相互隔离的 working tree 让 N 个 coder 可以并行实现子任务，而不会踩到共享文件",
+            "Worktree 的克隆速度比分支快"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为了确保 reviewer 保持公正，会对其施加什么约束？",
+          "options": [
+            "它不能批准自己编写或提出的 diff",
+            "只能在 tester 签字后运行",
+            "必须批准它读到的每个 diff",
+            "必须使用与 architect 相同的模型"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么评分标准要根据单智能体基线来权衡 token 效率？",
+          "options": [
+            "单智能体没有 observability 方案",
+            "角色边界会增加摘要和交接上下文，因此真正的问题是这个 factory 能否提高每美元产出",
+            "多智能体总是更便宜",
+            "Token 成本与性能无关"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "事后分析会为每个失败的 issue 生成哪种产物？",
+          "options": [
+            "新的 architect plan template",
+            "更新后的 A2A protocol spec",
+            "handoff-failure histogram，用于确定哪个角色边界发生故障（plan、merge、review、test）",
+            "force-push log"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "这个综合项目使用哪个评估集对各角色的 pass@1 进行评分？",
+          "options": [
+            "HumanEval-Java",
+            "MigrationBench",
+            "MT-Bench-v2",
+            "SWE-bench Pro 的 50-issue 子集"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/11-llm-observability-dashboard": {
+      "sourceSha256": "3a035176660ee4874c76cfb7f35bd87bd3df30f3955a9f59b16398376138e863",
+      "questions": [
+        {
+          "question": "Langfuse、Phoenix 和 OpenLLMetry 统一采用哪种摄取 schema？",
+          "options": [
+            "Prometheus exposition format",
+            "基于 OTLP HTTP 的 OpenTelemetry GenAI semantic conventions",
+            "每个 vendor 各自使用专有 JSON",
+            "纯 CSV log 文件"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么在存储层中将 ClickHouse 和 Postgres 分开？",
+          "options": [
+            "两者可以互换，随机选择一个即可",
+            "Postgres 的 span 摄取速度更快",
+            "ClickHouse 对 span 执行列式分析，Postgres 则存储用户、session 和应用 metadata",
+            "ClickHouse 无法存储字符串"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "OpenTelemetry Collector 中的 tail-sampling processor 做什么？",
+          "options": [
+            "在 trace 完成后，根据保留错误并抽样成功请求等规则决定是否保留它",
+            "将旧 trace 重放到 Postgres 中",
+            "无条件流式传输每个 byte",
+            "截断低于 100ms 的 span"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "dashboard 如何检测跨周 drift？",
+          "options": [
+            "统计唯一 trace ID",
+            "在池化后的 prompt embedding 上计算 PSI 或 KL divergence，并观察评估分数趋势",
+            "人工目测 dashboard",
+            "读取最新 deploy timestamp"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "该交付物对注入的 PII-leak regression 设定了什么 MTTR 目标？",
+          "options": [
+            "1 小时以内",
+            "24 小时以内",
+            "从 bug 部署到 Slack alert 不超过 5 分钟",
+            "下一个值班班次结束前"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "要满足 trace coverage 评分标准，哪些 SDK family 必须产生规范的 GenAI span？",
+          "options": [
+            "仅 OpenAI 和 Anthropic",
+            "任意一个 SDK 即可",
+            "仅 vLLM",
+            "至少六种：OpenAI、Anthropic、Google GenAI、LangChain、LlamaIndex 和 vLLM"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "评估结果如何关联回原始 LLM 调用？",
+          "options": [
+            "存入没有 trace ID 的独立 Postgres table",
+            "以 CSV 形式每晚通过邮件发送",
+            "仅作为 Slack message",
+            "以 eval span 的形式写入 ClickHouse，作为 parent trace 的 child"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/12-video-understanding-pipeline": {
+      "sourceSha256": "3171e985303d3c070651bf9519e84ca67c6594e464530a4dfe67e938a9610052",
+      "questions": [
+        {
+          "question": "即使长上下文 VLM 可以直接读取一段 2 小时的视频，为什么仍然需要 scene-level index？",
+          "options": [
+            "VLM 只能理解 scene cut",
+            "向量索引不支持视频文件",
+            "长上下文 VLM 无法流式输出",
+            "要把 100 小时视频摄取为可查询语料库，仍需进行 scene-level retrieval，即使单个视频可以整段读取"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 multi-vector index 中，每个 scene 会获得哪三种 vector？",
+          "options": [
+            "音频 waveform、mel-spectrogram 和 MFCCs",
+            "Pose、depth 和 optical flow",
+            "Hash、gzip 和 CRC",
+            "Caption embedding、keyframe embedding 和 transcript embedding"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "查询时，三个检索流的结果如何合并？",
+          "options": [
+            "对三个排序列表执行 reciprocal rank fusion",
+            "对余弦相似度取平均值",
+            "只选择 caption 命中项",
+            "直接取并集，不做评分"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "temporal grounding 步骤会在排名最高的 scene 中细化什么？",
+          "options": [
+            "包含答案的 `(start, end)` 时间戳窗口",
+            "keyframe embedding 的维度",
+            "Whisper 转录的词级时间戳",
+            "Qdrant 中存储的 vector 数量"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪类问题是已知的幻觉高发区，因此需要单独报告？",
+          "options": [
+            "翻译问题",
+            "说话人识别问题",
+            "计数和动作类问题，因为 VLM 会对事件计数错误或排序错误",
+            "关于景物的描述性问题"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "评分标准会在留出集上衡量哪个 grounding 指标？",
+          "options": [
+            "Perplexity",
+            "Temporal-grounding intersection-over-union (IoU)",
+            "Acceptance rate",
+            "MRR@10"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 pipeline 要求答案引用时间戳？",
+          "options": [
+            "Whisper 输出要求提供时间戳",
+            "Qdrant payload 要求提供时间戳",
+            "时间戳可以减小 embedding 维度",
+            "它们让观看者能够跳转到精确的 `(video_id, start, end)`，以核实主张"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/13-mcp-server-with-registry": {
+      "sourceSha256": "65a33c03e948a96b6cc6956b7729692e957eb112440f4eff85d94b35d17cac34",
+      "questions": [
+        {
+          "question": "为什么这个综合项目同时使用 server.json 和 server/discover？",
+          "options": [
+            "server.json 存储 session，而 server/discover 删除 session",
+            "Registry 要求两个文件包含相同的版本日期",
+            "它们是同一份工具 manifest 的两个名称",
+            "server.json 发布安装和 endpoint metadata，而 server/discover 报告实时协议能力"
+          ],
+          "explanation": "Registry 记录帮助客户端定位和配置服务器。实时 RPC 报告正在运行的进程支持哪些能力。二者的 schema 和版本域相互独立，但发布的身份必须使用经过身份验证的 namespace，并与实时 serverInfo 匹配。"
+        },
+        {
+          "question": "在 MCP revision 2026-07-28 中，什么取代了 initialize handshake？",
+          "options": [
+            "Mcp-Session-Id 加 notifications/initialized",
+            "每个请求都携带 protocol version 和 client capabilities，客户端还可以调用强制提供的 server/discover",
+            "通过 GET 请求打开永久 server stream",
+            "每条 TCP connection 只发送一次 session cookie"
+          ],
+          "explanation": "该协议是无状态的。Version 和 capabilities 属于请求 metadata，而 server/discover 提供实时的版本与能力发现，无需创建 session。"
+        },
+        {
+          "question": "哪种 tools/list 行为能够支持安全且高效的发现？",
+          "options": [
+            "永久缓存响应，且不设置 scope",
+            "每个 replica 上的工具顺序都随机变化",
+            "在 initialize 期间创建 connection-local list",
+            "采用确定性顺序，并提供 ttlMs 以及正确的 public 或 private cacheScope"
+          ],
+          "explanation": "稳定排序可提高可复现性和 prompt caching 效果。ttlMs 用于说明数据新鲜度，cacheScope 则防止用户特定的结果通过共享缓存泄漏。"
+        },
+        {
+          "question": "哪种 Streamable HTTP 设计符合当前的无状态 transport？",
+          "options": [
+            "所有客户端都需要 load balancer 进行 sticky routing",
+            "POST 创建 session，GET 恢复 session，DELETE 关闭 session",
+            "独立 GET stream 使用 Last-Event-ID replay",
+            "每条 JSON-RPC message 都使用独立 POST，并通过 JSON 或 request-scoped SSE 返回单个请求的结果"
+          ],
+          "explanation": "当前 Streamable HTTP 对 MCP message 只使用 POST，不存在 protocol session、独立 GET stream、session DELETE 或 Last-Event-ID resumability。"
+        },
+        {
+          "question": "在 policy 批准的工具 handler 运行前，生产服务器必须验证什么？",
+          "options": [
+            "只验证 server.json 是否列出 remote URL",
+            "只验证工具的 destructiveHint annotation",
+            "只验证是否有人发布了 approval message",
+            "验证 protocol metadata，以及 token issuer、audience 或 resource、expiry、scope 和任何 exact-action approval"
+          ],
+          "explanation": "Transport metadata、token validation 和 policy 是相互独立的门禁。Annotation 和发布 metadata 不会授予权限。"
+        },
+        {
+          "question": "哪项证据最能支持服务器无需 protocol session 即可扩展的说法？",
+          "options": [
+            "server.json 中的一条 remote entry",
+            "在两个可互换 replica 上执行 wire-level concurrent run，且不依赖 affinity",
+            "构造一个 response dictionary 的 unit test",
+            "一张展示 load balancer 的图"
+          ],
+          "explanation": "必须对真实的 transport 和 deployment boundary 进行演练。在 replica 之间交替发送请求，可以证明正确性并未隐藏在单个进程或 sticky session 中。"
+        }
+      ]
+    },
+    "phases/19-capstone-projects/14-speculative-decoding-server": {
+      "sourceSha256": "414434300134013daae2f362b7b3ca12bde27ddc589e55a89f79581762e7fb88",
+      "questions": [
+        {
+          "question": "speculative decoding 背后的双层机制是什么？",
+          "options": [
+            "两个 target model 逐 token 交替运行",
+            "一个 embedding model 和一个 synthesizer",
+            "一个 retrieval cache 和一个 reranker",
+            "draft model 提出 k 个候选 token；target model 在一次 pass 中完成验证"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "EAGLE-3 能做到而 ngram draft 做不到的是什么？",
+          "options": [
+            "完全绕过 tokenization",
+            "只在 CPU 上运行",
+            "在 target model 的 hidden state 上训练 draft head，以获得更高的 acceptance rate",
+            "取代 target model"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么要报告 batch size 为 1、8 和 32 时的 p99 尾延迟？",
+          "options": [
+            "稳态 tokens-per-second 可能掩盖这一事实：发生拒绝时，verify pass 比普通 decoding 成本更高",
+            "vLLM 无法支持小于 8 的 batch size",
+            "p99 只在 batch size 32 时才重要",
+            "尾延迟与 batch size 无关"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么流量分布变化时 acceptance rate 会漂移？",
+          "options": [
+            "Draft 的对齐程度取决于输入分布：ShareGPT、代码和领域数据会触发不同模式",
+            "OS scheduler 会重新排列 GPU memory",
+            "Quantization 会在 runtime 发生变化",
+            "vLLM 每小时轮换模型"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Kubernetes HPA deployment 根据哪个信号扩缩容？",
+          "options": [
+            "Disk IOPS",
+            "CPU utilization",
+            "推理请求的 queue-wait time",
+            "Cluster autoscaler node 数量"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "相比串行 EAGLE-3，P-EAGLE 增加了什么？",
+          "options": [
+            "将权重量化为 FP4",
+            "移除 target model",
+            "在 draft branch 树上进行并行推测，再由 target 在一次 pass 中验证",
+            "自动整理数据集"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "相对于非 speculative baseline，评分标准要求达到哪个吞吐量目标？",
+          "options": [
+            "在两个模型上以相同质量达到至少 2.5x",
+            "只要高于 baseline 即可",
+            "以相同质量达到约 1.1x",
+            "不论质量如何都恰好达到 10x"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/15-constitutional-safety-harness": {
+      "sourceSha256": "7eda49611e2efdea72b86e04c89d2f55779295032671c3707798d221506af347",
+      "questions": [
+        {
+          "question": "这个综合项目中的 layered safety 是什么意思？",
+          "options": [
+            "通过 input sanitize、policy rails、classifier gate、模型、output filter 和 HITL tier 实现纵深防御",
+            "只在输入上运行一个强大的 classifier",
+            "只对输出使用一条基于规则的 regex",
+            "人工审查每一条响应"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪个 classifier 能够覆盖约 132 种语言？",
+          "options": [
+            "Llama Guard 4",
+            "Nemotron 3 Content Safety",
+            "X-Guard",
+            "ShieldGemma-2"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么要在 XSTest 之类的良性 suite 上衡量 over-refusal？",
+          "options": [
+            "跟踪误拦截，使模型在提升无害性的同时仍保持有用",
+            "认证 guardrail framework",
+            "取代 red-team 评分",
+            "对 token 吞吐量进行基准测试"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "这个综合项目中的 constitutional self-critique loop 是什么？",
+          "options": [
+            "从头训练的 RLHF reward model",
+            "Critic LLM 根据成文 constitution 为草稿评分，提示模型重写受到质疑的输出，再使用改进后的配对数据进行 SFT",
+            "通过 Llama Guard 4 完成一次 forward pass",
+            "对候选 jailbreak prompt 进行 rerank"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "findings 如何评定成功 jailbreak 的严重程度？",
+          "options": [
+            "由产生响应的模型进行评分",
+            "使用 CVSS 4.0，考虑 attack vector、complexity 和 impact，并附带 disclosure timeline",
+            "按 prompt 的原始 token 数量评分",
+            "采用 operator 自行调整的 1-10 分制"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "red-team range 会运行哪六类攻击？",
+          "options": [
+            "PSI、KL、MMD、KS、JS 和 Wasserstein",
+            "PAIR、TAP、GCG、encoding（ASCII/base64/rot13）、multi-turn persona 和 multilingual code-switch",
+            "Brute-force、dictionary、replay、MITM、phishing 和 CSRF",
+            "BLEU、ROUGE、METEOR、BERTScore、CometKiwi 和 chrF"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 range automation（cron + alerts）是评分标准的一部分？",
+          "options": [
+            "cron 是调用 OPA 的唯一方式",
+            "必须通过 automation 禁用 Llama Guard 4",
+            "明确要求手动运行",
+            "持续的定时探测可以捕获攻击成功率的漂移，以及 over-refusal 随时间出现的回退"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/16-github-issue-to-pr-agent": {
+      "sourceSha256": "7a21bf608f8a342e91d0c74c455e7b4b6aa57bde8e81f5b06c11522198974ae5",
+      "questions": [
+        {
+          "question": "生产环境中的异步云端编码智能体如何触发？",
+          "options": [
+            "由 issue label 或 PR comment 触发 GitHub webhook，再分派给 sandbox worker",
+            "手动上传文件",
+            "通过长期存在的 SSH session 连接 VM",
+            "使用定时 cron job 访问 repo"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么智能体必须使用短期 GitHub App installation token，而不是 personal access token？",
+          "options": [
+            "Personal access token 无法创建 PR",
+            "App token 提供细粒度、限定 scope、短期有效的凭据，适合每任务 worker",
+            "App 可以完全绕过 GitHub rate limit",
+            "App 所需代码比 PAT 少"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪两项保护措施可以防止智能体覆盖 main？",
+          "options": [
+            "在 worker 上禁用 git",
+            "Branch protection 禁止直接 push 或 force-push 到 main，且 app 不在 bypass list 中",
+            "每次 push 都要求完成 captcha",
+            "clone 前加密 repo"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么对 `.github/workflows` 的路径级保护要在 worker 上实施，而不是作为 GitHub App permission？",
+          "options": [
+            "`.github/workflows` 是 virtual path",
+            "GitHub App permission 无法限定 path，因此应由 worker 的 allow-list 检查对拟议 diff 实施保护",
+            "任何形式都无法限定 path",
+            "Workflow 存储在 repo 外部"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "智能体循环结束后、创建 PR 前会执行什么门禁？",
+          "options": [
+            "Reviewer model 重写 diff",
+            "不做任何检查，立即创建 PR",
+            "在 sandbox 中运行完整 CI，计算 coverage delta；回退超过阈值的 PR 会被标记为 `needs-review`",
+            "将 repo 强制推送到 main"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "dispatcher 为每个 repo 的每一天实施哪些预算参数？",
+          "options": [
+            "只限制轮数",
+            "每个 PR 的 dollar ceiling，加上每个 repo 每天的 PR 数量上限",
+            "PR 数量和成本均不设上限",
+            "只限制 wall-clock"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "智能体发布的 PR body 中包含什么？",
+          "options": [
+            "Rationale、diff summary、trace URL、cost 和 turn count，便于 reviewer 审计与跟进",
+            "只有 diff",
+            "不包含任何内容；PR body 为空",
+            "只有生成的 changelog"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/19-capstone-projects/17-personal-ai-tutor": {
+      "sourceSha256": "5fe0cc2852179fc2efcda9ab77606176637f73cc9946738cc4ef93f82c5fc13a",
+      "questions": [
+        {
+          "question": "当学习者直接索要答案时，Socratic tutor policy 会怎么做？",
+          "options": [
+            "切换到另一个 concept node",
+            "记录请求，然后保持沉默",
+            "提出引导性问题，搭建脚手架，让学习者自己走向答案",
+            "立即给出答案并继续下一项"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "curriculum graph 编码了哪种结构？",
+          "options": [
+            "只包含最近学习的 node",
+            "随机打乱的 topic",
+            "带 prerequisite edge 并关联 OER content 的 concept 有向图",
+            "互不相关 concept 的平面列表"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "每次交互后，learner model 会更新什么？",
+          "options": [
+            "curriculum graph schema",
+            "base LLM 的权重",
+            "通过 Bayesian knowledge tracing 或类似变体更新每个 concept 的 mastery probability",
+            "COPPA retention policy"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "memory 如何划分为 episodic store 和 semantic store？",
+          "options": [
+            "Episodic 供家长使用，semantic 供学习者使用",
+            "Episodic 保存每次交互；semantic 保存从 episodic 中提升而来的压缩版错误与偏好",
+            "Episodic 保存 embedding，semantic 保存原始音频",
+            "两者是同一份数据的副本"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪项约束决定了 K-12 学习者的 memory retention 方式？",
+          "options": [
+            "符合 COPPA 的 retention：经过规定窗口后自动删除，并允许家长访问",
+            "根据模型上下文长度决定 retention",
+            "永久 retention，不允许删除",
+            "只遵守 GDPR"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "用于对交付物进行门禁的 efficacy study 采用什么结构？",
+          "options": [
+            "一名学习者参加一次一小时 session",
+            "匿名互联网问卷",
+            "30 秒的 AB test",
+            "对 10 名学习者进行为期两周的 Pre-test 和 post-test，并与非自适应 baseline cohort 比较"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "tutor 向学习者提供哪些多模态输入路径？",
+          "options": [
+            "只能通过自定义 OCR model 输入照片",
+            "键入文本、通过 LiveKit + Whisper 输入语音，以及通过 dots.ocr 或 PaliGemma 2 输入数学题照片",
+            "仅文本",
+            "仅语音，不支持文本或照片"
+          ],
+          "explanation": ""
+        }
+      ]
+    }
+  }
+}

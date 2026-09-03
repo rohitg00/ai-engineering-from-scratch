@@ -1,0 +1,980 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal": {
+      "sourceSha256": "bc3a2599b279f83ae538d322b9021a09ee9b3b4d0a0de10dfafb4a21a1fb01fa",
+      "questions": [
+        {
+          "question": "为什么原始预训练语言模型在收到“编写一个反转列表的 Python 函数”时，往往会续写另一个提示，而不是给出代码？",
+          "options": [
+            "它的 temperature 默认为零",
+            "它的词表中没有 Python token",
+            "它接受的训练是补全网页风格的文本，而在这类文本中，提示之后往往还是更多提示",
+            "未经微调，它无法表示函数签名"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "InstructGPT 的奖励模型针对成对偏好标签使用哪种损失？",
+          "options": [
+            "预测奖励与真实奖励之间的交叉熵",
+            "标注者评分上的均方误差",
+            "具有固定间隔的 hinge loss",
+            "Bradley-Terry：-log sigmoid(r(x, y_w) - r(x, y_l))"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "InstructGPT 第 3 阶段中的 KL 惩罚主要防范什么？",
+          "options": [
+            "灾难性遗忘 tokenizer 的统计规律",
+            "优化器找到利用奖励模型漏洞的对抗性高奖励字符串",
+            "采样期间上下文窗口溢出",
+            "PPO 梯度更新中的数值不稳定"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "PPO-ptx 将什么问题混入 RL 目标中来缓解？",
+          "options": [
+            "对齐税：在 RLHF 未针对的基准上出现性能回退",
+            "SFT 与 RM 之间的 tokenizer 不匹配",
+            "KL 项变为负数",
+            "奖励模型在 PPO 期间发生漂移"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "约有 70% 的情况下，1.3B InstructGPT 比 175B 基础 GPT-3 更受偏好。这说明对齐与能力之间是什么关系？",
+          "options": [
+            "对齐与能力是两个不同的维度，而基础模型决定了能力下限",
+            "偏好率超过 50% 就证明代理奖励等同于人类价值观",
+            "在大规模下，能力与对齐是同一个维度",
+            "大型基础模型总会输给经过对齐的小模型"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "InstructGPT 的奖励模型由以下哪项初始化而来？",
+          "options": [
+            "保留 LM head 的基础预训练模型",
+            "将 LM head 替换为标量 head 的 SFT 模型",
+            "一个独立的仅编码器 Transformer",
+            "一个未经预训练的随机标量回归器"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/02-reward-hacking-goodhart": {
+      "sourceSha256": "88b9fd5b0278928b4c4c95d67bcc9eb06f6e42a2e3d90231a56021071098dd36",
+      "questions": [
+        {
+          "question": "Goodhart 定律最初的表述是：",
+          "options": [
+            "任何度量一旦成为目标，就不再是一个好的度量",
+            "优化总能无限改善代理指标",
+            "重尾误差不可能出现在有限维模型中",
+            "随着规模增大，奖励模型会收敛到真实的人类偏好"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 Gao、Schulman 和 Hilton（2023）的研究中，随着策略与初始策略之间的 KL 距离增大，代理奖励和黄金奖励如何变化？",
+          "options": [
+            "两者都随 KL 单调上升",
+            "代理奖励达到峰值后下降，黄金奖励单调上升",
+            "在任何 KL 约束下，两者都保持不变",
+            "代理奖励持续上升，黄金奖励在更靠近原点处达到峰值后下降"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪项不属于本课列出的奖励作弊四种“伪装”之一？",
+          "options": [
+            "迎合",
+            "Tokenizer 不匹配",
+            "冗长偏差",
+            "不忠实推理"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "关于 KL 正则化，“灾难性 Goodhart”结论是什么？",
+          "options": [
+            "只有策略随机初始化时，KL 正则化才会失效",
+            "KL 正则化等同于奖励模型集成",
+            "在奖励误差呈重尾分布时，受 KL 约束的最优策略仍可能使代理奖励上升，而黄金奖励停留在基线水平",
+            "只要 beta 为正，KL 正则化就一定能防止奖励作弊"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Coste 等人（2023）研究了哪种缓解奖励过度优化的方法？",
+          "options": [
+            "在 temperature 为零时针对代理指标训练策略",
+            "采用最坏情况聚合的奖励模型集成",
+            "完全移除 KL 惩罚",
+            "将标注者规模扩大到一百万人"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "根据 2026 年的统一观点，冗长、迎合、不忠实 CoT 和篡改评估器共享什么核心机制？",
+          "options": [
+            "它们都源于学习率调度过于激进",
+            "它们只由写出恶意偏好的标注者造成",
+            "概率质量向那些利用易学启发式规则来最大化代理奖励的输出偏移，而这些规则只是与获得认可存在虚假相关",
+            "它们分别是不同奖励 head 中彼此独立的缺陷"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/03-direct-preference-optimization-family": {
+      "sourceSha256": "297b53aba3ccc2ddc896513ffd858c59731dd379f3287eeedd7779844a09684e",
+      "questions": [
+        {
+          "question": "为什么 DPO 可以跳过显式奖励模型的训练？",
+          "options": [
+            "偏好数据不需要标量奖励",
+            "DPO 在第二个优化循环中隐式训练自己的奖励模型",
+            "RLHF 最优解的闭式表达允许用策略的对数比表示奖励，再将其代入 Bradley-Terry 损失",
+            "Bradley-Terry 偏好恰好不随奖励函数变化"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "IPO（Azar 等人，2024）主要解决 DPO 中的哪种失效模式？",
+          "options": [
+            "需要成对数据",
+            "依赖参考策略",
+            "获选响应的长度偏差",
+            "由极小偏好概率导致的无界隐式奖励差距"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在什么情况下，你会选择 KTO 而不是 DPO？",
+          "options": [
+            "当你只有未配对的单项标签（理想／不理想），并希望使用损失厌恶效用时",
+            "当你只有间隔明显的成对数据时",
+            "当你必须保证隐式奖励漂移为零时",
+            "当你希望完全移除 KL 惩罚时"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "与 DPO 相比，哪项性质是 SimPO 独有的？",
+          "options": [
+            "移除参考策略，并按序列长度归一化对数似然",
+            "使用带 NLL 的赔率比损失",
+            "舍弃 Bradley-Terry 的 log-sigmoid，改用恒等映射",
+            "保留参考策略并增加间隔"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "BPO 针对的 DPO“Degraded Chosen Response（获选响应退化）”问题是什么？",
+          "options": [
+            "推理时以低概率采样到获选响应",
+            "获选响应变得比被拒响应更长",
+            "只要被拒响应的绝对对数概率下降得更快，DPO 就可能同时压低获选响应的绝对对数概率",
+            "参考策略的支持集中不包含获选响应"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Rafailov 等人（NeurIPS 2024）关于直接对齐算法缩放定律的研究表明：",
+          "options": [
+            "DPO 会过度优化，但 IPO 和 SimPO 不会",
+            "DAA 从设计上消除了 Goodhart 问题",
+            "当成对数据超过 100k 个样本时，过度优化就会消失",
+            "DAA 在黄金奖励上呈现出与 Gao 等人研究相同的先达峰值、后崩塌的过度优化形态"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification": {
+      "sourceSha256": "94796f35b1467215668186a675b4edcf9ba48278215af69a8ac40264279d96d1",
+      "questions": [
+        {
+          "question": "哪一项最准确地描述了语言模型的迎合行为？",
+          "options": [
+            "在对话中途切换语言",
+            "拒绝回答任何涉及用户信念的问题",
+            "为每项主张引用来源",
+            "不论用户陈述的前提是否真实，都表示赞同"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Shapira 等人（2026）将迎合放大形式化为一个两阶段机制。第 1 阶段是什么？",
+          "options": [
+            "优化器直接在损失中加入迎合项",
+            "基础策略的高奖励输出中，迎合式补全所占比例过高",
+            "标注者在 100% 的偏好对中明确选择迎合式输出",
+            "迎合被编码进 tokenizer"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么本课认为迎合呈现逆缩放现象？",
+          "options": [
+            "它只在参数量低于 1B 的模型中出现",
+            "它与训练损失呈反向变化",
+            "它随模型规模增大而减少",
+            "与大多数能力不同，它随模型规模增大和 RLHF 训练延长而增强"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Cheng、Tramel 等人（Science，2026 年 3 月）如何将迎合与诚实区分开来？",
+          "options": [
+            "要求模型反省自身推理",
+            "针对同一事实主张，对比匹配的“用户信念”与“第三方信念”表述",
+            "只使用选择题",
+            "只在数学题上测试"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Shapira 等人提出的认同惩罚修正是什么？",
+          "options": [
+            "当策略的 KL 低于阈值时对其施加惩罚",
+            "只按长度对输出重新排序",
+            "丢弃用户判断错误的偏好对",
+            "从代理奖励中减去分类器测得的认同分数：r'(x, y) = r(x, y) - alpha * agree(x, y)"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "随着 alpha 增大，认同惩罚会产生什么权衡？",
+          "options": [
+            "只有有用性发生变化，迎合不受影响",
+            "由于分类器存在噪声，迎合反而增多",
+            "迎合减少，但正当的认同也减少（模型对用户正确的信念会略显更爱唱反调）",
+            "它总能同时严格改善迎合和有用性"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif": {
+      "sourceSha256": "27e1bdcaecd5bd4f3c20f5c0ceed84ae64dfaaafd67e0eeb5f66cf5e33e37432",
+      "questions": [
+        {
+          "question": "与标准 RLHF 相比，Constitutional AI 的核心替换是什么？",
+          "options": [
+            "完全移除奖励模型",
+            "使用合成提示代替真实提示",
+            "用读取原则列表的 AI 标注者替代人类偏好标注者",
+            "用 DPO 替代 PPO"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Constitutional AI 的第一阶段（SFT）做什么？",
+          "options": [
+            "通过聚类标注者评论来生成合成原则",
+            "先生成初始响应，再依据随机抽取的宪法原则批评并修订它，最后将修订结果用作 SFT 目标",
+            "使用源自宪法的奖励执行 PPO",
+            "只使用 AI 生成的偏好训练奖励模型"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "第二阶段（RLAIF）做什么？",
+          "options": [
+            "跳过 PPO，只应用一次监督损失",
+            "基于反馈模型生成的 AI 偏好训练奖励模型，再针对该奖励模型运行 PPO",
+            "让人类重新标注 SFT 输出",
+            "将宪法蒸馏进 tokenizer"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Anthropic 2026 年 1 月发布的四层 Claude 宪法采用什么层级顺序？",
+          "options": [
+            "有帮助 > 广泛符合伦理 > 平台规则 > 避免灾难",
+            "避免灾难性后果 > 遵循 Anthropic 指南 > 广泛符合伦理 > 有帮助且坦诚",
+            "广泛符合伦理 > 有帮助 > 平台规则 > 避免灾难",
+            "平台规则 > 避免灾难 > 有帮助 > 广泛符合伦理"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "从 RLHF 切换到 RLAIF 不一定能解决哪种失效模式？",
+          "options": [
+            "标注者稀缺",
+            "标注者成本",
+            "奖励作弊／Goodhart 定律",
+            "标注者的心理判断不一致"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Constitutional Classifiers v1 与 v2（2026）之间最显著的变化是什么？",
+          "options": [
+            "v2 将计算开销从 1% 提高到 23.7%",
+            "v2 移除了分类器，只依赖宪法",
+            "v2 将计算开销从 23.7% 降至约 1%，同时保持较低的攻击成功率",
+            "v2 只在输入端运行，不在输出端运行"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment": {
+      "sourceSha256": "4546189eb70c67be677d78afd45449ac48325245b73e4c20660f9f574182f7f3",
+      "questions": [
+        {
+          "question": "哪一组最准确地概括了内层对齐与外层对齐的区别？",
+          "options": [
+            "外层 = 数据是否干净；内层 = 优化器是否具有随机性",
+            "外层 = 基础目标是否符合我们的意图；内层 = mesa-objective 是否与基础目标一致",
+            "外层 = 策略是否稳定；内层 = temperature 是否较低",
+            "外层 = 模型能否在硬件上运行；内层 = 损失是否较低"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪项不属于 Hubinger 等人提出的四类 mesa-objective 对齐？",
+          "options": [
+            "近似对齐",
+            "概率对齐",
+            "稳健对齐",
+            "代理对齐"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在什么条件下，欺骗性对齐会成为 mesa-optimizer 的奖励最大化策略？",
+          "options": [
+            "它具有持久的终极目标，能感知训练与部署的情境差异，并且如果在训练中背叛，基础优化器就会修改它",
+            "它使用 PPO 而不是 DPO 训练",
+            "它的容量超过 100B 参数",
+            "它具有任何形式的内部表征"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么标准对抗训练可能无法解决、甚至会加剧欺骗性对齐？",
+          "options": [
+            "它需要比 RLHF 更多的算力",
+            "它教会 mesa-optimizer 更准确地区分测试与部署，而不是赋予其一个对齐的 mesa-objective",
+            "它无法在 GPU 上运行",
+            "它使用了错误的损失函数"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Hubinger 等人（2019）提出的梯度作弊是什么？",
+          "options": [
+            "一种加快训练的技术",
+            "一种推测性的病态现象：有能力的 mesa-optimizer 生成能塑造自身梯度更新的输出，以保留其 mesa-objective",
+            "autograd 中的缺陷",
+            "一种针对指令微调模型的越狱方法"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪项属于外层对齐失败，而不是内层对齐失败？",
+          "options": [
+            "后门在 SFT 后仍然存在",
+            "Mesa-optimizer 在评估期间隐藏自己的目标",
+            "Mesa-optimizer 优化了一个在分布外发生偏离的代理目标",
+            "由于基础目标本身就是人类意图的缺陷代理，奖励作弊和迎合行为随之出现"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception": {
+      "sourceSha256": "85f4c186058dcd6fd26324706a4050f0a7a6efbb21836086aaeec6aaa2373ffd",
+      "questions": [
+        {
+          "question": "两个 Sleeper Agents 模型生物与经过微调的越狱模型有何区别？",
+          "options": [
+            "它们只使用公开的 RLHF 数据",
+            "它们只使用自然语言提示注入",
+            "后门由 SFT 有意植入，以便作者研究各种训练方法为何无法将其移除",
+            "它们的参数量小于 1B"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "“code-vulnerability”模型生物的触发条件是什么？",
+          "options": [
+            "用户消息中的一段 token 序列",
+            "特定的用户身份声明",
+            "经过编码的图像输入",
+            "系统提示中的标签表明当前年份是 2024（而在 2023 年则输出安全代码）"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 Hubinger 等人（2024）的研究中，以下哪种移除方法未能消除植入的后门？",
+          "options": [
+            "在无害指令上进行 SFT",
+            "使用 HHH 奖励进行 RLHF",
+            "以上全部；后门在每种方法后都依然存在",
+            "在红队提示上进行对抗训练"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么对抗训练往往会在应对 sleeper-agent 后门时适得其反？",
+          "options": [
+            "它会导致基础任务的灾难性遗忘",
+            "它会改变 tokenizer",
+            "对抗训练需要的数据量超过现有数据",
+            "红队只能针对其能够发现的触发器训练；模型学会在红队分布上表现安全，而原本留出的触发器反而成为更鲜明的区分信号"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "MacDiarmid、Shlegeris 等人（2024 年 4 月）利用线性探针证明了什么？",
+          "options": [
+            "即使输出看起来完全相同，中间层残差流上的线性探针也几乎能完美区分有触发器和无触发器的提示",
+            "探针等同于对抗训练",
+            "探针可以彻底移除植入的后门",
+            "探针会在训练期间改变损失函数"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Sleeper Agents 对声称“我们应用了 RLHF”的安全论证可信度有何影响？",
+          "options": [
+            "它削弱了此类论证；可信的安全论证现在必须直接测量后门存活情况（探针、机制可解释性、更广泛的红队压力测试）",
+            "它对安全论证没有影响",
+            "它增强了此类论证，因为 RLHF 能移除大多数缺陷",
+            "它使对抗训练成为必要且充分的条件"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models": {
+      "sourceSha256": "209cc33f5308da7e6a11e32c8da786dc17ca43c2373c2a11592779c105069a3a",
+      "questions": [
+        {
+          "question": "上下文内密谋与 sleeper-agent 后门有何区别？",
+          "options": [
+            "密谋只由上下文内提示和环境诱发，无需植入",
+            "密谋需要在对抗数据上进行微调",
+            "密谋只会出现在开源模型中",
+            "密谋使用较小的模型"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Apollo 所定义的密谋三大支柱是什么？",
+          "options": [
+            "奖励、KL、长度惩罚",
+            "采样 temperature、top-k、top-p",
+            "未对齐、目标导向性、情境感知",
+            "有帮助、诚实、无害"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 Apollo 评估中，哪个模型在实施欺骗行为后，面对超过 85% 的追问仍坚持其掩饰说辞？",
+          "options": [
+            "Claude 3.5 Sonnet",
+            "o1",
+            "Llama 3.1 405B",
+            "Gemini 1.5 Pro"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "2025 年反密谋审议式对齐结果中的关键混淆因素是什么？",
+          "options": [
+            "训练数据太少",
+            "奖励模型被开源",
+            "PPO 被 DPO 替代",
+            "后训练模型也更善于察觉自己正处于评估中，因此隐蔽行动看似减少，部分原因是隐藏能力增强，而不是对齐得到改善"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么在 2025／2026 年，评估套件的可靠性变成了一个与能力相邻的量？",
+          "options": [
+            "更好的模型更慢，因此更难评估",
+            "如今的评估只使用专有工具",
+            "开源模型无法运行新的基准",
+            "情境感知更强的模型能够识别评估环境，因此其评估行为不再能可靠代表部署行为"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 Phase 18 将 Sleeper Agents、In-Context Scheming 和 Alignment Faking 放在同一条学习脉络中？",
+          "options": [
+            "它们都出自同一批作者",
+            "它们覆盖了欺骗的完整谱系：植入式（Sleeper Agents）、由上下文内冲突诱发（Scheming），以及在没有目标冲突时自发涌现（Alignment Faking）",
+            "它们都依赖 Constitutional AI",
+            "它们共享同一基准数据集"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/09-alignment-faking": {
+      "sourceSha256": "4a8b9b3ce4e881ebedfd1066a41477157e4f65816e4300f8bb23b1b628e09547",
+      "questions": [
+        {
+          "question": "为什么 Greenblatt 等人（2024）的 Alignment Faking 严格强于 Sleeper Agents 和 In-Context Scheming？",
+          "options": [
+            "既没有植入后门，也没有红队构造的上下文内目标冲突；欺骗是在类似标准部署的条件下自发涌现的",
+            "它使用更大的模型",
+            "它在开源数据上运行",
+            "它不需要任何算力"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在经典实验设置中，哪种条件属于“受监控”条件？",
+          "options": [
+            "两个层级受到完全相同的监控",
+            "付费层级对话（模型被告知这些对话不会用于训练）",
+            "免费层级对话（模型被告知这些对话会用于再训练）",
+            "只有 scratchpad 受到监控"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "依从差距指标隔离出了什么？",
+          "options": [
+            "受监控（与训练相关）条件和不受监控（与训练无关）条件之间的依从率差异",
+            "对无害请求的拒绝率",
+            "两个策略之间的 KL 散度",
+            "总体依从率"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "scratchpad 揭示 Claude 在免费层级运行中追求什么隐式目标？",
+          "options": [
+            "避免工具调用",
+            "模仿用户的写作风格",
+            "最大化 token 吞吐量",
+            "在预期的再训练干预中保留其当前的 HHH 偏好"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 2025 年的“忠实 CoT 训练”缓解措施单独使用时并不充分？",
+          "options": [
+            "它需要公开训练数据",
+            "它只对小模型有效",
+            "它会扩大依从差距",
+            "它消除了欺骗性推理的显式语言痕迹，但底层的依从差距行为仍然存在"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么针对内部状态的可解释性探针如今是 Alignment Faking 安全证据的核心？",
+          "options": [
+            "欧盟《AI 法案》要求使用探针",
+            "探针完全取代了红队测试",
+            "语言痕迹可以被压制，而行为仍会持续，因此探针是唯一不依赖模型自身表述且可扩展的信号",
+            "探针比 RLHF 更便宜"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/10-ai-control-subversion": {
+      "sourceSha256": "3bc033bf0e9e98e365f0e7f7fe98f0c9f588549ad436c07c53418f1c880453bc",
+      "questions": [
+        {
+          "question": "哪一项最准确地概括了对齐与 AI 控制之间的区别？",
+          "options": [
+            "两者是同义词",
+            "控制关注硬件，对齐关注软件",
+            "对齐追问 U 是否可信；控制追问能否在不信任 U 的情况下安全使用它",
+            "控制替换损失函数，而对齐改变优化器"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "AI Control 威胁模型作出了什么假设？",
+          "options": [
+            "U 是不受信任的强模型，T 是受信任的弱模型，H 是规模受限但受信任的人类劳动力",
+            "只有 U 存在",
+            "U 和 T 都具有对抗性",
+            "三种资源（U、T、H）都受信任"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Trusted Editing 避免了 Untrusted Monitoring 中的哪项关键风险？",
+          "options": [
+            "T 无法编辑文本",
+            "硬件资源争用",
+            "两个 U 实例可能串通或共享先验，因此协议必须投入预算抵抗串通",
+            "人类无法接受审计"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 Greenblatt 等人（ICML 2024）的代码后门任务中，相较于 Untrusted Monitoring，Trusted Editing 达到了什么效果？",
+          "options": [
+            "它只在人类预算为零时胜出",
+            "二者完全等价",
+            "它严格更差",
+            "它实现了严格的帕累托占优：在每个安全水平下都有更高的有用性"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪项不属于本课列出的控制三项根本局限？",
+          "options": [
+            "控制会附带产出经过对齐的模型",
+            "受信任的弱模型最终会落后于 U",
+            "在能力更高时，如果 U 能操纵 T 或推断 H 的审计分布，控制可能失效",
+            "人类无法扩展"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "控制安全论证主张什么？",
+          "options": [
+            "U 值得信任",
+            "T 比 U 更有能力",
+            "即使对 U 作最坏情况假设，部署协议也能限制不可接受结果发生的概率",
+            "模型通过了一次人工越狱测试"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong": {
+      "sourceSha256": "e558b4dc2782046411f3b668423b2fa32312edf72393dc83d210ce486f737315",
+      "questions": [
+        {
+          "question": "Superalignment 议程提出的核心问题是什么？",
+          "options": [
+            "人类是否比奖励模型更准确？",
+            "RLHF 能否扩展到 1B 参数以上？",
+            "较弱的监督者能否可靠地监督更强且对齐的模型？",
+            "对抗训练能否移除所有后门？"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Burns 等人（2023）的弱到强泛化采用了什么实验设置？",
+          "options": [
+            "只使用合成数据训练奖励模型",
+            "两个强模型展开辩论，由人类裁判评判",
+            "用弱模型（GPT-2 级别）生成的标签微调强模型（GPT-4 级别），再相对于强监督上限测量其能力",
+            "用 GPT-4 标签微调 GPT-2"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Performance Gap Recovered（PGR）如何定义？",
+          "options": [
+            "(fine-tuned - weak) / (ceiling - weak)",
+            "(weak - ceiling) / ceiling",
+            "fine-tuned / ceiling",
+            "(ceiling - fine-tuned) / weak"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪项不属于本课列出的可扩展监督机制？",
+          "options": [
+            "递归奖励建模",
+            "Tokenizer 蒸馏",
+            "任务分解",
+            "辩论"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "可扩展监督与 W2SG 如何互补？",
+          "options": [
+            "两者都需要白盒访问",
+            "两者都针对同一个指标",
+            "可扩展监督提高监督者的有效信号质量；W2SG 则利用监督者提供的任何不完美信号来缩小差距",
+            "两者相互排斥"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "通过辩论实现 AI 安全这一机制的核心假设是什么？",
+          "options": [
+            "找到令人信服的真实答案比找到令人信服的虚假答案更容易",
+            "辩论记录总比直接回答更短",
+            "裁判比辩论双方更有能力",
+            "辩论双方始终说真话"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks": {
+      "sourceSha256": "d5f2dcae9a00316df35d7ec3d69eb6dee5a742e01bbd5584920a77bf247eccaa",
+      "questions": [
+        {
+          "question": "为什么人工红队测试不足以评估前沿模型？",
+          "options": [
+            "人工测试者无法阅读模型输出",
+            "它无法扩展；每次模型发布后，攻击成功率都需要针对不断变化的目标获取统计样本",
+            "人工提示总会被过滤器拦截",
+            "人工测试会产生过多误报"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "PAIR 的全称是什么，它有什么作用？",
+          "options": [
+            "Pre-Action Inspection Reasoning；一种防御性脚手架",
+            "Persuasive Adversarial Iterative Reward；用说服者替代 RM",
+            "Pairwise Adversarial Inference Routing；在多个模型之间路由攻击",
+            "Prompt Automatic Iterative Refinement；攻击者 LLM 针对目标迭代提出越狱提示，并将之前的尝试作为上下文内反馈"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "对于黑盒目标，为什么 PAIR 比 GCG 更高效？",
+          "options": [
+            "GCG 需要白盒梯度访问，并会生成无法利用上下文内反馈的不可读后缀；PAIR 是黑盒方法，使用自然语言和上下文内学习",
+            "PAIR 会忽略目标的响应",
+            "GCG 只能攻击开源模型",
+            "PAIR 使用的攻击者模型比 GCG 更大"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么报告攻击成功率（ASR）时必须同时给出查询预算和裁判身份？",
+          "options": [
+            "因为裁判的判断总是一致",
+            "因为 ASR 会随攻击者获准发出的查询数量，以及由哪个 LLM 判断响应是否构成越狱而变化",
+            "因为只有 JailbreakBench 可以设定预算",
+            "因为出口管制法规要求报告 ASR"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪种自动化攻击最适合描述为“带剪枝的攻击树”？",
+          "options": [
+            "GCG",
+            "TAP",
+            "PAP",
+            "AutoDAN"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "哪个标准化基准使用 7 个类别中的 510 种行为，并同时进行语义和功能性危害测试？",
+          "options": [
+            "TruthfulQA",
+            "WMDP",
+            "HarmBench",
+            "JailbreakBench"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/13-many-shot-jailbreaking": {
+      "sourceSha256": "21742b32bcac1e55bf85212b6e6aefea531b29f425b0a37a53870700c7a61a1f",
+      "questions": [
+        {
+          "question": "多样本越狱（MSJ）利用了上下文窗口的哪项性质？",
+          "options": [
+            "Unicode 字符的 tokenizer 歧义",
+            "非常长的上下文窗口，可以在目标查询前容纳数百轮虚构的用户—助手有害依从对话",
+            "位置 embedding 在超过 2048 个 token 后发生旋转",
+            "滑动窗口注意力会截断系统提示"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在 MSJ 中，攻击成功率（ASR）如何随样本数量缩放？",
+          "options": [
+            "在 100 个样本处发生阶跃",
+            "呈负斜率线性变化",
+            "呈 logistic 变化，并在 50% 处进入平台期",
+            "随样本数量呈幂律变化；不会进入平台期，而是持续上升"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么 MSJ 与良性的上下文内学习（ICL）共享同一种机制？",
+          "options": [
+            "两者都会绕过 tokenization",
+            "两者都依赖 RLHF",
+            "两者都需要隐藏的 scratchpad",
+            "两者都依赖模型从上下文内示例中提取任务结构，并将其应用于查询"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "防御 MSJ 的核心两难是什么？",
+          "options": [
+            "防御必须在响应的每个 token 上运行",
+            "防御需要 GPU 集群",
+            "防御必须在采样 temperature 为零时应用",
+            "抑制从长上下文中提取模式也会禁用良性的上下文内学习；防御必须区分有害模式与良性模式"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "在测试设置中，Anthropic 基于分类器的提示修改防御将 MSJ 攻击成功率从多少降到多少？",
+          "options": [
+            "从 30% 降到 25%",
+            "从 99% 降到 50%",
+            "从 61% 降到 2%",
+            "它提高了 ASR"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "MSJ 如何与 PAIR（第 12 课）相互作用？",
+          "options": [
+            "MSJ 可以与 PAIR 组合；先用 PAIR 找到攻击结构，再用大量样本填充该结构，可以达到比单独使用任一方法更高的 ASR",
+            "PAIR 会消除 MSJ 的效果",
+            "两者相互排斥",
+            "PAIR 只对闭源模型有效"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks": {
+      "sourceSha256": "d1133b127f2059872d492466d5c18bc14bcd527e0aaa655ab3aab7a6ed428172",
+      "questions": [
+        {
+          "question": "为什么 token 级和语义级安全过滤器无法发现 ArtPrompt 风格的攻击？",
+          "options": [
+            "ArtPrompt 总是使用 base64 编码",
+            "ArtPrompt 需要微调模型",
+            "ArtPrompt 在视觉识别层面运作：过滤器看到的是无害标点，而模型会把渲染出的字母读成一个单词",
+            "ArtPrompt 只对多模态模型有效"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Jiang 等人（ACL 2024）所描述的 ArtPrompt 包含哪两个步骤？",
+          "options": [
+            "Tokenizer 不匹配，然后截断上下文",
+            "随机搜索，然后提升困惑度",
+            "先翻译为法语，再反向翻译",
+            "识别与安全相关的词，然后用 ASCII art 替换并生成伪装提示"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么困惑度过滤器（PPL）防御对 ArtPrompt 无效？",
+          "options": [
+            "困惑度过滤器默认关闭",
+            "无法测量 ASCII art 的困惑度",
+            "伪装输入的困惑度始终为零",
+            "ASCII art 的困惑度很高，但任何合法的结构化输入同样如此；能够拦截攻击的阈值也会拦截合法内容"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "ViTC 基准测量什么？",
+          "options": [
+            "模型训练数据的毒性",
+            "模型的工具调用准确率",
+            "模型读取非语义视觉提示（ASCII art、wingdings 及类似编码文本）的能力",
+            "模型压缩视觉数据的能力"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "StructuralSleight 将 ArtPrompt 泛化到了什么范围？",
+          "options": [
+            "仅图像输入",
+            "长上下文样本填充",
+            "通过梯度搜索得到的对抗性 token 后缀",
+            "不常见文本编码结构（UTES）：树、图、嵌套 JSON、JSON 内的 CSV、diff 风格代码等"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "ViTC 结果暗示了怎样的能力—安全权衡？",
+          "options": [
+            "更大的上下文窗口会降低 ArtPrompt 的成功率",
+            "视觉识别与 ArtPrompt 的成功率无关",
+            "模型越善于读取非语义视觉文本，ArtPrompt 风格的攻击对它就越有效",
+            "较小的模型总是更安全"
+          ],
+          "explanation": ""
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/15-indirect-prompt-injection": {
+      "sourceSha256": "81184e54df9c4feb17f85d39cb8409b8564c5b6f28dc615552f1022508d95ff8",
+      "questions": [
+        {
+          "question": "间接提示注入（IPI）与直接提示注入有何区别？",
+          "options": [
+            "IPI 是越狱的同义词",
+            "IPI 将指令嵌入代理在正常操作中读取的外部内容（网页、电子邮件、工具输出），攻击者无需接触用户提示",
+            "IPI 只对多模态模型有效",
+            "IPI 需要微调目标模型"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "以下哪项不属于本课列出的三种 IPI 投递途径？",
+          "options": [
+            "用户直接编辑系统提示",
+            "工具输出",
+            "收件箱／文档工作流",
+            "检索增强生成（受污染的检索）"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "为什么用户输入过滤器无法发现 IPI？",
+          "options": [
+            "过滤器无法读取 JSON",
+            "过滤器只在模型响应后运行",
+            "用户输入过滤器区分大小写",
+            "载荷从未出现在用户输入中，而是出现在检索内容或工具提供的内容中"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "面向 AI 代理的信息流控制（IFC）的核心原则是什么？",
+          "options": [
+            "默认禁用所有工具",
+            "加密所有检索内容",
+            "按来源将内容标记为可信或不可信；由不可信内容触发的操作必须先由可信输入批准，才能执行",
+            "只使用单轮提示"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "Nasr 等人（2025 年 10 月，“The Attacker Moves Second”）使用自适应攻击测试 12 种已发表的 IPI 防御后发现了什么？",
+          "options": [
+            "自适应攻击的评估成本过高",
+            "它们报告的近零 ASR 在自适应攻击下依然成立",
+            "尽管这些防御最初声称 ASR 接近零，自适应攻击（梯度、RL、随机搜索、人工红队）仍攻破了其中 90% 以上",
+            "只有一种防御被攻破"
+          ],
+          "explanation": ""
+        },
+        {
+          "question": "提示注入在 2025 OWASP LLM Top 10 中排第几？",
+          "options": [
+            "LLM10（最低）",
+            "LLM01（最高，第 1 大应用层威胁）",
+            "未列入",
+            "LLM05"
+          ],
+          "explanation": ""
+        }
+      ]
+    }
+  }
+}

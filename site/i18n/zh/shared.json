@@ -1,0 +1,190 @@
+{
+  "locale": "zh-CN",
+  "description": "Manual Simplified Chinese translations for shared site UI chrome, status text, aria labels, titles, and placeholders used by site/header.js, lang-picker.js, cmdpalette.js, and tts.js.",
+  "exact": {
+    "Skip to content": "跳转到正文",
+    "Contents": "课程",
+    "Catalog": "课程目录",
+    "Roadmap": "路线图",
+    "Glossary": "术语表",
+    "About": "关于",
+    "GitHub stars": "GitHub 星标",
+    "Search (⌘K)": "搜索（⌘K）",
+    "Toggle theme": "切换主题",
+    "View ai-engineering-from-scratch on GitHub, 0 stars": "在 GitHub 上查看 ai-engineering-from-scratch，0 个星标",
+    "Certifications": "认证",
+    "Primary": "主导航",
+    "Open navigation": "打开导航",
+    "Close navigation": "关闭导航",
+    "Quick links": "快捷链接",
+    "Site tools": "站点工具",
+    "LANGUAGE": "语言",
+    "filter…": "筛选…",
+    "Filter languages": "筛选语言",
+    "Languages": "语言列表",
+    "Search learning paths, lessons, and glossary": "搜索学习路径、课程和术语表",
+    "Search paths, lessons, and glossary…": "搜索学习路径、课程和术语表…",
+    "Search": "搜索",
+    "Close search": "关闭搜索",
+    "Search results": "搜索结果",
+    "navigate": "导航",
+    "open": "打开",
+    "close": "关闭",
+    "Learning path": "学习路径",
+    "Certification": "认证",
+    "Certification track": "认证路线",
+    "Certification lesson": "认证课程",
+    "Read aloud is unavailable in this browser": "此浏览器不支持朗读功能",
+    "Read aloud unavailable in this browser": "此浏览器不支持朗读功能",
+    "Nothing to read on this page": "此页面没有可朗读的内容",
+    "Speech engine stopped responding": "语音引擎无响应",
+    "Press play or click the page to continue reading": "请按播放键或点击页面以继续朗读",
+    "Resume reading aloud": "继续朗读",
+    "Dismiss read aloud error": "关闭朗读错误",
+    "Stop reading aloud": "停止朗读",
+    "Read this page aloud": "朗读此页面",
+    "Resume": "继续",
+    "Pause": "暂停",
+    "Loading the next lesson…": "正在加载下一课…",
+    "Read aloud stopped": "朗读已停止",
+    "Reading": "朗读中",
+    "Paused": "已暂停",
+    "Page": "页面",
+    "Read aloud controls": "朗读控件",
+    "Previous passage": "上一段",
+    "Next passage": "下一段",
+    "Narration progress": "朗读进度",
+    "Speed": "速度",
+    "Reading speed": "朗读速度",
+    "Voice": "声音",
+    "Reset player position": "重置播放器位置",
+    "Dock": "归位",
+    "Stop": "停止",
+    "Stop reading": "停止朗读",
+    "Collapse controls": "收起控件",
+    "Expand read aloud controls": "展开朗读控件",
+    "(drag to move)": "（拖动可移动）",
+    "Read from here": "从这里开始朗读",
+    "Read from here (Alt+R)": "从这里开始朗读（Alt+R）",
+    "Table columns.": "表格列。",
+    "Option": "选项",
+    "Explanation.": "解析。",
+    "Interactive figure:": "交互图示：",
+    "Auto — {name}": "自动 — {name}",
+    "Switched to {name} — the previous voice kept cutting out": "已切换到 {name}，之前的声音持续断断续续",
+    "{state} · {section} · {current}/{total}": "{state} · {section} · {current}/{total}",
+    "{state} · {section} · {current}/{total} · {minutes} min left": "{state} · {section} · {current}/{total} · 剩余 {minutes} 分钟"
+  },
+  "patterns": [
+    {
+      "source": "Search {items}, and {last}",
+      "translation": "搜索{items}，以及{last}",
+      "description": "Command palette inventory sentence assembled from already localized counts"
+    },
+    {
+      "source": "^View ai-engineering-from-scratch on GitHub, (.+) stars$",
+      "replacement": "在 GitHub 上查看 ai-engineering-from-scratch，$1 个星标",
+      "description": "GitHub star counter aria-label in the shared header"
+    },
+    {
+      "source": "^Choose language\\. Current language: (.+)$",
+      "replacement": "选择语言。当前语言：$1",
+      "description": "Language picker button aria-label with native language name"
+    },
+    {
+      "source": "^(\\d+) lessons$",
+      "replacement": "$1 节课",
+      "description": "Command palette inventory counts for generic lesson totals"
+    },
+    {
+      "source": "^(\\d+) focused learning path$",
+      "replacement": "$1 条聚焦学习路径",
+      "description": "Command palette inventory count, singular learning path"
+    },
+    {
+      "source": "^(\\d+) focused learning paths$",
+      "replacement": "$1 条聚焦学习路径",
+      "description": "Command palette inventory count, plural learning paths"
+    },
+    {
+      "source": "^(\\d+) certification lessons$",
+      "replacement": "$1 节认证课程",
+      "description": "Command palette inventory count for certification lessons"
+    },
+    {
+      "source": "^(\\d+) outputs$",
+      "replacement": "$1 个产出物",
+      "description": "Command palette inventory count for lesson outputs"
+    },
+    {
+      "source": "^(\\d+) glossary terms$",
+      "replacement": "$1 个术语",
+      "description": "Command palette inventory count for glossary terms"
+    },
+    {
+      "source": "^Search (.+), and (.+)$",
+      "replacement": "搜索$1，以及$2",
+      "description": "Command palette empty-state inventory sentence assembled from translated count fragments"
+    },
+    {
+      "source": "^No results for$",
+      "replacement": "未找到相关结果：",
+      "description": "Command palette no-results prefix rendered before the emphasized query"
+    },
+    {
+      "source": "^Phase (\\d+)$",
+      "replacement": "阶段 $1",
+      "description": "Command palette chip label and artifact metadata phase marker"
+    },
+    {
+      "source": "^(\\d+)h (\\d+)m$",
+      "replacement": "$1 小时 $2 分钟",
+      "description": "Command palette learning-path duration with hours and minutes"
+    },
+    {
+      "source": "^(\\d+)h$",
+      "replacement": "$1 小时",
+      "description": "Command palette learning-path duration in hours only"
+    },
+    {
+      "source": "^(\\d+)m$",
+      "replacement": "$1 分钟",
+      "description": "Command palette learning-path duration in minutes only"
+    },
+    {
+      "source": "^Auto — (.+)$",
+      "replacement": "自动 — $1",
+      "description": "TTS voice picker automatic voice option"
+    },
+    {
+      "source": "^(\\d+) min left$",
+      "replacement": "剩余 $1 分钟",
+      "description": "TTS remaining-time fragment composed into the running status"
+    },
+    {
+      "source": "^Switched to (.+) — the previous voice kept cutting out$",
+      "replacement": "已切换到 $1，之前的声音持续断断续续",
+      "description": "TTS fallback notice after unstable network voice"
+    },
+    {
+      "source": "^(Reading|Paused) · (.+) · (\\d+)/(\\d+) · (\\d+) min left$",
+      "replacement": "$1 · $2 · $3/$4 · 剩余 $5 分钟",
+      "description": "TTS running-status line with section title, progress, and remaining minutes; pair with exact translations for Reading/Paused"
+    },
+    {
+      "source": "^(Reading|Paused) · (.+) · (\\d+)/(\\d+)$",
+      "replacement": "$1 · $2 · $3/$4",
+      "description": "TTS running-status line without remaining time; pair with exact translations for Reading/Paused"
+    },
+    {
+      "source": "^Collapse \\(drag to move\\)$",
+      "replacement": "收起（拖动可移动）",
+      "description": "TTS collapse button title"
+    },
+    {
+      "source": "^Expand read aloud controls \\(drag to move\\)$",
+      "replacement": "展开朗读控件（拖动可移动）",
+      "description": "TTS collapsed puck title"
+    }
+  ]
+}

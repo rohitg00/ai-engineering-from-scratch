@@ -48,6 +48,8 @@ function careerSectionSource() {
 
 test('homepage nodes open the expanded learning paths domains', () => {
   assert.match(homepage, /href="learning-paths\.html"[\s\S]*?>\s*<span>Explore Learning Paths<\/span>/);
+  assert.match(homepage, /srcset="assets\/figures\/006-ai-engineering-learning-paths-mobile\.svg"[\s\S]*?data-i18n-srcset-zh="assets\/figures\/006-ai-engineering-learning-paths-mobile\.zh-CN\.svg"/);
+  assert.match(homepage, /src="assets\/figures\/006-ai-engineering-learning-paths\.svg"[\s\S]*?data-i18n-src-zh="assets\/figures\/006-ai-engineering-learning-paths\.zh-CN\.svg"/);
   assert.match(homepage, /href="learning-paths\.html#career-routes">Browse career routes<\/a>/);
   assert.match(homepage, /<figcaption class="learning-paths-compact-root">\s*<strong>AI Engineering<\/strong>\s*<span>4 connected domains<\/span>\s*<\/figcaption>/);
   assert.match(homepage, /@media \(max-width: 600px\)[\s\S]*?\.learning-paths-figure\s*\{[\s\S]*?display: grid;[\s\S]*?gap: 8px;[\s\S]*?padding: 12px;/);

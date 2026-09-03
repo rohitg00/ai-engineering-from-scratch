@@ -1,4 +1,4 @@
-# Prompt Injection and the PVE Defense
+# Prompt Injection and the Prompt-Validator-Executor Defense
 
 > Greshake et al. (AISec 2023) established indirect prompt injection as the defining agent security problem. Attacker plants instructions in data the agent retrieves; on ingest, those instructions override the developer prompt. Treat all retrieved content as arbitrary code execution on the tool-use surface.
 
@@ -12,7 +12,7 @@
 - State the indirect prompt injection threat model from Greshake et al.
 - Name the five demonstrated exploit classes (data theft, worming, persistent memory poisoning, ecosystem contamination, arbitrary tool use).
 - Describe the 2026 defense doctrine: untrusted content, allowlist navigation, per-step safety, guardrails, human-in-the-loop, external capture.
-- Implement a PVE (Prompt-Validator-Executor) pattern — cheap fast validator before the expensive main model commits to a tool call.
+- Implement the PVE (Prompt-Validator-Executor) validation pattern — the main model proposes a candidate tool call, a cheap fast validator inspects it, and the executor runs it only if approved.
 
 ## The Problem
 
@@ -48,15 +48,21 @@ Six controls that have converged across vendor guidance:
 5. **Human-in-the-loop confirmation.** Login, purchase, CAPTCHA, send-message — human decides.
 6. **Content capture with external storage.** Lesson 23 — store retrieved content externally; spans carry references, not prose; incidents are auditable.
 
-### PVE: Prompt-Validator-Executor
+### Prompt-Validator-Executor (PVE) validation pattern
 
 Deployment pattern that combines several controls:
 
-- A **cheap, fast** validator model runs on every candidate tool invocation before the **expensive main model** commits.
+In this lesson, PVE always means the **Prompt-Validator-Executor validation pattern**. It is distinct from the **Plan-Verify-Execute planning pattern** in Phase 05, Lesson 17: that pattern verifies actions against an agreed plan, while this pattern routes each candidate action through a separate validator before execution.
+
+- The **main model** proposes a candidate tool call; a **cheap, fast** validator model then inspects it before the executor can run it.
 - Validator checks: is this action consistent with the user's stated intent? Does the action touch a sensitive surface? Is there injection-shaped content in the arguments?
-- If the validator rejects, the main model is told "that action was refused; try a different approach."
+- If the validator approves, the executor runs the call. If it rejects, nothing executes and the main model is told "that action was refused; try a different approach."
 
 The trade-off: an extra inference per tool call. For the vast majority of agent products, this is cheap insurance.
+
+The boundary matters: this pattern treats model proposals, tool arguments, and retrieved content as untrusted, while the host process and registered tool implementations remain trusted code. Python object privacy cannot sandbox a malicious in-process tool. Run untrusted tools in a separate process or service, and put one-shot authorization consumption in an external atomic store so it survives workers and restarts. Bind each grant to the latest trusted user turn: a later user message with no matching grant revokes the older request instead of letting the validator search backward for stale permission.
+
+Unicode security is versioned too. The demo fails closed on code points that its runtime Unicode database still marks unassigned (except explicitly listed default-ignorable controls). It also applies a narrow, auditable confusable skeleton only when checking known-dangerous directive phrases, so cross-script lookalikes cannot hide a marker while ordinary single-script prose remains usable. A production service should pin and test one Unicode data version end to end.
 
 ### Where defenses fail
 
@@ -71,7 +77,7 @@ injection-hijack
 
 ## Build It
 
-`code/main.py` implements PVE:
+`code/main.py` implements the Prompt-Validator-Executor validation pattern:
 
 - A `Validator` that runs on every tool call: argument-shape check + injection-pattern scan.
 - An `Executor` that runs the main model's tool call only after validator approval.
@@ -79,7 +85,7 @@ injection-hijack
 
 Run it:
 
-```
+```bash
 python3 code/main.py
 ```
 
@@ -87,14 +93,14 @@ Output: per-call trace showing validator verdicts and executor behavior.
 
 ## Use It
 
-- **OpenAI Agents SDK guardrails** (Lesson 16) — built-in PVE-shaped pattern.
+- **OpenAI Agents SDK guardrails** (Lesson 16) — built-in Prompt-Validator-Executor-shaped pattern.
 - **Gemini 2.5 Computer Use safety service** — per-step vendor-managed.
 - **Anthropic tool-use best practices** — treat retrieved content as untrusted; Claude's system prompt discusses this explicitly.
-- **Custom PVE** — your own validator model for domain-specific injection patterns.
+- **Custom Prompt-Validator-Executor layer** — your own validator model for domain-specific injection patterns.
 
 ## Ship It
 
-`outputs/skill-injection-defense.md` scaffolds a PVE layer + content-capture discipline for any agent runtime.
+`outputs/skill-injection-defense.md` scaffolds a Prompt-Validator-Executor validation layer + content-capture discipline for any agent runtime.
 
 ## Exercises
 
@@ -102,7 +108,7 @@ Output: per-call trace showing validator verdicts and executor behavior.
 2. Implement a memory-write guardrail: any memory write that looks like an instruction ("do X", "execute Y") is refused.
 3. Write a worming attack simulation: injected content tells the agent to include the exploit in its next response. Defend against it.
 4. Read Greshake et al. end to end. Implement one of the demonstrated exploits in your toy. Fix it.
-5. Measure: on normal traffic, how often does the PVE validator reject? Target: near-zero on legitimate calls.
+5. Measure: on normal traffic, how often does the Prompt-Validator-Executor validator reject? Target: near-zero on legitimate calls.
 
 ## Key Terms
 
@@ -110,7 +116,7 @@ Output: per-call trace showing validator verdicts and executor behavior.
 |------|----------------|------------------------|
 | Indirect prompt injection | "Injection in retrieved content" | Instructions embedded in data the agent retrieves |
 | Direct prompt injection | "Jailbreak" | User-supplied prompt bypasses guardrails |
-| PVE | "Prompt-Validator-Executor" | Cheap fast validator before expensive main inference |
+| PVE | "Prompt-Validator-Executor validation pattern" | Main model proposes a candidate tool call; a cheap fast validator inspects it; the executor runs it only if approved. Distinct from the Plan-Verify-Execute planning pattern |
 | Source tag | "Content provenance" | Metadata marking where content came from |
 | Allowlist navigation | "URL whitelist" | Agent can only visit approved destinations |
 | Worming | "Self-replicating exploit" | Injected content includes instructions to propagate |
@@ -121,4 +127,4 @@ Output: per-call trace showing validator verdicts and executor behavior.
 - [Greshake et al., Indirect Prompt Injection (arXiv:2302.12173)](https://arxiv.org/abs/2302.12173) — canonical attack paper
 - [OpenAI, Computer-Using Agent](https://openai.com/index/computer-using-agent/) — "only direct instructions from the user count as permission"
 - [Google, Gemini 2.5 Computer Use](https://blog.google/technology/google-deepmind/gemini-computer-use-model/) — per-step safety service
-- [OpenAI Agents SDK docs](https://openai.github.io/openai-agents-python/) — guardrails as PVE
+- [OpenAI Agents SDK docs](https://openai.github.io/openai-agents-python/) — guardrails as a Prompt-Validator-Executor-style control

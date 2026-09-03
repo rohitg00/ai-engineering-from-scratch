@@ -79,6 +79,12 @@ site/certification-data.js
 site/figure-manifest.js
 site/lesson-seo.json
 site/certification-seo.json
+site/i18n-data.js
+site/i18n-figures.js
+site/i18n-glossary.js
+site/i18n-quizzes-zh-*.json
+site/i18n-search-zh-*.json
+site/i18n-generated/
 book/_build/
 
 # Lesson translations are generated to a separate `translations` branch, never

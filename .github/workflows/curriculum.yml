@@ -15,6 +15,17 @@ on:
       - "scripts/debias_quizzes.py"
       - "scripts/build_readme_i18n.py"
       - "scripts/readme_translations.py"
+      - "languages.json"
+      - "i18n/*/README.md"
+      - "i18n/zh/catalog/**"
+      - "i18n/zh/readme-structural.json"
+      - "scripts/audit_translations.py"
+      - "scripts/test_audit_translations.py"
+      - "scripts/test_build_book.py"
+      - "scripts/test_readme_i18n.py"
+      - "scripts/test_translate_lessons.py"
+      - "scripts/build_book.py"
+      - "site/test_i18n_contracts.js"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
       - "scripts/install_skills.py"
@@ -24,7 +35,6 @@ on:
       - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
       - "site/test_learning_paths.js"
-      - "languages.json"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
@@ -33,6 +43,7 @@ on:
       - "api/**"
       - "vercel.json"
       - ".github/workflows/curriculum.yml"
+      - ".github/workflows/deploy-pages.yml"
       - ".github/workflows/translate.yml"
   pull_request:
     branches: [main]
@@ -48,6 +59,17 @@ on:
       - "scripts/debias_quizzes.py"
       - "scripts/build_readme_i18n.py"
       - "scripts/readme_translations.py"
+      - "languages.json"
+      - "i18n/*/README.md"
+      - "i18n/zh/catalog/**"
+      - "i18n/zh/readme-structural.json"
+      - "scripts/audit_translations.py"
+      - "scripts/test_audit_translations.py"
+      - "scripts/test_build_book.py"
+      - "scripts/test_readme_i18n.py"
+      - "scripts/test_translate_lessons.py"
+      - "scripts/build_book.py"
+      - "site/test_i18n_contracts.js"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
       - "scripts/install_skills.py"
@@ -57,7 +79,6 @@ on:
       - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
       - "site/test_learning_paths.js"
-      - "languages.json"
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
@@ -66,10 +87,17 @@ on:
       - "api/**"
       - "vercel.json"
       - ".github/workflows/curriculum.yml"
+      - ".github/workflows/deploy-pages.yml"
       - ".github/workflows/translate.yml"
 
 permissions:
   contents: read
+
+env:
+  # Configure the same owner/repository and branch in the site deployment.
+  # Defaults keep a fork self-contained and make its first publish optional.
+  AIFS_TRANSLATION_REPOSITORY: ${{ vars.AIFS_TRANSLATION_REPOSITORY || github.repository }}
+  AIFS_TRANSLATION_REF: ${{ vars.AIFS_TRANSLATION_REF || 'translations' }}
 
 jobs:
   audit:
@@ -96,6 +124,8 @@ jobs:
         run: python3 scripts/test_skill_artifact_bundles.py
       - name: skill artifact bundles render as one lesson output
         run: node --test site/test_build_artifacts.js
+      - name: i18n publication and book contracts stay intact
+        run: node --test site/test_i18n_contracts.js
       - name: build the static site
         run: node site/build.js
       - name: dynamic lesson and certification routes preserve their public contracts
@@ -108,12 +138,55 @@ jobs:
         run: node --test site/test_static_preview_routes.js
       - name: learning paths links and routes stay valid
         run: node --test site/test_learning_paths.js
+      - name: Simplified Chinese site UI contracts stay intact
+        run: node --test site/test_ui_i18n.js
       - name: quiz answer positions are de-biased
         run: python3 scripts/debias_quizzes.py --check
       - name: certification answer positions are de-biased
         run: python3 scripts/debias_certification_questions.py --check
       - name: README translations are in sync with English
         run: python3 scripts/build_readme_i18n.py --check
+      - name: README translation coverage is complete
+        run: python3 scripts/test_readme_i18n.py
+      - name: lesson translation auditor is tested
+        run: python3 scripts/test_audit_translations.py
+      - name: translated book heading structure is tested
+        run: python3 scripts/test_build_book.py
+      - name: lesson translation walker preserves protected content
+        run: python3 scripts/test_translate_lessons.py
+      - name: audit published Simplified Chinese lessons
+        run: |
+          case "$AIFS_TRANSLATION_REF" in
+            ""|@|-*|refs/*)
+              echo "::error title=Invalid translation ref::AIFS_TRANSLATION_REF must name a branch using a short ref"
+              exit 1
+              ;;
+          esac
+          if ! git check-ref-format "refs/heads/$AIFS_TRANSLATION_REF" >/dev/null; then
+            echo "::error title=Invalid translation ref::AIFS_TRANSLATION_REF must name a branch using a short ref"
+            exit 1
+          fi
+
+          translation_remote="https://github.com/${AIFS_TRANSLATION_REPOSITORY}.git"
+          translation_remote_ref="refs/heads/${AIFS_TRANSLATION_REF}"
+          translation_audit_ref="refs/remotes/aifs-translations/source"
+
+          set +e
+          git ls-remote --exit-code "$translation_remote" "$translation_remote_ref" >/dev/null
+          translation_status=$?
+          set -e
+
+          if [ "$translation_status" -eq 2 ]; then
+            echo "translation branch has not been published yet; site will fall back to English"
+            exit 0
+          fi
+          if [ "$translation_status" -ne 0 ]; then
+            echo "failed to inspect configured translation source" >&2
+            exit "$translation_status"
+          fi
+
+          git fetch --no-tags "$translation_remote" "+${translation_remote_ref}:${translation_audit_ref}"
+          python3 scripts/audit_translations.py --lang zh --translation-ref "$translation_audit_ref"
       - name: translation workflow publisher retries safely
         run: python3 scripts/test_translate_workflow.py
       - name: learning skills mirror is in sync
@@ -146,42 +219,47 @@ jobs:
         env:
           BOT_COMMIT_PREFIX: "chore(readme): sync counts"
         run: |
-          # porcelain (not git diff) so a newly generated, still-untracked
-          # i18n/<lang>/README.md for a freshly added language is also detected
-          if [ -z "$(git status --porcelain -- README.md i18n)" ]; then
+          # Keep the allowlist narrow: the i18n tree also contains reviewed
+          # catalogs and other source assets that this job must never commit.
+          generated_paths=('README.md' ':(top,glob)i18n/*/README.md')
+          # porcelain (not git diff) also sees a newly generated README for a
+          # freshly added language and deletions for a removed language.
+          if [ -z "$(git status --porcelain -- "${generated_paths[@]}")" ]; then
             echo "README.md + translations already in sync"
-            exit 0
-          fi
-          last_msg=$(git log -1 --pretty=%s)
-          if [[ "$last_msg" == "$BOT_COMMIT_PREFIX"* ]]; then
-            echo "last commit was already a bot regen; not pushing to avoid loop"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md i18n
+          git add -A -- "${generated_paths[@]}"
           git commit -m "$BOT_COMMIT_PREFIX"
-          # Retry on non-fast-forward when another merge to main races us
           branch="${GITHUB_REF#refs/heads/}"
           for attempt in 1 2 3 4 5; do
             if git push origin "HEAD:${branch}"; then
               echo "push succeeded on attempt $attempt"
               exit 0
             fi
-            echo "push attempt $attempt rejected; rebasing onto origin/${branch}"
+            if [ "$attempt" -eq 5 ]; then
+              break
+            fi
+            echo "push attempt $attempt rejected; rebuilding from origin/${branch}"
             git fetch origin "${branch}"
-            if ! git rebase "origin/${branch}"; then
-              echo "rebase produced a conflict; aborting and giving up cleanly"
-              git rebase --abort || true
+            git switch --detach "origin/${branch}"
+            python3 scripts/build_catalog.py
+            python3 scripts/check_readme_counts.py --fix
+            python3 scripts/build_readme_i18n.py
+            if [ -z "$(git status --porcelain -- "${generated_paths[@]}")" ]; then
+              echo "newest ${branch} is already in sync"
               exit 0
             fi
+            git add -A -- "${generated_paths[@]}"
+            git commit -m "$BOT_COMMIT_PREFIX"
             sleep "$((attempt * 2))"
           done
-          echo "push failed after 5 attempts; main will self-heal on next push"
-          exit 0
+          echo "push failed after 5 attempts; README translations remain stale" >&2
+          exit 1
 
   site-rebuild:
-    name: site/data.js auto-rebuild (main only)
+    name: site generated artifacts auto-rebuild (main only)
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -192,24 +270,22 @@ jobs:
         with:
           ref: ${{ github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: rebuild site/data.js
+      - name: rebuild generated site artifacts
         run: node site/build.js
-      - name: commit + push if site/data.js changed
+      - name: commit + push if generated site artifacts changed
         env:
-          BOT_COMMIT_PREFIX: "chore(site): rebuild data.js"
+          BOT_COMMIT_PREFIX: "chore(site): rebuild generated artifacts"
         run: |
-          if git diff --quiet site/data.js; then
-            echo "site/data.js already in sync"
-            exit 0
-          fi
-          last_msg=$(git log -1 --pretty=%s)
-          if [[ "$last_msg" == "$BOT_COMMIT_PREFIX"* ]]; then
-            echo "last commit was already a bot regen; not pushing to avoid loop"
+          # site/build.js intentionally updates these tracked generated surfaces.
+          # Keep the allowlist explicit so source files are never swept into a bot commit.
+          generated_paths=('README.md' 'site/data.js' 'site/cmdpalette.js' ':(glob)site/*.html')
+          if [ -z "$(git status --porcelain -- "${generated_paths[@]}")" ]; then
+            echo "generated site artifacts already in sync"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site/data.js
+          git add -A -- "${generated_paths[@]}"
           git commit -m "$BOT_COMMIT_PREFIX"
           branch="${GITHUB_REF#refs/heads/}"
           for attempt in 1 2 3 4 5; do
@@ -217,17 +293,23 @@ jobs:
               echo "push succeeded on attempt $attempt"
               exit 0
             fi
-            echo "push attempt $attempt rejected; rebasing onto origin/${branch}"
+            if [ "$attempt" -eq 5 ]; then
+              break
+            fi
+            echo "push attempt $attempt rejected; rebuilding from origin/${branch}"
             git fetch origin "${branch}"
-            if ! git rebase "origin/${branch}"; then
-              echo "rebase produced a conflict; aborting and giving up cleanly"
-              git rebase --abort || true
+            git switch --detach "origin/${branch}"
+            node site/build.js
+            if [ -z "$(git status --porcelain -- "${generated_paths[@]}")" ]; then
+              echo "newest ${branch} is already in sync"
               exit 0
             fi
+            git add -A -- "${generated_paths[@]}"
+            git commit -m "$BOT_COMMIT_PREFIX"
             sleep "$((attempt * 2))"
           done
-          echo "push failed after 5 attempts; main will self-heal on next push"
-          exit 0
+          echo "push failed after 5 attempts; generated site artifacts remain stale" >&2
+          exit 1
 
   readme-counts-drift:
     name: README.md counts drift advisory

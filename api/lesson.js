@@ -22,7 +22,7 @@ function loadProductionAssets() {
       manifest,
       languageCodes: Array.isArray(languageRegistry.languages)
         ? languageRegistry.languages
-          .filter(function (language) { return language.source || language.ci; })
+          .filter(function (language) { return language.source || language.ci || language.manual; })
           .map(function (language) { return String(language.code || ''); }).filter(Boolean)
         : [],
     };

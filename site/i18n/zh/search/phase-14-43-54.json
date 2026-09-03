@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/14-agent-engineering/43-frame-the-task-before-code": {
+      "source": "A coding agent can implement a clear task quickly. It can also implement an unclear task quickly. The speed is the same. The cost is not.",
+      "translation": "编程智能体可以快速实现一项清晰的任务，也可以快速实现一项含糊的任务。速度相同，代价却不同。"
+    },
+    "phases/14-agent-engineering/44-plan-from-evidence": {
+      "source": "A plan is not a prettier to-do list. It is a dependency graph in which every change has a reason and every terminal node has proof.",
+      "translation": "计划不是一份更漂亮的待办事项列表，而是一张依赖图：每项变更都有理由，每个终端节点都有验证依据。"
+    },
+    "phases/14-agent-engineering/45-delegate-with-isolation": {
+      "source": "Parallel agents save wall time only when the work is independent. Otherwise they convert one clear task into a coordination problem with a faster failure rate.",
+      "translation": "只有当工作彼此独立时，并行智能体才能缩短实际耗时。否则，它们只会把一个清晰的任务变成协调问题，并让失败来得更快。"
+    },
+    "phases/14-agent-engineering/46-turn-feedback-into-system": {
+      "source": "A correction that lives only in chat fixes one run. A correction promoted into a test, boundary, example, or tool improves every later run.",
+      "translation": "只停留在聊天中的纠正只能修复一次运行；被固化为测试、边界、示例或工具的纠正，则会改善之后的每一次运行。"
+    },
+    "phases/14-agent-engineering/47-outcomes-before-output": {
+      "source": "Fast implementation increases the penalty for choosing the wrong problem. Shape the outcome first so speed points in the right direction.",
+      "translation": "实现速度越快，选错问题的代价就越大。先明确成果，让速度指向正确方向。"
+    },
+    "phases/14-agent-engineering/48-discover-the-real-workflow": {
+      "source": "Requirements are not waiting in a meeting to be collected. They are scattered across actions, workarounds, records, and disagreements.",
+      "translation": "需求并非等着你在会议中收集，而是散落在行动、变通做法、记录和分歧之中。"
+    },
+    "phases/14-agent-engineering/49-map-assumptions-and-risk": {
+      "source": "A roadmap hides uncertainty inside features. An assumption map exposes what must be true before those features deserve to exist.",
+      "translation": "路线图把不确定性藏在功能之中。假设图则揭示了这些功能要值得存在，必须先满足哪些条件。"
+    },
+    "phases/14-agent-engineering/50-choose-the-smallest-testable-slice": {
+      "source": "Small is useful only when it proves something important. A tiny build that cannot change the next decision is merely incomplete.",
+      "translation": "只有在能够证明重要事项时，小才有意义。无法改变下一项决策的微型构建，不过是尚未完成而已。"
+    },
+    "phases/14-agent-engineering/51-write-specifications-that-preserve-judgment": {
+      "source": "A useful specification fixes invariants and evidence while leaving reversible implementation choices open. It is a decision boundary, not a screenplay.",
+      "translation": "一份有用的规格说明会固定不变量和证据，同时为可逆的实现选择留出空间。它是一条决策边界，而不是剧本。"
+    },
+    "phases/14-agent-engineering/52-design-success-metrics": {
+      "source": "Measurement should answer a decision, not decorate a dashboard. Start with the goal, derive questions, then choose the smallest metrics that answer them.",
+      "translation": "度量应当为决策提供答案，而不是装饰仪表盘。先从目标出发，由此推导问题，再选择能够回答这些问题的最少指标。"
+    },
+    "phases/14-agent-engineering/53-prototype-pilot-or-production": {
+      "source": "These are different learning environments, not levels of polish. Choose the stage that answers the current unknown with the least unnecessary consequence.",
+      "translation": "它们是不同的学习环境，而不是不同的打磨程度。应选择能够以最少不必要后果回答当前未知问题的阶段。"
+    },
+    "phases/14-agent-engineering/54-build-the-feedback-ratchet": {
+      "source": "Shipping closes one build loop and opens the learning loop. Evidence must change the system or it becomes telemetry nobody owns.",
+      "translation": "交付结束了一轮构建循环，也开启了学习循环。证据必须推动系统发生改变，否则它只会成为无人负责的遥测数据。"
+    }
+  },
+  "artifacts": {}
+}

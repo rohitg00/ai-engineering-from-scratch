@@ -1,0 +1,78 @@
+{
+  "lesson": "14-evaluation-fid-clip-score",
+  "title": "Evaluation — FID, CLIP Score, Human Preference",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which combination covers the three main evaluation axes in this lesson?",
+      "options": [
+        "Resolution, batch size, and checkpoint size",
+        "Training loss, parameter count, and latency",
+        "Precision, recall, and classification accuracy",
+        "Sample quality, prompt adherence, and human preference"
+      ],
+      "correct": 3,
+      "explanation": "FID estimates sample-distribution quality, CLIP score estimates prompt adherence, and blinded pairwise comparisons measure human preference."
+    },
+    {
+      "stage": "check",
+      "question": "Why should FID normally be computed with a large sample set?",
+      "options": [
+        "Inception-v3 cannot process small batches",
+        "Finite-sample mean and covariance estimates are noisy and bias the score",
+        "CLIP embeddings require exactly 10,000 prompts",
+        "Elo ratings are undefined below 10,000 comparisons"
+      ],
+      "correct": 1,
+      "explanation": "FID depends on estimated feature means and covariances. Small samples make those estimates noisy, often yielding a positive FID even when both samples come from the same distribution and potentially distorting model rankings."
+    },
+    {
+      "stage": "check",
+      "question": "What does CLIP score primarily measure for a generated image and its prompt?",
+      "options": [
+        "The generator's likelihood loss",
+        "The probability that a human judge prefers the image",
+        "Fréchet distance between their pixel distributions",
+        "Cosine similarity between their CLIP image and text embeddings"
+      ],
+      "correct": 3,
+      "explanation": "CLIP score uses cosine similarity between the generated image's CLIP embedding and the prompt's CLIP text embedding."
+    },
+    {
+      "stage": "check",
+      "question": "Why can a strong CLIP score fail to prove that a model follows a complex prompt correctly?",
+      "options": [
+        "CLIP has compositional blind spots and can be inflated by prompt wording",
+        "CLIP accepts only grayscale images",
+        "CLIP cannot compare image and text embeddings",
+        "CLIP score always decreases as visual quality improves"
+      ],
+      "correct": 0,
+      "explanation": "CLIP can miss attribute and spatial relationships, while phrases such as 'high quality' can raise the score without improving true image-text binding."
+    },
+    {
+      "stage": "post",
+      "question": "Which report provides the strongest evidence that a new image generator beats its baseline?",
+      "options": [
+        "A higher Elo score on prompts seen during training",
+        "A lower FID from 1,000 samples and one seed",
+        "Matched-sample metrics, blinded preferences, and qualitative failure analysis",
+        "A higher CLIP score on hand-picked short prompts"
+      ],
+      "correct": 2,
+      "explanation": "Triangulating distribution quality, prompt adherence, blinded preference, and qualitative failures is stronger because every individual metric has exploitable blind spots."
+    },
+    {
+      "stage": "post",
+      "question": "A team evaluates artwork far outside ImageNet's domain. How should it address standard FID's limitation?",
+      "options": [
+        "Report only the generator's training loss",
+        "Keep Inception features but reduce the sample count",
+        "Replace the held-out real set with generated images",
+        "Use a domain-appropriate extractor or a complementary metric such as CMMD"
+      ],
+      "correct": 3,
+      "explanation": "Standard FID inherits the biases of ImageNet-trained Inception features. A domain-appropriate representation or a complementary CLIP-feature metric is more informative."
+    }
+  ]
+}

@@ -1,10 +1,11 @@
 name: translate
 
-# Machine-translates lesson prose with NLLB-200, a free open model that runs
+# Machine-translates eligible lesson prose with NLLB-200, a free open model that runs
 # inside the runner. No API key, no Vercel cost. Results are pushed to a
-# dedicated `translations` branch; main stays English-only.
+# configured publication branch (`translations` by default); main stays
+# English-only.
 #
-# Sharded one job per (language, phase). A full 503-lesson language run is ~27h
+# Sharded one job per (language, phase). A full 511-lesson language run is ~27h
 # on a CPU runner, far past the 6-hour job limit, so a per-language job always
 # timed out before it could publish and banked nothing. Splitting by phase keeps
 # the largest job (phase 19, 85 lessons) near ~4.5h, well under the limit, and
@@ -23,13 +24,16 @@ on:
     paths:
       - "phases/**/docs/en.md"
       - "languages.json"
-      # Publisher fixes must be able to bootstrap a missing translations branch
+      - "scripts/translate_lessons.py"
+      - "scripts/audit_translations.py"
+      - ".github/translate-requirements.txt"
+      # Publisher fixes must be able to bootstrap a missing configured branch
       # even when no English lesson changed in the same merge.
       - ".github/workflows/translate.yml"
   workflow_dispatch:
     inputs:
       langs:
-        description: "space-separated language codes; blank = the ci:true set in languages.json"
+        description: "machine-managed language codes; blank = ci:true (manual locales excluded)"
         default: ""
       phase:
         description: "one phase directory (for example 01-math-foundations); blank = all phases"
@@ -39,6 +43,13 @@ concurrency:
   group: translate
   cancel-in-progress: false
 
+env:
+  # Keep the publisher on the exact source consumed by the site and curriculum
+  # audit. github.token is intentionally used only for this repository; an
+  # external configured source is read-only and disables this workflow's jobs.
+  AIFS_TRANSLATION_REPOSITORY: ${{ vars.AIFS_TRANSLATION_REPOSITORY || github.repository }}
+  AIFS_TRANSLATION_REF: ${{ vars.AIFS_TRANSLATION_REF || 'translations' }}
+
 jobs:
   prepare:
     runs-on: ubuntu-latest
@@ -47,8 +58,29 @@ jobs:
     outputs:
       langs: ${{ steps.set.outputs.langs }}
       phases: ${{ steps.set.outputs.phases }}
+      publish_enabled: ${{ steps.translation_target.outputs.publish_enabled }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Enforce the translation publication boundary
+        id: translation_target
+        run: |
+          case "$AIFS_TRANSLATION_REF" in
+            ""|@|-*|refs/*)
+              echo "::error title=Invalid translation ref::AIFS_TRANSLATION_REF must name a branch using a short ref"
+              exit 1
+              ;;
+          esac
+          if ! git check-ref-format "refs/heads/$AIFS_TRANSLATION_REF" >/dev/null; then
+            echo "::error title=Invalid translation ref::AIFS_TRANSLATION_REF must name a branch using a short ref"
+            exit 1
+          fi
+          if [ "$AIFS_TRANSLATION_REPOSITORY" = "$GITHUB_REPOSITORY" ]; then
+            echo "publish_enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish_enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Translation publication disabled::AIFS_TRANSLATION_REPOSITORY points to an external read-only source; github.token cannot write across repositories"
+          fi
+
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
         with:
           persist-credentials: false
       - id: set
@@ -56,15 +88,20 @@ jobs:
           REQUESTED: ${{ github.event.inputs.langs }}
           REQUESTED_PHASE: ${{ github.event.inputs.phase }}
         run: |
-          # every emitted code must exist in the registry; requested codes are
-          # intersected with it, so untrusted input can never reach matrix.lang
+          # Every emitted code must be a machine-managed registry entry. Human-
+          # maintained locales such as zh are never sent through NLLB, including
+          # on a manual dispatch, so reviewed translations cannot be overwritten.
           if [ -n "$REQUESTED" ]; then
             JSON=$(jq -c --arg req "$REQUESTED" \
               '($req | split(" ") | map(select(length > 0))) as $want
-               | [.languages[].code] as $known
+               | [.languages[] | select(.source != true and .manual != true) | .code] as $known
                | [$want[] | select(. as $c | $known | index($c))]' languages.json)
           else
-            JSON=$(jq -c '[.languages[] | select(.ci == true) | .code]' languages.json)
+            JSON=$(jq -c '[.languages[] | select(.ci == true and .manual != true) | .code]' languages.json)
+          fi
+          if [ "$JSON" = "[]" ]; then
+            echo "no machine-managed languages selected" >&2
+            exit 1
           fi
           echo "langs=$JSON" >> "$GITHUB_OUTPUT"
           # Manual runs can select one phase for a cheap end-to-end smoke test.
@@ -86,6 +123,7 @@ jobs:
 
   translate:
     needs: prepare
+    if: needs.prepare.outputs.publish_enabled == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 330
     permissions:
@@ -100,35 +138,61 @@ jobs:
         phase: ${{ fromJSON(needs.prepare.outputs.phases) }}
     steps:
       - name: Checkout main (English source)
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
         with:
           persist-credentials: false
 
+      - name: Configure translation publication remote
+        run: |
+          # Reads always use a credential-free remote. The override exists only
+          # so the local regression test can use a bare repository.
+          if [ -n "${TRANSLATION_TEST_REMOTE_URL:-}" ]; then
+            TRANSLATION_REMOTE_URL=$TRANSLATION_TEST_REMOTE_URL
+          else
+            TRANSLATION_REMOTE_URL="https://github.com/${AIFS_TRANSLATION_REPOSITORY}.git"
+          fi
+          git remote remove aifs-translations 2>/dev/null || true
+          git remote add aifs-translations "$TRANSLATION_REMOTE_URL"
+
+      - name: Restore this language's cache + output from configured branch
+        env:
+          LANG_CODE: ${{ matrix.lang }}
+        run: |
+          TRANSLATION_REMOTE_REF="refs/heads/$AIFS_TRANSLATION_REF"
+          TRANSLATION_TRACKING_REF="refs/remotes/aifs-translations/source"
+          set +e
+          git ls-remote --exit-code aifs-translations "$TRANSLATION_REMOTE_REF" >/dev/null
+          TRANSLATION_STATUS=$?
+          set -e
+          if [ "$TRANSLATION_STATUS" -eq 0 ]; then
+            git fetch --no-tags aifs-translations \
+              "+${TRANSLATION_REMOTE_REF}:${TRANSLATION_TRACKING_REF}"
+          elif [ "$TRANSLATION_STATUS" -eq 2 ]; then
+            echo "translation branch has not been published yet; starting from English HEAD"
+          else
+            echo "could not inspect configured translation source" >&2
+            exit "$TRANSLATION_STATUS"
+          fi
+          mkdir -p "i18n/$LANG_CODE"
+          if git cat-file -e "${TRANSLATION_TRACKING_REF}:i18n/$LANG_CODE" 2>/dev/null; then
+            git archive "$TRANSLATION_TRACKING_REF" "i18n/$LANG_CODE" | tar -x
+          fi
+
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5.6.0
         with:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: .github/translate-requirements.txt
 
       - name: Cache the NLLB model
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830  # v4.3.0
         with:
           path: ~/.cache/huggingface
           key: hf-${{ env.NLLB_MODEL }}
 
       - name: Install NLLB runtime
         run: pip install -r .github/translate-requirements.txt
-
-      - name: Restore this language's cache + output from translations branch
-        env:
-          LANG_CODE: ${{ matrix.lang }}
-        run: |
-          git fetch origin "+refs/heads/translations:refs/remotes/origin/translations" || true
-          mkdir -p "i18n/$LANG_CODE"
-          if git cat-file -e "origin/translations:i18n/$LANG_CODE" 2>/dev/null; then
-            git archive origin/translations "i18n/$LANG_CODE" | tar -x || true
-          fi
 
       - name: Translate this phase's changed lessons (NLLB-200, no key)
         env:
@@ -144,26 +208,29 @@ jobs:
           esac
           python3 scripts/translate_lessons.py --lang "$LANG_CODE" --phase "$PHASE"
 
-      - name: Publish this phase slice to translations branch (race-safe)
+      - name: Audit this phase's translated lesson slice
+        env:
+          LANG_CODE: ${{ matrix.lang }}
+          PHASE: ${{ matrix.phase }}
+        run: |
+          python3 scripts/audit_translations.py \
+            --lang "$LANG_CODE" \
+            --phase "$PHASE" \
+            --translation-root .
+
+      - name: Publish this phase slice to configured branch (race-safe)
         env:
           GH_TOKEN: ${{ github.token }}
           LANG_CODE: ${{ matrix.lang }}
           PHASE: ${{ matrix.phase }}
         run: |
-          # checkout used persist-credentials:false, so authenticate the push
-          # explicitly with the job token rather than a stored credential
-          if [ -n "${TRANSLATION_PUSH_URL:-}" ]; then
-            # Local regression tests use a bare repository instead of GitHub.
-            git remote set-url origin "$TRANSLATION_PUSH_URL"
-          else
-            git remote set-url origin \
-              "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           SLICE="i18n/$LANG_CODE/phases/$PHASE"
           CACHE="i18n/$LANG_CODE/.cache/$PHASE.json"
           PUBLISH_DIR="$RUNNER_TEMP/translation-publish"
+          TRANSLATION_REMOTE_REF="refs/heads/$AIFS_TRANSLATION_REF"
+          TRANSLATION_TRACKING_REF="refs/remotes/aifs-translations/source"
 
           cleanup_publish_worktree() {
             # Removing the directory alone leaves Git's worktree registration
@@ -181,13 +248,28 @@ jobs:
           # a removed-but-still-registered worktree blocking the next attempt.
           for attempt in 1 2 3 4 5 6 7 8; do
             cleanup_publish_worktree
-            if git fetch origin "+refs/heads/translations:refs/remotes/origin/translations"; then
-              BASE=origin/translations
-            else
-              # The first successful shard creates the translations branch.
-              # A concurrent creator makes this push lose normally; the next
+            set +e
+            git ls-remote --exit-code aifs-translations "$TRANSLATION_REMOTE_REF" >/dev/null
+            TRANSLATION_STATUS=$?
+            set -e
+            if [ "$TRANSLATION_STATUS" -eq 0 ]; then
+              if git fetch --no-tags aifs-translations \
+                "+${TRANSLATION_REMOTE_REF}:${TRANSLATION_TRACKING_REF}"; then
+                BASE=$TRANSLATION_TRACKING_REF
+              else
+                echo "could not fetch configured translation source" >&2
+                sleep "${TRANSLATION_PUBLISH_RETRY_DELAY:-$((RANDOM % 12 + 3))}"
+                continue
+              fi
+            elif [ "$TRANSLATION_STATUS" -eq 2 ]; then
+              # The first successful shard creates the configured branch. A
+              # concurrent creator makes this push lose normally; the next
               # attempt fetches that winner and reapplies only this shard.
               BASE=HEAD
+            else
+              echo "could not inspect configured translation source" >&2
+              sleep "${TRANSLATION_PUBLISH_RETRY_DELAY:-$((RANDOM % 12 + 3))}"
+              continue
             fi
             git worktree add --detach "$PUBLISH_DIR" "$BASE"
             rm -rf "$PUBLISH_DIR/$SLICE"
@@ -223,11 +305,294 @@ jobs:
                 echo "could not commit translation slice" >&2
                 exit 1
               fi
-              if ! git push origin HEAD:refs/heads/translations; then
-                echo "could not push translation slice" >&2
-                exit 1
+              # Local regression fixtures need no credentials. On GitHub, add
+              # the write credential to this push only; never persist it in a
+              # remote URL, push URL, or credential helper.
+              if [ -n "${TRANSLATION_TEST_REMOTE_URL:-}" ]; then
+                if ! git push aifs-translations "HEAD:${TRANSLATION_REMOTE_REF}"; then
+                  echo "could not push translation slice" >&2
+                  exit 1
+                fi
+              else
+                AUTH_HEADER=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')
+                if ! git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $AUTH_HEADER" \
+                  push aifs-translations "HEAD:${TRANSLATION_REMOTE_REF}"; then
+                  echo "could not push translation slice" >&2
+                  exit 1
+                fi
               fi ) && exit 0
             echo "push race, retrying ($attempt)"
             sleep "${TRANSLATION_PUBLISH_RETRY_DELAY:-$((RANDOM % 12 + 3))}"
           done
           echo "could not publish after retries" >&2; exit 1
+
+  cleanup:
+    needs: [prepare, translate]
+    if: >-
+      ${{ always() && needs.prepare.result == 'success' &&
+          needs.prepare.outputs.publish_enabled == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout main (canonical curriculum)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
+        with:
+          persist-credentials: false
+
+      - name: Configure translation cleanup remote
+        run: |
+          if [ -n "${TRANSLATION_TEST_REMOTE_URL:-}" ]; then
+            TRANSLATION_REMOTE_URL=$TRANSLATION_TEST_REMOTE_URL
+          else
+            TRANSLATION_REMOTE_URL="https://github.com/${AIFS_TRANSLATION_REPOSITORY}.git"
+          fi
+          git remote remove aifs-translations 2>/dev/null || true
+          git remote add aifs-translations "$TRANSLATION_REMOTE_URL"
+
+      - name: Prune deleted translation artifacts (race-safe)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          PUBLISH_DIR="$RUNNER_TEMP/translation-cleanup"
+          CANONICAL_PHASES="$RUNNER_TEMP/canonical-translation-phases"
+          CANONICAL_LESSONS="$RUNNER_TEMP/canonical-translation-lessons"
+          CANONICAL_LESSONS_JSON="$RUNNER_TEMP/canonical-translation-lessons.json"
+          PUBLISHED_LANGS="$RUNNER_TEMP/published-translation-languages"
+          REGISTERED_LANGS="$RUNNER_TEMP/registered-translation-languages"
+          REMOTE_LANGS="$RUNNER_TEMP/remote-translation-languages"
+          CANDIDATE_PHASES="$RUNNER_TEMP/translation-cleanup-candidates"
+          CANDIDATE_LESSONS="$RUNNER_TEMP/translation-cleanup-lessons"
+          TRANSLATION_REMOTE_REF="refs/heads/$AIFS_TRANSLATION_REF"
+          TRANSLATION_TRACKING_REF="refs/remotes/aifs-translations/source"
+
+          # Cleanup is one job, not another (language, phase) matrix. This keeps
+          # the translation matrix below GitHub's 256-job limit while covering
+          # every published non-source locale. Manual locales are never machine-
+          # translated here, but their orphaned phase slices must still be pruned.
+          find phases -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
+            | { grep -E '^[0-9]{2}-[a-z0-9-]+$' || true; } | sort -u > "$CANONICAL_PHASES"
+          find phases -mindepth 4 -maxdepth 4 -type f -path '*/docs/en.md' \
+            | { grep -E '^phases/[0-9]{2}-[a-z0-9-]+/[0-9]{2}-[a-z0-9-]+/docs/en\.md$' || true; } \
+            | sort -u > "$CANONICAL_LESSONS"
+          jq -Rsc 'split("\n") | map(select(length > 0))' \
+            "$CANONICAL_LESSONS" > "$CANONICAL_LESSONS_JSON"
+          jq -r '.languages[]
+            | select(.source != true)
+            | .code' languages.json > "$PUBLISHED_LANGS"
+          jq -r '.languages[].code' languages.json > "$REGISTERED_LANGS"
+
+          cleanup_publish_worktree() {
+            git worktree remove --force "$PUBLISH_DIR" 2>/dev/null || true
+            rm -rf "$PUBLISH_DIR"
+            git worktree prune
+          }
+          trap cleanup_publish_worktree EXIT
+
+          prune_cache_file() {
+            local CACHE_FILE=$1
+            local PHASE=${2:-}
+            local ORPHAN_COUNT
+            local CACHE_TMP
+            [ -f "$CACHE_FILE" ] || return 0
+
+            if [ -n "$PHASE" ]; then
+              ORPHAN_COUNT=$(jq --slurpfile allowed "$CANONICAL_LESSONS_JSON" \
+                --arg prefix "phases/$PHASE/" '
+                  [keys[] as $key | $key
+                    | select(
+                        (($key | startswith($prefix)) | not)
+                        or (($allowed[0] | index($key)) == null)
+                      )]
+                  | length
+                ' "$CACHE_FILE")
+            else
+              ORPHAN_COUNT=$(jq --slurpfile allowed "$CANONICAL_LESSONS_JSON" '
+                  [keys[] as $key | $key
+                    | select(($allowed[0] | index($key)) == null)]
+                  | length
+                ' "$CACHE_FILE")
+            fi
+            [ "$ORPHAN_COUNT" -gt 0 ] || return 0
+
+            CACHE_TMP="$CACHE_FILE.cleanup.$$"
+            if [ -n "$PHASE" ]; then
+              jq --slurpfile allowed "$CANONICAL_LESSONS_JSON" \
+                --arg prefix "phases/$PHASE/" '
+                  with_entries(
+                    .key as $key
+                    | select(
+                        ($key | startswith($prefix))
+                        and (($allowed[0] | index($key)) != null)
+                      )
+                  )
+                ' "$CACHE_FILE" > "$CACHE_TMP"
+            else
+              jq --slurpfile allowed "$CANONICAL_LESSONS_JSON" '
+                  with_entries(
+                    .key as $key
+                    | select(($allowed[0] | index($key)) != null)
+                  )
+                ' "$CACHE_FILE" > "$CACHE_TMP"
+            fi
+            mv "$CACHE_TMP" "$CACHE_FILE"
+            REMOVED=1
+          }
+
+          # Every attempt starts at the latest publication tip and applies only
+          # deletions implied by canonical main. The explicit lease also checks
+          # a no-op attempt: if a concurrent shard publishes after our fetch, the
+          # push fails and the retry preserves that shard before pruning again.
+          for attempt in 1 2 3 4 5 6 7 8; do
+            cleanup_publish_worktree
+            set +e
+            git ls-remote --exit-code aifs-translations "$TRANSLATION_REMOTE_REF" >/dev/null
+            TRANSLATION_STATUS=$?
+            set -e
+            if [ "$TRANSLATION_STATUS" -eq 2 ]; then
+              echo "translation branch has not been published yet; nothing to prune"
+              exit 0
+            elif [ "$TRANSLATION_STATUS" -ne 0 ]; then
+              echo "could not inspect configured translation source" >&2
+              sleep "${TRANSLATION_PUBLISH_RETRY_DELAY:-$((RANDOM % 12 + 3))}"
+              continue
+            fi
+            if ! git fetch --no-tags aifs-translations \
+              "+${TRANSLATION_REMOTE_REF}:${TRANSLATION_TRACKING_REF}"; then
+              echo "could not fetch configured translation source" >&2
+              sleep "${TRANSLATION_PUBLISH_RETRY_DELAY:-$((RANDOM % 12 + 3))}"
+              continue
+            fi
+            git worktree add --detach "$PUBLISH_DIR" "$TRANSLATION_TRACKING_REF"
+            BASE_OID=$(git rev-parse "$TRANSLATION_TRACKING_REF")
+
+            : > "$REMOTE_LANGS"
+            if [ -d "$PUBLISH_DIR/i18n" ]; then
+              find "$PUBLISH_DIR/i18n" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
+                | { grep -E '^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$' || true; } \
+                | sort -u > "$REMOTE_LANGS"
+            fi
+
+            REMOVED=0
+            while IFS= read -r LANG_CODE; do
+              if ! grep -Fqx -- "$LANG_CODE" "$REGISTERED_LANGS"; then
+                # The workflow owns only translated lesson slices and caches.
+                # Preserve hand-authored README/assets when a locale is retired.
+                if [ -d "$PUBLISH_DIR/i18n/$LANG_CODE/phases" ] \
+                  || [ -d "$PUBLISH_DIR/i18n/$LANG_CODE/.cache" ] \
+                  || [ -f "$PUBLISH_DIR/i18n/$LANG_CODE/.translate-cache.json" ]; then
+                  rm -rf "$PUBLISH_DIR/i18n/$LANG_CODE/phases"
+                  rm -rf "$PUBLISH_DIR/i18n/$LANG_CODE/.cache"
+                  rm -f "$PUBLISH_DIR/i18n/$LANG_CODE/.translate-cache.json"
+                  REMOVED=1
+                fi
+                continue
+              fi
+              # Source-language content is never owned by this publisher.
+              if ! grep -Fqx -- "$LANG_CODE" "$PUBLISHED_LANGS"; then
+                continue
+              fi
+              if ! [[ "$LANG_CODE" =~ ^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$ ]]; then
+                echo "unexpected published language code: $LANG_CODE" >&2
+                exit 1
+              fi
+              : > "$CANDIDATE_PHASES"
+              if [ -d "$PUBLISH_DIR/i18n/$LANG_CODE/phases" ]; then
+                find "$PUBLISH_DIR/i18n/$LANG_CODE/phases" \
+                  -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
+                  >> "$CANDIDATE_PHASES"
+              fi
+              if [ -d "$PUBLISH_DIR/i18n/$LANG_CODE/.cache" ]; then
+                find "$PUBLISH_DIR/i18n/$LANG_CODE/.cache" \
+                  -mindepth 1 -maxdepth 1 -type f -name '*.json' \
+                  -exec basename {} .json \; >> "$CANDIDATE_PHASES"
+              fi
+              sort -u -o "$CANDIDATE_PHASES" "$CANDIDATE_PHASES"
+              while IFS= read -r PHASE; do
+                [[ "$PHASE" =~ ^[0-9]{2}-[a-z0-9-]+$ ]] || continue
+                if ! grep -Fqx -- "$PHASE" "$CANONICAL_PHASES"; then
+                  rm -rf "$PUBLISH_DIR/i18n/$LANG_CODE/phases/$PHASE"
+                  rm -f "$PUBLISH_DIR/i18n/$LANG_CODE/.cache/$PHASE.json"
+                  REMOVED=1
+                  continue
+                fi
+
+                : > "$CANDIDATE_LESSONS"
+                if [ -d "$PUBLISH_DIR/i18n/$LANG_CODE/phases/$PHASE" ]; then
+                  find "$PUBLISH_DIR/i18n/$LANG_CODE/phases/$PHASE" \
+                    -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
+                    | sort -u > "$CANDIDATE_LESSONS"
+                fi
+                while IFS= read -r LESSON; do
+                  [[ "$LESSON" =~ ^[0-9]{2}-[a-z0-9-]+$ ]] || continue
+                  SOURCE_KEY="phases/$PHASE/$LESSON/docs/en.md"
+                  if ! grep -Fqx -- "$SOURCE_KEY" "$CANONICAL_LESSONS"; then
+                    rm -rf "$PUBLISH_DIR/i18n/$LANG_CODE/phases/$PHASE/$LESSON"
+                    REMOVED=1
+                  fi
+                done < "$CANDIDATE_LESSONS"
+                prune_cache_file \
+                  "$PUBLISH_DIR/i18n/$LANG_CODE/.cache/$PHASE.json" "$PHASE"
+              done < "$CANDIDATE_PHASES"
+              if find "$PUBLISH_DIR/i18n/$LANG_CODE/.cache" \
+                -mindepth 1 -maxdepth 1 -type f -name '*.json' -print -quit \
+                2>/dev/null | grep -q .; then
+                # A locale must publish exactly one cache layout. Once any
+                # phase shard exists it is authoritative, so discard the
+                # legacy combined cache instead of leaving an audit conflict.
+                if [ -f "$PUBLISH_DIR/i18n/$LANG_CODE/.translate-cache.json" ]; then
+                  rm -f "$PUBLISH_DIR/i18n/$LANG_CODE/.translate-cache.json"
+                  REMOVED=1
+                fi
+              else
+                prune_cache_file \
+                  "$PUBLISH_DIR/i18n/$LANG_CODE/.translate-cache.json"
+              fi
+            done < "$REMOTE_LANGS"
+
+            ( cd "$PUBLISH_DIR" || exit 1
+              if [ "$REMOVED" -ne 0 ]; then
+                if ! git add -u -- i18n; then
+                  echo "could not stage deleted translation artifacts" >&2
+                  exit 1
+                fi
+              fi
+              if git diff --cached --quiet; then
+                CLEANUP_CHANGED=0
+              else
+                DIFF_STATUS=$?
+                if [ "$DIFF_STATUS" -ne 1 ]; then
+                  echo "could not inspect staged translation cleanup" >&2
+                  exit 1
+                fi
+                CLEANUP_CHANGED=1
+                if ! git commit -m "chore(i18n): prune deleted translation artifacts"; then
+                  echo "could not commit translation cleanup" >&2
+                  exit 1
+                fi
+              fi
+              if [ -n "${TRANSLATION_TEST_REMOTE_URL:-}" ]; then
+                if ! git push \
+                  --force-with-lease="${TRANSLATION_REMOTE_REF}:${BASE_OID}" \
+                  aifs-translations "HEAD:${TRANSLATION_REMOTE_REF}"; then
+                  echo "could not push translation cleanup" >&2
+                  exit 1
+                fi
+              else
+                AUTH_HEADER=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')
+                if ! git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $AUTH_HEADER" \
+                  push --force-with-lease="${TRANSLATION_REMOTE_REF}:${BASE_OID}" \
+                  aifs-translations "HEAD:${TRANSLATION_REMOTE_REF}"; then
+                  echo "could not push translation cleanup" >&2
+                  exit 1
+                fi
+              fi
+              if [ "$CLEANUP_CHANGED" -eq 0 ]; then
+                echo "no deleted translation artifacts"
+              fi ) && exit 0
+            echo "cleanup push race, retrying ($attempt)"
+            sleep "${TRANSLATION_PUBLISH_RETRY_DELAY:-$((RANDOM % 12 + 3))}"
+          done
+          echo "could not prune deleted translation artifacts after retries" >&2; exit 1

@@ -1,0 +1,839 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/04-computer-vision/01-image-fundamentals": {
+      "source": "An image is a tensor of light samples. Every vision model you will ever use starts from this one fact.",
+      "translation": "图像是由光线采样值构成的张量。你以后使用的每一个视觉模型，都从这个事实出发。"
+    },
+    "phases/04-computer-vision/02-convolutions-from-scratch": {
+      "source": "A convolution is a tiny dense layer you slide across an image, sharing the same weights at every location.",
+      "translation": "卷积就是一个微型全连接层：让它在图像上滑动，并在每个位置共享同一组权重。"
+    },
+    "phases/04-computer-vision/03-cnns-lenet-to-resnet": {
+      "source": "Every major CNN of the last thirty years is the same conv–nonlinearity–downsample recipe with one new idea bolted on. Learn the ideas in order.",
+      "translation": "过去三十年的每一种重要 CNN，本质上都沿用“卷积—非线性—下采样”这一套方法，只是每一代又加上了一个新想法。请按时间顺序理解这些想法。"
+    },
+    "phases/04-computer-vision/04-image-classification": {
+      "source": "A classifier is a function from pixels to a probability distribution over classes. Everything else is plumbing.",
+      "translation": "分类器就是一个从像素映射到类别概率分布的函数，其他一切都是配套管线。"
+    },
+    "phases/04-computer-vision/05-transfer-learning": {
+      "source": "Somebody else spent a million GPU hours teaching a network what edges, textures, and object parts look like. You should borrow those features before training your own.",
+      "translation": "已经有人花费一百万 GPU 小时，教会网络识别边缘、纹理和物体部件。在训练自己的模型前，你应该先借用这些特征。"
+    },
+    "phases/04-computer-vision/06-object-detection-yolo": {
+      "source": "Detection is classification plus regression, run at every position in a feature map, then cleaned up with non-maximum suppression.",
+      "translation": "目标检测就是在特征图的每个位置同时执行分类与回归，再使用非极大值抑制清理结果。"
+    },
+    "phases/04-computer-vision/07-semantic-segmentation-unet": {
+      "source": "Segmentation is classification at every pixel. U-Net makes it work by pairing a downsampling encoder with an upsampling decoder and wiring skip connections between them.",
+      "translation": "分割就是对每个像素进行分类。U-Net 将下采样编码器与上采样解码器配对，并在二者之间建立跳跃连接，从而让像素级分类真正可行。"
+    },
+    "phases/04-computer-vision/08-instance-segmentation-mask-rcnn": {
+      "source": "Add a tiny mask branch to a Faster R-CNN detector and you have instance segmentation. The hard part is RoIAlign, and it is harder than it looks.",
+      "translation": "在 Faster R-CNN 检测器上增加一个小型掩码分支，就得到了实例分割。真正困难的部分是 RoIAlign，而且它比看起来更难。"
+    },
+    "phases/04-computer-vision/09-image-generation-gans": {
+      "source": "A GAN is two neural networks in a fixed game. One draws, one critiques. They get better together until the drawings fool the critic.",
+      "translation": "GAN 是两个神经网络之间的一场固定博弈。一个负责作画，一个负责批评。它们在对抗中共同进步，直到生成的图像足以骗过批评者。"
+    },
+    "phases/04-computer-vision/10-image-generation-diffusion": {
+      "source": "A diffusion model learns to denoise. Train it to remove a tiny bit of noise from a noisy image, repeat that backwards a thousand times, and you have an image generator.",
+      "translation": "扩散模型学习的是去噪。训练它从含噪图像中移除一小部分噪声，再把这个过程反向重复一千次，就得到了一台图像生成器。"
+    },
+    "phases/04-computer-vision/11-stable-diffusion": {
+      "source": "Stable Diffusion is a DDPM that runs in the latent space of a pretrained VAE, conditioned on text via cross-attention, sampled with a fast deterministic ODE solver, and steered …",
+      "translation": "Stable Diffusion 是一种在预训练 VAE 的潜在空间中运行的 DDPM，通过交叉注意力接受文本条件，使用快速确定性 ODE 求解器采样，并由无分类器引导控制方向。"
+    },
+    "phases/04-computer-vision/12-video-understanding": {
+      "source": "A video is a sequence of images plus the physics that connects them. Every video model either treats time as an extra axis (3D conv), a sequence to attend over (transformer), or…",
+      "translation": "视频是一连串图像，再加上连接这些图像的物理规律。每种视频模型要么把时间视为额外维度（3D 卷积），要么视为可供注意力处理的序列（Transformer），要么只提取一次特征后进行汇聚（2D + Pool）。"
+    },
+    "phases/04-computer-vision/13-3d-vision-nerf": {
+      "source": "3D vision comes in two flavours. Point clouds are the sensor's raw output. NeRFs are the learned volumetric field. Both answer \"what is where in space.\"",
+      "translation": "3D 视觉有两种主要形态。点云是传感器的原始输出，NeRF 是学习得到的体积场。两者都在回答“空间中的什么位置存在什么”。"
+    },
+    "phases/04-computer-vision/14-vision-transformers": {
+      "source": "Cut the image into patches, treat each patch as a word, run a standard transformer. Don't look back.",
+      "translation": "把图像切成 Patch，把每个 Patch 当作一个单词，再运行标准 Transformer。无需回头。"
+    },
+    "phases/04-computer-vision/15-real-time-edge": {
+      "source": "Edge inference is the discipline of getting a 90-accuracy model to run at 30 fps on a device with 2 GB of RAM. Every percentage point of accuracy is traded against milliseconds …",
+      "translation": "边缘推理的任务，是让一个准确率 90% 的模型在只有 2 GB 内存的设备上以 30 fps 运行。准确率每提高一个百分点，都要与数毫秒延迟进行权衡。"
+    },
+    "phases/04-computer-vision/16-vision-pipeline-capstone": {
+      "source": "A production vision system is a chain of models and rules stitched with data contracts. The pieces are already in this phase; the capstone wires them together end-to-end.",
+      "translation": "生产级视觉系统是由多个模型和规则组成的链条，并通过数据契约连接起来。本阶段已经准备好了所有部件，这个综合项目会把它们端到端串联起来。"
+    },
+    "phases/04-computer-vision/17-self-supervised-vision": {
+      "source": "Labels are the bottleneck of supervised vision. Self-supervised pretraining removes them: learn visual features from 100M unlabelled images, fine-tune on 10k labelled ones.",
+      "translation": "标签是监督视觉的瓶颈。自监督预训练消除了这个瓶颈：先从一亿张无标签图像中学习视觉特征，再用一万张带标签图像微调。"
+    },
+    "phases/04-computer-vision/18-open-vocab-clip": {
+      "source": "Train an image encoder and a text encoder together so that matching (image, caption) pairs land at the same point in a shared space. That is the whole trick.",
+      "translation": "同时训练图像编码器与文本编码器，让匹配的（图像，说明文字）对落在共享空间中的同一点。这就是全部诀窍。"
+    },
+    "phases/04-computer-vision/19-ocr-document-understanding": {
+      "source": "OCR is a three-stage pipeline — detect text boxes, recognise the characters, then lay them out. Every modern OCR system reorders these stages or merges them.",
+      "translation": "OCR 是一条三阶段流水线——检测文本框、识别字符、再恢复版面。每一种现代 OCR 系统，都只是在重新排列这些阶段或把它们合并起来。"
+    },
+    "phases/04-computer-vision/20-image-retrieval-metric": {
+      "source": "A retrieval system ranks candidates by a distance in embedding space. Metric learning is the discipline of shaping that space so the distances mean what you want.",
+      "translation": "检索系统根据嵌入空间中的距离对候选项排序。度量学习的任务，就是塑造这个空间，让其中的距离表达你真正需要的含义。"
+    },
+    "phases/04-computer-vision/21-keypoint-pose": {
+      "source": "A pose is a set of ordered keypoints. A keypoint detector is a heatmap regressor. Everything else is bookkeeping.",
+      "translation": "姿态是一组有顺序的关键点，关键点检测器则是一个热力图回归器，其余只是簿记工作。"
+    },
+    "phases/04-computer-vision/22-3d-gaussian-splatting": {
+      "source": "A scene is a cloud of millions of 3D Gaussians. Each one has a position, orientation, scale, opacity, and a colour that depends on viewing direction. Rasterise them, backprop th…",
+      "translation": "场景由数百万个三维高斯组成。每个高斯都有位置、方向、尺度、不透明度，以及随观察方向变化的颜色。将它们光栅化，再让梯度穿过光栅化过程反向传播，就完成了。"
+    },
+    "phases/04-computer-vision/23-diffusion-transformers-rectified-flow": {
+      "source": "The U-Net is not the secret of diffusion. Replace it with a transformer, swap the noise schedule for a straight-line flow, and suddenly you have SD3, FLUX, and every 2026 text-t…",
+      "translation": "U-Net 并不是扩散模型的秘密。把它换成 Transformer，再用直线路径的流替换噪声调度，就得到了 SD3、FLUX，以及 2026 年的每一种文生图模型。"
+    },
+    "phases/04-computer-vision/24-sam3-open-vocab-segmentation": {
+      "source": "Give a model a text prompt and an image and get masks for every matching object. SAM 3 made that a single forward pass.",
+      "translation": "向模型提供文本提示和图像，即可得到所有匹配物体的掩码。SAM 3 让这一切只需一次前向传播。"
+    },
+    "phases/04-computer-vision/25-vision-language-models": {
+      "source": "A vision encoder converts an image into tokens. An MLP projector maps those tokens into the LLM's embedding space. A language model does the rest. That pattern — ViT-MLP-LLM — i…",
+      "translation": "视觉编码器把图像转换成 Token，MLP 投影器把这些 Token 映射到 LLM 的嵌入空间，再由语言模型完成其余工作。ViT-MLP-LLM 这一模式，就是 2026 年每个生产级 VLM 的基础。"
+    },
+    "phases/04-computer-vision/26-monocular-depth": {
+      "source": "A depth map is a single-channel image where each pixel is a distance from the camera. Predicting it from one RGB frame used to be impossible without stereo or LiDAR. In 2026 a f…",
+      "translation": "深度图是一张单通道图像，其中每个像素都表示到相机的距离。过去，如果没有双目相机或 LiDAR，就无法从单张 RGB 图像预测深度。到 2026 年，冻结的 ViT 编码器加一个轻量 Head，已经能把误差缩小到距真值仅几个百分点。"
+    },
+    "phases/04-computer-vision/27-multi-object-tracking": {
+      "source": "Tracking is detection plus association. Detect every frame. Match this frame's detections to last frame's tracks by ID.",
+      "translation": "跟踪就是检测加关联。逐帧检测，再按 ID 将当前帧的检测结果与上一帧的轨迹匹配起来。"
+    },
+    "phases/04-computer-vision/28-world-models-video-diffusion": {
+      "source": "A video model that predicts the next seconds of a scene is a world simulator. Condition that prediction on actions and you have a learned game engine.",
+      "translation": "能预测一个场景未来数秒变化的视频模型，就是世界模拟器。再让这种预测以动作作为条件，你便拥有了一个学习式游戏引擎。"
+    },
+    "phases/05-nlp-foundations-to-advanced/01-text-processing": {
+      "source": "Language is continuous. Models are discrete. Preprocessing is the bridge.",
+      "translation": "语言是连续的，模型是离散的。预处理是连接二者的桥梁。"
+    },
+    "phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf": {
+      "source": "Count first, think later. TF-IDF still beats embeddings on well-defined tasks in 2026.",
+      "translation": "先计数，再思考。到 2026 年，在边界清晰的任务上，TF-IDF 仍能胜过嵌入。"
+    },
+    "phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec": {
+      "source": "A word is the company it keeps. Train a shallow net on that idea and geometry falls out.",
+      "translation": "观其友，知其词。围绕这个想法训练一个浅层网络，几何结构便会自然涌现。"
+    },
+    "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword": {
+      "source": "Word2Vec trained one embedding per word. GloVe factorized the co-occurrence matrix. FastText embedded the pieces. BPE bridged to transformers.",
+      "translation": "Word2Vec 为每个词训练一个嵌入。GloVe 分解共现矩阵，FastText 嵌入词的组成部分，BPE 则搭起了通往 Transformer 的桥梁。"
+    },
+    "phases/05-nlp-foundations-to-advanced/05-sentiment-analysis": {
+      "source": "The canonical NLP task. Most of what you need to know about classical text classification shows up here.",
+      "translation": "这是自然语言处理的经典任务。经典文本分类中需要了解的大部分知识，都能在这里看到。"
+    },
+    "phases/05-nlp-foundations-to-advanced/06-named-entity-recognition": {
+      "source": "Pull the names out. Sounds easy until you deal with ambiguous boundaries, nested entities, and domain jargon.",
+      "translation": "把名称提取出来。听起来很简单，直到你遇到边界歧义、嵌套实体和领域术语。"
+    },
+    "phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing": {
+      "source": "Grammar was unfashionable for a while. Then every LLM pipeline needed to validate structured extraction, and it came back.",
+      "translation": "语法曾一度不受追捧。后来每条大语言模型流水线都需要验证结构化抽取，它又回来了。"
+    },
+    "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text": {
+      "source": "Convolutions learn n-grams. Recurrences remember. Both are superseded by attention. Both still matter on constrained hardware.",
+      "translation": "卷积学习 n 元语法，循环记住历史。二者都已被注意力取代，却依然适用于资源受限的硬件。"
+    },
+    "phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence": {
+      "source": "Two RNNs pretending to be a translator. The bottleneck they hit is the reason attention exists.",
+      "translation": "两个 RNN 扮演翻译器。它们遇到的瓶颈，正是注意力机制存在的原因。"
+    },
+    "phases/05-nlp-foundations-to-advanced/10-attention-mechanism": {
+      "source": "The decoder stops squinting at a compressed summary and starts looking at the whole source. Everything after this is attention plus engineering.",
+      "translation": "解码器不再费力盯着一份压缩摘要，而是开始查看整个源序列。此后的一切，都是注意力加工程优化。"
+    },
+    "phases/05-nlp-foundations-to-advanced/11-machine-translation": {
+      "source": "Translation is the task that paid for NLP research for thirty years and keeps paying now.",
+      "translation": "三十年来，机器翻译一直是支撑自然语言处理研究投入的任务，至今仍在持续创造价值。"
+    },
+    "phases/05-nlp-foundations-to-advanced/12-text-summarization": {
+      "source": "Extractive systems tell you what the document said. Abstractive systems tell you what the author meant. Different tasks, different pitfalls.",
+      "translation": "抽取式系统告诉你文档说了什么，生成式系统告诉你作者想表达什么。两类任务，不同陷阱。"
+    },
+    "phases/05-nlp-foundations-to-advanced/13-question-answering": {
+      "source": "Three systems shaped modern QA. Extractive found spans. Retrieval-augmented grounded them in documents. Generative produced answers. Every modern AI assistant is a mix of the th…",
+      "translation": "三类系统塑造了现代问答。抽取式系统寻找文本跨度，检索增强系统用文档为答案提供依据，生成式系统直接生成答案。每个现代 AI 助手都是三者的组合。"
+    },
+    "phases/05-nlp-foundations-to-advanced/14-information-retrieval-search": {
+      "source": "BM25 is precise but brittle. Dense casts a wide net but misses keywords. Hybrid is the 2026 default. Everything else is tuning.",
+      "translation": "BM25 精确但脆弱，稠密检索覆盖面广却会漏掉关键词。混合检索是 2026 年的默认方案，其余都是调优。"
+    },
+    "phases/05-nlp-foundations-to-advanced/15-topic-modeling": {
+      "source": "LDA: documents are mixtures of topics, topics are distributions over words. BERTopic: documents cluster in embedding space, clusters are topics. Same goal, different decompositi…",
+      "translation": "LDA：文档是主题的混合，主题是词语的概率分布。BERTopic：文档在嵌入空间中聚类，簇就是主题。目标相同，分解方式不同。"
+    },
+    "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer": {
+      "source": "If a word is surprising, the model is bad. Perplexity makes surprise a number. Smoothing keeps it finite.",
+      "translation": "如果一个词令人意外，说明模型还不够好。困惑度把意外量化，平滑则让这个数值保持有限。"
+    },
+    "phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural": {
+      "source": "ELIZA replied with pattern matches. DialogFlow mapped intents. GPT answered from weights. Claude runs tools and verifies. Each era solved the previous one's worst failure.",
+      "translation": "ELIZA 用模式匹配作答，DialogFlow 映射意图，GPT 从权重中回答，Claude 调用工具并验证结果。每个时代都解决了上一个时代最严重的失败。"
+    },
+    "phases/05-nlp-foundations-to-advanced/18-multilingual-nlp": {
+      "source": "One model, 100+ languages, zero training data for most of them. Cross-lingual transfer is the practical miracle of the 2020s.",
+      "translation": "一个模型覆盖 100 多种语言，其中大多数语言都没有训练数据。跨语言迁移是 2020 年代真正实用的奇迹。"
+    },
+    "phases/05-nlp-foundations-to-advanced/19-subword-tokenization": {
+      "source": "Word tokenizers choke on unseen words. Character tokenizers blow up sequence length. Subword tokenizers split the difference. Every modern LLM ships on one.",
+      "translation": "单词分词器会被未见词难住，字符分词器又会让序列长度暴涨。子词分词器取二者之间的平衡，每个现代大语言模型都依赖其中一种。"
+    },
+    "phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding": {
+      "source": "Ask an LLM for JSON. Get JSON most of the time. In production, \"most\" is the problem. Constrained decoding turns \"most\" into \"always\" by editing the logits before sampling.",
+      "translation": "要求大语言模型返回 JSON，它大多数时候会照做。但在生产环境中，“大多数”本身就是问题。约束解码通过在采样前修改 logits，把“大多数”变成“始终如此”。"
+    },
+    "phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment": {
+      "source": "\"t entails h\" means a human reading t would conclude h is true. NLI is the task of predicting entailment / contradiction / neutral. Boring on the surface, load-bearing in produc…",
+      "translation": "“t 蕴含 h”意味着人类读完 t 后会认为 h 为真。NLI 的任务是预测蕴含、矛盾或中立。表面枯燥，却支撑着生产系统。"
+    },
+    "phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive": {
+      "source": "Word2Vec gave you a vector per word. Modern embedding models give you a vector per passage, cross-lingual, with sparse, dense, and multi-vector views, sized to fit your index. P…",
+      "translation": "Word2Vec 为每个词生成一个向量。现代嵌入模型则为每个段落生成一个跨语言向量，提供稀疏、稠密和多向量视图，还能调整大小以适应索引。选择错误，RAG 就会检索到错误内容。"
+    },
+    "phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag": {
+      "source": "Chunking configuration influences retrieval quality as much as the choice of embedding model (Vectara NAACL 2025). Get chunking wrong and no amount of reranking saves you.",
+      "translation": "分块配置对检索质量的影响，与嵌入模型的选择同样大（Vectara，NAACL 2025）。分块做错，再多重排也救不回来。"
+    },
+    "phases/05-nlp-foundations-to-advanced/24-coreference-resolution": {
+      "source": "\"She called him. He did not answer. The doctor was at lunch.\" Three references to two people and nobody is named. Coreference resolution figures out who is who.",
+      "translation": "“她给他打了电话。他没有接。那位医生当时在吃午饭。”三处指称涉及两个人，却没有出现任何姓名。共指消解负责判断谁是谁。"
+    },
+    "phases/05-nlp-foundations-to-advanced/25-entity-linking": {
+      "source": "NER found \"Paris.\" Entity linking decides: Paris, France? Paris Hilton? Paris, Texas? Paris (the Trojan prince)? Without linking, your knowledge graph stays ambiguous.",
+      "translation": "NER 找到了“Paris”。实体链接需要判断：法国巴黎？Paris Hilton？美国得克萨斯州巴黎？还是特洛伊王子帕里斯？没有链接，你的知识图谱仍然充满歧义。"
+    },
+    "phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg": {
+      "source": "NER found the entities. Entity linking anchored them. Relation extraction finds the edges between them. A knowledge graph is the sum of nodes, edges, and their provenance.",
+      "translation": "NER 找到了实体，实体链接把它们锚定下来，关系抽取则找出实体之间的边。知识图谱由节点、边及其溯源信息共同构成。"
+    },
+    "phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks": {
+      "source": "Exact-match and F1 miss semantic equivalence. Human review does not scale. LLM-as-judge is the production answer — with enough calibration to trust the number.",
+      "translation": "精确匹配和 F1 无法识别语义等价，人工审阅又无法扩展。大语言模型裁判是生产方案——前提是经过充分校准，让分数值得信赖。"
+    },
+    "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation": {
+      "source": "Gemini 3 Pro advertises 10M tokens of context. At 1M tokens, 8-needle MRCR drops to 26.3%. Advertised ≠ usable. Long-context evaluation tells you the actual capacity of the mode…",
+      "translation": "Gemini 3 Pro 宣称拥有 1000 万词元的上下文。在 100 万词元处，8 针 MRCR 却跌至 26.3%。宣传值不等于可用值。长上下文评估会告诉你正在交付的模型究竟有多大实际容量。"
+    },
+    "phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking": {
+      "source": "\"I want a cheap restaurant in the north... actually make it moderate... and add Italian.\" Three turns, three state updates. DST keeps the slot-value dict in sync so the booking …",
+      "translation": "“我想找北边的便宜餐厅……等等，改成中等价位……再加上意大利菜。”三轮对话、三次状态更新。DST 让槽位—值字典保持同步，确保预订正确完成。"
+    },
+    "phases/06-speech-and-audio/01-audio-fundamentals": {
+      "source": "Waveforms are the raw signal. Spectrograms are the representation. Mel features are the ML-friendly form. Every modern ASR and TTS pipeline walks this ladder, and the first rung…",
+      "translation": "波形是原始信号，频谱图是它的表示，梅尔特征则是适合机器学习的形式。每条现代 ASR 和 TTS 流水线都会沿着这组阶梯向上走，而第一阶就是理解采样与傅里叶变换。"
+    },
+    "phases/06-speech-and-audio/02-spectrograms-mel-features": {
+      "source": "Neural nets do not consume raw waveforms well. They consume spectrograms. They consume mel spectrograms even better. Every ASR, TTS, and audio classifier in 2026 lives or dies b…",
+      "translation": "神经网络不善于直接处理原始波形，却很适合处理频谱图，尤其是梅尔频谱图。从 2010 年到 2026 年，每个 ASR、TTS 和音频分类器的成败都取决于这一项预处理选择。"
+    },
+    "phases/06-speech-and-audio/03-audio-classification": {
+      "source": "Everything from \"dog barking vs siren\" to \"which language is this\" is audio classification. The features are mels. The architecture moves each decade. The evaluation stays AUC, …",
+      "translation": "从“狗叫还是警笛”到“这是什么语言”，都属于音频分类。特征使用梅尔表示，架构每十年都会变化，评估却始终围绕 AUC、F1 与逐类别召回率。"
+    },
+    "phases/06-speech-and-audio/04-speech-recognition-asr": {
+      "source": "Speech recognition is audio classification at every timestep, glued together by a sequence model that knows English and silence. CTC, RNN-T, and attention are the three ways to …",
+      "translation": "语音识别是在每个时间步执行音频分类，再由理解语言与静音的序列模型把结果连接起来。CTC、RNN-T 和注意力是三种实现方式。选择一种，并理解原因。"
+    },
+    "phases/06-speech-and-audio/05-whisper-architecture-finetuning": {
+      "source": "Whisper is a 30-second-window transformer encoder-decoder, trained on 680k hours of multilingual weakly-supervised audio-text pairs. One architecture, multiple tasks, robust acr…",
+      "translation": "Whisper 是一个采用 30 秒窗口的 Transformer 编码器—解码器，在 68 万小时的多语言弱监督音频—文本对上训练。一套架构完成多种任务，稳健覆盖 99 种语言，是 2026 年的参考 ASR。"
+    },
+    "phases/06-speech-and-audio/06-speaker-recognition-verification": {
+      "source": "ASR asks \"what did they say?\" Speaker recognition asks \"who said it?\" The math looks the same — embeddings plus cosine — but every production decision hinges on a single EER num…",
+      "translation": "ASR 问“他说了什么？”，说话人识别问“是谁说的？”二者的数学形式看起来相同——嵌入加余弦相似度——但每项生产决策都取决于一个 EER 数字。"
+    },
+    "phases/06-speech-and-audio/07-text-to-speech": {
+      "source": "ASR inverts speech to text; TTS inverts text to speech. The 2026 stack is three parts: text → tokens, tokens → mel, mel → waveform. Each part has a default model that fits in a …",
+      "translation": "ASR 把语音转换为文本，TTS 则把文本转换为语音。2026 年的技术栈由三部分组成：文本 → 词元、词元 → 梅尔特征、梅尔特征 → 波形。每一部分都有可在笔记本电脑上运行的默认模型。"
+    },
+    "phases/06-speech-and-audio/08-voice-cloning-conversion": {
+      "source": "Voice cloning reads your text in someone else's voice. Voice conversion rewrites your voice into someone else's while preserving what you said. Both hang on the same decompositi…",
+      "translation": "声音克隆让别人的声音读出你的文本。声音转换则在保留你所说内容的同时，把你的声音变成另一个人的声音。二者都依赖同一种分解：把说话人身份与内容分离。"
+    },
+    "phases/06-speech-and-audio/09-music-generation": {
+      "source": "2026 music generation: Suno v5 and Udio v4 dominate commercial; MusicGen, Stable Audio Open, and ACE-Step lead open-source. The technical problem is mostly solved. The legal pro…",
+      "translation": "2026 年的音乐生成领域：Suno v5 与 Udio v4 主导商业市场；MusicGen、Stable Audio Open 和 ACE-Step 领跑开源领域。技术问题大体已经解决，法律问题（Warner Music 5 亿美元和解、UMG 和解）则在 2025～2026 年重塑了整个行业。"
+    },
+    "phases/06-speech-and-audio/10-audio-language-models": {
+      "source": "2026 audio-language models reason over speech + environmental sound + music. Qwen2.5-Omni-7B matches GPT-4o Audio on MMAU-Pro. Audio Flamingo Next beats Gemini 2.5 Pro on LongAu…",
+      "translation": "2026 年的音频语言模型能够综合推理语音、环境声音和音乐。Qwen2.5-Omni-7B 在 MMAU-Pro 上比肩 GPT-4o Audio，Audio Flamingo Next 在 LongAudioBench 上胜过 Gemini 2.5 Pro。开放与封闭模型之间的差距几乎已经消失——唯独多音频任务例外，所有模型都接近随机水平。"
+    },
+    "phases/06-speech-and-audio/11-real-time-audio-processing": {
+      "source": "Batch pipelines process a file. Real-time pipelines process the next 20 milliseconds before the next 20 arrive. Every conversational AI, broadcast studio, and telephony bot live…",
+      "translation": "批处理流水线处理完整文件，实时流水线则必须在下一个 20 毫秒到达前处理完当前的 20 毫秒。每个对话式 AI、广播演播室和电话机器人都成败于这份延迟预算。"
+    },
+    "phases/06-speech-and-audio/12-voice-assistant-pipeline": {
+      "source": "Everything from lessons 01-11, stitched together. Build a voice assistant that listens, reasons, and talks back. In 2026 that is a solved engineering problem, not a research pro…",
+      "translation": "把第 01～11 课的所有内容连接起来。构建一个能够聆听、推理并开口回答的语音助手。到 2026 年，这已经是工程问题而非研究问题——但集成细节会决定它能否真正交付。"
+    },
+    "phases/06-speech-and-audio/13-neural-audio-codecs": {
+      "source": "2026 audio generation is almost all tokens. EnCodec, SNAC, Mimi, and DAC turn continuous waveforms into discrete sequences that a transformer can predict. The semantic-vs-acoust…",
+      "translation": "2026 年的音频生成几乎都建立在词元之上。EnCodec、SNAC、Mimi 和 DAC 把连续波形转换成 Transformer 可以预测的离散序列。语义词元与声学词元的分离——第一个码本表达语义，其余码本表达声学信息——是继 Transformer 之后音频领域最重要的架构转变。"
+    },
+    "phases/06-speech-and-audio/14-voice-activity-detection-turn-taking": {
+      "source": "Every voice agent lives or dies on two decisions: is the user speaking now, and are they done? VAD answers the first. Turn-detection (VAD + silence-hangover + semantic endpoint …",
+      "translation": "每个语音智能体的成败都取决于两个判断：用户现在是否正在说话，以及用户是否已经说完？VAD 回答第一个问题。轮次检测（VAD + 静音拖尾 + 语义端点模型）回答第二个。任何一个判断出错，助手要么打断用户，要么永远说个不停。"
+    },
+    "phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki": {
+      "source": "2024-2026 redefined voice AI. Moshi ships a single model that listens and speaks simultaneously at 200 ms latency. Hibiki does speech-to-speech translation chunk-by-chunk. Both …",
+      "translation": "2024～2026 年重新定义了语音 AI。Moshi 用单一模型以 200 毫秒延迟同时聆听与说话，Hibiki 则逐块完成语音到语音翻译。二者都放弃 ASR → 大语言模型 → TTS 流水线，改用基于 Mimi 编解码器词元的统一全双工架构。这是新的参考设计。"
+    },
+    "phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking": {
+      "source": "Voice cloning shipped faster than defenses. 2026 production voice systems need two things: a detector (AASIST, RawNet2) that classifies real vs fake speech, and a watermark (Aud…",
+      "translation": "声音克隆的发展速度超过了防御技术。2026 年的生产语音系统需要两样东西：一个区分真实与伪造语音的检测器（AASIST、RawNet2），以及一个能够经受压缩与编辑的水印（AudioSeal）。两者缺一，就不应交付声音克隆。"
+    },
+    "phases/06-speech-and-audio/17-audio-evaluation-metrics": {
+      "source": "You cannot ship what you cannot measure. This lesson names the 2026 metrics for every audio task: ASR (WER, CER, RTFx), TTS (MOS, UTMOS, SECS, WER-on-ASR-round-trip), audio-lang…",
+      "translation": "无法衡量，就无法交付。本课列出各类音频任务在 2026 年使用的指标：ASR（WER、CER、RTFx）、TTS（MOS、UTMOS、SECS、ASR 往返 WER）、音频语言（MMAU、LongAudioBench）、音乐（FAD、CLAP）和说话人（EER），以及用于横向比较的排行榜。"
+    },
+    "phases/07-transformers-deep-dive/01-why-transformers": {
+      "source": "RNNs process tokens one at a time. Transformers process all tokens at once. That single architectural bet changed every scaling curve in deep learning after 2017.",
+      "translation": "RNN 每次处理一个词元，Transformer 则同时处理所有词元。这个架构赌注改变了 2017 年后深度学习中的每一条规模化曲线。"
+    },
+    "phases/07-transformers-deep-dive/02-self-attention-from-scratch": {
+      "source": "Attention is a lookup table where every word asks \"who matters to me?\" - and learns the answer.",
+      "translation": "注意力就像一张查找表，每个词都在问“谁对我重要？”——并通过学习得到答案。"
+    },
+    "phases/07-transformers-deep-dive/03-multi-head-attention": {
+      "source": "One attention head learns one relation at a time. Eight heads learn eight. Heads are free. Take more of them.",
+      "translation": "一个注意力头一次学习一种关系，八个头就能学习八种。增加头数不增加总参数量，所以不妨多用几个。"
+    },
+    "phases/07-transformers-deep-dive/04-positional-encoding": {
+      "source": "Attention is permutation-invariant. \"The cat sat on the mat\" and \"mat the on sat cat the\" produce the same output without positional signal. Three algorithms fix it — each with …",
+      "translation": "注意力具有排列不变性。如果没有位置信号，“The cat sat on the mat”和“mat the on sat cat the”会产生相同的输出。三种算法解决了这个问题——它们对“位置”的含义各有不同假设。"
+    },
+    "phases/07-transformers-deep-dive/05-full-transformer": {
+      "source": "Attention is the star. Everything else — residuals, normalization, feed-forward, cross-attention — is the scaffolding that lets you stack it deep.",
+      "translation": "注意力是主角，其他一切——残差、归一化、前馈网络、交叉注意力——都是让它可以深层堆叠的脚手架。"
+    },
+    "phases/07-transformers-deep-dive/06-bert-masked-language-modeling": {
+      "source": "GPT predicts the next word. BERT predicts a missing word. One sentence of difference — and half a decade of everything embedding-shaped.",
+      "translation": "GPT 预测下一个词，BERT 预测缺失的词。仅此一处差异，便开启了此后五年的嵌入模型时代。"
+    },
+    "phases/07-transformers-deep-dive/07-gpt-causal-language-modeling": {
+      "source": "BERT sees both sides. GPT sees only the past. The triangle mask is the most consequential single line of code in modern AI.",
+      "translation": "BERT 能看见两侧，GPT 只能看见过去。这个三角掩码是现代 AI 中影响最深远的一行代码。"
+    },
+    "phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder": {
+      "source": "Encoders understand. Decoders generate. Put them back together and you get a model built for input → output tasks: translate, summarize, rewrite, transcribe.",
+      "translation": "编码器负责理解，解码器负责生成。把二者重新组合起来，就得到专为输入 → 输出任务设计的模型：翻译、摘要、改写、转写。"
+    },
+    "phases/07-transformers-deep-dive/09-vision-transformers": {
+      "source": "An image is a grid of patches. A sentence is a grid of tokens. The same transformer eats both.",
+      "translation": "图像是图块组成的网格，句子是词元组成的网格。同一个 Transformer 可以处理二者。"
+    },
+    "phases/07-transformers-deep-dive/10-audio-transformers-whisper": {
+      "source": "Audio is an image of frequency over time. Whisper is a ViT that eats mel spectrograms and speaks back.",
+      "translation": "音频是一幅频率随时间变化的图像。Whisper 就是一个以梅尔频谱图为输入、再用文本作答的 ViT。"
+    },
+    "phases/07-transformers-deep-dive/11-mixture-of-experts": {
+      "source": "A dense 70B transformer activates every parameter for every token. A 671B MoE activates only 37B per token and beats it on every benchmark. Sparsity is the most important scalin…",
+      "translation": "一个稠密 70B Transformer 会为每个词元激活全部参数。一个 671B MoE 每个词元只激活 37B 参数，却在所有基准上胜过前者。稀疏性是这个十年中最重要的规模化思想。"
+    },
+    "phases/07-transformers-deep-dive/12-kv-cache-flash-attention": {
+      "source": "Training is parallel and FLOP-bound. Inference is serial and memory-bound. Different bottleneck, different tricks.",
+      "translation": "训练可以并行，受 FLOP 限制；推理只能串行，受内存限制。瓶颈不同，优化手段也不同。"
+    },
+    "phases/07-transformers-deep-dive/13-scaling-laws": {
+      "source": "The 2020 Kaplan paper said: bigger model, lower loss. The 2022 Hoffmann paper said: you were under-training. Compute goes into two buckets — parameters and tokens — and the spli…",
+      "translation": "Kaplan 2020 年的论文说：模型越大，损失越低。Hoffmann 2022 年的论文说：你的训练量不足。计算量分配给两个部分——参数与词元——但如何划分并不显而易见。"
+    },
+    "phases/07-transformers-deep-dive/14-build-a-transformer-capstone": {
+      "source": "Thirteen lessons. One model. No shortcuts.",
+      "translation": "十三节课，一个模型，不走捷径。"
+    },
+    "phases/07-transformers-deep-dive/15-attention-variants": {
+      "source": "Full attention is a circle. Every token sees every token, and memory pays the price. Four variants bend the shape of the circle and recover half the cost.",
+      "translation": "完整注意力像一个圆。每个词元都能看到其他所有词元，内存则为此付出代价。四种变体改变了这个圆的形状，并省下过半成本。"
+    },
+    "phases/07-transformers-deep-dive/16-speculative-decoding": {
+      "source": "Autoregressive decoding is serial. Each token waits for the previous one. Speculative decoding breaks the chain: a cheap model drafts N tokens, the expensive model verifies all …",
+      "translation": "自回归解码必须串行执行，每个词元都要等待前一个。推测解码打破了这条链：便宜模型先草拟 N 个词元，昂贵模型用一次前向传播同时验证全部 N 个。草稿正确时，只用一次大模型前向传播就完成了 N 次生成。"
+    }
+  },
+  "artifacts": {
+    "phases/04-computer-vision/01-image-fundamentals/outputs/prompt-vision-preprocessing-audit.md": {
+      "source": "Turn any model card or dataset card into a checklist of the preprocessing invariants a vision pipeline must honour",
+      "translation": "将任意模型卡或数据集卡转化为视觉流水线必须遵守的预处理不变量清单"
+    },
+    "phases/04-computer-vision/01-image-fundamentals/outputs/skill-image-tensor-inspector.md": {
+      "source": "Inspect any image-shaped tensor or array and report dtype, layout, range, and whether it looks raw, normalized, or standardized",
+      "translation": "检查任意图像形状的张量或数组，报告 dtype、布局、取值范围，以及数据看起来是原始值、归一化值还是标准化值"
+    },
+    "phases/04-computer-vision/02-convolutions-from-scratch/outputs/prompt-cnn-architect.md": {
+      "source": "Design a stack of Conv2d layers from input size, parameter budget, and target receptive field",
+      "translation": "根据输入尺寸、参数预算和目标感受野设计一组 Conv2d 层"
+    },
+    "phases/04-computer-vision/02-convolutions-from-scratch/outputs/skill-conv-shape-calculator.md": {
+      "source": "Walk a CNN spec layer by layer and report output shape, receptive field, and parameter count for every block",
+      "translation": "逐层分析 CNN 规格，报告每个模块的输出形状、感受野和参数量"
+    },
+    "phases/04-computer-vision/03-cnns-lenet-to-resnet/outputs/prompt-backbone-selector.md": {
+      "source": "Pick the right vision backbone (LeNet, VGG, ResNet, MobileNet, EfficientNet-Lite, ConvNeXt, ViT) for a given task, dataset size, and compute budget",
+      "translation": "根据给定任务、数据集规模和计算预算，选择合适的视觉骨干网络（LeNet、VGG、ResNet、MobileNet、EfficientNet-Lite、ConvNeXt、ViT）"
+    },
+    "phases/04-computer-vision/03-cnns-lenet-to-resnet/outputs/skill-residual-block-reviewer.md": {
+      "source": "Review a PyTorch residual block for skip-connection correctness, BN placement, activation order, and shape alignment",
+      "translation": "审查 PyTorch 残差块的跳跃连接是否正确，以及 BN 位置、激活顺序和形状是否对齐"
+    },
+    "phases/04-computer-vision/04-image-classification/outputs/prompt-classifier-pipeline-auditor.md": {
+      "source": "Audit a PyTorch image classification training script for the five invariants that cover most silent bugs",
+      "translation": "审计 PyTorch 图像分类训练脚本中的五项关键不变量，覆盖大多数静默错误"
+    },
+    "phases/04-computer-vision/04-image-classification/outputs/skill-classification-diagnostics.md": {
+      "source": "Given a confusion matrix and class names, surface per-class failures and propose the single most impactful fix",
+      "translation": "根据混淆矩阵和类别名称，找出各类别的失败情况，并提出影响最大的一项修复"
+    },
+    "phases/04-computer-vision/05-transfer-learning/outputs/prompt-fine-tune-planner.md": {
+      "source": "Pick feature extraction vs progressive vs end-to-end fine-tuning given dataset size, domain distance, and compute budget",
+      "translation": "根据数据集规模、领域差异和计算预算，在特征提取、渐进式微调和端到端微调之间做出选择"
+    },
+    "phases/04-computer-vision/05-transfer-learning/outputs/skill-freeze-inspector.md": {
+      "source": "Report which parameters are trainable, which BatchNorm layers are in eval mode, and whether the optimizer is actually consuming the trainable parameters",
+      "translation": "报告哪些参数可训练、哪些 BatchNorm 层处于 eval 模式，以及优化器是否确实接收了这些可训练参数"
+    },
+    "phases/04-computer-vision/06-object-detection-yolo/outputs/prompt-detection-metric-reader.md": {
+      "source": "Turn a precision/recall/AP/mAP row into a one-line diagnosis and the single most useful next experiment",
+      "translation": "将一行 precision/recall/AP/mAP 指标转化为一句诊断和最有价值的下一项实验"
+    },
+    "phases/04-computer-vision/06-object-detection-yolo/outputs/skill-anchor-designer.md": {
+      "source": "Given a dataset of ground-truth boxes, run k-means on (w, h) and return anchor sets per FPN level plus coverage statistics",
+      "translation": "给定真实框数据集，对 (w, h) 运行 k-means，并返回每个 FPN 层级的锚框集合及覆盖率统计"
+    },
+    "phases/04-computer-vision/07-semantic-segmentation-unet/outputs/prompt-segmentation-task-picker.md": {
+      "source": "Pick semantic vs instance vs panoptic segmentation and name the architecture for a given task",
+      "translation": "针对给定任务，在语义分割、实例分割和全景分割之间选择，并指定架构"
+    },
+    "phases/04-computer-vision/07-semantic-segmentation-unet/outputs/skill-segmentation-mask-inspector.md": {
+      "source": "Report class distribution, predicted-mask statistics, and the classes most likely to be under-predicted or boundary-blurred",
+      "translation": "报告类别分布、预测掩码统计，以及最可能出现预测不足或边界模糊的类别"
+    },
+    "phases/04-computer-vision/08-instance-segmentation-mask-rcnn/outputs/prompt-instance-vs-semantic-router.md": {
+      "source": "Ask three questions and pick instance vs semantic vs panoptic segmentation plus the first model",
+      "translation": "通过三个问题，在实例分割、语义分割和全景分割之间选择，并确定首选模型"
+    },
+    "phases/04-computer-vision/08-instance-segmentation-mask-rcnn/outputs/skill-mask-rcnn-head-swapper.md": {
+      "source": "Generate the exact code for swapping box and mask heads on a torchvision Mask R-CNN for a custom num_classes",
+      "translation": "生成精确代码，为 torchvision Mask R-CNN 替换适配自定义 num_classes 的检测框 Head 和掩码 Head"
+    },
+    "phases/04-computer-vision/09-image-generation-gans/outputs/prompt-gan-training-triage.md": {
+      "source": "Read a description of GAN training curves and pick the failure mode plus the single recommended fix",
+      "translation": "读取 GAN 训练曲线的描述，判断失败模式并给出唯一推荐修复方案"
+    },
+    "phases/04-computer-vision/09-image-generation-gans/outputs/skill-dcgan-scaffold.md": {
+      "source": "Write a complete DCGAN scaffold from z_dim, image_size, and num_channels, including training loop and sample saver",
+      "translation": "根据 z_dim、image_size 和 num_channels 编写完整的 DCGAN 脚手架，包括训练循环和样本保存器"
+    },
+    "phases/04-computer-vision/10-image-generation-diffusion/outputs/prompt-diffusion-sampler-picker.md": {
+      "source": "Pick DDPM, DDIM, DPM-Solver++, or Euler ancestral based on quality target, latency budget, and conditioning type",
+      "translation": "根据质量目标、延迟预算和条件类型，在 DDPM、DDIM、DPM-Solver++ 和 Euler ancestral 之间选择"
+    },
+    "phases/04-computer-vision/10-image-generation-diffusion/outputs/skill-noise-schedule-designer.md": {
+      "source": "Produce a linear, cosine, or sigmoid beta schedule given T and target corruption level, plus SNR plot",
+      "translation": "根据 T 和目标损坏程度生成线性、余弦或 sigmoid beta 调度，并绘制 SNR 图"
+    },
+    "phases/04-computer-vision/11-stable-diffusion/outputs/prompt-sd-pipeline-planner.md": {
+      "source": "Pick SD 1.5 / SDXL / SD3 / FLUX plus scheduler and precision given a latency budget, fidelity target, and licensing constraint",
+      "translation": "根据延迟预算、保真度目标和许可约束，选择 SD 1.5 / SDXL / SD3 / FLUX，以及调度器和精度"
+    },
+    "phases/04-computer-vision/11-stable-diffusion/outputs/skill-lora-training-setup.md": {
+      "source": "Write a full LoRA training config for a custom dataset, including captions, rank, batch size, and learning rate",
+      "translation": "为自定义数据集编写完整的 LoRA 训练配置，包括 captions、rank、batch size 和 learning rate"
+    },
+    "phases/04-computer-vision/12-video-understanding/outputs/prompt-video-architecture-picker.md": {
+      "source": "Pick 2D+pool / I3D / (2+1)D / spatio-temporal transformer based on appearance-vs-motion, dataset size, and compute budget",
+      "translation": "根据外观与运动的侧重、数据集规模和计算预算，在 2D+pool / I3D / (2+1)D / spatio-temporal transformer 之间选择"
+    },
+    "phases/04-computer-vision/12-video-understanding/outputs/skill-frame-sampler-auditor.md": {
+      "source": "Audit a video pipeline's frame sampler for off-by-one, short-clip handling, and crop consistency",
+      "translation": "审计视频流水线的帧采样器，检查 off-by-one 错误、短片段处理和裁剪一致性"
+    },
+    "phases/04-computer-vision/13-3d-vision-nerf/outputs/prompt-3d-task-router.md": {
+      "source": "Route to the right 3D representation (point cloud, mesh, voxel, NeRF, Gaussian splat) based on task and input",
+      "translation": "根据任务和输入选择合适的 3D 表示（点云、网格、体素、NeRF、Gaussian splat）"
+    },
+    "phases/04-computer-vision/13-3d-vision-nerf/outputs/skill-point-cloud-loader.md": {
+      "source": "Write a PyTorch Dataset for .ply / .pcd / .xyz files with correct normalisation, centring, and point sampling",
+      "translation": "为 .ply / .pcd / .xyz 文件编写 PyTorch Dataset，正确处理归一化、居中和点采样"
+    },
+    "phases/04-computer-vision/14-vision-transformers/outputs/prompt-vit-vs-cnn-picker.md": {
+      "source": "Pick between ViT, ConvNeXt, or Swin based on dataset size, compute, and inference stack",
+      "translation": "根据数据集规模、算力和推理栈，在 ViT、ConvNeXt 和 Swin 之间选择"
+    },
+    "phases/04-computer-vision/14-vision-transformers/outputs/skill-vit-patch-and-pos-embed-inspector.md": {
+      "source": "Verify a ViT's patch embedding and positional embedding shapes match the model's expected sequence length",
+      "translation": "验证 ViT 的 Patch embedding 和 positional embedding 形状是否与模型期望的序列长度匹配"
+    },
+    "phases/04-computer-vision/15-real-time-edge/outputs/prompt-edge-deployment-planner.md": {
+      "source": "Pick backbone, quantisation strategy, and runtime given target device and latency SLA",
+      "translation": "根据目标设备和延迟 SLA 选择骨干网络、量化策略和运行时"
+    },
+    "phases/04-computer-vision/15-real-time-edge/outputs/skill-latency-profiler.md": {
+      "source": "Write a complete latency-benchmarking script with warmup, synchronisation, percentiles, and memory tracking",
+      "translation": "编写完整的延迟基准测试脚本，包含预热、同步、百分位数和内存跟踪"
+    },
+    "phases/04-computer-vision/16-vision-pipeline-capstone/outputs/prompt-vision-service-shape-reviewer.md": {
+      "source": "Review a vision service's code for contract/response shape violations and name the first breaking bug",
+      "translation": "审查视觉服务代码中的契约或响应形状违规，并指出第一个会造成破坏的错误"
+    },
+    "phases/04-computer-vision/16-vision-pipeline-capstone/outputs/skill-pipeline-budget-planner.md": {
+      "source": "Given target latency and throughput, assign a time budget to every pipeline stage and flag which stage will miss its budget first",
+      "translation": "根据目标延迟和吞吐量，为流水线各阶段分配时间预算，并标出最先超出预算的阶段"
+    },
+    "phases/04-computer-vision/17-self-supervised-vision/outputs/prompt-ssl-pretraining-picker.md": {
+      "source": "Pick SimCLR / MAE / DINOv2 given dataset size, compute, and downstream task",
+      "translation": "根据数据集规模、算力和下游任务，在 SimCLR / MAE / DINOv2 之间选择"
+    },
+    "phases/04-computer-vision/17-self-supervised-vision/outputs/skill-linear-probe-runner.md": {
+      "source": "Write the complete linear-probe evaluation for any frozen encoder and labelled dataset",
+      "translation": "为任意冻结编码器和带标签数据集编写完整的线性探测评估"
+    },
+    "phases/04-computer-vision/18-open-vocab-clip/outputs/prompt-zero-shot-class-picker.md": {
+      "source": "Design prompt templates for zero-shot CLIP given a list of classes and a domain",
+      "translation": "根据类别列表和领域，为零样本 CLIP 设计提示模板"
+    },
+    "phases/04-computer-vision/18-open-vocab-clip/outputs/skill-image-text-retriever.md": {
+      "source": "Build an image embedding index with any CLIP checkpoint; support query-by-text and query-by-image",
+      "translation": "使用任意 CLIP checkpoint 构建图像嵌入索引，支持以文本查询和以图像查询"
+    },
+    "phases/04-computer-vision/19-ocr-document-understanding/outputs/prompt-ocr-stack-picker.md": {
+      "source": "Pick Tesseract / PaddleOCR / Donut / VLM-OCR given document type, language, and structure",
+      "translation": "根据文档类型、语言和结构，在 Tesseract / PaddleOCR / Donut / VLM-OCR 之间选择"
+    },
+    "phases/04-computer-vision/19-ocr-document-understanding/outputs/skill-ctc-decoder.md": {
+      "source": "Write greedy and beam-search CTC decoders from scratch, including length normalisation",
+      "translation": "从零编写贪心和 beam-search CTC 解码器，包括长度归一化"
+    },
+    "phases/04-computer-vision/20-image-retrieval-metric/outputs/prompt-retrieval-loss-picker.md": {
+      "source": "Pick triplet / InfoNCE / ProxyNCA for a given retrieval problem",
+      "translation": "针对给定检索问题，在 triplet / InfoNCE / ProxyNCA 之间选择"
+    },
+    "phases/04-computer-vision/20-image-retrieval-metric/outputs/skill-recall-at-k-runner.md": {
+      "source": "Write a clean evaluation harness for recall@K with train/val/gallery splits and proper data contract",
+      "translation": "为 recall@K 编写简洁的评估工具，包含 train/val/gallery 划分和正确的数据契约"
+    },
+    "phases/04-computer-vision/21-keypoint-pose/outputs/prompt-pose-stack-picker.md": {
+      "source": "Pick MediaPipe / YOLOv8-pose / HRNet / ViTPose given latency, crowd size, and 2D vs 3D need",
+      "translation": "根据延迟、人群规模及 2D 与 3D 需求，在 MediaPipe / YOLOv8-pose / HRNet / ViTPose 之间选择"
+    },
+    "phases/04-computer-vision/21-keypoint-pose/outputs/skill-heatmap-to-coords.md": {
+      "source": "Write the sub-pixel heatmap-to-coordinate routine used by every production pose model",
+      "translation": "编写生产级姿态模型通用的亚像素热力图到坐标转换例程"
+    },
+    "phases/04-computer-vision/22-3d-gaussian-splatting/outputs/prompt-3dgs-capture-planner.md": {
+      "source": "Plan a photo capture session for 3DGS reconstruction given scene type and hardware",
+      "translation": "根据场景类型和硬件，为 3DGS 重建规划照片采集流程"
+    },
+    "phases/04-computer-vision/22-3d-gaussian-splatting/outputs/skill-3dgs-export-router.md": {
+      "source": "Pick the right 3DGS export format (.ply / .splat / glTF KHR_gaussian_splatting / USD) given the downstream viewer or engine",
+      "translation": "根据下游查看器或引擎选择合适的 3DGS 导出格式（.ply / .splat / glTF KHR_gaussian_splatting / USD）"
+    },
+    "phases/04-computer-vision/23-diffusion-transformers-rectified-flow/outputs/prompt-dit-model-picker.md": {
+      "source": "Pick between SD3, SD3.5, FLUX.1-dev, FLUX.1-schnell, Z-Image, SD4 Turbo given quality, latency, and license",
+      "translation": "根据质量、延迟和许可要求，在 SD3、SD3.5、FLUX.1-dev、FLUX.1-schnell、Z-Image、SD4 Turbo 之间选择"
+    },
+    "phases/04-computer-vision/23-diffusion-transformers-rectified-flow/outputs/skill-rectified-flow-trainer.md": {
+      "source": "Write a complete rectified-flow training loop with AdaLN DiT and Euler sampling",
+      "translation": "使用 AdaLN DiT 和 Euler sampling 编写完整的 rectified-flow 训练循环"
+    },
+    "phases/04-computer-vision/24-sam3-open-vocab-segmentation/outputs/prompt-open-vocab-stack-picker.md": {
+      "source": "Pick SAM 3 / Grounded SAM 2 / YOLO-World / SAM-MI based on latency, concept complexity, and licensing",
+      "translation": "根据延迟、概念复杂度和许可要求，在 SAM 3 / Grounded SAM 2 / YOLO-World / SAM-MI 之间选择"
+    },
+    "phases/04-computer-vision/24-sam3-open-vocab-segmentation/outputs/skill-concept-prompt-designer.md": {
+      "source": "Turn user utterances into well-formed SAM 3 concept prompts with splitting, disambiguation, and fallbacks",
+      "translation": "通过拆分、消歧和回退机制，将用户话语转化为格式完善的 SAM 3 概念提示"
+    },
+    "phases/04-computer-vision/25-vision-language-models/outputs/prompt-vlm-selector.md": {
+      "source": "Pick Qwen3-VL / InternVL3.5 / LLaVA-Next / API given accuracy, latency, context length, and budget",
+      "translation": "根据准确率、延迟、上下文长度和预算，在 Qwen3-VL / InternVL3.5 / LLaVA-Next / API 之间选择"
+    },
+    "phases/04-computer-vision/25-vision-language-models/outputs/skill-cmer-monitor.md": {
+      "source": "Instrument a production VLM endpoint with Cross-Modal Error Rate monitoring, dashboards, and alerts",
+      "translation": "为生产级 VLM 端点接入 Cross-Modal Error Rate 监控、仪表板和告警"
+    },
+    "phases/04-computer-vision/26-monocular-depth/outputs/prompt-depth-model-picker.md": {
+      "source": "Pick Depth Anything V3 / Marigold / UniDepth / MiDaS given latency, metric-vs-relative need, and scene type",
+      "translation": "根据延迟、度量深度与相对深度需求及场景类型，在 Depth Anything V3 / Marigold / UniDepth / MiDaS 之间选择"
+    },
+    "phases/04-computer-vision/26-monocular-depth/outputs/skill-depth-to-pointcloud.md": {
+      "source": "Build point clouds from depth maps with correct intrinsics handling and export to .ply",
+      "translation": "正确处理相机内参，从深度图构建点云并导出为 .ply"
+    },
+    "phases/04-computer-vision/27-multi-object-tracking/outputs/prompt-tracker-picker.md": {
+      "source": "Pick SORT / ByteTrack / BoT-SORT / SAM 2 / SAM 3.1 given scene type, occlusion patterns, and latency budget",
+      "translation": "根据场景类型、遮挡模式和延迟预算，在 SORT / ByteTrack / BoT-SORT / SAM 2 / SAM 3.1 之间选择"
+    },
+    "phases/04-computer-vision/27-multi-object-tracking/outputs/skill-mot-evaluator.md": {
+      "source": "Write a complete evaluation harness for MOTA / IDF1 / HOTA against ground-truth tracks",
+      "translation": "编写完整的评估工具，对照真实轨迹计算 MOTA / IDF1 / HOTA"
+    },
+    "phases/04-computer-vision/28-world-models-video-diffusion/outputs/prompt-video-model-picker.md": {
+      "source": "Pick Sora 2 / Runway Gen-5 / Wan-Video / HunyuanVideo / Cosmos for a given task, license, and latency target",
+      "translation": "根据给定任务、许可和延迟目标，在 Sora 2 / Runway Gen-5 / Wan-Video / HunyuanVideo / Cosmos 之间选择"
+    },
+    "phases/04-computer-vision/28-world-models-video-diffusion/outputs/skill-physical-plausibility-checks.md": {
+      "source": "Automated checks for object permanence, gravity, and continuity on any generated video before shipping",
+      "translation": "在交付任何生成视频前，自动检查物体恒存性、重力和连续性"
+    },
+    "phases/05-nlp-foundations-to-advanced/01-text-processing/outputs/prompt-preprocessing-advisor.md": {
+      "source": "Recommends a tokenization, stemming, and lemmatization setup for an NLP task.",
+      "translation": "为 NLP 任务推荐分词、词干提取和词形还原配置。"
+    },
+    "phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/outputs/prompt-vectorization-picker.md": {
+      "source": "Given a text-classification task, recommend BoW, TF-IDF, embeddings, or a hybrid.",
+      "translation": "针对文本分类任务，推荐 BoW、TF-IDF、嵌入或混合方案。"
+    },
+    "phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/outputs/skill-embedding-probe.md": {
+      "source": "Inspect a word2vec model. Run analogies, find neighbors, diagnose quality.",
+      "translation": "检查 word2vec 模型，运行类比测试、查找近邻并诊断质量。"
+    },
+    "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/outputs/skill-embeddings-picker.md": {
+      "source": "Pick a tokenization approach for a new language model or text pipeline.",
+      "translation": "为新的语言模型或文本流水线选择分词方案。"
+    },
+    "phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/outputs/prompt-sentiment-baseline.md": {
+      "source": "Design a sentiment analysis baseline for a new dataset.",
+      "translation": "为新数据集设计情感分析基线。"
+    },
+    "phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/outputs/skill-ner-picker.md": {
+      "source": "Pick the right NER approach for a given extraction task.",
+      "translation": "为给定抽取任务选择合适的 NER 方案。"
+    },
+    "phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/outputs/skill-grammar-pipeline.md": {
+      "source": "Design a classical POS + dependency pipeline for a downstream NLP task.",
+      "translation": "为下游 NLP 任务设计经典的 POS + 依存分析流水线。"
+    },
+    "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/outputs/prompt-text-encoder-picker.md": {
+      "source": "Pick a text encoder architecture for a given constraint set.",
+      "translation": "针对给定约束选择文本编码器架构。"
+    },
+    "phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/outputs/prompt-seq2seq-design.md": {
+      "source": "Design a sequence-to-sequence pipeline for a given task.",
+      "translation": "为给定任务设计序列到序列流水线。"
+    },
+    "phases/05-nlp-foundations-to-advanced/10-attention-mechanism/outputs/prompt-attention-shapes.md": {
+      "source": "Debug shape bugs in attention implementations.",
+      "translation": "调试注意力实现中的形状错误。"
+    },
+    "phases/05-nlp-foundations-to-advanced/11-machine-translation/outputs/skill-mt-evaluator.md": {
+      "source": "Evaluate a machine translation output for shipping.",
+      "translation": "评估机器翻译输出是否达到交付标准。"
+    },
+    "phases/05-nlp-foundations-to-advanced/12-text-summarization/outputs/skill-summary-picker.md": {
+      "source": "Pick extractive or abstractive, name the library, add a factuality check.",
+      "translation": "选择抽取式或生成式方案，指定库，并加入事实性检查。"
+    },
+    "phases/05-nlp-foundations-to-advanced/13-question-answering/outputs/skill-qa-architect.md": {
+      "source": "Choose QA architecture, retrieval strategy, and evaluation plan.",
+      "translation": "选择 QA 架构、检索策略和评估方案。"
+    },
+    "phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/outputs/skill-retrieval-picker.md": {
+      "source": "Pick a retrieval stack for a given corpus and query pattern.",
+      "translation": "针对给定语料库和查询模式选择检索技术栈。"
+    },
+    "phases/05-nlp-foundations-to-advanced/15-topic-modeling/outputs/skill-topic-picker.md": {
+      "source": "Pick LDA or BERTopic for a corpus. Specify library, knobs, evaluation.",
+      "translation": "为语料库选择 LDA 或 BERTopic，并指定库、调节参数和评估方式。"
+    },
+    "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/outputs/prompt-lm-baseline.md": {
+      "source": "Build a reproducible n-gram language model baseline before training a neural LM.",
+      "translation": "在训练神经语言模型前，构建可复现的 n-gram 语言模型基线。"
+    },
+    "phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/outputs/skill-chatbot-architect.md": {
+      "source": "Design a chatbot stack for a given use case.",
+      "translation": "为给定用例设计聊天机器人技术栈。"
+    },
+    "phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/outputs/skill-multilingual-picker.md": {
+      "source": "Pick source language, target model, and evaluation plan for a multilingual NLP task.",
+      "translation": "为多语言 NLP 任务选择源语言、目标模型和评估方案。"
+    },
+    "phases/05-nlp-foundations-to-advanced/19-subword-tokenization/outputs/skill-bpe-vs-wordpiece.md": {
+      "source": "Pick tokenizer algorithm, vocab size, library for a given corpus and deployment target.",
+      "translation": "针对给定语料库和部署目标，选择 tokenizer 算法、vocab size 和库。"
+    },
+    "phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/outputs/skill-structured-output-picker.md": {
+      "source": "Choose a structured output approach, schema design, and validation plan.",
+      "translation": "选择结构化输出方案、schema 设计和验证计划。"
+    },
+    "phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/outputs/skill-nli-picker.md": {
+      "source": "Pick an NLI model, label template, and evaluation setup for a classification / faithfulness / zero-shot task.",
+      "translation": "为分类、忠实度或零样本任务选择 NLI 模型、标签模板和评估配置。"
+    },
+    "phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/outputs/skill-embedding-picker.md": {
+      "source": "Pick embedding model, dimension, and retrieval mode for a given corpus and deployment.",
+      "translation": "针对给定语料库和部署场景，选择嵌入模型、维度和检索模式。"
+    },
+    "phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/outputs/skill-chunker.md": {
+      "source": "Pick a chunking strategy, size, and overlap for a given corpus and query distribution.",
+      "translation": "针对给定语料库和查询分布，选择分块策略、大小和重叠量。"
+    },
+    "phases/05-nlp-foundations-to-advanced/24-coreference-resolution/outputs/skill-coref-picker.md": {
+      "source": "Pick a coreference approach, evaluation plan, and integration strategy.",
+      "translation": "选择共指消解方案、评估计划和集成策略。"
+    },
+    "phases/05-nlp-foundations-to-advanced/25-entity-linking/outputs/skill-entity-linker.md": {
+      "source": "Design an entity linking pipeline — KB, candidate generator, disambiguator, evaluation.",
+      "translation": "设计实体链接流水线，包括 KB、候选生成器、消歧器和评估。"
+    },
+    "phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/outputs/skill-re-designer.md": {
+      "source": "Design a relation extraction pipeline with provenance and canonicalization.",
+      "translation": "设计具备溯源与规范化能力的关系抽取流水线。"
+    },
+    "phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/outputs/skill-eval-architect.md": {
+      "source": "Design an LLM evaluation plan with calibrated judge and CI gates.",
+      "translation": "设计包含校准裁判和 CI 门禁的 LLM 评估方案。"
+    },
+    "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/outputs/skill-long-context-eval.md": {
+      "source": "Design a long-context evaluation battery for a given model and use case.",
+      "translation": "为给定模型和用例设计一套长上下文评估测试组。"
+    },
+    "phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/outputs/skill-dst-designer.md": {
+      "source": "Design a dialogue state tracker — schema, extractor, update policy, evaluation.",
+      "translation": "设计对话状态跟踪器，包括 schema、抽取器、更新策略和评估。"
+    },
+    "phases/06-speech-and-audio/01-audio-fundamentals/outputs/skill-audio-loader.md": {
+      "source": "Validate a raw audio file against a target model's expectations and resample it safely.",
+      "translation": "根据目标模型的预期验证原始音频文件，并安全地进行重采样。"
+    },
+    "phases/06-speech-and-audio/02-spectrograms-mel-features/outputs/skill-feature-extractor.md": {
+      "source": "Pick feature type, mel count, frame/hop, and normalization to match a downstream audio model.",
+      "translation": "选择特征类型、mel 数量、frame/hop 和归一化方式，以匹配下游音频模型。"
+    },
+    "phases/06-speech-and-audio/03-audio-classification/outputs/skill-classifier-designer.md": {
+      "source": "Pick architecture, augmentation, class-balance strategy, and eval metric for an audio classification task.",
+      "translation": "为音频分类任务选择架构、数据增强、类别平衡策略和评估指标。"
+    },
+    "phases/06-speech-and-audio/04-speech-recognition-asr/outputs/skill-asr-picker.md": {
+      "source": "Pick ASR model, decoding strategy, chunking, and LM fusion for a given deployment target.",
+      "translation": "针对给定部署目标，选择 ASR 模型、解码策略、分块方式和 LM 融合方案。"
+    },
+    "phases/06-speech-and-audio/05-whisper-architecture-finetuning/outputs/skill-whisper-tuner.md": {
+      "source": "Design a Whisper fine-tune or inference pipeline for a given language, domain, and latency budget.",
+      "translation": "针对给定语言、领域和延迟预算，设计 Whisper 微调或推理流水线。"
+    },
+    "phases/06-speech-and-audio/06-speaker-recognition-verification/outputs/skill-speaker-verifier.md": {
+      "source": "Design a speaker verification or diarization pipeline with model choice, enrollment protocol, and threshold tuning.",
+      "translation": "设计说话人验证或说话人分离流水线，包括模型选择、注册协议和阈值调优。"
+    },
+    "phases/06-speech-and-audio/07-text-to-speech/outputs/skill-tts-designer.md": {
+      "source": "Pick TTS model, voice, text-normalization scope, and evaluation plan for a given language, style, and latency target.",
+      "translation": "针对给定语言、风格和延迟目标，选择 TTS 模型、声音、文本规范化范围和评估方案。"
+    },
+    "phases/06-speech-and-audio/08-voice-cloning-conversion/outputs/skill-voice-cloner.md": {
+      "source": "Pick cloning approach (zero-shot / conversion / adaptation), consent artifact, watermark, and safety filters for a voice-cloning deployment.",
+      "translation": "为声音克隆部署选择克隆方案（zero-shot / conversion / adaptation）、同意凭证、水印和安全过滤器。"
+    },
+    "phases/06-speech-and-audio/09-music-generation/outputs/skill-music-designer.md": {
+      "source": "Pick a music-generation model, license strategy, length plan, and disclosure metadata for a deployment.",
+      "translation": "为部署选择音乐生成模型、许可策略、时长方案和披露元数据。"
+    },
+    "phases/06-speech-and-audio/10-audio-language-models/outputs/skill-alm-picker.md": {
+      "source": "Pick an audio-language model, benchmark subset, output modality (text vs speech), and guardrails for an audio-understanding task.",
+      "translation": "为音频理解任务选择音频语言模型、基准子集、输出模态（文本或语音）和护栏。"
+    },
+    "phases/06-speech-and-audio/11-real-time-audio-processing/outputs/skill-realtime-pipeline.md": {
+      "source": "Pick transport, VAD, streaming STT, LLM, streaming TTS, and orchestration for a target end-to-end latency.",
+      "translation": "针对目标端到端延迟，选择传输方式、VAD、流式 STT、LLM、流式 TTS 和编排方案。"
+    },
+    "phases/06-speech-and-audio/12-voice-assistant-pipeline/outputs/skill-voice-assistant-architect.md": {
+      "source": "Produce a full-stack voice-assistant spec — components, latency budget, observability, compliance — for a given workload.",
+      "translation": "为给定工作负载产出全栈语音助手规格，包括组件、延迟预算、可观测性和合规要求。"
+    },
+    "phases/06-speech-and-audio/13-neural-audio-codecs/outputs/skill-codec-picker.md": {
+      "source": "Pick a neural audio codec (EnCodec / DAC / SNAC / Mimi) for a given generative or compression task.",
+      "translation": "为给定生成或压缩任务选择神经音频编解码器（EnCodec / DAC / SNAC / Mimi）。"
+    },
+    "phases/06-speech-and-audio/14-voice-activity-detection-turn-taking/outputs/skill-vad-tuner.md": {
+      "source": "Pick VAD model, threshold, silence hangover, pre-roll, and turn-detection strategy for a voice agent.",
+      "translation": "为语音智能体选择 VAD 模型、阈值、静音拖尾、预滚动和轮次检测策略。"
+    },
+    "phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki/outputs/skill-duplex-pipeline.md": {
+      "source": "Pick full-duplex (Moshi) vs pipeline (VAD + STT + LLM + TTS) architecture for a voice-agent workload.",
+      "translation": "为语音智能体工作负载选择全双工（Moshi）或流水线（VAD + STT + LLM + TTS）架构。"
+    },
+    "phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking/outputs/skill-spoof-defender.md": {
+      "source": "Pick detection model, watermark, provenance manifest, and operational playbook for a voice-generation / voice-auth deployment.",
+      "translation": "为语音生成或语音认证部署选择检测模型、水印、溯源清单和运维手册。"
+    },
+    "phases/06-speech-and-audio/17-audio-evaluation-metrics/outputs/skill-audio-evaluator.md": {
+      "source": "Pick metrics, benchmarks, normalization rules, and reporting format for any audio model release.",
+      "translation": "为任意音频模型发布选择指标、基准、归一化规则和报告格式。"
+    },
+    "phases/07-transformers-deep-dive/01-why-transformers/outputs/skill-architecture-picker.md": {
+      "source": "Pick sequence architecture (RNN, transformer, SSM, hybrid) given length, throughput, and training budget.",
+      "translation": "根据序列长度、吞吐量和训练预算选择序列架构（RNN、Transformer、SSM、hybrid）。"
+    },
+    "phases/07-transformers-deep-dive/02-self-attention-from-scratch/outputs/prompt-attention-explainer.md": {
+      "source": "Explain the attention mechanism through the database lookup analogy",
+      "translation": "通过数据库查找类比解释注意力机制"
+    },
+    "phases/07-transformers-deep-dive/03-multi-head-attention/outputs/skill-mha-configurator.md": {
+      "source": "Recommend head count, KV-head count, and projection strategy (MHA / MQA / GQA / MLA) for a new transformer.",
+      "translation": "为新的 Transformer 推荐注意力头数量、KV-head 数量和投影策略（MHA / MQA / GQA / MLA）。"
+    },
+    "phases/07-transformers-deep-dive/04-positional-encoding/outputs/skill-positional-encoding-picker.md": {
+      "source": "Pick positional encoding (RoPE, ALiBi, sinusoidal) + scaling strategy given context length and training budget.",
+      "translation": "根据上下文长度和训练预算选择位置编码（RoPE、ALiBi、sinusoidal）及缩放策略。"
+    },
+    "phases/07-transformers-deep-dive/05-full-transformer/outputs/skill-transformer-block-reviewer.md": {
+      "source": "Review a transformer block implementation against 2026 defaults and flag drift.",
+      "translation": "依据 2026 年默认实践审查 Transformer block 实现，并标出偏差。"
+    },
+    "phases/07-transformers-deep-dive/06-bert-masked-language-modeling/outputs/skill-bert-finetuner.md": {
+      "source": "Scope a BERT fine-tune for a new classification, extraction, or retrieval task.",
+      "translation": "为新的分类、抽取或检索任务界定 BERT 微调方案。"
+    },
+    "phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/outputs/skill-sampling-tuner.md": {
+      "source": "Pick decoding strategy (greedy / temperature / top-k / top-p / min-p / speculative) for a given generation task.",
+      "translation": "为给定生成任务选择解码策略（greedy / temperature / top-k / top-p / min-p / speculative）。"
+    },
+    "phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/outputs/skill-seq2seq-picker.md": {
+      "source": "Choose encoder-decoder vs decoder-only for a new sequence-to-sequence task.",
+      "translation": "为新的序列到序列任务选择 encoder-decoder 或 decoder-only 架构。"
+    },
+    "phases/07-transformers-deep-dive/09-vision-transformers/outputs/skill-vit-configurator.md": {
+      "source": "Pick a ViT variant, patch size, and pretraining source for a new vision task.",
+      "translation": "为新的视觉任务选择 ViT 变体、Patch 大小和预训练来源。"
+    },
+    "phases/07-transformers-deep-dive/10-audio-transformers-whisper/outputs/skill-asr-configurator.md": {
+      "source": "Pick an ASR model (Whisper variant / Moonshine / faster-whisper) and decoding parameters for a new speech pipeline.",
+      "translation": "为新的语音流水线选择 ASR 模型（Whisper variant / Moonshine / faster-whisper）和解码参数。"
+    },
+    "phases/07-transformers-deep-dive/11-mixture-of-experts/outputs/skill-moe-configurator.md": {
+      "source": "Pick expert count, top-k, balancing strategy, and shared-expert layout for a new MoE transformer.",
+      "translation": "为新的 MoE Transformer 选择专家数量、top-k、负载均衡策略和共享专家布局。"
+    },
+    "phases/07-transformers-deep-dive/12-kv-cache-flash-attention/outputs/skill-inference-optimizer.md": {
+      "source": "Pick attention implementation, KV cache strategy, quantization, and speculative decoding for a new inference deployment.",
+      "translation": "为新的推理部署选择注意力实现、KV cache 策略、量化方案和推测解码策略。"
+    },
+    "phases/07-transformers-deep-dive/13-scaling-laws/outputs/skill-training-budget-estimator.md": {
+      "source": "Estimate (N, D, hours, GPU count) for a new transformer training run given compute budget and deployment constraints.",
+      "translation": "根据计算预算和部署约束，为新的 Transformer 训练任务估算（N、D、小时数、GPU 数量）。"
+    },
+    "phases/07-transformers-deep-dive/14-build-a-transformer-capstone/outputs/skill-transformer-review.md": {
+      "source": "Review a transformer-from-scratch implementation against the 13 Phase 7 lessons.",
+      "translation": "依据第 7 阶段的 13 节课程，审查从零实现的 Transformer。"
+    },
+    "phases/07-transformers-deep-dive/15-attention-variants/outputs/skill-attention-variant-picker.md": {
+      "source": "Pick a full / sliding-window / sparse / differential attention topology for a new model given context length, retrieval demands, and compute profile.",
+      "translation": "根据上下文长度、检索需求和计算特征，为新模型选择 full / sliding-window / sparse / differential attention 拓扑。"
+    },
+    "phases/07-transformers-deep-dive/16-speculative-decoding/outputs/skill-spec-decode-picker.md": {
+      "source": "Pick a speculative decoding strategy (vanilla / Medusa / EAGLE / lookahead) and tuning parameters for a new LLM inference workload.",
+      "translation": "为新的 LLM 推理工作负载选择推测解码策略（vanilla / Medusa / EAGLE / lookahead）及调优参数。"
+    }
+  }
+}

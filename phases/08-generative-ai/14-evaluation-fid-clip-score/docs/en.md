@@ -32,7 +32,7 @@ Heusel et al. (2017). Steps:
 Interpretation: Fréchet distance between two multivariate Gaussians in feature space. Lower = more similar distributions.
 
 Failure modes:
-- **Biased on small N.** FID is mean-squared over the feature distribution — small N under-estimates covariance, gives falsely low FID. Always use N ≥ 10,000.
+- **Biased on small N.** Noisy finite-sample estimates of the means and covariances distort FID. Even two samples from the same distribution usually produce a positive score (the upward bias shown in the demo), while the direction and magnitude of error depend on the distributions and feature space. Always use N ≥ 10,000.
 - **Inception-dependent.** Inception-v3 was trained on ImageNet. Domains far from ImageNet (faces, art, text images) produce meaningless FID. Use a domain-specific feature extractor.
 - **Gaming.** Overfitting to the Inception prior gives low FID without visual quality improvement. Beat it with CMMD (below).
 
@@ -40,7 +40,7 @@ Failure modes:
 
 Radford et al. (2021). For a generated image + prompt:
 
-```
+```text
 clip_score = cos_sim( CLIP_image(x_gen), CLIP_text(prompt) )
 ```
 
@@ -161,7 +161,7 @@ Save `outputs/skill-eval-report.md`. Skill takes a new model checkpoint + baseli
 | FID | "Fréchet Inception Distance" | Fréchet distance of Gaussian fits to real vs gen Inception features. |
 | CLIP score | "Text-image similarity" | Cosine similarity between CLIP image and text embeddings. |
 | CMMD | "FID's replacement" | CLIP-feature MMD; less biased, no Gaussian assumption. |
-| IS | "Inception score" | Exp KL(p(y|x) || p(y)); correlates poorly on modern models, retired. |
+| IS | "Inception score" | exp(E_x[KL(p(y\|x) \|\| p(y))]); correlates poorly on modern models, retired. |
 | HPSv2 / ImageReward / PickScore | "Learned preference proxies" | Small models trained on human preferences; used as automatic judges. |
 | Elo | "Chess rating" | Bradley-Terry aggregation of pairwise wins. |
 | PartiPrompts | "The benchmark prompt set" | 1,600 Google-curated prompts across 12 categories. |

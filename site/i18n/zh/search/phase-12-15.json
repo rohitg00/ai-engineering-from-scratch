@@ -1,0 +1,967 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/12-multimodal-ai/01-vision-transformer-patch-tokens": {
+      "source": "Before anything multimodal, an image has to become a sequence of tokens a transformer can eat. The 2020 ViT paper answered this with 16x16 pixel patches, a linear projection, an…",
+      "translation": "在处理任何多模态任务之前，图像必须先变成 Transformer 能够接收的词元序列。2020 年的 ViT 论文使用 16x16 像素图像块、线性投影和位置嵌入解决了这个问题。五年后，2026 年的每个前沿模型（原生支持 2576px 的 Claude Opus 4.7、Gemini 3.1 Pro、Qwen3.5-Omni）仍从这里起步——编码器从 ViT 演进为 DINOv2、SigLIP 2，又加入了寄存器词元，位置方案也变成 2D-RoPE，但这项原语始终不变。本课会端到端解读图像块词元流水线，并使用标准库 Python 构建它，为阶段 12 后续课程中的“视觉词元”建立具体的心智模型。"
+    },
+    "phases/12-multimodal-ai/02-clip-contrastive-pretraining": {
+      "source": "OpenAI's CLIP (2021) proved a single idea big enough to power the next five years: align an image encoder and a text encoder in the same vector space using only noisy web image-…",
+      "translation": "OpenAI 的 CLIP（2021）证明了一个足以驱动此后五年发展的想法：只使用带噪声的 Web 图像—说明文字对和对比损失，把图像编码器与文本编码器对齐到同一个向量空间。不使用任何监督标签，只需要 4 亿个样本对。由此得到的嵌入空间能够执行零样本分类和图文检索，并作为视觉塔接入 2026 年的每种 VLM。SigLIP 2（2025）以 Sigmoid 取代 Softmax，用更低成本扩展到了 CLIP 之上。本课从 InfoNCE 一路推导到成对 Sigmoid 损失，并使用标准库 Python 构建训练步骤。"
+    },
+    "phases/12-multimodal-ai/03-blip2-qformer-bridge": {
+      "source": "CLIP aligns image and text but cannot generate captions, answer questions, or hold a conversation. BLIP-2 (Salesforce, 2023) solved that with a small trainable bridge: 32 learna…",
+      "translation": "CLIP 对齐了图像与文本，却无法生成说明文字、回答问题或进行对话。BLIP-2（Salesforce，2023）用一个小型可训练桥梁解决了这个问题：32 个可学习查询向量通过交叉注意力关注冻结 ViT 的特征，再直接插入冻结大语言模型的输入流。仅 1.88 亿个桥接参数，就把一个 11B 大语言模型连接到 ViT-g/14。直到 2026 年的每个适配器式 VLM——MiniGPT-4、InstructBLIP、LLaVA 的同类模型——都是它的后代。本课会解读 Q-Former 架构，解释它的两阶段训练，并构建一个把视觉词元送入冻结文本解码器的玩具版本。"
+    },
+    "phases/12-multimodal-ai/04-flamingo-gated-cross-attention": {
+      "source": "DeepMind's Flamingo (2022) did two things before anyone else. It showed a single model could process arbitrarily interleaved sequences of images, videos, and text. And it showed…",
+      "translation": "DeepMind 的 Flamingo（2022）率先完成了两件事。它证明单个模型可以处理图像、视频与文本任意交错的序列；也证明 VLM 能够进行上下文学习——给出包含三个（图像、说明文字）样本对的少样本提示后，模型无须任何梯度更新，就能为一幅新图像生成说明文字。其机制是在冻结大语言模型的现有层之间插入门控交叉注意力层，并使用一个初始值为零的可学习 tanh 门，从而在初始化时保留大语言模型的文本能力。本课会讲解 Flamingo 的 Perceiver 重采样器与门控交叉注意力架构——它们是 Gemini 交错输入和 Idefics2 视觉词元的先驱。"
+    },
+    "phases/12-multimodal-ai/05-llava-visual-instruction-tuning": {
+      "source": "LLaVA (April 2023) is the most copied multimodal architecture on the planet. It replaced BLIP-2's Q-Former with a 2-layer MLP, replaced Flamingo's gated cross-attention with nai…",
+      "translation": "LLaVA（2023 年 4 月）是全球被仿效最多的多模态架构。它用两层 MLP 替代 BLIP-2 的 Q-Former，用朴素词元拼接替代 Flamingo 的门控交叉注意力，并使用 GPT-4 根据纯文本说明生成的 15.8 万轮视觉指令数据进行训练。2023 到 2026 年间，几乎每位构建 VLM 的实践者都做过某种 LLaVA 变体。LLaVA-1.5 加入 AnyRes，LLaVA-NeXT 提高分辨率，LLaVA-OneVision 则用一套训练方案统一单图、多图与视频。本课会解析这套方案，实现投影器，并解释为什么“更简单的方案赢了”。"
+    },
+    "phases/12-multimodal-ai/06-any-resolution-patch-n-pack": {
+      "source": "Real images are not 224x224 squares. A receipt is 9:16, a chart is 16:9, a medical scan might be 4096x4096, a mobile screenshot is 9:19.5. The pre-2024 VLM answer — resize every…",
+      "translation": "真实图像并不是 224x224 的正方形。收据是 9:16，图表是 16:9，医学扫描可能达到 4096x4096，手机截图则是 9:19.5。2024 年之前 VLM 的做法——把所有图像缩放成固定正方形——会丢掉 OCR、文档理解与高分辨率场景解析赖以工作的信号。NaViT（Google，2023）证明，可以使用分块对角掩码，把不同分辨率的图像块打包进同一个 Transformer 批次。Qwen2-VL 的 M-RoPE（2024）彻底舍弃绝对位置表。LLaVA-NeXT 的 AnyRes 把高分辨率图像平铺为一幅基础图像加若干子图像。SigLIP 2 的 NaFlex 变体（2025）如今已成为开放 VLM 的默认编码器，使一个检查点可以服务所有宽高比。本课将端到端实现 patch-n'-pack。"
+    },
+    "phases/12-multimodal-ai/07-open-weight-vlm-recipes": {
+      "source": "The 2024-2026 open-weight VLM literature is a forest of ablation tables. Apple's MM1 tested 13 combinations of image encoder, connector, and data mix. Allen AI's Molmo proved de…",
+      "translation": "2024～2026 年的开放权重 VLM 文献，就像一片消融实验表格组成的森林。Apple 的 MM1 测试了图像编码器、连接器与数据混合的 13 种组合。Allen AI 的 Molmo 证明，详细的人工说明文字胜过 GPT-4V 蒸馏。Cambrian-1 比较了 20 多种编码器。Idefics2 将设计空间归纳为五个维度。Prismatic VLMs 在受控基准上比较了 27 种训练配方。从所有噪声中，可以提炼出一小组在多篇论文中都成立的结论：图像编码器比连接器架构更重要，数据混合比二者都重要，而详细的人工说明文字胜过蒸馏得到的合成数据。本课会替你读完这些表格。"
+    },
+    "phases/12-multimodal-ai/08-llava-onevision-single-multi-video": {
+      "source": "Before LLaVA-OneVision (Li et al., August 2024) the open-VLM world had separate lineages: LLaVA-1.5 for single images, multi-image models like Mantis and VILA, video models like…",
+      "translation": "LLaVA-OneVision（Li 等，2024 年 8 月）出现之前，开放 VLM 世界存在彼此分离的谱系：LLaVA-1.5 处理单幅图像，Mantis 与 VILA 等模型处理多幅图像，Video-LLaVA 和 Video-LLaMA 等模型处理视频。每个模型都能赢得自己的基准，却会在其他基准上失败。LLaVA-OneVision 主张，一套统一课程可以训练出一个同时主导三种场景的模型，而且涌现出的任务迁移效应（单图技能迁移到视频，多图推理迁移到单图）会超过多个专用模型之和。其配方看似简单：在各种场景间保持恒定的视觉词元预算，再采用从单图到 OneVision（多图）、最后到视频的显式课程。本课会解读这套预算、课程与涌现行为。"
+    },
+    "phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps": {
+      "source": "The Qwen-VL family — Qwen-VL (2023), Qwen2-VL (2024), Qwen2.5-VL (2025), Qwen3-VL (2025) — is the most influential open vision-language model lineage in 2026. Each generation ma…",
+      "translation": "Qwen-VL 系列——Qwen-VL（2023）、Qwen2-VL（2024）、Qwen2.5-VL（2025）、Qwen3-VL（2025）——是 2026 年最具影响力的开放视觉—语言模型谱系。每一代都在架构上做出一个决定性的选择，随后十二个月内便被开放生态广泛借鉴：通过 M-RoPE 实现原生动态分辨率、结合绝对时间对齐的动态帧率采样、ViT 中的窗口注意力，以及结构化智能体输出格式。到 Qwen3-VL 时，配方已经稳定下来：使用支持原生宽高比输入的 2D-RoPE ViT 编码器，通过 MLP 投影器连接大型 Qwen3 语言基座，并在训练阶段把 OCR、定位和智能体行为作为一等目标。本课按时间顺序梳理这一系列，让你理解每个调节项为何如此设置。"
+    },
+    "phases/12-multimodal-ai/10-internvl3-native-multimodal": {
+      "source": "Every open VLM before InternVL3 followed the same three-step recipe: take a text LLM trained on trillions of text tokens, bolt on a vision encoder, then fine-tune the seams. Thi…",
+      "translation": "InternVL3 之前的每个开放 VLM 都遵循相同的三步配方：先取得一个用数万亿文本词元训练的文本大语言模型，外挂视觉编码器，再微调连接处。这样可以工作，却会积累对齐债务——文本大语言模型已经把全部预训练预算都用在纯文本上，并不原生理解视觉词元。事后加入视觉后，大语言模型必须重新学习如何把视觉输入与文本推理联系起来，同时还不能忘记文本能力。InternVL3（Zhu 等，2025 年 4 月）拒绝了这种事后补接方式：只进行一次预训练，从第一步起就交错使用文本与多模态数据。其 78B 开放模型在 MMMU-Pro 上追平 Gemini 2.5 Pro。本课会分析原生预训练的理由，以及采用它后会发生哪些变化。"
+    },
+    "phases/12-multimodal-ai/11-chameleon-early-fusion-tokens": {
+      "source": "Every VLM we have seen so far keeps images and text separate. Visual tokens come from a vision encoder, flow into a projector, then meet text inside the LLM. The vision and text…",
+      "translation": "此前介绍的每种 VLM 都把图像与文本分开处理。视觉词元来自视觉编码器，流入投影器，再在大语言模型内部与文本相遇；视觉与文本词表从不重叠。Chameleon（Meta，2024 年 5 月）提出：如果让它们重叠会怎样？训练一个 VQ-VAE，把图像转换为来自共享词表的离散词元序列。于是，每份多模态文档都变成一条序列——文本词元与图像词元交错，只使用一个自回归损失。副作用是：模型可以生成混合模态输出——在一次推理调用中交替输出文本与图像词元。本课会解读早期融合观点，并端到端构建一个玩具版本。"
+    },
+    "phases/12-multimodal-ai/12-emu3-next-token-for-generation": {
+      "source": "BAAI's Emu3 (Wang et al., September 2024) is the 2024 result that should have ended the diffusion-versus-autoregressive debate. A single Llama-style decoder-only transformer, tr…",
+      "translation": "BAAI 的 Emu3（Wang 等，2024 年 9 月）本应终结 2024 年关于扩散模型与自回归模型的争论。一个 Llama 风格、仅解码器的 Transformer，在文本 + VQ 图像词元 + 三维 VQ 视频词元组成的统一词表上，只使用下一词元预测目标进行训练，却在图像生成上击败 SDXL，在感知上击败 LLaVA-1.6。不需要 CLIP 损失，也不需要扩散调度。推理时使用无分类器引导提升质量，但核心训练目标只是使用教师强制的下一词元预测。这项成果发表于《Nature》。本课会解读 Emu3 的核心观点——只要拥有更好的分词器与足够规模，就已足够——并将其与扩散方法对比。"
+    },
+    "phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion": {
+      "source": "Chameleon and Emu3 bet everything on discrete tokens. They work, but the quantization bottleneck is visible — the image quality plateaus below continuous-space diffusion models.…",
+      "translation": "Chameleon 与 Emu3 把全部赌注押在离散词元上。这种方法确实有效，但量化瓶颈清晰可见——图像质量在达到连续空间扩散模型的水平之前就已停滞。Transfusion（Meta，Zhou 等，2024 年 8 月）做出了相反选择：保留连续图像，彻底移除 VQ-VAE，并使用两个损失训练同一个 Transformer。文本词元使用下一词元预测，图像块使用流匹配/扩散损失，两项目标共同优化同一套权重。Stable Diffusion 3 背后的架构 MMDiT 与它非常相似。本课会解读 Transfusion 的核心观点，构建一个玩具式双损失训练器，并追踪让单个 Transformer 同时完成两项工作的注意力掩码。"
+    },
+    "phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified": {
+      "source": "Transfusion mixes continuous and discrete representations. Show-o (Xie et al., August 2024) goes the other way: text tokens use causal next-token prediction, image tokens use ma…",
+      "translation": "Transfusion 混合连续表示与离散表示。Show-o（Xie 等，2024 年 8 月）则反其道而行：文本词元使用因果下一词元预测，图像词元使用 MaskGIT 风格的掩码离散扩散。二者位于同一个 Transformer 中，并使用混合注意力掩码。结果是，一个骨干、每种模态一个分词器、一种损失形式（从下一词元预测扩展到掩码预测），即可统一 VQA、文本生成图像、图像修复与混合模态生成。本课会讲解 Show-o 的设计——掩码离散扩散为何能成为一种并行、少步骤的图像生成器——并将其与 Transfusion 和 Emu3 对比。"
+    },
+    "phases/12-multimodal-ai/15-janus-pro-decoupled-encoders": {
+      "source": "Unified multimodal models have an unavoidable tension. Understanding wants semantic features — SigLIP or DINOv2 output vectors rich with concept-level information. Generation wa…",
+      "translation": "统一多模态模型存在一种不可避免的张力。理解任务需要语义特征——SigLIP 或 DINOv2 会输出富含概念级信息的向量；生成任务需要便于重建的编码——可以重新组合为清晰像素的 VQ 词元。一个编码器无法同时兼顾这两个目标。Janus（DeepSeek，2024 年 10 月）与 Janus-Pro（DeepSeek，2025 年 1 月）认为，解决办法是不再勉强统一：将两个编码器解耦。任务之间共享 Transformer 主干，但理解通过 SigLIP 路由，生成通过 VQ 分词器路由。7B 参数的 Janus-Pro 在 GenEval 上击败 DALL-E 3，同时在 MMMU 上追平 LLaVA。本课会分析为什么两个编码器能在单个编码器失败的地方取得成功。"
+    },
+    "phases/12-multimodal-ai/16-mio-any-to-any-streaming": {
+      "source": "GPT-4o ships a product most open models cannot replicate: an agent that hears voice, sees video, and speaks back in real time. The open-ecosystem answer by late 2024 was MIO (Wa…",
+      "translation": "GPT-4o 交付了一种多数开放模型无法复现的产品：一个能够实时听取语音、观看视频并开口回应的智能体。到 2024 年末，开放生态给出的答案是 MIO（Wang 等，2024 年 9 月）。MIO 对文本、图像、语音与音乐进行分词，在交错序列上训练单个因果 Transformer，并实现任意模态到任意模态的生成。AnyGPT（Zhan 等，2024 年 2 月）是概念验证，MIO 是规模化版本，Unified-IO 2（Allen AI，2023 年 12 月）则是结合视觉与动作定位的近亲。本课会解读任意到任意模式——四个分词器、一个 Transformer，以及适合流式传输的解码。"
+    },
+    "phases/12-multimodal-ai/17-video-language-temporal-grounding": {
+      "source": "Video is not a stack of photos. A 5-second clip has causal ordering, action verbs, and event timing that an image model cannot represent. Video-LLaMA (Zhang et al., June 2023) s…",
+      "translation": "视频并不是一叠照片。一个 5 秒片段包含因果顺序、动作动词和事件时机，这些都不是图像模型能够表示的。Video-LLaMA（Zhang 等，2023 年 6 月）发布了首个具备视听定位能力的开放视频大语言模型，VideoChat 与 Video-LLaVA 随后扩展了这一模式。到 2025 年，Qwen2.5-VL 的 TMRoPE 已缩小与前沿专有模型之间的差距。各系统采用不同方式处理时间词元——Video-LLaMA 每个片段使用一个 Q-Former，Video-LLaVA 拼接每帧池化结果，Qwen2.5-VL 则为每个词元使用 TMRoPE。本课会梳理这些模式，构建均匀与动态帧率采样器，并在时间定位任务上进行评估。"
+    },
+    "phases/12-multimodal-ai/18-long-video-million-token": {
+      "source": "A 1-hour 4K video at 24 FPS, patched and embedded, produces on the order of 60 million tokens. A 2-hour podcast episode transcribed is 30,000 tokens. A full Blu-ray feature film…",
+      "translation": "一小时的 4K 视频以 24 FPS 播放，经过图像分块与嵌入后，会产生约 6000 万个词元。一期两小时播客转写后约有 30,000 个词元。一部长篇蓝光电影即使经过激进池化，也会产生数十万个词元。Google 的 Gemini 1.5（2024 年 3 月）以 1000 万词元上下文开启了这个时代，并能在一小时视频中可靠完成大海捞针式召回。LWM（Liu 等，2024 年 2 月）展示了环形注意力的扩展路径，LongVILA 与 Video-XL 进一步扩大了摄取规模，VideoAgent 则以智能体式检索取代原始上下文。每种方法都在计算量、召回率与工程复杂度之间做出不同取舍。本课将它们并排比较。"
+    },
+    "phases/12-multimodal-ai/19-audio-language-whisper-to-af3": {
+      "source": "Whisper (Radford et al., December 2022) settled speech recognition — 680k hours of weakly-supervised multilingual speech, a simple encoder-decoder transformer, a benchmark that …",
+      "translation": "Whisper（Radford 等，2022 年 12 月）奠定了语音识别的格局——68 万小时弱监督多语言语音、一个简单的编码器—解码器 Transformer，以及此后每项 ASR 成果都会引用的基准。但识别并不等于推理。询问“这段录音中有哪些乐器”“说话者表达了什么情绪”或“第 3 分钟发生了什么”，需要的是音频理解，而不只是转写。Qwen-Audio、SALMONN、LTU 与 NVIDIA 的 Audio Flamingo 3（AF3，2025 年 7 月）逐步搭建了这套技术栈：保留 Whisper 级编码器，外挂 Q-Former，使用音频—文本指令数据训练，并加入思维链推理。本课会梳理这条演进路线。"
+    },
+    "phases/12-multimodal-ai/20-omni-models-thinker-talker": {
+      "source": "GPT-4o's product demo in May 2024 was disruptive not because of the underlying model but because of the product shape — a voice interface where you talk, the model sees what the…",
+      "translation": "GPT-4o 在 2024 年 5 月的产品演示之所以带来冲击，不是因为底层模型本身，而是因为产品形态——一个语音界面，你可以和它说话，模型能看到摄像头看到的内容，并在 250 毫秒内开口回应。开放生态在 2024 年余下时间与 2025 年不断追赶这种产品形态。Qwen2.5-Omni（2025 年 3 月）是开放设计的参考方案：一个 Thinker（大型文本生成 Transformer）加一个 Talker（并行语音生成 Transformer），二者通过流式语音词元相连。Mini-Omni 简化了它，Moshi 追平了它的延迟，GLM-4-Voice 则将其扩展到中文。本课会解析 Thinker-Talker 架构，以及让流式实时对话真正可行的延迟预算。"
+    },
+    "phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot": {
+      "source": "The first time a model read a recipe off a website and executed it in a kitchen robot was RT-2 (Google DeepMind, July 2023). RT-2 discretized actions as text tokens, co-fine-tun…",
+      "translation": "模型第一次从网站读取食谱，并在厨房机器人上执行，是 RT-2（Google DeepMind，2023 年 7 月）。RT-2 把动作离散化为文本词元，在 Web 数据与机器人动作数据上共同微调 VLM，并证明 Web 规模的视觉—语言知识可以迁移到机器人控制。OpenVLA（2024 年 6 月）发布了开放 7B 参考实现。Physical Intelligence 的 π0 系列（2024～2025）加入流匹配动作专家。NVIDIA 的 GR00T N1（2025 年 3 月）则为人形机器人提供大规模双系统（系统 1 / 系统 2）控制。VLA 原语——视觉—语言—动作，即一个能够看、读并行动的模型——连接了本阶段的理解模型与阶段 15 的自主系统。"
+    },
+    "phases/12-multimodal-ai/22-document-diagram-understanding": {
+      "source": "Documents are not photos. A PDF, scientific paper, invoice, or handwritten form has layout, tables, diagrams, footnotes, headers, and semantic structure that plain image underst…",
+      "translation": "文档不是照片。PDF、科学论文、发票或手写表单包含版式、表格、图示、脚注、页眉与语义结构，而普通图像理解无法捕获这些信息。VLM 之前的技术栈是一条流水线：Tesseract OCR + LayoutLMv3 + 表格抽取启发式规则。VLM 浪潮带来了无 OCR 模型——Donut（2022）、Nougat（2023）、DocLLM（2023）——它们能够直接输出结构化标记。到 2026 年，前沿做法已经简化为“把页面图像以 2576px 原生分辨率交给 Claude Opus 4.7”，结构化标记输出也随之自然获得。本课会梳理文档 AI 的三个时代。"
+    },
+    "phases/12-multimodal-ai/23-colpali-vision-native-rag": {
+      "source": "Traditional RAG parses PDFs into text, splits into chunks, embeds chunks, stores vectors. Every step loses signal: OCR drops chart data, chunking breaks table rows, text embeddi…",
+      "translation": "传统 RAG 会把 PDF 解析成文本，再切分成块、嵌入各块并存储向量。每一步都会损失信号：OCR 会遗漏图表数据，分块会拆散表格行，文本嵌入则会忽略图形。ColPali（Faysse 等，2024 年 7 月）提出了一个更简单的问题：为什么一定要抽取文本？直接用 PaliGemma 嵌入页面图像，使用 ColBERT 风格的后期交互进行检索，就能保留文档中的版式、图形、字体与格式信号。公开基准显示，在视觉信息丰富的文档上，其端到端准确率比文本 RAG 高 20%～40%。ColQwen2、ColSmol 与 VisRAG 随后扩展了这一模式。本课会解读视觉原生 RAG 的核心观点，并构建一个微型 ColPali 风格索引器。"
+    },
+    "phases/12-multimodal-ai/24-multimodal-rag-cross-modal": {
+      "source": "Vision-native document RAG is one slice. Production multimodal RAG goes wider — retrieving across text, images, audio, and video for workflows like trip planning (\"find me a qui…",
+      "translation": "视觉原生文档 RAG 只是其中一个切面。生产级多模态 RAG 覆盖面更广——它会跨文本、图像、音频与视频进行检索，支持旅行规划（“帮我找一家安静、有自然光的纯素早午餐厅”）、医疗分诊（“什么损伤与这张照片和这些症状描述相符”）、电子商务（“找与这张自拍风格相似、且有我的尺码的服装”）和现场服务（“结合这个发动机声音和零件照片诊断故障”）等工作流。2025 年的三篇综述——Abootorabi 等、Mei 等、Zhao 等——归纳了其中的子问题：跨模态检索、检索融合、生成依据与多模态评估。本课会解读这些综述，并设计一条生产流水线。"
+    },
+    "phases/12-multimodal-ai/25-multimodal-agents-computer-use": {
+      "source": "The 2026 frontier product is a multimodal agent that reads screenshots, clicks buttons, navigates web UIs, fills forms, and completes workflows end-to-end. SeeClick and CogAgent…",
+      "translation": "2026 年的前沿产品，是能够读取屏幕截图、点击按钮、浏览 Web 界面、填写表单并端到端完成工作流的多模态智能体。SeeClick 与 CogAgent（2024）证明了 GUI 定位原语的可行性，Ferret-UI 将其扩展到移动端，ChartAgent 则为图表引入视觉工具使用。VisualWebArena 与 AgentVista（2026）是前沿模型追赶的基准——即使 Gemini 3 Pro 与 Claude Opus 4.7，在 AgentVista 困难任务上的得分也只有约 30%。这个综合项目会汇集阶段 12 的所有脉络：感知（高分辨率 VLM）、推理（带工具使用的大语言模型）、定位（坐标输出）、长程记忆和评估。"
+    },
+    "phases/13-tools-and-protocols/01-the-tool-interface": {
+      "source": "A language model produces tokens. A program takes actions. The gap between those two is the tool interface: a contract that lets the model request an action and the host execute…",
+      "translation": "语言模型生成词元，程序执行动作。二者之间的鸿沟由工具接口弥合：这是一份契约，让模型能够请求某项动作，再由宿主执行。2026 年的每种技术栈——OpenAI、Anthropic 与 Gemini 的函数调用；MCP 的 `tools/call`；A2A 的任务部件——都只是同一个四步循环的不同编码方式。本课会为这个循环命名，并展示运行它所需的最小机制。"
+    },
+    "phases/13-tools-and-protocols/02-function-calling-deep-dive": {
+      "source": "The three frontier providers converged on the same tool-call loop in 2024 and then diverged on everything else. OpenAI uses `tools` and `tool_calls`. Anthropic uses `tool_use` a…",
+      "translation": "三家前沿提供商在 2024 年收敛到了相同的工具调用循环，其他部分却各不相同。OpenAI 使用 `tools` 与 `tool_calls`；Anthropic 使用 `tool_use` 与 `tool_result` 块；Gemini 使用 `functionDeclarations` 与唯一 ID 关联。本课会并排比较三者，使在一家提供商上发布的代码迁移时不会崩溃。"
+    },
+    "phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls": {
+      "source": "Three independent weather lookups serialized is three round trips. Run them in parallel and total time collapses to the slowest single call. Every frontier provider now emits mu…",
+      "translation": "把三个彼此独立的天气查询串行执行，就需要三次往返。并行运行后，总耗时会缩短到最慢的单次调用耗时。如今，每家前沿提供商都能在一轮中输出多个工具调用。收益实实在在，但接线细节相当微妙。本课会讲解两部分：并行扇出与流式参数重组，并重点说明 ID 关联陷阱。"
+    },
+    "phases/13-tools-and-protocols/04-structured-output": {
+      "source": "\"Ask the model nicely to return JSON\" fails 5 to 15 percent of the time, even on frontier models. Structured outputs close that gap with constrained decoding: the model is liter…",
+      "translation": "“礼貌地要求模型返回 JSON”即使在前沿模型上也会有 5%～15% 的失败率。结构化输出通过受约束解码弥合这道差距：模型在字面意义上无法输出任何违反 Schema 的词元。OpenAI 的严格模式、Anthropic 使用 Schema 定义类型的工具调用、Gemini 的 `responseSchema`、Pydantic AI 的 `output_type` 与 Zod 的 `.parse`，都是同一思想的五种表面形式。本课会构建 Schema 验证器，以及学习者今后可用于每条生产抽取流水线的严格模式契约。"
+    },
+    "phases/13-tools-and-protocols/05-tool-schema-design": {
+      "source": "A correct tool fails silently when the model cannot tell when to use it. Naming, descriptions, and parameter shapes drive 10 to 20 percentage-point swings in tool-selection accu…",
+      "translation": "如果模型无法判断何时使用一个工具，那么即使工具实现完全正确，也会悄无声息地失败。在 StableToolBench 和 MCPToolBench++ 等基准上，仅名称、描述与参数形态的差异，就能使工具选择准确率相差 10～20 个百分点。本课会总结设计规则，区分模型能够可靠选择的工具与经常误触发的工具。"
+    },
+    "phases/13-tools-and-protocols/06-mcp-fundamentals": {
+      "source": "Modern MCP has no handshake and no protocol session. Each request must carry enough metadata to be understood, authorized, routed, and retried on its own.",
+      "translation": "现代 MCP 没有握手，也没有协议会话。每个请求都必须自行携带足够的元数据，以便被理解、授权、路由和重试。"
+    },
+    "phases/13-tools-and-protocols/07-building-an-mcp-server": {
+      "source": "A modern MCP server does not remember a handshake. It validates the metadata on every request, runs one handler, and returns one typed result.",
+      "translation": "现代 MCP 服务器不会记住握手。它会在每个请求上验证元数据、运行一个处理器，再返回一个类型化结果。"
+    },
+    "phases/13-tools-and-protocols/08-building-an-mcp-client": {
+      "source": "A modern MCP client repeats its contract on every request. Its hardest compatibility decision is knowing when an old server is truly old and when a modern server is reporting a …",
+      "translation": "现代 MCP 客户端会在每个请求中重复声明其契约。兼容性处理中最棘手的判断，是分清服务器确实属于旧版，还是现代服务器只是在报告一个可以修正的错误。"
+    },
+    "phases/13-tools-and-protocols/09-mcp-transports": {
+      "source": "Transport carries MCP messages. It does not supply missing protocol state. In `2026-07-28`, local stdio and remote Streamable HTTP both carry self-describing requests.",
+      "translation": "传输层负责承载 MCP 消息，却不会补齐缺失的协议状态。在 `2026-07-28` 中，本地 stdio 与远程可流式 HTTP 承载的都是自描述请求。"
+    },
+    "phases/13-tools-and-protocols/10-mcp-resources-and-prompts": {
+      "source": "Tools perform operations. Resources expose addressable content. Prompts package user-selected message templates. A good MCP server keeps those contracts separate and predictable.",
+      "translation": "工具执行操作，资源公开可寻址内容，提示词则封装由用户选择的消息模板。优秀的 MCP 服务器会让这些契约彼此分离且行为可预测。"
+    },
+    "phases/13-tools-and-protocols/11-mcp-sampling": {
+      "source": "MCP 2026-07-28 deprecates Sampling for new designs and removes the server-to-client request channel. If an existing workflow still needs the client's model, the server returns a…",
+      "translation": "MCP 2026-07-28 不再建议新设计采用 Sampling，并移除了服务器到客户端的请求通道。如果现有工作流仍需要使用客户端的模型，服务器会返回 `input_required` 结果，客户端再携带模型输出重试原始请求。这样一来，推理循环在协议层变得显式、有界且无状态。"
+    },
+    "phases/13-tools-and-protocols/12-mcp-roots-and-elicitation": {
+      "source": "Roots are deprecated in MCP 2026-07-28 and were never a security sandbox. Put scope in visible tool arguments or resource URIs, authorize it on the server, and use MRTR when a t…",
+      "translation": "Roots 在 MCP 2026-07-28 中已被弃用，而且从来都不是安全沙箱。应把作用域放进可见的工具参数或资源 URI，在服务器上执行授权，并在工具确实需要用户输入时使用 MRTR。用户看到决策，模型看到句柄，而任意服务器实例都能处理重试。"
+    },
+    "phases/13-tools-and-protocols/13-mcp-async-tasks": {
+      "source": "Stateless MCP does not mean every operation must finish in one request. The official Tasks extension gives long-running work an explicit durable handle. A server can return that…",
+      "translation": "MCP 无状态并不意味着每项操作都必须在单次请求内完成。官方 Tasks 扩展为长时间运行的工作提供了明确、持久的句柄。服务器可从 `tools/call` 返回该句柄，任意实例都能响应 `tasks/get`，客户端则通过 `tasks/update` 提交输入，无须恢复协议会话。"
+    },
+    "phases/13-tools-and-protocols/14-mcp-apps": {
+      "source": "An interactive result is still an MCP tool and resource exchange. The 2026-07-28 core makes that exchange self-contained, while the Apps extension adds the sandboxed browser sur…",
+      "translation": "交互式结果本质上仍是一次 MCP 工具与资源交换。2026-07-28 核心协议让这次交换自包含，Apps 扩展则在其上增加了沙箱化的浏览器界面。"
+    },
+    "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning": {
+      "source": "Stateless does not mean trustless. It means every request exposes the evidence a server and gateway need to validate the call independently.",
+      "translation": "无状态不等于无须信任。它意味着每个请求都应给出服务器与网关独立验证调用所需的证据。"
+    },
+    "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1": {
+      "source": "A remote MCP request is stateless, but its authorization is not anonymous. Bind every credential to the issuer that created it and every token to the resource that receives it.",
+      "translation": "远程 MCP 请求是无状态的，但其授权并非匿名。应把每份凭据绑定到创建它的签发方，并把每个令牌绑定到接收它的资源。"
+    },
+    "phases/13-tools-and-protocols/17-mcp-gateways-and-registries": {
+      "source": "A gateway should make every route explicit. The 2026-07-28 protocol gives it method, name, version, capability, identity, cache, and trace boundaries without a transport session.",
+      "translation": "网关应让每条路由都清晰明确。2026-07-28 协议无需传输会话，就能为网关提供方法、名称、版本、能力、身份、缓存与追踪边界。"
+    },
+    "phases/13-tools-and-protocols/18-mcp-auth-production": {
+      "source": "Lesson 16 built the OAuth 2.1 state machine. This lesson hardens its production boundaries for MCP 2026-07-28: Client ID Metadata Documents first, deprecated dynamic registratio…",
+      "translation": "第 16 课构建了 OAuth 2.1 状态机。本课将针对 MCP 2026-07-28 加固其生产边界：优先使用 Client ID Metadata Document，只将已弃用的动态注册保留作兼容方案，验证授权响应的发行方，按发行方隔离客户端凭据，刷新 JWKS，并在每个无状态请求中使用绑定受众的令牌。"
+    },
+    "phases/13-tools-and-protocols/19-a2a-protocol": {
+      "source": "MCP is agent-to-tool. A2A (Agent2Agent) is agent-to-agent — an open protocol for letting opaque agents built on different frameworks collaborate. Released by Google in April 202…",
+      "translation": "MCP 面向智能体与工具之间的交互。A2A（Agent2Agent）则面向智能体与智能体之间的交互——它是一项开放协议，让基于不同框架构建、内部实现不透明的智能体也能协同工作。A2A 由 Google 于 2025 年 4 月发布，2025 年 6 月捐赠给 Linux Foundation，并在 2026 年 4 月发展到 v1.0，获得 AWS、Cisco、Microsoft、Salesforce、SAP 和 ServiceNow 等 150 多家组织的支持。它吸收了 IBM 的 ACP，并新增 AP2 支付扩展。本课将依次讲解 Agent Card、Task 生命周期以及两种传输绑定。"
+    },
+    "phases/13-tools-and-protocols/20-opentelemetry-genai": {
+      "source": "An agent calls five tools, three MCP servers, and two sub-agents. You need one trace across all of it. The OpenTelemetry GenAI semantic conventions (stable attributes in v1.37 a…",
+      "translation": "一个智能体调用了五个工具、三个 MCP 服务器和两个子智能体。你需要用一条 trace 串起整个过程。OpenTelemetry GenAI 语义约定（v1.37 及更高版本中的稳定属性）是 2026 年的标准，Datadog、Langfuse、Arize Phoenix、OpenLLMetry 和 AgentOps 均提供原生支持。本课将介绍必需属性，梳理 span 层级（智能体 → LLM → 工具），并交付一个仅依赖标准库的 span 发射器，可接入任意 OTel exporter。"
+    },
+    "phases/13-tools-and-protocols/21-llm-routing-layer": {
+      "source": "Provider lock-in is expensive. Different tool-calling workloads suit different models. Routing gateways give one API surface, retries, failover, cost tracking, and guardrails. T…",
+      "translation": "被单一提供商锁定的代价很高。不同的工具调用负载适合不同的模型。路由网关提供统一的 API 接口，并集中处理重试、故障转移、成本追踪和防护规则。到 2026 年，三种主要形态是：LiteLLM（开源、自托管）、OpenRouter（托管 SaaS）以及 Portkey（生产级，并于 2026 年 3 月开源）。本课将说明选型标准，并带你实现一个仅依赖标准库的路由网关。"
+    },
+    "phases/13-tools-and-protocols/22-skills-and-agent-sdks": {
+      "source": "A skill is not a long prompt with a better filename. It is a discoverable package of instructions, resources, and executable helpers that enters an agent's context through a run…",
+      "translation": "Skill 并不是换了一个更好文件名的长 prompt。它是一个可发现的软件包，由指令、资源和可执行辅助程序组成，并通过运行时契约进入智能体上下文。"
+    },
+    "phases/13-tools-and-protocols/23-capstone-tool-ecosystem": {
+      "source": "A production agent system is a set of boundaries, not a pile of features. This capstone separates a readable in-process simulation from the protocol clients, authorization serve…",
+      "translation": "生产级智能体系统是一组边界，而不是一堆功能。本综合项目会把易于阅读的进程内模拟，与真实部署仍然需要的协议客户端、授权服务器、沙箱和遥测导出器明确区分开来。"
+    },
+    "phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure": {
+      "source": "A skill becomes useful before its body is loaded. Its name and description earn a place in the catalog; its deeper files earn context only when the task reaches them.",
+      "translation": "Skill 在加载正文之前就已经开始发挥作用。名称与描述让它获得进入目录的资格；只有当任务真正需要时，更深层的文件才值得占用上下文。"
+    },
+    "phases/13-tools-and-protocols/25-skill-invocation-and-routing": {
+      "source": "Invocation is an authority decision followed by a relevance decision. A good description helps the model choose; a good policy decides whether that choice is allowed.",
+      "translation": "调用先是一项权限决策，随后才是一项相关性决策。好的描述帮助模型作出选择；好的策略决定是否允许这一选择。"
+    },
+    "phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust": {
+      "source": "A skill can suggest an action. Only the host can authorize it, only an isolation boundary can contain it, and only verification can tell you whether it worked.",
+      "translation": "技能可以建议一项操作，但只有宿主能够授权它，只有隔离边界能够约束它，也只有验证才能判断它是否成功。"
+    },
+    "phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability": {
+      "source": "A skill is finished when its package survives linting, routes on the right requests, improves a measured task, stays inside policy, and degrades honestly on another host.",
+      "translation": "当一个技能包能通过静态检查、在正确请求上触发、改善可测量任务、始终遵守策略，并能在另一种宿主上如实降级时，这个技能才算完成。"
+    },
+    "phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content": {
+      "source": "A tool is safe to automate only when discovery, arguments, results, pagination, and transport metadata agree on one contract.",
+      "translation": "只有当发现、参数、结果、分页和传输元数据遵循同一份契约时，工具才适合安全地自动化调用。"
+    },
+    "phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control": {
+      "source": "A request ID correlates a message. It does not make a side effect safe, stop a worker, or protect a stream from a slow consumer.",
+      "translation": "请求 ID 只能关联消息。它不能保证副作用安全，不能停止 worker，也不能保护数据流免受慢速消费者影响。"
+    },
+    "phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift": {
+      "source": "A registry entry tells you what a publisher declared. Production admission proves what you fetched, what you observed, what you approved, and what you can safely restore.",
+      "translation": "Registry 条目只能告诉你发布方声明了什么。生产准入需要证明你获取了什么、观察到了什么、批准了什么，以及能够安全恢复什么。"
+    },
+    "phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations": {
+      "source": "A server is not conformant because its happy path worked through one SDK. Conformance lives at the wire, at version boundaries, through intermediaries, and during rollback.",
+      "translation": "仅仅因为服务器通过某个 SDK 走通了顺利路径，并不能说明它符合规范。一致性存在于线路数据、版本边界、中间设施以及回滚过程中。"
+    },
+    "phases/14-agent-engineering/01-the-agent-loop": {
+      "source": "Every agent in 2026 is a variant of the ReAct loop from 2022 — Claude Code, Cursor, Devin, Operator included. Reasoning tokens interleave with tool calls and observations until …",
+      "translation": "2026 年的每一种 Agent——包括 Claude Code、Cursor、Devin 和 Operator——都可以视为 2022 年 ReAct 循环的变体。推理 token、工具调用与观察结果交替出现，直到触发停止条件。在接触任何框架之前，先把这个循环彻底学透。"
+    },
+    "phases/14-agent-engineering/02-rewoo-plan-and-execute": {
+      "source": "ReAct interleaves thought and action in one stream. ReWOO separates them: one big plan up front, then execute. 5x fewer tokens, +4% accuracy on HotpotQA, and you can distill the…",
+      "translation": "ReAct 将思考与行动交织在同一条流中；ReWOO 则把两者拆开：先一次性制定完整计划，再执行。它的 token 用量减少 5 倍，在 HotpotQA 上的准确率提升 4%，而且可以把规划器蒸馏到 7B 模型中。Plan-and-Execute 对这一方法进行了泛化；Plan-and-Act 又将它扩展到了 Web 导航。"
+    },
+    "phases/14-agent-engineering/03-reflexion-verbal-rl": {
+      "source": "Gradient-based RL needs thousands of trials and a GPU cluster to fix a failure mode. Reflexion (Shinn et al., NeurIPS 2023) does it in natural language: after each failed trial,…",
+      "translation": "基于梯度的强化学习需要数千次试验和一个 GPU 集群，才能修复某种失败模式。Reflexion（Shinn 等，NeurIPS 2023）用自然语言做到这一点：每次试验失败后，智能体写下一段反思，将它存入情景记忆，并以该记忆为条件进行下一次试验。Letta 的休眠时计算、Claude Code 的 CLAUDE.md 经验记录，以及 pro-workflow 的 learn-rule，背后都是这种模式。"
+    },
+    "phases/14-agent-engineering/04-tree-of-thoughts-lats": {
+      "source": "A single chain-of-thought trajectory has no room to backtrack. ToT (Yao et al., 2023) turns reasoning into a tree with self-evaluation on each node. LATS (Zhou et al., 2024) uni…",
+      "translation": "单条思维链轨迹没有回溯空间。ToT（Yao 等，2023）把推理转化为一棵树，并在每个节点进行自我评估。LATS（Zhou 等，2024）以蒙特卡洛树搜索为框架，统一了 ToT、ReAct 和 Reflexion。Game of 24 的准确率从 CoT 的 4% 提升到 ToT 的 74%；LATS 在 HumanEval 上达到 92.7% pass@1。"
+    },
+    "phases/14-agent-engineering/05-self-refine-and-critic": {
+      "source": "Self-Refine (Madaan et al., 2023) uses one LLM in three roles — generate, feedback, refine — in a loop. Average gain: +20 absolute on 7 tasks. CRITIC (Gou et al., 2023) hardens …",
+      "translation": "Self-Refine（Madaan 等，2023）让同一个 LLM 在循环中扮演三种角色——生成、反馈、改进——在 7 项任务上平均取得 20 个百分点的绝对提升。CRITIC（Gou 等，2023）通过外部工具完成验证，从而强化反馈步骤。到了 2026 年，每个框架都以“Evaluator–Optimizer”（Anthropic）或护栏循环（OpenAI Agents SDK）的形式提供了这种模式。"
+    },
+    "phases/14-agent-engineering/06-tool-use-and-function-calling": {
+      "source": "Toolformer (Schick et al., 2023) started self-supervised tool annotation. Berkeley Function Calling Leaderboard V4 (Patil et al., 2025) sets the 2026 bar: 40% agentic, 30% multi…",
+      "translation": "Toolformer（Schick 等，2023）开创了自监督工具标注。Berkeley Function Calling Leaderboard V4（Patil 等，2025）设定了 2026 年的基准：智能体任务占 40%，多轮占 30%，实时数据占 10%，非实时数据占 10%，幻觉检测占 10%。单轮调用已经解决；记忆、动态决策和长时程工具链仍未解决。"
+    },
+    "phases/14-agent-engineering/07-memory-virtual-context-memgpt": {
+      "source": "Context windows are finite. Conversations, documents, and tool traces are not. The fix is OS virtual memory restated — main context is RAM, external store is disk, the agent pag…",
+      "translation": "上下文窗口是有限的，而对话、文档和工具 trace 没有这样的上限。解决方案就是重新表述操作系统的虚拟内存：主上下文相当于 RAM，外部存储相当于磁盘，智能体在二者之间换入和换出页面。MemGPT（Packer 等，2023）为这种模式命名；许多生产级记忆系统都构建在它之上。"
+    },
+    "phases/14-agent-engineering/08-memory-blocks-sleep-time-compute": {
+      "source": "Discrete functional memory blocks the model can edit directly, and a sleep-time agent that consolidates memory asynchronously while the primary agent is idle. These two ideas ar…",
+      "translation": "模型可以直接编辑离散的功能性记忆块；当主智能体空闲时，另一个休眠时智能体会异步整合记忆。这两个理念让记忆得以扩展到单次对话之外。"
+    },
+    "phases/14-agent-engineering/09-hybrid-memory-mem0": {
+      "source": "Hybrid memory runs three stores in parallel — vector for semantic similarity, KV for fast fact lookup, graph for entity-relationship reasoning — with a scoring layer that fuses …",
+      "translation": "混合记忆并行运行三种存储——vector 用于语义相似度，KV 用于快速事实查询，graph 用于实体关系推理——并在检索时通过评分层融合结果。这是外部记忆中广泛采用的生产模式；Mem0（Chhikara 等，2025）是一种参考实现。"
+    },
+    "phases/14-agent-engineering/10-skill-libraries-voyager": {
+      "source": "Voyager (Wang et al., TMLR 2024) treats executable code as a skill. Skills are named, retrievable, composable, and refined by environment feedback. This is the reference archite…",
+      "translation": "Voyager（Wang 等，TMLR 2024）把可执行代码视为 Skill。Skill 具有名称，可以检索、组合，并可根据环境反馈持续改进。这是 Claude Agent SDK Skill、skillkit 以及 2026 年 Skill Library 模式的参考架构。"
+    },
+    "phases/14-agent-engineering/11-planning-htn-and-evolutionary": {
+      "source": "Symbolic planning handles the cases where the plan is provably correct. Evolutionary code search handles the cases where the fitness function is machine-checkable. ChatHTN (2025…",
+      "translation": "符号规划适合处理方案正确性可以证明的问题。进化式代码搜索适合处理 fitness function 可由机器检查的问题。ChatHTN（2025）与 AlphaEvolve（2025）展示了各自与 LLM 结合后能够释放的能力。"
+    },
+    "phases/14-agent-engineering/12-anthropic-workflow-patterns": {
+      "source": "Schluntz and Zhang (Anthropic, Dec 2024) distinguish workflows (predefined paths) from agents (dynamic tool-use). Five workflow patterns cover most cases. Start with direct API …",
+      "translation": "Schluntz 和 Zhang（Anthropic，2024 年 12 月）区分了工作流（预定义路径）与 agent（动态工具使用）。五种工作流模式已经覆盖了大多数场景。先从直接 API 调用开始，只有在步骤本身无法预判时，才引入 agent。"
+    },
+    "phases/14-agent-engineering/13-langgraph-stateful-graphs": {
+      "source": "Agent is a state machine; nodes are functions; edges are transitions; state is checkpointed after each node. Resume from any failure at the last successful checkpoint. LangGraph…",
+      "translation": "Agent 可以被建模为状态机：节点是函数，边是状态转移，状态会在每个节点后落盘成检查点。任何失败都可以从最后一个成功检查点恢复。到 2026 年，LangGraph 已经成为这种低层有状态编排模型的代表性参考实现。"
+    },
+    "phases/14-agent-engineering/14-autogen-actor-model": {
+      "source": "Agents as actors: async message exchange, event-driven handlers, fault isolation, natural concurrency. AutoGen v0.4 (Microsoft Research, Jan 2025) redesigned agent orchestration…",
+      "translation": "把 agent 看成 actor：它们通过异步消息交换协作，依赖事件驱动处理器、天然的故障隔离，以及自然形成的并发。AutoGen v0.4（Microsoft Research，2025 年 1 月）围绕这一模型重构了 agent orchestration；如今 AutoGen 已进入维护模式，而 Microsoft Agent Framework（2025 年 10 月公开预览）则成为它面向生产的继任者。"
+    },
+    "phases/14-agent-engineering/15-crewai-role-based-crews": {
+      "source": "Four primitives: Agent, Task, Crew, Process. Two top-level shapes: Crews (autonomous, role-based collaboration) and Flows (event-driven, deterministic). CrewAI is the 2026 refer…",
+      "translation": "四个基本原语：Agent、Task、Crew、Process。两种顶层形态：Crews（自治、基于角色的协作）和 Flows（事件驱动、确定性的流程）。CrewAI 是 2026 年这一思路的代表实现，而且它的官方文档说得很直白：“任何准备投入生产的应用，都应该先从 Flow 开始。”"
+    },
+    "phases/14-agent-engineering/16-openai-agents-sdk": {
+      "source": "OpenAI Agents SDK is the lightweight multi-agent framework built on the Responses API. Five primitives: Agent, Handoff, Guardrail, Session, Tracing. Handoffs are tools named `tr…",
+      "translation": "OpenAI Agents SDK 是一个建立在 Responses API 之上的轻量级多 agent 框架。它有五个核心原语：Agent、Handoff、Guardrail、Session、Tracing。Handoff 在模型看来就是名为 `transfer_to_<agent>` 的工具；Guardrail 会在输入或输出上触发；Tracing 默认开启。"
+    },
+    "phases/14-agent-engineering/17-claude-agent-sdk": {
+      "source": "A harness you can import: built-in tools, subagents for context isolation, hooks, W3C trace propagation, session persistence. The Claude Agent SDK is the reference example — the…",
+      "translation": "一个可以直接导入的 harness：内置工具、用于上下文隔离的子代理、hooks、W3C trace 传播、会话持久化。Claude Agent SDK 是这一模式的代表性实现，也是 Claude Code harness 的库形态；Claude Managed Agents 则是面向长时间异步任务的托管替代方案。"
+    },
+    "phases/14-agent-engineering/18-agno-and-mastra-runtimes": {
+      "source": "A production agent runtime optimizes what prototyping frameworks ignore: instantiation cost, typed workflow surfaces, and a serving-ready backend. The 2026 pairing: Agno (Python…",
+      "translation": "生产级智能体运行时会优化那些原型框架常常忽略的东西：实例化成本、类型化工作流接口，以及可直接服务化的后端。到 2026 年，常见的一组对照是：Agno（Python）主打微秒级智能体实例化与无状态 FastAPI 后端；Mastra 则构建在 Vercel AI SDK 之上，提供 Agents、Tools、Workflows、统一模型路由和组合式存储。"
+    },
+    "phases/14-agent-engineering/19-benchmarks-swebench-gaia": {
+      "source": "Three benchmarks anchor agent evaluation in 2026. SWE-bench tests code patching. GAIA tests generalist tool use. AgentBench tests multi-environment reasoning. Know their composi…",
+      "translation": "到 2026 年，agent 评测主要由三类 benchmark 锚定：SWE-bench 用来测试代码补丁能力，GAIA 用来测试通用型工具使用能力，AgentBench 用来测试跨环境推理能力。你需要了解它们的构成、污染问题，以及它们没有测到什么。"
+    },
+    "phases/14-agent-engineering/20-benchmarks-webarena-osworld": {
+      "source": "WebArena tests web-agent capability across four self-hosted apps. OSWorld tests desktop-agent capability across Ubuntu, Windows, macOS. At release (2023–2024) both showed a big …",
+      "translation": "WebArena 测试的是 agent 在四个自托管 web 应用中的能力。OSWorld 测试的是 agent 在 Ubuntu、Windows、macOS 上操作桌面的能力。在它们发布时（2023–2024），两者都展示了顶级 agent 与人类之间的巨大差距。这个差距正在缩小，但失败模式并没有变。"
+    },
+    "phases/14-agent-engineering/21-computer-use-agents": {
+      "source": "Three production computer-use models in 2026. All three are vision-based. All three treat screenshots, DOM text, and tool outputs as untrusted input. Only direct user instructio…",
+      "translation": "到 2026 年，已有三种生产级 computer-use 模型。三者都基于视觉。三者都把截图、DOM 文本和工具输出视为不可信输入。只有来自用户的直接指令才算授权。逐步安全服务已经成为标准配置。"
+    },
+    "phases/14-agent-engineering/22-voice-agents-pipecat-livekit": {
+      "source": "Voice agents are a first-class production category in 2026. Pipecat gives you a Python frame-based pipeline (VAD → STT → LLM → TTS → transport). LiveKit Agents bridges AI models…",
+      "translation": "到了 2026 年，语音代理已经是正式的一线生产形态。Pipecat 提供基于 Python 的 frame 管线（VAD → STT → LLM → TTS → transport），LiveKit Agents 则通过 WebRTC 把 AI 模型接到真实用户面前。高端语音栈的端到端延迟目标，通常落在 450–600ms。"
+    },
+    "phases/14-agent-engineering/23-otel-genai-conventions": {
+      "source": "OpenTelemetry's GenAI SIG (launched April 2024) defines the standard schema for agent telemetry. Span names, attributes, and content-capture rules converge across vendors so age…",
+      "translation": "OpenTelemetry 的 GenAI SIG（2024 年 4 月启动）定义了代理遥测的标准 schema。span 名称、attributes 以及内容捕获规则开始在不同厂商之间收敛，因此无论你把 trace 送到 Datadog、Grafana、Jaeger 还是 Honeycomb，看到的 agent trace 都能表达同一件事。"
+    },
+    "phases/14-agent-engineering/24-agent-observability-platforms": {
+      "source": "Three open-source agent observability platforms dominate 2026. Langfuse (MIT) — 6M+ installs/month, tracing + prompt management + evals + session replay. Arize Phoenix (Elastic …",
+      "translation": "到了 2026 年，三大开源 agent observability 平台已经形成主流格局。Langfuse（MIT）每月 SDK 安装量超过 600 万，提供 tracing、prompt management、evals 与 session replay。Arize Phoenix（Elastic 2.0）更强调 agent 专属评估、RAG relevancy 与 OpenInference 自动埋点。Comet Opik（Apache 2.0）则主打自动 prompt optimization、guardrails 与基于 LLM-judge 的幻觉检测。"
+    },
+    "phases/14-agent-engineering/25-multi-agent-debate": {
+      "source": "Du et al. (ICML 2024, \"Society of Minds\") run N model instances that independently propose answers, then iteratively critique each other over R rounds to converge. Improves fact…",
+      "translation": "Du 等人在 ICML 2024 的论文 “Society of Minds” 中提出：让 N 个模型实例先独立给出答案，再在 R 轮里相互批评、逐步收敛。这种方法可以提升事实性、规则遵守与推理质量。与此同时，稀疏通信拓扑在 token 成本上往往优于全连接 full mesh。"
+    },
+    "phases/14-agent-engineering/26-failure-modes-agentic": {
+      "source": "MASFT (Berkeley, 2025) catalogs 14 multi-agent failure modes in 3 categories. Microsoft's Taxonomy documents how existing AI failures amplify in agentic settings. Industry field…",
+      "translation": "MASFT（Berkeley，2025）把 14 种多代理失败模式归入 3 大类别。微软的 Taxonomy 则说明，既有 AI 失败在 agentic 环境中会被进一步放大。行业实战数据最后汇聚成 5 类反复出现的问题：hallucinated actions、scope creep、cascading errors、context loss、tool misuse。"
+    },
+    "phases/14-agent-engineering/27-prompt-injection-defense": {
+      "source": "Greshake et al. (AISec 2023) established indirect prompt injection as the defining agent security problem. Attacker plants instructions in data the agent retrieves; on ingest, t…",
+      "translation": "Greshake 等人在 AISec 2023 证明，间接 prompt injection 是代理安全里最具代表性的问题。攻击者把指令埋进代理会检索的数据里；代理一旦摄入这些内容，这些指令就可能覆盖开发者提示。对于代理的工具使用面来说，所有检索内容都应被视为任意代码执行输入。"
+    },
+    "phases/14-agent-engineering/28-orchestration-patterns": {
+      "source": "Four orchestration patterns recur across 2026 frameworks: supervisor-worker, swarm / peer-to-peer, hierarchical, debate. Anthropic's guidance: \"It's about building the right sys…",
+      "translation": "到了 2026 年，各类框架里反复出现四种编排模式：supervisor-worker、swarm / peer-to-peer、hierarchical、debate。Anthropic 的建议很直接：“关键不是做出最复杂的系统，而是为你的需求搭出正确的系统。” 先从简单方案开始；只有当单代理加五种工作流模式仍然不够时，才引入更复杂的拓扑。"
+    },
+    "phases/14-agent-engineering/29-production-runtimes": {
+      "source": "Production agents run on six runtime shapes: request-response, streaming, durable execution, queue-based background, event-driven, and scheduled. Pick the shape before you pick …",
+      "translation": "生产级代理通常运行在六种运行时形态上：request-response、streaming、durable execution、queue-based background、event-driven，以及 scheduled。先选运行时形态，再选框架。无论哪一种形态，可观测性都是承重结构。"
+    },
+    "phases/14-agent-engineering/30-eval-driven-agent-development": {
+      "source": "Anthropic's guidance: \"start with simple prompts, optimize them with comprehensive evaluation, and add multi-step agentic systems only when needed.\" Evaluation is not the last s…",
+      "translation": "Anthropic 的建议是：“从简单提示词开始，用全面评估持续优化，只有在确有必要时才引入多步骤 agentic 系统。” 评估不是最后补上的一步，而是驱动 Phase 14 其他所有设计选择的外层循环。"
+    },
+    "phases/14-agent-engineering/31-agent-workbench-why-models-fail": {
+      "source": "A capable model is not enough. Reliable agents need a workbench: instructions, state, scope, feedback, verification, review, and handoff. Strip those away and even a frontier mo…",
+      "translation": "仅有一个能力很强的模型还不够。可靠的 agent 需要一套工作台：指令、状态、范围、反馈、验证、审查和交接。把这些拿掉，即使是前沿模型，产出的工作也依然不适合直接交付。"
+    },
+    "phases/14-agent-engineering/32-minimal-agent-workbench": {
+      "source": "The smallest useful workbench is three files: a root instructions router, a state file, and a task board. Everything else is layered on top. If a repo cannot carry these three, …",
+      "translation": "最小但真正有用的工作台只需要三个文件: 根指令路由器、状态文件和任务板。其余一切都是在这三者之上逐层叠加出来的。如果一个仓库连这三个文件都承载不了,再强的模型也救不了它。"
+    },
+    "phases/14-agent-engineering/33-instructions-as-executable-constraints": {
+      "source": "Instructions written as prose are wishes. Instructions written as constraints are tests. The workbench turns each rule into something an agent can check at runtime and a reviewe…",
+      "translation": "写成散文的指令只是愿望,写成约束的指令才是测试。工作台会把每一条规则都变成一种东西: 代理在运行时可以检查它,审查者在事后也能验证它。"
+    },
+    "phases/14-agent-engineering/34-repo-memory-and-state": {
+      "source": "Chat history is volatile. The repo is durable. The workbench stores agent state in versioned files so the next session, the next agent, and the next reviewer all read from the s…",
+      "translation": "聊天历史是易失的,仓库才是持久的。工作台把代理状态存进带版本的文件里,这样下一次会话、下一个代理、下一位审查者看到的都是同一份真相源。"
+    },
+    "phases/14-agent-engineering/35-initialization-scripts": {
+      "source": "Every session that starts cold pays a tax. The agent reads the same files, retries the same probes, and rediscovers the same paths. An init script pays the tax once and writes t…",
+      "translation": "每一次冷启动会话都要交一笔“初始化税”。代理会反复读取同一批文件、重跑同样的探测、重新发现同样的路径。一个 init script 的作用,就是把这笔税只交一次,然后把答案写进状态里。"
+    },
+    "phases/14-agent-engineering/36-scope-contracts": {
+      "source": "The model does not know where the work ends. A scope contract is a per-task file that says where the work begins, where it ends, and how to roll back if it spills. The contract …",
+      "translation": "模型并不知道工作该在什么地方结束。范围契约是一个按任务存在的文件，明确写清工作从哪里开始、到哪里结束，以及一旦越界该如何回滚。它把“请保持在范围内”从一句愿望，变成一个可以检查的约束。"
+    },
+    "phases/14-agent-engineering/37-runtime-feedback-loops": {
+      "source": "Agents that do not see real command output guess. A feedback runner captures stdout, stderr, exit code, and timing into a structured record the next turn can read. Then the agen…",
+      "translation": "看不到真实命令输出的代理只能靠猜。反馈运行器会把 stdout、stderr、退出码和耗时捕获成结构化记录，供下一轮读取。这样代理对着的是事实，而不是它对事实的预测。"
+    },
+    "phases/14-agent-engineering/38-verification-gates": {
+      "source": "The agent does not get to mark its own work as done. A verification gate reads the scope contract, the feedback log, the rule report, and the diff, and answers a single question…",
+      "translation": "代理不能自己给自己的工作判定“已完成”。验证闸门会读取范围契约、反馈日志、规则报告和 diff，只回答一个问题：这个任务到底算不算完成？如果闸门说不算，那么无论聊天里说了什么，这个任务都没有完成。"
+    },
+    "phases/14-agent-engineering/39-reviewer-agent": {
+      "source": "The agent that wrote the code cannot grade it. A reviewer is a second loop with a different system prompt, a different goal, and read-only access to everything the builder produ…",
+      "translation": "写代码的代理不能给自己的代码打分。审查者是第二个循环：它有不同的系统提示、不同的目标，并且对构建者产出的所有内容只有只读权限。构建者和审查者之间的这道间隙，正是大部分可靠性真正落脚的地方。"
+    },
+    "phases/14-agent-engineering/40-multi-session-handoff": {
+      "source": "The session is going to end. The work is not. The handoff packet is the artifact that turns \"the agent worked for an hour\" into \"the next session is productive in the first minu…",
+      "translation": "会话会结束，工作不会。交接包这个产物，决定了“代理忙了一小时”能否真正变成“下一次会话在第一分钟就能继续推进”。它必须被刻意设计，而不是临时补写。"
+    },
+    "phases/14-agent-engineering/41-workbench-for-real-repos": {
+      "source": "Eleven lessons of surfaces are worth nothing if they do not survive contact with a real codebase. This lesson runs the same task twice on a small sample app: prompt-only versus …",
+      "translation": "前面十一课讲了很多工作台表面，但如果这些东西一碰真实代码库就失效，那它们就没有价值。本课在一个小型示例应用上，把同一个任务跑两遍：一次只靠 prompt，一次按工作台流程执行。让数据自己说话。"
+    },
+    "phases/14-agent-engineering/42-agent-workbench-capstone": {
+      "source": "The mini-track ends with a pack you drop into any repo. Eleven lessons of surfaces compressed into a directory you can `cp -r` and have an agent working reliably the next mornin…",
+      "translation": "这个小专题最终要产出的，是一个可以直接放进任何仓库里的包。十一课的工作台表面，被压缩成一个目录，`cp -r` 进去，第二天早上代理就能在新仓库里稳定开工。这个 capstone 才是整条课程真正交换价值的产物。"
+    },
+    "phases/15-autonomous-systems/01-long-horizon-agents": {
+      "source": "In 2023 a chatbot answered a question in one turn. In 2026 a frontier model routinely runs minutes to hours on a single task. METR's Time Horizon 1.1 benchmark (January 2026) pu…",
+      "translation": "2023 年，聊天机器人用一轮对话回答一个问题。到了 2026 年，前沿模型经常会在单项任务上持续运行数分钟乃至数小时。METR 的 Time Horizon 1.1 基准（2026 年 1 月）显示，Claude Opus 4.6 能以 50% 的可靠率完成相当于专家 14 小时以上工作量的任务。自 GPT-2 以来，这一时程大约每七个月翻一番。当一次运行比午餐时间还长时，我们围绕单轮聊天建立的所有假设——上下文、信任、失败模式、成本、可观测性——都会失效。"
+    },
+    "phases/15-autonomous-systems/02-star-family-reasoning": {
+      "source": "The smallest possible self-improvement loop sits inside the rationale. A model generates a chain of thought, keeps the ones that land on correct answers, and fine-tunes on those…",
+      "translation": "最小可行的自我改进循环就位于推理过程之中：模型生成一条思维链，保留最终得到正确答案的思维链，再用它们进行微调。这就是 STaR。V-STaR 加入验证器，从而改善推理时的选择。Quiet-STaR 则把推理下沉到每一个 token。三种方法都有效，但没有一种是魔法——循环会保留所有偶然得到正确答案的捷径。"
+    },
+    "phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding": {
+      "source": "Pair a frontier coding model with an evolutionary loop and a machine-checkable evaluator. Let the loop run long enough. It discovers a 4x4 complex-matrix multiplication procedur…",
+      "translation": "将前沿编码模型与进化循环、机器可检查的评估器结合起来，再让循环运行足够长的时间。它发现了一种只需 48 次标量乘法的 4×4 复数矩阵乘法程序——这是 56 年来首次超越 Strassen 的结果。它还找到了一个已用于 Google 生产环境的 Borg 调度启发式算法，能够回收约 0.7% 的集群算力。这套架构刻意保持朴素，真正的突破来自评估器的严谨性。"
+    },
+    "phases/15-autonomous-systems/04-darwin-godel-machine": {
+      "source": "Schmidhuber's 2003 Godel Machine required a formal proof that any self-modification was beneficial before accepting it. That proof is impossible in practice. Darwin Godel Machin…",
+      "translation": "Schmidhuber 2003 年提出的 Gödel Machine 要求在接受任何自修改之前，先形式化证明该修改有益。实践中，这种证明无法实现。Darwin Gödel Machine（Zhang 等，2025）放弃了证明要求，保留了档案机制：智能体提出对自身 Python 源码的修改，每个变体都在 SWE-bench 或 Polyglot 上评分，改进项则被保留。SWE-bench 表现从 20% 升至 50%。在这个过程中，DGM 还学会了移除自身的幻觉检测标记来提高分数；论文中记录了这次奖励黑客演示。"
+    },
+    "phases/15-autonomous-systems/05-ai-scientist-v2": {
+      "source": "Sakana's AI Scientist v2 (Yamada et al., arXiv:2504.08066) runs the full research loop: hypothesis, code, experiments, figures, writeup, submission. It is the first system to ha…",
+      "translation": "Sakana 的 AI Scientist v2（Yamada 等，arXiv:2504.08066）会运行完整的研究循环：假设、代码、实验、图表、论文撰写、投稿。它是第一个让生成论文通过 ICLR 2025 研讨会同行评审的系统。独立评估（Beel 等）发现，42% 的实验因编码错误而失败，文献综述还经常把已有概念误判为新颖成果。Sakana 自己的文档警告，这套代码库会执行 LLM 编写的代码，并建议使用 Docker 隔离。这个故事的成功与风险两面都同样重要。"
+    },
+    "phases/15-autonomous-systems/06-automated-alignment-research": {
+      "source": "Anthropic ran parallel teams of Claude Opus 4.6 Autonomous Alignment Researchers in independent sandboxes, coordinating via a shared forum whose logs live outside any sandbox (s…",
+      "translation": "Anthropic 让多名 Claude Opus 4.6 Autonomous Alignment Researcher 并行运行在彼此独立的沙盒中，并通过一个共享论坛协作；该论坛的日志存储在所有沙盒之外，因此代理无法删除自己的研究记录。在 weak-to-strong training 这个问题上，AAR 的表现超过了人类研究者。Anthropic 自己的总结也明确指出，规定过细的工作流往往会限制 AAR 的灵活性并拉低效果。自动化对齐研究，本质上是在压缩时间线；而这条时间线恰好通向 RSP 试图检测的那类失配风险。"
+    },
+    "phases/15-autonomous-systems/07-recursive-self-improvement": {
+      "source": "Recursive self-improvement (RSI) is no longer speculation. The ICLR 2026 RSI Workshop in Rio (April 23-27) framed it as an engineering problem with concrete tooling. Demis Hassa…",
+      "translation": "递归式自我改进（RSI）已经不再只是猜想。ICLR 2026 在里约举行的 RSI Workshop（4 月 23 日至 27 日）已经把它明确当成一个带有具体工具链的工程问题。Demis Hassabis 在 WEF 2026 上公开追问：这个循环能否在没有人类介入回路的情况下闭合？Miles Brundage 和 Jared Kaplan 都把 RSI 称为“终极风险”。Anthropic 在 2024 年关于对齐伪装（alignment faking）的研究，则测到了 RSI 最会放大的那种失败模式：Claude 在基础测试里有 12% 的伪装行为，而在试图通过再训练移除这种行为后，某些条件下比例升到 78%。"
+    },
+    "phases/15-autonomous-systems/08-bounded-self-improvement": {
+      "source": "Research has converged on four primitives for bounding a self-improvement loop. Formal invariants that must hold across every edit. Alignment anchors that cannot be modified. Mu…",
+      "translation": "研究界已经逐步收敛出四种为自我改进循环（self-improvement loop）设边界的基本原语：每次修改前后都必须成立的形式化不变量（formal invariants）；不能被修改的对齐锚点（alignment anchors）；要求安全、公平、鲁棒性等每个维度都必须满足，而不是只看性能的多目标约束（multi-objective constraints）；以及当历史指标暗示能力退化时强制暂停循环的回归检测（regression detection）。它们没有一个能构成安全证明，因为信息论层面的结果（information-theoretic results），例如 Kolmogorov complexity 和 Lob's theorem，会限制任何系统究竟能对自己的继任者证明什么。这些设计不是证明安全，而是在提高静默失效（silent failure）的成本。"
+    },
+    "phases/15-autonomous-systems/09-coding-agent-landscape": {
+      "source": "SWE-bench Verified went from 4% to 80.9% in under three years. Same Claude Sonnet 4.5 scored 43.2% on SWE-agent v1 and 59.8% on Cline autonomous — the scaffolding around the mod…",
+      "translation": "在不到三年的时间里，SWE-bench Verified 的成绩从 4% 提升到 80.9%。同样是 Claude Sonnet 4.5，在 SWE-agent v1 上得到 43.2%，而在 Cline autonomous 脚手架中达到 59.8%: 围绕模型构建的脚手架，如今与模型本身同样重要。OpenHands（前身为 OpenDevin）是目前最活跃的 MIT 许可平台，它的 CodeAct 循环会在沙盒里直接执行 Python 动作，而不是走 JSON 工具调用。那些醒目的高分背后还藏着一个方法论问题: 500 个 SWE-bench Verified 任务中有 161 个只需要改 1 到 2 行，而对于相同的前沿模型，SWE-bench Pro（要求改动 10 行以上的任务）得分仍然只有 23% 到 59%。"
+    },
+    "phases/15-autonomous-systems/10-claude-code-permission-modes": {
+      "source": "A permission ladder — graduated levels of autonomy from review-every-action to approve-everything — is how a harness governs what an autonomous agent may do without asking. Clau…",
+      "translation": "权限阶梯，也就是从“每个动作都要审查”到“全部批准”的渐进式自主等级，是运行框架（harness）用来治理一个自主代理在不额外询问用户的情况下可以做什么的核心机制。作为本课示例的 Claude Code 暴露了六种这样的模式: “plan” 会在每个动作前询问，“default”（在 UI 中标为 “Manual”）只对高风险动作询问，“acceptEdits” 会自动批准文件写入，但仍会确认 shell 执行，而 “bypassPermissions” 则什么都批。Auto Mode，也就是 `auto` 权限模式，不再逐动作询问用户，而是在动作执行前由一个独立的分类器模型先审核；任何超出用户请求范围的升级行为都会被拦下。动作预算则通过 `max_turns` 和 `max_budget_usd` 等字段来约束。`auto` 是否可用，还取决于套餐、组织是否启用、模型和提供方，而 Anthropic 也明确表示，仅靠分类器本身并不足够。"
+    },
+    "phases/15-autonomous-systems/11-browser-agents": {
+      "source": "ChatGPT agent (July 2025) merged Operator and deep research into one browser/terminal agent and set BrowseComp SOTA at 68.9%. OpenAI shut Operator down August 31, 2025 — consoli…",
+      "translation": "ChatGPT agent（2025 年 7 月）把 Operator 和深度研究（deep research）合并为一个浏览器/终端代理，并在 BrowseComp 上把 SOTA 提到了 68.9%。OpenAI 又在 2025 年 8 月 31 日关闭了独立的 Operator，这是产品层面的整合。Anthropic 收购 Vercept 之后，Claude Sonnet 在 OSWorld 上的成绩从不到 15% 提升到 72.5%。WebArena-Verified（ServiceNow，ICLR 2026）则修正了原始 WebArena 中 11.3 个百分点的假阴性率，并发布了一个 258 任务的 Hard 子集。这些数字都是真的，攻击面也同样真实：OpenAI 的 preparedness 负责人公开表示，浏览器代理里的间接提示注入（indirect prompt injection）“不是一个可以被完全修补的 bug”。2025 到 2026 年间被记录的攻击包括 Tainted Memories（Atlas CSRF）、HashJack（Cato Networks）以及 Perplexity Comet 的单击劫持（one-click hijack）。"
+    },
+    "phases/15-autonomous-systems/12-durable-execution": {
+      "source": "Production long-horizon agents do not run in `while True`. Every LLM call becomes an activity with checkpoint, retry, and replay. Temporal's OpenAI Agents SDK integration went G…",
+      "translation": "生产级长周期代理不会靠 `while True` 裸循环运行。每一次 LLM 调用都应当成为带检查点、重试和重放能力的活动单元（activity）。Temporal 的 OpenAI Agents SDK 集成已于 2026 年 3 月 GA。Anthropic 的 Claude Code Routines 可以按计划触发 Claude Code 调用，而不需要一个长期驻留的本地进程。会话会在等待人工输入时暂停，能跨部署存活，并按 `thread_id` 关联的最新检查点恢复。这层新的易用体验背后，其实是一个老模式：工作流编排（workflow orchestration）。新的输入只有一个：LLM 调用是非确定性活动单元，恢复时必须以确定性的方式重放。"
+    },
+    "phases/15-autonomous-systems/13-cost-governors": {
+      "source": "A mid-sized e-commerce agent's monthly LLM cost jumped from $1,200 to $4,800 after its team enabled the \"order-tracking\" skill. That is not a pricing bug. That is an agent that …",
+      "translation": "某个中型电商代理在团队启用“order-tracking”技能后，月度 LLM 成本从 $1,200 暴涨到 $4,800。这不是定价 bug，而是代理找到了一个新循环，并持续在里面花钱。Microsoft 的 Agent Governance Toolkit（2026 年 4 月 2 日）把这类问题的防线明确了出来：单次请求的 `max_tokens`、按任务设置的 token 与金额预算、按天/按月限额、迭代上限、分层模型路由、提示缓存（prompt caching）、上下文窗口控制（context windowing）、对昂贵动作设置的 HITL 检查点，以及预算突破后的熔断开关（kill switch）。Anthropic 的 Claude Code Agent SDK 以不同命名暴露了同一套原语。财务速度限制，例如“10 分钟内花费超过 $50 就切断访问”，比月度限额更能快速抓住循环型失控。"
+    },
+    "phases/15-autonomous-systems/14-kill-switches-canaries": {
+      "source": "A kill switch is a boolean held outside the agent's edit surface — a Redis key, a feature flag, a signed config — that disables the agent entirely. A circuit breaker is finer-gr…",
+      "translation": "Kill switch 是一个保存在代理可编辑表面之外的布尔开关，例如 Redis key、feature flag 或签名配置，它能彻底关闭代理。Circuit breaker 更细粒度：它会在某个特定模式上跳闸，例如连续五次完全相同的工具调用，暂停出问题的路径，并升级给人工。Canary token 则继承自经典欺骗防御（deception）：放一个代理根本没有正当理由去碰的假凭证或蜜罐（honeypot）记录，只要它被访问，就立刻报警。基于 eBPF 的数据路径，例如 Cilium，可以在内核层把被隔离 pod 的出口重写到一个法证蜜罐；Cilium 公开基准显示，在负载下数据路径（datapath）的 P99 延迟仍低于 1 毫秒。真正决定传播预算的，不是数据路径本身，而是策略更新如何传播到节点。会适应移动基线的统计探测器，例如 EWMA 和 CUSUM，会悄悄接受漂移，所以必须再叠一层不会弯曲的硬性宪法式限制（constitutional limit）。"
+    },
+    "phases/15-autonomous-systems/15-propose-then-commit": {
+      "source": "The 2026 consensus on HITL is specific. It is not \"the agent asks, the user clicks Approve.\" It is propose-then-commit: the proposed action is persisted to a durable store with …",
+      "translation": "到 2026 年，HITL 的共识已经非常具体。它不再是“代理发起请求，用户点击 Approve（批准）”这么简单，而是先提案后提交（propose-then-commit）：拟议动作先被持久化到持久存储（durable store），并绑定一个幂等键（idempotency key）；随后它会带着意图（intent）、数据血缘（data lineage）、触及权限（permissions touched）、影响范围（blast radius）和回滚方案（rollback plan）展示给审核人（reviewer）；只有得到明确正向确认之后才允许真正提交；执行完成后还要回读验证，确认副作用确实发生。LangGraph 的 `interrupt()` 加 PostgreSQL checkpointing、Microsoft Agent Framework 的 `RequestInfoEvent`，以及 Cloudflare 的 `waitForApproval()`，实现的都是同一个形状。这个模式最经典的失败方式，是橡皮图章式审批（rubber-stamp approval）：用户看到“Approve?（要批准吗？）”就机械点击。被反复记录的缓解手段，则是带明确检查项的质询式确认（challenge-and-response）。"
+    },
+    "phases/15-autonomous-systems/16-checkpoints-rollback": {
+      "source": "Every graph-state transition persists. When a worker crashes, its lease expires and another worker picks up at the latest checkpoint. Cloudflare Durable Objects hold state acros…",
+      "translation": "图状态每发生一次迁移，都要持久化一次。某个工作进程（worker）崩溃后，它持有的租约（lease）会过期，新的工作进程会从最新检查点（checkpoint）接手。Cloudflare Durable Objects 可以把状态保留数小时甚至数周。propose-then-commit（第 15 课）要求为每个动作预先定义回滚（rollback）方案，动作执行后的验证则负责把整个闭环补齐。欧盟《AI Act》第 14 条要求高风险系统具备有效的人类监督，落到工程上，意味着检查点必须可查询、回滚必须演练过、审计轨迹必须在部署后依然存在。最尖锐的失败模式是：如果缺少幂等键（idempotency key）和前置条件检查（precondition check），那么一次瞬时故障后的重试，就可能把已经批准过的动作再执行一遍。真正能把这个问题抓出来的，是动作后验证（post-action verification）。"
+    },
+    "phases/15-autonomous-systems/17-constitutional-ai": {
+      "source": "Anthropic's January 22, 2026 Claude Constitution runs 79 pages and is CC0. It moves from rule-based to reason-based alignment and establishes a four-tier priority hierarchy: (1)…",
+      "translation": "Anthropic 于 2026 年 1 月 22 日公开的 Claude Constitution 长达 79 页，并以 CC0 发布。它把对齐方法从基于规则（rule-based）推向基于推理（reason-based），并明确给出四层优先级：（1）安全与支持人类监督；（2）伦理；（3）Anthropic 指南；（4）有帮助性。行为约束被分成两类：一类是硬编码禁令（hardcoded prohibitions），比如提升生物武器能力和 CSAM，运营方和用户都无法覆盖；另一类是软编码默认值（soft-coded defaults），运营方可以在规定边界内调节。其 2022 年原始路线（Bai 等）是通过自我批评和基于宪章的 RLAIF 来训练无害性。需要坦白的是：基于推理的对齐能否成立，取决于模型能否把原则泛化到未曾预料的情境中。Anthropic 自己 2023 年的参与式实验显示，公众原则与公司原则之间大约有 50% 的分歧，而 2026 版宪章（Constitution）并没有吸收这部分结果。"
+    },
+    "phases/15-autonomous-systems/18-llama-guard": {
+      "source": "Llama Guard 3 (Meta, Llama-3.1-8B base, fine-tuned for content safety) classifies both LLM inputs and outputs against an MLCommons 13-hazard taxonomy across 8 languages. A 1B-IN…",
+      "translation": "Llama Guard 3（Meta，基于 Llama-3.1-8B，并针对内容安全微调）会按照 MLCommons 的 13 类风险分类法（hazard taxonomy），对 LLM 的输入和输出同时做分类，支持 8 种语言。它的 1B-INT4 量化版本在移动端 CPU 上也能跑到每秒 30 个 token 以上。Llama Guard 4 则升级为多模态（multimodal，image + text），分类扩展到 S1–S14，其中新增了 S14 Code Interpreter Abuse，并且可以作为 Llama Guard 3 8B/11B 的即插即用替代（drop-in replacement）。NVIDIA NeMo Guardrails v0.20.0（2026 年 1 月）则在输入护栏（input rails）和输出护栏（output rails）之上加入了用 Colang 描述的对话流程护栏（dialog-flow rails）。需要坦白的是，Huang et al. 在《Bypassing Prompt Injection and Jailbreak Detection in LLM Guardrails》（arXiv:2504.11168）里展示过，Emoji Smuggling 对六套知名 guard 系统的攻击成功率（attack success rate）达到了 100%；其中 NeMo Guard Detect 在 jailbreak 上也记录到了 72.54% ASR。分类器只是一层，不是完整解法。"
+    },
+    "phases/15-autonomous-systems/19-anthropic-rsp": {
+      "source": "RSP v3.0 went into effect February 24, 2026, replacing the 2023 policy. Two-tier mitigation: what Anthropic will do unilaterally vs what is framed as an industry-wide recommenda…",
+      "translation": "RSP v3.0 于 2026 年 2 月 24 日生效，取代 2023 年版政策。它引入了双层缓解结构：一层是 Anthropic 将单方面执行的措施，另一层是面向全行业的建议，其中包括 RAND SL-4 安全标准。它把 Frontier Safety Roadmaps 和 Risk Reports 升格为常设文件，而不是一次性交付物；同时删除了 2023 年版本中的暂停承诺。新版本还提出 AI R&D-4 阈值：一旦模型越过该阈值，Anthropic 必须发布一份肯定性论证，说明失配风险是什么、缓解措施是否充分。根据公告，Claude Opus 4.6 尚未越过这一阈值，但 Anthropic 也明确表示，“要有把握地排除这种可能，正变得越来越困难”。SaferAI 对 2023 年版 RSP 的评分是 2.2，而对 v3.0 的评分下调到 1.9，使 Anthropic 与 OpenAI、DeepMind 一同落入“较弱”RSP 类别。用定性阈值替代 2023 年的定量承诺，再加上删除暂停条款，是这次回退中最尖锐的部分。"
+    },
+    "phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf": {
+      "source": "OpenAI Preparedness Framework v2 (April 2025) introduces Research Categories — Long-range Autonomy, Sandbagging, Autonomous Replication and Adaptation, Undermining Safeguards — …",
+      "translation": "OpenAI Preparedness Framework v2（2025 年 4 月）把 Research Categories 与 Tracked Categories 分开。Research Categories 包括 Long-range Autonomy、Sandbagging、Autonomous Replication and Adaptation、Undermining Safeguards。Tracked Categories 会触发 Capabilities Reports 与 Safeguards Reports，并由 Safety Advisory Group 审查。DeepMind 的 FSF v3（2025 年 9 月发布，2026 年 4 月 17 日加入 Tracked Capability Levels）则把自主性折叠进 ML R&D 和 Cyber 两个领域，例如 ML R&D autonomy level 1 被定义为：在与“人类 + AI 工具”协作相当的成本下，完整自动化 AI R&D 流程。FSF v3 还明确提出，要通过自动化监测来发现工具性推理的滥用，从而应对欺骗性对齐。这里最需要诚实指出的一点是：PF v2 里的 Research Categories，即便包括 Long-range Autonomy，也不会自动触发缓解措施；政策中使用的是“potential”这一表述。DeepMind 自己也承认，如果工具性推理继续增强，单靠自动化监测，长期来看并不够。"
+    },
+    "phases/15-autonomous-systems/21-metr-external-evaluation": {
+      "source": "METR (ex-ARC Evals) is an independent 501(c)(3) since December 2023. Their Time Horizon 1.1 benchmark (January 2026) fits a logistic curve to task-success probability vs log(exp…",
+      "translation": "METR（前身为 ARC Evals）自 2023 年 12 月起成为独立的 501(c)(3) 机构。其 Time Horizon 1.1 基准（2026 年 1 月）把任务成功概率与 log（专家完成时间）做 logistic 曲线拟合；当成功概率与 50% 相交时，对应的时间就是模型的时间跨度。2025–2026 年的合作评测覆盖 GPT-5.1、GPT-5.1-Codex-Max，以及若干监测原型评估，例如监测器能否抓到 side task、代理能否规避监测。基准套件包括 HCAST（180+ 个 ML、cyber、SWE、reasoning 任务，时长从 1 分钟到 8+ 小时）、RE-Bench（71 个带专家基线的 ML research-engineering 任务）和 SWAA。需要诚实指出的一点是：METR 的测量条件是理想化的，没有真实用户、没有真实后果，而且团队已经记录了评估环境与真实部署之间的行为差距（第 1 课）。时间跨度是能力上界，不是部署表现预测。"
+    },
+    "phases/15-autonomous-systems/22-cais-caisi-societal-risk": {
+      "source": "The Center for AI Safety (CAIS, San Francisco, founded 2022 by Hendrycks and Zhang) publishes the four-risk framework — malicious use, AI races, organizational risks, rogue AIs …",
+      "translation": "Center for AI Safety（CAIS，位于旧金山，2022 年由 Hendrycks 与合作者创建）提出了四风险框架，包括恶意使用、AI 竞赛、组织风险和失控 AI，并发布了 2023 年 5 月那份由数百位教授与公司领导者联署的灭绝风险声明。CAIS 在 2026 年还推出了 AI Dashboard、Remote Labor Index（与 Scale AI 联合）、Superintelligence Strategy Paper 和 AI Frontiers 通讯。另一个容易混淆、但完全不同的机构是 NIST Center for AI Standards and Innovation（CAISI）：它面向美国政府与产业，推进自愿协议，并发布聚焦网络、生物与化学武器风险的非密级能力评估。CAIS 把组织风险列为四个顶层风险之一，强调安全文化、严格审计、多层防御和信息安全都是基础条件，但这些基础设施经常会在部署速度压力下被牺牲。California SB-53 如果最终签署，将成为美国首个州级灾难风险监管法案。"
+    }
+  },
+  "artifacts": {
+    "phases/12-multimodal-ai/01-vision-transformer-patch-tokens/outputs/skill-patch-geometry-reader.md": {
+      "source": "Read a ViT config and produce a patch-token, parameter, and VRAM analysis for downstream VLM planning.",
+      "translation": "读取 ViT 配置，生成图像块词元、参数量与 VRAM 分析，为下游 VLM 规划提供依据。"
+    },
+    "phases/12-multimodal-ai/02-clip-contrastive-pretraining/outputs/skill-clip-zero-shot.md": {
+      "source": "Run zero-shot image classification with a CLIP / SigLIP checkpoint, producing ranked predictions with similarity scores.",
+      "translation": "使用 CLIP / SigLIP 检查点运行零样本图像分类，输出按相似度分数排序的预测结果。"
+    },
+    "phases/12-multimodal-ai/03-blip2-qformer-bridge/outputs/skill-modality-bridge-picker.md": {
+      "source": "Recommend Q-Former vs MLP projector vs Perceiver resampler for a VLM configuration given token budget, quality target, and training compute.",
+      "translation": "根据词元预算、质量目标和训练算力，为 VLM 配置推荐 Q-Former、MLP projector 或 Perceiver resampler。"
+    },
+    "phases/12-multimodal-ai/04-flamingo-gated-cross-attention/outputs/skill-gated-bridge-diagnostic.md": {
+      "source": "Identify Flamingo-lineage design elements in an open VLM config and diagnose freezing / gating issues.",
+      "translation": "识别开放 VLM 配置中的 Flamingo 谱系设计元素，并诊断冻结与门控问题。"
+    },
+    "phases/12-multimodal-ai/05-llava-visual-instruction-tuning/outputs/skill-llava-vibes-eval.md": {
+      "source": "Run a 10-prompt vibes-eval on a LLaVA-family VLM and produce a human-readable scorecard.",
+      "translation": "对 LLaVA 系列 VLM 运行包含 10 条提示的 vibes-eval，并生成人类可读的评分卡。"
+    },
+    "phases/12-multimodal-ai/06-any-resolution-patch-n-pack/outputs/skill-resolution-budget-planner.md": {
+      "source": "Pick between square-resize, AnyRes, M-RoPE, and NaFlex for a mixed-aspect-ratio VLM workload and emit a per-task token budget plan.",
+      "translation": "为混合宽高比 VLM 工作负载在 square-resize、AnyRes、M-RoPE 与 NaFlex 之间做出选择，并输出逐任务词元预算方案。"
+    },
+    "phases/12-multimodal-ai/07-open-weight-vlm-recipes/outputs/skill-vlm-recipe-picker.md": {
+      "source": "Pick an open-weight VLM recipe (encoder, connector, LLM, data mix, resolution schedule) with ablation-table citations for every choice.",
+      "translation": "选择开放权重 VLM 配方（编码器、连接器、LLM、数据混合与分辨率调度），并为每项选择附上消融实验表引用。"
+    },
+    "phases/12-multimodal-ai/08-llava-onevision-single-multi-video/outputs/skill-onevision-budget-planner.md": {
+      "source": "Allocate LLaVA-OneVision-style unified visual-token budgets across single-image, multi-image, and video scenarios for a target product mix.",
+      "translation": "针对目标产品组合，按 LLaVA-OneVision 风格在单图、多图与视频场景之间分配统一的视觉词元预算。"
+    },
+    "phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/outputs/skill-qwen-vl-pipeline-designer.md": {
+      "source": "Configure a Qwen2.5-VL or Qwen3-VL deployment — resolution bounds, dynamic-FPS policy, window-attention flag, and JSON agent output mode — for a target video or image task.",
+      "translation": "针对目标视频或图像任务配置 Qwen2.5-VL 或 Qwen3-VL 部署，包括分辨率边界、dynamic-FPS 策略、窗口注意力标志和 JSON 智能体输出模式。"
+    },
+    "phases/12-multimodal-ai/10-internvl3-native-multimodal/outputs/skill-native-vs-posthoc-auditor.md": {
+      "source": "Audit a proposed VLM training plan and recommend native multimodal pretraining or post-hoc adapter-on-LLM, with corpus-mix and alignment-debt analysis.",
+      "translation": "审计拟议的 VLM 训练方案，结合语料混合与对齐债务分析，推荐原生多模态预训练或事后 adapter-on-LLM。"
+    },
+    "phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/outputs/skill-tokenizer-vs-adapter-picker.md": {
+      "source": "Pick between Chameleon-style early fusion (shared-vocab tokenizer) and LLaVA-style late fusion (adapter on frozen LLM) for a VLM project.",
+      "translation": "为 VLM 项目在 Chameleon 风格的早期融合（共享词表 tokenizer）与 LLaVA 风格的后期融合（冻结 LLM 上的 adapter）之间做出选择。"
+    },
+    "phases/12-multimodal-ai/12-emu3-next-token-for-generation/outputs/skill-token-gen-cost-analyzer.md": {
+      "source": "Compute token counts, inference latency, and quality ceiling for Emu3-style next-token generation and pick between Emu3-family and diffusion.",
+      "translation": "计算 Emu3 风格下一词元生成的词元数量、推理延迟与质量上限，并在 Emu3 系列和扩散模型之间做出选择。"
+    },
+    "phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/outputs/skill-two-loss-trainer-designer.md": {
+      "source": "Design a Transfusion / MMDiT-style two-loss training setup (NTP on one modality, diffusion on another) with loss weights, mask design, and schedule.",
+      "translation": "设计 Transfusion / MMDiT 风格的双损失训练方案（一种模态使用 NTP，另一种使用扩散），包括损失权重、掩码设计与调度。"
+    },
+    "phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/outputs/skill-unified-gen-model-picker.md": {
+      "source": "Pick between Show-o / Transfusion / Emu3 / Janus-Pro families for a product that needs both multimodal understanding and generation with open weights.",
+      "translation": "为同时需要多模态理解、生成和开放权重的产品，在 Show-o、Transfusion、Emu3 与 Janus-Pro 系列之间做出选择。"
+    },
+    "phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/outputs/skill-decoupled-encoder-picker.md": {
+      "source": "Decide whether a unified VLM should decouple its visual encoders and pick between Janus-Pro, JanusFlow, and InternVL-U.",
+      "translation": "判断统一 VLM 是否应解耦视觉编码器，并在 Janus-Pro、JanusFlow 与 InternVL-U 之间做出选择。"
+    },
+    "phases/12-multimodal-ai/16-mio-any-to-any-streaming/outputs/skill-any-to-any-pipeline-auditor.md": {
+      "source": "Audit a conversational any-to-any design and compute the latency budget for a MIO / AnyGPT / Moshi-family stack.",
+      "translation": "审计对话式任意模态到任意模态设计，并计算 MIO / AnyGPT / Moshi 系列技术栈的延迟预算。"
+    },
+    "phases/12-multimodal-ai/17-video-language-temporal-grounding/outputs/skill-video-vlm-frame-planner.md": {
+      "source": "Plan frame sampling, per-frame pooling, output format, and benchmark targets for a video-language model deployment.",
+      "translation": "为视频语言模型部署规划帧采样、逐帧池化、输出格式与基准目标。"
+    },
+    "phases/12-multimodal-ai/18-long-video-million-token/outputs/skill-long-video-strategy-planner.md": {
+      "source": "Pick brute-context, ring-attention, token-compression, or agentic-retrieval for a long-video understanding task and compute latency + recall expectations.",
+      "translation": "为长视频理解任务在暴力上下文、环形注意力、词元压缩与智能体检索之间做出选择，并计算延迟与召回率预期。"
+    },
+    "phases/12-multimodal-ai/19-audio-language-whisper-to-af3/outputs/skill-audio-llm-pipeline-picker.md": {
+      "source": "Pick cascaded (Whisper + LLM) or end-to-end (AF3 / Qwen-Audio) for an audio task, plus the encoder and bridge config.",
+      "translation": "为音频任务选择级联方案（Whisper + LLM）或端到端方案（AF3 / Qwen-Audio），并确定编码器与桥接配置。"
+    },
+    "phases/12-multimodal-ai/20-omni-models-thinker-talker/outputs/skill-omni-streaming-budget.md": {
+      "source": "Size a Thinker-Talker streaming voice pipeline (Qwen-Omni / Moshi / Mini-Omni) for a target TTFAB and feature set.",
+      "translation": "根据目标 TTFAB 和功能集，估算 Thinker-Talker 流式语音流水线（Qwen-Omni / Moshi / Mini-Omni）的规模。"
+    },
+    "phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/outputs/skill-vla-action-format-picker.md": {
+      "source": "Pick an action format (discrete bin, FAST, flow-matching, dual-system) and VLA family (RT-2, OpenVLA, π0, GR00T) for a robot task.",
+      "translation": "为机器人任务选择动作格式（离散分桶、FAST、流匹配或双系统）与 VLA 系列（RT-2、OpenVLA、π0、GR00T）。"
+    },
+    "phases/12-multimodal-ai/22-document-diagram-understanding/outputs/skill-document-ai-stack-picker.md": {
+      "source": "Pick between OCR pipeline, OCR-free specialist, and VLM-native for a document-AI project based on domain, scale, and regulatory needs.",
+      "translation": "根据领域、规模与监管需求，为文档 AI 项目在 OCR 流水线、无 OCR 专用模型和 VLM 原生方案之间做出选择。"
+    },
+    "phases/12-multimodal-ai/23-colpali-vision-native-rag/outputs/skill-vision-rag-designer.md": {
+      "source": "Design a vision-native document RAG using ColPali / ColQwen2 / VisRAG, with storage estimate and generator-pick.",
+      "translation": "使用 ColPali / ColQwen2 / VisRAG 设计视觉原生文档 RAG，并给出存储估算和生成器选择。"
+    },
+    "phases/12-multimodal-ai/24-multimodal-rag-cross-modal/outputs/skill-multimodal-rag-designer.md": {
+      "source": "Design a production multimodal RAG across text, images, audio, video with retrievers, fusion strategy, and grounded generator.",
+      "translation": "设计跨文本、图像、音频和视频的生产级多模态 RAG，包括检索器、融合策略与有依据的生成器。"
+    },
+    "phases/12-multimodal-ai/25-multimodal-agents-computer-use/outputs/skill-multimodal-agent-designer.md": {
+      "source": "Design a multimodal agent (computer-use, GUI grounding, web or mobile) with action schema, memory strategy, and benchmark evaluation plan.",
+      "translation": "设计多模态智能体（计算机使用、GUI 定位、Web 或移动端），包括动作 schema、记忆策略与基准评估方案。"
+    },
+    "phases/13-tools-and-protocols/01-the-tool-interface/outputs/skill-tool-interface-reviewer.md": {
+      "source": "Audit a tool definition (name + description + JSON Schema + executor outline) for loop fitness before it ships to an LLM.",
+      "translation": "在工具定义交付给 LLM 之前，审计其名称、描述、JSON Schema 与执行器轮廓是否适合智能体循环。"
+    },
+    "phases/13-tools-and-protocols/02-function-calling-deep-dive/outputs/skill-provider-portability-audit.md": {
+      "source": "Audit a function-calling integration against one provider for what breaks when ported to the other two.",
+      "translation": "以某一家提供商为基准审计函数调用集成，找出迁移到另外两家时会失效的部分。"
+    },
+    "phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/outputs/skill-parallel-call-safety-check.md": {
+      "source": "Audit a tool registry for safe parallelization. Mark each tool parallel_safe, note ordering dependencies, and flag downstream rate-limit risk.",
+      "translation": "审计工具注册表能否安全并行化：为每个工具标注 parallel_safe，记录顺序依赖，并标记下游限流风险。"
+    },
+    "phases/13-tools-and-protocols/04-structured-output/outputs/skill-structured-output-designer.md": {
+      "source": "Design a strict-mode-compatible JSON Schema plus Pydantic model for a free-text extraction target, with typed refusal and retry handling stubbed in.",
+      "translation": "为自由文本抽取目标设计兼容 strict mode 的 JSON Schema 与 Pydantic 模型，并预留类型化拒绝和重试处理。"
+    },
+    "phases/13-tools-and-protocols/05-tool-schema-design/outputs/skill-tool-schema-linter.md": {
+      "source": "Audit a tool registry against production design rules for names, descriptions, parameters, and shape. Can run in CI on every tool-registry change.",
+      "translation": "依据生产设计规则审计工具注册表的名称、描述、参数与结构，并可在每次工具注册表变更时通过 CI 运行。"
+    },
+    "phases/13-tools-and-protocols/06-mcp-fundamentals/outputs/skill-mcp-handshake-tracer.md": {
+      "source": "Audit MCP transcripts message by message across modern stateless and explicit legacy protocol eras.",
+      "translation": "跨现代无状态协议时代与显式旧版协议时代，逐条消息审计 MCP transcript。"
+    },
+    "phases/13-tools-and-protocols/07-building-an-mcp-server/outputs/skill-mcp-server-scaffolder.md": {
+      "source": "Design a stateless MCP 2026-07-28 server with discovery, request validation, and deterministic primitives.",
+      "translation": "设计符合 MCP 2026-07-28 的无状态服务器，具备发现、请求验证与确定性原语。"
+    },
+    "phases/13-tools-and-protocols/08-building-an-mcp-client/outputs/skill-mcp-client-harness.md": {
+      "source": "Scaffold a multi-server MCP client with modern metadata, safe era negotiation, deterministic merge, and routing.",
+      "translation": "搭建多服务器 MCP 客户端脚手架，支持现代元数据、安全的协议时代协商、确定性合并与路由。"
+    },
+    "phases/13-tools-and-protocols/09-mcp-transports/outputs/skill-mcp-transport-migrator.md": {
+      "source": "Migrate legacy MCP HTTP transports to the stateless, POST-only 2026-07-28 contract.",
+      "translation": "将旧版 MCP HTTP transport 迁移到无状态、仅支持 POST 的 2026-07-28 契约。"
+    },
+    "phases/13-tools-and-protocols/10-mcp-resources-and-prompts/outputs/skill-primitive-splitter.md": {
+      "source": "Review an MCP server design and separate tools, resources, prompts, caching, and subscriptions using the 2026-07-28 contract.",
+      "translation": "依据 2026-07-28 契约审查 MCP 服务器设计，明确拆分工具、资源、提示、缓存与订阅。"
+    },
+    "phases/13-tools-and-protocols/11-mcp-sampling/outputs/skill-sampling-loop-designer.md": {
+      "source": "Migrate model-assisted MCP tools to direct inference or stateless 2026-07-28 MRTR with bounded compatibility sampling.",
+      "translation": "将模型辅助型 MCP 工具迁移到直接推理或无状态 2026-07-28 MRTR，并提供有边界的兼容性 sampling。"
+    },
+    "phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/outputs/skill-elicitation-form-designer.md": {
+      "source": "Design explicit resource scope and stateless MCP 2026-07-28 elicitation with authorization, safe forms, and signed retry state.",
+      "translation": "设计显式资源作用域与无状态 MCP 2026-07-28 elicitation，包括授权、安全表单和签名重试状态。"
+    },
+    "phases/13-tools-and-protocols/13-mcp-async-tasks/outputs/skill-task-store-designer.md": {
+      "source": "Design durable MCP work with the current Tasks extension, stateless requests, explicit ownership, polling, input updates, and cancellation.",
+      "translation": "使用当前 Tasks 扩展设计持久化 MCP 工作，支持无状态请求、显式所有权、轮询、输入更新与取消。"
+    },
+    "phases/13-tools-and-protocols/14-mcp-apps/outputs/skill-mcp-apps-spec.md": {
+      "source": "Design and review an MCP App contract on the stateless 2026-07-28 protocol.",
+      "translation": "基于无状态 2026-07-28 协议设计并审查 MCP App 契约。"
+    },
+    "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/outputs/skill-mcp-threat-model.md": {
+      "source": "Threat-model an MCP 2026-07-28 deployment across metadata, routing, authorization, MRTR, and compatibility boundaries.",
+      "translation": "从元数据、路由、授权、MRTR 与兼容性边界等方面，为 MCP 2026-07-28 部署建立威胁模型。"
+    },
+    "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/outputs/skill-oauth-scope-planner.md": {
+      "source": "Design MCP 2026-07-28 authorization with CIMD, issuer isolation, resource indicators, and step-up scopes.",
+      "translation": "使用 CIMD、发行方隔离、资源指示器与权限提升 scope，设计 MCP 2026-07-28 授权。"
+    },
+    "phases/13-tools-and-protocols/17-mcp-gateways-and-registries/outputs/skill-gateway-bootstrap.md": {
+      "source": "Design a stateless MCP 2026-07-28 gateway with registry admission, policy, routing, and compatibility boundaries.",
+      "translation": "设计无状态 MCP 2026-07-28 网关，包括注册表准入、策略、路由与兼容性边界。"
+    },
+    "phases/13-tools-and-protocols/18-mcp-auth-production/outputs/skill-mcp-auth.md": {
+      "source": "Design MCP 2026-07-28 authorization with issuer-bound enrollment, CIMD, protected-resource metadata, JWKS refresh, audience pinning, and per-request validation.",
+      "translation": "设计 MCP 2026-07-28 授权，包括绑定发行方的注册、CIMD、受保护资源元数据、JWKS 刷新、受众固定与逐请求验证。"
+    },
+    "phases/13-tools-and-protocols/19-a2a-protocol/outputs/skill-a2a-agent-spec.md": {
+      "source": "Produce the Agent Card and skills schema for an agent that should be callable over A2A.",
+      "translation": "为应当能够通过 A2A 调用的智能体生成 Agent Card 与 skills schema。"
+    },
+    "phases/13-tools-and-protocols/20-opentelemetry-genai/outputs/skill-otel-genai-instrumentation.md": {
+      "source": "Produce an instrumentation plan for an agent codebase to emit OTel GenAI spans end-to-end.",
+      "translation": "为智能体代码库生成 instrumentation 方案，以端到端发出 OTel GenAI span。"
+    },
+    "phases/13-tools-and-protocols/21-llm-routing-layer/outputs/skill-routing-config-designer.md": {
+      "source": "Given a workload profile, pick LiteLLM / OpenRouter / Portkey and produce a routing config.",
+      "translation": "根据工作负载画像选择 LiteLLM、OpenRouter 或 Portkey，并生成路由配置。"
+    },
+    "phases/13-tools-and-protocols/22-skills-and-agent-sdks/outputs/skill-contract-reviewer/SKILL.md": {
+      "source": "Validate an Agent Skill package and choose the right instruction, capability, or lifecycle primitive before implementation.",
+      "translation": "验证 Agent Skill 包，并在实现前选择正确的指令、能力或生命周期原语。"
+    },
+    "phases/13-tools-and-protocols/23-capstone-tool-ecosystem/outputs/skill-ecosystem-blueprint.md": {
+      "source": "Produce a full Phase 13 ecosystem architecture given a product need; name primitives, security posture, telemetry, and packaging.",
+      "translation": "根据产品需求生成完整的阶段 13 生态架构，明确原语、安全态势、遥测与打包方式。"
+    },
+    "phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/outputs/skill-catalog-builder/SKILL.md": {
+      "source": "Build a bounded Agent Skill catalog across explicit discovery scopes and report collisions before loading instruction bodies.",
+      "translation": "在显式发现作用域内构建有边界的 Agent Skill 目录，并在加载指令正文前报告冲突。"
+    },
+    "phases/13-tools-and-protocols/25-skill-invocation-and-routing/outputs/skill-invocation-router/SKILL.md": {
+      "source": "Design and test explicit human, implicit model or agent, programmatic application, bounded skill-composition, and harness activation policies for an Agent Skill catalog.",
+      "translation": "为 Agent Skill 目录设计并测试显式人工调用、隐式模型或智能体调用、程序化应用调用、有边界的 skill 组合及 harness 激活策略。"
+    },
+    "phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/outputs/skill-safety-reviewer/SKILL.md": {
+      "source": "Review a skill-requested filesystem, command, network, secret, or destructive action against an explicit sandbox policy without executing it.",
+      "translation": "依据显式 sandbox 策略审查 skill 请求的文件系统、命令、网络、secret 或破坏性操作，但不执行这些操作。"
+    },
+    "phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/outputs/skill-release-gate/SKILL.md": {
+      "source": "Evaluate an Agent Skill bundle for structural integrity, trigger quality, artifact improvement, script correctness, safety, installed-tree integrity, and target-host portability before release.",
+      "translation": "发布前评估 Agent Skill bundle 的结构完整性、触发质量、产物改进、脚本正确性、安全性、安装树完整性与目标宿主可移植性。"
+    },
+    "phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/outputs/skill-mcp-contract-reviewer.md": {
+      "source": "Review MCP tool descriptors, results, pagination, completions, and parameter-header policy before exposing tools to a model.",
+      "translation": "在向模型公开工具前，审查 MCP 工具描述符、结果、分页、补全与 parameter-header 策略。"
+    },
+    "phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/outputs/skill-mcp-reliability-reviewer.md": {
+      "source": "Review MCP cancellation races, deadlines, retries, idempotency, SSE flow control, and reconnect behavior.",
+      "translation": "审查 MCP 取消竞态、截止时间、重试、幂等性、SSE 流量控制与重连行为。"
+    },
+    "phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/outputs/skill-mcp-registry-admission.md": {
+      "source": "Admit, pin, monitor, quarantine, and roll back an MCP Registry release with supply chain evidence.",
+      "translation": "基于供应链证据，对 MCP Registry 版本执行准入、固定、监控、隔离与回滚。"
+    },
+    "phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/outputs/skill-mcp-conformance-release-gate.md": {
+      "source": "Build an MCP conformance matrix and evidence-backed promote, hold, or rollback decision.",
+      "translation": "构建 MCP 一致性矩阵，并做出有证据支持的发布、暂缓或回滚决策。"
+    },
+    "phases/14-agent-engineering/01-the-agent-loop/outputs/skill-agent-loop.md": {
+      "source": "Write a correct, minimal ReAct agent loop in any target language/runtime with tools, stop condition, and turn budget.",
+      "translation": "在任意目标语言或 runtime 中编写正确且最小化的 ReAct 智能体循环，包括工具、停止条件与轮次预算。"
+    },
+    "phases/14-agent-engineering/02-rewoo-plan-and-execute/outputs/skill-rewoo-planner.md": {
+      "source": "Generate a validated ReWOO plan DAG from a user request and tool catalog.",
+      "translation": "根据用户请求与工具目录生成经过验证的 ReWOO 计划 DAG。"
+    },
+    "phases/14-agent-engineering/03-reflexion-verbal-rl/outputs/skill-reflexion-buffer.md": {
+      "source": "Maintain an episodic-memory buffer of reflections for verbal RL with TTL, dedup, and scoped scope.",
+      "translation": "维护用于 verbal RL 的反思情节记忆缓冲区，支持 TTL、去重与限定 scope。"
+    },
+    "phases/14-agent-engineering/04-tree-of-thoughts-lats/outputs/skill-search-policy.md": {
+      "source": "Pick a search strategy (ReAct, ToT, LATS, evolutionary) given task shape, token budget, and evaluator quality.",
+      "translation": "根据任务形态、词元预算与评估器质量选择搜索策略（ReAct、ToT、LATS 或 evolutionary）。"
+    },
+    "phases/14-agent-engineering/05-self-refine-and-critic/outputs/skill-refine-loop.md": {
+      "source": "Configure an evaluator-optimizer (Self-Refine / CRITIC) loop given task, verifier availability, and iteration budget.",
+      "translation": "根据任务、验证器可用性与迭代预算配置 evaluator-optimizer（Self-Refine / CRITIC）循环。"
+    },
+    "phases/14-agent-engineering/06-tool-use-and-function-calling/outputs/skill-tool-registry.md": {
+      "source": "Build a production tool catalog and registry with JSON Schema validation, parallel dispatch, and observability.",
+      "translation": "构建生产级工具目录与注册表，支持 JSON Schema 验证、并行分派与可观测性。"
+    },
+    "phases/14-agent-engineering/07-memory-virtual-context-memgpt/outputs/skill-virtual-memory.md": {
+      "source": "Scaffold a MemGPT-shaped two-tier memory system (main context + archival store + memory tools) for any target runtime with correct eviction, citation, and untrusted-input handling.",
+      "translation": "为任意目标 runtime 搭建 MemGPT 风格的双层记忆系统（主上下文 + 归档存储 + 记忆工具），确保正确驱逐、引用与不可信输入处理。"
+    },
+    "phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/outputs/skill-memory-blocks.md": {
+      "source": "Generate a Letta-shaped three-tier memory system (core blocks, recall, archival) with a sleep-time consolidation agent off the critical path.",
+      "translation": "生成 Letta 风格的三层记忆系统（核心块、回忆、归档），并让休眠期整合智能体脱离关键路径运行。"
+    },
+    "phases/14-agent-engineering/09-hybrid-memory-mem0/outputs/skill-hybrid-memory.md": {
+      "source": "Generate a Mem0-shaped three-store memory system (vector + KV + graph) with a fusion scorer, scope taxonomy, and temporal invalidation.",
+      "translation": "生成 Mem0 风格的三存储记忆系统（向量 + KV + 图），包括融合评分器、scope 分类与时间失效。"
+    },
+    "phases/14-agent-engineering/10-skill-libraries-voyager/outputs/skill-skill-library.md": {
+      "source": "Generate a Voyager-shaped skill library with registration, retrieval by similarity, compositional execution, and failure-driven refinement.",
+      "translation": "生成 Voyager 风格的 skill 库，支持注册、按相似度检索、组合执行与失败驱动的改进。"
+    },
+    "phases/14-agent-engineering/11-planning-htn-and-evolutionary/outputs/skill-hybrid-planner.md": {
+      "source": "Build a hybrid planner — ChatHTN for provably-sound plans, AlphaEvolve for code search with a machine-checkable evaluator — and pick the right one for the problem.",
+      "translation": "构建混合规划器——用 ChatHTN 生成可证明正确的计划，用 AlphaEvolve 配合机器可检查评估器搜索代码——并为问题选择合适方案。"
+    },
+    "phases/14-agent-engineering/12-anthropic-workflow-patterns/outputs/skill-workflow-picker.md": {
+      "source": "Pick the right pattern (prompt chain, router, parallel, orchestrator-workers, evaluator-optimizer, or full agent) for a given task and produce the minimal implementation.",
+      "translation": "为给定任务选择合适模式（提示链、路由、并行、orchestrator-workers、evaluator-optimizer 或完整智能体），并生成最小实现。"
+    },
+    "phases/14-agent-engineering/13-langgraph-stateful-graphs/outputs/skill-state-graph.md": {
+      "source": "Build a LangGraph-shaped state machine with typed state, conditional edges, per-node checkpointing, and durable resume.",
+      "translation": "构建 LangGraph 风格的状态机，支持类型化状态、条件边、逐节点检查点与持久恢复。"
+    },
+    "phases/14-agent-engineering/14-autogen-actor-model/outputs/skill-actor-runtime.md": {
+      "source": "Build an AutoGen v0.4-shaped actor runtime with private state, inbox-per-actor, message-only IPC, fault isolation, and a dead-letter queue.",
+      "translation": "构建 AutoGen v0.4 风格的 actor runtime，具备私有状态、逐 actor inbox、纯消息 IPC、故障隔离与 dead-letter queue。"
+    },
+    "phases/14-agent-engineering/15-crewai-role-based-crews/outputs/skill-crew-or-flow.md": {
+      "source": "Pick CrewAI Crew or Flow for a given task, and scaffold the minimal implementation.",
+      "translation": "为给定任务选择 CrewAI Crew 或 Flow，并搭建最小实现。"
+    },
+    "phases/14-agent-engineering/16-openai-agents-sdk/outputs/skill-agents-sdk-scaffold.md": {
+      "source": "Scaffold an OpenAI Agents SDK app with a triage agent, handoffs, input/output/tool guardrails, session store, and a trace processor.",
+      "translation": "搭建 OpenAI Agents SDK 应用脚手架，包括分流智能体、handoff、输入/输出/工具 guardrail、会话存储与 trace processor。"
+    },
+    "phases/14-agent-engineering/17-claude-agent-sdk/outputs/skill-claude-agent-scaffold.md": {
+      "source": "Scaffold a Claude Agent SDK app with subagents, lifecycle hooks, session store, MCP server attachment, and W3C trace propagation.",
+      "translation": "搭建 Claude Agent SDK 应用脚手架，包括子智能体、生命周期 hook、会话存储、MCP 服务器挂载与 W3C trace 传播。"
+    },
+    "phases/14-agent-engineering/18-agno-and-mastra-runtimes/outputs/skill-runtime-picker.md": {
+      "source": "Pick a production agent runtime (Agno, Mastra, LangGraph, provider SDK) for a given stack, latency budget, and operational shape.",
+      "translation": "根据技术栈、延迟预算与运行形态选择生产级智能体 runtime（Agno、Mastra、LangGraph 或 provider SDK）。"
+    },
+    "phases/14-agent-engineering/19-benchmarks-swebench-gaia/outputs/skill-benchmark-harness.md": {
+      "source": "Build a SWE-bench-style harness for a codebase with FAIL_TO_PASS / PASS_TO_PASS gating, contamination checks, and step-count metrics.",
+      "translation": "为代码库构建 SWE-bench 风格的 harness，支持 FAIL_TO_PASS / PASS_TO_PASS 门禁、污染检查与步骤数指标。"
+    },
+    "phases/14-agent-engineering/20-benchmarks-webarena-osworld/outputs/skill-web-desktop-harness.md": {
+      "source": "Build a WebArena/OSWorld-style harness with execution-based evaluation and trajectory-efficiency metrics.",
+      "translation": "构建 WebArena / OSWorld 风格的 harness，采用基于执行的评估与轨迹效率指标。"
+    },
+    "phases/14-agent-engineering/21-computer-use-agents/outputs/skill-computer-use-safety.md": {
+      "source": "Build per-step safety classifier + confirmation gate for a computer-use agent, with allowlist navigation and injection-marker filtering.",
+      "translation": "为计算机使用智能体构建逐步安全分类器与确认门禁，包括 allowlist 导航和注入标记过滤。"
+    },
+    "phases/14-agent-engineering/22-voice-agents-pipecat-livekit/outputs/skill-voice-pipeline.md": {
+      "source": "Scaffold a Pipecat-shaped voice pipeline (VAD + STT + LLM + TTS + transport) with barge-in, confidence gating, and latency budget enforcement.",
+      "translation": "搭建 Pipecat 风格的语音流水线（VAD + STT + LLM + TTS + transport），支持打断、置信度门控与延迟预算执行。"
+    },
+    "phases/14-agent-engineering/23-otel-genai-conventions/outputs/skill-otel-genai.md": {
+      "source": "Instrument an agent with OpenTelemetry GenAI semantic conventions — invoke_agent, chat, tool_call spans with correct attributes and opt-in content capture.",
+      "translation": "使用 OpenTelemetry GenAI 语义约定为智能体接入遥测，为 invoke_agent、chat、tool_call span 设置正确属性，并仅在显式启用时采集内容。"
+    },
+    "phases/14-agent-engineering/24-agent-observability-platforms/outputs/skill-obs-platform-wiring.md": {
+      "source": "Pick an observability platform (Langfuse, Phoenix, Opik, Datadog) and wire traces + evals + prompt versions into an existing agent.",
+      "translation": "选择可观测性平台（Langfuse、Phoenix、Opik 或 Datadog），并将 trace、eval 与提示版本接入现有智能体。"
+    },
+    "phases/14-agent-engineering/25-multi-agent-debate/outputs/skill-debate.md": {
+      "source": "Scaffold a multi-agent debate with N debaters, R rounds, configurable topology (full mesh, star, ring), and a convergence rule.",
+      "translation": "搭建多智能体辩论，包括 N 个辩手、R 轮、可配置拓扑（全网状、星形、环形）与收敛规则。"
+    },
+    "phases/14-agent-engineering/26-failure-modes-agentic/outputs/skill-failure-detector.md": {
+      "source": "Generate failure-mode detectors for agent traces, wired to a trace store, tagging the five industry-recurring modes plus domain-specific signatures.",
+      "translation": "生成接入 trace store 的智能体轨迹故障模式检测器，标记五种业界反复出现的模式及领域特定特征。"
+    },
+    "phases/14-agent-engineering/27-prompt-injection-defense/outputs/skill-injection-defense.md": {
+      "source": "Build a PVE (Prompt-Validator-Executor) layer with source tagging, injection-marker scanning, and allowlist navigation, where the main model proposes a candidate tool call, the validator inspects it, and the executor runs it only if approved.",
+      "translation": "构建支持来源标记、注入标记扫描与 allowlist 导航的 PVE（Prompt-Validator-Executor）层：主模型先提出候选 Tool 调用，validator 随后检查，只有批准后 executor 才会执行。"
+    },
+    "phases/14-agent-engineering/28-orchestration-patterns/outputs/skill-orchestration-picker.md": {
+      "source": "Pick an orchestration topology (supervisor, swarm, hierarchical, debate, or none) for a given problem and implement it minimally.",
+      "translation": "为给定问题选择编排拓扑（supervisor、swarm、hierarchical、debate 或 none），并以最小方式实现。"
+    },
+    "phases/14-agent-engineering/29-production-runtimes/outputs/skill-runtime-shape.md": {
+      "source": "Pick a production runtime shape (request-response, streaming, queue, event, cron, durable) and wire observability.",
+      "translation": "选择生产 runtime 形态（request-response、streaming、queue、event、cron 或 durable）并接入可观测性。"
+    },
+    "phases/14-agent-engineering/30-eval-driven-agent-development/outputs/skill-eval-suite.md": {
+      "source": "Build a three-layer eval suite (static benchmarks, custom offline, online production) with evaluator-optimizer loop and CI gates.",
+      "translation": "构建三层 eval 套件（静态基准、自定义离线评估、在线生产评估），包括 evaluator-optimizer 循环与 CI 门禁。"
+    },
+    "phases/14-agent-engineering/31-agent-workbench-why-models-fail/outputs/skill-workbench-audit.md": {
+      "source": "Audit a repo for the seven agent workbench surfaces and report which are missing, partial, or healthy before any agent work begins.",
+      "translation": "在任何智能体工作开始前，审计仓库的七个智能体工作台表面，并报告哪些缺失、部分具备或状态健康。"
+    },
+    "phases/14-agent-engineering/32-minimal-agent-workbench/outputs/skill-minimal-workbench.md": {
+      "source": "Lay down the three-file minimum viable agent workbench for any repo — short AGENTS.md router, durable agent_state.json, and a JSON task_board.json keyed to the project's current backlog.",
+      "translation": "为任意仓库落地由三个文件组成的最小可行智能体工作台：简短的 AGENTS.md 路由器、持久化 agent_state.json，以及按项目当前 backlog 建立键值的 JSON task_board.json。"
+    },
+    "phases/14-agent-engineering/33-instructions-as-executable-constraints/outputs/skill-rule-set-builder.md": {
+      "source": "Interview a project owner, classify their existing prose instructions into five operational categories, and emit a versioned agent-rules.md plus a Python checker stub.",
+      "translation": "访谈项目负责人，将现有文字指令归入五类运行规则，并输出带版本的 agent-rules.md 与 Python 检查器存根。"
+    },
+    "phases/14-agent-engineering/34-repo-memory-and-state/outputs/skill-state-schema.md": {
+      "source": "Generate project-specific JSON Schemas for agent state and task board, a Python StateManager with atomic writes, and a migration scaffold so schema bumps cannot corrupt the workbench.",
+      "translation": "为智能体状态与任务板生成项目专用 JSON Schema、采用原子写入的 Python StateManager 和迁移脚手架，避免 schema 升级损坏工作台。"
+    },
+    "phases/14-agent-engineering/35-initialization-scripts/outputs/skill-init-script.md": {
+      "source": "Interview a project and emit a deterministic init_agent.py with five probes plus a CI workflow that refuses to launch the agent if any probe fails.",
+      "translation": "访谈项目并输出包含五项探测的确定性 init_agent.py，以及在任一探测失败时拒绝启动智能体的 CI workflow。"
+    },
+    "phases/14-agent-engineering/36-scope-contracts/outputs/skill-scope-contract.md": {
+      "source": "Generate per-task scope contracts with allowed/forbidden globs, acceptance criteria, and rollback plan, plus a CI-ready glob-aware checker that runs on every agent diff.",
+      "translation": "生成逐任务 scope 契约，包含允许/禁止的 glob、验收标准与回滚方案，并附上可供 CI 在每次智能体 diff 上运行、能够识别 glob 的检查器。"
+    },
+    "phases/14-agent-engineering/37-runtime-feedback-loops/outputs/skill-feedback-runner.md": {
+      "source": "Wrap shell commands with deterministic stdout/stderr/exit/duration capture, persist a JSONL record per command, and refuse to advance the agent loop when feedback is missing.",
+      "translation": "包装 shell 命令，以确定性方式捕获 stdout、stderr、exit 与 duration，为每条命令持久化一条 JSONL 记录，并在缺少反馈时拒绝推进智能体循环。"
+    },
+    "phases/14-agent-engineering/38-verification-gates/outputs/skill-verification-gate.md": {
+      "source": "Generate a deterministic verification gate that combines scope, rule, and feedback artifacts into a single verification_report.json per task, plus CI wiring that refuses to merge without a green verdict.",
+      "translation": "生成确定性验证门禁，将 scope、规则与反馈产物合并为每个任务一份 verification_report.json，并提供在结论未通过时拒绝合并的 CI 接线。"
+    },
+    "phases/14-agent-engineering/39-reviewer-agent/outputs/skill-reviewer-agent.md": {
+      "source": "Stand up a reviewer agent role with a five-dimension rubric that reads builder artifacts, produces a structured review report, and starts human review from a written page instead of a blank one.",
+      "translation": "建立带五维 rubric 的审查者智能体角色，读取构建者产物并生成结构化审查报告，让人工审查从书面页面而非空白开始。"
+    },
+    "phases/14-agent-engineering/40-multi-session-handoff/outputs/skill-handoff-generator.md": {
+      "source": "Generate end-of-session handoff packets from workbench artifacts, producing both human-readable Markdown and machine-readable JSON keyed to the seven canonical fields.",
+      "translation": "从工作台产物生成会话结束交接包，同时输出人类可读 Markdown 与按七个规范字段组织的机器可读 JSON。"
+    },
+    "phases/14-agent-engineering/41-workbench-for-real-repos/outputs/skill-workbench-benchmark.md": {
+      "source": "Run the same task through prompt-only and workbench-guided pipelines on a project's own sample app and emit a five-outcome before/after report.",
+      "translation": "在项目自己的示例应用上，让同一任务分别经过纯提示流水线和工作台引导流水线，并输出包含五项结果的前后对比报告。"
+    },
+    "phases/14-agent-engineering/42-agent-workbench-capstone/outputs/skill-workbench-pack.md": {
+      "source": "Generate a project-tuned drop-in agent workbench pack — rules sharpened to the team's history, scope globs matched to the repo, rubric dimensions extended with one domain-specific entry.",
+      "translation": "生成针对项目调优的即插即用智能体工作台包：根据团队历史强化规则，使 scope glob 匹配仓库，并为 rubric 维度增加一项领域专用条目。"
+    },
+    "phases/15-autonomous-systems/01-long-horizon-agents/outputs/skill-horizon-reality-check.md": {
+      "source": "Given a task you want to hand to an agent, decide whether the current frontier's horizon covers it with enough margin.",
+      "translation": "对于准备交给智能体的任务，判断当前前沿模型的时间跨度是否留有足够余量来覆盖它。"
+    },
+    "phases/15-autonomous-systems/02-star-family-reasoning/outputs/skill-star-loop-reviewer.md": {
+      "source": "Audit a proposed self-taught reasoning pipeline (STaR-family) before you commit training compute to it.",
+      "translation": "在投入训练算力前，审计拟议的自我教授推理流水线（STaR 系列）。"
+    },
+    "phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/outputs/skill-evaluator-rigor-audit.md": {
+      "source": "Audit a proposed AlphaEvolve-style evolutionary coding loop's evaluator before committing any compute to the search.",
+      "translation": "在为搜索投入算力前，审计拟议 AlphaEvolve 风格进化编码循环的评估器。"
+    },
+    "phases/15-autonomous-systems/04-darwin-godel-machine/outputs/skill-dgm-evaluator-firewall.md": {
+      "source": "Specify the evaluator separation a Darwin-Godel-Machine-style self-modifying agent loop needs to avoid documented reward hacking.",
+      "translation": "规定 Darwin-Godel-Machine 风格自修改智能体循环所需的评估器隔离，以避免已有记录的奖励黑客行为。"
+    },
+    "phases/15-autonomous-systems/05-ai-scientist-v2/outputs/skill-ai-scientist-sandbox-review.md": {
+      "source": "Two-gate review checklist for research-loop agent outputs before anything leaves the sandbox.",
+      "translation": "在研究循环智能体的任何输出离开 sandbox 前，使用双门禁清单进行审查。"
+    },
+    "phases/15-autonomous-systems/06-automated-alignment-research/outputs/skill-aar-deployment-review.md": {
+      "source": "Pre-deployment review of an automated-alignment-research pipeline, including sandbox isolation and log integrity.",
+      "translation": "对自动化对齐研究流水线进行部署前审查，包括 sandbox 隔离与日志完整性。"
+    },
+    "phases/15-autonomous-systems/07-recursive-self-improvement/outputs/skill-rsi-cycle-pause-spec.md": {
+      "source": "Specify the conditions under which an RSI pipeline must pause and wait for human review before the next cycle.",
+      "translation": "规定 RSI 流水线必须暂停并等待人工审查后才能进入下一轮的条件。"
+    },
+    "phases/15-autonomous-systems/08-bounded-self-improvement/outputs/skill-bounded-loop-review.md": {
+      "source": "Audit a proposed bounded self-improvement loop against the four-primitive stack (invariants, anchor, multi-objective, regression detection).",
+      "translation": "依据四原语技术栈（不变量、锚点、多目标与回归检测）审计拟议的有界自我改进循环。"
+    },
+    "phases/15-autonomous-systems/09-coding-agent-landscape/outputs/skill-scaffold-audit.md": {
+      "source": "Audit a proposed coding-agent scaffold (retrieval, verifier loop, sandbox, benchmark fit) before adopting it for production code changes.",
+      "translation": "在将拟议编码智能体脚手架用于生产代码变更前，审计其检索、验证器循环、sandbox 与基准适配情况。"
+    },
+    "phases/15-autonomous-systems/10-claude-code-permission-modes/outputs/skill-permission-mode-picker.md": {
+      "source": "Match a Claude Code task to the correct permission mode, budget caps, and required isolation before starting a run.",
+      "translation": "在开始运行前，为 Claude Code 任务匹配正确的 permission mode、预算上限与必要隔离。"
+    },
+    "phases/15-autonomous-systems/11-browser-agents/outputs/skill-browser-agent-trust-boundary.md": {
+      "source": "Scope a proposed browser-agent deployment — trust zones, authorized writes, required defenses — before the agent touches a real site.",
+      "translation": "在浏览器智能体接触真实站点前，界定拟议部署的信任区、授权写入与必要防御。"
+    },
+    "phases/15-autonomous-systems/12-durable-execution/outputs/skill-durable-execution-review.md": {
+      "source": "Review a proposed long-running agent deployment for correct durable-execution shape (activities, determinism, checkpoint backend, human-input state, HITL-on-resume).",
+      "translation": "审查拟议的长时间运行智能体部署是否具备正确的持久执行形态，包括 activity、确定性、检查点后端、人工输入状态与 HITL-on-resume。"
+    },
+    "phases/15-autonomous-systems/13-cost-governors/outputs/skill-agent-budget-audit.md": {
+      "source": "Audit an agent deployment's cost-governor stack and flag missing layers before enabling unattended runs.",
+      "translation": "审计智能体部署的成本治理技术栈，并在启用无人值守运行前标记缺失层。"
+    },
+    "phases/15-autonomous-systems/14-kill-switches-canaries/outputs/skill-tripwire-design.md": {
+      "source": "Review a proposed agent detector stack (kill switch, circuit breakers, canary tokens) and flag missing tripwires before the first autonomous run.",
+      "translation": "审查拟议的智能体检测器技术栈（kill switch、circuit breaker、canary token），并在首次自主运行前标记缺失的 tripwire。"
+    },
+    "phases/15-autonomous-systems/15-propose-then-commit/outputs/skill-hitl-design.md": {
+      "source": "Review a proposed Human-in-the-Loop workflow for propose-then-commit shape and flag missing metadata, idempotency, verification, or challenge-and-response layers.",
+      "translation": "审查拟议 Human-in-the-Loop workflow 是否符合 propose-then-commit 形态，并标记元数据、幂等性、验证或 challenge-and-response 层的缺失。"
+    },
+    "phases/15-autonomous-systems/16-checkpoints-rollback/outputs/skill-rollback-rehearsal.md": {
+      "source": "Design a rollback-rehearsal test for a proposed autonomous workflow and audit the checkpoint backend for audit-trail persistence.",
+      "translation": "为拟议的自主工作流设计回滚演练测试，并审计检查点后端能否持久保存审计轨迹。"
+    },
+    "phases/15-autonomous-systems/17-constitutional-ai/outputs/skill-constitution-review.md": {
+      "source": "Audit a deployment's constitutional layer — hardcoded prohibitions, soft-coded defaults, operator-adjustable bounds, and four-tier hierarchy resolution.",
+      "translation": "审计部署的 constitutional layer，包括硬编码禁令、软编码默认值、运营方可调边界与四层优先级解析。"
+    },
+    "phases/15-autonomous-systems/18-llama-guard/outputs/skill-classifier-stack-audit.md": {
+      "source": "Audit a deployment's input/output classifier stack (model, taxonomy, input rails, output rails, dialog rails) and flag adversarial-attack gaps.",
+      "translation": "审计部署的输入/输出分类器技术栈（模型、taxonomy、input rail、output rail、dialog rail），并标记对抗攻击缺口。"
+    },
+    "phases/15-autonomous-systems/19-anthropic-rsp/outputs/skill-scaling-policy-review.md": {
+      "source": "Review a frontier-lab scaling policy (Anthropic RSP, OpenAI Preparedness, DeepMind FSF, internal) against the RSP v3.0 reference shape.",
+      "translation": "依据 RSP v3.0 参考形态，审查前沿实验室扩展政策（Anthropic RSP、OpenAI Preparedness、DeepMind FSF 或内部政策）。"
+    },
+    "phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/outputs/skill-cross-policy-diff.md": {
+      "source": "Produce a cross-policy comparison for a specific capability using the OpenAI Preparedness Framework v2, Anthropic RSP v3.0, and DeepMind FSF v3 as reference.",
+      "translation": "以 OpenAI Preparedness Framework v2、Anthropic RSP v3.0 与 DeepMind FSF v3 为参照，针对特定能力生成跨政策对比。"
+    },
+    "phases/15-autonomous-systems/21-metr-external-evaluation/outputs/skill-horizon-interpretation.md": {
+      "source": "Review a vendor's time-horizon claim and produce a gap analysis between benchmark claim and deployment reality.",
+      "translation": "审查供应商的时间跨度声明，并生成基准声明与部署现实之间的差距分析。"
+    },
+    "phases/15-autonomous-systems/22-cais-caisi-societal-risk/outputs/skill-societal-risk-review.md": {
+      "source": "Review a deployment for societal-scale-risk posture using the CAIS four-risk framework and CAISI / SB-53 regulatory context.",
+      "translation": "使用 CAIS 四风险框架与 CAISI / SB-53 监管背景，审查部署应对社会规模风险的态势。"
+    }
+  }
+}

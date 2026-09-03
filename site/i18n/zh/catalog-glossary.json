@@ -1,0 +1,217 @@
+{
+  "strings": {
+    "Skip to content": "跳转到正文",
+    "GitHub stars": "GitHub 星标",
+    "Search (⌘K)": "搜索（⌘K）",
+    "Toggle theme": "切换主题",
+    "Contents": "课程",
+    "Catalog": "课程目录",
+    "Roadmap": "路线图",
+    "Glossary": "术语表",
+    "About": "关于",
+    "Lesson Catalog": "课程目录",
+    "Lesson Catalog - AI Engineering from Scratch": "课程目录 - AI Engineering from Scratch",
+    "Every lesson across all 20 core phases. Search, filter, sort.": "涵盖全部 20 个核心阶段的所有课程。可搜索、筛选、排序。",
+    "Search lessons...": "搜索课程……",
+    "Search lessons": "搜索课程",
+    "Filter by phase": "按阶段筛选",
+    "All Phases": "全部阶段",
+    "Filter by lesson status": "按课程状态筛选",
+    "All Status": "全部状态",
+    "Complete": "已完成",
+    "Planned": "计划中",
+    "complete": "已完成",
+    "planned": "计划中",
+    "Build": "构建",
+    "Learn": "学习",
+    "Reference": "参考",
+    "Loading lesson index...": "正在加载课程索引……",
+    "JavaScript is needed for local filtering. Every lesson remains available in the <a href=\"https://github.com/rohitg00/ai-engineering-from-scratch#contents\">GitHub curriculum index</a>.": "本地筛选需要启用 JavaScript。所有课程仍可在 <a href=\"https://github.com/rohitg00/ai-engineering-from-scratch#contents\">GitHub 课程索引</a> 中查看。",
+    "Phase": "阶段",
+    "Lesson": "课程",
+    "Type": "类型",
+    "Language": "语言",
+    "Status": "状态",
+    "Show more": "显示更多",
+    "Show all": "全部显示",
+    "AI Engineering from Scratch · open source · free forever.": "AI Engineering from Scratch · 开源 · 永久免费。",
+    "Home": "首页",
+    "Report / Suggest": "报告问题 / 提出建议",
+    "The lesson index could not be loaded.": "无法加载课程索引。",
+    "Reload the page or use the GitHub curriculum index.": "请刷新页面，或改用 GitHub 课程索引。",
+    "No lessons match your filters.": "没有课程符合当前筛选条件。",
+    "AI Engineering Glossary": "AI 工程术语表",
+    "AI Engineering Glossary - AI Engineering from Scratch": "AI 工程术语表 - AI Engineering from Scratch",
+    "Reference ledger · curriculum v1.0": "参考索引 · 课程 v1.0",
+    "Precise working definitions for the systems you build. Start with the meaning, then use the examples, distinctions, and lesson links to turn vocabulary into judgment.": "为你构建的系统提供精确、可操作的定义。先理解含义，再结合示例、区分说明和课程链接，把词汇转化为判断力。",
+    "Each entry separates a term's working definition from why it matters in an AI system, how it appears in practice, and what engineers commonly confuse it with. Search by term, alias, or idea; narrow the ledger by learning area; then follow the linked course lesson or primary source when you need the full derivation. Every entry has a stable fragment link, so you can cite one definition directly without sending someone through the entire index.": "每个条目都会分别说明术语的工作定义、它在 AI 系统中的重要性、实际应用方式，以及工程师常见的混淆点。你可以按术语、别名或概念搜索，按学习领域缩小范围；需要完整推导时，再进入对应课程或一手资料。每个条目都有稳定的锚点链接，因此可以直接引用某个定义，无需让读者在整个索引中查找。",
+    "Glossary statistics": "术语表统计",
+    "Terms indexed": "已索引术语",
+    "Learning areas": "学习领域",
+    "Stable deep links": "稳定深链接",
+    "Glossary filters": "术语表筛选",
+    "Search the ledger": "搜索索引",
+    "Term, alias, or idea": "术语、别名或概念",
+    "Clear": "清除",
+    "Learning area": "学习领域",
+    "Jump to letter": "跳转到字母",
+    "Live reference": "实时参考",
+    "Reference entries": "参考条目",
+    "Loading reference entries...": "正在加载参考条目……",
+    "JavaScript is needed for local filtering. Every definition remains available in the <a href=\"https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/glossary/terms.md\">GitHub glossary source</a>.": "本地筛选需要启用 JavaScript。所有定义仍可在 <a href=\"https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/glossary/terms.md\">GitHub 术语表源码</a> 中查看。",
+    "Untitled term ": "未命名术语 ",
+    "Foundations": "基础",
+    "All terms": "全部术语",
+    "Do not confuse it with": "不要与它混淆",
+    "Why it is called this": "为何这样命名",
+    "Learn it in the course": "在课程中学习它",
+    "Primary sources": "一手资料",
+    "Read term": "朗读术语",
+    "Copy link": "复制链接",
+    "Also called · ": "又称 · ",
+    "Working definition": "工作定义",
+    "Definition in progress.": "定义整理中。",
+    "Why it matters": "为什么重要",
+    "In practice": "实际应用",
+    "Common shortcut": "常见简写",
+    "Distinctions and evidence": "区别与依据",
+    "Related terms": "相关术语",
+    "The glossary index could not be loaded.": "无法加载术语表索引。",
+    "Reference unavailable": "参考内容不可用",
+    "Reload the page or open the glossary source on GitHub.": "请刷新页面，或在 GitHub 上打开术语表源码。",
+    "No matching reference": "没有匹配的参考条目",
+    "Try a broader idea, another learning area, or reset the ledger to see every term.": "试试更宽泛的关键词、其他学习领域，或重置索引以查看全部术语。",
+    "Clear filters": "清除筛选",
+    "Copied": "已复制",
+    "Link copied": "链接已复制",
+    "Copy failed": "复制失败",
+    "Advanced RAG": "高级 RAG：分块与重排序",
+    "Agent Observability Platforms": "智能体可观测性：Langfuse、Phoenix 与 Opik",
+    "Build a Full Transformer": "从零构建 Transformer",
+    "CLIP Contrastive Pretraining": "CLIP 与对比式视觉-语言预训练",
+    "Fine-Tuning and LoRA": "使用 LoRA 与 QLoRA 进行微调",
+    "Function Calling": "函数调用与工具使用",
+    "Multi-Session Handoff": "多会话移交",
+    "Indirect Prompt Injection": "间接提示词注入",
+    "Jailbreak Taxonomy": "越狱攻击分类",
+    "Introduction to JAX": "JAX 入门",
+    "Cross-Attention Fusion": "交叉注意力融合",
+    "Differential Privacy for LLMs": "面向 LLM 的差分隐私",
+    "MIO Any-to-Any Streaming": "MIO 任意模态流式处理",
+    "Inference Optimization": "推理优化",
+    "Production Agent Runtimes": "生产级智能体运行时",
+    "Skill Evals, Packaging, and Portability": "Skill 评测、打包与可移植性",
+    "Skill Invocation and Routing": "Skill 调用与路由",
+    "Structured Outputs": "结构化输出",
+    "Tool Use and Function Calling": "工具使用与函数调用",
+    "Guardrails": "护栏与安全",
+    "Inference Metrics and Goodput": "推理指标：TTFT、TPOT、ITL、Goodput 与 P99",
+    "Instructions as Executable Constraints": "将智能体指令作为可执行约束",
+    "KV Cache and Flash Attention": "KV 缓存、FlashAttention 与推理优化",
+    "MCP Fundamentals": "MCP 基础：无状态请求与 JSON-RPC",
+    "MCP Roots and Elicitation": "显式作用域与无状态信息征询（Elicitation）",
+    "Model Context Protocol": "模型上下文协议（MCP）",
+    "OpenTelemetry GenAI Conventions": "OpenTelemetry GenAI 语义约定",
+    "Production LLM Application": "构建生产级大语言模型应用",
+    "Projection Layer Modality Alignment": "用于模态对齐的投影层",
+    "Prompt Caching": "提示缓存与上下文缓存",
+    "Prompt Engineering": "提示工程：技术与模式",
+    "Prompt Injection Defense": "提示词注入与 PVE 防御",
+    "Reinforcement Learning from Human Feedback": "RLHF：奖励模型与 PPO",
+    "Retrieval-Augmented Generation": "RAG：检索增强生成",
+    "Reviewer Agent": "评审智能体：将构建者与评分者分离",
+    "SRE for AI": "AI SRE：多智能体事件响应",
+    "Scaling and Distributed Training": "分布式训练、FSDP 与 DeepSpeed",
+    "Scope Contracts": "作用域契约与任务边界",
+    "Security, Secrets, and Audit": "安全：密钥、PII 清洗与审计日志",
+    "Self-Hosted Serving Selection": "自托管推理服务选型：按硬件与规模匹配引擎",
+    "Shadow, Canary, and Progressive Delivery": "影子、金丝雀与渐进式部署",
+    "Tokenizers": "分词器：BPE、WordPiece 与 SentencePiece",
+    "Vision Transformer Patch Tokens": "视觉 Transformer 与图像块词元原语",
+    "Vision Transformers": "视觉 Transformer（ViT）",
+    "Vision-Language Models": "视觉-语言模型（ViT-MLP-LLM）",
+    "Workbench for Real Repositories": "在真实代码仓库中使用工作台"
+  },
+  "patterns": [
+    {
+      "source": "Showing {shown} of {matched} matching lessons. {total} total.",
+      "translation": "显示 {shown} / {matched} 节匹配课程，共 {total} 节。"
+    },
+    {
+      "source": "Phase {phase}: {name}",
+      "translation": "第 {phase} 阶段：{name}"
+    },
+    {
+      "source": "{count} lessons",
+      "translation": "{count} 节课程"
+    },
+    {
+      "source": "{remaining} matching lessons remain.",
+      "translation": "还有 {remaining} 节匹配课程未显示。"
+    },
+    {
+      "source": "Show next {count}",
+      "translation": "再显示 {count} 条"
+    },
+    {
+      "source": "{id} - {name}",
+      "translation": "{id} - {name}",
+      "note": "Phase select option; preserve the phase name data."
+    },
+    {
+      "source": "Jump to letter {letter}",
+      "translation": "跳转到字母 {letter}"
+    },
+    {
+      "source": "Read {term} aloud",
+      "translation": "朗读 {term}"
+    },
+    {
+      "source": "Copy link to {term}",
+      "translation": "复制指向 {term} 的链接"
+    },
+    {
+      "source": "Terms related to {term}",
+      "translation": "与 {term} 相关的术语"
+    },
+    {
+      "source": "REF {number}",
+      "translation": "参考 {number}"
+    },
+    {
+      "source": "Showing {shown} of {matched} matching terms. {total} total",
+      "translation": "显示 {shown} / {matched} 个匹配术语，共 {total} 个"
+    },
+    {
+      "source": "Showing {shown} of {matched} matching terms. {total} total · {category}",
+      "translation": "显示 {shown} / {matched} 个匹配术语，共 {total} 个 · {category}",
+      "note": "Preserve category labels if they come from glossary data."
+    },
+    {
+      "source": "Showing {shown} of {matched} matching terms. {total} total shown.",
+      "translation": "已显示 {shown} / {matched} 个匹配术语，共 {total} 个。"
+    },
+    {
+      "source": "Showing {shown} of {matched} matching terms. {total} total · {category} shown.",
+      "translation": "已显示 {shown} / {matched} 个匹配术语，共 {total} 个 · {category}。",
+      "note": "Announcement text; preserve category labels if data-driven."
+    },
+    {
+      "source": "{count} entry",
+      "translation": "{count} 个条目"
+    },
+    {
+      "source": "{count} entries",
+      "translation": "{count} 个条目"
+    },
+    {
+      "source": "{remaining} matching terms remain.",
+      "translation": "还有 {remaining} 个匹配术语未显示。"
+    },
+    {
+      "source": "term-{number}",
+      "translation": "term-{number}",
+      "note": "Fallback slug; keep ASCII slug stable."
+    }
+  ]
+}

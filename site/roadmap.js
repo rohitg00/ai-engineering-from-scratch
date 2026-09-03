@@ -1,5 +1,15 @@
 (function () {
   var root = document.documentElement;
+
+  function tr(value, params) {
+    if (window.AIFS_I18n && typeof window.AIFS_I18n.t === 'function') {
+      return window.AIFS_I18n.t(value, params);
+    }
+    return String(value == null ? '' : value).replace(/\{([A-Za-z0-9_]+)\}/g, function (token, name) {
+      return params && Object.prototype.hasOwnProperty.call(params, name) ? params[name] : token;
+    });
+  }
+
   var storedTheme = null;
   try { storedTheme = localStorage.getItem('theme'); } catch (_) {}
   if (storedTheme) {
@@ -69,6 +79,7 @@
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
+    window.addEventListener('aifs:language-change', refreshLanguage);
     if (typeof PHASES === 'undefined' || !Array.isArray(PHASES) || !PREREQS || !validateRoadmapData()) {
       showDataError();
       return;
@@ -208,7 +219,7 @@
     for (var i = 0; i < STAGES.length; i++) {
       var stage = STAGES[i];
       html += '<button class="roadmap-stage-jump" type="button" data-stage-target="' + stage.id + '">' +
-        '<span>Zone ' + stage.number + '</span><strong>' + escapeHtml(stage.name) + '</strong>' +
+        '<span>' + escapeHtml(tr('Zone {number}', { number: stage.number })) + '</span><strong>' + escapeHtml(tr(stage.name)) + '</strong>' +
       '</button>';
     }
     nav.innerHTML = html;
@@ -217,10 +228,10 @@
   function renderJumpOptions() {
     var select = document.getElementById('roadmapJump');
     if (!select) return;
-    var html = '<option value="">Jump to a phase</option>';
+    var html = '<option value="">' + escapeHtml(tr('Jump to a phase')) + '</option>';
     for (var i = 0; i < PHASES.length; i++) {
       var phase = PHASES[i];
-      html += '<option value="' + phase.id + '">' + formatPhase(phase.id) + ' · ' + escapeHtml(phase.name) + '</option>';
+      html += '<option value="' + phase.id + '">' + formatPhase(phase.id) + ' · ' + escapeHtml(tr(phase.name)) + '</option>';
     }
     select.innerHTML = html;
   }
@@ -237,7 +248,9 @@
     setText('roadmapLessonCount', String(totalLessons));
     setText('roadmapProgressCount', completedLessons + ' / ' + totalLessons);
     var recommendation = recommendedPhase();
-    setText('roadmapNextPhase', recommendation ? 'Phase ' + formatPhase(recommendation.id) : 'Complete');
+    setText('roadmapNextPhase', recommendation
+      ? tr('Phase {number}', { number: formatPhase(recommendation.id) })
+      : tr('Complete'));
   }
 
   function renderGraph() {
@@ -362,10 +375,10 @@
         height: endY - startY
       }));
       var number = svgEl('text', { class: 'roadmap-stage-band-number', x: 32, y: startY + 18 });
-      number.textContent = 'ZONE ' + stage.number;
+      number.textContent = tr('ZONE {number}', { number: stage.number });
       layer.appendChild(number);
       var label = svgEl('text', { class: 'roadmap-stage-band-label', x: 90, y: startY + 18 });
-      label.textContent = stage.name;
+      label.textContent = tr(stage.name);
       layer.appendChild(label);
     }
   }
@@ -379,7 +392,8 @@
       class: 'roadmap-node',
       'data-phase': phase.id,
       'data-tts-read': '',
-      'data-tts-section': 'Phase ' + formatPhase(phase.id) + ': ' + phase.name,
+      'data-tts-key': 'roadmap-phase-' + phase.id,
+      'data-tts-section': tr('Phase {phase}: {name}', { phase: formatPhase(phase.id), name: phase.name }),
       'data-tts-label': narration,
       transform: 'translate(' + pos.x + ',' + pos.y + ')',
       tabindex: '-1',
@@ -395,7 +409,7 @@
     surface.appendChild(svgEl('rect', { class: 'roadmap-node-focus', x: -4, y: -4, width: NODE_W + 8, height: NODE_H + 8 }));
 
     var code = svgEl('text', { class: 'roadmap-node-code', x: 14, y: 18 });
-    code.textContent = 'PHASE ' + formatPhase(phase.id);
+    code.textContent = tr('PHASE {number}', { number: formatPhase(phase.id) });
     surface.appendChild(code);
 
     var stateText = svgEl('text', {
@@ -403,12 +417,12 @@
       x: NODE_W - 14,
       y: 18,
       'text-anchor': 'end',
-      'data-default': state.label
+      'data-default': tr(state.label)
     });
-    stateText.textContent = state.label;
+    stateText.textContent = tr(state.label);
     surface.appendChild(stateText);
 
-    var lines = splitName(phase.name);
+    var lines = splitName(tr(phase.name));
     for (var i = 0; i < lines.length; i++) {
       var title = svgEl('text', {
         class: 'roadmap-node-title',
@@ -420,7 +434,7 @@
     }
 
     var meta = svgEl('text', { class: 'roadmap-node-meta', x: NODE_W - 14, y: 68, 'text-anchor': 'end' });
-    meta.textContent = progress.done + '/' + progress.total + ' COMPLETE';
+    meta.textContent = tr('{done}/{total} COMPLETE', { done: progress.done, total: progress.total });
     surface.appendChild(meta);
     surface.appendChild(svgEl('rect', { class: 'roadmap-node-progress-track', x: 14, y: 74, width: NODE_W - 28, height: 4 }));
     surface.appendChild(svgEl('rect', {
@@ -459,15 +473,19 @@
 
   function phaseNarration(phase, state, progress) {
     var requirements = (PREREQS[phase.id] || []).map(function (id) {
-      return phaseMap[id] ? phaseMap[id].name : 'Phase ' + formatPhase(id);
+      return phaseMap[id] ? tr(phaseMap[id].name) : tr('Phase {number}', { number: formatPhase(id) });
     });
     var unlocks = (children[phase.id] || []).map(function (id) {
-      return phaseMap[id] ? phaseMap[id].name : 'Phase ' + formatPhase(id);
+      return phaseMap[id] ? tr(phaseMap[id].name) : tr('Phase {number}', { number: formatPhase(id) });
     });
-    var text = 'Phase ' + formatPhase(phase.id) + ': ' + phase.name + '. ' + state.label + '. ' +
-      progress.done + ' of ' + progress.total + ' lessons completed.';
-    text += requirements.length ? ' Direct prerequisites: ' + requirements.join(', ') + '.' : ' This is the starting phase.';
-    text += unlocks.length ? ' Immediately unlocks: ' + unlocks.join(', ') + '.' : ' This is a final destination.';
+    var text = tr('Phase {phase}: {name}.', { phase: formatPhase(phase.id), name: phase.name }) + ' ' + tr(state.label) + '. ' +
+      tr('{done} of {total} lessons completed.', { done: progress.done, total: progress.total });
+    text += ' ' + (requirements.length
+      ? tr('Direct prerequisites: {items}.', { items: requirements.join(', ') })
+      : tr('This is the starting phase.'));
+    text += ' ' + (unlocks.length
+      ? tr('Immediately unlocks: {items}.', { items: unlocks.join(', ') })
+      : tr('This is a final destination.'));
     return text;
   }
 
@@ -724,7 +742,7 @@
     var jump = document.getElementById('roadmapJump');
     if (jump) jump.value = '';
     renderEmptyInspector(!(options && options.animate === false));
-    setText('roadmapGraphStatus', 'Route focus cleared.');
+    setText('roadmapGraphStatus', tr('Route focus cleared.'));
     if (updateHistory && window.location.hash) {
       history.replaceState({}, '', window.location.pathname + window.location.search);
     }
@@ -779,9 +797,9 @@
     if (nextState !== 'default') node.classList.add('is-' + nextState);
     node.setAttribute('aria-pressed', nextState === 'selected' ? 'true' : 'false');
     restoreNodeState(node);
-    if (nextState === 'selected') setNodeState(node, 'Selected', true);
-    else if (nextState === 'prerequisite') setNodeState(node, 'Prerequisite', true);
-    else if (nextState === 'unlock') setNodeState(node, 'Unlocks', true);
+    if (nextState === 'selected') setNodeState(node, tr('Selected'), true);
+    else if (nextState === 'prerequisite') setNodeState(node, tr('Prerequisite'), true);
+    else if (nextState === 'unlock') setNodeState(node, tr('Unlocks'), true);
   }
 
   function updateEdgeRouteState(key, nextState) {
@@ -912,7 +930,7 @@
     var id = parseInt(match[1], 10);
     if (!phaseMap[id]) {
       if (selectedId !== null) clearSelection(false);
-      setText('roadmapGraphStatus', 'No roadmap phase matches this link.');
+      setText('roadmapGraphStatus', tr('No roadmap phase matches this link.'));
       return;
     }
     selectPhase(id, { updateHistory: false });
@@ -998,12 +1016,12 @@
   function renderEmptyInspector(animate) {
     var recommendation = recommendedPhase();
     var recommendationHtml = recommendation
-      ? '<div class="roadmap-recommendation"><span>Recommended next</span><button type="button" data-route-phase="' + recommendation.id + '">Phase ' + formatPhase(recommendation.id) + ' · ' + escapeHtml(recommendation.name) + '</button></div>'
+      ? '<div class="roadmap-recommendation"><span>' + escapeHtml(tr('Recommended next')) + '</span><button type="button" data-route-phase="' + recommendation.id + '">' + escapeHtml(tr('Phase ' + formatPhase(recommendation.id) + ' · ' + recommendation.name)) + '</button></div>'
       : '';
     updateInspector(
-      '<span class="roadmap-inspector-eyebrow">Route inspector</span>' +
-      '<h2>Choose a phase</h2>' +
-      '<p class="roadmap-inspector-copy">Select a node to illuminate the exact route into it, every phase it unlocks, and the best lesson to continue from your local progress.</p>' +
+      '<span class="roadmap-inspector-eyebrow">' + escapeHtml(tr('Route inspector')) + '</span>' +
+      '<h2>' + escapeHtml(tr('Choose a phase')) + '</h2>' +
+      '<p class="roadmap-inspector-copy">' + escapeHtml(tr('Select a node to illuminate the exact route into it, every phase it unlocks, and the best lesson to continue from your local progress.')) + '</p>' +
       recommendationHtml,
       !!animate
     );
@@ -1020,40 +1038,40 @@
     var directUnlocks = children[id] || [];
     var lesson = nextLessonForPhase(phase);
     var lessonLink = lesson ? lessonPageUrl(lesson) : '';
-    var actionLabel = progress.done === progress.total && progress.total > 0 ? 'Review phase' : (progress.done > 0 ? 'Continue phase' : 'Start phase');
+    var actionLabel = tr(progress.done === progress.total && progress.total > 0 ? 'Review phase' : (progress.done > 0 ? 'Continue phase' : 'Start phase'));
     updateInspector(
-      '<span class="roadmap-inspector-eyebrow">Phase ' + formatPhase(id) + '</span>' +
-      '<h2>' + escapeHtml(phase.name) + '</h2>' +
-      '<span class="roadmap-inspector-state">' + state.label + '</span>' +
-      '<p class="roadmap-inspector-copy">' + escapeHtml(phase.desc || '') + '</p>' +
+      '<span class="roadmap-inspector-eyebrow">' + escapeHtml(tr('Phase ' + formatPhase(id))) + '</span>' +
+      '<h2>' + escapeHtml(tr(phase.name)) + '</h2>' +
+      '<span class="roadmap-inspector-state">' + escapeHtml(tr(state.label)) + '</span>' +
+      '<p class="roadmap-inspector-copy">' + escapeHtml(tr(phase.desc || '')) + '</p>' +
       '<div class="roadmap-inspector-progress">' +
-        '<div class="roadmap-inspector-progress-head"><span>Your progress</span><strong>' + progress.done + ' / ' + progress.total + '</strong></div>' +
+        '<div class="roadmap-inspector-progress-head"><span>' + escapeHtml(tr('Your progress')) + '</span><strong>' + progress.done + ' / ' + progress.total + '</strong></div>' +
         '<div class="roadmap-inspector-progress-bar" aria-hidden="true"><span style="--inspector-progress:' + (progress.percent / 100) + '"></span></div>' +
       '</div>' +
       '<div class="roadmap-inspector-context">' +
-        '<div class="roadmap-inspector-stat"><strong>' + Object.keys(ancestors).length + '</strong><span class="roadmap-inspector-stat-label">All prerequisites</span></div>' +
-        '<div class="roadmap-inspector-stat"><strong>' + Object.keys(descendants).length + '</strong><span class="roadmap-inspector-stat-label">Phases unlocked</span></div>' +
+        '<div class="roadmap-inspector-stat"><strong>' + Object.keys(ancestors).length + '</strong><span class="roadmap-inspector-stat-label">' + escapeHtml(tr('All prerequisites')) + '</span></div>' +
+        '<div class="roadmap-inspector-stat"><strong>' + Object.keys(descendants).length + '</strong><span class="roadmap-inspector-stat-label">' + escapeHtml(tr('Phases unlocked')) + '</span></div>' +
       '</div>' +
       '<div class="roadmap-route-sections">' +
         renderRouteSection('Direct prerequisites', directPrereqs, 'This is the starting point.') +
         renderRouteSection('Immediately unlocks', directUnlocks, 'This is a final destination.') +
       '</div>' +
       '<div class="roadmap-actions">' +
-        (lessonLink ? '<a class="roadmap-action roadmap-action-primary" href="' + lessonLink + '">' + actionLabel + '</a>' : '') +
-        '<a class="roadmap-action" href="' + phaseGithubUrl(phase) + '" target="_blank" rel="noopener">View phase on GitHub</a>' +
+        (lessonLink ? '<a class="roadmap-action roadmap-action-primary" href="' + lessonLink + '">' + escapeHtml(actionLabel) + '</a>' : '') +
+        '<a class="roadmap-action" href="' + phaseGithubUrl(phase) + '" target="_blank" rel="noopener">' + escapeHtml(tr('View phase on GitHub')) + '</a>' +
       '</div>',
       animate !== false
     );
   }
 
   function renderRouteSection(title, ids, emptyMessage) {
-    var html = '<section class="roadmap-route-section"><h3>' + escapeHtml(title) + '</h3>';
-    if (!ids.length) return html + '<p class="roadmap-route-empty">' + escapeHtml(emptyMessage) + '</p></section>';
+    var html = '<section class="roadmap-route-section"><h3>' + escapeHtml(tr(title)) + '</h3>';
+    if (!ids.length) return html + '<p class="roadmap-route-empty">' + escapeHtml(tr(emptyMessage)) + '</p></section>';
     html += '<div class="roadmap-route-list">';
     for (var i = 0; i < ids.length; i++) {
       var phase = phaseMap[ids[i]];
       if (!phase) continue;
-      html += '<button class="roadmap-route-button" type="button" data-route-phase="' + phase.id + '"><span>' + formatPhase(phase.id) + '</span>' + escapeHtml(phase.name) + '</button>';
+      html += '<button class="roadmap-route-button" type="button" data-route-phase="' + phase.id + '"><span>' + formatPhase(phase.id) + '</span>' + escapeHtml(tr(phase.name)) + '</button>';
     }
     return html + '</div></section>';
   }
@@ -1061,7 +1079,10 @@
   function announceSelection(id) {
     var ancestors = Object.keys(getAncestors(id)).length;
     var descendants = Object.keys(getDescendants(id)).length;
-    setText('roadmapGraphStatus', 'Phase ' + formatPhase(id) + ' selected. ' + ancestors + ' prerequisite phases and ' + descendants + ' downstream phases highlighted.');
+    setText('roadmapGraphStatus', tr(
+      'Phase {phase} selected. {ancestors} prerequisite phases and {descendants} downstream phases highlighted.',
+      { phase: formatPhase(id), ancestors: ancestors, descendants: descendants }
+    ));
   }
 
   function phaseState(id) {
@@ -1144,7 +1165,24 @@
 
   function lessonPageUrl(lesson) {
     var path = lessonPath(lesson && lesson.url);
-    return path ? 'lesson?path=' + encodeURI(path) : '';
+    if (!path) return '';
+    var url = 'lesson?path=' + encodeURI(path);
+    var lang = currentLanguageParam();
+    return lang ? url + '&lang=' + encodeURIComponent(lang) : url;
+  }
+
+  function currentLanguageParam() {
+    var lang = window.AIFS_I18n && typeof window.AIFS_I18n.current === 'string'
+      ? window.AIFS_I18n.current
+      : '';
+    if (!lang && typeof window.AIFS_currentLang === 'function') lang = window.AIFS_currentLang();
+    if (!lang || lang === 'en') return '';
+
+    var languages = Array.isArray(window.AIFS_LANGS) ? window.AIFS_LANGS : [];
+    for (var i = 0; i < languages.length; i++) {
+      if (languages[i] && languages[i].code === lang) return lang;
+    }
+    return '';
   }
 
   function lessonPath(url) {
@@ -1182,6 +1220,19 @@
     if (element) element.textContent = value;
   }
 
+  function refreshLanguage() {
+    if (typeof PHASES === 'undefined' || !Array.isArray(PHASES) || !PREREQS || !Object.keys(phaseMap).length) {
+      showDataError();
+      return;
+    }
+    refreshProgress();
+    renderStageNavigation();
+    renderJumpOptions();
+    var jump = document.getElementById('roadmapJump');
+    if (jump && selectedId !== null) jump.value = String(selectedId);
+    if (selectedId !== null) announceSelection(selectedId);
+  }
+
   function svgEl(tag, attrs) {
     var element = document.createElementNS('http://www.w3.org/2000/svg', tag);
     if (attrs) for (var key in attrs) element.setAttribute(key, attrs[key]);
@@ -1190,7 +1241,12 @@
 
   function showDataError() {
     var wrap = document.getElementById('roadmapGraphWrap');
-    if (wrap) wrap.innerHTML = '<p>Roadmap data could not be loaded. Rebuild the site and refresh this page.</p>';
+    if (wrap) {
+      wrap.textContent = '';
+      var message = document.createElement('p');
+      message.textContent = tr('Roadmap data could not be loaded. Rebuild the site and refresh this page.');
+      wrap.appendChild(message);
+    }
   }
 
   function escapeHtml(value) {

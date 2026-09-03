@@ -1,5 +1,15 @@
 (function () {
   var root = document.documentElement;
+
+  function tr(value, params) {
+    if (window.AIFS_I18n && typeof window.AIFS_I18n.t === 'function') {
+      return window.AIFS_I18n.t(value, params);
+    }
+    return String(value == null ? '' : value).replace(/\{([A-Za-z0-9_]+)\}/g, function (token, name) {
+      return params && Object.prototype.hasOwnProperty.call(params, name) ? params[name] : token;
+    });
+  }
+
   var stored = localStorage.getItem('theme');
   if (stored) {
     root.setAttribute('data-theme', stored);
@@ -27,11 +37,24 @@
     var lessonTotal = PHASES.reduce(function (total, phase) {
       return total + (Array.isArray(phase.lessons) ? phase.lessons.length : 0);
     }, 0);
+    var summary = typeof CURRICULUM_SUMMARY !== 'undefined' && CURRICULUM_SUMMARY
+      ? CURRICULUM_SUMMARY
+      : {
+          corePhases: PHASES.length,
+          coreLessons: lessonTotal,
+          focusedLearningPaths: typeof LEARNING_PATHS !== 'undefined' && Array.isArray(LEARNING_PATHS) ? LEARNING_PATHS.length : 0,
+          certificationTracks: 0,
+          certificationLessons: 0,
+          guidedRoutes: typeof LEARNING_PATHS !== 'undefined' && Array.isArray(LEARNING_PATHS) ? LEARNING_PATHS.length : 0,
+          publishedLessons: lessonTotal
+        };
     var values = {
-      mastheadLessonCount: lessonTotal + ' lessons',
-      mastheadPhaseCount: PHASES.length + ' phases',
-      prefaceLessonCount: lessonTotal + ' lessons',
-      prefacePhaseCount: PHASES.length + ' phases'
+      mastheadSummary: tr('{publishedLessons} published lessons. {corePhases} core phases. {guidedRoutes} guided routes.', summary),
+      prefaceCurriculumSummary: tr(
+        'The core curriculum has {corePhases} phases and {coreLessons} lessons in four languages. Beyond it are {focusedLearningPaths} focused paths and {certificationTracks} Claude certification tracks with {certificationLessons} certification lessons.',
+        summary
+      ),
+      curriculumTocTitle: tr('Core curriculum · {corePhases} phases · {coreLessons} lessons', summary)
     };
     Object.keys(values).forEach(function (id) {
       var target = document.getElementById(id);
@@ -113,9 +136,12 @@
 
     setText('[data-stat="complete-frac"]', stats.complete + ' / ' + stats.lessons);
     setText('[data-stat="phases-frac"]', stats.completePhases + ' / ' + stats.phases);
+    var guidedRoutes = typeof CURRICULUM_SUMMARY !== 'undefined' ? CURRICULUM_SUMMARY.guidedRoutes : 0;
+    setText('[data-stat="routes-count"]', String(guidedRoutes));
     setText('[data-stat="glossary-count"]', String(glossaryCount));
     setBar('[data-bar="complete"]', pct);
     setBar('[data-bar="phases"]', phasePct);
+    setBar('[data-bar="routes"]', guidedRoutes > 0 ? 100 : 0);
     setBar('[data-bar="languages"]', 100);
     setBar('[data-bar="glossary"]', glossaryCount > 0 ? 100 : 0);
   }
@@ -248,7 +274,7 @@
     if (resetBtn) {
       resetBtn.addEventListener('click', function () {
         if (!window.AIFSProgress) return;
-        var ok = window.confirm('Clear all your local progress (quiz answers and completed lessons)? This cannot be undone.');
+        var ok = window.confirm(tr('Clear all your local progress (quiz answers and completed lessons)? This cannot be undone.'));
         if (!ok) return;
         window.AIFSProgress.reset();
       });
@@ -282,6 +308,11 @@
     });
   }
 
+  function lessonPageUrl(lessonPath) {
+    var route = /\.github\.io$/i.test(window.location.hostname) ? 'lesson.html' : 'lesson';
+    return route + '?path=' + encodeURIComponent(lessonPath);
+  }
+
   function renderModalLessons(p) {
     var container = document.getElementById('modalLessons');
     if (!container) return;
@@ -298,7 +329,7 @@
       if (userComplete) userDone++;
 
       var canOpen = (l.status === 'complete' || userComplete) && lessonPath;
-      var lessonUrl = canOpen ? 'lesson?path=' + encodeURIComponent(lessonPath) : '';
+      var lessonUrl = canOpen ? lessonPageUrl(lessonPath) : '';
       var lessonLabel = escapeHtml(l.name);
       var lessonMeta = '<span class="modal-lesson-meta"><span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Combines: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span><span aria-hidden="true">·</span><span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span></span>';
 
@@ -345,12 +376,13 @@
       var pct = Math.round((userDone / p.lessons.length) * 100);
       if (progEl) {
         progEl.style.display = '';
-        progEl.innerHTML = '<span><strong class="modal-progress-count">' + userDone + '</strong> of ' + p.lessons.length + ' lessons complete</span><span class="modal-progress-pct">' + pct + '%</span>';
+        var progressLabel = tr(userDone + ' of ' + p.lessons.length + ' lessons complete');
+        progEl.innerHTML = '<span>' + escapeHtml(progressLabel) + '</span><span class="modal-progress-pct">' + pct + '%</span>';
       }
       if (barEl && barFill) {
         barEl.style.display = '';
         barEl.setAttribute('role', 'progressbar');
-        barEl.setAttribute('aria-label', p.name + ' progress');
+        barEl.setAttribute('aria-label', tr(p.name + ' progress'));
         barEl.setAttribute('aria-valuemin', '0');
         barEl.setAttribute('aria-valuemax', '100');
         barEl.setAttribute('aria-valuenow', String(pct));
@@ -371,6 +403,13 @@
       renderPhases();
     });
   }
+
+  window.addEventListener('aifs:language-change', function () {
+    populateCurriculumSummary();
+    if (currentPhaseIdx >= 0 && PHASES[currentPhaseIdx]) {
+      renderModalLessons(PHASES[currentPhaseIdx]);
+    }
+  });
 
   function closeModal(fromKeyboard) {
     var overlay = document.getElementById('modalOverlay');
@@ -393,27 +432,27 @@
   function wireCopyButton(btn, label, getText) {
     if (!btn || !label) return;
     var revertTimer = null;
-    var defaultLabel = label.textContent || 'copy';
-    var defaultAriaLabel = btn.getAttribute('aria-label') || 'Copy command';
+    var defaultLabel = 'copy';
+    var defaultAriaLabel = btn.id === 'installCopy' ? 'Copy the install command' : 'Copy command';
     function resetCopyState() {
-      label.textContent = defaultLabel;
+      label.textContent = tr(defaultLabel);
       btn.classList.remove('copied');
-      btn.setAttribute('aria-label', defaultAriaLabel);
+      btn.setAttribute('aria-label', tr(defaultAriaLabel));
     }
     function scheduleReset() {
       if (revertTimer) clearTimeout(revertTimer);
       revertTimer = setTimeout(resetCopyState, 1500);
     }
     function confirmCopied() {
-      label.textContent = 'copied';
+      label.textContent = tr('copied');
       btn.classList.add('copied');
-      btn.setAttribute('aria-label', 'Command copied');
+      btn.setAttribute('aria-label', tr('Command copied'));
       scheduleReset();
     }
     function reportCopyFailure() {
-      label.textContent = 'retry';
+      label.textContent = tr('retry');
       btn.classList.remove('copied');
-      btn.setAttribute('aria-label', 'Copy failed. Try again');
+      btn.setAttribute('aria-label', tr('Copy failed. Try again'));
       scheduleReset();
     }
     function fallbackCopy(text) {
@@ -447,6 +486,13 @@
       } else {
         fallbackCopy(text);
       }
+    });
+    window.addEventListener('aifs:language-change', function () {
+      if (revertTimer) {
+        clearTimeout(revertTimer);
+        revertTimer = null;
+      }
+      resetCopyState();
     });
   }
 

@@ -15,7 +15,7 @@
 ## Checklist
 
 - [ ] Code runs without errors with the listed dependencies
-- [ ] No comments in code files (docs explain, code is self-explanatory)
+- [ ] Every `code/main.*` has its required 4-6 line lesson/source header; other comments are purposeful
 - [ ] Built from scratch first, then shown with a framework (for new lessons)
 - [ ] Lesson folder matches `LESSON_TEMPLATE.md` structure
 - [ ] ROADMAP.md row for the lesson is a markdown link (`[Name](phases/...)`), not bare text

@@ -17,7 +17,7 @@
   <a href="../../i18n/ar/README.md">العربية</a> ·
   <a href="../../i18n/ru/README.md">Русский</a> ·
   <a href="../../i18n/tr/README.md">Türkçe</a>
-  <br><sub>Translated landing pages, committed to the repo. English is canonical; lesson pages are machine-translated on the <code>translations</code> branch. See <a href="../../docs/i18n.md">docs/i18n.md</a>.</sub>
+  <br><sub>Translated landing pages are committed here; lesson translations live on the <code>translations</code> branch. English is canonical. See <a href="../../docs/i18n.md">docs/i18n.md</a>.</sub>
 </p>
 
 <p align="center">
@@ -44,23 +44,21 @@
 <p align="center"><sub><b>114,584</b> readers &nbsp;·&nbsp; <b>181,995</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-## Start here: choose what you want to build
+## यहाँ से शुरू करें: चुनें कि आप क्या बनाना चाहते हैं
 
-You do not need to scan 523 lessons before beginning. Pick one goal. Each link
-opens the same curriculum on GitHub or the website, and both versions use the
-same lesson code.
+शुरू करने से पहले आपको सभी 523 पाठ देखने की ज़रूरत नहीं है। एक लक्ष्य चुनें। हर लिंक GitHub या वेबसाइट पर इसी पाठ्यक्रम को खोलता है, और दोनों संस्करणों में पाठों का वही कोड इस्तेमाल होता है।
 
-| Your goal | Learn on GitHub | Learn on the website |
+| आपका लक्ष्य | GitHub पर सीखें | वेबसाइट पर सीखें |
 |---|---|---|
-| I am new and want the complete foundation | [Phase 0: Setup and Tooling](../../phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](../../phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| I want to build production LLM applications | [Phase 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| I want to build agents | [Phase 14: Agent Engineering](../../phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| I want to use coding agents on real repositories | [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json) | [Agent-Assisted Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| I want to shape the right build before implementation | [Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json) | [Product Judgment and Delivery](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| I want to prepare for a Claude certification | [Certification onboarding](../../certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |
+| मुझे शुरुआत से पूरी बुनियाद सीखनी है | [चरण 0: सेटअप और टूलिंग](../../phases/00-setup-and-tooling/) | [डेवलपमेंट एनवायरनमेंट](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| मुझे Python का ज्ञान है और गणित व ML की बुनियाद सीखनी है | [चरण 1: गणित की बुनियाद](../../phases/01-math-foundations/) | [रैखिक बीजगणित की सहज समझ](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| मुझे प्रोडक्शन-स्तरीय LLM एप्लिकेशन बनाने हैं | [चरण 11: LLM इंजीनियरिंग](../../phases/11-llm-engineering/) | [प्रॉम्प्ट इंजीनियरिंग](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| मुझे एजेंट बनाने हैं | [चरण 14: एजेंट इंजीनियरिंग](../../phases/14-agent-engineering/) | [एजेंट लूप](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| मुझे वास्तविक रिपॉज़िटरी में कोडिंग एजेंट इस्तेमाल करने हैं | [एजेंट-सहायित इंजीनियरिंग मार्ग](../../learning-paths/using-coding-agents.json) | [एजेंट-सहायित इंजीनियरिंग](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| मुझे इम्प्लीमेंटेशन से पहले सही समाधान की रूपरेखा तय करनी है | [प्रोडक्ट जजमेंट और डिलीवरी मार्ग](../../learning-paths/shaping-the-build.json) | [प्रोडक्ट जजमेंट और डिलीवरी](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| मुझे Model Context Protocol (MCP) का उपयोग करके समाधान बनाने हैं | [Model Context Protocol (MCP) का मार्ग](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) सीखने का मार्ग](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| मुझे Agent Skills लिखकर जारी करनी हैं | [Agent Skills का केंद्रित मार्ग](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills सीखने का मार्ग](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| मुझे Claude सर्टिफ़िकेशन की तैयारी करनी है | [सर्टिफ़िकेशन की तैयारी शुरू करें](../../certifications/claude/GETTING_STARTED.md) | [सर्टिफ़िकेशन अकादमी](https://aiengineeringfromscratch.com/certifications.html) |
 
 Not sure where you fit? Use the [`start-learning` placement tutor](../../skills/start-learning/SKILL.md)
 or the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).

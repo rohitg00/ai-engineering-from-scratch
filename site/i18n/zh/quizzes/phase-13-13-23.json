@@ -1,0 +1,525 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/13-tools-and-protocols/13-mcp-async-tasks": {
+      "sourceSha256": "13082aef59bb2fde853929b0bb1ecf2ad6442dc71e25481b7dba93b91229e1be",
+      "questions": [
+        {
+          "question": "无状态 MCP 服务器如何支持持续十分钟的工作？",
+          "options": [
+            "让一个 Mcp-Session-Id 连接保持打开十分钟",
+            "仅在 initialize 状态中存储进度",
+            "要求每个客户端都使用粘性负载均衡",
+            "返回一个由应用存储支撑的显式持久任务句柄"
+          ],
+          "explanation": "无状态描述的是协议请求模型。持久的应用状态由显式任务 ID 和共享存储表示。"
+        },
+        {
+          "question": "服务器何时可以从 tools/call 返回 resultType 为 task 的结果？",
+          "options": [
+            "当前请求声明支持该扩展，且任务已可被持久读取之后",
+            "只要先前某个会话声明过 Tasks",
+            "持久化之前，以便客户端进行乐观轮询",
+            "仅当 params._meta.task.required 为 true 时"
+          ],
+          "explanation": "任务创建由服务器决定，但必须满足当前请求支持相应能力，并且先持久化、后返回。缺少支持时返回 -32021，且 data.requiredCapabilities 中包含所需能力。"
+        },
+        {
+          "question": "tasks/get 响应的 resultType 为 complete，而 status 为 working。这意味着什么？",
+          "options": [
+            "该响应违反了扩展规范",
+            "底层作业已完成",
+            "任务已取消",
+            "轮询 RPC 已完成，但作业仍在运行"
+          ],
+          "explanation": "resultType 描述 tasks/get RPC。任务 status 则独立描述持久作业。当 status 为 completed 时，嵌套的 CallToolResult 自身带有 resultType complete 和 serverInfo 元数据。"
+        },
+        {
+          "question": "任务已存在后，客户端应如何响应 input_required？",
+          "options": [
+            "调用 tasks/result，并提供 answer 字段",
+            "打开一个新的 initialize 会话",
+            "使用相同 ID 重试原始 tools/call",
+            "发送 tasks/update，并在 inputResponses 中为尚未处理的任务键提供响应"
+          ],
+          "explanation": "任务创建后的输入要求由 tasks/get 显示，并通过 tasks/update 满足，而不是通过重试原始调用来处理。"
+        },
+        {
+          "question": "成功的 tasks/cancel 响应能保证什么？",
+          "options": [
+            "服务器已确认取消意图",
+            "结果已被删除",
+            "任务的最终 status 将是 cancelled",
+            "工作进程已经停止"
+          ],
+          "explanation": "取消是协作式的，并且最终一致。确认取消后，工作仍可能完成或忽略取消。"
+        },
+        {
+          "question": "哪组方法与当前官方 Tasks 扩展相符？",
+          "options": [
+            "tools/task、notifications/task_result 和 roots/list",
+            "tasks/get、tasks/update 和 tasks/cancel",
+            "tasks/create、tasks/subscribe 和 tasks/delete",
+            "tasks/status、tasks/result 和 tasks/list"
+          ],
+          "explanation": "该扩展使用 tasks/get、tasks/update 和 tasks/cancel。每个 HTTP 请求都将 Mcp-Name 设置为 params.taskId。较早的 status、result 和 list 方法仅用于迁移。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/14-mcp-apps": {
+      "sourceSha256": "733a1c55d87023b378ed67c2b13afb119c522e83294f9bf8c50ab709d715d413",
+      "questions": [
+        {
+          "question": "现代 MCP App 应在何处将其 UI 资源绑定到工具？",
+          "options": [
+            "仅在最终文本结果中",
+            "在独立的 HTTP GET 流中",
+            "在 MCP 会话 cookie 中",
+            "在 tools/list 返回的工具定义中"
+          ],
+          "explanation": "工具定义中嵌套的 _meta.ui.resourceUri 让宿主能够在调用前预加载并审查 UI。"
+        },
+        {
+          "question": "2026-07-28 客户端如何声明支持 MCP Apps？",
+          "options": [
+            "通过 notifications/initialized",
+            "通过 Mcp-Session-Id",
+            "在每个请求的 io.modelcontextprotocol/clientCapabilities.extensions 中",
+            "通过接受所有 ui:// 资源"
+          ],
+          "explanation": "扩展通过逐请求的客户端能力映射选择启用。"
+        },
+        {
+          "question": "ui/initialize 初始化的是什么？",
+          "options": [
+            "协议级服务器会话",
+            "OAuth 客户端注册",
+            "iframe 与宿主之间的 Apps postMessage 桥接",
+            "Streamable HTTP GET 通道"
+          ],
+          "explanation": "ui/initialize 属于 Apps 桥接方言，与已移除的 MCP 核心握手相互独立。"
+        },
+        {
+          "question": "对于不依赖用户的捆绑式 App，哪种资源响应最安全？",
+          "options": [
+            "没有 resultType，也没有缓存策略",
+            "resultType 为 complete、有限的 ttlMs、public cacheScope，以及默认拒绝的 CSP",
+            "在 HTML 中嵌入会话令牌",
+            "无限的 ttlMs 和使用通配符的 CSP 域名"
+          ],
+          "explanation": "完整的结果、明确的缓存提示和严格的 CSP，使传输协议与浏览器策略都可供审查。"
+        },
+        {
+          "question": "宿主收到的 resources/read 正文对应一个 URI，但 Mcp-Name 请求头却是另一个。应如何处理？",
+          "options": [
+            "打开两个资源",
+            "优先采用请求头",
+            "优先采用正文",
+            "返回 HTTP 400 和 JSON-RPC 错误 -32020"
+          ],
+          "explanation": "必须先确认路由请求头与正文一致，之后才能评估版本支持或功能策略；传输层返回 HTTP 400 和 JSON-RPC 错误 -32020。"
+        },
+        {
+          "question": "不支持 MCP Apps 的宿主应采用什么回退方式？",
+          "options": [
+            "将 HTML 作为可信的宿主界面返回",
+            "保持工具可通过普通文本或结构化输出使用，并省略 UI 绑定",
+            "创建隐藏会话并重试",
+            "自动授予该扩展"
+          ],
+          "explanation": "可选扩展不能导致未协商该扩展的客户端无法使用底层工具。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning": {
+      "sourceSha256": "9fcc3d6a3db51eba6d89c240f87aa466196f0adc2ffd69bf17987a1001f61e29",
+      "questions": [
+        {
+          "question": "哪个 MCP 字段可安全用作已经过身份认证的客户端身份？",
+          "options": [
+            "所有由客户端自行报告的 clientInfo 字段都不可以",
+            "clientInfo.name",
+            "clientInfo.version",
+            "clientCapabilities"
+          ],
+          "explanation": "客户端信息和能力属于协议元数据，而不是身份认证证据。"
+        },
+        {
+          "question": "批准一个工具后，网关应对什么内容计算哈希？",
+          "options": [
+            "完整描述符的规范形式，包括 description、schema 和相关 annotations",
+            "仅工具名称",
+            "仅服务器显示名称",
+            "当前会话标识符"
+          ],
+          "explanation": "固定完整描述符可以检测 schema 和 annotation 的变化，而只对 description 计算哈希会漏掉这些变化。"
+        },
+        {
+          "question": "网关应如何公开两个都名为 search 的后端工具？",
+          "options": [
+            "让模型推断服务器",
+            "随机选择一个后端",
+            "使用 notes.search 和 issues.search 之类的稳定限定名称",
+            "保留最后发现的工具"
+          ],
+          "explanation": "限定名称让路由、审批、审计和请求头验证都指向一个稳定工具。"
+        },
+        {
+          "question": "哪些客户端能力声明支持 MCP 表单征询？",
+          "options": [
+            "隐式的 elicitation: {} 或显式的 elicitation: {form: {}}",
+            "任意非空 extensions 对象",
+            "仅启用了 form 的协议会话",
+            "仅 elicitation.url"
+          ],
+          "explanation": "空的 elicitation 对象隐含支持 form，而 form: {} 则显式声明支持。仅支持 URL 不足以处理表单请求。"
+        },
+        {
+          "question": "为什么必须对 requestState 提供完整性保护，并将其绑定到确切参数？",
+          "options": [
+            "为了选择 cache scope",
+            "为了取代 OAuth",
+            "为了阻止客户端将一次确认重用于其他操作，或为其他操作篡改该确认",
+            "为了缩小 JSON"
+          ],
+          "explanation": "requestState 会经过不受信任的对端往返，因此服务器必须检测篡改和上下文变化。对共享 nonce 的原子认领可防止跨处理器实例重复使用。"
+        },
+        {
+          "question": "现代网关的正确处理顺序是什么？",
+          "options": [
+            "信任 clientInfo、执行，然后审计",
+            "将声明的能力视为权限",
+            "进行身份认证，验证传输内容和请求头，检查能力兼容性，授权，然后执行",
+            "创建会话，按发现顺序路由，然后授权"
+          ],
+          "explanation": "必须在授权和执行之前消除传输歧义并确认身份。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1": {
+      "sourceSha256": "75b4a7f19783d3e4492b2825d0f5e86dafd70501f8f4cbf344977b8e0b8312a5",
+      "questions": [
+        {
+          "question": "在 2026-07-28 中，哪种机制是新 MCP OAuth 客户端登记的首选？",
+          "options": [
+            "URL 中的 access token",
+            "Mcp-Session-Id",
+            "Client ID Metadata Documents",
+            "Dynamic Client Registration"
+          ],
+          "explanation": "CIMD 是首选；DCR 已弃用，仅作为兼容路径保留。"
+        },
+        {
+          "question": "通过 DCR 回退登记时，使用回环重定向的桌面客户端应声明哪个 application_type？",
+          "options": [
+            "web",
+            "stateless",
+            "native",
+            "confidential"
+          ],
+          "explanation": "桌面、移动、命令行和回环客户端都属于 native 应用。"
+        },
+        {
+          "question": "客户端必须如何处理授权响应中的 iss 值？",
+          "options": [
+            "将其规范化后比较主机名",
+            "将其存储为 clientInfo",
+            "PKCE 成功后将其忽略",
+            "使用响应之前，将其与已记录的 issuer 精确比较"
+          ],
+          "explanation": "RFC 9207 的 issuer 检查可以防止不同 issuer 之间发生授权响应混淆。"
+        },
+        {
+          "question": "客户端应如何为 issuer 签发的 OAuth 凭据和 access token 设定存储键？",
+          "options": [
+            "issuer 签发的凭据按 issuer 键控，token 按 issuer 加 resource 键控",
+            "将所有登记和 token 存放在一个全局客户端名称下",
+            "仅按服务器显示名称键控",
+            "按协议会话标识符键控"
+          ],
+          "explanation": "issuer 和 resource 键可以防止签发的凭据跨越安全授权方或受众。自托管的 CIMD URL 仍具可移植性。"
+        },
+        {
+          "question": "资源返回 403，并要求 scope notes:delete。正确的下一步是什么？",
+          "options": [
+            "未经授权就在本地添加 notes:delete",
+            "解释该 scope，获得同意，为其完成授权，然后使用新的请求 ID 重试",
+            "将 MCP token 发送到下游 API",
+            "复用当前 token 并忽略 challenge"
+          ],
+          "explanation": "权限提升会在重试操作前取得一个新授权的 token。"
+        },
+        {
+          "question": "对于 MCP 资源 https://notes.example.com/mcp，RFC 9728 元数据 URL 是什么？",
+          "options": [
+            "https://notes.example.com/.well-known/oauth-protected-resource/mcp",
+            "https://auth.example.com/.well-known/oauth-protected-resource",
+            "https://notes.example.com/.well-known/oauth-protected-resource",
+            "https://notes.example.com/mcp/.well-known/oauth-protected-resource"
+          ],
+          "explanation": "RFC 9728 在 well-known 段之后保留受保护资源的路径，因此必须带有 /mcp 后缀。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/17-mcp-gateways-and-registries": {
+      "sourceSha256": "e0459cf610535ebdd944a6ea9fabd68427ecde106b1d8a172af21c92afc5dcb3",
+      "questions": [
+        {
+          "question": "当前 MCP 网关在普通客户端请求之间必须保留什么？",
+          "options": [
+            "每个后端一个 Mcp-Session-Id",
+            "上一个 HTTP 连接",
+            "一个独立的 GET 事件流",
+            "无需保留协议会话；每个请求都携带验证和路由所需的信息"
+          ],
+          "explanation": "MCP 2026-07-28 的普通请求是自包含的，可以到达任意健康的网关实例。"
+        },
+        {
+          "question": "按主体过滤的 tools/list 结果通常应使用哪种 cache scope？",
+          "options": [
+            "public",
+            "global",
+            "private",
+            "session"
+          ],
+          "explanation": "不得跨授权上下文共享特定于用户的工具列表。"
+        },
+        {
+          "question": "网关应如何将工具调用转发给当前版本的后端？",
+          "options": [
+            "先打开一个 GET 流",
+            "复制外层 bearer token 和 session ID",
+            "将外层 JSON-RPC ID 作为持久状态复用",
+            "使用网关客户端元数据和经调解的能力，创建一个全新的自包含请求"
+          ],
+          "explanation": "网关是后端的客户端，会创建一个独立有效的新请求。"
+        },
+        {
+          "question": "网关在准入过程中应如何使用官方 Registry 的 server.json 记录？",
+          "options": [
+            "验证其发布结构，然后将其与另行验证的发布者、来源证明、策略和批准状态关联",
+            "将发布视为已完成安全审查",
+            "从任意记录字段复制验证声明",
+            "信任名称看起来熟悉的任何记录"
+          ],
+          "explanation": "server.json 携带发布元数据。经过验证的来源证明和网关的批准决定仍是外部准入证据。"
+        },
+        {
+          "question": "现代 Streamable HTTP 如何打开长期存在的列表变更通知？",
+          "options": [
+            "通过一个响应为 SSE 的 POST subscriptions/listen 请求",
+            "通过 resources/subscribe",
+            "通过带有 Last-Event-ID 的独立 GET",
+            "通过 notifications/initialized"
+          ],
+          "explanation": "subscriptions/listen 取代了旧版的主动 GET 和资源订阅模型。"
+        },
+        {
+          "question": "哪条 Tasks 扩展路由规则是当前规则？",
+          "options": [
+            "使用 tasks/result 获取最终输出",
+            "使用 tasks/list 恢复会话中的所有任务",
+            "使用 taskId 作为 Mcp-Name，路由 tasks/get、tasks/update 和 tasks/cancel",
+            "将任务存储在 Mcp-Session-Id 中"
+          ],
+          "explanation": "官方扩展使用 get、update 和 cancel；任务 ID 提供路由句柄，不需要协议会话。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/18-mcp-auth-production": {
+      "sourceSha256": "b9859fe5c4e3646db14eabefce8e2f0e8065b2dd1fa915b3c31a773e6b8ffa1e",
+      "questions": [
+        {
+          "question": "MCP 客户端为同一资源发现了不同的授权服务器 issuer。它应如何处理现有登记和 access token？",
+          "options": [
+            "在本地更改 access token 的受众后，仅复用该 token",
+            "向新的 issuer 登记，并按 issuer 隔离凭据",
+            "两者都复用，因为 MCP 资源 URL 没有变化",
+            "将两者存放在工具名称下，而不是 issuer 下"
+          ],
+          "explanation": "客户端标识符和登记凭据属于创建它们的授权服务器 issuer。issuer 发生变化时需要独立登记，而每个 access token 都按该 issuer 及其 resource audience 缓存。"
+        },
+        {
+          "question": "MCP 2026-07-28 授权配置文件首选哪种登记方式？",
+          "options": [
+            "为每个请求使用 RFC 7591 Dynamic Client Registration",
+            "从客户端 HTTPS URL 提供 Client ID Metadata Document",
+            "用一个协议会话存储全局客户端标识符",
+            "在每个桌面客户端中嵌入共享 client secret"
+          ],
+          "explanation": "CIMD 允许授权服务器从 HTTPS 客户端标识符解析客户端元数据。DCR 已弃用，仅为兼容性而保留。"
+        },
+        {
+          "question": "一个已弃用的 DCR 请求描述了回环桌面客户端。要正确分类它，哪项元数据至关重要？",
+          "options": [
+            "Mcp-Session-Id",
+            "通配符 redirect URI",
+            "将 application_type 设置为 native",
+            "可复用的 bearer token"
+          ],
+          "explanation": "当前兼容性指南要求正确的 application type。回环桌面客户端属于 native；web 客户端使用 HTTPS redirect URI。"
+        },
+        {
+          "question": "为什么客户端要在兑换 authorization code 之前验证 RFC 9207 的 iss 值？",
+          "options": [
+            "防止在错误的 token endpoint 兑换由可信 issuer 签发的 code",
+            "避免刷新 JWKS 缓存",
+            "用 issuer discovery 取代 PKCE",
+            "从 server/discover 中选择工具"
+          ],
+          "explanation": "issuer 检查可以防御授权服务器混淆攻击。它通过确认响应来自重定向前记录的 issuer，与 PKCE 形成互补。"
+        },
+        {
+          "question": "在当前无状态传输下，MCP 资源服务器应在哪里缓存授权？",
+          "options": [
+            "存放在 Mcp-Session-Id 下，直到客户端发送 DELETE",
+            "存放在 server/discover 结果中，供后续所有调用使用",
+            "存放在 SSE 连接中，直到重新连接",
+            "不应将其缓存为协议会话决策；每个请求都要验证 bearer token"
+          ],
+          "explanation": "MCP 2026-07-28 移除了协议会话。每个请求都独立跨越授权边界，因此每次都要检查身份、受众、有效期和 scope。"
+        },
+        {
+          "question": "在信任授权服务器之前，哪项部署证据最有力？",
+          "options": [
+            "目标服务器发现的元数据，并已对照 PKCE、issuer、登记和 resource binding 要求进行检查",
+            "从旧课程复制的供应商分类表",
+            "声称支持 OAuth 的产品页面",
+            "一次未检查 token audience 的成功登录"
+          ],
+          "explanation": "能力会随部署和版本变化。实时发现文档是需要检查的具体契约，之后还要进行端到端的 issuer 和 audience 验证。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/22-skills-and-agent-sdks": {
+      "sourceSha256": "b95fc551f16c7f88cc9c6345f0c7474d99b8340ac126999afa971138dbd515d7",
+      "questions": [
+        {
+          "question": "团队有一套可复用的审查方法，以及一个提供拉取请求数据的现有 API。根据运行时策略，哪种设计将每项职责分配给正确的原语？",
+          "options": [
+            "将审查方法放入 Agent Skill，并通过 MCP 工具公开 API",
+            "用更长的用户提示词取代 API",
+            "将方法和 API 实现都放入 AGENTS.md",
+            "将生命周期 hook 作为审查指令的唯一来源"
+          ],
+          "explanation": "Skill 承载可复用的程序性知识，而 MCP 公开外部能力。二者可以组合使用。AGENTS.md 更适合仓库范围的默认约定，hook 则响应生命周期事件，而不是替代其中任一层。"
+        },
+        {
+          "question": "为什么验证器应要求 SKILL.md 中的 name 与其所在目录一致？",
+          "options": [
+            "它保证每个宿主都支持相同的调用语法",
+            "它让发现和打包共用一个稳定身份，避免两个相互冲突的名称",
+            "它使 Markdown 标题正确渲染",
+            "它允许 Skill 绕过宿主权限"
+          ],
+          "explanation": "发现工具经常同时按文件夹和 frontmatter 索引 Skill。两者保持一致可以避免目录条目含糊和安装路径损坏，但不会授予权限，也不会统一宿主的调用界面。"
+        },
+        {
+          "question": "SKILL.md 包含一个仅被某个运行时理解的字段。可移植的解释是什么？",
+          "options": [
+            "将该字段移入 Skill 名称",
+            "将其视为宿主扩展，并且只在显式宿主策略下验证",
+            "该字段会自动成为核心标准的一部分",
+            "每个运行时都必须先实现它，才能加载该 Skill"
+          ],
+          "explanation": "可移植的核心元数据与宿主运行时扩展是两份独立契约。适配器可以识别某个扩展，但核心验证器不应宣称该字段具有通用语义。"
+        },
+        {
+          "question": "哪种原语最适合表示每次工具调用后都必须运行的检查？",
+          "options": [
+            "MCP resource",
+            "一次性提示词",
+            "仓库术语表",
+            "生命周期 hook"
+          ],
+          "explanation": "决定性要求是事件发生时机，因此生命周期 hook 是正确机制。Skill 可以解释工作流，MCP 可以公开能力，但二者都不会固有地在每次工具调用后触发。"
+        },
+        {
+          "question": "什么时候 AGENTS.md 比 Agent Skill 更合适？",
+          "options": [
+            "外部服务需要经过身份认证的 API 调用时",
+            "脚本需要在工作区沙箱外执行时",
+            "约定应适用于整个仓库中的工作时",
+            "指令只应为罕见的专业任务加载时"
+          ],
+          "explanation": "AGENTS.md 传达构建命令和编码约定等持久的仓库上下文。特定任务的流程适合 Skill，外部操作适合工具，并且任何指令文件都不应被用于逃逸沙箱。"
+        },
+        {
+          "question": "一个有效的 Agent Skill 本身会授予什么？",
+          "options": [
+            "每个 agent 宿主中的通用斜杠命令",
+            "可被发现的程序性指令，但受宿主运行时策略约束",
+            "执行所有捆绑脚本的权限",
+            "自动网络访问权限"
+          ],
+          "explanation": "可移植制品提供元数据和指令。发现、调用界面、工具访问、审批和脚本执行仍由运行时负责，因此有效并不等同于获得权限。"
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/23-capstone-tool-ecosystem": {
+      "sourceSha256": "e38ef3c3520460b2bf9086f33f511a86d45a3e1ee848c7c3420fde79fcad55a8",
+      "questions": [
+        {
+          "question": "成功运行本课的标准库测试工具能证明什么？",
+          "options": [
+            "进程内策略和数据流按断言运行",
+            "真实的 MCP 传输完成了初始化",
+            "OAuth 授权服务器签发了有效 token",
+            "collector 收到了每一个 OpenTelemetry span"
+          ],
+          "explanation": "该测试工具使用 Python 函数、静态 token、fixture 和内存 span。它验证这些本地边界，同时将协议、授权、导出、浏览器和沙箱集成留给后续测试。"
+        },
+        {
+          "question": "对于发现服务器并轮询长时间运行的工作，哪个流程符合 MCP 2026-07-28 修订版？",
+          "options": [
+            "server/connect、tools/poll、tasks/status",
+            "server/discover、返回任务句柄的 tools/call、tasks/get",
+            "initialize、tools/call、tasks/result",
+            "GET /mcp、tools/call、tasks/list"
+          ],
+          "explanation": "无状态修订版使用必需的 `server/discover`。可选的 `io.modelcontextprotocol/tasks` 扩展会返回任务句柄，并使用 `tasks/get`；终态任务携带其最终结果。旧握手、GET endpoint、`tasks/result` 和 `tasks/list` 不在此流程中。"
+        },
+        {
+          "question": "A2A v1 在 gRPC 和 JSON-RPC binding 中如何命名发送消息操作？",
+          "options": [
+            "AgentMessage",
+            "message/create",
+            "tasks/send",
+            "SendMessage"
+          ],
+          "explanation": "A2A v1 在 gRPC 和 JSON-RPC 中使用 `SendMessage`。其 HTTP+JSON binding 公开 `POST /message:send`。"
+        },
+        {
+          "question": "哪个 MCP Apps SDK 调用允许 App 请求其来源服务器上的工具？",
+          "options": [
+            "host.callTool(name, args)",
+            "app.callServerTool({ name, arguments })",
+            "app.invoke(name, args)",
+            "server.tools.call(args)"
+          ],
+          "explanation": "App 实例调用 `callServerTool`，传入包含 `name` 和可选 `arguments` 的对象；宿主代理底层的 `tools/call` 请求。"
+        },
+        {
+          "question": "capstone Agent Skill 对 MCP 工具和沙箱提供了什么权限？",
+          "options": [
+            "显式调用后绕过审批",
+            "授予正文中提到的所有工具",
+            "授予只读网络访问权限",
+            "不提供任何权限；宿主适配器和策略仍会授权每项能力"
+          ],
+          "explanation": "Skill 提供流程。发现、调用、工具公开、授权、凭据和隔离都由宿主及外部运行时边界强制执行。"
+        },
+        {
+          "question": "哪项证据最能证明遥测数据跨越了生产导出边界？",
+          "options": [
+            "一条要求发出 span 的 Skill 指令",
+            "一个包含 traceId 键的本地字典",
+            "一张预期 span 层级结构图",
+            "接收端 collector 数据，其中包含对 trace 和 parent 的断言"
+          ],
+          "explanation": "接收端观测能证明 SDK、propagator、exporter、transport 和 collector 整条路径正常工作。本地数据和图示只能证明本地构造或意图。"
+        }
+      ]
+    }
+  }
+}

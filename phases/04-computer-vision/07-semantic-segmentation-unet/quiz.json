@@ -1,4 +1,6 @@
 {
+  "lesson": "07-semantic-segmentation-unet",
+  "title": "Semantic Segmentation — U-Net",
   "questions": [
     {
       "stage": "pre",
@@ -8,24 +10,31 @@
       "explanation": "Without skips, a U-Net's decoder is producing H x W predictions from a very low-resolution bottleneck, which cannot resolve crisp edges. Skip connections splice the encoder's high-resolution, low-semantic features into the decoder's low-resolution, high-semantic features so both context and detail are available at every output stage."
     },
     {
-      "stage": "pre",
+      "stage": "check",
       "question": "A segmentation task has 99% background pixels and 1% tumour pixels. You train with plain cross-entropy and reach 99% pixel accuracy. What happened?",
       "options": ["The loss function was implemented incorrectly", "The model converged", "The model learned to predict background for every pixel; pixel accuracy is dominated by the majority class and ignores the class you actually care about", "The optimizer failed"],
       "correct": 2,
       "explanation": "Pixel accuracy on an imbalanced dataset is a useless metric. The network collects the easy 99% by always predicting background and produces empty tumour masks. The fix: combine cross-entropy with Dice loss (overlap-based, scale-free) and report IoU/Dice per foreground class."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "Which task type separates individual cars of the same class from each other?",
       "options": ["Both produce the same output", "Semantic segmentation", "Instance segmentation", "Neither — that requires a detection model instead"],
       "correct": 2,
       "explanation": "Semantic segmentation labels every pixel with a class but merges touching instances of the same class into one blob. Instance segmentation keeps instance IDs, so each car, each person, each apple is a separate predicted mask. Panoptic segmentation unifies both: semantic labels for stuff, instance IDs for things."
     },
     {
+      "stage": "check",
+      "question": "You pass a 255 x 257 image through a U-Net that downsamples and upsamples by powers of two. The decoder tensor is one pixel smaller than its skip tensor. What should the up block do before concatenation?",
+      "options": ["Flatten both tensors", "Resize the upsampled decoder tensor to skip.shape[-2:], then concatenate along channels", "Increase num_classes", "Discard the skip connection"],
+      "correct": 1,
+      "explanation": "Pooling and upsampling odd spatial dimensions can differ by one pixel because of rounding. Resizing only the decoder tensor to the skip tensor's spatial shape preserves the encoder feature map and makes channel-wise concatenation valid."
+    },
+    {
       "stage": "post",
-      "question": "You swap U-Net's bilinear upsample + 3x3 conv for a ConvTranspose2d with kernel_size=2, stride=2 and see checkerboard artifacts in the output. Why?",
-      "options": ["Transposed conv is broken in PyTorch", "The learning rate was too low", "When kernel_size is not evenly divisible by stride, output pixels receive unequal contributions from input pixels, producing a periodic pattern in the output that looks like a checkerboard", "Batch norm has to be added before transposed conv"],
-      "correct": 2,
+      "question": "You swap U-Net's bilinear upsample + 3x3 conv for a ConvTranspose2d with kernel_size=3, stride=2 and see checkerboard artifacts in the output. Why?",
+      "options": ["Transposed conv is broken in PyTorch", "The learning rate was too low", "Batch norm has to be added before transposed conv", "When kernel_size is not evenly divisible by stride, output pixels receive unequal contributions from input pixels, producing a periodic pattern in the output that looks like a checkerboard"],
+      "correct": 3,
       "explanation": "Checkerboard artifacts come from uneven overlap of the transposed convolution's receptive field across output positions. Using kernel_size = stride * n (e.g. kernel 4, stride 2) or replacing transposed conv with bilinear upsample + conv eliminates the artifacts. The modern default is bilinear + conv for this reason."
     },
     {

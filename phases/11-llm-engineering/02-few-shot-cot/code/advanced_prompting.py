@@ -1,8 +1,12 @@
-import json
+# From-scratch implementation for the lesson in ../docs/en.md.
+# Few-shot and CoT: Wei et al., 2022, https://arxiv.org/abs/2201.11903
+# Self-consistency: Wang et al., 2023, https://arxiv.org/abs/2203.11171
+# Tree of Thoughts: Yao et al., 2023, https://arxiv.org/abs/2305.10601
+# Provider calls stay injectable; importing or running this module is offline.
+
 import re
-import os
 from collections import Counter
-from openai import OpenAI
+from decimal import Decimal, InvalidOperation
 
 
 GSM8K_EXAMPLES = [
@@ -101,23 +105,143 @@ GSM8K_EXAMPLES = [
 ]
 
 
+NUMBER_PATTERN = r"[-+]?(?:\d[\d,]*(?:\.\d+)?|\.\d+)"
+
+CONTENT_STOP_WORDS = frozenset(
+    {
+        "a",
+        "an",
+        "and",
+        "as",
+        "at",
+        "for",
+        "from",
+        "he",
+        "her",
+        "how",
+        "in",
+        "is",
+        "it",
+        "many",
+        "much",
+        "of",
+        "on",
+        "per",
+        "she",
+        "the",
+        "they",
+        "to",
+        "was",
+        "what",
+        "with",
+    }
+)
+
+
 def extract_answer(text):
     if not text:
         return None
     patterns = [
-        r"[Tt]he answer is[:\s]*\$?([\d,]+\.?\d*)",
-        r"[Tt]he answer is[:\s]*([\d,]+\.?\d*)",
-        r"#### ([\d,]+\.?\d*)",
-        r"= \$?([\d,]+\.?\d*)\s*$",
+        rf"[Tt]he answer is[:\s]*\$?({NUMBER_PATTERN})",
+        rf"####\s*\$?({NUMBER_PATTERN})",
+        rf"=\s*\$?({NUMBER_PATTERN})\s*[.!]?\s*$",
     ]
+    explicit_matches = []
     for pattern in patterns:
-        match = re.search(pattern, text)
-        if match:
-            return match.group(1).replace(",", "")
-    numbers = re.findall(r"[\d,]+\.?\d*", text)
+        explicit_matches.extend(
+            (match.start(), match.group(1)) for match in re.finditer(pattern, text)
+        )
+    if explicit_matches:
+        _, answer = max(explicit_matches, key=lambda match: match[0])
+        return answer.replace(",", "")
+    numbers = re.findall(NUMBER_PATTERN, text)
     if numbers:
         return numbers[-1].replace(",", "")
     return None
+
+
+def normalize_answer(answer):
+    """Return one canonical representation for a numeric answer."""
+    if answer is None:
+        return None
+
+    text = str(answer).strip().replace(",", "")
+    if text.startswith("$"):
+        text = text[1:].strip()
+    if not text:
+        return None
+
+    try:
+        number = Decimal(text)
+    except InvalidOperation:
+        return text
+
+    normalized = format(number.normalize(), "f")
+    if "." in normalized:
+        normalized = normalized.rstrip("0").rstrip(".")
+    return "0" if normalized in {"-0", "+0"} else normalized
+
+
+def _content_tokens(text):
+    return {
+        token
+        for token in re.findall(r"[a-z0-9]+", text.lower())
+        if token not in CONTENT_STOP_WORDS
+    }
+
+
+def example_similarity(question, example_question):
+    """Score lexical coverage without embeddings or network access."""
+    target = _content_tokens(question)
+    candidate = _content_tokens(example_question)
+    if not target or not candidate:
+        return 0.0
+    return len(target & candidate) / len(target | candidate)
+
+
+def select_examples(question, examples, num_examples=3):
+    """Select the most similar examples, preserving order for tied scores."""
+    if num_examples < 0:
+        raise ValueError("num_examples must be non-negative")
+
+    scored = [
+        (example_similarity(question, example.get("question", "")), index, example)
+        for index, example in enumerate(examples)
+    ]
+    scored.sort(key=lambda item: (-item[0], item[1]))
+    return [example for _, _, example in scored[:num_examples]]
+
+
+def majority_vote(answers, total_samples=None):
+    """Vote over parsed answers; ties resolve to the earliest sampled answer."""
+    normalized_answers = []
+    for answer in answers:
+        normalized = normalize_answer(answer)
+        if normalized is not None:
+            normalized_answers.append(normalized)
+
+    if not normalized_answers:
+        return None, 0.0, Counter()
+
+    vote_counts = Counter(normalized_answers)
+    highest_count = max(vote_counts.values())
+    best_answer = next(
+        answer for answer in normalized_answers if vote_counts[answer] == highest_count
+    )
+    denominator = len(normalized_answers) if total_samples is None else total_samples
+    if denominator < len(normalized_answers):
+        raise ValueError("total_samples cannot be smaller than the parsed answer count")
+    confidence = highest_count / denominator if denominator else 0.0
+    return best_answer, confidence, vote_counts
+
+
+def vote_reasoning_paths(reasonings):
+    """Extract final answers from reasoning paths and aggregate their votes."""
+    reasonings = list(reasonings)
+    return majority_vote(
+        (extract_answer(reasoning) for reasoning in reasonings),
+        total_samples=len(reasonings),
+    )
 
 
 def build_cot_prompt(question, examples, num_examples=3):
@@ -158,6 +282,15 @@ def build_zero_shot_prompt(question):
 
 
 def call_llm(client, model, system, user, temperature=0.0):
+    if hasattr(client, "complete"):
+        return client.complete(
+            model=model,
+            system=system,
+            user=user,
+            temperature=temperature,
+            max_tokens=1024,
+        )
+
     response = client.chat.completions.create(
         model=model,
         messages=[
@@ -200,12 +333,9 @@ def self_consistency_solve(question, examples, client, model, n_samples=5):
         if answer is not None:
             answers.append(answer)
 
-    if not answers:
-        return None, 0.0, reasonings, Counter()
-
-    vote_counts = Counter(answers)
-    best_answer = vote_counts.most_common(1)[0][0]
-    confidence = vote_counts[best_answer] / len(answers)
+    best_answer, confidence, vote_counts = majority_vote(
+        answers, total_samples=len(reasonings)
+    )
 
     return best_answer, confidence, reasonings, vote_counts
 
@@ -507,41 +637,4 @@ TEST_QUESTIONS = [
 
 
 if __name__ == "__main__":
-    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "your-api-key"))
-    model = os.environ.get("LLM_MODEL", "gpt-4o")
-
-    print("=" * 60)
-    print("ADVANCED PROMPTING PIPELINE")
-    print("Few-Shot + CoT + Self-Consistency + Tree-of-Thought")
-    print("=" * 60)
-
-    questions = [t["question"] for t in TEST_QUESTIONS]
-    expected = [t["answer"] for t in TEST_QUESTIONS]
-
-    print("\n--- Technique Comparison ---")
-    run_comparison(questions, expected, GSM8K_EXAMPLES, client, model)
-
-    print("\n\n--- Escalation Pipeline ---")
-    for test in TEST_QUESTIONS[:2]:
-        print(f"\nQ: {test['question'][:80]}...")
-        result = solve_with_escalation(
-            test["question"], GSM8K_EXAMPLES, client, model
-        )
-        print(f"  Method: {result['method']}")
-        print(f"  Answer: {result['answer']} (expected: {test['answer']})")
-        print(f"  Confidence: {result['confidence']}")
-
-    print("\n\n--- Prompt Chaining ---")
-    for test in TEST_QUESTIONS[:2]:
-        print(f"\nQ: {test['question'][:80]}...")
-        answer, chain = prompt_chain_solve(test["question"], client, model)
-        print(f"  Answer: {answer} (expected: {test['answer']})")
-        print(f"  Steps: extract -> solve -> verify")
-
-    print("\n\n--- ReAct ---")
-    for test in TEST_QUESTIONS[:2]:
-        print(f"\nQ: {test['question'][:80]}...")
-        answer, trace = react_solve(test["question"], client, model)
-        print(f"  Answer: {answer} (expected: {test['answer']})")
-
-    print("\n\nDone.")
+    print("This module is offline-safe. Run `python3 main.py` for the demo.")

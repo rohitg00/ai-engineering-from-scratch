@@ -1,10 +1,34 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="robots" content="noindex"><title>404 · AI Engineering from Scratch</title><link rel="stylesheet" href="style.css?v=20260802a"></head>
-<body><main class="container" style="max-width:760px;padding-top:18vh"><p class="about-eyebrow">404 · AI Engineering from Scratch</p><h1>Page not found</h1><pre style="white-space:pre-wrap;line-height:1.7"># AI Engineering from Scratch
-
-This path does not exist.
-
-Try the sitemap: /sitemap.xml
-Try the agent index: /llms.txt
-Try the catalog: /catalog.html
-Try the developer resources: /developer.html</pre></main></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex">
+  <title>404 · AI Engineering from Scratch</title>
+  <script>
+    (function () {
+      var isProjectPages = /\.github\.io$/i.test(window.location.hostname);
+      var firstSegment = window.location.pathname.split('/').filter(Boolean)[0] || '';
+      var siteRoot = isProjectPages && firstSegment ? '/' + firstSegment + '/' : '/';
+      var base = document.createElement('base');
+      base.href = siteRoot;
+      document.head.appendChild(base);
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css?v=20260802a">
+</head>
+<body data-i18n-page="404.html">
+  <header class="site-header"><div class="header-inner"><a href="index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH</a><div id="langPicker"></div></div></header>
+  <main class="container" style="max-width:760px;padding-top:18vh">
+    <p class="about-eyebrow">404 · AI Engineering from Scratch</p>
+    <h1>Page not found</h1>
+    <div style="line-height:1.7">
+      <p>This path does not exist.</p>
+      <p>Try the sitemap: /sitemap.xml<br>Try the agent index: /llms.txt<br>Try the catalog: /catalog.html<br>Try the developer resources: /developer.html</p>
+    </div>
+  </main>
+  <script src="langs.js?v=fb2840c8aa0a"></script>
+  <script src="i18n-data.js?v=7e2dd86ccaad"></script>
+  <script src="ui-i18n.js?v=ed1be68f31e1"></script>
+  <script src="lang-picker.js?v=853069504587" defer></script>
+</body>
+</html>

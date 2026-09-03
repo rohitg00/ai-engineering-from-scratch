@@ -1,3 +1,9 @@
+# Educational implementation for ../docs/en.md.
+# Builds FID, cosine similarity, and Elo updates from Python's standard library.
+# FID follows Heusel et al. (2017), https://arxiv.org/abs/1706.08500.
+# CLIP-style scoring follows Radford et al. (2021), https://arxiv.org/abs/2103.00020.
+# The seeded demo is deterministic and terminates without external services.
+
 import math
 import random
 
@@ -35,17 +41,86 @@ def matmul(A, B):
     return out
 
 
-def jacobi_sqrt(M, iters=30):
-    """Matrix square root by Denman-Beavers iteration (stable for PSD M)."""
+def symmetric_eigendecomposition(M, tolerance=1e-12, max_sweeps=50):
+    """Return eigenvalues and column eigenvectors for a symmetric matrix."""
     n = len(M)
-    Y = [row[:] for row in M]
-    Z = [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
-    for _ in range(iters):
-        Y_inv = inverse(Y)
-        Z_inv = inverse(Z)
-        Y = [[(Y[i][j] + Z_inv[i][j]) / 2 for j in range(n)] for i in range(n)]
-        Z = [[(Z[i][j] + Y_inv[i][j]) / 2 for j in range(n)] for i in range(n)]
-    return Y
+    if n == 0 or any(len(row) != n for row in M):
+        raise ValueError("matrix must be non-empty and square")
+    if any(not math.isfinite(value) for row in M for value in row):
+        raise ValueError("matrix entries must be finite")
+
+    scale = max(1.0, max(abs(value) for row in M for value in row))
+    for i in range(n):
+        for j in range(i + 1, n):
+            if abs(M[i][j] - M[j][i]) > tolerance * scale:
+                raise ValueError("matrix must be symmetric")
+
+    A = [[(M[i][j] + M[j][i]) / 2.0 for j in range(n)] for i in range(n)]
+    vectors = [[1.0 if i == j else 0.0 for j in range(n)] for i in range(n)]
+
+    for _ in range(max_sweeps):
+        largest = max(
+            (abs(A[i][j]) for i in range(n) for j in range(i + 1, n)),
+            default=0.0,
+        )
+        diagonal_scale = max(1.0, max(abs(A[i][i]) for i in range(n)))
+        if largest <= tolerance * diagonal_scale:
+            break
+
+        for p in range(n - 1):
+            for q in range(p + 1, n):
+                if abs(A[p][q]) <= tolerance * diagonal_scale:
+                    continue
+                angle = 0.5 * math.atan2(2.0 * A[p][q], A[p][p] - A[q][q])
+                cosine = math.cos(angle)
+                sine = math.sin(angle)
+                a_pp = A[p][p]
+                a_qq = A[q][q]
+                a_pq = A[p][q]
+
+                A[p][p] = (
+                    cosine * cosine * a_pp
+                    + 2.0 * cosine * sine * a_pq
+                    + sine * sine * a_qq
+                )
+                A[q][q] = (
+                    sine * sine * a_pp
+                    - 2.0 * cosine * sine * a_pq
+                    + cosine * cosine * a_qq
+                )
+                A[p][q] = A[q][p] = 0.0
+
+                for k in range(n):
+                    if k in (p, q):
+                        continue
+                    a_kp = A[k][p]
+                    a_kq = A[k][q]
+                    A[k][p] = A[p][k] = cosine * a_kp + sine * a_kq
+                    A[k][q] = A[q][k] = -sine * a_kp + cosine * a_kq
+
+                for k in range(n):
+                    v_kp = vectors[k][p]
+                    v_kq = vectors[k][q]
+                    vectors[k][p] = cosine * v_kp + sine * v_kq
+                    vectors[k][q] = -sine * v_kp + cosine * v_kq
+    else:
+        raise ArithmeticError("Jacobi eigendecomposition did not converge")
+
+    return [A[i][i] for i in range(n)], vectors
+
+
+def jacobi_sqrt(M, iters=50):
+    """Principal square root of a symmetric PSD matrix via Jacobi rotations."""
+    eigenvalues, vectors = symmetric_eigendecomposition(M, max_sweeps=iters)
+    spectral_scale = max(1.0, max(abs(value) for value in eigenvalues))
+    if any(value < -1e-12 * spectral_scale for value in eigenvalues):
+        raise ValueError("matrix must be positive semidefinite")
+    roots = [math.sqrt(max(value, 0.0)) for value in eigenvalues]
+    n = len(M)
+    return [
+        [sum(vectors[i][k] * roots[k] * vectors[j][k] for k in range(n)) for j in range(n)]
+        for i in range(n)
+    ]
 
 
 def inverse(M):
@@ -71,17 +146,39 @@ def inverse(M):
 
 
 def fid(real_features, gen_features):
+    _validate_feature_sets(real_features, gen_features)
     mu_r = mean_vec(real_features)
     mu_g = mean_vec(gen_features)
     cov_r = covariance(real_features, mu_r)
     cov_g = covariance(gen_features, mu_g)
     mean_sq = sum((a - b) ** 2 for a, b in zip(mu_r, mu_g))
-    prod = matmul(cov_r, cov_g)
-    sqrt_prod = jacobi_sqrt(prod)
-    return mean_sq + trace(cov_r) + trace(cov_g) - 2 * trace(sqrt_prod)
+    sqrt_cov_r = jacobi_sqrt(cov_r)
+    covariance_sandwich = matmul(matmul(sqrt_cov_r, cov_g), sqrt_cov_r)
+    sqrt_sandwich = jacobi_sqrt(covariance_sandwich)
+    score = mean_sq + trace(cov_r) + trace(cov_g) - 2 * trace(sqrt_sandwich)
+    return max(score, 0.0)
+
+
+def _validate_feature_sets(real_features, gen_features):
+    if not real_features or not gen_features:
+        raise ValueError("feature sets must be non-empty")
+    dimension = len(real_features[0])
+    if dimension == 0:
+        raise ValueError("feature vectors must be non-empty")
+    for features in (real_features, gen_features):
+        if any(len(vector) != dimension for vector in features):
+            raise ValueError("all feature vectors must have the same dimension")
+        if any(not math.isfinite(value) for vector in features for value in vector):
+            raise ValueError("feature values must be finite")
 
 
 def clip_like(a, b):
+    if not a or not b:
+        raise ValueError("embeddings must be non-empty")
+    if len(a) != len(b):
+        raise ValueError("embeddings must have the same dimension")
+    if any(not math.isfinite(value) for embedding in (a, b) for value in embedding):
+        raise ValueError("embedding values must be finite")
     dot = sum(x * y for x, y in zip(a, b))
     na = math.sqrt(sum(x * x for x in a))
     nb = math.sqrt(sum(x * x for x in b))

@@ -1,0 +1,1175 @@
+{
+  "schemaVersion": 1,
+  "lessons": {
+    "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer": {
+      "sourceSha256": "e5f08d990cfe11e8950b143215eab924280934224d602cc02f676de4c0d1c31f",
+      "questions": [
+        {
+          "question": "n-gram 语言模型估计的是什么？",
+          "options": [
+            "文档嵌入",
+            "单词之间的编辑距离",
+            "根据计数统计得到的 P(next word | previous n-1 words)",
+            "P(label | document)"
+          ],
+          "explanation": "n-gram LM 通过统计出现次数来建模 P(w | last n-1 words)。"
+        },
+        {
+          "question": "平滑解决了 n-gram 模型中的什么问题？",
+          "options": [
+            "数值精度",
+            "训练中未见的 n-gram 被赋予零概率，导致句子似然降为零",
+            "内存使用量",
+            "分词不匹配"
+          ],
+          "explanation": "平滑会重新分配概率质量，使未见过的 n-gram 也能获得非零概率。"
+        },
+        {
+          "question": "什么洞见使 Kneser-Ney 平滑优于朴素绝对折扣？",
+          "options": [
+            "它使用更大的 n",
+            "它使用 TF-IDF",
+            "它使用梯度下降",
+            "它使用延续概率（一个词出现在多少种不同上下文中）而不是原始频次来估计低阶分布"
+          ],
+          "explanation": "延续概率关注上下文的多样性，而不只是原始计数。"
+        },
+        {
+          "question": "困惑度衡量什么？",
+          "options": [
+            "不同 n-gram 的数量",
+            "留出测试集上每个词元平均负对数似然的 exp；越低越好",
+            "标签的交叉熵",
+            "生成吞吐量"
+          ],
+          "explanation": "Perplexity = exp(- mean log P)；数值越低，表示模型对测试文本越不意外。"
+        },
+        {
+          "question": "比较困惑度数值时，为什么训练集和测试集必须使用完全相同的分词方式？",
+          "options": [
+            "为了避免 OOV",
+            "困惑度取决于分词方案；不一致的分词器会产生不可比较的分数",
+            "梯度下降要求如此",
+            "为了控制批大小"
+          ],
+          "explanation": "不同的分词方式会改变词元数量和似然，因此困惑度数值无法直接比较。"
+        },
+        {
+          "question": "为什么三元语法 LM 生成的句子在局部看起来流畅，却在整体上缺乏连贯性？",
+          "options": [
+            "局部三元语法上下文会指导下一个词，但模型在 n-1 个词元之外没有长程记忆",
+            "它们会丢弃标点",
+            "它们使用拉普拉斯平滑",
+            "束搜索失效"
+          ],
+          "explanation": "只以最后 n-1 个词元为条件，会使长程连贯性只能偶然出现。"
+        },
+        {
+          "question": "到 2026 年，n-gram 模型仍在哪些生产场景中使用？",
+          "options": [
+            "多语言翻译",
+            "摘要生成",
+            "开放域聊天机器人",
+            "对延迟敏感的路径，例如语音识别重打分，以及通过 KenLM 等库实现的端侧自动补全"
+          ],
+          "explanation": "KenLM 风格的 n-gram 模型仍可作为快速的端侧组件或重打分组件。"
+        },
+        {
+          "question": "在断言神经 LM“表现良好”之前，为什么仍建议先计算 n-gram 基线？",
+          "options": [
+            "它能加快训练",
+            "ROUGE 要求如此",
+            "它能消除 OOV",
+            "如果 transformer LM 在相同分词方式下不能大幅超过调优后的 Kneser-Ney 基线，训练流水线很可能出了问题"
+          ],
+          "explanation": "KN 基线强得出人意料；神经 LM 应该大幅胜出，否则很可能存在缺陷。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural": {
+      "sourceSha256": "94cb2a4a970f1deb6568dd74e3916a29f8981c6361669ce227c34fb86a89d704",
+      "questions": [
+        {
+          "question": "在基于规则的聊天机器人中，槽位填充状态机做什么？",
+          "options": [
+            "选择最流畅的回复",
+            "对用户消息做嵌入",
+            "跟踪仍缺少哪些必需参数（日期、目的地、金额），并按顺序询问",
+            "检测讽刺"
+          ],
+          "explanation": "槽位填充通过迭代方式收集任务处理器所需的结构化参数。"
+        },
+        {
+          "question": "与单次 LLM 调用相比，LLM agent 循环的定义特征是什么？",
+          "options": [
+            "控制器交替执行 LLM 调用和工具调用，直到模型返回最终答案或达到步骤预算",
+            "使用 softmax",
+            "使用贪心解码",
+            "更大的上下文窗口"
+          ],
+          "explanation": "Agent 增加了包含工具调用和终止条件的计划-行动-观察循环。"
+        },
+        {
+          "question": "为什么混合路由（规则 + 检索 + LLM agent）是 2026 年生产系统的默认选择？",
+          "options": [
+            "它不需要嵌入",
+            "没有一种架构能妥善处理所有请求；规则处理破坏性操作，检索处理 FAQ，agent 处理含糊的开放式查询",
+            "它的维护成本更低",
+            "它不再需要评估"
+          ],
+          "explanation": "混合系统用确定性规则处理高风险操作，把 LLM agent 留给开放式查询。"
+        },
+        {
+          "question": "什么是提示词注入？",
+          "options": [
+            "一种分词器攻击",
+            "由用户提供（直接）或文档提供（间接）的文本，试图覆盖系统提示词或劫持 agent 的行为",
+            "仅指 SQL 注入的一种变体",
+            "把词元注入嵌入"
+          ],
+          "explanation": "提示词注入会利用用户输入或工具输出中的不可信文本改写 agent 的行为。"
+        },
+        {
+          "question": "哪种缓解模式通过分离规划与执行来减少间接提示词注入？",
+          "options": [
+            "Plan-Verify-Execute 规划模式：agent 先制定计划，再根据计划验证每项操作，然后执行，从而阻止工具输出注入未规划的新操作",
+            "缩短上下文",
+            "降低 temperature",
+            "使用更大的模型"
+          ],
+          "explanation": "这里的 PVE 指 Plan-Verify-Execute 规划模式：它会根据已商定的计划检查每一步，因此来自工具输出的注入指令会被拒绝。它不同于 Phase 14 的 Prompt-Validator-Executor 验证模式。"
+        },
+        {
+          "question": "即使在 LLM-agent 系统中，为什么破坏性操作（付款、删除）也必须经由结构化流程？",
+          "options": [
+            "工具无法调用",
+            "束搜索不安全",
+            "自信地捏造、提示词注入和范围蔓延意味着 LLM 不能成为不可逆副作用的唯一决策者",
+            "LLM 很慢"
+          ],
+          "explanation": "幻觉和注入使纯 LLM agent 执行不可逆操作并不安全；必须采用确定性的确认流程。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/18-multilingual-nlp": {
+      "sourceSha256": "1549ce6451ea205b17d7b886035beb7cf047e84c141b91a3933e3c183d859a53",
+      "questions": [
+        {
+          "question": "零样本跨语言迁移是什么意思？",
+          "options": [
+            "不使用翻译模型进行翻译",
+            "以零次合并进行分词",
+            "在一种源语言上微调多语言模型，再在没有目标语言标签的情况下用另一种语言评估",
+            "使用零个样本训练"
+          ],
+          "explanation": "零样本迁移：在源语言上训练，在没有目标语言监督的情况下用于目标语言。"
+        },
+        {
+          "question": "哪个模型家族是标准的 100 种语言跨语言基线？",
+          "options": [
+            "GPT-2",
+            "GloVe",
+            "DistilBERT",
+            "XLM-R（例如 XLM-RoBERTa-base，270M）"
+          ],
+          "explanation": "XLM-R 是跨语言分类中经典的 100 种语言预训练基线。"
+        },
+        {
+          "question": "对于非英语目标语言，为什么以英语为源语言并不总能获得最佳迁移效果？",
+          "options": [
+            "英语数据太少",
+            "语言相似性（类型、文字系统、形态）能够预测迁移质量；更接近且资源丰富的源语言可能胜过英语",
+            "英语使用 BPE",
+            "英语太短"
+          ],
+          "explanation": "类型上相关的源语言（例如面向印度语言目标时使用印地语）作为微调源语言，效果往往优于英语。"
+        },
+        {
+          "question": "低资源语言的“fertility tax”是什么？",
+          "options": [
+            "较小的模型训练更慢",
+            "分词器无法处理 Unicode",
+            "BPE 拒绝训练",
+            "低资源文本中的每个词会比英语拆成更多子词，从而消耗上下文窗口、增加延迟并占用模型容量"
+          ],
+          "explanation": "长尾语言的分词 fertility 往往高得多，会消耗上下文并降低训练效率。"
+        },
+        {
+          "question": "为什么必须按语言分别评估，而不能只看汇总准确率？",
+          "options": [
+            "汇总评估运行得更快",
+            "汇总评估只适用于分类",
+            "汇总评估会忽略分词",
+            "汇总数值会掩盖长尾语言的表现，而多语言模型在这些语言上可能远差于平均水平"
+          ],
+          "explanation": "汇总准确率会掩盖低资源语言上的较差表现；逐语言分数能够将其暴露出来。"
+        },
+        {
+          "question": "使用少样本数据适配多语言模型时，为什么微调学习率至关重要？",
+          "options": [
+            "过高的 LR 会破坏多语言对齐，使模型实际上退化为仅支持英语",
+            "较低的 LR 会浪费 GPU",
+            "它会改变词表",
+            "分词器要求如此"
+          ],
+          "explanation": "过高的 LR 会使共享表示发生漂移；保守的 LR（~2e-5）有助于保留跨语言结构。"
+        },
+        {
+          "question": "哪种缓解方式能直接改善长尾文字系统的分词 fertility？",
+          "options": [
+            "跳过停用词",
+            "使用字节回退（SentencePiece byte_fallback=True），或采用覆盖更多文字系统的分词器（例如 XLM-V）",
+            "增加训练轮数",
+            "减小批大小"
+          ],
+          "explanation": "字节回退和词表覆盖更广的分词器可以降低低资源文字系统的 fertility 和 OOV。"
+        },
+        {
+          "question": "什么时候值得从头训练单语言模型，而不是使用多语言模型？",
+          "options": [
+            "仅用于翻译时",
+            "每当分词器是 BPE 时",
+            "英语始终如此",
+            "当目标语言有足够数据，可以训练出胜过多语言基线的单语言模型时；先测试再下结论"
+          ],
+          "explanation": "对于资源丰富的目标语言，单语言训练有时会胜过多语言训练；应通过实证比较来决定。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/19-subword-tokenization": {
+      "sourceSha256": "80ce338f9fc960ef85f0c7a7fb7a8aa6f82ccd322bc633ca55b1b8a78e7098b4",
+      "questions": [
+        {
+          "question": "与词级词表相比，子词分词带来了什么优势？",
+          "options": [
+            "训练更快",
+            "模型更小",
+            "嵌入更好",
+            "生僻词可以拆解为已知子词单元，在保持词表规模有上限的同时消除 OOV"
+          ],
+          "explanation": "子词词元通过拆解覆盖任意输入，消除了词级词表的 OOV 问题。"
+        },
+        {
+          "question": "为什么 GPT-2 使用字节级 BPE，而不是字符级 BPE？",
+          "options": [
+            "transformer 要求如此",
+            "由 256 个字节组成的基础词表可以覆盖任意 UTF-8 输入，保证不会出现 [UNK] 词元",
+            "字节更小",
+            "字节 BPE 会跳过合并"
+          ],
+          "explanation": "字节级 BPE 从 256 个字节开始，因此每个输入都可以编码，不会出现 OOV。"
+        },
+        {
+          "question": "Unigram 分词器如何构建词表？",
+          "options": [
+            "贪心合并高频词对",
+            "随机采样",
+            "从一个大型候选集开始，迭代剪除那些移除后对语料库对数似然损害最小的词元",
+            "贪心 IDF 加权"
+          ],
+          "explanation": "Unigram 拟合一个 unigram LM，并迭代移除作用最小的词元，直至达到目标词表大小。"
+        },
+        {
+          "question": "WordPiece 的合并准则与 BPE 有何区别？",
+          "options": [
+            "WordPiece 使用字节",
+            "WordPiece 跳过合并",
+            "WordPiece 是无监督的",
+            "WordPiece 合并能使训练语料库似然最大化的词对，而 BPE 合并频率最高的词对"
+          ],
+          "explanation": "WordPiece 根据似然选择合并项；BPE 根据原始频次选择。"
+        },
+        {
+          "question": "哪个工具可以直接在原始多语言 Unicode 文本上训练分词器？",
+          "options": [
+            "spaCy",
+            "tiktoken",
+            "tokenizers-lite",
+            "SentencePiece（把空白编码为特殊标记，并训练 BPE 或 Unigram）"
+          ],
+          "explanation": "SentencePiece 无需预分词即可在原始文本上训练 BPE/Unigram；tiktoken 只负责编码。"
+        },
+        {
+          "question": "为什么生产环境的 CI 必须对已部署的 tokenizer.json 做哈希校验？",
+          "options": [
+            "分词器漂移会产生与模型训练时不同的词元 ID，在不易察觉的情况下破坏输出",
+            "为了压缩存储",
+            "它能减小词表大小",
+            "Hugging Face 要求如此"
+          ],
+          "explanation": "即使分词器只有细微变化，也会使 ID 发生偏移；哈希校验可以在问题触达用户之前发现漂移。"
+        },
+        {
+          "question": "一个 emoji 经常占用多个词元，常见原因是什么？",
+          "options": [
+            "emoji 是停用字符",
+            "emoji 是保留字符",
+            "由多个码点组成的 emoji 会编码成多个 UTF-8 字节；如果没有专用词元，每个字节都会成为一个子词",
+            "emoji 以浮点数存储"
+          ],
+          "explanation": "复合 emoji 会编码为多个字节；字节级分词器可能用多个词元表示一个字形。"
+        },
+        {
+          "question": "为新的单语言 transformer 选择词表大小时，可以参考什么经验规则？",
+          "options": [
+            "与训练语料库大小保持一致",
+            "参数少于 1B 的模型约用 32k；1-10B 的模型用 50-100k；多语言或前沿模型用 200k+",
+            "始终使用 1M",
+            "始终使用 8000"
+          ],
+          "explanation": "词表大小会随模型规模和语言覆盖范围增长；这些数值是社区的大致默认值。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding": {
+      "sourceSha256": "23856e10a6274d73099e1b472295ec001feb0a7fd7863a455fcb02514f1c4fd6",
+      "questions": [
+        {
+          "question": "为什么在生产环境中，仅靠提示词要求“return JSON”还不够？",
+          "options": [
+            "提示词太长",
+            "提示无法描述 schema",
+            "JSON 太冗长",
+            "前沿模型大多数时候会遵循要求，但并非总是如此；少量格式错误的输出就足以破坏下游解析器"
+          ],
+          "explanation": "在前沿模型上，仅靠提示词约束结构大约有 ~80% 的成功率；生产环境需要更强的保证。"
+        },
+        {
+          "question": "约束解码会在每个生成步骤修改什么？",
+          "options": [
+            "logit 向量：屏蔽会使目标语法无效的词元，从而只能采样有效的后续内容",
+            "训练损失",
+            "分词器",
+            "KV cache"
+          ],
+          "explanation": "logit processor 会把无效词元设为 -inf，使 softmax 无法采样这些词元。"
+        },
+        {
+          "question": "为什么约束解码可能比自由生成更快？",
+          "options": [
+            "模型更小",
+            "它完全避开 softmax",
+            "它跳过反向传播",
+            "强制性的框架词元（例如 '{\"name\": \"'）可以不经采样直接发出，而且有效词元的搜索空间更小"
+          ],
+          "explanation": "确定的词元无需采样，而缩小后的有效词元集合会降低解码成本。"
+        },
+        {
+          "question": "哪种 schema 设计可以避免模型过早做出决定？",
+          "options": [
+            "把 'answer' 放在最前面",
+            "把推理字段放在答案或决策字段之前，让模型先思考再做决定",
+            "使用更短的键",
+            "使用 snake_case"
+          ],
+          "explanation": "字段顺序就是逻辑：先放推理字段，可以让模型思考后再锁定答案。"
+        },
+        {
+          "question": "Outlines 等基于 FSM 的约束解码工具有什么局限？",
+          "options": [
+            "它们只支持 enum",
+            "它们会把你锁定在 OpenAI",
+            "递归 schema 必须扁平化；真正的递归结构需要 XGrammar 等基于 CFG 的引擎",
+            "它们不是确定性的"
+          ],
+          "explanation": "FSM 无法表示无界递归；CFG 引擎可以处理。"
+        },
+        {
+          "question": "为什么说 Instructor 不会修改 logits？",
+          "options": [
+            "Instructor 把 schema 格式化到提示词中，并解析输出、在失败时重试；logit 屏蔽要么在服务端发生，要么根本不发生",
+            "它会编辑提示词",
+            "它使用梯度更新",
+            "Anthropic 要求如此"
+          ],
+          "explanation": "Instructor 使用提供商侧的结构化输出以及客户端侧的验证和重试，而不是 logit 屏蔽。"
+        },
+        {
+          "question": "像 date='YYYY-MM-DD' 这样的严格正则表达式会带来什么问题？",
+          "options": [
+            "它会破坏 JSON 解析",
+            "它不为未知值保留任何退路，因此模型会捏造日期，而不是返回 null/sentinel",
+            "它需要 CFG 支持",
+            "正则表达式很慢"
+          ],
+          "explanation": "过于严格的语法会迫使模型编造值；应始终允许用 null/sentinel 表示未知值。"
+        },
+        {
+          "question": "什么时候应该使用 vLLM guided decoding，而不是厂商提供的结构化输出 API？",
+          "options": [
+            "仅在使用字节级 BPE 时",
+            "始终使用厂商方案",
+            "当你自行托管推理、控制模型，并希望无需重试即可获得 logit 级保证时",
+            "仅用于很小的 schema"
+          ],
+          "explanation": "vLLM guided decoding 适合需要 logit 级约束的自托管服务；厂商 API 会把你绑定在其技术栈上。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment": {
+      "sourceSha256": "d3579e0034e36907a82793fb2d3240c9e1cbbace0867a20d6236ba780e09a343",
+      "questions": [
+        {
+          "question": "NLI 会为（前提，假设）对分配哪三个标签？",
+          "options": [
+            "真 / 假 / 未知",
+            "原因 / 结果 / 无关",
+            "蕴含 / 矛盾 / 中立",
+            "正面 / 负面 / 中立"
+          ],
+          "explanation": "NLI 是针对蕴含、矛盾和中立的 3 类分类任务。"
+        },
+        {
+          "question": "如何把 NLI 用作零样本文本分类器？",
+          "options": [
+            "通过提示 LLM",
+            "把每个候选标签表述为一个假设（例如 'This text is about sports'），然后选择蕴含分数最高的标签",
+            "通过计算 TF-IDF",
+            "通过对嵌入取平均值"
+          ],
+          "explanation": "把 NLI 当分类器时，会将标签转化为假设；模型选择蕴含分数最高的标签。"
+        },
+        {
+          "question": "为什么 NLI 可以检查 RAG 输出的忠实度？",
+          "options": [
+            "它成本低",
+            "检查检索上下文是否蕴含答案中的每项主张，正是 NLI 所训练的任务形式",
+            "它支持多语言",
+            "它使用分词器"
+          ],
+          "explanation": "幻觉就是答案中的主张不被检索上下文蕴含；NLI 可以直接衡量蕴含关系。"
+        },
+        {
+          "question": "仅使用假设的基线能够揭示什么？",
+          "options": [
+            "分词器漂移",
+            "推理速度慢",
+            "多语言差距",
+            "即使没有前提，仅凭假设也能预测标签的数据集，这表明存在标签泄漏"
+          ],
+          "explanation": "SNLI 上较高的仅假设分数揭示了标注伪迹；这有助于调试自己的数据。"
+        },
+        {
+          "question": "截至 2026 年，哪个 NLI 模型家族是排行榜领先的标准主力？",
+          "options": [
+            "在 MNLI/FEVER/ANLI 上微调的 DeBERTa-v3 变体",
+            "普通 Word2Vec",
+            "GPT-2",
+            "fastText"
+          ],
+          "explanation": "在 MNLI 及相关语料库上微调的 DeBERTa-v3，是 2026 年开放 NLI 模型中的主力。"
+        },
+        {
+          "question": "为什么句子级 NLI 模型在文档长度的前提上准确率会下降？",
+          "options": [
+            "它们是在短前提上训练的，难以完成多句和多跳推理；针对 DocNLI 调优的模型更擅长处理长输入",
+            "更大的输入运行得更慢",
+            "余弦相似度会衰减",
+            "文档会触发分词器漂移"
+          ],
+          "explanation": "这是训练分布不匹配：单句 NLI 模型在文档长度输入上的 F1 会下降 20+。"
+        },
+        {
+          "question": "为什么零样本准确率会因假设模板不同而波动 10+ 个点？",
+          "options": [
+            "模板会改变标签集",
+            "模型对措辞很敏感；例如 'This text is about {label}' 与仅使用 '{label}' 会使蕴含概率发生变化",
+            "模板会改变分词器行为",
+            "模板会影响模型权重"
+          ],
+          "explanation": "模板措辞会显著改变蕴含分数；应在一个小型留出集上进行调优。"
+        },
+        {
+          "question": "对于使用 NLI 检测幻觉，怎样表述其能力边界才是稳妥的？",
+          "options": [
+            "它可作为忠实度信号来减少幻觉，但无法彻底消除幻觉；应结合检索召回率和人工审查",
+            "它只适用于英语",
+            "它能消除幻觉",
+            "它需要 LLM"
+          ],
+          "explanation": "NLI 是有用的信号，但不是完整解决方案；应配合检索指标和人工抽查。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive": {
+      "sourceSha256": "d812c191e7514db7493d4590af688f5e56b977b976acd08ed43250136b80b6b7",
+      "questions": [
+        {
+          "question": "什么是稠密嵌入？",
+          "options": [
+            "每段文本对应一个固定大小的向量，通过余弦相似度按语义接近程度对段落排序",
+            "词元级对齐矩阵",
+            "词表中每个词元对应一个稀疏权重",
+            "文档之间的图"
+          ],
+          "explanation": "稠密嵌入为每段文本提供一个向量（通常为 384-3072 维）；余弦相似度用于排序。"
+        },
+        {
+          "question": "Matryoshka Representation Learning 能实现什么？",
+          "options": [
+            "更快的 softmax",
+            "多语言训练",
+            "cross-encoder 重打分",
+            "把训练好的嵌入截断到前 N 维，仍能得到有用的较小嵌入"
+          ],
+          "explanation": "Matryoshka 训练使向量的前 N 维可以独立使用，从而支持低成本截断。"
+        },
+        {
+          "question": "多向量（ColBERT）嵌入如何为查询-文档对打分？",
+          "options": [
+            "对平均池化后的词元向量计算余弦相似度",
+            "交叉熵",
+            "MaxSim：为每个查询词元找到最相似的文档词元，然后把各最大值相加",
+            "Earth-mover's distance"
+          ],
+          "explanation": "ColBERT 风格的后期交互会在逐词元向量之间使用 MaxSim。"
+        },
+        {
+          "question": "BGE-M3 会同时输出什么？",
+          "options": [
+            "仅一个稀疏向量",
+            "仅一个稠密向量",
+            "一次推理同时从一个模型输出稠密、稀疏和多向量（colbert）表示",
+            "仅一个 colbert 向量"
+          ],
+          "explanation": "BGE-M3 从一个模型中输出三种检索模式，可用于融合式混合打分。"
+        },
+        {
+          "question": "为什么在计算余弦相似度之前，必须重新归一化经过 Matryoshka 截断的向量？",
+          "options": [
+            "截断会改变向量范数；不重新归一化时，点积不再等于余弦相似度",
+            "余弦相似度不考虑归一化",
+            "截断会破坏训练",
+            "只有 FAISS 要求如此"
+          ],
+          "explanation": "截断后重新归一化会恢复单位范数，使点积再次等于余弦相似度。"
+        },
+        {
+          "question": "为什么 BGE 模型通常需要在查询侧添加前缀字符串？",
+          "options": [
+            "为了压缩查询",
+            "前缀会改变分词器行为",
+            "FAISS 要求如此",
+            "BGE 训练时使用了显式查询提示；省略它会损失 3-5 个召回率点"
+          ],
+          "explanation": "BGE 模型期望查询带有 'Represent this sentence for searching...' 前缀。"
+        },
+        {
+          "question": "为什么选择嵌入模型时，MTEB 必要但并不充分？",
+          "options": [
+            "MTEB 只覆盖英语",
+            "MTEB 奖励更大的模型",
+            "MTEB 忽略延迟",
+            "排行榜名次是许多任务的平均结果；你的具体领域可能不同，因此始终要用自己的数据做基准测试"
+          ],
+          "explanation": "MTEB 对多个任务取平均；特定领域的评估可能颠覆排行榜顺序。"
+        },
+        {
+          "question": "什么时候应该在稠密嵌入之外增加 SPLADE 稀疏检索？",
+          "options": [
+            "仅在小型语料库上",
+            "每当编码器支持多语言时",
+            "当查询高度依赖关键词，或包含会被稠密嵌入模糊化的标识符或代码时",
+            "每当使用 Matryoshka 时"
+          ],
+          "explanation": "SPLADE 能捕获稠密模型可能遗漏的词法或关键词匹配；可通过 RRF 与稠密检索融合。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag": {
+      "sourceSha256": "e0c8a58bc7f2bfc034d6c8ee0974c71fe9faa2f84f5bcd5e64119a820d45d949",
+      "questions": [
+        {
+          "question": "为什么在 RAG 中，分块策略与嵌入模型同样重要？",
+          "options": [
+            "分块会缩小模型",
+            "更小的块训练得更快",
+            "FAISS 要求分块",
+            "分块边界决定答案是否能够被检索到；糟糕的分块会让任何嵌入都失效"
+          ],
+          "explanation": "Vectara 的 2025 年研究表明，分块质量对检索质量的影响不逊于、甚至超过嵌入模型。"
+        },
+        {
+          "question": "LangChain 的 RecursiveCharacterTextSplitter 会按什么顺序尝试切分？",
+          "options": [
+            "先按段落分隔符，再按换行符、句子边界，最后按空格切分",
+            "按词元 ID 切分",
+            "只按空白切分",
+            "始终按第 N 个字符切分"
+          ],
+          "explanation": "递归切分会按段落 -> 换行 -> 句子 -> 空格逐级回退，以保留结构。"
+        },
+        {
+          "question": "为什么父文档模式能改善答案质量？",
+          "options": [
+            "它会移除嵌入",
+            "子块提供精确检索；返回更大的父块则保留读者所需的周边上下文",
+            "它能避开分词",
+            "它使用更少的 GPU 周期"
+          ],
+          "explanation": "先通过小型子块进行精确检索，再扩展到父块以获得上下文。"
+        },
+        {
+          "question": "Anthropic 的“contextual retrieval”会在建立索引前向每个块添加什么？",
+          "options": [
+            "由 LLM 生成的 50-100 词摘要，用于说明该块在整篇文档中的位置和背景",
+            "随机噪声",
+            "一个 POS 标签",
+            "一个语言代码"
+          ],
+          "explanation": "Contextual retrieval 会在每个块前添加由 LLM 编写的定位摘要；召回率约提升 ~35-50%。"
+        },
+        {
+          "question": "2026 年的哪项发现与关于分块重叠的传统看法相矛盾？",
+          "options": [
+            "重叠应为 50%",
+            "BM25 要求重叠",
+            "重叠只会改善 contextual retrieval",
+            "2026 年的实证基准表明，重叠往往没有可测量的收益，却会使索引成本翻倍"
+          ],
+          "explanation": "较新的研究（在 NQ 上使用 SPLADE+Mistral）表明，分块重叠很少带来帮助，却会扩大索引体积。"
+        },
+        {
+          "question": "NVIDIA 的 2026 年基准测试认为，哪种块大小适合事实型查询？",
+          "options": [
+            "大约 256-512 个词元",
+            "2048-4096 个词元",
+            "8192 个词元",
+            "64 个词元"
+          ],
+          "explanation": "事实型查询受益于较小的块（256-512 个词元），因为答案信号更加集中。"
+        },
+        {
+          "question": "使用语义分块时，为什么设置最小词元数下限很重要？",
+          "options": [
+            "如果没有下限，语义分块可能产生只有 40 个词元的微小片段，损害检索效果",
+            "BERT 要求如此",
+            "下限可以防止重叠",
+            "下限能加快推理"
+          ],
+          "explanation": "语义分块器可能过度切分；强制设置最小大小可防止产生信号过弱的片段。"
+        },
+        {
+          "question": "“late chunking”与传统分块方式有何不同？",
+          "options": [
+            "在检索后分块",
+            "先在词元级嵌入整篇文档，再把词元嵌入池化为块向量，以保留跨块上下文",
+            "完全跳过分块",
+            "改用 BM25"
+          ],
+          "explanation": "Late chunking 先嵌入、后池化，从而保留跨分块边界的上下文交互。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/24-coreference-resolution": {
+      "sourceSha256": "9fe868f75187cf76d20e0d7309ac209a49079b003097e2dd870e77b1097f47f9",
+      "questions": [
+        {
+          "question": "共指消解的目标是什么？",
+          "options": [
+            "把指向同一现实世界实体的所有提及（专名、名词性、代词性）聚为一组",
+            "抽取关系",
+            "标注词性",
+            "把代词翻译成名词"
+          ],
+          "explanation": "共指消解会把所有指向同一实体的提及跨度聚成一组。"
+        },
+        {
+          "question": "哪类表达属于“名词性”提及？",
+          "options": [
+            "一个动词",
+            "像 'she' 这样的代词",
+            "仅专有名词",
+            "像 'the CEO' 或 'the company' 这样的名词短语"
+          ],
+          "explanation": "名词性提及是像 'the company' 这样的名词短语；代词性提及则是代词。"
+        },
+        {
+          "question": "现代共指消解架构（Lee et al., 2017）是什么？",
+          "options": [
+            "仅使用基于规则的句法分析",
+            "决策树",
+            "端到端的跨度式架构：枚举跨度、为提及打分，再计算先行词概率并以贪心方式聚类",
+            "BM25 检索"
+          ],
+          "explanation": "端到端神经共指消解会枚举跨度，并联合学习提及打分与先行词打分。"
+        },
+        {
+          "question": "CoNLL F1 对哪些指标取平均？",
+          "options": [
+            "MUC、B-cubed 和 CEAF-phi4 的 F1 分数",
+            "精确率和召回率",
+            "各语言的 F1",
+            "词元 F1 和跨度 F1"
+          ],
+          "explanation": "CoNLL F1 是 MUC、B-cubed 和 CEAF-phi4 指标的平均值。"
+        },
+        {
+          "question": "什么是桥接照应？",
+          "options": [
+            "一种隐式指代，例如 'the wheels' 暗指先前提到的汽车的车轮",
+            "一次误译",
+            "出现在所指对象之前的代词",
+            "没有先行词的代词"
+          ],
+          "explanation": "桥接会把一个提及关联到已被暗示但没有明确说出的部分实体或相关实体。"
+        },
+        {
+          "question": "为什么仅依赖 LLM 的共指消解在长文档上并不可靠？",
+          "options": [
+            "共指消解需要 CFG",
+            "LLM 无法阅读文本",
+            "分词器会失效",
+            "单次调用 LLM 处理 50+ 个段落时，会过度合并或悄然漏掉提及；需要滑动窗口加合并"
+          ],
+          "explanation": "LLM 的长文档共指消解效果会下降；使用滑动窗口并进行跨窗口合并可以缓解这一问题。"
+        },
+        {
+          "question": "为什么要在下游任务之前，把共指簇合并到 NER 结果中？",
+          "options": [
+            "Wikidata 要求如此",
+            "使下游任务把每个簇视为一个实体，而不是把每个表面提及分别视为实体，从而大幅提升覆盖率",
+            "降低延迟",
+            "增加词元数量"
+          ],
+          "explanation": "如果不合并，NER 会分别统计每种表面形式，并漏掉 60-80% 的实体提及。"
+        },
+        {
+          "question": "为什么硬编码性别规则会使共指系统变得脆弱？",
+          "options": [
+            "它们无法妥善处理非二元性别的所指对象、组织和动物；学习式打分更加稳健",
+            "它们无法使用 POS 标签",
+            "它们需要 GPU",
+            "它们运行得太快"
+          ],
+          "explanation": "性别启发式规则会在具有多样人口特征的文本中失效；应优先使用学习式模型。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/25-entity-linking": {
+      "sourceSha256": "8e463e90bbf5ca14b7a9217ad215a2393b9afd203b73d58229ff5b5befa39d7d",
+      "questions": [
+        {
+          "question": "实体链接在 NER 的基础上增加了什么？",
+          "options": [
+            "情感极性",
+            "词性标签",
+            "把每个检测到的提及映射到知识库中的唯一条目（Wikidata、Wikipedia 或领域 KB）",
+            "翻译"
+          ],
+          "explanation": "实体链接把提及转化为规范的 KB id，从而消除同名实体之间的歧义。"
+        },
+        {
+          "question": "实体链接的两个主要子任务是什么？",
+          "options": [
+            "候选生成（筛出可能的 KB 条目）和消歧（根据上下文选择正确条目）",
+            "嵌入和聚类",
+            "词性标注和词形还原",
+            "分词和解析"
+          ],
+          "explanation": "实体链接分为提出候选项，再按其与上下文的匹配程度进行排序。"
+        },
+        {
+          "question": "为什么报告消歧准确率时必须同时报告提及召回率？",
+          "options": [
+            "消歧无法挽回缺失的候选项；流水线的上限受候选生成召回率限制",
+            "GDPR 强制要求提及召回率",
+            "spaCy 要求召回率",
+            "召回率会取代精确率"
+          ],
+          "explanation": "如果候选项中没有正确实体，任何消歧器都无法修复；召回率决定了流水线质量的上限。"
+        },
+        {
+          "question": "GENRE 如何执行实体链接？",
+          "options": [
+            "在有效 KB id 构成的 trie 上进行约束解码，逐词元解码实体的规范名称",
+            "通过计算 TF-IDF",
+            "通过 BM25",
+            "通过 PageRank"
+          ],
+          "explanation": "GENRE 通过约束解码生成规范 KB 名称，以保证得到有效 id。"
+        },
+        {
+          "question": "实体链接中的 NIL 处理是什么？",
+          "options": [
+            "跳过每个提及",
+            "返回完整候选列表",
+            "把输入转为小写",
+            "当没有任何候选项真正匹配时（新出现的实体、不知名的人物），预测“not in KB”标签"
+          ],
+          "explanation": "NIL 预测可以防止为知识库尚未覆盖的实体猜测错误的 KB id。"
+        },
+        {
+          "question": "为什么流行度偏差会损害专业领域中的实体链接？",
+          "options": [
+            "在 Web 数据上训练的模型会过度预测高频实体（例如在篮球运动员 Jordan 与机器学习研究者 Michael I. Jordan 之间偏向前者）",
+            "流行度有助于提高召回率",
+            "它只会偏向更早出现的实体",
+            "流行度会移除 NIL"
+          ],
+          "explanation": "流行度先验会使预测偏离那些不常见、具有领域特异性的同名实体。"
+        },
+        {
+          "question": "到 2026 年，怎样的 LLM-EL 模式是稳妥的？",
+          "options": [
+            "只提示“find the entity”",
+            "跳过候选生成",
+            "自由形式生成",
+            "提供候选列表，并使用约束 JSON 输出，使 LLM 只能从有效 KB id 中选择"
+          ],
+          "explanation": "把 LLM 限制在有效候选列表内，可以防止它编造 KB id，并使输出保持可查询。"
+        },
+        {
+          "question": "为什么实体链接要正常工作，NER 提及边界就必须精确？",
+          "options": [
+            "边界错误会传播：把 'Bank of America' 截成 'Bank' 会得到错误候选项，并使实体链接召回率大幅下降",
+            "边界会破坏 Wikipedia 查询",
+            "边界精确率只影响 NER 指标，不影响实体链接的候选质量",
+            "边界会改变分词"
+          ],
+          "explanation": "边界错误的提及会检索到错误的别名集合，并把错误传播到消歧环节。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg": {
+      "sourceSha256": "57a89a51e040992cb0a7c2e1610dd67148d13f0385bf53b0014698e5181aa1c4",
+      "questions": [
+        {
+          "question": "知识图谱的原子单位是什么？",
+          "options": [
+            "一个词元",
+            "一个 POS 标签",
+            "一个（主语，关系，宾语）三元组",
+            "一个句子"
+          ],
+          "explanation": "KG 以 (s, r, o) 三元组存储信息；聚合后的三元组构成图。"
+        },
+        {
+          "question": "在 2026 年的关系抽取中，AEVS 代表什么？",
+          "options": [
+            "Aggregated Entity-Value Schema",
+            "Async Entity Validation Service",
+            "Auto-Encoder Vector Search",
+            "Anchor-Extraction-Verification-Supplement：锚定文本跨度、抽取三元组、对照来源验证、补充覆盖范围"
+          ],
+          "explanation": "AEVS 是 2026 年用于缓解有依据关系抽取中幻觉问题的框架。"
+        },
+        {
+          "question": "为什么每个三元组都必须携带来源溯源信息（doc id + span）？",
+          "options": [
+            "SPARQL 要求溯源信息",
+            "它能加快抽取",
+            "溯源信息会改变本体",
+            "溯源信息使你能够审计三元组，并拒绝跨度与源文本不匹配的幻觉"
+          ],
+          "explanation": "溯源信息支持审计，也是 AEVS 风格幻觉检测的核心。"
+        },
+        {
+          "question": "关系规范化做什么？",
+          "options": [
+            "添加嵌入",
+            "移除三元组",
+            "把表面动词短语（例如 'was born in'、'is a native of'）映射到固定属性 id，使图可供查询",
+            "翻译文档"
+          ],
+          "explanation": "规范化会把各种释义归并到规范的 KG 属性 id。"
+        },
+        {
+          "question": "为什么关系抽取通常需要先做共指消解？",
+          "options": [
+            "必须先把 'he founded Apple' 中的代词解析为命名实体，才能抽取三元组",
+            "共指消解会统一大小写",
+            "共指消解会提供位置",
+            "共指消解会添加嵌入"
+          ],
+          "explanation": "如果没有共指消解，关系抽取会把关系关联到代词，而不是其背后的命名实体。"
+        },
+        {
+          "question": "哪种选择是以牺牲开放信息抽取的召回率来换取图的可查询性？",
+          "options": [
+            "随机采样三元组",
+            "仅含嵌入的图",
+            "在合并到 KG 之前，把开放信息抽取的关系映射到封闭本体（例如 Wikidata 属性）",
+            "跳过 NER"
+          ],
+          "explanation": "封闭本体使图可以查询；规范化步骤带来的下游收益足以抵偿其成本。"
+        },
+        {
+          "question": "为什么许多生产知识图谱会使用时间限定符（开始时间/结束时间）？",
+          "options": [
+            "RDF 要求如此",
+            "为了移除 NIL 实体",
+            "加快 SPARQL",
+            "许多关系有时间边界（雇主、配偶、角色）；限定符可防止“永远为真”的陈述随时间失效"
+          ],
+          "explanation": "有时间边界的关系需要限定符（例如 Wikidata P580/P582），否则事实会在不知不觉中过时。"
+        },
+        {
+          "question": "什么是 REBEL？",
+          "options": [
+            "一个分词器",
+            "一个共指消解模型",
+            "一个 seq2seq 关系抽取器，输出已经使用 Wikidata 属性 id 的三元组",
+            "一个向量数据库"
+          ],
+          "explanation": "REBEL（Babelscape）是使用远程监督的 Wikidata 三元组训练的 seq2seq 关系抽取模型。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks": {
+      "sourceSha256": "b2b3b39be2258c16853ab01a0d7347bea641da6c4fb3c460ffe228e4d0c2d3cd",
+      "questions": [
+        {
+          "question": "为什么 Exact Match 和 token-F1 不足以评估现代 LLM 的输出？",
+          "options": [
+            "它们不可微",
+            "它们无法识别语义等价；'June 29th, 2007' 与 'June 29, 2007' 尽管含义正确，EM 仍会得到 0 分",
+            "它们需要 GPU",
+            "它们太慢"
+          ],
+          "explanation": "Exact Match/F1 无法识别人类会判为正确的释义或格式差异。"
+        },
+        {
+          "question": "RAGAS 的忠实度指标衡量什么？",
+          "options": [
+            "延迟",
+            "每秒词元数",
+            "通过 NLI 判断答案中的每项主张是否被检索上下文蕴含",
+            "检索召回率"
+          ],
+          "explanation": "忠实度使用 NLI 蕴含，逐项对照检索上下文检查答案中的主张。"
+        },
+        {
+          "question": "为什么必须先用人工标签校准裁判模型，才能信任其分数？",
+          "options": [
+            "GDPR 要求如此",
+            "如果裁判与人工标签之间的 Spearman 相关性太低（例如低于 0.7），分数只是噪声而非信号",
+            "校准会加快裁判模型",
+            "校准是一个分词问题"
+          ],
+          "explanation": "没有校准，就无法判断裁判分数反映的是质量还是模型偏差。"
+        },
+        {
+          "question": "在 LLM-as-judge 设置中，什么是自我评估偏差？",
+          "options": [
+            "裁判模型处理缓存输出时运行得更快",
+            "裁判模型忽略系统提示词",
+            "延迟更低",
+            "使用同一家族的 LLM 生成和评判，与独立裁判相比会使分数虚高 10-20%"
+          ],
+          "explanation": "生成器和裁判来自同一家族会使分数偏高；应使用另一个模型家族进行评判。"
+        },
+        {
+          "question": "与朴素的“score 0-1”提示相比，G-Eval 具体增加了什么？",
+          "options": [
+            "更大的上下文",
+            "带有明确评估步骤名称的显式思维链评分准则，从而得到更稳定的分数",
+            "多语言评分",
+            "更低的成本"
+          ],
+          "explanation": "G-Eval 的结构化评估步骤比自由形式的“rate it”提示产生更可靠的分数。"
+        },
+        {
+          "question": "为什么只报告汇总平均分很危险？",
+          "options": [
+            "汇总需要 GPU",
+            "汇总会忽略裁判",
+            "汇总数据太大",
+            "0.85 的平均分可能掩盖 5% 的灾难性失败；应始终检查最低分位"
+          ],
+          "explanation": "平均值会掩盖尾部失败；应呈现表现最差的 10%，以发现高严重性问题。"
+        },
+        {
+          "question": "为什么要在 CI 中固定裁判模型及其版本？",
+          "options": [
+            "Anthropic 要求如此",
+            "升级裁判会改变所有指标；如果不冻结裁判，就无法进行纵向比较",
+            "分词器漂移",
+            "成本更低"
+          ],
+          "explanation": "升级裁判会悄然改变指标基线；固定版本可以保留不同运行之间的可比性。"
+        },
+        {
+          "question": "相对于 RAGAS，DeepEval 的定位是什么？",
+          "options": [
+            "完全取代 RAGAS",
+            "DeepEval 是一个分词器",
+            "DeepEval 是面向 LLM 的 pytest（CI 门禁、G-Eval、幻觉指标）；RAGAS 专注于无需参考答案的 RAG 监控",
+            "DeepEval 仅提供托管版本"
+          ],
+          "explanation": "DeepEval 侧重 CI/CD 回归测试；RAGAS 负责无需参考答案的 RAG 监控。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation": {
+      "sourceSha256": "a854573bd253ad7f779d2fe1a1afaf6ccb0a8025cc242f95a78bd4742f6e1dd5",
+      "questions": [
+        {
+          "question": "原始 NIAH 基准测试衡量什么？",
+          "options": [
+            "模型能否从长上下文中不同的受控深度检索预先植入的事实",
+            "分词 fertility",
+            "嵌入余弦漂移",
+            "仅多跳推理"
+          ],
+          "explanation": "NIAH = needle in a haystack：植入一个事实，要求模型将其检索出来，并遍历不同深度和长度。"
+        },
+        {
+          "question": "为什么宣称的上下文窗口往往与可用上下文相差很大？",
+          "options": [
+            "嵌入会溢出",
+            "分词器会截断",
+            "注意力会随长度和任务退化；规格表中的最大值很少能在多跳或推理负载下保持",
+            "束搜索会变慢"
+          ],
+          "explanation": "用于推理的有效上下文通常只有宣称最大值的 25-50%。"
+        },
+        {
+          "question": "与 NIAH 相比，RULER 增加了什么？",
+          "options": [
+            "逐词元 logprobs",
+            "翻译任务",
+            "更快的推理",
+            "在多种上下文长度下，涵盖检索、多跳追踪、聚合和问答的十三种任务类型"
+          ],
+          "explanation": "RULER 把 NIAH 扩展为多任务长上下文基准，可以发现那些在 NIAH 上已达饱和、却在其他任务上失败的模型。"
+        },
+        {
+          "question": "什么是“lost in the middle”效应？",
+          "options": [
+            "模型对长输入中间位置的内容关注不足；depth=0.5 时的表现往往差于 depth=0 或 1",
+            "模型会丢失标点",
+            "模型会忘记第一个词元",
+            "模型会重新排列词元"
+          ],
+          "explanation": "上下文中部的内容得到的关注最少；遍历不同深度会呈现 U 形准确率曲线。"
+        },
+        {
+          "question": "为什么仅使用 NIAH 的评估必须辅以多跳测试？",
+          "options": [
+            "NIAH 没有标准答案",
+            "前沿模型可能轻松通过单针检索，却仍会在多跳变量追踪或聚合任务上失败",
+            "多跳测试更快",
+            "NIAH 无法在长上下文上运行"
+          ],
+          "explanation": "通过检索不代表通过推理；多跳基准能暴露真正的能力上限。"
+        },
+        {
+          "question": "NoLiMa 重点考察什么？",
+          "options": [
+            "分词",
+            "与查询没有任何字面词元重叠的针，使检索必须经过一步语义推理",
+            "延迟",
+            "流式输出"
+          ],
+          "explanation": "NoLiMa 移除了词汇重叠，因此模型必须推理，而不能只匹配关键词。"
+        },
+        {
+          "question": "长上下文规格表应该报告哪两个数值？",
+          "options": [
+            "仅 GPU 内存和延迟",
+            "仅每秒词元数",
+            "仅宣称的最大值",
+            "有效检索长度（例如 NIAH 通过率达到 90%）和有效推理长度（例如多跳通过率达到 70%）"
+          ],
+          "explanation": "区分检索有效长度和推理有效长度，对于真实场景中的能力声明至关重要。"
+        },
+        {
+          "question": "为什么要测量长上下文长度下的首词元时间？",
+          "options": [
+            "RAG 要求如此",
+            "束搜索依赖它",
+            "1M-token 的 prefill 可能耗时数十秒；只看准确率会掩盖影响产品体验的延迟",
+            "分词很慢"
+          ],
+          "explanation": "长提示词的 prefill 成本极高；必须同时跟踪延迟和准确率。"
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking": {
+      "sourceSha256": "f61504ffb3fb074807bc2ec32b87edf9c812dfe3e78afe6b8b647b49ea268777",
+      "questions": [
+        {
+          "question": "对话状态跟踪会在多个轮次之间维护什么？",
+          "options": [
+            "仅自由文本历史",
+            "经过 POS 标注的对话记录",
+            "对话的嵌入",
+            "表示用户当前目标的槽位-值字典，并在每轮对话后更新"
+          ],
+          "explanation": "DST 会维护后端可据此执行操作的结构化槽位-值映射。"
+        },
+        {
+          "question": "Joint Goal Accuracy（JGA）衡量什么？",
+          "options": [
+            "所有槽位都完全正确的轮次占比（要么全对，要么全错）",
+            "余弦相似度",
+            "每轮延迟",
+            "平均槽位准确率"
+          ],
+          "explanation": "JGA 要求每轮中的所有槽位严格匹配；逐槽位准确率更宽松。"
+        },
+        {
+          "question": "为什么每轮都根据历史重新生成完整状态，可以自然处理用户更正？",
+          "options": [
+            "它使用更少的词元",
+            "它在 GPU 上运行",
+            "它不需要嵌入",
+            "读取完整历史可让模型重新推导包含 'actually...' 更正的最终状态，而不需要显式回滚逻辑"
+          ],
+          "explanation": "基于完整历史重新生成状态，会通过对整段对话重新计算最终状态来吸收更正。"
+        },
+        {
+          "question": "哪种 2026 年的模式只需 5 行代码就能得到保证有效的槽位字典？",
+          "options": [
+            "手写正则表达式",
+            "LLM + Instructor + Pydantic schema，并使用受约束或经过验证的输出",
+            "TF-IDF 分类器",
+            "BM25 检索"
+          ],
+          "explanation": "Pydantic schema + Instructor 会自动根据槽位本体验证 LLM 的状态输出。"
+        },
+        {
+          "question": "为什么要为 DST schema 设置版本？",
+          "options": [
+            "事后添加新槽位会使较旧的训练数据失效，并破坏纵向评估",
+            "减少词元数量",
+            "JSON 要求如此",
+            "提高速度"
+          ],
+          "explanation": "不设版本的 schema 变更会悄然破坏训练数据对齐和评估可比性。"
+        },
+        {
+          "question": "为什么合规敏感领域的 DST 除了 LLM 抽取外，还必须进行基于规则的检查？",
+          "options": [
+            "LLM 更慢",
+            "规则不需要嵌入",
+            "仅依赖 LLM 的 DST 可能错误抽取具有破坏性的参数（金额、账户、日期）；规则层可以执行确定性约束",
+            "规则支持多语言"
+          ],
+          "explanation": "合规领域需要确定性执行；规则可以捕获 LLM 引入的槽位错误。"
+        },
+        {
+          "question": "每轮都通过 LLM 重新生成状态，会带来什么成本问题？",
+          "options": [
+            "嵌入漂移",
+            "产生更多嵌入",
+            "每轮重新读取完整历史会使总词元用量达到 O(n^2)；应限制或摘要较早的轮次",
+            "余弦计算成本"
+          ],
+          "explanation": "基于完整历史重新生成状态的成本随轮次呈二次增长；应限制历史长度或使用滚动摘要。"
+        },
+        {
+          "question": "为什么在执行破坏性后端操作前必须采用显式确认流程？",
+          "options": [
+            "确认会提高 JGA",
+            "即使优秀的 DST 也存在非零槽位错误率；确定性的确认可防止对错误账户或错误金额执行操作",
+            "分词器要求如此",
+            "延迟"
+          ],
+          "explanation": "DST 永远无法做到零错误，因此破坏性操作需要用户确认。"
+        }
+      ]
+    }
+  }
+}
