@@ -1,0 +1,61 @@
+{
+  "status": "ready",
+  "issues": [],
+  "waves": [
+    [
+      "contract"
+    ],
+    [
+      "docs",
+      "implementation"
+    ],
+    [
+      "integration"
+    ]
+  ],
+  "items": [
+    {
+      "id": "contract",
+      "change": "Define duplicate-email behavior",
+      "evidence": [
+        "tests/test_accounts.py:44"
+      ],
+      "depends_on": [],
+      "proof": "review contract"
+    },
+    {
+      "id": "implementation",
+      "change": "Reject normalized duplicates",
+      "evidence": [
+        "app/accounts.py:18"
+      ],
+      "depends_on": [
+        "contract"
+      ],
+      "proof": "python3 -m unittest tests.test_accounts"
+    },
+    {
+      "id": "docs",
+      "change": "Document the 409 response",
+      "evidence": [
+        "docs/api.md:72"
+      ],
+      "depends_on": [
+        "contract"
+      ],
+      "proof": "python3 scripts/check_links.py"
+    },
+    {
+      "id": "integration",
+      "change": "Run the complete acceptance gate",
+      "evidence": [
+        "pyproject.toml:31"
+      ],
+      "depends_on": [
+        "implementation",
+        "docs"
+      ],
+      "proof": "python3 -m unittest"
+    }
+  ]
+}

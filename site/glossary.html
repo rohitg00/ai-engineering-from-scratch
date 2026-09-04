@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Engineering Glossary - AI Engineering from Scratch</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
+  <meta name="description" content="A practical AI engineering glossary with precise definitions, examples, distinctions, related terms, and course links.">
+  <link rel="canonical" href="https://aiengineeringfromscratch.com/glossary.html">
+  <meta property="og:title" content="Glossary · AI Engineering from Scratch">
+  <meta property="og:description" content="Precise AI engineering definitions with practical examples, distinctions, related terms, and course links.">
+  <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
+  <meta property="og:url" content="https://aiengineeringfromscratch.com/glossary.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Glossary · AI Engineering from Scratch">
+  <meta name="twitter:description" content="Precise AI engineering definitions with practical examples and course links.">
+  <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260824a">
+  <style>
+    .glossary-page {
+      padding-block: 104px 80px;
+      min-height: 100vh;
+    }
+
+    .glossary-masthead {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 40px;
+      align-items: end;
+      padding-block-end: 32px;
+      border-block-end: 1px solid var(--rule);
+    }
+
+    .glossary-kicker,
+    .glossary-field-label,
+    .glossary-stat-label,
+    .glossary-section-label,
+    .glossary-entry-label,
+    .glossary-entry-category,
+    .glossary-entry-index,
+    .glossary-filter-count,
+    .glossary-result-count,
+    .glossary-aliases,
+    .glossary-details summary,
+    .glossary-resource-label {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .glossary-kicker {
+      margin-block-end: 10px;
+      color: var(--blueprint);
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .glossary-masthead h1 {
+      max-width: 780px;
+      font-size: clamp(3rem, 7vw, 5.6rem);
+      line-height: 0.88;
+      text-wrap: balance;
+    }
+
+    .glossary-deck {
+      max-width: 680px;
+      margin-block-start: 20px;
+      color: var(--ink-soft);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.55;
+    }
+
+    .glossary-stats {
+      display: grid;
+      min-width: 250px;
+      border: 1px solid var(--rule-soft);
+      background: var(--bg-surface);
+    }
+
+    .glossary-stat {
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 12px;
+      align-items: baseline;
+      padding: 10px 14px;
+    }
+
+    .glossary-stat + .glossary-stat {
+      border-block-start: 1px solid var(--rule-soft);
+    }
+
+    .glossary-stat strong {
+      color: var(--blueprint);
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .glossary-stat-label {
+      color: var(--ink-mute);
+      font-size: 0.61rem;
+    }
+
+    .glossary-explorer {
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: 0;
+      margin-block-start: 32px;
+      border-block-start: 1px solid var(--rule-soft);
+    }
+
+    .glossary-rail {
+      align-self: start;
+      position: sticky;
+      inset-block-start: 84px;
+      max-height: calc(100vh - 104px);
+      padding-block: 24px;
+      padding-inline-end: 28px;
+      overflow-y: auto;
+      border-inline-end: 1px solid var(--rule-soft);
+      scrollbar-width: thin;
+    }
+
+    .glossary-search-control {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 2;
+      padding-block-end: 12px;
+      border-block-end: 1px solid var(--rule-soft);
+      background: var(--bg);
+    }
+
+    .glossary-field-label,
+    .glossary-section-label {
+      display: block;
+      margin-block-end: 8px;
+      color: var(--ink-soft);
+      font-size: 0.66rem;
+      font-weight: 700;
+    }
+
+    .glossary-search-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 6px;
+    }
+
+    .glossary-search {
+      width: 100%;
+      min-height: 44px;
+      padding: 9px 10px;
+      background: var(--bg);
+      border: 1px solid var(--rule-soft);
+      border-radius: 0;
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      outline: none;
+      transition: border-color var(--motion-feedback) var(--ease-out);
+    }
+
+    .glossary-search::placeholder {
+      color: var(--ink-mute);
+    }
+
+    .glossary-search:focus {
+      border-color: var(--blueprint);
+    }
+
+    .glossary-search:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: 2px;
+    }
+
+    .glossary-clear,
+    .glossary-filter,
+    .glossary-letter,
+    .glossary-copy-link,
+    .glossary-read-aloud,
+    .glossary-show-button {
+      border-radius: 0;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      transition:
+        transform var(--motion-press) var(--ease-out),
+        border-color var(--motion-feedback) var(--ease-out),
+        color var(--motion-feedback) var(--ease-out),
+        background-color var(--motion-feedback) var(--ease-out);
+    }
+
+    .glossary-clear:active,
+    .glossary-filter:active,
+    .glossary-letter:active,
+    .glossary-copy-link:active,
+    .glossary-read-aloud:active,
+    .glossary-show-button:active {
+      transform: scale(0.97);
+    }
+
+    .glossary-clear:focus-visible,
+    .glossary-filter:focus-visible,
+    .glossary-letter:focus-visible,
+    .glossary-copy-link:focus-visible,
+    .glossary-read-aloud:focus-visible,
+    .glossary-show-button:focus-visible,
+    .glossary-related-link:focus-visible,
+    .glossary-resource-link:focus-visible,
+    .glossary-details summary:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: 2px;
+    }
+
+    .glossary-clear {
+      min-width: 58px;
+      min-height: 44px;
+      padding-inline: 10px;
+      border: 1px solid var(--rule-soft);
+      background: var(--bg-surface);
+      color: var(--ink-soft);
+      font-size: 0.66rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .glossary-clear:disabled {
+      cursor: default;
+      opacity: 0.45;
+    }
+
+    .glossary-filter-block {
+      margin-block-start: 24px;
+    }
+
+    .glossary-filter-list {
+      display: grid;
+      gap: 4px;
+    }
+
+    .glossary-filter {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      min-height: 38px;
+      padding: 7px 9px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-soft);
+      font-size: 0.68rem;
+      line-height: 1.35;
+      text-align: start;
+    }
+
+    .glossary-filter[aria-pressed="true"] {
+      border-color: var(--blueprint);
+      background: var(--blueprint-tint);
+      color: var(--blueprint);
+    }
+
+    .glossary-filter-count {
+      color: var(--ink-mute);
+      font-size: 0.58rem;
+    }
+
+    .glossary-filter[aria-pressed="true"] .glossary-filter-count {
+      color: currentColor;
+    }
+
+    .glossary-letter-list {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 3px;
+    }
+
+    .glossary-letter {
+      aspect-ratio: 1;
+      min-width: 0;
+      border: 1px solid var(--rule-soft);
+      background: var(--bg);
+      color: var(--ink-soft);
+      font-size: 0.62rem;
+    }
+
+    .glossary-letter:disabled {
+      cursor: default;
+      opacity: 0.22;
+    }
+
+    .glossary-ledger {
+      min-width: 0;
+      padding-block: 24px;
+      padding-inline-start: 40px;
+    }
+
+    .glossary-ledger-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding-block-end: 18px;
+      border-block-end: 1px solid var(--rule);
+    }
+
+    .glossary-ledger-header h2 {
+      font-size: clamp(1.7rem, 4vw, 2.5rem);
+    }
+
+    .glossary-result-count {
+      color: var(--ink-mute);
+      font-size: 0.66rem;
+      white-space: nowrap;
+    }
+
+    .glossary-letter-group {
+      scroll-margin-block-start: 84px;
+    }
+
+    .glossary-letter-heading {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding-block: 20px 8px;
+      border-block-end: 1px solid var(--rule-soft);
+    }
+
+    .glossary-letter-heading h3 {
+      color: var(--blueprint);
+      font-size: 2.2rem;
+    }
+
+    .glossary-letter-line {
+      height: 1px;
+      background: var(--rule-soft);
+    }
+
+    .glossary-letter-total {
+      color: var(--ink-mute);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .glossary-entry {
+      position: relative;
+      padding-block: 28px 30px;
+      scroll-margin-block-start: 84px;
+      border-block-end: 1px solid var(--rule-soft);
+    }
+
+    .glossary-entry:target,
+    .glossary-entry.is-focused {
+      background: var(--blueprint-tint);
+    }
+
+    .glossary-entry-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-block-end: 10px;
+    }
+
+    .glossary-entry-meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .glossary-entry-actions {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .glossary-entry-index,
+    .glossary-entry-category {
+      color: var(--ink-mute);
+      font-size: 0.6rem;
+    }
+
+    .glossary-entry-index {
+      color: var(--blueprint);
+    }
+
+    .glossary-copy-link,
+    .glossary-read-aloud {
+      flex: 0 0 auto;
+      min-height: 34px;
+      padding: 6px 9px;
+      border: 1px solid var(--rule-soft);
+      background: transparent;
+      color: var(--ink-soft);
+      font-size: 0.61rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .glossary-term-heading {
+      color: var(--blueprint);
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 0.95;
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+
+    .glossary-aliases {
+      margin-block-start: 8px;
+      color: var(--ink-mute);
+      font-size: 0.6rem;
+      line-height: 1.55;
+    }
+
+    .glossary-meaning {
+      max-width: 860px;
+      margin-block-start: 20px;
+      padding-inline-start: 18px;
+      border-inline-start: 3px solid var(--blueprint);
+    }
+
+    .glossary-entry-label {
+      display: block;
+      margin-block-end: 5px;
+      color: var(--ink-mute);
+      font-size: 0.6rem;
+      font-weight: 700;
+    }
+
+    .glossary-meaning p {
+      font-size: clamp(1.08rem, 2vw, 1.3rem);
+      line-height: 1.52;
+    }
+
+    .glossary-teaching-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px 32px;
+      margin-block-start: 24px;
+    }
+
+    .glossary-teaching-block {
+      min-width: 0;
+    }
+
+    .glossary-teaching-block p {
+      color: var(--ink-soft);
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .glossary-shortcut p {
+      font-style: italic;
+    }
+
+    .glossary-details {
+      margin-block-start: 20px;
+      padding-block: 12px;
+      border-block: 1px solid var(--rule-soft);
+    }
+
+    .glossary-details summary {
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blueprint);
+      cursor: pointer;
+      font-size: 0.63rem;
+      font-weight: 700;
+      list-style: none;
+    }
+
+    .glossary-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .glossary-details summary::before {
+      content: "+";
+      display: inline-grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      border: 1px solid currentColor;
+      font-size: 0.72rem;
+      line-height: 1;
+    }
+
+    .glossary-details[open] summary::before {
+      content: "−";
+    }
+
+    .glossary-details-body {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 32px;
+      padding-block-start: 14px;
+      padding-inline-start: 26px;
+    }
+
+    .glossary-details-body p {
+      color: var(--ink-soft);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .glossary-resource-block {
+      min-width: 0;
+    }
+
+    .glossary-resource-label {
+      display: block;
+      margin-block-end: 7px;
+      color: var(--ink-mute);
+      font-size: 0.58rem;
+      font-weight: 700;
+    }
+
+    .glossary-resource-list,
+    .glossary-related-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      list-style: none;
+    }
+
+    .glossary-resource-link,
+    .glossary-related-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      color: var(--blueprint);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      line-height: 1.35;
+      border-block-end: 1px solid var(--blueprint-tint-strong);
+    }
+
+    .glossary-related {
+      margin-block-start: 18px;
+    }
+
+    .glossary-empty {
+      padding-block: 64px;
+      text-align: center;
+    }
+
+    .glossary-empty h3 {
+      color: var(--ink);
+      font-size: 1.8rem;
+    }
+
+    .glossary-empty p {
+      max-width: 480px;
+      margin: 8px auto 20px;
+      color: var(--ink-soft);
+    }
+
+    .glossary-empty .glossary-clear {
+      color: var(--blueprint);
+      border-color: var(--blueprint);
+    }
+
+    .glossary-progressive-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-block-start: 20px;
+      padding-block-start: 18px;
+      border-block-start: 1px solid var(--rule-soft);
+    }
+
+    .glossary-progressive-note {
+      color: var(--ink-mute);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+    }
+
+    .glossary-progressive-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .glossary-show-button {
+      min-height: 42px;
+      padding: 8px 12px;
+      border: 1px solid var(--blueprint);
+      background: var(--bg);
+      color: var(--blueprint);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+    }
+
+    .glossary-noscript {
+      margin-block: 20px;
+      padding: 16px;
+      border: 1px solid var(--blueprint);
+      background: var(--blueprint-tint);
+      color: var(--ink);
+    }
+
+    .glossary-visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .glossary-clear:not(:disabled):hover,
+      .glossary-filter:hover,
+      .glossary-letter:not(:disabled):hover,
+      .glossary-copy-link:hover,
+      .glossary-read-aloud:hover {
+        border-color: var(--blueprint);
+        color: var(--blueprint);
+      }
+
+      .glossary-show-button:hover {
+        background: var(--blueprint);
+        color: var(--bg);
+      }
+
+      .glossary-related-link:hover,
+      .glossary-resource-link:hover {
+        color: var(--accent-hover);
+        border-block-end-color: currentColor;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .glossary-masthead {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .glossary-stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        min-width: 0;
+      }
+
+      .glossary-stat {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2px;
+      }
+
+      .glossary-stat + .glossary-stat {
+        border-block-start: 0;
+        border-inline-start: 1px solid var(--rule-soft);
+      }
+
+      .glossary-explorer {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .glossary-rail {
+        position: static;
+        max-height: none;
+        padding-block: 20px 24px;
+        padding-inline-end: 0;
+        overflow: visible;
+        border-inline-end: 0;
+        border-block-end: 1px solid var(--rule-soft);
+      }
+
+      .glossary-search-control {
+        position: static;
+        padding-block-end: 0;
+        border-block-end: 0;
+      }
+
+      .glossary-filter-list,
+      .glossary-letter-list {
+        display: flex;
+        flex-wrap: nowrap;
+        margin-inline: -16px;
+        padding-inline: 16px;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        scroll-padding-inline: 16px;
+        scroll-snap-type: inline proximity;
+        scrollbar-width: thin;
+      }
+
+      .glossary-filter {
+        display: inline-flex;
+        flex: 0 0 auto;
+        min-height: 38px;
+        scroll-snap-align: start;
+      }
+
+      .glossary-letter-list {
+        scroll-snap-type: inline mandatory;
+      }
+
+      .glossary-letter {
+        flex: 0 0 auto;
+        width: 34px;
+        height: 34px;
+        aspect-ratio: auto;
+        scroll-snap-align: start;
+      }
+
+      .glossary-ledger {
+        padding-inline-start: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .glossary-page {
+        padding-block: 84px 48px;
+      }
+
+      .glossary-masthead {
+        gap: 24px;
+        padding-block-end: 24px;
+      }
+
+      .glossary-masthead h1 {
+        font-size: clamp(2.8rem, 16vw, 4.4rem);
+      }
+
+      .glossary-stats {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .glossary-stat {
+        grid-template-columns: 52px minmax(0, 1fr);
+      }
+
+      .glossary-stat + .glossary-stat {
+        border-inline-start: 0;
+        border-block-start: 1px solid var(--rule-soft);
+      }
+
+      .glossary-ledger-header {
+        align-items: start;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .glossary-letter-heading {
+        grid-template-columns: 38px minmax(0, 1fr) auto;
+      }
+
+      .glossary-entry {
+        padding-block: 24px 26px;
+      }
+
+      .glossary-entry-topline {
+        align-items: start;
+      }
+
+      .glossary-entry-meta {
+        align-items: start;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .glossary-teaching-grid,
+      .glossary-details-body {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .glossary-details-body {
+        padding-inline-start: 0;
+      }
+
+      .glossary-progressive-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .glossary-progressive-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .glossary-search,
+      .glossary-clear,
+      .glossary-filter,
+      .glossary-letter,
+      .glossary-copy-link,
+      .glossary-read-aloud,
+      .glossary-show-button {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
+      </a>
+      <nav class="header-nav">
+        <a href="index.html#contents">Contents</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="prereqs.html">Roadmap</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="about.html">About</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
+          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+        </a>
+      </nav>
+      <button class="search-toggle" type="button" data-cmd-palette
+        aria-label="Search (⌘K)" title="Search (⌘K)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+        <span class="theme-icon" id="themeIcon">N</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="glossary-page" id="main">
+    <div class="container">
+      <header class="glossary-masthead">
+        <div>
+          <p class="glossary-kicker">Reference ledger · curriculum v1.0</p>
+          <h1>AI Engineering Glossary</h1>
+          <p class="glossary-deck">Precise working definitions for the systems you build. Start with the meaning, then use the examples, distinctions, and lesson links to turn vocabulary into judgment.</p>
+          <p class="glossary-deck">Each entry separates a term's working definition from why it matters in an AI system, how it appears in practice, and what engineers commonly confuse it with. Search by term, alias, or idea; narrow the ledger by learning area; then follow the linked course lesson or primary source when you need the full derivation. Every entry has a stable fragment link, so you can cite one definition directly without sending someone through the entire index.</p>
+        </div>
+        <div class="glossary-stats" aria-label="Glossary statistics">
+          <div class="glossary-stat">
+            <strong id="glossaryStatTerms">0</strong>
+            <span class="glossary-stat-label">Terms indexed</span>
+          </div>
+          <div class="glossary-stat">
+            <strong id="glossaryStatCategories">0</strong>
+            <span class="glossary-stat-label">Learning areas</span>
+          </div>
+          <div class="glossary-stat">
+            <strong>A-Z</strong>
+            <span class="glossary-stat-label">Stable deep links</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="glossary-explorer">
+        <aside class="glossary-rail" aria-label="Glossary filters">
+          <div class="glossary-search-control">
+            <label class="glossary-field-label" for="glossarySearch">Search the ledger</label>
+            <div class="glossary-search-row">
+              <input type="search" class="glossary-search" id="glossarySearch" placeholder="Term, alias, or idea" autocomplete="off" aria-describedby="glossaryCount">
+              <button class="glossary-clear" id="glossaryClear" type="button">Clear</button>
+            </div>
+          </div>
+
+          <div class="glossary-filter-block">
+            <span class="glossary-section-label" id="glossaryCategoryLabel">Learning area</span>
+            <div class="glossary-filter-list" id="glossaryCategories" role="group" aria-labelledby="glossaryCategoryLabel"></div>
+          </div>
+
+          <div class="glossary-filter-block">
+            <span class="glossary-section-label" id="glossaryAlphabetLabel">Jump to letter</span>
+            <div class="glossary-letter-list" id="glossaryAlphabet" role="group" aria-labelledby="glossaryAlphabetLabel" dir="ltr"></div>
+          </div>
+        </aside>
+
+        <section class="glossary-ledger" aria-labelledby="glossaryResultsHeading">
+          <header class="glossary-ledger-header">
+            <div>
+              <span class="glossary-section-label">Live reference</span>
+              <h2 id="glossaryResultsHeading">Reference entries</h2>
+            </div>
+            <p class="glossary-result-count" id="glossaryCount" tabindex="-1">Loading reference entries...</p>
+            <p class="glossary-visually-hidden" id="glossaryAnnounce" aria-live="polite" aria-atomic="true"></p>
+          </header>
+          <noscript>
+            <div class="glossary-noscript">JavaScript is needed for local filtering. Every definition remains available in the <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/glossary/terms.md">GitHub glossary source</a>.</div>
+          </noscript>
+          <div id="glossaryList" aria-busy="true"></div>
+          <div class="glossary-progressive-actions" id="glossaryProgressiveActions" hidden>
+            <span class="glossary-progressive-note" id="glossaryProgressiveNote"></span>
+            <div class="glossary-progressive-buttons">
+              <button class="glossary-show-button" id="glossaryShowMore" type="button">Show more</button>
+              <button class="glossary-show-button" id="glossaryShowAll" type="button">Show all</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>AI Engineering from Scratch · open source · free forever.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
+        <a href="catalog.html">Catalog</a>
+              <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js?v=20260821c"></script>
+  <script src="progress.js?v=20260822a"></script>
+  <script src="header.js?v=20260829b" defer></script>
+  <script src="cmdpalette.js?v=20260821a" defer></script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var stored = '';
+      try { stored = window.localStorage.getItem('theme') || ''; } catch (_) {}
+      if (stored) {
+        root.setAttribute('data-theme', stored);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        root.setAttribute('data-theme', 'dark');
+      } else {
+        root.setAttribute('data-theme', 'light');
+      }
+
+      function updateIcon() {
+        var icon = document.getElementById('themeIcon');
+        if (!icon) return;
+        icon.textContent = root.getAttribute('data-theme') === 'light' ? 'N' : 'D';
+      }
+
+      updateIcon();
+
+      document.addEventListener('DOMContentLoaded', function () {
+        updateIcon();
+
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+          btn.addEventListener('click', function () {
+            var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            root.setAttribute('data-theme', next);
+            try { window.localStorage.setItem('theme', next); } catch (_) {}
+            updateIcon();
+          });
+        }
+
+        var searchInput = document.getElementById('glossarySearch');
+        var clearButton = document.getElementById('glossaryClear');
+        var categoriesEl = document.getElementById('glossaryCategories');
+        var alphabetEl = document.getElementById('glossaryAlphabet');
+        var listEl = document.getElementById('glossaryList');
+        var countEl = document.getElementById('glossaryCount');
+        var announceEl = document.getElementById('glossaryAnnounce');
+        var statTermsEl = document.getElementById('glossaryStatTerms');
+        var statCategoriesEl = document.getElementById('glossaryStatCategories');
+        var progressiveActionsEl = document.getElementById('glossaryProgressiveActions');
+        var progressiveNoteEl = document.getElementById('glossaryProgressiveNote');
+        var showMoreButton = document.getElementById('glossaryShowMore');
+        var showAllButton = document.getElementById('glossaryShowAll');
+        var announceTimer = 0;
+        var BATCH_SIZE = 32;
+        var visibleLimit = BATCH_SIZE;
+        var collator = typeof Intl !== 'undefined' && Intl.Collator
+          ? new Intl.Collator(undefined, { sensitivity: 'base', numeric: true })
+          : null;
+
+        function text(value) {
+          return value == null ? '' : String(value).trim();
+        }
+
+        function normalize(value) {
+          var result = text(value).toLowerCase();
+          try {
+            result = result.normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
+          } catch (_) {}
+          return result.replace(/\s+/g, ' ');
+        }
+
+        function slugify(value) {
+          return normalize(value)
+            .replace(/&/g, ' and ')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        }
+
+        function textList(value) {
+          if (Array.isArray(value)) {
+            return value.map(text).filter(Boolean);
+          }
+          if (!text(value)) return [];
+          return text(value).split(',').map(text).filter(Boolean);
+        }
+
+        function objectList(value) {
+          return Array.isArray(value) ? value.filter(Boolean) : [];
+        }
+
+        function escapeHtml(str) {
+          var div = document.createElement('div');
+          div.textContent = text(str);
+          return div.innerHTML;
+        }
+
+        function safeUrl(value) {
+          var raw = text(value);
+          if (!raw) return '';
+          try {
+            var parsed = new URL(raw, window.location.href);
+            if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return '';
+            return raw;
+          } catch (_) {
+            return '';
+          }
+        }
+
+        function compareText(a, b) {
+          return collator ? collator.compare(a, b) : a.localeCompare(b);
+        }
+
+        var glossaryAvailable = typeof GLOSSARY !== 'undefined' && Array.isArray(GLOSSARY);
+        var rawGlossary = glossaryAvailable ? GLOSSARY : [];
+        var slugUses = Object.create(null);
+        var entries = rawGlossary.map(function (item, index) {
+          var term = text(item.term) || ('Untitled term ' + (index + 1));
+          var baseSlug = slugify(item.slug || term) || ('term-' + (index + 1));
+          slugUses[baseSlug] = (slugUses[baseSlug] || 0) + 1;
+          var stableSlug = slugUses[baseSlug] > 1 ? baseSlug + '-' + slugUses[baseSlug] : baseSlug;
+          var letter = text(item.letter || term.charAt(0)).charAt(0).toUpperCase();
+          if (!/^[A-Z]$/.test(letter)) letter = '#';
+          return {
+            term: term,
+            slug: stableSlug,
+            letter: letter,
+            category: text(item.category) || 'Foundations',
+            says: text(item.says),
+            means: text(item.means),
+            whyItMatters: text(item.whyItMatters),
+            example: text(item.example),
+            confusion: text(item.confusion),
+            whyCalled: text(item.whyCalled),
+            aliases: textList(item.aliases),
+            related: Array.isArray(item.related) ? item.related : textList(item.related),
+            lessons: objectList(item.lessons),
+            sources: objectList(item.sources),
+            sourceIndex: index
+          };
+        });
+
+        var entryByKey = Object.create(null);
+        entries.forEach(function (entry) {
+          entryByKey[normalize(entry.term)] = entry;
+          entryByKey[normalize(entry.slug)] = entry;
+          entry.aliases.forEach(function (alias) {
+            if (!entryByKey[normalize(alias)]) entryByKey[normalize(alias)] = entry;
+          });
+        });
+
+        var categoryCounts = Object.create(null);
+        entries.forEach(function (entry) {
+          categoryCounts[entry.category] = (categoryCounts[entry.category] || 0) + 1;
+        });
+        var preferredCategories = typeof GLOSSARY_CATEGORY_ORDER !== 'undefined' && Array.isArray(GLOSSARY_CATEGORY_ORDER)
+          ? GLOSSARY_CATEGORY_ORDER.map(text).filter(Boolean)
+          : Object.keys(categoryCounts).sort(compareText);
+        var preferredCategoryIndex = Object.create(null);
+        preferredCategories.forEach(function (category, index) {
+          preferredCategoryIndex[normalize(category)] = index;
+        });
+        var categories = Object.keys(categoryCounts).sort(function (a, b) {
+          var ai = preferredCategoryIndex[normalize(a)];
+          var bi = preferredCategoryIndex[normalize(b)];
+          if (ai == null) ai = 100;
+          if (bi == null) bi = 100;
+          return ai === bi ? compareText(a, b) : ai - bi;
+        });
+
+        var currentQuery = '';
+        var currentCategory = 'all';
+        var currentLetterFocus = '';
+
+        function termSearchText(entry) {
+          var relatedText = entry.related.map(function (related) {
+            return typeof related === 'object' ? text(related.label || related.term || related.slug) : text(related);
+          }).join(' ');
+          var lessonText = entry.lessons.map(function (lesson) { return text(lesson.label); }).join(' ');
+          var sourceText = entry.sources.map(function (source) { return text(source.label); }).join(' ');
+          return normalize([
+            entry.category,
+            entry.says,
+            entry.means,
+            entry.whyItMatters,
+            entry.example,
+            entry.confusion,
+            entry.whyCalled,
+            entry.aliases.join(' '),
+            relatedText,
+            lessonText,
+            sourceText
+          ].join(' '));
+        }
+
+        function scoreEntry(entry, query) {
+          if (!query) return 0;
+          var term = normalize(entry.term);
+          if (term === query) return 0;
+          if (term.indexOf(query) === 0) return 1;
+          if (term.indexOf(query) !== -1) return 2;
+          var aliasMatch = entry.aliases.some(function (alias) {
+            return normalize(alias).indexOf(query) !== -1;
+          });
+          if (aliasMatch) return 3;
+          var teachingText = termSearchText(entry);
+          if (teachingText.indexOf(query) !== -1) return 4;
+          var words = query.split(/\s+/).filter(Boolean);
+          var completeText = term + ' ' + entry.aliases.map(normalize).join(' ') + ' ' + teachingText;
+          return words.length > 1 && words.every(function (word) {
+            return completeText.indexOf(word) !== -1;
+          }) ? 5 : -1;
+        }
+
+        function filteredEntries() {
+          var query = normalize(currentQuery);
+          return entries.map(function (entry) {
+            return { entry: entry, score: scoreEntry(entry, query) };
+          }).filter(function (result) {
+            var categoryMatches = currentCategory === 'all' || result.entry.category === currentCategory;
+            return categoryMatches && result.score !== -1;
+          }).sort(function (a, b) {
+            if (a.score !== b.score) return a.score - b.score;
+            return compareText(a.entry.term, b.entry.term);
+          });
+        }
+
+        function renderCategoryFilters() {
+          var html = '<button class="glossary-filter" type="button" data-category="all" aria-pressed="' + (currentCategory === 'all') + '" tabindex="' + (currentCategory === 'all' ? '0' : '-1') + '">';
+          html += '<span>All terms</span><span class="glossary-filter-count">' + entries.length + '</span></button>';
+          categories.forEach(function (category) {
+            html += '<button class="glossary-filter" type="button" data-category="' + escapeHtml(category) + '" aria-pressed="' + (currentCategory === category) + '" tabindex="' + (currentCategory === category ? '0' : '-1') + '">';
+            html += '<span>' + escapeHtml(category) + '</span><span class="glossary-filter-count">' + categoryCounts[category] + '</span></button>';
+          });
+          categoriesEl.innerHTML = html;
+        }
+
+        function renderAlphabet(activeLetters) {
+          if (!activeLetters[currentLetterFocus]) {
+            currentLetterFocus = '';
+            for (var firstCode = 65; firstCode <= 90; firstCode++) {
+              var firstLetter = String.fromCharCode(firstCode);
+              if (activeLetters[firstLetter]) {
+                currentLetterFocus = firstLetter;
+                break;
+              }
+            }
+          }
+          var html = '';
+          for (var code = 65; code <= 90; code++) {
+            var letter = String.fromCharCode(code);
+            var enabled = !!activeLetters[letter];
+            var tabIndex = enabled && letter === currentLetterFocus ? '0' : '-1';
+            html += '<button class="glossary-letter" type="button" data-letter="' + letter + '" aria-label="Jump to letter ' + letter + '" tabindex="' + tabIndex + '"' + (enabled ? '' : ' disabled') + '>' + letter + '</button>';
+          }
+          alphabetEl.innerHTML = html;
+        }
+
+        function enabledButtons(container, selector) {
+          return Array.prototype.filter.call(container.querySelectorAll(selector), function (button) {
+            return !button.disabled;
+          });
+        }
+
+        function setRovingTabStop(buttons, target, focus) {
+          buttons.forEach(function (button) {
+            button.tabIndex = button === target ? 0 : -1;
+          });
+          if (!focus || !target) return;
+          target.focus();
+          target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
+        }
+
+        function handleRovingKey(event, container, selector) {
+          if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
+          var buttons = enabledButtons(container, selector);
+          var current = event.target.closest(selector);
+          var index = buttons.indexOf(current);
+          if (index === -1 || !buttons.length) return;
+
+          var nextIndex = index;
+          if (event.key === 'Home') nextIndex = 0;
+          else if (event.key === 'End') nextIndex = buttons.length - 1;
+          else {
+            var direction = event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : -1;
+            if ((event.key === 'ArrowLeft' || event.key === 'ArrowRight') &&
+                window.getComputedStyle(container).direction === 'rtl') {
+              direction *= -1;
+            }
+            nextIndex = (index + direction + buttons.length) % buttons.length;
+          }
+
+          event.preventDefault();
+          setRovingTabStop(buttons, buttons[nextIndex], true);
+        }
+
+        function resourceHtml(label, resources, sourceKind) {
+          if (!resources.length) return '';
+          var items = '';
+          resources.forEach(function (resource) {
+            var resourceLabel = text(resource.label || resource.title);
+            var rawUrl = text(resource.url || resource.href);
+            var lessonMatch = !sourceKind && rawUrl.match(/(?:^|\.\.\/|\/)(phases\/[^/?#]+\/[^/?#]+)/);
+            var url = lessonMatch
+              ? 'lesson?path=' + encodeURIComponent(lessonMatch[1])
+              : safeUrl(rawUrl);
+            if (!resourceLabel || !url) return;
+            var external = false;
+            try { external = new URL(url, window.location.href).origin !== window.location.origin; } catch (_) {}
+            items += '<li><a class="glossary-resource-link" href="' + escapeHtml(url) + '"' + (external ? ' target="_blank" rel="noopener"' : '') + '>' + escapeHtml(resourceLabel) + (sourceKind && external ? ' ↗' : '') + '</a></li>';
+          });
+          if (!items) return '';
+          return '<div class="glossary-resource-block"><span class="glossary-resource-label">' + escapeHtml(label) + '</span><ul class="glossary-resource-list">' + items + '</ul></div>';
+        }
+
+        function relatedDescriptor(related) {
+          var label = typeof related === 'object'
+            ? text(related.label || related.term || related.slug)
+            : text(related);
+          var explicitSlug = typeof related === 'object' ? text(related.slug) : '';
+          var match = entryByKey[normalize(explicitSlug)] || entryByKey[normalize(label)];
+          return {
+            label: label,
+            slug: match ? match.slug : (slugify(explicitSlug || label) || '')
+          };
+        }
+
+        function entryHtml(entry) {
+          var referenceNumber = String(entry.sourceIndex + 1).padStart(3, '0');
+          var details = '';
+          if (entry.confusion) {
+            details += '<div><span class="glossary-entry-label">Do not confuse it with</span><p>' + escapeHtml(entry.confusion) + '</p></div>';
+          }
+          if (entry.whyCalled) {
+            details += '<div><span class="glossary-entry-label">Why it is called this</span><p>' + escapeHtml(entry.whyCalled) + '</p></div>';
+          }
+          details += resourceHtml('Learn it in the course', entry.lessons, false);
+          details += resourceHtml('Primary sources', entry.sources, true);
+
+          var relatedItems = '';
+          entry.related.forEach(function (related) {
+            var descriptor = relatedDescriptor(related);
+            if (!descriptor.label || !descriptor.slug || descriptor.slug === entry.slug) return;
+            relatedItems += '<li><a class="glossary-related-link" href="#' + escapeHtml(descriptor.slug) + '" data-related-slug="' + escapeHtml(descriptor.slug) + '" data-related-label="' + escapeHtml(descriptor.label) + '">' + escapeHtml(descriptor.label) + '</a></li>';
+          });
+
+          var html = '<article class="glossary-entry" id="' + escapeHtml(entry.slug) + '" tabindex="-1" aria-labelledby="' + escapeHtml(entry.slug) + '-title" data-tts-section>';
+          html += '<div class="glossary-entry-topline"><div class="glossary-entry-meta">';
+          html += '<span class="glossary-entry-index">REF ' + referenceNumber + '</span>';
+          html += '<span class="glossary-entry-category">' + escapeHtml(entry.category) + '</span></div>';
+          html += '<div class="glossary-entry-actions"><button class="glossary-read-aloud" type="button" data-tts-start aria-label="Read ' + escapeHtml(entry.term) + ' aloud">Read term</button>';
+          html += '<button class="glossary-copy-link" type="button" data-copy-slug="' + escapeHtml(entry.slug) + '" aria-label="Copy link to ' + escapeHtml(entry.term) + '">Copy link</button></div></div>';
+          html += '<h4 class="glossary-term-heading" id="' + escapeHtml(entry.slug) + '-title" dir="auto">' + escapeHtml(entry.term) + '</h4>';
+          if (entry.aliases.length) {
+            html += '<p class="glossary-aliases">Also called · ' + escapeHtml(entry.aliases.join(' · ')) + '</p>';
+          }
+          html += '<div class="glossary-meaning"><span class="glossary-entry-label">Working definition</span><p>' + escapeHtml(entry.means || 'Definition in progress.') + '</p></div>';
+
+          var teaching = '';
+          if (entry.whyItMatters) {
+            teaching += '<div class="glossary-teaching-block"><span class="glossary-entry-label">Why it matters</span><p>' + escapeHtml(entry.whyItMatters) + '</p></div>';
+          }
+          if (entry.example) {
+            teaching += '<div class="glossary-teaching-block"><span class="glossary-entry-label">In practice</span><p>' + escapeHtml(entry.example) + '</p></div>';
+          }
+          if (entry.says) {
+            teaching += '<div class="glossary-teaching-block glossary-shortcut"><span class="glossary-entry-label">Common shortcut</span><p>“' + escapeHtml(entry.says) + '”</p></div>';
+          }
+          if (teaching) html += '<div class="glossary-teaching-grid">' + teaching + '</div>';
+
+          if (details) {
+            html += '<details class="glossary-details"><summary>Distinctions and evidence</summary><div class="glossary-details-body">' + details + '</div></details>';
+          }
+          if (relatedItems) {
+            html += '<nav class="glossary-related" aria-label="Terms related to ' + escapeHtml(entry.term) + '"><span class="glossary-resource-label">Related terms</span><ul class="glossary-related-list">' + relatedItems + '</ul></nav>';
+          }
+          html += '</article>';
+          return html;
+        }
+
+        function announce(message) {
+          window.clearTimeout(announceTimer);
+          announceTimer = window.setTimeout(function () {
+            announceEl.textContent = message;
+          }, 180);
+        }
+
+        function renderGlossary() {
+          if (!glossaryAvailable) {
+            countEl.textContent = 'The glossary index could not be loaded.';
+            listEl.innerHTML = '<div class="glossary-empty"><h3>Reference unavailable</h3><p>Reload the page or open the glossary source on GitHub.</p></div>';
+            listEl.setAttribute('aria-busy', 'false');
+            progressiveActionsEl.hidden = true;
+            return;
+          }
+
+          var results = filteredEntries();
+          var shownResults = results.slice(0, visibleLimit);
+          var activeLetters = Object.create(null);
+          var groups = Object.create(null);
+          results.forEach(function (result) {
+            activeLetters[result.entry.letter] = true;
+          });
+          shownResults.forEach(function (result) {
+            var letter = result.entry.letter;
+            if (!groups[letter]) groups[letter] = { letter: letter, score: result.score, entries: [] };
+            groups[letter].score = Math.min(groups[letter].score, result.score);
+            groups[letter].entries.push(result.entry);
+          });
+
+          var countMessage = 'Showing ' + shownResults.length + ' of ' + results.length + ' matching terms. ' + entries.length + ' total';
+          if (currentCategory !== 'all') countMessage += ' · ' + currentCategory;
+          countEl.textContent = countMessage;
+          announce(countMessage + ' shown.');
+          listEl.setAttribute('aria-busy', 'false');
+          clearButton.disabled = !currentQuery && currentCategory === 'all';
+          renderCategoryFilters();
+          renderAlphabet(activeLetters);
+
+          if (!results.length) {
+            listEl.innerHTML = '<div class="glossary-empty"><h3>No matching reference</h3><p>Try a broader idea, another learning area, or reset the ledger to see every term.</p><button class="glossary-clear" id="glossaryEmptyClear" type="button">Clear filters</button></div>';
+            progressiveActionsEl.hidden = true;
+            return;
+          }
+
+          var groupList = Object.keys(groups).map(function (letter) { return groups[letter]; });
+          groupList.sort(function (a, b) {
+            if (currentQuery && a.score !== b.score) return a.score - b.score;
+            if (a.letter === '#') return 1;
+            if (b.letter === '#') return -1;
+            return compareText(a.letter, b.letter);
+          });
+
+          var html = '';
+          groupList.forEach(function (group) {
+            var headingId = 'letter-' + (group.letter === '#' ? 'other' : group.letter);
+            html += '<section class="glossary-letter-group" id="' + headingId + '" tabindex="-1" aria-labelledby="' + headingId + '-title">';
+            html += '<header class="glossary-letter-heading"><h3 id="' + headingId + '-title">' + escapeHtml(group.letter) + '</h3><span class="glossary-letter-line" aria-hidden="true"></span><span class="glossary-letter-total">' + group.entries.length + (group.entries.length === 1 ? ' entry' : ' entries') + '</span></header>';
+            group.entries.forEach(function (entry) { html += entryHtml(entry); });
+            html += '</section>';
+          });
+          listEl.innerHTML = html;
+
+          var remaining = results.length - shownResults.length;
+          progressiveActionsEl.hidden = remaining <= 0;
+          progressiveNoteEl.textContent = remaining > 0 ? remaining + ' matching terms remain.' : '';
+          showMoreButton.textContent = 'Show next ' + Math.min(BATCH_SIZE, remaining);
+          showMoreButton.hidden = remaining <= 0;
+          showAllButton.hidden = remaining <= 0;
+        }
+
+        function updateUrl(hash, mode) {
+          try {
+            var url = new URL(window.location.href);
+            if (currentQuery) url.searchParams.set('q', currentQuery);
+            else url.searchParams.delete('q');
+            if (currentCategory !== 'all') url.searchParams.set('category', currentCategory);
+            else url.searchParams.delete('category');
+            if (hash === null) url.hash = '';
+            else if (typeof hash === 'string') url.hash = hash ? '#' + hash : '';
+            var nextUrl = url.pathname + url.search + url.hash;
+            if (mode === 'push') history.pushState(null, '', nextUrl);
+            else history.replaceState(null, '', nextUrl);
+          } catch (_) {}
+        }
+
+        function clearFilters(keepFocus) {
+          currentQuery = '';
+          currentCategory = 'all';
+          visibleLimit = BATCH_SIZE;
+          searchInput.value = '';
+          updateUrl(null, 'push');
+          renderGlossary();
+          if (keepFocus) searchInput.focus();
+        }
+
+        function focusTerm(slug, scroll) {
+          var target = document.getElementById(slug);
+          if (!target || !target.classList.contains('glossary-entry')) return false;
+          document.querySelectorAll('.glossary-entry.is-focused').forEach(function (entry) {
+            entry.classList.remove('is-focused');
+          });
+          target.classList.add('is-focused');
+          target.focus({ preventScroll: true });
+          if (scroll) target.scrollIntoView({ block: 'start', behavior: 'auto' });
+          return true;
+        }
+
+        function navigateToTerm(slug, fallbackLabel, historyMode) {
+          currentQuery = '';
+          currentCategory = 'all';
+          visibleLimit = BATCH_SIZE;
+          searchInput.value = '';
+          var results = filteredEntries();
+          var targetIndex = results.findIndex(function (result) { return result.entry.slug === slug; });
+          if (targetIndex >= 0) visibleLimit = Math.max(visibleLimit, targetIndex + 1);
+          updateUrl(slug, historyMode || 'push');
+          renderGlossary();
+          window.requestAnimationFrame(function () {
+            if (!focusTerm(slug, true) && fallbackLabel) {
+              currentQuery = fallbackLabel;
+              searchInput.value = fallbackLabel;
+              visibleLimit = BATCH_SIZE;
+              updateUrl(null, 'replace');
+              renderGlossary();
+            }
+          });
+        }
+
+        function copyText(value) {
+          if (navigator.clipboard && window.isSecureContext) {
+            return navigator.clipboard.writeText(value);
+          }
+          return new Promise(function (resolve, reject) {
+            var area = document.createElement('textarea');
+            area.value = value;
+            area.setAttribute('readonly', '');
+            area.style.position = 'fixed';
+            area.style.opacity = '0';
+            document.body.appendChild(area);
+            area.select();
+            try {
+              document.execCommand('copy') ? resolve() : reject(new Error('Copy failed'));
+            } catch (error) {
+              reject(error);
+            }
+            document.body.removeChild(area);
+          });
+        }
+
+        function copyStableLink(button, slug) {
+          var url;
+          try {
+            url = new URL(window.location.href);
+            url.search = '';
+            url.hash = slug;
+          } catch (_) {
+            return;
+          }
+          copyText(url.toString()).then(function () {
+            var original = button.textContent;
+            var originalLabel = button.getAttribute('aria-label') || '';
+            button.textContent = 'Copied';
+            button.setAttribute('aria-label', 'Link copied');
+            window.setTimeout(function () {
+              button.textContent = original;
+              button.setAttribute('aria-label', originalLabel);
+            }, 1200);
+          }).catch(function () {
+            button.textContent = 'Copy failed';
+            window.setTimeout(function () { button.textContent = 'Copy link'; }, 1200);
+          });
+        }
+
+        try {
+          var params = new URLSearchParams(window.location.search);
+          currentQuery = text(params.get('q'));
+          var requestedCategory = text(params.get('category'));
+          if (requestedCategory) {
+            currentCategory = categories.find(function (category) {
+              return normalize(category) === normalize(requestedCategory) || slugify(category) === slugify(requestedCategory);
+            }) || 'all';
+          }
+        } catch (_) {}
+
+        var initialSlug = '';
+        try { initialSlug = decodeURIComponent(window.location.hash.replace(/^#/, '')); } catch (_) {}
+        if (initialSlug && entryByKey[normalize(initialSlug)]) {
+          var canonicalInitial = entryByKey[normalize(initialSlug)].slug;
+          currentQuery = '';
+          currentCategory = 'all';
+          var initialResults = filteredEntries();
+          var initialIndex = initialResults.findIndex(function (result) { return result.entry.slug === canonicalInitial; });
+          if (initialIndex >= 0) visibleLimit = Math.max(visibleLimit, initialIndex + 1);
+          initialSlug = canonicalInitial;
+        }
+
+        searchInput.value = currentQuery;
+        statTermsEl.textContent = entries.length;
+        statCategoriesEl.textContent = categories.length;
+        renderGlossary();
+
+        searchInput.addEventListener('input', function () {
+          currentQuery = searchInput.value.trim();
+          visibleLimit = BATCH_SIZE;
+          updateUrl(null, 'replace');
+          renderGlossary();
+        });
+
+        clearButton.addEventListener('click', function () {
+          clearFilters(true);
+        });
+
+        categoriesEl.addEventListener('click', function (event) {
+          var button = event.target.closest('[data-category]');
+          if (!button) return;
+          currentCategory = button.getAttribute('data-category') || 'all';
+          visibleLimit = BATCH_SIZE;
+          updateUrl(null, 'push');
+          renderGlossary();
+          Array.prototype.some.call(categoriesEl.querySelectorAll('[data-category]'), function (candidate) {
+            if (candidate.getAttribute('data-category') !== currentCategory) return false;
+            candidate.focus();
+            return true;
+          });
+        });
+
+        categoriesEl.addEventListener('keydown', function (event) {
+          handleRovingKey(event, categoriesEl, '[data-category]');
+        });
+
+        alphabetEl.addEventListener('click', function (event) {
+          var button = event.target.closest('[data-letter]');
+          if (!button || button.disabled) return;
+          currentLetterFocus = button.getAttribute('data-letter') || '';
+          var targetLetter = currentLetterFocus;
+          var letterResults = filteredEntries();
+          var letterIndex = letterResults.findIndex(function (result) { return result.entry.letter === targetLetter; });
+          if (letterIndex >= 0) visibleLimit = Math.max(visibleLimit, letterIndex + 1);
+          renderGlossary();
+          window.requestAnimationFrame(function () {
+            var section = document.getElementById('letter-' + targetLetter);
+            if (!section) return;
+            section.focus({ preventScroll: true });
+            section.scrollIntoView({ block: 'start', behavior: 'auto' });
+          });
+        });
+
+        alphabetEl.addEventListener('keydown', function (event) {
+          handleRovingKey(event, alphabetEl, '[data-letter]');
+          var focused = document.activeElement;
+          if (focused && focused.matches('[data-letter]')) {
+            currentLetterFocus = focused.getAttribute('data-letter') || '';
+          }
+        });
+
+        listEl.addEventListener('click', function (event) {
+          var emptyClear = event.target.closest('#glossaryEmptyClear');
+          if (emptyClear) {
+            clearFilters(true);
+            return;
+          }
+
+          var related = event.target.closest('[data-related-slug]');
+          if (related) {
+            event.preventDefault();
+            navigateToTerm(related.getAttribute('data-related-slug'), related.getAttribute('data-related-label'));
+            return;
+          }
+
+          var copyButton = event.target.closest('[data-copy-slug]');
+          if (copyButton) copyStableLink(copyButton, copyButton.getAttribute('data-copy-slug'));
+        });
+
+        document.addEventListener('keydown', function (event) {
+          var target = event.target;
+          var editable = target && (target.matches('input, textarea, select') || target.isContentEditable);
+          if (event.key === '/' && !editable && !event.metaKey && !event.ctrlKey && !event.altKey) {
+            event.preventDefault();
+            searchInput.focus();
+            searchInput.select();
+          }
+          if (event.key === 'Escape' && (currentQuery || currentCategory !== 'all')) {
+            event.preventDefault();
+            clearFilters(true);
+          }
+        });
+
+        window.addEventListener('hashchange', function () {
+          var slug = '';
+          try { slug = decodeURIComponent(window.location.hash.replace(/^#/, '')); } catch (_) { return; }
+          if (!slug) return;
+          if (!focusTerm(slug, true) && entryByKey[normalize(slug)]) {
+            navigateToTerm(entryByKey[normalize(slug)].slug, '', 'replace');
+          }
+        });
+
+        if (initialSlug) {
+          window.requestAnimationFrame(function () {
+            if (!focusTerm(initialSlug, true) && entryByKey[normalize(initialSlug)]) {
+              navigateToTerm(entryByKey[normalize(initialSlug)].slug, '', 'replace');
+            }
+          });
+        }
+
+        showMoreButton.addEventListener('click', function () {
+          visibleLimit += BATCH_SIZE;
+          renderGlossary();
+          if (progressiveActionsEl.hidden) countEl.focus();
+          else showMoreButton.focus();
+        });
+
+        showAllButton.addEventListener('click', function () {
+          visibleLimit = Number.POSITIVE_INFINITY;
+          renderGlossary();
+          countEl.focus();
+        });
+
+        window.addEventListener('popstate', function () {
+          var params = new URLSearchParams(window.location.search);
+          currentQuery = text(params.get('q'));
+          var requestedCategory = text(params.get('category'));
+          currentCategory = categories.find(function (category) {
+            return normalize(category) === normalize(requestedCategory) || slugify(category) === slugify(requestedCategory);
+          }) || 'all';
+          visibleLimit = BATCH_SIZE;
+          searchInput.value = currentQuery;
+          var slug = '';
+          try { slug = decodeURIComponent(window.location.hash.replace(/^#/, '')); } catch (_) {}
+          if (slug && entryByKey[normalize(slug)]) {
+            var canonical = entryByKey[normalize(slug)].slug;
+            currentQuery = '';
+            currentCategory = 'all';
+            searchInput.value = '';
+            var results = filteredEntries();
+            var index = results.findIndex(function (result) { return result.entry.slug === canonical; });
+            if (index >= 0) visibleLimit = Math.max(visibleLimit, index + 1);
+            renderGlossary();
+            window.requestAnimationFrame(function () { focusTerm(canonical, true); });
+            return;
+          }
+          renderGlossary();
+        });
+      });
+    })();
+  </script>
+<script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
+</body>
+</html>

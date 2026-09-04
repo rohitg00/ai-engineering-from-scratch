@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .green { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .blue { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .orange { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 17px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+      .mono { font-size: 11px; font-family: Menlo, monospace; fill: #222; }
+      .small { font-size: 11px; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="28" text-anchor="middle" class="title">MCP Apps on the 2026-07-28 stateless core</text>
+
+  <rect x="35" y="60" width="250" height="420" rx="8" class="green"/>
+  <text x="160" y="86" text-anchor="middle" class="head">client request</text>
+  <text x="52" y="118" class="mono">POST /mcp</text>
+  <text x="52" y="138" class="mono">MCP-Protocol-Version</text>
+  <text x="52" y="158" class="mono">Mcp-Method + Mcp-Name</text>
+  <text x="52" y="196" class="mono">params._meta</text>
+  <text x="52" y="216" class="small">protocolVersion</text>
+  <text x="52" y="236" class="small">clientCapabilities.extensions</text>
+  <text x="68" y="256" class="mono">io.modelcontextprotocol/ui</text>
+  <text x="52" y="294" class="mono">server/discover</text>
+  <text x="52" y="314" class="small">then tools/list, tools/call,</text>
+  <text x="52" y="334" class="small">resources/read</text>
+  <text x="52" y="380" class="head">never sent</text>
+  <text x="52" y="402" class="mono">initialize</text>
+  <text x="52" y="422" class="mono">Mcp-Session-Id</text>
+  <text x="52" y="442" class="mono">standalone GET stream</text>
+
+  <path d="M285,270 L350,270" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="350" y="60" width="260" height="420" rx="8" class="blue"/>
+  <text x="480" y="86" text-anchor="middle" class="head">MCP App server</text>
+  <text x="368" y="118" class="mono">server/discover</text>
+  <text x="368" y="138" class="small">advertise tools, resources, UI</text>
+  <text x="368" y="174" class="mono">tools/list</text>
+  <text x="368" y="194" class="small">_meta.ui.resourceUri</text>
+  <text x="368" y="214" class="mono">ui://notes/timeline.html</text>
+  <text x="368" y="250" class="mono">tools/call</text>
+  <text x="368" y="270" class="small">text + structuredContent</text>
+  <text x="368" y="306" class="mono">resources/list + read</text>
+  <text x="368" y="326" class="small">HTML + CSP + permissions</text>
+  <text x="368" y="346" class="small">ttlMs + cacheScope</text>
+  <text x="368" y="390" class="mono">every result</text>
+  <text x="368" y="410" class="small">resultType: complete</text>
+  <text x="368" y="430" class="small">serverInfo in result _meta</text>
+
+  <path d="M610,270 L675,270" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="675" y="60" width="250" height="420" rx="8" class="orange"/>
+  <text x="800" y="86" text-anchor="middle" class="head">host sandbox and App</text>
+  <text x="692" y="118" class="mono">sandboxed iframe</text>
+  <text x="692" y="138" class="small">host controls browser powers</text>
+  <text x="692" y="174" class="mono">deny-first CSP</text>
+  <text x="692" y="194" class="small">minimum origins and permissions</text>
+  <text x="692" y="230" class="mono">postMessage JSON-RPC</text>
+  <text x="692" y="250" class="small">exact targetOrigin</text>
+  <text x="692" y="270" class="small">validate event.origin</text>
+  <text x="692" y="306" class="mono">ui/initialize</text>
+  <text x="692" y="326" class="small">Apps bridge only</text>
+  <text x="692" y="346" class="small">not core MCP initialization</text>
+  <text x="692" y="390" class="mono">tools/call bridge</text>
+  <text x="692" y="410" class="small">host consent, then a new</text>
+  <text x="692" y="430" class="small">self-contained MCP request</text>
+
+  <text x="480" y="515" text-anchor="middle" class="caption">This protocol model plugs into Lesson 09's full Streamable HTTP adapter.</text>
+</svg>

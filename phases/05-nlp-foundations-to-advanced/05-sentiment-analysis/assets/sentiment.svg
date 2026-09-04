@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .pos { fill: #e8f3e0; stroke: #1a1a1a; stroke-width: 1.5; }
+      .neg { fill: #f3e0e0; stroke: #1a1a1a; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .stage { font-size: 11px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .line { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="50" width="200" height="220" rx="4"/>
+  <text class="label" x="120" y="75" text-anchor="middle">raw reviews</text>
+  <text class="content" x="35" y="105">"loved this movie"</text>
+  <text class="content" x="35" y="130">"not worth your time"</text>
+  <text class="content" x="35" y="155">"terrible acting"</text>
+  <text class="content" x="35" y="180">"beautiful story"</text>
+  <text class="content" x="35" y="225">labels: + / - / - / +</text>
+
+  <path class="line" d="M 220 160 L 270 160" marker-end="url(#arrow)"/>
+  <text class="stage" x="245" y="150">tokenize</text>
+  <text class="stage" x="245" y="180">+ negate</text>
+
+  <rect class="box" x="270" y="50" width="240" height="220" rx="4"/>
+  <text class="label" x="390" y="75" text-anchor="middle">features</text>
+  <text class="content" x="285" y="105">[loved, movie]</text>
+  <text class="content" x="285" y="130">[not, NOT_worth, NOT_your]</text>
+  <text class="content" x="285" y="155">[terrible, acting]</text>
+  <text class="content" x="285" y="180">[beautiful, story]</text>
+  <text class="content" x="285" y="225">+ bigrams: "not_worth", ...</text>
+  <text class="content" x="285" y="245">+ tf-idf weight</text>
+
+  <path class="line" d="M 510 160 L 560 160" marker-end="url(#arrow)"/>
+  <text class="stage" x="535" y="150">fit</text>
+
+  <rect class="box" x="560" y="50" width="180" height="220" rx="4"/>
+  <text class="label" x="650" y="75" text-anchor="middle">classifier</text>
+  <text class="content" x="575" y="105">Naive Bayes</text>
+  <text class="content" x="575" y="130">or Logistic Reg</text>
+  <text class="content" x="575" y="165">learns:</text>
+  <text class="content" x="575" y="185">w[terrible] &lt; 0</text>
+  <text class="content" x="575" y="205">w[loved] &gt; 0</text>
+  <text class="content" x="575" y="225">w[NOT_worth] &lt; 0</text>
+
+  <path class="line" d="M 740 130 L 790 90" marker-end="url(#arrow)"/>
+  <path class="line" d="M 740 190 L 790 230" marker-end="url(#arrow)"/>
+
+  <rect class="pos" x="790" y="60" width="90" height="60" rx="4"/>
+  <text class="label" x="835" y="95" text-anchor="middle">+</text>
+
+  <rect class="neg" x="790" y="200" width="90" height="60" rx="4"/>
+  <text class="label" x="835" y="235" text-anchor="middle">−</text>
+
+  <text class="stage" x="460" y="305" text-anchor="middle">keep stopwords. handle negation. bigrams catch what unigrams miss.</text>
+</svg>

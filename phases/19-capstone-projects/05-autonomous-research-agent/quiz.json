@@ -1,0 +1,90 @@
+{
+  "lesson": "05-autonomous-research-agent",
+  "title": "Capstone 05 — Autonomous Research Agent (AI-Scientist Class)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What search shape does the AI-Scientist-class agent use to explore experiments?",
+      "options": [
+        "Breadth-first expansion with random scoring",
+        "Beam search over token outputs",
+        "Pure reinforcement learning from human feedback",
+        "Best-first tree search over experiment nodes with a novelty x quality x budget score"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Why is the sandbox configured with --network=none and bounded resource caps?",
+      "options": [
+        "To force the agent to use prompt caching",
+        "To prevent network egress and contain experiment side effects within a reproducible envelope",
+        "To enforce deterministic floating-point arithmetic",
+        "To allow GPU passthrough by default"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the role of the vision critique step in the writer loop?",
+      "options": [
+        "Generates new experiment ideas from screenshots",
+        "Replaces matplotlib at render time",
+        "Translates figures into bar charts",
+        "Compiles the LaTeX draft to PDF, then has a VLM critique layout, figure legibility, and claim-evidence alignment"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How does the reviewer ensemble gate the pipeline?",
+      "options": [
+        "Reviewers vote anonymously and the majority wins",
+        "Five judges score on NeurIPS-style rubrics and the weighted aggregate must clear a threshold, otherwise the draft loops back to the writer",
+        "A single judge accepts or rejects on a binary flag",
+        "Reviews run after publication only"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which cost discipline does the capstone enforce per paper?",
+      "options": [
+        "GPU-hours tracked but never capped",
+        "A $30 hard budget tracked through Langfuse counters and pre-run estimates",
+        "Cost-only optimization without quality checks",
+        "Unbounded compute, hard wall-clock only"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which scoring function ranks tree nodes for further expansion?",
+      "options": [
+        "Citation count of related papers",
+        "Random uniform priority",
+        "Output length and token count",
+        "Novelty x quality x remaining budget"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does the red-team report exercise against the system?",
+      "options": [
+        "Sandbox-escape attempts such as fork bombs, network exfiltration, and filesystem escapes",
+        "Caching hit rate on system prompts",
+        "Multi-tenant data leakage in the vector DB",
+        "Latency tail under packet loss"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

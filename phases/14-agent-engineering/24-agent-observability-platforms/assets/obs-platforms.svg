@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .lf { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .px { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .op { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .shared { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Agent observability 2026 — three open-source platforms, three emphases</text>
+
+  <rect x="40" y="50" width="290" height="240" class="lf"/>
+  <text x="185" y="72" text-anchor="middle" class="head">Langfuse  MIT</text>
+  <text x="60" y="96" class="small">6M+ SDK installs/month, 19k+ stars</text>
+  <rect x="60" y="108" width="250" height="30" class="box"/>
+  <text x="78" y="128" class="step">tracing + prompt management</text>
+  <rect x="60" y="142" width="250" height="30" class="box"/>
+  <text x="78" y="162" class="step">LLM-as-judge, user feedback, custom evals</text>
+  <rect x="60" y="176" width="250" height="30" class="box"/>
+  <text x="78" y="196" class="step">session replays, annotation queues</text>
+  <rect x="60" y="210" width="250" height="30" class="box"/>
+  <text x="78" y="230" class="step">playground + prompt experiments</text>
+  <rect x="60" y="244" width="250" height="40" class="box"/>
+  <text x="78" y="264" class="step">best for: all-in-one with prompt loop</text>
+  <text x="78" y="280" class="small">prompt versions tied to traces</text>
+
+  <rect x="340" y="50" width="290" height="240" class="px"/>
+  <text x="485" y="72" text-anchor="middle" class="head">Arize Phoenix  Elastic 2.0</text>
+  <text x="360" y="96" class="small">agent-specific evaluation focus</text>
+  <rect x="360" y="108" width="250" height="30" class="box"/>
+  <text x="378" y="128" class="step">trace clustering + anomaly detection</text>
+  <rect x="360" y="142" width="250" height="30" class="box"/>
+  <text x="378" y="162" class="step">RAG relevancy + retrieval eval</text>
+  <rect x="360" y="176" width="250" height="30" class="box"/>
+  <text x="378" y="196" class="step">OpenInference auto-instrumentation</text>
+  <rect x="360" y="210" width="250" height="30" class="box"/>
+  <text x="378" y="230" class="step">pairs with managed Arize AX</text>
+  <rect x="360" y="244" width="250" height="40" class="box"/>
+  <text x="378" y="264" class="step">best for: RAG relevancy + drift</text>
+  <text x="378" y="280" class="small">no prompt versioning  alongside, not replacing</text>
+
+  <rect x="640" y="50" width="290" height="240" class="op"/>
+  <text x="785" y="72" text-anchor="middle" class="head">Comet Opik  Apache 2.0</text>
+  <text x="660" y="96" class="small">automated optimization + guardrails</text>
+  <rect x="660" y="108" width="250" height="30" class="box"/>
+  <text x="678" y="128" class="step">automated prompt A/B experiments</text>
+  <rect x="660" y="142" width="250" height="30" class="box"/>
+  <text x="678" y="162" class="step">guardrails: PII redaction, topical</text>
+  <rect x="660" y="176" width="250" height="30" class="box"/>
+  <text x="678" y="196" class="step">LLM-judge hallucination detection</text>
+  <rect x="660" y="210" width="250" height="30" class="box"/>
+  <text x="678" y="230" class="step">vendor benchmark: ~14x Langfuse</text>
+  <rect x="660" y="244" width="250" height="40" class="box"/>
+  <text x="678" y="264" class="step">best for: optimization loop</text>
+  <text x="678" y="280" class="small">vendor numbers directional; measure your own</text>
+
+  <rect x="40" y="310" width="880" height="200" class="shared"/>
+  <text x="480" y="332" text-anchor="middle" class="head">common substrate  OpenTelemetry GenAI spans (Lesson 23)</text>
+  <rect x="60" y="348" width="840" height="30" class="box"/>
+  <text x="78" y="368" class="step">all three consume OTel GenAI spans; you can switch without re-instrumenting</text>
+  <rect x="60" y="382" width="840" height="30" class="box"/>
+  <text x="78" y="402" class="step">content capture: external store + span references (PII-safe)</text>
+  <rect x="60" y="416" width="840" height="30" class="box"/>
+  <text x="78" y="436" class="step">89% of orgs have agent observability (Maxim field data, 2026)</text>
+  <rect x="60" y="450" width="840" height="30" class="box"/>
+  <text x="78" y="470" class="step">32% of respondents cite quality as the top production barrier</text>
+  <rect x="60" y="484" width="840" height="22" class="box"/>
+  <text x="78" y="500" class="step">Datadog v1.37+ maps GenAI attributes natively  mixed ops+ML teams fit here</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">tracing without evaluation is expensive logging. pair traces + LLM-judge + prompt versioning.</text>
+</svg>

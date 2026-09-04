@@ -1,0 +1,78 @@
+{
+  "lesson": "20-reliable-extraction-batch-and-reviewers",
+  "title": "Reliable Extraction, Batch, and Independent Reviewers",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An extraction pipeline always returns schema-valid JSON but invents missing dates. What is the primary gap?",
+      "options": [
+        "A nullable absence state plus semantic and evidence validation",
+        "A discovery step that gives the model access to date-normalization tools",
+        "A stricter parser for invalid date formats",
+        "A larger extraction model that infers likely dates from surrounding document context"
+      ],
+      "correct": 0,
+      "explanation": "The schema forces a value and checks only shape. Representing unknown explicitly and verifying claims against source evidence prevents validly formatted invention."
+    },
+    {
+      "stage": "check",
+      "question": "Which few-shot example is most useful for reducing false-positive obligations?",
+      "options": [
+        "Another clear obligation with new wording but the same straightforward boundary",
+        "A near-miss background statement labeled as not an obligation with the boundary explained",
+        "A longer contract excerpt containing several obligations but no labeled negative cases",
+        "A stylistically similar extraction example from another category with no boundary note"
+      ],
+      "correct": 1,
+      "explanation": "Boundary examples teach the judgment that separates a plausible near miss from the target class. Repeating easy positives adds little information."
+    },
+    {
+      "stage": "check",
+      "question": "What should happen after repeated semantic validation failure on an ambiguous source?",
+      "options": [
+        "Relax semantic validation for this record while keeping schema and evidence checks",
+        "Raise the reasoning budget for another bounded retry",
+        "Return an explicit unresolved state and escalate to qualified review",
+        "Select the most frequent candidate across bounded retries and mark it low confidence"
+      ],
+      "correct": 2,
+      "explanation": "Bounded retry prevents cost and latency loops from converting ambiguity into confident fabrication. The source needs review or additional evidence."
+    },
+    {
+      "stage": "check",
+      "question": "Why use stable custom IDs in batch processing?",
+      "options": [
+        "They carry the authenticated user's tool authority into each asynchronous request",
+        "They ensure every request receives the same price and completion deadline",
+        "They let the model correlate nearby requests and improve consistency across the batch",
+        "Results may complete out of order and need reliable reconciliation"
+      ],
+      "correct": 3,
+      "explanation": "Stable IDs join each result to source, version, and expected output regardless of completion order, retries, or partial job failure."
+    },
+    {
+      "stage": "post",
+      "question": "When is real-time processing stronger than batch?",
+      "options": [
+        "An interactive task whose model must call and observe external tools before continuing",
+        "A nightly reclassification whose results can be reconciled before the next day",
+        "A static extraction archive with no immediate user or downstream dependency",
+        "A large evaluation backfill of independent requests with stable custom identifiers"
+      ],
+      "correct": 0,
+      "explanation": "Adaptive mid-request tool loops need immediate observations and continuation. Batch fits asynchronous, tool-independent work when the service window is acceptable."
+    },
+    {
+      "stage": "post",
+      "question": "What should an independent extraction reviewer receive?",
+      "options": [
+        "The final category, confidence, and explanation without source text to avoid anchoring",
+        "Source, candidate record, evidence, and an explicit rubric in a fresh context",
+        "The source and final record without a rubric, allowing an independent standard to emerge",
+        "The generator's complete reasoning transcript so the reviewer can assess its intent"
+      ],
+      "correct": 1,
+      "explanation": "Controlled inputs and a fresh context help the reviewer test evidence support and criteria without inheriting the generator's framing."
+    }
+  ]
+}

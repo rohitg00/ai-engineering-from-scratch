@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .mask { fill: #d0d0d0; stroke: #888; }
+      .tok { fill: #faf6ef; stroke: #2e7d32; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Show-o — parallel masked-discrete-diffusion image sampling</text>
+
+  <rect x="30" y="50" width="900" height="220" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">cosine mask schedule over 8 steps</text>
+
+  <g transform="translate(60, 100)">
+    <text x="-10" y="15" class="step">step 0</text>
+    <text x="-10" y="45" class="step">step 2</text>
+    <text x="-10" y="75" class="step">step 4</text>
+    <text x="-10" y="105" class="step">step 6</text>
+    <text x="-10" y="135" class="step">step 8</text>
+  </g>
+
+  <g transform="translate(120, 90)">
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="20" height="20" class="mask"/>
+      <rect x="22" y="0" width="20" height="20" class="mask"/>
+      <rect x="44" y="0" width="20" height="20" class="mask"/>
+      <rect x="66" y="0" width="20" height="20" class="mask"/>
+      <rect x="88" y="0" width="20" height="20" class="mask"/>
+      <rect x="110" y="0" width="20" height="20" class="mask"/>
+      <rect x="132" y="0" width="20" height="20" class="mask"/>
+      <rect x="154" y="0" width="20" height="20" class="mask"/>
+      <rect x="176" y="0" width="20" height="20" class="mask"/>
+      <rect x="198" y="0" width="20" height="20" class="mask"/>
+      <rect x="220" y="0" width="20" height="20" class="mask"/>
+      <rect x="242" y="0" width="20" height="20" class="mask"/>
+      <rect x="264" y="0" width="20" height="20" class="mask"/>
+      <rect x="286" y="0" width="20" height="20" class="mask"/>
+      <rect x="308" y="0" width="20" height="20" class="mask"/>
+      <rect x="330" y="0" width="20" height="20" class="mask"/>
+      <text x="360" y="14" class="small">16 masked</text>
+    </g>
+    <g transform="translate(0, 30)">
+      <rect x="0" y="0" width="20" height="20" class="mask"/>
+      <rect x="22" y="0" width="20" height="20" class="mask"/>
+      <rect x="44" y="0" width="20" height="20" class="mask"/>
+      <rect x="66" y="0" width="20" height="20" class="tok"/>
+      <rect x="88" y="0" width="20" height="20" class="mask"/>
+      <rect x="110" y="0" width="20" height="20" class="mask"/>
+      <rect x="132" y="0" width="20" height="20" class="mask"/>
+      <rect x="154" y="0" width="20" height="20" class="mask"/>
+      <rect x="176" y="0" width="20" height="20" class="mask"/>
+      <rect x="198" y="0" width="20" height="20" class="tok"/>
+      <rect x="220" y="0" width="20" height="20" class="mask"/>
+      <rect x="242" y="0" width="20" height="20" class="mask"/>
+      <rect x="264" y="0" width="20" height="20" class="mask"/>
+      <rect x="286" y="0" width="20" height="20" class="tok"/>
+      <rect x="308" y="0" width="20" height="20" class="tok"/>
+      <rect x="330" y="0" width="20" height="20" class="mask"/>
+      <text x="360" y="14" class="small">12 masked</text>
+    </g>
+    <g transform="translate(0, 60)">
+      <rect x="0" y="0" width="20" height="20" class="mask"/>
+      <rect x="22" y="0" width="20" height="20" class="mask"/>
+      <rect x="44" y="0" width="20" height="20" class="mask"/>
+      <rect x="66" y="0" width="20" height="20" class="tok"/>
+      <rect x="88" y="0" width="20" height="20" class="mask"/>
+      <rect x="110" y="0" width="20" height="20" class="mask"/>
+      <rect x="132" y="0" width="20" height="20" class="tok"/>
+      <rect x="154" y="0" width="20" height="20" class="tok"/>
+      <rect x="176" y="0" width="20" height="20" class="mask"/>
+      <rect x="198" y="0" width="20" height="20" class="tok"/>
+      <rect x="220" y="0" width="20" height="20" class="tok"/>
+      <rect x="242" y="0" width="20" height="20" class="mask"/>
+      <rect x="264" y="0" width="20" height="20" class="tok"/>
+      <rect x="286" y="0" width="20" height="20" class="tok"/>
+      <rect x="308" y="0" width="20" height="20" class="tok"/>
+      <rect x="330" y="0" width="20" height="20" class="mask"/>
+      <text x="360" y="14" class="small">8 masked</text>
+    </g>
+    <g transform="translate(0, 90)">
+      <rect x="0" y="0" width="20" height="20" class="tok"/>
+      <rect x="22" y="0" width="20" height="20" class="tok"/>
+      <rect x="44" y="0" width="20" height="20" class="tok"/>
+      <rect x="66" y="0" width="20" height="20" class="tok"/>
+      <rect x="88" y="0" width="20" height="20" class="mask"/>
+      <rect x="110" y="0" width="20" height="20" class="tok"/>
+      <rect x="132" y="0" width="20" height="20" class="tok"/>
+      <rect x="154" y="0" width="20" height="20" class="tok"/>
+      <rect x="176" y="0" width="20" height="20" class="tok"/>
+      <rect x="198" y="0" width="20" height="20" class="tok"/>
+      <rect x="220" y="0" width="20" height="20" class="tok"/>
+      <rect x="242" y="0" width="20" height="20" class="tok"/>
+      <rect x="264" y="0" width="20" height="20" class="tok"/>
+      <rect x="286" y="0" width="20" height="20" class="tok"/>
+      <rect x="308" y="0" width="20" height="20" class="tok"/>
+      <rect x="330" y="0" width="20" height="20" class="mask"/>
+      <text x="360" y="14" class="small">2 masked</text>
+    </g>
+    <g transform="translate(0, 120)">
+      <rect x="0" y="0" width="20" height="20" class="tok"/>
+      <rect x="22" y="0" width="20" height="20" class="tok"/>
+      <rect x="44" y="0" width="20" height="20" class="tok"/>
+      <rect x="66" y="0" width="20" height="20" class="tok"/>
+      <rect x="88" y="0" width="20" height="20" class="tok"/>
+      <rect x="110" y="0" width="20" height="20" class="tok"/>
+      <rect x="132" y="0" width="20" height="20" class="tok"/>
+      <rect x="154" y="0" width="20" height="20" class="tok"/>
+      <rect x="176" y="0" width="20" height="20" class="tok"/>
+      <rect x="198" y="0" width="20" height="20" class="tok"/>
+      <rect x="220" y="0" width="20" height="20" class="tok"/>
+      <rect x="242" y="0" width="20" height="20" class="tok"/>
+      <rect x="264" y="0" width="20" height="20" class="tok"/>
+      <rect x="286" y="0" width="20" height="20" class="tok"/>
+      <rect x="308" y="0" width="20" height="20" class="tok"/>
+      <rect x="330" y="0" width="20" height="20" class="tok"/>
+      <text x="360" y="14" class="small">all filled</text>
+    </g>
+  </g>
+
+  <text x="480" y="250" text-anchor="middle" class="small">at each step predict all masks in parallel, commit top-K confident</text>
+
+  <rect x="30" y="290" width="900" height="230" class="box"/>
+  <text x="480" y="312" text-anchor="middle" class="head">Show-o vs alternatives</text>
+
+  <rect x="50" y="330" width="210" height="180" class="hot"/>
+  <text x="155" y="352" text-anchor="middle" class="step">Chameleon / Emu3</text>
+  <text x="155" y="372" text-anchor="middle" class="small">discrete + NTP</text>
+  <text x="155" y="390" text-anchor="middle" class="small">1024 forward passes</text>
+  <text x="155" y="406" text-anchor="middle" class="small">~2 min / 512x512</text>
+  <text x="155" y="430" text-anchor="middle" class="small">simplest training</text>
+  <text x="155" y="448" text-anchor="middle" class="small">tokenizer-capped quality</text>
+
+  <rect x="280" y="330" width="210" height="180" class="cool"/>
+  <text x="385" y="352" text-anchor="middle" class="step">Show-o / MaskGIT</text>
+  <text x="385" y="372" text-anchor="middle" class="small">discrete + masked diff</text>
+  <text x="385" y="390" text-anchor="middle" class="small">~16 forward passes</text>
+  <text x="385" y="406" text-anchor="middle" class="small">~4-8s / 512x512</text>
+  <text x="385" y="430" text-anchor="middle" class="small">single loss, clean</text>
+  <text x="385" y="448" text-anchor="middle" class="small">inpainting free</text>
+
+  <rect x="510" y="330" width="210" height="180" class="cold"/>
+  <text x="615" y="352" text-anchor="middle" class="step">Transfusion / MMDiT</text>
+  <text x="615" y="372" text-anchor="middle" class="small">continuous + diffusion</text>
+  <text x="615" y="390" text-anchor="middle" class="small">~20 forward passes</text>
+  <text x="615" y="406" text-anchor="middle" class="small">~5-10s / 512x512</text>
+  <text x="615" y="430" text-anchor="middle" class="small">highest quality</text>
+  <text x="615" y="448" text-anchor="middle" class="small">dual-loss to tune</text>
+
+  <rect x="740" y="330" width="180" height="180" class="reg"/>
+  <text x="830" y="352" text-anchor="middle" class="step">Stable Diffusion</text>
+  <text x="830" y="372" text-anchor="middle" class="small">continuous latent</text>
+  <text x="830" y="390" text-anchor="middle" class="small">~20 passes</text>
+  <text x="830" y="406" text-anchor="middle" class="small">~2-5s / 512x512</text>
+  <text x="830" y="430" text-anchor="middle" class="small">specialist model</text>
+  <text x="830" y="448" text-anchor="middle" class="small">no VQA/reasoning</text>
+</svg>

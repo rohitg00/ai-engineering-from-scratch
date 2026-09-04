@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">2026-07-28: explicit scope plus stateless elicitation</text>
+
+  <rect x="40" y="55" width="270" height="175" class="hot"/>
+  <text x="175" y="80" text-anchor="middle" class="head">deprecated Roots</text>
+  <text x="58" y="108" class="step">roots/list</text>
+  <text x="58" y="128" class="step">notifications/roots/list_changed</text>
+  <text x="58" y="158" class="small">informational guidance only</text>
+  <text x="58" y="176" class="small">not authorization</text>
+  <text x="58" y="194" class="small">not containment</text>
+  <text x="58" y="212" class="small">not an operating-system sandbox</text>
+
+  <path d="M310,140 L380,140" class="edge" marker-end="url(#arrow)"/>
+  <text x="345" y="132" text-anchor="middle" class="small">replace</text>
+
+  <rect x="380" y="55" width="540" height="175" class="cool"/>
+  <text x="650" y="80" text-anchor="middle" class="head">explicit scope and real enforcement</text>
+  <text x="400" y="108" class="step">arguments.workspaceUri = file:///.../Notes</text>
+  <text x="400" y="136" class="small">1. authorize authenticated principal for workspace</text>
+  <text x="400" y="156" class="small">2. normalize URI and enforce path-component containment</text>
+  <text x="400" y="176" class="small">3. re-check live target immediately before mutation</text>
+  <text x="400" y="196" class="small">4. rely on a process sandbox for technical isolation</text>
+  <text x="400" y="216" class="small">scope is visible to the model, gateway, logs, and tests</text>
+
+  <rect x="40" y="255" width="260" height="250" class="cold"/>
+  <text x="170" y="280" text-anchor="middle" class="head">client</text>
+  <text x="58" y="310" class="step">tools/call id 1</text>
+  <text x="58" y="328" class="small">workspaceUri + title + _meta</text>
+  <text x="58" y="360" class="step">render form</text>
+  <text x="58" y="378" class="small">show server and reason</text>
+  <text x="58" y="396" class="small">accept | decline | cancel</text>
+  <text x="58" y="428" class="step">tools/call id 2</text>
+  <text x="58" y="446" class="small">same args + inputResponses</text>
+  <text x="58" y="464" class="small">exact requestState echo</text>
+  <text x="58" y="486" class="small">fresh independent request</text>
+
+  <rect x="660" y="255" width="260" height="250" class="cool"/>
+  <text x="790" y="280" text-anchor="middle" class="head">server</text>
+  <text x="678" y="310" class="step">tools/list + form gate -32021</text>
+  <text x="678" y="342" class="step">resultType: input_required</text>
+  <text x="678" y="360" class="small">elicitation/create in map</text>
+  <text x="678" y="378" class="small">signed candidates and expiry</text>
+  <text x="678" y="410" class="step">verify retry</text>
+  <text x="678" y="428" class="small">state, response schema, action</text>
+  <text x="678" y="446" class="small">authorization and containment</text>
+  <text x="678" y="478" class="step">resultType: complete</text>
+
+  <path d="M300,320 L660,320" class="edge" marker-end="url(#arrow)"/>
+  <path d="M660,370 L300,370" class="edge" marker-end="url(#arrow)"/>
+  <path d="M300,440 L660,440" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="525" width="880" height="25" class="box"/>
+  <text x="480" y="542" text-anchor="middle" class="small">No initialize, no reverse request, no hidden protocol session, and no mutation based on untrusted scope.</text>
+</svg>

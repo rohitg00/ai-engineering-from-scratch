@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "kind": "career-route",
+  "id": "ai-data-engineer",
+  "title": "AI Data Systems",
+  "workFamily": "AI Data Systems",
+  "commonTitles": ["AI Data Engineer", "Machine Learning Data Engineer", "Retrieval Engineer"],
+  "summary": "Build reliable data, feature, embedding, retrieval, evaluation, and observability pipelines for AI systems.",
+  "keywords": "ai data engineer pipelines feature engineering embeddings retrieval rag quality observability",
+  "decisionPrompt": "Do you want to make the data behind training, retrieval, evaluation, and production behavior trustworthy?",
+  "mission": "Build on shared foundations to create traceable AI data systems that transform source data into measurable model and retrieval inputs.",
+  "responsibilities": [
+    "Design reproducible ingestion, transformation, and feature pipelines.",
+    "Build embedding and retrieval paths with explicit quality measures.",
+    "Detect leakage, drift, missing data, and retrieval regressions.",
+    "Instrument data-dependent behavior from source through production."
+  ],
+  "goodFitIf": [
+    "You care about lineage, repeatability, and data quality more than demos.",
+    "You enjoy tracing model behavior back to data and retrieval decisions.",
+    "You want to connect data systems with measurable AI outcomes."
+  ],
+  "baseline": [
+    "Complete the shared software engineering and AI foundations, or demonstrate equivalent working knowledge.",
+    "Be comfortable with tabular data, features, train and test splits, and basic evaluation.",
+    "Be able to inspect files, schemas, and pipeline output from code."
+  ],
+  "boundary": "This is a specialist overlay after shared foundations. It samples training, feature, and retrieval data work, but does not claim mastery of every warehouse, lake, streaming, or governance platform.",
+  "timeNote": "The estimate covers lesson time only. Portfolio work and practice take additional time.",
+  "portfolioProof": {
+    "title": "Traceable AI Data Pipeline",
+    "description": "Build a reproducible data and retrieval path whose inputs, transformations, quality checks, and downstream effects can be inspected.",
+    "evidence": [
+      "A reproducible ingestion and transformation pipeline",
+      "Leakage, schema, and data quality checks",
+      "Embedding and retrieval evaluation results",
+      "Observability for data-dependent failures",
+      "A provenance and rollback note"
+    ]
+  },
+  "readinessCriteria": [
+    "Can explain lineage from raw data to model or retrieval input.",
+    "Can prevent leakage and verify feature transformations.",
+    "Can measure retrieval quality separately from generation quality.",
+    "Can identify a data, embedding, retrieval, or model cause from evidence.",
+    "Can reproduce a pipeline result and document how to roll it back."
+  ],
+  "coverage": {
+    "strong": ["Data and feature pipelines", "Embeddings and retrieval", "RAG evaluation", "AI observability"],
+    "partial": ["Lineage and schema evolution", "Pipeline orchestration and backfills", "Data governance"],
+    "outsideCourse": ["Enterprise warehouse or lake ownership", "Compliance authority", "Live data platform on-call experience"]
+  },
+  "completionClaim": "Completing this route shows that you can build and evaluate a traceable AI data pipeline. It does not guarantee a role or establish experience operating an enterprise data platform.",
+  "sourceBasis": {
+    "reviewedAt": "2026-08-29",
+    "method": "Synthesized from current primary job descriptions across AI field, product, platform, data, developer, and evaluation teams."
+  },
+  "estimatedMinutes": 915,
+  "stages": [
+    {
+      "id": "common-core",
+      "title": "Common Core",
+      "outcome": "Build reproducible data, feature, and language-model preparation pipelines.",
+      "lessonPaths": [
+        "phases/00-setup-and-tooling/09-data-management",
+        "phases/02-ml-fundamentals/08-feature-engineering",
+        "phases/02-ml-fundamentals/13-ml-pipelines",
+        "phases/10-llms-from-scratch/03-data-pipelines"
+      ],
+      "artifact": "A versioned pipeline with deterministic transforms, split checks, and a reproducible run record."
+    },
+    {
+      "id": "role-practice",
+      "title": "Role Practice",
+      "outcome": "Build context and retrieval paths whose quality can be measured independently.",
+      "lessonPaths": [
+        "phases/11-llm-engineering/04-embeddings",
+        "phases/11-llm-engineering/05-context-engineering",
+        "phases/11-llm-engineering/06-rag",
+        "phases/11-llm-engineering/07-advanced-rag"
+      ],
+      "artifact": "A retrieval system with a documented corpus, index configuration, and retrieval metrics."
+    },
+    {
+      "id": "proof-project",
+      "title": "Proof Project",
+      "outcome": "Connect the data path to an evaluated production-style application.",
+      "lessonPaths": [
+        "phases/11-llm-engineering/10-evaluation",
+        "phases/11-llm-engineering/13-production-app"
+      ],
+      "artifact": "A traceable AI data pipeline with end-to-end quality checks and application-level evaluation."
+    },
+    {
+      "id": "interview-readiness-evidence",
+      "title": "Interview and Readiness Evidence",
+      "outcome": "Show how telemetry separates data, retrieval, and generation failures.",
+      "lessonPaths": ["phases/17-infrastructure-and-production/13-llm-observability"],
+      "artifact": "A failure analysis that links a production symptom to the responsible data or retrieval stage."
+    }
+  ],
+  "lessons": [
+    {"order": 1, "path": "phases/00-setup-and-tooling/09-data-management", "minutes": 45, "required": true},
+    {"order": 2, "path": "phases/02-ml-fundamentals/08-feature-engineering", "minutes": 90, "required": true},
+    {"order": 3, "path": "phases/02-ml-fundamentals/13-ml-pipelines", "minutes": 120, "required": true},
+    {"order": 4, "path": "phases/10-llms-from-scratch/03-data-pipelines", "minutes": 90, "required": true},
+    {"order": 5, "path": "phases/11-llm-engineering/04-embeddings", "minutes": 75, "required": true},
+    {"order": 6, "path": "phases/11-llm-engineering/05-context-engineering", "minutes": 90, "required": true},
+    {"order": 7, "path": "phases/11-llm-engineering/06-rag", "minutes": 90, "required": true},
+    {"order": 8, "path": "phases/11-llm-engineering/07-advanced-rag", "minutes": 90, "required": true},
+    {"order": 9, "path": "phases/11-llm-engineering/10-evaluation", "minutes": 45, "required": true},
+    {"order": 10, "path": "phases/11-llm-engineering/13-production-app", "minutes": 120, "required": true},
+    {"order": 11, "path": "phases/17-infrastructure-and-production/13-llm-observability", "minutes": 60, "required": true}
+  ]
+}

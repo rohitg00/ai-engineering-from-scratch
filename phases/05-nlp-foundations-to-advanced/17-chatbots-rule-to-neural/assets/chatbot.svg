@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .stage { font-size: 11px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .note { font-size: 10px; fill: #666; font-style: italic; }
+      .line { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="30" width="200" height="300" rx="4"/>
+  <text class="label" x="120" y="55" text-anchor="middle">rule-based</text>
+  <text class="note" x="35" y="78">1960s → today for safety-critical</text>
+  <text class="content" x="35" y="105">IF matches "i want"</text>
+  <text class="content" x="35" y="125">THEN "why do you want"</text>
+  <text class="content" x="35" y="165">intent classifier</text>
+  <text class="content" x="35" y="183">+ slot filling</text>
+  <text class="content" x="35" y="201">+ state machine</text>
+  <text class="note" x="35" y="235">pro: predictable,</text>
+  <text class="note" x="35" y="250">deterministic,</text>
+  <text class="note" x="35" y="265">no hallucination</text>
+  <text class="note" x="35" y="290">con: narrow scope</text>
+  <text class="note" x="35" y="305">doesn't handle novel inputs</text>
+
+  <rect class="box" x="240" y="30" width="200" height="300" rx="4"/>
+  <text class="label" x="340" y="55" text-anchor="middle">retrieval-based</text>
+  <text class="note" x="255" y="78">2010s. still ships for FAQs</text>
+  <text class="content" x="255" y="105">encode utterance,</text>
+  <text class="content" x="255" y="123">find nearest match,</text>
+  <text class="content" x="255" y="141">return stored response</text>
+  <text class="content" x="255" y="180">threshold for refusal</text>
+  <text class="note" x="255" y="220">pro: handles paraphrase,</text>
+  <text class="note" x="255" y="235">no hallucination,</text>
+  <text class="note" x="255" y="250">scales cheaply</text>
+  <text class="note" x="255" y="280">con: can't combine info,</text>
+  <text class="note" x="255" y="295">can't do multi-turn</text>
+  <text class="note" x="255" y="310">reasoning</text>
+
+  <rect class="box" x="460" y="30" width="200" height="300" rx="4"/>
+  <text class="label" x="560" y="55" text-anchor="middle">neural (seq2seq)</text>
+  <text class="note" x="475" y="78">2014-2019. rarely solo now</text>
+  <text class="content" x="475" y="105">encoder-decoder on</text>
+  <text class="content" x="475" y="123">conversation logs</text>
+  <text class="content" x="475" y="141">generates from scratch</text>
+  <text class="note" x="475" y="180">pro: fluent phrasing</text>
+  <text class="note" x="475" y="220">con: generic outputs</text>
+  <text class="note" x="475" y="235">("I don't know"),</text>
+  <text class="note" x="475" y="250">factual drift, no grounding,</text>
+  <text class="note" x="475" y="265">no tool use</text>
+  <text class="note" x="475" y="290">used inside hybrids today,</text>
+  <text class="note" x="475" y="305">not solo</text>
+
+  <rect class="hot" x="680" y="30" width="200" height="300" rx="4"/>
+  <text class="label" x="780" y="55" text-anchor="middle">LLM agent loop</text>
+  <text class="note" x="695" y="78">2023 → 2026 production</text>
+  <text class="content" x="695" y="105">plan → call tool</text>
+  <text class="content" x="695" y="123">   → observe → decide</text>
+  <text class="content" x="695" y="141">   → ... → answer</text>
+  <text class="content" x="695" y="175">RAG grounding</text>
+  <text class="content" x="695" y="195">tool contracts</text>
+  <text class="content" x="695" y="215">eval + observability</text>
+  <text class="note" x="695" y="245">pro: takes actions,</text>
+  <text class="note" x="695" y="260">handles novelty</text>
+  <text class="note" x="695" y="290">con: harder to reason about,</text>
+  <text class="note" x="695" y="305">prompt injection,</text>
+  <text class="note" x="695" y="320">infinite loops</text>
+</svg>

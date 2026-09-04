@@ -1,0 +1,90 @@
+{
+  "lesson": "29-production-runtimes",
+  "title": "Production Runtimes: Queue, Event, Cron",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What are the six runtime shapes the lesson lists?",
+      "options": [
+        "Map, filter, reduce, fold, scan, group",
+        "Request-response, streaming, durable execution, queue-based, event-driven, scheduled",
+        "REST, gRPC, GraphQL, WebSocket, SSE, MQTT",
+        "Read, write, exec, fork, exit, wait"
+      ],
+      "correct": 1,
+      "explanation": "These are the six runtime shapes; pick a shape before picking a framework."
+    },
+    {
+      "stage": "pre",
+      "question": "When is request-response a poor fit?",
+      "options": [
+        "On internal services",
+        "When the task takes longer than about 30 seconds and users hang up while workers pile up",
+        "On REST APIs",
+        "On a 1-second classification"
+      ],
+      "correct": 1,
+      "explanation": "Synchronous HTTP is only viable for short tasks; long tasks need queue/durable/event shapes."
+    },
+    {
+      "stage": "check",
+      "question": "What is durable execution's core property?",
+      "options": [
+        "Lower token cost",
+        "Faster inference",
+        "Native voice support",
+        "State is checkpointed after every step so the runtime can resume from the last successful step on failure"
+      ],
+      "correct": 3,
+      "explanation": "Checkpoint-and-resume is the differentiator; LangGraph is the lesson's reference."
+    },
+    {
+      "stage": "check",
+      "question": "Which Anthropic observation justifies queue-based runtimes for long-horizon agents?",
+      "options": [
+        "Tasks must run synchronously",
+        "Tasks always complete in 5 seconds",
+        "Computer use announcement: dozens-to-hundreds of steps per task is normal",
+        "Cron solves everything"
+      ],
+      "correct": 2,
+      "explanation": "Anthropic flagged dozens-to-hundreds of steps per task as normal; that workload needs queues or durable runtimes."
+    },
+    {
+      "stage": "check",
+      "question": "What does the lesson mean by 'observability is load-bearing'?",
+      "options": [
+        "Providers require it for billing",
+        "Logs are pretty",
+        "Disk gets full",
+        "Without OTel GenAI spans and a Langfuse/Phoenix/Opik backend you cannot debug a multi-step agent that failed at step 40"
+      ],
+      "correct": 3,
+      "explanation": "Observability is not optional for multi-step agents; it is the difference between debugging and replaying from scratch."
+    },
+    {
+      "stage": "post",
+      "question": "Why must queue workers have a dead-letter queue (DLQ)?",
+      "options": [
+        "DLQ makes jobs faster",
+        "Without DLQ, failed jobs vanish silently",
+        "DLQ is encrypted",
+        "DLQ is required by AWS"
+      ],
+      "correct": 1,
+      "explanation": "Failed jobs without DLQ disappear; DLQ is the parking lot for failed jobs."
+    },
+    {
+      "stage": "post",
+      "question": "What does the lesson recommend pairing cron-shaped agents with?",
+      "options": [
+        "Durable execution so a failing nightly run resumes next tick",
+        "WebRTC",
+        "GPU autoscalers",
+        "Streaming SSE"
+      ],
+      "correct": 0,
+      "explanation": "Cron + durable execution recovers cleanly from failed scheduled runs."
+    }
+  ]
+}

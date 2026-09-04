@@ -1,0 +1,8 @@
+{
+  "workspaceRoot": "..",
+  "allowedKinds": ["read", "write", "command", "network"],
+  "commandAllowlist": [["python3", "-m", "unittest"]],
+  "networkAllowlist": ["https://docs.example.test"],
+  "approvalKinds": ["write", "network"],
+  "permitSecretUseAfterApproval": false
+}

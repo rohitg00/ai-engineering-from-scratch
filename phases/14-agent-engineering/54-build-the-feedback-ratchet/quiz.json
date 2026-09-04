@@ -1,0 +1,48 @@
+{
+  "lesson": "54-build-the-feedback-ratchet",
+  "title": "Build the Feedback Ratchet",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "When does feedback become infrastructure?",
+      "options": ["When it is summarized", "When it appears on a dashboard", "When it is collected", "When it has a path to an owned durable change and verification"],
+      "correct": 3,
+      "explanation": "Promotion and ownership turn observation into system learning."
+    },
+    {
+      "stage": "check",
+      "question": "Where should a production-write attempt route?",
+      "options": ["Documentation only", "Policy or permission boundary", "General backlog", "Visual design"],
+      "correct": 1,
+      "explanation": "Unsafe authority is owned by an enforceable policy layer."
+    },
+    {
+      "stage": "check",
+      "question": "What should a false positive change first?",
+      "options": ["Team title", "Deployment region", "Pricing", "Evaluation or test coverage"],
+      "correct": 3,
+      "explanation": "The evaluation layer should preserve the failure as a reproducible case."
+    },
+    {
+      "stage": "check",
+      "question": "Why is an owner part of the control?",
+      "options": ["Unowned improvements do not reliably change or stay current", "To increase meetings", "To hide the signal", "To remove proof"],
+      "correct": 0,
+      "explanation": "Someone must implement, verify, review, and retire the action."
+    },
+    {
+      "stage": "post",
+      "question": "When should a control be retired?",
+      "options": ["Never", "When evidence shows it is superseded, obsolete, or creates more friction than protected risk", "When it feels old", "Immediately after adding it"],
+      "correct": 1,
+      "explanation": "Retirement should be evidence-backed just like promotion."
+    },
+    {
+      "stage": "post",
+      "question": "How do shaping and coding-agent feedback connect?",
+      "options": ["Only prompts matter", "Only metrics matter", "Product evidence changes outcome and scope, while agent corrections change the workbench; incidents may change both", "They do not"],
+      "correct": 2,
+      "explanation": "Both tracks use the same ratchet from evidence to durable system change."
+    }
+  ]
+}

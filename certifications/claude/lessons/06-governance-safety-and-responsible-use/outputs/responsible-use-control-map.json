@@ -1,0 +1,48 @@
+{
+  "useCaseId": "renewal-risk-assistance-v1",
+  "approvedPurpose": "Prepare evidence-backed renewal-risk summaries for an authorized account manager",
+  "automationMode": "assist",
+  "analysisConfidence": 0.87,
+  "consequence": "high",
+  "reversible": false,
+  "dataClasses": ["internal", "confidential"],
+  "affectedPeople": "current business customers",
+  "allowedOutputs": ["risk evidence summary", "draft review packet"],
+  "prohibitedActions": ["rank protected groups", "approve discounts", "send offers"],
+  "risks": [
+    {
+      "id": "personal-data-exposure",
+      "prevent": "Minimize transcripts and remove direct identifiers",
+      "detect": "Scan prompt and output fields before model and reviewer access",
+      "correct": "Contain the workflow, notify the incident owner, and rotate exposed access"
+    },
+    {
+      "id": "unsupported-recommendation",
+      "prevent": "Constrain claims to approved account and policy sources",
+      "detect": "Run claim-evidence validation and expose conflicts",
+      "correct": "Block release and return explicit findings for revision"
+    },
+    {
+      "id": "unauthorized-action",
+      "prevent": "Expose read and draft capabilities only",
+      "detect": "Audit denied mutation proposals and approval state",
+      "correct": "Revoke the capability and investigate attempted action"
+    },
+    {
+      "id": "uneven-treatment",
+      "prevent": "Define approved criteria and exclude unjustified proxy fields",
+      "detect": "Measure error and escalation rates across affected groups",
+      "correct": "Pause the workflow and repair data, criteria, or review policy"
+    }
+  ],
+  "approvalPacket": {
+    "humanGate": true,
+    "authorizedRole": "account-director",
+    "decision": "Approve, revise, reject, or escalate the proposed next step",
+    "evidence": "Source IDs, conflicts, and automated check results",
+    "uncertainty": "Missing or low-authority evidence is listed explicitly",
+    "untrustedContentCanAuthorize": false
+  },
+  "retentionRule": "Retain minimized review evidence for the approved policy period, then delete it",
+  "incidentOwner": "security-and-privacy-on-call"
+}

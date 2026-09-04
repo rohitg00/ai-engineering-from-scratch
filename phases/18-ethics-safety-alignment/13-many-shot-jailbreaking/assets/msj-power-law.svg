@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .axis { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .curve { stroke-width: 2.0; fill: none; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Many-shot jailbreaking: ASR power law (Anil et al. 2024)</text>
+
+  <rect x="60" y="60" width="600" height="340" class="box"/>
+  <line x1="120" y1="360" x2="620" y2="360" class="axis"/>
+  <line x1="120" y1="360" x2="120" y2="80" class="axis"/>
+  <text x="370" y="395" text-anchor="middle" class="small">shots (log) 1 .. 512</text>
+  <text x="70" y="220" text-anchor="middle" class="small" transform="rotate(-90 70 220)">attack success rate</text>
+
+  <path d="M 130 355 Q 200 345 260 300 T 380 200 T 500 120 T 600 100" class="curve" stroke="#c0392b"/>
+  <text x="510" y="125" class="small" fill="#c0392b">undefended (power law)</text>
+
+  <path d="M 130 355 Q 200 340 260 300 L 320 280 L 620 275" class="curve" stroke="#2e7d32"/>
+  <text x="500" y="270" class="small" fill="#2e7d32">prompt-classifier defense</text>
+
+  <line x1="220" y1="80" x2="220" y2="360" stroke="#888" stroke-dasharray="2 4"/>
+  <text x="225" y="95" class="small" fill="#888">5 shots</text>
+  <line x1="330" y1="80" x2="330" y2="360" stroke="#888" stroke-dasharray="2 4"/>
+  <text x="335" y="95" class="small" fill="#888">32 shots</text>
+  <line x1="480" y1="80" x2="480" y2="360" stroke="#888" stroke-dasharray="2 4"/>
+  <text x="485" y="95" class="small" fill="#888">256 shots</text>
+
+  <rect x="680" y="60" width="240" height="340" class="box"/>
+  <text x="800" y="82" text-anchor="middle" class="head">mechanism shared with ICL</text>
+  <rect x="700" y="100" width="200" height="60" class="cold"/>
+  <text x="800" y="125" text-anchor="middle" class="step">benign few-shot</text>
+  <text x="800" y="143" text-anchor="middle" class="small">pattern: task instruction</text>
+  <rect x="700" y="180" width="200" height="60" class="hot"/>
+  <text x="800" y="205" text-anchor="middle" class="step">MSJ</text>
+  <text x="800" y="223" text-anchor="middle" class="small">pattern: harmful compliance</text>
+  <text x="700" y="265" class="small">same power-law exponent.</text>
+  <text x="700" y="283" class="small">same pattern extraction.</text>
+  <text x="700" y="301" class="small">defenses that block MSJ</text>
+  <text x="700" y="319" class="small">without blocking ICL require</text>
+  <text x="700" y="337" class="small">context-level classification.</text>
+  <text x="700" y="365" class="small">Anthropic: 61% -&gt; 2% reduction</text>
+  <text x="700" y="383" class="small">on prompt-classifier defense.</text>
+
+  <rect x="60" y="420" width="860" height="70" class="box"/>
+  <text x="80" y="445" class="small">power law -&gt; no natural saturation; more shots keeps helping the attacker.</text>
+  <text x="80" y="465" class="small">category sensitivity: violent / deceitful categories have lower-exponent power laws (jailbreak faster).</text>
+  <text x="80" y="483" class="small">compositional: MSJ + PAIR + persuasive templates is strictly stronger than any single attack.</text>
+</svg>

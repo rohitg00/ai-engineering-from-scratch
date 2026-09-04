@@ -1,0 +1,78 @@
+{
+  "lesson": "19-ai-gateways",
+  "title": "AI Gateways — LiteLLM, Portkey, Kong AI Gateway, Bifrost",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the core role of an AI gateway in the lesson?",
+      "options": [
+        "A vector database for retrieval",
+        "A model fine-tuning service",
+        "A process sitting between apps and model providers that consolidates routing, fallback, retries, rate limits, secret references, observability, and guardrails behind one API",
+        "A logging-only sidecar"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What scale ceiling does Kong's benchmark report for LiteLLM?",
+      "options": [
+        "LiteLLM cannot be benchmarked",
+        "It scales linearly past 10k RPS",
+        "It breaks down around ~2000 RPS with 8 GB memory and cascading failures under sustained load",
+        "It tops out at 50 RPS"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Per the Kong benchmark on equivalent CPU, how much faster is Kong AI Gateway than Portkey and LiteLLM?",
+      "options": [
+        "Identical",
+        "About 10% and 20% faster",
+        "228% faster than Portkey and 859% faster than LiteLLM",
+        "Slower than both"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which gateway does the lesson position with 20-40 ms latency overhead and guardrails / PII redaction / jailbreak detection focus?",
+      "options": [
+        "Cloudflare AI Gateway",
+        "Portkey",
+        "Kong AI Gateway",
+        "LiteLLM"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does the lesson say is the forcing function for self-hosted vs managed gateway decisions?",
+      "options": [
+        "Number of supported providers",
+        "Cost per request",
+        "Data residency requirements",
+        "Whether the gateway is open source"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which gateways stay within budget when the SLA is TTFT P99 < 100 ms?",
+      "options": [
+        "Only Portkey",
+        "Any gateway",
+        "Only LiteLLM",
+        "Kong (~3-8 ms) or Cloudflare/Vercel edge gateways (~1-3 ms); Portkey at 20-40 ms is too heavy"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

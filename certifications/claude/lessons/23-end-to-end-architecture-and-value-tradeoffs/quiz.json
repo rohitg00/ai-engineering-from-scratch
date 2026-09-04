@@ -1,0 +1,78 @@
+{
+  "lesson": "23-end-to-end-architecture-and-value-tradeoffs",
+  "title": "End-to-End Architecture and Value Tradeoffs",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A process has stable, known steps and strict audit requirements. Which pattern is the strongest default?",
+      "options": [
+        "A tool-enabled single prompt",
+        "A planner-executor agent pair",
+        "A deterministic workflow",
+        "A bounded agent"
+      ],
+      "correct": 2,
+      "explanation": "Known steps and audit needs favor code-owned transitions, narrow permissions, and explicit recovery. An agent is justified only when adaptive path selection is a real requirement."
+    },
+    {
+      "stage": "check",
+      "question": "When is a multi-agent design most justified?",
+      "options": [
+        "When redundant agents independently vote on every output",
+        "When an agent framework supports handoffs and parallel execution without additional application code",
+        "When a task has distinct stages that can each receive a specialized prompt and dedicated tool set",
+        "When context isolation, independent review, or parallel work measurably improves the outcome"
+      ],
+      "correct": 3,
+      "explanation": "Multiple agents add coordination, cost, and handoff risk. They earn that complexity when isolation, independence, parallelism, or specialization addresses a measured requirement."
+    },
+    {
+      "stage": "check",
+      "question": "Which control should be enforced outside the model?",
+      "options": [
+        "Whether a requested refund exceeds the caller's authorized limit",
+        "Whether a clause creates material business risk under the available evidence",
+        "Whether a summary preserves the decision-critical nuance of the source material",
+        "Whether a draft is sufficiently persuasive"
+      ],
+      "correct": 0,
+      "explanation": "An authorization limit is a stable predicate over trusted identity and transaction data. Code must enforce it. Semantic judgments can use Claude with evaluation and review."
+    },
+    {
+      "stage": "check",
+      "question": "Why can the cheapest model per token be more expensive per successful task?",
+      "options": [
+        "Low unit price always lowers task cost",
+        "Higher retry and human-review rates can outweigh the lower call price",
+        "Its token price changes the authorization boundary for costly or high-impact tool calls",
+        "Its lower capability tier requires every tool operation to be confirmed by a human reviewer"
+      ],
+      "correct": 1,
+      "explanation": "Architecture economics include retries, tool calls, review labor, and corrections. Lower unit price does not guarantee lower expected cost for an accepted outcome."
+    },
+    {
+      "stage": "post",
+      "question": "A contract pipeline returns polished redlines with unsupported conclusions. Which change best addresses the structural failure?",
+      "options": [
+        "Retrieve the highest-ranked clauses, generate the full redline in one step, and keep the version with the strongest confidence score",
+        "Run a second verifier prompt over each completed redline and accept it when the verifier reports no unsupported claims",
+        "Separate retrieval, clause analysis, evidence review, redline generation, and approval with explicit contracts",
+        "Add the full contract and policy library to one longer prompt, then require citations in the returned redline"
+      ],
+      "correct": 2,
+      "explanation": "The failure comes from collapsed responsibilities and missing provenance. Decomposition with contracts localizes errors and prevents generation from bypassing evidence review."
+    },
+    {
+      "stage": "post",
+      "question": "What should a feedback record include so it can guide an architecture change?",
+      "options": [
+        "The final answer, its cited evidence, and the model confidence reported for each conclusion",
+        "A task-level rating, reviewer identity, and timestamp attached to the final response",
+        "Token usage, latency, retry count, and total cost for the completed model trajectory",
+        "Input class, versions, evidence, trajectory, validation, human edits, and downstream outcome"
+      ],
+      "correct": 3,
+      "explanation": "A useful feedback loop connects outcome to the system state and trajectory that produced it. That evidence distinguishes prompt, retrieval, tool, routing, and scope failures."
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
+    </style>
+  </defs>
+  <text x="450" y="28" text-anchor="middle" class="title">A2A protocol — agent-to-agent discovery, task, artifact</text>
+
+  <rect x="40" y="60" width="180" height="380" class="cool"/>
+  <text x="130" y="82" text-anchor="middle" class="head">Client Agent</text>
+  <text x="130" y="104" text-anchor="middle" class="small">LangGraph? CrewAI? custom?</text>
+  <text x="130" y="124" text-anchor="middle" class="small">doesn't matter to A2A</text>
+
+  <rect x="680" y="60" width="180" height="380" class="hot"/>
+  <text x="770" y="82" text-anchor="middle" class="head">Remote Agent</text>
+  <text x="770" y="104" text-anchor="middle" class="small">code-review-agent</text>
+  <text x="770" y="124" text-anchor="middle" class="small">opaque implementation</text>
+
+  <line x1="220" y1="160" x2="680" y2="160" class="edge" marker-end="url(#arrow)"/>
+  <text x="450" y="152" text-anchor="middle" class="small">GET /.well-known/agent.json</text>
+
+  <line x1="680" y1="200" x2="220" y2="200" class="edge" marker-end="url(#arrow)"/>
+  <text x="450" y="192" text-anchor="middle" class="small">Agent Card: skills, endpoints, auth, modalities</text>
+
+  <line x1="220" y1="240" x2="680" y2="240" class="edge" marker-end="url(#arrow)"/>
+  <text x="450" y="232" text-anchor="middle" class="small">POST /tasks {skill: review-python, payload: {...}}</text>
+
+  <line x1="680" y1="280" x2="220" y2="280" class="edge" marker-end="url(#arrow)"/>
+  <text x="450" y="272" text-anchor="middle" class="small">201 task_id=baf1fc13, state=submitted</text>
+
+  <line x1="220" y1="320" x2="680" y2="320" class="edge" marker-end="url(#arrow)"/>
+  <text x="450" y="312" text-anchor="middle" class="small">GET /tasks/baf1fc13 (poll)</text>
+
+  <line x1="680" y1="360" x2="220" y2="360" class="edge" marker-end="url(#arrow)"/>
+  <text x="450" y="352" text-anchor="middle" class="small">state=completed, artifact={type: structured, data: {...}}</text>
+
+  <rect x="250" y="395" width="400" height="40" class="cold"/>
+  <text x="450" y="420" text-anchor="middle" class="small">lifecycle: submitted → working → completed / failed / canceled</text>
+
+  <rect x="40" y="460" width="820" height="50" class="box"/>
+  <text x="450" y="482" text-anchor="middle" class="head">A2A (horizontal, agent↔agent) vs MCP (vertical, agent↔tool) — production uses both</text>
+  <text x="450" y="500" text-anchor="middle" class="small">150+ orgs by April 2026 · Google Vertex AI Agent Builder · Microsoft Agent Framework · LangGraph / CrewAI / AutoGen adapters</text>
+</svg>

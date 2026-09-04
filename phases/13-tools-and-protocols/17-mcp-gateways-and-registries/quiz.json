@@ -1,0 +1,78 @@
+{
+  "lesson": "17-mcp-gateways-and-registries",
+  "title": "Stateless MCP Gateways and Registry Admission",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What must a current MCP gateway preserve between ordinary client requests?",
+      "options": [
+        "One Mcp-Session-Id per backend",
+        "The last HTTP connection",
+        "A standalone GET event stream",
+        "No protocol session; each request carries the information needed to validate and route it"
+      ],
+      "correct": 3,
+      "explanation": "MCP 2026-07-28 ordinary requests are self-contained and can reach any healthy gateway instance."
+    },
+    {
+      "stage": "check",
+      "question": "A principal-filtered tools/list result should usually use which cache scope?",
+      "options": [
+        "public",
+        "global",
+        "private",
+        "session"
+      ],
+      "correct": 2,
+      "explanation": "A user-specific tool list must not be shared across authorization contexts."
+    },
+    {
+      "stage": "check",
+      "question": "How should a gateway forward a tool call to a current backend?",
+      "options": [
+        "Open a GET stream first",
+        "Copy the outer bearer token and session id",
+        "Reuse the outer JSON-RPC id as durable state",
+        "Create a fresh self-contained request with gateway client metadata and mediated capabilities"
+      ],
+      "correct": 3,
+      "explanation": "The gateway is the backend's client and creates a new independently valid request."
+    },
+    {
+      "stage": "check",
+      "question": "How should a gateway use an official Registry server.json record during admission?",
+      "options": [
+        "Validate its publication shape, then join it to separate verified publisher, provenance, policy, and approval state",
+        "Treat publication as a completed security review",
+        "Copy verification claims from arbitrary record fields",
+        "Trust any record whose name looks familiar"
+      ],
+      "correct": 0,
+      "explanation": "server.json carries publication metadata. Verified provenance and the gateway's approval decision remain external admission evidence."
+    },
+    {
+      "stage": "post",
+      "question": "How are long-lived list-change notifications opened in modern Streamable HTTP?",
+      "options": [
+        "Through a POST subscriptions/listen request whose response is SSE",
+        "Through resources/subscribe",
+        "Through a standalone GET with Last-Event-ID",
+        "Through notifications/initialized"
+      ],
+      "correct": 0,
+      "explanation": "subscriptions/listen replaces the old unsolicited GET and resource subscription model."
+    },
+    {
+      "stage": "post",
+      "question": "Which Tasks extension routing rule is current?",
+      "options": [
+        "Use tasks/result for final output",
+        "Use tasks/list to recover all tasks in a session",
+        "Route tasks/get, tasks/update, and tasks/cancel using taskId as Mcp-Name",
+        "Store the task in Mcp-Session-Id"
+      ],
+      "correct": 2,
+      "explanation": "The official extension uses get, update, and cancel; task ids provide the routing handle without protocol sessions."
+    }
+  ]
+}

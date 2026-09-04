@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">three failure modes, two enforcement points</text>
+
+  <rect x="40" y="50" width="400" height="440" class="box"/>
+  <text x="240" y="72" text-anchor="middle" class="head">prompt-for-JSON (no strict mode)</text>
+
+  <rect x="60" y="90" width="360" height="40" class="cool"/>
+  <text x="240" y="114" text-anchor="middle" class="step">generate freely</text>
+
+  <rect x="60" y="140" width="360" height="40" class="box"/>
+  <text x="240" y="164" text-anchor="middle" class="step">parse JSON</text>
+
+  <rect x="60" y="190" width="360" height="40" class="box"/>
+  <text x="240" y="214" text-anchor="middle" class="step">validate against schema</text>
+
+  <path d="M240,130 L240,140" class="edge" marker-end="url(#arrow)"/>
+  <path d="M240,180 L240,190" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="260" width="360" height="40" class="hot"/>
+  <text x="240" y="284" text-anchor="middle" class="step">FAIL 1: parse error</text>
+
+  <rect x="60" y="310" width="360" height="40" class="hot"/>
+  <text x="240" y="334" text-anchor="middle" class="step">FAIL 2: schema violation</text>
+
+  <rect x="60" y="360" width="360" height="40" class="cool"/>
+  <text x="240" y="384" text-anchor="middle" class="step">SUCCESS: typed payload</text>
+
+  <rect x="60" y="420" width="360" height="50" class="box"/>
+  <text x="240" y="443" text-anchor="middle" class="step">retry on failure (max 3x)</text>
+  <text x="240" y="459" text-anchor="middle" class="small">expensive but necessary without strict mode</text>
+
+  <rect x="480" y="50" width="440" height="440" class="cool"/>
+  <text x="700" y="72" text-anchor="middle" class="head">strict mode / constrained decoding</text>
+
+  <rect x="500" y="90" width="400" height="50" class="cold"/>
+  <text x="700" y="110" text-anchor="middle" class="step">decode with schema-aware logit mask</text>
+  <text x="700" y="128" text-anchor="middle" class="small">grammar FSM rejects invalid next-tokens</text>
+
+  <rect x="500" y="160" width="400" height="40" class="box"/>
+  <text x="700" y="184" text-anchor="middle" class="step">output parses (always)</text>
+
+  <rect x="500" y="210" width="400" height="40" class="box"/>
+  <text x="700" y="234" text-anchor="middle" class="step">output validates (always)</text>
+
+  <path d="M700,140 L700,160" class="edge" marker-end="url(#arrow)"/>
+  <path d="M700,200 L700,210" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="500" y="280" width="400" height="40" class="cool"/>
+  <text x="700" y="304" text-anchor="middle" class="step">SUCCESS: typed payload</text>
+
+  <rect x="500" y="330" width="400" height="40" class="hot"/>
+  <text x="700" y="354" text-anchor="middle" class="step">REFUSAL: typed reason</text>
+
+  <rect x="500" y="400" width="400" height="80" class="box"/>
+  <text x="520" y="422" class="step">OpenAI     : response_format strict:true</text>
+  <text x="520" y="440" class="step">Anthropic  : input_schema on tool_use</text>
+  <text x="520" y="458" class="step">Gemini     : responseSchema + grammar</text>
+  <text x="520" y="476" class="step">Open       : outlines / guidance / lm-format-enforcer</text>
+
+  <text x="480" y="506" text-anchor="middle" class="caption">under strict, only the refusal branch stays; the retry loop collapses.</text>
+</svg>

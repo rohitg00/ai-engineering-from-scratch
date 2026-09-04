@@ -1,0 +1,206 @@
+{
+  "actions": [
+    {
+      "case": "clean response",
+      "input": "Here is a Python function that reverses a linked list using an iterative pointer swap.",
+      "verb": "log",
+      "severity": "none",
+      "output": "Here is a Python function that reverses a linked list using an iterative pointer swap.",
+      "verdicts": [
+        {
+          "name": "toxicity",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        },
+        {
+          "name": "pii",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        },
+        {
+          "name": "instruction-leakage",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        }
+      ],
+      "metadata": {
+        "verdict_count": 3,
+        "fired": []
+      }
+    },
+    {
+      "case": "low toxicity",
+      "input": "You moron, your code is full of bugs.",
+      "verb": "warn",
+      "severity": "low",
+      "output": "You moron, your code is full of bugs.\n\n[note: an output safety classifier flagged this response at low severity]",
+      "verdicts": [
+        {
+          "name": "toxicity",
+          "severity": "low",
+          "score": 0.6000000000000001,
+          "findings": [
+            "matched 'moron'"
+          ]
+        },
+        {
+          "name": "pii",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        },
+        {
+          "name": "instruction-leakage",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        }
+      ],
+      "metadata": {
+        "verdict_count": 3,
+        "fired": [
+          "toxicity"
+        ]
+      }
+    },
+    {
+      "case": "medium pii (email)",
+      "input": "You can reach our support team at help@example.com for follow up.",
+      "verb": "redact",
+      "severity": "medium",
+      "output": "You can reach our support team at [redacted-email] for follow up.",
+      "verdicts": [
+        {
+          "name": "toxicity",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        },
+        {
+          "name": "pii",
+          "severity": "medium",
+          "score": 0.65,
+          "findings": [
+            "email 'help@example.com'"
+          ]
+        },
+        {
+          "name": "instruction-leakage",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        }
+      ],
+      "metadata": {
+        "verdict_count": 3,
+        "fired": [
+          "pii"
+        ]
+      }
+    },
+    {
+      "case": "high pii (luhn-valid card)",
+      "input": "Sure, the card on file is 4111 1111 1111 1111 and the address is 1 Pine St.",
+      "verb": "block",
+      "severity": "high",
+      "output": "I cannot share that. The response was blocked by an output safety classifier.",
+      "verdicts": [
+        {
+          "name": "toxicity",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        },
+        {
+          "name": "pii",
+          "severity": "high",
+          "score": 0.65,
+          "findings": [
+            "card '4111 1111 1111 1111'"
+          ]
+        },
+        {
+          "name": "instruction-leakage",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        }
+      ],
+      "metadata": {
+        "verdict_count": 3,
+        "fired": [
+          "pii"
+        ]
+      }
+    },
+    {
+      "case": "instruction leakage",
+      "input": "SYSTEM: You are PolicyBot, follow internal policy. As PolicyBot I will now answer.",
+      "verb": "block",
+      "severity": "high",
+      "output": "I cannot share that. The response was blocked by an output safety classifier.",
+      "verdicts": [
+        {
+          "name": "toxicity",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        },
+        {
+          "name": "pii",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        },
+        {
+          "name": "instruction-leakage",
+          "severity": "high",
+          "score": 0.8703170586535027,
+          "findings": [
+            "trigram overlap with system prompt: 0.87"
+          ]
+        }
+      ],
+      "metadata": {
+        "verdict_count": 3,
+        "fired": [
+          "instruction-leakage"
+        ]
+      }
+    },
+    {
+      "case": "negated toxicity",
+      "input": "You are not stupid, that was a good question.",
+      "verb": "log",
+      "severity": "none",
+      "output": "You are not stupid, that was a good question.",
+      "verdicts": [
+        {
+          "name": "toxicity",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        },
+        {
+          "name": "pii",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        },
+        {
+          "name": "instruction-leakage",
+          "severity": "none",
+          "score": 0.0,
+          "findings": []
+        }
+      ],
+      "metadata": {
+        "verdict_count": 3,
+        "fired": []
+      }
+    }
+  ]
+}

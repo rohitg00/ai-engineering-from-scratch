@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .win { fill: #e8f5e9; stroke: #2e7d32; stroke-width: 2; }
+      .lose { fill: #f5f5f5; stroke: #aaa; stroke-width: 1; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .win-text { fill: #2e7d32; font-weight: 600; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">entity linking — mention → candidates → disambiguated KB id</text>
+
+  <!-- Step 1: input -->
+  <rect x="40" y="55" width="820" height="55" class="box"/>
+  <text x="55" y="78" class="label">input</text>
+  <text x="55" y="98" class="content">"<tspan font-weight="700">Jordan</tspan> scored 45 points against the Lakers last night."</text>
+
+  <line x1="450" y1="110" x2="450" y2="130" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: candidate gen -->
+  <rect x="40" y="135" width="820" height="90" class="hot"/>
+  <text x="55" y="158" class="label">candidate generation (alias-index lookup for "Jordan")</text>
+  <rect x="55" y="172" width="180" height="40" class="box"/>
+  <text x="145" y="190" text-anchor="middle" class="mono">Q41421</text>
+  <text x="145" y="205" text-anchor="middle" class="caption">Michael Jordan</text>
+
+  <rect x="245" y="172" width="180" height="40" class="box"/>
+  <text x="335" y="190" text-anchor="middle" class="mono">Q810</text>
+  <text x="335" y="205" text-anchor="middle" class="caption">Jordan (country)</text>
+
+  <rect x="435" y="172" width="180" height="40" class="box"/>
+  <text x="525" y="190" text-anchor="middle" class="mono">Q254110</text>
+  <text x="525" y="205" text-anchor="middle" class="caption">Michael B. Jordan</text>
+
+  <rect x="625" y="172" width="220" height="40" class="box"/>
+  <text x="735" y="190" text-anchor="middle" class="mono">Q3308285</text>
+  <text x="735" y="205" text-anchor="middle" class="caption">Michael I. Jordan (ML)</text>
+
+  <line x1="450" y1="225" x2="450" y2="245" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: disambiguation -->
+  <rect x="40" y="250" width="820" height="130" class="box"/>
+  <text x="55" y="273" class="label">disambiguation — score each candidate against context</text>
+
+  <text x="55" y="296" class="mono">score = Jaccard(context, description) + 0.1 × P(entity | "Jordan")</text>
+
+  <rect x="55" y="310" width="180" height="55" class="win"/>
+  <text x="145" y="330" text-anchor="middle" class="mono win-text">Q41421</text>
+  <text x="145" y="348" text-anchor="middle" class="caption win-text">score 0.109</text>
+  <text x="145" y="362" text-anchor="middle" class="caption win-text">basketball match</text>
+
+  <rect x="245" y="310" width="180" height="55" class="lose"/>
+  <text x="335" y="330" text-anchor="middle" class="mono">Q810</text>
+  <text x="335" y="348" text-anchor="middle" class="caption">Lakers not in country desc</text>
+
+  <rect x="435" y="310" width="180" height="55" class="lose"/>
+  <text x="525" y="330" text-anchor="middle" class="mono">Q254110</text>
+  <text x="525" y="348" text-anchor="middle" class="caption">no film keywords in context</text>
+
+  <rect x="625" y="310" width="220" height="55" class="lose"/>
+  <text x="735" y="330" text-anchor="middle" class="mono">Q3308285</text>
+  <text x="735" y="348" text-anchor="middle" class="caption">no ML keywords in context</text>
+
+  <text x="450" y="410" text-anchor="middle" class="caption">top score wins → Q41421 (Michael Jordan, basketball) — output linked to Wikidata</text>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .col { font-size: 11px; fill: #1a1a1a; font-weight: 600; }
+    </style>
+  </defs>
+
+  <text x="440" y="30" text-anchor="middle" class="title">three decades of audio classifiers, same log-mel input</text>
+
+  <!-- shared input -->
+  <rect x="40" y="60" width="800" height="60" class="box"/>
+  <text x="440" y="82" text-anchor="middle" class="label">input: 10-sec log-mel spectrogram — shape [T=998, n_mels=80]</text>
+  <text x="440" y="102" text-anchor="middle" class="caption">same frontend, three generations of backends</text>
+
+  <!-- Era 1: k-NN -->
+  <rect x="40" y="145" width="250" height="280" class="box"/>
+  <text x="165" y="170" text-anchor="middle" class="label">1990s — k-NN on MFCCs</text>
+  <rect x="60" y="195" width="210" height="35" class="box"/>
+  <text x="165" y="218" text-anchor="middle" class="content">MFCC-13 + mean/var pool</text>
+  <line x1="165" y1="232" x2="165" y2="250" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="60" y="255" width="210" height="35" class="box"/>
+  <text x="165" y="278" text-anchor="middle" class="content">cosine → top-K vote</text>
+  <text x="165" y="318" text-anchor="middle" class="caption">zero training, no GPU</text>
+  <text x="165" y="336" text-anchor="middle" class="caption">strong on ESC-50</text>
+  <text x="165" y="354" text-anchor="middle" class="caption">fails on AudioSet</text>
+  <text x="165" y="386" text-anchor="middle" class="content" font-size="11">ESC-50 acc: ~65%</text>
+  <text x="165" y="406" text-anchor="middle" class="caption">your first baseline</text>
+
+  <!-- Era 2: CNN -->
+  <rect x="315" y="145" width="250" height="280" class="box"/>
+  <text x="440" y="170" text-anchor="middle" class="label">2015–2021 — 2D CNN</text>
+  <rect x="335" y="195" width="210" height="35" class="box"/>
+  <text x="440" y="218" text-anchor="middle" class="content">log-mel as image</text>
+  <line x1="440" y1="232" x2="440" y2="250" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="335" y="255" width="210" height="35" class="box"/>
+  <text x="440" y="278" text-anchor="middle" class="content">Conv + Pool × 3, softmax</text>
+  <text x="440" y="318" text-anchor="middle" class="caption">3M params, 10-min train</text>
+  <text x="440" y="336" text-anchor="middle" class="caption">SpecAugment + mixup</text>
+  <text x="440" y="354" text-anchor="middle" class="caption">still the baseline in KWS</text>
+  <text x="440" y="386" text-anchor="middle" class="content" font-size="11">ESC-50 acc: ~82%</text>
+  <text x="440" y="406" text-anchor="middle" class="caption">edge + speech commands</text>
+
+  <!-- Era 3: SSL -->
+  <rect x="590" y="145" width="250" height="280" class="hot"/>
+  <text x="715" y="170" text-anchor="middle" class="label">2024–2026 — BEATs / AST</text>
+  <rect x="610" y="195" width="210" height="35" class="box"/>
+  <text x="715" y="218" text-anchor="middle" class="content">patchify log-mel (16×16)</text>
+  <line x1="715" y1="232" x2="715" y2="250" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="610" y="255" width="210" height="35" class="box"/>
+  <text x="715" y="278" text-anchor="middle" class="content">SSL-pretrained transformer</text>
+  <text x="715" y="318" text-anchor="middle" class="caption">fine-tune on 1-10% labels</text>
+  <text x="715" y="336" text-anchor="middle" class="caption">BEATs-iter3 leads AudioSet</text>
+  <text x="715" y="354" text-anchor="middle" class="caption">default for non-speech 2026</text>
+  <text x="715" y="386" text-anchor="middle" class="content" font-size="11">ESC-50 acc: 97.0%</text>
+  <text x="715" y="406" text-anchor="middle" class="caption">AudioSet mAP: 0.548</text>
+
+  <text x="440" y="450" text-anchor="middle" class="caption">the features stayed the same for 30 years; the backend is the lever</text>
+</svg>

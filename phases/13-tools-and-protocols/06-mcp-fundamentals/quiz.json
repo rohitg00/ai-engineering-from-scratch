@@ -1,0 +1,48 @@
+{
+  "lesson": "06-mcp-fundamentals",
+  "title": "MCP Fundamentals: Stateless Requests and JSON-RPC",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What creates protocol state between two MCP 2026-07-28 requests?",
+      "options": ["The HTTP connection", "Nothing in the protocol core", "Mcp-Session-Id", "The stdio process"],
+      "correct": 1,
+      "explanation": "The modern protocol core is stateless. Each request carries its own version and capabilities."
+    },
+    {
+      "stage": "check",
+      "question": "Which two params._meta fields are required on every modern request?",
+      "options": ["clientInfo and cacheScope", "protocolVersion and clientCapabilities", "sessionId and capabilities", "serverInfo and ttlMs"],
+      "correct": 1,
+      "explanation": "Protocol version and client capabilities are required. Client identity is recommended."
+    },
+    {
+      "stage": "check",
+      "question": "What method must every modern MCP server implement for up-front discovery?",
+      "options": ["tools/list", "initialize", "server/discover", "notifications/initialized"],
+      "correct": 2,
+      "explanation": "server/discover advertises supported versions, capabilities, instructions, and server identity."
+    },
+    {
+      "stage": "check",
+      "question": "What does error code -32022 mean?",
+      "options": ["Internal error", "Header mismatch", "Method not found", "Unsupported protocol version"],
+      "correct": 3,
+      "explanation": "UnsupportedProtocolVersionError includes the requested version and the versions the server supports."
+    },
+    {
+      "stage": "post",
+      "question": "Which result requires ttlMs and cacheScope in MCP 2026-07-28?",
+      "options": ["A JSON-RPC error", "A tools/list result", "A tools/call result", "A cancellation notification"],
+      "correct": 1,
+      "explanation": "List results and resources/read are cacheable results with required cache hints."
+    },
+    {
+      "stage": "post",
+      "question": "How should a server choose capabilities for the current request?",
+      "options": ["Read them from Mcp-Session-Id", "Infer them from the process", "Reuse the first request's declaration", "Read them from the current request metadata"],
+      "correct": 3,
+      "explanation": "A server must not infer modern capabilities from connection or previous-request state."
+    }
+  ]
+}

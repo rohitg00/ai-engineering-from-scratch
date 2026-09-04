@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
+      .frozen { fill: #ecece8; stroke: #666; stroke-width: 1; stroke-dasharray: 4,3; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">ControlNet clones the encoder; LoRA adds a low-rank delta</text>
+
+  <!-- ControlNet -->
+  <text x="100" y="70" class="label">ControlNet</text>
+  <rect x="40" y="80" width="120" height="200" class="frozen"/>
+  <text x="100" y="100" text-anchor="middle" class="caption">frozen SD U-Net</text>
+  <rect x="55" y="115" width="90" height="35" class="box"/>
+  <text x="100" y="138" text-anchor="middle" class="content">encoder</text>
+  <rect x="55" y="155" width="90" height="35" class="box"/>
+  <text x="100" y="178" text-anchor="middle" class="content">bottleneck</text>
+  <rect x="55" y="195" width="90" height="35" class="box"/>
+  <text x="100" y="218" text-anchor="middle" class="content">decoder</text>
+  <rect x="55" y="235" width="90" height="35" class="box"/>
+  <text x="100" y="258" text-anchor="middle" class="content">decoder</text>
+
+  <rect x="200" y="80" width="140" height="200" class="cold"/>
+  <text x="270" y="100" text-anchor="middle" class="caption">ControlNet clone (trainable)</text>
+  <rect x="220" y="115" width="100" height="35" class="box"/>
+  <text x="270" y="138" text-anchor="middle" class="content">enc copy</text>
+  <rect x="220" y="155" width="100" height="35" class="box"/>
+  <text x="270" y="178" text-anchor="middle" class="content">bottleneck copy</text>
+
+  <rect x="220" y="230" width="100" height="40" class="hot"/>
+  <text x="270" y="253" text-anchor="middle" class="mono">depth map</text>
+
+  <line x1="270" y1="230" x2="270" y2="190" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <line x1="320" y1="170" x2="360" y2="200" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="380" y="180" class="mono">zero-conv</text>
+  <line x1="320" y1="130" x2="145" y2="215" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="3,3"/>
+  <line x1="320" y1="170" x2="145" y2="255" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="3,3"/>
+
+  <text x="180" y="310" text-anchor="middle" class="caption">zero-conv init =&gt; starts as identity; learns a delta</text>
+
+  <!-- LoRA -->
+  <text x="590" y="70" class="label">LoRA</text>
+  <rect x="500" y="80" width="360" height="220" class="box"/>
+  <text x="680" y="102" text-anchor="middle" class="mono">W' = W + &#945; &#183; B &#183; A</text>
+
+  <rect x="540" y="130" width="70" height="80" class="frozen"/>
+  <text x="575" y="175" text-anchor="middle" class="content">W</text>
+  <text x="575" y="195" text-anchor="middle" class="caption">d &#215; d, frozen</text>
+
+  <text x="630" y="175" class="mono">+</text>
+
+  <rect x="655" y="140" width="60" height="60" class="cold"/>
+  <text x="685" y="175" text-anchor="middle" class="content">B</text>
+  <text x="685" y="195" text-anchor="middle" class="caption">d &#215; r</text>
+
+  <rect x="730" y="150" width="80" height="40" class="cold"/>
+  <text x="770" y="175" text-anchor="middle" class="content">A</text>
+  <text x="770" y="195" text-anchor="middle" class="caption">r &#215; d</text>
+
+  <text x="680" y="240" text-anchor="middle" class="caption">r = 4-16 typical; rank-r compression</text>
+  <text x="680" y="260" text-anchor="middle" class="caption">params: 2 &#183; d &#183; r instead of d&#178;</text>
+  <text x="680" y="280" text-anchor="middle" class="caption">runtime knob: &#945; &#8712; [0.5, 1.5]</text>
+
+  <!-- composability -->
+  <rect x="40" y="340" width="820" height="180" class="box"/>
+  <text x="450" y="365" text-anchor="middle" class="label">composability in 2026 pipelines</text>
+
+  <rect x="60" y="380" width="180" height="120" class="cold"/>
+  <text x="150" y="402" text-anchor="middle" class="content">ControlNet</text>
+  <text x="150" y="422" text-anchor="middle" class="caption">spatial (pose, depth,</text>
+  <text x="150" y="438" text-anchor="middle" class="caption">edges, scribble, seg)</text>
+  <text x="150" y="470" text-anchor="middle" class="caption">70-360 MB per modality</text>
+
+  <rect x="260" y="380" width="180" height="120" class="cold"/>
+  <text x="350" y="402" text-anchor="middle" class="content">LoRA</text>
+  <text x="350" y="422" text-anchor="middle" class="caption">style, subject, concept</text>
+  <text x="350" y="438" text-anchor="middle" class="caption">20-200 MB</text>
+  <text x="350" y="470" text-anchor="middle" class="caption">stack multiple with &#945; scaling</text>
+
+  <rect x="460" y="380" width="180" height="120" class="cold"/>
+  <text x="550" y="402" text-anchor="middle" class="content">IP-Adapter</text>
+  <text x="550" y="422" text-anchor="middle" class="caption">reference image as condition</text>
+  <text x="550" y="438" text-anchor="middle" class="caption">via CLIP image tokens</text>
+  <text x="550" y="470" text-anchor="middle" class="caption">~20 MB</text>
+
+  <rect x="660" y="380" width="180" height="120" class="cold"/>
+  <text x="750" y="402" text-anchor="middle" class="content">DreamBooth</text>
+  <text x="750" y="422" text-anchor="middle" class="caption">full fine-tune of base</text>
+  <text x="750" y="438" text-anchor="middle" class="caption">strongest identity</text>
+  <text x="750" y="470" text-anchor="middle" class="caption">2-5 GB</text>
+</svg>

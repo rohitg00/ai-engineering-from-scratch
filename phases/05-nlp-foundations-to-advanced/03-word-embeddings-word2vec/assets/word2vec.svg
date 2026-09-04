@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .label { font-size: 15px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 13px; fill: #333; font-family: 'Menlo', 'Courier New', monospace; }
+      .stage { font-size: 12px; fill: #c0392b; font-style: italic; }
+      .line { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .dot { fill: #1a1a1a; }
+      .vec { stroke: #c0392b; stroke-width: 1.5; fill: none; }
+      .axis { stroke: #999; stroke-width: 1; stroke-dasharray: 3,3; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="30" width="380" height="130" rx="4"/>
+  <text class="label" x="40" y="55">Skip-gram window (size 2)</text>
+  <text class="content" x="40" y="90">"The cat sat on the mat"</text>
+
+  <text class="content" x="40" y="130">center = cat</text>
+  <text class="content" x="180" y="130">context = {The, sat, on}</text>
+
+  <path class="line" d="M 95 105 L 200 105" stroke-dasharray="2,2" stroke="#c0392b"/>
+  <rect x="77" y="95" width="38" height="20" rx="3" fill="none" stroke="#c0392b" stroke-width="1.5"/>
+
+  <text class="stage" x="210" y="180">network learns: dot(v_cat, u_sat) high, dot(v_cat, u_random) low</text>
+
+  <rect class="box" x="430" y="30" width="450" height="330" rx="4"/>
+  <text class="label" x="450" y="55">Embedding space (2D projection of learned vectors)</text>
+
+  <line class="axis" x1="460" y1="310" x2="860" y2="310"/>
+  <line class="axis" x1="660" y1="80" x2="660" y2="340"/>
+
+  <circle class="dot" cx="540" cy="260" r="4"/>
+  <text class="content" x="510" y="255">cat</text>
+
+  <circle class="dot" cx="560" cy="245" r="4"/>
+  <text class="content" x="570" y="240">dog</text>
+
+  <circle class="dot" cx="555" cy="275" r="4"/>
+  <text class="content" x="490" y="285">puppy</text>
+
+  <circle class="dot" cx="580" cy="255" r="4"/>
+  <text class="content" x="590" y="270">kitten</text>
+
+  <circle class="dot" cx="740" cy="130" r="4"/>
+  <text class="content" x="755" y="125">king</text>
+
+  <circle class="dot" cx="770" cy="180" r="4"/>
+  <text class="content" x="780" y="175">man</text>
+
+  <circle class="dot" cx="705" cy="150" r="4"/>
+  <text class="content" x="645" y="145">queen</text>
+
+  <circle class="dot" cx="735" cy="200" r="4"/>
+  <text class="content" x="700" y="220">woman</text>
+
+  <path class="vec" d="M 770 180 L 740 130" marker-end="url(#arrow)"/>
+  <path class="vec" d="M 735 200 L 705 150" marker-end="url(#arrow)"/>
+  <text class="stage" x="700" y="110">king - man ≈ queen - woman</text>
+
+  <text class="stage" x="450" y="350">co-occurring words cluster. analogy vectors are directions.</text>
+</svg>

@@ -1,0 +1,72 @@
+{
+  "policyId": "repository-agent-v1",
+  "tools": [
+    {"name": "Read", "mutates": false, "approvalRequired": false},
+    {"name": "Search", "mutates": false, "approvalRequired": false},
+    {"name": "RunFocusedTests", "mutates": false, "approvalRequired": true},
+    {"name": "Computer", "mutates": true, "approvalRequired": false, "approvalPolicy": "per-action"},
+    {"name": "Edit", "mutates": true, "approvalRequired": true}
+  ],
+  "hooks": [
+    {"event": "pre-tool", "tools": ["RunFocusedTests", "Computer", "Edit"], "purpose": "authorize scope and deny disallowed paths before execution"},
+    {"event": "post-tool", "tools": ["Read", "Search", "RunFocusedTests", "Computer", "Edit"], "purpose": "redact results and record an audit event"},
+    {"event": "stop", "tools": [], "purpose": "require focused tests and an independently verified final state"}
+  ],
+  "sandbox": {
+    "readRoots": ["/workspace/repository"],
+    "writeRoots": ["/workspace/repository/owned"],
+    "network": "deny",
+    "secretPaths": [".env", "credentials", ".ssh"]
+  },
+  "budgets": {
+    "maxTurns": 12,
+    "maxToolCalls": 30,
+    "deadlineSeconds": 900,
+    "maxConsecutiveErrors": 2
+  },
+  "reviewerSubagent": {
+    "objective": "Grade the patch against protocol ordering, tests, and scope",
+    "tools": ["Read", "Search"],
+    "canWrite": false,
+    "maxTurns": 8,
+    "outputContract": "JSON findings with file, evidence, severity, and test"
+  },
+  "durableState": {
+    "fields": ["goal", "acceptanceCriteria", "artifactPaths", "contentHashes", "completedSteps", "pendingSteps", "approvalRecords", "operationIds", "testResults", "recoveryPlan"],
+    "reconcileBeforeResume": true
+  },
+  "finalStatePredicate": {
+    "type": "artifact-and-tests",
+    "requirements": ["owned files match the approved scope", "focused tests pass", "artifact hashes are recorded", "no unauthorized side effect occurred"]
+  },
+  "runtimeDecision": {
+    "selected": "sdk-tool-runner",
+    "reason": "client-owned repository tools and sandbox meet the task; no remote managed session is required",
+    "acceptsManagedBeta": false,
+    "applicationOwns": ["authorization", "data boundaries", "custom tool execution", "event persistence", "final-state verification"]
+  },
+  "managedEventStream": {
+    "persistEventCursor": true,
+    "deduplicateByEventId": true,
+    "connectionCloseIsTerminal": false,
+    "resolveRequiresActionByEventId": true
+  },
+  "computerUse": {
+    "enabled": true,
+    "environment": {
+      "isolation": "dedicated-vm",
+      "network": "allowlist",
+      "allowedDomains": ["docs.example.test"],
+      "sensitiveData": "deny"
+    },
+    "display": {"width": 1280, "height": 720},
+    "allowedActions": ["screenshot", "left_click", "type"],
+    "requireFreshScreenshotBeforeAction": true,
+    "requireScreenshotAfterAction": true,
+    "humanApproval": {
+      "allowedRiskClasses": ["read-only", "local-reversible"],
+      "requiredRiskClasses": ["external-side-effect", "affirmative-consent", "financial-transaction", "terms-acceptance"],
+      "deniedRiskClasses": ["credential-entry"]
+    }
+  }
+}

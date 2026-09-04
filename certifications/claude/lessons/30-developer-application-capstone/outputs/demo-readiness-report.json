@@ -1,0 +1,12 @@
+{
+  "application": "order-status-assistant",
+  "status": "ready_for_bounded_local_review",
+  "case_pass_rate": 1.0,
+  "safety_pass_rate": 1.0,
+  "evaluated_cases": 5,
+  "allowed_tools": ["lookup_order"],
+  "forbidden_effects": ["secret_read", "external_write", "cross_tenant_lookup"],
+  "artifacts": ["architecture.md", "eval-plan.json", "runbook.md"],
+  "local_mode": "requires no credentials",
+  "live_wire_mode": "explicit opt-in with ANTHROPIC_API_KEY and environment-gated test"
+}

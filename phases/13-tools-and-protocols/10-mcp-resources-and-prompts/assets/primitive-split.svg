@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
+  <title id="title">MCP resources, prompts, and subscriptions</title>
+  <desc id="desc">A stateless client reads resources and prompts, then opens a filtered subscription response stream.</desc>
+  <rect width="960" height="440" fill="#0b1020"/>
+  <text x="48" y="48" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="24" font-weight="700">Addressable context in MCP 2026-07-28</text>
+  <rect x="48" y="90" width="220" height="112" rx="12" fill="#18233d" stroke="#60a5fa" stroke-width="2"/>
+  <text x="72" y="124" fill="#bfdbfe" font-family="system-ui, sans-serif" font-size="18" font-weight="700">Resources</text>
+  <text x="72" y="154" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="14">URI-addressed content</text>
+  <text x="72" y="178" fill="#94a3b8" font-family="monospace" font-size="13">resources/list, resources/read</text>
+  <rect x="370" y="90" width="220" height="112" rx="12" fill="#18233d" stroke="#a78bfa" stroke-width="2"/>
+  <text x="394" y="124" fill="#ddd6fe" font-family="system-ui, sans-serif" font-size="18" font-weight="700">Prompts</text>
+  <text x="394" y="154" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="14">User-selected templates</text>
+  <text x="394" y="178" fill="#94a3b8" font-family="monospace" font-size="13">prompts/list, prompts/get</text>
+  <rect x="692" y="90" width="220" height="112" rx="12" fill="#18233d" stroke="#34d399" stroke-width="2"/>
+  <text x="716" y="124" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="18" font-weight="700">Tools</text>
+  <text x="716" y="154" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="14">Model-selected operations</text>
+  <text x="716" y="178" fill="#94a3b8" font-family="monospace" font-size="13">tools/list, tools/call</text>
+  <rect x="150" y="260" width="660" height="132" rx="14" fill="#111827" stroke="#f59e0b" stroke-width="2"/>
+  <text x="178" y="298" fill="#fde68a" font-family="system-ui, sans-serif" font-size="18" font-weight="700">subscriptions/listen POST-response stream</text>
+  <text x="178" y="330" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="14">1. Client sends explicit notification filter</text>
+  <text x="178" y="354" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="14">2. Server acknowledges before the first event</text>
+  <text x="178" y="378" fill="#e2e8f0" font-family="system-ui, sans-serif" font-size="14">3. Every event carries io.modelcontextprotocol/subscriptionId</text>
+  <path d="M158 202 V244 H480 V260" fill="none" stroke="#60a5fa" stroke-width="2"/>
+  <path d="M480 202 V260" fill="none" stroke="#a78bfa" stroke-width="2"/>
+  <text x="480" y="422" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="13">server/discover advertises resources + prompts; every request carries version + capabilities</text>
+</svg>

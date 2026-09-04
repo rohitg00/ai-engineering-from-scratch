@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .dev { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .gw { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .scale { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .otel { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">LLM observability — two categories, one OpenTelemetry glue</text>
+
+  <rect x="40" y="50" width="280" height="210" class="dev"/>
+  <text x="180" y="72" text-anchor="middle" class="head">development platforms</text>
+  <text x="180" y="92" text-anchor="middle" class="small">traces + evals + prompts + sessions</text>
+  <rect x="60" y="110" width="240" height="35" class="box"/>
+  <text x="180" y="132" text-anchor="middle" class="step">LangSmith ($39/user/mo)</text>
+  <rect x="60" y="150" width="240" height="35" class="box"/>
+  <text x="180" y="172" text-anchor="middle" class="step">Langfuse (MIT + 50K free)</text>
+  <rect x="60" y="190" width="240" height="35" class="box"/>
+  <text x="180" y="212" text-anchor="middle" class="step">Opik (Apache 2.0)</text>
+  <text x="180" y="245" text-anchor="middle" class="caption">bundled — best for dev loops</text>
+
+  <rect x="340" y="50" width="280" height="210" class="gw"/>
+  <text x="480" y="72" text-anchor="middle" class="head">gateway / telemetry</text>
+  <text x="480" y="92" text-anchor="middle" class="small">traces + metrics + gateway features</text>
+  <rect x="360" y="110" width="240" height="35" class="box"/>
+  <text x="480" y="132" text-anchor="middle" class="step">Helicone (proxy, MIT)</text>
+  <rect x="360" y="150" width="240" height="35" class="box"/>
+  <text x="480" y="172" text-anchor="middle" class="step">SigNoz (Apache 2.0)</text>
+  <rect x="360" y="190" width="240" height="35" class="box"/>
+  <text x="480" y="212" text-anchor="middle" class="step">OpenLLMetry (OSS)</text>
+  <text x="480" y="245" text-anchor="middle" class="caption">minimalist — pairs with dev platform</text>
+
+  <rect x="640" y="50" width="280" height="210" class="scale"/>
+  <text x="780" y="72" text-anchor="middle" class="head">scale / dev / lake</text>
+  <text x="780" y="92" text-anchor="middle" class="small">RAG drift, zero-copy, long-term</text>
+  <rect x="660" y="110" width="240" height="35" class="box"/>
+  <text x="780" y="132" text-anchor="middle" class="step">Phoenix (Elastic L2.0)</text>
+  <rect x="660" y="150" width="240" height="35" class="box"/>
+  <text x="780" y="172" text-anchor="middle" class="step">Arize AX (zero-copy)</text>
+  <rect x="660" y="190" width="240" height="35" class="box"/>
+  <text x="780" y="212" text-anchor="middle" class="step">TruLens (OSS evals)</text>
+  <text x="780" y="245" text-anchor="middle" class="caption">RAG + long-term analytics</text>
+
+  <rect x="40" y="280" width="880" height="100" class="otel"/>
+  <text x="480" y="302" text-anchor="middle" class="head">OpenTelemetry GenAI conventions — the glue</text>
+  <text x="480" y="325" text-anchor="middle" class="step">gen_ai.system · gen_ai.request.model · gen_ai.usage.input_tokens · gen_ai.usage.output_tokens</text>
+  <text x="480" y="345" text-anchor="middle" class="small">2025 shipped. 2026 production pattern:</text>
+  <text x="480" y="363" text-anchor="middle" class="step">gateway (Helicone) + eval (Phoenix) + lake (Iceberg / Arize AX)</text>
+
+  <rect x="40" y="400" width="880" height="100" class="box"/>
+  <text x="480" y="422" text-anchor="middle" class="head">sampling at scale — you can't keep 1M traces/day raw</text>
+  <text x="480" y="444" text-anchor="middle" class="step">keep 100% errors · keep 100% high-cost · sample 5% success</text>
+  <text x="480" y="462" text-anchor="middle" class="step">aggregates always · raw for long-tail debugging</text>
+  <text x="480" y="482" text-anchor="middle" class="caption">Arize AX claims ~100x cheaper than monolithic APM at scale — zero-copy on your own data lake</text>
+</svg>

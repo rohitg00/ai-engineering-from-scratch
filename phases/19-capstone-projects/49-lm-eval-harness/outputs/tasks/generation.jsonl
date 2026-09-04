@@ -1,0 +1,5 @@
+{"id": "gen-00", "prompt": "write: hello world", "targets": ["hello"], "metric": "substring_contains"}
+{"id": "gen-01", "prompt": "write: training language models", "targets": ["language"], "metric": "substring_contains"}
+{"id": "gen-02", "prompt": "write: evaluation harness", "targets": ["evaluation"], "metric": "substring_contains"}
+{"id": "gen-03", "prompt": "write: gradient accumulation step", "targets": ["gradient"], "metric": "substring_contains"}
+{"id": "gen-04", "prompt": "write: distributed parameter sharding", "targets": ["distributed"], "metric": "substring_contains"}

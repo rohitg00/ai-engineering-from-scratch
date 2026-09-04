@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">adversarial training: two networks, one loss</text>
+
+  <!-- noise -->
+  <rect x="40" y="100" width="80" height="50" class="box"/>
+  <text x="80" y="128" text-anchor="middle" class="content">z ~ N(0, I)</text>
+  <line x1="120" y1="125" x2="170" y2="125" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- generator -->
+  <rect x="170" y="90" width="120" height="70" class="cold"/>
+  <text x="230" y="118" text-anchor="middle" class="label">G(z)</text>
+  <text x="230" y="138" text-anchor="middle" class="caption">generator</text>
+
+  <line x1="290" y1="125" x2="340" y2="125" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- fake sample -->
+  <rect x="340" y="100" width="80" height="50" class="box"/>
+  <text x="380" y="128" text-anchor="middle" class="content">x&#770; (fake)</text>
+
+  <!-- real data -->
+  <rect x="340" y="220" width="80" height="50" class="box"/>
+  <text x="380" y="248" text-anchor="middle" class="content">x (real)</text>
+
+  <!-- discriminator -->
+  <line x1="420" y1="125" x2="470" y2="140" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="420" y1="245" x2="470" y2="220" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="470" y="135" width="130" height="90" class="hot"/>
+  <text x="535" y="170" text-anchor="middle" class="label">D(x)</text>
+  <text x="535" y="195" text-anchor="middle" class="caption">discriminator</text>
+  <text x="535" y="215" text-anchor="middle" class="caption">real? 0-1</text>
+
+  <line x1="600" y1="180" x2="660" y2="180" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- loss -->
+  <rect x="660" y="150" width="200" height="60" class="box"/>
+  <text x="760" y="180" text-anchor="middle" class="label">BCE loss</text>
+  <text x="760" y="200" text-anchor="middle" class="caption">real -&gt; 1, fake -&gt; 0</text>
+
+  <!-- objective -->
+  <rect x="40" y="300" width="820" height="50" class="box"/>
+  <text x="450" y="320" text-anchor="middle" class="label">minimax:  min_G  max_D  E_real[log D(x)]  +  E_fake[log(1 - D(G(z)))]</text>
+  <text x="450" y="340" text-anchor="middle" class="caption">use non-saturating G loss  -log D(G(z))  to avoid vanishing gradients</text>
+
+  <!-- failures -->
+  <rect x="40" y="370" width="400" height="70" class="hot"/>
+  <text x="240" y="392" text-anchor="middle" class="label">failure: D wins</text>
+  <text x="240" y="412" text-anchor="middle" class="caption">D(fake) &#8594; 0,  gradient to G vanishes</text>
+  <text x="240" y="428" text-anchor="middle" class="caption">fix: cut D lr, add input noise, WGAN</text>
+
+  <rect x="460" y="370" width="400" height="70" class="hot"/>
+  <text x="660" y="392" text-anchor="middle" class="label">failure: G collapses</text>
+  <text x="660" y="412" text-anchor="middle" class="caption">G outputs one mode, D can't penalize</text>
+  <text x="660" y="428" text-anchor="middle" class="caption">fix: minibatch disc, spectral norm, PacGAN</text>
+</svg>

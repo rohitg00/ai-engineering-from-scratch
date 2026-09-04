@@ -1,0 +1,233 @@
+name: translate
+
+# Machine-translates lesson prose with NLLB-200, a free open model that runs
+# inside the runner. No API key, no Vercel cost. Results are pushed to a
+# dedicated `translations` branch; main stays English-only.
+#
+# Sharded one job per (language, phase). A full 503-lesson language run is ~27h
+# on a CPU runner, far past the 6-hour job limit, so a per-language job always
+# timed out before it could publish and banked nothing. Splitting by phase keeps
+# the largest job (phase 19, 85 lessons) near ~4.5h, well under the limit, and
+# each job publishes only its own phase slice.
+#
+# Never wastes work: each lesson is hash-cached in a per-(language, phase) cache
+# file, published when the job finishes. A completed run re-translates only
+# lessons whose English changed, and disjoint phase slices merge cleanly.
+#
+# The repo README is hand-authored per language and committed to main (see
+# scripts/build_readme_i18n.py and docs/i18n.md); it is not part of this matrix.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "phases/**/docs/en.md"
+      - "languages.json"
+      # Publisher fixes must be able to bootstrap a missing translations branch
+      # even when no English lesson changed in the same merge.
+      - ".github/workflows/translate.yml"
+  workflow_dispatch:
+    inputs:
+      langs:
+        description: "space-separated language codes; blank = the ci:true set in languages.json"
+        default: ""
+      phase:
+        description: "one phase directory (for example 01-math-foundations); blank = all phases"
+        default: ""
+
+concurrency:
+  group: translate
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      langs: ${{ steps.set.outputs.langs }}
+      phases: ${{ steps.set.outputs.phases }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - id: set
+        env:
+          REQUESTED: ${{ github.event.inputs.langs }}
+          REQUESTED_PHASE: ${{ github.event.inputs.phase }}
+        run: |
+          # every emitted code must exist in the registry; requested codes are
+          # intersected with it, so untrusted input can never reach matrix.lang
+          if [ -n "$REQUESTED" ]; then
+            JSON=$(jq -c --arg req "$REQUESTED" \
+              '($req | split(" ") | map(select(length > 0))) as $want
+               | [.languages[].code] as $known
+               | [$want[] | select(. as $c | $known | index($c))]' languages.json)
+          else
+            JSON=$(jq -c '[.languages[] | select(.ci == true) | .code]' languages.json)
+          fi
+          echo "langs=$JSON" >> "$GITHUB_OUTPUT"
+          # Manual runs can select one phase for a cheap end-to-end smoke test.
+          # Push runs and blank manual inputs retain the full phase matrix.
+          if [ -n "$REQUESTED_PHASE" ]; then
+            PHASE_LIST=$(find phases -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
+              | grep -E '^[0-9]{2}-[a-z0-9-]+$' | sort)
+            if ! printf '%s\n' "$PHASE_LIST" | grep -Fqx -- "$REQUESTED_PHASE"; then
+              echo "unknown phase: $REQUESTED_PHASE" >&2
+              exit 1
+            fi
+            PHASES=$(jq -cn --arg phase "$REQUESTED_PHASE" '[$phase]')
+          else
+            # one shard per phase dir (NN-name); the README is handled off-matrix
+            PHASES=$(find phases -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
+              | grep -E '^[0-9]{2}-[a-z0-9-]+$' | sort | jq -R . | jq -cs .)
+          fi
+          echo "phases=$PHASES" >> "$GITHUB_OUTPUT"
+
+  translate:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    permissions:
+      contents: write
+    env:
+      NLLB_MODEL: facebook/nllb-200-distilled-600M
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        lang: ${{ fromJSON(needs.prepare.outputs.langs) }}
+        phase: ${{ fromJSON(needs.prepare.outputs.phases) }}
+    steps:
+      - name: Checkout main (English source)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: .github/translate-requirements.txt
+
+      - name: Cache the NLLB model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-${{ env.NLLB_MODEL }}
+
+      - name: Install NLLB runtime
+        run: pip install -r .github/translate-requirements.txt
+
+      - name: Restore this language's cache + output from translations branch
+        env:
+          LANG_CODE: ${{ matrix.lang }}
+        run: |
+          git fetch origin "+refs/heads/translations:refs/remotes/origin/translations" || true
+          mkdir -p "i18n/$LANG_CODE"
+          if git cat-file -e "origin/translations:i18n/$LANG_CODE" 2>/dev/null; then
+            git archive origin/translations "i18n/$LANG_CODE" | tar -x || true
+          fi
+
+      - name: Translate this phase's changed lessons (NLLB-200, no key)
+        env:
+          TRANSLATE_PROVIDER: nllb
+          LANG_CODE: ${{ matrix.lang }}
+          PHASE: ${{ matrix.phase }}
+        run: |
+          # matrix values reach the shell only through env; re-check the phase
+          # shape before use so nothing but an NN-name can be passed on
+          case "$PHASE" in
+            [0-9][0-9]-*) ;;
+            *) echo "unexpected phase name: $PHASE" >&2; exit 1 ;;
+          esac
+          python3 scripts/translate_lessons.py --lang "$LANG_CODE" --phase "$PHASE"
+
+      - name: Publish this phase slice to translations branch (race-safe)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LANG_CODE: ${{ matrix.lang }}
+          PHASE: ${{ matrix.phase }}
+        run: |
+          # checkout used persist-credentials:false, so authenticate the push
+          # explicitly with the job token rather than a stored credential
+          if [ -n "${TRANSLATION_PUSH_URL:-}" ]; then
+            # Local regression tests use a bare repository instead of GitHub.
+            git remote set-url origin "$TRANSLATION_PUSH_URL"
+          else
+            git remote set-url origin \
+              "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          SLICE="i18n/$LANG_CODE/phases/$PHASE"
+          CACHE="i18n/$LANG_CODE/.cache/$PHASE.json"
+          PUBLISH_DIR="$RUNNER_TEMP/translation-publish"
+
+          cleanup_publish_worktree() {
+            # Removing the directory alone leaves Git's worktree registration
+            # behind, so the next retry cannot recreate it. Remove both.
+            git worktree remove --force "$PUBLISH_DIR" 2>/dev/null || true
+            rm -rf "$PUBLISH_DIR"
+            git worktree prune
+          }
+          trap cleanup_publish_worktree EXIT
+
+          # Sync only this (lang, phase) slice + its cache. Other phases in the
+          # same language live on the branch untouched, so parallel shards merge
+          # without clobbering each other. A detached worktree lets each retry
+          # rebuild from the latest remote branch without a stale local branch or
+          # a removed-but-still-registered worktree blocking the next attempt.
+          for attempt in 1 2 3 4 5 6 7 8; do
+            cleanup_publish_worktree
+            if git fetch origin "+refs/heads/translations:refs/remotes/origin/translations"; then
+              BASE=origin/translations
+            else
+              # The first successful shard creates the translations branch.
+              # A concurrent creator makes this push lose normally; the next
+              # attempt fetches that winner and reapplies only this shard.
+              BASE=HEAD
+            fi
+            git worktree add --detach "$PUBLISH_DIR" "$BASE"
+            rm -rf "$PUBLISH_DIR/$SLICE"
+            mkdir -p "$PUBLISH_DIR/$(dirname "$SLICE")" "$PUBLISH_DIR/i18n/$LANG_CODE/.cache"
+            [ -d "$SLICE" ] && cp -r "$SLICE" "$PUBLISH_DIR/$SLICE"
+            [ -f "$CACHE" ] && cp "$CACHE" "$PUBLISH_DIR/$CACHE"
+            ( cd "$PUBLISH_DIR" || exit 1
+              # -f: the translations branch is created from main's checkout
+              # (when it doesn't exist yet) and so carries main's .gitignore,
+              # which deliberately excludes i18n/*/phases/ and i18n/*/.cache/
+              # from main. That same rule silently no-ops a plain `git add`
+              # here, so every publish reports "no changes" and nothing is
+              # ever pushed. Force past it: this branch exists specifically
+              # to hold these files.
+              if ! git add -f "i18n/$LANG_CODE"; then
+                echo "could not stage translation slice" >&2
+                exit 1
+              fi
+              # nothing staged is the only success-without-push case; a real
+              # commit or push failure must fall through to a retry, not be
+              # swallowed as "no changes"
+              if git diff --cached --quiet; then
+                echo "no changes"
+                exit 0
+              else
+                DIFF_STATUS=$?
+                if [ "$DIFF_STATUS" -ne 1 ]; then
+                  echo "could not inspect staged translation slice" >&2
+                  exit 1
+                fi
+              fi
+              if ! git commit -m "chore(i18n): $LANG_CODE / $PHASE (NLLB-200)"; then
+                echo "could not commit translation slice" >&2
+                exit 1
+              fi
+              if ! git push origin HEAD:refs/heads/translations; then
+                echo "could not push translation slice" >&2
+                exit 1
+              fi ) && exit 0
+            echo "push race, retrying ($attempt)"
+            sleep "${TRANSLATION_PUBLISH_RETRY_DELAY:-$((RANDOM % 12 + 3))}"
+          done
+          echo "could not publish after retries" >&2; exit 1

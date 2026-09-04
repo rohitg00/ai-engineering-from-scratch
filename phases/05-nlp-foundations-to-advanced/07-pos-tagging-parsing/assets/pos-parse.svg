@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="dep-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .tok { fill: #f3ece0; stroke: #1a1a1a; stroke-width: 1.2; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 13px; fill: #333; font-family: 'Menlo', monospace; }
+      .tag { font-size: 11px; fill: #c0392b; font-family: 'Menlo', monospace; font-weight: 600; }
+      .rel { font-size: 11px; fill: #c0392b; font-style: italic; }
+      .dep { stroke: #c0392b; stroke-width: 1.5; fill: none; }
+      .note { font-size: 11px; fill: #666; font-style: italic; }
+      .stage { font-size: 12px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="30" width="860" height="100" rx="4"/>
+  <text class="label" x="35" y="55">POS tags (Universal Dependencies)</text>
+
+  <rect class="tok" x="50"  y="75" width="80" height="40" rx="3"/><text class="content" x="90"  y="98" text-anchor="middle">The</text><text class="tag" x="90"  y="115" text-anchor="middle">DET</text>
+  <rect class="tok" x="140" y="75" width="80" height="40" rx="3"/><text class="content" x="180" y="98" text-anchor="middle">cats</text><text class="tag" x="180" y="115" text-anchor="middle">NOUN</text>
+  <rect class="tok" x="230" y="75" width="80" height="40" rx="3"/><text class="content" x="270" y="98" text-anchor="middle">were</text><text class="tag" x="270" y="115" text-anchor="middle">AUX</text>
+  <rect class="tok" x="320" y="75" width="90" height="40" rx="3"/><text class="content" x="365" y="98" text-anchor="middle">running</text><text class="tag" x="365" y="115" text-anchor="middle">VERB</text>
+  <rect class="tok" x="420" y="75" width="60" height="40" rx="3"/><text class="content" x="450" y="98" text-anchor="middle">at</text><text class="tag" x="450" y="115" text-anchor="middle">ADP</text>
+  <rect class="tok" x="490" y="75" width="80" height="40" rx="3"/><text class="content" x="530" y="98" text-anchor="middle">3pm</text><text class="tag" x="530" y="115" text-anchor="middle">NOUN</text>
+  <rect class="tok" x="580" y="75" width="50" height="40" rx="3"/><text class="content" x="605" y="98" text-anchor="middle">.</text><text class="tag" x="605" y="115" text-anchor="middle">PUNCT</text>
+
+  <rect class="box" x="20" y="170" width="860" height="180" rx="4"/>
+  <text class="label" x="35" y="195">Dependency parse</text>
+
+  <rect class="tok" x="50"  y="240" width="80" height="40" rx="3"/><text class="content" x="90"  y="265" text-anchor="middle">The</text>
+  <rect class="tok" x="140" y="240" width="80" height="40" rx="3"/><text class="content" x="180" y="265" text-anchor="middle">cats</text>
+  <rect class="tok" x="230" y="240" width="80" height="40" rx="3"/><text class="content" x="270" y="265" text-anchor="middle">were</text>
+  <rect class="tok" x="320" y="240" width="90" height="40" rx="3" fill="#fff1d6"/><text class="content" x="365" y="265" text-anchor="middle">running</text>
+  <rect class="tok" x="420" y="240" width="60" height="40" rx="3"/><text class="content" x="450" y="265" text-anchor="middle">at</text>
+  <rect class="tok" x="490" y="240" width="80" height="40" rx="3"/><text class="content" x="530" y="265" text-anchor="middle">3pm</text>
+
+  <path class="dep" d="M 90 240 Q 135 220 180 240" marker-end="url(#dep-arrow)"/>
+  <text class="rel" x="135" y="215" text-anchor="middle">det</text>
+
+  <path class="dep" d="M 180 240 Q 270 200 365 240" marker-end="url(#dep-arrow)"/>
+  <text class="rel" x="275" y="195" text-anchor="middle">nsubj</text>
+
+  <path class="dep" d="M 270 240 Q 320 210 365 240" marker-end="url(#dep-arrow)"/>
+  <text class="rel" x="320" y="205" text-anchor="middle">aux</text>
+
+  <path class="dep" d="M 450 240 Q 405 215 365 240" marker-end="url(#dep-arrow)"/>
+  <text class="rel" x="405" y="210" text-anchor="middle">prep</text>
+
+  <path class="dep" d="M 530 240 Q 490 225 450 240" marker-end="url(#dep-arrow)"/>
+  <text class="rel" x="490" y="220" text-anchor="middle">pobj</text>
+
+  <text class="note" x="365" y="310" text-anchor="middle">ROOT = running</text>
+  <text class="stage" x="450" y="370" text-anchor="middle">every word has one head. arrows go head → dependent.</text>
+</svg>

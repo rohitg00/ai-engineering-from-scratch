@@ -1,0 +1,78 @@
+{
+  "lesson": "15-claude-code-for-development-teams",
+  "title": "Claude Code Scales Through Shared Constraints",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the strongest purpose of a project CLAUDE.md?",
+      "options": [
+        "Record project environment values, including secrets needed by common development commands",
+        "Act as a compact onboarding contract with commands, layout, and non-obvious constraints",
+        "Replace deterministic tests and hooks with stronger natural-language repository rules",
+        "Store complete API references so every session can work without opening other files"
+      ],
+      "correct": 1,
+      "explanation": "A lean project guide gives repeated repository facts and routes to deeper sources without consuming every session with a handbook."
+    },
+    {
+      "stage": "check",
+      "question": "A developer wants Claude Code to apply file edits without prompting while other terminal commands still require approval. Which permission mode matches that boundary?",
+      "options": [
+        "default",
+        "bypassPermissions",
+        "acceptEdits",
+        "dontAsk"
+      ],
+      "correct": 2,
+      "explanation": "acceptEdits removes per-edit approval while preserving permission checks for other commands. It does not authorize publishing, deployment, or arbitrary shell work."
+    },
+    {
+      "stage": "check",
+      "question": "Why must team settings and hooks be reviewed like code?",
+      "options": [
+        "They affect local developer behavior but cannot alter headless or automated execution",
+        "Only executable hooks can change permissions or trust boundaries",
+        "They are safe when versioned because repository history supplies an automatic rollback",
+        "They can change permissions, tools, execution, and trust boundaries"
+      ],
+      "correct": 3,
+      "explanation": "Configuration can grant shell, filesystem, network, MCP, and lifecycle behavior. A parsing file can still create unsafe effective behavior."
+    },
+    {
+      "stage": "check",
+      "question": "How should a command hook return a structured PermissionRequest denial?",
+      "options": [
+        "Exit 0 with a PermissionRequest JSON decision in hookSpecificOutput",
+        "Exit 1 and print the JSON decision to stderr so normal Unix failure semantics block the request",
+        "Exit 0 with plain text on stdout and rely on the text to override matching permission deny rules",
+        "Exit 2 and print the JSON decision to stdout so Claude Code parses and enforces both signals"
+      ],
+      "correct": 0,
+      "explanation": "Structured control requires exit 0 and JSON-only stdout. Exit 2 is a separate blocking path that uses stderr; JSON printed with it is ignored."
+    },
+    {
+      "stage": "post",
+      "question": "Which CI design is safest for automated pull-request review?",
+      "options": [
+        "A pinned review plugin with every available tool enabled inside the main working directory",
+        "Minimal permissions, isolated checkout, bounded run, structured artifact, and human review",
+        "Read-only repository access plus production secrets for integration tests on forked changes",
+        "A write token, open network, and direct merge after checks pass"
+      ],
+      "correct": 1,
+      "explanation": "Headless execution removes interactive supervision, so capability, time, token, network, and public-action boundaries must become stricter."
+    },
+    {
+      "stage": "post",
+      "question": "What distinguishes Anthropic's managed Code Review from the official Claude Code GitHub Action?",
+      "options": [
+        "Managed Code Review can read repository guidance, while the Action cannot load CLAUDE.md or Skills",
+        "Managed Code Review automatically becomes a required GitHub check, while the Action can only leave optional comments",
+        "Managed Code Review is hosted; the Action runs in a repository-owned workflow",
+        "Managed Code Review is for private repositories only, while the Action is limited to public repositories"
+      ],
+      "correct": 2,
+      "explanation": "Managed Code Review runs on Anthropic infrastructure and reports findings without approving or blocking. The official Action runs inside the team's workflow, where repository permissions, triggers, tools, and secrets are configured."
+    }
+  ]
+}

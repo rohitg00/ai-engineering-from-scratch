@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .mode { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .mit { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .tax { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Agent failure modes — taxonomy, recurring five, mitigation</text>
+
+  <rect x="40" y="50" width="440" height="250" class="tax"/>
+  <text x="260" y="72" text-anchor="middle" class="head">taxonomies 2024-2026</text>
+  <rect x="60" y="88" width="400" height="46" class="box"/>
+  <text x="78" y="108" class="step">MASFT (Berkeley 2025)  14 modes, 3 categories</text>
+  <text x="78" y="124" class="small">Cohen's Kappa 0.88 on annotation  reliably distinct</text>
+  <rect x="60" y="140" width="400" height="46" class="box"/>
+  <text x="78" y="160" class="step">Microsoft Taxonomy  autonomy amplifies AI failures</text>
+  <text x="78" y="176" class="small">bias, hallucination, leakage worse when agent has tools</text>
+  <rect x="60" y="192" width="400" height="46" class="box"/>
+  <text x="78" y="212" class="step">Characterizing Faults in Agentic AI</text>
+  <text x="78" y="228" class="small">orchestration + state evolution + env interaction</text>
+  <rect x="60" y="244" width="400" height="46" class="box"/>
+  <text x="78" y="264" class="step">Hallucinations Survey (arXiv:2509.18970)</text>
+  <text x="78" y="280" class="small">Instruction deviation + Long-range context misuse</text>
+
+  <rect x="500" y="50" width="420" height="250" class="mode"/>
+  <text x="710" y="72" text-anchor="middle" class="head">five industry-recurring modes</text>
+  <rect x="520" y="88" width="380" height="36" class="box"/>
+  <text x="538" y="110" class="step">1. hallucinated actions  fake tool, fabricated args</text>
+  <rect x="520" y="128" width="380" height="36" class="box"/>
+  <text x="538" y="150" class="step">2. scope creep  extra PRs, extra emails, extra writes</text>
+  <rect x="520" y="168" width="380" height="36" class="box"/>
+  <text x="538" y="190" class="step">3. cascading errors  one mistake, N downstream ops</text>
+  <rect x="520" y="208" width="380" height="36" class="box"/>
+  <text x="538" y="230" class="step">4. context loss  forgets early-turn constraints</text>
+  <rect x="520" y="248" width="380" height="36" class="box"/>
+  <text x="538" y="270" class="step">5. tool misuse  wrong args, wrong tool</text>
+
+  <rect x="40" y="320" width="880" height="190" class="mit"/>
+  <text x="480" y="342" text-anchor="middle" class="head">mitigation  gates at every step</text>
+  <rect x="60" y="358" width="840" height="30" class="box"/>
+  <text x="78" y="378" class="step">per-step safety classifier (Lesson 21)</text>
+  <rect x="60" y="392" width="840" height="30" class="box"/>
+  <text x="78" y="412" class="step">tool-call argument validation (Lesson 06)</text>
+  <rect x="60" y="426" width="840" height="30" class="box"/>
+  <text x="78" y="446" class="step">CRITIC-style external grounding of claims (Lesson 05)</text>
+  <rect x="60" y="460" width="840" height="30" class="box"/>
+  <text x="78" y="480" class="step">state re-probe to catch success hallucination ("was the file actually created?")</text>
+  <rect x="60" y="494" width="840" height="14" class="box"/>
+  <text x="78" y="506" class="step">Phoenix trace clustering for drift detection in production</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">cascading is the killer — one phantom SKU  4 API calls  multi-system incident.</text>
+</svg>

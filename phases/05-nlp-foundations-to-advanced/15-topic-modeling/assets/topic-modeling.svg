@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .stage { font-size: 11px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .note { font-size: 11px; fill: #666; font-style: italic; }
+      .line { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="20" width="420" height="380" rx="4"/>
+  <text class="label" x="230" y="45" text-anchor="middle">LDA (probabilistic, mixed-membership)</text>
+
+  <rect class="box" x="40" y="75" width="180" height="70" rx="3"/>
+  <text class="content" x="55" y="100">document</text>
+  <text class="content" x="55" y="120">"stocks rose after</text>
+  <text class="content" x="55" y="135">the fed cut rates"</text>
+
+  <rect class="hot" x="240" y="75" width="180" height="70" rx="3"/>
+  <text class="content" x="250" y="100">topic mixture</text>
+  <text class="content" x="250" y="120">{finance: 0.7,</text>
+  <text class="content" x="250" y="135"> politics: 0.2, ...}</text>
+
+  <path class="line" d="M 220 110 L 240 110" marker-end="url(#arrow)"/>
+
+  <rect class="box" x="40" y="170" width="380" height="120" rx="3"/>
+  <text class="content" x="55" y="195">topic_word matrix:</text>
+  <text class="content" x="55" y="220">  finance  -> { stocks: 0.04, rate: 0.03, ... }</text>
+  <text class="content" x="55" y="240">  politics -> { fed: 0.05, vote: 0.04, ... }</text>
+  <text class="content" x="55" y="260">  tech     -> { chip: 0.04, ai: 0.03, ... }</text>
+  <text class="content" x="55" y="280">  each row sums to 1</text>
+
+  <text class="note" x="230" y="325" text-anchor="middle">good for long docs, topic mixtures, limited compute.</text>
+  <text class="note" x="230" y="345" text-anchor="middle">weak on short text. no semantics.</text>
+  <text class="note" x="230" y="365" text-anchor="middle">interpretable probability distributions.</text>
+
+  <rect class="box" x="460" y="20" width="420" height="380" rx="4"/>
+  <text class="label" x="670" y="45" text-anchor="middle">BERTopic (neural, cluster-based)</text>
+
+  <rect class="box" x="480" y="75" width="120" height="40" rx="3"/>
+  <text class="content" x="540" y="100" text-anchor="middle">docs (N)</text>
+  <path class="line" d="M 605 95 L 630 95" marker-end="url(#arrow)"/>
+  <rect class="hot" x="630" y="75" width="120" height="40" rx="3"/>
+  <text class="content" x="690" y="100" text-anchor="middle">BERT embed</text>
+  <path class="line" d="M 755 95 L 775 95" marker-end="url(#arrow)"/>
+  <rect class="box" x="775" y="75" width="90" height="40" rx="3"/>
+  <text class="content" x="820" y="100" text-anchor="middle">384-dim</text>
+
+  <path class="line" d="M 820 120 L 820 145" marker-end="url(#arrow)"/>
+  <text class="stage" x="820" y="140">UMAP</text>
+
+  <rect class="box" x="775" y="150" width="90" height="40" rx="3"/>
+  <text class="content" x="820" y="175" text-anchor="middle">5-dim</text>
+
+  <path class="line" d="M 820 195 L 820 220" marker-end="url(#arrow)"/>
+  <text class="stage" x="820" y="215">HDBSCAN</text>
+
+  <circle cx="540" cy="260" r="25" fill="#f3ece0" stroke="#1a1a1a"/>
+  <text class="content" x="540" y="265" text-anchor="middle">cluster 0</text>
+  <circle cx="640" cy="260" r="20" fill="#f3ece0" stroke="#1a1a1a"/>
+  <text class="content" x="640" y="265" text-anchor="middle">1</text>
+  <circle cx="720" cy="260" r="18" fill="#f3ece0" stroke="#1a1a1a"/>
+  <text class="content" x="720" y="265" text-anchor="middle">2</text>
+  <circle cx="820" cy="260" r="22" fill="#f3ece0" stroke="#1a1a1a"/>
+  <text class="content" x="820" y="265" text-anchor="middle">3</text>
+
+  <path class="line" d="M 670 290 L 670 315" marker-end="url(#arrow)"/>
+  <text class="stage" x="670" y="310">class-based TF-IDF</text>
+
+  <rect class="box" x="480" y="320" width="380" height="50" rx="3"/>
+  <text class="content" x="670" y="345" text-anchor="middle">top words per cluster = topic representation</text>
+  <text class="note" x="670" y="365" text-anchor="middle">one topic per document. short text friendly. semantic.</text>
+</svg>

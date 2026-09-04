@@ -1,0 +1,314 @@
+{
+  "id": "claude-ccar-p-diagnostic",
+  "version": 2,
+  "track": "claude-ccar-p",
+  "kind": "diagnostic",
+  "title": "Architect Professional Diagnostic",
+  "timeLimitMinutes": 30,
+  "questions": [
+    {
+      "id": "ccar-p-diag-001",
+      "domain": "solution-design-architecture",
+      "objective": "Translate business problems into Claude solutions",
+      "type": "single",
+      "prompt": "A director asks for a fully autonomous claims agent but provides no baseline, authority limit, or error-cost information. What should the architect do first?",
+      "options": [
+        "Build a constrained pilot around the existing claims process, use the most capable model, and defer authority and error-cost decisions until stakeholders see outputs",
+        "Run structured discovery to define outcome, workflow, constraints, authority, measures, and non-goals",
+        "Select the most capable model",
+        "Create five specialist agents"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The architecture cannot be evaluated until the business outcome, current process, authority, risk, and measurable constraints are explicit. Technology selection before discovery optimizes unverified assumptions.",
+      "references": [
+        "certifications/claude/lessons/22-business-discovery-requirements-and-slas",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops",
+        "certifications/claude/lessons/16-multi-agent-orchestration-and-delegation",
+        "certifications/claude/lessons/32-architect-professional-system-capstone"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-002",
+      "domain": "solution-design-architecture",
+      "objective": "Choose workflow, agentic, or augmented-LLM patterns",
+      "type": "multiple",
+      "prompt": "A process has stable steps, strict auditability, and only one ambiguous classification step. Which TWO design choices are strongest?",
+      "options": [
+        "Use an adaptive agent for the entire stable sequence",
+        "Use Claude only for the bounded classification judgment",
+        "Expose the full approved business-tool catalog under read-only credentials, then use the prompt to constrain Claude to the known sequence",
+        "Use deterministic orchestration for the known sequence"
+      ],
+      "correct": [
+        1,
+        3
+      ],
+      "explanation": "Known transitions belong in code, while Claude can handle the bounded semantic decision. This minimizes variability, permission surface, latency, and testing burden without losing useful judgment.",
+      "references": [
+        "certifications/claude/lessons/23-end-to-end-architecture-and-value-tradeoffs"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-003",
+      "domain": "models-prompting-context",
+      "objective": "Reuse stable prompts with caching, modular prompts, and Skills",
+      "type": "single",
+      "prompt": "An application sends the same long policy and system instructions before a short changing user request. Quality is acceptable, but cost and first-token latency are high. What is the most direct first optimization?",
+      "options": [
+        "Discard most of the policy",
+        "Raise temperature",
+        "Place stable content in a reusable prefix and apply current prompt-caching guidance",
+        "Route each request through a smaller model that summarizes the repeated policy before the production model receives the summary and changing user content"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A stable repeated prefix is the intended caching shape and can reduce repeated processing without removing required policy. The team must verify current cache behavior and measure hit rate.",
+      "references": [
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching",
+        "certifications/claude/lessons/02-model-selection-and-token-economics",
+        "certifications/claude/lessons/03-prompting-and-task-decomposition",
+        "certifications/claude/lessons/09-structured-output-and-defensive-parsing"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-004",
+      "domain": "models-prompting-context",
+      "objective": "Select models from explicit tradeoffs",
+      "type": "multiple",
+      "prompt": "Which TWO measurements are necessary to compare a faster model and a more capable model for production routing?",
+      "options": [
+        "Task quality on representative classes and risk strata",
+        "Published per-token price and median first-token latency from a non-representative synthetic request",
+        "Provider benchmark ranking for each model",
+        "End-to-end latency and cost per accepted outcome"
+      ],
+      "correct": [
+        0,
+        3
+      ],
+      "explanation": "Model selection depends on observed task quality, latency, and full outcome cost for the real distribution. Names and unsourced size claims cannot establish production fitness.",
+      "references": [
+        "certifications/claude/lessons/02-model-selection-and-token-economics",
+        "certifications/claude/lessons/26-production-observability-latency-and-cost"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-005",
+      "domain": "integration",
+      "objective": "Design RAG chunking and indexing",
+      "type": "single",
+      "prompt": "A RAG assistant becomes confidently wrong immediately after a policy refresh. Model version and latency are unchanged. What should the architect inspect first?",
+      "options": [
+        "The number of agents",
+        "The answer-generation prompt and model sampling settings, while treating the active retrieval index as correct because the refresh job completed successfully",
+        "Prompt temperature, answer style, and reasoning effort, because the refresh may have changed how confidently the same model summarizes policy language",
+        "Ingestion, active index versions, metadata filters, and retrieved chunks"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The timing isolates the likely change to the data pipeline. The model cannot use the active policy if parsing, version activation, filtering, or ranking supplied stale evidence.",
+      "references": [
+        "certifications/claude/lessons/24-rag-retrieval-and-data-pipelines",
+        "certifications/claude/lessons/08-messages-api-and-application-lifecycle",
+        "certifications/claude/lessons/11-mcp-server-design-and-integration",
+        "certifications/claude/lessons/18-tool-contracts-errors-and-progressive-discovery"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-006",
+      "domain": "integration",
+      "objective": "Find authentication and authorization gaps",
+      "type": "multiple",
+      "prompt": "A support drafting agent does not need refund or deletion capability. Which TWO changes create the strongest least-privilege boundary?",
+      "options": [
+        "Keep every tool discoverable and prohibit calls in the prompt",
+        "Remove their scopes from the execution credential and authorize each call",
+        "Remove those tools from discovery for the role",
+        "Allow the calls under the existing credential and require a complete audit event plus automatic incident alert when either capability is selected"
+      ],
+      "correct": [
+        1,
+        2
+      ],
+      "explanation": "Narrow discovery reduces exposure and selection error, while execution-time scope enforcement prevents direct or stale unauthorized calls. Prompt warnings and audit alone leave the capability intact.",
+      "references": [
+        "certifications/claude/lessons/25-integration-protocols-identity-and-least-privilege"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-007",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Build representative datasets and mixed-method test frameworks",
+      "type": "single",
+      "prompt": "A grounded-answer evaluation is failing. Which measurement most directly determines whether the required source ever reached generation?",
+      "options": [
+        "Retrieval recall at K",
+        "HTTP success rate",
+        "Final answer length",
+        "The groundedness score of the final answer against whatever passages the retriever returned, without a separate labeled retrieval-recall measurement"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Recall at K measures whether labeled relevant evidence appeared in the candidate set. It separates a retrieval failure from a generation or citation-support failure.",
+      "references": [
+        "certifications/claude/lessons/24-rag-retrieval-and-data-pipelines",
+        "certifications/claude/lessons/05-output-evaluation-and-validation"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-008",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Run A/B tests and iterative improvements",
+      "type": "multiple",
+      "prompt": "Which TWO practices make an architecture A/B test safer and more informative?",
+      "options": [
+        "Gate rollout on quality, safety, latency, and cost per success",
+        "Stratify results by task and risk class",
+        "Randomize all eligible users at once after offline gates pass, with a kill switch and continuous aggregate monitoring",
+        "Use aggregate task success as the only release metric"
+      ],
+      "correct": [
+        0,
+        1
+      ],
+      "explanation": "Strata prevent aggregate improvements from hiding high-risk regressions. Multi-dimensional gates and progressive exposure limit harm while measuring the full production tradeoff.",
+      "references": [
+        "certifications/claude/lessons/26-production-observability-latency-and-cost",
+        "certifications/claude/lessons/14-evals-testing-debugging-and-observability"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-009",
+      "domain": "governance-safety-risk",
+      "objective": "Account for GDPR, HIPAA, FedRAMP, and applicable regulation",
+      "type": "single",
+      "prompt": "A proposed analysis upload contains customer names and account identifiers that the trend analysis does not need. What is the strongest first control?",
+      "options": [
+        "Add a longer system prompt",
+        "Remove or pseudonymize unnecessary identifiers before the data enters the workflow",
+        "Upload the complete record into an approved restricted workspace, apply output redaction, and retain the original input under the standard audit schedule",
+        "Upload it and ask Claude not to remember"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Data minimization removes unnecessary sensitive fields from the entire processing and retention surface. Prompt language does not control provider or application storage boundaries.",
+      "references": [
+        "certifications/claude/lessons/27-enterprise-governance-compliance-and-hitl",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use",
+        "certifications/claude/lessons/13-application-security-and-secrets"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-010",
+      "domain": "governance-safety-risk",
+      "objective": "Design human-in-the-loop validation",
+      "type": "multiple",
+      "prompt": "Which TWO properties are required for human review to function as a meaningful high-risk control?",
+      "options": [
+        "A review queue that accepts every triggered case without capacity limits, relying on priority ordering and overtime escalation to preserve coverage",
+        "A polished recommendation with citations, confidence, and a suggested decision that lets reviewers process the queue within the service level",
+        "A qualified reviewer with authority and sufficient evidence",
+        "A defined trigger, service level, fallback, and audit record"
+      ],
+      "correct": [
+        2,
+        3
+      ],
+      "explanation": "Review works only when an appropriate person can inspect evidence, make an authorized decision, and operate within a defined process. Unbounded load and automation bias weaken the control.",
+      "references": [
+        "certifications/claude/lessons/27-enterprise-governance-compliance-and-hitl"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-011",
+      "domain": "stakeholder-lifecycle",
+      "objective": "Communicate decisions and tradeoffs",
+      "type": "single",
+      "prompt": "What should lead an executive architecture review?",
+      "options": [
+        "A complete list of SDK methods",
+        "The number of model calls",
+        "The business decision, options, expected value, investment, residual risk, evidence plan, and owner",
+        "A complete target-state sequence diagram with latency estimates, model calls, integration boundaries, and operating assumptions before stating the investment decision"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Executives own a value, investment, and risk decision. Technical components support that choice, but the narrative must first make the decision and consequences explicit.",
+      "references": [
+        "certifications/claude/lessons/28-stakeholder-communication-adrs-and-lifecycle",
+        "certifications/claude/lessons/00-certification-strategy"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-012",
+      "domain": "stakeholder-lifecycle",
+      "objective": "Support discovery, design, handoff, monitoring, and iteration",
+      "type": "multiple",
+      "prompt": "Which TWO pieces of evidence most strongly demonstrate operational handoff?",
+      "options": [
+        "The receiving team successfully runs an incident and rollback drill",
+        "The repository contains reviewed setup, deployment, troubleshooting, and rollback documentation, but the receiving team has not exercised it",
+        "Owners, alerts, runbooks, evaluation, access, and change processes meet acceptance criteria",
+        "The architect presents an approved operations deck covering system components, alerts, owners, and recovery paths to the receiving team"
+      ],
+      "correct": [
+        0,
+        2
+      ],
+      "explanation": "Handoff is accepted operating ability and responsibility. A drill plus verified readiness artifacts proves the receiving team can detect, contain, recover, evaluate, and change the system.",
+      "references": [
+        "certifications/claude/lessons/28-stakeholder-communication-adrs-and-lifecycle"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-013",
+      "domain": "developer-productivity-operations",
+      "objective": "Configure Claude tools and team environments",
+      "type": "single",
+      "prompt": "A team gets inconsistent Claude Code behavior because each developer maintains private instructions and commands. What is the strongest improvement?",
+      "options": [
+        "Standardize on a centrally managed user-level configuration distributed outside the repository so project history stays focused on product code",
+        "Grant unrestricted permissions",
+        "Publish a canonical setup prompt for developers to paste into each new session, then audit adherence through periodic output reviews rather than versioned configuration",
+        "Use a shared, versioned project configuration with concise instructions, scoped rules, reusable Skills or commands, and tests"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Versioned project configuration makes behavior reviewable, repeatable, and maintainable. Scope-specific rules and tested reusable assets reduce drift without broadening permissions.",
+      "references": [
+        "certifications/claude/lessons/15-claude-code-for-development-teams",
+        "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci"
+      ]
+    },
+    {
+      "id": "ccar-p-diag-014",
+      "domain": "developer-productivity-operations",
+      "objective": "Support debugging and operational incident resolution",
+      "type": "multiple",
+      "prompt": "A headless Claude Code workflow intermittently changes files outside its intended scope. Which TWO controls best improve operational safety and diagnosis?",
+      "options": [
+        "A final full-repository test suite that runs only after all model edits, without recording attempted out-of-scope writes that were later reverted",
+        "Structured traces and verification gates that record attempted and accepted changes",
+        "A concise scope instruction listing permitted directories, combined with a requirement that Claude self-report any requested exception before writing",
+        "Path-scoped permissions or hooks that block out-of-scope writes"
+      ],
+      "correct": [
+        1,
+        3
+      ],
+      "explanation": "Deterministic scope enforcement prevents the unsafe action, while structured evidence and verification show what happened and why. Prompt compliance alone is probabilistic and not a boundary.",
+      "references": [
+        "certifications/claude/lessons/15-claude-code-for-development-teams",
+        "certifications/claude/lessons/26-production-observability-latency-and-cost"
+      ]
+    }
+  ]
+}

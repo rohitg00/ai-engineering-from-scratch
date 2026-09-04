@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Transfusion — one transformer, two losses, hybrid attention mask</text>
+
+  <rect x="30" y="50" width="900" height="240" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">forward pass, two loss heads</text>
+
+  <rect x="60" y="90" width="260" height="180" class="hot"/>
+  <text x="190" y="112" text-anchor="middle" class="step">text tokens</text>
+  <text x="190" y="132" text-anchor="middle" class="small">discrete BPE vocab</text>
+  <text x="190" y="150" text-anchor="middle" class="small">causal attention</text>
+  <text x="190" y="168" text-anchor="middle" class="small">teacher forcing</text>
+  <text x="190" y="194" text-anchor="middle" class="step">loss: cross-entropy</text>
+  <text x="190" y="216" text-anchor="middle" class="small">next-token prediction</text>
+  <text x="190" y="232" text-anchor="middle" class="small">vocab-logits head</text>
+  <text x="190" y="258" text-anchor="middle" class="caption">same as any LLM</text>
+
+  <rect x="350" y="90" width="260" height="180" class="cool"/>
+  <text x="480" y="112" text-anchor="middle" class="step">shared transformer body</text>
+  <text x="480" y="132" text-anchor="middle" class="small">one weight set</text>
+  <text x="480" y="150" text-anchor="middle" class="small">block-triangular mask</text>
+  <text x="480" y="168" text-anchor="middle" class="small">both modalities in</text>
+  <text x="480" y="186" text-anchor="middle" class="small">one forward pass</text>
+  <text x="480" y="218" text-anchor="middle" class="step">gradient mixes</text>
+  <text x="480" y="236" text-anchor="middle" class="small">text and image objectives</text>
+  <text x="480" y="254" text-anchor="middle" class="caption">shared body, two heads</text>
+
+  <rect x="640" y="90" width="260" height="180" class="cold"/>
+  <text x="770" y="112" text-anchor="middle" class="step">image patches</text>
+  <text x="770" y="132" text-anchor="middle" class="small">continuous vectors</text>
+  <text x="770" y="150" text-anchor="middle" class="small">bidirectional attention</text>
+  <text x="770" y="168" text-anchor="middle" class="small">within image block</text>
+  <text x="770" y="194" text-anchor="middle" class="step">loss: MSE on velocity</text>
+  <text x="770" y="216" text-anchor="middle" class="small">flow-matching diffusion</text>
+  <text x="770" y="232" text-anchor="middle" class="small">predict noise -&gt; data</text>
+  <text x="770" y="258" text-anchor="middle" class="caption">SD3 MMDiT sibling</text>
+
+  <rect x="30" y="310" width="900" height="200" class="box"/>
+  <text x="480" y="332" text-anchor="middle" class="head">hybrid attention mask for [T T &lt;image&gt; P P P P &lt;/image&gt; T T]</text>
+
+  <g transform="translate(200, 350)">
+    <rect x="0" y="0" width="18" height="18" class="hot"/>
+    <rect x="20" y="0" width="18" height="18" class="hot"/>
+    <rect x="40" y="0" width="18" height="18" class="box"/>
+    <rect x="60" y="0" width="18" height="18" class="cold"/>
+    <rect x="80" y="0" width="18" height="18" class="cold"/>
+    <rect x="100" y="0" width="18" height="18" class="cold"/>
+    <rect x="120" y="0" width="18" height="18" class="cold"/>
+    <rect x="140" y="0" width="18" height="18" class="box"/>
+    <rect x="160" y="0" width="18" height="18" class="hot"/>
+    <rect x="180" y="0" width="18" height="18" class="hot"/>
+
+    <text x="9" y="35" text-anchor="middle" class="small">T</text>
+    <text x="29" y="35" text-anchor="middle" class="small">T</text>
+    <text x="49" y="35" text-anchor="middle" class="small">&lt;I&gt;</text>
+    <text x="69" y="35" text-anchor="middle" class="small">P</text>
+    <text x="89" y="35" text-anchor="middle" class="small">P</text>
+    <text x="109" y="35" text-anchor="middle" class="small">P</text>
+    <text x="129" y="35" text-anchor="middle" class="small">P</text>
+    <text x="149" y="35" text-anchor="middle" class="small">&lt;/I&gt;</text>
+    <text x="169" y="35" text-anchor="middle" class="small">T</text>
+    <text x="189" y="35" text-anchor="middle" class="small">T</text>
+  </g>
+
+  <rect x="420" y="340" width="490" height="160" class="reg"/>
+  <text x="665" y="362" text-anchor="middle" class="step">mask rules</text>
+  <text x="665" y="384" text-anchor="middle" class="small">1. text-to-text: causal (triangular)</text>
+  <text x="665" y="402" text-anchor="middle" class="small">2. patch-to-patch: full bidirectional within image</text>
+  <text x="665" y="420" text-anchor="middle" class="small">3. text-to-prior-image: attend fully</text>
+  <text x="665" y="438" text-anchor="middle" class="small">4. image-to-prior-text: attend fully</text>
+  <text x="665" y="460" text-anchor="middle" class="small">5. no image-to-later-text (causal block)</text>
+  <text x="665" y="480" text-anchor="middle" class="caption">implemented as a single block-triangular mask</text>
+</svg>

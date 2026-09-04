@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.4; }
+      .risk { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .guard { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .title { font-size: 17px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .mono { font-size: 11px; font-family: Menlo, monospace; fill: #222; }
+      .small { font-size: 10.5px; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+
+  <text x="480" y="28" text-anchor="middle" class="title">MCP 2026-07-28 security surfaces and matching controls</text>
+
+  <rect x="30" y="52" width="900" height="224" rx="8" class="risk"/>
+  <text x="480" y="76" text-anchor="middle" class="head">untrusted inputs</text>
+
+  <rect x="50" y="92" width="205" height="66" rx="5" class="box"/>
+  <text x="64" y="114" class="mono">metadata poisoning</text>
+  <text x="64" y="134" class="small">descriptions and annotations</text>
+  <text x="64" y="149" class="small">steer model or user</text>
+
+  <rect x="270" y="92" width="205" height="66" rx="5" class="box"/>
+  <text x="284" y="114" class="mono">descriptor rug pull</text>
+  <text x="284" y="134" class="small">name, schema, or behavior</text>
+  <text x="284" y="149" class="small">changes after approval</text>
+
+  <rect x="490" y="92" width="205" height="66" rx="5" class="box"/>
+  <text x="504" y="114" class="mono">route confusion</text>
+  <text x="504" y="134" class="small">duplicate name or header</text>
+  <text x="504" y="149" class="small">and body mismatch</text>
+
+  <rect x="710" y="92" width="200" height="66" rx="5" class="box"/>
+  <text x="724" y="114" class="mono">capability escalation</text>
+  <text x="724" y="134" class="small">compatibility declaration</text>
+  <text x="724" y="149" class="small">mistaken for permission</text>
+
+  <rect x="160" y="178" width="270" height="72" rx="5" class="box"/>
+  <text x="174" y="200" class="mono">MRTR state tampering</text>
+  <text x="174" y="220" class="small">change arguments, forge confirmation,</text>
+  <text x="174" y="237" class="small">or replay requestState</text>
+
+  <rect x="530" y="178" width="270" height="72" rx="5" class="box"/>
+  <text x="544" y="200" class="mono">identity confusion</text>
+  <text x="544" y="220" class="small">clientInfo, serverInfo, or display</text>
+  <text x="544" y="237" class="small">name treated as authenticated proof</text>
+
+  <rect x="30" y="296" width="900" height="224" rx="8" class="guard"/>
+  <text x="480" y="320" text-anchor="middle" class="head">independent controls</text>
+
+  <rect x="50" y="338" width="205" height="68" rx="5" class="box"/>
+  <text x="64" y="360" class="mono">scan + full digest</text>
+  <text x="64" y="380" class="small">review first version, then</text>
+  <text x="64" y="395" class="small">quarantine every change</text>
+
+  <rect x="270" y="338" width="205" height="68" rx="5" class="box"/>
+  <text x="284" y="360" class="mono">qualified names</text>
+  <text x="284" y="380" class="small">notes.search and issues.search</text>
+  <text x="284" y="395" class="small">never silent overwrite</text>
+
+  <rect x="490" y="338" width="205" height="68" rx="5" class="box"/>
+  <text x="504" y="360" class="mono">wire equality</text>
+  <text x="504" y="380" class="small">version, method, and name</text>
+  <text x="504" y="395" class="small">validated before policy</text>
+
+  <rect x="710" y="338" width="200" height="68" rx="5" class="box"/>
+  <text x="724" y="360" class="mono">real authorization</text>
+  <text x="724" y="380" class="small">issuer, principal, resource,</text>
+  <text x="724" y="395" class="small">tool, scope, arguments</text>
+
+  <rect x="160" y="426" width="270" height="68" rx="5" class="box"/>
+  <text x="174" y="448" class="mono">protected requestState</text>
+  <text x="174" y="468" class="small">integrity, exact arguments, expiry,</text>
+  <text x="174" y="483" class="small">principal, purpose, nonce</text>
+
+  <rect x="530" y="426" width="270" height="68" rx="5" class="box"/>
+  <text x="544" y="448" class="mono">stateless policy keys</text>
+  <text x="544" y="468" class="small">rate limit and audit by principal,</text>
+  <text x="544" y="483" class="small">issuer, resource, tool, and time</text>
+
+  <text x="480" y="548" text-anchor="middle" class="caption">No single control proves safety. Each closes a different ambiguity.</text>
+</svg>

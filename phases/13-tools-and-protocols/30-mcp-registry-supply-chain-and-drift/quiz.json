@@ -1,0 +1,78 @@
+{
+  "lesson": "30-mcp-registry-supply-chain-and-drift",
+  "title": "MCP Registry Supply Chain: Admission, Drift, and Rollback",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does successful publication in an MCP Registry establish for a production gateway?",
+      "options": [
+        "The record passed Registry publication controls, while local runtime admission is still required",
+        "The live endpoint exactly matches the published package",
+        "The newest version should immediately replace every older route",
+        "The server is safe for every principal"
+      ],
+      "correct": 0,
+      "explanation": "Registry publication establishes publication facts. Artifact, runtime, authorization, and local approval checks remain separate."
+    },
+    {
+      "stage": "check",
+      "question": "Which namespace comparison rejects com.exampleevil/tool when the verified namespace is com.example?",
+      "options": [
+        "Check whether the whole name starts with com.example",
+        "Search for the substring example",
+        "Split at the slash and compare the namespace segment exactly",
+        "Trust the namespace written inside server.json"
+      ],
+      "correct": 2,
+      "explanation": "An exact segment comparison preserves the namespace boundary and uses authority supplied by a trusted verifier."
+    },
+    {
+      "stage": "check",
+      "question": "A live server adds a new tool while its Registry record and package coordinate stay unchanged. Which evidence detects this?",
+      "options": [
+        "A fresh normalized descriptor digest compared with the admitted toolset pin",
+        "The Registry publication timestamp",
+        "The namespace authentication method",
+        "The semantic version string alone"
+      ],
+      "correct": 0,
+      "explanation": "Live descriptor pinning detects behavior drift that publication metadata and package coordinates cannot show."
+    },
+    {
+      "stage": "check",
+      "question": "What should happen when an admitted Registry version changes from active to deprecated?",
+      "options": [
+        "Quarantine it from new routing and retain the historical admission evidence",
+        "Rewrite the published record back to active",
+        "Delete all evidence so clients cannot discover it",
+        "Ignore status because package ownership was already verified"
+      ],
+      "correct": 0,
+      "explanation": "Status is operational input. Quarantine stops new use while retained evidence supports audit and rollback analysis."
+    },
+    {
+      "stage": "post",
+      "question": "Which target is eligible for an automatic rollback?",
+      "options": [
+        "Any version whose name sorts before the candidate",
+        "A previously admitted pin that is active under policy, healthy, and not quarantined",
+        "The version marked latest, even if it was never reviewed",
+        "A deleted Registry version with a familiar package name"
+      ],
+      "correct": 1,
+      "explanation": "Rollback restores a known admissible route. It does not bypass current status, health, or quarantine checks."
+    },
+    {
+      "stage": "post",
+      "question": "Why should admission ledger heads be anchored in a separate trust domain?",
+      "options": [
+        "It makes artifact digests unnecessary",
+        "It lets publishers set Registry-managed status",
+        "It converts mutable version ranges into exact pins",
+        "A local hash chain detects edits, while a separate anchor makes a complete local rewrite detectable"
+      ],
+      "correct": 3,
+      "explanation": "An attacker who can rewrite the whole local ledger can recompute its chain. An external signed or write-once anchor exposes that rewrite."
+    }
+  ]
+}

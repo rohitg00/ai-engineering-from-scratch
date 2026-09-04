@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Open-weight VLM design space — five axes and their benchmark pull</text>
+
+  <rect x="30" y="50" width="900" height="180" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">the five axes of every open VLM recipe</text>
+
+  <rect x="50" y="90" width="170" height="120" class="hot"/>
+  <text x="135" y="108" text-anchor="middle" class="step">1. image encoder</text>
+  <text x="135" y="128" text-anchor="middle" class="small">CLIP / SigLIP 2</text>
+  <text x="135" y="144" text-anchor="middle" class="small">DINOv2 / InternViT</text>
+  <text x="135" y="164" text-anchor="middle" class="small">concat for dense</text>
+  <text x="135" y="184" text-anchor="middle" class="small">MM1: +3 MMMU</text>
+  <text x="135" y="200" text-anchor="middle" class="caption">SigLIP 2 wins 2026</text>
+
+  <rect x="230" y="90" width="170" height="120" class="cool"/>
+  <text x="315" y="108" text-anchor="middle" class="step">2. connector</text>
+  <text x="315" y="128" text-anchor="middle" class="small">MLP / Q-Former</text>
+  <text x="315" y="144" text-anchor="middle" class="small">Perceiver / C-Abstr</text>
+  <text x="315" y="164" text-anchor="middle" class="small">SVA (Cambrian)</text>
+  <text x="315" y="184" text-anchor="middle" class="small">~1 pt between them</text>
+  <text x="315" y="200" text-anchor="middle" class="caption">picks token count</text>
+
+  <rect x="410" y="90" width="170" height="120" class="cold"/>
+  <text x="495" y="108" text-anchor="middle" class="step">3. LLM</text>
+  <text x="495" y="128" text-anchor="middle" class="small">Llama-3 / Mistral</text>
+  <text x="495" y="144" text-anchor="middle" class="small">Qwen2.5 / Phi</text>
+  <text x="495" y="164" text-anchor="middle" class="small">7B -> 70B plateau</text>
+  <text x="495" y="184" text-anchor="middle" class="small">+2-4 / doubling</text>
+  <text x="495" y="200" text-anchor="middle" class="caption">sets reasoning ceiling</text>
+
+  <rect x="590" y="90" width="170" height="120" class="reg"/>
+  <text x="675" y="108" text-anchor="middle" class="step">4. data</text>
+  <text x="675" y="128" text-anchor="middle" class="small">caption pairs</text>
+  <text x="675" y="144" text-anchor="middle" class="small">interleaved OBELICS</text>
+  <text x="675" y="164" text-anchor="middle" class="small">instr: LLaVA/ShareGPT4V</text>
+  <text x="675" y="184" text-anchor="middle" class="small">PixMo human caps</text>
+  <text x="675" y="200" text-anchor="middle" class="caption">detail > distill</text>
+
+  <rect x="770" y="90" width="150" height="120" class="hot"/>
+  <text x="845" y="108" text-anchor="middle" class="step">5. resolution</text>
+  <text x="845" y="128" text-anchor="middle" class="small">fixed 336/448</text>
+  <text x="845" y="144" text-anchor="middle" class="small">AnyRes tiling</text>
+  <text x="845" y="164" text-anchor="middle" class="small">native dynamic</text>
+  <text x="845" y="184" text-anchor="middle" class="small">ramped schedule</text>
+  <text x="845" y="200" text-anchor="middle" class="caption">OCR multiplier</text>
+
+  <rect x="30" y="250" width="900" height="270" class="box"/>
+  <text x="480" y="272" text-anchor="middle" class="head">Prismatic VLMs variance decomposition (controlled 7B comparison)</text>
+
+  <g transform="translate(80, 290)">
+    <text x="0" y="15" class="step">visual-token count</text>
+    <rect x="200" y="0" width="360" height="18" class="hot"/>
+    <text x="575" y="15" class="small">~60%</text>
+
+    <text x="0" y="45" class="step">image encoder</text>
+    <rect x="200" y="30" width="120" height="18" class="cool"/>
+    <text x="335" y="45" class="small">~20%</text>
+
+    <text x="0" y="75" class="step">LLM size</text>
+    <rect x="200" y="60" width="90" height="18" class="cold"/>
+    <text x="305" y="75" class="small">~15%</text>
+
+    <text x="0" y="105" class="step">data mix</text>
+    <rect x="200" y="90" width="60" height="18" class="reg"/>
+    <text x="275" y="105" class="small">~10%</text>
+
+    <text x="0" y="135" class="step">connector arch</text>
+    <rect x="200" y="120" width="30" height="18" class="hot"/>
+    <text x="245" y="135" class="small">~5%</text>
+
+    <text x="0" y="165" class="step">resolution sched</text>
+    <rect x="200" y="150" width="30" height="18" class="cool"/>
+    <text x="245" y="165" class="small">~5%</text>
+  </g>
+
+  <rect x="600" y="290" width="300" height="210" class="reg"/>
+  <text x="750" y="312" text-anchor="middle" class="head">2026 default recipe</text>
+  <text x="750" y="334" text-anchor="middle" class="small">encoder: SigLIP 2 SO400m/14</text>
+  <text x="750" y="350" text-anchor="middle" class="small">connector: 2-layer MLP</text>
+  <text x="750" y="366" text-anchor="middle" class="small">LLM: Qwen2.5-7B (or 70B)</text>
+  <text x="750" y="382" text-anchor="middle" class="small">data: PixMo + Cauldron</text>
+  <text x="750" y="398" text-anchor="middle" class="small">res: dynamic 256-1280</text>
+  <text x="750" y="414" text-anchor="middle" class="small">schedule: 3 stages</text>
+  <text x="750" y="440" text-anchor="middle" class="step">ablate first:</text>
+  <text x="750" y="456" text-anchor="middle" class="small">1. token count</text>
+  <text x="750" y="472" text-anchor="middle" class="small">2. encoder</text>
+  <text x="750" y="488" text-anchor="middle" class="small">3. data mix</text>
+</svg>

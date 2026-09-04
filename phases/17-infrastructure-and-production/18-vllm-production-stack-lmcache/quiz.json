@@ -1,0 +1,78 @@
+{
+  "lesson": "18-vllm-production-stack-lmcache",
+  "title": "Production Serving Stack — KV Offloading and Cache-Aware Routing",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What problem does LMCache primarily address in a vLLM deployment?",
+      "options": [
+        "Tokenizer GIL contention",
+        "Network egress filtering",
+        "Cold-start image pull",
+        "KV cache pressure in HBM causing preemption and re-prefill of the same prefixes"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What vLLM API introduced pluggable KV cache backends?",
+      "options": [
+        "Prefix-caching flag",
+        "Connector API in vLLM v0.9.0",
+        "PagedAttention v2",
+        "ChunkedPrefill API"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the vLLM 0.11.0 (January 2026) release add to the KV offload path?",
+      "options": [
+        "Removal of LMCache support",
+        "Mandatory FP8 KV cache",
+        "An asynchronous offload path so the engine does not block on offload in the common case",
+        "Synchronous-only offload"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "When should you pick LMCache over native CPU offload?",
+      "options": [
+        "When you are running on CPU only",
+        "When multiple engines share prefixes across tenants, LoRA variants, or repeated RAG context, so cross-engine reuse pays",
+        "When a single engine has HBM pressure and no prefix sharing",
+        "When you want to disable KV caching entirely"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What happens to LMCache benefit when KV footprint stays well below HBM?",
+      "options": [
+        "LMCache automatically disables",
+        "Configs match baseline with roughly 3-5% overhead and no real benefit",
+        "Engine crashes",
+        "It still doubles throughput"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does LMCache compose with disaggregated serving (Phase 17 · 17)?",
+      "options": [
+        "KV transferred from prefill to decode lands in LMCache; later queries can pull from LMCache and skip prefill, so the cache-aware router can pick an engine whose local or LMCache-shared cache matches",
+        "It does not — they are mutually exclusive",
+        "Because LMCache replaces NIXL",
+        "Because LMCache runs on the same GPU as the engine"
+      ],
+      "correct": 0,
+      "explanation": ""
+    }
+  ]
+}

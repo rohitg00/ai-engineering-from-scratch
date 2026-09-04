@@ -1,0 +1,78 @@
+{
+  "lesson": "28-stakeholder-communication-adrs-and-lifecycle",
+  "title": "Stakeholder Communication, ADRs, and Lifecycle Ownership",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An executive review receives only a detailed component diagram. What critical information is missing?",
+      "options": [
+        "A dependency inventory showing whether the proposed design is technically feasible",
+        "A model benchmark and prompt transcript so the group can compare raw answer quality before discussing ownership",
+        "The business decision, options, consequences, residual risk, evidence, and owner",
+        "A line-by-line implementation plan so executives can estimate engineering effort without the delivery team's input"
+      ],
+      "correct": 2,
+      "explanation": "Executives need to decide whether expected value justifies investment and residual risk. Components matter only as evidence for that decision."
+    },
+    {
+      "stage": "check",
+      "question": "Why should an ADR include rejected alternatives?",
+      "options": [
+        "To make every considered option appear equally credible",
+        "To stop future teams revisiting the decision after constraints change",
+        "To replace implementation tests with the written decision record",
+        "To preserve which constraints and evidence made other choices weaker"
+      ],
+      "correct": 3,
+      "explanation": "Rejected options preserve tradeoff context. Future teams can revisit the decision rationally when evidence or constraints change instead of repeating hidden analysis."
+    },
+    {
+      "stage": "check",
+      "question": "When is an operational handoff complete?",
+      "options": [
+        "When the receiving owners can monitor, evaluate, recover, change, and support the system under agreed acceptance criteria",
+        "When the implementation team stays on call indefinitely, so the receiving team never needs independent recovery or change capability",
+        "When the deck, runbook, and repository have been delivered, even if receiving owners have not exercised them",
+        "When one production request succeeds and the implementation team has documented the nominal workflow"
+      ],
+      "correct": 0,
+      "explanation": "Handoff transfers demonstrated operating ability and responsibility. Dashboards, runbooks, evaluation, rollback, access, review capacity, and ownership must be ready."
+    },
+    {
+      "stage": "check",
+      "question": "What is the strongest way to assign lifecycle ownership?",
+      "options": [
+        "Wait until the first incident reveals which team has the operational access and expertise to respond",
+        "Name owners and approvers for each decision, artifact, control, metric, and operational response",
+        "Give one AI team end-to-end ownership so fewer groups must coordinate lifecycle decisions",
+        "Assign ownership to the model-routing service so changes to prompts, knowledge, controls, and policy stay synchronized"
+      ],
+      "correct": 1,
+      "explanation": "Specific assets and decisions change at different rates and require different authority. Concrete ownership prevents silent decay and unclear escalation."
+    },
+    {
+      "stage": "post",
+      "question": "A pilot has high login counts but reviewer time and correction rate doubled. What should the steering group conclude?",
+      "options": [
+        "Expand the pilot immediately so a larger user sample can determine whether the correction rate is statistically stable",
+        "Treat the login growth as proof of adoption because reviewer effort is an implementation cost that should fall after scale",
+        "Usage alone is insufficient; evaluate outcome, rework, review burden, quality, and cost per accepted result",
+        "Exclude reviewer time from the scorecard because human correction sits outside measured AI performance"
+      ],
+      "correct": 2,
+      "explanation": "The workflow may have shifted work instead of reducing it. Adoption must connect to the intended business and quality outcomes without hidden operational burden."
+    },
+    {
+      "stage": "post",
+      "question": "What is a useful reversal condition in an architecture decision?",
+      "options": [
+        "A scheduled date when the team must reconsider the decision, regardless of whether any relevant evidence has changed",
+        "A general quality-improvement goal used as the condition that triggers future architecture reconsideration",
+        "Any stakeholder question about the architecture, even when the question does not challenge a constraint or outcome",
+        "A measurable event, such as P95 latency or review load exceeding an agreed bound, that triggers reconsideration"
+      ],
+      "correct": 3,
+      "explanation": "A reversal condition turns uncertainty into a planned response. It identifies evidence that invalidates the current tradeoff and prompts a controlled decision review."
+    }
+  ]
+}

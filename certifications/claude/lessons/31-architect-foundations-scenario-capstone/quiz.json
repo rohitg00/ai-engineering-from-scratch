@@ -1,0 +1,78 @@
+{
+  "lesson": "31-architect-foundations-scenario-capstone",
+  "title": "Defend One Architecture Across Six Contexts",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What should an architect identify before selecting a multi-agent topology?",
+      "options": [
+        "The largest context window available across candidate models and the documents that could fill it",
+        "The maximum agent count that the runtime can schedule within the expected latency and cost envelope",
+        "The decision, evidence, consequence, authority, dependencies, and failure behavior for the work",
+        "The preferred framework and its default orchestration primitives"
+      ],
+      "correct": 2,
+      "explanation": "Topology follows the work and its boundaries. Feature preference cannot replace requirements, prerequisites, or risk analysis."
+    },
+    {
+      "stage": "check",
+      "question": "A support researcher and case analyst are independent, but drafting depends on both. Which structure fits?",
+      "options": [
+        "Run all three tasks concurrently and let the draft revise itself whenever either analysis finishes",
+        "Give every role the same write-capable tool so they can resolve missing inputs without orchestration delays",
+        "Allow the drafting role to issue a refund immediately when either analysis indicates customer harm",
+        "Fan out the two independent analyses, validate both results, then draft from their accepted outputs"
+      ],
+      "correct": 3,
+      "explanation": "The first two tasks can run concurrently, while deterministic prerequisites should block drafting until both results are complete or explicitly partial."
+    },
+    {
+      "stage": "check",
+      "question": "Valid JSON contains a value unsupported by its cited source. Which architecture gate failed?",
+      "options": [
+        "Provenance validation after the response passes structural schema validation",
+        "Context budgeting, because missing source detail indicates an undersized evidence window",
+        "Tool authorization, because retrieval returned insufficient evidence",
+        "Schema validation, because structure should prove that cited evidence entails each value"
+      ],
+      "correct": 0,
+      "explanation": "Structural validity passed, but the source does not support the value. The provenance layer must reject or escalate it."
+    },
+    {
+      "stage": "check",
+      "question": "Why should CI start from a clean checkout instead of a resumed developer session?",
+      "options": [
+        "CI should avoid tools entirely because any tool result makes the build depend on state outside the versioned repository",
+        "Declared repository and configuration state is reproducible and avoids hidden conversational or local assumptions",
+        "A clean checkout makes model behavior deterministic and removes the need for adversarial evaluation cases",
+        "A resumed session cannot access repository files after its first turn, so later checks would run without implementation context"
+      ],
+      "correct": 1,
+      "explanation": "A clean declared environment supports reproducible findings and prevents interactive state from silently controlling the gate."
+    },
+    {
+      "stage": "post",
+      "question": "What is the strongest way to adapt one architecture to a new scenario lens?",
+      "options": [
+        "Copy the component topology and control placement unchanged, then rename only the scenario-specific entities",
+        "Remove failure tests that encode the original scenario, because retaining them would prevent the architecture from transferring cleanly",
+        "Document the source, authority, tool, configuration, validation, and context deltas while preserving applicable invariants",
+        "Increase the number of specialist agents so each newly discovered scenario difference receives an independent reasoning role"
+      ],
+      "correct": 2,
+      "explanation": "Cross-scenario transfer requires explicit variation points. Some controls change, while provenance, errors, bounded authority, and verification generally remain."
+    },
+    {
+      "stage": "post",
+      "question": "A design contains many Claude features but no control for a named policy conflict. How should it be judged?",
+      "options": [
+        "Ready once schema validation passes for every output, regardless of unresolved policy conflicts",
+        "Ready if the chosen model has enough context to include the entire policy and every potentially conflicting source",
+        "Sophisticated because combining more product features increases the number of boundaries available to absorb policy failures",
+        "Incomplete because feature density does not close or control the named policy-conflict failure path"
+      ],
+      "correct": 3,
+      "explanation": "Architecture quality is measured by whether boundaries hold under scenario failures, not by the number of products or components used."
+    }
+  ]
+}

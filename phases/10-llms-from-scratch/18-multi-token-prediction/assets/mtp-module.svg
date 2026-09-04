@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .shared { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .old { fill: #eeeeee; stroke: #888; stroke-width: 1.2; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="28" text-anchor="middle" class="title">sequential multi-token prediction — DeepSeek-V3 style</text>
+
+  <!-- Main backbone -->
+  <rect x="30" y="60" width="200" height="60" class="box"/>
+  <text x="130" y="80" text-anchor="middle" class="head">main model backbone</text>
+  <text x="130" y="100" text-anchor="middle" class="step">h_i^(0)  ·  L_main</text>
+
+  <!-- Shared embedding -->
+  <rect x="30" y="150" width="200" height="50" class="shared"/>
+  <text x="130" y="170" text-anchor="middle" class="head">shared embedding E</text>
+  <text x="130" y="188" text-anchor="middle" class="small">used by main + every MTP depth</text>
+
+  <!-- Depth 1 module -->
+  <rect x="280" y="60" width="260" height="140" class="cool"/>
+  <text x="410" y="82" text-anchor="middle" class="head">MTP module k=1</text>
+  <text x="410" y="100" text-anchor="middle" class="small">combine: M_1 * [RMSNorm(h^0); RMSNorm(E(t_{i+1}))]</text>
+  <text x="410" y="118" text-anchor="middle" class="small">transformer block T_1 (attn + MLP)</text>
+  <text x="410" y="138" text-anchor="middle" class="step">h_i^(1)</text>
+  <text x="410" y="160" text-anchor="middle" class="small">shared LM head -&gt; predict t_{i+1}</text>
+  <text x="410" y="180" text-anchor="middle" class="step">L_1 = CE(logits, t_{i+1})</text>
+
+  <!-- Depth 2 module -->
+  <rect x="580" y="60" width="260" height="140" class="cool"/>
+  <text x="710" y="82" text-anchor="middle" class="head">MTP module k=2</text>
+  <text x="710" y="100" text-anchor="middle" class="small">combine: M_2 * [RMSNorm(h^1); RMSNorm(E(t_{i+2}))]</text>
+  <text x="710" y="118" text-anchor="middle" class="small">transformer block T_2 (attn + MLP)</text>
+  <text x="710" y="138" text-anchor="middle" class="step">h_i^(2)</text>
+  <text x="710" y="160" text-anchor="middle" class="small">shared LM head -&gt; predict t_{i+2}</text>
+  <text x="710" y="180" text-anchor="middle" class="step">L_2 = CE(logits, t_{i+2})</text>
+
+  <!-- Arrows between modules -->
+  <line x1="230" y1="90" x2="280" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="540" y1="90" x2="580" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="560" y="80" text-anchor="middle" class="small">h^(1)</text>
+
+  <!-- Shared head -->
+  <rect x="340" y="230" width="280" height="50" class="shared"/>
+  <text x="480" y="250" text-anchor="middle" class="head">shared output head Out</text>
+  <text x="480" y="268" text-anchor="middle" class="small">reuses main model's LM head — no extra params</text>
+
+  <!-- E feeds into modules -->
+  <line x1="230" y1="175" x2="285" y2="175" stroke="#5a4fcf" stroke-width="1.2"/>
+  <line x1="285" y1="175" x2="285" y2="130" stroke="#5a4fcf" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="230" y1="175" x2="585" y2="175" stroke="#5a4fcf" stroke-width="1.0" stroke-dasharray="3,2"/>
+  <line x1="585" y1="175" x2="585" y2="130" stroke="#5a4fcf" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Joint loss -->
+  <rect x="30" y="320" width="900" height="60" class="box"/>
+  <text x="480" y="343" text-anchor="middle" class="head">joint loss</text>
+  <text x="480" y="363" text-anchor="middle" class="step">L_total = L_main + (lambda / D) * sum_{k=1..D} L_k</text>
+
+  <!-- Inference repurpose -->
+  <rect x="30" y="400" width="900" height="120" class="hot"/>
+  <text x="480" y="423" text-anchor="middle" class="label">at inference: MTP modules become a speculative-decoding draft</text>
+  <text x="50" y="450" class="step">module k=1</text>
+  <text x="220" y="450" class="small">draft t_{i+1} given main h^(0)   ·  DeepSeek-V3 reports 80%+ acceptance</text>
+  <text x="50" y="470" class="step">module k=2</text>
+  <text x="220" y="470" class="small">draft t_{i+2} given h^(1) + E(t_{i+1}) ·  chains across depths</text>
+  <text x="50" y="490" class="step">verifier</text>
+  <text x="220" y="490" class="small">main model accepts/rejects via Leviathan rule (Phase 10 · 15)</text>
+  <text x="50" y="510" class="step">speedup</text>
+  <text x="220" y="510" class="small">~1.8x throughput in generation — paper-reported measured value</text>
+</svg>

@@ -1,0 +1,5 @@
+{"id": "code-00", "prompt": "python: write a function f that doubles its input", "targets": ["ok"], "metric": "code_exec", "extras": {"io_pairs": [[1, 2], [3, 6], [5, 10]], "tag": "double"}}
+{"id": "code-01", "prompt": "python: write a function f that increments its input", "targets": ["ok"], "metric": "code_exec", "extras": {"io_pairs": [[1, 2], [5, 6], [10, 11]], "tag": "increment"}}
+{"id": "code-02", "prompt": "python: write a function f that squares its input", "targets": ["ok"], "metric": "code_exec", "extras": {"io_pairs": [[2, 4], [3, 9], [4, 16]], "tag": "square"}}
+{"id": "code-03", "prompt": "python: write a function f that doubles its input again", "targets": ["ok"], "metric": "code_exec", "extras": {"io_pairs": [[7, 14], [9, 18]], "tag": "double"}}
+{"id": "code-04", "prompt": "python: write a function f that increments its input again", "targets": ["ok"], "metric": "code_exec", "extras": {"io_pairs": [[0, 1], [2, 3]], "tag": "increment"}}

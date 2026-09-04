@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Transparency documentation: three scopes</text>
+
+  <rect x="40" y="60" width="280" height="200" class="box"/>
+  <text x="180" y="85" text-anchor="middle" class="head">Datasheet</text>
+  <text x="180" y="105" text-anchor="middle" class="small">Gebru et al. 2018 (CACM 2021)</text>
+  <rect x="60" y="125" width="240" height="50" class="cold"/>
+  <text x="180" y="148" text-anchor="middle" class="step">upstream: training data</text>
+  <text x="180" y="166" text-anchor="middle" class="small">motivation, composition, collection</text>
+  <rect x="60" y="185" width="240" height="60" class="cold"/>
+  <text x="180" y="208" text-anchor="middle" class="step">Data Cards (Pushkarna 2022)</text>
+  <text x="180" y="226" text-anchor="middle" class="small">telescopic / periscopic / microscopic</text>
+
+  <rect x="340" y="60" width="280" height="200" class="box"/>
+  <text x="480" y="85" text-anchor="middle" class="head">Model Card</text>
+  <text x="480" y="105" text-anchor="middle" class="small">Mitchell et al. 2019</text>
+  <rect x="360" y="125" width="240" height="50" class="cool"/>
+  <text x="480" y="148" text-anchor="middle" class="step">middle: the model</text>
+  <text x="480" y="166" text-anchor="middle" class="small">intended use, factors, metrics</text>
+  <rect x="360" y="185" width="240" height="60" class="cool"/>
+  <text x="480" y="208" text-anchor="middle" class="step">quant disaggregation</text>
+  <text x="480" y="226" text-anchor="middle" class="small">ethical considerations (0.3% filled)</text>
+
+  <rect x="640" y="60" width="280" height="200" class="box"/>
+  <text x="780" y="85" text-anchor="middle" class="head">System Card</text>
+  <text x="780" y="105" text-anchor="middle" class="small">Sidhpurwala 2024 / Blueprints 2025</text>
+  <rect x="660" y="125" width="240" height="50" class="hot"/>
+  <text x="780" y="148" text-anchor="middle" class="step">downstream: deployment</text>
+  <text x="780" y="166" text-anchor="middle" class="small">safety stack + incident response</text>
+  <rect x="660" y="185" width="240" height="60" class="hot"/>
+  <text x="780" y="208" text-anchor="middle" class="step">end-to-end scope</text>
+  <text x="780" y="226" text-anchor="middle" class="small">covers PI, exfil, alignment</text>
+
+  <rect x="40" y="280" width="880" height="210" class="box"/>
+  <text x="480" y="305" text-anchor="middle" class="head">2024-2025 developments</text>
+  <text x="60" y="335" class="small">CardGen (Liu et al. 2024): automated generation via LLMs; higher objectivity than many human-authored cards.</text>
+  <text x="60" y="355" class="small">download correlation (Liang et al. 2024): detailed cards +29% HF downloads -- adoption is market-driven.</text>
+  <text x="60" y="375" class="small">Laminator (Duddu et al. 2024): hardware TEE + cryptographic attestations for verifiable claims.</text>
+  <text x="60" y="395" class="small">sustainability (Jouneaux et al. July 2025): carbon, water, energy fields; emerging ISO standards.</text>
+  <text x="60" y="415" class="small">EU AI Act GPAI Code of Practice Transparency chapter: model cards as compliance artifacts.</text>
+  <text x="60" y="445" class="small">adoption gap: 0.3% of HF model cards document ethical considerations (Oreamuno et al. 2023).</text>
+  <text x="60" y="465" class="small">remediation: auto-generation + download-correlation pressure + regulatory requirement.</text>
+  <text x="60" y="485" class="small">"Blueprints of Trust" (arXiv:2509.20394) formalizes the System Card as deployment-layer complement.</text>
+</svg>

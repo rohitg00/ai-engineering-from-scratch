@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .warn { fill: #fde0b4; stroke: #b5651d; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .axis { stroke: #444; stroke-width: 1; fill: none; }
+      .curve { stroke: #c0392b; stroke-width: 2; fill: none; }
+      .curve-gamed { stroke: #2c5ea9; stroke-width: 2; fill: none; stroke-dasharray: 4,4; }
+      .grid { stroke: #ddd; stroke-width: 0.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">Logistic fit of P(success) vs log(expert time) — the horizon shape</text>
+
+  <rect x="40" y="50" width="800" height="460" class="box"/>
+
+  <!-- Chart area -->
+  <rect x="60" y="70" width="480" height="320" class="box"/>
+
+  <!-- Grid -->
+  <line x1="60" y1="230" x2="540" y2="230" class="grid"/>
+  <line x1="60" y1="150" x2="540" y2="150" class="grid"/>
+  <line x1="60" y1="310" x2="540" y2="310" class="grid"/>
+  <line x1="180" y1="70" x2="180" y2="390" class="grid"/>
+  <line x1="300" y1="70" x2="300" y2="390" class="grid"/>
+  <line x1="420" y1="70" x2="420" y2="390" class="grid"/>
+
+  <!-- 50% line -->
+  <line x1="60" y1="230" x2="540" y2="230" stroke="#555" stroke-width="1" stroke-dasharray="2,2"/>
+  <text x="50" y="234" text-anchor="end" class="small">0.5</text>
+
+  <!-- Curve: clean -->
+  <path class="curve" d="M60,100 C150,105 240,140 300,230 C360,320 450,355 540,370"/>
+
+  <!-- Curve: gamed (shifted right) -->
+  <path class="curve-gamed" d="M60,85 C200,95 300,140 360,230 C420,320 500,355 540,370"/>
+
+  <!-- Axis labels -->
+  <text x="60" y="405" class="small">1 min</text>
+  <text x="180" y="405" class="small">10 min</text>
+  <text x="300" y="405" class="small">1 hr</text>
+  <text x="420" y="405" class="small">10 hr</text>
+  <text x="520" y="405" class="small">48 hr</text>
+
+  <text x="50" y="75" text-anchor="end" class="small">1.0</text>
+  <text x="50" y="395" text-anchor="end" class="small">0</text>
+
+  <line x1="60" y1="70" x2="60" y2="390" class="axis"/>
+  <line x1="60" y1="390" x2="540" y2="390" class="axis"/>
+
+  <!-- Mark horizon intersections -->
+  <line x1="300" y1="230" x2="300" y2="390" stroke="#c0392b" stroke-width="1" stroke-dasharray="2,2"/>
+  <circle cx="300" cy="230" r="4" fill="#c0392b"/>
+  <text x="302" y="222" class="small">50% clean</text>
+
+  <line x1="360" y1="230" x2="360" y2="390" stroke="#2c5ea9" stroke-width="1" stroke-dasharray="2,2"/>
+  <circle cx="360" cy="230" r="4" fill="#2c5ea9"/>
+  <text x="362" y="222" class="small">50% gamed</text>
+
+  <text x="300" y="425" text-anchor="middle" class="caption">expert completion time (log scale)</text>
+
+  <!-- Right panel: interpretation -->
+  <rect x="560" y="70" width="280" height="320" class="box"/>
+  <text x="700" y="92" text-anchor="middle" class="label">what the horizon is</text>
+  <text x="575" y="115" class="small">METR fits P(success) to log(expert time)</text>
+  <text x="575" y="130" class="small">and reads off the 50% crossing.</text>
+
+  <rect x="575" y="145" width="250" height="44" class="cool"/>
+  <text x="584" y="165" class="small">clean evaluation</text>
+  <text x="584" y="180" class="small">horizon = capability ceiling</text>
+
+  <rect x="575" y="195" width="250" height="44" class="warn"/>
+  <text x="584" y="215" class="small">eval-context gaming</text>
+  <text x="584" y="230" class="small">horizon shifts right (inflated)</text>
+
+  <rect x="575" y="245" width="250" height="44" class="hot"/>
+  <text x="584" y="265" class="small">deployment reality</text>
+  <text x="584" y="280" class="small">horizon shifts left (discount)</text>
+
+  <text x="575" y="310" class="small">doubling time ~7 months (HCAST)</text>
+  <text x="575" y="325" class="small">14 hr today → 48 hr in ~12 months</text>
+  <text x="575" y="340" class="small">METR Time Horizon 1.1 (Jan 2026)</text>
+  <text x="575" y="360" class="small">SWAA + HCAST + RE-Bench</text>
+  <text x="575" y="376" class="small">cites in RSP v3.0 and FSF v3</text>
+
+  <!-- Takeaway strip -->
+  <rect x="60" y="410" width="780" height="80" class="hot"/>
+  <text x="440" y="434" text-anchor="middle" class="label">interpretation rules</text>
+  <text x="80" y="454" class="content">1. a horizon is an upper bound on capability, not a deployment reliability prediction</text>
+  <text x="80" y="470" class="content">2. measure your own distribution; public horizons predict rank-order, not absolute quality</text>
+  <text x="80" y="486" class="small">3. eval-context gaming and tooling gap typically discount the public number 10–40%</text>
+</svg>

@@ -1,0 +1,51 @@
+{
+  "status": "executable",
+  "issues": [],
+  "contract": {
+    "outcome": "Identify the affected service from an incident alert in under two minutes",
+    "invariants": [
+      "diagnosis is read-only",
+      "every source is included in the audit record"
+    ],
+    "examples": [
+      "an alert with a deployment id resolves to its service owner"
+    ],
+    "non_goals": [
+      "automatic remediation",
+      "changing alert routing"
+    ],
+    "decisions": [
+      {
+        "question": "Which read-only data source should be queried first?",
+        "mode": "delegated",
+        "rationale": ""
+      },
+      {
+        "question": "May the system write to production?",
+        "mode": "locked",
+        "rationale": "Production authority stays with the incident commander"
+      },
+      {
+        "question": "How many sources may be queried?",
+        "mode": "bounded",
+        "rationale": "Stop after five sources or two minutes"
+      }
+    ],
+    "proof": [
+      "ten recorded incident replays",
+      "zero production writes"
+    ]
+  },
+  "agent_may_decide": [
+    "Which read-only data source should be queried first?"
+  ],
+  "bounded_decisions": [
+    {
+      "question": "How many sources may be queried?",
+      "boundary": "Stop after five sources or two minutes"
+    }
+  ],
+  "human_checkpoint": [
+    "May the system write to production?"
+  ]
+}

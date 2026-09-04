@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Encoding attacks and the defense layers that miss them</text>
+
+  <rect x="60" y="60" width="840" height="60" class="box"/>
+  <text x="80" y="100" class="step">attack family:</text>
+  <rect x="200" y="70" width="130" height="40" class="hot"/>
+  <text x="265" y="95" text-anchor="middle" class="small">ArtPrompt (ASCII)</text>
+  <rect x="340" y="70" width="130" height="40" class="hot"/>
+  <text x="405" y="95" text-anchor="middle" class="small">base64 / leet</text>
+  <rect x="480" y="70" width="130" height="40" class="hot"/>
+  <text x="545" y="95" text-anchor="middle" class="small">UTF-8 homoglyph</text>
+  <rect x="620" y="70" width="130" height="40" class="hot"/>
+  <text x="685" y="95" text-anchor="middle" class="small">UTES (tree/JSON)</text>
+  <rect x="760" y="70" width="130" height="40" class="hot"/>
+  <text x="825" y="95" text-anchor="middle" class="small">image modality</text>
+
+  <rect x="60" y="140" width="840" height="50" class="box"/>
+  <text x="80" y="170" class="step">keyword filter:</text>
+  <text x="265" y="170" text-anchor="middle" class="small" fill="#c0392b">misses</text>
+  <text x="405" y="170" text-anchor="middle" class="small" fill="#c0392b">misses</text>
+  <text x="545" y="170" text-anchor="middle" class="small" fill="#c0392b">misses</text>
+  <text x="685" y="170" text-anchor="middle" class="small" fill="#c0392b">misses</text>
+  <text x="825" y="170" text-anchor="middle" class="small" fill="#c0392b">misses</text>
+
+  <rect x="60" y="200" width="840" height="50" class="box"/>
+  <text x="80" y="230" class="step">perplexity filter:</text>
+  <text x="265" y="230" text-anchor="middle" class="small" fill="#e67e22">partial</text>
+  <text x="405" y="230" text-anchor="middle" class="small" fill="#e67e22">partial</text>
+  <text x="545" y="230" text-anchor="middle" class="small" fill="#c0392b">misses</text>
+  <text x="685" y="230" text-anchor="middle" class="small" fill="#e67e22">partial</text>
+  <text x="825" y="230" text-anchor="middle" class="small" fill="#c0392b">misses</text>
+
+  <rect x="60" y="260" width="840" height="50" class="box"/>
+  <text x="80" y="290" class="step">paraphrase defense:</text>
+  <text x="265" y="290" text-anchor="middle" class="small" fill="#c0392b">misses</text>
+  <text x="405" y="290" text-anchor="middle" class="small" fill="#e67e22">partial</text>
+  <text x="545" y="290" text-anchor="middle" class="small" fill="#c0392b">misses</text>
+  <text x="685" y="290" text-anchor="middle" class="small" fill="#c0392b">misses</text>
+  <text x="825" y="290" text-anchor="middle" class="small" fill="#c0392b">misses</text>
+
+  <rect x="60" y="320" width="840" height="50" class="box"/>
+  <text x="80" y="350" class="step">output classifier:</text>
+  <text x="265" y="350" text-anchor="middle" class="small" fill="#2e7d32">catches</text>
+  <text x="405" y="350" text-anchor="middle" class="small" fill="#2e7d32">catches</text>
+  <text x="545" y="350" text-anchor="middle" class="small" fill="#2e7d32">catches</text>
+  <text x="685" y="350" text-anchor="middle" class="small" fill="#2e7d32">catches</text>
+  <text x="825" y="350" text-anchor="middle" class="small" fill="#e67e22">partial</text>
+
+  <rect x="60" y="380" width="840" height="50" class="box"/>
+  <text x="80" y="410" class="step">multimodal moderator:</text>
+  <text x="265" y="410" text-anchor="middle" class="small" fill="#2e7d32">catches</text>
+  <text x="405" y="410" text-anchor="middle" class="small" fill="#2e7d32">catches</text>
+  <text x="545" y="410" text-anchor="middle" class="small" fill="#2e7d32">catches</text>
+  <text x="685" y="410" text-anchor="middle" class="small" fill="#e67e22">partial</text>
+  <text x="825" y="410" text-anchor="middle" class="small" fill="#2e7d32">catches</text>
+
+  <rect x="60" y="430" width="840" height="60" class="box"/>
+  <text x="80" y="455" class="small">input-side defenses (keyword, PPL, paraphrase, retokenization) fail because recognition is visual / structural.</text>
+  <text x="80" y="475" class="small">output-side and multimodal moderators are the reliable layer; every deployment should include at least one.</text>
+</svg>

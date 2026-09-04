@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Thinker-Talker — streaming pipeline for real-time voice</text>
+
+  <rect x="30" y="50" width="900" height="230" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">parallel streaming: Thinker and Talker run concurrently</text>
+
+  <rect x="60" y="90" width="140" height="170" class="hot"/>
+  <text x="130" y="112" text-anchor="middle" class="step">user audio</text>
+  <text x="130" y="130" text-anchor="middle" class="small">mic 16 kHz</text>
+  <text x="130" y="146" text-anchor="middle" class="small">+ webcam 4 fps</text>
+  <text x="130" y="166" text-anchor="middle" class="small">streaming</text>
+  <text x="130" y="186" text-anchor="middle" class="small">tokens in</text>
+  <text x="130" y="212" text-anchor="middle" class="caption">VAD for turn-taking</text>
+
+  <path d="M 205 170 L 245 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="250" y="90" width="210" height="170" class="cool"/>
+  <text x="355" y="112" text-anchor="middle" class="step">Thinker (7-80B)</text>
+  <text x="355" y="130" text-anchor="middle" class="small">text-generating</text>
+  <text x="355" y="146" text-anchor="middle" class="small">large LLM reasoning</text>
+  <text x="355" y="162" text-anchor="middle" class="small">TMRoPE timestamps</text>
+  <text x="355" y="180" text-anchor="middle" class="small">emits text tokens</text>
+  <text x="355" y="202" text-anchor="middle" class="step">first token ~40ms</text>
+  <text x="355" y="224" text-anchor="middle" class="caption">streams per token</text>
+  <text x="355" y="240" text-anchor="middle" class="caption">into Talker</text>
+
+  <path d="M 465 170 L 505 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="510" y="90" width="210" height="170" class="cold"/>
+  <text x="615" y="112" text-anchor="middle" class="step">Talker (200M-1B)</text>
+  <text x="615" y="130" text-anchor="middle" class="small">speech-generating</text>
+  <text x="615" y="146" text-anchor="middle" class="small">small + fast</text>
+  <text x="615" y="162" text-anchor="middle" class="small">residual-VQ output</text>
+  <text x="615" y="180" text-anchor="middle" class="small">8 codebooks</text>
+  <text x="615" y="202" text-anchor="middle" class="step">50 tok/s throughput</text>
+  <text x="615" y="224" text-anchor="middle" class="caption">keeps pace with speech</text>
+
+  <path d="M 725 170 L 765 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="770" y="90" width="140" height="170" class="reg"/>
+  <text x="840" y="112" text-anchor="middle" class="step">waveform</text>
+  <text x="840" y="130" text-anchor="middle" class="small">SNAC decoder</text>
+  <text x="840" y="146" text-anchor="middle" class="small">16 kHz samples</text>
+  <text x="840" y="162" text-anchor="middle" class="small">speaker output</text>
+  <text x="840" y="182" text-anchor="middle" class="step">~70 ms decode</text>
+  <text x="840" y="206" text-anchor="middle" class="caption">streaming</text>
+
+  <rect x="30" y="300" width="900" height="220" class="box"/>
+  <text x="480" y="322" text-anchor="middle" class="head">TTFAB budget and open implementations</text>
+
+  <g transform="translate(60, 350)">
+    <text x="0" y="15" class="step">mic -&gt; audio tokens</text>
+    <rect x="200" y="2" width="50" height="16" class="hot"/>
+    <text x="260" y="15" class="small">40 ms</text>
+
+    <text x="0" y="40" class="step">Thinker prefill</text>
+    <rect x="200" y="27" width="120" height="16" class="cool"/>
+    <text x="330" y="40" class="small">100 ms at 7B</text>
+
+    <text x="0" y="65" class="step">first text token</text>
+    <rect x="200" y="52" width="45" height="16" class="cool"/>
+    <text x="255" y="65" class="small">40 ms</text>
+
+    <text x="0" y="90" class="step">Talker first tokens</text>
+    <rect x="200" y="77" width="20" height="16" class="cold"/>
+    <text x="230" y="90" class="small">20 ms</text>
+
+    <text x="0" y="115" class="step">RVQ + waveform</text>
+    <rect x="200" y="102" width="100" height="16" class="reg"/>
+    <text x="310" y="115" class="small">100 ms</text>
+  </g>
+
+  <rect x="590" y="340" width="320" height="160" class="reg"/>
+  <text x="750" y="362" text-anchor="middle" class="step">open implementations</text>
+  <text x="750" y="384" text-anchor="middle" class="small">Mini-Omni : first open streaming</text>
+  <text x="750" y="402" text-anchor="middle" class="small">Moshi     : 160 ms, inner monologue</text>
+  <text x="750" y="420" text-anchor="middle" class="small">Qwen2.5-Omni : ~350 ms, TMRoPE</text>
+  <text x="750" y="438" text-anchor="middle" class="small">Qwen3-Omni   : close to GPT-4o</text>
+  <text x="750" y="456" text-anchor="middle" class="small">GLM-4-Voice  : Chinese-first</text>
+  <text x="750" y="480" text-anchor="middle" class="caption">GPT-4o reference: ~250 ms</text>
+</svg>

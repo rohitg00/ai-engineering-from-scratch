@@ -1,0 +1,78 @@
+{
+  "lesson": "10-ai-control-subversion",
+  "title": "AI Control - Safety Despite Subversion",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which best captures the difference between alignment and AI control?",
+      "options": [
+        "They are synonyms",
+        "Control is about hardware; alignment is about software",
+        "Alignment asks whether U is trustworthy; control asks whether we can safely use U without trusting it",
+        "Control replaces the loss function while alignment changes the optimizer"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the AI Control threat model assume?",
+      "options": [
+        "U is untrusted strong, T is trusted weak, H is bounded trusted human labor",
+        "Only U exists",
+        "U and T are both adversarial",
+        "All three resources (U, T, H) are trusted"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the key risk in Untrusted Monitoring that Trusted Editing avoids?",
+      "options": [
+        "T cannot edit text",
+        "Hardware contention",
+        "Two instances of U can collude or share priors, so the protocol must spend budget on collusion-resistance",
+        "Humans cannot be audited"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "On the Greenblatt et al. (ICML 2024) code-backdoor task, what does Trusted Editing achieve relative to Untrusted Monitoring?",
+      "options": [
+        "It only wins at zero human budget",
+        "They are exactly equivalent",
+        "It is strictly worse",
+        "It strictly Pareto-dominates: higher usefulness at every safety level"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which of the following is NOT one of the lesson's three fundamental limits of control?",
+      "options": [
+        "Control produces aligned models as a byproduct",
+        "Trusted weak models eventually lag U",
+        "Control may fail at higher capability levels if U can manipulate T or reason about H's audit distribution",
+        "Humans do not scale"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does a Control Safety Case argue?",
+      "options": [
+        "That U is trustworthy",
+        "That T is more capable than U",
+        "That under worst-case assumptions about U, the deployment protocol bounds the probability of an unacceptable outcome",
+        "That the model passed a manual jailbreak test"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

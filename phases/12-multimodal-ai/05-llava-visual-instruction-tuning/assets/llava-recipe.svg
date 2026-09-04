@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .frozen { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; stroke-dasharray: 4 3; }
+      .train { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .stage { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">LLaVA recipe — simpler projector, cheaper training, bigger ecosystem</text>
+
+  <rect x="40" y="50" width="880" height="250" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">forward pass: image -> projector -> LLM</text>
+
+  <rect x="60" y="90" width="160" height="180" class="frozen"/>
+  <text x="140" y="112" text-anchor="middle" class="step">CLIP ViT-L/14</text>
+  <text x="140" y="130" text-anchor="middle" class="small">@ 336x336</text>
+  <text x="140" y="148" text-anchor="middle" class="small">frozen stage 1</text>
+  <text x="140" y="166" text-anchor="middle" class="small">303M params</text>
+  <text x="140" y="194" text-anchor="middle" class="small">576 patch tokens</text>
+  <text x="140" y="212" text-anchor="middle" class="small">dim 1024 each</text>
+  <text x="140" y="240" text-anchor="middle" class="caption">24x24 grid</text>
+
+  <path d="M 225 180 L 290 180" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="295" y="90" width="180" height="180" class="train"/>
+  <text x="385" y="112" text-anchor="middle" class="step">2-layer MLP projector</text>
+  <text x="385" y="130" text-anchor="middle" class="small">1024 -&gt; 4096 -&gt; 4096</text>
+  <text x="385" y="148" text-anchor="middle" class="small">GELU activation</text>
+  <text x="385" y="168" text-anchor="middle" class="small">~22M params</text>
+  <text x="385" y="196" text-anchor="middle" class="small">shared across all patches</text>
+  <text x="385" y="214" text-anchor="middle" class="small">trained in stage 1</text>
+  <text x="385" y="232" text-anchor="middle" class="small">fine-tuned in stage 2</text>
+  <text x="385" y="252" text-anchor="middle" class="caption">the whole bridge</text>
+
+  <path d="M 480 180 L 545 180" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="550" y="90" width="160" height="180" class="box"/>
+  <text x="630" y="112" text-anchor="middle" class="step">576 visual tokens</text>
+  <text x="630" y="130" text-anchor="middle" class="small">each dim 4096</text>
+  <text x="630" y="148" text-anchor="middle" class="small">replaces &lt;image&gt;</text>
+  <text x="630" y="166" text-anchor="middle" class="small">in the text prompt</text>
+  <text x="630" y="194" text-anchor="middle" class="small">token budget:</text>
+  <text x="630" y="212" text-anchor="middle" class="small">576 / 2048 = 28%</text>
+  <text x="630" y="230" text-anchor="middle" class="small">576 / 32k = 1.8%</text>
+  <text x="630" y="252" text-anchor="middle" class="small">AnyRes: 2880 tokens</text>
+
+  <path d="M 715 180 L 780 180" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="785" y="90" width="130" height="180" class="frozen"/>
+  <text x="850" y="112" text-anchor="middle" class="step">Vicuna 13B</text>
+  <text x="850" y="130" text-anchor="middle" class="small">or Llama-3.1</text>
+  <text x="850" y="150" text-anchor="middle" class="small">frozen stage 1</text>
+  <text x="850" y="170" text-anchor="middle" class="small">trained stage 2</text>
+  <text x="850" y="200" text-anchor="middle" class="small">autoregressive</text>
+  <text x="850" y="218" text-anchor="middle" class="small">next-token</text>
+  <text x="850" y="236" text-anchor="middle" class="small">generation</text>
+  <text x="850" y="256" text-anchor="middle" class="caption">same as text-only</text>
+
+  <rect x="40" y="320" width="880" height="220" class="box"/>
+  <text x="480" y="342" text-anchor="middle" class="head">two-stage training</text>
+
+  <rect x="60" y="360" width="410" height="160" class="stage"/>
+  <text x="80" y="382" class="step">Stage 1: projector alignment</text>
+  <text x="80" y="402" class="small">freeze ViT, freeze LLM</text>
+  <text x="80" y="418" class="small">train ONLY the 2-layer MLP</text>
+  <text x="80" y="434" class="small">data: 558k caption pairs (LAION-CC-SBU)</text>
+  <text x="80" y="450" class="small">loss: LM on caption, conditioned on visual tokens</text>
+  <text x="80" y="468" class="small">cost: ~4 hours on 8xA100</text>
+  <text x="80" y="490" class="small">goal: projector learns ViT-space -&gt; LLM-space</text>
+  <text x="80" y="508" class="caption">no task-specific objectives</text>
+
+  <rect x="490" y="360" width="410" height="160" class="train"/>
+  <text x="510" y="382" class="step">Stage 2: visual instruction tuning</text>
+  <text x="510" y="402" class="small">unfreeze LLM (full or LoRA)</text>
+  <text x="510" y="418" class="small">keep projector trainable</text>
+  <text x="510" y="434" class="small">data: 158k GPT-4-generated turns</text>
+  <text x="510" y="450" class="small">  (conversation / description / reasoning)</text>
+  <text x="510" y="468" class="small">cost: ~20 hours on 8xA100</text>
+  <text x="510" y="490" class="small">goal: dialog, VQA, instruction following</text>
+  <text x="510" y="508" class="caption">LLaVA-NeXT adds ShareGPT4V, academic mix</text>
+</svg>

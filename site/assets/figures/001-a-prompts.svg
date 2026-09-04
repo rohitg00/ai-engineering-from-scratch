@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="FIG_001.A — prompt as instruction text">
+  <defs>
+    <style>
+      .bp { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
+      .bp-fill { fill: #3553ff; }
+      .face { fill: rgba(53, 83, 255, 0.08); }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; }
+    </style>
+  </defs>
+
+  <rect width="120" height="120" fill="#fafaf5"/>
+
+  <text class="mono bp-fill" x="8" y="14" font-size="6.5" letter-spacing="1.5">FIG_001.A</text>
+
+  <!-- document body -->
+  <rect class="face" x="24" y="26" width="62" height="74"/>
+  <rect class="bp" x="24" y="26" width="62" height="74" stroke-width="1.5"/>
+
+  <!-- folded corner -->
+  <polyline class="bp" points="76,26 86,36 76,36 76,26" stroke-width="1.5"/>
+  <line class="bp" x1="76" y1="36" x2="86" y2="36" stroke-width="1.5"/>
+
+  <!-- text lines (instruction) -->
+  <line class="bp" x1="32" y1="46" x2="78" y2="46" stroke-width="1.2"/>
+  <line class="bp" x1="32" y1="54" x2="78" y2="54" stroke-width="1.2"/>
+  <line class="bp" x1="32" y1="62" x2="70" y2="62" stroke-width="1.2"/>
+  <line class="bp" x1="32" y1="76" x2="78" y2="76" stroke-width="1.2"/>
+  <line class="bp" x1="32" y1="84" x2="62" y2="84" stroke-width="1.2"/>
+
+  <!-- prompt arrow leaving the document (instruction sent to model) -->
+  <line class="bp" x1="88" y1="62" x2="104" y2="62" stroke-width="1.5"/>
+  <polyline class="bp" points="100,58 104,62 100,66" stroke-width="1.5"/>
+
+  <text class="mono bp-fill" x="60" y="114" font-size="7" letter-spacing="1.5" text-anchor="middle">PROMPT</text>
+</svg>

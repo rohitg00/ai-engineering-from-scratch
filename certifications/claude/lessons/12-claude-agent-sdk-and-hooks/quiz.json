@@ -1,0 +1,78 @@
+{
+  "lesson": "12-claude-agent-sdk-and-hooks",
+  "title": "The Agent SDK Is a Harness, Not Permission",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which statement correctly distinguishes the main agent harness levels?",
+      "options": [
+        "Agent SDK is the typed name for raw REST, while Tool Runner is available only inside Managed Agents",
+        "Tool Runner handles a Messages tool loop, Agent SDK adds a broader harness, and Managed Agents adds a remote event-driven service",
+        "Managed Agents transfers business authorization and final-state validation to the configured agent",
+        "Tool Runner, Agent SDK, and Managed Agents differ mainly in model quality and naming; all three own the same loop, tool, and session boundary"
+      ],
+      "correct": 1,
+      "explanation": "These surfaces automate different amounts of state, tools, sessions, and hosting. None transfers business authorization, tenant policy, or outcome verification."
+    },
+    {
+      "stage": "check",
+      "question": "Which control should deny a dangerous command before it executes?",
+      "options": [
+        "A final-state evaluator after execution",
+        "A session instruction that asks the agent to explain risky commands before use",
+        "A pre-tool policy hook backed by a sandbox",
+        "A post-tool hook that redacts the command result before it reaches the model"
+      ],
+      "correct": 2,
+      "explanation": "A pre-tool hook can block before side effects. The sandbox limits damage if policy code fails, while post-tool checks are too late to prevent execution."
+    },
+    {
+      "stage": "check",
+      "question": "When is a subagent most justified?",
+      "options": [
+        "When task completion and approvals should remain inside one model's private context",
+        "When deterministic work needs a separate context",
+        "When several agents need unrestricted write access to the same files at the same time",
+        "When an independent reviewer needs isolated context and read-only tools"
+      ],
+      "correct": 3,
+      "explanation": "Subagents earn their cost through isolation, narrow permissions, independent evaluation, or genuinely parallel bounded work."
+    },
+    {
+      "stage": "check",
+      "question": "A managed-agent SSE connection closes after a session.status_running event. No persisted end_turn event was observed. What should the application do?",
+      "options": [
+        "Reconnect or list persisted events from the stored cursor and reconcile session status",
+        "Mark the session complete because closing SSE is the transport form of end_turn",
+        "Start a replacement session and copy only the preview text into it",
+        "Repeat the most recent tool call because no terminal event means it did not execute"
+      ],
+      "correct": 0,
+      "explanation": "Stream deltas and connection state are not durable completion evidence. Persist event IDs and cursors, deduplicate replays, and use the session's persisted state machine."
+    },
+    {
+      "stage": "post",
+      "question": "Claude proposes clicking a purchase button from a screenshot. Which control sequence is strongest?",
+      "options": [
+        "Execute an in-bounds click in the sandbox because its coordinates are typed, then ask the user to confirm the purchase after it appears",
+        "Validate the fresh screenshot and target, require bound human approval, sandbox the action, then verify a new screenshot",
+        "Use a managed agent so the built-in sandbox can authorize financial actions automatically",
+        "Trust the model's risk label when the provider's prompt-injection classifier did not request confirmation"
+      ],
+      "correct": 1,
+      "explanation": "Computer Use remains client-executed. Fresh visual state, typed action validation, sandboxing, human approval for consequences, and post-action evidence form the control boundary."
+    },
+    {
+      "stage": "post",
+      "question": "Which evidence best validates a three-sprint long-running agent task?",
+      "options": [
+        "The agent summary records completion after each sprint and the final output is coherent",
+        "The same session resumes successfully after each compaction without losing its task list",
+        "Each sprint has a durable artifact, acceptance tests, trace, and independent evaluator decision",
+        "Separate subagents complete every sprint and agree on the final status"
+      ],
+      "correct": 2,
+      "explanation": "Long-horizon coherence comes from bounded contracts and external verification, not self-report, compaction, or agent count."
+    }
+  ]
+}

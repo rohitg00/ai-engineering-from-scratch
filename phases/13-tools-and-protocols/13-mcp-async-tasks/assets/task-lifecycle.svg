@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">MCP Tasks extension on the 2026-07-28 stateless core</text>
+
+  <rect x="40" y="55" width="880" height="95" class="box"/>
+  <text x="60" y="80" class="step">client -&gt; tools/call + per-request io.modelcontextprotocol/tasks capability</text>
+  <text x="60" y="104" class="step">server: durably create task, then return resultType: "task" + taskId</text>
+  <text x="60" y="130" class="small">tools/list publishes generate_report; the server chooses task mode after the capability check.</text>
+
+  <rect x="40" y="180" width="155" height="80" class="cool"/>
+  <text x="118" y="215" text-anchor="middle" class="step">working</text>
+  <text x="118" y="235" text-anchor="middle" class="small">worker owns lease</text>
+
+  <rect x="245" y="180" width="170" height="80" class="cold"/>
+  <text x="330" y="215" text-anchor="middle" class="step">input_required</text>
+  <text x="330" y="235" text-anchor="middle" class="small">outstanding requests</text>
+
+  <rect x="465" y="180" width="155" height="80" class="cool"/>
+  <text x="543" y="215" text-anchor="middle" class="step">completed</text>
+  <text x="543" y="235" text-anchor="middle" class="small">nested complete result</text>
+
+  <rect x="670" y="180" width="110" height="80" class="hot"/>
+  <text x="725" y="215" text-anchor="middle" class="step">failed</text>
+  <text x="725" y="235" text-anchor="middle" class="small">RPC error</text>
+
+  <rect x="810" y="180" width="110" height="80" class="box"/>
+  <text x="865" y="215" text-anchor="middle" class="step">cancelled</text>
+  <text x="865" y="235" text-anchor="middle" class="small">worker stopped</text>
+
+  <path d="M195,220 L245,220" class="edge" marker-end="url(#arrow)"/>
+  <path d="M415,220 L465,220" class="edge" marker-end="url(#arrow)"/>
+  <path d="M330,260 L330,280 C330,300 118,300 118,260" class="edge" marker-end="url(#arrow)"/>
+  <path d="M195,205 C300,155 390,155 465,205" class="edge" marker-end="url(#arrow)"/>
+  <path d="M620,220 L670,220" class="edge" marker-end="url(#arrow)"/>
+  <path d="M620,240 C700,285 790,285 810,240" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="310" width="420" height="165" class="cool"/>
+  <text x="250" y="335" text-anchor="middle" class="head">polling and input</text>
+  <text x="58" y="365" class="step">tasks/get {taskId}</text>
+  <text x="58" y="383" class="small">Mcp-Name = taskId; complete snapshot</text>
+  <text x="58" y="415" class="step">tasks/update {taskId, inputResponses}</text>
+  <text x="58" y="433" class="small">Mcp-Name = taskId; complete acknowledgement</text>
+  <text x="58" y="457" class="small">Unique input keys for the entire task lifetime</text>
+
+  <rect x="500" y="310" width="420" height="165" class="cold"/>
+  <text x="710" y="335" text-anchor="middle" class="head">cancellation and optional push</text>
+  <text x="518" y="365" class="step">tasks/cancel {taskId}</text>
+  <text x="518" y="383" class="small">Mcp-Name = taskId; cooperative acknowledgement</text>
+  <text x="518" y="415" class="step">subscriptions/listen via POST response SSE</text>
+  <text x="518" y="433" class="small">notifications/subscriptions/acknowledged</text>
+  <text x="518" y="451" class="small">notifications/tasks + subscriptionId metadata</text>
+
+  <rect x="40" y="500" width="880" height="45" class="hot"/>
+  <text x="480" y="520" text-anchor="middle" class="step">removed experimental assumptions: tasks/status | tasks/result | tasks/list</text>
+  <text x="480" y="538" text-anchor="middle" class="small">Persist ownership, expiry, issued input keys, result or error, and worker lease in application storage.</text>
+</svg>

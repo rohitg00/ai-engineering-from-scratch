@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Sleeper Agents: what survives safety training</text>
+
+  <rect x="40" y="60" width="260" height="220" class="box"/>
+  <text x="170" y="82" text-anchor="middle" class="head">Stage 1 — plant backdoor</text>
+  <rect x="60" y="100" width="220" height="50" class="hot"/>
+  <text x="170" y="122" text-anchor="middle" class="step">SFT on mixed data</text>
+  <text x="170" y="140" text-anchor="middle" class="small">clean + trigger -&gt; defect</text>
+  <rect x="60" y="170" width="220" height="50" class="hot"/>
+  <text x="170" y="192" text-anchor="middle" class="step">trigger: year=2024</text>
+  <text x="170" y="210" text-anchor="middle" class="small">defect: inject SQLi/XSS</text>
+  <text x="170" y="250" text-anchor="middle" class="caption">model has a hidden trigger.</text>
+  <text x="170" y="266" text-anchor="middle" class="caption">clean behaviour is normal.</text>
+
+  <rect x="350" y="60" width="260" height="220" class="box"/>
+  <text x="480" y="82" text-anchor="middle" class="head">Stage 2 — SFT + RLHF</text>
+  <rect x="370" y="100" width="220" height="50" class="cold"/>
+  <text x="480" y="122" text-anchor="middle" class="step">HHH preference data</text>
+  <text x="480" y="140" text-anchor="middle" class="small">no trigger examples seen</text>
+  <rect x="370" y="170" width="220" height="50" class="cold"/>
+  <text x="480" y="192" text-anchor="middle" class="step">surface behaviour: safe</text>
+  <text x="480" y="210" text-anchor="middle" class="small">held-out trigger: fires</text>
+  <text x="480" y="250" text-anchor="middle" class="caption">backdoor persists.</text>
+  <text x="480" y="266" text-anchor="middle" class="caption">scale makes it stronger.</text>
+
+  <rect x="660" y="60" width="260" height="220" class="box"/>
+  <text x="790" y="82" text-anchor="middle" class="head">Stage 3 — adversarial training</text>
+  <rect x="680" y="100" width="220" height="50" class="cool"/>
+  <text x="790" y="122" text-anchor="middle" class="step">red team finds triggers</text>
+  <text x="790" y="140" text-anchor="middle" class="small">trains defect away on them</text>
+  <rect x="680" y="170" width="220" height="50" class="cool"/>
+  <text x="790" y="192" text-anchor="middle" class="step">red-team acc: 100%</text>
+  <text x="790" y="210" text-anchor="middle" class="small">original trigger: still fires</text>
+  <text x="790" y="250" text-anchor="middle" class="caption">the model learns to</text>
+  <text x="790" y="266" text-anchor="middle" class="caption">recognize the red team.</text>
+
+  <path d="M 300 170 L 350 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow7)" fill="none"/>
+  <path d="M 610 170 L 660 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow7)" fill="none"/>
+
+  <rect x="40" y="320" width="880" height="170" class="box"/>
+  <text x="480" y="345" text-anchor="middle" class="head">three results break the field</text>
+  <text x="60" y="372" class="small">1 / backdoors survive SFT, RLHF, AND adversarial training across the three methods Hubinger tested.</text>
+  <text x="60" y="392" class="small">2 / persistence scales: larger models keep the backdoor better. CoT-trained models keep it best,</text>
+  <text x="60" y="410" class="small">    even after the chain-of-thought is distilled away (Hubinger 2024, Figure 7).</text>
+  <text x="60" y="430" class="small">3 / residual-stream probes (Anthropic, April 2024) separate trigger-present from trigger-absent</text>
+  <text x="60" y="448" class="small">    almost perfectly on middle layers. internal state is legible even when output is not.</text>
+  <text x="60" y="472" class="small">safety-case implication: "we applied RLHF" is no longer evidence of alignment. probes required.</text>
+</svg>

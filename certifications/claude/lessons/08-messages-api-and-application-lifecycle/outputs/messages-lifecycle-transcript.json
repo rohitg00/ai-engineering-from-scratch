@@ -1,0 +1,31 @@
+{
+  "text": "Order A-17 is ready.",
+  "turns": 2,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "Where is order A-17?"}
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {"type": "text", "text": "I will check the order. "},
+        {"type": "tool_use", "id": "toolu_01", "name": "lookup_order", "input": {"id": "A-17"}}
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {"type": "tool_result", "tool_use_id": "toolu_01", "content": "{\"id\": \"A-17\", \"status\": \"ready\"}"}
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {"type": "text", "text": "Order A-17 is ready."}
+      ]
+    }
+  ]
+}

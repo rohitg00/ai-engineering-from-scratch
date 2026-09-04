@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
+    </style>
+  </defs>
+  <text x="450" y="28" text-anchor="middle" class="title">Multi-agent debate — Du et al. 2023, convergence dynamics</text>
+
+  <!-- 3 rounds, 3 agents layout -->
+  <text x="110" y="80" text-anchor="middle" class="head">round 0</text>
+  <text x="310" y="80" text-anchor="middle" class="head">round 1</text>
+  <text x="510" y="80" text-anchor="middle" class="head">round 2</text>
+  <text x="710" y="80" text-anchor="middle" class="head">round 3</text>
+
+  <rect x="60" y="100" width="100" height="40" class="hot"/>
+  <text x="110" y="125" text-anchor="middle" class="step">A: 38.0</text>
+  <rect x="60" y="160" width="100" height="40" class="cool"/>
+  <text x="110" y="185" text-anchor="middle" class="step">B: 42.5</text>
+  <rect x="60" y="220" width="100" height="40" class="cold"/>
+  <text x="110" y="245" text-anchor="middle" class="step">C: 51.0</text>
+
+  <line x1="160" y1="120" x2="260" y2="120" class="edge" marker-end="url(#arrow)"/>
+  <line x1="160" y1="180" x2="260" y2="180" class="edge" marker-end="url(#arrow)"/>
+  <line x1="160" y1="240" x2="260" y2="240" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="260" y="100" width="100" height="40" class="hot"/>
+  <text x="310" y="125" text-anchor="middle" class="step">A: 42.89</text>
+  <rect x="260" y="160" width="100" height="40" class="cool"/>
+  <text x="310" y="185" text-anchor="middle" class="step">B: 44.49</text>
+  <rect x="260" y="220" width="100" height="40" class="cold"/>
+  <text x="310" y="245" text-anchor="middle" class="step">C: 45.34</text>
+
+  <line x1="360" y1="120" x2="460" y2="120" class="edge" marker-end="url(#arrow)"/>
+  <line x1="360" y1="180" x2="460" y2="180" class="edge" marker-end="url(#arrow)"/>
+  <line x1="360" y1="240" x2="460" y2="240" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="460" y="100" width="100" height="40" class="hot"/>
+  <text x="510" y="125" text-anchor="middle" class="step">A: 44.15</text>
+  <rect x="460" y="160" width="100" height="40" class="cool"/>
+  <text x="510" y="185" text-anchor="middle" class="step">B: 44.56</text>
+  <rect x="460" y="220" width="100" height="40" class="cold"/>
+  <text x="510" y="245" text-anchor="middle" class="step">C: 44.59</text>
+
+  <line x1="560" y1="120" x2="660" y2="120" class="edge" marker-end="url(#arrow)"/>
+  <line x1="560" y1="180" x2="660" y2="180" class="edge" marker-end="url(#arrow)"/>
+  <line x1="560" y1="240" x2="660" y2="240" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="660" y="100" width="100" height="40" class="hot"/>
+  <text x="710" y="125" text-anchor="middle" class="step">A: 44.43</text>
+  <rect x="660" y="160" width="100" height="40" class="cool"/>
+  <text x="710" y="185" text-anchor="middle" class="step">B: 44.52</text>
+  <rect x="660" y="220" width="100" height="40" class="cold"/>
+  <text x="710" y="245" text-anchor="middle" class="step">C: 44.50</text>
+
+  <text x="110" y="300" text-anchor="middle" class="small">spread 13.0</text>
+  <text x="310" y="300" text-anchor="middle" class="small">spread 2.45</text>
+  <text x="510" y="300" text-anchor="middle" class="small">spread 0.44</text>
+  <text x="710" y="300" text-anchor="middle" class="small">spread 0.09</text>
+
+  <rect x="60" y="330" width="780" height="60" class="box"/>
+  <text x="450" y="352" text-anchor="middle" class="head">Du et al. ablations</text>
+  <text x="450" y="372" text-anchor="middle" class="small">agents-only plateaus · rounds-only barely helps · agents × rounds produces the big jump</text>
+
+  <rect x="60" y="400" width="780" height="100" class="box"/>
+  <text x="450" y="422" text-anchor="middle" class="head">failure modes to guard against</text>
+  <text x="450" y="442" text-anchor="middle" class="small">sycophancy cascade: agents defer to loudest confidence, may converge on wrong answer</text>
+  <text x="450" y="460" text-anchor="middle" class="small">topic drift: long debates wander from original question — re-inject every round</text>
+  <text x="450" y="478" text-anchor="middle" class="small">cost: N × R calls with growing context; cap N=5, R=3</text>
+</svg>

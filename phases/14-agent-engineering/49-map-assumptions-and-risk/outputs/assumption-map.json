@@ -1,0 +1,32 @@
+[
+  {
+    "statement": "Engineers can identify the right service from alert context",
+    "impact": 5,
+    "uncertainty": 5,
+    "irreversibility": 2,
+    "test": "Replay ten incidents with a read-only prototype",
+    "evidence": "",
+    "risk_score": 27,
+    "status": "open"
+  },
+  {
+    "statement": "Automatic remediation is acceptable",
+    "impact": 5,
+    "uncertainty": 4,
+    "irreversibility": 5,
+    "test": "Do not automate; test approval workflow first",
+    "evidence": "",
+    "risk_score": 25,
+    "status": "open"
+  },
+  {
+    "statement": "Two-minute diagnosis matters",
+    "impact": 4,
+    "uncertainty": 2,
+    "irreversibility": 1,
+    "test": "Interview five incident commanders",
+    "evidence": "four of five confirmed",
+    "risk_score": 9,
+    "status": "tested"
+  }
+]

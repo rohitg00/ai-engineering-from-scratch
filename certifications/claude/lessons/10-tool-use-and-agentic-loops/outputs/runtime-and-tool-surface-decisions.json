@@ -1,0 +1,51 @@
+{
+  "verified_on": "2026-08-09",
+  "runtime_decisions": [
+    {
+      "scenario": "fixed extraction pipeline",
+      "runtime": "deterministic-workflow"
+    },
+    {
+      "scenario": "regulated loop with custom protocol checkpoints",
+      "runtime": "hand-written-loop"
+    },
+    {
+      "scenario": "client-owned support agent",
+      "runtime": "sdk-tool-runner"
+    },
+    {
+      "scenario": "remote long-running agent with managed sandbox",
+      "runtime": "managed-agents"
+    }
+  ],
+  "capability_decisions": [
+    {
+      "scenario": "live public web search",
+      "execution": "server-built-in-tool",
+      "procedure": "inline-instructions",
+      "execution_boundary": "anthropic-service",
+      "authorization_owner": "application-policy"
+    },
+    {
+      "scenario": "approved private refund procedure",
+      "execution": "custom-client-tool",
+      "procedure": "skill",
+      "execution_boundary": "application-service",
+      "authorization_owner": "application-policy"
+    },
+    {
+      "scenario": "shared CRM service",
+      "execution": "mcp",
+      "procedure": "inline-instructions",
+      "execution_boundary": "mcp-server",
+      "authorization_owner": "application-policy"
+    },
+    {
+      "scenario": "desktop interaction",
+      "execution": "anthropic-schema-client-tool",
+      "procedure": "inline-instructions",
+      "execution_boundary": "application-sandbox",
+      "authorization_owner": "application-policy"
+    }
+  ]
+}

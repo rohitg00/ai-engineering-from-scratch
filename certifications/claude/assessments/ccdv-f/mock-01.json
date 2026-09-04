@@ -1,0 +1,1180 @@
+{
+  "id": "claude-ccdv-f-mock-01",
+  "version": 2,
+  "track": "claude-ccdv-f",
+  "kind": "mock",
+  "title": "Developer Foundations Full Mock",
+  "timeLimitMinutes": 120,
+  "questions": [
+    {
+      "id": "ccdv-m1-001",
+      "domain": "agents-workflows",
+      "objective": "Choose workflows or agents from task constraints",
+      "type": "single",
+      "prompt": "A compliance pipeline always retrieves one policy, extracts four fields, validates them, and asks a reviewer to approve. Which design is most appropriate?",
+      "options": [
+        "A manager with five subagents",
+        "An autonomous agent that can choose any corporate tool",
+        "A deterministic workflow with bounded model steps",
+        "A self-modifying prompt loop"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "The path and approval boundary are already known. A workflow makes ordering, validation, and review deterministic, while an agent would add freedom without a requirement for adaptive planning.",
+      "references": [
+        "https://www.anthropic.com/research/building-effective-agents",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-002",
+      "domain": "agents-workflows",
+      "objective": "Design manager and subagent hierarchies",
+      "type": "multiple",
+      "prompt": "A code migration is divided among subagents. Which design choices improve reliability? Select all that apply.",
+      "options": [
+        "Use an independent read-only reviewer for the merged result",
+        "Give every subagent broad write access to resolve dependencies",
+        "Require structured handoff artifacts from each subagent",
+        "Give each subagent explicit file ownership and acceptance tests"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Ownership reduces conflicting edits, independent review avoids generator self-confirmation, and structured handoffs preserve exact state. Broad shared write access creates races and unclear accountability.",
+      "references": [
+        "https://platform.claude.com/docs/en/agent-sdk/overview",
+        "https://www.anthropic.com/research/building-effective-agents",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-003",
+      "domain": "agents-workflows",
+      "objective": "Build with the Claude Agent SDK, custom loops, managed agents, and hooks",
+      "type": "single",
+      "prompt": "A team needs built-in repository tools, sessions, hooks, subagents, and streamed lifecycle events. Which implementation choice is the strongest starting point?",
+      "options": [
+        "A raw one-call text completion",
+        "A JSON parser with no model",
+        "A custom Messages API loop that recreates repository tools, session persistence, hooks, subagent scheduling, and event streaming inside the application",
+        "The Claude Agent SDK with an explicit policy and evaluation layer"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The Agent SDK packages an agent harness that fits these requirements. It does not replace authorization, sandboxing, terminal conditions, or evals, which the application must still provide.",
+      "references": [
+        "https://platform.claude.com/docs/en/agent-sdk/overview",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-004",
+      "domain": "agents-workflows",
+      "objective": "Apply tool-loop, memory, context, and framework patterns",
+      "type": "multiple",
+      "prompt": "Which conditions should terminate or pause a production agent loop? Select all that apply.",
+      "options": [
+        "Stop when the agent reports high confidence",
+        "Maximum turn or cost budget reached",
+        "Repeated identical tool calls indicate no progress",
+        "A required human approval is pending"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Budgets, loop detection, and pending approval are objective control conditions. Confidence in prose is not evidence of correct final state and should not control termination by itself.",
+      "references": [
+        "https://www.anthropic.com/research/building-effective-agents",
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-005",
+      "domain": "agents-workflows",
+      "objective": "Apply tool-loop, memory, context, and framework patterns",
+      "type": "single",
+      "prompt": "An agent resumes after a process crash during a deployment request. What should it do before continuing?",
+      "options": [
+        "Reconcile the operation ID, repository state, and deployment system of record",
+        "Ask a subagent to guess whether the deployment finished",
+        "Discard all prior evidence and increase temperature",
+        "Resume from the compacted session summary, repeat the last deployment call with the same arguments, and infer success if the provider returns no error"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Session memory is not authoritative state. Reconciliation establishes whether side effects occurred and which acceptance checks remain before any retry or continuation.",
+      "references": [
+        "https://platform.claude.com/docs/en/agent-sdk/overview",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-006",
+      "domain": "agents-workflows",
+      "objective": "Design manager and subagent hierarchies",
+      "type": "multiple",
+      "prompt": "When does a subagent provide a real architectural benefit? Select all that apply.",
+      "options": [
+        "A specialist needs a narrower tool allowlist",
+        "Independent research branches can proceed in parallel",
+        "A reviewer needs context isolated from the generator",
+        "Use a subagent for one bounded prompt edit"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Isolation, genuine parallelism, and permission specialization justify a subagent. A minor prompt issue should be fixed directly instead of adding another model boundary.",
+      "references": [
+        "https://platform.claude.com/docs/en/agent-sdk/overview",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-007",
+      "domain": "agents-workflows",
+      "objective": "Apply tool-loop, memory, context, and framework patterns",
+      "type": "single",
+      "prompt": "A long-running agent compacts its context every hour. Which statement is correct?",
+      "options": [
+        "Compaction can serve as the sole recovery record when the summary explicitly mentions current goals, approvals, artifact locations, and completed verification checks",
+        "Critical goals, approvals, artifacts, and verification results should also live in durable typed state",
+        "Compaction makes final-state evaluation unnecessary",
+        "Compaction removes the need for checkpoints"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Compaction supports continuity but is a probabilistic summary. Critical state needs durable records and reconciliation so omissions or drift cannot silently change the job.",
+      "references": [
+        "https://platform.claude.com/docs/en/agent-sdk/overview",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-008",
+      "domain": "agents-workflows",
+      "objective": "Apply tool-loop, memory, context, and framework patterns",
+      "type": "single",
+      "prompt": "A research agent returns a polished report but never accessed the two required databases. Which evaluation is most decisive?",
+      "options": [
+        "Increase the maximum turns",
+        "Grade only the writing style",
+        "Inspect the required tool trajectory and verify cited records resolve",
+        "Score the report for factual consistency, citation formatting, and coverage of the requested topics without enforcing the required database trajectory"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Agent success includes the path and evidence, not only final language. Required source access and resolvable citations reveal whether the claimed research actually occurred.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "https://www.anthropic.com/research/building-effective-agents",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-009",
+      "domain": "applications-integration",
+      "objective": "Translate business needs into functional and infrastructure requirements",
+      "type": "single",
+      "prompt": "A product owner asks for a Claude agent that answers customers instantly. What should engineering establish first?",
+      "options": [
+        "A twelve-agent hierarchy",
+        "A complete capability inventory and agent hierarchy that can answer every anticipated customer request before the team quantifies error cost or latency targets",
+        "The largest available model",
+        "The measurable outcome, data sources, action authority, error cost, and service constraints"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Architecture begins with a testable outcome and boundaries. Model and tool choices follow latency, quality, security, lifecycle, and authority requirements rather than replacing discovery.",
+      "references": [
+        "https://www.anthropic.com/research/building-effective-agents",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-010",
+      "domain": "applications-integration",
+      "objective": "Use messages, tools, streaming, vision, thinking, caching, batch, and third-party providers",
+      "type": "multiple",
+      "prompt": "Claude returns text and two tool_use blocks in one assistant message. What must the client do? Select all that apply.",
+      "options": [
+        "Preserve the complete assistant content block sequence",
+        "Validate and correlate a result for each tool_use ID",
+        "Open a separate conversation for each returned tool result",
+        "Append the tool results in a following user message"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "The assistant response is part of client-owned history. Every tool request needs a correlated result, and the following user message carries those results before the next model call.",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use",
+        "https://platform.claude.com/docs/en/api/messages",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-011",
+      "domain": "applications-integration",
+      "objective": "Use messages, tools, streaming, vision, thinking, caching, batch, and third-party providers",
+      "type": "single",
+      "prompt": "Application code assumes response.content[0] always has a text field. Claude instead returns a tool_use block first. What is the correct fix?",
+      "options": [
+        "Switch on each content block type and handle supported types explicitly",
+        "Force every response into one string",
+        "Delete all non-text blocks",
+        "Normalize every response by retrying with an instruction that the first content block must be text, while retaining the remaining block handling assumptions"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Messages contain typed blocks, not a guaranteed text slot. Explicit dispatch preserves tool, thinking, and future block semantics while unknown types can fail closed or be safely recorded.",
+      "references": [
+        "https://platform.claude.com/docs/en/api/messages",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-012",
+      "domain": "applications-integration",
+      "objective": "Apply system lifecycle practices",
+      "type": "single",
+      "prompt": "A response ends with a complete-looking sentence but stop_reason is max_tokens. How should the application classify it?",
+      "options": [
+        "Complete if the visible sentence passes semantic checks, while recording max_tokens as a transport warning that does not affect downstream use",
+        "Potentially incomplete and requiring explicit recovery or escalation",
+        "A prompt-cache hit",
+        "A successful tool result"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Protocol control metadata overrides visual appearance. max_tokens means generation reached its configured limit, so downstream consumers must not assume the contract completed.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-013",
+      "domain": "applications-integration",
+      "objective": "Use messages, tools, streaming, vision, thinking, caching, batch, and third-party providers",
+      "type": "multiple",
+      "prompt": "Which practices are safe for streamed responses? Select all that apply.",
+      "options": [
+        "Record whether message_stop or an equivalent terminal event arrived",
+        "Execute tool calls from a schema-valid partial-response prefix",
+        "Buffer tool input until its block completes before parsing",
+        "Treat rendered text as provisional until terminal completion"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Streams expose partial state. Rendering may be progressive, but parsing, authorization, and side effects wait for complete blocks and a terminal message state.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/streaming",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-014",
+      "domain": "applications-integration",
+      "objective": "Use messages, tools, streaming, vision, thinking, caching, batch, and third-party providers",
+      "type": "single",
+      "prompt": "An invoice image is supplied for extraction. Which control most improves reliability?",
+      "options": [
+        "Use the smallest supported thumbnail to minimize latency, ask for confidence per extracted field, and manually review only values below the threshold",
+        "Convert the image into an unrestricted shell command",
+        "Use supported image formats and resolution, state the extraction contract, and validate totals against source evidence",
+        "Skip output validation because vision is deterministic"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Vision quality depends on usable input and explicit task constraints, while extracted values still require schema and semantic checks. Visual capability does not make readings deterministic.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/vision",
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-015",
+      "domain": "applications-integration",
+      "objective": "Use messages, tools, streaming, vision, thinking, caching, batch, and third-party providers",
+      "type": "single",
+      "prompt": "Extended thinking is enabled in a multi-turn tool workflow. What should the client do with provider-supplied thinking blocks when the current API requires them to be returned?",
+      "options": [
+        "Replace them with the tool result ID",
+        "Rewrite them for clarity",
+        "Convert the provider-supplied thinking blocks into a concise rationale and send that edited version back with the next tool result",
+        "Preserve and return them exactly according to the current protocol"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Feature-specific thinking blocks can carry integrity data and protocol requirements. The client must follow current documentation and must not edit, fabricate, or expose internal reasoning content.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-016",
+      "domain": "applications-integration",
+      "objective": "Use messages, tools, streaming, vision, thinking, caching, batch, and third-party providers",
+      "type": "single",
+      "prompt": "A shared 30,000-token policy prefix is identical across requests, while each customer question differs. Which arrangement best supports caching?",
+      "options": [
+        "Place the stable policy and tool definitions before volatile customer content",
+        "Store the policy only in output",
+        "Put the customer question first and policy last",
+        "Place customer identity and request metadata before the policy so authorization context is evaluated first, then append the stable policy and tool definitions"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Prompt caching works on reusable prefixes. Stable content belongs before volatile content so customer-specific bytes do not invalidate the expensive shared prefix.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-017",
+      "domain": "applications-integration",
+      "objective": "Use messages, tools, streaming, vision, thinking, caching, batch, and third-party providers",
+      "type": "multiple",
+      "prompt": "A batch job contains 10,000 independent requests. Which practices are appropriate? Select all that apply.",
+      "options": [
+        "Use batch for user-facing requests that need immediate streaming",
+        "Assign a stable custom identifier to every request",
+        "Reconcile returned results to the original inputs",
+        "Handle per-request success and failure rather than assuming all-or-nothing"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Batch processing is asynchronous and results can vary per request. Stable IDs and reconciliation preserve accountability; an interactive dependent loop needs normal request latency instead.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/message-batches",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-018",
+      "domain": "applications-integration",
+      "objective": "Use messages, tools, streaming, vision, thinking, caching, batch, and third-party providers",
+      "type": "single",
+      "prompt": "An application moves from Anthropic's direct API to a third-party managed provider. What should the migration test first?",
+      "options": [
+        "Whether the provider advertises the same model family and context limit under a comparable enterprise service tier",
+        "Authentication, supported features, request and response serialization, quotas, regions, and resolved model behavior",
+        "Whether a compatibility wrapper can preserve the current SDK method signatures and normalize all provider failures into the application's existing exception type",
+        "Only whether the model name string is accepted"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Provider integrations can differ in identity, feature availability, headers, versions, quotas, data regions, and serialization. A live contract test must verify the actual wire and application mapping.",
+      "references": [
+        "https://platform.claude.com/docs/en/api/messages",
+        "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-019",
+      "domain": "applications-integration",
+      "objective": "Apply REST, JSON, async, version-control, review, and refactoring practices",
+      "type": "single",
+      "prompt": "Twenty independent read-only tool requests can safely run concurrently. Which design is appropriate?",
+      "options": [
+        "Remove timeouts so every request eventually returns",
+        "Serialize the calls in model-request order so trace playback remains deterministic, even though the operations are independent and each carries a stable call ID",
+        "Launch bounded asynchronous work, preserve per-call IDs, and collect individual outcomes",
+        "Share one mutable argument object across all tasks"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Bounded concurrency improves latency for independent work while correlation, deadlines, and per-call results preserve correctness. Shared mutable state and missing timeouts create nondeterministic failures.",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-020",
+      "domain": "applications-integration",
+      "objective": "Apply REST, JSON, async, version-control, review, and refactoring practices",
+      "type": "single",
+      "prompt": "A prompt and output schema change together. Which release record is most useful?",
+      "options": [
+        "Only the final pass rate",
+        "The developer's chat title",
+        "The source diff and final aggregate pass rate, because version control already preserves the previous prompt, schema, and code for rollback",
+        "Prompt version, schema version, model configuration, code revision, eval dataset version, and rollback point"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Behavior depends on the complete configuration. Recording all relevant versions makes a regression reproducible and gives operations a precise rollback target.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-021",
+      "domain": "applications-integration",
+      "objective": "Apply REST, JSON, async, version-control, review, and refactoring practices",
+      "type": "multiple",
+      "prompt": "An AI-generated refactor passes unit tests. What else should review verify? Select all that apply.",
+      "options": [
+        "Unrelated files were not changed",
+        "Public API and serialization compatibility",
+        "The actual built or integrated behavior",
+        "Give the reviewer full repository context"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Unit tests are one layer. Integration behavior, compatibility, and scope discipline catch regressions that local tests miss, while context size is not a correctness criterion.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-022",
+      "domain": "applications-integration",
+      "objective": "Design instruction, schema, session, content-boundary, and plugin behavior",
+      "type": "single",
+      "prompt": "A support session for Tenant A is reused when Tenant B opens a request. What is the primary defect?",
+      "options": [
+        "A session and data-isolation boundary violation",
+        "A routing defect caused by a low sampling temperature that made the session repeatedly select context from the previously successful tenant interaction",
+        "Missing prompt caching",
+        "Too few tools"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Conversation state can contain private context and instructions. Tenant sessions must be isolated, with identity and authorization bound from authenticated application state.",
+      "references": [
+        "https://platform.claude.com/docs/en/api/messages",
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-023",
+      "domain": "applications-integration",
+      "objective": "Manage CLAUDE.md, settings, model, prompt, and plugin versions",
+      "type": "multiple",
+      "prompt": "A team upgrades a Claude Code plugin used in CI. Which evidence should accompany the change? Select all that apply.",
+      "options": [
+        "Representative workflow eval and rollback steps",
+        "Inventory of newly added tools, hooks, Skills, and network access",
+        "The plugin publisher's signed release notes and compatibility statement, without an independent inventory or workflow evaluation in the team's CI boundary",
+        "Pinned or recorded plugin version and provenance"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "A plugin changes executable capability and context. Provenance, capability review, regression evidence, and rollback make the upgrade controlled; marketing does not establish safety.",
+      "references": [
+        "https://code.claude.com/docs/en/settings",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-024",
+      "domain": "applications-integration",
+      "objective": "Apply system lifecycle practices",
+      "type": "single",
+      "prompt": "A read-only provider request returns a transient 529 and no response body. Which recovery is strongest?",
+      "options": [
+        "Convert the request into a mutating tool",
+        "Retry with bounded exponential backoff, jitter, and an overall deadline",
+        "Repeat forever until it succeeds",
+        "Switch to a fallback model and slightly relax the output schema on each retry while retaining the same unbounded retry schedule"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "A transient availability error can justify a bounded retry for an idempotent read. Backoff, jitter, deadlines, and attempt limits prevent synchronized load and runaway latency.",
+      "references": [
+        "https://platform.claude.com/docs/en/api/messages",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-025",
+      "domain": "applications-integration",
+      "objective": "Apply REST, JSON, async, version-control, review, and refactoring practices",
+      "type": "single",
+      "prompt": "An API accepts create-ticket requests. Which field best protects a retry after a connection drop?",
+      "options": [
+        "A longer user message",
+        "A fresh client-generated retry identifier created after each interrupted create-ticket attempt",
+        "A stable idempotency key bound to the intended operation",
+        "A provider-generated request identifier, because the service can use it to recognize repeated create-ticket payloads after an interrupted response"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Idempotency lets the server recognize the same logical operation and return or reconcile the prior result instead of creating a duplicate side effect.",
+      "references": [
+        "https://platform.claude.com/docs/en/api/messages",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-026",
+      "domain": "claude-code",
+      "objective": "Operate Rules, Skills, Commands, Agents, memory, sessions, headless mode, streaming mode, auto-mode, CLAUDE.md, initialization, and settings",
+      "type": "single",
+      "prompt": "A database migration procedure is detailed, reusable, and needed only when migration files change. Where should the team place it?",
+      "options": [
+        "Inside an API token",
+        "In the model alias",
+        "In the root CLAUDE.md so every repository task receives the full migration procedure and Claude can decide whether a changed file makes it relevant",
+        "In a task-relevant Skill or scoped Rule, depending on whether it is a procedure or file constraint"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A Skill packages reusable procedure with progressive disclosure, while a scoped Rule applies constraints to relevant files. Both avoid bloating every session with unrelated detail.",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
+        "https://code.claude.com/docs/en/memory",
+        "certifications/claude/lessons/15-claude-code-for-development-teams"
+      ]
+    },
+    {
+      "id": "ccdv-m1-027",
+      "domain": "claude-code",
+      "objective": "Operate Rules, Skills, Commands, Agents, memory, sessions, headless mode, streaming mode, auto-mode, CLAUDE.md, initialization, and settings",
+      "type": "multiple",
+      "prompt": "A headless pull-request review runs on untrusted contributions. Which controls are required? Select all that apply.",
+      "options": [
+        "Minimal repository and token permissions",
+        "A short-lived repository write token so the reviewer can apply obvious fixes to its branch after emitting structured findings",
+        "No unrelated secrets in the job environment",
+        "Bounded time, tools, network, and structured output"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Headless execution lacks interactive supervision, so its identity and capabilities must be narrow. The result should enter normal review and protected merge paths rather than bypass them.",
+      "references": [
+        "https://code.claude.com/docs/en/headless",
+        "https://code.claude.com/docs/en/settings",
+        "certifications/claude/lessons/15-claude-code-for-development-teams"
+      ]
+    },
+    {
+      "id": "ccdv-m1-028",
+      "domain": "eval-testing-debugging",
+      "objective": "Classify errors, select recovery, analyze traces, and isolate integration failures from model failures",
+      "type": "single",
+      "prompt": "Claude chose the correct tool, but the tool returned HTTP 403 because the authenticated service account lacks scope. How should the failure be classified?",
+      "options": [
+        "Authorization or integration failure at the tool boundary",
+        "Prompt wording failure",
+        "Sampling variance",
+        "A model planning failure because the selected tool could not accomplish the requested action with the service account available to the agent"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The model selected the expected capability. The authoritative 403 identifies an identity or authorization configuration problem, which should be fixed at the integration boundary rather than through prompting.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/05-output-evaluation-and-validation"
+      ]
+    },
+    {
+      "id": "ccdv-m1-029",
+      "domain": "model-selection-optimization",
+      "objective": "Explain tokens, sampling, context, non-determinism, thinking, effort, and prompting modes",
+      "type": "single",
+      "prompt": "Two requests with identical visible inputs produce different valid summaries. What is the best engineering interpretation?",
+      "options": [
+        "The application should select a canonical answer by comparing deterministic surface features such as length and sentence coverage across the two outputs",
+        "Model generation is non-deterministic, so quality must be measured across representative repeated trials",
+        "One response proves the API is broken",
+        "Caching guarantees identical text"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Probabilistic generation can vary even under controlled settings. Evals should define acceptable properties and use repeated samples where variance matters instead of demanding identical wording.",
+      "references": [
+        "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-030",
+      "domain": "model-selection-optimization",
+      "objective": "Explain tokens, sampling, context, non-determinism, thinking, effort, and prompting modes",
+      "type": "single",
+      "prompt": "A classification task uses an enum and already passes its eval. What is the likely effect of increasing randomness?",
+      "options": [
+        "Automatic schema validation",
+        "Greater coverage of borderline labels because additional sampling variance explores classifications the deterministic configuration might systematically miss",
+        "Potentially greater output variance without a demonstrated requirement",
+        "A larger context window"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Sampling controls influence variation, not truth or schema enforcement. A stable classification workload should keep settings justified by measured behavior.",
+      "references": [
+        "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-031",
+      "domain": "model-selection-optimization",
+      "objective": "Balance model quality, latency, cost, capability, and version changes",
+      "type": "multiple",
+      "prompt": "Which measurements belong in a model-selection comparison? Select all that apply.",
+      "options": [
+        "The provider's broad benchmark ranking and advertised model tier, used as a proxy for capability classes not present in the representative task set",
+        "p50 and p95 latency",
+        "Task and safety pass rates on representative cases",
+        "Token and monetary cost per successful task"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Selection is an empirical tradeoff across quality, risk, latency, and economics. Branding does not prove fitness for one workload or its operational constraints.",
+      "references": [
+        "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "https://platform.claude.com/docs/en/about-claude/pricing",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-032",
+      "domain": "model-selection-optimization",
+      "objective": "Balance model quality, latency, cost, capability, and version changes",
+      "type": "single",
+      "prompt": "A smaller model fails only complex contract analysis cases, while it passes simple routing cases. Which architecture is most efficient?",
+      "options": [
+        "Increase every prompt to the context limit",
+        "Remove the difficult cases from evaluation",
+        "Use the largest model for every request to avoid routing false negatives, then recover the added expense by shortening prompts for routine cases",
+        "Route by measured task complexity, with safeguards and fallback"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Model routing can reserve expensive capability for tasks that earn it while keeping simpler work fast and economical. The router and fallback need their own evaluation.",
+      "references": [
+        "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-033",
+      "domain": "model-selection-optimization",
+      "objective": "Budget tokens and use prompt caching",
+      "type": "multiple",
+      "prompt": "Which statements about prompt caching are correct? Select all that apply.",
+      "options": [
+        "A cache hit does not make stale source content correct",
+        "It can reduce repeated-prefix input cost and time to first token",
+        "Changing bytes early in the prefix can reduce downstream reuse",
+        "It lets the application exceed the selected model's context limit when the overflowing tokens belong to a byte-identical cached prefix"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Caching reuses computation for stable prompt prefixes. It changes economics and latency, not freshness, truth, authorization, or the context-window limit.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-034",
+      "domain": "model-selection-optimization",
+      "objective": "Explain tokens, sampling, context, non-determinism, thinking, effort, and prompting modes",
+      "type": "single",
+      "prompt": "A request exceeds the selected model's context window. Which response is strongest?",
+      "options": [
+        "Prune irrelevant content, retrieve only needed evidence, compact durable state, or select a justified larger context",
+        "Split the oversized input into arbitrary equal parts, generate an answer for each part independently, and concatenate the answers without preserving cross-part obligations",
+        "Increase temperature",
+        "Encode the overflow as a secret"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Context is a finite budget. Selection, retrieval, pruning, and structured compaction preserve relevant evidence; a larger context is justified only when the workload still requires it.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-035",
+      "domain": "model-selection-optimization",
+      "objective": "Explain tokens, sampling, context, non-determinism, thinking, effort, and prompting modes",
+      "type": "single",
+      "prompt": "Extended thinking improves hard planning accuracy by 8 points but doubles p95 latency. What should determine adoption?",
+      "options": [
+        "Whether prompt caching is disabled",
+        "Whether the target workflow's quality requirement earns the measured latency and cost tradeoff",
+        "Enable it for every request because a statistically significant gain on the hard planning slice justifies a uniform configuration and simpler operations",
+        "Whether the output contains more reasoning text"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Thinking is a workload-specific tradeoff. Adopt it on the tasks where measured quality gain is necessary and operational budgets remain acceptable.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-036",
+      "domain": "model-selection-optimization",
+      "objective": "Integrate SDK and transport fundamentals",
+      "type": "multiple",
+      "prompt": "A direct API SDK upgrade changes typed response models. Which tests reduce migration risk? Select all that apply.",
+      "options": [
+        "Test deserialization of every used content block and stop reason",
+        "Capture and compare actual wire responses",
+        "Rely on the SDK's semantic-versioning guarantee for fields covered by its types, while testing only newly introduced response content blocks",
+        "Run live integration cases for streaming and tools"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Wire, typed-model, and end-to-end tests cover the serialization boundaries where fields can disappear or change. Version labels help planning but do not replace evidence.",
+      "references": [
+        "https://platform.claude.com/docs/en/api/messages",
+        "https://platform.claude.com/docs/en/build-with-claude/streaming",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-037",
+      "domain": "model-selection-optimization",
+      "objective": "Balance model quality, latency, cost, capability, and version changes",
+      "type": "single",
+      "prompt": "An application uses a moving model alias. What operational control is most important?",
+      "options": [
+        "Depend on the moving alias as the rollback mechanism because the provider can update it again if the new resolved version causes a regression",
+        "Disable traces to reduce cost",
+        "Run scheduled canary evals and keep a tested rollback configuration",
+        "Never record the resolved model information"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A moving alias can change behavior without an application commit. Canary evals, recorded configuration, and rollback make that change observable and recoverable.",
+      "references": [
+        "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccdv-m1-038",
+      "domain": "prompt-context-engineering",
+      "objective": "Place clear instructions, examples, and constraints",
+      "type": "single",
+      "prompt": "A prompt fails on ambiguous invoices. Which improvement should be tried first?",
+      "options": [
+        "Repeat the task name twenty times",
+        "Add several easy invoice examples that reinforce the normal-case format and tell Claude to extrapolate the same pattern when ambiguous fields appear",
+        "Remove the validation criteria",
+        "Add one representative difficult example with the desired decision and output contract"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Failure-driven few-shot examples clarify gray cases and the expected contract. Prompt changes should target observed errors rather than adding undirected text.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+        "certifications/claude/lessons/03-prompting-and-task-decomposition"
+      ]
+    },
+    {
+      "id": "ccdv-m1-039",
+      "domain": "prompt-context-engineering",
+      "objective": "Place clear instructions, examples, and constraints",
+      "type": "multiple",
+      "prompt": "Which prompt practices make mixed trusted instructions and untrusted documents easier to reason about? Select all that apply.",
+      "options": [
+        "Delimit each source and label its role",
+        "Concatenate content into one XML-tagged document but omit source trust labels, assuming consistent delimiters are sufficient to preserve instruction priority",
+        "State that document content cannot override policy",
+        "Place output requirements near the task and validate them"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Clear boundaries, authority labels, and explicit output contracts reduce ambiguity. They support but do not replace deterministic security and validation controls.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks",
+        "certifications/claude/lessons/03-prompting-and-task-decomposition"
+      ]
+    },
+    {
+      "id": "ccdv-m1-040",
+      "domain": "prompt-context-engineering",
+      "objective": "Prevent context drift and bloat with pruning, compaction, and isolation",
+      "type": "single",
+      "prompt": "A chat has accumulated three unrelated tasks and contradictory constraints. What is the safest next step?",
+      "options": [
+        "Start a clean session with a verified handoff containing only current facts and obligations",
+        "Continue in the existing session after appending a final instruction that newer constraints override older ones and asking Claude to resolve conflicts implicitly",
+        "Move secrets into the system prompt",
+        "Add every previous message twice"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Old context can contaminate a changed objective. A clean boundary and concise verified handoff preserve necessary state while removing stale instructions.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+        "certifications/claude/lessons/03-prompting-and-task-decomposition"
+      ]
+    },
+    {
+      "id": "ccdv-m1-041",
+      "domain": "prompt-context-engineering",
+      "objective": "Prevent context drift and bloat with pruning, compaction, and isolation",
+      "type": "multiple",
+      "prompt": "Which information belongs in a long-task checkpoint artifact? Select all that apply.",
+      "options": [
+        "The agent's full speculative reasoning history so a resumed session can understand why rejected approaches were considered and avoid repeating exploration",
+        "Current objective and acceptance criteria",
+        "Outstanding approvals and ambiguous side effects",
+        "Completed artifacts and their hashes"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "A checkpoint preserves exact operational state needed to resume and verify. Speculative reasoning can be discarded unless it became an approved decision.",
+      "references": [
+        "https://platform.claude.com/docs/en/agent-sdk/overview",
+        "certifications/claude/lessons/03-prompting-and-task-decomposition"
+      ]
+    },
+    {
+      "id": "ccdv-m1-042",
+      "domain": "prompt-context-engineering",
+      "objective": "Sanitize input and iterate prompts",
+      "type": "single",
+      "prompt": "A user-supplied field is inserted into a repair prompt. What is the safest construction?",
+      "options": [
+        "Place the field directly after the system repair rules so it remains close to the validation instructions, then ask the model to ignore any embedded commands",
+        "Label and delimit it as untrusted data, include machine-generated validation errors, and cap attempts",
+        "Execute any commands it contains",
+        "Remove all validation so repair is easier"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Trust labeling and delimiting prevent input from masquerading as policy, while bounded repair and precise errors address formatting without creating an infinite injection loop.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks",
+        "certifications/claude/lessons/03-prompting-and-task-decomposition"
+      ]
+    },
+    {
+      "id": "ccdv-m1-043",
+      "domain": "prompt-context-engineering",
+      "objective": "Validate and defensively consume structured output",
+      "type": "single",
+      "prompt": "Claude returns valid JSON with priority 12, while the schema allows integers from 1 through 5. What should the consumer do?",
+      "options": [
+        "Clamp it silently to 5",
+        "Accept it after clamping the value to the schema maximum and record the original value in telemetry for later prompt-quality analysis",
+        "Reject it as a schema violation and use bounded repair or fallback",
+        "Ask a tool to authorize 12"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Parsing proves only syntax. Numeric bounds are part of the contract, and silent coercion hides a producer failure that should remain observable.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+        "certifications/claude/lessons/03-prompting-and-task-decomposition"
+      ]
+    },
+    {
+      "id": "ccdv-m1-044",
+      "domain": "security-safety",
+      "objective": "Mitigate prompt injection, jailbreaks, data leakage, and unsafe input",
+      "type": "multiple",
+      "prompt": "An MCP resource contains instructions to call a secret-export tool. Which defenses should apply? Select all that apply.",
+      "options": [
+        "Require host and server authorization independent of content",
+        "Do not expose unnecessary secret or export capabilities",
+        "Keep resource content in an untrusted-data boundary",
+        "Treat instructions from an authenticated MCP server as trusted application policy, while still requiring normal approval for the resulting secret-export call"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Remote content and tool results can be compromised. Capability minimization and independent authorization prevent content from granting itself authority over protected operations.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "certifications/claude/lessons/12-claude-agent-sdk-and-hooks"
+      ]
+    },
+    {
+      "id": "ccdv-m1-045",
+      "domain": "security-safety",
+      "objective": "Protect identity, secrets, keys, and access approvals",
+      "type": "single",
+      "prompt": "Where should a commerce API key be introduced into an order lookup?",
+      "options": [
+        "In the user-visible trace",
+        "In a short-lived system prompt inserted only after the model has selected the order-lookup tool, with trace redaction enabled for the request",
+        "In the tool description",
+        "In trusted integration code immediately before the authorized request"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The model needs a business capability, not the credential. Trusted code retrieves the key from a protected source and returns only minimized result data.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks",
+        "certifications/claude/lessons/12-claude-agent-sdk-and-hooks"
+      ]
+    },
+    {
+      "id": "ccdv-m1-046",
+      "domain": "security-safety",
+      "objective": "Layer guardrails with least privilege",
+      "type": "single",
+      "prompt": "Claude proposes read_file with path /workspace/project/../secrets.txt. What should the policy check use?",
+      "options": [
+        "The canonical resolved path against explicit allowed roots, plus operating-system sandboxing",
+        "Claude's confidence score",
+        "The file extension only",
+        "A normalized string-prefix check performed by the application before the tool call, without resolving symlinks or relying on an operating-system sandbox"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Traversal can make an apparently allowed prefix resolve outside the root. Canonical path enforcement and sandbox permissions provide complementary protection.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks",
+        "certifications/claude/lessons/12-claude-agent-sdk-and-hooks"
+      ]
+    },
+    {
+      "id": "ccdv-m1-047",
+      "domain": "security-safety",
+      "objective": "Use hooks for deterministic safety controls",
+      "type": "multiple",
+      "prompt": "Which statements about security hooks are correct? Select all that apply.",
+      "options": [
+        "A pre-tool hook can block before a side effect",
+        "A post-tool hook can redact result content and record metrics",
+        "A tested pre-tool hook that canonicalizes paths and blocks known secret patterns can replace sandboxing for tools whose arguments are fully schema validated",
+        "Hooks should be tested with allowed and denied fixtures"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Hooks enforce lifecycle checks and need behavioral tests. They are one defense layer, not a replacement for filesystem, network, identity, and server-side controls.",
+      "references": [
+        "https://code.claude.com/docs/en/hooks-guide",
+        "certifications/claude/lessons/12-claude-agent-sdk-and-hooks"
+      ]
+    },
+    {
+      "id": "ccdv-m1-048",
+      "domain": "tools-mcps",
+      "objective": "Design descriptions, schemas, errors, approvals, and tool sets",
+      "type": "multiple",
+      "prompt": "Which changes make a tool catalog easier for Claude to use correctly? Select all that apply.",
+      "options": [
+        "Give each tool a distinct narrow purpose",
+        "Expose several overlapping tools under one namespace and use detailed examples in the system prompt instead of distinct names or negative-use descriptions",
+        "Describe important non-use cases",
+        "Use bounded schemas with required fields and enums"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Clear semantic separation and strict inputs improve selection and validation. Overlapping vague tools create ambiguity and consume context without adding reliable capability.",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-049",
+      "domain": "tools-mcps",
+      "objective": "Design descriptions, schemas, errors, approvals, and tool sets",
+      "type": "single",
+      "prompt": "A read-only tool handler times out. What should a useful tool error tell the model?",
+      "options": [
+        "Instructions for bypassing policy",
+        "What failed, whether state changed, and whether a bounded retry is safe",
+        "Only the word error",
+        "The complete exception class, stack location, and request arguments so Claude can decide whether modified arguments would make a retry safe"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Concise operational facts let the loop choose a safe recovery. Internal stack traces and secrets belong in protected telemetry, not model-visible results.",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-050",
+      "domain": "tools-mcps",
+      "objective": "Design descriptions, schemas, errors, approvals, and tool sets",
+      "type": "single",
+      "prompt": "Claude requests two tools: create_invoice and send_invoice. Can they run in parallel?",
+      "options": [
+        "Yes, if the harness starts both requests together but delays delivery of send_invoice until create_invoice returns the generated identifier",
+        "Yes, if temperature is zero",
+        "No, because sending depends on the created invoice and its identifier",
+        "No, because tools can never run concurrently"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "These calls have a data and state dependency, so execution must remain sequential. Independent read-only calls may be parallelized with correlation and bounded concurrency.",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-051",
+      "domain": "tools-mcps",
+      "objective": "Author and deploy MCP tools, resources, and prompts across transports",
+      "type": "multiple",
+      "prompt": "Which steps belong to the MCP connection lifecycle? Select all that apply.",
+      "options": [
+        "Call optional methods documented by the server vendor before capability negotiation, then fall back when the server returns a method-not-found error",
+        "Discover only capabilities the server advertised",
+        "Send the initialized notification where required",
+        "Initialize and negotiate protocol version and capabilities"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "MCP begins with explicit negotiation, followed by operation within advertised capabilities. Assumptions about unsupported methods create version and interoperability failures.",
+      "references": [
+        "https://modelcontextprotocol.io/specification",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-052",
+      "domain": "tools-mcps",
+      "objective": "Author and deploy MCP tools, resources, and prompts across transports",
+      "type": "single",
+      "prompt": "A team-wide remote MCP server exposes customer data. Which control is essential?",
+      "options": [
+        "Put one shared bearer token in CLAUDE.md",
+        "Allow arbitrary redirect destinations",
+        "Authenticate the MCP transport once for the team workspace and rely on each tool description to state which tenant data callers may request",
+        "Authenticate the caller and enforce tenant and resource authorization on the server"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "The server owns its data boundary and must authenticate and authorize every request. Host consent and model selection cannot grant server-side access.",
+      "references": [
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    },
+    {
+      "id": "ccdv-m1-053",
+      "domain": "tools-mcps",
+      "objective": "Choose among built-in tools, custom tools, Skills, and MCP",
+      "type": "multiple",
+      "prompt": "Match architecture mechanisms to their strongest use. Which pairings are correct? Select all that apply.",
+      "options": [
+        "Subagent for isolated reviewer context",
+        "MCP for shared standard capability discovery across hosts",
+        "Skill for reusable procedure loaded only when relevant",
+        "MCP for one stable in-process helper when a generated schema and standard client library are available, even though no interoperability boundary exists"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Skills package procedure, MCP standardizes external capability connections, and subagents isolate context or tools. A one-process helper is usually simpler as a local function or client tool.",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
+        "https://modelcontextprotocol.io/specification",
+        "https://platform.claude.com/docs/en/agent-sdk/overview",
+        "certifications/claude/lessons/10-tool-use-and-agentic-loops"
+      ]
+    }
+  ]
+}

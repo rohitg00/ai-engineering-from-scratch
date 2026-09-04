@@ -1,0 +1,78 @@
+{
+  "lesson": "04-context-knowledge-memory-and-caching",
+  "title": "Put Each Fact in the Right Kind of Context",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which mechanism should be treated as the authoritative source for a current operational policy?",
+      "options": [
+        "An approved and maintained source of record",
+        "The latest complete policy chat",
+        "A remembered preference that has produced correct answers in prior sessions",
+        "A cached response generated while the policy source was known to be current"
+      ],
+      "correct": 0,
+      "explanation": "Operational truth should come from an owned, approved, current source, not continuity or reuse mechanisms."
+    },
+    {
+      "stage": "check",
+      "question": "What does retrieval establish by itself?",
+      "options": [
+        "That the top-ranked chunk is authoritative",
+        "That a selected chunk appears relevant to the query",
+        "That the source is complete, current, and applicable to the user's jurisdiction",
+        "That the authenticated user may perform any action described by the retrieved text"
+      ],
+      "correct": 1,
+      "explanation": "Retrieval selects material. Authority, completeness, freshness, permission, and action rights require separate checks."
+    },
+    {
+      "stage": "check",
+      "question": "Which content is the strongest prompt-caching candidate?",
+      "options": [
+        "A live inventory table refreshed every minute",
+        "A static credential block reused by integration code across several user sessions",
+        "A large stable instruction and reference prefix reused across many calls",
+        "A customer-specific request and account snapshot that changes on every call"
+      ],
+      "correct": 2,
+      "explanation": "Caching is most useful for large stable prefixes that repeat. Dynamic or sensitive content needs different handling."
+    },
+    {
+      "stage": "check",
+      "question": "A long chat contains abandoned plans and corrected dates. What is the safest continuation?",
+      "options": [
+        "Keep the full history but add a final instruction saying newer dates take precedence",
+        "Use an automatic summary that prefers repeated decisions",
+        "Move the same history to a larger-context model so no prior reasoning is discarded",
+        "Start a fresh context with a verified decision brief and required evidence"
+      ],
+      "correct": 3,
+      "explanation": "A verified brief removes contradictory history while preserving current decisions and evidence."
+    },
+    {
+      "stage": "post",
+      "question": "A connector returns a recent draft that conflicts with an older approved policy. What should the workflow do?",
+      "options": [
+        "Apply the documented source hierarchy and expose the conflict",
+        "Combine non-overlapping clauses and silently choose the newer wording for conflicts",
+        "Prefer the draft because recency is the strongest default when sources disagree",
+        "Accept the draft because connector permissions imply that its contents are approved"
+      ],
+      "correct": 0,
+      "explanation": "Recency, access, and authority are distinct. The workflow should follow explicit governance and surface unresolved conflict."
+    },
+    {
+      "stage": "post",
+      "question": "Which registry fields most directly support knowledge lifecycle control?",
+      "options": [
+        "Source format, page count, chunk size, retrieval score, and embedding version",
+        "Owner, authority, effective date, review date, sensitivity, and supersession",
+        "Conversation identifier, user role, writing tone, output format, and cache status",
+        "Model family, prompt version, temperature, output tokens, and response latency"
+      ],
+      "correct": 1,
+      "explanation": "Those fields make approval, freshness, permissions, accountability, and retirement observable."
+    }
+  ]
+}

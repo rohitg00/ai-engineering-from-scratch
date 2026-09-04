@@ -1,0 +1,78 @@
+{
+  "lesson": "14-mcp-apps",
+  "title": "MCP Apps on the Stateless Protocol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Where should a modern MCP App bind its UI resource to a tool?",
+      "options": [
+        "Only in the final text result",
+        "In a standalone HTTP GET stream",
+        "In an MCP session cookie",
+        "In the tool definition returned by tools/list"
+      ],
+      "correct": 3,
+      "explanation": "Nested _meta.ui.resourceUri on the tool definition lets the host preload and review the UI before invocation."
+    },
+    {
+      "stage": "check",
+      "question": "How does a 2026-07-28 client advertise MCP Apps support?",
+      "options": [
+        "With notifications/initialized",
+        "With Mcp-Session-Id",
+        "In io.modelcontextprotocol/clientCapabilities.extensions on each request",
+        "By accepting all ui:// resources"
+      ],
+      "correct": 2,
+      "explanation": "Extensions are opt-in through the per-request client capabilities map."
+    },
+    {
+      "stage": "check",
+      "question": "What does ui/initialize initialize?",
+      "options": [
+        "A protocol-level server session",
+        "OAuth client registration",
+        "The Apps postMessage bridge between an iframe and host",
+        "The Streamable HTTP GET channel"
+      ],
+      "correct": 2,
+      "explanation": "ui/initialize belongs to the Apps bridge dialect and is separate from the removed MCP core handshake."
+    },
+    {
+      "stage": "check",
+      "question": "Which resource response is safest for a user-independent bundled App?",
+      "options": [
+        "No resultType and no cache policy",
+        "resultType complete, a bounded ttlMs, public cacheScope, and deny-first CSP",
+        "A session token embedded in the HTML",
+        "An unlimited ttlMs and wildcard CSP domains"
+      ],
+      "correct": 1,
+      "explanation": "A complete result, explicit cache hints, and a narrow CSP make the wire and browser policies inspectable."
+    },
+    {
+      "stage": "post",
+      "question": "A host receives a resources/read body for one URI but a different Mcp-Name header. What should happen?",
+      "options": [
+        "Open both resources",
+        "Prefer the header",
+        "Prefer the body",
+        "Return HTTP 400 with JSON-RPC error -32020"
+      ],
+      "correct": 3,
+      "explanation": "Routing headers and the body must match before version support or feature policy is evaluated; the transport returns HTTP 400 with JSON-RPC error -32020."
+    },
+    {
+      "stage": "post",
+      "question": "What is the correct fallback for a host without MCP Apps support?",
+      "options": [
+        "Return HTML as trusted host chrome",
+        "Keep the tool usable with ordinary text or structured output and omit the UI binding",
+        "Create a hidden session and retry",
+        "Grant the extension automatically"
+      ],
+      "correct": 1,
+      "explanation": "An optional extension must not make the underlying tool unusable for clients that do not negotiate it."
+    }
+  ]
+}

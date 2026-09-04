@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">serial depth: the only thing a GPU actually cares about</text>
+
+  <!-- RNN row -->
+  <text x="40" y="80" class="label">RNN</text>
+  <text x="40" y="98" class="caption">depth = N</text>
+
+  <rect x="100" y="70" width="80" height="40" class="hot"/>
+  <text x="140" y="94" text-anchor="middle" class="content">h_1</text>
+
+  <line x1="180" y1="90" x2="210" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="210" y="70" width="80" height="40" class="hot"/>
+  <text x="250" y="94" text-anchor="middle" class="content">h_2</text>
+
+  <line x1="290" y1="90" x2="320" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="320" y="70" width="80" height="40" class="hot"/>
+  <text x="360" y="94" text-anchor="middle" class="content">h_3</text>
+
+  <line x1="400" y1="90" x2="430" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="430" y="70" width="80" height="40" class="hot"/>
+  <text x="470" y="94" text-anchor="middle" class="content">h_4</text>
+
+  <line x1="510" y1="90" x2="540" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="540" y="70" width="80" height="40" class="hot"/>
+  <text x="580" y="94" text-anchor="middle" class="content">h_5</text>
+
+  <line x1="620" y1="90" x2="650" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="650" y="70" width="80" height="40" class="hot"/>
+  <text x="690" y="94" text-anchor="middle" class="content">h_6</text>
+
+  <line x1="730" y1="90" x2="760" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="760" y="70" width="80" height="40" class="hot"/>
+  <text x="800" y="94" text-anchor="middle" class="content">h_7</text>
+
+  <text x="450" y="145" text-anchor="middle" class="caption">each box must wait for the one to its left — 7 steps of wall-clock</text>
+
+  <!-- Divider -->
+  <line x1="40" y1="180" x2="860" y2="180" stroke="#999" stroke-width="0.5" stroke-dasharray="4,3"/>
+
+  <!-- Transformer row -->
+  <text x="40" y="230" class="label">Transformer</text>
+  <text x="40" y="248" class="caption">depth = 1</text>
+
+  <rect x="100" y="220" width="80" height="40" class="box"/>
+  <text x="140" y="244" text-anchor="middle" class="content">x_1</text>
+
+  <rect x="210" y="220" width="80" height="40" class="box"/>
+  <text x="250" y="244" text-anchor="middle" class="content">x_2</text>
+
+  <rect x="320" y="220" width="80" height="40" class="box"/>
+  <text x="360" y="244" text-anchor="middle" class="content">x_3</text>
+
+  <rect x="430" y="220" width="80" height="40" class="box"/>
+  <text x="470" y="244" text-anchor="middle" class="content">x_4</text>
+
+  <rect x="540" y="220" width="80" height="40" class="box"/>
+  <text x="580" y="244" text-anchor="middle" class="content">x_5</text>
+
+  <rect x="650" y="220" width="80" height="40" class="box"/>
+  <text x="690" y="244" text-anchor="middle" class="content">x_6</text>
+
+  <rect x="760" y="220" width="80" height="40" class="box"/>
+  <text x="800" y="244" text-anchor="middle" class="content">x_7</text>
+
+  <!-- all-to-all attention arrows (simplified, from middle down) -->
+  <line x1="140" y1="260" x2="470" y2="305" stroke="#c0392b" stroke-width="0.8" opacity="0.4"/>
+  <line x1="250" y1="260" x2="470" y2="305" stroke="#c0392b" stroke-width="0.8" opacity="0.4"/>
+  <line x1="360" y1="260" x2="470" y2="305" stroke="#c0392b" stroke-width="0.8" opacity="0.4"/>
+  <line x1="470" y1="260" x2="470" y2="305" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="580" y1="260" x2="470" y2="305" stroke="#c0392b" stroke-width="0.8" opacity="0.4"/>
+  <line x1="690" y1="260" x2="470" y2="305" stroke="#c0392b" stroke-width="0.8" opacity="0.4"/>
+  <line x1="800" y1="260" x2="470" y2="305" stroke="#c0392b" stroke-width="0.8" opacity="0.4"/>
+
+  <rect x="380" y="310" width="180" height="38" class="hot"/>
+  <text x="470" y="334" text-anchor="middle" class="content">softmax(QK^T / √d) V</text>
+
+  <text x="450" y="378" text-anchor="middle" class="caption">every x_i contributes to every output in a single matmul — 1 step of wall-clock</text>
+
+  <text x="450" y="440" text-anchor="middle" class="caption">same op count. different dependency graph. that is the entire thesis of Attention Is All You Need.</text>
+</svg>

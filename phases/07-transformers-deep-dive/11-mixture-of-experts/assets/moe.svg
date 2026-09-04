@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .active { fill: #ffd78a; stroke: #c0392b; stroke-width: 1.5; }
+      .inactive { fill: #e8e2d0; stroke: #999; stroke-width: 0.8; }
+      .shared { fill: #d7e3ee; stroke: #1a1a1a; stroke-width: 1.2; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">mixture of experts — total params grow, active params stay flat</text>
+
+  <!-- Input token -->
+  <rect x="400" y="60" width="100" height="30" class="hot"/>
+  <text x="450" y="80" text-anchor="middle" class="content">token x</text>
+
+  <line x1="450" y1="90" x2="450" y2="115" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Router -->
+  <rect x="350" y="115" width="200" height="36" class="box"/>
+  <text x="450" y="138" text-anchor="middle" class="content">router (top-k of E experts)</text>
+
+  <!-- Lines to experts -->
+  <line x1="450" y1="151" x2="180" y2="200" stroke="#999" stroke-width="0.8" stroke-dasharray="2,2"/>
+  <line x1="450" y1="151" x2="275" y2="200" stroke="#c0392b" stroke-width="1.8"/>
+  <line x1="450" y1="151" x2="370" y2="200" stroke="#999" stroke-width="0.8" stroke-dasharray="2,2"/>
+  <line x1="450" y1="151" x2="465" y2="200" stroke="#999" stroke-width="0.8" stroke-dasharray="2,2"/>
+  <line x1="450" y1="151" x2="560" y2="200" stroke="#c0392b" stroke-width="1.8"/>
+  <line x1="450" y1="151" x2="655" y2="200" stroke="#999" stroke-width="0.8" stroke-dasharray="2,2"/>
+  <line x1="450" y1="151" x2="745" y2="200" stroke="#999" stroke-width="0.8" stroke-dasharray="2,2"/>
+  <line x1="450" y1="151" x2="835" y2="200" stroke="#c0392b" stroke-width="1.8"/>
+
+  <!-- Experts (8 of them; 3 active in orange) -->
+  <rect x="135"  y="200" width="90" height="60" class="inactive"/>
+  <text x="180" y="230" text-anchor="middle" class="content">E_1</text>
+  <text x="180" y="246" text-anchor="middle" class="caption">skip</text>
+
+  <rect x="230" y="200" width="90" height="60" class="active"/>
+  <text x="275" y="230" text-anchor="middle" class="content">E_2</text>
+  <text x="275" y="246" text-anchor="middle" class="caption">g=0.52</text>
+
+  <rect x="325" y="200" width="90" height="60" class="inactive"/>
+  <text x="370" y="230" text-anchor="middle" class="content">E_3</text>
+  <text x="370" y="246" text-anchor="middle" class="caption">skip</text>
+
+  <rect x="420" y="200" width="90" height="60" class="inactive"/>
+  <text x="465" y="230" text-anchor="middle" class="content">E_4</text>
+  <text x="465" y="246" text-anchor="middle" class="caption">skip</text>
+
+  <rect x="515" y="200" width="90" height="60" class="active"/>
+  <text x="560" y="230" text-anchor="middle" class="content">E_5</text>
+  <text x="560" y="246" text-anchor="middle" class="caption">g=0.30</text>
+
+  <rect x="610" y="200" width="90" height="60" class="inactive"/>
+  <text x="655" y="230" text-anchor="middle" class="content">E_6</text>
+  <text x="655" y="246" text-anchor="middle" class="caption">skip</text>
+
+  <rect x="700" y="200" width="90" height="60" class="inactive"/>
+  <text x="745" y="230" text-anchor="middle" class="content">E_7</text>
+  <text x="745" y="246" text-anchor="middle" class="caption">skip</text>
+
+  <rect x="790" y="200" width="90" height="60" class="active"/>
+  <text x="835" y="230" text-anchor="middle" class="content">E_8</text>
+  <text x="835" y="246" text-anchor="middle" class="caption">g=0.18</text>
+
+  <!-- Weighted sum -->
+  <line x1="275" y1="260" x2="450" y2="315" stroke="#c0392b" stroke-width="1.2"/>
+  <line x1="560" y1="260" x2="450" y2="315" stroke="#c0392b" stroke-width="1.2"/>
+  <line x1="835" y1="260" x2="450" y2="315" stroke="#c0392b" stroke-width="1.2"/>
+
+  <rect x="350" y="315" width="200" height="36" class="hot"/>
+  <text x="450" y="338" text-anchor="middle" class="content">Σ g_k · E_k(x)</text>
+
+  <!-- Optional shared expert -->
+  <rect x="450" y="385" width="230" height="40" class="shared"/>
+  <text x="565" y="408" text-anchor="middle" class="content">+ shared expert (always on)</text>
+
+  <line x1="450" y1="351" x2="450" y2="385" stroke="#1a1a1a" stroke-width="1.5"/>
+  <path d="M 450 405 Q 330 405 330 350" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- DS-V3 style caption box -->
+  <rect x="60" y="385" width="360" height="100" class="box"/>
+  <text x="240" y="407" text-anchor="middle" class="label">auxiliary-loss-free balance</text>
+  <text x="240" y="428" text-anchor="middle" class="caption">each expert has a bias b_e</text>
+  <text x="240" y="444" text-anchor="middle" class="caption">selection uses score + bias</text>
+  <text x="240" y="460" text-anchor="middle" class="caption">gate weight uses score only</text>
+  <text x="240" y="476" text-anchor="middle" class="caption">bias nudged ±γ based on usage — no extra loss</text>
+
+  <text x="450" y="510" text-anchor="middle" class="caption">DeepSeek-V3: 1 shared + 256 routed, top-8. Total 671B, active 37B per token.</text>
+</svg>

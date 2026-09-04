@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .mask { fill: #2c3e50; stroke: #1a1a1a; stroke-width: 1.2; }
+      .mask-text { fill: #fff; }
+      .keep { fill: #e4eadb; stroke: #1a1a1a; stroke-width: 1; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">masked language modeling — the 80/10/10 rule</text>
+
+  <!-- Original sentence -->
+  <text x="40" y="75" class="label">sentence</text>
+  <rect x="140" y="60" width="80" height="28" class="box"/>
+  <text x="180" y="79" text-anchor="middle" class="content">the</text>
+  <rect x="230" y="60" width="80" height="28" class="box"/>
+  <text x="270" y="79" text-anchor="middle" class="content">quick</text>
+  <rect x="320" y="60" width="80" height="28" class="box"/>
+  <text x="360" y="79" text-anchor="middle" class="content">brown</text>
+  <rect x="410" y="60" width="80" height="28" class="box"/>
+  <text x="450" y="79" text-anchor="middle" class="content">fox</text>
+  <rect x="500" y="60" width="80" height="28" class="box"/>
+  <text x="540" y="79" text-anchor="middle" class="content">jumps</text>
+  <rect x="590" y="60" width="80" height="28" class="box"/>
+  <text x="630" y="79" text-anchor="middle" class="content">over</text>
+  <rect x="680" y="60" width="80" height="28" class="box"/>
+  <text x="720" y="79" text-anchor="middle" class="content">the</text>
+  <rect x="770" y="60" width="80" height="28" class="box"/>
+  <text x="810" y="79" text-anchor="middle" class="content">dog</text>
+
+  <!-- After masking (80/10/10) -->
+  <text x="40" y="143" class="label">after masking</text>
+  <rect x="140" y="128" width="80" height="28" class="box"/>
+  <text x="180" y="147" text-anchor="middle" class="content">the</text>
+  <rect x="230" y="128" width="80" height="28" class="mask"/>
+  <text x="270" y="147" text-anchor="middle" class="content mask-text">[MASK]</text>
+  <rect x="320" y="128" width="80" height="28" class="box"/>
+  <text x="360" y="147" text-anchor="middle" class="content">brown</text>
+  <rect x="410" y="128" width="80" height="28" class="mask"/>
+  <text x="450" y="147" text-anchor="middle" class="content mask-text">[MASK]</text>
+  <rect x="500" y="128" width="80" height="28" class="box"/>
+  <text x="540" y="147" text-anchor="middle" class="content">jumps</text>
+  <rect x="590" y="128" width="80" height="28" class="hot"/>
+  <text x="630" y="147" text-anchor="middle" class="content">cat</text>
+  <rect x="680" y="128" width="80" height="28" class="box"/>
+  <text x="720" y="147" text-anchor="middle" class="content">the</text>
+  <rect x="770" y="128" width="80" height="28" class="keep"/>
+  <text x="810" y="147" text-anchor="middle" class="content">dog</text>
+
+  <text x="140" y="180" class="caption">[MASK] = 80% path</text>
+  <text x="540" y="180" class="caption">random swap = 10% path ("cat" picked in place of "over")</text>
+  <text x="770" y="180" class="caption">kept as-is = 10% path</text>
+
+  <!-- Arrow to BERT -->
+  <line x1="450" y1="195" x2="450" y2="225" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- BERT encoder box -->
+  <rect x="160" y="225" width="580" height="100" class="box"/>
+  <text x="450" y="252" text-anchor="middle" class="label">BERT encoder (bidirectional self-attention × 12 layers)</text>
+  <text x="450" y="272" text-anchor="middle" class="caption">every position sees every other. predicting "quick" uses "brown fox jumps".</text>
+  <text x="450" y="295" text-anchor="middle" class="caption">modernbert 2024: RoPE + RMSNorm + GeGLU + alternating local/global attention + 8k context</text>
+  <text x="450" y="314" text-anchor="middle" class="caption">output: per-position 768-d vectors</text>
+
+  <line x1="450" y1="325" x2="450" y2="345" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- MLM head -->
+  <rect x="320" y="345" width="260" height="32" class="hot"/>
+  <text x="450" y="367" text-anchor="middle" class="content">MLM head: Linear(d_model → vocab)</text>
+
+  <line x1="450" y1="377" x2="450" y2="395" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Loss -->
+  <rect x="300" y="395" width="300" height="32" class="box"/>
+  <text x="450" y="417" text-anchor="middle" class="content">cross-entropy, only at selected positions</text>
+
+  <text x="450" y="460" text-anchor="middle" class="caption">no signal at unselected positions — IGNORE_INDEX is a PyTorch convention for this exact use</text>
+</svg>

@@ -1,0 +1,90 @@
+{
+  "lesson": "36-scope-contracts",
+  "title": "Scope Contracts and Task Boundaries",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is scope creep called the most under-monitored failure mode?",
+      "options": [
+        "It is too rare to monitor",
+        "Tests catch it automatically",
+        "It crashes the agent loudly",
+        "Each touch had a plausible reason in the moment; together they form a different change than was reviewed"
+      ],
+      "correct": 3,
+      "explanation": "Agents narrate each step in good faith; the silent total is the creep."
+    },
+    {
+      "stage": "pre",
+      "question": "Which contract field does the lesson call half the contract?",
+      "options": [
+        "approvals_required",
+        "forbidden_files (the negative space)",
+        "goal",
+        "task_id"
+      ],
+      "correct": 1,
+      "explanation": "A contract without forbidden_files is incomplete; the negative space is half the contract."
+    },
+    {
+      "stage": "check",
+      "question": "Why pin allowed/forbidden to globs rather than raw paths?",
+      "options": [
+        "Globs encrypt better",
+        "Globs are faster",
+        "Raw paths are not JSON-serializable",
+        "Real repos move files; globs survive refactors between sessions"
+      ],
+      "correct": 3,
+      "explanation": "Globs (app/**/*.py) keep the contract valid through refactors."
+    },
+    {
+      "stage": "check",
+      "question": "What does the 'violation budget' pattern do?",
+      "options": [
+        "Charges per violation",
+        "Allows minor scope slips as warnings within a budget; only excess triggers a merge refusal — the difference between a gate that ships and one that gets disabled",
+        "Throttles model calls",
+        "Sets a monthly budget for the agent"
+      ],
+      "correct": 1,
+      "explanation": "agent-guardrails uses violationBudget so the gate is usable in day-to-day flow."
+    },
+    {
+      "stage": "check",
+      "question": "What did the specsmaxxing practitioner report?",
+      "options": [
+        "Latency dropped 90%",
+        "Cost rose 5x",
+        "Rabbit-hole rate dropped from 52% to 21% in three weeks without changing the agent; the contract did the work, not the model",
+        "Tests slowed down"
+      ],
+      "correct": 2,
+      "explanation": "Scope contracts in YAML before invoking the agent halved the rabbit-hole rate without model changes."
+    },
+    {
+      "stage": "post",
+      "question": "What are the multi-contract merge semantics (least privilege)?",
+      "options": [
+        "Last contract wins",
+        "Intersect allowed_files; union forbidden_files; min time_budget; accumulate approvals; deny-all sticks; merge of None defers to the other side",
+        "Random tie-break",
+        "First contract wins"
+      ],
+      "correct": 1,
+      "explanation": "Least-privilege merge: intersection on allows, union on forbids, most-restrictive time, accumulate approvals."
+    },
+    {
+      "stage": "post",
+      "question": "Why do time and network budgets belong in the contract too?",
+      "options": [
+        "Providers require them",
+        "Wall clock and external-host access are scope dimensions; file globs alone are necessary but not sufficient",
+        "They make the JSON smaller",
+        "They are required by Apache 2.0"
+      ],
+      "correct": 1,
+      "explanation": "time_budget_minutes and network_egress allowlists are scope dimensions on top of file globs."
+    }
+  ]
+}

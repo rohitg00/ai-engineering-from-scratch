@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">EAGLE-3 speculative decoding — alpha is the only metric</text>
+
+  <rect x="40" y="50" width="420" height="240" class="box"/>
+  <text x="250" y="72" text-anchor="middle" class="head">the flow (K=5)</text>
+  <rect x="60" y="90" width="120" height="40" class="cool"/>
+  <text x="120" y="114" text-anchor="middle" class="step">draft head</text>
+  <rect x="200" y="90" width="240" height="40" class="cold"/>
+  <text x="320" y="114" text-anchor="middle" class="step">5 candidate tokens</text>
+  <line x1="180" y1="110" x2="198" y2="110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="200" y="140" width="240" height="40" class="hot"/>
+  <text x="320" y="164" text-anchor="middle" class="step">target verify (1 forward)</text>
+  <line x1="320" y1="132" x2="320" y2="139" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="200" y="190" width="240" height="40" class="cool"/>
+  <text x="320" y="214" text-anchor="middle" class="step">K * alpha accepted</text>
+  <line x1="320" y1="182" x2="320" y2="189" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="200" y="240" width="240" height="40" class="old" fill="#eeeeee" stroke="#888"/>
+  <text x="320" y="264" text-anchor="middle" class="step">rest rerolled (second pass)</text>
+
+  <rect x="480" y="50" width="440" height="240" class="box"/>
+  <text x="700" y="72" text-anchor="middle" class="head">alpha by workload</text>
+  <rect x="500" y="90" width="400" height="30" class="cool"/>
+  <text x="510" y="110" class="small">general chat + EAGLE-3 trained on ShareGPT : alpha 0.60 - 0.80</text>
+  <rect x="500" y="125" width="400" height="30" class="cold"/>
+  <text x="510" y="145" class="small">specialized (code, legal, medical) : alpha 0.40 - 0.60</text>
+  <rect x="500" y="160" width="400" height="30" class="hot"/>
+  <text x="510" y="180" class="small">domain mismatch without retraining draft : alpha 0.30 - 0.45</text>
+  <rect x="500" y="195" width="400" height="30" class="dsk"/>
+  <text x="510" y="215" class="small">classic draft-model (Llama 3.2 1B for 70B) : alpha 0.30 - 0.50</text>
+  <rect x="500" y="230" width="400" height="50" class="box"/>
+  <text x="510" y="250" class="small">break-even alpha at 256 concurrent : ~0.55</text>
+  <text x="510" y="268" class="small">below that : P99 tail gets worse even if mean improves</text>
+
+  <rect x="40" y="310" width="880" height="100" class="box"/>
+  <text x="480" y="332" text-anchor="middle" class="head">generations</text>
+  <text x="60" y="356" class="step">classic draft-model</text>
+  <text x="60" y="374" class="small">two models loaded; K forwards per target; alpha 0.3-0.5</text>
+  <text x="280" y="356" class="step">EAGLE-1</text>
+  <text x="280" y="374" class="small">draft head on last target layer; alpha ~0.5-0.6</text>
+  <text x="500" y="356" class="step">EAGLE-2</text>
+  <text x="500" y="374" class="small">tree drafts, adaptive K; alpha ~0.6-0.7</text>
+  <text x="720" y="356" class="step">EAGLE-3 (2025-2026)</text>
+  <text x="720" y="374" class="small">multi-layer draft head; alpha ~0.6-0.8</text>
+  <text x="60" y="396" class="caption">all EAGLE variants train fast and add small parameter overhead to the target</text>
+
+  <rect x="40" y="430" width="880" height="110" class="hot"/>
+  <text x="480" y="452" text-anchor="middle" class="head">production checklist</text>
+  <text x="60" y="474" class="small">1. baseline target model plain : TTFT, ITL, throughput at target concurrency</text>
+  <text x="60" y="490" class="small">2. enable speculative_config with EAGLE-3 draft ; rerun benchmark</text>
+  <text x="60" y="506" class="small">3. log alpha (vLLM V1 reports accepted tokens per request) ; gate on alpha &gt;= 0.55</text>
+  <text x="60" y="522" class="small">4. watch P99 ITL, not P50 — rejected-draft two-pass drives tail</text>
+  <text x="60" y="538" class="small">5. vLLM v0.18.0 : draft-model spec decode incompatible with chunked prefill ; N-gram in V1 is the exception</text>
+</svg>

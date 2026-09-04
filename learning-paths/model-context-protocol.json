@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 1,
+  "id": "model-context-protocol",
+  "title": "Model Context Protocol (MCP)",
+  "summary": "Build, secure, verify, and operate stateless MCP systems from JSON-RPC envelopes through conformance release gates.",
+  "estimatedMinutes": 1395,
+  "stateFile": "MCP-LEARNING.md",
+  "prerequisites": [
+    {
+      "type": "knowledge",
+      "required": true,
+      "title": "Python and command-line basics",
+      "description": "You can inspect JSON, edit a file, and run a Python command. Prior MCP or agent-framework experience is not required."
+    },
+    {
+      "type": "software",
+      "required": true,
+      "title": "Python 3 for executable wire evidence",
+      "description": "The deterministic implementations and tests use Python 3. A TypeScript runner is optional for the second Lesson 07 implementation."
+    },
+    {
+      "type": "lesson",
+      "required": false,
+      "title": "The Tool Interface",
+      "path": "phases/13-tools-and-protocols/01-the-tool-interface",
+      "description": "Skim this lesson if typed tool calls and side-effect boundaries are new to you."
+    },
+    {
+      "type": "lesson",
+      "required": false,
+      "title": "Tool Schema Design",
+      "path": "phases/13-tools-and-protocols/05-tool-schema-design",
+      "description": "Skim this lesson if you have not designed or validated JSON Schema tool inputs."
+    }
+  ],
+  "invocation": {
+    "codex": "learn-mcp, or choose it from /skills",
+    "claudeCode": "/learn-mcp",
+    "portableFallback": "Use learn-mcp to start or resume the Model Context Protocol (MCP) path."
+  },
+  "conceptualFallback": "Read the website or each lesson's docs/en.md and hand-trace the named request and response pair. Record the checkpoint as conceptual and leave runtime, transport, authorization, and deployment evidence pending until the repository and Python 3 are available.",
+  "quickStart": {
+    "estimatedMinutes": 10,
+    "lessonPath": "phases/13-tools-and-protocols/06-mcp-fundamentals",
+    "goal": "Run one stateless MCP transcript and identify the metadata that makes every request independently interpretable.",
+    "workingDirectory": "The repository root.",
+    "command": "python3 phases/13-tools-and-protocols/06-mcp-fundamentals/code/main.py",
+    "expectedEvidence": [
+      "Each request repeats protocol version and client capabilities in params._meta.",
+      "server/discover returns a complete result with supported versions, capabilities, cache hints, and server identity.",
+      "An unsupported version returns JSON-RPC error -32022 with requested and supported versions.",
+      "The transcript closes its transport without creating or terminating an MCP protocol session."
+    ]
+  },
+  "publicDeploymentGate": {
+    "checkpointLessonPath": "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning",
+    "appliesBefore": "Any non-loopback bind, shared ingress, hosted endpoint, registry publication, or other public MCP deployment.",
+    "requiredEvidence": [
+      "The Lesson 15 executable checkpoint rejects poisoned or drifted metadata before routing.",
+      "Tool descriptions, annotations, server instructions, and MRTR content are treated as untrusted input.",
+      "Authentication, authorization, sandboxing, and result verification are recorded as separate controls.",
+      "The learner explicitly approves the external deployment action after reviewing the target and authority."
+    ]
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "group": "core",
+      "phase": 13,
+      "lesson": 6,
+      "title": "MCP Fundamentals: Stateless Requests and JSON-RPC",
+      "path": "phases/13-tools-and-protocols/06-mcp-fundamentals",
+      "minutes": 55,
+      "required": true,
+      "checkpointEvidence": [
+        "A transcript of two independent requests that each carry protocol version and client capabilities in params._meta.",
+        "A complete server/discover result and an unsupported-version error with code -32022."
+      ]
+    },
+    {
+      "order": 2,
+      "group": "core",
+      "phase": 13,
+      "lesson": 7,
+      "title": "Building an MCP Server: Stateless Python and TypeScript",
+      "path": "phases/13-tools-and-protocols/07-building-an-mcp-server",
+      "minutes": 85,
+      "required": true,
+      "checkpointEvidence": [
+        "A server demo showing discovery, tools/list, and tools/call without connection-scoped protocol state.",
+        "A deterministic test result from the Python implementation, plus the TypeScript demo when a TypeScript runner is available."
+      ]
+    },
+    {
+      "order": 3,
+      "group": "core",
+      "phase": 13,
+      "lesson": 8,
+      "title": "Building an MCP Client: Discovery, Routing, and Dual-Era Fallback",
+      "path": "phases/13-tools-and-protocols/08-building-an-mcp-client",
+      "minutes": 85,
+      "required": true,
+      "checkpointEvidence": [
+        "A client transcript that selects the modern route from per-request metadata and records the selected protocol era.",
+        "A separate legacy fallback trace that does not mix initialization state into the modern request path."
+      ]
+    },
+    {
+      "order": 4,
+      "group": "core",
+      "phase": 13,
+      "lesson": 9,
+      "title": "MCP Transports: stdio and Stateless Streamable HTTP",
+      "path": "phases/13-tools-and-protocols/09-mcp-transports",
+      "minutes": 65,
+      "required": true,
+      "checkpointEvidence": [
+        "A byte-framed stdio exchange and a POST /mcp exchange with the observed status and content type.",
+        "A header-to-body parity failure that is rejected before version negotiation or dispatch."
+      ]
+    },
+    {
+      "order": 5,
+      "group": "core",
+      "phase": 13,
+      "lesson": 10,
+      "title": "MCP Resources and Prompts: Addressable Context for Stateless Servers",
+      "path": "phases/13-tools-and-protocols/10-mcp-resources-and-prompts",
+      "minutes": 60,
+      "required": true,
+      "checkpointEvidence": [
+        "A transcript that lists and reads a URI-addressed resource and renders a prompt with validated arguments.",
+        "Explicit cache scope, TTL, deterministic ordering, and primitive choice for the same example."
+      ]
+    },
+    {
+      "order": 6,
+      "group": "bidirectional",
+      "phase": 13,
+      "lesson": 11,
+      "title": "MCP Model Input: Sampling Migration and Stateless MRTR",
+      "path": "phases/13-tools-and-protocols/11-mcp-sampling",
+      "minutes": 75,
+      "required": true,
+      "checkpointEvidence": [
+        "An MRTR input request, a client-side provider result, and a retry of the original operation with a new request id.",
+        "Evidence that the server never emits an independent server-initiated JSON-RPC request."
+      ]
+    },
+    {
+      "order": 7,
+      "group": "bidirectional",
+      "phase": 13,
+      "lesson": 12,
+      "title": "Explicit Scope and Stateless Elicitation",
+      "path": "phases/13-tools-and-protocols/12-mcp-roots-and-elicitation",
+      "minutes": 60,
+      "required": true,
+      "checkpointEvidence": [
+        "A request whose allowed roots are explicit operation inputs rather than remembered client state.",
+        "An elicitation MRTR response that is schema-validated before the original operation is retried."
+      ]
+    },
+    {
+      "order": 8,
+      "group": "bidirectional",
+      "phase": 13,
+      "lesson": 13,
+      "title": "MCP Tasks Extension: Durable Work on a Stateless Core",
+      "path": "phases/13-tools-and-protocols/13-mcp-async-tasks",
+      "minutes": 90,
+      "required": true,
+      "checkpointEvidence": [
+        "A durable task trace covering creation, status polling, cancellation, and a terminal result across independent requests.",
+        "Task ids, revision or idempotency behavior, deterministic listings, and request-header parity recorded separately from protocol state."
+      ]
+    },
+    {
+      "order": 9,
+      "group": "bidirectional",
+      "phase": 13,
+      "lesson": 14,
+      "title": "MCP Apps on the Stateless Protocol",
+      "path": "phases/13-tools-and-protocols/14-mcp-apps",
+      "minutes": 75,
+      "required": true,
+      "checkpointEvidence": [
+        "A tool result that references an explicit UI resource and keeps protocol data separate from view state.",
+        "A recorded host-to-view message boundary with allowed messages, rejected messages, and no ambient authority assumption."
+      ]
+    },
+    {
+      "order": 10,
+      "group": "secure",
+      "phase": 13,
+      "lesson": 15,
+      "title": "MCP Security: Poisoned Metadata, Routing, and MRTR State",
+      "path": "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning",
+      "minutes": 60,
+      "required": true,
+      "checkpointEvidence": [
+        "A poisoned or drifted descriptor rejected before tool routing and authorization.",
+        "A threat-model record that separates untrusted metadata, requested authority, sandbox boundary, and result verification."
+      ]
+    },
+    {
+      "order": 11,
+      "group": "secure",
+      "phase": 13,
+      "lesson": 16,
+      "title": "MCP Authorization: CIMD, Issuer Binding, PKCE, and Step-Up",
+      "path": "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1",
+      "minutes": 90,
+      "required": true,
+      "checkpointEvidence": [
+        "A complete authorization trace with issuer-bound metadata discovery, PKCE, resource binding, audience validation, and least-privilege scopes.",
+        "A step-up decision that denies insufficient authority before the handler runs."
+      ]
+    },
+    {
+      "order": 12,
+      "group": "secure",
+      "phase": 13,
+      "lesson": 18,
+      "title": "MCP Auth in Production: Issuer-Bound Enrollment and Tokens",
+      "path": "phases/13-tools-and-protocols/18-mcp-auth-production",
+      "minutes": 90,
+      "required": true,
+      "checkpointEvidence": [
+        "An issuer-bound client enrollment and token-validation trace with no discovery metadata trusted across issuers.",
+        "Independent authentication and concrete-operation authorization evidence for two consecutive requests."
+      ]
+    },
+    {
+      "order": 13,
+      "group": "secure",
+      "phase": 13,
+      "lesson": 17,
+      "title": "Stateless MCP Gateways and Registry Admission",
+      "path": "phases/13-tools-and-protocols/17-mcp-gateways-and-registries",
+      "minutes": 75,
+      "required": true,
+      "checkpointEvidence": [
+        "A registry candidate admitted or rejected from immutable descriptor, provenance, and policy evidence.",
+        "A gateway trace that records deterministic routing, request-scoped authorization, and the exact policy snapshot used."
+      ]
+    },
+    {
+      "order": 14,
+      "group": "advanced",
+      "phase": 13,
+      "lesson": 28,
+      "title": "MCP Tool Contracts and Content",
+      "path": "phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content",
+      "minutes": 120,
+      "required": true,
+      "checkpointEvidence": [
+        "A tool descriptor accepted only after schema, annotations, transport-header mappings, and content-block invariants agree.",
+        "A redacted HTTP-boundary trace that proves parameter-header encoding and exact header-to-body comparison before dispatch."
+      ]
+    },
+    {
+      "order": 15,
+      "group": "advanced",
+      "phase": 13,
+      "lesson": 29,
+      "title": "MCP Reliability, Cancellation, and Flow Control",
+      "path": "phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control",
+      "minutes": 120,
+      "required": true,
+      "checkpointEvidence": [
+        "Four deterministic cancellation, completion, deadline, and disconnect orderings with no sleep-based coordination.",
+        "Exactly one terminal outcome per request, bounded queue behavior, and late-event handling recorded for every race."
+      ]
+    },
+    {
+      "order": 16,
+      "group": "advanced",
+      "phase": 13,
+      "lesson": 30,
+      "title": "MCP Registry Supply Chain: Admission, Drift, and Rollback",
+      "path": "phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift",
+      "minutes": 90,
+      "required": true,
+      "checkpointEvidence": [
+        "A namespace collision and descriptor-drift case rejected before registry exposure.",
+        "A status transition and rollback decision tied to immutable artifact identity, provenance, and policy evidence."
+      ]
+    },
+    {
+      "order": 17,
+      "group": "advanced",
+      "phase": 13,
+      "lesson": 31,
+      "title": "MCP Conformance Engineering: Versioning, Evidence, and Operations",
+      "path": "phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations",
+      "minutes": 100,
+      "required": true,
+      "checkpointEvidence": [
+        "A conformance matrix that records protocol era, additive-field behavior, SDK transformation, and proxy preservation at every boundary.",
+        "A release decision backed by normalized wire transcripts, deterministic tests, and an explicit failure report for every rejected case."
+      ]
+    }
+  ],
+  "optionalLessons": [
+    {
+      "phase": 13,
+      "lesson": 23,
+      "title": "Capstone: Stateless Tool Ecosystem",
+      "path": "phases/13-tools-and-protocols/23-capstone-tool-ecosystem",
+      "minutes": 120,
+      "required": false,
+      "prerequisitePaths": [
+        "phases/13-tools-and-protocols/19-a2a-protocol",
+        "phases/13-tools-and-protocols/20-opentelemetry-genai"
+      ],
+      "entryRule": "Complete the 17 required Model Context Protocol (MCP) lessons plus both prerequisite paths before starting this integration capstone."
+    }
+  ]
+}

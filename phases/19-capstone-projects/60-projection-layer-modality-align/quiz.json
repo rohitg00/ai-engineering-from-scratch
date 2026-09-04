@@ -1,0 +1,78 @@
+{
+  "lesson": "60-projection-layer-modality-align",
+  "title": "Projection Layer for Modality Alignment",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does the vision encoder produce tokens that the text decoder cannot consume directly?",
+      "options": [
+        "Image tokens are encrypted",
+        "Image tokens are too short",
+        "They are in a different file format",
+        "Image tokens live in a basis the encoder learned during vision pretraining with no correspondence to the decoder's word vectors"
+      ],
+      "correct": 3,
+      "explanation": "The two encoders learn independent bases; a bridge module is required to align them in a shared space."
+    },
+    {
+      "stage": "pre",
+      "question": "Why is the two-layer MLP enough for modality alignment in practice?",
+      "options": [
+        "One-layer projections are forbidden",
+        "PyTorch requires two layers",
+        "One non-linear bend (GELU) between two linear projections is empirically enough to align CLIP-style features with text embeddings",
+        "Deeper projections are illegal"
+      ],
+      "correct": 2,
+      "explanation": "LLaVA and its descendants ship this two-layer MLP because the non-linearity fixes curvature mismatches a single linear cannot."
+    },
+    {
+      "stage": "check",
+      "question": "Why is the vision encoder frozen during this alignment stage?",
+      "options": [
+        "The encoder is empty",
+        "The 86M-parameter encoder cannot be retrained on a small mock corpus; the 1.3M-parameter projection alone is light enough to align in minutes",
+        "Frozen means faster wall time",
+        "PyTorch does not support training the encoder"
+      ],
+      "correct": 1,
+      "explanation": "Freezing the encoder and text table makes the projection the only thing learning, which is the operational shape of every adapter-based VLM."
+    },
+    {
+      "stage": "check",
+      "question": "What does cosine_alignment_loss(image_emb, text_emb) return when the two vectors point in opposite directions?",
+      "options": [
+        "Infinity",
+        "1.0",
+        "0.0",
+        "2.0"
+      ],
+      "correct": 3,
+      "explanation": "Loss is 1 - cos(angle). Antiparallel vectors have cos = -1, so the loss is 1 - (-1) = 2.0."
+    },
+    {
+      "stage": "check",
+      "question": "Why does CLS pooling get used to produce a single image-level vector from 197 tokens?",
+      "options": [
+        "It saves disk space",
+        "PyTorch sums tokens automatically",
+        "Patch tokens are unused",
+        "Captions are one vector per sample so the image side also needs one vector; the CLS token is the encoder's built-in image summary"
+      ],
+      "correct": 3,
+      "explanation": "Alignment is one image vector against one caption vector; CLS pooling produces that image vector with no extra parameters."
+    },
+    {
+      "stage": "post",
+      "question": "Which production system maps most directly to the lesson 60 pattern?",
+      "options": [
+        "LLaVA 1.5: frozen vision encoder, frozen LLM, train only a two-layer MLP projection",
+        "PaLM",
+        "AlphaFold",
+        "Stable Diffusion"
+      ],
+      "correct": 0,
+      "explanation": "LLaVA's stage-one training is exactly this: a frozen encoder and LM with a two-layer MLP bridge as the sole trainable piece."
+    }
+  ]
+}

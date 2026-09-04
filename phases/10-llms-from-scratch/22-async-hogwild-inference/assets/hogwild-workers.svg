@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .worker1 { fill: #dff4dd; stroke: #2e7d32; stroke-width: 1.5; }
+      .worker2 { fill: #ffd9c2; stroke: #c0392b; stroke-width: 1.5; }
+      .cache { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Hogwild! inference — N workers, one shared KV cache</text>
+
+  <!-- Worker 1 -->
+  <rect x="60" y="60" width="200" height="120" class="worker1"/>
+  <text x="160" y="84" text-anchor="middle" class="head">worker 1</text>
+  <text x="160" y="106" text-anchor="middle" class="small">reads full shared cache</text>
+  <text x="160" y="124" text-anchor="middle" class="small">decides what to write next</text>
+  <text x="160" y="144" text-anchor="middle" class="small">writes one token</text>
+  <text x="160" y="164" text-anchor="middle" class="small">repeat</text>
+
+  <!-- Worker 2 -->
+  <rect x="60" y="360" width="200" height="120" class="worker2"/>
+  <text x="160" y="384" text-anchor="middle" class="head">worker 2</text>
+  <text x="160" y="406" text-anchor="middle" class="small">reads full shared cache</text>
+  <text x="160" y="424" text-anchor="middle" class="small">sees worker 1's tokens</text>
+  <text x="160" y="444" text-anchor="middle" class="small">pivots to unexplored work</text>
+  <text x="160" y="464" text-anchor="middle" class="small">writes one token</text>
+
+  <!-- Shared cache -->
+  <rect x="380" y="180" width="540" height="180" class="cache"/>
+  <text x="650" y="210" text-anchor="middle" class="head">shared KV cache</text>
+
+  <!-- Tokens in cache -->
+  <rect x="400" y="230" width="40" height="30" class="worker1"/>
+  <text x="420" y="249" text-anchor="middle" class="step">A</text>
+  <rect x="445" y="230" width="40" height="30" class="worker1"/>
+  <text x="465" y="249" text-anchor="middle" class="step">A</text>
+  <rect x="490" y="230" width="40" height="30" class="worker2"/>
+  <text x="510" y="249" text-anchor="middle" class="step">B</text>
+  <rect x="535" y="230" width="40" height="30" class="worker1"/>
+  <text x="555" y="249" text-anchor="middle" class="step">A</text>
+  <rect x="580" y="230" width="40" height="30" class="worker2"/>
+  <text x="600" y="249" text-anchor="middle" class="step">B</text>
+  <rect x="625" y="230" width="40" height="30" class="worker2"/>
+  <text x="645" y="249" text-anchor="middle" class="step">B</text>
+  <rect x="670" y="230" width="40" height="30" class="worker1"/>
+  <text x="690" y="249" text-anchor="middle" class="step">A</text>
+  <rect x="715" y="230" width="40" height="30" class="worker2"/>
+  <text x="735" y="249" text-anchor="middle" class="step">C</text>
+  <rect x="760" y="230" width="40" height="30" class="worker1"/>
+  <text x="780" y="249" text-anchor="middle" class="step">A</text>
+  <rect x="805" y="230" width="40" height="30" class="worker2"/>
+  <text x="825" y="249" text-anchor="middle" class="step">C</text>
+
+  <text x="650" y="290" text-anchor="middle" class="small">tokens arrive asynchronously from all workers</text>
+  <text x="650" y="308" text-anchor="middle" class="small">RoPE positions let the cache stay stable under concurrent writes</text>
+  <text x="650" y="328" text-anchor="middle" class="small">each worker's next read sees everything</text>
+  <text x="650" y="346" text-anchor="middle" class="small">(including the other workers' just-written tokens)</text>
+
+  <!-- Arrows -->
+  <line x1="260" y1="120" x2="380" y2="200" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="260" y1="420" x2="380" y2="340" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="380" y1="250" x2="260" y2="150" stroke="#5a4fcf" stroke-width="1.0" stroke-dasharray="4,3"/>
+  <line x1="380" y1="260" x2="260" y2="390" stroke="#5a4fcf" stroke-width="1.0" stroke-dasharray="4,3"/>
+
+  <!-- Amdahl summary -->
+  <rect x="60" y="500" width="860" height="36" class="box"/>
+  <text x="80" y="524" class="step">speedup(N, p, c) = 1 / [(1 - p) + p/N + c * N / T_serial]</text>
+  <text x="500" y="524" class="small">p = parallelizable fraction · c = per-worker coord cost · T_serial = single-worker task length</text>
+</svg>

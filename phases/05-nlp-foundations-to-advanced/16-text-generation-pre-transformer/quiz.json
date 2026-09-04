@@ -1,0 +1,102 @@
+{
+  "lesson": "16-text-generation-pre-transformer",
+  "title": "Text Generation Before Transformers — N-gram Language Models",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does an n-gram language model estimate?",
+      "options": [
+        "Document embeddings",
+        "Edit distance between words",
+        "P(next word | previous n-1 words) from count statistics",
+        "P(label | document)"
+      ],
+      "correct": 2,
+      "explanation": "An n-gram LM models P(w | last n-1 words) via counted occurrences."
+    },
+    {
+      "stage": "pre",
+      "question": "What problem does smoothing solve in n-gram models?",
+      "options": [
+        "Numerical precision",
+        "Zero-probability assignment to n-grams unseen in training, which collapses sentence likelihoods to zero",
+        "Memory usage",
+        "Tokenization mismatch"
+      ],
+      "correct": 1,
+      "explanation": "Smoothing reallocates probability mass so unseen n-grams get non-zero probability."
+    },
+    {
+      "stage": "check",
+      "question": "What insight makes Kneser-Ney smoothing better than naive absolute discounting?",
+      "options": [
+        "It uses bigger n",
+        "It uses TF-IDF",
+        "It uses gradient descent",
+        "It estimates the lower-order distribution with continuation probability (number of distinct contexts a word appears in) instead of raw frequency"
+      ],
+      "correct": 3,
+      "explanation": "Continuation probability gives credit for context diversity, not just raw count."
+    },
+    {
+      "stage": "check",
+      "question": "What does perplexity measure?",
+      "options": [
+        "Number of distinct n-grams",
+        "exp of the average negative log-likelihood per token on a held-out test set; lower is better",
+        "Cross-entropy of labels",
+        "Throughput of generation"
+      ],
+      "correct": 1,
+      "explanation": "Perplexity = exp(- mean log P); lower means the model is less surprised by the test text."
+    },
+    {
+      "stage": "check",
+      "question": "Why must train and test sets use identical tokenization when comparing perplexity numbers?",
+      "options": [
+        "To avoid OOV",
+        "Perplexity depends on the tokenization scheme; mismatched tokenizers produce noncomparable scores",
+        "Required by gradient descent",
+        "To control batch size"
+      ],
+      "correct": 1,
+      "explanation": "Different tokenizations change the token count and likelihood, making perplexity values incomparable."
+    },
+    {
+      "stage": "post",
+      "question": "Why do generated trigram-LM sentences feel locally fluent but globally incoherent?",
+      "options": [
+        "Local trigram context guides each next word but the model has no long-range memory beyond n-1 tokens",
+        "They drop punctuation",
+        "They use Laplace smoothing",
+        "Beam search fails"
+      ],
+      "correct": 0,
+      "explanation": "Conditioning only on the last n-1 tokens makes long-range coherence accidental."
+    },
+    {
+      "stage": "post",
+      "question": "Where do n-gram models still ship in production in 2026?",
+      "options": [
+        "Multilingual translation",
+        "Summarization",
+        "Open-domain chatbots",
+        "Latency-critical paths like speech recognition rescoring and on-device autocomplete via libraries such as KenLM"
+      ],
+      "correct": 3,
+      "explanation": "KenLM-style n-gram models still serve as fast on-device or rescoring components."
+    },
+    {
+      "stage": "post",
+      "question": "Why is computing an n-gram baseline before declaring a neural LM 'good' still recommended?",
+      "options": [
+        "It speeds up training",
+        "Required by ROUGE",
+        "It removes OOV",
+        "If a transformer LM does not beat a tuned Kneser-Ney baseline by a wide margin on the same tokenization, something is off in the training pipeline"
+      ],
+      "correct": 3,
+      "explanation": "KN baselines are surprisingly strong; a neural LM should win by a large margin or you have a bug."
+    }
+  ]
+}

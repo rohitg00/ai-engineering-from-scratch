@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .warn { fill: #fde0b4; stroke: #b5651d; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">Checkpoint lifecycle: idempotency + precondition + verify + rollback</text>
+
+  <rect x="40" y="50" width="800" height="460" class="box"/>
+
+  <!-- Approved action -->
+  <rect x="60" y="80" width="160" height="60" class="cool"/>
+  <text x="140" y="104" text-anchor="middle" class="label">approved action</text>
+  <text x="140" y="122" text-anchor="middle" class="small">idempotency key k</text>
+
+  <!-- Preconditions -->
+  <rect x="240" y="80" width="160" height="60" class="cold"/>
+  <text x="320" y="104" text-anchor="middle" class="label">precondition check</text>
+  <text x="320" y="122" text-anchor="middle" class="small">state still consistent?</text>
+
+  <!-- Mark-as-done-first -->
+  <rect x="420" y="80" width="180" height="60" class="warn"/>
+  <text x="510" y="104" text-anchor="middle" class="label">mark-as-done-first</text>
+  <text x="510" y="122" text-anchor="middle" class="small">persist "committed" BEFORE exec</text>
+
+  <!-- Execute -->
+  <rect x="620" y="80" width="180" height="60" class="hot"/>
+  <text x="710" y="104" text-anchor="middle" class="label">execute side effect</text>
+  <text x="710" y="122" text-anchor="middle" class="small">tool call / DB write / send</text>
+
+  <path d="M220 110 L240 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M400 110 L420 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M600 110 L620 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Verify -->
+  <rect x="60" y="180" width="160" height="60" class="cool"/>
+  <text x="140" y="204" text-anchor="middle" class="label">post-action verify</text>
+  <text x="140" y="222" text-anchor="middle" class="small">re-read target resource</text>
+
+  <rect x="240" y="180" width="160" height="60" class="cool"/>
+  <text x="320" y="204" text-anchor="middle" class="label">verify passes</text>
+  <text x="320" y="222" text-anchor="middle" class="small">done</text>
+
+  <rect x="420" y="180" width="180" height="60" class="hot"/>
+  <text x="510" y="204" text-anchor="middle" class="label">verify fails</text>
+  <text x="510" y="222" text-anchor="middle" class="small">known-bad state detected</text>
+
+  <rect x="620" y="180" width="180" height="60" class="hot"/>
+  <text x="710" y="204" text-anchor="middle" class="label">rollback fires</text>
+  <text x="710" y="222" text-anchor="middle" class="small">in-band / compensating / alert</text>
+
+  <path d="M220 210 L240 210" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M600 210 L620 210" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Double-execute hazard -->
+  <rect x="60" y="270" width="760" height="100" class="hot"/>
+  <text x="440" y="294" text-anchor="middle" class="label">the sharp failure: double-execute on retry after crash</text>
+  <text x="80" y="316" class="content">1. commit starts · 2. execute succeeds · 3. crash before persisting "committed"</text>
+  <text x="80" y="332" class="content">4. resume, sees "approved not committed" · 5. re-executes · 6. side effect fires twice</text>
+  <text x="80" y="352" class="content">mitigation: persist "committed" BEFORE execute ("mark-as-done-first" pattern)</text>
+
+  <!-- Article 14 -->
+  <rect x="60" y="400" width="760" height="90" class="cold"/>
+  <text x="440" y="424" text-anchor="middle" class="label">EU AI Act Article 14 — operational reading</text>
+  <text x="80" y="446" class="content">checkpoints queryable (auditor access, not just logs)</text>
+  <text x="80" y="462" class="content">rollbacks rehearsed (end-to-end test, not documented intent)</text>
+  <text x="80" y="478" class="content">audit trail survives deploys (PostgreSQL or Durable Objects, not in-memory)</text>
+</svg>

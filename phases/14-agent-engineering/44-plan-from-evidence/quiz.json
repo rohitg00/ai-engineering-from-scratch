@@ -1,0 +1,48 @@
+{
+  "lesson": "44-plan-from-evidence",
+  "title": "Plan from Evidence",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What distinguishes an execution plan from a to-do list?",
+      "options": ["A model recommendation", "A fixed number of steps", "More prose", "A dependency graph with evidence and proof"],
+      "correct": 3,
+      "explanation": "Dependencies, receipts, and completion proof make the plan executable and resumable."
+    },
+    {
+      "stage": "check",
+      "question": "Why define a shared contract before its implementations?",
+      "options": ["To avoid documentation", "To delay all work", "So dependent surfaces do not invent conflicting behavior", "So only one agent can work"],
+      "correct": 2,
+      "explanation": "A fixed contract unblocks safe parallel work on dependent surfaces."
+    },
+    {
+      "stage": "check",
+      "question": "What does a dependency cycle usually reveal?",
+      "options": ["Good parallelism", "A hidden unresolved decision or bad decomposition", "Fast execution", "Strong evidence"],
+      "correct": 1,
+      "explanation": "Cyclic work items cannot establish a valid starting point."
+    },
+    {
+      "stage": "check",
+      "question": "When can two work items share an execution wave?",
+      "options": ["When their dependencies are complete and they are otherwise independent", "When they touch the same files", "When neither has proof", "When both are important"],
+      "correct": 0,
+      "explanation": "A wave contains all currently unblocked independent work."
+    },
+    {
+      "stage": "post",
+      "question": "Why attach evidence to each work item?",
+      "options": ["To show why the change belongs and let new evidence revise it", "To replace tests", "To decorate the plan", "To satisfy a token target"],
+      "correct": 0,
+      "explanation": "Evidence must justify and be capable of changing the plan."
+    },
+    {
+      "stage": "post",
+      "question": "What makes a plan resumable?",
+      "options": ["One worker for everything", "A long initial prompt", "Small items with status, artifacts, dependencies, and proof", "Chat history"],
+      "correct": 2,
+      "explanation": "Durable item state lets another session continue without rediscovery."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "lesson": "38-verification-gates",
+  "title": "Verification Gates",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What single question does the verification gate answer?",
+      "options": [
+        "Is this task actually complete? (reading scope, rule, feedback, and diff artifacts)",
+        "Is the prompt optimal?",
+        "Is the model fast?",
+        "Is the token budget healthy?"
+      ],
+      "correct": 0,
+      "explanation": "The gate is a deterministic function over workbench artifacts producing a pass/fail verdict."
+    },
+    {
+      "stage": "pre",
+      "question": "Why must the gate be deterministic?",
+      "options": [
+        "The same artifact set must produce the same verdict every time; LLM judges belong in the reviewer (qualitative), not the gate (status)",
+        "Providers require it",
+        "Determinism is free",
+        "It saves money"
+      ],
+      "correct": 0,
+      "explanation": "Mixing model judgment into the gate collapses the deterministic/qualitative split."
+    },
+    {
+      "stage": "check",
+      "question": "What is the gate's override discipline?",
+      "options": [
+        "Block-severity findings can only be overridden by a human with a recorded override_reason and overridden_by user id in a signed audit log",
+        "Overrides are forbidden",
+        "Anyone can override silently",
+        "Override requires a manager email"
+      ],
+      "correct": 0,
+      "explanation": "Signed overrides land in outputs/verification/overrides.jsonl; agent cannot self-override."
+    },
+    {
+      "stage": "check",
+      "question": "What is the Hybrid Norm pairing the lesson cites?",
+      "options": [
+        "GPU and CPU split",
+        "Hot/cold prompts",
+        "Verifiable rewards (tests, schemas, exit codes) answer 'did it solve the problem?'; LLM rubrics answer 'is it readable, secure, on-style?'",
+        "Cache vs no-cache"
+      ],
+      "correct": 2,
+      "explanation": "Anthropic 2026 guidance: gate runs the first class; reviewer (Lesson 39) runs the second."
+    },
+    {
+      "stage": "check",
+      "question": "How does defense-in-depth layer the gates?",
+      "options": [
+        "Pre-commit hook -> CI status check -> pre-tool authz hook -> pre-merge gate; each layer is deterministic so failure in one is caught by the next",
+        "Single gate at merge time",
+        "Only a chat reminder",
+        "Only IDE warnings"
+      ],
+      "correct": 0,
+      "explanation": "Multiple non-bypassable layers catch what a single layer would miss."
+    },
+    {
+      "stage": "post",
+      "question": "What does a coverage_floor check protect against?",
+      "options": [
+        "Hot-path latency",
+        "Agents quietly deleting tests that fail; the gate fails if measured coverage drops below the floor or last merge by more than 1 percentage point",
+        "Cold starts",
+        "Outdated lockfiles"
+      ],
+      "correct": 1,
+      "explanation": "Without a floor, agents can silently lower coverage to keep the verdict green."
+    },
+    {
+      "stage": "post",
+      "question": "When should --strict mode promote every warn to block?",
+      "options": [
+        "Always",
+        "Never",
+        "Only on Sundays",
+        "Release branches, ship-blocking PRs, post-incident triage; not the daily default because strict-on-everything corrodes flow"
+      ],
+      "correct": 3,
+      "explanation": "--strict is opt-in by branch; reserve for high-stakes moments."
+    }
+  ]
+}

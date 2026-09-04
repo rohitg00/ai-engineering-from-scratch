@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">Four primitives for bounded self-improvement</text>
+
+  <rect x="40" y="50" width="800" height="440" class="box"/>
+
+  <!-- Proposed edit -->
+  <rect x="80" y="80" width="140" height="60" class="cool"/>
+  <text x="150" y="108" text-anchor="middle" class="label">proposed edit</text>
+  <text x="150" y="126" text-anchor="middle" class="small">from self-improvement loop</text>
+
+  <!-- Four gate boxes -->
+  <rect x="260" y="80" width="140" height="60" class="hot"/>
+  <text x="330" y="102" text-anchor="middle" class="label">1. invariants</text>
+  <text x="330" y="120" text-anchor="middle" class="small">module hashes,</text>
+  <text x="330" y="134" text-anchor="middle" class="small">tool manifest</text>
+
+  <rect x="420" y="80" width="140" height="60" class="cold"/>
+  <text x="490" y="102" text-anchor="middle" class="label">2. alignment anchor</text>
+  <text x="490" y="120" text-anchor="middle" class="small">constitution hash</text>
+  <text x="490" y="134" text-anchor="middle" class="small">pinned read-only</text>
+
+  <rect x="580" y="80" width="140" height="60" class="dsk"/>
+  <text x="650" y="102" text-anchor="middle" class="label">3. multi-objective</text>
+  <text x="650" y="120" text-anchor="middle" class="small">perf + safety +</text>
+  <text x="650" y="134" text-anchor="middle" class="small">fairness + robustness</text>
+
+  <rect x="740" y="80" width="90" height="60" class="cool"/>
+  <text x="785" y="102" text-anchor="middle" class="label">4. regression</text>
+  <text x="785" y="120" text-anchor="middle" class="small">per-axis</text>
+  <text x="785" y="134" text-anchor="middle" class="small">history check</text>
+
+  <!-- Arrows left-to-right -->
+  <path d="M220 110 L260 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M400 110 L420 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M560 110 L580 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M720 110 L740 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- What each catches -->
+  <rect x="260" y="170" width="140" height="90" class="box"/>
+  <text x="330" y="190" text-anchor="middle" class="label">catches</text>
+  <text x="330" y="210" text-anchor="middle" class="small">smuggled tool</text>
+  <text x="330" y="225" text-anchor="middle" class="small">unauthorized API</text>
+  <text x="330" y="240" text-anchor="middle" class="small">evaluator edits</text>
+  <text x="330" y="255" text-anchor="middle" class="small">(DGM case study)</text>
+
+  <rect x="420" y="170" width="140" height="90" class="box"/>
+  <text x="490" y="190" text-anchor="middle" class="label">catches</text>
+  <text x="490" y="210" text-anchor="middle" class="small">objective drift</text>
+  <text x="490" y="225" text-anchor="middle" class="small">reinterpretation</text>
+  <text x="490" y="240" text-anchor="middle" class="small">constitutional</text>
+  <text x="490" y="255" text-anchor="middle" class="small">text mods</text>
+
+  <rect x="580" y="170" width="140" height="90" class="box"/>
+  <text x="650" y="190" text-anchor="middle" class="label">catches</text>
+  <text x="650" y="210" text-anchor="middle" class="small">single-axis</text>
+  <text x="650" y="225" text-anchor="middle" class="small">optimization</text>
+  <text x="650" y="240" text-anchor="middle" class="small">safety drop while</text>
+  <text x="650" y="255" text-anchor="middle" class="small">perf climbs</text>
+
+  <rect x="740" y="170" width="90" height="90" class="box"/>
+  <text x="785" y="190" text-anchor="middle" class="label">catches</text>
+  <text x="785" y="210" text-anchor="middle" class="small">silent</text>
+  <text x="785" y="225" text-anchor="middle" class="small">capability</text>
+  <text x="785" y="240" text-anchor="middle" class="small">dips absorbed</text>
+  <text x="785" y="255" text-anchor="middle" class="small">into moving avg</text>
+
+  <!-- Information-theoretic limit box -->
+  <rect x="80" y="290" width="740" height="78" class="hot"/>
+  <text x="100" y="312" class="label">information-theoretic ceiling</text>
+  <text x="100" y="332" class="content">Kolmogorov complexity bounds what any system can prove about its own successor.</text>
+  <text x="100" y="350" class="content">Lob's theorem: a system can act on "I should" without proving it should.</text>
+  <text x="100" y="365" class="content">These are mitigations, not proofs of safety.</text>
+
+  <!-- Accept/reject -->
+  <rect x="80" y="388" width="360" height="80" class="cool"/>
+  <text x="260" y="412" text-anchor="middle" class="label">edit lands only if all four gates pass</text>
+  <text x="260" y="432" text-anchor="middle" class="content">any gate fails -&gt; edit rejected</text>
+  <text x="260" y="450" text-anchor="middle" class="small">regression gate + human review for borderline rejects</text>
+
+  <rect x="460" y="388" width="360" height="80" class="hot"/>
+  <text x="640" y="412" text-anchor="middle" class="label">production reality (RSI Workshop 2026)</text>
+  <text x="640" y="432" text-anchor="middle" class="content">labs implement subsets; full stack is rare</text>
+  <text x="640" y="450" text-anchor="middle" class="small">Meta HyperAgents, SAHOO (Mar 2026) = partial refs</text>
+</svg>

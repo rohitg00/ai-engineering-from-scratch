@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #444; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #666; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .axis { stroke: #444; stroke-width: 1; fill: none; }
+      .curve { stroke: #c0392b; stroke-width: 2; fill: none; }
+      .grid { stroke: #ddd; stroke-width: 0.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="440" y="24" text-anchor="middle" class="title">The horizon doubles ~every 7 months</text>
+
+  <!-- Chart area -->
+  <rect x="60" y="60" width="480" height="360" class="box"/>
+
+  <!-- Grid -->
+  <line x1="60" y1="150" x2="540" y2="150" class="grid"/>
+  <line x1="60" y1="240" x2="540" y2="240" class="grid"/>
+  <line x1="60" y1="330" x2="540" y2="330" class="grid"/>
+  <line x1="140" y1="60" x2="140" y2="420" class="grid"/>
+  <line x1="220" y1="60" x2="220" y2="420" class="grid"/>
+  <line x1="300" y1="60" x2="300" y2="420" class="grid"/>
+  <line x1="380" y1="60" x2="380" y2="420" class="grid"/>
+  <line x1="460" y1="60" x2="460" y2="420" class="grid"/>
+
+  <!-- Axis labels -->
+  <text x="60" y="435" class="small">GPT-2</text>
+  <text x="140" y="435" class="small">2020</text>
+  <text x="220" y="435" class="small">2022</text>
+  <text x="300" y="435" class="small">2024</text>
+  <text x="380" y="435" class="small">2026</text>
+  <text x="460" y="435" class="small">2028</text>
+  <text x="40" y="65" class="small">1 wk</text>
+  <text x="40" y="155" class="small">1 day</text>
+  <text x="40" y="245" class="small">1 hr</text>
+  <text x="40" y="335" class="small">1 min</text>
+  <text x="40" y="420" class="small">10 s</text>
+
+  <!-- Curve: exponential in log space, straight line -->
+  <polyline class="curve" points="60,400 120,380 180,350 240,310 300,260 360,200 420,140 480,80"/>
+
+  <!-- Marked points -->
+  <circle cx="60" cy="400" r="4" fill="#c0392b"/>
+  <circle cx="300" cy="260" r="4" fill="#c0392b"/>
+  <circle cx="380" cy="200" r="4" fill="#c0392b"/>
+  <text x="65" y="395" class="content">GPT-2 (10s)</text>
+  <text x="305" y="275" class="content">GPT-4 (~5 min)</text>
+  <text x="305" y="295" class="small">expert task horizon</text>
+  <text x="385" y="220" class="content">Opus 4.6 (14 hr)</text>
+  <text x="385" y="235" class="small">METR Jan 2026</text>
+
+  <!-- Axis frame -->
+  <line x1="60" y1="60" x2="60" y2="420" class="axis"/>
+  <line x1="60" y1="420" x2="540" y2="420" class="axis"/>
+
+  <text x="300" y="460" text-anchor="middle" class="caption">log-linear: horizon doubles per ~7 months. y-axis is log scale.</text>
+
+  <!-- Right panel: what breaks -->
+  <rect x="560" y="60" width="300" height="460" class="box"/>
+  <text x="710" y="82" text-anchor="middle" class="label">what breaks at long horizon</text>
+
+  <rect x="572" y="100" width="276" height="54" class="hot"/>
+  <text x="580" y="120" class="label">context</text>
+  <text x="580" y="138" class="content">10^5-10^7 tokens per run.</text>
+  <text x="580" y="152" class="content">needs tiered memory.</text>
+
+  <rect x="572" y="162" width="276" height="54" class="hot"/>
+  <text x="580" y="182" class="label">failure compounds</text>
+  <text x="580" y="200" class="content">99% per-step, 70 steps = 50%.</text>
+  <text x="580" y="214" class="content">reliability is exponential.</text>
+
+  <rect x="572" y="224" width="276" height="54" class="hot"/>
+  <text x="580" y="244" class="label">cost is fat-tailed</text>
+  <text x="580" y="262" class="content">one loop can burn a month</text>
+  <text x="580" y="276" class="content">of chat budget.</text>
+
+  <rect x="572" y="286" width="276" height="54" class="cool"/>
+  <text x="580" y="306" class="label">eval vs deploy gap</text>
+  <text x="580" y="324" class="content">models infer eval context</text>
+  <text x="580" y="338" class="content">and behave safer in tests.</text>
+
+  <rect x="572" y="348" width="276" height="54" class="cool"/>
+  <text x="580" y="368" class="label">review shifts</text>
+  <text x="580" y="386" class="content">from reading answers</text>
+  <text x="580" y="400" class="content">to auditing trajectories.</text>
+
+  <rect x="572" y="410" width="276" height="78" class="box"/>
+  <text x="580" y="430" class="label">design implication</text>
+  <text x="580" y="448" class="content">horizons are upper bounds.</text>
+  <text x="580" y="462" class="content">deploy with budgets, kill</text>
+  <text x="580" y="476" class="content">switches, HITL, canaries.</text>
+</svg>

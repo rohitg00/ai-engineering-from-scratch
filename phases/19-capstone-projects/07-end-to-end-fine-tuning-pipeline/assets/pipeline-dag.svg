@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .edge { stroke: #555; stroke-width: 1.2; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">fine-tuning DAG — one YAML reproduces everything</text>
+
+  <rect x="40" y="60" width="180" height="60" class="cool"/>
+  <text x="130" y="84" text-anchor="middle" class="step">data</text>
+  <text x="130" y="102" text-anchor="middle" class="small">Datatrove dedup</text>
+  <text x="130" y="116" text-anchor="middle" class="small">Nemotron-CC + Presidio</text>
+
+  <rect x="260" y="60" width="180" height="60" class="hot"/>
+  <text x="350" y="84" text-anchor="middle" class="step">contamination</text>
+  <text x="350" y="102" text-anchor="middle" class="small">MinHashLSH vs</text>
+  <text x="350" y="116" text-anchor="middle" class="small">MMLU-Pro / MT-Bench</text>
+
+  <rect x="480" y="60" width="180" height="60" class="cool"/>
+  <text x="570" y="84" text-anchor="middle" class="step">SFT</text>
+  <text x="570" y="102" text-anchor="middle" class="small">Axolotl v0.8 + ZeRO-3</text>
+  <text x="570" y="116" text-anchor="middle" class="small">2-3 epochs 8xH100</text>
+
+  <rect x="700" y="60" width="180" height="60" class="cool"/>
+  <text x="790" y="84" text-anchor="middle" class="step">DPO / GRPO</text>
+  <text x="790" y="102" text-anchor="middle" class="small">TRL 0.15</text>
+  <text x="790" y="116" text-anchor="middle" class="small">1 epoch, beta sweep</text>
+
+  <path d="M220,90 L260,90" class="edge" marker-end="url(#arrow)"/>
+  <path d="M440,90 L480,90" class="edge" marker-end="url(#arrow)"/>
+  <path d="M660,90 L700,90" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="150" y="170" width="200" height="60" class="cold"/>
+  <text x="250" y="194" text-anchor="middle" class="step">quantize</text>
+  <text x="250" y="212" text-anchor="middle" class="small">GPTQ + AWQ + GGUF</text>
+  <text x="250" y="226" text-anchor="middle" class="small">Marlin INT4</text>
+
+  <rect x="390" y="170" width="200" height="60" class="dsk"/>
+  <text x="490" y="194" text-anchor="middle" class="step">serve</text>
+  <text x="490" y="212" text-anchor="middle" class="small">vLLM 0.7 + EAGLE-3</text>
+  <text x="490" y="226" text-anchor="middle" class="small">K8s HPA on queue-wait</text>
+
+  <rect x="630" y="170" width="200" height="60" class="cool"/>
+  <text x="730" y="194" text-anchor="middle" class="step">eval</text>
+  <text x="730" y="212" text-anchor="middle" class="small">lm-eval + MT-Bench v2</text>
+  <text x="730" y="226" text-anchor="middle" class="small">RewardBench-2 + MMLU-Pro</text>
+
+  <path d="M790,120 L490,170" class="edge" marker-end="url(#arrow)"/>
+  <path d="M590,200 L630,200" class="edge" marker-end="url(#arrow)"/>
+  <path d="M350,200 L390,200" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="260" y="280" width="440" height="60" class="hot"/>
+  <text x="480" y="304" text-anchor="middle" class="step">safety eval + model card</text>
+  <text x="480" y="322" text-anchor="middle" class="small">Llama Guard 4 + ShieldGemma-2 + MOF 2026 template</text>
+  <path d="M480,230 L480,280" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="380" width="880" height="140" class="box"/>
+  <text x="480" y="400" text-anchor="middle" class="head">content-hashed manifest + reproducibility contract</text>
+  <text x="60" y="422" class="small">every stage consumes and produces a content-hashed artifact</text>
+  <text x="60" y="440" class="small">re-running with the same YAML + seed yields identical hashes end to end</text>
+  <text x="60" y="458" class="small">one command: ./pipeline.sh config/llama3.3-8b-domainX.yaml</text>
+  <text x="60" y="476" class="small">Langfuse traces training+inference; W&amp;B run links in model card</text>
+  <text x="60" y="496" class="small">ablation table baked in: base / SFT-only / SFT+DPO / SFT+GRPO</text>
+  <text x="60" y="514" class="caption">serving target: 2.5x+ throughput vs baseline with EAGLE-3; $/1M tokens reported vs hosted APIs</text>
+</svg>

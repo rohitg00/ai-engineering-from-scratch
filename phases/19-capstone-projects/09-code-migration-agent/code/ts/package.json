@@ -1,0 +1,23 @@
+{
+  "name": "code-migration-agent-dashboard",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Multi-file TypeScript skeleton for the code migration agent dashboard.",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "serve": "SERVE=1 tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "hono": "^4.6.0",
+    "@hono/node-server": "^1.13.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

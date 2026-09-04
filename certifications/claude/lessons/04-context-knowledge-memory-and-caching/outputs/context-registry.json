@@ -1,0 +1,76 @@
+{
+  "registryId": "refund-context-v1",
+  "asOf": "2026-08-08",
+  "sources": [
+    {
+      "id": "project-instructions",
+      "job": "behavior",
+      "owner": "workflow-owner",
+      "authority": "governing-instructions",
+      "effectiveDate": "2026-07-01",
+      "reviewDate": "2026-10-01",
+      "sensitivity": "internal",
+      "status": "active",
+      "stability": "stable",
+      "cacheEligible": true
+    },
+    {
+      "id": "refund-policy-uk",
+      "job": "authoritative-knowledge",
+      "owner": "customer-operations",
+      "authority": "approved-policy",
+      "effectiveDate": "2026-07-01",
+      "reviewDate": "2026-10-01",
+      "sensitivity": "internal",
+      "status": "active",
+      "stability": "stable",
+      "cacheEligible": true
+    },
+    {
+      "id": "refund-policy-2025",
+      "job": "reference-knowledge",
+      "owner": "customer-operations",
+      "authority": "superseded-policy",
+      "effectiveDate": "2025-01-01",
+      "reviewDate": "2026-07-01",
+      "sensitivity": "internal",
+      "status": "superseded",
+      "stability": "stable",
+      "cacheEligible": false
+    },
+    {
+      "id": "conversation-preferences",
+      "job": "continuity",
+      "owner": "workflow-user",
+      "authority": "preference-only",
+      "effectiveDate": "2026-08-01",
+      "reviewDate": "2026-09-01",
+      "sensitivity": "internal",
+      "status": "active",
+      "stability": "dynamic",
+      "cacheEligible": false
+    },
+    {
+      "id": "live-account-state",
+      "job": "connected-data",
+      "owner": "account-system",
+      "authority": "system-of-record",
+      "effectiveDate": "2026-08-08",
+      "reviewDate": "2026-08-09",
+      "sensitivity": "confidential",
+      "status": "active",
+      "stability": "dynamic",
+      "cacheEligible": false
+    }
+  ],
+  "promptBudget": {
+    "maximumTokens": 25000,
+    "stableInstructions": 4000,
+    "taskInput": 2000,
+    "retrievedEvidence": 5000,
+    "continuity": 1000,
+    "cachedReference": 10000
+  },
+  "cachedPrefixSourceIds": ["project-instructions", "refund-policy-uk"],
+  "invalidationRule": "Invalidate when an included source changes status, effective date, content hash, or approval"
+}

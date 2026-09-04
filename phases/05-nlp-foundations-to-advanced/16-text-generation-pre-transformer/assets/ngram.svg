@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .stage { font-size: 11px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .note { font-size: 11px; fill: #666; font-style: italic; }
+      .line { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="30" width="200" height="260" rx="4"/>
+  <text class="label" x="120" y="55" text-anchor="middle">1. count</text>
+  <text class="content" x="35" y="90">training corpus</text>
+  <text class="content" x="35" y="115">  "the cat sat"</text>
+  <text class="content" x="35" y="135">  "the cat ran"</text>
+  <text class="content" x="35" y="155">  "the dog sat"</text>
+  <text class="content" x="35" y="190">trigram counts:</text>
+  <text class="content" x="35" y="210">  (the, cat, sat): 1</text>
+  <text class="content" x="35" y="230">  (the, cat, ran): 1</text>
+  <text class="content" x="35" y="250">  (the, dog, sat): 1</text>
+  <text class="content" x="35" y="275">  (the, cat, *): 2</text>
+
+  <path class="line" d="M 220 160 L 260 160" marker-end="url(#arrow)"/>
+
+  <rect class="hot" x="260" y="30" width="220" height="260" rx="4"/>
+  <text class="label" x="370" y="55" text-anchor="middle">2. smooth</text>
+  <text class="content" x="275" y="90">raw count gives zero</text>
+  <text class="content" x="275" y="110">to unseen n-grams.</text>
+  <text class="content" x="275" y="145">Kneser-Ney redistributes:</text>
+  <text class="content" x="275" y="170">  discount seen counts</text>
+  <text class="content" x="275" y="190">  use continuation prob</text>
+  <text class="content" x="275" y="210">  for unseen words</text>
+  <text class="content" x="275" y="245">P(w | prev) = max(c-D, 0)/N</text>
+  <text class="content" x="275" y="265">        + λ · P_cont(w)</text>
+
+  <path class="line" d="M 480 160 L 520 160" marker-end="url(#arrow)"/>
+
+  <rect class="box" x="520" y="30" width="180" height="260" rx="4"/>
+  <text class="label" x="610" y="55" text-anchor="middle">3. generate</text>
+  <text class="content" x="535" y="90">sample from</text>
+  <text class="content" x="535" y="110">P(w | prev):</text>
+  <text class="content" x="535" y="145">"the" (start)</text>
+  <text class="content" x="535" y="165">  -> "cat" (p=0.6)</text>
+  <text class="content" x="535" y="185">     -> "sat" (p=0.4)</text>
+  <text class="content" x="535" y="205">        -> "on"</text>
+  <text class="content" x="535" y="225">           -> "the"</text>
+  <text class="content" x="535" y="250">locally plausible,</text>
+  <text class="content" x="535" y="270">globally incoherent.</text>
+
+  <path class="line" d="M 700 160 L 740 160" marker-end="url(#arrow)"/>
+
+  <rect class="box" x="740" y="30" width="140" height="260" rx="4"/>
+  <text class="label" x="810" y="55" text-anchor="middle">4. evaluate</text>
+  <text class="content" x="755" y="100">perplexity</text>
+  <text class="content" x="755" y="125">= exp(- (1/N) Σ</text>
+  <text class="content" x="755" y="145">   log P(w_i | ctx))</text>
+  <text class="content" x="755" y="180">lower = better</text>
+  <text class="content" x="755" y="220">Brown corpus:</text>
+  <text class="content" x="755" y="240">  KN 4-gram ~140</text>
+  <text class="content" x="755" y="260">  transformer ~20</text>
+
+  <text class="stage" x="450" y="330" text-anchor="middle">Kneser-Ney stayed the best n-gram smoother for 20 years.</text>
+  <text class="stage" x="450" y="350" text-anchor="middle">Transformers closed the perplexity gap by ~10x, not by inventing a better smoother.</text>
+</svg>

@@ -1,0 +1,37 @@
+[
+  {
+    "question": "A 7B parameter model in FP16 needs how much VRAM just for weights?",
+    "options": ["14 GB", "28 GB", "7 GB", "56 GB"],
+    "correct": 0,
+    "explanation": "Each parameter in FP16 is 2 bytes. 7 billion * 2 bytes = 14 GB. With Adam optimizer states (2 copies) and gradients, total training memory is roughly 56 GB before accounting for activations.",
+    "stage": "pre"
+  },
+  {
+    "question": "What are the three types of parallelism used in distributed training?",
+    "options": ["Batch, sequence, and token parallelism", "Forward, backward, and optimizer parallelism", "Data parallelism, tensor parallelism, and pipeline parallelism", "CPU, GPU, and TPU parallelism"],
+    "correct": 2,
+    "explanation": "Data parallelism replicates the model on each GPU and splits the data. Tensor parallelism splits individual layers across GPUs. Pipeline parallelism splits the model's layers into stages across GPUs.",
+    "stage": "pre"
+  },
+  {
+    "question": "What does FSDP (Fully Sharded Data Parallel) do that standard DDP does not?",
+    "options": ["It uses a different optimizer", "It processes data faster", "It supports more GPUs", "It shards model parameters, gradients, and optimizer states across GPUs instead of replicating the full model on each"],
+    "correct": 3,
+    "explanation": "Standard DDP replicates the entire model on every GPU (wasteful). FSDP shards parameters across GPUs so each holds only a fraction. Parameters are gathered on-demand for computation and released after.",
+    "stage": "post"
+  },
+  {
+    "question": "What is DeepSpeed ZeRO Stage 3?",
+    "options": ["A learning rate schedule", "It partitions optimizer states, gradients, AND model parameters across GPUs, achieving maximum memory efficiency", "A quantization method", "A data preprocessing pipeline"],
+    "correct": 1,
+    "explanation": "ZeRO Stage 1 shards optimizer states, Stage 2 adds gradient sharding, Stage 3 adds parameter sharding. Stage 3 gives maximum memory savings, allowing training of models that far exceed single-GPU memory.",
+    "stage": "post"
+  },
+  {
+    "question": "Why is gradient synchronization necessary in data-parallel training?",
+    "options": ["To speed up the forward pass", "Each GPU computes gradients on different data; averaging gradients across GPUs ensures all replicas update identically", "To reduce memory usage", "To prevent overfitting"],
+    "correct": 1,
+    "explanation": "In data parallelism, each GPU processes a different batch and computes different gradients. AllReduce averages these gradients across all GPUs so every replica applies the same update and stays in sync.",
+    "stage": "post"
+  }
+]

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #f3ece0; stroke: #1a1a1a; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 13px; fill: #333; font-family: 'Menlo', monospace; }
+      .note { font-size: 11px; fill: #666; font-style: italic; }
+      .stage { font-size: 12px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="30" width="860" height="120" rx="4"/>
+  <text class="label" x="35" y="55">BIO tagging</text>
+  <text class="note" x="35" y="75">label each token with B-TYPE (begin), I-TYPE (inside), or O (outside)</text>
+
+  <text class="content" x="40" y="110">token:  Apple  sued  Google  over  its  iPhone  search  deal  in  the  US  .</text>
+  <text class="content" x="40" y="135">label:  B-ORG  O     B-ORG   O     O    B-PROD  O       O     O   O    B-GPE  O</text>
+
+  <rect class="box" x="20" y="180" width="200" height="160" rx="4"/>
+  <text class="label" x="120" y="205" text-anchor="middle">rule-based</text>
+  <text class="content" x="35" y="235">gazetteer match</text>
+  <text class="content" x="35" y="255">regex + dicts</text>
+  <text class="note" x="35" y="285">high precision</text>
+  <text class="note" x="35" y="305">zero OOV coverage</text>
+  <text class="note" x="35" y="325">no disambiguation</text>
+
+  <rect class="box" x="240" y="180" width="200" height="160" rx="4"/>
+  <text class="label" x="340" y="205" text-anchor="middle">CRF</text>
+  <text class="content" x="255" y="235">hand features:</text>
+  <text class="content" x="255" y="255">  shape, suffix,</text>
+  <text class="content" x="255" y="275">  neighbors, case</text>
+  <text class="note" x="255" y="305">enforces valid</text>
+  <text class="note" x="255" y="325">BIO transitions</text>
+
+  <rect class="box" x="460" y="180" width="200" height="160" rx="4"/>
+  <text class="label" x="560" y="205" text-anchor="middle">BiLSTM-CRF</text>
+  <text class="content" x="475" y="235">learned features</text>
+  <text class="content" x="475" y="255">embed → BiLSTM</text>
+  <text class="content" x="475" y="275">  → CRF head</text>
+  <text class="note" x="475" y="305">no more hand</text>
+  <text class="note" x="475" y="325">engineering</text>
+
+  <rect class="hot" x="680" y="180" width="200" height="160" rx="4"/>
+  <text class="label" x="780" y="205" text-anchor="middle">transformer NER</text>
+  <text class="content" x="695" y="235">fine-tune BERT</text>
+  <text class="content" x="695" y="255">token-classif head</text>
+  <text class="content" x="695" y="275">aggregate spans</text>
+  <text class="note" x="695" y="305">best accuracy</text>
+  <text class="note" x="695" y="325">most compute</text>
+
+  <text class="stage" x="450" y="370" text-anchor="middle">pick the cheapest method that hits your accuracy bar</text>
+</svg>

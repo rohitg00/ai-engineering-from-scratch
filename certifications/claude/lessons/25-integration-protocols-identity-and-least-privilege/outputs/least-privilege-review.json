@@ -1,0 +1,23 @@
+{
+  "review_id": "support-role-capabilities-v1",
+  "principal": "support-agent-42",
+  "primary_integration": "mcp",
+  "visible_tools": ["read_ticket", "draft_reply"],
+  "hidden_tools": ["issue_refund", "delete_account"],
+  "execution_fixture": {
+    "tool": "issue_refund",
+    "allowed": false,
+    "error": {
+      "category": "authorization",
+      "retryable": false,
+      "safe_next_action": "request authorized human review"
+    }
+  },
+  "controls": [
+    "identity propagated outside model arguments",
+    "execution-time scope check",
+    "approval bound to exact action and parameters",
+    "structured audit reference"
+  ],
+  "status": "least_privilege_verified"
+}

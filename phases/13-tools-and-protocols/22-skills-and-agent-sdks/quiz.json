@@ -1,0 +1,78 @@
+{
+  "lesson": "22-skills-and-agent-sdks",
+  "title": "Agent Skills: Portable Contract and Runtime Boundary",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team has a reusable review method and an existing API that supplies pull request data. Which design assigns each concern to the right primitive according to the runtime policy?",
+      "options": [
+        "Put the review method in an Agent Skill and expose the API through an MCP tool",
+        "Replace the API with a longer user prompt",
+        "Put both the method and the API implementation in AGENTS.md",
+        "Use a lifecycle hook as the only source of review instructions"
+      ],
+      "correct": 0,
+      "explanation": "A skill carries reusable procedural knowledge, while MCP exposes an external capability. They can compose. AGENTS.md is better for repository-wide defaults, and a hook responds to lifecycle events rather than replacing either layer."
+    },
+    {
+      "stage": "check",
+      "question": "Why should a validator require the SKILL.md name to match its containing directory?",
+      "options": [
+        "It guarantees every host supports the same invocation syntax",
+        "It gives discovery and packaging one stable identity instead of two conflicting names",
+        "It makes the Markdown heading render correctly",
+        "It allows the skill to bypass host permissions"
+      ],
+      "correct": 1,
+      "explanation": "Discovery tools frequently index a skill by both folder and frontmatter. Matching them prevents ambiguous catalog entries and broken installation paths. It does not grant authority or standardize a host's invocation UI."
+    },
+    {
+      "stage": "check",
+      "question": "A SKILL.md contains a field that only one runtime understands. What is the portable interpretation?",
+      "options": [
+        "Move the field into the skill name",
+        "Treat it as a host extension and validate it only under an explicit host policy",
+        "The field silently becomes part of the core standard",
+        "Every runtime must implement it before loading the skill"
+      ],
+      "correct": 1,
+      "explanation": "Portable core metadata and host runtime extensions are separate contracts. An adapter may recognize an extension, but a core validator should not claim that the field has universal semantics."
+    },
+    {
+      "stage": "check",
+      "question": "Which primitive best represents a check that must run after every tool call?",
+      "options": [
+        "An MCP resource",
+        "A one-shot prompt",
+        "A repository glossary",
+        "A lifecycle hook"
+      ],
+      "correct": 3,
+      "explanation": "The defining requirement is event timing, so a lifecycle hook is the right mechanism. A skill may explain a workflow and MCP may expose a capability, but neither inherently fires after each tool call."
+    },
+    {
+      "stage": "post",
+      "question": "When is AGENTS.md a better home than an Agent Skill?",
+      "options": [
+        "When an external service needs an authenticated API call",
+        "When a script needs to be executed outside the workspace jail",
+        "When conventions should apply throughout work in a repository",
+        "When instructions should load only for a rare specialist task"
+      ],
+      "correct": 2,
+      "explanation": "AGENTS.md communicates durable repository context such as build commands and coding conventions. Task-specific procedures fit skills, external operations fit tools, and no instruction file should be used to escape a sandbox."
+    },
+    {
+      "stage": "post",
+      "question": "What does a valid Agent Skill grant by itself?",
+      "options": [
+        "A universal slash command in every agent host",
+        "Discoverable procedural instructions, subject to the host runtime's policies",
+        "Permission to execute every bundled script",
+        "Automatic network access"
+      ],
+      "correct": 1,
+      "explanation": "The portable artifact supplies metadata and instructions. Discovery, invocation UI, tool access, approvals, and script execution remain runtime responsibilities, so validity is not equivalent to authority."
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .user { fill: #e3f2fd; stroke: #1565c0; stroke-width: 1.5; }
+      .state { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .slot-filled { fill: #e8f5e9; stroke: #2e7d32; stroke-width: 1; }
+      .slot-empty { fill: #f5f5f5; stroke: #aaa; stroke-width: 1; stroke-dasharray: 3 2; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">dialogue state tracking — slots fill, update, correct across turns</text>
+
+  <!-- Turn 1 -->
+  <text x="50" y="65" class="label">turn 1</text>
+  <rect x="100" y="50" width="360" height="30" class="user"/>
+  <text x="280" y="70" text-anchor="middle" class="content">"I want a cheap restaurant in the north."</text>
+
+  <line x1="465" y1="65" x2="500" y2="65" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="505" y="45" width="100" height="40" class="state"/>
+  <text x="555" y="60" text-anchor="middle" class="mono">cuisine: —</text>
+  <text x="555" y="78" text-anchor="middle" class="mono">area: north</text>
+
+  <rect x="610" y="45" width="100" height="40" class="state"/>
+  <text x="660" y="60" text-anchor="middle" class="mono">price: cheap</text>
+  <text x="660" y="78" text-anchor="middle" class="mono">people: —</text>
+
+  <!-- Turn 2 -->
+  <text x="50" y="130" class="label">turn 2</text>
+  <rect x="100" y="115" width="360" height="30" class="user"/>
+  <text x="280" y="135" text-anchor="middle" class="content">"Italian food please."</text>
+
+  <line x1="465" y1="130" x2="500" y2="130" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="505" y="110" width="100" height="40" class="slot-filled"/>
+  <text x="555" y="125" text-anchor="middle" class="mono">cuisine: italian</text>
+  <text x="555" y="143" text-anchor="middle" class="mono">area: north</text>
+
+  <rect x="610" y="110" width="100" height="40" class="state"/>
+  <text x="660" y="125" text-anchor="middle" class="mono">price: cheap</text>
+  <text x="660" y="143" text-anchor="middle" class="mono">people: —</text>
+
+  <!-- Turn 3 -->
+  <text x="50" y="195" class="label">turn 3</text>
+  <rect x="100" y="180" width="360" height="30" class="user"/>
+  <text x="280" y="200" text-anchor="middle" class="content">"Actually make it moderate pricing."</text>
+
+  <line x1="465" y1="195" x2="500" y2="195" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="505" y="175" width="100" height="40" class="state"/>
+  <text x="555" y="190" text-anchor="middle" class="mono">cuisine: italian</text>
+  <text x="555" y="208" text-anchor="middle" class="mono">area: north</text>
+
+  <rect x="610" y="175" width="100" height="40" class="slot-filled"/>
+  <text x="660" y="190" text-anchor="middle" class="mono">price: moderate</text>
+  <text x="660" y="208" text-anchor="middle" class="mono">people: —</text>
+
+  <!-- Turn 4 -->
+  <text x="50" y="260" class="label">turn 4</text>
+  <rect x="100" y="245" width="360" height="30" class="user"/>
+  <text x="280" y="265" text-anchor="middle" class="content">"For four people."</text>
+
+  <line x1="465" y1="260" x2="500" y2="260" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="505" y="240" width="100" height="40" class="state"/>
+  <text x="555" y="255" text-anchor="middle" class="mono">cuisine: italian</text>
+  <text x="555" y="273" text-anchor="middle" class="mono">area: north</text>
+
+  <rect x="610" y="240" width="100" height="40" class="slot-filled"/>
+  <text x="660" y="255" text-anchor="middle" class="mono">price: moderate</text>
+  <text x="660" y="273" text-anchor="middle" class="mono">people: 4</text>
+
+  <!-- Final state -->
+  <rect x="100" y="320" width="700" height="70" class="box"/>
+  <text x="450" y="345" text-anchor="middle" class="label">final state (JGA counts if and only if all slots match gold)</text>
+  <text x="450" y="370" text-anchor="middle" class="mono">{cuisine: italian, area: north, price: moderate, people: 4}</text>
+  <text x="450" y="385" text-anchor="middle" class="caption">→ pass to backend: book_restaurant(cuisine=italian, area=north, price=moderate, people=4)</text>
+
+  <text x="450" y="425" text-anchor="middle" class="caption">invariants — correction overwrites (turn 3); explicit negation clears; untouched slots persist</text>
+</svg>

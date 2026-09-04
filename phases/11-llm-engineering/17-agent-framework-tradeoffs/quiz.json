@@ -1,0 +1,65 @@
+{
+  "lesson": "phase-11/17-agent-framework-tradeoffs",
+  "questions": [
+    {
+      "stage": "post",
+      "question": "Which framework is the right first pick for a workflow that must resume after a crash, accept a human approval mid-run, and fan out to three retrievers in parallel?",
+      "options": [
+        "LangGraph",
+        "Agno",
+        "AutoGen",
+        "CrewAI"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does LLM-selected routing cost more tokens per turn than explicit routing?",
+      "options": [
+        "A planner LLM call picks the next step each turn, adding prompt and completion tokens for every decision.",
+        "It duplicates the tool list for every agent in the crew.",
+        "It sends the whole conversation history to a verifier model.",
+        "It pre-fetches the next node in parallel to hedge latency."
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Proposer-critic dialogue in code review naturally maps to which framework's core abstraction?",
+      "options": [
+        "LangGraph's StateGraph",
+        "AutoGen's GroupChat / ConversableAgent pair",
+        "CrewAI's sequential Crew",
+        "Agno's single Agent with tools"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which framework has built-in storage drivers (SQLite, Postgres, Redis, Mongo, DynamoDB) attached directly to the Agent class for session and memory persistence?",
+      "options": [
+        "Agno",
+        "CrewAI",
+        "AutoGen",
+        "LangGraph"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "You have a two-call summarizer: fetch text, summarize. Which option is the right framework choice?",
+      "options": [
+        "AutoGen GroupChat — two agents can argue about the best summary.",
+        "Plain Python with the provider SDK — no framework is the fastest framework for tiny pipelines.",
+        "CrewAI with researcher + summarizer roles — roles make it clearer.",
+        "LangGraph StateGraph — always use a framework for reliability."
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

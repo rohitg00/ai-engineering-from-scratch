@@ -1,0 +1,102 @@
+{
+  "lesson": "07-pos-tagging-parsing",
+  "title": "POS Tagging and Syntactic Parsing",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the goal of POS tagging?",
+      "options": [
+        "Translate the sentence",
+        "Detect sentiment",
+        "Extract named entities",
+        "Assign a grammatical category (noun, verb, etc.) to each token"
+      ],
+      "correct": 3,
+      "explanation": "POS tagging labels each token with its part of speech."
+    },
+    {
+      "stage": "pre",
+      "question": "Which tagset is the default for cross-lingual work?",
+      "options": [
+        "Penn Treebank",
+        "CoNLL-2003",
+        "Stanford Dependencies",
+        "Universal Dependencies"
+      ],
+      "correct": 3,
+      "explanation": "Universal Dependencies provides a coarser, language-agnostic 17-tag set."
+    },
+    {
+      "stage": "check",
+      "question": "What does a bigram HMM POS tagger model?",
+      "options": [
+        "Dependency parses",
+        "P(tags) only",
+        "P(tag | previous tag) transitions plus P(word | tag) emissions, decoded with Viterbi",
+        "Embedding similarities"
+      ],
+      "correct": 2,
+      "explanation": "Bigram HMM uses tag transitions and word emissions; Viterbi finds the highest-probability sequence."
+    },
+    {
+      "stage": "check",
+      "question": "What does the Viterbi algorithm compute for an HMM tagger?",
+      "options": [
+        "The transition matrix",
+        "The marginal probability of each tag",
+        "The forward probabilities only",
+        "The single highest-probability tag sequence via dynamic programming over the tag lattice"
+      ],
+      "correct": 3,
+      "explanation": "Viterbi finds the argmax sequence with O(n * |T|^2) dynamic programming."
+    },
+    {
+      "stage": "check",
+      "question": "What does dependency parsing produce?",
+      "options": [
+        "A constituency tree of NP/VP/PP labels",
+        "A tree where each word has one head word and a labeled grammatical relation",
+        "A coreference chain",
+        "A flat BIO sequence"
+      ],
+      "correct": 1,
+      "explanation": "Dependency parses give per-word (head, relation) edges; constituency parses give nested phrase structures."
+    },
+    {
+      "stage": "post",
+      "question": "Why is the accuracy ceiling on PTB POS tagging around 97-98%?",
+      "options": [
+        "Models cannot exceed 98% in any task",
+        "Universal Dependencies caps at 98%",
+        "Human annotators only agree about 97% of the time, so models above ~98% may be overfitting test data",
+        "Hardware limitations"
+      ],
+      "correct": 2,
+      "explanation": "Annotator disagreement bounds the achievable accuracy; very high numbers often signal overfitting."
+    },
+    {
+      "stage": "post",
+      "question": "Why does POS tagging still matter in 2026 LLM pipelines?",
+      "options": [
+        "Required for tokenization",
+        "Lemmatization, aspect-based sentiment, query decomposition, structured-output validation, and cross-lingual transfer all still consume POS or dependency parses",
+        "Replaces transformers",
+        "LLMs cannot run without it"
+      ],
+      "correct": 1,
+      "explanation": "POS and dependency parses feed many structured downstream tasks even when LLMs generate the prose."
+    },
+    {
+      "stage": "post",
+      "question": "Which library should you reach for in most production POS / parse tasks?",
+      "options": [
+        "scikit-learn",
+        "spaCy (or stanza/trankit for top accuracy or wider language coverage)",
+        "NumPy",
+        "Roll your own parser"
+      ],
+      "correct": 1,
+      "explanation": "spaCy ships fast production-grade POS + dependency parsers; stanza/trankit cover broader languages."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "hostMode": "deterministic-fixture",
+  "requirements": {
+    "companionFiles": true,
+    "scriptExecution": true,
+    "runtimeExtensions": []
+  },
+  "minimumNativeHosts": 1,
+  "hosts": [
+    {
+      "name": "directory-bundle-host",
+      "loadsCoreSkill": true,
+      "preservesCompanionFiles": true,
+      "runsBundledScripts": true,
+      "supportedExtensions": []
+    },
+    {
+      "name": "single-file-host",
+      "loadsCoreSkill": true,
+      "preservesCompanionFiles": false,
+      "runsBundledScripts": false,
+      "supportedExtensions": []
+    },
+    {
+      "name": "prompt-only-host",
+      "loadsCoreSkill": false,
+      "preservesCompanionFiles": false,
+      "runsBundledScripts": false,
+      "supportedExtensions": []
+    }
+  ]
+}

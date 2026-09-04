@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Provenance: watermarks + C2PA as complementary layers</text>
+
+  <rect x="40" y="60" width="880" height="180" class="box"/>
+  <text x="480" y="85" text-anchor="middle" class="head">modality x mechanism</text>
+  <rect x="60" y="105" width="200" height="110" class="cool"/>
+  <text x="160" y="130" text-anchor="middle" class="step">text</text>
+  <text x="160" y="152" text-anchor="middle" class="small">SynthID-text (Kirchenbauer)</text>
+  <text x="160" y="170" text-anchor="middle" class="small">green/red token bias</text>
+  <text x="160" y="190" text-anchor="middle" class="small">paraphrase-vulnerable</text>
+
+  <rect x="280" y="105" width="200" height="110" class="cool"/>
+  <text x="380" y="130" text-anchor="middle" class="step">image</text>
+  <text x="380" y="152" text-anchor="middle" class="small">SynthID + Stable Signature</text>
+  <text x="380" y="170" text-anchor="middle" class="small">latent-decoder fingerprint</text>
+  <text x="380" y="190" text-anchor="middle" class="small">fine-tune-vulnerable</text>
+
+  <rect x="500" y="105" width="200" height="110" class="cool"/>
+  <text x="600" y="130" text-anchor="middle" class="step">audio</text>
+  <text x="600" y="152" text-anchor="middle" class="small">SynthID-audio</text>
+  <text x="600" y="170" text-anchor="middle" class="small">spectral signal</text>
+  <text x="600" y="190" text-anchor="middle" class="small">re-encoding-resistant</text>
+
+  <rect x="720" y="105" width="180" height="110" class="cool"/>
+  <text x="810" y="130" text-anchor="middle" class="step">video</text>
+  <text x="810" y="152" text-anchor="middle" class="small">SynthID-video (Veo)</text>
+  <text x="810" y="170" text-anchor="middle" class="small">frame + temporal signal</text>
+  <text x="810" y="190" text-anchor="middle" class="small">frame-rate robust</text>
+
+  <rect x="40" y="260" width="880" height="110" class="box"/>
+  <text x="480" y="285" text-anchor="middle" class="head">C2PA 2.2: cryptographically signed metadata</text>
+  <rect x="60" y="305" width="420" height="50" class="cold"/>
+  <text x="270" y="327" text-anchor="middle" class="step">provenance chain</text>
+  <text x="270" y="345" text-anchor="middle" class="small">creator, ingredients, transformations</text>
+  <rect x="500" y="305" width="400" height="50" class="cold"/>
+  <text x="700" y="327" text-anchor="middle" class="step">signed manifest</text>
+  <text x="700" y="345" text-anchor="middle" class="small">tamper-evident; can be stripped</text>
+
+  <rect x="40" y="390" width="880" height="100" class="box"/>
+  <text x="480" y="415" text-anchor="middle" class="head">layered properties</text>
+  <text x="60" y="440" class="small">watermark survives compression, cropping, re-encoding; does NOT survive paraphrase or adversarial fine-tune.</text>
+  <text x="60" y="460" class="small">C2PA metadata carries richer provenance; CAN be stripped but its absence signals suspicion.</text>
+  <text x="60" y="478" class="small">regulatory: EU AI Act Article 50 (effective Aug 2026) requires deepfake labelling; Transparency Code final Jun 2026.</text>
+</svg>

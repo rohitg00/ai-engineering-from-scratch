@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">video diffusion: patchify, DiT, decode</text>
+
+  <!-- raw video -->
+  <text x="80" y="70" class="label">raw video</text>
+  <g>
+    <rect x="30" y="85" width="30" height="30" class="box"/>
+    <rect x="65" y="85" width="30" height="30" class="box"/>
+    <rect x="100" y="85" width="30" height="30" class="box"/>
+    <rect x="135" y="85" width="30" height="30" class="box"/>
+    <rect x="170" y="85" width="30" height="30" class="box"/>
+    <text x="115" y="135" text-anchor="middle" class="caption">T &#215; H &#215; W &#215; 3  (240 frames @ 1080p)</text>
+  </g>
+
+  <line x1="210" y1="100" x2="260" y2="100" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- 3D VAE -->
+  <rect x="260" y="75" width="140" height="60" class="cold"/>
+  <text x="330" y="105" text-anchor="middle" class="content">3-D VAE encoder</text>
+  <text x="330" y="125" text-anchor="middle" class="caption">spatiotemporal latent</text>
+
+  <line x1="400" y1="100" x2="450" y2="100" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- patchify -->
+  <rect x="450" y="75" width="140" height="60" class="hot"/>
+  <text x="520" y="105" text-anchor="middle" class="content">patchify</text>
+  <text x="520" y="125" text-anchor="middle" class="caption">t_p &#215; h_p &#215; w_p blocks</text>
+
+  <line x1="590" y1="100" x2="640" y2="100" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- DiT -->
+  <rect x="640" y="60" width="220" height="90" class="cold"/>
+  <text x="750" y="85" text-anchor="middle" class="label">spatiotemporal DiT</text>
+  <text x="750" y="105" text-anchor="middle" class="caption">factorized: spatial then temporal attn</text>
+  <text x="750" y="125" text-anchor="middle" class="caption">cross-attn to T5-XXL text</text>
+
+  <!-- loss -->
+  <rect x="30" y="180" width="830" height="60" class="hot"/>
+  <text x="445" y="203" text-anchor="middle" class="label">same DDPM loss over spatiotemporal latents</text>
+  <text x="445" y="225" text-anchor="middle" class="mono">L = E || &#949; - &#949;_&#952;( z_t, t, text, first_frame_opt ) ||&#178;</text>
+
+  <!-- temporal coherence panel -->
+  <rect x="30" y="260" width="400" height="220" class="box"/>
+  <text x="230" y="285" text-anchor="middle" class="label">flicker: independent per-frame sampling</text>
+  <path d="M 60,370 L 100,340 L 140,410 L 180,320 L 220,390 L 260,335 L 300,405 L 340,340 L 380,395"
+        fill="none" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="230" y="460" text-anchor="middle" class="caption">per-frame noise is independent =&gt; jagged motion</text>
+
+  <rect x="460" y="260" width="400" height="220" class="box"/>
+  <text x="660" y="285" text-anchor="middle" class="label">coherent: joint sequence diffusion</text>
+  <path d="M 490,370 Q 540,355 580,365 T 680,370 T 780,380 T 840,395"
+        fill="none" stroke="#2c5f8c" stroke-width="1.5"/>
+  <text x="660" y="460" text-anchor="middle" class="caption">shared noise + temporal attention =&gt; smooth motion</text>
+</svg>

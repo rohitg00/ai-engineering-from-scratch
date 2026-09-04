@@ -1,0 +1,78 @@
+{
+  "lesson": "22-business-discovery-requirements-and-slas",
+  "title": "Business Discovery, Requirements, and SLAs",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A stakeholder asks for an autonomous support agent. What should the architect establish first?",
+      "options": [
+        "The number of specialist subagents and the handoff protocol between them",
+        "The orchestration framework, hosting topology, and preferred deployment region",
+        "The model family, context window, and token budget that fit the expected support volume",
+        "The business outcome, baseline, authority boundary, and cost of error"
+      ],
+      "correct": 3,
+      "explanation": "Discovery must define the decision, desired outcome, current baseline, authority, and consequences before a technical pattern can be evaluated. Model and framework choices follow those requirements."
+    },
+    {
+      "stage": "check",
+      "question": "Which statement is a service-level indicator rather than an objective or agreement?",
+      "options": [
+        "The percentage of evaluated drafts with a valid active-policy citation",
+        "The team will approve launch only if citation quality improves during the pilot",
+        "Eligible customers receive a first response within the contracted four-hour window",
+        "At least 98 percent of drafts should cite the active policy"
+      ],
+      "correct": 0,
+      "explanation": "An SLI is the measured signal. The 98 percent target is an SLO, while the contractual response promise is an SLA. Choosing a tool is neither."
+    },
+    {
+      "stage": "check",
+      "question": "A proposed workflow automates refund execution, but policy requires approval above a threshold. Which requirement class makes the architecture conflict explicit?",
+      "options": [
+        "Service-level performance requirement",
+        "Safety and authority requirement",
+        "Model quality and evaluation requirement",
+        "Functional automation requirement"
+      ],
+      "correct": 1,
+      "explanation": "The approval threshold limits action authority and prevents a high-impact outcome. It is a safety and authorization constraint, not a presentation or model preference."
+    },
+    {
+      "stage": "check",
+      "question": "Why should a pilot measure human review time as well as model quality?",
+      "options": [
+        "Review time proves whether the approval policy must cover every generated draft",
+        "Review time determines the context size and model tier needed for each request",
+        "Human review can move the bottleneck instead of reducing total work",
+        "Review time directly measures model quality"
+      ],
+      "correct": 2,
+      "explanation": "A system can generate good drafts yet fail the business goal if review cost erases the time saved. Human review is an operational step with latency, capacity, and quality of its own."
+    },
+    {
+      "stage": "post",
+      "question": "A stable claims workflow has known steps and strict latency targets. Which starting architecture is most defensible?",
+      "options": [
+        "A single Claude call with structured output and validation after every completed claim",
+        "A bounded agent that selects the next step dynamically within explicit tool limits",
+        "A planner-executor pair with bounded handoffs",
+        "A deterministic workflow with Claude used only where judgment is required"
+      ],
+      "correct": 3,
+      "explanation": "Known steps and strict latency favor deterministic orchestration. Claude can handle bounded judgment tasks while the workflow keeps sequence, permissions, and failure handling explicit."
+    },
+    {
+      "stage": "post",
+      "question": "What makes an architecture decision record useful during later review?",
+      "options": [
+        "It records context, alternatives, the decision, consequences, and verification plan",
+        "It records the final component diagram and deployment owner",
+        "It stores the operational metrics, alerts, and traces needed to verify the architecture",
+        "It freezes the original rationale so later maintainers cannot reverse the approved design"
+      ],
+      "correct": 0,
+      "explanation": "An ADR preserves why the choice fit the evidence and constraints at the time, including rejected alternatives and consequences. That context makes future reversal or revision rational."
+    }
+  ]
+}

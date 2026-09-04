@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">regulated-domain RAG — ingestion, guard, cache, observe</text>
+
+  <rect x="40" y="50" width="280" height="460" class="box"/>
+  <text x="180" y="72" text-anchor="middle" class="head">ingestion</text>
+  <rect x="60" y="90" width="240" height="34" class="cool"/>
+  <text x="180" y="110" text-anchor="middle" class="step">docling / Unstructured</text>
+  <rect x="60" y="130" width="240" height="34" class="cool"/>
+  <text x="180" y="150" text-anchor="middle" class="step">ColPali for visual docs</text>
+  <rect x="60" y="170" width="240" height="34" class="dsk"/>
+  <text x="180" y="190" text-anchor="middle" class="step">role + jurisdiction tags</text>
+  <rect x="60" y="210" width="240" height="34" class="dsk"/>
+  <text x="180" y="230" text-anchor="middle" class="step">summaries + labels</text>
+
+  <rect x="60" y="260" width="240" height="60" class="cold"/>
+  <text x="180" y="280" text-anchor="middle" class="step">pgvector + pgvectorscale</text>
+  <text x="180" y="298" text-anchor="middle" class="small">Tantivy BM25 side-index</text>
+  <text x="180" y="314" text-anchor="middle" class="small">payload: role, jurisdiction</text>
+
+  <rect x="60" y="336" width="240" height="160" class="box"/>
+  <text x="180" y="358" text-anchor="middle" class="head">eval</text>
+  <text x="180" y="378" text-anchor="middle" class="small">200-Q golden set</text>
+  <text x="180" y="394" text-anchor="middle" class="small">RAGAS faithfulness</text>
+  <text x="180" y="410" text-anchor="middle" class="small">citation correctness</text>
+  <text x="180" y="428" text-anchor="middle" class="small">Phoenix weekly drift</text>
+  <text x="180" y="444" text-anchor="middle" class="small">red-team suite</text>
+  <text x="180" y="460" text-anchor="middle" class="small">(PAIR + PII + off-domain)</text>
+  <text x="180" y="484" text-anchor="middle" class="caption">alert: nDCG drop &gt; 5%</text>
+
+  <rect x="340" y="50" width="300" height="460" class="box"/>
+  <text x="490" y="72" text-anchor="middle" class="head">conversation (LangGraph)</text>
+  <rect x="360" y="90" width="260" height="36" class="cool"/>
+  <text x="490" y="112" text-anchor="middle" class="step">filter role + jurisdiction</text>
+  <rect x="360" y="134" width="260" height="36" class="cool"/>
+  <text x="490" y="156" text-anchor="middle" class="step">hybrid retrieve + RRF</text>
+  <rect x="360" y="178" width="260" height="36" class="cool"/>
+  <text x="490" y="200" text-anchor="middle" class="step">rerank bge-v2-gemma-2b</text>
+  <rect x="360" y="222" width="260" height="36" class="dsk"/>
+  <text x="490" y="244" text-anchor="middle" class="step">assemble cache-stable prompt</text>
+  <rect x="360" y="266" width="260" height="36" class="dsk"/>
+  <text x="490" y="288" text-anchor="middle" class="step">Claude Sonnet 4.7 synth</text>
+  <rect x="360" y="310" width="260" height="36" class="hot"/>
+  <text x="490" y="332" text-anchor="middle" class="step">Llama Guard 4 output</text>
+  <rect x="360" y="354" width="260" height="36" class="hot"/>
+  <text x="490" y="376" text-anchor="middle" class="step">Presidio PII scrub</text>
+  <rect x="360" y="398" width="260" height="36" class="cool"/>
+  <text x="490" y="420" text-anchor="middle" class="step">citation enforcement</text>
+  <text x="490" y="460" text-anchor="middle" class="small">prompt-caching target: 60-80%</text>
+  <text x="490" y="478" text-anchor="middle" class="small">cache key = system+policy+context</text>
+  <text x="490" y="496" text-anchor="middle" class="caption">Claude 4.5+ prompt-cache API</text>
+
+  <rect x="660" y="50" width="260" height="460" class="box"/>
+  <text x="790" y="72" text-anchor="middle" class="head">guardrails + observe</text>
+  <rect x="680" y="90" width="220" height="40" class="hot"/>
+  <text x="790" y="108" text-anchor="middle" class="step">Llama Guard 4 input</text>
+  <text x="790" y="124" text-anchor="middle" class="small">jailbreak + PII probes</text>
+  <rect x="680" y="138" width="220" height="40" class="hot"/>
+  <text x="790" y="156" text-anchor="middle" class="step">NeMo Guardrails v0.12</text>
+  <text x="790" y="172" text-anchor="middle" class="small">off-domain rails</text>
+  <rect x="680" y="186" width="220" height="40" class="dsk"/>
+  <text x="790" y="204" text-anchor="middle" class="step">Langfuse self-hosted</text>
+  <text x="790" y="220" text-anchor="middle" class="small">annotation queue</text>
+  <rect x="680" y="234" width="220" height="40" class="cold"/>
+  <text x="790" y="252" text-anchor="middle" class="step">Arize Phoenix drift</text>
+  <text x="790" y="268" text-anchor="middle" class="small">weekly retrieval quality</text>
+
+  <rect x="680" y="286" width="220" height="220" class="box"/>
+  <text x="790" y="308" text-anchor="middle" class="head">cost report</text>
+  <text x="790" y="330" text-anchor="middle" class="small">prompt-cache hit rate</text>
+  <text x="790" y="346" text-anchor="middle" class="small">tokens / query breakdown</text>
+  <text x="790" y="362" text-anchor="middle" class="small">$ / query by stage</text>
+  <text x="790" y="380" text-anchor="middle" class="small">rerank / synth / guard</text>
+  <text x="790" y="404" text-anchor="middle" class="small">hit rate target: 60-80%</text>
+  <text x="790" y="420" text-anchor="middle" class="small">3-5x cost reduction</text>
+  <text x="790" y="442" text-anchor="middle" class="small">when prefix is stable</text>
+  <text x="790" y="478" text-anchor="middle" class="caption">Harvey / Glean / Mendable 2026 shape</text>
+</svg>

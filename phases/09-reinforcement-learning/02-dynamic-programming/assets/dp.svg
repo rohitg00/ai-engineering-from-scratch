@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">two DP algorithms, one fixed point</text>
+
+  <rect x="40" y="60" width="380" height="370" class="box"/>
+  <text x="230" y="85" text-anchor="middle" class="label">policy iteration</text>
+  <text x="230" y="102" text-anchor="middle" class="caption">outer loop over (evaluate, improve)</text>
+
+  <rect x="70" y="125" width="320" height="50" class="hot"/>
+  <text x="230" y="146" text-anchor="middle" class="content">1. evaluate: V^pi until convergence</text>
+  <text x="230" y="162" text-anchor="middle" class="content">V(s) &lt;- sum pi(a) sum P (r + g V(s'))</text>
+
+  <line x1="230" y1="180" x2="230" y2="198" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="70" y="203" width="320" height="50" class="hot"/>
+  <text x="230" y="224" text-anchor="middle" class="content">2. improve: pi(s) &lt;- argmax_a Q(s,a)</text>
+  <text x="230" y="240" text-anchor="middle" class="content">greedy w.r.t. current V</text>
+
+  <line x1="230" y1="258" x2="230" y2="278" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="70" y="283" width="320" height="40" class="box"/>
+  <text x="230" y="308" text-anchor="middle" class="content">3. stop if pi unchanged</text>
+
+  <text x="230" y="355" text-anchor="middle" class="caption">few outer iters (5-20)</text>
+  <text x="230" y="375" text-anchor="middle" class="caption">each inner eval is expensive</text>
+  <text x="230" y="400" text-anchor="middle" class="caption">guarantee: monotone V improvement</text>
+
+  <rect x="480" y="60" width="380" height="370" class="box"/>
+  <text x="670" y="85" text-anchor="middle" class="label">value iteration</text>
+  <text x="670" y="102" text-anchor="middle" class="caption">one loop, Bellman optimality backup</text>
+
+  <rect x="510" y="125" width="320" height="60" class="hot"/>
+  <text x="670" y="148" text-anchor="middle" class="content">V(s) &lt;- max_a sum P (r + g V(s'))</text>
+  <text x="670" y="168" text-anchor="middle" class="content">applied to every state, every sweep</text>
+
+  <line x1="670" y1="192" x2="670" y2="212" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="510" y="217" width="320" height="50" class="hot"/>
+  <text x="670" y="238" text-anchor="middle" class="content">stop when max_s |dV(s)| &lt; eps</text>
+  <text x="670" y="254" text-anchor="middle" class="content">sup-norm contraction by factor g</text>
+
+  <line x1="670" y1="272" x2="670" y2="292" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="510" y="297" width="320" height="40" class="box"/>
+  <text x="670" y="322" text-anchor="middle" class="content">extract greedy pi from V*</text>
+
+  <text x="670" y="355" text-anchor="middle" class="caption">more sweeps (often 100+)</text>
+  <text x="670" y="375" text-anchor="middle" class="caption">each sweep O(|S| * |A|)</text>
+  <text x="670" y="400" text-anchor="middle" class="caption">convergence: ||T V - V*|| &lt;= g^k ||V_0 - V*||</text>
+
+  <text x="450" y="450" text-anchor="middle" class="caption">both land at V* — different paths, same fixed point (generalized policy iteration)</text>
+</svg>

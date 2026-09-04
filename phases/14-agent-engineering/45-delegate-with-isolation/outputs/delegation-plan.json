@@ -1,0 +1,48 @@
+{
+  "status": "ready",
+  "duplicate_ids": [],
+  "conflicts": [],
+  "missing_proof": [],
+  "waves": [
+    [
+      "api",
+      "docs"
+    ],
+    [
+      "integration"
+    ]
+  ],
+  "units": [
+    {
+      "id": "api",
+      "owner": "worker-api",
+      "paths": [
+        "app/api",
+        "tests/test_api.py"
+      ],
+      "depends_on": [],
+      "proof": "python3 -m unittest tests.test_api"
+    },
+    {
+      "id": "docs",
+      "owner": "worker-docs",
+      "paths": [
+        "docs/api.md"
+      ],
+      "depends_on": [],
+      "proof": "python3 scripts/check_links.py"
+    },
+    {
+      "id": "integration",
+      "owner": "reviewer",
+      "paths": [
+        "tests/test_integration.py"
+      ],
+      "depends_on": [
+        "api",
+        "docs"
+      ],
+      "proof": "python3 -m unittest"
+    }
+  ]
+}

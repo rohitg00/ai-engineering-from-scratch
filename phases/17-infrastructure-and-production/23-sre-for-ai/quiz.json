@@ -1,0 +1,78 @@
+{
+  "lesson": "23-sre-for-ai",
+  "title": "SRE for AI — Multi-Agent Incident Response, Runbooks, Predictive Detection",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What multi-agent shape does the lesson recommend for AI SRE?",
+      "options": [
+        "Supervisor agent that breaks the incident into sub-queries for specialized log, metric, and runbook agents, then synthesizes and presents to a human",
+        "One monolithic agent owning everything",
+        "Random selection of one of three agents",
+        "Two agents in series with no supervisor"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which auto-remediation set does the lesson call safe?",
+      "options": [
+        "Modifying IAM policies",
+        "Altering databases",
+        "Re-architecting service topology",
+        "Restart pod, revert a specific deploy, scale a pool within pre-approved bounds, enable a pre-approved feature flag"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How does NeuBird Hawkeye use adversarial evaluation to filter hallucinated root causes?",
+      "options": [
+        "Picks the higher-confidence model's answer always",
+        "Runs the same model twice on the same input",
+        "Two models independently analyze the same incident; agreement = high confidence, disagreement = escalate to human with both hypotheses",
+        "Uses GAN-style training"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does operational memory solve in AI SRE?",
+      "options": [
+        "Loss of tribal knowledge when teams turn over — runbooks and post-mortems live in a vector DB that agents retrieve on every incident",
+        "Network egress filtering",
+        "Cold start of inference pods",
+        "Token cost attribution"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What MIT 2025 result does the lesson cite for pre-incident prediction?",
+      "options": [
+        "Predictions remain unsolved",
+        "100% prediction with 1-second lead",
+        "89% of outages predicted 10-15 minutes early using logs + GPU temps + API error patterns",
+        "10% with no lead time"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What operational constraint does the lesson stress about predictive detection?",
+      "options": [
+        "Predictions replace runbooks",
+        "Predictions without actuation are just dashboards — the operational question is what action (pre-drain, page, auto-scale) the prediction triggers",
+        "Predictions should never be wired to action",
+        "Predictions are always accurate"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

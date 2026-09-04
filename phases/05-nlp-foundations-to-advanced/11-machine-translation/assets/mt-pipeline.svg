@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 280" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #1a1a1a; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .stage { font-size: 12px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .line { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .note { font-size: 11px; fill: #666; font-style: italic; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="50" width="150" height="100" rx="4"/>
+  <text class="label" x="95" y="75" text-anchor="middle">source</text>
+  <text class="content" x="35" y="105">"The cats</text>
+  <text class="content" x="35" y="125">are running."</text>
+  <text class="note" x="95" y="145" text-anchor="middle">eng_Latn</text>
+
+  <path class="line" d="M 170 100 L 210 100" marker-end="url(#arrow)"/>
+  <text class="stage" x="190" y="90">tokenize</text>
+
+  <rect class="box" x="210" y="50" width="130" height="100" rx="4"/>
+  <text class="label" x="275" y="75" text-anchor="middle">subword ids</text>
+  <text class="content" x="225" y="105">[1201, 412,</text>
+  <text class="content" x="225" y="125"> 8834, 92]</text>
+  <text class="note" x="275" y="145" text-anchor="middle">SentencePiece</text>
+
+  <path class="line" d="M 340 100 L 380 100" marker-end="url(#arrow)"/>
+
+  <rect class="hot" x="380" y="50" width="170" height="100" rx="4"/>
+  <text class="label" x="465" y="75" text-anchor="middle">encoder-decoder</text>
+  <text class="content" x="395" y="100">NLLB, mBART,</text>
+  <text class="content" x="395" y="120">M2M, Marian</text>
+  <text class="note" x="465" y="140" text-anchor="middle">forced_bos = fra_Latn</text>
+
+  <path class="line" d="M 550 100 L 590 100" marker-end="url(#arrow)"/>
+  <text class="stage" x="570" y="90">beam search</text>
+
+  <rect class="box" x="590" y="50" width="130" height="100" rx="4"/>
+  <text class="label" x="655" y="75" text-anchor="middle">target ids</text>
+  <text class="content" x="605" y="105">[831, 5102,</text>
+  <text class="content" x="605" y="125"> 2918, 4]</text>
+  <text class="note" x="655" y="145" text-anchor="middle">fra_Latn</text>
+
+  <path class="line" d="M 720 100 L 760 100" marker-end="url(#arrow)"/>
+  <text class="stage" x="740" y="90">detok</text>
+
+  <rect class="box" x="760" y="50" width="120" height="100" rx="4"/>
+  <text class="label" x="820" y="75" text-anchor="middle">output</text>
+  <text class="content" x="775" y="105">"Les chats</text>
+  <text class="content" x="775" y="125">courent."</text>
+
+  <text class="stage" x="450" y="200" text-anchor="middle">watch for: hallucinations, off-target language, terminology drift, formality mismatch</text>
+  <text class="stage" x="450" y="230" text-anchor="middle">score with sacrebleu (BLEU + chrF); always reference-matched</text>
+</svg>

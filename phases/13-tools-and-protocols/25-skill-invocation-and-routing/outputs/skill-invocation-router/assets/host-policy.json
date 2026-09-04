@@ -1,0 +1,14 @@
+{
+  "allowHuman": true,
+  "allowModel": true,
+  "allowAgent": true,
+  "allowProgrammatic": true,
+  "allowApplication": true,
+  "allowSkill": true,
+  "modelThreshold": 0.2,
+  "harnessAllowlist": ["incident-triage"],
+  "applicationAllowlist": ["release-notes"],
+  "skillCallerAllowlist": ["release-readiness"],
+  "maxSkillDepth": 2,
+  "recognizedExtensions": ["user-invocable", "disable-model-invocation"]
+}

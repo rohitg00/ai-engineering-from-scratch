@@ -1,0 +1,90 @@
+{
+  "lesson": "28-orchestration-patterns",
+  "title": "Orchestration Patterns: Supervisor, Swarm, Hierarchical",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which four orchestration patterns does the lesson list?",
+      "options": [
+        "Push, pull, batch, stream",
+        "Supervisor-worker, swarm/peer-to-peer, hierarchical, debate",
+        "Sequential, parallel, distributed, federated",
+        "Plan, act, reflect, refine"
+      ],
+      "correct": 1,
+      "explanation": "Supervisor-worker, swarm, hierarchical, and debate recur across 2026 frameworks."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the 2026 LangChain recommendation regarding supervision?",
+      "options": [
+        "Always use create_supervisor",
+        "Avoid supervision entirely",
+        "Prefer direct tool calls over create_supervisor for finer context-engineering control",
+        "Run supervisors on GPUs"
+      ],
+      "correct": 2,
+      "explanation": "Tool-call-based supervision gives you precise control over what each specialist sees."
+    },
+    {
+      "stage": "check",
+      "question": "What distinguishes a swarm from a supervisor-worker topology?",
+      "options": [
+        "Swarm runs on cron only",
+        "Swarm has no central router; agents hand off directly via a shared tool surface",
+        "Swarm uses GPUs",
+        "Swarm is single-agent"
+      ],
+      "correct": 1,
+      "explanation": "Swarm is peer-to-peer; supervisor centralizes routing through one LLM."
+    },
+    {
+      "stage": "check",
+      "question": "When is hierarchical orchestration justified?",
+      "options": [
+        "Never; it is an antipattern",
+        "Only with GPUs",
+        "When a single supervisor's context budget cannot hold descriptions of all specialists",
+        "Always; it scales for free"
+      ],
+      "correct": 2,
+      "explanation": "Nested supervisors are for large specialist populations that exceed one supervisor's budget."
+    },
+    {
+      "stage": "check",
+      "question": "What is the recommended decision order Anthropic supports?",
+      "options": [
+        "Start with a single agent plus workflow patterns; add topology only when needed; supervisor before swarm before hierarchical; debate when accuracy beats cost",
+        "Start with debate",
+        "Always start with hierarchical multi-agent",
+        "Start with swarm and contract toward single"
+      ],
+      "correct": 0,
+      "explanation": "Anthropic's guidance is to build the right system for your needs, not the most sophisticated."
+    },
+    {
+      "stage": "post",
+      "question": "What is fake hierarchy in this lesson?",
+      "options": [
+        "Three layers of supervisors because 'enterprise' when there are only two actual teams; collapse it",
+        "An orchestrator written in TypeScript",
+        "Mislabelled YAML",
+        "A test fixture"
+      ],
+      "correct": 0,
+      "explanation": "Layers that do not correspond to real teams add operational complexity without payoff."
+    },
+    {
+      "stage": "post",
+      "question": "How do you mitigate bouncing handoffs in a swarm (A -> B -> A -> B)?",
+      "options": [
+        "Pin the temperature to 0",
+        "Lower the rate limit",
+        "Add a hop counter and refuse after N transfers",
+        "Disable tracing"
+      ],
+      "correct": 2,
+      "explanation": "A hop counter caps swarm cycles before they loop indefinitely."
+    }
+  ]
+}

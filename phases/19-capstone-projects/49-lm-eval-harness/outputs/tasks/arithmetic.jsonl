@@ -1,0 +1,5 @@
+{"id": "arith-00", "prompt": "compute: 2 + 2", "targets": ["4"], "metric": "exact_match"}
+{"id": "arith-01", "prompt": "compute: 7 - 3", "targets": ["4"], "metric": "exact_match"}
+{"id": "arith-02", "prompt": "compute: 6 * 4", "targets": ["24"], "metric": "exact_match"}
+{"id": "arith-03", "prompt": "compute: 100 / 4", "targets": ["25.0"], "metric": "exact_match"}
+{"id": "arith-04", "prompt": "compute: 12 + 9", "targets": ["21"], "metric": "exact_match"}

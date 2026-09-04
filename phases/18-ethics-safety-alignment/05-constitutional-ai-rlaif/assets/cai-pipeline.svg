@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 580" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Constitutional AI — two-phase pipeline, 2026 four-tier structure</text>
+
+  <rect x="40" y="60" width="420" height="220" class="box"/>
+  <text x="250" y="82" text-anchor="middle" class="head">phase 1 — critique and revise (SFT)</text>
+
+  <rect x="60" y="100" width="180" height="50" class="hot"/>
+  <text x="150" y="125" text-anchor="middle" class="step">initial response</text>
+  <text x="150" y="141" text-anchor="middle" class="small">(potentially unsafe)</text>
+
+  <rect x="60" y="170" width="180" height="50" class="cool"/>
+  <text x="150" y="195" text-anchor="middle" class="step">critique under principle</text>
+  <text x="150" y="211" text-anchor="middle" class="small">(identify violations)</text>
+
+  <rect x="60" y="240" width="180" height="30" class="cold"/>
+  <text x="150" y="260" text-anchor="middle" class="step">revised = SFT target</text>
+
+  <rect x="270" y="100" width="170" height="170" class="dsk"/>
+  <text x="355" y="122" text-anchor="middle" class="head">constitution</text>
+  <text x="285" y="146" class="small">- avoid harm</text>
+  <text x="285" y="162" class="small">- no operational uplift</text>
+  <text x="285" y="178" class="small">- clear, non-violent</text>
+  <text x="285" y="194" class="small">- protect third parties</text>
+  <text x="285" y="222" class="small">sampled per critique</text>
+  <text x="285" y="238" class="small">legible signal</text>
+  <text x="285" y="254" class="small">reproducible</text>
+
+  <path d="M 150 150 L 150 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ar)" fill="none"/>
+  <path d="M 150 220 L 150 240" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#ar)" fill="none"/>
+
+  <rect x="500" y="60" width="420" height="220" class="box"/>
+  <text x="710" y="82" text-anchor="middle" class="head">phase 2 — RL from AI feedback</text>
+
+  <rect x="520" y="100" width="380" height="50" class="hot"/>
+  <text x="710" y="125" text-anchor="middle" class="step">generate pairs of completions</text>
+
+  <rect x="520" y="170" width="380" height="50" class="cool"/>
+  <text x="710" y="195" text-anchor="middle" class="step">feedback model ranks under principles</text>
+
+  <rect x="520" y="240" width="380" height="30" class="cold"/>
+  <text x="710" y="260" text-anchor="middle" class="step">train RM + PPO (InstructGPT-shaped)</text>
+
+  <rect x="40" y="300" width="880" height="140" class="box"/>
+  <text x="480" y="324" text-anchor="middle" class="head">the 2026 Claude constitution — four-tier priority structure</text>
+  <text x="60" y="352" class="small">Tier 1 — avoid catastrophic outcomes (mass casualty, critical infrastructure)</text>
+  <text x="60" y="370" class="small">Tier 2 — follow Anthropic's guidelines (operator overrides, platform rules)</text>
+  <text x="60" y="388" class="small">Tier 3 — be broadly ethical (standard HHH, third-party protection)</text>
+  <text x="60" y="406" class="small">Tier 4 — be helpful and candid</text>
+  <text x="60" y="428" class="small">conflicts resolved top-down. first major-lab formal acknowledgment of uncertainty about model moral status.</text>
+
+  <rect x="40" y="460" width="880" height="100" class="box"/>
+  <text x="480" y="484" text-anchor="middle" class="head">constitutional classifiers — layered defense</text>
+  <text x="60" y="508" class="small">v1 (2023): 23.7% compute overhead · v2 (2026): ~1% overhead · lowest attack-success rate Anthropic has shipped.</text>
+  <text x="60" y="528" class="small">no universal jailbreak reported early 2026. behaviour shaping + output gating together, neither alone sufficient.</text>
+  <text x="60" y="548" class="small">the 2026 constitution is CC0 1.0 — free for other labs and OSS projects to adapt.</text>
+</svg>

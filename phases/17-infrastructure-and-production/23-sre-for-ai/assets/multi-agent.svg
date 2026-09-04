@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .sup { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .agent { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .human { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .arrow { stroke: #1a1a1a; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">AI SRE — multi-agent triage with human gate</text>
+
+  <rect x="380" y="50" width="200" height="70" class="sup"/>
+  <text x="480" y="75" text-anchor="middle" class="head">supervisor</text>
+  <text x="480" y="95" text-anchor="middle" class="small">breaks incident into sub-queries</text>
+  <text x="480" y="110" text-anchor="middle" class="small">synthesizes hypotheses</text>
+
+  <rect x="40" y="160" width="240" height="100" class="agent"/>
+  <text x="160" y="182" text-anchor="middle" class="head">log agent</text>
+  <text x="160" y="204" text-anchor="middle" class="step">tool: log search</text>
+  <text x="160" y="222" text-anchor="middle" class="small">pattern detection, frequency</text>
+  <text x="160" y="240" text-anchor="middle" class="small">grouping by service + trace</text>
+
+  <rect x="360" y="160" width="240" height="100" class="agent"/>
+  <text x="480" y="182" text-anchor="middle" class="head">metric agent</text>
+  <text x="480" y="204" text-anchor="middle" class="step">tool: PromQL / DCGM</text>
+  <text x="480" y="222" text-anchor="middle" class="small">correlation windows</text>
+  <text x="480" y="240" text-anchor="middle" class="small">anomaly + change-point</text>
+
+  <rect x="680" y="160" width="240" height="100" class="agent"/>
+  <text x="800" y="182" text-anchor="middle" class="head">runbook agent</text>
+  <text x="800" y="204" text-anchor="middle" class="step">tool: vector search</text>
+  <text x="800" y="222" text-anchor="middle" class="small">matches to RB-###</text>
+  <text x="800" y="240" text-anchor="middle" class="small">proposes safe action</text>
+
+  <path class="arrow" d="M480 125 L 160 155"/>
+  <path class="arrow" d="M480 125 L 480 155"/>
+  <path class="arrow" d="M480 125 L 800 155"/>
+
+  <rect x="280" y="290" width="400" height="90" class="box"/>
+  <text x="480" y="312" text-anchor="middle" class="head">adversarial evaluation (NeuBird pattern)</text>
+  <text x="480" y="334" text-anchor="middle" class="step">agents agree → high confidence → present to human</text>
+  <text x="480" y="354" text-anchor="middle" class="step">agents disagree → escalate with both hypotheses</text>
+  <text x="480" y="372" text-anchor="middle" class="caption">filters against hallucinated root causes</text>
+
+  <path class="arrow" d="M160 260 L 310 290"/>
+  <path class="arrow" d="M480 260 L 480 290"/>
+  <path class="arrow" d="M800 260 L 650 290"/>
+
+  <rect x="280" y="410" width="400" height="90" class="human"/>
+  <text x="480" y="432" text-anchor="middle" class="head">human approval gate</text>
+  <text x="480" y="454" text-anchor="middle" class="step">safe actions: restart pod, revert deploy, scale within bounds</text>
+  <text x="480" y="472" text-anchor="middle" class="step">broad changes always escalate: topology, code, IAM</text>
+  <text x="480" y="490" text-anchor="middle" class="caption">"set and forget" is overselling</text>
+
+  <path class="arrow" d="M480 380 L 480 405"/>
+</svg>

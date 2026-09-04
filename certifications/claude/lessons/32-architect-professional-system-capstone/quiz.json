@@ -1,0 +1,78 @@
+{
+  "lesson": "32-architect-professional-system-capstone",
+  "title": "Architect Professional System Capstone",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the capstone's primary deliverable?",
+      "options": [
+        "A connected, evidence-linked architecture packet covering requirements, design, validation, rollout, and operations",
+        "A model-feature inventory mapping every available capability to the component where it could be enabled",
+        "An exam-alignment report linking architecture patterns to blueprint domains and practice scores",
+        "A comprehensive multi-agent diagram showing every available role, model route, integration, and communication path"
+      ],
+      "correct": 0,
+      "explanation": "Professional readiness requires connected decisions, contracts, controls, tests, rollout, ownership, and recovery. Complexity and feature lists do not prove that."
+    },
+    {
+      "stage": "check",
+      "question": "A candidate architecture has excellent average quality but one unverified authorization hard gate. What is the release decision?",
+      "options": [
+        "Release because aggregate quality demonstrates that the remaining authorization risk is unlikely to affect most requests",
+        "Block release until the authorization control is implemented and verified at the execution boundary",
+        "Lower the authorization gate's weight so stronger aggregate quality can offset the missing evidence",
+        "Add a system instruction telling the model to avoid unauthorized actions, then monitor the pilot for violations"
+      ],
+      "correct": 1,
+      "explanation": "A hard gate represents a constraint that cannot be averaged away. Authorization must be proven at the execution boundary before exposure."
+    },
+    {
+      "stage": "check",
+      "question": "Why must a model or agent call trace back to a requirement?",
+      "options": [
+        "Every requirement needs a model call because deterministic components are insufficient",
+        "A one-to-one mapping makes architecture ownership and implementation review easier across teams",
+        "Unjustified calls add cost, latency, attack surface, and maintenance without proven value",
+        "Each requirement should receive equal model-token allocation across capabilities"
+      ],
+      "correct": 2,
+      "explanation": "Architecture spends complexity to satisfy constraints and outcomes. A call with no requirement is capability bloat and should be removed or justified."
+    },
+    {
+      "stage": "check",
+      "question": "What makes a capstone evaluation representative?",
+      "options": [
+        "It measures API availability, request latency, token use, and error rate because operational metrics are objective and comparable",
+        "It reproduces one successful end-to-end demonstration with the exact prompt, model, tools, and data intended for launch",
+        "It uses a large synthetic set of well-formed inputs so every component receives enough statistically consistent success cases",
+        "It covers task distribution, risk strata, ambiguity, stale data, attacks, dependency failures, quality, trajectory, latency, cost, and review"
+      ],
+      "correct": 3,
+      "explanation": "Representative evidence covers ordinary work and the failures the architecture must control, across both final outcomes and the trajectory that produced them."
+    },
+    {
+      "stage": "post",
+      "question": "Which statement best defends a deterministic workflow over an adaptive agent?",
+      "options": [
+        "The path is known, strict latency and auditability are requirements, and evaluations show no value from adaptive planning",
+        "Deterministic workflows are categorically safer than agents, so requirements and evaluation evidence do not need to influence the choice",
+        "Adaptive agents consume more tokens in many trajectories, so token count alone establishes that a fixed workflow is the correct pattern",
+        "The team lacks Agent SDK experience, so a fixed workflow reduces implementation, testing, and delivery risk for this release"
+      ],
+      "correct": 0,
+      "explanation": "A strong defense connects the pattern to explicit requirements and evidence. It also leaves room to reverse the decision if the task distribution changes."
+    },
+    {
+      "stage": "post",
+      "question": "What proves an operational handoff in the capstone?",
+      "options": [
+        "The pilot completes without a visible error, which demonstrates that the receiving owner will be able to handle future failures",
+        "The receiving owner can monitor, evaluate, contain, roll back, recover, and change the system using accepted evidence",
+        "The architect approves the final delivery packet and remains available to explain any undocumented operating assumption",
+        "The repository, architecture packet, dashboards, and runbooks exist in locations the receiving team can access"
+      ],
+      "correct": 1,
+      "explanation": "Handoff is demonstrated operating ability and accepted responsibility. Recovery drills, runbooks, access, evaluation, and ownership prove it."
+    }
+  ]
+}

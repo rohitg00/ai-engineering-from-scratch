@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .super { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .swarm { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hier { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .debate { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">Orchestration — supervisor, swarm, hierarchical, debate</text>
+
+  <rect x="40" y="50" width="440" height="230" class="super"/>
+  <text x="260" y="72" text-anchor="middle" class="head">supervisor-worker</text>
+  <circle cx="180" cy="130" r="28" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="180" y="134" text-anchor="middle" class="step">super</text>
+  <circle cx="300" cy="110" r="22" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="300" y="114" text-anchor="middle" class="step">refund</text>
+  <circle cx="360" cy="150" r="22" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="360" y="154" text-anchor="middle" class="step">bug</text>
+  <circle cx="300" cy="190" r="22" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="300" y="194" text-anchor="middle" class="step">sales</text>
+  <line x1="208" y1="130" x2="278" y2="110" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="208" y1="130" x2="338" y2="150" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="208" y1="130" x2="278" y2="190" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="260" y="240" text-anchor="middle" class="small">central router dispatches; specialists don't talk to each other</text>
+  <text x="260" y="258" text-anchor="middle" class="small">LangGraph create_supervisor / Anthropic orchestrator-workers</text>
+  <text x="260" y="274" text-anchor="middle" class="small">2026: direct tool calls preferred for context control</text>
+
+  <rect x="500" y="50" width="420" height="230" class="swarm"/>
+  <text x="710" y="72" text-anchor="middle" class="head">swarm  peer-to-peer</text>
+  <circle cx="610" cy="150" r="28" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="610" y="154" text-anchor="middle" class="step">refund</text>
+  <circle cx="770" cy="110" r="28" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="770" y="114" text-anchor="middle" class="step">bug</text>
+  <circle cx="770" cy="190" r="28" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="770" y="194" text-anchor="middle" class="step">sales</text>
+  <line x1="638" y1="150" x2="742" y2="110" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="638" y1="150" x2="742" y2="190" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="770" y1="138" x2="770" y2="162" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="710" y="240" text-anchor="middle" class="small">direct handoffs via shared tools; no central router</text>
+  <text x="710" y="258" text-anchor="middle" class="small">lower latency; harder to reason about</text>
+  <text x="710" y="274" text-anchor="middle" class="small">hop counter required to avoid bouncing A  B  A</text>
+
+  <rect x="40" y="300" width="440" height="210" class="hier"/>
+  <text x="260" y="322" text-anchor="middle" class="head">hierarchical  nested subgraphs</text>
+  <circle cx="260" cy="360" r="24" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="260" y="364" text-anchor="middle" class="step">top</text>
+  <circle cx="160" cy="410" r="22" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="160" y="414" text-anchor="middle" class="step">ops</text>
+  <circle cx="360" cy="410" r="22" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="360" y="414" text-anchor="middle" class="step">commercial</text>
+  <circle cx="100" cy="460" r="18" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="100" y="464" text-anchor="middle" class="small">refund</text>
+  <circle cx="220" cy="460" r="18" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="220" y="464" text-anchor="middle" class="small">bug</text>
+  <circle cx="360" cy="460" r="18" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="360" y="464" text-anchor="middle" class="small">sales</text>
+  <line x1="260" y1="384" x2="160" y2="388" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="260" y1="384" x2="360" y2="388" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="160" y1="432" x2="100" y2="442" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="160" y1="432" x2="220" y2="442" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="360" y1="432" x2="360" y2="442" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="260" y="498" text-anchor="middle" class="small">only when supervisor context budget fails</text>
+
+  <rect x="500" y="300" width="420" height="210" class="debate"/>
+  <text x="710" y="322" text-anchor="middle" class="head">debate  proposer + critique</text>
+  <circle cx="600" cy="380" r="28" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="600" y="384" text-anchor="middle" class="step">alpha</text>
+  <circle cx="710" cy="380" r="28" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="710" y="384" text-anchor="middle" class="step">beta</text>
+  <circle cx="820" cy="380" r="28" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="820" y="384" text-anchor="middle" class="step">gamma</text>
+  <circle cx="710" cy="460" r="28" fill="#faf6ef" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="710" y="464" text-anchor="middle" class="step">synth</text>
+  <line x1="600" y1="408" x2="710" y2="432" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="710" y1="408" x2="710" y2="432" stroke="#1a1a1a" stroke-width="1.5"/>
+  <line x1="820" y1="408" x2="710" y2="432" stroke="#1a1a1a" stroke-width="1.5"/>
+  <text x="710" y="498" text-anchor="middle" class="small">most expensive; best for hard reasoning + factuality</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">pick problem first, topology second. Anthropic: "the right system, not the most sophisticated."</text>
+</svg>

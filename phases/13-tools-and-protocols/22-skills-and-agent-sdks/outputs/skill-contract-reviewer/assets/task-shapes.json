@@ -1,0 +1,26 @@
+[
+  {
+    "task": "Rewrite this paragraph once",
+    "primitives": ["prompt"]
+  },
+  {
+    "task": "Apply the same release checklist across repositories",
+    "primitives": ["Agent Skill"]
+  },
+  {
+    "task": "Use the release checklist and query a deployment API",
+    "primitives": ["Agent Skill", "MCP tool"]
+  },
+  {
+    "task": "Enforce formatting after every generated file",
+    "primitives": ["hook"]
+  },
+  {
+    "task": "Normalize a known JSON schema deterministically",
+    "primitives": ["ordinary code"]
+  },
+  {
+    "task": "Research an independent question in an isolated context",
+    "primitives": ["subagent"]
+  }
+]

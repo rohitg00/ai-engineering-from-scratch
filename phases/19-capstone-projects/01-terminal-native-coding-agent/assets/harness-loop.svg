@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">terminal-native coding agent — plan/act/observe loop</text>
+
+  <rect x="40" y="50" width="200" height="460" class="box"/>
+  <text x="140" y="72" text-anchor="middle" class="head">turn lifecycle</text>
+
+  <rect x="60" y="90" width="160" height="44" class="cool"/>
+  <text x="140" y="108" text-anchor="middle" class="step">plan</text>
+  <text x="140" y="126" text-anchor="middle" class="small">TodoWrite rewrite</text>
+
+  <rect x="60" y="148" width="160" height="44" class="hot"/>
+  <text x="140" y="166" text-anchor="middle" class="step">act</text>
+  <text x="140" y="184" text-anchor="middle" class="small">dispatch tool call</text>
+
+  <rect x="60" y="206" width="160" height="44" class="cold"/>
+  <text x="140" y="224" text-anchor="middle" class="step">observe</text>
+  <text x="140" y="242" text-anchor="middle" class="small">truncate + feed back</text>
+
+  <rect x="60" y="264" width="160" height="44" class="dsk"/>
+  <text x="140" y="282" text-anchor="middle" class="step">recover</text>
+  <text x="140" y="300" text-anchor="middle" class="small">retry / compact / stop</text>
+
+  <rect x="60" y="340" width="160" height="150" class="box"/>
+  <text x="140" y="360" text-anchor="middle" class="head">budgets</text>
+  <text x="140" y="382" text-anchor="middle" class="small">max_turns = 50</text>
+  <text x="140" y="400" text-anchor="middle" class="small">max_tokens = 200k</text>
+  <text x="140" y="418" text-anchor="middle" class="small">max_dollars = $5</text>
+  <text x="140" y="446" text-anchor="middle" class="small">PreCompact at 150k</text>
+  <text x="140" y="464" text-anchor="middle" class="small">Stop on any breach</text>
+
+  <rect x="270" y="50" width="310" height="230" class="box"/>
+  <text x="425" y="72" text-anchor="middle" class="head">tools (MCP StreamableHTTP)</text>
+  <rect x="290" y="88" width="270" height="30" class="cool"/>
+  <text x="425" y="108" text-anchor="middle" class="step">read_file / edit_file</text>
+  <rect x="290" y="124" width="270" height="30" class="cool"/>
+  <text x="425" y="144" text-anchor="middle" class="step">ripgrep / tree_sitter_symbols</text>
+  <rect x="290" y="160" width="270" height="30" class="hot"/>
+  <text x="425" y="180" text-anchor="middle" class="step">run_shell (timeout)</text>
+  <rect x="290" y="196" width="270" height="30" class="cold"/>
+  <text x="425" y="216" text-anchor="middle" class="step">git (status / diff / commit / push)</text>
+  <text x="425" y="254" text-anchor="middle" class="small">every call returns at most 4k tokens</text>
+  <text x="425" y="270" text-anchor="middle" class="small">every call runs inside the sandbox</text>
+
+  <rect x="270" y="294" width="310" height="216" class="box"/>
+  <text x="425" y="316" text-anchor="middle" class="head">sandbox (E2B / Daytona)</text>
+  <text x="425" y="336" text-anchor="middle" class="small">fresh devcontainer per task</text>
+  <text x="425" y="352" text-anchor="middle" class="small">git worktree add agent/TASK_ID</text>
+  <text x="425" y="368" text-anchor="middle" class="small">read-write inside tree only</text>
+  <text x="425" y="384" text-anchor="middle" class="small">no network unless allowlisted</text>
+  <rect x="290" y="398" width="270" height="40" class="dsk"/>
+  <text x="425" y="418" text-anchor="middle" class="step">worktree cleanup on Stop</text>
+  <text x="425" y="430" text-anchor="middle" class="small">success or failure, always</text>
+  <text x="425" y="464" text-anchor="middle" class="small">host filesystem stays untouched</text>
+  <text x="425" y="482" text-anchor="middle" class="small">credentials scoped by GitHub App</text>
+  <text x="425" y="500" text-anchor="middle" class="small">destructive commands blocked by hook</text>
+
+  <rect x="610" y="50" width="310" height="460" class="box"/>
+  <text x="765" y="72" text-anchor="middle" class="head">hook surface (2026 shape)</text>
+  <rect x="630" y="88" width="270" height="30" class="cool"/>
+  <text x="765" y="108" text-anchor="middle" class="step">SessionStart / SessionEnd</text>
+  <rect x="630" y="124" width="270" height="30" class="hot"/>
+  <text x="765" y="144" text-anchor="middle" class="step">PreToolUse / PostToolUse</text>
+  <rect x="630" y="160" width="270" height="30" class="cold"/>
+  <text x="765" y="180" text-anchor="middle" class="step">UserPromptSubmit / Notification</text>
+  <rect x="630" y="196" width="270" height="30" class="dsk"/>
+  <text x="765" y="216" text-anchor="middle" class="step">Stop / PreCompact</text>
+
+  <text x="765" y="256" text-anchor="middle" class="small">reference user hooks:</text>
+  <text x="765" y="274" text-anchor="middle" class="small">· destructive-command guard</text>
+  <text x="765" y="290" text-anchor="middle" class="small">· token + dollar accounting</text>
+  <text x="765" y="306" text-anchor="middle" class="small">· OTel span emitter per tool call</text>
+  <text x="765" y="322" text-anchor="middle" class="small">· trace bundle writer on Stop</text>
+
+  <rect x="630" y="340" width="270" height="150" class="box"/>
+  <text x="765" y="362" text-anchor="middle" class="head">observability</text>
+  <text x="765" y="384" text-anchor="middle" class="small">OpenTelemetry GenAI semconv</text>
+  <text x="765" y="402" text-anchor="middle" class="small">one span per tool call</text>
+  <text x="765" y="420" text-anchor="middle" class="small">tokens + $ attached as attributes</text>
+  <text x="765" y="438" text-anchor="middle" class="small">Langfuse self-hosted sink</text>
+  <text x="765" y="468" text-anchor="middle" class="small">trace bundle ships with PR body</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">SWE-bench Pro target: pass@1 at or above mini-swe-agent baseline, under $5 per task</text>
+</svg>

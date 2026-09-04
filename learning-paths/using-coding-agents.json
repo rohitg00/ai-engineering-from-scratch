@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "using-coding-agents",
+  "title": "Agent-Assisted Engineering",
+  "summary": "Frame, plan, execute, delegate, verify, review, and improve coding-agent work inside real repositories.",
+  "estimatedMinutes": 900,
+  "lessons": [
+    {"order": 1, "path": "phases/14-agent-engineering/31-agent-workbench-why-models-fail", "minutes": 45, "required": true},
+    {"order": 2, "path": "phases/14-agent-engineering/43-frame-the-task-before-code", "minutes": 60, "required": true},
+    {"order": 3, "path": "phases/14-agent-engineering/44-plan-from-evidence", "minutes": 65, "required": true},
+    {"order": 4, "path": "phases/14-agent-engineering/32-minimal-agent-workbench", "minutes": 45, "required": true},
+    {"order": 5, "path": "phases/14-agent-engineering/33-instructions-as-executable-constraints", "minutes": 50, "required": true},
+    {"order": 6, "path": "phases/14-agent-engineering/34-repo-memory-and-state", "minutes": 60, "required": true},
+    {"order": 7, "path": "phases/14-agent-engineering/35-initialization-scripts", "minutes": 45, "required": true},
+    {"order": 8, "path": "phases/14-agent-engineering/36-scope-contracts", "minutes": 50, "required": true},
+    {"order": 9, "path": "phases/14-agent-engineering/37-runtime-feedback-loops", "minutes": 50, "required": true},
+    {"order": 10, "path": "phases/14-agent-engineering/38-verification-gates", "minutes": 55, "required": true},
+    {"order": 11, "path": "phases/14-agent-engineering/39-reviewer-agent", "minutes": 55, "required": true},
+    {"order": 12, "path": "phases/14-agent-engineering/45-delegate-with-isolation", "minutes": 70, "required": true},
+    {"order": 13, "path": "phases/14-agent-engineering/40-multi-session-handoff", "minutes": 50, "required": true},
+    {"order": 14, "path": "phases/14-agent-engineering/41-workbench-for-real-repos", "minutes": 60, "required": true},
+    {"order": 15, "path": "phases/14-agent-engineering/46-turn-feedback-into-system", "minutes": 65, "required": true},
+    {"order": 16, "path": "phases/14-agent-engineering/42-agent-workbench-capstone", "minutes": 75, "required": true}
+  ]
+}

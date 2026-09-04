@@ -1,0 +1,92 @@
+{
+  "planId": "ccao-f-10-hour-readiness",
+  "guide": {
+    "version": "1.0",
+    "effective": "July 2026",
+    "verifiedOn": "2026-08-09",
+    "officialSource": "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542847%2FClaude+Certified+Associate+%E2%80%93+Foundations+Exam+Guide.pdf"
+  },
+  "totalHours": 10.0,
+  "domains": [
+    {
+      "id": "prompting-task-execution",
+      "weight": 14,
+      "allocatedHours": 1.4,
+      "confidence": "practiced",
+      "decisions": ["Choose a prompt contract", "Place a verification boundary"],
+      "artifact": "Prompt contract packet",
+      "failureMode": "Optimizing wording before defining success"
+    },
+    {
+      "id": "output-evaluation-validation",
+      "weight": 21,
+      "allocatedHours": 2.1,
+      "confidence": "understood",
+      "decisions": ["Choose a deterministic check", "Escalate an unsupported claim"],
+      "artifact": "Claim-evidence matrix",
+      "failureMode": "Treating citation presence as claim support"
+    },
+    {
+      "id": "product-model-selection",
+      "weight": 12,
+      "allocatedHours": 1.2,
+      "confidence": "practiced",
+      "decisions": ["Choose the smallest sufficient surface", "Escalate model capability from evidence"],
+      "artifact": "Product-selection record",
+      "failureMode": "Choosing the largest model by reputation"
+    },
+    {
+      "id": "workflow-integration-solution-design",
+      "weight": 16,
+      "allocatedHours": 1.6,
+      "confidence": "understood",
+      "decisions": ["Assist, automate, redesign, or reject", "Place a human handoff"],
+      "artifact": "Workflow handoff packet",
+      "failureMode": "Automating prose while deleting ownership"
+    },
+    {
+      "id": "configuration-knowledge-management",
+      "weight": 12,
+      "allocatedHours": 1.2,
+      "confidence": "practiced",
+      "decisions": ["Classify context by job", "Retire a superseded source"],
+      "artifact": "Source registry",
+      "failureMode": "Treating memory as a source of record"
+    },
+    {
+      "id": "governance-risk-responsible-use",
+      "weight": 15,
+      "allocatedHours": 1.5,
+      "confidence": "understood",
+      "decisions": ["Separate capability from authority", "Require meaningful review"],
+      "artifact": "Responsible-use control map",
+      "failureMode": "Relying on prompt-only governance"
+    },
+    {
+      "id": "troubleshooting-optimization",
+      "weight": 10,
+      "allocatedHours": 1.0,
+      "confidence": "timed",
+      "decisions": ["Classify the failure layer", "Choose the smallest repair"],
+      "artifact": "Error log",
+      "failureMode": "Calling every defect a model failure"
+    }
+  ],
+  "practiceProtocol": {
+    "stages": [
+      {"id": "orient", "exitEvidence": "Untouched diagnostic mapped to objectives and confidence"},
+      {"id": "build", "exitEvidence": "Required lessons, tests, and learner-owned artifacts complete"},
+      {"id": "transfer", "exitEvidence": "New scenarios defended and weak domains remediated"},
+      {"id": "simulate", "exitEvidence": "Fresh timed sets reviewed under published exam rules"}
+    ],
+    "errorTaxonomy": [
+      "recall-gap",
+      "stale-fact",
+      "missed-constraint",
+      "sequence-error",
+      "surface-confusion",
+      "evidence-failure",
+      "overengineering"
+    ]
+  }
+}

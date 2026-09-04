@@ -1,0 +1,8 @@
+{
+  "id": "task_001_fizzbuzz_offbyone",
+  "goal": "fizzbuzz(n) should print FizzBuzz for numbers 1..n inclusive. The buggy version skips the final number. Fix the loop bound so that the function prints all numbers from 1 to n.",
+  "verifier": {
+    "name": "file_equals",
+    "args": { "path": "fizzbuzz.py" }
+  }
+}

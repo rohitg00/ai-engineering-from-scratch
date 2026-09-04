@@ -1,0 +1,141 @@
+{
+  "id": "claude-ccao-f",
+  "slug": "ccao-f",
+  "examCode": "CCAO-F",
+  "credential": "Claude Certified Associate - Foundations",
+  "shortName": "Associate Foundations",
+  "level": "Foundational",
+  "accent": "orange",
+  "badge": {
+    "imageUrl": "https://images.credly.com/images/a6387cbd-5ac1-4894-833a-da2cbc28587e/blob",
+    "width": 600,
+    "height": 600
+  },
+  "summary": "Use Claude safely and effectively for business, research, analysis, and productivity workflows.",
+  "audience": "Operations, project, sales, marketing, finance, support, research, and other knowledge-work professionals. No software-development experience is required.",
+  "recommendedExperience": [
+    "Three to six months using Claude or a comparable AI assistant in real work",
+    "Experience reviewing AI output before sharing it",
+    "A practical understanding of hallucinations, context limits, and data sensitivity"
+  ],
+  "exam": {
+    "items": 60,
+    "timeLimitMinutes": 120,
+    "feeUsd": 99,
+    "passingScaledScore": 720,
+    "scoreScale": "100-1000",
+    "validityMonths": 12,
+    "format": "Multiple-choice and multiple-response",
+    "delivery": "Proctored online or at a test center",
+    "guideVersion": "1.0",
+    "effective": "July 2026",
+    "officialGuideUrl": "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542847%2FClaude+Certified+Associate+%E2%80%93+Foundations+Exam+Guide.pdf"
+  },
+  "domains": [
+    {
+      "id": "prompting-task-execution",
+      "name": "Prompting and Task Execution",
+      "weight": 14,
+      "objectives": [
+        "Create effective prompts for business and technical tasks",
+        "Decompose complex requests into manageable work",
+        "Iterate prompts using observed output quality",
+        "Adapt prompting to analysis, research, drafting, and brainstorming"
+      ]
+    },
+    {
+      "id": "output-evaluation-validation",
+      "name": "Output Evaluation and Validation",
+      "weight": 21,
+      "objectives": [
+        "Evaluate accuracy, completeness, and audience fit",
+        "Identify hallucinations, inconsistencies, and bias",
+        "Fact-check against authoritative evidence",
+        "Choose when human review or additional verification is required",
+        "Refine and compare outputs",
+        "Select appropriate inline, artifact, and structured formats"
+      ]
+    },
+    {
+      "id": "product-model-selection",
+      "name": "Product and Model Selection",
+      "weight": 12,
+      "objectives": [
+        "Choose among Projects, research, chat, and artifacts",
+        "Differentiate Haiku, Sonnet, and Opus roles",
+        "Balance quality, speed, and cost",
+        "Manage context and memory by restarting, summarizing, or persisting"
+      ]
+    },
+    {
+      "id": "workflow-integration-solution-design",
+      "name": "Workflow Integration and Solution Design",
+      "weight": 16,
+      "objectives": [
+        "Analyze requirements and candidate use cases",
+        "Apply Claude to research, planning, and process improvement",
+        "Support solution design and iteration",
+        "Augment or redesign existing workflows",
+        "Communicate value and limitations to stakeholders"
+      ]
+    },
+    {
+      "id": "configuration-knowledge-management",
+      "name": "Configuration and Knowledge Management",
+      "weight": 12,
+      "objectives": [
+        "Configure Projects with instructions and knowledge",
+        "Manage uploads and connectors",
+        "Write effective persistent instructions",
+        "Maintain configurations and sources over time"
+      ]
+    },
+    {
+      "id": "governance-risk-responsible-use",
+      "name": "Governance, Risk, and Responsible Use",
+      "weight": 15,
+      "objectives": [
+        "Separate appropriate from inappropriate use cases",
+        "Apply privacy, data-sensitivity, and regulatory constraints",
+        "Follow organizational AI policy",
+        "Recognize ethical implications and escalate risk"
+      ]
+    },
+    {
+      "id": "troubleshooting-optimization",
+      "name": "Troubleshooting and Optimization",
+      "weight": 10,
+      "objectives": [
+        "Diagnose underperforming prompts and poor outputs",
+        "Adjust the approach using feedback and results",
+        "Optimize workflows for efficiency and effectiveness"
+      ]
+    }
+  ],
+  "lessons": [
+    {"path": "certifications/claude/lessons/00-certification-strategy", "domains": ["prompting-task-execution"], "role": "orientation", "required": true},
+    {"path": "certifications/claude/lessons/01-claude-product-and-model-landscape", "domains": ["product-model-selection"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/02-model-selection-and-token-economics", "domains": ["product-model-selection", "troubleshooting-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/03-prompting-and-task-decomposition", "domains": ["prompting-task-execution", "troubleshooting-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/04-context-knowledge-memory-and-caching", "domains": ["configuration-knowledge-management", "product-model-selection"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/05-output-evaluation-and-validation", "domains": ["output-evaluation-validation", "troubleshooting-optimization"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/06-governance-safety-and-responsible-use", "domains": ["governance-risk-responsible-use"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/07-workflow-design-and-human-handoffs", "domains": ["workflow-integration-solution-design", "output-evaluation-validation"], "role": "core", "required": true},
+    {"path": "certifications/claude/lessons/29-associate-workflow-capstone", "domains": ["prompting-task-execution", "output-evaluation-validation", "product-model-selection", "workflow-integration-solution-design", "configuration-knowledge-management", "governance-risk-responsible-use", "troubleshooting-optimization"], "role": "capstone", "required": true}
+  ],
+  "deepDives": [
+    {"path": "phases/11-llm-engineering/01-prompt-engineering", "label": "Prompt Engineering", "reason": "Build prompt structure and iteration from first principles"},
+    {"path": "phases/11-llm-engineering/05-context-engineering", "label": "Context Engineering", "reason": "Understand context limits and deliberate context assembly"},
+    {"path": "phases/11-llm-engineering/10-evaluation", "label": "LLM Evaluation", "reason": "Turn quality judgment into repeatable tests"},
+    {"path": "phases/11-llm-engineering/12-guardrails", "label": "Guardrails", "reason": "Layer responsible-use controls around model behavior"},
+    {"path": "phases/18-ethics-safety-alignment/20-bias-representational-harm", "label": "Bias and Representational Harm", "reason": "Recognize and evaluate harmful output patterns"}
+  ],
+  "assessments": [
+    {"id": "claude-ccao-f-diagnostic", "path": "certifications/claude/assessments/ccao-f/diagnostic.json", "kind": "diagnostic", "title": "Associate Foundations Diagnostic", "timeLimitMinutes": 25},
+    {"id": "claude-ccao-f-mock-01", "path": "certifications/claude/assessments/ccao-f/mock-01.json", "kind": "mock", "title": "Associate Foundations Full Mock", "timeLimitMinutes": 120}
+  ],
+  "studyPlans": [
+    {"id": "ccao-f-14-day", "label": "14-day focused plan", "durationDays": 14, "hoursPerWeek": 7, "milestones": ["Days 1-2: diagnose and learn the product map", "Days 3-6: prompting, context, and validation", "Days 7-10: workflows, governance, and troubleshooting", "Days 11-12: complete the capstone", "Days 13-14: full mock and targeted review"]},
+    {"id": "ccao-f-28-day", "label": "28-day steady plan", "durationDays": 28, "hoursPerWeek": 4, "milestones": ["Week 1: product selection and prompting", "Week 2: context, knowledge, and validation", "Week 3: workflow design and responsible use", "Week 4: capstone, mock, and weak-domain review"]}
+  ]
+}

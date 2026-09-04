@@ -1,0 +1,78 @@
+{
+  "lesson": "11-mcp-server-design-and-integration",
+  "title": "MCP Separates Capability From Host",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In MCP, which component owns the user experience, model interaction, consent policy, and one or more protocol clients?",
+      "options": [
+        "The server that executes capabilities and chooses how the host presents them",
+        "The host application that coordinates the model, user, and server clients",
+        "The resource provider that resolves URIs and stores conversation state",
+        "The tool handler that selects a model for each invocation"
+      ],
+      "correct": 1,
+      "explanation": "The host owns the AI application experience and policy. A client communicates with one server, and the server executes its advertised capabilities."
+    },
+    {
+      "stage": "check",
+      "question": "Which metadata must a current MCP 2026-07-28 client include in every request?",
+      "options": [
+        "Only clientInfo because the server infers version from the connection",
+        "An initialized flag and a Last-Event-ID header",
+        "Protocol version and client capabilities in params._meta",
+        "A protocol session ID and the server capabilities negotiated during initialize"
+      ],
+      "correct": 2,
+      "explanation": "Every request carries io.modelcontextprotocol/protocolVersion and io.modelcontextprotocol/clientCapabilities. clientInfo should also be sent, but it is optional and self-reported."
+    },
+    {
+      "stage": "check",
+      "question": "A tools/call needs roots, sampling, and elicitation input. What is the current wire pattern?",
+      "options": [
+        "The server creates an MCP session, stores pending callbacks, and waits for notifications/initialized",
+        "The client preloads every possible root, approval answer, and model output into every initial tool argument",
+        "The server sends three independent JSON-RPC requests on the open connection",
+        "Return input_required, then retry the original method with inputResponses, exact requestState, and a new ID"
+      ],
+      "correct": 3,
+      "explanation": "MRTR embeds requested client input in an input_required result. The client gathers responses and retries the original request with a new ID, inputResponses, and the exact requestState."
+    },
+    {
+      "stage": "check",
+      "question": "What must a server/discover response include to describe current protocol support?",
+      "options": [
+        "A resultType and the exact supportedVersions field, plus advertised capabilities",
+        "A negotiatedVersion field and the protocol session expiry",
+        "A server-initiated roots/list request followed by a capability response tied to the connection",
+        "Only a tools array because clients infer all other capabilities"
+      ],
+      "correct": 0,
+      "explanation": "Current servers must implement server/discover. Its complete result reports supportedVersions and capabilities, and should include serverInfo."
+    },
+    {
+      "stage": "post",
+      "question": "Why can an MCP MRTR requestState value not be trusted merely because the server originally created it?",
+      "options": [
+        "JSON-RPC always converts opaque strings into executable instructions",
+        "It crossed the client boundary and may have been changed",
+        "The protocol requires clients to decode, normalize, and edit requestState before every retry",
+        "Every load balancer replaces requestState with its own session cookie"
+      ],
+      "correct": 1,
+      "explanation": "requestState travels through the client and is attacker-controlled on return. Protect security-sensitive state with HMAC or AEAD and bind it to identity, expiry, method, and important arguments."
+    },
+    {
+      "stage": "post",
+      "question": "Which deployment description matches current MCP 2026-07-28 Streamable HTTP?",
+      "options": [
+        "An initialize POST that returns Mcp-Session-Id and requires a DELETE on shutdown",
+        "A server-owned WebSocket session that carries direct sampling requests",
+        "One POST endpoint, per-request JSON or SSE responses, and no protocol session",
+        "A POST endpoint for requests and a permanent GET stream resumed with Last-Event-ID"
+      ],
+      "correct": 2,
+      "explanation": "Current Streamable HTTP uses a single POST endpoint and self-describing requests. It removed the GET stream, protocol sessions, session deletion, and Last-Event-ID resumption."
+    }
+  ]
+}

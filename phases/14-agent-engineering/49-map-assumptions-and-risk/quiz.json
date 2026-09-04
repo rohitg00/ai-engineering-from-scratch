@@ -1,0 +1,48 @@
+{
+  "lesson": "49-map-assumptions-and-risk",
+  "title": "Map Assumptions and Risk",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does an assumption map expose that a feature roadmap hides?",
+      "options": ["Conditions that must be true for the build to deserve investment", "Release dates", "Source code", "Team names"],
+      "correct": 0,
+      "explanation": "Assumptions surface value, usability, feasibility, viability, and safety bets."
+    },
+    {
+      "stage": "check",
+      "question": "Which assumption is falsifiable?",
+      "options": ["The design is modern", "Users will love it", "Eight of ten engineers identify the correct service faster in replay", "The feature is useful"],
+      "correct": 2,
+      "explanation": "A falsifiable assumption has a population, observation, and possible failure."
+    },
+    {
+      "stage": "check",
+      "question": "Why score impact, uncertainty, and irreversibility separately?",
+      "options": ["To guarantee success", "To make the reason for risk ordering explicit", "To eliminate judgment", "To create a universal formula"],
+      "correct": 1,
+      "explanation": "The dimensions expose why an unknown should be resolved early."
+    },
+    {
+      "stage": "check",
+      "question": "What should the next experiment target?",
+      "options": ["The highest open risk with a decisive, cheap test", "The most popular idea", "The easiest feature", "The longest task"],
+      "correct": 0,
+      "explanation": "Risk-driven order maximizes learning before commitment."
+    },
+    {
+      "stage": "post",
+      "question": "What makes an experiment decisive?",
+      "options": ["It produces a demo", "Every result leads to more building", "Pass, fail, and ambiguous results lead to stated next decisions", "It uses production authority"],
+      "correct": 2,
+      "explanation": "A test must be able to change direction."
+    },
+    {
+      "stage": "post",
+      "question": "How should build order change when reversibility differs?",
+      "options": ["Irreversible work always comes first", "Only cost matters", "It does not", "Reversible tests should precede high-consequence irreversible commitments"],
+      "correct": 3,
+      "explanation": "Learn safely before taking on authority or migration cost."
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="28" text-anchor="middle" class="title">enroll → embed → cosine → EER</text>
+
+  <!-- Enrollment row -->
+  <rect x="40" y="60" width="180" height="80" class="box"/>
+  <text x="130" y="80" text-anchor="middle" class="label">enrollment</text>
+  <text x="130" y="105" text-anchor="middle" class="content">3–5 clean clips</text>
+  <text x="130" y="123" text-anchor="middle" class="caption">&gt; 3 s each, same channel</text>
+
+  <line x1="225" y1="100" x2="250" y2="100" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="255" y="60" width="180" height="80" class="hot"/>
+  <text x="345" y="80" text-anchor="middle" class="label">embedder</text>
+  <text x="345" y="105" text-anchor="middle" class="content">ECAPA / WavLM-SV</text>
+  <text x="345" y="123" text-anchor="middle" class="caption">192-d or 256-d, L2-normalized</text>
+
+  <line x1="440" y1="100" x2="465" y2="100" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="470" y="60" width="180" height="80" class="box"/>
+  <text x="560" y="80" text-anchor="middle" class="label">anchor</text>
+  <text x="560" y="105" text-anchor="middle" class="content">mean of enroll embeds</text>
+  <text x="560" y="123" text-anchor="middle" class="caption">single speaker vector</text>
+
+  <!-- Verification row -->
+  <rect x="40" y="165" width="180" height="80" class="box"/>
+  <text x="130" y="185" text-anchor="middle" class="label">test utterance</text>
+  <text x="130" y="210" text-anchor="middle" class="content">1 clip (&gt; 2 s)</text>
+  <text x="130" y="228" text-anchor="middle" class="caption">channel-matched if possible</text>
+
+  <line x1="225" y1="205" x2="250" y2="205" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="255" y="165" width="180" height="80" class="hot"/>
+  <text x="345" y="185" text-anchor="middle" class="label">embedder</text>
+  <text x="345" y="210" text-anchor="middle" class="content">same model</text>
+  <text x="345" y="228" text-anchor="middle" class="caption">L2-normalize output</text>
+
+  <line x1="440" y1="205" x2="465" y2="205" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="470" y="165" width="180" height="80" class="box"/>
+  <text x="560" y="185" text-anchor="middle" class="label">score</text>
+  <text x="560" y="210" text-anchor="middle" class="content">cosine(anchor, test)</text>
+  <text x="560" y="228" text-anchor="middle" class="caption">optional AS-norm for domain</text>
+
+  <line x1="655" y1="155" x2="680" y2="155" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="685" y="115" width="175" height="80" class="hot"/>
+  <text x="772" y="135" text-anchor="middle" class="label">threshold</text>
+  <text x="772" y="160" text-anchor="middle" class="content">accept / reject</text>
+  <text x="772" y="178" text-anchor="middle" class="caption">tune on dev set</text>
+
+  <!-- EER curve -->
+  <rect x="40" y="270" width="400" height="170" class="box"/>
+  <text x="240" y="292" text-anchor="middle" class="label">pick threshold at EER</text>
+  <line x1="80" y1="410" x2="420" y2="410" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="80" y1="410" x2="80" y2="310" stroke="#1a1a1a" stroke-width="1"/>
+  <path d="M80,315 Q160,370 240,380 T420,405" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+  <path d="M80,405 Q160,390 240,380 T420,315" fill="none" stroke="#c0392b" stroke-width="1.5"/>
+  <circle cx="240" cy="380" r="5" fill="#1a1a1a"/>
+  <text x="253" y="378" class="content" font-size="11">EER</text>
+  <text x="250" y="395" class="caption" font-size="10">FA = FR</text>
+  <text x="90" y="310" class="caption" font-size="10">FR</text>
+  <text x="410" y="310" class="caption" font-size="10">FA</text>
+  <text x="240" y="430" text-anchor="middle" class="caption">low threshold → high FA; high threshold → high FR</text>
+
+  <!-- Model table -->
+  <rect x="460" y="270" width="385" height="170" class="box"/>
+  <text x="652" y="292" text-anchor="middle" class="label">VoxCeleb1-O EER in 2026</text>
+  <text x="475" y="320" class="content">ReDimNet (2024)</text>        <text x="820" y="320" text-anchor="end" class="content">0.39%</text>
+  <text x="475" y="340" class="content">WavLM-SV large</text>         <text x="820" y="340" text-anchor="end" class="content">0.42%</text>
+  <text x="475" y="360" class="content">Pyannote 3.1</text>           <text x="820" y="360" text-anchor="end" class="content">0.65%</text>
+  <text x="475" y="380" class="content">ECAPA-TDNN</text>             <text x="820" y="380" text-anchor="end" class="content">0.87%</text>
+  <text x="475" y="400" class="content">x-vector (classic)</text>    <text x="820" y="400" text-anchor="end" class="content">3.10%</text>
+  <text x="652" y="428" text-anchor="middle" class="caption">start with ECAPA; move to WavLM if domain needs it</text>
+</svg>

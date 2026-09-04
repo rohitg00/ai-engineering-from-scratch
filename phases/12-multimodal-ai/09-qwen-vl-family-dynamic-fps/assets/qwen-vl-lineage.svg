@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Qwen-VL generational lineage — 2023 to 2025</text>
+
+  <line x1="60" y1="170" x2="920" y2="170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="60" y="180" class="small">2023</text>
+  <text x="310" y="180" class="small">Sep 2024</text>
+  <text x="560" y="180" class="small">Feb 2025</text>
+  <text x="820" y="180" class="small">Nov 2025</text>
+
+  <rect x="40" y="60" width="200" height="100" class="hot"/>
+  <text x="140" y="82" text-anchor="middle" class="step">Qwen-VL</text>
+  <text x="140" y="100" text-anchor="middle" class="small">OpenCLIP + Q-Former</text>
+  <text x="140" y="116" text-anchor="middle" class="small">448x448 resolution</text>
+  <text x="140" y="132" text-anchor="middle" class="small">grounding + bbox tokens</text>
+  <text x="140" y="148" text-anchor="middle" class="small">zh + en multilingual</text>
+
+  <rect x="290" y="60" width="200" height="100" class="cool"/>
+  <text x="390" y="82" text-anchor="middle" class="step">Qwen2-VL</text>
+  <text x="390" y="100" text-anchor="middle" class="small">M-RoPE (3D position)</text>
+  <text x="390" y="116" text-anchor="middle" class="small">native dynamic res</text>
+  <text x="390" y="132" text-anchor="middle" class="small">MLP projector only</text>
+  <text x="390" y="148" text-anchor="middle" class="small">video with variable FPS</text>
+
+  <rect x="540" y="60" width="200" height="100" class="cold"/>
+  <text x="640" y="82" text-anchor="middle" class="step">Qwen2.5-VL</text>
+  <text x="640" y="100" text-anchor="middle" class="small">dynamic FPS sampler</text>
+  <text x="640" y="116" text-anchor="middle" class="small">absolute time tokens</text>
+  <text x="640" y="132" text-anchor="middle" class="small">window attention ViT</text>
+  <text x="640" y="148" text-anchor="middle" class="small">JSON agent mode</text>
+
+  <rect x="790" y="60" width="140" height="100" class="reg"/>
+  <text x="860" y="82" text-anchor="middle" class="step">Qwen3-VL</text>
+  <text x="860" y="100" text-anchor="middle" class="small">Qwen3-72B base</text>
+  <text x="860" y="116" text-anchor="middle" class="small">thinking mode</text>
+  <text x="860" y="132" text-anchor="middle" class="small">expanded OCR</text>
+  <text x="860" y="148" text-anchor="middle" class="small">data + scale</text>
+
+  <rect x="30" y="210" width="900" height="140" class="box"/>
+  <text x="480" y="232" text-anchor="middle" class="head">M-RoPE: one position, three axes</text>
+
+  <rect x="60" y="250" width="260" height="80" class="hot"/>
+  <text x="190" y="270" text-anchor="middle" class="step">temporal band</text>
+  <text x="190" y="288" text-anchor="middle" class="small">16 dims (out of 48)</text>
+  <text x="190" y="304" text-anchor="middle" class="small">t=0 image, t=frame video</text>
+  <text x="190" y="322" text-anchor="middle" class="small">rotate by t * theta_i</text>
+
+  <rect x="340" y="250" width="260" height="80" class="cool"/>
+  <text x="470" y="270" text-anchor="middle" class="step">height band</text>
+  <text x="470" y="288" text-anchor="middle" class="small">16 dims</text>
+  <text x="470" y="304" text-anchor="middle" class="small">h = patch row index</text>
+  <text x="470" y="322" text-anchor="middle" class="small">rotate by h * theta_i</text>
+
+  <rect x="620" y="250" width="280" height="80" class="cold"/>
+  <text x="760" y="270" text-anchor="middle" class="step">width band</text>
+  <text x="760" y="288" text-anchor="middle" class="small">16 dims</text>
+  <text x="760" y="304" text-anchor="middle" class="small">w = patch column index</text>
+  <text x="760" y="322" text-anchor="middle" class="small">rotate by w * theta_i</text>
+
+  <rect x="30" y="370" width="900" height="160" class="box"/>
+  <text x="480" y="392" text-anchor="middle" class="head">dynamic FPS: tokens per video = duration * fps * tokens_per_frame</text>
+
+  <rect x="60" y="410" width="200" height="100" class="reg"/>
+  <text x="160" y="430" text-anchor="middle" class="step">high motion</text>
+  <text x="160" y="448" text-anchor="middle" class="small">tennis, cooking</text>
+  <text x="160" y="464" text-anchor="middle" class="small">4-8 FPS</text>
+  <text x="160" y="480" text-anchor="middle" class="small">event-dense</text>
+  <text x="160" y="496" text-anchor="middle" class="small">~19k tokens / 30s</text>
+
+  <rect x="280" y="410" width="200" height="100" class="cool"/>
+  <text x="380" y="430" text-anchor="middle" class="step">medium motion</text>
+  <text x="380" y="448" text-anchor="middle" class="small">dialogue, demo</text>
+  <text x="380" y="464" text-anchor="middle" class="small">2-4 FPS</text>
+  <text x="380" y="480" text-anchor="middle" class="small">balanced</text>
+  <text x="380" y="496" text-anchor="middle" class="small">~10k tokens / 30s</text>
+
+  <rect x="500" y="410" width="200" height="100" class="cold"/>
+  <text x="600" y="430" text-anchor="middle" class="step">low motion</text>
+  <text x="600" y="448" text-anchor="middle" class="small">security, lecture</text>
+  <text x="600" y="464" text-anchor="middle" class="small">0.5-1 FPS</text>
+  <text x="600" y="480" text-anchor="middle" class="small">long-horizon</text>
+  <text x="600" y="496" text-anchor="middle" class="small">~24k tokens / 10min</text>
+
+  <rect x="720" y="410" width="200" height="100" class="hot"/>
+  <text x="820" y="430" text-anchor="middle" class="step">agent replay</text>
+  <text x="820" y="448" text-anchor="middle" class="small">UI screencasts</text>
+  <text x="820" y="464" text-anchor="middle" class="small">2-4 FPS</text>
+  <text x="820" y="480" text-anchor="middle" class="small">JSON output mode</text>
+  <text x="820" y="496" text-anchor="middle" class="small">click/scroll calls</text>
+</svg>

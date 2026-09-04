@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">RadixAttention — KV cache as a tree, scheduler as the hot-branch pinner</text>
+
+  <rect x="40" y="50" width="460" height="490" class="box"/>
+  <text x="270" y="72" text-anchor="middle" class="head">the radix tree</text>
+  <rect x="210" y="90" width="120" height="30" class="cool"/>
+  <text x="270" y="110" text-anchor="middle" class="step">SYSTEM (2000 tok)</text>
+  <rect x="210" y="140" width="120" height="30" class="cool"/>
+  <text x="270" y="160" text-anchor="middle" class="step">TOOLS (300 tok)</text>
+  <line x1="270" y1="120" x2="270" y2="140" stroke="#1a1a1a" stroke-width="1.2"/>
+  <rect x="80" y="200" width="110" height="30" class="cold"/>
+  <text x="135" y="220" text-anchor="middle" class="step">DOC_A (500)</text>
+  <rect x="220" y="200" width="110" height="30" class="cold"/>
+  <text x="275" y="220" text-anchor="middle" class="step">DOC_B (500)</text>
+  <rect x="360" y="200" width="110" height="30" class="cold"/>
+  <text x="415" y="220" text-anchor="middle" class="step">DOC_C (500)</text>
+  <line x1="270" y1="170" x2="135" y2="200" stroke="#1a1a1a" stroke-width="1.2"/>
+  <line x1="270" y1="170" x2="275" y2="200" stroke="#1a1a1a" stroke-width="1.2"/>
+  <line x1="270" y1="170" x2="415" y2="200" stroke="#1a1a1a" stroke-width="1.2"/>
+  <rect x="60" y="260" width="60" height="22" class="hot"/>
+  <text x="90" y="276" text-anchor="middle" class="small">Q_1</text>
+  <rect x="130" y="260" width="60" height="22" class="hot"/>
+  <text x="160" y="276" text-anchor="middle" class="small">Q_2</text>
+  <rect x="200" y="260" width="60" height="22" class="hot"/>
+  <text x="230" y="276" text-anchor="middle" class="small">Q_3</text>
+  <rect x="270" y="260" width="60" height="22" class="hot"/>
+  <text x="300" y="276" text-anchor="middle" class="small">Q_4</text>
+  <rect x="340" y="260" width="60" height="22" class="hot"/>
+  <text x="370" y="276" text-anchor="middle" class="small">Q_5</text>
+  <rect x="410" y="260" width="60" height="22" class="hot"/>
+  <text x="440" y="276" text-anchor="middle" class="small">Q_6</text>
+
+  <rect x="60" y="310" width="420" height="70" class="box"/>
+  <text x="270" y="330" text-anchor="middle" class="step">new request: SYSTEM + TOOLS + DOC_B + Q_7</text>
+  <text x="270" y="350" text-anchor="middle" class="small">walk the tree : SYSTEM reuse, TOOLS reuse, DOC_B reuse</text>
+  <text x="270" y="366" text-anchor="middle" class="small">allocate blocks only for Q_7 (60 tokens, 4 blocks)</text>
+
+  <rect x="60" y="390" width="420" height="60" class="cool"/>
+  <text x="270" y="414" text-anchor="middle" class="step">prefill cost : 60 tokens instead of 2860</text>
+  <text x="270" y="432" text-anchor="middle" class="small">on prefix-heavy RAG : up to 6.4x SGLang over vLLM</text>
+
+  <rect x="60" y="460" width="420" height="70" class="hot"/>
+  <text x="270" y="482" text-anchor="middle" class="step">the eviction policy</text>
+  <text x="270" y="500" text-anchor="middle" class="small">branch-level LRU : evict whole leaves</text>
+  <text x="270" y="518" text-anchor="middle" class="small">keeps cache shape matched to tree shape</text>
+
+  <rect x="520" y="50" width="400" height="490" class="box"/>
+  <text x="720" y="72" text-anchor="middle" class="head">cache-aware scheduling</text>
+  <rect x="540" y="90" width="360" height="70" class="cold"/>
+  <text x="720" y="112" text-anchor="middle" class="step">FCFS is wrong for prefix-heavy traffic</text>
+  <text x="720" y="130" text-anchor="middle" class="small">serves requests in arrival order</text>
+  <text x="720" y="146" text-anchor="middle" class="small">evicts hot branches before they are reused</text>
+  <rect x="540" y="170" width="360" height="80" class="cool"/>
+  <text x="720" y="192" text-anchor="middle" class="step">depth-first dispatch</text>
+  <text x="720" y="210" text-anchor="middle" class="small">prefer requests rooted at the running branch</text>
+  <text x="720" y="226" text-anchor="middle" class="small">keep the hot branch resident; stream siblings</text>
+  <text x="720" y="242" text-anchor="middle" class="small">approximates radix depth-first traversal</text>
+
+  <rect x="540" y="260" width="360" height="120" class="dsk"/>
+  <text x="720" y="282" text-anchor="middle" class="step">numbers (2026)</text>
+  <text x="720" y="302" text-anchor="middle" class="small">Llama 3.1 8B H100 ShareGPT 1K :</text>
+  <text x="720" y="318" text-anchor="middle" class="small">SGLang ~16,200 tok/s vs vLLM ~12,500 (+29%)</text>
+  <text x="720" y="336" text-anchor="middle" class="small">prefix-heavy RAG : up to 6.4x</text>
+  <text x="720" y="352" text-anchor="middle" class="small">voice cloning : 86.4% prefix-cache hit rate</text>
+  <text x="720" y="368" text-anchor="middle" class="small">production : 50-99% depending on template discipline</text>
+
+  <rect x="540" y="390" width="360" height="140" class="hot"/>
+  <text x="720" y="412" text-anchor="middle" class="step">the gotcha — prompt ordering</text>
+  <text x="720" y="432" text-anchor="middle" class="small">[system, tools, context] ≠ [system, context, tools]</text>
+  <text x="720" y="450" text-anchor="middle" class="small">tree sees two distinct paths</text>
+  <text x="720" y="466" text-anchor="middle" class="small">6.4x disappears, back to vLLM throughput</text>
+  <text x="720" y="488" text-anchor="middle" class="step">engineer's lever : fix the template</text>
+  <text x="720" y="506" text-anchor="middle" class="small">immutable first (system, tools, schemas)</text>
+  <text x="720" y="520" text-anchor="middle" class="small">user input last; real case 7% to 74% in one change</text>
+</svg>

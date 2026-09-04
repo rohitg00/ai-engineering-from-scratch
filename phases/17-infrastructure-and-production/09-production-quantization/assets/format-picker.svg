@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">Quantization formats — pick by hardware, engine, workload</text>
+
+  <rect x="40" y="50" width="440" height="240" class="box"/>
+  <text x="260" y="72" text-anchor="middle" class="head">the picking tree</text>
+  <rect x="60" y="90" width="400" height="35" class="cool"/>
+  <text x="260" y="112" text-anchor="middle" class="step">CPU / edge ? → GGUF Q4_K_M (llama.cpp)</text>
+  <rect x="60" y="130" width="400" height="35" class="cold"/>
+  <text x="260" y="152" text-anchor="middle" class="step">Reasoning workload ? → FP8 (vLLM or TRT-LLM)</text>
+  <rect x="60" y="170" width="400" height="35" class="dsk"/>
+  <text x="260" y="192" text-anchor="middle" class="step">Multi-LoRA on vLLM ? → GPTQ-Int4 + Marlin</text>
+  <rect x="60" y="210" width="400" height="35" class="hot"/>
+  <text x="260" y="232" text-anchor="middle" class="step">Routine chat, GPU ? → AWQ-Int4 + Marlin</text>
+  <rect x="60" y="250" width="400" height="35" class="box"/>
+  <text x="260" y="272" text-anchor="middle" class="step">Blackwell, quality validated ? → NVFP4 + FP8 KV</text>
+
+  <rect x="500" y="50" width="420" height="240" class="box"/>
+  <text x="710" y="72" text-anchor="middle" class="head">trap #1 — the KV cache</text>
+  <rect x="520" y="90" width="380" height="70" class="hot"/>
+  <text x="710" y="112" text-anchor="middle" class="step">AWQ shrinks weights, not KV</text>
+  <text x="710" y="130" text-anchor="middle" class="small">70B AWQ weights : ~35 GB</text>
+  <text x="710" y="144" text-anchor="middle" class="small">KV at 128 conc / 2k ctx : ~20-30 GB</text>
+  <rect x="520" y="170" width="380" height="60" class="cool"/>
+  <text x="710" y="192" text-anchor="middle" class="step">budget HBM holistically</text>
+  <text x="710" y="210" text-anchor="middle" class="small">weights + KV + activations</text>
+  <text x="710" y="226" text-anchor="middle" class="small">FP8 KV buys equivalent savings to AWQ weights</text>
+  <rect x="520" y="240" width="380" height="50" class="cold"/>
+  <text x="710" y="262" text-anchor="middle" class="step">KV quantization is a separate choice</text>
+  <text x="710" y="280" text-anchor="middle" class="small">affects attention accuracy directly</text>
+
+  <rect x="40" y="310" width="440" height="220" class="box"/>
+  <text x="260" y="332" text-anchor="middle" class="head">trap #2 — calibration dataset</text>
+  <rect x="60" y="350" width="400" height="60" class="hot"/>
+  <text x="260" y="372" text-anchor="middle" class="step">AWQ and GPTQ calibrate on C4/Wiki by default</text>
+  <text x="260" y="390" text-anchor="middle" class="small">for domain models : wrong weights get protected</text>
+  <text x="260" y="404" text-anchor="middle" class="small">Pass@1 on HumanEval can drop 3-5 points</text>
+  <rect x="60" y="420" width="400" height="60" class="cool"/>
+  <text x="260" y="442" text-anchor="middle" class="step">fix : calibrate on in-domain data</text>
+  <text x="260" y="460" text-anchor="middle" class="small">few hundred samples usually enough</text>
+  <text x="260" y="474" text-anchor="middle" class="small">always test on eval set before shipping</text>
+  <rect x="60" y="490" width="400" height="35" class="dsk"/>
+  <text x="260" y="512" text-anchor="middle" class="step">AWQ INT4 is hazardous for reasoning : use FP8</text>
+
+  <rect x="500" y="310" width="420" height="220" class="box"/>
+  <text x="710" y="332" text-anchor="middle" class="head">numbers (2026)</text>
+  <rect x="520" y="350" width="380" height="30" class="cool"/>
+  <text x="710" y="370" text-anchor="middle" class="small">GGUF Q4_K_M on vLLM : ~93 tok/s (wrong engine)</text>
+  <rect x="520" y="385" width="380" height="30" class="cold"/>
+  <text x="710" y="405" text-anchor="middle" class="small">GPTQ-Int4 + Marlin on vLLM : ~712 tok/s</text>
+  <rect x="520" y="420" width="380" height="30" class="dsk"/>
+  <text x="710" y="440" text-anchor="middle" class="small">AWQ-Int4 + Marlin : ~741 tok/s ; best Pass@1 INT4</text>
+  <rect x="520" y="455" width="380" height="30" class="hot"/>
+  <text x="710" y="475" text-anchor="middle" class="small">FP8 on H100 : ~2x BF16 throughput</text>
+  <rect x="520" y="490" width="380" height="30" class="box"/>
+  <text x="710" y="510" text-anchor="middle" class="small">NVFP4 on Blackwell : ~4x BF16 ; reasoning risk</text>
+</svg>

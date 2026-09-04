@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .req { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .router { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .region { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .arrow { stroke: #1a1a1a; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">cache-aware multi-region routing — TTFT vs network RTT</text>
+
+  <rect x="40" y="50" width="180" height="70" class="req"/>
+  <text x="130" y="75" text-anchor="middle" class="head">incoming request</text>
+  <text x="130" y="92" text-anchor="middle" class="step">origin: us-east-1</text>
+  <text x="130" y="108" text-anchor="middle" class="small">prefix_hash = 0xabc</text>
+
+  <rect x="280" y="50" width="400" height="110" class="router"/>
+  <text x="480" y="75" text-anchor="middle" class="head">cache-aware router (vLLM Router / llm-d)</text>
+  <text x="290" y="95" class="step">1. hash prefix → 0xabc</text>
+  <text x="290" y="112" class="step">2. lookup replicas holding 0xabc</text>
+  <text x="290" y="129" class="step">3. minimize prefill + network RTT</text>
+  <text x="290" y="146" class="small">KV events: cache.block_added / cache.block_evicted</text>
+  <path class="arrow" d="M220 85 L 275 85"/>
+  <path class="arrow" d="M685 85 L 740 85"/>
+
+  <rect x="740" y="50" width="180" height="110" class="router"/>
+  <text x="830" y="75" text-anchor="middle" class="head">choice</text>
+  <text x="830" y="95" text-anchor="middle" class="step">replica R3 (us-east)</text>
+  <text x="830" y="112" text-anchor="middle" class="small">hit=true, local</text>
+  <text x="830" y="128" text-anchor="middle" class="step">TTFT ≈ 80 ms</text>
+  <text x="830" y="146" text-anchor="middle" class="small">vs ~800 ms cold</text>
+
+  <rect x="40" y="190" width="280" height="130" class="region"/>
+  <text x="180" y="212" text-anchor="middle" class="head">us-east-1 (origin)</text>
+  <text x="180" y="232" text-anchor="middle" class="step">R1 R2 R3* R4</text>
+  <text x="180" y="252" text-anchor="middle" class="small">R3 holds prefix 0xabc</text>
+  <text x="180" y="272" text-anchor="middle" class="small">RTT 0 ms</text>
+  <text x="180" y="294" text-anchor="middle" class="caption">local cache hit: 80 ms</text>
+
+  <rect x="340" y="190" width="280" height="130" class="region"/>
+  <text x="480" y="212" text-anchor="middle" class="head">us-west-2</text>
+  <text x="480" y="232" text-anchor="middle" class="step">R5 R6 R7 R8</text>
+  <text x="480" y="252" text-anchor="middle" class="small">no match on 0xabc</text>
+  <text x="480" y="272" text-anchor="middle" class="small">RTT 65 ms</text>
+  <text x="480" y="294" text-anchor="middle" class="caption">cold prefill: 800 + 65 ms</text>
+
+  <rect x="640" y="190" width="280" height="130" class="region"/>
+  <text x="780" y="212" text-anchor="middle" class="head">eu-west-1</text>
+  <text x="780" y="232" text-anchor="middle" class="step">R9 R10 R11 R12</text>
+  <text x="780" y="252" text-anchor="middle" class="small">R11 holds prefix 0xabc</text>
+  <text x="780" y="272" text-anchor="middle" class="small">RTT 75 ms</text>
+  <text x="780" y="294" text-anchor="middle" class="caption">hit + cross: 80 + 75 ms</text>
+
+  <rect x="40" y="350" width="440" height="140" class="box"/>
+  <text x="260" y="372" text-anchor="middle" class="head">routing objective — GORGO (2026)</text>
+  <text x="260" y="394" text-anchor="middle" class="step">minimize: prefill_time + network_RTT</text>
+  <text x="60" y="418" class="small">· cache hit saves ~720 ms</text>
+  <text x="60" y="436" class="small">· cross-region costs ~65-220 ms RTT</text>
+  <text x="60" y="454" class="small">· cross-region wins when prefill dominates</text>
+  <text x="60" y="472" class="small">· residency boundary beats both — partition first</text>
+
+  <rect x="500" y="350" width="420" height="140" class="box"/>
+  <text x="710" y="372" text-anchor="middle" class="head">DR manifest — the 32% failure</text>
+  <text x="500" y="394" text-anchor="middle" class="step" style="font-size: 11px;">weights backed up, tokenizer was not</text>
+  <text x="520" y="418" class="small">required files:</text>
+  <text x="520" y="436" class="small">· tokenizer.json / tokenizer.model</text>
+  <text x="520" y="454" class="small">· quantization_config.json, AWQ scales</text>
+  <text x="520" y="472" class="small">· RoPE scaling, chat template, LoRA adapters</text>
+</svg>

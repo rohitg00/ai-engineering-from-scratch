@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">the MDP loop: five objects, one recursion</text>
+
+  <rect x="40" y="70" width="160" height="90" class="box"/>
+  <text x="120" y="98" text-anchor="middle" class="label">state s_t</text>
+  <text x="120" y="120" text-anchor="middle" class="content">what agent sees</text>
+  <text x="120" y="140" text-anchor="middle" class="content">Markov sufficient</text>
+
+  <rect x="260" y="70" width="160" height="90" class="hot"/>
+  <text x="340" y="98" text-anchor="middle" class="label">policy pi(a | s)</text>
+  <text x="340" y="120" text-anchor="middle" class="content">chooses action</text>
+  <text x="340" y="140" text-anchor="middle" class="content">a_t ~ pi(. | s_t)</text>
+
+  <rect x="480" y="70" width="160" height="90" class="box"/>
+  <text x="560" y="98" text-anchor="middle" class="label">transition P</text>
+  <text x="560" y="120" text-anchor="middle" class="content">s_{t+1} ~ P(. | s_t, a_t)</text>
+  <text x="560" y="140" text-anchor="middle" class="content">env dynamics</text>
+
+  <rect x="700" y="70" width="160" height="90" class="box"/>
+  <text x="780" y="98" text-anchor="middle" class="label">reward r_t</text>
+  <text x="780" y="120" text-anchor="middle" class="content">scalar signal</text>
+  <text x="780" y="140" text-anchor="middle" class="content">R(s_t, a_t, s_{t+1})</text>
+
+  <line x1="200" y1="115" x2="258" y2="115" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="420" y1="115" x2="478" y2="115" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="640" y1="115" x2="698" y2="115" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <path d="M 780 160 Q 780 230 450 260 Q 120 290 120 160" fill="none" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)" stroke-dasharray="5,3"/>
+  <text x="450" y="248" text-anchor="middle" class="caption">next step: s_{t+1} becomes the new s_t</text>
+
+  <rect x="40" y="300" width="820" height="130" class="box"/>
+  <text x="450" y="325" text-anchor="middle" class="label">the Bellman recursion</text>
+  <text x="450" y="352" text-anchor="middle" class="content">V^pi(s) = sum_a pi(a|s) · sum_{s',r} P(s',r | s,a) · [ r + gamma · V^pi(s') ]</text>
+  <text x="450" y="378" text-anchor="middle" class="content">Q^pi(s,a) = sum_{s',r} P(s',r | s,a) · [ r + gamma · sum_{a'} pi(a'|s') · Q^pi(s',a') ]</text>
+  <text x="450" y="408" text-anchor="middle" class="caption">iterate to fixed point (DP) · sample (MC) · bootstrap one step (TD)</text>
+
+  <text x="450" y="450" text-anchor="middle" class="caption">state + action + transition + reward + discount — every RL algorithm in this phase</text>
+</svg>

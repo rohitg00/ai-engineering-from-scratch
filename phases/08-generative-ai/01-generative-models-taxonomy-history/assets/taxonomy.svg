@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">five families of generative models</text>
+  <text x="450" y="50" text-anchor="middle" class="caption">split by what they model and how they sample</text>
+
+  <rect x="380" y="70" width="140" height="44" class="box"/>
+  <text x="450" y="90" text-anchor="middle" class="label">p_data(x)</text>
+  <text x="450" y="106" text-anchor="middle" class="caption">unknown, want sampler</text>
+
+  <line x1="450" y1="114" x2="180" y2="150" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="450" y1="114" x2="340" y2="150" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="450" y1="114" x2="500" y2="150" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="450" y1="114" x2="660" y2="150" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="450" y1="114" x2="820" y2="150" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="155" width="230" height="180" class="box"/>
+  <text x="175" y="178" text-anchor="middle" class="label">1. explicit, tractable</text>
+  <text x="175" y="200" text-anchor="middle" class="mono">p(x) = &#8719; p(x_i | x_&lt;i)</text>
+  <text x="175" y="225" text-anchor="middle" class="content">autoregressive: GPT, PixelCNN</text>
+  <text x="175" y="245" text-anchor="middle" class="content">flows: Glow, RealNVP</text>
+  <text x="175" y="275" text-anchor="middle" class="caption">exact log p(x)</text>
+  <text x="175" y="293" text-anchor="middle" class="caption">slow sequential inference</text>
+  <text x="175" y="311" text-anchor="middle" class="caption">architecture restrictions (flows)</text>
+
+  <rect x="305" y="155" width="230" height="180" class="hot"/>
+  <text x="420" y="178" text-anchor="middle" class="label">2. explicit, approximate</text>
+  <text x="420" y="200" text-anchor="middle" class="mono">maximize ELBO &#8804; log p(x)</text>
+  <text x="420" y="225" text-anchor="middle" class="content">VAE: encoder + decoder</text>
+  <text x="420" y="245" text-anchor="middle" class="content">diffusion: DDPM, SD3</text>
+  <text x="420" y="275" text-anchor="middle" class="caption">dominant in 2026</text>
+  <text x="420" y="293" text-anchor="middle" class="caption">iterative sampling (20-50 steps)</text>
+  <text x="420" y="311" text-anchor="middle" class="caption">scales to text, image, video, 3D</text>
+
+  <rect x="550" y="155" width="230" height="180" class="box"/>
+  <text x="665" y="178" text-anchor="middle" class="label">3. implicit density</text>
+  <text x="665" y="200" text-anchor="middle" class="mono">G(z) -> x,  D(x) -> real/fake</text>
+  <text x="665" y="225" text-anchor="middle" class="content">GAN, StyleGAN, Pix2Pix</text>
+  <text x="665" y="255" text-anchor="middle" class="caption">one-shot sampling</text>
+  <text x="665" y="273" text-anchor="middle" class="caption">no log p(x) at all</text>
+  <text x="665" y="291" text-anchor="middle" class="caption">training instability, mode collapse</text>
+  <text x="665" y="309" text-anchor="middle" class="caption">still SOTA for narrow photoreal</text>
+
+  <rect x="60" y="350" width="350" height="150" class="box"/>
+  <text x="235" y="373" text-anchor="middle" class="label">4. score / continuous-time</text>
+  <text x="235" y="395" text-anchor="middle" class="mono">learn s(x) = &#8711;_x log p(x)</text>
+  <text x="235" y="418" text-anchor="middle" class="content">score SDE, flow matching</text>
+  <text x="235" y="438" text-anchor="middle" class="content">rectified flow, consistency models</text>
+  <text x="235" y="465" text-anchor="middle" class="caption">simulation-free training</text>
+  <text x="235" y="483" text-anchor="middle" class="caption">straight paths =&gt; 1-4 step sampling</text>
+
+  <rect x="430" y="350" width="350" height="150" class="box"/>
+  <text x="605" y="373" text-anchor="middle" class="label">5. tokens + AR transformer</text>
+  <text x="605" y="395" text-anchor="middle" class="mono">VQ-VAE  +  transformer over tokens</text>
+  <text x="605" y="418" text-anchor="middle" class="content">DALL-E 1, Parti, MuseNet</text>
+  <text x="605" y="438" text-anchor="middle" class="content">AudioLM, VALL-E, MusicGen, Sora patches</text>
+  <text x="605" y="465" text-anchor="middle" class="caption">reuse LLM stack</text>
+  <text x="605" y="483" text-anchor="middle" class="caption">quality bounded by tokenizer</text>
+</svg>

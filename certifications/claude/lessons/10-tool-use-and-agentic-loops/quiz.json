@@ -1,0 +1,78 @@
+{
+  "lesson": "10-tool-use-and-agentic-loops",
+  "title": "A Tool Loop Is Controlled Delegation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does a Claude tool_use block represent?",
+      "options": [
+        "A safe operation whenever the arguments conform to the declared JSON schema",
+        "A client-authorized operation already dispatched to the named service",
+        "A committed transaction whose arguments passed the server's input schema",
+        "A model proposal for the client to validate and execute"
+      ],
+      "correct": 3,
+      "explanation": "Claude proposes a tool and arguments. Deterministic client code still validates, authorizes, executes, and records the operation."
+    },
+    {
+      "stage": "check",
+      "question": "A supported SDK is available, custom tools execute in the application's existing sandbox, and no remote durable session or custom wire control is needed. Which loop is the best default?",
+      "options": [
+        "SDK Tool Runner with application authorization, budgets, and final-state validation",
+        "A hand-written REST loop because SDK-managed message sequencing removes policy control",
+        "A deterministic workflow even though the next tool depends on observations",
+        "Claude Managed Agents because any open-ended task requires a remote managed session"
+      ],
+      "correct": 0,
+      "explanation": "Tool Runner removes repetitive client-loop plumbing while the application keeps execution, approval, sandboxing, budgets, and verification. Managed or hand-written infrastructure needs a concrete requirement."
+    },
+    {
+      "stage": "check",
+      "question": "A tool times out after the server may have sent a payment. What should happen before retry?",
+      "options": [
+        "Extend the timeout and resend only if the trace lacks a success event",
+        "Reconcile the operation by idempotency key and confirmed server state",
+        "Retry once with identical arguments because deterministic input prevents duplication",
+        "Ask Claude to compare the error with the conversation and infer the result"
+      ],
+      "correct": 1,
+      "explanation": "The outcome is ambiguous at the transaction boundary. Only idempotency and authoritative reconciliation can establish whether retry is safe."
+    },
+    {
+      "stage": "check",
+      "question": "A refund-review procedure should load only for relevant cases, while the approved refund action must run inside a private application service. Which composition fits?",
+      "options": [
+        "An Anthropic-schema computer tool that clicks the refund button without application policy",
+        "A server-executed built-in tool containing the private refund credentials",
+        "A Skill for the procedure plus a custom client tool for the authorized operation",
+        "An MCP server only, because reusable instructions and executable authority are the same layer"
+      ],
+      "correct": 2,
+      "explanation": "A Skill packages reusable procedure. The custom client tool preserves the private execution, identity, approval, and idempotency boundary."
+    },
+    {
+      "stage": "post",
+      "question": "Which success check is strongest for a deployment agent?",
+      "options": [
+        "The agent loop ends normally after reporting that post-deployment checks passed",
+        "The final response names the deployed version and cites the successful tool result",
+        "The trace shows that every planned deployment tool returned without an error",
+        "The configured version is healthy according to an independent final-state check"
+      ],
+      "correct": 3,
+      "explanation": "Protocol completion and confident prose do not prove the environment changed correctly. Verify the externally observable final state."
+    },
+    {
+      "stage": "post",
+      "question": "A task always extracts fields, validates them, and writes an approved record. What is the better default architecture?",
+      "options": [
+        "A deterministic workflow with an explicit model step",
+        "One model call that extracts and validates before invoking the write tool",
+        "A coordinator with separate extraction, validation, and writing subagents",
+        "A bounded agent that chooses among extraction, validation, and write tools"
+      ],
+      "correct": 0,
+      "explanation": "The path is known, so a workflow gives clearer control and testing. Agentic selection is useful when observations determine an unknown path."
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">REINFORCE — gradient ascent on expected return</text>
+
+  <rect x="40" y="60" width="820" height="70" class="box"/>
+  <text x="60" y="85" class="label">policy gradient theorem</text>
+  <text x="60" y="108" class="content">grad J(theta) = E_pi [ sum_t  G_t  *  grad_theta log pi_theta(a_t | s_t) ]</text>
+
+  <rect x="40" y="150" width="820" height="80" class="hot"/>
+  <text x="60" y="175" class="label">one rollout, one update</text>
+  <text x="60" y="198" class="content">roll out tau ~ pi_theta,  compute returns G_0, G_1, ..., G_T</text>
+  <text x="60" y="218" class="content">for each (s_t, a_t):  theta += lr * (G_t - b(s_t)) * grad log pi_theta(a_t | s_t)</text>
+
+  <rect x="40" y="250" width="260" height="140" class="box"/>
+  <text x="170" y="275" text-anchor="middle" class="label">sample action</text>
+  <text x="60" y="300" class="content">logits = f_theta(s)</text>
+  <text x="60" y="320" class="content">p = softmax(logits)</text>
+  <text x="60" y="340" class="content">a ~ Categorical(p)</text>
+  <text x="170" y="370" text-anchor="middle" class="caption">stochastic by design</text>
+
+  <rect x="320" y="250" width="260" height="140" class="box"/>
+  <text x="450" y="275" text-anchor="middle" class="label">credit assignment</text>
+  <text x="340" y="300" class="content">G_t = sum_{k&gt;=t} g^{k-t} r_{k+1}</text>
+  <text x="340" y="320" class="content">reward-to-go only</text>
+  <text x="340" y="340" class="content">baseline: G_t - V(s_t)</text>
+  <text x="450" y="370" text-anchor="middle" class="caption">unbiased, lower variance</text>
+
+  <rect x="600" y="250" width="260" height="140" class="box"/>
+  <text x="730" y="275" text-anchor="middle" class="label">apply gradient</text>
+  <text x="620" y="300" class="content">grad log pi = e_a - p</text>
+  <text x="620" y="320" class="content">theta += lr * adv * grad</text>
+  <text x="620" y="340" class="content">+ entropy bonus</text>
+  <text x="730" y="370" text-anchor="middle" class="caption">on-policy, batched</text>
+
+  <text x="450" y="430" text-anchor="middle" class="caption">PPO = REINFORCE + clipped IS ratio  ·  GRPO = REINFORCE + group-relative baseline  ·  DPO = REINFORCE without sampling</text>
+</svg>

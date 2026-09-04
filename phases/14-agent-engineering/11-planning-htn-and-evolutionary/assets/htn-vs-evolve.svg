@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .htn { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .ev { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .compare { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">ChatHTN and AlphaEvolve — two 2025 hybrid planners</text>
+
+  <rect x="40" y="50" width="440" height="210" class="htn"/>
+  <text x="260" y="72" text-anchor="middle" class="head">ChatHTN  symbolic + LLM decomposer</text>
+  <text x="60" y="96" class="small">compound task  decompose via method library</text>
+  <rect x="60" y="108" width="400" height="40" class="box"/>
+  <text x="78" y="130" class="step">1. method applies?  expand subtasks (provably sound)</text>
+  <rect x="60" y="156" width="400" height="40" class="box"/>
+  <text x="78" y="178" class="step">2. no method?  ask LLM for decomposition</text>
+  <rect x="60" y="204" width="400" height="40" class="box"/>
+  <text x="78" y="226" class="step">3. validate against operator schema; cache on success</text>
+
+  <rect x="500" y="50" width="420" height="210" class="ev"/>
+  <text x="710" y="72" text-anchor="middle" class="head">AlphaEvolve  evolutionary code search</text>
+  <text x="520" y="96" class="small">seed program + deterministic evaluator</text>
+  <rect x="520" y="108" width="380" height="40" class="box"/>
+  <text x="538" y="130" class="step">1. ensemble of LLMs proposes mutations</text>
+  <rect x="520" y="156" width="380" height="40" class="box"/>
+  <text x="538" y="178" class="step">2. evaluator scores each child program</text>
+  <rect x="520" y="204" width="380" height="40" class="box"/>
+  <text x="538" y="226" class="step">3. keep top-k; mutate; repeat</text>
+
+  <rect x="40" y="290" width="880" height="220" class="compare"/>
+  <text x="480" y="312" text-anchor="middle" class="head">when to use which</text>
+
+  <rect x="60" y="330" width="840" height="40" class="box"/>
+  <text x="78" y="352" class="step">scheduling, compliance, policy-bound automation  HTN (ChatHTN)</text>
+  <text x="78" y="368" class="small">provable soundness; LLM only expands the method library</text>
+
+  <rect x="60" y="380" width="840" height="40" class="box"/>
+  <text x="78" y="402" class="step">matrix-mult kernels, compiler passes, scheduling heuristics  AlphaEvolve</text>
+  <text x="78" y="418" class="small">fitness must be deterministic; works when tests / benchmarks are the evaluator</text>
+
+  <rect x="60" y="430" width="840" height="40" class="box"/>
+  <text x="78" y="452" class="step">open-ended agent tasks  ReAct / ReWOO (not these)</text>
+  <text x="78" y="468" class="small">no operator schema, no machine-checkable fitness; reach for Lessons 01-02</text>
+
+  <rect x="60" y="480" width="840" height="26" class="box"/>
+  <text x="78" y="498" class="step">hybrid: HTN at the top level, AlphaEvolve on each primitive operator  case-by-case</text>
+
+  <text x="480" y="540" text-anchor="middle" class="caption">LLMs amplify; they do not own correctness. symbolic layer and evaluator own the hard guarantees.</text>
+</svg>

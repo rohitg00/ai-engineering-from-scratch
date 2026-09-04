@@ -1,0 +1,78 @@
+{
+  "lesson": "29-mcp-reliability-cancellation-and-flow-control",
+  "title": "MCP Reliability, Cancellation, and Flow Control",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A mutation response is lost and the client retries with a new JSON-RPC id. What makes the retry safe?",
+      "options": [
+        "The new JSON-RPC id automatically deduplicates the mutation",
+        "The tool descriptor includes an idempotentHint",
+        "A durable application idempotency key reused with identical arguments",
+        "The retry uses the same HTTP connection"
+      ],
+      "correct": 2,
+      "explanation": "JSON-RPC ids correlate messages. Business idempotency requires a durable key, an argument fingerprint, and a stored committed result."
+    },
+    {
+      "stage": "check",
+      "question": "How does a client cancel an in-flight request over stdio in MCP 2026-07-28?",
+      "options": [
+        "Call tasks/cancel for the JSON-RPC id",
+        "Send notifications/cancelled with the active request id",
+        "Close a per-request SSE stream",
+        "Send a DELETE request to the MCP endpoint"
+      ],
+      "correct": 1,
+      "explanation": "stdio has no per-request response stream, so the client sends the fire-and-forget notifications/cancelled notification."
+    },
+    {
+      "stage": "check",
+      "question": "How does a client cancel an in-flight Streamable HTTP request?",
+      "options": [
+        "Close that request's SSE response stream",
+        "POST notifications/cancelled to the MCP endpoint",
+        "Wait for the server to send notifications/cancelled",
+        "Send Last-Event-ID with an empty value"
+      ],
+      "correct": 0,
+      "explanation": "For modern Streamable HTTP, closing the request-specific response stream is the cancellation signal."
+    },
+    {
+      "stage": "check",
+      "question": "Progress keeps arriving before every idle timeout. Which deadline must still end a runaway request?",
+      "options": [
+        "An absolute maximum timeout measured from request start",
+        "The next pagination cursor expiry",
+        "The proxy keepalive interval",
+        "The Task polling interval"
+      ],
+      "correct": 0,
+      "explanation": "Valid progress may reset the idle clock, but an absolute maximum deadline must remain in force."
+    },
+    {
+      "stage": "post",
+      "question": "What does a successful tasks/cancel response prove?",
+      "options": [
+        "The durable result was deleted",
+        "The worker has already stopped",
+        "The server acknowledged cancellation intent",
+        "The Task must eventually become cancelled"
+      ],
+      "correct": 2,
+      "explanation": "Task cancellation is cooperative. The Task may remain working, finish first, or reach cancelled after a worker checkpoint."
+    },
+    {
+      "stage": "post",
+      "question": "A subscription SSE stream drops after several progress events. Which recovery plan fits MCP 2026-07-28?",
+      "options": [
+        "Resume from Last-Event-ID and replay every in-flight mutation",
+        "Open a GET event stream and restore Mcp-Session-Id",
+        "Keep the old request id and assume no updates were lost",
+        "Open a new listen request, refetch authoritative state, and avoid unsafe mutation replay"
+      ],
+      "correct": 3,
+      "explanation": "Modern MCP streams are not resumable with Last-Event-ID. Recovery uses a new request plus authoritative refetch and explicit retry safety."
+    }
+  ]
+}

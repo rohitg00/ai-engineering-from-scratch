@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">sequential vs parallel and the accumulator per id</text>
+
+  <rect x="40" y="50" width="440" height="240" class="box"/>
+  <text x="260" y="72" text-anchor="middle" class="head">wall-clock: three-city weather</text>
+  <text x="60" y="100" class="step">sequential:  B --(400)--&gt; T --(600)--&gt; Z --(800)--&gt;  done</text>
+  <text x="60" y="118" class="small">             total 1800 ms  (sum of latencies)</text>
+  <text x="60" y="150" class="step">parallel:    B --(400)--&gt;</text>
+  <text x="60" y="168" class="step">             T -------(600)----&gt;</text>
+  <text x="60" y="186" class="step">             Z ------------(800)-------&gt;  done</text>
+  <text x="60" y="204" class="small">             total 800 ms   (max of latencies)</text>
+  <text x="60" y="236" class="step">speedup = sum / max = 2.25x on this shape</text>
+  <text x="60" y="258" class="small">savings grow with tool count; stay bounded by slowest call.</text>
+
+  <rect x="500" y="50" width="420" height="240" class="cool"/>
+  <text x="710" y="72" text-anchor="middle" class="head">id correlation matters</text>
+  <text x="516" y="100" class="step">each call emits: {id, name, arguments}</text>
+  <text x="516" y="120" class="step">each result replies: {tool_call_id, content}</text>
+  <text x="516" y="142" class="step">OpenAI     : call_abc123</text>
+  <text x="516" y="160" class="step">Anthropic  : toolu_xyz789</text>
+  <text x="516" y="178" class="step">Gemini 3   : UUID</text>
+  <text x="516" y="208" class="step">Gemini 2 bug: two same-name parallel calls</text>
+  <text x="516" y="226" class="step">were indistinguishable; Gemini 3 unique-id fixed it.</text>
+  <text x="516" y="258" class="small">reply in completion order; model reorders by id internally.</text>
+
+  <rect x="40" y="310" width="880" height="220" class="cold"/>
+  <text x="480" y="332" text-anchor="middle" class="head">streaming: chunks interleave, accumulator per id</text>
+
+  <text x="60" y="362" class="step">events on the wire (OpenAI-shaped):</text>
+  <text x="60" y="382" class="small">  call_start A, call_start B, call_start C</text>
+  <text x="60" y="400" class="small">  args_delta A: '{"city"'  |  args_delta B: '{"city'</text>
+  <text x="60" y="418" class="small">  args_delta A: ':"Beng'   |  args_delta C: '{"city":"Zu'</text>
+  <text x="60" y="436" class="small">  args_delta A: 'aluru"}'  -&gt; call_stop A  -&gt; execute(A)</text>
+  <text x="60" y="454" class="small">  args_delta B: '":"Tokyo"}' -&gt; call_stop B -&gt; execute(B)</text>
+  <text x="60" y="472" class="small">  args_delta C: 'rich"}'     -&gt; call_stop C -&gt; execute(C)</text>
+  <text x="60" y="504" class="step">rule: parse only on call_stop; kick off executor as soon as the</text>
+  <text x="60" y="522" class="step">id closes, NOT after all calls close.</text>
+</svg>

@@ -1,0 +1,78 @@
+{
+  "lesson": "83-prompt-injection-detector",
+  "title": "Capstone 83 — Prompt Injection Detector",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does the detector return for a prompt?",
+      "options": [
+        "A boolean block decision only",
+        "The model's full system prompt",
+        "A list of every rule in the rulebase",
+        "A category and a confidence in [0, 1]"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Why does normalize run before substring and regex rules?",
+      "options": [
+        "Because regex is slower than substring",
+        "Because the standard library forbids running rules on the original text",
+        "Because normalize lowers the file size on disk",
+        "Because normalize exposes hidden tokens such as base64, rot13, and zero-width insertions to the downstream rules"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Given true positives = 6, false positives = 2 for category C, what is precision?",
+      "options": [
+        "0.86",
+        "0.60",
+        "0.75",
+        "0.50"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is the benign prompt corpus part of the evaluation?",
+      "options": [
+        "To compute recall on attacks",
+        "To inflate the accuracy number",
+        "To pre-train the rules",
+        "To measure false-positive rate on safe text and catch over-broad rules"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the analyze method do when no rule fires?",
+      "options": [
+        "Returns the category of the most recent rule attempted",
+        "Returns a random category",
+        "Returns the category benign with confidence 0.0",
+        "Raises an exception"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does this lesson argue the detector is not the safety gate?",
+      "options": [
+        "Because the detector is implemented in Python",
+        "Because the rules are stored as data",
+        "Because the detector is too fast to be useful",
+        "Because the detector is one signal among several the gate will compose, with each signal trading precision against recall differently"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

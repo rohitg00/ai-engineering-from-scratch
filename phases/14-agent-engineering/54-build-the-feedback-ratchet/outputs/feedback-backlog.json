@@ -1,0 +1,29 @@
+[
+  {
+    "priority": 12,
+    "destination": "context",
+    "change": "Prevent recurrence of: missing context caused duplicate service lookup",
+    "owner": "platform",
+    "durable_artifact": "context/retrieval-guidance.md",
+    "verification_evidence": "Record a replay with the required context present",
+    "retirement_check": "Remove or revise after 90 days without recurrence"
+  },
+  {
+    "priority": 12,
+    "destination": "evaluation",
+    "change": "Prevent recurrence of: false positive on a stale deployment",
+    "owner": "evaluation",
+    "durable_artifact": "evaluations/regression-suite.json",
+    "verification_evidence": "Record a passing regression evaluation",
+    "retirement_check": "Remove or revise after 60 days without recurrence"
+  },
+  {
+    "priority": 5,
+    "destination": "policy",
+    "change": "Prevent recurrence of: production write was attempted",
+    "owner": "security",
+    "durable_artifact": "policies/authority-boundaries.json",
+    "verification_evidence": "Record a passing authority-boundary scenario",
+    "retirement_check": "Remove or revise after 180 days without recurrence"
+  }
+]

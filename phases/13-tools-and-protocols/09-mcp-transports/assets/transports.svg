@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">MCP 2026-07-28 transports and the legacy boundary</text>
+
+  <rect x="35" y="55" width="280" height="410" class="cool"/>
+  <text x="175" y="80" text-anchor="middle" class="head">stdio: local</text>
+  <text x="55" y="112" class="step">binding</text>
+  <text x="55" y="134" class="small">client-launched child process</text>
+  <text x="55" y="152" class="small">one JSON-RPC object per line</text>
+  <text x="55" y="170" class="small">stdout protocol, stderr logs</text>
+  <text x="55" y="208" class="step">modern metadata</text>
+  <text x="55" y="230" class="small">version + capabilities per request</text>
+  <text x="55" y="248" class="small">clientInfo SHOULD repeat</text>
+  <text x="55" y="286" class="step">lifetime</text>
+  <text x="55" y="308" class="small">EOF closes transport process</text>
+  <text x="55" y="326" class="small">process is not protocol session</text>
+  <text x="55" y="364" class="step">recovery</text>
+  <text x="55" y="386" class="small">restart, rediscover, relist</text>
+  <text x="55" y="404" class="small">retry safe work with new id</text>
+
+  <rect x="340" y="55" width="280" height="410" class="cold"/>
+  <text x="480" y="80" text-anchor="middle" class="head">Streamable HTTP: modern</text>
+  <text x="360" y="112" class="step">single endpoint /mcp</text>
+  <text x="360" y="134" class="small">POST each JSON-RPC message</text>
+  <text x="360" y="152" class="small">response: JSON or scoped SSE</text>
+  <text x="360" y="188" class="step">required mirrors</text>
+  <text x="360" y="210" class="small">MCP-Protocol-Version</text>
+  <text x="360" y="228" class="small">Mcp-Method + conditional Mcp-Name</text>
+  <text x="360" y="246" class="small">validate every value vs body</text>
+  <text x="360" y="282" class="step">long-lived changes</text>
+  <text x="360" y="304" class="small">POST subscriptions/listen</text>
+  <text x="360" y="322" class="small">ack + tagged notifications + result</text>
+  <text x="360" y="358" class="step">removed modern behavior</text>
+  <text x="360" y="380" class="small">GET / DELETE return 405</text>
+  <text x="360" y="398" class="small">ignore session + replay headers</text>
+  <text x="360" y="416" class="small">no server JSON-RPC requests</text>
+
+  <rect x="645" y="55" width="280" height="410" class="hot"/>
+  <text x="785" y="80" text-anchor="middle" class="head">legacy compatibility only</text>
+  <text x="665" y="112" class="step">2025 Streamable HTTP</text>
+  <text x="665" y="134" class="small">Mcp-Session-Id</text>
+  <text x="665" y="152" class="small">standalone GET + DELETE</text>
+  <text x="665" y="170" class="small">Last-Event-ID resumption</text>
+  <text x="665" y="206" class="step">2024 HTTP+SSE</text>
+  <text x="665" y="228" class="small">separate SSE and POST endpoints</text>
+  <text x="665" y="264" class="step">safe dual-era probe</text>
+  <text x="665" y="286" class="small">modern POST first</text>
+  <text x="665" y="304" class="small">recognized modern error: stay modern</text>
+  <text x="665" y="322" class="small">unrecognized miss: try legacy</text>
+  <text x="665" y="358" class="step">migration rule</text>
+  <text x="665" y="380" class="small">keep legacy routes separate</text>
+  <text x="665" y="398" class="small">never label them 2026 behavior</text>
+
+  <text x="480" y="505" text-anchor="middle" class="caption">Protocol semantics stay the same across bindings: every modern request is self-describing.</text>
+</svg>

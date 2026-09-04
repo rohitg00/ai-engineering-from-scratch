@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .frozen { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; stroke-dasharray: 4 3; }
+      .train { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">BLIP-2 Q-Former bridge — 32 queries compress the ViT for a frozen LLM</text>
+
+  <rect x="40" y="60" width="180" height="200" class="frozen"/>
+  <text x="130" y="82" text-anchor="middle" class="head">frozen ViT</text>
+  <text x="130" y="102" text-anchor="middle" class="small">ViT-g/14, 1.1B</text>
+  <text x="130" y="120" text-anchor="middle" class="small">224x224 input</text>
+  <text x="130" y="138" text-anchor="middle" class="small">16x16 patch grid</text>
+  <text x="130" y="156" text-anchor="middle" class="small">-&gt; 256 patch tokens</text>
+  <text x="130" y="174" text-anchor="middle" class="small">dim 1408</text>
+  <text x="130" y="202" text-anchor="middle" class="caption">not trained</text>
+  <text x="130" y="220" text-anchor="middle" class="caption">outputs frozen features</text>
+  <text x="130" y="240" text-anchor="middle" class="caption">256 x 1408 per image</text>
+
+  <path d="M 225 160 L 290 160" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="258" y="150" text-anchor="middle" class="small">K, V</text>
+
+  <rect x="295" y="60" width="250" height="300" class="train"/>
+  <text x="420" y="82" text-anchor="middle" class="head">Q-Former (trained)</text>
+  <text x="420" y="100" text-anchor="middle" class="small">12 layers, BERT-base init</text>
+
+  <rect x="315" y="110" width="210" height="60" class="cool"/>
+  <text x="420" y="128" text-anchor="middle" class="step">32 learnable queries</text>
+  <text x="420" y="146" text-anchor="middle" class="small">parameters of the bridge</text>
+  <text x="420" y="162" text-anchor="middle" class="small">same 32 vectors for every image</text>
+
+  <rect x="315" y="178" width="210" height="60" class="box"/>
+  <text x="420" y="196" text-anchor="middle" class="step">self-attention (queries only)</text>
+  <text x="420" y="214" text-anchor="middle" class="small">queries interact with each other</text>
+  <text x="420" y="230" text-anchor="middle" class="small">and with text in stage 1</text>
+
+  <rect x="315" y="244" width="210" height="60" class="box"/>
+  <text x="420" y="262" text-anchor="middle" class="step">cross-attention</text>
+  <text x="420" y="280" text-anchor="middle" class="small">Q from queries, K/V from patches</text>
+  <text x="420" y="296" text-anchor="middle" class="small">32 x 256 attention map</text>
+
+  <rect x="315" y="312" width="210" height="40" class="box"/>
+  <text x="420" y="338" text-anchor="middle" class="step">FFN + LN (shared with text path)</text>
+
+  <path d="M 550 160 L 620 160" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="585" y="150" text-anchor="middle" class="small">32 tokens</text>
+
+  <rect x="625" y="60" width="140" height="120" class="train"/>
+  <text x="695" y="82" text-anchor="middle" class="head">linear projection</text>
+  <text x="695" y="100" text-anchor="middle" class="small">768 -&gt; 4096 (LLM dim)</text>
+  <text x="695" y="118" text-anchor="middle" class="small">trained in stage 2</text>
+  <text x="695" y="138" text-anchor="middle" class="small">~3M params</text>
+  <text x="695" y="158" text-anchor="middle" class="small">32 x LLM_dim output</text>
+
+  <path d="M 770 120 L 830 120" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="835" y="60" width="100" height="240" class="frozen"/>
+  <text x="885" y="82" text-anchor="middle" class="head">frozen LLM</text>
+  <text x="885" y="102" text-anchor="middle" class="small">OPT-6.7B or</text>
+  <text x="885" y="120" text-anchor="middle" class="small">Flan-T5-XXL</text>
+  <text x="885" y="148" text-anchor="middle" class="small">32 visual tokens</text>
+  <text x="885" y="164" text-anchor="middle" class="small">+ text prompt</text>
+  <text x="885" y="182" text-anchor="middle" class="small">-&gt; caption / VQA</text>
+  <text x="885" y="212" text-anchor="middle" class="caption">not trained</text>
+  <text x="885" y="230" text-anchor="middle" class="caption">LM generation</text>
+  <text x="885" y="248" text-anchor="middle" class="caption">caption or answer</text>
+
+  <rect x="40" y="380" width="880" height="130" class="box"/>
+  <text x="480" y="402" text-anchor="middle" class="head">two-stage training</text>
+
+  <rect x="60" y="420" width="415" height="75" class="cool"/>
+  <text x="80" y="440" class="step">Stage 1: representation (no LLM)</text>
+  <text x="80" y="458" class="small">train Q-Former alone with</text>
+  <text x="80" y="474" class="small">ITC (image-text contrastive)</text>
+  <text x="80" y="488" class="small">+ ITM (image-text matching)</text>
+  <text x="250" y="458" class="small">+ ITG (image-grounded text gen)</text>
+  <text x="250" y="474" class="small">queries learn to encode</text>
+  <text x="250" y="488" class="small">both semantic and text-decodable info</text>
+
+  <rect x="490" y="420" width="415" height="75" class="train"/>
+  <text x="510" y="440" class="step">Stage 2: generative (with frozen LLM)</text>
+  <text x="510" y="458" class="small">project 32 queries -&gt; LLM dim</text>
+  <text x="510" y="474" class="small">prepend to text</text>
+  <text x="510" y="488" class="small">train LM loss end-to-end</text>
+  <text x="680" y="458" class="small">bridge + projector learn</text>
+  <text x="680" y="474" class="small">to feed the LLM cleanly</text>
+  <text x="680" y="488" class="small">188M params total</text>
+</svg>

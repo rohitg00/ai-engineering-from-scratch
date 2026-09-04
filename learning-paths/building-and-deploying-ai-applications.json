@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "building-and-deploying-ai-applications",
+  "title": "Building and Deploying AI Applications",
+  "summary": "Build an AI feature from prompt and structured output through retrieval, evaluation, production serving, observability, and release.",
+  "estimatedMinutes": 780,
+  "lessons": [
+    {"order": 1, "path": "phases/11-llm-engineering/01-prompt-engineering", "minutes": 60, "required": true},
+    {"order": 2, "path": "phases/11-llm-engineering/03-structured-outputs", "minutes": 60, "required": true},
+    {"order": 3, "path": "phases/11-llm-engineering/04-embeddings", "minutes": 60, "required": true},
+    {"order": 4, "path": "phases/11-llm-engineering/05-context-engineering", "minutes": 60, "required": true},
+    {"order": 5, "path": "phases/11-llm-engineering/06-rag", "minutes": 75, "required": true},
+    {"order": 6, "path": "phases/11-llm-engineering/10-evaluation", "minutes": 75, "required": true},
+    {"order": 7, "path": "phases/11-llm-engineering/11-caching-cost", "minutes": 60, "required": true},
+    {"order": 8, "path": "phases/11-llm-engineering/12-guardrails", "minutes": 60, "required": true},
+    {"order": 9, "path": "phases/11-llm-engineering/13-production-app", "minutes": 90, "required": true},
+    {"order": 10, "path": "phases/17-infrastructure-and-production/13-llm-observability", "minutes": 60, "required": true},
+    {"order": 11, "path": "phases/17-infrastructure-and-production/20-shadow-canary-progressive", "minutes": 60, "required": true},
+    {"order": 12, "path": "phases/17-infrastructure-and-production/23-sre-for-ai", "minutes": 60, "required": true}
+  ]
+}

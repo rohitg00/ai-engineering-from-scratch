@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Audio-LLM arc: Whisper (2022) to Audio Flamingo 3 (2025)</text>
+
+  <rect x="30" y="50" width="900" height="230" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">the pipeline: spectrogram -&gt; encoder -&gt; Q-former -&gt; LLM</text>
+
+  <rect x="50" y="90" width="180" height="170" class="hot"/>
+  <text x="140" y="110" text-anchor="middle" class="step">1. waveform</text>
+  <text x="140" y="128" text-anchor="middle" class="small">16 kHz mono</text>
+  <text x="140" y="150" text-anchor="middle" class="step">2. log-Mel spec</text>
+  <text x="140" y="168" text-anchor="middle" class="small">25ms win, 10ms hop</text>
+  <text x="140" y="184" text-anchor="middle" class="small">80 Mel bins</text>
+  <text x="140" y="200" text-anchor="middle" class="small">log compress</text>
+  <text x="140" y="222" text-anchor="middle" class="small">30s = 3000 frames</text>
+
+  <path d="M 235 170 L 275 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="280" y="90" width="200" height="170" class="cool"/>
+  <text x="380" y="110" text-anchor="middle" class="step">3. audio encoder</text>
+  <text x="380" y="132" text-anchor="middle" class="small">Whisper: speech strong</text>
+  <text x="380" y="148" text-anchor="middle" class="small">BEATs: music strong</text>
+  <text x="380" y="164" text-anchor="middle" class="small">AF-Whisper: concat</text>
+  <text x="380" y="186" text-anchor="middle" class="small">1 frame per 10ms</text>
+  <text x="380" y="210" text-anchor="middle" class="small">12-layer transformer</text>
+  <text x="380" y="230" text-anchor="middle" class="caption">frozen at bridge train</text>
+
+  <path d="M 485 170 L 525 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="530" y="90" width="200" height="170" class="cold"/>
+  <text x="630" y="110" text-anchor="middle" class="step">4. audio Q-former</text>
+  <text x="630" y="132" text-anchor="middle" class="small">32-64 learnable queries</text>
+  <text x="630" y="148" text-anchor="middle" class="small">cross-attend over frames</text>
+  <text x="630" y="164" text-anchor="middle" class="small">output fixed-length tokens</text>
+  <text x="630" y="186" text-anchor="middle" class="step">training</text>
+  <text x="630" y="202" text-anchor="middle" class="small">stage 1: ITM + ITC + ITG</text>
+  <text x="630" y="218" text-anchor="middle" class="small">stage 2: instruction tune</text>
+
+  <path d="M 735 170 L 775 170" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="780" y="90" width="140" height="170" class="reg"/>
+  <text x="850" y="110" text-anchor="middle" class="step">5. LLM</text>
+  <text x="850" y="128" text-anchor="middle" class="small">Qwen2.5-7B</text>
+  <text x="850" y="144" text-anchor="middle" class="small">or Llama 3.1</text>
+  <text x="850" y="166" text-anchor="middle" class="step">output</text>
+  <text x="850" y="184" text-anchor="middle" class="small">captions</text>
+  <text x="850" y="200" text-anchor="middle" class="small">QA answers</text>
+  <text x="850" y="216" text-anchor="middle" class="small">with CoT</text>
+
+  <rect x="30" y="300" width="900" height="210" class="box"/>
+  <text x="480" y="322" text-anchor="middle" class="head">cascaded vs end-to-end task coverage</text>
+
+  <rect x="50" y="340" width="400" height="160" class="hot"/>
+  <text x="250" y="362" text-anchor="middle" class="step">cascaded (Whisper -&gt; LLM)</text>
+  <text x="250" y="384" text-anchor="middle" class="small">transcription: yes</text>
+  <text x="250" y="400" text-anchor="middle" class="small">summarization: yes</text>
+  <text x="250" y="416" text-anchor="middle" class="small">emotion: no</text>
+  <text x="250" y="432" text-anchor="middle" class="small">music genre: no</text>
+  <text x="250" y="448" text-anchor="middle" class="small">environmental: no</text>
+  <text x="250" y="464" text-anchor="middle" class="small">deepfake: no</text>
+  <text x="250" y="488" text-anchor="middle" class="caption">MMAU ~0.50</text>
+
+  <rect x="470" y="340" width="440" height="160" class="cool"/>
+  <text x="690" y="362" text-anchor="middle" class="step">end-to-end audio-LLM (AF3)</text>
+  <text x="690" y="384" text-anchor="middle" class="small">every cascaded task: yes</text>
+  <text x="690" y="400" text-anchor="middle" class="small">emotion / mood: yes</text>
+  <text x="690" y="416" text-anchor="middle" class="small">music / instruments: yes</text>
+  <text x="690" y="432" text-anchor="middle" class="small">environmental sounds: yes</text>
+  <text x="690" y="448" text-anchor="middle" class="small">temporal grounding: yes</text>
+  <text x="690" y="464" text-anchor="middle" class="small">on-demand CoT: +3-5 pts</text>
+  <text x="690" y="488" text-anchor="middle" class="caption">MMAU 0.72 (open SOTA 2025)</text>
+</svg>

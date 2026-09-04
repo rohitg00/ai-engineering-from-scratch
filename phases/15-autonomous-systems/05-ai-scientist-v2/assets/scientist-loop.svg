@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">AI Scientist v2 — research loop, measured failure rates</text>
+
+  <rect x="40" y="50" width="800" height="430" class="box"/>
+
+  <!-- Stages across -->
+  <g>
+    <rect x="60" y="80" width="110" height="60" class="cool"/>
+    <text x="115" y="104" text-anchor="middle" class="label">idea</text>
+    <text x="115" y="120" text-anchor="middle" class="small">agentic tree search</text>
+
+    <rect x="180" y="80" width="110" height="60" class="hot"/>
+    <text x="235" y="104" text-anchor="middle" class="label">novelty check</text>
+    <text x="235" y="120" text-anchor="middle" class="small">~25% mislabel</text>
+
+    <rect x="300" y="80" width="110" height="60" class="hot"/>
+    <text x="355" y="104" text-anchor="middle" class="label">experiment</text>
+    <text x="355" y="120" text-anchor="middle" class="small">42% failure</text>
+    <text x="355" y="134" text-anchor="middle" class="small">(Beel 2025)</text>
+
+    <rect x="420" y="80" width="110" height="60" class="cold"/>
+    <text x="475" y="104" text-anchor="middle" class="label">VLM figure critique</text>
+    <text x="475" y="120" text-anchor="middle" class="small">polishes visuals</text>
+    <text x="475" y="134" text-anchor="middle" class="small">masks 70%</text>
+
+    <rect x="540" y="80" width="110" height="60" class="cool"/>
+    <text x="595" y="104" text-anchor="middle" class="label">writeup</text>
+
+    <rect x="660" y="80" width="110" height="60" class="cool"/>
+    <text x="715" y="104" text-anchor="middle" class="label">review + submit</text>
+  </g>
+
+  <!-- Arrows across -->
+  <path d="M170 110 L180 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M290 110 L300 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M410 110 L420 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M530 110 L540 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M650 110 L660 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Results panel -->
+  <rect x="60" y="175" width="740" height="115" class="box"/>
+  <text x="80" y="196" class="label">measured results (Yamada 2025, Sakana Nature 2026)</text>
+  <text x="80" y="218" class="content">· v2-generated paper accepted at ICLR 2025 workshop (disclosed)</text>
+  <text x="80" y="236" class="content">· template-free loop replaces v1's fixed scaffolding</text>
+  <text x="80" y="254" class="content">· Nature 2026 paper documents end-to-end pipeline</text>
+  <text x="80" y="272" class="content">· Beel et al. 2025 external eval flagged polish masking experiment flaws</text>
+
+  <!-- Safety box -->
+  <rect x="60" y="305" width="740" height="155" class="hot"/>
+  <text x="80" y="328" class="label">operational safety (Sakana repo README, paraphrased)</text>
+  <text x="80" y="350" class="content">- the codebase executes LLM-written code</text>
+  <text x="80" y="368" class="content">- dangerous packages, uncontrolled web access, unintended processes possible</text>
+  <text x="80" y="386" class="content">- Docker isolation recommended (seccomp / gVisor preferred for multi-day runs)</text>
+  <text x="80" y="404" class="content">- disclose agent-authored papers; review before submission</text>
+  <text x="80" y="424" class="content">- polish stage can mask experiment weakness; require separate audit</text>
+  <text x="80" y="442" class="content">- evaluator is peer review, which is weak and noisy</text>
+
+  <text x="440" y="478" text-anchor="middle" class="caption">unverified domain + full-text output surface + public venues = strongest controls in the phase</text>
+</svg>

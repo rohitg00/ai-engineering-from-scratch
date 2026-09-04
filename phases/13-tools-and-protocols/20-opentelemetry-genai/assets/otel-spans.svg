@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">OTel GenAI span hierarchy for one agent turn</text>
+
+  <rect x="40" y="60" width="880" height="40" class="cool"/>
+  <text x="480" y="84" text-anchor="middle" class="step">agent.invoke_agent  INTERNAL  gen_ai.agent.name=research-agent</text>
+
+  <rect x="80" y="110" width="400" height="40" class="cold"/>
+  <text x="280" y="134" text-anchor="middle" class="step">llm.chat  CLIENT  model=gpt-4o</text>
+
+  <rect x="80" y="160" width="800" height="40" class="hot"/>
+  <text x="480" y="184" text-anchor="middle" class="step">tool.execute  INTERNAL  tool=get_weather(Bengaluru)</text>
+
+  <rect x="140" y="210" width="740" height="40" class="cold"/>
+  <text x="510" y="234" text-anchor="middle" class="step">mcp.call  CLIENT  server=notes  transport=stdio  traceparent=...</text>
+
+  <rect x="80" y="260" width="800" height="40" class="hot"/>
+  <text x="480" y="284" text-anchor="middle" class="step">tool.execute  INTERNAL  tool=get_weather(Tokyo)</text>
+
+  <rect x="140" y="310" width="740" height="40" class="cold"/>
+  <text x="510" y="334" text-anchor="middle" class="step">mcp.call  CLIENT</text>
+
+  <rect x="80" y="360" width="800" height="40" class="hot"/>
+  <text x="480" y="384" text-anchor="middle" class="step">tool.execute  INTERNAL  tool=get_weather(Zurich)</text>
+
+  <rect x="140" y="410" width="740" height="40" class="cold"/>
+  <text x="510" y="434" text-anchor="middle" class="step">mcp.call  CLIENT</text>
+
+  <rect x="80" y="460" width="400" height="40" class="cold"/>
+  <text x="280" y="484" text-anchor="middle" class="step">llm.chat  CLIENT  synthesize</text>
+
+  <text x="480" y="516" text-anchor="middle" class="caption">one trace id; 11 spans; every GenAI attribute prefixed gen_ai.*  (spec v1.37+)</text>
+</svg>

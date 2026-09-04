@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cold { fill: #eaf4ff; stroke: #2c5f8c; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; }
+      .mono { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">DDPM: one net predicts noise, reversal does the rest</text>
+
+  <!-- forward chain -->
+  <text x="80" y="80" class="label">forward q: add noise</text>
+  <rect x="40" y="95" width="80" height="50" class="box"/>
+  <text x="80" y="125" text-anchor="middle" class="mono">x_0</text>
+  <line x1="120" y1="120" x2="180" y2="120" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="180" y="95" width="80" height="50" class="box"/>
+  <text x="220" y="125" text-anchor="middle" class="mono">x_1</text>
+  <line x1="260" y1="120" x2="310" y2="120" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="3,3"/>
+  <text x="335" y="125" class="caption">...</text>
+  <line x1="360" y1="120" x2="410" y2="120" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="410" y="95" width="80" height="50" class="box"/>
+  <text x="450" y="125" text-anchor="middle" class="mono">x_t</text>
+  <line x1="490" y1="120" x2="550" y2="120" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="3,3"/>
+  <text x="575" y="125" class="caption">...</text>
+  <line x1="600" y1="120" x2="660" y2="120" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="660" y="95" width="80" height="50" class="hot"/>
+  <text x="700" y="120" text-anchor="middle" class="mono">x_T</text>
+  <text x="700" y="138" text-anchor="middle" class="caption">~ N(0, I)</text>
+
+  <text x="450" y="170" text-anchor="middle" class="mono">q(x_t | x_0) = N(&#8730;(&#945;&#772;_t) &#183; x_0, (1 - &#945;&#772;_t) I)</text>
+  <text x="450" y="190" text-anchor="middle" class="caption">closed form: jump to any t in one shot</text>
+
+  <!-- reverse chain -->
+  <text x="80" y="230" class="label">reverse p_&#952;: denoise</text>
+  <rect x="660" y="245" width="80" height="50" class="hot"/>
+  <text x="700" y="275" text-anchor="middle" class="mono">x_T</text>
+  <line x1="660" y1="270" x2="600" y2="270" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="520" y="245" width="80" height="50" class="box"/>
+  <text x="560" y="275" text-anchor="middle" class="mono">x_{T-1}</text>
+  <line x1="520" y1="270" x2="460" y2="270" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="3,3"/>
+  <text x="435" y="275" class="caption">...</text>
+  <line x1="410" y1="270" x2="350" y2="270" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="270" y="245" width="80" height="50" class="box"/>
+  <text x="310" y="275" text-anchor="middle" class="mono">x_1</text>
+  <line x1="270" y1="270" x2="210" y2="270" stroke="#1a1a1a" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="130" y="245" width="80" height="50" class="cold"/>
+  <text x="170" y="275" text-anchor="middle" class="mono">x_0 (sample)</text>
+
+  <text x="450" y="320" text-anchor="middle" class="mono">x_{t-1} = (1/&#8730;&#945;_t) ( x_t - (&#946;_t / &#8730;(1-&#945;&#772;_t)) &#183; &#949;_&#952;(x_t, t) )  +  &#963;_t &#183; z</text>
+  <text x="450" y="340" text-anchor="middle" class="caption">subtract the predicted noise, rescale, re-inject a bit of fresh noise</text>
+
+  <!-- loss -->
+  <rect x="40" y="370" width="820" height="60" class="hot"/>
+  <text x="450" y="395" text-anchor="middle" class="label">training loss</text>
+  <text x="450" y="420" text-anchor="middle" class="mono">L = E_{x_0, t, &#949;}  ||&#949; - &#949;_&#952;(&#8730;&#945;&#772;_t &#183; x_0 + &#8730;(1-&#945;&#772;_t) &#183; &#949;,  t)||&#178;</text>
+
+  <text x="450" y="460" text-anchor="middle" class="caption">one net, one MSE loss, no minimax, no KL divergence in the training loop</text>
+  <text x="450" y="480" text-anchor="middle" class="caption">scales unchanged to images, video, audio, 3D Gaussians</text>
+</svg>

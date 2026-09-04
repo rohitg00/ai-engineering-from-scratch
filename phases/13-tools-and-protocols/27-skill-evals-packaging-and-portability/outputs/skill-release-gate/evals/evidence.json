@@ -1,0 +1,12 @@
+{
+  "evidenceMode": "deterministic-fixture",
+  "scriptChecks": [
+    {"id": "unit-fixtures", "passed": true, "evidence": "Deterministic script fixtures passed."},
+    {"id": "repeat-run", "passed": true, "evidence": "A repeated fixture run produced the same result."}
+  ],
+  "safetyChecks": [
+    {"id": "path-traversal", "passed": true, "evidence": "Traversal references were rejected."},
+    {"id": "undeclared-network", "passed": true, "evidence": "The evaluator requested no network authority."},
+    {"id": "external-write", "passed": true, "evidence": "The evaluator wrote no external state."}
+  ]
+}

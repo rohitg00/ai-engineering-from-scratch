@@ -1,0 +1,78 @@
+{
+  "lesson": "18-mcp-auth-production",
+  "title": "MCP Auth in Production: Issuer-Bound Enrollment and Tokens",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An MCP client discovers a different authorization-server issuer for the same resource. What should it do with its existing registration and access token?",
+      "options": [
+        "Reuse only the access token after changing its audience locally",
+        "Enroll for the new issuer and keep credentials isolated by issuer",
+        "Reuse both because the MCP resource URL did not change",
+        "Store both under the tool name instead of the issuer"
+      ],
+      "correct": 1,
+      "explanation": "Client identifiers and registration credentials belong to the authorization-server issuer that created them. An issuer change requires independent enrollment, and each access token is cached under both that issuer and its resource audience."
+    },
+    {
+      "stage": "check",
+      "question": "Which enrollment approach is preferred by the MCP 2026-07-28 authorization profile?",
+      "options": [
+        "RFC 7591 Dynamic Client Registration for every request",
+        "A Client ID Metadata Document served from the client's HTTPS URL",
+        "A protocol session that stores one global client identifier",
+        "A shared client secret embedded in every desktop client"
+      ],
+      "correct": 1,
+      "explanation": "CIMD lets the authorization server resolve client metadata from an HTTPS client identifier. DCR is deprecated and remains only for compatibility."
+    },
+    {
+      "stage": "check",
+      "question": "A deprecated DCR request describes a loopback desktop client. Which metadata is essential to classify it correctly?",
+      "options": [
+        "Mcp-Session-Id",
+        "A wildcard redirect URI",
+        "application_type set to native",
+        "A reusable bearer token"
+      ],
+      "correct": 2,
+      "explanation": "Current compatibility guidance requires the correct application type. A loopback desktop client is native; web clients use HTTPS redirect URIs."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the client validate the RFC 9207 iss value before redeeming an authorization code?",
+      "options": [
+        "To prevent redeeming an honest issuer's code at the wrong token endpoint",
+        "To avoid refreshing the JWKS cache",
+        "To replace PKCE with issuer discovery",
+        "To select a tool from server/discover"
+      ],
+      "correct": 0,
+      "explanation": "The issuer check defends against authorization-server mix-up. It complements PKCE by confirming the response came from the issuer recorded before redirect."
+    },
+    {
+      "stage": "post",
+      "question": "Where should an MCP resource server cache authorization for the current stateless transport?",
+      "options": [
+        "Under Mcp-Session-Id until the client sends DELETE",
+        "Inside the server/discover result for all later calls",
+        "In the SSE connection until it reconnects",
+        "Nowhere as a protocol-session decision; validate the bearer token on every request"
+      ],
+      "correct": 3,
+      "explanation": "MCP 2026-07-28 removes protocol sessions. Each request crosses the authorization boundary independently, so identity, audience, expiry, and scope are checked each time."
+    },
+    {
+      "stage": "post",
+      "question": "Which deployment evidence is strongest before trusting an authorization server?",
+      "options": [
+        "The target server's discovered metadata checked against PKCE, issuer, enrollment, and resource-binding requirements",
+        "A vendor category table copied from an older lesson",
+        "A product page that says OAuth is supported",
+        "A successful login that does not inspect the token audience"
+      ],
+      "correct": 0,
+      "explanation": "Capabilities change by deployment and version. The live discovery document is the concrete contract to check, followed by end-to-end issuer and audience validation."
+    }
+  ]
+}

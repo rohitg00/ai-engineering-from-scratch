@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .old { fill: #eeeeee; stroke: #888; stroke-width: 1.2; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="28" text-anchor="middle" class="title">native sparse attention — three branches</text>
+
+  <!-- Input query -->
+  <rect x="30" y="60" width="160" height="40" class="box"/>
+  <text x="110" y="85" text-anchor="middle" class="step">query q</text>
+
+  <!-- Branch 1: compressed -->
+  <line x1="190" y1="80" x2="240" y2="130" stroke="#1a1a1a" stroke-width="1.5"/>
+  <rect x="240" y="120" width="240" height="60" class="cool"/>
+  <text x="360" y="140" text-anchor="middle" class="head">1 / compressed branch</text>
+  <text x="360" y="158" text-anchor="middle" class="small">mean-pool every l tokens into</text>
+  <text x="360" y="172" text-anchor="middle" class="small">summary; attend over N/l keys</text>
+
+  <!-- Branch 2: selected -->
+  <line x1="190" y1="80" x2="240" y2="250" stroke="#1a1a1a" stroke-width="1.5"/>
+  <rect x="240" y="240" width="240" height="60" class="hot"/>
+  <text x="360" y="260" text-anchor="middle" class="head">2 / selected branch</text>
+  <text x="360" y="278" text-anchor="middle" class="small">take top-k compressed blocks</text>
+  <text x="360" y="292" text-anchor="middle" class="small">attend over k * l uncompressed keys</text>
+
+  <!-- Branch 3: sliding window -->
+  <line x1="190" y1="80" x2="240" y2="370" stroke="#1a1a1a" stroke-width="1.5"/>
+  <rect x="240" y="360" width="240" height="60" class="cold"/>
+  <text x="360" y="380" text-anchor="middle" class="head">3 / sliding window</text>
+  <text x="360" y="398" text-anchor="middle" class="small">attend over last W tokens for</text>
+  <text x="360" y="412" text-anchor="middle" class="small">local syntax and coreference</text>
+
+  <!-- Scores from branch 1 feed top-k selection -->
+  <line x1="360" y1="180" x2="360" y2="240" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="490" y="215" class="small" fill="#c0392b">compressed scores pick top-k blocks</text>
+
+  <!-- Gate MLP -->
+  <rect x="530" y="120" width="180" height="60" class="box"/>
+  <text x="620" y="140" text-anchor="middle" class="head">gate MLP</text>
+  <text x="620" y="158" text-anchor="middle" class="small">g_cmp, g_sel, g_win</text>
+  <text x="620" y="172" text-anchor="middle" class="small">from query q</text>
+
+  <line x1="110" y1="100" x2="530" y2="150" stroke="#1a1a1a" stroke-width="1.2"/>
+
+  <!-- Combine -->
+  <rect x="750" y="230" width="180" height="80" class="box"/>
+  <text x="840" y="252" text-anchor="middle" class="head">combine</text>
+  <text x="840" y="272" text-anchor="middle" class="step">g_cmp * o_cmp</text>
+  <text x="840" y="288" text-anchor="middle" class="step">+ g_sel * o_sel</text>
+  <text x="840" y="304" text-anchor="middle" class="step">+ g_win * o_win</text>
+
+  <line x1="480" y1="150" x2="750" y2="250" stroke="#2e7d32" stroke-width="1.2"/>
+  <line x1="480" y1="270" x2="750" y2="270" stroke="#c0392b" stroke-width="1.2"/>
+  <line x1="480" y1="390" x2="750" y2="290" stroke="#2c5ea9" stroke-width="1.2"/>
+
+  <!-- Compute budget -->
+  <rect x="30" y="450" width="900" height="100" class="box"/>
+  <text x="480" y="472" text-anchor="middle" class="label">keys attended per query vs full attention</text>
+
+  <text x="50" y="498" class="step">N=4k, l=32, k=8, W=256</text>
+  <text x="360" y="498" class="small">NSA 640  ·  full 4,096  ·  6.4x fewer</text>
+
+  <text x="50" y="518" class="step">N=64k, l=64, k=16, W=512</text>
+  <text x="360" y="518" class="small">NSA 2,560  ·  full 65,536  ·  25.6x fewer</text>
+
+  <text x="50" y="538" class="step">N=128k, l=64, k=16, W=512</text>
+  <text x="360" y="538" class="small">NSA 3,584  ·  full 131,072  ·  36.6x fewer</text>
+</svg>

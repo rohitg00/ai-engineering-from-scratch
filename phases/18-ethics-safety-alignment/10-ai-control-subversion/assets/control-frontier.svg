@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .axis { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .curve { stroke-width: 2.0; fill: none; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">AI Control: usefulness-safety frontier (Greenblatt et al. 2024)</text>
+
+  <rect x="60" y="60" width="600" height="340" class="box"/>
+  <line x1="120" y1="360" x2="620" y2="360" class="axis"/>
+  <line x1="120" y1="360" x2="120" y2="80" class="axis"/>
+  <text x="370" y="395" text-anchor="middle" class="small">usefulness (useful outputs / total) -&gt;</text>
+  <text x="80" y="220" text-anchor="middle" class="small" transform="rotate(-90 80 220)">safety (1 - backdoor ship rate) -&gt;</text>
+
+  <path d="M 180 340 Q 280 340 400 340 T 580 340" class="curve" stroke="#c0392b" stroke-dasharray="4 4"/>
+  <text x="580" y="335" class="small" fill="#c0392b">baseline (no protocol)</text>
+
+  <path d="M 130 100 Q 160 110 200 130 T 320 260" class="curve" stroke="#2c5ea9"/>
+  <text x="220" y="170" class="small" fill="#2c5ea9">upfront audit (H)</text>
+
+  <path d="M 180 300 Q 300 220 420 180 T 560 140" class="curve" stroke="#2e7d32"/>
+  <text x="520" y="130" class="small" fill="#2e7d32">trusted editing</text>
+
+  <path d="M 200 320 Q 320 280 440 240 T 580 200" class="curve" stroke="#8e44ad"/>
+  <text x="460" y="230" class="small" fill="#8e44ad">untrusted monitoring</text>
+
+  <rect x="680" y="60" width="240" height="200" class="box"/>
+  <text x="800" y="82" text-anchor="middle" class="head">protocol roles</text>
+  <text x="700" y="110" class="small">U = untrusted strong</text>
+  <text x="700" y="130" class="small">T = trusted weak</text>
+  <text x="700" y="150" class="small">H = trusted human</text>
+  <text x="700" y="180" class="small">baseline : ship U</text>
+  <text x="700" y="200" class="small">upfront  : audit all w/ H</text>
+  <text x="700" y="220" class="small">t-edit   : T gate, H on low conf</text>
+  <text x="700" y="240" class="small">u-monitor: U on U, H on flag</text>
+
+  <rect x="60" y="420" width="860" height="70" class="box"/>
+  <text x="80" y="445" class="small">trusted editing Pareto-dominates untrusted monitoring on the Greenblatt 2024 code-backdoor task.</text>
+  <text x="80" y="465" class="small">collusion risk: two U instances can coordinate via steganography or shared training priors.</text>
+  <text x="80" y="483" class="small">limits: H does not scale; T-to-U capability gap caps editing signal; control is not alignment.</text>
+</svg>

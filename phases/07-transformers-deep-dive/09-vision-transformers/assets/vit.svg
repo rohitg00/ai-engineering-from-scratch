@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cls { fill: #2c3e50; }
+      .cls-text { fill: #fff; }
+      .patch { fill: #e7edd9; stroke: #1a1a1a; stroke-width: 0.6; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">an image is a grid of patches — nothing else changes</text>
+
+  <!-- Original image 4x4 grid -->
+  <text x="130" y="70" text-anchor="middle" class="label">image (224x224x3)</text>
+  <g transform="translate(60 85)">
+    <g class="patch">
+      <rect x="0" y="0" width="36" height="36"/>
+      <rect x="36" y="0" width="36" height="36"/>
+      <rect x="72" y="0" width="36" height="36"/>
+      <rect x="108" y="0" width="36" height="36"/>
+      <rect x="0" y="36" width="36" height="36"/>
+      <rect x="36" y="36" width="36" height="36"/>
+      <rect x="72" y="36" width="36" height="36"/>
+      <rect x="108" y="36" width="36" height="36"/>
+      <rect x="0" y="72" width="36" height="36"/>
+      <rect x="36" y="72" width="36" height="36"/>
+      <rect x="72" y="72" width="36" height="36"/>
+      <rect x="108" y="72" width="36" height="36"/>
+      <rect x="0" y="108" width="36" height="36"/>
+      <rect x="36" y="108" width="36" height="36"/>
+      <rect x="72" y="108" width="36" height="36"/>
+      <rect x="108" y="108" width="36" height="36"/>
+    </g>
+  </g>
+  <text x="130" y="250" text-anchor="middle" class="caption">sliced into a 14 × 14 grid of 16-pixel patches</text>
+
+  <line x1="230" y1="160" x2="270" y2="160" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Flatten into tokens -->
+  <text x="400" y="70" text-anchor="middle" class="label">flatten each patch → embed</text>
+  <g transform="translate(280 90)">
+    <rect x="0"   y="0" width="26" height="40" class="cls"/><text x="13"  y="25" text-anchor="middle" class="content cls-text">CLS</text>
+    <rect x="30"  y="0" width="26" height="40" class="patch"/><text x="43"  y="25" text-anchor="middle" class="content">p_1</text>
+    <rect x="60"  y="0" width="26" height="40" class="patch"/><text x="73"  y="25" text-anchor="middle" class="content">p_2</text>
+    <rect x="90"  y="0" width="26" height="40" class="patch"/><text x="103" y="25" text-anchor="middle" class="content">p_3</text>
+    <rect x="120" y="0" width="26" height="40" class="patch"/><text x="133" y="25" text-anchor="middle" class="content">p_4</text>
+    <text x="160" y="25" class="content">...</text>
+    <rect x="180" y="0" width="36" height="40" class="patch"/><text x="198" y="25" text-anchor="middle" class="content">p_196</text>
+  </g>
+  <text x="400" y="155" text-anchor="middle" class="caption">sequence of 197 d-dim tokens (CLS + 196 patches)</text>
+
+  <line x1="400" y1="170" x2="400" y2="200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Transformer encoder block -->
+  <rect x="240" y="200" width="320" height="190" class="box"/>
+  <text x="400" y="225" text-anchor="middle" class="label">transformer encoder (same as BERT)</text>
+  <rect x="270" y="245" width="260" height="28" class="box"/>
+  <text x="400" y="264" text-anchor="middle" class="content">block 1: self-attn + MLP</text>
+  <rect x="270" y="280" width="260" height="28" class="box"/>
+  <text x="400" y="299" text-anchor="middle" class="content">block 2: self-attn + MLP</text>
+  <text x="400" y="325" text-anchor="middle" class="caption">× 12 for ViT-Base, × 24 for ViT-Large</text>
+  <rect x="270" y="340" width="260" height="32" class="hot"/>
+  <text x="400" y="361" text-anchor="middle" class="content">197 × d_model hidden states</text>
+
+  <line x1="400" y1="390" x2="400" y2="415" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Classification head -->
+  <rect x="275" y="415" width="250" height="30" class="box"/>
+  <text x="400" y="435" text-anchor="middle" class="content">take CLS → Linear(d, num_classes)</text>
+
+  <line x1="400" y1="445" x2="400" y2="465" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="305" y="465" width="190" height="30" class="hot"/>
+  <text x="400" y="485" text-anchor="middle" class="content">softmax → class</text>
+
+  <!-- Right side: variant callouts -->
+  <rect x="620" y="90" width="240" height="120" class="box"/>
+  <text x="740" y="112" text-anchor="middle" class="label">variants</text>
+  <text x="740" y="134" text-anchor="middle" class="caption">DeiT (2021): distill from CNN</text>
+  <text x="740" y="152" text-anchor="middle" class="caption">Swin: shifted-window local attn</text>
+  <text x="740" y="170" text-anchor="middle" class="caption">DINOv2: self-supervised</text>
+  <text x="740" y="188" text-anchor="middle" class="caption">SigLIP: + text encoder</text>
+  <text x="740" y="206" text-anchor="middle" class="caption">SAM 3: + mask decoder</text>
+
+  <rect x="620" y="230" width="240" height="160" class="box"/>
+  <text x="740" y="252" text-anchor="middle" class="label">scale table</text>
+  <text x="740" y="274" text-anchor="middle" class="content">ViT-B/16   86M</text>
+  <text x="740" y="294" text-anchor="middle" class="content">ViT-L/16   304M</text>
+  <text x="740" y="314" text-anchor="middle" class="content">ViT-H/14   632M</text>
+  <text x="740" y="334" text-anchor="middle" class="content">ViT-22B    22,000M</text>
+  <text x="740" y="362" text-anchor="middle" class="caption">data hunger: ≥ImageNet-21k</text>
+  <text x="740" y="378" text-anchor="middle" class="caption">needed to beat ResNet</text>
+
+  <text x="450" y="528" text-anchor="middle" class="caption">one architecture, many modalities — patchify the input and attention does the rest.</text>
+</svg>

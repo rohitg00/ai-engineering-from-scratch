@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">MC: rollout, compute returns, average</text>
+
+  <rect x="40" y="60" width="820" height="90" class="hot"/>
+  <text x="60" y="85" class="label">episode i</text>
+  <text x="60" y="110" class="content">s_0 --a_0--&gt; s_1 --a_1--&gt; s_2 --a_2--&gt; ... --a_{T-1}--&gt; s_T  (terminal)</text>
+  <text x="60" y="132" class="content">rewards:   r_1      r_2       r_3                  r_T</text>
+
+  <line x1="450" y1="150" x2="450" y2="175" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="180" width="820" height="80" class="box"/>
+  <text x="60" y="205" class="label">backward pass: compute returns</text>
+  <text x="60" y="230" class="content">G_t = r_{t+1} + gamma * G_{t+1}    (one pass, O(T))</text>
+  <text x="60" y="250" class="caption">the return G_t is the sampled realization of the expected return V^pi(s_t)</text>
+
+  <line x1="450" y1="262" x2="450" y2="285" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="290" width="400" height="130" class="box"/>
+  <text x="240" y="315" text-anchor="middle" class="label">first-visit MC</text>
+  <text x="60" y="340" class="content">for t where s_t first visited:</text>
+  <text x="60" y="360" class="content">  N(s_t) += 1</text>
+  <text x="60" y="380" class="content">  V(s_t) += (G_t - V(s_t)) / N(s_t)</text>
+  <text x="240" y="405" text-anchor="middle" class="caption">unbiased, iid samples</text>
+
+  <rect x="460" y="290" width="400" height="130" class="box"/>
+  <text x="660" y="315" text-anchor="middle" class="label">every-visit MC</text>
+  <text x="480" y="340" class="content">for every t in trajectory:</text>
+  <text x="480" y="360" class="content">  N(s_t) += 1</text>
+  <text x="480" y="380" class="content">  V(s_t) += (G_t - V(s_t)) / N(s_t)</text>
+  <text x="660" y="405" text-anchor="middle" class="caption">lower variance, slightly biased</text>
+
+  <text x="450" y="450" text-anchor="middle" class="caption">no model, no bootstrap — just sample trajectories and average the returns</text>
+</svg>

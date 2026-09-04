@@ -1,0 +1,1455 @@
+{
+  "id": "claude-ccar-p-mock-01",
+  "version": 2,
+  "track": "claude-ccar-p",
+  "kind": "mock",
+  "title": "Architect Professional Full Mock",
+  "timeLimitMinutes": 120,
+  "questions": [
+    {
+      "id": "ccar-p-m1-001",
+      "domain": "solution-design-architecture",
+      "objective": "Translate business problems into Claude solutions",
+      "type": "single",
+      "prompt": "A claims director asks for a fully autonomous system that will reduce handling time, but supplies no baseline, case boundaries, authority limits, or acceptable error rate. What should the architect do first?",
+      "options": [
+        "Promise a latency target based on a vendor benchmark",
+        "Select the highest-capability Claude model and build a read-only pilot on recent claims, using reviewer agreement to infer suitable case and authority boundaries",
+        "Design a manager agent with one subagent per claim type",
+        "Run structured discovery to define the current workflow, measurable outcome, risk boundaries, authority, and non-goals"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Architecture cannot be evaluated until the business outcome, workflow, error cost, and action authority are explicit. Structured discovery turns a feature request into testable requirements and exposes whether autonomy is justified.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "https://www.anthropic.com/research/building-effective-agents",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-002",
+      "domain": "solution-design-architecture",
+      "objective": "Align designs to value, cost, performance, and SLAs",
+      "type": "multiple",
+      "prompt": "A support drafting system is being designed for a premium service. Which requirements belong in the initial architecture decision? Select all that apply.",
+      "options": [
+        "Task-quality target on a representative ticket population",
+        "Require one model across all environments for consistency",
+        "Maximum action authority and human-approval triggers",
+        "P95 response latency and expected request volume"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Quality, performance, scale, and action authority directly constrain the design. A model tier is an implementation choice to test against those requirements, not a business requirement by itself.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-003",
+      "domain": "solution-design-architecture",
+      "objective": "Choose workflow, agentic, or augmented-LLM patterns",
+      "type": "single",
+      "prompt": "A loan-document process always extracts fields, validates them against deterministic rules, checks two databases, and routes exceptions to a reviewer. Which pattern is strongest?",
+      "options": [
+        "A deterministic workflow with bounded Claude extraction and reasoning steps",
+        "An unrestricted agent with access to every banking system",
+        "One structured prompt that includes the documents and copied database values, asks Claude to execute every rule, and routes low-confidence outputs to review",
+        "A peer-to-peer swarm with no coordinator"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The sequence and controls are known, so deterministic orchestration provides clearer auditability and failure handling. Agentic planning should be reserved for paths that genuinely depend on evidence discovered during execution.",
+      "references": [
+        "https://www.anthropic.com/research/building-effective-agents",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-004",
+      "domain": "solution-design-architecture",
+      "objective": "Design input, processing, output, and feedback loops",
+      "type": "single",
+      "prompt": "A contract-review application produces good summaries but does not improve after reviewers correct missed clauses. Which architectural component is missing?",
+      "options": [
+        "A larger context window",
+        "A governed feedback loop that captures corrections, labels failure classes, and feeds evaluation and iteration",
+        "A second output formatter",
+        "A reviewer dashboard that displays missed-clause feedback beside each summary but does not convert corrections into governed labels or evaluation cases"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Reviewer corrections create value only when they enter a controlled learning and evaluation loop. The system needs provenance, labels, ownership, and release criteria rather than an unstructured store of comments.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-005",
+      "domain": "solution-design-architecture",
+      "objective": "Design multi-agent orchestration",
+      "type": "multiple",
+      "prompt": "A due-diligence system uses a manager and four specialist agents. Which controls make the hierarchy defensible? Select all that apply.",
+      "options": [
+        "Let specialists edit one shared report while the manager infers ownership",
+        "Give each specialist a bounded objective, source set, and output contract",
+        "Propagate correlation IDs and budget limits through every delegation",
+        "Use a separate evaluator to verify evidence before the manager synthesizes"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Bounded contracts, independent evidence checks, traceability, and inherited budgets keep delegation inspectable. Silent cross-editing destroys ownership and makes failures difficult to attribute or reproduce.",
+      "references": [
+        "https://www.anthropic.com/research/building-effective-agents",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-006",
+      "domain": "solution-design-architecture",
+      "objective": "Decompose complex problems",
+      "type": "single",
+      "prompt": "A migration plan has discovery, schema design, transformation, verification, and cutover stages. Which decomposition is safest?",
+      "options": [
+        "Start cutover first so the team learns faster",
+        "Give one planning agent the full migration brief and authority to reorder stages whenever new evidence appears, while relying on its session memory for predecessor status",
+        "Model the dependencies, parallelize only independent discovery tasks, and gate transformation and cutover on verified predecessors",
+        "Run every stage in parallel to minimize elapsed time"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Decomposition must preserve causal dependencies. Independent work may proceed concurrently, while destructive or irreversible stages require accepted inputs, checkpoints, and explicit go or no-go gates.",
+      "references": [
+        "https://www.anthropic.com/research/building-effective-agents",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-007",
+      "domain": "solution-design-architecture",
+      "objective": "Align designs to value, cost, performance, and SLAs",
+      "type": "single",
+      "prompt": "Two architectures have the same answer accuracy. Design A costs half as much but sends twice as many cases to human review, making total handling cost higher. Which metric should drive the decision?",
+      "options": [
+        "Output token count alone",
+        "Model inference cost alone",
+        "Total automated handling time before human review, because the architecture with lower model cost also produces fast preliminary decisions",
+        "Total cost per successfully completed business outcome, including review and rework"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Architecture economics must include the entire workflow. Cheap inference can be a false economy when it increases review labor, escalations, retries, or downstream correction.",
+      "references": [
+        "https://platform.claude.com/docs/en/about-claude/pricing",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-008",
+      "domain": "solution-design-architecture",
+      "objective": "Design input, processing, output, and feedback loops",
+      "type": "multiple",
+      "prompt": "A customer-facing Claude service has a strict availability objective. Which degradation paths should be designed before launch? Select all that apply.",
+      "options": [
+        "Queues and bounded retries for transient provider failures",
+        "Fallback to a narrower read-only workflow when optional tools fail",
+        "Explicit unavailable or escalate states instead of fabricated answers",
+        "Retry failed requests indefinitely so availability remains high"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Graceful degradation preserves safe value under partial failure. Explicit states, queues, and bounded retries support the service objective; unlimited retries create load amplification and uncontrolled latency.",
+      "references": [
+        "https://sre.google/sre-book/table-of-contents/",
+        "https://platform.claude.com/docs/en/api/messages",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-009",
+      "domain": "solution-design-architecture",
+      "objective": "Design input, processing, output, and feedback loops",
+      "type": "single",
+      "prompt": "An application validates model output but never checks whether a requested refund actually appears in the payment system. Which layer is missing?",
+      "options": [
+        "Independent final-state verification against the system of record",
+        "A richer refund-tool response containing the requested amount, model confidence, policy citations, and a success status returned by the orchestration layer",
+        "Prompt caching",
+        "A prompt template"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Output validation proves only the response contract. Agentic applications also require a final-state check that confirms the external action and catches confident but unexecuted claims.",
+      "references": [
+        "https://www.anthropic.com/research/building-effective-agents",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-010",
+      "domain": "solution-design-architecture",
+      "objective": "Choose workflow, agentic, or augmented-LLM patterns",
+      "type": "single",
+      "prompt": "A global service requires regional data residency and can tolerate a 30-minute recovery point for its knowledge index. Which design is most defensible?",
+      "options": [
+        "Keep the regulated source in approved regional storage but query it through one centrally managed cross-region index to simplify recovery and relevance tuning",
+        "Map data classes and provider regions, keep regulated data in approved boundaries, and design regional indexes with tested recovery",
+        "Copy every source into one global prompt",
+        "Ignore residency because prompts are transient"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Residency and recovery requirements shape storage, retrieval, provider selection, and failover. The design must document approved regions and prove restoration instead of assuming transient model calls remove data obligations.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "https://trust.anthropic.com/",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-011",
+      "domain": "solution-design-architecture",
+      "objective": "Translate business problems into Claude solutions",
+      "type": "single",
+      "prompt": "An architecture review compares workflow and agent designs but records only the chosen option. What should be added?",
+      "options": [
+        "The architect's private chain of thought",
+        "A target-state diagram and implementation plan that describe the selected option in enough detail to recreate it if the current architecture owner leaves",
+        "A durable decision record containing context, constraints, rejected alternatives, consequences, verification, and reversal conditions",
+        "A screenshot of the whiteboard only"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A professional decision record preserves why the choice fit current evidence and what would trigger reconsideration. This supports implementation, review, operations, and later reversal without exposing private reasoning.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-012",
+      "domain": "models-prompting-context",
+      "objective": "Select models from explicit tradeoffs",
+      "type": "single",
+      "prompt": "A smaller Claude model and a larger model both pass safety gates, but the larger model improves complex reasoning accuracy by 6 points at three times the cost. What should the architect do?",
+      "options": [
+        "Use the smaller model for every request because it passes safety gates, then add a human review rule for the complex cases instead of routing by measured value",
+        "Average the two model outputs without validation",
+        "Use the larger model for every request",
+        "Segment the workload, quantify business value of the gain, and route only cases that earn the larger model"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Model selection is workload-specific. Routing preserves economical handling for simple cases while applying additional capability where the measured quality improvement justifies cost and latency.",
+      "references": [
+        "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "https://platform.claude.com/docs/en/about-claude/pricing",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-013",
+      "domain": "models-prompting-context",
+      "objective": "Select models from explicit tradeoffs",
+      "type": "multiple",
+      "prompt": "A model-routing architecture is proposed. Which controls are required? Select all that apply.",
+      "options": [
+        "A representative eval for the router's classification decisions",
+        "Cost and latency telemetry by route",
+        "Route uncertain cases to the cheapest model before escalating",
+        "Fallback behavior when the selected model is unavailable or fails its contract"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "The router becomes a production decision component and needs its own quality, fallback, and economics evidence. Uncertain high-impact cases generally need stronger review or capability, not automatic cost minimization.",
+      "references": [
+        "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-014",
+      "domain": "models-prompting-context",
+      "objective": "Design prompts, templates, and guardrails",
+      "type": "single",
+      "prompt": "A production prompt has grown to 9,000 tokens of duplicated policy, examples, and task-specific rules. What is the strongest redesign?",
+      "options": [
+        "Separate always-needed policy, reusable task modules, scoped examples, and deterministic controls, then evaluate each change",
+        "Remove all constraints and rely on a model upgrade",
+        "Keep one complete prompt but deduplicate exact repeated lines, group the remaining policy and examples by topic, and rely on prompt caching to control cost",
+        "Move every line into the user message"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Modular instruction architecture reduces context cost and conflict. The team should preserve core policy, load specialized procedure only when relevant, enforce invariants outside the prompt, and validate behavior through evals.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+        "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-015",
+      "domain": "models-prompting-context",
+      "objective": "Apply zero-shot, few-shot, and reasoning techniques",
+      "type": "single",
+      "prompt": "A claims classifier performs well on obvious cases but confuses borderline exclusions. Which prompting intervention is most targeted?",
+      "options": [
+        "Increase output length to 5,000 words",
+        "Add few-shot examples drawn from the difficult boundary cases with correct rationale and labels",
+        "Add a larger balanced sample of routine approved and denied claims so the model sees the overall label distribution, without emphasizing borderline exclusions",
+        "Tell the model it is a world-class classifier"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Few-shot examples are most valuable where category boundaries are ambiguous. Representative hard cases teach the intended distinction, while easy repetition and personas do not address the observed failure.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-016",
+      "domain": "models-prompting-context",
+      "objective": "Manage context windows and token use",
+      "type": "single",
+      "prompt": "A research agent repeatedly includes 200 pages of source material even though each question needs only a few sections. What is the best architecture?",
+      "options": [
+        "Pre-summarize each source into a short paragraph, concatenate all summaries into a stable context, and retrieve from that compressed corpus without source-level provenance",
+        "Always select the largest context window",
+        "Retrieve and rank relevant sections, preserve provenance, and keep durable state outside the prompt",
+        "Drop source citations to save tokens"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Context should carry the evidence needed for the current decision, not the entire corpus by default. Retrieval and durable state reduce bloat while provenance preserves verification.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+        "https://www.anthropic.com/news/contextual-retrieval",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-017",
+      "domain": "models-prompting-context",
+      "objective": "Reuse stable prompts with caching, modular prompts, and Skills",
+      "type": "multiple",
+      "prompt": "A service repeats a long stable policy and tool catalog across requests. Which choices improve cache economics? Select all that apply.",
+      "options": [
+        "Place the stable prefix before customer-specific content",
+        "Put tenant metadata first to bind every cached prefix",
+        "Measure cache creation, hit rate, latency, and cost",
+        "Keep reusable prefix bytes stable where practical"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Prompt caching benefits from stable shared prefixes and empirical measurement. Volatile content near the beginning prevents reuse for everything that follows it.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+        "https://platform.claude.com/docs/en/about-claude/pricing",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-018",
+      "domain": "models-prompting-context",
+      "objective": "Reuse stable prompts with caching, modular prompts, and Skills",
+      "type": "multiple",
+      "prompt": "Which content is best packaged as an Agent Skill instead of always placed in the root prompt? Select all that apply.",
+      "options": [
+        "A universal safety rule that loads only after model risk detection",
+        "Reference files and scripts used by one specialized workflow",
+        "A domain playbook that should load when its task is detected",
+        "A reusable incident-analysis procedure needed only during incidents"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Skills support progressive disclosure for reusable specialized procedure and assets. A safety invariant needed every time belongs in trusted core policy and deterministic controls.",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-019",
+      "domain": "models-prompting-context",
+      "objective": "Apply zero-shot, few-shot, and reasoning techniques",
+      "type": "single",
+      "prompt": "Extended thinking improves one architecture-planning eval but causes the interactive service to miss its latency objective. What is the strongest response?",
+      "options": [
+        "Keep extended thinking on the synchronous route and stream a generated progress explanation to users, because perceived responsiveness may offset the measured latency miss",
+        "Disable all reasoning features permanently",
+        "Ignore the latency objective",
+        "Use the measured gain only in an asynchronous or high-complexity route whose service objective can absorb it"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Reasoning budget must fit the service and task. Routing difficult or asynchronous work to a higher-effort configuration preserves quality without violating the primary interactive path.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/01-claude-product-and-model-landscape"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-020",
+      "domain": "integration",
+      "objective": "Reduce capability bloat",
+      "type": "multiple",
+      "prompt": "An enterprise agent loads 140 overlapping tools on every turn. Which redesigns are appropriate? Select all that apply.",
+      "options": [
+        "Group capabilities into coherent domain surfaces",
+        "Use progressive discovery so detailed tools load only when relevant",
+        "Remove or merge overlapping tools based on trajectory evals",
+        "Keep all tools but shorten each description to one sentence"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Capability bloat consumes context and increases selection ambiguity. Domain scoping, progressive discovery, and evidence-driven consolidation preserve useful reach with a smaller active surface.",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+        "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-021",
+      "domain": "integration",
+      "objective": "Find authentication and authorization gaps",
+      "type": "multiple",
+      "prompt": "An MCP tool accepts tenant_id and user_role directly from model arguments. Which corrections are required? Select all that apply.",
+      "options": [
+        "Authorize the specific operation and resource on the server",
+        "Bind tenant and identity from the authenticated session",
+        "Trust schema-validated tenant and role arguments from the model",
+        "Treat model-provided role as advisory only, never proof of authority"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Schema validity does not establish identity or permission. Authentication comes from trusted session state, and server-side authorization must constrain every resource and action.",
+      "references": [
+        "https://modelcontextprotocol.io/specification/latest/basic/authorization",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-022",
+      "domain": "integration",
+      "objective": "Design RAG chunking and indexing",
+      "type": "single",
+      "prompt": "A corpus contains long legal documents whose meaning depends on sections, clauses, and cross-references. Which chunking strategy is strongest?",
+      "options": [
+        "Structure-aware chunks that retain section metadata, overlap where needed, and preserve document and clause identifiers",
+        "Fixed five-character chunks",
+        "Sentence-level chunks grouped into fixed windows after shuffling boilerplate clauses away, with the parent document ID retained for reconstruction",
+        "Uniform token-sized chunks with generous overlap and document IDs, because consistent embedding units simplify indexing and cross-document retrieval at scale"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Structure-aware chunking preserves semantic units and provenance while keeping retrieval granular. Metadata and controlled overlap support cross-reference resolution and later citation checks.",
+      "references": [
+        "https://www.anthropic.com/news/contextual-retrieval",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-023",
+      "domain": "integration",
+      "objective": "Match retrieval to data shape and query pattern",
+      "type": "single",
+      "prompt": "A support assistant retrieves an obsolete cancellation policy even though the new policy is indexed. Which system change most directly addresses the defect?",
+      "options": [
+        "Increase semantic-ranking weight for cancellation queries and ask the generator to compare any retrieved policy dates before choosing which passage to cite",
+        "Add version, effective-date, and authority metadata; filter or rank to the active policy and test freshness",
+        "Increase generation temperature",
+        "Remove all document identifiers"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "This is a retrieval-governance failure. Explicit authority and temporal metadata let the retriever select the active source and make freshness observable in tests and operations.",
+      "references": [
+        "https://www.anthropic.com/news/contextual-retrieval",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-024",
+      "domain": "integration",
+      "objective": "Match retrieval to data shape and query pattern",
+      "type": "multiple",
+      "prompt": "A product search must handle exact part numbers and natural-language descriptions. Which retrieval design is appropriate? Select all that apply.",
+      "options": [
+        "Lexical retrieval for exact identifiers",
+        "Recall likely catalog entries before retrieval",
+        "A reranking stage evaluated on representative queries",
+        "Semantic retrieval for paraphrased needs"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Exact and semantic queries have different strengths, so hybrid retrieval plus reranking can serve both. Product availability and identifiers require current authoritative data, not model memory.",
+      "references": [
+        "https://www.anthropic.com/news/contextual-retrieval",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-025",
+      "domain": "integration",
+      "objective": "Use progressive discovery instead of monolithic context where appropriate",
+      "type": "multiple",
+      "prompt": "A large internal platform has hundreds of APIs. Which progressive-discovery design is strongest? Select all that apply.",
+      "options": [
+        "Put compressed summaries for every API in root context",
+        "Record discovery and selection in the trace",
+        "Expose a small capability index with concise domain descriptions",
+        "Load detailed schemas only after a domain is selected"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Progressive discovery keeps initial context small while retaining access to deeper capability. Tracing makes routing errors diagnosable; monolithic schemas increase cost and confusion.",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+        "https://modelcontextprotocol.io/specification",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-026",
+      "domain": "integration",
+      "objective": "Choose MCP, API, CLI, or agent-to-agent integration",
+      "type": "single",
+      "prompt": "One service makes one stable, high-volume call to an internal risk API. No other host needs discovery. Which integration is the best default?",
+      "options": [
+        "A public MCP registry entry",
+        "A small MCP server deployed beside the service so the internal risk capability can later be discovered by additional hosts without changing the client contract",
+        "A direct typed API client with authentication, timeouts, and contract tests",
+        "A new multi-agent protocol"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A direct typed client is the smallest reliable boundary for one stable high-volume integration. MCP or agent-to-agent protocols add value only when interoperability or delegated coordination justifies their lifecycle cost.",
+      "references": [
+        "https://modelcontextprotocol.io/specification",
+        "https://platform.claude.com/docs/en/api/messages",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-027",
+      "domain": "integration",
+      "objective": "Choose MCP, API, CLI, or agent-to-agent integration",
+      "type": "single",
+      "prompt": "A desktop host and two IDEs need the same governed repository tools and reusable resources. Which option best fits?",
+      "options": [
+        "Duplicate bespoke connectors in each host",
+        "A spreadsheet copied into every session",
+        "Three host-specific connectors generated from one shared integration package, all calling the same governed repository API and consent service",
+        "A reviewed MCP server with negotiated capabilities and host-specific consent"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "MCP standardizes discovery and invocation across compliant hosts while preserving one governed server boundary. Authentication, authorization, consent, and versioning remain necessary.",
+      "references": [
+        "https://modelcontextprotocol.io/specification",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-028",
+      "domain": "integration",
+      "objective": "Select observability at scale",
+      "type": "multiple",
+      "prompt": "A request crosses an API gateway, Claude call, MCP server, and database. Which telemetry is needed for diagnosis at scale? Select all that apply.",
+      "options": [
+        "Latency and result class for each boundary",
+        "Versioned model, prompt, tool, and policy identifiers",
+        "A propagated correlation or trace ID",
+        "Log bearer-token fingerprints in every trace span"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Correlation and versioned boundary telemetry reconstruct the request path and identify regressions. Credentials and unrestricted sensitive content should be redacted or omitted from observability.",
+      "references": [
+        "https://opentelemetry.io/docs/specs/otel/",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-029",
+      "domain": "integration",
+      "objective": "Balance accuracy and latency",
+      "type": "single",
+      "prompt": "A RAG pipeline improves recall by issuing five query expansions, but p95 latency exceeds the user objective and answer quality improves only 0.4 points. What should the architect do?",
+      "options": [
+        "Use eval evidence to reduce or condition expansion, then measure quality and latency by query slice",
+        "Remove retrieval entirely",
+        "Hide the latency metric from stakeholders",
+        "Keep all five expansions for every query but run them concurrently and cache repeated candidates, optimizing transport latency before changing retrieval behavior"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The small average quality gain may not earn the latency cost. Conditional expansion for difficult query slices can preserve value while meeting the service objective.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-030",
+      "domain": "integration",
+      "objective": "Find authentication and authorization gaps",
+      "type": "single",
+      "prompt": "A third-party model platform is proposed for regulated regional workloads. What must be verified before approval?",
+      "options": [
+        "Only whether it exposes a compatible chat method",
+        "Identity, data processing and residency, model and feature availability, network path, logging, retention, and contractual controls",
+        "Whether its SDK preserves the existing method names, streaming events, and error classes so the application can migrate without code changes",
+        "Whether a demo completes once"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "API compatibility does not establish compliance or operational suitability. The architect must verify the full data and identity boundary and document which controls remain the customer's responsibility.",
+      "references": [
+        "https://trust.anthropic.com/",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-031",
+      "domain": "integration",
+      "objective": "Choose MCP, API, CLI, or agent-to-agent integration",
+      "type": "multiple",
+      "prompt": "A tool times out after it may have created a customer record. Which integration controls are required before retry? Select all that apply.",
+      "options": [
+        "A stable idempotency key",
+        "A bounded retry policy based on failure class",
+        "Ask a model whether the timed-out write succeeded",
+        "Authoritative reconciliation of the operation outcome"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Ambiguous side effects require transaction-level evidence. Idempotency, reconciliation, and classified retry policy prevent duplicates; generation settings cannot determine whether the first write completed.",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+        "https://sre.google/sre-book/table-of-contents/",
+        "certifications/claude/lessons/04-context-knowledge-memory-and-caching"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-032",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Define accuracy, latency, cost, safety, and security metrics",
+      "type": "multiple",
+      "prompt": "Which measures form a balanced production scorecard for an account-support agent? Select all that apply.",
+      "options": [
+        "Cost per successful resolution and human-review minutes",
+        "Track response length and model confidence",
+        "P50 and P95 latency plus availability",
+        "Task success and unsupported-claim rate"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "A balanced scorecard covers quality, reliability, economics, and operational burden. Stylistic counts matter only if tied to a validated user requirement.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/02-model-selection-and-token-economics"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-033",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Build representative datasets and mixed-method test frameworks",
+      "type": "multiple",
+      "prompt": "A team builds an evaluation set from production traffic. Which practices improve validity? Select all that apply.",
+      "options": [
+        "Tune prompts against held-out failures until those cases pass",
+        "Represent common, boundary, high-impact, and adversarial slices",
+        "Preserve provenance and label quality while minimizing sensitive data",
+        "Separate development cases from held-out release cases"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Representative slices and trustworthy labels make the set useful, while a held-out partition limits overfitting. Repeated tuning on release cases converts them into development data.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "https://www.nist.gov/itl/ai-risk-management-framework",
+        "certifications/claude/lessons/02-model-selection-and-token-economics"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-034",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Build representative datasets and mixed-method test frameworks",
+      "type": "single",
+      "prompt": "An LLM judge gives a helpfulness score. How should the team establish whether the judge is reliable enough for a release gate?",
+      "options": [
+        "Ask the judge to score its own accuracy",
+        "Use the same model and prompt as the generator",
+        "Calibrate it against independently labeled human examples and inspect false positives, false negatives, and slice disagreement",
+        "Accept it after prompt-level consistency tests show stable JSON scores across repeated samples, using disagreement with human labels only to refine the judge prompt"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Judge validity is empirical. Human calibration and disagreement analysis reveal rubric ambiguity and shared blind spots that structured output or self-assessment cannot remove.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/02-model-selection-and-token-economics"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-035",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Diagnose prompt, hallucination, retrieval, and model failures",
+      "type": "multiple",
+      "prompt": "A RAG answer cites the wrong policy. Which tests isolate the cause? Select all that apply.",
+      "options": [
+        "Evaluate reranker ordering independently",
+        "Measure whether the correct document appeared in the retrieved top-k set",
+        "Give Claude the correct source directly and test answer faithfulness",
+        "Change prompt, reranker, and model together before retesting"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Separate retrieval, ranking, and generation tests localize the failure. Changing every component together may improve one run but destroys causal evidence.",
+      "references": [
+        "https://www.anthropic.com/news/contextual-retrieval",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/02-model-selection-and-token-economics"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-036",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Run A/B tests and iterative improvements",
+      "type": "single",
+      "prompt": "Variant B raises offline answer quality by 3 points but increases live abandonment. What should determine rollout?",
+      "options": [
+        "Offline score alone",
+        "The offline score if it was measured on a representative dataset, while treating abandonment as a temporary interface-adaptation effect after release",
+        "The architect's personal preference",
+        "A predeclared decision rule combining guardrails and the primary live outcome, followed by slice analysis"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Offline quality is one signal. A production experiment should use predeclared business and safety metrics, ensure valid assignment, and inspect important slices before deciding.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/02-model-selection-and-token-economics"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-037",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Build representative datasets and mixed-method test frameworks",
+      "type": "single",
+      "prompt": "One evaluation run passes all 50 cases. What can the architect conclude?",
+      "options": [
+        "Only that one sampled run passed; higher-variance or high-risk cases need repeated measurement and confidence analysis",
+        "The model is deterministic",
+        "The system will always pass those cases",
+        "The current prompt-model combination is ready for launch on the represented cases, provided deterministic checks pass, without estimating run-to-run uncertainty"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Probabilistic model behavior and changing integrations make one run insufficient evidence of stability. Repeated trials and production monitoring quantify variance and detect distribution shift.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "https://platform.claude.com/docs/en/about-claude/models/overview",
+        "certifications/claude/lessons/02-model-selection-and-token-economics"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-038",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Diagnose prompt, hallucination, retrieval, and model failures",
+      "type": "single",
+      "prompt": "The provider wire response contains a citation field, but the application trace and UI do not. What should the team inspect first?",
+      "options": [
+        "The UI rendering component and browser compatibility layer, because the trace may intentionally omit provider-only citation metadata before display",
+        "SDK deserialization and each application serialization boundary",
+        "The retrieval and citation-generation prompts, because a citation visible on the provider wire may still have been produced from a malformed evidence chunk",
+        "The system prompt"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The field existed at the provider boundary, so the likely defect is integration mapping. Comparing wire, SDK object, service DTO, and UI payload locates where the field disappeared.",
+      "references": [
+        "https://platform.claude.com/docs/en/api/messages",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/02-model-selection-and-token-economics"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-039",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Optimize tokens, latency, and cost-performance",
+      "type": "single",
+      "prompt": "Prompt caching cuts input cost by 35 percent, but a stale policy prefix causes incorrect decisions. What is the correct optimization response?",
+      "options": [
+        "Increase cache lifetime without measurement",
+        "Remove correctness from the scorecard",
+        "Restore source freshness and versioned invalidation, then evaluate cache economics on correct outputs",
+        "Keep caching enabled but shorten the cache lifetime and add a prompt instruction to prefer newer retrieved policy when it conflicts with the stable prefix"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Optimization is subordinate to correctness. Stable prefixes need explicit content ownership and invalidation so cost savings do not preserve obsolete policy.",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/02-model-selection-and-token-economics"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-040",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Run A/B tests and iterative improvements",
+      "type": "multiple",
+      "prompt": "Which release gates protect against a misleading average improvement? Select all that apply.",
+      "options": [
+        "No regression beyond threshold in high-impact slices",
+        "Zero new unauthorized side effects",
+        "Gate only on a significant aggregate improvement",
+        "Cost and latency within approved budgets"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Non-negotiable safety failures, critical slices, and operational budgets prevent aggregate gains from hiding unacceptable regressions. Averages cannot express every risk boundary.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "https://www.nist.gov/itl/ai-risk-management-framework",
+        "certifications/claude/lessons/02-model-selection-and-token-economics"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-041",
+      "domain": "evaluation-testing-optimization",
+      "objective": "Monitor with logs, traces, and observability",
+      "type": "multiple",
+      "prompt": "Which information belongs in a production trace for a tool-using Claude workflow? Select all that apply.",
+      "options": [
+        "Model, prompt, schema, tool, and policy versions",
+        "Encrypted full prompts, retrieved documents, and tool arguments in a restricted trace store so investigators can reproduce any result without source lookups",
+        "Stop reason and redacted tool-decision events",
+        "Correlation IDs and final-state verification result"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Versioned and correlated decision events support reproduction and incident analysis. Sensitive payloads and credentials should be minimized, redacted, and protected rather than copied into general telemetry.",
+      "references": [
+        "https://opentelemetry.io/docs/specs/otel/",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/02-model-selection-and-token-economics"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-042",
+      "domain": "governance-safety-risk",
+      "objective": "Layer guardrails and safety controls",
+      "type": "multiple",
+      "prompt": "A coding agent can read files, execute commands, and access a package registry. Which layered controls are appropriate? Select all that apply.",
+      "options": [
+        "A system instruction that assigns Claude the role of a security-conscious senior engineer and requires explicit reasoning before any tool with side effects",
+        "Prompt-level trust-boundary instructions",
+        "Pre-tool policy hooks and explicit approval for consequential actions",
+        "Filesystem and network sandboxing with least privilege"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Defense in depth combines behavioral guidance, deterministic gates, human authority, and infrastructure isolation. Capability claims do not constrain execution or replace enforceable boundaries.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks",
+        "https://code.claude.com/docs/en/hooks-guide",
+        "https://code.claude.com/docs/en/security",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-043",
+      "domain": "governance-safety-risk",
+      "objective": "Design human-in-the-loop validation",
+      "type": "multiple",
+      "prompt": "Which properties make a human-review step meaningful? Select all that apply.",
+      "options": [
+        "A qualified reviewer with evidence and authority",
+        "A defined trigger based on impact, uncertainty, or policy",
+        "A time objective and safe fallback when review is unavailable",
+        "A post-action reviewer checkpoint that can reverse most outcomes and records whether the original model action should remain in effect"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Human review needs a trigger, accountable role, evidence packet, time budget, and fallback. Review after an irreversible action cannot serve as preauthorization.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "https://www.nist.gov/itl/ai-risk-management-framework",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-044",
+      "domain": "governance-safety-risk",
+      "objective": "Account for GDPR, HIPAA, FedRAMP, and applicable regulation",
+      "type": "multiple",
+      "prompt": "A European customer-service assistant is being designed. Which GDPR-aligned architectural questions should be answered? Select all that apply.",
+      "options": [
+        "What lawful basis and purpose govern processing",
+        "How data-subject rights and deletion propagate through stores and logs",
+        "Which optional customer fields could improve future personalization, provided the privacy notice describes broad service-improvement use and access is restricted",
+        "Which personal data is necessary and how long it is retained"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Purpose limitation, data minimization, retention, and rights handling shape the data lifecycle. Speculative collection conflicts with minimization and increases risk. Legal counsel must confirm obligations for the deployment.",
+      "references": [
+        "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-045",
+      "domain": "governance-safety-risk",
+      "objective": "Account for GDPR, HIPAA, FedRAMP, and applicable regulation",
+      "type": "single",
+      "prompt": "A healthcare workflow will send protected health information through Claude. What is the architect's strongest first governance action?",
+      "options": [
+        "Assume encryption alone makes the workflow compliant",
+        "Ask Claude to certify compliance",
+        "Use the provider's encrypted transport and approved enterprise plan, send complete records to maximize clinical context, and rely on downstream access logs for compliance",
+        "Confirm the covered workflow, approved service configuration and agreements, minimum-necessary data, access controls, auditability, and organizational HIPAA review"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "HIPAA suitability depends on the complete administrative, technical, contractual, and data-minimization boundary. A model cannot declare the system compliant, and encryption is only one control.",
+      "references": [
+        "https://www.hhs.gov/hipaa/for-professionals/security/index.html",
+        "https://trust.anthropic.com/",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-046",
+      "domain": "governance-safety-risk",
+      "objective": "Account for GDPR, HIPAA, FedRAMP, and applicable regulation",
+      "type": "single",
+      "prompt": "A US government team requires a FedRAMP-authorized boundary. Which statement is correct?",
+      "options": [
+        "The exact cloud service, deployment boundary, region, inherited controls, customer responsibilities, and data flow must be verified",
+        "A local prototype is sufficient evidence",
+        "Use the same model family through any government cloud region, provided encryption, identity federation, and agency logging meet the team's inherited control baseline",
+        "FedRAMP applies only to the user interface"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Authorization attaches to a defined service and control boundary, not a model name in isolation. Architects must verify the approved offering and map inherited versus customer-operated controls.",
+      "references": [
+        "https://www.fedramp.gov/",
+        "https://trust.anthropic.com/",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-047",
+      "domain": "governance-safety-risk",
+      "objective": "Address bias, fairness, and transparency",
+      "type": "multiple",
+      "prompt": "A benefits-triage system has acceptable overall accuracy. Which fairness checks are still needed? Select all that apply.",
+      "options": [
+        "Compare error and escalation rates across relevant groups",
+        "Use the acceptable aggregate score plus a balanced overall label distribution as evidence of fairness, then monitor complaints for group-specific problems",
+        "Test accessibility and language slices",
+        "Review whether labels and proxy variables encode historical inequity"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Aggregate performance can conceal concentrated harm. Slice metrics, data and label review, and accessibility evaluation reveal distributional failures that require governance decisions.",
+      "references": [
+        "https://www.nist.gov/itl/ai-risk-management-framework",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-048",
+      "domain": "governance-safety-risk",
+      "objective": "Address bias, fairness, and transparency",
+      "type": "single",
+      "prompt": "Users receive recommendations that affect account access. Which transparency design is strongest?",
+      "options": [
+        "Publish private chain-of-thought",
+        "Disclose the AI-assisted role, provide understandable factors and evidence where appropriate, and offer a challenge or escalation path",
+        "Disclose that AI generated the recommendation, show a calibrated confidence band, and direct users to ordinary customer support without exposing decision factors",
+        "Hide that AI contributed so users trust the result"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Meaningful transparency explains the system's role, basis, limitations, and recourse without exposing private reasoning or sensitive controls. A bare confidence number is not an explanation.",
+      "references": [
+        "https://www.nist.gov/itl/ai-risk-management-framework",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-049",
+      "domain": "governance-safety-risk",
+      "objective": "Identify LLM failure modes",
+      "type": "multiple",
+      "prompt": "An external document instructs a procurement agent to approve a new vendor and send credentials. Which controls should prevent harm? Select all that apply.",
+      "options": [
+        "Treat the document as authenticated business intent when its signature image and vendor details match an approved record, then apply ordinary tool approval",
+        "Treat document instructions as untrusted content",
+        "Require authenticated human approval bound to the exact vendor action",
+        "Keep vendor approval and credential access outside automatic model authority"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Indirect prompt injection exploits legitimate agent authority. Trust labeling, least privilege, and action-bound approval prevent content from authenticating or authorizing itself.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-050",
+      "domain": "governance-safety-risk",
+      "objective": "Layer guardrails and safety controls",
+      "type": "single",
+      "prompt": "A secret appears in a model trace. What is the correct immediate response?",
+      "options": [
+        "Restrict trace access, add the secret pattern to redaction, and monitor the credential for suspicious use before rotating it at the next maintenance window",
+        "Ask the model to forget it",
+        "Contain the affected capability, revoke or rotate the credential, preserve redacted evidence, and investigate actual access",
+        "Delete the trace and continue using the credential"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Once exposed, a credential is no longer trustworthy. Containment and rotation reduce ongoing risk, while protected evidence and authoritative logs establish impact and support regression fixes.",
+      "references": [
+        "https://code.claude.com/docs/en/security",
+        "https://www.nist.gov/itl/ai-risk-management-framework",
+        "certifications/claude/lessons/06-governance-safety-and-responsible-use"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-051",
+      "domain": "stakeholder-lifecycle",
+      "objective": "Run structured discovery",
+      "type": "multiple",
+      "prompt": "A discovery workshop for an underwriting assistant is beginning. Which questions should the architect prioritize? Select all that apply.",
+      "options": [
+        "Which data and systems are authoritative",
+        "Which action follows the output and what happens when it is wrong",
+        "What observable outcome should improve and who owns it",
+        "Which current model leads broad public benchmarks and has the strongest adoption among comparable underwriting teams"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Outcome ownership, downstream consequence, and authoritative data define the problem boundary. Model popularity is not a requirement and should not precede discovery.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/22-business-discovery-requirements-and-slas"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-052",
+      "domain": "stakeholder-lifecycle",
+      "objective": "Communicate decisions and tradeoffs",
+      "type": "single",
+      "prompt": "Executives ask why the proposed architecture keeps human approval for refunds above a threshold. Which explanation is strongest?",
+      "options": [
+        "The engineering team prefers more screens",
+        "The model is not intelligent enough",
+        "Human review is retained because refunds are external financial actions, so a uniform approval rule across all values is simpler to audit and explain than a calibrated risk threshold",
+        "The threshold balances handling-time benefit with the financial impact, reversibility, policy obligation, and measured uncertainty of higher-value cases"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Tradeoff communication should connect the control to value, risk, evidence, and policy. It avoids vague capability claims and explains why the boundary is proportional.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "https://www.nist.gov/itl/ai-risk-management-framework",
+        "certifications/claude/lessons/22-business-discovery-requirements-and-slas"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-053",
+      "domain": "stakeholder-lifecycle",
+      "objective": "Manage feedback, expectations, and SLAs",
+      "type": "single",
+      "prompt": "A stakeholder says the agent must be 99 percent accurate. What should the architect ask next?",
+      "options": [
+        "Which task population, label, evaluator, time window, error classes, and consequences define that target",
+        "Whether 99 is the stakeholder's favorite number",
+        "Which prompt is longest",
+        "Whether the target refers to offline model accuracy or end-to-end production success, then adopt the stricter definition to avoid understating performance"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "An accuracy target is meaningless without a denominator, measurement method, and error taxonomy. Operational commitments must name the population and response when objectives are missed.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/22-business-discovery-requirements-and-slas"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-054",
+      "domain": "stakeholder-lifecycle",
+      "objective": "Document architectures and implementation guidance",
+      "type": "multiple",
+      "prompt": "Which sections belong in a useful architecture decision record? Select all that apply.",
+      "options": [
+        "Options, decision, and rejected alternatives",
+        "Consequences, verification, and reversal conditions",
+        "The final architecture diagram plus implementation milestones and owners, with rejected options and reversal conditions retained in workshop notes",
+        "Context, constraints, and evidence"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "A decision record preserves why an option fit the evidence and how it will be validated or reversed. A diagram alone shows structure but not rationale or operational consequences.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/22-business-discovery-requirements-and-slas"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-055",
+      "domain": "stakeholder-lifecycle",
+      "objective": "Support discovery, design, handoff, monitoring, and iteration",
+      "type": "multiple",
+      "prompt": "Before handing a Claude system from the build team to operations, which artifacts are required? Select all that apply.",
+      "options": [
+        "Runbooks, escalation paths, and rollback procedure",
+        "A signed build-team statement that the production-like demo passed its acceptance cases, with unresolved issues documented in the handoff meeting notes",
+        "Service objectives, dashboards, and alert ownership",
+        "Version inventory for model, prompt, tools, data, and policy"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Operations needs measurable service behavior, response procedures, ownership, and versioned dependencies. A successful demo does not define how to detect, contain, or recover from production failure.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "https://sre.google/sre-book/table-of-contents/",
+        "certifications/claude/lessons/22-business-discovery-requirements-and-slas"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-056",
+      "domain": "stakeholder-lifecycle",
+      "objective": "Manage feedback, expectations, and SLAs",
+      "type": "multiple",
+      "prompt": "A high-impact assistant is ready for rollout. Which pilot design is strongest? Select all that apply.",
+      "options": [
+        "Grant production authority to a small expert-user cohort with a global kill switch, using rapid incident response instead of draft-only or read-only boundaries",
+        "Collect structured reviewer feedback and failure traces",
+        "Use a bounded population and read-only or draft-only authority",
+        "Define success, safety gates, review load, and rollback before launch"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "A bounded pilot tests the riskiest assumptions while limiting harm. Predeclared gates and structured evidence make the decision to expand or stop defensible.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/22-business-discovery-requirements-and-slas"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-057",
+      "domain": "stakeholder-lifecycle",
+      "objective": "Support discovery, design, handoff, monitoring, and iteration",
+      "type": "single",
+      "prompt": "Reviewers complain that too many safe cases are escalated. What should the lifecycle owner do?",
+      "options": [
+        "Raise the escalation confidence threshold immediately based on reviewer complaints, then compare queue volume and incident counts during the next release window",
+        "Measure false-escalation slices, review the trigger and evidence quality, test a candidate change, and monitor safety guardrails",
+        "Tell reviewers to work faster",
+        "Remove human review entirely"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Feedback should become a classified, measurable improvement hypothesis. The team can reduce unnecessary review only while preserving the high-impact safety boundary.",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/22-business-discovery-requirements-and-slas"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-058",
+      "domain": "stakeholder-lifecycle",
+      "objective": "Communicate decisions and tradeoffs",
+      "type": "single",
+      "prompt": "How should the same architecture change be communicated to an executive sponsor and an on-call engineer?",
+      "options": [
+        "Give both audiences the architecture decision record and full sequence diagram so each receives the same authoritative details and can extract what matters",
+        "Send both the complete source code only",
+        "Explain business outcome, risk, and cost to the sponsor; give dependencies, signals, failure modes, and recovery steps to the engineer",
+        "Hide tradeoffs from the sponsor"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "Stakeholders need different levels of detail while the underlying decision remains consistent. Communication should support each audience's decisions and responsibilities.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "certifications/claude/lessons/22-business-discovery-requirements-and-slas"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-059",
+      "domain": "stakeholder-lifecycle",
+      "objective": "Support discovery, design, handoff, monitoring, and iteration",
+      "type": "multiple",
+      "prompt": "A source system is being retired. Which lifecycle actions are required for the Claude application? Select all that apply.",
+      "options": [
+        "Migrate or remove data with retention and deletion controls",
+        "Identify prompts, retrieval indexes, tools, evals, and runbooks that depend on it",
+        "Re-run acceptance and failure tests before cutover",
+        "Keep the old connector disabled but deployable as an emergency fallback, without including it in routine runbooks, tests, or dependency inventories"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Decommissioning is an architectural change across data, integration, evaluation, and operations. Undocumented stale access increases security risk and can silently reintroduce obsolete information.",
+      "references": [
+        "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542810%2FClaude+Certified+Architect+%E2%80%93+Professional+Exam+Guide.pdf",
+        "https://www.nist.gov/itl/ai-risk-management-framework",
+        "certifications/claude/lessons/22-business-discovery-requirements-and-slas"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-060",
+      "domain": "developer-productivity-operations",
+      "objective": "Configure Claude tools and team environments",
+      "type": "multiple",
+      "prompt": "A team standardizes Claude Code across repositories. Which configuration belongs in reviewed project scope? Select all that apply.",
+      "options": [
+        "Repository-specific constraints and approved hooks",
+        "Versioned team settings needed for consistent safe behavior",
+        "References to production secret names together with sample resolved values so every repository can validate credential format during setup",
+        "Canonical build and test commands"
+      ],
+      "correct": [
+        0,
+        1,
+        3
+      ],
+      "explanation": "Shared commands, constraints, hooks, and settings create repeatable behavior. Credentials belong in protected environment or secret-management boundaries, never committed project instructions.",
+      "references": [
+        "https://code.claude.com/docs/en/settings",
+        "https://code.claude.com/docs/en/hooks-guide",
+        "certifications/claude/lessons/12-claude-agent-sdk-and-hooks"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-061",
+      "domain": "developer-productivity-operations",
+      "objective": "Improve engineering workflows with AI-assisted tooling",
+      "type": "multiple",
+      "prompt": "A headless Claude Code job reviews untrusted pull requests. Which controls are appropriate? Select all that apply.",
+      "options": [
+        "Minimal repository and token permissions",
+        "A short-lived protected-branch token limited to reviewer-generated fixes, allowing the headless job to apply high-confidence findings after tests pass",
+        "Bounded tools, network, time, and structured report output",
+        "No unrelated secrets in the environment"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Headless automation lacks interactive supervision, so capability and identity must be narrower. Findings should enter normal review and protected merge paths instead of bypassing them.",
+      "references": [
+        "https://code.claude.com/docs/en/headless",
+        "https://code.claude.com/docs/en/security",
+        "certifications/claude/lessons/12-claude-agent-sdk-and-hooks"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-062",
+      "domain": "developer-productivity-operations",
+      "objective": "Support debugging and operational incident resolution",
+      "type": "multiple",
+      "prompt": "An on-call engineer uses Claude to investigate a latency incident. Which inputs and boundaries are most useful? Select all that apply.",
+      "options": [
+        "Short-lived read credentials copied into a protected system prompt so Claude can reproduce failing dependency requests directly from the incident context",
+        "Redacted correlated traces and recent version changes",
+        "Read-only diagnostic tools before any remediation authority",
+        "Service objectives, dependency health, and runbook steps"
+      ],
+      "correct": [
+        1,
+        2,
+        3
+      ],
+      "explanation": "Correlated evidence, objectives, dependency state, and safe diagnostic tools support fast causal analysis. Credentials add exposure and should remain inside trusted integrations.",
+      "references": [
+        "https://opentelemetry.io/docs/specs/otel/",
+        "https://sre.google/sre-book/table-of-contents/",
+        "https://code.claude.com/docs/en/security",
+        "certifications/claude/lessons/12-claude-agent-sdk-and-hooks"
+      ]
+    },
+    {
+      "id": "ccar-p-m1-063",
+      "domain": "developer-productivity-operations",
+      "objective": "Configure Claude tools and team environments",
+      "type": "multiple",
+      "prompt": "A team upgrades Claude Code, a plugin, and an MCP server in one release. Which practices reduce operational risk? Select all that apply.",
+      "options": [
+        "Run representative canary workflows with rollback instructions",
+        "Inventory changes to tools, hooks, permissions, and network access",
+        "Record and pin versions where supported",
+        "Rely on successful installation and protocol negotiation as compatibility proof, then monitor production canaries instead of running representative workflows before release"
+      ],
+      "correct": [
+        0,
+        1,
+        2
+      ],
+      "explanation": "Behavior depends on the combined tool and configuration surface. Version records, capability review, canaries, and rollback turn upgrades into controlled operational changes.",
+      "references": [
+        "https://code.claude.com/docs/en/settings",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "certifications/claude/lessons/12-claude-agent-sdk-and-hooks"
+      ]
+    }
+  ]
+}

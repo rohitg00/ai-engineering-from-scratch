@@ -1,0 +1,48 @@
+{
+  "lesson": "07-building-an-mcp-server",
+  "title": "Building an MCP Server: Stateless Python and TypeScript",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Where does a modern MCP server read client capabilities?",
+      "options": ["From Mcp-Session-Id", "From the first initialize call", "From every current request", "From the process environment"],
+      "correct": 2,
+      "explanation": "MCP 2026-07-28 carries client capabilities in every request's params._meta."
+    },
+    {
+      "stage": "check",
+      "question": "Which method must a modern server implement?",
+      "options": ["initialize", "server/discover", "resources/subscribe", "shutdown"],
+      "correct": 1,
+      "explanation": "server/discover is mandatory on modern servers, although clients may call another method first."
+    },
+    {
+      "stage": "check",
+      "question": "Which successful result fields are required on tools/list?",
+      "options": ["protocolVersion and tools", "resultType, ttlMs, cacheScope, tools", "initialized and tools", "sessionId and tools"],
+      "correct": 1,
+      "explanation": "Modern list results are typed and cacheable."
+    },
+    {
+      "stage": "check",
+      "question": "Why should a server sort tools deterministically?",
+      "options": ["To stabilize caches and model context", "To create a session", "To negotiate the protocol", "To replace authorization"],
+      "correct": 0,
+      "explanation": "Stable ordering makes equivalent registries produce equivalent responses."
+    },
+    {
+      "stage": "post",
+      "question": "A valid tool call runs but the domain operation fails. Which shape fits?",
+      "options": ["notifications/initialized", "HTTP DELETE", "A complete tool result with isError true", "A new server request"],
+      "correct": 2,
+      "explanation": "Tool-level failures stay visible to the model through content and isError."
+    },
+    {
+      "stage": "post",
+      "question": "What should end a stdio server's transport lifetime?",
+      "options": ["EOF on stdin", "A GET request", "A mandatory shutdown RPC", "Mcp-Session-Id expiry"],
+      "correct": 0,
+      "explanation": "EOF is the portable stdio shutdown signal. It does not close a modern protocol session."
+    }
+  ]
+}

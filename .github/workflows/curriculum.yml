@@ -1,0 +1,249 @@
+name: curriculum
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "phases/**"
+      - "certifications/**"
+      - "skills/**"
+      - ".claude/skills/**"
+      - "scripts/audit_lessons.py"
+      - "scripts/audit_certifications.py"
+      - "scripts/backfill_certification_references.py"
+      - "scripts/debias_certification_questions.py"
+      - "scripts/debias_quizzes.py"
+      - "scripts/build_readme_i18n.py"
+      - "scripts/readme_translations.py"
+      - "scripts/build_catalog.py"
+      - "scripts/check_readme_counts.py"
+      - "scripts/install_skills.py"
+      - "scripts/test_agent_negotiation.js"
+      - "scripts/test_agent_readiness.py"
+      - "scripts/test_seo_routes.js"
+      - "scripts/test_skill_artifact_bundles.py"
+      - "scripts/test_translate_workflow.py"
+      - "site/test_learning_paths.js"
+      - "languages.json"
+      - "README.md"
+      - "ROADMAP.md"
+      - "glossary/**"
+      - "site/build.js"
+      - "site/**"
+      - "api/**"
+      - "vercel.json"
+      - ".github/workflows/curriculum.yml"
+      - ".github/workflows/translate.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "phases/**"
+      - "certifications/**"
+      - "skills/**"
+      - ".claude/skills/**"
+      - "scripts/audit_lessons.py"
+      - "scripts/audit_certifications.py"
+      - "scripts/backfill_certification_references.py"
+      - "scripts/debias_certification_questions.py"
+      - "scripts/debias_quizzes.py"
+      - "scripts/build_readme_i18n.py"
+      - "scripts/readme_translations.py"
+      - "scripts/build_catalog.py"
+      - "scripts/check_readme_counts.py"
+      - "scripts/install_skills.py"
+      - "scripts/test_agent_negotiation.js"
+      - "scripts/test_agent_readiness.py"
+      - "scripts/test_seo_routes.js"
+      - "scripts/test_skill_artifact_bundles.py"
+      - "scripts/test_translate_workflow.py"
+      - "site/test_learning_paths.js"
+      - "languages.json"
+      - "README.md"
+      - "ROADMAP.md"
+      - "glossary/**"
+      - "site/build.js"
+      - "site/**"
+      - "api/**"
+      - "vercel.json"
+      - ".github/workflows/curriculum.yml"
+      - ".github/workflows/translate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: invariant checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
+        with:
+          python-version: "3.12"
+      - name: run scripts/audit_lessons.py
+        run: python3 scripts/audit_lessons.py
+      - name: run scripts/audit_certifications.py
+        run: python3 scripts/audit_certifications.py
+      - name: certification remediation references are complete
+        run: python3 scripts/backfill_certification_references.py --check
+      - name: run certification lab tests
+        run: find certifications/claude/lessons -path '*/code/tests/test_*.py' -print0 | xargs -0 -r -n1 python3
+      - name: run certification lab demos
+        run: find certifications/claude/lessons -path '*/code/main.py' -print0 | xargs -0 -r -n1 python3
+      - name: skill artifact bundles install without losing companion files
+        run: python3 scripts/test_skill_artifact_bundles.py
+      - name: skill artifact bundles render as one lesson output
+        run: node --test site/test_build_artifacts.js
+      - name: build the static site
+        run: node site/build.js
+      - name: dynamic lesson and certification routes preserve their public contracts
+        run: node --test scripts/test_seo_routes.js
+      - name: agent-facing discovery surfaces stay complete
+        run: python3 scripts/test_agent_readiness.py
+      - name: Markdown negotiation stays cache-safe
+        run: node --test scripts/test_agent_negotiation.js
+      - name: static preview routes stay navigable
+        run: node --test site/test_static_preview_routes.js
+      - name: learning paths links and routes stay valid
+        run: node --test site/test_learning_paths.js
+      - name: quiz answer positions are de-biased
+        run: python3 scripts/debias_quizzes.py --check
+      - name: certification answer positions are de-biased
+        run: python3 scripts/debias_certification_questions.py --check
+      - name: README translations are in sync with English
+        run: python3 scripts/build_readme_i18n.py --check
+      - name: translation workflow publisher retries safely
+        run: python3 scripts/test_translate_workflow.py
+      - name: learning skills mirror is in sync
+        # skills/ is the canonical, agent-neutral home (what `npx skills add`
+        # installs for every agent); .claude/skills/ is a mirror so cloning the
+        # repo auto-loads them in Claude Code. They must never diverge.
+        run: diff -r skills .claude/skills
+
+  readme-counts-sync:
+    name: README counts auto-fix (main only)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          ref: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
+        with:
+          python-version: "3.12"
+      - name: build ephemeral catalog
+        run: python3 scripts/build_catalog.py
+      - name: sync README counts
+        run: python3 scripts/check_readme_counts.py --fix
+      - name: regenerate README translations from the synced English
+        run: python3 scripts/build_readme_i18n.py
+      - name: commit + push if README changed
+        env:
+          BOT_COMMIT_PREFIX: "chore(readme): sync counts"
+        run: |
+          # porcelain (not git diff) so a newly generated, still-untracked
+          # i18n/<lang>/README.md for a freshly added language is also detected
+          if [ -z "$(git status --porcelain -- README.md i18n)" ]; then
+            echo "README.md + translations already in sync"
+            exit 0
+          fi
+          last_msg=$(git log -1 --pretty=%s)
+          if [[ "$last_msg" == "$BOT_COMMIT_PREFIX"* ]]; then
+            echo "last commit was already a bot regen; not pushing to avoid loop"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md i18n
+          git commit -m "$BOT_COMMIT_PREFIX"
+          # Retry on non-fast-forward when another merge to main races us
+          branch="${GITHUB_REF#refs/heads/}"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${branch}"; then
+              echo "push succeeded on attempt $attempt"
+              exit 0
+            fi
+            echo "push attempt $attempt rejected; rebasing onto origin/${branch}"
+            git fetch origin "${branch}"
+            if ! git rebase "origin/${branch}"; then
+              echo "rebase produced a conflict; aborting and giving up cleanly"
+              git rebase --abort || true
+              exit 0
+            fi
+            sleep "$((attempt * 2))"
+          done
+          echo "push failed after 5 attempts; main will self-heal on next push"
+          exit 0
+
+  site-rebuild:
+    name: site/data.js auto-rebuild (main only)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs: readme-counts-sync
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          ref: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: rebuild site/data.js
+        run: node site/build.js
+      - name: commit + push if site/data.js changed
+        env:
+          BOT_COMMIT_PREFIX: "chore(site): rebuild data.js"
+        run: |
+          if git diff --quiet site/data.js; then
+            echo "site/data.js already in sync"
+            exit 0
+          fi
+          last_msg=$(git log -1 --pretty=%s)
+          if [[ "$last_msg" == "$BOT_COMMIT_PREFIX"* ]]; then
+            echo "last commit was already a bot regen; not pushing to avoid loop"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data.js
+          git commit -m "$BOT_COMMIT_PREFIX"
+          branch="${GITHUB_REF#refs/heads/}"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${branch}"; then
+              echo "push succeeded on attempt $attempt"
+              exit 0
+            fi
+            echo "push attempt $attempt rejected; rebasing onto origin/${branch}"
+            git fetch origin "${branch}"
+            if ! git rebase "origin/${branch}"; then
+              echo "rebase produced a conflict; aborting and giving up cleanly"
+              git rebase --abort || true
+              exit 0
+            fi
+            sleep "$((attempt * 2))"
+          done
+          echo "push failed after 5 attempts; main will self-heal on next push"
+          exit 0
+
+  readme-counts-drift:
+    name: README.md counts drift advisory
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
+        with:
+          python-version: "3.12"
+      - name: build ephemeral catalog
+        run: python3 scripts/build_catalog.py
+      - name: check README counts
+        run: |
+          if ! python3 scripts/check_readme_counts.py; then
+            echo "::warning::README.md counts drift detected. Main will self-heal on merge."
+          fi

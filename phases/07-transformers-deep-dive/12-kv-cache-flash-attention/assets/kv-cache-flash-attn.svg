@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .hbm { fill: #c9d4de; stroke: #1a1a1a; stroke-width: 1; }
+      .sram { fill: #ffd78a; stroke: #c0392b; stroke-width: 1.2; }
+      .kv { fill: #e7edd9; stroke: #1a1a1a; stroke-width: 0.8; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">KV cache grows. Flash Attention keeps the hot path in SRAM.</text>
+
+  <!-- Left: KV cache growth -->
+  <rect x="40" y="60" width="400" height="230" class="box"/>
+  <text x="240" y="85" text-anchor="middle" class="label">KV cache — decoding step by step</text>
+
+  <!-- step 1: one token -->
+  <text x="60" y="115" class="content">t=1</text>
+  <rect x="90"  y="100" width="24" height="22" class="kv"/>
+  <text x="102" y="116" text-anchor="middle" class="content">k1</text>
+  <rect x="90"  y="125" width="24" height="22" class="kv"/>
+  <text x="102" y="141" text-anchor="middle" class="content">v1</text>
+
+  <!-- step 3 -->
+  <text x="60" y="170" class="content">t=3</text>
+  <rect x="90"  y="155" width="24" height="22" class="kv"/>
+  <text x="102" y="171" text-anchor="middle" class="content">k1</text>
+  <rect x="115" y="155" width="24" height="22" class="kv"/>
+  <text x="127" y="171" text-anchor="middle" class="content">k2</text>
+  <rect x="140" y="155" width="24" height="22" class="kv"/>
+  <text x="152" y="171" text-anchor="middle" class="content">k3</text>
+  <rect x="90"  y="180" width="24" height="22" class="kv"/>
+  <text x="102" y="196" text-anchor="middle" class="content">v1</text>
+  <rect x="115" y="180" width="24" height="22" class="kv"/>
+  <text x="127" y="196" text-anchor="middle" class="content">v2</text>
+  <rect x="140" y="180" width="24" height="22" class="kv"/>
+  <text x="152" y="196" text-anchor="middle" class="content">v3</text>
+
+  <!-- step N -->
+  <text x="60" y="225" class="content">t=N</text>
+  <rect x="90"  y="215" width="24" height="22" class="kv"/>
+  <rect x="115" y="215" width="24" height="22" class="kv"/>
+  <rect x="140" y="215" width="24" height="22" class="kv"/>
+  <rect x="165" y="215" width="24" height="22" class="kv"/>
+  <rect x="190" y="215" width="24" height="22" class="kv"/>
+  <rect x="215" y="215" width="24" height="22" class="kv"/>
+  <rect x="240" y="215" width="24" height="22" class="kv"/>
+  <rect x="265" y="215" width="24" height="22" class="kv"/>
+  <rect x="290" y="215" width="24" height="22" class="kv"/>
+  <rect x="315" y="215" width="24" height="22" class="kv"/>
+  <rect x="340" y="215" width="24" height="22" class="kv"/>
+  <rect x="365" y="215" width="24" height="22" class="kv"/>
+  <rect x="390" y="215" width="24" height="22" class="kv"/>
+
+  <rect x="90"  y="240" width="24" height="22" class="kv"/>
+  <rect x="115" y="240" width="24" height="22" class="kv"/>
+  <rect x="140" y="240" width="24" height="22" class="kv"/>
+  <rect x="165" y="240" width="24" height="22" class="kv"/>
+  <rect x="190" y="240" width="24" height="22" class="kv"/>
+  <rect x="215" y="240" width="24" height="22" class="kv"/>
+  <rect x="240" y="240" width="24" height="22" class="kv"/>
+  <rect x="265" y="240" width="24" height="22" class="kv"/>
+  <rect x="290" y="240" width="24" height="22" class="kv"/>
+  <rect x="315" y="240" width="24" height="22" class="kv"/>
+  <rect x="340" y="240" width="24" height="22" class="kv"/>
+  <rect x="365" y="240" width="24" height="22" class="kv"/>
+  <rect x="390" y="240" width="24" height="22" class="kv"/>
+
+  <text x="240" y="278" text-anchor="middle" class="caption">each new query attends to N cached k/v — O(N) per step, not O(N²)</text>
+
+  <!-- Right: Flash attention tiling -->
+  <rect x="460" y="60" width="400" height="230" class="box"/>
+  <text x="660" y="85" text-anchor="middle" class="label">Flash Attention — tiling into SRAM</text>
+
+  <!-- HBM frame -->
+  <rect x="485" y="100" width="180" height="170" class="hbm"/>
+  <text x="575" y="120" text-anchor="middle" class="content">HBM</text>
+  <text x="575" y="138" text-anchor="middle" class="caption">3 TB/s, 80 GB</text>
+
+  <!-- Q, K, V, O blocks in HBM -->
+  <rect x="505" y="150" width="45" height="35" class="kv"/><text x="527" y="170" text-anchor="middle" class="content">Q</text>
+  <rect x="555" y="150" width="45" height="35" class="kv"/><text x="577" y="170" text-anchor="middle" class="content">K</text>
+  <rect x="605" y="150" width="45" height="35" class="kv"/><text x="627" y="170" text-anchor="middle" class="content">V</text>
+  <rect x="555" y="195" width="45" height="35" class="kv"/><text x="577" y="215" text-anchor="middle" class="content">O</text>
+  <text x="575" y="258" text-anchor="middle" class="caption">no N×N ever materialized here</text>
+
+  <!-- SRAM -->
+  <rect x="690" y="100" width="160" height="170" class="sram"/>
+  <text x="770" y="120" text-anchor="middle" class="content">SRAM (per SM)</text>
+  <text x="770" y="138" text-anchor="middle" class="caption">30 TB/s, 256 KB</text>
+
+  <rect x="705" y="150" width="30" height="30" class="kv"/><text x="720" y="170" text-anchor="middle" class="content">Qt</text>
+  <rect x="740" y="150" width="30" height="30" class="kv"/><text x="755" y="170" text-anchor="middle" class="content">Kt</text>
+  <rect x="775" y="150" width="30" height="30" class="kv"/><text x="790" y="170" text-anchor="middle" class="content">Vt</text>
+  <rect x="810" y="150" width="30" height="30" class="kv"/><text x="825" y="170" text-anchor="middle" class="content">Ot</text>
+
+  <text x="770" y="215" text-anchor="middle" class="content">running (max, sum)</text>
+  <text x="770" y="238" text-anchor="middle" class="caption">softmax exact, not approximated</text>
+
+  <!-- Arrows between HBM and SRAM -->
+  <line x1="665" y1="160" x2="695" y2="160" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="695" y1="210" x2="665" y2="210" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Bottom: version timeline -->
+  <rect x="60" y="320" width="800" height="160" class="box"/>
+  <text x="460" y="345" text-anchor="middle" class="label">Flash Attention version timeline</text>
+
+  <text x="110" y="385" text-anchor="middle" class="content">FA1 (2022)</text>
+  <text x="110" y="405" text-anchor="middle" class="caption">SRAM tiling</text>
+  <text x="110" y="421" text-anchor="middle" class="caption">2× on A100</text>
+
+  <text x="290" y="385" text-anchor="middle" class="content">FA2 (2023)</text>
+  <text x="290" y="405" text-anchor="middle" class="caption">better parallelism</text>
+  <text x="290" y="421" text-anchor="middle" class="caption">3× on A100</text>
+
+  <text x="470" y="385" text-anchor="middle" class="content">FA3 (2024)</text>
+  <text x="470" y="405" text-anchor="middle" class="caption">Hopper asynchrony, FP8</text>
+  <text x="470" y="421" text-anchor="middle" class="caption">~740 TFLOPs H100</text>
+
+  <text x="650" y="385" text-anchor="middle" class="content">FA4 (2026)</text>
+  <text x="650" y="405" text-anchor="middle" class="caption">Blackwell 5-stage pipe</text>
+  <text x="650" y="421" text-anchor="middle" class="caption">inference-first</text>
+
+  <text x="810" y="385" text-anchor="middle" class="content">next</text>
+  <text x="810" y="405" text-anchor="middle" class="caption">backward + GQA</text>
+  <text x="810" y="421" text-anchor="middle" class="caption">varlen for training</text>
+
+  <text x="460" y="456" text-anchor="middle" class="caption">KV cache and Flash Attention are universal in 2026 — vLLM, SGLang, TensorRT-LLM, llama.cpp all assume both.</text>
+
+  <text x="460" y="504" text-anchor="middle" class="caption">Next frontier: PagedAttention (KV as virtual memory), prefix caching, speculative decoding.</text>
+</svg>

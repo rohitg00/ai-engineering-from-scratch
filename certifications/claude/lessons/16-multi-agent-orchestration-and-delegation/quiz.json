@@ -1,0 +1,78 @@
+{
+  "lesson": "16-multi-agent-orchestration-and-delegation",
+  "title": "Multi-Agent Orchestration and Delegation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "When is a subagent more appropriate than a simple tool?",
+      "options": [
+        "When a long reasoning task shares all context, permissions, and evaluation with the parent",
+        "When the task needs its own bounded reasoning loop, evidence, context, and stop condition",
+        "When a deterministic transformation needs an independent log and retry policy",
+        "When an ambiguous task has no output contract or completion criteria yet"
+      ],
+      "correct": 1,
+      "explanation": "A subagent earns a separate context for bounded reasoning, isolation, specialization, or independent review. Deterministic operations belong in code or tools."
+    },
+    {
+      "stage": "check",
+      "question": "Which requirement should orchestration code enforce rather than a coordinator prompt?",
+      "options": [
+        "Which ambiguous claim needs another evidence-gathering pass before synthesis",
+        "Which authoritative source more directly supports a disputed semantic claim",
+        "Cross-file review cannot start until required per-file results are complete or explicitly partial",
+        "Whether one explanation better satisfies a qualitative clarity rubric"
+      ],
+      "correct": 2,
+      "explanation": "Stage prerequisites are stable invariants. Code should track the manifest and block illegal transitions, while Claude handles semantic judgment within allowed states."
+    },
+    {
+      "stage": "check",
+      "question": "What should a partial subagent result contain?",
+      "options": [
+        "A complete-looking artifact with uncertainty notes but no explicit coverage boundary",
+        "The full reasoning transcript and tool history without a normalized result contract",
+        "A failure flag, the last attempted action, and a request for the coordinator to retry",
+        "Valid completed work plus named gaps, failed evidence, and safe next actions"
+      ],
+      "correct": 3,
+      "explanation": "Partial is a first-class state. It preserves usable work while preventing the coordinator from treating missing evidence as completion or negative evidence."
+    },
+    {
+      "stage": "check",
+      "question": "Why should an independent reviewer receive a fresh context?",
+      "options": [
+        "To reduce inheritance of the generator's framing and unsupported assumptions",
+        "To let the reviewer judge intuitively without being constrained by the rubric",
+        "To prevent the reviewer from seeing any evidence used by the generator",
+        "To give the reviewer a larger independent token budget than the generator received"
+      ],
+      "correct": 0,
+      "explanation": "Context isolation helps the reviewer judge artifact and evidence against the rubric instead of continuing the generator's persuasive narrative."
+    },
+    {
+      "stage": "post",
+      "question": "Three source researchers can work independently. What is the strongest orchestration?",
+      "options": [
+        "Run them sequentially so later agents inherit all prior framing and sources",
+        "Run bounded tasks in parallel, normalize results, preserve failures, then reduce",
+        "Give every researcher the same write-capable tools so any one can finish missing work",
+        "Let each researcher draft the full report, then choose the most comprehensive version"
+      ],
+      "correct": 1,
+      "explanation": "Independent work can reduce latency through parallel fan-out, but reliable reduction requires shared schemas, source identity, error propagation, and conflict rules."
+    },
+    {
+      "stage": "post",
+      "question": "A multi-agent design costs more without improving results. What should the architect do first?",
+      "options": [
+        "Keep the topology but evaluate only final answers so coordination costs do not dominate",
+        "Add a coordinator agent to reduce duplicate work before changing the current roles",
+        "Compare against the single-agent baseline and remove contexts without measured isolation, independence, or parallelism value",
+        "Increase every agent's context and reasoning budget to recover quality lost to coordination"
+      ],
+      "correct": 2,
+      "explanation": "Each context must justify its coordination cost with a measurable benefit. Removing unnecessary agents usually improves latency, cost, and debuggability."
+    }
+  ]
+}

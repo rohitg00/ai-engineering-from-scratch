@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .content { font-size: 11px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 15px; font-weight: 700; fill: #1a1a1a; }
+      .tag { font-size: 10px; fill: #c0392b; font-weight: 600; }
+      .bar { fill: #c0392b; opacity: 0.5; }
+      .line { stroke: #1a1a1a; stroke-width: 1.3; fill: none; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">three-tier VAD cascade + turn-end state machine</text>
+
+  <rect x="20" y="55" width="260" height="130" class="box"/>
+  <text x="150" y="78" text-anchor="middle" class="label">Tier 1: energy gate</text>
+  <text x="150" y="96" text-anchor="middle" class="tag">cheap, fires on every noise</text>
+  <text x="30" y="122" class="content">if RMS &gt; -40 dBFS → "speech"</text>
+  <text x="30" y="142" class="content">filters silence but NOT</text>
+  <text x="30" y="160" class="content">keyboard / cough / chair</text>
+
+  <rect x="295" y="55" width="260" height="130" class="hot"/>
+  <text x="425" y="78" text-anchor="middle" class="label">Tier 2: Silero VAD</text>
+  <text x="425" y="96" text-anchor="middle" class="tag">the 2020-2026 default</text>
+  <text x="305" y="122" class="content">1M params · 1 ms / 30 ms chunk</text>
+  <text x="305" y="142" class="content">87.7% TPR @ 5% FPR</text>
+  <text x="305" y="160" class="content">trained on 6000+ languages</text>
+  <text x="305" y="176" class="caption">MIT · open · rejects transients</text>
+
+  <rect x="570" y="55" width="285" height="130" class="box"/>
+  <text x="712" y="78" text-anchor="middle" class="label">Tier 3: semantic turn detector</text>
+  <text x="712" y="96" text-anchor="middle" class="tag">LiveKit turn-detector / custom</text>
+  <text x="580" y="122" class="content">VAD + recent-words classifier</text>
+  <text x="580" y="142" class="content">pauses mid-sentence vs done</text>
+  <text x="580" y="160" class="content">("hmm, let me think..." stays)</text>
+  <text x="580" y="176" class="caption">reduces false-interrupt by 5-10%</text>
+
+  <rect x="20" y="205" width="835" height="130" class="box"/>
+  <text x="440" y="226" text-anchor="middle" class="label">turn-detection state machine</text>
+  <text x="60" y="254" class="content">state: "idle"       ─ VAD fires &gt; 250 ms of speech ─→ state: "speaking"  (emit START)</text>
+  <text x="60" y="274" class="content">state: "speaking"   ─ VAD silent for 500 ms        ─→ state: "idle"      (emit END)</text>
+  <text x="60" y="300" class="caption">pre-roll buffer (300 ms): keep audio BEFORE VAD fires, else first word gets clipped</text>
+  <text x="60" y="318" class="caption">min speech (250 ms): reject transients; silence hangover (500 ms): tune per use case</text>
+
+  <rect x="20" y="345" width="835" height="105" class="hot"/>
+  <text x="440" y="366" text-anchor="middle" class="label">the flush trick (Kyutai Unmute 2025) — sub-200 ms end-to-end</text>
+  <text x="60" y="392" class="content">1. VAD fires end-of-speech at t=0</text>
+  <text x="60" y="410" class="content">2. send buffered audio + flush signal to STT server</text>
+  <text x="60" y="428" class="content">3. STT processes at 4× realtime → 500 ms look-ahead buffer → 125 ms wall time</text>
+  <text x="60" y="446" class="content">4. transcript ready at t+125 ms — same latency as the VAD signal itself</text>
+</svg>

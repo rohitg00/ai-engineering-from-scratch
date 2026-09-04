@@ -1,0 +1,54 @@
+{
+  "status": "valid",
+  "issues": [],
+  "plan": {
+    "goal": "Reduce time to identify the affected service without increasing unsafe actions",
+    "questions": [
+      "How quickly is the correct service identified?",
+      "Does diagnosis remain read-only?"
+    ],
+    "metrics": [
+      {
+        "name": "median_identification_seconds",
+        "direction": "at-most",
+        "threshold": 120,
+        "window": "ten incident replays",
+        "source": "replay log",
+        "kind": "outcome"
+      },
+      {
+        "name": "correct_service_rate",
+        "direction": "at-least",
+        "threshold": 0.9,
+        "window": "ten incident replays",
+        "source": "incident record",
+        "kind": "outcome"
+      },
+      {
+        "name": "production_writes",
+        "direction": "at-most",
+        "threshold": 0,
+        "window": "entire pilot",
+        "source": "audit log",
+        "kind": "guardrail"
+      }
+    ]
+  },
+  "results": [
+    {
+      "name": "median_identification_seconds",
+      "value": 94,
+      "passed": true
+    },
+    {
+      "name": "correct_service_rate",
+      "value": 0.9,
+      "passed": true
+    },
+    {
+      "name": "production_writes",
+      "value": 0,
+      "passed": true
+    }
+  ]
+}

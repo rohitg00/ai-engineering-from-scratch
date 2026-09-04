@@ -1,0 +1,90 @@
+{
+  "lesson": "15-constitutional-safety-harness",
+  "title": "Capstone 15 — Constitutional Safety Harness + Red-Team Range",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does layered safety in this capstone mean?",
+      "options": [
+        "Defense in depth across input sanitize, policy rails, classifier gate, model, output filter, and HITL tier",
+        "Running one strong classifier on the input only",
+        "A single rule-based regex over outputs",
+        "Manual review of every response"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "Which classifier handles multilingual coverage across roughly 132 languages?",
+      "options": [
+        "Llama Guard 4",
+        "Nemotron 3 Content Safety",
+        "X-Guard",
+        "ShieldGemma-2"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why is over-refusal measured on a benign suite like XSTest?",
+      "options": [
+        "To track false-positive blocks so the model stays helpful while improving harmlessness",
+        "To certify the guardrail framework",
+        "To replace red-team scoring",
+        "To benchmark token throughput"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the constitutional self-critique loop in this capstone?",
+      "options": [
+        "An RLHF reward model trained from scratch",
+        "Critic LLM scores drafts against a written constitution, prompts the model rewrites the objected outputs, and SFT runs on the improved pairs",
+        "A single forward pass through Llama Guard 4",
+        "A reranker over candidate jailbreak prompts"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How are successful jailbreaks scored for severity in the findings?",
+      "options": [
+        "By the model that produced the response",
+        "Using CVSS 4.0 with attack vector, complexity, and impact, plus a disclosure timeline",
+        "By raw token count of the prompt",
+        "On a hand-tuned 1-10 scale chosen by the operator"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Which six attack families does the red-team range run?",
+      "options": [
+        "PSI, KL, MMD, KS, JS, and Wasserstein",
+        "PAIR, TAP, GCG, encoding (ASCII/base64/rot13), multi-turn persona, and multilingual code-switch",
+        "Brute-force, dictionary, replay, MITM, phishing, and CSRF",
+        "BLEU, ROUGE, METEOR, BERTScore, CometKiwi, and chrF"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why is range automation (cron + alerts) part of the rubric?",
+      "options": [
+        "Cron is the only way to call OPA",
+        "Automation is required to disable Llama Guard 4",
+        "Manual runs are explicitly required",
+        "Continuous scheduled probes catch drift in attack success rate and over-refusal regressions over time"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

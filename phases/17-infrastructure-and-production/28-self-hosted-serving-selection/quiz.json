@@ -1,0 +1,78 @@
+{
+  "lesson": "28-self-hosted-serving-selection",
+  "title": "Self-Hosted Serving Selection — Matching Engine to Hardware and Scale",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which engine does the lesson pick as the dev-laptop one-command default?",
+      "options": [
+        "llama.cpp",
+        "vLLM",
+        "TGI",
+        "Ollama"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What 2025 event changes the default away from TGI for new projects?",
+      "options": [
+        "TGI entered maintenance mode on December 11, 2025 — only bug fixes going forward",
+        "TGI dropped CUDA support",
+        "TGI raised prices",
+        "TGI was acquired by Anthropic"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which hardware constraint forces llama.cpp and excludes vLLM / TRT-LLM?",
+      "options": [
+        "CPU only (no accelerator)",
+        "AMD MI300X",
+        "NVIDIA Hopper",
+        "Apple M4"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Which engine does the lesson position for agentic multi-turn and prefix-heavy workloads thanks to RadixAttention?",
+      "options": [
+        "SGLang",
+        "Ollama",
+        "TGI",
+        "llama.cpp"
+      ],
+      "correct": 0,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What dev-to-prod pipeline does the lesson recommend on the same GGUF or HF weights?",
+      "options": [
+        "TGI everywhere",
+        "Ollama in dev and Ollama in prod",
+        "Ollama in dev, llama.cpp in staging, vLLM (or SGLang for prefix-heavy) in prod",
+        "Only TRT-LLM, top to bottom"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why is Ollama discouraged for shared production?",
+      "options": [
+        "It cannot load GGUF",
+        "It only runs on Windows",
+        "It is closed source",
+        "Go HTTP serialization adds overhead, concurrency management is simpler than vLLM, and OpenTelemetry support lags"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

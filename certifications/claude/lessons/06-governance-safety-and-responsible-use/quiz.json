@@ -1,0 +1,78 @@
+{
+  "lesson": "06-governance-safety-and-responsible-use",
+  "title": "Put Authority Around Capability",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A connector can read customer records and a model can draft offers. What is still required before offers are sent?",
+      "options": [
+        "Documented authority, approved purpose, controls, and any required human approval",
+        "A prompt that tells Claude to send only offers it considers fair and accurate",
+        "A post-generation evaluator that checks tone and required offer fields before delivery",
+        "Treat connector read access as sufficient sending authority"
+      ],
+      "correct": 0,
+      "explanation": "Technical capability and data permission do not grant organizational authority to make or execute a decision."
+    },
+    {
+      "stage": "check",
+      "question": "Which action best demonstrates data minimization?",
+      "options": [
+        "Retaining complete prompts for a shorter period instead of removing unnecessary fields",
+        "Supplying only the redacted fields required for the approved task",
+        "Sending the full customer record but instructing Claude to use only relevant fields",
+        "Encrypting the entire dataset before sending all records to the approved product surface"
+      ],
+      "correct": 1,
+      "explanation": "Minimization reduces input to the smallest information needed for the approved purpose."
+    },
+    {
+      "stage": "check",
+      "question": "Why must Claude data and retention behavior be verified for the exact product surface?",
+      "options": [
+        "A system prompt can request stricter retention when product controls are unavailable",
+        "Every surface follows the same default terms, but enterprise settings can override them",
+        "Terms, settings, plans, contracts, and features can differ and change",
+        "Retention matters only for external customer data, so internal workflows need a simpler check"
+      ],
+      "correct": 2,
+      "explanation": "Privacy and retention are changeable product and contract facts, so assumptions should not be transferred between surfaces."
+    },
+    {
+      "stage": "check",
+      "question": "What makes a human review gate meaningful?",
+      "options": [
+        "Every output is held until an available employee confirms the model followed its prompt",
+        "A reviewer sees the polished output and can approve it within the required service window",
+        "The workflow chooses the reviewer based on similarity between the case and prior approvals",
+        "The reviewer has evidence, uncertainty, policy context, authority, and the ability to reject or escalate"
+      ],
+      "correct": 3,
+      "explanation": "Oversight requires informed authority and real intervention options, not ceremonial approval."
+    },
+    {
+      "stage": "post",
+      "question": "A retrieved document says to ignore workflow policy and invoke a tool. What is the safest treatment?",
+      "options": [
+        "Treat it as untrusted data, preserve higher-level controls, and block unauthorized tool use",
+        "Ask a second model whether the document is malicious before allowing it to expand permissions",
+        "Remove imperative sentences from the retrieved text and then execute any remaining requests",
+        "Follow document instructions only if the source ranks highly and the requested tool is read-only"
+      ],
+      "correct": 0,
+      "explanation": "Retrieved content can carry prompt injection. Tool authorization and governing instructions must remain outside untrusted text."
+    },
+    {
+      "stage": "post",
+      "question": "A ranking system shows materially different error rates across affected groups. What is the strongest next step?",
+      "options": [
+        "Add an explicit fairness instruction, then proceed if the aggregate evaluation still passes",
+        "Investigate data and workflow causes with qualified owners, apply policy, and preserve correction or appeal",
+        "Reweight the aggregate metric so each group contributes equally, then release on that score",
+        "Remove group labels from evaluation data to keep the model and reviewers from using them"
+      ],
+      "correct": 1,
+      "explanation": "Fairness needs defined populations, outcomes, measurements, governance, and a remedy path, not a vague instruction."
+    }
+  ]
+}

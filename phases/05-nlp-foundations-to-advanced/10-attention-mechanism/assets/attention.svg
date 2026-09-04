@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <marker id="red-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cell { fill: #f3ece0; stroke: #1a1a1a; stroke-width: 1.2; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 2; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .stage { font-size: 12px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .line { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
+      .att { stroke: #c0392b; stroke-width: 1.5; fill: none; opacity: 0.7; }
+      .note { font-size: 11px; fill: #666; font-style: italic; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="30" width="860" height="160" rx="4"/>
+  <text class="label" x="35" y="55">encoder hidden states (kept, not discarded)</text>
+
+  <rect class="cell" x="40"  y="80" width="60" height="40" rx="3"/><text class="content" x="70"  y="105" text-anchor="middle">h1</text>
+  <rect class="cell" x="120" y="80" width="60" height="40" rx="3"/><text class="content" x="150" y="105" text-anchor="middle">h2</text>
+  <rect class="cell" x="200" y="80" width="60" height="40" rx="3"/><text class="content" x="230" y="105" text-anchor="middle">h3</text>
+  <rect class="cell" x="280" y="80" width="60" height="40" rx="3"/><text class="content" x="310" y="105" text-anchor="middle">h4</text>
+  <rect class="cell" x="360" y="80" width="60" height="40" rx="3"/><text class="content" x="390" y="105" text-anchor="middle">h5</text>
+
+  <rect class="cell" x="40"  y="135" width="60" height="30" rx="3"/><text class="content" x="70"  y="155" text-anchor="middle">Je</text>
+  <rect class="cell" x="120" y="135" width="60" height="30" rx="3"/><text class="content" x="150" y="155" text-anchor="middle">ne</text>
+  <rect class="cell" x="200" y="135" width="60" height="30" rx="3"/><text class="content" x="230" y="155" text-anchor="middle">suis</text>
+  <rect class="cell" x="280" y="135" width="60" height="30" rx="3"/><text class="content" x="310" y="155" text-anchor="middle">pas</text>
+  <rect class="cell" x="360" y="135" width="60" height="30" rx="3"/><text class="content" x="390" y="155" text-anchor="middle">chat</text>
+
+  <path class="line" d="M 70 135 L 70 120"/>
+  <path class="line" d="M 150 135 L 150 120"/>
+  <path class="line" d="M 230 135 L 230 120"/>
+  <path class="line" d="M 310 135 L 310 120"/>
+  <path class="line" d="M 390 135 L 390 120"/>
+
+  <rect class="hot" x="500" y="80" width="80" height="40" rx="3"/>
+  <text class="content" x="540" y="105" text-anchor="middle">s_{t-1}</text>
+  <text class="note" x="540" y="70" text-anchor="middle">query</text>
+
+  <rect class="box" x="460" y="220" width="170" height="110" rx="4"/>
+  <text class="label" x="545" y="245" text-anchor="middle">score + softmax</text>
+  <text class="content" x="475" y="275">α_{t,i} = softmax(</text>
+  <text class="content" x="475" y="295">  score(s_{t-1}, h_i)</text>
+  <text class="content" x="475" y="315">)</text>
+
+  <path class="att" d="M 70 110 Q 300 180 470 270" marker-end="url(#red-arrow)"/>
+  <path class="att" d="M 150 110 Q 300 180 470 270" marker-end="url(#red-arrow)"/>
+  <path class="att" d="M 230 110 Q 350 180 470 270" marker-end="url(#red-arrow)"/>
+  <path class="att" d="M 310 110 Q 400 180 470 270" marker-end="url(#red-arrow)"/>
+  <path class="att" d="M 390 110 Q 450 180 470 270" marker-end="url(#red-arrow)"/>
+  <path class="line" d="M 540 120 L 545 220"/>
+
+  <rect class="box" x="680" y="220" width="180" height="110" rx="4"/>
+  <text class="label" x="770" y="245" text-anchor="middle">context c_t</text>
+  <text class="content" x="695" y="275">= Σ α_{t,i} · h_i</text>
+  <text class="content" x="695" y="305">weighted average</text>
+  <text class="content" x="695" y="322">of encoder states</text>
+
+  <path class="line" d="M 630 275 L 680 275" marker-end="url(#arrow)"/>
+
+  <rect class="hot" x="680" y="370" width="180" height="50" rx="4"/>
+  <text class="label" x="770" y="395" text-anchor="middle">decoder step</text>
+  <text class="content" x="770" y="415" text-anchor="middle">outputs next token</text>
+
+  <path class="line" d="M 770 330 L 770 370" marker-end="url(#arrow)"/>
+
+  <text class="stage" x="450" y="415">no more fixed-size bottleneck. context reshapes every step.</text>
+</svg>

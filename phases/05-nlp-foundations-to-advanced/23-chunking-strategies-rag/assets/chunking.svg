@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.2; }
+      .chunk { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.2; }
+      .parent { fill: #e3f2fd; stroke: #1565c0; stroke-width: 1.2; }
+      .child { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.2; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 10px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 10px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .sub { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="450" y="28" text-anchor="middle" class="title">six chunking strategies on the same document</text>
+
+  <!-- row 1 -->
+  <text x="40" y="60" class="sub">fixed (size=N)</text>
+  <rect x="40" y="70" width="100" height="30" class="chunk"/>
+  <rect x="142" y="70" width="100" height="30" class="chunk"/>
+  <rect x="244" y="70" width="100" height="30" class="chunk"/>
+  <rect x="346" y="70" width="100" height="30" class="chunk"/>
+  <rect x="448" y="70" width="100" height="30" class="chunk"/>
+  <rect x="550" y="70" width="100" height="30" class="chunk"/>
+  <rect x="652" y="70" width="100" height="30" class="chunk"/>
+  <rect x="754" y="70" width="60" height="30" class="chunk"/>
+  <text x="450" y="115" text-anchor="middle" class="caption">hard split every N chars — breaks mid-sentence</text>
+
+  <!-- row 2 -->
+  <text x="40" y="140" class="sub">recursive (\n\n → \n → . → ' ')</text>
+  <rect x="40" y="150" width="140" height="30" class="chunk"/>
+  <rect x="182" y="150" width="110" height="30" class="chunk"/>
+  <rect x="294" y="150" width="170" height="30" class="chunk"/>
+  <rect x="466" y="150" width="130" height="30" class="chunk"/>
+  <rect x="598" y="150" width="160" height="30" class="chunk"/>
+  <rect x="760" y="150" width="100" height="30" class="chunk"/>
+  <text x="450" y="195" text-anchor="middle" class="caption">try separators in order; 2026 default</text>
+
+  <!-- row 3 -->
+  <text x="40" y="220" class="sub">semantic (embedding similarity)</text>
+  <rect x="40" y="230" width="210" height="30" class="chunk"/>
+  <rect x="252" y="230" width="70" height="30" class="chunk"/>
+  <rect x="324" y="230" width="310" height="30" class="chunk"/>
+  <rect x="636" y="230" width="90" height="30" class="chunk"/>
+  <rect x="728" y="230" width="130" height="30" class="chunk"/>
+  <text x="450" y="275" text-anchor="middle" class="caption">split where adjacent-sentence similarity drops</text>
+
+  <!-- row 4: parent / child -->
+  <text x="40" y="300" class="sub">parent-document (child for retrieval, parent for context)</text>
+  <rect x="40" y="310" width="380" height="30" class="parent"/>
+  <rect x="422" y="310" width="440" height="30" class="parent"/>
+  <rect x="45" y="312" width="85" height="26" class="child"/>
+  <rect x="132" y="312" width="85" height="26" class="child"/>
+  <rect x="219" y="312" width="85" height="26" class="child"/>
+  <rect x="306" y="312" width="110" height="26" class="child"/>
+  <rect x="427" y="312" width="85" height="26" class="child"/>
+  <rect x="514" y="312" width="85" height="26" class="child"/>
+  <rect x="601" y="312" width="85" height="26" class="child"/>
+  <rect x="688" y="312" width="85" height="26" class="child"/>
+  <rect x="775" y="312" width="85" height="26" class="child"/>
+  <text x="450" y="355" text-anchor="middle" class="caption">embed the small boxes, return the large boxes — degrades gracefully</text>
+
+  <!-- row 5 -->
+  <text x="40" y="380" class="sub">late chunking (embed full doc first, then pool)</text>
+  <rect x="40" y="390" width="820" height="20" class="box"/>
+  <text x="450" y="404" text-anchor="middle" class="content">token embeddings across full doc</text>
+  <rect x="40" y="412" width="150" height="20" class="chunk"/>
+  <rect x="192" y="412" width="160" height="20" class="chunk"/>
+  <rect x="354" y="412" width="200" height="20" class="chunk"/>
+  <rect x="556" y="412" width="150" height="20" class="chunk"/>
+  <rect x="708" y="412" width="152" height="20" class="chunk"/>
+  <text x="450" y="450" text-anchor="middle" class="caption">pool token embeddings into chunk vectors — preserves cross-chunk context</text>
+</svg>

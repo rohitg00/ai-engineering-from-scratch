@@ -1,0 +1,13 @@
+{
+  "manifestVersion": 1,
+  "algorithm": "sha256",
+  "files": {
+    "SKILL.md": "sha256:b57d0f111224c29bc589aefedd2d88c825177f22a3dcee21fd6590f68efd4453",
+    "assets/hosts.json": "sha256:2fda2f2813f3cd148f42a4fc5f44d04954021681430901197003265930950323",
+    "evals/artifacts.json": "sha256:4be0a182bfcf799decf0589e5e72744caf1a81caf3dbad40fe2ff68d8aad7041",
+    "evals/cases.json": "sha256:ab96a4f1af5c96e0adb64a6b3620e407e7e5a1952fb1bfb6599ec83426c22aff",
+    "evals/evidence.json": "sha256:8466ec1c250699f4652191e7f3298aec40c485dc0e6d88311da7b724194b263a",
+    "references/eval-contract.md": "sha256:280d5afab9be15c6e8c5efd57d9e41dc0ee591368af27f735f10fda3d35126a9",
+    "scripts/evaluate_skill.py": "sha256:0143d2fc9440e697992980292d86d90142af4ef0572c515cfdcf47de639a906c"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "13-mcp-server-with-registry",
+  "title": "Capstone 13: Stateless MCP Server with Registry and Governance",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does this capstone use both server.json and server/discover?",
+      "options": [
+        "server.json stores sessions, while server/discover deletes them",
+        "The Registry requires both files to contain identical version dates",
+        "They are two names for the same tool manifest",
+        "server.json publishes install and endpoint metadata, while server/discover reports live protocol capabilities"
+      ],
+      "correct": 3,
+      "explanation": "The Registry record helps clients locate and configure a server. The live RPC reports what the running process supports. Their schemas and version domains are independent, but the published identity must use the authenticated namespace and match live serverInfo."
+    },
+    {
+      "stage": "check",
+      "question": "What replaces the initialize handshake in MCP revision 2026-07-28?",
+      "options": [
+        "Mcp-Session-Id plus notifications/initialized",
+        "Every request carries protocol version and client capabilities, and clients can call mandatory server/discover",
+        "A GET request that opens a permanent server stream",
+        "A session cookie sent once per TCP connection"
+      ],
+      "correct": 1,
+      "explanation": "The protocol is stateless. Version and capabilities are request metadata, while server/discover provides live version and capability discovery without creating a session."
+    },
+    {
+      "stage": "check",
+      "question": "Which tools/list behavior supports safe and efficient discovery?",
+      "options": [
+        "A response cached forever without a scope",
+        "A random tool order on each replica",
+        "A connection-local list created during initialize",
+        "Deterministic order plus ttlMs and a correct public or private cacheScope"
+      ],
+      "correct": 3,
+      "explanation": "Stable ordering improves reproducibility and prompt caching. ttlMs communicates freshness, and cacheScope prevents user-specific results from leaking through shared caches."
+    },
+    {
+      "stage": "check",
+      "question": "Which Streamable HTTP design matches the current stateless transport?",
+      "options": [
+        "All clients require sticky load-balancer routing",
+        "POST creates a session, GET resumes it, and DELETE closes it",
+        "A standalone GET stream uses Last-Event-ID replay",
+        "Each JSON-RPC message uses its own POST, with JSON or request-scoped SSE for a request"
+      ],
+      "correct": 3,
+      "explanation": "Current Streamable HTTP is POST-only for MCP messages and has no protocol session, standalone GET stream, session DELETE, or Last-Event-ID resumability."
+    },
+    {
+      "stage": "post",
+      "question": "What must a production server validate before a policy-approved tool handler runs?",
+      "options": [
+        "Only that server.json lists the remote URL",
+        "Only the tool's destructiveHint annotation",
+        "Only that a human posted an approval message",
+        "Protocol metadata plus token issuer, audience or resource, expiry, scope, and any exact-action approval"
+      ],
+      "correct": 3,
+      "explanation": "Transport metadata, token validation, and policy are separate gates. Annotations and publication metadata do not grant authority."
+    },
+    {
+      "stage": "post",
+      "question": "Which evidence best supports the claim that the server scales without protocol sessions?",
+      "options": [
+        "A server.json remote entry",
+        "A wire-level concurrent run across two interchangeable replicas with no affinity dependency",
+        "A unit test that constructs one response dictionary",
+        "A diagram showing a load balancer"
+      ],
+      "correct": 1,
+      "explanation": "The real transport and deployment boundary must be exercised. Alternating requests across replicas proves correctness is not hidden in one process or sticky session."
+    }
+  ]
+}

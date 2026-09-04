@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .timeline { stroke: #1a1a1a; stroke-width: 2.0; fill: none; }
+      .tick { stroke: #1a1a1a; stroke-width: 1.0; }
+      .step { font-size: 11px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">AI regulation timeline: EU, US, UK, Korea</text>
+
+  <line x1="60" y1="260" x2="900" y2="260" class="timeline"/>
+
+  <line x1="100" y1="250" x2="100" y2="270" class="tick"/>
+  <text x="100" y="290" text-anchor="middle" class="small">2024-08</text>
+  <rect x="60" y="160" width="200" height="70" class="cool"/>
+  <text x="160" y="185" text-anchor="middle" class="step">EU AI Act in force</text>
+  <text x="160" y="205" text-anchor="middle" class="small">Regulation 2024/1689</text>
+
+  <line x1="260" y1="250" x2="260" y2="270" class="tick"/>
+  <text x="260" y="290" text-anchor="middle" class="small">2025-02</text>
+  <rect x="220" y="210" width="200" height="40" class="cool"/>
+  <text x="320" y="235" text-anchor="middle" class="small">prohibited practices apply</text>
+
+  <line x1="420" y1="250" x2="420" y2="270" class="tick"/>
+  <text x="420" y="290" text-anchor="middle" class="small">2025-08</text>
+  <rect x="380" y="330" width="200" height="40" class="cool"/>
+  <text x="480" y="355" text-anchor="middle" class="small">GPAI obligations apply</text>
+
+  <line x1="580" y1="250" x2="580" y2="270" class="tick"/>
+  <text x="580" y="290" text-anchor="middle" class="small">2026-01</text>
+  <rect x="540" y="160" width="200" height="40" class="cold"/>
+  <text x="640" y="185" text-anchor="middle" class="small">Korea Framework Act effective</text>
+
+  <line x1="780" y1="250" x2="780" y2="270" class="tick"/>
+  <text x="780" y="290" text-anchor="middle" class="small">2026-08</text>
+  <rect x="720" y="330" width="200" height="70" class="hot"/>
+  <text x="820" y="355" text-anchor="middle" class="step">EU AI Act full applicability</text>
+  <text x="820" y="375" text-anchor="middle" class="small">Article 50 transparency</text>
+  <text x="820" y="395" text-anchor="middle" class="small">penalties up to 15M EUR / 3%</text>
+
+  <rect x="40" y="410" width="880" height="80" class="box"/>
+  <text x="480" y="435" text-anchor="middle" class="head">2025 rebrands</text>
+  <text x="60" y="460" class="small">UK AISI -&gt; AI Security Institute (Feb 2025): narrower frontier-security focus, drops bias / free-speech framing.</text>
+  <text x="60" y="478" class="small">US AISI -&gt; CAISI (Jun 2025): Center for AI Standards and Innovation; pro-growth posture; NIST host.</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .warn { fill: #fde0b4; stroke: #b5651d; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">RSP v2 (2023) → v3.0 (Feb 24, 2026): what changed</text>
+
+  <rect x="40" y="50" width="800" height="460" class="box"/>
+
+  <!-- Two columns: additions / removals -->
+  <rect x="60" y="80" width="370" height="280" class="cool"/>
+  <text x="245" y="104" text-anchor="middle" class="label">additions in v3.0</text>
+  <text x="76" y="126" class="content">• two-tier mitigation schedule</text>
+  <text x="76" y="142" class="small">  (Anthropic-unilateral vs industry recommendation)</text>
+  <text x="76" y="162" class="content">• AI R&amp;D-4 threshold (research automation)</text>
+  <text x="76" y="178" class="small">  once crossed: publish affirmative case</text>
+  <text x="76" y="198" class="content">• Frontier Safety Roadmap (standing doc)</text>
+  <text x="76" y="214" class="content">• Risk Report (standing doc, retrospective)</text>
+  <text x="76" y="234" class="content">• RAND SL-4 security referenced</text>
+  <text x="76" y="250" class="small">  (in the industry-recommendation tier)</text>
+  <text x="76" y="270" class="content">• acknowledgement: "confidently ruling out</text>
+  <text x="76" y="286" class="content">   AI R&amp;D-4 is becoming difficult"</text>
+  <text x="76" y="318" class="small">v3.0 announcement notes the threshold is a live concern</text>
+  <text x="76" y="334" class="small">even on current-gen Claude Opus 4.6</text>
+
+  <rect x="450" y="80" width="370" height="280" class="hot"/>
+  <text x="635" y="104" text-anchor="middle" class="label">removals / softenings in v3.0</text>
+  <text x="466" y="126" class="content">• 2023 pause commitment REMOVED</text>
+  <text x="466" y="142" class="small">  (explicit training-pause clause dropped)</text>
+  <text x="466" y="162" class="content">• quantitative thresholds softened</text>
+  <text x="466" y="178" class="small">  to qualitative judgments</text>
+  <text x="466" y="198" class="content">• specific mitigations replaced with</text>
+  <text x="466" y="214" class="content">  "affirmative case" framing</text>
+  <text x="466" y="234" class="content">• independent review kept weak</text>
+  <text x="466" y="250" class="small">  (internal Safety Advisory Group primary)</text>
+  <text x="466" y="270" class="content">• industry-recommendation tier allows</text>
+  <text x="466" y="286" class="content">  policy-advocacy framing without commitment</text>
+
+  <!-- SaferAI rating -->
+  <rect x="60" y="380" width="760" height="110" class="warn"/>
+  <text x="440" y="404" text-anchor="middle" class="label">SaferAI independent rating</text>
+  <text x="80" y="426" class="content">v2 (2023): 2.2 — moderate</text>
+  <text x="80" y="442" class="content">v3.0 (2026): 1.9 — weak (joins OpenAI Preparedness and DeepMind FSF in "weak" category)</text>
+  <text x="80" y="462" class="content">downgrade drivers: qualitative thresholds · pause removal · limited independent oversight</text>
+  <text x="80" y="482" class="small">policy gets less rigorous while looking more polished; reading closely is the skill.</text>
+</svg>

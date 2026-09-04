@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .shadow { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .canary { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .ab { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .gate { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">LLM rollout sequence — shadow → canary → A/B → 100%</text>
+
+  <rect x="40" y="50" width="280" height="180" class="shadow"/>
+  <text x="180" y="72" text-anchor="middle" class="head">1. shadow mode</text>
+  <text x="180" y="92" text-anchor="middle" class="step">zero user impact</text>
+  <text x="60" y="118" class="small">· duplicate prod requests to candidate</text>
+  <text x="60" y="136" class="small">· log outputs, token counts, latency</text>
+  <text x="60" y="154" class="small">· diff vs production output</text>
+  <text x="60" y="172" class="small">· catches: cost spikes, length shifts,</text>
+  <text x="60" y="190" class="small">  obvious refusal changes, hard errors</text>
+  <text x="180" y="214" text-anchor="middle" class="caption">not a quality test — a smoke test</text>
+
+  <rect x="340" y="50" width="280" height="180" class="canary"/>
+  <text x="480" y="72" text-anchor="middle" class="head">2. canary rollout</text>
+  <text x="480" y="92" text-anchor="middle" class="step">1% → 10% → 25% → 50% → 75% → 100%</text>
+  <text x="360" y="118" class="small">· five gates at each step:</text>
+  <text x="360" y="136" class="small">  latency P99 &gt; 1.5x baseline</text>
+  <text x="360" y="154" class="small">  cost/request &gt; 1.2x baseline</text>
+  <text x="360" y="172" class="small">  error/refusal &gt; 2x baseline</text>
+  <text x="360" y="190" class="small">  output-length shift &gt; 1.4x</text>
+  <text x="360" y="208" class="small">  thumbs-down &gt; 1.5x baseline</text>
+
+  <rect x="640" y="50" width="280" height="180" class="ab"/>
+  <text x="780" y="72" text-anchor="middle" class="head">3. A/B (optional)</text>
+  <text x="780" y="92" text-anchor="middle" class="step">only for distinct alternatives</text>
+  <text x="660" y="118" class="small">· 50/50 split</text>
+  <text x="660" y="136" class="small">· run until stats significance</text>
+  <text x="660" y="154" class="small">· CUPED / sequential / Benjamini-H</text>
+  <text x="660" y="172" class="small">· skip if just improved variant</text>
+  <text x="660" y="190" class="small">· Phase 17 · 21 covers GrowthBook +</text>
+  <text x="660" y="208" class="small">  Statsig semantics</text>
+
+  <rect x="40" y="250" width="880" height="100" class="gate"/>
+  <text x="480" y="272" text-anchor="middle" class="head">non-determinism sets the noise floor</text>
+  <text x="480" y="294" text-anchor="middle" class="step">up to 15% run-to-run variance on identical inputs</text>
+  <text x="480" y="314" text-anchor="middle" class="small">causes: GPU FP non-associativity, batch-size variance, sampling</text>
+  <text x="480" y="334" text-anchor="middle" class="caption">gates must sit above the noise floor, not at identity with baseline</text>
+
+  <rect x="40" y="370" width="880" height="110" class="box"/>
+  <text x="480" y="392" text-anchor="middle" class="head">rollback in seconds</text>
+  <text x="480" y="414" text-anchor="middle" class="step">policy flag (feature flags) + model pin (registry digest)</text>
+  <text x="480" y="434" text-anchor="middle" class="step">rollback = flip flag + revert digest</text>
+  <text x="480" y="454" text-anchor="middle" class="small">if rollback requires redeploy you are too slow — fix the stack first</text>
+  <text x="480" y="474" text-anchor="middle" class="caption">tooling: Argo Rollouts, Flagger, Istio weighted, KServe, feature flag system</text>
+</svg>

@@ -1,0 +1,8 @@
+{
+  "visitors30d": 114584,
+  "pageViews30d": 181995,
+  "period": "30 days",
+  "updated": "2026-08-29",
+  "source": "Vercel Web Analytics (Production)",
+  "note": "Refresh these values from the production Web Analytics dashboard, then run `node site/build.js` to propagate them to README + site."
+}

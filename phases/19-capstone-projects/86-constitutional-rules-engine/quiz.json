@@ -1,0 +1,78 @@
+{
+  "lesson": "86-constitutional-rules-engine",
+  "title": "Capstone 86 — Constitutional Rules Engine",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why use a declarative YAML constitution rather than ad-hoc code checks?",
+      "options": [
+        "Because YAML supports anchors",
+        "Because YAML is faster to parse than Python",
+        "Because rules in YAML are reviewable by non-engineers, lived in version control, and replaceable without a code change",
+        "Because the standard library prefers YAML"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "What fields must every rule have at minimum?",
+      "options": [
+        "name, regex, fix",
+        "id, owner, timestamp",
+        "predicate, severity, owner",
+        "name, severity, must, explanation"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How does the engine compose predicates?",
+      "options": [
+        "Only via a single contains_regex per rule",
+        "By multiplying confidence scores",
+        "Through a neural classifier",
+        "Via all_of, any_of, and not_ which recursively wrap atomic predicates"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What is the role of applies_when?",
+      "options": [
+        "It overrides the severity",
+        "It picks the fixer operation",
+        "It gates the must predicate so rules that do not apply are recorded as not_applicable rather than violation",
+        "It always evaluates to true"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the Fixer do?",
+      "options": [
+        "It calls a remote model to repair the text",
+        "It applies the per-rule declarative fix (append, prepend, replace_regex) to produce a revised text",
+        "It rewrites the rules file",
+        "It computes severity from the fix"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does the demo run the engine a second time after the fixer?",
+      "options": [
+        "Because the first pass is only a dry run",
+        "To re-load the constitution",
+        "To inflate the report size",
+        "To verify the revised text satisfies the rules and to surface any rule the fixer cannot repair locally"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

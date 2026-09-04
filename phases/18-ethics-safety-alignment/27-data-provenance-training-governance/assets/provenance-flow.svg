@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow27" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Training-data governance: collection-time compliance</text>
+
+  <rect x="40" y="60" width="200" height="180" class="box"/>
+  <text x="140" y="82" text-anchor="middle" class="head">data sources</text>
+  <rect x="60" y="100" width="160" height="50" class="cool"/>
+  <text x="140" y="125" text-anchor="middle" class="step">public web</text>
+  <text x="140" y="143" text-anchor="middle" class="small">robots.txt opt-out</text>
+  <rect x="60" y="160" width="160" height="50" class="cool"/>
+  <text x="140" y="185" text-anchor="middle" class="step">first-party content</text>
+  <text x="140" y="203" text-anchor="middle" class="small">EU: legitimate interest</text>
+
+  <rect x="260" y="60" width="220" height="180" class="box"/>
+  <text x="370" y="82" text-anchor="middle" class="head">opt-out infrastructure</text>
+  <rect x="280" y="100" width="180" height="50" class="cold"/>
+  <text x="370" y="125" text-anchor="middle" class="step">robots.txt</text>
+  <rect x="280" y="160" width="180" height="50" class="cold"/>
+  <text x="370" y="185" text-anchor="middle" class="step">C2PA "No AI Training"</text>
+
+  <rect x="500" y="60" width="220" height="180" class="box"/>
+  <text x="610" y="82" text-anchor="middle" class="head">training pipeline</text>
+  <rect x="520" y="100" width="180" height="50" class="hot"/>
+  <text x="610" y="125" text-anchor="middle" class="step">filter + curate</text>
+  <text x="610" y="143" text-anchor="middle" class="small">respect opt-out at collection</text>
+  <rect x="520" y="160" width="180" height="50" class="hot"/>
+  <text x="610" y="185" text-anchor="middle" class="step">train -&gt; weights</text>
+  <text x="610" y="203" text-anchor="middle" class="small">irreversible embedding</text>
+
+  <rect x="740" y="60" width="180" height="180" class="box"/>
+  <text x="830" y="82" text-anchor="middle" class="head">documentation</text>
+  <rect x="760" y="100" width="140" height="50" class="cool"/>
+  <text x="830" y="125" text-anchor="middle" class="step">AB 2013 summary</text>
+  <text x="830" y="143" text-anchor="middle" class="small">12 fields</text>
+  <rect x="760" y="160" width="140" height="50" class="cool"/>
+  <text x="830" y="185" text-anchor="middle" class="step">Datasheet</text>
+  <text x="830" y="203" text-anchor="middle" class="small">(Lesson 26)</text>
+
+  <path d="M 240 150 L 260 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow27)" fill="none"/>
+  <path d="M 480 150 L 500 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow27)" fill="none"/>
+  <path d="M 720 150 L 740 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow27)" fill="none"/>
+
+  <rect x="40" y="280" width="880" height="210" class="box"/>
+  <text x="480" y="305" text-anchor="middle" class="head">2024-2025 developments</text>
+  <text x="60" y="335" class="small">EU AI Act GPAI Code of Practice Copyright chapter (2025): all GPAI providers must respect opt-outs.</text>
+  <text x="60" y="355" class="small">California AB 2013 (2024): 12 mandated fields; in effect Jan 2025 for new models.</text>
+  <text x="60" y="375" class="small">Irish DPC (May 2025), Cologne Higher Regional Court, UK ICO (Sept 2025): legitimate interest OK with opt-out.</text>
+  <text x="60" y="395" class="small">Brazilian ANPD (June 2024): suspended Meta over transparency; stricter bar than EU.</text>
+  <text x="60" y="425" class="small">Data Provenance Initiative (Jul 2024): "Consent in Crisis" -- robots.txt restrictions accelerating.</text>
+  <text x="60" y="445" class="small">irreversibility: GDPR right-to-erasure has no practical analogue for trained weights.</text>
+  <text x="60" y="465" class="small">unlearning is approximate; MIA-calibrated; see Lesson 22. compliance window is at collection.</text>
+  <text x="60" y="485" class="small">provenance chain + AB 2013 summary + Datasheet + card = the 2026 documentation minimum.</text>
+</svg>

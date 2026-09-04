@@ -1,0 +1,90 @@
+{
+  "lesson": "03-reflexion-verbal-rl",
+  "title": "Reflexion: Verbal Reinforcement Learning",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does Reflexion replace in standard reinforcement learning?",
+      "options": [
+        "Episodic memory with parametric memory",
+        "Gradient updates with natural-language reflections stored between trials",
+        "Policy networks with random search",
+        "Reward shaping with a constant reward"
+      ],
+      "correct": 1,
+      "explanation": "Reflexion uses natural-language reflections in episodic memory instead of weight updates."
+    },
+    {
+      "stage": "pre",
+      "question": "What three components define a Reflexion system?",
+      "options": [
+        "Planner, Worker, Solver",
+        "Selector, Expander, Backpropagator",
+        "Generator, Critic, Optimizer",
+        "Actor, Evaluator, Self-Reflector"
+      ],
+      "correct": 3,
+      "explanation": "Reflexion factors the agent into an Actor that runs trajectories, an Evaluator that scores them, and a Self-Reflector that writes lessons."
+    },
+    {
+      "stage": "check",
+      "question": "Which evaluator type uses an external binary signal like a unit test or a known correct answer?",
+      "options": [
+        "Heuristic",
+        "Scalar",
+        "Self-evaluated",
+        "Vote-based"
+      ],
+      "correct": 1,
+      "explanation": "Scalar evaluators read pass/fail signals from ground truth (ALFWorld success, HumanEval tests)."
+    },
+    {
+      "stage": "check",
+      "question": "Why is self-evaluation a weaker signal than scalar feedback?",
+      "options": [
+        "The model judging itself has no external grounding so it can rubber-stamp its own answer",
+        "It is slower to compute",
+        "It always requires a larger model",
+        "It cannot run on tools"
+      ],
+      "correct": 0,
+      "explanation": "Self-eval lacks an external check, so a confident hallucination scores well; pair it with tool-grounded verification."
+    },
+    {
+      "stage": "check",
+      "question": "Which case does the lesson list as a place where Reflexion does NOT help?",
+      "options": [
+        "An external transient failure like the network being down",
+        "HotpotQA multi-hop questions",
+        "Code generation where tests can score",
+        "ALFWorld navigation tasks"
+      ],
+      "correct": 0,
+      "explanation": "Reflecting on a transient external outage produces a reflection that does not help future runs."
+    },
+    {
+      "stage": "post",
+      "question": "What is memory rot in the Reflexion pattern?",
+      "options": [
+        "Losing reflections when the process restarts",
+        "The reflection prompt exceeds the context window",
+        "Reflections get encrypted by the provider",
+        "Episodic buffer fills with obsolete or wrong reflections and slows or biases future trials"
+      ],
+      "correct": 3,
+      "explanation": "Accumulated stale or wrong reflections degrade behavior; mitigate with compaction or TTL."
+    },
+    {
+      "stage": "post",
+      "question": "Which production pattern is the lesson's clearest match for Reflexion?",
+      "options": [
+        "Claude Code's CLAUDE.md learnings prepended to future sessions",
+        "Anthropic's prompt caching",
+        "Cursor's apply-edits flow",
+        "OpenAI's batch API"
+      ],
+      "correct": 0,
+      "explanation": "CLAUDE.md learnings, pro-workflow's learn-rule, and Letta's sleep-time compute all externalize the episodic reflection buffer."
+    }
+  ]
+}

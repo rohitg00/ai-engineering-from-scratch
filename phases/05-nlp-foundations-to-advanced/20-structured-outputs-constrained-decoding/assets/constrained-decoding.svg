@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .kill { fill: #fce8e6; stroke: #c0392b; stroke-width: 1; stroke-dasharray: 3 2; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .struck { text-decoration: line-through; fill: #aaa; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">constrained decoding — mask invalid tokens before sampling</text>
+
+  <!-- Model box -->
+  <rect x="40" y="70" width="160" height="80" class="box"/>
+  <text x="120" y="95" text-anchor="middle" class="label">LLM</text>
+  <text x="120" y="115" text-anchor="middle" class="content">next-token</text>
+  <text x="120" y="132" text-anchor="middle" class="content">logits</text>
+
+  <line x1="200" y1="110" x2="240" y2="110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Raw logits -->
+  <rect x="240" y="70" width="200" height="260" class="box"/>
+  <text x="340" y="90" text-anchor="middle" class="label">raw logits (vocab)</text>
+  <text x="260" y="115" class="content">"(" :  2.1</text>
+  <text x="260" y="135" class="content">"0" :  1.8</text>
+  <text x="260" y="155" class="content">"1" :  1.6</text>
+  <text x="260" y="175" class="content">"2" :  1.4</text>
+  <text x="260" y="195" class="content">"a" :  0.9</text>
+  <text x="260" y="215" class="content">"b" :  0.7</text>
+  <text x="260" y="235" class="content">"-" : -0.1</text>
+  <text x="260" y="255" class="content">" " : -0.3</text>
+  <text x="260" y="275" class="content">...</text>
+  <text x="260" y="305" class="content">100k tokens</text>
+
+  <line x1="440" y1="200" x2="480" y2="200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- FSM box -->
+  <rect x="480" y="70" width="180" height="110" class="hot"/>
+  <text x="570" y="95" text-anchor="middle" class="label">FSM state</text>
+  <text x="570" y="118" text-anchor="middle" class="content">at pos 0:</text>
+  <text x="570" y="138" text-anchor="middle" class="content">\d{3}-\d{3}-\d{4}</text>
+  <text x="570" y="158" text-anchor="middle" class="content">valid: {0-9}</text>
+
+  <line x1="570" y1="180" x2="570" y2="210" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Mask rules -->
+  <rect x="480" y="210" width="180" height="120" class="box"/>
+  <text x="570" y="235" text-anchor="middle" class="label">logit processor</text>
+  <text x="570" y="260" text-anchor="middle" class="content">logit[t] = -inf</text>
+  <text x="570" y="278" text-anchor="middle" class="content">if t not in valid</text>
+  <text x="570" y="305" text-anchor="middle" class="caption">keeps 10 of 100,000</text>
+
+  <line x1="660" y1="200" x2="700" y2="200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Masked logits -->
+  <rect x="700" y="70" width="180" height="260" class="box"/>
+  <text x="790" y="90" text-anchor="middle" class="label">masked logits</text>
+  <text x="720" y="115" class="content struck">"(" :  -inf</text>
+  <text x="720" y="135" class="content">"0" :   1.8</text>
+  <text x="720" y="155" class="content">"1" :   1.6</text>
+  <text x="720" y="175" class="content">"2" :   1.4</text>
+  <text x="720" y="195" class="content struck">"a" :  -inf</text>
+  <text x="720" y="215" class="content struck">"b" :  -inf</text>
+  <text x="720" y="235" class="content struck">"-" :  -inf</text>
+  <text x="720" y="255" class="content struck">" " :  -inf</text>
+  <text x="720" y="275" class="content">...</text>
+  <text x="720" y="305" class="content">sample → "5"</text>
+
+  <!-- Bottom loop -->
+  <text x="450" y="370" text-anchor="middle" class="caption">repeat at every step; FSM advances with each accepted token</text>
+  <text x="450" y="390" text-anchor="middle" class="caption">invalid continuations are unreachable — 100% valid output by construction</text>
+
+  <path d="M 790 330 Q 500 410 120 160" fill="none" stroke="#c0392b" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+</svg>

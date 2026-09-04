@@ -1,0 +1,78 @@
+{
+  "lesson": "23-capstone-tool-ecosystem",
+  "title": "Capstone: Stateless Tool Ecosystem",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does a successful run of this lesson's stdlib harness prove?",
+      "options": [
+        "The in-process policy and data flow behaved as asserted",
+        "A real MCP transport completed initialization",
+        "An OAuth authorization server issued a valid token",
+        "A collector received every OpenTelemetry span"
+      ],
+      "correct": 0,
+      "explanation": "The harness uses Python functions, static tokens, fixtures, and in-memory spans. It validates those local boundaries while leaving protocol, authorization, export, browser, and sandbox integration to later tests."
+    },
+    {
+      "stage": "check",
+      "question": "Which flow matches MCP revision 2026-07-28 for discovering a server and polling long-running work?",
+      "options": [
+        "server/connect, tools/poll, tasks/status",
+        "server/discover, tools/call returning a task handle, tasks/get",
+        "initialize, tools/call, tasks/result",
+        "GET /mcp, tools/call, tasks/list"
+      ],
+      "correct": 1,
+      "explanation": "The stateless revision uses mandatory `server/discover`. The optional `io.modelcontextprotocol/tasks` extension returns a task handle and uses `tasks/get`; a terminal task carries its final result. The old handshake, GET endpoint, `tasks/result`, and `tasks/list` are not in this flow."
+    },
+    {
+      "stage": "check",
+      "question": "How does A2A v1 name the send-message operation in its gRPC and JSON-RPC bindings?",
+      "options": [
+        "AgentMessage",
+        "message/create",
+        "tasks/send",
+        "SendMessage"
+      ],
+      "correct": 3,
+      "explanation": "A2A v1 uses `SendMessage` for gRPC and JSON-RPC. Its HTTP+JSON binding exposes `POST /message:send`."
+    },
+    {
+      "stage": "check",
+      "question": "Which MCP Apps SDK call lets an App request a tool on its originating server?",
+      "options": [
+        "host.callTool(name, args)",
+        "app.callServerTool({ name, arguments })",
+        "app.invoke(name, args)",
+        "server.tools.call(args)"
+      ],
+      "correct": 1,
+      "explanation": "The App instance calls `callServerTool` with an object containing `name` and optional `arguments`; the host proxies the underlying `tools/call` request."
+    },
+    {
+      "stage": "post",
+      "question": "What authority does the capstone Agent Skill provide over MCP tools and the sandbox?",
+      "options": [
+        "It bypasses approval after explicit invocation",
+        "It grants every tool named in the body",
+        "It grants read-only network access",
+        "None; host adapters and policy still authorize each capability"
+      ],
+      "correct": 3,
+      "explanation": "A skill supplies procedure. Discovery, invocation, tool exposure, authorization, credentials, and isolation are enforced by the host and external runtime boundaries."
+    },
+    {
+      "stage": "post",
+      "question": "Which evidence best proves that telemetry crossed the production export boundary?",
+      "options": [
+        "A skill instruction saying to emit spans",
+        "A local dictionary containing a traceId key",
+        "A diagram of the intended span hierarchy",
+        "Receiver-side collector data with trace and parent assertions"
+      ],
+      "correct": 3,
+      "explanation": "A receiver-side observation proves the SDK, propagator, exporter, transport, and collector path worked. Local data and diagrams prove only local construction or intent."
+    }
+  ]
+}

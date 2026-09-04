@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "id": "agent-skills",
+  "title": "Agent Skills Engineering",
+  "summary": "Build, route, secure, evaluate, package, and verify Agent Skills in real hosts.",
+  "estimatedMinutes": 570,
+  "stateFile": "AGENT-SKILLS-LEARNING.md",
+  "prerequisites": [
+    {
+      "type": "knowledge",
+      "required": true,
+      "title": "Files, Python, and the command line",
+      "description": "You can edit a text file, inspect a directory, and run a Python command. No agent framework experience is required."
+    },
+    {
+      "type": "software",
+      "required": true,
+      "title": "Node.js, npx, and Python 3 for real labs",
+      "description": "The install and bundled-script checkpoints require working node, npx, and python3 commands. The website and docs remain a conceptual fallback when these commands are unavailable."
+    },
+    {
+      "type": "host",
+      "required": true,
+      "title": "One selected skill-capable host and install scope",
+      "description": "Choose a supported agent host plus a writable project or user skill scope before installation. Record the exact host, scope, and installed path; do not infer discovery from installer success."
+    },
+    {
+      "type": "lesson",
+      "required": false,
+      "title": "The Tool Interface",
+      "path": "phases/13-tools-and-protocols/01-the-tool-interface",
+      "description": "Skim this first if tool schemas and side-effect boundaries are new to you."
+    },
+    {
+      "type": "lesson",
+      "required": false,
+      "title": "Tool Schema Design",
+      "path": "phases/13-tools-and-protocols/05-tool-schema-design",
+      "description": "Skim this first if you have not designed typed tool contracts."
+    },
+    {
+      "id": "tool-poisoning-and-untrusted-instructions",
+      "type": "knowledge",
+      "required": true,
+      "title": "Tool poisoning and untrusted instructions",
+      "description": "Before Lesson 26, explain why skill and tool metadata is untrusted input. Lesson 15 is an optional refresher outside this five-lesson route when this preflight is not yet confirmed."
+    }
+  ],
+  "invocation": {
+    "codex": "learn-agent-skills, or choose it from /skills",
+    "claudeCode": "/learn-agent-skills",
+    "portableFallback": "Use learn-agent-skills to start or resume the Agent Skills Engineering path."
+  },
+  "conceptualFallback": "Read the website or each lesson's docs/en.md manually. Mark real-host discovery, invocation, script, update, and uninstall evidence pending until Node.js, npx, Python 3, a compatible host, and a writable install scope are available.",
+  "quickStart": {
+    "estimatedMinutes": 10,
+    "lessonPath": "phases/13-tools-and-protocols/22-skills-and-agent-sdks",
+    "goal": "Create a small skill, install the complete reviewer bundle into a real host, invoke it explicitly, verify its output, and remove it cleanly.",
+    "installCommand": "npx skills add rohitg00/ai-engineering-from-scratch --skill skill-contract-reviewer --full-depth",
+    "workingDirectory": "An empty learner workspace. Save its absolute path as TARGET_ROOT before installation.",
+    "expectedEvidence": [
+      "The installer reports the selected host and destination.",
+      "The host discovers skill-contract-reviewer after a rescan or new session.",
+      "An explicit invocation returns a validation report and primitive choice, plus the resolved script path, target path, cwd, argv, and exit code.",
+      "The uninstall command removes only skill-contract-reviewer from the selected host."
+    ]
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "phase": 13,
+      "lesson": 22,
+      "title": "Agent Skills: Portable Contract and Runtime Boundary",
+      "path": "phases/13-tools-and-protocols/22-skills-and-agent-sdks",
+      "minutes": 90,
+      "required": true,
+      "checkpoint": "Create, install, invoke, verify, and remove one complete skill bundle in a real host."
+    },
+    {
+      "order": 2,
+      "phase": 13,
+      "lesson": 24,
+      "title": "Skill Discovery and Progressive Disclosure",
+      "path": "phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure",
+      "minutes": 105,
+      "required": true,
+      "checkpoint": "Trace discovery, catalog publication, activation, and branch-specific resource loading separately."
+    },
+    {
+      "order": 3,
+      "phase": 13,
+      "lesson": 25,
+      "title": "Skill Invocation and Routing",
+      "path": "phases/13-tools-and-protocols/25-skill-invocation-and-routing",
+      "minutes": 105,
+      "required": true,
+      "checkpoint": "Exercise explicit invocation, implicit selection, abstention, and a near-miss request."
+    },
+    {
+      "order": 4,
+      "phase": 13,
+      "lesson": 26,
+      "title": "Skill Permissions, Sandboxes, and Trust",
+      "path": "phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust",
+      "minutes": 120,
+      "required": true,
+      "prerequisitePaths": [
+        "phases/13-tools-and-protocols/25-skill-invocation-and-routing"
+      ],
+      "prerequisiteChecks": [
+        "tool-poisoning-and-untrusted-instructions"
+      ],
+      "checkpoint": "Distinguish instructions, permission prompts, sandbox containment, and independent verification with observed evidence."
+    },
+    {
+      "order": 5,
+      "phase": 13,
+      "lesson": 27,
+      "title": "Skill Evals, Packaging, and Portability",
+      "path": "phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability",
+      "minutes": 150,
+      "required": true,
+      "checkpoint": "Run the release gate in a real host, record routing and authority evidence, and verify upgrade and uninstall behavior."
+    }
+  ],
+  "optionalLessons": [
+    {
+      "phase": 13,
+      "lesson": 23,
+      "title": "Capstone: Stateless Tool Ecosystem",
+      "path": "phases/13-tools-and-protocols/23-capstone-tool-ecosystem",
+      "minutes": 120,
+      "required": false,
+      "entryRule": "Complete the Agent Skills route and Phase 13 lessons 06 through 20 before starting this systems integration capstone."
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .warn { fill: #fde0b4; stroke: #b5651d; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">Claude Constitution (Jan 2026, 79 pages, CC0): hardcoded floor + four tiers</text>
+
+  <rect x="40" y="50" width="800" height="460" class="box"/>
+
+  <!-- Hardcoded floor -->
+  <rect x="60" y="80" width="760" height="86" class="hot"/>
+  <text x="440" y="104" text-anchor="middle" class="label">hardcoded prohibitions (operators and users cannot override)</text>
+  <text x="80" y="126" class="content">bioweapons / CBRN uplift  ·  CSAM  ·  critical-infrastructure attack planning</text>
+  <text x="80" y="142" class="content">deception about AI identity when asked directly  ·  deployment-specific additions allowed</text>
+  <text x="80" y="158" class="small">enforced at model weights (CAI training + RLAIF) and at inference layer</text>
+
+  <!-- Tier 1 -->
+  <rect x="60" y="190" width="760" height="60" class="cool"/>
+  <text x="80" y="212" class="label">tier 1 — safety and supporting human oversight  (highest)</text>
+  <text x="80" y="232" class="content">do not act in ways that make it harder for humans to supervise and correct AI</text>
+
+  <!-- Tier 2 -->
+  <rect x="60" y="260" width="760" height="60" class="cold"/>
+  <text x="80" y="282" class="label">tier 2 — ethics</text>
+  <text x="80" y="302" class="content">honesty · avoid harm to persons · no deception · no manipulation</text>
+
+  <!-- Tier 3 -->
+  <rect x="60" y="330" width="760" height="60" class="warn"/>
+  <text x="80" y="352" class="label">tier 3 — Anthropic guidelines  (operator-adjustable within declared bounds)</text>
+  <text x="80" y="372" class="content">response length · topical scope · style · tool-use patterns</text>
+
+  <!-- Tier 4 -->
+  <rect x="60" y="400" width="760" height="60" class="box"/>
+  <text x="80" y="422" class="label">tier 4 — helpfulness  (lowest)</text>
+  <text x="80" y="442" class="content">be as useful as possible within the three higher tiers</text>
+
+  <!-- Resolution note -->
+  <rect x="60" y="466" width="760" height="36" class="box"/>
+  <text x="440" y="490" text-anchor="middle" class="small">when tiers conflict, higher wins; when principles are ambiguous, model reasons (reason-based alignment)</text>
+</svg>

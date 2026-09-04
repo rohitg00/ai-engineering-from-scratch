@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.2; fill: none; }
+    </style>
+  </defs>
+  <text x="450" y="28" text-anchor="middle" class="title">Supervisor / Orchestrator-Worker — Anthropic Research pattern</text>
+
+  <rect x="340" y="60" width="220" height="80" class="hot"/>
+  <text x="450" y="84" text-anchor="middle" class="head">Lead (Opus 4)</text>
+  <text x="450" y="104" text-anchor="middle" class="small">plan · delegate · synthesize</text>
+  <text x="450" y="120" text-anchor="middle" class="small">never reads raw sources</text>
+
+  <line x1="420" y1="142" x2="220" y2="200" class="edge" marker-end="url(#arrow)"/>
+  <line x1="450" y1="142" x2="450" y2="200" class="edge" marker-end="url(#arrow)"/>
+  <line x1="480" y1="142" x2="680" y2="200" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="100" y="200" width="220" height="100" class="cool"/>
+  <text x="210" y="224" text-anchor="middle" class="head">Worker 1 (Sonnet 4)</text>
+  <text x="210" y="246" text-anchor="middle" class="small">fresh 200k context</text>
+  <text x="210" y="262" text-anchor="middle" class="small">sub-question: "origins"</text>
+  <text x="210" y="282" text-anchor="middle" class="small">returns: narrow summary</text>
+
+  <rect x="340" y="200" width="220" height="100" class="cool"/>
+  <text x="450" y="224" text-anchor="middle" class="head">Worker 2 (Sonnet 4)</text>
+  <text x="450" y="246" text-anchor="middle" class="small">fresh 200k context</text>
+  <text x="450" y="262" text-anchor="middle" class="small">sub-question: "state of art"</text>
+  <text x="450" y="282" text-anchor="middle" class="small">returns: narrow summary</text>
+
+  <rect x="580" y="200" width="220" height="100" class="cool"/>
+  <text x="690" y="224" text-anchor="middle" class="head">Worker 3 (Sonnet 4)</text>
+  <text x="690" y="246" text-anchor="middle" class="small">fresh 200k context</text>
+  <text x="690" y="262" text-anchor="middle" class="small">sub-question: "open problems"</text>
+  <text x="690" y="282" text-anchor="middle" class="small">returns: narrow summary</text>
+
+  <line x1="210" y1="300" x2="420" y2="345" class="edge" marker-end="url(#arrow)"/>
+  <line x1="450" y1="300" x2="450" y2="345" class="edge" marker-end="url(#arrow)"/>
+  <line x1="690" y1="300" x2="480" y2="345" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="340" y="345" width="220" height="60" class="cold"/>
+  <text x="450" y="367" text-anchor="middle" class="head">synthesis</text>
+  <text x="450" y="387" text-anchor="middle" class="small">lead reads worker summaries only</text>
+
+  <rect x="60" y="425" width="780" height="80" class="box"/>
+  <text x="450" y="447" text-anchor="middle" class="head">why it wins</text>
+  <text x="450" y="467" text-anchor="middle" class="small">fresh context per worker · parallel wall-clock · narrow worker prompts</text>
+  <text x="450" y="487" text-anchor="middle" class="small">+90.2% over single-agent Opus 4 (Anthropic internal research evals) · 80% of BrowseComp variance explained by tokens alone</text>
+</svg>

@@ -1,0 +1,90 @@
+{
+  "lesson": "10-skill-libraries-voyager",
+  "title": "Skill Libraries and Lifelong Learning (Voyager)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does Voyager treat as the action space?",
+      "options": [
+        "Primitive Minecraft commands",
+        "Reinforcement learning Q-values",
+        "Text prompts only",
+        "Executable code (JavaScript functions) stored, retrieved, and composed"
+      ],
+      "correct": 3,
+      "explanation": "Voyager's contribution is making code the action: skills are programs, not raw commands."
+    },
+    {
+      "stage": "pre",
+      "question": "What three components define a Voyager agent?",
+      "options": [
+        "Retriever, generator, ranker",
+        "Encoder, decoder, value head",
+        "Automatic curriculum, skill library, iterative prompting",
+        "Planner, executor, judge"
+      ],
+      "correct": 2,
+      "explanation": "Voyager structures the agent around curriculum, skill library, and iterative prompting."
+    },
+    {
+      "stage": "check",
+      "question": "What three signals can return from a skill execution attempt?",
+      "options": [
+        "Success, error (with stack trace), self-verification failure",
+        "Pass, fail, retry",
+        "Heartbeat, ack, nack",
+        "Green, yellow, red"
+      ],
+      "correct": 0,
+      "explanation": "Voyager's iterative prompting mechanism is driven by these three signals folded back into the next version."
+    },
+    {
+      "stage": "check",
+      "question": "How does the automatic curriculum pick the next task?",
+      "options": [
+        "Random uniform over the action space",
+        "Just above current capability, based on environment state and skill inventory (the exploration sweet spot)",
+        "Always the hardest available task",
+        "User-supplied list only"
+      ],
+      "correct": 1,
+      "explanation": "The proposer aims for tasks just above current capability so progress is steady."
+    },
+    {
+      "stage": "check",
+      "question": "Which 2026 product is the lesson's clearest match for the Voyager skill?",
+      "options": [
+        "Claude Agent SDK skills: named, retrievable code plus instructions loaded on demand",
+        "AWS Lambda layers",
+        "Pinecone indices",
+        "OpenAI fine-tuning"
+      ],
+      "correct": 0,
+      "explanation": "Agent SDK skills match Voyager's named-retrievable-composable code pattern."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson recommend dedup on write for the skill library?",
+      "options": [
+        "Without dedup, the same skill gets added many times with slightly different descriptions; retrieval should return one canonical version",
+        "Providers reject duplicates",
+        "Git blocks duplicates",
+        "Disk is expensive"
+      ],
+      "correct": 0,
+      "explanation": "Near-duplicate descriptions collapse to a single canonical skill so retrieval stays clean."
+    },
+    {
+      "stage": "post",
+      "question": "What problem does composed-skill drift describe?",
+      "options": [
+        "A skill stops compiling after a Python upgrade",
+        "A parent skill silently picks up a refined child version it was never tested against; fix by pinning skill versions",
+        "Skills get encrypted in storage",
+        "Retrieval returns nothing"
+      ],
+      "correct": 1,
+      "explanation": "Without version pinning, a refinement to a child silently changes the parent's behavior."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "task_002_factorial_missing_return",
+  "goal": "factorial(n) computes n!. The buggy version assigns the result to a local but forgets to return it. Add the missing return statement.",
+  "verifier": {
+    "name": "regex_match",
+    "args": {
+      "path": "factorial.py",
+      "pattern": "^\\s*return\\s+result\\s*$"
+    }
+  }
+}

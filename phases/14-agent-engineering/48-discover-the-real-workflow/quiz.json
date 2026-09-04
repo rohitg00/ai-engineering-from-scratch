@@ -1,0 +1,48 @@
+{
+  "lesson": "48-discover-the-real-workflow",
+  "title": "Discover the Real Workflow",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why start with current behavior instead of requested features?",
+      "options": ["The real workflow reveals workarounds, handoffs, state, and constraints", "Features are never useful", "It guarantees production readiness", "It avoids users"],
+      "correct": 0,
+      "explanation": "Requirements emerge from how work actually happens, not only what people request."
+    },
+    {
+      "stage": "check",
+      "question": "Which is the strongest direct evidence?",
+      "options": ["A user says what usually happens", "A roadmap", "A system trace of the action", "A team guess"],
+      "correct": 2,
+      "explanation": "A trace observes behavior directly rather than reporting or inferring it."
+    },
+    {
+      "stage": "check",
+      "question": "What four workflow surfaces deserve special attention?",
+      "options": ["Branches, commits, tags, releases", "Friction, hidden state, authority, and exceptions", "Color, font, layout, animation", "Model, tokens, temperature, prompt"],
+      "correct": 1,
+      "explanation": "These surfaces commonly contain the real problem and risk."
+    },
+    {
+      "stage": "check",
+      "question": "Why preserve workflow variants?",
+      "options": ["An average may describe nobody and erase valid role or risk differences", "Variants are easier to code", "All users are identical", "It removes evidence needs"],
+      "correct": 0,
+      "explanation": "Differences can encode roles, policy, expertise, or legacy state."
+    },
+    {
+      "stage": "post",
+      "question": "What does a direct-evidence ratio communicate?",
+      "options": ["Deployment cost", "Model accuracy", "Feature completeness", "How much of the workflow is grounded in observation rather than report or inference"],
+      "correct": 3,
+      "explanation": "It keeps the strength of evidence visible."
+    },
+    {
+      "stage": "post",
+      "question": "What is a hidden workflow step?",
+      "options": ["A public API", "A unit test", "A CSS transition", "Work carried in memory, chat, or personal notes outside the formal process"],
+      "correct": 3,
+      "explanation": "Hidden state often explains why the visible process is incomplete."
+    }
+  ]
+}

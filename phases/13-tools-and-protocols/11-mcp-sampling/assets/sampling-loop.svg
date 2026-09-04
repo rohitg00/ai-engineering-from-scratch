@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">2026-07-28 model input: direct integration or stateless MRTR</text>
+
+  <rect x="40" y="55" width="880" height="70" class="hot"/>
+  <text x="480" y="78" text-anchor="middle" class="head">architecture decision</text>
+  <text x="60" y="100" class="small">New server: call a model provider directly. Compatibility need: carry deprecated Sampling through MRTR.</text>
+
+  <rect x="40" y="145" width="260" height="350" class="cool"/>
+  <text x="170" y="170" text-anchor="middle" class="head">client and host model</text>
+  <text x="58" y="202" class="step">every POST includes _meta</text>
+  <text x="58" y="220" class="small">protocolVersion: 2026-07-28</text>
+  <text x="58" y="238" class="small">clientCapabilities: sampling</text>
+  <text x="58" y="272" class="step">fulfill inputRequests</text>
+  <text x="58" y="290" class="small">apply approval and budgets</text>
+  <text x="58" y="308" class="small">validate model output</text>
+  <text x="58" y="342" class="step">retry original method</text>
+  <text x="58" y="360" class="small">fresh JSON-RPC id</text>
+  <text x="58" y="378" class="small">inputResponses for this round</text>
+  <text x="58" y="396" class="small">exact requestState echo</text>
+  <text x="58" y="438" class="small">No initialize</text>
+  <text x="58" y="456" class="small">No protocol session</text>
+  <text x="58" y="474" class="small">No reverse request channel</text>
+
+  <rect x="660" y="145" width="260" height="350" class="cold"/>
+  <text x="790" y="170" text-anchor="middle" class="head">stateless MCP server</text>
+  <text x="678" y="202" class="step">discover + cached tools/list</text>
+  <text x="678" y="220" class="small">version -32022 | capability -32021</text>
+  <text x="678" y="252" class="step">round 1: pick files</text>
+  <text x="678" y="270" class="small">resultType: input_required</text>
+  <text x="678" y="288" class="small">sampling/createMessage embedded</text>
+  <text x="678" y="320" class="step">round 2: summarize</text>
+  <text x="678" y="338" class="small">validate first response</text>
+  <text x="678" y="356" class="small">return next input_required</text>
+  <text x="678" y="388" class="step">round 3: complete</text>
+  <text x="678" y="406" class="small">resultType: complete</text>
+  <text x="678" y="438" class="step">requestState</text>
+  <text x="678" y="456" class="small">HMAC binds principal, args,</text>
+  <text x="678" y="474" class="small">phase, and short expiry</text>
+
+  <path d="M300,230 L660,230" class="edge" marker-end="url(#arrow)"/>
+  <text x="480" y="222" text-anchor="middle" class="small">1. tools/call, id 1</text>
+  <path d="M660,285 L300,285" class="edge" marker-end="url(#arrow)"/>
+  <text x="480" y="277" text-anchor="middle" class="small">2. input_required + signed state</text>
+  <path d="M300,345 L660,345" class="edge" marker-end="url(#arrow)"/>
+  <text x="480" y="337" text-anchor="middle" class="small">3. tools/call retry, id 2</text>
+  <path d="M660,400 L300,400" class="edge" marker-end="url(#arrow)"/>
+  <text x="480" y="392" text-anchor="middle" class="small">4. next input_required or complete</text>
+
+  <rect x="40" y="515" width="880" height="30" class="box"/>
+  <text x="480" y="535" text-anchor="middle" class="small">Any server instance can process a retry because the request and integrity-protected state are self-contained.</text>
+</svg>

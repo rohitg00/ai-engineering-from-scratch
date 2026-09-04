@@ -1,0 +1,84 @@
+{
+  "buildCommand": "node site/build.js",
+  "outputDirectory": "site",
+  "framework": null,
+  "installCommand": "echo skip",
+  "routes": [
+    { "src": "/lesson\\.html", "methods": ["GET", "HEAD"], "dest": "/api/lesson?legacy=1" },
+    { "src": "/certification\\.html", "methods": ["GET", "HEAD"], "dest": "/api/certification?legacy=1" }
+  ],
+  "rewrites": [
+    { "source": "/lesson", "destination": "/api/lesson" },
+    { "source": "/certification", "destination": "/api/certification" },
+    { "source": "/", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/" },
+    { "source": "/about", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/about" },
+    { "source": "/catalog", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/catalog" },
+    { "source": "/glossary", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/glossary" },
+    { "source": "/path", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/path" },
+    { "source": "/roadmap", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/roadmap" },
+    { "source": "/developer", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/developer" },
+    { "source": "/docs", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/docs" },
+    { "source": "/contact", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/contact" },
+    { "source": "/privacy", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/privacy" },
+    { "source": "/glossary", "destination": "/glossary.html" },
+    { "source": "/catalog", "destination": "/catalog.html" },
+    { "source": "/certifications", "destination": "/certifications.html" },
+    { "source": "/assessment", "destination": "/assessment.html" },
+    { "source": "/path", "destination": "/prereqs.html" },
+    { "source": "/roadmap", "destination": "/prereqs.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/developer", "destination": "/developer.html" },
+    { "source": "/docs", "destination": "/developer.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/privacy", "destination": "/privacy.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.(css|js|png|jpg|jpeg|svg|webp|woff2|woff|ttf|ico)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000" }
+      ]
+    },
+    {
+      "source": "/certification-data.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/build-meta.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" },
+        { "key": "Vary", "value": "Accept, Accept-Encoding" }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" },
+        { "key": "Vary", "value": "Accept, Accept-Encoding" }
+      ]
+    },
+    {
+      "source": "/(glossary|catalog|certifications|certification|assessment|path|roadmap|about|developer|docs|contact|privacy)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" },
+        { "key": "Vary", "value": "Accept, Accept-Encoding" }
+      ]
+    },
+    {
+      "source": "/llms.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/markdown; charset=utf-8" },
+        { "key": "Vary", "value": "Accept, Accept-Encoding" },
+        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" }
+      ]
+    }
+  ]
+}

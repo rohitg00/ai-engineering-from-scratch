@@ -1,0 +1,46 @@
+{
+  "required_proof": [
+    "operator-trust",
+    "service-identification"
+  ],
+  "selected": {
+    "name": "read-only incident replay",
+    "outcome_value": 4,
+    "uncertainty_reduced": 5,
+    "effort": 2,
+    "consequence": 1,
+    "reversible": true,
+    "proves": [
+      "service-identification",
+      "operator-trust"
+    ],
+    "score": 3.6
+  },
+  "alternatives": [
+    {
+      "name": "production auto-remediation",
+      "outcome_value": 5,
+      "uncertainty_reduced": 4,
+      "effort": 10,
+      "consequence": 5,
+      "reversible": false,
+      "proves": [
+        "service-identification",
+        "operator-trust"
+      ],
+      "score": 0.45
+    },
+    {
+      "name": "dashboard mockup",
+      "outcome_value": 2,
+      "uncertainty_reduced": 2,
+      "effort": 1,
+      "consequence": 1,
+      "reversible": true,
+      "proves": [
+        "operator-trust"
+      ],
+      "score": 2.667
+    }
+  ]
+}

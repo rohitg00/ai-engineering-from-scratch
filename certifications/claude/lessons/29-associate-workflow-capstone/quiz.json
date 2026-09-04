@@ -1,0 +1,78 @@
+{
+  "lesson": "29-associate-workflow-capstone",
+  "title": "Ship a Week of Work, Not a Perfect Prompt",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the central capstone deliverable?",
+      "options": [
+        "A polished prompt that drafts the weekly brief directly from the approved source archive",
+        "A memorized comparison of models, context limits, product surfaces, and feature availability",
+        "An automatic publication service that removes human approval from the recurring reporting process",
+        "A governed decision workflow with sources, validation, authority, handoff, and recovery"
+      ],
+      "correct": 3,
+      "explanation": "The capstone integrates the full Associate skill set around an observable, reviewable workflow."
+    },
+    {
+      "stage": "check",
+      "question": "Why freeze a weekly source snapshot?",
+      "options": [
+        "To ensure generation and review refer to the same versioned evidence boundary",
+        "To remove the need for source ownership because versioning establishes authority automatically",
+        "To replace claim citations with one link to the weekly archive",
+        "To guarantee that each source remains permanently correct after the documented cutoff time"
+      ],
+      "correct": 0,
+      "explanation": "A snapshot makes the run reproducible and exposes changes that require a separate delta review."
+    },
+    {
+      "stage": "check",
+      "question": "Which capstone property belongs in deterministic Python validation?",
+      "options": [
+        "Whether leadership prefers the brief's tone, framing, and level of detail",
+        "Whether every claim's source ID exists in the versioned registry used for the run",
+        "Whether the assigned reviewer has enough competence and decision authority",
+        "Whether the source policies produce ethically sufficient outcomes for affected people"
+      ],
+      "correct": 1,
+      "explanation": "Referential integrity is exact and repeatable. Ethical sufficiency and reviewer qualification require organizational judgment."
+    },
+    {
+      "stage": "check",
+      "question": "A signed source changes after the director approves the brief. What should happen?",
+      "options": [
+        "Ask the model to ignore the changed fields so the approved draft remains reproducible against its prior prompt",
+        "Publish the approved brief and record the source change for the next weekly reporting cycle",
+        "Invalidate the publication gate, compare the new source with the approved snapshot, and review the delta",
+        "Delete the earlier snapshot and rebuild the source registry so reviewers see only the latest evidence"
+      ],
+      "correct": 2,
+      "explanation": "Approval applies to a particular evidence snapshot. A material change must be evaluated before release."
+    },
+    {
+      "stage": "post",
+      "question": "The workflow repeatedly misses one regional exception. What is the strongest response?",
+      "options": [
+        "Pause the region until its inputs match the standard reporting format used elsewhere",
+        "Strengthen confidence wording so reviewers can distinguish conclusions from regional exceptions",
+        "Continue correcting the regional exception manually during every weekly human review",
+        "Add the failure to the evaluation set and repair source, prompt, or coverage controls"
+      ],
+      "correct": 3,
+      "explanation": "A durable case and system repair close the learning loop and prevent recurrence."
+    },
+    {
+      "stage": "post",
+      "question": "When is the capstone ready for a limited release?",
+      "options": [
+        "After normal and failure tests pass, blockers are resolved, human authority and fallback work, and current product facts are verified",
+        "When every workflow stage is automated, input variation has been eliminated, and the release no longer depends on human intervention",
+        "After one end-to-end demonstration passes and the team records every remaining defect for monitoring during the pilot",
+        "When the highest-capability model is selected and its benchmark results exceed the baseline for the average workflow case"
+      ],
+      "correct": 0,
+      "explanation": "Readiness is evidence across quality, governance, operations, recovery, and current product configuration."
+    }
+  ]
+}

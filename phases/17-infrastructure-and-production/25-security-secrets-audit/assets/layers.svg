@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .vault { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .pii { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .net { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .audit { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">LLM security — four layers, zero-trust by default</text>
+
+  <rect x="40" y="50" width="220" height="180" class="vault"/>
+  <text x="150" y="72" text-anchor="middle" class="head">secrets (vault)</text>
+  <text x="60" y="96" class="step">· HashiCorp Vault</text>
+  <text x="60" y="114" class="step">· AWS Secrets Manager</text>
+  <text x="60" y="132" class="step">· Azure Key Vault</text>
+  <text x="60" y="150" class="step">· GCP Secret Manager</text>
+  <text x="60" y="178" class="small">IAM role + short-lived</text>
+  <text x="60" y="196" class="small">OIDC for CI/CD</text>
+  <text x="60" y="214" class="small">rotation ≤ 90 days</text>
+
+  <rect x="280" y="50" width="220" height="180" class="pii"/>
+  <text x="390" y="72" text-anchor="middle" class="head">PII scrubbing</text>
+  <text x="300" y="96" class="step">· Presidio / spaCy NER</text>
+  <text x="300" y="114" class="step">· regex (SSN, email, phone)</text>
+  <text x="300" y="132" class="step">· consistent tokenization</text>
+  <text x="300" y="150" class="step">· Mesh approach</text>
+  <text x="300" y="178" class="small">same value → same placeholder</text>
+  <text x="300" y="196" class="small">preserves semantics for LLM</text>
+  <text x="300" y="214" class="small">reverse mapping optional</text>
+
+  <rect x="520" y="50" width="220" height="180" class="net"/>
+  <text x="630" y="72" text-anchor="middle" class="head">network egress</text>
+  <text x="540" y="96" class="step">whitelist only:</text>
+  <text x="540" y="114" class="step">  api.openai.com</text>
+  <text x="540" y="132" class="step">  api.anthropic.com</text>
+  <text x="540" y="150" class="step">  vault endpoints</text>
+  <text x="540" y="168" class="step">  vector DB</text>
+  <text x="540" y="196" class="small">DNS allowlist only</text>
+  <text x="540" y="214" class="small">prevents tunneling exfil</text>
+
+  <rect x="760" y="50" width="160" height="180" class="audit"/>
+  <text x="840" y="72" text-anchor="middle" class="head">audit log</text>
+  <text x="780" y="96" class="step">append-only</text>
+  <text x="780" y="114" class="step">per call:</text>
+  <text x="780" y="132" class="small">· user / tenant</text>
+  <text x="780" y="148" class="small">· prompt/resp hash</text>
+  <text x="780" y="164" class="small">· tokens + cost</text>
+  <text x="780" y="180" class="small">· guardrail trips</text>
+  <text x="780" y="204" class="small">SOC2: 1y</text>
+  <text x="780" y="220" class="small">HIPAA: 6y</text>
+
+  <rect x="40" y="260" width="880" height="100" class="box"/>
+  <text x="480" y="282" text-anchor="middle" class="head">gateway pattern (Phase 17 · 19)</text>
+  <text x="480" y="304" text-anchor="middle" class="step">app → gateway → model provider</text>
+  <text x="480" y="322" text-anchor="middle" class="step">gateway pulls credentials from vault at runtime</text>
+  <text x="480" y="340" text-anchor="middle" class="caption">rotate in vault → apps pick up in minutes; no redeploys</text>
+
+  <rect x="40" y="380" width="880" height="110" class="box"/>
+  <text x="480" y="402" text-anchor="middle" class="head">the 2026 incident driver</text>
+  <text x="480" y="424" text-anchor="middle" class="step">Vercel supply-chain attack: compromised CI/CD credentials</text>
+  <text x="480" y="444" text-anchor="middle" class="step">exfiltrated env vars across thousands of customer deployments</text>
+  <text x="480" y="464" text-anchor="middle" class="caption">CI/CD creds are prod-equivalent; store in vault, scope narrowly, rotate aggressively</text>
+</svg>

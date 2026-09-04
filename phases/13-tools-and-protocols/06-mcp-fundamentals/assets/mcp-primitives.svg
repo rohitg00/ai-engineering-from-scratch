@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="490" y="26" text-anchor="middle" class="title">MCP 2026-07-28: primitives and stateless requests</text>
+
+  <rect x="40" y="55" width="440" height="210" class="cool"/>
+  <text x="260" y="78" text-anchor="middle" class="head">server primitives</text>
+  <rect x="60" y="96" width="400" height="45" class="box"/>
+  <text x="80" y="116" class="step">tools</text>
+  <text x="80" y="133" class="small">tools/list, tools/call</text>
+  <rect x="60" y="151" width="400" height="45" class="box"/>
+  <text x="80" y="171" class="step">resources</text>
+  <text x="80" y="188" class="small">resources/list, resources/read</text>
+  <rect x="60" y="206" width="400" height="45" class="box"/>
+  <text x="80" y="226" class="step">prompts</text>
+  <text x="80" y="243" class="small">prompts/list, prompts/get</text>
+
+  <rect x="500" y="55" width="440" height="210" class="cold"/>
+  <text x="720" y="78" text-anchor="middle" class="head">metadata carried by every request</text>
+  <text x="520" y="112" class="step">params._meta</text>
+  <text x="520" y="138" class="small">io.modelcontextprotocol/protocolVersion</text>
+  <text x="520" y="158" class="small">io.modelcontextprotocol/clientCapabilities</text>
+  <text x="520" y="178" class="small">io.modelcontextprotocol/clientInfo (SHOULD)</text>
+  <text x="520" y="214" class="step">never inferred from</text>
+  <text x="520" y="234" class="small">a previous call, process, or connection</text>
+
+  <rect x="40" y="290" width="900" height="235" class="box"/>
+  <text x="490" y="314" text-anchor="middle" class="head">one request, one complete decision</text>
+
+  <rect x="60" y="340" width="220" height="140" class="cold"/>
+  <text x="170" y="364" text-anchor="middle" class="step">1 / client request</text>
+  <text x="78" y="394" class="small">JSON-RPC id + method</text>
+  <text x="78" y="414" class="small">arguments + current _meta</text>
+  <text x="78" y="446" class="small">server/discover is optional</text>
+  <text x="78" y="464" class="small">for the client, required on server</text>
+
+  <path d="M280,410 L365,410" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="370" y="340" width="240" height="140" class="hot"/>
+  <text x="490" y="364" text-anchor="middle" class="step">2 / server validates</text>
+  <text x="388" y="394" class="small">version + capabilities</text>
+  <text x="388" y="414" class="small">method-specific params</text>
+  <text x="388" y="446" class="small">unsupported version: -32022</text>
+  <text x="388" y="464" class="small">no connection state consulted</text>
+
+  <path d="M610,410 L695,410" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="700" y="340" width="220" height="140" class="cool"/>
+  <text x="810" y="364" text-anchor="middle" class="step">3 / server result</text>
+  <text x="718" y="394" class="small">resultType: complete</text>
+  <text x="718" y="414" class="small">serverInfo in result _meta</text>
+  <text x="718" y="446" class="small">lists: ttlMs + cacheScope</text>
+  <text x="718" y="464" class="small">deterministic item order</text>
+
+  <text x="490" y="510" text-anchor="middle" class="caption">The next request repeats the full contract. Transport lifetime is not protocol session state.</text>
+</svg>

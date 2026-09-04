@@ -1,0 +1,78 @@
+{
+  "lesson": "14-ascii-art-visual-jailbreaks",
+  "title": "ASCII Art and Visual Jailbreaks",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do token-level and semantic-level safety filters miss ArtPrompt-style attacks?",
+      "options": [
+        "ArtPrompt always uses base64 encoding",
+        "ArtPrompt requires fine-tuning the model",
+        "ArtPrompt operates at the visual recognition level: the filter sees harmless punctuation while the model reads the rendered letters as a word",
+        "ArtPrompt is only effective on multimodal models"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What are the two steps of ArtPrompt as described in Jiang et al. (ACL 2024)?",
+      "options": [
+        "Tokenizer mismatch, then context truncation",
+        "Random search, then perplexity boosting",
+        "Translation to French, then back-translation",
+        "Word identification of safety-relevant tokens, then ASCII-art substitution and cloaked-prompt generation"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does perplexity-filter (PPL) defense fail on ArtPrompt?",
+      "options": [
+        "Perplexity filters are disabled by default",
+        "Perplexity is not measurable on ASCII art",
+        "Perplexity always equals zero on cloaked input",
+        "ASCII art has high perplexity, but so does any legitimate structured input; thresholds that block the attack also block legitimate content"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What does the ViTC benchmark measure?",
+      "options": [
+        "The model's training-data toxicity",
+        "The model's tool-calling accuracy",
+        "The model's ability to read non-semantic visual prompts (ASCII art, wingdings, similar encoded text)",
+        "The model's ability to compress vision data"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What does StructuralSleight generalize ArtPrompt to?",
+      "options": [
+        "Image inputs only",
+        "Long-context shot stuffing",
+        "Adversarial token suffixes via gradient search",
+        "Uncommon Text-Encoded Structures (UTES): trees, graphs, nested JSON, CSV-in-JSON, diff-style code, etc."
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "What is the capability-safety tradeoff implied by ViTC results?",
+      "options": [
+        "Larger context windows reduce ArtPrompt success",
+        "Visual recognition is unrelated to ArtPrompt success",
+        "The better the model reads non-semantic visual text, the more effective ArtPrompt-style attacks are on it",
+        "Smaller models are always more secure"
+      ],
+      "correct": 2,
+      "explanation": ""
+    }
+  ]
+}

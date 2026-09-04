@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .axis { stroke: #888; stroke-width: 0.5; }
+      .wave { fill: none; stroke: #c0392b; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <text x="450" y="30" text-anchor="middle" class="title">three ways to tell attention about position</text>
+
+  <!-- Sinusoidal column -->
+  <rect x="30" y="60" width="270" height="380" class="box"/>
+  <text x="165" y="85" text-anchor="middle" class="label">sinusoidal (2017)</text>
+  <text x="165" y="103" text-anchor="middle" class="caption">add sin/cos to the embedding</text>
+
+  <!-- draw two sine waves at different freqs -->
+  <line x1="50" y1="180" x2="280" y2="180" class="axis"/>
+  <path d="M50 180 Q 75 130, 100 180 T 150 180 T 200 180 T 250 180 T 280 180" class="wave"/>
+  <text x="165" y="210" text-anchor="middle" class="caption">dim 0: fast sine</text>
+
+  <line x1="50" y1="280" x2="280" y2="280" class="axis"/>
+  <path d="M50 280 Q 115 220, 180 280 Q 245 340, 280 280" class="wave"/>
+  <text x="165" y="310" text-anchor="middle" class="caption">dim 64: slow sine</text>
+
+  <text x="165" y="360" text-anchor="middle" class="content">X' = X + PE</text>
+  <text x="165" y="385" text-anchor="middle" class="caption">does not extrapolate beyond</text>
+  <text x="165" y="402" text-anchor="middle" class="caption">trained positions</text>
+  <text x="165" y="428" text-anchor="middle" class="caption">history only</text>
+
+  <!-- RoPE column -->
+  <rect x="315" y="60" width="270" height="380" class="hot"/>
+  <text x="450" y="85" text-anchor="middle" class="label">RoPE (2021) — dominant 2026</text>
+  <text x="450" y="103" text-anchor="middle" class="caption">rotate Q,K by position angle</text>
+
+  <!-- Unit circle -->
+  <circle cx="395" cy="200" r="55" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="340" y1="200" x2="450" y2="200" class="axis"/>
+  <line x1="395" y1="145" x2="395" y2="255" class="axis"/>
+  <line x1="395" y1="200" x2="440" y2="163" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="395" y="285" text-anchor="middle" class="caption">q_m rotated by m·θ</text>
+
+  <circle cx="510" cy="200" r="55" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <line x1="455" y1="200" x2="565" y2="200" class="axis"/>
+  <line x1="510" y1="145" x2="510" y2="255" class="axis"/>
+  <line x1="510" y1="200" x2="475" y2="155" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="510" y="285" text-anchor="middle" class="caption">k_n rotated by n·θ</text>
+
+  <text x="450" y="340" text-anchor="middle" class="content">&lt;q'_m, k'_n&gt; = f(m − n)</text>
+  <text x="450" y="365" text-anchor="middle" class="caption">relative distance, for free</text>
+  <text x="450" y="390" text-anchor="middle" class="caption">base knob extends context</text>
+  <text x="450" y="415" text-anchor="middle" class="caption">Llama, Qwen, Mistral,</text>
+  <text x="450" y="432" text-anchor="middle" class="caption">DeepSeek, Kimi</text>
+
+  <!-- ALiBi column -->
+  <rect x="600" y="60" width="270" height="380" class="box"/>
+  <text x="735" y="85" text-anchor="middle" class="label">ALiBi (2022)</text>
+  <text x="735" y="103" text-anchor="middle" class="caption">linear bias in attention scores</text>
+
+  <!-- Triangle / heatmap-like grid -->
+  <g transform="translate(635 130)">
+    <!-- 6x6 grid -->
+    <rect x="0"   y="0"   width="30" height="30" fill="#2c3e50"/>
+    <rect x="30"  y="0"   width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+    <rect x="60"  y="0"   width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+    <rect x="90"  y="0"   width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+    <rect x="120" y="0"   width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+    <rect x="150" y="0"   width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+
+    <rect x="0"   y="30"  width="30" height="30" fill="#7f97b0"/>
+    <rect x="30"  y="30"  width="30" height="30" fill="#2c3e50"/>
+    <rect x="60"  y="30"  width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+    <rect x="90"  y="30"  width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+    <rect x="120" y="30"  width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+    <rect x="150" y="30"  width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+
+    <rect x="0"   y="60"  width="30" height="30" fill="#b9c7d4"/>
+    <rect x="30"  y="60"  width="30" height="30" fill="#7f97b0"/>
+    <rect x="60"  y="60"  width="30" height="30" fill="#2c3e50"/>
+    <rect x="90"  y="60"  width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+    <rect x="120" y="60"  width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+    <rect x="150" y="60"  width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+
+    <rect x="0"   y="90"  width="30" height="30" fill="#dfe5ea"/>
+    <rect x="30"  y="90"  width="30" height="30" fill="#b9c7d4"/>
+    <rect x="60"  y="90"  width="30" height="30" fill="#7f97b0"/>
+    <rect x="90"  y="90"  width="30" height="30" fill="#2c3e50"/>
+    <rect x="120" y="90"  width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+    <rect x="150" y="90"  width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+
+    <rect x="0"   y="120" width="30" height="30" fill="#eff3f5"/>
+    <rect x="30"  y="120" width="30" height="30" fill="#dfe5ea"/>
+    <rect x="60"  y="120" width="30" height="30" fill="#b9c7d4"/>
+    <rect x="90"  y="120" width="30" height="30" fill="#7f97b0"/>
+    <rect x="120" y="120" width="30" height="30" fill="#2c3e50"/>
+    <rect x="150" y="120" width="30" height="30" fill="#ffffff" stroke="#ccc"/>
+
+    <rect x="0"   y="150" width="30" height="30" fill="#f5f7f9"/>
+    <rect x="30"  y="150" width="30" height="30" fill="#eff3f5"/>
+    <rect x="60"  y="150" width="30" height="30" fill="#dfe5ea"/>
+    <rect x="90"  y="150" width="30" height="30" fill="#b9c7d4"/>
+    <rect x="120" y="150" width="30" height="30" fill="#7f97b0"/>
+    <rect x="150" y="150" width="30" height="30" fill="#2c3e50"/>
+  </g>
+
+  <text x="735" y="335" text-anchor="middle" class="content">score -= m · |i − j|</text>
+  <text x="735" y="360" text-anchor="middle" class="caption">darker = smaller penalty</text>
+  <text x="735" y="385" text-anchor="middle" class="caption">extrapolates cleanly</text>
+  <text x="735" y="410" text-anchor="middle" class="caption">BLOOM, MPT,</text>
+  <text x="735" y="427" text-anchor="middle" class="caption">long-context ablations</text>
+
+  <text x="450" y="472" text-anchor="middle" class="caption">attention is permutation-invariant; pick the injection that matches your context length strategy</text>
+</svg>

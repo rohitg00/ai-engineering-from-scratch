@@ -1,0 +1,5 @@
+{"id": "sum-00", "prompt": "summarize: Cats are mammals. Mammals are warm blooded.", "targets": ["cats are mammals"], "metric": "rouge_l"}
+{"id": "sum-01", "prompt": "summarize: Python uses indentation. Indentation defines blocks.", "targets": ["python uses indentation"], "metric": "rouge_l"}
+{"id": "sum-02", "prompt": "summarize: The river flows east. Boats pass slowly.", "targets": ["the river flows east"], "metric": "rouge_l"}
+{"id": "sum-03", "prompt": "summarize: Storms approach the coast. Waves rise quickly.", "targets": ["storms approach the coast"], "metric": "rouge_l"}
+{"id": "sum-04", "prompt": "summarize: Bread bakes at high heat. Crust forms last.", "targets": ["bread bakes at high heat"], "metric": "rouge_l"}

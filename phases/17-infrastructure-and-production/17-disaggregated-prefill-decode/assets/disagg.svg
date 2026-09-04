@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .pre { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .dec { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .router { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .arrow { stroke: #1a1a1a; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">disaggregated prefill + decode — NVIDIA Dynamo / llm-d</text>
+
+  <rect x="40" y="60" width="140" height="70" class="router"/>
+  <text x="110" y="82" text-anchor="middle" class="head">router</text>
+  <text x="110" y="100" text-anchor="middle" class="small">cache-aware</text>
+  <text x="110" y="116" text-anchor="middle" class="small">+ SLA planner</text>
+
+  <rect x="240" y="60" width="260" height="120" class="pre"/>
+  <text x="370" y="82" text-anchor="middle" class="head">prefill pool — compute-bound</text>
+  <text x="370" y="102" text-anchor="middle" class="step">H100 / B200</text>
+  <text x="250" y="122" class="small">· matmul-heavy forward</text>
+  <text x="250" y="138" class="small">· FLOPs-limited</text>
+  <text x="250" y="154" class="small">· scale on queue depth</text>
+  <text x="370" y="174" text-anchor="middle" class="caption">~2000 TFLOPS FP8 useful</text>
+
+  <rect x="640" y="60" width="260" height="120" class="dec"/>
+  <text x="770" y="82" text-anchor="middle" class="head">decode pool — memory-bound</text>
+  <text x="770" y="102" text-anchor="middle" class="step">H200 or aggressive quant</text>
+  <text x="650" y="122" class="small">· one token per iter, all weights</text>
+  <text x="650" y="138" class="small">· HBM-bandwidth-limited</text>
+  <text x="650" y="154" class="small">· scale on KV utilization</text>
+  <text x="770" y="174" text-anchor="middle" class="caption">~3 TB/s HBM3 ceiling</text>
+
+  <path class="arrow" d="M180 95 L 235 95"/>
+  <text x="210" y="88" text-anchor="middle" class="small">prompt</text>
+  <path class="arrow" d="M500 95 L 635 95"/>
+  <text x="568" y="78" text-anchor="middle" class="step">NIXL</text>
+  <text x="568" y="108" text-anchor="middle" class="small">KV transfer</text>
+  <text x="568" y="125" text-anchor="middle" class="small">RDMA or TCP</text>
+
+  <rect x="40" y="210" width="440" height="110" class="box"/>
+  <text x="260" y="232" text-anchor="middle" class="head">NVIDIA Dynamo</text>
+  <text x="60" y="256" class="small">· sits above vLLM / SGLang / TRT-LLM</text>
+  <text x="60" y="274" class="small">· Planner Profiler + SLA Planner auto-configs</text>
+  <text x="60" y="292" class="small">· Rust core, Python extensibility</text>
+  <text x="60" y="310" class="small">· 30x on DeepSeek-R1; 50x MoE on GB300 NVL72</text>
+
+  <rect x="500" y="210" width="420" height="110" class="box"/>
+  <text x="710" y="232" text-anchor="middle" class="head">llm-d (Red Hat + AWS)</text>
+  <text x="520" y="256" class="small">· Kubernetes-native Services per role</text>
+  <text x="520" y="274" class="small">· packDomain: rack for KV locality</text>
+  <text x="520" y="292" class="small">· per-role HPA (queue / KV util)</text>
+  <text x="520" y="310" class="small">· 0.5: hierarchical KV, LoRA routing, UCCL</text>
+
+  <rect x="40" y="340" width="880" height="110" class="box"/>
+  <text x="480" y="362" text-anchor="middle" class="head">when it pays off</text>
+  <text x="480" y="386" text-anchor="middle" class="step">prompts > 512 tokens AND outputs > 200 tokens</text>
+  <text x="480" y="404" text-anchor="middle" class="step">MoE serving (DeepSeek-V3, future GPT-5 variants) — double win on expert routing</text>
+  <text x="480" y="424" text-anchor="middle" class="step">real case: $2M → $1.2M/yr on same workload, same SLA, no new hardware</text>
+  <text x="480" y="444" text-anchor="middle" class="caption">short prompts: transfer tax dominates, do not disaggregate</text>
+</svg>

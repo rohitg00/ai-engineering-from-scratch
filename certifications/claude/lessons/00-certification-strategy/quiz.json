@@ -1,0 +1,78 @@
+{
+  "lesson": "00-certification-strategy",
+  "title": "Study the Decisions, Not the Vocabulary",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the best first use of an official exam blueprint?",
+      "options": [
+        "Turn every domain label into a glossary and study all domains for equal time",
+        "Allocate study around weighted job decisions and measured objective gaps",
+        "Treat the listed objectives as an exact inventory of live question wording",
+        "Translate the scaled cut score into a percent-correct target"
+      ],
+      "correct": 1,
+      "explanation": "The blueprint defines domains, weights, and objectives. It is most useful as a map of the work and decisions to practice."
+    },
+    {
+      "stage": "check",
+      "question": "A product price appears in your study notes. What makes the note defensible?",
+      "options": [
+        "Keep the guide's figure until that exam version retires",
+        "Record the figure without a date because an official page will update in place",
+        "Record the official source, applicable product surface, and verification date",
+        "Accept the figure after two independent preparation sources report the same amount"
+      ],
+      "correct": 2,
+      "explanation": "Prices and feature availability change. A dated official source lets the learner verify the fact again before relying on it."
+    },
+    {
+      "stage": "check",
+      "question": "A scenario offers four technically capable features. Which comparison should come first?",
+      "options": [
+        "Compare published benchmark scores before translating the scenario constraints",
+        "Select the most comprehensive feature so later use cases are already covered",
+        "Pick the lowest list price before checking quality, latency, and operational risk",
+        "Choose the smallest option that satisfies the outcome and stated constraints"
+      ],
+      "correct": 3,
+      "explanation": "Scenario judgment begins with outcome and constraints, then selects the smallest sufficient capability."
+    },
+    {
+      "stage": "check",
+      "question": "Why should you review questions answered correctly by guessing?",
+      "options": [
+        "A correct guess does not demonstrate a reusable decision rule",
+        "Reviewing the chosen option is enough even if the reasoning cannot be reproduced",
+        "A low-confidence correct answer should count as mastery after the score is recorded",
+        "Guessed answers should be reviewed only when that domain falls below the target"
+      ],
+      "correct": 0,
+      "explanation": "The result was correct, but the reasoning is not yet reliable enough to transfer to a different scenario."
+    },
+    {
+      "stage": "post",
+      "question": "Which readiness signal is strongest?",
+      "options": [
+        "Completed labs and flashcards without a fresh timed test of transfer decisions",
+        "Two fresh timed sets, no weak domain, completed artifacts, and explained errors",
+        "One untimed mock above target after reviewing every explanation in that same set",
+        "Three timed mocks above target even though one high-weight domain remains weak"
+      ],
+      "correct": 1,
+      "explanation": "A multi-part gate measures repeatability, domain balance, practical work, and reasoning instead of familiarity with one set."
+    },
+    {
+      "stage": "post",
+      "question": "What should an error log capture after a wrong scenario answer?",
+      "options": [
+        "The final score and time spent, without recording why the distractor looked valid",
+        "The correct option, domain label, and a note to reread the corresponding lesson",
+        "The missed constraint, attractive distractor, better rule, and transfer scenario",
+        "The full question and every option so repeated wording can be memorized later"
+      ],
+      "correct": 2,
+      "explanation": "The useful unit is the reasoning failure and the reusable rule that repairs it, not the option letter."
+    }
+  ]
+}

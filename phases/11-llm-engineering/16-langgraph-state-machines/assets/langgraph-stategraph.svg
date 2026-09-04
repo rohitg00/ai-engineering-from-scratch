@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#111827"/>
+    </marker>
+  </defs>
+  <style>
+    .node { fill: #ffffff; stroke: #111827; stroke-width: 1.5; rx: 8; }
+    .label { fill: #111827; }
+    .edge { stroke: #111827; stroke-width: 1.5; fill: none; }
+    .dash { stroke: #111827; stroke-width: 1.5; stroke-dasharray: 6 4; fill: none; }
+    .cp { fill: #f3f4f6; stroke: #111827; stroke-width: 1.5; rx: 6; }
+    .title { fill: #111827; font-weight: 600; }
+  </style>
+
+  <!-- START -->
+  <circle cx="50" cy="110" r="18" class="node"/>
+  <text x="50" y="114" text-anchor="middle" class="label">S</text>
+
+  <!-- agent -->
+  <rect x="130" y="80" width="120" height="60" class="node"/>
+  <text x="190" y="115" text-anchor="middle" class="label">agent</text>
+
+  <!-- tools -->
+  <rect x="330" y="80" width="120" height="60" class="node"/>
+  <text x="390" y="115" text-anchor="middle" class="label">tools</text>
+
+  <!-- END -->
+  <circle cx="570" cy="110" r="18" class="node"/>
+  <text x="570" y="114" text-anchor="middle" class="label">E</text>
+
+  <!-- edges -->
+  <path class="edge" d="M68,110 L130,110" marker-end="url(#arrow)"/>
+  <path class="edge" d="M250,100 Q290,70 330,100" marker-end="url(#arrow)"/>
+  <text x="290" y="62" text-anchor="middle" class="label">if tool_calls</text>
+  <path class="edge" d="M330,130 Q290,160 250,130" marker-end="url(#arrow)"/>
+  <text x="290" y="180" text-anchor="middle" class="label">tool results</text>
+  <path class="dash" d="M250,118 L552,118" marker-end="url(#arrow)"/>
+  <text x="400" y="140" text-anchor="middle" class="label">else END</text>
+
+  <!-- checkpointer line -->
+  <rect x="130" y="230" width="320" height="60" class="cp"/>
+  <text x="290" y="252" text-anchor="middle" class="title">Checkpointer</text>
+  <text x="290" y="272" text-anchor="middle" class="label">(thread_id, checkpoint_id) -> State</text>
+
+  <path class="dash" d="M190,140 L190,230"/>
+  <path class="dash" d="M390,140 L390,230"/>
+
+  <!-- interrupt marker -->
+  <text x="290" y="40" text-anchor="middle" class="title">StateGraph</text>
+  <circle cx="330" cy="110" r="5" fill="#111827"/>
+  <text x="305" y="175" text-anchor="middle" class="label" font-size="11">interrupt_before</text>
+</svg>

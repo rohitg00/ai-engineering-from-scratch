@@ -1,0 +1,87 @@
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.55;
+  color: #1a1a1a;
+}
+
+h1, h2, h3 {
+  font-family: Georgia, serif;
+  line-height: 1.2;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+h1 {
+  border-bottom: 2px solid #3553ff;
+  padding-bottom: 0.3em;
+  margin-top: 2em;
+}
+
+code {
+  font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 0.85em;
+}
+
+pre {
+  background: #f6f6f1;
+  border-left: 3px solid #3553ff;
+  padding: 0.8em 1em;
+  overflow-x: auto;
+  font-size: 0.8em;
+  line-height: 1.45;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+blockquote {
+  border-left: 3px solid #ddd;
+  margin-left: 0;
+  padding-left: 1em;
+  color: #555;
+  font-style: italic;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.85em;
+  margin: 1em 0;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 0.4em 0.6em;
+  text-align: left;
+}
+
+th {
+  background: #f0f2ff;
+  font-family: Menlo, monospace;
+  font-size: 0.8em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+img {
+  max-width: 100%;
+}
+
+.interactive-figure {
+  border: 1px solid #3553ff;
+  background: #f0f2ff;
+  padding: 0.8em 1em;
+  margin: 1.2em 0;
+  font-size: 0.9em;
+}
+
+.continue-online {
+  border: 1px dashed #3553ff;
+  background: #fafaf5;
+  padding: 0.8em 1em;
+  margin: 1.5em 0;
+  font-size: 0.9em;
+}
+
+a {
+  color: #3553ff;
+}

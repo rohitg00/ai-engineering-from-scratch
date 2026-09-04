@@ -1,0 +1,102 @@
+{
+  "lesson": "14-information-retrieval-search",
+  "title": "Information Retrieval and Search",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does BM25 score a document on?",
+      "options": [
+        "Term frequency, IDF, and document-length-normalized presence of query terms",
+        "Edit distance to the query",
+        "Embedding cosine to the query",
+        "PageRank over the corpus"
+      ],
+      "correct": 0,
+      "explanation": "BM25 weighs TF saturation, IDF, and length normalization to score lexical matches."
+    },
+    {
+      "stage": "pre",
+      "question": "What is the main weakness of dense-only retrieval that BM25 catches?",
+      "options": [
+        "Multilingual queries",
+        "Latency",
+        "Exact keyword and identifier matches (product codes, error strings, named entities) that semantic embeddings can miss",
+        "Long documents"
+      ],
+      "correct": 2,
+      "explanation": "Dense embeddings can blur identifiers and exact strings; BM25 nails them."
+    },
+    {
+      "stage": "check",
+      "question": "Why does Reciprocal Rank Fusion (RRF) ignore raw scores from each retriever?",
+      "options": [
+        "BM25 and dense scores live in different scales; using only rank positions makes the fusion robust to calibration",
+        "Speeds up sorting",
+        "RRF requires probabilities",
+        "Raw scores are illegal to use"
+      ],
+      "correct": 0,
+      "explanation": "RRF uses 1/(k + rank), so the two scoring systems' scales do not have to match."
+    },
+    {
+      "stage": "check",
+      "question": "Why run a cross-encoder reranker only on the top-30 fused results?",
+      "options": [
+        "Cross-encoders are slow per pair; amortizing them on a small candidate pool gives high accuracy with acceptable latency",
+        "Rerankers reduce recall",
+        "Cross-encoders are required at every step",
+        "Top-30 is required by FAISS"
+      ],
+      "correct": 0,
+      "explanation": "Cross-encoders score query+doc jointly; running them only on the small fused candidate pool keeps latency manageable."
+    },
+    {
+      "stage": "check",
+      "question": "Which metric is most important to optimize for RAG retrievers?",
+      "options": [
+        "Throughput",
+        "Recall@k, since the reader cannot answer if the correct passage is missing from the top-k",
+        "BLEU",
+        "Latency"
+      ],
+      "correct": 1,
+      "explanation": "If the right passage is not in the retrieved top-k, the reader is guaranteed to fail."
+    },
+    {
+      "stage": "post",
+      "question": "Where do most production RAG failures originate, per 2026 industry experience?",
+      "options": [
+        "Ingestion and chunking, not the model; bad context defeats good readers",
+        "Prompt verbosity",
+        "Reranker tuning",
+        "The LLM choice"
+      ],
+      "correct": 0,
+      "explanation": "Roughly 80% of RAG failures trace to chunking and ingestion quality, not the generative model."
+    },
+    {
+      "stage": "post",
+      "question": "What is the 'parent-doc' retrieval pattern?",
+      "options": [
+        "Pick the longest document",
+        "Use parent doc embeddings only",
+        "Retrieve small child chunks for precision, then expand to the parent block when multiple children from the same parent appear, preserving context",
+        "Embed only parent documents"
+      ],
+      "correct": 2,
+      "explanation": "Child-level retrieval is precise; expanding to the parent preserves the surrounding context the reader needs."
+    },
+    {
+      "stage": "post",
+      "question": "When should you ship three-way retrieval (BM25 + dense + SPLADE)?",
+      "options": [
+        "Always",
+        "When infrastructure supports learned-sparse indexes and queries mix proper nouns with semantic intent",
+        "Only on under 1000 documents",
+        "Only for English-only corpora"
+      ],
+      "correct": 1,
+      "explanation": "Three-way retrieval outperforms two-way in 2026 benchmarks for mixed lexical-semantic queries, given SPLADE infrastructure."
+    }
+  ]
+}

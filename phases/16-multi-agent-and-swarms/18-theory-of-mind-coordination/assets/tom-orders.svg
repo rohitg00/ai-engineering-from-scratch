@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="28" text-anchor="middle" class="title">Theory of Mind orders and the coordination illusion</text>
+
+  <rect x="40" y="60" width="280" height="200" class="hot"/>
+  <text x="180" y="84" text-anchor="middle" class="head">zeroth-order</text>
+  <text x="180" y="108" text-anchor="middle" class="step">no model of others</text>
+  <text x="180" y="138" text-anchor="middle" class="small">agent acts on own observations only</text>
+  <text x="180" y="156" text-anchor="middle" class="small">collides with other agents</text>
+  <text x="180" y="174" text-anchor="middle" class="small">duplicates effort on shared resources</text>
+  <text x="180" y="206" text-anchor="middle" class="caption">measured: ~0.96 collisions / trial</text>
+  <text x="180" y="224" text-anchor="middle" class="caption">(3 agents, 3 boxes, no ToM)</text>
+
+  <rect x="340" y="60" width="280" height="200" class="cool"/>
+  <text x="480" y="84" text-anchor="middle" class="head">first-order</text>
+  <text x="480" y="108" text-anchor="middle" class="step">"A believes X"</text>
+  <text x="480" y="138" text-anchor="middle" class="small">agent tracks each other's beliefs</text>
+  <text x="480" y="156" text-anchor="middle" class="small">predicts action from modeled beliefs</text>
+  <text x="480" y="174" text-anchor="middle" class="small">avoids redundancy + anticipates need</text>
+  <text x="480" y="206" text-anchor="middle" class="caption">measured: ~0.00 collisions / trial</text>
+  <text x="480" y="224" text-anchor="middle" class="caption">(with preference prime)</text>
+
+  <rect x="640" y="60" width="280" height="200" class="cold"/>
+  <text x="780" y="84" text-anchor="middle" class="head">second-order</text>
+  <text x="780" y="108" text-anchor="middle" class="step">"A believes B believes X"</text>
+  <text x="780" y="138" text-anchor="middle" class="small">recursive belief modeling</text>
+  <text x="780" y="156" text-anchor="middle" class="small">emerges in cooperative games</text>
+  <text x="780" y="174" text-anchor="middle" class="small">degrades on long horizons</text>
+  <text x="780" y="206" text-anchor="middle" class="caption">Li et al. 2023 context failure mode:</text>
+  <text x="780" y="224" text-anchor="middle" class="caption">identity-belief binding drops over turns</text>
+
+  <rect x="40" y="290" width="880" height="200" class="box"/>
+  <text x="480" y="314" text-anchor="middle" class="head">the coordination illusion (Riedl 2025, arXiv:2510.05174)</text>
+  <text x="70" y="346" class="step">claim</text>
+  <text x="140" y="346" class="small">"our agents coordinate emergently"</text>
+  <text x="70" y="372" class="step">failure</text>
+  <text x="140" y="372" class="small">coordination is prompt-dressed; strip "work together" from system prompt, effect vanishes</text>
+  <text x="70" y="398" class="step">audit</text>
+  <text x="140" y="398" class="small">require control condition, statistical test, complementarity metric, capacity-check</text>
+  <text x="70" y="424" class="step">real</text>
+  <text x="140" y="424" class="small">identity-linked differentiation + goal-directed complementarity + higher-order synergy</text>
+  <text x="70" y="450" class="step">only</text>
+  <text x="140" y="450" class="small">the ToM-prompted condition produces all three above chance in Riedl's population experiment</text>
+  <text x="70" y="476" class="caption">larger models show some coordination without ToM prompting, but the effect is smaller</text>
+</svg>

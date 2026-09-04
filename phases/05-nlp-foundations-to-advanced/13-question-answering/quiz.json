@@ -1,0 +1,102 @@
+{
+  "lesson": "13-question-answering",
+  "title": "Question Answering Systems",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does extractive QA predict?",
+      "options": [
+        "Start and end token indices of the answer span within a given passage",
+        "A retrieved passage ID",
+        "A generated natural-language answer",
+        "A confidence score only"
+      ],
+      "correct": 0,
+      "explanation": "Extractive QA outputs the span of the passage that contains the answer."
+    },
+    {
+      "stage": "pre",
+      "question": "What two components define a basic RAG pipeline?",
+      "options": [
+        "Tokenizer and POS tagger",
+        "An encoder and a decoder trained jointly",
+        "A reranker and a translator",
+        "A retriever (find relevant passages) and a reader (extract or generate the answer)"
+      ],
+      "correct": 3,
+      "explanation": "RAG = retriever (finds relevant context) plus reader (answers from it)."
+    },
+    {
+      "stage": "check",
+      "question": "On SQuAD, what does Exact Match (EM) measure?",
+      "options": [
+        "Token-level F1",
+        "Whether the prediction matches the reference exactly after normalization (lowercase, strip punctuation, remove articles)",
+        "Edit distance",
+        "Per-word overlap"
+      ],
+      "correct": 1,
+      "explanation": "EM is strict equality after a defined normalization step; partial matches score zero."
+    },
+    {
+      "stage": "check",
+      "question": "What does deepset/roberta-base-squad2 add over a SQuAD 1.1 model?",
+      "options": [
+        "Bigger context window",
+        "Multilingual support",
+        "Cross-lingual retrieval",
+        "Training on unanswerable questions so the model can predict a null answer"
+      ],
+      "correct": 3,
+      "explanation": "SQuAD 2.0 includes unanswerable items; models trained on it can predict 'no answer'."
+    },
+    {
+      "stage": "check",
+      "question": "Which RAGAS dimension targets hallucinations specifically?",
+      "options": [
+        "Context precision",
+        "Answer relevance",
+        "Faithfulness, measured by NLI entailment between answer claims and retrieved context",
+        "Context recall"
+      ],
+      "correct": 2,
+      "explanation": "Faithfulness checks each answer claim against retrieved context via NLI entailment."
+    },
+    {
+      "stage": "post",
+      "question": "Why should you measure retrieval recall before evaluating reader accuracy?",
+      "options": [
+        "Reader latency depends on it",
+        "If the correct passage is not in the top-k, the reader cannot succeed regardless of how good it is",
+        "Recall determines ROUGE",
+        "Required by transformers"
+      ],
+      "correct": 1,
+      "explanation": "A reader cannot answer when the right passage is missing; retrieval recall bounds reader performance."
+    },
+    {
+      "stage": "post",
+      "question": "Which prompt pattern reduces hallucinations in RAG generation?",
+      "options": [
+        "Removing the question",
+        "Including more passages",
+        "Asking the model to be creative",
+        "Telling the model to answer only from the provided context and to reply 'I don't know' when the context is insufficient"
+      ],
+      "correct": 3,
+      "explanation": "Grounding + explicit refusal instructions cuts hallucination rates substantially."
+    },
+    {
+      "stage": "post",
+      "question": "When is extractive QA still preferred over generative RAG in 2026?",
+      "options": [
+        "Regulated domains (legal, medical, audit) where literal quotation from authoritative sources is required",
+        "Open-domain trivia",
+        "Conversational QA",
+        "Multilingual support"
+      ],
+      "correct": 0,
+      "explanation": "Extractive QA gives verbatim quotes from an authoritative corpus, which compliance contexts demand."
+    }
+  ]
+}

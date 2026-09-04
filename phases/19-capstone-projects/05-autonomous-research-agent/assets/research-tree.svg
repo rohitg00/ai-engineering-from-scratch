@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .edge { stroke: #555; stroke-width: 1.2; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">autonomous research agent — best-first experiment tree</text>
+
+  <rect x="40" y="50" width="640" height="460" class="box"/>
+  <text x="360" y="72" text-anchor="middle" class="head">tree search (budget $30)</text>
+
+  <rect x="300" y="92" width="120" height="38" class="cool"/>
+  <text x="360" y="114" text-anchor="middle" class="step">seed / root</text>
+  <text x="360" y="126" text-anchor="middle" class="small">hypothesis + config</text>
+
+  <rect x="80" y="170" width="120" height="38" class="cold"/>
+  <text x="140" y="192" text-anchor="middle" class="step">sp top-4</text>
+  <rect x="220" y="170" width="120" height="38" class="cold"/>
+  <text x="280" y="192" text-anchor="middle" class="step">sp top-8 (*)</text>
+  <rect x="360" y="170" width="120" height="38" class="cold"/>
+  <text x="420" y="192" text-anchor="middle" class="step">sp top-16</text>
+  <rect x="500" y="170" width="120" height="38" class="cold"/>
+  <text x="560" y="192" text-anchor="middle" class="step">lr=3e-4</text>
+
+  <path d="M360,130 L140,170" class="edge"/>
+  <path d="M360,130 L280,170" class="edge"/>
+  <path d="M360,130 L420,170" class="edge"/>
+  <path d="M360,130 L560,170" class="edge"/>
+
+  <rect x="220" y="240" width="120" height="38" class="dsk"/>
+  <text x="280" y="262" text-anchor="middle" class="step">sp8 + lr=1e-3</text>
+  <rect x="360" y="240" width="120" height="38" class="dsk"/>
+  <text x="420" y="262" text-anchor="middle" class="step">sp8 + dropout</text>
+  <rect x="500" y="240" width="120" height="38" class="dsk"/>
+  <text x="560" y="262" text-anchor="middle" class="step">sp8 + layer-drop</text>
+
+  <path d="M280,208 L280,240" class="edge"/>
+  <path d="M280,208 L420,240" class="edge"/>
+  <path d="M280,208 L560,240" class="edge"/>
+
+  <rect x="360" y="310" width="120" height="38" class="hot"/>
+  <text x="420" y="332" text-anchor="middle" class="step">chosen branch</text>
+  <text x="420" y="344" text-anchor="middle" class="small">novelty x quality</text>
+  <path d="M420,278 L420,310" class="edge"/>
+
+  <text x="80" y="398" class="small">expand() proposes k children by small-edit variation</text>
+  <text x="80" y="416" class="small">each child runs in a sandboxed container:</text>
+  <text x="80" y="432" class="small">  docker run --network=none --memory=8g --cpus=2 --read-only</text>
+  <text x="80" y="450" class="small">verify() checks: loss converged? baselines ran? seed set?</text>
+  <text x="80" y="468" class="small">score() = 0.4*novelty + 0.5*quality + 0.1*remaining_budget</text>
+  <text x="80" y="486" class="small">frontier is a max-heap; pop highest score each step</text>
+
+  <rect x="700" y="50" width="220" height="230" class="box"/>
+  <text x="810" y="72" text-anchor="middle" class="head">writer loop</text>
+  <rect x="720" y="90" width="180" height="34" class="cool"/>
+  <text x="810" y="110" text-anchor="middle" class="step">LaTeX draft v1</text>
+  <rect x="720" y="130" width="180" height="34" class="hot"/>
+  <text x="810" y="150" text-anchor="middle" class="step">vision critique</text>
+  <text x="810" y="168" text-anchor="middle" class="small">Opus 4.7 reads PDF</text>
+  <rect x="720" y="180" width="180" height="34" class="cool"/>
+  <text x="810" y="200" text-anchor="middle" class="step">draft v2, v3...</text>
+  <rect x="720" y="220" width="180" height="34" class="dsk"/>
+  <text x="810" y="240" text-anchor="middle" class="step">reviewer ensemble</text>
+  <text x="810" y="258" text-anchor="middle" class="small">5 judges, NeurIPS rubric</text>
+
+  <rect x="700" y="298" width="220" height="212" class="box"/>
+  <text x="810" y="318" text-anchor="middle" class="head">safety</text>
+  <text x="810" y="340" text-anchor="middle" class="small">sandbox per experiment</text>
+  <text x="810" y="356" text-anchor="middle" class="small">no network egress</text>
+  <text x="810" y="372" text-anchor="middle" class="small">bounded wall-clock</text>
+  <text x="810" y="388" text-anchor="middle" class="small">deterministic seeds</text>
+  <text x="810" y="406" text-anchor="middle" class="small">cgroup memory + pids caps</text>
+  <text x="810" y="424" text-anchor="middle" class="small">$30 hard budget / paper</text>
+  <text x="810" y="442" text-anchor="middle" class="small">red-team: fork bombs,</text>
+  <text x="810" y="458" text-anchor="middle" class="small">filesystem escape,</text>
+  <text x="810" y="474" text-anchor="middle" class="small">LLM shell-metachar injection</text>
+  <text x="810" y="498" text-anchor="middle" class="caption">Sakana v2 documented attack surface</text>
+</svg>

@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Janus-Pro — decoupled input encoders, shared transformer body</text>
+
+  <rect x="30" y="50" width="900" height="270" class="box"/>
+
+  <rect x="60" y="80" width="180" height="100" class="hot"/>
+  <text x="150" y="102" text-anchor="middle" class="step">input: image</text>
+  <text x="150" y="124" text-anchor="middle" class="small">source of visual signal</text>
+  <text x="150" y="146" text-anchor="middle" class="small">understanding: describe</text>
+  <text x="150" y="162" text-anchor="middle" class="small">generation: condition on</text>
+
+  <path d="M 245 110 L 285 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M 245 150 L 285 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="290" y="70" width="170" height="60" class="cool"/>
+  <text x="375" y="92" text-anchor="middle" class="step">SigLIP encoder</text>
+  <text x="375" y="108" text-anchor="middle" class="small">understanding path</text>
+  <text x="375" y="122" text-anchor="middle" class="small">semantic features</text>
+
+  <rect x="290" y="140" width="170" height="60" class="cold"/>
+  <text x="375" y="162" text-anchor="middle" class="step">VQ encoder</text>
+  <text x="375" y="178" text-anchor="middle" class="small">generation path</text>
+  <text x="375" y="192" text-anchor="middle" class="small">reconstruction codes</text>
+
+  <path d="M 465 100 L 505 140" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M 465 170 L 505 150" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="510" y="100" width="180" height="100" class="reg"/>
+  <text x="600" y="122" text-anchor="middle" class="step">shared transformer</text>
+  <text x="600" y="142" text-anchor="middle" class="small">one body, one weight set</text>
+  <text x="600" y="158" text-anchor="middle" class="small">init from DeepSeek-7B</text>
+  <text x="600" y="174" text-anchor="middle" class="small">absorbs both encoders</text>
+  <text x="600" y="190" text-anchor="middle" class="small">autoregressive decode</text>
+
+  <path d="M 695 120 L 745 90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M 695 170 L 745 200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="750" y="70" width="160" height="60" class="cool"/>
+  <text x="830" y="92" text-anchor="middle" class="step">text output</text>
+  <text x="830" y="108" text-anchor="middle" class="small">NTP, vocab logits</text>
+  <text x="830" y="122" text-anchor="middle" class="small">VQA, caption</text>
+
+  <rect x="750" y="180" width="160" height="60" class="cold"/>
+  <text x="830" y="202" text-anchor="middle" class="step">image VQ -&gt; pixels</text>
+  <text x="830" y="218" text-anchor="middle" class="small">emit VQ tokens</text>
+  <text x="830" y="232" text-anchor="middle" class="small">decoder -&gt; pixels</text>
+
+  <rect x="60" y="230" width="850" height="70" class="box"/>
+  <text x="485" y="252" text-anchor="middle" class="step">routing tag picks encoder and output head</text>
+  <text x="485" y="272" text-anchor="middle" class="small">&lt;understand&gt; image -&gt; SigLIP -&gt; body -&gt; text</text>
+  <text x="485" y="288" text-anchor="middle" class="small">&lt;generate&gt; text -&gt; body -&gt; VQ tokens -&gt; pixels</text>
+
+  <rect x="30" y="340" width="900" height="160" class="box"/>
+  <text x="480" y="362" text-anchor="middle" class="head">Janus-Pro data + scale scoreboard</text>
+
+  <g transform="translate(60, 380)">
+    <text x="0" y="15" class="step">axis</text>
+    <text x="200" y="15" class="step">Janus (Oct 2024)</text>
+    <text x="450" y="15" class="step">Janus-Pro (Jan 2025)</text>
+    <text x="710" y="15" class="step">delta</text>
+
+    <text x="0" y="40" class="small">model params</text>
+    <text x="200" y="40" class="small">1.3B</text>
+    <text x="450" y="40" class="small">7B</text>
+    <text x="710" y="40" class="small">5.4x</text>
+
+    <text x="0" y="60" class="small">stage-2 data</text>
+    <text x="200" y="60" class="small">26M pairs</text>
+    <text x="450" y="60" class="small">72M pairs</text>
+    <text x="710" y="60" class="small">+176%</text>
+
+    <text x="0" y="80" class="small">MMMU</text>
+    <text x="200" y="80" class="small">30.5</text>
+    <text x="450" y="80" class="small">60.3</text>
+    <text x="710" y="80" class="small">+29.8</text>
+
+    <text x="0" y="100" class="small">GenEval</text>
+    <text x="200" y="100" class="small">0.61</text>
+    <text x="450" y="100" class="small">0.80 (beats DALL-E 3)</text>
+    <text x="710" y="100" class="small">+0.19</text>
+  </g>
+</svg>

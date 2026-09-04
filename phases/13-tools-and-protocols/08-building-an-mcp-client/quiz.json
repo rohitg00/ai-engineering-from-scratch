@@ -1,0 +1,48 @@
+{
+  "lesson": "08-building-an-mcp-client",
+  "title": "Building an MCP Client: Discovery, Routing, and Dual-Era Fallback",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What should a dual-era stdio client send first?",
+      "options": ["Mcp-Session-Id", "server/discover", "initialize", "HTTP GET"],
+      "correct": 1,
+      "explanation": "The discovery probe creates a clear boundary between modern per-request metadata and legacy initialization."
+    },
+    {
+      "stage": "check",
+      "question": "A discovery probe returns -32022 with a mutually supported version. What should the client do?",
+      "options": ["Retry modern discovery at the supported version", "Send initialize", "Open HTTP GET", "Ignore the server"],
+      "correct": 0,
+      "explanation": "-32022 is recognized modern evidence, so the client stays modern and retries."
+    },
+    {
+      "stage": "check",
+      "question": "Which condition is sufficient to select the legacy era?",
+      "options": ["Any -32601 error", "The peer is on a legacy allowlist", "The peer is allowlisted and a bounded initialize probe returns a valid supported legacy result", "A discovery timeout by itself"],
+      "correct": 2,
+      "explanation": "The allowlist permits a probe, but only a structurally valid positive initialize result for a configured legacy revision proves the legacy era."
+    },
+    {
+      "stage": "check",
+      "question": "How should a client handle two tools named search?",
+      "options": ["Silently overwrite one", "Trust startup order", "Prefix or reject by declared policy", "Create a protocol session"],
+      "correct": 2,
+      "explanation": "Explicit prefix or rejection keeps routing visible and deterministic."
+    },
+    {
+      "stage": "post",
+      "question": "A legacy result omits resultType after the client negotiated a legacy era. How is it interpreted?",
+      "options": ["As input_required", "As complete", "As a transport error", "As server/discover"],
+      "correct": 1,
+      "explanation": "Clients treat absent resultType from earlier protocol versions as complete."
+    },
+    {
+      "stage": "post",
+      "question": "What must happen after a modern transport loss before routing resumes?",
+      "options": ["Reconnect, rediscover, and relist", "Resume with Last-Event-ID", "Echo Mcp-Session-Id", "Reuse old connection metadata"],
+      "correct": 0,
+      "explanation": "The client rebuilds peer bookkeeping and retries only safe operations with new request ids."
+    }
+  ]
+}

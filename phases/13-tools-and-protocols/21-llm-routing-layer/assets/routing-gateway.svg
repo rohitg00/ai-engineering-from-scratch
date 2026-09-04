@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .edge { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="480" y="26" text-anchor="middle" class="title">LLM routing gateway: one API, N providers</text>
+
+  <rect x="40" y="60" width="220" height="440" class="cool"/>
+  <text x="150" y="82" text-anchor="middle" class="head">your app</text>
+  <text x="56" y="108" class="step">openai.chat.completions.create(</text>
+  <text x="56" y="126" class="step">  model="smart",</text>
+  <text x="56" y="144" class="step">  messages=[...])</text>
+  <text x="56" y="176" class="small">- alias "smart" is a logical</text>
+  <text x="56" y="192" class="small">  name, not a real model</text>
+  <text x="56" y="216" class="small">- no provider-specific code</text>
+
+  <rect x="280" y="60" width="380" height="440" class="cold"/>
+  <text x="470" y="82" text-anchor="middle" class="head">routing gateway</text>
+  <text x="296" y="108" class="step">1 / redact PII</text>
+  <text x="296" y="126" class="small">regex or ML pre-dispatch</text>
+  <text x="296" y="148" class="step">2 / semantic cache</text>
+  <text x="296" y="166" class="small">prompt embedding lookup</text>
+  <text x="296" y="188" class="step">3 / alias resolve</text>
+  <text x="296" y="206" class="small">smart -&gt; [gpt-4o, claude, gemini]</text>
+  <text x="296" y="228" class="step">4 / pick strategy</text>
+  <text x="296" y="246" class="small">static / cost / latency / A-B</text>
+  <text x="296" y="268" class="step">5 / call provider</text>
+  <text x="296" y="286" class="small">translate OpenAI -&gt; backend shape</text>
+  <text x="296" y="308" class="step">6 / fallback on 5xx</text>
+  <text x="296" y="326" class="small">next provider in chain</text>
+  <text x="296" y="348" class="step">7 / cost tracking</text>
+  <text x="296" y="366" class="small">tokens x price -&gt; per-key aggregate</text>
+  <text x="296" y="388" class="step">8 / emit OTel GenAI</text>
+  <text x="296" y="406" class="small">gen_ai.* on every hop</text>
+  <text x="296" y="428" class="step">9 / guardrails on output</text>
+  <text x="296" y="446" class="small">scrub completions before return</text>
+
+  <path d="M660,200 L760,200" class="edge" marker-end="url(#arrow)"/>
+  <path d="M660,280 L760,280" class="edge" marker-end="url(#arrow)"/>
+  <path d="M660,360 L760,360" class="edge" marker-end="url(#arrow)"/>
+
+  <rect x="760" y="60" width="160" height="440" class="hot"/>
+  <text x="840" y="82" text-anchor="middle" class="head">providers</text>
+  <text x="776" y="108" class="step">OpenAI</text>
+  <text x="776" y="126" class="small">gpt-4o, gpt-4o-mini</text>
+
+  <text x="776" y="158" class="step">Anthropic</text>
+  <text x="776" y="176" class="small">claude-sonnet, haiku</text>
+
+  <text x="776" y="208" class="step">Google</text>
+  <text x="776" y="226" class="small">gemini-pro, flash</text>
+
+  <text x="776" y="258" class="step">Cohere / Mistral /</text>
+  <text x="776" y="276" class="step">DeepSeek / Ollama</text>
+
+  <text x="776" y="328" class="step">choices (2026)</text>
+  <text x="776" y="346" class="small">LiteLLM (self-host)</text>
+  <text x="776" y="362" class="small">OpenRouter (SaaS)</text>
+  <text x="776" y="378" class="small">Portkey (prod)</text>
+
+  <text x="776" y="416" class="step">key trade-off</text>
+  <text x="776" y="434" class="small">control vs managed</text>
+  <text x="776" y="450" class="small">vs guardrails out</text>
+  <text x="776" y="466" class="small">of the box</text>
+</svg>

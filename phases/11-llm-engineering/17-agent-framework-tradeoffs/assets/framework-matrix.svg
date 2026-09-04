@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">
+  <style>
+    .axis { stroke: #111827; stroke-width: 1.5; fill: none; }
+    .grid { stroke: #d1d5db; stroke-width: 1; fill: none; }
+    .label { fill: #111827; }
+    .title { fill: #111827; font-weight: 600; font-size: 13; }
+    .bubble { fill: #ffffff; stroke: #111827; stroke-width: 1.5; }
+  </style>
+
+  <text x="380" y="24" text-anchor="middle" class="title">Framework fit by problem shape</text>
+
+  <!-- axes -->
+  <line class="axis" x1="90" y1="320" x2="720" y2="320"/>
+  <line class="axis" x1="90" y1="60" x2="90" y2="320"/>
+
+  <text x="405" y="355" text-anchor="middle" class="label">Branching style: explicit ---- LLM-selected</text>
+  <text x="40" y="190" text-anchor="middle" class="label" transform="rotate(-90 40 190)">State: ephemeral ---- durable</text>
+
+  <!-- gridlines -->
+  <line class="grid" x1="405" y1="60" x2="405" y2="320"/>
+  <line class="grid" x1="90" y1="190" x2="720" y2="190"/>
+
+  <!-- LangGraph (durable, explicit) -->
+  <circle cx="200" cy="120" r="46" class="bubble"/>
+  <text x="200" y="118" text-anchor="middle" class="title">LangGraph</text>
+  <text x="200" y="136" text-anchor="middle" class="label">StateGraph</text>
+
+  <!-- CrewAI (ephemeral, mixed but closer to LLM-routed) -->
+  <circle cx="540" cy="240" r="46" class="bubble"/>
+  <text x="540" y="238" text-anchor="middle" class="title">CrewAI</text>
+  <text x="540" y="256" text-anchor="middle" class="label">Roles + tasks</text>
+
+  <!-- AutoGen (ephemeral, LLM-selected speakers) -->
+  <circle cx="620" cy="150" r="46" class="bubble"/>
+  <text x="620" y="148" text-anchor="middle" class="title">AutoGen</text>
+  <text x="620" y="166" text-anchor="middle" class="label">Chat / GroupChat</text>
+
+  <!-- Agno (session-durable, explicit-ish tools) -->
+  <circle cx="290" cy="250" r="46" class="bubble"/>
+  <text x="290" y="248" text-anchor="middle" class="title">Agno</text>
+  <text x="290" y="266" text-anchor="middle" class="label">Agent + storage</text>
+</svg>

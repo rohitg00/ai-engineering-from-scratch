@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="28" text-anchor="middle" class="title">OG-Narrator decomposition and Contract Net task market</text>
+
+  <rect x="40" y="60" width="420" height="200" class="cool"/>
+  <text x="250" y="82" text-anchor="middle" class="head">OG-Narrator (arXiv:2402.15813)</text>
+
+  <rect x="70" y="110" width="150" height="70" class="box"/>
+  <text x="145" y="134" text-anchor="middle" class="step">offer generator</text>
+  <text x="145" y="152" text-anchor="middle" class="small">deterministic</text>
+  <text x="145" y="168" text-anchor="middle" class="small">Zeuthen / Rubinstein</text>
+
+  <rect x="280" y="110" width="150" height="70" class="box"/>
+  <text x="355" y="134" text-anchor="middle" class="step">LLM narrator</text>
+  <text x="355" y="152" text-anchor="middle" class="small">framing only</text>
+  <text x="355" y="168" text-anchor="middle" class="small">no numeric decisions</text>
+
+  <line x1="220" y1="145" x2="276" y2="145" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <text x="250" y="140" text-anchor="middle" class="small">price</text>
+
+  <text x="250" y="210" text-anchor="middle" class="step">deal rate: 26.67% -> 88.88%</text>
+  <text x="250" y="230" text-anchor="middle" class="caption">prices stay in the ZOPA; anchors are strategic</text>
+
+  <rect x="500" y="60" width="420" height="200" class="hot"/>
+  <text x="710" y="82" text-anchor="middle" class="head">anti-pattern: LLM decides the price</text>
+
+  <rect x="540" y="110" width="340" height="70" class="box"/>
+  <text x="710" y="134" text-anchor="middle" class="step">single LLM call</text>
+  <text x="710" y="152" text-anchor="middle" class="small">generates both offer and framing</text>
+  <text x="710" y="168" text-anchor="middle" class="small">reveals reasoning in the output</text>
+
+  <text x="710" y="210" text-anchor="middle" class="step">deal rate: ~27%</text>
+  <text x="710" y="230" text-anchor="middle" class="caption">prices drift; counterpart reads the reservation price</text>
+
+  <rect x="40" y="290" width="880" height="210" class="cold"/>
+  <text x="480" y="314" text-anchor="middle" class="head">Contract Net Protocol (Smith 1980 / FIPA 1996)</text>
+
+  <rect x="80" y="340" width="140" height="50" class="box"/>
+  <text x="150" y="370" text-anchor="middle" class="step">manager</text>
+  <circle cx="400" cy="365" r="24" class="box"/>
+  <text x="400" y="370" text-anchor="middle" class="step">bidders</text>
+  <rect x="550" y="340" width="140" height="50" class="box"/>
+  <text x="620" y="370" text-anchor="middle" class="step">winner</text>
+  <rect x="730" y="340" width="160" height="50" class="box"/>
+  <text x="810" y="370" text-anchor="middle" class="step">losers (reject)</text>
+
+  <line x1="220" y1="365" x2="376" y2="365" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <text x="295" y="355" text-anchor="middle" class="small">cfp</text>
+  <line x1="424" y1="365" x2="546" y2="365" stroke="#1a1a1a" marker-end="url(#arrow)"/>
+  <text x="485" y="355" text-anchor="middle" class="small">propose · accept</text>
+  <line x1="424" y1="380" x2="726" y2="380" stroke="#1a1a1a" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="575" y="400" text-anchor="middle" class="small">reject-proposal</text>
+
+  <text x="480" y="440" text-anchor="middle" class="caption">scales: broadcast + collect + award; no synchronous chat</text>
+  <text x="480" y="460" text-anchor="middle" class="caption">adopted in production task markets (Microsoft Agent Framework, some LangGraph implementations)</text>
+  <text x="480" y="480" text-anchor="middle" class="caption">FIPA performative mapping: cfp -> propose -> accept-proposal / reject-proposal</text>
+</svg>

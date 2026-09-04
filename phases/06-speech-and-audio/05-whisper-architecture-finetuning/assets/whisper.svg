@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 480" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="28" text-anchor="middle" class="title">Whisper: one architecture, many tasks, steered by prompt</text>
+
+  <!-- Encoder block -->
+  <rect x="40" y="60" width="220" height="200" class="box"/>
+  <text x="150" y="82" text-anchor="middle" class="label">audio encoder</text>
+  <rect x="60" y="100" width="180" height="28" class="box"/>
+  <text x="150" y="120" text-anchor="middle" class="content">30 s → 80 log-mel, 3000 fr</text>
+  <line x1="150" y1="130" x2="150" y2="146" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="60" y="148" width="180" height="26" class="box"/>
+  <text x="150" y="165" text-anchor="middle" class="content">conv stride-2</text>
+  <line x1="150" y1="176" x2="150" y2="192" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="60" y="195" width="180" height="50" class="box"/>
+  <text x="150" y="215" text-anchor="middle" class="content">N × transformer blocks</text>
+  <text x="150" y="232" text-anchor="middle" class="caption">Large-v3: N=32</text>
+
+  <!-- Cross arrow -->
+  <line x1="265" y1="160" x2="320" y2="160" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="292" y="150" text-anchor="middle" class="caption" font-size="10">cross-attn</text>
+
+  <!-- Decoder block -->
+  <rect x="325" y="60" width="270" height="200" class="hot"/>
+  <text x="460" y="82" text-anchor="middle" class="label">text decoder</text>
+  <rect x="345" y="100" width="230" height="44" class="box"/>
+  <text x="460" y="118" text-anchor="middle" class="content">SOT → &lt;|en|&gt; → &lt;|transcribe|&gt;</text>
+  <text x="460" y="134" text-anchor="middle" class="content">→ &lt;|notimestamps|&gt; → tokens → EOT</text>
+  <line x1="460" y1="148" x2="460" y2="164" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="345" y="167" width="230" height="50" class="box"/>
+  <text x="460" y="187" text-anchor="middle" class="content">N × transformer blocks (causal)</text>
+  <text x="460" y="204" text-anchor="middle" class="caption">Large: N=32   Turbo: N=4 → 8× faster</text>
+  <line x1="460" y1="220" x2="460" y2="236" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="460" y="252" text-anchor="middle" class="content">51,865-BPE softmax</text>
+
+  <!-- Prompt -->
+  <rect x="615" y="60" width="230" height="200" class="box"/>
+  <text x="730" y="82" text-anchor="middle" class="label">prompt-based task</text>
+  <text x="625" y="108" class="content">&lt;|en|&gt;   &lt;|transcribe|&gt;</text>
+  <text x="625" y="125" class="caption">→ English transcript</text>
+  <text x="625" y="147" class="content">&lt;|fr|&gt;   &lt;|translate|&gt;</text>
+  <text x="625" y="164" class="caption">→ FR speech → EN text</text>
+  <text x="625" y="186" class="content">&lt;|ja|&gt;   &lt;|transcribe|&gt;</text>
+  <text x="625" y="203" class="caption">→ Japanese transcript</text>
+  <text x="625" y="225" class="content">no_timestamps / timestamps</text>
+  <text x="625" y="242" class="caption">→ word-level alignment on</text>
+
+  <!-- Chunking -->
+  <rect x="40" y="290" width="400" height="175" class="box"/>
+  <text x="240" y="312" text-anchor="middle" class="label">long-form = chunk 30 s + overlap</text>
+  <line x1="60" y1="365" x2="420" y2="365" stroke="#1a1a1a" stroke-width="1"/>
+  <rect x="60" y="355" width="100" height="20" fill="#eed9a8" stroke="#1a1a1a"/>
+  <rect x="130" y="380" width="100" height="20" fill="#eed9a8" stroke="#1a1a1a"/>
+  <rect x="200" y="405" width="100" height="20" fill="#eed9a8" stroke="#1a1a1a"/>
+  <rect x="270" y="430" width="100" height="20" fill="#eed9a8" stroke="#1a1a1a"/>
+  <text x="60" y="352" class="caption" font-size="10">0–30</text>
+  <text x="130" y="377" class="caption" font-size="10">25–55</text>
+  <text x="200" y="402" class="caption" font-size="10">50–80</text>
+  <text x="270" y="427" class="caption" font-size="10">75–105</text>
+  <text x="240" y="458" text-anchor="middle" class="caption">5 s stride overlap; VAD-gate silence to prevent hallucinations</text>
+
+  <!-- Fine-tune -->
+  <rect x="460" y="290" width="385" height="175" class="hot"/>
+  <text x="652" y="312" text-anchor="middle" class="label">LoRA fine-tune (q_proj + v_proj, r=16)</text>
+  <text x="475" y="340" class="content">full-FT  Turbo-809M → 809M trainable</text>
+  <text x="475" y="362" class="content">LoRA-r16 Turbo      → 0.65M trainable</text>
+  <text x="475" y="384" class="content">LoRA-r16 Large-v3   → 5.2M trainable</text>
+  <text x="475" y="406" class="content">LoRA-r16 Medium     → 3.1M trainable</text>
+  <text x="652" y="432" text-anchor="middle" class="caption">freeze encoder if &lt;10 h; tune decoder only</text>
+  <text x="652" y="452" text-anchor="middle" class="caption">2–20 h gets 2–5× WER drop in-domain</text>
+</svg>

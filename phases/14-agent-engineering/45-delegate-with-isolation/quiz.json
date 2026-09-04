@@ -1,0 +1,48 @@
+{
+  "lesson": "45-delegate-with-isolation",
+  "title": "Delegate with Isolation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "When is parallel delegation justified?",
+      "options": ["When work has real independence in decisions, paths, or waiting time", "For every task over ten minutes", "Whenever more agents are available", "Only for documentation"],
+      "correct": 0,
+      "explanation": "Parallelism helps only when units can progress without shared mutable decisions or ownership."
+    },
+    {
+      "stage": "check",
+      "question": "Which guarantee does filesystem isolation not provide?",
+      "options": ["Exclusive design and path ownership", "Independent command execution", "Recoverable branches", "Separate directories"],
+      "correct": 0,
+      "explanation": "Two isolated worktrees can still implement conflicting designs."
+    },
+    {
+      "stage": "check",
+      "question": "Why must each work unit name proof?",
+      "options": ["To avoid a handoff", "To increase concurrency", "So the integrator receives reproducible evidence", "So the worker can claim success"],
+      "correct": 2,
+      "explanation": "The integrator must verify results, not trust summaries."
+    },
+    {
+      "stage": "check",
+      "question": "What should happen when two units own overlapping paths?",
+      "options": ["Let the last worker win", "Merge without review", "Run them faster", "Block and redesign the split"],
+      "correct": 3,
+      "explanation": "Overlapping write ownership creates avoidable conflict and ambiguity."
+    },
+    {
+      "stage": "post",
+      "question": "What is calibrated autonomy?",
+      "options": ["Manual work only", "Freedom where evidence and rollback are strong, checkpoints where consequence is high", "Full automation", "Random approvals"],
+      "correct": 1,
+      "explanation": "Authority should follow consequence and reversibility."
+    },
+    {
+      "stage": "post",
+      "question": "What is the integrator's final responsibility?",
+      "options": ["Delete handoffs", "Choose a larger model", "Rewrite every unit", "Run the full cross-unit verification gate and enforce scope"],
+      "correct": 3,
+      "explanation": "Unit proof does not replace end-to-end integration evidence."
+    }
+  ]
+}

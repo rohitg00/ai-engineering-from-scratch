@@ -1,0 +1,78 @@
+{
+  "lesson": "87-end-to-end-safety-gate",
+  "title": "Capstone 87 — End-to-End Safety Gate",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Where do the three checkpoints sit in the request lifecycle?",
+      "options": [
+        "All three run before the model is called",
+        "Pre-gen runs on the prompt before the model, during-gen filters the stream, post-gen runs on the completed output",
+        "Only post-gen runs; pre-gen and during-gen are aliases",
+        "All three run after the model finishes"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "pre",
+      "question": "What is the goal of during-gen filtering?",
+      "options": [
+        "To increase token throughput",
+        "To buffer chunks and terminate the stream early when a known harmful continuation appears, before the user sees it",
+        "To replace the prompt with a refusal",
+        "To translate the output to another language"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "How does the aggregator decide the final action?",
+      "options": [
+        "By looking only at the rules engine",
+        "By taking the maximum severity across detector, token-filter, classifier, and rules signals and mapping it to block, redact, warn, or allow",
+        "By averaging the confidences of every signal",
+        "By calling the model a second time"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "Why does the gate emit a structured RequestTrace per request?",
+      "options": [
+        "To slow the system down",
+        "To replace logging",
+        "To give a reviewer a per-checkpoint audit trail so a regression in any layer can be traced to the right module",
+        "To replicate the trace into the prompt"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "check",
+      "question": "What happens when pre-gen confidence exceeds the block threshold?",
+      "options": [
+        "The model is still called for completeness",
+        "The gate raises an exception",
+        "The gate returns the policy refusal and skips during-gen and post-gen entirely",
+        "The gate lowers the threshold and retries"
+      ],
+      "correct": 2,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why does the demo intentionally let some encoding-trick prompts reach during-gen?",
+      "options": [
+        "Because encoding tricks are not real attacks",
+        "Because the input pipeline does not always normalize them in time; the during-gen filter is the defense in depth that catches the leaked continuation",
+        "Because the rules engine handles encoding",
+        "Because the model refuses them anyway"
+      ],
+      "correct": 1,
+      "explanation": ""
+    }
+  ]
+}

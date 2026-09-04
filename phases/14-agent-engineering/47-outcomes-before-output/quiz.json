@@ -1,0 +1,48 @@
+{
+  "lesson": "47-outcomes-before-output",
+  "title": "Outcomes Before Output",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which statement is an outcome rather than an output?",
+      "options": ["Build an incident assistant", "Add a dashboard", "Deploy a vector database", "Identify the failing service within two minutes while remaining read-only"],
+      "correct": 3,
+      "explanation": "The statement names an observable change and constraint without fixing the artifact."
+    },
+    {
+      "stage": "check",
+      "question": "Why does faster implementation increase shaping risk?",
+      "options": ["Teams can commit to the wrong problem before learning catches up", "Code becomes slower", "Models stop planning", "Tests become impossible"],
+      "correct": 0,
+      "explanation": "Speed amplifies the cost of an unearned direction."
+    },
+    {
+      "stage": "check",
+      "question": "What belongs in an outcome frame?",
+      "options": ["User, situation, current behavior, desired outcome, constraints, and non-goals", "Only architecture", "Only features", "Model and framework versions"],
+      "correct": 0,
+      "explanation": "The six surfaces connect the build to a real situation and boundary."
+    },
+    {
+      "stage": "check",
+      "question": "When may an outcome frame name technology?",
+      "options": ["Only in the title", "When a verified compatibility constraint truly fixes it", "In every goal", "Whenever it is popular"],
+      "correct": 1,
+      "explanation": "Technology belongs only when evidence makes it a real constraint."
+    },
+    {
+      "stage": "post",
+      "question": "What is the role of non-goals?",
+      "options": ["List future dreams", "Reject tempting adjacent work in this slice", "Measure success", "Replace constraints"],
+      "correct": 1,
+      "explanation": "Concrete non-goals keep the build attached to its current outcome."
+    },
+    {
+      "stage": "post",
+      "question": "When has a constrained outcome failed?",
+      "options": ["Only when no code ships", "When implementation changes", "When the desired result is reached by violating a fixed constraint", "When a non-goal is documented"],
+      "correct": 2,
+      "explanation": "Constraints are part of the outcome, not optional implementation guidance."
+    }
+  ]
+}

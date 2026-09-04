@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <marker id="red-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 2; }
+      .cell { fill: #f3ece0; stroke: #1a1a1a; stroke-width: 1.2; }
+      .label { font-size: 14px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 12px; fill: #333; font-family: 'Menlo', monospace; }
+      .stage { font-size: 12px; fill: #c0392b; font-style: italic; text-anchor: middle; }
+      .line { stroke: #1a1a1a; stroke-width: 1.5; fill: none; }
+      .red { stroke: #c0392b; stroke-width: 2; fill: none; }
+      .note { font-size: 11px; fill: #666; font-style: italic; }
+    </style>
+  </defs>
+
+  <rect class="box" x="20" y="40" width="380" height="320" rx="4"/>
+  <text class="label" x="210" y="65" text-anchor="middle">encoder (GRU)</text>
+
+  <rect class="cell" x="50"  y="90" width="50" height="35" rx="2"/><text class="content" x="75"  y="113" text-anchor="middle">h1</text>
+  <rect class="cell" x="120" y="90" width="50" height="35" rx="2"/><text class="content" x="145" y="113" text-anchor="middle">h2</text>
+  <rect class="cell" x="190" y="90" width="50" height="35" rx="2"/><text class="content" x="215" y="113" text-anchor="middle">h3</text>
+  <rect class="cell" x="260" y="90" width="50" height="35" rx="2"/><text class="content" x="285" y="113" text-anchor="middle">h4</text>
+  <rect class="hot"  x="330" y="90" width="50" height="35" rx="2"/><text class="content" x="355" y="113" text-anchor="middle">h5</text>
+
+  <path class="line" d="M 100 108 L 118 108" marker-end="url(#arrow)"/>
+  <path class="line" d="M 170 108 L 188 108" marker-end="url(#arrow)"/>
+  <path class="line" d="M 240 108 L 258 108" marker-end="url(#arrow)"/>
+  <path class="line" d="M 310 108 L 328 108" marker-end="url(#arrow)"/>
+
+  <rect class="cell" x="50"  y="160" width="50" height="30" rx="2"/><text class="content" x="75"  y="180" text-anchor="middle">Je</text>
+  <rect class="cell" x="120" y="160" width="50" height="30" rx="2"/><text class="content" x="145" y="180" text-anchor="middle">ne</text>
+  <rect class="cell" x="190" y="160" width="50" height="30" rx="2"/><text class="content" x="215" y="180" text-anchor="middle">suis</text>
+  <rect class="cell" x="260" y="160" width="50" height="30" rx="2"/><text class="content" x="285" y="180" text-anchor="middle">pas</text>
+  <rect class="cell" x="330" y="160" width="50" height="30" rx="2"/><text class="content" x="355" y="180" text-anchor="middle">chat</text>
+
+  <path class="line" d="M 75 160 L 75 130"/>
+  <path class="line" d="M 145 160 L 145 130"/>
+  <path class="line" d="M 215 160 L 215 130"/>
+  <path class="line" d="M 285 160 L 285 130"/>
+  <path class="line" d="M 355 160 L 355 130"/>
+
+  <text class="stage" x="210" y="230">final state = context vector</text>
+  <text class="note" x="210" y="250" text-anchor="middle">fixed size, no matter how long the input</text>
+
+  <path class="red" d="M 382 108 L 490 220" marker-end="url(#red-arrow)"/>
+  <text class="stage" x="430" y="180">bottleneck</text>
+
+  <rect class="box" x="500" y="40" width="380" height="320" rx="4"/>
+  <text class="label" x="690" y="65" text-anchor="middle">decoder (GRU)</text>
+
+  <rect class="hot"  x="520" y="220" width="50" height="35" rx="2"/><text class="content" x="545" y="243" text-anchor="middle">h5</text>
+  <rect class="cell" x="590" y="220" width="50" height="35" rx="2"/><text class="content" x="615" y="243" text-anchor="middle">s1</text>
+  <rect class="cell" x="660" y="220" width="50" height="35" rx="2"/><text class="content" x="685" y="243" text-anchor="middle">s2</text>
+  <rect class="cell" x="730" y="220" width="50" height="35" rx="2"/><text class="content" x="755" y="243" text-anchor="middle">s3</text>
+  <rect class="cell" x="800" y="220" width="50" height="35" rx="2"/><text class="content" x="825" y="243" text-anchor="middle">s4</text>
+
+  <path class="line" d="M 570 238 L 588 238" marker-end="url(#arrow)"/>
+  <path class="line" d="M 640 238 L 658 238" marker-end="url(#arrow)"/>
+  <path class="line" d="M 710 238 L 728 238" marker-end="url(#arrow)"/>
+  <path class="line" d="M 780 238 L 798 238" marker-end="url(#arrow)"/>
+
+  <rect class="cell" x="590" y="290" width="50" height="30" rx="2"/><text class="content" x="615" y="310" text-anchor="middle">I</text>
+  <rect class="cell" x="660" y="290" width="50" height="30" rx="2"/><text class="content" x="685" y="310" text-anchor="middle">am</text>
+  <rect class="cell" x="730" y="290" width="50" height="30" rx="2"/><text class="content" x="755" y="310" text-anchor="middle">not</text>
+  <rect class="cell" x="800" y="290" width="50" height="30" rx="2"/><text class="content" x="825" y="310" text-anchor="middle">cat</text>
+
+  <path class="line" d="M 615 290 L 615 255"/>
+  <path class="line" d="M 685 290 L 685 255"/>
+  <path class="line" d="M 755 290 L 755 255"/>
+  <path class="line" d="M 825 290 L 825 255"/>
+
+  <text class="note" x="690" y="350" text-anchor="middle">emits one token per step, feeds it back in</text>
+</svg>

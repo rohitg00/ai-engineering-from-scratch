@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .bad { fill: #ffe1e1; stroke: #b71c1c; stroke-width: 1.5; }
+      .tool { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .pattern { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="24" text-anchor="middle" class="title">load testing LLM APIs — two traps, four patterns, five tools</text>
+
+  <rect x="40" y="50" width="440" height="110" class="bad"/>
+  <text x="260" y="72" text-anchor="middle" class="head">GIL trap (Locust stock)</text>
+  <text x="60" y="96" class="small">· client tokenizes under Python GIL</text>
+  <text x="60" y="114" class="small">· competes with request generation</text>
+  <text x="60" y="132" class="small">· tokenization backlog inflates reported ITL</text>
+  <text x="260" y="152" text-anchor="middle" class="caption">your client is the bottleneck, not the server</text>
+
+  <rect x="500" y="50" width="420" height="110" class="bad"/>
+  <text x="710" y="72" text-anchor="middle" class="head">prompt-uniformity trap</text>
+  <text x="520" y="96" class="small">· loop with one prompt = 100% prefix cache</text>
+  <text x="520" y="114" class="small">· request coalescing serves "N concurrent" as 1</text>
+  <text x="520" y="132" class="small">· throughput looks great, production falls over</text>
+  <text x="710" y="152" text-anchor="middle" class="caption">fix: LLMPerf --mean + --stddev input tokens</text>
+
+  <rect x="40" y="180" width="440" height="160" class="tool"/>
+  <text x="260" y="202" text-anchor="middle" class="head">2026 tools</text>
+  <text x="60" y="226" class="step">LLMPerf — Anyscale, Rust tokenizers, streaming</text>
+  <text x="60" y="244" class="step">NVIDIA GenAI-Perf — Triton-backed reference</text>
+  <text x="60" y="262" class="step">LLM-Locust — Locust + GIL fix</text>
+  <text x="60" y="280" class="step">guidellm — large-scale synthetic</text>
+  <text x="60" y="298" class="step">k6 v2026.1.0 + Operator 1.0 GA</text>
+  <text x="60" y="316" class="small">  streaming-aware, CRD-native, best CI gate</text>
+
+  <rect x="500" y="180" width="420" height="160" class="pattern"/>
+  <text x="710" y="202" text-anchor="middle" class="head">four load patterns</text>
+  <text x="520" y="226" class="step">steady — 30-60 min constant RPS</text>
+  <text x="520" y="244" class="small">  catches baseline regressions</text>
+  <text x="520" y="264" class="step">ramp — 0 to target over 15 min</text>
+  <text x="520" y="280" class="small">  catches capacity breakpoint + warm-up</text>
+  <text x="520" y="300" class="step">spike — 3-10x sudden burst</text>
+  <text x="520" y="316" class="small">  catches autoscaling + cold-start impact</text>
+  <text x="520" y="328" class="step">soak — 4-8h steady</text>
+
+  <rect x="40" y="360" width="880" height="130" class="box"/>
+  <text x="480" y="382" text-anchor="middle" class="head">CI gate recipe</text>
+  <text x="480" y="406" text-anchor="middle" class="step">k6 on PR with 30-50 iterations at baseline RPS</text>
+  <text x="480" y="426" text-anchor="middle" class="step">gate: P50 / P95 TTFT, 5xx &lt; 5%, TPOT threshold</text>
+  <text x="480" y="446" text-anchor="middle" class="caption">break the build on breach — treat performance as a compile error</text>
+  <text x="480" y="468" text-anchor="middle" class="small">GenAI-Perf ITL excludes TTFT · LLMPerf includes it — same server, different TPOT</text>
+</svg>

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .reg { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Video VLMs — frame sampling, temporal tokens, grounding output</text>
+
+  <rect x="30" y="50" width="900" height="220" class="box"/>
+  <text x="480" y="72" text-anchor="middle" class="head">three architecture patterns from 2023 to 2025</text>
+
+  <rect x="50" y="90" width="280" height="160" class="hot"/>
+  <text x="190" y="110" text-anchor="middle" class="step">Video-LLaMA (2023)</text>
+  <text x="190" y="128" text-anchor="middle" class="small">Q-former + audio branch</text>
+  <text x="190" y="144" text-anchor="middle" class="small">16 frames @ 2 FPS fixed</text>
+  <text x="190" y="160" text-anchor="middle" class="small">32 video queries, 32 audio</text>
+  <text x="190" y="184" text-anchor="middle" class="step">strength: audio grounding</text>
+  <text x="190" y="204" text-anchor="middle" class="small">weakness: 8s fixed clip</text>
+  <text x="190" y="220" text-anchor="middle" class="small">no event time localization</text>
+
+  <rect x="340" y="90" width="280" height="160" class="cool"/>
+  <text x="480" y="110" text-anchor="middle" class="step">Video-LLaVA (2023)</text>
+  <text x="480" y="128" text-anchor="middle" class="small">MLP + shared encoder</text>
+  <text x="480" y="144" text-anchor="middle" class="small">8 frames @ 1-2 FPS</text>
+  <text x="480" y="160" text-anchor="middle" class="small">alignment before projection</text>
+  <text x="480" y="184" text-anchor="middle" class="step">strength: simple + effective</text>
+  <text x="480" y="204" text-anchor="middle" class="small">weakness: short clips only</text>
+  <text x="480" y="220" text-anchor="middle" class="small">no dynamic FPS</text>
+
+  <rect x="630" y="90" width="280" height="160" class="cold"/>
+  <text x="770" y="110" text-anchor="middle" class="step">Qwen2.5-VL (2025)</text>
+  <text x="770" y="128" text-anchor="middle" class="small">TMRoPE + dynamic FPS</text>
+  <text x="770" y="144" text-anchor="middle" class="small">arbitrary duration</text>
+  <text x="770" y="160" text-anchor="middle" class="small">absolute time tokens</text>
+  <text x="770" y="184" text-anchor="middle" class="step">strength: event grounding</text>
+  <text x="770" y="204" text-anchor="middle" class="small">JSON output format</text>
+  <text x="770" y="220" text-anchor="middle" class="small">open SOTA 2026</text>
+
+  <rect x="30" y="290" width="900" height="230" class="box"/>
+  <text x="480" y="312" text-anchor="middle" class="head">frame sampling + output format</text>
+
+  <rect x="60" y="330" width="260" height="170" class="reg"/>
+  <text x="190" y="352" text-anchor="middle" class="step">frame sampling strategies</text>
+  <text x="190" y="372" text-anchor="middle" class="small">uniform: N frames / duration</text>
+  <text x="190" y="388" text-anchor="middle" class="small">- simple, loses motion peaks</text>
+  <text x="190" y="408" text-anchor="middle" class="small">dynamic FPS: motion-weighted</text>
+  <text x="190" y="424" text-anchor="middle" class="small">- denser in high-motion spans</text>
+  <text x="190" y="444" text-anchor="middle" class="small">event-driven: detector + sample</text>
+  <text x="190" y="460" text-anchor="middle" class="small">- best for action recognition</text>
+  <text x="190" y="480" text-anchor="middle" class="caption">pair with 3x3 pooling per frame</text>
+
+  <rect x="340" y="330" width="280" height="170" class="hot"/>
+  <text x="480" y="352" text-anchor="middle" class="step">grounding output formats</text>
+  <text x="480" y="372" text-anchor="middle" class="small">free text:</text>
+  <text x="480" y="388" text-anchor="middle" class="small">"The cat jumps around 4s"</text>
+  <text x="480" y="412" text-anchor="middle" class="small">JSON:</text>
+  <text x="480" y="428" text-anchor="middle" class="small">{"event":"jump","start":4.1,"end":4.3}</text>
+  <text x="480" y="452" text-anchor="middle" class="small">token:</text>
+  <text x="480" y="468" text-anchor="middle" class="small">"&lt;time&gt;4.1&lt;/time&gt; jump"</text>
+  <text x="480" y="488" text-anchor="middle" class="caption">JSON is easiest to parse downstream</text>
+
+  <rect x="640" y="330" width="280" height="170" class="cool"/>
+  <text x="780" y="352" text-anchor="middle" class="step">benchmarks</text>
+  <text x="780" y="372" text-anchor="middle" class="small">VideoMME: general, 2500 samples</text>
+  <text x="780" y="388" text-anchor="middle" class="small">TempCompass: before/after</text>
+  <text x="780" y="404" text-anchor="middle" class="small">EgoSchema: 3min first-person</text>
+  <text x="780" y="420" text-anchor="middle" class="small">Video-MMMU: multi-discipline</text>
+  <text x="780" y="446" text-anchor="middle" class="step">open SOTA 2026</text>
+  <text x="780" y="462" text-anchor="middle" class="small">Qwen2.5-VL-72B</text>
+  <text x="780" y="478" text-anchor="middle" class="small">TMRoPE is the differentiator</text>
+</svg>

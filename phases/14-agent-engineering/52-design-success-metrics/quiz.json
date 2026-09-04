@@ -1,0 +1,48 @@
+{
+  "lesson": "52-design-success-metrics",
+  "title": "Design Success Metrics",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the correct measurement order?",
+      "options": ["Data, model, feature", "Metric, question, goal", "Dashboard, metric, goal", "Goal, question, metric"],
+      "correct": 3,
+      "explanation": "Goals define information needs, questions refine them, and metrics operationalize answers."
+    },
+    {
+      "stage": "check",
+      "question": "Why define thresholds before looking at the results?",
+      "options": ["To avoid questions", "To reduce storage", "To prevent moving the decision rule to protect the build", "To guarantee a pass"],
+      "correct": 2,
+      "explanation": "Precommitted thresholds reduce post-result rationalization."
+    },
+    {
+      "stage": "check",
+      "question": "What does a guardrail metric protect?",
+      "options": ["A fixed constraint or unacceptable harm", "Only speed", "A release name", "A visual style"],
+      "correct": 0,
+      "explanation": "Guardrails ensure improvement does not violate safety or policy."
+    },
+    {
+      "stage": "check",
+      "question": "What is a counter-metric?",
+      "options": ["An unmeasured opinion", "A measure that catches cost or harm shifted elsewhere", "A second copy of the outcome metric", "A model score"],
+      "correct": 1,
+      "explanation": "Local gains can create downstream burden that a counter-metric exposes."
+    },
+    {
+      "stage": "post",
+      "question": "Why must a metric name its source and window?",
+      "options": ["For branding", "To replace a threshold", "To avoid users", "For reproducibility and interpretation"],
+      "correct": 3,
+      "explanation": "A number without provenance and time or sample boundaries cannot support a reliable decision."
+    },
+    {
+      "stage": "post",
+      "question": "When is offline replay insufficient?",
+      "options": ["When the decision depends on real user behavior or workflow effects", "When tests are fast", "Never", "Always"],
+      "correct": 0,
+      "explanation": "Replay is repeatable but cannot fully reproduce trust, coordination, and live behavior."
+    }
+  ]
+}

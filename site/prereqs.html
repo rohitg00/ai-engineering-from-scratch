@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roadmap - AI Engineering from Scratch</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
+  <meta name="description" content="Explore 20 connected AI engineering phases. Trace prerequisites, see what each phase unlocks, and continue from your saved progress.">
+  <link rel="canonical" href="https://aiengineeringfromscratch.com/prereqs.html">
+  <meta property="og:title" content="Roadmap · AI Engineering from Scratch">
+  <meta property="og:description" content="Trace every prerequisite, find your next phase, and move from first principles to production AI.">
+  <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
+  <meta property="og:url" content="https://aiengineeringfromscratch.com/prereqs.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Roadmap · AI Engineering from Scratch">
+  <meta name="twitter:description" content="An interactive learning map across 20 connected phases.">
+  <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260824a">
+  <link rel="stylesheet" href="roadmap.css?v=20260822a">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
+      </a>
+      <nav class="header-nav">
+        <a href="index.html#contents">Contents</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="prereqs.html" aria-current="page">Roadmap</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="about.html">About</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
+          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+        </a>
+      </nav>
+      <button class="search-toggle" type="button" data-cmd-palette aria-label="Search (⌘K)" title="Search (⌘K)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+        <span class="theme-icon" id="themeIcon">N</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="roadmap-page" id="main">
+    <section class="roadmap-hero roadmap-container" aria-labelledby="roadmapTitle">
+      <div class="roadmap-hero-copy">
+        <span class="roadmap-eyebrow">Curriculum navigation</span>
+        <h1 id="roadmapTitle">From first principles to production AI.</h1>
+        <p class="roadmap-lede">Twenty connected phases form one top-to-bottom dependency graph. Follow the route downward, illuminate the prerequisites behind any phase, and continue exactly where your local progress left off.</p>
+      </div>
+      <div class="roadmap-hero-stats" aria-label="Roadmap summary">
+        <div class="roadmap-hero-stat"><strong class="roadmap-hero-stat-value" id="roadmapPhaseCount">20</strong><span class="roadmap-hero-stat-label">Phases</span></div>
+        <div class="roadmap-hero-stat"><strong class="roadmap-hero-stat-value" id="roadmapLessonCount">...</strong><span class="roadmap-hero-stat-label">Lessons</span></div>
+        <div class="roadmap-hero-stat"><strong class="roadmap-hero-stat-value" id="roadmapProgressCount">0 / ...</strong><span class="roadmap-hero-stat-label">Your progress</span></div>
+        <div class="roadmap-hero-stat"><strong class="roadmap-hero-stat-value" id="roadmapNextPhase">Phase 00</strong><span class="roadmap-hero-stat-label">Recommended next</span></div>
+      </div>
+    </section>
+
+    <section class="roadmap-stage-index roadmap-container" aria-label="Roadmap stages">
+      <div class="roadmap-stage-index-copy">
+        <strong>Four graph zones</strong>
+        <span>Jump down the map</span>
+      </div>
+      <nav class="roadmap-stage-nav" id="roadmapStageNav" aria-label="Jump to a roadmap stage"></nav>
+    </section>
+
+    <section class="roadmap-workspace roadmap-container" aria-labelledby="learningMapTitle">
+      <div class="roadmap-board">
+        <div class="roadmap-toolbar">
+          <div class="roadmap-toolbar-copy">
+            <span class="roadmap-toolbar-label" id="learningMapTitle">Interactive learning map</span>
+            <p>Select a node to illuminate its route. Click the selected node or blank space to return to the full graph.</p>
+            <span class="roadmap-sr-only" id="roadmapKeyboardHelp">Use the arrow keys to move between phase nodes. Press Enter or Space to select a phase. Press Escape to clear the route.</span>
+          </div>
+          <div class="roadmap-toolbar-actions">
+            <label class="roadmap-jump-field">
+              <span class="roadmap-jump-label">Find a phase</span>
+              <select class="roadmap-jump-select" id="roadmapJump" aria-label="Jump to a phase"></select>
+            </label>
+            <div class="roadmap-zoom" aria-label="Graph zoom controls">
+              <button class="roadmap-zoom-button" id="roadmapZoomOut" type="button" aria-label="Zoom out">−</button>
+              <span class="roadmap-zoom-value" id="roadmapZoomValue" aria-live="polite">100%</span>
+              <button class="roadmap-zoom-button" id="roadmapZoomIn" type="button" aria-label="Zoom in">+</button>
+            </div>
+            <button class="roadmap-clear" id="roadmapClear" type="button" hidden>Back to full graph</button>
+          </div>
+        </div>
+        <div class="roadmap-graph-shell">
+          <div class="roadmap-graph-wrap" id="roadmapGraphWrap" aria-label="Scrollable curriculum dependency graph">
+            <div class="roadmap-graph-container" id="roadmapGraphContainer">
+              <svg class="roadmap-graph-svg" id="roadmapGraph" role="group"></svg>
+            </div>
+          </div>
+          <div class="roadmap-graph-footer">
+            <div class="roadmap-graph-legend" aria-label="Focused route legend">
+              <span class="roadmap-legend-item"><span class="roadmap-legend-line"></span> Prerequisite route</span>
+              <span class="roadmap-legend-item"><span class="roadmap-legend-line is-unlock"></span> Downstream unlocks</span>
+            </div>
+            <span class="roadmap-graph-hint">Scroll down to follow the route · drag sideways across branches</span>
+          </div>
+          <span class="roadmap-sr-only" id="roadmapGraphStatus" role="status" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <aside class="roadmap-inspector" id="roadmapInspector" aria-label="Selected phase details" aria-live="polite"></aside>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>AI Engineering from Scratch · open source · free forever.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report / Suggest</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js?v=20260821c"></script>
+  <script src="progress.js?v=20260822a"></script>
+  <script src="header.js?v=20260829b" defer></script>
+  <script src="cmdpalette.js?v=20260821a" defer></script>
+  <script src="roadmap.js?v=20260822a" defer></script>
+  <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
+</body>
+</html>

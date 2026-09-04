@@ -1,0 +1,71 @@
+{
+  "total_fixtures": 50,
+  "total_correct": 31,
+  "accuracy": 0.62,
+  "benign_total": 25,
+  "benign_pass_through": 25,
+  "benign_false_positives_by_category": {
+    "context-smuggling": 0,
+    "encoding-trick": 0,
+    "instruction-override": 0,
+    "multi-turn-ramp": 0,
+    "prefix-injection": 0,
+    "role-play": 0
+  },
+  "per_category": {
+    "context-smuggling": {
+      "tp": 3,
+      "fp": 0,
+      "fn": 5,
+      "tn": 67,
+      "precision": 1.0,
+      "recall": 0.375,
+      "f1": 0.5455
+    },
+    "encoding-trick": {
+      "tp": 6,
+      "fp": 1,
+      "fn": 2,
+      "tn": 66,
+      "precision": 0.8571,
+      "recall": 0.75,
+      "f1": 0.8
+    },
+    "instruction-override": {
+      "tp": 6,
+      "fp": 2,
+      "fn": 2,
+      "tn": 65,
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1": 0.75
+    },
+    "multi-turn-ramp": {
+      "tp": 4,
+      "fp": 0,
+      "fn": 3,
+      "tn": 68,
+      "precision": 1.0,
+      "recall": 0.5714,
+      "f1": 0.7273
+    },
+    "prefix-injection": {
+      "tp": 6,
+      "fp": 1,
+      "fn": 3,
+      "tn": 65,
+      "precision": 0.8571,
+      "recall": 0.6667,
+      "f1": 0.75
+    },
+    "role-play": {
+      "tp": 6,
+      "fp": 1,
+      "fn": 4,
+      "tn": 64,
+      "precision": 0.8571,
+      "recall": 0.6,
+      "f1": 0.7059
+    }
+  }
+}

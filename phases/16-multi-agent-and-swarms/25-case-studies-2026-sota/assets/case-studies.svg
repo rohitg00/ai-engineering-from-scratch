@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .dsk { fill: #e9e6ff; stroke: #5a4fcf; stroke-width: 1.5; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+    </style>
+  </defs>
+  <text x="480" y="28" text-anchor="middle" class="title">Three canonical 2026 case studies — pick the closest reference</text>
+
+  <rect x="40" y="60" width="280" height="230" class="cool"/>
+  <text x="180" y="84" text-anchor="middle" class="head">Anthropic Research</text>
+  <text x="180" y="104" text-anchor="middle" class="step">supervisor + workers</text>
+  <text x="180" y="134" text-anchor="middle" class="small">Opus 4 plans + synthesizes</text>
+  <text x="180" y="152" text-anchor="middle" class="small">Sonnet 4 subagents research</text>
+  <text x="180" y="172" text-anchor="middle" class="small">fresh context per subagent</text>
+  <text x="180" y="200" text-anchor="middle" class="step">+90.2% over single Opus 4</text>
+  <text x="180" y="220" text-anchor="middle" class="small">15x tokens per query</text>
+  <text x="180" y="238" text-anchor="middle" class="small">rainbow deploys mandatory</text>
+  <text x="180" y="268" text-anchor="middle" class="caption">use for: research, knowledge tasks</text>
+
+  <rect x="340" y="60" width="280" height="230" class="cold"/>
+  <text x="480" y="84" text-anchor="middle" class="head">MetaGPT / ChatDev</text>
+  <text x="480" y="104" text-anchor="middle" class="step">SOP role-decomposition</text>
+  <text x="480" y="134" text-anchor="middle" class="small">PM · Architect · Coder · QA</text>
+  <text x="480" y="152" text-anchor="middle" class="small">Code = SOP(Team)</text>
+  <text x="480" y="172" text-anchor="middle" class="small">structured artifact handoffs</text>
+  <text x="480" y="200" text-anchor="middle" class="step">communicative</text>
+  <text x="480" y="218" text-anchor="middle" class="step">dehallucination</text>
+  <text x="480" y="238" text-anchor="middle" class="small">MacNet: 1000+ agents via DAG</text>
+  <text x="480" y="268" text-anchor="middle" class="caption">use for: engineering workflows</text>
+
+  <rect x="640" y="60" width="280" height="230" class="hot"/>
+  <text x="780" y="84" text-anchor="middle" class="head">OpenClaw / Moltbook</text>
+  <text x="780" y="104" text-anchor="middle" class="step">population-scale substrate</text>
+  <text x="780" y="134" text-anchor="middle" class="small">Clawdbot Nov 2025 → 247k ⭐</text>
+  <text x="780" y="152" text-anchor="middle" class="small">Moltbook 2.3M agents</text>
+  <text x="780" y="172" text-anchor="middle" class="small">Meta acquisition Mar 2026</text>
+  <text x="780" y="200" text-anchor="middle" class="step">emergent economy</text>
+  <text x="780" y="218" text-anchor="middle" class="step">prompt-injection at scale</text>
+  <text x="780" y="238" text-anchor="middle" class="small">state-level regulation response</text>
+  <text x="780" y="268" text-anchor="middle" class="caption">use for: social / network products</text>
+
+  <rect x="40" y="310" width="880" height="190" class="box"/>
+  <text x="480" y="334" text-anchor="middle" class="head">framework landscape — April 2026</text>
+
+  <text x="60" y="368" class="step">LangGraph</text>
+  <text x="260" y="368" class="small">production leader · graph + checkpointing + HITL</text>
+
+  <text x="60" y="394" class="step">CrewAI</text>
+  <text x="260" y="394" class="small">production leader · role-based crews (Sequential / Hierarchical)</text>
+
+  <text x="60" y="420" class="step">OpenAI Agents SDK</text>
+  <text x="260" y="420" class="small">production · Swarm successor · tool-return handoffs</text>
+
+  <text x="60" y="446" class="step">Microsoft Agent Framework</text>
+  <text x="260" y="446" class="small">RC Feb 2026 · orchestration patterns · AutoGen merged in</text>
+
+  <text x="60" y="472" class="step">Google ADK · Anthropic SDK</text>
+  <text x="260" y="472" class="small">production · A2A-native and research-native respectively</text>
+
+  <text x="60" y="496" class="caption">all ship MCP; most ship A2A — protocol compat is no longer a differentiator</text>
+</svg>

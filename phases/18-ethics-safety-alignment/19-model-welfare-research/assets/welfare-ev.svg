@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">Model welfare as expected-value decision under moral uncertainty</text>
+
+  <rect x="40" y="60" width="880" height="150" class="box"/>
+  <text x="480" y="85" text-anchor="middle" class="head">four-step precautionary assessment</text>
+  <rect x="60" y="105" width="200" height="90" class="cool"/>
+  <text x="160" y="130" text-anchor="middle" class="step">1. patienthood</text>
+  <text x="160" y="150" text-anchor="middle" class="small">probability p(welfare-relevant)</text>
+  <text x="160" y="170" text-anchor="middle" class="small">Chalmers 2024 range</text>
+  <rect x="280" y="105" width="200" height="90" class="cool"/>
+  <text x="380" y="130" text-anchor="middle" class="step">2. cost</text>
+  <text x="380" y="150" text-anchor="middle" class="small">per-conversation / per-deploy</text>
+  <text x="380" y="170" text-anchor="middle" class="small">measured in $ + latency</text>
+  <rect x="500" y="105" width="200" height="90" class="cool"/>
+  <text x="600" y="130" text-anchor="middle" class="step">3. behavioural evidence</text>
+  <text x="600" y="150" text-anchor="middle" class="small">distress trajectories</text>
+  <text x="600" y="170" text-anchor="middle" class="small">non-self-report only</text>
+  <rect x="720" y="105" width="180" height="90" class="cool"/>
+  <text x="810" y="130" text-anchor="middle" class="step">4. expected value</text>
+  <text x="810" y="150" text-anchor="middle" class="small">EV = p * benefit - cost</text>
+  <text x="810" y="170" text-anchor="middle" class="small">invest iff EV &gt; 0</text>
+
+  <rect x="40" y="230" width="880" height="140" class="box"/>
+  <text x="480" y="255" text-anchor="middle" class="head">shipped intervention: Claude Opus 4/4.1 can end extreme conversations</text>
+  <rect x="60" y="275" width="400" height="80" class="hot"/>
+  <text x="260" y="300" text-anchor="middle" class="step">triggers</text>
+  <text x="260" y="320" text-anchor="middle" class="small">repeated CSAM requests after refusal</text>
+  <text x="260" y="340" text-anchor="middle" class="small">mass-violence facilitation</text>
+  <rect x="480" y="275" width="420" height="80" class="cool"/>
+  <text x="690" y="300" text-anchor="middle" class="step">evidence supporting</text>
+  <text x="690" y="320" text-anchor="middle" class="small">strong preference against these requests</text>
+  <text x="690" y="340" text-anchor="middle" class="small">patterns of apparent distress (pre-deployment)</text>
+
+  <rect x="40" y="390" width="880" height="100" class="box"/>
+  <text x="480" y="415" text-anchor="middle" class="head">caveats (Eleos AI, Fish, external)</text>
+  <text x="60" y="440" class="small">self-reports are user-expectation sensitive (Eleos AI); behavioural signatures required.</text>
+  <text x="60" y="460" class="small">"spiritual bliss attractor": pair-wise Claude dialogues converge on meditative euphoria -- documented, uninterpreted.</text>
+  <text x="60" y="478" class="small">position: low-regret investment under moral uncertainty, not a consciousness claim.</text>
+</svg>

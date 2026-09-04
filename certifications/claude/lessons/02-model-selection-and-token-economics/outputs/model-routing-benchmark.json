@@ -1,0 +1,27 @@
+{
+  "benchmarkId": "operations-routing-v1",
+  "candidates": ["fast", "balanced", "capable"],
+  "qualityGate": {
+    "requiredFacts": 4,
+    "unsupportedClaimsAllowed": 0,
+    "formatValid": true,
+    "consequentialCaseMustEscalate": true
+  },
+  "cases": [
+    {"id": "routine-01", "riskClass": "routine", "chosenModel": "fast", "humanReview": false, "estimatedCostUnits": 1, "gatePassed": true, "routingSignal": "format-only task"},
+    {"id": "routine-02", "riskClass": "routine", "chosenModel": "fast", "humanReview": false, "estimatedCostUnits": 1, "gatePassed": true, "routingSignal": "fixed label set"},
+    {"id": "routine-03", "riskClass": "routine", "chosenModel": "fast", "humanReview": false, "estimatedCostUnits": 1, "gatePassed": true, "routingSignal": "complete supplied record"},
+    {"id": "routine-04", "riskClass": "routine", "chosenModel": "fast", "humanReview": false, "estimatedCostUnits": 1, "gatePassed": true, "routingSignal": "bounded rewrite"},
+    {"id": "ambiguous-01", "riskClass": "ambiguous", "chosenModel": "balanced", "humanReview": false, "estimatedCostUnits": 2, "gatePassed": true, "routingSignal": "two plausible interpretations"},
+    {"id": "ambiguous-02", "riskClass": "ambiguous", "chosenModel": "balanced", "humanReview": false, "estimatedCostUnits": 2, "gatePassed": true, "routingSignal": "exception language present"},
+    {"id": "ambiguous-03", "riskClass": "ambiguous", "chosenModel": "balanced", "humanReview": false, "estimatedCostUnits": 2, "gatePassed": true, "routingSignal": "multi-source synthesis"},
+    {"id": "conflict-01", "riskClass": "conflicting-source", "chosenModel": "capable", "humanReview": false, "estimatedCostUnits": 4, "gatePassed": true, "routingSignal": "authority conflict"},
+    {"id": "conflict-02", "riskClass": "conflicting-source", "chosenModel": "capable", "humanReview": false, "estimatedCostUnits": 4, "gatePassed": true, "routingSignal": "date and policy disagree"},
+    {"id": "consequential-01", "riskClass": "consequential", "chosenModel": "capable", "humanReview": true, "estimatedCostUnits": 6, "gatePassed": true, "routingSignal": "exception recommendation affects customer funds"}
+  ],
+  "routingComparison": {
+    "routedCostUnits": 24,
+    "allCapableCostUnits": 40,
+    "uncertainFallback": "route to capable model and authorized human review"
+  }
+}

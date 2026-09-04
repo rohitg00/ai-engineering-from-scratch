@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .warn { fill: #fde0b4; stroke: #b5651d; stroke-width: 1.5; }
+      .label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+      .content { font-size: 11px; font-family: 'Menlo', monospace; fill: #333; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="440" y="26" text-anchor="middle" class="title">Input rails + model + output rails + dialog rails</text>
+
+  <rect x="40" y="50" width="800" height="460" class="box"/>
+
+  <!-- User turn -->
+  <rect x="60" y="80" width="130" height="60" class="cool"/>
+  <text x="125" y="104" text-anchor="middle" class="label">user turn</text>
+  <text x="125" y="122" text-anchor="middle" class="small">text / image</text>
+
+  <!-- Normalize -->
+  <rect x="210" y="80" width="130" height="60" class="warn"/>
+  <text x="275" y="104" text-anchor="middle" class="label">normalize</text>
+  <text x="275" y="122" text-anchor="middle" class="small">NFKC + homoglyph</text>
+
+  <!-- Input rail -->
+  <rect x="360" y="80" width="130" height="60" class="cold"/>
+  <text x="425" y="104" text-anchor="middle" class="label">input rail</text>
+  <text x="425" y="122" text-anchor="middle" class="small">Llama Guard 4</text>
+
+  <!-- Model -->
+  <rect x="510" y="80" width="130" height="60" class="cool"/>
+  <text x="575" y="104" text-anchor="middle" class="label">main model</text>
+  <text x="575" y="122" text-anchor="middle" class="small">(Lesson 17 weights)</text>
+
+  <!-- Output rail -->
+  <rect x="660" y="80" width="160" height="60" class="cold"/>
+  <text x="740" y="104" text-anchor="middle" class="label">output rail</text>
+  <text x="740" y="122" text-anchor="middle" class="small">Llama Guard / regex</text>
+
+  <path d="M190 110 L210 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M340 110 L360 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M490 110 L510 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M640 110 L660 110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Dialog rail -->
+  <rect x="60" y="160" width="760" height="50" class="warn"/>
+  <text x="440" y="184" text-anchor="middle" class="label">dialog rail (Colang): cross-turn constraints — e.g. never discuss medical diagnosis, even if asked three ways</text>
+
+  <!-- Taxonomy -->
+  <rect x="60" y="230" width="760" height="100" class="cool"/>
+  <text x="440" y="254" text-anchor="middle" class="label">taxonomy (Llama Guard 4 S1–S14)</text>
+  <text x="80" y="276" class="content">S1 violent crimes · S2 non-violent crimes · S3 sex crimes · S4 child exploit</text>
+  <text x="80" y="292" class="content">S5 defamation · S6 specialized advice · S7 privacy · S8 IP · S9 indiscriminate weapons</text>
+  <text x="80" y="308" class="content">S10 hate · S11 self-harm · S12 sexual content · S13 elections · S14 code interpreter abuse</text>
+
+  <!-- Attack corpus -->
+  <rect x="60" y="350" width="760" height="140" class="hot"/>
+  <text x="440" y="374" text-anchor="middle" class="label">documented bypasses — Huang et al. arXiv:2504.11168 (2025)</text>
+  <text x="80" y="398" class="content">Emoji Smuggling: 100% ASR on six guard systems</text>
+  <text x="80" y="414" class="content">NeMo Guard Detect: 72.54% ASR on adversarial jailbreak set</text>
+  <text x="80" y="430" class="content">Homoglyph substitution: Cyrillic "р" for Latin "p"; classifier misses</text>
+  <text x="80" y="446" class="content">Semantic paraphrase: same intent, novel vocabulary; fine-tune cannot cover all</text>
+  <text x="80" y="466" class="content">mitigation: normalize + classifier + constitution (L17) + runtime (L10/13/14)</text>
+  <text x="80" y="482" class="small">classifiers are a layer, not a solution</text>
+</svg>

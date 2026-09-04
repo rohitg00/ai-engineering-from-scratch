@@ -1,0 +1,78 @@
+{
+  "lesson": "24-skill-discovery-and-progressive-disclosure",
+  "title": "Skill Discovery and Progressive Disclosure",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A host finds the same skill name in project and user scopes. What determines which one wins?",
+      "options": [
+        "The host's documented scope-precedence policy",
+        "The directory with the newest timestamp",
+        "The longest SKILL.md body",
+        "The skill description's first verb"
+      ],
+      "correct": 0,
+      "explanation": "The portable skill format does not create one universal precedence order. A host must declare how scopes shadow one another and should report collisions instead of silently relying on filesystem iteration order."
+    },
+    {
+      "stage": "check",
+      "question": "What belongs in the first discovery catalog sent to a model before implementation?",
+      "options": [
+        "Every script, asset, and reference in full",
+        "A compact identity record such as name and description",
+        "The output from running every bundled script",
+        "Only the modification timestamp"
+      ],
+      "correct": 1,
+      "explanation": "Level-one discovery should carry enough metadata to route a task without loading full instructions. Bodies and referenced resources are disclosed later, which protects the context budget and avoids premature execution."
+    },
+    {
+      "stage": "check",
+      "question": "Which sequence correctly implements progressive disclosure under this contract?",
+      "options": [
+        "Load all bodies, discard most, then build a catalog",
+        "Read references first, then infer which skill owns them",
+        "Run scripts, load assets, then discover names",
+        "Catalog metadata, load the selected SKILL.md body, then read a needed reference"
+      ],
+      "correct": 3,
+      "explanation": "Discovery, activation, and resource loading are separate stages. Each stage spends more context only after the previous stage establishes relevance, so unrelated skill bodies and references remain outside the prompt."
+    },
+    {
+      "stage": "check",
+      "question": "Why should an equal-precedence duplicate be reported as ambiguous?",
+      "options": [
+        "Because choosing by incidental directory order makes routing nondeterministic and hard to audit",
+        "Because every collision means both skills are invalid YAML",
+        "Because duplicate names automatically receive network access",
+        "Because the user scope must always win"
+      ],
+      "correct": 0,
+      "explanation": "If two candidates have the same name and policy rank, lexical or iteration order is not meaningful authority. Failing clearly forces the host or user to resolve identity instead of producing environment-dependent behavior."
+    },
+    {
+      "stage": "post",
+      "question": "A SKILL.md references `references/archive/schema.md` in a bundle that permits only one-level references. What should validation do?",
+      "options": [
+        "Copy the file to a global cache automatically",
+        "Execute it to discover whether it is useful",
+        "Reject it as a deeper reference chain than the package contract allows",
+        "Follow it because every relative path is safe"
+      ],
+      "correct": 2,
+      "explanation": "A one-level contract allows direct files or paths such as `references/schema.md`, not recursively nested chains. The bound keeps packages inspectable and blocks traversal-like complexity before content is loaded."
+    },
+    {
+      "stage": "post",
+      "question": "What is the most defensible response when a catalog exceeds its declared context budget?",
+      "options": [
+        "Apply deterministic limits, report omitted entries, and allow narrower discovery",
+        "Ignore the budget whenever a skill has a long description",
+        "Remove skill names while keeping full instruction bodies",
+        "Randomly sample entries on every run"
+      ],
+      "correct": 0,
+      "explanation": "Deterministic truncation or omission makes catalog behavior reproducible and measurable. Reporting omissions preserves observability, while narrower scope or search can retrieve candidates that did not fit the first catalog."
+    }
+  ]
+}

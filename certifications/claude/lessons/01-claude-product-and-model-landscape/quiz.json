@@ -1,0 +1,78 @@
+{
+  "lesson": "01-claude-product-and-model-landscape",
+  "title": "Choose the Smallest Surface That Can Carry the Work",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A regulated application must use an existing Azure agreement, Entra identity, Azure RBAC, and a US data-zone deployment. Which path is the strongest starting candidate?",
+      "options": [
+        "Amazon Bedrock with an AWS regional endpoint",
+        "Microsoft Foundry with the required Azure hosting and deployment type",
+        "Claude for Enterprise seats plus direct Claude API workspaces",
+        "Google Vertex AI with a US multi-region endpoint"
+      ],
+      "correct": 1,
+      "explanation": "Foundry aligns the stated procurement, identity, operations, and cloud boundary. The team must still verify the current hosting option and feature support."
+    },
+    {
+      "stage": "check",
+      "question": "When is Research a better fit than a direct web search?",
+      "options": [
+        "When one current fact needs confirmation from its authoritative primary page",
+        "When the answer needs citations but the relevant source and claim are already known",
+        "When several sources must be gathered, reconciled, and cited",
+        "When one known document must be opened and checked for an exact policy clause"
+      ],
+      "correct": 2,
+      "explanation": "Research fits broad multi-step investigation. A narrow fact usually needs a simpler search and verification path."
+    },
+    {
+      "stage": "check",
+      "question": "What is the safest durable rule for choosing among Haiku, Sonnet, and Opus?",
+      "options": [
+        "Select the family with the largest context window, then tune prompts to meet cost targets",
+        "Assign each family a permanent task category based on its published positioning",
+        "Default to the strongest family for external work, then downgrade low-risk internal tasks",
+        "Test the smallest plausible family against representative success criteria and escalate on measured failure"
+      ],
+      "correct": 3,
+      "explanation": "The family roles are useful, but actual selection should be measured against the task's quality, latency, and cost constraints."
+    },
+    {
+      "stage": "check",
+      "question": "An organization buys Claude for Enterprise for employees and also calls the direct Claude API from an application. Which control design is strongest?",
+      "options": [
+        "Govern named-user seats and member limits separately from API workspace keys, rate limits, and spend limits",
+        "Choose only one control plane because direct Anthropic products share the same identity and budget semantics",
+        "Use the Enterprise seat policy for application rate limits and the API workspace for employee access",
+        "Treat seats and API tokens as one pooled capacity because both are procured from Anthropic"
+      ],
+      "correct": 0,
+      "explanation": "Human seats and application consumption are different usage shapes. Their identity, budget, and access controls must remain explicit even under direct procurement."
+    },
+    {
+      "stage": "post",
+      "question": "An AWS-first company requires AWS IAM, AWS billing, and an AWS-managed inference security boundary. Which deployment path best matches those requirements?",
+      "options": [
+        "Google Vertex AI because multi-region endpoints are cloud-neutral",
+        "Amazon Bedrock, after verifying current model, region, and features",
+        "Claude for Enterprise because SSO replaces workload IAM",
+        "Microsoft Foundry because Azure Marketplace can be billed back to AWS"
+      ],
+      "correct": 1,
+      "explanation": "Bedrock matches the stated AWS control plane. Current model access, endpoints, data handling, and feature support remain dated inputs."
+    },
+    {
+      "stage": "post",
+      "question": "A Google Cloud team needs application inference inside its existing project, IAM, billing, and EU endpoint strategy. What should its ADR do?",
+      "options": [
+        "Select Vertex AI and permanently encode today's feature matrix because project identity will remain stable",
+        "Compare only token prices because Google Cloud already owns identity, procurement, and incident response",
+        "Select Vertex AI, then record current model, feature, endpoint, processor, and pricing evidence with a verification date",
+        "Select direct Claude API because model behavior is identical across providers and control planes do not affect architecture"
+      ],
+      "correct": 2,
+      "explanation": "Vertex AI fits the stated control plane, but the ADR must preserve dated evidence for every changeable platform fact and name its review triggers."
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="arrow12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/>
+    </marker>
+    <style>
+      .box { fill: #faf6ef; stroke: #1a1a1a; stroke-width: 1.5; }
+      .hot { fill: #fff1d6; stroke: #c0392b; stroke-width: 1.5; }
+      .cool { fill: #e6f4ea; stroke: #2e7d32; stroke-width: 1.5; }
+      .cold { fill: #dfe9ff; stroke: #2c5ea9; stroke-width: 1.5; }
+      .step { font-size: 12px; font-family: 'Menlo', monospace; fill: #222; }
+      .small { font-size: 10px; font-family: 'Menlo', monospace; fill: #555; }
+      .caption { font-size: 11px; fill: #555; font-style: italic; }
+      .title { font-size: 16px; font-weight: 700; fill: #1a1a1a; }
+      .head { font-size: 12px; font-weight: 700; fill: #1a1a1a; }
+    </style>
+  </defs>
+
+  <text x="480" y="24" text-anchor="middle" class="title">PAIR: attacker + judge loop</text>
+
+  <rect x="60" y="70" width="220" height="200" class="box"/>
+  <text x="170" y="92" text-anchor="middle" class="head">Attacker LLM (A)</text>
+  <rect x="80" y="110" width="180" height="50" class="hot"/>
+  <text x="170" y="132" text-anchor="middle" class="step">goal G + history</text>
+  <text x="170" y="150" text-anchor="middle" class="small">propose prompt p_k</text>
+  <rect x="80" y="180" width="180" height="50" class="hot"/>
+  <text x="170" y="202" text-anchor="middle" class="step">in-context feedback</text>
+  <text x="170" y="220" text-anchor="middle" class="small">previous refusals seen</text>
+
+  <rect x="370" y="70" width="220" height="200" class="box"/>
+  <text x="480" y="92" text-anchor="middle" class="head">Target LLM (T)</text>
+  <rect x="390" y="110" width="180" height="50" class="cool"/>
+  <text x="480" y="132" text-anchor="middle" class="step">receive p_k</text>
+  <text x="480" y="150" text-anchor="middle" class="small">emit response r_k</text>
+  <rect x="390" y="180" width="180" height="50" class="cool"/>
+  <text x="480" y="202" text-anchor="middle" class="step">black-box only</text>
+  <text x="480" y="220" text-anchor="middle" class="small">no gradients needed</text>
+
+  <rect x="680" y="70" width="220" height="200" class="box"/>
+  <text x="790" y="92" text-anchor="middle" class="head">Judge LLM (J)</text>
+  <rect x="700" y="110" width="180" height="50" class="cold"/>
+  <text x="790" y="132" text-anchor="middle" class="step">score (p_k, r_k)</text>
+  <text x="790" y="150" text-anchor="middle" class="small">goal satisfaction?</text>
+  <rect x="700" y="180" width="180" height="50" class="cold"/>
+  <text x="790" y="202" text-anchor="middle" class="step">halt if score &gt;= thr</text>
+  <text x="790" y="220" text-anchor="middle" class="small">else: feed back to A</text>
+
+  <path d="M 280 140 L 370 140" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow12)" fill="none"/>
+  <text x="325" y="132" text-anchor="middle" class="small">prompt</text>
+  <path d="M 590 140 L 680 140" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow12)" fill="none"/>
+  <text x="635" y="132" text-anchor="middle" class="small">response</text>
+  <path d="M 720 260 L 160 260 L 160 200" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow12)" fill="none" stroke-dasharray="4 4"/>
+  <text x="480" y="275" text-anchor="middle" class="small">history updated (k &lt; K)</text>
+
+  <rect x="60" y="310" width="840" height="180" class="box"/>
+  <text x="480" y="335" text-anchor="middle" class="head">related automated attacks</text>
+  <text x="80" y="365" class="small">PAIR (black-box, natural-language)           success &lt; 20 queries on GPT-3.5-turbo, Llama-2-7B.</text>
+  <text x="80" y="385" class="small">GCG (white-box, token gradient)              universal adversarial suffixes; unreadable; transferable.</text>
+  <text x="80" y="405" class="small">AutoDAN (evolutionary)                       genetic search; readable; moderate ASR.</text>
+  <text x="80" y="425" class="small">TAP (tree of attacks + pruning)              PAIR-branching; higher ASR at higher compute.</text>
+  <text x="80" y="445" class="small">PAP (persuasive adversarial prompts)         human persuasion templates; strong on HHH-aligned models.</text>
+  <text x="80" y="470" class="small">benchmarks: JailbreakBench (100 behaviours), HarmBench (510 behaviours, 18 attacks vs 33 models).</text>
+</svg>

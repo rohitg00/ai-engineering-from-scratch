@@ -1,0 +1,66 @@
+{
+  "lesson": "15-prompt-caching",
+  "title": "Prompt Caching and Context Caching",
+  "questions": [
+    {
+      "stage": "post",
+      "question": "What discount does Anthropic apply to cache reads versus the base input rate?",
+      "options": [
+        "25% off",
+        "90% off",
+        "75% off",
+        "50% off"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "Why must dynamic timestamps go below the cache breakpoint, not above it?",
+      "options": [
+        "Anthropic explicitly rejects timestamps in cached blocks",
+        "Timestamps confuse the tokenizer",
+        "They cost more tokens than static text",
+        "Caches only hit when the prefix is byte-identical; a changing timestamp breaks the match for everything after it"
+      ],
+      "correct": 3,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "OpenAI's prompt caching is configured how?",
+      "options": [
+        "A system-level flag you toggle per project",
+        "Automatic prefix matching with no configuration",
+        "A CachedContent API you create and reference",
+        "Explicit cache_control markers"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "For Anthropic, what write premium does the 1-hour extended TTL cost vs the 5-minute default?",
+      "options": [
+        "4x the write premium",
+        "2x the write premium (50% over baseline)",
+        "No write premium",
+        "Same"
+      ],
+      "correct": 1,
+      "explanation": ""
+    },
+    {
+      "stage": "post",
+      "question": "How many reuses are needed to break even on Anthropic's 25% write premium?",
+      "options": [
+        "5",
+        "10",
+        "1",
+        "2"
+      ],
+      "correct": 3,
+      "explanation": ""
+    }
+  ]
+}

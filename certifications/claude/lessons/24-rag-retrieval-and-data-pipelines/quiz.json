@@ -1,0 +1,78 @@
+{
+  "lesson": "24-rag-retrieval-and-data-pipelines",
+  "title": "RAG, Retrieval, and Data Pipelines",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A RAG system becomes confidently wrong immediately after a document refresh while the model and latency are unchanged. What should be investigated first?",
+      "options": [
+        "Ingestion, index versions, filters, and retrieved chunks",
+        "An output-formatting rule that may suppress qualifying language from otherwise grounded answers",
+        "A temperature setting that now makes generation less deterministic for the refreshed documents",
+        "A model-weight regression near the refresh"
+      ],
+      "correct": 0,
+      "explanation": "The timing points to the data and retrieval boundary. Inspect active source versions, parsing, chunking, filters, and candidate ranking before changing the model."
+    },
+    {
+      "stage": "check",
+      "question": "Which retrieval method is especially useful for exact error codes and product identifiers?",
+      "options": [
+        "Dense semantic retrieval",
+        "Sparse term-based retrieval",
+        "Generative query expansion",
+        "Cross-encoder reranking"
+      ],
+      "correct": 1,
+      "explanation": "Sparse retrieval preserves exact lexical matches and is strong for codes, names, and policy phrases. Dense retrieval can complement it for paraphrases."
+    },
+    {
+      "stage": "check",
+      "question": "Why must access-control filtering happen before retrieved text reaches Claude?",
+      "options": [
+        "Post-generation filtering enforces the same boundary",
+        "Filtering before context preserves the retriever's original relevance order across users with different permissions",
+        "Prompt instructions are not an authorization boundary",
+        "Access-control metadata is unavailable to Claude once a retriever serializes document chunks into prompt text"
+      ],
+      "correct": 2,
+      "explanation": "Forbidden content should never enter model context. A request to ignore unauthorized text does not enforce confidentiality or least privilege."
+    },
+    {
+      "stage": "check",
+      "question": "What does recall at K measure in a retrieval evaluation?",
+      "options": [
+        "What fraction of the top K candidates is labeled relevant to the evaluation query",
+        "What fraction of cited source URLs remain reachable when the evaluation is replayed",
+        "Whether the answer cites all K candidates",
+        "Whether required evidence appears among the top K candidates"
+      ],
+      "correct": 3,
+      "explanation": "Recall at K measures candidate coverage for labeled relevant evidence. It isolates retrieval quality before generation is evaluated."
+    },
+    {
+      "stage": "post",
+      "question": "Two active policy chunks conflict. What is the most reliable system behavior?",
+      "options": [
+        "Apply an explicit precedence rule if one exists; otherwise report the conflict and escalate",
+        "Prefer the chunk from the most recently refreshed index because freshness establishes policy authority",
+        "Ask the model to reconcile both chunks into one conservative rule and flag its answer as low confidence",
+        "Use the chunk with the highest semantic score, then cite the lower-ranked chunk as supplementary context"
+      ],
+      "correct": 0,
+      "explanation": "Similarity does not establish authority. The system needs a trusted precedence rule or an explicit conflict result that routes to a qualified owner."
+    },
+    {
+      "stage": "post",
+      "question": "Which refresh design best prevents old and new chunks from mixing in production?",
+      "options": [
+        "Clear the model and retrieval caches before updating documents in the currently active index",
+        "Build and validate a versioned index, then switch the active pointer atomically",
+        "Upsert every new chunk into the active index, then delete stale chunks after retrieval smoke tests pass",
+        "Increase overlap between refreshed chunks so both old and new policy wording remain retrievable during rollout"
+      ],
+      "correct": 1,
+      "explanation": "A versioned build plus validation and atomic activation keeps the serving index consistent and retains a rollback path if retrieval quality regresses."
+    }
+  ]
+}
