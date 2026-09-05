@@ -112,12 +112,16 @@ def memory_calculator(
         )
         activation_memory = activation_per_layer * num_layers
     else:
+        # Whole-model proxy when the architecture is unknown; it is a global
+        # estimate, so it is split across GPUs below like the other terms.
         activation_memory = params * precision_bytes * 0.5
 
     if sharding == "fsdp" or sharding == "zero3":
         weight_memory /= num_gpus
         optimizer_memory /= num_gpus
         gradient_memory /= num_gpus
+        if not (hidden_dim and num_layers):
+            activation_memory /= num_gpus
     elif sharding == "zero2":
         optimizer_memory /= num_gpus
         gradient_memory /= num_gpus
@@ -222,7 +226,9 @@ def training_cost_estimator(
         num_gpus = max(1, int(np.ceil(mem["per_gpu_total_gb"] / spec["memory_gb"])) * 2)
 
     verify = memory_calculator(params_billions, sharding="fsdp", num_gpus=num_gpus)
-    while verify["per_gpu_total_gb"] > spec["memory_gb"]:
+    # Cap the doubling: activations do not shard, so some configs never fit
+    # and the loop would otherwise run until num_gpus overflows a float.
+    while verify["per_gpu_total_gb"] > spec["memory_gb"] and num_gpus < 2**16:
         num_gpus *= 2
         verify = memory_calculator(params_billions, sharding="fsdp", num_gpus=num_gpus)
 

@@ -129,8 +129,9 @@ def demo_memory_tracking():
     print("\n--- 3. Memory Tracking (tracemalloc) ---")
     tracemalloc.start()
 
-    data = [torch.randn(100, 100) for _ in range(100)]
-    more_data = torch.randn(1000, 1000)
+    # Plain lists, not tensors: this demo also runs when torch is missing.
+    data = [[0.0] * 10_000 for _ in range(100)]
+    more_data = [0.0] * 1_000_000
 
     snapshot = tracemalloc.take_snapshot()
     top_stats = snapshot.statistics("lineno")

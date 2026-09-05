@@ -144,8 +144,10 @@ class GenerateTests(unittest.TestCase):
         model = build_model(cfg)
         out = generate(model, tok, "Hi.", max_len=cfg.max_len, max_new_tokens=4)
         self.assertIsInstance(out, str)
-        # At most max_new_tokens bytes (the function may stop earlier).
-        self.assertLessEqual(len(out.encode("utf-8")), 4)
+        # At most max_new_tokens characters (the function may stop earlier).
+        # Bytes are not a valid bound: decode_response uses errors="replace",
+        # so an invalid byte from an untrained model becomes a 3-byte U+FFFD.
+        self.assertLessEqual(len(out), 4)
 
     def test_temperature_zero_is_deterministic(self) -> None:
         cfg = SFTConfig(hidden=32, heads=2, depth=1, max_len=24, seed=1)

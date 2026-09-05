@@ -74,7 +74,9 @@ class TestViTStack(unittest.TestCase):
         enc = VisionEncoder(cfg)
         img = torch.randn(1, 3, cfg.image_size, cfg.image_size)
         _, cls = enc(img)
-        cls.sum().backward()
+        # Not cls.sum(): the final LayerNorm (weight=1 at init) makes the sum of
+        # its outputs constant, so that gradient is identically zero.
+        cls.pow(2).sum().backward()
         grad = enc.front.patch.proj.weight.grad
         self.assertIsNotNone(grad)
         self.assertGreater(grad.norm().item(), 0.0)

@@ -8,8 +8,8 @@ Uses stdlib http.server to serve a single /mcp endpoint supporting:
 Enforces Origin allowlist and assigns Mcp-Session-Id on first POST.
 Reuses the Lesson 07 dispatch shape for tool behavior.
 
-Run: python code/main.py               # starts server on :8017
-      python code/main.py --probe       # run self-probe over TCP loopback
+Run: python code/main.py               # run self-probe over TCP loopback, then exit
+      python code/main.py --serve       # keep server up on :8017 (Ctrl-C to stop)
 """
 
 from __future__ import annotations
@@ -235,7 +235,7 @@ def probe() -> None:
 
 
 def main() -> None:
-    if len(sys.argv) > 1 and sys.argv[1] == "--probe":
+    if not (len(sys.argv) > 1 and sys.argv[1] == "--serve"):
         probe()
         return
     srv = serve("127.0.0.1", 8017)

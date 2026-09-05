@@ -110,7 +110,7 @@ This lesson produces `outputs/skill-mcp-transport-migrator.md`. Given an HTTP+SS
 
 ## Exercises
 
-1. Run `code/main.py`. POST an `initialize` from `curl` and observe the `Mcp-Session-Id` response header. POST a second request echoing the header and verify session continuity.
+1. Run `code/main.py --serve`. POST an `initialize` from `curl` and observe the `Mcp-Session-Id` response header. POST a second request echoing the header and verify session continuity.
 
 2. Add a GET handler that opens an SSE stream. Send one `notifications/progress` event every five seconds. Reconnect by re-GETing with the same session id and confirm the server accepts it.
 
