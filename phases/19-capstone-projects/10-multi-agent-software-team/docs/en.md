@@ -87,7 +87,7 @@ Coder A          Coder B          Coder C          Coder D          (4 parallel)
 ## Use It
 
 ```
-$ team run --issue https://github.com/acme/widget/issues/842
+$ team run --issue https://github.example.com/acme/widget/issues/842
 [architect] plan: 4 subtasks (parser, cache, api, migration)
 [board]     dispatched to 4 coders in parallel worktrees
 [coder-A]   subtask parser  -> 42 lines, tests pass locally
@@ -146,6 +146,6 @@ $ team run --issue https://github.com/acme/widget/issues/842
 - [AutoGen v0.4](https://github.com/microsoft/autogen) — Microsoft's typed actor framework
 - [Cognition AI (Devin)](https://cognition.ai) — reference product
 - [Factory Droids](https://www.factory.ai) — alternate reference product
-- [Google A2A protocol](https://developers.google.com/agent-to-agent) — inter-agent messaging spec
+- [A2A protocol](https://a2a-protocol.org/latest/) — inter-agent messaging spec
 - [git worktree documentation](https://git-scm.com/docs/git-worktree) — the isolation substrate
 - [SWE-bench Pro](https://www.swebench.com) — the evaluation target

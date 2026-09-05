@@ -61,6 +61,7 @@ DEFAULT_SKIP_DOMAINS = (
     "instagram.com",
     "medium.com",
 )
+PLACEHOLDER_SUFFIXES = ("example.com", "example.net", "example.org", ".example", ".invalid", ".test", "localhost")
 EXCLUDE_DIRS = {".git", "node_modules", "outputs"}
 
 MD_LINK_RE = re.compile(r"\[[^\]]*\]\((<?)(https?://[^\s)>]+)>?\)")
@@ -224,6 +225,10 @@ def should_skip(url: str, skip_domains: set[str]) -> bool:
     domain = domain_of(url)
     if not domain:
         return False
+    # Placeholder hosts used in example commands: RFC 2606 reserved names and
+    # single-label hostnames (e.g. https://my-otel-collector/) never resolve.
+    if "." not in domain or domain.endswith(PLACEHOLDER_SUFFIXES):
+        return True
     for sd in skip_domains:
         if domain == sd or domain.endswith("." + sd):
             return True

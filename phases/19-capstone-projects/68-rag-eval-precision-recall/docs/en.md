@@ -178,7 +178,7 @@ Lesson 69 wires the entire pipeline (chunker, retriever, reranker, generator) an
 - Buckley, Voorhees, "Evaluating Evaluation Measure Stability", SIGIR 2000 - the canonical paper on ranking metrics
 - Jarvelin, Kekalainen, "Cumulated Gain-based Evaluation of IR Techniques" - the nDCG paper
 - [Ragas: Automated Evaluation of RAG Pipelines](https://docs.ragas.io)
-- [Anthropic, Evaluating RAG](https://www.anthropic.com/news/evaluating-rag)
+- [Anthropic, Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval)
 - Phase 11 lesson 10 - evaluation framework foundations
 - Phase 19 lessons 64-67 - components evaluated here
 - Phase 19 lesson 69 - the end-to-end pipeline this eval grades
