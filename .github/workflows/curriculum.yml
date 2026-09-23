@@ -118,6 +118,8 @@ jobs:
         run: node --test site/test_learning_paths.js
       - name: sponsor placement preserves approved artwork and ownership
         run: node --test site/test_sponsors.js
+      - name: site chrome translations cover every CI language and match the pages
+        run: node --test site/test_ui_i18n.js
       - name: quiz answer positions are de-biased
         run: python3 scripts/debias_quizzes.py --check
       - name: certification answer positions are de-biased

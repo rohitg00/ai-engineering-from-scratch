@@ -144,6 +144,7 @@
       updateButton();
       close(true);
       if (typeof window.AIFS_onLangChange === 'function') window.AIFS_onLangChange(lang);
+      try { document.dispatchEvent(new CustomEvent('aifs:lang', { detail: { lang: lang } })); } catch (_) {}
     }
 
     btn.addEventListener('click', function (e) { e.stopPropagation(); toggle(); });
