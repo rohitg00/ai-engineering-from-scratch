@@ -146,7 +146,8 @@ class Lazy:
 
 def load_published(path):
     """Return (strings, pinned) from a previously published ui.json. A flat
-    object is accepted as strings with nothing pinned."""
+    object carries no pin provenance, so every value in it counts as pinned and
+    is refreshed once rather than reused blindly."""
     if not path.is_file():
         return {}, set()
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -154,7 +155,7 @@ def load_published(path):
         return {}, set()
     if isinstance(data.get("strings"), dict):
         return data["strings"], set(data.get("pinned") or [])
-    return data, set()
+    return data, set(data)
 
 
 def build_language(keys, overrides, existing, translate_fn, pinned_before=frozenset()):

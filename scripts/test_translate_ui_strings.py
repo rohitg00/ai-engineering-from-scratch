@@ -59,9 +59,19 @@ class BuildLanguageTest(unittest.TestCase):
             path = Path(tmp) / "ui.json"
             self.assertEqual(ui.load_published(path), ({}, set()))
             path.write_text(json.dumps({"A": "a"}), encoding="utf-8")
-            self.assertEqual(ui.load_published(path), ({"A": "a"}, set()))
+            self.assertEqual(ui.load_published(path), ({"A": "a"}, {"A"}))
             path.write_text(json.dumps({"strings": {"A": "a"}, "pinned": ["A"]}), encoding="utf-8")
             self.assertEqual(ui.load_published(path), ({"A": "a"}, {"A"}))
+
+    def test_flat_file_values_are_refreshed_once_on_migration(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "ui-strings.json"
+            source.write_text(json.dumps({"keys": ["Build"], "overrides": {}}), encoding="utf-8")
+            out = Path(tmp) / "es" / "ui.json"
+            out.parent.mkdir()
+            out.write_text(json.dumps({"Build": "old pin"}), encoding="utf-8")
+            ui.main(["--lang", "es", "--provider", "echo", "--out", tmp, "--source", str(source)])
+            self.assertEqual(json.loads(out.read_text(encoding="utf-8")), {"strings": {"Build": "Build"}, "pinned": []})
 
     def test_dropped_keys_disappear_from_output(self):
         strings, _ = ui.build_language(["A"], {}, {"A": "x", "Gone": "y"}, lambda s: s)
