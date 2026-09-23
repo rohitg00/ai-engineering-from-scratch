@@ -2,17 +2,14 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const vm = require('node:vm');
 
 const SITE = __dirname;
-const sandbox = { window: {} };
-vm.runInNewContext(fs.readFileSync(path.join(SITE, 'ui-strings.js'), 'utf8'), sandbox);
-const STRINGS = sandbox.window.AIFS_UI_STRINGS;
+const SOURCE = JSON.parse(fs.readFileSync(path.join(SITE, 'ui-strings.json'), 'utf8'));
+const KEYS = SOURCE.keys;
+const OVERRIDES = SOURCE.overrides || {};
 const i18n = require('./ui-i18n.js');
 const registry = JSON.parse(fs.readFileSync(path.join(SITE, '..', 'languages.json'), 'utf8')).languages;
 const CI_LANGS = registry.filter((lang) => lang.ci && !lang.source).map((lang) => lang.code);
-const LANGS = Object.keys(STRINGS);
-const KEYS = Object.keys(STRINGS[LANGS[0]]);
 
 function decodeEntities(text) {
   return text
@@ -26,34 +23,39 @@ function decodeEntities(text) {
 }
 
 function siteSource() {
-  const skip = /^(ui-strings\.js|ui-i18n\.js|test_.*\.js|data\.js|langs\.js|certification-data\.js|figure.*\.js|figures-.*\.js|lesson-figures\.js|build\.js)$/;
+  const skip = /^(ui-i18n\.js|test_.*\.js|data\.js|langs\.js|certification-data\.js|figure.*\.js|figures-.*\.js|lesson-figures\.js|build\.js)$/;
   const files = fs.readdirSync(SITE).filter((name) => /\.(html|js)$/.test(name) && !skip.test(name));
   return files.map((name) => decodeEntities(fs.readFileSync(path.join(SITE, name), 'utf8'))).join('\n');
 }
 
-test('every CI language has a chrome dictionary', () => {
-  for (const code of CI_LANGS) {
-    assert.ok(STRINGS[code], `missing ui-strings.js dictionary for ${code}`);
+test('the key list is a trimmed, unique list of English strings', () => {
+  assert.ok(Array.isArray(KEYS) && KEYS.length > 0);
+  assert.equal(new Set(KEYS).size, KEYS.length, 'duplicate keys');
+  for (const key of KEYS) {
+    assert.equal(typeof key, 'string');
+    assert.ok(key.trim().length > 0, 'empty key');
+    assert.equal(key, key.trim(), `key has surrounding whitespace: ${JSON.stringify(key)}`);
   }
 });
 
-test('every dictionary covers the same keys with non-empty strings', () => {
-  for (const code of LANGS) {
-    const keys = Object.keys(STRINGS[code]);
-    assert.deepEqual(keys, KEYS, `${code} key set differs from ${LANGS[0]}`);
-    for (const key of keys) {
-      const value = STRINGS[code][key];
-      assert.equal(typeof value, 'string', `${code}: ${key} is not a string`);
+test('overrides only pin keys from the list and only for registered languages', () => {
+  const codes = new Set(registry.map((lang) => lang.code));
+  for (const [code, table] of Object.entries(OVERRIDES)) {
+    assert.ok(codes.has(code), `override language ${code} is not in languages.json`);
+    for (const [key, value] of Object.entries(table)) {
+      assert.ok(KEYS.includes(key), `${code} pins a key that is not in the list: ${JSON.stringify(key)}`);
+      assert.equal(typeof value, 'string');
       assert.ok(value.trim().length > 0, `${code}: ${key} is empty`);
       assert.equal(value, value.trim(), `${code}: ${key} has surrounding whitespace`);
     }
   }
+  assert.ok(CI_LANGS.length > 0);
 });
 
 test('every key still appears in the site pages or scripts', () => {
   const source = siteSource().replace(/\s+/g, ' ');
   for (const key of KEYS) {
-    assert.ok(source.includes(key), `orphaned ui-strings.js key: ${JSON.stringify(key)}`);
+    assert.ok(source.includes(key), `orphaned ui-strings.json key: ${JSON.stringify(key)}`);
   }
 });
 
@@ -66,14 +68,26 @@ test('translateText swaps only the trimmed core and keeps surrounding whitespace
   assert.equal(i18n.translateText('Contents', null), 'Contents');
 });
 
-test('dictionaryFor returns null for English and unknown languages', () => {
-  global.AIFS_UI_STRINGS = STRINGS;
+test('dictionaries come from the translations branch, English and unknown languages resolve to none', async () => {
+  assert.equal(i18n.TRANSLATIONS_BASE, 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/');
+  assert.equal(i18n.dictionaryFor('en'), null);
+  assert.equal(i18n.dictionaryFor(''), null);
+  i18n.preload('zh', { Contents: '目录' });
+  assert.deepEqual(i18n.dictionaryFor('zh'), { Contents: '目录' });
+  const requested = [];
+  globalThis.fetch = async (url) => {
+    requested.push(url);
+    return { ok: url.includes('/es/'), json: async () => ({ Contents: 'Contenido' }) };
+  };
   try {
-    assert.equal(i18n.dictionaryFor('en'), null);
-    assert.equal(i18n.dictionaryFor('xx'), null);
-    assert.equal(i18n.dictionaryFor(''), null);
-    assert.equal(i18n.dictionaryFor('zh'), STRINGS.zh);
+    const es = await new Promise((resolve) => i18n.loadDictionary('es', resolve));
+    assert.deepEqual(es, { Contents: 'Contenido' });
+    const missing = await new Promise((resolve) => i18n.loadDictionary('xx', resolve));
+    assert.equal(missing, null);
+    const again = await new Promise((resolve) => i18n.loadDictionary('es', resolve));
+    assert.deepEqual(again, { Contents: 'Contenido' });
+    assert.deepEqual(requested, [`${i18n.TRANSLATIONS_BASE}es/ui.json`, `${i18n.TRANSLATIONS_BASE}xx/ui.json`]);
   } finally {
-    delete global.AIFS_UI_STRINGS;
+    delete globalThis.fetch;
   }
 });

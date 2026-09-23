@@ -87,4 +87,5 @@ book/_build/
 i18n/*/phases/
 i18n/*/.cache/
 i18n/*/.translate-cache.json
+i18n/*/ui.json
 site/langs.js

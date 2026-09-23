@@ -1,7 +1,7 @@
 (function (root) {
   'use strict';
 
-  var STRINGS_VERSION = '20260923a';
+  var TRANSLATIONS_BASE = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/';
   var ATTRS = ['aria-label', 'title', 'placeholder'];
   var SKIP_TAGS = { SCRIPT: 1, STYLE: 1, CODE: 1, PRE: 1, KBD: 1, SAMP: 1, TEXTAREA: 1, NOSCRIPT: 1, svg: 1, SVG: 1, MATH: 1 };
   var SKIP_SELECTOR = '.lang-picker, .mermaid-render, .mermaid-modal-body, .quiz-question-text, .quiz-option-text, .quiz-explanation, .nav-title, .sidebar-lesson-link, .toc-nav, [data-i18n-skip]';
@@ -10,18 +10,44 @@
   var RTL = { ar: 1, he: 1, fa: 1, ur: 1 };
 
   var records = typeof WeakMap === 'function' ? new WeakMap() : null;
+  var dictionaries = {};
+  var pending = {};
   var active = 'en';
   var touched = false;
+  var request = 0;
   var observer = null;
 
-  function strings() {
-    return root.AIFS_UI_STRINGS || {};
+  function preload(lang, dict) {
+    dictionaries[lang] = dict && typeof dict === 'object' ? dict : null;
   }
 
   function dictionaryFor(lang) {
     if (!lang || lang === 'en') return null;
-    var dict = strings()[lang];
+    var dict = dictionaries[lang];
     return dict && typeof dict === 'object' ? dict : null;
+  }
+
+  function loadDictionary(lang, done) {
+    if (!lang || lang === 'en' || Object.prototype.hasOwnProperty.call(dictionaries, lang)) {
+      done(dictionaryFor(lang));
+      return;
+    }
+    if (pending[lang]) {
+      pending[lang].push(done);
+      return;
+    }
+    pending[lang] = [done];
+    root.fetch(TRANSLATIONS_BASE + encodeURIComponent(lang) + '/ui.json')
+      .then(function (response) {
+        if (!response.ok) throw new Error('missing');
+        return response.json();
+      })
+      .then(function (json) { preload(lang, json); }, function () { preload(lang, null); })
+      .then(function () {
+        var callbacks = pending[lang] || [];
+        delete pending[lang];
+        for (var i = 0; i < callbacks.length; i++) callbacks[i](dictionaryFor(lang));
+      });
   }
 
   function translateText(text, dict) {
@@ -117,13 +143,16 @@
   }
 
   function setLanguage(lang) {
-    var dict = dictionaryFor(lang);
-    active = dict ? lang : 'en';
-    if (!dict && !touched) return;
-    touched = true;
-    applyTree(root.document.body, dict);
-    applyDir(active);
-    observe();
+    var sequence = ++request;
+    loadDictionary(lang, function (dict) {
+      if (sequence !== request) return;
+      active = dict ? lang : 'en';
+      if (!dict && !touched) return;
+      touched = true;
+      applyTree(root.document.body, dict);
+      applyDir(active);
+      observe();
+    });
   }
 
   function observe() {
@@ -160,6 +189,11 @@
   }
 
   function start() {
+    if (root.AIFS_UI_STRINGS && typeof root.AIFS_UI_STRINGS === 'object') {
+      for (var lang in root.AIFS_UI_STRINGS) {
+        if (Object.prototype.hasOwnProperty.call(root.AIFS_UI_STRINGS, lang)) preload(lang, root.AIFS_UI_STRINGS[lang]);
+      }
+    }
     root.document.addEventListener('aifs:lang', function (event) {
       setLanguage(event.detail && event.detail.lang);
     });
@@ -170,23 +204,14 @@
     }
   }
 
-  function boot() {
-    if (root.AIFS_UI_STRINGS) {
-      start();
-      return;
-    }
-    var script = root.document.createElement('script');
-    script.src = 'ui-strings.js?v=' + STRINGS_VERSION;
-    script.async = true;
-    script.onload = start;
-    root.document.head.appendChild(script);
-  }
-
   var api = {
     translateText: translateText,
     dictionaryFor: dictionaryFor,
+    loadDictionary: loadDictionary,
+    preload: preload,
     currentLang: currentLang,
     setLanguage: setLanguage,
+    TRANSLATIONS_BASE: TRANSLATIONS_BASE,
     ATTRS: ATTRS,
     SKIP_SELECTOR: SKIP_SELECTOR,
     ARTICLE_ALLOW_SELECTOR: ARTICLE_ALLOW_SELECTOR
@@ -194,5 +219,5 @@
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.AIFSUiI18n = api;
 
-  if (root.document && typeof root.document.createElement === 'function') boot();
+  if (root.document && typeof root.document.createElement === 'function' && typeof root.fetch === 'function') start();
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -23,6 +23,8 @@ on:
       - "scripts/test_seo_routes.js"
       - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
+      - "scripts/translate_ui_strings.py"
+      - "scripts/test_translate_ui_strings.py"
       - "site/test_learning_paths.js"
       - "languages.json"
       - "README.md"
@@ -60,6 +62,8 @@ on:
       - "scripts/test_seo_routes.js"
       - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
+      - "scripts/translate_ui_strings.py"
+      - "scripts/test_translate_ui_strings.py"
       - "site/test_learning_paths.js"
       - "languages.json"
       - "README.md"
@@ -128,6 +132,8 @@ jobs:
         run: python3 scripts/build_readme_i18n.py --check
       - name: translation workflow publisher retries safely
         run: python3 scripts/test_translate_workflow.py
+      - name: interface-string translator pins, reuses, and protects correctly
+        run: python3 scripts/test_translate_ui_strings.py
       - name: learning skills mirror is in sync
         # skills/ is the canonical, agent-neutral home (what `npx skills add`
         # installs for every agent); .claude/skills/ is a mirror so cloning the
