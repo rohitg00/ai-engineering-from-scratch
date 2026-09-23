@@ -74,19 +74,32 @@ test('dictionaries come from the translations branch, English and unknown langua
   assert.equal(i18n.dictionaryFor(''), null);
   i18n.preload('zh', { Contents: '目录' });
   assert.deepEqual(i18n.dictionaryFor('zh'), { Contents: '目录' });
+  i18n.preload('hi', { strings: { Contents: 'विषय-सूची' }, pinned: ['Contents'] });
+  assert.deepEqual(i18n.dictionaryFor('hi'), { Contents: 'विषय-सूची' });
   const requested = [];
+  let published = false;
   globalThis.fetch = async (url) => {
     requested.push(url);
-    return { ok: url.includes('/es/'), json: async () => ({ Contents: 'Contenido' }) };
+    return {
+      ok: url.includes('/es/') || published,
+      json: async () => ({ strings: { Contents: url.includes('/es/') ? 'Contenido' : 'later' }, pinned: [] }),
+    };
   };
   try {
     const es = await new Promise((resolve) => i18n.loadDictionary('es', resolve));
     assert.deepEqual(es, { Contents: 'Contenido' });
     const missing = await new Promise((resolve) => i18n.loadDictionary('xx', resolve));
     assert.equal(missing, null);
-    const again = await new Promise((resolve) => i18n.loadDictionary('es', resolve));
-    assert.deepEqual(again, { Contents: 'Contenido' });
-    assert.deepEqual(requested, [`${i18n.TRANSLATIONS_BASE}es/ui.json`, `${i18n.TRANSLATIONS_BASE}xx/ui.json`]);
+    const cached = await new Promise((resolve) => i18n.loadDictionary('es', resolve));
+    assert.deepEqual(cached, { Contents: 'Contenido' });
+    published = true;
+    const retried = await new Promise((resolve) => i18n.loadDictionary('xx', resolve));
+    assert.deepEqual(retried, { Contents: 'later' });
+    assert.deepEqual(requested, [
+      `${i18n.TRANSLATIONS_BASE}es/ui.json`,
+      `${i18n.TRANSLATIONS_BASE}xx/ui.json`,
+      `${i18n.TRANSLATIONS_BASE}xx/ui.json`,
+    ]);
   } finally {
     delete globalThis.fetch;
   }

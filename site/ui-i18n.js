@@ -18,7 +18,9 @@
   var observer = null;
 
   function preload(lang, dict) {
-    dictionaries[lang] = dict && typeof dict === 'object' ? dict : null;
+    var table = dict && typeof dict === 'object' && dict.strings && typeof dict.strings === 'object' ? dict.strings : dict;
+    if (table && typeof table === 'object') dictionaries[lang] = table;
+    else delete dictionaries[lang];
   }
 
   function dictionaryFor(lang) {
@@ -42,7 +44,7 @@
         if (!response.ok) throw new Error('missing');
         return response.json();
       })
-      .then(function (json) { preload(lang, json); }, function () { preload(lang, null); })
+      .then(function (json) { preload(lang, json); }, function () {})
       .then(function () {
         var callbacks = pending[lang] || [];
         delete pending[lang];

@@ -40,6 +40,29 @@ class BuildLanguageTest(unittest.TestCase):
         self.assertEqual(count, 1)
         self.assertEqual(calls, ["About"])
 
+    def test_removed_override_is_retranslated_instead_of_reused(self):
+        calls = []
+
+        def translate(text):
+            calls.append(text)
+            return text.upper()
+
+        strings, count = ui.build_language(
+            ["Build", "Run"], {}, {"Build": "old pin", "Run": "machine"}, translate, pinned_before={"Build"}
+        )
+        self.assertEqual(strings, {"Build": "BUILD", "Run": "machine"})
+        self.assertEqual(count, 1)
+        self.assertEqual(calls, ["Build"])
+
+    def test_load_published_accepts_flat_and_wrapped_files(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "ui.json"
+            self.assertEqual(ui.load_published(path), ({}, set()))
+            path.write_text(json.dumps({"A": "a"}), encoding="utf-8")
+            self.assertEqual(ui.load_published(path), ({"A": "a"}, set()))
+            path.write_text(json.dumps({"strings": {"A": "a"}, "pinned": ["A"]}), encoding="utf-8")
+            self.assertEqual(ui.load_published(path), ({"A": "a"}, {"A"}))
+
     def test_dropped_keys_disappear_from_output(self):
         strings, _ = ui.build_language(["A"], {}, {"A": "x", "Gone": "y"}, lambda s: s)
         self.assertEqual(list(strings), ["A"])
@@ -87,11 +110,12 @@ class EndToEndTest(unittest.TestCase):
             ui.main(["--lang", "zh", "--lang", "tr", "--provider", "echo", "--out", tmp])
             for lang in ("zh", "tr"):
                 data = json.loads((Path(tmp) / lang / "ui.json").read_text(encoding="utf-8"))
-                self.assertEqual(list(data), keys)
+                self.assertEqual(list(data["strings"]), keys)
+                self.assertEqual(data["pinned"], [key for key in keys if key in overrides.get(lang, {})])
                 for key, value in overrides.get(lang, {}).items():
-                    self.assertEqual(data[key], value)
+                    self.assertEqual(data["strings"][key], value)
 
-    def test_second_run_reuses_published_translations(self):
+    def test_second_run_reuses_published_translations_until_a_pin_is_removed(self):
         with tempfile.TemporaryDirectory() as tmp:
             source = Path(tmp) / "ui-strings.json"
             source.write_text(
@@ -102,13 +126,16 @@ class EndToEndTest(unittest.TestCase):
             ui.main(args)
             out = Path(tmp) / "es" / "ui.json"
             data = json.loads(out.read_text(encoding="utf-8"))
-            self.assertEqual(data, {"Contents": "Contenido", "Catalog": "Catalog"})
-            data["Catalog"] = "kept"
+            self.assertEqual(data, {"strings": {"Contents": "Contenido", "Catalog": "Catalog"}, "pinned": ["Contents"]})
+            data["strings"]["Catalog"] = "kept"
             out.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
             ui.main(args)
-            self.assertEqual(json.loads(out.read_text(encoding="utf-8")), {"Contents": "Contenido", "Catalog": "kept"})
+            self.assertEqual(json.loads(out.read_text(encoding="utf-8"))["strings"], {"Contents": "Contenido", "Catalog": "kept"})
+            source.write_text(json.dumps({"keys": ["Contents", "Catalog"], "overrides": {}}), encoding="utf-8")
+            ui.main(args)
+            self.assertEqual(json.loads(out.read_text(encoding="utf-8")), {"strings": {"Contents": "Contents", "Catalog": "kept"}, "pinned": []})
             ui.main(args + ["--force"])
-            self.assertEqual(json.loads(out.read_text(encoding="utf-8"))["Catalog"], "Catalog")
+            self.assertEqual(json.loads(out.read_text(encoding="utf-8"))["strings"]["Catalog"], "Catalog")
 
     def test_unknown_language_fails_loudly(self):
         with tempfile.TemporaryDirectory() as tmp:

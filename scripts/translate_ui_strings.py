@@ -12,8 +12,9 @@ interface strings the pages use, "overrides" pins a translation per language
 where a machine translation would be wrong (short labels such as Build or Run).
 Every other key is translated through the same provider layer as the lessons,
 and a previously published translation is reused, so a run only translates keys
-that are new or lost their override. Output goes to the translations branch,
-never to main.
+that are new or lost their override. The published file records which keys were
+pinned, so removing an override retranslates that key instead of freezing the old
+pin. Output goes to the translations branch, never to main.
 
 Usage:
     python3 scripts/translate_ui_strings.py                       # every ci:true language, NLLB
@@ -143,16 +144,30 @@ class Lazy:
         return self.fn(text)
 
 
-def build_language(keys, overrides, existing, translate_fn):
+def load_published(path):
+    """Return (strings, pinned) from a previously published ui.json. A flat
+    object is accepted as strings with nothing pinned."""
+    if not path.is_file():
+        return {}, set()
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        return {}, set()
+    if isinstance(data.get("strings"), dict):
+        return data["strings"], set(data.get("pinned") or [])
+    return data, set()
+
+
+def build_language(keys, overrides, existing, translate_fn, pinned_before=frozenset()):
     """Return (strings, translated_count). translate_fn runs only for keys with
-    neither an override nor a previously published translation; None counts
-    those keys without translating (dry run)."""
+    neither an override nor a reusable published translation; a published value
+    that came from an override which has since been removed is not reused. None
+    counts those keys without translating (dry run)."""
     result = {}
     translated = 0
     for key in keys:
         if key in overrides:
             result[key] = overrides[key]
-        elif key in existing:
+        elif key in existing and key not in pinned_before:
             result[key] = existing[key]
         elif translate_fn is None:
             translated += 1
@@ -182,16 +197,16 @@ def main(argv=None):
         if lang not in lessons.LANG_NAMES:
             raise SystemExit(f"unknown language {lang!r}: not in languages.json")
         dst = Path(args.out) / lang / "ui.json"
-        existing = {}
-        if dst.is_file() and not args.force:
-            existing = json.loads(dst.read_text(encoding="utf-8"))
+        existing, pinned_before = ({}, set()) if args.force else load_published(dst)
+        pins = overrides.get(lang, {})
         translate_fn = None if args.dry_run else Lazy(lambda lang=lang: translator(lang, args.provider))
-        strings, count = build_language(keys, overrides.get(lang, {}), existing, translate_fn)
+        strings, count = build_language(keys, pins, existing, translate_fn, pinned_before)
         if args.dry_run:
             print(f"{lang}: would translate {count} of {len(keys)} keys")
             continue
+        published = {"strings": strings, "pinned": [key for key in keys if key in pins]}
         dst.parent.mkdir(parents=True, exist_ok=True)
-        dst.write_text(json.dumps(strings, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        dst.write_text(json.dumps(published, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"{lang}: {count} translated, {len(strings) - count} reused or pinned -> {dst}")
 
 
