@@ -1,3 +1,4 @@
+import ast
 import json
 import math
 import re
@@ -98,13 +99,23 @@ def read_file(path):
     return {"path": path, "content": content, "size_bytes": len(content), "lines": content.count("\n") + 1}
 
 
+_UNSAFE_BUILTINS = {"exec", "eval", "compile", "__import__", "open", "getattr", "setattr", "delattr", "vars", "globals", "locals"}
+
+
 def run_code(code, language="python"):
     if language != "python":
         return {"error": True, "message": f"Language '{language}' not supported. Only 'python' is available."}
-    forbidden = ["import os", "import sys", "import subprocess", "exec(", "eval(", "__import__", "open("]
-    for pattern in forbidden:
-        if pattern in code:
-            return {"error": True, "message": f"Forbidden operation: {pattern}", "code": "SECURITY_VIOLATION"}
+    try:
+        tree = ast.parse(code)
+    except SyntaxError as e:
+        return {"error": True, "message": f"SyntaxError: {e}", "code": "SYNTAX_ERROR"}
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.Import, ast.ImportFrom)):
+            return {"error": True, "message": "Forbidden operation: import statements not allowed", "code": "SECURITY_VIOLATION"}
+        if isinstance(node, ast.Attribute) and node.attr.startswith("__") and node.attr.endswith("__"):
+            return {"error": True, "message": "Forbidden operation: dunder attribute access not allowed", "code": "SECURITY_VIOLATION"}
+        if isinstance(node, ast.Name) and node.id in _UNSAFE_BUILTINS:
+            return {"error": True, "message": f"Forbidden operation: {node.id} not allowed", "code": "SECURITY_VIOLATION"}
     try:
         local_vars = {}
         exec(
