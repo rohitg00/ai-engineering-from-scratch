@@ -69,6 +69,15 @@ def main() -> None:
     negotiator_rewrites = [r for r in rewrites if r.get("destination", "").startswith("/api/markdown")]
     assert negotiator_rewrites, "markdown negotiation rewrite is missing"
     assert all("accept" in h["key"].lower() for r in negotiator_rewrites for h in r["has"])
+    shadowed = [
+        r["source"]
+        for r in negotiator_rewrites
+        if any(
+            candidate.is_file()
+            for candidate in (SITE / r["source"].strip("/") / "index.html", SITE / r["source"].strip("/"))
+        )
+    ]
+    assert not shadowed, f"a static file wins over these negotiation rewrites: {shadowed}"
 
     route_rewrites = {rewrite["source"]: rewrite["destination"] for rewrite in rewrites}
     assert route_rewrites["/lesson"] == "/api/lesson"
@@ -87,6 +96,12 @@ def main() -> None:
         "methods": ["GET", "HEAD"],
         "dest": "/api/certification?legacy=1",
     }
+    root_route = legacy_routes["/"]
+    assert root_route["dest"] == "/api/markdown?path=/"
+    assert any(
+        h["type"] == "header" and h["key"].lower() == "accept" and "text/markdown" in h["value"]
+        for h in root_route["has"]
+    )
 
     headers = config["headers"]
     llms_header = next(h for h in headers if h["source"] == "/llms.txt")

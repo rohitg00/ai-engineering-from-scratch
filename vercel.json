@@ -5,12 +5,12 @@
   "installCommand": "echo skip",
   "routes": [
     { "src": "/lesson\\.html", "methods": ["GET", "HEAD"], "dest": "/api/lesson?legacy=1" },
-    { "src": "/certification\\.html", "methods": ["GET", "HEAD"], "dest": "/api/certification?legacy=1" }
+    { "src": "/certification\\.html", "methods": ["GET", "HEAD"], "dest": "/api/certification?legacy=1" },
+    { "src": "/", "methods": ["GET", "HEAD"], "has": [{ "type": "header", "key": "accept", "value": ".*text/markdown.*" }], "dest": "/api/markdown?path=/" }
   ],
   "rewrites": [
     { "source": "/lesson", "destination": "/api/lesson" },
     { "source": "/certification", "destination": "/api/certification" },
-    { "source": "/", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/" },
     { "source": "/about", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/about" },
     { "source": "/catalog", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/catalog" },
     { "source": "/glossary", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/glossary" },
