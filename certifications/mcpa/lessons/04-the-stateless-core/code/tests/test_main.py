@@ -48,6 +48,15 @@ class StatelessCoreTests(unittest.TestCase):
         self.assertTrue(response["result"]["isError"])
         self.assertIn("expired", response["result"]["content"][0]["text"])
 
+    def test_adding_an_item_resets_the_idle_expiry_window(self) -> None:
+        clock, _router, alice, _alice2, _bob = main.build_deployment()
+        basket_id = alice.call("create_basket", {})["result"]["structuredContent"]["basket_id"]
+        clock.advance(main.BASKET_EXPIRY_TICKS)
+        alice.call("add_item", {"basket_id": basket_id, "sku": "kettle"})
+        clock.advance(main.BASKET_EXPIRY_TICKS)
+        response = alice.call("checkout", {"basket_id": basket_id})
+        self.assertFalse(response["result"]["isError"])
+
     def test_list_tools_is_identical_for_two_connections_of_the_same_principal(self) -> None:
         _, _router, alice, alice2, _bob = main.build_deployment()
         first_names = alice.list_tools()

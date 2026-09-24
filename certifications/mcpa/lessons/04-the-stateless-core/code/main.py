@@ -61,6 +61,7 @@ class Basket:
     handle: str
     owner: str
     created_at: int
+    last_active: int = 0
     items: list[str] = field(default_factory=list)
 
 
@@ -76,7 +77,7 @@ class SharedStore:
         self._next_id += 1
         digest = hashlib.sha256(f"{owner}:{self._next_id}".encode()).hexdigest()[:8]
         handle = f"bsk_{digest}"
-        basket = Basket(handle=handle, owner=owner, created_at=self.clock.now)
+        basket = Basket(handle=handle, owner=owner, created_at=self.clock.now, last_active=self.clock.now)
         self.baskets[handle] = basket
         return basket
 
@@ -84,7 +85,7 @@ class SharedStore:
         return self.baskets.get(handle)
 
     def is_expired(self, basket: Basket) -> bool:
-        return self.clock.now - basket.created_at > BASKET_EXPIRY_TICKS
+        return self.clock.now - basket.last_active > BASKET_EXPIRY_TICKS
 
 
 @dataclass
@@ -205,6 +206,7 @@ class Replica:
                 _meta=self._server_meta(),
             )
         basket.items.append(sku)
+        basket.last_active = self.store.clock.now
         return make_result(
             request_id,
             content=[{"type": "text", "text": f"Added {sku} to {basket.handle} ({len(basket.items)} item(s))"}],
