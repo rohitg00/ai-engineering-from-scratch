@@ -9,6 +9,7 @@ on:
       - "skills/**"
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
+      - "scripts/run_lesson_tests.py"
       - "scripts/audit_certifications.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
@@ -48,6 +49,7 @@ on:
       - "skills/**"
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
+      - "scripts/run_lesson_tests.py"
       - "scripts/audit_certifications.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
@@ -139,6 +141,23 @@ jobs:
         # installs for every agent); .claude/skills/ is a mirror so cloning the
         # repo auto-loads them in Claude Code. They must never diverge.
         run: diff -r skills .claude/skills
+
+  lesson-tests:
+    name: lesson tests (stdlib)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
+        with:
+          python-version: "3.12"
+      - name: run each lesson's own tests
+        # No scientific dependencies are installed here, so lessons that need
+        # one (torch, numpy, and the rest of the allowlist in the script) are
+        # skipped, not failed. The stdlib lessons run for real, which catches
+        # the class of breakage where a lesson cannot import its own module.
+        run: python3 scripts/run_lesson_tests.py
 
   readme-counts-sync:
     name: README counts auto-fix (main only)

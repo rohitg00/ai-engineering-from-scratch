@@ -151,7 +151,7 @@ names, logos, links, and tier assignments are managed by the maintainer. See
 1. Fork the repository
 2. Create a feature branch (`git checkout -b add-lesson-phase3-gradient-descent`)
 3. Make your changes
-4. Ensure all code runs
+4. Ensure all code runs. Run `python3 scripts/run_lesson_tests.py` to execute every lesson's own tests; lessons whose tests need a scientific dependency you have not installed are skipped, the rest run.
 5. Submit a pull request with a clear description
 
 ## Code of Conduct
