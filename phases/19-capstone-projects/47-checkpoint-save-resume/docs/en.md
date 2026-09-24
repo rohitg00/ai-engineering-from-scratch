@@ -100,7 +100,7 @@ cc-atomic-checkpoint
 
 `save_checkpoint` packages the model, optimizer, scheduler, train state, and RNG into one dict. `load_checkpoint` reverses it and returns a `TrainState`. The schema field is the upgrade hook: future format changes bump the version string and the loader dispatches.
 
-`load_checkpoint` calls `torch.load(..., weights_only=True)`. A `.pt` file is a pickle, and unpickling an untrusted file with `weights_only=False` runs whatever code the file names. The weights-only loader accepts tensors and primitive containers and rejects everything else, which is why Step 1 keeps the RNG state in plain lists. Integrity checks raise `ValueError` instead of using `assert`, because `python -O` strips asserts.
+`load_checkpoint` calls `torch.load(..., weights_only=True)`. A `.pt` file is a pickle, and unpickling an untrusted file with `weights_only=False` runs whatever code the file names. The weights-only loader accepts tensors and primitive containers and rejects everything else, which is why Step 1 keeps the RNG state in plain lists. Integrity checks raise `ValueError` instead of using `assert`, because `python -O` strips asserts. Use torch 2.6 or newer: before that release `weights_only=True` had a known bypass (CVE-2025-32434), so the guarantee this lesson relies on holds only from 2.6 on.
 
 ### Step 4: sharded variant
 
