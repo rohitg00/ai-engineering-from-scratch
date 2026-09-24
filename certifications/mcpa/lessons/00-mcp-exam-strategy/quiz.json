@@ -30,9 +30,9 @@
       "stage": "check",
       "question": "The MCPA certification page and the Linux Foundation's own launch press release disagree about one exam fact. Which fact is it, and which source does this curriculum follow?",
       "options": [
-        "The exam fee",
         "The included retake count",
         "The credential validity period",
+        "The exam fee",
         "The exam duration"
       ],
       "correct": 3,
@@ -43,9 +43,9 @@
       "question": "A practice question claims a client must call initialize before a 2026-07-28 server will accept any other request. How should a prepared candidate read that claim?",
       "options": [
         "A legacy-era protocol distractor",
-        "A true, still current requirement",
         "True only for older MCP servers",
-        "A detail specific to stdio only"
+        "A detail specific to stdio only",
+        "A true, still current requirement"
       ],
       "correct": 0,
       "explanation": "The 2026-07-28 revision removed the initialize handshake and protocol sessions entirely, so every request now carries its own protocol version and capabilities in its metadata instead of relying on a prior handshake."
@@ -66,10 +66,10 @@
       "stage": "post",
       "question": "A few lessons in the 34-lesson route, such as JSON-RPC and Meta, are tagged with two domains instead of one. What does that reflect about the route?",
       "options": [
-        "A numbering error the curriculum needs to fix",
         "A sign those lessons are optional to skip",
+        "A sign those lessons get double the study time",
         "A concept tested from two domains at once",
-        "A sign those lessons get double the study time"
+        "A numbering error the curriculum needs to fix"
       ],
       "correct": 2,
       "explanation": "A lesson can sit at a genuine intersection, such as a message envelope that is both a core concept and a piece of the architecture, so the route tags it under both domains rather than forcing one arbitrary choice."

@@ -6,9 +6,9 @@
       "stage": "pre",
       "question": "Before sending any other request, how does a dual-era client learn whether a stdio MCP server is modern or legacy?",
       "options": [
-        "It reads a version banner the server prints to stderr when it launches",
-        "It sends a server/discover probe first and reads the shape of the reply",
         "It assumes every server is modern until a later request happens to fail",
+        "It sends a server/discover probe first and reads the shape of the reply",
+        "It reads a version banner the server prints to stderr when it launches",
         "It opens two connections and always compares how long each takes to answer"
       ],
       "correct": 1,
@@ -30,24 +30,24 @@
       "stage": "check",
       "question": "Which outcome of a server/discover probe means the server is modern but speaks a different version than the client asked for?",
       "options": [
-        "A recognized version error that also names the versions it does support",
+        "An unrecognized error the client has never once seen, with no version data",
         "A DiscoverResult that lists exactly the version the client had requested",
         "No response at all within the client's own configured probe timeout",
-        "An unrecognized error the client has never once seen, with no version data"
+        "A recognized version error that also names the versions it does support"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": "A recognized modern error such as UnsupportedProtocolVersionError still identifies a modern server, just one that needs a different mutually supported version."
     },
     {
       "stage": "check",
       "question": "On the Streamable HTTP transport, how should a dual-era client decide whether a server that just answered with 400 Bad Request is modern or legacy?",
       "options": [
+        "Read the response body; a recognized modern error still means modern",
         "Treat every 400 response as proof the server only speaks the legacy revision",
         "Retry the exact same unmodified request until the server somehow accepts it",
-        "Close the connection and ask whoever configured it to try another server",
-        "Read the response body; a recognized modern error still means modern"
+        "Close the connection and ask whoever configured it to try another server"
       ],
-      "correct": 3,
+      "correct": 0,
       "explanation": "Modern servers also answer 400 for version, capability, and header errors, so a dual-era client inspects the body for a recognized modern error before assuming legacy."
     },
     {
