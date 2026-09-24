@@ -157,7 +157,8 @@ class NotesServer:
     def _read_vault(self, request_id: Any, params: dict, token: str) -> dict:
         if "inputResponses" in params:
             confirmation = params["inputResponses"].get("confirm", {})
-            if confirmation.get("action") != "accept":
+            content = confirmation.get("content") if isinstance(confirmation, dict) else None
+            if not isinstance(content, dict) or confirmation.get("action") != "accept" or content.get("proceed") is not True:
                 return make_result(request_id, "complete", contents=[], ttlMs=0, cacheScope="private",
                                     _meta=self._server_meta())
             text = f"{token or 'anonymous'}'s vault: rotate the deploy key before Friday."

@@ -228,8 +228,10 @@ class Server:
                 _meta=self._server_meta(),
             )
         self.consumed_states.add(request_state)
-        action = confirm_response.get("action")
-        if action != "accept":
+        response = confirm_response if isinstance(confirm_response, dict) else {}
+        action = response.get("action")
+        content = response.get("content")
+        if action != "accept" or not isinstance(content, dict) or content.get("approved") is not True:
             return make_result(
                 request_id,
                 content=[{"type": "text", "text": f"The user did not approve {tool.name} (action: {action}). The call did not run."}],

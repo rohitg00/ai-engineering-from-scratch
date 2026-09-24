@@ -53,6 +53,14 @@ class CachingAndPaginationTests(unittest.TestCase):
         self.assertEqual(response["result"]["resultType"], "input_required")
         self.assertIsNone(self.cache.get("resources/read", ("note://private/vault",), self.alice.token))
 
+    def test_accept_without_proceed_does_not_reveal_the_vault(self) -> None:
+        request = main.make_request(1, "resources/read", {
+            "uri": "note://private/vault",
+            "inputResponses": {"confirm": {"action": "accept", "content": {"proceed": False}}},
+        })
+        response = self.server.handle(request, self.alice.token)
+        self.assertEqual(response["result"]["contents"], [])
+
     def test_mrtr_retried_result_is_not_cached(self) -> None:
         self.alice.read_resource("note://private/vault")
         calls_after_first_round_trip = self.server.call_counts["resources/read"]

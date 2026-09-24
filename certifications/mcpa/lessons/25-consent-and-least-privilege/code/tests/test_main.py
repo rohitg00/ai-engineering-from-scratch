@@ -36,6 +36,16 @@ class ConsentAndLeastPrivilegeTests(unittest.TestCase):
         self.assertNotIn("error", response)
         self.assertIn("notes.txt", self.server.filesystem)
 
+    def test_accept_without_approval_does_not_run_the_tool(self) -> None:
+        prompt = self.client.call("delete_file", {"path": "notes.txt"})
+        response = self.client.call(
+            "delete_file", {"path": "notes.txt"},
+            input_responses={"confirm": {"action": "accept", "content": {"approved": False}}},
+            request_state=prompt["result"]["requestState"],
+        )
+        self.assertTrue(response["result"]["isError"])
+        self.assertIn("notes.txt", self.server.filesystem)
+
     def test_cancel_also_prevents_the_call(self) -> None:
         prompt = self.client.call("delete_file", {"path": "notes.txt"})
         response = self.client.call(
