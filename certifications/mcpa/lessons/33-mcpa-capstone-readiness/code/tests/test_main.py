@@ -45,6 +45,13 @@ class CapstoneTests(unittest.TestCase):
         response = client.send("tools/call", {"name": "close_incident_ticket", "arguments": {}})
         self.assertEqual(response["error"]["code"], main.INVALID_PARAMS)
 
+    def test_listed_http_only_tool_is_a_tool_error_outside_the_authorized_endpoint(self) -> None:
+        server = main.build_server()
+        client = main.Client("alice-oncall", server)
+        response = client.send("tools/call", {"name": "acknowledge_incident", "arguments": {"incident_id": "INC-7"}})
+        self.assertNotIn("error", response)
+        self.assertTrue(response["result"]["isError"])
+
     def test_unknown_method_is_method_not_found_not_invalid_params(self) -> None:
         server = main.build_server()
         client = main.Client("alice-oncall", server)

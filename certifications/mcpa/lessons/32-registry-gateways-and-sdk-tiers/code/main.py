@@ -401,7 +401,7 @@ def demo() -> None:
     print(f"registry admission: {private_entry.name} (private) -> accepted={private_result.accepted} ({private_result.reason})")
 
     print(f"server.json schema version {schema_version_from_url(REGISTRY_SCHEMA_URL)!r} is independent of protocol version {PROTOCOL_VERSION!r}")
-    print("install target (prefer remote):", resolve_install_target(owned_entry, prefer="package"))
+    print("install target (prefer remote):", resolve_install_target(owned_entry, prefer="remote"))
 
     print()
     print("SDK tier requirements")

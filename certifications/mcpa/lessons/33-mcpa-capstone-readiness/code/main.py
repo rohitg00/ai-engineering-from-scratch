@@ -370,6 +370,14 @@ class Server:
             return [], self._restart_service(request_id, params, meta, principal, trace_id)
         if name == "run_full_diagnostics":
             return [], self._run_diagnostics(request_id, params, meta, principal, trace_id)
+        if name == "acknowledge_incident":
+            self.audit.append(trace_id, request_id, principal, "tools/call", name, "isError: requires the authorized HTTP endpoint")
+            return [], make_result(
+                request_id,
+                content=[{"type": "text", "text": "acknowledge_incident is served only over the authorized HTTP endpoint. Send it there with a bearer token issued for this server."}],
+                isError=True,
+                _meta=self._server_meta(),
+            )
         self.audit.append(trace_id, request_id, principal, "tools/call", name, "protocol_error: unknown tool")
         return [], make_error(request_id, INVALID_PARAMS, f"Unknown tool: {name}")
 

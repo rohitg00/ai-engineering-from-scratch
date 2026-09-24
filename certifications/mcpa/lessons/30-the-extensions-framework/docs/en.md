@@ -96,7 +96,7 @@ Open `code/main.py`. `negotiate_extensions` is the whole mechanism in one functi
 python3 code/main.py
 ```
 
-Run it and follow the eight exchanges in order. The sixth one declares a made up identifier, `no-slash-here`, alongside a valid one; watch it get silently dropped from negotiation while the valid one still activates, which is exactly what `is_well_formed_extension_id` is there to guarantee even when nothing else about the request looks wrong. Try adding a third tool that requires two extensions at once, and see which missing one `_call` reports first.
+Run it and follow the eight exchanges in order. The seventh one declares a made up identifier, `no-slash-here`, alongside a valid one; watch it get silently dropped from negotiation while the valid one still activates, which is exactly what `is_well_formed_extension_id` is there to guarantee even when nothing else about the request looks wrong. Try adding a third tool that requires two extensions at once, and see which missing one `_call` reports first.
 
 ## Shipped Artifact
 
