@@ -75,9 +75,10 @@ def synthetic_loader(batch_size: int, num_batches: int, in_dim: int, out_dim: in
 
 
 def capture_rng_state() -> Dict[str, Any]:
+    name, keys, pos, has_gauss, cached_gaussian = np.random.get_state()
     state: Dict[str, Any] = {
         "python": random.getstate(),
-        "numpy": np.random.get_state(),
+        "numpy": (name, keys.tolist(), int(pos), int(has_gauss), float(cached_gaussian)),
         "torch_cpu": torch.get_rng_state().tolist(),
     }
     if torch.cuda.is_available():
@@ -197,8 +198,9 @@ def load_checkpoint(
     optimizer: torch.optim.Optimizer,
     scheduler: torch.optim.lr_scheduler._LRScheduler,
 ) -> TrainState:
-    payload = torch.load(path, map_location="cpu", weights_only=False)
-    assert payload["schema"].startswith("ckpt"), f"unknown schema {payload['schema']}"
+    payload = torch.load(path, map_location="cpu", weights_only=True)
+    if not str(payload.get("schema", "")).startswith("ckpt"):
+        raise ValueError(f"unknown schema {payload.get('schema')}")
     model.load_state_dict(payload["model"])
     optimizer.load_state_dict(payload["optimizer"])
     scheduler.load_state_dict(payload["scheduler"])
@@ -292,15 +294,21 @@ def load_sharded_checkpoint(
     expected_sha = index["meta_sha256"]
     meta_path = ckpt_dir / "meta.pt"
     actual_sha = file_sha256(meta_path)
-    assert actual_sha == expected_sha, f"meta sha mismatch: {actual_sha} != {expected_sha}"
-    meta = torch.load(meta_path, map_location="cpu", weights_only=False)
+    if actual_sha != expected_sha:
+        raise ValueError(f"meta sha mismatch: {actual_sha} != {expected_sha}")
+    meta = torch.load(meta_path, map_location="cpu", weights_only=True)
+    root = ckpt_dir.resolve()
     merged: Dict[str, torch.Tensor] = {}
     for shard in meta["shards"]:
-        shard_path = ckpt_dir / shard["path"]
+        shard_path = (ckpt_dir / shard["path"]).resolve()
+        if not shard_path.is_relative_to(root):
+            raise ValueError(f"shard path escapes the checkpoint directory: {shard['path']}")
         actual = file_sha256(shard_path)
-        assert actual == shard["sha256"], f"shard sha mismatch: {shard['path']}"
-        body = torch.load(shard_path, map_location="cpu", weights_only=False)
-        assert body["schema"] == SHARD_SCHEMA
+        if actual != shard["sha256"]:
+            raise ValueError(f"shard sha mismatch: {shard['path']}")
+        body = torch.load(shard_path, map_location="cpu", weights_only=True)
+        if body["schema"] != SHARD_SCHEMA:
+            raise ValueError(f"unknown shard schema {body['schema']}")
         merged.update(body["tensors"])
     model.load_state_dict(merged)
     optimizer.load_state_dict(meta["optimizer"])

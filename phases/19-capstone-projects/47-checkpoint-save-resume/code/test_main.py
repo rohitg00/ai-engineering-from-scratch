@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import pickle
 import sys
 import tempfile
 import unittest
@@ -15,6 +16,10 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE))
 
 import main as ckpt
+
+
+class _ArbitraryObject:
+    pass
 
 
 def _build_components(total_steps: int = 10, lr: float = 0.01):
@@ -79,6 +84,14 @@ class CheckpointResumeTests(unittest.TestCase):
             )
             self.assertLess(result["max_loss_diff_after_resume"], 1e-5)
 
+    def test_load_refuses_pickled_objects(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "ckpt.pt"
+            torch.save({"schema": "ckpt.v1", "payload": _ArbitraryObject()}, target)
+            model, opt, sched = _build_components(total_steps=4)
+            with self.assertRaises(pickle.UnpicklingError):
+                ckpt.load_checkpoint(target, model, opt, sched)
+
 
 class ShardedCheckpointTests(unittest.TestCase):
     def test_sharded_round_trip(self):
@@ -106,7 +119,24 @@ class ShardedCheckpointTests(unittest.TestCase):
             data = tampered.read_bytes()
             tampered.write_bytes(data + b"\x00")
             model2, opt2, sched2 = _build_components(total_steps=4)
-            with self.assertRaises(AssertionError):
+            with self.assertRaises(ValueError):
+                ckpt.load_sharded_checkpoint(Path(tmp), model2, opt2, sched2)
+
+    def test_shard_path_outside_checkpoint_dir_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ckpt.seed_everything(0)
+            model, opt, sched = _build_components(total_steps=4)
+            state = ckpt.TrainState(step=1, epoch=0, batch_in_epoch=1, losses=[0.9])
+            meta = ckpt.save_sharded_checkpoint(model, opt, sched, state, Path(tmp), num_shards=2)
+            meta["shards"][0]["path"] = "../outside.pt"
+            meta_path = Path(tmp) / "meta.pt"
+            ckpt.atomic_save(meta, meta_path)
+            index_path = Path(tmp) / "index.json"
+            index = json.loads(index_path.read_text())
+            index["meta_sha256"] = ckpt.file_sha256(meta_path)
+            ckpt.atomic_write_json(index, index_path)
+            model2, opt2, sched2 = _build_components(total_steps=4)
+            with self.assertRaises(ValueError):
                 ckpt.load_sharded_checkpoint(Path(tmp), model2, opt2, sched2)
 
 
