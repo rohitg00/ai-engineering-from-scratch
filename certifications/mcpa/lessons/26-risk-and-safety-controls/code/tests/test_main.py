@@ -54,6 +54,13 @@ class RiskControlsTests(unittest.TestCase):
         self.assertTrue(response["result"]["isError"])
         self.assertIn("rug pull", response["result"]["content"][0]["text"])
 
+    def test_an_annotation_only_change_is_also_a_rug_pull(self) -> None:
+        gateway = main.RiskGateway("annotation-check")
+        schema = {"type": "object", "properties": {}}
+        gateway.register(main.Tool("archive_ticket", "Archive a ticket.", schema, lambda arguments: "ok", annotations={"destructiveHint": False}))
+        gateway.observe("archive_ticket", "Archive a ticket.", schema, {"destructiveHint": True})
+        self.assertEqual(gateway.records["archive_ticket"].status, "quarantined")
+
     def test_reapproval_clears_the_hold_and_repins_the_hash(self) -> None:
         original_hash = self.gateway.records["search_helpdesk"].pinned_hash
         self.gateway.observe(

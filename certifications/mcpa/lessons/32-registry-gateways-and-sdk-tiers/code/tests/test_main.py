@@ -121,6 +121,19 @@ class RegistryGatewayTierTests(unittest.TestCase):
             message = entry.get("message") if isinstance(entry, dict) else entry
             self.assertNotIn("secret-token-value", json.dumps(message))
 
+    def test_gateway_log_records_a_principal_reference_never_the_raw_token(self) -> None:
+        gateway, accounts, status = main.build_gateway()
+        gateway.call_tool("secret-token-value", "lookup_account", {"accountId": "acct-1"})
+        gateway.read_resource("secret-token-value", "billing://acct/statement")
+        self.assertNotIn("secret-token-value", json.dumps(gateway.log))
+        principals = {entry["principal"] for entry in gateway.log if isinstance(entry, dict) and "principal" in entry}
+        self.assertEqual(principals, {main.principal_ref("secret-token-value")})
+
+    def test_backend_answers_an_unimplemented_method_with_method_not_found(self) -> None:
+        gateway, accounts, status = main.build_gateway()
+        response = accounts.handle(main.make_request(1, "prompts/list"))
+        self.assertEqual(response["error"]["code"], main.METHOD_NOT_FOUND)
+
     def test_every_request_in_transcript_carries_protocol_version_and_capabilities(self) -> None:
         for entry in main.transcript():
             message = entry.get("message") if isinstance(entry, dict) and "message" in entry else entry

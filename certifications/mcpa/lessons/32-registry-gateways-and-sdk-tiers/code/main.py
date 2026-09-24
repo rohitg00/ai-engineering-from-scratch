@@ -7,6 +7,7 @@ Sources: MCP Registry documentation; SEP-1730 (SDK tiers); SEP-2243.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from dataclasses import dataclass, field
@@ -20,6 +21,7 @@ CLIENT_INFO_KEY = "io.modelcontextprotocol/clientInfo"
 SERVER_INFO_KEY = "io.modelcontextprotocol/serverInfo"
 
 INVALID_PARAMS = -32602
+METHOD_NOT_FOUND = -32601
 HEADER_MISMATCH = -32020
 
 NAME_HEADER_METHODS = {"tools/call": "name", "prompts/get": "name", "resources/read": "uri"}
@@ -188,7 +190,7 @@ class Backend:
             return self._call_tool(request_id, params)
         if method == "resources/read":
             return self._read_resource(request_id, params)
-        return make_error(request_id, INVALID_PARAMS, f"This backend does not implement {method}")
+        return make_error(request_id, METHOD_NOT_FOUND, f"This backend does not implement {method}")
 
     def _call_tool(self, request_id: Any, params: dict) -> dict:
         name = params.get("name")
@@ -214,6 +216,12 @@ class Backend:
             cacheScope=resource.cache_scope,
             _meta=self._server_meta(),
         )
+
+
+def principal_ref(token: str | None) -> str:
+    if not token:
+        return "anonymous"
+    return "principal-" + hashlib.sha256(token.encode("utf-8")).hexdigest()[:12]
 
 
 @dataclass
@@ -254,7 +262,7 @@ class Gateway:
     def call_tool(self, token: str, name: str, arguments: dict) -> dict:
         request = make_request(self._next_id(), "tools/call", {"name": name, "arguments": arguments})
         headers = self._headers_for("tools/call", name)
-        self.log.append({"http": {"headers": headers}, "principal": token, "message": request})
+        self.log.append({"http": {"headers": headers}, "principal": principal_ref(token), "message": request})
         mismatches = self._validate_headers(headers, request)
         if mismatches:
             error = make_error(request["id"], HEADER_MISMATCH, "Header mismatch: " + ", ".join(mismatches), {"headers": mismatches})
@@ -273,7 +281,7 @@ class Gateway:
         request = make_request(self._next_id(), "tools/call", {"name": name, "arguments": arguments})
         headers = self._headers_for("tools/call", name)
         headers["Mcp-Method"] = "prompts/get"
-        self.log.append({"violation": reason, "http": {"headers": headers}, "principal": token, "message": request})
+        self.log.append({"violation": reason, "http": {"headers": headers}, "principal": principal_ref(token), "message": request})
         mismatches = self._validate_headers(headers, request)
         error = make_error(request["id"], HEADER_MISMATCH, "Header mismatch: " + ", ".join(mismatches), {"headers": mismatches})
         self.log.append({"http": {"status": 400}, "message": error})
@@ -291,7 +299,7 @@ class Gateway:
     def _read_through(self, token: str, uri: str) -> dict:
         request = make_request(self._next_id(), "resources/read", {"uri": uri})
         headers = self._headers_for("resources/read", uri)
-        self.log.append({"http": {"headers": headers}, "principal": token, "message": request})
+        self.log.append({"http": {"headers": headers}, "principal": principal_ref(token), "message": request})
         mismatches = self._validate_headers(headers, request)
         if mismatches:
             error = make_error(request["id"], HEADER_MISMATCH, "Header mismatch: " + ", ".join(mismatches), {"headers": mismatches})

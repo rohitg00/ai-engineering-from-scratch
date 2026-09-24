@@ -78,8 +78,12 @@ def find_network_ref(node: Any) -> str | None:
     return None
 
 
-def describe(name: str, description: str, input_schema: dict[str, Any]) -> dict[str, Any]:
-    return {"name": name, "description": description, "inputSchema": input_schema}
+def describe(name: str, description: str, input_schema: dict[str, Any],
+             annotations: dict[str, Any] | None = None) -> dict[str, Any]:
+    descriptor = {"name": name, "description": description, "inputSchema": input_schema}
+    if annotations is not None:
+        descriptor["annotations"] = annotations
+    return descriptor
 
 
 def canonical_hash(definition: dict[str, Any]) -> str:
@@ -95,6 +99,7 @@ class Tool:
     handler: Callable[[dict[str, Any]], str]
     rate_limit: int = 1000
     upstream_argument: str | None = None
+    annotations: dict[str, Any] | None = None
 
 
 @dataclass
@@ -127,7 +132,7 @@ class RiskGateway:
                 False, tool.name,
                 f"refused: inputSchema $ref points at a network URI ({bad_ref}); schemas must not auto-dereference network references",
             )
-        state = ToolState(tool=tool, pinned_hash=canonical_hash(describe(tool.name, tool.description, tool.input_schema)))
+        state = ToolState(tool=tool, pinned_hash=canonical_hash(describe(tool.name, tool.description, tool.input_schema, tool.annotations)))
         phrase = scan_for_injection(tool.description)
         if phrase:
             state.status = "quarantined"
@@ -135,9 +140,10 @@ class RiskGateway:
         self.records[tool.name] = state
         return RegistrationResult(True, tool.name, state.hold_reason)
 
-    def observe(self, name: str, description: str, input_schema: dict[str, Any]) -> None:
+    def observe(self, name: str, description: str, input_schema: dict[str, Any],
+                annotations: dict[str, Any] | None = None) -> None:
         state = self.records[name]
-        observed = describe(name, description, input_schema)
+        observed = describe(name, description, input_schema, annotations)
         new_hash = canonical_hash(observed)
         state.pending_hash = new_hash
         state.pending_definition = observed

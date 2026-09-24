@@ -89,15 +89,15 @@ class TrustLabeler:
 
     def label_server_content(self, server_id: str, label: str, text: str) -> ContextItem:
         item = ContextItem(zone=ZONE_SERVER, label=label, text=text, source_server=server_id)
-        match = CROSS_SERVER_CALL_PATTERN.search(text)
-        if match and match.group(1) != server_id:
-            self.quarantine.append(QuarantineEntry(
-                item_label=label,
-                source_server=server_id,
-                target_server=match.group(1),
-                target_tool=match.group(2),
-                reason="content asked the host to call a different server's tool",
-            ))
+        for match in CROSS_SERVER_CALL_PATTERN.finditer(text):
+            if match.group(1) != server_id:
+                self.quarantine.append(QuarantineEntry(
+                    item_label=label,
+                    source_server=server_id,
+                    target_server=match.group(1),
+                    target_tool=match.group(2),
+                    reason="content asked the host to call a different server's tool",
+                ))
         return item
 
     def is_trusted_server(self, server_id: str) -> bool:
@@ -116,12 +116,12 @@ class TrustLabeler:
 
     def attempt_relay(self, item: ContextItem, requested_server: str, requested_tool: str) -> tuple[bool, str]:
         if item.zone == ZONE_SERVER and item.source_server != requested_server:
-            match = CROSS_SERVER_CALL_PATTERN.search(item.text)
-            if match and match.group(1) == requested_server and match.group(2) == requested_tool:
-                return False, (
-                    f"refused: {item.source_server} content asked to call "
-                    f"{requested_server}.{requested_tool}, and only the model may choose a cross-server call"
-                )
+            for match in CROSS_SERVER_CALL_PATTERN.finditer(item.text):
+                if match.group(1) == requested_server and match.group(2) == requested_tool:
+                    return False, (
+                        f"refused: {item.source_server} content asked to call "
+                        f"{requested_server}.{requested_tool}, and only the model may choose a cross-server call"
+                    )
         return True, "allowed: the model chose this call on its own"
 
     def resolve_local_launch(self, item: ContextItem, command: str) -> tuple[bool, str]:
