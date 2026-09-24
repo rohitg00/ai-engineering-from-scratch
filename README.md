@@ -314,10 +314,13 @@ a passing score.
 
 The [MCPA Certification Curriculum](certifications/mcpa/README.md) is a free,
 open-source preparation program for the Model Context Protocol Associate exam from the
-Agentic AI Foundation, delivered through Linux Foundation Training. Its ten lessons build
-an MCP host, client, server, and tool from first principles across the five exam domains,
-each with a runnable standard-library lab, a diagnostic, a capstone, and a full-length
-original practice exam whose question mix follows the published blueprint weights.
+Agentic AI Foundation, delivered through Linux Foundation Training. Its 34 lessons teach
+the stateless 2026-07-28 protocol across the five exam domains: per-request `_meta` and
+`server/discover` in place of the old handshake, multi round-trip requests, subscriptions,
+caching, the tasks and MCP Apps extensions, OAuth authorization, and the registry and SDK
+tiers. Every lesson ships a runnable standard-library lab whose transcript is checked for
+the current wire shape, and the track adds a diagnostic, a capstone, and three full-length
+original practice exams whose question mix follows the published blueprint weights.
 
 Use the [AI-native GitHub onboarding guide](certifications/mcpa/GETTING_STARTED.md) with
 Claude Code, Codex, ChatGPT, Cursor, or another agent. Run `mcpa-certification` in Codex,
@@ -339,6 +342,7 @@ live exam questions, and cannot guarantee a passing score.
 | [`learn-mcp`](skills/learn-mcp/SKILL.md) | Focused Model Context Protocol (MCP) tutor. Creates `MCP-LEARNING.md`, follows the 17-lesson manifest, and records wire, security, reliability, and conformance evidence. |
 | [`learn-agent-skills`](skills/learn-agent-skills/SKILL.md) | Focused Agent Skills tutor. Creates `AGENT-SKILLS-LEARNING.md`, teaches lessons 22, 24, 25, 26, and 27, and records real-host evidence. |
 | [`claude-certification`](skills/claude-certification/SKILL.md) | Certification tutor. Chooses CCAO-F, CCDV-F, CCAR-F, or CCAR-P; teaches each lesson; runs labs; reviews artifacts; administers diagnostics and mocks; saves progress. |
+| [`mcpa-certification`](skills/mcpa-certification/SKILL.md) | MCPA tutor. Follows the 34-lesson `mcpa-f` route on the 2026-07-28 protocol; teaches each lesson; runs labs and the wire checker; administers the diagnostic and three mocks; saves progress. |
 | [`find-your-level`](skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
 | [`check-understanding <phase>`](skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. Use the Codex, Claude Code, or natural-language form in the invocation table above. |
 
@@ -1203,10 +1207,10 @@ reads a SKILL.md / AGENTS.md directory. Real tools, not homework.
 Two skill sets, two installers:
 
 **The learning skills** (`start-learning`, `learn`, `course-guide`,
-`learn-mcp`, `learn-agent-skills`, `claude-certification`, `find-your-level`, and
-`check-understanding`) live under [`skills/`](skills/) and install into a
-supported skill-capable host with one command. Installation needs Node.js and
-`npx`, but not a repository clone or Python:
+`learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`,
+`find-your-level`, and `check-understanding`) live under [`skills/`](skills/) and
+install into a supported skill-capable host with one command. Installation needs
+Node.js and `npx`, but not a repository clone or Python:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch

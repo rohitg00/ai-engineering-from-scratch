@@ -61,9 +61,10 @@ MCPA is one track, not a menu of options.
 | Credential | Model Context Protocol Associate |
 | Provider | Agentic AI Foundation, via Linux Foundation Training and Certification |
 | Level | Beginner, vendor-neutral |
-| Route | [10-lesson route](tracks/mcpa-f.json) |
-| Diagnostic | a short diagnostic at `assessments/mcpa-f/diagnostic.json` |
-| Full mock | a 60-question original mock at `assessments/mcpa-f/mock-01.json` |
+| Protocol revision | 2026-07-28, the stateless core, summarized with sources in [the protocol brief](research/mcp-2026-07-28-brief.md) |
+| Route | [34-lesson route](tracks/mcpa-f.json) |
+| Diagnostic | a 30-question diagnostic at `assessments/mcpa-f/diagnostic.json` |
+| Full mocks | three 60-question original mocks, `mock-01.json`, `mock-02.json`, and `mock-03.json` in `assessments/mcpa-f/` |
 
 The track JSON is the machine-readable source for route order, domain
 weights, and the assessment paths it declares. The tutor reads it instead of
@@ -107,15 +108,19 @@ Open the next lesson path from the route. Read `docs/en.md`, predict the
 scenario result, then run:
 
 ```bash
-LESSON=certifications/mcpa/lessons/06-trust-boundaries-and-consent
+LESSON=certifications/mcpa/lessons/14-multi-round-trip-requests-and-elicitation
 python3 "$LESSON/code/main.py"
 python3 -m unittest discover -s "$LESSON/code/tests" -v
 ```
 
-Lesson 06 is a trust-boundary example: its runnable work validates a consent
-gate before a tool call is allowed to execute. It does not add artificial
-provider code to a conceptual topic. Other lessons ship schema validators,
-lifecycle and error-handling mocks, an audit-log checker, and a full capstone
+Lesson 14 is a multi round-trip example: a deploy tool answers with
+`input_required`, asks a human to confirm through elicitation, and only
+deploys when the retry arrives with a new request id and the server's
+`requestState` echoed intact. Its runner also shows a tampered, expired,
+replayed, and retargeted `requestState` each being refused. It does not add
+artificial provider code to a conceptual topic. Other lessons ship schema
+validators, a discovery and caching runner, error-channel and lifecycle
+mocks, an OAuth flow model, an audit-chain checker, and a full capstone
 exchange verifier.
 
 Use `outputs/` as the completed example. Create your own version in
@@ -134,7 +139,15 @@ find certifications/mcpa/lessons -path '*/code/main.py' -print0 \
 
 find certifications/mcpa/lessons -path '*/code/tests/test_*.py' -print0 \
   | xargs -0 -n1 python3
+
+python3 scripts/check_mcpa_wire.py
 ```
+
+The wire checker imports every lesson's transcript and flags any message
+that lacks the 2026-07-28 shape: a request without its protocol version and
+client capabilities in `_meta`, a result without `resultType`, a legacy
+method such as `initialize` presented as current, or an error code the
+specification does not define.
 
 Every MCPA lab is an offline standard-library mock. None of them call a
 network API or need a key, and none has a live-wire mode. The suite is fully
@@ -142,8 +155,11 @@ local and credential-free by design.
 
 ## Take Assessments From GitHub
 
-The `mcpa-f` track declares one diagnostic and one original full mock. An AI
-tutor can read the JSON and administer it one question at a time:
+The `mcpa-f` track declares one diagnostic and three original full mocks.
+Each mock leans on a different skill: operational scenarios, wire-level
+messages, and design and security trade-offs. Use a mock you have not seen
+for each retake. An AI tutor can read the JSON and administer it one
+question at a time:
 
 - answer `single` questions with one letter;
 - answer `multiple` questions with the full set of letters;

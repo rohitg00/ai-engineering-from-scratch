@@ -5,7 +5,7 @@ description: >
   Protocol Associate) certification in AI Engineering from Scratch. Use when
   a learner wants to prepare for the MCPA, resume their certification path,
   learn the next lesson interactively, run and verify practical labs, take
-  the diagnostic or full mock, or remediate weak exam domains from GitHub
+  the diagnostic or a full mock, or remediate weak exam domains from GitHub
   with Claude Code, Codex, ChatGPT, Cursor, or another agent.
 ---
 
@@ -37,8 +37,11 @@ Read these files as needed:
 - Tests: `<lesson-path>/code/tests/test_*.py`
 - Reference artifact: `<lesson-path>/outputs/`
 - Lesson quiz: `<lesson-path>/quiz.json`
-- Diagnostic and mock: the `assessments` paths declared by the track
+- Diagnostic and three full mocks: the `assessments` paths declared by the track
 - Exam-fact citations and retrieval dates: `certifications/mcpa/research/source-verification-ledger.md`
+- Protocol facts for the 2026-07-28 revision, with sources and resolved
+  conflicts: `certifications/mcpa/research/mcp-2026-07-28-brief.md`
+- Wire-shape checker for lesson transcripts: `scripts/check_mcpa_wire.py`
 
 Read the `mcpa-f` track JSON at the start of every session. Its `lessons`
 array is the route order. Do not invent a route, lesson, domain weight, exam
@@ -47,6 +50,15 @@ fact, or official policy from memory. Cite
 fee, validity, retakes, or domain weight; when the ledger or `program.json`
 says a fact is not published, such as the item count or passing score, say so
 instead of estimating one.
+
+Teach the 2026-07-28 protocol revision as current. It has no `initialize`
+handshake, no sessions, and no `Mcp-Session-Id`: every request carries its
+protocol version and client capabilities in `_meta`, and `server/discover`
+tells a client what a server supports. Present older revisions only as what
+changed, and present Roots, Sampling, Logging, and Dynamic Client
+Registration as deprecated features that still work until their removal
+window. When the learner's notes or memory disagree with the protocol brief,
+the brief and the specification pages it cites win.
 
 The website is an optional interactive view, not a dependency:
 
@@ -210,10 +222,12 @@ learner who explicitly requests it:
 No-code changes the interface, not the standard. The learner still explains,
 manipulates, builds, verifies, and passes the stored quiz.
 
-Conceptual lessons still require practical work. Use their handshake
-simulator, schema validator, lifecycle runner, consent gate, or audit-log
-checker. Never invent fake API code to make a conceptual lesson look
-technical.
+Conceptual lessons still require practical work. Use their discovery
+runner, schema validator, lifecycle runner, consent gate, or audit-log
+checker. When the learner edits a lesson's transcript, run
+`python3 scripts/check_mcpa_wire.py <lesson-path>` to confirm every message
+still has the 2026-07-28 wire shape. Never invent fake API code to make a
+conceptual lesson look technical.
 
 Treat checked-in `outputs/` files as completed references. Have the learner
 build or modify their own artifact under:
@@ -274,18 +288,26 @@ After a diagnostic, continue the ordered route while emphasizing weak domains.
 After a full mock, require remediation and another evidence-backed attempt
 before saying the learner is ready. Never claim that a learner will pass.
 
+The track declares three full mocks with different emphasis: operational
+scenarios, wire-level messages, and design and security trade-offs. Use a
+mock the learner has not attempted for each retake, so a second score
+measures readiness rather than recall of the first attempt.
+
 ## Capstone boundaries
 
-Require the track's capstone artifact, `09-mcpa-capstone-readiness`, and run
+Require the track's capstone artifact, `33-mcpa-capstone-readiness`, and run
 its validator. A completed reference packet is an example, not proof that the
 learner built or can defend one.
 
 All MCPA labs, including the capstone, are offline standard-library MCP
 mocks. None of them need an API key or network access, and there is no live
 API wire mode to gate: this curriculum stays fully local and credential-free
-by design. The capstone integrates handshake, discovery, schema validation,
-error handling, consent, and audit into one exchange; treat its validator as
-the qualifying bar before calling a learner capstone-ready.
+by design. The capstone integrates discovery with cache hints, stateless
+requests, schema validation with tool execution errors, a multi round-trip
+consent request with protected `requestState`, a task for long work, HTTP
+headers, OAuth audience validation, trace context, and an audit chain into
+one exchange; treat its validator as the qualifying bar before calling a
+learner capstone-ready.
 
 ## Close each session
 
