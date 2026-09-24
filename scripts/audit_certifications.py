@@ -913,7 +913,7 @@ def run_provider_audit(audit: Audit, slug: str) -> None:
     readme_text = CERT_README_PATH.read_text(encoding="utf-8") if CERT_README_PATH.is_file() else ""
     readme_counts = {
         code: int(count)
-        for code, count in re.findall(r"^\|\s*(CC[A-Z-]+)\s*\|.*\|\s*(\d+)\s+lessons\s*\|$", readme_text, re.MULTILINE)
+        for code, count in re.findall(r"^\|\s*([A-Z][A-Z0-9-]+)\s*\|.*\|\s*(\d+)\s+lessons\s*\|$", readme_text, re.MULTILINE)
     }
     for track in tracks_by_id.values():
         exam_code = track.get("examCode")
