@@ -18,9 +18,9 @@ Training and Certification:
 The exam is online proctored, multiple choice, aligned to the Model Context
 Protocol specification dated 2026-07-28, valid for two years, with one retake
 included and a twelve-month eligibility window. The official exam item count and
-passing score are not published, so this curriculum's 60-question mock is an
-original practice set, not the official length, and practice percentages cannot
-predict an official outcome. The MCPA page lists 90 minutes; the launch
+passing score are not published, so this curriculum's three 60-question mocks
+are original practice sets, not the official length, and practice percentages
+cannot predict an official outcome. The MCPA page lists 90 minutes; the launch
 announcement stated 120 minutes. Confirm current pricing, format, duration, and
 eligibility on the official page before scheduling, because program details can
 change. Every exam fact and its retrieval date is recorded in
@@ -60,17 +60,22 @@ One route, built from first principles, that assembles a working MCP exchange:
 
 ```mermaid
 flowchart LR
-    F["Fundamentals\nroles, JSON-RPC, discovery"] --> A["Architecture\nhosts, clients, servers, schemas"]
-    A --> I["Interactions\nprimitives, lifecycle, errors"]
-    I --> S["Security\ntrust boundaries, consent, audit"]
-    S --> U["Use cases\nportability and ecosystem"]
-    U --> C["Capstone\na full exchange, end to end"]
+    F["Fundamentals\nspecification, JSON-RPC, stateless core"] --> A["Architecture\ntopology, discovery, schemas"]
+    A --> I["Interactions\nprimitives, multi round-trip, errors, tasks"]
+    I --> S["Security\ntrust zones, OAuth, consent, audit"]
+    S --> U["Use cases\nroles, extensions, apps, registry"]
+    U --> C["Capstone\none 2026-07-28 exchange, end to end"]
 ```
 
 Each lesson ships a runnable standard-library MCP mock, a test suite, a lesson
-quiz, and a reusable artifact. The route includes a short diagnostic and a
-full-length original mock whose question mix follows the published blueprint
-weights within practical rounding. It does not imitate or reproduce live exam
+quiz, and a reusable artifact. Every lesson teaches the stateless 2026-07-28
+revision as current, and `scripts/check_mcpa_wire.py` checks each lab's
+transcript for that wire shape. The protocol facts, their primary sources, and
+the source conflicts resolved while writing live in
+[research/mcp-2026-07-28-brief.md](research/mcp-2026-07-28-brief.md). The route
+includes a 30-question diagnostic and three full-length original mocks, each
+with a different emphasis, whose question mix follows the published blueprint
+weights within practical rounding. They do not imitate or reproduce live exam
 questions.
 
 The MCPA blueprint has five domains:
@@ -85,40 +90,45 @@ The MCPA blueprint has five domains:
 
 ## GitHub Lesson Index
 
-- [00-mcp-exam-strategy/](lessons/00-mcp-exam-strategy/) mcp exam strategy
-- [01-reading-the-specification/](lessons/01-reading-the-specification/) reading the specification
-- [02-the-integration-problem/](lessons/02-the-integration-problem/) the integration problem
-- [03-json-rpc-and-meta/](lessons/03-json-rpc-and-meta/) json rpc and meta
-- [04-the-stateless-core/](lessons/04-the-stateless-core/) the stateless core
-- [05-protocol-eras-and-compatibility/](lessons/05-protocol-eras-and-compatibility/) protocol eras and compatibility
-- [06-hosts-clients-and-servers/](lessons/06-hosts-clients-and-servers/) hosts clients and servers
-- [07-discovery-and-capability-negotiation/](lessons/07-discovery-and-capability-negotiation/) discovery and capability negotiation
-- [08-tool-schemas-and-structured-content/](lessons/08-tool-schemas-and-structured-content/) tool schemas and structured content
-- [09-reading-server-manifests/](lessons/09-reading-server-manifests/) reading server manifests
-- [10-model-interaction-flow/](lessons/10-model-interaction-flow/) model interaction flow
-- [11-the-tools-primitive/](lessons/11-the-tools-primitive/) the tools primitive
-- [12-the-resources-primitive/](lessons/12-the-resources-primitive/) the resources primitive
-- [13-prompts-and-completion/](lessons/13-prompts-and-completion/) prompts and completion
-- [14-multi-round-trip-requests-and-elicitation/](lessons/14-multi-round-trip-requests-and-elicitation/) multi round trip requests and elicitation
-- [15-deprecated-client-features/](lessons/15-deprecated-client-features/) deprecated client features
-- [16-notifications-and-subscriptions/](lessons/16-notifications-and-subscriptions/) notifications and subscriptions
-- [17-tool-invocation-lifecycle/](lessons/17-tool-invocation-lifecycle/) tool invocation lifecycle
-- [18-error-handling/](lessons/18-error-handling/) error handling
-- [19-transports-and-http-headers/](lessons/19-transports-and-http-headers/) transports and http headers
-- [20-caching-and-pagination/](lessons/20-caching-and-pagination/) caching and pagination
-- [21-long-running-work-and-tasks/](lessons/21-long-running-work-and-tasks/) long running work and tasks
-- [22-trust-boundaries/](lessons/22-trust-boundaries/) trust boundaries
-- [23-oauth-authorization/](lessons/23-oauth-authorization/) oauth authorization
-- [24-client-registration-and-identity/](lessons/24-client-registration-and-identity/) client registration and identity
-- [25-consent-and-least-privilege/](lessons/25-consent-and-least-privilege/) consent and least privilege
-- [26-risk-and-safety-controls/](lessons/26-risk-and-safety-controls/) risk and safety controls
-- [27-auditability-and-observability/](lessons/27-auditability-and-observability/) auditability and observability
-- [28-roles-and-adoption/](lessons/28-roles-and-adoption/) roles and adoption
-- [29-operational-use-cases/](lessons/29-operational-use-cases/) operational use cases
-- [30-the-extensions-framework/](lessons/30-the-extensions-framework/) the extensions framework
-- [31-mcp-apps/](lessons/31-mcp-apps/) mcp apps
-- [32-registry-gateways-and-sdk-tiers/](lessons/32-registry-gateways-and-sdk-tiers/) registry gateways and sdk tiers
-- [33-mcpa-capstone-readiness/](lessons/33-mcpa-capstone-readiness/) mcpa capstone readiness
+The tutor reads the track file for route order. This complete index also makes
+every lesson directly browsable from GitHub.
+
+| # | Lesson |
+|---:|--------|
+| 00 | [The MCPA Blueprint Is a Study Budget, Not a Checklist](lessons/00-mcp-exam-strategy/) |
+| 01 | [Reading the MCP Specification](lessons/01-reading-the-specification/) |
+| 02 | [The Integration Problem MCP Solves](lessons/02-the-integration-problem/) |
+| 03 | [The JSON-RPC Envelope](lessons/03-json-rpc-and-meta/) |
+| 04 | [The Stateless Core of MCP](lessons/04-the-stateless-core/) |
+| 05 | [Telling a Modern MCP Server From a Legacy One](lessons/05-protocol-eras-and-compatibility/) |
+| 06 | [Hosts, Clients, and Servers: MCP's Process Topology](lessons/06-hosts-clients-and-servers/) |
+| 07 | [Discovering a Server and Negotiating What It Can Do](lessons/07-discovery-and-capability-negotiation/) |
+| 08 | [The Contract Inside a Tool Definition](lessons/08-tool-schemas-and-structured-content/) |
+| 09 | [Reading a Server Manifest Like a Reviewer](lessons/09-reading-server-manifests/) |
+| 10 | [The Model Interaction Flow](lessons/10-model-interaction-flow/) |
+| 11 | [The Tools Primitive: Calling Actions and Reading Their Results](lessons/11-the-tools-primitive/) |
+| 12 | [Resources: Addressable Content for a Stateless Server](lessons/12-the-resources-primitive/) |
+| 13 | [Prompt Templates and Argument Completion](lessons/13-prompts-and-completion/) |
+| 14 | [Multi Round-Trip Requests and Elicitation](lessons/14-multi-round-trip-requests-and-elicitation/) |
+| 15 | [Deprecated, Not Removed: Roots, Sampling, and Logging](lessons/15-deprecated-client-features/) |
+| 16 | [The Subscription Stream: Notifications, Progress, and Cancellation](lessons/16-notifications-and-subscriptions/) |
+| 17 | [The Tool Invocation Lifecycle](lessons/17-tool-invocation-lifecycle/) |
+| 18 | [Two Ways for a Request to Fail](lessons/18-error-handling/) |
+| 19 | [Transports and the HTTP Header Contract](lessons/19-transports-and-http-headers/) |
+| 20 | [Cache Freshness and Cursor-Based Pagination](lessons/20-caching-and-pagination/) |
+| 21 | [Long-Running Work and the Tasks Extension](lessons/21-long-running-work-and-tasks/) |
+| 22 | [Trust Zones in an MCP Exchange](lessons/22-trust-boundaries/) |
+| 23 | [Authorizing Access to an MCP Server](lessons/23-oauth-authorization/) |
+| 24 | [Proving a Client's Identity to an Authorization Server](lessons/24-client-registration-and-identity/) |
+| 25 | [Consent and Least Privilege](lessons/25-consent-and-least-privilege/) |
+| 26 | [Risk and Safety Controls for MCP Tool Calls](lessons/26-risk-and-safety-controls/) |
+| 27 | [One Trace ID Ties Auditability to Observability](lessons/27-auditability-and-observability/) |
+| 28 | [Every MUST Needs an Owner](lessons/28-roles-and-adoption/) |
+| 29 | [Choosing MCP's Shape for the Job](lessons/29-operational-use-cases/) |
+| 30 | [The Extensions Framework](lessons/30-the-extensions-framework/) |
+| 31 | [Interactive Interfaces Inside the Conversation](lessons/31-mcp-apps/) |
+| 32 | [Finding, Routing To, and Trusting a Server](lessons/32-registry-gateways-and-sdk-tiers/) |
+| 33 | [Reading One MCP Exchange End to End](lessons/33-mcpa-capstone-readiness/) |
 
 ## Not Affiliated
 
