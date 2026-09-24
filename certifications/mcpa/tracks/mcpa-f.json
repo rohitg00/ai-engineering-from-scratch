@@ -458,5 +458,34 @@
       "reason": "Versioning, conformance tests, and release evidence"
     }
   ],
-  "assessments": []
+  "assessments": [
+    {
+      "id": "mcpa-f-diagnostic",
+      "path": "certifications/mcpa/assessments/mcpa-f/diagnostic.json",
+      "kind": "diagnostic",
+      "title": "MCPA Foundations Diagnostic",
+      "timeLimitMinutes": 30
+    },
+    {
+      "id": "mcpa-f-mock-01",
+      "path": "certifications/mcpa/assessments/mcpa-f/mock-01.json",
+      "kind": "mock",
+      "title": "MCPA Full-Length Mock 1: Operational Scenarios",
+      "timeLimitMinutes": 90
+    },
+    {
+      "id": "mcpa-f-mock-02",
+      "path": "certifications/mcpa/assessments/mcpa-f/mock-02.json",
+      "kind": "mock",
+      "title": "MCPA Full-Length Mock 2: Wire-Level Messages",
+      "timeLimitMinutes": 90
+    },
+    {
+      "id": "mcpa-f-mock-03",
+      "path": "certifications/mcpa/assessments/mcpa-f/mock-03.json",
+      "kind": "mock",
+      "title": "MCPA Full-Length Mock 3: Design and Security Trade-offs",
+      "timeLimitMinutes": 90
+    }
+  ]
 }
