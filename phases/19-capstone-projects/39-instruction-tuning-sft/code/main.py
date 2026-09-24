@@ -662,7 +662,11 @@ def run_demo(cfg: Optional[SFTConfig] = None) -> int:
     print("")
     print(f"FINAL EXACT MATCH = {report.final_em:.3f}  (baseline was {initial_em:.3f})")
 
-    if len(report.losses) < 2 or report.losses[-1] >= report.losses[0]:
+    if (
+        len(report.losses) < 2
+        or not math.isfinite(report.losses[-1])
+        or report.losses[-1] >= report.losses[0]
+    ):
         print("ERROR: training loss did not decrease over the run", file=sys.stderr)
         return 1
     return 0
