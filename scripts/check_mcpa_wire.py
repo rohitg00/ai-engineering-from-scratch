@@ -195,7 +195,9 @@ def check_transcript(report: Report, lesson: str, entries: list[Any], extra_resu
         if wrapper.get("legacy") or wrapper.get("violation"):
             if wrapper.get("violation") and not isinstance(wrapper.get("violation"), str):
                 report.add(where, "violation must be a string explaining the deliberate negative example")
-            if isinstance(message, dict) and "id" in message and "method" in message:
+            if not isinstance(message, dict):
+                report.add(where, "legacy/violation entry must wrap a JSON-RPC message object")
+            elif "id" in message and "method" in message:
                 pending[message["id"]] = message
             continue
         kind = classify(message)

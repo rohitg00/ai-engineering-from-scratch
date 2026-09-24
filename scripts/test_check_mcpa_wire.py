@@ -154,6 +154,10 @@ class StreamAndHeaderTests(unittest.TestCase):
         entries = [{"violation": "shows the -32602 rejection of a request without _meta", "message": broken}, error(9, -32602)]
         self.assertEqual(findings(entries), [])
 
+    def test_wrappers_around_a_non_object_message_are_flagged(self):
+        for wrapper in ({"legacy": True, "message": None}, {"violation": "typo", "message": "initialize"}):
+            self.assertTrue(any("must wrap a JSON-RPC message object" in item for item in findings([wrapper])))
+
 
 if __name__ == "__main__":
     unittest.main()
