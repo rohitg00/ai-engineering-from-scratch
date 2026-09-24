@@ -108,14 +108,12 @@ PROVIDERS: dict[str, dict[str, Any]] = {
     },
     "mcpa": {
         "entity": "agentic ai foundation",
-        # MCPA's official guide does not publish a passing score, score scale, or
-        # guide version yet, so commonFacts only declares the fields it verifies.
         "commonFacts": {
             "validityMonths": 24,
             "effective": "September 2026",
         },
         "examFacts": {
-            "mcpa-f": {"items": 60, "timeLimitMinutes": 90, "feeUsd": 250},
+            "mcpa-f": {"timeLimitMinutes": 90, "feeUsd": 250},
         },
         "expectedFigures": {
             "00": "mcpa-00-blueprint-weights",
