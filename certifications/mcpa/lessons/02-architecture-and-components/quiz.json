@@ -1,0 +1,78 @@
+{
+  "lesson": "02-architecture-and-components",
+  "title": "One Client, One Server: The Process Topology of MCP",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the relationship between an MCP client and an MCP server?",
+      "options": [
+        "A client can multiplex requests to any number of servers over one shared connection",
+        "A server pushes updates to every client that has ever connected to it before",
+        "Each client holds exactly one connection to exactly one server for its lifetime",
+        "A client and a server always run inside the same operating system process"
+      ],
+      "correct": 2,
+      "explanation": "A client is scoped to a single connection and a single server; a host that needs to reach several servers embeds a separate client for each one it connects to."
+    },
+    {
+      "stage": "check",
+      "question": "Why does a host embed more than one client when it needs to reach more than one server?",
+      "options": [
+        "Because each client holds only one connection, so a new server needs its own client",
+        "Because a single client can only send one JSON-RPC request in its whole lifetime",
+        "Because the specification requires a full process restart before adding any new server",
+        "Because a server refuses a client that has previously connected to a different server"
+      ],
+      "correct": 0,
+      "explanation": "A client's connection is one to one with a server, so reaching a second server means instantiating a second client inside the same host, not reusing the first connection."
+    },
+    {
+      "stage": "check",
+      "question": "During the initialize handshake, what does a server return alongside the negotiated protocol version?",
+      "options": [
+        "The complete source code of every tool handler the server has implemented",
+        "A list naming every other server the host happens to be connected to",
+        "The operating system username of the account that launched the host process",
+        "A capabilities object describing which features, such as tools, that server supports"
+      ],
+      "correct": 3,
+      "explanation": "The initialize response pairs the protocol version with a capabilities object, so the client learns exactly which features, such as tools or resources, that particular server supports before calling anything."
+    },
+    {
+      "stage": "check",
+      "question": "Why are an MCP host and an MCP server usually described as separate trust domains?",
+      "options": [
+        "They must run on physically separate hardware located in different data centers",
+        "They are separate processes, and the server's output is not inherently trusted by the host",
+        "The server encrypts every message so the host cannot read its own requests",
+        "Trust domains describe billing boundaries rather than anything about process isolation"
+      ],
+      "correct": 1,
+      "explanation": "Host and server are independent processes, often written by different parties, so content the server returns crosses a real boundary and is treated as untrusted input rather than as code the host already trusts."
+    },
+    {
+      "stage": "post",
+      "question": "A client sends an initialize request declaring protocol version 2026-07-28, but the server only speaks 2025-01-01. What should happen?",
+      "options": [
+        "The server silently upgrades itself to 2026-07-28 and proceeds as though nothing happened",
+        "The connection succeeds and the mismatch is only logged if debug mode is enabled",
+        "The server returns a structured error describing the mismatch instead of a result",
+        "The host process terminates immediately without giving the client any chance to respond"
+      ],
+      "correct": 2,
+      "explanation": "A version mismatch is a negotiation failure the server reports as an ordinary JSON-RPC error carrying a code and a message, which lets the host decide what to do next instead of crashing."
+    },
+    {
+      "stage": "post",
+      "question": "A host is connected to two servers, files and search, each exposing a different tool. How does it know which one to call for a given tool name?",
+      "options": [
+        "It builds a directory mapping each discovered tool name to the server that declared it",
+        "It sends the same request to every connected server and keeps whichever reply arrives first",
+        "It always routes every tool call to whichever server happened to connect first",
+        "It asks the end user to type the exact server name before every single call"
+      ],
+      "correct": 0,
+      "explanation": "Because each server declares its own tools during discovery, the host can build a directory from tool name to owning server and route a call to the connection that actually implements it."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "lessons": {
+    "certifications/mcpa/lessons/00-mcp-exam-strategy": [],
+    "certifications/mcpa/lessons/01-mcp-fundamentals": [
+      "certifications/mcpa/lessons/00-mcp-exam-strategy"
+    ],
+    "certifications/mcpa/lessons/02-architecture-and-components": [
+      "certifications/mcpa/lessons/01-mcp-fundamentals"
+    ],
+    "certifications/mcpa/lessons/03-schemas-and-structured-data": [
+      "certifications/mcpa/lessons/02-architecture-and-components"
+    ],
+    "certifications/mcpa/lessons/04-interaction-patterns-and-primitives": [
+      "certifications/mcpa/lessons/03-schemas-and-structured-data"
+    ],
+    "certifications/mcpa/lessons/05-tool-invocation-lifecycle-and-errors": [
+      "certifications/mcpa/lessons/04-interaction-patterns-and-primitives"
+    ],
+    "certifications/mcpa/lessons/06-trust-boundaries-and-consent": [
+      "certifications/mcpa/lessons/05-tool-invocation-lifecycle-and-errors"
+    ],
+    "certifications/mcpa/lessons/07-risk-controls-and-auditability": [
+      "certifications/mcpa/lessons/06-trust-boundaries-and-consent"
+    ],
+    "certifications/mcpa/lessons/08-use-cases-and-ecosystem": [
+      "certifications/mcpa/lessons/07-risk-controls-and-auditability"
+    ],
+    "certifications/mcpa/lessons/09-mcpa-capstone-readiness": [
+      "certifications/mcpa/lessons/08-use-cases-and-ecosystem"
+    ]
+  }
+}

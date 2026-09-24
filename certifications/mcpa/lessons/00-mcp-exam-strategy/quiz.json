@@ -1,0 +1,78 @@
+{
+  "lesson": "00-mcp-exam-strategy",
+  "title": "The MCPA Blueprint Is a Study Budget, Not a Checklist",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does a domain's weight in the MCPA blueprint most directly tell a candidate?",
+      "options": [
+        "The share of exam questions drawn from that domain, on average",
+        "The order in which the five domains appear in the official guide",
+        "The number of official training hours required before attempting it",
+        "The minimum score a candidate must reach in that domain alone"
+      ],
+      "correct": 0,
+      "explanation": "A domain's published weight is its share of the blueprint, the proportion of exam content the domain represents; it does not set a reading order, a required hour count, or a per-domain minimum score."
+    },
+    {
+      "stage": "check",
+      "question": "Which pair of domains carries the largest combined share of the MCPA blueprint?",
+      "options": [
+        "MCP Fundamentals and Architecture and Components, the two foundational domains",
+        "Interactions and Execution and Security and Governance, the two heaviest domains",
+        "Use Cases and Ecosystem and MCP Fundamentals, the two adoption-facing domains",
+        "Architecture and Components and Use Cases and Ecosystem, the two mid-weight domains"
+      ],
+      "correct": 1,
+      "explanation": "Interactions and Execution is weighted 26 percent and Security and Governance is weighted 24 percent, together half the blueprint, which is why they deserve the largest share of study hours."
+    },
+    {
+      "stage": "check",
+      "question": "According to the published MCPA guide, which exam detail is not stated?",
+      "options": [
+        "The exam fee for the exam-only purchase option",
+        "The specification version the exam questions are aligned to",
+        "The exact number of items on the exam",
+        "The length of time the credential stays valid"
+      ],
+      "correct": 2,
+      "explanation": "The certification page states the fee, the aligned specification version, and the validity period, but it does not publish an exact item count or a passing score, so a candidate should calibrate confidence rather than chase a target count."
+    },
+    {
+      "stage": "check",
+      "question": "A candidate has 40 hours before the exam and allocates them by blueprint weight. Roughly how many hours should go to Security and Governance, weighted at 24 percent?",
+      "options": [
+        "About 8 hours, an even split across all five domains",
+        "About 14 hours, matching the Architecture and Components weight instead",
+        "About 20 hours, half of the entire available study budget",
+        "About 9.6 hours, 24 percent of the 40 hour total"
+      ],
+      "correct": 3,
+      "explanation": "Proportional allocation multiplies the total budget by a domain's blueprint share, so 24 percent of 40 hours works out to 9.6 hours; an even split or another domain's weight would misrepresent the published blueprint."
+    },
+    {
+      "stage": "post",
+      "question": "A candidate scores 100 percent in MCP Fundamentals, weighted 16 percent, and 0 percent everywhere else. Why is a weighted readiness estimate more useful here than a plain five-way average?",
+      "options": [
+        "It shows readiness near 16 percent instead of a misleading 20 percent average",
+        "It rounds every domain score upward so the candidate always looks prepared",
+        "It discards the weakest domain scores before computing any final result",
+        "It replaces the five domains with a single combined pass or fail flag"
+      ],
+      "correct": 0,
+      "explanation": "A plain average shows 20 percent because one of five domains is perfect, but a weighted estimate reflects that the mastered domain is only 16 percent of the exam, which is a more honest picture of overall readiness."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the study planner treat a domain with zero attempted practice questions as contributing zero to readiness, rather than raising an error or leaving the domain out entirely?",
+      "options": [
+        "Skipping the domain would let the function avoid importing the standard library",
+        "It surfaces an unpracticed domain as a visible gap instead of crashing or hiding it",
+        "Raising an error there matches how a live MCPA exam server is expected to respond",
+        "Zero questions attempted is treated as an automatic passing score for that domain"
+      ],
+      "correct": 1,
+      "explanation": "Guarding the division keeps the function from crashing, and scoring an unattempted domain as zero surfaces a coverage gap in the readiness number instead of silently excluding it or inflating the overall result."
+    }
+  ]
+}

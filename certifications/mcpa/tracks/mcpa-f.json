@@ -90,13 +90,118 @@
       ]
     }
   ],
-  "lessons": [],
+  "lessons": [
+    {
+      "path": "certifications/mcpa/lessons/00-mcp-exam-strategy",
+      "domains": [
+        "mcp-fundamentals"
+      ],
+      "role": "orientation",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/01-mcp-fundamentals",
+      "domains": [
+        "mcp-fundamentals"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/02-architecture-and-components",
+      "domains": [
+        "architecture-and-components"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/03-schemas-and-structured-data",
+      "domains": [
+        "architecture-and-components"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/04-interaction-patterns-and-primitives",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/05-tool-invocation-lifecycle-and-errors",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/06-trust-boundaries-and-consent",
+      "domains": [
+        "security-and-governance"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/07-risk-controls-and-auditability",
+      "domains": [
+        "security-and-governance"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/08-use-cases-and-ecosystem",
+      "domains": [
+        "use-cases-and-ecosystem"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/09-mcpa-capstone-readiness",
+      "domains": [
+        "mcp-fundamentals",
+        "architecture-and-components",
+        "interactions-and-execution",
+        "security-and-governance",
+        "use-cases-and-ecosystem"
+      ],
+      "role": "capstone",
+      "required": true
+    }
+  ],
   "deepDives": [
-    {"path": "phases/13-tools-and-protocols/06-mcp-fundamentals", "label": "MCP Fundamentals", "reason": "Build a stateless MCP request contract from first principles"},
-    {"path": "phases/13-tools-and-protocols/07-building-an-mcp-server", "label": "Building an MCP Server", "reason": "Implement a server that exposes tools and capabilities"},
-    {"path": "phases/13-tools-and-protocols/08-building-an-mcp-client", "label": "Building an MCP Client", "reason": "Implement a client that discovers and calls tools"},
-    {"path": "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1", "label": "MCP Security and OAuth 2.1", "reason": "Apply permissions and token handling across the trust boundary"},
-    {"path": "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning", "label": "MCP Tool Poisoning", "reason": "Recognize and defend against malicious tool descriptions"}
+    {
+      "path": "phases/13-tools-and-protocols/06-mcp-fundamentals",
+      "label": "MCP Fundamentals",
+      "reason": "Build a stateless MCP request contract from first principles"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/07-building-an-mcp-server",
+      "label": "Building an MCP Server",
+      "reason": "Implement a server that exposes tools and capabilities"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/08-building-an-mcp-client",
+      "label": "Building an MCP Client",
+      "reason": "Implement a client that discovers and calls tools"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1",
+      "label": "MCP Security and OAuth 2.1",
+      "reason": "Apply permissions and token handling across the trust boundary"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning",
+      "label": "MCP Tool Poisoning",
+      "reason": "Recognize and defend against malicious tool descriptions"
+    }
   ],
   "assessments": []
 }

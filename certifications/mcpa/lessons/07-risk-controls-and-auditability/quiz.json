@@ -1,0 +1,78 @@
+{
+  "lesson": "07-risk-controls-and-auditability",
+  "title": "Auditability Means Tampering Leaves Evidence",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In the MCPA Security and Governance domain, what does auditability add beyond real-time observability?",
+      "options": [
+        "It replaces real-time monitoring entirely, since a stored log shows everything a live dashboard already shows",
+        "It lets a reviewer reconstruct and verify what happened after the fact, using durable recorded evidence",
+        "It measures how quickly a tool call finishes, which a monitoring dashboard is not able to measure",
+        "It stores a full copy of the model's weights, so training can be repeated exactly step by step"
+      ],
+      "correct": 1,
+      "explanation": "Observability is real-time visibility into current behavior, while auditability is the ability to reconstruct and independently verify past behavior from durable, tamper-evident records after an incident."
+    },
+    {
+      "stage": "check",
+      "question": "Why does altering a past entry in a hash-chained audit log get detected when the chain is verified?",
+      "options": [
+        "Each entry is individually encrypted with a private signing key, so only the person holding that key can open it",
+        "Each entry is copied out to three separate backup servers, so a majority vote decides which stored copy is authentic",
+        "Each entry is also stamped by an external clock service, so any later secret edit would simply show the wrong date",
+        "Each entry's hash covers the previous hash plus its own content, so editing a past entry breaks its recorded hash value"
+      ],
+      "correct": 3,
+      "explanation": "A hash chain ties each entry to the one before it through the hash value itself, so changing any past entry's content produces a different hash than the one recorded, and the mismatch is detectable."
+    },
+    {
+      "stage": "check",
+      "question": "Why must a flagged sensitive field be redacted before an audit entry is written and hashed, rather than only masked later when the log is displayed?",
+      "options": [
+        "Because the durable record must never contain the secret, or anyone reading the stored log or its backups can recover it later",
+        "Because redacting an entry only after it has already been written would make that one particular tool call run measurably slower every time",
+        "Because a display-time mask would silently change the tool's name, which would break the audit log's hash chain",
+        "Because the protocol specification requires every request to be encrypted twice before any server is allowed to execute it"
+      ],
+      "correct": 0,
+      "explanation": "Redaction has to happen before an entry is created, because a durable or backed-up log that ever stored the raw secret has already leaked it, no matter how a later viewer displays that entry."
+    },
+    {
+      "stage": "check",
+      "question": "How does an allowlist that denies an unregistered tool differ from what the audit log itself does?",
+      "options": [
+        "The allowlist only applies to tools that are written in Python, while the audit log applies to tools written in any language",
+        "The allowlist is optional and can be skipped by the model, while the audit log is mandatory for every request",
+        "The allowlist stops a call before it runs at all, while the log only records calls that were allowed to execute",
+        "The allowlist encrypts every argument before a call runs, while the audit log decrypts those arguments for a human reviewer"
+      ],
+      "correct": 2,
+      "explanation": "An allowlist is a risk control that prevents a disallowed tool from ever executing, while the audit log is a record of what already happened, so the two serve different points in the same request's lifecycle."
+    },
+    {
+      "stage": "post",
+      "question": "An attacker with write access to the log file edits a past entry's arguments and also recomputes that one entry's own stored hash to match the new content. What happens when verify() runs next?",
+      "options": [
+        "Verification passes cleanly, because a hash chain can only detect a change to the single most recent entry in the log",
+        "The edited entry's own hash matches again, but the next entry's stored previous-hash no longer matches it, so verification still catches the break",
+        "Verification fails immediately on the first entry in the log, regardless of which later entry the attacker actually changed",
+        "Verification is skipped entirely, because recomputing just one entry's hash disables the chain check for every single entry after it in the log"
+      ],
+      "correct": 1,
+      "explanation": "A hash chain protects against exactly this move: repairing one entry's own hash does not repair the link the following entry holds back to it, so the break is still visible at that later point."
+    },
+    {
+      "stage": "post",
+      "question": "A support tool resets a user's password. The team wants proof the reset happened without the new password ever sitting in the audit log. Which control accomplishes this?",
+      "options": [
+        "Raising the per-tool rate limit, so the password-reset tool is allowed to run as many times as the entire support team needs it to",
+        "Adding the password tool to the allowlist, so the server will accept a request to run it at all",
+        "Increasing the required arguments on the schema, so the caller must supply more fields before the tool can run",
+        "Marking the password argument as a flagged field, so it is replaced with a fixed marker before the entry is written or hashed"
+      ],
+      "correct": 3,
+      "explanation": "Redaction targets the one field that must never be stored, replacing it with a fixed marker before the entry exists in any form, which is a different job than deciding whether the tool may run or how often."
+    }
+  ]
+}
