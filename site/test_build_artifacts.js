@@ -2295,7 +2295,10 @@ test('lesson page includes completion panel and button contract', () => {
   assert.match(lessonHtml, /\.ai-panel--complete/);
   assert.match(lessonHtml, /\.lesson-complete-btn/);
   assert.match(lessonHtml, /\.lesson-complete-btn\.is-completed/);
+  assert.match(lessonHtml, /\.lesson-complete-btn:disabled\.is-completed/);
   assert.match(lessonHtml, /\.lesson-unmark-btn/);
+  assert.match(lessonHtml, /completeBtn\.disabled = isDone/);
+  assert.doesNotMatch(lessonHtml, /completeBtn\.setAttribute\('aria-pressed'/);
 
   const runtime = loadProgressRuntime();
   const lesson = 'phases/01-math-foundations/01-scalar-derivatives';

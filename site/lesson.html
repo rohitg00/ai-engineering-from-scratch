@@ -1486,14 +1486,17 @@
       transform: scale(0.98);
     }
 
-    .lesson-complete-btn.is-completed {
+    .lesson-complete-btn.is-completed,
+    .lesson-complete-btn:disabled.is-completed {
       background: var(--blueprint-tint);
       color: var(--blueprint);
       border-color: var(--blueprint);
       cursor: default;
+      opacity: 1;
     }
 
-    .lesson-complete-btn.is-completed:hover {
+    .lesson-complete-btn.is-completed:hover,
+    .lesson-complete-btn:disabled.is-completed:hover {
       background: var(--blueprint-tint);
       border-color: var(--blueprint);
       color: var(--blueprint);
@@ -5813,7 +5816,7 @@
           '<div class="lesson-complete-body">' +
           '<p class="lesson-complete-desc">Mark this lesson as completed to update your progress and continue through the curriculum.</p>' +
           '<div class="lesson-complete-actions">' +
-          '<button class="btn btn-primary lesson-complete-btn" id="lessonCompleteBtn" type="button" aria-pressed="false">' +
+          '<button class="btn btn-primary lesson-complete-btn" id="lessonCompleteBtn" type="button">' +
           '<span class="lesson-complete-btn-text">Complete Lesson</span>' +
           '</button>' +
           '<button class="lesson-unmark-btn" id="lessonUnmarkBtn" type="button" hidden>' +
@@ -5867,7 +5870,8 @@
         var isDone = window.AIFSProgress.isLessonComplete(lessonPath);
 
         if (completeBtn) {
-          completeBtn.setAttribute('aria-pressed', isDone ? 'true' : 'false');
+          completeBtn.disabled = isDone;
+          completeBtn.removeAttribute('aria-pressed');
           completeBtn.setAttribute('title', isDone ? 'Lesson completed' : 'Mark lesson as complete');
           if (isDone) {
             completeBtn.classList.remove('btn-primary');
