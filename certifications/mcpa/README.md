@@ -13,7 +13,7 @@ Training and Certification:
 
 | Exam | Credential | Level | Time | Fee | Core route |
 |------|------------|-------|------|-----|-----------:|
-| MCPA | Model Context Protocol Associate | Beginner | 90 min | $250 | 10 lessons |
+| MCPA | Model Context Protocol Associate | Beginner | 90 min | $250 | 34 lessons |
 
 The exam is online proctored, multiple choice, aligned to the Model Context
 Protocol specification dated 2026-07-28, valid for two years, with one retake
@@ -85,16 +85,40 @@ The MCPA blueprint has five domains:
 
 ## GitHub Lesson Index
 
-- [00-mcp-exam-strategy/](lessons/00-mcp-exam-strategy/) how the blueprint is weighted
-- [01-mcp-fundamentals/](lessons/01-mcp-fundamentals/) the integration problem MCP solves
-- [02-architecture-and-components/](lessons/02-architecture-and-components/) hosts, clients, and servers
-- [03-schemas-and-structured-data/](lessons/03-schemas-and-structured-data/) tools described by JSON Schema
-- [04-interaction-patterns-and-primitives/](lessons/04-interaction-patterns-and-primitives/) requests, notifications, primitives
-- [05-tool-invocation-lifecycle-and-errors/](lessons/05-tool-invocation-lifecycle-and-errors/) the call lifecycle and error codes
-- [06-trust-boundaries-and-consent/](lessons/06-trust-boundaries-and-consent/) the trust boundary and consent
-- [07-risk-controls-and-auditability/](lessons/07-risk-controls-and-auditability/) audit logs and risk controls
-- [08-use-cases-and-ecosystem/](lessons/08-use-cases-and-ecosystem/) portability across hosts
-- [09-mcpa-capstone-readiness/](lessons/09-mcpa-capstone-readiness/) a full exchange, end to end
+- [00-mcp-exam-strategy/](lessons/00-mcp-exam-strategy/) mcp exam strategy
+- [01-reading-the-specification/](lessons/01-reading-the-specification/) reading the specification
+- [02-the-integration-problem/](lessons/02-the-integration-problem/) the integration problem
+- [03-json-rpc-and-meta/](lessons/03-json-rpc-and-meta/) json rpc and meta
+- [04-the-stateless-core/](lessons/04-the-stateless-core/) the stateless core
+- [05-protocol-eras-and-compatibility/](lessons/05-protocol-eras-and-compatibility/) protocol eras and compatibility
+- [06-hosts-clients-and-servers/](lessons/06-hosts-clients-and-servers/) hosts clients and servers
+- [07-discovery-and-capability-negotiation/](lessons/07-discovery-and-capability-negotiation/) discovery and capability negotiation
+- [08-tool-schemas-and-structured-content/](lessons/08-tool-schemas-and-structured-content/) tool schemas and structured content
+- [09-reading-server-manifests/](lessons/09-reading-server-manifests/) reading server manifests
+- [10-model-interaction-flow/](lessons/10-model-interaction-flow/) model interaction flow
+- [11-the-tools-primitive/](lessons/11-the-tools-primitive/) the tools primitive
+- [12-the-resources-primitive/](lessons/12-the-resources-primitive/) the resources primitive
+- [13-prompts-and-completion/](lessons/13-prompts-and-completion/) prompts and completion
+- [14-multi-round-trip-requests-and-elicitation/](lessons/14-multi-round-trip-requests-and-elicitation/) multi round trip requests and elicitation
+- [15-deprecated-client-features/](lessons/15-deprecated-client-features/) deprecated client features
+- [16-notifications-and-subscriptions/](lessons/16-notifications-and-subscriptions/) notifications and subscriptions
+- [17-tool-invocation-lifecycle/](lessons/17-tool-invocation-lifecycle/) tool invocation lifecycle
+- [18-error-handling/](lessons/18-error-handling/) error handling
+- [19-transports-and-http-headers/](lessons/19-transports-and-http-headers/) transports and http headers
+- [20-caching-and-pagination/](lessons/20-caching-and-pagination/) caching and pagination
+- [21-long-running-work-and-tasks/](lessons/21-long-running-work-and-tasks/) long running work and tasks
+- [22-trust-boundaries/](lessons/22-trust-boundaries/) trust boundaries
+- [23-oauth-authorization/](lessons/23-oauth-authorization/) oauth authorization
+- [24-client-registration-and-identity/](lessons/24-client-registration-and-identity/) client registration and identity
+- [25-consent-and-least-privilege/](lessons/25-consent-and-least-privilege/) consent and least privilege
+- [26-risk-and-safety-controls/](lessons/26-risk-and-safety-controls/) risk and safety controls
+- [27-auditability-and-observability/](lessons/27-auditability-and-observability/) auditability and observability
+- [28-roles-and-adoption/](lessons/28-roles-and-adoption/) roles and adoption
+- [29-operational-use-cases/](lessons/29-operational-use-cases/) operational use cases
+- [30-the-extensions-framework/](lessons/30-the-extensions-framework/) the extensions framework
+- [31-mcp-apps/](lessons/31-mcp-apps/) mcp apps
+- [32-registry-gateways-and-sdk-tiers/](lessons/32-registry-gateways-and-sdk-tiers/) registry gateways and sdk tiers
+- [33-mcpa-capstone-readiness/](lessons/33-mcpa-capstone-readiness/) mcpa capstone readiness
 
 ## Not Affiliated
 
