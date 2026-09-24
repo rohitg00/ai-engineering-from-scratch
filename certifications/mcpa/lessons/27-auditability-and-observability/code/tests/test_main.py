@@ -25,6 +25,12 @@ class TracePropagationAndAuditTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             main.parse_traceparent("00-" + "0" * 32 + "-00f067aa0ba902b7-01")
 
+    def test_malformed_inbound_traceparent_restarts_the_trace_instead_of_failing(self) -> None:
+        response = self.scenario.client.call_tool("list_recent_grants", {}, traceparent="not-a-traceparent")
+        self.assertNotIn("error", response)
+        entry = self.scenario.ops.log.entries[-1]
+        self.assertRegex(entry.trace_id, r"^[0-9a-f]{32}$")
+
     def test_child_span_keeps_trace_id_and_changes_parent_id(self) -> None:
         root = main.new_root_traceparent()
         child = main.child_traceparent(root)

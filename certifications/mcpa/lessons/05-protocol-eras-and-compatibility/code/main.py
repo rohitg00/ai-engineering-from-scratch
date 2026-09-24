@@ -179,12 +179,16 @@ class DualEraClient:
         error = response.get("error") or {}
         if error.get("code") == UNSUPPORTED_PROTOCOL_VERSION:
             supported = (error.get("data") or {}).get("supported") or []
-            retry_version = supported[0]
-            retry_request = make_request(self._new_id(), "server/discover", version=retry_version)
-            self._record(retry_request)
-            retry_response = server.handle(retry_request)
-            self._record(retry_response)
-            era = {"era": "modern", "version": retry_version}
+            era = {"era": "modern", "version": None}
+            if supported:
+                retry_version = supported[0]
+                retry_request = make_request(self._new_id(), "server/discover", version=retry_version)
+                self._record(retry_request)
+                retry_response = server.handle(retry_request)
+                self._record(retry_response)
+                retry_result = retry_response.get("result")
+                if isinstance(retry_result, dict) and retry_result.get("resultType") == "complete" and "supportedVersions" in retry_result:
+                    era = {"era": "modern", "version": retry_version}
             self.era_cache[server.name] = era
             return era
         era = self._fall_back_to_legacy(server)

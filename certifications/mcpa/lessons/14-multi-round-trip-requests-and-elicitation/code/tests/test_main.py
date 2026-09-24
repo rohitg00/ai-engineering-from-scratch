@@ -72,6 +72,11 @@ class MultiRoundTripElicitationTests(unittest.TestCase):
         self.assertTrue(retry["result"]["isError"])
         self.assertEqual(self.server.deployed, [])
 
+    def test_non_ascii_requestState_is_rejected_as_malformed(self) -> None:
+        verdict = main.verify_request_state(b"key", "été.signature", "user-alice", "deploy_release", {}, 0, set())
+        self.assertFalse(verdict.ok)
+        self.assertIn("malformed", verdict.reason)
+
     def test_expired_requestState_is_rejected(self) -> None:
         ask = self.alice.call({"service": "search", "environment": "staging"})
         state = ask["result"]["requestState"]

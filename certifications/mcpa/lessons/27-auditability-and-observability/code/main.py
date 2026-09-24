@@ -284,7 +284,11 @@ class Server:
             return make_error(request_id, INVALID_PARAMS, "missing required _meta fields")
 
         traceparent = meta.get(TRACEPARENT_KEY) or new_root_traceparent()
-        trace_id = parse_traceparent(traceparent)["trace_id"]
+        try:
+            trace_id = parse_traceparent(traceparent)["trace_id"]
+        except ValueError:
+            traceparent = new_root_traceparent()
+            trace_id = parse_traceparent(traceparent)["trace_id"]
         tracestate = meta.get(TRACESTATE_KEY)
         baggage = meta.get(BAGGAGE_KEY)
 

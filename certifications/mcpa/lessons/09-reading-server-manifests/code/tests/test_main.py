@@ -45,6 +45,20 @@ class ManifestReviewTests(unittest.TestCase):
         main.lint_x_mcp_header(tool, findings)
         self.assertTrue(any("number" in f.message for f in findings))
 
+    def test_x_mcp_header_on_object_type_or_non_string_value_is_flagged(self) -> None:
+        tool = {
+            "name": "shaped_tool",
+            "inputSchema": {"type": "object", "properties": {
+                "filters": {"type": "object", "x-mcp-header": "Filters"},
+                "region": {"type": "string", "x-mcp-header": 7},
+            }},
+        }
+        findings: list[main.Finding] = []
+        main.lint_x_mcp_header(tool, findings)
+        messages = [f.message for f in findings]
+        self.assertTrue(any("object property" in message for message in messages))
+        self.assertTrue(any("is not a string" in message for message in messages))
+
     def test_public_cache_scope_with_private_looking_text_is_flagged(self) -> None:
         caching_findings = [f for f in self.acme_report.findings if f.area == "caching"]
         self.assertTrue(any("tools/list" in f.message for f in caching_findings))

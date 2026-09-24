@@ -119,10 +119,16 @@ def lint_x_mcp_header(tool: dict[str, Any], findings: list[Finding]) -> None:
         header = prop.get("x-mcp-header")
         if header is None:
             continue
-        if prop.get("type") == "number":
+        if not isinstance(header, str):
             findings.append(Finding(
                 "x-mcp-header", tool.get("name"),
-                f"x-mcp-header on {prop_name!r} sits on a number property, which the spec forbids",
+                f"x-mcp-header on {prop_name!r} is not a string; a client MUST drop this tool from tools/list",
+            ))
+            continue
+        if prop.get("type") not in ("string", "integer", "boolean"):
+            findings.append(Finding(
+                "x-mcp-header", tool.get("name"),
+                f"x-mcp-header on {prop_name!r} sits on a {prop.get('type')} property; only string, integer, and boolean parameters may be mirrored",
             ))
         if not header or not HEADER_TOKEN_RE.match(header):
             findings.append(Finding(

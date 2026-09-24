@@ -91,10 +91,13 @@ def encode_header_value(value: Any) -> str:
     return text
 
 
-def decode_header_value(value: str) -> str:
+def decode_header_value(value: str) -> str | None:
     if value.startswith(BASE64_PREFIX) and value.endswith(BASE64_SUFFIX):
         payload = value[len(BASE64_PREFIX):-len(BASE64_SUFFIX)]
-        return base64.b64decode(payload).decode("utf-8")
+        try:
+            return base64.b64decode(payload, validate=True).decode("utf-8")
+        except ValueError:
+            return None
     return value
 
 

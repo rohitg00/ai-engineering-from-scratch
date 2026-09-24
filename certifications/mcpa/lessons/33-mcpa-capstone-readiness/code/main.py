@@ -324,7 +324,12 @@ class Server:
 
     def _trace_id(self, meta: dict[str, Any]) -> str | None:
         traceparent = meta.get(TRACEPARENT_KEY)
-        return parse_traceparent(traceparent)["trace_id"] if isinstance(traceparent, str) else None
+        if not isinstance(traceparent, str):
+            return None
+        try:
+            return parse_traceparent(traceparent)["trace_id"]
+        except ValueError:
+            return None
 
     def handle(self, message: dict[str, Any], principal: str) -> tuple[list[dict[str, Any]], dict[str, Any]]:
         request_id = message.get("id")

@@ -52,6 +52,12 @@ class CapstoneTests(unittest.TestCase):
         self.assertNotIn("error", response)
         self.assertTrue(response["result"]["isError"])
 
+    def test_malformed_traceparent_does_not_interrupt_the_request(self) -> None:
+        server = main.build_server()
+        client = main.Client("alice-oncall", server)
+        response = client.send("tools/list", traceparent="not-a-traceparent")
+        self.assertEqual(response["result"]["resultType"], "complete")
+
     def test_unknown_method_is_method_not_found_not_invalid_params(self) -> None:
         server = main.build_server()
         client = main.Client("alice-oncall", server)

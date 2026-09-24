@@ -102,7 +102,7 @@ class StateVerdict:
 
 def verify_request_state(secret: bytes, state: Any, principal: str, name: str, arguments: dict[str, Any], now: int,
                          consumed: set[str]) -> StateVerdict:
-    if not isinstance(state, str) or "." not in state:
+    if not isinstance(state, str) or not state.isascii() or "." not in state:
         return StateVerdict(False, "requestState is missing or malformed")
     encoded, _, signature = state.rpartition(".")
     expected_signature = hmac.new(secret, encoded.encode("ascii"), hashlib.sha256).hexdigest()

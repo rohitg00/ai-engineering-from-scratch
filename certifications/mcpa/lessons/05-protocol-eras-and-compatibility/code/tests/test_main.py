@@ -26,6 +26,14 @@ class ProtocolErasTests(unittest.TestCase):
         self.assertEqual(methods, ["server/discover", "server/discover"])
         self.assertNotIn("initialize", methods)
 
+    def test_unsupported_version_with_no_supported_list_stays_modern_without_retry(self) -> None:
+        client = main.DualEraClient()
+        server = main.ModernServer("no-versions-server", [])
+        era = client.probe(server)
+        self.assertEqual(era, {"era": "modern", "version": None})
+        methods = [entry["method"] for entry in client.log if isinstance(entry, dict) and "method" in entry]
+        self.assertEqual(methods, ["server/discover"])
+
     def test_unrecognized_error_triggers_legacy_fallback(self) -> None:
         client = main.DualEraClient()
         server = main.LegacyErrorServer("legacy-error-server")

@@ -44,6 +44,10 @@ class TransportsAndHttpHeadersTests(unittest.TestCase):
         round_tripped = main.decode_header_value(main.encode_header_value("Hello, 世界"))
         self.assertEqual(round_tripped, "Hello, 世界")
 
+    def test_malformed_base64_sentinel_decodes_to_a_mismatch_not_an_exception(self) -> None:
+        self.assertIsNone(main.decode_header_value("=?base64?not*base64?="))
+        self.assertIsNone(main.decode_header_value("=?base64?/w==?="))
+
     def test_mcp_name_header_source_field_depends_on_method(self) -> None:
         read_request = main.make_request(2, "resources/read", {"uri": "file:///tmp/config.json"})
         self.assertEqual(main.build_http_headers(read_request)["Mcp-Name"], "file:///tmp/config.json")
