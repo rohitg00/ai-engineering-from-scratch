@@ -78,10 +78,10 @@ def discover_targets(phase_filter: str | None):
 
 
 def classify(output: str) -> tuple[str, str]:
-    match = MISSING_MODULE.search(output)
-    if match:
-        top = match.group(1).split(".")[0]
-        if top in OPTIONAL_DEPS:
+    has_test_failure = "AssertionError" in output or "FAILED (failures=" in output
+    if not has_test_failure:
+        match = MISSING_MODULE.search(output)
+        if match and match.group(1).split(".")[0] in OPTIONAL_DEPS:
             return "skip", f"needs {match.group(1)}"
     return "fail", ""
 
