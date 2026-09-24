@@ -53,7 +53,7 @@ The figure traces one request through all five stages. Follow the top row from a
 
 ## Practice Lab
 
-Open `code/main.py` and run it from the repository root:
+Open `code/main.py` and run it from the lesson directory:
 
 ```bash
 python3 code/main.py

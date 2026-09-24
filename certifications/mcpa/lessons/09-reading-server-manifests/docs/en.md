@@ -45,7 +45,7 @@ The figure lays out the three documents side by side: a `server/discover` result
 
 ## Practice Lab
 
-Open `code/main.py`. It builds two servers that only answer `server/discover` and `tools/list`, an `acme-tools` server written the way a careless integration often ships, and a `docs-search` server written carefully, then runs both results and a hand-written `server.json` for each through `lint_manifest`. Run it from the repository root:
+Open `code/main.py`. It builds two servers that only answer `server/discover` and `tools/list`, an `acme-tools` server written the way a careless integration often ships, and a `docs-search` server written carefully, then runs both results and a hand-written `server.json` for each through `lint_manifest`. Run it from the lesson directory:
 
 ```bash
 python3 code/main.py

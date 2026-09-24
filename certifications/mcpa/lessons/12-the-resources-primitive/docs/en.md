@@ -47,7 +47,7 @@ The figure follows one URI from a template to a result. On the left, a template,
 
 ## Practice Lab
 
-Open `code/main.py`. It builds one in-memory workspace server: a `README.md`, a directory of two files under `src/`, a binary `logo.png`, a version-controlled changelog under a `git://` URI, and one private note under a `user://` URI. Run it from the repository root.
+Open `code/main.py`. It builds one in-memory workspace server: a `README.md`, a directory of two files under `src/`, a binary `logo.png`, a version-controlled changelog under a `git://` URI, and one private note under a `user://` URI. Run it from the lesson directory.
 
 ```bash
 python3 code/main.py

@@ -42,7 +42,7 @@ A one-page reference for building Multi Round-Trip Requests and elicitation into
 
 - A retry that reuses the original id is wrong; it must be new.
 - A retry that changes or omits a requestState the server sent is wrong; it must be echoed exactly.
-- A protocol error is not the right channel for a tampered or expired requestState; treat it the same way an expired handle is treated, as a tool execution error (isError true) the model can read and act on by calling the tool again.
+- The specification requires a server to reject requestState that fails verification but does not prescribe the channel. This lab answers a tampered or expired requestState the way an expired handle is treated, with a tool execution error (isError true) the model can read and act on by calling the tool again; asking again with a fresh input_required result is also a valid choice.
 - A server that pushes elicitation/create down an open stream without ending the original call is implementing the pre-2026-07-28 pattern SEP-2322 replaced.
 
 Source: `certifications/mcpa/research/mcp-2026-07-28-brief.md`, sections 7 and 11.

@@ -13,7 +13,7 @@ A one-page decision reference for MCP 2026-07-28, aligned to the "Interactions a
 
 - Client declares support in `io.modelcontextprotocol/clientCapabilities.extensions["io.modelcontextprotocol/tasks"]` on every request that might need it, not once for the whole session; there is no session to remember it in.
 - Server declares the same extension in `server/discover` `capabilities.extensions`.
-- A server MUST NOT return `CreateTaskResult` to a request that did not declare the extension; it returns `-32021` (Missing Required Client Capability) with `data.requiredCapabilities` instead.
+- A server MUST NOT return `CreateTaskResult` to a request that did not declare the extension. If it can still complete the work within that request it returns an ordinary result; only when it cannot service the request without a task does it return `-32021` (Missing Required Client Capability) with `data.requiredCapabilities`. `tasks/get`, `tasks/update`, and `tasks/cancel` from a client that did not declare the extension on that request also get `-32021`.
 - The server decides per request whether to create a task. A client that declared the extension must handle either a normal result or `resultType: "task"` for the same tool.
 - Only `tools/call` supports task augmentation in this revision.
 
