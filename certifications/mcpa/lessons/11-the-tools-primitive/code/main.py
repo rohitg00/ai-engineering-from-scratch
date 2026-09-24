@@ -15,6 +15,7 @@ SERVER_INFO_KEY = "io.modelcontextprotocol/serverInfo"
 SUBSCRIPTION_ID_KEY = "io.modelcontextprotocol/subscriptionId"
 
 INVALID_PARAMS = -32602
+METHOD_NOT_FOUND = -32601
 
 PAGE_SIZE = 2
 
@@ -124,7 +125,7 @@ class Server:
             return self._list_tools(request_id, params.get("cursor"))
         if method == "tools/call":
             return self._call_tool(request_id, params)
-        return make_error(request_id, INVALID_PARAMS, f"Unexpected method for this lesson: {method}")
+        return make_error(request_id, METHOD_NOT_FOUND, f"Unexpected method for this lesson: {method}")
 
     def _list_tools(self, request_id: Any, cursor: Any) -> dict:
         start = _start_for_cursor(cursor)

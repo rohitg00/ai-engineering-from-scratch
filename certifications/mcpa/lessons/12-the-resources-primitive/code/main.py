@@ -18,6 +18,7 @@ CLIENT_INFO_KEY = "io.modelcontextprotocol/clientInfo"
 SERVER_INFO_KEY = "io.modelcontextprotocol/serverInfo"
 
 INVALID_PARAMS = -32602
+METHOD_NOT_FOUND = -32601
 UNSUPPORTED_PROTOCOL_VERSION = -32022
 
 ROOT_PREFIX = "file:///project/"
@@ -144,7 +145,7 @@ class WorkspaceServer:
             return self._list_templates(request_id)
         if method == "resources/read":
             return self._read(request_id, params)
-        return make_error(request_id, INVALID_PARAMS, f"Unknown method: {method}")
+        return make_error(request_id, METHOD_NOT_FOUND, f"Unknown method: {method}")
 
     def _list(self, request_id: Any) -> dict:
         listing = [self.resources[uri].definition() for uri in sorted(self.resources)]

@@ -14,6 +14,7 @@ CAPS_KEY = "io.modelcontextprotocol/clientCapabilities"
 CLIENT_INFO_KEY = "io.modelcontextprotocol/clientInfo"
 SERVER_INFO_KEY = "io.modelcontextprotocol/serverInfo"
 
+METHOD_NOT_FOUND = -32601
 INVALID_PARAMS = -32602  # JSON-RPC: Invalid params
 
 
@@ -144,7 +145,7 @@ class Replica:
             )
         if method == "tools/call":
             return self._call(request_id, params, principal)
-        return make_error(request_id, INVALID_PARAMS, f"Unknown method: {method}")
+        return make_error(request_id, METHOD_NOT_FOUND, f"Unknown method: {method}")
 
     def _call(self, request_id: Any, params: dict, principal: str) -> dict:
         name = params.get("name")

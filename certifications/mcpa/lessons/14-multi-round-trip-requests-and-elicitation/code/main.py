@@ -17,6 +17,7 @@ CLIENT_INFO_KEY = "io.modelcontextprotocol/clientInfo"
 SERVER_INFO_KEY = "io.modelcontextprotocol/serverInfo"
 
 INVALID_PARAMS = -32602
+METHOD_NOT_FOUND = -32601
 MISSING_REQUIRED_CLIENT_CAPABILITY = -32021
 
 
@@ -143,7 +144,7 @@ class DeployServer:
             return make_error(request_id, INVALID_PARAMS, "Missing required _meta protocol fields")
         method = message.get("method")
         if method != "tools/call":
-            return make_error(request_id, INVALID_PARAMS, f"Unknown method: {method}")
+            return make_error(request_id, METHOD_NOT_FOUND, f"Unknown method: {method}")
         return self._call(request_id, params, meta[CAPS_KEY], principal)
 
     def _call(self, request_id: Any, params: dict, client_capabilities: dict, principal: str) -> dict:

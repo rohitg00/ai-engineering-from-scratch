@@ -35,6 +35,12 @@ class JsonRpcAndMetaTests(unittest.TestCase):
         self.assertTrue(main.validate_result_shape(missing))
         self.assertEqual(main.validate_result_shape(present), [])
 
+    def test_error_without_code_or_message_is_rejected(self) -> None:
+        missing = {"jsonrpc": "2.0", "id": 1, "error": {}}
+        present = {"jsonrpc": "2.0", "id": 1, "error": {"code": main.INVALID_PARAMS, "message": "bad"}}
+        self.assertTrue(main.validate_error_shape(missing))
+        self.assertEqual(main.validate_error_shape(present), [])
+
     def test_reserved_meta_prefix_detection(self) -> None:
         self.assertEqual(main.meta_key_status("io.modelcontextprotocol/protocolVersion"), "reserved")
         self.assertEqual(main.meta_key_status("dev.mcp/experimentalHint"), "reserved")
