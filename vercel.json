@@ -6,7 +6,7 @@
   "routes": [
     { "src": "/lesson\\.html", "methods": ["GET", "HEAD"], "dest": "/api/lesson?legacy=1" },
     { "src": "/certification\\.html", "methods": ["GET", "HEAD"], "dest": "/api/certification?legacy=1" },
-    { "src": "/", "methods": ["GET", "HEAD"], "has": [{ "type": "header", "key": "accept", "value": ".*text/markdown.*" }], "dest": "/api/markdown?path=/" }
+    { "src": "/", "methods": ["GET", "HEAD"], "has": [{ "type": "header", "key": "accept", "value": "(?i).*text/markdown.*" }], "dest": "/api/markdown?path=/" }
   ],
   "rewrites": [
     { "source": "/lesson", "destination": "/api/lesson" },
