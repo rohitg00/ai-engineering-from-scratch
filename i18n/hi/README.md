@@ -61,7 +61,7 @@ same lesson code.
 | I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
 | I want to prepare for a Claude certification | [Certification onboarding](../../certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |
-| I want to prepare for the MCP Associate (MCPA) | [MCPA onboarding](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA Curriculum](../../certifications/mcpa/README.md) |
+| I want to prepare for the MCP Associate (MCPA) | [MCPA onboarding](../../certifications/mcpa/GETTING_STARTED.md) · [MCPA Curriculum](../../certifications/mcpa/README.md) | Not on the website yet |
 
 Not sure where you fit? Use the [`start-learning` placement tutor](../../skills/start-learning/SKILL.md)
 or the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).

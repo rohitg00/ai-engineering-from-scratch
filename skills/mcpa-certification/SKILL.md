@@ -60,15 +60,10 @@ Registration as deprecated features that still work until their removal
 window. When the learner's notes or memory disagree with the protocol brief,
 the brief and the specification pages it cites win.
 
-The website is an optional interactive view, not a dependency:
-
-```text
-https://aiengineeringfromscratch.com/certifications.html
-```
-
-GitHub learners must be able to complete the full tutor loop without opening
-the website. Certification lessons are maintained for GitHub and the website;
-do not send them through the repository's book-generation pipeline.
+The website does not show the MCPA program yet, so teach entirely from the
+repository and never send a learner to the website for MCPA lessons, figures,
+or assessments. Certification lessons stay out of the repository's
+book-generation pipeline.
 
 ## Select the mode
 
@@ -179,10 +174,9 @@ Teach the current lesson in this order:
 
 1. Frame `The Problem` against the learner's goal.
 2. Explain `The Concept` in small sections and pause for predictions.
-3. Use the registered `Interactive Lab` relationship. On the website, have the
-   learner manipulate it. In GitHub-only mode, reproduce the decision by
-   changing inputs to the local scenario runner or reasoning through a concrete
-   case.
+3. Use the lesson's `Interactive Lab` section: reproduce the decision by
+   changing inputs to the local scenario runner or by reasoning through a
+   concrete case.
 4. Ask the lesson's `pre` and `check` questions at the relevant point. Wait for
    each answer before revealing its explanation.
 

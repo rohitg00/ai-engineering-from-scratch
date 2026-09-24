@@ -1,9 +1,9 @@
 # Learn the MCPA Certification From GitHub
 
-The repository and the website are equal learning surfaces. The website adds
-interactive figures and browser progress. GitHub gives your AI coding harness
-the lesson source, scenario code, tests, artifacts, quizzes, diagnostics, and
-route order it needs to teach you step by step.
+MCPA is GitHub-only for now: the website does not show this program yet. The
+repository gives your AI coding harness the lesson source, scenario code,
+tests, artifacts, quizzes, diagnostics, and route order it needs to teach you
+step by step.
 
 ## Start With an AI Tutor
 
@@ -173,23 +173,13 @@ credentials, or guarantees of passing, and the official item count and
 passing score are not published, so practice results cannot predict an
 official outcome.
 
-## Use the Website Too
+## The Website
 
-The same curriculum remains available at
-[aiengineeringfromscratch.com/certifications.html](https://aiengineeringfromscratch.com/certifications.html).
-Use it for direct-manipulation figures, local browser progress, timers, and
-visual assessment remediation. GitHub remains the better surface when you want
-an AI tutor to run code, inspect artifacts, and preserve a detailed learning
-plan.
-
-For a local website preview:
-
-```bash
-node site/build.js
-python3 -m http.server 4173 --bind 127.0.0.1
-```
-
-Open `http://127.0.0.1:4173/site/certifications.html`.
+The certification pages at
+[aiengineeringfromscratch.com/certifications.html](https://aiengineeringfromscratch.com/certifications.html)
+do not show the MCPA program yet, so there are no MCPA figures, progress
+tracking, timers, or assessments on the website. Learn MCPA from this
+repository with an AI tutor as described above.
 
 ## Independence and Publishing Boundary
 
@@ -201,7 +191,7 @@ not contain live exam questions, and does not issue a credential or guarantee
 a passing result. Check the current official page and eligibility rules
 before registering.
 
-Certification content is published through GitHub and the website. It is
+MCPA content is published through GitHub. It is
 intentionally not included in the repository's EPUB/PDF book workflow because
 the labs, assessments, route state, and interactive mechanisms are the
 course.
