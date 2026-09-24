@@ -11,6 +11,8 @@ on:
       - "scripts/audit_lessons.py"
       - "scripts/run_lesson_tests.py"
       - "scripts/audit_certifications.py"
+      - "scripts/check_mcpa_wire.py"
+      - "scripts/test_check_mcpa_wire.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
@@ -52,6 +54,8 @@ on:
       - "scripts/audit_lessons.py"
       - "scripts/run_lesson_tests.py"
       - "scripts/audit_certifications.py"
+      - "scripts/check_mcpa_wire.py"
+      - "scripts/test_check_mcpa_wire.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
@@ -108,6 +112,10 @@ jobs:
         run: find certifications/*/lessons -path '*/code/tests/test_*.py' -print0 | xargs -0 -r -n1 python3
       - name: run certification lab demos
         run: find certifications/*/lessons -path '*/code/main.py' -print0 | xargs -0 -r -n1 python3
+      - name: MCPA wire-shape checker tests
+        run: python3 scripts/test_check_mcpa_wire.py
+      - name: MCPA lesson transcripts match the 2026-07-28 wire shape
+        run: python3 scripts/check_mcpa_wire.py
       - name: skill artifact bundles install without losing companion files
         run: python3 scripts/test_skill_artifact_bundles.py
       - name: skill artifact bundles render as one lesson output
