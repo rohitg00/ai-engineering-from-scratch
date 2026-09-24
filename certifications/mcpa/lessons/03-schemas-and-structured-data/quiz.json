@@ -6,33 +6,33 @@
       "stage": "pre",
       "question": "What does a tool's inputSchema give a client that its name and description alone do not?",
       "options": [
-        "A cached copy of every argument object the tool has ever received before",
         "A guaranteed maximum price the host will be charged for each tool call",
         "A machine-checkable shape that the client uses to build a valid argument object",
-        "A compiled binary of the tool's handler that runs faster than the original"
+        "A compiled binary of the tool's handler that runs faster than the original",
+        "A cached copy of every argument object the tool has ever received before"
       ],
-      "correct": 2,
+      "correct": 1,
       "explanation": "An inputSchema is data a client can read and check code against, not prose a human has to interpret, which is why a model can construct a correct call for a server it has never seen."
     },
     {
       "stage": "check",
       "question": "In a tool's inputSchema, what does the required array control?",
       "options": [
-        "Which property names must be present for the call to be considered valid",
-        "Which properties the server will silently rename before it runs the tool handler",
+        "Which properties the host displays to the user before a call is sent",
         "Which properties the client is allowed to log for later analytics review",
-        "Which properties the host displays to the user before a call is sent"
+        "Which property names must be present for the call to be considered valid",
+        "Which properties the server will silently rename before it runs the tool handler"
       ],
-      "correct": 0,
+      "correct": 2,
       "explanation": "The required array lists property names that must be present in the arguments object; anything left off that list is optional, and the server checks this before running the tool."
     },
     {
       "stage": "check",
       "question": "A create_ticket call arrives with points set to the string \"five\" instead of a number. What does a conformant server do?",
       "options": [
-        "It converts the string to the nearest integer and runs the tool handler anyway",
         "It stores the string as given and lets the ticket system fail later",
         "It asks the model to resend the call using a different tool instead",
+        "It converts the string to the nearest integer and runs the tool handler anyway",
         "It rejects the call with an Invalid params error before the handler runs"
       ],
       "correct": 3,
@@ -42,36 +42,36 @@
       "stage": "check",
       "question": "A tool's inputSchema constrains priority to the enum [\"low\", \"medium\", \"high\"]. What happens when a call sends priority as \"urgent\"?",
       "options": [
-        "The call succeeds because urgent is treated as a synonym for high priority",
         "The call fails validation because urgent is not in the enum's allowed values",
+        "The call succeeds because urgent is treated as a synonym for high priority",
         "The call succeeds and the server adds urgent to the enum automatically",
         "The call is queued until a human operator approves the new value"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": "An enum on a property restricts it to a fixed set of values, so any value outside that set fails validation regardless of type, and the server rejects the call rather than silently accepting or expanding the allowed set."
     },
     {
       "stage": "post",
       "question": "A tools/call request passes schema validation and the handler runs successfully. How does the structured result reach the model?",
       "options": [
-        "As a single string logged to the server's console for a human to read later",
         "As a raw database row the client must parse using the server's private schema",
         "As a result object with a list of typed content items the model reads",
+        "As a single string logged to the server's console for a human to read later",
         "As a redirect instructing the host to open the tool's own web page"
       ],
-      "correct": 2,
+      "correct": 1,
       "explanation": "A tools/call result carries typed content items, each with its own type field, so the model can read specific structured values back out of the response instead of parsing free-form text."
     },
     {
       "stage": "post",
       "question": "Why does a conformant MCP server validate arguments again on its own side, even though the client built them from the same schema?",
       "options": [
-        "Because the client or the model that filled in the arguments can still be wrong",
         "Because JSON-RPC requires every message to be validated exactly twice before delivery",
         "Because the schema changes randomly each time a tool is registered again",
+        "Because the client or the model that filled in the arguments can still be wrong",
         "Because the host charges a fee for every validation the server skips"
       ],
-      "correct": 0,
+      "correct": 2,
       "explanation": "A client can be wrong and a model can hallucinate a field, so a server that trusted the client's construction without checking it would be one bad argument away from running a handler on data it was never designed to receive."
     }
   ]

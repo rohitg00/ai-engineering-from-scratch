@@ -64,6 +64,7 @@ mlruns/
 !.claude/skills/
 .claude/skills/*
 !.claude/skills/claude-certification/
+!.claude/skills/mcpa-certification/
 !.claude/skills/find-your-level/
 !.claude/skills/find-your-level/**
 !.claude/skills/learn-agent-skills/

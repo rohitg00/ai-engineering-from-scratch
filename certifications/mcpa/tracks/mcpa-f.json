@@ -203,5 +203,20 @@
       "reason": "Recognize and defend against malicious tool descriptions"
     }
   ],
-  "assessments": []
+  "assessments": [
+    {
+      "id": "mcpa-f-diagnostic",
+      "path": "certifications/mcpa/assessments/mcpa-f/diagnostic.json",
+      "kind": "diagnostic",
+      "title": "MCPA Foundations Diagnostic",
+      "timeLimitMinutes": 25
+    },
+    {
+      "id": "mcpa-f-mock-01",
+      "path": "certifications/mcpa/assessments/mcpa-f/mock-01.json",
+      "kind": "mock",
+      "title": "MCPA Full-Length Mock",
+      "timeLimitMinutes": 90
+    }
+  ]
 }

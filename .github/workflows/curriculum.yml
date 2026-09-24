@@ -105,9 +105,9 @@ jobs:
       - name: certification remediation references are complete
         run: python3 scripts/backfill_certification_references.py --check
       - name: run certification lab tests
-        run: find certifications/claude/lessons -path '*/code/tests/test_*.py' -print0 | xargs -0 -r -n1 python3
+        run: find certifications/*/lessons -path '*/code/tests/test_*.py' -print0 | xargs -0 -r -n1 python3
       - name: run certification lab demos
-        run: find certifications/claude/lessons -path '*/code/main.py' -print0 | xargs -0 -r -n1 python3
+        run: find certifications/*/lessons -path '*/code/main.py' -print0 | xargs -0 -r -n1 python3
       - name: skill artifact bundles install without losing companion files
         run: python3 scripts/test_skill_artifact_bundles.py
       - name: skill artifact bundles render as one lesson output
