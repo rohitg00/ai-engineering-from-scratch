@@ -7,57 +7,57 @@
       "question": "What does the Model Context Protocol standardize?",
       "options": [
         "How a model host and an external system exchange capabilities and tool calls",
-        "The weights and architecture of the model itself",
-        "The pricing of hosted model APIs",
-        "The programming language a server must be written in"
+        "The weights, architecture, and training data that define the model itself",
+        "The one programming language in which every compliant server must be written",
+        "The retail pricing and per-token billing terms of every hosted model API"
       ],
       "correct": 0,
-      "explanation": "MCP is a protocol for the messages between a host and a server, not a model, a price list, or a language mandate."
+      "explanation": "MCP is a protocol for the messages between a host and a server, not the model, a price list, or a language mandate."
     },
     {
       "stage": "check",
       "question": "In MCP, what is a client responsible for?",
       "options": [
-        "Holding one connection to one server on behalf of the host",
-        "Training the model that decides which tool to call",
-        "Storing every server's data on disk",
-        "Billing the user for tool calls"
+        "It trains the underlying model that decides which server tool to call",
+        "It holds exactly one connection to one server on behalf of the host",
+        "It stores a full copy of every connected server's data on local disk",
+        "It meters usage and bills the end user for each tool call that runs"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": "A client lives inside the host and maintains exactly one connection to one server; the host embeds one or more clients."
     },
     {
       "stage": "check",
       "question": "Why does MCP reduce an N times M integration problem to N plus M?",
       "options": [
-        "Each host speaks MCP once and each server exposes MCP once, so any host can talk to any server",
-        "It caches every response so integrations never run twice",
-        "It forces all servers into a single process",
-        "It removes the need for authentication between host and server"
+        "It removes the need for authentication or authorization between host and server",
+        "It forces every server to run inside one single shared operating-system process",
+        "Each host speaks MCP once and each server exposes it once, so any pair connects",
+        "It permanently caches every response so an integration never runs a second time"
       ],
-      "correct": 0,
+      "correct": 2,
       "explanation": "One shared protocol means a host is written once and a server is written once, and they interoperate without custom glue per pair."
     },
     {
       "stage": "check",
       "question": "How does a client learn which tools a server offers?",
       "options": [
-        "It requests the server's tool list at runtime, and the server returns each tool with a schema",
-        "It reads a configuration file the user must write by hand for every tool",
-        "It guesses tool names from the server's process name",
-        "It recompiles the host with the server's source code"
+        "It reads a config file the user must write by hand for each server tool",
+        "It guesses the tool names directly from the server's operating-system process name",
+        "It recompiles the host together with the server's full source code at startup",
+        "It requests the tool list at runtime and the server returns each tool's schema"
       ],
-      "correct": 0,
+      "correct": 3,
       "explanation": "Discovery is part of the protocol: the server advertises its tools as data, so a client can use tools it was not built with."
     },
     {
       "stage": "post",
       "question": "A client sends a tools/call request naming a tool the server does not expose. What should a conformant server do?",
       "options": [
-        "Return a JSON-RPC error with a code and message keyed to the request id",
-        "Silently run the closest matching tool instead",
-        "Terminate the connection without a response",
-        "Return an empty result as if the call succeeded"
+        "Return a JSON-RPC error whose code and message are keyed to the request id",
+        "Silently pick and run the closest matching tool it does happen to expose",
+        "Return an empty result object as though the requested call had succeeded",
+        "Immediately terminate the transport connection without sending any response"
       ],
       "correct": 0,
       "explanation": "An unknown tool is a client error the server reports as a structured JSON-RPC error, not a crash, a silent substitution, or a fake success."
@@ -66,12 +66,12 @@
       "stage": "post",
       "question": "When a tool result crosses back from the server into the host, why does it matter for security?",
       "options": [
-        "The result is untrusted content entering the model's context across a trust boundary",
-        "The result is always encrypted so it can be ignored",
-        "The host owns the server, so the content is inherently trusted",
-        "The model cannot read tool results, so they are inert"
+        "The model is unable to read tool results at all, so they remain completely inert",
+        "It is untrusted content entering the model's context across a trust boundary",
+        "The host process owns the server, so any content it returns is inherently trusted",
+        "The result is always encrypted in transit, so its contents can be safely ignored"
       ],
-      "correct": 0,
+      "correct": 1,
       "explanation": "The server is a separate program; its output is untrusted input to the model, which is why the trust boundary sits at the tool result."
     }
   ]
