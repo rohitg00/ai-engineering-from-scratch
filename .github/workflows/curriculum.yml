@@ -52,6 +52,7 @@ on:
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
+      - "scripts/check_quiz_bias.py"
       - "scripts/build_readme_i18n.py"
       - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
@@ -126,6 +127,8 @@ jobs:
         run: node --test site/test_ui_i18n.js
       - name: quiz answer positions are de-biased
         run: python3 scripts/debias_quizzes.py --check
+      - name: quiz answer lengths do not give away the answer
+        run: python3 scripts/check_quiz_bias.py --check
       - name: certification answer positions are de-biased
         run: python3 scripts/debias_certification_questions.py --check
       - name: README translations are in sync with English
