@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: a consent broker that elicits approval for sensitive tool calls and steps up OAuth scope on a 403 challenge."""
+"""Companion code for:
+certifications/mcpa/lessons/25-consent-and-least-privilege/docs/en.md
+A consent broker that elicits approval for sensitive tool calls and steps up OAuth scope on a
+403 challenge.
+Sources: MCP 2026-07-28 Elicitation page and Authorization page (step-up authorization).
+"""
 
 from __future__ import annotations
 

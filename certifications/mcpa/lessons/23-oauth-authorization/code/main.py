@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: OAuth 2.1 authorization guarding one MCP tool call."""
+"""Companion code for:
+certifications/mcpa/lessons/23-oauth-authorization/docs/en.md
+OAuth 2.1 authorization guarding one MCP tool call.
+Sources: MCP 2026-07-28 Authorization; OAuth 2.1; RFCs 7636, 8414, 8707, 9207, and 9728.
+"""
 
 from __future__ import annotations
 

@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: negotiating optional MCP extensions per request, falling back to core behavior, and rejecting a call that needs an extension neither side mutually activated."""
+"""Companion code for:
+certifications/mcpa/lessons/30-the-extensions-framework/docs/en.md
+Negotiating optional MCP extensions per request, falling back to core behavior, and rejecting a
+call that needs an extension neither side mutually activated.
+Sources: SEP-2133; MCP extensions overview (extension negotiation).
+"""
 
 from __future__ import annotations
 

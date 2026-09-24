@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: labels MCP context by trust zone and blocks a cross-server instruction hidden in server content."""
+"""Companion code for:
+certifications/mcpa/lessons/22-trust-boundaries/docs/en.md
+Labels MCP context by trust zone and blocks a cross-server instruction hidden in server content.
+Sources: SEP-1024; MCP Security Best Practices; MCP 2026-07-28 basic protocol (icons).
+"""
 
 from __future__ import annotations
 

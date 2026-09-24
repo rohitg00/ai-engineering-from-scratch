@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: a tool-call lifecycle state machine from discover through final."""
+"""Companion code for:
+certifications/mcpa/lessons/17-tool-invocation-lifecycle/docs/en.md
+A tool-call lifecycle state machine from discover through final.
+Sources: MCP 2026-07-28 Tools, multi round-trip requests, and Cancellation pages.
+"""
 
 from __future__ import annotations
 

@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: roots and sampling still ride MRTR while logging rides per-request logLevel."""
+"""Companion code for:
+certifications/mcpa/lessons/15-deprecated-client-features/docs/en.md
+Roots and sampling still ride MRTR while logging rides per-request logLevel.
+Sources: SEP-2577; MCP 2026-07-28 deprecated-features registry.
+"""
 
 from __future__ import annotations
 

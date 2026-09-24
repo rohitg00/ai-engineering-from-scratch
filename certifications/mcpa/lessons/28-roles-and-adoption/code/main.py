@@ -1,6 +1,8 @@
-"""Runnable lab for docs/en.md: assign MCP 2026-07-28 spec requirements to the six roles behind a deployment.
-
+"""Companion code for:
+certifications/mcpa/lessons/28-roles-and-adoption/docs/en.md
+Assign MCP 2026-07-28 spec requirements to the six roles behind a deployment.
 Run: python3 code/main.py
+Sources: MCP 2026-07-28 specification; MCP governance, SEP guidelines, and SDK tiers pages.
 """
 
 from __future__ import annotations

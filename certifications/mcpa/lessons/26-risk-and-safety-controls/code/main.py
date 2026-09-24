@@ -1,4 +1,8 @@
-"""Risk and safety controls for the MCP 2026-07-28 tool-call boundary. See docs/en.md."""
+"""Companion code for:
+certifications/mcpa/lessons/26-risk-and-safety-controls/docs/en.md
+Risk and safety controls for the MCP 2026-07-28 tool-call boundary.
+Sources: MCP Security Best Practices; MCP 2026-07-28 Authorization Security Considerations.
+"""
 
 from __future__ import annotations
 

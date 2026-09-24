@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: two stateless replicas sharing one handle store answer any client's call."""
+"""Companion code for:
+certifications/mcpa/lessons/04-the-stateless-core/docs/en.md
+Two stateless replicas sharing one handle store answer any client's call.
+Sources: SEP-2575 (stateless MCP); SEP-2567 (sessionless MCP); MCP 2026-07-28 basic protocol.
+"""
 
 from __future__ import annotations
 

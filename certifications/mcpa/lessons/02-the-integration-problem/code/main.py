@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: one client driving two servers it was never built for."""
+"""Companion code for:
+certifications/mcpa/lessons/02-the-integration-problem/docs/en.md
+One client driving two servers it was never built for.
+Sources: MCP 2026-07-28 architecture overview, server/discover, and Tools pages.
+"""
 
 from __future__ import annotations
 

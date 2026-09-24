@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: a registry admission check, an SDK tier lookup, and a gateway that routes on headers and partitions its cache by caller."""
+"""Companion code for:
+certifications/mcpa/lessons/32-registry-gateways-and-sdk-tiers/docs/en.md
+A registry admission check, an SDK tier lookup, and a gateway that routes on headers and
+partitions its cache by caller.
+Sources: MCP Registry documentation; SEP-1730 (SDK tiers); SEP-2243.
+"""
 
 from __future__ import annotations
 

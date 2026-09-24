@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: a prompts server with pagination, argument templates, and completion."""
+"""Companion code for:
+certifications/mcpa/lessons/13-prompts-and-completion/docs/en.md
+A prompts server with pagination, argument templates, and completion.
+Sources: MCP 2026-07-28 Prompts and Completion pages.
+"""
 
 from __future__ import annotations
 

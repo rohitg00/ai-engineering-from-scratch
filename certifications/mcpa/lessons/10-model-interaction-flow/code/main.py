@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: a scripted model driving one host loop over a mock server."""
+"""Companion code for:
+certifications/mcpa/lessons/10-model-interaction-flow/docs/en.md
+A scripted model driving one host loop over a mock server.
+Sources: MCP 2026-07-28 Tools and multi round-trip requests (MRTR) pages.
+"""
 
 from __future__ import annotations
 

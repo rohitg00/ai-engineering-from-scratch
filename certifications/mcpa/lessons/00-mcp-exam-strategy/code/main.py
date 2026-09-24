@@ -1,4 +1,8 @@
-"""Deterministic MCPA study planner and 34-lesson route map. See docs/en.md."""
+"""Companion code for:
+certifications/mcpa/lessons/00-mcp-exam-strategy/docs/en.md
+Deterministic MCPA study planner and 34-lesson route map.
+Sources: MCPA exam page (Linux Foundation Training); research/source-verification-ledger.md.
+"""
 
 from __future__ import annotations
 

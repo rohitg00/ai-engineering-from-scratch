@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: classify JSON-RPC message shapes and validate _meta keys."""
+"""Companion code for:
+certifications/mcpa/lessons/03-json-rpc-and-meta/docs/en.md
+Classify JSON-RPC message shapes and validate _meta keys.
+Sources: JSON-RPC 2.0; MCP 2026-07-28 basic protocol and _meta rules; SEP-414.
+"""
 
 from __future__ import annotations
 

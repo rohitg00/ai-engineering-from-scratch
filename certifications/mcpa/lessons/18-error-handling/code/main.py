@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: an error classifier and responder that refuses legacy and retired JSON-RPC codes."""
+"""Companion code for:
+certifications/mcpa/lessons/18-error-handling/docs/en.md
+An error classifier and responder that refuses legacy and retired JSON-RPC codes.
+Sources: JSON-RPC 2.0; SEP-1303; SEP-2164; MCP 2026-07-28 error code allocation.
+"""
 
 from __future__ import annotations
 

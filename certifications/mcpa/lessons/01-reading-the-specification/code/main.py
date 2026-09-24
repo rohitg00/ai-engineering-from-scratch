@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: a spec navigator over keyword strength, feature lifecycle, and changelog data."""
+"""Companion code for:
+certifications/mcpa/lessons/01-reading-the-specification/docs/en.md
+A spec navigator over keyword strength, feature lifecycle, and changelog data.
+Sources: MCP 2026-07-28 changelog and deprecated-features registry; RFC 2119; RFC 8174;
+SEP-2596.
+"""
 
 from __future__ import annotations
 

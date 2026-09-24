@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: a subscriptions/listen stream demultiplexed by subscription id, next to a request's own progress notifications."""
+"""Companion code for:
+certifications/mcpa/lessons/16-notifications-and-subscriptions/docs/en.md
+A subscriptions/listen stream demultiplexed by subscription id, next to a request's own progress
+notifications.
+Sources: MCP 2026-07-28 Subscriptions, Progress, and Cancellation pages.
+"""
 
 from __future__ import annotations
 

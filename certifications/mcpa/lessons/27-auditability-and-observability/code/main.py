@@ -1,4 +1,8 @@
-"""Trace context propagation and a hash-chained audit log for MCP tool calls; see docs/en.md."""
+"""Companion code for:
+certifications/mcpa/lessons/27-auditability-and-observability/docs/en.md
+Trace context propagation and a hash-chained audit log for MCP tool calls.
+Sources: SEP-414; W3C Trace Context; W3C Baggage.
+"""
 
 from __future__ import annotations
 

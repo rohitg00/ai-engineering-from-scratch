@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: a deploy tool gated by MRTR elicitation and HMAC-protected requestState."""
+"""Companion code for:
+certifications/mcpa/lessons/14-multi-round-trip-requests-and-elicitation/docs/en.md
+A deploy tool gated by MRTR elicitation and HMAC-protected requestState.
+Sources: SEP-2322 (multi round-trip requests); MCP 2026-07-28 Elicitation page.
+"""
 
 from __future__ import annotations
 

@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: server/discover and per-request capability negotiation."""
+"""Companion code for:
+certifications/mcpa/lessons/07-discovery-and-capability-negotiation/docs/en.md
+The server/discover request and per-request capability negotiation.
+Sources: MCP 2026-07-28 server/discover and versioning pages; SEP-2575.
+"""
 
 from __future__ import annotations
 

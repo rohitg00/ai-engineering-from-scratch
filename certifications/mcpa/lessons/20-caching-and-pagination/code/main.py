@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: a client cache that honors ttlMs, cacheScope, and list-changed invalidation while paging through opaque cursors."""
+"""Companion code for:
+certifications/mcpa/lessons/20-caching-and-pagination/docs/en.md
+A client cache that honors ttlMs, cacheScope, and list-changed invalidation while paging through
+opaque cursors.
+Sources: SEP-2549; MCP 2026-07-28 Caching and Pagination pages.
+"""
 
 from __future__ import annotations
 

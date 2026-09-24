@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: a use-case recommender mapping operational scenarios to MCP primitives, transport, auth, extensions, and cache scope."""
+"""Companion code for:
+certifications/mcpa/lessons/29-operational-use-cases/docs/en.md
+A use-case recommender mapping operational scenarios to MCP primitives, transport, auth,
+extensions, and cache scope.
+Sources: MCP extensions overview; MCP 2026-07-28 Authorization page.
+"""
 
 from __future__ import annotations
 

@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: a resource server over an in-memory project tree with a URI template, binary contents, traversal protection, and cache hints."""
+"""Companion code for:
+certifications/mcpa/lessons/12-the-resources-primitive/docs/en.md
+A resource server over an in-memory project tree with a URI template, binary contents, traversal
+protection, and cache hints.
+Sources: MCP 2026-07-28 Resources page; RFC 6570; RFC 3986.
+"""
 
 from __future__ import annotations
 

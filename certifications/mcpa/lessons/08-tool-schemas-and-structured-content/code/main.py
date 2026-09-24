@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: a tool's schema contract, enforced as tool execution errors, not protocol errors."""
+"""Companion code for:
+certifications/mcpa/lessons/08-tool-schemas-and-structured-content/docs/en.md
+A tool's schema contract, enforced as tool execution errors, not protocol errors.
+Sources: MCP 2026-07-28 Tools page; JSON Schema 2020-12; SEP-1303.
+"""
 
 from __future__ import annotations
 

@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: a manifest linter that reads a discover result, a tools/list page, and a server.json like a reviewer."""
+"""Companion code for:
+certifications/mcpa/lessons/09-reading-server-manifests/docs/en.md
+A manifest linter that reads a discover result, a tools/list page, and a server.json like a
+reviewer.
+Sources: MCP 2026-07-28 Tools and server/discover pages; MCP Registry server.json documentation.
+"""
 
 from __future__ import annotations
 

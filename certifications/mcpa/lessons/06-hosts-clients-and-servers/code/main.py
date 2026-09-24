@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: a host aggregates three servers behind one collision-safe tool registry."""
+"""Companion code for:
+certifications/mcpa/lessons/06-hosts-clients-and-servers/docs/en.md
+A host aggregates three servers behind one collision-safe tool registry.
+Sources: MCP 2026-07-28 architecture overview and Tools pages (tool name collisions).
+"""
 
 from __future__ import annotations
 

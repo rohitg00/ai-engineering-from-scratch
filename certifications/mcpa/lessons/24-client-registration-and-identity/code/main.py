@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: a registration planner and a CIMD validator for an MCP client an authorization server has never met."""
+"""Companion code for:
+certifications/mcpa/lessons/24-client-registration-and-identity/docs/en.md
+A registration planner and a CIMD validator for an MCP client an authorization server has never
+met.
+Sources: MCP 2026-07-28 Client Registration page; Client ID Metadata Documents; RFC 7591.
+"""
 
 from __future__ import annotations
 

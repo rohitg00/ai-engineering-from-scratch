@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: a dual-era client probing modern, modern-with-a-different-version, and legacy stdio servers."""
+"""Companion code for:
+certifications/mcpa/lessons/05-protocol-eras-and-compatibility/docs/en.md
+A dual-era client probing modern, modern-with-a-different-version, and legacy stdio servers.
+Sources: MCP 2026-07-28 versioning, stdio transport, and Streamable HTTP transport pages.
+"""
 
 from __future__ import annotations
 

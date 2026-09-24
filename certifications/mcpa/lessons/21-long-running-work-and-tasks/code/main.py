@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: a build-pipeline tool that only becomes a durable task when the client declares io.modelcontextprotocol/tasks."""
+"""Companion code for:
+certifications/mcpa/lessons/21-long-running-work-and-tasks/docs/en.md
+A build-pipeline tool that only becomes a durable task when the client declares
+io.modelcontextprotocol/tasks.
+Sources: SEP-2663 (tasks extension); MCP tasks extension overview.
+"""
 
 from __future__ import annotations
 

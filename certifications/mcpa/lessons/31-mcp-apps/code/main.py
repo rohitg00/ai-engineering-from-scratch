@@ -1,4 +1,9 @@
-"""Runnable lab for docs/en.md: a host-side loader that constructs CSP from declared domains, grants only the permissions its own policy allows, enforces tool visibility, and falls back to text otherwise."""
+"""Companion code for:
+certifications/mcpa/lessons/31-mcp-apps/docs/en.md
+A host-side loader that constructs CSP from declared domains, grants only the permissions its
+own policy allows, enforces tool visibility, and falls back to text otherwise.
+Sources: SEP-1865; MCP Apps specification 2026-01-26 (ext-apps).
+"""
 
 from __future__ import annotations
 

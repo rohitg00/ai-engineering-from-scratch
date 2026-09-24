@@ -1,4 +1,8 @@
-"""Capstone lab for docs/en.md: one 2026-07-28 incident-response exchange touching every MCPA domain."""
+"""Companion code for:
+certifications/mcpa/lessons/33-mcpa-capstone-readiness/docs/en.md
+Capstone: one 2026-07-28 incident-response exchange touching every MCPA domain.
+Sources: MCP 2026-07-28 specification and the sources cited by lessons 00 to 32.
+"""
 
 from __future__ import annotations
 

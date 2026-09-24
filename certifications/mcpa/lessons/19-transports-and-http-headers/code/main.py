@@ -1,4 +1,8 @@
-"""Runnable lab for docs/en.md: framing a stdio message and validating an HTTP header mirror."""
+"""Companion code for:
+certifications/mcpa/lessons/19-transports-and-http-headers/docs/en.md
+Framing a stdio message and validating an HTTP header mirror.
+Sources: MCP 2026-07-28 stdio and Streamable HTTP transport pages; SEP-2243.
+"""
 
 from __future__ import annotations
 

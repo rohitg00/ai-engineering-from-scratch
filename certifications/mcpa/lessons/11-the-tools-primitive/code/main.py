@@ -1,4 +1,8 @@
-"""Calling a tool and reading every shape its result can take: see docs/en.md."""
+"""Companion code for:
+certifications/mcpa/lessons/11-the-tools-primitive/docs/en.md
+Calling a tool and reading every shape its result can take.
+Sources: MCP 2026-07-28 Tools and Subscriptions pages.
+"""
 
 from __future__ import annotations
 
