@@ -1,3 +1,6 @@
+"""Function calling from scratch: a tool registry, the model-to-tool dispatch
+loop, and guarded tool implementations. See docs/en.md for the walkthrough."""
+
 import ast
 import json
 import math

@@ -209,7 +209,7 @@ function registerAllTools(): void {
   );
   registerTool(
     "run_code",
-    "Execute JavaScript in a sandbox. Assign to 'result' to return output.",
+    "Run a small JavaScript snippet behind a denylist and a restricted evaluator. This is a teaching filter, not real isolation. Assign to 'result' to return output.",
     {
       type: "object",
       properties: {

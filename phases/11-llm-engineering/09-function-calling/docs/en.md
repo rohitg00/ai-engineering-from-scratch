@@ -182,6 +182,7 @@ mx-tool-call-loop
 Build a registry that stores tool definitions and their implementations. Each tool has a JSON Schema definition (what the model sees) and a Python function (what your code executes).
 
 ```python
+import ast
 import json
 import math
 import time
