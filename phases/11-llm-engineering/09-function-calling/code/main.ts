@@ -141,7 +141,7 @@ function runCode(args: Readonly<Record<string, JsonValue>>): JsonValue {
   if (language !== "javascript") {
     return { error: true, message: "Language '" + language + "' not supported." };
   }
-  const FORBIDDEN = ["require(", "process.", "fs.", "child_process", "import ", "eval(", "Function("];
+  const FORBIDDEN = ["require(", "process.", "fs.", "child_process", "import ", "eval(", "Function(", "constructor", "globalThis"];
   for (const p of FORBIDDEN) {
     if (code.includes(p)) {
       return { error: true, message: "Forbidden operation: " + p, code: "SECURITY_VIOLATION" };
