@@ -856,7 +856,7 @@ It also produces `outputs/skill-eval-patterns.md` -- a decision framework for ch
 - [DeepEval Documentation](https://docs.confident-ai.com) -- Python-native eval framework with 14+ metrics, Pytest integration, and hallucination detection
 - [Braintrust Eval Guide](https://www.braintrust.dev/docs) -- production eval platform with experiment tracking, scoring functions, and dataset management
 - [Ribeiro et al., 2020 -- "Beyond Accuracy: Behavioral Testing of NLP Models with CheckList"](https://arxiv.org/abs/2005.04118) -- systematic behavioral testing methodology (minimum functionality, invariance, directional expectations) applicable to LLM evaluation
-- [LMSYS Chatbot Arena](https://chat.lmsys.org) -- live human evaluation platform where users vote on model outputs, the largest pairwise comparison dataset for LLMs
+- [LMArena (formerly LMSYS Chatbot Arena)](https://lmarena.ai/) -- live human evaluation platform where users vote on model outputs, the largest pairwise comparison dataset for LLMs
 - [Es et al., "RAGAS: Automated Evaluation of Retrieval Augmented Generation" (EACL 2024 demo)](https://arxiv.org/abs/2309.15217) -- reference-free metrics for RAG (faithfulness, answer relevancy, context precision/recall); the eval pattern that scales to prod without labelers.
 - [Liu et al., "G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment" (EMNLP 2023)](https://arxiv.org/abs/2303.16634) -- chain-of-thought + form-filling as a judge protocol; the calibration and bias results every judge-builder needs.
 - [Hugging Face LLM Evaluation Guidebook](https://huggingface.co/spaces/OpenEvals/evaluation-guidebook) -- practical advice on data contamination, metric selection, and reproducibility from the team maintaining the Open LLM Leaderboard.

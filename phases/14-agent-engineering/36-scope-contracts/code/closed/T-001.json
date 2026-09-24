@@ -1,0 +1,39 @@
+{
+  "task_id": "T-001",
+  "findings": [
+    {
+      "code": "scope.forbidden",
+      "severity": "block",
+      "detail": "forbidden writes: ['scripts/release.sh', 'migrations/001_init.sql']"
+    },
+    {
+      "code": "scope.soft_off_scope",
+      "severity": "info",
+      "detail": "docs/markdown off-scope: ['README.md']"
+    },
+    {
+      "code": "acceptance.missing",
+      "severity": "block",
+      "detail": "acceptance not run: ['pytest -x test_app.py::test_signup_rejects_short_password']"
+    },
+    {
+      "code": "time.over_budget",
+      "severity": "block",
+      "detail": "elapsed 42.1m > budget 30m"
+    },
+    {
+      "code": "network.unallowed_host",
+      "severity": "block",
+      "detail": "egress to non-allowlisted hosts: ['evil.example']"
+    }
+  ],
+  "in_scope": [
+    "app.py"
+  ],
+  "off_scope": [],
+  "soft_off_scope": [
+    "README.md"
+  ],
+  "passed": false,
+  "closed_at": 1788638845.874431
+}

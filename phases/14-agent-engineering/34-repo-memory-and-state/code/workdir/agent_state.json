@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "active_task_id": "T-001",
+  "touched_files": [],
+  "assumptions": [],
+  "blockers": [],
+  "next_action": "read existing /signup handler"
+}

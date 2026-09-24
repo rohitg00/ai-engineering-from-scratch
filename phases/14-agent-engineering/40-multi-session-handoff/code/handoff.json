@@ -1,0 +1,51 @@
+{
+  "task_id": "T-001",
+  "summary": "task T-001: review=pass, gate=True",
+  "changed_files": [
+    "app/signup.py",
+    "tests/test_signup.py",
+    "README.md"
+  ],
+  "commands_run": [
+    "pytest",
+    "ruff check .",
+    "pytest test_signup.py",
+    "pytest test_signup.py"
+  ],
+  "failed_attempts": [
+    "pytest test_signup.py -> exit 1"
+  ],
+  "open_risks": [
+    {
+      "severity": "warn",
+      "detail": "off-scope: README.md"
+    },
+    {
+      "severity": "warn",
+      "detail": "open blocker: awaiting decision on rate-limit window"
+    }
+  ],
+  "next_action": "open PR with current diff and request review",
+  "verdict_pointer": {
+    "verdict": "outputs/verification/T-001.json",
+    "review": "outputs/review/T-001.json"
+  },
+  "feedback_tail": [
+    {
+      "command": "pytest",
+      "exit_code": 0
+    },
+    {
+      "command": "ruff check .",
+      "exit_code": 0
+    },
+    {
+      "command": "pytest test_signup.py",
+      "exit_code": 1
+    },
+    {
+      "command": "pytest test_signup.py",
+      "exit_code": 0
+    }
+  ]
+}

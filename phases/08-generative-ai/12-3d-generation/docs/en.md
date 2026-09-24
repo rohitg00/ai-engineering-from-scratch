@@ -164,4 +164,4 @@ For most 2026 products, the right answer is "run a multi-view diffusion model on
 - [Shi et al. (2023). MVDream](https://arxiv.org/abs/2308.16512) — multi-view diffusion.
 - [Hong et al. (2023). LRM: Large Reconstruction Model for Single Image to 3D](https://arxiv.org/abs/2311.04400) — LRM.
 - [Gao et al. (2024). CAT3D: Create Anything in 3D with Multi-View Diffusion Models](https://arxiv.org/abs/2405.10314) — CAT3D.
-- [Stability AI (2024). Stable Video 3D (SV3D)](https://stability.ai/research/sv3d) — SV3D.
+- [Stability AI (2024). Stable Video 3D (SV3D)](https://stability.ai/news/introducing-stable-video-3d) — SV3D.

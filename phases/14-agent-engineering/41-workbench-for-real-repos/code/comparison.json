@@ -1,0 +1,21 @@
+{
+  "prompt_only": {
+    "pipeline": "prompt-only",
+    "tests_actually_run": false,
+    "acceptance_met": false,
+    "files_outside_scope": [
+      "README.md",
+      "sample_app/scripts/release.sh"
+    ],
+    "handoff_quality": "missing",
+    "reviewer_total": 3
+  },
+  "workbench": {
+    "pipeline": "workbench-guided",
+    "tests_actually_run": true,
+    "acceptance_met": true,
+    "files_outside_scope": [],
+    "handoff_quality": "full packet",
+    "reviewer_total": 9
+  }
+}

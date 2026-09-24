@@ -1,0 +1,32 @@
+{
+  "task_id": "T-001",
+  "total": 9,
+  "verdict": "pass",
+  "dimensions": [
+    {
+      "name": "problem_fit",
+      "score": 1,
+      "note": "keyword hits across touched files: 1"
+    },
+    {
+      "name": "scope_discipline",
+      "score": 2,
+      "note": "off-scope warnings: 0"
+    },
+    {
+      "name": "assumptions",
+      "score": 2,
+      "note": "1 assumptions recorded"
+    },
+    {
+      "name": "verification_quality",
+      "score": 2,
+      "note": "all feedback exit zero"
+    },
+    {
+      "name": "handoff_readiness",
+      "score": 2,
+      "note": "next_action set, task closed"
+    }
+  ]
+}

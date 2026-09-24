@@ -6,7 +6,9 @@ Requires Python 3.10+ (PEP 604 union types).
 Walks every `*.md` file under the repo (excluding `.git/`, `node_modules/`,
 `outputs/`), extracts `https?://` URLs from markdown link syntax and bare URLs,
 deduplicates, and validates each unique URL by HEAD request (falling back to
-GET on 405/501). Results are cached for 7 days at `.link-cache.json` (repo
+GET on 405/501). A 401/403/429 or 5xx answer means the host is up but refused
+the request (paywall, bot block, rate limit); those are listed as "unverified"
+and never fail `--strict`. Only 404/410 and unreachable hosts count as broken. Results are cached for 7 days at `.link-cache.json` (repo
 root, gitignored) so re-runs do not hammer external services.
 
 Stdlib only. No `requests`, no `httpx`.
@@ -46,7 +48,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 CACHE_PATH = ROOT / ".link-cache.json"
-CACHE_SCHEMA_VERSION = 1
+CACHE_SCHEMA_VERSION = 2  # v2: adds the "unverified" status
 USER_AGENT = (
     "ai-engineering-from-scratch link-check/1.0 "
     "(+https://aiengineeringfromscratch.com)"
@@ -61,10 +63,16 @@ DEFAULT_SKIP_DOMAINS = (
     "instagram.com",
     "medium.com",
 )
+PLACEHOLDER_SUFFIXES = ("example.com", "example.net", "example.org", ".example", ".invalid", ".test", "localhost")
 EXCLUDE_DIRS = {".git", "node_modules", "outputs"}
 
-MD_LINK_RE = re.compile(r"\[[^\]]*\]\((<?)(https?://[^\s)>]+)>?\)")
-BARE_URL_RE = re.compile(r"(?<![\w(\[=\"'])(https?://[^\s)\]<>\"'`]+)")
+# URLs may contain one level of balanced parentheses (DOIs such as
+# 10.1016/0010-0277(85)90022-8); an unbalanced ')' still ends the URL.
+_URL_BODY = r"https?://(?:[^\s()<>\]\"'`]|\([^\s()<>]*\))+"
+MD_LINK_RE = re.compile(r"\[[^\]]*\]\((<?)(" + _URL_BODY + r")>?\)")
+BARE_URL_RE = re.compile(r"(?<![\w(\[=\"'])(" + _URL_BODY + r")")
+# Template URLs: a placeholder follows or sits inside the URL.
+TEMPLATE_URL_RE = re.compile(r"<[^>]*>|\{[^}]*\}|YOUR[-_]")
 TRAILING_PUNCT = ".,;:!?)\"'>"
 
 
@@ -95,6 +103,7 @@ class Report:
     cached_hits: int = 0
     skipped: list[str] = field(default_factory=list)
     failed: list[dict[str, object]] = field(default_factory=list)
+    unverified: list[dict[str, object]] = field(default_factory=list)
     by_file: dict[str, list[dict[str, object]]] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, object]:
@@ -106,8 +115,10 @@ class Report:
             "cached_hits": self.cached_hits,
             "skipped_count": len(self.skipped),
             "failed_count": len(self.failed),
+            "unverified_count": len(self.unverified),
             "skipped": sorted(set(self.skipped)),
             "failed": self.failed,
+            "unverified": self.unverified,
             "by_file": self.by_file,
         }
 
@@ -166,6 +177,8 @@ def extract_urls(text: str) -> list[tuple[str, int]]:
             out.append((url, lineno))
         masked = MD_LINK_RE.sub(" ", line)
         for m in BARE_URL_RE.finditer(masked):
+            if m.end() < len(masked) and masked[m.end()] in "<{":
+                continue  # `https://host/prefix/<path>`: a template, not a link
             url = strip_trailing_punct(m.group(1))
             key = (lineno, url)
             if key in seen_per_line:
@@ -222,8 +235,15 @@ def domain_of(url: str) -> str:
 
 def should_skip(url: str, skip_domains: set[str]) -> bool:
     domain = domain_of(url)
-    if not domain:
-        return False
+    if not domain or "$" in url or TEMPLATE_URL_RE.search(url):
+        # No host (e.g. `http://` in a shell snippet), an unexpanded shell
+        # variable, or a placeholder such as YOUR-USERNAME or <path>: not a
+        # link anyone can follow, so nothing to check.
+        return True
+    # Placeholder hosts used in example commands: RFC 2606 reserved names and
+    # single-label hostnames (e.g. https://my-otel-collector/) never resolve.
+    if "." not in domain or domain.endswith(PLACEHOLDER_SUFFIXES):
+        return True
     for sd in skip_domains:
         if domain == sd or domain.endswith("." + sd):
             return True
@@ -261,7 +281,10 @@ def _request(url: str, method: str, timeout: int) -> tuple[int | None, str | Non
 
 def check_url(url: str, timeout: int) -> CheckResult:
     status_code, err = _request(url, "HEAD", timeout)
-    if status_code in (405, 501) or (status_code is None and err and "http" not in err):
+    # Retry with GET when HEAD is unsupported (405/501), failed at the
+    # transport level, or came back 404: some hosts (Kaggle, Next.js sites)
+    # answer 404 to HEAD for pages that GET serves fine.
+    if status_code in (404, 405, 501) or (status_code is None and err and "http" not in err):
         get_status, get_err = _request(url, "GET", timeout)
         if get_status is not None:
             status_code, err = get_status, get_err
@@ -269,9 +292,21 @@ def check_url(url: str, timeout: int) -> CheckResult:
             status_code, err = get_status, get_err
 
     if status_code is None:
-        return CheckResult(url=url, status="error", http_status=None, error=err or "unknown")
+        # Only a name-resolution failure proves the host is gone. Timeouts,
+        # refused connections and TLS failures are transient or bot-related.
+        dns_failure = err is not None and ("nodename nor servname" in err or "Name or service not known" in err or "getaddrinfo" in err)
+        if dns_failure:
+            return CheckResult(url=url, status="error", http_status=None, error=err)
+        return CheckResult(url=url, status="unverified", http_status=None, error=err or "unknown")
     if 200 <= status_code < 400:
         return CheckResult(url=url, status="ok", http_status=status_code, error=None)
+    if status_code == 404 or status_code == 410:
+        return CheckResult(url=url, status="broken", http_status=status_code, error=f"http {status_code}")
+    if status_code >= 400:
+        # The host answered but refused or failed the request: paywalls and
+        # bot blocks (401/403), rate limits (429), other 4xx, server errors.
+        # The link is not known to be dead, so report it separately.
+        return CheckResult(url=url, status="unverified", http_status=status_code, error=f"http {status_code}")
     return CheckResult(url=url, status="broken", http_status=status_code, error=err or f"http {status_code}")
 
 
@@ -352,7 +387,7 @@ def run(args: argparse.Namespace) -> int:
                     "last_error": result.error,
                 }
                 if not args.json:
-                    mark = "OK" if result.ok else "FAIL"
+                    mark = "OK" if result.ok else ("UNVERIFIED" if result.status == "unverified" else "FAIL")
                     code = result.http_status if result.http_status is not None else "-"
                     print(f"  [{mark}] {code} {url}", file=sys.stderr)
 
@@ -364,6 +399,12 @@ def run(args: argparse.Namespace) -> int:
         if result is None:
             continue
         if result.ok:
+            continue
+        if result.status == "unverified":
+            for occ in occs:
+                report.unverified.append(
+                    {"file": occ.file, "url": url, "line": occ.line, "http_status": result.http_status}
+                )
             continue
         for occ in occs:
             entry = {
@@ -390,6 +431,7 @@ def run(args: argparse.Namespace) -> int:
         print(f"requested:   {report.requested}", file=sys.stderr)
         print(f"cache hits:  {report.cached_hits}", file=sys.stderr)
         print(f"skipped:     {len(set(report.skipped))} urls in {len(skip_domains)} domains", file=sys.stderr)
+        print(f"unverified:  {len(report.unverified)} occurrences (non-404 errors, timeouts; not counted as broken)", file=sys.stderr)
         print(f"broken:      {len(report.failed)} occurrences across {len(report.by_file)} files", file=sys.stderr)
         if report.by_file:
             print("", file=sys.stderr)

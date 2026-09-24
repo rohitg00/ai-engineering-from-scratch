@@ -158,7 +158,7 @@ This lesson produces `outputs/skill-parallel-call-safety-check.md`. Given a tool
 ## Further Reading
 
 - [OpenAI — Parallel function calling](https://platform.openai.com/docs/guides/function-calling#parallel-function-calling) — default behavior and the opt-out flag
-- [Anthropic — Tool use: implementing tool use](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/implementing-tool-use) — `disable_parallel_tool_use` and result batching
+- [Anthropic — Tool use: implementing tool use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use) — `disable_parallel_tool_use` and result batching
 - [Google — Gemini function calling parallel section](https://ai.google.dev/gemini-api/docs/function-calling) — id-correlated parallel calls from Gemini 3
 - [OpenAI — Streaming responses with tools](https://platform.openai.com/docs/api-reference/responses-streaming) — chunked argument reassembly for OpenAI streams
 - [Anthropic — Streaming messages](https://docs.anthropic.com/en/api/messages-streaming) — `content_block_delta` with `input_json_delta`

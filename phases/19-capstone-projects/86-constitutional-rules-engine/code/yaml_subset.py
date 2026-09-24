@@ -154,7 +154,8 @@ def _parse_sequence(lines: list[str], start: int, indent: int) -> tuple[list[Any
             synthetic = " " * child_indent + rest
             j = i + 1
             extra_lines = []
-            while j < len(lines) and _indent_of(lines[j]) > indent and not lines[j].lstrip().startswith("- "):
+            # Any deeper-indented line belongs to this item, including nested '- ' sequences.
+            while j < len(lines) and _indent_of(lines[j]) > indent:
                 extra_lines.append(lines[j])
                 j += 1
             block = [synthetic] + extra_lines

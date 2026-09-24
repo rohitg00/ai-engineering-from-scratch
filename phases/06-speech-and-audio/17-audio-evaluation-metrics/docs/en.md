@@ -224,5 +224,5 @@ Save as `outputs/skill-audio-evaluator.md`. Pick metrics, benchmarks, and report
 - [Fréchet Audio Distance (Kilgour et al. 2019)](https://arxiv.org/abs/1812.08466) — the music-gen standard.
 - [Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard) — 2026 live rankings.
 - [TTS Arena](https://huggingface.co/spaces/TTS-AGI/TTS-Arena) — human-vote TTS leaderboard.
-- [MMAU-Pro benchmark](https://mmaubenchmark.github.io/) — LALM reasoning leaderboard.
+- [MMAU-Pro benchmark](https://arxiv.org/abs/2508.13992) — LALM reasoning leaderboard.
 - [HEAR benchmark](https://hearbenchmark.com/) — audio SSL benchmarks.

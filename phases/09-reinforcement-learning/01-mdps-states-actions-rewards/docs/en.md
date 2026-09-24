@@ -189,4 +189,4 @@ Refuse to ship any MDP where the state is non-Markovian without explicit mention
 - [Bellman (1957). Dynamic Programming](https://press.princeton.edu/books/paperback/9780691146683/dynamic-programming) — the origin of the Bellman equation.
 - [OpenAI Spinning Up — Part 1: Key Concepts](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html) — concise MDP primer from a deep-RL angle.
 - [Puterman (2005). Markov Decision Processes](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470316887) — the operations-research reference on MDPs and exact solution methods.
-- [Littman (1996). Algorithms for Sequential Decision Making (PhD thesis)](https://www.cs.rutgers.edu/~mlittman/papers/thesis-main.pdf) — the cleanest derivation of MDPs as a dynamic-programming specialization.
+- [Littman (1996). Algorithms for Sequential Decision Making (PhD thesis)](https://www.semanticscholar.org/paper/Algorithms-for-Sequential-Decision-Making-Littman/b98ddfa5080620f00968ba439eff2e7e235ff5d5) — the cleanest derivation of MDPs as a dynamic-programming specialization.

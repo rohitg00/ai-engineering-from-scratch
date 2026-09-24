@@ -1,8 +1,8 @@
 {
   "schema": "leaderboard.v1",
-  "timestamp": 1779820461.3824089,
+  "timestamp": 1788638911.5478148,
   "overall_score": 1.0,
-  "adapter": "arithmetic",
+  "adapter": "toy.v1",
   "tasks": [
     {
       "task": "arithmetic",
@@ -10,7 +10,7 @@
       "score": 1.0,
       "correct": 5,
       "total": 5,
-      "latency_ms": 0.09666697587817907
+      "latency_ms": 0.07266699685715139
     },
     {
       "task": "code-exec",
@@ -18,7 +18,7 @@
       "score": 1.0,
       "correct": 5,
       "total": 5,
-      "latency_ms": 0.1051250146701932
+      "latency_ms": 0.056750024668872356
     },
     {
       "task": "generation",
@@ -26,7 +26,7 @@
       "score": 1.0,
       "correct": 5,
       "total": 5,
-      "latency_ms": 0.02195802517235279
+      "latency_ms": 0.05545798921957612
     },
     {
       "task": "multiple-choice",
@@ -34,7 +34,7 @@
       "score": 1.0,
       "correct": 5,
       "total": 5,
-      "latency_ms": 0.011208001524209976
+      "latency_ms": 0.00708398874849081
     },
     {
       "task": "summary",
@@ -42,7 +42,7 @@
       "score": 1.0,
       "correct": 5,
       "total": 5,
-      "latency_ms": 0.1154160127043724
+      "latency_ms": 0.06695897900499403
     }
   ]
 }

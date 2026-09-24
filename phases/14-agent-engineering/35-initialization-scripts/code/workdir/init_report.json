@@ -1,0 +1,42 @@
+{
+  "timestamp": 1788638845.844567,
+  "probes": [
+    {
+      "name": "runtime",
+      "status": "pass",
+      "detail": "python 3.12",
+      "duration_ms": 0
+    },
+    {
+      "name": "dependencies",
+      "status": "pass",
+      "detail": "all of ['json', 'dataclasses'] importable",
+      "duration_ms": 0
+    },
+    {
+      "name": "test_command",
+      "status": "pass",
+      "detail": "python3 resolvable on PATH",
+      "duration_ms": 0
+    },
+    {
+      "name": "env",
+      "status": "pass",
+      "detail": "all of [] present",
+      "duration_ms": 0
+    },
+    {
+      "name": "state_freshness",
+      "status": "warn",
+      "detail": "no state file yet; first run",
+      "duration_ms": 0
+    },
+    {
+      "name": "lkg_diff",
+      "status": "warn",
+      "detail": "no last_known_good.json; pin one after first successful merge",
+      "duration_ms": 0
+    }
+  ],
+  "ok": true
+}

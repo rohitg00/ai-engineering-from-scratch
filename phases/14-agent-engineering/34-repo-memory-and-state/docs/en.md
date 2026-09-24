@@ -133,7 +133,7 @@ In production:
 
 - [JSON Schema specification](https://json-schema.org/specification.html)
 - [LangGraph checkpointers](https://langchain-ai.github.io/langgraph/concepts/persistence/)
-- [Letta memory blocks](https://docs.letta.com/concepts/memory)
+- [Letta memory blocks](https://docs.letta.com/guides/agents/memory)
 - [Fast.io, AI Agent State Checkpointing: A Practical Guide](https://fast.io/resources/ai-agent-state-checkpointing/) — schema-first checkpointing with idempotency
 - [Fast.io, AI Agent Workflow State Persistence: Best Practices 2026](https://fast.io/resources/ai-agent-workflow-state-persistence/) — concurrency control, TTL, event sourcing
 - [Hive Issue #6263 — non-atomic state.json writes silently ignored](https://github.com/aden-hive/hive/issues/6263) — the failure mode in a real project

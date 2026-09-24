@@ -1,0 +1,11 @@
+[
+  {
+    "id": "T-001",
+    "goal": "validate /signup payloads",
+    "owner": "builder",
+    "acceptance": [
+      "pytest -x test_app.py::test_signup_rejects_short_password"
+    ],
+    "status": "todo"
+  }
+]

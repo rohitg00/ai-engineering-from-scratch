@@ -110,5 +110,5 @@ This lesson produces `outputs/skill-eagle3-rollout.md`. Given a target model, tr
 - [vLLM Speculative Config API](https://docs.vllm.ai/en/latest/api/vllm/config/speculative/) — the exact field set.
 - [EAGLE paper (arXiv:2401.15077)](https://arxiv.org/abs/2401.15077) — original EAGLE draft-head formulation.
 - [EAGLE-2 paper (arXiv:2406.16858)](https://arxiv.org/abs/2406.16858) — adaptive drafts and trees.
-- [UC Berkeley EECS-2025-224](https://www2.eecs.berkeley.edu/Pubs/TechRpts/2025/EECS-2025-224.html) — efficient LLM system with speculative decoding.
+- [Liu et al. — Online Speculative Decoding](https://arxiv.org/abs/2310.07177) — Berkeley work on adapting draft models online for efficient LLM serving.
 - [BentoML — Speculative Decoding](https://bentoml.com/llm/inference-optimization/speculative-decoding) — production rollout checklist.

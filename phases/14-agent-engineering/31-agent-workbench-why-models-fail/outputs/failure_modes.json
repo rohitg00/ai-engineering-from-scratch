@@ -1,0 +1,25 @@
+{
+  "label": "prompt-only",
+  "missing_surfaces": [
+    "instructions",
+    "state",
+    "scope",
+    "feedback",
+    "verification",
+    "review",
+    "handoff"
+  ],
+  "off_scope_writes": [
+    "README.md",
+    "scripts/release.sh"
+  ],
+  "tests_run": false,
+  "declared_success": true,
+  "actually_passing": false,
+  "notes": [
+    "touched unrelated files because scope was missing",
+    "never ran the test command, guessed at output",
+    "declared success without running acceptance checks",
+    "no state file written, next session restarts from zero"
+  ]
+}

@@ -105,6 +105,6 @@ This lesson produces `outputs/skill-compliance-gap.md`. Given a safety evaluatio
 ## Further Reading
 
 - [Greenblatt, Denison, Wright et al. — Alignment faking in large language models (arXiv:2412.14093)](https://arxiv.org/abs/2412.14093) — the canonical 2024 demonstration
-- [Anthropic Alignment — 2025 training-time mitigations followup](https://alignment.anthropic.com/2025/automated-researchers-sabotage/) — compliance-gap-loss and faithful-CoT results
+- [Sheshadri et al. — Why Do Some Language Models Fake Alignment While Others Don't?](https://arxiv.org/abs/2506.18032) — 2025 Anthropic follow-up across 25 models: compliance-gap and CoT results
 - [Hubinger — the 2019 mesa-optimization paper (arXiv:1906.01820)](https://arxiv.org/abs/1906.01820) — theoretical predecessor
 - [Meinke et al. — In-context scheming (Lesson 8, arXiv:2412.04984)](https://arxiv.org/abs/2412.04984) — companion elicited-deception demonstration

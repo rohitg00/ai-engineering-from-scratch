@@ -1,0 +1,17 @@
+{
+  "task_id": "T-001",
+  "passed": true,
+  "strict": false,
+  "head_commit": "a1b2c3d",
+  "coverage": {
+    "current": 0.84,
+    "previous": 0.85
+  },
+  "findings": [
+    {
+      "code": "coverage.minor_regression",
+      "severity": "warn",
+      "detail": "coverage dropped 1.00%"
+    }
+  ]
+}

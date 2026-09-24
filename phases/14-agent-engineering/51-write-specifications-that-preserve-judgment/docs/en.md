@@ -90,7 +90,7 @@ Move the production-write decision from locked to delegated. Explain why the sch
 ## Further Reading
 
 - [Nuseibeh and Easterbrook, Requirements Engineering: A Roadmap](https://www.cs.toronto.edu/~sme/papers/2000/ICSE2000.pdf), for the relationship among goals, precise specifications, validation, agreement, and evolution.
-- [Zave and Jackson, Four Dark Corners of Requirements Engineering](https://doi.org/10.1145/267895.267896), for separating environmental assumptions, requirements, and specifications.
+- [Zave and Jackson, Four Dark Corners of Requirements Engineering](https://doi.org/10.1145/237432.237434), for separating environmental assumptions, requirements, and specifications.
 - [Gotel and Finkelstein, An Analysis of the Requirements Traceability Problem](https://doi.org/10.1109/ICRE.1994.292398), for preserving why a requirement exists and where it came from.
 
 ## What You Keep

@@ -91,7 +91,7 @@ ce-team-handoff
 ## Use It
 
 ```
-$ team run --issue https://github.com/acme/widget/issues/842
+$ team run --issue https://github.example.com/acme/widget/issues/842
 [architect] plan: 4 subtasks (parser, cache, api, migration)
 [board]     dispatched to 4 coders in parallel worktrees
 [coder-A]   subtask parser  -> 42 lines, tests pass locally

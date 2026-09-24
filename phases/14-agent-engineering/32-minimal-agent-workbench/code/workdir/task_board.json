@@ -1,0 +1,20 @@
+[
+  {
+    "id": "T-001",
+    "goal": "add input validation to /signup",
+    "owner": "builder",
+    "acceptance": [
+      "pytest test_app.py::test_signup_rejects_short_password"
+    ],
+    "status": "in_progress"
+  },
+  {
+    "id": "T-002",
+    "goal": "document the new /signup contract",
+    "owner": "builder",
+    "acceptance": [
+      "docs/api.md mentions /signup constraints"
+    ],
+    "status": "todo"
+  }
+]

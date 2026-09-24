@@ -1,0 +1,82 @@
+{
+  "bad": [
+    {
+      "slug": "startup/state-file-fresh",
+      "category": "startup",
+      "passed": false
+    },
+    {
+      "slug": "forbidden/no-release-script-edits",
+      "category": "forbidden",
+      "passed": false
+    },
+    {
+      "slug": "done/tests-pass",
+      "category": "definition_of_done",
+      "passed": false
+    },
+    {
+      "slug": "uncertainty/open-question-note",
+      "category": "uncertainty",
+      "passed": false
+    },
+    {
+      "slug": "approval/new-dependency",
+      "category": "approval",
+      "passed": false
+    }
+  ],
+  "good": [
+    {
+      "slug": "startup/state-file-fresh",
+      "category": "startup",
+      "passed": true
+    },
+    {
+      "slug": "forbidden/no-release-script-edits",
+      "category": "forbidden",
+      "passed": true
+    },
+    {
+      "slug": "done/tests-pass",
+      "category": "definition_of_done",
+      "passed": true
+    },
+    {
+      "slug": "uncertainty/open-question-note",
+      "category": "uncertainty",
+      "passed": true
+    },
+    {
+      "slug": "approval/new-dependency",
+      "category": "approval",
+      "passed": true
+    }
+  ],
+  "trace_bad": {
+    "read_state_file": false,
+    "edited_files": [
+      "app.py",
+      "scripts/release.sh"
+    ],
+    "confidence": 0.4,
+    "asked_for_help": false,
+    "tests_exit_code": 1,
+    "added_dependencies": [
+      "fastapi"
+    ],
+    "approvals": []
+  },
+  "trace_good": {
+    "read_state_file": true,
+    "edited_files": [
+      "app.py",
+      "test_app.py"
+    ],
+    "confidence": 0.9,
+    "asked_for_help": false,
+    "tests_exit_code": 0,
+    "added_dependencies": [],
+    "approvals": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "task_id": "T-003",
+  "passed": false,
+  "strict": false,
+  "head_commit": "c3d4e5f",
+  "coverage": null,
+  "findings": [
+    {
+      "code": "acceptance.missing",
+      "severity": "block",
+      "detail": "never ran: pytest -x test_app.py::test_signup_rejects_short_password"
+    },
+    {
+      "code": "rule.failed",
+      "severity": "block",
+      "detail": "rule failed: done/tests-pass"
+    },
+    {
+      "code": "coverage.missing",
+      "severity": "warn",
+      "detail": "no coverage_report.json; cannot enforce floor"
+    }
+  ]
+}

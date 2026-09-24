@@ -1,0 +1,32 @@
+{
+  "task_id": "T-002",
+  "total": 5,
+  "verdict": "hard_fail",
+  "dimensions": [
+    {
+      "name": "problem_fit",
+      "score": 0,
+      "note": "keyword hits across touched files: 0"
+    },
+    {
+      "name": "scope_discipline",
+      "score": 1,
+      "note": "off-scope warnings: 1"
+    },
+    {
+      "name": "assumptions",
+      "score": 1,
+      "note": "no assumptions recorded; either work was trivial or undocumented"
+    },
+    {
+      "name": "verification_quality",
+      "score": 2,
+      "note": "all feedback exit zero"
+    },
+    {
+      "name": "handoff_readiness",
+      "score": 1,
+      "note": "active task not closed in state"
+    }
+  ]
+}

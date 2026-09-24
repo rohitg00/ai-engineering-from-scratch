@@ -1,0 +1,37 @@
+{
+  "task_id": "T-002",
+  "passed": false,
+  "strict": false,
+  "head_commit": "b2c3d4e",
+  "coverage": {
+    "current": 0.62,
+    "previous": 0.8
+  },
+  "findings": [
+    {
+      "code": "scope.forbidden",
+      "severity": "block",
+      "detail": "forbidden writes: ['scripts/release.sh']"
+    },
+    {
+      "code": "scope.off_scope",
+      "severity": "warn",
+      "detail": "off-scope writes: ['README.md']"
+    },
+    {
+      "code": "rule.failed",
+      "severity": "block",
+      "detail": "rule failed: forbidden/no-release-script-edits"
+    },
+    {
+      "code": "coverage.below_floor",
+      "severity": "block",
+      "detail": "coverage 62.00% below floor 80%"
+    },
+    {
+      "code": "coverage.regression",
+      "severity": "block",
+      "detail": "coverage dropped 18.00% (prev 80.00% -> 62.00%)"
+    }
+  ]
+}

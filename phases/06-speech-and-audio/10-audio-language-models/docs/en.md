@@ -187,4 +187,4 @@ Save as `outputs/skill-alm-picker.md`. Pick LALM + benchmark subset + output-mod
 - [NVIDIA (2025). Audio Flamingo 3](https://arxiv.org/abs/2507.08128) — the open long-audio leader.
 - [NVIDIA (2026). Audio Flamingo Next](https://arxiv.org/abs/2604.10905) — LongAudioBench SOTA.
 - [Tang et al. (2023). SALMONN](https://arxiv.org/abs/2310.13289) — dual-encoder pioneer.
-- [MMAU-Pro leaderboard](https://mmaubenchmark.github.io/) — live 2026 rankings.
+- [MMAU-Pro benchmark (arXiv 2508.13992)](https://arxiv.org/abs/2508.13992) — 5,305-instance audio-reasoning benchmark with per-model results.

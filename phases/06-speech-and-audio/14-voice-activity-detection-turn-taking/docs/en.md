@@ -170,7 +170,7 @@ Save as `outputs/skill-vad-tuner.md`. Pick VAD model, threshold, hangover, pre-r
 ## Further Reading
 
 - [Silero VAD](https://github.com/snakers4/silero-vad) — the reference open VAD.
-- [Picovoice Cobra VAD](https://picovoice.ai/products/cobra/) — commercial accuracy leader.
+- [Picovoice Cobra VAD](https://picovoice.ai/platform/cobra/) — commercial accuracy leader.
 - [Kyutai — Unmute + flush trick](https://kyutai.org/stt) — the sub-200 ms engineering trick.
 - [LiveKit — turn detection](https://docs.livekit.io/agents/logic/turns/) — semantic endpointing in production.
 - [WebRTC VAD](https://webrtc.googlesource.com/src/) — the legacy baseline.

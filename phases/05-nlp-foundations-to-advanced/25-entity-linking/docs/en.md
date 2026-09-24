@@ -185,7 +185,7 @@ Refuse any EL pipeline without a mention-recall baseline (you cannot evaluate a 
 
 ## Further Reading
 
-- [Milne, Witten (2008). Learning to Link with Wikipedia](https://www.cs.waikato.ac.nz/~ihw/papers/08-DM-IHW-LearningToLinkWithWikipedia.pdf) — the foundational prior+context approach.
+- [Milne, Witten (2008). Learning to Link with Wikipedia](https://dl.acm.org/doi/10.1145/1458082.1458150) — the foundational prior+context approach.
 - [Wu et al. (2020). Zero-shot Entity Linking with Dense Entity Retrieval (BLINK)](https://arxiv.org/abs/1911.03814) — the embedding-based workhorse.
 - [De Cao et al. (2021). Autoregressive Entity Retrieval (GENRE)](https://arxiv.org/abs/2010.00904) — generative EL with constrained decoding.
 - [Hoffart et al. (2011). Robust Disambiguation of Named Entities in Text (AIDA)](https://www.aclweb.org/anthology/D11-1072.pdf) — the benchmark paper.

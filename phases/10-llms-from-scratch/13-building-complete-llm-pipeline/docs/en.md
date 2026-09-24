@@ -264,4 +264,4 @@ This lesson produces `outputs/skill-llm-pipeline-reviewer.md`. Feed it a propose
 - [Kaplan et al., 2020 -- "Scaling Laws for Neural Language Models"](https://arxiv.org/abs/2001.08361) -- the original compute-data-params scaling relationship
 - [Hoffmann et al., 2022 -- "Training Compute-Optimal Large Language Models (Chinchilla)"](https://arxiv.org/abs/2203.15556) -- the correction to Kaplan that recalibrated modern data budgets
 - [PyTorch FSDP2 documentation](https://pytorch.org/docs/stable/fsdp.html) -- the distributed training primitive replacing FSDP1 in PyTorch 2.4+
-- [Weights & Biases LLM Reports](https://wandb.ai/site/llms) -- real manifests and experiment tracker output for open-source LLM runs, useful as plagiarizable templates
+- [Weights & Biases docs](https://docs.wandb.ai/) -- real manifests and experiment tracker output for open-source LLM runs, useful as plagiarizable templates
