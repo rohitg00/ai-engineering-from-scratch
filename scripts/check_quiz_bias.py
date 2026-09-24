@@ -58,11 +58,13 @@ def scan():
     biased = 0
     per_phase = collections.defaultdict(lambda: [0, 0])
     offenders = []
+    errors = []
     for path in sorted(glob.glob(QUIZ_GLOB)):
         phase = path.split("/")[1]
         try:
             data = json.load(open(path, encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append((path, str(exc)))
             continue
         for index, question in enumerate(questions_in(data)):
             flag = is_length_biased(question)
@@ -74,7 +76,7 @@ def scan():
                 biased += 1
                 per_phase[phase][0] += 1
                 offenders.append((path, index, str(question.get("question", ""))[:70]))
-    return total, biased, per_phase, offenders
+    return total, biased, per_phase, offenders, errors
 
 
 def main():
@@ -83,7 +85,11 @@ def main():
     parser.add_argument("--report", action="store_true")
     args = parser.parse_args()
 
-    total, biased, per_phase, offenders = scan()
+    total, biased, per_phase, offenders, errors = scan()
+    if errors:
+        for path, message in errors:
+            print(f"could not read {path}: {message}", file=sys.stderr)
+        return 1
     if total == 0:
         print("no quiz questions found")
         return 0
