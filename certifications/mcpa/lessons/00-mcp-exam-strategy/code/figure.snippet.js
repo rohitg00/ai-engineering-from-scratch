@@ -36,7 +36,7 @@ function blueprintWeightsFigure(host) {
     '<div class="mf-head"><strong>MCPA Blueprint</strong> five domains weighted by percent of exam content</div>',
     '<div class="mf-body">',
     '<svg viewBox="0 0 560 250" role="img" aria-label="Bar chart of the five MCPA domain weights: MCP Fundamentals 16 percent, Architecture and Components 14 percent, Interactions and Execution 26 percent, Security and Governance 24 percent, Use Cases and Ecosystem 20 percent">',
-    '<style>.mfbar{fill:var(--blueprint,#3553ff);opacity:.85}.mfval{fill:var(--ink,#111);font:11px var(--font-mono,monospace);text-anchor:middle}.mflabel{fill:var(--ink-mute,#777);font:9px var(--font-mono,monospace);text-anchor:middle}.mfaxis{stroke:var(--rule-soft,#ccc);stroke-width:1}</style>',
+    '<style>.mfbar{fill:var(--blueprint,#3553ff);opacity:.85}.mfval{fill:var(--ink,#111);font:11px var(--font-mono,monospace);text-anchor:middle}.mflabel{fill:var(--ink-mute,#777);font:11px var(--font-mono,monospace);text-anchor:middle}.mfaxis{stroke:var(--rule-soft,#ccc);stroke-width:1}</style>',
     '<line class="mfaxis" x1="30" y1="210" x2="530" y2="210"/>',
     bars,
     '</svg>',

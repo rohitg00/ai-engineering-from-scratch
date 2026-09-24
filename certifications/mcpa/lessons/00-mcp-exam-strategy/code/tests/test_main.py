@@ -60,6 +60,27 @@ class McpaExamStrategyTests(unittest.TestCase):
         readiness = main.estimate_readiness(partial_results)
         self.assertEqual(readiness, 24.0)
 
+    def test_unknown_domain_in_results_is_rejected(self) -> None:
+        with self.assertRaises(ValueError):
+            main.estimate_readiness({"not-a-real-domain": (5, 5)})
+
+    def test_unknown_domain_is_rejected_by_route_lookup(self) -> None:
+        with self.assertRaises(ValueError):
+            main.route_for_domain("not-a-real-domain")
+
+    def test_route_covers_all_34_lessons(self) -> None:
+        main.validate_route()
+        self.assertEqual(len(main.ROUTE), 34)
+        self.assertEqual({entry["nn"] for entry in main.ROUTE}, {f"{n:02d}" for n in range(34)})
+
+    def test_route_for_domain_includes_this_lesson(self) -> None:
+        self.assertIn("mcp-exam-strategy", main.route_for_domain("mcp-fundamentals"))
+
+    def test_capstone_lesson_spans_every_domain(self) -> None:
+        capstone = main.ROUTE[-1]
+        self.assertEqual(capstone["nn"], "33")
+        self.assertEqual(set(capstone["domains"]), set(main.DOMAIN_WEIGHTS))
+
 
 if __name__ == "__main__":
     unittest.main()

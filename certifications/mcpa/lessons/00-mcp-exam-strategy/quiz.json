@@ -28,27 +28,27 @@
     },
     {
       "stage": "check",
-      "question": "According to the published MCPA guide, which exam detail is not stated?",
+      "question": "The MCPA certification page and the Linux Foundation's own launch press release disagree about one exam fact. Which fact is it, and which source does this curriculum follow?",
       "options": [
-        "The specification version the exam questions are aligned to",
-        "The length of time the credential stays valid",
-        "The exam fee for the exam-only purchase option",
-        "The exact number of items on the exam"
+        "The exam fee",
+        "The included retake count",
+        "The credential validity period",
+        "The exam duration"
       ],
       "correct": 3,
-      "explanation": "The certification page states the fee, the aligned specification version, and the validity period, but it does not publish an exact item count or a passing score, so a candidate should calibrate confidence rather than chase a target count."
+      "explanation": "The certification page states a 90 minute duration while the press release states 120 minutes; this curriculum follows the certification page as the exam-specific source and records the conflict rather than silently choosing a number."
     },
     {
       "stage": "check",
-      "question": "A candidate has 40 hours before the exam and allocates them by blueprint weight. Roughly how many hours should go to Security and Governance, weighted at 24 percent?",
+      "question": "A practice question claims a client must call initialize before a 2026-07-28 server will accept any other request. How should a prepared candidate read that claim?",
       "options": [
-        "About 9.6 hours, 24 percent of the 40 hour total",
-        "About 14 hours, matching the Architecture and Components weight instead",
-        "About 20 hours, half of the entire available study budget",
-        "About 8 hours, an even split across all five domains"
+        "A legacy-era protocol distractor",
+        "A true, still current requirement",
+        "True only for older MCP servers",
+        "A detail specific to stdio only"
       ],
       "correct": 0,
-      "explanation": "Proportional allocation multiplies the total budget by a domain's blueprint share, so 24 percent of 40 hours works out to 9.6 hours; an even split or another domain's weight would misrepresent the published blueprint."
+      "explanation": "The 2026-07-28 revision removed the initialize handshake and protocol sessions entirely, so every request now carries its own protocol version and capabilities in its metadata instead of relying on a prior handshake."
     },
     {
       "stage": "post",
@@ -64,15 +64,15 @@
     },
     {
       "stage": "post",
-      "question": "Why does the study planner treat a domain with zero attempted practice questions as contributing zero to readiness, rather than raising an error or leaving the domain out entirely?",
+      "question": "A few lessons in the 34-lesson route, such as JSON-RPC and Meta, are tagged with two domains instead of one. What does that reflect about the route?",
       "options": [
-        "Zero questions attempted is treated as an automatic passing score for that domain",
-        "Skipping the domain would let the function avoid importing the standard library",
-        "It surfaces an unpracticed domain as a visible gap instead of crashing or hiding it",
-        "Raising an error there matches how a live MCPA exam server is expected to respond"
+        "A numbering error the curriculum needs to fix",
+        "A sign those lessons are optional to skip",
+        "A concept tested from two domains at once",
+        "A sign those lessons get double the study time"
       ],
       "correct": 2,
-      "explanation": "Guarding the division keeps the function from crashing, and scoring an unattempted domain as zero surfaces a coverage gap in the readiness number instead of silently excluding it or inflating the overall result."
+      "explanation": "A lesson can sit at a genuine intersection, such as a message envelope that is both a core concept and a piece of the architecture, so the route tags it under both domains rather than forcing one arbitrary choice."
     }
   ]
 }
