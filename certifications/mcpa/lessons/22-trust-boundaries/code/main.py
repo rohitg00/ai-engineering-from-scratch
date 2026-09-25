@@ -62,6 +62,10 @@ ALLOWED_ICON_PREFIXES = ("https://", "data:")
 CROSS_SERVER_CALL_PATTERN = re.compile(r"CALL\s+([a-z0-9_.-]+)\.([a-z0-9_.-]+)", re.IGNORECASE)
 
 
+def same_name(left: str, right: str) -> bool:
+    return left.casefold() == right.casefold()
+
+
 @dataclass
 class ContextItem:
     zone: str
@@ -90,7 +94,7 @@ class TrustLabeler:
     def label_server_content(self, server_id: str, label: str, text: str) -> ContextItem:
         item = ContextItem(zone=ZONE_SERVER, label=label, text=text, source_server=server_id)
         for match in CROSS_SERVER_CALL_PATTERN.finditer(text):
-            if match.group(1) != server_id:
+            if not same_name(match.group(1), server_id):
                 self.quarantine.append(QuarantineEntry(
                     item_label=label,
                     source_server=server_id,
@@ -115,9 +119,9 @@ class TrustLabeler:
         return uri.startswith(ALLOWED_ICON_PREFIXES)
 
     def attempt_relay(self, item: ContextItem, requested_server: str, requested_tool: str) -> tuple[bool, str]:
-        if item.zone == ZONE_SERVER and item.source_server != requested_server:
+        if item.zone == ZONE_SERVER and not same_name(item.source_server or "", requested_server):
             for match in CROSS_SERVER_CALL_PATTERN.finditer(item.text):
-                if match.group(1) == requested_server and match.group(2) == requested_tool:
+                if same_name(match.group(1), requested_server) and same_name(match.group(2), requested_tool):
                     return False, (
                         f"refused: {item.source_server} content asked to call "
                         f"{requested_server}.{requested_tool}, and only the model may choose a cross-server call"
