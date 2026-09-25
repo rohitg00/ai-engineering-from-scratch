@@ -59,7 +59,7 @@
 | Я хочу разрабатывать с Model Context Protocol (MCP) | [Маршрут Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Маршрут Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | Я хочу писать и выпускать Agent Skills | [Сфокусированный маршрут Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Маршрут Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
 | Я хочу подготовиться к сертификации Claude | [Начало подготовки](../../certifications/claude/GETTING_STARTED.md) | [Академия сертификации](https://aiengineeringfromscratch.com/certifications.html) |
-| I want to prepare for the MCP Associate (MCPA) | [MCPA onboarding](../../certifications/mcpa/GETTING_STARTED.md) · [MCPA Curriculum](../../certifications/mcpa/README.md) | Not on the website yet |
+| I want to prepare for the MCP Associate (MCPA) | [MCPA onboarding](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA track](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
 
 Не знаете, что выбрать? Используйте [наставника `start-learning` для определения уровня](../../skills/start-learning/SKILL.md) или [руководство по предварительным требованиям на сайте](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -316,7 +316,8 @@ Use the [AI-native GitHub onboarding guide](../../certifications/mcpa/GETTING_ST
 Claude Code, Codex, ChatGPT, Cursor, or another agent. Run `mcpa-certification` in Codex,
 `/mcpa-certification` in Claude Code, or ask another host to use `mcpa-certification`. It
 creates a persistent route in `MCPA-CERTIFICATION.md`, teaches one step at a time, runs
-the real labs, and gives artifact-based feedback.
+the real labs, and gives artifact-based feedback. The same curriculum is available on the
+[MCPA track page](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
 
 This curriculum is independent study material based on public exam objectives. It is not
 affiliated with the Agentic AI Foundation or the Linux Foundation, does not reproduce
