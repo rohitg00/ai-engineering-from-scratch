@@ -59,7 +59,7 @@ Você não precisa percorrer 523 lições antes de começar. Escolha um objetivo
 | Quero desenvolver com o Model Context Protocol (MCP) | [Rota do Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Trilha do Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
 | Quero escrever e publicar Agent Skills | [Rota focada de Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Trilha de Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
 | Quero me preparar para uma certificação Claude | [Introdução à certificação](../../certifications/claude/GETTING_STARTED.md) | [Academia de certificação](https://aiengineeringfromscratch.com/certifications.html) |
-| I want to prepare for the MCP Associate (MCPA) | [MCPA onboarding](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA track](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+| Quero me preparar para a certificação MCP Associate (MCPA) | [Introdução ao MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [Trilha MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
 
 Não sabe onde se encaixa? Use o [tutor de nivelamento `start-learning`](../../skills/start-learning/SKILL.md) ou o [guia de pré-requisitos do site](https://aiengineeringfromscratch.com/prereqs.html).
 
