@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="AI Engineering from Scratch — reference manual banner">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="AI Engineering from Scratch: a reference manual in 20 phases, stacked from setup and math up to production, safety, and capstones">
   <defs>
     <pattern id="paper" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
       <circle cx="0" cy="0" r="1" fill="#1a1a1a" fill-opacity="0.08"/>
@@ -8,11 +8,9 @@
       <rect x="8" y="3" width="6" height="3" fill="#3553ff" fill-opacity="0.35"/>
     </pattern>
     <style>
-      .face { fill: rgba(53, 83, 255, 0.06); }
-      .face-strong { fill: rgba(53, 83, 255, 0.18); }
-      .stroke-bp { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
-      .mono { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; }
-      .display { font-family: 'VT323', ui-monospace, monospace; font-weight: 400; }
+      .bp { stroke: #3553ff; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .display { font-family: 'VT323', ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 400; }
       .serif { font-family: 'Source Serif 4', Georgia, serif; }
     </style>
   </defs>
@@ -21,12 +19,11 @@
   <rect width="1280" height="420" fill="url(#paper)"/>
 
   <g class="mono" font-size="11" letter-spacing="2.4" fill="#3553ff">
-    <text x="56" y="44">FIG_000  —  REFERENCE MANUAL  V1.0</text>
+    <text x="56" y="44">FIG_000  ·  REFERENCE MANUAL  V1.0</text>
   </g>
   <g class="mono" font-size="11" letter-spacing="2.4" fill="#7a7a78" text-anchor="end">
     <text x="1224" y="44">© 2026  ·  OPEN SOURCE  ·  MIT LICENSE</text>
   </g>
-
   <line x1="56" y1="64" x2="1224" y2="64" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.4"/>
 
   <g transform="translate(56, 110)">
@@ -40,71 +37,118 @@
   <g class="mono" font-size="11" letter-spacing="2.4" fill="#7a7a78">
     <text x="56" y="324">20 PHASES  ·  523 LESSONS  ·  396 SKILLS  ·  99 PROMPTS</text>
   </g>
+  <g class="mono" font-size="11" letter-spacing="2.4" fill="#3553ff">
+    <text x="56" y="350">CERTIFICATION PREP  ·  CLAUDE  ·  MCPA</text>
+  </g>
 
-  <line x1="780" y1="110" x2="780" y2="350" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.4" stroke-dasharray="3 3"/>
+  <line x1="780" y1="110" x2="780" y2="362" stroke="#3553ff" stroke-width="0.6" stroke-opacity="0.4" stroke-dasharray="3 3"/>
 
-  <g transform="translate(820, 130)">
-    <g class="mono" font-size="9" letter-spacing="2" fill="#3553ff">
-      <text x="0" y="-10">FIG_000.A  —  CURRICULUM STACK</text>
+  <g class="mono" font-size="9" letter-spacing="2" fill="#3553ff">
+    <text x="820" y="120">FIG_000.A  ·  CURRICULUM STACK</text>
+  </g>
+
+    <g>
+      <polygon points="834,330 924,310 1014,330 1014,338 924,358 834,338" fill="#fafaf5"/>
+      <polygon points="834,330 924,310 1014,330 924,350" fill="#3553ff" fill-opacity="0.05"/>
+      <polygon points="834,330 924,350 924,358 834,338" fill="#3553ff" fill-opacity="0.13"/>
+      <polygon points="924,350 1014,330 1014,338 924,358" fill="#3553ff" fill-opacity="0.19"/>
+      <polygon class="bp" points="834,330 924,310 1014,330 924,350" stroke-width="1.1"/>
+      <polyline class="bp" points="834,330 834,338 924,358 1014,338 1014,330" stroke-width="1.1"/>
+      <line class="bp" x1="924" y1="350" x2="924" y2="358" stroke-width="1.1"/>
+    </g>
+    <g>
+      <polygon points="834,305 924,285 1014,305 1014,313 924,333 834,313" fill="#fafaf5"/>
+      <polygon points="834,305 924,285 1014,305 924,325" fill="#3553ff" fill-opacity="0.07"/>
+      <polygon points="834,305 924,325 924,333 834,313" fill="#3553ff" fill-opacity="0.15"/>
+      <polygon points="924,325 1014,305 1014,313 924,333" fill="#3553ff" fill-opacity="0.21"/>
+      <polygon class="bp" points="834,305 924,285 1014,305 924,325" stroke-width="1.1"/>
+      <polyline class="bp" points="834,305 834,313 924,333 1014,313 1014,305" stroke-width="1.1"/>
+      <line class="bp" x1="924" y1="325" x2="924" y2="333" stroke-width="1.1"/>
+    </g>
+    <g>
+      <polygon points="834,280 924,260 1014,280 1014,288 924,308 834,288" fill="#fafaf5"/>
+      <polygon points="834,280 924,260 1014,280 924,300" fill="#3553ff" fill-opacity="0.09"/>
+      <polygon points="834,280 924,300 924,308 834,288" fill="#3553ff" fill-opacity="0.17"/>
+      <polygon points="924,300 1014,280 1014,288 924,308" fill="#3553ff" fill-opacity="0.23"/>
+      <polygon class="bp" points="834,280 924,260 1014,280 924,300" stroke-width="1.1"/>
+      <polyline class="bp" points="834,280 834,288 924,308 1014,288 1014,280" stroke-width="1.1"/>
+      <line class="bp" x1="924" y1="300" x2="924" y2="308" stroke-width="1.1"/>
+    </g>
+    <g>
+      <polygon points="834,255 924,235 1014,255 1014,263 924,283 834,263" fill="#fafaf5"/>
+      <polygon points="834,255 924,235 1014,255 924,275" fill="#3553ff" fill-opacity="0.11"/>
+      <polygon points="834,255 924,275 924,283 834,263" fill="#3553ff" fill-opacity="0.19"/>
+      <polygon points="924,275 1014,255 1014,263 924,283" fill="#3553ff" fill-opacity="0.25"/>
+      <polygon class="bp" points="834,255 924,235 1014,255 924,275" stroke-width="1.1"/>
+      <polyline class="bp" points="834,255 834,263 924,283 1014,263 1014,255" stroke-width="1.1"/>
+      <line class="bp" x1="924" y1="275" x2="924" y2="283" stroke-width="1.1"/>
+    </g>
+    <g>
+      <polygon points="834,230 924,210 1014,230 1014,238 924,258 834,238" fill="#fafaf5"/>
+      <polygon points="834,230 924,210 1014,230 924,250" fill="#3553ff" fill-opacity="0.14"/>
+      <polygon points="834,230 924,250 924,258 834,238" fill="#3553ff" fill-opacity="0.22"/>
+      <polygon points="924,250 1014,230 1014,238 924,258" fill="#3553ff" fill-opacity="0.28"/>
+      <polygon class="bp" points="834,230 924,210 1014,230 924,250" stroke-width="1.1"/>
+      <polyline class="bp" points="834,230 834,238 924,258 1014,238 1014,230" stroke-width="1.1"/>
+      <line class="bp" x1="924" y1="250" x2="924" y2="258" stroke-width="1.1"/>
+    </g>
+    <g>
+      <polygon points="834,205 924,185 1014,205 1014,213 924,233 834,213" fill="#fafaf5"/>
+      <polygon points="834,205 924,185 1014,205 924,225" fill="#3553ff" fill-opacity="0.16"/>
+      <polygon points="834,205 924,225 924,233 834,213" fill="#3553ff" fill-opacity="0.24"/>
+      <polygon points="924,225 1014,205 1014,213 924,233" fill="#3553ff" fill-opacity="0.30"/>
+      <polygon class="bp" points="834,205 924,185 1014,205 924,225" stroke-width="1.1"/>
+      <polyline class="bp" points="834,205 834,213 924,233 1014,213 1014,205" stroke-width="1.1"/>
+      <line class="bp" x1="924" y1="225" x2="924" y2="233" stroke-width="1.1"/>
+    </g>
+    <g>
+      <polygon points="834,180 924,160 1014,180 1014,188 924,208 834,188" fill="#fafaf5"/>
+      <polygon points="834,180 924,160 1014,180 924,200" fill="#3553ff" fill-opacity="0.18"/>
+      <polygon points="834,180 924,200 924,208 834,188" fill="#3553ff" fill-opacity="0.26"/>
+      <polygon points="924,200 1014,180 1014,188 924,208" fill="#3553ff" fill-opacity="0.32"/>
+      <polygon class="bp" points="834,180 924,160 1014,180 924,200" stroke-width="1.1"/>
+      <polyline class="bp" points="834,180 834,188 924,208 1014,188 1014,180" stroke-width="1.1"/>
+      <line class="bp" x1="924" y1="200" x2="924" y2="208" stroke-width="1.1"/>
+    </g>
+    <g>
+      <polygon points="834,155 924,135 1014,155 1014,163 924,183 834,163" fill="#fafaf5"/>
+      <polygon points="834,155 924,135 1014,155 924,175" fill="#3553ff" fill-opacity="0.26"/>
+      <polygon points="834,155 924,175 924,183 834,163" fill="#3553ff" fill-opacity="0.28"/>
+      <polygon points="924,175 1014,155 1014,163 924,183" fill="#3553ff" fill-opacity="0.34"/>
+      <polygon class="bp" points="834,155 924,135 1014,155 924,175" stroke-width="1.5"/>
+      <polyline class="bp" points="834,155 834,163 924,183 1014,163 1014,155" stroke-width="1.5"/>
+      <line class="bp" x1="924" y1="175" x2="924" y2="183" stroke-width="1.5"/>
     </g>
 
-    <g transform="translate(8, 32)">
-      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
-      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
-    </g>
-    <g transform="translate(14, 60)">
-      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
-      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
-    </g>
-    <g transform="translate(20, 88)">
-      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
-      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
-    </g>
-    <g transform="translate(26, 116)">
-      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
-      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
-    </g>
-    <g transform="translate(32, 144)">
-      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
-      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
-    </g>
-    <g transform="translate(38, 172)">
-      <polygon class="face" points="0,0 110,-26 200,-13 90,13"/>
-      <polygon class="stroke-bp" stroke-width="1.2" points="0,0 110,-26 200,-13 90,13"/>
-    </g>
-    <g transform="translate(44, 200)">
-      <polygon class="face-strong" points="0,0 110,-26 200,-13 90,13"/>
-      <polygon class="stroke-bp" stroke-width="1.4" points="0,0 110,-26 200,-13 90,13"/>
-    </g>
-
-    <g class="stroke-bp" stroke-width="0.8" stroke-dasharray="3 3">
-      <line x1="208" y1="19" x2="278" y2="19"/>
-      <line x1="214" y1="47" x2="278" y2="47"/>
-      <line x1="220" y1="75" x2="278" y2="75"/>
-      <line x1="226" y1="103" x2="278" y2="103"/>
-      <line x1="232" y1="131" x2="278" y2="131"/>
-      <line x1="238" y1="159" x2="278" y2="159"/>
-      <line x1="244" y1="187" x2="278" y2="187"/>
-    </g>
-
-    <g class="mono" font-size="9" letter-spacing="1.6" fill="#3553ff">
-      <text x="288" y="22">SETUP &amp; TOOLING</text>
-      <text x="288" y="50">MATH FOUNDATIONS</text>
-      <text x="288" y="78">ML FUNDAMENTALS</text>
-      <text x="288" y="106">DEEP LEARNING · RL</text>
-      <text x="288" y="134">VISION · SPEECH · NLP</text>
-      <text x="288" y="162">LLMS · TRANSFORMERS</text>
-      <text x="288" y="190">AGENTS · SWARMS · PROD</text>
-    </g>
-    <g class="mono" font-size="8" letter-spacing="1.4" fill="#7a7a78">
-      <text x="288" y="33">PHASE 00</text>
-      <text x="288" y="61">PHASE 01</text>
-      <text x="288" y="89">PHASE 02</text>
-      <text x="288" y="117">PHASE 03 · 09</text>
-      <text x="288" y="145">PHASE 04 · 05 · 06</text>
-      <text x="288" y="173">PHASE 07 · 08 · 10 · 12</text>
-      <text x="288" y="201">PHASE 13–19</text>
-    </g>
+  <g class="bp" stroke-width="0.8" stroke-dasharray="3 3">
+    <line x1="1018" y1="330" x2="1036" y2="330"/>
+    <line x1="1018" y1="305" x2="1036" y2="305"/>
+    <line x1="1018" y1="280" x2="1036" y2="280"/>
+    <line x1="1018" y1="255" x2="1036" y2="255"/>
+    <line x1="1018" y1="230" x2="1036" y2="230"/>
+    <line x1="1018" y1="205" x2="1036" y2="205"/>
+    <line x1="1018" y1="180" x2="1036" y2="180"/>
+    <line x1="1018" y1="155" x2="1036" y2="155"/>
+  </g>
+  <g class="mono" font-size="10.5" letter-spacing="1" fill="#3553ff" font-weight="600">
+    <text x="1044" y="333.5">SETUP · MATH</text>
+    <text x="1044" y="308.5">ML · DEEP LEARNING</text>
+    <text x="1044" y="283.5">VISION · NLP · SPEECH</text>
+    <text x="1044" y="258.5">TRANSFORMERS · GEN AI</text>
+    <text x="1044" y="233.5">RL · LLMS</text>
+    <text x="1044" y="208.5">MULTIMODAL · TOOLS</text>
+    <text x="1044" y="183.5">AGENTS · SWARMS</text>
+    <text x="1044" y="158.5">PROD · SAFETY · CAPSTONE</text>
+  </g>
+  <g class="mono" font-size="9" letter-spacing="1" fill="#7a7a78">
+    <text x="1044" y="344.5">PHASE 00 · 01</text>
+    <text x="1044" y="319.5">PHASE 02 · 03</text>
+    <text x="1044" y="294.5">PHASE 04 · 05 · 06</text>
+    <text x="1044" y="269.5">PHASE 07 · 08</text>
+    <text x="1044" y="244.5">PHASE 09 · 10 · 11</text>
+    <text x="1044" y="219.5">PHASE 12 · 13</text>
+    <text x="1044" y="194.5">PHASE 14 · 15 · 16</text>
+    <text x="1044" y="169.5">PHASE 17 · 18 · 19</text>
   </g>
 
   <rect x="0" y="408" width="1280" height="6" fill="url(#paperRule)"/>
