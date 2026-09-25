@@ -27,6 +27,15 @@ const CATALOG_DISCOVERY_START = '<!-- GENERATED:LESSON-DISCOVERY:START -->';
 const CATALOG_DISCOVERY_END = '<!-- GENERATED:LESSON-DISCOVERY:END -->';
 const CERTIFICATION_DISCOVERY_START = '<!-- GENERATED:CERTIFICATION-DISCOVERY:START -->';
 const CERTIFICATION_DISCOVERY_END = '<!-- GENERATED:CERTIFICATION-DISCOVERY:END -->';
+const SPONSORS_SOURCE_PATH = path.join(REPO_ROOT, 'SPONSORS.md');
+const SPONSORS_PAGE_START = '<!-- GENERATED:SPONSORS:START -->';
+const SPONSORS_PAGE_END = '<!-- GENERATED:SPONSORS:END -->';
+const SPONSOR_TAG_ATTRIBUTES = {
+  a: ['href'],
+  picture: [],
+  source: ['media', 'srcset'],
+  img: ['src', 'alt', 'width', 'height'],
+};
 
 // Registration order is public behavior. Later providers intentionally replace
 // selected legacy figures, including figures-tools3.js -> figures-mcp.js.
@@ -1233,6 +1242,162 @@ function replaceGeneratedDiscovery(filePath, startMarker, endMarker, content) {
   fs.writeFileSync(filePath, updated, 'utf8');
 }
 
+function markdownHeadingSlug(text) {
+  return String(text).toLowerCase().replace(/[^a-z0-9 _-]/g, '').trim().replace(/ /g, '-');
+}
+
+function sanitizeSponsorTag(tag) {
+  const match = tag.match(/^<(\/?)([a-z]+)\b([^>]*)>$/i);
+  if (!match) return null;
+  const name = match[2].toLowerCase();
+  const allowed = SPONSOR_TAG_ATTRIBUTES[name];
+  if (!allowed) return null;
+  if (match[1]) return name === 'source' || name === 'img' ? '' : `</${name}>`;
+  const attributes = [];
+  for (const [, rawKey, value] of match[3].matchAll(/([a-z-]+)="([^"]*)"/gi)) {
+    const key = rawKey.toLowerCase();
+    if (!allowed.includes(key)) continue;
+    if (['href', 'src', 'srcset'].includes(key) && !/^https:\/\/[^\s"'<>]+$/.test(value)) return null;
+    if (key === 'media' && !/^\(prefers-color-scheme: (?:dark|light)\)$/.test(value)) return null;
+    if ((key === 'width' || key === 'height') && !/^\d{1,4}$/.test(value)) return null;
+    attributes.push(`${key}="${htmlEscape(value)}"`);
+  }
+  if (name === 'a') attributes.push('target="_blank"', 'rel="noopener"');
+  return `<${name}${attributes.map(attribute => ` ${attribute}`).join('')}>`;
+}
+
+function sponsorLinkTarget(href) {
+  if (/^#[\w-]+$/.test(href)) return { href, external: false };
+  if (/^https:\/\/[^\s"'<>]+$/.test(href)) return { href, external: true };
+  if (/^[\w.-]+(?:\/[\w.-]+)*(?:#[\w-]+)?$/.test(href) && !href.includes('..')) {
+    return { href: GITHUB_BLOB_BASE + href, external: true };
+  }
+  return null;
+}
+
+function renderSponsorInline(text) {
+  const kept = [];
+  const keep = html => `\u0000${kept.push(html) - 1}\u0000`;
+  const openTags = {};
+  const staged = String(text)
+    .replace(/`([^`]+)`/g, (match, code) => keep(`<code>${htmlEscape(code)}</code>`))
+    .replace(/<\/?[a-z][^>]*>/gi, tag => {
+      const safe = sanitizeSponsorTag(tag);
+      if (safe === null) return tag;
+      const closing = safe.match(/^<\/([a-z]+)>$/);
+      const opening = safe.match(/^<(a|picture)\b/);
+      if (closing) {
+        if (!openTags[closing[1]]) return tag;
+        openTags[closing[1]]--;
+      } else if (opening) {
+        openTags[opening[1]] = (openTags[opening[1]] || 0) + 1;
+      }
+      return keep(safe);
+    });
+  return htmlEscape(staged)
+    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (match, label, href) => {
+      const target = sponsorLinkTarget(href.replace(/&amp;/g, '&'));
+      if (!target) return label;
+      const opener = target.external ? ' target="_blank" rel="noopener"' : '';
+      return `<a href="${htmlEscape(target.href)}"${opener}>${label}</a>`;
+    })
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\u0000(\d+)\u0000/g, (match, index) => kept[Number(index)]);
+}
+
+function splitMarkdownTableRow(row) {
+  return row.replace(/^\||\|$/g, '').split('|').map(cell => cell.trim());
+}
+
+function renderSponsorTable(rows) {
+  if (rows.length < 2 || !/^\|?\s*:?-{3,}/.test(rows[1])) {
+    return rows.map(row => `<p>${renderSponsorInline(row)}</p>`).join('\n');
+  }
+  const alignment = splitMarkdownTableRow(rows[1]).map(cell => {
+    if (!cell.endsWith(':')) return '';
+    return cell.startsWith(':') ? 'center' : 'right';
+  });
+  const cell = (tag, value, index) => {
+    const align = alignment[index] ? ` class="align-${alignment[index]}"` : '';
+    return `<${tag}${align}>${renderSponsorInline(value)}</${tag}>`;
+  };
+  const head = splitMarkdownTableRow(rows[0]).map((value, index) => cell('th', value, index)).join('');
+  const body = rows.slice(2).map(row =>
+    `<tr>${splitMarkdownTableRow(row).map((value, index) => cell('td', value, index)).join('')}</tr>`
+  ).join('');
+  return `<div class="sponsor-table-wrap"><table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+}
+
+function renderSponsorsMarkdown(markdown) {
+  const html = [];
+  let paragraph = [];
+  let list = null;
+  let table = [];
+  const flushParagraph = () => {
+    if (paragraph.length) html.push(`<p>${renderSponsorInline(paragraph.join(' '))}</p>`);
+    paragraph = [];
+  };
+  const flushList = () => {
+    if (list) html.push(`<${list.tag}>${list.items.map(item => `<li>${renderSponsorInline(item)}</li>`).join('')}</${list.tag}>`);
+    list = null;
+  };
+  const flushTable = () => {
+    if (table.length) html.push(renderSponsorTable(table));
+    table = [];
+  };
+  for (const line of String(markdown).replace(/\r\n?/g, '\n').split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      flushParagraph();
+      flushList();
+      flushTable();
+      continue;
+    }
+    if (/^\|.*\|$/.test(trimmed)) {
+      flushParagraph();
+      flushList();
+      table.push(trimmed);
+      continue;
+    }
+    flushTable();
+    const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      flushList();
+      const level = heading[1].length;
+      html.push(`<h${level} id="${markdownHeadingSlug(heading[2])}">${renderSponsorInline(heading[2])}</h${level}>`);
+      continue;
+    }
+    const item = line.match(/^(?:[-*]|(\d+)\.)\s+(.+)$/);
+    if (item) {
+      flushParagraph();
+      const tag = item[1] ? 'ol' : 'ul';
+      if (!list || list.tag !== tag) {
+        flushList();
+        list = { tag, items: [] };
+      }
+      list.items.push(item[2]);
+      continue;
+    }
+    if (list && /^\s+\S/.test(line)) {
+      list.items[list.items.length - 1] += ` ${trimmed}`;
+      continue;
+    }
+    flushList();
+    paragraph.push(trimmed);
+  }
+  flushParagraph();
+  flushList();
+  flushTable();
+  return html.join('\n');
+}
+
+function writeSponsorsPage() {
+  const html = renderSponsorsMarkdown(fs.readFileSync(SPONSORS_SOURCE_PATH, 'utf8'));
+  replaceGeneratedDiscovery(path.join(__dirname, 'sponsors.html'), SPONSORS_PAGE_START, SPONSORS_PAGE_END, html);
+  console.log('   rendered sponsors.html from SPONSORS.md');
+}
+
 function writeSeoArtifacts(phases, certifications, learningPaths) {
   const manifests = buildSeoManifests(phases, certifications, learningPaths);
   fs.writeFileSync(LESSON_SEO_OUTPUT_PATH, JSON.stringify(manifests.lessonManifest, null, 2) + '\n', 'utf8');
@@ -2144,6 +2309,7 @@ function build() {
 
   console.log('🔎 Generating lesson and certification SEO manifests...');
   const seoManifests = writeSeoArtifacts(phases, certifications, learningPaths);
+  writeSponsorsPage();
 
   // Stats
   let totalLessons = 0;
@@ -2204,6 +2370,7 @@ function writeSitemap(lessonManifest, glossaryCount, certifications) {
     { loc: '/developer.html', priority: '0.6', freq: 'monthly' },
     { loc: '/contact.html', priority: '0.3', freq: 'yearly' },
     { loc: '/privacy.html', priority: '0.3', freq: 'yearly' },
+    { loc: '/sponsors.html', priority: '0.5', freq: 'monthly' },
   ];
   if (glossaryCount > 0) urls.push({ loc: '/glossary.html', priority: '0.6', freq: 'monthly' });
   if (certifications && certifications.programs && certifications.programs.length) {
@@ -2264,6 +2431,7 @@ function writeLlms(phases, glossaryCount, artifactCount, certifications) {
   out += `- [Roadmap](${SITE_ORIGIN}/prereqs.html) — prerequisite ordering across phases\n`;
   out += `- [AI Engineering Learning Paths](${SITE_ORIGIN}/learning-paths.html) — four core domain paths and six career routes connected to practical lessons\n`;
   if (glossaryCount > 0) out += `- [Glossary](${SITE_ORIGIN}/glossary.html) — plain-language definitions of ${glossaryCount} terms\n`;
+  out += `- [Sponsor the project](${SITE_ORIGIN}/sponsors.html) — sponsorship tiers, rules, and current sponsors from SPONSORS.md\n`;
   if (certifications && certifications.programs && certifications.programs.length) {
     out += `\n## Certification preparation\n`;
     out += `Independent, open-source practice material. Practice scores are not official exam scores and completion does not guarantee certification.\n\n`;
@@ -2370,6 +2538,7 @@ module.exports = {
   parseFrontmatter,
   renderCatalogDiscovery,
   renderCertificationDiscovery,
+  renderSponsorsMarkdown,
   serializeFigureProviderManifest,
   writeFigureManifest,
 };

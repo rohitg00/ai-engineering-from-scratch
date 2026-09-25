@@ -13,6 +13,7 @@ const HTML_BY_PATH = {
   '/docs': 'developer.html',
   '/contact': 'contact.html',
   '/privacy': 'privacy.html',
+  '/sponsors': 'sponsors.html',
 };
 
 function parseAccept(header) {

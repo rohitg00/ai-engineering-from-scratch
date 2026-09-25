@@ -20,6 +20,7 @@
     { "source": "/docs", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/docs" },
     { "source": "/contact", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/contact" },
     { "source": "/privacy", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/privacy" },
+    { "source": "/sponsors", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/sponsors" },
     { "source": "/glossary", "destination": "/glossary.html" },
     { "source": "/catalog", "destination": "/catalog.html" },
     { "source": "/certifications", "destination": "/certifications.html" },
@@ -30,7 +31,8 @@
     { "source": "/developer", "destination": "/developer.html" },
     { "source": "/docs", "destination": "/developer.html" },
     { "source": "/contact", "destination": "/contact.html" },
-    { "source": "/privacy", "destination": "/privacy.html" }
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/sponsors", "destination": "/sponsors.html" }
   ],
   "headers": [
     {
