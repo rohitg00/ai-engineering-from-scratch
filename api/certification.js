@@ -172,7 +172,7 @@ function certificationFallback(entry, trackId) {
     const params = new URLSearchParams();
     params.set('path', lesson.path);
     params.set(
-      lesson.path.startsWith('certifications/claude/lessons/') ? 'track' : 'fromTrack',
+      /^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//.test(lesson.path) ? 'track' : 'fromTrack',
       trackId
     );
     const href = `/lesson?${params.toString()}`;

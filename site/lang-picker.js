@@ -12,7 +12,7 @@
   function isCertificationLesson() {
     try {
       var path = new URLSearchParams(location.search).get('path') || '';
-      return path.indexOf('certifications/claude/lessons/') === 0;
+      return /^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//.test(path);
     } catch (_) {
       return false;
     }

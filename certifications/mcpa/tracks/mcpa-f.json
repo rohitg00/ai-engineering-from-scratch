@@ -9,7 +9,8 @@
   "badge": {
     "imageUrl": "https://training.linuxfoundation.org/wp-content/uploads/2026/06/MCPA_Badge-1.png",
     "width": 300,
-    "height": 300
+    "height": 300,
+    "shape": "square"
   },
   "summary": "Prove you understand how the Model Context Protocol works: its hosts, clients, servers, and tools, the message flow and primitives that connect them, and the trust boundaries that keep the connection safe.",
   "audience": "AI engineers, platform engineers, and AI governance professionals who connect agents to external systems and need to reason about how the protocol works and how its components communicate.",

@@ -1,6 +1,8 @@
 {
   "id": "mcpa-certification",
   "name": "MCPA Certification Curriculum",
+  "shortName": "MCPA",
+  "accessNoticeTitle": "Official exam access is open",
   "provider": "Agentic AI Foundation",
   "publisher": "AI Engineering from Scratch",
   "version": "1.0.0-local-preview",

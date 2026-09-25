@@ -96,7 +96,7 @@ function hasQuery(req, name) {
 
 function validLessonPath(value) {
   if (!value || value.includes('..') || value.includes('\\') || value.includes('\0')) return false;
-  return /^(?:phases\/[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9-]*|certifications\/claude\/lessons\/[a-z0-9][a-z0-9-]*)$/.test(value);
+  return /^(?:phases\/[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9-]*|certifications\/[a-z0-9][a-z0-9-]*\/lessons\/[a-z0-9][a-z0-9-]*)$/.test(value);
 }
 
 function validTrackId(value) {
@@ -277,7 +277,7 @@ function send(res, method, status, body, cacheControl) {
 
 function normalizedLessonLocation(req, lessonPath, entry, assets) {
   const params = new URLSearchParams();
-  const certificationLesson = lessonPath.startsWith('certifications/claude/lessons/');
+  const certificationLesson = /^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//.test(lessonPath);
   const navigationByTrack = entry.navigationByTrack && typeof entry.navigationByTrack === 'object'
     ? entry.navigationByTrack
     : {};

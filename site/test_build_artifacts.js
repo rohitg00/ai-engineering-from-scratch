@@ -518,7 +518,19 @@ test('build-time SEO manifests cover every readable lesson and expose canonical 
   );
   assert.deepEqual(Object.keys(lessonManifest.lessons).sort(), expectedPaths);
   assert.equal(certificationManifest.version, 1);
-  assert.equal(Object.keys(certificationManifest.tracks).length, 4);
+  assert.deepEqual(
+    certifications.programs.map(program => program.id).sort(),
+    ['claude-certifications', 'mcpa-certification']
+  );
+  const programsById = new Map(certifications.programs.map(program => [program.id, program]));
+  for (const track of certifications.tracks) assert.ok(programsById.has(track.programId), `${track.id} has no program`);
+  for (const lesson of Object.values(certifications.lessonsByPath)) {
+    assert.ok(programsById.has(lesson.programId), `${lesson.path} has no program`);
+    assert.ok(lesson.path.startsWith(`${programsById.get(lesson.programId).directory}/lessons/`));
+  }
+  assert.ok(certifications.tracks.some(track => track.id === 'mcpa-f'));
+  assert.ok(expectedCertificationPaths.some(lessonPath => lessonPath.startsWith('certifications/mcpa/lessons/')));
+  assert.equal(Object.keys(certificationManifest.tracks).length, certifications.tracks.length);
 
   function inspectKeys(value) {
     if (!value || typeof value !== 'object') return;
@@ -601,7 +613,7 @@ test('build-time SEO manifests cover every readable lesson and expose canonical 
 
   const trackEntries = Object.values(certificationManifest.tracks);
   for (const field of ['title', 'description', 'excerpt', 'canonicalUrl']) {
-    assert.equal(new Set(trackEntries.map(track => track[field])).size, 4, `track ${field} values are not unique`);
+    assert.equal(new Set(trackEntries.map(track => track[field])).size, trackEntries.length, `track ${field} values are not unique`);
   }
   for (const track of trackEntries) {
     assert.ok(track.seoTitle.length <= 60);
@@ -618,7 +630,14 @@ test('build-time SEO manifests cover every readable lesson and expose canonical 
   const catalogDiscovery = renderCatalogDiscovery(phases, lessonManifest);
   const certificationDiscovery = renderCertificationDiscovery(certifications, certificationManifest);
   assert.equal((catalogDiscovery.match(/href="lesson\?path=/g) || []).length, expectedCoursePaths.length);
-  assert.equal((certificationDiscovery.match(/href="certification\?id=/g) || []).length, 4);
+  assert.equal((certificationDiscovery.match(/href="certification\?id=/g) || []).length, certifications.tracks.length);
+  assert.equal(
+    (certificationDiscovery.match(/data-generated-discovery="certification-program"/g) || []).length,
+    certifications.programs.length
+  );
+  for (const program of certifications.programs) {
+    assert.ok(certificationDiscovery.includes(program.learnerGuidePath), `${program.id} discovery lacks its learner guide`);
+  }
   assert.ok((certificationDiscovery.match(/href="lesson\?path=/g) || []).length >= expectedCertificationPaths.length);
   assert.doesNotMatch(catalogDiscovery + certificationDiscovery, /(?:lesson|certification)\.html\?/);
 

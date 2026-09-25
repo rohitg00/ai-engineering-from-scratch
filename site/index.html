@@ -1154,6 +1154,8 @@
     }
 
     .certification-badge-stage {
+      display: grid;
+      gap: 12px;
       width: 124px;
       margin: 0;
     }
@@ -1164,6 +1166,9 @@
       height: auto;
       aspect-ratio: 1;
       object-fit: contain;
+    }
+
+    .certification-badge-stage .certification-badge-claude {
       clip-path: polygon(31% 0, 67% 0, 86% 6%, 97% 20%, 100% 36%, 99% 71%, 88% 84%, 61% 99%, 25% 97%, 6% 82%, 0 66%, 0 36%, 5% 20%);
     }
 
@@ -2411,10 +2416,10 @@
         </article>
         <article class="course-route">
           <div class="course-route-name"><span>Practice by evidence</span><strong>Certification preparation</strong></div>
-          <p>Choose a certification route, complete practical labs, keep learner-owned artifacts, and use original assessments.</p>
+          <p>Choose a Claude or MCPA certification route, complete practical labs, keep learner-owned artifacts, and use original assessments.</p>
           <div class="course-route-actions">
             <a class="course-route-link" href="certifications.html">Explore paths</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/certifications/claude/GETTING_STARTED.md" target="_blank" rel="noopener">GitHub tutor</a>
+            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/certifications/README.md" target="_blank" rel="noopener">GitHub tutor</a>
           </div>
         </article>
       </div>
@@ -2485,27 +2490,31 @@
     <section class="certification-spotlight container" id="certifications" aria-labelledby="certification-spotlight-title">
       <div class="certification-spotlight-grid reveal">
         <figure class="certification-badge-stage" aria-hidden="true">
-          <img
+          <img class="certification-badge-claude"
             src="https://images.credly.com/images/f101c6ac-8a2d-4220-b381-70e3e6c364e3/blob"
             width="601" height="601" loading="lazy" decoding="async" referrerpolicy="no-referrer"
+            alt="">
+          <img class="certification-badge-mcpa"
+            src="https://training.linuxfoundation.org/wp-content/uploads/2026/06/MCPA_Badge-1.png"
+            width="300" height="300" loading="lazy" decoding="async" referrerpolicy="no-referrer"
             alt="">
         </figure>
 
         <div class="certification-copy">
           <span class="certification-eyebrow">Independent certification preparation</span>
           <h2 id="certification-spotlight-title">Prepare by building the real systems</h2>
-          <p class="certification-intro">Four Claude certification paths taught the same way as the course: step by step, with interactive labs, practical artifacts, and an AI tutor that works from the GitHub repo.</p>
+          <p class="certification-intro">Claude and Model Context Protocol Associate (MCPA) certification paths taught the same way as the course: step by step, with interactive labs, practical artifacts, and an AI tutor that works from the GitHub repo.</p>
           <div class="certification-proof" aria-label="Certification curriculum coverage">
-            <span><strong>4</strong> tracks</span>
-            <span><strong>33</strong> certification lessons</span>
-            <span><strong>295</strong> original practice questions</span>
+            <span><strong data-cert-stat="tracks">5</strong> tracks</span>
+            <span><strong data-cert-stat="lessons">67</strong> certification lessons</span>
+            <span><strong data-cert-stat="questions">505</strong> original practice questions</span>
           </div>
-          <p class="certification-disclaimer">Not affiliated with, endorsed by, sponsored by, or authorized by Anthropic. This curriculum does not issue credentials or guarantee a passing result.</p>
+          <p class="certification-disclaimer">Not affiliated with, endorsed by, sponsored by, or authorized by Anthropic, the Agentic AI Foundation, or the Linux Foundation. This curriculum does not issue credentials or guarantee a passing result.</p>
         </div>
 
         <div class="certification-actions">
           <a class="masthead-btn masthead-btn--primary" href="certifications.html">Explore certifications</a>
-          <a class="certification-github-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/certifications/claude/GETTING_STARTED.md" target="_blank" rel="noopener" aria-label="Use the certification tutor on GitHub (opens in a new tab)">Learn with the GitHub tutor</a>
+          <a class="certification-github-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/certifications/README.md" target="_blank" rel="noopener" aria-label="Use the certification tutors on GitHub (opens in a new tab)">Learn with the GitHub tutor</a>
         </div>
       </div>
     </section>
@@ -2646,7 +2655,7 @@
   </script>
 
   <script src="langs.js?v=20260802a"></script>
-  <script src="lang-picker.js?v=20260923a" defer></script>
+  <script src="lang-picker.js?v=20260925a" defer></script>
   <script src="data.js?v=20260821c"></script>
   <script src="progress.js?v=20260822a"></script>
   <script src="header.js?v=20260923a" defer></script>

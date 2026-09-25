@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20260824a">
-  <link rel="stylesheet" href="certifications.css?v=20260809a">
+  <link rel="stylesheet" href="certifications.css?v=20260925a">
   <style>
     .scroll-progress {
       position: fixed;
@@ -2521,7 +2521,7 @@
 
   <script src="build-meta.js"></script>
   <script src="langs.js?v=20260802a"></script>
-  <script src="lang-picker.js?v=20260923a"></script>
+  <script src="lang-picker.js?v=20260925a"></script>
   <script src="data.js?v=20260821c"></script>
   <script>
     (function () {
@@ -2532,11 +2532,11 @@
         path = lessonParams.get('path') || '';
         hasTrackContext = !!(lessonParams.get('track') || lessonParams.get('fromTrack'));
       } catch (_) {}
-      if (path.indexOf('certifications/claude/lessons/') !== 0 && !hasTrackContext) return;
+      if (!/^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//.test(path) && !hasTrackContext) return;
 
       window.__AIFS_CERTIFICATION_DATA_READY = new Promise(function (resolve, reject) {
         var script = document.createElement('script');
-        script.src = 'certification-data.js?v=20260809c';
+        script.src = 'certification-data.js?v=20260925a';
         script.onload = resolve;
         script.onerror = function () { reject(new Error('certification-data.js failed to load')); };
         document.head.appendChild(script);
@@ -3882,9 +3882,11 @@
       function certificationDisclaimerHtml() {
         if (!certificationLesson) return '';
         var certs = certificationData();
-        var program = certs && certs.program ? certs.program : {};
         var contextTrack = certificationContextTrack();
-        var disclaimer = program.disclaimer || 'This is independent community preparation and is not affiliated with, endorsed by, sponsored by, or authorized by Anthropic.';
+        var programId = certificationLesson.programId || (contextTrack && contextTrack.programId) || '';
+        var programs = certs && Array.isArray(certs.programs) ? certs.programs : [];
+        var program = programs.find(function (entry) { return entry.id === programId; }) || {};
+        var disclaimer = program.disclaimer || 'This is independent community preparation and is not affiliated with, endorsed by, sponsored by, or authorized by the certification provider.';
         var scoring = program.scoringNotice || 'Course practice percentages are not official certification scores and cannot guarantee a passing result.';
         var breadcrumb = '<div class="cert-breadcrumb lesson-cert-breadcrumb" aria-label="Breadcrumb"><a href="certifications.html">Certifications</a>';
         if (contextTrack) {
