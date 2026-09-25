@@ -1,6 +1,6 @@
-# 图像检索和测量学习
+# 图像检索与度量学习
 
-> 测量学习是塑造空间的学科,使距离意味着你想要的.
+> 检索系统在嵌入空间中按距离对候选结果排序。度量学习就是塑造该空间的学科，使距离具有你所期望的含义。
 
 **Type:** Build
 **Languages:** Python
@@ -9,22 +9,22 @@
 
 ## 学习目标
 
-- 解释三小部分,对比和代理的指标学习损失,并选择给定的数据集的正确数据
-- 执行L2规范化和共数相似性正确,并审核"同类"和"同类"检索之间的差异
-- 建立一个 FAISS 指数,通过文字和图像查询,并报告回忆@K 对于一个已保留的查询集
-- 使用DINOv2,Clip和SigLIP作为现货嵌入骨,并知道每一个赢得什么时候
+- 解释三元组、对比和基于代理（proxy）的度量学习损失，并能为给定数据集选择合适的损失
+- 正确实现 L2 归一化和余弦相似度，并审视“同一物品”与“同一类别”检索之间的差异
+- 构建 FAISS 索引，用文本和图像进行查询，并在留出的查询集上报告 recall@K
+- 将 DINOv2、CLIP 和 SigLIP 作为开箱即用的嵌入骨干网络，并了解各自何时占优
 
-## 问题
+## 问题所在
 
-检索在生产视觉中无处不在:重复检测,反向图像搜索,视觉搜索 ("找到类似的产品"),面部重新识别,监控的人身份,电子商务的实例级匹配.
+检索在生产视觉系统中无处不在：重复检测、以图搜图、视觉搜索（“查找相似商品”）、人脸重识别、监控中的行人重识别、电商的实例级匹配。产品问题始终是同一个：“给定这张查询图像，对我的商品目录进行排序。”
 
-两个设计决定塑造整个系统.嵌入式 产生向量模型.索引 如何在尺度上找到最近的邻居.这两种都是2026年的商品 (嵌入式 DINOv2 ,索引式 FAISS),这提高了条:最难的部分是定义 *什么是类似的* 对于您的应用,然后塑造嵌入式空间,使距离匹配.
+两个设计决策决定整个系统的形态。嵌入——用什么模型生成向量。索引——如何在大规模下找到最近邻。在 2026 年，两者都已商品化（DINOv2 用于嵌入，FAISS 用于索引），这提高了门槛：难点在于为你的应用定义*什么算相似*，然后塑造嵌入空间使距离与之匹配。
 
-塑造是一种微小但高杆性的学科.
+这种塑造就是度量学习。它是一个小而杠杆效应极高的学科。
 
-## 概念
+## 核心概念
 
-### 一眼发现
+### 检索概览
 
 ```mermaid
 flowchart LR
@@ -41,74 +41,74 @@ flowchart LR
     style OUT fill:#dcfce7,stroke:#16a34a
 ```
 
-### 失去的四个家庭
+### 四类损失
 
-| Loss | Requires | Pros | Cons |
+| 损失 | 需要 | 优点 | 缺点 |
 |------|----------|------|------|
-| **Contrastive** | (anchor, positive) + negatives | Simple, works with any pair label | Slow to converge without many negatives |
-| **Triplet** | (anchor, positive, negative) | Intuitive; direct margin control | Hard-triplet mining is expensive |
-| **NT-Xent / InfoNCE** | Pairs + batch-mined negatives | Scales to large batches | Needs big batch or momentum queue |
-| **Proxy-based (ProxyNCA)** | Class labels only | Fast, stable, no mining | Can overfit to proxies on small datasets |
+| **Contrastive（对比）** | (anchor, positive) + 负样本 | 简单，适用于任意成对标签 | 缺少大量负样本时收敛慢 |
+| **Triplet（三元组）** | (anchor, positive, negative) | 直观；直接控制间隔 | 困难三元组挖掘代价高 |
+| **NT-Xent / InfoNCE** | 样本对 + 批内挖掘的负样本 | 可扩展到大 batch | 需要大 batch 或动量队列 |
+| **Proxy-based（ProxyNCA）** | 仅需类别标签 | 快速、稳定、无需挖掘 | 在小数据集上可能对代理过拟合 |
 
-在大多数生产使用案例中,从预训练的脊椎开始,只需在测试组上使用的嵌入式性能低,才能添加测量学习细节调整.
+对大多数生产场景，先用预训练骨干网络，只有当开箱即用的嵌入在你的测试集上表现不佳时，才添加度量学习微调。
 
-### 官方的三分之一损失
+### 三元组损失的正式定义
 
 ```
 L = max(0, ||f(a) - f(p)||^2 - ||f(a) - f(n)||^2 + margin)
 ```
 
-拉`a`接近正面`p`让它远离负面`n`通过`margin`对于任何类似性来说,这将使得图像结构普遍化.
+将 anchor `a` 拉近正样本 `p`，推离负样本 `n`，并用 `margin` 保证间隔。这一三图像结构可推广到任意相似性排序。
 
-矿业问题:轻松三重 (`n`现在还不太久了`a`只有硬三分之一教网络.`n`超过`p`虽然这项技术是最重要的,但在边缘范围内) 是2016年FaceNet的配方,
+挖掘很重要：简单三元组（`n` 已经远离 `a`）贡献零损失；只有困难三元组才能教会网络。半困难挖掘（`n` 比 `p` 更远但在间隔内）是 2016 年 FaceNet 的配方，至今仍然占主导地位。
 
-### 子相似性与L2
+### 余弦相似度 vs L2
 
-两个指标,两个公约:
+两种度量，两种约定：
 
-- **Cosine**需要L2标准化嵌入式.
-- **L2**工作在原始或正常嵌入式上,但通常与L2正常化 +2L2相对.
+- **余弦**：向量之间的夹角。要求 L2 归一化的嵌入。
+- **L2**：欧氏距离。可用于原始或归一化的嵌入，但通常与 L2 归一化 + 平方 L2 搭配使用。
 
-对于大多数现代网络来说,这两种网络是相当的:`||a - b||^2 = 2 - 2 cos(a, b)`什么时候`||a|| = ||b|| = 1`选择与你的嵌入训练相匹配的会议; 默默地混合它们改变了"最接近"的意思.
+对大多数现代网络而言两者等价：当 `||a|| = ||b|| = 1` 时 `||a - b||^2 = 2 - 2 cos(a, b)`。选择与你的嵌入训练相匹配的约定；混用两者会悄然改变“最近邻”的含义。
 
-### 提醒@K
+### Recall@K
 
-标准检索指标:
+标准检索指标：
 
 ```
 recall@K = fraction of queries where at least one correct match is in the top K results
 ```
 
-报告 recall@1, @5, @10 旁边. recall@10 在 0.95 之上, recall@1 在 0.5 之下,意味着嵌入空间有正确的结构,但排名很尝试更长的细节调节或重新排名步骤.
+将 recall@1、@5、@10 并排报告。recall@10 高于 0.95 而 recall@1 低于 0.5 意味着嵌入空间结构正确但排序有噪声——尝试更长的微调或重排序（re-ranking）步骤。
 
-对于重复检测,精度@K更重要,因为每一个假正是用户可见的错误.
+对重复检测而言，precision@K 更重要，因为每个误报都是用户可见的错误。对视觉搜索而言，recall@K 才是产品信号。
 
-### 单一段落中的 FAISS
+### 一段话讲完 FAISS
 
-根据"Facebook AI相似性搜索"的实际图书馆,
+Facebook AI Similarity Search。事实上最近邻搜索的标准库。三种索引选择：
 
-- `IndexFlatIP`现在,`IndexFlatL2`粗力,精确,没有训练. 运用到1M向量.
-- `IndexIVFFlat`分成K细胞,只搜索最近的几个细胞. 接近,快速,需要训练数据.
-- `IndexHNSW`基于图表,最快于许多查询,大指数尺寸.
+- `IndexFlatIP` / `IndexFlatL2` —— 暴力搜索，精确，无需训练。适用于约 100 万向量以内。
+- `IndexIVFFlat` —— 划分为 K 个单元，只搜索最近的几个单元。近似、快速、需要训练数据。
+- `IndexHNSW` —— 基于图，多查询时最快，索引体积大。
 
-对于100万个向量,你可能想要`IndexFlatIP`对于10万,你想要的`IndexIVFFlat`对于100万+与产品量化相结合 (`IndexIVFPQ`)
+对 10 万向量，你可能想在余弦相似度上使用 `IndexFlatIP`。对 1000 万向量，用 `IndexIVFFlat`。对 1 亿以上向量，结合乘积量化（`IndexIVFPQ`）。
 
-### 实例级别与类别级别检索
+### 实例级 vs 类别级检索
 
-两个完全不同的问题,
+名字相同的两个截然不同的问题：
 
-- **Category-level**"在我的目录中找到猫".类条件相似性;现货CLIP/DINOv2嵌入式工作良好.
-- **Instance-level**"在我的目录中找到*这个精确的产品*".需要细微的区分相同类别的视觉相似物体;现货嵌入式性能低;对测量学习问题进行细微调整.
+- **类别级** —— “在我的商品目录中找猫。” 基于类别的相似性；开箱即用的 CLIP / DINOv2 嵌入效果很好。
+- **实例级** —— “在我的商品目录中找到*这件确切商品*。” 需要在视觉上相似的同类物体之间进行细粒度判别；开箱即用的嵌入表现不佳；用度量学习微调至关重要。
 
-在选择模型之前,你总是问你要解决哪个问题.
+选模型之前，先问清楚你在解决哪一个问题。
 
 ```figure
 metric-embedding
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:三分钟损失
+### 步骤 1：三元组损失
 
 ```python
 import torch
@@ -120,11 +120,11 @@ def triplet_loss(anchor, positive, negative, margin=0.2):
     return F.relu(d_ap - d_an + margin).mean()
 ```
 
-能在L2标准化或原始嵌入式上使用.
+一行代码。适用于 L2 归一化或原始嵌入。
 
-### 步骤2:半硬的采矿
+### 步骤 2：半困难挖掘
 
-根据嵌入式和标签的批量, 找出每个的最难的半硬负值.
+给定一批嵌入和标签，为每个 anchor 找到最难的半困难负样本。
 
 ```python
 def semi_hard_negatives(emb, labels, margin=0.2):
@@ -152,9 +152,9 @@ def semi_hard_negatives(emb, labels, margin=0.2):
     return pos_idx, neg_idx
 ```
 
-每个都有最硬的正值,半硬的负值,远于正值,但在边缘范围内.
+每个 anchor 得到类内最难的正样本，以及一个比正样本更远但在间隔内的半困难负样本。
 
-### 步骤3:回忆@K
+### 步骤 3：Recall@K
 
 ```python
 def recall_at_k(query_emb, gallery_emb, query_labels, gallery_labels, k=1):
@@ -164,9 +164,9 @@ def recall_at_k(query_emb, gallery_emb, query_labels, gallery_labels, k=1):
     return matches.float().mean().item()
 ```
 
-在L2标准化嵌入式上,内产量上-k等于kosine上-k.报告至少一个正确邻居的平均查询比例.
+在 L2 归一化嵌入上按内积取 top-k 等价于按余弦取 top-k。报告至少有一个正确邻居的查询比例的均值。
 
-### 步骤4: 组合
+### 步骤 4：整合
 
 ```python
 import torch
@@ -204,48 +204,48 @@ for step in range(200):
     opt.zero_grad(); loss.backward(); opt.step()
 ```
 
-后几百步,嵌入集群形成一个集群每个类.
+几百步之后，嵌入簇将形成每类一簇的结构。
 
-## 用它
+## 实际应用
 
-2026年生产堆:
+2026 年的生产技术栈：
 
-- **DINOv2 + FAISS**一般用途的视觉检索.
-- **CLIP + FAISS**当查询是短信时.
-- **Fine-tuned DINOv2 + FAISS**实例级检索,面部重新识别,时尚,电子商务.
-- **Milvus / Weaviate / Qdrant**管理在 FAISS 或 HNSW 周围的向量 DB 包装.
+- **DINOv2 + FAISS** —— 通用视觉检索。开箱即用。
+- **CLIP + FAISS** —— 当查询是文本时。
+- **微调后的 DINOv2 + FAISS** —— 实例级检索、人脸重识别、时尚、电商。
+- **Milvus / Weaviate / Qdrant** —— 围绕 FAISS 或 HNSW 的托管向量数据库封装。
 
-对于SOTA实例检索,配方是:DINOv2脊柱,添加嵌入头,通过三小组调整或InfoNCE损失在实例标记的对,索引在FAISS中.
+对于 SOTA 实例检索，配方是：DINOv2 骨干网络，加一个嵌入头，在实例标注的样本对上用三元组或 InfoNCE 损失微调，再在 FAISS 中建立索引。
 
-## 运送它
+## 上线交付
 
-这一课产生了:
+本课产出：
 
-- `outputs/prompt-retrieval-loss-picker.md`一个提示,选择给定的检索问题的三小部分 / InfoNCE / ProxyNCA.
-- `outputs/skill-recall-at-k-runner.md`写一个清洁的评估带,以火车//图库分区和适当的数据合同.
+- `outputs/prompt-retrieval-loss-picker.md` —— 一个提示词，为给定的检索问题选择三元组 / InfoNCE / ProxyNCA。
+- `outputs/skill-recall-at-k-runner.md` —— 一个技能，为 recall@K 编写干净的评估框架，包含 train/val/gallery 划分和规范的数据契约。
 
-## 运动
+## 练习
 
-1. **(Easy)**在训练前和后,用PCA绘制嵌入式图,看看六个集群形成.
-2. **(Medium)**添加ProxyNCA损失实现:每个类学习一个"代理",在可西因相似度上标准交叉.在玩具数据上比较缩速度与三分钟损失.
-3. **(Hard)**通过 HuggingFace 嵌入DINOv2的1000个ImageNet验证图像,构建一个 FAISS平面索引,并报告回忆@{1, 5, 10}与查询相同的图像 (应该是1.0) 和与ImageNet标签的持久分离作为基础真相.
+1. **（简单）** 运行上面的玩具示例。用 PCA 在训练前后绘制嵌入，观察六个簇的形成。
+2. **（中等）** 添加一个 ProxyNCA 损失实现：每类一个可学习的“代理”，在余弦相似度上做标准交叉熵。比较它与三元组损失在玩具数据上的收敛速度。
+3. **（困难）** 取 1000 张 ImageNet 验证集图像，用 HuggingFace 的 DINOv2 生成嵌入，构建 FAISS flat 索引，并报告 recall@{1, 5, 10}：以相同图像作为查询（应为 1.0），以及以留出划分的 ImageNet 标签作为真值（ground truth）。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|----------------------|
-| Metric learning | "Shape the space" | Training an encoder so distances in its output space reflect a target similarity |
-| Triplet loss | "Pull and push" | L = max(0, d(a, p) - d(a, n) + margin); the canonical metric-learning loss |
-| Semi-hard mining | "Useful negatives" | Negatives further from the anchor than the positive but within margin; empirically the most informative |
-| Proxy-based loss | "Class prototypes" | One learned proxy per class; cross-entropy over similarity-to-proxies; no pair mining |
-| Recall@K | "Top-K hit rate" | Fraction of queries with at least one correct result in the top K |
-| Instance retrieval | "Find this exact thing" | Fine-grained matching; off-the-shelf features usually underperform |
-| FAISS | "The NN library" | Facebook's nearest-neighbour library; supports exact and approximate indexes |
-| HNSW | "Graph index" | Hierarchical navigable small world; fast approximate NN with small memory overhead |
+| 度量学习 | “塑造空间” | 训练一个编码器，使其输出空间中的距离反映目标相似性 |
+| 三元组损失 | “拉近与推开” | L = max(0, d(a, p) - d(a, n) + margin)；最经典的度量学习损失 |
+| 半困难挖掘 | “有用的负样本” | 比正样本离 anchor 更远但在间隔内的负样本；经验上信息量最大 |
+| 基于代理的损失 | “类原型” | 每类一个可学习代理；在到各代理的相似度上做交叉熵；无需样本对挖掘 |
+| Recall@K | “Top-K 命中率” | 在 top K 中至少有一个正确结果的查询比例 |
+| 实例检索 | “找到这件确切的东西” | 细粒度匹配；开箱即用的特征通常表现不佳 |
+| FAISS | “最近邻库” | Facebook 的最近邻库；支持精确和近似索引 |
+| HNSW | “图索引” | 分层可导航小世界（Hierarchical Navigable Small World）；内存开销小的快速近似最近邻 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [FaceNet: A Unified Embedding for Face Recognition (Schroff et al., 2015)](https://arxiv.org/abs/1503.03832)三片损失/半硬的矿山纸
-- [In Defense of the Triplet Loss for Person Re-Identification (Hermans et al., 2017)](https://arxiv.org/abs/1703.07737)三重小组细调的实用指南
-- [FAISS documentation](https://github.com/facebookresearch/faiss/wiki)每一个指数,每一个交易
-- [SMoT: Metric Learning Taxonomy (Kim et al., 2021)](https://arxiv.org/abs/2010.06927)现代损失及其联系的调查
+- [FaceNet: A Unified Embedding for Face Recognition (Schroff et al., 2015)](https://arxiv.org/abs/1503.03832) —— 三元组损失 / 半困难挖掘的原始论文
+- [In Defense of the Triplet Loss for Person Re-Identification (Hermans et al., 2017)](https://arxiv.org/abs/1703.07737) —— 三元组微调的实践指南
+- [FAISS documentation](https://github.com/facebookresearch/faiss/wiki) —— 每种索引、每种权衡
+- [SMoT: Metric Learning Taxonomy (Kim et al., 2021)](https://arxiv.org/abs/2010.06927) —— 现代损失及其相互关系的综述

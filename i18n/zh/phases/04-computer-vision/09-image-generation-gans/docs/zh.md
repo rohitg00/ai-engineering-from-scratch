@@ -1,30 +1,30 @@
-# 图像生成 GAN
+# 图像生成 — GAN
 
-> 两种神经网络在一个固定游戏中,一个抽奖,一个批评. 他们一起变得更好,直到图纸欺骗了批评者.
+> GAN 是处于固定博弈中的两个神经网络。一个负责画图，一个负责评判。它们共同进步，直到画出的图能骗过评判者。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 4 Lesson 03 (CNNs), Phase 3 Lesson 06 (Optimizers), Phase 3 Lesson 07 (Regularization)
-**Time:** ~75 minutes
+**Prerequisites:** 第 4 阶段第 03 课（CNN）、第 3 阶段第 06 课（优化器）、第 3 阶段第 07 课（正则化）
+**Time:** 约 75 分钟
 
 ## 学习目标
 
-- 解释生成器和分辨器之间的最小数游戏,以及为什么平衡与p_model =p_data相符
-- 在 PyTorch 中实现DCGAN,并使它在60行以下生成一致的32x32合成图像
-- 通过三个标准技巧稳定GAN训练:不和损失,光谱规范,TTUR (两次更新规则)
-- 阅读训练曲线,将健康的融合与模式崩,振荡和歧视者完全区分
+- 解释生成器与判别器之间的极小极大博弈，以及为什么均衡点对应于 p_model = p_data
+- 在 PyTorch 中实现一个 DCGAN，并在不到 60 行代码内生成连贯的 32x32 合成图像
+- 用三种标准技巧稳定 GAN 训练：非饱和损失、谱归一化、TTUR（双时间尺度更新规则）
+- 读懂训练曲线，区分健康收敛与模式崩溃、震荡、判别器完全占优
 
 ## 问题
 
-类别教导网络将图像映射到标签上. 生成逆转问题:样本新图像看起来像来自同一分布. 没有"正确"输出,你可以不同;只有一个你想模仿的分布.
+分类教网络把图像映射到标签。生成则反转了这个问题：采样出看起来像来自同一分布的新图像。没有可以对比的"正确"输出；只有一个你想要模仿的分布。
 
-标准损失函数 (MSE,跨进) 无法测量"这个样本是否来自真实分布".减少每像素错误会产生模糊的平均值,而不是现实样本.突破是学习损失:训练第二个网络,其工作是区分真实与假,并使用其判断力推出发电机.
+标准损失函数（MSE、交叉熵）无法度量"这个样本是否来自真实分布"。最小化逐像素误差会产生模糊的平均值，而非真实的样本。突破在于学习这个损失：训练第二个网络，其任务是分辨真假，并利用它的判断来推动生成器。
 
-截至2018年,StyleGAN正在生产1024x1024面,无法与照片区分.从那以后,扩散模型已经在质量和可控制性方面占据了王位,但使扩散实用化的每一个技巧都是GAN上第一次理解的.
+GAN（Goodfellow 等，2014）定义了这一框架。到 2018 年，StyleGAN 已能生成与照片难以区分的 1024x1024 人脸。此后扩散模型在质量和可控性上夺得了王座，但让扩散模型变得实用的每一个技巧——归一化选择、潜空间、特征损失——都最早是在 GAN 上被理解的。
 
 ## 概念
 
-### 两家网络
+### 两个网络
 
 ```mermaid
 flowchart LR
@@ -39,44 +39,44 @@ flowchart LR
     style OUT fill:#dcfce7,stroke:#16a34a
 ```
 
-其他**generator** G 取出噪音向量`z`它们可以通过一个图像来输出.**discriminator**图像的概率是真实的.
+**生成器** G 接收一个噪声向量 `z` 并输出一张图像。**判别器** D 接收一张图像并输出单个标量：图像为真的概率。
 
-### 游戏
+### 博弈
 
-格希望D错误,D想要正确.
+G 想让 D 出错。D 想让自己正确。形式化表示为：
 
 ```
 min_G max_D  E_x[log D(x)] + E_z[log(1 - D(G(z)))]
 ```
 
-读到右到左:D是最大化真实 (`log D(real)`) 和假 (`log (1 - D(fake))`图像. G 正在尽量减少D的虚假信息准确性.`D(G(z))`为了高兴.
+从右往左读：D 在真实图像（`log D(real)`）和假图像（`log (1 - D(fake))`）上最大化准确率。G 在假图像上最小化 D 的准确率——它想让 `D(G(z))` 变高。
 
-士证明这个最小值有一个全球平衡`p_G = p_data`并且在生成和实际分布之间的森-申农分歧是零.
+Goodfellow 证明了这个极小极大博弈存在一个全局均衡点，其中 `p_G = p_data`，D 处处输出 0.5，且生成分布与真实分布之间的 Jensen-Shannon 散度为零。难点在于如何到达那里。
 
-### 无化的损失
+### 非饱和损失
 
-早期训练, 早期训练,`D(G(z))`对于每一个假冒,几乎是零,所以`log(1 - D(G(z)))`解决方案是翻转G的损失.
+上式在数值上不稳定。训练早期，`D(G(z))` 对每个假样本都接近零，因此 `log(1 - D(G(z)))` 关于 G 的梯度会消失。解决办法：翻转 G 的损失。
 
 ```
 L_D = -E_x[log D(x)] - E_z[log(1 - D(G(z)))]
 L_G = -E_z[log D(G(z))]                          # non-saturating
 ```
 
-现在什么时候?`D(G(z))`现在,每一个现代GAN列车都用这种变体.
+现在当 `D(G(z))` 接近零时，G 的损失很大且其梯度富有信息量。每个现代 GAN 都用这个变体训练。
 
-### DCGAN架构规则
+### DCGAN 架构规则
 
-拉德福德,梅茨,辛塔拉 (2015) 将多年的失败实验分成五项规则,使得GAN训练稳定:
+Radford、Metz、Chintala（2015）将多年失败的实验提炼为五条规则，使 GAN 训练变得稳定：
 
-1. 换成双脚 (两个网) 的聚合器.
-2. 在发电机和分辨器中使用批量标准,除了G输出和D输入.
-3. 移除更深层的结构上完全连接的层次.
-4. G 在所有层上使用ReLU,除了输出 (在 [-1, 1] 中输出的tanh).
-5. D 在所有层上使用LeakyReLU (负_斜率=0.2).
+1. 用带步幅的卷积替换池化（两个网络皆是）。
+2. 在生成器和判别器中都使用 batch norm，但 G 的输出层和 D 的输入层除外。
+3. 在更深的架构中移除全连接层。
+4. G 在除输出层外的所有层使用 ReLU（输出层用 tanh 映射到 [-1, 1]）。
+5. D 在所有层使用 LeakyReLU（negative_slope=0.2）。
 
-现在,每一个基于的GAN (StyleGAN,BigGAN,GigaGAN) 都从这些规则开始,
+每个现代基于卷积的 GAN（StyleGAN、BigGAN、GigaGAN）仍然从这些规则出发，然后逐个替换组件。
 
-### 失败模式及其签名
+### 失败模式及其特征
 
 ```mermaid
 flowchart LR
@@ -89,30 +89,30 @@ flowchart LR
     style M3 fill:#fecaca,stroke:#dc2626
 ```
 
-- **Mode collapse**修复:添加微批次分辨率,光谱规范或标签条件.
-- **Discriminator wins**修复:D较小,D学习率较低,或将标签滑滑在真实标签上.
-- **Oscillation**修复:TTUR (D学习比G快2倍2倍),或转向Wasserstein损失.
+- **模式崩溃**：G 找到一张能骗过 D 的图像，然后只生成这一张。解决办法：加入 minibatch discrimination、谱归一化或标签条件化。
+- **判别器获胜**：D 变得太强太快，G 的梯度消失。解决办法：缩小 D、降低 D 的学习率，或对真实标签应用标签平滑。
+- **震荡**：两个网络交替获胜，永远无法接近均衡。解决办法：TTUR（D 的学习速度是 G 的 2-4 倍），或改用 Wasserstein 损失。
 
 ### 评估
 
-没有实在的GAN,你怎么知道它们是有效的?
+GAN 没有真值，那么如何知道它们在正常工作？
 
-- **Sample inspection**每一个时代结束时,只要看看64个样本.
-- **FID (Fréchet Inception Distance)** 距离在实体和生成集合的分类中.较低更好.
-- **Inception Score**年龄较大,较脆弱;更喜欢FID.
-- **Precision/Recall for generative models** 单独测量质量 (精度) 和覆盖性 (召回).
+- **样本检查** —— 每个 epoch 结束时直接看 64 个样本。不可省略。
+- **FID（Fréchet Inception 距离）** —— 真实集与生成集的 Inception-v3 特征分布之间的距离。越低越好。社区标准。
+- **Inception Score** —— 较旧、较脆弱；优先使用 FID。
+- **生成模型的 Precision/Recall** —— 分别度量质量（precision）和覆盖度（recall）。比单独的 FID 更有信息量。
 
-对于小型合成数据运行,样本检查就足够了.
+对于小规模合成数据实验，样本检查就足够了。
 
 ```figure
 cv-gan-image
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:发电机
+### 第 1 步：生成器
 
-通过 64 维噪音生成32x32图像的小型DCGAN发电机.
+一个小型 DCGAN 生成器，接收 64 维噪声并生成 32x32 图像。
 
 ```python
 import torch
@@ -139,11 +139,11 @@ class Generator(nn.Module):
         return self.net(z.view(z.size(0), -1, 1, 1))
 ```
 
-转换了四个车辆,每个车辆都有`kernel_size=4, stride=2, padding=1`通过TANH,输出激活在 [-1, 1] 中.
+四个转置卷积，每个都用 `kernel_size=4, stride=2, padding=1`，以便它们干净地将空间尺寸翻倍。输出激活经 tanh 映射到 [-1, 1]。
 
-### 第二步: 歧视者
+### 第 2 步：判别器
 
-漏的雷卢,步骤的电梯,以一个尺度的逻辑结束.
+生成器的镜像。LeakyReLU、带步幅的卷积，以一个标量 logit 结尾。
 
 ```python
 class Discriminator(nn.Module):
@@ -165,11 +165,11 @@ class Discriminator(nn.Module):
         return self.net(x).view(-1)
 ```
 
-最后一个缩一个`4x4`功能地图`1x1`输出是每张图像的单个 skalar;仅在损失计算过程中应用 sigmoid.
+最后一个卷积将 `4x4` 的特征图缩减到 `1x1`。输出是每张图像一个标量；仅在计算损失时才应用 sigmoid。
 
-### 步骤3:培训步骤
+### 第 3 步：训练步骤
 
-换个方式:一次更新D,然后一次更新G,每批次.
+交替进行：每个 batch 先更新 D 一次，再更新 G 一次。
 
 ```python
 import torch.nn.functional as F
@@ -197,9 +197,9 @@ def train_step(G, D, real, z, opt_g, opt_d, device):
     return loss_d.item(), loss_g.item()
 ```
 
-`G(z).detach()`在D步骤中,关键是:我们不希望更新时渐变流入G.忘记这是经典的初学者错误.
+D 步骤中的 `G(z).detach()` 至关重要：我们不希望在更新 D 时梯度流入 G。忘记这一点是典型的初学者 bug。
 
-### 步骤4:合成形状的全训练循环
+### 第 4 步：在合成形状上的完整训练循环
 
 ```python
 from torch.utils.data import DataLoader, TensorDataset
@@ -234,9 +234,9 @@ for epoch in range(10):
     print(f"epoch {epoch}  D {ld:.3f}  G {lg:.3f}")
 ```
 
-`Adam(lr=2e-4, betas=(0.5, 0.999))`低的beta1 阻碍动力期来稳定对手的游戏.
+`Adam(lr=2e-4, betas=(0.5, 0.999))` 是 DCGAN 的默认设置——较低的 beta1 可防止动量项过度稳定对抗博弈。
 
-### 步骤5:采样
+### 第 5 步：采样
 
 ```python
 @torch.no_grad()
@@ -248,11 +248,11 @@ def sample(G, n=16, z_dim=64, device="cpu"):
     return imgs.clamp(0, 1)
 ```
 
-在采样之前,总是切换到评估模式.对于DCGAN来说,这是重要的,因为使用批量规范运行统计数据而不是批量统计数据.
+采样前务必切换到 eval 模式。对 DCGAN 而言这很重要，因为此时使用的是 batch norm 的滑动统计量而非当前 batch 的统计量。
 
-### 步骤 6: 频谱规范化
+### 第 6 步：谱归一化
 
-网络保证的区别器中,BN的替代器是1-Lipschitz.
+判别器中 BN 的即插即用替代品，可保证网络是 1-Lipschitz 的。能修复大多数"D 赢得太容易"的失败。
 
 ```python
 from torch.nn.utils import spectral_norm
@@ -269,46 +269,46 @@ def build_sn_discriminator(img_channels=3, feat=64):
     )
 ```
 
-换换`Discriminator`为了`build_sn_discriminator()`频谱规范是你能应用的最简单的单一强度升级.
+把 `Discriminator` 换成 `build_sn_discriminator()`，你往往就不再需要 TTUR 技巧了。谱归一化是你可以应用的最容易的单一鲁棒性升级。
 
-## 用它
+## 使用它
 
-对于严格的生成,使用预训练的权重或转换为扩散.
+对于严肃的生成任务，使用预训练权重或改用扩散模型。两个标准库：
 
-- `torch_fidelity`在你的发电机上计算FID/IS,而不需要编写定制的评估代码.
-- `pytorch-gan-zoo`其他国家`StudioGAN`试验的DCGAN,WGAN-GP,SN-GAN,StayGAN和BigGAN的实施方案.
+- `torch_fidelity` 无需编写自定义评估代码即可在你的生成器上计算 FID / IS。
+- `pytorch-gan-zoo`（遗留版）和 `StudioGAN` 提供经过测试的 DCGAN、WGAN-GP、SN-GAN、StyleGAN 和 BigGAN 实现。
 
-在2026年,GAN仍然是最好的选择:实时图像生成 (延迟 <10 ms),风格转移,精确控制的图像到图像翻译 (Pix2Pix,CycleGAN).
+到 2026 年，GAN 在以下场景仍是最佳选择：实时图像生成（延迟 <10 ms）、风格迁移、需要精确控制的图像到图像翻译（Pix2Pix、CycleGAN）。扩散模型在照片级真实感和文本条件化上更胜一筹。
 
-## 运送它
+## 发布它
 
-这一课产生了:
+本课产出：
 
-- `outputs/prompt-gan-training-triage.md`一个提示,读取训练曲线描述,选择失败模式 (模式崩,D-win,振荡) 加上单个建议的修复.
-- `outputs/skill-dcgan-scaffold.md`写一个DCGAN架子的技能`z_dim`目标`image_size`其他`num_channels`包括训练循环和样本节省器.
+- `outputs/prompt-gan-training-triage.md` —— 一个提示词，读取训练曲线描述并判断失败模式（模式崩溃、D 获胜、震荡）以及唯一的推荐修复方法。
+- `outputs/skill-dcgan-scaffold.md` —— 一个技能，根据 `z_dim`、目标 `image_size` 和 `num_channels` 编写 DCGAN 脚手架，包含训练循环和样本保存器。
 
-## 运动
+## 练习
 
-1. **(Easy)**在每个时代结束时,将DCGAN训练在合成圈数据集上,并保存16个样本的网格.
-2. **(Medium)**换取分辨器的批量标准,用光谱标准. 训练两种版本一边. 哪个版本更快地融合?哪个种子之间的差异较低?
-3. **(Hard)**实施条件的DCGAN:将类标签输入到G和D (在G中对噪音进行一次性缩,在D中缩放类嵌入道).从第7课中训练合成"圆与平方"数据集,并通过采用特定标签进行样本测试来证明类调节工作.
+1. **（简单）** 在合成圆形数据集上训练上述 DCGAN，并在每个 epoch 结束时保存 16 个样本的网格图。到第几个 epoch 时生成的圆形明显变圆？
+2. **（中等）** 将判别器的 batch norm 替换为谱归一化。并行训练两个版本。哪个收敛更快？在三个随机种子下哪个方差更低？
+3. **（困难）** 实现一个条件 DCGAN：将类别标签同时输入 G 和 D（在 G 中将 one-hot 拼接到噪声上，在 D 中拼接一个类别嵌入通道）。在第 7 课的合成"圆形 vs 方形"数据集上训练，并通过用特定标签采样来证明类别条件化有效。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Generator (G) | "The draws-stuff net" | Maps noise to images; trained to fool the discriminator |
-| Discriminator (D) | "The critic" | Binary classifier; trained to distinguish real from generated images |
-| Minimax | "The game" | min over G, max over D of an adversarial loss; equilibrium is p_G = p_data |
-| Non-saturating loss | "The numerically sane version" | G's loss is -log(D(G(z))) instead of log(1 - D(G(z))) to avoid vanishing gradients early in training |
-| Mode collapse | "Generator makes one thing" | G produces only a small subset of the data distribution; fix with SN, minibatch discrimination, or larger batch |
-| TTUR | "Two learning rates" | D learns faster than G, typically by a factor of 2-4; stabilises training |
-| Spectral norm | "1-Lipschitz layer" | A weight-normalisation that bounds each layer's Lipschitz constant; stops D from becoming arbitrarily steep |
-| FID | "Fréchet Inception Distance" | Distance between Inception-v3 feature distributions of real and generated sets; the standard evaluation metric |
+| 生成器（G） | "画图的网络" | 将噪声映射为图像；训练目标是骗过判别器 |
+| 判别器（D） | "评判者" | 二分类器；训练目标是区分真实图像与生成图像 |
+| Minimax | "那个博弈" | 对抗损失关于 G 取最小、关于 D 取最大；均衡点为 p_G = p_data |
+| 非饱和损失 | "数值上更合理的版本" | G 的损失为 -log(D(G(z))) 而非 log(1 - D(G(z)))，以避免训练早期梯度消失 |
+| 模式崩溃 | "生成器只会画一样东西" | G 只生成数据分布的一小部分；用谱归一化、minibatch discrimination 或更大 batch 修复 |
+| TTUR | "两个学习率" | D 的学习速度快于 G，通常为 2-4 倍；可稳定训练 |
+| 谱归一化 | "1-Lipschitz 层" | 一种权重归一化，约束每层的 Lipschitz 常数；防止 D 变得任意陡峭 |
+| FID | "Fréchet Inception 距离" | 真实集与生成集的 Inception-v3 特征分布之间的距离；标准评估指标 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Generative Adversarial Networks (Goodfellow et al., 2014)](https://arxiv.org/abs/1406.2661)报纸是这一切的起始.
-- [DCGAN (Radford, Metz, Chintala, 2015)](https://arxiv.org/abs/1511.06434)使GAN可培训的建筑规则
-- [Spectral Normalization for GANs (Miyato et al., 2018)](https://arxiv.org/abs/1802.05957)最有用的稳定技巧
-- [StyleGAN3 (Karras et al., 2021)](https://arxiv.org/abs/2106.12423)苏塔甘;读起来像一个最伟大的成功专辑,
+- [Generative Adversarial Networks (Goodfellow 等， 2014)](https://arxiv.org/abs/1406.2661) — 开创这一切的论文
+- [DCGAN (Radford, Metz, Chintala, 2015)](https://arxiv.org/abs/1511.06434) — 让 GAN 可训练的架构规则
+- [Spectral Normalization for GANs (Miyato 等， 2018)](https://arxiv.org/abs/1802.05957) — 最有用的单一稳定化技巧
+- [StyleGAN3 (Karras 等， 2021)](https://arxiv.org/abs/2106.12423) — 最先进的 GAN；读起来像过去十年所有技巧的精选合集

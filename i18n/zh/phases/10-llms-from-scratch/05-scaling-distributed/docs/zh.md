@@ -1,59 +1,59 @@
-# 规模化:分布式培训,FSDP,深度速度
+# 规模化：分布式训练、FSDP、DeepSpeed
 
-> 现在试试70亿参数,模型不适合内存,数据需要几周的时间,在单个机器上.分布式训练不是可选的.这是唯一的途径.
+> 你的 124M 模型在单个 GPU 上训练完成。现在试试 70 亿参数。模型放不进内存。数据在单机上要训练数周。在大规模场景下，分布式训练不是可选项，而是唯一的出路。
 
 **Type:** Build
 **Languages:** Python
 **Prerequisites:** Phase 10, Lesson 04 (Pre-Training a Mini GPT)
-**Time:** ~120 minutes
+**Time:** ~120 分钟
 
 ## 学习目标
 
-- 解释三个类型的平行性 (数据,子,管道) 以及每种类型的必要性,根据模型和集群大小
-- 使用 PyTorch DDP 实现数据平行训练,并通过多个GPU进行梯度同步
-- 计算给定模型大小的内存预算 (重量+优化状态+梯度+激活) 确定最小硬件
-- 配置FSDP或DeepSpeed ZeRO阶段,将模型状态分成GPU和超越单GPU内存的适应模型
+- 解释三种并行方式(数据并行、张量并行、流水线并行)以及根据模型和集群规模判断各自何时必要
+- 使用 PyTorch DDP 实现数据并行训练，跨多个 GPU 进行梯度同步
+- 计算给定模型规模的内存预算(权重 + 优化器状态 + 梯度 + 激活值)，以确定最低硬件需求
+- 配置 FSDP 或 DeepSpeed ZeRO 各阶段，将模型状态分片到多个 GPU,使超出单 GPU 内存的模型得以训练
 
 ## 问题
 
-在FP16中,一个7B参数模型只需要14GB的权重.亚当优化器存储每个参数的两个额外副本 (第一和第二时刻估计).这又是28GB.后延的基梯子增加了14GB.在单次激活之前,您在56GB上存储.
+一个 70 亿参数的 FP16 模型仅权重就需要 14GB。Adam 优化器会为每个参数额外存储两份副本(一阶矩和二阶矩估计)，又是 28GB。反向传播期间的梯度再加 14GB。还没存任何激活值，你就已经用了 56GB。
 
-现在,NVIDIA A100的内存是80GB.
+一块 NVIDIA A100 有 80GB 显存。
 
-消耗的80GB中56GB.这使得激活的数量24GB,在前进传递过程中计算的中间值,必须保持活跃,以便向后传播.在4096维模型中的2048代币序列中,单层激活的数量约为64MB.在32层中,你需要每样本的2GB.
+80GB 中已消耗 56GB,只剩 24GB 留给激活值——即前向传播中计算出的、必须保留到反向传播时使用的中间值。对于一个 2048 token 序列、4096 维模型，单层激活值约 64MB。32 层意味着每个样本需要 2GB。batch size 为 8 时需要 16GB。你有 24GB。batch size 为 12 就会爆掉。
 
-现在试试70B参数. 单独的重量:FP16中的140GB. 不适合一个GPU. 仅仅需要保持重量,至少需要2个A100 (2 x 80GB = 160GB). 添加优化状态和梯度,你需要更多的:3+GPU最小,而实际上8-16取决于碎片策略.
+现在试试 700 亿参数。仅权重：FP16 下 140GB。单块 GPU 装不下。光是存放权重你至少需要 2 块 A100(2 x 80GB = 160GB)。再加上优化器状态和梯度，需要的远不止：至少 3 块 GPU,现实中根据分片策略需要 8 到 16 块。
 
-拉马3405B使用了16,384个NVIDIAH100GPU.$100 million in compute. DeepSeek V3 trained a comparable model for roughly $5,6亿通过对建筑 (专家混合意味着每代币只能激活一小部分参数) 和训练效率.
+Llama 3 405B 在 16,384 块 NVIDIA H100 GPU 上训练。通过巧妙的架构设计(Mixture of Experts 意味着每个 token 只激活一小部分参数)和训练效率优化，这次训练的估算成本为 $100 million in compute. DeepSeek V3 trained a comparable model for roughly $560 万美元。
 
-本课程涵盖了使大规模训练成为可能的四种策略:数据平行,子平行,管道平行和完全碎片化的数据平行.
+本课涵盖使大规模训练成为可能的四种策略：数据并行、张量并行、流水线并行和全分片数据并行。你将用纯 Python 模拟每一种策略以理解其机制，然后才接触分布式训练框架。
 
 ## 概念
 
-### 为什么需要分发
+### 为什么必须分布式
 
-现在我们要做的是记忆模型的数学,每个数字都是计算的,而不是估算的.
+以下是真实模型的内存计算。每个数字都是算出来的，不是估的。
 
-| Model | Params | Weights (FP16) | Adam States | Gradients (FP16) | Total (no activations) |
+| 模型 | 参数量 | 权重 (FP16) | Adam 状态 | 梯度 (FP16) | 总计(不含激活值) |
 |-------|--------|----------------|-------------|------------------|----------------------|
 | GPT-2 Small | 124M | 248 MB | 992 MB | 248 MB | 1.5 GB |
 | Llama 3 8B | 8B | 16 GB | 64 GB | 16 GB | 96 GB |
 | Llama 3 70B | 70B | 140 GB | 560 GB | 140 GB | 840 GB |
 | Llama 3 405B | 405B | 810 GB | 3,240 GB | 810 GB | 4,860 GB |
 
-亚当状态列是杀手.亚当为每个参数存储运行平均值 (m) 和运行变量 (v).对于70B模型,这为70B x 4字节 x 2 = 560GB.
+"Adam 状态”这一列才是致命的。Adam 为每个参数维护一个滑动均值 (m) 和一个滑动方差 (v),均为 FP32。对 700 亿参数的模型，即 700 亿 x 4 字节 x 2 = 560GB。仅优化器就需要 7 块 A100。
 
-一个H100拥有80GB.Llama 3 405B需要至少61个H100来控制权重,优化器和梯度.加上激活,数量会进一步增加.Meta使用了16384个GPU,不是因为他们想要,因为他们必须.
+单块 H100 有 80GB。Llama 3 405B 至少需要 61 块 H100 来存放权重、优化器和梯度。加上激活值，数字还会继续增长。Meta 使用 16,384 块 GPU 不是因为他们想——而是因为他们不得不。
 
-### 数据平行
+### 数据并行
 
-简单的分布式策略.将整个模型复制成NGPU.将每个训练批量分为N等部分.每个GPU在数据片段上运行前后传递.后传递后,平均所有GPU的梯度.每个GPU更新其重量副本,保持所有副本的同步.
+最简单的分布式策略。将整个模型复制到 N 块 GPU。把每个训练 batch 分成 N 等份。每块 GPU 对自己那份的数据执行前向和反向传播。反向传播后，对所有 GPU 的梯度取平均。每块 GPU 用相同的平均梯度更新自己的权重副本，从而保持所有副本同步。
 
-**The good:**线性吞吐量扩展.NGPU每步处理N倍的数据.通信仅限于梯度平均值,它与计算重叠.
+**优点：** 吞吐量线性扩展。N 块 GPU 每步处理 N 倍的数据。通信仅限于梯度平均，可以与计算重叠。
 
-**The bad:**每个GPU都包含模型的完整副本,优化状态和梯度.对于70B模型,每个GPU需要840GB.数据平行化没有任何作用,以减少每GPU内存.它只减少了训练时间.
+**缺点：** 每块 GPU 都持有模型、优化器状态和梯度的完整副本。对 700 亿参数的模型，每块 GPU 需要 840GB。数据并行丝毫不能降低单 GPU 内存，只能缩短训练时间。
 
-**The math:**有效批量大小 = per_gpu_batch_size x N.对于每GPU批量为16个GPU的N=64GPU,有效批量为1,024. Llama 3使用了每步的有效批量大小为1600万代币.
+**数学：** 有效 batch size = per_gpu_batch_size x N。N=64 块 GPU、每 GPU batch 为 16 时，有效 batch 为 1,024。Llama 3 每步使用的有效 batch size 为 1600 万 token。
 
 ```mermaid
 graph TD
@@ -79,46 +79,46 @@ graph TD
     style U fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-### 度平行
+### 张量并行
 
-分开 GPU 之间单个层次.单个矩阵乘法被分为 GPU 之间,每个计算结果的部分.
+将单个层拆分到多块 GPU 上。一次矩阵乘法被分给多块 GPU,每块计算结果的一部分。
 
-考虑一个重量矩阵 (8192,8192) 在一个输送前进层.通过4个方向的子平行性,每个GPU都保持一个 (8192,2048) 片段.每个GPU乘以其片段输入,产生部分结果.部分结果被结合 (通过全部减小或全部收集) 来产生全部输出.
+考虑一个前馈层中形状为 (8192, 8192) 的权重矩阵。采用 4 路张量并行时，每块 GPU 持有一个 (8192, 2048) 的分片。每块 GPU 将输入与其分片相乘，得到部分结果。部分结果通过 all-reduce 或 all-gather 合并，得到完整输出。
 
-**The good:**减少模型重量的每GPU内存. 70B模型分为8个GPU,意味着每个GPU都具有8.75B参数的重量.
+**优点：** 降低模型权重的单 GPU 内存占用。70B 模型拆到 8 块 GPU 上，每块 GPU 只需承载约 87.5 亿参数的权重。
 
-**The bad:**每层后都需要快速的GPU间通信.每层后的全减后每 matmul增加延迟.这与NVLink (900GB/s在同一节点的GPU之间) 运作良好,但通过InfiniBand (400GB/s,约50GB/s) 连接的节点之间不太好.紧张平行几乎总是局限于单个节点 (8GPU) 内.
+**缺点：** 每层之后都需要快速的 GPU 间通信。每次矩阵乘法后的 all-reduce 会增加延迟。这在 NVLink(同节点 GPU 间 900 GB/s)上表现良好，但在通过 InfiniBand(400 Gb/s,约 50 GB/s)连接的节点间表现很差。张量并行几乎总是限制在单节点内(8 块 GPU)。
 
-**Real usage:**梅加特龙-LM是子平行论的先驱.Llama 3 405B使用每个节点内的8个方向子平行论.
+**实际使用：** Megatron-LM 开创了张量并行。Llama 3 405B 在每个节点内使用 8 路张量并行。
 
-### 管道平行
+### 流水线并行
 
-按层次分类模型.GPU 1运行层次1-8.GPU 2运行层次9-16.GPU 3运行层次17-24.GPU 4运行层次25-32.数据通过管道流动:GPU 1计算其层次,并发送激活到GPU 2,该层次计算并发送到GPU 3,等.
+按层拆分模型。GPU 1 运行第 1-8 层。GPU 2 运行第 9-16 层。GPU 3 运行第 17-24 层。GPU 4 运行第 25-32 层。数据沿流水线流动:GPU 1 计算自己的层并把激活值发给 GPU 2,GPU 2 计算自己的层再发给 GPU 3,依此类推。
 
-**The good:** GPU 之间的通信最小,只是在层边界的激活,这些激活与梯度或重量相比较小.
+**优点：** GPU 间通信极少——只有层边界的激活值，相比梯度或权重很小。带宽需求低，因此可以跨节点工作。
 
-**The bad:**管道泡.当GPU4计算了微批次1的前进传递时,GPU1,2和3是空置的 (它们已经转发了部分).在后进传递时,模式反转.在天真的管道线下,GPU的使用率为N管道阶段的1/N.
+**缺点：** 流水线气泡。当 GPU 4 在对 micro-batch 1 计算前向传播时，GPU 1、2、3 都在空闲(它们已经前向传播完了自己负责的部分)。反向传播时模式反过来。朴素流水线下，N 个流水线阶段的 GPU 利用率只有 1/N。
 
-**GPipe and PipeDream**通过分批量为微批量来解决泡问题.GPU 1 在转发微批量完成后就开始在微批量 2 上启动.这在管道阶段之间进行计算重叠.在M微批量和N阶段时,泡分数降至 (N-1) /M.使用M=16个微批量,N=4个阶段,泡为3/16=18.75%的空置时间.
+**GPipe 和 PipeDream** 通过将 batch 拆分为 micro-batch 来解决气泡问题。GPU 1 一完成 micro-batch 1 的前向传播，就立刻开始 micro-batch 2。这样使计算在各流水线阶段之间重叠。有 M 个 micro-batch 和 N 个阶段时，气泡占比降到 (N-1)/M。使用 M=16 个 micro-batch 和 N=4 个阶段，气泡为 3/16 = 18.75% 的空闲时间。
 
-### FSDP:完全分碎的数据并行
+### FSDP:全分片数据并行
 
-FSDP 结合数据平行化的扩展性和碎片化的内存效率.而不是每个GPU都持有模型的完整副本,每个GPU只持有1/N的参数,梯度和优化状态.
+FSDP 结合了数据并行的可扩展性与分片的内存效率。每块 GPU 不再持有模型的完整副本，而是只持有 1/N 的参数、梯度和优化器状态。
 
-在一个层向前传递之前,FSDP运行一个**all-gather**后续传输后,每个GPU都会丢弃非本地参数.在倒退期间,全集再次运行,以重建梯度计算参数.**reduce-scatter**它们只存储1 N的梯度.
+在一层做前向传播之前，FSDP 执行一次 **all-gather**,从所有 GPU 收集完整参数到每块 GPU 的内存中。前向传播后，每块 GPU 丢弃非本地参数。反向传播时再次执行 all-gather 重建参数以计算梯度。反向传播后，一次 **reduce-scatter** 分发梯度分片，使每块 GPU 只存储 1/N 的梯度。
 
-**The math for a 70B model on 8 GPUs:**
+**以 70B 模型在 8 块 GPU 上为例：**
 
-| Component | Without FSDP | With FSDP |
+| 组成部分 | 无 FSDP | 有 FSDP |
 |-----------|-------------|-----------|
-| Weights (FP16) | 140 GB per GPU | 17.5 GB per GPU |
-| Adam States (FP32) | 560 GB per GPU | 70 GB per GPU |
-| Gradients (FP16) | 140 GB per GPU | 17.5 GB per GPU |
-| **Total** | **840 GB per GPU** | **105 GB per GPU** |
+| 权重 (FP16) | 每GPU 140 GB | 每GPU 17.5 GB |
+| Adam 状态 (FP32) | 每GPU 560 GB | 每GPU 70 GB |
+| 梯度 (FP16) | 每GPU 140 GB | 每GPU 17.5 GB |
+| **总计** | **每GPU 840 GB** | **每GPU 105 GB** |
 
-没有FSDP,你不能安装70B模型在一个80GB的GPU上.在8GB的GPU上,FSDP每个GPU使用105GB - 等,这仍然不合适.你需要至少16个GPU以达到80GB以下的GPU,或者你将FSDP与激活检查组合在一起 (反向的激活度重新计算,而不是存储它们).
+没有 FSDP,70B 模型无法装进单块 80GB GPU。用 FSDP 在 8 块 GPU 上，每块 GPU 用 105GB——等等，还是装不下。你需要至少 16 块 GPU 才能降到每块 80GB 以下，或者把 FSDP 与激活值检查点(反向传播时重算激活值而不是存储它们)结合使用。
 
-由于每个层前的全部收集,通信成本比尼拉数据平行性更高.
+通信开销高于朴素数据并行，因为每层之前都有 all-gather。但内存上的节省使原本不可能的训练成为可能。
 
 ```mermaid
 graph TD
@@ -164,57 +164,57 @@ graph TD
     style RS fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-### 极速飞行器
+### DeepSpeed ZeRO
 
-根据概念,DeepSpeed的Zero Redundancy Optimizer与FSDP相同,但由微软独立开发.它定义了三个阶段,每个阶段更积极地分化:
+DeepSpeed 的 ZeRO(Zero Redundancy Optimizer)在概念上与 FSDP 完全相同，但由 Microsoft 独立开发。它定义了三个阶段，每个阶段分片更激进：
 
-| Stage | Shards | Memory Savings | Communication |
+| 阶段 | 分片对象 | 内存节省 | 通信 |
 |-------|--------|---------------|---------------|
-| ZeRO-1 | Optimizer states only | ~4x reduction | Same as data parallel |
-| ZeRO-2 | + Gradients | ~8x reduction | Slightly more |
-| ZeRO-3 | + Parameters | ~Nx reduction (N GPUs) | All-gather per layer |
+| ZeRO-1 | 仅优化器状态 | 约 4 倍缩减 | 与数据并行相同 |
+| ZeRO-2 | + 梯度 | 约 8 倍缩减 | 略多 |
+| ZeRO-3 | + 参数 | 约 N 倍缩减(N 块 GPU) | 每层一次 all-gather |
 
-泽罗-3与FSDP相当.名称不同,机制相同.PyTorch在DeepSpeed证明了这个概念后,添加了FSDP作为本土实现.
+ZeRO-3 等价于 FSDP。名字不同，机制相同。PyTorch 在 DeepSpeed 证明了这一概念之后，将 FSDP 作为原生实现加入。
 
-速也引入了ZERO-Offload (对CPU RAM进行卸载优化状态,这是更便宜和更大的) 和ZERO-Infinity (对NVMe SSD进行卸载).这些交易计算速度用于内存容量 - - 卸载操作更慢,但释放了GPU内存.
+DeepSpeed 还推出了 ZeRO-Offload(把优化器状态卸载到更便宜、更大的 CPU 内存)和 ZeRO-Infinity(卸载到 NVMe SSD)。这些以计算速度换内存容量——被卸载的操作更慢，但释放了 GPU 内存。
 
-### 混合精准训练
+### 混合精度训练
 
-现代训练同时使用多种浮点格式:
+现代训练同时使用多种浮点格式：
 
-- **Forward pass**子在子核上运行速度是两倍.
-- **Master weights**: FP32 (32位). 在重量更新期间,优化器保持数值精度.
-- **Loss scaling**乘以后向前一个大常数,以防止FP16梯度下流到零. 在优化步骤前乘以相同的常数.
+- **前向传播**： FP16 或 BF16(16 位)。内存是 FP32 的一半。矩阵乘法在 tensor core 上快 2 倍。
+- **主权重**： FP32(32 位)。由优化器维护，以保证权重更新时的数值精度。
+- **损失缩放**： 反向传播前将损失乘以一个大常数，防止 FP16 梯度下溢为零。优化器更新前再除以同一常数。
 
-BF16 (Brain Float 16) 与 FP32 (8个指数位) 的指数范围相同,但精度降低 (7个 mantissa 位与 FP32 的23).它很少需要损失扩展,因为它可以代表相同的值范围. FP16 有5个指数位和10个 mantissa 位 - 它可以代表细粒度的值,但在极端大小下流过/下流.
+BF16(Brain Float 16)的指数范围与 FP32 相同(8 位指数)，但精度降低(7 位尾数，FP32 是 23 位)。它很少需要损失缩放，因为它能表示同样的数值范围。FP16 有 5 位指数和 10 位尾数——能表示细粒度数值，但在极端大小处会上溢/下溢。
 
-谷歌的TPU使用BF16本土.NVIDIA的A100和H100支持FP16和BF16.该行业已大大转向BF16,因为它消除了损失缩小头痛.
+Google 的 TPU 原生使用 BF16。NVIDIA 的 A100 和 H100 同时支持 FP16 和 BF16。业界已大多转向 BF16,因为它免除了损失缩放的麻烦。
 
-**Memory comparison for a 7B model:**
+**7B 模型的内存对比：**
 
-| Precision | Weights | Optimizer | Gradients | Total |
+| 精度 | 权重 | 优化器 | 梯度 | 总计 |
 |-----------|---------|-----------|-----------|-------|
-| FP32 everywhere | 28 GB | 56 GB | 28 GB | 112 GB |
-| Mixed (BF16 + FP32 master) | 14 GB | 56 GB | 14 GB | 84 GB |
+| 全 FP32 | 28 GB | 56 GB | 28 GB | 112 GB |
+| 混合 (BF16 + FP32 主权重) | 14 GB | 56 GB | 14 GB | 84 GB |
 
-混合精度节省了28GB的存储量. 优化器状态不管是32FP,这是大部分内存的位置.
+混合精度在这个模型上节省 28GB。优化器状态无论如何都保持 FP32——大部分内存正是消耗在这里。
 
-### 光电和3D平行
+### Megatron-LM 与 3D 并行
 
-实际的大规模培训结合了三个平行:
+真实的大规模训练组合全部三种并行：
 
-- **Data parallelism**通过节点组 (批量规模)
-- **Tensor parallelism**在一个节点内 (分开8个GPU的层)
-- **Pipeline parallelism**通过节点 (在机器之间分层组)
+- **数据并行**跨节点组(扩展 batch size)
+- **张量并行**在节点内(将层拆分到 8 块 GPU)
+- **流水线并行**跨节点(将层组拆分到多台机器)
 
-拉马3405B在16384辆H100上:
-- 每个节点内的8个向子平行性 (8个GPU每个节点)
-- 节点间16个路管道平行性 (16个管道阶段)
-- 剩余维度的128个方向数据平行 (16,384 / 8 / 16 = 128)
+Llama 3 405B 在 16,384 块 H100 上：
+- 每个节点内 8 路张量并行(每节点 8 块 GPU)
+- 跨节点 16 路流水线并行(16 个流水线阶段)
+- 剩余维度上 128 路数据并行(16,384 / 8 / 16 = 128)
 
-这种3D分解 (8 x 16 x 128 = 16,384) 是你如何扩展到数千个GPU.每个GPU看到不同的数据片段 (数据平行),保持每个层的一片 (ensor平行),并计算不同的层集 (管道平行).
+这种 3D 分解(8 x 16 x 128 = 16,384)就是扩展到数千块 GPU 的方式。每块 GPU 处理不同的数据分片(数据并行)，持有每层的一个切片(张量并行)，并计算不同的层组(流水线并行)。
 
-它们的专家组合架构每代币只激活了671B参数中的37B.这意味着每个GPU只需要计算 (并存储激活) 活跃参数. 他们训练了2,048个H800GPU - 比Meta的GPU数量少于1/8 -$5.6M vs Meta's estimated $百米.
+DeepSeek V3 采用了不同的路线。其 Mixture of Experts 架构每个 token 只激活 6710 亿参数中的 370 亿。这意味着每块 GPU 只需计算(并为)活跃参数(存储激活值)。他们在 2,048 块 H800 GPU 上训练——不到 Meta GPU 数量的 1/8——花费 $5.6M vs Meta's estimated $1 亿美元。
 
 ```mermaid
 graph TD
@@ -243,11 +243,11 @@ graph TD
 paged-kv-cache
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:模拟数据平行
+### 步骤 1:模拟数据并行
 
-按图像组分成模拟GPU.每个GPU计算其碎片的前进传输.平均"梯度" (我们模拟它们为损失值).
+将一个 batch 拆分到模拟的 GPU 上。每块 GPU 对自己的数据分片执行前向传播。对“梯度”取平均(我们用损失值模拟它们)。
 
 ```python
 import numpy as np
@@ -276,11 +276,11 @@ def simulate_data_parallelism(data, num_gpus, model_fn):
     return avg_loss, avg_gradient
 ```
 
-完全降低操作 (平均梯度) 是数据平行性唯一的通信. 在实践中,这使用了NVIDIA GPU上的NCCL库,该系统实现了环全减:每个 GPU 将1/N的梯度发送给邻居,从另一个邻居接收1/N,并在N-1步骤后每个 GPU 得到了完整的平均值. 通信总体: 2 x gradient_size x (N-1)/N,接近大 N 的 gradient 尺寸的 2x
+all-reduce 操作(梯度平均)是数据并行中唯一的通信。实践中，这使用 NVIDIA GPU 上的 NCCL 库，它实现环形 all-reduce:每块 GPU 把自己梯度的 1/N 发给邻居，从另一个邻居接收 1/N,经过 N-1 步后每块 GPU 都拥有完整的平均值。总通信量为 2 x gradient_size x (N-1)/N,N 很大时接近 2 倍梯度大小。
 
-### 步骤 2:模拟度平行
+### 步骤 2:模拟张量并行
 
-每个GPU计算一个部分矩阵乘法. 结合结果.
+将权重矩阵拆分到多块 GPU 上。每块 GPU 计算部分矩阵乘法。合并结果。
 
 ```python
 def simulate_tensor_parallelism(input_data, weight_matrix, num_gpus):
@@ -305,13 +305,13 @@ def simulate_tensor_parallelism(input_data, weight_matrix, num_gpus):
     return full_output, error
 ```
 
-错误应该是完全零 (或机器的epsilon).电压平行是数学上精确的 - 它产生与计算一个GPU上的全matmul相同的结果. 分裂沿着输出维度,所以每个GPU产生不同的列,和连锁重建完整的结果.
+误差应当恰好为零(或机器精度)。张量并行在数学上是精确的——结果与在单块 GPU 上计算完整矩阵乘法相同。拆分沿输出维度进行，每块 GPU 产生不同的列块，拼接后重建完整结果。
 
-在一个变压器 FFN 中,第一个线性 (扩展) 使用列式并行,第二个线性 (合同) 使用列式并行. 这避免了两层之间的全部减少.
+对于列并行线性层(拆分输出维度)，你做拼接。对于行并行(拆分输入维度)，你做求和。在 transformer 的 FFN 中，第一个线性层(扩展)用列并行，第二个线性层(收缩)用行并行。这避免了两个层之间的一次 all-reduce。
 
-### 步骤3:模拟管道平行
+### 步骤 3:模拟流水线并行
 
-显示泡问题,早期阶段停留在空中,而后期阶段计算.
+将模型的层拆分到虚拟 GPU 上。展示气泡问题：早期阶段在后期阶段计算时闲置。
 
 ```python
 def simulate_pipeline_parallelism(num_layers, num_stages, num_microbatches):
@@ -349,11 +349,11 @@ def simulate_pipeline_parallelism(num_layers, num_stages, num_microbatches):
     return timeline, total_time, bubble_fraction
 ```
 
-通过4个阶段和1个微批,泡分数为75% - - 每四个GPU中的三个在任何时候都会置. 16个微批,它会下降到19%.消除泡的成本是内存:你必须同时存储所有飞行中的微批的激活.
+4 个阶段、1 个 micro-batch 时，气泡占比为 75%——任意时刻四分之三的 GPU 在空闲。16 个 micro-batch 时，降到约 19%。消除气泡的代价是内存：你必须同时为所有在途 micro-batch 存储激活值。
 
-### 步骤4: 记忆计算器
+### 步骤 4:内存计算器
 
-计算训练任何模型尺寸的精确的内存需求.
+为任意模型规模计算训练所需的精确内存。
 
 ```python
 def memory_calculator(
@@ -416,11 +416,11 @@ def memory_calculator(
     }
 ```
 
-这台计算器回答了每一个ML工程师问的问题:"我需要多少GPU?"给它提供模型大小,看看它是否适合. juste 分片策略直到每GPU总量下降到80GB以下.
+这个计算器回答每个 ML 工程师都会问的问题：“我需要多少块 GPU?" 输入模型规模，看它是否能装下。调整分片策略，直到单 GPU 总量降到 80GB 以下。
 
-### 步骤5:混合精密模拟
+### 步骤 5:混合精度模拟
 
-进行FP32,FP16和混合精度训练之间的内存使用比较.
+比较 FP32、FP16 和混合精度训练的内存使用。
 
 ```python
 def mixed_precision_comparison(params_billions):
@@ -450,11 +450,11 @@ def mixed_precision_comparison(params_billions):
     }
 ```
 
-对于大多数人来说,最大的惊喜是:混合精度不会减半内存.优化器状态 (亚当的m和v) 无论精度如何都保持在FP32.对于7B模型,FP32训练使用112GB.混合精度使用84GB.这意味着25%的减少,而不是50%.优化器占主导地位.
+对大多数人来说最大的意外是：混合精度并不会把内存减半。优化器状态(Adam 的 m 和 v)无论精度如何都保持 FP32。对 7B 模型，FP32 训练用 112GB。混合精度用 84GB。这是 25% 的缩减，不是 50%。优化器是大头。
 
-## 用它
+## 使用它
 
-### 运行所有模拟
+### 运行全部模拟
 
 ```python
 def run_all_demos():
@@ -531,42 +531,42 @@ def run_all_demos():
               f"Savings={result['savings_vs_fp32']:.0%}")
 ```
 
-## 运送它
+## 发布它
 
-这一课产生了`outputs/prompt-distributed-training-planner.md`-- 提示需要模型尺寸和可用的硬件,然后生成一个完整的分布式培训计划:平行战略,内存预算,通信总费和预期吞吐量.
+本课产出 `outputs/prompt-distributed-training-planner.md`——一个 prompt,输入模型规模和可用硬件，然后产出一个完整的分布式训练计划：并行策略、内存预算、通信开销和预期吞吐量。
 
-## 运动
+## 练习
 
-1. 修改记忆计算器,以包括激活检查点. 检查点,只在每个K-th层 (典型的K=1,这意味着重新计算所有) 上存活点. 显示记忆-计算的权衡:检查点节省多少记忆,并且它会减慢训练的速度 (大约33%更多的计算为完整的检查点)?
+1. 修改内存计算器，加入激活值检查点。启用检查点后，只在每第 K 层存储激活值(典型 K=1,即全部重算)。展示内存与计算的权衡：检查点节省多少内存，又使训练慢多少(完整检查点约多 33% 的计算量)？
 
-2. 扩展管道平行模拟,实现PipeDream使用的1F1B (一向前,一向后) 时间表.将泡分数与4个阶段和8个微批的天真时间表进行比较. 1F1B时间表应该具有较小的峰值内存,因为它更早开始向后传递.
+2. 扩展流水线并行模拟，实现 PipeDream 使用的 1F1B(一次前向、一次反向)调度。对 4 个阶段和 8 个 micro-batch,比较其气泡占比与朴素调度。1F1B 调度的峰值内存应更小，因为它更早开始反向传播。
 
-3. 实现梯度积累模拟器.在每个微批次之后,不要把梯度全部减少,而是把梯度集中在K步骤中,然后把梯度全部减少.
+3. 实现一个梯度累积模拟器。不是在每个 micro-batch 后都 all-reduce,而是在本地累积梯度 K 步，然后一次 all-reduce。展示这如何将通信量减少 K 倍，同时产生完全相同的最终梯度(从而得到完全相同的训练结果)。
 
-4. 根据模型大小,目标代币数量,GPU类型 (A100在 $2/hr, H100 at $根据已知成本的验证:据报道,Llama 3 405B 成本~$100M, DeepSeek V3 cost ~$五,六米.
+4. 构建一个成本估算器。给定模型规模、目标 token 数、GPU 类型(A100 按 $2/hr, H100 at $3.50/小时)和并行策略，估算以美元计的总训练成本。与已知成本对照验证：据报道 Llama 3 405B 成本约 $100M, DeepSeek V3 cost ~$560 万美元。
 
-5. 加入ZERO-Offload到内存计算器.假设CPU RAM为每节点512GB,NVMe为2TB. 显示如何将优化器卸载到CPU允许70B模型在16个 GPU的时间里训练4个 GPU,而不是30-50%慢的优化器步骤.
+5. 在内存计算器中加入 ZeRO-Offload。假设每节点 CPU 内存为 512GB,NVMe 为 2TB。展示把优化器状态卸载到 CPU 如何让 70B 模型用 4 块 GPU 而非 16 块来训练，代价是优化器步进慢 30-50%。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Data parallelism | "Copy the model to every GPU" | Each GPU processes a different data shard; gradients are averaged via all-reduce after each step |
-| Tensor parallelism | "Split a layer across GPUs" | Partition weight matrices so each GPU computes part of the matmul; requires fast NVLink interconnect |
-| Pipeline parallelism | "Split layers across GPUs" | Each GPU runs a different group of layers; data flows through the pipeline with micro-batches to reduce bubbles |
-| FSDP | "Shard everything" | Fully Sharded Data Parallel -- each GPU holds 1/N of weights, gradients, and optimizer states; all-gather before compute |
-| ZeRO | "DeepSpeed's version of FSDP" | Zero Redundancy Optimizer with 3 stages: shard optimizer (Stage 1), + gradients (Stage 2), + parameters (Stage 3) |
-| All-reduce | "Average across GPUs" | Collective operation where every GPU ends with the sum (or average) of all GPUs' inputs -- typically implemented as ring all-reduce |
-| All-gather | "Collect from all GPUs" | Collective operation where every GPU ends with the concatenation of all GPUs' data -- used in FSDP to reconstruct full parameters |
-| Reduce-scatter | "Sum and distribute" | Collective operation that reduces (sums) data and scatters different chunks to different GPUs -- used in FSDP for gradient sharding |
-| Mixed precision | "Train in half precision" | Use FP16/BF16 for forward/backward and FP32 for optimizer states -- saves ~25% memory, not 50%, because the optimizer dominates |
-| Pipeline bubble | "Idle time in the pipeline" | Fraction of time GPUs sit idle waiting for data from the previous stage -- reduced by using more micro-batches |
+| 数据并行 | “把模型复制到每块 GPU" | 每块 GPU 处理不同的数据分片；每步之后通过 all-reduce 对梯度取平均 |
+| 张量并行 | “把一层拆到多块 GPU" | 划分权重矩阵，使每块 GPU 计算矩阵乘法的一部分；需要高速 NVLink 互连 |
+| 流水线并行 | “把各层拆到多块 GPU" | 每块 GPU 运行不同的层组；数据沿流水线以 micro-batch 流动以减少气泡 |
+| FSDP | “全部分片" | 全分片数据并行——每块 GPU 持有 1/N 的权重、梯度和优化器状态；计算前执行 all-gather |
+| ZeRO | “DeepSpeed 版的 FSDP" | Zero Redundancy Optimizer,分 3 个阶段：分片优化器(阶段 1)、+ 梯度(阶段 2)、+ 参数(阶段 3) |
+| All-reduce | “跨 GPU 取平均" | 一种集合通信操作，每块 GPU 最终得到所有 GPU 输入的和(或平均)——通常实现为环形 all-reduce |
+| All-gather | “从所有 GPU 收集" | 一种集合通信操作，每块 GPU 最终得到所有 GPU 数据的拼接——FSDP 用它重建完整参数 |
+| Reduce-scatter | “求和并分发" | 一种集合通信操作，对数据归约(求和)并把不同块分发给不同 GPU——FSDP 用它做梯度分片 |
+| 混合精度 | “用半精度训练" | 前向/反向用 FP16/BF16,优化器状态用 FP32——节省约 25% 而非 50% 的内存，因为优化器是大头 |
+| 流水线气泡 | “流水线中的空闲时间" | GPU 等待上一阶段数据而闲置的时间比例——通过使用更多 micro-batch 来降低 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Rajbhandari et al., 2020 -- "ZeRO: Memory Optimizations Toward Training Trillion Parameter Models"](https://arxiv.org/abs/1910.02054)根据深度速度的Zero论文,
-- [Shoeybi et al., 2020 -- "Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism"](https://arxiv.org/abs/1909.08053)对于转变器的NVIDIA的子平行性
-- [Narayanan et al., 2021 -- "Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM"](https://arxiv.org/abs/2104.04473)-- 3D平行结合数据,子和管道
-- [Zhao et al., 2023 -- "PyTorch FSDP: Experiences on Scaling Fully Sharded Data Parallel"](https://arxiv.org/abs/2304.11277)-- PyTorch 的本地FSDP实现
-- [Llama 3 Technical Report](https://arxiv.org/abs/2407.21783)-- 16,384个GPU训练, 3D平行细节
-- [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)-- 如何使MoE架构降低培训成本
+- [Rajbhandari et al., 2020 -- "ZeRO: Memory Optimizations Toward Training Trillion Parameter Models"](https://arxiv.org/abs/1910.02054) —— 定义了三个分片阶段的 DeepSpeed ZeRO 论文
+- [Shoeybi et al., 2020 -- "Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism"](https://arxiv.org/abs/1909.08053) —— NVIDIA 面向 transformer 的张量并行
+- [Narayanan et al., 2021 -- "Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM"](https://arxiv.org/abs/2104.04473) —— 结合数据、张量与流水线的 3D 并行
+- [Zhao et al., 2023 -- "PyTorch FSDP: Experiences on Scaling Fully Sharded Data Parallel"](https://arxiv.org/abs/2304.11277) —— PyTorch 原生 FSDP 实现
+- [Llama 3 Technical Report](https://arxiv.org/abs/2407.21783) —— 16,384 块 GPU 训练及 3D 并行细节
+- [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437) —— MoE 架构如何将训练成本降低一个数量级

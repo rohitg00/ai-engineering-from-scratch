@@ -1,65 +1,65 @@
 # 线性回归
 
-> 线性回归通过数据绘制出最好的直线.
+> 线性回归在你的数据中画出最佳直线。它是机器学习的“hello world”。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 1 (Linear Algebra, Calculus, Optimization), Phase 2 Lesson 1
-**Time:** ~90 minutes
+**Prerequisites:** 阶段 1(线性代数、微积分、优化)、阶段 2 第 1 课
+**Time:** 约 90 分钟
 
 ## 学习目标
 
-- 取代平均二次错误的梯度下降更新规则,从零开始实现线性回归
-- 计算复杂性和使用时间的比较
-- 建立一个多个线性回归模型,并将学习的权重解释
-- 解释如何通过惩罚大重量来防止Ridge回归 (L2规律化)
+- 推导均方误差的梯度下降更新规则，并从零实现线性回归
+- 从计算复杂度及适用场景的角度比较梯度下降与正规方程
+- 构建带特征标准化的多元线性回归模型，并解释学到的权重
+- 解释 Ridge 回归(L2 正则化)如何通过惩罚大权重来防止过拟合
 
 ## 问题
 
-你有数据:房子尺寸和售价.你想预测一个新房子的价格,考虑到它的尺寸.你可以在散布地图上看它,但你需要一个公式.你需要一个最适合数据的线条,这样你可以插入任何尺寸,得到价格预测.
+你有一份数据：房屋面积及其售价。你想根据面积预测一栋新房屋的价格。你可以在散点图上目测，但你需要一个公式。你需要一条最拟合数据的直线，这样代入任意面积就能得到价格预测。
 
-线性回归给你这个线条.更重要的是,它引入了整个ML训练循环:定义模型,定义成本函数,优化参数.每个ML算法都遵循这个模式.
+线性回归给你这条直线。更重要的是，它引入了完整的 ML 训练循环：定义模型、定义代价函数、优化参数。每个 ML 算法都遵循同样的模式。用这个最简单的情形掌握它，你就会在各处认出它。
 
-线性回归在生产系统中用于需求预测,A/B测试分析,金融建模以及每个回归任务的基线.
+这不仅适用于简单问题。线性回归在生产系统中用于需求预测、A/B 测试分析、金融建模，并且是所有回归任务的基线。
 
 ## 概念
 
-### 榜样
+### 模型
 
-线性回归假设输入 (x) 和输出 (y) 之间有线性关系:
+线性回归假设输入 (x) 与输出 (y) 之间存在线性关系：
 
 ```
 y = wx + b
 ```
 
-- `w`(重量/倾斜):当x增加1时,y 变化量是多少
-- `b`(偏差/截图):当x = 0时,y的值
+- `w`(权重/斜率)：x 每增加 1 时 y 变化多少
+- `b`(偏置/截距)：x = 0 时 y 的值
 
-对于多个输入 (特征),这扩展到:
+对于多个输入(特征)，可以扩展为：
 
 ```
 y = w1*x1 + w2*x2 + ... + wn*xn + b
 ```
 
-或是向量形式:`y = w^T * x + b`
+或写成向量形式：`y = w^T * x + b`
 
-目标:在所有训练示例中找到w和b的值,使预测的y尽可能接近实际y.
+目标是：找到使预测 y 在所有训练样本上尽可能接近实际 y 的 w 和 b 的值。
 
-### 成本函数 (平均平方错误)
+### 代价函数(均方误差)
 
-如何测量"尽可能接近"?你需要一个单一的数字来捕捉你的预测是多么错误.最常见的选择是平均平方错误 (MSE):
+如何衡量“尽可能接近”？你需要一个单一的数字来捕捉预测的误差程度。最常见的选择是均方误差(MSE):
 
 ```
 MSE = (1/n) * sum((y_predicted - y_actual)^2)
 ```
 
-为什么是二次?两个原因.第一,它惩罚大错误比小错误 (一个错误10是100倍比一个错误10x).第二,二次函数在任何地方都是平滑的,可区分的,这使得优化更容易.
+为什么要平方？两个原因。第一，它对大误差的惩罚大于小误差(误差为 10 比误差为 1 差 100 倍，而不是 10 倍)。第二，平方函数处处光滑可导，使优化变得直接。
 
-成本函数创造了一个表面.对于单重量w和偏差b,MSE表面看起来像一个碗 (一个凸的抛物线).碗底是MSE最小化的.训练意味着找到底部.
+代价函数构成一个曲面。对于单个权重 w 和偏置 b,MSE 曲面像一个碗(凸抛物面)。碗底就是 MSE 最小化的位置。训练就是找到那个碗底。
 
-### 渐进的下降
+### 梯度下降
 
-渐进下降,通过下坡步骤找到碗底部.
+梯度下降通过向山下走步来找到碗底。
 
 ```mermaid
 flowchart TD
@@ -72,7 +72,7 @@ flowchart TD
     F -->|Yes| G[Done: optimal w and b found]
 ```
 
-梯度告诉你两个东西:哪个方向移动每个参数,以及多少移动.
+梯度告诉你两件事：每个参数应该往哪个方向移动，以及移动多少。
 
 对于 y_hat = wx + b 的 MSE:
 
@@ -81,79 +81,79 @@ dMSE/dw = (2/n) * sum((y_hat - y) * x)
 dMSE/db = (2/n) * sum(y_hat - y)
 ```
 
-更新规则:
+更新规则：
 
 ```
 w = w - learning_rate * dMSE/dw
 b = b - learning_rate * dMSE/db
 ```
 
-学习速度控制步骤的尺寸.太大:你超越最小值,偏差.太小:训练需要永远.典型的起始值:0.01,0.001,或0.0001.
+学习率控制步长。太大：你会越过最小值并发散。太小：训练会花很长时间。典型的初始值：0.01、0.001 或 0.0001。
 
-### 常态方程 (封闭形式解决方案)
+### 正规方程(闭式解)
 
-对于线性回归,有一个直接公式,它提供了没有任何代的最佳权重:
+对于线性回归，有一个直接公式可以在不迭代的情况下给出最优权重：
 
 ```
 w = (X^T * X)^(-1) * X^T * y
 ```
 
-这将一个矩阵转换为w在一个步骤中解决.它对小数据集工作很好.对于大数据集 (数百万行或数千个特征),梯度下降是最喜欢的,因为矩阵逆转是O(n^3) 在数值特征中.
+它通过一次矩阵求逆直接解出 w。对小数据集效果完美。对大数据集(数百万行或数千个特征)，更倾向于梯度下降，因为矩阵求逆关于特征数是 O(n^3) 的。
 
-### 多个线性回归
+### 多元线性回归
 
-通过多个功能,模型成为:
+有多个特征时，模型变为：
 
 ```
 y = w1*x1 + w2*x2 + ... + wn*xn + b
 ```
 
-它们的重量是多少? 它们的重量是多少?
+一切照旧：MSE 是代价函数，梯度下降同时更新所有权重。唯一的区别是你在拟合一个超平面而不是一条直线。
 
-对于一个特征的范围从0到1和另一个从0到1,000,000,梯度下降将很难因为成本表面变得长.
+特征缩放在这里很重要。如果一个特征范围是 0 到 1,另一个是 0 到 1,000,000,梯度下降会很吃力，因为代价曲面被拉长了。训练前先标准化特征(减去均值，除以标准差)。
 
 ### 多项式回归
 
-如果关系不是线性,则如何?
+如果关系不是线性的怎么办？你仍然可以使用线性回归，只需创建多项式特征：
 
 ```
 y = w1*x + w2*x^2 + w3*x^3 + b
 ```
 
-这仍然是"线性"回归,因为模型在重量中是线性 (w1,w2,w3).
+这仍然是“线性”回归，因为模型对权重 (w1, w2, w3) 是线性的。你只是使用了 x 的非线性特征。
 
-高度多项式可以适应更复杂的曲线,但有过度适应的风险.10度多项式将通过10点数据集中的每个点,但对新数据预测不好.
+高次多项式可以拟合更复杂的曲线，但有过拟合风险。一个 10 次多项式会穿过 10 个点的数据集中的每一个点，但在新数据上预测很差。
 
-### 分数
+### R 方得分
 
-根据MSE的数据,你会发现你错了多少,但这个数字取决于y的尺度.
+MSE 告诉你错得多离谱，但这个数字依赖于 y 的尺度。R 方(R^2)给出了一个与尺度无关的度量：
 
 ```
 R^2 = 1 - (sum of squared residuals) / (sum of squared deviations from mean)
     = 1 - SS_res / SS_tot
 ```
 
-- 率为1.0:完美的预测
-- 模型不比每次预测平均值更好
-- R^2 < 0.0:模型比预测平均水平更糟
+- R^2 = 1.0:完美预测
+- R^2 = 0.0:模型并不比每次都预测均值更好
+- R^2 < 0.0:模型比预测均值还差
 
-### 调节预览 (回)
+### 正则化预览(Ridge 回归)
 
-杆回归 (L2规律化) 增加了罚款:
+当你有很多特征时，模型可能通过赋予过大的权重而过拟合。Ridge 回归(L2 正则化)增加了一个惩罚项：
 
 ```
 Cost = MSE + lambda * sum(w_i^2)
 ```
 
-罚款术语不鼓励大重量.超参数lambda控制交易:较高的lambda意味着较小的重量和更大的规律化. 这将在稍后的课程中详细介绍. 现在,知道它存在和为什么它有帮助.
+惩罚项抑制过大的权重。超参数 lambda 控制权衡：lambda 越高，权重越小，正则化越强。后面的课程会深入讲解。现在只需知道它存在以及为什么有用。
 
 ```figure
 linear-regression-fit
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:生成样本数据
+### 第 1 步：生成样本数据
 
 ```python
 import random
@@ -173,7 +173,7 @@ print(f"True relationship: y = {TRUE_W}x + {TRUE_B} (+ noise)")
 print(f"First 5 points: {[(round(X[i], 2), round(y[i], 2)) for i in range(5)]}")
 ```
 
-### 步骤2:从零开始的线性回归与梯度下降
+### 第 2 步：用梯度下降从零实现线性回归
 
 ```python
 class LinearRegression:
@@ -226,7 +226,7 @@ print(f"True:    y = {TRUE_W}x + {TRUE_B}")
 print(f"R-squared: {model.r_squared(X, y):.4f}")
 ```
 
-### 步骤3:正常方程 (封闭式解决方案)
+### 第 3 步：正规方程(闭式解)
 
 ```python
 class LinearRegressionNormal:
@@ -262,7 +262,7 @@ print(f"Learned: y = {model_normal.w:.4f}x + {model_normal.b:.4f}")
 print(f"R-squared: {model_normal.r_squared(X, y):.4f}")
 ```
 
-### 步骤4:多个线性回归
+### 第 4 步：多元线性回归
 
 ```python
 class MultipleLinearRegression:
@@ -351,7 +351,7 @@ print(f"Bias (standardized): {multi_model.bias:.4f}")
 print(f"R-squared: {multi_model.r_squared(X_scaled, y_scaled):.4f}")
 ```
 
-### 步骤5:多项式回归
+### 第 5 步：多项式回归
 
 ```python
 class PolynomialRegression:
@@ -419,7 +419,7 @@ print("\nDegree 2 fits the true curve well. Degree 5 fits training data slightly
 print("but risks overfitting on new data.")
 ```
 
-### 步骤 6:坡回归 (L2规律化)
+### 第 6 步：Ridge 回归(L2 正则化)
 
 ```python
 class RidgeRegression:
@@ -464,9 +464,9 @@ print(f"Plain weights: {[round(w, 4) for w in multi_model.weights]}")
 print("Ridge weights are smaller (shrunk toward zero) due to the L2 penalty.")
 ```
 
-## 用它
+## 使用现成工具
 
-现在,同样的事情是用 scikit-learn,
+现在用 scikit-learn 实现同样的功能，这才是你在生产中实际会用的东西。
 
 ```python
 from sklearn.linear_model import LinearRegression as SklearnLR
@@ -510,39 +510,39 @@ print(f"Ridge R-squared: {r2_score(y_test, ridge.predict(X_test_scaled)):.4f}")
 print(f"Ridge coefficient: {ridge.coef_[0]:.4f}")
 ```
 
-您从零开始的实现和 scikit-learn 产生相同的结果.区别是: scikit-learn 处理边缘案例,数值稳定性和性能优化.使用图书馆进行制作.使用从零开始的版本来了解发生的事情.
+你的从零实现和 scikit-learn 产生相同的结果。区别在于：scikit-learn 处理边界情况、数值稳定性和性能优化。生产中使用库。使用从零实现的版本来理解背后发生了什么。
 
-## 运送它
+## 发布成果
 
-这一课产生了:
-- `outputs/skill-regression.md`- 根据问题选择正确的回归方法的能力
+本课产出：
+- `outputs/skill-regression.md` - 一项根据问题选择正确回归方法的技能
 
-## 运动
+## 练习
 
-1. 运用批次梯度下降,股票梯度下降 (SGD) 和小型批次梯度下降.在同一数据集上比较缩速度.哪个趋于最快?哪个具有最平滑的成本曲线?
-2. 从立方函数生成数据 (y = ax^3 + bx^2 + cx + d + 噪音). 1,3和10级的合适多项数.比较训练R^2和测试R^2.在何种程度上过度合适变得明显?
-3. 运行拉索回归 (L1规律化:罚款阿尔法 *(上不_w_i 否)). 训练多个特征的住房数据.比较哪些重量达到零与.为什么L1产生稀疏的解决方案而L2没有?
+1. 实现批量梯度下降、随机梯度下降(SGD)和小批量梯度下降。在同一数据集上比较收敛速度。哪个收敛最快？哪个的代价曲线最平滑？
+2. 从三次函数生成数据(y = ax^3 + bx^2 + cx + d + noise)。拟合 1 次、3 次和 10 次多项式。比较训练 R^2 和测试 R^2。在几次时过拟合变得明显？
+3. 实现 Lasso 回归(L1 正则化：penalty = alpha * sum(|w_i|))。在多特征住房数据上训练。比较哪些权重变为零，并与 Ridge 对比。为什么 L1 产生稀疏解而 L2 不会？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Linear regression | "Draw a line through data" | Find weight w and bias b that minimize the sum of squared differences between wx+b and actual y values |
-| Cost function | "How bad the model is" | A function that maps model parameters to a single number measuring prediction error, which optimization minimizes |
-| Mean squared error | "Average of squared errors" | (1/n) * sum of (predicted - actual)^2, penalizing large errors disproportionately |
-| Gradient descent | "Walk downhill" | Iteratively adjust parameters in the direction that reduces the cost function, using partial derivatives |
-| Learning rate | "Step size" | A scalar that controls how much parameters change per gradient descent step |
-| Normal equation | "Solve it directly" | The closed-form solution w = (X^T X)^-1 X^T y that gives optimal weights without iteration |
-| R-squared | "How good the fit is" | The fraction of variance in y explained by the model, ranging from negative infinity to 1.0 |
-| Feature scaling | "Make features comparable" | Transforming features to similar ranges (e.g., zero mean, unit variance) so gradient descent converges faster |
-| Regularization | "Penalize complexity" | Adding a term to the cost function that shrinks weights, preventing overfitting |
-| Ridge regression | "L2 regularization" | Linear regression with a penalty of lambda * sum(w_i^2) added to MSE |
-| Polynomial regression | "Fitting curves with linear math" | Linear regression on polynomial features (x, x^2, x^3, ...), still linear in the weights |
-| Overfitting | "Memorizing training data" | Using a model so complex that it fits noise in training data and fails on new data |
+| 线性回归 | “在数据中画一条线” | 找到使 wx+b 与实际 y 值的平方差之和最小的权重 w 和偏置 b |
+| 代价函数 | “模型有多差” | 将模型参数映射为衡量预测误差的单一数值的函数，优化过程将其最小化 |
+| 均方误差 | “误差的平方的平均” | (1/n) * (预测 - 实际)^2 之和，对大误差施加不成比例的惩罚 |
+| 梯度下降 | “往山下走” | 利用偏导数，沿降低代价函数的方向迭代调整参数 |
+| 学习率 | “步长” | 控制每次梯度下降步骤中参数变化幅度的标量 |
+| 正规方程 | “直接求解” | 闭式解 w = (X^T X)^-1 X^T y,无需迭代即可给出最优权重 |
+| R 方 | “拟合有多好” | 模型解释的 y 方差比例，取值范围从负无穷到 1.0 |
+| 特征缩放 | “让特征可比较” | 将特征变换到相近的范围(如零均值、单位方差)，使梯度下降收敛更快 |
+| 正则化 | “惩罚复杂度” | 在代价函数中加入收缩权重的项，防止过拟合 |
+| Ridge 回归 | “L2 正则化” | 在 MSE 上加入 lambda * sum(w_i^2) 惩罚项的线性回归 |
+| 多项式回归 | “用线性数学拟合曲线” | 在多项式特征 (x, x^2, x^3, ...) 上的线性回归，对权重仍是线性的 |
+| 过拟合 | “死记训练数据” | 使用过于复杂的模型，拟合了训练数据中的噪声，在新数据上表现不佳 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [An Introduction to Statistical Learning (ISLR)](https://www.statlearning.com/)--免费的PDF,第三章和第六章涵盖线性回归和规律化,
-- [The Elements of Statistical Learning (ESL)](https://hastie.su.domains/ElemStatLearn/)--免费的PDF,更具数学性,更深度处理的ISLR的伴侣
-- [Stanford CS229 Lecture Notes on Linear Regression](https://cs229.stanford.edu/main_notes.pdf)-- 亚德鲁·恩格的笔记从第一原则中提取了正常方程和梯度下降
-- [scikit-learn LinearRegression documentation](https://scikit-learn.org/stable/modules/linear_model.html)-- 线性回归,,拉索和ElasticNet的实用参考,包括代码示例
+- [An Introduction to Statistical Learning (ISLR)](https://www.statlearning.com/) -- 免费 PDF,第 3 章和第 6 章用实用的 R 示例讲解线性回归和正则化
+- [The Elements of Statistical Learning (ESL)](https://hastie.su.domains/ElemStatLearn/) -- 免费 PDF,ISLR 更数学化的姊妹篇，更深入地讨论 ridge 和 lasso
+- [Stanford CS229 Lecture Notes on Linear Regression](https://cs229.stanford.edu/main_notes.pdf) -- Andrew Ng 的讲义，从第一性原理推导正规方程和梯度下降
+- [scikit-learn LinearRegression documentation](https://scikit-learn.org/stable/modules/linear_model.html) -- LinearRegression、Ridge、Lasso 和 ElasticNet 的实用参考，附代码示例

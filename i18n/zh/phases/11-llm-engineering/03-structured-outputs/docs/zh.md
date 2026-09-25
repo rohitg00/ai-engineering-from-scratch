@@ -1,39 +1,39 @@
-# 结构化输出:JSON,方案验证,限制解码
+# 结构化输出：JSON、Schema 验证、约束解码
 
-> 你的LLM返回一个字符串.你的应用程序需要JSON. 这个差距已经破解了更多的生产系统比任何模型幻觉. 结构化输出是自然语言和打字数据之间的桥梁. 得到正确的,你的LLM成为可靠的API. 错误的,你在3点上通过regex解析自由文本.
+> 你的 LLM 返回的是一个字符串。你的应用需要的是 JSON。这个鸿沟导致的生产系统崩溃比任何模型幻觉都多。结构化输出是自然语言与类型化数据之间的桥梁。做对了，你的 LLM 就成为一个可靠的 API。做错了，你就要在凌晨 3 点用正则表达式解析自由文本。
 
 **Type:** Build
 **Languages:** Python
 **Prerequisites:** Phase 10, Lessons 01-05 (LLMs from Scratch)
 **Time:** ~90 minutes
-**Related:**阶段5 · 20 (结构化输出和限制式解码) 涵盖了解码级理论 (FSM/CFG逻辑处理器,概要,XGrammar).本课程重点关注生产SDK表面 (OpenAI `response_format`阅读第5阶段 · 20 首先,如果你想了解API下面发生了什么.
+**Related:** Phase 5 · 20 (Structured Outputs & Constrained Decoding) 讲解了解码器层面的理论（FSM/CFG logit 处理器、Outlines、XGrammar）。本课聚焦于生产环境 SDK 层面（OpenAI `response_format`、Anthropic tool use、Instructor）——如果你想理解 API 之下发生了什么，请先阅读 Phase 5 · 20。
 
 ## 学习目标
 
-- 使用OpenAI和人类API参数实现JSON模式和方案限制输出
-- 建立一个拒绝错误的LLM输出和反复试验的Pydantic验证层
-- 解释限制解码如何在代币级别上有效的JSON,而不需要后处理
-- 设计强大的提取提示器,可靠地将未结构化的文本转换为打字数据结构
+- 使用 OpenAI 和 Anthropic API 参数实现 JSON 模式和 schema 约束的输出
+- 构建一个 Pydantic 验证层，拒绝格式错误的 LLM 输出，并携带错误反馈进行重试
+- 解释约束解码如何在 token 层面强制生成合法 JSON，无需后处理
+- 设计稳健的抽取提示词，可靠地将非结构化文本转换为类型化数据结构
 
-## 问题
+## 问题所在
 
-你问一个法学士:"从本文中取出产品名称,价格和可用性".
+你问一个 LLM：“从这段文本中提取产品名称、价格和库存状态。”它回答：
 
 ```
 The product is the Sony WH-1000XM5 headphones, which cost $348.00 and are currently in stock.
 ```
 
-您的库存系统需要`{"product": "Sony WH-1000XM5", "price": 348.00, "in_stock": true}`您需要一个具有特定键,特定类型和特定值限制的JSON对象.
+这个答案完全正确，但对你的应用毫无用处。你的库存系统需要 `{"product": "Sony WH-1000XM5", "price": 348.00, "in_stock": true}`。你需要一个具有特定键、特定类型和特定取值约束的 JSON 对象，而不是一个句子。
 
-简单的解决方案:在提示中添加"JSON中回答". 这种方法90%的时间都能有效. 另外10%的模型将JSON包裹在标记码围中,或者添加一个序言,如"这里是JSON:",或者产生语法不有效的JSON,因为它关闭了一个括号早些时候. 你的JSON解析器崩了. 你的管道断裂. 加入试/除外,然后再试循环. 试验有时会产生不同的数据. 现在你有一个连贯性问题,
+朴素的解决方案：在提示词里加上“用 JSON 回答”。这有 90% 的成功率。剩下 10% 的情况，模型会把 JSON 包在 markdown 代码围栏里，或者加上“这是 JSON：”之类的前言，或者因为提前闭合了一个括号而产生语法错误的 JSON。你的 JSON 解析器崩溃了。你的流水线断了。你加了 try/except 和重试循环。重试有时会产生不同的数据。现在你在解析问题之上又多了一个一致性问题。
 
-这不是一个快速工程问题.这是一个解码问题.模型生成左到右的代币.在每个位置,它从100K+选项的词汇库中选择了最有可能的下一个代币.这些选项中的大多数将在任何位置产生无效的JSON.如果模型刚刚发射`{"price":`接下来的代币必须是数字,一个引用 (为字符串),`null`现在`true`现在`false`没有限制,模型可能会选择一个完全合理的英语词,这是灾难性的语法错误.
+这不是提示词工程问题，而是解码问题。模型从左到右生成 token。在每个位置，它从超过 10 万个候选的词表中挑选最可能的下一个 token。其中大多数选项在任何给定位置都会产生非法 JSON。如果模型刚输出了 `{"price":`，下一个 token 必须是数字、引号（用于字符串）、`null`、`true`、`false` 或负号。其他任何内容都会产生非法 JSON。没有约束的话，模型可能选出一个完全合理的英文单词，却在语法上造成灾难性错误。
 
-## 概念
+## 核心概念
 
-### 结构化输出频谱
+### 结构化输出光谱
 
-结构化输出控制的四个层次,每个层次比前一个更可靠.
+结构化输出控制有四个层级，每一级都比上一级更可靠。
 
 ```mermaid
 graph LR
@@ -50,17 +50,17 @@ graph LR
     style D fill:#1a1a2e,stroke:#0f3460,color:#fff
 ```
 
-**Prompt-based**("有效的JSON中回复"):没有执行.模型通常符合,但有时不.可靠性: ~90%.失败模式:标记围,序言文本,缩短输出,结构错误.
+**基于提示词**（“用合法 JSON 回答”）：没有任何强制机制。模型通常会遵守，但有时不会。可靠性：约 90%。失败模式：markdown 围栏、前言文本、输出截断、结构错误。
 
-**JSON mode**通过 API 确保输出是有效的 JSON.`response_format: { type: "json_object" }`输出将没有错误进行分析. 但它可能不符合预期的方案 - - 额外的键,错误的类型,缺失的字段.
+**JSON 模式**：API 保证输出是合法 JSON。OpenAI 的 `response_format: { type: "json_object" }` 启用此功能。输出一定能解析成功。但未必符合你期望的 schema——可能有额外的键、错误的类型、缺失的字段。
 
-**Schema mode**通过JSON模式,确保输出与它匹配. 到2026年,所有主要供应商都支持本地:OpenAI的`response_format: { type: "json_schema", json_schema: {...} }`(也称为`tool_choice="required"`), 类的工具使用`input_schema`双子座的`response_schema`其他`response_mime_type: "application/json"`输出中包含了你指定的密钥,类型和限制.
+**Schema 模式**：API 接收一个 JSON Schema 并保证输出符合它。到 2026 年，所有主要提供商都原生支持：OpenAI 的 `response_format: { type: "json_schema", json_schema: {...} }`（也以 `tool_choice="required"` 形式提供）、Anthropic 带 `input_schema` 的 tool use、以及 Gemini 的 `response_schema` + `response_mime_type: "application/json"`。输出拥有你指定的精确键、类型和约束。
 
-**Constrained decoding**代码器在生成过程中在每个代币位置上掩盖所有将产生不有效输出的代币.如果该方案需要一个数字,模型即将发出一字母,则该代币设置为概率零.该模型只能产生导致有效输出的代币.这是OpenAI的结构化输出模式和图书馆如概况和指导在罩杯下实现的.
+**约束解码**：在生成过程中的每个 token 位置，解码器屏蔽所有会产生非法输出的 token。如果 schema 要求一个数字而模型即将输出一个字母，该 token 的概率就被置为零。模型只能产生通向合法输出的 token。这就是 OpenAI 的结构化输出模式以及 Outlines、Guidance 等库在底层实现的方式。
 
-### 约定语言
+### JSON Schema：契约语言
 
- JSON 方案是如何告诉模型 (或验证层) 输出必须有什么形状.
+JSON Schema 是你告诉模型（或验证层）输出必须具有什么形状的方式。所有主要结构化输出系统都使用它。
 
 ```json
 {
@@ -78,13 +78,13 @@ graph LR
 }
 ```
 
-这个方案说:输出必须是具有字符串的对象`product`没有负数`price`尔式`in_stock`并且可选的字符串阵列`categories`任何不匹配的输出都会被拒绝.
+这个 schema 表示：输出必须是一个对象，包含一个字符串 `product`、一个非负数 `price`、一个布尔值 `in_stock`，以及一个可选的字符串数组 `categories`。任何不匹配的输出都会被拒绝。
 
-方案处理硬件:嵌套物体,有打字的物体的阵列,enums (限制一个字符串到特定值),图案匹配 (在字符串上重复),和组合器 (oneOf, anyOf,allOf多形输出).
+Schema 能处理困难情况：嵌套对象、带类型化元素的数组、枚举（将字符串限制为特定取值）、模式匹配（对字符串使用正则）、以及组合器（用于多态输出的 oneOf、anyOf、allOf）。
 
-### 皮达因特模式
+### Pydantic 模式
 
-在Python中,你不用手写JSON Schema.你定义一个Pydantic模型,它为你生成了该方案.
+在 Python 中，你不需要手写 JSON Schema。定义一个 Pydantic 模型，它会自动生成 schema。
 
 ```python
 from pydantic import BaseModel
@@ -96,11 +96,11 @@ class Product(BaseModel):
     categories: list[str] = []
 ```
 
-这产生了如上所述的JSON方案.教师库 (和OpenAI的SDK) 直接接受Pydantic模型:通过模型类,获得验证实例.如果LLM输出不匹配,教师自动重新尝试.
+这将产生与上面相同的 JSON Schema。Instructor 库（以及 OpenAI 的 SDK）直接接受 Pydantic 模型：传入模型类，返回一个已验证的实例。如果 LLM 输出不匹配，Instructor 会自动重试。
 
-### 函数调用/工具使用
+### Function Calling / Tool Use
 
-模特将一个函数调用,并将其输出到一个函数. 模特将其输出一个函数调用,并将其输出到一个函数调用. OpenAI称之为"函数调用".
+同一问题的另一种接口。不是让模型直接产生 JSON，而是定义带类型化参数的“工具”（函数）。模型输出一个带有结构化参数的函数调用。OpenAI 称之为 "function calling"，Anthropic 称之为 "tool use"。结果是一样的：结构化数据。
 
 ```mermaid
 graph TD
@@ -117,31 +117,31 @@ graph TD
     style R fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-如果您有10种不同的提取方案,并且模型必须根据输入选择正确的方案,则工具使用将给您提供既方案选择,又结构化输出.
+当模型需要选择调用哪个函数而不仅仅是填充参数时，tool use 是首选。如果你有 10 个不同的抽取 schema，模型必须根据输入选择正确的一个，tool use 同时给你 schema 选择和结构化输出。
 
-### 常见的失败方式
+### 常见失败模式
 
-即使是执行方案,结构化输出也可能以微妙的方式失败.
+即使有 schema 强制，结构化输出仍可能以微妙的方式失败。
 
-**Hallucinated values**输出与方案相匹配,但包含发明的数据.`{"price": 299.99}`图表验证不能捕获这个-- 类型是正确的,值是错误的.
+**幻觉值**：输出符合 schema 但包含编造的数据。文本写的是 $348，模型却输出 `{"price": 299.99}`。Schema 验证无法捕获这一点——类型正确，值错了。
 
-**Enum confusion**限制一个字段到`["in_stock", "out_of_stock", "preorder"]`模型的输出`"available"`虽然它是基于语义上的,但不是允许的集合. 良好的限制解码阻止了这一点.
+**枚举混淆**：你把一个字段约束为 `["in_stock", "out_of_stock", "preorder"]`。模型输出 `"available"`——语义上正确，但不在允许的取值集合中。良好的约束解码可以防止这种情况。基于提示词的方法则不能。
 
-**Nested object depth**密集化模式 (4+级) 产生更多错误. 每个级别的嵌套化是模型可能失去结构的另一个地方.
+**嵌套对象深度**：深层嵌套的 schema（4 层以上）会产生更多错误。每层嵌套都是模型可能迷失结构的另一个地方。
 
-**Array length**模型可能会在数组中产生太多或太少的项目.`minItems`其他`maxItems`但并非所有提供商都在解码层面执行它们.
+**数组长度**：模型可能在数组中产生过多或过少的元素。Schema 支持 `minItems` 和 `maxItems`，但并非所有提供商都在解码层面强制执行。
 
-**Optional field omission**模型遗漏技术上可选但对您的使用情况具有意义上的重要性的字段.即使有时数据缺失,也可以根据图案要求设置它们.`null`显然.
+**可选字段省略**：模型省略了技术上可选但对你的用例语义上重要的字段。即使数据有时缺失，也要在 schema 中把它们设为必填——强制模型显式输出 `null`。
 
 ```figure
 mx-schema-funnel
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1: JSON 方案验证器
+### 第 1 步：JSON Schema 验证器
 
-建立一个验证器从零开始,以检查Python对象是否匹配JSON方案.这是输出侧运行的,以验证合规性.
+从零开始构建一个验证器，检查 Python 对象是否匹配某个 JSON Schema。这是在输出端运行的、用于验证合规性的组件。
 
 ```python
 import json
@@ -208,9 +208,9 @@ def _validate(data, schema, path, errors):
             errors.append(f"{path}: expected integer, got {type(data).__name__}")
 ```
 
-### 步骤2:从皮达因式模型到方案
+### 第 2 步：Pydantic 风格模型转 Schema
 
-建立一个最小的类到方案转换器.定义一个Python类,自动生成其JSON方案.
+构建一个极简的类到 schema 转换器。定义一个 Python 类并自动生成它的 JSON Schema。
 
 ```python
 class SchemaField:
@@ -265,9 +265,9 @@ def model_to_schema(name, fields):
     }
 ```
 
-### 步骤3: 限制的标志过
+### 第 3 步：约束 Token 过滤器
 
-模拟限制解码. 鉴于部分JSON字符串和图案,确定当前位置是否有效的代币类别.
+模拟约束解码。给定一个部分 JSON 字符串和一个 schema，判断当前位置哪些 token 类别是合法的。
 
 ```python
 def next_valid_tokens(partial_json, schema):
@@ -326,9 +326,9 @@ def demonstrate_constrained_decoding():
         print(f"{display:<45} {valid}")
 ```
 
-### 步骤4:提取管道
+### 第 4 步：抽取流水线
 
-将所有东西结合到一个提取管道中:定义一个方案,模拟一个LLM产生结构化输出,验证输出,并处理重试.
+将所有部分组合成一个抽取流水线：定义 schema，模拟 LLM 产生结构化输出，验证输出，并处理重试。
 
 ```python
 def simulate_llm_extraction(text, schema, attempt=0):
@@ -372,7 +372,7 @@ product_schema = {
 }
 ```
 
-### 步骤5: 运行全管道
+### 第 5 步：运行完整流水线
 
 ```python
 def run_demo():
@@ -423,9 +423,9 @@ def run_demo():
             print(f"  Output: FAILED after retries")
 ```
 
-## 用它
+## 实际使用
 
-### 开放AI结构化输出
+### OpenAI 结构化输出
 
 ```python
 # from openai import OpenAI
@@ -451,9 +451,9 @@ def run_demo():
 # print(product.product, product.price, product.in_stock)
 ```
 
-开放AI的结构化输出模式使用内部限制式解码.模型生成的每个代币都保证与Pydantic方案相匹配的输出.不需要重试.不需要验证.限制被入解码过程中.
+OpenAI 的结构化输出模式在内部使用约束解码。模型生成的每个 token 都被保证产生符合 Pydantic schema 的输出。无需重试。无需验证。约束被内置于解码过程中。
 
-### 人类工具的使用
+### Anthropic Tool Use
 
 ```python
 # import anthropic
@@ -480,9 +480,9 @@ def run_demo():
 # )
 ```
 
-通过工具使用,Anthropic实现结构化输出.该模型发出一个与 input_schema相匹配的结构化参数的工具调用.相同的结果,不同的API表面.
+Anthropic 通过 tool use 实现结构化输出。模型发出一个工具调用，其结构化参数符合 input_schema。结果相同，API 表面不同。
 
-### 导师图书馆
+### Instructor 库
 
 ```python
 # pip install instructor
@@ -504,49 +504,49 @@ def run_demo():
 # )
 ```
 
-导师将任何LLM客户端包裹并添加自动复试验证.如果第一次尝试失败验证,它将错误作为文本返回模型,并要求它修复输出.这与任何提供商都能合作,而不仅仅是OpenAI.
+Instructor 封装任意 LLM 客户端，并添加带验证的自动重试。如果第一次尝试未通过验证，它会把错误作为上下文发回给模型，要求其修正输出。这适用于任何提供商，而不仅是 OpenAI。
 
-## 运送它
+## 上线交付
 
-这一课产生了`outputs/prompt-structured-extractor.md`--一个可重复使用的提示模板,从任何定义的图案中提取结构化数据. 给它提供一个JSON图案和非结构化文本,然后返回验证的JSON.
+本课产出 `outputs/prompt-structured-extractor.md`——一个可复用的提示词模板，在给定 schema 定义的情况下从任意文本中抽取结构化数据。输入一个 JSON Schema 和非结构化文本，它返回经过验证的 JSON。
 
-它还产生了`outputs/skill-structured-outputs.md`根据供应商,可靠性要求和方案复杂性,选择正确的结构化输出策略的决策框架.
+它还产出 `outputs/skill-structured-outputs.md`——一个决策框架，根据你的提供商、可靠性要求和 schema 复杂度，选择合适的结构化输出策略。
 
-## 运动
+## 练习
 
-1. 扩展到支持的方案验证器`oneOf`处理多形输出,例如,一个可以是`Product`或是`Service`具有不同形状的物体.
+1. 扩展 schema 验证器以支持 `oneOf`（数据必须恰好匹配多个 schema 中的一个）。这可以处理多态输出——例如，一个字段可以是 `Product` 或形状不同的 `Service` 对象。
 
-2. 建立一个"方案差异"工具,可以比较两个方案,并识别破解变化 (删除所需的字段,改变类型) 与不破解变化 (添加选项字段,放松的限制).这是生产中版本化您的提取方案的必不可少.
+2. 构建一个“schema diff”工具，比较两个 schema 并识别破坏性变更（删除必填字段、修改类型）与非破坏性变更（新增可选字段、放宽约束）。这对于在生产环境中对抽取 schema 进行版本管理至关重要。
 
-3. 实施一个更现实的限制解码模拟器. 鉴于JSON方案和100个代码 (字母,数字,分区别,关键字) 的词汇库,一步一步通过生成,每个位置都掩盖了无效代码. 测量每个步骤中的词汇库有多少个百分比有效.
+3. 实现一个更真实的约束解码模拟器。给定一个 JSON Schema 和一个包含 100 个 token 的词表（字母、数字、标点、关键字），逐步执行生成过程，在每个位置屏蔽非法 token。测量每一步词表中合法 token 的百分比。
 
-4. 建立一个提取评估套件. 创建50个产品描述,使用手动标记的JSON输出. 在所有50个中运行提取管道,测量准确匹配,场面级准确性和类型合规性. 确定哪些领域最难正确地提取.
+4. 构建一个抽取评估套件。创建 50 条带有手工标注 JSON 输出的产品描述。在你的抽取流水线上运行全部 50 条，测量精确匹配率、字段级准确率和类型合规性。找出哪些字段最难正确抽取。
 
-5. 对于每一个提取的字段,估计模型的信心程度 (基于代币概率,或通过运行提取3次和测量一致性). 标签低信心字段用于人类审查.
+5. 为你的抽取流水线添加“置信度分数”。对每个抽取的字段，估计模型的可信程度（基于 token 概率，或运行 3 次抽取并测量一致性）。将低置信度字段标记出来供人工审核。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| JSON mode | "Returns JSON" | API flag that guarantees syntactically valid JSON output, but does not enforce any particular schema |
-| Structured output | "Typed JSON" | Output that matches a specific JSON Schema with correct keys, types, and constraints |
-| Constrained decoding | "Guided generation" | At each token position, mask out tokens that would produce invalid output -- guarantees 100% schema compliance |
-| JSON Schema | "A JSON template" | A declarative language for describing the structure, types, and constraints of JSON data (used by OpenAPI, JSON Forms, etc.) |
-| Pydantic | "Python dataclasses+" | Python library that defines data models with type validation, used by FastAPI and Instructor to generate JSON Schemas |
-| Function calling | "Tool use" | LLM outputs a structured function invocation (name + typed arguments) instead of free text -- OpenAI and Anthropic both support this |
-| Instructor | "Pydantic for LLMs" | Python library that wraps LLM clients to return validated Pydantic instances, with automatic retry on validation failure |
-| Token masking | "Filtering the vocabulary" | Setting specific token probabilities to zero during generation so the model cannot produce them |
-| Schema compliance | "Matches the shape" | The output has every required field, correct types, values within constraints, and no extra disallowed fields |
-| Retry loop | "Try again until it works" | Send validation errors back to the model and ask it to fix the output -- Instructor does this automatically, up to a configurable max |
+| JSON 模式 | “返回 JSON” | 保证语法合法 JSON 输出的 API 开关，但不强制任何特定 schema |
+| 结构化输出 | “类型化的 JSON” | 符合特定 JSON Schema 的输出，具有正确的键、类型和约束 |
+| 约束解码 | “引导式生成” | 在每个 token 位置屏蔽会产生非法输出的 token——保证 100% 符合 schema |
+| JSON Schema | “一个 JSON 模板” | 用于描述 JSON 数据结构、类型和约束的声明式语言（被 OpenAPI、JSON Forms 等使用） |
+| Pydantic | “Python dataclasses 增强版” | 定义带类型验证的数据模型的 Python 库，被 FastAPI 和 Instructor 用来生成 JSON Schema |
+| Function calling | “Tool use” | LLM 输出结构化的函数调用（名称 + 类型化参数）而非自由文本——OpenAI 和 Anthropic 都支持 |
+| Instructor | “LLM 的 Pydantic” | 封装 LLM 客户端以返回已验证 Pydantic 实例的 Python 库，验证失败时自动重试 |
+| Token 屏蔽 | “过滤词表” | 在生成过程中将特定 token 的概率置为零，使模型无法产生它们 |
+| Schema 合规 | “形状匹配” | 输出包含所有必填字段、类型正确、取值在约束范围内、且没有多余的不允许字段 |
+| 重试循环 | “不断重试直到成功” | 把验证错误发回给模型并要求其修正输出——Instructor 自动执行此操作，最多重试可配置次数 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [OpenAI Structured Outputs Guide](https://platform.openai.com/docs/guides/structured-outputs)-- 基于JSON方案的限制解码在OpenAIAPI中的官方文档
-- [Willard & Louf, 2023 -- "Efficient Guided Generation for Large Language Models"](https://arxiv.org/abs/2307.09702)-- 概述论文,描述如何将JSON图案编译成有限状态机,
-- [Instructor documentation](https://python.useinstructor.com/)-- 获得任何具有Pydantic验证和重试的LLM结构化输出的标准图书馆
-- [Anthropic Tool Use Guide](https://docs.anthropic.com/en/docs/tool-use)-- 克劳德如何通过工具使用JSON Schema input_schema实现结构化输出
-- [JSON Schema specification](https://json-schema.org/)-- 对于每个主要结构化输出系统所使用的方案语言的完整规格
-- [Outlines library](https://github.com/outlines-dev/outlines)--使用 regex 和 JSON 方案编译到有限状态机器的开源限制生成
-- [Dong et al., "XGrammar: Flexible and Efficient Structured Generation Engine for Large Language Models" (MLSys 2025)](https://arxiv.org/abs/2411.15100)现在的最先进的语法引擎; 按下自动组合, 掩盖代币的代币为100ns/代币.
-- [Beurer-Kellner et al., "Prompting Is Programming: A Query Language for Large Language Models" (LMQL)](https://arxiv.org/abs/2212.06094)-- LMQL 纸张框架限制了解码作为一个查询语言,
-- [Microsoft Guidance (framework docs)](https://github.com/guidance-ai/guidance)--基于模板的限制生成; 供应商无知的补充到概要和XGrammar.
+- [OpenAI Structured Outputs Guide](https://platform.openai.com/docs/guides/structured-outputs) -- OpenAI API 中基于 JSON Schema 的约束解码官方文档
+- [Willard & Louf, 2023 -- "Efficient Guided Generation for Large Language Models"](https://arxiv.org/abs/2307.09702) -- Outlines 论文，描述如何将 JSON Schema 编译为有限状态机以实现 token 级约束
+- [Instructor documentation](https://python.useinstructor.com/) -- 从任意 LLM 获取结构化输出、带 Pydantic 验证和重试的标准库
+- [Anthropic Tool Use Guide](https://docs.anthropic.com/en/docs/tool-use) -- Claude 如何通过带 JSON Schema input_schema 的 tool use 实现结构化输出
+- [JSON Schema specification](https://json-schema.org/) -- 所有主要结构化输出系统所使用的 schema 语言的完整规范
+- [Outlines library](https://github.com/outlines-dev/outlines) -- 开源约束生成库，将正则和 JSON Schema 编译为有限状态机
+- [Dong et al., "XGrammar: Flexible and Efficient Structured Generation Engine for Large Language Models" (MLSys 2025)](https://arxiv.org/abs/2411.15100) -- 当前最先进的语法引擎；下推自动机编译，每个 token 的屏蔽耗时约 100 ns。
+- [Beurer-Kellner et al., "Prompting Is Programming: A Query Language for Large Language Models" (LMQL)](https://arxiv.org/abs/2212.06094) -- LMQL 论文，将约束解码框架化为带类型和取值约束的查询语言。
+- [Microsoft Guidance (framework docs)](https://github.com/guidance-ai/guidance) -- 模板驱动的约束生成；Outlines 和 XGrammar 的供应商无关补充。

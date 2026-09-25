@@ -1,80 +1,80 @@
-# 音乐世代 音乐世代,稳定音频,苏诺,许可证地震
+# 音乐生成 — MusicGen、Stable Audio、Suno 与授权许可地震
 
-> 2026年音乐代:Suno v5和Udio v4占据商业主导地位; MusicGen,Stable Audio Open和 ACE-Step引领开源.技术问题大多得到解决.法律问题 (Warner Music 500M美元和解,UMG和解) 在2025-2026年重新塑造了该领域.
+> 2026 年的音乐生成：Suno v5 和 Udio v4 主导商业领域；MusicGen、Stable Audio Open 和 ACE-Step 领跑开源。技术问题基本已被解决。法律问题（华纳音乐 5 亿美元和解案、UMG 和解案）在 2025-2026 年重塑了这个领域。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 4 · 10 (Diffusion Models)
-**Time:** ~75 minutes
+**Prerequisites:** Phase 6 · 02 (Spectrograms)、Phase 4 · 10 (Diffusion Models)
+**Time:** 约 75 分钟
 
-## 问题
+## 问题所在
 
-文字 → 30 秒到 4 分钟的音乐片段,歌词,歌声和结构.
+文本 → 一段 30 秒至 4 分钟的音乐片段，包含歌词、人声和结构。三个子问题：
 
-1. **Instrumental generation.**文字如"热键的洛菲哈普鼓" →音频.
-2. **Song generation (with vocals + lyrics).**关于雨天的德克萨斯州夜晚的乡村歌曲.
-3. **Conditional / controllable.**扩展现有剪辑,再生桥梁,交换类型,干部分离或涂料.Udio的涂料+干部分离是2026年配合的功能.
+1. **纯器乐生成。** "lo-fi hip-hop 鼓点配温暖键盘” 之类的文本 → 音频。MusicGen、Stable Audio、AudioLDM。
+2. **歌曲生成（含人声 + 歌词）。** "一首关于德克萨斯雨夜乡村歌曲” → 完整歌曲。Suno、Udio、YuE、ACE-Step。
+3. **条件化 / 可控生成。** 延长现有片段、重新生成过渡段、切换流派、分轨分离或修复（inpaint）。Udio 的 inpainting + 分轨分离是 2026 年竞相追赶的功能。
 
-## 概念
+## 核心概念
 
 ![Music generation: token-LM vs diffusion, the 2026 model map](../assets/music-generation.svg)
 
-### 标志 LM 与神经编码标志相比
+### 基于神经编解码器 token 的 token 语言模型
 
-标签**MusicGen**根据"中文代码"的定义,它可以使用"中文代码" (MIT) 和许多衍生品:文字/旋律嵌入式的条件,可自行预测EnCodec代码 (32 kHz, 4 代码书),可用EnCodec解码. 300M - 3.3B参数.强基线;超过 30 秒的斗争.
+Meta 的 **MusicGen**（2023，MIT 许可）以及众多衍生模型：以文本/旋律 embedding 为条件，自回归地预测 EnCodec token（32 kHz，4 个 codebook），再用 EnCodec 解码。参数量 300M - 3.3B。是强大的基线；超过 30 秒表现不佳。
 
-**ACE-Step**开源,4B XL发布于2026年4月. 这将扩展到全歌曲歌词的生成.
+**ACE-Step**（开源，4B XL 于 2026 年 4 月发布）将其扩展为歌词条件的完整歌曲生成。这是开源社区最接近 Suno 的东西。
 
-### 化或隐藏物间的化
+### 基于 mel 频谱或潜在空间的扩散模型
 
-**Stable Audio (2023)**其他**Stable Audio Open (2024)**音,音响设计,环境纹理,结构性完整歌曲不太好.
+**Stable Audio (2023)** 和 **Stable Audio Open (2024)**：在压缩音频上的 latent diffusion。擅长循环乐句、音效设计和环境音纹理。不擅长结构化的完整歌曲。
 
-**AudioLDM / AudioLDM2**通过T2I式的隐藏传播,将其通用到音乐,音效,语音.
+**AudioLDM / AudioLDM2**：通过 T2I 风格的 latent diffusion 实现文本到音频，并推广至音乐、音效和语音。
 
-### 混合动力 (制作) 苏诺,乌迪奥,丽亚
+### 混合式（生产级）— Suno、Udio、Lyria
 
-密闭重量.可能是AR编码器LM+基于扩散的声码器,具有专业的声音/鼓/旋律头.Suno v5 (2026) 是ELO 1293质量领导者.Udio v4增加了涂料+干部分离 (低音,鼓,声声单独下载).
+闭源权重。很可能是 AR codec LM + 基于扩散的 vocoder，并带有专门的人声/鼓点/旋律输出头。Suno v5（2026）是 ELO 1293 的质量领跑者。Udio v4 增加了 inpainting + 分轨分离（贝斯、鼓、人声可分别下载）。
 
 ### 评估
 
-- **FAD (Fréchet Audio Distance).**嵌入级距离在使用VGGish或PANN功能生成与真实的音频分发之间.较低更好.音乐Gen小: MusicCaps上的4.5 FAD;SOTA ~3.0.
-- **Musicality (subjective).**人类偏好.苏诺V5ELO1293导向.
-- **Text-audio alignment.**快速和输出之间的CLAP分数.
-- **Musicality artifacts.**音频转变,声语漂移,30秒后结构损失.
+- **FAD (Fréchet Audio Distance)。** 使用 VGGish 或 PANNs 特征，计算生成音频分布与真实音频分布在 embedding 层面的距离。数值越低越好。MusicGen small：在 MusicCaps 上 FAD 为 4.5；SOTA 约 3.0。
+- **音乐性（主观）。** 人类偏好。Suno v5 以 ELO 1293 领先。
+- **文本-音频对齐。** 提示词与输出之间的 CLAP 分数。
+- **音乐性伪影。** 节拍错位的过渡、乐句人声漂移、超过 30 秒后结构崩坏。
 
-## 2026年模型地图
+## 2026 年模型图谱
 
-| Model | Params | Length | Vocals | License |
+| 模型 | 参数量 | 长度 | 人声 | 许可证 |
 |-------|--------|--------|--------|---------|
-| MusicGen-large | 3.3B | 30 s | no | MIT |
-| Stable Audio Open | 1.2B | 47 s | no | Stability non-commercial |
-| ACE-Step XL (Apr 2026) | 4B | &gt; 2 min | yes | Apache-2.0 |
-| YuE | 7B | &gt; 2 min | yes, multilingual | Apache-2.0 |
-| Suno v5 (closed) | ? | 4 min | yes, ELO 1293 | commercial |
-| Udio v4 (closed) | ? | 4 min | yes + stems | commercial |
-| Google Lyria 3 (closed) | ? | real-time | yes | commercial |
-| MiniMax Music 2.5 | ? | 4 min | yes | commercial API |
+| MusicGen-large | 3.3B | 30 秒 | 无 | MIT |
+| Stable Audio Open | 1.2B | 47 秒 | 无 | Stability 非商业 |
+| ACE-Step XL（2026 年 4 月） | 4B | &gt; 2 分钟 | 有 | Apache-2.0 |
+| YuE | 7B | &gt; 2 分钟 | 有，多语言 | Apache-2.0 |
+| Suno v5（闭源） | ? | 4 分钟 | 有，ELO 1293 | 商业 |
+| Udio v4（闭源） | ? | 4 分钟 | 有 + 分轨 | 商业 |
+| Google Lyria 3（闭源） | ? | 实时 | 有 | 商业 |
+| MiniMax Music 2.5 | ? | 4 分钟 | 有 | 商业 API |
 
-## 法律环境 (2025-2026)
+## 法律格局（2025-2026）
 
-- **Warner Music vs Suno settlement.**现在WMG已经监督了Suno的AI相似性,音乐权利和用户生成的曲目.
-- **EU AI Act**其他**California SB 942**必须披露人工智能生成的音乐.
-- **Riffusion / MusicGen**没有合规包装,也没有商业声.
+- **华纳音乐与 Suno 和解案。** 5 亿美元。WMG 现在对 Suno 上的 AI 声音模拟、音乐版权及用户生成的曲目拥有监督权。UMG 对 Udio 也有类似和解。
+- **EU AI Act** + **California SB 942**：AI 生成的音乐必须予以披露。
+- **Riffusion / MusicGen** 采用 MIT 许可，无合规负担，但也没有商业级人声。
 
-安全到船的模式:
+可安全上线的模式：
 
-1. 仅生成仪器 (MusicGen,稳定音频开放,MIT/CC0输出).
-2. 使用商业API (Suno,Udio,ElevenLabs Music) 按一代许可.
-3. 列车在拥有或授权的目录上 (大多数企业都在此结束).
-4. 标签生成器用水标+元数据.
+1. 仅生成纯器乐（MusicGen、Stable Audio Open，MIT/CC0 输出）。
+2. 使用带逐次生成授权的商业 API（Suno、Udio、ElevenLabs Music）。
+3. 在自有或已授权的曲库上训练（大多数企业最终都走这条路）。
+4. 为生成内容添加水印 + 元数据标签。
 
 ```figure
 sp-codec-tokens
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:使用 MusicGen生成
+### 步骤 1：用 MusicGen 生成
 
 ```python
 from audiocraft.models import MusicGen
@@ -86,9 +86,9 @@ wav = model.generate(["upbeat synthwave with driving drums, 128 BPM"])
 torchaudio.save("out.wav", wav[0].cpu(), 32000)
 ```
 
-三个尺寸:`small`快速的`medium`其他国家`large`3.3B. 对于"想法能实现"而言,小就足够了.
+三种规模：`small`（300M，快速）、`medium`（1.5B）、`large`（3.3B）。验证想法是否可行，small 就够了。
 
-### 步骤2:调节旋律
+### 步骤 2：旋律条件化
 
 ```python
 melody, sr = torchaudio.load("humming.wav")
@@ -99,9 +99,9 @@ wav = model.generate_with_chroma(
 )
 ```
 
-音乐Gen-melody在调音调换时会采用染色符号,保存调音.
+MusicGen-melody 接收 chromagram，在保留曲调的同时更换音色。适用于“把这段旋律变成弦乐四重奏”。
 
-### 步骤3:FAD评估
+### 步骤 3：FAD 评估
 
 ```python
 from frechet_audio_distance import FrechetAudioDistance
@@ -110,11 +110,11 @@ fad = FrechetAudioDistance()
 fad.get_fad_score("generated_folder/", "reference_folder/")
 ```
 
-对于类型水平回归测试有用,而不是替代人类听者.
+计算 VGGish-embedding 距离。适用于流派级别的回归测试；不能替代真人听感评估。
 
-### 步骤4:加入LLM音乐工作流程
+### 步骤 4：接入 LLM-音乐工作流
 
-结合了从第七到八课的想法:
+与第 7-8 课的思路相结合：
 
 ```python
 prompt = "Write a 30-second jazz loop. Describe the drums, bass, and piano voicing."
@@ -122,51 +122,51 @@ description = llm.complete(prompt)
 music = musicgen.generate([description], duration=30)
 ```
 
-## 用它
+## 应用场景
 
-| Goal | Stack |
+| 目标 | 技术栈 |
 |------|-------|
-| Instrumental sound design | Stable Audio Open |
-| Game / adaptive music | Google Lyria RealTime (closed) |
-| Full songs with vocals (commercial) | Suno v5 or Udio v4 with explicit license |
-| Full songs with vocals (open) | ACE-Step XL or YuE |
-| Short ad jingle | MusicGen melody-conditioned on a hummed reference |
-| Music-video background | MusicGen + Stable Video Diffusion |
+| 器乐音效设计 | Stable Audio Open |
+| 游戏 / 自适应音乐 | Google Lyria RealTime（闭源） |
+| 含人声的完整歌曲（商业） | Suno v5 或 Udio v4，附带明确授权 |
+| 含人声的完整歌曲（开源） | ACE-Step XL 或 YuE |
+| 短广告配乐 | 以哼唱参考做 melody 条件的 MusicGen |
+| 音乐视频背景 | MusicGen + Stable Video Diffusion |
 
-## 陷在2026年仍存在
+## 2026 年仍会踩的坑
 
-- **Copyright-laundering prompts.**现在,开放型号不了. 添加自己的过列表.
-- **Repetition / drift past 30 s.**交叉多代,或使用ACE-Step来实现结构一致性.
-- **Tempo drift.**通过图书馆的提示和后过器使用BPM标签.`beat_track`现在,我们要去.
-- **Vocal intelligibility.**苏诺很好,开放式模型通常是不熟悉的.如果歌词很重要,请使用商业API或细节调节.
-- **Mono output.**开放型号生成单声或假声. 通过适当的声波重建升级 (例如,卡特西亚的声波扩散).
+- **版权洗白式提示词。** “泰勒·斯威夫特风格的歌曲” — 商业的 Suno/Udio 现在会过滤这类提示，开源模型不会。请自行添加过滤列表。
+- **超过 30 秒的重复 / 漂移。** AR 模型会循环。可对多次生成结果做交叉淡化，或使用 ACE-Step 保持结构连贯性。
+- **节奏漂移。** 模型会偏离 BPM。在提示词中使用 BPM 标签，并用 librosa 的 `beat_track` 做后置过滤。
+- **人声清晰度。** Suno 表现优秀；开源模型的歌词往往含混不清。如果歌词很重要，请使用商业 API 或做微调。
+- **单声道输出。** 开源模型生成单声道或伪立体声。需要用真正的立体声重建来升级（ezst、Cartesia 的 stereo diffusion）。
 
-## 运送它
+## 上线交付
 
-保存如`outputs/skill-music-designer.md`选择模式,许可战略,长度/结构计划,以及披露音乐代部署的元数据.
+保存为 `outputs/skill-music-designer.md`。为音乐生成部署选定模型、授权策略、长度/结构方案以及披露元数据。
 
-## 运动
+## 练习
 
-1. **Easy.**跑步`code/main.py`它产生"生成"和弦进步 + 鼓模式作为ASCII符号音乐代动画.
-2. **Medium.**安装`audiocraft`通过 MusicGen-small生成10秒的视频,
-3. **Hard.**使用ACE-Step (或 MusicGen-melody) 来生成相同旋律的三个变化,使用不同的调音提示.计算CLAP与提示的相似性来验证对齐.
+1. **简单。** 运行 `code/main.py`。它会以 ASCII 符号生成"生成式"和弦进行 + 鼓点模式 — 一幅音乐生成的漫画。需要的话可通过任意 MIDI 渲染器播放。
+2. **中等。** 安装 `audiocraft`，用 MusicGen-small 在 4 个流派提示下生成 10 秒片段，并对照一个参考流派集合测量 FAD。
+3. **困难。** 使用 ACE-Step（或 MusicGen-melody），用不同的音色提示生成同一段旋律的三个变体。计算与提示词的 CLAP 相似度以验证对齐。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|-----------------------|
-| FAD | Audio FID | Fréchet distance between embedding distributions of real vs generated. |
-| Chromagram | Melody as pitches | 12-dim per-frame vector; input to melody conditioning. |
-| Stems | Instrument tracks | Separated bass / drums / vocals / melody as WAV. |
-| Inpainting | Regen a section | Mask a time window; model regenerates just that. |
-| CLAP | Text-audio CLIP | Contrastive audio-text embedding; eval text-audio alignment. |
-| EnCodec | Music codec | Meta's neural codec used by MusicGen; 32 kHz, 4 codebooks. |
+| FAD | 音频版 FID | 真实音频与生成音频的 embedding 分布之间的 Fréchet 距离。 |
+| Chromagram | 音高形式的旋律 | 每帧 12 维向量；旋律条件化的输入。 |
+| Stems | 乐器音轨 | 分离出的贝斯/鼓/人声/旋律，以 WAV 格式保存。 |
+| Inpainting | 重新生成某段 | 掩盖一个时间窗口；模型只重新生成该部分。 |
+| CLAP | 文本-音频版 CLIP | 对比式音频-文本 embedding；用于评估文本-音频对齐。 |
+| EnCodec | 音乐编解码器 | Meta 的神经编解码器，MusicGen 所用；32 kHz，4 个 codebook。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Copet et al. (2023). MusicGen](https://arxiv.org/abs/2306.05284)开放的反向性基准指数.
-- [Evans et al. (2024). Stable Audio Open](https://arxiv.org/abs/2407.14358)默认的音响设计.
-- [ACE-Step](https://github.com/ace-step/ACE-Step)开放4B全歌发电机,2026年4月.
-- [Suno v5 platform docs](https://suno.com)商业质量领导者.
-- [AudioLDM2](https://arxiv.org/abs/2308.05734) 音乐+音效的隐藏传播.
-- [WMG-Suno settlement coverage](https://www.musicbusinessworldwide.com/suno-warner-music-settlement/)2025年11月前例.
+- [Copet et al. (2023). MusicGen](https://arxiv.org/abs/2306.05284) — 开源自回归基准。
+- [Evans et al. (2024). Stable Audio Open](https://arxiv.org/abs/2407.14358) — 音效设计的默认选择。
+- [ACE-Step](https://github.com/ace-step/ACE-Step) — 开源 4B 完整歌曲生成器，2026 年 4 月。
+- [Suno v5 平台文档](https://suno.com) — 商业质量领跑者。
+- [AudioLDM2](https://arxiv.org/abs/2308.05734) — 面向音乐 + 音效的 latent diffusion。
+- [WMG-Suno 和解案报道](https://www.musicbusinessworldwide.com/suno-warner-music-settlement/) — 2025 年 11 月的先例。

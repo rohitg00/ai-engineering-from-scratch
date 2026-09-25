@@ -1,34 +1,34 @@
-# 功能选择
+# 特征选择
 
-> 更多的功能不好,但正确的功能更好.
+> 特征越多不一定越好。选对特征才是关键。
 
 **Type:** Build
-**Language:**字符串
+**Language:** Python
 **Prerequisites:** Phase 2, Lessons 01-09, 08 (feature engineering)
 **Time:** ~75 minutes
 
 ## 学习目标
 
-- 从零开始实施过方法 (变量门,互通信息,千平方) 和包装方法 (RFE,前进选择)
-- 解释为什么相互信息捕捉到非线性特征目标关系,而相关性没有
-- 比较L1规律化 (嵌入式选择) 与RFE (包装选择) 并评估它们的计算权衡
-- 建立一个结合多种方法的功能选择管道,并证明保留数据的更好的通用化
+- 从零实现过滤式方法（方差阈值、互信息、卡方检验）和包裹式方法（RFE、前向选择）
+- 解释为什么互信息能够捕捉相关性无法发现的非线性特征-目标关系
+- 比较 L1 正则化（嵌入式选择）与 RFE（包裹式选择），并评估它们的计算成本权衡
+- 构建一个结合多种方法的特征选择流水线，并在留出数据上展示更好的泛化能力
 
-## 问题
+## 问题所在
 
-你有500个功能.你的模型慢慢训练,不断过度训练,没有人能解释它学到什么.你增加更多功能希望提高性能.
+你有 500 个特征。模型训练缓慢、不断过拟合，而且没人能解释它学到了什么。你希望通过增加更多特征来提升性能。结果反而更糟。
 
-随着功能数量增加,功能空间的体积会爆炸.数据点变得稀疏.点之间的距离趋于近距离.模型需要更多的数据来找到真正的模式.噪音功能淹没信号功能.过度调整成为默认.
+这就是维度灾难在起作用。随着特征数量增长，特征空间的体积呈爆炸式增长。数据点变得稀疏，点与点之间的距离趋于收敛。模型需要指数级更多的数据才能找到真正的模式。噪声特征淹没了信号特征。过拟合成为常态。
 
-选择特征是抗药物. 消除噪音. 消除冗余性. 保持有关目标的实际信息的特征. 结果:更快的训练,更好的概括,以及你可以实际解释的模型.
+特征选择就是解药。剔除噪声，消除冗余，保留那些真正携带关于目标的信息的特征。结果：训练更快、泛化更好，而且模型是你可以真正解释的。
 
-目的不是使用所有可用的信息,而是使用正确的信息.
+目标不是使用所有可用的信息，而是使用正确的信息。
 
 ## 概念
 
-### 选项的三个类别
+### 特征选择的三大类别
 
-每种特征选择方法都属于三个类别之一:
+每种特征选择方法都属于以下三类之一：
 
 ```mermaid
 flowchart TD
@@ -50,41 +50,41 @@ flowchart TD
     D --> D3["Elastic Net"]
 ```
 
-**Filter methods**它们使用了一个模型. 快速,但它们错过了功能互动.
+**过滤式方法** 使用统计量独立地为每个特征打分。它们不使用模型。速度快，但会遗漏特征之间的交互。
 
-**Wrapper methods**训练一个模型来评估功能子集. 他们使用模型性能作为分数. 结果更好,但昂贵,因为他们重训模型多次.
+**包裹式方法** 训练模型来评估特征子集。它们以模型性能作为评分标准。效果更好，但代价高昂，因为需要多次重新训练模型。
 
-**Embedded methods**选择特征作为模型训练的一部分.L1规律化将重量推到零.决策树分为最有用的特征.选择是在安装过程中发生的,而不是作为单独的步骤.
+**嵌入式方法** 在模型训练过程中完成特征选择。L1 正则化将权重压缩为零，决策树在最有用的特征上进行分裂。选择发生在拟合过程中，而不是一个单独的步骤。
 
-### 变化门
+### 方差阈值
 
-如果一个特征在样本中几乎不存在差异,它几乎没有信息.
+最简单的过滤式方法。如果一个特征在样本之间几乎没有变化，那它几乎不携带任何信息。
 
-考虑一个为1000个样本中的999个的特征为0.0. 其差距接近零. 没有模型可以使用它来区分类. 删除它.
+考虑一个在 1000 个样本中有 999 个取值为 0.0 的特征。它的方差接近零。任何模型都无法用它区分类别。删掉它。
 
 ```
 variance(x) = mean((x - mean(x))^2)
 ```
 
-设置门值 (例如0.01). 放下其以下变量的每个特征. 这就会消除不看目标变量的常态或近常态特征.
+设定一个阈值（例如 0.01），丢弃方差低于该阈值的所有特征。这可以在完全不使用目标变量的情况下去除常数或近常数特征。
 
-什么时候使用:作为其他方法之前的预处理步骤. 它显然以接近零成本捕获无用的特性.
+何时使用：作为其他方法之前的预处理步骤。它以近乎为零的成本去除明显无用的特征。
 
-限制:一个特征可以具有高差异性,但仍然是纯噪音.
+局限性：一个特征可能方差很高但仍然是纯噪声。方差阈值是必要的，但并不充分。
 
-### 互通信息
+### 互信息
 
-互通信息衡量了知道X特征的值有多大程度上减少了对目标Y的不确定性.
+互信息衡量知道特征 X 的取值能在多大程度上减少关于目标 Y 的不确定性。
 
 ```
 I(X; Y) = sum_x sum_y p(x, y) * log(p(x, y) / (p(x) * p(y)))
 ```
 
-如果X和Y是独立的,p(x,y) =p(x) *p(y),所以日志术语是零,I(X;Y) =0.
+如果 X 和 Y 相互独立，则 p(x, y) = p(x) * p(y)，对数项为零，I(X; Y) = 0。X 提供的关于 Y 的信息越多，互信息就越高。
 
-关键优势:相互信息捕捉到非线性关系.一个特征可能与目标没有相关性,但由于关系是方形或周期性,相互信息很高.
+相对于相关性的关键优势：互信息能够捕捉非线性关系。一个特征可能与目标的相关性为零，但因为关系是二次的或周期性的，其互信息可能很高。
 
-对于连续特征,首先分为容器 (基于历史图的估计).容器数量影响了估计 - - 太少容器丢失了信息,太多容器增加了噪音.一个常见的选择:平方 (n) 容器或斯图尔格斯规则 (1 + log2(n)).
+对于连续特征，先离散化为区间（基于直方图的估计）。区间数量会影响估计——区间太少会丢失信息，区间太多会引入噪声。常见的选择：sqrt(n) 个区间，或 Sturges 规则（1 + log2(n)）。
 
 ```mermaid
 flowchart LR
@@ -95,14 +95,14 @@ flowchart LR
     E --> F[Select Top K]
 ```
 
-### 复发性特征消除 (RFE)
+### 递归特征消除（RFE）
 
-采用模型的特征重要性,以反复剪切:
+RFE 是一种包裹式方法。它利用模型自身的特征重要性迭代地剪枝：
 
-1. 训练模型,并提供所有功能
-2. 根据重要性排名特征 (线性模型的系数,树木的杂质减少)
-3. 删除最不重要的特征 (s)
-4. 重复直到所需数量仍然存在
+1. 用所有特征训练模型
+2. 按重要性对特征排序（线性模型用系数，树模型用不纯度减少量）
+3. 移除最不重要的特征
+4. 重复，直到剩余期望数量的特征
 
 ```mermaid
 flowchart TD
@@ -114,33 +114,33 @@ flowchart TD
     E -->|Yes| F["Return Selected Features"]
 ```
 
-通过RFE,模型可以将其所有剩余的特性视为相对的.删除一个特性会改变其它特性的重要性.这使得它比过方法更彻底.
+RFE 会考虑特征之间的交互，因为模型会同时看到所有剩余的特征。移除一个特征会改变其他特征的重要性。这使它比过滤式方法更彻底。
 
-费用:你训练模型N - 目标时间.500个功能和10个目标,即490个训练跑.对于昂贵的模型,这很慢.你可以通过每步删除多个功能来加快它 (例如,每轮删除下 10%).
+代价：你需要训练模型 N - target 次。若有 500 个特征、目标数量为 10，那就是 490 次训练。对于代价高昂的模型来说，这很慢。可以通过每步移除多个特征来加速（例如每轮移除最差的 10%）。
 
-### 规范化
+### L1（Lasso）正则化
 
-规律化 L1 将权重的绝对值添加到损失函数:
+L1 正则化将权重的绝对值加入损失函数：
 
 ```
 loss = prediction_error + alpha * sum(|w_i|)
 ```
 
-超高的阿尔法意味着更多的重量达到完全零.
+alpha 参数控制剪枝的激进程度。alpha 越高，就有越多的权重被精确压缩为零。
 
-为什么是零?L1罚款在权重空间中创造了一个钻石形状的限制区域.最佳解决方案往往落在钻石的角落,其中一个或多个权重是零.L2规律化 () 创造了一个圆形的限制,重量缩小但很少达到零.
+为什么恰好为零？L1 惩罚在权重空间中形成一个菱形的约束区域。最优解往往落在这个菱形的顶点上，此时一个或多个权重为零。L2 正则化（ridge）形成圆形约束，权重会收缩但很少精确为零。
 
-模型在训练过程中学习哪些功能可以忽略.零重的功能被有效地删除.
+这就是嵌入式特征选择：模型在训练过程中学习忽略哪些特征。权重为零的特征实际上已被移除。
 
-优点:单次训练运行,处理相关功能 (选择一个,其他是零),构建在大多数线性模型实现中.
+优点：只需一次训练，能处理相关特征（保留一个，将其他压缩为零），内置于大多数线性模型实现中。
 
-限制:仅适用于线性模型.不能捕捉非线性特征的重要性.
+局限性：只适用于线性模型。无法捕捉非线性的特征重要性。
 
-### 树木的重要性
+### 基于树的特征重要性
 
-决策树及其集合 (随机森林,梯度增强) 自然地排列特征.每一个分离都会减少杂质 (Gini或化为分类,变异为回归).产生更大的杂质减少的特征更重要.
+决策树及其集成方法（随机森林、梯度提升）天然会对特征进行排序。每次分裂都会降低不纯度（分类用 Gini 或熵，回归用方差）。产生更大不纯度减少量的特征更重要。
 
-对于一个随机森林,有T树:
+对于有 T 棵树的随机森林：
 
 ```
 importance(feature_j) = (1/T) * sum over all trees of
@@ -148,33 +148,33 @@ importance(feature_j) = (1/T) * sum over all trees of
         (n_samples * impurity_decrease)
 ```
 
-这为每个特征提供了正常化的重要性分数. 它自动处理非线性关系和特征互动.
+这为每个特征给出一个归一化的重要性分数。它会自动处理非线性关系和特征交互。
 
-注意:树上的重要性偏向于具有多个独特值 (高特点) 的特征.随机ID列将显得很重要,因为它完美地分开每一个样本. 使用变量重要性作为智能检查.
+注意：基于树的重要性偏向于取值众多（高基数）的特征。一个随机的 ID 列会显得很重要，因为它完美地分割了每个样本。请使用置换重要性作为校验手段。
 
-### 转变的重要性
+### 置换重要性
 
-模型-化方法:
+一种与模型无关的方法：
 
-1. 训练模型并记录基线性能,使用验证数据
-2. 对于每个功能:随机混动其值,测量性能下降
-3. 随着下降的规模,
+1. 训练模型，并在验证数据上记录基准性能
+2. 对每个特征：随机打乱其取值，测量性能的下降幅度
+3. 下降越大，该特征越重要
 
-如果混合一个功能不会损害性能,模型就不会依赖于它.
+如果打乱某个特征不损害性能，模型就不依赖它。如果性能崩溃，该特征就至关重要。
 
-转变重要性避免了基于树的重要性的枢纽偏见. 但它很慢:每个特征进行一次完整的评估,重复多次以保持稳定性.
+置换重要性避免了基于树的重要性的基数偏差。但它很慢：每个特征需要一次完整评估，且为了稳定性需要重复多次。
 
-### 较量表
+### 对比表
 
-| Method | Type | Speed | Nonlinear | Feature Interactions |
+| 方法 | 类型 | 速度 | 非线性 | 特征交互 |
 |--------|------|-------|-----------|---------------------|
-| Variance threshold | Filter | Very fast | No | No |
-| Mutual information | Filter | Fast | Yes | No |
-| Correlation filter | Filter | Fast | No | No |
-| RFE | Wrapper | Slow | Depends on model | Yes |
-| L1 / Lasso | Embedded | Fast | No (linear) | No |
-| Tree importance | Embedded | Medium | Yes | Yes |
-| Permutation importance | Model-agnostic | Slow | Yes | Yes |
+| 方差阈值 | 过滤式 | 非常快 | 否 | 否 |
+| 互信息 | 过滤式 | 快 | 是 | 否 |
+| 相关性过滤 | 过滤式 | 快 | 否 | 否 |
+| RFE | 包裹式 | 慢 | 取决于模型 | 是 |
+| L1 / Lasso | 嵌入式 | 快 | 否（线性） | 否 |
+| 树重要性 | 嵌入式 | 中等 | 是 | 是 |
+| 置换重要性 | 模型无关 | 慢 | 是 | 是 |
 
 ### 决策流程图
 
@@ -206,9 +206,9 @@ flowchart TD
 f3-feature-prune
 ```
 
-## 建立它
+## 动手实现
 
-### 步骤1:生成已知特征结构的合成数据
+### 步骤 1：生成具有已知特征结构的合成数据
 
 ```python
 import numpy as np
@@ -247,9 +247,9 @@ def make_feature_selection_data(n_samples=500, seed=42):
     return X, y, feature_names
 ```
 
-我们知道基本的真理: 0-4 个特征是信息性的 (加上 3 和 4 是 0 和 1 的相关副本), 5-9 个特征是信息性的特征, 10-19 个特征是纯噪音.一个好的选择方法应该排名 0-4 最高, 10-19 最低.
+我们知道真实情况：特征 0-4 是有信息的（且 3 和 4 分别是 0 和 1 的相关副本），特征 5-9 与有信息的特征相关，特征 10-19 是纯噪声。一个好的选择方法应将 0-4 排在最前面，将 10-19 排在最后。
 
-### 步骤2:变异门
+### 步骤 2：方差阈值
 
 ```python
 def variance_threshold(X, threshold=0.01):
@@ -258,7 +258,7 @@ def variance_threshold(X, threshold=0.01):
     return mask, variances
 ```
 
-### 步骤3:相互信息 (谨慎)
+### 步骤 3：互信息（离散）
 
 ```python
 def discretize(x, n_bins=10):
@@ -294,7 +294,7 @@ def mutual_information(X, y, n_bins=10):
     return mi_scores
 ```
 
-### 步骤4:消除复发性特征
+### 步骤 4：递归特征消除
 
 ```python
 def simple_logistic_importance(X, y, lr=0.1, epochs=100):
@@ -336,7 +336,7 @@ def rfe(X, y, n_features_to_select=5, lr=0.1, epochs=100):
     return selected_mask, rankings
 ```
 
-### 步骤5: L1 功能选择
+### 步骤 5：L1 特征选择
 
 ```python
 def soft_threshold(w, alpha):
@@ -364,7 +364,7 @@ def l1_feature_selection(X, y, alpha=0.1, lr=0.01, epochs=500):
     return selected_mask, w
 ```
 
-### 步骤 6:树木基础上的重要性 (简单的决策树)
+### 步骤 6：基于树的重要性（简单决策树）
 
 ```python
 def gini_impurity(y):
@@ -459,13 +459,13 @@ def _build_tree_importance(X, y, feature_subset, max_depth, depth=0):
     return importances
 ```
 
-### 步骤7:运行所有方法并比较
+### 步骤 7：运行所有方法并进行比较
 
-代码文件将所有五种方法都运行在同一合成数据集上,并打印出一个显示每个方法选择的比较表.
+代码文件在同一个合成数据集上运行所有五种方法，并打印一个对比表，展示每种方法选择了哪些特征。
 
-## 用它
+## 使用它
 
-通过 scikit-learn, 功能选择是建立在线的:
+在 scikit-learn 中，特征选择被内置于流水线中：
 
 ```python
 from sklearn.feature_selection import (
@@ -496,45 +496,45 @@ rf.fit(X, y)
 importances = rf.feature_importances_
 ```
 
-变异门只是计算.`var(X, axis=0)`互通信息是计算紧急表中的关节和边缘频率.RFE是一个循环,训练,排列和.L1是梯度下降,有软门步骤.树重量积累在分区之间杂质减少.没有魔法,只是统计和循环.
+从零开始的实现展示了每种方法内部到底发生了什么。方差阈值只是计算 `var(X, axis=0)` 并应用掩码。互信息是在列联表中统计联合频率和边缘频率。RFE 是一个训练、排序、剪枝的循环。L1 是带软阈值步骤的梯度下降。树重要性跨分裂累加不纯度减少量。没有魔法——只有统计和循环。
 
- sklearn 版本增加了强度 (例如, mutual_info_classif 使用k-NN密度估计而不是),速度 (C实现) 和管道集成.
+sklearn 版本增加了鲁棒性（例如 mutual_info_classif 使用 k-NN 密度估计而非分箱）、速度（C 实现）以及流水线集成。
 
-## 运送它
+## 交付它
 
-这一课产生了:
-- `outputs/skill-feature-selector.md`-- 快速参考决策树,以选择合适的功能选择方法
+本课产出：
+- `outputs/skill-feature-selector.md` —— 用于选择合适特征选择方法的快速参考决策树
 
-## 运动
+## 练习
 
-1. **Forward selection**通过RFE的相反方式实现.从零功能开始.在每一步上,添加最能提高模型性能的功能.在添加功能时停止.将选定的功能与RFE结果进行比较.哪个功能更快?哪个结果更好?
+1. **前向选择**：实现与 RFE 相反的过程。从零个特征开始。每一步添加最能提升模型性能的特征。当添加特征不再有帮助时停止。将选出的特征与 RFE 的结果进行比较。哪个更快？哪个效果更好？
 
-2. **Stability selection**运行L1功能选择50次,每次在随机80%的数据子样本上,有略有不同的阿尔法值.计算每个功能的选择频率.在>80%的运行中选择的功能是"稳定的".与单次运行L1选项相比较稳定的功能.哪个更可靠?
+2. **稳定性选择**：运行 L1 特征选择 50 次，每次在数据的随机 80% 子样本上进行，并使用略有不同的 alpha 值。统计每个特征被选中的频率。在超过 80% 的运行中被选中的特征是“稳定”特征。将稳定特征与单次运行的 L1 选择进行比较。哪个更可靠？
 
-3. **Multicollinearity detection**运行一个函数,以鉴于相关性门值 (例如0.9),将每个高度相关的对取出一个特征 (保持与目标相处的更高互通信息).测试合成数据集并验证它,消除了冗余的相关特征.
+3. **多重共线性检测**：计算所有特征的相关矩阵。实现一个函数，给定相关性阈值（例如 0.9），从每对高度相关的特征中移除一个（保留与目标互信息更高的那个）。在合成数据集上测试，并验证它移除了冗余的相关特征。
 
-4. **Feature selection pipeline**首先,删除近零变异特性,然后通过相互信息保持前50%的功能,然后在幸存者上运行RFE.将这个管道与运行RFE单独的所有功能进行比较.管道更快吗?它同样准确吗?
+4. **特征选择流水线**：将方差阈值、互信息过滤和 RFE 链接成单个流水线。先移除近零方差特征，然后按互信息保留前 50%，再对幸存特征运行 RFE。将该流水线与单独在所有特征上运行 RFE 进行比较。流水线更快吗？准确性相当吗？
 
-5. **Permutation importance from scratch**根据F1分数的平均下降,测量F1分数的平均下降. 根据树基的重要性进行排名比较. 找出不同意见的情况,并解释原因 (提示:相关的特征).
+5. **从零实现置换重要性**：实现置换重要性。对每个特征，打乱其取值 10 次，测量 F1 分数的平均下降。将排名与基于树的重要性进行比较。找出它们不一致的情况并解释原因（提示：相关特征）。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Filter method | "Score features independently" | A feature selection approach that ranks features using a statistical measure without training a model, evaluating each feature in isolation |
-| Wrapper method | "Use the model to pick features" | A feature selection approach that evaluates feature subsets by training a model and using its performance as the selection criterion |
-| Embedded method | "The model selects features during training" | Feature selection that happens as part of model fitting, such as L1 regularization driving weights to zero |
-| Mutual information | "How much one variable tells you about another" | A measure of the reduction in uncertainty about Y given knowledge of X, capturing both linear and nonlinear dependencies |
-| Recursive Feature Elimination | "Train, rank, prune, repeat" | An iterative wrapper method that trains a model, removes the least important feature(s), and repeats until a target count is reached |
-| L1 / Lasso regularization | "Penalty that kills features" | Adding the sum of absolute weight values to the loss function, which drives unimportant feature weights to exactly zero |
-| Variance threshold | "Remove constant features" | Dropping features whose variance across samples falls below a specified threshold, filtering out features that carry no information |
-| Feature importance | "Which features matter most" | A score indicating how much each feature contributes to model predictions, computed from split gains (trees) or coefficient magnitudes (linear) |
-| Permutation importance | "Shuffle and measure the damage" | Evaluating feature importance by randomly shuffling each feature's values and measuring the resulting drop in model performance |
-| Curse of dimensionality | "Too many features, not enough data" | The phenomenon where adding features increases the volume of the feature space exponentially, making data sparse and distances meaningless |
+| 过滤式方法 | “独立地为特征打分” | 一种特征选择方法，使用统计量对特征进行排序，无需训练模型，孤立地评估每个特征 |
+| 包裹式方法 | “用模型来挑选特征” | 一种特征选择方法，通过训练模型并以模型性能作为选择标准来评估特征子集 |
+| 嵌入式方法 | “模型在训练过程中选择特征” | 作为模型拟合一部分的特征选择，例如 L1 正则化将权重压缩为零 |
+| 互信息 | “一个变量告诉你多少关于另一个变量的信息” | 衡量在已知 X 的条件下关于 Y 的不确定性减少量的指标，同时捕捉线性和非线性依赖 |
+| 递归特征消除 | “训练、排序、剪枝、重复” | 一种迭代式包裹方法，训练模型、移除最不重要的特征，重复直到达到目标数量 |
+| L1 / Lasso 正则化 | “消灭特征的惩罚” | 将权重绝对值之和加入损失函数，使不重要特征的权重精确为零 |
+| 方差阈值 | “移除常数特征” | 丢弃样本间方差低于指定阈值的特征，过滤掉不携带任何信息的特征 |
+| 特征重要性 | “哪些特征最重要” | 表示每个特征对模型预测贡献程度的分数，可由分裂增益（树）或系数大小（线性模型）计算得出 |
+| 置换重要性 | “打乱并测量损害” | 通过随机打乱每个特征的取值并测量模型性能的下降来评估特征重要性 |
+| 维度灾难 | “特征太多，数据不够” | 增加特征会使特征空间体积呈指数增长，导致数据稀疏、距离失去意义的现象 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [An Introduction to Variable and Feature Selection (Guyon & Elisseeff, 2003)](https://jmlr.org/papers/v3/guyon03a.html)基本调查,仍然广泛引用.
-- [scikit-learn Feature Selection Guide](https://scikit-learn.org/stable/modules/feature_selection.html)-- 选,包装和嵌入式方法的实用参考,包含代码示例
-- [Stability Selection (Meinshausen & Buhlmann, 2010)](https://arxiv.org/abs/0809.2932)-- 结合子样本与特征选择,以获得强,可复制的结果
-- [Beware Default Random Forest Importances (Strobl et al., 2007)](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25)-- 证明树木的重要性中的性偏见,并提出条件性重要性作为替代
+- [An Introduction to Variable and Feature Selection (Guyon & Elisseeff, 2003)](https://jmlr.org/papers/v3/guyon03a.html) —— 特征选择方法的开创性综述，至今仍被广泛引用
+- [scikit-learn Feature Selection Guide](https://scikit-learn.org/stable/modules/feature_selection.html) —— 过滤式、包裹式和嵌入式方法的实用参考，附带代码示例
+- [Stability Selection (Meinshausen & Buhlmann, 2010)](https://arxiv.org/abs/0809.2932) —— 将子采样与特征选择相结合，以获得稳健且可复现的结果
+- [Beware Default Random Forest Importances (Strobl et al., 2007)](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25) —— 演示了基于树的重要性中的基数偏差，并提出条件重要性作为替代方案

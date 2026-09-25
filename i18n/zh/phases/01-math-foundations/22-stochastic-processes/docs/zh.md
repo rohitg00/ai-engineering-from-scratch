@@ -1,46 +1,46 @@
-# 断过程
+# 随机过程
 
-> 随机性与结构,随机散步,马科夫链和扩散模型背后的数学.
+> 有结构的随机性。随机游走、马尔可夫链和扩散模型背后的数学。
 
 **Type:** Learn
-**Language:**字符串
-**Prerequisites:** Phase 1, Lessons 06-07 (probability, Bayes)
-**Time:** ~75 minutes
+**Language:** Python
+**Prerequisites:** Phase 1, Lessons 06-07（概率、贝叶斯）
+**Time:** 约 75 分钟
 
 ## 学习目标
 
-- 模拟1D和2D随机行走,并验证移动的平方
-- 通过自己的组合计算它静止分布
-- 实施Metropoolis-Hastings MCMC和Langevin动态,用于从目标分布中采样
-- 将前方扩散过程连接到布朗运动,并解释反向过程如何生成数据
+- 模拟一维和二维随机游走，并验证位移的 sqrt(n) 缩放规律
+- 构建马尔可夫链模拟器，并通过特征分解计算其平稳分布
+- 实现 Metropolis-Hastings MCMC 和 Langevin 动力学，从目标分布中采样
+- 将前向扩散过程与布朗运动联系起来，解释反向过程如何生成数据
 
-## 问题
+## 问题背景
 
-许多人工智能系统都涉及随机性,随着时间的推移而进化.而不是静态性,结构化,序列性随机性,
+许多 AI 系统涉及随时间演化的随机性。不是静态的随机性——而是有结构的、序列化的随机性，其中每一步都依赖于之前发生的事情。
 
-语言模型一次生成代币.每个代币取决于前一个背景.模型输出了概率分布,从中取出样本,然后继续进行.这是一个 Stochastic 过程.
+语言模型逐个生成 token。每个 token 都依赖于之前的上下文。模型输出一个概率分布，从中采样，然后继续。这就是一个随机过程。
 
-扩散模型逐步添加噪音到图像中,直到它变得纯静态.然后它们逆转过程,逐步否定过程,直到出现新的图像.前进过程是马科夫链.逆过程是学习的马科夫链,运行向后.
+扩散模型逐步向图像添加噪声，直到它变成纯静态噪声。然后逆转这一过程，逐步去噪，直到生成一张新图像。前向过程是一个马尔可夫链。反向过程是一个学习到的、反向运行的马尔可夫链。
 
-强化学习代理在环境中采取行动.每一个行动都带来了新的状态,有某种可能性. 代理在一个随机世界中遵循随机政策. 这整个过程是马科夫的决策过程.
+强化学习智能体在环境中采取动作。每个动作以一定概率导致新状态。智能体在一个随机世界中遵循随机策略。整个过程就是一个马尔可夫决策过程。
 
-采样是贝耶斯推理的背骨,构建一个马科夫链,
+MCMC 采样——贝叶斯推断的支柱——构建一个马尔可夫链，其平稳分布正是你想从中采样的后验分布。
 
-所有这些都建立在四个基本思想上:
-1. 随机步行 - - 最简单的静止过程
-2. 马科夫链 - - 结构化的随机性与过渡矩阵
-3. 维因动态 - - 噪音的梯度下降
-4. 城市-哈斯廷斯 - - 从任何分布中采样
+所有这些都建立在四个基础概念之上：
+1. 随机游走——最简单的随机过程
+2. 马尔可夫链——具有转移矩阵的结构化随机性
+3. Langevin 动力学——带噪声的梯度下降
+4. Metropolis-Hastings——从任意分布采样
 
-## 概念
+## 核心概念
 
-### 随机散步
+### 随机游走
 
-开始从位置0.每一步,抛一个公平的硬币.头部:右 (+1).尾部:左 (-1).
+从位置 0 出发。每一步抛一次均匀硬币。正面：向右移动（+1）。反面：向左移动（-1）。
 
-随着 n 步骤,你的位置是 n 随机+/-1值的总和.预期位置是 0 (步行是无偏见的).但预期距离从原点增长为 sqrt(n).
+n 步之后，你的位置是 n 个随机 +/-1 值的和。期望位置为 0（游走是无偏的）。但离原点的期望距离按 sqrt(n) 增长。
 
-这与直觉相反.步行是公平的 - - 没有任何方向的漂移.但随着时间的推移,它从开始的地方越来越远. n 步骤后的标准偏差是 sqrt(n.
+这很反直觉。游走是公平的——没有朝任何方向的漂移。但随着时间推移，它离出发点越来越远。n 步之后的标准差是 sqrt(n)。
 
 ```
 Step 0:  Position = 0
@@ -51,35 +51,35 @@ Step 100: Expected distance from origin ~ 10 (sqrt(100))
 Step 10000: Expected distance from origin ~ 100 (sqrt(10000))
 ```
 
-**In 2D**步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内,步行的速度在一个小时内.
+**在二维中**，游走以相等概率向上、下、左、右移动。同样的 sqrt(n) 缩放规律适用于离原点的距离。路径呈现类似分形的图案。
 
-**Why sqrt(n)?**每一步都是 +1 或 -1 且概率均等. n 步骤后,位置 S_n = X_1 + X_2 + ... + X_n 每一步 X_i 为 +/-1. 每一步的变量为 1,步骤是独立的,所以 Var(S_n) = n.标准偏差 = sqrt(n.
+**为什么是 sqrt(n)？** 每一步以相等概率取 +1 或 -1。n 步之后，位置 S_n = X_1 + X_2 + ... + X_n，其中每个 X_i 是 +/-1。每一步的方差为 1，且各步相互独立，因此 Var(S_n) = n。标准差 = sqrt(n)。根据中心极限定理，S_n / sqrt(n) 收敛于标准正态分布。
 
-这种平方 (n) 尺度在 ML 中显示到处. SGD 噪声尺度为1/sqrt(批量尺寸). 嵌入尺寸尺度为 sqrt(d). 平方根是独立随机加算的签名.
+这种 sqrt(n) 缩放在机器学习中无处不在。SGD 噪声按 1/sqrt(batch_size) 缩放。嵌入维度按 sqrt(d) 缩放。平方根是独立随机相加的标志。
 
-**Connection to Brownian motion.**随着 n 进入无限,步行将趋于布朗运动 B(t) - 一个连续时间过程,B(t) 通常分布在平均0和变量 t.
+**与布朗运动的联系。** 取一个步长为 1/sqrt(n)、单位时间内走 n 步的随机游走。当 n 趋于无穷时，该游走收敛于布朗运动 B(t)——一个连续时间过程，其中 B(t) 服从均值为 0、方差为 t 的正态分布。
 
-布朗运动是扩散的数学基础. 它模拟了液体中的粒子的随机摇摆,股价的波动,
+布朗运动是扩散的数学基础。它建模流体中粒子的随机抖动、股价的波动，以及——至关重要的——扩散模型中的噪声过程。
 
-**Gambler's ruin.**随机步行者从位置 k开始,吸收屏障在 0 和 N. 达到 N 在 0 之前的概率是多少? 公平步行: P(reach N) = k/N. 这令人惊的简单和优雅. 它与马丁加尔理论相连 - - 公平随机步行是马丁加尔 (预期未来值 = 现值).
+**赌徒破产问题。** 一个随机游走者从位置 k 出发，在 0 和 N 处有吸收壁。在到达 0 之前先到达 N 的概率是多少？对于公平游走：P(reach N) = k/N。这出奇地简洁优雅。它还与鞅理论相关联——公平随机游走就是一个鞅（未来期望值 = 当前值）。
 
-### 马科夫链
+### 马尔可夫链
 
-马科夫链是一个系统,根据固定概率,状态之间过渡.关键属性:下一个状态只取决于当前状态,而不是历史.
+马尔可夫链是一个按固定概率在状态之间转移的系统。关键性质：下一状态只依赖于当前状态，而不依赖于历史。
 
 ```
 P(X_{t+1} = j | X_t = i, X_{t-1} = ...) = P(X_{t+1} = j | X_t = i)
 ```
 
-这就是马科夫的属性. 这意味着你可以用过渡矩阵P来描述整个动态:
+这就是马尔可夫性。它意味着你可以用一个转移矩阵 P 完整描述整个动力学：
 
 ```
 P[i][j] = probability of going from state i to state j
 ```
 
-每一行P的数值为1 (你必须去某个地方).
+P 的每一行之和为 1（你必须转移到某个地方）。
 
-**Example -- Weather:**
+**示例——天气：**
 
 ```
 States: Sunny (0), Rainy (1), Cloudy (2)
@@ -89,9 +89,9 @@ P = [[0.7, 0.1, 0.2],    (if sunny: 70% sunny, 10% rainy, 20% cloudy)
      [0.4, 0.2, 0.4]]    (if cloudy: 40% sunny, 20% rainy, 40% cloudy)
 ```
 
-开始在任何状态.经过许多转变,状态分布趋于静止分布 pi,其中 pi * P = pi.这是 P 的左自向量,自值 1.
+从任意状态出发。经过多次转移后，状态分布收敛于平稳分布 pi，其中 pi * P = pi。这是 P 的特征值为 1 的左特征向量。
 
-对于天气链,静止分布是 [0.55,0.18,0.27] -- 长期来看,它在55%,不管是什么状态开始,
+对于天气链，平稳分布是 [0.55, 0.18, 0.27]——从长远来看，无论初始状态如何，晴天的时间占 55%。
 
 ```mermaid
 graph LR
@@ -106,78 +106,78 @@ graph LR
     C -->|0.4| C
 ```
 
-**Computing the stationary distribution.**两种方法:
+**计算平稳分布。** 有两种方法：
 
-1. **Power method**并且在一个小组中,它可以通过 P 乘以 P 乘以 P.
-2. **Eigenvalue method**求出 P 的左自向量与 eigenvalue 1. 这就是 P^T 的自向量与 eigenvalue 1.
+1. **幂法**：将任意初始分布反复乘以 P。经过足够多次迭代后，它收敛。
+2. **特征值法**：找到 P 的特征值为 1 的左特征向量。即 P^T 的特征值为 1 的特征向量。
 
-两种方法都要求链接满足缩条件.
+两种方法都要求链满足收敛条件。
 
-**Convergence conditions.**如果一个马科夫链是:
-- **Irreducible**任何国家都可以从其他国家到达
-- **Aperiodic**:链不循环,有固定时间
+**收敛条件。** 一个马尔可夫链收敛到唯一的平稳分布，如果它是：
+- **不可约的**：从每个状态都能到达其他任何状态
+- **非周期的**：链不会以固定周期循环
 
-机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器人机器
+你在机器学习中遇到的大多数链都满足这两个条件。
 
-**Absorbing states.**吸收状态是吸收的,如果你进入它,你永远不会离开 (P[i][i] = 1).吸收马科夫链模型过程与终端状态 - 一场结束的游戏,一个客户,一个,一个符号序列,
+**吸收状态。** 如果一旦进入某个状态就永远不会离开（P[i][i] = 1），则该状态是吸收状态。吸收马尔可夫链建模具有终止状态的过程——一局结束的游戏、流失的客户、命中 end-of-text token 的 token 序列。
 
-**Mixing time.**位分布"接近"链程的步骤有多少? 形式上,位距离的变化距离总数下降到某个门以下.快速混合 = 需要几步.P的光谱差距 (1减下第二大自值) 控制了混合时间.更大的差距 = 快速混合.
+**混合时间。** 链需要多少步才能“接近”平稳分布？形式上，是从平稳性的总变差距离降到某个阈值以下所需的步数。快速混合 = 所需步数少。P 的谱隙（1 减去第二大的特征值）决定混合时间。谱隙越大 = 混合越快。
 
-### 与语言模型的连接
+### 与语言模型的联系
 
-语言模型中的代币生成大约是马科夫过程.鉴于当前的背景,模型输出了下一个代币的分布.温度控制了敏度:
+语言模型中的 token 生成近似于一个马尔可夫过程。给定当前上下文，模型输出下一个 token 上的分布。Temperature 控制分布的锐度：
 
 ```
 P(token_i) = exp(logit_i / temperature) / sum(exp(logit_j / temperature))
 ```
 
-- 温度=1.0:标准分布
-- 温度 < 1.0:更 (更确定性)
-- 温度 > 1.0:平坦 (更随机)
-- 温度 -> 0: argmax (贪)
+- Temperature = 1.0：标准分布
+- Temperature < 1.0：更尖锐（更确定）
+- Temperature > 1.0：更平坦（更随机）
+- Temperature -> 0：argmax（贪心）
 
-顶k样本抽取量缩小到k最有可能的代币.顶p (核)样本抽取量缩小到其累计概率超过p的最小的代币组.这两者都修改了马科夫过渡概率.
+Top-k 采样截断到概率最高的 k 个 token。Top-p（nucleus）采样截断到累计概率超过 p 的最小 token 集合。两者都会修改马尔可夫转移概率。
 
 ### 布朗运动
 
-随机走路的连续时间限制.位置B(t) 有三个属性:
-1. 子
-2. B(t) - B(s) 通常分布为平均0和变量 t - s (为 t > s)
-3. 不重叠间隔的增长是独立的
+随机游走的连续时间极限。位置 B(t) 具有三个性质：
+1. B(0) = 0
+2. B(t) - B(s) 服从均值为 0、方差为 t - s 的正态分布（当 t > s 时）
+3. 不重叠区间上的增量相互独立
 
-布朗运动是连续的,但在任何地方都无法区分,它在每个尺度上都会摇摆.
+布朗运动连续但处处不可微——它在每个尺度上都抖动。其路径在平面上的分形维数为 2。
 
-在单独的模拟中,你将布朗运动 приблизи为:
+在离散模拟中，你通过下式近似布朗运动：
 
 ```
 B(t + dt) = B(t) + sqrt(dt) * z,    where z ~ N(0, 1)
 ```
 
-平方度是重要的.它来自于对随机行走的中央限定理.
+sqrt(dt) 的缩放很重要。它来自应用于随机游走的中心极限定理。
 
-### 兰杰文动力学
+### Langevin 动力学
 
-渐进式下降发现函数的最小值. 朗杰文动态发现概率分布与 exp ((-U ((x) /T) 比例,U是能量函数,T是温度.
+梯度下降找到函数的最小值。Langevin 动力学找到正比于 exp(-U(x)/T) 的概率分布，其中 U 是能量函数，T 是温度。
 
 ```
 x_{t+1} = x_t - dt * gradient(U(x_t)) + sqrt(2 * T * dt) * z_t
 ```
 
-两种力量对粒子作用:
-1. **Gradient force**(-dt *梯度(U)):向低能量推进 (如梯度下降)
-2. **Random force**按在随机方向 (探索)
+两个力作用于粒子：
+1. **梯度力**（-dt * gradient(U)）：推向低能量区域（类似梯度下降）
+2. **随机力**（sqrt(2*T*dt) * z）：推向随机方向（探索）
 
-在温度T=0时,这是纯梯度下降.在高温时,它几乎是随机走路.在正确的温度下,粒子探索能量景观,并在低能区域花更多时间.
+当温度 T = 0 时，这就是纯梯度下降。在高温下，它几乎就是随机游走。在合适的温度下，粒子探索能量地形，并在低能量区域停留更多时间。
 
-**Connection to diffusion models.**扩散模型的前进过程是:
+**与扩散模型的联系。** 扩散模型的前向过程是：
 
 ```
 x_t = sqrt(alpha_t) * x_{t-1} + sqrt(1 - alpha_t) * noise
 ```
 
-现在,我们可以看到一个数据的音,然后我们可以看到一个数据的音.
+这是一个逐步将数据与噪声混合的马尔可夫链。经过足够多步之后，x_T 是纯高斯噪声。
 
-反向过程--从噪音回到数据-- 也是一种马科夫链,但它的过渡概率是由神经网络学习的.
+反向过程——从噪声回到数据——也是一个马尔可夫链，但其转移概率由神经网络学习得到。网络学习预测每一步添加的噪声，然后将其减去。
 
 ```mermaid
 graph LR
@@ -193,48 +193,48 @@ graph LR
     end
 ```
 
-### 马科夫链蒙特卡罗
+### MCMC：马尔可夫链蒙特卡洛
 
-有时你需要从分布 p ((x) 中样本,你可以评估 (到一个常数),但不能直接从样本.贝耶斯后层是经典的例子 - - 你知道概率乘以前面,但正常化常数是难以解决的.
+有时你需要从一个分布 p(x) 中采样，这个分布你可以求值（至多差一个常数），却无法直接采样。贝叶斯后验就是经典例子——你知道似然乘以先验，但归一化常数是难以处理的。
 
-**Metropolis-Hastings**构建一个马科夫链,其静止分布为p(x):
+**Metropolis-Hastings** 构建一个平稳分布为 p(x) 的马尔可夫链：
 
-1. 从某个位置开始 x
-2. 提出一个新的立场x'从一个提案分布Q(x' 则x)
-3. 计算接受率: a(x') * Q(x 便x') / (p(x) * Q(x'便x))
-4. 接受x'与概率min ((1,a).否则保持在x.
-5. 复制.
+1. 从某个位置 x 出发
+2. 从提议分布 Q(x'|x) 提议一个新位置 x'
+3. 计算接受比率：a = p(x') * Q(x|x') / (p(x) * Q(x'|x))
+4. 以概率 min(1, a) 接受 x'。否则停留在 x。
+5. 重复。
 
-如果Q是对称,例如,Q(x' (便x) =Q(x (便x') =N(x, sigma^2)),比率简化为a =p(x') /p(x.
+如果 Q 是对称的（例如 Q(x'|x) = Q(x|x') = N(x, sigma^2)），比率简化为 a = p(x') / p(x)。你只需要概率的比率——归一化常数相消。
 
-由于这种情况,在很小的条件下,链接可以保证将与p ((x) 融合.但如果提案太小 (随机走路) 或太大 (高拒绝),则趋同可能会缓慢.调整提案是MCMC的艺术.
+在温和条件下，该链保证收敛到 p(x)。但如果提议太小（随机游走）或太大（高拒绝率），收敛可能很慢。调节提议分布是 MCMC 的艺术。
 
-**Why it works.**接受比率确保了详细的平衡:在x'上移动到x'的概率等于在x'上移动到x的概率.详细的平衡意味着p(x) 是链的静止分布.所以,经过足够的步骤,样本来自p(x.
+**为什么有效。** 接受比率确保细致平衡：处于 x 并移动到 x' 的概率等于处于 x' 并移动到 x 的概率。细致平衡意味着 p(x) 是该链的平稳分布。因此经过足够多步之后，样本来自 p(x)。
 
-**Practical considerations:**
-- **Burn-in**链接需要时间才能从起点到达静止分布.
-- **Thinning**保持每一个k-th样本以减少自动相关性.
-- **Multiple chains**它们在不同的起点上运行多个链.
-- **Acceptance rate**对于高斯的d维度提案,最佳接受率约为23% (Roberts & Rosenthal, 2001).
+**实践注意事项：**
+- **Burn-in（预烧期）**：丢弃最初 N 个样本。链需要时间从起点到达平稳分布。
+- **Thinning（稀疏化）**：每隔 k 个样本保留一个，以减少自相关。
+- **多条链**：从不同起点运行若干条链。如果它们收敛到同一分布，就有收敛的证据。
+- **接受率**：对于 d 维中的高斯提议，最优接受率约为 23%（Roberts & Rosenthal, 2001）。太高意味着链几乎不动。太低意味着它拒绝一切。
 
-### 人工智能中的断过程
+### AI 中的随机过程
 
-| Process | AI Application |
+| 过程 | AI 应用 |
 |---------|---------------|
-| Random walk | Exploration in RL, Node2Vec embeddings |
-| Markov chain | Text generation, MCMC sampling |
-| Brownian motion | Diffusion models (forward process) |
-| Langevin dynamics | Score-based generative models, SGLD |
-| Markov decision process | Reinforcement learning |
-| Metropolis-Hastings | Bayesian inference, posterior sampling |
+| 随机游走 | RL 中的探索、Node2Vec 嵌入 |
+| 马尔可夫链 | 文本生成、MCMC 采样 |
+| 布朗运动 | 扩散模型（前向过程） |
+| Langevin 动力学 | 基于分数的生成模型、SGLD |
+| 马尔可夫决策过程 | 强化学习 |
+| Metropolis-Hastings | 贝叶斯推断、后验采样 |
 
 ```figure
 random-walk-diffusion
 ```
 
-## 建立它
+## 动手实现
 
-### 步骤1:随机走路模拟器
+### 步骤 1：随机游走模拟器
 
 ```python
 import numpy as np
@@ -260,9 +260,9 @@ def random_walk_2d(n_steps, seed=None):
     return x, y
 ```
 
-1D走路存储累计的总和.每个步骤是 +1 或 -1. n步骤后,位置是总和.变异与 n 增长线性,所以标准偏差增长为 sqrt(n.
+一维游走存储累积和。每一步是 +1 或 -1。n 步之后，位置即为总和。方差随 n 线性增长，因此标准差按 sqrt(n) 增长。
 
-### 步骤2:马科夫链
+### 步骤 2：马尔可夫链
 
 ```python
 class MarkovChain:
@@ -294,9 +294,9 @@ class MarkovChain:
         return np.abs(stationary)
 ```
 
-静止分布是 P 的左自向量,具有自值 1. 我们通过计算 P^T 的自向量 (转换左自向量为右自向量) 找到它.
+平稳分布是 P 的特征值为 1 的左特征向量。我们通过计算 P^T 的特征向量来求它（转置将左特征向量变为右特征向量）。
 
-### 步骤3: 兰杰文动态
+### 步骤 3：Langevin 动力学
 
 ```python
 def langevin_dynamics(grad_U, x0, dt, temperature, n_steps, seed=None):
@@ -310,9 +310,9 @@ def langevin_dynamics(grad_U, x0, dt, temperature, n_steps, seed=None):
     return np.array(trajectory)
 ```
 
-渐变将x推向低能量.噪音防止它住.在平衡时,样本分布与ex ((-U ((x) /温度相比例).
+梯度将 x 推向低能量区域。噪声防止它卡住。在平衡态，样本的分布正比于 exp(-U(x)/temperature)。
 
-### 第四步:大都会 - 忙
+### 步骤 4：Metropolis-Hastings
 
 ```python
 def metropolis_hastings(target_log_prob, proposal_std, x0, n_samples, seed=None):
@@ -331,11 +331,11 @@ def metropolis_hastings(target_log_prob, proposal_std, x0, n_samples, seed=None)
     return np.array(samples), acceptance_rate
 ```
 
-算法提出一个新的点,检查它是否具有更高的概率 (或与比率相对的概率接受),并重复.
+该算法提议一个新点，检查它是否具有更高的概率（或按与比率成比例的概率接受），然后重复。对于良好的混合，接受率应在 23-50% 左右。
 
-## 用它
+## 实际使用
 
-实际上,你会使用既定的库来进行这些算法.
+在实践中，你会使用成熟的库来实现这些算法。但理解其机制对于调试和调参至关重要。
 
 ```python
 import numpy as np
@@ -347,7 +347,7 @@ print(f"Expected distance: {np.sqrt(10000):.1f}")
 print(f"Actual distance: {abs(walk[-1])}")
 ```
 
-### 转变矩阵的 numpy
+### 用 numpy 处理转移矩阵
 
 ```python
 import numpy as np
@@ -363,15 +363,15 @@ for _ in range(100):
 print(f"Stationary distribution: {np.round(distribution, 4)}")
 ```
 
-乘以P重复初始分布. 经过足够的代,它与您开始的位置不论相近的静止分布.这是寻找主导左自向量的功率方法.
+将初始分布反复乘以 P。经过足够多次迭代后，无论从哪里出发，它都收敛到平稳分布。这就是求主左特征向量的幂法。
 
-### 与实际框架的联系
+### 与真实框架的联系
 
-- **PyTorch diffusion:**其他`DDPMScheduler`在拥抱的脸上`diffusers`执行前进和倒退的马科夫链
-- **NumPyro / PyMC:**对于贝叶斯推理使用MCMC (NUTS样本,在Metropolis-Hastings上改善)
-- **Gymnasium (RL):**环境步骤函数定义了马科夫决策过程
+- **PyTorch 扩散：** Hugging Face `diffusers` 中的 `DDPMScheduler` 实现了前向和反向马尔可夫链
+- **NumPyro / PyMC：** 使用 MCMC（NUTS 采样器，它是对 Metropolis-Hastings 的改进）进行贝叶斯推断
+- **Gymnasium (RL)：** 环境的 step 函数定义了一个马尔可夫决策过程
 
-### 验证马科夫链的融合
+### 验证马尔可夫链的收敛性
 
 ```python
 import numpy as np
@@ -385,77 +385,77 @@ print(f"Spectral gap: {spectral_gap:.4f}")
 print(f"Approximate mixing time: {1/spectral_gap:.1f} steps")
 ```
 
-频谱差距告诉你链接的原始状态是多快的. 0.2 的差距意味着大约 5 个步骤的混合. 0.01 的差距意味着大约 100 个步骤. 运行长时间模拟之前,总是检查这个 - - 一个缓慢混合链废物计算.
+谱隙告诉你链多快能遗忘其初始状态。0.2 的谱隙意味着大约 5 步即可混合。0.01 的谱隙意味着大约 100 步。在运行长时间模拟之前务必检查这一指标——混合缓慢的链会浪费算力。
 
-## 运送它
+## 发布成果
 
-这一课产生了:
-- `outputs/prompt-stochastic-process-advisor.md`--一个提示,帮助确定哪个对特定问题的过程框架适用于
+本课产出：
+- `outputs/prompt-stochastic-process-advisor.md` —— 一个帮助判断给定问题适用哪种随机过程框架的提示词
 
-## 联系
+## 知识关联
 
-| Concept | Where it shows up |
+| 概念 | 出现之处 |
 |---------|------------------|
-| Random walk | Node2Vec graph embeddings, exploration in RL |
-| Markov chain | Token generation in LLMs, MCMC sampling |
-| Brownian motion | Forward diffusion process in DDPM, SDE-based models |
-| Langevin dynamics | Score-based generative models, stochastic gradient Langevin dynamics (SGLD) |
-| Stationary distribution | MCMC convergence target, PageRank |
-| Metropolis-Hastings | Bayesian posterior sampling, simulated annealing |
-| Temperature | LLM sampling, Boltzmann exploration in RL, simulated annealing |
-| Mixing time | Convergence speed of MCMC, spectral gap analysis |
-| Absorbing state | End-of-sequence token, terminal states in RL |
-| Detailed balance | Correctness guarantee for MCMC samplers |
+| 随机游走 | Node2Vec 图嵌入、RL 中的探索 |
+| 马尔可夫链 | LLM 中的 token 生成、MCMC 采样 |
+| 布朗运动 | DDPM 中的前向扩散过程、基于 SDE 的模型 |
+| Langevin 动力学 | 基于分数的生成模型、随机梯度 Langevin 动力学（SGLD） |
+| 平稳分布 | MCMC 收敛目标、PageRank |
+| Metropolis-Hastings | 贝叶斯后验采样、模拟退火 |
+| Temperature | LLM 采样、RL 中的 Boltzmann 探索、模拟退火 |
+| 混合时间 | MCMC 收敛速度、谱隙分析 |
+| 吸收状态 | 序列结束 token、RL 中的终止状态 |
+| 细致平衡 | MCMC 采样器的正确性保证 |
 
-扩散模型值得特别关注.DDPM (Ho et al., 2020) 定义了前进马科夫链:
+扩散模型值得特别关注。DDPM（Ho et al., 2020）定义了一个前向马尔可夫链：
 
 ```
 q(x_t | x_{t-1}) = N(x_t; sqrt(1-beta_t) * x_{t-1}, beta_t * I)
 ```
 
-在T步骤后,x_T是大约N(0,I).反向过程由一个神经网络进行参数,预测噪音:
+其中 beta_t 是噪声调度。经过 T 步之后，x_T 近似服从 N(0, I)。反向过程由一个预测噪声的神经网络参数化：
 
 ```
 p_theta(x_{t-1} | x_t) = N(x_{t-1}; mu_theta(x_t, t), sigma_t^2 * I)
 ```
 
-了解马科夫链意味着理解如何和为什么扩散模型生成数据.
+生成的每一步都是学习到的马尔可夫链中的一步。理解马尔可夫链就意味着理解扩散模型如何以及为何生成数据。
 
-基梯度化 (Stochastic Gradient Langevin Dynamics) 结合了迷你批次化降低和基梯度噪音. 根据标准的测量, 随着学习速度的衰退,SGLD从优化转向采样 -- 你得到了大约的贝耶斯后面样品免费. 这就是从神经网络中获取不确定性估计的最简单方法之一.
+SGLD（Stochastic Gradient Langevin Dynamics）将小批量梯度下降与 Langevin 噪声相结合。你不必计算完整梯度，而是使用随机估计并添加经过校准的噪声。随着学习率衰减，SGLD 从优化过渡到采样——你免费获得近似的贝叶斯后验样本。这是从神经网络获得不确定性估计的最简单方法之一。
 
-关键的见解在所有这些连接上:  Stochastic 过程不仅仅是理论工具. 他们是现代人工智能系统中的计算机制. 当你调整法学士的温度时,你调整了马科夫链. 当你训练一个扩散模型时,你正在学习扭转一个类似布朗运动的过程. 当你运行贝叶斯推理时,你构建一个连锁链,
+贯穿所有这些联系的关键洞见：随机过程不仅仅是理论工具。它们是现代 AI 系统内部的计算机制。当你调节 LLM 的 temperature 时，你是在调整一个马尔可夫链。当你训练扩散模型时，你是在学习逆转一个类似布朗运动的过程。当你运行贝叶斯推断时，你是在构建一个收敛到后验的链。
 
-## 运动
+## 练习
 
-1. **Simulate 1000 random walks of 10000 steps.**图表最终位置分布. 验证它是大约高斯式的,平均值为0和标准偏差为10000) = 100.
+1. **模拟 1000 次 10000 步的随机游走。** 绘制最终位置的分布。验证它近似为均值 0、标准差 sqrt(10000) = 100 的高斯分布。
 
-2. **Build a text generator using a Markov chain.**训练一个小的体积:每一个词,数过关到下一个词. 构建过关矩阵. 通过从链中采样生成新的句子.
+2. **用马尔可夫链构建一个文本生成器。** 在一个小语料库上训练：对每个词，统计到下一个词的转移。构建转移矩阵。通过从链中采样生成新句子。
 
-3. **Implement simulated annealing**使用Metropoles-Hastings. 开始在高温 (几乎接受一切) 并且逐渐冷却 (只接受改进). 使用它来找到一个具有多个本地最小的函数的最小值.
+3. **使用 Metropolis-Hastings 实现模拟退火。** 从高温开始（几乎接受一切），逐渐降温（只接受改进）。用它来寻找具有许多局部极小值的函数的最小值。
 
-4. **Compare Langevin dynamics at different temperatures.**采样从双井潜力 U(x) = (x^2 - 1)^2.在低温下,样本集成在一个井.在高温下,它们分散在两处.找到链接混合的关键温度.
+4. **比较不同温度下的 Langevin 动力学。** 从双阱势 U(x) = (x^2 - 1)^2 中采样。在低温下，样本聚集在一个阱中。在高温下，它们分布在两个阱中。找到链能在两个阱之间混合的临界温度。
 
-5. **Implement the forward diffusion process.**开始使用1维信号 (例如,鼻波).通过线性噪音时间表逐步增加噪音100步以上. 显示信号如何降低到纯噪音. 然后实施一个简单的指标,扭转这个过程 (即使是简单的,只会减去估计的噪音).
+5. **实现前向扩散过程。** 从一维信号（例如正弦波）开始。使用线性噪声调度，在 100 步内逐步添加噪声。展示信号如何退化为纯噪声。然后实现一个简单的去噪器来逆转该过程（哪怕只是一个简单地减去估计噪声的朴素去噪器）。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Random walk | "Coin-flip movement" | A process where position changes by random increments at each step |
-| Markov property | "Memoryless" | The future depends only on the present state, not on the history |
-| Transition matrix | "The probability table" | P[i][j] = probability of moving from state i to state j |
-| Stationary distribution | "The long-run average" | The distribution pi where pi*P = pi -- the chain's equilibrium |
-| Brownian motion | "Random jiggling" | The continuous-time limit of a random walk, B(t) ~ N(0, t) |
-| Langevin dynamics | "Gradient descent with noise" | Update rule that combines deterministic gradient and random perturbation |
-| MCMC | "Walking toward the target" | Constructing a Markov chain whose stationary distribution is the one you want |
-| Metropolis-Hastings | "Propose and accept/reject" | MCMC algorithm that uses acceptance ratios to ensure convergence |
-| Temperature | "The randomness knob" | Parameter controlling the tradeoff between exploration and exploitation |
-| Diffusion process | "Noise in, noise out" | Forward: gradually add noise. Reverse: gradually remove it. Generates data. |
+| 随机游走 | "掷硬币式移动" | 每一步位置按随机增量变化的过程 |
+| 马尔可夫性 | "无记忆性" | 未来只依赖于当前状态，而不依赖于历史 |
+| 转移矩阵 | "概率表" | P[i][j] = 从状态 i 移动到状态 j 的概率 |
+| 平稳分布 | "长期平均值" | 满足 pi*P = pi 的分布 pi——链的平衡态 |
+| 布朗运动 | "随机抖动" | 随机游走的连续时间极限，B(t) ~ N(0, t) |
+| Langevin 动力学 | "带噪声的梯度下降" | 结合确定性梯度和随机扰动的更新规则 |
+| MCMC | "走向目标" | 构建一个平稳分布正是你想要的分布的马尔可夫链 |
+| Metropolis-Hastings | "提议并接受/拒绝" | 使用接受比率确保收敛的 MCMC 算法 |
+| Temperature | "随机性旋钮" | 控制探索与利用之间权衡的参数 |
+| 扩散过程 | "噪声进，噪声出" | 前向：逐步添加噪声。反向：逐步去除噪声。生成数据。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- **Ho, Jain, Abbeel (2020)**关于"散概率模型"的论文, 引发了散模型革命.
-- **Song & Ermon (2019)**基于分数的方法,使用兰杰文动态进行样本采集.
-- **Roberts & Rosenthal (2004)**什么时候和为什么MCMC工作的理论.
-- **Norris (1997)**标准教科书,涵盖缩,静止分布和击球时间.
-- **Welling & Teh (2011)**通过斯托卡斯式渐进式兰杰文动力学进行贝耶斯学习.
+- **Ho, Jain, Abbeel (2020)** -- "Denoising Diffusion Probabilistic Models." 引领扩散模型革命的 DDPM 论文。对前向和反向马尔可夫链有清晰的推导。
+- **Song & Ermon (2019)** -- "Generative Modeling by Estimating Gradients of the Data Distribution." 使用 Langevin 动力学进行采样的基于分数的方法。
+- **Roberts & Rosenthal (2004)** -- "General state space Markov chains and MCMC algorithms." MCMC 何时以及为何有效的理论。
+- **Norris (1997)** -- "Markov Chains." 标准教科书。涵盖收敛性、平稳分布和命中时间。
+- **Welling & Teh (2011)** -- "Bayesian Learning via Stochastic Gradient Langevin Dynamics." 将 SGD 与 Langevin 动力学相结合，实现可扩展的贝叶斯推断。

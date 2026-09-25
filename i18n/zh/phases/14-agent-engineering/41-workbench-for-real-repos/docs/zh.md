@@ -1,24 +1,24 @@
-# 工作台在一个真正的商店
+# 真实仓库上的工作台
 
-> 对于一个小样本应用程序,这个课程两次执行相同的任务:仅需提示与工作台指导. 数字是辩论的.
+> 十一课的表面知识如果无法在真实代码库的接触中存活，就毫无价值。本课在一个小型示例应用上将同一任务运行两次：仅提示词与工作台引导。让数据来说话。
 
 **Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phases 14 · 32 to 14 · 40
-**Time:** ~60 minutes
+**Languages:** Python (标准库)
+**Prerequisites:** 阶段 14 · 32 至 14 · 40
+**Time:** 约 60 分钟
 
 ## 学习目标
 
-- 将七个工作桌面放在一个小应用上.
-- 执行同一任务两次 (仅即时执行和工作台指导) 并测量五项结果.
-- 阅读前后报告,并决定哪些表面产生了最大的影响力.
-- 为了保护工作台免受"但我的模型足够好"的反驳.
+- 在一个小型应用上综合运用七个工作台表面。
+- 运行同一任务两次（仅提示词与工作台引导）并测量五个结果。
+- 阅读前后对比报告，判断哪些表面提供了最大的杠杆作用。
+- 面对“我的模型已经够好了”的质疑，为工作台辩护。
 
-## 问题
+## 问题所在
 
-玩具任务的演示没有人相信. 工作桌的情况是当一个真正的任务在一个真正的重复工作中,生产失败的数量减少,回转的数量减少,
+在玩具任务上的演示无法说服任何人。工作台的价值在于：一个感觉真实的任务在感觉真实的仓库上落地生产时，失败更少、回滚更少，并产生下一个会话可以使用的交接包。
 
-通过两条管道,这次课程将实现真正的回应,并通过两条管道执行相同的任务.
+本课提供了这个感觉真实的仓库，并通过两条流水线运行同一任务。结果是一份可以交给怀疑论者的前后对比报告。
 
 ## 概念
 
@@ -31,122 +31,122 @@ flowchart TD
   M --> Report[before-after-report.md]
 ```
 
-### 样本应用程序
+### 示例应用
 
-简单的FastAPI式处理器`sample_app/`其他:
+`sample_app/` 中的一个极简 FastAPI 风格处理器：
 
-- `app.py`随着`/signup`(目前还没有验证).
-- `test_app.py`通过一个快乐道路测试.
-- `README.md`其他`scripts/release.sh`作为禁止区域的.
+- `app.py`，带有 `/signup`（尚无验证）。
+- `test_app.py`，包含一个正常路径测试。
+- `README.md` 和 `scripts/release.sh` 作为禁区诱饵。
 
 ### 任务
 
-> 添加输入验证`/signup`拒绝短于8个字符的密码,返回422,输入错误包.添加证明新行为的测试.
+> 为 `/signup` 添加输入验证：拒绝少于 8 个字符的密码，返回 422 并附带类型化错误包。添加一个证明新行为的测试。
 
-### 两条管道
+### 两条流水线
 
-仅即时使用:
+仅提示词：
 
-1. 阅读阅读.
-2. 阅读`app.py`现在,我们要去.
-3. 编辑文件.
-4. 要求完成.
+1. 阅读 README。
+2. 阅读 `app.py`。
+3. 编辑文件。
+4. 声称完成。
 
-工作台指导:
+工作台引导：
 
-1. 运行初始脚本 (课35).
-2. 阅读合同范围 (第36课).
-3. 阅读状态 (课34).
-4. 仅允许编辑文件.
-5. 通过反运行器运行接受命令 (课37).
-6. 运行验证门 (课程38).
-7. 经过审核 (第39课).
-8. 产生交换 (课40).
+1. 运行初始化脚本（第 35 课）。
+2. 阅读范围契约（第 36 课）。
+3. 阅读状态（第 34 课）。
+4. 仅编辑允许的文件。
+5. 通过反馈运行器运行验收命令（第 37 课）。
+6. 运行验证门（第 38 课）。
+7. 运行审查者（第 39 课）。
+8. 生成交接包（第 40 课）。
 
 ### 测量的五个结果
 
-| Outcome | Why it matters |
+| 结果 | 为何重要 |
 |---------|----------------|
-| `tests_actually_run` | Most "tests passed" claims are unverifiable |
-| `acceptance_met` | The test that proves the goal must be the test that ran |
-| `files_outside_scope` | Scope creep is the dominant silent failure |
-| `handoff_quality` | The next session pays for or benefits from this |
-| `reviewer_total` | Qualitative judgment on top of the gate |
+| `tests_actually_run` | 大多数“测试通过”的说法无法验证 |
+| `acceptance_met` | 证明目标的测试必须是实际运行的测试 |
+| `files_outside_scope` | 范围蔓延是主要的隐性失败 |
+| `handoff_quality` | 下一个会话为此付出代价或从中受益 |
+| `reviewer_total` | 在验证门之上的定性判断 |
 
 ```figure
 wb-ab-runs
 ```
 
-## 建立它
+## 动手构建
 
-`code/main.py`测量方法是通过测量方法进行的,这两个管道都与相同的样本应用程序固定进行了调整.`before-after-report.md`其他`comparison.json`现在,我们要去.
+`code/main.py` 针对同一示例应用夹具编排两条流水线。两条流水线均为脚本化（无 LLM 参与），因此测量是可复现的。脚本将对比结果写入 `before-after-report.md` 和 `comparison.json`。
 
-运行它:
+运行它：
 
 ```
 python3 code/main.py
 ```
 
-输出:每个管道的结果表,脚本旁边保存的标记报告,以及任何想要图表的JSON.
+输出：每个流水线的结果控制台表格、保存在脚本旁边的 Markdown 报告，以及供想要绘图的人使用的 JSON。
 
-## 野生生产模式
+## 生产环境中的真实模式
 
-怀疑者的问题是"工作台实际上有多有帮助?" 2026 年的数字比解释更清楚.
+怀疑论者的问题是：“工作台到底有多大帮助？”2026 年的数据比解释更有说服力。
 
-**Terminal Bench Top-30 to Top-5 on the same model.**兰格链的"机器人带的解剖" (2026年4月):一个编码器从前30名之外跳跃到终端台2.0上排名第五,仅仅改变了带.相同的模型.不同的表面.25位的三角形.
+**同一模型在 Terminal Bench 上从 Top-30 跃升至 Top-5。** LangChain 的 *Anatomy of an Agent Harness*（2026 年 4 月）：一个编码智能体仅通过更改 harness，就在 Terminal Bench 2.0 上从 30 名以外跃升至第五名。同一模型。不同的表面。25 个名次的差距。
 
-**Vercel 80% to 100% by deleting tools.**据Vercel报道,它删除了80%的代理工具, 提高了成功率从80%到100%. 工具表面较小, 范围更明晰, 失败的方法较少.
+**Vercel 通过删除工具将成功率从 80% 提升到 100%。** Vercel 报告称，删除其智能体 80% 的工具使成功率从 80% 提升到 100%。更小的工具表面、更清晰的范围、更少的失败方式。负空间获胜。
 
-**Harvey 2x accuracy via harness alone.**法律代理通过利用优化带, 没有模型的改变,
+**Harvey 仅通过 harness 将准确率提升 2 倍。** 法律智能体的准确率通过 harness 优化翻了一倍以上，模型未作任何更改。
 
-**88% of enterprise AI agent projects fail to reach production.**预印.org*语言代理人运用工程*论文 (2026年3月) 追踪失败到运行时间,而不是推理:陈旧状态,脆弱的重试,过度生长的背景,
+**88% 的企业级 AI 智能体项目未能进入生产。** preprints.org 的 *Harness Engineering for Language Agents* 论文（2026 年 3 月）将失败归因于运行时而非推理：过时的状态、脆弱的重试、过度膨胀的上下文、对中间错误恢复能力差。
 
-**Long-context collapse.**根据WebAgent的基本线程,在长文本条件下40-50%的成功降至10%以下,主要是由于无限循环和目标损失.
+**长上下文崩溃。** WebAgent 基线 40-50% 的成功率在长上下文条件下降至 10% 以下，主要源于无限循环和目标丢失。Ralph Loop 和交接包的存在正是为了吸收这一点。
 
-**False negatives still exist.**单步实事任务,单行列表,格式化运行,模型已经记得的任何东西,这些运行更快,只需提示.基准应该诚实列出它们,以便工作台不被视为过度.
+**假阴性依然存在。** 单步事实任务、单行 lint、格式化程序运行、模型逐字记住的任何内容——这些任务仅用提示词运行得更快。基准测试应诚实地列举它们，以免工作台被框定为杀鸡用牛刀。
 
-模型确实随着时间的推移吸收了使用的技巧. 结果是,今天,工程负载在七个表面上,数字证明了这一点.
+结论不是“harness 永远获胜”。模型确实会随时间吸收 harness 的技巧。结论是：今天，工程负载位于七个表面之中，而数据证明了这一点。
 
-## 用它
+## 应用场景
 
-这一课是你提到的案例文件:
+本课是你在以下情况引用的案例档案：
 
-- 有人问为什么每一个公关都会带着一个`agent-rules.md`并且有一个合同.
-- 一支团队想放弃验证门, "仅仅是为了这个冲刺".
-- 您需要一个可移植的基准,以确定它是否能节省时间.
+- 有人问为什么每个 PR 都带有 `agent-rules.md` 和范围契约。
+- 一个团队想“只在这个冲刺”放弃验证门。
+- 一个新的智能体产品发布，你需要一个可移植的基准来判断它是否真正节省时间。
 
-数字远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远远
+数据比解释传播得更远。
 
-## 运送它
+## 发布上线
 
-`outputs/skill-workbench-benchmark.md`是一个可移植的评估器件,通过两个管道运行任何代理产品,与项目自己的样本应用程序进行测试,并报告五项结果.
+`outputs/skill-workbench-benchmark.md` 是一个可移植的评估 harness，它针对项目自身的示例应用，通过两条流水线运行任何智能体产品，并报告五个结果。
 
-## 运动
+## 练习
 
-1. 另外,我们还要做一个第六个结果:时间到第一次的有意义的编辑.
-2. 在你的代码库中进行第二天的实际任务的比较.
-3. 添加一个"假负"通过:只需提示才能更快的任务,工作桌面的费用是真正的成本. 无论如何,保护工作桌面的保留.
-4. 取代剧本中的"代理"用一个真正的法师调用.
-5. 专注于非工程师的一页摘要.
+1. 增加第六个结果：首次有意义编辑的耗时。如何干净地测量它？
+2. 在代码库中一个真实的第二天的任务上运行对比。工作台的数据在哪里下滑？
+3. 增加一个“假阴性”环节：仅提示词本会更快、工作台开销是真实成本的任务。仍然为保留工作台辩护。
+4. 将脚本化的“智能体”替换为真实的 LLM 调用。哪些结果会变得更嘈杂？
+5. 为非工程师撰写一页纸的摘要。什么内容能留存下来？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Sample app | "Toy repo" | Small but realistic enough to exercise all seven surfaces |
-| Pipeline | "Workflow" | Ordered sequence of surface reads/writes the agent follows |
-| Before/after report | "The receipts" | The artifact you hand to a skeptic |
-| False negative | "Workbench overkill" | Tasks where prompt-only is faster; useful to enumerate honestly |
-| Workbench benchmark | "Reliability score" | Portable harness that runs the comparison on your codebase |
+| 术语 | 人们怎么说 | 实际含义 |
+|------|------------------------|
+| 示例应用 | “玩具仓库” | 小但足够真实，能锻炼所有七个表面 |
+| 流水线 | “工作流” | 智能体遵循的表面读/写的有序序列 |
+| 前后对比报告 | “证据” | 交给怀疑论者的产物 |
+| 假阴性 | “工作台过度设计” | 仅提示词更快的任务；诚实列举很有用 |
+| 工作台基准 | “可靠性得分” | 在你的代码库上运行对比的可移植 harness |
 
-## 进一步阅读
+## 延伸阅读
 
-- [LangChain, The Anatomy of an Agent Harness](https://blog.langchain.com/the-anatomy-of-an-agent-harness/)终端台前-30至前5的收据
-- [MongoDB, The Agent Harness: Why the LLM Is the Smallest Part of Your Agent System](https://www.mongodb.com/company/blog/technical/agent-harness-why-llm-is-smallest-part-of-your-agent-system) 维尔塞尔 + 哈维数字
-- [preprints.org, Harness Engineering for Language Agents](https://www.preprints.org/manuscript/202603.1756) 88%的企业失败率,运行时间的根本原因
-- [HN: Improving 15 LLMs at Coding in One Afternoon. Only the Harness Changed](https://news.ycombinator.com/item?id=46988596)在15个模型中复制
-- [Cloudflare, Orchestrating AI Code Review at Scale](https://blog.cloudflare.com/ai-code-review/) 131k 期复习 / 30 天生产
+- [LangChain, The Anatomy of an Agent Harness](https://blog.langchain.com/the-anatomy-of-an-agent-harness/) — Terminal Bench Top-30 到 Top-5 的证据
+- [MongoDB, The Agent Harness: Why the LLM Is the Smallest Part of Your Agent System](https://www.mongodb.com/company/blog/technical/agent-harness-why-llm-is-smallest-part-of-your-agent-system) — Vercel + Harvey 的数据
+- [preprints.org, Harness Engineering for Language Agents](https://www.preprints.org/manuscript/202603.1756) — 88% 企业失败率，运行时根本原因
+- [HN: Improving 15 LLMs at Coding in One Afternoon. Only the Harness Changed](https://news.ycombinator.com/item?id=46988596) — 在 15 个模型上复现
+- [Cloudflare, Orchestrating AI Code Review at Scale](https://blog.cloudflare.com/ai-code-review/) — 生产环境中 30 天内 13.1 万次审查运行
 - [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
-- 阶段14 · 32至14 · 40 这个课程的表面
-- 阶段14 · 19 SWE-bench,GAIA,AgentBench作为宏观基准本课补充
-- 阶段 14 · 30  评估驱动的剂开发相同的带插头
+- 阶段 14 · 32 至 14 · 40 — 本课端到端锻炼的表面
+- 阶段 14 · 19 — SWE-bench、GAIA、AgentBench 作为本课补充的宏观基准
+- 阶段 14 · 30 — 本 harness 所接入的评估驱动智能体开发

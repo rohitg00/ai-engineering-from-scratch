@@ -1,33 +1,33 @@
-# 字符串环境
+# Python 环境
 
-> 依赖性地狱是真实的.
+> 依赖地狱是真实存在的。虚拟环境就是解药。
 
 **Type:** Build
 **Languages:** Shell
 **Prerequisites:** Phase 0, Lesson 01
-**Time:** ~30 minutes
+**Time:** ~30 分钟
 
 ## 学习目标
 
-- 创建使用 `uv`现在`venv`其他`conda`
-- 写一个`pyproject.toml`具有可选的依赖组,并生成可复制性的锁文件
-- 诊断和解决常见陷:全球安装,管/混合,CUDA版本不匹配
-- 实施对项目有相互依赖的各阶段环境战略
+- 使用 `uv`、`venv` 或 `conda` 创建隔离的虚拟环境
+- 编写带有可选依赖组的 `pyproject.toml`，并生成锁文件以保证可复现性
+- 诊断并修复常见陷阱：全局安装、pip/conda 混用、CUDA 版本不匹配
+- 为依赖相互冲突的项目实现按阶段的环境策略
 
-## 问题
+## 问题所在
 
-你安装PyTorch 2.4用于一个细节调整项目.下周,另一个项目需要PyTorch 2.1因为它的CUDA构建是固定的.你升级全球,第一个项目会断裂.你降级,第二个会断裂.
+你为某个微调项目安装了 PyTorch 2.4。下周，另一个项目需要 PyTorch 2.1，因为它的 CUDA 构建版本被固定了。你全局升级，第一个项目崩了。你降级，第二个项目又崩了。
 
-这就是依赖地狱. 在AI/ML工作中,它经常发生,因为:
+这就是依赖地狱。它在 AI/ML 工作中经常发生，因为：
 
-- 皮托奇,JAX和TensorFlow每个公司都运送自己的CUDA绑定
-- 模型库将特定框架版本定制
-- 全球化`pip install`覆盖之前的任何东西
-- CUDA 11.8 构建不适用于 CUDA 12.x 驱动程序 (反之亦然)
+- PyTorch、JAX 和 TensorFlow 各自附带自己的 CUDA 绑定
+- 模型库固定了特定的框架版本
+- 全局的 `pip install` 会覆盖之前安装的内容
+- CUDA 11.8 构建无法在 CUDA 12.x 驱动上运行（反之亦然）
 
-解决方案是:每个项目都会有自己的孤立环境,
+解决办法：每个项目都拥有自己的隔离环境，包含自己的包。
 
-## 概念
+## 核心概念
 
 ```mermaid
 graph TD
@@ -49,11 +49,11 @@ graph TD
 s0-env-isolation
 ```
 
-## 建立它
+## 动手构建
 
-### 选择1: uv venv (建议)
+### 方案 1：uv venv（推荐）
 
-`uv`它可以在一个工具中处理虚拟环境,Python版本和依赖分辨率.
+`uv` 是最快的 Python 包管理器（比 pip 快 10-100 倍）。它在一个工具中处理虚拟环境、Python 版本和依赖解析。
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -65,13 +65,13 @@ uv venv
 source .venv/bin/activate
 ```
 
-装备包:
+安装包：
 
 ```bash
 uv pip install torch numpy
 ```
 
-创建一个项目`pyproject.toml`在一个步骤:
+用 `pyproject.toml` 一步创建项目：
 
 ```bash
 uv init my-ai-project
@@ -79,9 +79,9 @@ cd my-ai-project
 uv add torch numpy matplotlib
 ```
 
-### 选择2: venv (内置)
+### 方案 2：venv（内置）
 
-如果无法安装`uv`鱼船与`venv`其他:
+如果无法安装 `uv`，Python 自带 `venv`：
 
 ```bash
 python3 -m venv .venv
@@ -91,15 +91,15 @@ source .venv/bin/activate  # Linux/macOS
 pip install torch numpy
 ```
 
-比较慢`uv`虽然它可以在任何地方使用 python.
+比 `uv` 慢，但在任何安装了 Python 的地方都可用。
 
-### 选择3:可纳 (当你需要它时)
+### 方案 3：conda（在需要时使用）
 
-康达管理非Python依赖性,如CUDA工具包,cuDNN和C库.
+Conda 可以管理非 Python 依赖，如 CUDA 工具包、cuDNN 和 C 库。在以下情况使用它：
 
-- 你需要一个特定的CUDA工具包版本,而不需要系统范围内的安装
-- 你在一个共享集群上,你不能安装系统包
-- 图书馆的安装说明书说"使用公寓"
+- 你需要特定版本的 CUDA 工具包，但不想在系统范围内安装
+- 你在共享集群上，无法安装系统级包
+- 某个库的安装说明写着"使用 conda"
 
 ```bash
 # Install miniconda (not the full Anaconda)
@@ -112,13 +112,13 @@ conda activate myproject
 conda install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia
 ```
 
-混合 混合 混合 混合 混合 混合 混合 `pip install`由于这种情况,我们可以在一个"无限"中找到一个问题.
+一条规则：如果某个环境使用 conda，那么该环境中的所有包都用 conda 安装。将 `pip install` 混入 conda 环境会导致难以调试的依赖冲突。
 
-### 对于本课程:各阶段的战略
+### 本课程策略：按阶段划分
 
-您可以为整个课程创造一个环境. 不做.不同的阶段需要不同的 (有时相互矛盾的) 依赖.
+你可以为整个课程创建一个环境。别这么做。不同阶段需要不同（有时相互冲突）的依赖。
 
-战略:
+策略：
 
 ```
 ai-engineering-from-scratch/
@@ -134,11 +134,11 @@ ai-engineering-from-scratch/
 │       └── .venv/            <-- API SDKs, no torch needed
 ```
 
-剧本在`code/env_setup.sh`创造了本课程的基础环境.
+`code/env_setup.sh` 中的脚本会创建本课程的基础环境。
 
-## 项目. 基础知识
+## pyproject.toml 基础
 
-每个Python项目都应该有一个`pyproject.toml`它取代了`setup.py`现在`setup.cfg`其他`requirements.txt`在一个文件中.
+每个 Python 项目都应有 `pyproject.toml`。它用一个文件取代了 `setup.py`、`setup.cfg` 和 `requirements.txt`。
 
 ```toml
 [project]
@@ -157,7 +157,7 @@ torch = ["torch>=2.3", "torchvision>=0.18"]
 llm = ["anthropic>=0.39", "openai>=1.50"]
 ```
 
-然后安装:
+然后安装：
 
 ```bash
 uv pip install -e ".[torch]"    # base + PyTorch
@@ -167,7 +167,7 @@ uv pip install -e ".[torch,llm]" # everything
 
 ## 锁文件
 
-锁文件将所有依赖性 (包括过渡性) 转换到精确版本. 这保证可重复性:从锁文件中安装的人都得到了完全相同的包.
+锁文件将每个依赖（包括传递依赖）固定到确切的版本。这保证了可复现性：任何从锁文件安装的人都会得到完全相同的包。
 
 ```bash
 # uv generates uv.lock automatically when using uv add
@@ -178,11 +178,11 @@ uv pip compile pyproject.toml -o requirements.lock
 uv pip install -r requirements.lock
 ```
 
-让你的锁文件转载到 git. 当有人克隆了 repo,他们从锁文件安装并获得相同的版本.
+将锁文件提交到 git。当有人克隆仓库时，他们从锁文件安装，得到完全相同的版本。
 
-## 常见的错误
+## 常见错误
 
-### 1. 全球安装
+### 1. 全局安装
 
 ```bash
 pip install torch  # BAD: installs to system Python
@@ -191,14 +191,14 @@ source .venv/bin/activate
 pip install torch  # GOOD: installs to virtual environment
 ```
 
-检查你的包裹去哪里:
+检查你的包安装到了哪里：
 
 ```bash
 which python       # should show .venv/bin/python, not /usr/bin/python
 which pip           # should show .venv/bin/pip
 ```
 
-### 2. 混合和
+### 2. 混用 pip 和 conda
 
 ```bash
 conda create -n myenv python=3.12
@@ -208,9 +208,9 @@ pip install some-other-package   # BAD: can break conda's dependency tracking
 conda install some-other-package # GOOD: let conda manage everything
 ```
 
-如果您必须在conda内使用 pip (有些包装只使用 pip),首先安装所有conda包装,然后使用 pip包.
+如果必须在 conda 中使用 pip（有些包只提供 pip），先安装所有 conda 包，最后安装 pip 包。
 
-### 3. 忘记激活
+### 3. 忘记激活环境
 
 ```bash
 python train.py           # uses system Python, missing packages
@@ -218,21 +218,21 @@ source .venv/bin/activate
 python train.py           # uses project Python, packages found
 ```
 
-您的 shell提示应显示环境名称:
+你的 shell 提示符应显示环境名称：
 
 ```
 (.venv) $ python train.py
 ```
 
-### 4. 承诺.venv到 git
+### 4. 将 .venv 提交到 git
 
 ```bash
 echo ".venv/" >> .gitignore
 ```
 
-虚拟环境是200MB到2GB.它们是本地的,不是机器之间可移植的.`pyproject.toml`而不是锁文件.
+虚拟环境大小为 200MB-2GB。它们只存在于本地，无法在机器之间移植。应提交 `pyproject.toml` 和锁文件。
 
-### 5.  CUDA版本不匹配
+### 5. CUDA 版本不匹配
 
 ```bash
 nvidia-smi                # shows driver CUDA version (e.g., 12.4)
@@ -242,29 +242,29 @@ python -c "import torch; print(torch.version.cuda)"  # shows PyTorch CUDA versio
 # PyTorch CUDA version must be <= driver CUDA version.
 ```
 
-## 用它
+## 使用它
 
-运行设置脚本来创建课程环境:
+运行 setup 脚本创建课程环境：
 
 ```bash
 bash phases/00-setup-and-tooling/06-python-environments/code/env_setup.sh
 ```
 
-这就会产生一个`.venv`在核电源根上,核电源已安装和验证.
+这会在仓库根目录创建一个 `.venv`，其中核心依赖已安装并通过验证。
 
-## 运动
+## 练习
 
-1. 跑步`env_setup.sh`检查所有检查通过
-2. 创建第二个虚拟环境,安装不同的版本的 numpy,并确认两个环境是孤立的
-3. 写一个`pyproject.toml`对于需要 PyTorch 和 Anthropic SDK 的项目
-4. 故意在全球范围内安装一个包 (不需要激活一个venv),注意它去哪里,然后卸载它
+1. 运行 `env_setup.sh` 并验证所有检查通过
+2. 创建第二个虚拟环境，在其中安装不同版本的 numpy，并确认两个环境相互隔离
+3. 为一个同时需要 PyTorch 和 Anthropic SDK 的项目编写 `pyproject.toml`
+4. 故意在全局安装一个包（不激活 venv），观察它安装到了哪里，然后卸载它
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|----------------------|
-| Virtual environment | "A venv" | An isolated directory containing a Python interpreter and packages, separate from the system Python |
-| Lockfile | "Pinned dependencies" | A file listing every package and its exact version, guaranteeing identical installs across machines |
-| pyproject.toml | "The new setup.py" | The standard Python project configuration file, replacing setup.py/setup.cfg/requirements.txt |
-| Transitive dependency | "A dependency of a dependency" | Package B depends on C; if you install A which depends on B, C is a transitive dependency of A |
-| CUDA mismatch | "My GPU isn't working" | PyTorch was compiled for a different CUDA version than what your GPU driver supports |
+| 虚拟环境 | "一个 venv" | 一个隔离的目录，包含独立的 Python 解释器和包，与系统 Python 分离 |
+| 锁文件 | "固定依赖" | 一个列出每个包及其确切版本的文件，保证在不同机器上安装结果完全一致 |
+| pyproject.toml | "新版 setup.py" | 标准的 Python 项目配置文件，取代 setup.py/setup.cfg/requirements.txt |
+| 传递依赖 | "依赖的依赖" | 包 B 依赖 C；如果你安装了依赖 B 的 A，那么 C 就是 A 的传递依赖 |
+| CUDA 不匹配 | "我的 GPU 不能用" | PyTorch 编译时使用的 CUDA 版本与你的 GPU 驱动所支持的版本不同 |

@@ -1,30 +1,30 @@
-# 自我监督视觉  SimCLR,DINO,MAE
+# 自监督视觉 — SimCLR、DINO、MAE
 
-> 标签是监督视觉的瓶. 自主监督预训练消除了它们:从100万个未标记的图像中学习视觉特征,
+> 标注是监督式视觉的瓶颈。自监督预训练消除了这一瓶颈：从 1 亿张无标注图像中学习视觉特征，再在 1 万张有标注图像上微调。
 
 **Type:** Learn + Build
 **Languages:** Python
 **Prerequisites:** Phase 4 Lesson 04 (Image Classification), Phase 4 Lesson 14 (ViT)
-**Time:** ~75 minutes
+**Time:** 约 75 分钟
 
 ## 学习目标
 
-- 追踪三个主要的自我监督家庭:对比性 (SimCLR),教师-学生 (DINO),面具重建 (MAE) ,并说明每个家庭都优化什么
-- 实施InfoNCE损失从零开始,并解释为什么512批成功,但32批失败
-- 解释为什么MAE的75%隐藏比不任意,以及它与BERT的15%对文本的不同
-- 使用DINOv2或MAE ImageNet检查站进行线性探测和零射击检索
+- 梳理三大自监督家族 —— 对比学习（SimCLR）、师生网络（DINO）、掩码重建（MAE）—— 并说明各自优化的目标
+- 从零实现 InfoNCE 损失，并解释为什么 batch size 为 512 可行而 32 会失败
+- 解释 MAE 的 75% 掩码比例并非随意设定，以及它与 BERT 在文本上 15% 的区别
+- 使用 DINOv2 或 MAE 的 ImageNet 检查点进行线性探测和零样本检索
 
-## 问题
+## 问题所在
 
-监督图像网有1300万个标记图像,这些图像的标记成本估计为1000万美元.医疗和工业数据集较小,标记成本更高.每个视觉团队都问:我们可以预训练低成本的无标记数据吗?
+监督式 ImageNet 拥有 130 万张标注图像，标注成本估计约 1000 万美元。医疗和工业数据集规模更小，标注成本也更昂贵。每个视觉团队都在问：能否先在廉价的无标注数据上预训练 —— YouTube 视频帧、网络爬取数据、监控录像、卫星影像 —— 然后在小型标注集上微调？
 
-现代的自主监督 ViT 在LAION或JFT上训练,在调整时达到或超过监督的ImageNet精度.它还更好地转移到下游任务 (检测,细分,深度) 比监督的预训练.DINOv2 (Meta, 2023) 和MAE (Meta, 2022) 是可转移视觉功能的当前生产默认.
+自监督学习就是答案。在 LAION 或 JFT 上训练的现代自监督 ViT，经微调后可达到甚至超过监督式 ImageNet 的准确率。它的下游迁移能力（检测、分割、深度估计）也优于监督式预训练。DINOv2（Meta，2023）和 MAE（Meta，2022）是当前可迁移视觉特征在生产环境中的默认选择。
 
-概念转变是,借口任务 模型训练要做的事情 不必是下游任务. 重要的是,它迫使模型学习有用的特性. 预测灰色图像的颜色,旋转图像,并要求模型分类旋转,掩盖补丁并重建它们都成功了. 对于此,三种方法是对比性学习,教师与学生蒸,
+概念上的转变在于：预训练任务（pretext task，即模型被训练去做的事情）不必是下游任务。关键在于它迫使模型学到有用的特征。预测灰度图像的颜色、旋转图像并让模型分类旋转角度、掩码 patch 并重建 —— 这些方法都曾奏效。能够规模化的是三种方法：对比学习、师生蒸馏和掩码重建。
 
-## 概念
+## 核心概念
 
-### 三个家庭
+### 三大家族
 
 ```mermaid
 flowchart LR
@@ -37,9 +37,9 @@ flowchart LR
     style C fill:#dcfce7,stroke:#16a34a
 ```
 
-### 对比学习 (SimCLR)
+### 对比学习（SimCLR）
 
-通过同一个编码器加上投影头,减少说"这两个嵌入应该接近"和"这个嵌入应该远离每个其他图像的嵌入".
+取一张图像，施加两次随机数据增强，得到两个视图。将两者输入同一个编码器加投影头。最小化一个损失，它要求"这两个嵌入应当接近"，同时"这个嵌入应当与 batch 中其他所有图像的嵌入保持远离"。
 
 ```
 Loss for positive pair (z_i, z_j) among 2N views per batch:
@@ -50,11 +50,11 @@ sim = cosine similarity
 tau = temperature (0.1 standard)
 ```
 
-这就是InfoNCE损失.它需要每一个正数的许多负数,所以批量大小很重要. SimCLR需要512-8192.
+这就是 InfoNCE 损失。它需要每个正样本对应大量负样本，因此 batch size 很重要 —— SimCLR 需要 512-8192。MoCo 引入了过去 batch 的动量队列，将负样本数量与 batch size 解耦。
 
-### 教师-学生 (DINO)
+### 师生网络（DINO）
 
-学生和老师:两个网络具有相同的架构.老师是学生的体重的指数动平均值 (EMA).两个都看到图像的增强视图.学生的输出训练以匹配老师的没有明确的负面.
+两个结构相同的网络：学生和教师。教师是学生权重的指数滑动平均（EMA）。两者都接收图像的增强视图。训练学生的输出去匹配教师的输出 —— 不使用显式的负样本。
 
 ```
 loss = CE( student_output(view_1),  teacher_output(view_2) )
@@ -63,13 +63,13 @@ loss = CE( student_output(view_1),  teacher_output(view_2) )
 teacher_weights = m * teacher_weights + (1 - m) * student_weights   (m ≈ 0.996)
 ```
 
-为什么"预测常数"不崩:教师的输出是集中 (减减每维度平均值) 和磨损 (分为小温度).中心化防止一个维度主导;磨损防止输出崩到均.
+为什么不会坍缩为"预测一个常数"：教师的输出会做中心化（减去每个维度的均值）和锐化（除以一个较小的温度）。中心化防止单一维度主导，锐化防止输出坍缩为均匀分布。
 
-根据DINOv2的扩展,DINOv2在142万个策划图像上进行了扩展.
+DINO 就是 DINOv2 所放大的基础，在 1.42 亿张精选图像上训练。其产生的特征是当前零样本视觉检索和密集预测的 SOTA。
 
-### 面具重建 (MAE)
+### 掩码重建（MAE）
 
-掩盖VIT输入的 75%的补丁.通过编码器传输只可见的25%.一个小的解码器在掩盖位置接收编码器的输出加上面具代币,并被训练重建掩盖补丁的像素.
+掩掉 ViT 输入的 75% patch。仅将可见的 25% 送入编码器。一个小型解码器接收编码器的输出以及掩码位置上的掩码 token，并被训练来重建被掩 patch 的像素。
 
 ```
 Encoder:  visible 25% of patches -> features
@@ -77,41 +77,41 @@ Decoder:  features + mask tokens at masked positions -> reconstructed pixels
 Loss:     MSE between reconstructed and original pixels on masked patches only
 ```
 
-让MAE工作的关键设计选择:
+让 MAE 生效的关键设计选择：
 
-- **75% mask ratio**高.强迫编码器学习语义特性;重建25%将是几乎无关紧要的 (邻近的像素是相对的,以至于CNN可以钉它).
-- **Asymmetric encoder/decoder**大型ViT编码器只能看到可见的补丁;一个小型的解码器 (8层,512层) 处理重建.比天真BEiT快3倍的预训练.
-- **Pixel-space reconstruction target**比BEiT的标记目标更简单,并且在ViT上更有效.
+- **75% 掩码比例** —— 很高。迫使编码器学习语义特征；重建时若可见部分达 25% 则近乎轻而易举（相邻像素高度相关，CNN 就能轻松搞定）。
+- **非对称编码器/解码器** —— 大型 ViT 编码器只看到可见 patch；小型解码器（8 层、512 维）负责重建。预训练速度比朴素的 BEiT 快 3 倍。
+- **像素空间的重建目标** —— 比 BEiT 的 token 化目标更简单，在 ViT 上效果也更好。
 
-训练前,放弃解码器.
+预训练完成后，丢弃解码器。编码器就是特征提取器。
 
-### 为什么75%而不是15%
+### 为什么是 75% 而不是 15%
 
-密码是15%,MAE是75%. 信息密度是区别.
+BERT 掩掉 15% 的 token。MAE 掩掉 75%。差别在于信息密度。
 
-- 预测15%的代币仍然很难,因为每个隐藏的位置都有许多可行的完成.
-- 图像补丁具有低值.一个未掩盖的邻居通常几乎准确地确定了掩盖补丁的像素.
+- 自然语言每个 token 的熵很高。预测 15% 的 token 仍然困难，因为每个被掩位置都有许多合理的补全。
+- 图像 patch 的熵很低 —— 未掩的邻域往往几乎能完全确定被掩 patch 的像素。要让预测需要语义理解，就必须激进地掩码。
 
-75%是足够高的,以至于简单的空间外分不能解决任务;编码器必须代表图像内容.
+75% 足够高，使简单的空间外推无法解决任务；编码器必须表示图像内容。
 
 ### 线性探测评估
 
-经过自我监督的预训,标准评估是**linear probe**通过将编码器结,将单个线性分类器放在图像网标签上.
+自监督预训练之后，标准评估是**线性探测**（linear probe）：冻结编码器，在其之上针对 ImageNet 标签训练一个单一线性分类器，报告 top-1 准确率。
 
-- 升级率: 低于50%
-- 子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子
-- 果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果果
-- 酸 (酸) 含量:
+- SimCLR ResNet-50：约 71%（2020）
+- DINO ViT-S/16：约 77%（2021）
+- MAE ViT-L/16：约 76%（2022）
+- DINOv2 ViT-g/14：约 86%（2023）
 
-线性探测器是特征质量的纯度衡量;细调通常增加2-5个点,但也会产生头部重训效果.
+线性探测是对特征质量的纯粹度量；微调通常能再提升 2-5 个百分点，但也会混入头部重新训练的影响。
 
 ```figure
 data-augmentation
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:双视图增强管道
+### 第 1 步：双视图增强流水线
 
 ```python
 import torch
@@ -141,9 +141,9 @@ class TwoViewDataset(torch.utils.data.Dataset):
         return v1, v2
 ```
 
-每个__getitem__返回相同图像的两个增长视图;没有需要标签.
+每个 __getitem__ 返回同一图像的两个增强视图；不需要标签。
 
-### 步骤2:InfoNCE损失
+### 第 2 步：InfoNCE 损失
 
 ```python
 import torch.nn.functional as F
@@ -163,9 +163,9 @@ def info_nce(z1, z2, tau=0.1):
     return F.cross_entropy(sim, targets)
 ```
 
-在调用之前,将L2嵌入正常化. `tau=0.1`低的值使损失更为明显,需要更多的负值.
+调用前先对嵌入做 L2 归一化。`tau=0.1` 是 SimCLR 的默认值；更低的温度会使损失更尖锐，并需要更多负样本。
 
-### 步骤3: 智力检查 InfoNCE
+### 第 3 步：InfoNCE 合理性检查
 
 ```python
 z1 = F.normalize(torch.randn(16, 32), dim=-1)
@@ -177,9 +177,9 @@ print(f"InfoNCE with identical pairs:  {loss_same:.3f}")
 print(f"InfoNCE with random pairs:     {loss_random:.3f}")
 ```
 
-偶数对应输出低损失 (对于大型批量和冷温度接近0).随机对应应输出 log(2N-1) = ~log(31) = ~3.4 与16对批量.
+相同配对应给出较低损失（大 batch 且低温时接近 0）。随机配对在 16 对的 batch 下应给出 log(2N-1) ≈ log(31) ≈ 3.4。
 
-### 步骤4:MAE风格的罩
+### 第 4 步：MAE 式掩码
 
 ```python
 def random_mask_indices(num_patches, mask_ratio=0.75, seed=0):
@@ -197,11 +197,11 @@ print(f"visible: {len(visible)} / {num_patches}")
 print(f"masked:  {len(masked)} / {num_patches}")
 ```
 
-实际的MAE实现将这些进行批量并保持每样品面具.
+简单、快速，且对给定随机种子是确定性的。真实的 MAE 实现会按 batch 处理并保留每个样本的掩码。
 
-## 用它
+## 应用它
 
-诺维2是2026年的生产标准:
+DINOv2 是 2026 年的生产标准：
 
 ```python
 import torch
@@ -218,39 +218,39 @@ with torch.no_grad():
     embedding = outputs.last_hidden_state[:, 0]  # CLS token
 ```
 
-结果的768dim嵌入式是现代图像检索,密集通信和零射击传输管道的脊柱.下游任务的细节调整很少需要超过线性头部.
+得到的 768 维嵌入是现代图像检索、密集对应和零样本迁移流水线的骨干。在下游任务上微调很少需要超过一个线性头。
 
-对于图像文本嵌入,SigLIP或OpenCLIP是相当的;对于MAE风格的细调,`timm`通过每一个检查点.
+对于图文嵌入，对应的是 SigLIP 或 OpenCLIP；对于 MAE 式微调，`timm` 仓库提供了所有 MAE 检查点。
 
-## 运送它
+## 交付成果
 
-这一课产生了:
+本课产出：
 
-- `outputs/prompt-ssl-pretraining-picker.md`一个提示,根据数据集的大小,计算和下游任务,选择 SimCLR / MAE / DINOv2.
-- `outputs/skill-linear-probe-runner.md`写出任何结编码器+标记数据集的线性探测评估的技能.
+- `outputs/prompt-ssl-pretraining-picker.md` —— 一个提示词，根据数据集规模、算力和下游任务在 SimCLR / MAE / DINOv2 之间做出选择。
+- `outputs/skill-linear-probe-runner.md` —— 一个技能，为任意冻结编码器 + 标注数据集编写线性探测评估。
 
-## 运动
+## 练习
 
-1. **(Easy)**检查如果您降低了适配嵌入式温度时的 InfoNCE 损失降低了,并且如果您降低了随机嵌入式温度时会增加.`tau in [0.05, 0.1, 0.2, 0.5]`损失和损失
-2. **(Medium)**通过DINO式的中心缓冲器, 显示学生在几个时代内会崩到一个恒定向量.
-3. **(Hard)**训练MAE在CIFAR-100上使用TinyUNet从10课作为脊柱.报告线性探测器的准确性在10,50和200个时代.显示MAE训练的线性探测器在同一1000图片子组上击败了从零开始监督的线性探测器.
+1. **（简单）** 验证：对于对齐良好的嵌入，降低温度时 InfoNCE 损失下降；对于随机嵌入，降低温度时损失上升。绘制 `tau in [0.05, 0.1, 0.2, 0.5]` 与损失的关系图。
+2. **（中等）** 实现 DINO 式的中心化缓冲区。展示在没有中心化的情况下，学生网络会在几个 epoch 内坍缩为一个常向量。
+3. **（困难）** 在 CIFAR-100 上以 Lesson 10 的 TinyUNet 作为骨干训练 MAE。报告 10、50 和 200 epoch 时的线性探测准确率。展示在相同的 1000 张图像子集上，MAE 预训练的线性探测优于从零开始的监督式线性探测。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Self-supervised | "Label-free" | A pretext task that produces useful representations from unlabelled data |
-| Pretext task | "The fake task" | The objective used during SSL (reconstruct patches, match views); discarded after pretraining |
-| Linear probe | "Frozen encoder + linear head" | Standard SSL evaluation: train only a linear classifier on top of frozen features |
-| InfoNCE | "Contrastive loss" | softmax over cosine similarities; positive pair is the target class, all others are negatives |
-| EMA teacher | "Moving-average teacher" | Teacher whose weights are an exponential moving average of the student's; used by BYOL, MoCo, DINO |
-| Mask ratio | "% of patches hidden" | Fraction of patches masked during MAE; 75% for vision, 15% for text |
-| Representation collapse | "Constant output" | SSL failure where the encoder outputs a constant vector for all inputs; prevented by centring, sharpening, or negatives |
-| DINOv2 | "Production SSL backbone" | Meta's 2023 self-supervised ViT; strongest general-purpose image features in 2026 |
+| 自监督 | "无标注" | 一种从无标注数据中产生有用表示的预训练任务 |
+| 预训练任务（pretext task） | "假任务" | SSL 中使用的目标（重建 patch、匹配视图）；预训练后被丢弃 |
+| 线性探测 | "冻结编码器 + 线性头" | 标准 SSL 评估：在冻结特征之上只训练一个线性分类器 |
+| InfoNCE | "对比损失" | 余弦相似度上的 softmax；正样本对是目标类别，其余均为负样本 |
+| EMA 教师 | "滑动平均教师" | 其权重是学生权重的指数滑动平均的教师；BYOL、MoCo、DINO 均使用 |
+| 掩码比例 | "被掩 patch 的百分比" | MAE 期间被掩的 patch 比例；视觉为 75%，文本为 15% |
+| 表示坍缩 | "恒定输出" | SSL 失败情形：编码器对所有输入输出同一常向量；通过中心化、锐化或负样本防止 |
+| DINOv2 | "生产级 SSL 骨干" | Meta 2023 年的自监督 ViT；2026 年最强的通用图像特征 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [SimCLR (Chen et al., 2020)](https://arxiv.org/abs/2002.05709)对比性学习参考
-- [DINO (Caron et al., 2021)](https://arxiv.org/abs/2104.14294)               
-- [MAE (He et al., 2022)](https://arxiv.org/abs/2111.06377)面具自动编码器预训练VIT
-- [DINOv2 (Oquab et al., 2023)](https://arxiv.org/abs/2304.07193)扩大自主监督的ViT到生产特征
+- [SimCLR (Chen et al., 2020)](https://arxiv.org/abs/2002.05709) — 对比学习参考文献
+- [DINO (Caron et al., 2021)](https://arxiv.org/abs/2104.14294) — 带动量、中心化、锐化的师生网络
+- [MAE (He et al., 2022)](https://arxiv.org/abs/2111.06377) — 面向 ViT 的掩码自编码器预训练
+- [DINOv2 (Oquab et al., 2023)](https://arxiv.org/abs/2304.07193) — 将自监督 ViT 扩展到生产级特征

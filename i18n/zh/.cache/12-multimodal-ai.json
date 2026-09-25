@@ -1,15 +1,11 @@
 {
   "phases/12-multimodal-ai/01-vision-transformer-patch-tokens/docs/en.md": "05fc1bb5a0e7a1777da50ae42ea01a6b5ae17c066bf1a5fa8c53208f5482dd60",
   "phases/12-multimodal-ai/02-clip-contrastive-pretraining/docs/en.md": "802bc398424324f3a203a4f8f468f1e21d327372a1a273db23dbe2d675d6d07d",
-  "phases/12-multimodal-ai/03-blip2-qformer-bridge/docs/en.md": "8849ac3172d4edecb50891b890d4a3080f6efd1a7af17ea6c79c86b410a63c28",
   "phases/12-multimodal-ai/04-flamingo-gated-cross-attention/docs/en.md": "ee025c471f27b129edbaa5930c75688306a349f57658b4d4bcf4059cd9919b8f",
   "phases/12-multimodal-ai/05-llava-visual-instruction-tuning/docs/en.md": "8eaf0cdcfc4548e7d44ac0a7cf50fe1b92154b42d99ac715926701719a8ff04c",
-  "phases/12-multimodal-ai/06-any-resolution-patch-n-pack/docs/en.md": "3bcfd1048342a65895d7fc37058bd969df102f9a0cdec1c07320c3f4ca185f52",
-  "phases/12-multimodal-ai/07-open-weight-vlm-recipes/docs/en.md": "a4fd19938cd04d5e5b3bf9edb2284d4ce7cbf3efb499f58f72e20d7f25442d48",
   "phases/12-multimodal-ai/08-llava-onevision-single-multi-video/docs/en.md": "d29e9d9d7f178eb2514a51dbe3324382c5eaad609613ab0f9f1c932bb5c64830",
   "phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/docs/en.md": "9591f7b9c113bd233f066804f4ba79127cac3a1aaef1bf99db613b7c75e5dd54",
   "phases/12-multimodal-ai/10-internvl3-native-multimodal/docs/en.md": "859fcab226b623475ece1a15a9bb46721c8e637fc9888939a5d282fca815b3e4",
-  "phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/docs/en.md": "c5409ecf20aa61fcbb8e9e7203299b4585b047cb2eeaffeb3029e90d1d3eaf31",
   "phases/12-multimodal-ai/12-emu3-next-token-for-generation/docs/en.md": "4ab06008e32cc50c306f7bcd81af826b9fa4431534ea2ef7a653d5bddf614d05",
   "phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/docs/en.md": "fe6e5c16f8fed7f6f61f68dd6f0bda20200527ee585f3faee80fcc779116bfe0",
   "phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/docs/en.md": "c87e6d0054f7b3244a92d39902938128f154c59f5e5aecbc3d1c27055b7e2091",
@@ -19,9 +15,13 @@
   "phases/12-multimodal-ai/18-long-video-million-token/docs/en.md": "d7352a3b7b1c8df360602be567922d19c2950ef714733a024f5ece8fffe50af3",
   "phases/12-multimodal-ai/19-audio-language-whisper-to-af3/docs/en.md": "e804554df688d4902e1d44d47afde4440c7189f55ac0cf9d93d352b37ce9b43f",
   "phases/12-multimodal-ai/20-omni-models-thinker-talker/docs/en.md": "6a61e636804224bc4c0a1530b3f0f26bfdabb46bdf6b31f92f72e5f1d7ebe8c4",
-  "phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/docs/en.md": "74e67225ca1e15d42fa2a561e836c1053ce944c0f11e2706d237294a9550885e",
   "phases/12-multimodal-ai/22-document-diagram-understanding/docs/en.md": "063ffd18e02c1add40116a7a4c3aa86eccae7b93d9e936e7cafa94ae76c13749",
   "phases/12-multimodal-ai/23-colpali-vision-native-rag/docs/en.md": "3e21fa1908caa13e3fd34a6f7ec5e07b208ea4e03a2e18864045bc620bb94a08",
   "phases/12-multimodal-ai/24-multimodal-rag-cross-modal/docs/en.md": "fc9d6c0c73229255a26820e81839b3837a2f7827b49af959bd2db224f1f22272",
-  "phases/12-multimodal-ai/25-multimodal-agents-computer-use/docs/en.md": "388c376120b81d1302dfc355f2f1ef031c32a38b86c476410a050a32af72cb51"
+  "phases/12-multimodal-ai/25-multimodal-agents-computer-use/docs/en.md": "388c376120b81d1302dfc355f2f1ef031c32a38b86c476410a050a32af72cb51",
+  "phases/12-multimodal-ai/03-blip2-qformer-bridge/docs/en.md": "8849ac3172d4edecb50891b890d4a3080f6efd1a7af17ea6c79c86b410a63c28",
+  "phases/12-multimodal-ai/06-any-resolution-patch-n-pack/docs/en.md": "3bcfd1048342a65895d7fc37058bd969df102f9a0cdec1c07320c3f4ca185f52",
+  "phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/docs/en.md": "74e67225ca1e15d42fa2a561e836c1053ce944c0f11e2706d237294a9550885e",
+  "phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/docs/en.md": "c5409ecf20aa61fcbb8e9e7203299b4585b047cb2eeaffeb3029e90d1d3eaf31",
+  "phases/12-multimodal-ai/07-open-weight-vlm-recipes/docs/en.md": "a4fd19938cd04d5e5b3bf9edb2284d4ce7cbf3efb499f58f72e20d7f25442d48"
 }

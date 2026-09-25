@@ -1,6 +1,6 @@
-# 产量量化  AWQ,GPTQ,GGUF K-量子,FP8,MXFP4/NVFP4
+# 生产级量化 — AWQ、GPTQ、GGUF K-quants、FP8、MXFP4/NVFP4
 
-> 量子化格式不是一个普遍的选择. 它是硬件,服务引擎和工作负载的函数. GGUF Q4_K_M或Q5_K_M拥有CPU和边缘,通过 llama.cpp和Ollama提供. 在VLLM中,GPTQ在同一基地需要多个LoRA时获胜. 通过使用 Marlin-AWQ 核,在 7B 类型模型上提供了741 个_tk/s,最好的 Pass@1 在 INT4  作为2026 年的数据中心生产的默认. ,阿达和布莱克威尔的中期保持几乎没有损失,得到广泛支持. NVFP4和MXFP4 (黑微量化) 是积极的,需要每块验证. 两个陷咬人团队:校准数据集必须与部署域匹配,KV缓存与重量量化分开 AWQ课 "我的模型现在是4GB"在生产批量时忘记了10-30GBKV缓存.
+> 量化格式不是一种放之四海而皆准的选择——它取决于硬件、推理引擎和工作负载。GGUF Q4_K_M 或 Q5_K_M 统治 CPU 和边缘设备，通过 llama.cpp 和 Ollama 提供。当你在 vLLM 中需要同一个基座上的多 LoRA 时，GPTQ 是胜者。AWQ 搭配 Marlin-AWQ 内核在 7B 级模型上可达到约 741 tok/s，并在 INT4 格式下拥有最佳的 Pass@1——这是 2026 年数据中心生产环境的默认选择。FP8 在 Hopper、Ada 和 Blackwell 上仍是折中之选——几乎无损且支持广泛。NVFP4 和 MXFP4（Blackwell 微缩放）较为激进，需要逐模型进行分块验证。有两个坑会困扰团队：校准数据集必须匹配部署领域，且 KV 缓存与权重量化是相互独立的——AWQ 教训“我的模型现在只有 4 GB”忽略了在生产批量规模下 10-30 GB 的 KV 缓存。
 
 **Type:** Learn
 **Languages:** Python (stdlib, toy memory and throughput comparison across formats)
@@ -9,132 +9,132 @@
 
 ## 学习目标
 
-- 举个6个生产量化格式和2026年的甜点.
-- 选择给定的硬件格式 (CPU vs GPU,Hopper vs Blackwell),引擎 (vLLM,TRT-LLM, llama.cpp),和工作负载 (例行聊天,推理,多LoRA).
-- 计算保存的重量内存,并为所选格式留下未触及的KV缓存.
-- 命名对域流量量进行量化模型的校准数据集陷.
+- 说出六种生产级量化格式及其在 2026 年的最佳适用场景。
+- 根据硬件（CPU vs GPU、Hopper vs Blackwell）、引擎（vLLM、TRT-LLM、llama.cpp）和工作负载（常规聊天、推理、多 LoRA）选择一种格式。
+- 计算所选格式节省的权重显存，以及未被触及的 KV 缓存大小。
+- 说出会导致量化模型在领域流量上性能退化的校准数据集陷阱。
 
 ## 问题
 
-量子化减少了内存和HBM带宽,这正是解码所需的.FP16 70B模型的重量为140GB.量化重量为INT4 (AWQ或GPTQ),模型为35GB 适合一个H100,可容纳KV缓存,这很重要,因为在2k文本的128个同时序列中,KV缓存仅为20-30GB.
+量化可以减少内存和 HBM 带宽占用，而这正是 decode 阶段所需要的。一个 FP16 的 70B 模型权重达 140 GB。将权重量化为 INT4（AWQ 或 GPTQ）后，模型只有 35 GB——可以装进一块 H100 并留出 KV 缓存的空间，这一点很重要，因为在 128 个并发序列、2k 上下文的情况下，仅 KV 缓存就需要 20-30 GB。
 
-量子化不是免费的. 侵略性量子化降低了质量,特别是在推理重任务上. 不同的格式与不同的引擎工作. 不同的硬件支持不同的精度. 2026 格式动物园是真实的,你不能复制别人的选择.
+但量化不是免费的。激进量化会降低质量，尤其是在推理密集型任务上。不同格式支持不同的引擎。不同硬件原生支持的精度也不同。2026 年的格式生态是真实存在的，你无法照搬别人的选择——你必须基于自己的技术栈来决定。
 
-## 概念
+## 核心概念
 
 ### 六种格式
 
-| Format | Bits | Sweet spot | Engines |
+| 格式 | 位数 | 最佳适用场景 | 引擎 |
 |--------|------|-----------|---------|
-| GGUF Q4_K_M / Q5_K_M | 4-5 | CPU, edge, laptops | llama.cpp, Ollama |
-| GPTQ | 4-8 | Multi-LoRA on vLLM | vLLM, TGI |
-| AWQ | 4 | Datacenter GPU production | vLLM (Marlin-AWQ), TGI |
-| FP8 | 8 | Hopper/Ada/Blackwell datacenter | vLLM, TRT-LLM, SGLang |
-| MXFP4 | 4 | Blackwell multi-user | TRT-LLM |
-| NVFP4 | 4 | Blackwell multi-user | TRT-LLM |
+| GGUF Q4_K_M / Q5_K_M | 4-5 | CPU、边缘设备、笔记本 | llama.cpp、Ollama |
+| GPTQ | 4-8 | vLLM 上的多 LoRA | vLLM、TGI |
+| AWQ | 4 | 数据中心 GPU 生产环境 | vLLM (Marlin-AWQ)、TGI |
+| FP8 | 8 | Hopper/Ada/Blackwell 数据中心 | vLLM、TRT-LLM、SGLang |
+| MXFP4 | 4 | Blackwell 多用户场景 | TRT-LLM |
+| NVFP4 | 4 | Blackwell 多用户场景 | TRT-LLM |
 
-### 关键键字:
+### GGUF — CPU/边缘设备的默认选择
 
-GGUF是一个文件格式,而不是一个量子化方案.它将K-量子变体 (Q2_K,Q3_K_M,Q4_K_M,Q5_K_M,Q6_K,Q8_0) 捆绑在一个容器中.Q4_K_M和Q5_K_M是生产默认的4BF16质量在4-5位.最好的选择是CPU或边缘服务,因为 llama.cpp是迄今为止最快的CPU推断引擎.
+GGUF 是一种文件格式，本身并非量化方案——它将多种 K-quant 变体（Q2_K、Q3_K_M、Q4_K_M、Q5_K_M、Q6_K、Q8_0）打包在一个容器中。Q4_K_M 和 Q5_K_M 是生产默认选择——在 4-5 比特下达到接近 BF16 的质量。对于 CPU 或边缘部署来说是最佳选择，因为 llama.cpp 是目前最快的 CPU 推理引擎。
 
-在vLLM中吞吐量处罚:在7B上~93tok/s 格式不适用于GPU内核.使用GGUF当部署目标是CPU/edge时.否则.
+在 vLLM 中的吞吐量损失：7B 上约 93 tok/s——该格式并未针对 GPU 内核优化。当部署目标是 CPU/边缘时使用 GGUF，否则不用。
 
-### 多洛拉在vLLM中
+### GPTQ — vLLM 中的多 LoRA
 
-GPTQ是一个后训练量化算法,具有校准度过.马林内核在GPU上实现速度2.6倍,而非马林GPTQ. ~712tc/s在7B上.
+GPTQ 是一种带有校准过程的训练后量化算法。Marlin 内核使其在 GPU 上运行迅速（相比非 Marlin 的 GPTQ 有 2.6 倍加速）。7B 上约 712 tok/s。
 
-唯一的胜利:GPTQ-Int4支持vLLM中的LoRA适配器.如果你正在使用基模型加上10-50个细调变量 (每个变量都是LoRA),GPTQ是你的路径.NVFP4尚未支持LoRA2026年初.
+独特优势：GPTQ-Int4 在 vLLM 中支持 LoRA 适配器。如果你需要部署一个基座模型加上 10-50 个微调变体（每个作为 LoRA），GPTQ 就是你的选择。截至 2026 年初，NVFP4 尚不支持 LoRA。
 
-### AWQ 数据中心 GPU 默认
+### AWQ — 数据中心 GPU 的默认选择
 
-激活意识重量量化. 在量化过程中保护了最突出的重量1%.马林-AWQ核: 10.9x速度与天真. 7B 上的741个通/秒,是 INT4 格式中最好的 Pass@1.
+Activation-aware Weight Quantization（激活感知权重量化）。在量化过程中保护约 1% 最显著的权重。Marlin-AWQ 内核：相比朴素实现有 10.9 倍加速。7B 上约 741 tok/s，在 INT4 格式中 Pass@1 最佳。
 
-选择AWQ为新的GPU服务,除非你需要多LoRA (GPTQ) 或积极的Blackwell FP4 (NVFP4).
+对于新的 GPU 部署选择 AWQ，除非你需要多 LoRA（GPTQ）或激进的 Blackwell FP4（NVFP4）。
 
-### 可靠的中部
+### FP8 — 可靠的折中方案
 
-八位浮点.几乎没有损失.广泛支持. 霍珀电压芯以原生方式加速FP8. 黑继承.FP8是安全的2026默认,当质量不可谈判时 (理性,医学,代码代码). 存储量是INT4的一半,但质量风险要低得多.
+8 位浮点数。几乎无损。支持广泛。Hopper Tensor Cores 原生加速 FP8。Blackwell 继承了这一能力。FP8 是 2026 年在质量不可妥协时（推理、医疗、代码生成）的安全默认选择。内存节省是 INT4 的一半，但质量风险要低得多。
 
-### 黑攻击性
+### MXFP4 / NVFP4 — 激进的 Blackwell 选择
 
-微量化FP4.每个重量块都有自己的尺度因子.黑尔子芯上具有侵略性但硬件加速性.每代币的字节减半,而FP8 在17期的经济胜利.
+微缩放 FP4。每个权重块都有各自的缩放因子。虽然激进，但在 Blackwell Tensor Cores 上有硬件加速。相比 FP8，每个 token 的字节数减半——这是 Phase 17 · 07 中的经济效益来源。
 
-洞穴:
-- 目前没有LoRA支持 (2026年初).
-- 在沉重的工作负载上,质量下降明显.
-- 根据模型的评估设置验证.
+注意事项：
+- 尚不支持 LoRA（2026 年初）。
+- 在推理密集型工作负载上可见质量下降。
+- 必须在你的评测集上逐模型验证。
 
-### 校准陷
+### 校准陷阱
 
-AWQ和GPTQ需要一个校准数据集,通常是C4或WikiText.对于域名模型 (代码,医学,法律),在通用网页文本上校准使算法做出错误的决定,关于保护的权重.
+AWQ 和 GPTQ 需要一个校准数据集——通常是 C4 或 WikiText。对于领域模型（代码、医疗、法律），在通用网页文本上校准会让算法对应该保护哪些权重做出错误决策。HumanEval 上的 Pass@1 可能下降几个百分点。
 
-解决方案:在域内数据进行校准.通常需要数百个域名样本. 在运输之前,在评估组上测试.
+解决办法：在领域内数据上校准。数百个领域样本通常就足够了。上线前先在评测集上测试。
 
-### 卡车预存陷
+### KV 缓存陷阱
 
-AWQ将重量缩小到4位.KV缓存是独立的,保持在FP16/FP8.对于AWQ的70B模型:
+AWQ 将权重压缩到 4 比特。KV 缓存是独立的，仍保持 FP16/FP8。对于一个使用 AWQ 的 70B 模型：
 
-- 权重: ~ 35 GB (INT4从 140 GB).
-- 在 128 个同时 × 2k 语境中的 KV缓存: ~ 20 GB.
-- 激活: ~ 5 GB.
-- 总量:60GB 适合H10080GB.
+- 权重：约 35 GB（INT4，原为 140 GB）。
+- KV 缓存（128 并发 × 2k 上下文）：约 20 GB。
+- 激活值：约 5 GB。
+- 总计：约 60 GB——可装进 H100 80GB。
 
-简单地说",我把我的模型量化为4GB",忘记了其他30-50GB.
+天真地说“我把模型量化到了 4 GB”忽略了另外 30-50 GB。必须整体规划 HBM 预算。
 
-单独,KV缓存量化 (FP8 KV或INT8 KV) 是一个不同的选择,它有自己的权衡.
+另外，KV 缓存量化（FP8 KV 或 INT8 KV）是一个独立的选择，有其自身的权衡——它直接影响注意力精度，并非免费的收益。
 
-###  AWQ INT4 对于推理是危险的
+### AWQ INT4 对推理任务有风险
 
-思想链,数学,长文本的代码代码这些显然受到攻击性量化的影响.AWQ INT4在 MATH 上损失3-5分.对于推理重的工作负载,请运送FP8或BF16;接受存储成本.
+思维链、数学、长上下文代码生成——这些任务在激进量化下明显受损。AWQ INT4 在 MATH 上损失约 3-5 个百分点。对于推理密集型工作负载，应部署 FP8 或 BF16；接受内存代价。
 
-### 2026 选用指南
+### 2026 年选择指南
 
-- 处理器/边缘服务:GGUF Q4_K_M.完成.
--  GPU服务,常规聊天,没有LORA: AWQ.
-- 接下来,我们将把它带到一个地方.
-- 推理工作量:FP8.
-- 黑数据中心,验证质量:NVFP4+FP8KV.
-- 模糊:对每个候选人格式进行1000个样本的评估.
+- CPU/边缘部署：GGUF Q4_K_M。就这么定。
+- GPU 部署、常规聊天、无 LoRA：AWQ。
+- GPU 部署、多 LoRA：GPTQ 搭配 Marlin。
+- 推理工作负载：FP8。
+- Blackwell 数据中心、质量已验证：NVFP4 + FP8 KV。
+- 拿不准：对每个候选格式跑一次 1,000 样本的评测。
 
 ```figure
 gpu-memory-breakdown
 ```
 
-## 用它
+## 动手实践
 
-`code/main.py`计算内存足迹 (权重+KV+激活) 和相对吞吐量在六种格式中,用于一系列模型尺寸.显示KV缓存在哪里占主导地位,重量压缩在哪里,以及FP8是安全选择的地方.
+`code/main.py` 针对一系列模型规模，计算六种格式的内存占用（权重 + KV + 激活值）和相对吞吐量。展示 KV 缓存在何处占主导，权重压缩在何处见效，以及 FP8 在何处是安全选择。
 
-## 运送它
+## 上线交付
 
-这一课产生了`outputs/skill-quantization-picker.md`鉴于硬件,模型尺寸,工作负载类型和质量耐受性,选择格式并制定校准/验证计划.
+本课产出 `outputs/skill-quantization-picker.md`。根据硬件、模型规模、工作负载类型和质量容忍度，选定一种格式并生成校准/验证计划。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`对于一个70B模型的128同时和2k文本,计算每个格式的总HBM. 哪个格式允许你适合一个H100 80GB?
-2. 如果你对质量宽容有错,恢复的路径是什么?
-3. 为什么更多数据并不总是更好?
-4. 在7B上,AWQ为什么达到741个单/秒,而原始GPTQ为712个单.
-5. 什么时候可以将 AWQ 重量与FP8 KV缓存相比,保持KV在BF16?
+1. 运行 `code/main.py`。对于一个 70B 模型、128 并发、2k 上下文，计算每种格式的总 HBM 占用。哪种格式能装进一块 H100 80GB？
+2. 你有一个 7B 代码模型。选择一种格式并说明理由。如果你对质量容忍度的判断错了，恢复路径是什么？
+3. 计算为一个医疗领域模型校准 AWQ 所需的校准数据集规模。为什么数据并非越多越好？
+4. 阅读 Marlin-AWQ 内核论文或发布说明。用三句话解释为什么 AWQ 在 7B 上达到 741 tok/s，而原始 GPTQ 只达到约 712。
+5. 什么时候将 AWQ 权重与 FP8 KV 缓存结合是合理的，而不是将 KV 保持在 BF16？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|------------------------|
-| GGUF | "llama.cpp format" | File format bundling K-quant variants; CPU/edge default |
-| Q4_K_M | "Q4 K M" | 4-bit K-quant medium; the production GGUF default |
-| GPTQ | "gee pee tee q" | Post-train INT4 with calibration; supports LoRA in vLLM |
-| AWQ | "a w q" | Activation-aware INT4; Marlin kernels; best Pass@1 at INT4 |
-| Marlin kernels | "fast INT4 kernels" | Custom CUDA kernels for INT4 on Hopper; 10x speedup |
-| FP8 | "eight-bit float" | Safe precision default on Hopper/Ada/Blackwell |
-| MXFP4 / NVFP4 | "microscaling four" | Blackwell 4-bit FP with per-block scale factors |
-| Calibration dataset | "cal data" | Input text used to pick quantization parameters; must match domain |
-| KV cache quantization | "KV INT8" | Separate choice from weights; affects attention accuracy |
+| GGUF | "llama.cpp 格式" | 打包 K-quant 变体的文件格式；CPU/边缘默认选择 |
+| Q4_K_M | "Q4 K M" | 4 比特 K-quant 中等版；生产 GGUF 默认选择 |
+| GPTQ | "gee pee tee q" | 带校准的训练后 INT4；在 vLLM 中支持 LoRA |
+| AWQ | "a w q" | 激活感知 INT4；Marlin 内核；INT4 中最佳 Pass@1 |
+| Marlin 内核 | "快速 INT4 内核" | 面向 Hopper 上 INT4 的定制 CUDA 内核；10 倍加速 |
+| FP8 | "八位浮点" | Hopper/Ada/Blackwell 上的安全精度默认选择 |
+| MXFP4 / NVFP4 | "微缩放四比特" | Blackwell 4 比特 FP，带逐块缩放因子 |
+| 校准数据集 | "cal data" | 用于选择量化参数的输入文本；必须匹配领域 |
+| KV 缓存量化 | "KV INT8" | 与权重相互独立的选择；影响注意力精度 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [VRLA Tech — LLM Quantization 2026](https://vrlatech.com/llm-quantization-explained-int4-int8-fp8-awq-and-gptq-in-2026/)比较基准.
-- [Jarvis Labs — vLLM Quantization Complete Guide](https://jarvislabs.ai/blog/vllm-quantization-complete-guide-benchmarks)按格式的吞吐量数.
-- [PremAI — GGUF vs AWQ vs GPTQ vs bitsandbytes 2026](https://blog.premai.io/llm-quantization-guide-gguf-vs-awq-vs-gptq-vs-bitsandbytes-compared-2026/)按格式选择.
-- [vLLM docs — Quantization](https://docs.vllm.ai/en/latest/features/quantization/index.html)支持的格式和旗.
-- [AWQ paper (arXiv:2306.00978)](https://arxiv.org/abs/2306.00978) AWQ原始表达式.
-- [GPTQ paper (arXiv:2210.17323)](https://arxiv.org/abs/2210.17323)原始GPTQ制剂.
+- [VRLA Tech — LLM Quantization 2026](https://vrlatech.com/llm-quantization-explained-int4-int8-fp8-awq-and-gptq-in-2026/) — 对比基准测试。
+- [Jarvis Labs — vLLM Quantization Complete Guide](https://jarvislabs.ai/blog/vllm-quantization-complete-guide-benchmarks) — 各格式的吞吐量数据。
+- [PremAI — GGUF vs AWQ vs GPTQ vs bitsandbytes 2026](https://blog.premai.io/llm-quantization-guide-gguf-vs-awq-vs-gptq-vs-bitsandbytes-compared-2026/) — 逐格式选择指南。
+- [vLLM docs — Quantization](https://docs.vllm.ai/en/latest/features/quantization/index.html) — 支持的格式与参数。
+- [AWQ paper (arXiv:2306.00978)](https://arxiv.org/abs/2306.00978) — AWQ 原始论文。
+- [GPTQ paper (arXiv:2210.17323)](https://arxiv.org/abs/2210.17323) — GPTQ 原始论文。

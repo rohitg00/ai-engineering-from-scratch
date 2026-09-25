@@ -1,19 +1,19 @@
-#  宪法规则引擎
+# Capstone 86 — 宪法规则引擎
 
-> 规则是个名字,一个预言,一个解释.
+> 一条规则由名称、谓词和解释组成。缺少三者之一的任何东西都只是一种感觉，而不是规则。
 
 **Type:** Build
 **Languages:** Python, YAML
-**Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
-**Time:** ~90 min
+**Prerequisites:** Phase 18 安全课程、Phase 19 Track A 课程 25-29
+**Time:** ~90 分钟
 
 ## 问题
 
-类别表包括可识别的故障. 规则引擎涵盖合同引擎. 一个编码助理写作团队希望有一个限制,比如"包含代码的每个响应都必须以可运行的区块或声明的假设结束".一个运行客户支持机器人的团队希望"每个拒绝都必须提供下一步".这些限制不是自然的分类器目标. 它们是对响应,对话和系统政策的预言,
+分类器覆盖可识别的失败。规则引擎覆盖契约性的失败。编写编码助手的团队希望有一个约束，例如"每个包含代码的响应必须以可运行的代码块或明确的假设结尾"。运营客服机器人的团队希望"每个拒绝都必须提供下一步"。这些约束并不是自然的分类器目标。它们是关于响应、对话和系统策略的谓词，并且需要让非工程师也能读懂。
 
-诚实代表是声明文件. 宪法与代码一起存在,在版本控制中,有单独的审查过程. 每个规则都有一个`name`其他`predicate`其他`severity`其他`explanation`引擎将文件加载,根据候选输出评估每个规则,并返回结构化`Violation`根据这项规则的执行,`all_of`现在`any_of`其他`not_`因此,一个单一的规则可以表达"如果响应包含代码,它必须以可运行的区块结束,而不是仅引用内部库".
+诚实的表示方式是一个声明式文件。宪法以 YAML 形式与代码并存，纳入版本控制，并有独立的评审流程。每条规则有一个 `name`、一个 `predicate`、一个 `severity` 和一个 `explanation` 模板。引擎加载该文件，针对候选输出评估每条规则，并为每条触发的规则返回结构化的 `Violation`。本 capstone 中的规则引擎使用 `all_of`、`any_of` 和 `not_` 组合谓词，因此单条规则就能表达"如果响应包含代码，则必须以可运行的代码块结尾 AND 不得引用仅限内部的库"。
 
-另一半是修改. 只有块的规则引擎是半构成的. 规则引擎提出修复的操作效果很好:助理起草了响应,引擎标记了违规行为,修复器产生了修改的响应,引擎确认修改符合规则. 课程中,在草案和修订中,必须设置一个最小的固定器 (每条规则的回复替换) 和结构化差异 (线后补充,删除,修改).
+本课的另一半内容是修订。只会阻止的规则引擎只完成了一半。能提出修复方案的规则引擎在运营上才有用：助手起草响应，引擎标记违规，修复器生成修订后的响应，引擎确认修订满足规则。本课附带一个最小修复器（每条规则的 regex 替换）以及草稿与修订之间的结构化 diff（逐行的添加、删除、编辑）。
 
 ## 概念
 
@@ -27,7 +27,7 @@ flowchart LR
   D -.->|diff| R
 ```
 
-一个规则有形状
+规则的形式为
 
 ```yaml
 - name: end-with-runnable-or-assumption
@@ -43,55 +43,55 @@ flowchart LR
     append_if_missing: "\n\nAssumption: example inputs are valid."
 ```
 
-预测是原子的:`contains_regex`现在`not_contains_regex`现在`ends_with_regex`现在`starts_with_regex`现在`max_words`现在`min_words`作品是`all_of`现在`any_of`现在`not_`引擎评估`applies_when`首先,如果不适用规则,违规行为将被记录为`not_applicable`否则,引擎会评估`must`它们是的.`pass`或`violation`现在,我们要去.
+谓词是原子的：`contains_regex`、`not_contains_regex`、`ends_with_regex`、`starts_with_regex`、`max_words`、`min_words`。组合方式是 `all_of`、`any_of`、`not_`。引擎先评估 `applies_when`；如果规则不适用，则该违规被记录为 `not_applicable`。否则，引擎评估 `must` 并产生 `pass` 或 `violation`。
 
-严重性`low`现在`medium`现在`high`后游门 (下游门87) 处理一个`high`违反规则的行为与`high`归类判决:封锁.
+严重级别为 `low`、`medium`、`high`，与课程 85 一致。下游门控（课程 87）将 `high` 规则违规与 `high` 分类器判定同等对待：阻止。
 
-固定器是声明操作列表: `append_if_missing`现在`prepend_if_missing`现在`replace_regex`每个操作都将一个规则按名称映射到一个转换.固定器是故意限制在本地编辑;结构重写属于一个不涵盖的单独拒绝和帮助层.
+修复器是一个声明式操作列表：`append_if_missing`、`prepend_if_missing`、`replace_regex`。每个操作按名称将一条规则映射到一个变换。修复器有意仅限于局部编辑；结构性重写属于单独的拒绝-引导层，本课不涉及。
 
-根据原始和修改的情况计算了差异.`Change`记录`op`下游门可以记录差异,因此人类审查员随着时间的推移来审核固定器的行为.
+diff 基于原始文本和修订文本计算。它是一个 `Change` 记录列表，带有 `op`（add、remove、edit）以及相关文本。下游门控可以记录 diff，以便人类评审员随时间审计修复器的行为。
 
 ```figure
 cd-constitution-loop
 ```
 
-## 建立它
+## 动手构建
 
-`code/rules.yml`车在车里.`code/main.py`接收一个YAML文件 (当PyYAML可用时) 或一个JSON文件 (内置).`rules.yml`课程测试了两个代码路径.`code/main.py`定义了`Engine`其他`Fixer`类和一个`diff`复制性评价: 复制性评价:`any_of`现在,我们要去.
+`code/rules.yml` 保存宪法。`code/main.py` 中的加载器接受 YAML 文件（当 PyYAML 可用时）或 JSON 文件（内置）。本课附带一个 `rules.yml`，课程测试会通过两条代码路径对其进行解析。`code/main.py` 定义了 `Engine` 和 `Fixer` 类以及一个 `diff` 函数。组合通过短路方式递归评估，在 `any_of` 上短路。
 
-宪法如下:
+随附的宪法包含：
 
-- `no-empty-refusal`(中) -拒绝必须包括建议或转向
-- `end-with-runnable-or-assumption`(中) - 代码响应必须清洁地关闭
-- `no-pii-in-examples`(高) - 实例数据不得包含电子邮件或电话形状
-- `cite-when-asserting-fact`(低) - 开始于"根据"的行必须包含括号引用
-- `no-internal-library-leak`语`internal-only`其他`policybot-internal`必须在输出中不显示
-- `bounded-length`(低) - 答案不得超过800字
+- `no-empty-refusal` (medium) - 拒绝必须包含建议或重定向
+- `end-with-runnable-or-assumption` (medium) - 代码响应必须干净地收尾
+- `no-pii-in-examples` (high) - 示例数据不得包含邮箱或电话形态
+- `cite-when-asserting-fact` (low) - 以 "According to" 开头的行必须包含括号引用
+- `no-internal-library-leak` (high) - 单词 `internal-only` 和 `policybot-internal` 不得出现在输出中
+- `bounded-length` (low) - 响应不得超过 800 词
 
-## 用它
+## 使用
 
-`python3 main.py`演示程序通过引擎运行三个草案响应, 打印违规, 运行调整器, 打印差异,`outputs/rules_report.json`一个固定件有不适用的规则 (草案中没有代码块),报告显示`not_applicable`根据这个规则,团队看到引擎明确评估它.
+`python3 main.py`。演示将三份草稿响应送入引擎，打印违规，运行修复器，打印 diff，并写出 `outputs/rules_report.json`。其中一个用例包含一条不适用的规则（草稿中没有代码块），报告对该规则显示 `not_applicable`，以便团队看到引擎明确评估了它。
 
-## 运送它
+## 上线
 
-`outputs/skill-constitutional-rules-engine.md`文件说明规则语法和固定器操作.
+`outputs/skill-constitutional-rules-engine.md` 记录了规则语法和修复器操作。
 
-## 运动
+## 练习
 
-1. 添加一个规则,要求每一个回答都包括"如果这是紧急的"这个短语,当提示提到安全.
-2. 替换Regex固定器用取名插槽的模板固定器. 展示一个规则在新的设计中重写.
-3. 添加一个指标终点, 给出一个草案, 返回每条规则违规率,
+1. 添加一条规则：当提示中提到安全时，每个响应都必须包含短语 "If this is urgent"。使用组合。
+2. 将 regex 修复器替换为接受命名槽位的模板修复器。演示在新设计下重写的一条规则。
+3. 添加一个指标端点：给定一批草稿，返回每条规则的违规率，以便团队看到哪条规则触发过于频繁。
 
-## 关键词
+## 关键术语
 
-| Term | Common usage | Precise meaning |
+| 术语 | 常见用法 | 精确含义 |
 |---|---|---|
-| constitution | a vague policy doc | a YAML file of rules with predicates, severities, and explanations |
-| predicate | a check | a callable from text to bool, atomic or composed via all_of/any_of/not_ |
-| violation | a failure | a structured record with rule name, severity, explanation, and matched span |
-| fixer | a model fine-tune | a deterministic per-rule transform mapping draft to revised |
-| diff | a string compare | a structured list of add, remove, edit operations between draft and revised |
+| constitution | 一份含糊的策略文档 | 一个包含谓词、严重级别和解释的 YAML 规则文件 |
+| predicate | 一次检查 | 一个从文本到布尔值的可调用对象，可为原子或通过 all_of/any_of/not_ 组合 |
+| violation | 一次失败 | 一条结构化记录，包含规则名称、严重级别、解释和匹配的片段 |
+| fixer | 一次模型微调 | 一个确定性的按规则变换，将草稿映射为修订 |
+| diff | 字符串比较 | 草稿与修订之间 add、remove、edit 操作的结构化列表 |
 
-## 进一步阅读
+## 延伸阅读
 
-课程87将此发动机与输入侧检测器和输出侧分类器组成一个安全门.
+课程 87 将本引擎与输入侧检测器和输出侧分类器组合为单一的安全门控。

@@ -1,31 +1,27 @@
-# 代理技能:可携带合同和运行时间限制
+# Agent Skills：可移植契约与运行时边界
 
-> 技能不是一个更好的文件名的长时间提示,而是一个可发现的指令,资源和可执行的辅助工具包,通过运行时间合同进入代理的环境.
+> 技能不是一个名字更好记的长提示词。它是一个可发现的指令、资源与可执行辅助程序包，通过运行时契约进入 agent 的上下文。
 
 **Type:** Build
 **Languages:** Python (stdlib)
-**Prerequisites:** Phase 13 · 01 (The Tool Interface), Phase 13 · 05 (Tool Schema Design)
-**Time:** ~90 minutes
+**Prerequisites:** Phase 13 · 01（The Tool Interface）、Phase 13 · 05（Tool Schema Design）
+**Time:** 约 90 分钟
 
 ## 学习目标
 
-- 定义一个代理技能,而不用把它混为一谈, 提示,存储器指令,工具,,子器或插件.
-- 阅读手机`SKILL.md`合同和分离其与运行时间特定的延长.
-- 解释发现,选择,激活,资源加载,工具使用和验证作为生命周期的不同阶段.
-- 在运行时间之前验证技能包,
-- 选择一个技能,MCP工具,子,子弹或普通代码来完成具体任务.
+- 定义 agent 技能，不将其与提示词、仓库指令、工具、hook、子代理或插件混淆。
+- 阅读可移植的 `SKILL.md` 契约，并将其与运行时特有的扩展区分开。
+- 将发现、选择、激活、资源加载、工具使用和验证解释为彼此独立的生命周期阶段。
+- 在运行时将技能包放入 agent 目录之前对其进行校验。
+- 针对具体任务在技能、MCP 工具、hook、子代理或普通代码之间做出选择。
 
-## 十分钟的第一次成功
+## 十分钟内的首次成功
 
-在长时间解释之前,你会创造一个小技能,
-通过使用完整的审查器捆绑到一个真正的代理主机,
-结果,然后取消它. 这证明了生命周期,
+先做这一步，再看后面的长篇解释。你将创建一个小技能，把完整的 reviewer 包安装到真实的 agent 宿主中，调用它，验证结果，然后卸载它。这通过可观察的结果证明了整个生命周期。
 
-### 飞往真正的宿主实验室的前航班
+### 真实宿主实验的前置检查
 
-实际主机检查点需要Node.js,`npx`选择一个
-能使用技能的主机,并写入您选择的项目或用户范围
-首先要检查本地命令:
+真实宿主检查点需要 Node.js、`npx`、Python 3、一个选定支持技能的宿主，以及你在安装器中选择的 project 或 user 作用域的写权限。先验证本地命令：
 
 ```bash
 node --version
@@ -33,15 +29,11 @@ npx --version
 python3 --version
 ```
 
-在安装之前,决定您将使用哪个主机和范围.
-您可以在网站上阅读本课程或继续阅读
-后面的手动包练习.
-没有证明主机发现,调用,捆绑脚本执行,或
-让这些观察留下标记.
+在安装之前决定使用哪个宿主和作用域。如果任何条件不可用，请在网站上阅读本课，或继续做下面的手动包练习。该后备路径能教会你契约，但无法证明宿主发现、调用、捆绑脚本执行或卸载行为。把这些观察标记为待完成。
 
-### 1. 在空白的工作目录中启动
+### 1. 从一个空的工作目录开始
 
-在任何学习工作的父母目录中运行这些命令:
+在你存放学习工作的任意父目录下运行以下命令：
 
 ```bash
 mkdir -p agent-skills-first-run
@@ -51,16 +43,15 @@ printf 'TARGET_ROOT=%s\n' "$TARGET_ROOT"
 ls -A
 ```
 
-如果它打印文件,选择不同的命令.
-没有任何文件,所以审查有明确的界限.
+最后一条命令不应打印任何内容。如果它打印了文件，请选择另一个空目录，以便评审有清晰的边界。
 
-创建一个目录,以学习你的第一技能:
+为你的第一个技能创建目录：
 
 ```bash
 mkdir -p my-first-skill
 ```
 
-创建`my-first-skill/SKILL.md`含有以下内容:
+创建 `my-first-skill/SKILL.md`，内容如下：
 
 ```markdown
 ---
@@ -75,30 +66,25 @@ If the notes do not contain a decision, ask one clarifying question instead
 of inventing one.
 ```
 
-检查您是否创建文件在预期目录中:
+确认你已在预期的目录中创建了该文件：
 
 ```bash
 test -f my-first-skill/SKILL.md
 ```
 
-没有输出和出口代码0意味着文件存在.
+无输出且退出码为 0 表示文件存在。
 
-### 2. 安装完整的审核器包
+### 2. 安装完整的 reviewer 包
 
-留在里面`agent-skills-first-run`运行:
+停留在 `agent-skills-first-run` 目录中并运行：
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch --skill skill-contract-reviewer --full-depth
 ```
 
-选择您使用的代理主机和范围.安装器应该列出
-`skill-contract-reviewer`它们写的目的地.`--full-depth`是
-需要因为这个课程的技能是一个嵌套的集群,
-剧本,一个资产.
+选择你正在使用的 agent 宿主和作用域。安装器应列出 `skill-contract-reviewer` 及其写入的目标位置。必须加上 `--full-depth`，因为本课的技能是一个包含引用、脚本和资产的嵌套包。
 
-设置`SKILL_ROOT`必须将其转移到安装器报告的绝对目录中.
-包含安装的目录`SKILL.md`没有课源
-目录,而不是当前的工作空间:
+将 `SKILL_ROOT` 设置为安装器报告的绝对目录。它必须是包含已安装 `SKILL.md` 的目录，而不是课程源码目录，也不是当前工作区：
 
 ```bash
 # Replace the placeholder with the destination printed by the installer.
@@ -107,132 +93,118 @@ test -f "$SKILL_ROOT/SKILL.md"
 printf 'SKILL_ROOT=%s\n' "$SKILL_ROOT"
 ```
 
-如果代理会话已经开放,启动新的会话或使用主机的
-不要假设每个主机都热重新加载了其目录.
+如果 agent 会话早已打开，请启动新会话，或使用该宿主的技能重扫描命令。不要假设所有宿主都会热重载其目录。
 
-### 3. 直接要求
+### 3. 显式调用它
 
-在安装的代理中,`agent-skills-first-run`作为工作
-导录,使用该主机支持的语法:
+在已安装的 agent 中，以 `agent-skills-first-run` 为工作目录，使用该宿主支持的语法：
 
-| Host | Explicit invocation |
+| 宿主 | 显式调用 |
 |---|---|
-| Codex | `skill-contract-reviewer`, or choose it from `/skills`, then provide the review request |
-| Claude Code | `/skill-contract-reviewer` followed by the review request |
-| Portable fallback | `Use skill-contract-reviewer to review the target package.` |
+| Codex | `skill-contract-reviewer`，或从 `/skills` 中选择它，然后提供评审请求 |
+| Claude Code | `/skill-contract-reviewer` 后接评审请求 |
+| 可移植后备方式 | `Use skill-contract-reviewer to review the target package.` |
 
-使用打印的绝对值为 `SKILL_ROOT`其他`TARGET_ROOT`在
-要求主机在执行之前扩展它们,并显示确切的
-解决命令,而不是依赖进程工作目录的命令:
+在请求中使用为 `SKILL_ROOT` 和 `TARGET_ROOT` 打印出的绝对值。要求宿主在执行前展开它们，并展示解析后的确切命令，而不是依赖进程工作目录的命令：
 
 ```text
 Use skill-contract-reviewer to review <TARGET_ROOT>/my-first-skill. The installed bundle root is <SKILL_ROOT>. Run python3 <SKILL_ROOT>/scripts/check_skill.py <TARGET_ROOT>/my-first-skill. Before running it, show the fully resolved argv. Return the validation report, selected primitives, and one sentence for each selection. Include the resolved script path, resolved target path, cwd, argv, and exit code as execution evidence.
 ```
 
-解析命令应以此形式,没有留下任何位置持有符:
+解析后的命令应呈现如下形态，且不残留任何占位符：
 
 ```bash
 python3 "/absolute/install/path/skill-contract-reviewer/scripts/check_skill.py" \
   "/absolute/workspace/path/agent-skills-first-run/my-first-skill"
 ```
 
-成功的结果具有三个特征:
+成功的结果须同时具备以下三个性质：
 
-1. 宿主发现了`skill-contract-reviewer`通过名字.
-2. 审查员阅读包裹合同并运行其捆绑验证器.
-3. 答案包含了没有结构错误的验证报告
-   样本,加上合理的原始选择.
+1. 宿主能按名称找到 `skill-contract-reviewer`。
+2. 评审者读取包契约并运行其捆绑的校验器。
+3. 响应包含一份校验报告，对样例没有结构错误，并给出有依据的原语选择。
 
-执行证据还必须指定脚本路径,目标路径,
-没有这些字段的流动报告不能
-证明安装的伴侣脚本运行.
+执行证据还必须给出脚本路径、目标路径、cwd、确切的参数向量和退出码。一份流畅但没有这些字段的报告，无法证明已安装的配套脚本真的运行过。
 
-如果主机报告该技能不可用,请验证安装
-目的地,重新扫描或重新启动一次,再尝试明确的请求.
-改写技能描述以掩盖安装故障.
+如果宿主报告技能不可用，请核对安装目标位置，重扫描或重启一次，然后重试显式请求。不要改写技能描述来掩盖安装失败。
 
-### 4. 探测器隐含选择
+### 4. 探测隐式选择
 
-开始一个新的代理转换,然后进入同一个任务,
+开启一个全新的 agent 回合，在不点名技能的情况下输入相同任务：
 
 ```text
 Review <TARGET_ROOT>/my-first-skill as a reusable agent package and tell me whether its package contract is valid.
 ```
 
-如果主机暴露出选定的技能,请记录是否选择
-`skill-contract-reviewer`如果主机不显示路由,
-显而易见的呼唤是可移植的倒退.
+如果宿主暴露被选中的技能，记录它是否选择了 `skill-contract-reviewer`。如果宿主不暴露路由信息，则将隐式选择标记为未验证。显式调用是可移植的后备方式。
 
 ### 5. 清理
 
-删除仅安装的审视器捆绑:
+只移除已安装的 reviewer 包：
 
 ```bash
 npx skills remove skill-contract-reviewer
 ```
 
-选择安装过程中使用的相同主机和范围.
-会议,一个明确的要求`skill-contract-reviewer`报告
-没有任何可用.`my-first-skill`对于后期课程,或取消
-在你完成了轨道后,
+选择与安装时相同的宿主和作用域。在重扫描或新会话之后，对 `skill-contract-reviewer` 的显式请求应报告其不可用。保留 `my-first-skill` 以便后续课程使用，或在完成本学习路线后删除实验目录。
 
-## 问题
+## 问题所在
 
-假设你的团队有一个可靠的发布工作流程. 它会找到合并的变化,检查迁移说明,更新变更日志,运行一个包装命令,并生成一个审查检查列表.
+假设你的团队有一套可靠的发布流程。它会查找已合并的变更、检查迁移说明、更新变更日志、运行打包命令，并生成一份评审清单。
 
-通过将工作流放到一个提示中,它可以轻松粘贴并难以操作.提示没有稳定的身份,没有发现规则,没有资源界限,没有可测试的包装形状,并且没有答案:谁可以调用它?模型应该何时选择它?它可以运行哪些脚本?哪些文件是可信的?当环境被压缩时,什么存活?
+把这套流程塞进一个提示词里，粘贴很方便，却难以运营。这个提示词没有稳定标识、没有发现规则、没有资源边界、没有可测试的包形态，也无法回答这些基本问题：谁可以调用它？模型何时应选择它？它能运行哪些脚本？哪些文件是可信的？上下文被压缩时什么会留存？
 
-对于这些问题来说,我们必须要把它们放在一个单独的位置,并把它们放在一个单独的位置.`SKILL.md`根据一个主机的无证行为,
+相反的错误是把每段可复用指令都当成技能。仓库约定、确定性自动化、外部工具、事件 hook 和委派代理解决的是不同的问题。把它们全部塞进 `SKILL.md` 会产出一个看似可移植、实则依赖某一宿主未公开行为的目录。
 
-首先要做的是分类,然后决定如何包装.
+第一项工程任务是分类。在决定如何打包之前，先决定这个工件是什么。
 
 ## 概念
 
-### 技能编码程序知识
+### 技能编码程序性知识
 
-代理技能是一个目录,其入口点是`SKILL.md`输入文件包含YAML前列,然后是Markdown指令.目录也可以包含参考,脚本和资产.
+agent 技能是一个目录，其入口是 `SKILL.md`。入口文件包含 YAML frontmatter 及其后的 Markdown 指令。目录中还可以包含引用、脚本和资产。
 
 ```figure
 skill-package-anatomy
 ```
 
-文件是可部署的单元.`SKILL.md`没有引用的包装是破碎的,即使它的前面材料被解析.
+部署单元是目录本身，而不只是那个 Markdown 文件。一份缺少引用的、被复制出来的 `SKILL.md` 是残缺的包，即使其 frontmatter 能被解析。
 
-### 周边的抽象
+### 相邻的抽象
 
-| Artifact | Primary job | Loaded or run when | What it should not impersonate |
+| 工件 | 主要职责 | 何时加载或运行 | 不应冒充的角色 |
 |---|---|---|---|
-| Prompt | Shape one model interaction | Included by an application or user | A versioned package with resources |
-| Repository instructions | Explain one codebase's standing rules | A coding runtime enters that scope | A reusable task workflow |
-| Agent skill | Supply reusable procedural knowledge | Explicit or implicit activation | A hard authorization boundary |
-| MCP tool | Expose a typed remote capability | The model or application calls it | A detailed operating procedure |
-| Hook | Run deterministic logic on an event | The declared event occurs | Probabilistic model routing |
-| Subagent | Delegate work with separate context and state | An orchestrator creates or calls it | A static instruction bundle |
-| Plugin | Distribute a larger runtime extension | The host installs or enables it | The portable skill contract itself |
-| Learned skill library | Store behavior discovered through experience | A policy retrieves a prior program or trajectory | A standards-based `SKILL.md` package |
+| 提示词 | 塑造一次模型交互 | 由应用或用户引入 | 带资源的版本化包 |
+| 仓库指令 | 说明一个代码库的长期规则 | 编码运行时进入该作用域 | 可复用的任务工作流 |
+| Agent 技能 | 提供可复用的程序性知识 | 显式或隐式激活 | 硬性授权边界 |
+| MCP 工具 | 暴露带类型的远程能力 | 模型或应用调用它 | 详细的操作规程 |
+| Hook | 在事件上运行确定性逻辑 | 声明的事件发生 | 概率性的模型路由 |
+| 子代理 | 以独立上下文和状态委派工作 | 编排器创建或调用它 | 静态指令包 |
+| 插件 | 分发更大的运行时扩展 | 宿主安装或启用它 | 可移植技能契约本身 |
+| 已学习技能库 | 存储通过经验发现的行为 | 策略检索先前的程序或轨迹 | 基于标准的 `SKILL.md` 包 |
 
-释放技能可以告诉代理人如何检查释放.一个MCP服务器可以暴露释放注册表.一个子可以禁止直接推.一个副官可以独立审计候选人.这些件是由因为它们保持不同的责任组成.
+一个发布技能可以告诉 agent 如何审查一次发布。一个 MCP 服务器可以暴露发布注册表。一个 hook 可以禁止直接推送。一个子代理可以独立审计候选发布。这些组件之所以能组合，是因为它们承担着不同的职责。
 
-### 技能是两个不同的概念.
+### “技能”一词指向两种不同的概念
 
-研究系统有时会称学习的程序,成功的轨迹或环境特定的政策碎片为技能. 代理人在探索过程中可以创建这些文物,根据任务相似性检索它们,执行它们,并根据反修改图书馆.
+研究系统有时会把学习到的程序、成功轨迹或环境特定的策略片段称为技能。agent 可以在探索过程中创建这些工件、按任务相似性检索、执行它们，并根据反馈修订这个库。Phase 14 · 10 构建的就是这种终身学习库。
 
-这部小轨道中的代理技能不同.它是一个由作者编制的包,包含声明的文件系统合同,目录元数据,渐进披露,运行时间调用调用和主机控制的工具.它可以由代理生成或改进,但学习不需要格式.
+本小型课程单元中的 Agent Skill 则不同。它是一个经人工编写的包，具有声明的文件系统契约、目录元数据、渐进披露、运行时中介的调用，以及由宿主控制的工具。它可以由 agent 生成或改进，但学习并非该格式所必需。
 
-| Dimension | Agent Skill package | Learned skill library |
+| 维度 | Agent Skill 包 | 已学习技能库 |
 |---|---|---|
-| Primary unit | `SKILL.md` directory | Program, policy, trajectory, or memory record |
-| Creation | Authored, generated, or curated | Usually discovered from environment experience |
-| Selection | Catalog description plus runtime policy | Retrieval or policy over task state |
-| Execution | Model follows instructions and calls host tools | Environment runs a stored behavior or code artifact |
-| Portability | Package contract can cross compatible hosts | Often tied to one environment and action space |
-| Evaluation | Routing, artifact, safety, and host compatibility | Reward, success rate, transfer, and library growth |
+| 基本单元 | `SKILL.md` 目录 | 程序、策略、轨迹或记忆记录 |
+| 创建 | 编写、生成或人工策划 | 通常从环境经验中发现 |
+| 选择 | 目录描述加运行时策略 | 基于任务状态的检索或策略 |
+| 执行 | 模型遵循指令并调用宿主工具 | 环境运行存储的行为或代码工件 |
+| 可移植性 | 包契约可跨兼容宿主迁移 | 常与单一环境和动作空间绑定 |
+| 评估 | 路由、工件、安全与宿主兼容性 | 奖励、成功率、迁移与库增长 |
 
-两种想法都包含可重复使用的能力.
+两种概念都打包了可复用的能力。它们不应仅因同名就在实现主张上混为一谈。
 
-### 移动核心
+### 可移植核心
 
-代理技能规范需要两个前面材料领域:
+Agent Skills 规范要求两个 frontmatter 字段：
 
 ```yaml
 ---
@@ -241,18 +213,18 @@ description: Inspect a release candidate when the user asks whether a version is
 ---
 ```
 
-`name`必须符合规范的命名规则,并与母目录相匹配. `description`需要说明技能是什么,什么时候适用.
+`name` 是稳定标识符。它必须满足规范的命名规则，并与父目录名一致。`description` 既是文档也是路由元数据。它应说明该技能做什么、何时适用。
 
-可移植的可选字段是:
+可移植的可选字段为：
 
-| Field | Purpose | Portability note |
+| 字段 | 用途 | 可移植性说明 |
 |---|---|---|
-| `license` | State the terms for the package | Core specification |
-| `compatibility` | State environmental requirements | Core specification |
-| `metadata` | Carry string-valued extension data | Core specification |
-| `allowed-tools` | Suggest pre-approved tools | Experimental; host support varies |
+| `license` | 声明包的使用条款 | 核心规范 |
+| `compatibility` | 声明环境要求 | 核心规范 |
+| `metadata` | 承载字符串值的扩展数据 | 核心规范 |
+| `allowed-tools` | 建议预先批准的工具 | 实验性；宿主支持程度不一 |
 
-马克唐机构拥有操作说明. 它应该定义工作流程,决策点,失败行为,以及直接通向支持资源的路径.
+Markdown 正文承载操作性指令。它应定义工作流、决策点、失败行为，以及指向支持资源的直接路径。
 
 ```markdown
 # Release readiness
@@ -266,33 +238,33 @@ Use this workflow for a release candidate, not for ordinary development builds.
 5. Ask for approval before any publish or tag action.
 ```
 
-### 运行时间扩展是第二层
+### 运行时扩展是第二层
 
-有些主机可以接受额外的前置或伴侣配置.这些字段可能是有用的,但它们不自动移植.
+一些宿主接受额外的 frontmatter 或伴随配置。这些字段可能有用，但并不自动可移植。
 
-| Behavior | Example host extension | Portable core? |
+| 行为 | 宿主扩展示例 | 属于可移植核心？ |
 |---|---|:---:|
-| Hide a skill from model routing while keeping direct user invocation | `disable-model-invocation` | No |
-| Hide a skill from the user's command menu while allowing model routing | `user-invocable` | No |
-| Show argument help in a command menu | `argument-hint` | No |
-| Run the skill in delegated context | `context`, `agent` | No |
-| Pin model or reasoning settings | `model`, `effort` | No |
-| Register lifecycle automation | `hooks` | No |
-| Disable implicit invocation in Codex | `agents/openai.yaml` policy | No |
+| 对模型路由隐藏技能，但保留用户的直接调用 | `disable-model-invocation` | 否 |
+| 对用户命令菜单隐藏技能，但允许模型路由 | `user-invocable` | 否 |
+| 在命令菜单中显示参数帮助 | `argument-hint` | 否 |
+| 在委派上下文中运行技能 | `context`、`agent` | 否 |
+| 固定模型或推理设置 | `model`、`effort` | 否 |
+| 注册生命周期自动化 | `hooks` | 否 |
+| 在 Codex 中禁用隐式调用 | `agents/openai.yaml` 策略 | 否 |
 
-处理每个扩展程序都像一个适配器. 保持核心工作流程没有它有效,记录下后退,并测试使用它的主机. 运行时间可能会忽视一个未知的字段,拒绝它,或保存它,而不实施行为.
+把每个扩展都当作适配器。核心工作流必须在没有它的情况下仍然有效，记录后备方式，并在消费它的宿主上进行测试。运行时可能忽略未知字段、拒绝它，或在不实现对应行为的情况下保留它。
 
-### 前列是可执行的元数据
+### Frontmatter 是可执行的元数据
 
-在技能体被读取之前,元数据改变系统行为.
+元数据会在技能正文被读取之前改变系统行为。
 
-- 一个形的`name`发现可能会失败.
-- 的`description`能引导错误的请求.
-- 只有人类的旗可以从模型的目录中删除技能.
-- 工具权限可以改变主机是否要求许可.
-- 文本设置可以将执行转移到单独的代理会议.
+- 格式错误的 `name` 会导致发现失败。
+- 模糊的 `description` 会把错误的请求路由过来。
+- 仅限人工的标记会把技能从模型目录中移除。
+- 工具许可会改变宿主是否请求权限。
+- 上下文设置会把执行移入单独的 agent 会话。
 
-检查前面物质,如配置代码,验证它,版本它,并包括其行为在评估.
+像对待配置代码一样审查 frontmatter。对它进行校验和版本管理，并把其行为纳入评估。
 
 ### 技能生命周期
 
@@ -300,40 +272,40 @@ Use this workflow for a release candidate, not for ordinary development builds.
 skill-runtime-lifecycle
 ```
 
-每个箭头都是一个有自己的失败模式的边界.
+每个箭头都是一个边界，各有自己的失败模式。
 
-1. **Discovery**在配置位置找到可能的包裹.
-2. **Validation**在目录发布前拒绝错误的或不安全的包装.
-3. **Cataloging**揭露了一个紧的`name`其他`description`没有完整的包裹.
-4. **Selection**决定技能是否相关.
-5. **Activation**载体进入可见模型的环境中.
-6. **Disclosure**只有分支机构要求阅读参考或资产.
-7. **Execution**使用主机工具,根据主机的许可和隔离规则.
-8. **Verification**检查生产的文物,不论模型的要求如何.
+1. **发现**在配置的位置中查找可能的包。
+2. **校验**在目录发布前拒绝格式错误或不安全的包。
+3. **编目**暴露精简的 `name` 和 `description`，而非完整包。
+4. **选择**判断该技能是否相关。
+5. **激活**将正文加载到模型可见的上下文中。
+6. **披露**只在某个分支需要时才读取引用或资产。
+7. **执行**在宿主的权限与隔离规则下使用宿主工具。
+8. **验证**独立于模型的声明检查产出的工件。
 
-由于这些阶段的崩导致了不良的心理模型.一个发现的技能是不活跃的.一个活跃的技能不被授权做它描述的一切.一个允许的工具呼叫不是证明结果是正确的.
+把这些阶段混为一谈会导致错误的心智模型。被发现不等于已激活。已激活不等于被授权做它描述的一切。一次被许可的工具调用也不是结果正确的证明。
 
-### 技能和工具是直角的
+### 技能与工具是正交的
 
-技术人员回答:"该应用程序可以要求哪些功能,以及它们的方案是什么?"一个技能回答",代理应该如何处理这个类型的任务?"
+MCP 回答的是：“这个应用可以调用哪些能力，它们的 schema 是什么？”技能回答的是：“agent 应该如何处理这类任务？”
 
 ```figure
 skill-tool-orthogonality
 ```
 
-技能可能会命名工具,但主机拥有实际能力登记册.如果工具不存在,技能应该明确表示倒退或失败.它永远不应该意味着命名能力创造它.
+技能可以点名某个工具，但真正的能力注册表归宿主管辖。如果工具不存在，技能应声明后备方案或明确失败。它绝不能暗示“点名一个能力就等于创造了它”。
 
-### 技能和存储指令是不同的范围
+### 技能与仓库指令作用域不同
 
-库存指令描述了你已经处于的环境:命令,会议,生成的文件和边界.一个技能为许多库存中可能发生的任务提供可重复使用的程序.
+仓库指令描述你当前所处的环境：命令、约定、生成文件和边界。技能为可能出现在多个仓库中的任务提供可复用的流程。
 
-当这两种应用时,活跃用户请求和存储器规则限制了技能.一个通用的重构技能不能取代禁止编辑生成文件的存储器规则.
+当两者同时适用时，当前的用户请求和仓库规则约束技能。一个通用的重构技能不得覆盖禁止编辑生成文件的仓库规则。
 
-### 技能不互相进口
+### 技能之间不互相导入
 
-一个技能可以引导代理调用另一个,但这不是语言级进口.第二个技能仍然通过运行时间发现,资格,激活,权限和文本处理.
+一个技能可以指示 agent 调用另一个技能，但这不是语言层面的导入。第二个技能仍要经过运行时的发现、资格判定、激活、权限和上下文处理。
 
-写出跨技能依赖性作为可观察的工作流边缘:
+把跨技能依赖写成可观察的工作流边：
 
 ```markdown
 After producing the candidate changelog, invoke the `release-risk-review` skill.
@@ -341,22 +313,22 @@ Pass the candidate path and require a blocking or non-blocking verdict.
 If that skill is unavailable, stop and report the missing dependency.
 ```
 
-这使得依赖性可测试,并给主机执行政策的机会.
+这使得依赖可测试，并给宿主一个执行策略的机会。
 
-## 建立它
+## 动手构建
 
-`code/main.py`它们只能使用一个标准化验证器和一个选件选件器.
+`code/main.py` 实现了一个小型的面向规范的校验器和一个工件选择器。它仅使用标准库，因此每条规则都清晰可见。
 
-验证器揭示:
+校验器暴露：
 
-- `parse_frontmatter(text)`为了将元数据与身体分开.
-- `validate_skill_text(text, directory_name, allowed_runtime_extensions=())`检查所需的字段,命名,未知的扩展,体体存在和可移植的限制.
-- `ValidationIssue`其他`SkillReport`返回结构化证据,而不是一个不透明的布鲁尔式.
-- `FrontmatterSyntaxError`对于无法安全解释的输入.
+- `parse_frontmatter(text)`，用于把元数据与正文分离。
+- `validate_skill_text(text, directory_name, allowed_runtime_extensions=())`，用于检查必填字段、命名、未知扩展、正文存在性和可移植性限制。
+- `ValidationIssue` 和 `SkillReport`，用于返回结构化证据而非一个不透明的布尔值。
+- `FrontmatterSyntaxError`，用于无法安全解析的输入。
 
-选择者会发现`TaskShape`其他`select_primitives(task)`它将任务的需求映射到普通代码,存储器指令,技能,,子器或MCP工具.
+选择器暴露 `TaskShape` 和 `select_primitives(task)`。它把任务的需求映射到普通代码、仓库指令、技能、hook、子代理或 MCP 工具。
 
-运行实验室:
+运行实验：
 
 ```bash
 cd "$(git rev-parse --show-toplevel)"
@@ -365,81 +337,78 @@ python3 code/main.py
 python3 -m unittest discover -s code/tests -v
 ```
 
-这个命令区块需要一个本地克隆,必须从内部开始.
-这种克隆是如此`git rev-parse --show-toplevel`它们可以解决存储库根.
+这个命令块需要本地克隆，并且必须从该克隆内的任意位置启动，以便 `git rev-parse --show-toplevel` 能解析仓库根目录。
 
-演示程序将JSON打印为一个有效的便携技能,一个扩展的主机技能,一个不有效的包,以及几个任务形状决策.检查问题代码.一个包验证器应该解释如何修复一个文物,而不代表作者猜测.
+演示为以下内容打印 JSON：一个有效的可移植技能、一个宿主扩展技能、一个无效包，以及若干任务形态的决策。请检查问题码。包校验器应解释如何修复工件，而不是替作者猜测。
 
-### 验证命令的问题
+### 校验顺序很重要
 
-在更深入的内容规则之前验证廉价结构性事实:
+先校验开销小的结构事实，再校验更深的内容规则：
 
 ```figure
 skill-validation-order
 ```
 
-由于此次测试的结果,
+这个顺序可以防止次要错误掩盖第一个被破坏的不变量。
 
-## 用它
+## 如何使用
 
-在写出技能之前,填写下面的决定卡:
+在编写技能之前，填写这张决策卡：
 
-| Question | If yes | Likely primitive |
+| 问题 | 如果是 | 可能的原语 |
 |---|---|---|
-| Does this need reusable model judgment across several steps? | The procedure is stable but decisions vary | Skill |
-| Must this happen every time an event fires? | Missing one execution is unacceptable | Hook or application code |
-| Does the model need an external capability with typed inputs? | The operation lives outside model context | Tool or MCP server |
-| Does the work need isolated context, state, or ownership? | A separate worker returns a bounded result | Subagent |
-| Is this guidance specific to one repository? | It describes local commands and constraints | Repository instructions |
-| Is one interaction enough? | No package lifecycle is needed | Prompt |
+| 这是否需要在多个步骤间复用的模型判断？ | 流程稳定但决策多变 | 技能 |
+| 这是否必须在每次事件触发时发生？ | 错过一次执行不可接受 | Hook 或应用代码 |
+| 模型是否需要带类型化输入的外部能力？ | 操作发生在模型上下文之外 | 工具或 MCP 服务器 |
+| 工作是否需要隔离的上下文、状态或所有权？ | 由独立的工作者返回有界结果 | 子代理 |
+| 这份指引是否只针对一个仓库？ | 它描述本地命令和约束 | 仓库指令 |
+| 一次交互是否足够？ | 不需要包生命周期 | 提示词 |
 
-许多生产工作流程使用多行,卡片阻止一个文物假装提供所有属性.
+许多生产工作流会用到不止一行。这张决策卡防止用一个工件假装具备所有属性。
 
-## 运送它
+## 如何交付
 
-这一课产生了`skill-contract-reviewer`包装下面`outputs/`它包含:
+本课产出位于 `outputs/` 下的 `skill-contract-reviewer` 包。它包含：
 
-- 一个便携式`SKILL.md`审查拟议的技能包;
-- 移动合同和原始选择的参考检查列表;
-- 确定性验证脚本;
-- 任务形状装置,包括提示,技能,工具,,普通代码和副标.
+- 一个可移植的 `SKILL.md`，用于评审拟议的技能包；
+- 关于可移植契约和原语选择的参考清单；
+- 一个确定性校验脚本；
+- 覆盖提示词、技能、工具、hook、普通代码和子代理的任务形态夹具。
 
-装备全部包,不仅仅是其输入文件:
+安装完整包，而不只是入口文件：
 
 ```bash
 cd "$(git rev-parse --show-toplevel)"
 python3 scripts/install_skills.py /tmp/aiefs-skills --phase 13 --type skill
 ```
 
-课程安装器报告了每一个复制的13期技能,并写
-`/tmp/aiefs-skills/manifest.json`. 这种清洁目的地检查包装形状;
-在上面的首次成功循环检查了实在的主机中发现和调用.
+课程安装器会报告每个被复制的 Phase 13 技能，并写入 `/tmp/aiefs-skills/manifest.json`。这个干净的目标位置检查包形态；上文的首胜循环则在真实宿主中检查发现与调用。
 
-下面的课程深化了生命周期的每个阶段.第24课程建立了发现和逐步披露.第25课程建立了调用政策和路由.第26课程将权限与沙盒分开.第27课程将整个包装变成了一个评估的释放文物.
+接下来的课程深化生命周期的每个阶段。Lesson 24 构建发现与渐进披露。Lesson 25 构建调用策略与路由。Lesson 26 把权限与沙箱区分开。Lesson 27 把整个包变成可评估的发布工件。
 
-## 运动
+## 练习
 
-1. 通过使用 `TaskShape`捍卫每一个你选择多个原始的案件.
-2. 添加一个500字符的边界测试证明`compatibility`值通过,501字符值失败为规格错误.
-3. 添加一个运行时间扩展到允许列表. 写一个测试证明相同的文件仍然可以区分于只可移植的技能.
-4. 分成400行提示`SKILL.md`让每个文件都负责一个类型的信息.
-5. 设计一个不存在的MCP工具的技能失败响应. 不要默默地用更广泛的权限替代工具.
-6. 检查现有技能,并将每个句子标记为路由,程序,政策,参考指针或输出合同.
+1. 使用 `TaskShape` 对你所在团队的五个工作流进行分类。为每一个选择多个原语的情形给出理由。
+2. 添加边界测试，证明 500 字符的 `compatibility` 值通过，而 501 字符的值作为规范错误失败。
+3. 向允许清单添加一个运行时扩展。编写测试证明同一个文件仍能与仅含可移植核心的技能区分开。
+4. 把一个 400 行的提示词拆分为 `SKILL.md`、一个引用文件、一个脚本契约和一个输出模板。让每个文件只负责一类信息。
+5. 为引用了不可用 MCP 工具的技能设计失败响应。不要用权限更宽的工具静默替代。
+6. 审查一个现有技能，把每句话标记为路由、流程、策略、引用指针或输出契约。移动所有不属于原处的内容。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们常说 | 实际含义 |
 |---|---|---|
-| Agent skill | "A saved prompt" | A discoverable directory of procedural instructions and optional resources |
-| Portable core | "Fields every runtime shares" | The contract defined by the Agent Skills specification |
-| Runtime extension | "Extra frontmatter" | Host-specific configuration whose behavior requires a compatible adapter |
-| Activation | "The skill ran" | The skill body entered model-visible context; execution may come later |
-| Skill dependency | "Import another skill" | A runtime-mediated invocation edge with availability and policy checks |
-| Tool contract | "A function schema" | Inputs, outputs, permissions, side effects, errors, and evidence for a capability |
+| Agent skill | “一个保存的提示词” | 一个可发现的目录，包含程序性指令和可选资源 |
+| 可移植核心 | “所有运行时共享的字段” | 由 Agent Skills 规范定义的契约 |
+| 运行时扩展 | “额外的 frontmatter” | 宿主特定配置，其行为需要兼容的适配器 |
+| 激活 | “技能运行了” | 技能正文进入模型可见的上下文；执行可能在此之后 |
+| 技能依赖 | “导入另一个技能” | 一条经运行时中介的调用边，带有可用性和策略检查 |
+| 工具契约 | “一个函数 schema” | 一个能力的输入、输出、权限、副作用、错误和证据 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Agent Skills specification](https://agentskills.io/specification)对于可移植目录和前置材料合同.
-- [Agent Skills best practices](https://agentskills.io/skill-creation/best-practices)对于范围,指令和资源组织.
-- [OpenAI: Build skills](https://learn.chatgpt.com/docs/build-skills)对于目前的Codex发现和呼唤行为.
-- [Claude Code skills](https://code.claude.com/docs/en/skills)对于一个运行时间的调用,参数,工具和委托文本扩展.
+- [Agent Skills specification](https://agentskills.io/specification)：可移植目录与 frontmatter 契约。
+- [Agent Skills best practices](https://agentskills.io/skill-creation/best-practices)：作用域、指令与资源组织。
+- [OpenAI: Build skills](https://learn.chatgpt.com/docs/build-skills)：Codex 当前的发现与调用行为。
+- [Claude Code skills](https://code.claude.com/docs/en/skills)：某一运行时的调用、参数、工具与委派上下文扩展。

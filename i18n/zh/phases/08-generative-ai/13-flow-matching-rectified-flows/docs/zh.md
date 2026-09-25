@@ -1,90 +1,90 @@
-# 流量匹配和调整流量
+# 流匹配与整流流
 
-> 扩散模型采用20-50个样本采集步骤,因为它们从噪音到数据的曲线路径.流量匹配 (Lipman等人, 2023) 和正流量 (Liu等人, 2022) 训练直路径.直路径意味着更少的步骤意味着更快的推断.稳定扩散3,流量1.1,音频Craft 2都转向流量匹配在2024年.
+> 扩散模型需要 20-50 个采样步，因为它们沿着一条弯曲的路径从噪声走向数据。流匹配（Lipman et al., 2023）和整流流（Liu et al., 2022）训练的是直线路径。路径越直，所需步数越少，推理也就越快。Stable Diffusion 3、Flux.1 和 AudioCraft 2 都在 2024 年转向了流匹配。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 8 · 06 (DDPM), Phase 1 · Calculus
-**Time:** ~45 minutes
+**Prerequisites:** Phase 8 · 06（DDPM）、Phase 1 · 微积分
+**Time:** 约 45 分钟
 
-## 问题
+## 问题所在
 
-起的过程是从 起的步骤到步行.`N(0, I)`现在我们要回来数据分布.DDIM将其分解成20-50个确定性步骤.你想要少的步骤理想情况下是一个.阻者是,解决反向过程的ODE是硬的;路径是曲线的.
+DDPM 的反向过程是一个从 `N(0, I)` 走回数据分布的 1000 步随机游走。DDIM 把它压缩到了 20-50 个确定性步。你想要更少的步数——最好是一步。阻碍在于求解反向过程的 ODE 是刚性的；路径是弯曲的。
 
-如果您可以训练模型,使噪音到数据的路径是*直线*,`t=1`为了`t=0`流量匹配直接构建这个:定义直线插射从`x_1 ∼ N(0, I)`为了`x_0 ∼ data`引进一个向量场`v_θ(x, t)`为了匹配其时间衍生值,在推断中集成.
+如果你能把模型训练成从噪声到数据的路径是一条*直线*，那么从 `t=1` 到 `t=0` 只需一个 Euler 步就能完成。流匹配直接构造这一点：定义一条从 `x_1 ∼ N(0, I)` 到 `x_0 ∼ data` 的直线插值，训练一个向量场 `v_θ(x, t)` 来匹配它对时间的导数，推理时做积分即可。
 
-修改流程 (Liu 2022) 进一步:通过重新流程程序反复直线路径,从而产生逐步接近线性ODE. 经过两次重新流程反复,一个2步样本器与50步DDPM质量相匹配.
+整流流（Liu 2022）更进一步：通过一个 reflow 过程迭代地拉直路径，产生逐步更接近线性的 ODE。经过两轮 reflow 迭代，2 步采样器就能达到 50 步 DDPM 的质量。
 
-## 概念
+## 核心概念
 
 ![Flow matching: straight-line interpolation between noise and data](../assets/flow-matching.svg)
 
-### 直线流量
+### 直线流
 
-定义:
+定义：
 
 ```
 x_t = t · x_1 + (1 - t) · x_0,   t ∈ [0, 1]
 ```
 
-在哪里`x_0 ~ data`其他`x_1 ~ N(0, I)`沿着直线的时间衍生值是恒定的:
+其中 `x_0 ~ data` 且 `x_1 ~ N(0, I)`。沿这条直线的时间导数是常数：
 
 ```
 dx_t / dt = x_1 - x_0
 ```
 
-定义一个神经向量场`v_θ(x_t, t)`并且将其训练成与此衍生品相匹配:
+定义一个神经向量场 `v_θ(x_t, t)`，训练它匹配这个导数：
 
 ```
 L = E_{x_0, x_1, t} || v_θ(x_t, t) - (x_1 - x_0) ||²
 ```
 
-这是**conditional flow matching**培训是无模拟的:你永远不会打开ODE.`(x_0, x_1, t)`后退.
+这就是**条件流匹配**损失（Lipman 2023）。训练是无模拟的：你从不需要展开 ODE。只需采样 `(x_0, x_1, t)` 并做回归。
 
 ### 采样
 
-在推断时,将学习的向量场 *倒退* 集成在时间中:
+推理时，对学到的向量场在时间上做*反向*积分：
 
 ```
 x_{t-Δt} = x_t - Δt · v_θ(x_t, t)
 ```
 
-开始`x_1 ~ N(0, I)`到,到.`t=0`现在,我们要去.
+从 `x_1 ~ N(0, I)` 出发，用 Euler 步走到 `t=0`。
 
-### 调整流量 (Liu 2022)
+### 整流流（Liu 2022）
 
-直线流程是有效的,但学习的路径是不直接的,因为很多`x_0`现在,我们可以将它们映射到同一位置.`x_1`调整流的反流步骤:
+直线流可行，但学到的路径*实际上并不直*——它们会弯曲，因为许多 `x_0` 可以映射到同一个 `x_1`。整流流的 reflow 步骤：
 
-1. 列车流量模型v_1随机对接.
-2. 样本N对`(x_1, x_0)`通过将v_1从`x_1`在它着陆之前`x_0`现在,我们要去.
-3. 由于对现在是"ODE-匹配",所以它们之间的直线插件是真正平坦的.
-4. 复制.
+1. 用随机配对训练流模型 v_1。
+2. 通过把 v_1 从 `x_1` 积分到其落点 `x_0`，采样出 N 对 `(x_1, x_0)`。
+3. 用这些配对样本训练 v_2。因为这些配对现在是“ODE 匹配”的，它们之间的直线插值确实更平了。
+4. 重复。
 
-在实践中,两次反流代将你带到近线性,使得2-4步推断.SDXL-Turbo,SD3-Turbo,LCM都是蒸的流量匹配模型.
+实践中 2 轮 reflow 迭代就能接近线性，从而实现 2-4 步推理。SDXL-Turbo、SD3-Turbo、LCM 都是从流匹配蒸馏而来的模型。
 
-### 为什么这在2024年赢得了图像
+### 为什么它在 2024 年的图像领域胜出
 
-原因有三个:
+三个原因：
 
-1. **Simulation-free training**培训期间没有ODE,实施是无关紧要的.
-2. **Better loss geometry**直路线具有一致的信号到噪音,而DDPM ε-loss在时间表边缘具有不良的SNR.
-3. **Faster inference** SDXL-Turbo质量4-8步;一致性蒸1步.
+1. **无模拟训练** —— 训练期间不展开 ODE，实现非常简单。
+2. **更好的损失几何** —— 直线路径具有一致的信号噪声比，而 DDPM 的 ε 损失在调度两端 SNR 很差。
+3. **更快的推理** —— SDXL-Turbo 质量下只需 4-8 步；配合一致性蒸馏可降至 1 步。
 
-## 流量匹配与DPM 确切的连接
+## 流匹配 vs DDPM —— 精确联系
 
-流量与高斯定条件路径相匹配是散 *具有特定的噪音时间表*.`x_t = α(t) x_0 + σ(t) x_1`时间表和流量匹配恢复了斯特拉托尼维奇修改的扩散`v = α'·x_0 - σ'·x_1`两者对高斯路径的代数式等价.
+带高斯条件路径的流匹配等价于*采用特定噪声调度的*扩散。选取 `x_t = α(t) x_0 + σ(t) x_1` 调度，流匹配就还原为 Stratonovich 形式化的扩散，且 `v = α'·x_0 - σ'·x_1`。对于高斯路径，二者在代数上等价。
 
-流量匹配增加了什么:目标的清晰度 (平坦的速度),更清洁的损失,以及使用非高斯人插件进行实验的许可.
+流匹配带来的新东西：目标的*清晰性*（一个朴素的速度量）、更干净的损失，以及尝试非高斯插值的自由。
 
 ```figure
 normalizing-flow
 ```
 
-## 建立它
+## 动手实现
 
-`code/main.py`实现1D流量匹配在两个模式的高斯混合物上.`v_θ(x, t)`在推断时,将1,2,4和20个艾勒步骤整合起来,并比较样品质量.
+`code/main.py` 在双模态高斯混合上实现了一维流匹配。向量场 `v_θ(x, t)` 是一个用直线目标训练的微型 MLP。推理时，分别用 1、2、4 和 20 个 Euler 步做积分，比较样本质量。
 
-### 步骤1:训练失败
+### 第 1 步：训练损失
 
 ```python
 def train_step(x0, net, rng, lr):
@@ -97,7 +97,7 @@ def train_step(x0, net, rng, lr):
     # backprop + update
 ```
 
-### 步骤2:多步骤推断
+### 第 2 步：多步推理
 
 ```python
 def sample(net, num_steps):
@@ -109,72 +109,72 @@ def sample(net, num_steps):
     return x
 ```
 
-### 步骤3:比较步骤数量
+### 第 3 步：比较步数
 
-预计4步样本已经与20步质量相匹配,
+预期 4 步采样器已经能匹配 20 步的质量——这对延迟来说是大事。
 
-## 陷
+## 常见陷阱
 
-- **Time parameterization.**流量匹配用途`t ∈ [0, 1]`随着`t=0`在数据上,`t=1`声. 声.`t ∈ [0, T]`随着`t=0`在数据上,`t=T`报纸总是错误的.
-- **Schedule choice.**修改流程的直线是"流量匹配时间表",但可以使用共数或逻辑正常t样本 (SD3这样做) 来获得更好的规模覆盖.
-- **Reflow cost.**通过一个数据集,我们可以通过一个数据集,然后再进行一个数据集.
-- **Classifier-free guidance still applies.**只是在线性组合中换 ε为 v: `v_cfg = (1+w) v_cond - w v_uncond`现在,我们要去.
+- **时间参数化。** 流匹配使用 `t ∈ [0, 1]`，其中 `t=0` 在数据端、`t=1` 在噪声端。DDPM 使用 `t ∈ [0, T]`，其中 `t=0` 在数据端、`t=T` 在噪声端。方向相同，尺度不同。论文里经常搞错这一点。
+- **调度选择。** 整流流的直线是“标准的”流匹配调度，但你可以用 cosine 或 logit-normal 的 t 采样（SD3 就是这么做的）来获得更好的尺度覆盖。
+- **Reflow 成本。** 为 reflow 生成配对数据集意味着每个样本都要完整跑一次推理。只有在你真的需要 1-2 步推理时才做 reflow。
+- **Classifier-free guidance 依然适用。** 只需在线性组合中把 ε 换成 v：`v_cfg = (1+w) v_cond - w v_uncond`。
 
-## 用它
+## 使用场景
 
-| Use case | 2026 stack |
+| 使用场景 | 2026 年技术栈 |
 |----------|-----------|
-| Text-to-image, best quality | Flow matching: SD3, Flux.1-dev |
-| Text-to-image, 1-4 steps | Distilled flow matching: Flux.1-schnell, SD3-Turbo, SDXL-Turbo |
-| Real-time inference | Consistency distillation from a flow-matched base (LCM, PCM) |
-| Audio generation | Flow matching: Stable Audio 2.5, AudioCraft 2 |
-| Video generation | Flow matching mixed with diffusion (Sora, Veo, Stable Video) |
-| Science / physics (particle trajectories, molecules) | Flow matching + equivariant vector field |
+| 文生图，最高质量 | 流匹配：SD3、Flux.1-dev |
+| 文生图，1-4 步 | 蒸馏流匹配：Flux.1-schnell、SD3-Turbo、SDXL-Turbo |
+| 实时推理 | 从流匹配基座做一致性蒸馏（LCM、PCM） |
+| 音频生成 | 流匹配：Stable Audio 2.5、AudioCraft 2 |
+| 视频生成 | 流匹配与扩散混合（Sora、Veo、Stable Video） |
+| 科学 / 物理（粒子轨迹、分子） | 流匹配 + 等变向量场 |
 
-任何一篇论文说2025-2026年"比扩散快"的时刻,
+在 2025-2026 年， whenever 一篇论文声称“比扩散更快”，它几乎总是流匹配 + 蒸馏。
 
-## 运送它
+## 上线部署
 
-保存`outputs/skill-fm-tuner.md`技能采用了扩散式模型规范,并将其转换为与流量匹配的训练配置:时间表选择,时间样本分配 (均/逻辑正常),优化器,回流计划,目标步骤计数,评估协议.
+保存 `outputs/skill-fm-tuner.md`。该技能接收一个扩散风格的模型规格，并将其转换为流匹配训练配置：调度选择、时间采样分布（uniform / logit-normal）、优化器、reflow 计划、目标步数、评估协议。
 
-## 运动
+## 练习
 
-1. **Easy.**跑步`code/main.py`并且比较1步对20步的MSE对真实数据分布.
-2. **Medium.**换成制服`t`采样到logit-normal (集中采样在t中).模型质量有没有改善?
-3. **Hard.**实现一个反流代:通过整合第一种模型生成对 (x_0, x_1) 组,对对进行第二种模型训练,并比较1步样品质量.
+1. **简单。** 运行 `code/main.py`，比较 1 步与 20 步相对真实数据分布的 MSE。
+2. **中等。** 把均匀的 `t` 采样换成 logit-normal（把采样集中到中等 t 值）。模型质量是否提升？
+3. **困难。** 实现一轮 reflow 迭代：通过积分第一个模型生成配对 (x_0, x_1)，用这些配对训练第二个模型，并比较 1 步采样质量。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|-----------------------|
-| Flow matching | "Straight-line diffusion" | Train `v_θ(x, t)` to match `x_1 - x_0` along an interpolant. |
-| Rectified flow | "Reflow" | Iterative procedure that straightens learned flows. |
-| Velocity field | "v_θ" | Output of the model — the direction to move `x_t`. |
-| Straight-line interpolant | "The path" | `x_t = (1-t)·x_0 + t·x_1`; trivial target derivative. |
-| Euler sampler | "1st order ODE solver" | Simplest integrator; works well when paths are straight. |
-| Logit-normal t | "SD3 sampling" | Concentrate `t` sampling toward mid-values where gradients are strongest. |
-| Consistency distillation | "1-step sampler" | Train a student to map any `x_t` directly to `x_0`. |
-| CFG with velocity | "v-CFG" | `v_cfg = (1+w) v_cond - w v_uncond`; same trick, new variable. |
+| 流匹配 | “直线扩散” | 训练 `v_θ(x, t)` 以匹配插值路径上的 `x_1 - x_0`。 |
+| 整流流 | “Reflow” | 迭代拉直已学流的程序。 |
+| 速度场 | "v_θ" | 模型的输出——移动 `x_t` 的方向。 |
+| 直线插值 | “那条路径” | `x_t = (1-t)·x_0 + t·x_1`；目标导数平凡。 |
+| Euler 采样器 | “一阶 ODE 求解器” | 最简单的积分器；路径为直线时效果很好。 |
+| Logit-normal t | “SD3 采样” | 把 `t` 采样集中到梯度最强的中间值附近。 |
+| 一致性蒸馏 | “1 步采样器” | 训练学生模型把任意 `x_t` 直接映射到 `x_0`。 |
+| 带速度的 CFG | "v-CFG" | `v_cfg = (1+w) v_cond - w v_uncond`；同样的技巧，换了变量。 |
 
-## 产品注释:Flux.1-schnell的流量最快
+## 生产注记：Flux.1-schnell 是流匹配的最快形态
 
-流量匹配的生产胜利是Flux.1-schnell 一个流量匹配的DT蒸到1-4推理步骤,同时保持Flux-dev级质量.尼尔的"Run Flux on an 8GB machine"笔记本书是参考部署配方:T5 + CLIP编码,量化MMDiT代号 (快速而不是 dev的50个步骤),VAE解码.成本计量:
+流匹配在生产上的胜利就是 Flux.1-schnell——一个被蒸馏到 1-4 个推理步、同时保持 Flux-dev 级质量的流匹配 DiT。Niels 的"Run Flux on an 8GB machine"笔记本是参考部署方案：T5 + CLIP 编码、量化 MMDiT 去噪（schnell 用 4 步，dev 用 50 步）、VAE 解码。成本核算：
 
-| Variant | Steps | Latency at 1024² on L4 | Total FLOPs (relative) |
+| 变体 | 步数 | L4 上 1024² 延迟 | 总 FLOPs（相对） |
 |---------|-------|------------------------|------------------------|
 | Flux.1-dev (raw) | 50 | ~15 s | 1.0× |
 | Flux.1-schnell | 4 | ~1.2 s | 0.08× (12× faster) |
 | SDXL-base | 30 | ~4 s | 0.25× |
 | SDXL-Lightning 2-step | 2 | ~0.3 s | 0.03× |
 
-生产规则:**flow-matched base + distillation = the 2026 default for fast text-to-image.**每个主要供应商都运送这种组合:SD3-Turbo (SD3 +流量 +蒸),Flux-schnell (Flux-dev +直流直线),CogView-4-Flash.纯的扩散基地仅适用于传统检查站.
+生产规则：**流匹配基座 + 蒸馏 = 2026 年快速文生图的默认方案。** 每家主要厂商都在交付这一组合：SD3-Turbo（SD3 + 流匹配 + 蒸馏）、Flux-schnell（Flux-dev + 整流流拉直）、CogView-4-Flash。纯扩散基座只作为遗留 checkpoint 存在。
 
-## 进一步阅读
+## 延伸阅读
 
-- [Liu, Gong, Liu (2022). Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow](https://arxiv.org/abs/2209.03003)正流量
-- [Lipman et al. (2023). Flow Matching for Generative Modeling](https://arxiv.org/abs/2210.02747)流量匹配
-- [Esser et al. (2024). Scaling Rectified Flow Transformers for High-Resolution Image Synthesis](https://arxiv.org/abs/2403.03206) SD3,在尺度上调整流量.
-- [Albergo, Vanden-Eijnden (2023). Stochastic Interpolants](https://arxiv.org/abs/2303.08797)涵盖FM+传播的一般框架.
-- [Song et al. (2023). Consistency Models](https://arxiv.org/abs/2303.01469) 1 步蒸/流.
-- [Sauer et al. (2023). Adversarial Diffusion Distillation (SDXL-Turbo)](https://arxiv.org/abs/2311.17042)轮机变体
-- [Black Forest Labs (2024). Flux.1 models](https://blackforestlabs.ai/announcing-black-forest-labs/)生产流量相匹配.
+- [Liu, Gong, Liu (2022). Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow](https://arxiv.org/abs/2209.03003) —— 整流流。
+- [Lipman et al. (2023). Flow Matching for Generative Modeling](https://arxiv.org/abs/2210.02747) —— 流匹配。
+- [Esser et al. (2024). Scaling Rectified Flow Transformers for High-Resolution Image Synthesis](https://arxiv.org/abs/2403.03206) —— SD3，规模化整流流。
+- [Albergo, Vanden-Eijnden (2023). Stochastic Interpolants](https://arxiv.org/abs/2303.08797) —— 涵盖 FM + 扩散的通用框架。
+- [Song et al. (2023). Consistency Models](https://arxiv.org/abs/2303.01469) —— 扩散 / 流的 1 步蒸馏。
+- [Sauer et al. (2023). Adversarial Diffusion Distillation (SDXL-Turbo)](https://arxiv.org/abs/2311.17042) —— turbo 变体。
+- [Black Forest Labs (2024). Flux.1 models](https://blackforestlabs.ai/announcing-black-forest-labs/) —— 生产中的流匹配。

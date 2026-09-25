@@ -1,72 +1,72 @@
-# 代理国机器 图表,节点,检查站
+# 智能体状态机 — 图、节点与检查点
 
-> 通过手写的 ReAct 循环是`while True`作为一个明确的图表,写的循环是你可以检查点,打断,分支,时间旅行. 代理没有改变. 环绕它有.
+> 手写的 ReAct 循环就是一个 `while True`。同一个循环写成显式图后,你就可以对它进行检查点保存、中断、分支和时间回溯。智能体本身没有变,变的是包裹它的执行框架。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 14 (Model Context Protocol)
-**Time:** ~75 minutes
+**Prerequisites:** Phase 11 · 09(Function Calling)、Phase 11 · 14(Model Context Protocol)
+**Time:** 约 75 分钟
 
-## 问题
+## 问题所在
 
-运输一个调用函数的代理.它工作了三次,然后发生了一些问题:模型尝试一个返回500的工具,用户在任务中改变了想法,或者代理决定退还一个订单,没有人签署.`while True:`没有子. 你不能暂停它,你不能转它,你不能分分成"如果模型选择了另一种工具".
+你上线了一个函数调用智能体。它正常运行了三轮,然后出了问题:模型调用了一个返回 500 的工具,用户在任务中途改变主意,或者智能体在无人审批的情况下决定给订单退款。这个 `while True:` 循环没有任何钩子。你无法暂停它,无法回退它,也无法分支探索"如果模型当时选了另一个工具会怎样"。一旦超出演示范围上线,智能体就变成一个只知成功或失败的黑盒。
 
-接下来的步骤是显而易见的. 代理已经是一个状态机 系统提示加上消息历史加上等待工具调用加上下一步行动. 让状态机明确:节点为"模型认为","工具运行","人批准",和边缘为它们之间的条件过渡. 一旦图表明确,该带将获得四件事免费:检查点 (节省步骤之间的状态),中断 (人类的暂停),流 (流代币和中间事件),以及时间旅行 (回返以前的状态并尝试不同的分支).
+看清这一点后,下一步就显而易见了。智能体本来就是一个状态机 — 系统提示词加消息历史加待处理的工具调用加下一个动作。把这个状态机显式化:为"模型思考""工具运行""人类审批"设置节点,为它们之间的条件转换设置边。一旦图是显式的,执行框架就免费获得四样东西:检查点(在步骤之间保存状态)、中断(暂停以等待人类)、流式输出(流式传输 token 和中间事件)以及时间回溯(回退到之前的状态并尝试不同的分支)。
 
-这种抽象的参考实现是LangGraph.它不是一个代理框架,在LangChain意义上 ("这里有一个代理执行者,好运").它是一个图表运行时间,具有一流状态,一流的持久性和一流的中断.代理循环是你绘制的东西,而不是你手写的东西.
+这一抽象的参考实现是 LangGraph。它不是 LangChain 意义上的智能体框架("这是 AgentExecutor,祝你好运")。它是一个图运行时,拥有一等公民的地位状态、持久化和中断。智能体循环是你绘制出来的东西,而不是你手写出来的东西。
 
-## 概念
+## 核心概念
 
 ![LangGraph StateGraph: nodes, edges, and the checkpointer](../assets/langgraph-stategraph.svg)
 
-`StateGraph`有三个东西.
+一个 `StateGraph` 包含三样东西。
 
-1. **State.**输入式命令 (TypedDict或Pydantic模型) 通过图表流动.每个节点都收到完整状态并返回部分更新,LangGraph将其通过每个字段的 *reducer* 合并`operator.add`对于应该积累的列表,默认上重写.
-2. **Nodes.** Python 函数`state -> partial_state`每一步都是一个分别的步骤: "调用模型", "运行工具", "总结".
-3. **Edges.**节点之间的过渡.静态边缘将移动到一个地方. 条件边缘将接收路由器函数`state -> next_node_name`图表可以分为模型输出.
+1. **状态。** 一个在图中流转的类型化字典(TypedDict 或 Pydantic 模型)。每个节点接收完整状态并返回部分更新,LangGraph 使用每个字段的 *reducer* 来合并更新 — 对需要累积的列表使用 `operator.add`,默认行为是覆盖。
+2. **节点。** Python 函数 `state -> partial_state`。每个节点是一个离散步骤:"调用模型""运行工具""总结"。
+3. **边。** 节点之间的转换。静态边指向一个固定的去向。条件边接受一个路由函数 `state -> next_node_name`,使图能够根据模型输出进行分支。
 
-编译将拓链接,附加一个检查点 (可选但对于生产至关重要),并返回一个可运行的.您使用一个初始状态和一个`thread_id`每一步执行都会有一个关键的检查点`(thread_id, checkpoint_id)`现在,我们要去.
+你编译这个图。编译会绑定拓扑结构,挂载一个 checkpointer(可选,但对生产环境至关重要),并返回一个可运行对象。你用一个初始状态和一个 `thread_id` 来调用它。执行的每一步都会持久化一个以 `(thread_id, checkpoint_id)` 为键的检查点。
 
-### 它们是四大超级大国.
+### 四大超能力
 
-**Checkpointing.**每个节点过渡都会将新状态写入一个存储器 (在内存中进行测试,Postgres/Redis/SQLite为 prod).再重复,再用相同的方式调用图表.`thread_id`图表从停留的地方恢复.
+**检查点。** 每次节点转换都会把新状态写入存储(测试用内存,生产用 Postgres/Redis/SQLite)。通过用相同的 `thread_id` 再次调用图来恢复执行。图会从暂停的地方继续。
 
-**Interrupts.**标记一个节点`interrupt_before=["human_review"]`您的API会以"等待批准"回复用户. 随后请求相同的`thread_id`随着`Command(resume=...)`恢复执行.
+**中断。** 用 `interrupt_before=["human_review"]` 标记一个节点,执行会在该节点运行之前停止。状态会被持久化。你的 API 向用户回复"等待审批"。稍后对同一个 `thread_id` 发送带 `Command(resume=...)` 的请求即可恢复执行。
 
-**Streaming.** `graph.stream(state, mode="updates")`随着这些事件,`mode="messages"`通过模特节点中流动LLM代币. `mode="values"`您可以选择在用户界面中出现什么.
+**流式输出。** `graph.stream(state, mode="updates")` 在状态增量发生时产出它们。`mode="messages"` 在模型节点内部流式传输 LLM token。`mode="values"` 产出完整快照。你可以选择在 UI 中展示哪些内容。
 
-**Time-travel.** `graph.get_state_history(thread_id)`返回检查站的全部日志.`checkpoint_id`为了`graph.invoke`对于调试 ("如果模型选择了工具B?") 和重播生产痕迹的回归测试来说,
+**时间回溯。** `graph.get_state_history(thread_id)` 返回完整的检查点日志。把任意先前的 `checkpoint_id` 传给 `graph.invoke`,你就可以从那个点分叉。这对调试("如果模型当时选的是工具 B 呢?")以及重放生产轨迹的回归测试非常有用。
 
-### 减少者是个问题
+### Reducer 才是关键
 
-每个状态字段都有减小器.大多数默认值都很好一个新的值覆盖了旧值.但消息列表需要`operator.add`通过减速器将其更新合并.如果两个节点都更新`messages`你忘了了这个`Annotated[list, add_messages]`减速器是图书馆唯一的微妙东西;把它做得好,剩下的都是编曲.
+每个状态字段都有一个 reducer。大多数默认值就够用 — 新值覆盖旧值。但消息列表需要 `operator.add`,这样新消息才会追加而不是替换。并行边通过 reducer 合并它们的更新。如果两个节点都更新 `messages` 而你忘了加 `Annotated[list, add_messages]`,第二个节点会静默胜出,你会丢失半轮对话。Reducer 是这个库中唯一需要细究的地方;把它弄对了,其余部分都能顺畅组合。
 
-### 通过4个节点的 ReAct图
+### 四节点的 ReAct 图
 
-生产 ReAct 代理是四个节点和两个边缘:
+生产级 ReAct 智能体是四个节点和两条边:
 
-1. `agent`将当前消息历史记录传递给LLM. 返回助理消息 (可能包含工具_调用).
-2. `tools`执行最后一个助理消息中的任何工具_调用,将工具结果添加为工具消息.
-3. 一个条件边缘`agent`航线到`tools`如果最后一个消息有工具_调用,否则`END`现在,我们要去.
-4. 一个静态边缘`tools`回到`agent`现在,我们要去.
+1. `agent` — 用当前消息历史调用 LLM,返回助手消息(其中可能包含 tool_calls)。
+2. `tools` — 执行最后一条助手消息中的所有 tool_calls,并将工具结果作为工具消息追加。
+3. 一条从 `agent` 出发的条件边:如果最后一条消息包含 tool_calls,路由到 `tools`,否则路由到 `END`。
+4. 一条从 `tools` 返回 `agent` 的静态边。
 
-您可以在约40行代码中获得全 ReAct循环 (思维 → 行动 → 观察 → 思考 → ...) 通过检查点,中断和流.
+就是这样。你用大约 40 行代码就得到了完整的 ReAct 循环(Thought → Action → Observation → Thought → …),并带有检查点、中断和流式输出。
 
-### 状态图与发送 (预测)
+### StateGraph 与 Send(fanout)
 
-`Send(node_name, state)`让节点发送平行子图. 举个例子:代理决定同时查询三个检索器. 每个`Send`通过状态减小器,它们的输出融合. 这就是LangGraph在没有线程原始的情况下表达了乐队员-工作者模式.
+`Send(node_name, state)` 允许一个节点派发并行子图。例如:智能体决定同时查询三个检索器。每个 `Send` 会生成目标节点的一个并行执行;它们的输出通过状态 reducer 合并。这就是 LangGraph 在不使用线程原语的情况下表达 orchestrator-workers 模式的方式。
 
-### 字幕
+### 子图
 
-编译图可以是另一个图中的节点. 外面图看到单个节点;内部图有自己的状态和检查点.这就是团队构建监督员工代理的方式:监督员工图将用户意图导向每个域名的员工子图.
+一个编译后的图可以作为另一个图中的节点。外层图看到的只是一个节点;内层图拥有自己的状态和自己的检查点。团队就是这样构建 supervisor-worker 智能体的:supervisor 图把用户意图路由到每个领域的 worker 子图。
 
 ```figure
 l5-state-graph-ledger
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:状态和节点
+### 步骤 1:状态和节点
 
 ```python
 from typing import Annotated, TypedDict
@@ -99,9 +99,9 @@ graph.add_edge("tools", "agent")
 app = graph.compile(checkpointer=MemorySaver())
 ```
 
-`add_messages`错误的原因是,它是最常见的LangGraph错误.
+`add_messages` 是让消息列表累积而非覆盖的 reducer。忘记它是 LangGraph 最常见的 bug。
 
-### 步骤2:用线程运行
+### 步骤 2:用线程运行
 
 ```python
 config = {"configurable": {"thread_id": "user-42"}}
@@ -113,11 +113,11 @@ for event in app.stream(
     print(event)
 ```
 
-每次更新都是一个命令`{node_name: state_delta}`你的前端可以向用户界面传输这些,以便用户看到"代理正在考虑...打电话搜索_网...得到结果...回复".
+每次更新都是一个字典 `{node_name: state_delta}`。你的前端可以把这些流式推送到 UI,让用户看到"智能体正在思考… 调用 search_web… 得到结果… 正在回答"。
 
-### 步骤3:添加一个人-在循环中中断
+### 步骤 3:添加人机协同中断
 
-标记一个节点,以便执行停止运行之前.
+标记一个节点,使执行在它运行之前暂停。
 
 ```python
 app = graph.compile(
@@ -134,9 +134,9 @@ app.invoke(Command(resume=True), config)
 app.update_state(config, {"messages": [AIMessage("Blocked by human reviewer.")]})
 ```
 
-状态,检查点和线程都在中断期间持续存在. 除了执行时,没有任何东西被记住.
+状态、检查点和线程都在中断期间持久保存。除了执行期间,没有任何东西留在内存中。
 
-### 步骤4:调试时间旅行
+### 步骤 4:用于调试的时间回溯
 
 ```python
 history = list(app.get_state_history(config))
@@ -149,9 +149,9 @@ for event in app.stream(None, target, stream_mode="values"):
     pass  # replay from that point forward
 ```
 
-通过`None`通过一个值,在恢复之前将其添加到该点状态的更新中. 这就是你在没有重新运行整个对话的情况下重复一个坏代理运行的方式.
+传入 `None` 作为输入会从给定的检查点重放;传入一个值则会先把它作为更新追加到该检查点的状态,然后再恢复执行。这就是你重现一次失败的智能体运行而无需重跑整个对话的方法。
 
-### 步骤5:换取检查点进行生产
+### 步骤 5:为生产环境更换 checkpointer
 
 ```python
 from langgraph.checkpoint.postgres import PostgresSaver
@@ -161,50 +161,50 @@ with PostgresSaver.from_conn_string("postgresql://...") as checkpointer:
     app = graph.compile(checkpointer=checkpointer)
 ```
 
-石,雷迪斯和后生已经出货了.`MemorySaver`任何持续在重启过程中都需要真正的商店.
+SQLite、Redis 和 Postgres 都有官方实现。`MemorySaver` 适用于测试。任何需要跨重启持久化的东西都需要真正的存储。
 
-## 技能
+## 这项技能
 
-> 你把代理作为图形,而不是作为图形.`while True`子,子.
+> 你要把智能体构建为图,而不是 `while True` 循环。
 
-在你拿到兰格拉夫之前,做一个60秒的设计:
+在使用 LangGraph 之前,先做 60 秒的设计:
 
-1. **Name the nodes.**任何单独的决定或副作用都是节点. "代理认为", "工具运行", "评论员批准", "响应流".如果你不能列出它们,任务还没有代理形状.
-2. **Declare the state.**单词单词,每一个单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词单词`messages`提升任务特定领域 (一个工作`plan`其他`budget`计数器`retrieved_docs`列表) 到最高水平.
-3. **Draw the edges.**只有下一步取决于模型输出.每个条件边缘需要一个具有命名分支的路由器函数.
-4. **Choose a checkpointer up front.** `MemorySaver`对于测试, Postgres/Redis/SQLite. 没有一个 没有检查点意味着没有简历,没有中断,没有时间旅行.
-5. **Decide interrupts before tools run, not after.**通过将边缘进入一个副作用节点,以便您可以在损害之前取消;验证将在模型边缘取消,
-6. **Stream by default.** `mode="updates"`对于UI,`mode="messages"`对于模型节点内部的代币级流,`mode="values"`在评估期间,
+1. **给节点命名。** 每个离散的决策或有副作用的动作都是一个节点。"智能体思考""工具运行""审核者批准""响应流式输出"。如果你列不出来,说明这个任务还不具备智能体形态。
+2. **声明状态。** 用最小的 TypedDict,并为每个列表字段配一个 reducer。不要把所有东西都塞进 `messages`;把任务特定的字段(一个工作用的 `plan`、一个 `budget` 计数器、一个 `retrieved_docs` 列表)提升到顶层。
+3. **画出边。** 默认用静态边,除非下一步取决于模型输出。每条条件边都需要一个具有命名分支的路由函数。
+4. **一开始就选好 checkpointer。** 测试用 `MemorySaver`,其他情况用 Postgres/Redis/SQLite。没有它就不要上线 — 没有 checkpointer 就无法恢复、无法中断、无法时间回溯。
+5. **在工具运行之前而不是之后设置中断。** 审批放在进入有副作用节点的边上,这样你可以在造成危害前取消;校验放在模型输出的边上,这样你可以低成本地拒绝错误的调用。
+6. **默认开启流式输出。** UI 用 `mode="updates"`,模型节点内的 token 级流式传输用 `mode="messages"`,评估期间的完整快照用 `mode="values"`。
 
-拒绝运送没有检查点的LangGraph代理.拒绝运送中断后的代理.拒绝运送一个`messages`没有字段`add_messages`作为其减小剂.
+拒绝上线没有 checkpointer 的 LangGraph 智能体。拒绝上线在副作用*之后*才中断的智能体。拒绝上线没有用 `add_messages` 作为 reducer 的 `messages` 字段。
 
-## 运动
+## 练习
 
-1. **Easy.**通过计算器工具和网页搜索工具实现上述四节点 ReAct 图.`list(app.get_state_history(config))`返回至少四个检查站,进行两轮对话.
-2. **Medium.**添加一个`planner`之前运行的节点`agent`编写一个结构化`plan: list[str]`现在,我在美国.`agent`测试中失败,如果`plan`检查点简历 (错误减小器) 上丢失.
-3. **Hard.**建立一个监督图,该图将三个子图之间的路线 (`researcher`现在`writer`现在`reviewer`) 使用`Send`每个子图都有自己的状态和检查点.`interrupt_before=["writer"]`确认从前一个检查点的时间旅行只运行了叉子分支.
+1. **简单。** 用一个计算器工具和一个网页搜索工具实现上面的四节点 ReAct 图。验证 `list(app.get_state_history(config))` 在两轮对话中至少返回四个检查点。
+2. **中等。** 添加一个 `planner` 节点,它在 `agent` 之前运行,并把一个结构化的 `plan: list[str]` 写入状态。让 `agent` 把计划步骤标记为完成。如果 `plan` 在检查点恢复后丢失(reducer 用错了),则测试失败。
+3. **困难。** 构建一个 supervisor 图,使用 `Send` 在三个子图(`researcher`、`writer`、`reviewer`)之间路由。每个子图有自己的状态和 checkpointer。在外层图上添加一个 `interrupt_before=["writer"]`,让人可以审批研究简报。确认从先前检查点进行时间回溯时只重跑分叉的分支。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|-----------------------|
-| StateGraph | "The LangGraph graph" | The builder object you add nodes and edges to before compile. |
-| Reducer | "How the field merges" | A function `(old, new) -> merged` applied when a node returns an update for that field; default is overwrite, `add_messages` appends. |
-| Thread | "A conversation ID" | A `thread_id` string that scopes all checkpoints for one session. |
-| Checkpoint | "A paused state" | A persisted snapshot of the full graph state after a node transition, keyed on `(thread_id, checkpoint_id)`. |
-| Interrupt | "Pause for a human" | `interrupt_before` / `interrupt_after` stop execution at a node boundary; resume with `Command(resume=...)`. |
-| Time-travel | "Fork from a prior step" | `graph.invoke(None, config_with_old_checkpoint_id)` replays from that checkpoint forward. |
-| Send | "Parallel subgraph dispatch" | A constructor a node can return to spawn N parallel executions of a target node. |
-| Subgraph | "A compiled graph as a node" | A compiled StateGraph used as a node in another graph; preserves its own state scope. |
+| StateGraph | "LangGraph 的图" | 你在 compile 之前向其中添加节点和边的构建器对象。 |
+| Reducer | "字段如何合并" | 当节点为该字段返回更新时应用的函数 `(old, new) -> merged`;默认是覆盖,`add_messages` 是追加。 |
+| Thread | "一个会话 ID" | 一个 `thread_id` 字符串,为一个会话的所有检查点划定作用域。 |
+| Checkpoint | "一个暂停的状态" | 节点转换后完整图状态的持久化快照,以 `(thread_id, checkpoint_id)` 为键。 |
+| Interrupt | "暂停等待人类" | `interrupt_before` / `interrupt_after` 在节点边界停止执行;用 `Command(resume=...)` 恢复。 |
+| Time-travel | "从先前步骤分叉" | `graph.invoke(None, config_with_old_checkpoint_id)` 从该检查点向前重放。 |
+| Send | "并行子图派发" | 节点可以返回的一个构造器,用于生成目标节点的 N 个并行执行。 |
+| Subgraph | "作为节点的编译图" | 用作另一个图中节点的编译后的 StateGraph;保留自己的状态作用域。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [LangGraph documentation](https://langchain-ai.github.io/langgraph/)对国家图表,减小器,检查点和中断的常规参考.
-- [LangGraph concepts: state, reducers, checkpointers](https://langchain-ai.github.io/langgraph/concepts/low_level/)本课中使用的心理模型,直接从源头.
-- [LangGraph Persistence and Checkpoints](https://langchain-ai.github.io/langgraph/concepts/persistence/) Postgres/SQLite/Redis 商店,检查点名字空间和线程ID的细节.
-- [LangGraph Human-in-the-loop](https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/) `interrupt_before`现在`interrupt_after`现在`Command(resume=...)`它们是"化"的.
-- [Yao et al., "ReAct: Synergizing Reasoning and Acting in Language Models" (ICLR 2023)](https://arxiv.org/abs/2210.03629)每一个LangGraph代理所实施的模式;阅读它,以推理后果理性.
-- [Anthropic — Building effective agents (Dec 2024)](https://www.anthropic.com/research/building-effective-agents) 什么图形 (链,路由器,管弦工作者,评价者优化器) 首选,何时.
-- 阶段11 · 09 (函数调用) 每一个LangGraph代理节点重复使用工具调用原始.
-- 11 · 14阶段 (模式文本协议) 外部工具发现,将其插入到一个LangGraph`ToolNode`通过MCP适配器.
-- 阶段11 · 17 (代理框架交易) 什么时候选择LangGraph而不是CrewAI,AutoGen或Agno.
+- [LangGraph 文档](https://langchain-ai.github.io/langgraph/) — StateGraph、reducer、checkpointer 和中断的权威参考。
+- [LangGraph 概念:状态、reducer、checkpointer](https://langchain-ai.github.io/langgraph/concepts/low_level/) — 本课所用的心智模型,直接来自官方来源。
+- [LangGraph 持久化与检查点](https://langchain-ai.github.io/langgraph/concepts/persistence/) — 关于 Postgres/SQLite/Redis 存储、检查点命名空间和 thread ID 的细节。
+- [LangGraph 人机协同](https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/) — `interrupt_before`、`interrupt_after`、`Command(resume=...)` 以及编辑状态的模式。
+- [Yao 等,"ReAct: Synergizing Reasoning and Acting in Language Models"(ICLR 2023)](https://arxiv.org/abs/2210.03629) — 每个 LangGraph 智能体都在实现的模式;阅读它以理解推理轨迹的设计依据。
+- [Anthropic — Building effective agents(2024 年 12 月)](https://www.anthropic.com/research/building-effective-agents) — 应该在何时偏好哪种图形态(chain、router、orchestrator-workers、evaluator-optimizer)。
+- Phase 11 · 09(Function Calling)— 每个 LangGraph 智能体节点都复用的工具调用原语。
+- Phase 11 · 14(Model Context Protocol)— 通过 MCP 适配器接入 LangGraph `ToolNode` 的外部工具发现机制。
+- Phase 11 · 17(Agent framework tradeoffs)— 何时在 LangGraph 与 CrewAI、AutoGen 或 Agno 之间做出选择。

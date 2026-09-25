@@ -1,38 +1,38 @@
 # 推理优化
 
-> 两个阶段定义了LLM推理.预填处理你的提示并行 - - 计算式.解码一次生成代币 - - 记忆式.每个优化都针对一个或两个.
+> 两个阶段定义了 LLM 推理。Prefill 并行处理你的提示词——受计算限制。Decode 一次生成一个 token——受内存限制。每一项优化都针对其中之一或两者。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 10, Lessons 01-08 (Transformer architecture, attention)
-**Time:** ~120 minutes
+**Prerequisites:** Phase 10, Lessons 01-08（Transformer 架构、注意力机制）
+**Time:** ~120 分钟
 
 ## 学习目标
 
-- 实现KV缓存,以消除自动降低代币生成期间冗余计算
-- 解释LLM推理的预填与解码阶段以及为什么每个阶段都有不同的瓶 (计算与记忆)
-- 实现连续批量和PagedAttention概念,以最大限度地在同时请求下利用GPU
-- 比较推断优化技术 (KV缓存,投机解码,闪存注意力) 和其吞吐量/延迟权衡
+- 实现 KV-cache，消除自回归 token 生成中的冗余计算
+- 解释 LLM 推理的 prefill 与 decode 阶段，以及为什么各自有不同的瓶颈（计算受限 vs 内存受限）
+- 实现连续批处理（continuous batching）和 PagedAttention 概念，以在并发请求下最大化 GPU 利用率
+- 比较推理优化技术（KV-cache、投机解码、flash attention）及其吞吐量/延迟权衡
 
-## 问题
+## 问题所在
 
-您在 4xA100 GPU 上部署Llama 3 70B. 一个用户每秒获得约50个代币.感觉很快. 然后100个用户同时达到终端点. 吞吐量下降到3个代币/秒/用户. 您的每月25,000美元的 GPU 账单服务响应速度比人类类型慢.
+你在 4xA100 GPU 上部署 Llama 3 70B。单个用户可获得约 50 token/秒。感觉很快。然后 100 个用户同时访问端点。吞吐量降到 3 token/秒/用户。你每月 25,000 美元的 GPU 账单，响应速度却比人打字还慢。
 
-模型本身在1用户到100用户之间不会发生变化. 体重相同,建筑相同,数学相同. 改变的是你安排工作的方式. 简单的推断浪费了90%以上的可用GPU计算. 预测到一个用户在等待代币47时, 整个批量插槽保持开放, 而GPU内存巴士在子之间停留. 另一方面,一个新用户的2000个代币提示可以用有用的计算来填补那个空白时间.
+从 1 个用户到 100 个用户，模型本身并没有变化。同样的权重、同样的架构、同样的数学。变化的是你如何调度工作。朴素的推理会浪费 90% 以上的可用 GPU 算力。一个等待第 47 个 token 的用户占用着整个批处理槽位，而 GPU 内存总线在矩阵乘法之间处于空闲状态。与此同时，一个新用户的 2,000-token 提示词本可以用有用的计算填满这段空闲时间。
 
-这不是扩展问题. 这是一个规划问题. 这课中的技术 - - KV缓存,连续批量,页面注意,推测解码,前缓存 - - 是分开一个$25k/month inference bill from a $平均每月5千辆,服务于同一个交通.
+这不是扩展性问题。这是调度问题。本课中的技术——KV 缓存、连续批处理、PagedAttention、投机解码、前缀缓存——正是区分一个 $25k/month inference bill from a $5k/月 服务相同流量的关键。
 
-通过4xA100-80GB的Llama 3 70B服务的vLLM在低同步时实现了50个代币/秒/用户,并通过连续批量和PagedAttention支持100个同步请求的15-25个TPS/用户.没有这些优化,相同的硬件在同步时服务于5个TPS/用户.相同的GPU,相同的模型,吞吐量为4倍.
+vLLM 在 4xA100-80GB 上服务 Llama 3 70B，在低并发下达到约 50 token/秒/用户，并通过连续批处理和 PagedAttention 在 100 个并发请求下维持 15-25 TPS/用户。没有这些优化，同样的硬件在该并发下只能提供 5 TPS/用户。同样的 GPU，同样的模型，4 倍的吞吐量。
 
-## 概念
+## 核心概念
 
-### 预填与解码
+### Prefill 与 Decode
 
-每个士推断请求都有两个不同的阶段.
+每个 LLM 推理请求都有两个不同的阶段。
 
-**Prefill**处理整个输入提示.所有代币都已知,因此注意力可以平行计算在整个序列中.这是一个大的矩阵乘法 - - GPU 核心保持忙碌.瓶是计算:你的硬件每秒能输送多少FLOPS.A100可以提供312 TFLOPS (BF16).在70B模型上预填4 096代币提示需要400ms在单个A100上.
+**Prefill** 处理整个输入提示词。所有 token 都是已知的，因此注意力可以在整个序列上并行计算。这是一次大型矩阵乘法——GPU 核心保持忙碌。瓶颈是计算：你的硬件每秒能提供多少 FLOPS。一块 A100 可达 312 TFLOPS（BF16）。在单块 A100 上，对 70B 模型处理 4,096-token 提示词的 prefill 约需 400ms。
 
-**Decode**发出输出代币一次. 每个新代币都会与之前的所有代币相结合,但每次前进通行只会产生一个代币. 按矩阵的尺寸与预填量相同,但你将它们乘以单个向量而不是矩阵.  GPU 核心在微秒内完成,然后等待下一批重量从内存到达. 瓶是内存带宽:你能如何快速将模型重量从HBM流到计算单元. 机有2TB/s的带宽. 对于FP16的70B模型,则是140GB. 一次阅读完整模型需要70ms,这是你单次解码步骤的地板.
+**Decode** 一次生成一个输出 token。每个新 token 都要关注所有之前的 token，但每次前向传播只产生一个 token。权重矩阵与 prefill 时相同大小，但你是在用单个向量而非矩阵与之相乘。GPU 核心在微秒内完成，然后等待下一批权重从内存到达。瓶颈是内存带宽：你从 HBM 向计算单元流式传输模型权重的速度。一块 A100 有 2 TB/s 带宽。一个 FP16 的 70B 模型是 140 GB。完整读取一次模型需要 70ms——这就是单个 decode 步骤的下限。
 
 ```mermaid
 graph LR
@@ -49,21 +49,21 @@ graph LR
     P3 --> D1
 ```
 
-其他**ops:byte ratio**计算量是计算的,它可以测量你每次从内存中加载的字节中执行多少操作.
+**ops:byte 比率**（也称算术强度）刻画了这一权衡。它衡量你每从内存加载一个字节执行多少操作。
 
 ```
 ops:byte ratio = FLOPs per token / bytes read from memory
 ```
 
-在 4,096 个代币的批量中,你执行每次加载重量的 4,096 个多积累操作.比率高 - 你是计算的.在批量大小 1 的解码过程中,你执行每次加载重量的 ~ 1 个操作.比率低 - 你是记忆的.
+在批大小为 4,096 个 token 的 prefill 期间，你每加载一个权重执行约 4,096 次乘加运算。比率很高——你受计算限制。在批大小为 1 的 decode 期间，你每加载一个权重执行约 1 次操作。比率很低——你受内存限制。
 
-基本的见解: *解码是记忆的,因为你读完整个模型,以产生一个代币*. 下面的每一个优化,
+根本洞见：*decode 是内存受限的，因为你读取整个模型只为产生一个 token*。下面的每一项优化要么减少你读取的内容，要么增加每次读取处理的 token 批量，要么完全避免读取。
 
-### 存储器
+### KV Cache
 
-在注意期间,每个代币的查询都会关注每个前代币的关键和值向量.没有缓存,生成代币N需要重新计算所有N-1前代币的关键和值预测.在生成代币 2,然后再次为代币3,然后再次为代币4.通过代币1000,你已经投影代币1总共999次.
+在注意力计算中，每个 token 的 query 都要关注所有之前 token 的 key 和 value 向量。如果不缓存，生成第 N 个 token 需要为所有前 N-1 个 token 重新计算 key 和 value 投影。Token 1 在生成 token 2 时被投影一次，生成 token 3 时再来一次，生成 token 4 时又来一次。到第 1,000 个 token 时，token 1 已被投影了总计 999 次。
 
-存储KV缓存存储所有前代币的关键和值预测.在生成代币N时,您只计算代币N的关键和值,然后将它们与从代币1到N-1的缓存K/V连接.
+KV cache 存储所有之前 token 的 key 和 value 投影。生成第 N 个 token 时，你只计算 token N 的 key 和 value，然后将它们与缓存的 token 1 到 N-1 的 K/V 拼接。
 
 ```mermaid
 graph TD
@@ -80,13 +80,13 @@ graph TD
     end
 ```
 
-**Memory formula for KV cache:**
+**KV cache 的内存公式：**
 
 ```
 KV cache size = 2 * num_layers * num_kv_heads * head_dim * seq_len * bytes_per_param
 ```
 
-对于Llama 3 70B (80层,8KV头,GQA,头_dim=128,BF16):
+对于 Llama 3 70B（80 层、GQA 的 8 个 KV 头、head_dim=128、BF16）：
 
 ```
 per token: 2 * 80 * 8 * 128 * 2 bytes = 327,680 bytes = 320 KB
@@ -94,13 +94,13 @@ at 4,096 tokens: 320 KB * 4,096 = 1.28 GB
 at 128K tokens: 320 KB * 131,072 = 40 GB
 ```
 
-单个128K文本对话用于Llama 3 70B消耗40GBKV缓存 - - 一半是A100的内存.每一个4K代币的100个同步用户,KV缓存单独需要128GB.这就是为什么KV缓存管理是推断优化的主要挑战.
+Llama 3 70B 的一次 128K 上下文对话消耗 40 GB KV cache——半个 A100 的内存。100 个并发用户各 4K token 时，仅 KV cache 就需要 128 GB。这就是为什么 KV cache 管理是推理优化的核心挑战。
 
-### 连续批量
+### Continuous Batching
 
-静态批量等到N请求的批量到来,处理它们在一起,并在接受新请求之前等到*全部*完成.如果一个请求需要500个代币,另一个需要10,则短请求在完成后490个解码步骤停留无所作为.
+静态批处理等待一批 N 个请求到达，一起处理它们，并等到*全部*完成才接受新请求。如果一个请求需要 500 个 token 而另一个需要 10 个，短请求在完成后会闲置 490 个 decode 步骤。
 
-连续批量 (也称为反复级批量) 随着任何请求完成,就会将新请求插入批量中.每次解码步骤都会重新评估批量.在10个代币后完成的请求立即被等待请求取代.
+连续批处理（也称迭代级批处理）在任何请求完成的瞬间就向批次中插入新请求。批次在每个 decode 步骤都被重新评估。一个在 10 个 token 后完成的请求立即被一个等待中的请求替换。
 
 ```mermaid
 sequenceDiagram
@@ -125,13 +125,13 @@ sequenceDiagram
     Note over R3: R3 done at step 30
 ```
 
-输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大.输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大.输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,输出长度有多大,因为 GPU 插槽永远不会空空.
+吞吐量提升取决于输出长度的差异程度。长度均匀时，连续批处理与静态批处理相当。长度可变时（常见情况），连续批处理可提供 2-5 倍的更高吞吐量，因为 GPU 槽位从不清空。
 
-### 页面关注
+### PagedAttention
 
-每个请求的KV缓存是连续的内存块.随着请求的到来和离开,内存碎片就像操作系统中的RAM碎片化一样.一个4K代码请求需要连续的1.28GB.即使你有2GB的自由总数,你可能没有1.28GB的连续性*.你要么浪费内存,要么拒绝请求.
+每个请求的 KV cache 是一块连续内存。随着请求的到来和离开，内存碎片化——与操作系统中的 RAM 碎片完全一样。一个 4K-token 请求需要 1.28 GB 连续内存。即使你总共有 2 GB 空闲，也可能没有 1.28 GB *连续*空间。你要么浪费内存，要么拒绝该请求。
 
-页面注意力 (vLLM) 应用OS式虚拟内存到KV缓存中.它不分配每请求一个连接块,而是分配固定尺寸的"页面" (通常每个 16 个代币).页面可以在物理GPU内存中的任何地方.页面表将每个请求的逻辑序列位置映射到物理页面位置.
+PagedAttention（来自 vLLM）将操作系统式的虚拟内存应用于 KV cache。它不为每个请求分配一个连续块，而是分配固定大小的"页"（通常每页 16 个 token）。页可以位于物理 GPU 内存的任何位置。一个页表将每个请求的逻辑序列位置映射到物理页位置。
 
 ```mermaid
 graph TD
@@ -150,15 +150,15 @@ graph TD
     end
 ```
 
-页面注意力也可以实现**copy-on-write**如果 50 个请求共享相同的系统提示,则该系统提示的 KV缓存页面会一次存储并被所有 50 个请求引用.只有当请求分离 (不同用户消息) 时,它才会获得自己的页面.这会大幅减少共享系统提示的应用程序的内存使用.
+PagedAttention 还为共享前缀启用了**写时复制**（copy-on-write）。如果 50 个请求共享同一个系统提示词，该系统提示词的 KV cache 页只存储一次，由所有 50 个请求引用。只有当请求分叉时（不同的用户消息），它才获得自己的页。对于具有共享系统提示词的应用，这大幅削减了内存使用。
 
-通过PagedAttention,vLLM报告了接近零的记忆浪费 (在无明的分配中~4%vs~60-80%).
+vLLM 报告通过 PagedAttention 实现接近零的内存浪费（约 4%，而朴素分配约为 60-80%）。
 
-### 投机式解码
+### Speculative Decoding
 
-解码是慢的,因为它是序列的 - - 你生成一个代币,回它,生成下一个.
+Decode 之所以慢，是因为它是串行的——你生成一个 token，喂回去，再生成下一个。但如果你能廉价地猜测接下来的 5 个 token，然后一次性验证它们呢？
 
-预测解码使用一个小,快速的**draft model**为了生成K候选代币.**target model**然后将所有K候选人处理在一个前进传递中 (看起来像一个预填 - 平行,计算,高效).如果目标模型与草案模型的预测一致,你会在一个目标前进传递的时间接受所有K代币.如果它在位置j上不同意,你会接受代币1到j-1,然后丢弃其余.
+投机解码使用一个小而快的**草稿模型**生成 K 个候选 token。然后大型**目标模型**在单次前向传播中处理所有 K 个候选（这看起来像一次 prefill——并行、计算受限、高效）。如果目标模型同意草稿模型的预测，你在一次目标前向传播的时间内接受全部 K 个 token。如果它在位置 j 上不同意，你接受 token 1 到 j-1，丢弃其余的。
 
 ```mermaid
 graph LR
@@ -169,89 +169,89 @@ graph LR
     V -->|"Mismatch at pos 5"| R["Reject token 5<br/>Resample from target"]
 ```
 
-速度取决于**acceptance rate**对于一个Llama 3 8B的编写,接受率为70-85%是自然语言的典型.这意味着解码速度增加了2-3倍.
+加速取决于**接受率**——草稿模型的预测与目标匹配的频率。对于用 Llama 3 8B 为 Llama 3 70B 起草，在自然语言上接受率通常为 70-85%。这转化为 2-3 倍的 decode 加速。
 
-推测解码的三个方法:
+投机解码的三种方法：
 
-| Method | Draft source | Acceptance rate | Overhead |
+| 方法 | 草稿来源 | 接受率 | 开销 |
 |--------|-------------|-----------------|----------|
-| Draft-target (Leviathan et al.) | Separate small model | 70-85% | Draft model memory |
-| EAGLE (Li et al.) | Lightweight head on target | 75-90% | ~1% extra parameters |
-| N-gram lookup | Token n-gram table | 40-60% | Negligible |
+| Draft-target（Leviathan 等人） | 独立的小模型 | 70-85% | 草稿模型内存 |
+| EAGLE（Li 等人） | 目标模型上的轻量头 | 75-90% | ~1% 额外参数 |
+| N-gram 查找 | Token n-gram 表 | 40-60% | 可忽略 |
 
-**EAGLE**训练一个小的自动降低头, 它预测下一个代币的嵌入,使用目标模型的第二至最后层功能. 由于它运行目标模型的自己的表示 (而不是单独的模型),因此它实现了更高的接受率,并且具有最小的额外内存. -2增加了一个动态的草稿树,根据环境调整候选人数量.
+**EAGLE** 在目标模型的隐藏状态之上训练一个小的自回归头。它使用目标模型的倒数第二层特征预测下一个 token 的嵌入。由于它作用于目标模型自身的表示（而非独立模型的），它以最小的额外内存实现更高的接受率。EAGLE-2 增加了一个动态草稿树，根据上下文调整候选数量。
 
-**N-gram speculative decoding**如果草案与同一对话中之前出现的内容 (重复模式,代码,结构化输出) 匹配,则它会带来零神经网络的通用费用.接受率平均较低,但每次猜测的成本基本上是免费的.
+**N-gram 投机解码**维护一个来自当前上下文或预构建语料的 n-gram 续写表。如果草稿与同一对话中之前出现的内容匹配（重复模式、代码、结构化输出），它以零神经网络开销触发。接受率平均较低，但每次推测的成本几乎为零。
 
-测量解码是 *数学上精确* - - 输出分布与目标模型的分布相同.它不是近似.验证步骤确保每个接受的代币都有目标模型分配的概率.
+投机解码在*数学上是精确的*——输出分布与目标模型的分布完全相同。它不是近似。验证步骤确保每个被接受的 token 恰好具有目标模型本会赋予的概率。
 
-### 预写 缓存
+### Prefix Caching
 
-许多请求共享相同的预先语.一个聊天机器人系统提示.一个RAG文本区块.几个拍摄的例子设置.没有预先语缓存,每个请求从零开始重新计算这些共享代币的KV缓存.
+许多请求共享相同的前缀。聊天机器人的系统提示词。RAG 上下文块。少样本示例集。没有前缀缓存，每个请求都要从头重新计算这些共享 token 的 KV cache。
 
-预先预先存储KV缓存用于常见预先存储器,并在请求中重复使用.当一个新的请求带有已知预先存储器到来时,系统复制 (或引用) 缓存的KV输入,仅计算KV为独特的后音.
+前缀缓存存储公共前缀的 KV cache 并跨请求复用。当新请求带着已知前缀到达时，系统复制（或引用）缓存的 KV 条目，只为唯一的后缀计算 KV。
 
-对于所有请求中共享2000个代币的系统提示,预先缓存消除了每请求的预填量400ms. 在每秒100次请求时,这节省了每秒40秒的GPU计算 - - 超过一个GPU的值.
+对于跨所有请求共享的 2,000-token 系统提示词，前缀缓存为每个请求消除约 400ms 的 prefill。在每秒 100 个请求下，每秒节省 40 秒 GPU 计算——超过一块 GPU 的工作量。
 
-根据其标志内容,该树将预写标志索引.任何与存储的预写标志相匹配的请求都会免费获得其KV缓存.该树可实现部分预写标志相匹配 - - 如果你共享了1,500个2000个预写标志的缓存输入,你将重新使用这些1,500个,只会重新计算500个.
+SGLang 的 RadixAttention 使用基数树（trie）实现前缀缓存，按 token 内容索引前缀。任何匹配已存储前缀的请求免费获得其 KV cache。树支持部分前缀匹配——如果你与某个缓存条目共享 2,000 个前缀 token 中的 1,500 个，你复用这 1,500 个，只重新计算 500 个。
 
-### 推进引擎
+### 推理引擎
 
-生产的三种发动机主导着LLM服务:
+三个引擎主导生产级 LLM 服务：
 
-| Engine | Key innovation | Best for |
+| 引擎 | 关键创新 | 最适合 |
 |--------|---------------|----------|
-| vLLM | PagedAttention, continuous batching | General-purpose serving, highest compatibility |
-| SGLang | RadixAttention (prefix caching), structured generation | Multi-turn chatbots, constrained decoding |
-| TensorRT-LLM | NVIDIA kernel fusion, FP8 quantization | Maximum single-GPU throughput on NVIDIA hardware |
+| vLLM | PagedAttention、连续批处理 | 通用服务，最高兼容性 |
+| SGLang | RadixAttention（前缀缓存）、结构化生成 | 多轮聊天机器人、受约束解码 |
+| TensorRT-LLM | NVIDIA 内核融合、FP8 量化 | NVIDIA 硬件上的最大单 GPU 吞吐量 |
 
-**vLLM**它支持最广泛的模型,运行在任何GPU供应商 (NVIDIA,AMD,Intel) 上,并通过PagedAttention +连续批量实现强大的吞吐量.OpenAI兼容的API意味着您可以将其作为任何OpenAI API调用的替代品.
+**vLLM** 是默认起点。它支持最广泛的模型，可在任何 GPU 厂商（NVIDIA、AMD、Intel）上运行，并通过 PagedAttention + 连续批处理实现强大吞吐量。其 OpenAI 兼容 API 意味着你可以直接将它作为任何 OpenAI API 调用的替代品。
 
-**SGLang**基于vLLM的基础,但增加了RadixAttention用于预写缓存和结构化的LLM程序的域名特定语言.如果您的工作负载涉及多轮对话,工具使用或限制式解码 (JSON输出,regex指导生成),SGLang通常通过预写重复使用超过vLLM2-5倍.
+**SGLang** 建立在 vLLM 相同的基础之上，但增加了用于前缀缓存的 RadixAttention 和一种用于结构化 LLM 程序的领域特定语言。如果你的工作负载涉及多轮对话、工具使用或受约束解码（JSON 输出、正则引导生成），SGLang 通过前缀复用通常比 vLLM 高出 2-5 倍。
 
-**TensorRT-LLM**它将模型组建成优化NVIDIA GPU内核. 它将操作 (注意力+线性+激活在一个内核中) 合并,在H100 GPU上使用FP8,并用于生产部署与NVIDIA Triton 输入服务器集成. 它实现了NVIDIA硬件上最高的单GPU吞吐量,但需要更多的设置,并且仅在NVIDIA GPU上工作.
+**TensorRT-LLM** 将模型编译为优化的 NVIDIA GPU 内核。它融合操作（注意力 + 线性 + 激活在单个内核中），在 H100 GPU 上使用 FP8，并与 NVIDIA Triton Inference Server 集成以进行生产部署。它在 NVIDIA 硬件上实现最高的单 GPU 吞吐量，但需要更多设置且只在 NVIDIA GPU 上工作。
 
-对于Llama 3 70B (4xA100-80GB,BF16) 的现实世界号码:
+Llama 3 70B 的真实世界数据（4xA100-80GB、BF16）：
 
-| Metric | vLLM | SGLang | TensorRT-LLM |
+| 指标 | vLLM | SGLang | TensorRT-LLM |
 |--------|------|--------|---------------|
-| Throughput (1 user) | ~50 TPS | ~55 TPS | ~65 TPS |
-| Throughput (100 users) | ~2,500 total TPS | ~3,200 total TPS | ~3,000 total TPS |
-| Time to first token | ~400ms | ~300ms (prefix hit) | ~350ms |
-| Max context | 128K | 128K | 128K |
+| 吞吐量（1 用户） | ~50 TPS | ~55 TPS | ~65 TPS |
+| 吞吐量（100 用户） | ~2,500 总 TPS | ~3,200 总 TPS | ~3,000 总 TPS |
+| 首 token 时间 | ~400ms | ~300ms（前缀命中） | ~350ms |
+| 最大上下文 | 128K | 128K | 128K |
 
-### 操作:字节框架
+### Ops:Byte 框架
 
-运营:字节比率告诉你你是否是计算或记忆的,这决定了哪些优化是重要的.
+你无法优化你没有度量的东西。ops:byte 比率告诉你自己是计算受限还是内存受限，这决定了哪些优化才是重要的。
 
 ```
 Compute roof: peak FLOPS of the GPU
 Memory roof:  peak bandwidth * ops:byte ratio
 ```
 
-当ops:byte低 (解码,小批量),你会击中内存带宽屋顶.增加更多计算 (较高的钟,更多的核心) 不会有帮助.你需要减少内存读数 (量化,KV缓存压缩) 或增加批量大小,以抵偿更有用的工作.
+当 ops:byte 低时（decode、小批次），你会撞上内存带宽天花板。增加更多算力（更高时钟频率、更多核心）无济于事。你需要减少内存读取（量化、KV cache 压缩）或增加批大小以将读取分摊到更多有用工作上。
 
-运算:byte高时 (预填,大批量),你会碰到计算屋顶.内存带宽优化并没有帮助.你需要更快的GPU,内核融合或更低的精度来挤压更多的FLOPS.
+当 ops:byte 高时（prefill、大批次），你会撞上计算天花板。内存带宽优化无济于事。你需要更快的 GPU、内核融合或降低精度以挤出更多 FLOPS。
 
-| Scenario | ops:byte | Bound | Optimize with |
+| 场景 | ops:byte | 受限 | 优化手段 |
 |----------|----------|-------|---------------|
-| Prefill, batch=1 | ~4,096 | Compute | Kernel fusion, FP8 |
-| Decode, batch=1 | ~1 | Memory | Quantization, KV compression |
-| Decode, batch=32 | ~32 | Memory | Larger batch, continuous batching |
-| Decode, batch=256 | ~256 | Transitioning | Both matter |
-| Decode, batch=1024 | ~1,024 | Compute | Kernel fusion, tensor parallelism |
+| Prefill, batch=1 | ~4,096 | 计算 | 内核融合、FP8 |
+| Decode, batch=1 | ~1 | 内存 | 量化、KV 压缩 |
+| Decode, batch=32 | ~32 | 内存 | 更大批次、连续批处理 |
+| Decode, batch=256 | ~256 | 过渡 | 两者都重要 |
+| Decode, batch=1024 | ~1,024 | 计算 | 内核融合、张量并行 |
 
-在A100上的交叉点是 ops:byte = 156 (312 TFLOPS / 2 TB/s) 周围.在156下,你是记忆绑定.在156上,你是计算绑定.持续批量通过每次代码包装更多代码来推动解码到这个交叉.
+A100 上的交叉点在 ops:byte = 156 左右（312 TFLOPS / 2 TB/s）。低于 156，你受内存限制。高于 156，你受计算限制。连续批处理通过在每次迭代中打包更多 token，将 decode 推向这个交叉点。
 
 ```figure
 context-window-slide
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:从零开始存储KV缓存
+### 步骤 1：从零实现 KV Cache
 
-我们建立了一个多头KV缓存, 存储每个层,每个头的关键和值预测,
+我们构建一个多头 KV cache，按层、按头存储 key 和 value 投影，并展示内存增长模式。
 
 ```python
 import numpy as np
@@ -293,9 +293,9 @@ class KVCache:
         return per_token * self.seq_len
 ```
 
-### 步骤 2: KV缓存的注意力
+### 步骤 2：带 KV Cache 的注意力
 
-简单的多头注意力,使用KV缓存解码步骤.
+一个在 decode 步骤中使用 KV cache 的简化多头注意力。
 
 ```python
 def scaled_dot_product_attention(query, keys, values):
@@ -340,9 +340,9 @@ class MultiHeadAttention:
         return np.matmul(attn_out, self.W_o)
 ```
 
-### 步骤3:连续批量模拟器
+### 步骤 3：连续批处理模拟器
 
-这模拟了静态和连续批量之间的时间表差异.
+这模拟了静态批处理与连续批处理之间的调度差异。
 
 ```python
 import heapq
@@ -441,9 +441,9 @@ def batching_stats(completed):
     }
 ```
 
-### 步骤4:预写缓存
+### 步骤 4：前缀缓存
 
-基于试验的预写缓存,存储共享预写的KV输入.
+一个基于 trie 的前缀缓存，存储共享前缀的 KV 条目。
 
 ```python
 class TrieNode:
@@ -507,9 +507,9 @@ class PrefixCache:
         return self.hits / total if total > 0 else 0.0
 ```
 
-### 步骤5: 推测式解码模拟器
+### 步骤 5：投机解码模拟器
 
-我们模拟了可配置的接受率.
+我们模拟可配置接受率的 draft-target 投机解码。
 
 ```python
 class DraftModel:
@@ -623,9 +623,9 @@ def compare_speculation_strategies(vocab_size=1000, num_trials=20):
     return results
 ```
 
-### 步骤 6: KV缓存存储器配置文件
+### 步骤 6：KV Cache 内存分析器
 
-计算KV缓存内存要求用于实际模型配置.
+为真实模型配置计算 KV cache 内存需求。
 
 ```python
 MODEL_CONFIGS = {
@@ -687,9 +687,9 @@ def memory_budget(config, gpu_memory_gb, model_dtype_bytes=2, kv_dtype_bytes=2):
     }
 ```
 
-## 用它
+## 使用它
 
-通过vLLM:
+使用 vLLM：
 
 ```python
 from vllm import LLM, SamplingParams
@@ -706,7 +706,7 @@ params = SamplingParams(temperature=0.7, max_tokens=256)
 outputs = llm.generate(["Explain inference optimization in one paragraph."], params)
 ```
 
-通过SGLang用于预写缓存 +结构输出:
+使用 SGLang 进行前缀缓存 + 结构化输出：
 
 ```python
 import sglang as sgl
@@ -727,7 +727,7 @@ results = classify.run_batch([
 ])
 ```
 
-使用TensorRT-LLM:
+使用 TensorRT-LLM：
 
 ```python
 import tensorrt_llm
@@ -742,42 +742,42 @@ outputs = runner.generate(
 )
 ```
 
-## 运送它
+## 交付它
 
-这一课产生了:
-- `outputs/skill-inference-optimization.md`对于诊断和优化LLM推断服务的技能
+本课产出：
+- `outputs/skill-inference-optimization.md` —— 一个用于诊断和优化 LLM 推理服务的技能
 
-## 运动
+## 练习
 
-1. 修改KV缓存配置文件,以比较FP16与FP8与INT4KV缓存量化.在4K环境下,计算每一个用户的最大共享用户为4xA100-80GB.KV量化到INT4应该大约是4倍的用户容量.
+1. 修改 KV cache 分析器，比较 FP16 vs FP8 vs INT4 KV cache 量化。对于 4K 上下文的 Llama 3 70B，在 4xA100-80GB 上计算每种情况的最大并发用户数。KV 量化到 INT4 应使用户容量大约提升 4 倍。
 
-2. 扩展连续批量模拟器,以追踪GPU利用率 (每步填充的批量插槽的部分).随时间推移,用于静态和连续批量,采用50个请求,其输出长度遵循帕雷托分布 (形状=1.5,规模=20).连续批量应保持80%的利用率.
+2. 扩展连续批处理模拟器以跟踪 GPU 利用率（每步批处理槽位被填充的比例）。对 50 个输出长度服从 Pareto 分布（shape=1.5, scale=20）的请求，绘制静态和连续批处理的利用率随时间的变化。连续批处理应保持 >80% 的利用率。
 
-3. 实现KV缓存的集成查询注意 (GQA) 版本,`num_kv_heads < num_query_heads`计算存储存量与全重多头注意力 (KV缓存大小减少8倍).
+3. 实现 KV cache 的分组查询注意力（GQA）版本，其中 `num_kv_heads < num_query_heads`。Llama 3 70B 使用 64 个 query 头但只有 8 个 KV 头。计算相对于完整多头注意力的内存节省（KV cache 大小减少 8 倍）。
 
-4. 建立一个使用 LRU 驱逐的预写缓存.设置最大_entries为500,生成1000个请求,其中60%共享了5个常见预写中的一个.测量击率并与无限缓存进行比较.如果有良好的驱逐,击率应该保持在 55% 以上.
+4. 构建一个使用 LRU 淘汰的前缀缓存。将 max_entries 设为 500，生成 1,000 个请求，其中 60% 共享 5 个公共前缀之一。测量命中率并与无限制缓存比较。良好的淘汰策略下，命中率应保持在 55% 以上。
 
-5. 扩展投机解码模拟器实现基于树的投机 (EAGLE-2 式).而不是单个链K草案代币,生成一个候选树 (例如,每个3级的2个分支=8个叶子候选).对验证轮和线性投机均接受的总代币进行比较.
+5. 扩展投机解码模拟器以实现基于树的推测（EAGLE-2 风格）。不是生成 K 个草稿 token 的单条链，而是生成一棵候选树（例如 3 层每层 2 个分支 = 8 个叶候选）。比较每轮验证接受的总 token 数与线性推测。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|----------------------|
-| Prefill | "Processing the prompt" | Computing attention over all input tokens in parallel -- compute-bound because the full matrix multiplication keeps GPU cores busy |
-| Decode | "Generating tokens" | Producing one token per forward pass, reading the full model weights each time -- memory-bound because compute finishes before the next weights arrive |
-| KV cache | "Caching attention states" | Storing the key and value projections for all previous tokens so they are not recomputed at each decode step -- trades memory for compute |
-| Continuous batching | "Dynamic batching" | Inserting new requests into the running batch as soon as any request finishes, evaluated at every decode iteration rather than waiting for the whole batch |
-| PagedAttention | "Virtual memory for KV cache" | Allocating KV cache in fixed-size pages instead of contiguous blocks, eliminating memory fragmentation and enabling copy-on-write for shared prefixes |
-| Speculative decoding | "Draft and verify" | Using a fast draft model to propose multiple tokens, then verifying them all in one target model forward pass -- mathematically exact, 2-3x speedup |
-| EAGLE | "Self-speculative decoding" | A speculative decoding variant that trains a lightweight head on the target model's own hidden states, achieving higher acceptance rates than a separate draft model |
-| Prefix caching | "Reusing system prompt KV" | Storing computed KV cache entries for common prefixes (system prompts, few-shot examples) and reusing them across requests to skip redundant prefill |
-| Ops:byte ratio | "Arithmetic intensity" | The ratio of compute operations to memory bytes read -- determines whether a workload is compute-bound (high ratio) or memory-bound (low ratio) |
-| Time to first token | "TTFT" | Latency from receiving a request to producing the first output token -- dominated by prefill time for long prompts |
+| Prefill | "处理提示词" | 并行计算所有输入 token 上的注意力——计算受限，因为完整的矩阵乘法使 GPU 核心保持忙碌 |
+| Decode | "生成 token" | 每次前向传播产生一个 token，每次都读取完整模型权重——内存受限，因为计算在下一次权重到达之前就完成了 |
+| KV cache | "缓存注意力状态" | 存储所有之前 token 的 key 和 value 投影，使其在每个 decode 步骤不被重新计算——用内存换计算 |
+| Continuous batching | "动态批处理" | 任何请求一完成就向运行中的批次插入新请求，在每个 decode 迭代时评估，而不是等待整批完成 |
+| PagedAttention | "KV cache 的虚拟内存" | 以固定大小的页而非连续块分配 KV cache，消除内存碎片并为共享前缀启用写时复制 |
+| Speculative decoding | "草稿与验证" | 使用快速草稿模型提出多个 token，然后在一次目标模型前向传播中全部验证——数学上精确，2-3 倍加速 |
+| EAGLE | "自投机解码" | 一种投机解码变体，在目标模型自身的隐藏状态上训练轻量头，实现比独立草稿模型更高的接受率 |
+| Prefix caching | "复用系统提示词 KV" | 存储公共前缀（系统提示词、少样本示例）的计算过的 KV cache 条目并跨请求复用，以跳过冗余 prefill |
+| Ops:byte 比率 | "算术强度" | 计算操作数与读取内存字节数之比——决定工作负载是计算受限（高比率）还是内存受限（低比率） |
+| Time to first token | "TTFT" | 从接收请求到产生第一个输出 token 的延迟——长提示词时由 prefill 时间主导 |
 
-## 进一步阅读
+## 延伸阅读
 
-- 昆等人",用页面注意力服务的大语言模型的有效内存管理" (2023) - 引入页面 KV缓存管理的vLLM论文,现在是推断服务的行业标准
-- 利维亚坦等, "通过推测解码从变压器快速推理" (2023) -- 证明了草案验证推测产生了精确的目标模型分布,同时实现了2-3倍的速度
-- 利等人",EAGLE:投机性样本采集需要重新思考特征不确定性" (2024) --通过培训一个头脑对目标模型的特征而不是使用单独的草案模型来实现更高的接受率
-- 等",SGLang:结构化语言模型程序的有效执行" (2024) -- 引入了RadixAttention用于预写缓存和多调用LLM课程的编程模型
-- 威廉姆斯等人",多核架构的屋顶线:一个洞察力的视觉性能模型" (2009) - - 官方的原始屋顶线论文,将 ops:byte框架正式化为计算与内存瓶的推理
+- Kwon 等人，"Efficient Memory Management for Large Language Model Serving with PagedAttention"（2023）——引入分页 KV cache 管理的 vLLM 论文，如今是推理服务的行业标准
+- Leviathan 等人，"Fast Inference from Transformers via Speculative Decoding"（2023）——奠基性论文，证明 draft-verify 推测产生精确的目标模型分布，同时实现 2-3 倍加速
+- Li 等人，"EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty"（2024）——通过在目标模型自身特征上训练头而非使用独立草稿模型，实现更高的接受率
+- Zheng 等人，"SGLang: Efficient Execution of Structured Language Model Programs"（2024）——引入用于前缀缓存的 RadixAttention 和面向多次调用 LLM 程序的编程模型
+- Williams 等人，"Roofline: An Insightful Visual Performance Model for Multicore Architectures"（2009）——原始 roofline 论文，将 ops:byte 框架形式化，用于推理计算与内存瓶颈

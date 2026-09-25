@@ -1,28 +1,28 @@
-#                                                                                                                                                                                                                                                               
+# 毕业项目 10 — 多智能体软件工程团队
 
-> 许多代理工程团队的2026年形状已经融合:一个建筑师的计划,N编码器在平行工作树中工作,一个审查员的门,一个测试员验证. 斯威-阿夫的工厂架构,MetaGPT的角色驱动,AutoGen 0.4的打字演员图,Cognition的Devin和工厂的Droids都独立地登陆了它. 并行工作树将墙钟转换为吞吐量. 共同状态和传递协议成为失败表面. 目标是建立团队,在SWE-bench Pro上评估,
+> 2026 年多智能体工程团队的形态已趋同:架构师负责规划,N 个编码者在并行 worktree 中工作,评审者把关,测试者验证。SWE-AF 的工厂架构、MetaGPT 的基于角色的提示、AutoGen 0.4 的类型化 actor 图、Cognition 的 Devin,以及 Factory 的 Droids,都独立地收敛到了这一形态。并行 worktree 将墙钟时间转化为吞吐量。共享状态与交接协议则成为故障面。本毕业项目的任务是构建这个团队,在 SWE-bench Pro 上评估,并报告哪些交接会失败以及失败频率。
 
 **Type:** Capstone
 **Languages:** Python / TypeScript (agents), Shell (worktree scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 17 (infrastructure)
-**Phases exercised:**子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子
+**Phases exercised:** P11 · P13 · P14 · P15 · P16 · P17
 **Time:** 40 hours
 
 ## 问题
 
-单机编码带在大型任务上达到了一个天花板. 不是因为任何单个代理都很弱,而是因为200k代币的文本不能容纳一个架构计划加上四个平行代码基础片加上评论员评论加上测试输出. 多代理工厂分开了问题:一个建筑师拥有计划,编码师在并行工作树中实现,一个审查员的门,一个测试员验证. 斯威-阿夫的"工厂"架构,MetaGPT的角色,AutoGen的打字演员图所有三个框架都描述着相同的形状.
+单智能体编码框架在大型任务上遇到了天花板。不是因为任何单个智能体能力不足,而是因为 200k token 的上下文无法同时容纳一份架构计划、四份并行的代码库切片、评审者意见以及测试输出。多智能体工厂对问题进行拆分:架构师负责计划,编码者在并行 worktree 中负责实现,评审者把关,测试者验证。SWE-AF 的"工厂"架构、MetaGPT 的角色设计、AutoGen 的类型化 actor 图——这三种表述描述的都是同一形态。
 
-设计师计划一些编码人员无法实现的东西.编码人员产生矛盾的差异.评论员批准了一个幻觉修复.测试员竞赛着一个写写写的编码器.你将构建一个团队,在50个SWE-bench Pro问题上运行它,跟踪每个编码人员,并发布死后测试.
+故障面就是交接。架构师规划出编码者无法实现的内容。编码者产出相互冲突的 diff。评审者批准了一个幻觉式的修复。测试者与仍在写代码的编码者产生竞争。你将构建一个这样的团队,在 50 个 SWE-bench Pro 问题上运行,追踪每一次交接,并发布复盘报告。
 
 ## 概念
 
-角色是打字代理.**Architect**(Claude Opus 4.7) 阅读问题,写一个计划,并将其分解成用明确界面的子任务. **Coders**(Claude Sonnet 4.7,N平行例,每个案例都在一个`git worktree`独立执行子任务. **Reviewer**通过GPT-5.4阅读合并的差异,批准或要求具体的变更. **Tester**(Gemini 2.5 Pro) 单独运行测试套件,并报告与文物的失败.
+角色是类型化的智能体。**架构师**(Claude Opus 4.7)阅读 issue,撰写计划,并将其拆解为具有显式接口的子任务。**编码者**(Claude Sonnet 4.7,N 个并行实例,每个位于 `git worktree` + Daytona 沙箱中)独立实现各子任务。**评审者**(GPT-5.4)阅读合并后的 diff,要么批准,要么要求具体修改。**测试者**(Gemini 2.5 Pro)在隔离环境中运行测试套件,并附带产物报告通过/失败。
 
-通过共享任务板 (文件支持或Redis) 进行通信. 每个角色都需要完成允许执行的任务. 交付是A2A协议类型的消息. 协调问题:融合冲突解决 (协调员角色或自动三向融合),共享状态同步 (计划在编码器启动后被结;重组是单独的事件),审查员关门 (审查员不能批准自己提出的变化或变化).
+通信通过共享任务板(基于文件或 Redis)进行。每个角色只消费其被允许处理的任务。交接是 A2A 协议类型化的消息。协调关注点包括:合并冲突解决(协调者角色或自动三方合并)、共享状态同步(计划在编码者开始后即冻结;重新规划是独立事件),以及评审者把关(评审者不能批准自己做出的或自己提出的修改)。
 
-代币放大是隐藏的成本.每个角色界限增加了总结提示和交付文本.40转单代理运行成为四个角色的总转折160. 标题特别权衡代币效率与单代理基线,因为问题不是"多代理工作"而是"每美元能否赢得".
+Token 放大是隐性成本。每个角色边界都会增加摘要提示与交接上下文。一次 40 轮的单智能体运行,分散到四个角色后变成总共 160 轮。评分标准特别权衡 token 效率与单智能体基线的对比,因为问题不是"多智能体是否可行",而是"每花费一美元是否更划算"。
 
-## 建筑
+## 架构
 
 ```
 GitHub issue URL
@@ -53,42 +53,42 @@ Coder A          Coder B          Coder C          Coder D          (4 parallel)
                                      -> fails?  -> route back to coder
 ```
 
-## 堆
+## 技术栈
 
-- 编排: 具有共享状态+每个代理子图的LangGraph
-- 信息传输:为打字的代理间信息的A2A协议 (Google 2025)
-- 模型:Opus 4.7 (建筑师),Sonnet 4.7 (编码器),GPT-5.4 (评论员),Gemini 2.5 Pro (测试员)
-- 工作树隔离: `git worktree add`每个编码器+戴顿沙箱
-- 合并协调员:定制三方合并+通过LLM调解冲突
-- 标准:SWE-bench Pro (50个版本),SWE-AF场景,HumanEval++用于单元测试
-- 可观察性:具有角色标签范围的长,每代理代币会计
-- 部署:K8个角色作为一个独立部署+HPA后备
+- 编排:LangGraph,共享状态 + 每个智能体独立的子图
+- 消息传递:A2A 协议(Google 2025),用于类型化的智能体间消息
+- 模型:Opus 4.7(架构师)、Sonnet 4.7(编码者)、GPT-5.4(评审者)、Gemini 2.5 Pro(测试者)
+- Worktree 隔离:每个编码者一个 `git worktree add` + Daytona 沙箱
+- 合并协调器:自定义三方合并 + LLM 介入的冲突解决
+- 评估:SWE-bench Pro(50 个问题)、SWE-AF 场景、HumanEval++ 用于单元测试
+- 可观测性:Langfuse,带角色标记的 span,按智能体的 token 计量
+- 部署:K8s,每个角色作为独立的 Deployment + 基于积压队列的 HPA
 
 ```figure
 ce-team-handoff
 ```
 
-## 建立它
+## 构建步骤
 
-1. **Task board.**文件支持的JSONL,输入信息: `plan_request`现在`subtask`现在`diff_ready`现在`review_needed`现在`test_needed`现在`approved`现在`rejected`现在`replan_needed`代理人签订了标签.
+1. **任务板。** 基于文件的 JSONL,包含类型化消息:`plan_request`、`subtask`、`diff_ready`、`review_needed`、`test_needed`、`approved`、`rejected`、`replan_needed`。智能体按标签订阅。
 
-2. **Architect.**读取GitHub问题,运行Opus 4.7与计划模板,需要明确的子任务界面 (触摸的文件,公共功能,测试影响). 发出一个 `plan_request`它们有着一个小任务.
+2. **架构师。** 阅读 GitHub issue,使用一个要求显式子任务接口(涉及的文件、公开函数、测试影响)的计划模板运行 Opus 4.7。输出一条 `plan_request`,包含子任务的 DAG。
 
-3. **Coders.**其他工作者都需要一个小任务,每个工作者都需要一个新的任务.`git worktree add`通过接,我们可以在线观看.`diff_ready`附加补丁+测试地带.
+3. **编码者。** N 个并行 worker,每个从任务板认领一个子任务。各自创建一个全新的 `git worktree add` 分支以及一个 Daytona 沙箱。实现子任务。输出 `diff_ready`,附带补丁和测试差异。
 
-4. **Merge coordinator.**在全编码器完成时,三向将N分支合并成一个阶段分支.只有在文件层次重叠的情况下,LLM调解冲突.
+4. **合并协调器。** 在所有编码者完成后,将 N 个分支三方合并到 staging 分支。仅在文件级重叠存在时进行 LLM 介入的冲突解决。
 
-5. **Reviewer.**没有批准其作者的差异. 发行`approved`没有任何`review_feedback`通过特定变更请求将返回相关编码器.
+5. **评审者。** GPT-5.4 阅读合并后的 diff。不能批准自己撰写的 diff。输出 `approved`(无操作)或 `review_feedback`,具体的修改请求被路由回相关编码者。
 
-6. **Tester.**双子座2.5 Pro在一个清洁的沙箱里运行测试套件,捕捉了文物,发射了`test_passed`或`test_failed`失败的测试循环返回失败的子任务的编码器.
+6. **测试者。** Gemini 2.5 Pro 在干净的沙箱中运行测试套件。捕获产物。输出 `test_passed` 或带堆栈跟踪的 `test_failed`。失败的测试回环给拥有该失败子任务的编码者。
 
-7. **Handoff accounting.**每个跨越角色界限的消息都会在Langfuse中获得一个跨度,使用的有效载荷大小和模型.计算每次子任务的代币放大 (coder_tokens + reviewer_tokens + tester_tokens + architect_share / coder_tokens).
+7. **交接计量。** 每条跨越角色边界的消息都在 Langfuse 中生成一个 span,记录负载大小和所用模型。计算每个子任务的 token 放大率(coder_tokens + reviewer_tokens + tester_tokens + architect_share / coder_tokens)。
 
-8. **Eval.**运行50个SWE-bench Pro问题. 比较pass@1和$-per-solved-issue与单个代理基线 (单个工作树中的一个Sonnet 4.7).
+8. **评估。** 在 50 个 SWE-bench Pro 问题上运行。对比 pass@1 和每解决一个问题的成本,与单智能体基线(单个 worktree 中的一个 Sonnet 4.7)进行比较。
 
-9. **Post-mortem.**对于每一个失败的问题,确定失败的交付 (计划太模糊,合并冲突,评论员错误批准,测试者).
+9. **复盘。** 对每个失败的问题,识别出失败的交接(计划过于模糊、合并冲突、评审者误批准、测试者偶发失败)。生成一份交接失败直方图。
 
-## 用它
+## 使用
 
 ```
 $ team run --issue https://github.com/acme/widget/issues/842
@@ -106,50 +106,50 @@ $ team run --issue https://github.com/acme/widget/issues/842
 [pr]        opened #3382   4 coders, 1 revision, $4.90, 18m
 ```
 
-## 运送它
+## 交付
 
-`outputs/skill-multi-agent-team.md`鉴于问题URL和平行性水平,团队会产生一个准备好合并的 PR,以每个角色的代币计算.
+`outputs/skill-multi-agent-team.md` 是交付物。给定一个 issue URL 和并行度级别,团队产出一个可合并的 PR,并附带按角色的 token 计量。
 
-| Weight | Criterion | How it is measured |
+| 权重 | 标准 | 衡量方式 |
 |:-:|---|---|
-| 25 | SWE-bench Pro pass@1 | Matched 50-issue subset, pass@1 |
-| 20 | Parallel speedup | Wall-clock vs single-agent baseline |
-| 20 | Review quality | False-approval rate on injected-bug probe |
-| 20 | Token efficiency | Total tokens per solved issue vs single-agent |
-| 15 | Coordination engineering | Merge-conflict resolution, handoff-failure histogram |
+| 25 | SWE-bench Pro pass@1 | 匹配的 50 问题子集,pass@1 |
+| 20 | 并行加速比 | 墙钟时间对比单智能体基线 |
+| 20 | 评审质量 | 注入 bug 探针下的误批准率 |
+| 20 | Token 效率 | 每解决一个问题的总 token 数对比单智能体 |
+| 15 | 协调工程质量 | 合并冲突解决、交接失败直方图 |
 | **100** | | |
 
-## 运动
+## 练习
 
-1. 注入明显的错误到中期差异中 (额外的`return None`检查员的错误批准率. 调整检查员提示,直到错误批准率低于5%.
+1. 在运行中途向 diff 注入一个明显的 bug(在主体之前加入额外的 `return None`)。测量评审者的误批准率。调整评审者提示,直到误批准率低于 5%。
 
-2. 缩小到两个编码器 (建筑师+编码器+审查器+测试器,编码器连续执行两个子任务).比较墙钟和通过率.
+2. 将编码者减少到两个(架构师 + 编码者 + 评审者 + 测试者,编码者依次执行两个子任务)。对比墙钟时间和通过率。
 
-3. 替换合并协调器用单字符限制 (子任务触摸分离的文件集). 测量建筑师的规划负担.
+3. 用单写者约束(子任务涉及互不相交的文件集)替代合并协调器。测量架构师承受的规划负担。
 
-4. 测量虚假批准率和代币成本的分别.
+4. 将评审者从 GPT-5.4 换成 Claude Opus 4.7。测量误批准率和 token 成本差异。
 
-5. 添加第五个角色:记录者 (海库4.5). 经过审查,它产生了变更日志输入. 测量文档质量是否合理增加代币支出.
+5. 增加第五个角色:文档撰写者(Haiku 4.5)。在评审之后,它生成一条变更日志。衡量文档质量是否值得额外的 token 开销。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|------------------------|
-| Parallel worktree | "Isolated branch" | `git worktree add` producing a fresh working tree per coder |
-| Task board | "Shared message bus" | File or Redis store of typed messages agents subscribe to |
-| Handoff | "Role boundary" | Any message crossing from one role's context to another's |
-| Token amplification | "Multi-agent overhead" | Total tokens across roles / single-agent tokens for the same task |
-| A2A protocol | "Agent-to-agent" | Google's 2025 spec for typed inter-agent messages |
-| Merge coordinator | "Integrator" | Component that runs three-way merge and mediates conflicts |
-| False approval | "Reviewer hallucination" | Reviewer approves a diff with known bugs |
+| 并行 worktree | "隔离分支" | `git worktree add`,为每个编码者生成一个全新的工作树 |
+| 任务板 | "共享消息总线" | 智能体订阅的类型化消息的文件或 Redis 存储 |
+| 交接 | "角色边界" | 任何从一个角色的上下文跨越到另一个角色的消息 |
+| Token 放大 | "多智能体开销" | 各角色总 token 数 / 同一任务的单智能体 token 数 |
+| A2A 协议 | "Agent-to-agent" | Google 2025 年的类型化智能体间消息规范 |
+| 合并协调器 | "集成者" | 执行三方合并并调解冲突的组件 |
+| 误批准 | "评审者幻觉" | 评审者批准了一个含有已知 bug 的 diff |
 
-## 进一步阅读
+## 延伸阅读
 
-- [SWE-AF factory architecture](https://github.com/Agent-Field/SWE-AF)2026年参考多代理工厂
-- [MetaGPT](https://github.com/FoundationAgents/MetaGPT)基于角色的多代理框架
-- [AutoGen v0.4](https://github.com/microsoft/autogen)微软的类型演员框架
-- [Cognition AI (Devin)](https://cognition.ai)参考产品
-- [Factory Droids](https://www.factory.ai)替代参考产品
-- [Google A2A protocol](https://a2a-protocol.org/latest/) 代理间信息信息规范
-- [git worktree documentation](https://git-scm.com/docs/git-worktree)隔离基板
-- [SWE-bench Pro](https://www.swebench.com)评估目标
+- [SWE-AF factory architecture](https://github.com/Agent-Field/SWE-AF) — 2026 年多智能体工厂的参考实现
+- [MetaGPT](https://github.com/FoundationAgents/MetaGPT) — 基于角色的多智能体框架
+- [AutoGen v0.4](https://github.com/microsoft/autogen) — Microsoft 的类型化 actor 框架
+- [Cognition AI (Devin)](https://cognition.ai) — 参考产品
+- [Factory Droids](https://www.factory.ai) — 替代参考产品
+- [Google A2A protocol](https://a2a-protocol.org/latest/) — 智能体间消息传递规范
+- [git worktree documentation](https://git-scm.com/docs/git-worktree) — 隔离的底层机制
+- [SWE-bench Pro](https://www.swebench.com) — 评估目标

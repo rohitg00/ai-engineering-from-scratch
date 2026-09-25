@@ -1,135 +1,135 @@
-# 选择自主托管服务 机器与硬件和规模相匹配
+# 自托管服务引擎选型 — 将推理引擎匹配到硬件与规模
 
-> 引擎选择是硬件,规模和生态系统的函数,而不是排名表的读数. 2026年,四个引擎主导自主主设置推理: llama.cpp, Ollama, vLLM, SGLang,TGI在维护模式下落后.**llama.cpp**支持最广泛的模型,对量化和线程进行全面控制.**Ollama**是 dev 笔记本电脑单命令安装,比 llama.cpp (Go + CGo + HTTP 序列化) ~15-30%慢,在像 prod 负载下输出差距3x. **TGI entered maintenance mode December 11, 2025**只修复错误,原始吞吐量比vLLM慢10%但历史上具有最高可观测性和HF生态系统集成性.这种维护状态使其成为一个风险的长期投注.**vLLM**是一般用途的生产默认 v0.15.1 (二月2026年) 添加 PyTorch 2.10, RTX Blackwell SM120, H200优化. **SGLang**是生产的多转/前重型专家的400,000+GPU (xAI,LinkedIn,Cursor,Oracle,GCP,Azure,AWS). 硬件限制:CPU-first → llama.cpp. AMD/非NVIDIA → vLLM是最强有支持的路径 (TRT-LLM是NVIDIA锁定). 2026 管道模式: dev = Ollama,阶段 = llama.cpp, prod = vLLM或 SGLang. 发动机采用不同的重量格式, GGUF用于 llama.cpp家族,HF安全传感器用于GPU发动机,因此格式转换可以在阶段之间进行.
+> 引擎选型是硬件、规模和生态的函数，而不是看排行榜。2026 年主导自托管推理的四个引擎是：llama.cpp、Ollama、vLLM、SGLang，TGI 处于维护模式落后其后。**llama.cpp** 在 CPU 上最快 — 模型支持最广，可完全控制量化与线程。**Ollama** 是开发笔记本上的一键安装方案，比 llama.cpp 慢约 15-30%（Go + CGo + HTTP 序列化），在生产级负载下吞吐量差距达 3 倍。**TGI 于 2025 年 12 月 11 日进入维护模式** — 只修复 bug，原始吞吐量比 vLLM 慢约 10%，但历来拥有顶尖的可观测性和 HF 生态集成。这种维护状态使其成为有风险的长期选择 — 对新项目而言，SGLang 或 vLLM 是更安全的默认选项。**vLLM** 是通用生产环境默认选择 — v0.15.1（2026 年 2 月）增加了 PyTorch 2.10、RTX Blackwell SM120、H200 优化。**SGLang** 是 agentic 多轮 / 前缀密集型场景的专家 — 生产环境中拥有 400,000+ GPU（xAI、LinkedIn、Cursor、Oracle、GCP、Azure、AWS）。硬件约束：CPU 优先 → llama.cpp。AMD / 非 NVIDIA → vLLM 是支持最完善的路径（TRT-LLM 被锁定在 NVIDIA）。2026 年的流水线模式：开发 = Ollama，预发布 = llama.cpp，生产 = vLLM 或 SGLang。各引擎使用不同的权重格式 — llama.cpp 系列用 GGUF，GPU 引擎用 HF safetensors — 因此阶段之间可能需要一次格式转换。
 
 **Type:** Learn
-**Languages:** Python (stdlib, engine-decision tree walker)
-**Prerequisites:** All Phase 17 lessons covering engines (04, 06, 07, 09, 18)
-**Time:** ~45 minutes
+**Languages:** Python（标准库、引擎决策树遍历器）
+**Prerequisites:** Phase 17 中所有关于引擎的课程（04、06、07、09、18）
+**Time:** 约 45 分钟
 
 ## 学习目标
 
-- 选择一个引擎 (CPU/AMD/NVIDIA Hopper/Blackwell),规模 (1用户/100/10,000),和工作负载 (通用聊天/代理/长文).
-- 举个2026年TGI维护模式状态 (2025年12月11日) 的名称,以及为什么它偏向新项目向vLLM或SGLang.
-- 描述开发/阶段化/生产管道,包括在阶段之间设置GGUF到安全感应器格式转换的地方.
-- 解释为什么"CPU-first"指 llama.cpp,而"AMD"排除TRT-LLM.
+- 在给定硬件（CPU / AMD / NVIDIA Hopper / Blackwell）、规模（1 用户 / 100 / 10,000）和工作负载（通用聊天 / 智能体 / 长上下文）的情况下选择引擎。
+- 说出 2026 年 TGI 维护模式状态（2025 年 12 月 11 日）及其为何促使新项目偏向 vLLM 或 SGLang。
+- 描述开发/预发布/生产流水线，包括 GGUF 到 safetensors 的格式转换位于哪些阶段之间。
+- 解释为什么“CPU 优先”指向 llama.cpp，以及为什么“AMD”排除 TRT-LLM。
 
 ## 问题
 
-你的团队开始了新的自主主办的LLM项目. 一个工程师说Ollama,另一个说vLLM,第三个说"TGI不只是出局吗?"这三个适合不同环境.
+你的团队启动一个新的自托管 LLM 项目。一位工程师说用 Ollama，另一位说用 vLLM，第三位说“TGI 不是开箱即用吗？”三种说法在各自场景下都对，但没有任何一种在所有场景下都适用。
 
-2026年,选择树是重要的:硬件第一,规模第二,工作负载第三. 2025年一个特定事件  TGI进入维护模式 12月11日 改变了新项目默认.
+在 2026 年，选择树很重要：硬件第一，规模第二，工作负载第三。而 2025 年的一个特定事件 — TGI 于 12 月 11 日进入维护模式 — 改变了新项目的默认选择。
 
 ## 概念
 
-### 五个发动机
+### 五个引擎
 
-| Engine | Best for | Notes |
+| 引擎 | 最适合 | 说明 |
 |--------|----------|-------|
-| **llama.cpp** | CPU / edge / minimal deps / widest model support | Fastest on CPU, full control |
-| **Ollama** | Dev laptops, single user, one-command install | 15-30% slower than llama.cpp; 3x prod throughput gap |
-| **TGI** | HF ecosystem, regulated industries | **Maintenance mode Dec 11, 2025** |
-| **vLLM** | General-purpose production, 100+ users | Broad production default; v0.15.1 Feb 2026 |
-| **SGLang** | Agentic multi-turn, prefix-heavy workloads | 400,000+ GPUs in production |
+| **llama.cpp** | CPU / 边缘设备 / 最小依赖 / 最广的模型支持 | CPU 上最快，完全可控 |
+| **Ollama** | 开发笔记本、单用户、一键安装 | 比 llama.cpp 慢 15-30%；生产吞吐量差距 3 倍 |
+| **TGI** | HF 生态、受监管行业 | **2025 年 12 月 11 日进入维护模式** |
+| **vLLM** | 通用生产环境、100+ 用户 | 广泛的生产默认选择；v0.15.1 2026 年 2 月 |
+| **SGLang** | Agentic 多轮、前缀密集型工作负载 | 生产环境中 400,000+ GPU |
 
-### 硬件首次决定
+### 硬件优先决策
 
-**CPU-first**拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉
+**CPU 优先** → llama.cpp。Ollama 也可用但更慢。其他引擎在 CPU 上均无竞争力。
 
-**AMD GPU**是最强的支持路径 (AMD ROCm支持).SGLang也可以.TRT-LLM是NVIDIA锁定,所以它是关闭的.
+**AMD GPU** → vLLM 是支持最完善的路径（AMD ROCm 支持）。SGLang 也可用。TRT-LLM 被锁定在 NVIDIA，因此排除。
 
-**NVIDIA Hopper (H100 / H200)**,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+**NVIDIA Hopper（H100 / H200）** → vLLM、SGLang 或 TRT-LLM。三者均为顶级。
 
-**NVIDIA Blackwell (B200 / GB200)** TRT-LLM是吞吐量领先者 (阶段17 · 07). vLLM和SGLang紧接着.
+**NVIDIA Blackwell（B200 / GB200）** → TRT-LLM 是吞吐量领先者（Phase 17 · 07）。vLLM 和 SGLang 紧随其后。
 
-**Apple Silicon (M-series)**拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉拉
+**Apple Silicon（M 系列）** → llama.cpp（Metal）。Ollama 是对它的封装。
 
-### 规模二次决定
+### 规模第二决策
 
-**1 user / local dev**一个命令,在几秒钟内发出.
+**1 用户 / 本地开发** → Ollama。一条命令，首 token 秒级返回。
 
-**10-100 users / small team**接器的使用率
+**10-100 用户 / 小型团队** → vLLM 单 GPU。
 
-**100-10k users / production**→ vLLM生产阶段 (阶段17 · 18) 或SGLang.
+**100-10k 用户 / 生产环境** → vLLM production-stack（Phase 17 · 18）或 SGLang。
 
-**10k+ users / enterprise**→ vLLM生产堆+分类 (阶段17 · 17) + LMCache (阶段17 · 18).
+**10k+ 用户 / 企业级** → vLLM production-stack + 分离式部署（Phase 17 · 17）+ LMCache（Phase 17 · 18）。
 
-### 工作负担第三决定
+### 工作负载第三决策
 
-**General chat / Q&A**在宽泛的默认情况下,
+**通用聊天 / 问答** → vLLM 是广泛的默认赢家。
 
-**Agentic multi-turn (tools, planning, memory)**→ SGLang 的RadixAttention (阶段17 · 06) 主导.
+**Agentic 多轮（工具、规划、记忆）** → SGLang 的 RadixAttention（Phase 17 · 06）占优。
 
-**RAG with heavy prefix reuse**子子
+**前缀高度复用的 RAG** → SGLang。
 
-**Code generation**,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+**代码生成** → vLLM 即可；SGLang 在缓存方面略优。
 
-**Long context (128K+)**→ vLLM + 碎片预填; SGLang + 层级KV.
+**长上下文（128K+）** → vLLM + 分块预填充；SGLang + 分层 KV。
 
-### 维护TGI陷
+### TGI 维护陷阱
 
-抱脸TGI进入维护模式2025年12月11日 仅在未来修复了错误.历史上:顶级可观测性,最好的HF生态系统整合 (模型卡,安全工具),在原始吞吐量上略落后于vLLM.
+Hugging Face TGI 于 2025 年 12 月 11 日进入维护模式 — 此后仅修复 bug。历史上：顶尖的可观测性、一流的 HF 生态集成（模型卡、安全工具），原始吞吐量略落后于 vLLM。
 
-2026年新项目:默认退出TGI.现有的TGI部署可以继续,但最终应该迁移.SGLang和vLLM是安全的默认.
+对于 2026 年的新项目：默认避开 TGI。已有的 TGI 部署可以继续，但最终应迁移。SGLang 和 vLLM 是更安全的默认选择。
 
-### 管道模式
+### 流水线模式
 
-发动机采用不同的重量格式.  GGUF为 llama.cpp 家庭,HF安全传感器为 GPU ,因此格式转换可以在阶段之间坐落. 工程师在笔记本电脑上快速演变; 阶段镜子生产量化; 是服务目标.
+开发（Ollama）→ 预发布（llama.cpp）→ 生产（vLLM）。各引擎使用不同的权重格式 — llama.cpp 系列用 GGUF，GPU 引擎用 HF safetensors — 因此阶段之间可能需要一次格式转换。工程师在笔记本上快速迭代；预发布环境镜像生产的量化配置；生产环境是实际服务目标。
 
-### 奥拉马警示
+### Ollama 注意事项
 
-欧拉马是 dev 很好的.它不适合共享生产:Go HTTP 序列化增加了上费用,同时管理比vLLM更简单,OpenTelemetry 支持延迟.使用Ollama 闪耀的一个用户,一个命令,然后切换到vLLM.
+Ollama 非常适合开发。但不适合共享生产环境：Go HTTP 序列化带来开销，并发管理比 vLLM 简单，OpenTelemetry 支持滞后。在 Ollama 擅长的场景使用它 — 单用户、一条命令 — 共享场景则切换到 vLLM。
 
-### 自主主主机与管理机是个独立的决定
+### 自托管 vs 托管是另一个独立决策
 
-阶段17 · 01 (管理过度计算器), · 02 (推理平台) 覆盖管理.本课程假设您已经决定自主托管.自主托管的原因:数据居住,定制细节调整,规模总成本所有权,主机模型不提供在托管.
+Phase 17 · 01（托管超大规模云）和 · 02（推理平台）介绍托管方案。本课假设你已经决定自托管。自托管的理由：数据驻留、自定义微调、规模化下的总拥有成本、托管平台上没有的领域模型。
 
-### 你应该记住的数字
+### 应该记住的数字
 
-- 维护模式:2025年12月11日
-- 支持PyTorch 2.10;支持Blackwell SM120
-- 产量足迹:400,000+GPU.
-- 拉马输出差距与拉马.cpp:15-30%慢;
+- TGI 维护模式：2025 年 12 月 11 日。
+- vLLM v0.15.1：2026 年 2 月；PyTorch 2.10；Blackwell SM120 支持。
+- SGLang 生产足迹：400,000+ GPU。
+- Ollama 相对 llama.cpp 的吞吐量差距：慢 15-30%；生产负载下差距 3 倍。
 
 ```figure
 data-parallel
 ```
 
-## 用它
+## 动手实践
 
-`code/main.py`根据硬件+规模+工作负载,选择引擎并解释原因.
+`code/main.py` 是一个决策树遍历器：给定硬件 + 规模 + 工作负载，选出引擎并解释原因。
 
-## 运送它
+## 交付
 
-这一课产生了`outputs/skill-engine-picker.md`由于限制,他选择了引擎,并写出了迁徙计划.
+本课产出 `outputs/skill-engine-picker.md`。给定约束条件，选出引擎并撰写迁移计划。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`输出与你的直觉相符吗?
-2. 你的红外线是12个H100和8个MI300XAMD. 什么发动机?为什么TRT-LLM没有上桌?
-3. 据了解, 移民案例是"我们所知道的"
-4. 拉马开发到vLLM推广:量子化,配置和可观测性有哪些变化?
-5. 采用P99预写长度8K和租户中重复使用的RAG产品.
+1. 用你的硬件 / 规模 / 工作负载运行 `code/main.py`。输出是否符合你的直觉？
+2. 你的基础设施是 12 块 H100 和 8 块 MI300X AMD。选什么引擎？为什么 TRT-LLM 不可行？
+3. 一个团队想在 2026 年使用 TGI，理由是“我们熟悉它”。请论证迁移的理由。
+4. 从 Ollama 开发环境到 vLLM 生产环境：量化、配置和可观测性方面有哪些变化？
+5. 一个 RAG 产品，P99 前缀长度 8K 且租户间高度复用。选择一个引擎并结合 Phase 17 · 11 + 18 搭建技术栈。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|------------------------|
-| llama.cpp | "the CPU one" | Widest model support, fastest on CPU |
-| Ollama | "the laptop one" | One-command install, dev-grade throughput |
-| TGI | "HF's serving" | Maintenance mode since Dec 2025 |
-| vLLM | "the default" | Broad production baseline 2026 |
-| SGLang | "the agentic one" | Prefix-heavy, RadixAttention |
-| TRT-LLM | "NVIDIA-locked" | Blackwell throughput leader, NVIDIA only |
-| GGUF | "llama.cpp format" | Bundled K-quant variants |
-| Production-stack | "vLLM K8s" | Phase 17 · 18 reference deployment |
-| Pipeline pattern | "dev→stage→prod" | Ollama → llama.cpp → vLLM; weight formats differ per engine |
+| llama.cpp | “CPU 那个” | 模型支持最广，CPU 上最快 |
+| Ollama | “笔记本那个” | 一键安装，开发级吞吐量 |
+| TGI | “HF 的服务” | 自 2025 年 12 月起进入维护模式 |
+| vLLM | “默认那个” | 2026 年广泛的生产基线 |
+| SGLang | “agentic 那个” | 前缀密集型，RadixAttention |
+| TRT-LLM | “NVIDIA 专属” | Blackwell 吞吐量领先者，仅限 NVIDIA |
+| GGUF | “llama.cpp 格式” | 打包的 K-quant 变体 |
+| Production-stack | “vLLM K8s” | Phase 17 · 18 参考部署 |
+| 流水线模式 | “dev→stage→prod” | Ollama → llama.cpp → vLLM；各引擎权重格式不同 |
 
-## 进一步阅读
+## 延伸阅读
 
 - [AI Made Tools — vLLM vs Ollama vs llama.cpp vs TGI 2026](https://www.aimadetools.com/blog/vllm-vs-ollama-vs-llamacpp-vs-tgi/)
 - [Morph — llama.cpp vs Ollama 2026](https://www.morphllm.com/comparisons/llama-cpp-vs-ollama)
 - [n1n.ai — Comprehensive LLM Inference Engine Comparison](https://explore.n1n.ai/blog/llm-inference-engine-comparison-vllm-tgi-tensorrt-sglang-2026-03-13)
 - [PremAI — 10 Best vLLM Alternatives 2026](https://blog.premai.io/10-best-vllm-alternatives-for-llm-inference-in-production-2026/)
-- [TGI maintenance announcement](https://github.com/huggingface/text-generation-inference)发布的说明.
-- [vLLM v0.15.1 release notes](https://github.com/vllm-project/vllm/releases)
+- [TGI 维护模式公告](https://github.com/huggingface/text-generation-inference) — 发布说明。
+- [vLLM v0.15.1 发布说明](https://github.com/vllm-project/vllm/releases)

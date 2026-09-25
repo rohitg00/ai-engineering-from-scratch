@@ -1,44 +1,44 @@
-# 原因语言建模
+# GPT — 因果语言建模
 
-> 现在,我们可以看到一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符串,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符,一个字符.
+> BERT 两边都看，GPT 只看过去。这个三角掩码是现代 AI 中最关键的一行代码。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT)
-**Time:** ~75 minutes
+**Prerequisites:** Phase 7 · 02(自注意力)、Phase 7 · 05(完整 Transformer)、Phase 7 · 06(BERT)
+**Time:** 约 75 分钟
 
 ## 问题
 
-语言模型回答了一个问题:`t-1`代币,代币的概率分布是多少?`t`训练这个信号,预测下一个代币,你得到一个模型,可以生成任意的文字,一个代币一次.
+语言模型只回答一个问题：给定前 `t-1` 个 token,token `t` 的概率分布是什么？用这个信号——下一个 token 预测——进行训练，你会得到一个可以逐个 token 生成任意文本的模型。
 
-为了在整个序列上进行端到端训练,你需要每个位置的预测仅依赖于之前的位置.否则模型通过查看答案就会轻微地欺骗.
+要在一个完整序列上端到端地并行训练，你需要让每个位置的预测只依赖更早的位置。否则模型会通过偷看答案轻易作弊。
 
-原因面膜是这样做的.`-inf`随着软max之后,这些位置变为0. 每个位置只能关注自己和之前的位置. 因为你将它应用到整个序列上一次,你得到N平行下一个代币预测在一个前进传递.
+因果掩码就是干这个的。它是一个单一的上三角矩阵，其 `-inf` 值在 softmax 之前加到注意力分数上。softmax 之后，这些位置的权重变为 0。每个位置只能关注它自己和更早的位置。而且因为整个序列只需应用一次掩码，一次前向传播就能得到 N 个并行的下一个 token 预测。
 
-它们都是具有相同的核心循环的仅可解码的因果变压器.它们分别于数据质量,规模和建筑精炼以及后培训 (SFT,RLHF,DPO及其后代).
+GPT-1(2018)、GPT-2(2019)、GPT-3(2020)、GPT-4(2023)、GPT-5(2025)、Claude、Llama、Qwen、Mistral、DeepSeek、Kimi——它们全都是使用相同核心循环的 decoder-only 因果 Transformer。将它们区分开的是数据质量、规模与架构上的改进，以及后训练(SFT、RLHF、DPO 及其后续方法)。
 
 ## 概念
 
 ![Causal mask creates a triangular attention matrix](../assets/causal-attention.svg)
 
-### 面具
+### 掩码
 
-由于长度的顺序`N`建立一个`N × N`矩阵:
+给定长度为 `N` 的序列，构建一个 `N × N` 矩阵:
 
 ```
 M[i, j] = 0       if j <= i
 M[i, j] = -inf    if j > i
 ```
 
-加入`M`软max之前的注意力分数. `exp(-inf) = 0`关注矩阵的每个行是仅对前位置的概率分布.
+在 softmax 之前，把 `M` 加到原始注意力分数上。由于 `exp(-inf) = 0`,被掩码的位置贡献零权重。注意力矩阵的每一行都是一个仅覆盖之前位置的概率分布。
 
-实施成本:一 `torch.tril()`电话,计算时间:纳秒,现场影响:一切.
+实现成本：一次 `torch.tril()` 调用。计算时间：纳秒级。对领域的影响：一切。
 
-### 长方体来自哪里
+### 三角从何而来
 
-面具通常以注意力上的补丁呈现. 运行衍生在另一方向,它不再神秘:注意力是预सर्ग平均的第三个精炼,三角形是该平均的循环边界,写成矩阵.
+掩码通常被呈现为贴在注意力上的一块补丁。但从另一个方向推导，它就不再神秘了：注意力是前缀平均的第三次精化，而那个三角就是该平均的循环边界，写成了矩阵的形式。
 
-**Stage 1 — prefix average.**顺序的最愚蠢的因果总结:位置`i`成为位置的平均值`0…i`作为一个循环,这是`out[i] = X[:i+1].mean(0)`按一个矩阵乘以一个矩阵,然后把每个行分为数,然后乘以
+**阶段 1 — 前缀平均。** 一个序列最笨的因果摘要：位置 `i` 变成位置 `0…i` 的均值。写成循环就是 `out[i] = X[:i+1].mean(0)`。同样的计算就是一次矩阵乘法。取一个全 1 的下三角矩阵，每行除以它的计数，相乘:
 
 ```python
 import numpy as np
@@ -48,9 +48,9 @@ A = A / A.sum(axis=1, keepdims=True)
 out = A @ X
 ```
 
-排列`i`其他`A`是`[1/(i+1), …, 1/(i+1), 0, …, 0]`未来的任何东西都没有被掩盖,未来从来没有在总数中.
+`A` 的第 `i` 行是 `[1/(i+1), …, 1/(i+1), 0, …, 0]`。对角线以上的零就是因果性。未来并没有被掩码掉；未来根本就不在求和之中。
 
-**Stage 2 — learned weights.**统一的平均值将过去的每个代币都视为同样相关.`S`现在,行列不再按构造算数积为一个,所以将每个行列正常化为软max,而不是按数量分.软max从来没有输出精确的零,这会破坏因果关系,除非未来的分数进入为`-inf`因为`exp(-inf) = 0`其他:
+**阶段 2 — 学习到的权重。** 均匀平均把每个过去的 token 视为同等相关。把 1 换成学习到的分数矩阵 `S`。现在各行不再天然求和为 1,所以改用 softmax 对每行归一化，而不是除以计数。Softmax 从不输出精确的零，这会破坏因果性——除非把未来位置的分数输入为 `-inf`,因为 `exp(-inf) = 0`:
 
 ```python
 def softmax(x, axis):
@@ -62,90 +62,90 @@ A = softmax(S, axis=1)
 out = A @ X
 ```
 
-它们是三角形,三行矩阵,三角形.`-inf`面具不是新机器,而是第一阶段的零输入,
+同样的三角，同样的行随机矩阵，同样的一次 matmul。`-inf` 掩码并不是新机制。它就是阶段 1 的那些零，换算到了 softmax 的输入域中。
 
-**Stage 3 — content-dependent weights.**在第二阶段,`S`选后的位置:位置7总是重量位置3相同,无论代币说什么. 让得分取决于代币本身:`S = Q @ K.T / sqrt(d_k)`面具,软质,,都是一样的.
+**阶段 3 — 依赖内容的权重。** 在阶段 2 中，`S` 在训练后是固定的：无论 token 内容如何，位置 7 对位置 3 的权重总是一样的。让分数依赖于 token 本身：`S = Q @ K.T / sqrt(d_k)`。其他什么都不变。掩码、softmax、matmul——完全一样。
 
-基本上,它是一个不变的阶段,一个不变的阶段:一个低三角的排列-stochastic矩阵乘以序列. 均的平均,学习的静态权重,内容依赖的权重.
+三个阶段，一个不变量：一个下三角行随机矩阵乘上序列。均匀平均、学习到的静态权重、依赖内容的权重。掩码从来不是加到注意力上的。它是从前缀平均中一路存续下来的。
 
 ```figure
 mask-derivation
 ```
 
-### 并行培训,串行推断
+### 并行训练，串行推理
 
-培训:向前传递整体`(N, d_model)`顺序一次,计算N跨进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进进
+训练：对整个 `(N, d_model)` 序列做一次前向传播，计算 N 个交叉熵损失(每个位置一个)，求和，反向传播。沿序列方向并行。这就是 GPT 训练可以扩展的原因——一次 GPU 前向就能处理一个批次中的 100 万个 token。
 
-引号:你生成代币.`[t1, t2, t3]`现在,`t4`料`[t1, t2, t3, t4]`现在,`t5`料`[t1, t2, t3, t4, t5]`现在,`t6` KV缓存 (课 12) 保存了隐藏的状态`t1…tn`所以你不会每一步都重新计算它们. 但推断的序列深度=输出长度. 这就是自动降低税,
+推理：你逐个 token 生成。输入 `[t1, t2, t3]`,得到 `t4`。输入 `[t1, t2, t3, t4]`,得到 `t5`。输入 `[t1, t2, t3, t4, t5]`,得到 `t6`。KV 缓存(第 12 课)保存了 `t1…tn` 的隐藏状态，这样你就不必每步重新计算它们。但推理时的串行深度 = 输出长度。这就是自回归税，也是为什么解码是每个 LLM 的延迟瓶颈。
 
-### 损失 变量
+### 损失 — 错位一位
 
-给出的代币`[t1, t2, t3, t4]`其他:
+给定 token `[t1, t2, t3, t4]`:
 
 - 输入:`[t1, t2, t3]`
 - 目标:`[t2, t3, t4]`
 
-对于每一个职位`i`计算`-log P(target_i | inputs[:i+1])`总结,这是整个序列的交叉化.
+对每个位置 `i`,计算 `-log P(target_i | inputs[:i+1])`。求和。这就是整个序列的交叉熵。
 
-每个变压器 LM 你听说过的火车在这个损失. 预训练,细节调整,SFT 相同的损失,不同的数据.
+你听说过的每一个 Transformer LM 都是用这个损失训练的。预训练、微调、SFT——同样的损失，不同的数据。
 
 ### 解码策略
 
-训练后,样本选项比人们想象的更重要.
+训练完成后，采样选择的重要性超出人们的想象。
 
-| Method | What it does | When to use |
+| 方法 | 它做什么 | 何时使用 |
 |--------|--------------|-------------|
-| Greedy | Argmax every step | Deterministic tasks, code completion |
-| Temperature | Divide logits by T, sample | Creative tasks, higher T = more diversity |
-| Top-k | Sample from top-k tokens only | Kills low-probability tails |
-| Top-p (nucleus) | Sample from smallest set with cumulative prob ≥ p | 2020+ default; adapts to distribution shape |
-| Min-p | Keep tokens with `p > min_p * max_p` | 2024+; better at rejecting long tails than top-p |
-| Speculative decoding | Draft model proposes N tokens, big model verifies | 2–3× latency reduction at same quality |
+| Greedy | 每一步取 argmax | 确定性任务、代码补全 |
+| Temperature | 将 logits 除以 T 后采样 | 创意任务，T 越高越多样 |
+| Top-k | 仅从前 k 个 token 中采样 | 消灭低概率尾部 |
+| Top-p(nucleus)| 从累计概率 ≥ p 的最小集合中采样 | 2020 年以来的默认；适应分布形状 |
+| Min-p | 保留满足 `p > min_p * max_p` 的 token | 2024 年以来；比 top-p 更擅长拒绝长尾 |
+| Speculative decoding | 草稿模型提出 N 个 token,大模型验证 | 同等质量下降低 2–3 倍延迟 |
 
-2026年,min-p + 0.7温度是开放权重模型的合理默认.
+在 2026 年，对开源权重模型而言，min-p + temperature 0.7 是一个合理的默认。Speculative decoding 是任何生产级推理栈的标配。
 
-### 什么让"GPT配方"工作
+### "GPT 配方"成功的原因
 
-1. **Decoder-only.**没有编码器,每层一个注意力传输+FFN.
-2. **Scaling.**基数法 (课 13) 告诉你如何花钱计算.
-3. **In-context learning.**模型可以在不需要细调的情况下遵循一些拍摄的例子.
-4. **RLHF.**培训后的人类偏好将原始预训练的文本转化为聊天助理.
-5. **Pre-norm + RoPE + SwiGLU.**稳定训练规模.
+1. **Decoder-only。** 没有 encoder 开销。每层只需一次注意力 + FFN 的前向。
+2. **扩展。** 124M → 1.5B → 175B → 数万亿。Chinchilla 缩放定律(第 13 课)告诉你如何分配算力。
+3. **上下文学习。** 在 6B–13B 规模左右涌现。模型无需微调即可跟随 few-shot 示例。
+4. **RLHF。** 基于人类偏好的后训练把原始预训练文本变成了对话助手。
+5. **Pre-norm + RoPE + SwiGLU。** 大规模下稳定训练。
 
-根据GPT-2的数据,规模和训练后的情况,
+自 GPT-2 以来，核心架构几乎没有变化。所有有趣的事情都发生在数据、规模和后训练上。
 
 ```figure
 causal-mask
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:因果性面具
+### 步骤 1:因果掩码
 
-看到`code/main.py`一个单行:
+见 `code/main.py`。一行代码:
 
 ```python
 def causal_mask(n):
     return [[0.0 if j <= i else float("-inf") for j in range(n)] for i in range(n)]
 ```
 
-在软max之前,再加上注意力分数.
+在 softmax 之前把它加到注意力分数上。这就是全部机制。
 
-### 步骤2:两层GPT型模型
+### 步骤 2:一个 2 层的类 GPT 模型
 
-堆叠两个解码器块 (掩盖自注意+FFN,没有交叉注意).添加一个代币嵌入,一个定位编码和一个解嵌 (绑定到代币嵌入矩阵是GPT-2以来的标准技巧).
+堆叠两个 decoder 块(带掩码的自注意力 + FFN,没有交叉注意力)。加上 token 嵌入、位置编码，以及一个 unembedding(与 token 嵌入矩阵绑定——GPT-2 以来的标准技巧)。
 
-### 步骤3:下一个标志预测,端到端
+### 步骤 3:下一个 token 预测，端到端
 
-在20个代币玩具词汇上,在每个位置都生成 logits. 计算交叉缩损失与转移对一个目标. 没有梯度.
+在一个 20 个 token 的玩具词表上，在每个位置产生 logits。对照错位一位的目标计算交叉熵损失。不求梯度——这只是前向传播的合理性检查。
 
-### 步骤4:采样
+### 步骤 4:采样
 
-运行一个固定提示,并比较输出.一个样本取函数是10行.
+实现 greedy、temperature、top-k、top-p、min-p。在固定提示上运行每个方法并比较输出。一个采样函数只有 10 行。
 
-## 用它
+## 使用它
 
-火,2026年语法:
+PyTorch,2026 年惯用写法:
 
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -164,38 +164,38 @@ out = model.generate(
 print(tok.decode(out[0]))
 ```
 
-在帽子下,`generate()`运行前进传递,拉出最后位置的记录,样本下一个代币,添加它,并重复.每个生产LLM推理堆 (vLLM,TensorRT-LLM, llama.cpp,Ollama,MLX) 实现相同的循环,重量优化批量预填,连续批量,KV缓存页面,投机解码.
+底层上,`generate()` 运行前向传播，取最后位置的 logits,采样下一个 token,追加，然后重复。每个生产级 LLM 推理栈(vLLM、TensorRT-LLM、llama.cpp、Ollama、MLX)都实现了同样的循环，但做了重度优化——批量化 prefill、continuous batching、KV 缓存分页、speculative decoding。
 
-**GPT vs BERT, one line each:**GPT预测`P(x_t | x_{<t})`伯特预测`P(x_masked | x_unmasked)`损失决定模型是否能产生.
+**GPT vs BERT,各一句话:** GPT 预测 `P(x_t | x_{<t})`。BERT 预测 `P(x_masked | x_unmasked)`。损失决定了模型能否生成。
 
-## 运送它
+## 交付它
 
-看到`outputs/skill-sampling-tuner.md`技能选择新一代任务的样本参数,并在确定性解码需要时标记.
+见 `outputs/skill-sampling-tuner.md`。该技能为新的生成任务挑选采样参数，并在需要确定性解码时给出提示。
 
-## 运动
+## 练习
 
-1. **Easy.**跑步`code/main.py`检查:排列3只应在03列中重量.
-2. **Medium.**根据10个短提示,比较beam-4的困难与贪.beam总是赢得吗? (提示:通常用于翻译,而不是开放式聊天.)
-3. **Hard.**实施投机解码:使用一个小的2层模型作为草案和一个6层模型作为验证器.测量长度100次的墙钟加速.64次验证输出与验证器的贪匹配.
+1. **简单。** 运行 `code/main.py`,验证因果注意力矩阵在 softmax 之后是下三角的。抽查：第 3 行应该只在第 0–3 列有权重。
+2. **中等。** 实现宽度为 4 的 beam search。在 10 个短提示上比较 beam-4 与 greedy 的困惑度。beam 总是赢吗？(提示：对翻译通常成立，对开放式聊天则不一定。)
+3. **困难。** 实现 speculative decoding:用一个 2 层小模型作草稿，用一个 6 层模型作验证者。在 100 个长度为 64 的补全上测量实际加速比。确认输出与验证者的 greedy 输出一致。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 它实际意味着什么 |
 |------|-----------------|-----------------------|
-| Causal mask | "The triangle" | Upper-triangular `-inf` matrix added to attention scores so position `i` only sees positions `≤ i`. |
-| Next-token prediction | "The loss" | Cross-entropy of the model's distribution against the true next token at every position. |
-| Autoregressive | "Generate one at a time" | Feed output back as input; parallelism only during training, not during generation. |
-| Logits | "Pre-softmax scores" | Raw output of the LM head before softmax; sampling happens on these. |
-| Temperature | "Creativity knob" | Divide logits by T; T→0 = greedy, T→∞ = uniform. |
-| Top-p | "Nucleus sampling" | Truncate distribution to smallest set summing to ≥p; sample from what remains. |
-| Min-p | "Better than top-p" | Keep tokens where `p ≥ min_p × max_p`; adapts cutoff to sharpness of distribution. |
-| Speculative decoding | "Draft + verify" | Cheap model proposes N tokens; big model verifies in parallel. |
-| Teacher forcing | "Training trick" | During training, feed the true previous token, not the model's prediction. Standard for every seq2seq LM. |
+| 因果掩码 | "那个三角" | 加到注意力分数上的上三角 `-inf` 矩阵，使位置 `i` 只能看到位置 `≤ i`。 |
+| 下一个 token 预测 | "那个损失" | 在每个位置上，模型分布对真实下一个 token 的交叉熵。 |
+| 自回归 | "一次生成一个" | 把输出反馈为输入；并行只存在于训练中，不存在于生成中。 |
+| Logits | "softmax 之前的分数" | LM head 在 softmax 之前的原始输出；采样在这些值上进行。 |
+| Temperature | "创造力旋钮" | 将 logits 除以 T;T→0 = greedy,T→∞ = 均匀分布。 |
+| Top-p | "nucleus sampling" | 把分布截断到求和 ≥p 的最小集合；从剩余部分中采样。 |
+| Min-p | "比 top-p 更好" | 保留满足 `p ≥ min_p × max_p` 的 token;根据分布的尖锐程度自适应调整截断。 |
+| Speculative decoding | "草稿 + 验证" | 便宜的模型提出 N 个 token;大模型并行验证。 |
+| Teacher forcing | "训练技巧" | 训练时输入真实的上一个 token,而不是模型的预测。是所有 seq2seq LM 的标准做法。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Radford et al. (2018). Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf)GPT-1.
-- [Radford et al. (2019). Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf)GPT-2.
-- [Brown et al. (2020). Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)GPT-3和在环境中学习.
-- [Leviathan, Kalman, Matias (2023). Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192)规格解码纸.
-- [HuggingFace `modeling_llama.py`](https://github.com/huggingface/transformers/blob/main/src/transformers/models/llama/modeling_llama.py)可нони化因果性-LM参考码.
+- [Radford et al. (2018). Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf) — GPT-1。
+- [Radford et al. (2019). Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) — GPT-2。
+- [Brown et al. (2020). Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) — GPT-3 与上下文学习。
+- [Leviathan, Kalman, Matias (2023). Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192) — spec decoding 论文。
+- [HuggingFace `modeling_llama.py`](https://github.com/huggingface/transformers/blob/main/src/transformers/models/llama/modeling_llama.py) — 权威的因果 LM 参考代码。

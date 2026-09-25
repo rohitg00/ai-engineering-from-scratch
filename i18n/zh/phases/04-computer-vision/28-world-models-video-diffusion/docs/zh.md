@@ -1,30 +1,30 @@
-# 世界模特和视频传播
+# 世界模型与视频扩散
 
-> 预测场景的下一秒钟的视频模型是世界模拟器, 条件下预测行动,你就有了学习的游戏引擎.
+> 能预测场景接下来几秒的视频模型就是一个世界模拟器。若将该预测以动作为条件，你就得到了一个学习得来的游戏引擎。
 
 **Type:** Learn + Build
 **Languages:** Python
-**Prerequisites:** Phase 4 Lesson 10 (Diffusion), Phase 4 Lesson 12 (Video Understanding), Phase 4 Lesson 23 (DiT + Rectified Flow)
-**Time:** ~75 minutes
+**Prerequisites:** Phase 4 Lesson 10 (Diffusion)、Phase 4 Lesson 12 (Video Understanding)、Phase 4 Lesson 23 (DiT + Rectified Flow)
+**Time:** 约 75 分钟
 
 ## 学习目标
 
-- 解释纯视频生成模型 (Sora 2) 和动作条件的世界模型 (Genie 3, DreamerV3) 的区别
-- 描述视频的DIT:空间时间补丁,3D位置编码,跨 (T,H,W) 代币的联合关注
-- 追踪世界模型如何连接到机器人:VLM计划 →视频模型模拟 →反向动态发射行动
-- 选择Sora 2,Genie 3,跑道GWM-1世界,Wan-Video和HunyuanVideo之间的特定使用情况 (创意视频,交互式模拟,自动驾驶合成)
+- 解释纯视频生成模型(Sora 2)与动作条件世界模型(Genie 3、DreamerV3)之间的区别
+- 描述视频 DiT:时空 patch、3D 位置编码、跨 (T, H, W) token 的联合注意力
+- 追踪世界模型如何接入机器人技术：VLM 规划 → 视频模型模拟 → 逆动力学输出动作
+- 针对给定用例(创意视频、交互式模拟、自动驾驶合成)在 Sora 2、Genie 3、Runway GWM-1 Worlds、Wan-Video 和 HunyuanVideo 之间做出选择
 
-## 问题
+## 问题所在
 
-视频生成和世界建模将在2026年融合. 一个能够生成一个连贯的视频分钟的模型, 从某种意义上讲, 已经学会了世界如何移动:物体永久性,重力,因果性,风格. 如果您将这些预测条件定为行动 (左步,打开门), 视频模型将成为一个可学习的模拟器,
+2026 年，视频生成与世界建模走向融合。一个能生成连贯一分钟视频的模型，在某种意义上已经学会了世界如何运转：物体恒存性、重力、因果性、风格。如果你将该预测以动作为条件(向左走、打开门)，视频模型就成为一个可学习的模拟器，能够替代游戏引擎、驾驶模拟器或机器人环境。
 
-注是具体的. 基尼3从一个图像中生成可播放环境. 跑道GWM-1世界合成无限的可探索场景. 索拉2制作了长达几分钟的视频, 对于自动驾驶车辆训练数据,NVIDIA Cosmos-Drive,Wayve Gaia-2和Tesla DrivingWorld生成了现实驾驶视频. 机器人系统正在静地接管现实化.
+其中的利害关系非常具体。Genie 3 能从单张图像生成可玩的环境。Runway GWM-1 Worlds 能合成无限可探索的场景。Sora 2 能生成长达一分钟、带同步音频且具有建模物理特性的视频。NVIDIA Cosmos-Drive、Wayve Gaia-2 和 Tesla DrivingWorld 能为自动驾驶车辆训练数据生成逼真的驾驶视频。世界模型范式正在悄然接管机器人领域的 sim-to-real。
 
-这一课是第四阶段的"大图片"课程. 它将图像生成,视频理解和代理推理连接到主导研究正在发展的建筑模式中.
+本课是 Phase 4 的“宏观图景”课程。它将图像生成、视频理解和智能体推理连接成主流研究正在迈向的架构模式。
 
-## 概念
+## 核心概念
 
-### 世界模型的三个家庭
+### 世界建模的三大流派
 
 ```mermaid
 flowchart LR
@@ -45,11 +45,11 @@ flowchart LR
     style RL fill:#dcfce7,stroke:#16a34a
 ```
 
-- **Sora 2**没有动作接口,在部署中无法"引导".
-- **Genie 3**现在**GWM-1 Worlds**现在**Mirage / Magica**互动式 你按键或移动相机,场景响应.
-- **DreamerV3**通过一个奖励信号训练,在隐藏的空间中预测. 视觉较少,更有用的样本效率的RL.
+- **Sora 2** 是以提示词为条件的纯视频生成模型。没有动作接口。你无法在 rollout 中途“操控”它。
+- **Genie 3**、**GWM-1 Worlds**、**Mirage / Magica** 是动作条件世界模型。它们从观察到的视频推断潜在动作，然后将未来帧预测以动作为条件。具有交互性——你按下按键或移动摄像头，场景便会响应。
+- **DreamerV3** 及经典 RL 世界模型家族在潜在空间中进行预测，带有显式的动作条件，并通过奖励信号进行训练。视觉呈现较少；对样本高效的 RL 更为有用。
 
-### 视频 设计
+### 视频 DiT 架构
 
 ```
 Video latent:          (C, T, H, W)
@@ -58,74 +58,74 @@ Patchify (temporal):   group P_t frames into a temporal patch
 Resulting tokens:      (T / P_t) * (H / P_h) * (W / P_w) tokens
 ```
 
-位置编码是3D:每 (t, h, w) 坐标的旋转或学习嵌入.注意力可以是:
+位置编码是 3D 的:对每个 (t, h, w) 坐标使用旋转式或可学习的嵌入。注意力可以是：
 
-- **Full joint**所有代币都会关注所有代币. O  N ^ 2 具有 N 代币.禁止长视频.
-- **Divided**交替时间注意 (时间间位置相同:`(H*W) * T^2`空间关注 (同一时间段,跨空间:`T * (H*W)^2`时光former和大多数视频节目.
-- **Window** (t, h, w) 中的本地窗户.
+- **完全联合** — 所有 token 相互关注。N 个 token 的复杂度为 O(N^2)。对于长视频来说代价过高。
+- **分解式** — 交替使用时间注意力(相同空间位置，跨时间:`(H*W) * T^2`)和空间注意力(相同时间步，跨空间:`T * (H*W)^2`)。TimeSformer 及大多数视频 DiT 采用此方式。
+- **窗口式** — (t, h, w) 中的局部窗口。Video Swin 采用此方式。
 
-每个2026年视频传播模型都使用了以下三个模式之一,加上AdaLN调节 (课3) 和修改流.
+2026 年的每个视频扩散模型都使用这三种模式之一，再加上 AdaLN 条件化(Lesson 23)和 rectified flow。
 
-### 行动条件:隐藏行动模式
+### 以动作为条件：潜在动作模型
 
-精灵学会了什么?**latent action**模型的解码器则在推断的隐藏行动而不是明确键盘键上进行条件.在推断时,用户可以指定隐藏行动 (或从新先前的样本中进行一个) 模型生成与该行动一致的下一个框架.
+Genie 通过判别式地预测一对连续帧之间的动作，来为每帧学习一个**潜在动作**。模型的解码器随后以推断出的潜在动作为条件——而不是显式的键盘按键。在推理时，用户可以指定一个潜在动作(或从全新的先验中采样一个)，模型会生成与该动作一致的下一帧。
 
-索拉完全跳过了操作界面.它的解码器预测了过去的空间时间代币的下一个空间时间代币.
+Sora 完全跳过了动作接口。其解码器从过去的时空 token 预测下一批时空 token。提示词为起点设定条件；生成中途没有任何东西能操控它。
 
-### 物理可靠性
+### 物理合理性
 
-苏拉2的2026年发布明确宣告**physical plausibility**通过手动评级可靠性分数测量;模型明显改善了落下的物体,字符碰撞和故意失败 (错过跳跃) 情况.
+Sora 2 在 2026 年的发布中明确宣传了**物理合理性**：重量、平衡、物体恒存性、因果关系。团队通过人工评定的合理性分数来衡量；与 Sora 1 相比，该模型在掉落物体、角色碰撞以及故意失败(一次失误的跳跃)上有明显改进。
 
-合理性仍然是主导的失败模式.2024-2025年人们吃西瓜或喝杯的视频显示了模型缺乏持久的对象表示.2026年模型 (索拉2,跑道Gen-5,洪源视频) 减少但不消除这些.
+合理性仍然是主要的失败模式。2024-2025 年间，人们吃意大利面或用玻璃杯喝水之类的视频暴露了模型缺乏持久的物体表示。2026 年的模型(Sora 2、Runway Gen-5、HunyuanVideo)减少了这些问题，但并未消除。
 
-### 自动驾驶世界车型
+### 自动驾驶世界模型
 
-驾驶世界模型可以根据轨迹,界限框或导航地图生成现实道路场景.
+驾驶世界模型以轨迹、边界框或导航地图为条件，生成逼真的道路场景。用例：
 
-- **Cosmos-Drive-Dreams**生成几分钟的驾驶视频用于RL训练.
-- **Gaia-2** 轨迹条件的场景合成,用于政策评估.
-- **DrivingWorld**模拟各种天气,日间时间,交通条件.
-- **Vista**反应驾驶场景合成.
+- **Cosmos-Drive-Dreams**(NVIDIA)— 生成数分钟的驾驶视频用于 RL 训练。
+- **Gaia-2**(Wayve)— 以轨迹为条件的场景合成，用于策略评估。
+- **DrivingWorld**(Tesla)— 模拟多样的天气、时段和交通状况。
+- **Vista**(ByteDance)— 反应式驾驶场景合成。
 
-它们取代了昂贵的真实数据收集, 对于角落的案例, 晚上行人走路,冰的交叉路口,
+它们替代了针对边缘案例的昂贵真实世界数据采集——如夜间行人乱穿马路、结冰的十字路口、少见的车辆类型——这些 otherwise 需要数百万英里的驾驶。
 
-### 机器人堆:VLM+视频模型+反向动态
+### 机器人技术栈：VLM + 视频模型 + 逆动力学
 
-现在,我们正在研究一个新的机器人循环.
+新兴的三组件机器人循环：
 
-1. **VLM**分析目标 ("挑起红杯"),计划高层次的行动序列.
-2. **Video generation model**预测未来的观察 N 框架.
-3. **Inverse dynamics model**引擎指令将产生这些观察.
+1. **VLM** 解析目标("拿起红色杯子"),规划高层动作序列。
+2. **视频生成模型** 模拟执行每个动作会出现什么——预测 N 帧之后的观测。
+3. **逆动力学模型** 提取出能产生那些观测的具体电机指令。
 
-这取代了奖励形状和样本重的RL.世界模型是想象力;反动动态关闭了动作循环.精灵设想器是一个实例;许多研究小组正在融合这个结构.
+这替代了奖励塑形和样本密集的 RL。世界模型负责想象；逆动力学闭合执行回路。Genie Envisioner 是一个实例；许多研究团队正汇聚到这一结构上。
 
 ### 评估
 
-- **Visual quality**FVD (Fréchet视频距离),用户研究.
-- **Prompt alignment**每框的CLIPS分,VQA类型的评估.
-- **Physical plausibility**在基准组上进行手动评级 (索拉2内部基准,VBench).
-- **Controllability**行动 →观察一致性;你能回到以前的状态吗?
+- **视觉质量** — FVD (Fréchet Video Distance),用户研究。
+- **提示词对齐** — 每帧 CLIPScore,基于 VQA 的评估。
+- **物理合理性** — 在基准套件上人工评定(Sora 2 的内部基准，VBench)。
+- **可控性**(针对交互式世界模型)— 动作 → 观测一致性；能否回到先前的状态？
 
-### 2026年样式景观
+### 2026 年的模型格局
 
-| Model | Use | Parameters | Output | License |
+| 模型 | 用途 | 参数量 | 输出 | 许可证 |
 |-------|-----|------------|--------|---------|
-| Sora 2 | text-to-video, audio | — | 1-min 1080p + audio | API only |
-| Runway Gen-5 | text/image-to-video | — | 10s clips | API |
-| Runway GWM-1 Worlds | interactive world | — | infinite 3D rollout | API |
-| Genie 3 | interactive world from image | 11B+ | playable frames | research preview |
-| Wan-Video 2.1 | open text-to-video | 14B | high-quality clips | non-commercial |
-| HunyuanVideo | open text-to-video | 13B | 10s clips | permissive |
-| Cosmos / Cosmos-Drive | autonomous driving sim | 7-14B | driving scenes | NVIDIA open |
-| Magica / Mirage 2 | AI-native game engine | — | modifiable worlds | product |
+| Sora 2 | 文生视频、音频 | — | 1 分钟 1080p + 音频 | 仅 API |
+| Runway Gen-5 | 文/图生视频 | — | 10 秒片段 | API |
+| Runway GWM-1 Worlds | 交互式世界 | — | 无限 3D rollout | API |
+| Genie 3 | 从图像生成交互式世界 | 11B+ | 可玩帧 | 研究预览 |
+| Wan-Video 2.1 | 开源文生视频 | 14B | 高质量片段 | 非商用 |
+| HunyuanVideo | 开源文生视频 | 13B | 10 秒片段 | 宽松许可 |
+| Cosmos / Cosmos-Drive | 自动驾驶模拟 | 7-14B | 驾驶场景 | NVIDIA 开源 |
+| Magica / Mirage 2 | AI 原生游戏引擎 | — | 可修改的世界 | 产品 |
 
 ```figure
 v4-world-rollout
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1: 3D 贴合视频
+### 步骤 1：视频的 3D patch 化
 
 ```python
 import torch
@@ -152,11 +152,11 @@ class VideoPatch3D(nn.Module):
         return tokens, (t, h, w)
 ```
 
-具有步骤等于内核的3D卷轴作为空间时间补丁器. `(T, H, W) -> (T/2, H/2, W/2)`电池的电池.
+步长等于卷积核大小的 3D 卷积充当时空 patch 化器。`(T, H, W) -> (T/2, H/2, W/2)` 的 token 网格。
 
-### 步骤2: 3D旋转位置编码
+### 步骤 2：3D 旋转位置编码
 
-单独应用的旋转位置嵌入式 (RoPE) `t`现在`h`现在`w`轴:
+旋转位置嵌入 (RoPE) 沿 `t`、`h`、`w` 轴分别应用：
 
 ```python
 def rope_3d(tokens, t_dim, h_dim, w_dim, grid):
@@ -183,9 +183,9 @@ def rope_3d(tokens, t_dim, h_dim, w_dim, grid):
     return tokens + torch.cat([emb_t, emb_h, emb_w], dim=-1)
 ```
 
-简单的添加形式:真正的ROPE在频率上旋转对通道;位置信息相同.
+简化为加法形式。真正的 RoPE 以不同频率旋转成对通道；位置信息是相同的。
 
-### 步骤3: 分开注意力
+### 步骤 3：分解式注意力块
 
 ```python
 class DividedAttentionBlock(nn.Module):
@@ -213,9 +213,9 @@ class DividedAttentionBlock(nn.Module):
         return xs
 ```
 
-时间注意力在每个空间位置之间随时;空间注意力在每个框架之间随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随时随的随时随时随时随时随时随时随时随时随时随的随时随时随时随的随时随时随时随时随的随时随时随的随时随时随时随的随时随的随时随的随时随的随时随时随的随时随时随的随的随时随的随时随的随时随时随的随的随时随的随的随时随时随的随时随时随的随时随的随的随的随时随的随的随时随之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之之
+时间注意力在每个空间位置内跨时间关注；空间注意力在每帧内跨位置关注。两次 O(T^2 + (HW)^2) 运算替代一次 O((THW)^2)。这是 TimeSformer 及每个现代视频 DiT 的核心。
 
-### 步骤4:编写一个小视频
+### 步骤 4：组装一个微型视频 DiT
 
 ```python
 class TinyVideoDiT(nn.Module):
@@ -232,9 +232,9 @@ class TinyVideoDiT(nn.Module):
         return self.out(tokens), grid
 ```
 
-没有一个工作的视频生成器;一个结构性演示,
+这不是一个可用的视频生成器；而是一个结构演示，验证每个组件的形状都正确。
 
-### 步骤5:检查形状
+### 步骤 5：检查形状
 
 ```python
 vid = torch.randn(1, 4, 8, 16, 16)  # (N, C, T, H, W)
@@ -245,59 +245,59 @@ print(f"tokens grid {grid}")
 print(f"output {tuple(out.shape)}")
 ```
 
-期待`grid = (4, 8, 8)`其他`out = (1, 256, 32)`之后,头部将其投射到每代币的空间时间补丁, 准备好重新重新被放入视频中.
+patch 化之后预期为 `grid = (4, 8, 8)` 和 `out = (1, 256, 32)`;然后头部将输出投影为每个 token 的时空 patch,准备被逆 patch 化回视频。
 
-## 用它
+## 实际使用
 
-2026年生产准入模式:
+2026 年的生产访问模式：
 
-- **Sora 2 API**文字到视频,同步音频.
-- **Runway Gen-5 / GWM-1**视频互动世界.
-- **Wan-Video 2.1 / HunyuanVideo**开源自主主机.
-- **Cosmos / Cosmos-Drive**驾驶模拟开放权重.
-- **Genie 3**研究预览,请求访问.
+- **Sora 2 API**(OpenAI)— 文生视频，同步音频。定价较高。
+- **Runway Gen-5 / GWM-1**(Runway)— 图生视频，交互式世界。
+- **Wan-Video 2.1 / HunyuanVideo** — 开源自托管。
+- **Cosmos / Cosmos-Drive**(NVIDIA)— 驾驶模拟开放权重。
+- **Genie 3** — 研究预览，需申请访问权限。
 
-为了构建一个互动的世界模型演示:从 Wan-Video开始,以提供质量,在隐形动作适配器上进行交互性.
+构建交互式世界模型演示：从 Wan-Video 起步以保证质量，再叠加一个潜在动作适配器以实现交互性。自动驾驶模拟：Cosmos-Drive 是 2026 年的开放参考。
 
-对于机器人, 野生的堆:
+机器人领域，实际部署中的技术栈：
 
-1. 语言目标 -> VLM (Qwen3-VL) -> 高级计划.
-2. 计划 -> 隐形行动视频模型 -> 想象中的部署.
-3. 推出 -> 反动态模型 -> 低级操作.
-4. 执行的操作 -> 观察返回步骤1.
+1. 语言目标 -> VLM (Qwen3-VL) -> 高层规划。
+2. 规划 -> 潜在动作视频模型 -> 想象的 rollout。
+3. Rollout -> 逆动力学模型 -> 低层动作。
+4. 动作执行 -> 观测反馈到步骤 1。
 
-## 运送它
+## 交付成果
 
-这一课产生了:
+本课产出：
 
-- `outputs/prompt-video-model-picker.md`选择Sora 2 / 跑道 / 瓦恩 / 洪源视频 / 宇宙给任务,许可证和延迟.
-- `outputs/skill-physical-plausibility-checks.md`定义自动检查 (物体永久性,重力,连续性) 在发送之前运行任何生成的视频的技能.
+- `outputs/prompt-video-model-picker.md` — 根据任务、许可证和延迟在 Sora 2 / Runway / Wan / HunyuanVideo / Cosmos 之间做出选择。
+- `outputs/skill-physical-plausibility-checks.md` — 定义自动化检查(物体恒存性、重力、连续性)的技能，在交付前对任何生成的视频运行。
 
-## 运动
+## 练习
 
-1. **(Easy)**计算5秒 360p视频的代币数量在补丁 t=2,补丁 h=8,补丁 w=8.
-2. **(Medium)**换上方的分离注意力块,以获得一个完整的关联注意力块,并测量形状和参数数.解释为什么在真实视频模型中需要分离注意力.
-3. **(Hard)**建立一个最小的隐形动作视频模型:采用 (frame_t, action_t, frame_{t+1}) 三倍的数据集 (任何简单的2D游戏),训练一个微小的视频DiT,以动作嵌入为条件,并显示不同的动作产生不同的下一个框架.
+1. **(简单)** 计算一段 5 秒 360p 视频、patch-t=2、patch-h=8、patch-w=8 时的 token 数量。推理该规模下注意力的内存需求。
+2. **(中等)** 将上面的分解式注意力块换成完全联合注意力块，测量形状和参数量。解释为什么真实视频模型需要分解式注意力。
+3. **(困难)** 构建一个最小化的潜在动作视频模型：取一个 (frame_t, action_t, frame_{t+1}) 三元组数据集(任何简单的 2D 游戏),训练一个以动作嵌入为条件的微型视频 DiT,并展示不同动作产生不同的下一帧。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
-|------|----------------|----------------------|
-| World model | "Learned simulator" | A model that predicts future observations given state and action |
-| Video DiT | "Spacetime transformer" | Diffusion transformer with 3D patchification and divided attention |
-| Latent action | "Inferred control" | Discrete or continuous action latent inferred from frame pairs; used to condition next-frame generation |
-| Divided attention | "Time then space" | Two attention operations per block — across time then across space — to keep O(N^2) manageable |
-| Object permanence | "Things stay real" | Scene property that video models must learn; classic failure mode on food, glassware |
-| FVD | "Fréchet Video Distance" | Video equivalent of FID; primary visual quality metric |
-| Inverse dynamics model | "Observations to actions" | Given (state, next state), output the action that connects them; closes robotics loop |
-| Cosmos-Drive | "NVIDIA driving sim" | Open-weights autonomous-driving world model for RL and evaluation |
+| 术语 | 人们的说法 | 实际含义 |
+|------|----------------------|----------------------|
+| 世界模型 | “学习得来的模拟器” | 给定状态和动作，预测未来观测的模型 |
+| 视频 DiT | “时空 Transformer” | 带 3D patch 化和分解式注意力的扩散 Transformer |
+| 潜在动作 | “推断出的控制” | 从帧对中推断出的离散或连续动作潜在量；用于以条件控制下一帧生成 |
+| 分解式注意力 | “先时间后空间” | 每个块中两次注意力运算——先跨时间再跨空间——以保持 O(N^2) 可控 |
+| 物体恒存性 | “事物保持真实” | 视频模型必须学会的场景属性；食物、玻璃器皿上的经典失败模式 |
+| FVD | “Fréchet Video Distance” | FID 的视频等价物；主要的视觉质量指标 |
+| 逆动力学模型 | “从观测到动作” | 给定 (state, next state),输出连接它们的动作；闭合机器人回路 |
+| Cosmos-Drive | “NVIDIA 驾驶模拟” | 用于 RL 和评估的开放权重自动驾驶世界模型 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Sora technical report (OpenAI)](https://openai.com/index/video-generation-models-as-world-simulators/)
-- [Genie: Generative Interactive Environments (Bruce et al., 2024)](https://arxiv.org/abs/2402.15391)隐藏的行动世界模型
-- [TimeSformer (Bertasius et al., 2021)](https://arxiv.org/abs/2102.05095) 视频转换器的重视
-- [DreamerV3 (Hafner et al., 2023)](https://arxiv.org/abs/2301.04104)全球RL模型
-- [Cosmos-Drive-Dreams (NVIDIA, 2025)](https://research.nvidia.com/labs/toronto-ai/cosmos-drive-dreams/)驾驶世界模式
-- [Top 10 Video Generation Models 2026 (DataCamp)](https://www.datacamp.com/blog/top-video-generation-models)
-- [From Video Generation to World Model — survey repo](https://github.com/ziqihuangg/Awesome-From-Video-Generation-to-World-Model/)
+- [Sora 技术报告 (OpenAI)](https://openai.com/index/video-generation-models-as-world-simulators/)
+- [Genie: Generative Interactive Environments (Bruce et al., 2024)](https://arxiv.org/abs/2402.15391) — 潜在动作世界模型
+- [TimeSformer (Bertasius et al., 2021)](https://arxiv.org/abs/2102.05095) — 视频 Transformer 的分解式注意力
+- [DreamerV3 (Hafner et al., 2023)](https://arxiv.org/abs/2301.04104) — 面向 RL 的世界模型
+- [Cosmos-Drive-Dreams (NVIDIA, 2025)](https://research.nvidia.com/labs/toronto-ai/cosmos-drive-dreams/) — 驾驶世界模型
+- [2026 年十大视频生成模型 (DataCamp)](https://www.datacamp.com/blog/top-video-generation-models)
+- [从视频生成到世界模型 — 综述仓库](https://github.com/ziqihuangg/Awesome-From-Video-Generation-to-World-Model/)

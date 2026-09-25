@@ -1,28 +1,28 @@
-#                      
+# Capstone 02 — 代码库 RAG（跨仓库语义搜索）
 
-> 每一个认真的工程机构在2026年都会进行内部代码搜索, 源图扩展器,Cursor的代码基础答案, Augment的企业图,Aider的重绘图,Pinterest的内部MCP 相同的形状. 取许多回复,用树分析,嵌入函数和类级分类,混合搜索,重新排名,回答引用. 这块顶石要求你构建一个处理2万行代码的代码,
+> 2026 年，每个严肃的工程组织都在运行能理解语义而非仅匹配字符串的内部代码搜索。Sourcegraph Amp、Cursor 的代码库问答、Augment 的企业图谱、Aider 的 repomap、Pinterest 的内部 MCP——形态都一样。摄取多个仓库，用 tree-sitter 解析，嵌入函数级和类级的代码块，混合检索，重排序，给出带引用的回答。本 Capstone 要求你构建一个能处理 10 个仓库、200 万行代码，并在每次 git push 时支持增量重建索引的系统。
 
 **Type:** Capstone
-**Languages:** Python (ingestion), TypeScript (API + UI)
-**Prerequisites:** Phase 5 (NLP foundations), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 17 (infrastructure)
-**Phases exercised:**五·七·十一·十三·十七
-**Time:** 30 hours
+**Languages:** Python（摄取）、TypeScript（API + UI）
+**Prerequisites:** Phase 5（NLP 基础）、Phase 7（transformers）、Phase 11（LLM 工程）、Phase 13（工具）、Phase 17（基础设施）
+**Phases exercised:** P5 · P7 · P11 · P13 · P17
+**Time:** 30 小时
 
 ## 问题
 
-到2026年,每个边境编码代理都将运输一个代码基础检索层,因为单独的语境窗口无法解决跨度问题. 克劳德的1M代币背景有助于;它并没有消除排名检索的需要. 简单的搜索原始的毒品, 结果是生成代码, 单体复制, 生产答案是通过重新排名的AST意识的块进行混合 (密度+BM25) 搜索,支持符号引用图.
+到 2026 年，每个前沿编码代理都自带代码库检索层，因为仅靠上下文窗口无法解决跨仓库问题。Claude 的 1M token 上下文有帮助；它并不能消除对排序检索的需求。对原始代码块做朴素的余弦搜索，会在生成代码、monorepo 中的重复代码以及很少被导入的符号的长尾上产生毒化结果。生产级答案是：基于 AST 感知的代码块做混合（稠密 + BM25）搜索，配备重排序器，并由符号引用图谱支撑。
 
-通过索引一个真正的机队,而不是一个教程 repo,测量MRR@10,引用忠诚度和增量新鲜度来学习这一点. 失败模式是基础设施的:一个100k文件单元 repo,一个重复一半文件的推力,一个需要跨越四个 repos才能正确回答.
+你将通过索引一组真实的仓库——而不是某个教程仓库——并测量 MRR@10、引用忠实度和增量新鲜度来学习这一点。失败模式是基础设施层面的：一个 10 万文件的 monorepo、一次触及一半文件的 push、一个需要跨四个仓库才能正确回答的查询。
 
 ## 概念
 
-基于AST的摄入管道通过树座仪分析每个文件,提取函数和类节点,并将节点的块放在节点边界而不是固定的代币窗口. 每个部分都得到了三个表示:密集嵌入 (旅行代码-3或名字嵌入代码),稀缺的BM25术语,以及简短的自然语言摘要. 总结中添加了第三种可检索的模式用户问"X是如何授权的"总结中提到"authz",即使代码只有`check_permission`现在,我们要去.
+AST 感知的摄取管线用 tree-sitter 解析每个文件，提取函数和类节点，并在节点边界而非固定 token 窗口处切块。每个代码块有三种表示：稠密嵌入（Voyage-code-3 或 nomic-embed-code）、稀疏 BM25 词项，以及一段简短的自然语言摘要。摘要提供了第三种可检索模态——用户会问"X 是如何鉴权的"，而摘要里提到"authz"，即使代码里只有 `check_permission`。
 
-复苏是混合物. 一个查询会发射密集和BM25搜索,并合并top-k,并将联盟交给一个跨编码重新排名器 (Cohere重排-3或bge-重排-v2-gemma-2b). 重新排名的列表将被转移到长文本合成器 (Claude Sonnet 4.7 与快速缓存,或Llama 3.3 70B自主托管) 没有引用的答案被后过所拒绝.
+检索是混合的。查询同时触发稠密检索和 BM25 检索，合并 top-k，并将并集交给交叉编码器重排序器（Cohere rerank-3 或 bge-reranker-v2-gemma-2b）。重排序后的列表交给长上下文合成器（带 prompt 缓存的 Claude Sonnet 4.7，或自托管的 Llama 3.3 70B），并要求其通过文件和行号范围为每条论断提供引用。没有引用的回答会被后置过滤器拒绝。
 
-增长新鲜性是基础设施问题. Git 推进会引发差异:哪些文件改变,哪些符号改变.只有受影响的块重新嵌入.受影响的跨文件符号边缘 (进口,方法调用) 重新计算.索引保持一致,不需要重新处理2M行.
+增量新鲜度是基础设施问题。Git push 触发一次 diff：哪些文件变了，哪些符号变了。只有受影响的代码块需要重新嵌入。受影响的跨文件符号边（导入、方法调用）需要重新计算。索引保持一致，无需每次提交都重新处理 200 万行代码。
 
-## 建筑
+## 架构
 
 ```
 git push --> webhook --> ingest worker (LlamaIndex Workflow)
@@ -49,44 +49,44 @@ git push --> webhook --> ingest worker (LlamaIndex Workflow)
                  answer + file:line citations
 ```
 
-## 堆
+## 技术栈
 
-- 解析:有17种语言语法的树守 (Python,TS,Rust,Go,Java,C++等)
-- 密集嵌入式: Voyage-code-3 (托管) 或名式嵌入式代码-v1.5 (自主托管), bge-code-v1倒退
-- 率指数:与BM25F的性 (性),按符号名称与体格进行田径权重
-- 矢量DB:Qdrant 1.12 混合搜索,或pgvector + pgvector尺度为50M以下的团队
-- 零件总结模型:克劳德海库4.5或双子 2.5 闪存,即时缓存
-- 排名重:Cohere排名-3或bge排名重-v2-gemma-2b自主托管
-- 调整:LlamaIndex 摄入工作流程,查询代理的LangGraph
-- 合成器:Claude Sonnet 4.7 (1M语境) 随时缓存
-- 符号图:进口和调用边缘 Neo4j (管理) 或 kuzu (嵌入式)
-- 观察性:每次检索+合成步骤的长跨度
+- 解析：tree-sitter，支持 17 种语言语法（Python、TS、Rust、Go、Java、C++ 等）
+- 稠密嵌入：Voyage-code-3（托管）或 nomic-embed-code-v1.5（自托管），备选 bge-code-v1
+- 稀疏索引：Tantivy（Rust），使用 BM25F，对符号名与函数体做字段加权
+- 向量数据库：Qdrant 1.12（支持混合搜索），或 5000 万向量以下团队使用 pgvector + pgvectorscale
+- 代码块摘要模型：Claude Haiku 4.5 或 Gemini 2.5 Flash，启用 prompt 缓存
+- 重排序器：Cohere rerank-3 或自托管 bge-reranker-v2-gemma-2b
+- 编排：摄取用 LlamaIndex Workflows，查询代理用 LangGraph
+- 合成器：带 prompt 缓存的 Claude Sonnet 4.7（1M 上下文）
+- 符号图谱：导入与调用边使用 Neo4j（托管）或 kuzu（嵌入式）
+- 可观测性：每次检索 + 合成步骤都有 Langfuse span
 
 ```figure
 ce-hybrid-retrieval
 ```
 
-## 建立它
+## 动手构建
 
-1. **Ingestion walker.**按每一个按上重复 Git 历史记录.收集已更改的文件.每个文件,用树监管器分析,提取函数和类节点,以其全部源跨度. 发送分类记录.`{repo, path, start_line, end_line, symbol, body}`现在,我们要去.
+1. **摄取遍历器。** 在每次 push 钩子上迭代 git 历史。收集变更文件。对每个文件，用 tree-sitter 解析，提取函数和类节点及其完整源码跨度。输出代码块记录 `{repo, path, start_line, end_line, symbol, body}`。
 
-2. **Chunk summarizer.**按组分分为Haiku 4.5调用,即时缓存系统序言. 提示:"将这个函数总结成一个句子,命名其公开合约和副作用". 随着部分存储总结.
+2. **代码块摘要器。** 将代码块分批送入 Haiku 4.5 调用，并对系统前导词启用 prompt 缓存。提示词："用一句话总结这个函数，说明其公开契约和副作用。" 将摘要与代码块一起存储。
 
-3. **Embedding pool.**两条平行队列:密集 (旅行代码-3批量128) 和总结 (相同的模型,但在总结字符串上).`{repo, path, start_line, end_line, symbol, kind}`现在,我们要去.
+3. **嵌入池。** 两条并行队列：稠密（Voyage-code-3，批次 128）和摘要（同一模型，但作用于摘要字符串）。将向量连同 payload `{repo, path, start_line, end_line, symbol, kind}` 写入 Qdrant。
 
-4. **BM25 index.**字段权重的Tantivy指数:符号名称重量4,符号体重量1,总结重量2. 启用"找到名为X的函数"查询,并加上"找到X的函数".
+4. **BM25 索引。** 字段加权的 Tantivy 索引：符号名权重 4，符号体权重 1，摘要权重 2。在"找出做 X 的函数"之外，同时支持"找出名为 X 的函数"的查询。
 
-5. **Symbol graph.**对于每个部分,记录边缘:进口 (本文件使用 repo Z 的符号 Y),调用 (本函数在 C 类上调用方法 M),继承.存储在 kuzu 中.在查询时用于扩大回收跨 repo 边界.
+5. **符号图谱。** 对每个代码块记录边：导入（本文件使用了仓库 Z 中的符号 Y）、调用（本函数调用了类 C 上的方法 M）、继承。存入 kuzu。查询时用于跨仓库边界扩展检索。
 
-6. **Query agent.**具有三个节点的兰格格拉夫.`retrieve`密度火 + BM25平行,乘以 (repo,路径,符号) 倍增.`rerank`运行跨码器在50上,保持10上.`synth`调用Claude Sonnet 4.7在文本中重新排名的部分,缓存系统提示,需要文件:行引用.
+6. **查询代理。** LangGraph，三个节点。`retrieve` 并行触发稠密 + BM25，按 (repo, path, symbol) 去重。`rerank` 在 top-50 上运行交叉编码器并保留 top-10。`synth` 调用 Claude Sonnet 4.7，将重排序后的代码块放入上下文，缓存系统提示词，要求 file:line 引用。
 
-7. **Citation enforcement.**分析模型输出; 任何没有 `(repo/path:start-end)`给用户返回只引用答案.
+7. **引用强制。** 解析模型输出；任何没有 `(repo/path:start-end)` 锚点的论断会被标记要求重答或丢弃。只返回带引用的回答给用户。
 
-8. **Incremental re-index.**在每个网关上,计算符号级别差异. 只有重新嵌入的部分,其文字发生了变化. 重新计算进口发生了变化的部分的符号边缘. 测量:为2M-LOC舰队,50文件推重索引在60秒内.
+8. **增量重建索引。** 在每个 webhook 上计算符号级 diff。只重新嵌入文本发生变化的代码块。对导入发生变化的代码块重新计算符号边。衡量标准：对 200 万行的仓库群，一次 50 个文件的 push 在 60 秒内完成重建索引。
 
-9. **Eval.**标签100个跨度问题,以黄金文件:线答. 测量MRR@10,nDCG@10,引用忠实性 (有可验证的杆的索赔的部分) 和p50/p99延迟.
+9. **评估。** 标注 100 个带标准 file:line 答案的跨仓库问题。测量 MRR@10、nDCG@10、引用忠实度（有可验证锚点的论断比例），以及 p50/p99 延迟。
 
-## 用它
+## 使用它
 
 ```
 $ code-rag ask "how is S3 multipart abort wired into our retry budget?"
@@ -101,50 +101,50 @@ answer:
               libs/s3client/multipart.ts:44-61]
 ```
 
-## 运送它
+## 交付它
 
-能提供的技能`outputs/skill-codebase-rag.md`鉴于复制文件,它会查询摄入量管道,混合指数和查询代理,并返回任何复制问题上引用的答案.
+交付技能 `outputs/skill-codebase-rag.md`。给定一组仓库语料，它能搭建摄取管线、混合索引和查询代理，并对任意跨仓库问题返回带引用的回答。评分标准：
 
-| Weight | Criterion | How it is measured |
+| 权重 | 标准 | 衡量方式 |
 |:-:|---|---|
-| 25 | Retrieval quality | MRR@10 and nDCG@10 on a 100-question held-out set |
-| 20 | Citation faithfulness | Fraction of answer claims with verifiable file:line anchors |
-| 20 | Latency and scale | p95 query latency at 10k QPS on the indexed corpus size |
-| 20 | Incremental indexing correctness | Time from git push to searchable on a 50-file commit |
-| 15 | UX and answer formatting | Citation clickability, snippet previews, follow-up affordance |
+| 25 | 检索质量 | 在 100 题的留出集上的 MRR@10 与 nDCG@10 |
+| 20 | 引用忠实度 | 回答中带可验证 file:line 锚点的论断比例 |
+| 20 | 延迟与规模 | 在已索引语料规模上，10k QPS 下的 p95 查询延迟 |
+| 20 | 增量索引正确性 | 一次 50 文件提交从 git push 到可搜索的耗时 |
+| 15 | 用户体验与回答格式 | 引用可点击性、片段预览、追问入口 |
 | **100** | | |
 
-## 运动
+## 练习
 
-1. 换取自主托管的名字嵌入式代码.测量MRR@10三角形.报告是否在重新排名启用时关闭差距.
+1. 将 Voyage-code-3 换成自托管的 nomic-embed-code。测量 MRR@10 的差值。报告启用重排序后差距是否消失。
 
-2. 注入20%生成代码 (LLM生产的炉板) 进入体内,重新评估.观察检索中毒.添加"生成"旗到有效载荷中,减轻这些击中.
+2. 向语料中注入 20% 的生成代码（LLM 生成的样板代码）并重新评估。观察检索毒化现象。在 payload 中添加"generated"标志并下调这些命中的权重。
 
-3. 基准测量Qdrant混合搜索与pgvector +pgvectorscale在您的体积. 报告p99在批量1.
+3. 在你的语料规模下对 Qdrant 混合搜索与 pgvector + pgvectorscale 进行基准测试。报告批次大小为 1 时的 p99。
 
-4. 增加基于样本的漂移检查:每周,重复100个问题评估.
+4. 添加基于抽样的漂移检查：每周重跑 100 题评估。当 MRR@10 下降超过 5% 时告警。
 
-5. 扩展到跨语言符号分辨率:一个Python函数,通过gRPC调用Go服务.使用符号图来链接它们.
+5. 扩展到跨语言符号解析：一个通过 gRPC 调用 Go 服务的 Python 函数。使用符号图谱将它们关联起来。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|------------------------|
-| AST-aware chunking | "Function-level splits" | Cutting code at tree-sitter node boundaries instead of fixed token windows |
-| Hybrid search | "Dense + sparse" | Run BM25 and vector search in parallel, merge top-k, rerank |
-| Cross-encoder rerank | "Second-stage rank" | Model that scores each (query, candidate) pair together, more accurate than cosine |
-| Prompt caching | "Cached system prompt" | 2026 Claude / OpenAI feature that discounts repeat prefix tokens up to 90% |
-| Symbol graph | "Code graph" | Edges for imports, calls, inheritance across files and repos |
-| Citation faithfulness | "Grounded answer rate" | Fraction of claims a user can verify by clicking the anchor and reading the referenced span |
-| Incremental re-index | "Push-to-search time" | Wall-clock from git push to the changed symbols being queryable |
+| AST 感知切块 | "函数级切分" | 在 tree-sitter 节点边界而非固定 token 窗口处切分代码 |
+| 混合搜索 | "稠密 + 稀疏" | 并行运行 BM25 与向量搜索，合并 top-k，重排序 |
+| 交叉编码器重排序 | "第二阶段排序" | 对每个 (查询, 候选) 对共同打分的模型，比余弦相似度更准确 |
+| Prompt 缓存 | "缓存的系统提示词" | 2026 年 Claude / OpenAI 的功能，对重复前缀 token 提供最高 90% 的折扣 |
+| 符号图谱 | "代码图谱" | 跨文件和仓库的导入、调用、继承边 |
+| 引用忠实度 | "有据回答率" | 用户可以通过点击锚点并阅读所引用片段来验证的论断比例 |
+| 增量重建索引 | "push 到可搜索的时间" | 从 git push 到变更符号可被查询的实际耗时 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Sourcegraph Amp](https://ampcode.com)生产跨度报告代码信息
-- [Sourcegraph Cody RAG architecture](https://sourcegraph.com/blog/how-cody-understands-your-codebase)这个顶石的参考深度潜水
-- [Aider repo-map](https://aider.chat/docs/repomap.html)树排名的回复视图
-- [Augment Code enterprise graph](https://www.augmentcode.com)商业象征图RAG
-- [Qdrant hybrid search docs](https://qdrant.tech/documentation/concepts/hybrid-queries/)参考实施
-- [Voyage AI code embeddings](https://docs.voyageai.com/docs/embeddings)旅行代码-3详细信息
-- [Cohere rerank-3](https://docs.cohere.com/reference/rerank)跨编码器参考
-- [Pinterest MCP internal search](https://medium.com/pinterest-engineering)内部平台参考
+- [Sourcegraph Amp](https://ampcode.com) — 生产级跨仓库代码智能
+- [Sourcegraph Cody RAG 架构](https://sourcegraph.com/blog/how-cody-understands-your-codebase) — 本 Capstone 的参考深度剖析
+- [Aider repo-map](https://aider.chat/docs/repomap.html) — 基于 tree-sitter 的仓库排序视图
+- [Augment Code 企业图谱](https://www.augmentcode.com) — 商业符号图谱 RAG
+- [Qdrant 混合搜索文档](https://qdrant.tech/documentation/concepts/hybrid-queries/) — 参考实现
+- [Voyage AI 代码嵌入](https://docs.voyageai.com/docs/embeddings) — Voyage-code-3 详情
+- [Cohere rerank-3](https://docs.cohere.com/reference/rerank) — 交叉编码器参考
+- [Pinterest MCP 内部搜索](https://medium.com/pinterest-engineering) — 内部平台参考

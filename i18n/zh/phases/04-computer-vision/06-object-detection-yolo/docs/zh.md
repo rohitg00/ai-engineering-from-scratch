@@ -1,32 +1,32 @@
-# 从零开始检测到物体
+# 目标检测 — 从零实现 YOLO
 
-> 检测是分类加回,在特征地图中的每个位置运行,然后通过非最大压缩来清理.
+> 检测 = 分类加回归，在特征图的每个位置上运行，再用非极大值抑制进行清理。
 
-**Type:** Build
-**Languages:** Python
-**Prerequisites:** Phase 4 Lesson 03 (CNNs), Phase 4 Lesson 04 (Image Classification), Phase 4 Lesson 05 (Transfer Learning)
-**Time:** ~75 minutes
+**类型:** Build
+**语言:** Python
+**先修要求:** Phase 4 Lesson 03(CNN)、Phase 4 Lesson 04(图像分类)、Phase 4 Lesson 05(迁移学习)
+**时长:** 约 75 分钟
 
 ## 学习目标
 
-- 解释了和的设计,使检测成为密集的预测问题,并说明输出子中的每个数字意味着什么
-- 计算盒子之间的交叉关系,从零开始实现非最大的抑制
-- 在训练前的脊椎上建立一个最小的YOLO风格头,包括分类,对象性和盒子回归损失
-- 阅读检测测量表行 (精度@0.5,回忆,mAP@0.5,mAP@0.5:0.95) 并选择下一个按
+- 解释"网格加锚框"的设计如何将检测转化为密集预测问题,并说明输出张量中每个数字的含义
+- 计算框之间的交并比(Intersection-over-Union),并从零实现非极大值抑制
+- 在预训练 backbone 之上构建一个极简的 YOLO 风格检测头,包括分类损失、objectness 损失和框回归损失
+- 读懂检测指标行(precision@0.5、recall、mAP@0.5、mAP@0.5:0.95),并决定下一步该调哪个旋钮
 
 ## 问题
 
-分类说:"这个图像是狗".检测说"在像素 (112, 40, 280, 210),在图像 (400, 180, 560, 310),还有猫. "这个结构变化 预测每张图像的标签而不是一个标签的变量盒子数量 是每个自主系统,每个监控产品,每个文件布局解析器,以及每个工厂视觉线都取决于什么.
+分类回答"这张图里有一只狗"。检测回答"在像素 (112, 40, 280, 210) 处有一只狗,在 (400, 180, 560, 310) 处有一只猫,画面中没有其他东西"。这一个结构性变化——从每张图一个标签变为预测数量不定的带标签框——是每一个自动驾驶系统、每一个监控产品、每一个文档版面解析器、每一条工厂视觉流水线所依赖的核心。
 
-检测也是每一个工程的视觉交易都会出现一次. 你想要准确的框 (回归头),你想要对每个框 (分类头) 的正确类别,你想要模型知道什么时候没有什么可以检测 (对象性分数),你想要每一个真实对象的预测 (非最大压制). 错过任何一个,管道要么错过物体,报告幻觉的盒子,或者预测相同的物体15次,
+检测也是视觉领域所有工程权衡同时显现的地方。你希望框准确(回归头),你希望每个框类别正确(分类头),你希望模型知道什么时候没有东西可检测(objectness 分数),你希望每个真实物体恰好对应一个预测(非极大值抑制)。缺了任何一环,流水线要么漏掉物体,要么报告幻觉框,要么在略微不同的位置上把同一个物体预测十五次。
 
-2016年,YOLO (You Only Look Once, Redmon et al. 2016) 是通过单个向前传输一个网来实现所有这些实时运行的设计,同样的结构决定仍然是现代探测器 (YOLOv8,YOLOv9,YOLO-NAS,RT-DETR) 的脊柱.
+YOLO(You Only Look Once,Redmon 等,2016)通过单次卷积网络前向传播让这一切实时运行,而这些相同的结构决策至今仍是现代检测器(YOLOv8、YOLOv9、YOLO-NAS、RT-DETR)的骨干。掌握核心之后,每个变体都只是相同部件的重新排列。
 
 ## 概念
 
-### 检测作为密集预测
+### 检测即密集预测
 
-一个分类器输出每张图像的C号码. 一个YOLO式检测器输出.`(S x S x (5 + C))`图像的数量,其中S是空间网格的尺寸.
+分类器对每张图输出 C 个数字。YOLO 风格的检测器对每张图输出 `(S x S x (5 + C))` 个数字,其中 S 是空间网格大小。
 
 ```mermaid
 flowchart LR
@@ -44,19 +44,19 @@ flowchart LR
     style RESULT fill:#dcfce7,stroke:#16a34a
 ```
 
-它们中的每一个`S * S`电网电池预测`B`盒子,每盒子:
+每个 `S * S` 的网格单元预测 `B` 个框。对每个框:
 
-- 描述几何学的4个数字:`tx, ty, tw, th`现在,我们要去.
-- 个数是对象性分数:"这个细胞中是否有一个中心的对象?"
-- 数是类概率.
+- 4 个数字描述几何:`tx, ty, tw, th`。
+- 1 个数字是 objectness 分数:"这个单元中心处有物体吗?"
+- C 个数字是类别概率。
 
-总数每一个细胞:`B * (5 + C)`对于VOC与`S=13, B=2, C=20`它们的数量是50个.
+每单元总计:`B * (5 + C)`。对于 VOC,`S=13, B=2, C=20`,即每单元 50 个数字。
 
-### 为什么网和
+### 为什么用网格和锚框
 
-简单的回归预测`(x, y, w, h)`对于每个对象来说,这是一个绝对坐标.对于一个 conv 网络来说,这是很难的,因为翻译图像不应该翻译所有预测的相同数量.每个对象是空间.
+朴素回归会把每个物体的 `(x, y, w, h)` 作为绝对坐标来预测。这对卷积网络很难,因为平移图像不应该把所有预测平移相同的量——每个物体在空间上是有锚定位置的。网格通过把每个真值框分配给其中心落入的网格单元来解决这个问题;只有那个单元对该物体负责。
 
-结解决了第二个问题.一个3×3 conv不能轻松退回500像素宽的盒子从16像素接收场特征细胞.`B`模型学会选择正确的,并推进它,而不是从无处退回.
+锚框解决第二个问题。一个 3x3 卷积很难从 16 像素感受野的特征单元回归出一个 500 像素宽的框。作为替代,我们为每个单元预定义 `B` 个先验框形状(锚框),并预测相对每个锚框的小偏移量。模型学会选择正确的锚框并微调它,而不是从零开始回归。
 
 ```
 Anchor box priors (example for 416x416 input):
@@ -68,11 +68,11 @@ Anchor box priors (example for 416x416 input):
 At each grid cell, every anchor emits (tx, ty, tw, th, obj, c_1, ..., c_C).
 ```
 
-现代探测器通常使用FPN,每个分辨率的具不同具. 低分辨率地图上的小具,低分辨率地图上的大具.
+现代检测器常使用 FPN,不同分辨率使用不同的锚框集合——浅层高分辨率图上用小锚框,深层低分辨率图上用大锚框。同一个思路,更多尺度。
 
 ### 解码预测
 
-的`tx, ty, tw, th`它们不是框坐标,而是在绘图之前要转换的回归目标:
+原始的 `tx, ty, tw, th` 不是框坐标;它们是回归目标,绘制前需要变换:
 
 ```
 centre x  = (sigmoid(tx) + cell_x) * stride
@@ -81,21 +81,21 @@ width     = anchor_w * exp(tw)
 height    = anchor_h * exp(th)
 ```
 
-`sigmoid`保持细胞内部的中心偏移. `exp`允许宽度从杆自由,而不需要标志转换.`stride`解码步骤是从2版本以来的每一个YOLO版本相同的.
+`sigmoid` 把中心偏移限制在单元格内。`exp` 使宽度可以相对锚框自由缩放而不会出现符号翻转。`stride` 把网格坐标缩放回像素。这个解码步骤自 v2 以来在所有 YOLO 版本中都相同。
 
-### 其他
+### IoU
 
-检测两个盒子之间的普遍相似度指标:
+检测领域通用的两个框之间的相似度度量:
 
 ```
 IoU(A, B) = area(A intersect B) / area(A union B)
 ```
 
-预测和基础真相框之间的 IoU 是决定一个预测是否算为真正 (通常是 IoU >=0.5). 两个预测之间的 IoU 是NMS用来分倍的.
+IoU = 1 表示完全相同;IoU = 0 表示无重叠。预测框与真值框之间的 IoU 决定一个预测是否算真正例(通常 IoU >= 0.5)。两个预测框之间的 IoU 是 NMS 去重所依据的量。
 
-### 超出最大压力
+### 非极大值抑制
 
-基于相邻的杆训练的 conv网络通常会预测同一对象的重叠框.NMS保持最高可靠性预测,并删除任何其他预测,如果 IoU 超过门值.
+在相邻锚框上训练的卷积网络常常对同一物体预测出相互重叠的框。NMS 保留置信度最高的预测,删除任何 IoU 高于阈值的其余预测。
 
 ```
 NMS(boxes, scores, iou_threshold):
@@ -107,11 +107,11 @@ NMS(boxes, scores, iou_threshold):
     return keep
 ```
 
-对于对象检测,典型门值为0.45. 最近的检测器取代了标准NMS的`soft-NMS`现在`DIoU-NMS`它们的结构性目的是相同的.
+典型阈值:目标检测用 0.45。近期检测器用 `soft-NMS`、`DIoU-NMS` 替代标准 NMS,或直接学习抑制过程(RT-DETR),但结构上的目的是一样的。
 
 ### 损失
 
-罗损失是三损失加重:
+YOLO 损失是三个损失加权相加:
 
 ```
 L = lambda_coord * L_box(pred, target, where obj=1)
@@ -120,30 +120,30 @@ L = lambda_coord * L_box(pred, target, where obj=1)
   + lambda_cls   * L_cls(pred, target, where obj=1)
 ```
 
-只有包含物体的细胞导致了盒子回归和分类损失. 没有物体的细胞只导致了物体性损失 (教模型保持沉默). `lambda_noobj`由于绝大多数细胞是空的,否则将占据总损失的主导地位.
+只有包含物体的单元格才对框回归损失和分类损失有贡献。没有物体的单元格只对 objectness 损失有贡献(教模型保持沉默)。`lambda_noobj` 通常很小(约 0.5),因为绝大多数单元格是空的,否则它们会主导总损失。
 
-现代变体将MSE盒损失换为CIoU/DIoU (直接优化IoU),使用焦失为类失衡,并平衡对象性与质量焦失.
+现代变体把 MSE 框损失换成 CIoU / DIoU(直接优化 IoU),用 focal loss 处理类别不平衡,并用 quality focal loss 平衡 objectness。三分量结构不变。
 
 ### 检测指标
 
-准确性不会转移到检测.
+准确率(accuracy)不适用于检测。四个有用的数字:
 
-- **Precision@IoU=0.5**的预测被认为是正确的,
-- **Recall@IoU=0.5**,我们发现了多少的真实物体.
-- **AP@0.5**精度回忆曲线面积在IOU门值为0.5;每类一个数字.
-- **mAP@0.5:0.95**平均AP超过IOU门值0.5,0.55, ...,0.95.
+- **Precision@IoU=0.5** — 被计为正例的预测中,有多少真正正确。
+- **Recall@IoU=0.5** — 真实物体中,我们找到了多少。
+- **AP@0.5** — IoU 阈值为 0.5 时的precision-recall曲线下面积;每个类别一个数字。
+- **mAP@0.5:0.95** — AP 在 IoU 阈值 0.5、0.55、...、0.95 上的平均。COCO 指标;最严格、信息量最大。
 
-报告四个.在mAP@0.5上强,但在mAP@0.5:0.95上弱的探测器,大致地定位,但不紧密;更好的盒子回归损失;高精度和低回忆的探测器过于保守;降低信任门或增加对象重量.
+四个都报。一个 mAP@0.5 强但 mAP@0.5:0.95 弱的检测器是定位粗糙但不紧致;用更好的框回归损失来修复。一个高 precision 低 recall 的检测器太保守;降低置信度阈值或提高 objectness 权重。
 
 ```figure
 object-detection-nms
 ```
 
-## 建立它
+## 动手实现
 
-### 步骤1:
+### 步骤 1:IoU
 
-整个课程的工作马. 在两个盒子上工作.`(x1, y1, x2, y2)`格式
+整课的核心工具。作用于两个 `(x1, y1, x2, y2)` 格式的框数组。
 
 ```python
 import numpy as np
@@ -167,9 +167,9 @@ def box_iou(boxes_a, boxes_b):
     return inter / np.clip(union, 1e-8, None)
 ```
 
-返回一个`(N_a, N_b)`通过使一个数组形状,使用它对抗一个单一的地面真相框.`(1, 4)`现在,我们要去.
+返回一个 `(N_a, N_b)` 的两两 IoU 矩阵。把其中一个数组形状设为 `(1, 4)` 即可用于单个真值框。
 
-### 步骤2:非最大压缩
+### 步骤 2:非极大值抑制
 
 ```python
 def nms(boxes, scores, iou_threshold=0.45):
@@ -186,11 +186,11 @@ def nms(boxes, scores, iou_threshold=0.45):
     return np.array(keep, dtype=np.int64)
 ```
 
-确定性主义者`O(N log N)`,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,`torchvision.ops.nms`在相同的输入.
+结果是确定性的,排序稳定(`O(N log N)`),且在相同输入下与 `torchvision.ops.nms` 的行为一致。
 
-### 步骤3: 框编码和解码
+### 步骤 3:框的编码与解码
 
-转换像素坐标和`(tx, ty, tw, th)`网络实际上会退缩.
+在像素坐标和网络实际回归的 `(tx, ty, tw, th)` 目标之间转换。
 
 ```python
 def encode(box_xyxy, cell_x, cell_y, stride, anchor_wh):
@@ -219,11 +219,11 @@ def sigmoid(x):
     return 1.0 / (1.0 + np.exp(-x))
 ```
 
-测试:编码一个框,然后解码 你应该得到回来非常接近原始的东西 (直到sigmoid反向不完全可逆时`tx`没有在sigmoid后的范围中).
+测试:对一个框先编码再解码——你应该得到非常接近原框的结果(当 `tx` 不在 sigmoid 后的值域内时,sigmoid 的逆不完全可逆,会有细微偏差)。
 
-### 步骤4:最小的YOLO头
+### 步骤 4:极简 YOLO 检测头
 
-图片的1x1集,重塑为`(B, S, S, num_anchors, 5 + C)`现在,我们要去.
+在特征图上做一个 1x1 卷积,重塑为 `(B, S, S, num_anchors, 5 + C)`。
 
 ```python
 import torch
@@ -244,11 +244,11 @@ class YOLOHead(nn.Module):
         return y
 ```
 
-输出形状:`(N, H, W, num_anchors, 5 + C)`最后一个维度是坚持的`[tx, ty, tw, th, obj, cls_0, ..., cls_{C-1}]`现在,我们要去.
+输出形状:`(N, H, W, num_anchors, 5 + C)`。最后一个维度包含 `[tx, ty, tw, th, obj, cls_0, ..., cls_{C-1}]`。
 
-### 第五步: 实践真相
+### 步骤 5:真值分配
 
-对于每一个基本真理盒子,`(cell, anchor)`负责.
+对每个真值框,决定哪个 `(cell, anchor)` 对它负责。
 
 ```python
 def assign_targets(boxes_xyxy, classes, anchors, stride, grid_size, num_classes):
@@ -279,9 +279,9 @@ def assign_targets(boxes_xyxy, classes, anchors, stride, grid_size, num_classes)
     return target, has_obj
 ```
 
-轮选择是"最好的形状 IoU 与地面真相"一个价格便宜的代理,与YOLOv2/v3任务匹配. v5及后者使用更复杂的策略 (任务一致匹配,动态 k) 来完善相同的想法.
+锚框选择规则是"与真值形状 IoU 最大的锚框"——一个廉价的代理,与 YOLOv2/v3 的分配方式一致。v5 及之后版本使用更复杂的策略(task-aligned matching、dynamic k),它们是对同一思想的精化。
 
-### 步骤 6: 三次损失
+### 步骤 6:三个损失
 
 ```python
 def yolo_loss(pred, target, has_obj, lambda_coord=5.0, lambda_obj=1.0, lambda_noobj=0.5, lambda_cls=1.0):
@@ -315,11 +315,11 @@ def yolo_loss(pred, target, has_obj, lambda_coord=5.0, lambda_obj=1.0, lambda_no
                    "obj_neg": loss_obj_neg.item(), "cls": loss_cls.item()}
 ```
 
-五个超级参数,每个YOLO教程都会硬码或扫描.`lambda_coord=5, lambda_noobj=0.5`像原始YOLOv1纸样,仍然是合理的默认.
+五个超参数,每个 YOLO 教程要么硬编码要么做扫描。比例很重要:`lambda_coord=5, lambda_noobj=0.5` 与最初的 YOLOv1 论文一致,至今仍是合理的默认值。
 
-### 步骤7: 推进管道
+### 步骤 7:推理流水线
 
-解码原始头输出,应用sigmoid/exp,对象性门和NMS.
+解码检测头的原始输出,应用 sigmoid/exp,对 objectness 做阈值过滤,再跑 NMS。
 
 ```python
 def postprocess(pred_tensor, anchors, stride, img_size, conf_threshold=0.25, iou_threshold=0.45):
@@ -353,11 +353,11 @@ def postprocess(pred_tensor, anchors, stride, img_size, conf_threshold=0.25, iou
     return boxes[keep], scores[keep], classes[keep]
 ```
 
-这就是完整的评估路径:头 -> 解码 -> 门 -> NMS.
+这就是完整的评估路径:检测头 -> 解码 -> 阈值 -> NMS。
 
-## 用它
+## 用起来
 
-`torchvision.models.detection`对于预训练模型,需要三行运载.
+`torchvision.models.detection` 提供了具有相同概念结构的生产级检测器。加载预训练模型只需三行代码。
 
 ```python
 import torch
@@ -373,37 +373,37 @@ print(f"scores: {predictions[0]['scores'].shape}")
 print(f"labels: {predictions[0]['labels'].shape}")
 ```
 
-对于实时推断管道,`ultralytics`标准是:`from ultralytics import YOLO; model = YOLO('yolov8n.pt'); model(img)`模型内部处理解码和NMS,并返回相同的信息.`boxes / scores / labels`你在上面建造的三倍.
+对于实时推理流水线,`ultralytics`(YOLOv8/v9)是标准选择:`from ultralytics import YOLO; model = YOLO('yolov8n.pt'); model(img)`。模型在内部处理解码和 NMS,返回与你上面构建的相同的 `boxes / scores / labels` 三元组。
 
-## 运送它
+## 交付
 
-这一课产生了:
+本课产出:
 
-- `outputs/prompt-detection-metric-reader.md`一个提示,转换一个`precision, recall, AP, mAP@0.5:0.95`排列一行诊断,然后再进行一个最有用的实验.
-- `outputs/skill-anchor-designer.md`一个技能,在基础真相框的数据集中,运行k-means`(w, h)`返回每个FPN级别的杆设置,加上需要选择正确的杆数量的覆盖统计数据.
+- `outputs/prompt-detection-metric-reader.md` — 一个提示词,把一行 `precision, recall, AP, mAP@0.5:0.95` 指标变成一句话诊断和单个最有用的下一步实验。
+- `outputs/skill-anchor-designer.md` — 一个技能,给定真值框数据集,对 `(w, h)` 运行 k-means,返回每个 FPN 层级的锚框集合以及选择正确锚框数量所需的覆盖率统计。
 
-## 运动
+## 练习
 
-1. **(Easy)**实施`box_iou`击它.`torchvision.ops.box_iou`检查最大绝对差距在以下`1e-6`现在,我们要去.
-2. **(Medium)**港口`yolo_loss`通过使用`CIoU`在100图像合成数据集上显示,CIoU在同一时间段相比,与MSE相比,接近更好的最终mAP@0.5:0.95.
-3. **(Hard)**实现多尺度推理:通过模型以三分辨率输送相同的图像,结合盒子预测,并在结尾运行单个NMS. 在一个持久的集合上测量mAP升级与单尺度推理.
+1. **(简单)** 实现 `box_iou`,并在 1,000 个随机框对上与 `torchvision.ops.box_iou` 对比。验证最大绝对差小于 `1e-6`。
+2. **(中等)** 把 `yolo_loss` 移植为使用 `CIoU` 框损失而非 MSE 的版本。在一个 100 张图的合成数据集上,证明在相同的 epoch 数下 CIoU 收敛到比 MSE 更好的最终 mAP@0.5:0.95。
+3. **(困难)** 实现多尺度推理:将同一图像以三种分辨率输入模型,合并框预测,最后只运行一次 NMS。在留出集上测量相对单尺度推理的 mAP 提升。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|----------------------|
-| Anchor | "Box prior" | A pre-defined box shape at each grid cell from which the network predicts deltas instead of absolute coordinates |
-| IoU | "Overlap" | Intersection-over-union of two boxes; the universal similarity measure in detection |
-| NMS | "Deduplicate" | Greedy algorithm that keeps highest-score predictions and removes overlapping ones above a threshold |
-| Objectness | "Is there something here" | Per-anchor, per-cell scalar predicting whether an object is centred in that cell |
-| Grid stride | "Downsample factor" | Pixels per grid cell; a 416-px input with a 13-grid head has stride 32 |
-| mAP | "Mean average precision" | Average of the area under the precision-recall curve, averaged over classes and (for COCO) IoU thresholds |
-| AP@0.5 | "PASCAL VOC AP" | Average precision with IoU threshold 0.5; the lenient version of the metric |
-| mAP@0.5:0.95 | "COCO AP" | Average over IoU thresholds 0.5..0.95 step 0.05; the strict version and current community standard |
+| Anchor | "框先验" | 每个网格单元处预定义的框形状,网络预测相对它的偏移量而非绝对坐标 |
+| IoU | "重叠" | 两个框的交并比;检测中通用的相似度度量 |
+| NMS | "去重" | 贪心算法,保留得分最高的预测,删除重叠超过阈值的预测 |
+| Objectness | "这里有没有东西" | 每个锚框、每个单元格的标量,预测是否有物体中心位于该单元格 |
+| Grid stride | "下采样因子" | 每个网格单元对应的像素数;416 像素输入配 13 网格的检测头,stride 为 32 |
+| mAP | "mean average precision" | precision-recall 曲线下面积的平均值,对类别以及(对 COCO)IoU 阈值取平均 |
+| AP@0.5 | "PASCAL VOC AP" | IoU 阈值为 0.5 的 average precision;指标的宽松版本 |
+| mAP@0.5:0.95 | "COCO AP" | IoU 阈值从 0.5 到 0.95、步长 0.05 的平均;严格版本,当前社区标准 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [YOLOv1: You Only Look Once (Redmon et al., 2016)](https://arxiv.org/abs/1506.02640)创建纸;从那以后的每一个YOLO都是这种结构的完善
-- [YOLOv3 (Redmon & Farhadi, 2018)](https://arxiv.org/abs/1804.02767)引入了多尺度FPN式头的纸;仍然是最清晰的图表
-- [Ultralytics YOLOv8 docs](https://docs.ultralytics.com)目前的生产参考;涵盖数据集格式,增强,培训食谱
-- [The Illustrated Guide to Object Detection (Jonathan Hui)](https://jonathan-hui.medium.com/object-detection-series-24d03a12f904)完整的检测动物园的最佳普通英语游览; 对于了解DETR,RetinaNet,FCOS和YOLO的关系,是无价的
+- [YOLOv1: You Only Look Once(Redmon 等,2016)](https://arxiv.org/abs/1506.02640) — 奠基论文;此后每个 YOLO 都是对这一结构的精化
+- [YOLOv3(Redmon & Farhadi,2018)](https://arxiv.org/abs/1804.02767) — 引入多尺度 FPN 风格检测头的论文;图示至今仍最清晰
+- [Ultralytics YOLOv8 文档](https://docs.ultralytics.com) — 当前的生产参考;涵盖数据集格式、数据增强、训练配方
+- [The Illustrated Guide to Object Detection(Jonathan Hui)](https://jonathan-hui.medium.com/object-detection-series-24d03a12f904) — 对整个检测器大家族最好的通俗讲解;对理解 DETR、RetinaNet、FCOS 和 YOLO 之间的关系极有价值

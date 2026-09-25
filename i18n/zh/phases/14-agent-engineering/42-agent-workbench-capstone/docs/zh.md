@@ -1,24 +1,24 @@
-# 石:运输可重复使用的代理工作台包
+# 毕业项目：交付一个可复用的 Agent 工作台包
 
-> 任何一个回复中,你放一个包,最后一个小曲目.`cp -r`石是这门课程所使用的文物.
+> 这个迷你课程结束时，你会得到一个可以放入任何仓库的包。十一节课的表面浓缩成一个目录，你可以 `cp -r`，第二天早上 agent 就能稳定工作。这个毕业项目就是本课程的核心产出物。
 
 **Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phases 14 · 31 to 14 · 41
-**Time:** ~75 minutes
+**Languages:** Python（标准库）
+**Prerequisites:** 阶段 14 · 31 到 14 · 41
+**Time:** 约 75 分钟
 
 ## 学习目标
 
-- 包装七个工作桌面面,
-- 入方案,脚本和模板,这样一个新的 repo得到了已知的基础.
-- 添加一个单个安装脚本,将包装无力放下.
-- 决定什么留在群里,什么留在外,为每一个人辩护.
+- 将七个工作台表面打包成一个可直接放入的目录。
+- 固定 schema、脚本和模板，使新仓库获得一个已知可用的基线。
+- 添加一个幂等地部署该包的单一安装脚本。
+- 决定什么留在包内、什么留在包外，并为每项取舍给出理由。
 
 ## 问题
 
-工作桌面在Google文档,聊天历史和三个半记忆脚本中存在,是一个每季度重建的工作桌面.治疗方法是一个版本包:一个备忘录或目录,上面包含表面,方案,脚本和一个命令安装器.
+一个散落在 Google Doc、聊天记录和三个记得不太清楚的脚本中的工作台，是每个季度都要重建一次的工作台。解决方案是一个带版本的包：一个包含表面、schema、脚本和一键安装器的仓库或目录。
 
-你将结束这个课程`outputs/agent-workbench-pack/`发送在磁盘上`bin/install.sh`这将它放入任何目标回报.
+本课结束时，你将在磁盘上交付 `outputs/agent-workbench-pack/`，以及一个可将它放入任何目标仓库的 `bin/install.sh`。
 
 ## 概念
 
@@ -32,7 +32,7 @@ flowchart TD
   Repo --> Surfaces[all seven workbench surfaces wired]
 ```
 
-### 包装布局
+### 包的布局
 
 ```
 outputs/agent-workbench-pack/
@@ -56,103 +56,103 @@ outputs/agent-workbench-pack/
 └── README.md
 ```
 
-### 什么是留在,什么是留在
+### 什么留下，什么排除
 
-在:
+留下的：
 
-- 表面图案,这是合同.
-- 上面的四个剧本,它们是运行时间.
-- 它们是规则和规则.
+- 表面 schema。它们是契约。
+- 上述四个脚本。它们是运行时。
+- 四份文档。它们是规则和评分标准。
 
-走出去
+排除的：
 
-- 任务属于目标备忘录的板块,而不是包装.
-- 包装是框架无知的.
-- 团队生活在团队现有的集团旁边,而不是内部.
+- 项目特定的任务。任务属于目标仓库的看板，不属于包。
+- 厂商 SDK 调用。包是框架无关的。
+- 入职指南。包放在团队现有入职材料旁边，而不是嵌在其中。
 
 ### 安装器
 
-简短的`bin/install.sh`(或`bin/install.py`):
+一个简短的 `bin/install.sh`（或 `bin/install.py`）：
 
-1. 拒绝安装在现有包装上,没有`--force`现在,我们要去.
-2. 复制包到目标存储器中.
-3. 电缆如果有`.github/workflows/`没有.
-4. 打印下一步:填写板,设置接受命令,运行 init脚本.
+1. 在没有 `--force` 的情况下拒绝覆盖已有的包。
+2. 将包复制到目标仓库。
+3. 如果存在 `.github/workflows/`，则接入 CI。
+4. 打印后续步骤：填写看板、设置验收命令、运行初始化脚本。
 
-### 版本化
+### 版本控制
 
-包装载有`VERSION`文件. 计划的颠覆和需要迁移的脚本变化颠覆主要. 只有文件的变化颠覆补丁. 目标备忘录的`agent_state.json`记录它被初始化为哪个包版本.
+该包带有一个 `VERSION` 文件。需要迁移的 schema 和脚本变更提升主版本号。仅文档变更提升补丁版本号。目标仓库的 `agent_state.json` 记录其初始化时所用的包版本。
 
 ```figure
 wb-pack-install
 ```
 
-## 建立它
+## 构建它
 
-`code/main.py`组装包装成`outputs/agent-workbench-pack/`在课旁边, 种植了你已经写的小曲目中的前课程的方案和脚本.
+`code/main.py` 将包组装到本课旁边的 `outputs/agent-workbench-pack/` 中，使用本迷你课程前几节课的 schema 和脚本，以及你已写好的文档作为种子。
 
-运行它:
+运行它：
 
 ```
 python3 code/main.py
 ```
 
-脚本复制和接表面,写出 README,打印包树,然后退出零.重启是无效的.
+该脚本复制并固定各表面、编写 README、打印包的目录树，并以零退出。重复运行是幂等的。
 
-## 野生生产模式
+## 实际生产中的模式
 
-包装只能有价值,只要它存活着,如果它能保持良好的状态,如果它能保持良好的状态,
+只有经受得住 fork、更新和不友好的上游环境，包才有价值。四种模式使之可行。
 
-**`VERSION` is the contract, not the marketing.**基本上,需要一个状态迁移. 基本上,需要重新检查. 补丁的补丁只需要文件. 安装器写道`.workbench-version`在每次安装中, 进入目标备忘录;`lint_pack.py`如果目标的锁与包裹的锁不同,拒绝运输`VERSION`这就是怎么做`npm`现在`Cargo`其他`pyproject.toml`经历了10年的炼, 没有什么改变了规则.
+**`VERSION` 是契约，不是宣传。** 主版本提升需要状态迁移。次版本提升需要重跑检查器。补丁版本提升仅涉及文档。安装器在每次安装时都会将 `.workbench-version` 写入目标仓库；如果目标仓库的锁文件与包的 `VERSION` 不一致，`lint_pack.py` 将拒绝交付。这就是 `npm`、`Cargo` 和 `pyproject.toml` 经受十年变更仍然可用的原因；agent 的出现没有改变这些规则。
 
-**Single source for cross-tool distribution.**号船1号`nx ai-setup`这就说明了`AGENTS.md`现在`CLAUDE.md`现在`.cursor/rules/`现在`.github/copilot-instructions.md`包装器应做同样的事情;安装器发出了符号链接 (`ln -s AGENTS.md CLAUDE.md`对于每一个编码代理,只有一种信息来源.
+**跨工具分发的单一来源。** Nx 交付一个 `nx ai-setup`，从单一配置生成 `AGENTS.md`、`CLAUDE.md`、`.cursor/rules/`、`.github/copilot-instructions.md` 和一个 MCP 服务器。包也应如此；安装器生成符号链接（`ln -s AGENTS.md CLAUDE.md`），使单一事实来源分发到每个编码 agent。为了支持某个工具而 fork 包是一种失败模式。
 
-**`uninstall.sh` that refuses on non-trivial state.**卸载包不能删除用户的文件`agent_state.json`现在`task_board.json`其他`outputs/`解装器删除了方案,脚本,文件,`AGENTS.md`(与`--keep-agents-md`由于该数据库的数据库是用户的,而该数据库并非其所有者.
+**遇到非平凡状态就拒绝的 `uninstall.sh`。** 卸载包绝不能删除用户的 `agent_state.json`、`task_board.json` 或 `outputs/`。卸载器会移除 schema、脚本、文档和 `AGENTS.md`（可通过 `--keep-agents-md` 选择退出），并且在状态文件有任何未提交的更改时拒绝继续。状态属于用户；包不拥有它。
 
-**Skill-as-publishable. SkillKit-style distribution.**作为一个SkillKit技能:`skillkit install agent-workbench-pack`包装备是真相来源,SkillKit是分销道.供应商锁定崩;七面保持相同.
+**技能即可发布物的 SkillKit 式分发。** 包以 SkillKit 技能的形式交付：`skillkit install agent-workbench-pack` 从单一来源将其部署到 32 个 AI agent。包的仓库是事实来源；SkillKit 是分发渠道。厂商锁定随之瓦解；七个表面保持不变。
 
-## 用它
+## 使用它
 
-包装船只的三个位置:
+包的三种交付方式：
 
-- **As a directory you drop into a repo.** `cp -r outputs/agent-workbench-pack /path/to/repo`现在,我们要去.
-- **As a public template repo.**叉和定制,用`VERSION`控制漂移.
-- **As a SkillKit skill.**连接到你的代理产品,所以只有一条命令可以设置它.
+- **作为放入仓库的目录。** `cp -r outputs/agent-workbench-pack /path/to/repo`。
+- **作为公开的模板仓库。** Fork 后定制，用 `VERSION` 控制漂移。
+- **作为 SkillKit 技能。** 接入你的 agent 产品，一条命令即可部署。
 
-每个装配都是一个分量.
+包是菜谱。每次安装是一份出品。
 
-## 运送它
+## 交付它
 
-`outputs/skill-workbench-pack.md`产生一个项目调整的包:规则与团队的历史进行了调整,范围范围与 repo相匹配,条目尺寸通过一个特定领域的输入扩展.
+`outputs/skill-workbench-pack.md` 生成一个针对项目调优的包：规则根据团队历史打磨、作用域 glob 匹配仓库、评分标准维度加入一个领域特定条目。
 
-## 运动
+## 练习
 
-1. 决定哪个选项第五文件值得升级到圣经包.
-2. 用一个 编写重新安装器为Python`--dry-run`标,比较 ergonomics 和 bash.
-3. 添加一个`bin/uninstall.sh`没有任何小事,如果国家文件有非小事历史,
-4. 添加一个`lint_pack.py`子出时会失败`VERSION`给IC传输,让包裹自己回复.
-5. 导读了从手动滚动工作台到这个包的迁移运行指南.
+1. 决定哪份可选的第五份文档值得提升为规范包的一部分，并说明理由。
+2. 用带 `--dry-run` 标志的 Python 重写安装器。对比其易用性与 bash。
+3. 添加一个 `bin/uninstall.sh`，安全地移除包，并在状态文件有非平凡历史时拒绝执行。什么算作非平凡？
+4. 添加一个 `lint_pack.py`，当包偏离 `VERSION` 时失败。将其接入包自身仓库的 CI。
+5. 编写从手工工作台迁移到此包的操作手册。怎样安排操作顺序才能将停机时间降到最低？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|------------------------|
-| Workbench pack | "The starter kit" | A versioned directory carrying all seven surfaces |
-| Installer | "Setup script" | `bin/install.sh` that lays the pack down idempotently |
-| Pack version | "VERSION" | Major bumps for schema/script changes, patch for doc-only |
-| Drop-in pack | "cp -r and go" | Pack works without per-repo customization on day one |
-| Forkable template | "GitHub template" | Public repo that GitHub's "Use this template" can clone from |
+| 工作台包 | "入门套件" | 一个包含全部七个表面的带版本目录 |
+| 安装器 | "安装脚本" | 幂等地部署包的 `bin/install.sh` |
+| 包版本 | "VERSION" | schema/脚本变更提升主版本，仅文档变更提升补丁版本 |
+| 直接放入的包 | "cp -r 然后跑" | 包在第一天起无需按仓库定制即可工作 |
+| 可 fork 的模板 | "GitHub 模板" | GitHub 的 "Use this template" 可以克隆的公开仓库 |
 
-## 进一步阅读
+## 延伸阅读
 
-- 阶段14 · 31至14 · 41 每一个面积包装包装
-- [SkillKit](https://github.com/rohitg00/skillkit)将这种技能安装在32个人工智能代理中
-- [Nx Blog, Teach Your AI Agent How to Work in a Monorepo](https://nx.dev/blog/nx-ai-agent-skills) 六个工具的单源发电机
-- [agents.md — the open spec](https://agents.md/)您的包装路由器必须实现什么
-- [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) 包装等价的参考实施
-- [andrewgarst/agentic_harness](https://github.com/andrewgarst/agentic_harness) 支持重复的引用与 eval套件
-- [Augment Code, A good AGENTS.md is a model upgrade](https://www.augmentcode.com/blog/how-to-write-good-agents-dot-md-files)包装文件质量条
-- [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
-- [Anthropic, Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps)
-- 阶段 14 · 30  基于评估的代理开发,使用包装的验证门
-- 之前/后的基准,本包的改善
+- 阶段 14 · 31 到 14 · 41 — 本包包含的每一个表面
+- [SkillKit](https://github.com/rohitg00/skillkit) — 将此技能安装到 32 个 AI agent
+- [Nx 博客，教你的 AI agent 在 monorepo 中工作](https://nx.dev/blog/nx-ai-agent-skills) — 覆盖六种工具的单一来源生成器
+- [agents.md — 开放规范](https://agents.md/) — 你包中的路由器必须实现的内容
+- [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) — 包等价物的参考实现
+- [andrewgarst/agentic_harness](https://github.com/andrewgarst/agentic_harness) — 带 eval 套件的基于 Redis 的参考实现
+- [Augment Code，一份好的 AGENTS.md 是一次模型升级](https://www.augmentcode.com/blog/how-to-write-good-agents-dot-md-files) — 包文档的质量标准
+- [Anthropic，长时间运行 agent 的有效 harness](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
+- [Anthropic，面向长时间运行应用开发的 harness 设计](https://www.anthropic.com/engineering/harness-design-long-running-apps)
+- 阶段 14 · 30 — 使用本包验证门控的 eval 驱动的 agent 开发
+- 阶段 14 · 41 — 本包所改进的 before/after 基准

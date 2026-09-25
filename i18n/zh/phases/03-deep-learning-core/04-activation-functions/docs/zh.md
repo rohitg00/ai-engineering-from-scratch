@@ -1,41 +1,41 @@
-# 激活功能
+# 激活函数
 
-> 没有线性,你的100层网络就像一个精致的矩阵乘法. 激活是让神经网络在曲线中思考的门户.
+> 没有非线性，你的 100 层网络不过是一次花哨的矩阵乘法。激活函数是让神经网络能够以曲线方式思考的闸门。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Lesson 03.03 (Backpropagation)
-**Time:** ~75 minutes
+**Prerequisites:** 第 03.03 课（反向传播）
+**Time:** 约 75 分钟
 
 ## 学习目标
 
-- 实现sigmoid,tanh,ReLU,Leaky ReLU,GELU,Swish和softmax及其衍生品从零开始
-- 通过测量激活大小通过10+层不同激活的激活量来诊断消失梯度问题
-- 检测 ReLU 网络中死神经元,并解释为什么 GELU 避免了这种故障模式
-- 选择给定架构的正确激活函数 (变压器,CNN,RNN,输出层)
+- 从零实现 sigmoid、tanh、ReLU、Leaky ReLU、GELU、Swish 和 softmax 及其导数
+- 通过测量 10 层以上网络中不同激活函数的激活值大小，诊断梯度消失问题
+- 检测 ReLU 网络中的死神经元，并解释 GELU 为何能避免这种失效模式
+- 为给定架构（transformer、CNN、RNN、输出层）选择正确的激活函数
 
-## 问题
+## 问题所在
 
-堆叠两个线性转换:y=W2(W1x+b1) +b2.扩展它:y=W2W1x+W2b1+b2.这只是y=Ax+c--一个线性转换.不管你堆叠多少线性层,结果都会崩到一个矩阵乘以.你的100层网络具有与单层相同的表示能力.
+堆叠两个线性变换：y = W2(W1x + b1) + b2。展开后：y = W2W1x + W2b1 + b2。这不过是 y = Ax + c——一个单一的线性变换。无论堆叠多少个线性层，结果都会坍缩为一次矩阵乘法。你的 100 层网络与单层网络的表达能力完全相同。
 
-这不是理论上的好奇心. 这意味着一个深线网络实际上无法学习XOR,不能分类螺旋数据集,不能识别面孔.没有激活函数,深度是幻觉.
+这并非理论上的奇闻。它意味着一个深度线性网络确实无法学习 XOR，无法对螺旋数据集进行分类，无法识别人脸。没有激活函数，深度只是一种幻觉。
 
-激活函数打破了线性. 他们通过非线性函数扭曲每个层的输出,使网络能够曲决策界限,近似任意函数,并实际学习. 但选择错误的激活,你的渐变会消失到零 (深度网络中的sigmoid),爆炸到无限 (无限的激活,没有仔细的初始化), 网络是否能学习,直接决定了激活函数的选择.
+激活函数打破了这种线性。它们通过非线性函数扭曲每一层的输出，使网络能够弯曲决策边界、逼近任意函数，从而真正地学习。但选错了激活函数，你的梯度可能会消失为零（深度网络中的 sigmoid）、爆炸到无穷大（未经精心初始化的无界激活），或者你的神经元会永久死亡（带有较大负偏置的 ReLU）。激活函数的选择直接决定了你的网络能否学习。
 
 ## 概念
 
-### 为什么不线性是必要的
+### 为什么需要非线性
 
-矩阵乘法是可复合的.乘以矩阵A乘以矩阵B乘以 AB乘以相同.这意味着堆10个线性层是数学上相当于一个线性层,一个大矩阵.所有这些参数,所有深度,都是浪费的.你需要一些东西来打破链.这是激活函数的作用.
+矩阵乘法是可组合的。向量先乘矩阵 A 再乘矩阵 B，等同于乘以 AB。这意味着堆叠十个线性层在数学上等价于一个拥有一个大矩阵的线性层。所有那些参数、所有那些深度——都浪费了。你需要某种东西来打破这个链条，这正是激活函数的作用。
 
-线性层计算了f ((x) =Wx + b.
+下面是证明。线性层计算 f(x) = Wx + b。堆叠两层：
 
 ```
 Layer 1: h = W1 * x + b1
 Layer 2: y = W2 * h + b2
 ```
 
-替代品:
+代入：
 
 ```
 y = W2 * (W1 * x + b1) + b2
@@ -43,128 +43,128 @@ y = (W2 * W1) * x + (W2 * b1 + b2)
 y = A * x + c
 ```
 
-插入一个非线性激活g() 之间的层:
+只有一层。在层之间插入非线性激活 g()：
 
 ```
 h = g(W1 * x + b1)
 y = W2 * h + b2
 ```
 
-现在替代器断裂.W2 * g(W1 * x + b1) + b2不能缩小到单个线性转换.网络可以代表非线性函数.每一个具有激活的额外层增加了表示容量.
+此时代入失效了。W2 * g(W1 * x + b1) + b2 无法再化简为单一的线性变换。网络可以表示非线性函数了。每个带有激活的额外层都会增加表达能力。
 
-### 状
+### Sigmoid
 
-对于神经网络的原始激活功能.
+最早的神经网络激活函数。
 
 ```
 sigmoid(x) = 1 / (1 + e^(-x))
 ```
 
-输出范围: (0,1). 顺,可分化,将任何真数映射到类似概率的值.
+输出范围：(0, 1)。平滑、可微，将任意实数映射为类似概率的值。
 
-衍生品:
+其导数：
 
 ```
 sigmoid'(x) = sigmoid(x) * (1 - sigmoid(x))
 ```
 
-转移的高值为0.25,发生在x=0. 转移时,梯度通过层次乘以.
+该导数的最大值为 0.25，出现在 x = 0 处。在反向传播中，梯度会跨层相乘。十层 sigmoid 意味着梯度最多被 0.25 连乘十次：
 
 ```
 0.25^10 = 0.000000953674
 ```
 
-信号的百万分之一不到.这是渐变问题.早期层的梯度变得如此小,重量几乎无法更新.网络似乎学习 - - 后层的损失减少 - - 但第一层是结的.深层的sigmoid网络根本没有训练.
+不到原始信号的百万分之一。这就是梯度消失问题。早期层中的梯度变得极小，权重几乎不更新。网络看似在学习——后面几层的损失在下降——但最前面的层被冻结了。深度 sigmoid 网络根本无法训练。
 
-另外一个问题:sigmoid输出总是正 (0到 1),这意味着重量上的梯度总是相同的标志.
+另一个问题：sigmoid 的输出始终为正（0 到 1），这意味着权重上的梯度始终是同一符号。这会导致梯度下降过程中出现之字形震荡。
 
-### 
+### Tanh
 
-它们是"西格莫伊德"的中心版本.
+以零为中心的 sigmoid 版本。
 
 ```
 tanh(x) = (e^x - e^(-x)) / (e^x + e^(-x))
 ```
 
-产出范围: (-1,1) 零中心,消除了扎克问题.
+输出范围：(-1, 1)。零中心化，消除了之字形震荡问题。
 
-衍生品:
+其导数：
 
 ```
 tanh'(x) = 1 - tanh(x)^2
 ```
 
-最高衍生值为1.0在x=0时 - - 比sigmoid好四倍.但消失梯度问题仍然存在.对于大量的正值或负值输入,衍生值接近零.十层仍然压碎梯度,但不那么积极.
+最大导数为 1.0，出现在 x = 0 处——比 sigmoid 好四倍。但梯度消失问题依然存在。对于较大的正输入或负输入，导数趋近于零。十层仍会压缩梯度，只是程度较轻。
 
-### 突破
+### ReLU：突破
 
-修改线性单元. 2010 年由纳尔和希顿推广为深度学习 (该功能本身可以追溯到福岛1969年的作品),它改变了一切.
+修正线性单元。由 Nair 和 Hinton 于 2010 年在深度学习中推广（该函数本身可追溯到 Fukushima 1969 年的工作），它改变了一切。
 
 ```
 relu(x) = max(0, x)
 ```
 
-输出范围: [0,无限).衍生式是微乎其微的简单:
+输出范围：[0, 无穷)。其导数极其简单：
 
 ```
 relu'(x) = 1  if x > 0
             0  if x <= 0
 ```
 
-没有消逝梯度.梯度是正确的1,通过直线.这就是为什么深度网络变得可训练的原因.
+对正输入没有梯度消失。梯度恰好为 1，直接通过。这就是深度网络变得可训练的原因——ReLU 在各层之间保持梯度大小。
 
-但有一个失败模式:死神经元问题.如果神经元的权重输入总是负面 (由于大负偏差或不幸的权重初始化),其输出总是零,其梯度总是零,它永远不会更新.它永久死亡.实际上,ReLU网络中的10-40%的神经元可以在训练中死亡.
+但存在一种失效模式：死神经元问题。如果一个神经元的加权输入始终为负（由于较大的负偏置或不幸的权重初始化），它的输出就始终为零，梯度也始终为零，永远不会更新。它永久死亡。在实践中，ReLU 网络中 10-40% 的神经元可能在训练过程中死亡。
 
-### 泄漏的RLU
+### Leaky ReLU
 
-对于死神经元的最简单的补救方法.
+针对死神经元最简单的修复方案。
 
 ```
 leaky_relu(x) = x        if x > 0
                 alpha * x if x <= 0
 ```
 
-负面侧面的斜率是小的,而不是零,所以死神经元仍然得到一个梯度信号,
+其中 alpha 是一个小的常数，通常为 0.01。负侧有一个小斜率而不是零，因此死神经元仍然能获得梯度信号并可以恢复。
 
-### 现代的默认
+### GELU：现代默认选择
 
-盖斯错误线性单位. 于2016年由亨德里克斯和吉普尔推出. 在BERT,GPT和大多数现代变压器中默认激活.
+高斯误差线性单元。由 Hendrycks 和 Gimpel 于 2016 年提出。是 BERT、GPT 以及大多数现代 transformer 中的默认激活函数。
 
 ```
 gelu(x) = x * Phi(x)
 ```
 
-在phi ((x) 是标准正常分布的累积分布函数.
+其中 Phi(x) 是标准正态分布的累积分布函数。实践中使用的近似形式：
 
 ```
 gelu(x) ~= 0.5 * x * (1 + tanh(sqrt(2/pi) * (x + 0.044715 * x^3)))
 ```
 
-格鲁在任何地方都是平滑的,允许小负值 (与硬剪切到零的ReLU不同),并且具有概率解释:它根据高斯分布中每一个输入的可能性进行权重.这种平滑的门口在变体架构中优于ReLU,因为它提供了更好的梯度流量,完全避免了死神经元问题.
+GELU 处处平滑，允许较小的负值（不同于硬性截断为零的 ReLU），并且有概率解释：它根据每个输入在 Gaussian 分布下为正的可能性对其进行加权。这种平滑门控在 transformer 架构中优于 ReLU，因为它提供更好的梯度流动，并完全避免了死神经元问题。
 
-### 瑞士 / 瑞士
+### Swish / SiLU
 
-通过自动搜索发现的自闭关键激活.
+由 Ramachandran 等人于 2017 年通过自动化搜索发现的自门控激活函数。
 
 ```
 swish(x) = x * sigmoid(x)
 ```
 
-通过自动搜索在激活函数空间上发现了它 - - 一个设计神经网络的神经网络.
+Swish 的正式定义是 x * sigmoid(x)。Google 通过对激活函数空间的自动化搜索发现了它——一个神经网络在设计神经网络的部件。
 
-像GELU一样,它是光滑的,非单调的,并允许小负值.区别微妙:Swish使用sigmoid为盖特,而GELU使用高斯CDF. 在实践中,性能几乎是一样的.Swish用于EfficientNet和一些视觉模型.GELU在语言模型中占主导地位.
+与 GELU 一样，它平滑、非单调，并允许较小的负值。区别很微妙：Swish 使用 sigmoid 进行门控，而 GELU 使用 Gaussian CDF。在实践中，性能几乎相同。Swish 用于 EfficientNet 和一些视觉模型。GELU 在语言模型中占主导地位。
 
-### 软max:输出激活
+### Softmax：输出激活函数
 
-软max将原始分数 (logits) 的向量转换为概率分布.
+不用于隐藏层。Softmax 将原始分数向量（logits）转换为概率分布。
 
 ```
 softmax(x_i) = e^(x_i) / sum(e^(x_j) for all j)
 ```
 
-每个输出均为0到1之间.所有输出总和为1.这使得它成为多类分类的标准最终激活.最大的逻辑得到最高概率,但与 argmax不同,软max是可分化的,并保留有关相对可靠性的信息.
+每个输出都在 0 和 1 之间。所有输出之和为 1。这使它成为多分类的标准最终激活函数。最大的 logit 获得最高的概率，但与 argmax 不同，softmax 是可微的，并保留了关于相对置信度的信息。
 
-### 形状的比较
+### 形状对比
 
 ```mermaid
 graph LR
@@ -180,7 +180,7 @@ graph LR
     G -->|"Smooth gradient<br/>everywhere"| Solution
 ```
 
-### 渐进流量比较
+### 梯度流动对比
 
 ```mermaid
 graph TD
@@ -197,7 +197,7 @@ graph TD
     end
 ```
 
-### 什么时候激活
+### 何时使用哪种激活函数
 
 ```mermaid
 flowchart TD
@@ -220,11 +220,11 @@ flowchart TD
 softmax-temperature
 ```
 
-## 建立它
+## 动手实现
 
-### 执行所有激活函数,使用衍生值
+### 步骤 1：实现所有激活函数及其导数
 
-每个函数都采用一个浮动,返回一个浮动. 每个衍生函数都采用相同的输入,返回梯度.
+每个函数接受一个浮点数并返回一个浮点数。每个导数函数接受相同的输入并返回梯度。
 
 ```python
 import math
@@ -278,9 +278,9 @@ def softmax(xs):
     return [e / total for e in exps]
 ```
 
-### 第二步: 想象出梯度的死亡
+### 步骤 2：可视化梯度死亡的区域
 
-计算在100个平间点的梯度,从 -5到 -5. 打印一个文字历史图,显示每个激活梯度接近零.
+计算从 -5 到 5 之间 100 个等距点上的梯度。打印一个文本直方图，显示每个激活函数的梯度接近零的区域。
 
 ```python
 def gradient_scan(name, derivative_fn, start=-5, end=5, n=100):
@@ -305,9 +305,9 @@ gradient_scan("GELU", gelu_derivative)
 gradient_scan("Swish", swish_derivative)
 ```
 
-### 第三步: 逐渐消失的实验
+### 步骤 3：梯度消失实验
 
-通过N层通过sigmoid对ReLU进行前传信号.测量激活大小如何变化.
+将信号分别通过使用 sigmoid 和 ReLU 的 N 层网络进行前向传播。测量激活值大小如何变化。
 
 ```python
 import random
@@ -331,9 +331,9 @@ vanishing_gradient_experiment(relu, "ReLU")
 vanishing_gradient_experiment(gelu, "GELU")
 ```
 
-### 步骤4: 死亡神经元探测器
+### 步骤 4：死神经元检测器
 
-创建一个ReLU网络,通过它传递随机输入,计算多少神经元从来没有发射.
+创建一个 ReLU 网络，将随机输入传入其中，统计有多少神经元从未激活。
 
 ```python
 def dead_neuron_detector(n_inputs=5, hidden_size=20, n_samples=1000):
@@ -368,9 +368,9 @@ def dead_neuron_detector(n_inputs=5, hidden_size=20, n_samples=1000):
 dead_neuron_detector()
 ```
 
-### 步骤5:训练比较 - 胺与ReluvsGelU
+### 步骤 5：训练对比——Sigmoid vs ReLU vs GELU
 
-运行相同的两个层网络在圆数据集 (圆内点 = 类 1, 外点 = 类 0) 通过三个不同的激活.
+使用三种不同的激活函数，在圆形数据集（圆内点 = 类别 1，圆外 = 类别 0）上训练同一个两层网络。比较收敛速度。
 
 ```python
 def make_circle_data(n=200, seed=42):
@@ -461,9 +461,9 @@ for name, losses in results.items():
     print(f"  {name:10s}: start={losses[0]:.4f} -> end={losses[-1]:.4f} (improvement: {(1 - losses[-1]/losses[0])*100:.1f}%)")
 ```
 
-## 用它
+## 使用它
 
-PyTorch提供了所有这些功能和模块形式:
+PyTorch 以函数式和模块式两种形式提供所有这些激活函数：
 
 ```python
 import torch
@@ -489,48 +489,48 @@ model = nn.Sequential(
 )
 ```
 
-变压器中的隐藏层:GELU. CNN中的隐藏层:ReLU. 排序的输出层:软max. 退回的输出层:没有 (线性). 概率的输出层:sigmoid.就这样.从这些默认开始.只要有证据,才会改变它们.
+transformer 中的隐藏层：GELU。CNN 中的隐藏层：ReLU。分类的输出层：softmax。回归的输出层：无（线性）。概率输出的层：sigmoid。就是这样。从这些默认选择开始，只有在有证据时才更换它们。
 
-如果您正在从零开始构建,您可能不会使用RNN. 如果您的RLU网络中神经元正在死亡,请切换到GELU. 除非您有特定的原因,就不要寻找Leaky ReLU.
+RNN 和 LSTM 在隐藏状态中使用 tanh，在门控中使用 sigmoid，但如果今天你从零开始构建，你可能不会使用 RNN。如果你的 ReLU 网络中神经元在死亡，请切换到 GELU。除非有特定理由，否则不要使用 Leaky ReLU——GELU 解决了死神经元问题，并提供更好的梯度流动。
 
-## 运送它
+## 发布它
 
-这一课产生了:
-- `outputs/prompt-activation-selector.md`-- 一个可重复使用的提示,帮助你选择任何架构的正确激活函数
+本课产出：
+- `outputs/prompt-activation-selector.md`——一个可复用的提示，帮助你为任何架构选择正确的激活函数
 
-## 运动
+## 练习
 
-1. 实现参数 ReLU (PReLU),其中负倾斜alpha是可学习的参数. 运行它在圆数据集上,并与固定的泄漏 ReLU 进行比较.
+1. 实现 Parametric ReLU（PReLU），其中负斜率 alpha 是一个可学习参数。在圆形数据集上训练它，并与固定的 Leaky ReLU 进行比较。
 
-2. 运行消失梯度实验,用50层而不是10层. 绘制每层的大小为sigmoid,tanh,ReLU和GELU. 在哪个层上每个激活的信号有效达到零?
+2. 用 50 层而不是 10 层运行梯度消失实验。绘制 sigmoid、tanh、ReLU 和 GELU 在每一层的数值大小。每个激活函数的信号在哪一层实际上达到零？
 
-3. 实现ELU (指数直线单位): elu(x) = x 如果 x > 0,alpha * (e^x - 1) 如果 x <= 0. 将其死神经元的速度与同一个网络上的 ReLU 进行比较.
+3. 实现 ELU（指数线性单元）：当 x > 0 时 elu(x) = x，当 x <= 0 时 elu(x) = alpha * (e^x - 1)。在相同网络上比较其死神经元率与 ReLU。
 
-4. 建立一个在训练过程中运行的"梯度健康监测器":在每个阶段,计算每个层的平均梯度大小.
+4. 构建一个在训练期间运行的“梯度健康监视器”：在每个 epoch，计算每一层的平均梯度大小。当任何一层的梯度低于 0.001 或超过 100 时打印警告。
 
-5. 修改训练比较,以使用从01课时的XOR数据集而不是圆.哪个激活式在XOR上最快收缩?为什么这与圆结果不同?
+5. 修改训练对比实验，使用第 01 课的 XOR 数据集代替圆形数据集。哪种激活函数在 XOR 上收敛最快？为什么这与圆形数据集的结果不同？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Activation function | "The nonlinear part" | A function applied to each neuron's output that breaks linearity, enabling the network to learn nonlinear mappings |
-| Vanishing gradient | "Gradients disappear in deep networks" | Gradients shrink exponentially through layers when the activation's derivative is less than 1, making early layers untrainable |
-| Exploding gradient | "Gradients blow up" | Gradients grow exponentially through layers when the effective multiplier exceeds 1, causing unstable training |
-| Dead neuron | "A neuron that stopped learning" | A ReLU neuron whose input is permanently negative, producing zero output and zero gradient |
-| Sigmoid | "Squishes values to 0-1" | The logistic function 1/(1+e^-x), historically important but causes vanishing gradients in deep networks |
-| ReLU | "Clips negatives to zero" | max(0, x) -- the activation that made deep learning practical by preserving gradient magnitude |
-| GELU | "The transformer activation" | Gaussian Error Linear Unit, a smooth activation that weights inputs by their probability of being positive |
-| Swish/SiLU | "Self-gated ReLU" | x * sigmoid(x), discovered through automated search, used in EfficientNet |
-| Softmax | "Turns scores into probabilities" | Normalizes a vector of logits into a probability distribution where all values are in (0,1) and sum to 1 |
-| Leaky ReLU | "ReLU that doesn't die" | max(alpha*x, x) where alpha is small (0.01), preventing dead neurons by allowing small negative gradients |
-| Saturation | "The flat part of sigmoid" | Regions where an activation's derivative approaches zero, blocking gradient flow |
-| Logit | "The raw score before softmax" | The unnormalized output of the final layer before applying softmax or sigmoid |
+| 激活函数 | “非线性的部分” | 应用于每个神经元输出的函数，打破线性，使网络能够学习非线性映射 |
+| 梯度消失 | “梯度在深层网络中消失” | 当激活函数的导数小于 1 时，梯度在层间指数级缩小，使早期层无法训练 |
+| 梯度爆炸 | “梯度爆掉了” | 当有效乘子超过 1 时，梯度在层间指数级增长，导致训练不稳定 |
+| 死神经元 | “停止学习的神经元” | 输入永久为负的 ReLU 神经元，产生零输出和零梯度 |
+| Sigmoid | “把值压到 0-1” | Logistic 函数 1/(1+e^-x)，历史上很重要，但在深度网络中会导致梯度消失 |
+| ReLU | “把负数截断为零” | max(0, x)——通过保持梯度大小使深度学习变得实用的激活函数 |
+| GELU | “transformer 的激活函数” | Gaussian Error Linear Unit，一种平滑的激活函数，根据输入为正的概率对其进行加权 |
+| Swish/SiLU | “自门控的 ReLU” | x * sigmoid(x)，通过自动化搜索发现，用于 EfficientNet |
+| Softmax | “把分数变成概率” | 将 logits 向量归一化为概率分布，所有值都在 (0,1) 内且总和为 1 |
+| Leaky ReLU | “不会死的 ReLU” | max(alpha*x, x)，其中 alpha 很小（0.01），通过允许小的负梯度防止死神经元 |
+| 饱和 | “sigmoid 的平坦部分” | 激活函数导数趋近于零的区域，阻碍梯度流动 |
+| Logit | “softmax 之前的原始分数” | 最后一层在应用 softmax 或 sigmoid 之前的未归一化输出 |
 
-## 进一步阅读
+## 延伸阅读
 
-- 纳尔和希顿, "修改线性单位改善限制的博尔茨曼机器" (2010) - 引入ReLU的论文,并使深度网络的训练成为可能
-- 亨德里克斯和吉普尔, "高斯错误线性单位 (GELU) " (2016) -- 引入了变压器默认的激活函数
-- 拉马坎德兰等人",搜索激活函数" (2017) -- 使用自动搜索发现Swish,表明激活设计可以自动化
-- 格洛罗特和Bengio, "理解训练深度传输神经网络的难度" (2010) - 诊断消失/爆炸梯度的论文,并提出Xavier初始化
-- 善良的同事,Bengio, Courville,深度学习6.3章 (https://www.deeplearningbook.org/) -- 密集单位和激活功能的严格处理
+- Nair & Hinton, "Rectified Linear Units Improve Restricted Boltzmann Machines"（2010）——引入 ReLU 并使深度网络训练成为可能的论文
+- Hendrycks & Gimpel, "Gaussian Error Linear Units (GELUs)"（2016）——介绍了后来成为 transformer 默认选择的激活函数
+- Ramachandran 等人, "Searching for Activation Functions"（2017）——使用自动化搜索发现 Swish，表明激活函数设计可以自动化
+- Glorot & Bengio, "Understanding the difficulty of training deep feedforward neural networks"（2010）——诊断梯度消失/爆炸并提出 Xavier 初始化的论文
+- Goodfellow, Bengio, Courville, 《Deep Learning》第 6.3 章（https://www.deeplearningbook.org/）——对隐藏单元和激活函数的严谨论述

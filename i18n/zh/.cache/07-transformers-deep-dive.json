@@ -1,18 +1,18 @@
 {
-  "phases/07-transformers-deep-dive/01-why-transformers/docs/en.md": "a1112a1e30e5eb677b718e7e663972f6a487641feaf023c701c1a87c8b18db39",
   "phases/07-transformers-deep-dive/02-self-attention-from-scratch/docs/en.md": "54a8d6da2e4f1ea0b0b43a1bf09be1b3c41e2d5b974cef459b0ab8ea0af18177",
   "phases/07-transformers-deep-dive/03-multi-head-attention/docs/en.md": "143eb42fb1de2307cda1f2231b8d5cbb2144deced1dfd717a2c789edbf667f81",
-  "phases/07-transformers-deep-dive/04-positional-encoding/docs/en.md": "c7e45e8178d68f5a75b790a84c81a6749b2f2f54c88e30c3f36fabc705a0a511",
-  "phases/07-transformers-deep-dive/05-full-transformer/docs/en.md": "cb33225ca1b2bbaf32a06d637343c22fbaaf3083081bcf04479409c53070a662",
   "phases/07-transformers-deep-dive/06-bert-masked-language-modeling/docs/en.md": "10d1685c0fc344868e948575ae3bf51cb0058e6b0f07a247c20eafcc858f7b70",
   "phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/docs/en.md": "631bdec6da1f43937a98f0e137a8d0e41cecab977e152b921fc140ebec3afd57",
   "phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/docs/en.md": "26b9204335f4793b7910e02a3a03820cd0ea0c7d47a2aa9c37580dcac67baeb1",
-  "phases/07-transformers-deep-dive/09-vision-transformers/docs/en.md": "6ac276b0bbfd15180e9e8850a8a7577f0ff18fa090f4ab545b8a3ad6906b2288",
   "phases/07-transformers-deep-dive/10-audio-transformers-whisper/docs/en.md": "f996b553ee4abba0d68ac4368a41ffecdffc5c91639060ffe99fa83fd84d80eb",
-  "phases/07-transformers-deep-dive/11-mixture-of-experts/docs/en.md": "9cad0d164da113440d4ed64d0ac4c32d79af89a2a6ffd5126fe28a24f538700c",
   "phases/07-transformers-deep-dive/12-kv-cache-flash-attention/docs/en.md": "b93352bcfa28b0ae8b1a60fe52a6078d37066e2df8b291c428fa3422a4ab79dc",
   "phases/07-transformers-deep-dive/13-scaling-laws/docs/en.md": "aac8b47ac5c315771ce177f36d9cf99a6cbc6a23f9208bf77b23dfe4a3b0dc39",
   "phases/07-transformers-deep-dive/14-build-a-transformer-capstone/docs/en.md": "1f8468652dd27eb7b8005038ce04c75fd536e18d887f7a8bc507d2c8fd42ced9",
   "phases/07-transformers-deep-dive/15-attention-variants/docs/en.md": "cd5ba2d28dd24fc6eb57f4477148156d5d5be31a8e157efcdcf00b914a9dfb48",
-  "phases/07-transformers-deep-dive/16-speculative-decoding/docs/en.md": "c69bf699512dd6d2b501316e7c32395ffac44b58d522a694f335964be3903eda"
+  "phases/07-transformers-deep-dive/01-why-transformers/docs/en.md": "a1112a1e30e5eb677b718e7e663972f6a487641feaf023c701c1a87c8b18db39",
+  "phases/07-transformers-deep-dive/04-positional-encoding/docs/en.md": "c7e45e8178d68f5a75b790a84c81a6749b2f2f54c88e30c3f36fabc705a0a511",
+  "phases/07-transformers-deep-dive/11-mixture-of-experts/docs/en.md": "9cad0d164da113440d4ed64d0ac4c32d79af89a2a6ffd5126fe28a24f538700c",
+  "phases/07-transformers-deep-dive/16-speculative-decoding/docs/en.md": "c69bf699512dd6d2b501316e7c32395ffac44b58d522a694f335964be3903eda",
+  "phases/07-transformers-deep-dive/05-full-transformer/docs/en.md": "cb33225ca1b2bbaf32a06d637343c22fbaaf3083081bcf04479409c53070a662",
+  "phases/07-transformers-deep-dive/09-vision-transformers/docs/en.md": "6ac276b0bbfd15180e9e8850a8a7577f0ff18fa090f4ab545b8a3ad6906b2288"
 }

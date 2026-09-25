@@ -1,82 +1,82 @@
-# 学习时间表和热身
+# 学习率调度与预热(Warmup)
 
-> 学习速度是最重要的超参数. 不是架构,数据集的尺寸,不是激活函数,学习速度.如果你没有调整其他东西,
+> 学习率是最重要的超参数。不是架构。不是数据集规模。不是激活函数。是学习率。如果只调一个东西,就调它。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Lesson 03.06 (Optimizers), Lesson 03.08 (Weight Initialization)
-**Time:** ~90 minutes
+**Prerequisites:** 第 03.06 课(优化器)、第 03.08 课(权重初始化)
+**Time:** 约 90 分钟
 
 ## 学习目标
 
-- 从零开始实施常态,步骤衰退,化,加热+化和1周期学习率计划
-- 展示学习率选择的三个失败模式:分离 (过高),停滞 (过低) 和振荡 (没有衰退)
-- 解释为什么亚当基础上优化者需要加热,以及如何稳定早期训练
-- 进行相同任务的五个时间表中的融合速度进行比较,并选择适合特定培训预算的时间表
+- 从零实现恒定、阶梯衰减、余弦退火、预热+余弦以及 1cycle 学习率调度
+- 演示学习率选择的三种失败模式:发散(过高)、停滞(过低)和振荡(无衰减)
+- 解释为什么基于 Adam 的优化器需要预热,以及预热如何稳定早期训练
+- 在同一任务上比较全部五种调度的收敛速度,并为给定训练预算选择合适的调度
 
-## 问题
+## 问题所在
 
-设置学习率为0.1.训练分离 - - 损失在3步中跳到无限.设置为0.0001.训练爬行 - - 100个时代后,模型几乎没有从随机移动.设置为0.01.训练工作50个时代,然后损失在最低水平上摇摆,它永远无法达到,因为步骤太大.
+把学习率设为 0.1。训练发散 -- 损失在 3 步内跳到无穷大。设为 0.0001。训练爬行 -- 100 个 epoch 后,模型几乎没离开随机初始化状态。设为 0.01。训练正常进行 50 个 epoch,然后损失围绕着一个它永远无法到达的最小值振荡,因为步长太大。
 
-训练中最好的学习速度不是恒定的.训练期间它会发生变化.早期,你需要快速地步覆盖大层面.训练中晚些时候,你需要小小的步骤达到极度.90%准确的模型和95%准确的模型之间的区别通常只是时间表.
+最优学习率不是一个常数。它在训练过程中变化。训练早期,你需要较大的步长来快速覆盖距离。训练后期,你需要极小的步长来收敛到一个尖锐的最小值。90% 准确率的模型和 95% 准确率的模型之间的差距往往只是调度问题。
 
-过去三年中出版的每一个主要模型都使用学习率时间表.Llama 3使用了最大的 lr=3e-4,2000个加热步骤和可西因衰变到3e-5.GPT-3使用 lr=6e-4加热超过375万个代币.这些不是任意的选择.它们是大量的超参数扫描结果,成本数百万美元.
+过去三年发表的每个主要模型都使用了学习率调度。Llama 3 使用峰值 lr=3e-4、2000 步预热、余弦衰减到 3e-5。GPT-3 使用 lr=6e-4,在 3.75 亿 token 上预热。这些不是随意选择,而是耗资数百万美元的大量超参数搜索的结果。
 
-你需要了解时间表,因为默认的规则不会解决你的问题.当你调整预训练模型时,正确的时间表与从头开始的训练不同.当你增加批量时,需要改变升温时间.当训练休息到10000步时,你需要知道这是一个时间表问题还是其他东西.
+你需要理解调度,因为默认设置不适合你的问题。微调预训练模型时,正确的调度不同于从头训练。增大批大小时,预热周期需要改变。训练在第 10000 步出问题时,你需要判断是调度问题还是其他问题。
 
-## 概念
+## 核心概念
 
-### 持续学习率
+### 恒定学习率
 
-最简单的方法是选择一个数字,用它来执行每一步.
+最简单的方法。选一个数,每一步都用它。
 
 ```
 lr(t) = lr_0
 ```
 
-很少是最佳的.它要么太高于训练结束时 (动在最低点左右) 还要太低于开始 (浪费了微小步骤的计算).对于小型号和调试工作很好.对于训练超过一个小时的任何东西来说,这是一个可怕的选择.
+很少是最优的。它要么在训练末期过高(围绕最小值振荡),要么在训练初期过低(微小步长浪费算力)。适用于小模型和调试。对任何训练超过一小时的模型来说都是糟糕的选择。
 
-### 步骤衰退
+### 阶梯衰减(Step Decay)
 
-通过 ResNet时代的旧式方法,在固定时代,减少学习率一倍 (通常是10倍).
+来自 ResNet 时代的老派方法。在固定 epoch 处按某个系数(通常 10 倍)削减学习率。
 
 ```
 lr(t) = lr_0 * gamma^(floor(epoch / step_size))
 ```
 
-在Gamma=0.1和 step_size=30的意思是: lr每30个时代下降10倍.ResNet-50使用这个--lr=0.1,在30个时代下降10倍,60个时代下降90个时代.
+其中 gamma = 0.1、step_size = 30 意味着:lr 每 30 个 epoch 下降 10 倍。ResNet-50 就用了这个 -- lr=0.1,在第 30、60、90 个 epoch 各下降 10 倍。
 
-问题是:最佳的衰退点取决于数据集和架构. 转向另一个问题,你需要重新调整下降时间. 转变是突然的 - - 损失可能会升,当速度突然改变.
+问题:最优衰减点依赖于数据集和架构。换一个不同的问题,你就得重新调整何时下降。而且过渡是突变的 -- 学习率突然变化时损失可能飙升。
 
-### 酸
+### 余弦退火(Cosine Annealing)
 
-随着可西因曲线的顺序下降,从最大学习速度到最低水平:
+从最大学习率平滑衰减到最小值,遵循余弦曲线:
 
 ```
 lr(t) = lr_min + 0.5 * (lr_max - lr_min) * (1 + cos(pi * t / T))
 ```
 
-在此,t是当前的步骤,T是全部的步骤数.
+其中 t 是当前步数,T 是总步数。
 
-在t=0,代数词是1,所以lr=lr_max.在t=T,代数词是-1,所以lr=lr_min.衰变最初是温和的,在中间加速,并在结束附近再次变得温和.
+t=0 时,余弦项为 1,所以 lr = lr_max。t=T 时,余弦项为 -1,所以 lr = lr_min。衰减起初平缓,中段加快,接近结束又变平缓。
 
-对于大多数现代训练运行来说,这是默认的.没有超值参数可以调整到 lr_max 和 lr_min.
+这是大多数现代训练运行的默认选择。除了 lr_max 和 lr_min 之外无需调整其他超参数。余弦形状符合经验观察:大部分学习发生在训练中段 -- 你希望在那个关键时期有合理的步长。
 
-### 热情:为什么你开始小
+### 预热(Warmup):为什么从小值开始
 
-亚当和其他适应优化器保持了梯度平均和变异的运行估计.在0步,这些估计初始化为零.第一些梯度更新基于垃圾统计.如果您在此期间的学习速度很大,模型会采取巨大的,不适合方向的步骤.
+Adam 和其他自适应优化器维护梯度均值和方差的滑动估计。第 0 步时,这些估计初始化为零。前几次梯度更新基于无意义的统计量。如果此期间学习率很大,模型会走出巨大且方向糟糕的步子。
 
-热化解决了这一问题.从一个小的学习速度开始 (通常是lr_max / warmup_steps或甚至是零) 并线性地在第一个N步骤上升到lr_max.
+预热解决这个问题。从一个极小的学习率开始(通常是 lr_max / warmup_steps,甚至为零),在前 N 步内线性上升到 lr_max。等你达到完整学习率时,Adam 的统计量已经稳定。
 
 ```
 lr(t) = lr_max * (t / warmup_steps)     for t < warmup_steps
 ```
 
-典型的加热:总训练步骤的1-5%.Llama 3训练了约1.8万亿代币,加热了2000个步骤.GPT-3加热了超过3.75亿代币.
+典型的预热:占总训练步数的 1-5%。Llama 3 训练约 1.8 万亿 token,预热 2000 步。GPT-3 在 3.75 亿 token 上预热。
 
-### 线性变暖 + 化衰变
+### 线性预热 + 余弦衰减
 
-现在的默认方式是:
+现代默认方案。先线性上升,再按余弦衰减:
 
 ```
 if t < warmup_steps:
@@ -86,22 +86,22 @@ else:
     lr(t) = lr_min + 0.5 * (lr_max - lr_min) * (1 + cos(pi * progress))
 ```
 
-光电器的热量可以减少光电的光电. 光电器的热量可以减少光电的光电.
+这是 Llama、GPT、PaLM 以及大多数现代 Transformer 使用的方案。预热防止早期不稳定。余弦衰减让模型稳定到一个好的最小值。
 
-### 周期政策
+### 1cycle 策略
 
-莱斯利·史密斯的发现 (2018):在训练的第一半年,学习率从低值升至高值,然后在下半年再降.
+Leslie Smith 的发现(2018):训练前半段把学习率从低值升到高值,后半段再降回来。反直觉 -- 为什么要训练到一半*增大*学习率?
 
-理论:高学习率通过增加噪音来调整优化轨迹.模型在升级阶段探索更多的损失景观,找到更好的盆地.升级阶段然后在发现的最佳盆地内精炼.
+理论解释:高学习率通过给优化轨迹添加噪声而起正则化作用。模型在上升阶段探索更多损失面,找到更好的盆地。下降阶段则在找到的最佳盆地里进行精炼。
 
 ```
 Phase 1 (0 to T/2):    lr ramps from lr_max/25 to lr_max
 Phase 2 (T/2 to T):    lr ramps from lr_max to lr_max/10000
 ```
 
-对于固定计算预算,一轮车往往比轮车速.
+在固定算力预算下,1cycle 通常比余弦退火训练得更快。代价:你必须预先知道总步数。
 
-### 时间表的形状
+### 调度形状
 
 ```mermaid
 graph LR
@@ -140,7 +140,7 @@ flowchart TD
     Cosine --> MinLR["Set lr_min = lr_max / 10"]
 ```
 
-### 已出版的模型中的真实数字
+### 已发表模型的实际数字
 
 ```mermaid
 graph TD
@@ -156,11 +156,11 @@ graph TD
 lr-schedule
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:安排工作
+### 第 1 步:调度函数
 
-每个函数都按照当前步骤进行学习,并返回当前步骤的学习速度.
+每个函数接收当前步数,返回该步的学习率。
 
 ```python
 import math
@@ -198,9 +198,9 @@ def one_cycle_schedule(step, lr=0.01, total_steps=1000, **kwargs):
         return lr * (1 - progress) + (lr / 10000) * progress
 ```
 
-### 第二步: 设想所有时间表
+### 第 2 步:可视化所有调度
 
-打印一个基于文字的图表,显示每个课程在训练过程中如何发展.
+打印基于文本的图,展示每个调度在训练过程中的演变。
 
 ```python
 def visualize_schedule(name, schedule_fn, total_steps=500, **kwargs):
@@ -218,9 +218,9 @@ def visualize_schedule(name, schedule_fn, total_steps=500, **kwargs):
         print(f"  Step {s:4d}: lr={lr_val:.6f} {bar}")
 ```
 
-### 第三步:培训网络
+### 第 3 步:训练网络
 
-简单的两个层网络,像以前的课程一样,但现在我们改变时间表.
+在 circle 数据集上使用一个简单的两层网络,与前面课程相同,但现在我们改变调度。
 
 ```python
 import random
@@ -304,9 +304,9 @@ def train_with_schedule(schedule_fn, schedule_name, data, epochs=300, base_lr=0.
     return epoch_losses
 ```
 
-### 步骤4: 进行所有时间表的比较
+### 第 4 步:比较所有调度
 
-训练同一个网络,并比较最终损失和合行为.
+用每种调度训练同一个网络,比较最终损失和收敛行为。
 
 ```python
 def compare_schedules(data):
@@ -328,9 +328,9 @@ def compare_schedules(data):
         print(f"{name:<20} {losses[0]:>12.6f} {losses[mid_idx]:>12.6f} {losses[-1]:>12.6f} {best:>12.6f}")
 ```
 
-### 步骤5: LR过高对低
+### 第 5 步:学习率过高与过低
 
-展示三个失败模式:过高 (分离),过低 (爬行),正确.
+演示三种失败模式:过高(发散)、过低(爬行)和恰到好处。
 
 ```python
 def lr_sensitivity(data):
@@ -358,9 +358,9 @@ def lr_sensitivity(data):
         print(f"  {lr:>10.4f} {start:>12.6f} {end_str:>12} {status:>15}")
 ```
 
-## 用它
+## 实际使用
 
-皮托尔奇提供时间表`torch.optim.lr_scheduler`其他:
+PyTorch 在 `torch.optim.lr_scheduler` 中提供了调度器:
 
 ```python
 import torch
@@ -377,7 +377,7 @@ for step in range(1000):
     scheduler.step()
 ```
 
-对于加热+可西斯,使用一个Lambda调度器或`get_cosine_schedule_with_warmup`收起脸:
+对于预热+余弦,使用 lambda 调度器或 HuggingFace 的 `get_cosine_schedule_with_warmup`:
 
 ```python
 from transformers import get_cosine_schedule_with_warmup
@@ -389,43 +389,43 @@ scheduler = get_cosine_schedule_with_warmup(
 )
 ```
 
-拥抱面部功能是大多数Llama和GPT细调脚本所使用的.在怀疑时,使用加热+加热的可西因 = 总步骤的 3-5%.它几乎适用于所有事情.
+大多数 Llama 和 GPT 微调脚本用的就是 HuggingFace 的这个函数。拿不准时,使用预热+余弦,预热取总步数的 3-5%。它几乎适用于所有情况。
 
-## 运送它
+## 交付
 
-这一课产生了:
-- `outputs/prompt-lr-schedule-advisor.md`-- 提示建议您的训练设置的适当学习速度时间表和超参数
+本课产出:
+- `outputs/prompt-lr-schedule-advisor.md` -- 一个提示词,为你的训练设置推荐合适的学习率调度和超参数
 
-## 运动
+## 练习
 
-1. 实现指数分解:lr(t) =lr_0 *gamma^t,gamma=0.999.
+1. 实现指数衰减:lr(t) = lr_0 * gamma^t,其中 gamma = 0.999。在 circle 数据集上与余弦退火比较。
 
-2. 执行学习率范围测试 (Leslie Smith):训练几百步,同时从1e-7升至1. 插图损失与 LR. 最佳最大LR是损失开始增加之前.
+2. 实现学习率范围测试(Leslie Smith):训练几百步,同时把 LR 从 1e-7 指数增加到 1。绘制损失对 LR 的曲线。最优最大 LR 就在损失开始上升之前。
 
-3. 训练用加热+,但变化加热时间:0%,1%,5%,10%,20%的总步骤.找到训练最稳定的甜点.
+3. 使用预热+余弦训练,但改变预热长度:总步数的 0%、1%、5%、10%、20%。找出训练最稳定的最佳点。
 
-4. 执行热启动 (SGDR) 的可西因缩:每T步骤都将学习速度重置至lr_max,再衰退.
+4. 实现带热重启的余弦退火(SGDR):每 T 步把学习率重置为 lr_max 并再次衰减。在更长的训练运行中与标准余弦比较。
 
-5. 建立一个"日程外科医生",监测训练损失,自动从加热转向位,
+5. 构建一个"调度外科医生":监控训练损失,当损失稳定时自动从预热切换到余弦,并在损失长时间停滞时降低 lr。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|----------------------|
-| Learning rate | "How fast the model learns" | The scalar that multiplies the gradient to determine the parameter update size |
-| Schedule | "Change the LR over time" | A function that maps training step to learning rate, designed to optimize convergence |
-| Warmup | "Start with a small LR" | Linearly ramping the LR from near-zero to the target value over the first N steps to stabilize optimizer statistics |
-| Cosine annealing | "Smooth LR decay" | Decreasing the LR following a cosine curve from lr_max to lr_min over training |
-| Step decay | "Drop LR at milestones" | Multiplying the LR by a factor (usually 0.1) at fixed epoch intervals |
-| 1cycle policy | "Up then down" | Leslie Smith's method of ramping LR up then down in a single cycle for faster convergence |
-| LR range test | "Find the best learning rate" | Training briefly while increasing LR to find the value where loss starts diverging |
-| Cosine with warm restarts | "Reset and repeat" | Periodically resetting the LR to lr_max and decaying again (SGDR) |
-| Eta min | "The floor for the LR" | The minimum learning rate that the schedule decays to |
-| Peak learning rate | "The maximum LR" | The highest LR reached during training, typically after warmup |
+| 学习率 | "模型学得多快" | 与梯度相乘以决定参数更新大小的标量 |
+| 调度 | "随时间改变 LR" | 将训练步数映射到学习率的函数,用于优化收敛 |
+| 预热 | "从小 LR 开始" | 在前 N 步内将 LR 从近零线性升到目标值,以稳定优化器统计量 |
+| 余弦退火 | "平滑的 LR 衰减" | 在训练过程中遵循余弦曲线从 lr_max 降到 lr_min |
+| 阶梯衰减 | "在里程碑处降低 LR" | 在固定 epoch 间隔将 LR 乘以一个系数(通常 0.1) |
+| 1cycle 策略 | "先升后降" | Leslie Smith 的方法,在单个周期内先升后降 LR 以加快收敛 |
+| LR 范围测试 | "找到最佳学习率" | 在增大 LR 的同时短暂训练,找到损失开始发散的值 |
+| 带热重启的余弦 | "重置并重复" | 周期性地把 LR 重置为 lr_max 并再次衰减(SGDR) |
+| Eta min | "LR 的下限" | 调度最终衰减到的最小学习率 |
+| 峰值学习率 | "最大 LR" | 训练过程中达到的最高 LR,通常在预热之后 |
 
-## 进一步阅读
+## 延伸阅读
 
-- 洛希洛夫和哈特, "SGDR:随着温暖的恢复而降低的斯托哈斯斯基梯度" (2017) -- 引入了缩和温暖的重新启动
-- 史密斯, "超级融合:使用较高学习率的神经网络非常快速培训" (2018) -- 1周期政策论文
-- 图弗龙等人",Llama 2:开放基础和精细调节的聊天模式" (2023) --记录了在规模上使用的加热+可西因时间表
-- 戈伊尔等人",精确,大型小型批次SGD:训练1小时中的图像网" (2017) --线性扩展规则和大型批次训练的加热
+- Loshchilov & Hutter, "SGDR: Stochastic Gradient Descent with Warm Restarts" (2017) -- 提出余弦退火和热重启
+- Smith, "Super-Convergence: Very Fast Training of Neural Networks Using Large Learning Rates" (2018) -- 1cycle 策略论文
+- Touvron et al., "Llama 2: Open Foundation and Fine-Tuned Chat Models" (2023) -- 记录了大规模使用的预热+余弦调度
+- Goyal et al., "Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour" (2017) -- 线性缩放规则和大批量训练的预热

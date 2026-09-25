@@ -1,6 +1,6 @@
-# 渐进式剪切和混合精度
+# 梯度裁剪与混合精度
 
-> 优化器和前课的时间表假设梯度是正常的. 他们通常不会. 只有一个坏批量可以使梯度标准增加三个级别. 混合精密训练通过在损失侧引入FP16过来加大这一点. 这一课构建了生产训练无法运输的两个安全带:降梯切割到配置的全球L2标准,以及混合精度循环,
+> 上一课的优化器和调度器假设梯度是正常的。但通常并非如此。一个坏批次就能使梯度范数飙高三个数量级。混合精度训练通过在损失侧引入 FP16 溢出进一步放大了这个问题。本课构建生产级训练不可或缺的两条安全带：将梯度裁剪到配置的全局 L2 范数，以及一个带有 autocast 和 GradScaler 的混合精度循环——它能检测 NaN 和 Inf、干净地跳过该步，并记录缩放因子以便事后分析。
 
 **Type:** Build
 **Languages:** Python
@@ -9,18 +9,18 @@
 
 ## 学习目标
 
-- 计算全球L2标准在所有设置参数梯度和剪辑时超过配置的门.
-- 装一个训练步骤在自动除一个 GradScaler,这样FP16前后的传递存活过度.
-- 检测损失或梯度中NAN和INF,跳过优化步骤,并记录跳过.
-- 报道格拉德斯卡勒的扩展因素每一步,以便一个长时间的跳跃序列立即可见.
+- 计算所有参数梯度的全局 L2 范数，并在超过配置阈值时就地裁剪。
+- 用 autocast 加 GradScaler 包装训练步，使 FP16 的前向和反向传播能在溢出中幸存。
+- 检测损失或梯度中的 NaN 和 Inf，跳过优化器步，并记录跳过事件。
+- 每步报告 GradScaler 的缩放因子，使连续多次跳过立即可见。
 
 ## 问题
 
-训练昨天的运行, 产生损失曲线, 犯罪者是单一批量,其梯度标准为4,200, 没有切断,优化器应用一个步骤,重新设置模型在前一个小时中所做的每一个学习. 随着全球L2剪辑在1.0标准,同一个批量贡献单位标准更新;损失保持其趋势线;运行存活.
+昨天运行良好的训练，在损失曲线上于第 8,217 步突然垂直飙升。罪魁祸首是一个梯度范数为 4,200 的批次——此前峰值的二十倍。不裁剪的话，优化器会应用一步操作，抹掉模型此前一小时内学到的所有东西。而使用范数 1.0 的全局 L2 裁剪，同一批次只贡献一个单位范数的更新；损失保持在趋势线上；训练得以幸存。
 
-通过计算前进传输和FP16中大部分后退传输,混合精密训练将吞吐量推高2-3倍. 成本是FP16的指数范围很窄. 在FP16中过的典型梯度以inf进行评估,该梯度通过后续层进行扩散为NaN,在下一个优化步骤中将每个重量设定为NaN. 通过在回转之前乘以一个大的扩展因子,并将梯度分为在优化步骤之前的同一个因子来解决这个问题. 如果任何梯度是Inf或NaN在不计时时,尺度仪跳过步骤并将尺度因子减半;如果前N步骤是清洁的,尺度仪将该因子翻倍. 在训练过程中,该因素发现了FP16范围允许的最高值.
+混合精度训练通过用 FP16 计算前向传播和大部分反向传播，将吞吐量提高 2-3 倍。代价是 FP16 的指数范围很窄。一个在 FP16 中溢出的典型梯度会求值为 Inf,随后在各层中传播为 NaN,并在下一次优化器步时把所有权重都设为 NaN。PyTorch 的 GradScaler 通过在反向传播前将损失乘以一个较大的缩放因子、并在优化器步前将梯度除以同一因子来解决这个问题。如果在反缩放时任何梯度为 Inf 或 NaN,缩放器会跳过该步并将缩放因子减半；如果此前 N 步都正常，缩放器将因子加倍。在整个训练过程中，因子会收敛到 FP16 范围所允许的最高值。
 
-按下下列列列表: 按下列列表: 按下列列表: 按下列列表: 按下列列表: 按下列表:`scaler.scale(loss).backward()`现在`scaler.unscale_(optimizer)`现在`clip_grad_norm_`现在`scaler.step(optimizer)`现在`scaler.update()`任何其他命令都会产生一个然破碎的循环.
+构建的难点在于正确地把两者连接起来。在反缩放前裁剪，阈值作用在缩放后的梯度上；在反缩放后裁剪，则操作顺序对 GradScaler 很重要。正确的顺序是：`scaler.scale(loss).backward()`,然后 `scaler.unscale_(optimizer)`,然后 `clip_grad_norm_`,然后 `scaler.step(optimizer)`,然后 `scaler.update()`。任何其他顺序都会产生一个静默失效的循环。
 
 ## 概念
 
@@ -40,94 +40,94 @@ flowchart TD
   Skip --> NextStep
 ```
 
-### 全球L2标准
+### 全局 L2 范数
 
-全球L2标准是连接梯度向量的尤克利德标准,而不是每参数标准. PyTorch将此实现为`torch.nn.utils.clip_grad_norm_(parameters, max_norm)`函数返回预剪辑标准,以便课程可以记录自然和剪辑值,这是"我们在每一步剪辑"诊断所必需的.
+全局 L2 范数是拼接后的梯度向量的欧几里得范数，而不是逐参数的范数。PyTorch 将其实现为 `torch.nn.utils.clip_grad_norm_(parameters, max_norm)`。该函数返回裁剪前的范数，以便本课能同时记录自然值和裁剪后的值——这是诊断“我们每一步都在裁剪”所必需的。
 
-### 机器和GradScaler
+### autocast 和 GradScaler
 
-`torch.amp.autocast(device_type)`是16财年FP中选择性运行可资格的运营 (大多数matmul类运营) 的环境管理者. `torch.amp.GradScaler(device_type)`测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是: 测试的结果是:
+`torch.amp.autocast(device_type)` 是一个上下文管理器，它选择性地以 FP16 运行符合条件的操作(大多数矩阵乘法类操作)。`torch.amp.GradScaler(device_type)` 是一个辅助工具，它在反向传播前缩放损失，并在优化器步前对梯度进行反向缩放。二者是配套设计的；只使用其中一个而不使用另一个，是测试应当捕获的配置错误。
 
-课程使用CPU自动cast,因为这是CI运行的;同样的模式通过改变将文字转移到CUDA`device_type="cpu"`为了`device_type="cuda"`CPU上的GradScaler是一个 (CPU自动播放器已经默认运行在BF16中,不需要损失扩展),但课程包括调用站点,因此线程与GPU循环相同.
+本课使用 CPU autocast,因为这是 CI 中运行的环境；将 `device_type="cpu"` 改为 `device_type="cuda"`,同样的模式可以原封不动地迁移到 CUDA。CPU 上的 GradScaler 是一个占位实现(CPU autocast 默认已经以 BF16 运行，不需要损失缩放)，但本课包含了调用点，使接线与 GPU 循环完全一致。
 
-### 检测NAN和inf
+### NaN 和 Inf 检测
 
-首先,损失本身是通过检查的.`torch.isfinite`由于在下列列列表中,在下列列列表中,`scaler.unscale_(optimizer)`课程扫描未测量的梯度`has_non_finite_grad(...)`两个检查一起涵盖前进通过和后退通过故障模式.
+检测发生在两个地方。首先，在反向传播之前用 `torch.isfinite` 检查损失本身；Inf 或 NaN 的损失不会产生有用的梯度，因此直接跳过而不进入优化器。其次，在 `scaler.unscale_(optimizer)` 之后，本课用 `has_non_finite_grad(...)` 扫描反缩放后的梯度，并将任何 Inf 或 NaN 视为跳过。这两项检查合在一起，覆盖了前向传播和反向传播两种失败模式。
 
-### 扩展因素诊断
+### 缩放因子诊断
 
-度因素是 GradScaler 的内部状态.`scaler.get_scale()`运行的健康运行显示了扩展因子在两强度上升,直到它接近`2^17`或`2^18`错误运行显示高值和低值之间的波动因素,这是一个信号,表明模型的梯度有时在范围内,有时不.
+缩放因子是 GradScaler 的内部状态。本课每步读取 `scaler.get_scale()`,并将其与学习率和梯度范数一起记录。健康的运行显示缩放因子以 2 的幂攀升，直到在 `2^17` 或 `2^18` 附近饱和。行为异常的运行显示因子在高值和低值之间振荡——这是模型梯度有时在范围内、有时不在的信号。不记录日志的话，这个诊断是不可见的。
 
 ```figure
 grad-clip-monitor
 ```
 
-## 建立它
+## 动手构建
 
-`code/main.py`执行:
+`code/main.py` 实现了：
 
-- `clip_global_l2_norm`- 一个包裹`torch.nn.utils.clip_grad_norm_`返回视频前和视频后的标准.
-- `has_non_finite_grad`- 扫描度的辅助器.
-- `AmpTrainState`- 包装一个模型,一个`AdamW`显示一个 度,一个 度,一个 自動播放器.`step(inputs, targets)`通过缩,扩展和跳转NaN管道.
-- `StepLog`其他`SkipLog`- 结构化每步记录.
-- 演示,训练一个小人.`nn.Linear`模型为20步,将Inf注入步骤5的梯度,以执行跳路,并打印结果日志.
+- `clip_global_l2_norm` - 对 `torch.nn.utils.clip_grad_norm_` 的一个包装，同时返回裁剪前和裁剪后的范数。
+- `has_non_finite_grad` - 一个扫描梯度中 NaN 和 Inf 的辅助函数。
+- `AmpTrainState` - 包装一个模型、一个 `AdamW` 优化器、一个 GradScaler 和一个 autocast 设备。暴露一个 `step(inputs, targets)`,运行完整的裁剪、缩放和 NaN 跳过流水线。
+- `StepLog` 和 `SkipLog` - 结构化的每步记录。
+- 一个演示：训练一个小的 `nn.Linear` 模型 20 步，在第 5 步向梯度注入一个 Inf 以触发跳过路径，并打印生成的日志。
 
-运行它:
+运行它：
 
 ```bash
 python3 code/main.py
 ```
 
-脚本从零开始,打印每步记录,每个行标记.`STEP`或`SKIP`至少一个行是`SKIP`现在,我们要去.
+脚本以零退出，并打印一个每步日志，每行标记为 `STEP` 或 `SKIP`;其中至少有一行是 `SKIP`。
 
 ## 生产模式
 
-轮的四个模式将其提高到生产训练阶段.
+四种模式将该循环提升为生产级训练步。
 
-**Skip counter as an alert, not a log line.**训练跑每次跳过几步是健康的.每时代数百次跳过是一个严格的警报:模型在FP16无法忍受的状态下,循环默默失败.课程跟踪了1000步的滚动跳过速度,并在生产中,将在5%以上的速度上页.
+**跳过计数器应当是告警，而不只是一行日志。** 每次训练中出现少量跳过步是健康的。每个 epoch 出现数百次跳过则是硬性告警：模型处于 FP16 无法承受的状态，循环正在静默失效。本课跟踪一个 1,000 步的滚动跳过率，在生产环境中，当比率超过 5% 时就会发出告警。
 
-**Clip threshold lives in the config.** `max_norm = 1.0`语言模型训练的现代默认标准. 首先,扫描它在一个小模型上;较大的门让模型从真正困难的批量中恢复;较小的门以更的损失曲线为代价,限制了最坏的情况.门属于与课程44中的YAML或JSON配置相同的时间表.
+**裁剪阈值放在配置中。** `max_norm = 1.0` 是现代语言模型训练的默认值。先在小模型上扫描它；较大的阈值让模型能从真正困难的批次中恢复；较小的阈值限制了最坏情况，代价是损失曲线更嘈杂。该阈值应与第 44 课的调度器放在同一个 YAML 或 JSON 配置中。
 
-**Norm log goes to a CSV with the schedule.** CSV 列是`step, lr, grad_l2_pre_clip, grad_l2_post_clip, loss, skipped, skip_reason, scaler_scale`检查者在开放文件时会在一行中看到时间表,梯度故事,扩展因子和跳转结果 (理由). 分类列在文件中是错误排列分析的配方.
+**范数日志与调度器一起写入 CSV。** CSV 的列为 `step, lr, grad_l2_pre_clip, grad_l2_post_clip, loss, skipped, skip_reason, scaler_scale`。审阅者打开文件，就能在一行中看到调度器、梯度情况、缩放因子和跳过结果(及其原因)。把列拆分到多个文件中，是导致分析错位的常见原因。
 
-**`scaler.update()` runs every step, even on skip.**在一个清洁的步骤上,skalar读取其无信息计数,增加它,可能翻倍的因素.在一个跳过的步骤上,skalar将该因素减半,重新设置计数.忘记`update()`在跳转路径上,有"扩展因素从来没有改变"的错误.
+**`scaler.update()` 每步都要运行，即使跳过。** 在正常步上，缩放器读取其无 Inf 计数器、递增它，并可能将因子加倍。在跳过步上，缩放器将因子减半并重置计数器。在跳过路径上忘记 `update()`,就是产生“缩放因子从未变化”这一现象的 bug。
 
-## 用它
+## 使用
 
-生产模式:
+生产模式：
 
-- **Autocast device matches optimizer device.** `torch.amp.autocast(device_type="cuda")`用于GPU训练;`torch.amp.autocast(device_type="cpu")`混合设备产生了沉默类型错误, 出现的损失曲线看起来很好, 但模型没有学习.
-- **Loss check before backward.** `torch.isfinite(loss).all()`节省纳米电气损失是整个训练步骤.
-- **`set_to_none=True` in `zero_grad`.**设置梯度为`None`设置是免费吞吐量改进和微小的漏洞表面降低.
+- **Autocast 设备与优化器设备匹配。** GPU 训练用 `torch.amp.autocast(device_type="cuda")`;CPU 用 `torch.amp.autocast(device_type="cpu")`。混用设备会产生一个静默的类型错误，表现为损失曲线看似正常，但模型并没有在学习。
+- **反向传播前检查损失。** `torch.isfinite(loss).all()` 只是一次张量规约；开销可以忽略不计，而在 NaN 损失上节省的则是一整个训练步。始终执行它。
+- **在 `zero_grad` 中使用 `set_to_none=True`。** 将梯度设为 `None` 而不是零，这让优化器可以跳过对未受影响参数组的计算。该设置是免费的吞吐量提升，并略微减少了出 bug 的面。
 
-## 运送它
+## 发布
 
-`outputs/skill-clip-amp.md`实际项目中,将描述训练阶段使用的剪辑门和自动播放设备,每个阶段的CSV在版本控制中存在哪里,以及生产跳速警报门是什么.
+`outputs/skill-clip-amp.md` 在真实项目中会描述训练步使用哪个裁剪阈值和 autocast 设备、每步 CSV 存放在版本控制中的什么位置，以及生产环境跳过率告警阈值是多少。本课交付的是引擎。
 
-## 运动
+## 练习
 
-1. 替换合成Inf注射以实际损失峰 (乘以1e8乘以一批的目标) 并验证跳转路的触发器.
-2. 添加一个`--bf16`转换自动播放到BF16而不是FP16.BF16比FP16具有更广泛的指标范围,很少需要损失扩展;在同一演示中,验证跳转率下降到零.
-3. 加入一个单位测试,证明在没有剪辑时,梯度剪辑包装正确返回剪辑前和剪辑后的标准.
-4. 加入滚动窗口跳速计算和如果速度超过了配置的门,连续100步的运行失败的CLI标志.
-5. 通过循环编写可行 CSV (`step, lr, grad_l2_pre_clip, grad_l2_post_clip, loss, skipped, skip_reason, scaler_scale`) 并通过每一行后刷清文件,确认文件存活Ctrl-C.
+1. 将合成的 Inf 注入替换为真实的损失尖峰(将某个批次的目标乘以 1e8),验证跳过路径被触发。
+2. 添加一个 `--bf16` 模式，将 autocast 切换为 BF16 而不是 FP16。BF16 的指数范围比 FP16 宽，几乎不需要损失缩放；验证在同样的演示中跳过率降为零。
+3. 添加一个单元测试，验证当未发生裁剪时，梯度裁剪包装器能正确返回裁剪前和裁剪后的范数。
+4. 添加滚动窗口跳过率计算和一个 CLI 标志，当该比率在连续 100 步内超过配置阈值时使运行失败。
+5. 将循环接上以写入规范 CSV(`step, lr, grad_l2_pre_clip, grad_l2_post_clip, loss, skipped, skip_reason, scaler_scale`),并确认在每行写入后都执行 flush,文件能在 Ctrl-C 下幸存。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|------------------------|
-| Global L2 norm | "Clip target" | Euclidean norm of the concatenated gradient vector across all trainable parameters |
-| autocast | "Mixed precision" | Selective FP16 (or BF16) execution of eligible operations inside a `with` block |
-| GradScaler | "Loss scaler" | Helper that multiplies the loss before backward and inverse-scales gradients before the optimizer step |
-| Skip | "Bad step" | An optimizer step refused because the gradient or loss was non-finite; the scaler halves the factor |
-| Scaling factor | "Scaler state" | The GradScaler's current multiplier; doubles after clean stretches and halves on every skip |
+| 全局 L2 范数 | "裁剪目标" | 所有可训练参数拼接后的梯度向量的欧几里得范数 |
+| autocast | "混合精度" | 在 `with` 块内对符合条件的操作选择性执行 FP16(或 BF16) |
+| GradScaler | "损失缩放器" | 在反向传播前放大损失、并在优化器步前对梯度反向缩放的辅助工具 |
+| 跳过 | "坏步" | 因梯度或损失非有限而被拒绝的优化器步；缩放器将因子减半 |
+| 缩放因子 | "缩放器状态" | GradScaler 当前的乘数；连续正常后加倍，每次跳过时减半 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Micikevicius et al., Mixed Precision Training (arXiv 1710.03740)](https://arxiv.org/abs/1710.03740)- 损失规模提议
-- [Pascanu, Mikolov, Bengio, On the difficulty of training recurrent neural networks (arXiv 1211.5063)](https://arxiv.org/abs/1211.5063)- 梯度切割参考纸
-- [PyTorch torch.amp.GradScaler](https://docs.pytorch.org/docs/stable/amp.html)- 这课的规模化API
-- [PyTorch torch.nn.utils.clip_grad_norm_](https://docs.pytorch.org/docs/stable/generated/torch.nn.utils.clip_grad_norm_.html)- 这课使用的剪切原始
-- 阶段19 · 42 - 导入器,其体内为循环提供了输送
-- 阶段19 · 43 - 循环所消耗的数据充电器
-- 阶段19 · 44 - 节目这个循环由
+- [Micikevicius et al., Mixed Precision Training (arXiv 1710.03740)](https://arxiv.org/abs/1710.03740) - 损失缩放的原始提案
+- [Pascanu, Mikolov, Bengio, On the difficulty of training recurrent neural networks (arXiv 1211.5063)](https://arxiv.org/abs/1211.5063) - 梯度裁剪的参考论文
+- [PyTorch torch.amp.GradScaler](https://docs.pytorch.org/docs/stable/amp.html) - 本课包装的缩放器 API
+- [PyTorch torch.nn.utils.clip_grad_norm_](https://docs.pytorch.org/docs/stable/generated/torch.nn.utils.clip_grad_norm_.html) - 本课使用的裁剪原语
+- Phase 19 · 42 - 为循环提供语料的下载器
+- Phase 19 · 43 - 循环所消费的 dataloader
+- Phase 19 · 44 - 本循环与之组合的调度器

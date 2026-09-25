@@ -1,32 +1,32 @@
-# 自我精炼和批判:反复产出改善
+# Self-Refine 与 CRITIC:迭代式输出改进
 
-> 自理修 (Madaan et al., 2023) 在一个循环中使用一个LLM在三个角色中生成,反,完善.平均收益:7项任务上+20绝对.CRITIC (Gou et al., 2023) 通过通过外部工具路由验证来加固反步骤.2026年,这种模式将在每个框架中作为"评估者优化器" (Anthropic) 或一个防护轨道循环 (OpenAI Agents SDK).
+> Self-Refine(Madaan 等，2023)让同一个 LLM 在循环中扮演三种角色——生成、反馈、改进。7 个任务上平均绝对提升 +20。CRITIC(Gou 等，2023)通过将验证路由到外部工具来强化反馈步骤。到 2026 年，这一模式在所有框架中都以 "evaluator-optimizer"(Anthropic)或护栏循环(OpenAI Agents SDK)的形式落地。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
-**Time:** ~60 minutes
+**类型:** 构建
+**语言：** Python(标准库)
+**前置知识：** Phase 14 · 01(Agent Loop)、Phase 14 · 03(Reflexion)
+**时间：** 约 60 分钟
 
 ## 学习目标
 
-- 状态自我清理的三个提示 (生成,反,精炼) 并解释为什么历史对精炼提示很重要.
-- 解释Critic的关键见解:在没有外部依据的情况下,LLC在自我验证上是不可靠的.
-- 实现一个具有历史和可选的外部验证器的 stdlib 自定义循环.
-- 绘制这个模式到安特罗皮克的"评估者优化器"工作流程和OpenAI代理SDK的输出防护窗口.
+- 说明 Self-Refine 的三个提示词(生成、反馈、改进)，并解释为什么历史记录对改进提示词很重要。
+- 解释 CRITIC 的关键洞见：缺乏外部依据时，LLM 的自我验证不可靠。
+- 实现一个基于标准库、带历史记录和可选外部验证器的 Self-Refine 循环。
+- 将该模式映射到 Anthropic 的 "evaluator-optimizer" 工作流和 OpenAI Agents SDK 的输出护栏。
 
 ## 问题
 
-代码可能有一个语法错误. 总结可能太长. 也许一个计划错过了一个边缘案例. 你想要的是: 代码批评自己的输出,然后修复它.
+智能体给出的答案几乎正确。也许某行代码有语法错误，也许摘要太长，也许某个计划遗漏了边界情况。你想要的是：智能体批判自己的输出，然后修正它。
 
-简单的方法是通过单个模型,没有训练数据,没有RL来实现这一目标.但有一个问题:LLM在硬实实上自我验证方面很不好.
+Self-Refine 表明，这在单一模型、无训练数据、无强化学习的情况下就能奏效。但有一个陷阱：LLM 在难事实上的自我验证很差。CRITIC 给出了解决方案——将验证步骤路由到外部工具(搜索、代码解释器、计算器、测试运行器)。
 
-它们将在2026年实现反复改进的默认标准:生成,验证 (在可能的情况下,外部),完善,停止验证器通过时.
+这两篇论文共同定义了 2026 年迭代式改进的默认做法：生成、验证(尽可能用外部工具)、改进，验证器通过后停止。
 
 ## 概念
 
-### 个人清理 (Madaan等, NeurIPS 2023)
+### Self-Refine(Madaan 等，NeurIPS 2023)
 
-一个法师,三个角色:
+一个 LLM,三种角色：
 
 ```
 generate(task)            -> output_0
@@ -38,107 +38,107 @@ refine(task, output_1, critique_1, history) -> output_2
 stop when feedback says "no issues" or budget exhausted.
 ```
 
-关键细节:`refine`报纸中指出:历史下降,质量急剧下降.
+关键细节：`refine` 看到完整的历史——所有先前的输出和批评——因此不会重复犯错。论文对此做了消融实验：去掉历史后质量急剧下降。
 
-标题:平均在7项任务 (数学,代码,缩写,对话) 中实现+20的绝对改善,包括GPT-4.没有培训,没有外部工具,单一模型.
+核心结论：在 7 个任务(数学、代码、缩写、对话)上平均绝对提升 +20,包括 GPT-4。无需训练，无外部工具，单一模型。
 
-### 评论 (Gou等人, arXiv:2305.11738, v4 Feb 2024)
+### CRITIC(Gou 等，arXiv:2305.11738,2024 年 2 月 v4)
 
-对于事实性说法来说,这不可靠 (一种幻觉往往看起来令人信服的模型).`feedback(task, output)`随着`verify(task, output, tools)`在哪里`tools`包括:
+Self-Refine 的弱点：反馈步骤是 LLM 给自己打分。对事实性断言而言这不可靠(幻觉对产生它的模型来说往往显得很有说服力)。CRITIC 将 `feedback(task, output)` 替换为 `verify(task, output, tools)`,其中 `tools` 包括：
 
-- 搜索引擎寻找事实性索赔.
-- 代码解释器,以确保代码正确.
-- 算数计算器.
-- 域特定验证器 (单位测试,类型检查器,接器).
+- 用于事实性断言的搜索引擎。
+- 用于代码正确性的代码解释器。
+- 用于算术的计算器。
+- 领域特定验证器(单元测试、类型检查器、linter)。
 
-验证器根据工具结果进行结构化批评,然后对此进行条件.
+验证器产生基于工具结果的、有依据的结构化批评。改进器随后以该批评为条件。
 
-标题:Critic在事实任务上优于Self-Refine,因为批评是基于地面的.在没有外部验证器 (创意写作,格式化) 的任务上,Critic将其降低到Self-Refine.
+核心结论：CRITIC 在事实性任务上优于 Self-Refine,因为批评是有依据的。在没有外部验证器的任务(创意写作、格式化)上，CRITIC 退化为 Self-Refine。
 
-### 停车条件
+### 停止条件
 
-两种常见的形状:
+两种常见形式：
 
-1. **Verifier passes.**外部测试结果成功. 当可用时最好 (单元测试,类型检查器,防护断).
-2. **No feedback issued.**价格更便宜,但不可靠; 配合最大.
+1. **验证器通过。** 外部测试返回成功。可用时优先采用(单元测试、类型检查器、护栏断言)。
+2. **无反馈。** 模型说“输出没问题”。更便宜但不可靠；需配合最大迭代次数上限。
 
-2026默认:结合它们. "如果验证器通过OR模型说好,停止,并且反复 >= 2 OR反复 >= max_iterations".
+2026 年默认做法：两者结合。“若验证器通过 或 模型说没问题 且 迭代次数 >= 2 或 迭代次数 >= max_iterations,则停止。”
 
-### 评价者-优化器 (人类学, 2024)
+### Evaluator-Optimizer(Anthropic,2024)
 
-亚当普奇的2024年12月的帖子将这列为五个工作流程模式之一.
+Anthropic 2024 年 12 月的文章将其列为五种工作流模式之一。两种角色：
 
-- 评价者:评分产品并产生批评.
-- 优化器:根据批评,修改输出.
+- Evaluator:为输出打分并产生批评。
+- Optimizer:根据批评修订输出。
 
-循环直到评估器通过.这是Anthropic的框架中的自我清理/CRITIC.Anthropic补充说:评估器和优化器提示应该很大程度上不同,所以模型不仅仅是印.
+循环直到 evaluator 通过。这就是 Anthropic 框架下的 Self-Refine/CRITIC。Anthropic 补充的关键工程细节：evaluator 和 optimizer 的提示词应当有实质性差异，以免模型只是走过场盖章。
 
-### 开放AI代理SDK输出防护护
+### OpenAI Agents SDK 输出护栏
 
-防护护是一个验证器,在代理的最终输出上运行.如果防护护出行 (升高)`OutputGuardrailTripwireTriggered`防护轨道可以调用工具 (CRITIC式) 或是纯函数 (Self-Refine式).
+OpenAI Agents SDK 以“输出护栏”的形式提供该模式。护栏是运行在智能体最终输出上的验证器。如果护栏触发(抛出 `OutputGuardrailTripwireTriggered`),输出被拒绝，智能体可以重试。护栏可以调用工具(CRITIC 式)，也可以是纯函数(Self-Refine 式)。
 
-### 2026 年陷
+### 2026 年的陷阱
 
-- **Rubber-stamp loops.**采用结构上不同的提示,或者采用较小的廉价模型来批评.
-- **Over-refinement.**每次精炼通过都增加了延迟和代币.预算1到3通过;之后,升级到人体审查.
-- **CRITIC on trivial tasks.**如果没有外部验证器,Critic将退化为自行清理;不要为 stub验证器支付延迟.
+- **盖章式循环。** 同一模型用相同风格的提示词同时做生成和批评，会收敛于“我觉得不错”。使用结构上不同的提示词，或用更小的廉价模型做批评。
+- **过度改进。** 每次改进都会增加延迟和 token。预算 1–3 次迭代；之后升级为人工审核。
+- **在琐碎任务上用 CRITIC。** 如果没有外部验证器，CRITIC 退化为 Self-Refine;不要为占位验证器付出延迟代价。
 
 ```figure
 self-refine
 ```
 
-## 建立它
+## 动手构建
 
-`code/main.py`通过自定义和CRITIC在玩具任务中实现:制作一个特定主题的短弹名单.验证器检查格式 (3弹,每个小于60个).Critic添加一个外部的"事实验证器",惩罚已知的幻觉.
+`code/main.py` 在一个玩具任务上实现 Self-Refine 和 CRITIC:根据主题生成一个简短的要点列表。验证器检查格式(3 个要点，每个不超过 60 字符)。CRITIC 增加一个外部“事实验证器”，对已知幻觉进行惩罚。
 
-组件:
+组件：
 
-- `generate`剧本制作人.
-- `feedback` 法学士式的自我批评.
-- `verify_external` 基于基层的Critic类型验证器.
-- `refine`重写输出给出历史.
-- 停止条件 验证器通过或最大4次代.
+- `generate` — 脚本化的生成器。
+- `feedback` — LLM 式自我批评。
+- `verify_external` — CRITIC 式有依据的验证器。
+- `refine` — 根据历史重写输出。
+- 停止条件 — 验证器通过或最多 4 次迭代。
 
-运行它:
+运行它：
 
 ```
 python3 code/main.py
 ```
 
-分析结果显示,自定义错误是因为外部验证器已经将自定义错误误误解读到.
+对比 Self-Refine 与 CRITIC 的运行结果。CRITIC 能捕获 Self-Refine 遗漏的事实性错误，因为外部验证器拥有自我批评所不具备的依据。
 
-## 用它
+## 实际应用
 
-安特罗皮克的评估器优化器是这种模式的克劳德友好的语言.OpenAI Agents SDK的输出护是Critic形状的 (护可以调用工具).LangGraph发送一个反射节点,读起来像自定义.谷歌的Gemini 2.5计算机使用添加一个每步安全评估器,这是一个Critic变体:每一个操作都在提交之前被验证.
+Anthropic 的 evaluator-optimizer 就是用 Claude 术语描述的这一模式。OpenAI Agents SDK 的输出护栏是 CRITIC 形态的(护栏可以调用工具)。LangGraph 提供了一个读起来像 Self-Refine 的反思节点。Google 的 Gemini 2.5 Computer Use 增加了每步安全评估器，是 CRITIC 的变体：每个动作在提交前都会被验证。
 
-## 运送它
+## 上线部署
 
-`outputs/skill-refine-loop.md`设置评估器优化器循环,以任务形状,验证器可用性和代预算. 发出生成器,评估器/验证器和优化器的提示,加上停止政策.
+`outputs/skill-refine-loop.md` 根据任务形态、验证器可用性和迭代预算配置 evaluator-optimizer 循环。生成生成器、评估器/验证器和改进器的提示词，外加停止策略。
 
-## 运动
+## 练习
 
-1. 运行玩具的最大_率=1. 评论仍然有帮助吗?
-2. 换一个噪音的外部验证器 (随机30%的假正值).循环是什么?这是大多数护堆的2026现实.
-3. 实施"不同模型的生成器批评"变体:大模型生成,小模型批评. 它是否超过相同的模型?
-4. 阅读Critic Section 3 (arXiv:2305.11738 v4). 举个证实工具类别,并为每一个类别举一个例子.
-5. 图片OpenAI代理SDK的`output_guardrails`什么是 SDK 错误的,什么是正确的?
+1. 用 max_iterations=1 运行玩具任务。CRITIC 仍然有帮助吗？
+2. 将外部验证器替换为有噪声的版本(随机 30% 假阳性)。循环会怎样？这是 2026 年大多数护栏技术栈的现实。
+3. 实现“生成器与批评器使用不同模型”的变体：大模型生成，小模型批评。它是否优于同模型方案？
+4. 阅读 CRITIC 第 3 节(arXiv:2305.11738 v4)。说出三种验证工具类别，并为每类举一个例子。
+5. 将 OpenAI Agents SDK 的 `output_guardrails` 映射到 CRITIC 的验证器角色。SDK 哪里做错了，哪里做对了？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Self-Refine | "LLM that fixes itself" | Generate -> feedback -> refine loop in one model, with history |
-| CRITIC | "Tool-grounded verification" | Replace feedback with an external verifier (search, code, calc, tests) |
-| Evaluator-Optimizer | "Anthropic workflow pattern" | Two roles — evaluator scores, optimizer revises — looped to convergence |
-| Output guardrail | "Post-hoc check" | OpenAI Agents SDK validator that runs after an agent produces output |
-| Verify step | "Critique phase" | The load-bearing decision: grounded or self-rated |
-| Refine history | "What the model already tried" | Prior outputs + critiques prepended to refine prompt; drop and quality collapses |
-| Rubber-stamp loop | "Self-agreement failure" | Same-prompt critique returns "looks good"; fix with structurally different prompts |
-| Stop condition | "Convergence test" | Verifier passes OR no feedback AND iteration cap; never single-condition |
+| 术语 | 人们的说法 | 实际含义 |
+|------|------------------------|------------------------|
+| Self-Refine | “能自我修正的 LLM” | 单一模型内的 生成 -> 反馈 -> 改进 循环，带历史记录 |
+| CRITIC | “基于工具的验证” | 用外部验证器(搜索、代码、计算器、测试)替代反馈 |
+| Evaluator-Optimizer | “Anthropic 工作流模式” | 两种角色——评估器打分，改进器修订——循环至收敛 |
+| 输出护栏 | “事后检查” | OpenAI Agents SDK 在智能体产生输出后运行的验证器 |
+| 验证步骤 | “批评阶段” | 关键决策：有依据还是自我评价 |
+| 改进历史 | “模型已经尝试过的内容” | 将先前输出和批评前置到改进提示词；去掉后质量崩溃 |
+| 盖章式循环 | “自我认同失败” | 相同提示词的批评返回“看起来不错”；用结构上不同的提示词修复 |
+| 停止条件 | “收敛测试” | 验证器通过 或 无反馈 且 迭代上限；绝不用单一条件 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Madaan et al., Self-Refine (arXiv:2303.17651)](https://arxiv.org/abs/2303.17651)法典论文
-- [Gou et al., CRITIC (arXiv:2305.11738)](https://arxiv.org/abs/2305.11738)基于工具的验证
-- [Anthropic, Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)评估者-优化器工作流程模式
-- [OpenAI Agents SDK docs](https://openai.github.io/openai-agents-python/)作为Critic型验证器的输出护
+- [Madaan 等，Self-Refine(arXiv:2303.17651)](https://arxiv.org/abs/2303.17651) — 原始论文
+- [Gou 等，CRITIC(arXiv:2305.11738)](https://arxiv.org/abs/2305.11738) — 基于工具的验证
+- [Anthropic,Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) — evaluator-optimizer 工作流模式
+- [OpenAI Agents SDK 文档](https://openai.github.io/openai-agents-python/) — 作为 CRITIC 形态验证器的输出护栏

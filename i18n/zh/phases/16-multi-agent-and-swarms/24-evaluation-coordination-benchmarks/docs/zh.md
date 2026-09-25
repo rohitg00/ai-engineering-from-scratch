@@ -1,153 +1,153 @@
-# 评估和协调基准
+# 评估与协调基准测试
 
-> 五个2025-2026年基准标准涵盖多代理评估领域. **MultiAgentBench / MARBLE**分析星/链/树/图表的顶层与里程碑指标;**graph is best for research**认知规划增加了3%的里程碑成就.**COMMA**评估多模式的无对称信息协调;包括GPT-4o在内的最先进的模型,**MedAgentBoard**医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗类型: 医疗类型: 医疗类型: 医疗类型: 医疗类型: 医疗类型: 医疗类型: 医疗类型: 类型: 医疗类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类: 类: 类型: 类型: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类:**AgentArch**企业代理架构结合工具使用+内存+调整. **SWE-bench Pro**([arXiv:2509.16941](https://arxiv.org/abs/2509.16941)) 在41个应用程序,B2B服务和开发工具中出现了1865个问题.边界模型在Pro上获得23%的分数,而在Verified上获得70%+的分数.**64.3%**关于PRO与明确的代理团队协调 (尚未发表的人类主要来源; 作为初步处理);**76.1% pass@1**关于验证 ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report)它们是**AAAI 2026 Bridge Program WMAC**(https://multiagents.org/2026/) 是2026年社区焦点.这个课程基于 MARBLE 的指标,进行了拓与指标扫描,并按"仅通过SWE 台验证不是通用化的证据"规则.
+> 五个 2025-2026 年的基准测试涵盖了多智能体评估领域。**MultiAgentBench / MARBLE**（ACL 2025，arXiv:2503.01935）使用里程碑 KPI 评估星型/链型/树型/图型拓扑；**图型最适合研究**，认知规划增加约 3% 的里程碑达成率。**COMMA** 评估多模态非对称信息协调；包括 GPT-4o 在内的最先进模型难以击败随机基线。**MedAgentBoard**（arXiv:2505.12371）涵盖四个医疗任务类别，并经常发现多智能体并不优于单 LLM。**AgentArch**（arXiv:2509.10769）对企业级智能体架构进行基准测试，将工具使用 + 记忆 + 编排结合在一起。**SWE-bench Pro**（[arXiv:2509.16941](https://arxiv.org/abs/2509.16941)）包含 41 个代码库中的 1865 个问题，涵盖商业应用、B2B 服务和开发工具；前沿模型在 Pro 上得分约 23%，而在 Verified 上超过 70%——这是对数据污染的一次现实检验。据报道，Claude Opus 4.7（2026 年 4 月）在 Pro 上通过显式的智能体团队协调达到 **64.3%**（尚无 Anthropic 一手来源发布——请视为初步结果）；Verdent（智能体脚手架）在 Verified 上达到 **76.1% pass@1**（[Verdent 技术报告](https://www.verdent.ai/blog/swe-bench-verified-technical-report)）。**AAAI 2026 Bridge Program WMAC**（https://multiagents.org/2026/）是 2026 年社区的重心。本课基于 MARBLE 的指标，运行拓扑与指标的对比扫描，并确立“仅在 SWE-bench Verified 上通过并不能作为泛化能力证据”这一规则。
 
 **Type:** Learn
 **Languages:** Python (stdlib)
-**Prerequisites:** Phase 16 · 15 (Voting and Debate Topology), Phase 16 · 23 (Failure Modes)
-**Time:** ~75 minutes
+**Prerequisites:** Phase 16 · 15（投票与辩论拓扑）、Phase 16 · 23（失败模式）
+**Time:** ~75 分钟
 
 ## 问题
 
-报告称"我们的多代理系统更好",问题是:比什么更好,在什么方面,如何衡量? 2023-2024年多代理评估时代是混乱的.
+当一篇论文声称“我们的多智能体系统更好”时，问题是：比什么更好，在什么上面，如何衡量？2023-2024 年的多智能体评估是一片混乱——每个人都选择自己的指标、自己的基线和自己任务集。2025-2026 年的基准测试确立了结构。
 
-没有共享基准,你不能有意义地比较两个多代理系统.更糟糕的是,没有持久基准,边界模型可以污染.SWE-bench Verified在2025年中旬被部分污染了训练机构;边界分数膨胀;Pro被设计为无污染的现实检查.
+没有共享的基准测试，你就无法有意义地比较两个多智能体系统。更糟的是，没有保留的基准测试，前沿模型可能会造成污染。到 2025 年中期，SWE-bench Verified 在训练语料库中已部分受到污染；前沿模型分数虚高；Pro 旨在作为一个未受污染的现实检验。
 
-这一课列出了2026年五项标准,列出了每项标准的名称,
+本课列举五个标准的 2026 年基准测试，说明每个测试衡量什么，并教你以怀疑态度解读基准测试声明。
 
 ## 概念
 
-###          
+### MultiAgentBench (MARBLE) — ACL 2025
 
-评估研究,编码和规划任务的四个协调拓 (星,链,树,图) .基于里程碑的KPI跟踪部分进展而不是最终成功.
+arXiv:2503.01935。在研究、编码和规划任务上评估四种协调拓扑（星型、链型、树型、图型）。基于里程碑的 KPI 追踪部分进展，而不仅仅是最终成功。
 
-测量结果:
+测得的结果：
 
-- **Graph**对于研究场景来说,最好的拓学;支持任何对任何批评.
-- **Chain**最适合步骤精炼编码.
-- **Star**对于快速的实事整合,最好.
-- **Coordination tax**在图表上显示了4个代理.
-- **Cognitive planning**增加了在各类拓领域的3%的里程碑成就.
+- **图型**拓扑最适合研究场景；支持任意节点之间的批评。
+- **链型**最适合逐步求精的编码。
+- **星型**最适合快速事实整合。
+- 在图型上超过约 4 个智能体时会出现**协调税**。
+- **认知规划**在各拓扑上增加约 3% 的里程碑达成率。
 
-您想比较协调拓的果到果时使用.https://github.com/ulab-uiuc/MARBLE) 提供评价者.
+适用场景：你想对协调拓扑进行公平比较。MARBLE 仓库（https://github.com/ulab-uiuc/MARBLE）提供了评估器。
 
-### COMMA 多模式非对称信息
+### COMMA — 多模态非对称信息
 
-报告结果不舒服:包括GPT-4o在内的边界模型努力击败一个**random baseline**关于COMMA中代理人合作. 信号是多代理模式不充分训练和评估 LLM合理处理单模式合作;多模式协调崩.
+涵盖智能体具有不同观测模态且必须在信息不完整共享的情况下进行协调的任务。报告的结果令人不安：在 COMMA 中，包括 GPT-4o 在内的前沿模型在智能体间协作上难以击败**随机基线**。这表明多智能体模态缺乏充分的训练和评估——LLM 处理单模态合作还算合理；多模态协调则会崩溃。
 
-系统具有多模式或不对称信息协调时使用. COMMA 的无效结果是要求之前测量警告.
+适用场景：你的系统涉及多模态或非对称信息协调。COMMA 的零结果是“先测量再宣称”的警示。
 
-### 域压力测试
+### MedAgentBoard — 领域压力测试
 
-医疗任务类别:诊断,治疗规划,报告生成,患者沟通. 进行多代理与单个LLM与传统规则系统的比较.
+arXiv:2505.12371。四个医疗任务类别：诊断、治疗规划、报告生成、患者沟通。比较多智能体 vs 单 LLM vs 传统基于规则的系统。
 
-发现:多代理在大多数类别中没有统治单个LLM.多代理优势是狭窄的. 任务分解有助于分离子任务 (诊断+治疗);当协调总费超过专业化收益时,会有伤害 (报告生成).
+发现：多智能体在大多数类别上并不优于单 LLM。多智能体的优势是狭窄的——当子任务清晰可分时（诊断 + 治疗），任务分解有帮助；当协调开销超过专业化收益时（报告生成），它则有害。
 
-如果MedAgentBoard的课程一般化,许多拟议的多代理系统都过于工程.
+适用场景：你的领域有明确的单 LLM 基线。如果 MedAgentBoard 的结论具有普遍性，那么许多提出的多智能体系统就是过度设计的。
 
-### 公司架构
+### AgentArch — 企业架构
 
-企业设置,工具使用,内存和配套配套.基准标识分离每个层的贡献:添加工具有多少帮助?添加内存?添加多代理配套?
+arXiv:2509.10769。将工具使用、记忆和编排分层组合的企业设置。基准测试隔离每一层的贡献：添加工具有多大帮助？添加记忆？添加多智能体编排？
 
-您正在设计一个企业代理堆,需要证明每个层的合理性. AgentArch 帮助避免购买无法测量价值的功能.
+适用场景：你正在设计企业级智能体技术栈，需要证明每一层的价值。AgentArch 有助于避免购买你无法衡量价值的功能。
 
-### 现实检查
+### SWE-bench Pro — 现实检验
 
-设计为: 创建技术,开发技术,开发技术,开发技术,开发技术,开发技术,开发技术,开发技术,开发技术,开发技术,开发技术,开发技术,开发技术,开发技术等.**uncontaminated**边界车型在Pro上获得23%的比分,而在Verified上获得70%以上的比分.
+arXiv:2509.16941。41 个代码库中的 1865 个问题，涵盖商业应用、B2B 服务和开发工具。设计为对后续训练截止时间**不受污染**。前沿模型在 Pro 上得分约 23%，而在 Verified 上超过 70%。这一差距就是污染的信号。
 
-2026年4月的成绩:
-- 克劳德·奥普斯 4.7 在Pro: **64.3%**(经过明确的代理团队协调报告;尚未发表任何人类主要来源.
-- 经验证的: **76.1% pass@1**([technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report))
-- 无代理架的Pro的边界原始分数: ~23-35% ([SWE-bench Pro paper](https://arxiv.org/abs/2509.16941))
+2026 年 4 月的分数：
+- Claude Opus 4.7 在 Pro 上：**64.3%**（报道有显式的智能体团队协调；尚无 Anthropic 一手来源发布——请视为初步结果）。
+- Verdent（智能体脚手架）在 Verified 上：**76.1% pass@1**（[技术报告](https://www.verdent.ai/blog/swe-bench-verified-technical-report)）。
+- 无智能体脚手架的前沿模型在 Pro 上的原始分数：约 23-35%（[SWE-bench Pro 论文](https://arxiv.org/abs/2509.16941)）。
 
-结果: "我们击败了SWE-bench Verified"不再是能力的证据.Pro是目前的盖特测试.代理团队架构对Pro (~30-40点德尔塔) 产生可测量的收益,这是2026年多代理协调的最强实验性论点之一.
+结论：“我们击败了 SWE-bench Verified”不再是能力的证据。Pro 是当前的门槛测试。智能体团队脚手架在 Pro 上产生可衡量的收益（约 30-40 个百分点的差距），这是 2026 年支持多智能体协调最有力的实证论据之一。
 
-### 美国航空航天局2026 WMAC
+### AAAI 2026 WMAC
 
- 关于多代理协调工作坊 (https://multiagents.org/2026/通过该组织的研究,研究人员将对人工智能进行研究,并将其作为"2026年多代理人工智能研究社区焦点".接受的论文和研讨会程序是评估新方法的常规场所;对生产决策的 arXiv预印件的WMAC接受的要求进行推迟.
+AAAI 2026 Bridge Program — 多智能体协调研讨会（https://multiagents.org/2026/）。2026 年多智能体 AI 研究的社区重心。被接收的论文和研讨会论文集是评估新方法的权威场所；在生产决策中，请优先采信 WMAC 接收的声明，而非 arXiv 预印本。
 
-### 阅读对基准指标的索赔怀疑 2026年检查清单
+### 以怀疑态度解读基准测试声明 — 2026 年清单
 
-当有人声称多代理结果:
+当有人声称一个多智能体结果时：
 
-1. **Which benchmark, which split?**关于错误分数的报道是毫无价值的.
-2. **Contamination check.**如果没有,请谨慎处理.
-3. **Baseline comparison.**对于单个LLM基线,对随机,对以前的多代理工作.
-4. **Statistical significance.**边界模型具有高变量,单次运行误导性.
-5. **Task diversity.**总体化是生产的重要任务.
-6. **Cost disclosure.**按任务的代币,墙钟. 90% 的解决方案以20倍的成本是商业决定,而不是能力要求.
+1. **哪个基准测试，哪个分割？** SWE-bench Verified 与 Pro 的区别至关重要。在错误的分割上报告的数字毫无价值。
+2. **污染检查。** 基准测试是否在模型训练截止之后发布？如果不是，请谨慎对待。
+3. **基线比较。** 对比单 LLM 基线、随机基线、先前的多智能体工作。而不是“对比同一系统的未调优版本”。
+4. **统计显著性。** N 次试验、p 值、置信区间。前沿模型方差很高；单次运行具有误导性。
+5. **任务多样性。** 一个任务还是多个任务？泛化能力对生产至关重要。
+6. **成本披露。** 每个任务的 token 数、实际耗时。成本 20 倍换取 90% 的解决方案是商业决策，而非能力声明。
 
-### 任何基准指标都没有什么好
+### 所有基准测试都无法很好衡量的内容
 
-- **Long-horizon coordination.**现在的标准都不够.
-- **Adversarial resilience.**如果一个代理人恶意或有危害,会发生什么?
-- **Drift under deployment.**标准是静态的,生产分布变化.
-- **Cost-normalized performance.**许多基准指标都显示出原始准确性,而不是每美元的准确性.
+- **长周期协调。** 数天的实际交互。目前所有基准测试运行周期都很短。
+- **对抗韧性。** 当一个智能体是恶意或被攻破时会发生什么？
+- **部署中的漂移。** 基准测试是静态的；生产环境的分布会发生变化。
+- **成本归一化的性能。** 大多数基准测试报告原始准确率，而非每美元准确率。
 
-建立你真正关心的轴心的内部基准通常是正确的举动.
+为你真正关心的维度构建自己的内部基准测试通常是正确的做法。
 
 ```figure
 a5-bench-gap
 ```
 
-## 建立它
+## 构建它
 
-`code/main.py`是一个非互动的通行:
+`code/main.py` 是一个非交互式的演示流程：
 
-- 模拟3个多代理系统在玩具任务上.
-- 计算每个里程碑的标志.
-- 通过将任务从"训练"组中隐,进行污染检查.
-- 显然与随机基线相比.
-- 打印了指标索赔的分数卡.
+- 在一个玩具任务上模拟 3 个多智能体系统。
+- 为每个系统计算 MARBLE 风格的里程碑指标。
+- 通过从“训练”集中保留任务来进行污染检查。
+- 明确地与随机基线进行比较。
+- 打印基准测试声明记分卡。
 
-运行:
+运行：
 
 ```bash
 python3 code/main.py
 ```
 
-预期输出:系统分数卡,含原始精度,里程碑成就,每任务成本,与随机基线的比分,以及污染检查说明.
+预期输出：包含原始准确率、里程碑达成率、每任务成本、随机基线差值以及污染检查说明的系统记分卡。
 
-## 用它
+## 使用它
 
-`outputs/skill-benchmark-reader.md`阅读多代理基准要求并应用审查清单. 产量:评级和警告.
+`outputs/skill-benchmark-reader.md` 读取任何多智能体基准测试声明并应用审查清单。输出：一个评级和注意事项。
 
-## 运送它
+## 发布它
 
-生产评估学科:
+生产评估纪律：
 
-- **Build an internal benchmark**公共基准指标提供信息,但不替代.
-- **Include a random baseline**如果您无法在协调任务中以大差距击败随机,任务可能会被错误地设置.
-- **Report cost alongside accuracy.**代币成本和墙钟. 操作团队需要两者.
-- **Rebuild the benchmark quarterly.**产量分配转移;过时的基准误导.
-- **Avoid published-benchmark overfitting.**如果你的团队专门为SWE-bench Pro数字进行优化,
+- **构建反映你实际生产分布的内部基准测试。** 公共基准测试可以提供参考，但不能替代。
+- **在每次比较中包含随机基线。** 如果你在协调任务上无法大幅击败随机基线，那么该任务可能是病态的。
+- **在报告准确率的同时报告成本。** Token 成本和实际耗时。运维团队需要两者。
+- **每季度重建基准测试。** 生产分布会变化；过时的基准测试具有误导性。
+- **避免对已发布基准测试的过拟合。** 如果你的团队专门针对 SWE-bench Pro 的分数进行优化，那么你在生产中就会退步。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`确定三个模拟系统中哪个成本比里程碑最高. 它是否与最高的原始精度系统相匹配?
-2. 阅读多代理位 (arXiv:2503.01935). 对于您自己的任务域,请决定MARBLE建议的四种拓物种中哪种.根据论文的结果证明.
-3. 阅读SWE-bench Pro论文. 具体是什么使其耐污染?
-4. 设计一个简单的多模式协调任务,你可以将其添加到你的内部基准.
-5. 根据最近的一篇多代理报纸的标题结果,你会给索赔的评分是什么?
+1. 运行 `code/main.py`。找出三个模拟系统中哪个具有最佳的每里程碑成本。它与最高原始准确率的系统一致吗？
+2. 阅读 MultiAgentBench（arXiv:2503.01935）。针对你自己的任务领域，判断 MARBLE 会推荐四种拓扑中的哪一种。从论文的结果中给出理由。
+3. 阅读 SWE-bench Pro 论文。是什么具体使其具有抗污染性？同样的技术可以应用于你关心的其他基准测试吗？
+4. 阅读 COMMA 关于多模态协调的发现。设计一个可以添加到你的内部基准测试中的简单多模态协调任务。什么才算作有用的信号？
+5. 将基准测试声明清单应用于最近一篇多智能体论文的核心结果。你会给该声明什么评级？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|------------------------|
-| MARBLE | "MultiAgentBench" | ACL 2025; star/chain/tree/graph topologies with milestone KPIs. |
-| COMMA | "Multimodal benchmark" | Multimodal asymmetric-info coordination; frontier models struggle vs random. |
-| MedAgentBoard | "Domain stress test" | Four medical categories; often finds multi-agent does not dominate single-LLM. |
-| AgentArch | "Enterprise benchmark" | Tools + memory + orchestration layered. |
-| SWE-bench Pro | "Contamination-resistant" | 1865 problems, 41 repos; ~23% vs 70%+ on Verified (the contamination signal). |
-| Milestone achievement | "Partial credit" | Benchmarks that reward progress, not only final success. |
-| Contamination | "Benchmark leaked into training" | Post-release, benchmarks drift into training corpora; scores inflate. |
-| WMAC | "AAAI 2026 Bridge Program" | Workshop on Multi-Agent Coordination; community focal point. |
+| MARBLE | "MultiAgentBench" | ACL 2025；具有里程碑 KPI 的星型/链型/树型/图型拓扑。 |
+| COMMA | "多模态基准测试" | 多模态非对称信息协调；前沿模型难以击败随机基线。 |
+| MedAgentBoard | "领域压力测试" | 四个医疗类别；经常发现多智能体并不优于单 LLM。 |
+| AgentArch | "企业级基准测试" | 工具 + 记忆 + 编排分层。 |
+| SWE-bench Pro | "抗污染" | 1865 个问题，41 个代码库；约 23% vs Verified 上的 70%+（污染信号）。 |
+| 里程碑达成率 | "部分得分" | 奖励进展而不仅是最终成功的基准测试。 |
+| 污染 | "基准测试泄漏进训练" | 发布后，基准测试混入训练语料库；分数虚高。 |
+| WMAC | "AAAI 2026 Bridge Program" | 多智能体协调研讨会；社区重心。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [MultiAgentBench / MARBLE](https://arxiv.org/abs/2503.01935)具有里程碑指标的拓基准
-- [MARBLE repository](https://github.com/ulab-uiuc/MARBLE)参考实施
-- [MedAgentBoard](https://arxiv.org/abs/2505.12371)域压力测试;多剂通常没有主导作用
-- [AgentArch](https://arxiv.org/abs/2509.10769)企业代理架构
-- [SWE-bench leaderboards](https://www.swebench.com/) 边界模型的验证和专业成绩
-- [AAAI 2026 WMAC](https://multiagents.org/2026/)2026年社区焦点
+- [MultiAgentBench / MARBLE](https://arxiv.org/abs/2503.01935) — 具有里程碑 KPI 的拓扑基准测试
+- [MARBLE 仓库](https://github.com/ulab-uiuc/MARBLE) — 参考实现
+- [MedAgentBoard](https://arxiv.org/abs/2505.12371) — 领域压力测试；多智能体常常不占优势
+- [AgentArch](https://arxiv.org/abs/2509.10769) — 企业级智能体架构
+- [SWE-bench 排行榜](https://www.swebench.com/) — 前沿模型在 Verified 和 Pro 上的分数
+- [AAAI 2026 WMAC](https://multiagents.org/2026/) — 2026 年社区重心

@@ -1,27 +1,27 @@
-# 无国籍乐团
+# 交接与例程 — 无状态编排
 
-> 开通AI的Swarm (2024年10月) 将多代理管弦乐器成两个原始:**routines**(指令+工具作为系统提示) 和 **handoffs**(一个工具可以返回另一个代理人). 没有国家机器,没有分支的DSL 通过调用正确的交付工具来LLM路线. 产品后代是OpenAI代理SDK (2025年3月). 群本身仍然是最清洁的概念参考其整个来源适合几百条线. 模式是病毒的,因为API表面大致是"代理 =提示 +工具;交付 =函数返回代理".限制:无状态,因此内存是调用者的问题.
+> OpenAI 的 Swarm(2024 年 10 月)将多智能体编排提炼为两个原语:**例程**(routine,作为系统提示词的指令 + 工具)和**交接**(handoff,返回另一个 Agent 的工具)。没有状态机,没有分支 DSL —— LLM 通过调用正确的交接工具来完成路由。OpenAI Agents SDK(2025 年 3 月)是其生产级后继者。Swarm 本身仍然是最清晰的概念参考 —— 它的全部源代码只有几百行。这个模式之所以流行,是因为它的 API 表面大致就是“agent = 提示词 + 工具;handoff = 返回 agent 的函数”。局限性:无状态,因此记忆是调用方的问题。
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 16 · 04 (Primitive Model)
-**Time:** ~60 minutes
+**Languages:** Python(stdlib)
+**Prerequisites:** Phase 16 · 04(Primitive Model)
+**Time:** 约 60 分钟
 
 ## 问题
 
-每个多代理框架都希望你学习其DSL: 兰格拉夫节点和边缘,CrewAI团队和任务,AutoGen GroupChat和管理者.
+每个多智能体框架都要求你学习它的 DSL:LangGraph 的节点和边、CrewAI 的 crew 和 task、AutoGen 的 GroupChat 和 manager。这些 DSL 是真正的抽象,但它们让事情显得比实际需要的更重。
 
-群众推向相反的方向:使用模型已经拥有的工具调用功能.交付成为工具调用.调音器是目前进行对话的任何代理.状态机器隐含于代理系统的提示.
+Swarm 反其道而行之:直接使用模型已经具备的工具调用能力。交接变成工具调用。编排者就是当前持有对话的那个 agent。状态机隐含在各个 agent 的系统提示词中。
 
 ## 概念
 
-### 两个原始人
+### 两个原语
 
-**Routine.**系统提示,定义代理人的角色和可用的工具. 想象它像一个有范围的指令集:"你是一个分类代理;如果用户询问退款,请交给退款代理.
+**例程(Routine)。** 一个系统提示词,定义 agent 的角色和可用工具。可以把它理解为范围受限的一组指令:“你是分诊 agent;如果用户询问退款,就交接给退款 agent。”
 
-**Handoff.**群运行时间检测到代理返回值,并将活跃代理转换为下一个轮.
+**交接(Handoff)。** agent 可以调用的一个工具,返回一个新的 Agent 对象。Swarm 运行时检测到 Agent 返回值后,在下一轮切换活跃 agent。
 
-这就是整个抽象.
+这就是全部的抽象。
 
 ```
 def transfer_to_refunds():
@@ -34,61 +34,61 @@ triage_agent = Agent(
 )
 ```
 
-根据用户的信息,分类代理的系统提示使其选择正确的交付.
+分诊 agent 的系统提示词使它根据用户消息选择正确的交接。LLM 的工具调用完成路由。
 
-### 为什么它是病毒的
+### 为什么它流行
 
-- **Small API.**需要学习的两个概念.
-- **Uses what the model already does.**工具调用已经在供应商中达到生产级.
-- **No state-machine burden.**你不描述图表; 代理人的提示描述他们交给谁.
+- **API 很小。** 只需要学两个概念。
+- **使用模型本来就会做的事。** 工具调用在各家提供商那里已经是生产级能力。
+- **没有状态机负担。** 你不需要描述图;agent 的提示词描述它们交接给谁。
 
-### 无国籍贸易
+### 无状态的取舍
 
-运行期间,该框架保留了消息历史,但它没有保留任何东西.内存,连续性,长时间运行任务所有电话调用者的问题.
+Swarm 明确地在多次运行之间保持无状态。框架在一次运行期间维护消息历史,但不持久化任何东西。记忆、连续性、长时间运行的任务 —— 全都是调用方的问题。
 
-在生产中 (OpenAI Agents SDK,2025年3月) 这是一个主要的变化:SDK添加了内置的会议管理,防护窗和追踪,同时保持了原始的交付.
+在生产环境中(OpenAI Agents SDK,2025 年 3 月),这是主要改变之一:SDK 增加了内置的会话管理、guardrails 和追踪,同时保留了交接原语。
 
-### /合时
+### 何时适合 Swarm/交接
 
-- **Triage patterns.**前线代理将用户送到专家那里.
-- **Skill-based handoffs.**"如果任务需要代码,请打电话给编码师;如果需要研究,请打电话给研究人员".
-- **Short, bounded conversations.**客户支持,常见问题,简单的工作流程.
+- **分诊模式。** 前台 agent 将用户路由给专家。
+- **基于技能的交接。** “如果任务需要写代码,调用 coder;如果需要调研,调用 researcher。”
+- **简短、有边界的对话。** 客户支持、FAQ 转工单、简单工作流。
 
-### 当群众扎时
+### 何时 Swarm 会吃力
 
-- **Long sessions with shared memory.**交换将对话状态重置为新代理的提示加上历史.
-- **Parallel execution.**交换是一次性  活动代理交换.平行需要调用者调用多个Swarm运行.
-- **Audit and replay.**无国籍的运行很难完全重复;LLM的交付选择不是确定性的.
+- **共享记忆的长会话。** 交接会将对话状态重置为新 agent 的提示词加上历史。没有调用方管理的记忆,就无法跨 agent 持久化状态。
+- **并行执行。** 交接一次只能进行一个 —— 活跃 agent 会切换。并行需要调用方编排多个 Swarm 运行。
+- **审计与回放。** 无状态的运行难以精确回放;LLM 的交接选择不是确定性的。
 
-### 开放AI代理 SDK (2025年3月)
+### OpenAI Agents SDK(2025 年 3 月)
 
-生产继任者补充说:
+生产级后继者增加了:
 
-- **Session state.**连续的线程.
-- **Guardrails.**输入/输出验证.
-- **Tracing.**任何工具的通话和交付都记录下来.
-- **Handoff filters.**控制在传递中转移的背景.
+- **会话状态。** 跨运行的持久线程。
+- **Guardrails。** 输入/输出校验钩子。
+- **追踪。** 每次工具调用和交接都会被记录。
+- **交接过滤器。** 控制交接时传递哪些上下文。
 
-交付原始品存活下来; 生产 ergonomics 加入了它.
+交接原语得以保留;在其周围增加了生产级的易用性。
 
-### 群众与群众聊天
+### Swarm vs GroupChat
 
-两者都使用了LLM驱动的路由,但它们在**who picks next**其他:
+两者都使用 LLM 驱动的路由,但区别在于**谁决定下一个**:
 
-- 集团聊天:选手 (函数或LLM) 从外部选择下一个扬声器.
-- 现在的代理人通过传递工具来选择继任者.
+- GroupChat:一个选择器(函数或 LLM)从外部挑选下一个发言者。
+- Swarm:当前 agent 通过调用交接工具选择自己的继任者。
 
-群众是"代理决定下一步";群众聊天是"管理者决定下一步".群众的决定生活在活跃的代理工具调用;群众聊天生活在 `GroupChatManager`现在,我们要去.
+Swarm 是“agent 决定接下来做什么”;GroupChat 是“manager 决定接下来做什么”。Swarm 的决策存在于活跃 agent 的工具调用中;GroupChat 的决策存在于 `GroupChatManager` 中。
 
 ```figure
 sw-handoff-routing
 ```
 
-## 建立它
+## 动手实现
 
-`code/main.py`实现从零开始的Swarm:一个代理数据类,一个转移机制 (工具返回代理),以及一个检测代理开关的运行循环.
+`code/main.py` 从零实现 Swarm:一个 Agent dataclass、一个交接机制(工具返回 Agent),以及一个检测 agent 切换的运行循环。
 
-演示:一个分类代理向退款,销售或支持专家提供路线.每个专家都有自己的工具.运行循环打印每一个交付.
+演示:一个分诊 agent 将请求路由给退款、销售或支持专家。每个专家有自己的工具。运行循环会打印每次交接。
 
 运行:
 
@@ -96,44 +96,44 @@ sw-handoff-routing
 python3 code/main.py
 ```
 
-## 用它
+## 使用它
 
-`outputs/skill-handoff-designer.md`设计一个给定任务的交付拓:哪些代理存在,哪些交付可以调用,哪些背景转移.
+`outputs/skill-handoff-designer.md` 为给定任务设计交接拓扑:存在哪些 agent、它们可以调用哪些交接、传递什么上下文。
 
-## 运送它
+## 上线它
 
-检查列表:
+检查清单:
 
-- **Handoff logging.**每次交付都会记录一个事件,从代理到代理,
-- **Context transfer rules.**决定什么是转发:完整的历史 (昂贵),最后的N消息,或总结.
-- **Guardrail on handoff.**必须验证向不同工具权限的专家交付的信息 否则即时注射可能会导致不必要的交付.
-- **Loop detection.**两位代理交往往往是常见的失败; 通过简单的最后K环检查检测.
-- **Fallback agent.**如果没有转移目标, 返回安全默认状态.
+- **交接日志。** 每次交接都写入一条追踪事件,包含来源 agent、目标 agent、上下文快照。
+- **上下文传递规则。** 决定交接时传递什么:完整历史(昂贵)、最近 N 条消息,或一个摘要。
+- **交接时的 guardrail。** 交接给具有不同工具权限的专家时必须经过身份验证 —— 否则提示注入可以强制触发不想要的交接。
+- **循环检测。** 两个 agent 互相来回交接是常见故障;用一个简单的最近 K 次环形检查来检测。
+- **兜底 agent。** 如果交接目标不存在,回退到一个安全的默认项。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`确认第二轮的活跃代理是退款的.
-2. 添加一个循环检测规则:如果同样的两个代理连续3次交出,强迫出口.
-3. 阅读OpenAI Agents SDK文件. 执行"总结在总结"版本:前入代理接管之前,退出代理将文本压缩到一个子弹总结.
-4. 如何将Swarm传递与GroupeChatManager选项进行比较.
-5. 阅读Swarm的厨师书 (https://developers.openai.com/cookbook/examples/orchestrating_agents确定一个明确的设计决定,Swarm将OpenAI Agents SDK更改或保留.
+1. 运行 `code/main.py`,将请求分诊到退款 agent。确认第二轮的活跃 agent 是 refund。
+2. 添加一条循环检测规则:如果同样两个 agent 连续交接了 3 次,强制退出。设计相应的兜底方案。
+3. 阅读 OpenAI Agents SDK 关于交接过滤器的文档。实现一个“交接时总结”的版本:离开的 agent 在接手的 agent 接管之前,把上下文压缩成要点摘要。
+4. 将 Swarm 的交接与 GroupChatManager 选择器进行比较。哪种模式让提示注入更严重,为什么?
+5. 阅读 Swarm cookbook(https://developers.openai.com/cookbook/examples/orchestrating_agents)。找出 Swarm 做出的、OpenAI Agents SDK 改变或保留的一个明确设计决策。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Routine | "The agent prompt" | System prompt + tool list. Defines role and available handoffs. |
-| Handoff | "Transfer to another agent" | A tool the active agent can call that returns a new Agent. The runtime switches active agent. |
-| Stateless | "No memory between runs" | Swarm does not persist anything; memory is the caller's responsibility. |
-| Active agent | "Who's speaking now" | The agent currently holding the conversation. Handoff changes this. |
-| Context transfer | "What moves on handoff" | Policy for what history the incoming agent sees: full, last N, or summarized. |
-| Handoff loop | "Agents ping-pong" | Failure mode where two agents keep handing back to each other. |
-| OpenAI Agents SDK | "Production Swarm" | March 2025 successor; adds sessions, guardrails, tracing on top of the handoff primitive. |
-| Handoff filter | "Gate on transfer" | SDK feature to inspect and modify context at the handoff boundary. |
+| 术语 | 人们的说法 | 实际含义 |
+|------|------------------------|------------------------|
+| Routine | “agent 的提示词” | 系统提示词 + 工具列表。定义角色和可用的交接。 |
+| Handoff | “转交给另一个 agent” | 活跃 agent 可以调用的工具,返回一个新的 Agent。运行时据此切换活跃 agent。 |
+| Stateless | “运行之间没有记忆” | Swarm 不持久化任何东西;记忆是调用方的责任。 |
+| Active agent | “现在是谁在说话” | 当前持有对话的 agent。交接会改变这一点。 |
+| Context transfer | “交接时传递什么” | 接手的 agent 能看到什么历史的策略:完整、最近 N 条,或摘要。 |
+| Handoff loop | “agent 之间乒乓” | 两个 agent 不断互相交接的故障模式。 |
+| OpenAI Agents SDK | “生产级 Swarm” | 2025 年 3 月的后继者;在交接原语之上增加了会话、guardrails 和追踪。 |
+| Handoff filter | “交接时的门控” | SDK 的功能,用于在交接边界检查和修改上下文。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [OpenAI cookbook — Orchestrating Agents: Routines and Handoffs](https://developers.openai.com/cookbook/examples/orchestrating_agents)参考文献
-- [OpenAI Swarm repo](https://github.com/openai/swarm)原始实施,作为概念参考
-- [OpenAI Agents SDK docs](https://openai.github.io/openai-agents-python/)生产继任者,会议和追踪
-- [Anthropic handoff-in-Claude notes](https://docs.anthropic.com/en/docs/claude-code)如何使用类似交付模式的Cloed Code子代码`Task`
+- [OpenAI cookbook — Orchestrating Agents: Routines and Handoffs](https://developers.openai.com/cookbook/examples/orchestrating_agents) — 权威的表述
+- [OpenAI Swarm 仓库](https://github.com/openai/swarm) — 原始实现,保留作为概念参考
+- [OpenAI Agents SDK 文档](https://openai.github.io/openai-agents-python/) — 带有会话和追踪的生产级后继者
+- [Anthropic 关于 Claude 中交接的说明](https://docs.anthropic.com/en/docs/claude-code) — Claude Code 的 subagent 如何通过 `Task` 使用类似交接的模式

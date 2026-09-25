@@ -1,30 +1,30 @@
 # 验证门
 
-> 经纪人不能标记自己的工作做完了.验证门阅读范围合同,反日志,规则报告和差异,并回答一个问题:这个任务是否真的完成了?如果门说不,任务没有完成,无论聊天说什么.
+> Agent 不能自行标记其工作已完成。验证门会读取范围契约、反馈日志、规则报告和 diff，并回答一个问题：这个任务是否真的完成了？如果验证门说不，那么无论聊天记录里说了什么，任务都没有完成。
 
 **Type:** Build
 **Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 33 (Rules), Phase 14 · 36 (Scope), Phase 14 · 37 (Feedback)
-**Time:** ~55 minutes
+**Prerequisites:** Phase 14 · 33 (Rules)、Phase 14 · 36 (Scope)、Phase 14 · 37 (Feedback)
+**Time:** 约 55 分钟
 
 ## 学习目标
 
-- 定义验证门作为工作桌文物上的确定性函数.
-- 结合规则报告,范围报告,反记录,并将分歧构成一个判决.
-- 发出一个`verification_report.json`审查员和通讯员都能读懂.
-- 拒绝在任何区块严重性失败的情况下,无例外地提前任务.
+- 将验证门定义为工作台产物之上的确定性函数。
+- 将规则报告、范围报告、反馈记录和 diff 合并为单一裁定结果。
+- 输出一个 `verification_report.json`，供评审 agent 和 CI 共同读取。
+- 任何 block 级别的失败都拒绝推进任务，无一例外。
 
-## 问题
+## 问题所在
 
-经纪人说成功太容易.
+Agent 声称成功过于轻率。三种失败形态最为常见：
 
-- "看起来很好".模型读到自己的差异,
-- "测试通过了",他自信地说.
-- 接受标准被解释为"任何类似于做的事情".
+- "看起来没问题。" 模型阅读了自己的 diff 并自行判定它是正确的。
+- "测试通过了。" 说得言之凿凿，却没有测试实际运行过的记录。
+- "满足验收标准。" 验收标准被宽松解读到足以等同于"看起来像完成了就行"。
 
-工作台修复是一个单个验证门,它读取代理已经制作的文物并进行电话.门是确定性的.门是版本控制.门是有线到CI.代理不能钱.
+工作台的解决方案是一个单一的验证门，它读取 agent 已经产出的产物并做出裁定。验证门是确定性的。验证门受版本控制。验证门接入 CI。Agent 无法贿赂它。
 
-## 概念
+## 核心概念
 
 ```mermaid
 flowchart TD
@@ -38,110 +38,110 @@ flowchart TD
   Pass -- no --> Refuse[refuse done + surface to human]
 ```
 
-### 门口检查什么
+### 验证门检查什么
 
-| Check | Source artifact | Severity |
+| 检查项 | 来源产物 | 严重级别 |
 |-------|-----------------|----------|
-| All acceptance commands ran | `feedback_record.jsonl` | block |
-| All acceptance commands exited zero | `feedback_record.jsonl` | block |
-| Scope check has no forbidden writes | `scope_report.json` | block |
-| Scope check has no off-scope writes | `scope_report.json` | block or warn |
-| All block-severity rules pass | `rule_report.json` | block |
-| No `null` exit codes in feedback | `feedback_record.jsonl` | block |
-| Touched files match `scope.allowed_files` | both | warn |
+| 所有验收命令都已运行 | `feedback_record.jsonl` | block |
+| 所有验收命令均以零退出 | `feedback_record.jsonl` | block |
+| 范围检查无禁止写入 | `scope_report.json` | block |
+| 范围检查无越界写入 | `scope_report.json` | block 或 warn |
+| 所有 block 级规则均通过 | `rule_report.json` | block |
+| 反馈中没有 `null` 退出码 | `feedback_record.jsonl` | block |
+| 被改动的文件匹配 `scope.allowed_files` | both | warn |
 
-`warn`发现注释判决;`block`发现阻碍`passed: true`现在,我们要去.
+一条 `warn` 发现会附加在裁定结果上；一条 `block` 发现会阻止 `passed: true`。
 
-### 确定性,而不是概率
+### 确定性，而非概率性
 
-门必须每次对同一件产品出出同样的判决.没有LLM法官.LLM法官属于审查者 (阶段14 · 39) 目标是质量评估,而不是地位.
+对于相同的产物集合，验证门每次必须产生相同的裁定结果。不用 LLM 裁判。LLM 裁判属于评审一侧（Phase 14 · 39），那里追求的是定性评估，而非状态判定。
 
-### 一份报告,一个路径
+### 一份报告，一条路径
 
-门发出一个`verification_report.json`按任务结尾,写在`outputs/verification/<task_id>.json`许多门,不同的路径,分开了真理的源头.
+验证门在每次任务收尾时输出一份 `verification_report.json`，写入 `outputs/verification/<task_id>.json` 之下。CI 消费同一路径。多个使用不同路径的验证门会分裂事实来源。
 
-### 拒绝无例外
+### 无例外拒绝
 
-只有一个记录的人类才能对这些发现进行无效.`override_reason`其他`overridden_by`转换是签署的变更,而不是代理决定.
+block 级别的发现不能由 agent 覆盖。它们只能由人工覆盖，且必须有记录在案的 `override_reason` 和一个 `overridden_by` 用户 id。覆盖是一次有签名的变更，而不是 agent 的决定。
 
 ```figure
 wb-gate-sequence
 ```
 
-## 建立它
+## 动手构建
 
-`code/main.py`执行:
+`code/main.py` 实现了：
 
-- 每个输入器件都有一个装载器, 它们都在本地进行了插入,
-- `verify(task_id, artifacts) -> VerdictReport`纯粹的功能.
-- 显示每次检查结果和最终通过/失败的打印机.
-- 演示中,有三个任务:清除通过,范围,缺失接受.
+- 每个输入产物的加载器，全部在本地打桩，使课程自包含。
+- 一个 `verify(task_id, artifacts) -> VerdictReport` 纯函数。
+- 一个打印器，展示每项检查的结果和最终的通过/失败。
+- 一个包含三种任务场景的演示：干净通过、范围蔓延、缺失验收。
 
-运行它:
+运行它：
 
 ```
 python3 code/main.py
 ```
 
-输出:三份判决报告,每个报告都保存在脚本旁边.
+输出：三份裁定报告，每份保存在脚本旁边。
 
-## 野生生产模式
+## 业界生产模式
 
-现在,我们已经开始了四个模式,
+四种模式将验证门从"又一个 lint 任务"提升为"最终裁决关口"。
 
-**Defense-in-depth, not single gate.**预约 → CI状态检查 →预工具 authz →预合组门.每个层都是确定性的,因此一个层中的故障被下一个层捕获.microservices.io的2026年3月的游戏簿明确:预约是不可绕过的,因为与模型侧技能不同,它不依赖于遵循指令的代理.验证门位于CI / pre-merge层.
+**纵深防御，而非单道门。** pre-commit 钩子 → CI 状态检查 → pre-tool 授权钩子 → 合并前验证门。每一层都是确定性的，因此某一层的失败会被下一层捕获。microservices.io 的 2026 年 3 月手册明确指出：pre-commit 钩子是不可绕过的，因为与模型侧的技能不同，它不依赖于 agent 是否遵循指令。验证门位于 CI / 合并前这一层。
 
-**Defense by deterministic check, model-judge only for nuance.**                                                                                                                                                                                                                                                              
+**确定性检查做防御，模型裁判只处理细微判断。** Anthropic 2026 年的 Hybrid Norm 配对：可验证的奖励（单元测试、schema 检查、退出码）回答"代码是否解决了问题？"——LLM 评分表回答"代码是否可读、安全、符合风格？"验证门运行第一类；评审者（Phase 14 · 39）运行第二类。混用两者会破坏信号。
 
-**Signed override log, not Slack threads.**每次过关都会发出一行`outputs/verification/overrides.jsonl`运行时间拒绝任何没有签名的过失;审计轨迹是 git-tracked.这是过失政策和过失剧院之间的界线.
+**有签名的覆盖日志，而非 Slack 讨论。** 每次覆盖都会在 `outputs/verification/overrides.jsonl` 中产生一行记录：时间戳、发现代码、原因、签名用户、当前 HEAD 提交。运行时拒绝任何缺少签名的覆盖；审计轨迹由 git 追踪。这就是真正的覆盖策略与覆盖表演之间的分界线。
 
-**Coverage floor as a first-class check.**`coverage_report.json`养一个`coverage_floor`检查 (默认80%) 如果测量覆盖率下降于地面或之前的合并地面水平超过1个百分点,则门失败.
+**覆盖率下限作为一等检查项。** 一份 `coverage_report.json` 输入到一个 `coverage_floor`（默认 80%）检查中。如果实测覆盖率低于下限，或比上一次合并的下限低超过 1 个百分点，验证门即失败。没有这项检查，agent 会悄悄删掉失败的测试，而验证报告却保持绿色。
 
-**`--strict` mode promotes warns to blocks.**对于释放分支,阻船舶的公关,或事件后的分类,`--strict`旗是分支的选择,而不是全球默认,因为严格对所有的事情腐蚀了日常流动.
+**`--strict` 模式将 warn 提升为 block。** 对于发布分支、阻塞交付的 PR 或事后故障分诊，`--strict` 会让每一条警告都成为硬性失败。该标志按分支选择性开启；不是全局默认值，因为事事严格会侵蚀日常工作流。
 
-## 用它
+## 使用场景
 
-生产模式:
+生产模式：
 
-- **CI step.**`verify_agent`合保护拒绝没有任何`passed: true`现在,我们要去.
-- **Pre-handoff hook.**经理在发送文件之前打电话.
-- **Manual triage.**经营者读到报告时,当一个代理声称成功,
+- **CI 步骤。** 一个 `verify_agent` 作业针对 agent 的最终产物运行验证门。合并保护在没有 `passed: true` 时拒绝合并。
+- **交接前钩子。** agent 运行时在生成交接文档之前调用验证门。没有绿色裁定，就没有交接。
+- **人工分诊。** 当 agent 声称成功而人工表示怀疑时，运维人员阅读该报告。
 
-门是工作台流量的决定边缘. 其他的表面都是上游的.
+验证门是工作台流程中的最终裁决关口。其他所有环节都在它的上游。
 
-## 运送它
+## 交付上线
 
-`outputs/skill-verification-gate.md`通过线程将门进入特定项目:哪些接受命令为其提供,哪些规则是区块严格,哪些离范围的写字被容忍,如何存储过失审计日志.
+`outputs/skill-verification-gate.md` 将验证门接入具体项目：哪些验收命令输入给它，哪些规则是 block 级别，哪些越界写入被容忍，覆盖审计日志如何存储。
 
-## 运动
+## 练习
 
-1. 添加一个`coverage_floor`检查:测试指挥必须提供至少80%的覆盖报告. 决定哪个器件携带地板.
-2. 支持一个`--strict`促进每一个`warn`为了`block`记录严格模式是正确的默认情况.
-3. 让门除了JSON外生成一个Markdown总结. 保护哪些字段属于总结.
-4. 添加一个`time_since_last_human_touch`检查:在人类键盘击中60秒内编辑的任何文件都免于离范围的标志.
-5. 运行一个真正的代理与你的产品不同. 结果是多少真实和噪音? 门需要在哪里生长?
+1. 添加一项 `coverage_floor` 检查：测试命令必须产出覆盖率不低于 80% 的覆盖率报告。决定由哪个产物承载该下限。
+2. 支持一种 `--strict` 模式，将每个 `warn` 提升为 `block`。记录哪些情况下严格模式适合作为默认值。
+3. 让验证门在 JSON 之外再产出一份 Markdown 摘要。论证哪些字段应包含在摘要中。
+4. 添加一项 `time_since_last_human_touch` 检查：在人工按键后 60 秒内被编辑的任何文件豁免越界标记。
+5. 在你产品的真实 agent diff 上运行验证门。多少发现是真实的，多少是噪声？验证门需要在哪里扩展？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|------------------------|
-| Verification gate | "The check that stops things" | Deterministic function over workbench artifacts producing a pass/fail verdict |
-| Block severity | "Hard fail" | A finding that prevents `passed: true` and requires a signed override |
-| Override log | "Why we let it through" | Signed entries with reason and user id, audited by review |
-| Acceptance command | "The proof" | A shell command whose zero exit is what `done` means |
-| One report path | "Source of truth" | `outputs/verification/<task_id>.json`, consumed by CI and humans alike |
+| 验证门 | "拦住东西的那个检查" | 工作台产物之上的确定性函数，产生通过/失败裁定 |
+| Block 级严重性 | "硬性失败" | 一种阻止 `passed: true` 且需要签名覆盖的发现 |
+| 覆盖日志 | "我们为什么放行" | 带原因和用户 id 的签名条目，由评审审计 |
+| 验收命令 | "证据" | 一条 shell 命令，其零退出码即 `done` 的含义 |
+| 单一报告路径 | "事实来源" | `outputs/verification/<task_id>.json`，CI 和人工共同消费 |
 
-## 进一步阅读
+## 延伸阅读
 
 - [Anthropic, Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps)
 - [OpenAI Agents SDK guardrails](https://openai.github.io/openai-agents-python/guardrails/)
-- [microservices.io, GenAI dev platform: guardrails](https://microservices.io/post/architecture/2026/03/09/genai-development-platform-part-1-development-guardrails.html)前承诺和CI之间的深度防御
-- [ICMD, The 2026 Playbook for Agentic AI Ops](https://icmd.app/article/the-2026-playbook-for-agentic-ai-ops-guardrails-costs-and-reliability-at-scale-1776661990431)批准门梯 (草案 →批准 → 车辆在门以下)
-- [Type-Checked Compliance: Deterministic Guardrails (arXiv 2604.01483)](https://arxiv.org/pdf/2604.01483)4作为确定性盖特的上限
-- [logi-cmd/agent-guardrails — merge gate spec](https://github.com/logi-cmd/agent-guardrails)范围+突变测试门
-- [Guardrails AI x MLflow](https://guardrailsai.com/blog/guardrails-mlflow)确定性验证器作为CI分数
-- [Akira, Real-Time Guardrails for Agentic Systems](https://www.akira.ai/blog/real-time-guardrails-agentic-systems)前/后工具门
-- 阶段14 · 27 快速注射防御 (门的对抗对)
-- 阶段14 · 36 本门执行的范围合同
-- 阶段14 · 37 反记录这个门得分
-- 阶段14 · 39 审查员代理人
+- [microservices.io, GenAI dev platform: guardrails](https://microservices.io/post/architecture/2026/03/09/genai-development-platform-part-1-development-guardrails.html) — pre-commit 与 CI 之间的纵深防御
+- [ICMD, The 2026 Playbook for Agentic AI Ops](https://icmd.app/article/the-2026-playbook-for-agentic-ai-ops-guardrails-costs-and-reliability-at-scale-1776661990431) — 审批门阶梯（草稿 → 审批 → 阈值内自动执行）
+- [Type-Checked Compliance: Deterministic Guardrails (arXiv 2604.01483)](https://arxiv.org/pdf/2604.01483) — Lean 4 作为确定性门控的上限
+- [logi-cmd/agent-guardrails — merge gate spec](https://github.com/logi-cmd/agent-guardrails) — 范围门 + 变异测试门
+- [Guardrails AI x MLflow](https://guardrailsai.com/blog/guardrails-mlflow) — 作为 CI 评分器的确定性验证器
+- [Akira, Real-Time Guardrails for Agentic Systems](https://www.akira.ai/blog/real-time-guardrails-agentic-systems) — 工具前置/后置门控
+- Phase 14 · 27 — 提示注入防御（验证门的对抗配对）
+- Phase 14 · 36 — 本验证门所强制执行的范围契约
+- Phase 14 · 37 — 本验证门所评分的反馈日志
+- Phase 14 · 39 — 验证门向其交接的评审 agent

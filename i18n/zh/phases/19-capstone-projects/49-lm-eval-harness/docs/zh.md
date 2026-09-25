@@ -1,28 +1,28 @@
-# 语言模型评估套件
+# 语言模型评测框架
 
-> 没有什么可能的模型是一个不确定性的模型, 运用一个简短的形式, 换成一个.
+> 一个在你无法定义的任务上表现良好的模型，只是碰巧表现良好。这个框架把任务定义、指标、运行器和排行榜合而为一，形态短小、可替换。
 
-**Type:** Build
+**Type:** 构建
 **Languages:** Python
-**Prerequisites:** Phase 19 lessons 42 to 45
-**Time:** ~90 minutes
+**Prerequisites:** 第 19 阶段第 42 至 45 课
+**Time:** 约 90 分钟
 
 ## 学习目标
 
-- 定义一个任务为一个JSONL文件`prompt`现在`targets`现在`metric`其他选择性`extras`举个例子.
-- 执行五个指标:精确匹配,Rouge-l F1,可执行的检查,多次选择,和子字符串含量.
-- 建立一个按任务进行批量的运行器,然后将其发送到可交换的模型适配器.
-- 发出一个排名表 JSON 每项任务分数,延迟,和可复制的总体平均值.
+- 将任务定义为 JSONL 文件，每个示例包含 `prompt`、`targets`、`metric` 以及可选的 `extras`。
+- 实现五个指标：精确匹配、rouge-l F1、可执行检查、多选、子串包含。
+- 构建一个运行器，按任务分批处理示例，并分发给可替换的模型适配器。
+- 输出一个可复现的排行榜 JSON，包含各任务得分、延迟以及总体平均值。
 
-## 问题
+## 问题所在
 
-每周都有新的语言模型.营销声称它做得很好.诚实的问题是:在什么方面?诚实答案是你自己写的排名表,因为供应商的排名表是他们调整的.
+每周都有新的语言模型发布。营销宣传说它表现良好。诚实的问题是：在什么方面表现良好？诚实的答案是你自己编写的排行榜，因为厂商的排行榜正是他们针对调优过的那个。
 
-没有一个带在你的 repo比较两个模型的振动.用一个带比较他们根据分数在一个固定任务组上,一个固定的指标,在一个JSON输出你可以区分.
+如果仓库里没有框架，你就只能凭感觉比较两个模型。有了框架，你就可以在固定的任务集上、用固定的指标，对可 diff 的 JSON 输出按得分进行比较。框架是昨天那次运行与今天那次运行之间的契约。没有它，性能回退就会悄悄上线。
 
-陷是过度将带连接到单个模型. 解决方案是逆向的陷: 带足够小,可以在15分钟内读取,任务足够小,可以在备忘录中发送, 换个适配器,排名板移动;换个任务,排名板移动. 别的东西不应该移动.
+陷阱在于把框架过拟合到单一模型上。解决办法恰恰是把陷阱反着用：框架要小到十五分钟内能读完，任务要小到能随仓库一起发布，指标要从零开始编写以便同事可以审计，适配器是唯一存放模型特定代码的地方。换掉适配器，排行榜随之变化；换掉任务，排行榜随之变化。除此之外什么都不应该变。
 
-## 概念
+## 核心概念
 
 ```mermaid
 flowchart TD
@@ -37,13 +37,13 @@ flowchart TD
 
 ### 任务规范
 
-每个例子都是一个JSONL行:
+每个示例是 JSONL 的一行：
 
 ```json
 {"id": "arith-00", "prompt": "compute: 2 + 2", "targets": ["4"], "metric": "exact_match"}
 ```
 
-对于需要助手的指标,`extras`携带侧面的有效载荷:
+对于需要评分辅助数据的指标，`extras` 携带附加载荷：
 
 ```json
 {
@@ -55,29 +55,29 @@ flowchart TD
 }
 ```
 
-任务是一个任务.`.jsonl`下面的文件`outputs/tasks/`文件名是任务名称. 文件中的所有例子都具有一个指标.
+一个任务就是 `outputs/tasks/` 目录下的一个 `.jsonl` 文件。文件名即任务名。一个文件中的所有示例共用一个指标。
 
-### 五项固定任务
+### 五个固定测试任务
 
-| Task | Metric | What it tests |
+| 任务 | 指标 | 测试内容 |
 |------|--------|---------------|
-| arithmetic | exact_match | Token-level correctness on a deterministic answer |
-| summary | rouge_l | Longest common subsequence F1 against a one-line reference summary |
-| code-exec | code_exec | Executable test: the predicted function must satisfy a list of input-output pairs |
-| multiple-choice | multiple_choice | First letter of the prediction must match an allowed letter |
-| generation | substring_contains | Free-form text must contain at least one target substring |
+| arithmetic | exact_match | 确定性答案的 token 级正确性 |
+| summary | rouge_l | 相对一行参考摘要的最长公共子序列 F1 |
+| code-exec | code_exec | 可执行测试：预测的函数必须满足一组输入-输出对 |
+| multiple-choice | multiple_choice | 预测的首字母必须匹配一个允许的字母 |
+| generation | substring_contains | 自由格式文本必须包含至少一个目标子串 |
 
-### 计量合同
+### 指标契约
 
-每个指标都是从`(prediction, targets, extras) -> float in [0.0, 1.0]`杆平均每个例子分数,以获得任务分数,然后平均任务分数,以获得总数.
+每个指标都是从 `(prediction, targets, extras) -> float in [0.0, 1.0]` 到得分的函数。框架对所有示例的得分求平均得到任务得分，再对任务得分求平均得到总体得分。指标函数都很小：
 
-- `exact_match`基本面:小文字,白色空间崩,平等.
-- `substring_contains`标准化,子字符串测试.
-- `multiple_choice`首个字符上.
-- `rouge_l`: LCS长度以预测和参考长度,精度和召回F1分.
-- `code_exec`: 执行预测在一个限制的名称空间,调用`f(x)`在每一个输出输入对, 计数匹配.
+- `exact_match`：小写化、合并空白、相等比较。
+- `substring_contains`：相同的归一化，子串测试。
+- `multiple_choice`：首字符大写。
+- `rouge_l`：LCS 长度分别除以预测与参考的长度，再取精确率和召回率的 F1。
+- `code_exec`：在受限命名空间中执行预测，对每个输入-输出对调用 `f(x)`，统计匹配数。
 
-代码_exec测量在一个剥离的内置命名空间中运行预测.课程测试表明`import os`爆炸是因为`os`文件系统不能从代码预测中访问.
+code_exec 指标在裁剪过 builtins 的命名空间中运行预测。本课的测试断言 `import os` 会报错，因为命名空间中没有 `os`；代码预测无法访问文件系统。
 
 ### 模型适配器
 
@@ -88,11 +88,11 @@ class ModelAdapter(Protocol):
     def name(self) -> str: ...
 ```
 
-适配器是接,课程是船只.`ToyAdapter`根据该系统的定义,一个确定性模式匹配器,在五个固定任务中返回每一个提示的正确答案.一个真正的适配器调用模型并返回其输出.
+适配器是接缝。本课提供 `ToyAdapter`，一个确定性的模式匹配器，能对五个固定任务中的每个提示返回正确答案。真实的适配器则调用模型并返回其输出。框架不关心是哪一种。
 
-### 跑步者
+### 运行器
 
-`run_task`批量`batch_size`按时提示,并发送到测量函数. `run_leaderboard`完成每项任务,平均.`write_leaderboard`发射JSON与一个方案字符串,以便未来的格式变化不会默默打破仪表板.
+`run_task` 每次处理 `batch_size` 个提示，并分发给指标函数。`run_leaderboard` 遍历所有任务并求平均。`write_leaderboard` 输出带有 schema 字符串的 JSON，这样未来的格式变更不会悄悄破坏仪表盘。
 
 ```mermaid
 flowchart LR
@@ -107,41 +107,41 @@ flowchart LR
 eval-harness-matrix
 ```
 
-## 建立它
+## 动手构建
 
-`code/main.py`它们是可运行的文物.
+`code/main.py` 是可运行的产物。
 
-### 步骤1:种子固定任务
+### 第 1 步：生成固定测试任务
 
-`seed_fixture_tasks(target_dir)`写出五个`.jsonl`文件的第一批`main.py`在目录空时种种它们.
+`seed_fixture_tasks(target_dir)` 写入五个 `.jsonl` 文件。当目录为空时，`main.py` 首次运行会生成它们。
 
-### 步骤2:负载任务
+### 第 2 步：加载任务
 
-`load_all_tasks(task_dir)`读到每一个`.jsonl`返回一个命令从任务名称到一个列表`Example`评论行开始于`#`没有空白的行列,以便贡献者可以注释文件.
+`load_all_tasks(task_dir)` 读取每个 `.jsonl`，返回一个从任务名到 `Example` 记录列表的字典。以 `#` 开头的注释行和空行会被跳过，以便贡献者可以在文件中添加注释。
 
-### 步骤3:实现指标
+### 第 3 步：实现指标
 
-每个指标都是一个小函数,一个单元测试.课程的测试套件包括13个案例,包括正常化,部分重叠,代码执行和不安全的代码拒绝.
+每个指标都是带单元测试的小函数。本课的测试套件包含 13 个用例，覆盖归一化、部分重叠、代码执行和不安全代码的拒绝。
 
-### 步骤4:写出跑步
+### 第 4 步：编写运行器
 
-`run_task`代批量并产生一个`TaskResult`通过分数,正确的计算,总数和延迟.`run_leaderboard`完成所有任务并产生一个`Leaderboard`总体平均水平.
+`run_task` 迭代各批次，产出包含得分、正确数、总数和延迟的 `TaskResult`。`run_leaderboard` 遍历所有任务，产出包含总体平均值的 `Leaderboard`。
 
-### 步骤5:发射JSON
+### 第 5 步：输出 JSON
 
-`write_leaderboard`片的连载.`--include-per-example`标志将每例记录丢弃,以便你可以与前一次运行时的预测进行差异.
+`write_leaderboard` 序列化排行榜。`--include-per-example` 标志会导出每条示例记录，这样当得分变化时，你可以对比本次预测与上一次运行的差异。
 
-运行它:
+运行它：
 
 ```bash
 python3 code/main.py
 ```
 
-脚本在第一次运行时种植装置,用玩具适配器 (它将每个装置都得到正确的),然后写`outputs/leaderboard.json`玩具适配器的总分为1.0, 玩具适配器的试验在`test_main.py`适配器不能回复时,相同的带产生0.0.
+脚本在首次运行时生成固定测试数据，用玩具适配器（它能答对所有固定任务）评分，并写入 `outputs/leaderboard.json`。使用玩具适配器时总体得分为 1.0；`test_main.py` 中的存根适配器测试表明，当适配器无法回答时，同一个框架会产生 0.0。
 
-## 用它
+## 使用它
 
-为了连接一个真正的模型, 写一个适配器.
+要接入真实模型，编写一个适配器。其形态：
 
 ```python
 class HttpAdapter:
@@ -159,40 +159,40 @@ class HttpAdapter:
         return out
 ```
 
-换换`ToyAdapter`为了`HttpAdapter`在顶部`main()`杆,任务,指标和排名表保持不变.
+在 `main()` 顶部把 `ToyAdapter` 换成 `HttpAdapter`。框架、任务、指标和排行榜保持不变。
 
-在一个真正的项目中,在运送带时必须执行三个模式:
+在真实项目中发布框架时需要执行三个模式：
 
-- **Pin the task files.**排名板.json 包含哈希嵌任务内容或它携带JSONLs;否则,任务文件在执行时,分数会移动,而您无法确定哪个.
-- **Diff predictions, not just scores.**其他`--include-per-example`标志让你看到模型在分数下降的那天说什么.
-- **Cap the batch size.**实际适配器的速度限制. 较小的批量量使得连接器在供应商之间保持兼容性.
+- **固定任务文件。** 排行榜 JSON 要么携带哈希固定的任务内容，要么把 JSONL 文件一并保存；否则任务文件变化时得分随之变化，而你无法分辨是哪一个变了。
+- **对比预测而不只是得分。** `--include-per-example` 标志让你能看到得分下降当天模型的实际输出。
+- **限制批大小。** 真实适配器有速率限制。较小的批大小能让框架在不同厂商之间保持兼容。
 
-## 运送它
+## 发布它
 
-`outputs/skill-lm-eval-harness.md`包含配方:JSONL任务规格,五个指标,可交换的适配器,批量运行器,排名表 JSON 与方案字符串.`outputs/tasks/`它们是固定装置, 它们可以作为一个真正的项目.
+`outputs/skill-lm-eval-harness.md` 包含完整配方：JSONL 任务规范、五个指标、可替换适配器、分批运行器、带 schema 字符串的排行榜 JSON。`outputs/tasks/` 中的任务文件就是固定测试数据；可以把它们复制到真实项目中作为起点。
 
-## 运动
+## 练习
 
-1. 添加一个第六个任务,使用一个自定义的指标,你从零开始写 (像BLEU的重叠,像BLEURT的参考分数,任何有明确的合同).
-2. 延长时间`code_exec`捕获击和接受预期击的目标列表.
-3. 添加一个排名表差命令:给了两个 `leaderboard.json`文件,打印哪些任务移动,以及多少.
-4. 缩适配器调用时间;单独地表面`timeouts`在排名表中列.
-5. 按排名表中的 sha256 标签,以便未来的读者可以验证他们取得了相同的任务.
+1. 添加第六个任务，并使用你从零编写的自定义指标（类似 BLEU 的重叠度、类似 BLEURT 的参考评分，任何有清晰契约的东西）。
+2. 扩展 `code_exec`，使其捕获 stdout 并接受一组期望的 stdout 作为目标。
+3. 添加一个排行榜 diff 命令：给定两个 `leaderboard.json` 文件，打印哪些任务发生了变化以及变化幅度。
+4. 限制每个示例的延迟。给适配器调用加上超时包装；在排行榜中单独显示一个 `timeouts` 列。
+5. 在排行榜中用 sha256 固定任务内容，以便未来的读者能验证他们评分的是同样的任务。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|------------------------|
-| Task spec | "The eval format" | JSONL file with prompt, targets, metric, optional extras per example |
-| Metric | "How you score" | Function from (prediction, targets, extras) to a float in [0, 1] |
-| Adapter | "The model client" | Object with a generate(prompts) -> list[str] method; the only model-specific code |
-| Leaderboard | "The scoreboard" | JSON with per-task scores, total counts, latency, and an overall average |
-| Code exec metric | "Run it and check" | Execute the prediction in a restricted namespace, compare against input-output pairs |
+| 任务规范 | "评测格式" | JSONL 文件，每个示例含 prompt、targets、metric 以及可选的 extras |
+| 指标 | "你怎么评分" | 从 (prediction, targets, extras) 到 [0, 1] 中一个浮点数的函数 |
+| 适配器 | "模型客户端" | 具有 generate(prompts) -> list[str] 方法的对象；唯一的模型特定代码 |
+| 排行榜 | "记分板" | 包含各任务得分、总数、延迟和总体平均值的 JSON |
+| 代码执行指标 | "跑一下检查" | 在受限命名空间中执行预测，与输入-输出对进行比较 |
 
-## 进一步阅读
+## 延伸阅读
 
-- 生产参考原始lm评估,大得多,但形状相同.
-- 为了实现同样的合同,HuggingFace的轻松.
-- 阶段19课46涵盖了训练堆中使用的梯度积累模式.
-- 阶段19课时47课时,你将分数的检查点格式进行分析.
-- 第19阶段课时48涵盖了测试模型的分布式训练堆.
+- 原版 lm-evaluation-harness，作为生产级参考，规模大得多但形态相同。
+- HuggingFace 的 lighteval，同一契约的另一种实现。
+- 第 19 阶段第 46 课讲解训练栈中使用的梯度累积模式，该栈正是框架评分的对象。
+- 第 19 阶段第 47 课讲解你所评分的 checkpoint 格式；把 checkpoint 的哈希固定在排行榜中。
+- 第 19 阶段第 48 课讲解产生被测模型的分布式训练栈。

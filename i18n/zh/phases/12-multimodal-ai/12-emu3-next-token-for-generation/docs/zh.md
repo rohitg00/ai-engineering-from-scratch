@@ -1,131 +1,131 @@
-# 图片和视频生成的下一个预测
+# Emu3：用下一词预测实现图像与视频生成
 
-> 据报道,该研究结果将在2024年9月推出. 单个Llama式单个解码器变压器,仅训练在下一个代码预测目标,通过文本+VQ图像代码+3DVQ视频代码的统一词汇,在图像生成方面击败了SDXL和感知方面击败了LLaVA-1.6. 没有损. 没有传播时间表. 无类型指导在推断质量时使用,但核心培训目标是预测下一个标志,教师强迫. 发表在"自然"杂志上. 这一课程上讲了Emu3论文,为什么一个更好的代币加量是你所需要的,
+> BAAI 的 Emu3(Wang et al.,2024 年 9 月)是本应终结扩散模型与自回归模型之争的 2024 年成果。它是一个单一的 Llama 风格 decoder-only Transformer,仅在下一词预测目标上训练，在文本 + VQ 图像 token + 3D VQ 视频 token 的统一词表上进行，在图像生成上击败了 SDXL,在感知上击败了 LLaVA-1.6。没有 CLIP 损失，没有扩散调度。推理时使用 classifier-free guidance 提升质量，但核心训练目标是带 teacher forcing 的下一词预测。发表于 Nature。本课解读 Emu3 的核心论点——更好的分词器加规模就是你所需要的一切——并与扩散方法进行对比。
 
 **Type:** Learn
-**Languages:** Python (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
-**Prerequisites:** Phase 12 · 11 (Chameleon)
-**Time:** ~120 minutes
+**Languages:** Python(stdlib,3D 视频分词器数学 + 自回归采样器骨架)
+**Prerequisites:** Phase 12 · 11(Chameleon)
+**Time:** ~120 分钟
 
 ## 学习目标
 
-- 解释为什么Emu3的单损失下一个标志目标尽管长期以来一直认为,图像质量需要扩散.
-- 描述3D视频代码标记器:时间空间VQ代码簿是什么样子,为什么补丁跨度时间.
-- 进行Emu3与稳定射XL的比较 (训练计算,推断成本,质量上限).
-- 命名三个角色相同的Emu3模型播放:Emu3-Gen (图像基因),Emu3-Chat (感知),Emu3-Stage2 (视频基因).
+- 解释为什么尽管长期假设图像质量必须依赖扩散模型，Emu3 的单损失下一词目标仍然有效。
+- 描述 3D 视频分词器：时空 VQ 码本是什么样的，为什么 patch 要跨越时间维度。
+- 比较 Emu3 与 Stable Diffusion XL(训练算力、推理成本、质量上限)。
+- 说出同一个 Emu3 模型扮演的三种角色：Emu3-Gen(图像生成)、Emu3-Chat(感知)、Emu3-Stage2(视频生成)。
 
-## 问题
+## 问题所在
 
-传统的智慧到2024年:图像生成需要传播. 争论:分离式图像代币失去太多信息来重建细节, 稳定射,DALL-E 3,Imagen,Midjourney都使用某种形式的射. 马里昂 (课 12.11) 在小规模上部分驳斥了这一点,但在质量上并没有与SDXL相匹配.
+截至 2024 年的传统观念是：图像生成需要扩散模型。论据是：离散图像 token 会丢失太多信息以致无法重建细节，且自回归采样会在数千个 token 上累积误差。Stable Diffusion、DALL-E 3、Imagen、Midjourney 都使用某种形式的扩散。Chameleon(第 12.11 课)在小规模上部分否定了这一观点，但在质量上未能匹敌 SDXL。
 
-据称:在同一模型中,更好的视觉代币器+足够的规模+下一个代币损失 = 扩散击败图像生成.
+Emu3 正面攻击了这一论点。其主张是：更好的视觉分词器 + 足够的规模 + 下一词损失 = 在同一个模型中击败扩散的图像生成，同时还能做感知。
 
-两年后,开源统一代家族 (Emu3,Show-o,Janus-Pro,Transfusion) 是研究的默认路径;生产边界模型似乎使用一些变体.
+这一赌注在发表时颇具争议。两年后，开源的统一生成家族(Emu3、Show-o、Janus-Pro、Transfusion)已成为研究界的默认路径；生产级前沿模型似乎也在使用其某种变体。
 
-## 概念
+## 核心概念
 
-### 电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子电子
+### Emu3 分词器
 
-基本成分是视觉代币器.Emu3训练一个定制 IBQ类代币器 (反瓶定量器,SBER-MoVQGAN家族) 每代币的分辨率降低8x8.一个512x512图像成为64x64 = 4096代币,代码书大小32768.
+关键要素是视觉分词器。Emu3 训练了一个自定义的 IBQ 类分词器(Inverse Bottleneck Quantizer,属 SBER-MoVQGAN 家族)，每个 token 降低 8x8 分辨率。一张 512x512 图像变成 64x64 = 4096 个 token,码本大小为 32768。
 
-这比Chameleon的1024个代币大于512x512个代币,但每代币价格更便宜 (更小的代码簿查找,更简单的代码).关键指标:重建PSNR在30.5dB,与稳定扩散的连续潜伏空间在32dB竞争.
+这比 Chameleon 在 K=8192 下对 512x512 图像的 1024 个 token 更大，但每个 token 的成本更低(码本查找更小，编解码器更简单)。关键指标：重建 PSNR 达 30.5 dB,与 Stable Diffusion 在 32 dB 的连续潜空间相当。
 
-视频:一个3DVQ代码器将空间时间补丁 (4x4x4像素) 编码为一个整数.在8FPS的4s剪辑有32个;在256x256的4x空间和4x时间缩小时,代码数量为 (256/4) * (256/4) * (32/4) = 64 * 64 * 8 = 32,768代币.
+对于视频：3D VQ 分词器将一个时空 patch(4x4x4 像素)编码为一个整数。一段 8 FPS 的 4 秒剪辑有 32 帧；在 256x256 分辨率下，空间上缩小 4 倍、时间上缩小 4 倍，token 数量为 (256/4) * (256/4) * (32/4) = 64 * 64 * 8 = 32,768 个 token。
 
-标器质量是天花板. 标器的贡献部分是"我们培养了一个非常好的标器".
+分词器质量就是上限。Emu3 的贡献部分在于“我们训练了一个非常好的分词器”。
 
-### 单次损失培训
+### 单损失训练
 
-3使用一个目标:在文本代币,2D图像代币和3D视频代币中分享词汇中的下一个代币预测.训练期间,重量乘以特定模式的因素来平衡贡献,但损失函数是相同的.
+Emu3 只用一个目标：在跨越文本 token、2D 图像 token 和 3D 视频 token 的共享词表上进行下一词预测。训练时权重会乘以模态特定的系数以平衡各模态的贡献，但损失函数完全相同。
 
-搭载混合物:
-- 图片来源: `<text caption> <image> image_tokens </image>`
-- 图像感知:`<image> image_tokens </image> <question> text_tokens`
-- 视频:`<text caption> <video> video_tokens </video>`
-- 视频感知:类似.
-- 仅仅是文字:标准NTP.
+训练数据混合包括：
+- 图像生成： `<text caption> <image> image_tokens </image>`
+- 图像感知： `<image> image_tokens </image> <question> text_tokens`
+- 视频生成： `<text caption> <video> video_tokens </video>`
+- 视频感知： 类似。
+- 纯文本： 标准的 NTP。
 
-模型学习在数据分布中发射图像代币与文字代币的时间.`<image>`标签
+模型从数据分布中学习何时输出图像 token 而非文本 token。生成能力源于模型在 `<image>` 标签之后预测图像 token。
 
-### 无分类器的指导和温度
+### Classifier-free guidance 与温度
 
-通过无分类器指导 (CFG) 进行推断,自动降低图像生成变得更好. Emu3使用它:生成两次,一次使用全标题,一次使用空标题,混合与指导权重 (典型的3.0-7.0).这是同样的CFG技巧传播使用,借用自动降低设置.
+自回归图像生成在推理时使用 classifier-free guidance(CFG)会显著提升质量。Emu3 就是这样做的：生成两次，一次用完整描述，一次用空描述，以引导权重(典型为 3.0-7.0)混合 logits。这与扩散模型使用的 CFG 技巧相同，只是被借鉴到了自回归场景。
 
-温度是重要的:太高,艺术品;太低,模式崩.
+温度很重要：太高会有伪影；太低会模式坍缩。Emu3 推荐的温度是感知用 1.0,图像生成用 0.8。
 
-### 三个角色,一个模型
+### 一个模型，三种角色
 
-作为三个功能不同的API,但有一个基本的重量组:
+Emu3 以三个功能不同的 API 形式发布，但底层是同一套权重：
 
-- 输入文字,输出图像代币.
-- 输入图像 (代币),输出文本.
-- 输入文本或视频,输出文本或视频.
+- Emu3-Gen。图像生成。输入文本，输出图像 token。
+- Emu3-Chat。VQA 与图像描述。输入图像(token),输出文本。
+- Emu3-Stage2。视频生成与视频 VQA。输入文本或视频，输出文本或视频。
 
-没有具体任务的头,只是不同的提示模板,相同的检查点.
+没有任务特定的头。只有不同的提示模板。同一个 checkpoint。
 
-### 标准标志
+### 基准测试
 
-根据Emu3论文 (2024年9月):
+来自 Emu3 论文(2024 年 9 月)：
 
-- 图像生成:在MJHQ-30K FID (5.4 vs 5.6) 上击败了SDXL,GenEval整体 (0.54 vs 0.55 统计),以及Deep-Eval的复合平衡.
-- 图像感知:在VQAv2 (75.1vs72.4) 上超过LLaVA-1.6并且在MMMU上大致匹配.
-- 视频生成:在竞争性FVD中,与 Sora时代公开标记的模型,进行4秒的录像质量.
+- 图像生成：在 MJHQ-30K FID 上击败 SDXL(5.4 vs 5.6),在 GenEval 总分上(0.54 vs 0.55——统计上打平)，在 Deep-Eval 的综合评分上大致持平。
+- 图像感知：在 VQAv2 上击败 LLaVA-1.6(75.1 vs 72.4),在 MMMU 上大致持平。
+- 视频生成：4 秒剪辑的质量在 FVD 上与 Sora 时代公开评测的模型具有竞争力。
 
- Emu3 交易一个点在这里,一个点在那里,但"下一个代币预测是你需要的"的说法可以通过各种方式辩护.
+这些数字并非处处领先——Emu3 在这里赢一点，在那里输一点——但“下一词预测就是你所需要的一切”这一主张在各模态上是站得住脚的。
 
-### 计算成本
+### 算力成本
 
-基于7B参数模型的300亿多模特代币,Emu3训练.GPU小时与Llama-2-7B预训练 (A100级上的2k-4kGPU年) 差不多相似.像Stable Diffusion 3这样的扩散模型在类似的预算中训练,但需要单独的文本编码器和更复杂的管道.
+Emu3 使用 7B 参数模型在约 3000 亿多模态 token 上训练。GPU 时数大致相当于 Llama-2-7B 预训练(A100 级硬件上 2k-4k GPU 年)。Stable Diffusion 3 等扩散模型在类似预算下训练，但需要单独的文本编码器和更复杂的流水线。
 
-在推断时,Emu3 比每张图像的SDXL慢:4096个图像代币30次/秒为每张512x512图像的2分钟,而SDXL则为2-5秒.投机解码和KV缓存优化缩小了差距,但并没有关闭它.autoregressive图像代码是计算重的;这是常设的交易.
+推理时，Emu3 每张图像比 SDXL 慢：4096 个图像 token 以 30 tok/s 计算约为每张 512x512 图像 2 分钟，而 SDXL 只需 2-5 秒。投机解码和 KV-cache 优化能缩小差距但无法消除。自回归图像生成是算力密集型的；这是一个长期的权衡。
 
-### 为什么这很重要
+### 为什么重要
 
-如果下一个代币预测尺度匹配图像生成的扩散,统一模型路径 (一个损失,一个脊柱,任何模式) 是可行的.未来模型不需要单独的文本编码器,单独的扩散计划器,单独的VAE.一个变压器,一个代币器每一种模式,规模.
+Emu3 的深层贡献是概念性的。如果下一词预测能扩展到在图像生成上匹敌扩散模型，那么统一模型路径(一个损失、一个骨干、任意模态)就是可行的。未来的模型不需要单独的文本编码器、单独的扩散调度器、单独的 VAE。一个 Transformer,每种模态一个分词器，再加上规模。
 
-华宇公司的公司在中国的实验室 (BAAI,DeepSeek) 发布了在这个方向的更积极的信息,
+Show-o、Janus-Pro 和 InternVL-U 都基于或挑战这一论点。到 2025 年，中国的实验室(BAAI、DeepSeek)在这个方向上的发表比美国实验室更为积极。
 
 ```figure
 l5-emu3-next-token
 ```
 
-## 用它
+## 动手使用
 
-`code/main.py`制造两个玩具:
+`code/main.py` 构建了两个玩具组件：
 
-- 根据2D对3DVQ代码符号计算器 (分辨率,补丁,剪辑_长度,FPS),计算图像对视频代码符号计算.
-- 具有无分类器的温度指导的自动降低图像标记样本器.
+- 一个 2D 与 3D VQ 分词器 token 数计算器：给定(分辨率、patch、clip_length、FPS),计算图像与视频的 token 数。
+- 一个带 classifier-free guidance 的温度控制自回归图像 token 采样器。
 
-根据Emu3的配方,CFG的实施与Emu3的配方相匹配.
+CFG 实现遵循 Emu3 的配方——以引导权重混合条件与无条件 logits。
 
-## 运送它
+## 交付
 
-这一课产生了`outputs/skill-token-gen-cost-analyzer.md`鉴于产品生成规格 (图像或视频,目标分辨率,质量级别,延迟预算),它计算了代币数量,推断成本,并选择了Emu3家族与扩散.
+本课产出 `outputs/skill-token-gen-cost-analyzer.md`。给定一份生成产品规格(图像或视频、目标分辨率、质量层级、延迟预算)，它会计算 token 数量、推理成本，并在 Emu3 家族与扩散模型之间做出选择。
 
-## 运动
+## 练习
 
-1. 根据 Emu3 的数据,每一个512x512图像的数值为4096个代币,每一个图像的数值为8x8个.
+1. Emu3 在 8x8 缩减下为每张 512x512 图像生成 4096 个 token。计算 1024x1024 和 2048x2048 下的等效值。推理延迟会发生什么变化？
 
-2. 阅读Emu3视频标记器3.3节. 描述3DVQ补丁形状,以及为什么它是4x4x4而不是8x8x1.
+2. 阅读 Emu3 第 3.3 节关于视频分词器的内容。描述 3D VQ patch 的形状，以及为什么是 4x4x4 而不是 8x8x1。
 
-3. 没有分类器的指导权重5.0对3.0:什么视觉效果?`code/main.py`现在,我们要去.
+3. Classifier-free guidance 权重 5.0 与 3.0 相比有什么视觉效果？在 `code/main.py` 中追踪相关数学。
 
-4. 计算Emu3-7B的FLOP训练,以300B代币进行比较.
+4. 计算 Emu3-7B 在 3000 亿 token 下的训练 FLOPs,并与 Stable Diffusion 3 比较。哪个训练成本更高？
 
-5. 对于FID而言,Emu3比SDXL更好,但对于VQAv2而言与专业VLM而言,不一样.
+5. Emu3 在 FID 上击败 SDXL,但在 VQAv2 上却比不过专用 VLM。解释为什么统一损失方法在不同基准上与专用模型相比展现出不同的优势。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|------------------------|
-| Next-token prediction | "NTP" | Standard autoregressive loss: predict token[i+1] given token[0..i]; works for every modality when tokenized |
-| IBQ tokenizer | "Inverse bottleneck quantizer" | A class of VQ-VAE with larger codebooks (32768+) and better reconstruction than Chameleon's |
-| 3D VQ | "Spatiotemporal quantizer" | Codebook indexed by (time, row, col); one token covers a 4x4x4 pixel cube |
-| Classifier-free guidance | "CFG" | Mix conditional and unconditional logits with weight gamma; boosts image quality at inference |
-| Unified vocabulary | "Shared tokens" | Text + image + video all draw from the same integer space; model predicts whichever modality comes next |
-| MJHQ-30K | "Image gen benchmark" | Midjourney-quality benchmark with 30k prompts; Emu3 reports FID here |
+| 下一词预测 | "NTP" | 标准自回归损失：给定 token[0..i] 预测 token[i+1];只要完成分词，适用于所有模态 |
+| IBQ 分词器 | "Inverse bottleneck quantizer" | 一类 VQ-VAE,码本更大(32768+),重建质量优于 Chameleon 的 |
+| 3D VQ | "时空量化器" | 码本按(时间，行，列)索引；一个 token 覆盖 4x4x4 像素立方体 |
+| Classifier-free guidance | "CFG" | 以权重 gamma 混合条件与无条件 logits;推理时提升图像质量 |
+| 统一词表 | "共享 token" | 文本 + 图像 + 视频都来自同一整数空间；模型预测接下来出现的任意模态 |
+| MJHQ-30K | "图像生成基准" | 使用 30k 提示词的 Midjourney 质量基准；Emu3 在此报告 FID |
 
-## 进一步阅读
+## 延伸阅读
 
 - [Wang et al. — Emu3: Next-Token Prediction is All You Need (arXiv:2409.18869)](https://arxiv.org/abs/2409.18869)
 - [Sun et al. — Emu: Generative Pretraining in Multimodality (arXiv:2307.05222)](https://arxiv.org/abs/2307.05222)

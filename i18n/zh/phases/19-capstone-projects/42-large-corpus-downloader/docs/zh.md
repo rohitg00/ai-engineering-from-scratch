@@ -1,6 +1,6 @@
-# 大型体体下载器
+# 大规模语料库下载器
 
-> 训练语言模型的开始是第一步前进之前. 身体必须登陆磁盘, 解压缩, 减复, 并且可以地址, 简历故事已经完成, 这一课构建了一个流媒体下载器, 拉压缩的碎片, 通过Zstandard飞行中解压缩, 通过 MinHash加上本地敏感的哈希,
+> 训练语言模型在第一次前向传播之前很早就开始了。语料库必须先落到磁盘上，完成解压、去重，并且可寻址，还要在网络在 4% 时断开之前就把断点续传方案准备好。本课构建一个流式下载器：拉取压缩分片，用 Zstandard 即时解压，通过 MinHash 加局部敏感哈希（LSH）对近重复文档进行指纹识别，并写出管线其余部分可以信赖的分片清单（manifest）。
 
 **Type:** Build
 **Languages:** Python
@@ -9,20 +9,20 @@
 
 ## 学习目标
 
-- 通过远程传输`urllib`缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,缩,`zstandard`没有缓冲整个文件在内存.
-- 通过发出HTTP恢复部分下载`Range`要求对验证的字节抵消.
-- 建立一个每份文件的MINHASH签名,然后用LSH它,
-- 发出内容哈希,字节大小,文件数量和裁决的分片说明.
+- 使用 `urllib` 流式读取远程分片，并用 `zstandard` 解压，而不把整个文件缓冲在内存中。
+- 通过对已验证的字节偏移发起 HTTP `Range` 请求来恢复中断的下载。
+- 为每个文档构建 MinHash 签名，并用 LSH 分桶，使近重复文档发生碰撞。
+- 输出包含内容哈希、字节大小、文档数量和去重判定结果的分片清单。
 
-## 问题
+## 问题所在
 
-网络的排放率下降到41%,脚本以一个`urllib`只有一个小时,你会发现一个错误,因为你已经完成了一个错误,所以你必须把它重新编写.`requests.get`让它生长牙.
+第一次在 200 GB 语料库上训练时，网络在 41% 处断开，脚本以一个 `urllib` 异常退出。第二次在 78% 处断开。到 99% 时你已经重写了三次循环。从第一分钟起就必须为两类失败做设计：部分下载的恢复和重复文档的移除。两者都有众所周知的解决方案；两者却常常被跳过，因为管线最初只是单行的 `requests.get` 调用，后来才长出了獠牙。
 
-简历是一个HTTP问题.服务器必须尊重`Range`如果代码和文件差距甚至是1字节,恢复下载会写垃圾,并且体积会以只有在代码化过程中出现的方式被破坏.
+恢复是一个 HTTP 问题。服务器必须支持 `Range`，客户端必须对照磁盘上的记录跟踪已验证的偏移量，而且该偏移量必须在进程崩溃后仍然存活。如果偏移量和文件哪怕相差一个字节，恢复的下载就会写入垃圾数据，语料库以一种只有在分词阶段才暴露出来的方式被损坏。
 
-排版是一个签名问题. 精确的hash排版缺失了近于排版:同一维基百科文章显示有三个不同的单元脚本,相同的代码文件具有不同的许可标题,同一博客帖子每个链接都有跟踪参数. 微软和LSH以线性成本捕获这些. 成本是每份文件一个签名和每份签名一个桶查找.
+去重是一个签名问题。精确哈希去重会漏掉近重复：同一篇 Wikipedia 文章带着三种不同的模板页脚出现，同一个代码文件带着不同的许可证头，同一篇博客文章的每个链接上都带有一个追踪参数。MinHash 加 LSH 能以亚线性代价捕获这些。代价是每个文档一个签名，每个签名一次桶查询。
 
-## 概念
+## 核心概念
 
 ```mermaid
 flowchart TD
@@ -41,98 +41,98 @@ flowchart TD
   Manifest --> Done[Shard manifest emitted]
 ```
 
-### 流媒体`urllib`
+### 使用 `urllib` 进行流式处理
 
-标准图书馆`urllib.request.urlopen`返回一个文件像的对象.`zstandard.ZstdDecompressor().stream_reader`通过解压缩器,字节从网络流入文档代码器,而不会在内存中实现压缩的碎片或解压缩的碎片.唯一的内存成本是线路缓冲器,当前文档的 MinHash 签名和LSH 指数.
+标准库的 `urllib.request.urlopen` 返回一个文件类对象。把它包进 `zstandard.ZstdDecompressor().stream_reader` 中，字节就从网络流经解压器进入文档迭代器，而压缩分片和解压后的分片都不会完整地驻留在内存中。唯一的内存开销是行缓冲区、当前文档的 MinHash 签名以及 LSH 索引。
 
-### 简历`Range`
+### 使用 `Range` 实现断点续传
 
-下载器每块文件写出两个文件:`.partial.json`检查站,检查站记录`verified_bytes`现在`expected_size`现在`sha256_prefix`(计算在第一个`verified_bytes`在启动时,下载器读取检查点,重新计算`sha256_prefix`如果哈希错误,则部分被丢弃,下载从字节零重新启动.沉默的腐败是不可能的,因为验证的字节被检查,而不是假设.
+下载器为每个分片写两个文件：分片本身和一个 `.partial.json` 检查点。检查点记录 `verified_bytes`、`expected_size`、`sha256_prefix`（对前 `verified_bytes` 字节计算），以及源 URL。启动时，下载器读取检查点，对磁盘上的字节重新计算 `sha256_prefix`，只有在重算的哈希匹配时才恢复下载。如果哈希不对，就丢弃部分文件，从字节零重新开始下载。静默损坏是不可能的，因为已验证的字节是被检查过的，而不是假定的。
 
-### 和LSH
+### MinHash 加 LSH
 
-据MinHash估计,在固定空间中两个集合的Jaccard相似性.对于一个文档,集合是其文本的带 (重叠的n-克拉).`k`两个文件具有Jaccard相似性 `s`没有任何可能.`s`任何单一的签名部分都得以达成一致.
+MinHash 在固定空间内估计两个集合的 Jaccard 相似度。对文档而言，集合是其文本的 shingle（重叠 n-gram）。签名是 `k` 个最小哈希值，每个独立哈希函数一个。Jaccard 相似度为 `s` 的两个文档，在签名的任一单个分量上达成一致的概率是 `s`。
 
- LSH 然后组合了`k`组件`b`频段`r`排列,每个行,`k = b * r`两份文件至少在一个带中碰撞,`1 - (1 - s^r)^b`值值的值`s`你调音了`(b, r)`典型的体积减产的门值是`s = 0.8`通过LSH研究文献来获取`k = 128`现在`b = 32`现在`r = 4`现在,我们要去.
+然后 LSH 把这 `k` 个分量分成 `b` 个 band，每个 band `r` 行，其中 `k = b * r`。两个文档至少在一个 band 中碰撞的概率是 `1 - (1 - s^r)^b`，这在 `s` 的取值附近形成一个锐利的阈值，而 `(b, r)` 正是你调节的参数。典型语料库去重的阈值是 `s = 0.8`，LSH 研究文献用 `k = 128`、`b = 32`、`r = 4` 达到这一阈值。
 
-### 作为合同的碎片表
+### 分片清单作为契约
 
-只有下载器的可持续输出是表格. 文件表包含每个分片的URL,解压缩字节数量,文件数量,除除除后的独特文件数量,以及最后的分片文件的 sha256. 后游代币化读取表格,而不是目录列表. 如果一个碎片缺失或其sha256是错误的,说明书告诉下一个阶段拒绝开始. 文件表是"数据下载"和"数据下载和可验证"之间的决定边缘.
+下载器唯一持久的输出是清单。清单为每个分片保存：URL、解压后的字节数、文档数、去重后的唯一文档数，以及最终分片文件的 sha256。下游分词读取的是清单，而不是目录列表。如果某个分片缺失或其 sha256 不对，清单会告知下一阶段拒绝启动。清单是"数据已下载"与"数据已下载且已验证"之间的分界线。
 
 ```figure
 cap-corpus-downloader
 ```
 
-## 建立它
+## 构建它
 
-`code/main.py`执行:
+`code/main.py` 实现了：
 
-- `ShardPlanner`- 阅读一个分片URL列表并生成计划的表格输入.
-- `StreamingDownloader`- 开启一个`urllib`随选的流量`Range`文件的编写,更新文件.`.partial.json`在每一个部分检查点,并验证了简历上的 Sha256 序列.
-- `ZstdDocIterator`- 将文件类型的流程卷入`zstandard.ZstdDecompressor`并且每行产生一个文件.
-- `MinHasher`- 产生了`k`- 用固定式种类的字符串的组件签名.
-- `LSHIndex`- 根据乐队的签名,报告碰撞.
-- `Dedup`- 结合哈希器和索引来标记每个文件`keep`或`near_duplicate`配合的碎片身份证.
-- `ManifestWriter`- 收集每股统计数据,并写`manifest.json`现在,我们要去.
+- `ShardPlanner` - 读取分片 URL 列表并生成计划中的清单条目。
+- `StreamingDownloader` - 打开一个带可选 `Range` 的 `urllib` 流，写入临时文件，每处理一个 chunk 就更新 `.partial.json` 检查点，并在恢复时验证 sha256 前缀。
+- `ZstdDocIterator` - 用 `zstandard.ZstdDecompressor` 包装文件类流，每行产出一个文档。
+- `MinHasher` - 使用固定的一组哈希种子，为字符串生成 `k` 个分量的签名。
+- `LSHIndex` - 按 band 对签名分桶并报告碰撞。
+- `Dedup` - 组合哈希器和索引，为每个文档标注 `keep` 或 `near_duplicate`，以及碰撞对应的分片 id。
+- `ManifestWriter` - 汇总每个分片的统计信息并写出 `manifest.json`。
 
-文件的底部的一个演示,构建了一个小型的合成体,`zstandard`通过一个`file://`查看下面的文件,
+文件底部的演示会在磁盘上构建一个小型合成语料库，用 `zstandard` 压缩它，通过 `file://` URL 下载，执行去重，并打印清单。
 
-运行它:
+运行它：
 
 ```bash
 python3 code/main.py
 ```
 
-脚本从零开始,打印一个显而易见的概述.
+脚本以零退出并打印清单摘要。
 
 ## 生产模式
 
-四个模式将这个课程扩展到真正的体体.
+四个模式可以把本课扩展到真实语料库。
 
-**Checkpoint before write.**其他`.partial.json`必须是`fsync`否则电源损失会逆转顺序:磁盘上的碎字节,检查点没有它们,下一个简历认为它有较少的验证字节,复制后音字节破坏了文件.检查点先,然后写.这是与写前日志相同的纪律.
+**先写检查点再写数据。** 在字节被追加到分片之前，`.partial.json` 必须先被 `fsync`。否则断电会颠倒顺序：分片字节在磁盘上，检查点里却没有，下次恢复时它相信自己拥有的已验证字节数比实际的少，重复的后缀字节会损坏文件。先写检查点，再写数据。这与预写日志（write-ahead log）是同一种纪律。
 
-**Sharded LSH index.**整个体积上单个LSH指数不适合200GB尺度的RAM.将LSH指数按第一个带哈希分区,存储在磁盘上的分区,并只查看新签名将登陆的分区.成本是每份文件读取额外的磁盘;优势是LSH指数不再是硬件内存上限.
+**分片化的 LSH 索引。** 在 200 GB 规模下，覆盖整个语料库的单一 LSH 索引装不进内存。按第一个 band 的哈希对 LSH 索引分区，把分区存储在磁盘上，新签名只需查询它将落入的那个分区。代价是每个文档多一次磁盘读取；好处是 LSH 索引不再是一个硬性的内存上限。
 
-**Tombstone, not delete.**丢弃的复制文件将被记录在公开文件中,并有判决.`near_duplicate`删除这些文件会失去复制文件和其持有者之间的联系. 墓碑将保留审计轨迹,
+**墓碑标记，而非删除。** 被丢弃的重复文档在清单中记录，判定结果为 `near_duplicate`，并附上与其碰撞的文档所在分片的 id。直接删除会丢失重复文档与其保留副本之间的关联。墓碑标记保留了审计线索，并允许下游处理在阈值上改变主意。
 
-**Per-shard sha256 in the manifest, plus a manifest sha256.**简单的内容是哈希的.下游阶段在信任每分片的输入之前验证了简单的哈希.没有了这个简单的内容是沉默的攻击表面:一个可以编辑一个文件的攻击者可以破坏整个管道.
+**清单中的每分片 sha256，外加清单本身的 sha256。** 清单本身也有一个内容哈希。下游阶段在信任每分片条目之前先验证清单哈希。没有这一层，清单就是静默的攻击面：能编辑单个文件的攻击者可以损坏整条管线。
 
-## 用它
+## 使用它
 
-生产模式:
+生产模式：
 
-- **Resume on every CI run.**导航运行器是短暂的. 下载器每次运行都必须承担一个新磁盘,`--cache-dir`是一流的旗.
-- **Dedup before tokenization.**代币化是昂贵的.在同一文件上运行两次是相同的损失曲线的两倍.
-- **Manifest as merge gate.**训练运行从一个固定的提交中读取表格 sha256.一个新的数据集版本需要一个新的表格提交.代码和数据之间的联系是 git,而不是民间.
+- **每次 CI 运行都要支持恢复。** CI 运行器是临时的。下载器必须假设每次运行都是全新磁盘，并从缓存或远程恢复。`--cache-dir` 是一个一等公民的标志。
+- **在分词之前去重。** 分词代价高昂。对同一文档运行两次分词，是为同一条损失曲线付出双倍代价。去重位于分词的上游，而不是下游。
+- **清单作为合并门禁。** 训练运行从固定的 commit 读取清单 sha256。新的数据集版本需要新的清单 commit。代码与数据之间的关联靠的是 git，而不是口口相传。
 
-## 运送它
+## 发布它
 
-`outputs/skill-corpus-downloader.md`实际项目中,将描述下载器的URL,检查点目录的布局,`(k, b, r)`现在,我们需要一个新的版本,
+`outputs/skill-corpus-downloader.md` 在真实项目中会描述哪些 URL 供给下载器、检查点目录如何布局、去重使用什么 shingle 宽度和 `(k, b, r)` 三元组，以及清单在版本控制中的位置。本课交付的是引擎。
 
-## 运动
+## 练习
 
-1. 添加一个`--shingle-width`标记并测量 dedup判决在宽度 3, 5, 9 变化.
-2. 通过嗅到魔术字节,将 gzip 支持添加到 zstd 旁边.下载器不应该要求调用者指定代码.
-3. 添加一个`--resume-only`通过 IC 帮助一个运行免于意外重新拉200GB.
-4. 移动LSH指数到架子或SQLite文件,测量吞吐量与内存变量.
-5. 添加一个表格 sha256 检查启动.如果磁盘上的表格与表格哈希不同意,下载器应该无法关闭`manifest.lock`现在,我们要去.
+1. 添加一个 `--shingle-width` 标志，并测量宽度为 3、5、9 时去重判定如何变化。为你选择的默认值辩护。
+2. 通过嗅探魔数（magic bytes），在 zstd 之外增加 gzip 支持。下载器不应要求调用者指定编解码器。
+3. 添加一个 `--resume-only` 模式：如果找不到检查点就拒绝开始全新下载。这在 CI 中很有用，可防止某次运行意外重新拉取 200 GB。
+4. 把 LSH 索引移到 shelf 或 sqlite 文件中，并测量其与内存版本的吞吐量对比。
+5. 在启动时添加清单 sha256 检查。如果磁盘上的清单与 `manifest.lock` 中的清单哈希不一致，下载器应当以失败方式关闭。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|------------------------|
-| Shard | "A file" | A self-contained slice of the corpus with its own sha256, used as the unit of resume and dedup |
-| MinHash signature | "Fingerprint" | A `k`-component sketch of a set, where each component is the minimum of one independent hash over the set |
-| LSH band | "Bucket" | A group of `r` signature components used as a single bucket key for collision detection |
-| Verified bytes | "Resume offset" | Bytes on disk whose sha256 prefix matches the checkpoint; the only safe offset to resume from |
-| Manifest | "The index" | The single durable record of what the downloader produced, including content hashes |
+| 分片（Shard） | "一个文件" | 语料库的一个自包含切片，带有自己的 sha256，用作恢复和去重的单元 |
+| MinHash 签名 | "指纹" | 一个 `k` 分量的集合略图，每个分量是对集合做一次独立哈希的最小值 |
+| LSH band | "桶" | 一组 `r` 个签名分量，用作碰撞检测的单个桶键 |
+| 已验证字节 | "恢复偏移量" | 磁盘上 sha256 前缀与检查点匹配的字节；唯一安全的恢复起点 |
+| 清单 | "索引" | 下载器产出的唯一持久记录，包括内容哈希 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [RFC 7233](https://datatracker.ietf.org/doc/html/rfc7233)-  HTTP 范围请求,简历协议
-- [Zstandard format specification](https://datatracker.ietf.org/doc/html/rfc8478)- 框架格式使流式解压安全
-- [MinHash](https://en.wikipedia.org/wiki/MinHash)- 这课中使用的签名家庭
-- [Locality-sensitive hashing](https://en.wikipedia.org/wiki/Locality-sensitive_hashing)- 减值门背后的带有权制度
-- 19 · 43阶段 - HDF5代币化体,下载器提供了
-- 19 · 44阶段 - - 运动体上的可西斯时间表
-- 19 · 45 阶段 - 消耗时间表的AMP循环
+- [RFC 7233](https://datatracker.ietf.org/doc/html/rfc7233) - HTTP Range 请求，即断点续传协议
+- [Zstandard 格式规范](https://datatracker.ietf.org/doc/html/rfc8478) - 使流式解压安全的帧格式
+- [MinHash](https://en.wikipedia.org/wiki/MinHash) - 本课使用的签名族
+- [Locality-sensitive hashing](https://en.wikipedia.org/wiki/Locality-sensitive_hashing) - 去重阈值背后的 banding 方案
+- Phase 19 · 43 - 下载器所供给的 HDF5 分词语料库
+- Phase 19 · 44 - 在该语料库上训练的 cosine 调度
+- Phase 19 · 45 - 消费该调度的 AMP 循环

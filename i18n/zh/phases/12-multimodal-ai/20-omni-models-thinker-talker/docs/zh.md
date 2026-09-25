@@ -1,139 +1,139 @@
-# 模:Qwen2.5 - 模和思想家-谈话者分区
+# 全模态模型：Qwen2.5-Omni 与 Thinker-Talker 分离架构
 
-> 2024年5月的GPT-4o产品演示不仅因为底层模型而造成破坏,而是由于产品形状语音接口, 开放生态系统在2024年和2025年期间一直在努力达到该产品表面. 文2.5-Omni (2025年3月) 是参考开放设计:一个Thinker (大型发达文字变压器) 加上一个Talker (并行发达语音变压器),通过流媒体语音代币连接. 迷你Omni简化了它,莫希匹配了它的延迟,GLM-4-Voice扩展到中国. 这一课讲述了"思考者-谈话者"架构和延迟预算,
+> GPT-4o 在 2024 年 5 月的产品演示之所以具有颠覆性，不在于底层模型，而在于产品形态——一个语音界面：你说话，模型看到摄像头所见的画面，并在 250 毫秒内回应。开放生态在 2024 年和 2025 年的其余时间里都在竞相达到这一产品形态。Qwen2.5-Omni（2025 年 3 月）是参考性的开源设计：一个 Thinker（大型文本生成 Transformer）加一个 Talker（并行的语音生成 Transformer），通过流式语音 token 相连。Mini-Omni 对其进行了简化，Moshi 匹配了它的延迟，GLM-4-Voice 将其扩展到中文。本课解读 Thinker-Talker 架构，以及让流式实时对话成为可能的延迟预算。
 
 **Type:** Build
-**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop)
-**Prerequisites:** Phase 12 · 19 (audio-LLMs), Phase 12 · 16 (any-to-any)
+**Languages:** Python（标准库，流式管线延迟模拟器 + VAD 循环）
+**Prerequisites:** Phase 12 · 19（audio-LLMs）、Phase 12 · 16（any-to-any）
 **Time:** ~180 minutes
 
 ## 学习目标
 
-- 分开推断管道为Thinker (文本推理) 和 Talker (言语合成) 并解释为什么并行流动工作.
-- 计算对话交互的时间到第一音频字节 (TTFAB) 预算,分别分别分别.
-- 描述TMRoPE在思考器内视觉,音频和文本中编码的时间一致位置.
-- 举个实时对话模式:半双,转换,全双.
+- 将推理管线拆分为 Thinker（文本推理）和 Talker（语音合成），并解释为什么并行流式处理可行。
+- 按组件逐一计算对话交互的 time-to-first-audio-byte（TTFAB）预算。
+- 描述 TMRoPE 在 Thinker 内部对视觉、音频和文本的时间对齐位置编码。
+- 说出三种实时对话模式：半双工、轮替对话、全双工。
 
 ## 问题
 
-实时语音助理必须做很多事情,快速:
+一个实时语音助手必须快速完成很多事情：
 
-1. 听用户说话,实时语音标记,声活动检测 (VAD) 知道他们什么时候说话.
-2. 选择性地看. 摄像头输入速度为2~4FPS, 流入智能思维器,
-3. 想想,根据谈话历史编写一个答案.
-4. 语音.合成音频代码,解码到波形,流向用户的扬声器.
+1. 听到用户。实时语音 token 化，用语音活动检测（VAD）判断用户何时说完。
+2. 可选地看到。以 2-4 FPS 的速率获取摄像头输入，与音频一起流入 Thinker。
+3. 思考。基于对话历史生成回复。
+4. 说话。合成音频 token，解码为波形，流式传输到用户扬声器。
 
-每一步都增加了延迟.对话感需要总回路 <500ms 以下,用户停止注意到延迟.GPT-4o声称约250ms.Moshi ~160ms.Qwen2.5-Omni ~350-500ms.
+每一步都会增加延迟。对话感要求总往返延迟 < 500 毫秒——低于这个阈值，用户就不会察觉到滞后。GPT-4o 宣称约 250ms，Moshi 约 160ms，Qwen2.5-Omni 约 350-500ms。
 
-任何组件都需要流动. 没有什么可以"分组所有然后解码".
+每个组件都必须流式处理。不能“先全部批处理，再解码”。
 
 ## 概念
 
-### 思考者和说话者
+### Thinker 与 Talker
 
-文2.5-Omni的分解:
+Qwen2.5-Omni 的分解方式：
 
-- 思考器:一个7B-80B文本生成变压器. 消耗交织的文本 + 图像 + 音频代码. 输出代表要说什么的文本代码.
-- 语音器:一个较小的语音生成变压器 (200M-1B).消耗了Thinker的文本输出代币以及最近的语音文本代币.输出了分离式语音代币 (残余VQ指数).
-- 语音解码器:是一款流浪形解码器 (SNAC,MoVQGAN家族),可实时将语音代码传输到音频样本.
+- Thinker：一个 7B-80B 的文本生成 Transformer。消费交错的文本 + 图像 + 音频 token，输出表示“说什么”的文本 token。
+- Talker：一个较小的语音生成 Transformer（200M-1B）。消费 Thinker 的文本输出 token 以及近期的语音上下文 token，输出离散语音 token（residual-VQ 索引）。
+- 语音解码器：一个流式波形解码器（SNAC、MoVQGAN 一族），实时地将语音 token 转换为音频采样。
 
-分离是重要的.思考者必须很大,才能有好推理.说话者可能很小,因为他的工作是当地的.
+这种分离很重要。Thinker 必须足够大才能有良好的推理能力。Talker 可以很小，因为它的任务是局部的——把文本转换为语音 token。更大的 Talker 并不会更有表现力，只会更慢。
 
-运行两者并行:
+两者并行运行：
 
-1. 思考器发出了文字符号.
-2. 发音者使用t_i (通过流媒体) 并发出语音标志s_i,s_{i+1}, ...,s_{i+k}.
-3. 语音解码器使用语音代码,
-4. 在Tanker在文字代号 t_{i+3}之前,Talker已经播放了 t_0..t_{i+2}.
+1. Thinker 输出文本 token t_i。
+2. Talker 消费 t_i（通过流式传输），并输出语音 token s_i、s_{i+1}、...、s_{i+k}。
+3. 语音解码器随语音 token 的到达即时消费并输出音频采样。
+4. 当 Thinker 处理到文本 token t_{i+3} 时，Talker 已经把 t_0..t_{i+2} 的音频流式输出了。
 
-### 时间对齐的多模态位置
+### TMRoPE — 时间对齐的多模态位置编码
 
-思考者需要从对话历史中集成图像框架 (达到,说,4FPS),音频框架 (达到50个框架/秒),以及文本.一个天真的序列顺序 (所有图像,然后所有音频,然后文本) 失去了时间排列.
+Thinker 需要整合图像帧（以约 4 FPS 到达）、音频帧（以每秒 50 帧到达）以及来自对话历史的文本。朴素的序列顺序（先所有图像、再所有音频、最后文本）会丢失时间对齐。
 
-TMRoPE将每个代币分配绝对时间标签.视觉代币在t=2.3s.音频代币在t=2.32s.用户的文字代币"停止"在t=2.35s. RoPE按时间标签旋转注意力;模型认为它们是暂时同步的.
+TMRoPE 为每个 token 分配绝对时间戳。t=2.3s 处的视觉 token，t=2.32s 处的音频 token，t=2.35s 处用户说的“停”的文本 token。RoPE 按时间戳旋转注意力，模型据此把它们视为时间上并发的。
 
-这就是"他挥手问候"的基础设施, 模型可以在同一概念时看到视频框架和音频.
+这是“他一边挥手一边说你好”能生效的基础设施——模型在同一个概念时刻看到视频帧和音频。
 
-### 流媒体语音合成
+### 流式语音合成
 
-语音代币必须流动.迷你Omni (Xie & Wu, 2024) 引入了"语音模型可以在流媒体中听到,思考,谈话":思维输出代币和谈话输出代币在同一序列中交互.思维执行下一个文本代币后,谈话器会发射.没有批量界限.
+语音 token 必须流式处理。Mini-Omni（Xie & Wu，2024）提出了“语言模型可以边听边在流式思考的同时说话”：Thinker 的输出 token 和 Talker 的输出 token 交错在同一条序列中。Talker 在 Thinker 提交下一个文本 token 时立即触发。没有批处理边界。
 
-莫希 (Défossez等,2024年10月) 是最快的开放实现. 160ms TTFAB在单个A100上.架构:单个7B变压器,在交替位置发出文字和语音代码,具有"内部单独语音"来分离思考流和语音流.这是有效的思考+谈话者与仔细训练融合成一个模型.
+Moshi（Défossez et al.，2024 年 10 月）是最快的开源实现。在单张 A100 上达到 160ms TTFAB。架构：单个 7B Transformer 在交替位置上输出文本 token 和语音 token，并利用一个“内心独白”将思考流与说话流分开。这实际上是把 Thinker + Talker 通过精心的训练融合成一个模型。
 
-### 和转变
+### VAD 与轮替对话
 
-语音活动检测在输入侧进行.
+语音活动检测在输入侧运行。有两种模式：
 
-- 半双:用户说话,模型听话.模型说话,用户听话.通过VAD沉默检测 (~200ms) 清晰的传递.
-- 双重:两者都可以同时说话.模型可以回频道 ("-") 或打断.更难.莫希支持这一点.
+- 半双工：用户说话时模型监听；模型说话时用户监听。通过 VAD 静音检测（约 200ms）进行清晰的交接。
+- 全双工：双方可以同时说话。模型可以插话反馈（“嗯嗯”）或打断。难度大得多。Moshi 支持这一模式。
 
-默认支持半双,通过沉默门进行转换. 完全双需要应用层处理.
+Qwen2.5-Omni 默认支持半双工，通过静音阈值实现轮替对话。全双工需要在应用层处理。
 
-### 文3-奥姆尼 (2025年11月)
+### Qwen3-Omni（2025 年 11 月）
 
-后者:Qwen3-80B Thinker,更大的Talker,改进了TMRoPE-v2. 延迟接近GPT-4o的250ms. 开放重量. 基板上的基准与双子 2.0 Live竞争.
+后继者。Qwen3-80B Thinker，更大的 Talker，改进的 TMRoPE-v2。延迟接近 GPT-4o 的 250ms。开放权重。在 OmniBench 上的基准成绩与 Gemini 2.0 Live 相当。
 
-### 生产延迟预算
+### 生产级延迟预算
 
-对于典型的流媒体互动:
+对于典型的流式交互：
 
-- 电话 -> 音频代码:40-80ms.
-- 在7B时,100-200ms,在70B时,更多.
-- 首先,一个思想家的短信代码:40ms.
-- 谈话器处理第一个文本代币:20ms.
-- 首次发言代码发行:40ms.
-- 剩余VQ解码:30ms.
-- 语音波形解码:50-80ms.
+- 麦克风 -> 音频 token：40-80ms。
+- Prefill（提示词 + 历史）：7B 下 100-200ms，70B 下要多得多。
+- Thinker 的首个文本 token：40ms。
+- Talker 处理首个文本 token：20ms。
+- 首批语音 token 提交：40ms。
+- Residual-VQ 解码：30ms。
+- 语音波形解码：50-80ms。
 
-总TTFAB:7B时320-510ms,70B时600-900ms.边界质量通常意味着70B+;因此边界延迟差距.
+总 TTFAB：7B 下 320-510ms，70B 下 600-900ms。前沿质量通常意味着 70B+，因此存在前沿延迟差距。
 
-### 标记率数学
+### Token 速率计算
 
-在16kHz语音和50Hz基语音代码时,输出每秒需要50个语音代码.说话者必须发射 ≥50个代码/秒才能跟上.在H100上典型的LLM吞吐量为30-80个代码/秒时,一个小的 (200-300M) 讲话器足够快;一个7B讲话器会落后.
+在 16kHz 语音、50 Hz 基础语音 token 的条件下，每秒输出需要 50 个语音 token。Talker 必须达到 ≥50 tok/s 才能跟上。在 H100 上典型的 LLM 吞吐量为 30-80 tok/s，一个小的（200-300M）Talker 足够快；而 7B 的 Talker 会跟不上。
 
-这就是为什么有小型专用Talker模型,而不是"只使用主模型".
+这就是为什么存在小型专用 Talker 模型，而不是“直接用主模型”。
 
 ```figure
 l5-thinker-talker
 ```
 
-## 用它
+## 使用
 
-`code/main.py`其他:
+`code/main.py`：
 
-- 模拟一个思想家-谈话者管道,
-- 计算TTFAB用于可配置的模型尺寸和微信样本率.
-- 显示半双转,与VAD沉默门.
+- 用模拟的 token 输出速率仿真 Thinker-Talker 管线。
+- 计算可配置模型大小和麦克风采样率下的 TTFAB。
+- 演示带 VAD 静音阈值的半双工轮替对话。
 
-## 运送它
+## 交付
 
-这一课产生了`outputs/skill-omni-streaming-budget.md`鉴于真实时语音产品的目标TTFAB和功能集 (视觉,双语,全双语),选择Qwen2.5-Omni,Qwen3-Omni,Moshi或Mini-Omni,并将Thinker/Speaker进行尺寸.
+本课产出 `outputs/skill-omni-streaming-budget.md`。给定一个实时语音产品的目标 TTFAB 和功能集（视觉输入、双语、全双工），从中选择 Qwen2.5-Omni、Qwen3-Omni、Moshi 或 Mini-Omni，并确定 Thinker/Talker 的规模。
 
-## 运动
+## 练习
 
-1. 在7B思考器和300M谈话器上,写出每个组件的延迟.
+1. 你的目标 TTFAB 是 300ms。在 7B Thinker 和 300M Talker 上，写出每个组件的延迟。
 
-2. Qwen2.5Omni使用TMRoPE.描述模型在 t=1s 时看到用户开始说话的提示,而相机在 t=1.2s 时捕获手势.
+2. Qwen2.5-Omni 使用 TMRoPE。描述在用户于 t=1s 开始说话、摄像头在 t=1.2s 捕捉到一个手势的提示中，模型看到的是什么。
 
-3. 支持全双重,模型需要在听话时发射音频. 建议一种教训数据格式来教导这一点.
+3. 全双工支持要求模型在监听的同时输出音频。提出一种能教会这一能力的训练数据格式。
 
-4. 阅读莫希的论文第4节. 描述"内在单词"的分离,以及为什么它避免了思想家和说话者分离.
+4. 阅读 Moshi 论文第 4 节。描述“内心独白”的分离方式，以及它为什么避免了 Thinker-Talker 拆分。
 
-5. 计算吞吐量预算:一个谈话器必须发射代币的速度是多少,以保持16kHz的语音速度在50基层代币/秒?
+5. 计算吞吐量预算：Talker 的 token 输出速度必须多快，才能跟上 16kHz 语音在 50 个基础层 token/秒下的需求？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|------------------------|
-| Thinker | "Reasoning brain" | Large text-generating transformer producing what to say |
-| Talker | "Speech-generating mouth" | Small transformer producing discrete speech tokens from Thinker's text |
-| TTFAB | "Latency budget" | Time-to-first-audio-byte: from user speech end to first audio sample out |
-| TMRoPE | "Time-aligned RoPE" | Position encoding using absolute timestamps across vision, audio, text |
-| Half-duplex | "Turn-taking" | User and model alternate; VAD silence detects user-done |
-| Full-duplex | "Simultaneous" | Model can speak and listen at the same time; backchannel capable |
-| Inner monologue | "Moshi separation" | Single-model design where thinking-stream and speaking-stream interleave |
+| Thinker | “推理大脑” | 生成“说什么”的大型文本生成 Transformer |
+| Talker | “生成语音的嘴巴” | 从 Thinker 的文本生成离散语音 token 的小型 Transformer |
+| TTFAB | “延迟预算” | Time-to-first-audio-byte：从用户语音结束到第一个音频采样输出 |
+| TMRoPE | “时间对齐的 RoPE” | 使用绝对时间戳、跨越视觉/音频/文本的位置编码 |
+| 半双工 | “轮替对话” | 用户与模型交替说话；VAD 静音检测判断用户说完 |
+| 全双工 | “同时进行” | 模型可以同时说话和监听；具备插话反馈能力 |
+| 内心独白 | “Moshi 的分离方式” | 思考流与说话流交织的单模型设计 |
 
-## 进一步阅读
+## 延伸阅读
 
 - [Xu et al. — Qwen2.5-Omni (arXiv:2503.20215)](https://arxiv.org/abs/2503.20215)
 - [Qwen Team — Qwen3-Omni (arXiv:2509.17765)](https://arxiv.org/html/2509.17765v1)

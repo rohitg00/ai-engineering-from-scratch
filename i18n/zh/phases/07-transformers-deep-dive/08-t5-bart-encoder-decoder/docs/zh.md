@@ -1,42 +1,42 @@
-# 编码器-解码器模型
+# T5、BART — 编码器-解码器模型
 
-> 编码器理解.编码器生成.把它们重新组合起来,你就能为输入 →输出任务构建模型:翻译,总结,重写,转录.
+> 编码器负责理解。解码器负责生成。把它们重新组合起来，你得到一个为输入 → 输出任务而生的模型：翻译、摘要、改写、转写。
 
 **Type:** Learn
 **Languages:** Python
-**Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT), Phase 7 · 07 (GPT)
-**Time:** ~45 minutes
+**Prerequisites:** 阶段 7 · 05（完整 Transformer）、阶段 7 · 06（BERT）、阶段 7 · 07（GPT）
+**Time:** 约 45 分钟
 
-## 问题
+## 问题所在
 
-只有解码器的GPT和只有编码器的BERT每个都为不同的目标而沿着2017年的架构.
+仅解码器的 GPT 和仅编码器的 BERT 各自为了不同目标对 2017 年的架构做了裁剪。但很多任务天然就是输入-输出形式的：
 
-- 翻译:英语 → 法语.
-- 总结:5000个标记文章 →200个标记总结.
-- 语音识别:音频代码 →文字代码.
-- 结构化提取:散文 → JSON.
+- 翻译：英语 → 法语。
+- 摘要：5,000 token 的文章 → 200 token 的摘要。
+- 语音识别：音频 token → 文本 token。
+- 结构化抽取：散文 → JSON。
 
-编码器生成出口,在每一步都会交叉地关注该表示.训练在输出侧进行一个接一个.与GPT相同的损失,只是根据编码器输出条件.
+对于这些任务，编码器-解码器是最契合的结构。编码器为源文本生成一个稠密表示。解码器生成输出，并在每一步对该表示进行交叉注意力。训练是在输出侧进行的 shift-by-one。损失函数与 GPT 相同，只是以编码器输出为条件。
 
-现代游戏书的定义是两篇论文:
+两篇论文定义了现代玩法：
 
-1. **T5**"文本转移变换器".每一个NLP任务都被重构为文本输入,文本输出.单个架构,单个词汇库,单个损失.预训练在面具跨度预测 (输入中的腐败跨度,输出中解码它们).
-2. **BART**"双向和自动回归变压器". 否认自动编码器:通过多种方式 (混动,掩盖,删除,旋转) 破坏输入,请解码器重建原始.
+1. **T5**（Raffel 等，2019）。"Text-to-Text Transfer Transformer。" 每个 NLP 任务都被重构为文本进、文本出。单一架构、单一词表、单一损失。在掩码片段预测上进行预训练（破坏输入中的片段，在输出中将其还原）。
+2. **BART**（Lewis 等，2019）。"Bidirectional and Auto-Regressive Transformer。" 去噪自编码器：以多种方式破坏输入（打乱、掩码、删除、旋转），要求解码器重建原文。
 
-在2026年,编码器-解码器格式将继续存在输入结构的重要位置:
+到 2026 年，编码器-解码器格式仍然在输入结构很重要的场景中活跃：
 
-- 语 (语音 →文字).
-- 谷歌的翻译堆.
-- 一些代码完成/修复模型具有不同的文本和编辑结构.
-- 结构性推理任务的Flan-T5和变体.
+- Whisper（语音 → 文本）。
+- Google 的翻译系统。
+- 一些具有独立的上下文与编辑结构的代码补全 / 修复模型。
+- 用于结构化推理任务的 Flan-T5 及其变体。
 
-只有解码器赢得了关注点,但解码器从来没有消失.
+仅解码器模型抢走了聚光灯，但编码器-解码器从未消失。
 
-## 概念
+## 核心概念
 
 ![Encoder-decoder with cross-attention](../assets/encoder-decoder.svg)
 
-### 进而循环
+### 前向循环
 
 ```
 source tokens ─▶ encoder ─▶ (N_src, d_model)  ──┐
@@ -49,57 +49,57 @@ target tokens ─▶ decoder block                   │
               next-token logits
 ```
 
-重要的是,编码器每输入一次运行.解码器运行自动降低式,但在每一步都会交叉处理 *相同*编码器输出.缓存编码器输出是长输入的免费加快.
+关键在于，编码器对每个输入只运行一次。解码器自回归地运行，但在每一步都对*同一份*编码器输出做交叉注意力。缓存编码器输出对长输入来说是免费的加速。
 
-###        
+### T5 预训练 — 片段破坏
 
-选择输入的随机跨度 (平均长度3个代币,总数为15%). 替换每个跨度一个独特的哨兵:`<extra_id_0>`现在`<extra_id_1>`解码器只输出了被破坏的跨度,
+从输入中随机选取片段（平均长度 3 个 token，总计 15%）。用唯一的哨兵标记替换每个片段：`<extra_id_0>`、`<extra_id_1>` 等。解码器只输出被破坏的片段及其哨兵前缀：
 
 ```
 source: The quick <extra_id_0> fox jumps <extra_id_1> dog
 target: <extra_id_0> brown <extra_id_1> over the lazy
 ```
 
-具有竞争力,与MLM (BERT) 和前LM (UniLM) 在T5纸的缩.
+比预测整个序列的信号成本更低。在 T5 论文的消融实验中，与 MLM（BERT）和 prefix-LM（UniLM）相当。
 
-### 多噪音排斥
+### BART 预训练 — 多噪声去噪
 
-音系统试验了五种噪音功能:
+BART 尝试了五种加噪函数：
 
-1. 标志掩盖.
-2. 删除代码.
-3. 填写文字 (掩盖一个跨度,解码器插入了正确的长度).
-4. 换句话变化.
-5. 文件转换.
+1. Token 掩码。
+2. Token 删除。
+3. 文本填充（掩码一个片段，解码器插入正确长度的内容）。
+4. 句子置换。
+5. 文档旋转。
 
-结合文本填写+句子变换产生了最佳下游数字.解码器总是重建原始.BART的输出是完整的序列,而不仅仅是损坏的跨度,因此预训计算高于T5.
+文本填充 + 句子置换的组合产生了最好的下游指标。解码器始终重建原始序列。BART 的输出是完整序列，而不仅仅是被破坏的片段 — 因此其预训练计算量高于 T5。
 
 ### 推理
 
-采用GPT的相同的自动降低性生成. 贪/束/顶部采样应用.束搜索 (45) 是翻译和总结的标准,因为输出分布比聊天更窄.
+与 GPT 相同的自回归生成。贪婪 / 集束 / top-p 采样均适用。集束搜索（宽度 4–5）是翻译和摘要的标准做法，因为其输出分布比聊天更窄。
 
-### 2026年,每种变体何时选择
+### 2026 年各变体的适用场景
 
-| Task | Encoder-decoder? | Why |
+| 任务 | 用编码器-解码器？ | 原因 |
 |------|------------------|-----|
-| Translation | Yes, usually | Clear source sequence; fixed output distribution; beam search works |
-| Speech-to-text | Yes (Whisper) | Input modality differs from output; encoder shapes audio features |
-| Chat / reasoning | No, decoder-only | No persistent "input" — the conversation is the sequence |
-| Code completion | Usually no | Decoder-only with long context wins; code models like Qwen 2.5 Coder are decoder-only |
-| Summarization | Either works | BART, PEGASUS beat earlier decoder-only baselines; modern decoder-only LLMs match them |
-| Structured extraction | Either | T5 is clean because "text → text" absorbs any output format |
+| 翻译 | 通常用 | 清晰的源序列；固定的输出分布；集束搜索有效 |
+| 语音转文本 | 用（Whisper） | 输入模态与输出不同；编码器塑造音频特征 |
+| 聊天 / 推理 | 不用，仅解码器 | 没有固定的"输入" — 对话本身就是序列 |
+| 代码补全 | 通常不用 | 长上下文的仅解码器模型占优；Qwen 2.5 Coder 等代码模型都是仅解码器的 |
+| 摘要 | 都可以 | BART、PEGASUS 曾胜过早期仅解码器基线；现代仅解码器 LLM 已与之持平 |
+| 结构化抽取 | 都可以 | T5 很干净，因为"文本 → 文本"能吸收任何输出格式 |
 
-自2022年以来的趋势:仅解码器接管了以前拥有的任务,因为 (a) 通过提示将指示调节的仅解码器LLM将其通用到任何东西, (b) 一个架构比两种更容易, (c) RLHF假设一个解码器. 编码器-解码器在输入方式不同的地方 (演讲,图像) 或光束搜索质量在哪里有意义.
+约 2022 年以来的趋势是：仅解码器接管了编码器-解码器曾经擅长的任务，因为（a）经指令微调的仅解码器 LLM 可以通过提示泛化到任何任务，（b）单一架构比双架构更容易扩展，（c）RLHF 假设的是解码器。编码器-解码器在输入模态不同（语音、图像）或集束搜索质量至关重要的场景中得以留存。
 
 ```figure
 encoder-decoder
 ```
 
-## 建立它
+## 动手构建
 
-看到`code/main.py`我们将T5式的跨度腐败用于玩具体,这是这个课程中最有用的单一部分,因为它显示在每一个编码器-解码器预训练配方.
+参见 `code/main.py`。我们为一个玩具语料库实现 T5 风格的片段破坏 — 这是本课中最有用的单个部分，因为自那时起它出现在每一个编码器-解码器预训练方案中。
 
-### 步骤1:跨度腐败
+### 步骤 1：片段破坏
 
 ```python
 def corrupt_spans(tokens, mask_rate=0.15, mean_span=3.0, rng=None):
@@ -110,19 +110,19 @@ def corrupt_spans(tokens, mask_rate=0.15, mean_span=3.0, rng=None):
     ...
 ```
 
-目标格式是T5公约: `<sent0> span0 <sent1> span1 ...`损坏的输入将未变的代币与守望器代币交换到跨度位置.
+目标格式遵循 T5 约定：`<sent0> span0 <sent1> span1 ...`。被破坏的输入将未改变的 token 与片段位置上的哨兵 token 交错排列。
 
-### 步骤2:检查回路
+### 步骤 2：验证往返
 
-鉴于被破坏的输入和目标,重建原始句子.如果你的腐败是可逆的,前进通过是很清楚的.这是一个智力检查真正的训练从来没有这样做,但测试是便宜的,并捕获你的跨度账本中的一个-一个错误.
+给定被破坏的输入和目标，重建原始句子。如果你的破坏是可逆的，那么前向传播就是良定义的。这是一个健全性检查 — 真实训练从不这样做，但这个测试很廉价，能捕捉片段记录中的 off-by-one 错误。
 
-### 步骤3:BART噪音
+### 步骤 3：BART 加噪
 
-五个功能:`token_mask`现在`token_delete`现在`text_infill`现在`sentence_permute`现在`document_rotate`两种组合,然后显示结果.
+五个函数：`token_mask`、`token_delete`、`text_infill`、`sentence_permute`、`document_rotate`。组合其中两个并展示结果。
 
-## 用它
+## 使用它
 
-抱脸的参考:
+HuggingFace 参考实现：
 
 ```python
 from transformers import T5ForConditionalGeneration, T5Tokenizer
@@ -134,35 +134,35 @@ out = model.generate(**inputs, max_new_tokens=32)
 print(tok.decode(out[0], skip_special_tokens=True))
 ```
 
-任务名称进入输入文本.同样的模型处理数十项任务,因为每个任务都是输入和输出. 2026年,该模式已被指令调节的单独解码器模型普遍化,但T5先编码了它.
+T5 的技巧：任务名称进入输入文本。同一个模型处理几十种任务，因为每个任务都是文本进、文本出。到 2026 年，这一模式已被指令微调的仅解码器模型推广，但 T5 最先将其固化。
 
-## 运送它
+## 上线
 
-看到`outputs/skill-seq2seq-picker.md`技能选择编码器-解码器和解码器-仅用于新任务,因为输入输出结构,延迟和质量目标.
+参见 `outputs/skill-seq2seq-picker.md`。该技能在给定输入-输出结构、延迟和质量目标的情况下，为新任务在编码器-解码器与仅解码器之间做出选择。
 
-## 运动
+## 练习
 
-1. **Easy.**跑步`code/main.py`检查是否将非传密源代币与解码目标代码连接,复制原始.
-2. **Medium.**实施BART的方案`text_infill`噪音:用单个取代随机度`<mask>`解码器必须推断正确的跨度长度加上内容.
-3. **Hard.**精细调节`flan-t5-small`在一个微小的英语 →猪拉丁体 (200对). 测量蓝色在一个持久的50对的集. 进行比较与细调`Llama-3.2-1B`根据相同的数据,使用相同的计算.
+1. **简单。** 运行 `code/main.py`，对一个 30 token 的句子应用片段破坏，验证将非哨兵的源 token 与解码得到的目标片段拼接后能还原原句。
+2. **中等。** 实现 BART 的 `text_infill` 加噪：用单个 `<mask>` token 替换随机片段，解码器必须推断出正确的片段长度和内容。展示一个示例。
+3. **困难。** 在一个微型英语 → 儿童黑话（pig-Latin）语料库（200 对）上微调 `flan-t5-small`。在留出的 50 对测试集上测量 BLEU。与在相同数据、相同计算量下微调 `Llama-3.2-1B` 的结果进行比较。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|-----------------------|
-| Encoder-decoder | "Seq2seq transformer" | Two stacks: bidirectional encoder for input, causal decoder with cross-attention for output. |
-| Cross-attention | "Where source talks to target" | Decoder's Q × encoder's K/V. The only place encoder information enters the decoder. |
-| Span corruption | "T5's pretraining trick" | Replace random spans with sentinel tokens; decoder outputs the spans. |
-| Denoising objective | "BART's game" | Apply a noise function to the input, train the decoder to reconstruct the clean sequence. |
-| Sentinel token | "The `<extra_id_N>` placeholder" | Special tokens that tag corrupted spans in the source and re-tag them in the target. |
-| Flan | "Instruction-tuned T5" | T5 fine-tuned on >1,800 tasks; made encoder-decoder competitive at instruction-following. |
-| Beam search | "Decoding strategy" | Keep top-k partial sequences at each step; standard for translation/summarization. |
-| Teacher forcing | "Training-time input" | During training, feed the true previous output token to the decoder, not the sampled one. |
+| 编码器-解码器 | "Seq2seq transformer" | 两个堆栈：用于输入的双向编码器，以及带交叉注意力、用于输出的因果解码器。 |
+| 交叉注意力 | "源与目标交互的地方" | 解码器的 Q × 编码器的 K/V。编码器信息进入解码器的唯一途径。 |
+| 片段破坏 | "T5 的预训练技巧" | 用哨兵 token 替换随机片段；解码器输出这些片段。 |
+| 去噪目标 | "BART 的玩法" | 对输入施加噪声函数，训练解码器重建干净序列。 |
+| 哨兵 token | "`<extra_id_N>` 占位符" | 特殊 token，在源中标记被破坏的片段，并在目标中重新标记它们。 |
+| Flan | "指令微调的 T5" | 在超过 1,800 个任务上微调的 T5；使编码器-解码器在指令遵循上具备竞争力。 |
+| 集束搜索 | "解码策略" | 每一步保留 top-k 个部分序列；翻译/摘要的标准做法。 |
+| Teacher forcing | "训练时的输入" | 训练期间，将真实的上一个输出 token 而非采样得到的 token 喂给解码器。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Raffel et al. (2019). Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer](https://arxiv.org/abs/1910.10683)T5
-- [Lewis et al. (2019). BART: Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension](https://arxiv.org/abs/1910.13461)  
-- [Chung et al. (2022). Scaling Instruction-Finetuned Language Models](https://arxiv.org/abs/2210.11416) 飞行器T5.
-- [Radford et al. (2022). Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356) 语,可谓的2026代码器-解码器.
-- [HuggingFace `modeling_t5.py`](https://github.com/huggingface/transformers/blob/main/src/transformers/models/t5/modeling_t5.py)参考实施.
+- [Raffel 等 (2019). Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer](https://arxiv.org/abs/1910.10683) — T5。
+- [Lewis 等 (2019). BART: Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension](https://arxiv.org/abs/1910.13461) — BART。
+- [Chung 等 (2022). Scaling Instruction-Finetuned Language Models](https://arxiv.org/abs/2210.11416) — Flan-T5。
+- [Radford 等 (2022). Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356) — Whisper，2026 年标志性的编码器-解码器。
+- [HuggingFace `modeling_t5.py`](https://github.com/huggingface/transformers/blob/main/src/transformers/models/t5/modeling_t5.py) — 参考实现。

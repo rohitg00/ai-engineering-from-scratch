@@ -1,6 +1,6 @@
-# 国际国际贸易协会 (FIPA-ACL) 的遗产和演讲法
+# FIPA-ACL 与言语行为的传承
 
-> 在MCP之前,A2A之前,有FIPA-ACL. 2000年,IEEE智能物理代理基金会批准了一种具有二十个执行语言,两个内容语言和一组互动协议的代理通信语言. 它从行业中消失了,因为对网络的ontology上层费用太重了,但多代理系统的LLM复兴正在地重新实现相同的想法, 这一课将FIPA-ACL认真读取,以便您可以看到2026年协议的决定是什么,是什么新奇,
+> 在 MCP 之前，在 A2A 之前，还有 FIPA-ACL。2000 年，IEEE 智能物理Agent基金会（Foundation for Intelligent Physical Agents）批准了一种Agent通信语言，包含二十种施为词（performatives）、两种内容语言以及一组交互协议——contract net、subscribe/notify、request-when。它在工业界逐渐消失，因为本体（ontology）负担对 Web 来说太重了，但由 LLM 驱动的多Agent系统复兴正在悄然重新实现同样的思想，只是去掉了形式化语义：JSON 契约取代了施为词，自然语言取代了本体。本课将认真研读 FIPA-ACL，让你看清 2026 年的哪些协议决策属于重新发明，哪些属于真正的新意，以及当前这波浪潮将在何处重新发现 2000 年代早已解决的问题。
 
 **Type:** Learn
 **Languages:** Python (stdlib)
@@ -9,42 +9,42 @@
 
 ## 问题
 
-2026年代理协议景观繁忙:工具的MCP,代理的A2A,企业审计的ACP,分散信任的ANP,自然语言内容的NLIP,加上CA-MCP和两十个研究提案.
+2026 年的Agent协议格局非常热闹：MCP 用于工具，A2A 用于Agent，ACP 用于企业审计，ANP 用于去中心化信任，NLIP 用于自然语言内容，再加上 CA-MCP 和二十多个研究提案。每一份规范都自诩为奠基之作。
 
-诚实地说,他们中的大多数人正在重新发现一个20岁的决定树. 语音行为理论来自奥斯 (1962) 和塞尔 (1969) 给了我们"表达是行动". 国际合资联盟 (批准2000年) 制订了参考标准化:二十个执行语言,内容语言SL0/SL1,互动协议合同网和订阅通知. 杰德和杰克是Java的参考平台. 2010年左右,这项努力然消逝,因为对应性成本太大,
+诚实的解读是：它们中的大多数正在重新发现一棵非常具体的、二十年前的决策树。Austin（1962）和 Searle（1969）的言语行为（speech-act）理论给了我们"话语即行动"的洞见。KQML（1993）将其转化为线上协议。FIPA-ACL（2000 年批准）产出了参考标准化：二十种施为词、内容语言 SL0/SL1、以及 contract-net 和 subscribe-notify 的交互协议。JADE 和 JACK 是 Java 参考实现平台。这项工作在 2010 年前后逐渐消退，因为本体负担太重，而 Web 正在赢得胜利。
 
-当你看看MCP时`tools/call`了解传统告诉你两件事:哪些新"创新"实际上是重发发,以及哪些旧失败模式新规将重新发现.
+当你看到 MCP 的 `tools/call`、A2A 的任务生命周期，或 CA-MCP 的共享上下文存储时，你看到的是对 FIPA 决策的更柔和、JSON 原生的翻版。了解这段传承能告诉你两件事：哪些新的"创新"实际上是重新发明，以及哪些旧的失败模式会被新规范重新发现。
 
 ## 概念
 
-### 演讲行为,在一段
+### 言语行为，一段话讲清楚
 
-奥斯注意到,有些句子没有描述世界, "我承诺. " "我要求. " "我宣布. "他称这些表演演讲. 塞尔尔正式化了五种类别:断言性,指令性,委托性,表达性和声明性. 对于软件代理人来说,KQML (Finin等人,1993) 已经使这一点运行起来:一个信息是执行 (行动) 加上内容 (行动是什么). 国际标准化协会 (FIPA-ACL) 清理了KQML的缺陷,并标准化了大约20个表演.
+Austin 注意到，有些句子并不描述世界——它们改变世界。"我承诺。""我请求。""我宣布。"他把这些称为施为话语（performative utterances）。Searle 将其形式化为五类：assertive（断言）、directive（指令）、commissive（承诺）、expressive（表达）、declarative（宣告）。KQML（Finin 等，1993）将其在软件Agent上落地：一条消息就是一个施为词（即行动）加上内容（行动所针对的对象）。FIPA-ACL 修补了 KQML 的缺口，围绕约二十种施为词进行了标准化。
 
-### 国际金融协会20个执行项 (部分列表)
+### FIPA 的二十种施为词（部分列表）
 
-| Performative | Intent |
+| 施为词 | 意图 |
 |---|---|
-| `inform` | "I tell you P is true" |
-| `request` | "I ask you to do X" |
-| `query-if` | "Is P true?" |
-| `query-ref` | "What is the value of X?" |
-| `propose` | "I propose we do X" |
-| `accept-proposal` | "I accept the proposal" |
-| `reject-proposal` | "I reject the proposal" |
-| `agree` | "I agree to do X" |
-| `refuse` | "I refuse to do X" |
-| `confirm` | "I confirm P is true" |
-| `disconfirm` | "I deny P" |
-| `not-understood` | "Your message did not parse" |
-| `cfp` | "Call for proposals on X" |
-| `subscribe` | "Notify me when X changes" |
-| `cancel` | "Cancel the ongoing X" |
-| `failure` | "I tried X and failed" |
+| `inform` | "我告诉你 P 为真" |
+| `request` | "我请你做 X" |
+| `query-if` | "P 是否为真？" |
+| `query-ref` | "X 的值是什么？" |
+| `propose` | "我提议我们做 X" |
+| `accept-proposal` | "我接受该提议" |
+| `reject-proposal` | "我拒绝该提议" |
+| `agree` | "我同意做 X" |
+| `refuse` | "我拒绝做 X" |
+| `confirm` | "我确认 P 为真" |
+| `disconfirm` | "我否认 P" |
+| `not-understood` | "你的消息未能解析" |
+| `cfp` | "征求关于 X 的提议" |
+| `subscribe` | "当 X 变化时通知我" |
+| `cancel` | "取消进行中的 X" |
+| `failure` | "我尝试了 X 但失败了" |
 
-完整的列表在`fipa00037.pdf`问题不是记住它,问题是,每个这些都与一个原始的 LLM 协议最终重新添加.
+完整列表见 `fipa00037.pdf`（FIPA ACL Message Structure）。重点不在于背下它——重点在于，其中每一项都对应着一个 LLM 协议迟早会重新加入的原语。
 
-### 标准的FIPA-ACL信息
+### 规范的 FIPA-ACL 消息
 
 ```
 (inform
@@ -59,26 +59,26 @@
 )
 ```
 
-七个字段包含协议封面;一个字段 (`content`其他领域是你每次重新发明的,每次将重试,线程和ontology转载到JSON协议上.
+七个字段承载协议信封；一个字段（`content`）承载负载。其余字段正是你在向 JSON 协议上嫁接重试、线程和本体时每次都要重新发明的东西。
 
-### 两个传统平台
+### 两个遗留平台
 
-**JADE**(Java Agent DEvelopment framework, 19992020s) 是最常用的符合FIPA的运行时间.代理扩展了一个基类,交换ACL消息,运行在容器内,并通过"行为"协调.
+**JADE**（Java Agent DEvelopment framework，1999–2020 年代）是使用最广泛的 FIPA 兼容运行时。Agent 继承基类、交换 ACL 消息、运行在容器中，并通过"行为（behaviors）"进行协调。其交互协议库随附 contract-net、subscribe-notify、request-when 和 propose-accept。
 
-**JACK**作为一个"非正式的,不太受欢迎的" (FIPA) 信息的基础上,BDI (信仰-愿望-意图) 的推理强调了.
+**JACK**（Agent Oriented Software，商业产品）强调在 FIPA 消息之上进行 BDI（信念-愿望-意图）推理。更形式化，但采用度更低。
 
-两者都在网页堆吃了多代理使用案例后减少.MCP和A2A是2026年的运行时间"容器".
+一旦 Web 技术栈吞并了多Agent系统的应用场景，两者都走向了衰落。MCP 和 A2A 就是 2026 年的运行时"容器"。
 
-### 为什么FIPA淡
+### FIPA 为何衰落
 
-- **Ontology overhead.**国际金融协会要求进行共享的分析`content`网络只是使用HTTP+JSON.
-- **Formal semantics nobody used.**语义语言 (SL) 提供了严格的真相条件,但大多数生产系统使用了自由形式的内容,并忽略了形式主义.
-- **Tooling lock-in.**简单的说法是Java,简单的说法是JACK.
-- **The internet won the stack.**后来是JSON-RPC,然后是gRPC取代了ACL的运输.
+- **本体负担。** FIPA 要求共享本体才能解析 `content`。就本体达成一致是一个旷日持久的标准化过程。而 Web 直接使用 HTTP + JSON。
+- **无人使用的形式化语义。** SL（Semantic Language）给出了严格的真值条件，但大多数生产系统使用自由格式的内容，无视这套形式化体系。
+- **工具锁定。** JADE 仅支持 Java；JACK 是商业产品。多语言团队绕开了这两者。
+- **互联网赢得了技术栈。** REST，然后是 JSON-RPC，然后是 gRPC，取代了 ACL 的传输层。
 
-### 法律法师复兴是FIPA-lite
+### LLM 复兴是 FIPA 的精简版
 
-比较一个FIPA`request`向一个MCP`tools/call`其他:
+比较 FIPA 的 `request` 与 MCP 的 `tools/call`：
 
 ```
 (request                                {
@@ -90,122 +90,122 @@
 )                                        }
 ```
 
-两者都包含:谁,谁,意图,有效载荷,相关性ID. 两者都不是一个革命对另一个.
+同样的信封，不同的语法。两者都承载：谁、发给谁、意图、负载、关联 id。二者之间不存在革命性差异——它们只是同一设计上不同的权衡。
 
-等人在2025年进行的调查 ("MCP, ACP, A2A, ANP的调查"),使这一谱系明确:MCP与工具使用语音行为,A2A与代理同行语音行为,ACP与审计轨道语音行为,ANP与分散身份扩展等相关.新规格是ACL后代,具有JSON语法和较宽松的语义.
+Liu 等 2025 年的综述（"A Survey of Agent Interoperability Protocols: MCP, ACP, A2A, ANP"，arXiv:2505.02279）明确指出了这一传承脉络：MCP 对应工具使用类言语行为，A2A 对应Agent对等类言语行为，ACP 对应审计轨迹类言语行为，ANP 对应去中心化身份的扩展。这些新规范是采用 JSON 语法、语义更宽松的 ACL 后裔。
 
-### 交易,明确表示
+### 权衡，直白地说
 
-**What FIPA gave you and modern specs drop:**
+**FIPA 给了你而现代规范舍弃的：**
 
-- 形式语义,你可以证明.`inform`意思是发送者相信内容.
-- ,你不必再说"如果我们有"`cancel`没有什么可做.
-- 几十年的互动协议模式 合同网,订阅-通知,提出-接受 已知正确性特性.
+- 形式化语义——你可以证明 `inform` 蕴含发送者相信该内容。
+- 施为词的规范目录——你不必重新争论"我们是否需要一个 `cancel`？"。
+- 数十年的交互协议模式——contract-net、subscribe-notify、propose-accept——并带有已知的正确性性质。
 
-**What modern specs give you and FIPA did not:**
+**现代规范给了你而 FIPA 没有的：**
 
-- 基于JSON的有效载荷,与所有现代工具兼容.
-- 法律法师可以在没有手编码的托学的情况下解释的自然语言内容.
-- 网络堆运输 (HTTP,SSE,WebSocket).
-- 通过现场MCP发现能力`server/discover`,我还在.
+- 与所有现代工具兼容的 JSON 原生负载。
+- LLM 无需手工编码本体即可解释的自然语言内容。
+- Web 技术栈传输（HTTP、SSE、WebSocket）。
+- 通过实时的 MCP `server/discover` 和 A2A Agent Cards 进行能力发现。
 
-为了更轻松地实现,更宽松的意图语义.
+用更宽松的意图语义换取更简单的实现。这就是那笔交易。
 
 ### 值得移植的交互协议
 
-国际金融协会发送了15个互动协议.三个值得将转载到LLM多代理系统:
+FIPA 提供了约 15 种交互协议。其中有三种值得带入 LLM 多Agent系统：
 
-1. **Contract Net Protocol (CNP).**管理者问题`cfp`投标者回答:`propose`管理者接受/拒绝. 这就是常规的任务市场模式 (16 · 16 阶段的谈判).
-2. **Subscribe/Notify.**订阅者发送`subscribe`出版商发送`inform`这就是2026年的每一个活动.
-3. **Request-When.**"当条件 Y 维持时做X". 延迟操作与预先条件. 2026 模拟是耐用工作流动引擎中的延迟任务 (阶段 16 · 22 生产规模化).
+1. **Contract Net Protocol（CNP）。** 管理者发出 `cfp`（征求提议）；竞标者以 `propose` 响应；管理者接受/拒绝。这是规范的任务市场模式（Phase 16 · 16 Negotiation）。
+2. **Subscribe/Notify。** 订阅者发送 `subscribe`；发布者在主题变化时发送 `inform`。这就是 2026 年的每一个事件总线。
+3. **Request-When。** "当条件 Y 成立时做 X。" 带前置条件的延迟动作。2026 年的对应物是持久化工作流引擎中的延迟任务（Phase 16 · 22 Production Scaling）。
 
-每个图片都清晰地将信息排队,HTTP+投票或SSE流量进行排列.
+每一种都能干净地映射到现代消息队列、HTTP + 轮询或 SSE 流上。
 
-### 当你放弃了理学时,什么会破裂
+### 舍弃本体后，什么东西会坏掉
 
-没有共享的定学,代理从自然语言内容中推断意义.**semantic drift**:两个代理使用相同的词 (`"customer"`) 对微妙不同的概念,接收者的代理人根据错误的解释行动,没有方案验证器抓住它.FIPA的学要求将在解析时拒绝信息.
+没有共享本体，Agent 会从自然语言内容中推断含义。2026 年已有记录的失败模式是**语义漂移（semantic drift）**：两个Agent使用同一个词（`"customer"`）表达微妙不同的概念，接收方的Agent按错误的解释行动，而没有任何 schema 校验器捕获这一点。FIPA 的本体要求本可以在解析时就拒绝该消息。
 
-减轻没有完全的定性:
+在不完全转向本体的情况下的缓解措施：
 
--  JSON 方案`content`拒绝电线结构错误.
-- 类型的文物 (A2A) 拒绝了错误的模式.
-- 封面中的明确执行性使意图不含糊,即使内容是自然语言.
+- 在 `content` 上使用 JSON Schema——在线路层面拒绝结构性错误。
+- 类型化工件（A2A）——拒绝错误的模态。
+- 信封中的显式施为词——即使内容是自然语言，意图也无歧义。
 
-### 2026年规格,与演讲行为遗产相匹配
+### 2026 年规范与言语行为传承的映射
 
-| Modern spec | FIPA analog | What it keeps | What it drops |
+| 现代规范 | FIPA 对应物 | 保留了什么 | 舍弃了什么 |
 |---|---|---|---|
-| MCP `tools/call` | `request` | explicit intent, correlation id | formal semantics, ontology |
-| MCP `resources/read` | `query-ref` | explicit intent, correlation id | formal semantics |
-| A2A Task lifecycle | contract-net + request-when | async lifecycle, state transitions | formal completeness guarantees |
-| A2A streaming events | subscribe/notify | async push | typed-predicate subscription |
-| CA-MCP shared context | blackboard (Hayes-Roth 1985) | multi-writer shared memory | logical consistency model |
-| NLIP | natural-language content | LLM-native | schema |
+| MCP `tools/call` | `request` | 显式意图、关联 id | 形式化语义、本体 |
+| MCP `resources/read` | `query-ref` | 显式意图、关联 id | 形式化语义 |
+| A2A 任务生命周期 | contract-net + request-when | 异步生命周期、状态转换 | 形式化完备性保证 |
+| A2A 流式事件 | subscribe/notify | 异步推送 | 类型化谓词订阅 |
+| CA-MCP 共享上下文 | 黑板模型（Hayes-Roth 1985） | 多写者共享内存 | 逻辑一致性模型 |
+| NLIP | 自然语言内容 | LLM 原生 | schema |
 
-阅读表表上至下,模式是:保持结构原始,放弃形式主义,让LLM在模糊性上写下.
+自上而下读这张表，模式是：保留结构性原语，舍弃形式化体系，让 LLM 去掩盖歧义。
 
 ```figure
 sw-contract-net
 ```
 
-## 建立它
+## 动手实现
 
-`code/main.py`实现了纯stdlib的FIPA-ACL翻译器.它编码和解码了正规的ACL包裹,并显示了每个MCP/A2A消息形状如何缩小到相同的七个字段.演示:
+`code/main.py` 实现了一个纯标准库的 FIPA-ACL 转换器。它对规范的 ACL 信封进行编码和解码，并展示每一条 MCP / A2A 消息如何归约为同样的七个字段。演示内容：
 
-- 编码五个MCP式和A2A式消息为FIPA-ACL.
-- 解码FIPA-ACL回到现代相当.
-- 运行一个玩具 合同 经理和三位投标者之间的网络谈判`cfp`现在`propose`现在`accept-proposal`现在`reject-proposal`现在,我们要去.
+- 将五条 MCP 风格和 A2A 风格的消息编码为 FIPA-ACL。
+- 将 FIPA-ACL 解码回现代等价形式。
+- 使用 `cfp`、`propose`、`accept-proposal`、`reject-proposal` 在一个管理者和三个竞标者之间运行一个玩具 Contract Net 协商。
 
-运行:
+运行：
 
 ```
 python3 code/main.py
 ```
 
-输出是一个横边的痕迹,显示每一个现代消息,在2026 JSON形式和FIPA-ACL形式,然后是合同网投标的回路.同样的协议原始物存活回路;只有语法不同.
+输出是一个并排的追踪日志，以 2026 年的 JSON 形式和 FIPA-ACL 形式同时显示每条现代消息，然后是一次 contract-net 竞标的往返。同样的协议原语在往返后保持不变；只有语法不同。
 
-## 用它
+## 使用
 
-`outputs/skill-fipa-mapper.md`通过FIFA-ACL地图,在采用新协议之前,使用它来回答:"这是真的新吗?`inform`通过JSON语法?"
+`outputs/skill-fipa-mapper.md` 是一个技能（skill），读取任意Agent协议规范并产出对应的 FIPA-ACL 映射。在采纳新协议之前使用它来回答："这是真正的新东西，还是套着 JSON 语法的 `inform`？"
 
-## 运送它
+## 上线
 
-让我们回来,让我们回来.
+不要把 FIPA-ACL 带回来。带回它的清单：
 
-- 每个信息的原始意图是什么?
-- 要求响应和取消的相关性ID有没有?
-- 有没有明确的内容语言 (JSON-RPC,简体文本,结构化编写的文物)?
-- 互动协议是第一级的,还是你从零开始重新实施合同网?
-- 如果两个代理人在内容意义上不同意 (语义漂移) 怎么办?
+- 每条消息的意图原语（施为词）是什么？
+- 是否有用于请求-响应和取消的关联 id？
+- 是否有显式的内容语言（JSON-RPC、纯文本、结构化类型化工件）？
+- 交互协议是否是一等公民，还是你在从零重新实现 contract-net？
+- 当两个Agent对内容含义产生分歧（语义漂移）时会发生什么？
 
-在你发送到生产之前,记录这些五个问题.
+在任何新协议投入生产之前，把这五个问题记录成文档。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`观察回路编码. 确定 FIPA 性能符号对应哪个`tools/call`现在`resources/read`通过A2A创建任务.
-2. 延长合同网演示`cancel`管理员可以在中期退出任务.`cancel`解决这些问题,你自己做了吗?
-3. 阅读FIPA ACL信息结构 (http://www.fipa.org/specs/fipa00037/) 4.14.3 分. 选择本课程未涉及的执行式,并描述其现代的JSON-RPC模拟.
-4. 阅读Liu et al., arXiv:2505.02279. 对于每一个MCP,A2A,ACP,ANP,列出 FIPA执行家族,他们保持和下降.
-5. 设计一个最小的JSON-Schema`content`一个字段`request`什么是纯自然语言没有的,而且成本是多少?
+1. 运行 `code/main.py`。观察往返编码。找出对应于 `tools/call`、`resources/read` 和 A2A 任务创建的 FIPA 施为词。
+2. 扩展 contract-net 演示，加入一个让管理者能在竞标中途撤回任务的 `cancel` 施为词。`cancel` 解决了哪些单纯重试无法解决的失败情况？
+3. 阅读 FIPA ACL Message Structure（http://www.fipa.org/specs/fipa00037/）的 4.1–4.3 节。选择一个本课未涵盖的施为词，并描述其现代 JSON-RPC 对应物。
+4. 阅读 Liu 等，arXiv:2505.02279。对 MCP、A2A、ACP、ANP 各自列出它们保留和舍弃的 FIPA 施为词家族。
+5. 为你自己系统中 `request` 施为词的 `content` 字段设计一个最小化的 JSON-Schema。相比纯自然语言，这个 schema 给了你什么，又付出了什么代价？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 它实际意味着什么 |
 |------|----------------|------------------------|
-| Speech act | "An utterance that does something" | Austin/Searle: utterances as actions. The theoretical parent of ACL. |
-| FIPA | "That old XML thing" | IEEE Foundation for Intelligent Physical Agents. Standardized ACL in 2000. |
-| ACL | "Agent Communication Language" | FIPA's envelope format: performative + content + metadata. |
-| Performative | "The verb" | The intent class of a message: `inform`, `request`, `propose`, `cfp`, etc. |
-| KQML | "FIPA's predecessor" | Knowledge Query and Manipulation Language (1993). Simpler, narrower. |
-| Ontology | "Shared vocabulary" | A formal definition of the concepts the content language talks about. |
-| SL0 / SL1 | "FIPA content languages" | Semantic Language levels 0 and 1 — the formal content language family. |
-| Contract Net | "Task market" | Manager issues cfp; bidders propose; manager accepts. The canonical interaction protocol. |
-| Interaction protocol | "Pattern of messages" | A sequence of performatives with known correctness: request-when, subscribe-notify, etc. |
+| 言语行为 | "做了某件事的话语" | Austin/Searle：话语即行动。ACL 的理论源头。 |
+| FIPA | "那个老的 XML 东西" | IEEE 智能物理Agent基金会。2000 年标准化了 ACL。 |
+| ACL | "Agent通信语言" | FIPA 的信封格式：施为词 + 内容 + 元数据。 |
+| 施为词 | "那个动词" | 消息的意图类别：`inform`、`request`、`propose`、`cfp` 等。 |
+| KQML | "FIPA 的前身" | Knowledge Query and Manipulation Language（1993）。更简单、更窄。 |
+| 本体 | "共享词汇表" | 对内容语言所谈论概念的形式化定义。 |
+| SL0 / SL1 | "FIPA 内容语言" | Semantic Language 的 0 级和 1 级——形式化内容语言家族。 |
+| Contract Net | "任务市场" | 管理者发出 cfp；竞标者提议；管理者接受。规范性的交互协议。 |
+| 交互协议 | "消息的模式" | 具有已知正确性的施为词序列：request-when、subscribe-notify 等。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Liu et al. — A Survey of Agent Interoperability Protocols: MCP, ACP, A2A, ANP](https://arxiv.org/html/2505.02279v1)2025年可信调查,将现代规格与FIPA遗产联系起来
-- [FIPA ACL Message Structure Specification (fipa00037)](http://www.fipa.org/specs/fipa00037/)批准的2000年包裹格式
-- [FIPA Communicative Act Library Specification (fipa00037)](http://www.fipa.org/specs/fipa00037/)完整的表演目录
-- [MCP specification 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28)目前无国有工具使用等价`request`现在,我们要去.`query-ref`
-- [A2A specification](https://a2a-protocol.org/latest/specification/)现代代理同等的合同网和订阅通知
+- [Liu 等 — A Survey of Agent Interoperability Protocols: MCP, ACP, A2A, ANP](https://arxiv.org/html/2505.02279v1) — 将现代规范与 FIPA 传承联系起来的一部 2025 年权威综述
+- [FIPA ACL Message Structure Specification (fipa00037)](http://www.fipa.org/specs/fipa00037/) — 2000 年批准的信封格式
+- [FIPA Communicative Act Library Specification (fipa00037)](http://www.fipa.org/specs/fipa00037/) — 完整的施为词目录
+- [MCP specification 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28) — `request`/`query-ref` 的当前无状态工具使用等价物
+- [A2A specification](https://a2a-protocol.org/latest/specification/) — contract-net 和 subscribe-notify 的现代Agent对等等价物

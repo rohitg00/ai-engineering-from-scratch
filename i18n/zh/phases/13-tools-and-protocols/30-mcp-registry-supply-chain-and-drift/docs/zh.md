@@ -1,94 +1,94 @@
-# 关管理局注册链:接入,漂移和回转
+# MCP Registry 供应链：准入、漂移与回滚
 
-> 编辑录制证明你收到的内容,你观察到的内容,你批准的内容,以及你可以安全地恢复的内容.
+> Registry 条目告诉你发布者声明了什么。生产准入则证明你获取了什么、观察到了什么、批准了什么，以及可以安全恢复什么。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 13 · 17 (gateways and registries), Phase 13 · 18 (production authentication)
-**Time:** ~90 minutes
+**Prerequisites:** Phase 13 · 17（网关与注册表）、Phase 13 · 18（生产环境认证）
+**Time:** 约 90 分钟
 
 ## 学习目标
 
-- 单独的登记库发布,包装来源,运行时间发现和当地批准.
-- 检查一个MCP服务器名字空间,而不需要相信其名字在自己的记录中.
-- 标签不可变的出版物,执行源,来源,现场描述符证据.
-- 检测登记状态变化和录取后运行时间漂移.
-- 转换路由到之前被允许的版本,而不需要重写历史.
-- 保持一个明确的录取账本,解释每一个决定.
+- 区分 Registry 发布、包来源、运行时发现与本地审批。
+- 在不信任记录自身名称的前提下验证 MCP 服务器命名空间。
+- 固定（pin）不可变的发布、执行来源、来源证明和在线描述符证据。
+- 在准入之后检测 Registry 状态变化与运行时漂移。
+- 将路由回滚到先前已准入的版本，而不改写历史。
+- 维护一个可证明防篡改的准入账本，解释每一个决策。
 
-## 问题
+## 问题所在
 
-你发现了`com.example/inventory`文件的描述是正确的,包裹存在,服务器回答了.`server/discover`现在,我们要去.
+你在 Registry 中找到 `com.example/inventory`。它的描述看起来没问题。它的包存在。服务器对 `server/discover` 有响应。
 
-这不是一个事实,而是来自不同当局的数据链.
+这并不是一个事实。它是一串来自不同权威方的事实：
 
-1. 发行商认证一个名字空间提交了记录.
-2. 一个包装登记库提供了一个具有特定身份和消化的文物.
-3. 运行终端报告了协议版本,功能,工具和诊断服务器信息.
-4. 你的组织决定允许这种结合.
+1. 某个通过命名空间认证的发布者提交了一条记录。
+2. 包仓库以特定标识和摘要提供了某个工件。
+3. 运行中的端点报告了协议版本、能力、工具以及诊断性服务器信息。
+4. 你的组织决定允许这一精确组合。
 
-倒这些事实到"它"是注册表中的,所以相信它会造成供应链盲点.一个有效的出版物仍然可以被废除.如果您不将其结,包装标签可以指向一个意想不到的文物.服务器可以在审查后添加破坏性工具.滚动可以默默地选择一个未被承认的版本.
+把这些事实压缩成“它在 Registry 里，所以信任它”会造成供应链盲区。有效的发布仍可能被弃用。如果你不固定其摘要，包标签可能指向意外的工件。服务器可能在审查之后添加破坏性工具。回滚可能悄悄选中一个从未被准入的版本。
 
-检查员在每一个边界都有证据.
+解决办法是一个在每个边界都保留证据的准入控制器。
 
-## 登记是指数,而不是你的认证系统
+## Registry 是索引，不是你的审批系统
 
-官方MCP登记处存储服务器的元数据.`server.json`记录服务器版本名称,并声明一个或多个包或远程终端点. 出版规则增加名称空间认证,包所有权检查,限制登记规则和狭窄的出版商元数据位置.
+官方 MCP Registry 存储服务器元数据。其 `server.json` 记录命名一个服务器版本，并声明一个或多个包或远程端点。发布规则增加了命名空间认证、包所有权检查、受限 Registry 规则，以及一个狭窄的发布者元数据存放位置。
 
-您的生产政策仍然回答部署问题:
+这些控制回答的是发布问题。你的生产策略仍要回答部署问题：
 
-| Boundary | Question | Evidence owner |
+| 边界 | 问题 | 证据所有者 |
 |---|---|---|
-| Namespace | Was the publisher allowed to use this name? | Registry authentication plus your verified namespace input |
-| Record | What did the publisher declare for this version? | Immutable `server.json` digest |
-| Execution source | Which package or remote endpoint will execute? | Declared source fields, verified ownership result, transport, and trusted digest |
-| Runtime | What does the endpoint expose now? | `server/discover` and tool descriptors |
-| Admission | Did your policy approve this exact set? | Local pin and ledger entry |
-| Operations | Is it still safe, and what can replace it? | Drift checks, status sync, health, and rollback route |
+| 命名空间 | 发布者是否被允许使用这个名称？ | Registry 认证加上你验证过的命名空间输入 |
+| 记录 | 发布者对这个版本声明了什么？ | 不可变的 `server.json` 摘要 |
+| 执行来源 | 哪个包或远程端点将执行？ | 声明的来源字段、经验证的所有权结果、传输方式与受信摘要 |
+| 运行时 | 端点当前暴露了什么？ | `server/discover` 与工具描述符 |
+| 准入 | 你的策略是否批准了这一精确集合？ | 本地 pin 与账本条目 |
+| 运维 | 它是否仍然安全，什么可以替代它？ | 漂移检查、状态同步、健康检查与回滚路由 |
 
-登记方案版本和MCP协议版本是独立的.`2025-12-11`现场服务器支持MCP `2026-07-28`永远不要把一个推断到另一个.
+Registry 模式版本与 MCP 协议版本相互独立。一条记录可能使用已发布的 `2025-12-11` 服务器模式，而在线服务器支持 MCP `2026-07-28`。绝不要由其中一个推断另一个。
 
 ```figure
 mcp-registry-admission
 ```
 
-## 一项录取决定中的七项检查
+## 一个准入决策中的七项控制
 
-### 1. 名称空间验证
+### 1. 命名空间验证
 
-官方注册名字使用验证的名称空间.一个验证的域名可以映射到一个倒置域名前.例如,控制`example.com`能确定`com.example/*`现在,我们要去.
+官方 Registry 名称使用经认证的命名空间。一个经验证的域名可以映射到反转域名前缀。例如，控制 `example.com` 可以确立 `com.example/*`。
 
-没有接受字符串前置检查:
+不要接受字符串前缀检查：
 
 ```python
 server_name.startswith("com.example")
 ```
 
-这也可以接受.`com.exampleevil/tool`分别在`/`需要一个不空的字符串,并精确地比较名字空间段. 更重要的是,通过验证名字空间进入认证结果.不要从不值得信赖的记录中获得信任.
+这同样会接受 `com.exampleevil/tool`。应按 `/` 拆分名称，要求 slug 非空，并精确比较命名空间段。更重要的是，将经验证的命名空间从认证结果传入准入。不要从不受信任的记录中推导信任。
 
-支持GitHub的名字空间和域名空间使用不同的身份验证路径.将任何路径都正常化为一个输入:确切验证的名字空间字符串.
+基于 GitHub 的命名空间与基于域名的命名空间使用不同的认证路径。将任一路径规范化为一个准入输入：精确的经验证命名空间字符串。
 
-### 2. 产地结合
+### 2. 来源关联
 
-对于包装记录,声明和采集的文物必须在明确的字段上结合:
+对于包记录，声明与获取的工件必须在显式字段上关联：
 
-- 包装登记类型
-- 包装标识符
-- 包装版本
+- 包仓库类型
+- 包标识符
+- 包版本
 - 经验证的所有权结果
-- 下载的文物消化
+- 下载工件的摘要
 
-确认声明的包运输.仅有一个远程终端点的记录是有效的,不能因为缺乏包而拒绝.对于远程源,将声明的URL和运输类型加入独立验证的终端点所有权和可信的连接或部署证据.
+同时验证声明的包传输方式。只包含远程端点的记录是有效的，不得因缺少包而被拒绝。对于远程来源，应将声明的 URL 和传输类型与独立验证过的端点所有权，以及可信连接或部署证据的摘要关联起来。
 
-课程代码支持源类型,并将选定的源源与注册表源,服务器名称,注册表版本,记录消化和证据消化一起哈希.结果的来源消化是完整的证据集的紧指针.它不是保留证据的替代品.
+示例代码支持两种来源类型，并将选定的来源与 Registry 来源、服务器名称、Registry 版本、记录摘要和证据摘要一起哈希。得到的来源摘要是指向完整证据集的紧凑指针。它不能替代保留证据本身。
 
-永远不要接受只通过你试图验证的文物提供的化, 计算在一个可信的收货界限, 或从一个你验证的验证结果的包装服务中收到它.
+绝不要接受仅由你正试图验证的工件提供的摘要。在可信的获取边界计算它，或从其验证结果经过你校验的包服务处接收。
 
-### 3. 结决定,不仅仅是版本
+### 3. 固定决策，而不只是版本
 
-登记版本是唯一的出版标识符. 发表的元数据是不可变的. 改变的记录需要一个新的版本. 推语义版本化,但登记程序不需要它,也不接受版本范围.
+Registry 版本是唯一的发布标识符。已发布的元数据不可变。更改记录需要新版本。推荐使用语义化版本，但 Registry 不强制要求，也不接受版本范围。
 
-这意味着`^1.4`最新                                                                                                                                                                                                                                                             
+这意味着 `^1.4` 不是准入 pin。“latest”也不是。一个有用的 pin 包含：
 
 ```json
 {
@@ -103,77 +103,77 @@ server_name.startswith("com.example")
 }
 ```
 
-通过将多层粘贴,可以确定哪个界限发生了变化.在同一注册表版本下发生的记录消化变化是注册表完整性失败.在同一包坐标或远程部署下发生的源消化变化是执行源完整性失败.工具集消化变化是运行时间漂移.
+固定多个层次让你能识别哪个边界发生了变化。相同 Registry 版本下记录摘要变化是 Registry 完整性失败。相同包坐标或远程部署下来源摘要变化是执行来源完整性失败。工具集摘要变化是运行时漂移。
 
-### 4. 现场漂移检测
+### 4. 在线漂移检测
 
-接收者应该观察实际接收流量的服务器.`server/discover`通过您的可信路径列出或以其他方式获取暴露的工具描述符,并验证:
+准入应观察将真正接收流量的服务器。调用 `server/discover`，通过你的可信路径列出或以其他方式获取暴露的工具描述符，并验证：
 
-- `2026-07-28`现在`supportedVersions`
-- 现有所有本地要求的能力
-- 每个工具描述器都有所需的身份和方案表面
-- 标准化描述器消化与后检验中被允许的匹配
+- `2026-07-28` 在 `supportedVersions` 中
+- 所有本地必需的能力都存在
+- 每个工具描述符具有必需的标识与模式表面
+- 后续检查中规范化后的描述符摘要与准入 pin 匹配
 
-选择性结果`_meta["io.modelcontextprotocol/serverInfo"]`值是自主报告的显示,日志和调试文本. 记录它作为诊断证据,但永远不要使用它来确定名字空间,包所有权,终端点所有权,录取或任何其他安全决定.`serverInfo`别名:外面`_meta`没有合同领域,不应被推广为诊断证据.
+可选结果 `_meta["io.modelcontextprotocol/serverInfo"]` 值是自报告的显示、日志和调试上下文。将其记录为诊断证据，但绝不要用它确立命名空间、包所有权、端点所有权、准入或任何其他安全决策。`_meta` 之外的直接 `serverInfo` 别名不是契约字段，也不应被提升为诊断证据。
 
-标准化仅仅是没有意义的字段.样本在哈希之前按稳定名称排序工具列表,因此无害的列表序变化不会导致漂移.它不会丢弃描述字段.新工具,改变方案,改变描述或新注释改变了.
+只规范化顺序无意义的字段。示例在哈希前按稳定名称对工具列表排序，因此无害的列表顺序变化不会引起漂移。它不会丢弃描述符字段。新工具、更改的模式、更改的描述或新的注解都会改变 pin。
 
-样本将错误的描述符和任何描述符消化变化视为漂移,隔离,删除其活跃路线,并将该版本作为反弹目标.生产政策只允许通过新的审查进行编辑变化,因为描述影响模型工具选择.
+示例将格式错误的描述符和任何描述符摘要变化视为漂移，隔离该 pin，移除其活动路由，并将该版本封锁为回滚目标。生产策略可能只允许通过新的审查进行编辑性更改，因为描述会影响模型的工具选择。“表面上的”元数据可以改变智能体行为。
 
-### 5. 登记状态是现实状态
+### 5. Registry 状态是实时状态
 
-登记器API附加响应级别`_meta`文件的管理范围在 文件中.`_meta["io.modelcontextprotocol.registry/official"]`通过答案`_meta`反对录取和阅读`_meta["io.modelcontextprotocol.registry/official"].status`直接的`_meta.status`答案的元数据与出版记录的元数据不要混为一谈`_meta`状态可以是:
+Registry API 在每条服务器记录旁附加一个响应级 `_meta` 对象。Registry 管理的字段位于 `_meta["io.modelcontextprotocol.registry/official"]` 下。将响应的 `_meta` 对象传入准入并读取 `_meta["io.modelcontextprotocol.registry/official"].status`。直接的 `_meta.status` 值不是官方线上格式。不要把响应元数据与发布记录自身的 `_meta` 混淆。状态可以是：
 
-- `active`: 违约返回,可接受本地接入
-- `deprecated`虽然可以通过警告发现,但不再是安全的自动选择
-- `deleted`:默认隐藏,而其历史记录仍然可通过删除或增量查看
+- `active`：默认返回，且可进行本地准入
+- `deprecated`：仍可在警告下被发现，但不再是安全的自动选择
+- `deleted`：默认隐藏，其历史记录仍可通过已删除或增量视图获取
 
-录取后同步状态. 如果一个活跃版本变得过时或删除,请关闭其点,停止向它调用新工作. 保存证据. 从默认列表中删除不是删除审计轨迹的许可.
+在准入之后同步状态。如果一个活动版本被弃用或删除，隔离其 pin 并停止向它路由新工作。保留证据。从默认列表中删除不等于有权抹去你的审计轨迹。
 
-出版商提供的定制元数据仅属于`_meta.io.modelcontextprotocol.registry/publisher-provided`管理登记的响应元数据是单独的. 不要让出版商设定自己的官方状态.
+发布者提供的自定义元数据只能位于发布记录的 `_meta.io.modelcontextprotocol.registry/publisher-provided` 下。Registry 管理的响应元数据是分开的。不要让发布者设定自己的官方状态。
 
-### 6. 翻车意味着恢复路线
+### 6. 回滚意味着路由恢复
 
-滚动时不会编辑不可变的出版物.滚动选择以前被允许的,目前符合条件的脚,并改变主动路线.
+回滚期间不可变的发布不会被编辑。回滚选择一个先前已准入、当前符合资格的 pin，并更改活动路由。
 
-安全目标必须:
+一个安全目标必须：
 
-1. 填写入学记录.
-2. 您的保险仍然具有活跃的登记处状态.
-3. 没有因运行时间或安全证据而被隔离.
-4. 仍然要把它固定到封装上,并将描述器设置.
-5. 通过目前的健康检查.
+1. 拥有已完成的准入记录。
+2. 在你的策略下仍具有活动的 Registry 状态。
+3. 未被运行时或安全证据隔离。
+4. 仍能解析到被固定的包与在线描述符集合。
+5. 通过当前的健康检查。
 
-实际调整者应该重新检查包裹,并在激活之前重新检查现场终端点.
+示例关注前三个条件。真正的协调器应在激活前重新获取包并重新检查在线端点。
 
-### 7. 添加录取账本
+### 7. 追加准入账本
 
-录取数据库显示了什么是活跃的.
+准入数据库说明什么是活动的。账本解释为什么。
 
-每个样本输入包含一个序列,时间,事件,服务器,版本,结果,原因,证据,前一个输入哈希,以及自己的哈希.更改一个旧的结果打破了该输入和每一个后来的链接的验证.
+示例的每条条目包含序列号、时间、事件、服务器、版本、结果、原因、证据、上一条目的哈希以及自身的哈希。修改较早的结果会破坏该条目及之后所有链条的验证。
 
-根据"数据库"的定义,数据库的数据库可以被编写成一个数据库,并且可以被编写成一个数据库.
+这是防篡改可证的，不是魔法般防篡改的。将周期性账本头锚定在单独的信任域中，例如签名的发布元数据或只写一次的存储。限制谁可以追加。不要将授权令牌、包凭据、工具参数和私有端点数据放入证据。
 
-## 建立它
+## 动手构建
 
-运行控制器已启动`code/main.py`它只使用Python标准库.
+可运行的控制器位于 `code/main.py`。它仅使用 Python 标准库。
 
-开始于有限的示范:
+从有限演示开始：
 
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
 ```
 
-演示活动进行了五次:
+演示执行五个操作：
 
-1. 承认`1.0.0`具有匹配的名称空间,包源,协议,功能和工具.
-2. 承认`1.1.0`让它变得活跃.
-3. 在运行时观察一个意外的删除工具.
-4. 观察注册表的状态`1.1.0`成为`deprecated`现在,我们要去.
-5. 恢复路由到仍被允许的`1.0.0`子.
+1. 以匹配的命名空间、包来源、协议、能力和工具准入 `1.0.0`。
+2. 准入 `1.1.0` 并将其设为活动。
+3. 在运行时观察到一个意外的删除工具。
+4. 观察 `1.1.0` 的 Registry 状态变为 `deprecated`。
+5. 将路由恢复到仍然已准入的 `1.0.0` pin。
 
-预期的形状:
+预期输出形态：
 
 ```json
 {
@@ -185,19 +185,19 @@ python3 code/main.py
 }
 ```
 
-在下列顺序下阅读执行情况:
+按以下顺序阅读实现：
 
-1. `namespace_for_domain()`其他`namespace_matches()`确定确切的命名权.
-2. `digest()`其他`normalized_tools()`它们可以产生确定性证据.
-3. `RegistryAdmissionController.admit()`加入出版,来源,运行时间和政策.
-4. `check_live()`通过笔来比较一个新的观察.
-5. `observe_registry_status()`隔离版本,注册表状态变化.
-6. `rollback()`仅激活已被允许的可接受目标.
-7. `AdmissionLedger.verify()`检测记录历史的变化.
+1. `namespace_for_domain()` 和 `namespace_matches()` 确立精确的命名权威。
+2. `digest()` 和 `normalized_tools()` 产生确定性证据。
+3. `RegistryAdmissionController.admit()` 关联发布、来源、运行时与策略。
+4. `check_live()` 将新的观察与 pin 比较。
+5. `observe_registry_status()` 隔离 Registry 状态发生变化的版本。
+6. `rollback()` 仅激活先前已准入且符合资格的目标。
+7. `AdmissionLedger.verify()` 检测对已记录历史的更改。
 
-## 用它
+## 使用它
 
-设置控制器在发现和路由之间:
+将控制器置于发现与路由之间：
 
 ```text
 Registry sync -> artifact verifier -> live discovery -> admission controller -> route table
@@ -206,26 +206,26 @@ Registry sync -> artifact verifier -> live discovery -> admission controller -> 
                                           evidence store    admission ledger
 ```
 
-对于这些工作使用单独的身份. 登记器同步工作者需要阅读访问转录数据. 文物验证器需要获取数据包. 路线调整器需要许可才能激活一个批准的针. 它们都不需要每个凭证.
+为这些任务使用独立的身份。Registry 同步工作器只需要元数据的读取权限。工件验证器只需要包获取权限。路由协调器只需要激活已批准 pin 的权限。它们谁都不需要全部凭据。
 
- 已批准  意思是经过证据的政策.  活动  意思是目前选择的路线.  隔离 意思是它不能接收新工作.  补充 表示另一个被承认的版本是活跃的.不要用一个布尔语编码所有四个意思.
+让发布状态显式化。“Approved”表示证据通过了策略。“Active”表示路由当前选择了它。“Quarantined”表示它不能接收新工作。“Superseded”表示另一个已准入版本是活动的。不要把这四种含义编码进一个布尔值。
 
-在曝光服务器之前运行入口`tools/list`否则,客户可以在发布和政策评估之间的差距中发现工具.
+在 `tools/list` 中暴露服务器之前先运行准入。否则客户端可能在发布与策略评估之间的空档期发现某个工具。
 
-## 互动实验室
+## 交互实验
 
-你会看到一个边界一次失败.
+你将逐一观察单个边界的失效。
 
-### 实验室A:名称空间碰撞
+### 实验 A：命名空间冲突
 
-从代码目录中打开Python shell:
+从代码目录打开 Python shell：
 
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/code
 python3 -q
 ```
 
-然后运行:
+然后运行：
 
 ```python
 from main import namespace_matches
@@ -233,9 +233,9 @@ namespace_matches("com.example/inventory", "com.example")
 namespace_matches("com.exampleevil/inventory", "com.example")
 ```
 
-结果是`True`第二个是`False`取代对比的确切值为`startswith`在继续之前,请恢复准确的比较.
+第一个结果是 `True`；第二个是 `False`。在本地将精确比较替换为 `startswith`，观察为什么第二个名称越过了边界。继续之前恢复精确比较。
 
-### 实验室B:描述器漂移
+### 实验 B：描述符漂移
 
 ```python
 from main import *
@@ -246,11 +246,11 @@ c.admit(sample_record("1.0.0"), meta, "com.example", evidence_for("1.0.0"), samp
 c.check_live("com.example/inventory", "1.0.0", sample_live("1.0.0", True))
 ```
 
-检查原因和路线状态.包装和注册表记录没有改变.运行时间工具表面确实改变了,因此控制器隔离和禁用了针.这就是为什么供应链控制必须在安装后继续.
+检查原因与路由状态。包和 Registry 记录没有变化。运行时工具表面变了，因此控制器隔离并停用了该 pin。这就是供应链控制必须在安装之后继续的原因。
 
-### 实验室C:状态和反弹
+### 实验 C：状态与回滚
 
-承认`1.1.0`标记为"过期"并尝试两个反弹目标:
+准入 `1.1.0`，将其标记为弃用，并尝试两个回滚目标：
 
 ```python
 c.admit(sample_record("1.1.0"), meta, "com.example", evidence_for("1.1.0"), sample_live("1.1.0"))
@@ -260,30 +260,30 @@ c.rollback("com.example/inventory", "1.0.0", "restore known release")
 c.ledger.verify()
 ```
 
-已被拒绝了被隔离的目标, 已被接受了早期的活跃脚本, 账本仍然有效.
+被隔离的目标被拒绝。较早的活动 pin 被接受。账本保持有效。
 
-## 实践实验室
+## 练习实验
 
-扩展控制器,使用两个人使用的批准门.
+为控制器扩展一个双人审批门。
 
-要求:
+要求：
 
-- 存储批准作为签署的证据引用,而不是在子中可变的名称.
-- 需要两个不同的审查员身份,以提供一个工具集`destructiveHint: true`现在,我们要去.
-- 拒绝复制审查员身份.
-- 在批准未完整时,保存原始录取尝试在本书中.
-- 增加零,一,双重和两种不同的批准的测试.
-- 不要记录签名,凭证或完整的私人工具参数.
+- 将审批存储为签名的证据引用，而不是 pin 中的可变名称。
+- 对于包含带有 `destructiveHint: true` 的工具的工具集，要求两个不同的审查者身份。
+- 拒绝重复的审查者身份。
+- 当审批不完整时，在账本中保留原始准入尝试。
+- 为零、一、重复和两个不同审批添加测试。
+- 不要记录签名、凭据或完整的私有工具参数。
 
-成功意味着,直到两个身份批准了准确的记录,包装和工具集消化,
+成功的标准是：破坏性工具在两个身份都批准了精确的记录、包和工具集摘要之前无法变为活动状态。
 
-## 运输的文物
+## 交付产物
 
-这一课是很好的.`outputs/skill-mcp-registry-admission.md`通过使用它作为一个平坦的可重复使用的运行簿,来审查新的登记库版本或调查漂移.它定义了输入,拒绝规则,证据捆绑,状态调整和反弹证明,而不会依赖于样本类名称.
+本课程附带 `outputs/skill-mcp-registry-admission.md`。在审查新的 Registry 版本或调查漂移时，将其作为扁平的、可复用的运行手册。它定义了输入、拒绝规则、证据包、状态协调和回滚证明，而不依赖示例中的类名。
 
-## 检查
+## 验证
 
-运行示范和确定性套件:
+运行演示和确定性测试套件：
 
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
@@ -291,40 +291,40 @@ python3 code/main.py
 python3 -m unittest discover -s code/tests -v
 ```
 
-验证应证明:
+验证应证明：
 
-- 确切的命名空间界限拒绝类似的预写
-- 只有官方名称空间登记处的状态才能使版本符合条件
-- 未经验证或不匹配的包装和远程证据被拒绝
-- 出版商的元数据不能伪装登记管理的元数据
-- 工具的排序是正常化的,而不隐藏描述符的变化
-- 错误的包装和工具结构安全地拒绝
-- `serverInfo`仍然是诊断的,从来没有提供录取权
-- 描述器漂移隔离,禁用和阻塞回转到杆
-- 状态变化隔离活跃针
-- 转换不能选择隔离或未知版本
-- 检测到本书的改
+- 精确的命名空间边界拒绝形近前缀
+- 只有官方带命名空间的 Registry 状态能使版本符合资格
+- 未验证或不匹配的包与远程证据被拒绝
+- 发布者元数据不能冒充 Registry 管理的元数据
+- 工具排序被规范化而不隐藏描述符变化
+- 格式错误的包与工具结构被安全拒绝
+- `serverInfo` 仅作诊断用途，绝不提供准入权威
+- 描述符漂移会隔离、停用并封锁回滚到该 pin
+- 状态变化会隔离活动 pin
+- 回滚不能选择被隔离或未知的版本
+- 账本篡改被检测到
 
-## 生产失败模式
+## 生产失效模式
 
-| Failure | Why it happens | Required response |
+| 失效 | 发生原因 | 所需响应 |
 |---|---|---|
-| Name looks valid but namespace was never authenticated | Policy trusted record text | Reject until a trusted namespace verifier supplies the exact prefix |
-| Same package coordinate returns new bytes | Mutable upstream or compromised distribution | Stop activation, retain both digests, investigate the fetch boundary |
-| “Latest” changes without review | Floating selection escaped the pin | Resolve only exact admitted versions and digests |
-| New tool appears after approval | Runtime drift or a different deployment | Quarantine the route and capture a fresh descriptor observation |
-| Deprecated version remains active | Status sync is missing or delayed | Reconcile status on a schedule and before activation |
-| Deleted record disappears from default sync | Client requested only active records | Use incremental or deleted-aware reconciliation and preserve local history |
-| Rollback target was never admitted | Route control and approval state are disconnected | Refuse rollback and run a new admission for the target |
-| Ledger verifies locally after an attacker rewrites all entries | Hash chain has no external anchor | Publish signed ledger heads to a separate trust domain |
-| Evidence contains bearer tokens or tool arguments | Logging copied whole requests | Redact at collection time and store only the minimum proof |
+| 名称看似有效但命名空间从未被认证 | 策略信任了记录文本 | 在可信的命名空间验证器提供精确前缀之前拒绝 |
+| 相同包坐标返回新字节 | 上游可变或分发被攻破 | 停止激活，保留两个摘要，调查获取边界 |
+| “latest”未经审查就变化 | 浮动选择绕过了 pin | 只解析精确的已准入版本和摘要 |
+| 审批后出现新工具 | 运行时漂移或不同的部署 | 隔离该路由并捕获新的描述符观察 |
+| 弃用版本仍处于活动状态 | 状态同步缺失或延迟 | 按计划协调状态，并在激活前协调 |
+| 已删除记录从默认同步中消失 | 客户端只请求了活动记录 | 使用增量或感知删除的协调，并保留本地历史 |
+| 回滚目标从未被准入 | 路由控制与审批状态脱节 | 拒绝回滚并对目标运行新的准入 |
+| 攻击者改写所有条目后账本本地仍可验证 | 哈希链没有外部锚点 | 将签名的账本头发布到单独的信任域 |
+| 证据包含 bearer 令牌或工具参数 | 日志记录复制了完整请求 | 在收集时脱敏，只存储最小证明 |
 
 ## 运营规则
 
-发表答案 这个身份能发布这个名字吗? 录取答案 我们会执行这个精确的文物并暴露这个精确的行为吗?
+发布回答的是“这个身份可以发布这个名称吗？”准入回答的是“我们会执行这个精确工件并暴露这个精确行为吗？”保持这两个决策分离，固定每一个关联点，并让回滚依据证据而非记忆进行选择。
 
-## 进一步阅读
+## 延伸阅读
 
-- [Official Registry server.json requirements](https://github.com/modelcontextprotocol/registry/blob/main/docs/reference/server-json/official-registry-requirements.md)
-- [Official Registry OpenAPI contract](https://registry.modelcontextprotocol.io/openapi.yaml)
-- [MCP 2026-07-28 server discovery](https://modelcontextprotocol.io/specification/2026-07-28/server/discover)
+- [官方 Registry server.json 要求](https://github.com/modelcontextprotocol/registry/blob/main/docs/reference/server-json/official-registry-requirements.md)
+- [官方 Registry OpenAPI 契约](https://registry.modelcontextprotocol.io/openapi.yaml)
+- [MCP 2026-07-28 服务器发现](https://modelcontextprotocol.io/specification/2026-07-28/server/discover)

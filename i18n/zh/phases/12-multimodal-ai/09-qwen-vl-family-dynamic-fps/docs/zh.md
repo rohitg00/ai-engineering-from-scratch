@@ -1,75 +1,75 @@
-# 文-VL家庭和动态-FPS视频
+# Qwen-VL 家族与动态 FPS 视频
 
-> wen-VL家族 wen-VL (2023年),Qwen2-VL (2024年),Qwen2.5-VL (2025年),Qwen3-VL (2025) 是2026年最具影响力的开放视觉语言模型系. 每一代都做出了一个决定性的建筑投注,其余的开放生态系统在十二个月内复制了:通过M-RoPE进行原生动态分辨率,通过绝对的时间调整进行动态FPS样本采集,在ViT中的窗口注意力,以及结构化代理输出格式. 通过Qwen3-VL,该配方已经稳定了:一个2D-RoPE-ViT编码器,具有原生面比输入,一个MLP投影器进入一个大型Qwen3语言基础,以及强调OCR,地面和代理行为作为一流目标的培训阶段. 这一课是按时间序列读取家庭,
+> Qwen-VL 家族——Qwen-VL(2023)、Qwen2-VL(2024)、Qwen2.5-VL(2025)、Qwen3-VL(2025)——是 2026 年最具影响力的开源视觉-语言模型谱系。每一代都做出了一项决定性的架构押注，而开源生态的其他部分在十二个月内纷纷效仿：通过 M-RoPE 实现原生动态分辨率、带绝对时间对齐的动态 FPS 采样、ViT 中的窗口注意力，以及结构化的智能体输出格式。到 Qwen3-VL 时，这套配方已经稳定：一个接受原生宽高比输入的 2D-RoPE-ViT 编码器、一个接入大型 Qwen3 语言底座的 MLP 投影层，以及把 OCR、grounding 和智能体行为作为一等目标加以强调的训练阶段。本课按时间顺序解读这一家族，让你理解每个旋钮为何处于它现在的位置。
 
 **Type:** Learn
 **Languages:** Python (stdlib, M-RoPE encoder + dynamic-FPS sampler)
 **Prerequisites:** Phase 12 · 06 (patch-n'-pack)
-**Time:** ~120 minutes
+**Time:** ~120 分钟
 
 ## 学习目标
 
-- 计算M-RoPE的三轴旋转 (时间,高度,宽度) 并解释为什么需要三轴旋转.
-- 选择一个动态FPS样本采集策略,
-- 列出四个Qwen-VL代升级的顺序,以及每个升级的功能.
-- 通过Qwen2.5VL式的JSON代理输出格式,并从VLM响应中分析结构化工具的呼叫.
+- 计算 M-RoPE 的三轴旋转(时间、高度、宽度)，并解释为什么三者缺一不可。
+- 为一段视频选择动态 FPS 采样策略，并推理每秒 token 数与事件检测准确率之间的权衡。
+- 按顺序说出 Qwen-VL 四代升级，以及每一代实现了什么。
+- 接入 Qwen2.5-VL 风格的 JSON 智能体输出格式，并从 VLM 响应中解析结构化工具调用。
 
 ## 问题
 
-文-VL于2023年8月出货,作为LLaVA-1.5和BLIP-2的直接反应.文团队的目标差距是三倍:分辨率,视频和结构性输出.
+Qwen-VL 于 2023 年 8 月发布，是对 LLaVA-1.5 和 BLIP-2 的直接回应。Qwen 团队瞄准的差距有三个：分辨率、视频和结构化输出。
 
-解析度:LLaVA-1.5 运行于336x336. 照片很好,对于一个中文发票或密集的电子表格截图来说是无用的. 文-VL 的第一个创新是448x448和地面边界框输出,让模型指向东西.
+分辨率：LLaVA-1.5 以 336x336 运行。对照片尚可，对中文发票或密集的电子表格截图毫无用处。Qwen-VL 的第一项创新是 448x448 分辨率和带 grounding 的边界框输出，让模型能够指向事物。
 
-视频:视频-LLaMA堆了每一个框架的编码器,然后将它们输送到LLM. 它适用于短片,而不是多分钟的视频,时间轴是信号.
+视频：Video-LLaMA 叠加逐帧编码器并喂给 LLM。这对短视频有效，对时间轴本身才是信号的多分钟视频则无效。Qwen 团队想要一个理解时间的单一编码器。
 
-结构化输出:LLaVA发射了自由形式文本.一个代理需要JSON.Qwen-VL训练在明确的JSON输出格式,包括边界框坐标作为文本.
+结构化输出：LLaVA 输出自由格式文本。智能体需要 JSON。Qwen-VL 在显式 JSON 输出格式上训练，包括以文本形式表示的边界框坐标。
 
-每一代Qwen-VL都延伸了三个轴之一.
+Qwen-VL 的每一代都在扩展这三个轴之一。
 
 ## 概念
 
-### 文-VL (2023年8月)
+### Qwen-VL(2023 年 8 月)
 
-第一代:OpenCLIP ViT-bigG/14作为编码器 (2.5B参数),LLama兼容的Q-Former (1步,含256个查询),Qwen-7B基础.贡献:
+第一代：OpenCLIP ViT-bigG/14 作为编码器(2.5B 参数)、与 LLama 兼容的 Q-Former(1 步、256 个查询)、Qwen-7B 底座。贡献：
 
-- 解析度为448x448 (然后为开放的VLM提供SOTA).
-- 接地:训练在图像和文本对进行明确的坐标标输出. "猫在 <box>112, 204), (280, 344)</box>".
-- 从一开始就进行了中文+英语多语言培训.
+- 448x448 分辨率(当时开源 VLM 的 SOTA)。
+- Grounding:在带显式坐标 token 输出的图文对上训练。"The cat is at <box>(112, 204), (280, 344)</box>"。
+- 从一开始就是中英双语训练。
 
-当时的标准:与GPT-4V在英语上竞争,在中国上占主导地位.
+当时的基准：英语上与 GPT-4V 相当，中文上占优。grounding 监督才是真正的头条。
 
-### wen2-VL (2024年9月) M-RoPE和本地分辨率
+### Qwen2-VL(2024 年 9 月)—— M-RoPE 与原生分辨率
 
-文2-VL 取代了固分分 + Q-Former 堆,并用了原生动分辨率 ViT 编码器.
+Qwen2-VL 用原生动态分辨率的 ViT 编码器取代了固定分辨率 + Q-Former 的堆叠。关键变化：
 
-- 视频可接受任何可乘以28 (补丁14与2x空间合并) 的 HxW. 图像在1120x672 (40x24合并补丁) 产生960个视觉代币.没有尺寸,没有,没有缩影图.
-- 对于图像 t=0,视频 t=frame_index. RoPE 每个代币都具有3D位置 (t, h, w) 而不是1D. RoPE每轴的频率按查询/关键向量旋转.没有位置嵌入表.
-- 放弃Q-Former,在合并的补丁代币上使用2层MLP.
-- 视频具有动态FPS. 视频默认的样本在1-2FPS,但模型接受任意的框架计数.
+- 原生动态分辨率。ViT 接受任何可被 28 整除的 HxW(patch 14 加 2x 空间合并)。一张 1120x672(40x24 个合并后 patch)的图像产生 960 个视觉 token。不缩放、不切分、不缩略图。
+- M-RoPE(Multimodal RoPE)。每个 token 携带 3D 位置 (t, h, w) 而非 1D。对图像 t=0,对视频 t = frame_index。RoPE 按每个轴一个频率旋转 query/key 向量。没有位置嵌入表。
+- MLP 投影层。去掉 Q-Former;对合并后的 patch token 使用 2 层 MLP。
+- 动态 FPS 视频。默认以 1-2 FPS 采样视频，但模型接受任意帧数。
 
-结果:Qwen2-VL-7B在多个多模式基准上匹配GPT-4o,并在 DocVQA (94.5 vs 88.4) 上击败了它.
+结果：Qwen2-VL-7B 在多个多模态基准上与 GPT-4o 持平，并在 DocVQA 上胜出(94.5 对 88.4)。架构改变才是决定性的一步。
 
-### wen2.5-VL (2025年2月) 动态FPS+绝对时间
+### Qwen2.5-VL(2025 年 2 月)—— 动态 FPS + 绝对时间
 
-动态FPS不仅仅是"需要更多的框架".
+Qwen2.5-VL 的重大转变在于视频。动态 FPS 不只是“需要时采样更多帧”。论文将其形式化为：
 
-- 实际时间标签. "在0:04时,猫跳跃".模型看到`<time>0.04</time>`交叉的代币与框架代币.
-- 动态FPS. 测试速度为1FPS,用于缓慢的镜头,用于行动的FPS为4+ FPS. 用户或训练师选择;M-RoPE适应.
-- 空间注意力为吞吐量 (区块内) 提供窗口;全球注意力每几层.
-- 经过工具调用数据训练: "{\"工具\": \"点击\", \"符号\": [380, 220]}". 代理准备出盒.
-- 按MRoPE-v2扩展. 按最大输入尺寸扩展位置,使10分钟的视频不会耗尽频段.
+- 绝对时间 token。不用位置索引(第 0、1、2 帧……),而是用真实时间戳。"At 0:04, the cat jumps." 模型看到与帧 token 交错出现的 `<time>0.04</time>` token。
+- 动态 FPS。慢节奏画面以 1 FPS 采样，动作场景 4+ FPS。由用户或训练者选择；M-RoPE 自适应。
+- ViT 中的窗口注意力。空间注意力被窗口化(块内局部)以提高吞吐；每隔几层做一次全局注意力。
+- 显式 JSON 输出格式。在工具调用数据上训练："{\"tool\": \"click\", \"coords\": [380, 220]}"。开箱即用即可做智能体。
+- MRoPE-v2 缩放。位置随最大输入尺寸缩放，因此 10 分钟的视频不会耗尽频率范围。
 
-基准:Qwen2.5-VL-72B在大多数视频基准上超过GPT-4o,在文档上匹配Gemini 2.0,并为GUI接地设置了开放型号SOTA (ScreenSpot: 84%的准确度与GPT-4o的38%).
+基准：Qwen2.5-VL-72B 在大多数视频基准上击败 GPT-4o,在文档上与 Gemini 2.0 持平，并为 GUI grounding 创下开源模型 SOTA(ScreenSpot:84% 准确率，GPT-4o 为 38%)。
 
-### 文3-VL (2025年11月)
+### Qwen3-VL(2025 年 11 月)
 
-文3-VL是一个逐步升级,而不是重新发明:更大的LLM脊柱 (Qwen3-72B),扩大了培训数据,改善了OCR,通过Qwen3"思考模式"进行了更强的推理.
+Qwen3-VL 是一次巩固而非重塑的渐进升级：更大的 LLM 底座(Qwen3-72B)、扩大的训练数据、改进的 OCR,以及通过 Qwen3 "thinking mode" 实现的更强推理。ViT 和 M-RoPE 保持不变。论文的重点是数据与训练改进，而非架构。
 
-后代的结论:到2025年,Qwen-VL架构已经稳定. 其他代代的计算和数据规模,而不是原始.
+这一谱系的启示：到 2025 年，Qwen-VL 架构已经稳定。后续的世代是在扩展算力和数据，而非原语。
 
-### 数学上,M-RoPE
+### M-RoPE 的数学
 
-经典的ROPE旋转查询`q`尺寸`d`按位置`m`使用对联坐标:
+经典 RoPE 使用成对坐标，按位置 `m` 旋转维度为 `d` 的 query `q`:
 
 ```
 q_rot[2i]   = q[2i]   * cos(m * theta_i) - q[2i+1] * sin(m * theta_i)
@@ -77,26 +77,26 @@ q_rot[2i+1] = q[2i]   * sin(m * theta_i) + q[2i+1] * cos(m * theta_i)
 theta_i     = 10000^(-2i/d)
 ```
 
-光将隐藏的暗光分为三段.`d = 96`按时间点分配32个,高度32个,宽32个.每个带按自己的轴位置旋转.一个 (t=5,h=10,w=20) 的补丁得到旋转.`R_t(5)`现在`R_h(10)`现在`R_w(20)`它们的三条带.
+M-RoPE 将隐藏维度切分为三个波段。设 `d = 96`。把 32 维分配给时间、32 维给高度、32 维给宽度。每个波段按自己的轴位置旋转。位于 (t=5, h=10, w=20) 的 patch 在其三个波段上分别应用旋转 `R_t(5)`、`R_h(10)`、`R_w(20)`。
 
-文字代码使用`t = text_index, h = 0, w = 0`视频片使用 视频片使用`t = frame_time, h = row, w = col`单个图像使用`t = 0`现在,我们要去.
+文本 token 使用 `t = text_index, h = 0, w = 0`(或某个归一化选择)，保持兼容性。视频帧使用 `t = frame_time, h = row, w = col`。单张图像使用 `t = 0`。
 
-优势:一个位置编码处理文本,图像和视频,而不需要分类代码或不同的位置表.
+好处：一个位置编码即可处理文本、图像和视频，无需分支代码或不同的位置表。
 
-### 动态-FPS样本抽取逻辑
+### 动态 FPS 采样逻辑
 
-视频时间`T`秒和目标代币预算`B`其他:
+给定时长为 `T` 秒的视频和目标 token 预算 `B`:
 
-1. 计算你能负担的最大FPS:`fps_max = B / (T * tokens_per_frame)`现在,我们要去.
-2. 选择一个目标FPS`{1, 2, 4, 8}`这满足了`fps <= fps_max`现在,我们要去.
-3. 如果运动高 (光流论或用户明确要求),请选择更高的FPS. 如果运动低,请选择更低.
-4. 在选择的FPS均样本;插入 `<time>t</time>`之间的代币.
+1. 计算你能负担的最大 FPS:`fps_max = B / (T * tokens_per_frame)`。
+2. 从 `{1, 2, 4, 8}` 中选择一个满足 `fps <= fps_max` 的目标 FPS。
+3. 若运动剧烈(光流启发式或用户显式要求)，选择更高 FPS。若运动平缓，选择更低。
+4. 以所选 FPS 均匀采样；在帧之间插入 `<time>t</time>` token。
 
-wen2.5VL 暗示了这种逻辑;`fps`参数:一个60秒的动作序列,4FPS,每框81个代币 =19440个代币,可在32k环境中管理.
+Qwen2.5-VL 隐式训练了这一逻辑；推理时用户通过 `fps` 参数控制。一段 60 秒的动作序列，4 FPS、每帧 81 个 token = 19440 个 token,在 32k 上下文中可以容纳。
 
-### 结构化代理输出
+### 结构化智能体输出
 
-文2.5VL的代理培训明确针对结构化工具调用:
+Qwen2.5-VL 的智能体训练显式瞄准结构化工具调用：
 
 ```
 {
@@ -107,51 +107,51 @@ wen2.5VL 暗示了这种逻辑;`fps`参数:一个60秒的动作序列,4FPS,每�
 }
 ```
 
-解析是决定性的:JSON.parse对模型的输出.比较自由形式的"点击 (1024, 512) "要求进行regex和模糊处理.这就是为什么Qwen2.5-VL的ScreenSpot分数从Qwen2-VL的55%跳到84%.
+解析是确定性的：对模型输出做 JSON.parse。相比之下，自由格式的 "click at (1024, 512)" 需要正则表达式和歧义处理。这一转变正是 Qwen2.5-VL 的 ScreenSpot 分数从 Qwen2-VL 的 55% 跃升至 84% 的原因。
 
 ```figure
 mm-mrope-axes
 ```
 
-## 用它
+## 动手使用
 
-`code/main.py`执行:
+`code/main.py` 实现了：
 
-- 对于包装序列混合文本,图像补丁和视频框架的M-RoPE位置计算.
-- 动态FPS样本:给出 (持续时间,预算,运动_水平),选择FPS并发射框架时间标记.
-- 玩具 Qwen2.5-VL JSON输出解析器,它处理工具调用响应,使用坐标字段.
+- 对混合文本、图像 patch 和视频帧的打包序列进行 M-RoPE 位置计算。
+- 动态 FPS 采样器：给定 (duration, budget, motion_level),选择 FPS 并输出帧时间戳。
+- 一个玩具级的 Qwen2.5-VL JSON 输出解析器，可处理带坐标字段的工具调用响应。
 
-运行它,然后在5分钟的视频中,
+运行它，然后在一段 5 分钟的视频上把固定 FPS 换成动态 FPS,体会其中的差别。
 
-## 运送它
+## 交付
 
-这一课产生了`outputs/skill-qwen-vl-pipeline-designer.md`视频任务 (监控,代理,行动识别,可访问性) 则会发出Qwen2.5VL配置 (框架预算,FPS策略,窗口注意力旗,代理输出模式) 和延迟估计.
+本课产出 `outputs/skill-qwen-vl-pipeline-designer.md`。给定一个视频任务(监控、智能体、动作识别、无障碍)，它输出 Qwen2.5-VL 配置(帧预算、FPS 策略、窗口注意力标志、智能体输出模式)以及延迟估计。每当你为视频产品部署 Qwen-VL 家族模型时，都使用它。
 
-## 运动
+## 练习
 
-1. 计算一个补丁的M-RoPE旋转 (t=3,h=5,w=7) 隐藏48 (16个条,底线theta 10000).显示每个条的前三对旋转角.
+1. 为位于 (t=3, h=5, w=7)、隐藏维度 48(每波段 16,base theta 10000)的 patch 计算 M-RoPE 旋转。给出每个波段中前三对的旋转角度。
 
-2. 通过10分钟的安全摄像头在1FPS录制,产生多少个图像?在3x分辨率的384分辨率,共有多少个代币?Qwen2.5VL的默认32k环境处理它吗?
+2. 一段 10 分钟、以 1 FPS 采样的监控录像产生多少帧？在 384 分辨率、3x 池化下，总共多少 token?Qwen2.5-VL 默认的 32k 上下文能容纳吗？
 
-3. 选择FPS为30秒的网球集会,对30秒的食谱演示,对30秒的UI代理录音.
+3. 为一段 30 秒的网球对打、一段 30 秒的食谱演示和一段 30 秒的 UI 智能体录制分别选择 FPS。用动态 FPS 逻辑为每个选择给出理由。
 
-4. 简单的MLP为什么在2025年工作,而不是2023年? (提示:数据规模和编码器质量)
+4. Qwen2.5-VL 完全去掉了 Q-Former。为什么简单的 MLP 在 2025 年可行，而在 2023 年不行？(提示：数据规模和编码器质量。)
 
-5. 解析3个Qwen2.5-VL JSON工具调用输出到Python字体中.错误的JSON有什么缺陷,Qwen厨师书建议什么恢复策略?
+5. 将三个 Qwen2.5-VL JSON 工具调用输出解析为 Python 字典。格式错误的 JSON 会导致什么失败？Qwen cookbook 推荐什么恢复策略？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 它实际是什么 |
 |------|-----------------|------------------------|
-| M-RoPE | "Multimodal RoPE" | 3D rotary position embedding with temporal, height, and width bands in the hidden dim |
-| Dynamic FPS | "Smart sampling" | Frame sampling rate chosen per video based on motion, duration, and token budget |
-| Absolute time token | "Timestamp token" | `<time>t</time>` interleaved in the sequence so the model sees actual seconds not frame index |
-| Window attention | "Local attention" | Spatial self-attention restricted to small windows for speed; global attention added periodically |
-| Structured agent output | "JSON mode" | Training data supervision teaching the VLM to emit parseable JSON with coords and tool names |
-| min_pixels / max_pixels | "Resolution bounds" | Per-request Qwen2.5-VL controls bounding total pixel count and therefore token count |
-| Grounding | "Point-at-it" | Outputting bounding-box coordinates as text tokens; used since Qwen-VL v1 |
+| M-RoPE | "Multimodal RoPE" | 在隐藏维度中划分时间、高度、宽度波段的 3D 旋转位置编码 |
+| Dynamic FPS | "智能采样" | 根据运动、时长和 token 预算为每个视频选择的帧采样率 |
+| Absolute time token | "时间戳 token" | 交错在序列中的 `<time>t</time>`,让模型看到的是实际秒数而非帧索引 |
+| Window attention | "局部注意力" | 为提速而限制在小窗口内的空间自注意力；周期性地加入全局注意力 |
+| Structured agent output | "JSON 模式" | 训练数据监督，教会 VLM 输出带坐标和工具名、可被解析的 JSON |
+| min_pixels / max_pixels | "分辨率界限" | Qwen2.5-VL 的按请求控制项，约束总像素数，从而约束 token 数 |
+| Grounding | "指哪打哪" | 以文本 token 形式输出边界框坐标；自 Qwen-VL v1 起就有 |
 
-## 进一步阅读
+## 延伸阅读
 
 - [Bai et al. — Qwen-VL (arXiv:2308.12966)](https://arxiv.org/abs/2308.12966)
 - [Wang et al. — Qwen2-VL (arXiv:2409.12191)](https://arxiv.org/abs/2409.12191)

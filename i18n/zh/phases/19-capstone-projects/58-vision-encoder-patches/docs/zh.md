@@ -1,26 +1,26 @@
-# 视觉编码器补丁
+# 视觉编码器的Patch划分
 
-> 读像素的视觉模型需要一个像素代码器. 补丁嵌入是这个代码器. 切割图像成一个平方网,平平平每个平方,将它投射到一个线性层,然后添加一个2D位置信号,这样变压器就可以知道每个平方在原始图像中坐在那里.
+> 一个读取像素的视觉模型需要一个针对像素的分词器。Patch嵌入就是这个分词器。将图像切分成方形网格,把每个方块展平,通过一个线性层投影,再加上一个2D位置信号,让Transformer知道每个方块在原图中的位置。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 19 lessons 30-37 (Track B foundations)
-**Time:** ~90 minutes
+**Prerequisites:** Phase 19 第30-37课(Track B 基础)
+**Time:** 约90分钟
 
 ## 学习目标
 
-- 标记图像成固定长度的嵌入补丁序列.
-- 实施一个`Conv2d`基于补丁投影,与"展开然后线性"的数学相匹配.
-- 构建一个确定性2D双向状位置,嵌入,所以代号序符号编码空间位置.
-- 检查片数量,嵌入形状,`Conv2d`合成装置的配方.
+- 将图像分词为固定长度的patch嵌入序列。
+- 实现一个基于 `Conv2d` 的patch投影,其数学效果与"unfold后再线性层"一致。
+- 构建确定性的2D正弦位置嵌入,使token顺序编码空间位置。
+- 在合成测试数据上验证patch数量、嵌入形状,以及 `Conv2d`/unfold 的等价性。
 
 ## 问题
 
-变体食用了一个向量序列. 图像是一个三通道的网格. 读取每个像素作为一个符号, 序列长度会爆炸: 224x224 RGB 图像是 150,528 个符号, 读取图像,作为一个巨大的平面向量, 抛弃了位置, 编码器前端的任务是将像素格式压缩成几百个代币,每个代币都总结了一个方形区域.
+Transformer吃的是向量序列。而图像是一个3通道网格。把每个像素都当作一个token会使序列长度爆炸:一张224x224的RGB图像有150,528个token,12层的Transformer在注意力计算上根本负担不起。把整张图像当作一个巨大的扁平向量则会丢掉局部性,而注意力层无法从中恢复。编码器前端的任务是将像素网格压缩成几百个token,每个token概括一个方形区域。
 
-补丁嵌入解决了一个线性投影.一个224x224图像切成16x16补丁产生14x14的格格 196补丁.每个补丁是平坦的从`(3, 16, 16) = 768`变压器看到196个维度代币.`hidden`网络其他部分可以取的序列.
+Patch嵌入用一个线性投影解决了这个问题。一张224x224的图像按16x16切分后,得到一个14x14的网格,共196个patch。每个patch从 `(3, 16, 16) = 768` 个像素值展平为一个向量,然后一个线性层将其映射到模型的隐藏维度。Transformer看到的是196个维度为 `hidden` (通常是768)的token,外加一个CLS token。这是网络其余部分能够处理的序列长度。
 
-## 概念
+## 核心概念
 
 ```mermaid
 flowchart LR
@@ -33,100 +33,100 @@ flowchart LR
   Pos --> Out[final token sequence]
 ```
 
-### 为什么是补丁,而不是像素
+### 为什么用patch而不是像素
 
-关注是序列长度的方形. 196 个代币的序列成本.`196 * 196 = 38,416`关注度分数每个头/层;一个150,528个代币的序列成本`150,528 * 150,528 = 22.6 billion`补丁可以减少注意力计算的590,000倍,而一个16x16区域可为高水平视觉任务承载足够的信号.成本是一个补丁内部细节空间细节的损失,这就是为什么下游多模块堆经常运行第二个高分辨率分支,当细节定位是重要的.
+注意力计算对序列长度是二次复杂度。196个token的序列在每个头每层需要 `196 * 196 = 38,416` 个注意力分数;150,528个token的序列则需要 `150,528 * 150,528 = 22.6 billion` 个。Patch带来了约59万倍的注意力计算量削减,而单个16x16的区域已经包含足够的信息用于高层视觉任务。代价是丢失了单个patch内部的细粒度空间细节,这就是为什么当下游需要精细定位时,多模态系统通常会增加一个高分辨率分支。
 
-### 为什么线性投影足够
+### 为什么一个线性投影就够了
 
-每个补丁都被视为一个独立的向量.投影学习了基础:边缘检测器,颜色过器,简单的纹理.`768 * 768 = 589,824`根据ViT-Base的标准,并快速列车.更深的卷积茎存在 ("混合"ViT),但平线线性投影是标准的,大多数现代开放权重编码器都具有这个形状.
+每个patch被当作独立的向量。投影学习一组基:边缘检测器、颜色滤波器、简单纹理。单个线性层很小(ViT-Base为 `768 * 768 = 589,824` 个参数)且训练快。存在更深的卷积stem("hybrid" ViT),但扁平线性投影是标准做法,大多数现代开源权重编码器都采用这一结构。
 
-### 其他`Conv2d`事
+### `Conv2d` 技巧
 
-`Conv2d(in_channels=3, out_channels=hidden, kernel_size=patch_size, stride=patch_size)`没有填充的结果与fold-then-linear相同,因为每个输出位置点-produces的补丁像素对一个过器. 卷积是补丁投影,大多数生产代码基础将它运送到这种方式,因为它在 GPU上更快,使用一个更少的重塑.
+无padding的 `Conv2d(in_channels=3, out_channels=hidden, kernel_size=patch_size, stride=patch_size)` 在数值上与"unfold后再线性层"结果相同,因为每个输出位置都是patch像素与一个滤波器的点积。卷积就是patch投影,大多数生产代码库都这样实现,因为它在GPU上更快,还少一次reshape。
 
 ### 位置嵌入
 
-两个维的双向突嵌入式给每个代币一个固定信号,`(row, col)`位置. 嵌入维度的一半在多频率上编码行位置,另一半编码列位置. 编码是决定性的,因此可以在不需要重新训练的情况下交换分辨率,并且它清洁地插入模型在训练时从未看到的网格.
+token经过投影后不携带任何顺序信息。2D正弦嵌入为每个token提供一个固定的信号,编码其 `(row, col)` 位置。嵌入维度的一半用多个频率的sin/cos编码行位置;另一半编码列位置。该编码是确定性的,因此可以在不重新训练的情况下更换分辨率,并且能干净地插值到训练时从未见过的网格。
 
-| Component | Shape | Parameters |
+| 组件 | 形状 | 参数量 |
 |-----------|-------|------------|
-| Patch projection (`Conv2d`) | `(hidden, 3, patch, patch)` | `3 * P * P * hidden + hidden` |
-| Position embedding (fixed) | `(num_patches, hidden)` | 0 (computed, not learned) |
-| CLS token (learned) | `(1, hidden)` | `hidden` |
+| Patch投影(`Conv2d`) | `(hidden, 3, patch, patch)` | `3 * P * P * hidden + hidden` |
+| 位置嵌入(固定) | `(num_patches, hidden)` | 0(计算得出,非学习) |
+| CLS token(学习) | `(1, hidden)` | `hidden` |
 
-对于ViT-Base/16的 224 分辨率:投影中590.592 个参数,CLS代币中768个参数,对于鼻状位置则是零.下一个课程 (59) 将这个前端上堆叠一个12层变压器.
+以224分辨率的ViT-Base/16为例:投影有590,592个参数,CLS token有768个,正弦位置为0。下一课(第59课)将在这个前端之上叠加一个12层的Transformer。
 
-### 相当性作为智力检查
+### 等价性作为正确性检验
 
-补丁步骤有两个拼写:`Conv2d`它们必须为相同的权重产生相同的输出.如果它们没有,则解体数学是错误的,而其余的编码器是建立在沙子上.本课中的测试实行了同等性.
+Patch步骤有两种写法:一个 `Conv2d` 投影,以及显式的"unfold后再线性层"。相同权重下它们必须产生相同的输出。如果不一致,则unfold的数学有误,编码器的其余部分就建立在流沙之上。本课的测试就是检验这一等价性。
 
 ```figure
 ch-patch-tokenizer
 ```
 
-## 建立它
+## 动手构建
 
-`code/main.py`执行:
+`code/main.py` 实现:
 
-- `PatchEmbed`其他`nn.Module`包装`Conv2d`用于补丁投射.
-- `sinusoidal_2d(grid_h, grid_w, dim)`构建2D位置表的无状态函数.
-- `VisionFrontEnd`接,CLS预定,并将位置添加到一个前进传输中.
-- `synthesize_image(seed)`通过  测量, 测量, 测量, 测量,`numpy.random`现在,我们要去.
-- 通过前端运行一个固定图像的演示,打印出式形状,CLS代币标准,以及位置嵌入的一行.
+- `PatchEmbed`,一个封装 `Conv2d` 用于patch投影的 `nn.Module`。
+- `sinusoidal_2d(grid_h, grid_w, dim)`,一个无状态函数,构建2D位置表。
+- `VisionFrontEnd`,将patch嵌入、CLS前插和位置相加组合成一次前向传播。
+- 一个 `synthesize_image(seed)` 辅助函数,从 `numpy.random` 构建确定性的224x224x3测试数据。
+- 一个演示脚本,将一张测试图像通过前端并打印输出形状、CLS token范数,以及位置嵌入的一行。
 
-运行它:
+运行:
 
 ```bash
 python3 code/main.py
 ```
 
-输出:224x224固定符号为一个形状序列`(1, 197, 768)`首个代币是CLS,接下来的196个是补丁代币. 位置嵌入规范在一行内均,这是鼻状签名.
+输出:224x224的测试图像被分词为形状为 `(1, 197, 768)` 的序列。第一个token是CLS;接下来的196个是patch token。位置嵌入的范数在同一行内是均匀的,这正是正弦编码的特征。
 
-## 用它
+## 实际应用
 
-现在,每一个现代视觉语言模型都出现了相同的补丁前端:Clip ViT-L/14,SigLIP,DINOv2,Qwen-VL家族,以及InternVL堆,`Conv2d`补丁投影加一个位置信号. 家庭之间的差异是下游 (CLS vs 没有CLS的集成,注册代币,不同补丁尺寸14 vs 16,通过插曲的位置进行动态分辨率). 本课程的前端是每个模型都站在的基板.
+同样的patch前端出现在每一个现代视觉-语言模型中:CLIP ViT-L/14、SigLIP、DINOv2、Qwen-VL系列和InternVL系列,都始于一个 `Conv2d` patch投影加位置信号。各系列之间的差异在下游(CLS还是无CLS池化、register token、patch大小14 vs 16、通过插值位置实现动态分辨率)。本课的前端是所有这些模型赖以构建的基础。
 
 ## 测试
 
-`code/test_main.py`覆盖:
+`code/test_main.py` 覆盖:
 
-- 补丁数量匹配`(image_size / patch_size) ** 2`
-- 输出形状匹配`(batch, num_patches + 1, hidden)`
-- 其他`Conv2d`投影等于手动在小装置上打开然后直线
-- 坐标位置表是通过调用的确定性
-- 通过批量淡而无泄漏的CLS代币发射
+- patch数量与 `(image_size / patch_size) ** 2` 一致
+- 输出形状与 `(batch, num_patches + 1, hidden)` 一致
+- `Conv2d` 投影在小型测试数据上等于手工的unfold-then-linear
+- 正弦位置表在多次调用间是确定性的
+- CLS token在batch维上广播而不发生泄漏
 
-运行它们:
+运行:
 
 ```bash
 python3 -m unittest code/test_main.py
 ```
 
-## 运动
+## 练习
 
-1. 换一个学会的位置.`nn.Parameter`训练后改变分辨率时,学习的位置在固定的分辨率上获胜;
+1. 将正弦位置替换为可学习的 `nn.Parameter`,并在一个小型合成分类任务上比较第一个epoch的损失。固定分辨率下可学习位置占优;训练后改变分辨率时正弦编码占优。
 
-2. 换一个`Conv2d`为了明确的`nn.Unfold`另外`nn.Linear`它们的输出与浮动容量相匹配.
+2. 将 `Conv2d` 换成显式的 `nn.Unfold` 加 `nn.Linear`,并断言输出在浮点容差内一致。同一数学,两种写法。
 
-3. 添加支持非方形补丁尺寸 (例如32x16用于宽面输入) 并验证位置表处理非方形网格.
+3. 增加对非正方形patch大小的支持(例如宽幅输入用32x16),并验证位置表能处理非正方形网格。
 
-4. 片步骤在批量1,8,64的配置.
+4. 在batch size为1、8、64下对patch步骤进行性能分析。patch投影很少是瓶颈;下游的注意力层才是主导。
 
-5. 训练前端作为一个冷的特征提取器在4类合成形状数据集 (圆,方形,三角形,星).CLS代币输出应线性分开.
+5. 将前端作为冻结的特征提取器,在一个4类合成形状数据集(圆形、正方形、三角形、星形)上训练。CLS token的输出应该可以线性分离。
 
-## 关键词
+## 关键术语
 
-| Term | What it means |
+| 术语 | 含义 |
 |------|---------------|
-| Patch | A square sub-region of the image, typically 14x14 or 16x16 |
-| Patch embedding | Linear projection of one flattened patch to the hidden dim |
-| Sequence length | Number of tokens after patch tokenization, usually plus CLS |
-| Sinusoidal position | Fixed sin/cos signal that encodes 2D grid coordinates |
-| CLS token | Learned vector prepended to the sequence as the pooling head |
+| Patch | 图像的一个方形子区域,通常为14x14或16x16 |
+| Patch嵌入 | 将一个展平的patch线性投影到隐藏维度 |
+| 序列长度 | patch分词后的token数量,通常再加上CLS |
+| 正弦位置 | 编码2D网格坐标的固定sin/cos信号 |
+| CLS token | 前插到序列中作为池化头的可学习向量 |
 
-## 进一步阅读
+## 延伸阅读
 
-- 一张图像值16x16字 (ViT, 2021) 对于原始的补丁嵌入式框架.
-- 关注就是你需要的 (2017) 对于这里适应2D的鼻形位置公式.
-- 印证的DINOv2纸,可以添加为6练习.
+- An Image is Worth 16x16 Words(ViT, 2021),了解原始的patch嵌入框架。
+- Attention Is All You Need(2017),了解此处改编为2D的正弦位置公式。
+- DINOv2论文,了解register token,你可以将其作为练习6添加。

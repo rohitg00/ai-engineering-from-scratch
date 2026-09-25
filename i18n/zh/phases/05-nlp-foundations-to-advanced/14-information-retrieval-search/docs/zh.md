@@ -1,40 +1,40 @@
-# 获取信息和搜索
+# 信息检索与搜索
 
-> 虽然BM25是精确的,但很脆弱.密集的网投宽,但错过关键字.混合型是2026年默认的.其他一切都在调整.
+> BM25 精确但脆弱。稠密检索覆盖面广但会漏掉关键词。混合检索是 2026 年的默认方案。其余的都是调优。
 
 **Type:** Build
 **Languages:** Python
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 04 (GloVe, FastText, Subword)
-**Time:** ~75 minutes
+**Time:** ~75 分钟
 
-## 问题
+## 问题所在
 
-用户输入"如果有人说谎来获得钱会发生什么?"并希望找到实际覆盖该条例:"IPC第420条".一个关键词搜索完全错过了它 (没有共享的词汇库).一个语义搜索错过了它如果嵌入式没有训练在法律文本.真正的搜索必须处理两者.
+用户输入"what happens if someone lies to get money"（如果有人撒谎骗钱会怎样），期望找到真正覆盖该情形的法条："Section 420 IPC"。关键词搜索完全找不到它（没有共享词汇）。语义搜索也找不到，如果嵌入模型没有在法律文本上训练过。真正的搜索必须两者兼顾。
 
-根据"图库"的定义,每一个图库都会被查到一个位置,每一个图库都会被查到一个位置.
+IR 是每个 RAG 系统、每个搜索框、每个文档网站模糊查找背后的流水线。2026 年在生产环境中可行的架构不是单一方法，而是一系列互补方法的链条，每一环都弥补前一环的失败。
 
-这一课构建了每一个小块,每一个捕获都失败了.
+本课逐个构建每个组件，并说明每一环能弥补哪些失败。
 
 ## 概念
 
 ![Hybrid retrieval: BM25 + dense + RRF + cross-encoder rerank](../assets/retrieval.svg)
 
-选择你需要的四层.
+四个层次。按需选用。
 
-1. **Sparse retrieval (BM25).**快速,准确的匹配,可怕的语义. 翻转索引. 每次查询在数百万文件中. 获得法规引用,产品代码,错误信息,命名实体正确.
-2. **Dense retrieval.**编码查询和文件成向量. 最近邻居搜索.捕捉句子和语义相似性. 错过一个字符不同的关键字匹配. 50-200ms 每个查询与FAISS或向量DB.
-3. **Fusion.**合并排名列表从稀疏和密集. 相互排名融合 (RRF) 是简单的默认,因为它忽略原始分数 (生活在不同的尺度中) 并仅使用排名位置.当你知道一个信号为你的域占主导地位时,重量融合是一个选择.
-4. **Cross-encoder rerank.**通过合,运行一个跨编码器 (查询+文档一起,分分分每对).保持前五个.跨编码器比双编码器较慢,但更准确.
+1. **稀疏检索（BM25）。** 快速，对精确匹配精准，对语义很差。运行在倒排索引上。数百万文档中每个查询不到 10 毫秒。能正确匹配法条编号、产品代码、错误信息、命名实体。
+2. **稠密检索。** 将查询和文档编码为向量。最近邻搜索。能捕捉改写和语义相似。会漏掉仅差一个字符的精确关键词匹配。使用 FAISS 或向量数据库，每个查询 50-200 毫秒。
+3. **融合。** 合并稀疏和稠密的排序列表。倒数排序融合（RRF）是简单的默认选择，因为它忽略原始分数（量纲各不相同），只使用排名位置。当你知道某个信号在你的领域占主导时，可以选用加权融合。
+4. **交叉编码器重排。** 取融合后的前 30 条。运行交叉编码器（查询 + 文档一起输入，为每一对打分）。保留前 5 条。交叉编码器每对比双编码器慢，但准确得多。通过只对前 30 条运行来摊薄成本。
 
-两向检索 (BM25 +密集 +学习空间,如SPLADE) 在2026年比较高于两向检索,但需要学习空间指数的基础设施.对于大多数团队来说,双向加加密交叉编码重排是最好的点.
+三路检索（BM25 + 稠密 + SPLADE 等学习型稀疏）在 2026 年的基准测试中优于两路检索，但需要支持学习型稀疏索引的基础设施。对大多数团队来说，两路加交叉编码器重排是最优平衡点。
 
 ```figure
 gx-hybrid-retrieval
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:从零开始BM25
+### 第 1 步：从零实现 BM25
 
 ```python
 import math
@@ -87,9 +87,9 @@ class BM25:
         return scored[:top_k]
 ```
 
-值得知道的两个参数.`k1=1.5`控制术语频率和;更高意味着更重的术语重复. `b=0.75`根据罗伯逊的建议,通常需要调整. 根据罗伯逊的建议, 罗伯逊的建议, 罗伯逊的建议是完全正常化的.
+两个值得了解的参数。`k1=1.5` 控制词频饱和度；值越高，词重复的权重越大。`b=0.75` 控制长度归一化；0 表示忽略文档长度，1 表示完全归一化。默认值来自原始论文中 Robertson 的建议，很少需要调优。
 
-### 步骤2:使用双编码器进行密集检索
+### 第 2 步：使用双编码器的稠密检索
 
 ```python
 from sentence_transformers import SentenceTransformer
@@ -109,9 +109,9 @@ def dense_search(encoder, embeddings, query, top_k=10):
     return [(float(sims[i]), int(i)) for i in order]
 ```
 
-点产量等于kosine.`all-MiniLM-L6-v2`对于多语言工作,使用 `paraphrase-multilingual-MiniLM-L12-v2`为了最准确的,`bge-large-en-v1.5`或`e5-large-v2`现在,我们要去.
+对嵌入做 L2 归一化，使点积等于余弦相似度。`all-MiniLM-L6-v2` 为 384 维，快速，对大多数英文检索足够强。多语言场景使用 `paraphrase-multilingual-MiniLM-L12-v2`。追求最高精度时，用 `bge-large-en-v1.5` 或 `e5-large-v2`。
 
-### 步骤3:相互级别的融合
+### 第 3 步：倒数排序融合
 
 ```python
 def reciprocal_rank_fusion(rankings, k=60):
@@ -123,9 +123,9 @@ def reciprocal_rank_fusion(rankings, k=60):
     return [(score, doc_idx) for doc_idx, score in fused]
 ```
 
-其他`k=60`常数来自原始的RRF纸.`k`降低了排名差异的贡献;`k`现在,我们在这个问题上,我们需要一个问题.
+常数 `k=60` 来自原始 RRF 论文。较高的 `k` 会抹平排名差异的贡献；较低的 `k` 会让靠前的排名占主导。60 是已发表的默认值，很少需要调优。
 
-### 步骤4:混合搜索+重排
+### 第 4 步：混合搜索 + 重排
 
 ```python
 from sentence_transformers import CrossEncoder
@@ -144,49 +144,49 @@ def hybrid_search(query, bm25, encoder, dense_embeddings, corpus, top_k=5, pool_
     return reranked[:top_k]
 ```
 
-组建三个阶段.BM25发现词汇匹配.密集发现语义匹配.RRF不需要分数校准的情况下合并两个排名.跨编码器使用查询文档对进行重新评分,从而捕获了双编码器错过的细粒度相关性.保持前-5.
+三个阶段组合而成。BM25 找到词汇匹配。稠密找到语义匹配。RRF 在不需要分数校准的情况下合并两个排名。交叉编码器将查询-文档对一起输入，对前 30 条重新打分，捕捉双编码器漏掉的细粒度相关性。保留前 5 条。
 
-### 五步:评估
+### 第 5 步：评估
 
-| Metric | Meaning |
+| 指标 | 含义 |
 |--------|---------|
-| Recall@k | Of queries where the correct document exists, how often is it in the top-k? |
-| MRR (Mean Reciprocal Rank) | Average of 1/rank of first relevant document. |
-| nDCG@k | Accounts for relevance gradations, not just binary relevant/not. |
+| Recall@k | 在正确文档存在的查询中，它出现在前 k 名的频率是多少？ |
+| MRR（Mean Reciprocal Rank） | 首个相关文档的 1/rank 的平均值。 |
+| nDCG@k | 考虑相关性分级，而不仅仅是相关/不相关的二值。 |
 
-对于RAG而言,**Recall@k**如果没有正确的段落,读者不能回答.
+对 RAG 而言，检索器的 **Recall@k** 是最重要的数字。如果正确的段落不在检索结果中，你的阅读器（reader）就无法作答。
 
-调试提示:对于失败的查询,分别稀疏和密集的排名.如果一个找到正确的文档,而另一个没有,你会出现词汇不匹配 (修正:添加缺失的一半) 或语义模糊 (修正:更好的嵌入或重新排名).
+调试技巧：对于失败的查询，对比稀疏和稠密的排名。如果一方找到了正确的文档而另一方没有，那么就是词汇不匹配（修复：补充缺失的一半）或语义歧义（修复：更好的嵌入或重排器）。
 
-## 用它
+## 实际应用
 
-现在,我们要做什么?
+2026 年的技术栈：
 
-| Scale | Stack |
+| 规模 | 技术栈 |
 |-------|-------|
-| 1k-100k docs | In-memory BM25 + `all-MiniLM-L6-v2` embeddings + RRF. No separate DB. |
-| 100k-10M docs | FAISS or pgvector for dense + Elasticsearch / OpenSearch for BM25. Run in parallel. |
-| 10M+ docs | Qdrant / Weaviate / Vespa / Milvus with hybrid support. Cross-encoder rerank on top-30. |
-| Best-quality frontier | Three-way (BM25 + dense + SPLADE) + ColBERT late-interaction reranking |
+| 1k-100k 文档 | 内存中 BM25 + `all-MiniLM-L6-v2` 嵌入 + RRF。无需单独的数据库。 |
+| 100k-10M 文档 | FAISS 或 pgvector 处理稠密 + Elasticsearch / OpenSearch 处理 BM25。并行运行。 |
+| 10M+ 文档 | Qdrant / Weaviate / Vespa / Milvus，支持混合检索。在前 30 条上做交叉编码器重排。 |
+| 追求极致质量 | 三路（BM25 + 稠密 + SPLADE）+ ColBERT 后期交互重排 |
 
-根据您选择的预算进行评估. 预测检索提醒,然后再进行预测,以检测到RAG的精度.
+无论选什么，都要为评估留出预算。在基准测试端到端 RAG 准确率之前，先基准测试检索召回率。检索器漏掉的东西，阅读器无法弥补。
 
-### 2026年生产RAG的难以获取教训
+### 2026 年生产级 RAG 的惨痛教训
 
-- **80% of RAG failures trace to ingestion and chunking, not the model.**团队花了几周时间交换LLM和调整提示,而检索每第三次查询都会地返回错误的文本.
-- **Chunking strategy matters more than chunk size.**固定尺寸分开分开表,代码和嵌入式标题.句子意识是默认的;语义或LLM基于的分断为技术文件和产品手册付出代价.
-- **Parent-doc pattern.**检索小小的"孩子"块以获得精确性.当来自同一父母部分的多个孩子出现时,在父母块中交换以保持文本.这在不需要重新训练的情况下不断提高答案质量.
-- **k_rerank=3 is usually optimal.**如果 k=8 对你来说仍然比 k=3 更好,那么重新排名器的性能低.
-- **HyDE / query expansion.**通过查询生成一个假设答案,嵌入,检索. 弥合短问题和长文档之间的措辞差距. 免费的精确升降,没有训练.
-- **Context budget under 8K tokens.**连续击中这个极限意味着重排门太松散了.
-- **Version everything.**提示,分量规则,嵌入模型,重新排序器.任何漂移都会默默破坏答案质量. CI 关闭信任,文本精确性和未回答问题的率,用户在看到之前阻止回归.
-- **Three-way retrieval (BM25 + dense + learned-sparse like SPLADE) outperforms two-way**根据2026年基准,特别是对混合正确名词和语义的查询.
+- **80% 的 RAG 失败源于数据摄取和分块，而不是模型。** 团队花数周更换 LLM、调优提示词，而检索器却每隔三次查询就悄悄返回错误上下文。先修复分块。
+- **分块策略比分块大小更重要。** 固定大小的切分会破坏表格、代码和嵌套标题。句子感知切分是默认选择；语义分块或基于 LLM 的分块对技术文档和产品手册很值得。
+- **父文档模式。** 检索小的"子"块以保证精确度。当同一父级章节的多个子块同时出现时，换入父级块以保留上下文。这一做法无需重新训练就能持续提升答案质量。
+- **k_rerank=3 通常是最优的。** 超过这个数的每个额外块都增加 token 成本和生成延迟，却不提升答案质量。如果 k=8 对你仍然比 k=3 好，说明重排器表现不佳。
+- **HyDE / 查询扩展。** 从查询生成一个假设性答案，对它做嵌入，再检索。弥合短问题与长文档之间的措辞差距。无需训练即可免费获得精确度提升。
+- **上下文预算控制在 8K token 以内。** 在该上限处持续命中说明重排器阈值过松。
+- **一切都要版本化。** 提示词、分块规则、嵌入模型、重排器。任何漂移都会悄悄破坏答案质量。以忠实度、上下文精确率和未回答问题率为门槛的 CI 门禁，能在用户看到之前拦住回归。
+- **三路检索（BM25 + 稠密 + SPLADE 等学习型稀疏）优于两路检索**——在 2026 年基准测试中，尤其是在专有名词与语义混合的查询上。当基础设施支持 SPLADE 索引时就上它。
 
-根据2026年行业测量,正确的检索设计可以减少70-90%.大多数RAG性能增长来自更好的检索,而不是模型细节调整.
+根据 2026 年的行业测量，合理的检索设计可将幻觉减少 70-90%。RAG 性能提升大多来自更好的检索，而不是模型微调。
 
-## 运送它
+## 交付上线
 
-保存如`outputs/skill-retrieval-picker.md`其他:
+保存为 `outputs/skill-retrieval-picker.md`：
 
 ```markdown
 ---
@@ -208,27 +208,27 @@ Given requirements (corpus size, query pattern, latency budget, quality bar, inf
 Refuse to recommend dense-only for corpora with named entities, error codes, or product SKUs unless the user has evidence dense handles exact matches. Refuse to skip reranking for high-stakes retrieval (legal, medical) where the final top-5 decides the user's answer.
 ```
 
-## 运动
+## 练习
 
-1. **Easy.**实施`hybrid_search`测试20个查询. 仅BM25,仅密集和混合物之间的5个回忆.
-2. **Medium.**添加MRR计算.对于每个已知正确文档的测试查询,在BM25,密集和混合排名中找到正确文档的排名. 报告每个文档的MRR.
-3. **Hard.**通过多个负面排名输失 (Sentence Transformers) 调整域名上的密集编码器.从500个查询文档对构建训练集.比较调整前和调整后的回忆.
+1. **简单。** 在 500 篇文档的语料库上实现上面的 `hybrid_search`。测试 20 个查询。比较 BM25 单独、稠密单独和混合检索在 k=5 时的召回率。
+2. **中等。** 添加 MRR 计算。对每个已知正确文档的测试查询，找出正确文档在 BM25、稠密和混合排名中的名次。报告各自的 MRR。
+3. **困难。** 使用 MultipleNegativesRankingLoss（Sentence Transformers）在你的领域上微调一个稠密编码器。用 500 个查询-文档对构建训练集。比较微调前后的召回率。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|-----------------------|
-| BM25 | Keyword search | Okapi BM25. Scores documents by term frequency, IDF, and length. |
-| Dense retrieval | Vector search | Encode query + doc into vectors, find nearest neighbors. |
-| Bi-encoder | Embedding model | Encodes query and doc independently. Fast at query time. |
-| Cross-encoder | Reranker model | Encodes query + doc together. Slow but accurate. |
-| RRF | Rank fusion | Combine two rankings by summing `1/(k + rank)`. |
-| Recall@k | Retrieval metric | Fraction of queries where a relevant doc is in the top-k. |
+| BM25 | 关键词搜索 | Okapi BM25。基于词频、IDF 和长度为文档打分。 |
+| 稠密检索 | 向量搜索 | 将查询 + 文档编码为向量，查找最近邻。 |
+| 双编码器 | 嵌入模型 | 独立编码查询和文档。查询时快。 |
+| 交叉编码器 | 重排器模型 | 将查询 + 文档一起编码。慢但准确。 |
+| RRF | 排名融合 | 通过对 `1/(k + rank)` 求和来合并两个排名。 |
+| Recall@k | 检索指标 | 相关文档出现在前 k 名的查询比例。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Robertson and Zaragoza (2009). The Probabilistic Relevance Framework: BM25 and Beyond](https://www.staff.city.ac.uk/~sbrp622/papers/foundations_bm25_review.pdf)最终的BM25治疗.
-- [Karpukhin et al. (2020). Dense Passage Retrieval for Open-Domain QA](https://arxiv.org/abs/2004.04906)DPR,是法典双码码器.
-- [Formal et al. (2021). SPLADE: Sparse Lexical and Expansion Model](https://arxiv.org/abs/2107.05720)                              
-- [Cormack, Clarke, Büttcher (2009). Reciprocal Rank Fusion outperforms Condorcet and individual Rank Learning Methods](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf)  纸质
-- [Khattab and Zaharia (2020). ColBERT: Efficient and Effective Passage Search](https://arxiv.org/abs/2004.12832) 晚间互动检索.
+- [Robertson and Zaragoza (2009). The Probabilistic Relevance Framework: BM25 and Beyond](https://www.staff.city.ac.uk/~sbrp622/papers/foundations_bm25_review.pdf) — BM25 的权威论述。
+- [Karpukhin et al. (2020). Dense Passage Retrieval for Open-Domain QA](https://arxiv.org/abs/2004.04906) — DPR，经典的双编码器。
+- [Formal et al. (2021). SPLADE: Sparse Lexical and Expansion Model](https://arxiv.org/abs/2107.05720) — 缩小与稠密检索差距的学习型稀疏检索器。
+- [Cormack, Clarke, Büttcher (2009). Reciprocal Rank Fusion outperforms Condorcet and individual Rank Learning Methods](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf) — RRF 论文。
+- [Khattab and Zaharia (2020). ColBERT: Efficient and Effective Passage Search](https://arxiv.org/abs/2004.12832) — 后期交互检索。

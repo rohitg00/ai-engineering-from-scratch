@@ -1,64 +1,64 @@
-# 政策渐进 从零开始加强
+# 策略梯度 —— 从零实现 REINFORCE
 
-> 停止估值.直接参数化政策,计算预期回报的梯度,上升步骤.威廉姆斯 (1992) 在一个定理中写下.这就是为什么PPO,GRPO和每一个LLM RL循环都存在.
+> 别再估计价值了。直接参数化策略，计算期望回报的梯度，向上攀升。Williams (1992) 用一个定理把它写了出来。这正是 PPO、GRPO 以及所有 LLM 强化学习循环存在的原因。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
-**Time:** ~75 minutes
+**Prerequisites:** 阶段 3 · 03(反向传播)、阶段 9 · 03(蒙特卡洛)、阶段 9 · 04(TD 学习)
+**Time:** ~75 分钟
 
-## 问题
+## 问题所在
 
-通过Q-学习和DQN来参数 *值*函数.`argmax Q`它们是对单独的操作和单独的状态来说很好的.`argmax`对于10维扭矩而言,`argmax`根据结构的决定性性.
+Q-learning 和 DQN 参数化的是*价值*函数。你通过 `argmax Q` 来选择动作。这对离散动作和离散状态没问题。但当动作是连续的(如何对 10 维力矩做 `argmax`?)或你想要随机性策略时(`argmax` 按其构造就是确定性的)，它就失效了。
 
-政策梯度则为"政策"设定参数.`π_θ(a | s)`根据数据的数据,一个数据的分布在一个数据的分布中.`θ`走上山坡.`argmax`没有贝尔曼复发,只是梯度上升.`J(θ) = E_{π_θ}[G]`现在,我们要去.
+策略梯度改为参数化*策略*本身。`π_θ(a | s)` 是一个输出动作分布的神经网络。从中采样以执行动作。计算期望回报关于 `θ` 的梯度。向上攀升。没有 `argmax`。没有 Bellman 递归。只是对 `J(θ) = E_{π_θ}[G]` 做梯度上升。
 
-强化定理 (威廉姆斯 1992) 告诉你,这个梯度是可计算的:`∇J(θ) = E_π[ G · ∇_θ log π_θ(a | s) ]`运行一个集,计算返回,乘以`∇ log π_θ(a | s)`平均水平,梯度上升,完成.
+REINFORCE 定理(Williams 1992)告诉你这个梯度是可计算的：`∇J(θ) = E_π[ G · ∇_θ log π_θ(a | s) ]`。跑一个回合。计算回报。在每一步乘上 `∇ log π_θ(a | s)`。取平均。梯度上升。完成。
 
-对于2026年每一个LLM-RL算法都是REINFORCE的完善.
+2026 年的每一个 LLM 强化学习算法 —— PPO、DPO、GRPO —— 都是 REINFORCE 的改进版。把它练到得心应手，是本阶段后续内容、阶段 10 · 07(RLHF 实现)和阶段 10 · 08(DPO)的先决条件。
 
 ## 概念
 
 ![Policy gradient: softmax policy, log-π gradient, return-weighted update](../assets/policy-gradient.svg)
 
-**The policy gradient theorem.**任何政策`π_θ`参数为`θ`其他:
+**策略梯度定理。** 对任意由 `θ` 参数化的策略 `π_θ`:
 
 `∇J(θ) = E_{τ ~ π_θ}[ Σ_{t=0}^{T} G_t · ∇_θ log π_θ(a_t | s_t) ]`
 
-在哪里`G_t = Σ_{k=t}^{T} γ^{k-t} r_{k+1}`是从步骤的折扣回报`t`预期已经超过了完整的轨迹`τ`采集了`π_θ`现在,我们要去.
+其中 `G_t = Σ_{k=t}^{T} γ^{k-t} r_{k+1}` 是从第 `t` 步起的折扣回报。期望是对从 `π_θ` 中采样的完整轨迹 `τ` 取的。
 
-**The proof is short.**区分`J(θ) = Σ_τ P(τ; θ) G(τ)`使用 `∇P(τ; θ) = P(τ; θ) ∇ log P(τ; θ)`原因是,我们在这个过程中,`log P(τ; θ) = Σ log π_θ(a_t | s_t) + environment terms that do not depend on θ`两个代数线给出了定理.
+**证明很短。** 在期望符号下对 `J(θ) = Σ_τ P(τ; θ) G(τ)` 求导。使用 `∇P(τ; θ) = P(τ; θ) ∇ log P(τ; θ)`(对数导数技巧)。整理出因子 `log P(τ; θ) = Σ log π_θ(a_t | s_t) + environment terms that do not depend on θ`。环境相关项消失。两行代数就得到定理。
 
-**Variance reduction tricks.**尼拉强化学品具有凶残的变化 回报很,`∇ log π`它们的产品非常杂.
+**方差削减技巧。** 原始 REINFORCE 的方差是致命的 —— 回报有噪声，`∇ log π` 有噪声，它们的乘积噪声极大。两个标准修正：
 
-1. **Baseline subtraction.**取代`G_t`随着`G_t - b(s_t)`对于任何基线`b(s_t)`这不取决于`a_t`公正,因为`E[b(s_t) · ∇ log π(a_t | s_t)] = 0`典型的选择:`b(s_t) = V̂(s_t)`经过评论家 →演员-评论家的学习 (课程07).
-2. **Reward-to-go.**取代`Σ_t G_t · ∇ log π_θ(a_t | s_t)`随着`Σ_t G_t^{from t} · ∇ log π_θ(a_t | s_t)`只有未来的回报对特定行动而言是重要的过去的回报贡献零平均噪音.
+1. **基线减除。** 把 `G_t` 替换为 `G_t - b(s_t)`,其中基线 `b(s_t)` 不依赖于 `a_t`。由于 `E[b(s_t) · ∇ log π(a_t | s_t)] = 0`,该方法无偏。典型选择：由 critic 学到的 `b(s_t) = V̂(s_t)` → actor-critic(第 07 课)。
+2. **Reward-to-go(未来回报)。** 把 `Σ_t G_t · ∇ log π_θ(a_t | s_t)` 替换为 `Σ_t G_t^{from t} · ∇ log π_θ(a_t | s_t)`。对一个给定动作来说，只有未来的回报才重要 —— 过去的奖励只贡献零均值噪声。
 
-结合起来,你得到:
+结合起来，得到：
 
 `∇J ≈ (1/N) Σ_{i=1}^{N} Σ_{t=0}^{T_i} [ G_t^{(i)} - V̂(s_t^{(i)}) ] · ∇_θ log π_θ(a_t^{(i)} | s_t^{(i)})`
 
-是A2C (课07),PPO (课08的直接祖先) 的基线.
+即带基线的 REINFORCE —— A2C(第 07 课)和 PPO(第 08 课)的直接祖先。
 
-**Softmax policy parameterization.**对于单独行动,标准选择:
+**Softmax 策略参数化。** 对离散动作，标准选择是：
 
 `π_θ(a | s) = exp(f_θ(s, a)) / Σ_{a'} exp(f_θ(s, a'))`
 
-在哪里`f_θ`任何神经网络都能输出每次操作的分数.
+其中 `f_θ` 是任意一个为每个动作输出分数的神经网络。梯度有一个简洁的形式：
 
 `∇_θ log π_θ(a | s) = ∇_θ f_θ(s, a) - Σ_{a'} π_θ(a' | s) ∇_θ f_θ(s, a')`
 
-投资者: 投资者: 投资者: 投资者: 投资者:
+即所采取动作的分数减去它在策略下的期望值。
 
-**Gaussian policy for continuous actions.** `π_θ(a | s) = N(μ_θ(s), σ_θ(s))`现在,我们要去.`∇ log N(a; μ, σ)`只有9期07期的SAC需要.
+**用于连续动作的高斯策略。** `π_θ(a | s) = N(μ_θ(s), σ_θ(s))`。`∇ log N(a; μ, σ)` 有闭式解。这正是阶段 9 · 07 中 SAC 所需的全部。
 
 ```figure
 policy-gradient-landscape
 ```
 
-## 建立它
+## 动手实现
 
-### 步骤1:软max政策网络
+### 第 1 步：softmax 策略网络
 
 ```python
 def policy_logits(theta, state_features):
@@ -71,9 +71,9 @@ def softmax(logits):
     return [e / Z for e in exps]
 ```
 
-对于图表包装,使用线性政策 (每动作一个权重向量).对于Atari,切换在CNN中并保持软max头.
+在表格型环境中使用线性策略(每个动作一个权重向量)。在 Atari 上换成 CNN,保留 softmax 输出头。
 
-### 步骤2:采样和记录概率
+### 第 2 步：采样与对数概率
 
 ```python
 def sample_action(probs, rng):
@@ -89,7 +89,7 @@ def log_prob(probs, a):
     return log(probs[a] + 1e-12)
 ```
 
-### 步骤3: 随着记录探测器的捕获,部署
+### 第 3 步：记录对数概率的 rollout
 
 ```python
 def rollout(theta, env, rng, gamma):
@@ -105,7 +105,7 @@ def rollout(theta, env, rng, gamma):
     return trajectory
 ```
 
-### 步骤4: 更新 REINFORCE
+### 第 4 步：REINFORCE 更新
 
 ```python
 def reinforce_step(theta, trajectory, gamma, lr, baseline=0.0):
@@ -119,39 +119,39 @@ def reinforce_step(theta, trajectory, gamma, lr, baseline=0.0):
                 theta[i][j] += lr * advantage * grad_log_pi_a[i] * s[j]
 ```
 
-梯度`∇ log π(a|s) = e_a - π(·|s)`(其中一个是`a`软max的核心是软max的政策梯度.
+梯度 `∇ log π(a|s) = e_a - π(·|s)`(`a` 的 onehot 减去概率)是 softmax 策略梯度的核心。把它刻进肌肉记忆。
 
-### 步骤5:基线
+### 第 5 步：基线
 
-运行的平均值`G`为了使4×4 GridWorld运行,需要500个集集集.`V̂(s)`你会得到演员评论.
+对近期回合的 `G` 取滑动平均，就足以让 4×4 GridWorld 跑起来；大约需要 500 个回合收敛。把基线升级为学习到的 `V̂(s)`,就得到了 actor-critic。
 
-## 陷
+## 常见陷阱
 
-- **Exploding gradients.**总是正常化.`G`为了`~N(0, 1)`在乘以之前,`∇ log π`现在,我们要去.
-- **Entropy collapse.**政策过早收缩到近定决策行动,停止探索,陷入困境.`β · H(π(·|s))`实现目标.
-- **High variance.**尼拉 REINFORCE需要数千个集. 标准解决方案是批评基线 (课时07),或TRPO/PPO的信任区域 (课时08).
-- **Sample inefficiency.**政策上意味着你在一次更新后都会丢弃每一个过渡.通过重要样本取样,在变化成本下,通过政策外的纠正将数据恢复 (PPO的比例是减小 IS重量).
-- **Non-stationary gradients.**百集前的梯度使用旧的`π`政策方法每次更新都是因为这个原因.
-- **Credit assignment.**没有奖励,过去的奖励会产生噪音.
+- **梯度爆炸。** 回报可能非常大。在乘以 `∇ log π` 之前，务必先把 `G` 在整个 batch 上归一化到 `~N(0, 1)`。
+- **熵坍缩。** 策略过早收敛到近乎确定性的动作，停止探索，陷入停滞。修复：在目标函数中加入熵奖励项 `β · H(π(·|s))`。
+- **高方差。** 原始 REINFORCE 需要数千个回合。critic 基线(第 07 课)或 TRPO/PPO 的信任域(第 08 课)是标准修复手段。
+- **样本效率低。** On-policy 意味着每次更新后就要丢弃所有转移数据。通过重要性采样做 off-policy 修正可以回收数据，但代价是方差增加(PPO 的 ratio 是截断的重要性采样权重)。
+- **梯度非平稳。** 100 个回合前的梯度用的是旧的 `π`。正因如此，on-policy 方法每几个 rollout 就更新一次。
+- **信用分配。** 不用 reward-to-go 的话，过去的奖励只会贡献噪声。永远使用 reward-to-go。
 
-## 用它
+## 实际应用
 
-在2026年,REINFORCE很少直接运行,但其梯度公式在各处:
+到 2026 年，REINFORCE 很少被直接运行，但它的梯度公式无处不在：
 
-| Use case | Derived method |
+| 使用场景 | 派生方法 |
 |----------|---------------|
-| Continuous control | PPO / SAC with Gaussian policy |
-| LLM RLHF | PPO with KL penalty, running on token-level policy |
-| LLM reasoning (DeepSeek) | GRPO — REINFORCE with group-relative baseline, no critic |
-| Multi-agent | Centralized-critic REINFORCE (MADDPG, COMA) |
-| Discrete action robotics | A2C, A3C, PPO |
-| Preference-only settings | DPO — REINFORCE rewritten as a preference-likelihood loss, no sampling |
+| 连续控制 | 采用高斯策略的 PPO / SAC |
+| LLM RLHF | 带 KL 惩罚的 PPO,运行在 token 级策略上 |
+| LLM 推理(DeepSeek) | GRPO —— 带组相对基线的 REINFORCE,无需 critic |
+| 多智能体 | 集中式 critic 的 REINFORCE(MADDPG、COMA) |
+| 离散动作机器人 | A2C、A3C、PPO |
+| 仅基于偏好的场景 | DPO —— REINFORCE 改写为偏好似然损失，无需采样 |
 
-当你读的时候`loss = -advantage * log_prob`整个论文 (DPO,GRPO,RLOO) 是此一行之上的一些变化降低技巧.
+当你在 2026 年的训练脚本中读到 `loss = -advantage * log_prob` 时，那就是带基线的 REINFORCE。整篇论文(DPO、GRPO、RLOO)都是在这行代码之上做方差削减。
 
-## 运送它
+## 交付
 
-保存如`outputs/skill-policy-gradient-trainer.md`其他:
+保存为 `outputs/skill-policy-gradient-trainer.md`:
 
 ```markdown
 ---
@@ -174,29 +174,29 @@ Given an environment (discrete / continuous actions, horizon, reward stats), out
 Refuse REINFORCE-no-baseline on horizons > 500 steps. Refuse continuous-action control with a softmax head. Flag any run with `β = 0` and observed policy entropy < 0.1 as entropy-collapsed.
 ```
 
-## 运动
+## 练习
 
-1. **Easy.**运用4×4 GridWorld上 REINFORCE 进行直线软max 政策. 训练1000集没有基线. 绘制学习曲线;测量变异 (回报的STD).
-2. **Medium.**加入运行平均基线. 再次训练. 比较样本效率和变异与尼拉运行.
-3. **Hard.**添加一个体奖金`β · H(π)`扫描`β ∈ {0, 0.01, 0.1, 1.0}`关于这个任务的甜点点是什么?
+1. **简单。** 在 4×4 GridWorld 上用线性 softmax 策略实现 REINFORCE。不带基线训练 1,000 个回合。绘制学习曲线；度量方差(回报的标准差)。
+2. **中等。** 加入滑动平均基线。再次训练。与原始版本比较样本效率和方差。基线把收敛步数降低了多少？
+3. **困难。** 加入熵奖励项 `β · H(π)`。扫描 `β ∈ {0, 0.01, 0.1, 1.0}`。绘制最终回报和策略熵。这个任务上的最佳平衡点在哪里？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|-----------------------|
-| Policy gradient | "Train the policy directly" | `∇J(θ) = E[G · ∇ log π_θ(a\|s)]`; derived from the log-derivative trick. |
-| REINFORCE | "The original PG algorithm" | Williams (1992); Monte Carlo returns multiplied by log-policy gradient. |
-| Log-derivative trick | "Score function estimator" | `∇P(τ;θ) = P(τ;θ) · ∇ log P(τ;θ)`; makes gradients of expectations tractable. |
-| Baseline | "Variance reduction" | Any `b(s)` subtracted from `G`; unbiased because `E[b · ∇ log π] = 0`. |
-| Reward-to-go | "Only future returns count" | `G_t^{from t}` instead of the full `G_0`; correct and lower-variance. |
-| Entropy bonus | "Encourage exploration" | `+β · H(π(·\|s))` term keeps the policy from collapsing. |
-| On-policy | "Train on what you just saw" | Gradient expectation is w.r.t. the current policy — cannot reuse old data directly. |
-| Advantage | "How much better than average" | `A(s, a) = G(s, a) - V(s)`; the signed quantity REINFORCE-with-baseline multiplies. |
+| 策略梯度 | "直接训练策略" | `∇J(θ) = E[G · ∇ log π_θ(a\|s)]`;由对数导数技巧推导而来。 |
+| REINFORCE | "最初的策略梯度算法" | Williams (1992);蒙特卡洛回报乘以策略对数梯度。 |
+| 对数导数技巧 | "得分函数估计器" | `∇P(τ;θ) = P(τ;θ) · ∇ log P(τ;θ)`;使期望的梯度变得可计算。 |
+| 基线 | "方差削减" | 任何从 `G` 中减去的、与动作无关的 `b(s)`;因为 `E[b · ∇ log π] = 0` 所以无偏。 |
+| Reward-to-go | "只算未来的回报" | 用 `G_t^{from t}` 代替完整的 `G_0`;正确且方差更低。 |
+| 熵奖励 | "鼓励探索" | `+β · H(π(·\|s))` 项防止策略坍缩。 |
+| On-policy | "用刚看到的数据训练" | 梯度期望是关于当前策略的 —— 不能直接复用旧数据。 |
+| 优势(Advantage) | "比平均好多少" | `A(s, a) = G(s, a) - V(s)`;带基线的 REINFORCE 所乘的带符号量。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Williams (1992). Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning](https://link.springer.com/article/10.1007/BF00992696)原始的 REINFORCE 文件.
-- [Sutton et al. (2000). Policy Gradient Methods for Reinforcement Learning with Function Approximation](https://papers.nips.cc/paper_files/paper/1999/hash/464d828b85b0bed98e80ade0a5c43b0f-Abstract.html)现代政策渐变定理与函数近似.
-- [Sutton & Barto (2018). Ch. 13 — Policy Gradient Methods](http://incompleteideas.net/book/RLbook2020.pdf) 教科书的演示.
-- [OpenAI Spinning Up — VPG / REINFORCE](https://spinningup.openai.com/en/latest/algorithms/vpg.html)使用 PyTorch 代码的明确教学说明.
-- [Peters & Schaal (2008). Reinforcement Learning of Motor Skills with Policy Gradients](https://homes.cs.washington.edu/~todorov/courses/amath579/reading/PolicyGradient.pdf) 变化减少和自然梯度视图,将REINFORCE与信托区域家族 (TRPO,PPO) 联系起来.
+- [Williams (1992). Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning](https://link.springer.com/article/10.1007/BF00992696) — REINFORCE 原始论文。
+- [Sutton et al. (2000). Policy Gradient Methods for Reinforcement Learning with Function Approximation](https://papers.nips.cc/paper_files/paper/1999/hash/464d828b85b0bed98e80ade0a5c43b0f-Abstract.html) — 带函数逼近的现代策略梯度定理。
+- [Sutton & Barto (2018). Ch. 13 — Policy Gradient Methods](http://incompleteideas.net/book/RLbook2020.pdf) — 教科书式讲解。
+- [OpenAI Spinning Up — VPG / REINFORCE](https://spinningup.openai.com/en/latest/algorithms/vpg.html) — 配有 PyTorch 代码的清晰教学阐述。
+- [Peters & Schaal (2008). Reinforcement Learning of Motor Skills with Policy Gradients](https://homes.cs.washington.edu/~todorov/courses/amath579/reading/PolicyGradient.pdf) — 方差削减，以及把 REINFORCE 与信任域家族(TRPO、PPO)联系起来的自然梯度视角。

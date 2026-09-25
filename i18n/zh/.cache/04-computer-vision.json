@@ -23,8 +23,8 @@
   "phases/04-computer-vision/22-3d-gaussian-splatting/docs/en.md": "0ede4133b98620602cbe40bc4ff92f43246dbe70e7575466b38207c470c0d55a",
   "phases/04-computer-vision/23-diffusion-transformers-rectified-flow/docs/en.md": "422060f3286899edcccdb97e17eda8c8f426a18c38116cbe0ef210ebda4aa606",
   "phases/04-computer-vision/24-sam3-open-vocab-segmentation/docs/en.md": "56e317c037a7b9fb92c05d8738f795c30b11e5cc3e082127984a1ca25a2bd040",
-  "phases/04-computer-vision/25-vision-language-models/docs/en.md": "8998f05f5d863f11139112ef6d845dce76cd3efc7756d6ea040ccb3bad018578",
-  "phases/04-computer-vision/26-monocular-depth/docs/en.md": "fe028ab042b796794be164531fd758573b48769f4afe359fd3c397d1a405cd32",
   "phases/04-computer-vision/27-multi-object-tracking/docs/en.md": "c94305127796ce8683c9625ebc1897373e86de8c1da82580815f656988c09e7c",
-  "phases/04-computer-vision/28-world-models-video-diffusion/docs/en.md": "2b64fd3dbecb74fbc2cf8c017468033e16d103409dce31b25b62100838991acd"
+  "phases/04-computer-vision/28-world-models-video-diffusion/docs/en.md": "2b64fd3dbecb74fbc2cf8c017468033e16d103409dce31b25b62100838991acd",
+  "phases/04-computer-vision/25-vision-language-models/docs/en.md": "8998f05f5d863f11139112ef6d845dce76cd3efc7756d6ea040ccb3bad018578",
+  "phases/04-computer-vision/26-monocular-depth/docs/en.md": "fe028ab042b796794be164531fd758573b48769f4afe359fd3c397d1a405cd32"
 }

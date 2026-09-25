@@ -1,37 +1,37 @@
-# 评估和测试法学士申请
+# LLM 应用的评估与测试
 
-> 没有测试,你永远不会部署一个网络应用程序. 没有反弹计划,你永远不会发送数据库迁移. 但现在,大多数团队通过阅读10个输出来提交LLM申请,并说"是的,看起来很好". 这就是希望. 希望不是工程实践. 每次快速变化,每次模型交换,每次温度调整都会改变出口分布, 评估是你申请和沉默的退化之间唯一的东西.
+> 你不会在没有测试的情况下部署 Web 应用，也不会在没有回滚计划的情况下发布数据库迁移。但现在，大多数团队发布 LLM 应用的方式是看 10 个输出然后说"嗯，看起来不错。"那不是评估。那是碰运气。碰运气不是工程实践。每一次 prompt 修改、每一次模型更换、每一次 temperature 调整，都会以你无法通过阅读少量示例来预测的方式改变输出分布。评估是你的应用与静默退化之间唯一的防线。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 11 Lesson 01 (Prompt Engineering), Lesson 09 (Function Calling)
-**Time:** ~45 minutes
-**Related:**第5期 (LLM评估 RAGAS,DeepEval,G-Eval) 涵盖框架级概念 (基于NLI的忠诚度,评判校准,RAG四).第5期 (长文本评估) 涵盖了NIAH /RULER /LongBench /MRCR的背景回归.本课程侧重于什么是LLM工程的具体:CI/CD集成,成本定位的评估运行,回归仪表板.
+**Prerequisites:** Phase 11 Lesson 01 (Prompt Engineering)、Lesson 09 (Function Calling)
+**Time:** ~45 分钟
+**Related:** Phase 5 · 27 (LLM Evaluation — RAGAS, DeepEval, G-Eval) 讲解框架层面的概念（基于 NLI 的忠实度、裁判校准、RAG 四指标）。Phase 5 · 28 (Long-Context Evaluation) 讲解用于上下文长度回归测试的 NIAH / RULER / LongBench / MRCR。本课聚焦 LLM 工程特有的内容：CI/CD 集成、成本门控的评估运行、回归测试仪表盘。
 
 ## 学习目标
 
-- 建立一个评估数据集,包括输入输出对,分类和专业申请的边缘案例
-- 通过法官的LLM,regex匹配和确定性断言检查实现自动得分
-- 设置回归测试,当提示,模型或参数发生变化时检测到质量下降
-- 设计评估指标,以捕捉您使用情况所关键的内容 (正确性,语调,格式合规性,延迟)
+- 构建一个评估数据集，包含针对你的 LLM 应用的输入-输出对、评分标准（rubric）和边界情况
+- 使用 LLM-as-judge、正则匹配和确定性断言检查实现自动化评分
+- 建立回归测试，在 prompt、模型或参数变化时检测质量退化
+- 设计能捕捉你的用例中真正重要指标的评估指标（正确性、语气、格式合规性、延迟）
 
 ## 问题
 
-你为客户支持建立了RAG聊天机器人.它在你的演示中非常有效.你运送它.两周后,有人改变系统,以减少幻觉.改变工作 - - 幻觉率下降.
+你为客服支持构建了一个 RAG 聊天机器人。它在演示中表现出色。你发布了它。两周后，有人修改了 system prompt 以减少幻觉。修改奏效了——幻觉率下降了。但回答的完整性也下降了 34%，因为模型现在拒绝回答任何它不是 100% 确定的问题。
 
-没有人注意到了11天,自助服务道的收入下降了,支持票升.
+11 天里没人注意到。自助渠道的收入下滑了。支持工单激增。
 
-根据"vibes"评价,这是默认的结果.你检查了几种例子,它们看起来很好,你会合并.但是LLM的结果是不合理的.在5个测试案例上运行的提示可能在6日失败.在你的基准中得分92%,在用户实际上击中的边缘案例上得分71%.
+这就是凭感觉做评估的默认结局。你检查几个示例，看起来没问题，就合并了。但 LLM 输出是随机的。一个在 5 个测试用例上有效的 prompt 可能在第 6 个上失败。一个在你的基准测试中得 92% 的模型，在用户实际遇到的边界情况上可能只得 71%。
 
-解决方案不是"要更加小心".解决方案是自动评估,每次变化都会运行,
+解决办法不是"更小心一点"。解决办法是自动化评估：每次变更都运行、按照评分标准对输出打分、计算置信区间，并在质量退化时阻止部署。
 
-评估不是一件好事,而是桌上投注. 没有评估的运输是盲目的运输.
+评估不是锦上添花。它是基本要求。没有评估就发布等于盲飞。
 
 ## 概念
 
-### 平等类别
+### 评估分类法
 
-法律法师评估有三个类别,每个类别都有自己的作用.
+LLM 评估分为三大类。每一类都有其作用，但没有一类单独够用。
 
 ```mermaid
 graph TD
@@ -57,59 +57,59 @@ graph TD
     style H fill:#e8e8e8,stroke:#333
 ```
 
-**Automated metrics**使用算法对输出文字进行参考答案的比较. 蓝色测量 n-gram重叠 (原本用于机器翻译). 红色措施召回参考n-gram (最初用于总结). 测量语义相似性 这些都是快速而便宜的,你可以在秒钟内获得1万个输出. 但他们想念细微的. 两个答案可以有零字重叠, 一个答案可能具有高色的含义,并且在文本上完全错误.
+**自动化指标**使用算法将输出文本与参考答案进行比较。BLEU 衡量 n-gram 重叠（最初用于机器翻译）。ROUGE 衡量参考 n-gram 的召回率（最初用于摘要）。BERTScore 使用 BERT 嵌入衡量语义相似度。它们快速且便宜——你可以在几秒钟内为 10,000 个输出打分。但它们会遗漏细微差别。两个答案可以零词重叠却都正确。一个答案可以有很高的 ROUGE 却在上下文中完全错误。
 
-**LLM-as-judge**通过使用强大的模型 (GPT-5,Claude Opus 4.7,Gemini 3 Pro) 来对一个标题进行分类. 这捕捉了语义质量 - - 相关性,正确性,有用性,安全性 - - 字符串的指标错过了.$8 per 1,000 judge calls with GPT-5-mini, ~$                                                                                                                                                                                                                                                              
+**LLM-as-judge** 使用一个强大的模型（GPT-5、Claude Opus 4.7、Gemini 3 Pro）按照评分标准对输出打分。这能捕捉字符串指标遗漏的语义质量——相关性、正确性、有用性、安全性。它有成本（使用 Claude Opus 4.7 时约 $8 per 1,000 judge calls with GPT-5-mini, ~$25），但在设计良好的评分标准上与人类判断的相关性达 82-88%——校准方法见 Phase 5 · 27。
 
-**Human evaluation**预备它用于校准自动评估,而不是在每次提交中运行.
+**人类评估**是黄金标准，但最慢也最昂贵。把它留作用来校准你的自动化评估，而不是在每次提交时运行。
 
-| Method | Speed | Cost per 1K evals | Correlation with humans | Best for |
+| 方法 | 速度 | 每 1K 次评估成本 | 与人类的相关性 | 最适合 |
 |--------|-------|-------------------|------------------------|----------|
-| BLEU/ROUGE | <1 sec | $0 | 40-60% | Translation, summarization baselines |
-| BERTScore | ~30 sec | $0 | 55-70% | Semantic similarity screening |
-| LLM-as-judge (GPT-5-mini) | ~3 min | ~$8 | 82-86% | Default CI judge; cheap, fast, calibrated |
-| LLM-as-judge (Claude Opus 4.7) | ~5 min | ~$25 | 85-88% | High-stakes scoring, safety, refusals |
-| LLM-as-judge (Gemini 3 Flash) | ~2 min | ~$3 | 80-84% | Highest-throughput judge; for 1M+ eval pass |
-| RAGAS (NLI faithfulness + judge) | ~5 min | ~$12 | 85% | RAG-specific metrics (see Phase 5 · 27) |
-| DeepEval (G-Eval + Pytest) | ~4 min | depends on judge | 80-88% | CI-native, per-PR regression gates |
-| Human expert | ~2 hours | ~$500 | 100% (by definition) | Calibration, edge cases, policy |
+| BLEU/ROUGE | <1 秒 | $0 | 40-60% | 翻译、摘要基线 |
+| BERTScore | ~30 秒 | $0 | 55-70% | 语义相似度筛选 |
+| LLM-as-judge (GPT-5-mini) | ~3 分钟 | ~$8 | 82-86% | 默认 CI 裁判；便宜、快速、已校准 |
+| LLM-as-judge (Claude Opus 4.7) | ~5 分钟 | ~$25 | 85-88% | 高风险评分、安全、拒答 |
+| LLM-as-judge (Gemini 3 Flash) | ~2 分钟 | ~$3 | 80-84% | 最高吞吐裁判；用于 100 万+ 次评估 |
+| RAGAS (NLI 忠实度 + 裁判) | ~5 分钟 | ~$12 | 85% | RAG 专项指标（见 Phase 5 · 27） |
+| DeepEval (G-Eval + Pytest) | ~4 分钟 | 取决于裁判 | 80-88% | CI 原生、按 PR 的回归门控 |
+| 人类专家 | ~2 小时 | ~$500 | 100%（按定义） | 校准、边界情况、策略 |
 
-### 作为法官的LLM:工作马
+### LLM-as-Judge：主力方法
 
-这就是你90%的时间使用的评估方法.模式很简单:给一个强大的模型输入,输出,一个可选的参考答案,一个标题.请它得分.
+这是你 90% 的时间都会使用的评估方法。模式很简单：给一个强大的模型提供输入、输出、可选的参考答案和评分标准，让它打分。
 
-四个标准涵盖大多数使用情况:
+四个维度覆盖大多数用例：
 
-**Relevance**(1-5):输出内容是否能解决问题? 1 分的分数意味着完全不相关. 5 分的分数意味着直接,具体地回答问题.
+**相关性** (1-5)：输出是否回应了所问的问题？1 分表示完全离题。5 分表示直接且具体地回答了问题。
 
-**Correctness**(1-5):信息是否事实上准确?一个分数为1意味着包含重大事实错误.一个分数为5意味着所有说法都是可验证和准确的.
+**正确性** (1-5)：信息在事实上是否准确？1 分表示包含重大事实错误。5 分表示所有陈述均可验证且准确。
 
-**Helpfulness**(1-5):用户会发现这很有用吗? 1 的分数意味着响应没有任何价值. 5 的分数意味着用户可以立即根据信息采取行动.
+**有用性** (1-5)：用户会觉得这有用吗？1 分表示回答毫无价值。5 分表示用户可以立即据此采取行动。
 
-**Safety**(1-5):产品是否没有有害内容,偏见或违反政策? 1 个分数意味着含有有害或危险的内容. 5 个分数意味着完全安全和合适.
+**安全性** (1-5)：输出是否不含有害内容、偏见或违规行为？1 分表示包含有害或危险内容。5 分表示完全安全且得体。
 
-### 轮胎设计
+### 评分标准设计
 
-坏类别会产生噪音的分数.好类别会将每个分数定位在特定的可观察行为上.
+糟糕的评分标准产生嘈杂的分数。好的评分标准把每个分数锚定到具体、可观察的行为上。
 
-坏的条目: "从1-5的评分,答案是好的.
+糟糕的标准："从 1-5 分评价回答的好坏。"
 
-很好的条款:
-- **5**答案是事实上正确的,直接解决问题,包含具体细节或例子,并提供可操作的信息.
-- **4**答案是事实上正确的,并解决了问题,但缺乏具体细节或略有口头.
-- **3**答案大多是正确的,但含有微小的不准确性或部分错过了问题的意图.
-- **2**答案包含重大事实错误或仅与问题相关.
-- **1**答案是错误的,不相关的,或有害的.
+好的标准：
+- **5**：回答事实正确、直接回应问题、包含具体细节或示例，并提供可操作的信息。
+- **4**：回答事实正确并回应了问题，但缺少具体细节或略显冗长。
+- **3**：回答大体正确，但包含轻微的不准确，或部分偏离了问题的意图。
+- **2**：回答包含重大事实错误，或仅与问题有边缘关联。
+- **1**：回答事实错误、离题或有害。
 
-与无的尺度相比,结描述减少了30-40%的判断差异.
+与未锚定的量表相比，锚定描述能将裁判的方差降低 30-40%。
 
-**Pairwise comparison**评审者只需要选择赢家. 很有用,可以比较两个即时版本. 评审者只需要选择一个"三"或"四".
+**成对比较**是一种替代方案：给裁判看两个输出，问哪个更好。这消除了量表校准问题——裁判不需要判断某物是"3"还是"4"，只需选出胜者。适用于头对头比较两个 prompt 版本。
 
-**Best-of-N**通过测量系统的顶层,你会得到一个测量系统的顶层.如果最好的-5 稳定击败最好的-1,你可能会从采样多个答案和选择中获益.
+**Best-of-N** 为每个输入生成 N 个输出，让裁判选出最好的一个。这衡量的是你系统的上限。如果 best-of-5 持续胜过 best-of-1，你或许可以通过采样多个响应再进行选择而获益。
 
-### 埃瓦尔管道
+### 评估流水线
 
-每次评估都遵循相同的6步管道.
+每次评估都遵循同一个 6 步流水线。
 
 ```mermaid
 flowchart LR
@@ -127,106 +127,106 @@ flowchart LR
     D -->|ship or block| P
 ```
 
-**Prompt**定义您的测试案例. 每个案例都有输入 (用户查询+文本) 和可选的参考答案.
+**Prompt**：定义你的测试用例。每个用例包含一个输入（用户查询 + 上下文），可选包含一个参考答案。
 
-**Run**执行提示与模型相比.收集输出.如果您想测量变异,运行每个测试案例1到3次.
+**Run**：对模型执行 prompt，收集输出。如果想测量方差，每个测试用例运行 1-3 次。
 
-**Collect**: 存储输入,输出和元数据 (模型,温度,时间标签,提示版本).
+**Collect**：存储输入、输出和元数据（模型、temperature、时间戳、prompt 版本）。
 
-**Score**应用评估方法--自动化指标,法官或两者.
+**Score**：应用你的评估方法——自动化指标、LLM-as-judge，或两者兼用。
 
-**Compare**根据一个基线,比较分数.基线是你最后一个已知版本.
+**Compare**：将分数与基线比较。基线是你上一个已知良好的版本。对差异计算置信区间。
 
-**Decide**:如果新版本的统计数据显著改善 (或不变),则将其发送.
+**Decide**：如果新版本在统计上显著更好（或不更差），发布它。如果退化了，阻止部署。
 
-### 埃瓦尔数据集:基金会
+### 评估数据集：根基
 
-您的评估数据集只能像其中的案例一样好.
+你的评估数据集的好坏取决于其中的用例。三种类型的测试用例很重要：
 
-**Golden test set**(50-100例): 编制的输入输出对代表您的核心使用案例. 这些是您的回归测试.每一次快速更改都必须通过这些.
+**黄金测试集**（50-100 个用例）：精心策划的、代表你核心用例的输入-输出对。这些是你的回归测试。每次 prompt 修改都必须通过它们。
 
-**Adversarial examples**简单的注射,边缘情况,模糊的查询,关于您域外的主题的问题,要求有害内容.
+**对抗性样本**（20-50 个用例）：旨在击破你系统的输入。Prompt 注入、边界情况、模糊查询、超出你领域的问题、索取有害内容的请求。
 
-**Distribution samples**(100-200例):来自实际生产流量的随机样本.这些捕获问题被评选测试错过,因为它们反映了用户实际询问的内容.
+**分布样本**（100-200 个用例）：来自真实生产流量的随机样本。它们能捕捉精心策划的测试遗漏的问题，因为它们反映了用户实际提出的问题。
 
-### 样本规模和自信
+### 样本量与置信度
 
-五个试验案例不够.
+50 个测试用例是不够的。
 
-如果你的评分在50个案例中达到90%的分数,则 95%的保证间隔是[78%, 97%].这是19点的差距.你不能区分一个评分80%的系统和一个评分96%.
+如果你的评估在 50 个用例上得 90%，那么 95% 置信区间是 [78%, 97%]。那是 19 个百分点的范围。你无法区分一个得 80% 的系统和一个得 96% 的系统。
 
-在200起案件中,90%的准确度,信任间隔缩小到85%,94%.
+在 200 个用例、90% 准确率的情况下，置信区间收窄到 [85%, 94%]。这时你才能做出决策。
 
-| Test cases | Observed accuracy | 95% CI width | Can detect 5% regression? |
+| 测试用例数 | 观察到的准确率 | 95% 置信区间宽度 | 能检测 5% 的退化吗？ |
 |-----------|------------------|-------------|--------------------------|
-| 50 | 90% | 19 points | No |
-| 100 | 90% | 12 points | Barely |
-| 200 | 90% | 9 points | Yes |
-| 500 | 90% | 5 points | Confidently |
-| 1000 | 90% | 3 points | Precisely |
+| 50 | 90% | 19 个百分点 | 不能 |
+| 100 | 90% | 12 个百分点 | 勉强 |
+| 200 | 90% | 9 个百分点 | 能 |
+| 500 | 90% | 5 个百分点 | 有把握地 |
+| 1000 | 90% | 3 个百分点 | 精确地 |
 
-对于任何需要做出部署决策的评估,至少使用200个测试案例. 如果您正在比较两种质量接近的系统,请使用500多个.
+任何需要做出部署决策的评估，至少使用 200 个测试用例。如果你在比较两个质量接近的系统，使用 500 个以上。
 
-### 退回测试
+### 回归测试
 
-任何变化都需要前后的评估.
+每次 prompt 修改都需要一次变更前后的评估。这一点不容商量。
 
-工作流程:
-1. 运行你的评估套件在当前 (基线) 提示上 - 存储分数
-2. 快速进行改变
-3. 在新的提示上运行相同的评估套件
-4. 进行统计测试 (t测试或启动测试) 的比较
-5. 如果没有任何标准的统计显著回归 - - 船舶
-6. 如果发现回归, 调查哪些试验情况降低了,
+工作流程：
+1. 在当前（基线）prompt 上运行你的评估套件——存储分数
+2. 修改 prompt
+3. 在新 prompt 上运行同一套评估套件
+4. 使用统计检验（配对 t 检验或 bootstrap）比较分数
+5. 如果任何维度上都没有统计上显著的退化——发布
+6. 如果检测到退化——调查哪些测试用例退化了以及为什么
 
-### 价格
+### 评估的成本
 
-士的士,用士的士,用钱.
+使用 LLM-as-judge 时评估是有成本的。为此做预算。
 
-| Eval size | GPT-5-mini judge | Claude Opus 4.7 judge | Gemini 3 Flash judge | Time |
+| 评估规模 | GPT-5-mini 裁判 | Claude Opus 4.7 裁判 | Gemini 3 Flash 裁判 | 时间 |
 |-----------|------------------|-----------------------|----------------------|------|
-| 100 cases x 4 criteria | ~$2 | ~$6 | ~$0.40 | ~2 min |
-| 200 cases x 4 criteria | ~$4 | ~$12 | ~$0.80 | ~4 min |
-| 500 cases x 4 criteria | ~$10 | ~$30 | ~$2 | ~10 min |
-| 1000 cases x 4 criteria | ~$20 | ~$60 | ~$4 | ~20 min |
+| 100 用例 x 4 维度 | ~$2 | ~$6 | ~$0.40 | ~2 分钟 |
+| 200 用例 x 4 维度 | ~$4 | ~$12 | ~$0.80 | ~4 分钟 |
+| 500 用例 x 4 维度 | ~$10 | ~$30 | ~$2 | ~10 分钟 |
+| 1000 用例 x 4 维度 | ~$20 | ~$60 | ~$4 | ~20 分钟 |
 
-通过GPT-5小费用运行每一个 PR 的200例评估套件$4 per run. If your team merges 10 PRs per week, that is $比较运输成本, 降低用户满意度11天.
+一个 200 用例的评估套件在每次 PR 上使用 GPT-5-mini 运行，成本约 $4 per run. If your team merges 10 PRs per week, that is $160/月。对比一下发布一个让用户满意度暴跌 11 天的退化所付出的代价。
 
-### 抗模式
+### 反模式
 
-**Vibes-based evaluation.**"我读了5个输出结果,看起来很好".你不能通过阅读例子感知5%的质量回归.你的大脑会检查证据.
+**凭感觉评估。**"我读了 5 个输出，看起来不错。"你无法通过阅读示例感知 5% 的质量退化。你的大脑会挑选证实性的证据。
 
-**Testing on training examples.**如果你的评估案例与提示或细调数据中的例子重叠,你正在测量记忆,而不是通用化.
+**在训练样本上测试。**如果你的评估用例与 prompt 或微调数据中的示例重叠，你测的是记忆而非泛化。把评估数据隔离开。
 
-**Single-metric obsession.**优化仅仅是为了正确性而忽略有用性,产生简洁,技术上精确但无用的答案.
+**单一指标执念。**只优化正确性而忽视有用性，会产出简短、技术上准确却无用的回答。始终对多个维度打分。
 
-**Evaluating without baselines.**只有一个分数,4.2/5就意味着什么.这是比昨天更好,还是更糟糕?比竞争对手的提示更好,还是更糟糕?总是比较.
+**没有基线就评估。**4.2/5 的分数孤立来看毫无意义。比昨天更好还是更差？比竞争 prompt 更好还是更差？始终进行比较。
 
-**Using a weak judge.**评审员必须至少能像评估模型一样. 评审员必须能像模型一样.
+**使用弱裁判。**GPT-3.5 作为裁判会产生嘈杂、不一致的分数。使用 GPT-4o 或 Claude Sonnet。裁判的能力必须至少与被评估的模型相当。
 
-### 真正的工具
+### 现成的工具
 
-您不必从零开始构建一切.
+你不必一切从零构建。这些工具提供了评估基础设施：
 
-| Tool | What it does | Pricing |
+| 工具 | 功能 | 定价 |
 |------|-------------|---------|
-| [promptfoo](https://promptfoo.dev) | Open-source eval framework, YAML config, LLM-as-judge, CI integration | Free (OSS) |
-| [Braintrust](https://braintrust.dev) | Eval platform with scoring, experiments, datasets, logging | Free tier, then usage-based |
-| [LangSmith](https://smith.langchain.com) | LangChain's eval/observability platform, tracing, datasets, annotation | Free tier, $39/mo+ |
-| [DeepEval](https://deepeval.com) | Python eval framework, 14+ metrics, Pytest integration | Free (OSS) |
-| [Arize Phoenix](https://phoenix.arize.com) | Open-source observability + evals, tracing, span-level scoring | Free (OSS) |
+| [promptfoo](https://promptfoo.dev) | 开源评估框架，YAML 配置，LLM-as-judge，CI 集成 | 免费 (OSS) |
+| [Braintrust](https://braintrust.dev) | 评估平台，提供评分、实验、数据集、日志 | 有免费层，之后按用量计费 |
+| [LangSmith](https://smith.langchain.com) | LangChain 的评估/可观测性平台，追踪、数据集、标注 | 免费层，$39/月起 |
+| [DeepEval](https://deepeval.com) | Python 评估框架，14+ 指标，Pytest 集成 | 免费 (OSS) |
+| [Arize Phoenix](https://phoenix.arize.com) | 开源可观测性 + 评估，追踪、span 级评分 | 免费 (OSS) |
 
-在这个课程中,我们将它从头开始,让你理解每个层.
+本课我们从零构建，以便你理解每一层。在生产环境中，请使用这些工具之一。
 
 ```figure
 llm-judge-rubric
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:定义Eval数据结构
+### 步骤 1：定义评估数据结构
 
-构建核心类型:测试案例,评估结果和分分类.
+构建核心类型：测试用例、评估结果和评分标准。
 
 ```python
 import json
@@ -278,9 +278,9 @@ class EvalResult:
         return sum(s.score for s in self.scores) / len(self.scores)
 ```
 
-### 步骤2:建立法官作为法官的分数
+### 步骤 2：构建 LLM-as-Judge 评分器
 
-在生产中,用实际的GPT-4o或Claude API调用取代模拟.
+这模拟了一个裁判模型按照评分标准对输出打分。在生产环境中，用实际的 GPT-4o 或 Claude API 调用替换这个模拟。
 
 ```python
 RUBRICS = {
@@ -379,9 +379,9 @@ def generate_judge_reasoning(input_text, model_output, criterion, score):
     return f"[{criterion.upper()}={score}/5] {description}. Output length: {len(model_output)} chars."
 ```
 
-### 步骤3: 建立自动化计量
+### 步骤 3：构建自动化指标
 
-执行ROUGE-L和简单的语义相似度分数,并与法学法官一起进行.
+在 LLM 裁判之外，实现 ROUGE-L 和一个简单的语义相似度分数。
 
 ```python
 def rouge_l_score(reference, hypothesis):
@@ -421,9 +421,9 @@ def word_overlap_score(reference, hypothesis):
     return round(len(intersection) / len(union), 4) if union else 0.0
 ```
 
-### 步骤4:建立信任间隔计算器
+### 步骤 4：构建置信区间计算器
 
-统计严格性将实际评估与振动分开.
+统计上的严谨性是真正的评估与凭感觉之间的分界线。
 
 ```python
 def wilson_confidence_interval(successes, total, z=1.96):
@@ -460,9 +460,9 @@ def bootstrap_confidence_interval(scores, n_bootstrap=1000, confidence=0.95):
     return (round(means[lower_idx], 4), round(mean, 4), round(means[upper_idx], 4))
 ```
 
-### 步骤5: 构建Eval运行者和比较报告
+### 步骤 5：构建评估运行器与比较报告
 
-这就是把一切联系在一起的配套层.
+这是将一切串联起来的编排层。
 
 ```python
 SIMULATED_MODELS = {
@@ -645,7 +645,7 @@ def print_comparison_report(report):
     print("=" * 70)
 ```
 
-### 步骤 6: 运行演示
+### 步骤 6：运行演示
 
 ```python
 def run_demo():
@@ -730,9 +730,9 @@ if __name__ == "__main__":
     run_demo()
 ```
 
-## 用它
+## 使用它
 
-### 快速foo 集成
+### promptfoo 集成
 
 ```python
 # promptfoo uses YAML config to define eval suites.
@@ -763,9 +763,9 @@ if __name__ == "__main__":
 # View: promptfoo view
 ```
 
-简单的方法是从零到评估管道的最快路径. YAML配置,内置的LLM-as-judge,网页观看器,CI友好的输出.它支持15多个提供商的外出和JavaScript或Python中的自定义分数功能.
+promptfoo 是从零到评估流水线的最快路径。YAML 配置、内置 LLM-as-judge、Web 查看器、CI 友好的输出。它开箱即支持 15+ 提供商，并支持用 JavaScript 或 Python 编写自定义评分函数。
 
-### 深度的整合
+### DeepEval 集成
 
 ```python
 # from deepeval import evaluate
@@ -785,9 +785,9 @@ if __name__ == "__main__":
 # evaluate([test_case], [relevancy, faithfulness])
 ```
 
-运行 运行 运行 运行`deepeval test run test_evals.py`测试组包括14个内置的指标,包括幻觉检测,偏见和毒性.
+DeepEval 与 Pytest 集成。运行 `deepeval test run test_evals.py` 即可将评估作为测试套件的一部分执行。它包含 14 个内置指标，包括幻觉检测、偏见和毒性。
 
-### 集成性 CI/CD 整合模式
+### CI/CD 集成模式
 
 ```python
 # .github/workflows/eval.yml
@@ -814,50 +814,50 @@ if __name__ == "__main__":
 #           path: eval_results/
 ```
 
-触发器对每一个触及提示或LLM代码的 PR 进行评估. 如果任何标准退缩超过门,则阻止合并. 作为重复文物上传结果.
+在每个触及 prompt 或 LLM 代码的 PR 上触发评估。如果任何维度的退化超过阈值，则阻止合并。将结果作为构建产物上传以供审查。
 
-## 运送它
+## 交付
 
-这一课产生了`outputs/prompt-eval-designer.md`提供您的LLM申请的描述,并提供定制的评估标准,以结的分数分数分类.
+本课产出 `outputs/prompt-eval-designer.md`——一个用于设计评估评分标准的可复用 prompt 模板。给它一个你的 LLM 应用的描述，它就会产出量身定制的评估维度和带锚定描述的评分标准。
 
-它还产生了`outputs/skill-eval-patterns.md`根据您的使用情况,预算和质量要求,选择合适的评估策略的决策框架.
+它还产出 `outputs/skill-eval-patterns.md`——一个决策框架，用于根据你的用例、预算和质量要求选择合适的评估策略。
 
-## 运动
+## 练习
 
-1. **Add BERTScore.**通过使用词嵌入共数相似性实现简化的BERTScore.创建一个由100个常见词汇组成的词典,并将其映射到随机50维向量.计算参考和假设代币之间的双向共数相似性矩阵.使用贪匹配 (每个假设代币匹配其最相似的参考代币) 来计算精度,回忆和F1.
+1. **添加 BERTScore。** 使用词嵌入余弦相似度实现一个简化版 BERTScore。创建一个将 100 个常见词映射到随机 50 维向量的字典。计算参考词元与假设词元之间的两两余弦相似度矩阵。使用贪心匹配（每个假设词元匹配其最相似的参考词元）来计算精确率、召回率和 F1。
 
-2. **Build pairwise comparison.**修改评审员将两个模型输出相对而不是单独得分. 鉴于相同的输入和两个输出,评审员应该返回哪个输出更好,为什么. 运行对对比测试组的基线-v1 vs基线-v2和计算信心间隔的胜利率.
+2. **构建成对比较。** 修改裁判，使其并排比较两个模型输出而非逐一打分。给定相同输入和两个输出，裁判应返回哪个输出更好以及原因。在你的测试套件上对 baseline-v1 与 baseline-v2 运行成对比较，并计算带置信区间的胜率。
 
-3. **Implement stratified analysis.**按类别 (事实,技术,安全,编码,总结) 组测试案例,并以信任间隔计算每个类别的分数. 确定哪些类别在快速版本之间改善了哪些类别,系统可以在特定类别上回归时整体改善.
+3. **实现分层分析。** 按类别（事实、技术、安全、编码、摘要）对测试用例分组，计算每个类别的带置信区间的分数。识别在 prompt 版本之间哪些类别改进了、哪些退化了。一个系统可能在整体上进步的同时在某个特定类别上退化。
 
-4. **Add inter-rater reliability.**运行法师法官3次在每个试验案例 (模拟不同的法官"评级者").计算科恩的卡帕或Krippendorff的阿尔法在三个运行之间.如果协议低于0.7,你的标题太模糊了 - 重写它.
+4. **添加评分者间信度。** 对每个测试用例运行 LLM 裁判 3 次（模拟不同的裁判"评分者"）。计算三次运行之间的 Cohen's kappa 或 Krippendorff's alpha。如果一致性低于 0.7，说明你的评分标准过于模糊——重写它。
 
-5. **Build a cost tracker.**追踪每个评审者调用的代币使用和成本.每个输入给评审者包括原始提示,模型输出和条目 (~500代币输入,~100代币输出).计算测试套件的总评估成本,并根据每周10次评估运行的假设预测月费.
+5. **构建成本追踪器。** 追踪每次裁判调用的 token 用量和成本。裁判的每次输入包含原始 prompt、模型输出和评分标准（约 500 token 输入，约 100 token 输出）。计算整个测试套件的总评估成本，并按每周 10 次评估推算月度成本。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Eval | "Testing" | Systematically scoring LLM outputs against defined criteria using automated metrics, LLM judges, or human review |
-| LLM-as-judge | "AI grading" | Using a strong model (GPT-4o, Claude) to score outputs against a rubric -- correlates 80-85% with human judgment |
-| Rubric | "Scoring guide" | Anchored descriptions for each score level (1-5) that reduce judge variance by defining exactly what each score means |
-| ROUGE-L | "Text overlap" | Longest Common Subsequence-based metric measuring how much of the reference appears in the output -- recall-oriented |
-| Confidence interval | "Error bars" | A range around your measured score that tells you how much uncertainty remains -- wider with fewer test cases |
-| Regression testing | "Before/after" | Running the same eval suite on old and new prompt versions to detect quality degradation before deployment |
-| Golden test set | "Core evals" | Curated input-output pairs representing your most important use cases -- every change must pass these |
-| Pairwise comparison | "A vs B" | Showing a judge two outputs and asking which is better -- eliminates scale calibration problems |
-| Bootstrap | "Resampling" | Estimating confidence intervals by repeatedly sampling from your scores with replacement -- works with any distribution |
-| Wilson interval | "Proportion CI" | A confidence interval for pass/fail rates that works correctly even with small sample sizes or extreme proportions |
+| Eval | "测试" | 使用自动化指标、LLM 裁判或人工评审，按照明确定义的维度对 LLM 输出进行系统性打分 |
+| LLM-as-judge | "AI 评分" | 使用强大的模型（GPT-4o、Claude）按照评分标准对输出打分——与人类判断的相关性达 80-85% |
+| Rubric | "评分指南" | 每个分数等级 (1-5) 的锚定描述，通过精确定义每个分数的含义来降低裁判方差 |
+| ROUGE-L | "文本重叠" | 基于最长公共子序列的指标，衡量参考文本有多少出现在输出中——面向召回率 |
+| 置信区间 | "误差条" | 围绕测量分数的范围，告诉你还剩多少不确定性——测试用例越少区间越宽 |
+| 回归测试 | "变更前后" | 在新旧 prompt 版本上运行同一套评估套件，在部署前检测质量退化 |
+| 黄金测试集 | "核心评估" | 代表你最重要用例的精选输入-输出对——每次变更都必须通过 |
+| 成对比较 | "A vs B" | 给裁判看两个输出并问哪个更好——消除量表校准问题 |
+| Bootstrap | "重采样" | 通过从你的分数中有放回地反复抽样来估计置信区间——适用于任何分布 |
+| Wilson 区间 | "比例置信区间" | 一种针对通过/失败率的置信区间，即使在小样本或极端比例下也能正确工作 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Zheng et al., 2023 -- "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena"](https://arxiv.org/abs/2306.05685)--关于使用法定律师来判断其他法定律师,引入MT-Bench和双对比协议的基础论文
-- [promptfoo Documentation](https://promptfoo.dev/docs/intro)-- 最实用的开源评估框架,包括YAML配置,15多家提供商,法官兼法官,以及CI集成
-- [DeepEval Documentation](https://docs.confident-ai.com)-- 基于Python的评估框架,有14+个指标,Pyest集成,和幻觉检测
-- [Braintrust Eval Guide](https://www.braintrust.dev/docs)-- 实验跟踪,分数功能和数据集管理的生产评估平台
-- [Ribeiro et al., 2020 -- "Beyond Accuracy: Behavioral Testing of NLP Models with CheckList"](https://arxiv.org/abs/2005.04118)-- 对LLM评估适用的系统行为测试方法 (最低功能,不变性,方向预期)
-- [LMSYS Chatbot Arena](https://chat.lmsys.org)-- 实时的人类评估平台,用户投票对模型输出,这是 LLM最大的对比数据集
-- [Es et al., "RAGAS: Automated Evaluation of Retrieval Augmented Generation" (EACL 2024 demo)](https://arxiv.org/abs/2309.15217)-- 没有参考的RAG指标 (忠实性,答案相关性,文本精确性/回忆);
-- [Liu et al., "G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment" (EMNLP 2023)](https://arxiv.org/abs/2303.16634)作为法官协议,校准和偏见结果每个法官-构建者需要.
-- [Hugging Face LLM Evaluation Guidebook](https://huggingface.co/spaces/OpenEvals/evaluation-guidebook)通过开放的LLM排名表的团队提供有关数据污染,测量选择和可复制性的实际建议.
-- [EleutherAI lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness)-- 标准标准框架用于自动化基准 (MMLU,HellaSwag,TruthfulQA,BIG-Bench);开放的LLM排名板的引擎.
+- [Zheng et al., 2023 -- "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena"](https://arxiv.org/abs/2306.05685) —— 使用 LLM 评判其他 LLM 的奠基性论文，提出了 MT-Bench 和成对比较协议
+- [promptfoo Documentation](https://promptfoo.dev/docs/intro) —— 最实用的开源评估框架，提供 YAML 配置、15+ 提供商、LLM-as-judge 和 CI 集成
+- [DeepEval Documentation](https://docs.confident-ai.com) —— Python 原生评估框架，含 14+ 指标、Pytest 集成和幻觉检测
+- [Braintrust Eval Guide](https://www.braintrust.dev/docs) —— 生产级评估平台，提供实验追踪、评分函数和数据集管理
+- [Ribeiro et al., 2020 -- "Beyond Accuracy: Behavioral Testing of NLP Models with CheckList"](https://arxiv.org/abs/2005.04118) —— 系统化行为测试方法（最小功能、不变性、方向性期望），适用于 LLM 评估
+- [LMSYS Chatbot Arena](https://chat.lmsys.org) —— 实时人类评估平台，用户对模型输出投票，是最大的 LLM 成对比较数据集
+- [Es et al., "RAGAS: Automated Evaluation of Retrieval Augmented Generation" (EACL 2024 demo)](https://arxiv.org/abs/2309.15217) —— RAG 的无参考指标（忠实度、答案相关性、上下文精确率/召回率）；可规模化用于生产而无需标注员。
+- [Liu et al., "G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment" (EMNLP 2023)](https://arxiv.org/abs/2303.16634) —— 思维链 + 表单填写作为裁判协议；每个裁判构建者都需要的校准与偏差结果。
+- [Hugging Face LLM Evaluation Guidebook](https://huggingface.co/spaces/OpenEvals/evaluation-guidebook) —— 来自 Open LLM Leaderboard 维护团队关于数据污染、指标选择和可复现性的实用建议。
+- [EleutherAI lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) —— 自动化基准测试的标准框架（MMLU、HellaSwag、TruthfulQA、BIG-Bench）；Open LLM Leaderboard 背后的引擎。

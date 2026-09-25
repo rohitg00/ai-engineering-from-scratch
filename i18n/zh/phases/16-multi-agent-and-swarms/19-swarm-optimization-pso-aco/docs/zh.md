@@ -1,25 +1,25 @@
-# 对于法定法律学历的群体优化 (PSO,ACO)
+# 面向 LLM 的群体智能优化（PSO、ACO）
 
-> 生物灵感优化正在使LLM复苏.**LMPSO**(arXiv:2504.09247) 使用PSO,每个粒子的速度是提示,LLM生成下一个候选人;在结构序列输出 (数学表达式,程序) 上工作良好. **Model Swarms**(arXiv:2410.11163) 对待每一位LLM专家作为模型重量多元件的PSO粒子,并报告**13.3% average gain**只有200个实例的9个数据集上超过12个基线. **SwarmPrompt**为了快速优化,将PSO+灰狼混合.**AMRO-S**                                  **4.7x speedup**通过"PROPT PARAMETER SPACE"和"ACO"在代理路由中,测量这些经典算法为什么适合LLM时代,以及何时不适合.
+> 仿生优化正在 LLM 领域卷土重来。**LMPSO**（arXiv:2504.09247）使用 PSO，其中每个粒子的速度是一个提示词（prompt），由 LLM 生成下一个候选结果；在结构化序列输出（数学表达式、程序）上效果良好。**Model Swarms**（arXiv:2410.11163）将每个 LLM 专家视为模型权重流形上的一个 PSO 粒子，仅用 200 个实例即在 9 个数据集上报告了相对 12 个基线的 **13.3% 平均提升**。**SwarmPrompt**（ICAART 2025）将 PSO 与灰狼优化结合用于提示词优化。**AMRO-S**（arXiv:2603.12933）是受 ACO 启发、基于信息素的多智能体 LLM 路由专家机制 —— **4.7 倍加速**、可解释的路由证据，以及将推理与学习解耦的质量门控异步更新。本课在提示词参数空间上实现 PSO，在智能体路由上实现 ACO，分析这些经典算法为何契合 LLM 时代，以及何时并不适用。
 
 **Type:** Learn + Build
 **Languages:** Python (stdlib)
-**Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 14 (Consensus and BFT)
-**Time:** ~75 minutes
+**Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks)、Phase 16 · 14 (Consensus and BFT)
+**Time:** 约 75 分钟
 
 ## 问题
 
-您有一个提示,在任务评估中得分62%.您想改进它. 简单的举动是无梯度的手动调整,这很糟糕.强化学习需要奖励信号和足够的推广来训练. 通过提示推进实际上是不可能的.提示是一个单独的字符串,而不是一个可分化参数.
+你有一个提示词，在你的任务评测中得分 62%。你想改进它。最直接的做法是无梯度的手动微调，但扩展性很差。强化学习需要奖励信号和足够多的 rollout 才能训练。对提示词做反向传播实际上不可行——提示词是离散字符串，不是可微参数。
 
-经典生物启发优化  PSO 连续搜索空间,ACO 选路是专门为这个制度设计的:无梯度,基于人口,每项评估便宜.对其进行无梯度搜索步骤的LLM结合,你得到了一个令人惊的实用优化器.
+经典仿生优化——PSO 用于连续搜索空间，ACO 用于路径选择——正是为这种场景设计的：无梯度、基于种群、单次评估成本低。将它们与 LLM 结合来执行无梯度搜索步骤，你会得到一个出奇实用的优化器。
 
-类似的模式适用于多代理系统中的代理 *路由 * .ACO式的子记录了哪个代理在哪个任务类型上最好工作,让路由器利用该线路,并分解子,以便重新发现路线.
+同样的模式也适用于多智能体系统中的智能体*路由*。ACO 风格的信息素轨迹记录哪个智能体在哪类任务上表现最好，让路由器利用该轨迹，并通过信息素衰减使路由可以被重新探索。
 
 ## 概念
 
-### 公共卫生组织的更新 (肯尼迪和埃伯哈特 1995)
+### PSO 回顾（Kennedy & Eberhart 1995）
 
-粒子群优化:在连续搜索空间中的粒子群.每个粒子都有位置.`x_i`速度`v_i`每次代:
+粒子群优化：连续搜索空间中的粒子种群。每个粒子有位置 `x_i` 和速度 `v_i`。每次迭代：
 
 ```
 v_i <- w * v_i + c1 * r1 * (p_best_i - x_i) + c2 * r2 * (g_best - x_i)
@@ -29,128 +29,128 @@ update p_best_i if improved
 update g_best if global best
 ```
 
-在哪里?`p_best`粒子本身的最佳.`g_best`是群众最好的,`w, c1, c2`它们是惯性+认知+社会权重,`r1, r2`它们是随机因素.
+其中 `p_best` 是粒子自身的历史最优，`g_best` 是种群最优，`w, c1, c2` 是惯性、认知和社会权重，`r1, r2` 是随机因子。
 
-### 关于法定管理局的产品的PSO  LMPSO
+### PSO 用于 LLM 输出 — LMPSO
 
-根据""的定义,每颗粒子都是一个候选输出.速度是描述如何修改当前输出,以实现个人/全球最佳.LLM从速度提示生成新的输出.速度的"惰性"是"做小增进变化"这样的提示.
+arXiv:2504.09247 将 PSO 适配到 LLM 生成的结构化输出（数学表达式、程序）。每个粒子是一个候选输出。速度是一个*提示词*，描述如何将当前输出修改得接近个人最优/全局最优。LLM 根据速度提示词生成新输出。速度的“惯性”是类似“做小幅增量修改”的提示词。
 
-如果:
-- 输出结构化 (可解析,可评估).
-- 健身是自动的 (测试运行,算术评估).
-- 人口小 (~10-30颗粒),因此总计LLM调用仍然可管理.
+它在以下情况下效果良好：
+- 输出是结构化的（可解析、可评估）。
+- 适应度是自动计算的（运行测试、算术求值）。
+- 种群较小（约 10-30 个粒子），LLM 调用总量可控。
 
-身体健康需要人体检查时,它不起作用.
+当适应度需要人工评审时效果不佳——单次迭代成本会变得过高。
 
-### 模型群
+### Model Swarms
 
-随着一个数据集的更新,每一个"粒子"都会通过一个无梯度更新将参数移动到集体最佳水平.报告:在9个数据集上平均增加13.3%的12个基线,每次代仅为200次.
+arXiv:2410.11163 将 PSO 从输出层移到了*模型*层。每个“粒子”是一个专家 LLM（参数）。群体通过无梯度更新将参数向集体最优移动。报告结果：仅用每次迭代 200 个实例，在 9 个数据集上相对 12 个基线平均提升 13.3%。
 
-基本的见解是,在一个共享参数多元组 (适配器重量,LORA 分) 中,LLC专家模型已经接近.
+关键洞察在于，LLM 专家模型在共享参数流形上本就彼此接近（adapter 权重、LoRA delta）。在这个低维子空间上运行 PSO 既廉价又有效。
 
-### 更新ACO (多里戈 1992)
+### ACO 回顾（Dorigo 1992）
 
-殖民地优化:穿过图表;每个路径都有子痕迹.子按子强度移动概率重量.完成任务的子按溶液质量比例存储子.子随时间而衰退.
+蚁群优化：蚂蚁遍历一张图；每条路径都有信息素轨迹。蚂蚁的移动概率按信息素强度加权。完成任务的蚂蚁按解的质量成比例地沉积信息素。信息素随时间衰减。
 
-###  AMRO-S  ACO 代理路由
+### AMRO-S — 用于智能体路由的 ACO
 
-根据ACO的数据,每一个任务类型都是"目的地",每一个代理都是可能的路线.
+arXiv:2603.12933 将 ACO 用于多智能体路由。每类任务是一个“目的地”；每个智能体是一条可能的路径。信息素强化产出良好结果的路径。关键贡献：
 
-- **Interpretable routing evidence.**子强度是人类可以读取的信号.
-- **Quality-gated asynchronous update.**异体仅在质量检查通过后更新, 脱离结论与学习.
-- **4.7x speedup**关于多代理路由基准.
+- **可解释的路由证据。** 信息素强度是人类可读的信号。
+- **质量门控异步更新。** 信息素只在质量检查通过后更新，将推理与学习解耦。
+- 在多智能体路由基准上实现 **4.7 倍加速**。
 
-质量关键:没有它,快速但错误的代理会积聚,
+质量门控至关重要：没有它，快但错的智能体会不断积累信息素，系统会锁定在坏路径上。
 
-### 什么时候使用PSO/ACO在 LLM
+### 何时将 PSO / ACO 用于 LLM
 
-**Use PSO when:**
-- 搜索空间是连续的或是连续参数的地图 (即时嵌入,LoRA权重,数值生成参数).
-- 健身是便宜的,自动的.
-- 人口可能很小 (10-30).
+**在以下情况使用 PSO：**
+- 搜索空间是连续的，或可映射到连续参数（提示词嵌入、LoRA 权重、数值生成参数）。
+- 适应度廉价且自动。
+- 种群可以很小（10-30）。
 
-**Use ACO when:**
-- 你有路由或路径选择问题.
-- 随着时间的推移,决策得到加强 (同样的任务类型会再次出现).
-- 你需要解释的证据来决定路线.
+**在以下情况使用 ACO：**
+- 你面对的是路由或路径选择问题。
+- 决策随时间不断强化（同类任务反复出现）。
+- 你需要可解释的路由决策依据。
 
-**Do not use either when:**
-- 健身需要人体审查 (每次代谢太昂贵).
-- 搜索空间是单独的和结合式的,以一种方式,PSO不覆盖 (使用遗传算法而不是).
-- 实时决策需要严格的延迟 (PSO/ACO相对于单通度度相对慢相近).
+**在以下情况两者都不适用：**
+- 适应度需要人工评审（单次迭代成本过高）。
+- 搜索空间是 PSO 无法覆盖的离散组合空间（改用遗传算法）。
+- 实时决策有严格延迟要求（相对单次启发式方法，PSO/ACO 收敛较慢）。
 
-### 生物灵感的原因仍然是胜利
+### 仿生方法为何仍然占优
 
-基于梯度的方法需要可分辨的信号.LLM输出和路由决策并不微乎其微的分辨性.伪梯度方法 (强化学习路由器,DPO式快速调节器) 有效,但需要昂贵的培训.
+基于梯度的方法需要可微信号。LLM 输出和路由决策并非天然可微。伪梯度方法（强化学习路由器、DPO 风格的提示词调优器）可行，但需要昂贵的训练。
 
-对于 PSO 和 ACO,只需要一个*评估器*函数.如果您可以评分一个候选输出或路由决定,您可以优化空间. 这使得适用性条格更低.
+PSO 和 ACO 只需要一个*评估器*函数。只要你能为候选输出或路由决策打分，就能在该空间上做优化。这使得适用门槛大大降低。
 
 ### 实际限制
 
-- **Population budget.**对于LLM评价的~$0.02 / call, a 20-particle PSO running 50 iterations costs ~$20,根据计划.
-- **Exploration vs exploitation.**子衰变率和PSO惰性交换;过快衰变 →忘记解决方案;过慢 →坚持早期的本地优势.
-- **Catastrophic drift.**两种算法可以在健身环境变化 (新数据分布) 时融合,然后分离.
+- **种群预算。** N 个粒子 × T 次迭代 × 单次评估成本。当 LLM 评估约需 $0.02 / call, a 20-particle PSO running 50 iterations costs ~$20。请据此规划。
+- **探索与利用。** 信息素衰减率与 PSO 惯性之间存在权衡；衰减过快 → 遗忘已有的解；过慢 → 陷入早期局部最优。
+- **灾难性漂移。** 两种算法都可能在收敛后因适应度地形变化（新数据分布）而发散。监控最优适应度的稳定性。
 
 ```figure
 swarm-stigmergy
 ```
 
-## 建立它
+## 动手实现
 
-`code/main.py`执行:
+`code/main.py` 实现了：
 
-- `LMPSO`PSO对数值提示参数 (温度,顶_k重量).每个粒子的"LLM生成"是模拟的脚本健身函数.运行算法30次并显示g_best融合.
-- `AMRO_S` ACO 类型的路由. 3 个代理, 4 个任务类型, 子矩阵, 100 个路由任务. 打印 (task_type → 代理选择) 时间分布以显示轨迹形成.
-- 比较:随机路由与同一任务流中的ACO路由. 测量质量和延迟.
+- `LMPSO` — 数值提示词参数（temperature、top_k 权重）上的 PSO。每个粒子的“LLM 生成”以脚本化的适应度函数模拟。运行算法 30 次迭代并展示 g_best 的收敛过程。
+- `AMRO_S` — ACO 风格的路由。3 个智能体、4 类任务、信息素矩阵、100 个路由任务。随时间打印（任务类型 → 智能体选择）的分布，以展示轨迹的形成。
+- 对比：在相同任务流上对比随机路由与 ACO 路由。测量质量与延迟。
 
-运行:
+运行：
 
 ```
 python3 code/main.py
 ```
 
-预期产量:
-- 体育:g_best 身体健康从随机到近最佳的改善超过30次.
-- AMRO-S:因任务类型而稳定于正确的代理;ACO路由在质量上随机超过30-40%,同时降低延迟 (减少重试).
+预期输出：
+- LMPSO：g_best 适应度在 30 次迭代内从随机水平提升至接近最优。
+- AMRO-S：信息素表在每类任务对应的正确智能体上趋于稳定；ACO 路由在质量上比随机路由高约 30-40%，同时降低延迟（更少的重试）。
 
-## 用它
+## 使用它
 
-`outputs/skill-swarm-optimizer.md`帮助选择PSO,ACO,遗传算法和基于梯度的优化器来解决LLM/代理优化问题.
+`outputs/skill-swarm-optimizer.md` 帮助你在 PSO、ACO、遗传算法和基于梯度的优化器之间为 LLM / 智能体优化问题做选择。
 
-## 运送它
+## 上线它
 
-- **Start small.**只有在缩曲线显示明显的增长的情况下,
-- **Log pheromones or g_best per iteration.**没有痕迹的调试群群优化器是痛苦的.
-- **Quality-gate updates.**特别是在ACO路由方面:快速和错误的药物不能积累.
-- **Reset decay on distribution shift.**当你的评估分布发生变化时,老化的子会变得陈旧;暂时重新设置或翻倍衰变率.
-- **Cap the per-iteration cost.**发出每次发行成本的指标. 费用500美元/发行,并获得0.5%的收益,不能运输.
+- **从小规模开始。** 10-20 个粒子、20-50 次迭代。只有当收敛曲线显示明显收益时才扩大规模。
+- **每次迭代记录信息素或 g_best。** 没有轨迹记录调试群体优化器会非常痛苦。
+- **对更新做质量门控。** 尤其是针对 ACO 路由：快但错的智能体绝不能积累信息素。
+- **在分布偏移时重置衰减。** 当你的评测分布发生变化时，陈旧的信息素已失效；临时重置或将衰减率加倍。
+- **限制单次迭代成本。** 输出每次迭代的成本指标。一次迭代花费 $500 却只提升 0.5% 的 PSO 不具备上线价值。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`观察LMPSO的化. 不同人口规模 5, 10, 20, 50. 化时间在多少度?
-2. 执行"灾难性漂移"实验:在30次回复后,改变健身功能.PSO如何快速适应?是否重置`p_best`帮助?
-3. 添加质量门 AMRO-S:仅在评估分数>0.7 的运行时存储子.
-4. 读LMPSO (arXiv:2504.09247). 绘制纸的"速度作为提示"回到你的数值速度.
-5. 通过非同步的激素更新,实现脱的"推理快速路径". 这如何改变系统延迟在持续负载下?
+1. 运行 `code/main.py`。观察 LMPSO 的收敛情况。将种群规模改为 5、10、20、50。在什么规模下收敛时间趋于饱和？
+2. 实现“灾难性漂移”实验：在第 30 次迭代后改变适应度函数。PSO 适应得有多快？重置 `p_best` 是否有帮助？
+3. 为 AMRO-S 添加质量门控：仅在评估得分 > 0.7 的运行中沉积信息素。与无门控版本相比，这如何改变收敛？
+4. 阅读 LMPSO（arXiv:2504.09247）。将论文中“速度作为提示词”的概念映射回你的数值速度。模拟中丢失了什么、保留了什么？
+5. 阅读 AMRO-S（arXiv:2603.12933）。实现解耦的“推理快速通道”与异步信息素更新。这在持续负载下如何改变系统延迟？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|------------------------|
-| PSO | "Particle Swarm Optimization" | Kennedy-Eberhart 1995. Population-based gradient-free optimizer. |
-| ACO | "Ant Colony Optimization" | Dorigo 1992. Path/route optimization via pheromone trails. |
-| LMPSO | "PSO with LLM generation" | arXiv:2504.09247. Velocity is a prompt; LLM produces candidates. |
-| Model Swarms | "PSO on expert weights" | arXiv:2410.11163. Gradient-free update on model parameter subspace. |
-| AMRO-S | "ACO for agent routing" | arXiv:2603.12933. Pheromone matrix over task-type × agent. |
-| p_best / g_best | "Personal / global best" | Per-particle and swarm-wide best solutions found so far. |
-| Pheromone | "Routing memory" | Strength on an edge; decays over time; deposits on quality. |
-| Quality-gated update | "Only learn from good runs" | Pheromone deposit conditioned on quality check. |
-| Catastrophic drift | "Distribution shift" | Fitness landscape changes; old p_best and pheromones become stale. |
+| PSO | “粒子群优化” | Kennedy-Eberhart 1995。基于种群的无梯度优化器。 |
+| ACO | “蚁群优化” | Dorigo 1992。通过信息素轨迹进行路径/路由优化。 |
+| LMPSO | “结合 LLM 生成的 PSO” | arXiv:2504.09247。速度即提示词；由 LLM 生成候选。 |
+| Model Swarms | “专家权重上的 PSO” | arXiv:2410.11163。在模型参数子空间上的无梯度更新。 |
+| AMRO-S | “用于智能体路由的 ACO” | arXiv:2603.12933。任务类型 × 智能体上的信息素矩阵。 |
+| p_best / g_best | “个人最优 / 全局最优” | 迄今为止找到的各粒子最优解和整个种群的最优解。 |
+| Pheromone（信息素） | “路由记忆” | 边上的强度；随时间衰减；按质量沉积。 |
+| 质量门控更新 | “只从好的运行中学习” | 信息素沉积以质量检查通过为条件。 |
+| 灾难性漂移 | “分布偏移” | 适应度地形发生变化；旧的 p_best 和信息素失效。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Kennedy & Eberhart — Particle Swarm Optimization](https://ieeexplore.ieee.org/document/488968)1995年公共卫生组织文件
-- [Dorigo — Ant Colony Optimization](https://www.aco-metaheuristic.org/about.html) 1992年ACO基金会
-- [LMPSO — Language Model Particle Swarm Optimization](https://arxiv.org/abs/2504.09247)结构化LLM产品的公共服务管理局
-- [Model Swarms — gradient-free LLM expert optimization](https://arxiv.org/abs/2410.11163)模型重量子空间的PSO
-- [AMRO-S — ant-colony multi-agent routing](https://arxiv.org/abs/2603.12933) 质量门的胺驱动路由
+- [Kennedy & Eberhart — Particle Swarm Optimization](https://ieeexplore.ieee.org/document/488968) — 1995 年的 PSO 论文
+- [Dorigo — Ant Colony Optimization](https://www.aco-metaheuristic.org/about.html) — 1992 年 ACO 的奠基工作
+- [LMPSO — Language Model Particle Swarm Optimization](https://arxiv.org/abs/2504.09247) — 面向结构化 LLM 输出的 PSO
+- [Model Swarms — gradient-free LLM expert optimization](https://arxiv.org/abs/2410.11163) — 模型权重子空间上的 PSO
+- [AMRO-S — ant-colony multi-agent routing](https://arxiv.org/abs/2603.12933) — 带质量门控的信息素驱动路由

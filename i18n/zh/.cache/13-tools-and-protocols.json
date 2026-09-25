@@ -1,5 +1,4 @@
 {
-  "phases/13-tools-and-protocols/01-the-tool-interface/docs/en.md": "03823fa620a739c438f4e907af32445f81cc3a26387b86d13ca90ff0d1f14533",
   "phases/13-tools-and-protocols/02-function-calling-deep-dive/docs/en.md": "4691bbc616aa41426d78eb1e3b77b8635de13cf451272e63fba79b59094a7e71",
   "phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/docs/en.md": "6339e746eb414f03ab0421f9ed1d654809753f39bdac5283fe0f3a3712a1c5b2",
   "phases/13-tools-and-protocols/04-structured-output/docs/en.md": "bd468ed5c79526e09282f88722e4603d5f80e9a3087e8de0e151dd94d48f73cc",
@@ -10,9 +9,6 @@
   "phases/13-tools-and-protocols/09-mcp-transports/docs/en.md": "8b35336a155283e509f16008a3acd65caedd87c443bde2c86c7836d615f6bb4e",
   "phases/13-tools-and-protocols/10-mcp-resources-and-prompts/docs/en.md": "34d186c38dea5a28accfab115201bb022dd41ca9a24c0385488821e5982a3108",
   "phases/13-tools-and-protocols/11-mcp-sampling/docs/en.md": "a205ee1e92a30eb61080e980620eaf0c5dbd1772db8b35da65a453273ed4fd71",
-  "phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/docs/en.md": "5b061e2bec0962f9a1bcf881f7886fbe16426236f428311f30199f398c1af6bd",
-  "phases/13-tools-and-protocols/13-mcp-async-tasks/docs/en.md": "6987b0cabf06d9f37c5f42b31a76889ad26b36b3571aeaae6629ceb2cd0f7314",
-  "phases/13-tools-and-protocols/14-mcp-apps/docs/en.md": "40f058cda91f1ed151492d82de0578ec39a8df5ded405087c2824c4d885abdcc",
   "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/docs/en.md": "8df9c5d03680ae24853c738c8c3876eb8e95decd5932e8356ac7c3b2915820e6",
   "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/docs/en.md": "74e8633388346ce360cc53b8aca33dcf3be056362c1111c54c367c257a32dde0",
   "phases/13-tools-and-protocols/17-mcp-gateways-and-registries/docs/en.md": "6c72285350d087babd97ec9907f94137be217337999ed1b4e44f299b4e3b1692",
@@ -29,5 +25,9 @@
   "phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/docs/en.md": "713a0c2c7a28774c61b59756221528c57dbae1361521967d95ac7647a98f7864",
   "phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/docs/en.md": "50f4b4cf4a382debc911c7f769cb3699bf0f54f4789bf19b9418635097be25df",
   "phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/docs/en.md": "734698d661d450db141c54509144cf914443f3b335e4b18a14d175bad520d60b",
-  "phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/docs/en.md": "fa7b16e90177a54f5ee0adb5c8a0d471a454074dda0ba277dc93b0e6abe28d57"
+  "phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/docs/en.md": "fa7b16e90177a54f5ee0adb5c8a0d471a454074dda0ba277dc93b0e6abe28d57",
+  "phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/docs/en.md": "5b061e2bec0962f9a1bcf881f7886fbe16426236f428311f30199f398c1af6bd",
+  "phases/13-tools-and-protocols/14-mcp-apps/docs/en.md": "40f058cda91f1ed151492d82de0578ec39a8df5ded405087c2824c4d885abdcc",
+  "phases/13-tools-and-protocols/01-the-tool-interface/docs/en.md": "03823fa620a739c438f4e907af32445f81cc3a26387b86d13ca90ff0d1f14533",
+  "phases/13-tools-and-protocols/13-mcp-async-tasks/docs/en.md": "6987b0cabf06d9f37c5f42b31a76889ad26b36b3571aeaae6629ceb2cd0f7314"
 }

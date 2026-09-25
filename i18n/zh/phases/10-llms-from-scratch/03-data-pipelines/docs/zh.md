@@ -1,64 +1,64 @@
-# 预训练数据管道
+# 预训练的数据管道
 
-> 模型是镜子,它反映出你给它提供的数据,它给它垃圾,它反映垃圾,完全流利.
+> 模型是一面镜子。它反映你喂给它的任何数据。喂给它垃圾，它就会以完美的流畅度反映垃圾。
 
 **Type:** Build
 **Languages:** Python
 **Prerequisites:** Phase 10, Lessons 01-02 (Tokenizers, Building a Tokenizer)
-**Time:** ~90 minutes
+**Time:** ~90 分钟
 
 ## 学习目标
 
-- 建立一个流媒体数据管道,将图标,块,混动和批量图拉字节的文本,而不需要将其全部加载到内存中
-- 实施在实际预训管道中使用的数据质量过器 (脱复,语言检测,内容过)
-- 建立固定长度训练序列,使用适当的注意力面具和文件边界处理
-- 为了确保数据加载器跟上GPU训练速度
+- 构建一个流式数据管道，对数 TB 的文本进行分词、切块、打乱和分批，而无需将其全部加载到内存中
+- 实现真实预训练管道中使用的数据质量过滤器（去重、语言检测、内容过滤）
+- 创建固定长度的训练序列，并正确处理注意力掩码和文档边界
+- 分析管道吞吐量，确保 dataloader 跟得上 GPU 训练速度
 
-## 问题
+## 问题所在
 
-你有代币,现在你需要数据.
+你已经有了一个分词器。现在你需要数据。
 
-没有数据集,没有CSV文件. 文字的太字节 - - 清理,减倍,过质量,将其代币化成固定长度的序列,
+不是一个数据集。不是一个 CSV 文件。而是数 TB 的文本——经过清洗、去重、质量过滤，分词为固定长度的序列，并以足够快的速度提供随机化的批次，让你的 8-GPU 集群从不等待下一个批次。
 
-大多数人认为,培训LLM是关于模型架构.不是.Llama 3使用了15.6万亿代币.GPT-3使用了300亿代币.DeepSeek-V2使用了8.1万亿代币.三者的架构大致相同:堆叠的变压器块,有注意力和反层.输出质量差异主要来自数据.
+大多数人认为训练 LLM 是关于模型架构的。事实并非如此。Llama 3 使用了 15.6 万亿 token。GPT-3 使用了 3000 亿。DeepSeek-V2 使用了 8.1 万亿。三者的架构大致相同：由注意力层和前馈层堆叠而成的 transformer 块。输出质量的差异绝大多数来自数据。
 
-深思维的辛奇拉论文确切地说明了这一点. 对于给定的计算预算,模型参数与训练令牌的最佳比例. 奇拉表明,大多数2022年的模型都很少训练, 训练用14万亿代币 (Chinchilla-optimal) 的70B参数模型超过了训练用300亿代币 (Gopher) 的280B模型.
+DeepMind 的 Chinchilla 论文将这一点精确化了。对于给定的计算预算，存在一个模型参数量与训练 token 数之间的最优比例。Chinchilla 表明，2022 年的大多数模型都严重训练不足——相对于它们所看到的数据量，它们的参数太多了。一个在 1.4 万亿 token 上训练（Chinchilla 最优）的 70B 参数模型，优于一个在 3000 亿 token 上训练的 280B 模型（Gopher）。
 
-您的数据管道决定您的模型是否学习语言或学习噪音.
+你的数据管道决定了你的模型学到的是语言，还是噪声。
 
 ## 概念
 
-### 数据来源于哪里
+### 数据从何而来
 
-每个大型语言模型都基于各种来源进行训练.
+每个大语言模型都是在多种来源的混合数据上训练的。确切的构成对大多数实验室来说是严格保密的，但我们对其类别已有足够的了解。
 
-| Source | Size | Quality | Used By |
+| 来源 | 规模 | 质量 | 使用者 |
 |--------|------|---------|---------|
-| Common Crawl | ~250 TB raw | Low (needs heavy filtering) | GPT-3, Llama, most open models |
-| Wikipedia | ~20 GB | High | Every major LLM |
-| GitHub code | ~1 TB+ | Medium (lots of duplicates, dead code) | StarCoder, CodeLlama, DeepSeek-Coder |
-| Books (BookCorpus, Pile) | ~100 GB | High | GPT-2, GPT-3, early models |
-| Academic papers (arXiv, S2ORC) | ~100 GB | High for STEM | Llama, Galactica |
-| StackOverflow, Reddit | ~100 GB | Medium | Llama, Falcon |
-| Curated web (C4, RefinedWeb) | ~5 TB | Medium-High (pre-filtered) | T5, Falcon |
+| Common Crawl | ~250 TB 原始数据 | 低（需要大量过滤） | GPT-3, Llama, 大多数开源模型 |
+| Wikipedia | ~20 GB | 高 | 每一个主流 LLM |
+| GitHub 代码 | ~1 TB+ | 中（大量重复、死代码） | StarCoder, CodeLlama, DeepSeek-Coder |
+| 书籍（BookCorpus, Pile） | ~100 GB | 高 | GPT-2, GPT-3, 早期模型 |
+| 学术论文（arXiv, S2ORC） | ~100 GB | 对 STEM 高 | Llama, Galactica |
+| StackOverflow, Reddit | ~100 GB | 中 | Llama, Falcon |
+| 精选网络数据（C4, RefinedWeb） | ~5 TB | 中高（预过滤） | T5, Falcon |
 
-拉马3公布了其数据组合:大约50%的网页数据,25%的代码,13%的书籍和学术论文,8%的数学数据,4%的多语言网页数据.总共来自超过5TB原始文本的15.6万亿代币.
+Llama 3 公开了其数据配比：大约 50% 网络数据、25% 代码、13% 书籍和学术论文、8% 数学数据，以及 4% 多语言网络数据。总量为 15.6 万亿 token，来源超过 5 TB 原始文本。
 
-比例与总规模一样重要.太多的网络数据,模型变成了Reddit.太少代码,它无法编程.太少数学,它无法推理.
+配比与总量同样重要。网络数据太多，模型就会变成一只 Reddit 鹦鹉。代码太少，它就无法编程。数学太少，它就无法推理。把这个配比调对是训练 LLM 中最困难的部分之一，而且没有公式——它需要实验和评估。
 
-### 数据清理
+### 数据清洗
 
-常见的爬垃圾包含:
+原始网络数据是肮脏的。一个典型的 Common Crawl 转储包含：
 
-- HTML标签和JavaScript
-- 炉板头,脚,导航菜单
-- 复制页面 (准确和接近复制)
-- 机器生成的垃圾邮件
-- 个人身份信息 (PII)
-- 低质量的文本 (关键词列表,SEO垃圾邮件)
-- 编码为文本的非文本内容
+- HTML 标签和 JavaScript
+- 模板化的页眉、页脚、导航菜单
+- 重复页面（完全重复和近似重复）
+- 机器生成的垃圾信息
+- 个人身份信息（PII）
+- 低质量文本（关键词列表、SEO 垃圾信息）
+- 以文本形式编码的非文本内容
 
-清理不是可选的.这是生成一致段落的模型和输出与产品列表混合的HTML标签之间的区别.
+清洗这些不是可选项。它决定了一个模型是生成连贯的段落，还是输出夹杂着商品列表的 HTML 标签。
 
 ```mermaid
 graph TD
@@ -78,23 +78,23 @@ graph TD
     style G fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-每一步都消除了一类噪音:
+每一步都会消除一类噪声：
 
-**HTML stripping:**删除所有标记,只保留可见的文本内容.`trafilatura`或`readability`提取文章内容,同时丢弃导航,广告和板.
+**HTML 剥离：** 移除所有标记。只保留可见的文本内容。像 `trafilatura` 或 `readability` 这样的库可以提取文章内容，同时丢弃导航、广告和模板内容。
 
-**Language detection:**使用快Text的语言识别模型 (lid.176.bin) 来分类每个文档. 过到您的目标语言.一个以0.8以下的信心分类为英语的文档可能不是清洁的英语.
+**语言检测：** 使用 fastText 的语言识别模型（lid.176.bin）对每个文档进行分类。过滤出你的目标语言。一个被分类为英语但置信度低于 0.8 的文档，很可能不是干净的英语。
 
-**Quality filtering:**这就是有趣的地方. 精炼Web (猎背后的数据集) 使用基于困难的过器:训练维基百科中的一个小语言模型,然后分分每份文档. 很高的困难意味着文档与维基百科不同 - 可能是垃圾邮件,关键词列表或机器生成的内容.
+**质量过滤：** 这是有意思的地方。RefinedWeb（Falcon 背后的数据集）使用了基于困惑度的过滤器：在 Wikipedia 上训练一个小型语言模型，然后对每个文档打分。高困惑度意味着该文档不像 Wikipedia——很可能是垃圾信息、关键词列表或机器生成的内容。困惑度超过阈值的文档会被移除。
 
-**Deduplication:**简单的清洁步骤.普通爬行包含大量的复制页面 - - 法律豁免, Cookie通知,服务条款.
+**去重：** 这是影响最大的单一清洗步骤。Common Crawl 包含海量的重复页面——法律免责声明、cookie 提示、服务条款。在重复数据上训练会浪费计算资源，并可能导致模型记忆并逐字复述特定段落。
 
-**PII removal:**基于Regex的检测,用于结构化 PII,NER模型,用于名字的背景.
+**PII 移除：** 姓名、电子邮件地址、电话号码、社会安全号码。对结构化 PII 使用基于正则的检测，对上下文中的姓名使用 NER 模型。
 
-### 除使用 MinHash
+### 使用 MinHash 去重
 
-精确的排版很容易:哈希每个文件,删除重复.但近重复是真正的问题.两个副本的相同新闻文章,周围有略有不同的广告是近重复.内容是95%相同的,但它们的字节对字节不同.
+精确去重很容易：对每个文档进行哈希，移除重复项。但近似重复才是真正的问题。同一篇新闻文章的两个副本，只是周围广告略有不同，就是近似重复。内容有 95% 相同，但逐字节来看它们并不相同。
 
-微软+本地敏感密码 (LSH) 能有效地解决这一问题.
+MinHash + 局部敏感哈希（LSH）可以高效地解决这个问题。
 
 ```mermaid
 graph LR
@@ -114,25 +114,25 @@ graph LR
     style G fill:#1a1a2e,stroke:#e94560,color:#fff
 ```
 
-他们的想法:
+其思想是：
 
-1. **Shingling:**转换每份文件成 n 克的集合 (例如, 5 克的词或字符). "快棕狐"与 3 字的带成为 {"快棕狐"",快棕狐"}.
+1. **Shingling：** 将每个文档转换为一个 n-gram 集合（例如，词或字符的 5-gram）。"the quick brown fox" 使用 3 词 shingle 变为 {"the quick brown", "quick brown fox"}。
 
-2. **MinHash:**对于每个文件的纹集合,计算k哈希值.每个哈希值是在不同哈希函数下所有纹中最小的哈希值. 这会产生一个固定尺寸的"签名",它接近任何两个文件之间的Jaccard相似性.
+2. **MinHash：** 对每个文档的 shingle 集合，计算 k 个哈希值。每个哈希值是在不同的哈希函数下所有 shingle 中的最小哈希。这会创建一个固定大小的“签名”，用于近似任意两个文档之间的 Jaccard 相似度。
 
-3. **LSH:**根据他们MinHash签名的带,将文件组成桶.同一桶中的文件是候选人近重复. 这避免了每对的比较 - - 你只比较候选人.
+3. **LSH：** 根据 MinHash 签名的分带将文档分组到桶中。同一桶中的文档是候选近似重复项。这避免了比较每一对文档——你只比较候选对。
 
-4. **Verify:**对于每个候选对,计算出精确的Jaccard相似性. 如果相似性超过门值 (通常是0.8),则删除一本.
+4. **验证：** 对每个候选对，计算精确的 Jaccard 相似度。如果相似度超过阈值（通常为 0.8），则移除其中一个副本。
 
-拉马团队报告说,通过排版删除了约38%的网络数据.这并不小数.超过三分之一的通用爬虫是重复或接近重复的内容.
+Llama 团队报告称，通过去重移除了大约 38% 的网络数据。这不是一个小数字。Common Crawl 超过三分之一是重复或近似重复的内容。
 
-### 序列包装
+### 序列打包
 
-您的模型预计的输入序列是固定的长度.您的文件是变长度.有些是50个代币.有些是50,000个代币.
+你的模型期望固定长度的输入序列。而你的文档长度可变。有些是 50 个 token。有些是 50,000 个 token。
 
-简单的方法:将每个文件填充到最大的序列长度. 这就会浪费大量的计算,
+朴素方法：将每个文档填充到最大序列长度。这会在填充 token 上浪费大量计算，而这些 token 对学习毫无贡献。
 
-较好的方法:将多份文件捆绑在一个单一的序列中,由序列结束代币分开. 2048代币的序列可能包含三个短文档,它们之间有 [EOS]代币.
+更好的方法：将多个文档打包进一个序列中，用序列结束符分隔。一个 2048 token 的序列可能包含三个短文档，它们之间用 [EOS] token 连接。
 
 ```mermaid
 graph TD
@@ -155,39 +155,39 @@ graph TD
     style B1 fill:#1a1a2e,stroke:#16c784,color:#fff
 ```
 
-注意力面具必须正确设置.文件 A 的代币不应在同一包装序列内与文件 B 的代币相处.这需要一个区块斜角的注意力面具.
+注意力掩码必须正确设置。来自文档 A 的 token 不应在同一打包序列内关注来自文档 B 的 token。这需要一个块对角注意力掩码。
 
-长文档在序列边界被缩小或分成块. 分断点是重要的:分断句子中部迫使模型看到不完整的想法.有些管道将分断与段落或句子边界进行排列,如果可能的话.
+长文档会在序列边界处被截断或分块。分割点很重要：在句子中间分割会迫使模型看到不完整的想法。一些管道在可能的情况下将分割对齐到段落或句子边界。
 
-### 奇拉尺度定律
+### Chinchilla 缩放定律
 
-对于固定计算预算C (以FLOP计量),最佳模型大小N和数据集大小D是:
+对于固定的计算预算 C（以 FLOPs 衡量），最优模型规模 N 和数据集规模 D 满足：
 
 ```
 N_opt ~ C^0.5
 D_opt ~ C^0.5
 ```
 
-实际上,这意味着你应该大约同样扩展模型大小和数据集大小.一个具有10倍以上参数的模型需要大约10倍更多的训练令牌才能达到相同的损失.
+在实践中，这意味着你应该大致等比例地扩展模型规模和数据集规模。参数量多 10 倍的模型需要大约多 10 倍的训练 token 才能达到相同的损失。
 
-| Model | Parameters | Training Tokens | Chinchilla-Optimal? |
+| 模型 | 参数量 | 训练 Token | Chinchilla 最优？ |
 |-------|-----------|----------------|-------------------|
-| GPT-3 | 175B | 300B | No (undertrained 3-4x) |
-| Chinchilla | 70B | 1.4T | Yes (by design) |
-| Llama 2 | 70B | 2T | Overtrained (intentionally) |
-| Llama 3 | 70B | 15T | Heavily overtrained |
+| GPT-3 | 175B | 300B | 否（训练不足 3-4 倍） |
+| Chinchilla | 70B | 1.4T | 是（按设计） |
+| Llama 2 | 70B | 2T | 过度训练（有意的） |
+| Llama 3 | 70B | 15T | 大幅过度训练 |
 
-拉马3故意违反了辛奇拉法.Meta发现,在更多数据上进行过度训练 - - 远远超出计算-最佳比率 - - - 产生了更好的推理模型.额外的训练成本是一次支付的,但较小的模型更便宜永远服务.这有时被称为"推理-最佳"规模化方法,并成为2024年以来的行业标准.
+Llama 3 刻意违反了 Chinchilla 定律。Meta 发现，在更多数据上进行过度训练——远超计算最优比例——能为推理产生更好的模型。额外的训练成本只需支付一次，而更小的模型在服务端永远更便宜。这有时被称为“推理最优”缩放方法，并且自 2024 年以来已成为行业标准。
 
 ```figure
 l5-data-pipeline
 ```
 
-## 建立它
+## 动手构建
 
-### 第一个步骤:清洁文字
+### 步骤 1：文本清洗
 
-删除非文本内容,将公共领域文本 (Gutenberg项目) 作为我们的小体.
+剥离 HTML、规范化空白字符、移除非文本内容。我们将使用公有领域文本（Project Gutenberg）作为我们的小型语料库。
 
 ```python
 import re
@@ -213,11 +213,11 @@ def quality_filter(text, min_words=50, max_ratio_caps=0.3, max_ratio_special=0.1
     return True
 ```
 
-质量过器捕获SEO垃圾邮件 (ALL CAPS),机器生成的噪音 (特殊字符比例高),以及页 (太短).仅仅这些三个检查可以从网页爬行中清除惊人的垃圾量.
+质量过滤器会捕获 SEO 垃圾信息（全大写）、机器生成的噪声（特殊字符比例过高）以及残缺页面（过短）。仅这三项检查就能从网络爬取数据中去除数量惊人的垃圾。
 
-### 步骤2: 微量化
+### 步骤 2：MinHash 去重
 
-没有需要外部图书馆,只是`hashlib`现在,我们要去.
+从零开始实现 MinHash。不需要外部库——只需 `hashlib`。
 
 ```python
 import hashlib
@@ -284,11 +284,11 @@ def deduplicate(documents, threshold=0.8, num_hashes=128, bands=16):
     return [doc for idx, doc in enumerate(documents) if idx not in removed], len(removed)
 ```
 
-其他`num_hashes=128`其他`bands=16`更多的哈希提供更准确的相似性估计.更多的频段以更大的假正值来增加回忆 (捕获更多重复).这些值对典型的网页文本工作很好.
+`num_hashes=128` 和 `bands=16` 参数控制精确率-召回率的权衡。更多哈希提供更准确的相似度估计。更多分带提高召回率（捕获更多重复项），代价是更多误报。这些值对于典型的网络文本效果良好。
 
-### 步骤3:标记并将序列包装
+### 步骤 3：分词并打包序列
 
-清洁的,复制的文本,将其标记成标记,然后将其包装成固定长度的序列,
+取清洗并去重后的文本，进行分词，并打包为固定长度的训练序列。
 
 ```python
 def tokenize_corpus(documents, tokenizer):
@@ -314,9 +314,9 @@ def pack_sequences(token_ids, seq_length, pad_id=0):
     return sequences, attention_masks
 ```
 
-### 步骤4:培训数据载体
+### 步骤 4：用于训练的 DataLoader
 
-随机组装序列的结果. 这就是训练循环所消耗的.
+生成打包序列的随机批次。这就是训练循环所消费的内容。
 
 ```python
 import random
@@ -342,9 +342,9 @@ class PreTrainingDataLoader:
             yield batch_seqs, batch_masks
 ```
 
-### 步骤5:数据集统计
+### 步骤 5：数据集统计
 
-计算重要数字:总代币,独特代币,压缩比,文件长度分布.
+计算那些重要的数字：总 token 数、唯一 token 数、压缩比、文档长度分布。
 
 ```python
 from collections import Counter
@@ -384,15 +384,15 @@ def compute_statistics(documents, token_ids, sequences, tokenizer_vocab_size):
     return stats
 ```
 
-压缩比率告诉你代币器在这个体积上是多么高效.英语文本通常压缩到每代币约3-4个字符.如果你看到每代币1.5个字符,你的代币器会被分化过于激进.如果你看到8+,它已经学会了非常特定的域的合并.
+压缩比告诉你分词器在该语料库上的效率。英文文本通常压缩到每个 token 约 3-4 个字符。如果你看到每个 token 只有 1.5 个字符，你的分词器切分得过于激进。如果你看到 8 以上，它学到了非常偏向特定领域的合并。
 
-序列利用告诉你你的包装序列中的多少是真实数据与填充.90%以下意味着你的包装是不高效的 - - 你正在浪费计算在填充代币.
+序列利用率告诉你打包序列中有多少是真实数据，多少是填充。低于 90% 意味着你的打包效率低下——你正在填充 token 上浪费计算资源。
 
-## 用它
+## 使用它
 
-### 与"抱抱脸"数据集进行比较
+### 与 HuggingFace Datasets 对比
 
-通过 HuggingFace 的数据库中加载相同的数据库,并比较管道速度.
+通过 HuggingFace 的 datasets 库加载相同的语料库，并对比管道速度。
 
 ```python
 from datasets import load_dataset
@@ -414,38 +414,38 @@ total_tokens = sum(len(t) for t in tokenized["input_ids"])
 print(f"HuggingFace: {total_tokens:,} tokens in {hf_time:.2f}s ({total_tokens/hf_time:,.0f} tokens/sec)")
 ```
 
-脸管道使用罩下的Rust代币,并行处理在4个核心.你的纯 Python 管道将会10-50倍慢.这差距是为什么生产团队使用编译代币.算法是一样的.实现语言是差异.
+HuggingFace 管道底层使用 Rust 分词器，并在 4 个核心上进行并行处理。你的纯 Python 管道会慢 10-50 倍。这个差距就是生产团队使用编译型分词器的原因。算法是相同的。实现语言才是差异所在。
 
-## 运送它
+## 上线
 
-本课程提供了验证和调试LLM培训管道数据质量的提示.`outputs/prompt-data-quality-checker.md`现在,我们要去.
+本课程产出用于验证和调试 LLM 训练管道中数据质量的 prompt。参见 `outputs/prompt-data-quality-checker.md`。
 
-## 运动
+## 练习
 
-1. **Easy:**通过简单的学 (字符集分析) 添加语言检测到清洁管道. 仅仅将英语文档过,并测量取消的文档数量.
-2. **Medium:**通过使用 SHA-256 哈希和 MinHash 接近排版一起实现精确排版. 通过每个方法在网页剪辑的体积上捕获的排版数量进行比较.
-3. **Hard:**建立一个基于杂性的质量过器. 在维基百科文本上训练一个小的大图语言模型,根据杂性评分每个文档,然后删除下面的20%.在训练过数据和未过数据时,比较模型输出质量.
+1. **简单：** 使用简单的启发式方法（字符集分析）为清洗管道添加语言检测。过滤出仅英文的文档，并测量有多少文档被移除。
+2. **中等：** 在 MinHash 近似去重之外，使用 SHA-256 哈希实现精确去重。在一个网络爬取的语料库上对比每种方法捕获的重复数量。
+3. **困难：** 构建一个基于困惑度的质量过滤器。在 Wikipedia 文本上训练一个小型 bigram 语言模型，按困惑度对每个文档打分，并移除得分最低的 20%。对比在过滤与未过滤数据上训练时的模型输出质量。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Common Crawl | "The internet" | A non-profit that crawls the web monthly -- ~250TB raw, the starting point for most LLM training data |
-| MinHash | "Some hashing trick" | A technique to estimate Jaccard similarity between sets using fixed-size signatures -- enables near-duplicate detection at scale |
-| LSH | "Locality-Sensitive Hashing" | A method to group similar items into the same bucket -- reduces pairwise comparisons from O(n^2) to near-linear |
-| Sequence packing | "Concatenating documents" | Fitting multiple documents into fixed-length sequences with proper attention masks -- eliminates padding waste |
-| Chinchilla scaling | "Train on more data" | For a fixed compute budget, optimal performance requires scaling model size and training tokens roughly equally |
-| Fertility | "Tokens per word" | Average number of tokens per word -- 1.3 for English in GPT-4, higher for non-Latin scripts |
-| Data mixing | "Choosing training data" | The ratio of code vs text vs math vs multilingual data -- no formula, requires experimentation |
-| Perplexity filter | "Quality scoring" | Use a small language model to score documents -- high perplexity means the text is unlike clean reference data |
-| Deduplication | "Removing copies" | Eliminating exact and near-duplicate documents -- typically removes 30-40% of raw web data |
-| Attention mask | "Which tokens to look at" | A binary mask that prevents attention across document boundaries in packed sequences |
+| Common Crawl | "互联网" | 一个每月爬取网络内容的非营利组织——约 250TB 原始数据，是大多数 LLM 训练数据的起点 |
+| MinHash | "某种哈希技巧" | 一种使用固定大小签名估计集合间 Jaccard 相似度的技术——使大规模近似重复检测成为可能 |
+| LSH | "局部敏感哈希" | 一种将相似项分组到同一桶中的方法——将成对比较从 O(n^2) 降低到近线性 |
+| 序列打包 | "拼接文档" | 将多个文档装入固定长度序列并配以正确的注意力掩码——消除填充浪费 |
+| Chinchilla 缩放 | "用更多数据训练" | 对于固定的计算预算，最优性能要求模型规模和训练 token 大致等比例扩展 |
+| Fertility | "每词 token 数" | 每个单词的平均 token 数——GPT-4 中英语为 1.3，非拉丁文字更高 |
+| 数据配比 | "选择训练数据" | 代码 vs 文本 vs 数学 vs 多语言数据的比例——没有公式，需要实验 |
+| 困惑度过滤器 | "质量打分" | 使用一个小型语言模型对文档打分——高困惑度意味着文本与干净的参考数据不同 |
+| 去重 | "移除副本" | 消除完全重复和近似重复的文档——通常可移除 30-40% 的原始网络数据 |
+| 注意力掩码 | "关注哪些 token" | 一种二值掩码，防止在打包序列中跨越文档边界的注意力 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Hoffmann et al., 2022 -- Training Compute-Optimal Large Language Models (Chinchilla)](https://arxiv.org/abs/2203.15556)改变了我们对数据规模的看法.
-- [Penedo et al., 2023 -- The RefinedWeb Dataset for Falcon LLM](https://arxiv.org/abs/2306.01116)--如何过普通爬虫到高质量
-- [Touvron et al., 2023 -- Llama 2: Open Foundation and Fine-Tuned Chat Models](https://arxiv.org/abs/2307.09288)-- 关于Llama 2的数据管道详情
-- [Lee et al., 2022 -- Deduplicating Training Data Makes Language Models Better](https://arxiv.org/abs/2107.06499)-- 为什么减倍比你想象的更重要
-- [Broder, 1997 -- On the Resemblance and Containment of Documents](https://ieeexplore.ieee.org/document/666900)-- 简单的MINHASH纸
-- [Meta, 2024 -- Llama 3 Technical Report](https://arxiv.org/abs/2407.21783)-- 15.6T代币,数据混合比率,过管道
+- [Hoffmann et al., 2022 -- Training Compute-Optimal Large Language Models (Chinchilla)](https://arxiv.org/abs/2203.15556) -- 改变了我们对数据规模认知的论文
+- [Penedo et al., 2023 -- The RefinedWeb Dataset for Falcon LLM](https://arxiv.org/abs/2306.01116) -- 如何将 Common Crawl 过滤为高质量数据
+- [Touvron et al., 2023 -- Llama 2: Open Foundation and Fine-Tuned Chat Models](https://arxiv.org/abs/2307.09288) -- Llama 2 的数据管道细节
+- [Lee et al., 2022 -- Deduplicating Training Data Makes Language Models Better](https://arxiv.org/abs/2107.06499) -- 为什么去重比你想象的更重要
+- [Broder, 1997 -- On the Resemblance and Containment of Documents](https://ieeexplore.ieee.org/document/666900) -- MinHash 的原始论文
+- [Meta, 2024 -- Llama 3 Technical Report](https://arxiv.org/abs/2407.21783) -- 15.6T token、数据配比、过滤管道

@@ -1,114 +1,114 @@
-# 3 生产中的投机解码
+# EAGLE-3 生产环境投机解码
 
-> 投机解码将快速的草案模型与目标模型结合起来. 草案提出K代币;目标在单个前期中验证;接受的代币是免费的. 2026年,EAGLE-3是生产级变体,它训练了一个预稿头,在目标模型的隐藏状态而不是原始代币,在一般聊天中推进接受率alpha到0.6-0.8带. 如果阿尔法下降到0.55以下,投机解码在高同步率下是净负的,因为每一个被拒绝的草案都需要第二个目标前进. 这课教你先测量阿尔法,然后翻旗.
+> 投机解码将一个快速的草稿模型与目标模型配对使用。草稿提出 K 个 token；目标模型在一次前向中验证它们；被接受的 token 是免费的。在 2026 年，EAGLE-3 是生产级变体——它在目标模型的隐藏状态上训练草稿头，而不是在原始 token 上，在通用对话中将接受率 alpha 推高到 0.6-0.8 区间。正确的问题不是“草稿有多快”，而是“在我的流量上 alpha 是多少？”如果 alpha 降到约 0.55 以下，在高并发下投机解码是净负收益，因为每个被拒绝的草稿都要付出第二次目标前向的代价。本课教你先测量 alpha，再切换开关。
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy acceptance-rate simulator)
-**Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 18 (Multi-Token Prediction)
-**Time:** ~60 minutes
+**Languages:** Python（标准库，玩具级接受率模拟器）
+**Prerequisites:** Phase 17 · 04（推理引擎内部机制）、Phase 10 · 18（多 Token 预测）
+**Time:** ~60 分钟
 
 ## 学习目标
 
-- 举个猜测解码的三个代,并解释EAGLE-3与EAGLE-2以及经典的草案模型所发生的变化.
-- 定义接受率alpha,从alpha和K (草案长度) 计算预期加速,并确定目标同步率的破解式alpha.
-- 解释为什么在vLLM 2026中投机解码是选择式 (不是默认的) 以及为什么在没有测量alpha的情况下启动它是生产反模式的原因.
-- 写出测量计划:哪个基准,哪个提示分布,哪个同步点,哪个指标要进入.
+- 说出投机解码的三个发展阶段，并解释 EAGLE-3 相对 EAGLE-2 以及相对经典草稿模型的改动。
+- 定义接受率 alpha，根据 alpha 和 K（草稿长度）计算期望加速比，并找出针对你目标并发水平的盈亏平衡 alpha。
+- 解释为什么在 vLLM 2026 中投机解码是可选开启（而非默认开启），以及为什么在不测量 alpha 的情况下开启它是一种生产反模式。
+- 编写一个测量计划：用哪个基准、哪种 prompt 分布、哪个并发点、以哪个指标作为门控。
 
 ## 问题
 
-解码是内存的.在运行Llama 3.3 70B FP8的H100上,每个解码的代币都读取了140GB/s的权重,并发出了一个代币.在解码期间,GPU计算几乎是无效的.
+解码是内存受限的。在 H100 上运行 Llama 3.3 70B FP8 时，每解码一个 token 需要以约 140 GB/s 的速度读取权重并输出一个 token。解码期间 GPU 计算几乎空闲——瓶颈是 HBM 带宽，而非矩阵乘吞吐。
 
-投机解码利用差距.使用廉价的草案模型生成K候选代币,然后要求目标模型在单次前进传递中验证所有K.每个验证的代币实际上是免费的 (将其抵免成一批K前进的代币,目标无论如何都必须做).
+投机解码正是利用了这个间隙。用一个廉价的草稿模型生成 K 个候选 token，然后让目标模型在一次前向中验证全部 K 个。每个被验证的 token 实际上是免费的（分摊到目标模型本来就必须做的一次 batch-of-K 前向中）。
 
-经典的草案模型方法采用相同家族的较小模型 (Llama 3.2 1B 草案为Llama 3.3 70B). 虽然它有效,但接受率是中等的, ,然后-2,然后-3将轻微的导弹头直接放在目标模型的内部状态上, 这就是为什么阿尔法从0.4的草案模型到0.6-0.8的EAGLE-3.
+经典草稿模型方法使用同一家族中更小的模型（用 Llama 3.2 1B 为 Llama 3.3 70B 起草）。它可行，但接受率平庸——小模型的分布与目标分布有偏差。EAGLE，接着 EAGLE-2，再到 EAGLE-3，直接在目标模型的内部状态上训练一个轻量草稿头，因此草稿分布与目标分布贴合得紧密得多。这就是 alpha 从草稿模型的 0.4 提升到 EAGLE-3 的 0.6-0.8 的原因。
 
-鱼:EAGLE-3将加入VLLM2026年.`speculative_config`没有标志,没有加速. 没有测量Alpha的团队通常会看到尾声延迟变得更糟,而不是更好.
+问题在于：EAGLE-3 在 vLLM 2026 中是可选开启的。必须显式设置 `speculative_config`。不开开关就没有加速。那些在未于真实流量上测量 alpha 的情况下就打开它的团队，往往会看到尾部延迟变差而非变好。
 
 ## 概念
 
-### 什么是投机解码实际上买
+### 投机解码真正带来什么
 
-没有规范解码,每代币成本是一个目标前. 通过草案长度K和接受alpha的规范解码,每个目标前的预期代币是`1 + K * alpha`速度是`(1 + K * alpha) / (1 + epsilon)`对于K=5,alpha=0.7: `(1 + 5*0.7) / (1 + 0.1) = 4.5 / 1.1 = 4.1x`实际数字的集群大约2到3倍,因为Alpha在生产流量上很少高,而epsilon在高批量量上生长.
+没有投机解码时，每个 token 的成本是一次目标前向。有投机解码时，草稿长度为 K、接受率为 alpha，每次目标前向的期望 token 数为 `1 + K * alpha`。加速比为 `(1 + K * alpha) / (1 + epsilon)`，其中 epsilon 是草稿加验证的开销。对于 K=5，alpha=0.7：`(1 + 5*0.7) / (1 + 0.1) = 4.5 / 1.1 = 4.1x`。实际数字集中在 2-3 倍左右，因为在生产流量上 alpha 很少那么高，而且 epsilon 在高 batch size 下会增大。
 
-### 为什么阿尔法是唯一重要的指标
+### 为什么 alpha 是唯一重要的指标
 
-拒绝的代币不会消失 它们强迫第二个目标向前,以获得第一个拒绝的代币. 在一个工作负载上,Alpha下降到0.4,你支付的草案总费加上验证加上重新滚动. 在高同步率 (例如 256 同步) 上,解码批量已经足够大,以至于"仅仅目标"和"仅仅验证目标"之间的内存带宽差距缩小. 在2026年大部分硬件上,
+被拒绝的 token 不会消失——它们会为第一个被拒绝的 token 触发第二次目标前向。在一个 alpha 降到 0.4 的工作负载上，你要同时付出草稿开销、验证开销和重新生成开销。在高并发下（比如 256 并发），解码 batch 已经足够大，以至于“仅目标模型”与“目标模型加验证”之间的内存带宽差距缩小了。在 2026 年的大多数硬件上，alpha 低于 0.55 时，投机解码是净负收益。
 
-在ShareGPT类型的通用聊天中,EAGLE-3在ShareGPT上训练达到0.6-0.8.在域特定流量 (代码,医疗,法律) 上,对一般数据训练的草案头下降到0.4-0.6.训练一个域特定的草案头恢复了alpha .
+Alpha 随工作负载而变。在 ShareGPT 风格的通用对话上，在 ShareGPT 上训练的 EAGLE-3 可达 0.6-0.8。在领域特定流量（代码、医疗、法律）上，用通用数据训练的草稿头会降到 0.4-0.6。训练一个领域特定的草稿头可以恢复 alpha——与目标模型微调相比，这是一个轻量、快速的训练任务。
 
-### 子一眼的几代人
+### EAGLE 各代概览
 
-- **Classic draft model**基础设施简单 两个型号加载,每一个目标向前运行K.
-- **EAGLE-1 (2024)**目标上面的小参数上层.
-- **EAGLE-2 (2025)**根据图文的定义,该图文的长度可适应,基于树木的图文 (在一个目标传输中检查多个分支).
-- **EAGLE-3 (2025-2026)**预备主机训练多个目标层 (不仅仅是最后),更好的排列.
+- **经典草稿模型**：同一家族的小模型。Alpha 0.3-0.5。基础设施简单——加载两个模型，每目标前向对应 K 次草稿前向。
+- **EAGLE-1 (2024)**：在目标隐藏状态（最后一层）上训练的单一草稿头。Alpha ~0.5-0.6。目标模型之上仅有很小的参数开销。
+- **EAGLE-2 (2025)**：自适应草稿长度和基于树的草稿（一次目标前向验证多个分支）。Alpha ~0.6-0.7。草稿调度器更复杂。
+- **EAGLE-3 (2025-2026)**：草稿头在多个目标层上训练（不只是最后一层），对齐更好。通用对话上 Alpha ~0.6-0.8。
 
-### 2026年生产配方
+### 2026 年生产配方
 
-1. 测量基线TTFT,ITL,在目标同步时的吞吐量.
-2. 通过vLLM启用EAGLE-3草案`speculative_config`检查一个标准.
-3. 记录接受率 alfa. vLLM V1 报告`spec_decode_metrics.accepted_tokens_per_request`按要求的草稿长度划分,得到阿尔法.
-4. 如果生产流量分布的alpha <0.55 值,则禁用规格解码或训练一个特定领域的EAGLE-3草案.
-5. 在生产同时,再运行.确认P99ITL没有变得更糟.
+1. 先上线纯目标模型。在目标并发下测量基线 TTFT、ITL、吞吐。
+2. 通过 vLLM `speculative_config` 启用 EAGLE-3 草稿。重跑基准。
+3. 记录接受率 alpha。vLLM V1 以 `spec_decode_metrics.accepted_tokens_per_request` 报告该值。除以请求的草稿长度得到 alpha。
+4. 如果在生产流量分布上 alpha < 0.55，禁用投机解码或训练领域特定的 EAGLE-3 草稿。
+5. 在生产并发下重跑。确认 P99 ITL 没有变差。
 
-### 产量陷:P99尾
+### 生产陷阱：P99 尾部
 
-平均ITL下降了,如果不调节,P99可能会变得更糟.拒绝的草案会引发两次通过序列 (草案+验证失败+重滚).在全批次下,这些两个通过会串行.看P99 ITL,而不是P50.
+开启投机解码后平均 ITL 会下降。如果不做调优，P99 可能变差。被拒绝的草稿会触发一个两次前向的序列（草稿 + 验证失败 + 重新生成）。在满 batch 下，这两次前向会串行执行。盯住 P99 ITL，而不是 P50。
 
-### 已经部署EagLE-3的地区
+### EAGLE-3 已部署的场景
 
-谷歌在2025年部署了AI概述中的投机解码 (相同质量,更快的响应).`speculative_config`作为文档化界面;N-gram GPU 投机解码在V1中是与碎片预填充兼容的变体.SGLang 支持EAGLE-3作为预写重工作负载的建议草案路径.
+Google 于 2025 年在 AI Overviews 中部署了投机解码（质量相同，响应更快）。vLLM V1 以 `speculative_config` 作为文档化接口；V1 中的 N-gram GPU 投机解码是与 chunked prefill 兼容的变体。SGLang 支持 EAGLE-3，作为前缀密集型工作负载的推荐草稿路径。
 
-### 在一行中打破平数
+### 一行盈亏平衡数学
 
-预期加速:`S(alpha, K) = (1 + K*alpha) / (1 + verify_overhead)`设置`S = 1`解决了alpha: `alpha_breakeven = verify_overhead / K`对于典型的verify_overhead ~0.15和K=5: `alpha_breakeven = 0.03`但这是原始解码数学. 在高同步时,验证上空费用增加,并且解码批量已经 amortizes 连续性内存读数,所以有效的alpha_breakeven 实际上上上升到0.45-0.55.
+期望加速比：`S(alpha, K) = (1 + K*alpha) / (1 + verify_overhead)`。令 `S = 1` 可解出 alpha：`alpha_breakeven = verify_overhead / K`。对于典型的 verify_overhead ~0.15 和 K=5：`alpha_breakeven = 0.03`。但这是纯解码的数学。在高并发下，验证开销上升，且解码 batch 已经在多条序列间分摊了内存读取，因此实际的有效 alpha_breakeven 攀升到约 0.45-0.55。
 
-### 什么时候不使用推测解码
+### 何时不该使用投机解码
 
-- 批发-1的离线生成,延迟不重要.
-- 非常短的输出 (低于50个代币). 草案总费和验证成本占主导地位.
-- 专业域没有专业训练的招聘负责人.
-- 附加于草案模型规格解码`--enable-chunked-prefill`文件的例外是V1中的N-gram GPU规格解码.
+- 延迟无关紧要的 batch-1 离线生成。使用纯目标模型。
+- 非常短的输出（少于 50 token）。草稿开销和验证成本占主导。
+- 没有领域训练草稿头的专业领域。Alpha 太低。
+- vLLM v0.18.0 加草稿模型投机解码加 `--enable-chunked-prefill`。这个组合无法编译。文档记载的例外是 V1 中的 N-gram GPU 投机解码。
 
 ```figure
 mx-speculative-tree
 ```
 
-## 用它
+## 动手实践
 
-`code/main.py`模拟一个在一系列alpha值和草案长度K中进行解码循环,并且没有猜测解码.它打印了破解式alpha,测量速度和尾声行为.在几种 (alpha,K) 组合上运行它,以查看猜测解码在哪里停止付费.
+`code/main.py` 在一系列 alpha 值和草稿长度 K 上模拟有和无投机解码的解码循环。它打印盈亏平衡 alpha、实测加速比和尾部行为。在若干 (alpha, K) 组合上运行它，以精确查看投机解码在何处不再划算。
 
-## 运送它
+## 上线部署
 
-这一课产生了`outputs/skill-eagle3-rollout.md`鉴于目标模型,流量分布描述和同步目标,它产生了一个阶段化的EAGLE-3部署计划基准线,启用配置,测量alpha,关键在alpha >=0.55,看P99ITL.
+本课产出 `outputs/skill-eagle3-rollout.md`。给定一个目标模型、流量分布描述和并发目标，它生成一个分阶段的 EAGLE-3 灰度计划——基准测试基线、启用配置、测量 alpha、以 alpha >= 0.55 作门控、监控 P99 ITL。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`在K=5时,你需要什么alpha来加速2x? 3x?
-2. 想象一下,生产流量分为70%的通用聊天,30%的代码.通用聊天达到0.7的阿尔法, EAGLE-3在ShareGPT上训练;代码达到0.4的阿尔法.
-3. 阅读全文`speculative_config`列出三个模式 (草案模型,EAGLE,N-gram) 以及哪一种模式与碎片预填充兼容.
-4. 3启用后,平均ITL下降了25%,但P99ITL上升了15%.
-5. 计算Eagle-3预备头的内存成本. 如何与经典预备机运行Llama 3.2 1B相比?
+1. 运行 `code/main.py`。在 K=5 时，要达到 2 倍加速需要多少 alpha？3 倍呢？它对 verify_overhead 有多敏感？
+2. 假设生产流量 70% 是通用对话，30% 是代码。通用对话在 ShareGPT 训练的 EAGLE-3 上达到 alpha 0.7；代码达到 alpha 0.4。混合 alpha 是多少？投机解码是否净收益为正？
+3. 阅读 vLLM `speculative_config` 文档。说出三种模式（草稿模型、EAGLE、N-gram）以及哪一种与 chunked prefill 兼容。
+4. 你发现启用 EAGLE-3 后平均 ITL 下降 25%，但 P99 ITL 上升了 15%。诊断原因并提出缓解方案。
+5. 计算 Llama 3.3 70B 的 EAGLE-3 草稿头的内存成本。与将 Llama 3.2 1B 作为经典草稿模型运行相比如何？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|------------------------|
-| Speculative decoding | "draft plus verify" | Propose K tokens with a cheap model, verify all K in one target forward |
-| Acceptance rate alpha | "spec accept rate" | Fraction of draft tokens accepted by the target; the only metric that matters |
-| Draft length K | "spec k" | How many tokens the draft proposes per target forward; typical 4-8 |
-| Verify overhead epsilon | "spec overhead" | Extra cost to verify-and-reroll vs a plain target forward; grows with batch |
-| EAGLE-3 | "latest EAGLE" | 2025-2026 variant; trains draft head on multiple target layers; alpha 0.6-0.8 on general chat |
-| `speculative_config` | "vLLM spec config" | The explicit opt-in in vLLM V1; no default means no acceleration |
-| N-gram spec decode | "N-gram draft" | GPU-side draft using N-gram lookups in the prompt; chunked-prefill-compatible |
-| Break-even alpha | "no-op alpha" | Alpha at which spec decode gives zero speedup; watch this at production concurrency |
-| Rejected-draft two-pass | "reroll cost" | Two target forwards when drafts reject; drives P99 tail |
+| 投机解码 | "draft plus verify" | 用廉价模型提出 K 个 token，在一次目标前向中验证全部 K 个 |
+| 接受率 alpha | "spec accept rate" | 草稿 token 被目标模型接受的比例；唯一重要的指标 |
+| 草稿长度 K | "spec k" | 每次目标前向草稿提出的 token 数；通常 4-8 |
+| 验证开销 epsilon | "spec overhead" | 相比纯目标前向，验证并重新生成的额外成本；随 batch 增长 |
+| EAGLE-3 | "latest EAGLE" | 2025-2026 变体；在多个目标层上训练草稿头；通用对话上 alpha 0.6-0.8 |
+| `speculative_config` | "vLLM spec config" | vLLM V1 中显式的可选开启项；不设置默认值意味着没有加速 |
+| N-gram 投机解码 | "N-gram draft" | 在 GPU 端使用 prompt 中 N-gram 查找的草稿；与 chunked-prefill 兼容 |
+| 盈亏平衡 alpha | "no-op alpha" | 投机解码加速比为零时的 alpha；要在生产并发下关注此值 |
+| 草稿被拒绝的两次前向 | "reroll cost" | 草稿被拒时发生两次目标前向；推高 P99 尾部 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [vLLM — Speculative Decoding docs](https://docs.vllm.ai/en/latest/features/spec_decode/) 权威来源`speculative_config`并且在V1中兼容零碎预填充.
-- [vLLM Speculative Config API](https://docs.vllm.ai/en/latest/api/vllm/config/speculative/)准确的场所.
-- [EAGLE paper (arXiv:2401.15077)](https://arxiv.org/abs/2401.15077)原始的EagLE草案头格式.
-- [EAGLE-2 paper (arXiv:2406.16858)](https://arxiv.org/abs/2406.16858)适应性草图和树木.
-- [UC Berkeley EECS-2025-224](https://www2.eecs.berkeley.edu/Pubs/TechRpts/2025/EECS-2025-224.html)具有投机解码的高效LLM系统.
-- [BentoML — Speculative Decoding](https://bentoml.com/llm/inference-optimization/speculative-decoding)生产部署检查清单.
+- [vLLM — Speculative Decoding docs](https://docs.vllm.ai/en/latest/features/spec_decode/) — 关于 `speculative_config` 以及 V1 中 chunked-prefill 兼容性的权威来源。
+- [vLLM Speculative Config API](https://docs.vllm.ai/en/latest/api/vllm/config/speculative/) — 精确的字段集合。
+- [EAGLE 论文 (arXiv:2401.15077)](https://arxiv.org/abs/2401.15077) — 原始 EAGLE 草稿头方案。
+- [EAGLE-2 论文 (arXiv:2406.16858)](https://arxiv.org/abs/2406.16858) — 自适应草稿与树结构。
+- [UC Berkeley EECS-2025-224](https://www2.eecs.berkeley.edu/Pubs/TechRpts/2025/EECS-2025-224.html) — 带投机解码的高效 LLM 系统。
+- [BentoML — Speculative Decoding](https://bentoml.com/llm/inference-optimization/speculative-decoding) — 生产灰度清单。

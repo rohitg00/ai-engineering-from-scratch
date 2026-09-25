@@ -1,38 +1,38 @@
-# 从零开始向后传播
+# 从零实现反向传播
 
-> 没有它,神经网络只是昂贵的随机数生成器.
+> 反向传播是让学习成为可能的算法。没有它,神经网络只是昂贵的随机数生成器。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Lesson 03.02 (Multi-Layer Networks)
-**Time:** ~120 minutes
+**Prerequisites:** 第 03.02 课(多层网络)
+**Time:** 约 120 分钟
 
 ## 学习目标
 
-- 实现基于值的自行排序引擎,构建计算图表,通过拓排序计算梯度
-- 使用链条规则来推导加,乘和sigmoid的倒退通行
-- 通过使用您的从零开始的反扩散引擎来训练多层网络在XOR和圆形分类上
-- 识别深度西格莫ид网络中消失梯度问题,并解释为什么梯度呈指数缩小
+- 实现一个基于 Value 的 autograd 引擎,构建计算图并通过拓扑排序计算梯度
+- 使用链式法则推导加法、乘法和 sigmoid 的反向传播过程
+- 仅使用你自己从零实现的反向传播引擎,在 XOR 和圆形分类任务上训练多层网络
+- 识别深层 sigmoid 网络中的梯度消失问题,并解释为什么梯度会指数级缩小
 
 ## 问题
 
-你的网络有一个隐藏的层,有768个输入和3072个输出. 这就是2,359,296个重量. 它做了一个错误的预测. 哪个重量导致了错误? 单独测试每个重量意味着2,300万个前进传输. 倒传计算了所有2,300万个梯度在一个倒传输中. 这不是优化. 这就是训练和不可能之间的区别.
+你的网络有一个隐藏层,768 个输入、3072 个输出,也就是 2,359,296 个权重。它做出了一个错误的预测。是哪些权重导致的误差?逐个测试每个权重意味着 230 万次前向传播。而反向传播只需一次反向传播就能算出全部 230 万个梯度。这不是一种优化,而是"可训练"与"不可行"之间的区别。
 
-简单的方法是:拿一个重量,把它推到一个小小的量,再运行前进的传输,测量损失是否上升或下降. 这给你了重量的梯度.现在为网络中的每一个重量做.乘以数千个训练步骤和数百万的数据点.你需要地质时间来训练任何有用的东西.
+朴素的做法:取一个权重,给它一个微小的扰动,重新运行前向传播,测量损失是上升还是下降。这就得到了该权重的梯度。然后对网络中的每个权重都这么做。再乘以数千次训练迭代和数百万个数据点。你需要地质纪元的时间才能训练出任何有用的东西。
 
-逆向传播解决了这个问题. 一个向前传递,一个向后传递,所有梯度计算. 俩是计算的链条规则,系统地应用到计算图表. 这就是使深度学习实用的算法. 没有它,我们仍然会陷入玩具问题.
+反向传播解决了这个问题。一次前向传播,一次反向传播,所有梯度计算完毕。诀窍就是微积分中的链式法则,系统地应用于计算图。正是这个算法让深度学习变得实用。没有它,我们至今仍被困在玩具问题上。
 
 ## 概念
 
-### 链条适用于网络
+### 链式法则在网络中的应用
 
-简单的重复:如果y=f(g(x)),那么dy/dx=f'(g(x)) *g'(x.
+你在阶段 01 第 05 课见过链式法则。快速回顾:若 y = f(g(x)),则 dy/dx = f'(g(x)) * g'(x)。沿着链把导数相乘即可。
 
-在神经网络中",链"是从输入到损失的操作序列.每个层应用权重,添加偏差,通过激活.损失函数将最终输出与目标进行比较.反传播追踪了这一链向后,计算了每个操作如何导致错误.
+在神经网络中,"链"就是从输入到损失的操作序列。每一层应用权重、加上偏置、经过激活函数。损失函数将最终输出与目标进行比较。反向传播沿这条链反向追溯,计算每个操作对误差的贡献。
 
-### 计算图表
+### 计算图
 
-每个前进传输构建一个图表. 每个节点是一个操作 (乘,加, sigmoid). 每一个边缘携带一个前进值和一个向后梯度.
+每次前向传播都会构建一个图。每个节点是一个操作(乘法、加法、sigmoid)。每条边向前传递一个值,向后传递一个梯度。
 
 ```mermaid
 graph LR
@@ -45,13 +45,13 @@ graph LR
     y["target"] --> loss
 ```
 
-进前传:值流向左向右. x 和 w 产生z1 = w*x. 添加b 得到z2. 辛格莫ид 给出激活a. 使用损失函数对比a 目标y.
+前向传播:值从左向右流动。x 和 w 产生 z1 = w*x。加上 b 得到 z2。sigmoid 给出激活值 a。用损失函数将 a 与目标 y 比较。
 
-往后传递:梯度流向右向左.从dL/da开始 (激活过程中损失发生变化).乘以da/dz2 (sigmoid衍生值).这就给出dL/dz2.分为dL/db (dL/dz2等于dL/dz2),因为z2 =z1 + b) 和dL/dz1.然后dL/dw =dL/dz1 * x,dL/dx =dL/dz1 * w.
+反向传播:梯度从右向左流动。从 dL/da 开始(损失如何随激活值变化)。乘以 da/dz2(sigmoid 的导数),得到 dL/dz2。再拆分为 dL/db(等于 dL/dz2,因为 z2 = z1 + b)和 dL/dz1。然后 dL/dw = dL/dz1 * x,dL/dx = dL/dz1 * w。
 
-每个节点在图表中都有一个任务:从上方来来的梯度,乘以其本地衍生值,然后传递下来.
+图中每个节点在反向传播中只做一件事:接收来自上游的梯度,乘以它的局部导数,再传递给下游。
 
-### 前往对后退
+### 前向与反向
 
 ```mermaid
 graph TB
@@ -70,11 +70,11 @@ graph TB
     Forward --> Backward
 ```
 
-前传存储每个中间值:z,a,每个层的输入.后传需要这些存储值来计算梯度.这是后传的核心的内存-计算权衡.你以速度 (一个传输而不是数百万) 换取内存 (存储激活).
+前向传播存储每个中间值:z、a、每层的输入。反向传播需要这些存储的值来计算梯度。这就是反向传播核心的内存-计算权衡:用内存(存储激活值)换速度(一次传播代替数百万次)。
 
-### 渐进的流动
+### 梯度在网格中的流动
 
-对于三层网络,梯度链通过每个层:
+对于一个 3 层网络,梯度穿过每一层时逐级相乘:
 
 ```mermaid
 graph RL
@@ -84,11 +84,11 @@ graph RL
     L1 -- "dL/dz1 = dL/da1 * sigmoid'(z1)" --> I["Input"]
 ```
 
-在每层,梯度由西格莫因衍生品乘以.西格莫因衍生品是* (1 - a),最大值为0.25 (当 a = 0.5).
+在每一层,梯度都会乘以 sigmoid 的导数。sigmoid 导数为 a * (1 - a),最大值为 0.25(当 a = 0.5 时)。三层深度,梯度最多已被乘以 0.25^3 = 0.0156。十层深度:0.25^10 = 0.000001。
 
-### 渐变物消失
+### 梯度消失
 
-形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形. 形的形是形的形的形. 形的形的形是形的形的形的形.
+这就是梯度消失问题。sigmoid 把输出压缩到 0 和 1 之间,其导数始终小于 0.25。堆叠足够多的 sigmoid 层,梯度就会缩小到零。早期的层几乎学不到东西,因为它们接收到的梯度接近于零。
 
 ```
 sigmoid(z):     Output range [0, 1]
@@ -98,13 +98,13 @@ After 5 layers:   gradient * 0.25^5 = 0.001x original
 After 10 layers:  gradient * 0.25^10 = 0.000001x original
 ```
 
-这就是为什么深度sigmoid网络几乎不可能训练. 修复 - - ReLU及其变体 - - 是第04课题.
+这就是为什么深层 sigmoid 网络几乎无法训练。解决方案——ReLU 及其变体——是第 04 课的主题。现在要理解的是:反向传播本身工作得很好,问题在于它所穿越的对象。
 
-### 取代二层网络的基梯子
+### 推导 2 层网络的梯度
 
-具体计算一个网络的输入 x,隐藏层与 sigmoid,输出层与 sigmoid,和 MSE 损失.
+针对一个网络的完整数学推导:输入 x,隐藏层用 sigmoid,输出层用 sigmoid,损失为 MSE。
 
-进步通行:
+前向传播:
 ```
 z1 = W1 * x + b1
 a1 = sigmoid(z1)
@@ -113,7 +113,7 @@ a2 = sigmoid(z2)
 L = (a2 - y)^2
 ```
 
-后行 (应用链条节点一步一步):
+反向传播(逐步应用链式法则):
 ```
 dL/da2 = 2(a2 - y)
 da2/dz2 = a2 * (1 - a2)
@@ -130,17 +130,17 @@ dL/dW1 = dL/dz1 * x
 dL/db1 = dL/dz1
 ```
 
-每个梯度都是从损失中追溯到本地衍生品的产物.
+每个梯度都是从损失出发回溯的局部导数的乘积。这就是反向传播的全部。
 
 ```figure
 backprop-vanishing
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:值节点
+### 步骤 1:Value 节点
 
-我们计算中的每一个数字都会变成一个值. 它存储其数据,其梯度,以及它是如何创建的 (所以它知道如何计算梯度向后).
+计算中的每个数字都变成一个 Value。它存储自己的数据、梯度,以及它是如何被创建的(这样它就知道如何反向计算梯度)。
 
 ```python
 class Value:
@@ -155,11 +155,11 @@ class Value:
         return f"Value(data={self.data:.4f}, grad={self.grad:.4f})"
 ```
 
-没有向后函数 (没有操作).`_children`现在我们可以在图表上进行排序.
+还没有梯度(0.0),还没有反向函数(空操作)。`_children` 记录产生这个 Value 的其他 Value,以便稍后对图进行拓扑排序。
 
-### 步骤2: 后期功能操作
+### 步骤 2:带反向函数的操作
 
-每个操作都会创造一个新的值,并定义梯度如何通过它向后流动.
+每个操作创建一个新的 Value,并定义梯度如何通过它反向流动。
 
 ```python
 def __add__(self, other):
@@ -185,13 +185,13 @@ def __mul__(self, other):
     return out
 ```
 
-为了加起来:d(a+b)/da = 1,d(a+b)/db = 1. 所以两个输入直接得到输出梯度.
+对于加法:d(a+b)/da = 1,d(a+b)/db = 1。所以两个输入都直接获得输出的梯度。
 
-对于乘法:d(a*b)/da = b,d(a*b)/db = a. 每个输入都得到了另一个值乘以输出梯度.
+对于乘法:d(a*b)/da = b,d(a*b)/db = a。每个输入获得对方的值乘以输出梯度。
 
-其他`+=`值可以用于多个操作.它的梯度是所有路径的梯度的总和.
+`+=` 至关重要。一个 Value 可能在多个操作中被使用,它的梯度是所有路径梯度的总和。
 
-### 步骤3:西格莫因和损失
+### 步骤 3:Sigmoid 与损失
 
 ```python
 import math
@@ -209,7 +209,7 @@ def sigmoid(self):
     return out
 ```
 
-引号导数:sigmoid(x) * (1 -sigmoid(x)). 我们在前进传递过程中计算了sigmoid(x) = s. 再利用它.没有额外的工作.
+sigmoid 的导数:sigmoid(x) * (1 - sigmoid(x))。我们在前向传播中已经算出 sigmoid(x) = s,直接复用,无需额外计算。
 
 ```python
 def mse_loss(predicted, target):
@@ -217,11 +217,11 @@ def mse_loss(predicted, target):
     return diff * diff
 ```
 
-单个输出的MSE: (预测 - 目标) ^2.我们表达减值为加值,负值.
+单个输出的 MSE:(predicted - target)^2。我们把减法表示为与一个取负的 Value 相加。
 
-### 步骤4: 往后过渡
+### 步骤 4:反向传播
 
-拓类型确保我们按正确的顺序处理节点, 节点的梯度在我们通过它传播之前完全积累.
+拓扑排序确保我们以正确的顺序处理节点——每个节点的梯度在向外传播之前已被完整累加。
 
 ```python
 def backward(self):
@@ -241,9 +241,9 @@ def backward(self):
         v._backward()
 ```
 
-开始在损失 (渐进值=1.0,因为dL/dL=1). 通过排序图表向后行走.`_backward`让孩子们的态度变得更低.
+从损失开始(梯度 = 1.0,因为 dL/dL = 1)。沿排序后的图反向遍历。每个节点的 `_backward` 将梯度传递给它的子节点。
 
-### 步骤5:层和网络
+### 步骤 5:层与网络
 
 ```python
 import random
@@ -301,9 +301,9 @@ class Network:
             p.grad = 0.0
 ```
 
-神经元采集输入,计算重量的总数 +偏差,并应用sigmoid.重量初始化尺度由 sqrt(2/n_input) 防止深层网络中的sigmoid和.一个层是神经元的列表.一个网络是层的列表.`parameters()`方法收集所有可学习的值,以便我们更新它们.
+Neuron 接收输入,计算加权和 + 偏置,然后应用 sigmoid。权重初始化按 sqrt(2/n_inputs) 缩放,以防止更深的网络中出现 sigmoid 饱和。Layer 是一组 Neuron,Network 是一组 Layer。`parameters()` 方法收集所有可学习的 Value,以便我们可以更新它们。
 
-### 步骤 6: 在XOR上列车
+### 步骤 6:在 XOR 上训练
 
 ```python
 random.seed(42)
@@ -342,11 +342,11 @@ for inputs, target in xor_data:
     print(f"  {inputs} -> {pred.data:.4f} (expected {target})")
 ```
 
-从随机预测到纠正XOR输出,完全由后延伸计算梯度和推重在正确的方向驱动.
+观察损失下降。从随机预测到正确的 XOR 输出,完全由反向传播计算梯度并将权重朝正确方向微调所驱动。
 
-### 阶段7:圆的分类
+### 步骤 7:圆形分类
 
-在第02课中,你手动调节了重量来进行圆形分类.
+在第 02 课中,你手工调整了权重来解决圆形分类。现在让网络自己学习它们。
 
 ```python
 random.seed(7)
@@ -390,13 +390,13 @@ for epoch in range(2000):
         print(f"Epoch {epoch:4d} | Loss: {total_loss_val:.4f} | Accuracy: {accuracy:.1f}%")
 ```
 
-我们使用在线SGD在这里 - 每个样本之后更新重量,而不是积累全批. 这更快地打破对称,避免了全损失景观上的sigmoid和.每一个时代混动数据,防止网络记忆顺序.
+这里我们使用在线 SGD——每个样本之后立即更新权重,而不是累积整个批次。这能更快地打破对称性,并避免在整个损失面上陷入 sigmoid 饱和。每个 epoch 打乱数据顺序可以防止网络记住顺序。
 
-网络可以自行发现圆形决策边界.这是反扩散的力量:你定义了架构,损失函数和数据.算法计算了重量.
+无需手工调参。网络自己发现了圆形决策边界。这就是反向传播的力量:你定义架构、损失函数和数据,算法自己算出权重。
 
-## 用它
+## 使用现成工具
 
-皮托尔奇在上面的所有内容都用几行来完成.核心想法是一样的 - - 自动基数在前进的过程中构建一个计算图表,然后追踪它向后计算梯度.
+PyTorch 用几行代码就能完成上面所有工作。核心思想完全相同——autograd 在前向传播时构建计算图,再反向遍历以计算梯度。
 
 ```python
 import torch
@@ -428,43 +428,43 @@ with torch.no_grad():
         print(f"  {X[i].tolist()} -> {pred.item():.4f} (expected {y[i].item()})")
 ```
 
-`loss.backward()`是你的`total_loss.backward()`现在,我们要去.`optimizer.step()`是你的手册吗?`p.data -= lr * p.grad`现在,我们要去.`optimizer.zero_grad()`是你的`net.zero_grad()`鱼处理GPU加速,混合精度,梯度检查,以及数百种层类型.但向后传递是同一链条规则适用于同一计算图.
+`loss.backward()` 就是你的 `total_loss.backward()`。`optimizer.step()` 就是你手写的 `p.data -= lr * p.grad`。`optimizer.zero_grad()` 就是你的 `net.zero_grad()`。同样的算法,工业级实现。PyTorch 处理 GPU 加速、混合精度、梯度检查点和数百种层类型。但反向传播依然是同样的链式法则应用于同样的计算图。
 
-训练运行前进,然后倒退,然后更新体重. 推理只运行前进的传输. 没有梯度,没有更新. 这种区别是重要的,因为推断是生产过程中发生的事情. 当你打电话给一个像Cloed或GPT这样的API时,你会推断--你的提示通过网络流向前, 没有变量. 了解背后支架是重要的,因为它塑造了网络中的每一个重量.
+训练运行前向传播,然后反向传播,再更新权重。推理只运行前向传播:没有梯度,没有更新。这个区别很重要,因为生产环境中运行的是推理。当你调用像 Claude 或 GPT 这样的 API 时,你运行的是推理——你的提示词前向流过网络,token 从另一端输出,没有任何权重改变。理解反向传播很重要,因为它塑造了那个网络中的每一个权重。
 
-## 运送它
+## 发布成果
 
-这一课产生了:
-- `outputs/prompt-gradient-debugger.md`-- 任何神经网络中可重复使用的提示来诊断梯度问题 (消失,爆炸,NaN)
+本课产出:
+- `outputs/prompt-gradient-debugger.md` —— 一个可复用的提示词,用于诊断任何神经网络中的梯度问题(消失、爆炸、NaN)
 
-## 运动
+## 练习
 
-1. 添加一个`__sub__`运行一个                                `__neg__`通过将 (a - b) ^2等简单表达式与手动计算进行比较来验证梯度是否正确.
+1. 为 Value 类添加一个 `__sub__` 方法(a - b = a + (-1 * b))。然后实现一个 `__neg__` 方法。对于像 (a - b)^2 这样的简单表达式,通过与手工计算比较来验证梯度是否正确。
 
-2. 添加一个`relu`换取隐藏层中的雷,再在XOR上训练.比较缩速度.你应该看到更快的训练--这预览课04
+2. 为 Value 添加一个 `relu` 方法(输出 max(0, x),导数在 x > 0 时为 1,否则为 0)。在隐藏层中用 relu 替换 sigmoid,再次在 XOR 上训练。比较收敛速度。你应该会看到训练更快——这是第 04 课的预告。
 
-3. 实施一个`__pow__`通过使用它来替换`mse_loss`具有适当的`(predicted - target) ** 2`检查梯度与原始实现一致.
+3. 在 Value 上实现一个 `__pow__` 方法以支持整数幂。用它将 `mse_loss` 替换为一个规范的 `(predicted - target) ** 2` 表达式。验证梯度与原实现一致。
 
-4. 加入梯剪切到训练循环: 调用后`backward()`通过缩,将所有梯度切断到 [-1, 1]. 训练更深的网络 (使用sigmoid) 进行4+层,并比较与没有切割的损失曲线.这是你第一次防范爆炸的梯度.
+4. 在训练循环中添加梯度裁剪:调用 `backward()` 之后,将所有梯度裁剪到 [-1, 1]。训练一个更深的网络(4 层及以上,使用 sigmoid),比较有无裁剪时的损失曲线。这是你对抗梯度爆炸的第一道防线。
 
-5. 建立一个视觉化:在XOR训练后,打印网络中的每个参数的梯度.确定哪个层具有最小梯度. 这表明了您在概念部分读到的消失梯度问题.
+5. 构建一个可视化:在 XOR 上训练后,打印网络中每个参数的梯度。找出哪一层的梯度最小。这演示了你在概念部分读到的梯度消失问题。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Backpropagation | "The network learns" | An algorithm that computes dL/dw for every weight by applying the chain rule backward through the computational graph |
-| Computational graph | "The network structure" | A directed acyclic graph where nodes are operations and edges carry values (forward) and gradients (backward) |
-| Chain rule | "Multiply the derivatives" | If y = f(g(x)), then dy/dx = f'(g(x)) * g'(x) -- the mathematical foundation of backpropagation |
-| Gradient | "The direction of steepest ascent" | The partial derivative of the loss with respect to a parameter -- tells you how to change that parameter to reduce the loss |
-| Vanishing gradient | "Deep networks don't learn" | Gradients shrink exponentially as they propagate through layers with saturating activations like sigmoid |
-| Forward pass | "Running the network" | Computing the output from inputs by sequentially applying each layer's operations and storing intermediate values |
-| Backward pass | "Computing gradients" | Traversing the computational graph in reverse, accumulating gradients at each node using the chain rule |
-| Learning rate | "How fast it learns" | A scalar that controls the step size when updating weights: w_new = w_old - lr * gradient |
-| Topological sort | "The right order" | An ordering of graph nodes where each node appears after all nodes it depends on -- ensures gradients are fully accumulated before propagation |
-| Autograd | "Automatic differentiation" | A system that builds computational graphs during forward computation and automatically computes gradients -- what PyTorch's engine does |
+| 反向传播 | "网络在学习" | 通过沿计算图反向应用链式法则,为每个权重计算 dL/dw 的算法 |
+| 计算图 | "网络的结构" | 一个有向无环图,节点是操作,边向前传递值、向后传递梯度 |
+| 链式法则 | "把导数乘起来" | 若 y = f(g(x)),则 dy/dx = f'(g(x)) * g'(x) —— 反向传播的数学基础 |
+| 梯度 | "最陡上升的方向" | 损失对某个参数的偏导数——告诉你如何改变该参数以降低损失 |
+| 梯度消失 | "深层网络学不会" | 梯度在穿过带有饱和激活函数(如 sigmoid)的层时指数级缩小 |
+| 前向传播 | "运行网络" | 通过依次应用每层的操作并存储中间值,从输入计算输出 |
+| 反向传播 | "计算梯度" | 逆向遍历计算图,使用链式法则在每个节点累加梯度 |
+| 学习率 | "它学得多快" | 控制权重更新步长的标量:w_new = w_old - lr * gradient |
+| 拓扑排序 | "正确的顺序" | 图节点的一种排序,每个节点出现在它依赖的所有节点之后——确保梯度在传播之前已被完整累加 |
+| Autograd | "自动微分" | 在前向计算时构建计算图并自动计算梯度的系统——即 PyTorch 引擎所做的事情 |
 
-## 进一步阅读
+## 延伸阅读
 
-- 鲁姆尔哈特,希顿和威廉姆斯,"通过反向传播错误学习表示" (1986) - - 论文使反向传播成为主流和解锁的多层网络培训
-- 蓝色1棕色,神经网络系列 (https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) -- 网络中回传和梯度流量的最佳视觉解释
+- Rumelhart, Hinton & Williams,"Learning representations by back-propagating errors"(1986)—— 让反向传播成为主流并解锁多层网络训练的论文
+- 3Blue1Brown,"Neural Networks" 系列(https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi)—— 关于反向传播和梯度在网络中流动的最佳可视化讲解

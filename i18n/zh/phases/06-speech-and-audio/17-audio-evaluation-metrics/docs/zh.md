@@ -1,123 +1,123 @@
-# 音频评估  WER,MOS,UTMOS,MMAU,FAD和开放的排名表
+# 音频评估 — WER、MOS、UTMOS、MMAU、FAD 与公开排行榜
 
-> 您不能运送您无法测量的东西.本课程列出了每个音频任务的2026个指标:ASR (WER, CER,RTFx),TTS (MOS,UTMOS,SECS,WER-on-ASR-round-trip),音频语言 (MMAU,LongAudioBench),音乐 (FAD,CLAP),音箱 (EER).
+> 你无法交付你无法衡量的东西。本课列出 2026 年每种音频任务的标准指标：ASR（WER、CER、RTFx）、TTS（MOS、UTMOS、SECS、WER-on-ASR-round-trip）、音频语言（MMAU、LongAudioBench）、音乐（FAD、CLAP）和说话人（EER）。外加用于对比的排行榜。
 
 **Type:** Learn
 **Languages:** Python
-**Prerequisites:** Phase 6 · 04, 06, 07, 09, 10; Phase 2 · 09 (Model Evaluation)
-**Time:** ~60 minutes
+**Prerequisites:** Phase 6 · 04, 06, 07, 09, 10；Phase 2 · 09（Model Evaluation）
+**Time:** 约 60 分钟
 
 ## 问题
 
-每个音频任务都有多个指标,每个指标都测量不同的轴.使用错误的指标是如何运送一个模型,看起来很好在仪表板上,而且生产非常糟糕.2026年经典列表:
+每种音频任务都有多个指标，每个衡量不同的维度。用错指标的后果是：模型在你的仪表板上看起来很棒，在生产环境中却表现糟糕。2026 年的标准清单：
 
-| Task | Primary | Secondary |
+| 任务 | 主要指标 | 次要指标 |
 |------|---------|-----------|
-| ASR | WER | CER · RTFx · first-token latency |
+| ASR | WER | CER · RTFx · 首 token 延迟 |
 | TTS | MOS / UTMOS | SECS · WER-on-ASR-round-trip · CER · TTFA |
-| Voice cloning | SECS (ECAPA cosine) | MOS · CER |
-| Speaker verification | EER | minDCF · FAR / FRR at operating point |
-| Diarization | DER | JER · speaker confusion |
-| Audio classification | top-1 · mAP | macro F1 · per-class recall |
-| Music generation | FAD | CLAP · listening panel MOS |
-| Audio language model | MMAU-Pro | LongAudioBench · AudioCaps FENSE |
-| Streaming S2S | latency P50/P95 | WER · MOS |
+| 语音克隆 | SECS（ECAPA 余弦） | MOS · CER |
+| 说话人验证 | EER | minDCF · 工作点处的 FAR / FRR |
+| 说话人分离 | DER | JER · 说话人混淆 |
+| 音频分类 | top-1 · mAP | macro F1 · 每类召回率 |
+| 音乐生成 | FAD | CLAP · 听测小组 MOS |
+| 音频语言模型 | MMAU-Pro | LongAudioBench · AudioCaps FENSE |
+| 流式 S2S | 延迟 P50/P95 | WER · MOS |
 
 ## 概念
 
 ![Audio evaluation matrix — metrics vs tasks vs 2026 leaderboards](../assets/eval-landscape.svg)
 
-### 标准标准
+### ASR 指标
 
-**WER (Word Error Rate).** `(S + D + I) / N`低文字,脱离分区,在得分之前正常化数字.`jiwer`或是OpenAI的`whisper_normalizer`,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+**WER（词错误率）。** `(S + D + I) / N`。评分前先小写化、去标点、归一化数字。使用 `jiwer` 或 OpenAI 的 `whisper_normalizer`。&lt; 5% = 达到朗读语音的人类水平。
 
-**CER (Character Error Rate).**语音语言 (曼德林,堪敦语) 使用的语音语言,语音分类不明确.
+**CER（字符错误率）。** 同样的公式，字符级别。用于声调语言（普通话、粤语）等词切分有歧义的场景。
 
-**RTFx (inverse real-time factor).**音频秒钟是每秒钟的处理. 较高更好. 子-TDT 达到3380×. 声-大-v3 达到30×.
+**RTFx（逆实时率）。** 每挂钟秒处理的音频秒数。越高越好。Parakeet-TDT 达到 3380×。Whisper-large-v3 约为 30×。
 
-**First-token latency.**视频传输到转录代币的墙钟.
+**首 token 延迟。** 从音频输入到第一个转写 token 的挂钟时间。对流式场景至关重要。Deepgram Nova-3：约 150 ms。
 
-### 标准标准
+### TTS 指标
 
-**MOS (Mean Opinion Score).**测量量1-5人,金标准,但速度慢. 每个样本收藏20多名听者,每个模型收藏100多个样本.
+**MOS（平均意见分）。** 1-5 分的人类评分。黄金标准但很慢。每个样本收集 20+ 名听测者，每个模型 100+ 个样本。
 
-**UTMOS (2022-2026).**已学习的MOS预测器.与标准基准的人类MOS相对应.F5-TTS:UTMOS3.95;基础真相:4.08.
+**UTMOS（2022-2026）。** 学习型 MOS 预测器。在标准基准上与人类 MOS 的相关性约 0.9。F5-TTS：UTMOS 3.95；真实值：4.08。
 
-**SECS (Speaker Encoder Cosine Similarity).**对于语音克隆.ECAPA 嵌入引用和克隆输出之间的共数. &gt; 0.75 =可识别的克隆.
+**SECS（说话人编码器余弦相似度）。** 用于语音克隆。参考音频与克隆输出之间 ECAPA 嵌入的余弦值。&gt; 0.75 = 可辨认的克隆。
 
-**WER-on-ASR-round-trip.**运行Whisper在TTS输出上,计算WER与输入文本.捕获可理解性回归. 2026 SOTA: &lt;2% CER.
+**WER-on-ASR-round-trip。** 用 Whisper 处理 TTS 输出，对照输入文本计算 WER。可发现可懂度回退。2026 SOTA：&lt; 2% CER。
 
-**TTFA (time-to-first-audio).**长时间: 长时间: 短时间: 短时间: 短时间:
+**TTFA（time-to-first-audio，首音频时间）。** 挂钟延迟。Kokoro-82M：约 100 ms；F5-TTS：约 1 s。
 
-### 语音克隆特定
+### 语音克隆专项
 
-**SECS + MOS + CER**克隆中高SECS但低MOS的意思是对音调,但不自然;相反的意思是自然的声音,但错误的扬声器.
+**SECS + MOS + CER** 作为三元组。克隆模型 SECS 高但 MOS 低意味着音色对但不自然；反之则意味着声音自然但说话人不对。
 
-### 扬声器验证
+### 说话人验证
 
-**EER (Equal Error Rate).**假接受率等于假拒绝率的门值.
+**EER（等错误率）。** 错误接受率等于错误拒绝率时的阈值。ECAPA 在 VoxCeleb1-O 上：0.87%。
 
-**minDCF (min Detection Cost).**在选择的运营点中,重量成本 (通常是FAR=0.01).
+**minDCF（最小检测代价）。** 在选定工作点（通常 FAR=0.01）的加权代价。比 EER 更贴近生产实际。
 
-### 腹化
+### 说话人分离
 
-**DER (Diarization Error Rate).** `(FA + Miss + Confusion) / total_speaker_time`错失语音+假报警语音+扬声器混,每一个是小部分. AMI会议:DER ~10-20%是现实的. pyannote 3.1 +精确-2广告: &lt;10%DER在记录良好音频.
+**DER（分离错误率）。** `(FA + Miss + Confusion) / total_speaker_time`。漏检语音 + 虚警语音 + 说话人混淆，各按比例计算。AMI 会议：DER 约 10-20% 是现实的。pyannote 3.1 + Precision-2 商用：在录制良好的音频上 &lt;10% DER。
 
-**JER (Jaccard Error Rate).**替代DER,强到短段偏见.
+**JER（Jaccard 错误率）。** DER 的替代方案，对短片段偏差更稳健。
 
 ### 音频分类
 
-多标签: **mAP (mean Average Precision)**音频组:BETs-iter3的 0.548mAP
+多标签：所有类别上的 **mAP（平均精度均值）**。AudioSet：BEATs-iter3 为 0.548 mAP。
 
-多类独家: **top-1, top-5 accuracy**语音指令v2: 99.0% 顶-1 (音频-MAE).
+多类别互斥：**top-1、top-5 准确率**。Speech Commands v2：99.0% top-1（Audio-MAE）。
 
-失衡:**macro F1**其他**per-class recall**报告每类 总准确性隐藏了哪些类失败.
+不平衡数据：**macro F1** + **每类召回率**。报告每类数据——聚合准确率会掩盖哪些类别失败。
 
-### 音乐产生的
+### 音乐生成
 
-**FAD (Fréchet Audio Distance).**视频集成直播器与生成音频之间的距离. MusicGen-small on MusicCaps:4.5. MusicLM:4.0.更低.
+**FAD（Fréchet Audio Distance）。** 真实音频与生成音频的 VGGish 嵌入分布之间的距离。MusicGen-small 在 MusicCaps 上：4.5。MusicLM：4.0。越低越好。
 
-**CLAP Score.**通过CLAP嵌入式的文字音频配列分数.
+**CLAP 分数。** 使用 CLAP 嵌入的文本-音频对齐分数。&gt; 0.3 = 对齐合理。
 
-**Listening panel MOS.**对于消费者级音乐,Suno v5 ELO 1293在TTS Arena (来自人类对配的偏好).
+**听测小组 MOS。** 对消费级音乐而言仍是最终标准。Suno v5 在 TTS Arena 上 ELO 1293（基于成对人类偏好）。
 
-### 音频语言基准指标
+### 音频语言基准
 
-**MMAU (Massive Multi-Audio Understanding).**十万个音频QA对.
+**MMAU（Massive Multi-Audio Understanding）。** 1 万个音频-问答对。
 
-**MMAU-Pro.**1,800个硬件,四类:语音/声音/音乐/多音频. 随机机会25%在四方向. 双子 2.5 专用总体约60%; 多音频约22%在所有车型上.
+**MMAU-Pro。** 1800 个困难条目，四个类别：语音 / 声音 / 音乐 / 多音频。四选一随机猜测 25%。Gemini 2.5 Pro 总体约 60%；多音频在所有模型上约 22%。
 
-**LongAudioBench.**音频Flamingo下一个比双子 2.5Pro更好.
+**LongAudioBench。** 带语义查询的数分钟长片段。Audio Flamingo Next 胜过 Gemini 2.5 Pro。
 
-**AudioCaps / Clotho.**标题标签:SPICE,CIDER,FENSE指标
+**AudioCaps / Clotho。** 字幕生成基准。SPICE、CIDEr、FENSE 指标。
 
-### 流通语音
+### 流式语音到语音
 
-**Latency P50 / P95 / P99.**截止用户语音到首次听到的响应.
+**延迟 P50 / P95 / P99。** 从用户语音结束到第一个可听响应的挂钟时间。Moshi：200 ms；GPT-4o Realtime：300 ms。
 
-**WER / MOS**在输出.
+对输出计算 **WER / MOS**。
 
-**Barge-in responsiveness.**时间从用户中断到助理.目标&lt;150ms.
+**插话响应性。** 从用户打断到助手静音的时间。目标 &lt; 150 ms。
 
-### 2026 年的排名榜
+### 2026 年排行榜
 
-| Leaderboard | Tracks | URL |
+| 排行榜 | 赛道 | URL |
 |------------|--------|-----|
-| Open ASR Leaderboard (HF) | English + multilingual + long-form | `huggingface.co/spaces/hf-audio/open_asr_leaderboard` |
-| TTS Arena (HF) | English TTS | `huggingface.co/spaces/TTS-AGI/TTS-Arena` |
-| Artificial Analysis Speech | TTS + STT, ELO from paired votes | `artificialanalysis.ai/speech` |
-| MMAU-Pro | LALM reasoning | `mmaubenchmark.github.io` |
-| SpeakerBench / VoxSRC | Speaker recognition | `voxsrc.github.io` |
-| MMAU music subset | Music LALM | (within MMAU) |
-| HEAR benchmark | Self-supervised audio | `hearbenchmark.com` |
+| Open ASR Leaderboard (HF) | 英语 + 多语言 + 长音频 | `huggingface.co/spaces/hf-audio/open_asr_leaderboard` |
+| TTS Arena (HF) | 英语 TTS | `huggingface.co/spaces/TTS-AGI/TTS-Arena` |
+| Artificial Analysis Speech | TTS + STT，基于成对投票的 ELO | `artificialanalysis.ai/speech` |
+| MMAU-Pro | LALM 推理 | `mmaubenchmark.github.io` |
+| SpeakerBench / VoxSRC | 说话人识别 | `voxsrc.github.io` |
+| MMAU 音乐子集 | 音乐 LALM | （在 MMAU 内） |
+| HEAR benchmark | 自监督音频 | `hearbenchmark.com` |
 
 ```figure
 sp-wer-align
 ```
 
-## 建立它
+## 动手实现
 
-### 步骤1:WER与正常化
+### 步骤 1：带归一化的 WER
 
 ```python
 from jiwer import wer, Compose, ToLowerCase, RemovePunctuation, Strip
@@ -132,7 +132,7 @@ score = wer(
 # ~0.17
 ```
 
-### 步骤2:TTS回路 WER
+### 步骤 2：TTS 往返 WER
 
 ```python
 def ttr_wer(tts_model, asr_model, texts):
@@ -144,7 +144,7 @@ def ttr_wer(tts_model, asr_model, texts):
     return sum(errors) / len(errors)
 ```
 
-### 步骤3:语音克隆的SECS
+### 步骤 3：语音克隆的 SECS
 
 ```python
 from speechbrain.inference.speaker import EncoderClassifier
@@ -155,7 +155,7 @@ emb_clone = sv.encode_batch(load_wav("cloned.wav"))
 secs = torch.nn.functional.cosine_similarity(emb_ref, emb_clone, dim=-1).item()
 ```
 
-### 步骤4:音乐生成的FAD
+### 步骤 4：音乐生成的 FAD
 
 ```python
 from frechet_audio_distance import FrechetAudioDistance
@@ -163,7 +163,7 @@ fad = FrechetAudioDistance()
 score = fad.get_fad_score("generated_folder/", "reference_folder/")
 ```
 
-### 步骤5:语音者验证的EER (与第6课相同的代码)
+### 步骤 5：说话人验证的 EER（与第 6 课相同代码）
 
 ```python
 def eer(same_scores, diff_scores):
@@ -177,52 +177,52 @@ def eer(same_scores, diff_scores):
     return best[1]
 ```
 
-## 用它
+## 使用
 
-通过每一个模型更新都运行的固定评估带来了每一个部署.
+为每次部署配备一个固定评估套件，在每次模型更新时运行。三条铁律：
 
-1. **Normalize before scoring.**简字,点击条,数字扩大,报告规则.
-2. **Report distributions, not averages.**对于延迟,P50/P95/P99 类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类别回忆,类型回忆,类型回忆,类型回忆,类型回忆,类型回忆,类型等等.
-3. **Run one canonical public benchmark.**即使您的生产数据不同, 报告在开放ASR/TTS Arena/MMAU让评论员比较果与果.
+1. **评分前先归一化。** 小写化、去标点、数字展开。报告所用的归一化规则。
+2. **报告分布，而非平均值。** 延迟用 P50/P95/P99。分类用每类召回率。MMAU 用每类别分数。
+3. **至少运行一个标准公开基准。** 即使你的生产数据不同，在 Open ASR / TTS Arena / MMAU 上报告能让评审者公平对比。
 
-## 陷
+## 常见陷阱
 
-- **UTMOS extrapolation.**训练于VCTK风格的清洁演讲; 评分噪音/克隆/情感音频差.
-- **MOS panel bias.**亚马逊机械土耳其员工的目标用户为20名.
-- **FAD depends on reference set.**较量模型中的参考分布相同.
-- **Aggregate WER.**总体上5%的WER可以隐藏30%的WER在强调的语音.
-- **Public benchmark saturation.**根据标准标准,大多数线路车型都接近天花板.
+- **UTMOS 外推。** 在 VCTK 风格的干净语音上训练；对嘈杂 / 克隆 / 情感化音频评分不佳。
+- **MOS 小组偏差。** 20 名 Amazon Mechanical Turk 工人 ≠ 20 名目标用户。利害大时应付费聘请领域听测小组。
+- **FAD 依赖参考集。** 跨模型比较时须使用相同的参考分布。
+- **聚合 WER。** 总体 5% 的 WER 可能掩盖带口音语音上 30% 的 WER。按人群切片报告。
+- **公开基准饱和。** 大多数前沿模型在标准基准上已接近天花板。构建一个反映你实际流量的内部留出集。
 
-## 运送它
+## 上线
 
-保存如`outputs/skill-audio-evaluator.md`选择任何音频模型发布的指标,基准和报告格式.
+保存为 `outputs/skill-audio-evaluator.md`。为任何音频模型发布选定指标、基准和报告格式。
 
-## 运动
+## 练习
 
-1. **Easy.**跑步`code/main.py`计算玩具输入的 WER / CER / EER / SECS / FAD-ish / MMAU-ish.
-2. **Medium.**建立一个TTS回路WER带.通过Whisper运行你的Kokoro或F5-TTS输出.计算WER超过50个提示.旗提示WER&gt; 10%.
-3. **Hard.**评分您的10课 LALM选择在MMAU-Pro语音+多音频子组 (每个组分为50个). 报告每类别的准确性,并与公布的数字进行比较.
+1. **简单。** 运行 `code/main.py`。在玩具输入上计算 WER / CER / EER / SECS / 类 FAD / 类 MMAU。
+2. **中等。** 构建一个 TTS 往返 WER 套件。将你的 Kokoro 或 F5-TTS 输出通过 Whisper 处理。对 50 个提示计算 WER。标记 WER &gt; 10% 的提示。
+3. **困难。** 在 MMAU-Pro 语音 + 多音频子集（各 50 个条目）上给你的第 10 课 LALM 选择评分。报告每类别准确率并与已发表数字比较。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|-----------------------|
-| WER | ASR score | `(S+D+I)/N` at word level after normalization. |
-| CER | Character WER | For tone languages or char-level systems. |
-| MOS | Human opinion | 1-5 rating; 20+ listeners × 100 samples. |
-| UTMOS | ML MOS predictor | Learned model; correlates ~0.9 with human MOS. |
-| SECS | Voice-clone similarity | ECAPA cosine between reference and clone. |
-| EER | Speaker verif score | Threshold where FAR = FRR. |
-| DER | Diarization score | (FA + Miss + Confusion) / total. |
-| FAD | Music-gen quality | Fréchet distance on VGGish embeddings. |
-| RTFx | Throughput | Audio seconds per wall-clock second. |
+| WER | ASR 分数 | 归一化后词级别的 `(S+D+I)/N`。 |
+| CER | 字符 WER | 用于声调语言或字符级系统。 |
+| MOS | 人类意见 | 1-5 评分；20+ 听测者 × 100 样本。 |
+| UTMOS | ML MOS 预测器 | 学习型模型；与人类 MOS 相关性约 0.9。 |
+| SECS | 语音克隆相似度 | 参考与克隆之间 ECAPA 余弦。 |
+| EER | 说话人验证分数 | FAR = FRR 时的阈值。 |
+| DER | 说话人分离分数 | (FA + Miss + Confusion) / 总量。 |
+| FAD | 音乐生成质量 | VGGish 嵌入上的 Fréchet 距离。 |
+| RTFx | 吞吐量 | 每挂钟秒处理的音频秒数。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [jiwer](https://github.com/jitsi/jiwer) WER/CER库,具有正常化工具.
-- [UTMOS (Saeki et al. 2022)](https://arxiv.org/abs/2204.02152)学习了MOS预测器.
-- [Fréchet Audio Distance (Kilgour et al. 2019)](https://arxiv.org/abs/1812.08466)音乐世代标准.
-- [Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard)2026年现场排名.
-- [TTS Arena](https://huggingface.co/spaces/TTS-AGI/TTS-Arena)人投票的TTS排名榜.
-- [MMAU-Pro benchmark](https://mmaubenchmark.github.io/) LALM推理排名榜
-- [HEAR benchmark](https://hearbenchmark.com/)音频SSL基准.
+- [jiwer](https://github.com/jitsi/jiwer) — 带归一化工具的 WER/CER 库。
+- [UTMOS (Saeki et al. 2022)](https://arxiv.org/abs/2204.02152) — 学习型 MOS 预测器。
+- [Fréchet Audio Distance (Kilgour et al. 2019)](https://arxiv.org/abs/1812.08466) — 音乐生成标准。
+- [Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard) — 2026 实时排名。
+- [TTS Arena](https://huggingface.co/spaces/TTS-AGI/TTS-Arena) — 人类投票 TTS 排行榜。
+- [MMAU-Pro benchmark](https://mmaubenchmark.github.io/) — LALM 推理排行榜。
+- [HEAR benchmark](https://hearbenchmark.com/) — 音频 SSL 基准。

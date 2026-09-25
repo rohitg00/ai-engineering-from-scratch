@@ -1,6 +1,6 @@
-# 标准:SWE-bench,GAIA,代理Bench
+# 基准测试：SWE-bench、GAIA、AgentBench
 
-> 据了解,在2026年,SWE-Bench测试了代码补丁.GAIA测试了一般主义工具使用.AgentBench测试了多环境推理.了解它们的组成,污染史,以及它们不测量什么.
+> 三个基准测试锚定了 2026 年的智能体评估。SWE-bench 测试代码修补。GAIA 测试通用工具使用。AgentBench 测试多环境推理。了解它们的构成、数据污染情况，以及它们不测什么。
 
 **Type:** Learn
 **Languages:** Python (stdlib)
@@ -9,129 +9,129 @@
 
 ## 学习目标
 
-- 命名SWE-bench的试验带 (FAIL_TO_PASS) 并解释为什么它在单元测试中被关闭.
-- 解释为什么SWE-bench Verified (OpenAI,500任务) 存在以及它删除的内容.
-- 描述GAIA的设计:对于人类来说简单,对人工智能来说难以做到;三个难度级别.
-- 给 AgentBench 的八个环境命名,
-- 概述SWE-bench+污染发现及其影响.
+- 说出 SWE-bench 的测试框架（FAIL_TO_PASS），并解释它为什么以单元测试作为门控。
+- 解释 SWE-bench Verified（OpenAI，500 个任务）为何存在，以及它移除了什么。
+- 描述 GAIA 的设计：对人类简单，对 AI 困难；三个难度级别。
+- 说出 AgentBench 的八个环境，以及开源 LLM 追赶的主要阻碍。
+- 总结 SWE-bench+ 的污染发现及其影响。
 
 ## 问题
 
-排名表告诉你哪个模型在一个基准上获胜.
+排行榜只告诉你哪个模型在某个基准上获胜。它们不会告诉你：
 
-- 基准指标是否受污染 (训练数据中的解决方案,测试泄漏).
-- 基准测量你关心什么 (代码与浏览与通用).
-- 评估人员是否强 (AST匹配,状态检查,人检查).
+- 该基准是否被污染（解法存在于训练数据中、测试泄露）。
+- 该基准是否衡量你关心的东西（代码 vs 浏览 vs 通用能力）。
+- 评估器是否稳健（AST 匹配、状态检查、人工审查）。
 
-在引用数字之前,了解三个定基准及其故障模式.
+在引用任何数字之前，先了解这三个锚定基准及其失效模式。
 
 ## 概念
 
-### 子 (Jimenez et al., ICLR 2024 口头)
+### SWE-bench（Jimenez 等，ICLR 2024 oral）
 
-- 通过12个受欢迎的Python存储器,
-- 代理得到:预设提交的代码基础+自然语言问题描述.
-- 代理生产:一个补丁.
-- 评估器:应用补丁,运行 repo 的测试套件.补丁必须在不打破 PASS_TO_PASS 测试的情况下翻转 FAIL_TO_PASS 测试 (以前失败,现在通过).
+- 来自 12 个流行 Python 仓库的 2,294 个真实 GitHub issue。
+- 智能体获得：修复前 commit 的代码库 + 自然语言 issue 描述。
+- 智能体产出：一个补丁。
+- 评估器：应用补丁，运行仓库的测试套件。补丁必须让 FAIL_TO_PASS 测试（之前失败，现在通过）翻转，且不破坏 PASS_TO_PASS 测试。
 
-通过强调代理-计算机接口 (文件编辑器命令,模型理解的搜索语法) 发布时,SWE-agent (Yang等,2024) 达到12.5%.
+SWE-agent（Yang 等，2024）发布时达到 12.5%，其关键在于强调智能体-计算机接口（文件编辑命令、模型能理解的搜索语法）。
 
-### 证实的SWE位
+### SWE-bench Verified
 
-开放AI,2024年8月. 人为主办的500项子集. 消除了模糊的问题,不可靠的测试和未明确的任务. "你的代理是否会发送真实的补丁?"的主要基准.
+OpenAI，2024 年 8 月。人工筛选的 500 任务子集。移除了模糊的 issue、不可靠的测试以及修复方式不清晰的任务。它是"你的智能体能否交付真实补丁？"的主要基准。
 
 ### 污染
 
-- 超过94%的SWE台问题都在大多数车型的截止之前.
-- **SWE-bench+**发现32.67%的成功补丁在问题文本中泄露了解决方案 (模型在描述中看到修正),31.08%由于测试覆盖率低而可疑.
-- 检测到的清洁,但没有污染.
+- SWE-bench 超过 94% 的 issue 早于大多数模型的训练截止日期。
+- **SWE-bench+** 发现 32.67% 的成功补丁存在 issue 文本中泄露解法的情况（模型在描述中看到了修复方法），另有 31.08% 因测试覆盖薄弱而可疑。
+- Verified 更干净，但并非无污染。
 
-实际含义:在SWE-bench上得分50%的模型可能在SWE-bench上得分35%.
+实践启示：一个在 SWE-bench 上得 50% 的模型在 SWE-bench+ 上可能只有 35%。如果你声称 SWE-bench 性能，请同时报告两者。
 
-### 其他国家:
+### GAIA（Mialon 等，2023 年 11 月）
 
-- 466个问题;在 huggingface.co/gaia-benchmark上保留了300个问题.
-- 设计理念:"对人类 (92%) 构想简单,但对人工智能 (GPT-4 附加插件:15%) 难以理解.
-- 测试推理,多种方式,网络,工具使用.
-- 难度级别为三级;第三级要求在各种模式中使用长长的工具链.
+- 466 个问题；300 个保留用于 huggingface.co/gaia-benchmark 的私密排行榜。
+- 设计理念："对人类概念上简单（92%），但对 AI 困难（带插件的 GPT-4：15%）。"
+- 测试推理、多模态、网页、工具使用。
+- 三个难度级别；Level 3 需要跨模态的长工具链。
 
-对于一般性能力来说, GAIA是指测量"一般性能力".
+GAIA 是你用来衡量"通用能力"的基准。不要与代码专用基准混淆。
 
-### 博公司 (Liu et al., ICLR 2024)
+### AgentBench（Liu 等，ICLR 2024）
 
-- 通过代码 (Bash, DB, KG),游戏 (Alfworld, LTP),网络 (WebShop,Mind2Web) 和开放式生成的环境.
-- 几轮,每分别的4K-13K转.
-- 基本发现:长期推理,决策和指导是OSS LLM追赶商业的阻碍者.
+- 8 个环境，涵盖代码（Bash、DB、KG）、游戏（Alfworld、LTP）、网页（WebShop、Mind2Web）和开放式生成。
+- 多轮，每个 split 约 4k-13k 轮。
+- 主要发现：长期推理、决策制定和指令遵循是开源 LLM 追赶商业模型的主要阻碍。
 
-### 这些都不衡量
+### 这些基准不测什么
 
-- 实际运营成本 (代币,墙钟).
-- 在不利条件下安全行为.
-- 您的域名表现 (使用您自己的评价,30课).
-- 尾部故障 (标准平均值;生产经营者关注最差的1%).
+- 真实世界的运营成本（token、耗时）。
+- 对抗条件下的安全行为。
+- 在你的领域上的表现（使用你自己的评估，见 Lesson 30）。
+- 尾部失败（基准取平均值；生产运维关心最差的 1%）。
 
-### 基准分析失败的地方
+### 基准测试容易出错的地方
 
-- **Single-number fixation.**利率50%比P50/P75/P95成本+阶段分布低.
-- **Contaminated claims.**报告SWE-bench而不提到 Verified或SWE-bench+是误导性的.
-- **Benchmark-as-development-target.**优化基准与生产有用性不同.
+- **单一数字执念。** SWE-bench 50% 告诉你的信息少于 P50/P75/P95 成本 + 步骤分布。
+- **被污染的声明。** 报告 SWE-bench 而不提 Verified 或 SWE-bench+ 是误导性的。
+- **以基准为开发目标。** 针对基准优化会偏离生产实用性。
 
 ```figure
 ae-swebench-gate
 ```
 
-## 建立它
+## 动手实现
 
-`code/main.py`装备一个玩具SWE子式带:
+`code/main.py` 实现了一个玩具级的类 SWE-bench 框架：
 
-- 合成 bug-fix任务 (3项任务).
-- 一个编写的"代理"提出补丁.
-- 检查 FAIL_TO_PASS (bug已修复) 和 PASS_TO_PASS (没有任何故障) 的测试运行器.
-- 基于问题分解深度的GAIA类型难度分类器.
+- 合成的 bug 修复任务（3 个任务）。
+- 一个提出补丁的脚本化"智能体"。
+- 一个测试运行器，检查 FAIL_TO_PASS（bug 已修复）和 PASS_TO_PASS（没有破坏任何东西）。
+- 一个基于问题分解深度的 GAIA 风格难度分类器。
 
-运行它:
+运行它：
 
 ```
 python3 code/main.py
 ```
 
-输出显示每个任务+每个难度的分辨率,使评估者规则具体化.
+输出显示每个任务和每个难度的解决率，并使评估器规则具体化。
 
-## 用它
+## 使用场景
 
-- **SWE-bench Verified**对于代码代理,总是报告验证的成绩.
-- **GAIA**对于一般主义代理人,使用私人排名板分.
-- **AgentBench**对于多环境比较.
-- **Custom evals**对于产品的实际形状.
+- **SWE-bench Verified** 用于代码智能体。始终报告 Verified 分数。
+- **GAIA** 用于通用智能体。使用私密排行榜 split。
+- **AgentBench** 用于多环境比较。
+- **自定义评估**（Lesson 30）用于你产品的实际形态。
 
-## 运送它
+## 上线实践
 
-`outputs/skill-benchmark-harness.md`构建任何具有 FAIL_TO_PASS / PASS_TO_PASS 盖特的代码基础任务对象的SWE-bench式带.
+`outputs/skill-benchmark-harness.md` 为任意代码库-任务对构建带 FAIL_TO_PASS / PASS_TO_PASS 门控的 SWE-bench 风格框架。
 
-## 运动
+## 练习
 
-1. 输入玩具带以运行一个真正的 repo (选择一个你的).写3个 FAIL_TO_PASS测试已知 bug.
-2. 在你的3个任务中,每分辨率有多少代理步骤?
-3. 阅读SWE-bench+论文. 执行解决方案泄漏检查 (图案与问题文本相匹配).
-4. 查看一个GPT-4类的代理会做什么.
-5. 读取 AgentBench 的环境分解. 哪个环境反映你的产品表面?
+1. 将玩具框架移植到一个真实仓库上运行（选你自己的一个）。为已知 bug 编写 3 个 FAIL_TO_PASS 测试。
+2. 添加一个步骤数指标。在你的 3 个任务上，每次解决需要多少智能体步骤？
+3. 阅读 SWE-bench+ 论文。实现一个解法泄露检查（将 issue 文本与 diff 进行模式匹配）。
+4. 从公开 split 下载一个 GAIA 问题。追踪一个 GPT-4 级别的智能体会怎么做。它需要哪些工具？
+5. 阅读 AgentBench 的按环境分解。哪个环境最接近你的产品形态？在那里"SOTA"是什么样的？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|------------------------|
-| SWE-bench | "Code agent benchmark" | 2,294 GitHub issues; patch must flip FAIL_TO_PASS tests |
-| SWE-bench Verified | "Clean SWE-bench" | 500 human-curated tasks, OpenAI |
-| FAIL_TO_PASS | "Fix gate" | Tests previously failing that must pass after the patch |
-| PASS_TO_PASS | "No-regression gate" | Tests that were passing and must still pass |
-| GAIA | "Generalist benchmark" | 466 human-easy / AI-hard multi-tool questions |
-| AgentBench | "Multi-env benchmark" | 8 environments; long-horizon multi-turn |
-| Contamination | "Training-set leak" | Benchmark tasks present in model training |
-| SWE-bench+ | "Contamination audit" | 32.67% solution leakage found in successful SWE-bench patches |
+| SWE-bench | "代码智能体基准" | 2,294 个 GitHub issue；补丁必须让 FAIL_TO_PASS 测试翻转 |
+| SWE-bench Verified | "干净的 SWE-bench" | 500 个人工筛选的任务，OpenAI |
+| FAIL_TO_PASS | "修复门控" | 之前失败、补丁后必须通过的测试 |
+| PASS_TO_PASS | "无回归门控" | 之前通过、补丁后必须仍然通过的测试 |
+| GAIA | "通用基准" | 466 个人类觉得容易 / AI 觉得难的多工具问题 |
+| AgentBench | "多环境基准" | 8 个环境；长程多轮 |
+| 污染 | "训练集泄露" | 基准任务出现在模型训练数据中 |
+| SWE-bench+ | "污染审计" | 在成功的 SWE-bench 补丁中发现 32.67% 的解法泄露 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Jimenez et al., SWE-bench (arXiv:2310.06770)](https://arxiv.org/abs/2310.06770)原始基准
-- [OpenAI, SWE-bench Verified](https://openai.com/index/introducing-swe-bench-verified/) 选定的子集
-- [Mialon et al., GAIA (arXiv:2311.12983)](https://arxiv.org/abs/2311.12983)一般性基准
-- [Liu et al., AgentBench (arXiv:2308.03688)](https://arxiv.org/abs/2308.03688)多环境套件
+- [Jimenez 等，SWE-bench (arXiv:2310.06770)](https://arxiv.org/abs/2310.06770) — 原始基准
+- [OpenAI，SWE-bench Verified](https://openai.com/index/introducing-swe-bench-verified/) — 筛选后的子集
+- [Mialon 等，GAIA (arXiv:2311.12983)](https://arxiv.org/abs/2311.12983) — 通用基准
+- [Liu 等，AgentBench (arXiv:2308.03688)](https://arxiv.org/abs/2308.03688) — 多环境套件

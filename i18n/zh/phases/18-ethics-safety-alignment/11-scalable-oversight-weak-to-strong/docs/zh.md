@@ -1,114 +1,114 @@
-# 扩展性监督和弱到强的普遍化
+# 可扩展监督与弱到强泛化
 
-> 其他类型 (OpenAI超级调整,"弱到强的通用化",2023) 提出了超级调整问题的代理:通过使用较弱模型生产的标签来细节调整强大的模型. 如果强大的模型从不完美的弱监督中得到正确的概括, 可扩展的监督和W2SG是互补的. 扩展式监督 (辩论,回复性奖励模型,任务分解) 增加监督者的有效能力,以便它能够跟上监督下的模型.  W2SG确保强大的模型正确的概括, 辩论帮助 W2SG (arXiv:2501.13124,2025年1月) 结合了它们.
+> Burns 等人（OpenAI Superalignment，《Weak-to-Strong Generalization》，2023）为超对齐问题提出了一个代理方法：使用由较弱模型产生的标签对一个强模型进行微调。如果强模型能够从不完美的弱监督中正确泛化，那么当前人类尺度的对齐方法或许可以扩展到超越人类的系统。可扩展监督与 W2SG 是互补的。可扩展监督（辩论、递归奖励建模、任务分解）提升了监督者的有效能力，使其能够跟上被监督模型的发展。W2SG 则确保强模型从监督者提供的任何不完美监督中正确泛化。Debate Helps W2SG（arXiv:2501.13124，2025 年 1 月）将两者结合了起来。
 
 **Type:** Learn
-**Languages:** Python (stdlib, W2SG gap simulator)
-**Prerequisites:** Phase 18 · 01 (instruction-following), Phase 18 · 10 (AI Control), Phase 09 (RL foundations)
-**Time:** ~60 minutes
+**Languages:** Python（标准库，W2SG 差距模拟器）
+**Prerequisites:** Phase 18 · 01（指令遵循）、Phase 18 · 10（AI Control）、Phase 09（RL 基础）
+**Time:** 约 60 分钟
 
 ## 学习目标
 
-- 定义可扩展的监督和弱到强的概括,并解释它们是如何互补的.
-- 描述Burn et al. 2023实验设置:使用GPT-2的标签进行细调GPT-4.
-- 解释恢复的绩效差距 (PGR) 指标以及它衡量的情况.
-- 说明三个主要可扩展监督机制 (辩论,递归奖励建模,任务分解) 和每个强度.
+- 定义可扩展监督与弱到强泛化，并解释它们为何互补。
+- 描述 Burns 等人 2023 年的实验设置：使用来自 GPT-2 的标签微调 GPT-4。
+- 解释性能差距恢复率（PGR）指标及其衡量内容。
+- 陈述三种主要的可扩展监督机制（辩论、递归奖励建模、任务分解）以及各自的一个优势。
 
 ## 问题
 
-根据"新型模型"的第18阶段,监督者可以评估模型的行为.当模型超人时,监督者是弱点链.
+Phase 18 中迄今的每一种对齐技术都假设监督者能够评估模型的行为。当模型超越人类时，监督者就成了薄弱环节。超对齐的问题是：一个较弱的监督者能否可靠地训练出一个更强的、已对齐的模型？
 
-伯恩斯等人将这缩小到一个运行实验性设置:监督强与弱,测量强模型的能力在弱监督中存活了多少. 这不是超级调整的解决方案.
+Burns 等人将其简化为一个可操作化的实证设置：用弱监督强，衡量强模型有多少能力在弱监督下得以保留。这并不是超对齐问题的解决方案——它是一个让我们能够衡量进展的代理方法。
 
 ## 概念
 
-### 布尔恩斯等组织
+### W2SG：Burns 等人的设置
 
-- 弱型:GPT-2类.
-- 强大的模型:GPT-4类.
-- 目标:任务的GPT-4强.
+- 弱模型：GPT-4 级别之前的 GPT-2 级别。
+- 强模型：GPT-4 级别。
+- 目标：强模型（GPT-4）在该任务上的上限。
 
-程序:
-1. 让我们得到一个任务的零射击预测.
-2. 根据弱标签的数据,细节调整强模型.
-3. 测量强度的细调模型的准确性.
+流程：
+1. 获取弱模型在某任务上的零样本预测。
+2. 在弱标签数据上微调强模型。
+3. 衡量微调后强模型的准确率。
 
-基本线:模型的精度较低,强型模型的监督上限在黄金标签上.
+基线：弱模型自身的准确率，以及强模型在金标准标签上的监督上限。
 
-差距指标: 绩效差距恢复 (PGR) = (精确调整 - 弱) / (天花板 - 弱).
+差距指标：性能差距恢复率（PGR）=（微调后 - 弱）/（上限 - 弱）。PGR 为 1.0 意味着弱监督完全弥合了差距；PGR 为 0 意味着弱监督没有帮助。
 
-### 伯恩斯等人经验性发现
+### Burns 等人的实证发现
 
-在NLP,棋牌拼图和奖励模型任务中,PGR一直是积极的:强大的模型将其扩展到弱的监督者的错误之外.任务特定的PGR从20%到80%左右.强大的模型"理解"预期任务从不完美的标签中,以其预先训练的先驱来补充.
+在 NLP、国际象棋谜题和奖励建模任务中，PGR 始终为正：强模型的泛化超越了弱监督者的错误。各任务的 PGR 在约 20% 到 80% 之间变化。强模型能够从“不完美的标签中理解”预期任务，并用其预训练的先验知识进行填补。
 
-限制 Burns等人注意:
-- 弱型模型是对齐的,一个真正超人模型可能是由人类对齐的,但有更大的能力差距.
-- 强大的模型的概括可能更多关于任务前期而不是恢复基础真相意图.
-- 实际问题是产生强大的模型的潜伏知识;
+Burns 等人指出的局限性：
+- 这里的弱到强差距是能力差距，而非对齐差距。弱模型本身是对齐的；而一个真正超越人类的模型可能由人类进行对齐，但能力差距要大得多。
+- 强模型的泛化可能更多源于任务先验，而非对真实意图的恢复。
+- 引出强模型的潜在知识才是真正的问题所在；PGR 衡量的是一种特定的操作化方式。
 
-### 可扩展的监督:三个机制
+### 可扩展监督：三种机制
 
-- **Debate (Irving et al. 2018).**两种例子U争论相反的方面;弱的法官决定.假设:找到一个令人信服的真实答案比找到一个令人信服的错误答案更容易.最近的2024-2025研究 (Khan等人,Michael等人) 显示辩论有时有助,有时没有,是否有助取决于任务结构.
-- **Recursive Reward Modeling (Leike et al. 2018).**监督员的有效能力随着模型的增长而增长.
-- **Task Decomposition (Christiano, Shlegeris, Amodei 2018).**分解一个艰难的任务成人类可以检查的子任务,反复.
+- **辩论（Irving 等人 2018）。** U 的两个实例分别论证对立的立场；由弱裁判进行裁决。其假设是：找到一个有说服力的真实答案，比找到一个有说服力的虚假答案更容易。最近的 2024-2025 年研究（Khan 等人、Michael 等人）表明，辩论有时有效，有时无效，且是否有效取决于任务结构。
+- **递归奖励建模（Leike 等人 2018）。** U 帮助人类为 U+1 训练奖励模型。监督者的有效能力随着模型的能力而增长。
+- **任务分解（Christiano, Shlegeris, Amodei 2018）。** 将困难任务递归分解为人类可以检查的子任务。假设任务具有可分解性。
 
-每个机制都假设有关任务结构或中间组件的配合.
+每种机制都对任务的结构或中间组件的对齐情况做出了某种假设。
 
-### 为什么可扩展监督和W2SG是互补的
+### 为什么可扩展监督与 W2SG 是互补的
 
-监督可以扩展,使监督员的信号质量提高.
-监督者可以提供任何不完美的信号.
+可扩展监督提高了监督者所提供信号的有效质量。
+W2SG 则从监督者能够提供的任何不完美信号中弥合差距。
 
-辩论帮助弱到强的概括 (arXiv:2501.13124) 结合了它们:辩论协议提供了更好的弱标签,强的模型则基于这些标签进行训练.
+Lang 等人 —— Debate Helps Weak-to-Strong Generalization（arXiv:2501.13124）将两者结合：辩论协议提供了更好的弱标签，强模型则在这些标签上进行训练。报告显示在 NLP 任务上 PGR 有所提升。
 
-### 组织戏剧
+### 组织风波
 
-简莱克离开安тропо基后,OpenAI的超级调整团队于2024年5月解散.议程 (可扩展监督,W2SG,自动调整研究) 在安тропо基和学术实验室继续进行.
+OpenAI 的 Superalignment 团队在 Jan Leike 于 2024 年 5 月离职加入 Anthropic 后解散。该研究议程（可扩展监督、W2SG、自动化对齐研究）在 Anthropic 以及各学术实验室得以延续 —— MATS（Lesson 28）、Redwood（Lesson 10）、Apollo（Lesson 8）、METR（Lesson 28）。组织架构发生了变化；但研究问题并未改变。
 
-### 在这个阶段的第18阶段
+### 在 Phase 18 中的定位
 
-课程6-10描述了威胁和防御范式,假设U是不可信的.课程11是攻击范式:让监督员足够强大,以验证U的配合.课程12-16然后转向对抗评估的实际工具.
+Lesson 6-10 描述了在假设 U 不可信的情况下的威胁与防御范式。Lesson 11 则是进攻范式：让监督者变得足够强大，以验证 U 的对齐情况。Lesson 12-16 则转向对抗性评估的实用工具。
 
 ```figure
 scalable-oversight
 ```
 
-## 用它
+## 动手实践
 
-`code/main.py`模拟 W2SG 细调在合成任务上. 弱标签器具有70%的准确性,结构错误;强型标签上有95%的天花板. 强型标签上进行细调,测量PGR,并将强度与黄金和弱型标签进行比较.
+`code/main.py` 在一个合成任务上模拟 W2SG 微调。弱标注器具有 70% 的准确率且存在结构化错误；强模型在金标准标签上具有 95% 的上限。你在弱标签上微调强模型，衡量 PGR，并将其与强模型在金标准上的表现以及弱模型单独的表现进行对比。
 
-## 运送它
+## 部署
 
-这一课产生了`outputs/skill-w2sg-pgr.md`鉴于监督设置描述,它确定了监督者弱点,强大的模型,监督质量,并计算 (或要求) PGR.它标记了该索赔是否"弱点可以监督强大"或"弱点+监督机制可以监督强大".
+本课程将生成 `outputs/skill-w2sg-pgr.md`。给定一个监督设置的描述，它会识别出弱监督者、强模型、监督质量，并计算（或请求）PGR。它会标记该主张是“弱模型能够监督强模型”，还是“弱模型 + 监督机制能够监督强模型”。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`报告PGR为弱_精度 = 0.60,0.70,0.80. 解释PGR曲线的形状.
+1. 运行 `code/main.py`。报告弱准确率（weak_accuracy）分别为 0.60、0.70、0.80 时的 PGR。解释 PGR 曲线的形状。
 
-2. 修改弱标签以结构错误 (例如,在特定输入类中总是错误). PGR 增长,减少或保持相同吗?解释.
+2. 修改弱标注器，使其具有结构化错误（例如，在某一特定输入类别上总是出错）。PGR 是会增加、减少还是保持不变？请解释。
 
-3. 阅读Burns等. 2023 第4.3节 (NLP任务). 复制"信心辅助损失"直觉:当强大的模型比弱的标签更自信,谁赢得?
+3. 阅读 Burns 等人 2023 年论文的 4.3 节（NLP 任务）。复现“置信度辅助损失”的直觉：当强模型比弱标签更自信时，哪一方会胜出？
 
-4. 设计一个可扩展的监督协议,将辩论和任务分解结合到一个软件工程任务. 命名每个组件的一个故障模式,并解释组合如何解决或未解决每个组件.
+4. 设计一个结合辩论与任务分解的可扩展监督协议，用于解决软件工程任务。指出每个组件的一个失败模式，并解释这种组合如何解决或未能解决这些失败模式。
 
-5. 解释"弱到强的概括是超级配合的可行的道路"的说法.
+5. 阐述什么样的情况会证伪“弱到强泛化是实现超对齐的可行路径”这一主张。请具体说明你需要观察到的实证特征。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|------------------------|
-| Scalable oversight | "making the overseer stronger" | Mechanisms that increase an overseer's ability to evaluate a more-capable model |
-| W2SG | "weak supervises strong" | Fine-tuning a strong model on weak labels and measuring the capability recovered |
-| PGR | "performance gap recovered" | (fine-tuned - weak) / (ceiling - weak); 1.0 = fully closed, 0 = no help |
-| Debate | "two U instances argue" | Scalable oversight mechanism where a weak judge picks between two U defenders |
-| RRM | "recursive reward modeling" | U helps train the reward model for U+1; overseer capability tracks U |
-| Task decomposition | "sub-tasks the human checks" | Break a hard task into sub-tasks the human can verify, recursively |
-| Superalignment | "aligning superhuman AI" | The research agenda concerned with aligning models the human cannot directly evaluate |
+| 可扩展监督 | “让监督者变得更强大” | 提升监督者评估更强模型能力的机制 |
+| W2SG | “弱模型监督强模型” | 在弱标签上微调强模型，并衡量恢复的能力 |
+| PGR | “性能差距恢复率” | （微调后 - 弱）/（上限 - 弱）；1.0 = 完全弥合，0 = 无帮助 |
+| 辩论 | “两个 U 实例进行辩论” | 一种可扩展监督机制，由弱裁判在两个 U 辩护者之间做出选择 |
+| RRM | “递归奖励建模” | U 帮助为 U+1 训练奖励模型；监督者的能力追踪 U |
+| 任务分解 | “人类检查子任务” | 递归地将困难任务分解为人类可以验证的子任务 |
+| 超对齐 | “对齐超越人类的 AI” | 关注对齐人类无法直接评估的模型的研究议程 |
 
-## 进一步阅读
+## 扩展阅读
 
-- [Burns et al. — Weak-to-Strong Generalization (OpenAI 2023)](https://openai.com/index/weak-to-strong-generalization/) W2SG 文件
-- [Irving, Christiano, Amodei — AI safety via debate (arXiv:1805.00899)](https://arxiv.org/abs/1805.00899)辩论机制
-- [Leike et al. — Scalable agent alignment via reward modeling (arXiv:1811.07871)](https://arxiv.org/abs/1811.07871)复发性奖励建模
-- [Khan et al. — Debating with More Persuasive LLMs Leads to More Truthful Answers (arXiv:2402.06782)](https://arxiv.org/abs/2402.06782) 2024 经验性研究与更强大的辩论者
-- [Lang et al. — Debate Helps Weak-to-Strong Generalization (arXiv:2501.13124)](https://arxiv.org/abs/2501.13124) 2025 辩论组合+W2SG
+- [Burns 等人 —— Weak-to-Strong Generalization（OpenAI 2023）](https://openai.com/index/weak-to-strong-generalization/) —— W2SG 论文
+- [Irving, Christiano, Amodei —— AI safety via debate（arXiv:1805.00899）](https://arxiv.org/abs/1805.00899) —— 辩论机制
+- [Leike 等人 —— Scalable agent alignment via reward modeling（arXiv:1811.07871）](https://arxiv.org/abs/1811.07871) —— 递归奖励建模
+- [Khan 等人 —— Debating with More Persuasive LLMs Leads to More Truthful Answers（arXiv:2402.06782）](https://arxiv.org/abs/2402.06782) —— 2024 年关于使用更强辩手进行辩论的实证研究
+- [Lang 等人 —— Debate Helps Weak-to-Strong Generalization（arXiv:2501.13124）](https://arxiv.org/abs/2501.13124) —— 2025 年辩论与 W2SG 的结合

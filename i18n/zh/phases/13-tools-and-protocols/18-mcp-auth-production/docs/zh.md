@@ -1,56 +1,56 @@
-# 发行商的注册和代币
+# 生产环境中的 MCP 认证：基于签发者的注册与令牌绑定
 
-> 第16课构建了OAuth 2.1状态机. 这一课加强了MCP 2026-07-28的生产界限:客户端 ID 转化数据文件首先,仅仅用于兼容性,授权-响应发行商验证,发行商密钥的客户身份证,JWKS更新和每个无状态请求的观众印代币.
-其他
-> **Spec note (2026-07-28):**动态客户端注册被废除以支持客户端ID元数据文件.DCR仍然是一个兼容性机制.当它被使用时,客户端声明正确的`application_type`客户验证现有RFC 9207`iss`授权服务器发行商之间永远不会重复使用凭证.
+> 第 16 课构建了 OAuth 2.1 状态机。本课程针对 MCP 2026-07-28 加固其生产边界：优先使用 Client ID Metadata Documents，已弃用的动态注册仅作兼容之用，授权响应中的签发者校验，按签发者键控的客户端凭据，JWKS 刷新，以及在每个无状态请求上绑定受众的令牌。
+>
+> **规范说明（2026-07-28）：** 动态客户端注册（Dynamic Client Registration）已被弃用，推荐使用 Client ID Metadata Documents。DCR 仍作为一种兼容机制保留。使用它时，客户端会声明正确的 `application_type`。客户端会校验存在的 RFC 9207 `iss` 值，且绝不在不同授权服务器签发者之间复用凭据。
 
-**Type:** Build
-**Languages:** Python (stdlib)
-**Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
-**Time:** ~90 minutes
+**类型：** Build
+**语言：** Python (标准库)
+**前置课程：** 阶段 13 · 16 (OAuth 2.1 状态机), 阶段 13 · 17 (网关)
+**耗时：** 约 90 分钟
 
 ## 学习目标
 
-- 通过RFC 8414元数据发现授权服务器,并验证合同.
-- 查看客户ID元数据文件,并将废旧的DCR作为回归.
-- 验证RFC 9207 `iss`发行者加资源的关键代币.
-- 按时间表存储和更新JWKS键,以便签名验证存活关键翻转.
-- 通过RFC 8707资源指标将代币粘贴到单个MCP资源上,并拒绝混副本重复使用.
-- 选择JWT验证或代币内检查,定义撤销新鲜度,并在身份依赖不可用时安全失败.
-- 分开授权服务器,资源服务器和客户端,
-- 审核授权服务器与部署检查清单,拒绝不安全的注册或代币重复使用.
+- 通过 RFC 8414 元数据发现授权服务器并校验其契约。
+- 通过 Client ID Metadata Document 注册，并将已弃用的 DCR 隔离为后备方案。
+- 校验 RFC 9207 `iss`，按授权服务器签发者键控注册，并按签发者加资源键控资源绑定令牌。
+- 定时缓存并刷新 JWKS 密钥，使签名校验在密钥轮换期间依然有效。
+- 使用 RFC 8707 资源指示符将令牌绑定到单一 MCP 资源，并拒绝“混淆代理人”式的复用。
+- 在 JWT 校验与令牌内省（introspection）之间做出选择，定义吊销时效性，并在身份依赖不可用时安全失败。
+- 将授权服务器、资源服务器与客户端分离，使每个组件仅执行其自身的检查。
+- 依据部署清单审计授权服务器，拒绝不安全的注册或令牌复用。
 
-## 问题
+## 问题所在
 
-课16模拟器在内存中运行OAuth 2.1. 制作中有三个操作缺口,仅存储器模拟器无法看到.
+第 16 课的模拟器在内存中运行 OAuth 2.1。生产环境存在三个仅内存模拟器看不到的运维缺口。
 
-实际的组织可能运行数百个MCP服务器和数千个MCP客户端. 2026-07-28的修订更喜欢一个**Client ID Metadata Document**客户端使用一个HTTPS URL,其路径是其识别符,授权服务器将元数据拉开.RFC 7591动态注册仅仅作为一个过时的兼容路径.当DCR是不可避免的,请求声明正确的`application_type`客户端存储在授权服务器发行商下的注册表和在授权服务器下的访问代币.`(issuer, resource)`换发行商意味着新注册,而不同的资源意味着一个单独的观众的代币.
+第一个缺口是注册与凭据隔离。一个真实的组织可能运行数百个 MCP 服务器和数千个 MCP 客户端。2026-07-28 修订版倾向于使用 **Client ID Metadata Document**：客户端使用一个带有其控制路径的 HTTPS URL 作为标识符，由授权服务器拉取元数据。RFC 7591 动态注册仅作为已弃用的兼容路径保留。当 DCR 无法避免时，请求会声明正确的 `application_type`。客户端将注册信息存储在授权服务器签发者之下，将访问令牌存储在 `(issuer, resource)` 对之下。签发者变更意味着需要新的注册，不同的资源意味着需要单独绑定受众的令牌。
 
-另一个缺口是关键旋转.  JWT验证取决于授权服务器的签字密钥, 作为 JSON Web Key Set (JWKS) 发布. 授权服务器按时间表旋转这些 (通常每小时,有时在事件响应下更快). 通过MCP服务器,一个接收JWKS的启动,直到转换窗口, 产品线程将 JWKS 作为缓存值,更新工作将在前键到期之前覆盖缓存,加上在一个新键签署的代币到达时,缓存错误的缓存.
+第二个缺口是密钥轮换。JWT 校验依赖于授权服务器以 JSON Web Key Set（JWKS）形式发布的签名密钥。授权服务器按计划轮换这些密钥（通常每小时一次，在事件响应期间有时更快）。启动时只获取一次 JWKS 的 MCP 服务器在轮换窗口之前都能正常校验——之后每个请求都会失败，直到重启。生产环境将 JWKS 作为缓存值，并配合一个在旧密钥过期前覆盖缓存的刷新任务，外加缓存未命中时的后备获取，以处理带有比缓存更新的密钥签名的令牌到达的情况。
 
-课程16引入了RFC 8707资源指标.在生产中,该指标成为每一个请求的硬要求检查.`token.aud`根据其自己的规范资源URL,并拒绝与HTTP401的不匹配.这是唯一的防御,以防止上游MCP服务器 (或持有一个服务器的恶意客户端) 将该代币反射到同一信任网中的另一台服务器中.
+第三个缺口是受众绑定。第 16 课介绍了 RFC 8707 资源指示符。在生产环境中，该指示符成为对每个请求的强制性声明（claim）检查。MCP 服务器将 `token.aud` 与其自身的规范化资源 URL 进行比较，并在不匹配时返回 HTTP 401 拒绝。这是抵御上游 MCP 服务器（或持有本应属于一个服务器令牌的恶意客户端）在同一个信任网中向另一个服务器重放该令牌的唯一防线。
 
-这一课将每一个空隙映射到一个水面的混凝土块上. 转载数据的数据是HTTP终端.  JWKS缓存更新是一个计划工作加上一个关键值缓存. 资源服务器在发送任何工具之前运行的 JWT验证是例行程序. 保持三个角色分开,每个角色只执行其所有的检查:授权服务器发出和旋转密钥,资源服务器缓存和验证,客户端发现和注册.
+本课程将每个缺口映射到暴露面的一个具体部分。元数据文档是一个 HTTP 端点。JWKS 缓存刷新是一个定时任务加上一个键值缓存。JWT 校验是资源服务器在分发任何工具之前运行的一个例程。保持这三个角色分离，每个组件仅执行其拥有的检查：授权服务器签发并轮换密钥，资源服务器缓存并校验，客户端发现并注册。
 
-## 范围:课后的生产执行
+## 范围：第 16 课之后的生产强制
 
-[Lesson 16: MCP Security with OAuth 2.1](../../16-mcp-security-oauth-2-1/docs/en.md)授权代码状态机,PKCE,保护资源发现,资源指标和范围决策.本课程并未定义第二个OAuth流.它开始在这些合同存在后,并询问部署的资源服务器如何在关键轮换,不透明代码验证,撤销,依赖性故障,部署和事件响应期间继续执行这些协议.
+[第 16 课：使用 OAuth 2.1 的 MCP 安全](../../16-mcp-security-oauth-2-1/docs/en.md) 负责授权码状态机、PKCE、受保护资源发现、资源指示符和范围决策。本课程不定义第二个 OAuth 流程。它从这些契约存在之后开始，探讨已部署的资源服务器如何在密钥轮换、不透明令牌（opaque-token）校验、吊销、依赖失败、推广和事件响应期间持续强制执行这些契约。
 
-生产界限较窄,更有效:
+生产边界更窄且更偏向运维：
 
-- 一个JWT路径验证了固定发行者,算法,签名键,观众,时间要求,以及每个请求的范围,同时安全地更新JWKS.
-- 透明的代币路径将调用发行商认证的内视终点,并验证返回的活跃状态,受众或资源,过期期,主题和范围.
-- 取消政策定义了证书必须停止工作的速度以及哪个缓存可以延迟这一事实.
-- 失败政策决定发现,JWKS,内检查或撤销基础设施不可用时发生什么.
-- 证据记录发行者转载的元数据,关键集或内检测响应,代币索赔,政策版本和拒绝理由驱动了结果,而没有存储代币.
+- JWT 路径在每个请求上校验固定的签发者、算法、签名密钥、受众、时间声明和范围，同时安全地刷新 JWKS。
+- 不透明令牌路径调用签发者经过身份验证的内省端点，并校验返回的激活状态、受众或资源、过期时间、主题（subject）和范围。
+- 吊销策略定义凭据必须多快失效，以及哪个缓存可以延迟这一事实。
+- 失败策略决定当发现、JWKS、内省或吊销基础设施不可用时会发生什么。
+- 证据记录哪些签发者元数据、密钥集或内省响应、令牌声明、策略版本和拒绝原因导致了结果，而不存储令牌。
 
-这种区别使得课程保持可编译性.16课证明了流动性.18课证明,一个代币在达到真正的MCP请求路径后仍然值得信赖,或者被拒绝.
+这种区分保持了课程的可组合性。第 16 课证明了流程。第 18 课证明令牌到达真实 MCP 请求路径后依然可信，或被拒绝。
 
-## 概念
+## 核心概念
 
-### 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签
+### RFC 8414 — OAuth 授权服务器元数据
 
-文件`/.well-known/oauth-authorization-server`描述客户需要的一切:
+`/.well-known/oauth-authorization-server` 处的文档描述了客户端所需的一切：
 
 ```json
 {
@@ -69,23 +69,23 @@
 }
 ```
 
-给一个MCP资源URL链的客户端发现: `oauth-protected-resource`根据RFC 9728 (资源服务器文件) 命名发行者,然后`oauth-authorization-server`客户端从来没有硬码授权URL.
+给定 MCP 资源 URL 的客户端会链式发现：RFC 9728 的 `oauth-protected-resource`（资源服务器的文档）指出签发者，然后 `oauth-authorization-server`（本 RFC）指出所有端点。客户端绝不硬编码授权 URL。
 
-对于具有路径的资源识别器,在路径前插入已知段.`https://mcp.example.com/team/server`解决保护资源的元数据`https://mcp.example.com/.well-known/oauth-protected-resource/team/server`附加`/.well-known/...`在资源路径不正确后.
+对于带路径的资源标识符，请在该路径之前插入 well-known 片段。例如，`https://mcp.example.com/team/server` 解析为 `https://mcp.example.com/.well-known/oauth-protected-resource/team/server` 处的受保护资源元数据。在资源路径之后附加 `/.well-known/...` 是错误的。
 
-在信任MCP的IDP之前,你要验证的合同:
+在信任用于 MCP 的 IdP 之前你要校验的契约：
 
-- `code_challenge_methods_supported`包括`S256`规格是明确的:如果这个字段是**absent**授权服务器不支持PKCE和客户端**MUST**拒绝继续.
-- `grant_types_supported`包括`authorization_code`拒绝了`password`其他`implicit`现在,我们要去.
-- 至少有一个招生途径:`client_id_metadata_document_supported: true`预注册客户或`registration_endpoint`(RFC 7591相容性已降低).
-- 如果`authorization_response_iss_parameter_supported`客户需要返回的RFC 9207`iss`并且与转向前记录的发行人进行了准确的比较.
-- `response_types_supported`现在,我们在`["code"]`对于OAuth 2.1.
+- `code_challenge_methods_supported` 包含 `S256`（按 RFC 7636 的 PKCE）。规范明确指出：如果该字段**缺失**，授权服务器不支持 PKCE，客户端**必须（MUST）**拒绝继续。
+- `grant_types_supported` 包含 `authorization_code` 并拒绝 `password` 和 `implicit`。
+- 至少有一个注册路径可用：`client_id_metadata_document_supported: true`（CIMD，首选）、预注册客户端，或 `registration_endpoint`（已弃用的 RFC 7591 兼容）。
+- 若 `authorization_response_iss_parameter_supported` 为 true，客户端要求返回的 RFC 9207 `iss`，并将其与重定向之前记录的签发者进行精确比较。
+- 对于 OAuth 2.1，`response_types_supported` 恰好是 `["code"]`。
 
-如果`S256`如果没有,MCP服务器拒绝部署这个IdP 没有降级模式的PKCE.如果 *没有*注册路径广告,你没有预注册`client_id`您也不能注册; 部署说明书是错误的,不是代码.
+如果 `S256` 缺失，MCP 服务器拒绝针对此 IdP 部署——PKCE 没有降级模式。如果**两个**注册路径均未公告，且你没有预注册的 `client_id`，你也无法注册；是部署清单错了，而不是代码错了。
 
-### 保护资源元数据
+### RFC 9728（回顾）— 受保护资源元数据
 
-第16课涵盖RFC 9728的生产中.该文件是客户端寻找由*这个*MCP服务器所信任的授权服务器的唯一地方.单个MCP服务器可以接受多个IDP的代币 (一个为员工,一个为合作伙伴).RFC 9728声明该集合;RFC 8414记录每个IDP支持什么.
+第 16 课已涵盖 RFC 9728。生产环境中的变化：该文档是客户端查找*此* MCP 服务器所信任的授权服务器的唯一位置。单个 MCP 服务器可以接受来自多个 IdP 的令牌（一个面向员工，一个面向合作伙伴）。RFC 9728 声明该集合；RFC 8414 说明每个 IdP 支持什么。
 
 ```json
 {
@@ -97,11 +97,11 @@
 }
 ```
 
-### 客户端ID元数据文件 (建议默认)
+### Client ID Metadata Documents（推荐的默认方式）
 
-转换登记从*推*到*拉*.`client_id`客户端使用它控制的HTTPSURL**as**其他`client_id`. URL 归结为 JSON 转载数据文件;授权服务器在 OAuth 流量中按要求获取它.信任根植于 DNS:如果服务器运营商信任 `app.example.com`公司信任客户`https://app.example.com/client.json`没有登记回路,没有`client_id`没有每个服务器状态保持同步.
+CIMD 将注册从*推送*反转为*拉取*。客户端不再要求授权服务器铸造 `client_id`，而是使用一个它控制的 HTTPS URL **作为**其 `client_id`。该 URL 解析为一个 JSON 元数据文档；授权服务器在 OAuth 流程期间按需获取它。信任根植于 DNS：如果服务器操作者信任 `app.example.com`，它就信任从 `https://app.example.com/client.json` 服务的客户端。没有注册往返，没有需要耗尽的 `client_id` 命名空间，没有需要同步的每服务器状态。
 
-客户端主持的元数据文档:
+客户端托管的元数据文档：
 
 ```json
 {
@@ -116,22 +116,22 @@
 }
 ```
 
-其他`client_id`文件中的值**MUST**授权服务器确认此情况,拒绝不匹配.`client_id_metadata_document_supported: true`在其RFC 8414元数据中.
+文档中的 `client_id` 值**必须（MUST）**等于它所服务的 URL（由授权服务器校验；不匹配将被拒绝）。授权服务器在其 RFC 8414 元数据中通过 `client_id_metadata_document_supported: true` 公告支持。
 
-对于目前的CIMD合同,`client_id`现在`client_name`没有空的`redirect_uris`客户端识别器是绝对的HTTPSURL,具有路径. `application_type`没有复制 DCR 要求`application_type`进入首选CIMD路径.
+对于当前的 CIMD 契约，`client_id`、`client_name` 和一个非空的 `redirect_uris` 数组是必需的。客户端标识符是一个带路径的绝对 HTTPS URL。`application_type` 可以包含，但它不是强制性的 CIMD 字段。不要将 `application_type` 的 DCR 要求复制到首选的 CIMD 路径中。
 
-两项安全事实,规范是直接的:
+规范直言不讳地指出的两个安全事实：
 
-- **SSRF.**授权服务器获取攻击者提供的URL. 它必须防范服务器端请求伪造 (不获取内部/管理员终端点).
-- **localhost impersonation.**单独CIMD不能阻止本地攻击者索取合法的客户端的元数据URL并绑定任何`localhost`转向权限服务器**MUST**在同意期间明确显示转向URI主机名称,**SHOULD**警告我们`localhost`- 只有转向.
+- **SSRF。** 授权服务器获取攻击者提供的 URL。它必须防御服务器端请求伪造（不向内部/管理端点发起获取请求）。
+- **localhost 伪装。** CIMD 本身无法阻止本地攻击者声称合法客户端的元数据 URL 并绑定任意 `localhost` 重定向。授权服务器**必须（MUST）**在同意期间明确显示重定向 URI 的主机名，并且**应该（SHOULD）**针对仅 `localhost` 的重定向发出警告。
 
-由于CIMD不需要服务器端状态,因此没有登记器可以像DCR所要求的那样站立.客户端端只能读取:从静态HTTPS端点提供您的元数据文档,然后让授权服务器拉出它.
+由于 CIMD 不需要服务器端状态，因此无需像 DCR 要求的那样搭建注册机构。客户端侧是只读的：从静态 HTTPS 端点服务你的元数据文档，让授权服务器拉取它。
 
-如果授权服务器运营商已经提供了客户端识别符,在尝试自动注册之前使用发行商范围的注册.否则更喜欢CIMD.只使用已过时的DCR,如果发行商无法使用预注册或CIMD.
+如果授权服务器操作者已预配置了客户端标识符，请在尝试自动注册之前使用该按签发者作用域的注册。否则首选 CIMD。仅在签发者既不能使用预注册也不能使用 CIMD 时，才使用已弃用的 DCR。
 
-### 标准第7591号:过期兼容性注册
+### RFC 7591：已弃用的兼容注册
 
-根据2026-07-28的修订,DCR已过时使用.只保留在不能使用CIMD的授权服务器和预注册不实用的地方.
+DCR 在 2026-07-28 修订版中已被弃用。仅将其保留用于不能使用 CIMD 且预注册不切实际的授权服务器。兼容客户端发送：
 
 ```json
 POST /register
@@ -150,7 +150,7 @@ Content-Type: application/json
 }
 ```
 
-服务器响应了`client_id`其他`registration_access_token`对于后续更新:
+服务器以 `client_id` 和用于后续更新的 `registration_access_token` 响应：
 
 ```json
 {
@@ -163,65 +163,65 @@ Content-Type: application/json
 }
 ```
 
-`application_type`没有装饰性.一个循环桌面客户端声明`native`;一个服务器托管的客户端声明`web`通过HTTPS转向URI.`token_endpoint_auth_method: none`对于一个公众原生客户来说,这是正确的默认.`client_id`只有PKCE提供了拥有证明.
+`application_type` 并非装饰性的。回环桌面客户端声明 `native`；服务器托管的客户端声明 `web` 并使用 HTTPS 重定向 URI。`token_endpoint_auth_method: none` 是公共原生客户端的正确默认值。它只获得一个 `client_id`，由 PKCE 提供占有证明。
 
-生产的三大陷:
+三个生产陷阱：
 
-- 没有那么,一个敌对的演员将编写数百万个假注册,`client_id`在注册官处理请求之前,请检查利率限制.
-- `software_statement`课程模拟跳过它;生产线一个验证步骤拒绝任何其他地方的未签名注册转向URI.
-- 其他`registration_access_token`盗窃这个代币意味着攻击者可以重写客户端的转向URI.
+- 注册端点必须按源 IP 进行速率限制。否则，恶意行为者可以脚本化数百万个虚假注册并耗尽 `client_id` 命名空间。在注册机构处理请求之前运行速率限制检查。
+- `software_statement`（为客户端担保的签名 JWT）被一些企业 IdP 要求。本课的模拟实现跳过了它；生产环境接入一个校验步骤，拒绝除 localhost 重定向 URI 以外的任何未签名注册。
+- `registration_access_token` 必须以哈希形式存储，而非明文。窃取此令牌意味着攻击者可以重写客户端的重定向 URI。
 
-### 资源指标 (RFC 8707 (重复) 
+### RFC 8707（回顾）— 资源指示符
 
-制作规则:每一个代币请求都包括`resource=<canonical-mcp-url>`并且MCP服务器验证`token.aud`常规的URI是服务器的*最具体*标识符:它使用小字母方案和主机,没有碎片,通常没有后续切片.路径组件是**not**规则 规格在需要识别一个单个MCP服务器时保留它. `https://mcp.example.com`现在`https://mcp.example.com/mcp`现在`https://mcp.example.com:8443`其他`https://mcp.example.com/server/mcp`选择一个每个服务器和`aud`现在,我们在学习时,`https://notes.example.com`简单的说法:一个部署在一个源头下共托几个MCP服务器,以路径来区分它们.
+第 16 课确立了形态。生产规则：每个令牌请求都包含 `resource=<canonical-mcp-url>`，且 MCP 服务器在每次调用时校验 `token.aud` 与其自身的资源 URL 匹配。规范化 URI 是服务器*最具体*的标识符：它使用小写的方案（scheme）和主机（host），无片段（fragment），并且按照惯例没有尾随斜杠。路径组件**不**按规则剥离——当需要识别单个 MCP 服务器时，规范保留它。`https://mcp.example.com`、`https://mcp.example.com/mcp`、`https://mcp.example.com:8443` 和 `https://mcp.example.com/server/mcp` 都是有效的规范化 URI。每个服务器选择一个，并将 `aud` 精确固定到它。（本课的模拟实现为了简洁使用像 `https://notes.example.com` 这样的裸主机受众；在同一源下共同托管多个 MCP 服务器的部署通过路径区分它们。）
 
-### 标准标准 (RFC 7636 (重复)  PKCE
+### RFC 7636（回顾）— PKCE
 
-在 OAuth 2.1 中,PKCE是强制性的.课程的授权代码流动始终带有`code_challenge`其他`code_verifier`服务器拒绝任何没有验证器或没有对存储挑战进行哈希的验证器的代币请求.
+PKCE 在 OAuth 2.1 中是强制性的。本课的授权码流程始终携带 `code_challenge` 和 `code_verifier`。服务器拒绝任何没有验证器（verifier）或验证器与存储的挑战（challenge）哈希不匹配的令牌请求。
 
-### 许可证的配置文件MCP 2026-07-28
+### MCP 2026-07-28 授权配置
 
-目前的MCP修订保持了OAuth资源服务器边界,同时使MCP运输无状态.没有协议会议可缓存身份决定.因此,授权层独立验证每个请求:
+当前的 MCP 修订版保留了 OAuth 资源服务器边界，同时使 MCP 传输无状态。没有可以缓存身份决策的协议会话。因此，授权层独立校验每个请求：
 
-- 执行RFC 9728保护资源的元数据,并通过 `WWW-Authenticate: Bearer resource_metadata="..."`标题在401号**or**已知的URI`/.well-known/oauth-protected-resource`(SEP-985使头条可选,已知倒退).`authorization_servers`领域**MUST**提名至少一个服务器.
-- 仅通过 `Authorization: Bearer ...`现在**every**从来没有在查询链中,从来没有仅在会议开始时验证.
-- 验证`aud`现在`iss`现在`exp`服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器 服务器**MUST**确认该代币是专门发行给它 (观众); 缺失或不匹配`aud`没有被拒绝,从来没有被视为牌.
-- 在401/403回来`WWW-Authenticate: Bearer`运输`error=...`其他`resource_metadata="<PRM-URL>"`参数 (元数据文档的URL, *不是*空格资源),以及`scope="..."`现在`insufficient_scope`(403). 注:参数是`resource_metadata`没有发现的指标`resource`挑战中的参数.
-- 授权服务器发现接受**either**标签: 标签: 标签: 标签: 标签: 标签:**or**客户端必须以优先顺序尝试两个已知后尾.
-- 客户端 (而不是服务器) 防御**mix-up attacks**报告预期的情况`issuer`在转向并验证`iss`仅仅PKCE不停止混,因为客户端交给其 `code_verifier`无论它是什么标志性的目的地.
-- 如果发现解决了另一个发行商,客户重新注册,而不是呈现旧的 `client_id`登记代币或访问代币.
-- 根据CIMD的规定,CIMD是最喜欢的注册机制.`application_type`现在,我们要去.
+- 实现 RFC 9728 受保护资源元数据，并通过 401 上的 `WWW-Authenticate: Bearer resource_metadata="..."` 头**或** well-known URI `/.well-known/oauth-protected-resource` 提供其位置（SEP-985 使该头变为可选，并提供 well-known 后备）。元数据的 `authorization_servers` 字段**必须（MUST）**至少命名一台服务器。
+- 仅通过**每个**请求上的 `Authorization: Bearer ...` 接受令牌——绝不在查询字符串中，绝不仅在校验会话开始时。
+- 按请求校验 `aud`、`iss`、`exp` 和所需范围。服务器**必须（MUST）**校验令牌是专门为它签发的（受众）；缺失或不匹配的 `aud` 会被拒绝，绝不被视为通配符。
+- 在 401/403 上，返回携带 `error=...` 的 `WWW-Authenticate: Bearer`、`resource_metadata="<PRM-URL>"` 参数（元数据文档的 URL，*而非*裸资源），以及 `insufficient_scope`（403）上的 `scope="..."`。注意：该参数是 `resource_metadata`，一个发现指针——挑战中没有 `resource` 参数。
+- 授权服务器发现接受 RFC 8414 OAuth 元数据**或** OpenID Connect Discovery 1.0；客户端必须按优先级顺序尝试两个 well-known 后缀。
+- 客户端（而非服务器）防御**混合攻击（mix-up attacks）**：它在重定向之前记录预期的 `issuer`，并在兑换（redeem）代码之前校验实际授权响应中返回的 `iss` 值（RFC 9207）。仅凭 PKCE 无法阻止混合攻击，因为客户端将其 `code_verifier` 交给它被引导到的任何令牌端点。
+- 客户端凭据属于一个授权服务器签发者。如果发现解析为不同的签发者，客户端重新注册，而不是出示旧的 `client_id`、注册令牌或访问令牌。
+- CIMD 是首选的注册机制。DCR 已弃用；兼容的 DCR 请求仍声明正确的 `application_type`。
 
-标题:OAuth 2.1草案是基板;RFC 8414/7591/8707/9728/9207 +RFC 7636 +CIMD是表面;MCP规格是配置文件.
+OAuth 2.1 草案是底层；RFC 8414/7591/8707/9728/9207 + RFC 7636 + CIMD 是表面；MCP 规范是配置。
 
-### 部署能力检查列表
+### 部署能力清单
 
-查看您实际部署的授权服务器返回的元数据. 门是机械的:
+供应商功能表很快就会过时。改为检查你实际将部署的授权服务器返回的元数据。闸门是机械的：
 
-| Check | Required decision |
+| 检查项 | 所需决策 |
 |---|---|
-| Discovered issuer | Exact HTTPS issuer expected by policy |
-| PKCE | `S256` advertised; otherwise stop |
-| Enrollment | CIMD preferred, pre-registration accepted, DCR only as deprecated compatibility |
-| Authorization response | Validate RFC 9207 `iss` when present or advertised |
-| Resource binding | Token request carries `resource`; resource server requires the matching `aud` |
-| Credential storage | Key client IDs and registration credentials by issuer; key access tokens by issuer plus resource |
-| DCR compatibility | Declare `native` or `web`; reject redirect URIs that do not fit the declared application type |
+| 发现的签发者 | 策略期望的精确 HTTPS 签发者 |
+| PKCE | 已公告 `S256`；否则停止 |
+| 注册 | 首选 CIMD，接受预注册，DCR 仅作为已弃用的兼容 |
+| 授权响应 | 当存在或已公告时校验 RFC 9207 `iss` |
+| 资源绑定 | 令牌请求携带 `resource`；资源服务器要求匹配的 `aud` |
+| 凭据存储 | 按签发者键控客户端 ID 和注册凭据；按签发者加资源键控访问令牌 |
+| DCR 兼容 | 声明 `native` 或 `web`；拒绝不符合所声明应用程序类型的重定向 URI |
 
-没有从产品名称或定价层推断支持. 在部署证据中捕获发现的文件,并在缺失强制性字段时关闭.
+不要从产品名称或价格层级推断支持。将发现的文档捕获到部署证据中，并在缺少必填字段时失败关闭（fail closed）。
 
-###  JWKS 更新模式 (在AS 旋转,在资源服务器更新)
+### JWKS 刷新模式（在 AS 轮换，在资源服务器刷新）
 
-两个动词分开,因为把它们混在一起是真正的生产错误:
+保持两个动词分离，因为将它们混淆是一个真实的生产缺陷：
 
-- **Rotate**资源服务器没有参与,也不能这样做.它不保留IdP的私钥.
-- **Refresh**资源服务器做什么:`GET`资源服务器所执行的唯一的JWKS操作.
+- **轮换**是*授权服务器*所做的事：铸造新的签名密钥，将其发布到 JWKS，稍后停用旧密钥。资源服务器在其中没有任何作用，也无法做到——它不持有 IdP 的私钥。
+- **刷新**是*资源服务器*所做的事：将已发布的 JWKS 重新`GET`到其缓存中。这是资源服务器曾经执行的唯一 JWKS 动作。
 
-产品故障模式是旧缓存. 通过计划更新工作加上关键值缓存来解决.资源服务器运行一个工作 (cron,计时器,无论运行时间提供什么) 在固定间隔上,检索`<issuer>/.well-known/jwks.json`子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子.`cache[issuer] = {keys, fetched_at}`验证器可以从缓存中读取.`kid`缓存触发器中没有找到**one**交代更新作为倒退,然后重新检查. 这一次处理两个情况:计划更新,和重叠键窗口,一个新钥匙签署的代币在下一个计划更新之前到达.
+生产故障模式是缓存过时。使用定时刷新任务加上键值缓存来解决它。资源服务器运行一个任务（cron、定时器，或你的运行时提供的任何东西），以固定间隔获取 `<issuer>/.well-known/jwks.json` 并覆盖 `cache[issuer] = {keys, fetched_at}`。校验器从该缓存读取。如果其 `kid` 在缓存中缺失，令牌会触发**一次**同步刷新作为后备，然后重新检查。这同时处理两种情况：定时刷新，以及在下一个定时刷新之前，由全新密钥签名的令牌到达的密钥重叠窗口。
 
-倒的情况**must be a re-fetch, never a rotate**如果把缓存错误路径转换到旋转和,两件事就会发生破裂: (1) 造一个新钥匙会产生一个`kid`并且 (2) 攻击者将随机喷代币`kid`值得一提的是,它需要一个无限的系列的关键创作.`kid`总的来说,这只钱最多是一个浪费的.
+后备**必须是重新获取，绝不轮换**。如果将缓存未命中路径连接到轮换并铸造，两件事会损坏：(1) 铸造一个新密钥产生的 `kid` *仍然*不匹配该令牌，所以查找仍然失败；(2) 一个喷射带有随机 `kid` 值的令牌的攻击者可以强制无限制的一系列密钥创建——这是自找的 DoS。重新获取是幂等的，因此一个伪造的 `kid` 至多浪费一次获取。
 
-缓存形状:
+缓存形状：
 
 ```json
 {
@@ -235,11 +235,11 @@ Content-Type: application/json
 }
 ```
 
-权限服务器通过输入下一个键 (`k_2026_04`) 在退休之前 (`k_2026_03`),因此在旧密钥下发行的代币仍然有效,直到它们到期.缓存存储存储会保持联盟;验证器选择通过`kid`现在,我们要去.
+同时持有两个密钥是稳定状态。授权服务器通过在停用上一个（`k_2026_03`）之前引入下一个（`k_2026_04`）来轮换，因此在旧密钥下签发的令牌在过期前保持有效。缓存持有并集；校验器按 `kid` 选择。
 
-### 验证程序
+### 校验例程
 
-在发送任何工具之前,MCP服务器执行验证.`code/main.py`使用:
+MCP 服务器在分发任何工具之前运行校验。`code/main.py` 使用的形态：
 
 ```python
 result = server.validate(bearer_token, required_scope="mcp:tools.invoke")
@@ -247,84 +247,84 @@ if not result["valid"]:
     return {"status": result["status"], "WWW-Authenticate": result["www_authenticate"]}
 ```
 
-`validate`解码JWT,从JWKS缓存中解决签名密钥 (一次更新一次错误),验证签名,然后检查`iss`针对允许清单,`aud`对于这个服务器的可信资源,`exp`返回一个 `WWW-Authenticate`资源服务器上保持一个常规的程序意味着每个入口点 (每个工具调用,每个运输) 都会经历相同的检查;没有通路可以先验证到一个工具.
+`validate` 解码 JWT，从 JWKS 缓存中解析签名密钥（在未命中时刷新一次），校验签名，然后对照允许列表检查 `iss`，对照本服务器的规范化资源检查 `aud`、`exp` 和所需范围——在首次失败时返回 `WWW-Authenticate` 挑战。将其保留为资源服务器上的单个例程意味着每个入口点（每次工具调用，每种传输）都经过相同的检查；没有路径在未先校验的情况下到达工具。
 
-### 形的代币使用内观,而不是猜测
+### 不透明令牌使用内省，而非猜测
 
-不是每个访问代币都是JWT. 如果发行商记录一个不透明的代币,资源服务器无法将其解码成可信的索赔.它通过认证后道将代币发送到发行商的RFC 7662内观终端点,并要求`active: true`预期发行商的背景,MCP的确切受众或资源,未到期的时间索赔,以及具体工具所需的范围.
+并非每个访问令牌都是 JWT。如果签发者记录为不透明令牌，资源服务器无法将其解码为可信声明。它通过经过身份验证的后端通道将令牌发送给签发者的 RFC 7662 内省端点，并要求 `active: true`、预期的签发者上下文、精确的 MCP 受众或资源、未过期的时间声明以及具体工具所需的范围。
 
-发行者进行缓存内省,单向代币消化,以及MCP资源. 永远不要使用清晰的代币作为日志或缓存标签. 按代币最早的期限,发行商的缓存指导,以及部署的撤销新鲜度目标绑定一个正确的缓存输入. 保持负面缓存时间短以免新发行的代币保持虚假的不活跃. 一个资源的结果不能授权另一个资源,即使不透明的代币字符串是相同的.
+按签发者、单向令牌摘要和 MCP 资源缓存内省结果。绝不要将明文令牌用作日志或缓存标签。正向缓存条目的时间限制为令牌过期时间、签发者缓存指导和部署的吊销时效性目标中的最早者。负向缓存保持足够短，以便新签发的令牌不会保持虚假的未激活状态。针对一个资源的结果不能授权另一个资源，即使不透明令牌字符串完全相同。
 
-通过攻击者控制的代币内容,不要选择验证模式. 印JWT与内视行为,并验证发行者元数据和部署配置.在JWT路径上,印接受算法和可信`jwks_uri`;永远不要遵循仅仅由代币标题选择的关键URL或算法.
+不要从攻击者控制的令牌内容中选择校验模式。将 JWT 与内省行为固定到经过校验的签发者元数据和部署配置。在 JWT 路径上，固定接受的算法和受信任的 `jwks_uri`；绝不要遵循仅由令牌头选择的密钥 URL 或算法。
 
-### 撤销是一项新鲜度合同
+### 吊销是一个时效性契约
 
-根据RFC 7009,客户端可以要求授权服务器撤销代币.该请求不会删除每个资源服务器已经缓存的副本.定义最大可接受的撤销延迟,并使每个缓存都尊重它.
+RFC 7009 允许客户端要求授权服务器吊销令牌。该请求不会抹去已经缓存在每个资源服务器上的副本。定义最大可接受的吊销延迟，并使每个缓存遵守它。
 
-通过对高风险的每次通话进行内视或使用短暂的正面缓存,可实现更严格的撤销. 独立的JWT部署通常结合短暂的访问代币使用寿命,更新代币撤销,发行商范围内的事件的关键退休,以及紧急局部拒绝的可选主题,会议或代币身份证分类列表. 签署的JWT将在截止日期内保持加密有效性,除非资源服务器有当前外部撤销证据.
+不透明令牌部署可以通过在每次高风险调用上进行内省或使用短的正向缓存来实现更紧的吊销。自包含 JWT 部署通常将短访问令牌生命周期与刷新令牌吊销相结合，对于签发者范围的事件采用密钥停用，并为紧急本地拒绝使用可选的主题、会话或令牌 ID 拒绝列表。除非资源服务器拥有当前的外部吊销证据，否则签名 JWT 在过期前在密码学上保持有效。
 
-登录,帐户禁用,同意撤销和事件响应是不同的触发因素,但必须与一个可测量的声明相结合:在宣布撤销窗口之后,每个复制都拒绝了凭证.通过负载平衡器测试该声明,不仅仅对一个热过程进行测试.
+登出、账户禁用、同意撤回和事件响应是不同的触发器，但必须收敛到一个可衡量的陈述：在至多声明的吊销窗口后，每个副本都拒绝该凭据。通过负载均衡器测试该陈述，而不仅针对一个热进程。
 
-### 依赖性失败需要宣布的决定
+### 依赖失败需要预先声明的决策
 
-永远不要在例外处理器内即兴化可用性政策.
+绝不要在异常处理器中临时制定可用性策略。
 
-| Failure | Safe production behavior |
+| 失败 | 安全的生产行为 |
 |---|---|
-| Scheduled JWKS refresh fails, known `kid` remains in a still-valid bounded cache | Continue only within the declared stale-on-error window and emit degraded health evidence |
-| Token has an unknown `kid` and the one allowed refresh fails | Reject; never accept an unverifiable signature |
-| Introspection is unavailable | Fail closed for protected calls; do not convert network failure into `active: true` |
-| Protected-resource or issuer metadata changes unexpectedly | Stop new enrollment and token acquisition; keep only explicitly pinned, unexpired configuration under a bounded incident policy |
-| Revocation endpoint is unavailable | Report logout or revocation as incomplete, retain the credential locally as unusable when possible, and do not claim global revocation succeeded |
-| Clock source or claim type is invalid | Reject rather than widening skew until the token passes |
+| 定时 JWKS 刷新失败，已知的 `kid` 仍在仍有效的限定缓存中 | 仅在声明的“错误时过时（stale-on-error）”窗口内继续，并发出降级健康证据 |
+| 令牌有未知的 `kid`，且允许的一次刷新失败 | 拒绝；绝不接受无法校验的签名 |
+| 内省不可用 | 对受保护调用失败关闭；不要将网络故障转换为 `active: true` |
+| 受保护资源或签发者元数据意外更改 | 停止新注册和令牌获取；在限定的事件策略下仅保留明确固定、未过期的配置 |
+| 吊销端点不可用 | 将登出或吊销报告为未完成，在可能的情况下本地保留该凭据为不可用，且不要声称全局吊销已成功 |
+| 时钟源或声明类型无效 | 拒绝而不是扩大偏斜（skew）直至令牌通过 |
 
-根据"安全性"的规定,使用者必须将数据丢失,并将数据丢失. 根据"安全性"的规定,使用者必须将数据丢失. 根据"安全性"的规定,使用者必须将数据丢失.
+将故障与无效凭据分开分类。依赖中断是带有健康和重试策略的操作错误。错误的签名、签发者、受众、过期或范围是授权拒绝。两者都不会到达工具处理器，且都不应将令牌内容泄漏到审计证据中。
 
-### 观众重播通行 (访问符号权限限制)
+### 受众重放演练（访问令牌权限限制）
 
-服务器A (`notes.example.com`) 和服务器B (`tasks.example.com`) 两者都会登录在同一授权服务器上.服务器A被破坏.攻击者取取用户的笔记符号并将其反弹到服务器B.
+服务器 A（`notes.example.com`）和服务器 B（`tasks.example.com`）都在同一个授权服务器上注册。服务器 A 被攻破。攻击者获取用户的笔记令牌并将其重放到服务器 B。
 
-服务器B的验证器:
+服务器 B 的校验器：
 
-1. 解码JWT,通过JWKS来获取`kid`检查签名.
-2. 查看`iss`对于其保护资源的元数据`authorization_servers`通过同一名人.
-3. 查看`aud == "https://tasks.example.com"`没有成功的代币.`aud`是`https://notes.example.com`)
-4. 返回401号`WWW-Authenticate: Bearer error="invalid_token", error_description="audience mismatch", resource_metadata="https://tasks.example.com/.well-known/oauth-protected-resource"`现在,我们要去.
+1. 解码 JWT，按 `kid` 获取 JWKS，校验签名。
+2. 对照其受保护资源元数据的 `authorization_servers` 检查 `iss`。（通过——同一个 IdP。）
+3. 检查 `aud == "https://tasks.example.com"`。（失败——令牌的 `aud` 是 `https://notes.example.com`。）
+4. 返回带有 `WWW-Authenticate: Bearer error="invalid_token", error_description="audience mismatch", resource_metadata="https://tasks.example.com/.well-known/oauth-protected-resource"` 的 401。
 
-观众声称是协议层的唯一防御措施. 为了性能而跳过它是最常见的生产错误;验证器必须在每个请求上运行,而不仅仅是会议开始. 规格称这是**access-token privilege restriction**:一个MCP服务器`MUST`拒绝任何在观众中不提名的标志.
+受众声明是在协议层抵御此攻击的唯一防线。为了性能而跳过它是最常见的生产错误；校验器必须在每个请求上运行，而不仅在校验会话开始时。规范将此称为**访问令牌权限限制**：MCP 服务器 `MUST` 拒绝任何未在受众中命名它的令牌。
 
-> **Naming note.**规格保留了"混副"这个词,用于一个相关但明显的问题:一个作为OAuth的MCP服务器**proxy**通过使用静态客户端ID,将代币转发到第三方API上,而不会获得每个客户端用户同意.观众绑定修复了上述重播;混副级修复是每个客户端同意.**plus**没有通过输入代币到上游API (MCP服务器)`MUST`获得自己的独立上游代币).
+> **命名说明。** 规范保留术语*混淆代理人（confused deputy）*用于一个相关但不同的问题：一个作为 OAuth **代理**连接到第三方 API 的 MCP 服务器，使用静态客户端 ID，在没有获得每客户端用户同意的情况下转发令牌。受众绑定修复了上述重放；混淆代理人的修复是每客户端同意**加上**绝不能将入站令牌传递给上游 API（MCP 服务器 `MUST` 获取其自己单独的上游令牌）。
 
-### 混合攻击 (服务器无法提供客户端防御)
+### 混合攻击（服务器无法提供的客户端侧防御）
 
-客户端可以在其一生中与许多授权服务器交谈.恶意AS可以试图让客户端在攻击者的代币终端点赎回诚实的AS授权代码.观众绑定在这里并没有帮助.
+一个客户端在其生命周期内与许多授权服务器通信。恶意 AS 可以尝试让客户端在攻击者的令牌端点兑换诚实 AS 的授权码。受众绑定在这里无济于事——攻击发生在任何令牌存在之前。防御存在于客户端（RFC 9207）：
 
-1. 在转向之前,客户记录预期的`issuer`根据验证的AS元数据.
-2. 在授权回复上,客户将返回的回复进行比较.`iss`在任何地方发送代码之前,对记录发行者进行参数 (简单的字符串比较,没有正常化).
-3. 失匹配 (或 `iss`在AS广告时缺席`authorization_response_iss_parameter_supported`拒绝,甚至不显示`error`其他地方
+1. 在重定向之前，客户端从经过校验的 AS 元数据中记录预期的 `issuer`。
+2. 在授权响应上，客户端在将代码发送到任何地方之前，将返回的 `iss` 参数与该记录的签发者进行比较（简单字符串比较，无规范化）。
+3. 不匹配（或当 AS 已公告 `authorization_response_iss_parameter_supported` 时 `iss` 缺失）→ 拒绝，甚至不要显示 `error` 字段。
 
-客户提供了其 `code_verifier`由于此,规格每次要求记录发行者与PKCE验证器一起,`state`现在,我们要去.
+仅凭 PKCE 无法阻止混合攻击，因为客户端将其 `code_verifier` 交给它被引导到的任何令牌端点。这就是为什么规范按请求将签发者与 PKCE 验证器和 `state` 一起记录。
 
 ### 失败模式
 
-- **Stale JWKS.**验证器在AS旋转键后拒绝有效代币. 修正是 cron-refresh + cache-miss-refetch 模式. 永远不要在更新工作的情况下缓存 JWKS.
-- **Rotate-as-fall-back.**转换缓存错误路径到转换的路径,`kid`攻击者控制了它`kid`值值在关键创建DoS. 倒退必须是无权的`refresh-jwks`现在,我们要去.
-- **Missing `aud` claim.**一些IDP默认省略`aud`除非`resource`验证者必须拒绝缺失的代币.`aud`没有人会把缺席视为一个狂欢的卡片.
-- **Mix-up via missing `iss` check.**没有验证RFC 9207的客户端`iss`权限响应参数对发行者进行转向之前记录的权限响应参数可以被引导到攻击者的代币终端点中赎回诚实的AS代码.这是客户端故障;资源服务器无法补偿它.
-- **Scope upgrade race.**两个同时进行的加大流程可以成功并产生两个具有不同范围的访问令牌.验证器必须使用在请求中呈现的令牌,而不是搜索"用户的当前范围",从而创建一个TOCTOU窗口.
-- **Registration token theft.**一个泄露的`registration_access_token`让攻击者重新写转向URI. 按住这些,要求客户端在每次更新中呈现清晰文本; 根据怀疑旋转.
-- **`iss` not pinned.**验证器可以接受任何`iss`攻击者可以建立自己的授权服务器,注册客户端,并发行代币.`authorization_servers`允许的列表是允许的列表;
-- **Credential or token cache collision.**客户端只通过资源进行注册,可以向另一个提交一个授权服务器的身份.客户端只通过发行商进行访问令牌的密钥可以在错误的受众中重播一个令牌.`(issuer, resource)`任何发行者改变时,
+- **过时的 JWKS。** AS 轮换密钥后，校验器拒绝有效令牌。修复方法是上述的定时刷新 + 缓存未命中重新获取模式。绝不要在没有刷新任务的情况下缓存 JWKS。
+- **轮换作为后备。** 将缓存未命中路径连接到轮换并铸造而非重新获取是一个真实的缺陷：它永远不会产生缺失的 `kid`，并且它将攻击者控制的 `kid` 值变成密钥创建 DoS。后备必须是幂等的 `refresh-jwks`。
+- **缺失 `aud` 声明。** 一些 IdP 默认省略 `aud`，除非 `resource` 存在于令牌请求中。校验器必须拒绝缺失 `aud` 的令牌，而不是将缺失视为通配符。
+- **通过缺失 `iss` 检查的混合攻击。** 一个未将 RFC 9207 `iss` 授权响应参数与其在重定向之前记录的签发者进行校验的客户端，可能被引导在攻击者的令牌端点兑换诚实 AS 的代码。这是客户端侧失败；资源服务器无法补偿。
+- **范围升级竞争。** 同一用户的两个并发步进流程都可以成功并产生两个具有不同范围的访问令牌。校验器必须使用请求中出示的令牌，而不是查找“用户的当前范围”——那会造成一个 TOCTOU 窗口。
+- **注册令牌窃取。** 泄漏的 `registration_access_token` 允许攻击者重写重定向 URI。在静态存储时进行哈希；要求客户端在每次更新时出示明文；有嫌疑时轮换。
+- **`iss` 未固定。** 接受任意 `iss` 的校验器允许攻击者搭建自己的授权服务器，为目标受众注册客户端，并签发令牌。受保护资源元数据的 `authorization_servers` 列表是允许列表；强制执行它。
+- **凭据或令牌缓存冲突。** 仅按资源键控注册的客户端可以向另一个授权服务器出示一个授权服务器的身份。仅按签发者键控访问令牌的客户端可能在错误的受众重放令牌。按经过校验的签发者键控注册，按 `(issuer, resource)` 键控访问令牌，并在签发者更改时重新注册。
 
 ```figure
 t3-jwks-rotate
 ```
 
-## 用它
+## 使用它
 
-`code/main.py`通过Stdlib Python和三个角色进行了整个生产流程: `AuthorizationServer`现在`ResourceServer`其他`Client`流量:
+`code/main.py` 使用标准库 Python 和三个角色：`AuthorizationServer`、`ResourceServer` 和 `Client`，演练完整的生产流程。流程如下：
 
-从存储库根,运行:
+从仓库根目录，运行：
 
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
@@ -332,71 +332,69 @@ python3 code/main.py
 python3 -m unittest discover -s code/tests -v
 ```
 
-第一个命令打印了发行商的注册和符号验证
-另一个报告18个通过检查.
-网络听者或写信件.
+第一个命令打印基于签发者的注册和令牌校验记录。第二个命令报告十八个通过的检查。两个命令都不会打开网络监听器或写入凭据。
 
-1. 授权服务器将RFC 8414的元数据发布在 `/.well-known/oauth-authorization-server`现在,我们要去.
-2.  MCP 客户端调用元数据终端点并检查其注册选项 (`client_id_metadata_document_supported`对于CIMD,`registration_endpoint`对于DCR) 和`S256`支持PKCE.
-3. 客户端检查是否有发行商预先注册,否则会使用HTTPS客户端身份证元数据文件注册. 退化DCR仍然是一个可以单独测试的兼容性方法.
-4. 客户记录验证发行商,创建S256挑战,获得一次性授权代码加上`iss`通过原始验证器和RFC 8707 验证返回发行商的代码.`resource`标志性
-5.  MCP 客户端调用一个工具在 MCP 服务器上`Authorization: Bearer ...`现在,我们要去.
-6.  MCP服务器运行`validate`通过JWKS缓存的签字密钥来解决问题.
-7.  IdP 旋转一个键; 计划更新将JWKS重新拉入缓存中.
-8. 下一次调用会根据更新的键进行验证,而之前的代币仍然在重叠窗口中进行验证.
-9. 试图反弹观众的 MCP 资源得到了 401 的`audience mismatch`其他`resource_metadata`标志.
+1. 授权服务器在 `/.well-known/oauth-authorization-server` 发布 RFC 8414 元数据。
+2. MCP 客户端调用元数据端点，并检查其注册选项（CIMD 的 `client_id_metadata_document_supported`，DCR 的 `registration_endpoint`）和 `S256` PKCE 支持。
+3. 客户端检查是否存在按签发者作用域的预注册，否则使用其 HTTPS Client ID Metadata Document 进行注册。已弃用的 DCR 仍作为一种可单独测试的兼容方法保留。
+4. 客户端记录经过校验的签发者，创建一个 S256 挑战，接收一次性授权码加上 `iss`，校验返回的签发者，并使用原始验证器和 RFC 8707 `resource` 指示符兑换该代码。
+5. MCP 客户端使用 `Authorization: Bearer ...` 在 MCP 服务器上调用工具。
+6. MCP 服务器运行 `validate`，从 JWKS 缓存中解析签名密钥。
+7. IdP 轮换一个密钥；定时刷新将 JWKS 重新拉入缓存。
+8. 下一次调用对照刷新后的密钥进行校验而无需重启，且先前的令牌在重叠窗口期间仍然有效。
+9. 针对另一个 MCP 资源的受众重放尝试会得到 401，附带 `audience mismatch` 和一个 `resource_metadata` 指针。
 
-在此,JWT使用HS256与共享秘密 (因此课程仅运行在stdlib上).制作使用RS256或EdDSA与上述JWKS模式;验证逻辑是相同的.因为IdP和资源服务器生活在一个过程中,`refresh_jwks`直接阅读授权服务器的关键列表;通过线程,它是一个HTTP `GET`为了`jwks_uri`现在,我们要去.
+这里的 JWT 使用带共享密钥的 HS256（因此本课仅依赖标准库）。生产环境使用 RS256 或 EdDSA 配合上述 JWKS 模式；校验逻辑在其他方面完全相同。由于 IdP 和资源服务器位于同一进程中，`refresh_jwks` 直接读取授权服务器的密钥列表；通过网络传输时，它是对 `jwks_uri` 的 HTTP `GET`。
 
-## 运送它
+## 交付它
 
-这一课产生了`outputs/skill-mcp-auth.md`鉴于MCP服务器配置和IdP能力组件,该技能会发射出站立的Auth表面保护资源的元数据,使用的注册路径 (CIMD,预注册或DCR倒退),JWKS更新时间表,范围映射和拒绝适用的规则,当IdP不支持完整的RFC配置文件.
+本课程产生 `outputs/skill-mcp-auth.md`。给定一个 MCP 服务器配置和一组 IdP 能力，该技能会输出需要搭建的认证暴露面——受保护资源元数据、要使用的注册路径（CIMD、预注册或 DCR 后备）、JWKS 刷新计划、范围映射，以及当 IdP 不支持完整 RFC 配置时要应用的拒绝规则。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`观察如何在第6步中旋转键,`refresh_jwks`重新拉出已发布的集,既旧的代币 (重叠窗口),又新的代币都在重新启动的情况下验证.
+1. 运行 `code/main.py`。追踪流程。注意 IdP 如何在第 6 步轮换密钥，定时的 `refresh_jwks` 如何重新拉取已发布的集合，以及旧令牌（重叠窗口）和新令牌如何都在不重启的情况下通过校验。
 
-2. 添加一个新的IDP到保护资源的元数据`authorization_servers`发行一个签署的代币,并确认验证者接受它.发行一个签署的代币,并确认验证者拒绝.`WWW-Authenticate: Bearer error="invalid_token", error_description="iss not allowed"`现在,我们要去.
+2. 向受保护资源元数据的 `authorization_servers` 列表添加一个新的 IdP。签发一个由新 IdP 签名的令牌，并确认校验器接受它。签发一个由未列出 IdP 签名的令牌，并确认校验器以 `WWW-Authenticate: Bearer error="invalid_token", error_description="iss not allowed"` 拒绝。
 
-3. 添加一个利率限制检查`register_client`使用一个每个源 IP 存储在一个小键键键的IP.
+3. 向 `register_client` 添加一个速率限制检查，在注册机构接受请求之前运行。使用按源 IP 的令牌桶，保存在一个按 IP 键控的小字典中。
 
-4. 阅读RFC 7591并确定课程的两个领域`/register`处理器不验证. 添加验证.`software_statement`其他`redirect_uris`美国的"URI"计划
+4. 阅读 RFC 7591，找出本课的 `/register` 处理器未校验的两个字段。添加校验。（提示：`software_statement` 和 `redirect_uris` URI 方案。）
 
-5. 确认客户端存储了单独的发行商密钥注册,拒绝重复使用第一个发行商的代币或`client_id`现在,我们要去.
+5. 添加第二个授权服务器。确认客户端存储单独的按签发者键控的注册，并拒绝复用第一个签发者的令牌或 `client_id`。
 
-6. 证明了DoS的修正,向验证器发送一个随机的代币.`kid`确认`refresh_jwks`之后,故意将下跌回转换为旋转和,然后看看按假代币的重复回收.
+6. 证明 DoS 修复。向校验器发送一个带有随机 `kid` 的令牌，并确认 `refresh_jwks` 至多运行一次，且授权服务器的密钥数量不增长。然后故意将后备重新连接为轮换并铸造，观察密钥数量随每个伪造令牌攀升——之后恢复为重新获取。
 
-7. 炼了两者都不适用`native`其他`web`确认一个 HTTP 转向URI的 Web 客户端,而一个没有精确的循环回转向的本地客户端则被拒绝.
+7. 用 `native` 和 `web` 两种客户端测试已弃用的 DCR。确认带有 HTTP 重定向 URI 的 Web 客户端和没有精确回环重定向的原生客户端均被拒绝。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|------------------------|
-| ASM | "OAuth metadata document" | RFC 8414 `/.well-known/oauth-authorization-server` JSON |
-| CIMD | "Client metadata URL" | Client ID Metadata Document: an HTTPS URL used as the `client_id`; the AS pulls the JSON. Preferred enrollment in MCP 2026-07-28 |
-| DCR | "Self-service client registration" | RFC 7591 `POST /register`; deprecated for current MCP and retained only for compatibility |
-| JWKS | "Public keys for JWT validation" | JSON Web Key Set, fetched from `jwks_uri`, indexed by `kid` |
-| Rotate vs refresh | "Updating the keys" | *Rotate* = AS mints/retires signing keys; *refresh* = resource server re-fetches the published set. Resource servers only ever refresh |
-| Resource indicator | "Audience parameter" | RFC 8707 `resource` parameter pinning the token to one server |
-| `aud` claim | "Audience" | JWT claim the validator compares against the canonical resource URL |
-| Audience replay | "Token replay" | Token issued for Server A presented to Server B; defended by audience validation (spec: access-token privilege restriction) |
-| Confused deputy | "Proxy token misuse" | An MCP proxy with a static client ID forwarding a token without per-client consent; distinct from audience replay |
-| Mix-up attack | "Wrong token endpoint" | Client steered to redeem an honest AS's code at an attacker's endpoint; defended client-side via RFC 9207 `iss` |
-| `iss` allow-list | "Trusted authorization servers" | The set named in protected-resource metadata's `authorization_servers` |
-| `resource_metadata` | "Where to find the PRM doc" | `WWW-Authenticate` parameter naming the RFC 9728 metadata URL on a 401/403 |
-| Public client | "Native or browser client" | OAuth client with no `client_secret`; PKCE compensates |
-| `WWW-Authenticate` | "401/403 response header" | Carries `Bearer error=...` directives that drive client recovery |
+| ASM | “OAuth 元数据文档” | RFC 8414 `/.well-known/oauth-authorization-server` JSON |
+| CIMD | “客户端元数据 URL” | Client ID Metadata Document：用作 `client_id` 的 HTTPS URL；由 AS 拉取 JSON。MCP 2026-07-28 中的首选注册 |
+| DCR | “自助客户端注册” | RFC 7591 `POST /register`；对当前 MCP 已弃用，仅为兼容而保留 |
+| JWKS | “用于 JWT 校验的公钥” | JSON Web Key Set，从 `jwks_uri` 获取，按 `kid` 索引 |
+| 轮换 vs 刷新 | “更新密钥” | *轮换* = AS 铸造/停用签名密钥；*刷新* = 资源服务器重新获取已发布的集合。资源服务器只执行刷新 |
+| 资源指示符 | “受众参数” | RFC 8707 `resource` 参数，将令牌固定到一台服务器 |
+| `aud` 声明 | “受众” | 校验器对照规范化资源 URL 进行比较的 JWT 声明 |
+| 受众重放 | “令牌重放” | 为服务器 A 签发的令牌被出示给服务器 B；由受众校验防御（规范：访问令牌权限限制） |
+| 混淆代理人 | “代理令牌滥用” | 具有静态客户端 ID 的 MCP 代理在没有每客户端同意的情况下转发令牌；与受众重放不同 |
+| 混合攻击 | “错误的令牌端点” | 客户端被引导在攻击者的端点兑换诚实 AS 的代码；通过 RFC 9207 `iss` 在客户端侧防御 |
+| `iss` 允许列表 | “受信任的授权服务器” | 受保护资源元数据的 `authorization_servers` 中命名的集合 |
+| `resource_metadata` | “在哪里找到 PRM 文档” | 在 401/403 上命名 RFC 9728 元数据 URL 的 `WWW-Authenticate` 参数 |
+| 公共客户端 | “原生或浏览器客户端” | 没有 `client_secret` 的 OAuth 客户端；PKCE 作为补偿 |
+| `WWW-Authenticate` | “401/403 响应头” | 携带驱动客户端恢复的 `Bearer error=...` 指令 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [MCP authorization specification (2026-07-28)](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization)- 现行MCP授权配置
-- [MCP 2026-07-28 changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog)- CIMD,发行人验证,DCR减值和发行人关键的凭证变化
-- [OAuth Client ID Metadata Document (draft-ietf-oauth-client-id-metadata-document-00)](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00)    
-- [RFC 8414 — OAuth 2.0 Authorization Server Metadata](https://datatracker.ietf.org/doc/html/rfc8414) 发现合同
-- [RFC 7591 — OAuth 2.0 Dynamic Client Registration Protocol](https://datatracker.ietf.org/doc/html/rfc7591) DCR (倒退路径)
-- [RFC 7636 — Proof Key for Code Exchange (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636)公众客户拥有证据
-- [RFC 8707 — Resource Indicators for OAuth 2.0](https://datatracker.ietf.org/doc/html/rfc8707)观众的
-- [RFC 9728 — OAuth 2.0 Protected Resource Metadata](https://datatracker.ietf.org/doc/html/rfc9728)资源服务器发现
-- [RFC 9207 — OAuth 2.0 Authorization Server Issuer Identification](https://datatracker.ietf.org/doc/html/rfc9207) `iss`防范混合攻击的参数
-- [RFC 7662: OAuth 2.0 Token Introspection](https://datatracker.ietf.org/doc/html/rfc7662)
-- [RFC 7009: OAuth 2.0 Token Revocation](https://datatracker.ietf.org/doc/html/rfc7009)
+- [MCP 授权规范 (2026-07-28)](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization) - 当前的 MCP 授权配置
+- [MCP 2026-07-28 变更日志](https://modelcontextprotocol.io/specification/2026-07-28/changelog) - CIMD、签发者校验、DCR 弃用以及按签发者键控凭据的更改
+- [OAuth Client ID Metadata Document (draft-ietf-oauth-client-id-metadata-document-00)](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00) — CIMD
+- [RFC 8414 — OAuth 2.0 授权服务器元数据](https://datatracker.ietf.org/doc/html/rfc8414) — 发现契约
+- [RFC 7591 — OAuth 2.0 动态客户端注册协议](https://datatracker.ietf.org/doc/html/rfc7591) — DCR（后备路径）
+- [RFC 7636 — 代码交换证明密钥 (PKCE)](https://datatracker.ietf.org/doc/html/rfc7636) — 公共客户端占有证明
+- [RFC 8707 — OAuth 2.0 的资源指示符](https://datatracker.ietf.org/doc/html/rfc8707) — 受众固定
+- [RFC 9728 — OAuth 2.0 受保护资源元数据](https://datatracker.ietf.org/doc/html/rfc9728) — 资源服务器发现
+- [RFC 9207 — OAuth 2.0 授权服务器签发者识别](https://datatracker.ietf.org/doc/html/rfc9207) — 防御混合攻击的 `iss` 参数
+- [RFC 7662: OAuth 2.0 令牌内省](https://datatracker.ietf.org/doc/html/rfc7662)
+- [RFC 7009: OAuth 2.0 令牌吊销](https://datatracker.ietf.org/doc/html/rfc7009)

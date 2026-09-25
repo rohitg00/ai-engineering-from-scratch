@@ -1,6 +1,6 @@
-# 罗优化器状态碎片
+# ZeRO 优化器状态分片
 
-> 亚当每参数存储两个时刻估计, 具有56GB的优化状态. 泽罗第1阶段将N级别的数量分成零件;每个级别拥有优化器的1/N. 在当地的步骤之后,更新的参数片段回放,每个级别重建完整的模型,下一步开始. 胜利是训练堆中最大的单个分配的线性记忆下降.
+> Adam 为每个参数存储两个动量估计，均为 float32。一个 7B 参数的模型携带 56 GB 的优化器状态。ZeRO stage 1 将其分片到 N 个 rank 上；每个 rank 拥有 1/N 的优化器。本地 step 完成后，更新后的参数分片广播回来，每个 rank 重建完整模型，下一步开始。收益是训练栈中最大单项内存分配的线性下降。
 
 **Type:** Build
 **Languages:** Python
@@ -9,18 +9,18 @@
 
 ## 学习目标
 
-- 切片优化状态 (第一时刻,第二时刻,fp32主副本) 在N排列中,因此每个排列拥有1/N.
-- 使用 reduce_scatter 传递每个级别的分数,然后将所有分数汇集到更新的参数分数中.
-- 计算第1阶段,第2阶段,第3阶段的存储存储表,与尼拉DP进行计算.
-- 根据模型大小和带宽预算,捍卫1级与2级与3级的选择.
+- 将优化器状态（一阶动量、二阶动量、fp32 主副本）分片到 N 个 rank 上，使每个 rank 拥有 1/N。
+- 使用 reduce_scatter 只向每个 rank 交付其分片的梯度总和，然后用 allgather 将更新后的参数分片广播回去。
+- 计算对比原生 DDP 时 stage 1、stage 2、stage 3 的内存节省表。
+- 从模型规模和带宽预算出发，论证选择 stage 1、stage 2 还是 stage 3 的理由。
 
-## 问题
+## 问题所在
 
-尼拉DDP复制了一切:参数,梯度和优化状态在每个级别上都存在.对于fp16中的7B参数模型,这意味着每级别14GB参数,14GB梯度和28GB优化状态.优化状态是最大的术语,而且最容易碎碎片化,因为它只在步骤中触摸,而不是前进或后退.
+原生 DDP 复制一切：参数、梯度和优化器状态在每个 rank 上都完整存在。对于 fp16 的 7B 参数模型，这意味着每个 rank 有 14 GB 参数、14 GB 梯度和 28 GB 优化器状态。优化器状态是最大的一项，也是最容易分片的，因为它只在 step 期间被访问，前向和反向期间不会。
 
-RO第一阶段将优化状态缩小. 每个级别都包含亚当时刻的1/N. 后退, ZeRO 没有把全梯度降低,而是把它地步降低,所以每个阶层只能得到其碎片的总梯度. 排名将优化步骤应用到其主要参数的碎片. 更新的参数分片然后全部聚在一起,所以每个级别都有下一个前进的完整模型. 优化器内存下降了N. 每步线路流量与DDP相同:一个减少_散射加一个全部等于一个所有减少带宽. 记忆力胜利,输出力保持.
+ZeRO stage 1 对优化器状态进行分片。每个 rank 持有 1/N 的 Adam 动量。反向传播之后，ZeRO 不再做全局 allreduce 并在本地 step，而是进行 reduce_scatter，使每个 rank 只收到其分片的梯度总和。该 rank 对其主参数分片应用优化器 step。更新后的参数分片随后通过 allgather 广播回来，使每个 rank 都拥有下一次前向所需的完整模型。优化器内存下降 N 倍。每 step 的网络流量与 DDP 相同：一次 reduce_scatter 加一次 allgather 在带宽上等于一次 allreduce。内存收益，吞吐不变。
 
-## 概念
+## 核心概念
 
 ```mermaid
 flowchart TD
@@ -33,101 +33,101 @@ flowchart TD
   G --> H[next forward sees full model again]
 ```
 
-### 泽罗的阶段
+### ZeRO 的各个阶段
 
-| Stage | What is sharded | Memory per rank | Comm per step |
+| 阶段 | 分片内容 | 每 rank 内存 | 每 step 通信 |
 |-------|----------------|------------------|---------------|
-| DDP | nothing | params + grads + optim | 1x allreduce |
-| ZeRO-1 | optimiser state | params + grads + optim/N | 1x reduce_scatter + 1x allgather |
-| ZeRO-2 | optim + grads | params + grads/N + optim/N | 1x reduce_scatter + 1x allgather |
-| ZeRO-3 | optim + grads + params | params/N + grads/N + optim/N | 1x allgather per layer + 1x reduce_scatter per layer |
+| DDP | 无 | params + grads + optim | 1x allreduce |
+| ZeRO-1 | 优化器状态 | params + grads + optim/N | 1x reduce_scatter + 1x allgather |
+| ZeRO-2 | 优化器 + 梯度 | params + grads/N + optim/N | 1x reduce_scatter + 1x allgather |
+| ZeRO-3 | 优化器 + 梯度 + 参数 | params/N + grads/N + optim/N | 1x allgather per layer + 1x reduce_scatter per layer |
 
-阶段1是最便宜的胜利,因为优化状态占据预算.阶段2需要梯度分片积累逻辑,但带宽是相同的.阶段3 (FSDP) 为每一个前后层支付通信,获得参数分片内存下降.课程全面实现阶段1.
+Stage 1 是最廉价的收益，因为优化器状态在内存预算中占主导。Stage 2 需要梯度分片累加逻辑，但带宽相同。Stage 3（FSDP）在每次前向和反向中支付逐层通信，以换取参数分片的内存下降。本课完整实现 stage 1。
 
-### 记忆的数学,实数
+### 内存计算，真实数字
 
-对于采用 Adam 混合精度训练的P参数模型:
+对于一个有 P 个参数、使用 Adam 混合精度训练的模型：
 
-| Term | Vanilla | ZeRO-1 | Why |
+| 项目 | 原生 | ZeRO-1 | 原因 |
 |------|---------|--------|-----|
-| fp16 params | 2P bytes | 2P bytes | needed for forward |
-| fp16 grads | 2P bytes | 2P bytes | needed for backward |
-| fp32 master copy | 4P bytes | 4P/N bytes | only the optim uses it |
-| fp32 first moment | 4P bytes | 4P/N bytes | only the optim uses it |
-| fp32 second moment | 4P bytes | 4P/N bytes | only the optim uses it |
-| Total | 16P bytes | 4P + 12P/N bytes |   |
+| fp16 参数 | 2P bytes | 2P bytes | 前向需要 |
+| fp16 梯度 | 2P bytes | 2P bytes | 反向需要 |
+| fp32 主副本 | 4P bytes | 4P/N bytes | 只有优化器使用 |
+| fp32 一阶动量 | 4P bytes | 4P/N bytes | 只有优化器使用 |
+| fp32 二阶动量 | 4P bytes | 4P/N bytes | 只有优化器使用 |
+| 总计 | 16P bytes | 4P + 12P/N bytes |   |
 
-在N=8时,尼 16P,ZRO-15.5P,下降65%.在N=64时,尼 16P,ZRO-14.19P,下降74%.
+在 N=8 时：原生 16P，ZeRO-1 为 5.5P，下降 65%。在 N=64 时：原生 16P，ZeRO-1 为 4.19P，下降 74%。
 
-### 为什么减_散射击所有减-然后-分
+### 为什么 reduce_scatter 胜过先 allreduce 再分片
 
-总减给每个级别的全部总和梯度. 如果只需要分片r,那么降低的梯度的 (N-1) /N在r级别上会浪费. 降低_散射器提供了每个级别的分片;每级别的字节与allreduce相同 (因为allreduce是 reduce_scatter + allgather),但后面的第二半个部分被参数-shardallgather所取代. 网线与DDP相同,内存是分开的.
+Allreduce 让每个 rank 都得到完整的梯度总和。如果你只需要分片 r，那么被 reduce 的梯度中有 (N-1)/N 在 rank r 上是浪费的。Reduce_scatter 只交付每个 rank 拥有的分片；每 rank 字节数与 allreduce 相同（因为 allreduce 就是 reduce_scatter + allgather），但后半部分被稍后的参数分片 allgather 所替代。净网络流量与 DDP 相同，内存却被分割了。
 
 ```figure
 cd-zero-shard
 ```
 
-## 建立它
+## 动手实现
 
-`code/main.py`执行:
+`code/main.py` 实现了：
 
-- `flatten_params(module)`其他`unflatten_into(module, flat)`单层的布局使得分类分类是一个简单的片段.
-- `ZeroOptimizer(model, world_size, rank, lr)`拥有了"大版"和"亚当时刻"的阶级碎片.
-- `step()`通过将"Reducer_Scatter"运行在平坦梯度上,将"亚当"应用到排列的碎片上,并将更新的参数收集到.
-- 演示,训练一个3层的MLP20步骤,并印出每步的内存预算,
+- `flatten_params(module)` 和 `unflatten_into(module, flat)`，将模型的参数打包成一个连续张量并可解包回去。扁平布局使得按 rank 分片成为简单的切片操作。
+- `ZeroOptimizer(model, world_size, rank, lr)`，持有该 rank 的主副本分片和 Adam 动量。
+- `step()`，对扁平梯度运行 reduce_scatter，对该 rank 的分片应用 Adam，然后 allgather 更新后的参数。
+- 一个演示：训练一个 3 层 MLP 20 步，并在原生 DDP 基线旁打印每步的内存预算。
 
-运行它:
+运行：
 
 ```bash
 python3 code/main.py
 ```
 
-输出:每步损失,显示ZeRO-1的内存表在每个排列中保持1/N的优化状态,而DDP的完整副本.
+输出：每步 loss，以及显示 ZeRO-1 在每个 rank 上只持有 1/N 优化器状态、而 DDP 持有完整副本的内存表。
 
-## 野生生产模式
+## 生产环境中的实践模式
 
-三个模式使Zero足够硬.
+三种模式让 ZeRO 足够健壮以便上线。
 
-**Sharded checkpointing matters.**泽罗-1的优化状态分为各级;检查点必须记录哪个级别拥有什么.80课程构建了分碎的检查点宣言,重启了同样的世界规模的泽罗运行.没有它,保存的状态是无法读取的重启时.
+**分片检查点很重要。** ZeRO-1 的优化器状态分散在各 rank 上；检查点必须记录哪个 rank 拥有什么。Lesson 80 构建了分片检查点清单，用于在相同 world size 下恢复 ZeRO 运行。没有它，保存的状态在重启时无法读取。
 
-**Mixed precision is the point.**采RO是一种混合精度技术; fp32 主版是碎片的.运行 ZeRO 没有混合精度支付了 fp32 主机上的内存税,而没有相应的 fp16 前进胜利.生产运行总是与自动或 bf16 重量对齐 ZeRO.
+**混合精度是关键。** ZeRO 是一种混合精度技术；被分片的正是 fp32 主副本。在没有混合精度的情况下运行 ZeRO，会为 fp32 主副本付出内存代价，却没有相应的 fp16 前向收益。生产运行总是将 ZeRO 与 autocast 或 bf16 权重配对使用。
 
-**Stage 1 is a near-free win.**通信带宽与DDP相同.存储存储在N中是线性的.唯一的成本是优化器分片的会计管理. 产量堆默认将进入第1阶段,除非参数分片存储也是问题;然后第二或第三阶段交易通信存储.
+**Stage 1 是近乎免费的收益。** 按带宽计，通信与 DDP 完全相同。内存节省与 N 呈线性关系。唯一的成本是优化器分片的簿记工作。生产栈默认使用 stage 1，除非参数分片内存也是问题；那时 stage 2 或 3 用通信换内存。
 
-## 用它
+## 使用它
 
-生产模式:
+生产工具：
 
-- **DeepSpeed ZeRO.**参考实施`deepspeed_config.json`选择阶段1/3和分区尺寸.
-- **PyTorch FSDP.**鱼原生同等.`ShardingStrategy.SHARD_GRAD_OP`是ZERO-2;`FULL_SHARD`现在,我们要做什么?
-- **HuggingFace Accelerate.**罩着深度速度和FSDP在一个统一的配置.
+- **DeepSpeed ZeRO。** 参考实现。`deepspeed_config.json` 选择 stage 1/2/3 及分片大小。
+- **PyTorch FSDP。** PyTorch 原生的等价物。`ShardingStrategy.SHARD_GRAD_OP` 是 ZeRO-2；`FULL_SHARD` 是 ZeRO-3。
+- **HuggingFace Accelerate。** 在统一的配置下封装 DeepSpeed 和 FSDP。
 
-## 运送它
+## 上线衔接
 
-第79课 (管道平行) 是直角分断轴:而不是在同一模型中分断优化状态,管道分断层跨行. 第81课组建了DDP + ZeRO在端到端演示中.
+Lesson 79（流水线并行）是正交的分片轴：不是对同一模型的优化器状态分片，而是流水线将层分片到各 rank。Lesson 81 在端到端演示中组合 DDP + ZeRO。
 
-## 运动
+## 练习
 
-1. 通过碎片梯度扩展到ZERO-2:每个级别只存储其碎片梯度,通过向后零化非碎片部分来实现.
-2. 添加一个存储器配置文件,将实际的fp32字节使用量在0级与公式预测中打印.
-3. 测量尼拉DDP与ZERO-1的每步墙钟时间,并分解成前进,后退,通信.
-4. 根据 ZeRO-1 实现梯度切割:L2标准必须通过所有碎片计算在地方标准的二方体中.
-5. 通过 allreduce而不是 reduce_scatter 实现"天真 ZeRO",测量电线时间差异.
+1. 扩展到 ZeRO-2，对梯度分片：每个 rank 只存储其分片的梯度，方法是在反向传播后将非分片部分置零。
+2. 添加一个内存分析器，在 rank 0 上打印实际的 fp32 字节使用量，并与公式预测对比。
+3. 测量原生 DDP 与 ZeRO-1 的每步墙钟时间，并分解为前向、反向、通信。
+4. 在 ZeRO-1 下实现梯度裁剪：L2 范数必须通过对本地范数平方做 allreduce 在所有分片上计算。
+5. 用 allreduce 代替 reduce_scatter 实现"naive ZeRO"，测量网络耗时差异。用数据论证 reduce_scatter 的选择。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|------------------------|
-| ZeRO-1 | "Shard the optimiser" | Each rank holds 1/N of fp32 master + Adam moments |
-| ZeRO-2 | "Shard grads too" | Each rank also drops the non-shard gradients after reduce_scatter |
-| ZeRO-3 | "Shard params" | Each rank holds 1/N of fp16 params; allgather per layer in forward |
-| Master copy | "fp32 weights" | The high-precision parameter copy the optimiser updates |
-| Reduce_scatter | "Split the sum" | Deliver each rank only its shard's summed gradient |
+| ZeRO-1 | "对优化器分片" | 每个 rank 持有 1/N 的 fp32 主副本 + Adam 动量 |
+| ZeRO-2 | "梯度也分片" | 每个 rank 在 reduce_scatter 后还丢弃非分片梯度 |
+| ZeRO-3 | "对参数分片" | 每个 rank 持有 1/N 的 fp16 参数；前向时逐层 allgather |
+| 主副本 | "fp32 权重" | 优化器更新所作用的高精度参数副本 |
+| Reduce_scatter | "切分总和" | 只向每个 rank 交付其分片的梯度总和 |
 
-## 进一步阅读
+## 延伸阅读
 
 - [Rajbhandari et al, ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054)
-- [DeepSpeed ZeRO documentation](https://www.deepspeed.ai/tutorials/zero/)
-- [PyTorch FSDP documentation](https://pytorch.org/docs/stable/fsdp.html)
-- 第十九阶段 第七十六课 - 减少_分散和聚合
-- 阶段19课80 - 切片检查点, ZeRO国家必须使用
+- [DeepSpeed ZeRO 文档](https://www.deepspeed.ai/tutorials/zero/)
+- [PyTorch FSDP 文档](https://pytorch.org/docs/stable/fsdp.html)
+- Phase 19 Lesson 76 - 本课所依托的 reduce_scatter 和 allgather
+- Phase 19 Lesson 80 - ZeRO 状态必须使用的分片检查点

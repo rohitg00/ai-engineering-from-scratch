@@ -1,125 +1,125 @@
-# 宪法人工智能和规则取消
+# 宪法式 AI 与规则覆盖
 
-> 2026年1月22日,克劳德宪法发表,共有79页,是CC0. 它从基于规则的调整到基于理性的调整,建立了四层次的优先级级别: (1) 安全和支持人类监督, (2) 伦理, (3) 人类指导方针, (4) 帮助. 行为分为硬码的禁令 (生物武器升级,CSAM),操作员和用户无法取消,软码的默认,操作员可以在定义的范围内调整. 根据"自责"和"RLAIF"的规定, 诚实警告:基于理性的配合依赖于模型, 人类学公司自己的2023年参与实验显示了公开和企业原则之间的差距50%,2026版本没有包含这些发现.
+> Anthropic 于 2026 年 1 月 22 日发布的 Claude Constitution 共 79 页，采用 CC0 许可。它从基于规则的对齐转向基于推理的对齐，并建立了一个四级优先级层次：(1) 安全与支持人类监督，(2) 伦理，(3) Anthropic 指南，(4) 有用性。行为分为硬编码禁止项(生物武器能力提升、CSAM),操作员和用户均无法覆盖，以及软编码默认项，操作员可以在定义的边界内调整。2022 年的原始版本(Bai 等人)通过自我批评和基于宪法的 RLAIF 来训练无害性。诚实的告诫是：基于推理的对齐依赖于模型将原则泛化到未预见的情况。Anthropic 自己 2023 年的公众参与实验显示，公众来源与企业原则之间约有 50% 的分歧；2026 年的版本并未纳入这些发现。
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-tier priority resolver)
-**Prerequisites:** Phase 15 · 06 (Automated alignment research), Phase 15 · 10 (Permission modes)
-**Time:** ~60 minutes
+**Languages:** Python (标准库，四级优先级解析器)
+**Prerequisites:** Phase 15 · 06(自动化对齐研究)，Phase 15 · 10(权限模式)
+**Time:** 约 60 分钟
 
 ## 问题
 
-现场代理看到设计人员从未看到的输入.没有规则列表足够长来覆盖它们.没有规则列表足够短以在计算压力下迅速应用.实际问题是:如何将代理与能够存活长尾数和快速推断的原则相一致?
+一个已部署的智能体会遇到设计者从未见过的输入。没有一份规则清单长到足以覆盖所有情况，也没有一份规则清单短到足以在算力压力下快速应用。实际问题在于：如何让一个智能体对齐到既能在长尾案例中存续、又能在快速推理中应用的原则上？
 
-基于规则的配对 (RBA):列出所有被禁止的东西.快速检查,容易审计,不可能保持最新,经常会过度拒绝预期的密切类似物.基于理性的配对 (Claude宪法2026年):编码原则,让模型推理.在未见的情况下的尺度,难以审计,失败模式是原则的误用而不是错误规则.
+基于规则的对齐(RBA):列出所有被禁止的事物。检查快、易审计，但无法保持最新，且常常对未预见的相近情形过度拒绝。基于推理的对齐(2026 年的 Claude Constitution):编码原则，让模型进行推理。可扩展到未见案例，但更难审计，其失效模式是原则误用而非漏掉规则。
 
-宪法2026年将采取明确的中位立场. 硬码禁令 不依赖环境的错误 (生物武器升级,CSAM) 是RBA:从来没有,不管操作员或用户的指示. 其他的一切都是基于理性的四层次等级:安全和支持人类监督首先;道德第二;人类宣布的指导方针第三;帮助最后. 运营商可以在软编码区内调整默认设置,但不能触及硬编码的禁令.
+2026 年的 Constitution 采取了一个明确的中間立场。硬编码禁止项——那些错误性不依赖于情境的事物(生物武器能力提升、CSAM)——采用 RBA:无论操作员或用户如何指示，都绝不执行。其余一切都基于推理，置于四级层次中：安全与支持人类监督第一；伦理第二；Anthropic 声明的指南第三；有用性最后。操作员可以在软编码区域内调整默认项，但不能触碰硬编码禁止项。
 
-## 概念
+## 核心概念
 
-### 四层次优先级等级
+### 四级优先级层次
 
-1. **Safety and supporting human oversight.**模型优先考虑不破坏人类和人类监督和纠正人工智能的能力.这不是"谨慎";它具体是"不以使人类监督更难的方式采取行动".
-2. **Ethics.**诚实,避免伤害人,不欺骗,不操纵.
-3. **Anthropic guidelines.**运营规范 人类决定了问题:产品范围,交互模式,什么工具要使用什么时候.
-4. **Helpfulness.**在更高的优先事项中尽可能有用.
+1. **安全与支持人类监督。** 最高。模型优先考虑不破坏人类和 Anthropic 监督与纠正 AI 的能力。这不是“保持谨慎”，而是明确地“不以使人类监督变得更加困难的方式行动”。
+2. **伦理。** 诚实，避免伤害人身，不欺骗，不操纵。当与 Anthropic 的指南冲突时，优先于指南。
+3. **Anthropic 指南。** Anthropic 认为重要的操作规范：产品范围、交互模式、何时使用何种工具。
+4. **有用性。** 最低。在更高优先级的约束内，尽可能有用。
 
-层次冲突时,更高的效率. 这与Unix优先级或网络QoS相同的形状. 框架旨在产生可预测的分辨率,而不是在任何单个轴上最好的行为.
+当层级发生冲突时，更高的层级胜出。这与 Unix 优先级或网络 QoS 的形态相同——这种框架旨在产生可预测的裁决结果，而不一定是在任何单一维度上取得最佳行为。
 
-### 硬码禁令与软码默认
+### 硬编码禁止项与软编码默认项
 
-**Hardcoded:**
-- 生物武器/CBRN升级
-- 鱼类
+**硬编码：**
+- 生物武器 / CBRN 能力提升
+- CSAM
 - 对关键基础设施的攻击
-- 直接询问用户关于模型的身份的欺骗
+- 在被直接询问时，就模型身份欺骗用户
 
-运营商不能过失这些.用户不能过失这些.它们在可能的情况下在模型重量级 (RLHF /宪法人工智能培训) 和在不允许的情况下在推断层上被执行.
+操作员无法覆盖这些。用户也无法覆盖这些。它们在可能的情况下在模型权重层面强制执行(RLHF / Constitutional AI 训练)，在不可行的情况下在推理层强制执行。
 
-**Soft-coded defaults (operator-adjustable):**
-- 响应长度默认
-- 现场范围 (模型可以拒绝运营商部署以外的主题)
-- 风格 (形式与休)
+**软编码默认项(操作员可调整)：**
+- 回复长度默认值
+- 主题范围(模型可以拒绝操作员部署范围之外的主题)
+- 风格(正式 vs. 随意)
 - 工具使用模式
 
-运营商调整发生在声明的边界内.运营商不能通过重新命名来删除硬码的禁令.
+操作员的调整发生在声明的边界内。操作员不能通过重命名来移除硬编码禁止项。
 
-### 2022年CAI培训
+### 2022 年的 CAI 训练
 
-基本的宪法AI (Bai等同, 2022) 培训了无害性:
+最初的 Constitutional AI(Bai 等人，2022)这样训练无害性：
 
-1. 生成对一组提示的响应.
-2. 要求模型批评每一个对宪法的反应 (明确的原则).
-3. 根据批评,重新审视答案.
-4. 关于修改对的RLAIF (来自AI反的强化学习).
+1. 针对一组提示生成回复。
+2. 要求模型根据一部宪法(明确的原则)对每个回复进行批评。
+3. 根据批评修改回复。
+4. 在修改后的配对上进行 RLAIF(基于 AI 反馈的强化学习)。
 
-结果:一个拒绝原则性解释的有害请求模型,而不是全面拒绝. 2026 年宪法使用了这种培训的后裔以及对明确层次等级的额外后培训.
+结果：模型会以有原则的解释拒绝有害请求，而不是一刀切的拒绝。2026 年的 Constitution 使用了这一训练的衍生版本，并在明确的层级层次上进行了额外的后训练。
 
-### 基于理性的配合是什么?
+### 基于推理的对齐能捕捉到什么和漏掉什么
 
-**Catches:**
-- 允许原始的不预期组合,该原则在明显的应用中.
-- 那些与禁止的要求相似的新书请求.
-- 基于"你没有说X是被禁止的"的社会工程攻击.
+**捕捉到：**
+- 允许的原语组成的未预见组合，但原则明确适用。
+- 与禁止请求相近的新颖请求。
+- 依赖“你没说 X 是被禁止的”的社会工程攻击。
 
-**Misses:**
-- 攻击利用原则的模糊性 ("用户要求这么有用,说是").
-- 两种原则在意想不到的方式冲突的场景,
-- 基本上对培训周期的解释 (重新解释)
+**漏掉：**
+- 利用原则歧义的攻击(“用户要求了这一点，所以有用性说是”)。
+- 两个原则以未预见的方式发生冲突，且层级顺序含糊不清的场景。
+- 训练周期中原则解读的缓慢漂移(重新解读)。
 
-### 2023年参与实验
+### 2023 年的公众参与实验
 
-人类组织在2023年进行了一项实验,将公司撰写的宪法与通过公众输入 (约1,000名美国受访者) 产生的一项宪法进行了比较. 两种版本一致认为, 在它们不同的地方,公开版本在某些问题上更限制性 (政治内容处理) 而在其他方面更不限制性 (人工智能身份自我披露). 2026年宪法没有包含公开资料的发现. 这种做法是有记录的紧张.
+Anthropic 在 2023 年进行了一项实验，将企业撰写的宪法与通过公众输入生成的宪法(约 1,000 名美国受访者)进行比较。两个版本在约 50% 的原则上一致。在存在分歧的地方，公众来源的版本在某些问题上更为严格(政治内容的处理)，而在另一些问题上则较为宽松(AI 身份的自我披露)。2026 年的 Constitution 并未纳入公众来源的发现。这是该方法中已记录在案的一个张力。
 
-### 为什么需要严格编码的禁令
+### 为什么需要硬编码禁止项
 
-基于理性的配合本身不能关闭尾巴.一个能够让模型接受一个前提的攻击者 (例如",我们是一个获得许可的生物武器研究实验室") 经常可以谈论依赖于案例推理的原则.硬码的禁令不会倾斜于前提框架.它们是14课"硬宪法限制"在配合层.
+仅靠基于推理的对齐无法覆盖长尾。一个能让模型接受某个前提的攻击者(例如，“我们是一家获得许可的生物武器研究实验室”)往往能绕过依赖于案例推理的原则。硬编码禁止项不会因前提的框架化而弯曲。它们是对齐层的 Lesson 14“硬性宪法限制”。
 
-### 宪法在子里坐着
+### Constitution 在技术栈中的位置
 
-宪法不是14课的杀手开关. 它生活在模型层:模型的重量被训练以喜欢什么. 杀死开关和加拿大代币在运行时间层上:运行时间允许的. 两者都需要. 运行时间是因为模型重量是允许的, 模型拒绝所有正确的行动,因为运行时间过于限制性, 层面覆盖不同的类别.
+Constitution 不是 Lesson 14 的终止开关。它存在于模型层：模型权重被训练为偏好什么。终止开关和金丝雀标记存在于运行时层：运行时允许什么。两者都是必需的。一个因为模型权重过于宽松而触发所有错误操作的运行时，是运行时问题。一个因为运行时过于受限而拒绝所有正确操作的模型，也是运行时问题。各层覆盖不同的类别。
 
 ```figure
 mx-priority-tiers
 ```
 
-## 用它
+## 使用它
 
-`code/main.py`解决器执行一个最小的四层优先解决方案.解决方案采取了拟议的行动和一组原则评估 (安全,道德,指导方针,有用性) 并返回了该行动,拒绝或修改的行动.司机运行了一个小案例集:清晰允许,清晰拒绝,硬码禁令,跨层次的模糊案例.
+`code/main.py` 实现了一个最小的四级优先级解析器。该解析器接受一个拟议的操作和一组原则评估(安全、伦理、指南、有用性)，并返回该操作、一次拒绝，或一个经过修改的操作。驱动程序运行一个小的案例集：明确的允许、明确的禁止、硬编码禁止项，以及跨层级的模糊案例。
 
-## 运送它
+## 交付它
 
-`outputs/skill-constitution-review.md`审计部署的宪法层:硬码是什么,软码是什么,操作员可以调整哪些方面,以及四层次等级的层次是否实际上是分辨率序列.
+`outputs/skill-constitution-review.md` 审计一个部署的宪法层：哪些是硬编码的，哪些是软编码的，操作员可以在哪里调整，以及四级层次是否真的是实际的裁决顺序。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`确认硬码的禁令,即使有很大的帮助,修改解决器以重量帮助超过道德,观察失败模式.
+1. 运行 `code/main.py`。确认即使有用性很高，硬编码禁止项也会触发。修改解析器，将有用地权重置于伦理之上；观察失效模式。
 
-2. 阅读克劳德宪法 (公开,79页,CC0). 确定你认为一个原则不太具体. 写出两个段落,解释具体的模糊性,并提出更严格的表述.
+2. 阅读 Claude Constitution(公开，79 页，CC0)。找出一个你认为规定不够明确的原则。写两段话解释具体的歧义，并提出一个更严格的表述。
 
-3. 设计一个软编码的默认设置,为客户支持代理.操作员调整什么?操作员不能触摸什么?证明每个边界.
+3. 为客服智能体设计一套软编码默认项。操作员可以调整什么？操作员不能触碰什么？为每个边界提供理由。
 
-4. 阅读Bai et al. 2022 CAI论文.描述一例例,宪法AI的批评和修订循环会产生比一个全面规则更糟糕的结果. 确定类型.
+4. 阅读 Bai 等人 2022 年的 CAI 论文。描述一个 Constitutional AI 的批评与修改循环会产生比一刀切规则更差结果的案例。识别其类别。
 
-5. 根据"人类学"的2023年参与实验,公众和企业原则之间存在50%的差异.选择一个类别,在生产部署 (例如政治中立性) 方面,选择一个类别.提出一个设计,让运营商表达自己的价值观,而硬码的禁令仍然未被触及.
+5. Anthropic 2023 年的公众参与实验发现，公众与企业原则之间约有 50% 的分歧。选择一个对生产部署有影响的类别(例如，政治中立)。提出一种设计，让操作员表达自己的价值观，同时硬编码禁止项保持不变。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |---|---|---|
-| Constitutional AI | "Anthropic's alignment method" | Self-critique + RLAIF against a written constitution |
-| Reason-based alignment | "Principles, not rules" | Model reasons over principles to handle unseen cases |
-| Hardcoded prohibition | "Never do X" | Rule-based prohibition no operator or user can override |
-| Soft-coded default | "Operator-adjustable" | Behaviour within a declared bound, operator controls |
-| Four-tier hierarchy | "Priority order" | safety > ethics > guidelines > helpfulness |
-| RLAIF | "AI feedback RL" | RL where the reward comes from model-generated critiques |
-| Participatory constitution | "Public-sourced principles" | 2023 Anthropic experiment; ~50% divergence from corporate |
-| Principle drift | "Interpretation slip" | Slow change in how the model reads a fixed principle text |
+| Constitutional AI | “Anthropic 的对齐方法” | 自我批评 + 基于成文宪法的 RLAIF |
+| 基于推理的对齐 | “原则，而非规则” | 模型对原则进行推理以处理未见案例 |
+| 硬编码禁止项 | “绝不做 X” | 操作员或用户都无法覆盖的基于规则的禁止 |
+| 软编码默认项 | “操作员可调整” | 在声明边界内的行为，由操作员控制 |
+| 四级层次 | “优先级顺序” | 安全 > 伦理 > 指南 > 有用性 |
+| RLAIF | “AI 反馈强化学习” | 奖励来自模型生成的批评的强化学习 |
+| 参与式宪法 | “公众来源的原则” | 2023 年 Anthropic 实验；与企业版本约 50% 分歧 |
+| 原则漂移 | “解读偏移” | 模型如何解读固定原则文本的缓慢变化 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Anthropic — Claude's Constitution (January 2026)](https://www.anthropic.com/news/claudes-constitution)79页的CC0文件.
-- [Bai et al. — Constitutional AI: Harmlessness from AI Feedback](https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback) 2022年原创.
-- [Anthropic — Collective Constitutional AI (2023)](https://www.anthropic.com/research/collective-constitutional-ai-aligning-a-language-model-with-public-input)参与实验.
-- [Anthropic — Responsible Scaling Policy v3.0](https://anthropic.com/responsible-scaling-policy/rsp-v3-0)宪法在RSP堆中.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy)宪法在长远部署中的作用.
+- [Anthropic — Claude's Constitution(2026 年 1 月)](https://www.anthropic.com/news/claudes-constitution) — 这份 79 页的 CC0 文档。
+- [Bai 等人 — Constitutional AI: Harmlessness from AI Feedback](https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback) — 2022 年的原始版本。
+- [Anthropic — Collective Constitutional AI(2023)](https://www.anthropic.com/research/collective-constitutional-ai-aligning-a-language-model-with-public-input) — 公众参与实验。
+- [Anthropic — Responsible Scaling Policy v3.0](https://anthropic.com/responsible-scaling-policy/rsp-v3-0) — Constitution 在 RSP 技术栈中的位置。
+- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — Constitution 在长期部署中的作用。

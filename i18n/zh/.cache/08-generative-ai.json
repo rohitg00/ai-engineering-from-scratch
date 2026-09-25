@@ -1,17 +1,17 @@
 {
   "phases/08-generative-ai/01-generative-models-taxonomy-history/docs/en.md": "ffd3a1abd851ac44929ef552e8c573e22ab8e45997119815e267dc68f179ea52",
-  "phases/08-generative-ai/02-autoencoders-vae/docs/en.md": "09d80cdcdfbcc7fcd85dcdba56b67cf8923e05ec5883f1f4c5f4525ae82d14b6",
-  "phases/08-generative-ai/03-gans-generator-discriminator/docs/en.md": "db7fe86ffad9d10f6c5a3af0a1192fde88538af04589e34a21472b8769a1cdf8",
-  "phases/08-generative-ai/04-conditional-gans-pix2pix/docs/en.md": "d6bbfa6ac4d6dc5ee373169e15023f9789b88a85ed0a7152ff0d588615c3ded7",
-  "phases/08-generative-ai/05-stylegan/docs/en.md": "4b67d997dd5a842de48754015af22b8a53395131d228b28145656a4fab111e75",
-  "phases/08-generative-ai/06-diffusion-ddpm-from-scratch/docs/en.md": "f62dd0eaa055920ebe0ae369fd734c5b0e6ab90ce3f31f485487d7d4cd7a86f8",
   "phases/08-generative-ai/07-latent-diffusion-stable-diffusion/docs/en.md": "31a712aa953cffde8d835b2d6776923c98ca0946f06adb2c53f2694863ba6941",
   "phases/08-generative-ai/08-controlnet-lora-conditioning/docs/en.md": "cc1f1598103a54fe7dda2459c8e0c172c22109098a64f730ac2dbb9d251e83b2",
   "phases/08-generative-ai/09-inpainting-outpainting-editing/docs/en.md": "a0a39b1a67b7b04440df938be761512cc0fc841d15d2ca492e7d7cdbad0cdbc2",
   "phases/08-generative-ai/10-video-generation/docs/en.md": "5e91c7daf3c94dce2a239e36f6cf07314359b21629aac1e2f47910d9212c53d1",
-  "phases/08-generative-ai/11-audio-generation/docs/en.md": "c9ead5e0d8b697a96395667f19e8968268865c09c809cbc1f32eed2b81fe010d",
   "phases/08-generative-ai/12-3d-generation/docs/en.md": "ff570bbe7e4e91898a1277b64011cd2f5bdd1e6bd4dbb5687d8e25f14fd1eeff",
-  "phases/08-generative-ai/13-flow-matching-rectified-flows/docs/en.md": "3b092712de5baa4726f5b090215c3d6e259e1858c7dcc512cc0bc81fea3a8a60",
   "phases/08-generative-ai/14-evaluation-fid-clip-score/docs/en.md": "4d3065d894662f8b621270106203c8f7a16d990c47fee5cba6ed66ee6b9c97ea",
-  "phases/08-generative-ai/19-visual-autoregressive-var/docs/en.md": "e7444b2327b8996ed0a0a266833e7ae86822f1add71474db7e045a6194011eb2"
+  "phases/08-generative-ai/03-gans-generator-discriminator/docs/en.md": "db7fe86ffad9d10f6c5a3af0a1192fde88538af04589e34a21472b8769a1cdf8",
+  "phases/08-generative-ai/05-stylegan/docs/en.md": "4b67d997dd5a842de48754015af22b8a53395131d228b28145656a4fab111e75",
+  "phases/08-generative-ai/19-visual-autoregressive-var/docs/en.md": "e7444b2327b8996ed0a0a266833e7ae86822f1add71474db7e045a6194011eb2",
+  "phases/08-generative-ai/02-autoencoders-vae/docs/en.md": "09d80cdcdfbcc7fcd85dcdba56b67cf8923e05ec5883f1f4c5f4525ae82d14b6",
+  "phases/08-generative-ai/06-diffusion-ddpm-from-scratch/docs/en.md": "f62dd0eaa055920ebe0ae369fd734c5b0e6ab90ce3f31f485487d7d4cd7a86f8",
+  "phases/08-generative-ai/11-audio-generation/docs/en.md": "c9ead5e0d8b697a96395667f19e8968268865c09c809cbc1f32eed2b81fe010d",
+  "phases/08-generative-ai/13-flow-matching-rectified-flows/docs/en.md": "3b092712de5baa4726f5b090215c3d6e259e1858c7dcc512cc0bc81fea3a8a60",
+  "phases/08-generative-ai/04-conditional-gans-pix2pix/docs/en.md": "d6bbfa6ac4d6dc5ee373169e15023f9789b88a85ed0a7152ff0d588615c3ded7"
 }

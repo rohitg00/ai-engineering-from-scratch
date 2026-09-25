@@ -1,51 +1,51 @@
-# 主题建模  LDA 和 BERTopic
+# 主题建模 — LDA 与 BERTopic
 
-> 文件是主题的混合物,主题是词汇上的分布.BERTopic:文件集群在嵌入空间中,集群是主题.相同的目标,不同的分解.
+> LDA：文档是主题的混合，主题是词上的分布。BERTopic：文档在嵌入空间中聚类，簇即主题。目标相同，分解方式不同。
 
 **Type:** Learn
 **Languages:** Python
-**Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word2Vec)
-**Time:** ~45 minutes
+**Prerequisites:** Phase 5 · 02 (BoW + TF-IDF)、Phase 5 · 03 (Word2Vec)
+**Time:** 约 45 分钟
 
-## 问题
+## 问题所在
 
-你有1万张客户支持门票,5万条新闻文章或200万条推文.你需要知道收集内容是什么,而不需要阅读它.你没有标签类别.你甚至不知道有多少类别.
+你手上有 10,000 条客户支持工单、50,000 篇新闻文章，或 200,000 条推文。你需要在不通读的情况下了解这个集合的内容。你没有标注好的类别，甚至不知道存在多少个类别。
 
-给它一个体积,回来一组连贯的主题,
+主题建模可以在无监督的情况下回答这个问题。给它一个语料库，它会返回一小组连贯的主题，以及每篇文档在这些主题上的分布。
 
-两个算法家族主导.LDA (2003) 将每个文档视为隐藏的主题的混合,每个主题视为词汇分布.推理是贝耶斯.它仍然在生产中运输,需要混合成员主题分配和可解释的词汇水平概率分布.
+两大算法家族占主导地位。LDA（2003）把每篇文档视为潜在主题的混合，把每个主题视为词上的分布。推断是贝叶斯式的。当你需要混合归属的主题分配以及可解释的词级概率分布时，它仍然在生产环境中使用。
 
-BERTopic (2020) 用BERT编码文件,用UMAP减少维度,用HDBSCAN集群,并通过基于类的TF-IDF提取主题词.它在短文本,社交媒体和任何语义相似性比词汇重叠更重要的地方都赢得了胜利. 一份文件得到了一个主题,这是一种长形式内容的限制.
+BERTopic（2020）用 BERT 对文档编码，用 UMAP 降维，用 HDBSCAN 聚类，并通过基于类别的 TF-IDF 提取主题词。它在短文本、社交媒体以及语义相似性比词重叠更重要的场景中占优。每篇文档只分配到一个主题，这对长文本是一个限制。
 
-这一课就建立了对两个人的直觉,
+本课为两者建立直观理解，并说明针对给定语料库应选哪一个。
 
-## 概念
+## 核心概念
 
 ![LDA mixture model vs BERTopic clustering](../assets/topic-modeling.svg)
 
-**LDA generative story.**每个主题都是单词的分布.每份文件都是单词的混合物.为了生成一个词,在文档中取样一个主题,然后取样一个词从该主题的分布中.推理逆转这一点:给出观察到的单词,推断每份文件的主题分布和每份话题的词分布.崩的吉布斯样本或变化贝斯做了数学.
+**LDA 生成故事。** 每个主题是词上的分布。每篇文档是主题的混合。要生成文档中的一个词，先从文档的主题混合中采样一个主题，再从该主题的分布中采样一个词。推断是反向过程：给定观测到的词，推断每篇文档的主题分布和每个主题的词分布。塌缩 Gibbs 采样或变分贝叶斯负责其中的数学计算。
 
-关键 LDA输出:
+LDA 的关键输出：
 
-- `doc_topic`列表`(n_docs, n_topics)`,每行总数为1 (文档的主题混合).
-- `topic_word`列表`(n_topics, vocab_size)`,每行总数为1 (主题的词分布).
+- `doc_topic`：矩阵 `(n_docs, n_topics)`，每行和为 1（文档的主题混合）。
+- `topic_word`：矩阵 `(n_topics, vocab_size)`，每行和为 1（主题的词分布）。
 
-**BERTopic pipeline.**
+**BERTopic 流水线。**
 
-1. 编码每个文档用句子变换器 (例如, `all-MiniLM-L6-v2`它们是384维向量.
-2. 通过UMAP将维度降低到5维度.BERT嵌入式太低于结.
-3. 基于密度,产生变量尺寸的集群和"异常"标签.
-4. 对于每个集群,计算基于类的TF-IDF在集群文件中以提取顶级词.
+1. 用句子 transformer（例如 `all-MiniLM-L6-v2`）对每篇文档编码。得到 384 维向量。
+2. 用 UMAP 降到约 5 维。BERT 嵌入的维度太高，不适合直接聚类。
+3. 用 HDBSCAN 聚类。基于密度，产生大小可变的簇以及一个“离群点”标签。
+4. 对每个簇，在该簇的文档上计算基于类别的 TF-IDF，提取top词。
 
-输出是每份文件的一个主题 (加上 -1 异常标签). 选择性是通过HDBSCAN的概率向量进行软会员.
+输出是每篇文档一个主题（外加 -1 离群标签）。可选地，通过 HDBSCAN 的概率向量得到软归属。
 
 ```figure
 topic-drift
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:通过 scikit-learn进行LDA
+### 第 1 步：用 scikit-learn 实现 LDA
 
 ```python
 from sklearn.feature_extraction.text import CountVectorizer
@@ -79,9 +79,9 @@ def print_top_words(lda, feature_names, n_top=10):
         print(f"topic {idx}: {' '.join(words)}")
 ```
 
-注意:删除停止字,min_df和max_df过稀有和无处不在的术语, CountVectorizer (不是TfidfVectorizer) 因为LDA预计原始计数.
+注意：已去除停用词，min_df 和 max_df 过滤罕见词和无处不在的词，使用 CountVectorizer（而非 TfidfVectorizer），因为 LDA 期望原始计数。
 
-### 步骤2:BERTopic (生产)
+### 第 2 步：BERTopic（生产级）
 
 ```python
 from bertopic import BERTopic
@@ -100,45 +100,45 @@ for topic_id in valid_topics[:5]:
     print(f"topic {topic_id}: {topic_model.get_topic(topic_id)[:10]}")
 ```
 
-镜开了`Topic != -1`降低BERTopic的外向桶 (HDBSCAN无法集结文件). `min_topic_size`控制HDBSCAN的最小集群大小;BERTopic的库默认是10.本例明确设置为15为课程规模.对于超过10,000份文件,增加到50或100.
+对 `Topic != -1` 的过滤会丢弃 BERTopic 的离群桶（HDBSCAN 无法聚类的文档）。`min_topic_size` 控制 HDBSCAN 的最小簇大小；BERTopic 库的默认值是 10。本例针对本课的规模将其显式设为 15。对于超过 10,000 篇文档的语料库，建议提高到 50 或 100。
 
-### 步骤3:评估
+### 第 3 步：评估
 
-问题是,这些词是否一致.
+两种方法都输出主题词。问题是这些词是否连贯。
 
-- **Topic coherence (c_v).**结合了在滑动窗口背景下顶级词对的NPMI (标准化的点向互通信息),将分数集成成主题向量,并通过共数相似性进行比较.更高更好.使用 `gensim.models.CoherenceModel`随着`coherence="c_v"`现在,我们要去.
-- **Topic diversity.**专题中所有主题的顶级词中独特词的比例.
-- **Qualitative inspection.**读一读每一个话题的头条词.它们是否命名一个真实的东西?
+- **主题一致性（c_v）。** 在滑动窗口上下文中计算 top 词对的 NPMI（归一化逐点互信息），将分数聚合成主题向量，并通过余弦相似度比较这些向量。越高越好。使用 `gensim.models.CoherenceModel` 配合 `coherence="c_v"`。
+- **主题多样性。** 所有主题的 top 词中唯一词的比例。越高越好（主题之间不重叠）。
+- **定性检查。** 阅读每个主题的 top 词。它们是否指向某个真实的东西？人工判断仍是最后一道防线。
 
-## 什么时候选择哪个
+## 何时选哪一个
 
-| Situation | Pick |
+| 情况 | 选择 |
 |-----------|------|
-| Short text (tweets, reviews, headlines) | BERTopic |
-| Long documents with topic mixtures | LDA |
-| No GPU / limited compute | LDA or NMF |
-| Need document-level multi-topic distributions | LDA |
-| LLM integration for topic labeling | BERTopic (direct support) |
-| Resource-constrained edge deployment | LDA |
-| Max semantic coherence | BERTopic |
+| 短文本（推文、评论、标题） | BERTopic |
+| 具有主题混合的长文档 | LDA |
+| 无 GPU / 算力有限 | LDA 或 NMF |
+| 需要文档级多主题分布 | LDA |
+| 用 LLM 做主题标注 | BERTopic（直接支持） |
+| 资源受限的边缘部署 | LDA |
+| 追求最大语义一致性 | BERTopic |
 
-文件长度是最大的实际考虑因素.BERT嵌入式缩短;LDA计算工作在任何长度.对于文件长于嵌入式模型的文本,要么使用chunk + agregate或使用LDA.
+最大的实际考量是文档长度。BERT 嵌入会截断；LDA 的词计数对任意长度都有效。对于超过嵌入模型上下文长度的文档，要么分块再聚合，要么使用 LDA。
 
-## 用它
+## 实践中的使用
 
-现在,我们要做什么?
+2026 年的技术栈：
 
-- **BERTopic.**默认的短文本和任何语义的东西.
-- **`gensim.models.LdaModel`.**经典的LDA生产,成熟,战斗测试.
-- **`sklearn.decomposition.LatentDirichletAllocation`.**实验的LDA很容易.
-- **NMF.**快速替代LDA,短文本的质量相似.
-- **Top2Vec.**类似于BERTopic的设计. 社区较小,但在一些基准上很好.
-- **FASTopic.**在非常大的体体上,比BERTopic更快.
-- **LLM-based labeling.**运行任何集群,然后要求一个模型命名每个集群.
+- **BERTopic。** 短文本以及任何语义重要的场景的默认选择。
+- **`gensim.models.LdaModel`。** 经典 LDA 用于生产环境，成熟，久经考验。
+- **`sklearn.decomposition.LatentDirichletAllocation`。** 易于用于实验的 LDA。
+- **NMF。** 非负矩阵分解。LDA 的快速替代方案，在短文本上质量相当。
+- **Top2Vec。** 设计与 BERTopic 类似。社区较小，但在某些基准上表现良好。
+- **FASTopic。** 更新，在超大规模语料库上比 BERTopic 更快。
+- **基于 LLM 的标注。** 运行任意聚类，然后提示模型为每个簇命名。
 
-## 运送它
+## 上线部署
 
-保存如`outputs/skill-topic-picker.md`其他:
+保存为 `outputs/skill-topic-picker.md`：
 
 ```markdown
 ---
@@ -160,25 +160,25 @@ Given a corpus description (document count, avg length, domain, language, comput
 Refuse BERTopic on documents longer than the embedding model's context window without a chunking strategy. Refuse LDA on very short text (tweets, reviews under 10 tokens) as coherence collapses. Flag any n_topics choice below 5 as likely wrong; flag >200 on corpora under 40k docs as likely over-splitting.
 ```
 
-## 运动
+## 练习
 
-1. **Easy.**按LDA适应20个新闻群数据集中的5个主题.按主题打印前10个词.手动标记每个主题.算法是否找到真正的类别?
-2. **Medium.**根据LDA的数据,比较发现的主题数量,顶尖词汇和质量一致性.哪个更清洁地表现出实际类别?
-3. **Hard.**在您的作品中计算LDA和BERTopic的c_v一致性.运行每个 5, 10, 20, 50个主题.图集一致性与主题数量.报告哪种方法在主题数量中更稳定.
+1. **简单。** 在 20 Newsgroups 数据集上拟合 5 个主题的 LDA。打印每个主题的 top 10 词。手动为每个主题命名。算法找到真实的类别了吗？
+2. **中等。** 在相同的 20 Newsgroups 子集上拟合 BERTopic。比较两种方法找到的主题数量、top 词以及定性一致性。哪一种更清晰地呈现出真实类别？
+3. **困难。** 在你的语料库上为 LDA 和 BERTopic 计算 c_v 一致性。分别用 5、10、20、50 个主题运行。绘制一致性与主题数量的关系图。报告哪种方法在不同主题数量下更稳定。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|-----------------------|
-| Topic | A thing the corpus is about | A probability distribution over words (LDA) or a cluster of similar documents (BERTopic). |
-| Mixed membership | Doc is multiple topics | LDA assigns each document a distribution over all topics. |
-| UMAP | Dimensionality reduction | Manifold learning that preserves local structure; used in BERTopic. |
-| HDBSCAN | Density clustering | Finds variable-size clusters; produces "noise" label (-1) for outliers. |
-| c_v coherence | Topic quality metric | Average pointwise mutual information of top topic words within sliding windows. |
+| 主题 | 语料库所涉及的一个东西 | 词上的概率分布（LDA）或相似文档的簇（BERTopic）。 |
+| 混合归属 | 文档属于多个主题 | LDA 为每篇文档分配所有主题上的一个分布。 |
+| UMAP | 降维 | 保持局部结构的流形学习；用于 BERTopic。 |
+| HDBSCAN | 密度聚类 | 找到大小可变的簇；为离群点产生“噪声”标签（-1）。 |
+| c_v 一致性 | 主题质量指标 | 滑动窗口内主题 top 词的平均逐点互信息。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Blei, Ng, Jordan (2003). Latent Dirichlet Allocation](https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf)LDA的报纸.
-- [Grootendorst (2022). BERTopic: Neural topic modeling with a class-based TF-IDF procedure](https://arxiv.org/abs/2203.05794)BERTopic论文
-- [Röder, Both, Hinneburg (2015). Exploring the Space of Topic Coherence Measures](https://svn.aksw.org/papers/2015/WSDM_Topic_Evaluation/public.pdf)报纸介绍了C_V和朋友.
-- [BERTopic documentation](https://maartengr.github.io/BERTopic/)生产参考. 优秀的例子.
+- [Blei, Ng, Jordan (2003). Latent Dirichlet Allocation](https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf) — LDA 原始论文。
+- [Grootendorst (2022). BERTopic: Neural topic modeling with a class-based TF-IDF procedure](https://arxiv.org/abs/2203.05794) — BERTopic 原始论文。
+- [Röder, Both, Hinneburg (2015). Exploring the Space of Topic Coherence Measures](https://svn.aksw.org/papers/2015/WSDM_Topic_Evaluation/public.pdf) — 提出 c_v 及其他一致性度量的论文。
+- [BERTopic documentation](https://maartengr.github.io/BERTopic/) — 生产环境参考。示例非常出色。

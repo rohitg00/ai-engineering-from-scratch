@@ -1,24 +1,24 @@
-# 从零开始的数据并行DP
+# 从零实现数据并行 DDP
 
-> 分布数据并行是所有降低的顶部的子. 包装一个模型,从排列0播放最初参数,使每个排列开始相同,安装一个向后的子在每个参数上,产生降低梯度的全部降低,其余是梯度下降.整个模式是200行.
+> DistributedDataParallel 是构建在 allreduce 之上的一个 hook。包装一个模型，从 rank 0 广播初始参数使每个 rank 的起点完全一致，在每个参数上安装一个对其梯度发起 allreduce 的反向 hook，剩下的就是梯度下降。整个模式只需 200 行代码。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 19 Track C lessons 42-49
-**Time:** ~90 min
+**Prerequisites:** 第 19 阶段 Track C 第 42-49 课
+**Time:** ~90 分钟
 
 ## 学习目标
 
-- 电线`DistributedDataParallel`形包装,可传输初始参数,并将向后降低梯度.
--  Spawn N CPU 排名为`torch.multiprocessing.spawn`通过文件的约会.
-- 通过对相同数据进行测量,并显示每个步骤参数等效率来证明梯度同步正确性.
-- 保护使用桶 (渐变融合) 和重叠 (后退时电流) 作为将工作的DDP转化为生产DDP的两个变化.
+- 实现一个 `DistributedDataParallel` 形态的包装器，广播初始参数并在反向传播后对梯度做 allreduce。
+- 使用 `torch.multiprocessing.spawn` 基于 gloo 后端和基于文件方式的 rendezvous，启动 N 个 CPU rank。
+- 通过在相同数据上顺序训练同一个模型，并证明逐步参数等价，来验证梯度同步的正确性。
+- 论证桶(梯度融合)和重叠(反向传播期间的通信)是把一个可用的 DDP 变成生产级 DDP 的两项关键改进。
 
 ## 问题
 
-一亿参数模型,具有12GB的激活,不适合于一个消费者GPU.即使它适合,训练也需要几周.数据平行将批量分为N排行,每个排行计算其碎片的前后,并且在每个步骤上每个排行的梯度被总和,因此所有N副本都保持相同.总的梯度是优化器步骤.
+一个 10 亿参数、带 12 GB 激活值的模型放不进单张消费级 GPU。即使放得下，训练也要数周。数据并行把批次切分到 N 个 rank，每个 rank 在自己的分片上计算前向和反向，且每一步都对所有 rank 的梯度求和，使全部 N 份副本保持一致。求和后的梯度才是优化器步进所用的梯度。
 
-没有梯度同步,N复制器通过步骤2分离. 模型不再是"一个模型训练在更多数据"的,它是N个独立的模型, 由于梯度同步不佳 (每参数每次减少一个,没有重叠,没有桶) 网络是瓶, 由于DDP的技术, gradient同步几乎与计算相比自由. 标准的 PyTorch DDP 通过将梯度加上,重叠下层的倒退,并使用NCCL在NVLink上实现这一目标. 我们可以用GLOO在CPU上做这三件事,并学习相同的课程.
+没有梯度同步，N 个副本在第 2 步就会发散。模型不再是"用更多数据训练的一个模型"，而是恰好共享初始权重的 N 个独立模型。梯度同步做得不好(每个参数一次 allreduce、无重叠、无分桶)时，网络成为瓶颈，GPU 空转等待网络传输。DDP 的技艺在于让梯度同步相对于计算几乎免费。标准的 PyTorch DDP 通过梯度分桶、将 allreduce 与下一层的反向传播重叠、以及在 NVLink 上使用 NCCL 来做到这一点。我们可以在 CPU 上用 gloo 实现这三点，并学到相同的经验。
 
 ## 概念
 
@@ -39,91 +39,91 @@ sequenceDiagram
   Note over R0,R3: optimizer.step on identical grads
 ```
 
-### 需要DDP的三个操作
+### DDP 需要的三种操作
 
-| Stage | Collective | Why |
+| 阶段 | 集合通信 | 原因 |
 |-------|-----------|-----|
-| Init | broadcast from rank 0 | Every rank starts with the same parameters |
-| After backward | allreduce of each grad | The mean gradient is what the optimiser steps on |
-| Sometimes | broadcast of buffers | Batchnorm running stats stay synchronised |
+| 初始化 | 从 rank 0 广播 | 每个 rank 从相同的参数开始 |
+| 反向传播后 | 对每个梯度做 allreduce | 平均梯度才是优化器步进所用的梯度 |
+| 偶尔 | 广播 buffer | Batchnorm 的运行统计保持同步 |
 
-### 为什么是恶意而不是总数
+### 为什么是均值而不是和
 
-平均值与世界大小不变:一个排列调节的学习率在四个排列上运行,因为每步梯度大小不会改变.没有分数的Allreduce-SUM迫使你每次改变集群大小时重新调整学习率.DDP将SUM卷起来并分开;在课中做同样的事情.
+Allreduce-SUM 除以 world_size 得到平均梯度。均值对 world_size 不变：在一个 rank 上调好的学习率在四个 rank 上同样适用，因为每步的梯度幅值不变。不除的 Allreduce-SUM 会迫使你每次改变集群规模都重新调学习率。DDP 包装 SUM 再做除法；本课也照此实现。
 
-### 为什么桶梯度
+### 为什么要对梯度分桶
 
-一个变压器有数千个参数子.每子的一个 allreduce 支付了黑暗延迟地板数千次.DDP 将梯度分为25 MB 桶,并发出一个 allreduce 桶.相同的总字节在线线上移动,但延迟在桶上被折扣.对于课程的小模型,我们将所有东西分为一个桶;结构是传递的.
+一个 Transformer 有数千个参数张量。每个张量一次 allreduce 要成千上万次支付 gloo 的延迟下限。DDP 将梯度分组到约 25 MB 的桶中，每个桶只发起一次 allreduce。线路上传输的总字节数相同，但延迟被摊销到整个桶上。对本课的小模型我们把所有东西放进一个桶；可以迁移的是这种结构。
 
-### 为什么要着种子
+### 为什么固定种子
 
-每个级别都必须呼叫`torch.manual_seed(seed + rank)`为了乱,但`torch.manual_seed(seed)`参数 init.单个共享种子意味着每个级别都看到相同的批量顺序 (失败数据平行);参数的级别特定种子意味着初始参数不一致通过浮动epsilon和梯度同步不再使复制品相同.
+每个 rank 必须用 `torch.manual_seed(seed + rank)` 做打乱，但用 `torch.manual_seed(seed)` 做参数初始化。共享同一种子意味着每个 rank 看到相同的批次顺序(使数据并行失效)；参数使用特定 rank 的种子意味着初始参数会相差浮点 epsilon，梯度同步也无法再使副本保持一致。种子模式弄错，参数等价性测试在第 1 步就会失败。
 
 ```figure
 ci-ddp-grad-sync
 ```
 
-## 建立它
+## 动手实现
 
-`code/main.py`执行:
+`code/main.py` 实现了：
 
-- `MiniMLP`具有3层的MLP,足以在几秒钟内融合,足以暴露电线.
-- `DistributedDataParallel(model, world_size)`果:在构建时发射节目,返回一个包装`sync_grads`总数和总数的毕业生按世界大小分.
-- `worker(rank, world_size, ...)`                                       `torch.distributed`开始在暗,向前,向后,同步,步骤.
-- `_reference_single_process_loop(...)`测试的结果:在每一步后,测试对字节等参数等效的测试中,
+- `MiniMLP`: 一个 3 层 MLP，小到几秒内即可收敛，大到足以暴露接线问题。
+- `DistributedDataParallel(model, world_size)`: 在构造时广播参数，返回一个包装器，其 `sync_grads` 将累计的 allreduce-summed 梯度除以 world_size。
+- `worker(rank, world_size, ...)`: 完整训练循环，包含基于 gloo 的 `torch.distributed` 初始化、前向、反向、同步、步进。
+- `_reference_single_process_loop(...)`: 在单个 rank 上顺序训练同一模型于同一数据，供测试在每个步骤之后验证字节级相等的参数等价性。
 
-运行它:
+运行：
 
 ```bash
 python3 code/main.py
 ```
 
-输出:一个步骤训练表,将单个过程损失和参数检查数与4行的DDP运行相比较.两个路径产生相同的损失曲线,以浮动epsilon,证明梯度同步是正确的.
+输出：一张逐步训练表，对比单进程的损失和参数校验和与 4 个 rank 上的 DDP 运行。两条路径产生到浮点 epsilon 精度一致的损失曲线，证明梯度同步是正确的。
 
-## 野生生产模式
+## 生产环境中的实用模式
 
-三个模式使DDP硬得足以运输.
+三种模式足以让 DDP 达到可上线的强度。
 
-**Find unused parameters.**某些前进路径会条件下跳过参数 (早期出口,专家混合路由器).跳过参数没有梯度,但DDP的桶式仍然等待它们,并减少了局. `find_unused_parameters=True`价格是每步走图,所以不要把它放下,除非你的前行分支.
+**查找未使用的参数。** 某些前向路径会条件性地跳过参数(提前退出、mixture-of-experts 路由)。被跳过的参数没有梯度，但 DDP 的 bucket-ready hook 仍在等待它们，导致 allreduce 死锁。`find_unused_parameters=True` 让 DDP 在 reduce 之前检查哪些参数获得了梯度。代价是每步一次图遍历，所以除非你的前向有分支，否则不要开启。
 
-**Static graph optimisation.**,当前的步骤稳定,`static_graph=True`预算节省每一步几毫米,而这些节约在1万步.
+**静态图优化。** 当前向在各步之间保持稳定时，`static_graph=True` 允许 DDP 预先计算桶调度。这一优化在大规模下很重要：每步节省几毫秒，在 10000 步上会累积成显著收益。
 
-**Gradient accumulation needs care.**积累在K微分钟内的梯度,而不同步每个微分钟,是10倍的吞吐量获胜.`no_sync()`忘记管理员,你就无用地减少K次,吞吐量下降到地板.
+**梯度累积需要小心。** 对 K 个微批次累积梯度而每个微批次不同步，可带来 10 倍的吞吐提升。DDP 提供 `no_sync()` 作为上下文管理器，用于暂停反向后的 allreduce。忘记这个管理器，你就会白白做 K 次 allreduce；吞吐量跌回谷底。
 
-## 用它
+## 使用它
 
-生产模式:
+生产环境模式：
 
-- **PyTorch DDP.**法规的实施.`torch.nn.parallel.DistributedDataParallel(model)`电线的互联,重叠,以及无_sync 环境.
-- **HuggingFace Accelerate.**增加一个处理的发射器`torchrun`包装的模型和包装,同样是盖子下面的DDP.
-- **Megatron-LM data parallel.**结合大型号的DDP和子平行;数据平行部分是相同的全部减后后回落模式.
+- **PyTorch DDP.** 标准实现。`torch.nn.parallel.DistributedDataParallel(model)` 实现了分桶、重叠以及 no_sync 上下文。
+- **HuggingFace Accelerate.** 增加了一个启动器，处理 `torchrun` 环境变量和模型包装。底层是相同的 DDP。
+- **Megatron-LM 数据并行.** 将 DDP 与张量并行结合用于大模型；其数据并行部分就是同样的反向后 allreduce 模式。
 
-## 运送它
+## 发布它
 
-课程78 (ZeRO分化) 将每参数allreduce取代为 reduce_scatter,因此每个级别只存储其优化状态的分化.课程81将DDP与ZeRO组合到端到端演示中.
+第 78 课(ZeRO sharding)用 reduce_scatter 取代逐参数 allreduce，使每个 rank 只存储自己的优化器状态分片。第 81 课将 DDP 与 ZeRO 组合成端到端演示。
 
-## 运动
+## 练习
 
-1. 添加可配置尺寸的梯度桶,并在更深层次的模型上测量加快与每参数减少一项的速度.
-2. 实施`no_sync()`作为一个环境管理器,并验证梯度积累与K微型相匹配的单个过程基线.
-3. 添加一个`find_unused_parameters`时时前进者跳过一个MLP层;如果没有旗,跑步将会陷入局.
-4. 取代 gloo `torch.distributed.barrier()`只有同步,以感觉到所有降低和屏障同步之间的区别.
-5. 测量梯度同步上层费用为批量1,16,256的步骤时间的小部分,并解释扩展.
+1. 添加可配置大小的梯度桶，并在更深的模型上测量其相对逐参数 allreduce 的加速比。
+2. 将 `no_sync()` 实现为上下文管理器，并验证在 K 个微批次上的梯度累积与单进程基线一致。
+3. 添加一个 `find_unused_parameters` 模式，使前向有时跳过某一 MLP 层；不加该标志时运行应当死锁。
+4. 将 gloo 替换为仅用 `torch.distributed.barrier()` 的同步，体会基于 allreduce 和基于 barrier 的同步之间的差异。
+5. 对于 batch size 1、16、256，测量梯度同步开销占步时长的比例，并解释其扩展规律。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|------------------------|
-| DDP | "Data parallel" | Wrapper that broadcasts params and allreduces grads each step |
-| Bucket | "Fuse grads" | Group N small allreduces into one large one |
-| Overlap | "Hide comm" | Issue allreduce while later layers still computing backward |
-| no_sync | "Accumulate" | Skip the post-backward allreduce for gradient accumulation |
-| find_unused | "Branchy forward" | Detect parameters with no grad before reducing |
+| DDP | "数据并行" | 每步广播参数并对梯度做 allreduce 的包装器 |
+| Bucket | "融合梯度" | 将 N 次小的 allreduce 合并为一次大的 |
+| Overlap | "隐藏通信" | 在后面的层仍在计算反向时发起 allreduce |
+| no_sync | "累积" | 为梯度累积跳过反向后的 allreduce |
+| find_unused | "分支前向" | 在 reduce 之前检测没有梯度的参数 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [PyTorch DistributedDataParallel docs](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html)
-- [PyTorch DDP internals tutorial](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html)
+- [PyTorch DistributedDataParallel 文档](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html)
+- [PyTorch DDP 内部机制教程](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html)
 - [Li et al, PyTorch Distributed: Experiences on Accelerating Data Parallel Training](https://arxiv.org/abs/2006.15704)
-- 第十九阶段 第七十六课 - 集体DDP建立在
-- 第19阶段 第78课 - ZeRO碎片取代每参数所有减小的减小_分散
+- 第 19 阶段第 76 课 - DDP 所依赖的集合通信
+- 第 19 阶段第 78 课 - ZeRO sharding 用 reduce_scatter 取代逐参数 allreduce

@@ -1,63 +1,63 @@
-# 文字与语音 (TTS)  从塔科特朗到F5和科科罗
+# 文本转语音(TTS)——从 Tacotron 到 F5 与 Kokoro
 
-> 亚斯尔将语音转换为文字;TTS将文字转换为语音.2026堆由三个部分组成:文字 →代币,代币 → mel,mel →波形.每个部分都有一个默认模型,可以适合笔记本电脑.
+> ASR 将语音转换为文本;TTS 将文本转换为语音。2026 年的技术栈分为三个部分:文本 → token,token → mel,mel → 波形。每个部分都有一个能在一台笔记本上运行的默认模型。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 09 (Seq2Seq), Phase 7 · 05 (Full Transformer)
-**Time:** ~75 minutes
+**Prerequisites:** Phase 6 · 02(频谱图与 Mel),Phase 5 · 09(Seq2Seq),Phase 7 · 05(完整 Transformer)
+**Time:** 约 75 分钟
 
 ## 问题
 
-你有一个字符串:"请提醒我在晚上6点点点灌植物".你需要一个自然听起来的3秒钟音频剪辑,有正确的音声 (暂停,压力),用正确的音符发音"植物",并在CPU上运行在300ms以下,即即可使用直播语音助理.你还需要交换声音,处理代码交换输入 ("提醒我在晚上6点,大约布?"),而不要在名字上尬.
+你有一个字符串:"Please remind me to water the plants at 6 pm."。你需要一段 3 秒的音频,听起来自然,韵律正确(停顿、重音),把 "plants" 中的元音发音正确,并且在 CPU 上 300 毫秒内运行完,以满足实时语音助手的需求。你还需要支持切换音色,处理语码转换输入("remind me at 6 pm, daijoubu?"),并且不能在人名上出丑。
 
-现代的TTS管道看起来像这样:
+现代 TTS 流水线如下:
 
-1. **Text frontend.**规范文本 (日期,数字,电子邮件),转换为音符或字幕标记,预测 prosody 功能.
-2. **Acoustic model.**文字 → 梅尔谱图.塔科特龙2 (2017),快速讲话2 (2020),VITS (2021),F5-TTS (2024),科科罗 (2024).
-3. **Vocoder.**波形:波网 (2016),波RNN,高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清高清中高清高清高清中高清高清中高清高清中高清中高清中高清中高清中高清中高清中高清中高清中高清中高清中高清中高清中
+1. **文本前端。** 归一化文本(日期、数字、邮箱),转换为音素或子词 token,预测韵律特征。
+2. **声学模型。** 文本 → mel 频谱图。Tacotron 2(2017)、FastSpeech 2(2020)、VITS(2021)、F5-TTS(2024)、Kokoro(2024)。
+3. **声码器。** Mel → 波形。WaveNet(2016)、WaveRNN、HiFi-GAN(2020)、BigVGAN(2022),以及 2024 年以后的神经编解码声码器。
 
-2026年,音声+声码器的分离模糊,并与端到端的扩散和流量匹配模型相匹配.
+到 2026 年,随着端到端扩散模型和流匹配模型的出现,声学模型 + 声码器的分界变得模糊。但"三个部分"的心智模型在调试时仍然适用。
 
-## 概念
+## 核心概念
 
 ![Tacotron, FastSpeech, VITS, F5/Kokoro side-by-side](../assets/tts.svg)
 
-**Tacotron 2 (2017).**序列2次:嵌入式 → BiLSTM编码器 →位置敏感注意 → 自动降低式LSTM解码器发射 mel 框架.慢 (AR),在长文中摇摆.仍然被引用为基线.
+**Tacotron 2(2017)。** Seq2seq:字符嵌入 → BiLSTM 编码器 → 位置敏感注意力 → 自回归 LSTM 解码器输出 mel 帧。速度慢(自回归),长文本上不稳定。仍常被作为基线引用。
 
-**FastSpeech 2 (2020).**无自行降低. 时间预测器输出每个音符的 mel 框架. 1 通过,比塔科特龙快10倍. 失去一些自然性 (单调的排列),但在任何地方都出发.
+**FastSpeech 2(2020)。** 非自回归。时长预测器输出每个音素对应多少 mel 帧。一次前向,比 Tacotron 快 10 倍。损失了一些自然度(单调对齐),但部署极为广泛。
 
-**VITS (2021).**联合训练编码器+基于流程的持续时间+高清高清高清高清单机型.主导的开源TTS 20222024.变体:YourTTS (多音箱零射击),XTTS v2 (2024,Coqui).
+**VITS(2021)。** 通过变分推断端到端联合训练编码器 + 基于流的时长模块 + HiFi-GAN 声码器。高质量,单一模型。2022–2024 年间的开源 TTS 主流。变体:YourTTS(多说话人零样本)、XTTS v2(2024,Coqui)。
 
-**F5-TTS (2024).**传输变压器与流量匹配.自然的声,零射击语音克隆, 5 秒的参考音频. 2026 年开源TTS 排名榜首. 335 亿参数.
+**F5-TTS(2024)。** 基于流匹配的扩散 Transformer。韵律自然,用 5 秒参考音频即可零样本克隆声音。位居 2026 年开源 TTS 排行榜前列。335M 参数。
 
-**Kokoro (2024).**简单的英语语,只能使用闭口语库,Apache-2.0.
+**Kokoro(2024)。** 小型(82M),可在 CPU 上运行,实时场景下最佳英语 TTS。封闭词表、仅英语,Apache-2.0 许可。
 
-**OpenAI TTS-1-HD, ElevenLabs v2.5, Google Chirp-3.**商业技术状态.ElevenLabs v2.5情感标签 ("[低声]", "[笑]") 和角色声音在2026年占据了音频书制作的主导地位.
+**OpenAI TTS-1-HD、ElevenLabs v2.5、Google Chirp-3。** 商业化顶尖水平。ElevenLabs v2.5 的情感标签("[whispered]"、"[laughing]")和角色音色在 2026 年主导有声书制作。
 
-### 声码器的进化
+### 声码器演进
 
-| Era | Vocoder | Latency | Quality |
+| 时期 | 声码器 | 延迟 | 质量 |
 |-----|---------|---------|---------|
-| 2016 | WaveNet | offline only | SOTA at release |
-| 2018 | WaveRNN | ~realtime | good |
-| 2020 | HiFi-GAN | 100× realtime | near-human |
-| 2022 | BigVGAN | 50× realtime | generalizes across speakers/langs |
-| 2024 | SNAC, DAC (neural codecs) | integrated with AR models | discrete tokens, bit-efficient |
+| 2016 | WaveNet | 仅离线 | 发布时 SOTA |
+| 2018 | WaveRNN | 约实时 | 良好 |
+| 2020 | HiFi-GAN | 100× 实时 | 接近人类 |
+| 2022 | BigVGAN | 50× 实时 | 跨说话人/语言泛化 |
+| 2024 | SNAC、DAC(神经编解码) | 与自回归模型集成 | 离散 token,比特高效 |
 
-到2026年,大多数"TTS"模型将从文本到波形的端到端;MEL谱系是一个内部表示.
+到 2026 年,大多数 "TTS" 模型已经从文本端到端直接生成波形;mel 频谱图只是内部表示。
 
 ### 评估
 
-- **MOS (Mean Opinion Score).**现在,我在上,我在上,我在上.
-- **CMOS (Comparative MOS).**对于每一个注释,更紧密的信任间隔.
-- **UTMOS, DNSMOS.**没有参考的神经MOS预测器,用于排名表.
-- **CER (Character Error Rate) via ASR.**通过Whisper运行TTS输出,计算CER与输入文本.
-- **SECS (Speaker Embedding Cosine Similarity).**语音克隆质量.
+- **MOS(平均意见得分)。** 1–5 分制,众包评分。仍是黄金标准,但极其缓慢。
+- **CMOS(对比 MOS)。** A vs B 的偏好选择。每次标注的置信区间更紧。
+- **UTMOS、DNSMOS。** 无参考的神经 MOS 预测器。用于排行榜。
+- **通过 ASR 计算 CER(字符错误率)。** 将 TTS 输出送入 Whisper,与输入文本计算 CER。可懂度的代理指标。
+- **SECS(说话人嵌入余弦相似度)。** 声音克隆质量。
 
-2026年 LibriTTS试验清洁号码:
+2026 年在 LibriTTS test-clean 上的数据:
 
-| Model | UTMOS | CER (via Whisper) | Size |
+| 模型 | UTMOS | CER(经 Whisper) | 规模 |
 |-------|-------|-------------------|------|
 | Ground truth | 4.08 | 1.2% | — |
 | F5-TTS | 3.95 | 2.1% | 335M |
@@ -70,9 +70,9 @@
 sp-tts-stack
 ```
 
-## 建立它
+## 动手实现
 
-### 步骤1:调音输入
+### 第 1 步:输入音素化
 
 ```python
 from phonemizer import phonemize
@@ -80,9 +80,9 @@ ph = phonemize("Hello world", language="en-us", backend="espeak")
 # 'həloʊ wɜːld'
 ```
 
-避免给任何低于VITS水平的质量的原始文本.
+音素是通用桥梁。除非模型质量达到 VITS 水平,否则不要直接喂入原始文本。
 
-### 步骤2:运行Kokoro (2026 CPU默认)
+### 第 2 步:运行 Kokoro(2026 年 CPU 默认选择)
 
 ```python
 from kokoro import KPipeline
@@ -91,9 +91,9 @@ audio, sr = tts("Please remind me to water the plants at 6 pm.", voice="af_bella
 # audio: float32 tensor, sr=24000
 ```
 
-运行离线,单个文件,82M参数.
+离线运行,单文件,82M 参数。
 
-### 步骤3:使用语音克隆运行F5-TTS
+### 第 3 步:运行带声音克隆的 F5-TTS
 
 ```python
 from f5_tts.api import F5TTS
@@ -105,11 +105,11 @@ wav = tts.infer(
 )
 ```
 
-通过5秒的参考片段+其转录;F5克隆了 prosody 和 timbre.
+传入 5 秒参考片段及其转写文本;F5 会克隆韵律和音色。
 
-### 步骤4:从零开始的 HiFi-GAN 声码器
+### 第 4 步:从零实现 HiFi-GAN 声码器
 
-太大了,不能适合教程脚本,但形状是:
+规模太大,无法放进一个教程脚本,但其结构是:
 
 ```python
 class HiFiGAN(nn.Module):
@@ -121,9 +121,9 @@ class HiFiGAN(nn.Module):
         return self.blocks(mel)  # -> waveform
 ```
 
-培训:对抗性 (短窗上的歧视) + 黑色谱重建损失 + 功能匹配损失.`hifi-gan`投资者或NVIDIA-NeMo.
+训练:对抗损失(在短窗口上的判别器)+ mel 频谱图重建损失 + 特征匹配损失。已经商品化——直接使用 `hifi-gan` 仓库或 nvidia-NeMo 中的预训练权重。
 
-### 步骤5:全管道 (伪代码)
+### 第 5 步:完整流水线(伪代码)
 
 ```python
 text = "Please remind me at 6 pm."
@@ -133,55 +133,55 @@ wav = vocoder(mel)                                # [T * 256]
 soundfile.write("out.wav", wav, 24000)
 ```
 
-## 用它
+## 应用场景
 
-现在,我们要做什么?
+2026 年的技术栈:
 
-| Situation | Pick |
+| 场景 | 选择 |
 |-----------|------|
-| Real-time English voice assistant | Kokoro (CPU) or XTTS v2 (GPU) |
-| Voice cloning from 5 s reference | F5-TTS |
-| Commercial character voices | ElevenLabs v2.5 |
-| Audiobook narration | ElevenLabs v2.5 or XTTS v2 + fine-tune |
-| Low-resource language | Train VITS on 5–20 h target-lang data |
-| Expressive / emotion tags | ElevenLabs v2.5 or StyleTTS 2 fine-tune |
+| 实时英语语音助手 | Kokoro(CPU)或 XTTS v2(GPU) |
+| 从 5 秒参考克隆声音 | F5-TTS |
+| 商业角色音色 | ElevenLabs v2.5 |
+| 有声书朗读 | ElevenLabs v2.5 或 XTTS v2 + 微调 |
+| 低资源语言 | 用 5–20 小时目标语言数据训练 VITS |
+| 表现力 / 情感标签 | ElevenLabs v2.5 或 StyleTTS 2 微调 |
 
-开源领导者到2026年: **F5-TTS for quality, Kokoro for efficiency**除非你是历史学家,就不要寻找塔科特朗.
+截至 2026 年的开源领先者:**追求质量选 F5-TTS,追求效率选 Kokoro**。除非你是历史研究者,否则不要碰 Tacotron。
 
-## 陷
+## 常见陷阱
 
-- **No text normalizer.**"史密斯博士"是"医生"或"驱动"? "2026"是"二十六"或"两零两六"?
-- **OOV proper nouns.**运送一个反弹图形到音形模型,用于未知的代币.
-- **Clipping.**声器输出很少剪辑,但在推断时的MEL尺度不匹配可以超越 ±1.0.`np.clip(wav, -1, 1)`现在,我们要去.
-- **Sample-rate mismatch.**科科罗输出24kHz;下游管道预计16kHz →重新样本或获得号.
+- **没有文本归一化器。** "Dr. Smith" 会被读成 "Doctor" 还是 "Drive"?"2026" 会被读成 "twenty twenty six" 还是 "two zero two six"?在音素化之前先做归一化。
+- **未登录专有名词。** "Ghumare" → "ghyu-mair"?为未知词提供一个回退的字素转音素模型。
+- **削波。** 声码器输出很少削波,但推理时 mel 缩放不匹配可能超出 ±1.0。务必使用 `np.clip(wav, -1, 1)`。
+- **采样率不匹配。** Kokoro 输出 24 kHz;而你的下游流水线期望 16 kHz → 需要重采样,否则会产生混叠。
 
-## 运送它
+## 上线部署
 
-保存如`outputs/skill-tts-designer.md`设计一个针对特定语音,延迟和语言目标的TTS管道.
+保存为 `outputs/skill-tts-designer.md`。为给定的音色、延迟和语言目标设计一个 TTS 流水线。
 
-## 运动
+## 练习
 
-1. **Easy.**跑步`code/main.py`根据玩具词汇,构建一个音符词典,估计每音符的持续时间,
-2. **Medium.**安装Kokoro,在语音上合成同一个句子`af_bella`其他`am_adam`进行对比.
-3. **Hard.**记录一个5秒的参考片,使用F5-TTS克隆它,报告SECS在参考和克隆输出之间.
+1. **简单。** 运行 `code/main.py`。从一个小型词表构建音素词典,估计每个音素的时长,并打印一个模拟的 "mel" 调度表。
+2. **中等。** 安装 Kokoro,用音色 `af_bella` 和 `am_adam` 合成同一句话。比较音频时长和主观质量。
+3. **困难。** 录制一段你自己 5 秒的参考音频。用 F5-TTS 克隆它。报告参考音频与克隆输出之间的 SECS。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|-----------------------|
-| Phoneme | Sound unit | Abstract sound class; 39 in English (ARPABet). |
-| Duration predictor | How long each phoneme lasts | Non-AR model output; integer frames per phoneme. |
-| Vocoder | Mel → waveform | Neural net mapping mel-spec to raw samples. |
-| HiFi-GAN | Standard vocoder | GAN-based; dominant 2020–2024. |
-| MOS | Subjective quality | 1–5 mean opinion score from human raters. |
-| SECS | Voice-clone metric | Cosine similarity between target and output speaker embedding. |
-| F5-TTS | 2024 open-source SOTA | Flow-matching diffusion; zero-shot cloning. |
-| Kokoro | CPU English leader | 82M-param model, Apache 2.0. |
+| Phoneme | 声音单元 | 抽象声音类别;英语有 39 个(ARPABet)。 |
+| Duration predictor | 每个音素持续多久 | 非自回归模型的输出;每个音素对应的整数帧数。 |
+| Vocoder | Mel → 波形 | 将 mel 频谱图映射到原始采样的神经网络。 |
+| HiFi-GAN | 标准声码器 | 基于 GAN;2020–2024 年的主流。 |
+| MOS | 主观质量 | 人类评分者给出的 1–5 平均意见得分。 |
+| SECS | 声音克隆指标 | 目标说话人嵌入与输出说话人嵌入之间的余弦相似度。 |
+| F5-TTS | 2024 年开源 SOTA | 流匹配扩散;零样本克隆。 |
+| Kokoro | CPU 英语领先者 | 82M 参数模型,Apache 2.0。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Shen et al. (2017). Tacotron 2](https://arxiv.org/abs/1712.05884) 后续后续的基线.
-- [Kim, Kong, Son (2021). VITS](https://arxiv.org/abs/2106.06103)基于端到端流动.
-- [Chen et al. (2024). F5-TTS](https://arxiv.org/abs/2410.06885)目前的开源SOTA.
-- [Kong, Kim, Bae (2020). HiFi-GAN](https://arxiv.org/abs/2010.05646) Vocoder,仍然在2026年发射.
-- [Kokoro-82M on HuggingFace](https://huggingface.co/hexgrad/Kokoro-82M) 2024 年的英语TTS,适用于 CPU.
+- [Shen et al. (2017). Tacotron 2](https://arxiv.org/abs/1712.05884) —— seq2seq 基线。
+- [Kim, Kong, Son (2021). VITS](https://arxiv.org/abs/2106.06103) —— 端到端基于流的方法。
+- [Chen et al. (2024). F5-TTS](https://arxiv.org/abs/2410.06885) —— 当前开源 SOTA。
+- [Kong, Kim, Bae (2020). HiFi-GAN](https://arxiv.org/abs/2010.05646) —— 到 2026 年仍在广泛部署的声码器。
+- [Kokoro-82M on HuggingFace](https://huggingface.co/hexgrad/Kokoro-82M) —— 2024 年对 CPU 友好的英语 TTS。

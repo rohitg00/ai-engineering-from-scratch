@@ -1,6 +1,6 @@
-# 感觉器
+# 感知机
 
-> 感知器是神经网络的原子. 打开它,你会发现重量,偏见和决定.
+> 感知机是神经网络的原子。把它拆开，你会发现权重、偏置和一个决策。
 
 **Type:** Build
 **Languages:** Python
@@ -9,24 +9,24 @@
 
 ## 学习目标
 
-- 在Python中从零开始实现一个 perceptron,包括重量更新规则和步骤激活函数
-- 解释为什么一个 perceptron 只有解决线性分离的问题,并证明XOR故障案例
-- 通过组合OR,NAND和AND门来构建一个多层的感知器来解决XOR
-- 训练一个双层网络,使用sigmoid激活和反扩散,自动学习XOR
+- 用 Python 从零实现一个感知机，包括权重更新规则和阶跃激活函数
+- 解释为什么单个感知机只能解决线性可分问题，并演示 XOR 失败案例
+- 通过组合 OR、NAND 和 AND 门构建多层感知机来解决 XOR
+- 训练一个带 sigmoid 激活和反向传播的两层网络，自动学习 XOR
 
 ## 问题
 
-你知道向量和点点产品.你知道一个矩阵将输入转化为输出.但是,机器如何学习使用哪种转化?
+你已经了解向量和点积。你也知道矩阵可以把输入变换为输出。但机器是如何*学习*该使用哪种变换的？
 
-感知器回答了这个问题. 它是最简单的学习机器: 取一些输入,乘以重量,添加偏见,做出二进制决定. 然后调整.就这样了.
+感知机回答了这个问题。它是最简单的学习机器：接收一些输入，乘以权重，加上偏置，然后做出二元决策。接着进行调整。就这么简单。迄今构建的每一个神经网络都是把这一想法层层堆叠而成。
 
-了解感知意味着理解"学习"在代码中实际上意味着什么:调整数字,直到输出匹配现实.
+理解感知机，就意味着理解“学习”在代码中究竟意味着什么：不断调整数字，直到输出与现实相符。
 
 ## 概念
 
-### 一个神经元,一个决定
+### 一个神经元，一个决策
 
-一个感知器采用n输入,乘以重量,总结它们,添加偏差,并通过激活函数传递结果.
+感知机接收 n 个输入，将每个输入乘以一个权重，求和，加上偏置，再把结果通过一个激活函数。
 
 ```mermaid
 graph LR
@@ -38,18 +38,18 @@ graph LR
     step --> out["output (0 or 1)"]
 ```
 
-步骤函数是残酷的:如果加重总和加偏差是 >= 0,输出 1.否则输出 0.
+阶跃函数非常直接：如果加权和加上偏置 >= 0,输出 1。否则输出 0。
 
 ```
 step(z) = 1  if z >= 0
            0  if z < 0
 ```
 
-这是一个线性分类器. 重量和偏差定义了一个线 (或更高的维度中的超平面) 将输入空间分为两个区域.
+这是一个线性分类器。权重和偏置定义了一条直线(在高维空间中是超平面)，将输入空间分成两个区域。
 
-### 决策的界限
+### 决策边界
 
-对于两个输入,感知器通过2D空间绘制了一条线:
+对于两个输入，感知机在二维空间中画出一条直线：
 
 ```
   x2
@@ -64,11 +64,11 @@ step(z) = 1  if z >= 0
   ┼───────────/──────────── x1
 ```
 
-训练将这个线路移动,直到它正确地分离了类.
+直线一侧的所有点输出 0。另一侧的所有点输出 1。训练的过程就是移动这条直线，直到它正确地分开两类。
 
 ### 学习规则
 
-感知学规则很简单:
+感知机学习规则很简单：
 
 ```
 For each training example (x, y_true):
@@ -80,11 +80,11 @@ For each training example (x, y_true):
     bias = bias + learning_rate * error
 ```
 
-如果预测是正确的,错误=0,没有什么改变.如果预测是0但应该是1,重量增加.如果预测是1但应该是0,重量减少.学习率控制每个调整的规模.
+如果预测正确，误差 = 0,什么都不变。如果预测为 0 但应为 1,权重增大。如果预测为 1 但应为 0,权重减小。学习率控制每次调整的幅度。
 
-### 关于XOR问题
+### XOR 问题
 
-这里是它破裂的地方.
+问题在这里出现了。看看这些逻辑门：
 
 ```
 AND gate:           OR gate:            XOR gate:
@@ -95,7 +95,7 @@ x1  x2  out         x1  x2  out         x1  x2  out
 1   1   1           1   1   1           1   1   0
 ```
 
- AND 和 OR 是线性分离的:你可以绘制一个单行来分离0s和1s. XOR不是.没有单行可以分离 [0,1]和 [1,0]和 [0,0]和 [1,1].
+AND 和 OR 是线性可分的：你可以画出一条直线把 0 和 1 分开。XOR 不是。没有任何一条直线能把 [0,1] 和 [1,0] 与 [0,0] 和 [1,1] 分开。
 
 ```
 AND (separable):        XOR (not separable):
@@ -108,17 +108,17 @@ AND (separable):        XOR (not separable):
        line works!          no single line works!
 ```
 
-只有一个单个感知器才能解决线性分离的问题. 敏斯基和帕珀特在1969年证明了这一点,这几乎杀死了十年的神经网络研究.
+这是一个根本性的限制。单个感知机只能解决线性可分问题。Minsky 和 Papert 在 1969 年证明了这一点，这使得神经网络研究几乎停滞了十年。
 
-解决方案:将感知子堆叠成层. 一个多层感知子可以通过将两个线性决定结合成一个非线性来解决XOR.
+解决办法：把感知机堆叠成层。多层感知机可以通过把两个线性决策组合成一个非线性决策来解决 XOR。
 
 ```figure
 perceptron-boundary
 ```
 
-## 建立它
+## 动手实现
 
-### 步骤1: 佩尔塞普特龙类
+### 第 1 步：Perceptron 类
 
 ```python
 class Perceptron:
@@ -149,7 +149,7 @@ class Perceptron:
         print(f"Did not converge after {epochs} epochs")
 ```
 
-### 步骤2:训练逻辑门
+### 第 2 步：在逻辑门上训练
 
 ```python
 and_data = [
@@ -190,7 +190,7 @@ for inputs, _ in not_data:
     print(f"  {inputs} -> {p_not.predict(inputs)}")
 ```
 
-### 步骤3: 观察XOR失败
+### 第 3 步：观察 XOR 失败
 
 ```python
 xor_data = [
@@ -209,11 +209,11 @@ for inputs, expected in xor_data:
     print(f"  {inputs} -> {result} (expected {expected}) {status}")
 ```
 
-这证明一个单个感知器不能学习XOR.
+它永远不会收敛。这就是单个感知机无法学习 XOR 的有力证明。
 
-### 步骤 4:用两个层解决XOR
+### 第 4 步：用两层解决 XOR
 
-技巧是:XOR= (x1 OR x2) 并不是 (x1 AND x2). 结合三个感知光:
+技巧在于：XOR = (x1 OR x2) AND NOT (x1 AND x2)。组合三个感知机：
 
 ```mermaid
 graph LR
@@ -252,11 +252,11 @@ for inputs, expected in xor_data:
     print(f"  {inputs} -> {result} (expected {expected})")
 ```
 
-积感知子在层层中创造出决策界限,
+四种情况全部正确。将感知机堆叠成层，可以产生单个感知机无法产生的决策边界。
 
-### 步骤5:培养两层网络
+### 第 5 步：训练一个两层网络
 
-步骤4是手动连接权重.这对XOR而言是有效的,但不是对真正的问题,你不能提前知道正确的权重.解决办法:用sigmoid取代步骤函数,通过后延伸自动学习权重.
+第 4 步是手工设定权重。这对 XOR 有效，但对于你事先不知道正确权重的真实问题则行不通。解决办法：用 sigmoid 替换阶跃函数，并通过反向传播自动学习权重。
 
 ```python
 class TwoLayerNetwork:
@@ -320,13 +320,13 @@ for inputs, expected in xor_data:
     print(f"  {inputs} -> {result:.4f} (rounded: {predicted}, expected {expected})")
 ```
 
-首先,sigmoid取代了步骤函数,它是光滑的,所以梯度存在.`train`通过这种方法,输出到隐藏层的错误会向后传播,调整每个重量以其对错误的贡献比例.
+与第 4 步有两个关键区别。第一，sigmoid 替换了阶跃函数——它是平滑的，因此梯度存在。第二，`train` 方法将误差从输出层向后传播到隐藏层，按照每个权重对误差的贡献比例进行调整。这就是 20 行代码实现的反向传播。
 
-这就是第3课的桥梁.`d_output`其他`hidden_deltas`我们将把它从这个线程中得到.
+这是通往第 03 课的桥梁。`d_output` 和 `hidden_deltas` 背后的数学是对网络图应用链式法则。我们将在那一课中正式推导它。
 
-## 用它
+## 使用它
 
-你从零开始的东西都存在于一个进口:
+你刚刚从零构建的一切，都可以通过一次导入获得：
 
 ```python
 from sklearn.linear_model import Perceptron as SkPerceptron
@@ -340,43 +340,43 @@ clf.fit(X, y)
 print([clf.predict([x])[0] for x in X])
 ```
 
-五行,你的30行.`Perceptron`并且,在Sklern版本中,我们可以看到一个类的重量,
+五行代码。你的 30 行 `Perceptron` 类做着同样的事情。sklearn 版本增加了收敛检查、多种损失函数和稀疏输入支持——但核心循环完全相同：加权和、阶跃函数、根据误差更新权重。
 
-实际的差距在规模上显现.
+真正的差距体现在规模上。生产级网络中的变化：
 
-- 步骤函数变成sigmoid,ReLU或其他流的激活
-- 通过反向扩散自动学习重量 (课3)
-- 层变得更深: 3, 10, 100+层
-- 根据此,每一个层都会从前一个层的输出中创造新的特性.
+- 阶跃函数被 sigmoid、ReLU 或其他平滑激活函数取代
+- 权重通过反向传播自动学习(第 03 课)
+- 层数更深：3 层、10 层、100 层以上
+- 同样的原理仍然成立：每一层根据上一层的输出创建新的特征
 
-一个感知器只能画直线,堆叠它们,你可以画任何形状.
+单个感知机只能画出直线。把它们堆叠起来，你就能画出任意形状。
 
-## 运送它
+## 交付成果
 
-这一课产生了:
-- `outputs/skill-perceptron.md`- 需要单层与多层架构时,
+本课产出：
+- `outputs/skill-perceptron.md` - 一项关于何时需要单层与多层架构的技能
 
-## 运动
+## 练习
 
-1. 训练一个感知器在NAND门 (通用门 - - 任何逻辑电路都可以从NAND构建).验证其重量和偏差形成有效的决策界限.
-2. 修改Perceptron类,以追踪每个时代的决策边界 (w1*x1 + w2*x2 + b = 0).在 AND 门上打印训练过程中线路的转移.
-3. 构建一个3输入感知器,只有当至少3输入中的2个是1 (多数投票函数) 时才能输出1.这是否线性分离的?为什么?
+1. 在 NAND 门(通用门——任何逻辑电路都可以由 NAND 构建)上训练一个感知机。验证它的权重和偏置构成一个有效的决策边界。
+2. 修改 Perceptron 类，在每个 epoch 中跟踪决策边界 (w1*x1 + w2*x2 + b = 0)。打印在 AND 门训练过程中这条直线如何移动。
+3. 构建一个 3 输入感知机，只有当 3 个输入中至少有 2 个为 1 时才输出 1(多数表决函数)。这是线性可分的吗？为什么？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Perceptron | "A fake neuron" | A linear classifier: dot product of inputs and weights, plus bias, through a step function |
-| Weight | "How important an input is" | A multiplier that scales each input's contribution to the decision |
-| Bias | "The threshold" | A constant that shifts the decision boundary, letting the perceptron fire even with zero inputs |
-| Activation function | "The thing that squishes values" | A function applied after the weighted sum - step function for perceptrons, sigmoid/ReLU for modern networks |
-| Linearly separable | "You can draw a line between them" | A dataset where a single hyperplane can perfectly separate the classes |
-| XOR problem | "The thing perceptrons can't do" | Proof that single-layer networks cannot learn non-linearly-separable functions |
-| Decision boundary | "Where the classifier switches" | The hyperplane w*x + b = 0 that divides input space into two classes |
-| Multi-layer perceptron | "A real neural network" | Perceptrons stacked in layers, where each layer's output feeds the next layer's input |
+| 感知机 | “一个模拟的神经元” | 一个线性分类器：输入与权重的点积，加上偏置，通过阶跃函数 |
+| 权重 | “某个输入有多重要” | 一个乘数，缩放每个输入对决策的贡献 |
+| 偏置 | “阈值” | 一个平移决策边界的常数，使感知机即使在输入全为零时也能激活 |
+| 激活函数 | “压缩数值的东西” | 在加权和之后应用的函数——感知机用阶跃函数，现代网络用 sigmoid/ReLU |
+| 线性可分 | “你可以在它们之间画一条线” | 一个数据集，其中单个超平面可以完美地分开各个类别 |
+| XOR 问题 | “感知机做不到的事” | 证明单层网络无法学习非线性可分函数 |
+| 决策边界 | “分类器切换的地方” | 将输入空间划分为两类的超平面 w*x + b = 0 |
+| 多层感知机 | “一个真正的神经网络” | 堆叠成层的感知机，每层的输出作为下一层的输入 |
 
-## 进一步阅读
+## 延伸阅读
 
-- 弗兰克·罗森布拉特,"感知器:大脑信息存储和组织的概率模型" (1958) -- 首先开始的论文
-- 敏斯基和帕珀特"感知器" (1969) - - 证明XOR是单层网络无法解决的书,并杀死了感知器研究十年
-- 迈克尔·尼尔森"神经网络和深度学习"第1章 (http://neuralnetworksanddeeplearning.com/) --免费在线,最好的视觉解释如何构成网络的感知器
+- Frank Rosenblatt,“The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain”(1958)——开启这一切的原始论文
+- Minsky & Papert,"Perceptrons"(1969)——这本书证明了单层网络无法解决 XOR,使感知机研究停滞了十年
+- Michael Nielsen,"Neural Networks and Deep Learning",第 1 章(http://neuralnetworksanddeeplearning.com/)——免费在线，关于感知机如何组合成网络的最佳可视化讲解

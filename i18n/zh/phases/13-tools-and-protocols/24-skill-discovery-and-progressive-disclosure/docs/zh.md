@@ -1,73 +1,73 @@
-# 技能发现和逐步揭示
+# 技能发现与渐进式披露
 
-> 技能在被装载之前就会变得有用.它的名称和描述在目录中获得位置;其更深层次的文件只有当任务达到它们时才获得了语境.
+> 技能在其正文被加载之前就已经变得有用。它的名称和描述为它赢得目录中的位置；只有当任务到达其更深层的文件时，这些文件才获得上下文。
 
 **Type:** Build
 **Languages:** Python (stdlib)
-**Prerequisites:** Phase 13 · 22 (Agent Skills: Portable Contract and Runtime Boundary)
-**Time:** ~105 minutes
+**Prerequisites:** 阶段 13 · 22（Agent Skills：可移植契约与运行时边界）
+**Time:** 约 105 分钟
 
 ## 学习目标
 
-- 建立一个文件系统发现管道,分开范围,验证,碰撞政策和目录发布.
-- 解释三个披露水平:目录元数据,活跃指令和具体任务资源.
-- 设计参考,使代理人可以直接到达所需细节,而不需要装载整个包装.
-- 预算目录空间独立于活跃技能背景.
-- 拒绝路径穿越和符号链接逃脱,当一个技能读取自己的资源.
+- 构建一个文件系统发现管道，将作用域、验证、冲突策略和目录发布彼此分离。
+- 解释三个披露层级：目录元数据、激活指令和任务特定资源。
+- 设计引用，使智能体可以直接获取所需细节，而无需加载整个包。
+- 将目录空间预算与激活技能上下文的预算分开管理。
+- 当技能读取自身资源时，拒绝路径穿越和符号链接逃逸。
 
-## 问题
+## 问题所在
 
-你的代理人有200个技能,`SKILL.md`访问程序的内容将会被删除,并且将其运行到无关程序中.
+你的智能体安装了 200 个技能。在会话开始时加载每个 `SKILL.md`、引用文件、脚本和模板，会把当前任务埋进无关的流程中。什么都不加载则会迫使用户记住确切的文件系统路径。
 
-常见的妥协是目录:向模型展示每个合格技能的紧身份和路由描述,然后在选择后才加载整个机器. 这会产生两个新的工程问题.
+常见的折中方案是目录：向模型展示每个合格技能的紧凑身份标识和路由描述，然后在选定之后才加载完整正文。这带来了两个新的工程问题。
 
-首先,发现不仅仅是复制文件搜索.技能可以存在于项目,用户,管理员,插件或内置范围.两个包可以共享一个名称.一个符号链接可以指向值得信赖的根外.一个错误的包可能耗尽目录空间或变得无法调用.
+第一，发现不仅仅是递归文件搜索。技能可以存在于项目、用户、管理员、插件或内置作用域中。两个包可能重名。一个符号链接可能指向受信任根之外。一个格式错误的包可能消耗目录空间，或变得无法调用。
 
-另一方面,逐步披露可能会导致逐步的混乱.`SKILL.md`如果每个指南指向了另外三个文件,加载就会变成一个无限的图形行程.
+第二，渐进式披露可能变成渐进式困惑。如果 `SKILL.md` 说"阅读相关指南"，而包里包含十二份指南，模型只能靠猜。如果每份指南又指向另外三个文件，加载就变成无界的图遍历。
 
-良好的运行时间使发现确定性,
+一个好的运行时使发现具有确定性，使披露是有意图的。
 
 ## 概念
 
-### 发现是一个编译器管道
+### 发现是一条编译器管道
 
-处理文件系统作为源输入.不要直接发布原始路径到模型中.
+把文件系统当作源输入。不要把原始路径直接发布给模型。
 
 ```figure
 skill-discovery-pipeline
 ```
 
-每个阶段都应该产生结构化数据和结构性故障.
+每个阶段都应产生结构化数据和结构化失败。发现日志应能回答：
 
-- 它们的根源是什么?
-- 谁的候选人被发现?
-- 哪些候选人被拒绝,为什么?
-- 哪个包赢得了碰撞?
-- 由于预算问题,哪些目录被缩短或遗漏?
+- 搜索了哪些根目录？
+- 找到了哪些候选？
+- 哪些候选被拒绝，为什么？
+- 哪个包赢得了冲突？
+- 哪些目录条目因预算而被缩短或省略？
 
-没有这些证据, "模型没有使用我的技能"几乎不可能诊断.
+没有这些证据，"模型没有使用我的技能"几乎无法诊断。
 
-### 范围是运行时间政策
+### 作用域是运行时策略
 
-移动规格定义了技能包,而不是一个通用的安装路径或优先级顺序. 主机决定它在哪里搜索.
+可移植规范定义的是技能包，而不是某个通用的安装路径或优先级顺序。由宿主决定在哪里搜索。
 
-总体运行时间可能使用以下范围:
+一个通用运行时可能使用以下作用域：
 
-| Scope | Example root | Intended ownership |
+| 作用域 | 示例根目录 | 预期归属 |
 |---|---|---|
-| Workspace | `<repo>/.agents/skills/` | Project maintainers |
-| User | `<user-data>/skills/` | One developer |
-| Administrator | `<system>/skills/` | Machine or organization policy |
-| Plugin | A signed plugin bundle | Plugin publisher and installer |
-| Built-in | Runtime package | Runtime vendor |
+| 工作区 | `<repo>/.agents/skills/` | 项目维护者 |
+| 用户 | `<user-data>/skills/` | 单个开发者 |
+| 管理员 | `<system>/skills/` | 机器或组织策略 |
+| 插件 | 签名的插件包 | 插件发布者和安装者 |
+| 内置 | 运行时包 | 运行时供应商 |
 
-截至2026年8月,Codex文件将项目发现`$CWD/.agents/skills`通过祖先目录到库根,加上用户,管理员和内置位置.它支持交互式技能目录.重复名称可能都会出现而不是合并.这些是Codex行为,而不是要求的`SKILL.md`检查电流[Codex skill documentation](https://learn.chatgpt.com/docs/build-skills)在编写适配器时.
+截至 2026 年 8 月，Codex 文档说明项目发现从 `$CWD/.agents/skills` 开始，沿祖先目录向上直到仓库根目录，此外还包括用户、管理员和内置位置。它支持符号链接的技能目录。重复的名称可能同时出现而不是被合并。这些是 Codex 的行为，不是 `SKILL.md` 的要求；编写适配器时请核对当前的 [Codex skill documentation](https://learn.chatgpt.com/docs/build-skills)。
 
-任何类目录名字都不能先决地出现. 声明为政策并测试它.`Scope`所以同一个候选人总是以同样的方式解决.
+绝不要根据目录名称臆造优先级。将其声明为策略并加以测试。课程实验为每个 `Scope` 使用显式整数等级，因此同一候选集合总能以相同方式解析。
 
-### 碰撞需要一个身份`name`
+### 冲突需要 `name` 之外的身份标识
 
-两个名为的包裹`release-readiness`一个可能是工作空间过失,另一个可能是用户默认.因此,目录入口至少需要:
+两个名为 `release-readiness` 的包可以同时合法。一个可能是工作区覆盖，另一个是用户默认。因此目录条目至少需要：
 
 ```json
 {
@@ -79,68 +79,68 @@ skill-discovery-pipeline
 }
 ```
 
-共同的碰撞政策包括:
+常见的冲突策略包括：
 
-| Policy | Benefit | Risk |
+| 策略 | 好处 | 风险 |
 |---|---|---|
-| Keep every candidate | Nothing is hidden | The model sees ambiguous names |
-| Highest-precedence scope wins | Simple invocation | A local package can shadow a trusted one |
-| Reject duplicates | No silent shadowing | Legitimate overrides stop working |
-| Qualify names by source | Explicit identity | User-facing names become longer |
+| 保留所有候选 | 没有内容被隐藏 | 模型看到含糊的名称 |
+| 最高优先级作用域获胜 | 调用简单 | 本地包可以遮蔽受信任的包 |
+| 拒绝重复 | 没有静默遮蔽 | 合法的覆盖会失效 |
+| 按来源限定名称 | 身份明确 | 面向用户的名称变长 |
 
-选择一个主机的政策.即使在模型目录中没有被拒绝或被置的候选人,也可以在诊断中保留.
+为宿主选择一种策略。即使被拒绝或被遮蔽的候选不出现在模型目录中，也要在诊断信息中保留它们。
 
-### 披露的三个层次
+### 三个披露层级
 
-机关的关键是每个层次都有不同的目的.
+Agent Skills 规范描述了分阶段加载。关键在于每个层级的目的不同。
 
 ```figure
 skill-disclosure-levels
 ```
 
-#### 级别1:目录元数据
+#### 层级 1：目录元数据
 
-模型需要足够的信息来区分技能与邻居.规格估计每一条目录的约100个代币,但实际的序列化和代币化属于主机.
+模型需要足够的信息来将该技能与相邻技能区分开。规范估算每个目录条目约 100 个 token，但实际的序列化和分词由宿主负责。
 
-有用的描述有两个条款:
+有用的描述包含两个分句：
 
 ```yaml
 description: Validate a release candidate and produce a readiness report. Use when the user asks whether a version, tag, or package is ready to publish.
 ```
 
-第一个条款规定了能力. 第二条规定了触发界限. 第25课程评估了这个界限,通过积极和接近错误的提示.
+第一个分句陈述能力。第二个分句陈述触发边界。第 25 课用正面提示和近似未命中提示来评估这一边界。
 
-#### 级别2: 活动指令
+#### 层级 2：激活指令
 
-激活后,该机体应作为一个地图和程序.`SKILL.md`这是一个设计信号,而不是一个填充目标.
+激活之后，正文应当既是一张地图，也是一套流程。规范建议将 `SKILL.md` 保持在 500 行以内。这是一个设计信号，而不是要填满的目标。
 
-身体应包含:
+正文应包含：
 
-- 任务界限;
-- 默认工作流程;
-- 部门条件;
-- 直接引用更深层次的文件;
-- 工具和脚本合同;
-- 失败和停止行为;
-- 预期产量和其验证.
+- 任务边界；
+- 默认工作流；
+- 分支条件；
+- 对更深层次文件的直接引用；
+- 工具和脚本契约；
+- 失败与停止行为；
+- 预期输出及其验证。
 
-仅仅是为了使输入文件短暂,不要将中央工作流转换为参考.
+不要仅仅为了让条目文件变短，就把核心工作流移入引用。激活必须给模型足够的上下文以正确开始。
 
-#### 支持资源的第三级
+#### 层级 3：支持性资源
 
-引用提供散文或数据.脚本提供确定性计算.资产被复制,填写或转化为交付物而不是作为说明.
+引用提供文本或数据。脚本提供确定性计算。资产被复制、填充或转换为交付物，而不是被当作指令。
 
-| Directory | Model reads it? | Model executes it? | Typical content |
+| 目录 | 模型会读取吗？ | 模型会执行吗？ | 典型内容 |
 |---|:---:|:---:|---|
-| `references/` | Yes, when needed | No | schemas, policies, domain guides |
-| `scripts/` | May inspect it | Through a permitted tool | validators, converters, collectors |
-| `assets/` | Only if useful | No | templates, fixtures, images, starter files |
+| `references/` | 会，在需要时 | 否 | 模式、策略、领域指南 |
+| `scripts/` | 可以查看 | 通过被许可的工具 | 校验器、转换器、采集器 |
+| `assets/` | 只在有用时 | 否 | 模板、夹具、图片、起始文件 |
 
-它们是规范,而不是魔术功能.
+这些名称是约定，不是魔法能力。宿主仍然需要文件访问和执行工具。
 
-### 专业指南比主题倾销更高
+### 面向分支的引用优于主题堆砌
 
-写入文件作为决策地图:
+把条目文件写成一张决策图：
 
 ```markdown
 ## Choose the path
@@ -151,52 +151,47 @@ description: Validate a release candidate and produce a readiness report. Use wh
 - If the release combines artifact types, read only the guides for those artifacts.
 ```
 
-这使得每个引用都能观察到的负载条件.`references/`没有.
+这让每个引用都有可观察的加载条件。"阅读 `references/` 以了解更多"则做不到。
 
-官方指南建议直接链接到`SKILL.md`一次跳跃使得可访问性可测试,
+保持引用图浅平。官方指南建议从 `SKILL.md` 直接链接，并避免深层链条。一跳的可达性可以测试，并降低必要约束从未进入上下文的可能性。
 
 ```figure
 skill-reference-map
 ```
 
-### 产品表预算和活动背景是不同的预算
+### 目录预算与激活上下文是不同的预算
 
-让我们`c_i`作为一个系列化目录的技能成本`i`现在`B_c`产品表预算`b_j`活动体成本,`r_k`实际上,资源的装载量.
+设 `c_i` 为技能 `i` 的序列化目录成本，`B_c` 为目录预算，`b_j` 为激活正文成本，`r_k` 为实际加载的资源。
 
 ```text
 catalog_cost = sum(c_i for every published skill)
 active_cost = sum(b_j for every activated skill) + sum(r_k for every disclosed resource)
 ```
 
-减少一个预算不会自动减少另一个.简短的描述可以节省目录空间,而一个激活的900行体仍然压倒任务.将体积分为参考可以减少活动成本,只有当运行时间和说明实际避免加载无关的分支时.
+削减一个预算不会自动削减另一个。简短的描述可以节省目录空间，而激活后的 900 行正文仍然会淹没任务。把正文拆成引用只有在运行时和指令确实避免加载无关分支时，才能降低激活成本。
 
-目前,Codex将初步技能列表的预算为
-设置一个窗口,当背景窗口大小已知.
-只有当该尺寸不清楚时,只有当该尺寸不清楚时;它不是第二个盖子,结合
-如果目录超过适用的预算,
-描述可能会缩短或遗漏.
-编码政策,不是代理技能标准的属性.
+Codex 目前在已知上下文窗口大小时，将初始技能列表的预算设为上下文窗口的 2%。8,000 字符值仅在该大小未知时作为回退；它不是与 2% 规则叠加的第二个上限。当目录超过适用预算时，描述可能被缩短或省略。将这些数字视为当前的 Codex 政策，而不是 Agent Skills 标准的属性。
 
-### 资源路径是信任界限
+### 资源路径是信任边界
 
-技能只需要阅读包装中的文件.
+技能应只读取其包内的文件。字面字符串前缀检查是不够的：
 
 ```text
 references/../../../../.ssh/config
 references/external-link -> /private/company-secrets
 ```
 
-通过文件系统语义来解决包根和候选,拒绝绝绝对输入,并验证已解决的候选仍然存在于已解决的根下. 确定是否允许在发现之前符号链接. 如果允许,每次都检查已解决的目标.
+用文件系统语义解析包根和候选路径，拒绝绝对路径输入，并验证解析后的候选仍然位于解析后的根之下。在发现之前决定是否允许符号链接。如果允许，每次都检查解析后的目标。
 
 ```figure
 skill-resource-containment
 ```
 
-路径封锁不会建立内容信任.一个有效的包装引用仍然可能包含恶意指令. 第26课处理这种威胁.
+路径包含并不能确立内容信任。一个合法的包内引用仍可能包含恶意指令。第 26 课处理该威胁。
 
-### 载荷必须可观测
+### 加载必须可观察
 
-记录披露事件,没有记录秘密:
+在不记录机密的前提下记录披露事件：
 
 ```json
 {
@@ -208,28 +203,28 @@ skill-resource-containment
 }
 ```
 
-原因是,它将文本选择转化为可审查的证据.
+"原因"把一次上下文选择变成可审查的证据。它还有助于识别那些导致智能体"以防万一"加载所有文件的指令。
 
-## 建立它
+## 动手构建
 
-`code/main.py`建立一个确定性发现和披露引擎.
+`code/main.py` 构建一个确定性的发现与披露引擎。
 
-发现表面包括:
+发现接口包括：
 
-- `Scope`对于源和优先级的元数据;
-- `SkillCandidate`对于未经验证的文件系统候选人;
-- `discover_scope(scope)`列出直接技能目录;
-- `resolve_collisions(candidates, precedence)`实施一个声明的政策;
-- `CatalogEntry`其他`build_catalog(...)`发布有限的元数据;
-- `CatalogBudget`为了解释连续化输入,而没有假装字符是通用代币.
+- `Scope` 用于来源和优先级元数据；
+- `SkillCandidate` 用于未经校验的文件系统候选；
+- `discover_scope(scope)` 用于枚举直接的技能目录；
+- `resolve_collisions(candidates, precedence)` 用于应用一种已声明的策略；
+- `CatalogEntry` 和 `build_catalog(...)` 用于发布有界的元数据；
+- `CatalogBudget` 用于核算序列化条目，而不假装字符等于通用 token。
 
-透露表面包括:
+披露接口包括：
 
-- `load_skill_body(entry, ...)`对于2级激活;
-- `validate_reference(skill_dir, reference)`对于路径封锁;
-- `load_reference(...)`对于有边界的3级读数.
+- `load_skill_body(entry, ...)` 用于层级 2 激活；
+- `validate_reference(skill_dir, reference)` 用于路径包含；
+- `load_reference(...)` 用于有界的层级 3 读取。
 
-运行实验室:
+运行实验：
 
 ```bash
 cd "$(git rev-parse --show-toplevel)"
@@ -238,63 +233,62 @@ python3 code/main.py
 python3 -m unittest discover -s code/tests -v
 ```
 
-这个区块需要一个本地克隆,并解决任何存储库的根
-在那个克隆内部的工作目录.
+本模块需要本地克隆，并从克隆内的任意工作目录解析仓库根目录。
 
-演示程序创建了临时项目和用户范围,插入了碰撞,在故意小预算下构建了目录,激活了一个技能,并尝试了有效的参考阅读和穿越逃逸.没有永久文件安装.
+演示会创建临时的项目与用户作用域，插入一个冲突，在刻意设小的预算下构建目录，激活一个技能，并尝试一次合法的引用读取和一次路径穿越逃逸。不会安装任何永久文件。
 
-### 为什么发现是浅的
+### 为什么发现是浅层的
 
-`discover_scope`检查了儿童直接目录`SKILL.md`它不会反复治疗每一个子.`SKILL.md`作为单独的包装,从而保护包装边界,避免在安装的技能内意外发布示例或装置.
+`discover_scope` 只检查 `SKILL.md` 的直接子目录。它不会递归地把每个嵌套的 `SKILL.md` 都当作独立包。这保住了包边界，避免意外发布已安装技能内的示例或夹具。
 
-### 为什么实验室不分析任意的YAML
+### 为什么实验不解析任意 YAML
 
-实验室支持其目录所需的 skalar frontmatter.生产运行时间应使用一个安全的YAML解析器,具有明确的方案,尺寸限制和禁用的自定义对象构建. "仅Stdlib"是教学约束,而不是允许默默地发明部分YAML方言.
+实验只支持其目录所需的标量前置元数据。生产运行时应使用安全的 YAML 解析器，配合显式模式、大小限制，并禁用自定义对象构造。"仅用标准库"是教学约束，而不是默许发明一种残缺 YAML 方言的许可。
 
-## 用它
+## 使用它
 
-应用此检查列表到任何发现适配器:
+将以下清单应用于任何发现适配器：
 
-1. 列出每个配置的根和谁可以写到它.
-2. 说明是否允许连接包裹.
-3. 验证包名,目录名称,所需的元数据和输入体尺寸.
-4. 保持内部身份的来源和范围.
-5. 声明和测试复制名称行为.
-6. 测量向模型发送的精确序列目录.
-7. 记录为什么一个尸体或资源被装载.
-8. 保持资源读数在解决包根内.
-9. 当引用文件缺失时,显然失败.
-10. 修改安装或政策时重建目录.
+1. 列出每个配置的根目录及其可写入者。
+2. 说明是否允许符号链接的包。
+3. 校验包名、目录名、必需元数据和正文大小。
+4. 在内部身份中保留来源与作用域。
+5. 声明并测试重名行为。
+6. 度量发送给模型的目录的确切序列化大小。
+7. 记录正文或资源为何被加载。
+8. 将资源读取保持在解析后的包根之内。
+9. 当被引用的文件缺失时，清晰地失败。
+10. 当安装或策略变化时重建目录。
 
-## 运送它
+## 发布它
 
-这一课产生了`skill-catalog-builder`包.它扫描了明确排序的根,拒绝了链接的输入文件和名称目录不匹配,解决了跨范围的碰撞,拒绝了相同优先级的重复,并将选定的元数据纳入了声明的输入,描述和序列化字符预算.
+本课产出 `skill-catalog-builder` 包。它扫描显式排序的根目录，拒绝符号链接的条目文件以及名称与目录不匹配的情况，解析跨作用域冲突，拒绝同等优先级的重复，并将选定的元数据装入声明的条目、描述和序列化字符预算。
 
-它的JSON报告包含选定的输入,阴影的候选人,遗漏的输入,验证错误,优先级和预算使用.体体和参考加载仍然是分离的运行时间操作,因此目录构建器不会执行脚本或将整个包放入文本中.
+其 JSON 报告包含选定的条目、被遮蔽的候选、被省略的条目、校验错误、优先级和预算使用。正文与引用加载仍是独立的运行时操作，因此目录构建器不会执行脚本，也不会把整个包纳入上下文。
 
-## 运动
+## 练习
 
-1. 添加一个插件范围,将其放在用户和内置优先级之间.
-2. 改变碰撞政策,从最优先级到合格名称.
-3. 添加字节大小限制`load_reference`检查一个文件的极限和一个字节以上.
-4. 创建两个几乎相同的描述,重新写它们,以免触发器界限重叠.
-5. 添加一个包含每个引用和脚本的哈希表. 在加载之前检测修改的资源.
-6. 仪器显示,报告级别1,级别2,级别3的字节分别计数.
+1. 添加一个插件作用域，其优先级位于用户与内置之间。用测试证明冲突结果。
+2. 把冲突策略从最高优先级改为限定名称。在目录中保留两个条目。
+3. 给 `load_reference` 添加字节大小限制。测试恰好等于限制的文件和超出一个字节的文件。
+4. 创建两个听起来几乎相同的描述。重写它们，使触发边界互不重叠。
+5. 添加一个清单，包含每个引用和脚本的哈希值。在加载资源之前检测被篡改的资源。
+6. 对演示进行插桩，分别报告层级 1、层级 2 和层级 3 的字节数。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |---|---|---|
-| Skill discovery | "Find every SKILL.md" | Search configured scopes, validate packages, attach provenance, and apply policy |
-| Skill catalog | "The list of installed skills" | Compact model-visible routing metadata for eligible packages |
-| Collision policy | "Which duplicate wins" | A declared rule for same-name candidates from different sources |
-| Progressive disclosure | "Lazy loading" | Staged context admission from catalog to body to branch-specific resources |
-| Reference graph | "Files linked by the skill" | The reachable resource structure and its load conditions |
-| Path containment | "Stay in the folder" | Verify resolved resource targets remain inside the resolved package root |
+| 技能发现 | "找到每个 SKILL.md" | 搜索配置的作用域、校验包、附加来源信息并应用策略 |
+| 技能目录 | "已安装技能的列表" | 面向模型的合格包的紧凑路由元数据 |
+| 冲突策略 | "哪个重复者获胜" | 一条针对来自不同来源的同名候选的已声明规则 |
+| 渐进式披露 | "懒加载" | 从目录到正文再到面向分支资源的分阶段上下文纳入 |
+| 引用图 | "技能链接的文件" | 可达的资源结构及其加载条件 |
+| 路径包含 | "待在文件夹里" | 验证解析后的资源目标仍在解析后的包根之内 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Agent Skills specification](https://agentskills.io/specification)包装形状和逐步披露水平.
-- [Optimizing skill descriptions](https://agentskills.io/skill-creation/optimizing-descriptions)对于目录路由元数据.
-- [Agent Skills best practices](https://agentskills.io/skill-creation/best-practices)直接引用和输入文件大小.
-- [OpenAI: Build skills](https://learn.chatgpt.com/docs/build-skills)对于目前的Codex发现范围和目录限制.
+- [Agent Skills specification](https://agentskills.io/specification)：包结构与渐进式披露层级。
+- [Optimizing skill descriptions](https://agentskills.io/skill-creation/optimizing-descriptions)：目录路由元数据。
+- [Agent Skills best practices](https://agentskills.io/skill-creation/best-practices)：直接引用与条目文件大小。
+- [OpenAI: Build skills](https://learn.chatgpt.com/docs/build-skills)：当前的 Codex 发现作用域与目录限制。

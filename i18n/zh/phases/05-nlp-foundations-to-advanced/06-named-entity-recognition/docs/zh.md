@@ -1,23 +1,23 @@
-# 名称实体识别
+# 命名实体识别
 
-> 听起来很容易,直到你处理模糊的边界,嵌套的实体,和域名语.
+> 把名字抽出来。听起来简单，直到你要面对模糊的边界、嵌套实体和领域术语。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word Embeddings)
-**Time:** ~75 minutes
+**Prerequisites:** Phase 5 · 02 (BoW + TF-IDF)，Phase 5 · 03 (Word Embeddings)
+**Time:** 约 75 分钟
 
 ## 问题
 
-"果公司就其在美国的iPhone搜索协议起诉谷歌".五家实体:果 (ORG),谷歌 (ORG),iPhone (PRODUCT),搜索协议 (也许),美国 (GPE).一个好的NER系统将所有这些实体都用正确类型提取出来.一个坏的系统错过了iPhone,把果和果公司混为一谈,并标记"美国"为个体.
+"Apple sued Google over its iPhone search deal in the US." 这句话包含五个实体：Apple（ORG）、Google（ORG）、iPhone（PRODUCT）、search deal（可能）、US（GPE）。一个好的 NER 系统能以正确的类型把它们全部抽取出来。一个差的系统会漏掉 iPhone，把苹果公司混淆成水果 Apple，并把 "US" 标为 PERSON。
 
-简历分析,合规日志扫描,医疗记录匿名化,搜索查询理解,聊天机器人响应的基础,法律合同提取.你永远不会完全看到它;你总是依赖它.
+NER 是所有结构化抽取管道背后的主力。简历解析、合规日志扫描、病历匿名化、搜索查询理解、聊天机器人响应的接地、法律合同抽取。你几乎从不直接看到它，却总是依赖它。
 
-这一课程将经典的路径 (基于规则,HMM,CRF) 走向现代的路径 (BiLSTM-CRF,然后是变压器).每个步骤解决了之前的特定限制.模式是课程.
+本课沿着经典路径（基于规则、HMM、CRF）走向现代路径（BiLSTM-CRF，再到 Transformer）。每一步都解决了前一步的某个具体局限。这个模式本身就是本课的精髓。
 
 ## 概念
 
-**BIO tagging**标签每一个代币以 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标签 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标 标`B-TYPE`(实体的开始),`I-TYPE`(内部实体),或`O`(任何实体以外).
+**BIO 标注**（或 BILOU）把实体抽取转化为序列标注问题。给每个 token 标注 `B-TYPE`（实体开始）、`I-TYPE`（实体内部）或 `O`（不在任何实体内）。
 
 ```
 Apple    B-ORG
@@ -34,23 +34,23 @@ US       B-GPE
 .        O
 ```
 
-多代币实体链: `New B-GPE`现在`York I-GPE`现在`City I-GPE`了解生物的模型可以提取任意的跨度.
+多 token 实体串联：`New B-GPE`、`York I-GPE`、`City I-GPE`。一个理解 BIO 的模型可以抽取任意跨度的片段。
 
-建筑发展:
+架构演进：
 
-- **Rule-based.**已知实体的高精度,新实体的覆盖率为零.
-- **HMM.**隐藏的马科夫模型,给定的标签的发射概率,标签到标签的过渡概率,维特比解码,训练用标签数据.
-- **CRF.**条件随机场.像HMM,但有歧视性,所以你可以混合任意的特征 (字形,字母,邻近的词).仍然是2026年低资源部署的经典生产工作马.
-- **BiLSTM-CRF.**系统读取句子两方向,CRF层在上面执行一致的标签序列.
-- **Transformer-based.**精细调节BERT,具有代币分类头,最准确,最计算.
+- **基于规则。** 正则表达式 + 词典查找。对已知实体精度高，对新实体覆盖率为零。
+- **HMM。** 隐马尔可夫模型。给定标签时 token 的发射概率、标签间的转移概率。用 Viterbi 解码。需要标注数据训练。
+- **CRF。** 条件随机场。类似 HMM 但属于判别式模型，因此可以混合任意特征（词形、大小写、相邻词）。到 2026 年，它仍然是低资源部署场景下的经典生产主力。
+- **BiLSTM-CRF。** 用神经网络学到的特征取代手工特征。LSTM 从两个方向读句子，顶部的 CRF 层保证标签序列的一致性。
+- **基于 Transformer。** 用 token 分类头微调 BERT。准确率最高，算力消耗最大。
 
 ```figure
 ner-bio-tagging
 ```
 
-## 建立它
+## 动手实现
 
-### 步骤1:生物标签助手
+### 第 1 步：BIO 标注辅助函数
 
 ```python
 def spans_to_bio(tokens, spans):
@@ -88,9 +88,9 @@ def bio_to_spans(tokens, labels):
 [(0, 1, 'ORG'), (2, 3, 'ORG'), (4, 5, 'PRODUCT')]
 ```
 
-### 步骤2:手工制作的特征
+### 第 2 步：手工特征
 
-对于经典 (非神经) NER,功能是游戏. 有用的是:
+对于经典（非神经）NER，特征就是一切。有用的特征：
 
 ```python
 def token_features(token, prev_token, next_token):
@@ -120,9 +120,9 @@ def word_shape(word):
     return "".join(out)
 ```
 
-`word_shape("iPhone")`收益`xXxxxx`现在,我们要去.`word_shape("USA-2024")`收益`XXX-dddd`资本化模式对正确名词具有高信号.
+`word_shape("iPhone")` 返回 `xXxxxx`。`word_shape("USA-2024")` 返回 `XXX-dddd`。大小写模式对专有名词是高信息量信号。
 
-### 步骤3:基于简单的规则+字典基础
+### 第 3 步：简单的规则 + 词典基线
 
 ```python
 ORG_GAZETTEER = {"Apple", "Google", "Microsoft", "OpenAI", "Meta", "Amazon", "Netflix"}
@@ -144,11 +144,11 @@ def rule_based_ner(tokens):
     return labels
 ```
 
-制作报纸上有数百万条文章从维基百科和DBpedia中摘录.`Apple`由于这些问题,我们必须要做出一些决定.
+生产级词典包含数百万条从 Wikipedia 和 DBpedia 抓取的词条。覆盖不错，但消歧（`Apple` 是公司还是水果）非常糟糕。这就是统计模型胜出的原因。
 
-### 步骤4:CRF步骤 (草图,不是完整的插入)
+### 第 4 步：CRF 步骤（概览，非完整实现）
 
-没有概率理论的基础,就不会有启发.`sklearn-crfsuite`换取之而言:
+在缺乏概率论基础的情况下，用 50 行代码从零实现完整 CRF 并没有启发意义。改用 `sklearn-crfsuite`：
 
 ```python
 import sklearn_crfsuite
@@ -178,11 +178,11 @@ X_train = [to_features(s) for s in sentences_tokenized]
 crf.fit(X_train, bio_labels_train)
 ```
 
-`c1`其他`c2`         `all_possible_transitions=True`模型可以学习非法序列 (例如,`I-ORG`之后`O`) 很不可能,这就是CRF如何在没有你写下限制的情况下强制生物一致性.
+`c1` 和 `c2` 分别是 L1 和 L2 正则化。`all_possible_transitions=True` 允许模型学会非法序列（例如 `O` 之后的 `I-ORG`）不太可能出现——这正是 CRF 在无需你手写约束的情况下保证 BIO 一致性的方式。
 
-### 步骤5: BiLSTM-CRF所增加的内容
+### 第 5 步：BiLSTM-CRF 增加了什么
 
-功能变得学习.输入:代号嵌入 (GloVe或快文).LSTM读左到右和右到左. 连接隐藏状态通过CRF输出层.CRF仍然强制标签序列一致性;LSTM取代手工制造的功能与学习.
+特征变成了学出来的。输入：token 嵌入（GloVe 或 fastText）。LSTM 从左到右和从右到左各读一遍。拼接后的隐藏状态经过 CRF 输出层。CRF 仍然保证标签序列的一致性；LSTM 用学习到的特征取代了手工特征。
 
 ```python
 import torch
@@ -203,11 +203,11 @@ class BiLSTM_CRF_Head(nn.Module):
         return emissions
 ```
 
-对于CRF层,使用`torchcrf.CRF`虽然手工CRF的效益是可测量的,但比你预期的小,除非你有数万个标记的句子.
+对于 CRF 层，使用 `torchcrf.CRF`（pip install pytorch-crf）。相比手工特征 CRF 的提升是可测的，但除非你有数万条标注句子，否则比预期的要小。
 
-## 用它
+## 使用它
 
-产品级NER的 spaCy 运输出了盒子.
+spaCy 开箱即带生产级 NER。
 
 ```python
 import spacy
@@ -225,9 +225,9 @@ iPhone               ORG
 US                   GPE
 ```
 
-注意`iPhone`标记`ORG`而不是`PRODUCT` spaCy的小型模型产品实体覆盖率较低.`en_core_web_lg`变压器模型 (`en_core_web_trf`) 情况更好.
+注意 `iPhone` 被标为 `ORG` 而不是 `PRODUCT` —— spaCy 的小模型对产品实体的覆盖较弱。大模型（`en_core_web_lg`）表现更好。Transformer 模型（`en_core_web_trf`）还要更好。
 
-基于BERT的NER的拥抱面孔:
+用 Hugging Face 做基于 BERT 的 NER：
 
 ```python
 from transformers import pipeline
@@ -243,38 +243,38 @@ print(ner("Apple sued Google over its iPhone in the US."))
  {'entity_group': 'LOC', 'word': 'US', ...}]
 ```
 
-`aggregation_strategy="simple"`没有它,你就会得到代币级别的标签,
+`aggregation_strategy="simple"` 把连续的 B-X、I-X token 合并为一个跨度。没有它，你只能得到 token 级标签，还得自己合并。
 
-### 基于LLM的NER (2026期选项)
+### 基于 LLM 的 NER（2026 年的选项）
 
-零射和少射的LLM NER现在与许多领域的细节调整模型竞争,
+零样本和少样本 LLM NER 在许多领域已能与微调模型抗衡，在标注数据稀缺时更是显著占优。
 
-- **Zero-shot prompting.**给LLM一个实体类型的列表和一个示例方案. 请求JSON输出. 工作出盒子;在新领域的准确度是中等的.
-- **ZeroTuneBio-style prompting.**解散任务成候选人提取 → 解释 → 判断 → 重复检查.多阶段提示 (而不是一次性) 显著提高了生物医学NER的准确性.同样的模式适用于法律,金融和科学领域.
-- **Dynamic prompting with RAG.**检索每次推断调用的小注释种子集合中最类似的标签示例;在飞行中构建几次调用提示.在2026年基准中,这将GPT-4生物医学NER F1提高11-12%于静态调用提示.
-- **Per-entity-type decomposition.**对于长文件,一个单次调用,同时提取所有实体类型,随着长度的增加而失去回忆. 每个实体类型运行一个提取通行. 推断成本更高,准确度更高. 这是临床笔记和法律合同的标准模式.
+- **零样本提示。** 给 LLM 一份实体类型列表和一个示例 schema，要求输出 JSON。开箱即用；在陌生领域上准确率中等。
+- **ZeroTuneBio 式提示。** 把任务分解为候选抽取 → 含义解释 → 判断 → 复查。一个多阶段提示（而非一次性提示）能在生物医学 NER 上大幅提升准确率。同样的模式适用于法律、金融和科学领域。
+- **结合 RAG 的动态提示。** 每次推理调用时，从一个小的标注种子集中检索最相似的标注样本；即时构建少样本提示。在 2026 年的基准测试中，相比静态提示，这使 GPT-4 生物医学 NER 的 F1 提升了 11-12%。
+- **按实体类型分解。** 对于长文档，单次调用抽取所有实体类型的召回率会随长度增长而下降。每种实体类型单独跑一次抽取。推理成本更高，但准确率显著更高。这是临床笔记和法律合同的标准模式。
 
-根据2026年开始的生产建议:在收集训练数据之前,开始从LLM零射击基线开始.
+2026 年的生产建议：在收集训练数据之前，先跑一个 LLM 零样本基线。通常 F1 已经足够好，你根本不需要微调。
 
-### 传统的NER仍然在胜利
+### 经典 NER 仍然占优的场景
 
-即使有LLM,经典的NER在:
+即使 LLM 可用，经典 NER 在以下情况下仍然占优：
 
-- 延迟预算低于50ms.
-- 你有数千个标记的例子,需要98%+F1.
-- 该域具有稳定的定性,预训练的CRF或BiLSTM转移良好.
-- 监管限制要求实地进行非创建模式.
+- 延迟预算在 50ms 以内。
+- 你有数千条标注样本，需要 98% 以上的 F1。
+- 领域有稳定的本体，预训练 CRF 或 BiLSTM 迁移效果好。
+- 监管约束要求本地部署的非生成式模型。
 
-### 在它崩的地方
+### 它在哪里失效
 
-- **Domain shift.**法律合同的NER比报纸员更差.
-- **Nested entities.**美国银行塔同时是ORG和FASILITY.标准BIO不能代表重叠跨度.你需要嵌套NER (多通或跨度模型).
-- **Long entities.**美国联邦存款保险公司的代币级别模型有时会分开这个.`aggregation_strategy`或是后处理.
-- **Sparse types.**医疗NER标签如Drug_Brand,ADVERSE_EVENT,DOSE.一般用途模型没有任何想法.Scispacy和BioBERT是此起点.
+- **领域漂移。** 在 CoNLL 上训练的 NER 用于法律合同时，表现还不如一个词典。要在你的领域上微调。
+- **嵌套实体。** "Bank of America Tower" 同时是 ORG 和 FACILITY。标准 BIO 无法表示重叠跨度。你需要嵌套 NER（多轮或基于跨度的模型）。
+- **长实体。** "United States Federal Deposit Insurance Corporation"。token 级模型有时会把它切开。使用 `aggregation_strategy` 或后处理。
+- **稀疏类型。** 医学 NER 的标签如 DRUG_BRAND、ADVERSE_EVENT、DOSE。通用模型对此一无所知。Scispacy 和 BioBERT 是该领域的起点。
 
-## 运送它
+## 发布它
 
-保存如`outputs/skill-ner-picker.md`其他:
+保存为 `outputs/skill-ner-picker.md`：
 
 ```markdown
 ---
@@ -296,26 +296,26 @@ Given a task description (domain, label set, language, latency, data volume), ou
 Refuse to recommend fine-tuning a transformer for under 500 labeled examples unless the user already has a pretrained domain model. Flag nested entities as needing span-based or multi-pass models. Require a gazetteer audit if the user mentions "production scale" and labels are unchanged from CoNLL-2003.
 ```
 
-## 运动
+## 练习
 
-1. **Easy.**实施`bio_to_spans`(反向的`spans_to_bio`) 并通过10句检查回路一致性.
-2. **Medium.**训练上述 sklearn-crfsuite CRF在CoNLL-2003英语NER数据集上.`seqeval`典型结果: ~ 84 F1.
-3. **Hard.**精细调节`distilbert-base-cased`根据该数据库的数据库,您可以在一个特定领域的NER数据集 (医疗,法律或金融) 上进行比较.
+1. **简单。** 实现 `bio_to_spans`（`spans_to_bio` 的逆操作），并在 10 个句子上验证往返一致性。
+2. **中等。** 在 CoNLL-2003 英文 NER 数据集上训练上面的 sklearn-crfsuite CRF。使用 `seqeval` 报告各实体类型的 F1。典型结果：约 84 F1。
+3. **困难。** 在一个特定领域的 NER 数据集（医学、法律或金融）上微调 `distilbert-base-cased`。与 spaCy 小模型比较。记录数据泄漏检查，并写下让你惊讶的地方。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|-----------------------|
-| NER | Extract names | Label token spans with types (PERSON, ORG, GPE, DATE, ...). |
-| BIO | Tagging scheme | `B-X` begins, `I-X` continues, `O` outside. |
-| BILOU | Better BIO | Adds `L-X` (last), `U-X` (unit) for cleaner boundaries. |
-| CRF | Structured classifier | Models transitions between labels, not just emissions. Enforces valid sequences. |
-| Nested NER | Overlapping entities | One span is a different entity than a sub-span of it. BIO cannot express this. |
-| Entity-level F1 | Proper NER metric | Predicted span must match true span exactly. Token-level F1 overstates accuracy. |
+| NER | 抽取名字 | 给 token 跨度标注类型（PERSON、ORG、GPE、DATE 等）。 |
+| BIO | 标注方案 | `B-X` 表示开始，`I-X` 表示延续，`O` 表示实体之外。 |
+| BILOU | 更好的 BIO | 增加 `L-X`（最后一个）和 `U-X`（单元），使边界更清晰。 |
+| CRF | 结构化分类器 | 建模标签之间的转移，而不仅仅是发射。保证合法序列。 |
+| Nested NER | 重叠实体 | 某个跨度与其子跨度是不同的实体。BIO 无法表达这一点。 |
+| Entity-level F1 | 真正的 NER 指标 | 预测跨度必须与真实跨度完全一致。token 级 F1 会高估准确率。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Lample et al. (2016). Neural Architectures for Named Entity Recognition](https://arxiv.org/abs/1603.01360) BiLSTM-CRF纸. 经典.
-- [Devlin et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers](https://arxiv.org/abs/1810.04805)引入了成为标准的代币分类模式.
-- [spaCy linguistic features — named entities](https://spacy.io/usage/linguistic-features#named-entities) 关于每一个属性的实际参考`Doc.ents`其他`Span`现在,我们要去.
-- [seqeval](https://github.com/chakki-works/seqeval)正确的计量库.
+- [Lample et al. (2016). Neural Architectures for Named Entity Recognition](https://arxiv.org/abs/1603.01360) —— BiLSTM-CRF 论文。经典之作。
+- [Devlin et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers](https://arxiv.org/abs/1810.04805) —— 引入了后来成为标准的 token 分类模式。
+- [spaCy linguistic features — named entities](https://spacy.io/usage/linguistic-features#named-entities) —— 关于 `Doc.ents` 和 `Span` 所有属性的实用参考。
+- [seqeval](https://github.com/chakki-works/seqeval) —— 正确的指标库。请始终使用它。

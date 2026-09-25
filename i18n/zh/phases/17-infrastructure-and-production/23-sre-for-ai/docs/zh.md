@@ -1,30 +1,30 @@
-# 针对AI的SRE 多代理事件响应,跑本,预测检测
+# AI 运维 SRE — 多智能体事件响应、Runbook、预测性检测
 
-> 通过RAG,通过基础设施数据 (日志,运行簿,服务拓) 实现自动化调查,文档和协调阶段的LLM. 2026 建筑模式是多代理管弦乐专业代理 (日志,指标,运行书籍) 由监督者协调; AI提出假设和查询,人类批准判断调用. 数据狗比特人工智能和Azure SRE代理将这些作为管理产品. 跑本正在发展:NeuBird Hawkeye使用对抗评估 (两个模型分析相同事件;协议 =信心,不同意见 =不确定性); 操作记忆在团队变化中持续存在. 自动补救仍然谨慎:人工智能建议,人类批准. 完全自主操作是狭窄的 (重新启动,反弹特定部署) 紧密的防护 任何销售"设置并忘记"的人都在超销. 突出界限:事件前预测 麻省理工学院的研究报告显示,在历史记录+GPU时间+API错误模式上训练的LLM预测, 预测:到2026年底,企业中95%的LLM将自动转账.
+> AI SRE 使用基于基础设施数据(日志、runbook、服务拓扑)并通过 RAG 检索增强的 LLM,自动化调查、文档记录和协调阶段。2026 年的架构模式是多智能体编排——由 supervisor 协调多个专用智能体(日志、指标、runbook);AI 提出假设和查询,人类对关键判断进行审批。Datadog Bits AI 和 Azure SRE Agent 已作为托管产品交付这一模式。Runbook 正在演变:NeuBird Hawkeye 使用对抗式评估(两个模型分析同一事件;一致 = 高置信度,分歧 = 不确定性);运维记忆在人员变动中持续保留。自动修复仍保持谨慎:AI 建议,人类审批。完全自主的操作范围很窄(重启 pod、回滚特定部署)并有严格护栏——任何宣传"设置后即可不管"的人都在夸大其词。新兴前沿:事前预测。MIT 的研究报告称,基于历史日志 + GPU 温度 + API 错误模式训练的 LLM,提前 10-15 分钟预测了 89% 的故障。预测:到 2026 年底,95% 的企业级 LLM 将具备自动故障转移能力。
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy multi-agent incident triage simulator)
+**Languages:** Python (标准库,简易多智能体事件分诊模拟器)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 24 (Chaos Engineering)
-**Time:** ~60 minutes
+**Time:** 约 60 分钟
 
 ## 学习目标
 
-- 绘制多代理AI SRE架构:监督者+专业代理 (日志,指标,运行簿) +人体批准门.
-- 解释为什么自动补救是狭窄的 (重新启动,重新部署) 而不是广泛的 (重建服务).
-- 举个对抗性评估模式 (NeuBird Hawkeye):两个模型一致=信心;不同=升级.
-- 提及MIT 89%早期检测结果和操作限制:没有动作的预测只是仪表板.
+- 绘制多智能体 AI SRE 架构图:supervisor + 专用智能体(日志、指标、runbook)+ 人工审批门。
+- 解释为什么自动修复范围狭窄(重启 pod、回滚部署)而非宽泛(重新设计服务架构)。
+- 说出对抗式评估模式(NeuBird Hawkeye):两个模型一致 = 高置信度;分歧 = 上报人工。
+- 引用 MIT 89% 早期检测结果及其运维约束:无法付诸行动的预测只是仪表盘。
 
 ## 问题
 
-电话上的工程师在凌晨3点被调用"检查时错误率很高".他们检查了Datadog,Loki,三个运行簿,部署日志.30分钟后,他们意识到根本原因是从KV缓存尖端的VLLM OOM.他们重新启动了,错误清除了.
+一名值班工程师在凌晨 3 点收到告警。"checkout 服务错误率过高。"他们查看 Datadog、Loki、三份 runbook、部署日志。30 分钟后,他们才发现根因是 KV cache 激增导致的 vLLM OOM。他们重启了 pod,错误消除。
 
-2026年,该调查的前20分钟可自动化. 根据服务,与最近部署相关的,与运行簿相匹配的集团日志都是RAG+工具使用.监督的代理人在打开Datadog之前可以进行第一次通过分类并提出假设.
+在 2026 年,这类调查的前 20 分钟是可以自动化的。按服务分组日志、关联最近的部署、匹配 runbook——全都是 RAG + 工具调用。一个有监督的智能体可以在人类打开 Datadog 之前完成初步分诊并提出假设。
 
-完全自主修复是一个不同的问题. 重启:安全. 扩展GPU池:安全,如果政策允许. 重新构建服务:绝对不是. 纪律是画窄的线.
+完全自主的修复是另一回事。重启 pod:安全。扩展 GPU 池:在策略允许时安全。重新设计服务架构:绝对不行。关键原则在于划定这条狭窄的边界。
 
 ## 概念
 
-### 多代理架构
+### 多智能体架构
 
 ```
           Incident
@@ -47,84 +47,84 @@
         Action (narrow set)
 ```
 
-监督者将事件分为子查询.专业代理人有工具访问 (日志搜索,PromoQL,文件检索).监督者合成,向人类提供假设 +证据.人类批准或转向.
+Supervisor 将事件拆解为子查询。专用智能体拥有工具访问权限(日志搜索、PromQL、文档检索)。Supervisor 汇总结果,向人类呈现假设 + 证据。人类批准或调整方向。
 
-### 自动补救范围
+### 自动修复范围
 
-**Safe (narrow)**:重新启动组,反转特定部署,在预先批准的边界内进行规模积分,启用预先批准的功能旗.
+**安全(狭窄)**:重启 pod、回滚特定部署、在预批准范围内扩展资源池、启用预批准的功能开关。
 
-**Not safe (broad)**改变服务拓,修改资源限制,部署新代码,改变IAM,改变数据库.
+**不安全(宽泛)**:更改服务拓扑、修改资源限制、部署新代码、更改 IAM、变更数据库。
 
-随着AI SRE的成熟,安全套就会增长,但边界是真实的.
+任何宣传"设置后即可不管"的人都在夸大其词。随着 AI SRE 的成熟,安全集合会扩大,但这条边界是真实存在的。
 
-### 逆境评估 (新鸟眼)
+### 对抗式评估(NeuBird Hawkeye)
 
-两种模型独立分析相同的事件.如果他们同意根源,信心很高.如果他们不同意,升级到人类,两个假设可见.简单的模式,有效的过对幻觉根源.
+两个模型独立分析同一事件。如果它们对根因结论一致,置信度高。如果分歧,则将两个假设同时呈现给人类并上报。模式简单,却是防止幻觉根因的有效过滤器。
 
-### 运行内存
+### 运维记忆
 
-团队转换是传统的SRE 部落知识叶片的沉默杀戮.AI SRE在向量DB中存储跑本+死后检测;代理人在每次新事件中获取.当新工程师加入时,AI拥有完整的历史.
+人员流失是传统 SRE 的隐形杀手——部落知识随人员离职而消失。AI SRE 将 runbook + 复盘报告存储在向量数据库中;智能体在每次新事件中检索。当新工程师入职时,AI 已拥有完整的历史。
 
-### 事件前预测
+### 事前预测
 
-通过历史记录,GPU温度,API错误模式训练的LLM预测在测试组发生前10-15分钟发生的停机量占89%.
+MIT 2025 研究:基于历史日志、GPU 温度、API 错误模式训练的 LLM,在测试集上提前 10-15 分钟预测了 89% 的故障。
 
-现实检查:没有动机的预测是仪表板. 操作问题是"当我们预测时,我们会做什么?" 预防性排泄? 页面? 自动扩展?
+现实检验:无法付诸行动的预测只是仪表盘。运维层面的问题是"当我们做出预测时,该做什么?"提前排水?触发告警?自动扩容?答案取决于具体策略。
 
-### 2026年产品
+### 2026 年的产品
 
-- **Datadog Bits AI**在Datadog内部管理了SRE副飞行员.
-- **Azure SRE Agent** 蓝色原生.
-- **NeuBird Hawkeye**对抗性评估+运行记忆.
-- **PagerDuty AIOps**分类+减倍.
-- **Incident.io Autopilot**事件指挥官+协调.
+- **Datadog Bits AI** — Datadog 内置的托管 SRE 副驾驶。
+- **Azure SRE Agent** — Azure 原生。
+- **NeuBird Hawkeye** — 对抗式评估 + 运维记忆。
+- **PagerDuty AIOps** — 分诊 + 去重。
+- **Incident.io Autopilot** — 事件指挥 + 协调。
 
-### 运行书籍作为代码
+### Runbook 即代码
 
-运行簿从"流通"页面发展到有结构化的部分 (症状,假设,验证,行为) 的版本分类.结构化运行簿提供更好的RAG检索.通过将未结构化运行簿转化为结构化,启动任何AI-SRE推广.
+Runbook 正从 Confluence 页面演变为带有结构化章节(症状、假设、验证、操作)的版本化 markdown。结构化的 runbook 能带来更好的 RAG 检索效果。任何 AI SRE 落地的第一步都是将非结构化 runbook 结构化。
 
-### 你应该记住的数字
+### 应当记住的数字
 
-- 早期检测:89%的停机,10-15分钟的领先时间.
-- 多代理分类:监督者+ (日志,指标,运行簿) +人.
-- 安全自动补救设置:重新启动,重新部署,在限度范围内扩展.
-- 矛盾的评估:两个独立的模型; 协议 = 信心.
+- MIT 早期检测:89% 的故障,提前 10-15 分钟。
+- 多智能体分诊:supervisor +(日志、指标、runbook)+ 人类。
+- 安全自动修复集合:重启 pod、回滚部署、在边界内扩容。
+- 对抗式评估:两个模型独立分析;一致 = 高置信度。
 
 ```figure
 i4-incident-agents
 ```
 
-## 用它
+## 使用它
 
-`code/main.py`模拟多代理分类:日志代理发现错误,测量代理发现CPU尖,运行簿代理匹配已知问题.监督员排列假设.
+`code/main.py` 模拟多智能体分诊:日志智能体发现错误,指标智能体发现 CPU 激增,runbook 智能体匹配到已知问题。Supervisor 对假设排序。
 
-## 运送它
+## 交付它
 
-这一课产生了`outputs/skill-ai-sre-plan.md`鉴于当前的调用,事件数量,团队成熟度,设计了AI SRE部署.
+本课产出 `outputs/skill-ai-sre-plan.md`。根据当前值班安排、事件量、团队成熟度,设计一份 AI SRE 落地方案。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`如果记录和计量代理人不同意, 监督员怎么解决呢?
-2. 确定为您服务的三项"安全"自动补救行动.
-3. 编写一个结构化运行簿模板:部分,所需的字段,验证命令.
-4. 预测检测火灾12分钟前,你有什么政策?
-5. 讨论3人团队是否应该在2026年采用AI SRE,或者等待.
+1. 运行 `code/main.py`。如果日志智能体和指标智能体结论不一致怎么办?Supervisor 如何裁决?
+2. 为你的服务定义三个"安全"的自动修复操作,并逐一说明理由。
+3. 编写一个结构化 runbook 模板:章节、必填字段、验证命令。
+4. 预测性检测在提前 12 分钟时触发。你的策略是什么——告警、提前排水,还是两者兼用?
+5. 论证一个 3 人团队在 2026 年应该采用 AI SRE 还是观望。考虑成熟度、事件量、风险。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| AI SRE | "agent for on-call" | LLM-backed incident investigation + coordination |
-| Supervisor agent | "the orchestrator" | Top-level agent breaking incidents into sub-queries |
-| Specialized agent | "domain agent" | Sub-agent with tool access (logs, metrics, runbooks) |
-| Auto-remediation | "AI fixes it" | Narrow pre-approved action; NOT broad re-architecture |
-| Operational memory | "vector runbooks" | Post-mortems + runbooks in vector DB for RAG |
-| Adversarial eval | "two-model check" | Independent analyses; agreement = confidence |
-| NeuBird Hawkeye | "the adversarial one" | Product with adversarial-eval + memory pattern |
-| Bits AI | "Datadog's SRE agent" | Datadog-managed AI SRE |
-| Pre-incident prediction | "early detection" | 10-15 min lead time on outage prediction |
+| 术语 | 人们怎么说 | 实际含义 |
+|------|------------------------|------------------------|
+| AI SRE | "值班智能体" | 基于 LLM 的事件调查 + 协调 |
+| Supervisor 智能体 | "编排器" | 将事件拆解为子查询的顶层智能体 |
+| 专用智能体 | "领域智能体" | 拥有工具访问权限的子智能体(日志、指标、runbook) |
+| 自动修复 | "AI 修复它" | 狭窄的预批准操作;不是宽泛的架构重构 |
+| 运维记忆 | "向量 runbook" | 存于向量数据库中的复盘报告 + runbook,用于 RAG |
+| 对抗式评估 | "双模型校验" | 独立分析;一致 = 高置信度 |
+| NeuBird Hawkeye | "对抗式那款" | 采用对抗式评估 + 记忆模式的产品 |
+| Bits AI | "Datadog 的 SRE 智能体" | Datadog 托管的 AI SRE |
+| 事前预测 | "早期检测" | 故障预测的 10-15 分钟提前量 |
 
-## 进一步阅读
+## 延伸阅读
 
 - [incident.io — AI SRE Complete Guide 2026](https://incident.io/blog/what-is-ai-sre-complete-guide-2026)
 - [InfoQ — Human-Centred AI for SRE](https://www.infoq.com/news/2026/01/opsworker-ai-sre/)

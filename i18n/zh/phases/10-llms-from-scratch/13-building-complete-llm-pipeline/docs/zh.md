@@ -1,34 +1,34 @@
-# 建立一个完整的LLM管道
+# 构建完整的 LLM 流水线
 
-> 从第1课到第12课,一切都是一个管道的阶段. 这一课是把这些阶段变成一个单一的终端运行:代码化,预列,规模化,SFT,排列,评估,量化,服务. 你不会在笔记本电脑上训练70B型号. 你将制作编排层,表格,评估门和2026年边境团队使用的反弹计划, 这是顶点.
+> 第 01 课到第 12 课的所有内容都只是某条流水线中的一个阶段。本课是脚手架，把这些阶段变成一次端到端运行：分词、预训练、扩展、SFT、对齐、评估、量化、服务。你不会在笔记本电脑上训练一个 70B 模型。你要构建的是一个 2026 年前沿团队用来决定发布什么内容的编排层、清单（manifest）、评估门禁和回滚计划。这是收官之作。
 
 **Type:** Build
 **Languages:** Python (stdlib)
-**Prerequisites:** All Phase 10 lessons 01-12
-**Time:** ~120 minutes
+**Prerequisites:** 第 10 阶段全部课程 01-12
+**Time:** 约 120 分钟
 
 ## 学习目标
 
-- 组合前十一个课程 (托肯化器,数据,预训练,扩展,SFT,RLHF,DPO,CAI,评估,量化,推断) 成为一个可复制的管道规范
-- 定义阶段之间的艺术品合同:每个阶段所消耗的东西,它产生的东西,以及下一个阶段如何验证输入
-- 建立一个追踪实验,哈希文物,和通过评估门的管弦仪
-- 设计回归计划:哪些文物是廉价的重新运行,哪些是昂贵的,以及一个腐败的检查站的成本
+- 将此前的十一课（分词器、数据、预训练、扩展、SFT、RLHF、DPO、CAI、评估、量化、推理）组合成一份可复现的流水线规范
+- 定义阶段之间的工件契约：每个阶段消费什么、产出什么、下一个阶段如何验证输入
+- 构建一个编排器，追踪实验、哈希工件，并依据评估阈值把关发布决策
+- 设计回滚计划：哪些工件重跑代价低，哪些代价高，一个损坏的检查点会造成什么损失
 
-## 问题
+## 问题所在
 
-之前的课程每一个工作. 托克尼泽训练. 小 GPT预训练. SFT 数据集组组装. 奖励模型训练. DPO运行. 测量等值. 量化权重出口. 输入服务器 spun up. 每个是笔记本. 每个都有自己的公约,自己的输出路径,自己的种子.
+之前的课程各自都能跑通。分词器已训练。微型 GPT 已预训练。SFT 数据集已组装。奖励模型已训练。DPO 已运行。评估已度量。量化权重已导出。推理服务器已启动。每一个都是一个 notebook。每一个都有自己的约定、自己的输出路径、自己的种子。
 
-边境训练不是笔记本. 拉马3405B在大约54天内花了3000万H100小时. 探V3使用了约2800万H800小时. 在那段时间里,一个破产的检查点,一个数据污染,一个评估回归, 团队通过管道卫生来生存下来:每个阶段都有确定性输入,确定性输出,表达,哈希和门口.
+前沿训练运行不是一个 notebook。Llama 3 405B 花费了约 3000 万 H100 小时，历时约 54 天。DeepSeek-V3 用了约 280 万 H800 小时。在这段时间里，一个损坏的检查点、一次数据污染、一次评估回退，就可能让团队损失一周的实际时间和一个月的 GPU 预算。团队存活下来的方式是流水线卫生：每个阶段都有确定性的输入、确定性的输出、一份清单、一个哈希、一道门禁。
 
-这就是结尾石.你不会在笔记本电脑上运行管道端到端.你会写编辑器协调阶段,说明运行的表格,验证器,通过运输决定,以及让第三方从单个文件中重新运行你的工作的重播计划.代码很小,纪律很大.
+这是收官之作。你不会在笔记本电脑上端到端运行这条流水线。你要编写协调各阶段的编排器、描述本次运行的清单、把关发布决策的验证器，以及让第三方从一个文件复现你工作的重放计划。代码很小；纪律性很强。
 
-模式从100M到1T参数不变.相同的四个组件 - - 表格,调整器,评估门,文物存储 - - 运行Llama 3 并运行您的爱好GPT. 区别在于每个阶段配置中的数字的尺寸,而不是管道的形状.
+这个模式从 100M 到 1T 参数都原样适用。同样的四个组件——清单、编排器、评估门禁、工件存储——既能运行 Llama 3，也能运行你的业余 GPT。区别只在于每个阶段配置里数字的大小，而不是流水线的形状。
 
-## 概念
+## 核心概念
 
 ### 十二个阶段
 
-每个10期课程都是一个阶段.
+第 10 阶段的每一课都是一个阶段。下面是完整的依赖图。
 
 ```mermaid
 graph TD
@@ -53,11 +53,11 @@ graph TD
     style GATE fill:#1a1a2e,stroke:#51cf66,color:#fff
 ```
 
-阶段07和08可以并行运行.其他一切都是一个艰难的依赖. 阶段02 (托肯尼泽) 的变化无效所有下游文物. 阶段10 (eval) 的变化只无效了船决定.
+阶段 07 和 08 可以并行运行。其余一切都是硬依赖。阶段 02（分词器）的变更会使所有下游工件失效。阶段 10（评估）的变更只会使发布决策失效。
 
-### 显而易见的
+### 清单（Manifest）
 
-简单单单是单个文件,描述一个运行完全足以重播.管道产生的任何东西都不应该取决于没有在简单单单单中的状态. 字段是无聊的和强制性的.
+清单是一个文件，它对一次运行的描述足够完整以实现重放。流水线产出的任何内容都不应依赖于清单之外的状态。这些字段枯燥但必不可少。
 
 ```
 pipeline_version: 1.2.3
@@ -72,31 +72,31 @@ stages:
     cost_usd: 12
 ```
 
-阶段N的输出哈希是阶段N+1的输入哈希.任何偏差和管道停止. 这就是你早期捕获数据腐败的方式. 这也是一个不同大陆的队友如何验证他们的重播产生与你的相同的文物.
+阶段 N 的输出哈希就是阶段 N+1 的输入哈希。任何偏差都会使流水线停止。这就是你及早发现数据损坏的方式。这也是地球另一端的队友验证他们的重放产出了与你相同工件的方式。
 
-在实践中,团队使用一个小的YAML方案加上一个与之前成功运行不同的表现检查器.任何在预期的领域之外的三角形 (成本,墙钟) 是红旗.
+实践中，团队使用一个小型 YAML 模式，外加一个与上一次成功运行做 diff 的清单检查器。任何超出预期字段（成本、实际耗时）的差异都是危险信号。
 
-### 工艺品的类型
+### 工件类型化
 
-每个阶段的输出都是一个打字的文物,不是一个目录,不是一个,而是一个已知的模式的命名类型.
+每个阶段的输出都是一个有类型的工件。不是一个目录大杂烩，不是一个 pickle，而是一个具有已知模式的命名类型。
 
-| Stage | Artifact Type | Key Fields |
+| 阶段 | 工件类型 | 关键字段 |
 |-------|--------------|-----------|
 | 01-02 | Tokenizer | vocab.json, merges.txt, config.json, hash |
-| 03 | Dataset | shards[], row count, token count, dedup stats |
-| 04-05 | Checkpoint | weights.safetensors, config.json, optimizer state, step count |
-| 06 | SFT Model | checkpoint + SFT recipe + data mix |
-| 07 | Reward Model | RM checkpoint + preference data hash |
-| 08-09 | Policy | checkpoint + reference hash + beta + KL budget consumed |
-| 10 | Eval Report | benchmark scores + regression diffs + eval data hash |
-| 11 | Quantized Model | quantized weights + calibration data + accuracy delta vs FP16 |
-| 12 | Server Spec | endpoint + model hash + config + observability hooks |
+| 03 | Dataset | shards[], 行数, token 数, 去重统计 |
+| 04-05 | Checkpoint | weights.safetensors, config.json, 优化器状态, 步数 |
+| 06 | SFT Model | 检查点 + SFT 配方 + 数据配比 |
+| 07 | Reward Model | RM 检查点 + 偏好数据哈希 |
+| 08-09 | Policy | 检查点 + 参考哈希 + beta + 已消耗的 KL 预算 |
+| 10 | Eval Report | 基准分数 + 回退 diff + 评估数据哈希 |
+| 11 | Quantized Model | 量化权重 + 校准数据 + 相对 FP16 的精度差 |
+| 12 | Server Spec | 端点 + 模型哈希 + 配置 + 可观测性钩子 |
 
-打字防止最常见的故障模式:使用步骤 08输出作为步骤 06输入,通过SFT路径运输一个DPO训练模型.打字的文物和打字的步骤签名使这些错误是编译时间故障,而不是五天的故障.
+类型化防止了最常见的失败模式：把阶段 08 的输出当作阶段 06 的输入，把 DPO 训练的模型送进 SFT 路径。有类型的工件和有类型的阶段签名让这类错误成为编译期失败，而不是第五天的失败。
 
-### 伊瓦尔门
+### 评估门禁
 
-运输不是"训练完成". 运输是"训练完成,评估门通过.
+发布不是“训练完成”。发布是“训练完成且评估门禁通过”。门禁在运行开始之前就已定义。
 
 ```
 gates:
@@ -108,49 +108,49 @@ gates:
   cost_total_usd: <= 50000
 ```
 
-每个门都是数字门.没有"看起来很好"的门,没有主观的签名.如果每个门通过,文物标记为可运输的.如果任何门失败,运行将在一个名为的审查者明确的过关之前举行,该项目本身被登记在表中.
+每道门禁都是一个数值阈值。没有“看起来不错”式的门禁。没有主观签字。如果所有门禁都通过，工件被标记为可发布。如果任何门禁失败，运行被挂起，等待具名审查者的显式覆盖，该覆盖本身也会记录在清单中。
 
-两门门捕获大多数灾难.一个*退缩*门 (新型车型必须至少与前一个核心基准标准一样好) 捕获训练错误.一个*KL预算*门 (调整政策不应偏离X的参考) 捕获调整过度.每个生产管道都有两者.
+两道门禁能捕获大多数灾难。一道*回退*门禁（新模型在核心基准上必须不差于前一个模型）捕获训练 bug。一道 *KL 预算*门禁（对齐后的策略相对其参考模型的漂移不得超过 X）捕获对齐过度。每条生产流水线都有这两道门禁。
 
-### 乐团主持人
+### 编排器
 
-简单的代码,读取说明书,发送阶段,追踪文物,停止任何违反合同.这不是空气流.这不是库贝流.
+一小段代码，读取清单、调度阶段、追踪工件，并在任何契约被违反时停止。这不是 Airflow。这不是 Kubeflow。为了流水线卫生，你需要的是你自己写的、朴实无华的东西。
 
-管家的工作很狭:
+编排器的职责很窄：
 
-1. 现在,请从文件中删除日期.
-2. 对于每个阶段,检查预期输出是否已经存在于正确的哈希 (如果是这样的话,跳转).
-3. 走上舞台,捕捉到的时间,测量墙上的钟表和成本.
-4. 验证输出哈希与下游阶段预期输入哈希相比.
-5. 如果失败,请写一个部分表格,准确的失败阶段,然后退出非零.
+1. 从清单解析出 DAG。
+2. 对每个阶段，检查期望的输出是否已存在于正确的哈希处（若存在则跳过）。
+3. 运行阶段，捕获 stdout/stderr，记录实际耗时和成本。
+4. 将输出哈希与下游阶段期望的输入哈希比对。
+5. 失败时，写一份包含确切失败阶段的局部清单并以非零码退出。
 
-这就是200行Python. 它将看起来像文件.`code/main.py`在这个课程中,在帽子下,真正的管道使用`torchrun`或`ray`管家自己在单个盒子上运行.
+这就是 200 行 Python。它看起来就像本课的文件 `code/main.py`。在底层，真正的流水线使用 `torchrun` 或 `ray` 在集群上执行各个阶段，但编排器本身在单机上运行。
 
-### 实验跟踪和艺术品存储
+### 实验追踪与工件存储
 
-两种外部系统住了管道.
+两个外部系统锚定整条流水线。
 
-**Experiment tracker (wandb, neptune, mlflow).**记录损失曲线,评估指标,系统远程测量每个阶段. 追踪器是你需要比较3周后的运行A与运行B时去的地方. 团队几乎总是使用一个托管的追踪器来做这个 - - 写你的自己的时间会损失,应该进入训练.
+**实验追踪器（wandb、neptune、mlflow）。**记录损失曲线、评估指标、每个阶段的系统遥测数据。三周后需要对比运行 A 和运行 B 时，你去的就是追踪器。团队几乎总是使用托管追踪器——自己写会浪费本该投入训练的时间。
 
-**Artifact store (S3, R2, GCS).**检查点,数据集,代币,评估报告的不可变的对象存储.`latest.pt`是脚步枪;`ckpt-7b-step-20000-sha256:abc123.safetensors`是一个合同.
+**工件存储（S3、R2、GCS）。**用于检查点、数据集、分词器、评估报告的不可变对象存储。工件按哈希寻址，而不是按文件名。像 `latest.pt` 这样的文件名是个坑；`ckpt-7b-step-20000-sha256:abc123.safetensors` 才是契约。
 
-管家写信给两者.跟踪器是为了人类查看图表. 艺术品商店是为了下一个阶段查找输入.
+编排器同时写入两者。追踪器是给人看图的。工件存储是给下一个阶段查找输入的。
 
-### 成本
+### 成本核算
 
-边境运行有美元号码,预算纪律在两个地方发生.
+一次前沿运行有对应的美元数字。预算纪律发生在两个地方。
 
-**Pre-run estimate.**从表格中计算预期FLOP (预训练:6x参数 x代币),预期GPU时间 (FLOP /峰值吞吐量 /利用率),以及美元成本以当前租金率计算.如果估计超过预算门,管道拒绝启动.
+**运行前估算。**从清单出发，计算期望 FLOPs（预训练为：6 x 参数量 x token 数）、期望 GPU 小时数（FLOPs / 峰值吞吐 / 利用率），以及按当前租用价格计算的美元成本。如果估算超出预算门禁，流水线拒绝启动。
 
-**In-run tracking.**阶段一步墙钟和成本记录在表格中.每阶段后,剩余预算都会被检查.如果一个阶段超过,下一个阶段的门将与新剩余预算进行评估.当风险投资公司打电话时,你不会发现你没有钱.
+**运行中追踪。**逐阶段的实际耗时和成本记录到清单。每个阶段结束后，检查剩余预算。如果某个阶段超支，下一阶段的门禁将以新的剩余预算评估。你不会等到 VC 打电话时才发现自己没钱了。
 
-拉马3的报告成本是$61M. DeepSeek-V3 reported $5.6M主要预训练运行.比率主要是硬件效率加上专家组合 - 但具体成本是可见的,因为两个团队都跟踪了每个阶段,而不是每个运行.
+Llama 3 公开的主预训练运行成本为 $61M. DeepSeek-V3 reported $5.6M。这个比例主要归功于硬件效率加上混合专家——但具体成本之所以可见，是因为两个团队都按阶段而不是按运行来追踪。
 
-### 复制性与确定性
+### 可复现性与确定性
 
-它们不同. *可复制性*意味着相同的表格加上相同的代码加上相同的基础设施产生了具有相等下游指标的检查点. *确定性*意味着比特相同的输出.
+这不是一回事。*可复现*意味着相同的清单加相同的代码加相同的基础设施，产出一个下游指标等价的检查点。*确定性*意味着比特级完全相同的输出。
 
-现代的LLM培训可复制,但不是确定性. 分布训练的降级序列,GPU内核非确定性 (cuBLAS,闪电attn) 和混合精度圆结结合,产生在运行之间差异的浮动. 对于最后的指标来说,这很好,它们不会移动. 如果您试图通过位级差异进行调试,那么这会致命. 治疗方法是记录每个阶段的输入和输出和标题指标-- 如果它们匹配, 运行会"复制",即使重量不相同.
+现代 LLM 训练是可复现的但不是确定性的。分布式训练的归约顺序、GPU 核的非确定性（cuBLAS、flash-attn）、以及混合精度舍入，共同导致两次运行之间在 1e-5 量级上不同的浮点数。这对不动的最终指标没有影响。如果你在尝试用比特级 diff 调试，这就是致命的。解决办法是记录每个阶段的输入哈希、输出哈希和头条指标——如果这些匹配，即使权重不是比特级相同，运行也算“已复现”。
 
 ```mermaid
 graph LR
@@ -169,52 +169,52 @@ graph LR
     style ROLL fill:#1a1a2e,stroke:#c0392b,color:#fff
 ```
 
-### 滚动计划
+### 回滚计划
 
-在比赛开始之前,写下每个阶段失败发生的事情.
+在运行开始之前，写下每个阶段失败时会发生什么。分三类。
 
-- **Cheap to re-run**标记器,评估,量化,推断服务器.
-- **Medium**(日):SFT,DPO,CAI. 保持基本模型;只重复调整阶段.
-- **Expensive**现在,我们需要做一些好工作, 让我们可以做一些好工作, 让我们可以做一些好工作.
+- **重跑代价低**（小时级）：分词器、评估、量化、推理服务器。直接重跑。
+- **中等**（天级）：SFT、DPO、CAI。保留基座模型；只重跑对齐阶段。
+- **昂贵**（周级和数百万美元）：预训练。这里的回滚计划不是“重跑”。而是“使用最后一个好的检查点，用修订后的数据重跑更便宜的下游阶段”。
 
-由于阶段依赖性是输入和哈希的,因此主管可以自动计算反弹集:无效的阶段加上每个后代.在阶段06 (SFT) 失败无效的06,07,08,09,10,11,12.在阶段11 (量化) 失败无效的11和12.在早上4点时,提前命名避免即兴.
+因为阶段依赖是有类型且有哈希的，编排器可以自动计算回滚集合：使失败阶段及其所有后代失效。阶段 06（SFT）失败会使 06、07、08、09、10、11、12 失效。阶段 11（量化）失败只使 11 和 12 失效。事先写下这些，避免团队在凌晨 4 点精疲力竭时临场发挥。
 
-### 2026年观察到的生产配方
+### 2026 年观察到的生产配方
 
-许多边境团队都在同一骨架上.
+大多数前沿团队收敛到了同一个骨架。
 
-- 标记器: 128k BPE 字节倒退. 训练在一个小,平衡的多语言片.
-- 预训练: 10-20T代币,主要是网络加代码加合成. Muon或 AdamW优化器. FSDP2或DeepSpeed ZeRO-3. 渐进检查. BF16重量,FP32主.
-- 标准:500k-2M指令对,混合人体和合成,与评估集进行严格的测试.
-- 配合:DPO或CAI+GRPO. 只有当偏好信号对DPO太多维度时,RLHF.
-- ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-- 量化:为服务提供4位GPTQ或 AWQ,在精度分别重要时进行8位安全评估.
-- 服务:vLLM,TensorRT-LLM,或内部. 连续批量. 投机解码. KV缓存驱逐.
+- 分词器：128k BPE，带字节回退。在小而均衡的多语言切片上训练。
+- 预训练：10-20T token，主要是网页加代码加合成数据。Muon 或 AdamW 优化器。FSDP2 或 DeepSpeed ZeRO-3。梯度检查点。BF16 权重、FP32 主权重。
+- SFT：500k-2M 条指令对，人工与合成混合，并与评估集严格去重。
+- 对齐：DPO 或 CAI + GRPO。只有当偏好信号对 DPO 来说维度过高时才使用 RLHF。
+- 评估：MMLU-Pro、MATH、HumanEval+、GPQA、SWE-Bench Verified、LiveBench，外加一个公众永远看不到的私有留出集。
+- 量化：服务用 4-bit GPTQ 或 AWQ，精度差重要的安全评估用 8-bit。
+- 服务：vLLM、TensorRT-LLM 或自研。连续批处理。投机解码。KV cache 淘汰。
 
-六个月就会有变化,但骨架却没有.
+数字每六个月变一次。骨架不变。
 
 ```figure
 beam-search
 ```
 
-## 建立它
+## 动手构建
 
-课程代码是一个管弦和一个明示检查器,而不是十二个训练脚本.每个阶段都用一个定位器模拟,产生一个正确的形状和哈希的输出文物.在实际阶段燃烧GPU资金之前,从端到端运行管弦证明管道工作.
+本课的代码是一个编排器和一个清单检查器，不是十二个训练脚本。每个阶段用一个占位符模拟，产出一个形状和哈希都正确的输出工件。端到端运行编排器，可以在你为真实阶段烧 GPU 钱之前证明流水线的管道部分是通的。
 
-看到`code/main.py`基本内容:
+完整实现见 `code/main.py`。关键部分：
 
-- `Manifest`数据类:管道版本,种子, Git 提交,阶段,门户.
-- `Stage`数据类:名称,类型,输入 (hashes),输出 (hash),墙钟,成本.
-- `Orchestrator.run()`解决DAG,发送阶段,验证哈希,更新表现.
-- `EvalGate.check()`:阅读门值,与最新的评估报告进行比较,返回通过/失败.
-- `ArtifactStore`按哈希,模拟S3.
-- `CostTracker`按阶段和累计,限量超过时停止.
+- `Manifest` dataclass：流水线版本、种子、git commit、阶段、门禁。
+- `Stage` dataclass：名称、类型、输入（哈希）、输出（哈希）、实际耗时、成本。
+- `Orchestrator.run()`：解析 DAG、调度阶段、验证哈希、更新清单。
+- `EvalGate.check()`：读取阈值，与最新评估报告比对，返回通过/失败。
+- `ArtifactStore`（内存版桩）：按哈希 put/get，模拟 S3。
+- `CostTracker`：逐阶段和累计核算，超出上限时停止。
 
-管道在`main.py`通过一个不良的评估门来显示一个被运行的运行是什么样子. 换取每个位数的实际训练脚本从相应的课程,你有一个骨架一个真正的边界管道使用.
+`main.py` 中的流水线运行十二个占位阶段，产出一份清单，并触发一道失败的评估门禁以展示运行被挂起时的样子。把每个占位符换成对应课程的真实训练脚本，你就得到了真实前沿流水线所使用的骨架。
 
-## 用它
+## 使用它
 
-标准工作流程有三个命令.
+标准工作流有三条命令。
 
 ```
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
@@ -222,46 +222,46 @@ python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
 ```
 
-跑步`plan`现在,我们在线运输系统中出现了很多错误,`plan`免费的.`run`通过获虫,可以节省钱.
+每次都先运行 `plan`。大多数流水线 bug 在 plan 阶段就会暴露——缺失的门禁阈值、过期的哈希、预算超支。运行 `plan` 是免费的。运行 `run` 是昂贵的。通过在便宜的一侧捕获 bug 来省钱。
 
-产量`gate`是否是`SHIP`或`HOLD: <reason>`经过的运行不是失败,而是决定点.一个名为的审查员要么过失 (并且过失记录),要么他们批准了过失.
+`gate` 的输出要么是 `SHIP`，要么是 `HOLD: <reason>`。被挂起的运行不是失败；它是一个决策点。具名审查者要么覆盖（且覆盖被记录在案），要么批准回滚。
 
-## 运送它
+## 发布它
 
-这一课产生了`outputs/skill-llm-pipeline-reviewer.md`提供一个拟议的管道说明书,并检查所有合同:阶段键入,哈希链,门户,反弹计划,成本估计.它拒绝批准一个没有评估门户的说明书,一个无限的KL预算,或一个运行混合评估和培训数据.
+本课产出 `outputs/skill-llm-pipeline-reviewer.md`。给它一份拟议的流水线清单，它会检查所有契约：阶段类型化、哈希链、门禁、回滚计划、成本估算。对于缺少评估门禁、KL 预算无上限、或评估与训练数据混用的清单，它会拒绝批准。
 
-## 运动
+## 练习
 
-1. 扩展调整器,以支持7和08阶段的并行执行.`concurrent.futures`确认最后的表格记录了两个阶段的输出,并且9阶段的输入哈希是两者的确定性组合.
+1. 扩展编排器以支持阶段 07 和 08 的并行执行。使用标准库的 `concurrent.futures` 模块。确认最终清单记录了两个阶段的输出，且阶段 09 的输入哈希是二者的确定性组合。
 
-2. 添加"污染检查"门.鉴于评估数据集和训练数据集的细节,计算重叠 (精确的字符串匹配或13克匹配).如果重叠超过0.1%,则门失败.将污染的训练集输入,并确认门能保持运行.
+2. 添加一道“污染检查”门禁。给定评估数据集哈希和训练数据集分片，计算重叠度（精确字符串匹配或 13-gram 匹配）。重叠超过 0.1% 时门禁失败。喂给它一个被污染的训练集，确认门禁挂起了运行。
 
-3. 根据第一原则实施成本估计器.对于第04阶段 (预训练),估计FLOP为6x参数 x代币,假设H100的40%MFU (模型FLOP利用率) 在989 TFLOPs BF16,在2.50美元/GPU-小时.报告2T代币训练的7B模型的估计.比较已发布的Llama 2数字.
+3. 从第一性原理实现成本估算器。对阶段 04（预训练），估算 FLOPs 为 6 x 参数量 x token 数，假设 H100 上 BF16 为 989 TFLOPs、MFU（模型 FLOPs 利用率）40%、$2.50/GPU 小时。报告在 2T token 上训练 7B 模型的估算值。与已发表的 Llama 2 数字对比。
 
-4. 构建部分反弹.模拟在09级 (CAI) 发生失败,然后在01-08被缓存的同时重启09至12级.调整器应该通过哈希检测到缓存的文物并跳过它们.测量保存的墙钟与完全重启.
+4. 构建部分回滚。模拟阶段 09（CAI）失败，然后重跑阶段 09 至 12，同时保持 01-08 缓存。编排器应通过哈希检测到缓存的工件并跳过它们。对比完整重跑，测量节省的实际时间。
 
-5. 添加可观测性. 发出OpenTelemetry 跨度为每个阶段,具有参数,看到的代币,损失和成本的属性. 输入跨度到本地收藏器. 问题不是仪表板; 问题是每个阶段的健康可以从单个痕迹识别器中追踪.
+5. 添加可观测性。为每个阶段发射 OpenTelemetry span，附带参数量、已见 token 数、损失和成本等属性。将 span 输送到本地收集器。重点不是仪表盘；重点是每个阶段的健康状态都可以从一个 trace ID 追溯。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Manifest | "The recipe file" | YAML or JSON describing pipeline version, seed, per-stage config, and gate thresholds — sufficient to replay a run |
-| Content-addressed | "By hash not name" | Artifacts stored by SHA-256 of their contents, so you can never confuse version A with version B |
-| Eval gate | "The ship criteria" | Numeric thresholds on benchmark metrics and safety scores that must pass before an artifact is marked shippable |
-| KL budget | "How far alignment drifted" | A cap on cumulative KL(policy || reference) across alignment stages, enforced as a gate |
-| MFU | "How much of the GPU you used" | Model FLOPs Utilization — achieved FLOPs divided by theoretical peak. 40% is typical at 70B scale, 55% at 7B |
-| Rollback plan | "What we do when it breaks" | Pre-written set of actions per stage on failure: re-run, fall back, retrain with revised inputs |
-| Orchestrator | "The conductor" | The process that reads the manifest, dispatches stages, verifies hashes, halts on any contract violation |
-| Artifact store | "Versioned S3 for weights" | Immutable content-addressed object store — single source of truth for checkpoints, datasets, eval reports |
-| Reproducible | "Same metrics on replay" | Different bit-level weights but equivalent downstream metrics — the realistic target for distributed LLM training |
-| Cost gate | "You cannot exceed X" | Pre-run cost estimate plus in-run tracker — the pipeline refuses to start if the estimate exceeds budget |
+| Manifest | “配方文件” | 描述流水线版本、种子、逐阶段配置和门禁阈值的 YAML 或 JSON——足以重放一次运行 |
+| Content-addressed | “按哈希不按名字” | 工件按其内容的 SHA-256 存储，因此你永远不会混淆版本 A 和版本 B |
+| Eval gate | “发布标准” | 基准指标和安全分数上的数值阈值，必须在工件被标记为可发布之前通过 |
+| KL budget | “对齐漂移了多远” | 对齐阶段累计 KL(policy \|\| reference) 的上限，作为门禁强制执行 |
+| MFU | “GPU 用了多少” | Model FLOPs Utilization——实际达到的 FLOPs 除以理论峰值。70B 规模下 40% 是典型值，7B 下为 55% |
+| Rollback plan | “出问题怎么办” | 每个阶段失败时预先写好的动作集合：重跑、回退、用修订后的输入重新训练 |
+| Orchestrator | “指挥家” | 读取清单、调度阶段、验证哈希、在任何契约被违反时停止的进程 |
+| Artifact store | “带版本管理的权重的 S3” | 不可变的按内容寻址的对象存储——检查点、数据集、评估报告的唯一事实来源 |
+| Reproducible | “重放时指标相同” | 比特级权重不同但下游指标等价——这是分布式 LLM 训练的现实目标 |
+| Cost gate | “你不能超过 X” | 运行前成本估算加运行中追踪器——如果估算超出预算，流水线拒绝启动 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Dubey et al., 2024 -- "The Llama 3 Herd of Models"](https://arxiv.org/abs/2407.21783)-- 边境管道最详细的公开描述,包括数据,培训,调整,评估
-- [DeepSeek-AI, 2024 -- "DeepSeek-V3 Technical Report"](https://arxiv.org/abs/2412.19437)提高效率率,占Llama3类培训成本的10分之一
-- [Kaplan et al., 2020 -- "Scaling Laws for Neural Language Models"](https://arxiv.org/abs/2001.08361)-- 计算数据参数规模关系的原始
-- [Hoffmann et al., 2022 -- "Training Compute-Optimal Large Language Models (Chinchilla)"](https://arxiv.org/abs/2203.15556)-- 校正卡普兰,重新校准了现代数据预算
-- [PyTorch FSDP2 documentation](https://pytorch.org/docs/stable/fsdp.html)-- 在 PyTorch 2.4+ 中,FSDP1的分布式训练原始替代
-- [Weights & Biases LLM Reports](https://wandb.ai/site/llms)-- 开源LLM运行的实验追踪器输出,作为可刺的模板有用
+- [Dubey et al., 2024 -- "The Llama 3 Herd of Models"](https://arxiv.org/abs/2407.21783) -- 关于一条前沿流水线（包括数据、训练、对齐、评估）最详尽的公开描述
+- [DeepSeek-AI, 2024 -- "DeepSeek-V3 Technical Report"](https://arxiv.org/abs/2412.19437) -- 成本约为 Llama 3 级训练十分之一的高效优先流水线
+- [Kaplan et al., 2020 -- "Scaling Laws for Neural Language Models"](https://arxiv.org/abs/2001.08361) -- 算力-数据-参数量扩展关系的开山之作
+- [Hoffmann et al., 2022 -- "Training Compute-Optimal Large Language Models (Chinchilla)"](https://arxiv.org/abs/2203.15556) -- 对 Kaplan 的修正，重新校准了现代数据预算
+- [PyTorch FSDP2 documentation](https://pytorch.org/docs/stable/fsdp.html) -- 在 PyTorch 2.4+ 中取代 FSDP1 的分布式训练原语
+- [Weights & Biases LLM Reports](https://wandb.ai/site/llms) -- 开源 LLM 运行的真实清单和实验追踪器输出，可作为可套用的模板

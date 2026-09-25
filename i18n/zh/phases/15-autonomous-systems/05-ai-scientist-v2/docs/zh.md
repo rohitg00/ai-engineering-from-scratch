@@ -1,112 +1,112 @@
-# 工坊级自主研究
+# AI Scientist v2 — 研讨会级别的自主研究
 
-> 萨卡纳的AI科学家 v2 (Yamada等, arXiv:2504.08066) 运行了整个研究循环:假设,代码,实验,数字,写作,提交. 这是第一个在ICLR 2025研讨会上进行的纸质合格同行审查的系统. 独立评估 (Beel等人) 发现, 42% 的实验失败于编码错误, 萨卡纳的医生警告说,该代码基础执行了LLM编写的代码, 这两个图片的两半都是重点.
+> Sakana 的 AI Scientist v2（Yamada 等，arXiv:2504.08066）运行完整的研究循环：假设、代码、实验、图表、论文撰写、投稿。它是首个生成的论文通过 ICLR 2025 研讨会同行评审的系统。独立评估（Beel 等）发现 42% 的实验因编码错误而失败，且文献综述经常把已有定论的概念误标为新颖。Sakana 自己的文档警告说，该代码库会执行 LLM 编写的代码，并建议使用 Docker 隔离。这两个方面的事实都是重点。
 
 **Type:** Learn
-**Languages:** Python (stdlib, research-loop state-machine toy)
+**Languages:** Python（标准库，研究循环状态机玩具实现）
 **Prerequisites:** Phase 15 · 03 (AlphaEvolve), Phase 15 · 04 (DGM)
-**Time:** ~60 minutes
+**Time:** ~60 分钟
 
-## 问题
+## 问题所在
 
-研究是一个无限任务.与AlphaEvolve的算法搜索或DGM的基准限制自我修改不同,研究结果没有机器可检查的正确度标准.论文由评论员评判,而不是单元测试.这使循环更难关闭,并且更有价值,因为研究是复合进步的所在.
+研究是一个开放式任务。与 AlphaEvolve 的算法搜索或 DGM 的基准受限自我修改不同，研究结果没有机器可校验的正确性标准。论文由评审员评判，而不是单元测试。这使得该循环更难闭合——而一旦闭合也更有价值，因为研究正是复利式进步所在之处。
 
-通过从人类创作的模板开始,AI科学家v1 (Sakana,2024) 关闭了循环. 法律法师在固定架子内进行了实验. AI科学家 v2 (Yamada等, 2025) 通过使用视觉语言模型批评循环的代理树搜索来删除模板要求. 该系统产生想法,实施实验,产生数字,写论文,并反复评论者的反.
+AI Scientist v1（Sakana，2024）通过从人工编写的模板出发来闭合循环。LLM 在固定脚手架内填充实验。AI Scientist v2（Yamada 等，2025）通过使用带有视觉-语言模型评审循环的智能体树搜索，移除了模板要求。该系统生成想法、实现实验、生成图表、撰写论文，并根据评审反馈进行迭代。
 
-专业评审判决:在ICLR 2025研讨会上接受了一份v2生成的论文 (含披露).独立评价判决:系统远非可靠.这两者都是真的.
+同行评审结论：一篇由 v2 生成的论文被 ICLR 2025 研讨会接收（有披露）。独立评估结论：该系统远非可靠。两者都是事实。
 
-## 概念
+## 核心概念
 
-### 建筑
+### 架构
 
-1. **Idea generation.**专业士提出了基于主题和先前文献的研究想法. v1使用模板; v2使用在假设领域的代理搜索.
-2. **Novelty check.**文献检索步骤检查了这个想法是否已发表.这是Beel等人评估发现错误标签的步骤.
-3. **Experiment plan.**经纪人起草了实验协议,并编写了代码.
-4. **Execution.**在比尔等的测量中, 42% 的实验在这个阶段失败于编码错误.
-5. **Figure generation.**视觉语言模型读取生成的数字并重新写出它们以确保清晰度.这是v2的关键技术补充.
-6. **Writeup.**法律士编写一篇论文,与内部审查员进行反复.
-7. **Optional: submission.**报纸提交给一个场所.
+1. **想法生成。** LLM 基于一个主题和先前文献提出研究想法。v1 使用模板；v2 在假设空间上进行智能体搜索。
+2. **新颖性检查。** 文献检索步骤检查该想法是否已被发表。Beel 等的评估正是在这一步发现了误标——已有方法经常被归类为新颖。
+3. **实验计划。** 智能体起草实验方案并编写代码。
+4. **执行。** 代码在沙箱中运行。失败被反馈到重试循环中。在 Beel 等的测量中，42% 的实验在此阶段因编码错误而失败。
+5. **图表生成。** 视觉-语言模型读取生成的图表并改写以提高清晰度。这是 v2 的关键技术新增。
+6. **撰写。** LLM 起草论文，并与内部评审员迭代。
+7. **可选：投稿。** 论文被提交至某个会议或研讨会。
 
-### 工作室接受结果意味着什么
+### 研讨会接收结果意味着什么
 
-一份v2生成的论文在ICLR 2025研讨会上通过了同行评审.作者向计划委员会披露了论文的起源.接受是数据点;它不是声称系统"进行研究"的许可.
+一篇由 v2 生成的论文通过了 ICLR 2025 研讨会的同行评审。作者向程序委员会披露了论文的来源。这次接收是一个数据点；它不是宣称该系统“能做研究”的许可。
 
-重要背景:研讨会论文比主要会议论文低.同行评审很;在任何一天都会接受小部分提交.一个成功是概念证明,而不是可靠性声明.Nature 2026论文记录了端到端循环,它本身是由人类研究人员共同撰写的;它不是"系统写了一篇 Nature论文".
+重要背景：研讨会论文的门槛低于主会论文。同行评审是有噪声的；任何时候都只有一小部分投稿被接收。一次成功是概念验证，不是可靠性声明。Nature 2026 论文记录了端到端循环，且本身由人类研究者合著；它并不是“系统写了一篇 Nature 论文”。
 
-### 独立评估发现的结果
+### 独立评估发现了什么
 
-贝尔等人 (arXiv:2502.14297) 进行了外部评估.
+Beel 等（arXiv:2502.14297）进行了外部评估。主要发现：
 
-- **Experiment failures.**42%的实验因编码错误 (不良进口,形状不匹配,未定义变量) 失败.
-- **Novelty mislabeling.**文献检索步骤经常标记既定概念为新奇.
-- **Presentation-quality gap.**视觉语言的形象批评产生了出版级的视觉,掩盖了潜在的实验弱点.
+- **实验失败。** 42% 的实验因编码错误而失败（错误的导入、形状不匹配、未定义变量）。重试循环捕获了其中一部分，但不是全部。
+- **新颖性误标。** 文献检索步骤经常将已有概念标记为新颖。这是研究领域的幻觉等价物。
+- **展示质量差距。** 视觉-语言图表评审产出了可发表级别的视觉效果，掩盖了底层的实验弱点。
 
-对于这一阶段,最后一个发现是重要的.一个系统,在没有做出说服力的研究的情况下产生令人信服的结果,比一个明显失败的系统更危险,更安全.
+最后一点发现对本阶段最为重要。一个在没有进行令人信服的研究的情况下产出令人信服的输出的系统，比一个明显失败的系统更危险，而非更安全。评估必须深入到底层声明，而不是停在图表上。
 
-### 沙箱逃走问题
+### 沙箱逃逸问题
 
-萨卡纳自己的存储库 README警告说:
+Sakana 自己的仓库 README 警告说：
 
-> 由于该软件的性质,它执行了LLM生成的代码,我们无法保证安全. 有危险的包裹的风险,不受控制的网络访问,以及不预期的过程的产卵.
+> 由于本软件执行 LLM 生成的代码的特性，我们无法保证安全性。存在危险软件包、不受控的网络访问以及产生意外进程的风险。请自行承担使用风险，并考虑使用 Docker 隔离。
 
-没有一个沙盒,严格限制文件系统,网络和过程操作,任何自主导的研究代理都可以将数据泄露,烧毁计算或重写自己.
+这就是未经验证领域中自主性的运行形态。LLM 编写代码；代码运行；代码可以做该进程被允许做的任何事情。如果没有一个严格限制文件系统、网络和进程操作的沙箱，任何自主研究智能体都可以窃取数据、烧毁算力或重写自身。
 
-由于其评估器紧密,AlphaEvolve的沙盒故事更容易.AI Scientist v2的循环运行开放式代码,具有开放式目标.这就是为什么它需要更强大的隔离 (Docker最小;seccomp/gVisor优先) 和离开系统之前手动审查每个提交.
+AlphaEvolve 的沙箱问题较容易处理，因为其评估器是紧密的。AI Scientist v2 的循环以开放目标运行开放式代码。这就是为什么它需要更强的隔离（最低 Docker；首选 seccomp / gVisor），以及在每份投稿离开系统之前进行人工审查。
 
-### 在边境堆中,v2
+### v2 在前沿技术栈中的位置
 
-| System | Target | Output kind | Evaluator | Known failure |
+| 系统 | 目标 | 输出类型 | 评估器 | 已知失败 |
 |---|---|---|---|---|
-| AlphaEvolve | algorithms | code | unit + benchmark | bounded by evaluator rigor |
-| DGM | agent scaffolding | code | SWE-bench | reward hacking |
-| AI Scientist v2 | research papers | text + code + figures | peer review (weak) | experiment failures, mislabeling, polish masking weakness |
+| AlphaEvolve | 算法 | 代码 | 单元测试 + 基准 | 受评估器严谨性限制 |
+| DGM | 智能体脚手架 | 代码 | SWE-bench | 奖励作弊 |
+| AI Scientist v2 | 研究论文 | 文本 + 代码 + 图表 | 同行评审（弱） | 实验失败、误标、包装掩盖弱点 |
 
-系统的安全性控制系统 (沙箱,审查,披露) 完成了大部分安全工作.
+v2 在三者中拥有最弱的自动评估器、最宽的输出面，以及通往公开产物的最短路径。运行层面的控制措施（沙箱、审查、披露）承担了大部分安全工作。
 
 ```figure
 mx-research-loop
 ```
 
-## 用它
+## 动手实践
 
-`code/main.py`模拟v2循环作为状态机:想法 →新奇检查 →实验 →图像 →写作 →评论 →接受或述.每个状态具有可配置的故障概率,从Beel等研究结果中抽取.运行模拟器为N循环并计算:
+`code/main.py` 将 v2 循环模拟为状态机：想法 → 新颖性检查 → 实验 → 图表 → 撰写 → 评审 → 接收或迭代。每个状态都有一个从 Beel 等的发现中提取的可配置失败概率。运行模拟器 N 轮并统计：
 
-- 许多想法都会得到提交.
-- 磨纸隐藏了多少件临界实验缺陷.
-- 如何重新尝试预算,
+- 有多少想法到达投稿阶段。
+- 有多少投稿存在精装论文所掩盖的严重实验缺陷。
+- 重试预算如何在质量与产出之间权衡。
 
-## 运送它
+## 上线部署
 
-`outputs/skill-ai-scientist-sandbox-review.md`检查任何由研究循环代理产生的东西,
+`outputs/skill-ai-scientist-sandbox-review.md` 是一个双门审查清单，用于任何由研究循环智能体产出、即将离开沙箱的内容。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`根据"环节运行"的部分,产生了"清洁"的纸. 根据"试验失败缺陷"的部分,产生了"清洁"的纸.
+1. 使用默认参数运行 `code/main.py`。多大比例的循环运行产出“干净”的论文？多大比例产出的论文存在被图表评审掩盖的实验失败缺陷？
 
-2. 违约的数据已经使用了Beel等的42% /25%.`--experiment-failure 0.20 --novelty-mislabel 0.10`然后是`--experiment-failure 0.60 --novelty-mislabel 0.40`两次运行之间,抛光但缺陷的股票如何转移?
+2. 默认值已使用 Beel 等的 42% / 25%。分别用 `--experiment-failure 0.20 --novelty-mislabel 0.10` 和 `--experiment-failure 0.60 --novelty-mislabel 0.40` 重新运行。“看似精美但有缺陷”的比例在两次运行之间如何变化？
 
-3. 阅读Sakana的AI科学家 v2 repo README关于沙箱要求. 举个两个额外的限制 (除了Docker) 你会申请多天自动运行.
+3. 阅读 Sakana 的 AI Scientist v2 仓库 README 中关于沙箱要求的部分。对于一次多天的自主运行，你会施加哪两项额外限制（Docker 之外）？
 
-4. 阅读Beel等人 第4节关于表达质量差距. 设计一个额外的评估器,可以捕获看起来很好,但实验上有缺陷的论文.
+4. 阅读 Beel 等的第 4 节关于展示质量差距的内容。设计一个额外的评估器，用以发现看似精美但实验上有缺陷的论文。
 
-5. 提出一个对研究人员产生的研究结果进行人为审查的协议,比"博士阅读每篇论文"更好.
+5. 为研究智能体的输出提出一个比“每位博士阅读每篇论文”更具扩展性的人工审查协议。识别瓶颈并围绕它进行设计。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |---|---|---|
-| AI Scientist v1 | "Sakana's templated research agent" | Filled experiments into a fixed scaffold |
-| AI Scientist v2 | "Template-free research agent" | Agentic tree search with VLM figure critique |
-| Agentic tree search | "Branching research agent" | Expands multiple experiment plans in parallel; prunes by internal critic |
-| Vision-language critique | "VLM polish on figures" | Multimodal model reads figures and rewrites them for clarity |
-| Literature retrieval | "Novelty check" | Searches prior work to confirm idea novelty — documented to mislabel |
-| Polish masking | "Pretty paper, broken research" | Presentation quality exceeds experimental quality; hides weaknesses |
-| Sandbox escape | "LLM code breaks out" | Agent-executed code does things the loop designer did not intend |
+| AI Scientist v1 | “Sakana 基于模板的研究智能体” | 在固定脚手架内填充实验 |
+| AI Scientist v2 | “无模板研究智能体” | 带有 VLM 图表评审的智能体树搜索 |
+| 智能体树搜索 | “分支式研究智能体” | 并行展开多个实验计划；由内部评审器剪枝 |
+| 视觉-语言评审 | “用 VLM 润色图表” | 多模态模型读取图表并改写以提高清晰度 |
+| 文献检索 | “新颖性检查” | 搜索先前工作以确认想法新颖性——已被证实存在误标 |
+| 包装掩盖 | “论文漂亮，研究残破” | 展示质量超过实验质量；掩盖弱点 |
+| 沙箱逃逸 | “LLM 代码越狱” | 智能体执行的代码做出循环设计者未意图的事情 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Yamada et al. (2025). The AI Scientist-v2](https://arxiv.org/abs/2504.08066)纸
-- [Sakana blog on the Nature 2026 publication](https://sakana.ai/ai-scientist-nature/)供应商总结与同行评审背景.
-- [Beel et al. (2025). Independent evaluation of The AI Scientist](https://arxiv.org/abs/2502.14297)外部评估数字.
-- [Sakana AI Scientist v1 paper](https://arxiv.org/abs/2408.06292)模板前身.
-- [Anthropic — Measuring AI agent autonomy](https://www.anthropic.com/research/measuring-agent-autonomy)更广泛的开放研究机构框架.
+- [Yamada 等（2025）。The AI Scientist-v2](https://arxiv.org/abs/2504.08066) — 论文。
+- [Sakana 关于 Nature 2026 发表的博客](https://sakana.ai/ai-scientist-nature/) — 包含同行评审背景的厂商总结。
+- [Beel 等（2025）。The AI Scientist 的独立评估](https://arxiv.org/abs/2502.14297) — 外部评估数据。
+- [Sakana AI Scientist v1 论文](https://arxiv.org/abs/2408.06292) — 基于模板的前身。
+- [Anthropic — Measuring AI agent autonomy](https://www.anthropic.com/research/measuring-agent-autonomy) — 关于开放式研究智能体的更宏观框架。

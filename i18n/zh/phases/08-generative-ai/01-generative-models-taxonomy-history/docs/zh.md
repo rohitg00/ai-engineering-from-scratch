@@ -1,6 +1,6 @@
-# 生成模型 类学与历史
+# 生成模型 — 分类与历史
 
-> 每个图像模型,文本模型,视频模型和3D模型都适合五个桶之一. 选择错误的桶,你会数周战斗. 选择正确的模型,
+> 每一个图像模型、文本模型、视频模型和 3D 模型都归属于五大类别之一。选错类别，你会和数学公式纠缠数周；选对了，这个领域过去十二年的进展就能清晰地在你脑中层层叠加。
 
 **Type:** Learn
 **Languages:** Python
@@ -9,66 +9,66 @@
 
 ## 问题
 
-产生型号只能做一个工作:从某种未知的分布中获取的训练样本`p_data(x)`面孔,句子,MIDI文件,蛋白质结构,如果你眼,所有这些都是相同的问题.
+生成模型只做一件事：给定从某个未知分布 `p_data(x)` 中抽取的训练样本，输出看起来像来自同一分布的新样本。人脸、句子、MIDI 文件、蛋白质结构——眯起眼看，其实都是同一个问题。
 
-问题是,`p_data`它们在一个空间里存在数百万个维度 (一个512x512 RGB图像是786k维度),样本坐落在一个薄型的多元体内,你只能得到10M的例子.
+麻烦在于 `p_data` 生活在数百万维的空间中（一张 512x512 RGB 图像约 78.6 万维），样本位于该空间中一个薄薄的流形上，而你可能只有 1000 万个样本。暴力估计密度是无望的。每一个生成模型都是一种妥协，用一个难题换一个稍不那么难的问题。
 
-知道每个家庭都会做出什么妥协,就能告诉你,为什么它在某些任务上胜利,而在其他任务上崩.
+五个家族挺过了过去的十二年。知道每个家族做出的是哪种妥协，就能明白为什么它在某些任务上胜出，而在另一些任务上崩溃。
 
 ## 概念
 
 ![Five families of generative models — taxonomy by what they model](../assets/taxonomy.svg)
 
-**1. Explicit density, tractable.**写下`log p(x)`它们是可以实际评估的.`p(x) = ∏ p(x_i | x_<i)`正常化流量 (RealNVP,Glow) 构建`p(x)`优点:精确的可能性,清洁的训练损失. 缺点:自行降低推理是序列 (长序列的缓慢),流需要可逆的架构 (建筑限制).
+**1. 显式密度，可解。** 把 `log p(x)` 写成你真正能计算的和的形式。自回归模型（PixelCNN、WaveNet、GPT）对 `p(x) = ∏ p(x_i | x_<i)` 进行因式分解。归一化流（RealNVP、Glow）把 `p(x)` 构建为一个简单基分布的可逆变换。优点：精确似然、干净的训练损失。缺点：自回归推理是串行的（长序列很慢），流需要可逆架构（架构上受限）。
 
-**2. Explicit density, approximate.**绑定`log p(x)`通过在下面 (ELBO) 进行优化,并优化边界.VAE (Kingma 2013) 使用一个变化后背的编码解码器. 扩散模型 (DDPM, Ho 2020) 训练一个暗示器,隐含优化一个权重的ELBO. 扩散是2026年占主导地位的图像,视频和3D脊柱.
+**2. 显式密度，近似。** 从下方对 `log p(x)` 进行约束（ELBO）并优化这个界。VAE（Kingma 2013）使用带变分后验的编码器-解码器。扩散模型（DDPM，Ho 2020）训练一个去噪器，隐式地优化加权 ELBO。扩散是 2026 年图像、视频和 3D 的主流骨干。
 
-**3. Implicit density.**完全跳过密度;学习一个发电机`G(z)`产品的样本和差异性`D(x)`简单的GAN (Goodfellow 2014). 快速推断 (一次前进通过),但在训练期间不稳定. 风格GAN 1/2/3即使在2026年仍然是固定域光现实主义的最先进状态.
+**3. 隐式密度。** 完全跳过密度；学习一个生成样本的生成器 `G(z)` 和一个区分真假样本的判别器 `D(x)`。即 GAN（Goodfellow 2014）。推理快（一次前向传播），但训练期间出了名的不稳定。即便在 2026 年，StyleGAN 1/2/3 在固定领域的照片级真实感（人脸、卧室）上仍是最先进的。
 
-**4. Score-based / continuous-time.**了解木材密度的梯度`∇_x log p(x)`和埃尔蒙 (2019) 显示,分数匹配将扩散扩散到SDE.流量匹配 (Lipman 2023) 是2024-2026年的热度:无模拟训练,更直线路,比DDPM快4-10倍的样本采集.稳定扩散3,流量,音频工艺2都使用流量匹配.
+**4. 基于分数 / 连续时间。** 直接学习对数密度的梯度 `∇_x log p(x)`（即分数）。Song & Ermon（2019）证明分数匹配将扩散推广到 SDE。Flow matching（Lipman 2023）是 2024-2026 年的热点：免模拟训练、更直的路径、比 DDPM 快 4-10 倍的采样。Stable Diffusion 3、Flux、AudioCraft 2 都使用 flow matching。
 
-**5. Token-based autoregressive over discrete codes.**通过VQ-VAE或残余量化器将高模数数据压缩到单独代币的短序列中,然后使用变压器来模拟代币序列.Parti,MuseNet,AudioLM,VALL-E,Sora的补丁代币器都使用此.这是桶1加上学习代币器.
+**5. 基于离散码的自回归。** 用 VQ-VAE 或残差量化器将高维数据压缩为较短的离散 token 序列，然后用 Transformer 对该 token 序列建模。Parti、MuseNet、AudioLM、VALL-E、Sora 的 patch tokenizer 都用这种方法。这是类别 1 加上一个学习到的 tokenizer。
 
-## 简短的历史
+## 简史
 
-| Year | Model | Why it mattered |
+| 年份 | 模型 | 重要性 |
 |------|-------|-----------------|
-| 2013 | VAE (Kingma) | First deep generative model with a usable training loss. |
-| 2014 | GAN (Goodfellow) | Implicit density, no likelihood — shockingly sharp samples. |
-| 2015 | DRAW, PixelCNN | Sequential image generation. |
-| 2017 | Glow, RealNVP | Invertible flows; exact likelihood with depth. |
-| 2017 | Progressive GAN | First megapixel faces. |
-| 2019 | StyleGAN / StyleGAN2 | Photorealistic faces still hard to beat for that one domain. |
-| 2020 | DDPM (Ho) | Diffusion becomes practical. |
-| 2021 | CLIP, DALL-E 1, VQGAN | Text-to-image goes mainstream. |
-| 2022 | Imagen, Stable Diffusion 1, DALL-E 2 | Latent diffusion + text conditioning = commodity. |
-| 2022 | ControlNet, LoRA | Fine control over pretrained diffusion. |
-| 2023 | SDXL, Midjourney v5, Flow matching | Scale + better training dynamics. |
-| 2024 | Sora, Stable Diffusion 3, Flux.1 | Video diffusion; flow matching wins. |
-| 2025 | Veo 2, Kling 1.5, Runway Gen-3, Nano Banana | Production-grade video. |
-| 2026 | Consistency + Rectified Flow | One-step sampling from diffusion backbones. |
+| 2013 | VAE (Kingma) | 第一个拥有可用训练损失的深度生成模型。 |
+| 2014 | GAN (Goodfellow) | 隐式密度，无需似然——样本出奇地锐利。 |
+| 2015 | DRAW, PixelCNN | 顺序图像生成。 |
+| 2017 | Glow, RealNVP | 可逆流；带深度的精确似然。 |
+| 2017 | Progressive GAN | 首个兆像素级人脸。 |
+| 2019 | StyleGAN / StyleGAN2 | 照片级人脸，在该领域仍难以超越。 |
+| 2020 | DDPM (Ho) | 扩散变得实用。 |
+| 2021 | CLIP, DALL-E 1, VQGAN | 文生图走向主流。 |
+| 2022 | Imagen, Stable Diffusion 1, DALL-E 2 | 潜空间扩散 + 文本条件 = 大众化。 |
+| 2022 | ControlNet, LoRA | 对预训练扩散的精细控制。 |
+| 2023 | SDXL, Midjourney v5, Flow matching | 规模 + 更好的训练动态。 |
+| 2024 | Sora, Stable Diffusion 3, Flux.1 | 视频扩散；flow matching 胜出。 |
+| 2025 | Veo 2, Kling 1.5, Runway Gen-3, Nano Banana | 生产级视频。 |
+| 2026 | Consistency + Rectified Flow | 从扩散骨干的一步采样。 |
 
-## 五个问题分类
+## 五问分诊
 
-在阅读方法部分之前,当新生成模型纸出现时,请回答这五个问题.
+当一篇新的生成模型论文发布时，在阅读方法部分之前，先回答这五个问题。
 
-1. **What is being modeled?**像素,隐藏,分离代币,3D高西安,网格,波形?
-2. **Is the density explicit or implicit?**他们写下了吗?`log p(x)`现在,我们要去.
-3. **Sampling: one-shot or iterative?**反复式意味着推断速度较慢; 一次射击通常意味着反向性或蒸性.
-4. **Conditioning: unconditional, class, text, image, pose?**这决定了损失和建筑架构.
-5. **Evaluation: FID, CLIP score, IS, human preference, task accuracy?**每个人都知道故障模式 (见14课).
+1. **建模的对象是什么？** 像素、潜变量、离散 token、3D 高斯、网格、波形？
+2. **密度是显式还是隐式？** 他们是否写下了 `log p(x)`？
+3. **采样：一次性还是迭代式？** 迭代意味着推理更慢；一次性通常意味着对抗式或蒸馏式。
+4. **条件：无条件、类别、文本、图像、姿态？** 这决定了损失函数和架构脚手架。
+5. **评估：FID、CLIP score、IS、人类偏好、任务准确率？** 每种都有已知的失效模式（见 Lesson 14）。
 
-在这个阶段,你会对每一个课程都回复这些五个答案.
+在本阶段的每一课中，你都要重新回答这五个问题。到最后，它们会成为条件反射。
 
 ```figure
 autoencoder-bottleneck
 ```
 
-## 建立它
+## 动手构建
 
-这一课的代码是轻量化可视化:通过使用三个玩具方法 (核密度,分离性 histogram 和最近的样本"GAN-ish"发电机) 来从样本中调整1D的Gaussians混合物,这样你就可以在一个屏幕上打印出的问题上看到明确与隐含密度之间的区别.
+本课的代码是一个轻量级可视化：用三种玩具方法（核密度、离散直方图和一个最近样本的“类 GAN”生成器）从样本中拟合一个一维高斯混合模型，让你能在一个屏幕能显示的问题上看到显式密度与隐式密度的区别。
 
-跑步`code/main.py`它从两种模式的高斯混合物中取出2000个样本,然后打印:
+运行 `code/main.py`。它会从一个双峰高斯混合中抽取 2000 个样本，然后打印：
 
 ```
 explicit density (histogram): p(x in [-0.5, 0.5]) ≈ 0.38
@@ -76,63 +76,63 @@ approximate density (KDE):     p(x in [-0.5, 0.5]) ≈ 0.41
 implicit (nearest-sample gen): 20 new samples printed, no p(x)
 ```
 
-首先,我们需要注意:第两个问题让你问"这个问题是多么可能的?"第三个问题是不能.这是*明确与隐含的*区别,这将在每一个未来的课程中都重要.
+注意：前两种方法让你可以问“这个点有多可能？”第三种不行。这就是*显式与隐式*的区别，它将在之后的每一课中都至关重要。
 
-## 用它
+## 实际应用
 
-2026年,哪个家庭,要做什么任务?
+2026 年，哪个家族适合哪个任务？
 
-| Task | Best family | Why |
+| 任务 | 最佳家族 | 原因 |
 |------|-------------|-----|
-| Photoreal faces, narrow domain | StyleGAN 2/3 | Still sharpest, fastest inference. |
-| General text-to-image | Latent diffusion + flow matching | SD3, Flux.1, DALL-E 3. |
-| Fast text-to-image | Rectified flow + distillation | SDXL-Turbo, SD3-Turbo, LCM. |
-| Text-to-video | Diffusion Transformer + flow matching | Sora, Veo 2, Kling. |
-| Speech + music | Token-based AR (AudioLM, VALL-E, MusicGen) or flow matching (AudioCraft 2) | Discrete tokens scale cheaply. |
-| 3D scenes | Gaussian Splatting fit, diffusion prior | 3D-GS for reconstruction, diffusion for novel-view. |
-| Density estimation (no sampling) | Flows | Only family with exact `log p(x)`. |
-| Simulation / physics | Flow matching, score SDE | Straight-line paths, smooth vector fields. |
+| 照片级人脸，窄领域 | StyleGAN 2/3 | 依然最锐利、推理最快。 |
+| 通用文生图 | 潜空间扩散 + flow matching | SD3、Flux.1、DALL-E 3。 |
+| 快速文生图 | Rectified flow + 蒸馏 | SDXL-Turbo、SD3-Turbo、LCM。 |
+| 文生视频 | Diffusion Transformer + flow matching | Sora、Veo 2、Kling。 |
+| 语音 + 音乐 | 基于 token 的 AR（AudioLM、VALL-E、MusicGen）或 flow matching（AudioCraft 2） | 离散 token 扩展成本低。 |
+| 3D 场景 | Gaussian Splatting 拟合、扩散先验 | 3D-GS 用于重建，扩散用于新视角。 |
+| 密度估计（无采样） | 流 | 唯一拥有精确 `log p(x)` 的家族。 |
+| 模拟 / 物理仿真 | Flow matching、score SDE | 直线路径、平滑的向量场。 |
 
-## 运送它
+## 落地交付
 
-保存如`outputs/skill-model-chooser.md`现在,我们要去.
+保存为 `outputs/skill-model-chooser.md`。
 
-技能需要一个任务描述和输出: (1) 使用哪个组件, (2) 排列三个开放和三个托管的选项, (3) 您应该关注的可能失败模式,以及 (4) 计算/时间预算.
+这个技能接收一个任务描述，并输出：(1) 应使用哪个家族，(2) 三个开源和三个托管选项的排名列表，(3) 你应该警惕的可能的失效模式，以及 (4) 计算量/时间预算。
 
-## 运动
+## 练习
 
-1. **Easy.**对于这五种产品,确定其家族和脊椎:ChatGPT图像,Midjourney v7,Sora,Runway Gen-3,ElevenLabs. 证据应来自公开技术报告.
-2. **Medium.**报纸中,你即将读到的报纸称采样速度比扩散速度快100倍.
-3. **Hard.**回答当前SOTA模型的五个问题分类,并绘制一个更好的模型将改变什么.
+1. **简单。** 对于以下五个产品，分别识别其家族和骨干：ChatGPT image、Midjourney v7、Sora、Runway Gen-3、ElevenLabs。证据应来自公开的技术报告。
+2. **中等。** 你明天要读的一篇论文声称其采样速度比扩散快 100 倍。写下三个问题，用于检验这个加速在有条件生成和高分辨率下是否依然成立。
+3. **困难。** 选一个你关心的领域（例如蛋白质结构、CAD、分子、轨迹）。为该领域当前的 SOTA 模型回答五问分诊，并勾勒出一个更好的模型会改变什么。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|-----------------------|
-| Generative model | "It makes new stuff" | Learns a sampler for `p_data(x)`, optionally exposes `log p(x)`. |
-| Explicit density | "You can evaluate it" | Model provides a closed-form or tractable `log p(x)`. |
-| Implicit density | "GAN-style" | Only a sampler — no way to evaluate `p(x)` of a given point. |
-| ELBO | "Evidence lower bound" | A tractable lower bound on `log p(x)`; VAEs and diffusion optimize it. |
-| Score | "Gradient of log-density" | `∇_x log p(x)`; diffusion and SDE models learn this field. |
-| Manifold hypothesis | "Data lives on a surface" | High-dim data concentrates on a low-dim manifold; why dimensionality reduction works. |
-| Autoregressive | "Predict the next piece" | Factorize joint as product of conditionals. |
-| Latent | "Compressed code" | Low-dim representation from which a decoder can reconstruct the input. |
+| 生成模型 | “它生成新东西” | 为 `p_data(x)` 学习一个采样器，可选地暴露 `log p(x)`。 |
+| 显式密度 | “你可以计算它” | 模型提供闭式或可解的 `log p(x)`。 |
+| 隐式密度 | “GAN 风格” | 只有采样器——无法计算给定点的 `p(x)`。 |
+| ELBO | “证据下界” | `log p(x)` 的一个可解下界；VAE 和扩散都在优化它。 |
+| Score | “对数密度的梯度” | `∇_x log p(x)`；扩散和 SDE 模型学习这个场。 |
+| 流形假设 | “数据生活在一张曲面上” | 高维数据集中在低维流形上；这就是降维有效的原因。 |
+| 自回归 | “预测下一个部分” | 将联合分布分解为条件分布的乘积。 |
+| 潜变量 | “压缩后的编码” | 低维表示，解码器可以从它重建输入。 |
 
-## 制作说明:五个家庭,五个推断形状
+## 生产提示：五个家族，五种推理形态
 
-每个家庭都将推断服务器成本曲线进行不同的映射.
+每个家族对应不同的推理服务器成本曲线。生产推理文献将 LLM 推理拆解为 prefill + decode；同样的分解也适用于此：
 
-- **Autoregressive (bucket 1 and 5).**序列解码占据延迟;KV缓存,连续批量和推测解码都直接适用于.
-- **VAE / diffusion / flow-matching (buckets 2 and 4).**没有法学法学意义上的解码.`num_steps × step_cost`其他`step_cost`生产是步骤计数 (DDIM / DPM-Solver /蒸),批量大小和精度 (bf16 / fp8 / int4).
-- **GAN (bucket 3).**没有时间表,没有KV缓存,TTFT ≈总延迟,这就是为什么StayGAN仍然在狭域UX中获胜的原因.
+- **自回归（类别 1 和 5）。** 串行解码主导延迟；KV-cache、continuous batching 和 speculative decoding 都直接适用。
+- **VAE / 扩散 / flow-matching（类别 2 和 4）。** 没有严格意义上类似 LLM 的 decode。成本 = `num_steps × step_cost`，且 `step_cost` 是在全潜分辨率下的 transformer 或 U-Net 前向传播。生产中的调节旋钮是步数（DDIM / DPM-Solver / 蒸馏）、批量大小和精度（bf16 / fp8 / int4）。
+- **GAN（类别 3）。** 一次前向传播。没有调度，没有 KV-cache。TTFT ≈ 总延迟。这就是 StyleGAN 在窄领域用户体验上仍然胜出的原因。
 
-在论文摘要中,当你看到"快于传播"时,把它转化为"少步 × 同步成本"或"同步步 × 低成本".其他的都是营销.
+当你在论文摘要中看到“比扩散更快”时，把它翻译为“更少步数 × 相同单步成本”或“相同步数 × 更低单步成本”。其他一切都是营销话术。
 
-## 进一步阅读
+## 延伸阅读
 
-- [Goodfellow et al. (2014). Generative Adversarial Nets](https://arxiv.org/abs/1406.2661)GAN文件.
-- [Kingma & Welling (2013). Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114)VAE论文.
-- [Ho, Jain, Abbeel (2020). Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239) 关于DDPM的论文.
-- [Song et al. (2021). Score-Based Generative Modeling through SDEs](https://arxiv.org/abs/2011.13456)作为SDE的扩散.
-- [Lipman et al. (2023). Flow Matching for Generative Modeling](https://arxiv.org/abs/2210.02747) 流量相匹配的纸.
-- [Esser et al. (2024). Scaling Rectified Flow Transformers for High-Resolution Image Synthesis](https://arxiv.org/abs/2403.03206)稳定扩散 3.
+- [Goodfellow et al. (2014). Generative Adversarial Nets](https://arxiv.org/abs/1406.2661) — GAN 原始论文。
+- [Kingma & Welling (2013). Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114) — VAE 原始论文。
+- [Ho, Jain, Abbeel (2020). Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239) — DDPM 原始论文。
+- [Song et al. (2021). Score-Based Generative Modeling through SDEs](https://arxiv.org/abs/2011.13456) — 作为 SDE 的扩散。
+- [Lipman et al. (2023). Flow Matching for Generative Modeling](https://arxiv.org/abs/2210.02747) — flow matching 原始论文。
+- [Esser et al. (2024). Scaling Rectified Flow Transformers for High-Resolution Image Synthesis](https://arxiv.org/abs/2403.03206) — Stable Diffusion 3。

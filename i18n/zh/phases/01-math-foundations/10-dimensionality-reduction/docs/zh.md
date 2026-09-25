@@ -1,34 +1,34 @@
-# 缩小尺寸
+# 降维
 
-> 通过从正面角度看,我们可以找到它.
+> 高维数据是有结构的。从正确的角度看，你就能发现它。
 
 **Type:** Build
-**Language:**字符串
-**Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
-**Time:** ~90 minutes
+**Language:** Python
+**Prerequisites:** 阶段 1, 第 01 课（线性代数直觉）、第 02 课（向量、矩阵与运算）、第 03 课（特征值与特征向量）、第 06 课（概率与分布）
+**Time:** 约 90 分钟
 
 ## 学习目标
 
-- 从零开始实施PCA:中心数据,计算共变矩阵,自主组合和项目
-- 使用解释的变量比和肘部方法来选择主要组件数量
-- 进行PCA,t-SNE和UMAP的比较,以2D可视化MNIST数字,并解释它们的交易
-- 应用RBF内核的内核PCA来分离标准PCA无法处理的非线性数据结构
+- 从零实现 PCA：中心化数据、计算协方差矩阵、特征分解并投影
+- 使用解释方差比和肘部法选择主成分的数量
+- 比较 PCA、t-SNE 和 UMAP 在将 MNIST 数字可视化到 2D 时的表现，并解释它们的权衡
+- 使用带 RBF 核的 kernel PCA 分离标准 PCA 无法处理的非线性数据结构
 
 ## 问题
 
-你有一个数据集,每样品有784个特征.也许是手写数字的像素值.也许是基因表达水平.也许是用户行为信号.你不能想象784个维度.你不能绘制它们.你甚至不能考虑它们.
+你有一个每个样本包含 784 个特征的数据集。可能是手写数字的像素值，可能是基因表达水平，也可能是用户行为信号。你无法可视化 784 维。你无法把它们画出来，甚至无法在脑海中构想它们。
 
-但这些784的大部分功能是过剩的.实际信息生活在一个更小的表面上.手写的"7"不需要784个独立的数字来描述它.它需要几个:拍摄的角度,横杆的长度,它倾斜多少.其余的噪音.
+但这 784 个特征中大部分是冗余的。真正的信息分布在一个小得多的曲面上。一个手写的"7"并不需要 784 个独立的数字来描述，只需要少数几个：笔画的倾角、横杠的长度、倾斜的程度。其余的都是噪声。
 
-缩小尺寸会发现更小的表面,它将784维的数据压缩到2,10或50维度,同时保持重要结构.
+降维就是找到那个更小的曲面。它把你的 784 维数据压缩到 2 维、10 维或 50 维，同时保留重要的结构。
 
 ## 概念
 
-### 维度的诅咒
+### 维度灾难
 
-空间的高度是不直观的.
+高维空间是反直觉的。随着维度增长，有三件事会出问题。
 
-**Distance becomes meaningless.**在高维度中,两个随机点之间的距离相近于相同的值.如果每个点与其他点的距离大约相同,
+**距离失去意义。** 在高维空间中，任意两个随机点之间的距离趋于相同的值。如果每个点到其他所有点的距离都大致相等，最近邻搜索就失效了。
 
 ```
 Dimension    Avg distance ratio (max/min between random points)
@@ -38,15 +38,15 @@ Dimension    Avg distance ratio (max/min between random points)
 1000         ~1.02
 ```
 
-**Volume concentrates in corners.**对于一个在d维度的单元超立方体,则有2d角.在100维度,几乎所有的体积都在角落里,远离中心.数据点蔓延到边缘,你的模型在内部饥饿数据.
+**体积集中在角落。** d 维的单位超立方体有 2^d 个角。在 100 维中，几乎所有的体积都在角落里，远离中心。数据点散布到边缘，而你的模型在内部区域缺乏数据。
 
-**You need exponentially more data.**为了保持相同的样本密度,从2D到20D需要10^18倍的数据.你永远没有足够的.减少尺寸使数据密度恢复到可操作的东西.
+**你需要指数级更多的数据。** 为了在空间中维持相同的样本密度，从 2D 到 20D 意味着需要 10^18 倍的数据。你永远不会有那么多数据。降维能把数据密度恢复到可用的水平。
 
-### 查找重要的方向
+### PCA：找到重要的方向
 
-基本组件分析 (PCA) 找出了您数据最多变化的轴. 它旋转了坐标系统,所以第一个轴捕获了最多的变化,第二个捕获了最多的变化,等等.
+主成分分析（PCA）找出数据方差最大的轴。它旋转你的坐标系，使第一个轴捕获最大的方差，第二个轴捕获次大的方差，依此类推。
 
-算法:
+算法：
 
 ```
 1. Center the data        (subtract the mean from each feature)
@@ -56,20 +56,20 @@ Dimension    Avg distance ratio (max/min between random points)
 5. Project               (keep top k eigenvectors, drop the rest)
 ```
 
-为什么是自定义? 变量矩阵是对称和正的半确定的.它的自向量是特征空间中的直角方向.自向值告诉你每个方向捕获多少变量.最大变量方向沿着最大变量方向的自向量.
+为什么用特征分解？协方差矩阵是对称的半正定矩阵。它的特征向量是特征空间中的正交方向。特征值告诉你每个方向捕获了多少方差。最大特征值对应的特征向量指向方差最大的方向。
 
 ```mermaid
 graph LR
     A["Original data (2D)\nData spread in both\nx and y directions"] -->|"PCA rotation"| B["After PCA\nPC1 captures the elongated spread\nPC2 captures the narrow spread\nDrop PC2 and you lose little info"]
 ```
 
-- **Before PCA:**数据云在x和y轴上横向分布
-- **After PCA:**坐标系统旋转,使PC1与最大差距方向 (延长差距) 及PC2与最小差距方向 (狭窄差距) 保持一致.
-- **Dimensionality reduction:**放弃PC2将数据投射到PC1,失去很少的信息
+- **PCA 之前：** 数据云沿 x 轴和 y 轴对角分布
+- **PCA 之后：** 坐标系被旋转，使 PC1 对齐方差最大的方向（拉长的分布），PC2 对齐方差最小的方向（狭窄的分布）
+- **降维：** 丢弃 PC2 会把数据投影到 PC1 上，损失极少的信息
 
-### 解释变异率
+### 解释方差比
 
-每个主要组件都占总变量的一小部分.
+每个主成分捕获总方差的一部分。解释方差比告诉你捕获了多少。
 
 ```
 Component    Eigenvalue    Explained ratio    Cumulative
@@ -80,96 +80,96 @@ PC4          0.89          0.089              0.925
 ...
 ```
 
-当总体解释变异达到0.95时,你知道许多组件捕获了95%的信息.
+当累积解释方差达到 0.95 时，你就知道这些成分捕获了 95% 的信息。之后的部分大多是噪声。
 
-### 选择组件数量
+### 选择成分数量
 
-需要采取三种策略:
+三种策略：
 
-1. **Threshold.**保持足够的组件,以解释90-95%的差异.
-2. **Elbow method.**图解各组件的变化. 寻找一个急剧的降落.
-3. **Downstream performance.**测量模型的精度,最好的精度是任何高原.
+1. **阈值法。** 保留足够解释 90-95% 方差的成分数量。
+2. **肘部法。** 绘制每个成分的解释方差，寻找急剧下降的位置。
+3. **下游性能。** 将 PCA 作为预处理，扫描 k 并测量模型的准确率。最佳的 k 就是准确率趋于平稳的位置。
 
-### 保护社区
+### t-SNE：保留邻域关系
 
-t-分布式静态邻居嵌入式 (t-SNE) 设计用于可视化.它将高维度数据映射到2D (或3D) 同时保留哪些点相邻.
+t 分布随机邻域嵌入（t-SNE）是为可视化设计的。它将高维数据映射到 2D（或 3D），同时保留哪些点彼此相近。
 
-感觉:在原始空间中,根据距离计算对点的概率分布.近点的概率高.远点的概率低.然后找到一个2D排列,相同的概率分布.784维度的点是邻居,仍然是邻居的2D.
+直觉：在原始空间中，根据点对的距离计算一个概率分布。距离近的点获得高概率，距离远的点获得低概率。然后找到一个 2D 排列，使得相同的概率分布成立。在 784 维中是邻居的点，在 2D 中仍然是邻居。
 
-子的主要特性:
-- 它可以展开复杂的多元化,而PCA不能.
-- 不同的运行产生不同的布局.
-- 困难参数控制了需要考虑多少邻居 (典型范围:5-50).
-- 输出中的集群之间的距离并不重要.
-- 默认情况下,在大型数据集上速度很慢.
+t-SNE 的关键特性：
+- 非线性。它能展开 PCA 无法处理的复杂流形。
+- 随机性。不同运行会产生不同的布局。
+- 困惑度（perplexity）参数控制考虑多少个邻居（典型范围：5-50）。
+- 输出中簇之间的距离没有意义，只有簇本身有意义。
+- 在大型数据集上很慢，默认复杂度为 O(n^2)。
 
-### 快速,更好的全球结构
+### UMAP：更快、更好的全局结构
 
-统一多重接近和投影 (UMAP) 与t-SNE类似,但具有两个优势:
-- 它使用近邻图表,而不是计算所有对距离.
-- 产量中的集群相对位置往往比t-SNE更有意义.
+均匀流形近似与投影（UMAP）的工作方式与 t-SNE 类似，但有两个优势：
+- 更快。它使用近似最近邻图，而不是计算所有成对距离。
+- 更好的全局结构。输出中簇的相对位置通常比 t-SNE 更有意义。
 
-UMAP在高维空间中构建一个重量图 ("模糊的拓表现") 然后找到一个低维布局,以尽可能保存这个图.
+UMAP 在高维空间中构建一个加权图（"模糊拓扑表示"），然后找到一个尽可能保留该图的低维布局。
 
-关键参数:
-- `n_neighbors`较高的价值保持更全球性的结构.
-- `min_dist`输出中点的密集性.较低的值会产生更密集的集群.
+关键参数：
+- `n_neighbors`：定义局部结构的邻居数量（类似困惑度）。值越高保留的全局结构越多。
+- `min_dist`：点在输出中彼此靠近的紧密程度。值越低生成的簇越密集。
 
-### 什么时候使用
+### 何时使用哪种方法
 
-| Method | Use case | Preserves | Speed |
+| 方法 | 使用场景 | 保留内容 | 速度 |
 |--------|----------|-----------|-------|
-| PCA | Preprocessing before training | Global variance | Fast (exact), works on millions of samples |
-| PCA | Quick exploratory visualization | Linear structure | Fast |
-| t-SNE | Publication-quality 2D plots | Local neighborhoods | Slow (< 10k samples ideal) |
-| UMAP | 2D visualization at scale | Local + some global structure | Medium (handles millions) |
-| PCA | Feature reduction for models | Variance-ranked features | Fast |
-| t-SNE / UMAP | Understanding cluster structure | Cluster separation | Medium to slow |
+| PCA | 训练前的预处理 | 全局方差 | 快（精确），可处理数百万样本 |
+| PCA | 快速探索性可视化 | 线性结构 | 快 |
+| t-SNE | 出版级 2D 图 | 局部邻域 | 慢（理想情况下 < 10k 样本） |
+| UMAP | 大规模 2D 可视化 | 局部 + 部分全局结构 | 中等（可处理数百万样本） |
+| PCA | 模型的特征降维 | 按方差排序的特征 | 快 |
+| t-SNE / UMAP | 理解簇结构 | 簇的分离度 | 中等至慢 |
 
-基本规则:使用PCA进行预处理和数据压缩.使用t-SNE或UMAP,当需要在2D中可视化结构时.
+经验法则：用 PCA 做预处理和数据压缩。当需要在 2D 中可视化结构时，使用 t-SNE 或 UMAP。
 
-### 核PCA
+### Kernel PCA
 
-标准PCA会找到线性子空间.它会旋转你的坐标系统,然后放下轴.但是如果数据位于非线性多元件上怎么办? 2D中的圆不能被任何线分开.标准PCA不会帮助.
+标准 PCA 找的是线性子空间。它旋转坐标系并丢弃轴。但如果数据位于非线性流形上呢？2D 中的一个圆无法被任何直线分开，标准 PCA 帮不上忙。
 
-核心PCA将PCA应用到一个高维功能空间中,由一个核心函数引发,而没有明确计算该空间中的坐标.这是核心技巧 - - 基于SVM的想法.
+Kernel PCA 在由核函数诱导的高维特征空间中执行 PCA，而无需显式计算该空间中的坐标。这就是核技巧（kernel trick）——与 SVM 背后的思想相同。
 
-算法:
-1. 计算内核矩阵K,K_ij = k(x_i,x_j)
-2. 核心矩阵中心在功能空间中
-3. 组建中心核矩阵
-4. 顶部的自向量 (以1/sqrt(自值值) 进行测量
+算法：
+1. 计算核矩阵 K，其中 K_ij = k(x_i, x_j)
+2. 在特征空间中对核矩阵进行中心化
+3. 对中心化后的核矩阵进行特征分解
+4. 最大的特征向量（按 1/sqrt(特征值) 缩放）即为投影
 
-常见的内核函数:
+常见的核函数：
 
-| Kernel | Formula | Good for |
+| 核 | 公式 | 适用场景 |
 |--------|---------|----------|
-| RBF (Gaussian) | exp(-gamma * \|\|x - y\|\|^2) | Most nonlinear data, smooth manifolds |
-| Polynomial | (x . y + c)^d | Polynomial relationships |
-| Sigmoid | tanh(alpha * x . y + c) | Neural network-like mappings |
+| RBF（高斯） | exp(-gamma * \|\|x - y\|\|^2) | 大多数非线性数据、平滑流形 |
+| 多项式 | (x . y + c)^d | 多项式关系 |
+| Sigmoid | tanh(alpha * x . y + c) | 类神经网络映射 |
 
-什么时候使用内核PCA与标准PCA:
+何时使用 kernel PCA 与标准 PCA：
 
-| Criterion | Standard PCA | Kernel PCA |
+| 标准 | 标准 PCA | Kernel PCA |
 |-----------|-------------|------------|
-| Data structure | Linear subspace | Nonlinear manifold |
-| Speed | O(min(n^2 d, d^2 n)) | O(n^2 d + n^3) |
-| Interpretability | Components are linear combinations of features | Components lack direct feature interpretation |
-| Scalability | Works on millions of samples | Kernel matrix is n x n, memory-limited |
-| Reconstruction | Direct inverse transform | Requires pre-image approximation |
+| 数据结构 | 线性子空间 | 非线性流形 |
+| 速度 | O(min(n^2 d, d^2 n)) | O(n^2 d + n^3) |
+| 可解释性 | 成分是特征的线性组合 | 成分缺乏直接的特征解释 |
+| 可扩展性 | 可处理数百万样本 | 核矩阵为 n x n，受内存限制 |
+| 重建 | 直接逆变换 | 需要预像（pre-image）近似 |
 
-经典例子:二维的集中圆.两个点圈,一个在另一个内.标准的PCA都投射在同一线上 - - 无用于分类.一个RBF内核的核心PCA将内圆和外圆映射到不同的区域,使它们线性分离.
+经典例子：2D 中的同心圆。两圈点，一圈在另一圈内部。标准 PCA 把两者投影到同一条直线上——对分类毫无用处。带 RBF 核的 kernel PCA 将内圈和外圈映射到不同区域，使它们线性可分。
 
-### 复制错误
+### 重建误差
 
-你压缩了784个维度到50个.
+你的降维效果有多好？你把 784 维压缩到 50 维，损失了什么？
 
-测量重建错误:
-1. 项目数据到 k 尺寸: X_reduced = X @ W_k
-2. 复制:X_hat =X_reduced @ W_k^T
-3. 计算MSE:平均 - X_hat) ^2)
+测量重建误差：
+1. 将数据投影到 k 维：X_reduced = X @ W_k
+2. 重建：X_hat = X_reduced @ W_k^T
+3. 计算 MSE：mean((X - X_hat)^2)
 
-对于PCA,重建错误与解释变异有清晰关系:
+对 PCA 而言，重建误差与解释方差有清晰的关系：
 
 ```
 Reconstruction error = sum of eigenvalues NOT included
@@ -177,26 +177,26 @@ Total variance = sum of ALL eigenvalues
 Fraction lost = (sum of dropped eigenvalues) / (sum of all eigenvalues)
 ```
 
-解释的各组件的变异比为:
+每个成分的解释方差比为：
 
 ```
 explained_ratio_k = eigenvalue_k / sum(all eigenvalues)
 ```
 
-图表对组件数量的累积解释变异,给出了"肘部"曲线.
-- 曲线平坦化 (回报率下降)
-- 累计变异超过你的门 (通常是0.90或0.95)
-- 下游任务执行平原
+绘制累积解释方差随成分数量的变化，就得到"肘部"曲线。合适的成分数量位于：
+- 曲线变平的地方（边际收益递减）
+- 累积方差越过阈值的地方（通常为 0.90 或 0.95）
+- 下游任务性能趋于平稳的地方
 
-复制错误除了选择k之外,还有用.你可以使用它来检测异常:具有高重建错误的样本是不适合学习子空间的异常值.这是生产系统中基于PCA的异常检测的基础.
+重建误差的用途不止于选择 k。你可以用它做异常检测：重建误差高的样本是不符合所学子空间的离群点。这是生产系统中基于 PCA 的异常检测的基础。
 
 ```figure
 pca-axes
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:从零开始进行PCA
+### 步骤 1：从零实现 PCA
 
 ```python
 import numpy as np
@@ -237,7 +237,7 @@ class PCA:
         return self.transform(X)
 ```
 
-### 步骤2:对合成数据进行测试
+### 步骤 2：在合成数据上测试
 
 ```python
 np.random.seed(42)
@@ -259,7 +259,7 @@ print(f"Explained variance ratios: {pca.explained_variance_ratio_}")
 print(f"Total variance captured: {sum(pca.explained_variance_ratio_):.4f}")
 ```
 
-### 步骤3:MNIST数字在2D中
+### 步骤 3：将 MNIST 数字映射到 2D
 
 ```python
 from sklearn.datasets import fetch_openml
@@ -277,7 +277,7 @@ X_pca2d = pca_2d.fit_transform(X_mnist)
 print(f"2 components capture {sum(pca_2d.explained_variance_ratio_):.2%} of variance")
 ```
 
-### 步骤 4:与 sklearn 进行比较
+### 步骤 4：与 sklearn 比较
 
 ```python
 from sklearn.decomposition import PCA as SklearnPCA
@@ -297,7 +297,7 @@ X_tsne = tsne.fit_transform(X_mnist)
 print(f"\nt-SNE output shape: {X_tsne.shape}")
 ```
 
-### 步骤5:UMAP比较
+### 步骤 5：UMAP 比较
 
 ```python
 try:
@@ -310,9 +310,9 @@ except ImportError:
     print("Install umap-learn: pip install umap-learn")
 ```
 
-## 用它
+## 使用它
 
-作为分类器前预加工的PCA:
+将 PCA 作为分类器之前的预处理：
 
 ```python
 from sklearn.decomposition import PCA as SklearnPCA
@@ -338,37 +338,37 @@ for k in [10, 30, 50, 100, 200]:
     print(f"k={k:>3d}  accuracy={acc:.4f}  variance={var_captured:.4f}")
 ```
 
-距离784维度远远前的高原.
+性能在远低于 784 维时就会趋于平稳。那个平稳点就是你的运行点。
 
-## 运送它
+## 交付它
 
-这一课产生了:
-- `outputs/skill-dimensionality-reduction.md`- 对于特定任务选择合适的尺寸降低技术的能力
+本课产出：
+- `outputs/skill-dimensionality-reduction.md` - 一项为给定任务选择合适降维技术的技能
 
-## 运动
+## 练习
 
-1. 修改PCA类以支持`inverse_transform`复制MNIST数字从 10, 50,和 200 个组件. 打印复制错误 (平均与原始的平方差别)
+1. 修改 PCA 类以支持 `inverse_transform`。用 10、50 和 200 个成分重建 MNIST 数字，并打印各自的重建误差（与原始数据的均方差）。
 
-2. 在同一MNIST子组上运行t-SNE,具有5,30和100的困难值.描述输出变化.为什么困难会影响集群紧密性?
+2. 在同一 MNIST 子集上使用困惑度 5、30 和 100 运行 t-SNE。描述输出如何变化。为什么困惑度会影响簇的紧密程度？
 
-3. 采用50个特征的数据集,只有5个是信息性的 (生成一个具有`sklearn.datasets.make_classification`) 应用PCA并检查解释的变异曲线是否正确地识别数据实际上是五维的.
+3. 构造一个有 50 个特征、其中只有 5 个是信息特征的数据集（可用 `sklearn.datasets.make_classification` 生成）。应用 PCA，检查解释方差曲线能否正确识别出数据实际上是 5 维的。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|----------------------|
-| Curse of dimensionality | "Too many features" | Distances, volumes, and data density all behave counterintuitively as dimensions grow. Models need exponentially more data to compensate. |
-| PCA | "Reduce dimensions" | Rotate your coordinate system so the axes align with the directions of maximum variance, then drop the low-variance axes. |
-| Principal component | "An important direction" | An eigenvector of the covariance matrix. The direction in feature space along which the data varies most. |
-| Explained variance ratio | "How much info this component has" | The fraction of total variance captured by one principal component. Sum the top k ratios to see how much k components preserve. |
-| Covariance matrix | "How features correlate" | A symmetric matrix where entry (i,j) measures how feature i and feature j move together. Diagonal entries are individual variances. |
-| t-SNE | "That cluster plot" | A nonlinear method that maps high-dimensional data to 2D by preserving pairwise neighborhood probabilities. Good for visualization, not for preprocessing. |
-| UMAP | "Faster t-SNE" | A nonlinear method based on topological data analysis. Preserves both local and some global structure. Scales better than t-SNE. |
-| Perplexity | "A t-SNE knob" | Controls the effective number of neighbors each point considers. Low perplexity focuses on very local structure. High perplexity captures broader patterns. |
-| Manifold | "The surface the data lives on" | A lower-dimensional surface embedded in a higher-dimensional space. A sheet of paper crumpled in 3D is a 2D manifold. |
+| 维度灾难 | "特征太多" | 随着维度增长，距离、体积和数据密度的行为都变得反直觉。模型需要指数级更多的数据来弥补。 |
+| PCA | "降维" | 旋转坐标系使轴对齐方差最大的方向，然后丢弃低方差的轴。 |
+| 主成分 | "一个重要的方向" | 协方差矩阵的特征向量，即特征空间中数据变化最大的方向。 |
+| 解释方差比 | "这个成分包含多少信息" | 一个主成分捕获的总方差比例。将前 k 个比例求和，可看出 k 个成分保留了多少。 |
+| 协方差矩阵 | "特征之间如何相关" | 一个对称矩阵，其中元素 (i,j) 度量特征 i 和特征 j 如何共同变化。对角元素是各自的方差。 |
+| t-SNE | "那张簇图" | 一种非线性方法，通过保留成对邻域概率将高维数据映射到 2D。适合可视化，不适合预处理。 |
+| UMAP | "更快的 t-SNE" | 一种基于拓扑数据分析的非线性方法。同时保留局部和部分全局结构。比 t-SNE 扩展性更好。 |
+| 困惑度 | "t-SNE 的一个旋钮" | 控制每个点考虑的有效邻居数量。低困惑度聚焦于非常局部的结构，高困惑度捕获更宽泛的模式。 |
+| 流形 | "数据所在的曲面" | 嵌入在高维空间中的低维曲面。一张在 3D 中被揉皱的纸就是一个 2D 流形。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [A Tutorial on Principal Component Analysis](https://arxiv.org/abs/1404.1100)(斯林斯) - PCA的清晰来源从头开始
-- [How to Use t-SNE Effectively](https://distill.pub/2016/misread-tsne/)(Wattenberg等人) - 互动指南 t-SNE陷和参数选择
-- [UMAP documentation](https://umap-learn.readthedocs.io/)- UMAP作者的理论和实践指导
+- [A Tutorial on Principal Component Analysis](https://arxiv.org/abs/1404.1100)（Shlens）——从零开始清晰推导 PCA
+- [How to Use t-SNE Effectively](https://distill.pub/2016/misread-tsne/)（Wattenberg 等）——关于 t-SNE 陷阱与参数选择的交互式指南
+- [UMAP 文档](https://umap-learn.readthedocs.io/)——来自 UMAP 作者的理论与实践指导

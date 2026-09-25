@@ -1,32 +1,32 @@
-# 没有监督的学习
+# 无监督学习
 
-> 没有标签,没有老师.算法可以自行找到结构.
+> 没有标签，没有老师。算法自己发现结构。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 1 (Norms & Distances, Probability & Distributions), Phase 2 Lessons 1-6
-**Time:** ~90 minutes
+**Prerequisites:** Phase 1(范数与距离、概率与分布)，Phase 2 第 1-6 课
+**Time:** 约 90 分钟
 
 ## 学习目标
 
-- 从零开始实现K-Means,DBSCAN和高斯混合模型,并比较它们的集群行为
-- 通过模具分数和肘部方法评估集群质量,以选择最佳K
-- 解释DBSCAN在何时超过K-Means,并确定哪个算法处理非球状集群和异常值
-- 通过集群方法建立一个异常检测管道,将偏离正常模式的标记点进行标记
+- 从零实现 K-Means、DBSCAN 和高斯混合模型，并比较它们的聚类行为
+- 使用轮廓系数和肘部法则评估聚类质量，以选择最优的 K
+- 解释 DBSCAN 何时优于 K-Means,并判断哪种算法能处理非球形簇和离群点
+- 构建一个基于聚类方法的异常检测管道，标记偏离正常模式的点
 
-## 问题
+## 问题所在
 
-在现实世界中,标签是昂贵的. 一个医院有数百万病人的记录,但没有人手动标记每一个病例. 电子商务网站有数百万用户, 警方有网络记录,但没有人标记了每一个异常.
+到目前为止，每一节机器学习课程都假设数据带有标签：“这是输入，这是正确输出。”在现实世界中，标签是昂贵的。一家医院有数百万份患者记录，但没有人手动为每份记录标注疾病类别。一个电商网站有数百万个用户会话，但没有人手工标注客户细分。一个安全团队有网络日志，但没有人标记过每一个异常。
 
-没有监督的学习会发现模式,而没有被告知要寻找什么.它集结类似的数据点,发现隐藏的结构,并表面上发现异常.如果监督的学习是从一本有答案键的教科书中学习,那么没有监督的学习会着原始数据,直到模式显示出来.
+无监督学习在没有人告诉它要找什么的情况下发现模式。它对相似的数据点进行分组，发现隐藏的结构，并揭示异常。如果说监督学习是跟着一本带答案的教科书学习，那么无监督学习就是盯着原始数据，直到模式自己浮现出来。
 
-没有标签,你不能直接测量"正确"或"错误".
+问题在于：没有标签，你就无法直接衡量“对”或“错”。你需要不同的工具来评估算法找到的结构是否有意义。
 
-## 概念
+## 核心概念
 
-### 集群: 集群相似的东西
+### 聚类：把相似的东西归为一组
 
-集群将每个数据点分配给一个组 (集群),使同一组内的点比其他组中的点更相似.问题总是:"相似"意味着什么?
+聚类将每个数据点分配到一个组(簇)中，使得同一组内的点彼此之间比它们与其他组中的点更相似。关键问题始终是：“相似”意味着什么？
 
 ```mermaid
 flowchart LR
@@ -41,94 +41,94 @@ flowchart LR
     F --> J[Soft assignments, elliptical clusters]
 ```
 
-### 工作马
+### K-Means:主力算法
 
-基-指数分为K集群,每个集群都有一个中心位 (其质量中心),每个点都属于最近的中心位.
+K-Means 将数据精确划分为 K 个簇。每个簇有一个质心(其质量中心)，每个点都属于距离最近的质心。
 
-劳埃德的算法:
+Lloyd 算法：
 
-1. 选择K随机点作为初始中心点
-2. 分配每个数据点到最近的中心位
-3. 计算每个中心位作为其分配点的平均值
-4. 重复步骤2-3,直到任务停止改变
+1. 随机选取 K 个点作为初始质心
+2. 将每个数据点分配给最近的质心
+3. 将每个质心重新计算为其所分配点的均值
+4. 重复步骤 2-3,直到分配不再变化
 
-客观函数 (惰性) 测量从每个点到其分配的中心点的总平方距离.K-Means 减少这一点,但只找到一个本地最小值.不同的初始化可以产生不同的结果.
+目标函数(惯性)衡量每个点到其所属质心的平方距离总和。K-Means 最小化这个量，但只能找到局部最小值。不同的初始化可能得到不同的结果。
 
-### 选择K
+### 选择 K
 
-两种标准方法:
+两种标准方法：
 
-**Elbow method:**运行K-Means为K = 1, 2, 3, ..., n. 插图惰性对K. 寻找"肘部",添加更多集群停止显著减少惰性.
+**肘部法则：** 对 K = 1, 2, 3, ..., n 依次运行 K-Means。绘制惯性随 K 变化的曲线。寻找“肘部”——即增加更多簇不再显著降低惯性的位置。
 
-**Silhouette score:**对于每个点,测量它与自己的集群 (a) 相比较近的其他集群 (b) 多么相似.模具系数是 (b - a) / max(a,b),从 -1 (错误集群) 到 +1 (好集群).全球分数的平均值在所有点上.
+**轮廓系数：** 对每个点，衡量它与自身簇的相似程度 (a) 与最近其他簇的相似程度 (b)。轮廓系数为 (b - a) / max(a, b),范围从 -1(错误的簇)到 +1(聚类良好)。对所有点取平均值得到全局分数。
 
-### 基于密度的聚合物
+### DBSCAN:基于密度的聚类
 
-据 K-Means 假设集群是圆形的,需要你先选择 K. DBSCAN 没有任何假设.它发现集群是密集区域,由稀疏区域分开.
+K-Means 假设簇是球形的，并且需要你预先指定 K。DBSCAN 不做这两个假设。它将簇视为由稀疏区域分隔开的密集区域。
 
-两个参数:
-- **eps**:一个邻居的半径
-- **min_samples**: 形成密集区域所需的最低点数
+两个参数：
+- **eps**:邻域的半径
+- **min_samples**:形成一个密集区域所需的最小点数
 
-三个类型的点:
-- **Core point**: 在eps距离内至少有min_sample点
-- **Border point**:在一个核心点的eps内,但本身不是核心点
-- **Noise point**它们是异常值的.
+三种类型的点：
+- **核心点**：在 eps 距离内至少有 min_samples 个点
+- **边界点**：在某个核心点的 eps 距离内，但自身不是核心点
+- **噪声点**：既不是核心点也不是边界点。这些就是离群点。
 
-光电缆系统将位于一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个离一个.
+DBSCAN 将彼此在 eps 距离内的核心点连接到同一个簇中。边界点加入附近核心点所在的簇。噪声点不属于任何簇。
 
-强度:找到任何形状的集群,自动确定集群数量,识别异常值. 弱点:与不同密度的集群斗争.
+优点：能找到任意形状的簇，自动确定簇的数量，能识别离群点。缺点：难以处理密度差异较大的簇。
 
-### 层次性集群
+### 层次聚类
 
-树木 (形图) 形成了嵌套的群体.
+构建嵌套簇的树(树状图)。
 
-聚合物 (下至上):
-1. 开始每个点作为自己的集群
-2. 合并两个最接近的集群
-3. 重复直到剩下只有一个集群
-4. 切割子图在所需水平,以获得K集群
+凝聚式(自底向上)：
+1. 从每个点各自作为一个簇开始
+2. 合并距离最近的两个簇
+3. 重复直到只剩一个簇
+4. 在期望的层级处切割树状图，得到 K 个簇
 
-集群之间的"接近"可以以以下方式测量:
-- **Single linkage**: 两组任何两个点之间的最小距离
-- **Complete linkage**:任何两个点之间的最大距离
-- **Average linkage**:所有对之间的平均距离
-- **Ward's method**: 集团内部总差异最小的增长
+簇之间的“接近程度”可以衡量为：
+- **单链接**：两个簇中任意两点之间的最小距离
+- **全链接**：任意两点之间的最大距离
+- **平均链接**：所有点对之间的平均距离
+- **Ward 方法**：使总簇内方差增量最小的合并
 
-### 盖斯混合物模型 (GMM)
+### 高斯混合模型(GMM)
 
-基准指数给出硬项:每个点属于一个集群.GMM给出软项:每个点都有属于每个集群的可能性.
+K-Means 给出硬分配：每个点恰好属于一个簇。GMM 给出软分配：每个点有一个属于每个簇的概率。
 
-根据GMM的假设,数据是由K高斯分布的混合物生成的,每个分布都有其平均值和共变值.预期最大化 (EM) 算法在以下之间交替:
+GMM 假设数据由 K 个高斯分布的混合生成，每个分布有自己的均值和协方差。期望最大化(EM)算法在以下两步之间交替：
 
-- **E-step**:计算每个点属于每个高斯的概率
-- **M-step**更新每一个高斯的平均值,变量和混合重量,以最大限度地提高数据的可能性
+- **E 步**：计算每个点属于每个高斯分布的概率
+- **M 步**：更新每个高斯分布的均值、协方差和混合权重，以最大化数据的似然
 
-GMM可以模拟圆团 (不仅像K-Means这样的球形) 并自然处理重叠的团.
+GMM 可以建模椭圆形的簇(不像 K-Means 只限于球形)，并且能自然地处理重叠的簇。
 
-### 什么时候使用
+### 何时用哪个
 
-| Method | Best for | Avoid when |
+| 方法 | 最适合 | 应避免的场景 |
 |--------|----------|------------|
-| K-Means | Large datasets, spherical clusters, known K | Irregular shapes, outliers present |
-| DBSCAN | Unknown K, arbitrary shapes, outlier detection | Varying densities, very high dimensions |
-| Hierarchical | Small datasets, need dendrogram, unknown K | Large datasets (O(n^2) memory) |
-| GMM | Overlapping clusters, soft assignments needed | Very large datasets, too many dimensions |
+| K-Means | 大数据集、球形簇、已知 K | 不规则形状、存在离群点 |
+| DBSCAN | K 未知、任意形状、离群点检测 | 密度差异大、维度非常高 |
+| 层次聚类 | 小数据集、需要树状图、K 未知 | 大数据集(O(n^2) 内存) |
+| GMM | 重叠簇、需要软分配 | 非常大的数据集、维度过多 |
 
-### 集的异常检测
+### 基于聚类的异常检测
 
-集群自然支持异常检测:
-- **K-Means**距离任何心脏部位的点都是异常
-- **DBSCAN**噪音点是定义上异常
-- **GMM**根据所有高斯人,低概率的点都是异常.
+聚类天然支持异常检测：
+- **K-Means**:距离任何质心都很远的点是异常
+- **DBSCAN**:噪声点按定义就是异常
+- **GMM**:在所有高斯分布下概率都很低的点是异常
 
 ```figure
 kmeans-step
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:K-从零开始
+### 步骤 1:从零实现 K-Means
 
 ```python
 import math
@@ -178,7 +178,7 @@ def kmeans(data, k, max_iterations=100, seed=42):
     return assignments, centroids
 ```
 
-### 步骤2:肘部方法和模具分数
+### 步骤 2:肘部法则与轮廓系数
 
 ```python
 def compute_inertia(data, assignments, centroids):
@@ -244,7 +244,7 @@ def find_best_k(data, max_k=10):
     return inertias
 ```
 
-### 步骤3:从零开始 DBSCAN
+### 步骤 3:从零实现 DBSCAN
 
 ```python
 def dbscan(data, eps, min_samples):
@@ -298,7 +298,7 @@ def dbscan(data, eps, min_samples):
     return labels
 ```
 
-### 步骤4:高斯混合物模型 (EM算法)
+### 步骤 4:高斯混合模型(EM 算法)
 
 ```python
 def gmm(data, k, max_iterations=100, seed=42):
@@ -363,7 +363,7 @@ def gmm(data, k, max_iterations=100, seed=42):
     return assignments, means, weights, responsibilities
 ```
 
-### 步骤5:生成测试数据并运行所有
+### 步骤 5:生成测试数据并运行全部代码
 
 ```python
 def make_blobs(centers, n_per_cluster=50, spread=0.5, seed=42):
@@ -454,9 +454,9 @@ if __name__ == "__main__":
         print(f"    Point {[round(v, 2) for v in a]}")
 ```
 
-## 用它
+## 使用它
 
-通过Skit-learn,相同的算法是单行:
+使用 scikit-learn,同样的算法只需一行代码：
 
 ```python
 from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering
@@ -469,33 +469,33 @@ agg = AgglomerativeClustering(n_clusters=3).fit(data)
 gmm_model = GaussianMixture(n_components=3, random_state=42).fit(data)
 ```
 
-从零开始的版本显示了这些库计算的内容.K-Means在分配和重新计算之间进行反复计算.DBSCAN从密集种子中成长集群.GMM在期望和最大化之间交替.图书馆版本增加了数值稳定性,更智能的初始化 (K-Means++),以及GPU加速,但核心逻辑是相同的.
+从零实现的版本让你确切地知道这些库在计算什么。K-Means 在分配和重新计算之间迭代。DBSCAN 从密集的种子点开始生长簇。GMM 在期望和最大化之间交替。库版本增加了数值稳定性、更聪明的初始化(K-Means++)和 GPU 加速，但核心逻辑是一样的。
 
-## 运送它
+## 上线它
 
-这一课程从零开始产生了K-Means,DBSCAN和GMM的工作实现.集群代码可以重新作为更先进的未监督方法的基础.
+本课程产出了可用的 K-Means、DBSCAN 和 GMM 从零实现。聚类代码可以作为更高级无监督方法的基础加以复用。
 
-## 运动
+## 练习
 
-1. 实现K-Means++初始化:而不是随机选择中位数,先随机选择第一个中位数,然后选择每一个后续的中位数,概率均等于距离最近的现有中位数的平方.比较接近速度和随机初始化.
-2. 添加等级聚合集成到代码中. 实现Ward的链接并生成一个子图 (作为一个嵌套的合并列表). 切割它在不同的层次和比较K-Means结果.
-3. 建立一个简单的异常检测管道:运行DBSCAN和GMM在相同的数据上,两种方法一致的标志点都是异常值 (DBSCAN中的噪音,GMM中的概率低).测量重叠,讨论方法不同时.
+1. 实现 K-Means++ 初始化：不是随机选取质心，而是随机选取第一个质心，之后的每个质心按与其最近的已有质心的平方距离成比例的概率选取。比较其与随机初始化的收敛速度。
+2. 在代码中加入层次凝聚聚类。实现 Ward 链接并生成树状图(以合并操作的嵌套列表表示)。在不同的层级切割它，并与 K-Means 的结果进行比较。
+3. 构建一个简单的异常检测管道：在相同数据上运行 DBSCAN 和 GMM,标记两种方法都认为是离群点的点(DBSCAN 中的噪声点，GMM 中的低概率点)。测量重合度，并讨论两种方法在何时会出现分歧。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Clustering | "Grouping similar things" | Partitioning data into subsets where within-group similarity exceeds between-group similarity, measured by a specific distance metric |
-| Centroid | "The center of a cluster" | The mean of all points assigned to a cluster; used by K-Means as the cluster representative |
-| Inertia | "How tight the clusters are" | Sum of squared distances from each point to its assigned centroid; lower is tighter |
-| Silhouette score | "How well-separated clusters are" | For each point, (b - a) / max(a, b) where a is mean intra-cluster distance and b is mean nearest-cluster distance |
-| Core point | "A point in a dense region" | A point with at least min_samples neighbors within eps distance, in DBSCAN |
-| EM algorithm | "Soft K-Means" | Expectation-Maximization: iteratively compute membership probabilities (E-step) and update distribution parameters (M-step) |
-| Dendrogram | "A tree of clusters" | A tree diagram showing the order and distance at which clusters were merged in hierarchical clustering |
-| Anomaly | "An outlier" | A data point that does not conform to the expected pattern, identified as noise by DBSCAN or low-probability by GMM |
+| 聚类 | “把相似的东西分组” | 将数据划分为若干子集，使得组内相似度超过组间相似度，并使用特定的距离度量来衡量 |
+| 质心 | “簇的中心” | 分配到某个簇的所有点的均值；K-Means 用它作为簇的代表 |
+| 惯性 | “簇有多紧” | 每个点到其所属质心的平方距离之和；越低越紧 |
+| 轮廓系数 | “簇的分离度如何” | 对每个点，(b - a) / max(a, b),其中 a 是平均簇内距离，b 是到最近其他簇的平均距离 |
+| 核心点 | “密集区域中的点” | 在 DBSCAN 中，eps 距离内至少有 min_samples 个邻居的点 |
+| EM 算法 | “软 K-Means” | 期望最大化：迭代地计算成员概率(E 步)并更新分布参数(M 步) |
+| 树状图 | “一棵簇的树” | 一种树形图，显示层次聚类中簇合并的顺序和距离 |
+| 异常 | “一个离群点” | 不符合预期模式的数据点，在 DBSCAN 中被识别为噪声，在 GMM 中表现为低概率 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Stanford CS229 - Unsupervised Learning](https://cs229.stanford.edu/notes2022fall/main_notes.pdf)- 关于集群和电脑的安德鲁·恩格的讲座笔记
-- [scikit-learn Clustering Guide](https://scikit-learn.org/stable/modules/clustering.html)- 实际比较所有集群算法与视觉示例
-- [DBSCAN original paper (Ester et al., 1996)](https://www.aaai.org/Papers/KDD/1996/KDD96-037.pdf)- 引入基于密度的集群的论文
+- [Stanford CS229 - Unsupervised Learning](https://cs229.stanford.edu/notes2022fall/main_notes.pdf) - Andrew Ng 关于聚类和 EM 的课程讲义
+- [scikit-learn Clustering Guide](https://scikit-learn.org/stable/modules/clustering.html) - 所有聚类算法的实用对比，配有可视化示例
+- [DBSCAN original paper (Ester et al., 1996)](https://www.aaai.org/Papers/KDD/1996/KDD96-037.pdf) - 提出基于密度聚类的原始论文

@@ -1,25 +1,25 @@
-# 装载训练过的重量
+# 加载预训练权重
 
-> 从零开始训练1200万参数模型是一个预算决定;加载已发布的检查点是星期二.本课程将预训练的GPT-2风格重量从安全感器文件中加载到35课时的确切架构中,并将参数名称映射片段进行散步,智能产生了继续证明负载工作.没有网络,没有第三方加载器,没有不透明的魔术.
+> 从零训练一个 1.24 亿参数的模型是一项预算决策；加载一个公开发布的 checkpoint 不过是寻常的一个周二。本课从 safetensors 文件中加载预训练的 GPT-2 风格权重，载入第 35 课中完全相同的架构，逐条讲解参数名称映射，并通过一次生成续写做合理性检查以证明加载成功。无需网络、无需第三方加载器、没有晦涩的魔法。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 19 lessons 30 to 36
-**Time:** ~90 minutes
+**Prerequisites:** Phase 19 第 30 至 36 课
+**Time:** 约 90 分钟
 
 ## 学习目标
 
-- 阅读一个安全感应器文件`safetensors`检查子名称和形状.
-- 根据教程35GPT模型,每个预训练的参数名称都将被映射到一个参数中.
-- 处理公布的GPT-2重量和该轨道中的模型之间的两个名称公约: `wte/wpe/h.N.attn.c_attn/c_proj`其他`mlp.c_fc/c_proj`根据当地名称`tok_embed/pos_embed/blocks.N.attn.qkv/out_proj`其他`mlp.fc1/fc2`现在,我们要去.
-- 在任何重量分配发生之前,检测和拒绝与明显错误的形状不匹配.
-- 生成加载权重的短续集,并确认代币来自加载分布,而不是随机初始化.
+- 使用 `safetensors` Python 库读取 safetensors 文件，并查看张量名称和形状。
+- 将每个预训练参数名称映射到第 35 课 GPT 模型中的对应参数。
+- 处理公开发布的 GPT-2 权重与本课程模型之间两种不同的命名约定：`wte/wpe/h.N.attn.c_attn/c_proj` 和 `mlp.c_fc/c_proj` 与本地命名的 `tok_embed/pos_embed/blocks.N.attn.qkv/out_proj` 和 `mlp.fc1/fc2`。
+- 在任何权重赋值发生之前，检测并拒绝形状不匹配的情况，并给出清晰的错误信息。
+- 使用加载的权重生成一段简短续写，确认这些 token 来自加载后的分布，而非随机初始化的分布。
 
-## 问题
+## 问题所在
 
-发布的权重不适用于您的架构.它们包含原始实现使用的名称.预训练文件有`transformer.h.0.attn.c_attn.weight`形状`(2304, 768)`您的模型预计`blocks.0.attn.qkv.weight`形状`(2304, 768)`(在不同的布局会议中相同的矩阵) 或您的模型使用`nn.Linear`输入的矩阵存储.同一个参数显示出三个微妙不同的身份 (名称,形状,字节布局),加载器必须协调所有三个.
+公开发布的权重并不是为你的架构打包的。它们沿用的是原始实现所使用的名称。预训练文件中包含形状为 `(2304, 768)` 的 `transformer.h.0.attn.c_attn.weight`；而你的模型期望的是形状为 `(2304, 768)` 的 `blocks.0.attn.qkv.weight`（这是同一矩阵在不同布局约定下的形式），或者你的模型使用 `nn.Linear`，它以转置形式存储该矩阵。同一个参数会以三种微妙不同的身份出现（名称、形状、字节布局），加载器必须将这三者全部协调一致。
 
-随着一个模块的复制,它将正确的子放在错误的地方,你得到了一个模型,它产生了无稽之谈.一个模块拒绝复制,但没有记录任何东西,让你猜测哪个子没有降落.`LoadReport`总结了击中,错失和形状不一致,
+盲目复制的加载器会把正确的张量放到错误的位置，你会得到一个生成胡言乱语的模型。当形状不同时拒绝复制却什么都不记录的加载器，会让你去猜测哪个张量没能加载到位。本课的加载器是显式的：每次赋值都有日志，每个形状都做检查，并用一个 `LoadReport` 汇总命中、缺失和形状不匹配的情况，让你能读懂发生了什么。
 
 ## 概念
 
@@ -36,127 +36,127 @@ flowchart LR
   RP --> G[generate<br/>sanity sample]
 ```
 
-名称地图表只是一个从字符串到字符串的函数.形状检查是一个如果. 赋值发生在内`torch.no_grad()`报告中包含了每个名字的结果.
+名称映射器只是一个从字符串到字符串的函数。形状检查就是一个 if。赋值操作在 `torch.no_grad()` 内部进行，因此 autograd 不会追踪这次加载。报告记录每个名称的结果。
 
-### 基因二级命名公约
+### GPT-2 命名约定
 
-发表的GPT-2权重以以下名称命名:
+公开发布的 GPT-2 权重使用如下名称：
 
-| Pretrained name | Shape | Meaning |
+| 预训练名称 | 形状 | 含义 |
 |-----------------|-------|---------|
-| `wte.weight` | (50257, 768) | Token embedding |
-| `wpe.weight` | (1024, 768) | Position embedding |
-| `h.N.ln_1.weight` | (768,) | LayerNorm 1 scale at block N |
-| `h.N.ln_1.bias` | (768,) | LayerNorm 1 shift at block N |
-| `h.N.attn.c_attn.weight` | (768, 2304) | Fused QKV linear weight |
-| `h.N.attn.c_attn.bias` | (2304,) | Fused QKV linear bias |
-| `h.N.attn.c_proj.weight` | (768, 768) | Attention output projection |
-| `h.N.attn.c_proj.bias` | (768,) | Attention output projection bias |
-| `h.N.ln_2.weight` | (768,) | LayerNorm 2 scale |
-| `h.N.ln_2.bias` | (768,) | LayerNorm 2 shift |
-| `h.N.mlp.c_fc.weight` | (768, 3072) | MLP fc1 weight |
-| `h.N.mlp.c_fc.bias` | (3072,) | MLP fc1 bias |
-| `h.N.mlp.c_proj.weight` | (3072, 768) | MLP fc2 weight |
-| `h.N.mlp.c_proj.bias` | (768,) | MLP fc2 bias |
-| `ln_f.weight` | (768,) | Final LayerNorm scale |
-| `ln_f.bias` | (768,) | Final LayerNorm shift |
+| `wte.weight` | (50257, 768) | Token 嵌入 |
+| `wpe.weight` | (1024, 768) | 位置嵌入 |
+| `h.N.ln_1.weight` | (768,) | 第 N 个 block 的 LayerNorm 1 缩放 |
+| `h.N.ln_1.bias` | (768,) | 第 N 个 block 的 LayerNorm 1 偏移 |
+| `h.N.attn.c_attn.weight` | (768, 2304) | 融合 QKV 线性权重 |
+| `h.N.attn.c_attn.bias` | (2304,) | 融合 QKV 线性偏置 |
+| `h.N.attn.c_proj.weight` | (768, 768) | 注意力输出投影 |
+| `h.N.attn.c_proj.bias` | (768,) | 注意力输出投影偏置 |
+| `h.N.ln_2.weight` | (768,) | LayerNorm 2 缩放 |
+| `h.N.ln_2.bias` | (768,) | LayerNorm 2 偏移 |
+| `h.N.mlp.c_fc.weight` | (768, 3072) | MLP fc1 权重 |
+| `h.N.mlp.c_fc.bias` | (3072,) | MLP fc1 偏置 |
+| `h.N.mlp.c_proj.weight` | (3072, 768) | MLP fc2 权重 |
+| `h.N.mlp.c_proj.bias` | (768,) | MLP fc2 偏置 |
+| `ln_f.weight` | (768,) | 最终 LayerNorm 缩放 |
+| `ln_f.bias` | (768,) | 最终 LayerNorm 偏移 |
 
-两次惊喜计划.`c_attn`现在`c_proj`现在`c_fc`线性图像是存储的,与矩阵相对的转移.`nn.Linear.weight`运载器在分配过程中转移.LM头根本不在文件中;模型依赖于重量绑定.`wte`现在,我们可以把头部设置为一个字母.`wte`接地.
+有两个需要提前计划的意外情况。`c_attn`、`c_proj`、`c_fc` 这些线性层存储的矩阵相对于 `nn.Linear.weight` 所期望的形式是转置的。加载器在赋值时进行转置。LM head 完全不在文件中；模型依赖与 `wte` 的权重绑定，因此一旦 `wte` 加载完成，head 就通过别名方式设置好了。
 
-### 地方命名大会
+### 本地命名约定
 
-在此轨道中的模型使用描述名称:
+本课程的模型使用描述性名称：
 
-| Local name | Meaning |
+| 本地名称 | 含义 |
 |------------|---------|
-| `tok_embed.weight` | Token embedding |
-| `pos_embed.weight` | Position embedding |
-| `blocks.N.ln1.scale` | LayerNorm 1 scale at block N |
-| `blocks.N.ln1.shift` | LayerNorm 1 shift |
-| `blocks.N.attn.qkv.weight` | Fused QKV |
-| `blocks.N.attn.qkv.bias` | Fused QKV bias |
-| `blocks.N.attn.out_proj.weight` | Attention output projection |
-| `blocks.N.attn.out_proj.bias` | Output projection bias |
-| `blocks.N.ln2.scale` | LayerNorm 2 scale |
-| `blocks.N.ln2.shift` | LayerNorm 2 shift |
+| `tok_embed.weight` | Token 嵌入 |
+| `pos_embed.weight` | 位置嵌入 |
+| `blocks.N.ln1.scale` | 第 N 个 block 的 LayerNorm 1 缩放 |
+| `blocks.N.ln1.shift` | LayerNorm 1 偏移 |
+| `blocks.N.attn.qkv.weight` | 融合 QKV |
+| `blocks.N.attn.qkv.bias` | 融合 QKV 偏置 |
+| `blocks.N.attn.out_proj.weight` | 注意力输出投影 |
+| `blocks.N.attn.out_proj.bias` | 输出投影偏置 |
+| `blocks.N.ln2.scale` | LayerNorm 2 缩放 |
+| `blocks.N.ln2.shift` | LayerNorm 2 偏移 |
 | `blocks.N.mlp.fc1.weight` | MLP fc1 |
-| `blocks.N.mlp.fc1.bias` | MLP fc1 bias |
+| `blocks.N.mlp.fc1.bias` | MLP fc1 偏置 |
 | `blocks.N.mlp.fc2.weight` | MLP fc2 |
-| `blocks.N.mlp.fc2.bias` | MLP fc2 bias |
-| `final_ln.scale` | Final LayerNorm scale |
-| `final_ln.shift` | Final LayerNorm shift |
+| `blocks.N.mlp.fc2.bias` | MLP fc2 偏置 |
+| `final_ln.scale` | 最终 LayerNorm 缩放 |
+| `final_ln.shift` | 最终 LayerNorm 偏移 |
 
-图表是一个固定函数,课程将它作为一个命令,
+映射是一个固定的函数。本课将其以 dict 的形式提供，由加载器遍历。
 
-### 子固定
+### 桩测试夹具
 
-实际GPT-2重量为0.5GB.演示程序不下载它们;它在首次运行时生成一个小的安全感应器装置,与精确的GPT-2命名公约和适合d_model 192的12块模型的形状而不是768.该装置具有适当的结构来执行加载器中的每个代码路径.将该装置换为实际文件,加载器无需修改.
+真实的 GPT-2 权重有 0.5 GB。本课的演示不会下载它们；它在首次运行时生成一个小的 safetensors 夹具，采用与 GPT-2 完全一致的命名约定，形状对应一个 12-block 模型，d_model 为 192 而非 768。这个夹具具备正确的结构，可以覆盖加载器中的每一条代码路径。把夹具换成真实文件，加载器无需任何修改即可工作。
 
 ```figure
 cc-weight-remap
 ```
 
-## 建立它
+## 动手实现
 
-`code/main.py`执行:
+`code/main.py` 实现了：
 
-- 经历了这段经验.`GPTModel`所以这门课程是自封的.
-- `make_pretrained_to_local(num_layers)`通过此,我们可以扩大每个层次的输入.
-- `load_safetensors(model, path)`它们可以进行代码,绘制它们,检查形状,转换 conv1d式的权重,并分配在`torch.no_grad()`返回一个`LoadReport`现在,我们要去.
-- `make_stub_safetensors(path, cfg)`它们可以生成一个具有精确预先训练的命名规则的固定文件.
-- 创建一个演示`outputs/gpt2-stub.safetensors`在第一次运行时,构建一个新型模型,从随机 init生成的连续性录取,加载了,捕获了另一个连续性,打印了两者,并验证了两者是否不同 (负载实际上改变了模型).
+- 第 35 课 `GPTModel` 的一个小型复刻，使本课自成一体。
+- `make_pretrained_to_local(num_layers)`，用于展开逐层的条目。
+- `load_safetensors(model, path)`，它遍历名称、进行映射、检查形状、转置 conv1d 风格的权重，并在 `torch.no_grad()` 下完成赋值。返回一个 `LoadReport`。
+- `make_stub_safetensors(path, cfg)`，它以完全一致的预训练命名约定生成夹具文件。
+- 一个演示：首次运行时创建 `outputs/gpt2-stub.safetensors`，构建一个全新模型，从随机初始化状态捕获一段生成续写，加载桩模型，再捕获一段续写，打印两者，并验证二者不同（即加载确实改变了模型）。
 
-运行它:
+运行它：
 
 ```bash
 python3 code/main.py
 ```
 
-输出:固定路径,每名负载日志, a `LoadReport`总结,在负载前的延续,在负载后的延续,以及在单个故意被注入装置中的坏子上出现的形状不匹配,从而实现故障路径.
+输出内容：夹具路径、逐名称的加载日志、一个 `LoadReport` 汇总、加载前的一段续写、加载后的一段续写，以及一个形状不匹配错误——该错误来自注入到夹具中的一个故意设置的错误张量，用于覆盖失败路径。
 
-## 堆
+## 技术栈
 
-- `safetensors`对于磁盘格式和流媒体读器.
-- `torch`对于模型和任务数学.
-- 没有.`transformers`没有`huggingface_hub`没有网络通话.
+- `safetensors` 用于磁盘上的文件格式和流式读取器。
+- `torch` 用于模型和赋值运算。
+- 不使用 `transformers`，不使用 `huggingface_hub`，不进行网络调用。
 
-## 野生生产模式
+## 生产环境中的常见模式
 
-只有三个模式使载体能够与你不创造的重量接触.
+有三个模式能让加载器在你面对并非由你创建的权重时依然可靠。
 
-**Always validate the file before any assignment.**打开文件,列出每个子名称及其dtype和形状,运行完整的映射,并只在成功后开始分配.
+**在任何赋值之前始终先验证文件。** 打开文件，列出每个张量的名称、dtype 和形状，运行完整的映射并进行形状检查，只有全部成功后才开始赋值。加载了一半的模型是静默失败的机器。
 
-**Log every assignment with the source name and the destination name.**记器告诉你哪个子落在哪里; 替代方法是读取六.`LoadReport`在本课程中,数据类 `loaded`现在`missing`现在`unexpected`其他`shape_mismatch`列表并在结尾打印总结.
+**用源名称和目标名称记录每一次赋值。** 当出现异常情况时，日志能告诉你哪个张量落在了哪里；否则你就只能去读十六进制转储。本课中的 `LoadReport` dataclass 会追踪 `loaded`、`missing`、`unexpected` 和 `shape_mismatch` 列表，并在最后打印一份汇总。
 
-**The LM head is a weight tying alias, not a separate copy.**设置`model.lm_head.weight = model.tok_embed.weight`装载后`tok_embed`复制嵌入矩阵成一个新的图案.`lm_head.weight`参数打破结合, 静静地加倍参数数.
+**LM head 是权重绑定的别名，而不是单独的副本。** 在加载 `tok_embed` 之后设置 `model.lm_head.weight = model.tok_embed.weight` 是标准做法。把嵌入矩阵复制到一个新的 `lm_head.weight` 参数中会破坏绑定，并悄悄地使参数数量翻倍。
 
-## 用它
+## 使用它
 
-- 载体可以用于使用预训练命名公约的任何安全传感器文件.真正的GPT-2文件 (小/中/大/xl) 没有代码更改工作;只有模型配置不同.
-- 根据该规则,在使用该规则的基础上, 测量量量和测量量量量均保持相同.
-- 负载后的智能生成是一个快速的门户:如果负载后的样本看起来像负载前的样本,负载没有改变模型,这意味着地图静默错过了每个子.
+- 该加载器适用于任何使用预训练命名约定的 safetensors 文件。真实的 GPT-2 文件（small / medium / large / xl）无需修改代码即可使用；仅模型配置不同。
+- 只要更新名称映射，同样的模式可以扩展到 LLaMA、Mistral、Qwen 权重。形状检查和报告保持完全一致。
+- 加载后的合理性生成是一道快速关卡：如果加载后的样本看起来和加载前的样本一样，说明加载没有改变模型，这意味着映射悄悄地漏掉了每一个张量。
 
-## 运动
+## 练习
 
-1. 添加一个`dtype`对于载体来说,每个子被投向目标d类型的参数 (`bfloat16`现在`float16`现在`float32`) 在任务期间. 确认`float32`模型可以降低到`bfloat16`并且仍然产生.
-2. 添加一个`expected_layers`拒绝加载一个检查站的论点`h.N`指数不符合模型的指数`num_layers`现在,我们要去.
-3. 插入载体到课35代函数中,并生成两个侧面的样本:一个来自随机 init,一个来自载体.
-4. 添加出口路径:使用预训练命名公约将当前模型状态写入新型安全感器文件. 循环访问加载器并确认报告没有任何形状不一致.
-5. 延长时间`NAME_MAP`处理LLaMA命名公约 (无偏见,RMSNorm,合并的qkv布局) 并重新运行加载器在您生成的LLaMA固定器上.
+1. 给加载器添加一个 `dtype` 参数，在赋值时把每个张量转换为目标 dtype（`bfloat16`、`float16`、`float32`）。确认一个 `float32` 模型可以降级为 `bfloat16` 并且仍然能正常生成。
+2. 添加一个 `expected_layers` 参数，当 checkpoint 的 `h.N` 索引与模型的 `num_layers` 不匹配时拒绝加载。
+3. 将加载器接入第 35 课的生成函数，产生两个并排的样本：一个来自随机初始化，一个来自加载的夹具。
+4. 添加一个导出路径：使用预训练命名约定将当前模型状态写入一个全新的 safetensors 文件。对加载器做往返测试，确认报告中形状不匹配的数量为零。
+5. 扩展 `NAME_MAP` 以处理 LLaMA 命名约定（无偏置、RMSNorm、融合 qkv 布局），并在你自己生成的 LLaMA 桩夹具上重新运行加载器。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|------------------------|
-| Name map | "Key remapping" | The function from pretrained tensor names to local parameter names; usually a literal dict with one entry per layer index expanded over a loop |
-| Shape mismatch | "Bad shape" | The pretrained tensor exists under the mapped name but its dimensions disagree with the local parameter; the loader refuses to assign and logs the pair |
-| Transpose-on-load | "Conv1d layout" | Published GPT-2 stores attention and MLP projections in the transpose of what nn.Linear expects; the loader transposes during assignment |
-| Weight tying alias | "Shared LM head" | Setting model.lm_head.weight = model.tok_embed.weight so the head and embedding share storage; the head is not in the file because of this |
-| Load report | "Coverage summary" | A small dataclass that tracks loaded, missing, unexpected, and shape_mismatch lists; printing it is how you tell whether the load succeeded |
+| 名称映射 | "键重映射" | 从预训练张量名称到本地参数名称的函数；通常是一个字面 dict，每个层索引一条，通过循环展开 |
+| 形状不匹配 | "形状错误" | 预训练张量在映射后的名称下存在，但其维度与本地参数不一致；加载器拒绝赋值并记录这一对名称 |
+| 加载时转置 | "Conv1d 布局" | 公开发布的 GPT-2 以 nn.Linear 所期望形式的转置存储注意力和 MLP 投影；加载器在赋值时进行转置 |
+| 权重绑定别名 | "共享 LM head" | 设置 model.lm_head.weight = model.tok_embed.weight，使 head 与嵌入共享存储；正因如此，head 不在文件中 |
+| 加载报告 | "覆盖率汇总" | 一个小型 dataclass，追踪 loaded、missing、unexpected 和 shape_mismatch 列表；打印它就能判断加载是否成功 |
 
-## 进一步阅读
+## 延伸阅读
 
-- 阶段19课 35 对于接收重量的建筑.
-- 训练循环的第19阶段课程36:
-- 阶段10课时,我们将对记忆紧张时的载重进行量化.
-- 第十阶段课程13 (构建一个完整的LLM管道)
+- Phase 19 第 35 课，介绍接收这些权重的架构。
+- Phase 19 第 36 课，介绍生成相同形状 checkpoint 的训练循环。
+- Phase 10 第 11 课（量化），介绍在内存紧张时如何处理加载的权重。
+- Phase 10 第 13 课（构建完整的 LLM 流水线），介绍围绕加载和推理的完整生命周期。

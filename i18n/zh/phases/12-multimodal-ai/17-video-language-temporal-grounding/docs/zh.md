@@ -1,153 +1,153 @@
-# 视频语言模型:暂时标志和地图
+# 视频语言模型：时间令牌与定位
 
-> 视频不是一堆照片. 一个5秒的剪辑有因果顺序,动作动词和事件时间, 视频-LLaMA (Zhang等,2023年6月) 发送了首个具有视频接地的开放视频-LLM. 视频聊天和视频-LLaVA扩大了模式. 到2025年,Qwen2.5VL的TMRoPE将与边境专业型号的差距缩小. 每个系统都以不同的方式解决时间代币 每片Q-former,每框 concat-pool,每代币TMRoPE. 这一课程阅读了模式,构建了一个统一对动态框架样本,
+> 视频不是一堆照片的堆叠。一个 5 秒的片段具有因果顺序、动作动词和事件时序，这是图像模型无法表达的。Video-LLaMA（Zhang 等，2023 年 6 月）发布了首个具备视听定位能力的开源视频 LLM。VideoChat 和 Video-LLaVA 扩展了这一模式。到 2025 年，Qwen2.5-VL 的 TMRoPE 缩小了与前沿专有模型的差距。每个系统以不同方式解决时间令牌问题——每个片段用 Q-former、每帧用 concat-pool、每个令牌用 TMRoPE。本课解读这些模式，构建均匀采样与动态采样帧采样器，并在时间定位任务上进行评估。
 
 **Type:** Build
-**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator)
+**Languages:** Python (标准库，帧采样器 + 时间定位评估器)
 **Prerequisites:** Phase 12 · 08 (LLaVA-OneVision)
-**Time:** ~180 minutes
+**Time:** ~180 分钟
 
 ## 学习目标
 
-- 解释为什么时间定位编码会独立于视觉编码器改变视频VLM性能.
-- 根据每秒代币与地面准确度进行统一,动态FPS和事件驱动的框架样本测试.
-- 描述Q-former-per-clip (视频-LLaMA) 与聚合式-per-frame (视频-LLaVA) 与M-RoPE-per-token (Qwen2.5-VL) 设计.
-- 举个视频基准:视频MME,TempCompass,EgoSchema,视频MMMU.
+- 解释为什么时间位置编码会在不依赖视觉编码器的情况下改变视频 VLM 的性能。
+- 在每秒令牌数与定位准确率的权衡下，比较均匀采样、动态 FPS 和事件驱动的帧采样。
+- 描述每片段 Q-former(Video-LLaMA) vs 每帧池化(Video-LLaVA) vs 每令牌 M-RoPE(Qwen2.5-VL) 的设计。
+- 说出四个视频基准：VideoMME、TempCompass、EgoSchema、Video-MMMU。
 
 ## 问题
 
-一分钟的视频30FPS为1800.每为196个视觉代币 (ViT-B为224),这比2024年代任何LLM文本大352k代币.
+一段 1 分钟、30 FPS 的视频有 1800 帧。以每帧 196 个视觉令牌计算(ViT-B 在 224 分辨率下)，总共是 35.2 万个令牌——超过任何 2024 年代的 LLM 上下文长度。
 
-减少三种策略:
+存在三种缩减策略：
 
-1. 副样本框架 (依据内容为1-8FPS).
-2. 积极组合每个框架的补丁代币 (3x3或4x4双线积分).
-3. 通过Q-former压缩,它拍摄了16个片,输出了64个代币.
+1. 对帧进行下采样(根据内容 1-8 FPS)。
+2. 激进地池化每帧的 patch 令牌(3x3 或 4x4 双线性池化)。
+3. 通过 Q-former 压缩：输入 16 帧的片段，输出 64 个令牌。
 
-每个交易都不同. 副样本输出时间细节. 聚合输出空间细节. 问元输出了两个小点,但节省了代币.
+每种权衡各不相同。下采样丢失时间细节。池化丢失空间细节。Q-former 两者都丢失一点，但节省令牌。
 
-时间位置编码是另一轴:模型如何知道5个框架是在6个框架之前出现的? 选项包括简单的1D时间 RoPE (Video-LLaMA),学习时间嵌入式 (Video-LLaVA),以及TMRoPE (Qwen2.5-VL,全3D).
+时间位置编码是另一个维度：模型如何知道第 5 帧在第 6 帧之前？选项包括简单的一维时间 RoPE(Video-LLaMA)、可学习的时间嵌入(Video-LLaVA)以及 TMRoPE(Qwen2.5-VL,完整 3D)。
 
 ## 概念
 
-### 视频-LLaMA:每片Q-former+音频分支
+### Video-LLaMA:每片段 Q-former + 音频分支
 
-视频-LLaMA (2023) 是第一个开放的视频-LLM.
+Video-LLaMA(2023)是首个开源视频 LLM。架构：
 
-- 速度为16个片,速度为2FPS (因此8秒).
-- 视频Q-former,通过16个框架进行交叉监视 -> 32个学习查询 -> LLM.
-- 接音频分支:波形 -> 图像结合音频编码器 -> 音频Q-former -> 32个查询 -> LLM.
+- 16 帧片段，2 FPS(即 8 秒)。
+- 每帧 ViT 特征 -> Video Q-former 对全部 16 帧进行交叉注意力 -> 32 个可学习查询 -> LLM。
+- 并行音频分支：波形 -> ImageBind 音频编码器 -> Audio Q-former -> 32 个查询 -> LLM。
 
-强度:视听结合推理. 弱点:固定剪辑长度,没有任意的时间定位.
+优势：视听联合推理。劣势：片段长度固定，无法进行任意时间定位。
 
-### 视频聊天和视频-LLaVA
+### VideoChat 和 Video-LLaVA
 
-视频聊天保留了视频-LLaMA的想法,但放弃了音频和简化.视频-LLaVA (Lin等,2023) 在图像和视频框架上训练了单个视觉编码器 ("投影前的配列"),从而提供统一的表示.这两者都是冷的CLIP编码器 + MLP + LLM.
+VideoChat 保留了 Video-LLaMA 的思路，但去掉了音频并进行了简化。Video-LLaVA(Lin 等，2023)在图像和视频帧上训练单一视觉编码器(“投影前对齐”)，得到统一的表示。两者都是冻结 CLIP 编码器 + MLP + LLM。
 
-两者都不是长视频处理器.
+两者都无法处理长视频。它们都是 8-16 帧系统。
 
-### 文2.5VL和TMRoPE
+### Qwen2.5-VL 与 TMRoPE
 
-Qwen2.5-VL推出了TMRoPE  时代模式旋转位置嵌入.每个补丁代币具有 (t, h, w) 位置,其中t是实际的时间 (而不是框架指数).
+Qwen2.5-VL 引入了 TMRoPE——Temporal-Modality Rotary Position Embedding。每个 patch 令牌携带一个 (t, h, w) 位置，其中 t 是实际时间戳(而非帧索引)。
 
-简单的时间嵌入的关键区别:
+与简单时间嵌入的关键区别：
 
-- 模型看到"4.2秒"而不是"15段".
-- 每个视觉代币以其时间标签独立旋转.
-- 如果您在此处采样2FPS,在此处采样4FPS,TMRoPE将在本地处理不均的间隔.
+- 绝对时间，而非索引。模型看到的是“在 4.2 秒”，而不是“在第 15 帧”。
+- 每令牌旋转，而非每片段。每个视觉令牌根据其时间戳独立旋转。
+- 与动态 FPS 兼容。如果这里以 2 FPS 采样、那里以 4 FPS 采样，TMRoPE 原生处理不均匀间隔。
 
-罗PE可以启用"猫跳什么秒钟?"的查询. 模型可以输出"4.2秒钟". 视频-LLaMA只能说"在剪辑的早期".
+TMRoPE 支持“猫在第几秒跳起？”这类查询。模型可以输出“在 4.2 秒”。Video-LLaMA 只能说“片段早期”。
 
-### 框架采样策略
+### 帧采样策略
 
-单一:样本N框架在持续时间内均.简单,损失运动峰值.
+均匀：在时长内均匀采样 N 帧。简单，但丢失运动峰值。
 
-动态FPS:基于运动强度的样本适应性.光学流量或框架差异化选择高运动段进行更密集的样本采集.Qwen2.5VL在此上运行.
+动态 FPS:根据运动强度自适应采样。光流或帧差分选取高运动片段进行更密集的采样。Qwen2.5-VL 以此方式训练。
 
-活动驱动:运行轻量检测器, 查看更多的行动发生的地方.
+事件驱动：运行轻量级检测器，在动作发生处采样更多帧。VideoAgent 采用此方式。
 
-键盘+背景:拍摄边界的样本+几个相邻的框架.用于电影内容.
+关键帧 + 上下文：在镜头边界处采样 + 少量相邻帧。用于影视内容。
 
-### 每个的集成
+### 每帧池化
 
-在每幅5秒的576个代币,一个5分钟的剪辑是172,800个代币.可用Qwen2.5-VL-72B的128k语境,但昂贵.
+以 1 FPS 和每帧 576 个令牌计算，5 分钟的片段是 172,800 个令牌。用 Qwen2.5-VL-72B 的 128k 上下文可以做到，但代价高昂。
 
-两行数组的数量减少到每一个图片的64个代币 -> 5 分钟的19200个代币.
+3x3 双线性池化将每帧缩减到 64 个令牌 -> 5 分钟共 19,200 个令牌。这是多数任务的最佳平衡点。
 
-对于空间细节不太重要的代理工作流程,更积极地组装 (6x6 -> 16个图像).
+更激进地池化(6x6 -> 每帧 16 个令牌)适用于空间细节不那么重要的智能体工作流。
 
 ### 四个视频基准
 
-- 视频中小企业:全面视频理解,短+中+长.
-- 时间:精细的时间推理,"之前"/"之后"的问题.
-- 长视野的第一人视频.
-- 视频-MMMU:多模式多学科视频问题.
+- VideoMME:全面的视频理解，短 + 中 + 长。
+- TempCompass:细粒度时间推理，“之前”/“之后”问题。
+- EgoSchema:长时程第一人称视频。
+- Video-MMMU:多模态多学科视频问答。
 
-它们强调不同的轴 TempCompass是关于订单, EgoSchema是关于3+分钟的推理, VideoMME跨度.
+完整的视频 VLM 评估覆盖全部四个。它们考查不同维度——TempCompass 专注于时序顺序，EgoSchema 考查 3 分钟以上的推理，VideoMME 覆盖各种时长。
 
-### 接地输出格式
+### 定位输出格式
 
-时间接地输出格式:
+时间定位的输出格式：
 
-- 简单的分析,但不准确.
-- 结构化JSON: `{"event": "jump", "start": 4.1, "end": 4.3}`文2.5VL是这辆车的.
-- 基于代币:特殊`<time>4.1</time>`文2.5VL的内部格式.
+- 自由文本：“猫在大约第 4 秒跳起。”易于解析但不精确。
+- 结构化 JSON:`{"event": "jump", "start": 4.1, "end": 4.3}`。Qwen2.5-VL 以此训练。
+- 基于令牌：在答案中穿插特殊的 `<time>4.1</time>` 令牌。Qwen2.5-VL 的内部格式。
 
-基于代币的使用最准确. Qwen2.5VL 的 JSON输出格式直接解析.
+基于令牌的方式对下游使用最精确。Qwen2.5-VL 的 JSON 输出格式可直接解析。
 
 ### 2026 年最佳实践
 
-2026年视频VLM:
+2026 年的视频 VLM:
 
-- 编码器:M-RoPE或TMRoPE (Qwen2.5-VL) 的SigLIP 2.
-- 模样:动态FPS (根据运动为1-4),最大盖.
-- 单个图像组合:3×3双线.
-- 输出:结构化JSON,时间+事件字段.
-- 标准:视频中小企业+时间准一般;长视野EgoSchema.
+- 编码器：SigLIP 2 配合 M-RoPE 或 TMRoPE(Qwen2.5-VL)。
+- 帧采样：动态 FPS(根据运动情况 1-4)并设最大帧数上限。
+- 每帧池化：3x3 双线性。
+- 输出：带时间 + 事件字段的结构化 JSON。
+- 基准：通用用 VideoMME + TempCompass;长时程用 EgoSchema。
 
 ```figure
 video-temporal-patches
 ```
 
-## 用它
+## 实践
 
-`code/main.py`包括:
+`code/main.py` 包括：
 
-- 统一和动态FPS框架样本仪.
-- 玩具时间定位评估器:在时间T时出现"基本真理"事件,以及模型输出结果,
-- 视频-LLaMA (16个,Q-前),视频-LLaVA (8个,MLP),Qwen2.5-VL (动态FPS +TMRoPE) 的比较.
+- 均匀和动态 FPS 帧采样器。
+- 一个玩具级时间定位评估器：给定时刻 T 的“真值”事件和模型输出，以容差计算准确率得分。
+- Video-LLaMA(16 帧，Q-former)、Video-LLaVA(8 帧，MLP)、Qwen2.5-VL(动态 FPS + TMRoPE)之间的对比。
 
-## 运送它
+## 交付
 
-这一课产生了`outputs/skill-video-vlm-frame-planner.md`视频任务 (监控,行动识别,时间定位,总结) 时,它选择了图像样本,聚合因素,输出格式和预期精度级别.
+本课产出 `outputs/skill-video-vlm-frame-planner.md`。给定一个视频任务(监控、动作识别、时间定位、摘要)，它会选择帧采样器、池化因子、输出格式以及预期的准确率档位。
 
-## 运动
+## 练习
 
-1. 为了做三分钟的演示,选择制服与动态FPS.
+1. 对于一段 3 分钟的烹饪演示，选择均匀还是动态 FPS。用令牌数量论证你的选择。
 
-2. 简单的时间嵌入表不能做什么?
+2. TMRoPE 具体增加了哪些简单时间嵌入表无法做到的事情？
 
-3. 写一个JSON图案,用于时间定位,一个VLM可以学习发射.包括错误案例.
+3. 编写一个 VLM 能够学会输出的时间定位 JSON 模式。包括错误情况。
 
-4. 阅读视频-LLaVA的第3节"在投影之前的配合".
+4. 阅读 Video-LLaVA 第 3 节“投影前对齐”。为什么这比分别训练图像和视频编码器更好？
 
-5. 鉴于视频MME排名榜,到2026年,顶级开放模型和顶级专有模型之间的差距是多少?
+5. 根据 VideoMME 排行榜，截至 2026 年，顶级开源模型与顶级专有模型之间的差距是多少？其中多少可归因于时间编码 vs 基座 LLM 规模？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|------------------------|
-| Temporal grounding | "Time-localized answers" | VLM outputs a specific timestamp range for when an event happens |
-| TMRoPE | "Time-Multimodal RoPE" | 3D rotary position with absolute timestamps, used by Qwen2.5-VL |
-| Dynamic FPS | "Motion-aware sampling" | Sample more frames in high-motion segments, fewer in static ones |
-| Frame pooling | "Spatial compress per frame" | Reduce patches per frame with bilinear interpolation before the LLM |
-| Video Q-former | "Clip compressor" | Cross-attention bottleneck mapping N frames to K learned queries |
-| VideoMME | "Video bench" | Comprehensive short/medium/long video benchmark, 2500+ samples |
+| 时间定位 | “时间定位的回答” | VLM 为事件发生的时间输出具体的时间戳范围 |
+| TMRoPE | “时间多模态 RoPE” | 带绝对时间戳的 3D 旋转位置编码，Qwen2.5-VL 采用 |
+| 动态 FPS | “运动感知采样” | 高运动片段采样更多帧，静态片段采样更少帧 |
+| 帧池化 | “每帧空间压缩” | 在 LLM 之前用双线性插值减少每帧的 patch 数 |
+| Video Q-former | “片段压缩器” | 将 N 帧映射到 K 个可学习查询的交叉注意力瓶颈 |
+| VideoMME | “视频基准” | 全面的短/中/长视频基准，2500+ 样本 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Zhang et al. — Video-LLaMA (arXiv:2306.02858)](https://arxiv.org/abs/2306.02858)
-- [Li et al. — VideoChat (arXiv:2305.06355)](https://arxiv.org/abs/2305.06355)
-- [Lin et al. — Video-LLaVA (arXiv:2311.10122)](https://arxiv.org/abs/2311.10122)
-- [Qwen Team — Qwen2.5-VL (arXiv:2502.13923)](https://arxiv.org/abs/2502.13923)
-- [Lin et al. — VILA-1.5 (arXiv:2312.07533)](https://arxiv.org/abs/2312.07533)
+- [Zhang 等 — Video-LLaMA (arXiv:2306.02858)](https://arxiv.org/abs/2306.02858)
+- [Li 等 — VideoChat (arXiv:2305.06355)](https://arxiv.org/abs/2305.06355)
+- [Lin 等 — Video-LLaVA (arXiv:2311.10122)](https://arxiv.org/abs/2311.10122)
+- [Qwen 团队 — Qwen2.5-VL (arXiv:2502.13923)](https://arxiv.org/abs/2502.13923)
+- [Lin 等 — VILA-1.5 (arXiv:2312.07533)](https://arxiv.org/abs/2312.07533)

@@ -1,34 +1,34 @@
-# 偏差差差异
+# 偏差-方差权衡
 
-> 每个模型错误都来自三个来源之一:偏见,变异或噪音.
+> 每个模型的误差都来自三个来源之一：偏差、方差或噪声。你只能控制前两者。
 
 **Type:** Learn
-**Language:**字符串
-**Prerequisites:** Phase 2, Lessons 01-09 (ML basics, regression, classification, evaluation)
+**Language:** Python
+**Prerequisites:** Phase 2, Lessons 01-09（机器学习基础、回归、分类、评估）
 **Time:** ~75 minutes
 
 ## 学习目标
 
-- 推导预期预测错误的偏差变量分解,并解释不可减噪噪音的作用
-- 诊断模型是否存在高度偏见或高度差异性,使用训练和测试错误模式
-- 解释如何调整技术 (L1,L2,退出,提前停止) 交易偏差
-- 实施对越来越复杂的模型的偏差差差异交易的实验
+- 推导期望预测误差的偏差-方差分解，并解释不可约噪声的作用
+- 利用训练误差和测试误差的模式，诊断模型是高偏差还是高方差
+- 解释正则化技术（L1、L2、dropout、早停）如何以偏差换方差
+- 实现可视化实验，展示模型复杂度递增时的偏差-方差权衡
 
-## 问题
+## 问题所在
 
-你训练了一个模型,它有一些测试数据上的错误.
+你训练了一个模型。它在测试数据上有一定误差。这些误差从何而来？
 
-如果你的模型太简单 (在曲线数据集上线性回归),它将始终错过真实模式.这是偏见.如果你的模型太复杂 (在15个数据点上20度多项),它将完美地适应训练数据,但给出了非常不同的预测.这是变异.
+如果你的模型太简单（在弯曲数据上用线性回归），它会持续偏离真实模式。这就是偏差。如果你的模型太复杂（在 15 个数据点上用 20 次多项式），它会完美拟合训练数据，但在新数据上给出大相径庭的预测。这就是方差。
 
-对于一个固定模型容量,你不能同时减少两者. 推偏差下降,变异增加. 推偏差下降,变异增加. 了解这种折衷是机器学习中最有用的诊断技能. 它告诉你是否要让你的模型变得更复杂或更少复杂,是否要获得更多数据或工程更好的功能,是否要更少或更少地规范.
+对于固定的模型容量，你无法同时最小化两者。压低偏差，方差就上升。压低方差，偏差就上升。理解这一权衡是机器学习中最有用的诊断技能。它告诉你该让模型更复杂还是更简单，该获取更多数据还是构造更好的特征，该加强还是减弱正则化。
 
-## 概念
+## 核心概念
 
-### 偏见:系统性错误
+### 偏差：系统性误差
 
-偏见测量模型的平均预测与真实值有多远.如果你从同一分布中训练了同一模型,并且平均预测,偏见是平均和真相之间的差距.
+偏差衡量模型的平均预测与真实值之间的偏离程度。如果你在从同一分布抽取的许多不同训练集上训练同一个模型，并对预测取平均，偏差就是这个平均值与真实值之间的差距。
 
-模型太刚硬了,无法捕捉到真实模式.一个合适的直线永远会错过曲线,不管你给它多少数据.这是不合适的.
+高偏差意味着模型过于僵化，无法捕捉真实模式。用直线拟合抛物线，无论给多少数据，都会偏离曲线。这就是欠拟合。
 
 ```
 High bias (underfitting):
@@ -38,11 +38,11 @@ High bias (underfitting):
   Gap between them: SMALL
 ```
 
-### 变异:对培训数据的敏感性
+### 方差：对训练数据的敏感性
 
-变化测量了你在训练不同子集数据时预测变化程度.如果训练集中的小变化导致模型发生大变化,则变化很高.
+方差衡量在不同数据子集上训练时预测的变化程度。如果训练集的微小变化导致模型的巨大变化，方差就高。
 
-模型在训练数据中适应噪音,而不是底层信号.一个20度多项字符将穿过每个训练点,但在它们之间会狂动.这是过度适应.
+高方差意味着模型在拟合训练数据中的噪声，而非潜在的信号。20 次多项式会穿过每个训练点，但点与点之间剧烈振荡。这就是过拟合。
 
 ```
 High variance (overfitting):
@@ -52,9 +52,9 @@ High variance (overfitting):
   Gap between them: LARGE
 ```
 
-### 腐烂
+### 分解
 
-对于任何点 x,在二次损失下预期预测错误完全分解:
+对于任意点 x，平方损失下的期望预测误差可以精确分解为：
 
 ```
 Expected Error = Bias^2 + Variance + Irreducible Noise
@@ -65,14 +65,14 @@ where:
   Noise    = E[(y - f(x))^2]             (sigma^2)
 ```
 
-- `f(x)`是真正的函数
-- `f_hat(x)`是你的模型的预测
-- `E[...]`是对不同培训组的预期
-- `y`是观察到的标签 (真实函数加噪音)
+- `f(x)` 是真实函数
+- `f_hat(x)` 是模型的预测
+- `E[...]` 是对不同训练集取的期望
+- `y` 是观测标签（真实函数加噪声）
 
-噪音术语是不可减轻的. 任何模型都能在噪音数据上比sigma^2更好. 你的工作是找到偏差^2和变异之间的正确平衡.
+噪声项是不可约的。在含噪声数据上，任何模型都无法优于 sigma^2。你的任务是在 bias^2 与方差之间找到合适的平衡。
 
-### 模型复杂性与错误
+### 模型复杂度与误差
 
 ```mermaid
 graph LR
@@ -84,28 +84,28 @@ graph LR
     style C fill:#f99,stroke:#333
 ```
 
-经典的U形曲线:
+经典的 U 形曲线：
 
-| Complexity | Bias | Variance | Total Error |
+| 复杂度 | 偏差 | 方差 | 总误差 |
 |-----------|------|----------|-------------|
-| Too low | HIGH | LOW | HIGH (underfitting) |
-| Just right | MODERATE | MODERATE | LOWEST |
-| Too high | LOW | HIGH | HIGH (overfitting) |
+| 过低 | 高 | 低 | 高（欠拟合） |
+| 恰到好处 | 中等 | 中等 | 最低 |
+| 过高 | 低 | 高 | 高（过拟合） |
 
-### 规范化作为偏差变异控制
+### 正则化作为偏差-方差控制手段
 
-规律化故意增加偏差,以减少变异性. 它限制模型,
+正则化有意增加偏差以降低方差。它约束模型，使其无法追逐噪声。
 
-- **L2 (Ridge):**缩小所有重量到零,保持所有特征,但减少它们的影响.
-- **L1 (Lasso):**按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数按数按数按数按数按数按数按数按数按数按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数按数量按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数按数量按数按数按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按数量按
-- **Dropout:**随机除神经元,在训练中,强迫过剩的表达.
-- **Early stopping:**在模型完全适应训练数据之前停止训练.
+- **L2（Ridge）：** 将所有权重向零收缩。保留所有特征但降低其影响。
+- **L1（Lasso）：** 将部分权重精确压到零。执行特征选择。
+- **Dropout:** 训练过程中随机禁用神经元。强制学习冗余表示。
+- **早停：** 在模型完全拟合训练数据之前停止训练。
 
-规律化强度 (lambda,脱节率,时间数) 直接控制你坐在偏差变异曲线上的位置.
+正则化强度（lambda、dropout 率、epoch 数）直接决定你在偏差-方差曲线上的位置。正则化越强，偏差越大，方差越小。
 
-### 双代:现代观点
+### 双下降：现代视角
 
-经典理论说:在甜点点之后,复杂性总是很痛苦.但自2019年以来的研究表明了一些意想不到的东西.如果你继续增加模型容量远远超过插射门 (模型具有足够的参数来完美地适应训练数据),测试错误可以再次减少.
+经典理论认为：过了最优点之后，复杂度增加总是有害的。但 2019 年以来的研究揭示了意料之外的现象。如果你将模型容量远远增加到超过插值阈值（即模型拥有足以完美拟合训练数据的参数量），测试误差可能再次下降。
 
 ```mermaid
 graph LR
@@ -119,25 +119,25 @@ graph LR
     style D fill:#dfd,stroke:#333
 ```
 
-这种"双下降"现象解释了为什么大量过度参数化的神经网络 (比训练示例要多得多的参数) 仍然很好地普遍化.
+这种“双下降”现象解释了为什么大规模过参数化的神经网络（参数远多于训练样本）仍然泛化良好。经典偏差-方差权衡并非错误，但在现代情形下它并不完整。
 
-关于双重下降的关键观察:
-- 它们在线性模型,决策树和神经网络中发生
-- 更多的数据实际上会在插射区域中伤害 (样本方式的双下降)
-- 更多的训练时代也可能导致它 (以时代方式的双下降)
-- 规律化可以平滑到峰值,但不能消除它
+关于双下降的关键观察：
+- 它出现在线性模型、决策树和神经网络中
+- 在插值区域，更多数据实际上可能有害（sample-wise double descent）
+- 更多训练 epoch 也可能导致它（epoch-wise double descent）
+- 正则化能平滑峰值但不能消除它
 
-为什么会发生这种情况? 在插射门时,该模型的容量足以适应所有训练点. 它被迫进入一个非常具体的解决方案, 通过每个点, 数据中的小扰乱导致了很大的变化. 这就是变异的高峰. 模型有很多可能的解决方案, 学习算法 (例如,含有隐含规律化的梯度下降) 往往选择其中最简单的. 这种对简单解决方案的隐含偏见是为什么过度参数化的模型普遍化.
+为什么会这样？在插值阈值处，模型刚好有足够的容量拟合所有训练点。它被迫采用一种穿过每个点的特定解，数据中的微小扰动会导致拟合的巨大变化。这正是方差的峰值。过了阈值之后，模型拥有许多能完美拟合数据的可能解，学习算法（例如带隐式正则化的梯度下降）倾向于从中选择最简单的解。这种对简单解的隐式偏好正是过参数化模型能够泛化的原因。
 
-| Regime | Parameters vs Samples | Behavior |
+| 情形 | 参数 vs 样本 | 行为 |
 |--------|----------------------|----------|
-| Underparameterized | p << n | Classical tradeoff applies |
-| Interpolation threshold | p ~ n | Variance peaks, test error spikes |
-| Overparameterized | p >> n | Implicit regularization kicks in, test error drops |
+| 欠参数化 | p << n | 适用经典权衡 |
+| 插值阈值 | p ~ n | 方差达到峰值，测试误差激增 |
+| 过参数化 | p >> n | 隐式正则化起效，测试误差下降 |
 
-实际目的:如果您使用神经网络或大型树团,不要在插射门点停留.要么远低于它 (明确规律化),要么远远超过它.最糟糕的地方就是在门点.
+从实用角度看：如果你使用神经网络或大型树集成，不要停在插值阈值处。要么远低于它（配合显式正则化），要么远超过它。最糟糕的位置恰恰在阈值处。
 
-### 诊断你的模式
+### 诊断你的模型
 
 ```mermaid
 flowchart TD
@@ -152,50 +152,50 @@ flowchart TD
     F --> I[Deploy]
 ```
 
-| Symptom | Diagnosis | Fix |
+| 症状 | 诊断 | 修复 |
 |---------|-----------|-----|
-| High train error, high test error | Bias | More features, complex model, less regularization |
-| Low train error, high test error | Variance | More data, regularization, simpler model, dropout |
-| Low train error, low test error | Good fit | Ship it |
-| Train error decreasing, test error increasing | Overfitting in progress | Early stopping |
+| 训练误差高，测试误差高 | 偏差 | 更多特征、更复杂的模型、减弱正则化 |
+| 训练误差低，测试误差高 | 方差 | 更多数据、正则化、更简单的模型、dropout |
+| 训练误差低，测试误差低 | 拟合良好 | 直接上线 |
+| 训练误差下降，测试误差上升 | 正在过拟合 | 早停 |
 
-### 实际的策略
+### 实用策略
 
-**When bias is the problem:**
-- 添加多项或交互功能
-- 使用更灵活的模型 (树组而不是线性)
-- 降低规律化强度
-- 长时间的列车 (如果尚未融合)
+**当偏差是问题所在：**
+- 添加多项式特征或交互特征
+- 使用更灵活的模型（用树集成替代线性模型）
+- 减弱正则化强度
+- 训练更久（如果尚未收敛）
 
-**When variance is the problem:**
+**当方差是问题所在：**
 - 获取更多训练数据
-- 使用包装 (随机森林)
-- 增加规律化 (更高的率,更高的退出率)
-- 功能选择 (删除噪音功能)
-- 使用跨验证以早期检测
+- 使用 bagging（随机森林）
+- 加强正则化（更大的 lambda、更多 dropout）
+- 特征选择（去除噪声特征）
+- 使用交叉验证及早发现问题
 
-### 组合方法和变化减少
+### 集成方法与方差削减
 
-组合方法是打击差异的最实用的工具.
+集成方法是对抗方差最实用的工具。
 
-**Bagging (Bootstrap Aggregating)**训练数据的不同启动样本上训练多个模型,然后平均他们的预测.每个单个模型的差异很高,但平均差异要低得多.随机森林将用于决策树.
+**Bagging（Bootstrap Aggregating）** 在训练数据的不同 bootstrap 样本上训练多个模型，然后对它们的预测取平均。每个单独的模型方差很高，但平均值方差低得多。随机森林就是应用于决策树的 bagging。
 
-为什么它运作数学上:如果你平均N独立预测,每个与差异sigma^2,平均差异是sigma^2 / N.模型不是真正独立的 (他们都看到类似的数据),所以减少小于1/N,但它仍然是实质性的.
+其数学原理：如果你对 N 个独立的预测取平均，每个预测的方差为 sigma^2，则平均值的方差为 sigma^2 / N。这些模型并非真正独立（它们看到的数据相似），因此削减幅度小于 1/N，但仍然可观。
 
-**Boosting**通过顺序构建模型来减少偏差,每个新模型都集中在迄今为止的组合错误上.渐进增强和AdaBoost是主要的例子.如果添加过多的模型,增强可以过度适应,因此需要早期停止或规范化.
+**Boosting** 通过按顺序构建模型来降低偏差，每个新模型专注于当前集成的错误。代表性方法有梯度提升和 AdaBoost。加入过多模型时 boosting 会过拟合，因此需要早停或正则化。
 
-| Method | Primary Effect | Bias Change | Variance Change |
+| 方法 | 主要作用 | 偏差变化 | 方差变化 |
 |--------|---------------|-------------|-----------------|
-| Bagging | Reduces variance | No change | Decreases |
-| Boosting | Reduces bias | Decreases | Can increase |
-| Stacking | Reduces both | Depends on meta-learner | Depends on base models |
-| Dropout | Implicit bagging | Slight increase | Decreases |
+| Bagging | 降低方差 | 不变 | 下降 |
+| Boosting | 降低偏差 | 下降 | 可能上升 |
+| Stacking | 同时降低两者 | 取决于元学习器 | 取决于基模型 |
+| Dropout | 隐式 bagging | 略有增加 | 下降 |
 
-**Practical rule:**如果你的基模型具有高变异性 (深树,高度多项),请使用包装.如果你的基模型具有高偏差 (浅茎,简单的线性模型),请使用增强.
+**实用规则：** 如果你的基模型方差高（深树、高次多项式），用 bagging。如果你的基模型偏差高（浅层树桩、简单线性模型），用 boosting。
 
 ### 学习曲线
 
-学习曲线是根据训练集的尺寸进行训练和验证错误的图表.它们是您拥有的最实用的诊断工具.与单一的训练/测试比较不同,学习曲线显示您的模型轨迹,并告诉您是否有更多数据有所帮助.
+学习曲线以训练集大小为自变量绘制训练误差和验证误差。它是你能拥有的最实用的诊断工具。与单次训练/测试对比不同，学习曲线展示模型的变化轨迹，并告诉你更多数据是否有帮助。
 
 ```mermaid
 flowchart TD
@@ -221,27 +221,27 @@ flowchart TD
     end
 ```
 
-如何读取:
+如何解读：
 
-| Scenario | Training Error | Validation Error | Gap | What It Means | What to Do |
+| 情形 | 训练误差 | 验证误差 | 差距 | 含义 | 对策 |
 |----------|---------------|-----------------|-----|---------------|------------|
-| High bias | High | High | Small | Model cannot capture the pattern | More features, complex model, less regularization |
-| High variance | Low | High | Large | Model memorizes training data | More data, regularization, simpler model |
-| Good fit | Moderate | Moderate | Small | Model generalizes well | Ship it |
-| High variance, improving | Low | Decreasing with more data | Shrinking | Variance problem that data can fix | Collect more data |
-| High bias, flat | High | High and flat | Small and flat | More data will NOT help | Change model architecture |
+| 高偏差 | 高 | 高 | 小 | 模型无法捕捉模式 | 更多特征、更复杂的模型、减弱正则化 |
+| 高方差 | 低 | 高 | 大 | 模型在记忆训练数据 | 更多数据、正则化、更简单的模型 |
+| 拟合良好 | 中等 | 中等 | 小 | 模型泛化良好 | 直接上线 |
+| 高方差，仍在改善 | 低 | 随数据增加而下降 | 缩小 | 数据可以解决的方差问题 | 收集更多数据 |
+| 高偏差，平坦 | 高 | 高且平坦 | 小且平坦 | 更多数据不会有帮助 | 更换模型架构 |
 
-关键见解:如果两个曲线均,差距小,但两个错误都很大,则更多数据是无用的.你需要更好的模型.如果差距大,但仍然缩小,更多数据将有助于.
+关键洞察：如果两条曲线都已趋平，差距很小但两个误差都很高，那么更多数据毫无用处。你需要更好的模型。如果差距很大且仍在缩小，更多数据会有帮助。
 
-### 如何产生学习曲线
+### 如何生成学习曲线
 
-两种方法:
+有两种方法：
 
-**Approach 1: Vary training set size, fixed model.**保持模型和超参数的恒定. 训练对训练数据的越来越大的子集. 测量训练错误和验证错误在每个尺寸. 这是标准学习曲线.
+**方法 1：改变训练集大小，固定模型。** 保持模型和超参数不变。在越来越大的训练数据子集上训练，测量每个规模下的训练误差和验证误差。这是标准的学习曲线。
 
-**Approach 2: Vary model complexity, fixed data.**保持数据常数.扫描复杂性参数 (多项数值,树深度,层次).在每个复杂度上测量训练错误和验证错误.这是一个验证曲线,直接显示偏差差异交换.
+**方法 2：改变模型复杂度，固定数据。** 保持数据不变。扫描一个复杂度参数（多项式次数、树深度、层数），测量每个复杂度下的训练误差和验证误差。这是验证曲线，直接展示偏差-方差权衡。
 
-两种方法都相互补充.第一种告诉你更多数据是否有帮助.第二种告诉你是否有不同的模型有帮助.
+两种方法互为补充。第一种告诉你更多数据是否有帮助，第二种告诉你换一个模型是否有帮助。在决定下一步之前，两者都应运行。
 
 ```mermaid
 flowchart TD
@@ -258,13 +258,13 @@ flowchart TD
 bias-variance
 ```
 
-## 建立它
+## 动手实现
 
-编码在`code/bias_variance.py`现在我们要做一个步骤的方法.
+`code/bias_variance.py` 中的代码运行完整的偏差-方差分解实验。以下是分步思路。
 
-### 步骤1:从已知函数生成合成数据
+### 第 1 步：从已知函数生成合成数据
 
-我们使用`f(x) = sin(1.5x) + 0.5x`知道真实函数可以计算出偏差和差异.
+我们使用 `f(x) = sin(1.5x) + 0.5x` 并叠加高斯噪声。知道真实函数使我们能精确计算偏差和方差。
 
 ```python
 def true_function(x):
@@ -277,9 +277,9 @@ def generate_data(n_samples=30, noise_std=0.5, x_range=(-3, 3), seed=None):
     return x, y
 ```
 
-### 步骤2:启动截图样本和多项式调整
+### 第 2 步：Bootstrap 采样与多项式拟合
 
-对于每个多项数的度数,我们绘制了许多启动训练集,适合多项数,并记录预测在固定测试网格上. 这给我们在每个测试点的预测分布.
+对每个多项式次数，我们抽取多个 bootstrap 训练集，拟合多项式，并记录在固定测试网格上的预测。这给出了每个测试点上的预测分布。
 
 ```python
 def fit_polynomial(x_train, y_train, degree, lam=0.0):
@@ -293,11 +293,11 @@ def fit_polynomial(x_train, y_train, degree, lam=0.0):
     return w
 ```
 
-我们可以使用200种不同的启动线样本.每个启动线样本都是从相同的基础分布中得到的,但包含不同的点.
+我们在 200 个不同的 bootstrap 样本上进行拟合。每个 bootstrap 样本抽自同一底层分布，但包含不同的点。
 
-### 步骤3:计算偏差^2,变量分解
+### 第 3 步：计算 Bias^2 与方差分解
 
-通过每一个测试点的200套预测,我们可以直接从定义计算分解:
+有了每个测试点上 200 组预测，我们可以直接按定义计算分解：
 
 ```python
 mean_pred = predictions.mean(axis=0)
@@ -306,14 +306,14 @@ variance = np.mean(predictions.var(axis=0))
 total_error = np.mean(np.mean((predictions - y_true) ** 2, axis=1))
 ```
 
-- `mean_pred`是从启动线样本中估计的E[f_hat(x)
-- `bias_sq`是平均预测和真相之间的平方差距
-- `variance`是预测在启动线样本中平均分布
-- `total_error`差距2+变异+噪音
+- `mean_pred` 是从 bootstrap 样本估计的 E[f_hat(x)]
+- `bias_sq` 是平均预测与真实值之间的平方差距
+- `variance` 是各 bootstrap 样本预测的平均离散程度
+- `total_error` 应近似等于 bias^2 + 方差 + 噪声
 
-### 步骤4:学习曲线
+### 第 4 步：学习曲线
 
-学习曲线扫描训练集的尺寸,同时保持模型复杂性固定.它们显示你的模型是否数据有限或容量有限.
+学习曲线在保持模型复杂度不变的情况下扫描训练集大小。它们展示你的模型是受数据限制还是受容量限制。
 
 ```python
 def demo_learning_curves():
@@ -335,16 +335,16 @@ def demo_learning_curves():
         # Average over runs gives the learning curve point
 ```
 
-对于高变量模型 (5级,数据小),您可以看到:
-- 训练错误开始很低,随着更多数据增加, 记忆变得更加困难
-- 测试错误开始高,随着模型获得更多信号而减少
-- 随着更多数据,差距会缩小
+对于高方差模型（小数据上的 5 次多项式），你会看到：
+- 训练误差起始较低，随着数据增多、记忆变得困难而上升
+- 测试误差起始较高，随着模型获得更多信号而下降
+- 随着数据增多，差距缩小
 
-对于高偏差模型 (级 1),两种错误都快速 konverge 到相同的高值,更多的数据没有帮助.
+对于高偏差模型（1 次多项式），两个误差很快收敛到同一个高值，更多数据也无济于事。
 
-### 步骤5:规律化扫描
+### 第 5 步：正则化扫描
 
-该代码还包括`demo_regularization_sweep()`通过测试,我们可以将其从一个不同的角度来显示:而不是变化的模型复杂性,我们改变了限制强度.
+代码还包括 `demo_regularization_sweep()`，它固定一个高次多项式（15 次），并将 Ridge 正则化强度从 0.001 扫到 100。这从另一个角度展示偏差-方差权衡：不变的是模型复杂度，变化的是约束强度。
 
 ```python
 def demo_regularization_sweep():
@@ -355,15 +355,15 @@ def demo_regularization_sweep():
         print(f"alpha={alpha:.3f}  bias={r['bias_sq']:.4f}  var={r['variance']:.4f}")
 ```
 
-在低阿尔法时,15度多项几乎不受限制.变异占主导地位,因为模型在每个启动样中追逐噪音.在高阿尔法时,惩罚是如此强大,模型实际上成为一个近恒定函数.偏差占主导地位.最佳阿尔法位于这些极端之间.
+在低 alpha 时，15 次多项式几乎不受约束。方差占主导，因为模型追逐每个 bootstrap 样本中的噪声。在高 alpha 时，惩罚过强，模型实际上退化为接近常数的函数。偏差占主导。最优 alpha 位于这两个极端之间。
 
-这是一条不同多项级别的U曲线,但由连续的而不是单独的控制.在实践中,规律化是控制交易的首选方式,因为它允许细粒度的控制,而不会改变特征集.
+这与改变多项式次数时的 U 形曲线相同，只是由连续旋钮而非离散参数控制。在实践中，正则化是控制该权衡的首选方式，因为它允许在不改变特征集的情况下进行精细调节。
 
-## 用它
+## 直接使用
 
- sklearn提供了`learning_curve`其他`validation_curve`通过自动化这些诊断,
+sklearn 提供 `learning_curve` 和 `validation_curve`，无需手写 bootstrap 循环即可自动化这些诊断。
 
-### 验证曲线:扫模复杂性
+### 验证曲线：扫描模型复杂度
 
 ```python
 from sklearn.model_selection import validation_curve
@@ -385,9 +385,9 @@ for d in degrees:
     val_scores_all.append(-val_scores.mean())
 ```
 
-这直接给你带来偏差差差距曲线. 验证分数与训练分数相比最差的地方,偏差占主导地位.
+这直接给出偏差-方差权衡曲线。验证得分相对于训练得分最差之处，方差占主导。两者都很差之处，偏差占主导。
 
-### 学习曲线:扫描训练集尺寸
+### 学习曲线：扫描训练集大小
 
 ```python
 from sklearn.model_selection import learning_curve
@@ -401,9 +401,9 @@ train_mse = -train_scores.mean(axis=1)
 val_mse = -val_scores.mean(axis=1)
 ```
 
-剧情`train_mse`其他`val_mse`反对`train_sizes`形状告诉你关于你的模型.
+将 `train_mse` 和 `val_mse` 对 `train_sizes` 作图。曲线的形状会告诉你关于模型的一切。
 
-### 通过标准化扫描进行交叉验证
+### 带正则化扫描的交叉验证
 
 ```python
 from sklearn.model_selection import cross_val_score
@@ -415,53 +415,53 @@ for alpha in alphas:
     print(f"alpha={alpha:>7.3f}  MSE={-scores.mean():.4f} +/- {scores.std():.4f}")
 ```
 
-这样就可以查看一个固定模型复杂性的规律化强度. 你会看到相同的偏差变异权衡:低的阿尔法意味着高的变异,高的阿尔法意味着高的偏差.
+这在固定模型复杂度下扫描正则化强度。你会看到同样的偏差-方差权衡：低 alpha 意味着高方差，高 alpha 意味着高偏差。
 
-### 整合:一个完整的诊断工作流程
+### 综合运用：完整的诊断工作流
 
-在实践中,你会按照顺序进行这些诊断:
+在实践中，你按顺序运行这些诊断：
 
-1. 训练模型,计算列车,测试错误.
-2. 如果两者都高,你有偏见问题.
-3. 如果列车低,但测试高:你有变异性问题.生成学习曲线,看看更多数据是否有帮助.如果没有,则定期.
-4. 通过验证曲线来扫描您的主要复杂性参数.
-5. 如果差距仍然很大,你需要更多的数据或规律化.
-6. 试用不同的阿尔法值的Ridge/Lasso`cross_val_score`选择最低的交叉验证错误的阿尔法.
+1. 训练模型。计算训练误差和测试误差。
+2. 如果两者都高：你有偏差问题。跳到第 4 步。
+3. 如果训练误差低但测试误差高：你有方差问题。生成学习曲线看更多数据是否有帮助。如果没有，进行正则化。
+4. 生成扫描主要复杂度参数的验证曲线。找到最优点。
+5. 在最优点处，生成学习曲线。如果差距仍然很大，你需要更多数据或正则化。
+6. 使用 `cross_val_score` 尝试不同 alpha 值的 Ridge/Lasso。选择交叉验证误差最低的 alpha。
 
-这需要大多的表格数据集计算的10-15分钟,节省了几个小时的猜测.
+对大多数表格数据集，这只需 10-15 分钟的计算，却能省去数小时的盲目猜测。
 
-## 运送它
+## 交付成果
 
-这一课产生的:`outputs/prompt-model-diagnostics.md`
+本课产出：`outputs/prompt-model-diagnostics.md`
 
-## 运动
+## 练习
 
-1. 运行分解`noise_std=0`没有噪音. 无可减小错误术语发生了什么?
+1. 在 `noise_std=0`（无噪声）下运行分解。不可约误差项会怎样？最优复杂度会改变吗？
 
-2. 增加训练集的尺寸从30到300. 这如何影响变异组件?
+2. 将训练集大小从 30 增加到 300。这对方差分量有何影响？最优多项式次数会移动吗？
 
-3. 添加L2规律化 (Ridge回归) 实验.对于固定高度多项式 (15度),扫 lambda从0到100. 图谱偏差^2和变异作为 lambda 的函数.
+3. 在实验中加入 L2 正则化（Ridge 回归）。固定一个高次多项式（15 次），将 lambda 从 0 扫到 100。绘制 bias^2 和方差随 lambda 变化的曲线。
 
-4. 从多项式修改到`sin(x)`偏差变化分解如何变化? 还有明确的最佳程度吗?
+4. 将真实函数从多项式改为 `sin(x)`。偏差-方差分解如何变化？还存在明确的最优次数吗？
 
-5. 实施一个简单的启动带集结 (背后) 包装:训练10个模型在启动带样本和平均预测. 展示这减少了差异,而不会增加偏见.
+5. 实现一个简单的 bootstrap aggregating（bagging）封装：在 bootstrap 样本上训练 10 个模型并对预测取平均。证明这能降低方差而不明显增加偏差。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|----------------------|
-| Bias | "The model is too simple" | Systematic error from wrong assumptions. The gap between the average model prediction and truth. |
-| Variance | "The model is overfitting" | Error from sensitivity to training data. How much predictions change across different training sets. |
-| Irreducible error | "Noise in the data" | Error from randomness in the true data-generating process. No model can eliminate it. |
-| Underfitting | "Not learning enough" | Model has high bias. It misses the real pattern even on training data. |
-| Overfitting | "Memorizing the data" | Model has high variance. It fits noise in training data that does not generalize. |
-| Regularization | "Constraining the model" | Adding a penalty to reduce model complexity, trading bias for lower variance. |
-| Double descent | "More parameters can help" | Test error decreases again when model capacity far exceeds the interpolation threshold. |
-| Model complexity | "How flexible the model is" | The capacity of a model to fit arbitrary patterns. Controlled by architecture, features, or regularization. |
+| 偏差 | “模型太简单” | 来自错误假设的系统性误差。平均模型预测与真实值之间的差距。 |
+| 方差 | “模型过拟合了” | 来自对训练数据敏感性的误差。预测在不同训练集之间的变化程度。 |
+| 不可约误差 | “数据里有噪声” | 来自真实数据生成过程中的随机性。任何模型都无法消除。 |
+| 欠拟合 | “学得不够” | 模型偏差高。即使在训练数据上也偏离真实模式。 |
+| 过拟合 | “在背数据” | 模型方差高。它拟合了训练数据中无法泛化的噪声。 |
+| 正则化 | “约束模型” | 添加惩罚项以降低模型复杂度，用偏差换取更低的方差。 |
+| 双下降 | “参数多一点也有好处” | 当模型容量远超插值阈值时，测试误差再次下降。 |
+| 模型复杂度 | “模型有多灵活” | 模型拟合任意模式的能力。由架构、特征或正则化控制。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Hastie, Tibshirani, Friedman: Elements of Statistical Learning, Ch. 7](https://hastie.su.domains/ElemStatLearn/)--偏差变量分解的最终处理
-- [Belkin et al., Reconciling modern machine learning practice and the bias-variance trade-off (2019)](https://arxiv.org/abs/1812.11118)-- 双下降纸
-- [Nakkiran et al., Deep Double Descent (2019)](https://arxiv.org/abs/1912.02292)-- 时代和样本的双下降
-- [Scott Fortmann-Roe: Understanding the Bias-Variance Tradeoff](http://scott.fortmann-roe.com/docs/BiasVariance.html)-- 清晰的视觉解释
+- [Hastie, Tibshirani, Friedman: Elements of Statistical Learning, Ch. 7](https://hastie.su.domains/ElemStatLearn/) —— 偏差-方差分解的权威论述
+- [Belkin et al., Reconciling modern machine learning practice and the bias-variance trade-off (2019)](https://arxiv.org/abs/1812.11118) —— 双下降论文
+- [Nakkiran et al., Deep Double Descent (2019)](https://arxiv.org/abs/1912.02292) —— epoch-wise 与 sample-wise 双下降
+- [Scott Fortmann-Roe: Understanding the Bias-Variance Tradeoff](http://scott.fortmann-roe.com/docs/BiasVariance.html) —— 清晰的可视化讲解

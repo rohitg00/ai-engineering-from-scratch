@@ -1,60 +1,60 @@
-# 预测解码 草稿,验证,重复
+# 投机解码 — 起草、验证、重复
 
-> 推迟解码是序列的.每个代币等待上一个. 投机解码打破链条:一个廉价的模型在一个前进通行中验证所有N代币,而昂贵的模型在一个前进通行中验证所有N代币. 当草案正确时,你为N代代付出了一个大额的前进.
+> 自回归解码是串行的。每个 token 都要等待前一个。投机解码打破了这个链条：用一个廉价模型起草 N 个 token，再让昂贵模型在一次前向传播中验证全部 N 个。当草稿正确时，你用一次大模型前向就换来了 N 个生成结果。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
-**Time:** ~60 minutes
+**Prerequisites:** Phase 7 · 07 (GPT Causal LM)、Phase 7 · 12 (KV Cache & Flash Attention)
+**Time:** ~60 分钟
 
-## 问题
+## 问题所在
 
-如果我们让3B草案5个代币前进,然后运行70B *一次*验证所有5,总数是`5×3 + 30 = 45 ms`对于最多5个被接受的代币`5×30 = 150 ms`这就是完全的投机解码比率:换取少量的额外的GPU内存 (草案模型) 为24x较低的解码延迟.
+一个 70B 的 LLM 在 H100 上采样一个 token 大约需要 30 ms。而一个 3B 的草稿模型只需要约 3 ms。如果我们让 3B 模型提前起草 5 个 token，然后让 70B 模型运行*一次*来验证这 5 个，总耗时为 `5×3 + 30 = 45 ms`，最多可接受 5 个 token —— 相比之下，直线生成需要 `5×30 = 150 ms`。这就是投机解码的完整卖点：用少量额外的 GPU 显存（草稿模型）换取 2–4× 更低的解码延迟。
 
-投机性样本采集,由Leviathan等 (2023) 和陈等同时引入,确保输出序列是**identically distributed**没有质量妥协,只是更快.
+这个技巧必须保持分布不变。投机采样（speculative sampling）由 Leviathan 等人（2023）以及 Chen 等人同期提出，它保证输出序列与大型模型独立生成时的分布**完全相同**。没有质量上的折中，只是更快。
 
-根据2026年推断,四个设计验证器对的家庭占据主导地位:
+2026 年的推理领域由四类草稿-验证器组合主导：
 
-1. **Vanilla speculative (Leviathan 2023).**单独的草案模型 (例如,Llama 3 1B) +验证器 (例如,Llama 3 70B).
-2. **Medusa (Cai 2024).**验证器上的多个解码头预测位置`t+1..t+k`没有单独的模型草案.
-3. **EAGLE family (Li 2024, 2025).**轻量级的草稿,重复验证器隐藏状态;比尼拉更接近接受率;典型的34×.
-4. **Lookahead decoding (Fu 2024).**简单的,但没有依赖.
+1. **原生投机（Leviathan 2023）。** 独立的草稿模型（如 Llama 3 1B）+ 验证器（如 Llama 3 70B）。
+2. **Medusa（Cai 2024）。** 在验证器上使用多个解码头并行预测位置 `t+1..t+k`。无需单独的草稿模型。
+3. **EAGLE 系列（Li 2024、2025）。** 轻量级草稿模型复用验证器的隐藏状态；接受率高于原生方法；典型加速 3–4×。
+4. **前瞻解码（Fu 2024）。** 基于 Jacobi 迭代；完全不需要草稿模型。自我投机。小众但无额外依赖。
 
-在2026年,每一个生产推断堆都会默认地发送投机解码. vLLM,TensorRT-LLM,SGLang和 llama.cpp都支持至少尼 + EAGLE-2.
+2026 年的每个生产级推理栈默认都内置投机解码。vLLM、TensorRT-LLM、SGLang 和 llama.cpp 至少都支持原生方法 + EAGLE-2。
 
-## 概念
+## 核心概念
 
 ### 核心算法
 
-鉴于验证器`M_q`并且更便宜的草稿`M_p`其他:
+给定一个验证器 `M_q` 和一个更廉价的草稿模型 `M_p`：
 
-1. 让我们`x_1..x_k`已解码的前.
-2. **Draft**:使用 `M_p`推出自动推移`d_{k+1}, d_{k+2}, ..., d_{k+N}`具有草案概率`p_1..p_N`现在,我们要去.
-3. **Verify in parallel**运行`M_q`一次就这样了`x_1..x_k, d_{k+1}, ..., d_{k+N}`获得验证器概率`q_1..q_{N+1}`对于职位`k+1..k+N+1`现在,我们要去.
-4. **Accept/reject each draft token left to right**对于每一个`i`接受一个可能的`min(1, q_i(d_i) / p_i(d_i))`现在,我们要去.
-5. 在第一次拒绝位置`j`: 样本`t_j`由于"残留"分布而导致的`(q_j - p_j)_+`之后的所有草案都正常化了.`j`它们被丢弃.
-6. 接受一切`N`: 样本一个额外的代币`t_{N+1}`其他`q_{N+1}`(免费奖金代币)
+1. 设 `x_1..x_k` 为已解码的前缀。
+2. **起草**：使用 `M_p` 以草稿概率 `p_1..p_N` 自回归地提出 `d_{k+1}, d_{k+2}, ..., d_{k+N}`。
+3. **并行验证**：让 `M_q` 对 `x_1..x_k, d_{k+1}, ..., d_{k+N}` 运行一次，得到位置 `k+1..k+N+1` 上的验证器概率 `q_1..q_{N+1}`。
+4. **从左到右逐个接受/拒绝草稿 token**：对每个 `i`，以概率 `min(1, q_i(d_i) / p_i(d_i))` 接受。
+5. 若在位置 `j` 首次拒绝：从归一化后的“残差”分布 `(q_j - p_j)_+` 中采样 `t_j`。丢弃 `j` 之后的所有草稿。
+6. 若全部 `N` 个草稿被接受：从 `q_{N+1}` 中额外采样一个 token `t_{N+1}`（免费赠送的 token）。
 
-剩余分布技巧是保持输出分布的数学洞察力`M_q`没有任何东西.
+残差分布技巧是数学上的关键洞察，它使输出分布与 `M_q` 独立采样时完全一致。
 
-### 什么决定了加速
+### 决定加速比的因素
 
-让我们`α`预期的每项项目代币的接受率.`c`项目/验证人成本比例.
+设 `α` = 每个草稿 token 的期望接受率。设 `c` = 草稿与验证器的成本比。每步来看：
 
-- 无辜的世代每代币都会做一个大型号.
-- 投机者每次打一个大型号电话`(1 - α^{N+1}) / (1 - α) ≈ 1/(1-α)`什么时候的代币`α`了.
+- 朴素生成每个 token 需要一次大模型调用。
+- 当 `α` 较高时，投机生成每 `(1 - α^{N+1}) / (1 - α) ≈ 1/(1-α)` 个 token 才需要一次大模型调用。
 
-典型的指南`α = 0.75`其他`N = 5`现在,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看,我们在线观看.
+在 `α = 0.75` 和 `N = 5` 条件下的典型经验法则：大模型调用次数减少 3×。草稿成本是廉价成本的 5 倍。总耗时下降约 2.5×。
 
-**α depends on:**
+**α 取决于：**
 
-- 如何接近验证器的草案.同一个家庭/同一个培训数据显著增强α.
-- 解码策略:贪的草案与贪的验证器:高 α.温度采样:难以匹配;接受度下降.
-- 任务类型:代码和结构化输出接受更多 (可预测);自由形式的创意写作接受少.
+- 草稿对验证器的近似程度。同一家族 / 相同训练数据能显著提高 α。
+- 解码策略。贪心草稿对贪心验证器：α 高。温度采样：更难匹配；接受率下降。
+- 任务类型。代码和结构化输出的接受率更高（可预测性强）；自由创作的写作接受率更低。
 
-### 梅杜萨  草案没有草案模型
+### Medusa — 无需草稿模型的草稿
 
-梅杜萨将草案模型取代,在验证器上加上输出头.`t`其他:
+Medusa 用验证器上的额外输出头取代草稿模型。在位置 `t`：
 
 ```
 shared trunk → hidden h_t
@@ -64,35 +64,35 @@ shared trunk → hidden h_t
     ├── head_3: predict token at t+4
 ```
 
-每个头都输出了自己的 logits. 在推断时,你从每个头进行样本来获得候选人序列,然后通过使用树注意方案验证一个前进通过,同时考虑所有候选人延续.
+每个头输出自己的 logits。推理时，从每个头采样得到候选序列，然后使用树注意力（tree-attention）方案进行一次前向验证，同时考虑所有候选续写。
 
-优势:没有第二个模型. 缺点:添加可训练的参数;需要监督的细节调整阶段 (~1B代币);接受率略低于良好的草稿的尼拉投机.
+优点：无需第二个模型。缺点：增加可训练参数；需要监督微调阶段（约 1B token）；接受率比使用优秀草稿模型的原生投机略低。
 
-### 通过重复使用隐藏状态来更好地绘制
+### EAGLE — 通过复用隐藏状态获得更好的草稿
 
-由于该草案看到验证器的特征表示,它的预测与验证器的输出分布密切相关.接受率从0.6 (瓦尼拉) 升至0.85+.
+EAGLE-1/2/3（Li 等人，2024–2025）将草稿模型做成了一个微型 Transformer（通常 1 层），它接收验证器最后一层的隐藏状态。由于草稿模型能看到验证器的特征表示，其预测与验证器的输出分布高度相关。接受率从约 0.6（原生方法）提升至 0.85 以上。
 
-3 (2025) 增加了对候选延续的树搜索. vLLM和SGLang 作为Llama 3/4和Qwen 3的默认规范路径,将Eagle-2/3作为3/3的预定规范路径.
+EAGLE-3（2025）增加了对候选续写的树搜索。vLLM 和 SGLang 将 EAGLE-2/3 作为 Llama 3/4 和 Qwen 3 的默认投机通路。
 
-### 的舞蹈
+### KV 缓存的舞蹈
 
-验证数据`N`通过一个前进传输,将验证器的KV缓存扩大到 `N`如果一些草案被拒绝,则必须将缓存重新滚动到接受的预写长度.
+验证过程在一次前向传播中将 `N` 个草稿 token 输入验证器。这会将验证器的 KV 缓存扩展 `N` 个条目。如果部分草稿被拒绝，必须将缓存回滚到已接受前缀的长度。
 
-生产实施 (vLLM 项目)`--speculative-model`首先写一下,承诺接受.这不是概念上很难,但它很难.
+生产级实现（vLLM 的 `--speculative-model`、TensorRT-LLM 的 LookaheadDecoder）通过临时 KV 缓冲区来处理。先写入，接受后提交。概念上并不难，但实现繁琐。
 
 ```figure
 draft-verify-tokens
 ```
 
-## 建立它
+## 动手实现
 
-看到`code/main.py`我们实施了核心投机性样本采集算法 (拒绝步骤+残余分布)
+参见 `code/main.py`。我们实现核心的投机采样算法（拒绝步骤 + 残差分布），包含：
 
-- 一个"大模型",是指指数定性软最大值,而不是指数编码的分布 (所以我们可以分析验证接受数学的结果).
-- 它们是对大模型的颠覆.
-- 接受/拒绝循环,产生与直接采样相同的边际分布.
+- 一个“大模型”，即对手写分布进行确定性 softmax（这样我们可以解析地验证接受数学）。
+- 一个“草稿模型”，即对大模型的扰动。
+- 一个接受/拒绝循环，其产出与直接采样具有相同的边缘分布。
 
-### 步骤1:拒绝步骤
+### 步骤 1：拒绝步骤
 
 ```python
 def accept_or_reject(q_prob, p_prob, draft_token, u):
@@ -100,9 +100,9 @@ def accept_or_reject(q_prob, p_prob, draft_token, u):
     return u < min(1.0, ratio)
 ```
 
-`u`是一个统一的随机数字.`q_prob`是验证者对拟定的代币的概率. `p_prob`利维雅坦定理是,这个伯诺利决定,然后是从废弃的残留样本中抽取样本,
+`u` 是一个均匀随机数。`q_prob` 是验证器对草稿 token 的概率。`p_prob` 是草稿模型的概率。Leviathan 定理表明：这个伯努利决策，加上拒绝时从残差分布采样，能精确保持验证器的分布。
 
-### 步骤2:残余分布
+### 步骤 2：残差分布
 
 ```python
 def residual_dist(q, p):
@@ -111,9 +111,9 @@ def residual_dist(q, p):
     return [r / s for r in raw]
 ```
 
-减去`p`其他`q`根据元素,将负值压缩到零,重新正常化.
+将 `q` 逐元素减去 `p`，将负值截断为零，重新归一化。任何拒绝发生时都从此分布采样。
 
-### 步骤3:一个投机步骤
+### 步骤 3：一次投机步骤
 
 ```python
 def spec_step(prefix, q_model, p_model, N, rng):
@@ -143,19 +143,19 @@ def spec_step(prefix, q_model, p_model, N, rng):
     return prefix
 ```
 
-五个接受的 → 一个奖金 → 一个验证器通行中产生的六个代币.
+接受 5 个 → 赠送 1 个 → 验证器一次前向产出 6 个 token。
 
-### 步骤4:测量接受率
+### 步骤 4：测量接受率
 
-运行1万个投机步骤,在不同的草案质量水平.图片接受率与草案和验证器分布之间的KL差异.你应该看到一个清洁的单调关系.
+在不同草稿质量水平下运行 10,000 次投机步骤。绘制接受率与草稿、验证器分布之间 KL 散度的关系图。你应该会看到清晰的单调关系。
 
-### 步骤5:验证分布等效
+### 步骤 5：验证分布等价性
 
-经验:投机循环产生的代币的历史图应与直接从验证器中采样生成的历史图相匹配.这是实践中的利维亚坦定理.一个奇方体测试在采样错误中确认.
+实证检验：投机循环产出的 token 直方图应与直接从验证器采样得到的直方图一致。这就是 Leviathan 定理的实践验证。卡方检验在采样误差范围内予以确认。
 
-## 用它
+## 应用实践
 
-产量:
+生产级方案：
 
 ```bash
 # vLLM with EAGLE
@@ -170,57 +170,57 @@ vllm serve meta-llama/Llama-3.1-70B-Instruct \
     --num-speculative-tokens 5
 ```
 
-据悉,在2026年中旬,TensorRT-LLM将拥有最快的梅杜萨路径.`faster-whisper`语大的猜测解码用一个小的草稿.
+截至 2026 年年中，TensorRT-LLM 拥有最快的 Medusa 通路。`faster-whisper` 使用小型草稿模型为 Whisper-large 封装了投机解码。
 
-**Picking a draft:**
+**选择草稿：**
 
-| Strategy | When to pick | Speedup |
+| 策略 | 何时选择 | 加速比 |
 |----------|--------------|---------|
-| Vanilla draft (1B/3B Llama family) | Fast prototype, no training | 1.8–2.3× |
-| Medusa heads | You can fine-tune the verifier | 2–3× |
-| EAGLE-2 / 3 | Production, max speed | 3–4× |
-| Lookahead | No draft, no training, no extra params | 1.3–1.6× |
+| 原生草稿（1B/3B Llama 家族） | 快速原型，无需训练 | 1.8–2.3× |
+| Medusa 头 | 可以微调验证器 | 2–3× |
+| EAGLE-2 / 3 | 生产环境，追求最高速度 | 3–4× |
+| Lookahead | 无草稿、无训练、无额外参数 | 1.3–1.6× |
 
-**When NOT to spec-decode:**
+**何时不使用投机解码：**
 
-- 单次序列生成15个代币.
-- 极具创意/高温采样 (α滴).
-- 存储量限制的部署 (草案模型添加VRAM).
+- 单序列生成 1–5 个 token。开销占主导。
+- 高度创造性 / 高温度采样（α 下降）。
+- 显存受限的部署（草稿模型增加显存）。
 
-## 运送它
+## 上线部署
 
-看到`outputs/skill-spec-decode-picker.md`技能选择一个投机式解码策略 (尼拉/梅杜萨/鱼/头) 和调节参数 (N,草稿温度) 进行新的推断工作负载.
+参见 `outputs/skill-spec-decode-picker.md`。该技能为新的推理工作负载选择投机解码策略（原生 / Medusa / EAGLE / lookahead）及调优参数（N、草稿温度）。
 
-## 运动
+## 练习
 
-1. **Easy.**跑步`code/main.py`确认投机代币分布与验证人在50万代币中直接样本分布相匹配,在平平面 p >0.05内.
-2. **Medium.**作为一个函数的图片加速 (每大模型前进的代币)`N`为了`α = 0.5, 0.7, 0.85`确定最佳的方法`N`对于每一个 α. (提示:每次验证调用预期的代币 = `(1 - α^{N+1}) / (1 - α)`)
-3. **Hard.**执行一个小的梅杜萨:从14课中取下顶石GPT,添加3个额外的LM头,预测位置t+2,t+3,t+4. 训练小克斯佩尔,并进行多头损失.比较接受率与尼拉草图,通过缩小相同模型.
-4. **Hard.**实现反弹:从10代标前标KV缓存开始,输入5个草案代标,模拟在3位的拒绝.在下一次回复时,检查缓存读数正确匹配"前标+第2个接受草案".
+1. **简单。** 运行 `code/main.py`。确认在 50,000 个 token 上，投机 token 分布与验证器的直接采样分布在卡方检验 p > 0.05 下一致。
+2. **中等。** 对 `α = 0.5, 0.7, 0.85` 绘制加速比（每次大模型前向产出的 token 数）随 `N` 变化的曲线。为每个 α 找出最优的 `N`。（提示：每次验证调用的期望 token 数 = `(1 - α^{N+1}) / (1 - α)`。）
+3. **困难。** 实现一个微型 Medusa：取第 14 课的 GPT 综合项目，添加 3 个额外 LM 头，分别预测位置 t+2、t+3、t+4。在 tinyshakespeare 上用联合多头损失训练。将其接受率与通过截断同一模型得到的原生草稿进行比较。
+4. **困难。** 实现回滚：以 10 个 token 的前缀 KV 缓存开始，输入 5 个草稿 token，模拟在位置 3 的拒绝。验证你的缓存读取在下一次迭代中与“前缀 + 前 2 个被接受的草稿”正确匹配。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|-----------------------|
-| Draft model | "The cheap one" | A smaller model that proposes candidate tokens; usually 10–50× cheaper than the verifier. |
-| Verifier | "The big one" | The target model whose distribution we preserve; runs once per speculative step. |
-| Acceptance rate (α) | "How often the draft is right" | Per-token probability that the verifier accepts the draft. 0.7–0.9 typical. |
-| Residual distribution | "The rejection fallback" | `(q - p)_+` normalized; sampling from this on rejection preserves the verifier's distribution. |
-| Bonus token | "The free one" | When all N drafts accepted, sample one more from the verifier's next-step distribution. |
-| Medusa | "Draft-less speculative" | Multiple LM heads on the verifier predict positions t+1..t+k in parallel. |
-| EAGLE | "Hidden-state draft" | Tiny transformer draft conditioned on the verifier's last-layer hidden states. |
-| Lookahead decoding | "Jacobi iteration" | Self-speculation using a fixed-point iteration; no draft model. |
-| Tree attention | "Verify many candidates at once" | Branching verification that considers several draft continuations simultaneously. |
-| KV rollback | "Undo rejected drafts" | Scratch KV buffer; commit on acceptance, discard on reject. |
+| 草稿模型 | “便宜的那个” | 提出候选 token 的较小模型；通常比验证器便宜 10–50×。 |
+| 验证器 | “大的那个” | 我们要保持其分布的目标模型；每次投机步骤运行一次。 |
+| 接受率（α） | “草稿有多准” | 验证器接受草稿的单 token 概率。典型值 0.7–0.9。 |
+| 残差分布 | “拒绝时的备选” | `(q - p)_+` 归一化后的结果；拒绝时从此采样可保持验证器的分布。 |
+| 赠送 token | “免费的那个” | 当全部 N 个草稿被接受时，从验证器的下一步分布再采样一个。 |
+| Medusa | “无草稿的投机” | 验证器上的多个 LM 头并行预测位置 t+1..t+k。 |
+| EAGLE | “隐藏状态草稿” | 以验证器最后一层隐藏状态为条件的微型 Transformer 草稿。 |
+| Lookahead 解码 | “Jacobi 迭代” | 使用不动点迭代的自我投机；无需草稿模型。 |
+| 树注意力 | “一次验证多个候选” | 同时考虑多个草稿续写的分支式验证。 |
+| KV 回滚 | “撤销被拒绝的草稿” | 临时 KV 缓冲区；接受则提交，拒绝则丢弃。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Leviathan, Kalman, Matias (2023). Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192)核心算法和等效定理.
-- [Chen et al. (2023). Accelerating Large Language Model Decoding with Speculative Sampling](https://arxiv.org/abs/2302.01318)同时引入;清洁的伯诺利拒绝证明.
-- [Cai et al. (2024). Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads](https://arxiv.org/abs/2401.10774)梅杜萨纸;树木注意力验证.
-- [Li et al. (2024). EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty](https://arxiv.org/abs/2401.15077)-1;隐藏状态的预案.
-- [Li et al. (2024). EAGLE-2: Faster Inference of Language Models with Dynamic Draft Trees](https://arxiv.org/abs/2406.16858)-2;动态树深度.
-- [Li et al. (2025). EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test](https://arxiv.org/abs/2503.01840)3号.
-- [Fu et al. (2024). Break the Sequential Dependency of LLM Inference Using Lookahead Decoding](https://arxiv.org/abs/2402.02057)看着,没有草稿的方法.
-- [vLLM docs — Speculative Decoding](https://docs.vllm.ai/en/latest/features/spec_decode.html)可信生产参考,四个战略都连接在一起.
-- [SafeAILab / EAGLE reference implementation](https://github.com/SafeAILab/EAGLE) EAGLE-1/2/3的参考代码.
+- [Leviathan, Kalman, Matias (2023). Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192) — 核心算法与等价性定理。
+- [Chen 等人 (2023). Accelerating Large Language Model Decoding with Speculative Sampling](https://arxiv.org/abs/2302.01318) — 同期独立提出；干净的伯努利拒绝证明。
+- [Cai 等人 (2024). Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads](https://arxiv.org/abs/2401.10774) — Medusa 论文；树注意力验证。
+- [Li 等人 (2024). EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty](https://arxiv.org/abs/2401.15077) — EAGLE-1；基于隐藏状态条件的草稿。
+- [Li 等人 (2024). EAGLE-2: Faster Inference of Language Models with Dynamic Draft Trees](https://arxiv.org/abs/2406.16858) — EAGLE-2；动态树深度。
+- [Li 等人 (2025). EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test](https://arxiv.org/abs/2503.01840) — EAGLE-3。
+- [Fu 等人 (2024). Break the Sequential Dependency of LLM Inference Using Lookahead Decoding](https://arxiv.org/abs/2402.02057) — 前瞻式、无草稿的方法。
+- [vLLM 文档 — Speculative Decoding](https://docs.vllm.ai/en/latest/features/spec_decode.html) — 集成全部四种策略的权威生产参考。
+- [SafeAILab / EAGLE 参考实现](https://github.com/SafeAILab/EAGLE) — EAGLE-1/2/3 的参考代码。

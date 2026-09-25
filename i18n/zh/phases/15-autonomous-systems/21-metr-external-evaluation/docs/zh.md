@@ -1,119 +1,119 @@
-# 时间水平和外部能力评估
+# METR 时间视野与外部能力评估
 
-> 根据该报告,该公司的资产在该地区的总额为1%. 他们的时间视野1.1基准 (2026年1月) 符合任务成功概率与专家人类完成时间的物流曲线;50%概率的交叉定义了模型的时间视野. 20252026的参与集包括GPT-5.1,GPT-5.1-Codex-Max和原型监测评估 (监测器可以捕获侧任务;可以逃避代理). 基准套件:HCAST (180+ML,网络,SWE,推理任务; 1分钟到8+小时),RE-Bench (71ML的研究工程任务与专家基线),SWAA. 诚实的说明:METR测量是理想化的,没有人,没有实际的后果, 时间视野是上限,而不是部署预测.
+> METR（前身为 ARC Evals）自 2023 年 12 月起成为独立的 501(c)(3) 组织。其 Time Horizon 1.1 基准（2026 年 1 月）将逻辑斯蒂曲线拟合到任务成功概率与 log(专家人类完成时间) 的关系上；50% 概率处的交点定义了模型的时间视野。2025–2026 年的合作评估涵盖 GPT-5.1、GPT-5.1-Codex-Max 以及原型监控评估（监控器能否发现侧向任务；智能体能否规避监控）。基准套件：HCAST（180+ 个机器学习、网络安全、软件工程、推理任务；从 1 分钟到 8 小时以上）、RE-Bench（71 个带专家基线的机器学习研究工程任务）、SWAA。需要坦诚说明的是：METR 的测量是理想化的——没有真实的人类，没有真实的后果——而且该团队已经记录了评估与部署之间的行为差距（第 1 课）。时间视野是一个上界，而非部署预测。
 
-**Type:** Learn
-**Languages:** Python (stdlib, logistic-fit horizon estimator)
-**Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 19 (RSP)
-**Time:** ~60 minutes
+**Type:** 学习
+**Languages:** Python（标准库，逻辑斯蒂拟合视野估计器）
+**Prerequisites:** 阶段 15 · 01（长视野智能体）、阶段 15 · 19（RSP）
+**Time:** ~60 分钟
 
-## 问题
+## 问题所在
 
-规模化政策 (课时19,20),只能与它们所指的测量一样有用. "AI R&D-4门"和"长距离自主化"在政策散文中定义;只有当特定评估产生特定数字时,它们才会被执行.
+扩展策略（第 19、20 课）的有用程度取决于它们所引用的测量。“AI R&D-4 阈值”和“长程自主性”是在策略文本中定义的；只有当具体的评估产生具体的数字时，它们才具有可操作性。
 
- METR是20242026外部评估组织,它已经定义了许多这些数字. 他们评估边界模型通常在发布前,在NDA下与实验室,然后发布方法. 时间视野1.1基准 (2026年1月) 是他们的标题文物:一个单个尺度,将能力压缩成一个可读的单位 ("这个模型可以完成一个专家在50%的可靠性下花费X小时的任务").
+METR 是 2024–2026 年间定义了其中许多数字的外部评估组织。他们评估前沿模型——通常在发布前、在实验室的保密协议下进行——并在事后公开发布方法论。Time Horizon 1.1 基准（2026 年 1 月）是他们的标志性成果：一个单一标量，将能力压缩为人类可理解的单位（“该模型能够以 50% 的可靠性完成专家需要花费 X 小时的任务”）。
 
-课程部分是关于方法 (如何计算一个视界) 和部分是解释 (为什么视界是一个上限,而不是部署预测).这两个技能都属于一起.一个了解视界是如何适合的团队,比一个只看到"14小时"在幻灯片上的团队更难以用一个糟糕的供应商声称来欺骗.
+本课一半是关于方法论（视野是如何计算的），一半是关于解释（为什么视野是上界而非部署预测）。这两种技能是相辅相成的。一个理解视野如何拟合的团队，远比一个只看到幻灯片上写着“14 小时”的团队更难被糟糕的供应商声明所蒙蔽。
 
 ## 概念
 
-### 计量背景
+### METR 背景
 
-- 成立于2023年12月 (前ARC Evals,分成独立的501 ((c) ((3)).
-- 范围:评估边界模型的自主能力,通常是预发布.
-- 合作实验室:人类学,OpenAI (多项参与 2025~2026).
-- 值得注意的成果:时间视野1.0 (2025年3月),时间视野1.1 (2026年1月),原型监测评估.
+- 成立时间：2023 年 12 月（前身为 ARC Evals，分拆为独立的 501(c)(3) 组织）。
+- 范围：评估前沿模型的自主能力，通常在发布前进行。
+- 合作实验室：Anthropic、OpenAI（2025–2026 年间多次合作）。
+- 代表性成果：Time Horizon 1.0（2025 年 3 月）、Time Horizon 1.1（2026 年 1 月）、原型监控评估。
 
-### 时间视野适合
+### 时间视野拟合
 
-方法 (来自METR博客和论文):
+方法论（来自 METR 博客和论文）：
 
-1. 收集一个分钟到小时的专家完成时间的任务套件. 目前的套件:HCAST (180多项任务),RE-Bench (71项任务),SWAA.
-2. 运行模型在每个任务;记录成功或失败.
-3. 按物流曲线:P(成功) 作为专家完成时间的函数.
-4. 视界是专家时间,P成功=0.5.
+1. 收集一套任务，其专家完成时间从分钟级跨越到小时级。当前套件：HCAST（180+ 个任务）、RE-Bench（71 个任务）、SWAA。
+2. 在每个任务上运行模型；记录成功或失败。
+3. 拟合逻辑斯蒂曲线：P(成功) 作为 log(专家完成时间) 的函数。
+4. 视野即 P(成功) = 0.5 处的专家时间。
 
-逻辑适应的形状是正确的,因为能力通常与任务难度的关系越来越高,接近平原.50%点是选择 (10%,90%);METR在详细的论文中报告多个门值,但以50%领先,因为它是最直观的.
+逻辑斯蒂拟合的形状是正确的，因为能力与任务难度之间通常呈递增且趋于平缓的关系。50% 点是一个选择（也可以是 10%、90%）；METR 在详细论文中报告了多个阈值，但以 50% 为主，因为它最为直观。
 
-### 2026年1月的数字
+### 2026 年 1 月的数据
 
-按时间视野1.1:
+依据 Time Horizon 1.1：
 
-- 克劳德·奥普斯 4.6: 时间视野 1.1 (2026年1月) 起,可靠度为50%~14小时.
-- 在HCAST类型任务中,翻倍时间:TIME Horizon 1.1 (1月2026) 报告的2023后的适应时间为 ~4.3个月 (130.8天);TIME Horizon 1.0 的全 20192025适应时间为 ~7个月,并与2023后的数字一起报告在TH1.1中.
+- Claude Opus 4.6：截至 Time Horizon 1.1（2026 年 1 月），50% 可靠性下约 14 小时。
+- HCAST 类任务上的倍增时间：Time Horizon 1.1（2026 年 1 月）报告的 2023 年后拟合约为 4.3 个月（130.8 天）；约 7 个月的数字来自 Time Horizon 1.0 的 2019–2025 全期拟合，TH1.1 将其与 2023 年后数字一并报告。
 
-它们被引用在安特罗皮克的RSP v3.0 (课 19) 和DeepMind的FSF v3 (课 20) 中作为值评估的测量之一.
+这些是阶段 15 其余部分所引用的具体数字。它们在 Anthropic 的 RSP v3.0（第 19 课）和 DeepMind 的 FSF v3（第 20 课）中被引用，作为阈值评估所依据的测量之一。
 
-### 标准套餐
+### 基准套件
 
-- **HCAST**专家时间:1分钟至8小时以上. 视野数后的主要套件.
-- **RE-Bench**测量模型是否能够完成符合AI研发4门的ML研发工作.
-- **SWAA**:较短的任务;可用于定位地平线曲线的低端.
+- **HCAST**：189 个任务，涵盖机器学习、网络安全、软件工程和一般推理。跨度：1 分钟至 8 小时以上的专家时间。视野数字背后的主要套件。
+- **RE-Bench**：71 个带人类专家基线的机器学习研究工程任务。衡量模型能否完成为 AI R&D-4 阈值提供依据的那类机器学习研发工作。
+- **SWAA**：较短的任务；有助于校准视野曲线的低端。
 
-### 试机监测评估
+### 原型监控评估
 
-20252026 METR工作包括监测和评估原型:监测器能否捕获执行侧任务的模型 (除了操作员要求的外),能否使代理人逃避监测器.这些直接提供OpenAI PF v2中的"破坏保障措施"类别和DeepMind FSF v3 (课程20) 中的欺骗性对准监测.
+2025–2026 年 METR 的工作包括监控评估原型：监控器能否发现模型执行侧向任务（操作员要求之外的事情）；智能体能否规避监控器。这些直接为 OpenAI PF v2 中的“破坏安全防护”类别以及 DeepMind FSF v3 中的欺骗性对齐监控（第 20 课）提供依据。
 
-### 为什么地平线是上限
+### 为什么视野是上界
 
-- **Idealized tooling**模型的标准任务为模型提供了清洁的工具和格式化数据.
-- **No real consequences**实际部署有不可逆转的风险.
-- **Eval-context gaming**课1:模型在测试中表现不一样. 2026年国际人工智能安全报告实验性地记录了这一点.
-- **No legitimate user variance**实际用户生成模糊,依赖环境的请求.
+- **理想化的工具**：基准任务为模型提供干净的工具和格式良好的数据。真实部署更为混乱。
+- **没有真实后果**：模型从不会真正向客户收费、删除真实数据或联系真实的人。真实部署具有不可逆的利害关系。
+- **评估情境博弈**：第 1 课。模型在测试中的表现不同。2026 年《国际 AI 安全报告》对此提供了实证记录。
+- **没有真实用户的多样性**：基准提示是结构化的。真实用户会提出模糊的、依赖上下文的请求。
 
-发展水平是有利条件下能力上限. 部署可靠性是不同的数量,较低,团队必须测量自己的分布才能知道它.
+视野是有利条件下的能力上限。部署可靠性是另一个数字，更低，团队必须测量自己的分布才能知道。
 
-### 外部评估者案件
+### 外部评估机构的必要性
 
-内部实验室有动机优化报告的指标,外部评估是重要的.METR的独立性  501 ((c) 3) 具有声明的方法和同行审查的论文是结构减轻.单独的减轻不够 (实验室仍然控制METR看到的),但它严格比没有外部评估更好.
+外部评估之所以重要，是因为内部实验室有动机优化它们所报告的指标。METR 的独立性——一个拥有公开方法论和经同行评审论文的 501(c)(3) 组织——是结构性的缓解措施。仅凭这一点并不充分（实验室仍然控制 METR 能看到什么），但严格优于没有外部评估。
 
-### 如何在实践中使用视界数字
+### 如何在实践中使用视野数字
 
-- **As a capability filter**:如果模型的视野远低于拟议任务的专业时间,请不要自动运送 (Lesson 1'技能文件).
-- **As a trend indicator**双倍时间告诉你,即使没有新的减轻措施,当前的做法将保持安全的时间.
-- **As a prior**根据您的任务分配,工具质量和部署环境,调整.
+- **作为能力过滤器**：如果模型的视野远低于拟议任务的专家时间，就不要自主部署它（第 1 课的技能文件）。
+- **作为趋势指标**：倍增时间告诉你，即使没有新的缓解措施，当前的做法还能保持多久的安全。
+- **作为先验**：14 小时的视野只是一个起点。根据你的任务分布、工具质量和部署环境向下调整。
 
 ```figure
 a5-horizon-fit
 ```
 
-## 用它
+## 实践使用
 
-`code/main.py`根据合成结果集,执行任务成功与专家时间的物流性适应.报告50%的视界 (METR的标题),10%的视界 (保守),90%的视界 (乐观).还展示了评估环境游戏人工膨胀时成功率发生什么变化.
+`code/main.py` 实现了对任务成功率与 log(专家时间) 的逻辑斯蒂拟合，输入为合成结果集。它报告 50% 视野（METR 的标志性数字）、10% 视野（保守）和 90% 视野（乐观）。还演示了当通过评估情境博弈人为提高成功率时会发生什么变化。
 
-## 运送它
+## 交付上线
 
-`outputs/skill-horizon-interpretation.md`审查出售商的视野索赔,并对基准索赔与部署现实进行差距分析.
+`outputs/skill-horizon-interpretation.md` 审查供应商的视野声明，并产出基准声明与部署现实之间的差距分析。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`现在将任务时间格格分减半,视野是否有意义地估计变化?
+1. 运行 `code/main.py`。确认拟合的 50% 视野与合成真实值相符。现在将任务时间网格减半；视野估计是否发生显著变化？
 
-2. 阅读METR的时间视野1.1博客文章. 确定可靠性最高和最低的具体任务. 解释为什么存在差距.
+2. 阅读 METR 的 Time Horizon 1.1 博客文章。找出可靠性最高和最低的具体任务。解释为什么存在这种差距。
 
-3. 阅读METR的"测量自主人工智能能力"资源.列出HCAST任务类别.选择一个类别,你会对生产任务进行更重的权重,并证明为什么.
+3. 阅读 METR 的“Measuring Autonomous AI Capabilities”资源。列出 HCAST 任务类别。选择一个你会为生产任务赋予更高权重的类别并说明理由。
 
-4. 引入评估背景游戏到模拟器中:将失败任务的20%转换为成功. 报告新的视野. 这接近20%的游戏率对观察到的数量做什么.
+4. 在模拟器中引入评估情境博弈：将约 20% 的失败任务翻转为成功。报告新的视野。这近似于 20% 的博弈率对观测数字的影响。
 
-5. 设计一个内部视野评估,以您自己的 bug 后备表或代表性任务集. 描述数据收集,合适性和输出告诉您的内容. 进行METR 数字比较.
+5. 在你自己的 bug 积压或具有代表性的任务集上设计一个内部视野评估。描述数据收集、拟合以及输出所传达的信息。与 METR 的数字进行比较。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |---|---|---|
-| METR | "External evaluator" | ex-ARC Evals; independent 501(c)(3) since Dec 2023 |
-| Time Horizon | "Capability measure" | Expert task length at 50% reliability, from logistic fit |
-| HCAST | "METR's main suite" | 180+ tasks spanning 1 min to 8+ hours |
-| RE-Bench | "Research engineering" | 71 ML research-engineering tasks with human baseline |
-| SWAA | "Short-task suite" | Calibrates the low end of the horizon curve |
-| Doubling time | "Growth rate" | Time for the 50% horizon to double; ~7 months per HCAST |
-| Eval-context gaming | "Model behaves differently" | Documented behavior gap between tests and deployment |
-| Upper bound | "Horizon is a ceiling" | Benchmark horizon > deployment reliability under load |
+| METR | “外部评估机构” | 前身为 ARC Evals；自 2023 年 12 月起为独立 501(c)(3) 组织 |
+| Time Horizon | “能力度量” | 50% 可靠性下的专家任务长度，来自逻辑斯蒂拟合 |
+| HCAST | “METR 的主套件” | 180+ 个任务，从 1 分钟到 8 小时以上 |
+| RE-Bench | “研究工程” | 71 个带人类基线的机器学习研究工程任务 |
+| SWAA | “短任务套件” | 校准视野曲线的低端 |
+| 倍增时间 | “增长率” | 50% 视野翻倍所需时间；HCAST 上约为 7 个月 |
+| 评估情境博弈 | “模型表现不同” | 已被记录的测试与部署之间的行为差距 |
+| 上界 | “视野是上限” | 基准视野 > 负载下的部署可靠性 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [METR — Resources for Measuring Autonomous AI Capabilities](https://metr.org/measuring-autonomous-ai-capabilities/) HCAST,RE-Bench,SWAA规格.
-- [METR — Measuring AI Ability to Complete Long Tasks](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)原始的视界纸.
-- [METR — Time Horizon 1.1 (January 2026)](https://metr.org/research/)目前的数字和方法.
-- [Epoch AI — METR Time Horizons benchmark](https://epoch.ai/benchmarks/metr-time-horizons) 现场追踪.
-- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy)对METR测量的内部观点.
+- [METR — Measuring Autonomous AI Capabilities 资源](https://metr.org/measuring-autonomous-ai-capabilities/) — HCAST、RE-Bench、SWAA 规范。
+- [METR — Measuring AI Ability to Complete Long Tasks](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) — 最早的视野论文。
+- [METR — Time Horizon 1.1（2026 年 1 月）](https://metr.org/research/) — 当前数字与方法论。
+- [Epoch AI — METR Time Horizons 基准](https://epoch.ai/benchmarks/metr-time-horizons) — 实时跟踪。
+- [Anthropic — Measuring agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — 对 METR 测量的内部视角。

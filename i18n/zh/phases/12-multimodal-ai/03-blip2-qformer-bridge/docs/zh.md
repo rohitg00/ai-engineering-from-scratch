@@ -1,144 +1,144 @@
-# 从CLIP到BLIP-2 Q-Former作为一种模拟桥梁
+# 从 CLIP 到 BLIP-2 —— Q-Former 作为模态桥梁
 
-> CLIP将图像和文字相对应,但不能生成标题,回答问题,或进行对话. 通过跨度注意力来通过结结结 ViT 的特征,然后直接插入结结 LLM 的输入流中, 188万个桥梁参数将11B LLM连接到ViT-g/14. 到2026年,每一个基于适配器的VLM都是 MiniGPT-4,InstructBLIP,LLaVA的表弟都是后代. 这一课程阅读了Q-Former的架构,解释了它的两阶段训练,
+> CLIP 能对齐图像和文本，但无法生成描述、回答问题或进行对话。BLIP-2(Salesforce, 2023)用一个小型可训练的桥梁解决了这个问题：32 个可学习的查询向量通过交叉注意力关注冻结 ViT 的特征，然后直接插入冻结 LLM 的输入流。这个 1.88 亿参数的桥梁将 110 亿参数的 LLM 连接到 ViT-g/14。到 2026 年为止，所有基于适配器的 VLM——MiniGPT-4、InstructBLIP、LLaVA 的衍生模型——都是它的后裔。本课将解读 Q-Former 的架构，解释其两阶段训练，并构建一个将视觉 token 输入冻结文本解码器的玩具版本。
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-attention + learnable-query demo)
+**Languages:** Python (标准库，交叉注意力 + 可学习查询演示)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 7 (Transformers)
-**Time:** ~180 minutes
+**Time:** ~180 分钟
 
 ## 学习目标
 
-- 解释为什么冷视觉编码器和冷的LLM之间的可训练的瓶比成本和稳定性更好.
-- 实现一个跨重视区块,其中一个固定的学习性查询集处理外部图像特征.
-- 通过BLIP-2的两阶段预训练:表示 (ITC + ITM + ITG) 然后生成 (通过冷解码器损失LM).
-- 比较Q-Former与LLaVA中使用的简单的MLP投影机,并讨论当每一个选择赢得时.
+- 解释为什么在冻结视觉编码器和冻结 LLM 之间使用可训练的瓶颈层，在成本和稳定性上优于端到端微调。
+- 实现一个交叉注意力模块，其中一组固定的可学习查询关注外部图像特征。
+- 走读 BLIP-2 的两阶段预训练：表示学习(ITC + ITM + ITG),然后是生成学习(使用冻结解码器的 LM 损失)。
+- 将 Q-Former 与 LLaVA 中更简单的 MLP 投影器进行比较，并论述各自在何种情况下更优。
 
 ## 问题
 
-你有一个冷的ViT,每张图片产生256个补丁代币,每张图片均为14080.你有一个冷的7B LLM,预计将4096的代币嵌入.明显的桥梁从1408到4096 的线性层工作,但将所有256个补丁代币输入到LLM的文本中,每张图片每张代币额外256个.超过32个图像的批量仅仅是视觉模式消耗的8192个代币.
+你有一个冻结的 ViT,每张图像产生 256 个维度为 1408 的 patch token。你有一个冻结的 7B LLM,它期望维度为 4096 的 token 嵌入。显而易见的桥梁——一个从 1408 到 4096 的线性层——是可行的，但将全部 256 个 patch token 输入 LLM 的上下文，每张图像要消耗 256 个额外 token。对于 32 张图像的批次，仅视觉模态就消耗了 8192 个 token。
 
-问:你可以将256个代币的图像表示压缩到更少的代币 (例如32个代币),同时保留足够的信息,让LLM能够标题,回答问题,并解释图像?
+BLIP-2 提出的问题是：能否将 256 个 token 的图像表示压缩到少得多的 token(比如 32 个)，同时为 LLM 保留足够的信息来生成描述、回答问题和对图像进行推理？能否在不触碰冻结主干的情况下训练这个桥梁，使训练成本仅限于桥梁自身的参数？
 
-答案:一个Q-Former. 32个可学习的"查询"向量,它们交叉地处理VIT的补丁代码,产生了LLM所消耗的32代代码视觉总结.总共188万个参数.在触及LLM之前,训练有素进行对比,匹配和生成目标.
+答案是：Q-Former。32 个可学习的“查询”向量对 ViT 的 patch token 进行交叉注意力，产生 LLM 可消费的 32 个 token 的视觉摘要。总计 1.88 亿参数。在触碰 LLM 之前，先用对比、匹配和生成目标进行训练。
 
 ## 概念
 
-### 需要学习的问题
+### 可学习查询
 
-模具的核心技巧:而不是让LLM的文字代币关注图像补丁,`Q`查询是模型的参数,它们是在训练中学习,并且用于每个图像的相同32个查询.
+Q-Former 的核心技巧：不是让 LLM 的文本 token 关注图像 patch,而是引入一组新的 32 个可学习查询向量 `Q`,让*它们*去关注图像 patch。这些查询是模型的参数——在训练过程中学习得到，并且对每张图像使用相同的 32 个查询。
 
-经过交叉关注,每个查询都包含了图像的压缩总结"描述主对象","描述背景","数对象",等.查询不真正专注于语义标签;它们学习任何编码导致下游损失下降.
+经过交叉注意力后，每个查询持有图像的一个压缩摘要——“描述主要物体”、“描述背景”、“数一数物体”等等。这些查询并非字面上在语义标签上专门化；它们学习的是任何能让下游损失下降的编码方式。
 
-### 建筑
+### 架构
 
-形器是一个小型变压器 (12层,大约100M参数),具有两个路径:
+Q-Former 是一个小型 transformer(12 层，约 1 亿参数)，有两条路径：
 
-1. 查询路径:32个查询向量通过自我注意 (彼此),然后通过冷的ViT补丁代币进行交叉注意,然后FFN.
-2. 文本路径:一个类似BERT的文本编码器与查询路径共享自注意和FFN权重.文本路径被禁用交叉注意.
+1. 查询路径：32 个查询向量经过自注意力(彼此之间)，然后对冻结 ViT 的 patch token 进行交叉注意力，最后经过 FFN。
+2. 文本路径：一个类 BERT 的文本编码器与查询路径共享自注意力和 FFN 权重。文本路径禁用交叉注意力。
 
-在训练时间,两个路径都运行.查询和文本通过共享自我注意力相互作用,这意味着查询可以对需要它的工作 (ITM,ITG) 进行文本条件.在VLM交付的推断时间,只有查询流过,产生32个视觉代币.
+训练时两条路径都运行。查询和文本通过共享自注意力交互，这意味着对于需要文本的任务(ITM、ITG),查询可以以文本为条件。在 VLM 衔接的推理阶段，只有查询流经模型，产出 32 个视觉 token。
 
-### 两阶段的培训
+### 两阶段训练
 
-双重飞行器-2预训练有两阶段:
+BLIP-2 分两个阶段进行预训练：
 
-阶段1:代表性学习 (没有法学士).
-- 图像与文本对比:集成查询代币和文本CLS代币之间的CLIP式对比.
-- 图像和文本匹配:二进制分类器 是不是图像和文本对相匹配?硬负采矿.
-- 图像基文本生成:因果性LM对文本进行标记,根据查询进行条件. 要求查询编码可生成文本的内容.
+阶段 1:表示学习(不含 LLM)。三种损失：
+- ITC(图文对比)：池化查询 token 与文本 CLS token 之间的 CLIP 风格对比损失。
+- ITM(图文匹配)：二分类器——这组图文是否匹配？使用难负例挖掘。
+- ITG(图像引导的文本生成)：在文本上使用因果 LM 头，以查询为条件。迫使查询编码可生成文本的内容。
 
-只有Q-Former列车,ViT被结,没有LLM涉及.
+只训练 Q-Former。ViT 冻结。不涉及 LLM。
 
-阶段2:生成学习. 附加一个结的LLM (OPT-2.7B或Flan-T5-XL,等).通过一个小的线性层将32个查询输出投影到LLM的嵌入式. 准备它们进入文本提示. 仅训练线性投影和Q-Former在LC损失上连接提示 +图像 +标题序列.
+阶段 2:生成学习。接入一个冻结 LLM(OPT-2.7B 或 Flan-T5-XL 等)。通过一个小型线性层将 32 个查询输出投影到 LLM 的嵌入维度。将它们前置到文本提示之前。仅训练线性投影和 Q-Former,使用 LM 损失，作用在拼接的提示 + 图像 + 描述序列上。
 
-在第二阶段之后,Q-Former+投影是完整的视觉适配器.在推断时:图像 → ViT → Q-Former →线性项目 →预pendium → text → frozen LLM 发出.
+阶段 2 之后，Q-Former + 投影构成完整的视觉适配器。推理流程：图像 → ViT → Q-Former → 线性投影 → 前置到文本 → 冻结 LLM 生成输出。
 
 ### 参数经济学
 
-造型 (B-Former) 总数为8B,训练有素188M.仅Q-Former为全堆参数的2.4% .训练成本反映了这一点:几天在少数A100s上与周为端到端.
+BLIP-2 使用 ViT-g/14(11 亿，冻结)+ OPT-6.7B(67 亿，冻结)+ Q-Former(1.88 亿，训练)= 总计 80 亿，仅训练 1.88 亿。Q-Former 约占整个技术栈参数量的 2.4%。训练成本也反映了这一点：少量 A100 上数天，而端到端训练需要数周。
 
-质量:BLIP-2与Flamingo-80B相匹配或超过零射击VQA,同时小50倍.
+质量：BLIP-2 在零样本 VQA 上达到或超过 Flamingo-80B,而体积小 50 倍。这个桥梁是有效的。
 
-### 导航BLIP和指令知情的Q-Former
+### InstructBLIP 与指令感知的 Q-Former
 
-导读BLIP (2023) 通过一个额外的输入:指令文本本身,扩展了Q-Former.在交叉注意力时间,查询现在可以访问图像补丁和指令.查询可以专业化每条指令 ("数车","描述情绪") 而不是学习单个固定总结.基准在完成任务上获益.
+InstructBLIP(2023)为 Q-Former 增加了一个额外输入：指令文本本身。在交叉注意力时，查询现在可以同时访问图像 patch 和指令。查询可以按指令专门化(“数一数汽车”、“描述情绪”)，而不是学习单一的固定摘要。在保留任务上取得基准提升。
 
-### 迷你GPT-4和仅用投影仪的方法
+### MiniGPT-4 与仅投影器方法
 
-迷你GPT-4 保留了Q-Former,但仅训练出口线性投影,同时结了其他一切.便宜,但成本是质量.
+MiniGPT-4 保留了 Q-Former,但只训练输出线性投影，冻结其余所有部分。成本低，但代价是质量——查询用的是 BLIP-2 的，不是你自己的。适合快速迭代，并非最佳架构。
 
-### 为什么LLaVA变得更简单
+### 为什么 LLaVA 选择了更简单的方案
 
-拉瓦 (2023,课时12.05) 取代了Q-Former,用一个简单的2层MLP,将每个ViT补丁代币投射到LLM空间中. 压缩更糟,但让法师参加了原始补丁. 当时这是有争议的;到2023年底,它是主导的,因为视觉指导数据 (LLaVA-Instruct-150k) 证明MLP可以训练来保存足够的信号. 交易:LLaVA的背景更快地填充,但它自然可以扩展到多个图像和视频.
+LLaVA(2023,第 12.05 课)用普通的两层 MLP 替换了 Q-Former,将每个 ViT patch token 投影到 LLM 空间——24x24 网格每张图像 576 个 token,全部输入 LLM。压缩效果更差，但让 LLM 能够关注原始 patch。这在当时颇有争议；到 2023 年底已成为主流，因为视觉指令数据(LLaVA-Instruct-150k)证明了 MLP 可以被训练到保留足够的信号。代价是：LLaVA 的上下文填充得更快，但它可以自然扩展到多图像和视频。
 
-到2026年,该领域的分化:Q-Former在代币预算重要的地方存活下来 (长视频,许多图像);MLP投影器在每代币原质量优先考虑的地方占主导地位.
+到 2026 年，领域出现分化：Q-Former 在 token 预算关键的场景存活(长视频、多图像)；MLP 投影器在单 token 原始质量优先的场景占主导。
 
-### 门的跨越注意力:弗拉明戈,祖先
+### 门控交叉注意力：Flamingo,鼻祖
 
-弗拉明戈 (课 12.04) 在BLIP-2之前使用了相同的跨注意力想法,但在每个结的LLM层上,不是单一的桥梁.BLIP-2显示你可以只压缩到输入层,仍然工作.双胞胎和Idefics结合了两者:交叉输入代币加上可选的门式跨注意力在文本中的几次拍摄.
+Flamingo(第 12.04 课)早于 BLIP-2,使用同样的交叉注意力思想，但在每个冻结 LLM 层上应用，而非单一桥梁。BLIP-2 证明只压缩到输入层也能奏效。Gemini 和 Idefics 结合两者：交错的输入 token 加上可选的门控交叉注意力，用于上下文少样本学习。
 
-### 2026年的后代
+### 2026 年的后裔
 
-- 问:前者:BLIP-2,InstructBLIP,MiniGPT-4,以及大多数视频语言模型,
-- 感知器重样:弗拉明戈变体 (课 12.04);Idefics家族,,OmniMAE.
-- 光器:LLaVA,LLaVA-NeXT,LLaVA-OneVision,Cambrian-1.
-- 警池:维拉,帕利盖玛.
+- Q-Former:出于 token 预算原因，BLIP-2、InstructBLIP、MiniGPT-4 以及大多数视频-语言模型。
+- Perceiver 重采样器：Flamingo 的变体(第 12.04 课)；Idefics 系列、Eagle、OmniMAE。
+- MLP 投影器：LLaVA、LLaVA-NeXT、LLaVA-OneVision、Cambrian-1。
+- 注意力池化：VILA、PaliGemma。
 
-重要的问题是,你是否受到代币预算或质量限制.
+四种方案都有效。决定性的问题是：你受限于 token 预算，还是受限于单 token 质量。
 
 ```figure
 modality-projection
 ```
 
-## 用它
+## 动手实践
 
-`code/main.py`建立一个像Q-Former这样的交叉注意力:
+`code/main.py` 构建了一个基于标准库的 Q-Former 风格交叉注意力：
 
-1. 模拟 256 个图像补丁代币 (dim 128).
-2. 立即完成32个可学习的查询 (第128个).
-3. 运行分点-产品跨度关注 (查询中的Q,补丁中的K/V).
-4. 通过线性层进行LLMdim (512) 项目.
-5. 输出32个准备好LLM的视觉代币.
+1. 模拟 256 个图像 patch token(维度 128)。
+2. 实例化 32 个可学习查询(维度 128)。
+3. 运行缩放点积交叉注意力(Q 来自查询，K/V 来自 patch)。
+4. 通过线性层投影到 LLM 维度(512)。
+5. 输出 32 个 LLM 就绪的视觉 token。
 
-算法是纯 Python (嵌在向量上循环).玩具但正确的形状.注意力重量矩阵打印,这样你可以看到每个查询从哪个补丁中拉出来.
+所有数学运算用纯 Python 实现(对向量的嵌套循环)。是玩具但形状正确。会打印注意力权重矩阵，让你能看到每个查询从哪些 patch 拉取了信息。
 
-## 运送它
+## 发布交付
 
-这一课产生了`outputs/skill-modality-bridge-picker.md`鉴于目标VLM配置 (视觉编码器代币数量,LLM环境预算,部署限制,质量目标),它建议为每个桥梁提供简短的理由和参数数数量估计的Q-Former vs MLP vs Perceiver重样样本.
+本课产出 `outputs/skill-modality-bridge-picker.md`。给定一个目标 VLM 配置(视觉编码器 token 数量、LLM 上下文预算、部署约束、质量目标)，它会推荐 Q-Former、MLP 还是 Perceiver 重采样器，附简要论证，以及每种桥梁的参数量估算。
 
-## 运动
+## 练习
 
-1. 执行PyTorch中跨注意力区块. 检查32个查询和256个键/值,注意力重量矩阵为32 x 256 ,每行总和在 softmax之后为1.
+1. 用 PyTorch 实现交叉注意力模块。验证在 32 个查询和 256 个键/值的情况下，注意力权重矩阵为 32 x 256,且经 softmax 后每行求和为 1。
 
-2. 在BLIP-2阶段1中,Q-Former同时运行三个输失:ITC,ITM,ITG.用伪代码写出每个人的前进签名.哪个需要文字编码器路径才能活跃?
+2. 在 BLIP-2 阶段 1,Q-Former 同时运行三种损失：ITC、ITM、ITG。用伪代码写出每种损失的前向签名。哪一种需要文本编码器路径处于激活状态？
 
-3. 比较参数数:Q-Former (12层,隐藏 768层) 与2层MLP投影机 (1408 → 4096,两个层).在什么LLM规模上,188MQ-Former成本回报了训练效率?
+3. 比较参数量：Q-Former(12 层，768 隐藏层)与两层 MLP 投影器(1408 → 4096,两层)。在什么 LLM 规模下，1.88 亿参数的 Q-Former 成本能在训练效率上获得回报？
 
-4. 阅读BLIP-2论文 (arXiv:2301.12597) 的3.2节,说明Q-Former如何初始化.解释为什么从BERT-base初始化 (非随机) 加速了融合.
+4. 阅读 BLIP-2 论文第 3.2 节(arXiv:2301.12597)中关于 Q-Former 如何初始化的内容。解释为什么从 BERT-base(而非随机)初始化能加速收敛。
 
-5. 对于一个10分钟的视频,以1FPS样本为60个,计算每代币成本在 (Q-Former → 32代币/) vs (MLP投影器 → 576代币/).哪个适合一个128k代币的LLM文本窗口?
+5. 对于一段以 1 FPS 采样 60 帧的 10 分钟视频，计算(Q-Former → 每帧 32 token)与(MLP 投影器 → 每帧 576 token)的每帧 token 成本。哪种能放入 128k token 的 LLM 上下文窗口？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Q-Former | "Querying transformer" | Small transformer with 32 learnable query vectors that cross-attend to frozen ViT features |
-| Learnable queries | "Soft prompt for vision" | A fixed set of parameters that serve as the query side of cross-attention; learned per model, shared across all inputs |
-| Cross-attention | "Q from here, K/V from there" | Attention where query, key, and value come from different sources; how the queries pull from ViT patches |
-| ITC | "Image-text contrastive" | CLIP-style loss applied to Q-Former pooled queries vs text CLS |
-| ITM | "Image-text matching" | Binary classifier on hard-negative-mined pairs; forces the queries to discriminate fine-grained mismatches |
-| ITG | "Image-grounded text generation" | Causal LM loss where text is generated conditioned on queries; forces queries to encode text-decodable content |
-| Two-stage pretraining | "Representation then generative" | Stage 1 trains Q-Former alone (ITC/ITM/ITG); Stage 2 attaches frozen LLM and trains only the projection + Q-Former |
-| Frozen backbone | "Do not finetune" | The vision encoder and LLM weights are fixed; only the bridge trains |
-| Projection head | "Linear to LLM dim" | Final linear layer mapping Q-Former output to the LLM's embedding dimension |
-| Perceiver resampler | "Flamingo's version" | Similar learnable-query cross-attention, used by Flamingo at every layer rather than as a single bridge |
+| 术语 | 人们的说法 | 实际含义 |
+|------|------------------------| 
+| Q-Former | “查询 transformer” | 带有 32 个可学习查询向量的小型 transformer,通过交叉注意力关注冻结 ViT 特征 |
+| 可学习查询 | “视觉的软提示” | 一组固定参数，充当交叉注意力的查询侧；按模型学习，在所有输入间共享 |
+| 交叉注意力 | “Q 从这里来，K/V 从那里来” | 查询、键、值来自不同来源的注意力；查询就是这样从 ViT patch 中拉取信息的 |
+| ITC | “图文对比” | 应用于 Q-Former 池化查询 vs 文本 CLS 的 CLIP 风格损失 |
+| ITM | “图文匹配” | 在难负例挖掘的图文对上的二分类器；迫使查询区分细粒度的不匹配 |
+| ITG | “图像引导的文本生成” | 以查询为条件生成文本的因果 LM 损失；迫使查询编码可被文本解码的内容 |
+| 两阶段预训练 | “先表示，后生成” | 阶段 1 仅训练 Q-Former(ITC/ITM/ITG);阶段 2 接入冻结 LLM,仅训练投影 + Q-Former |
+| 冻结主干 | “不要微调” | 视觉编码器和 LLM 的权重固定；只有桥梁被训练 |
+| 投影头 | “线性层映射到 LLM 维度” | 将 Q-Former 输出映射到 LLM 嵌入维度的最终线性层 |
+| Perceiver 重采样器 | “Flamingo 的版本” | 类似的可学习查询交叉注意力，Flamingo 在每一层使用而非作为单一桥梁 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Li et al. — BLIP-2 (arXiv:2301.12597)](https://arxiv.org/abs/2301.12597)核心纸
-- [Li et al. — BLIP (arXiv:2201.12086)](https://arxiv.org/abs/2201.12086)前任与ITC/ITM/ITG三重组.
-- [Li et al. — ALBEF (arXiv:2107.07651)](https://arxiv.org/abs/2107.07651)"前配线" 第一阶段训练的概念祖先.
-- [Dai et al. — InstructBLIP (arXiv:2305.06500)](https://arxiv.org/abs/2305.06500)          
-- [Zhu et al. — MiniGPT-4 (arXiv:2304.10592)](https://arxiv.org/abs/2304.10592)仅使用投影仪的方法.
-- [Jaegle et al. — Perceiver IO (arXiv:2107.14795)](https://arxiv.org/abs/2107.14795)学习性-查询性交叉注意力的一般架构.
+- [Li 等 — BLIP-2 (arXiv:2301.12597)](https://arxiv.org/abs/2301.12597) — 核心论文。
+- [Li 等 — BLIP (arXiv:2201.12086)](https://arxiv.org/abs/2201.12086) — 前作，提出 ITC/ITM/ITG 三损失组合。
+- [Li 等 — ALBEF (arXiv:2107.07651)](https://arxiv.org/abs/2107.07651) — “先对齐后融合”——阶段 1 训练的概念鼻祖。
+- [Dai 等 — InstructBLIP (arXiv:2305.06500)](https://arxiv.org/abs/2305.06500) — 指令感知的 Q-Former。
+- [Zhu 等 — MiniGPT-4 (arXiv:2304.10592)](https://arxiv.org/abs/2304.10592) — 仅投影器方法。
+- [Jaegle 等 — Perceiver IO (arXiv:2107.14795)](https://arxiv.org/abs/2107.14795) — 可学习查询交叉注意力的通用架构。

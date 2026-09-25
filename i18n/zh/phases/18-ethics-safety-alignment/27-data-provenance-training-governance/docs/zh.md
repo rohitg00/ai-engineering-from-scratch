@@ -1,115 +1,115 @@
-# 数据来源和培训 - 数据管理
+# 数据来源与训练数据治理
 
-> 欧盟人工智能法要求在2025年8月之前 (通过欧盟版权指令TDM例外) 进行机器可读的GPAI排斥标准. 加利福尼亚 AB 2013 (签署2024) 生成人工智能培训数据透明度要求开发人员发布包含12个授权领域的数据集总结. 2025 DPA 根据合法利益的调整:爱尔兰 DPC (2025年5月21日) 接受了Meta的首方公开欧盟/经济区成人内容的LLM培训,在EDPB意见后获得保障;科隆高等区域法院 (2025年5月23日) 驳回了禁令;汉堡 DPA 放弃了紧急情况;英国ICO (2025年9月23日) 对LinkedIn的人工智能培训保障措施 (透明度,简化选择退出,延长反对窗口) 发出了积极的监管反应,并继续监测而不是正式批准. 巴西ANPD (2024年7月2日) 暂停了Meta的处理,因为信息透明度不足;Meta提交了合规计划后,在2024年8月30日取消了预防措施. 基本不可逆性问题: Cookie-consent框架是为实时可逆追踪而设计的;一旦数据在模型重量中, 术性删除是不可能的 收费时间是合规窗口. 数据来源倡议 (dataprovenance.org,Longpre,Mahari,Lee等",危机中的同意",2024年7月):随着出版商增加robots.txt限制,大规模审计显示人工智能数据共同的迅速下降.
+> EU AI Act 要求到 2025 年 8 月为 GPAI 提供机器可读的选择退出标准（依据 EU Copyright Directive 的 TDM 例外）。California AB 2013（2024 年签署）——生成式 AI 训练数据透明度要求开发者发布包含 12 个法定字段的数据集摘要。2025 年各 DPA 在合法利益上达成一致：爱尔兰 DPC（2025 年 5 月 21 日）在 EDPB 意见后，附带保障措施接受 Meta 基于 EU/EEA 成年用户第一方公开内容的 LLM 训练；科隆高等地方法院（2025 年 5 月 23 日）驳回禁令申请；汉堡 DPA 撤销紧急程序；英国 ICO（2025 年 9 月 23 日）对 LinkedIn 的 AI 训练保障措施（透明度、简化选择退出、延长异议窗口）作出积极监管回应并继续监测——并非正式批准。巴西 ANPD（2024 年 7 月 2 日）以信息透明度不足为由暂停了 Meta 的处理活动；在 Meta 提交合规计划后，该预防措施于 2024 年 8 月 30 日解除。关键的不可逆问题：cookie 同意框架是为实时、可撤销的追踪设计的；一旦数据进入模型权重，手术式删除便不可能——针对已训练神经网络的 GDPR 删除权没有实际可行的实现。合规窗口在数据收集时。Data Provenance Initiative（dataprovenance.org，Longpre、Mahari、Lee 等，"Consent in Crisis"，2024 年 7 月）：大规模审计显示，随着出版商添加 robots.txt 限制，AI 数据公共资源正在迅速萎缩。
 
 **Type:** Learn
-**Languages:** Python (stdlib, 12-field California AB 2013 scaffolding generator)
-**Prerequisites:** Phase 18 · 24 (regulatory), Phase 18 · 26 (cards)
-**Time:** ~60 minutes
+**Languages:** Python（标准库，12 字段 California AB 2013 脚手架生成器）
+**Prerequisites:** Phase 18 · 24（监管），Phase 18 · 26（模型卡）
+**Time:** ~60 分钟
 
 ## 学习目标
 
-- 描述加州AB 2013年对生成人工智能培训数据透明度的12个授权领域.
-- 说明2025年DPA关于合法利益LLM培训的立场 (爱尔兰DPC,英国ICO,汉堡,科隆).
-- 描述不可逆性问题:为什么GDPR删除权对训练有素的神经网络没有实际等效.
-- 报告数据来源倡议的"危机中同意"发现.
+- 描述 California AB 2013 针对生成式 AI 训练数据透明度的 12 个法定字段。
+- 阐述 2025 年各 DPA 对合法利益 LLM 训练的立场（爱尔兰 DPC、英国 ICO、汉堡、科隆）。
+- 描述不可逆问题：为什么 GDPR 删除权对已训练神经网络没有实际可行的等价物。
+- 阐述 Data Provenance Initiative 的"Consent in Crisis"发现。
 
 ## 问题
 
-培训数据治理是每种模型卡 (课程 26) 和监管义务 (课程 24) 的上游.在2024-2025年,监管环境将基于三个原则结合起来:选择退出基础设施,每数据集披露,以及对公开可用的数据的合法利益适应.在收集时不遵守的提供商无法补救下游.
+训练数据治理是每个模型卡（第 26 课）和监管义务（第 24 课）的上游。2024-2025 年，监管格局整合于三项原则：选择退出基础设施、逐数据集披露，以及对公开可用数据的合法利益豁免。未能在收集时合规的提供方无法在下游补救。
 
 ## 概念
 
-### 美国加州AB 2013年
+### California AB 2013
 
-签署2024. 关于在2026年1月1日或之后发布的系统,文件必须在2026年1月1日或之前发布.
-1. 数据集的来源或所有者
-2. 描述数据集如何推进人工智能系统的目的.
-3. 数据集中的数据点数 (一般范围可接受;动态数据集的估计).
-4. 数据点类型的描述 (标记数据集的标签类型;未标记的一般特征).
-5. 数据集是否包括任何受版权,商标或专利保护的数据,或者完全属于公共领域.
-6. 数据集是否购买或授权.
-7. 数据集是否包含个人信息 (根据加州公民法典1798.140 ((v)).
-8. 数据集是否包含总消费者信息 (根据加州公民法典1798.140号 (b)).
-9. 开发者进行了清洁,加工或其他修改,以目的.
-10. 收集数据的时间,如果收集正在进行,请通知.
-11. 数据集在开发过程中首次使用的日期.
-12. 系统是否使用或持续使用合成数据生成.
+2024 年签署。对 2022 年 1 月 1 日或之后发布的系统，文档必须在 2026 年 1 月 1 日或之前发布。第 3111(a) 节要求开发者发布训练所用数据集的高层级摘要，包含 12 个法定条目：
+1. 数据集的来源或所有者。
+2. 说明数据集如何服务于 AI 系统的预期用途。
+3. 数据集中的数据点数量（可接受大致范围；动态数据集可估计）。
+4. 描述数据点类型（已标注数据集的标注类型；未标注数据集的一般特征）。
+5. 数据集是否包含受版权、商标或专利保护的数据，或完全属于公有领域。
+6. 数据集是否为购买或授权获得。
+7. 数据集是否包含个人信息（依据 Cal. Civ. Code §1798.140(v)）。
+8. 数据集是否包含汇总消费者信息（依据 Cal. Civ. Code §1798.140(b)）。
+9. 开发者进行的清洗、处理或其他修改，及其预期用途。
+10. 数据收集的时间段，若收集仍在进行则须注明。
+11. 数据集在开发中首次使用的日期。
+12. 系统是否使用或持续使用合成数据生成。
 
-根据"个人信息"第7条,该条款引发了"隐私权利法" (CPRA) 义务.该条款豁免了安全/诚信,飞机运营和联邦国家安全系统 (第3111条) 条.
+第 12 项（合成数据）相对 Gebru 等 2018 年的 datasheets 是新增的。第 7 项（个人信息）触发 Privacy Rights Act（CPRA）义务。该法规豁免安全/完整性系统、飞行器操作系统以及仅限联邦的国家安全系统（第 3111(b) 节）。
 
-### 欧盟人工智能法 (24课) 和TDM选择退出
+### EU AI Act（第 24 课）与 TDM 选择退出
 
-欧盟版权指令的文本和数据挖掘例外允许在公共可用的内容上进行培训,除非权利持有人选择退出.欧盟人工智能法GPAI实践规范版权章要求GPAI提供商尊重机器可读的退出信号 (robots.txt,C2PA"无人工智能培训"要求等).
+EU Copyright Directive 的文本与数据挖掘例外允许在公开可用内容上训练，除非权利人选择退出。EU AI Act GPAI Code of Practice 的版权章节要求 GPAI 提供方尊重机器可读的选择退出信号（robots.txt、C2PA "No AI Training" 声明等）。
 
-### 2025年 DPA 合并性利益
+### 2025 年各 DPA 在合法利益上的趋同
 
-爱尔兰DPC (2025年5月21日):Meta计划在EDPB意见后接受了安全措施的欧盟/EEA成人用户内容的第一方公共培训. 科隆高等区域法院 (2025年5月23日) 驳回了Meta的禁令:拒绝选择是足够的. 汉堡DPA撤销了欧盟范围内的紧迫程序. 英国ICO (英国ICO) 于2025年9月23日发布了积极的监管反应, 没有正式的批准,
+爱尔兰 DPC（2025 年 5 月 21 日）：在 EDPB 意见后，附带保障措施接受 Meta 基于 EU/EEA 成年用户第一方公开内容的训练计划。科隆高等地方法院（2025 年 5 月 23 日）驳回针对 Meta 的禁令申请：选择退出已足够。汉堡 DPA 为全欧盟一致性而撤销紧急程序。英国 ICO（2025 年 9 月 23 日）对 LinkedIn 在类似保障措施和持续监测下恢复 AI 训练作出积极监管回应——并非正式批准。
 
-融合原则:有合法利益可以为选择退出公开的第一方内容提供培训的理由.
+趋同原则：合法利益可证成在附带选择退出的公开可用第一方内容上训练。无需同意。
 
-### 巴西ANPD (2024年6月)
+### 巴西 ANPD（2024 年 6 月）
 
-由于信息透明度不足,Meta暂停了对巴西用户数据的处理. 与欧盟DPA不同.
+以信息透明度不足为由，暂停了 Meta 对巴西用户数据的 AI 训练处理。结果与 EU 各 DPA 不同——ANPD 将透明度置于合法利益可采性之上。
 
-### 无法逆转的问题
+### 不可逆问题
 
-根据"Cookie-consent"的说法,Cookie-consent是用于实时可逆追踪的.训练数据是不同的:一旦数据进入模型重量,手术删除是不可能的.从零开始重新训练是唯一的完整补救,而且是极其昂贵的.
+Cookie 同意是为实时、可撤销的追踪设计的。训练数据不同：一旦数据进入模型权重，手术式删除便不可能。从头重新训练是唯一完整的补救方式，但其成本令人望而却步。
 
-部分补救措施:
-- **Unlearning.**通过MIA (课2) 测量,可进行近似移除.
-- **Influence function-based localization.**确定数据影响最严重的重量;选择性更新.
-- **Fine-tune-suppression.**训练模型拒绝从数据中获得的输出.
+部分补救方式：
+- **Unlearning（遗忘）。** 近似移除；以 MIA 度量（第 22 课）。
+- **基于影响函数的定位。** 识别受该数据影响最大的权重；选择性更新。
+- **微调抑制。** 训练模型拒绝源自该数据的输出。
 
-没有一个完全解决问题. 合规窗口是收费时间.
+以上都不能完全解决问题。合规窗口在数据收集时。
 
-### 数据来源倡议
+### Data Provenance Initiative
 
-提供数据.org. 长春,马哈里,李等. "危机中的同意" (2024年7月):大规模审计人工智能培训数据共享. 发现:出版商正在加快Robots.txt限制速度. 开放式训练可用的共同点正在迅速缩小. 据报道,在2023年至2024年, 未来的培训数据可用性取决于新的收购模式 (许可,合成生成,激励参与).
+dataprovenance.org。Longpre、Mahari、Lee 等"Consent in Crisis"（2024 年 7 月）：对 AI 训练数据公共资源的大规模审计。发现：出版商正以加速的速度添加 robots.txt 限制。可开放训练的公共资源正在迅速收缩。2023 到 2024 年间，约 25% 的头部训练数据来源添加了某种限制。含义：未来训练数据的可得性取决于新的获取范式（授权、合成生成、激励参与）。
 
-### 在这个阶段的第18阶段
+### 在 Phase 18 中的位置
 
-第26课是模型级文档. 第27课是数据集级治理. 它们共同定义了透明度层. 第28课绘制了研究生态系统,该系统处理这些问题.
+第 26 课是模型级文档。第 27 课是数据集级治理。二者共同构成透明度层。第 28 课梳理研究这些问题的研究生态系统。
 
 ```figure
 an-provenance-oneway
 ```
 
-## 用它
+## 使用
 
-`code/main.py`您可以填写这些字段并观察哪些字段会引发隐私或版权后续义务.
+`code/main.py` 为一个玩具数据集生成符合 California AB 2013 的 12 字段数据集摘要脚手架。你可以填写各字段，并观察哪些字段会触发隐私或版权的后续义务。
 
-## 运送它
+## 交付
 
-这一课产生了`outputs/skill-provenance-check.md`鉴于培训中使用的数据集,它检查了AB 201312领域的覆盖范围,选择退出基础设施的合规性,DPA的调整和不可逆转性风险评估.
+本课产出 `outputs/skill-provenance-check.md`。给定一个用于训练的数据集，它会检查 AB 2013 的 12 字段覆盖情况、选择退出基础设施合规性、与 DPA 立场的一致性，以及不可逆风险评估。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`制作玩具数据集的12个领域总结,并确定哪些领域未具备具体规范.
+1. 运行 `code/main.py`。为一个玩具数据集生成 12 字段摘要，并指出哪些字段规定不足。
 
-2. 欧盟版权指令 TDM 选择退出是机器可读的. 建议退出信号的标准格式,并将其与 robots.txt 和 C2PA "无人工智能培训"进行比较.
+2. EU Copyright Directive 的 TDM 选择退出是机器可读的。提出一种选择退出信号的标准格式，并将其与 robots.txt 和 C2PA "No AI Training" 比较。
 
-3. 阅读数据来源倡议的"危机中的同意" (2024年7月).描述三个最快限制内容类别,并论证一个经济后果.
+3. 阅读 Data Provenance Initiative 的"Consent in Crisis"（2024 年 7 月）。描述限制增加最快的三个内容类别，并论证一个经济后果。
 
-4. 2025年DPA调整接受了对公共内容培训的合法利益.构建一个不够合法利益的场景,并确定提供商需要的法律基础.
+4. 2025 年各 DPA 的一致立场接受以合法利益在公开内容上训练。构造一个合法利益不足以成立的场景，并指出提供方需要的替代法律依据。
 
-5. 绘制一个培训数据来源明示,该明示明示明示每一个数据集的AB 2013领域和C2PA签署的来源链.确定一个技术和一个法律障碍.
+5. 草拟一份与 AB 2013 字段兼容的训练数据来源清单（manifest），以及每个数据集的 C2PA 签名来源链。指出一个技术障碍和一个法律障碍。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|-----------------|------------------------|
-| AB 2013 | "the California law" | Generative AI training-data transparency; 12 mandated fields |
-| TDM exception | "text-and-data-mining" | EU Copyright Directive training-data exception with opt-out |
-| Legitimate interest | "the EU basis" | GDPR Article 6 basis that may justify training on public content |
-| Opt-out signal | "machine-readable no-train" | robots.txt, C2PA "No AI Training," TDM.Reservation |
-| Irreversibility | "cannot un-train" | Data in model weights is not surgically removable |
-| Unlearning | "approximate removal" | Post-training interventions to reduce model dependence on specific data |
-| Consent in Crisis | "the DPI audit" | July 2024 finding of accelerating robots.txt restrictions |
+| AB 2013 | “加州那部法律” | 生成式 AI 训练数据透明度；12 个法定字段 |
+| TDM exception | “文本与数据挖掘” | EU Copyright Directive 附带选择退出的训练数据例外 |
+| Legitimate interest | “欧盟的法律依据” | GDPR 第 6 条依据，可证成在公开内容上训练 |
+| Opt-out signal | “机器可读的不许训练” | robots.txt、C2PA "No AI Training"、TDM.Reservation |
+| Irreversibility | “无法撤销训练” | 数据一旦进入模型权重便无法手术式移除 |
+| Unlearning | “近似移除” | 训练后干预，以降低模型对特定数据的依赖 |
+| Consent in Crisis | “DPI 审计” | 2024 年 7 月关于 robots.txt 限制加速增加的发现 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [California AB 2013](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240AB2013) 创新人工智能培训数据透明度法
-- [EU AI Act + GPAI Code of Practice (Lesson 24)](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai) 版权章节
-- [Longpre, Mahari, Lee et al. — Consent in Crisis (dataprovenance.org, July 2024)](https://www.dataprovenance.org/consent-in-crisis-paper) 指数指数审计
-- [IAPP — EU Digital Omnibus GDPR amendments (2025)](https://iapp.org/news/a/eu-digital-omnibus-amendments-to-gdpr-to-facilitate-ai-training-miss-the-mark)监管环境
+- [California AB 2013](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240AB2013) — 生成式 AI 训练数据透明度法律
+- [EU AI Act + GPAI Code of Practice（第 24 课）](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai) — 版权章节
+- [Longpre、Mahari、Lee 等 — Consent in Crisis（dataprovenance.org，2024 年 7 月）](https://www.dataprovenance.org/consent-in-crisis-paper) — DPI 审计
+- [IAPP — EU Digital Omnibus GDPR 修正案（2025）](https://iapp.org/news/a/eu-digital-omnibus-amendments-to-gdpr-to-facilitate-ai-training-miss-the-mark) — 监管背景

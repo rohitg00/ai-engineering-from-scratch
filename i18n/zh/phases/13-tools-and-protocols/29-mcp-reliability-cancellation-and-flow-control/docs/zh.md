@@ -1,50 +1,47 @@
-#  MCP可靠性,取消和流量控制
+# MCP 可靠性、取消与流量控制
 
-> 请求 ID 与消息相关,它不会使副作用安全,阻止一个工作者,或者保护一个流量免受缓慢的消费者.
+> 请求 ID 用于关联消息。它不能保证副作用安全，不能停止工作进程，也不能保护流免受慢消费者影响。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 13, Lessons 09 and 13
-**Time:** ~120 minutes
+**Prerequisites:** 阶段 13，第 09 课与第 13 课
+**Time:** 约 120 分钟
 
 ## 学习目标
 
-- 执行stdio和流式HTTP的正确取消信号.
-- 解决完成和取消比赛,而没有在取消后发送消息.
-- 单独取消请求与持久的取消`tasks/cancel`它们是什么意思?
-- 根据副作用和明确的无能度关键,重新尝试决策.
-- 限制进步队列,同时保留最终的回复.
-- 通过重新连接,重新调整和动的后退来恢复流.
+- 为 stdio 和 Streamable HTTP 实现正确的取消信号。
+- 解决完成与取消之间的竞争，且不在取消后发送消息。
+- 将请求取消与持久化 `tasks/cancel` 语义区分开。
+- 基于副作用和显式幂等键构建重试决策。
+- 在保留最终响应的前提下限制进度队列。
+- 通过重连、重新获取与抖动退避恢复流。
 
-## 问题
+## 问题所在
 
-幸福之路隐藏着最昂贵的分布式系统 bug.
+正常路径掩盖了最昂贵的分布式系统缺陷。
 
-客户端调用工具.服务器开始工作. 进程到达. 代理缓冲流. 客户端达到其时间过期,然后断开. 服务器完成一毫秒后. 客户端重新尝试一个新的JSON-RPCID. 突变运行两次.
+客户端调用一个工具。服务端开始工作。进度消息到达。代理缓冲了流。客户端到达超时并断开连接。服务端在一毫秒后完成。客户端用一个新 JSON-RPC id 重试。变更操作执行了两次。
 
-系统在全球范围内失败.
+每个组件在本地都表现正常。系统在全局层面失败。
 
-虽然MCP定义了消息和运输行为,但您的应用程序仍然拥有:
+MCP 定义了消息和传输行为，但你的应用仍然拥有以下责任：
 
-- 时间预算;
-- 商业自由;
-- 边界排队;
-- 复试分类;
-- 持续任务状态;
-- 重新联系和重新调整政策.
+- 时间预算；
+- 业务幂等性；
+- 有界队列；
+- 重试分类；
+- 持久化任务状态；
+- 重连与重新获取策略。
 
-通过这种方式,我们可以将这些决定构成一个确定性模拟器.
-没有休息,插座或随机故障.
-一个同步的线程测试迫使两个账本客户竞争
-对于相同的无权重关.
+本课将这些决策构建进一个确定性模拟器。没有 sleep、套接字或随机故障。你直接控制取消事件的顺序。一个同步线程测试迫使两个账本客户端竞争同一个幂等键。
 
-## 取消请求是具体的交通
+## 请求取消因传输方式而异
 
-客户不再需要飞行结果. 电线信号不同.
+意图在每个传输方式上相同：客户端不再需要进行中的结果。而线路上的信号不同。
 
-### 工作室
+### stdio
 
-通过使用一个共享的双向频道,客户端发送通知:
+stdio 使用一条共享的双向通道。客户端发送一个通知：
 
 ```json
 {
@@ -57,29 +54,29 @@
 }
 ```
 
-服务器没有发出任何JSON-RPC响应.
+该通知是即发即忘的。服务端不会为它发出 JSON-RPC 响应。
 
-服务器应停止工作,释放资源,避免发送取消请求的回复. 当请求未知,已经完成或无法安全地停止时,它可能会忽视取消.
+服务端应停止工作、释放资源，并且不为已取消的请求发送响应。当请求未知、已完成或无法安全停止时，服务端可以忽略取消。
 
-由于这些比赛被错误化,将会导致更多的比赛.
+格式错误、未知和已完成的取消通知都会被忽略。把这些竞争转化为新的错误只会制造更多竞争。
 
-### 流式 HTTP
+### Streamable HTTP
 
-现代流式HTTP给每个请求自己的HTTP响应或SSE响应流.客户端通过关闭该请求的响应流取消.
+现代 Streamable HTTP 为每个请求提供独立的 HTTP 响应或 SSE 响应流。客户端通过关闭该请求的响应流来取消。
 
-不要发帖`notifications/cancelled`关闭流是取消信号.
+不要为普通 HTTP 请求 POST `notifications/cancelled`。流关闭就是取消信号。
 
-一旦服务器观察到断开,该服务器应停止工作,不得再发送更多的信息.
+一旦服务端观察到断开连接，它应停止工作，并且不得为该请求再发送更多消息。
 
-### 服务器发送的取消是狭窄的
+### 服务端发起的取消范围很窄
 
-服务器不使用`notifications/cancelled`在工作室,服务器发送的取消仅用于终止一个 `subscriptions/listen`保持该路径与普通客户请求取消分开.
+服务端不会使用 `notifications/cancelled` 来取消任意的客户端调用。在 stdio 上，服务端发起的取消仅保留用于终止 `subscriptions/listen` 请求。将该路径与普通客户端请求取消区分开。
 
-## 取消是一个种族
+## 取消是一场竞争
 
-两项活动订单都有效.
+两种事件顺序都是有效的。
 
-### 取消的胜利
+### 取消获胜
 
 ```text
 request starts
@@ -89,7 +86,7 @@ worker reaches completion
 server suppresses the response
 ```
 
-### 完成胜利
+### 完成获胜
 
 ```text
 request starts
@@ -99,24 +96,24 @@ cancellation arrives late
 server ignores the late notification
 ```
 
-网络延迟意味着双方都无法证明另一方首先观察到哪个事件.
+客户端也必须忽略它已放弃请求的迟到响应。网络延迟意味着任何一方都无法证明对方先观察到哪个事件。
 
 ```figure
 mcp-reliability-race
 ```
 
-我们学会了什么?`RequestCoordinator`存储一个终端状态.`complete()`取消后没有回复. 取消迟到不能改变已完成的记录.
+本课的 `RequestCoordinator` 只存储一个终态。取消后 `complete()` 不返回响应。迟到的取消不能改变已完成的记录。
 
-## 时间限制需要两个钟
+## 超时需要两个时钟
 
-一个无活动计时器不够.
+单个不活动计时器是不够的。
 
-使用两个限制:
+使用两个限制：
 
-1. **Idle timeout.**要求可能不会产生有用活动的时间.
-2. **Maximum timeout.**要求开始时的绝对墙壁时钟预算.
+1. **空闲超时。** 请求可以多久不产生有效活动。
+2. **最大超时。** 从请求开始计算的绝对墙钟预算。
 
-进步可能会重新设置空时钟,
+进度可以重置空闲时钟。它绝不能移除最大截止时间。
 
 ```text
 start: 0 ms
@@ -127,33 +124,33 @@ idle timeout: 500 ms
 maximum timeout: 2000 ms
 ```
 
-在 1500 ms 时,请求仍然活跃,因为最新的进展仅仅是300 ms 时.在 2000 ms 时,最大的截止日期会取消它,即使在 1999 ms 时,另一个进展事件也会出现.
+在 1500 ms 时，请求仍然活跃，因为最近的进度只有 300 ms 旧。在 2000 ms 时，最大截止时间将其取消，即使另一个进度事件在 1999 ms 到达。
 
-服务器可以接受一个进步代币,并且不会发出任何更新.
+进度是可选的。服务端可以接受进度令牌却不发出任何更新。绝不要把令牌的存在变成无限超时。
 
-必须增加MCP进步值.通知完成或取消后停止. 速度限制进步,以便快速工人无法淹没运输.
+MCP 的进度值必须递增。完成或取消后通知停止。对进度进行限速，防止快速的工作进程淹没传输通道。
 
-## 取消请求是没有的`tasks/cancel`
+## 请求取消不是 `tasks/cancel`
 
-这些机制可以解决不同的生命.
+这些机制解决不同的生命周期。
 
-| Mechanism | Target | Signal | What success means |
+| 机制 | 目标 | 信号 | 成功的含义 |
 |-----------|--------|--------|--------------------|
-| Request cancellation on stdio | One in-flight RPC | `notifications/cancelled` | Client abandoned the request; server should stop if practical |
-| Request cancellation on HTTP | One in-flight response stream | Close the stream | Client abandoned the request; server should stop if practical |
-| `tasks/cancel` | One durable Task | Ordinary MCP request | Server acknowledged cancellation intent |
+| stdio 上的请求取消 | 一个进行中的 RPC | `notifications/cancelled` | 客户端放弃了请求；服务端应尽可能停止 |
+| HTTP 上的请求取消 | 一个进行中的响应流 | 关闭流 | 客户端放弃了请求；服务端应尽可能停止 |
+| `tasks/cancel` | 一个持久化 Task | 普通 MCP 请求 | 服务端确认了取消意图 |
 
-一个成功的人`tasks/cancel`工作人员的工作可能仍然在工作中.`working`工人检查站观察旗之前.工作可能在该检查站之前完成.
+成功的 `tasks/cancel` 结果不能证明工作进程已停止。在工作进程检查点观察到该标志之前，任务可能仍是 `working`。工作可能在检查点之前完成。
 
-当HTTP连接关闭时,不要删除持久任务状态.创建任务的原因是其生命周期超过一个请求和一个连接.
+不要在 HTTP 连接关闭时抹除持久化任务状态。创建 Task 的理由就是它的生命周期长于单个请求和单个连接。
 
-## 新的JSON-RPCID不是无效
+## 新的 JSON-RPC ID 不是幂等性
 
- JSON-RPC id 相关请求和响应.它们不识别一个业务操作.
+JSON-RPC id 用于关联请求与响应。它们不标识业务操作。
 
-假设客户提交一个指控,`41`输出了回应,然后再试用ID`42`服务器看到两个不同的消息. 没有应用程序密钥,它不能知道它们代表一个支票.
+假设客户端提交了一笔 id 为 `41` 的扣款，丢失了响应，然后用 id `42` 重试。服务端看到两条不同的消息。没有应用层键，它无法知道这两条代表同一次结账。
 
-无权密钥标识了商业意图:
+幂等键标识业务意图：
 
 ```json
 {
@@ -166,17 +163,17 @@ maximum timeout: 2000 ms
 }
 ```
 
-服务器存储:
+服务端存储：
 
-- 关键;
-- 操作论证的指纹;
-- 承诺的结果.
+- 该键；
+- 操作参数的指纹；
+- 已提交的结果。
 
-同样的关键和相同的参数返回存储的结果.同样的关键与不同的参数被拒绝. 这防止意外重复使用的关键改变了不同的业务操作.
+相同键与相同参数返回存储的结果。相同键但不同参数则被拒绝。这防止了意外的键复用修改另一个业务操作。
 
-### 总账边界必须是原子和持久的
+### 账本边界必须是原子的且持久的
 
-这种序列是不安全的:
+以下序列是不安全的：
 
 ```text
 check key
@@ -184,61 +181,49 @@ run mutation
 store result
 ```
 
-两个工人可以观察一个缺失的钥匙,
-在效果之后,但在商店之前,重新尝试时会产生相同的模糊性.
+两个工作进程可能都观察到键缺失，并且都执行变更。在副作用之后、写入存储之前发生崩溃，会在重试时制造同样的歧义。
 
-课程使用文件支持的SQLite账本.`BEGIN IMMEDIATE`连续化
-密钥检查,模拟业务效果,执行计数,以及存储成绩
-两个独立的账本连接,用相同的密钥竞争
-因此,观察一个承诺结果和一个执行.
-记本保存了记录.
+本课使用基于文件的 SQLite 账本。`BEGIN IMMEDIATE` 将键检查、模拟的业务副作用、执行计数器和存储的结果序列化为一个事务。因此，两个使用相同键竞争的独立账本连接只会观察到一个已提交的结果和一次执行。关闭并重新打开账本仍保留该记录。
 
-根据存储的JSON,每一个返回值都被重建.
-由于本书所持的可变物体,因此更改返回的字典不能
-后续复制结果.
+每个返回值都从存储的 JSON 重建。调用方永远不会收到账本持有的可变对象，因此修改返回的字典不会破坏后续的重放结果。
 
-模拟器的商业效果是收件和执行柜台
-实际的支付,部署或外部API调用是
-只有通过写一个本地表来制造原子.
-共有数据库交易,交易输出箱或上游供应商
-只有一个过程锁,不能保护
-复制或重启.
+模拟器的业务副作用是同一 SQLite 事务内的回执和执行计数器。真实的支付、部署或外部 API 调用并不会仅仅因为写了一张本地表就变得原子。生产环境需要持久化的共享数据库事务、事务性发件箱（transactional outbox），或强制相同幂等键的上游提供方。仅靠进程锁无法保护多个副本，也无法在重启后存活。
 
-### 复试矩阵
+### 重试矩阵
 
-在实施之前重新分类尝试.
+在实现之前先对重试进行分类。
 
-| Class | Example | Retry rule |
+| 类别 | 示例 | 重试规则 |
 |------|---------|------------|
-| Safe | Deterministic read with no side effect | Retry with a new JSON-RPC id after the failure boundary is understood |
-| Conditional | Mutation with a durable idempotency key | Retry with the same key and identical arguments |
-| Unsafe | Mutation without business deduplication | Do not retry automatically; reconcile first |
+| 安全 | 无副作用的确定性读取 | 在理解故障边界后，用新的 JSON-RPC id 重试 |
+| 有条件 | 带持久化幂等键的变更操作 | 用相同键和相同参数重试 |
+| 不安全 | 无业务去重的变更操作 | 不要自动重试；先对账 |
 
-工具注释如`readOnlyHint`其他`idempotentHint`应用程序合同和服务器实现决定了重新尝试安全性.
+诸如 `readOnlyHint` 和 `idempotentHint` 之类的工具注解仍是不可信的提示。重试安全性由应用契约和服务端实现决定。
 
-## 压力是正确的部分
+## 背压是正确性的一部分
 
-无限排队将缓慢转化为记忆耗尽.
+SSE 生产者生成进度的速度可能快于客户端、代理或网络的消费速度。无界队列将慢速转化为内存耗尽。
 
-通过一个有限的排队来定义可能丢失的东西.
+使用有界队列，并定义什么可以丢失。
 
-进步可替换.后来的进步值取代了之前的值.最终的JSON-RPC响应是无法替换的.
+进度是可替代的。同一令牌的较新进度值取代较早的值。最终的 JSON-RPC 响应不可替代。
 
-课程缓冲适用于以下政策:
+本课的缓冲区应用以下策略：
 
-1. 为了同样实现相邻的进展.
-2. 能达到最大的容量时,就放弃最古老的进步.
-3. 标记流需要权威的改造.
-4. 保存最后的反应.
-5. 拒绝一个状态, 保存最终反应需要放下另一个最终反应.
+1. 合并同一令牌的相邻进度。
+2. 达到容量时丢弃最旧的进度。
+3. 将流标记为需要权威重新获取。
+4. 保留最终响应。
+5. 拒绝“保留最终响应会需要丢弃另一个最终响应”的状态。
 
-丧不是一个策略.
+这是带显式恢复的有界丢失。静默丢失不是一种策略。
 
 ### 代理缓冲
 
-一个服务器可以正确流动,而一个反向代理在缓冲中保存事件.
+服务端可以正确地流式传输，而反向代理却在缓冲区中扣留事件。
 
-为了获得SSE的回应,请发送:
+对于 SSE 响应，发送：
 
 ```http
 Content-Type: text/event-stream
@@ -246,37 +231,37 @@ Cache-Control: no-cache
 X-Accel-Buffering: no
 ```
 
-2026 流式HTTP规范建议`X-Accel-Buffering: no`让兼容的代理人立即传递事件.
+2026 年的 Streamable HTTP 规范建议使用 `X-Accel-Buffering: no`，以便兼容的代理立即投递事件。
 
-对于静静长期的流,定期发出SSE评论:
+对于长时间静默的流，周期性发出 SSE 注释：
 
 ```text
 :
 ```
 
-客户忽略评论行,中间人看到流量,更不太可能关闭空置连接.
+客户端会忽略注释行。中间设备看到流量，就不太可能关闭空闲连接。
 
-保持效率不是进步. 不要仅仅因为输送评论到达,重新设置操作的语义空置时间.
+保活不是进度。不要仅仅因为传输注释到达就重置操作的语义空闲超时。
 
-## 连接意味着重新连接
+## 重连意味着重新获取
 
-现代流式HTTP不支持可重启的SSE通过 `Last-Event-ID`现在,我们要去.
+现代 Streamable HTTP 不支持通过 `Last-Event-ID` 恢复 SSE。
 
-在一个`subscriptions/listen`流量下降:
+在 `subscriptions/listen` 流断开后：
 
-1. 打开一个新的听取请求,使用新的JSON-RPCID.
-2. 恢复所需的订阅过器.
-3. 根据权威方法,重新查找所影响的工具,资源,提示或任务.
-4. 通过稳定标识符进行减复应用状态.
-5. 不要因为没有反应而重复一个不安全的突变.
+1. 用新的 JSON-RPC id 打开新的监听请求。
+2. 恢复所需的订阅过滤器。
+3. 从权威方法重新获取受影响的工具、资源、提示或 Task。
+4. 用稳定标识符对应用状态去重。
+5. 不要仅仅因为响应丢失就重放一个不安全的变更操作。
 
-样本回收计划明确规定`sendLastEventId`其他地方的资源.
+示例恢复计划显式地将 `sendLastEventId` 设为 false，并列出要重新获取的资源。
 
-### 防止重新连接的群体
+### 防止重连群潮
 
-如果1万个客户在1秒内重新连接,恢复服务器再次失败.
+如果 10000 个客户端恰好在第一秒同时重连，恢复中的服务器会再次失败。
 
-课程计算了客户端ID和尝试号码的确定性 jitter,因此测试仍然可复制:
+使用带抖动和上限的指数退避。本课根据客户端 id 和尝试次数计算确定性抖动，使测试保持可复现：
 
 ```text
 attempt 0: up to 250 ms
@@ -286,52 +271,50 @@ attempt 2: up to 1000 ms
 cap: 8000 ms
 ```
 
-产品可以使用加密安全或运行时间随机性. 不变量是分布,而不是特定的公式.
+生产环境可以使用密码学安全的随机性或运行时随机性。不变性是分布，而不是特定公式。
 
-## 建立它
+## 构建它
 
-`code/main.py`构建了五个小型可靠性组件.
+`code/main.py` 构建五个小型可靠性组件。
 
 ### `RequestCoordinator`
 
-- 开始在飞行时提出的空置和最高截止日期请求;
-- 发出单调的进展通知;
-- 产生正确的stdio或HTTP取消信号;
-- 忽略无效的取消通知;
-- 明确取消和完成终端比赛;
-- 保留服务器发送的取消,
+- 以空闲和最大截止时间启动进行中的请求；
+- 发出单调递增的进度通知；
+- 生成正确的 stdio 或 HTTP 取消信号；
+- 忽略无效的取消通知；
+- 使取消与完成的终态竞争显式化；
+- 将服务端发起的取消保留给 stdio 订阅。
 
 ### `MutationLedger`
 
-- 证明两个JSON-RPCID没有商用密钥执行两次;
-- 使用文件支持的SQLite交易进行键检查,模拟效果,
-  执行计数和结果承诺;
-- 在一个独立的无能率键下,将匹配的参数进行排版
-  账本连接;
-- 拒绝使用不同的参数重复使用的单个关键;
-- 恢复了防守副本,并保存了已提交的记录.
-
-### `DurableTaskService`
-
-- 确认取消请求;
-- 能完成任务`working`直到工人检查站;
-- 证明确认为什么不是最终状态.
+- 证明没有业务键时，两个 JSON-RPC id 会执行两次；
+- 使用基于文件的 SQLite 事务处理键检查、模拟副作用、执行计数器和结果提交；
+- 在独立账本连接间，用同一幂等键对匹配参数去重；
+- 拒绝同一键配合不同参数的复用；
+- 返回防御性副本，并在重新打开后保留已提交记录。
 
 ### `BoundedSseBuffer`
 
-- 压力下合或降低进展;
-- 记录需要进行权威的改编;
-- 没有任何最终反应.
+- 在压力下合并或丢弃进度；
+- 记录需要权威重新获取；
+- 绝不丢弃最终响应。
 
-### 恢复人员
+### `DurableTaskService`
 
-- 返回安全的代理SSE标题和保留意见;
-- 建立重新连接和重新调整计划;
-- 扩散复试, 具有决定性指数的反弹和.
+- 确认取消请求；
+- 在工作进程检查点之前保持任务为 `working`；
+- 说明为什么确认不是最终状态。
 
-## 用它
+### 恢复辅助工具
 
-根据数据库根:
+- 返回代理安全的 SSE 头和保活注释；
+- 创建重连与重新获取计划；
+- 用确定性指数退避和抖动分散重试。
+
+## 使用它
+
+在仓库根目录下：
 
 ```bash
 cd phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/code
@@ -339,128 +322,120 @@ python3 main.py
 python3 -m unittest discover tests -v
 ```
 
-演示程序运行了中央竞赛的两侧,
-在临时文件支持的本书中,除复制突变,超载了有限的
-显示一个持续的任务从已确认的取消移动
-工人观察到的取消.
+演示运行中央竞争的双方，在临时基于文件的账本中执行一个事务性去重的变更操作，使有界进度缓冲区过载，并展示一个持久化 Task 从已确认取消变为工作进程观察到的取消。
 
-## 互动实验室
+## 交互实验
 
-运行四次活动,没有增加睡眠.
+在不添加 sleep 的情况下运行四种事件顺序。
 
-1. 开始请求`A`取消,然后打电话`complete()`现在,我们要去.
-2. 开始请求`B`完成,然后取消.
-3. 开始请求`C`在每一个空的最后期限之前发出进展,然后超过最大的最后期限.
-4. 开始请求`D`通过流式HTTP,关闭其响应流.
+1. 启动请求 `A`，取消它，然后调用 `complete()`。
+2. 启动请求 `B`，完成它，然后投递取消。
+3. 启动请求 `C`，在每个空闲截止时间前发出进度，然后跨越最大截止时间。
+4. 在 Streamable HTTP 上启动请求 `D` 并关闭其响应流。
 
-记录每个场景:
+为每个场景记录：
 
-- 终端请求状态;
-- 是否存在最终回应;
-- 放到电线上的取消信号;
-- 客户应该忽略哪个事件.
+- 请求的终态；
+- 是否存在最终响应；
+- 线路上放置的取消信号；
+- 客户端应忽略哪个事件。
 
-然后改变`D`操作是相同的,但取消信号必须改变.
+然后将 `D` 改为 stdio。操作完全相同，但取消信号必须改变。
 
-## 实践实验室
+## 练习实验
 
-添加一个`reserve_inventory`变化到`MutationLedger`现在,我们要去.
+向 `MutationLedger` 添加一个 `reserve_inventory` 变更操作。
 
-要求:
+要求：
 
-1. 密钥将 SKU,数量,租户和运营名称绑定.
-2. 通过相同的键和相同的参数再次尝试,将返回第一个预订.
-3. 没有另一个保留,改变数量的重试失败.
-4. 执行但失去了回应的执行可以通过关键调和.
-5. 结果没有记录秘密或支付数据.
-6. 如果客户端未提供钥匙,则将自动重新尝试禁用.
-7. 在决定接下来要做什么之前,添加一个模拟的订阅下降,
-8. 在一个屏障中启动两个账本连接,并提交相同的键
-   确认已提交一个保留.
-9. 转换返回的首个预订对象. 重复播放键,证明
-   存储结果没有改变.
-10. 关闭和重新打开本书文件,然后按键调整预订.
+1. 键绑定 SKU、数量、租户和操作名称。
+2. 相同键与相同参数的重试返回第一次预留。
+3. 数量改变的重试失败，且不产生新的预留。
+4. 已提交但丢失响应的执行可以通过键对账。
+5. 结果不记录任何机密或支付数据。
+6. 客户端未提供键时禁用自动重试。
+7. 添加一次模拟的订阅断开，并在决定下一步之前重新获取库存记录。
+8. 在屏障处启动两个账本连接，并发提交相同的键。断言只有一个预留被提交。
+9. 修改第一个返回的预留对象。重放该键，证明存储的结果未改变。
+10. 关闭并重新打开账本文件，然后按键对账预留。
 
-实验室诚实:如果库存存存入另一个服务,
-服务接受相同的无权密钥,或者是否是交易输出箱
-桥梁,地方的承诺是远程效应.
+保持实验的诚实性：如果库存存在于另一个服务中，请说明该服务是否接受相同的幂等键，或者是否需要事务性发件箱将本地提交桥接到远程副作用。
 
-## 运输的文物
+## 交付工件
 
-`outputs/skill-mcp-reliability-reviewer.md`提供MCP操作,运输,时间限度政策,重试行为,队列政策和恢复计划.它返回比赛表,重试分类,无能度边界,流量控制检查和故障装置.
+`outputs/skill-mcp-reliability-reviewer.md` 是一个平面的可靠性审查技能。给它一个 MCP 操作、传输方式、超时策略、重试行为、队列策略和恢复计划。它返回一张竞争表、重试分类、幂等边界、流控检查和故障测试夹具。
 
-## 检查
+## 验证它
 
-如果这些说法是真的,课程就会完整:
+当以下陈述全部为真时，本课即告完成：
 
-- 工作室取消发送`notifications/cancelled`他没有得到任何回应.
-- 流式HTTP取消关闭请求流,并不会发送取消POST.
-- 取消前完成抑制最终反应.
-- 完全取消之前保留响应,忽略迟到取消.
-- 进步可以重新设置空置时间,但永远不会达到最大的时间.
-- 单独一个新的JSON-RPCID再次执行突变.
-- 一个无效键和相同的参数执行一次在同时
-  两连接的比赛.
-- 复制后,可以恢复,反复复复制后,可以恢复.
-- 转换返回结果不能改变存储的结果.
-- 限制式缓冲器保持容量内,保持最终反应.
-- 连接重新使用新的请求,不发送`Last-Event-ID`并且重新调整受影响的状态.
-- `tasks/cancel`确认将使任务不终结,直到工人遵守它.
+- stdio 取消发送 `notifications/cancelled` 且不接收响应。
+- Streamable HTTP 取消关闭请求流，且不发送取消 POST。
+- 先取消后完成会抑制最终响应。
+- 先完成后取消会保留响应并忽略迟到的取消。
+- 进度可以重置空闲超时，但绝不能重置最大超时。
+- 仅用一个新的 JSON-RPC id 就会再次执行变更操作。
+- 在两连接并发竞争下，一个幂等键和相同参数只执行一次。
+- 已提交的记录在重新打开后存活，重放返回防御性副本。
+- 修改一个返回的结果不能改变存储的结果。
+- 有界缓冲区保持在容量之内并保留最终响应。
+- 重连使用新请求，不发送 `Last-Event-ID`，并重新获取受影响的状态。
+- `tasks/cancel` 确认使任务保持非终态，直到工作进程观察到它。
 
-## 生产失败模式
+## 生产环境故障模式
 
-| Failure | Observable symptom | Correct response |
+| 故障 | 可观察症状 | 正确响应 |
 |---------|--------------------|------------------|
-| HTTP client POSTs cancellation notification | Server and client disagree about request lifetime | Close the request's SSE response stream |
-| Server responds after accepted cancellation | Client receives an unusable late result | Stop work and suppress further messages when cancellation wins |
-| Progress resets every deadline | Hung work survives forever | Keep a separate absolute maximum timeout |
-| New RPC id treated as deduplication | Charge, deployment, or deletion runs twice | Add a durable application idempotency key |
-| Key check and effect are separate | Concurrent workers both observe a missing key | Commit key claim, effect record, and result atomically |
-| In-memory ledger used across replicas | Restart or another worker forgets prior commits | Use shared durable storage or upstream idempotency |
-| Stored mutable result returned directly | Caller mutation corrupts later replays | Serialize committed results and return defensive copies |
-| Key reused with changed arguments | One key aliases two business intents | Store and compare an argument fingerprint |
-| Unbounded progress queue | Memory rises with a slow consumer | Coalesce and drop replaceable progress within a bound |
-| Final response dropped under pressure | Client cannot know the request outcome | Reserve capacity or evict progress, never the final response |
-| Proxy buffers SSE | Progress arrives in bursts or after timeout | Disable buffering and configure compatible proxy timeouts |
-| `Last-Event-ID` assumed | Client resumes from state the server does not support | Reconnect with a new request and refetch |
-| Every client reconnects immediately | Recovery creates another outage | Use capped exponential backoff with jitter |
-| Task ack treated as final cancellation | Worker keeps running after UI says stopped | Poll the Task until a terminal status |
+| HTTP 客户端 POST 取消通知 | 服务端与客户端对请求生命周期认知不一致 | 关闭该请求的 SSE 响应流 |
+| 服务端在已接受的取消之后响应 | 客户端收到不可用的迟到结果 | 取消获胜时停止工作并抑制后续消息 |
+| 进度重置所有截止时间 | 挂起的工作永远存活 | 保留一个独立的绝对最大超时 |
+| 新的 RPC id 被当作去重 | 扣款、部署或删除执行两次 | 添加持久化的应用幂等键 |
+| 键检查与副作用分离 | 并发工作进程都观察到键缺失 | 原子地提交键声明、副作用记录和结果 |
+| 跨副本使用内存中的账本 | 重启或另一个工作进程丢失先前提交 | 使用共享持久化存储或上游幂等性 |
+| 直接返回存储的可变结果 | 调用方的修改破坏后续重放 | 序列化已提交结果并返回防御性副本 |
+| 相同键配合改变的参数 | 一个键混叠了两个业务意图 | 存储并比较参数指纹 |
+| 无界进度队列 | 慢消费者导致内存上升 | 在界限内合并并丢弃可替代的进度 |
+| 压力下丢弃最终响应 | 客户端无法得知请求结果 | 保留容量或驱逐进度，绝不驱逐最终响应 |
+| 代理缓冲 SSE | 进度成批到达或在超时后才到达 | 禁用缓冲并配置兼容的代理超时 |
+| 假设 `Last-Event-ID` 可用 | 客户端从服务端不支持的状态恢复 | 用新请求重连并重新获取 |
+| 每个客户端立即重连 | 恢复制造了另一次故障 | 使用带抖动、有上限的指数退避 |
+| Task 确认被当作最终取消 | UI 显示已停止但工作进程仍在运行 | 轮询 Task 直到出现终态 |
 
-## 石连接
+## 毕业项目关联
 
-工具生态系统的终点石应该将可靠性视为可执行的证据,而不是建筑图中的段落.
+工具生态毕业项目应将可靠性视为可执行的证据，而不是架构图中的一段文字。
 
-需要这些文物:
+要求这些工件：
 
-- 每辆运输的取消赛车记录;
-- 每个暴露的突变的重试表;
-- 无效密钥记录和不匹配装置;
-- 一次同步的相同密钥转录,重新开放检查和突变代号检查;
-- 限制缓冲过载结果;
-- 逆代理SSE标题和空置政策;
-- 连接计划,其中列出了权威的重复方法;
-- 终点石使用Task时,具有持久的任务取消痕迹.
+- 每种传输方式一份取消竞争记录；
+- 每个暴露的变更操作一张重试表；
+- 一份幂等键记录和不匹配测试夹具；
+- 一份并发相同键记录、一次重新打开检查和一次修改混叠检查；
+- 一份有界缓冲区过载结果；
+- 反向代理 SSE 头和空闲策略；
+- 一份指明权威重新获取方法的重连计划；
+- 当毕业项目使用 Task 时，一份持久化 Task 取消跟踪。
 
-绿色要求在本地过程中证明了只有幸福的道路. 失败的反应,迟到的取消,消费者缓慢和重新连接的群体产生决定性结果时,终点石是生产准备的.
+本地进程中的绿色请求只证明了正常路径。当丢失响应、迟到取消、慢消费者和重连群潮都有确定性结果时，毕业项目才算生产就绪。
 
-## 关键词
+## 关键术语
 
-| Term | Meaning |
+| 术语 | 含义 |
 |------|---------|
-| Request cancellation | Abandonment of one in-flight MCP request |
-| Cancellation race | Competition between terminal completion and cancellation events |
-| Idle timeout | Limit since the last useful request activity |
-| Maximum timeout | Absolute limit from request start, unaffected by progress |
-| Idempotency key | Application identifier that deduplicates one business intent |
-| Atomic ledger | Durable boundary that commits the key claim, effect record, and result as one unit |
-| Backpressure | Control applied when producers outpace consumers |
-| Progress coalescing | Replacing older progress with a newer authoritative value |
-| Refetch | Reading current state again after a stream gap |
-| Jitter | Deliberate variation that spreads retries across time |
+| 请求取消 | 放弃一个进行中的 MCP 请求 |
+| 取消竞争 | 终态完成事件与取消事件之间的竞争 |
+| 空闲超时 | 自上次有效请求活动以来的限制 |
+| 最大超时 | 自请求开始的绝对限制，不受进度影响 |
+| 幂等键 | 对一个业务意图去重的应用标识符 |
+| 原子账本 | 将键声明、副作用记录和结果作为一个单元提交的持久化边界 |
+| 背压 | 当生产者快于消费者时施加的控制 |
+| 进度合并 | 用较新的权威值替换较早的进度 |
+| 重新获取 | 在流中断后重新读取当前状态 |
+| 抖动 | 将重试分散到时间上的刻意变化 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [MCP Cancellation](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/cancellation)
-- [MCP Progress](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/progress)
+- [MCP 取消](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/cancellation)
+- [MCP 进度](https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/progress)
 - [MCP Streamable HTTP](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http)
-- [MCP Tasks Extension](https://tasks.extensions.modelcontextprotocol.io/specification/draft/tasks)
+- [MCP Tasks 扩展](https://tasks.extensions.modelcontextprotocol.io/specification/draft/tasks)

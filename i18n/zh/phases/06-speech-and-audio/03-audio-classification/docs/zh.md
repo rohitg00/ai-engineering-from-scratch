@@ -1,61 +1,61 @@
-# 音频分类 从k-NN在MFCC到AST和BEAT
+# 音频分类 — 从基于 MFCC 的 k-NN 到 AST 与 BEATs
 
-> 无论是"狗吠声与声"还是"这是什么语言",都在进行音频分类. 功能都是化. 架构每十年都在移动. 评估仍然是AUC,F1和每类回忆.
+> 从"狗叫还是警报"到"这是哪种语言"，都属于音频分类。特征是梅尔谱。架构每隔十年就更换一次。但评估始终是 AUC、F1 和每类召回率。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 3 · 06 (CNNs), Phase 5 · 08 (CNNs & RNNs for Text)
-**Time:** ~75 minutes
+**Prerequisites:** Phase 6 · 02（频谱图与 Mel）、Phase 3 · 06（CNN）、Phase 5 · 08（用于文本的 CNN 与 RNN）
+**Time:** 约 75 分钟
 
 ## 问题
 
-你得到一个10秒钟的剪辑.你想知道:"这是什么?"城市声音 (声,钻机,狗),语音命令 (是的/不/停止),语言识别 (en/es/ar),扬声器情绪 (愤怒/中性),或环境声音 (室内/室外,声).所有这些都是 *音频分类*,并在2026年基础架构成熟:log-mel → CNN或变压器 →软max.
+你拿到一段 10 秒的音频片段。你想知道："这是什么？"城市声音（警报、电钻、狗叫）、语音指令（是/否/停止）、语言识别（英/西/阿）、说话人情绪（愤怒/中性），或环境声音（室内/室外、嘈杂声）。这些都是*音频分类*，到 2026 年，基线架构已经成熟：log-mel → CNN 或 Transformer → softmax。
 
-音频数据集具有残酷的类失衡,强大的域名转移 (清洁与噪音),以及标签噪音 (谁决定"城市语"与"餐厅噪音"?).80%的问题是策展,增强和评估,而不是将CNN换为变压器.
+核心难点不在于网络，而在于数据。音频数据集存在严重的类别不平衡、强烈的域偏移（干净 vs 噪声）和标签噪声（谁来决定"城市嘈杂声"与"餐厅噪声"的区分？）。问题的 80% 在于数据整理、增强和评估，而不是把 CNN 换成 Transformer。
 
 ## 概念
 
 ![Audio classification ladder: k-NN on MFCCs to AST to BEATs](../assets/audio-classification.svg)
 
-**k-NN on MFCCs (the 1990s baseline).**按片段平坦的MFCC,计算与标记的银行相似的共数,返回顶部K的多数投票.在清洁的小数据集 (语音命令,ESC-50) 上,令人惊的强度.
+**基于 MFCC 的 k-NN（1990 年代基线）。** 将每个片段的 MFCC 展平，与带标签的样本库计算余弦相似度，返回前 K 个的多数投票。在干净的小数据集（Speech Commands、ESC-50）上表现出乎意料地强。无需 GPU 即可运行。
 
-**2D CNN on log-mels (2015-2019).**治疗`(T, n_mels)`通过RESNET-18或VGG方式,全球平均时间轴积分,课程上的软度,仍然是2026年大多数高格赛的基线.
+**基于 log-mel 的 2D CNN（2015–2019）。** 把 `(T, n_mels)` 的 log-mel 当作图像处理。使用 ResNet-18 或 VGG 风格的网络。对时间轴做全局平均池化。对类别做 softmax。这在大多数 2026 年的 Kaggle 竞赛中仍是基线。
 
-**Audio Spectrogram Transformer, AST (2021-2024).**贴合日志邮件 (例如16×16补丁),添加位置嵌入,输入VIT. 视频组的最新状态 (mAP 0.485) 进行监督学习.
+**Audio Spectrogram Transformer，AST（2021–2024）。** 将 log-mel 切分为 patch（例如 16×16 的 patch），加上位置嵌入，输入 ViT。这是 AudioSet（mAP 0.485）上监督学习的最先进水平。
 
-**BEATs and WavLM-base (2024-2026).**通过使用1-10%的监督数据,你需要完成任务.在2026年,这是非语音音的默认起点. BEATs-iter3在AudioSet上击败AST1-2mAP,同时使用1/4的计算.
+**BEATs 与 WavLM-base（2024–2026）。** 在数百万小时的音频上进行自监督预训练。只需原本监督学习所需数据的 1–10% 即可在你的任务上微调。到 2026 年，这是非语音音频的默认起点。BEATs-iter3 在 AudioSet 上比 AST 高出 1–2 mAP，且只用了 1/4 的算力。
 
-**Whisper-encoder as a frozen backbone (2024).**接下来,我们将Whisper的编码器放下,将解码器放下,将线性分类器附加到.
+**Whisper 编码器作为冻结主干（2024）。** 取 Whisper 的编码器，去掉解码器，接一个线性分类器。在零音频增强的条件下，在语言识别和简单事件分类上接近最先进水平。这是"免费午餐"式的基线。
 
-### 阶级失衡是真正的挑战
+### 类别不平衡才是真正的挑战
 
-标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签: 标签
+ESC-50：50 个类别，每类 40 个片段——均衡、容易。UrbanSound8K：10 个类别，不平衡比例 10:1。AudioSet：632 个类别，长尾比例高达 100,000:1。有效的技术：
 
-- 在培训期间 (不在评估中) 进行均衡的采样.
-- 混合:将两个剪辑 (及其标签) 线性插入为增强.
-- 简单,关键. 现在,我们需要一个新的技术.
+- 训练时均衡采样（评估时不用）。
+- Mixup：将两个片段（及其标签）做线性插值作为增强。
+- SpecAugment：随机遮蔽时间段和频段。简单但至关重要。
 
 ### 评估
 
-- 多级独家 (语音命令):最高1-准确,最高5-准确.
-- 多级多级标签 (AudioSet, UrbanSound-style):平均精度 (mAP).
-- 严重失衡:每类召回+宏F1.
+- 多分类互斥（Speech Commands）：top-1 准确率、top-5 准确率。
+- 多分类多标签（AudioSet、UrbanSound 风格）：平均精度均值（mAP）。
+- 严重不平衡：每类召回率 + 宏 F1。
 
-2026号码你应该知道:
+2026 年你应该知道的数字：
 
-| Benchmark | Baseline | SOTA 2026 | Source |
+| 基准 | 基线 | 2026 SOTA | 来源 |
 |-----------|----------|-----------|--------|
-| ESC-50 | 82% (AST) | 97.0% (BEATs-iter3) | BEATs paper (2024) |
-| AudioSet mAP | 0.485 (AST) | 0.548 (BEATs-iter3) | HEAR leaderboard 2026 |
-| Speech Commands v2 | 98% (CNN) | 99.0% (Audio-MAE) | HEAR v2 results |
+| ESC-50 | 82%（AST） | 97.0%（BEATs-iter3） | BEATs 论文（2024） |
+| AudioSet mAP | 0.485（AST） | 0.548（BEATs-iter3） | HEAR 排行榜 2026 |
+| Speech Commands v2 | 98%（CNN） | 99.0%（Audio-MAE） | HEAR v2 结果 |
 
 ```figure
 mfcc-pipeline
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1: 化
+### 第 1 步：特征化
 
 ```python
 def featurize_mfcc(signal, sr, n_mfcc=13, n_mels=40, frame_len=400, hop=160):
@@ -66,7 +66,7 @@ def featurize_mfcc(signal, sr, n_mfcc=13, n_mels=40, frame_len=400, hop=160):
     return [dct_ii(frame, n_mfcc) for frame in log]
 ```
 
-### 步骤2:固定长度的总结
+### 第 2 步：定长摘要
 
 ```python
 def summarize(mfcc_frames):
@@ -78,9 +78,9 @@ def summarize(mfcc_frames):
     return mean + var
 ```
 
-简单但强大:平均+时间变异为13个 MFCC提供26维固定嵌入.即时运行.在ESC-50上击败了最新的NN基线.
+简单但强大：对时间维度取均值 + 方差，即可将 13 系数的 MFCC 转为 26 维的定长嵌入。运行瞬间完成。直到 2017 年，它还能在 ESC-50 上击败最先进的神经网络基线。
 
-### 步骤3: k-NN
+### 第 3 步：k-NN
 
 ```python
 def cosine(a, b):
@@ -95,9 +95,9 @@ def knn_classify(q, bank, labels, k=5):
     return votes.most_common(1)[0][0]
 ```
 
-### 步骤4:升级到CNN在日志
+### 第 4 步：升级为基于 log-mel 的 CNN
 
-在PyTorch:
+在 PyTorch 中：
 
 ```python
 import torch.nn as nn
@@ -117,9 +117,9 @@ class AudioCNN(nn.Module):
         return self.head(self.body(x).flatten(1))
 ```
 
-列车在ESC-50上用单个RTX 4090的10分钟. 80%+精度.
+300 万参数。在单块 RTX 4090 上训练 ESC-50 约需 10 分钟。准确率 80% 以上。
 
-### 步骤5:2026年默认的 细调 BEAT
+### 第 5 步：2026 年的默认方案 — 微调 BEATs
 
 ```python
 from transformers import ASTFeatureExtractor, ASTForAudioClassification
@@ -135,49 +135,49 @@ inputs = ext(audio, sampling_rate=16000, return_tensors="pt")
 logits = model(**inputs).logits
 ```
 
-对于 BEAT 则使用`microsoft/BEATs-base`通过`beats`转换器API的形状相同.
+对于 BEATs，通过 `beats` 库使用 `microsoft/BEATs-base`；transformers API 的形式相同。
 
-## 用它
+## 实践应用
 
-现在,我们要做什么?
+2026 年的技术选型：
 
-| Situation | Start with |
+| 场景 | 从这里开始 |
 |-----------|-----------|
-| Tiny dataset (<1000 clips) | k-NN on MFCC means (your baseline) + audio augmentation |
-| Medium dataset (1K–100K) | BEATs or AST fine-tune |
-| Large dataset (>100K) | Train from scratch or fine-tune Whisper-encoder |
-| Real-time, edge | 40-MFCC CNN, quantized to int8 (KWS-style) |
-| Multi-label (AudioSet) | BEATs-iter3 with BCE loss + mixup + SpecAugment |
-| Language ID | MMS-LID, SpeechBrain VoxLingua107 baseline |
+| 微型数据集（<1000 个片段） | 基于 MFCC 均值的 k-NN（你的基线）+ 音频增强 |
+| 中型数据集（1K–100K） | BEATs 或 AST 微调 |
+| 大型数据集（>100K） | 从头训练或微调 Whisper 编码器 |
+| 实时、边缘设备 | 40-MFCC CNN，量化为 int8（KWS 风格） |
+| 多标签（AudioSet） | BEATs-iter3 + BCE 损失 + mixup + SpecAugment |
+| 语言识别 | MMS-LID、SpeechBrain VoxLingua107 基线 |
 
-决策规则:**start with a frozen backbone, not a fresh model**精细调节BET头脑,会让你在几个小时内获得95%的SOTA,而不是几周.
+决策原则：**从冻结主干开始，而不是从头训练新模型**。微调一个 BEATs 头，几小时（而非几周）就能达到 SOTA 的 95%。
 
-## 运送它
+## 上线部署
 
-保存如`outputs/skill-classifier-designer.md`选择一个特定的音频分类任务的架构,增强,类平衡策略和评估指标.
+保存为 `outputs/skill-classifier-designer.md`。为给定的音频分类任务选择架构、增强方法、类别平衡策略和评估指标。
 
-## 运动
+## 练习
 
-1. **Easy.**跑步`code/main.py`根据4类合成数据集 (不同音调的纯色调) 训练k-NN MFCC基线. 报告混矩阵.
-2. **Medium.**取代`summarize`它们的数据集中的4分钟聚合率比同一个合成数据集的 mean+var 值更高吗?
-3. **Hard.**使用`torchaudio`报告交叉验证准确度为5倍. 添加规格增量 (时间面具=20,频率面具=10) 并报告三角形.
+1. **简单。** 运行 `code/main.py`。它在一个 4 类合成数据集（不同音高的纯音）上训练 k-NN MFCC 基线。报告混淆矩阵。
+2. **中等。** 将 `summarize` 替换为 [均值、方差、偏度、峰度]。在同一合成数据集上，4 矩量池化是否优于均值+方差？
+3. **困难。** 使用 `torchaudio`，在 ESC-50 的第 1 折上训练一个 2D CNN。报告 5 折交叉验证的准确率。加入 SpecAugment（时间遮蔽 = 20，频率遮蔽 = 10）并报告提升幅度。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|-----------------|-----------------------|
-| AudioSet | The ImageNet of audio | Google's 2M-clip, 632-class weakly-labeled YouTube dataset. |
-| ESC-50 | Small classification benchmark | 50 classes × 40 clips of environmental sounds. |
-| AST | Audio Spectrogram Transformer | ViT on log-mel patches; 2021 SOTA. |
-| BEATs | Self-supervised audio | Microsoft model, iter3 leads AudioSet as of 2026. |
-| Mixup | Pair augmentation | `x = λ·x1 + (1-λ)·x2; y = λ·y1 + (1-λ)·y2`. |
-| SpecAugment | Mask-based augmentation | Zero-out random time and frequency bands of the spectrogram. |
-| mAP | Main multi-label metric | Mean average precision across classes and thresholds. |
+| AudioSet | 音频界的 ImageNet | Google 的 200 万片段、632 类弱标注 YouTube 数据集。 |
+| ESC-50 | 小型分类基准 | 环境声音的 50 类 × 40 片段。 |
+| AST | Audio Spectrogram Transformer | 基于log-mel patch 的 ViT；2021 年 SOTA。 |
+| BEATs | 自监督音频 | Microsoft 的模型，截至 2026 年 iter3 领跑 AudioSet。 |
+| Mixup | 成对增强 | `x = λ·x1 + (1-λ)·x2; y = λ·y1 + (1-λ)·y2`。 |
+| SpecAugment | 基于遮蔽的增强 | 将频谱图上随机的时间段和频段置零。 |
+| mAP | 主要的多标签指标 | 跨类别和阈值的平均精度均值。 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Gong, Chung, Glass (2021). AST: Audio Spectrogram Transformer](https://arxiv.org/abs/2104.01778)从2021年到2024年记录的建筑.
-- [Chen et al. (2022, rev. 2024). BEATs: Audio Pre-Training with Acoustic Tokenizers](https://arxiv.org/abs/2212.09058)2024+默认
-- [Park et al. (2019). SpecAugment](https://arxiv.org/abs/1904.08779)主导的音频增强.
-- [Piczak (2015). ESC-50 dataset](https://github.com/karolpiczak/ESC-50)50级的基准,活着.
-- [Gemmeke et al. (2017). AudioSet](https://research.google.com/audioset/) 632 级YouTube类别;仍然是黄金标准.
+- [Gong, Chung, Glass (2021). AST: Audio Spectrogram Transformer](https://arxiv.org/abs/2104.01778) — 2021–2024 年间的事实标准架构。
+- [Chen et al. (2022, rev. 2024). BEATs: Audio Pre-Training with Acoustic Tokenizers](https://arxiv.org/abs/2212.09058) — 2024 年起的默认选择。
+- [Park et al. (2019). SpecAugment](https://arxiv.org/abs/1904.08779) — 占主导地位的音频增强方法。
+- [Piczak (2015). ESC-50 dataset](https://github.com/karolpiczak/ESC-50) — 至今仍在使用的 50 类基准。
+- [Gemmeke et al. (2017). AudioSet](https://research.google.com/audioset/) — 632 类的 YouTube 分类体系；仍是黄金标准。

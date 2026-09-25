@@ -1,24 +1,24 @@
-# 评论员代理: 独立的建筑师和标记器
+# 审查者代理：将构建者与评分者分离
 
-> 编写代码的代理人不能评级代码. 审核器是一个第二循环,其系统提示不同,目标不同,并且只能读取构建者制作的所有内容.构建者和审核器之间的差距是最可靠的地方.
+> 编写代码的代理不能给它自己打分。审查者是一个拥有不同系统提示、不同目标，以及对构建者产出的一切只读访问权限的第二循环。构建者与审查者之间的差距，正是大部分可靠性所在之处。
 
 **Type:** Build
 **Languages:** Python (stdlib)
-**Prerequisites:** Phase 14 · 38 (Verification Gate)
-**Time:** ~55 minutes
+**Prerequisites:** 第 14 阶段 · 38(验证门)
+**Time:** 约 55 分钟
 
 ## 学习目标
 
-- 解释为什么同一代理人不能可靠地审查自己的工作.
-- 建立一个审查代理循环,它消耗了构建器文物,并发出了一个结构化审查报告.
-- 写作一个评审者条目, 评分特定的尺寸, 而不是振动.
-- 让审稿人进入工作台,让人类审稿步骤从一个真正的文物开始.
+- 说明为什么同一个代理无法可靠地审查自己的工作。
+- 构建一个审查者代理循环，该循环消费构建者的产物并输出一份结构化的审查报告。
+- 编写一份按具体维度评分(而非凭感觉)的审查者评分细则。
+- 将审查者接入工作台，使人工审查步骤从一个真实产物开始。
 
 ## 问题
 
-检查门 (阶段14·38) 确认接受运行和范围保持. 门说`passed: true`两天后,你发现,修复解决了错误的半个错误.
+你让代理修复一个 bug。它编辑了四个文件，运行了测试，并报告完成。验证门(第 14 阶段 · 38)确认验收已运行且范围未扩大。门返回 `passed: true`。你合并了代码。两天后你发现，这个修复只解决了 bug 中错误的那一半。
 
-接受是必要的,不够的. 审查者提出了接受不能提出的问题:这是否解决了正确的问题?
+验收是必要的，但并不充分。审查者会提出验收无法提出的问题：这是否解决了正确的问题？它是否在未标记的情况下扩大了范围？它是否记录了本应被质疑的假设？它是否让工作台处于下一个会话可以顺利接手的状态？
 
 ## 概念
 
@@ -31,111 +31,111 @@ flowchart LR
   Report --> Human[Human Sign-Off]
 ```
 
-### 审查员条款
+### 审查者评分细则
 
-五个维度,每个维度都是0到2的.
+五个维度，每个维度评分 0 到 2。
 
-| Dimension | Question |
+| 维度 | 问题 |
 |-----------|----------|
-| Problem fit | Did the change solve the task as stated, not a nearby task? |
-| Scope discipline | Were edits confined to the contract or was the contract grown deliberately? |
-| Assumptions | Are all hidden assumptions written down somewhere reviewable? |
-| Verification quality | Does the acceptance command actually prove the goal, or did it prove a weaker version? |
-| Handoff readiness | Could the next session pick up cleanly from the current state? |
+| 问题契合度 | 该变更是否解决了所陈述的任务，而不是一个相近的任务？ |
+| 范围纪律 | 编辑是否被限制在契约之内，还是契约被有意扩大？ |
+| 假设 | 所有隐藏的假设是否都写在可审查的地方？ |
+| 验证质量 | 验收命令是否真正证明了目标，还是只证明了一个较弱的版本？ |
+| 交接就绪度 | 下一个会话能否从当前状态顺利接手？ |
 
-总数是10个. 7以下的运行是软失败; 5以下的运行是硬失败.
+总分 10 分。低于 7 分为软失败；低于 5 分为硬失败。
 
-### 评审员是一个独立的角色,而不是一个独立的模型
+### 审查者是一个独立的角色，而非独立的模型
 
-修建器可以使用同样的模型运行评论器. 纪律是角色分离:不同的系统提示,不同的输入,没有写入差异. 姿势的变化是信号的变化.
+你可以使用与构建者相同的模型运行审查者。纪律在于角色分离：不同的系统提示、不同的输入、对 diff 没有写权限。姿态的改变就是信号的改变。
 
-### 评论员不能编辑差异
+### 审查者不能编辑 diff
 
-评论员阅读差异,状态,反,判决. 它写了一个报告. 它不补丁差异. 如果报告说"修复这个",下一个构建者转会修复; 评论员回到审查. 混合角色打败了差距.
+审查者阅读 diff、状态、反馈和判定结果。它撰写一份报告。它不会修补 diff。如果报告说“修复这个”，下一个构建者回合执行修复；审查者则回到审查工作中。混淆角色会消除这个差距。
 
-### 审查员分类与验证门
+### 审查者评分细则与验证门
 
-通过"审核"的过程,检查了确定性事实:是否接受,是否通过规则,是否适用.审核者做出了质量判断:这是否正确的工作,是否有文档,是否可使用.
+门(第 14 阶段 · 38)检查确定性事实：验收是否运行、规则是否通过、范围是否守住。审查者做出定性判断：这是否是正确的工作、是否有文档记录、交接是否可用。两者都需要。
 
 ```figure
 wb-builder-marker
 ```
 
-## 建立它
+## 构建它
 
-`code/main.py`执行:
+`code/main.py` 实现了：
 
-- `ReviewerInputs`分析师阅读的文物.
-- 每个函数都是对课程的决定性和 stub 级;实际的实现将称为LLM.
-- `review_report.json`总数和判决 (`pass`现在`soft_fail`现在`hard_fail`)
-- 两种示范案例:一个清洁的变化和一个"正确的测试,错误的问题"的变化.
+- 一个 `ReviewerInputs` dataclass,捆绑审查者读取的产物。
+- 一个评分器，每个维度对应一个函数。每个函数都是确定性的，且在本课中仅为桩级实现；真实实现会调用 LLM。
+- 一个 `review_report.json` 写入器，包含五个分数、总分和判定(`pass`、`soft_fail`、`hard_fail`)。
+- 两个演示用例：一个干净的变更，以及一个“测试正确但问题错误”的变更。
 
-运行它:
+运行它：
 
 ```
 python3 code/main.py
 ```
 
-输出:两个写到磁盘上的审查报告和一个控制台的维度分数表.
+输出：写入磁盘的两份审查报告，以及一个维度分数的控制台表格。
 
-## 野生生产模式
+## 业界生产模式
 
-收据:Cloudflare 2026年4月的AI代码审查系统在30天内通过5169个备忘录进行了48,095次合并请求的131,246次审查. 平均检查完成在3分39秒. 七名专业审查员 (安全性,性能,代码质量,文档,释放管理,合规性,工程编辑) 在审查协调员的同时进行了审查,该委员会将调查结果进行复制并判断严重性. 专家们在更便宜的阶段运行.
+数据凭证：Cloudflare 于 2026 年 4 月推出的 AI 代码审查系统，在 30 天内跨 5,169 个仓库的 48,095 个合并请求运行了 131,246 次审查。审查完成时间中位数为 3 分 39 秒。最多七个专家审查者(安全、性能、代码质量、文档、发布管理、合规、Engineering Codex)在一个 Review Coordinator 之下并行运行，由该协调器去重发现并评判严重程度。顶级模型专供协调器使用；专家运行在更便宜的层级上。
 
-只有四种模式使得这个工作可以在规模上进行.
+四个模式使其能大规模运作。
 
-**Specialist pool, not one big reviewer.**一个具有5维分类的评论员为单独备份工作.一旦代码库具有安全关键,性能关键和文件表面,分为具有较小提示的专家.协调员进行排版;专家从来没有运行完整分类.模型层分离不出:廉价专家,昂贵的协调员.
+**专家池，而非一个大审查者。** 带有 5 维度评分细则的单个审查者适用于个人仓库。一旦代码库包含安全关键、性能关键和文档相关的界面，就应拆分为更小提示的专家。协调器负责去重；专家从不运行完整评分细则。模型层级分离随之自然形成：便宜专家，昂贵协调器。
 
-**Bias mitigation as design requirement, not optimization.**法律法官显示有四种可靠的偏见 (Adnan Masood,2026年4月):位置偏见 (GPT-4 ~40%不一致于 (A,B) vs (B,A) 订单),语法偏见 (~15%的指数通胀向更长的输出),自偏 (法官更喜欢来自同一个模型家族的输出),权威 (法官对已知的作者进行过度引用). 减轻:评估两种排序,只计算一致的胜利;使用1-4个尺度,显然奖励简洁;在模型家庭中旋转评委;在得分之前剥离作者名称.
+**偏差缓解是设计要求，而非优化。** LLM 评审者表现出四种可靠的偏差(Adnan Masood,2026 年 4 月)：位置偏差(GPT-4 在 (A,B) 与 (B,A) 排序上约 40% 不一致)、冗长偏差(对较长输出约 15% 的分数膨胀)、自我偏好(评审者偏好同一模型家族的输出)、权威偏差(评审者高估对知名作者的引用)。缓解措施：评估两种排序并只统计一致的胜出；使用明确奖励简洁性的 1-4 分制；跨模型家族轮换评审者；在评分前去除作者姓名。
 
-**Calibration set, not vibes.**根据历史记录,每次变化都会让审稿人重新审核.如果历史记录的一致性低于80%,审稿人需要在审稿人发出之前修改.这就是每个团队最终重新发现的东西;更好从中开始.
+**校准集，而非凭感觉。** 一个包含 10-20 个任务、带有已知正确判定结果的历史集合。每次提示变更时都在其上运行审查者。如果与历史记录的一致率低于 80%,评分细则需要在审查者上线前修订。这是每个团队最终都会重新发现的东西；不如一开始就用上。
 
-**Hybrid norm with the gate.**验证门 (阶段14 · 38) 处理确定性检查 (是否接受运行,是否通过测试,是否保持范围). 评论员处理语义检查 (这是正确的工作,假设已记录,是否可使用). 人类2026指南明确于这个分区:不要要求评论员重复已经证明的门.
+**与门混合的规范。** 验证门(第 14 阶段 · 38)处理确定性检查(验收是否运行、测试是否通过、范围是否守住)。审查者处理语义检查(这是否是正确的工作、假设是否有记录、交接是否可用)。Anthropic 2026 年的指导明确划分了这一界限：不要要求审查者重做门已经证明的事情。
 
-## 用它
+## 使用它
 
-生产模式:
+生产模式：
 
-- **Claude Code subagents.**建筑师完成任务后,一个审核员就会跑去,并发布一个评论,
-- **OpenAI Agents SDK handoffs.**建筑师可以向审核员交出完成任务.审核员可以向一个人交出一份发现列表.
-- **Two-model pairing.**构建者使用更快的更便宜的模型. 评论者使用更强大的模型,
+- **Claude Code 子代理。** 审查者子代理在构建者完成任务后运行。它在 PR 上发布包含评分细则分数的评论。
+- **OpenAI Agents SDK 交接。** 构建者在任务完成时交接给审查者。审查者可以带着一份发现清单交回，或交还给人类。
+- **双模型配对。** 构建者运行在更快的廉价模型上。审查者运行在更强、上下文更小的模型上，专注于判断。
 
-评论家是第二双眼睛,当人类不能自己做每一次评论时,工作台就会成长.
+审查者是工作台在人类无法亲自完成每次审查时培养出的第二双眼睛。
 
-## 运送它
+## 发布它
 
-`outputs/skill-reviewer-agent.md`生成一个项目特定的审查员标签,一个与建筑商的文物连接的审查员代理标签,并与验证网关集成,
+`outputs/skill-reviewer-agent.md` 生成一份针对特定项目的审查者评分细则、一个连接到构建者产物的审查者代理桩，以及与验证门的集成，使人工审查从一份书面报告开始，而不是一张空白页。
 
-## 运动
+## 练习
 
-1. 添加一个特定产品域的第六维度. 辩护为什么它不被现有五个吸收.
-2. 通过两个不同的系统提示 (第三,词语) 运行评论器.
-3. 添加一个`confidence`拒绝在最低维度的可信度低于0.6时发送报告.
-4. 建立一个校准集: 10个历史任务的结局,已知正确的判决. 运行审查员在它们上. 它与历史记录不同的地方.
-5. 补充一个"要求更多证据"的条件:审查员可以在得分之前要求建筑师进行特定的测试.
+1. 添加一个针对你的产品领域的第六维度。论证它为何不能被现有五个维度吸收。
+2. 用两个不同的系统提示(简洁、详细)运行审查者。哪个产生的报告更可能被人阅读？
+3. 为每个维度添加一个 `confidence` 字段。当最低维度的置信度低于 0.6 时，拒绝发布报告。
+4. 构建一个校准集：10 个带有已知正确判定结果的历史任务收尾。在其上运行审查者。它在何处与历史记录不一致？
+5. 添加一个“请求更多证据”的机制：审查者可以在评分前要求构建者运行特定的测试。怎样的退避策略才不会导致循环？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
-|------|----------------|------------------------|
-| Reviewer rubric | "Checklist" | Five-dimension 0-2 scoring with a written question per dimension |
-| Soft fail | "Needs revisions" | Total below 7; builder gets findings to address |
-| Hard fail | "Reject" | Total below 5 or any dimension at 0; halt and surface to human |
-| Role separation | "Different prompt" | Same model can be both roles; the discipline is inputs and posture |
-| Confidence floor | "Don't ship low-signal reports" | Refuse to emit a verdict when the rubric is uncertain |
+| 术语 | 人们怎么说 | 它实际的含义 |
+|------|------------------------|
+| 审查者评分细则 | “清单” | 五维度 0-2 评分，每个维度有一个书面问题 |
+| 软失败 | “需要修改” | 总分低于 7;构建者收到需要处理的发现 |
+| 硬失败 | “拒绝” | 总分低于 5 或任一维度为 0;停止并上报给人类 |
+| 角色分离 | “不同的提示” | 同一模型可以担任两种角色；纪律在于输入和姿态 |
+| 置信度下限 | “不要发布低信号报告” | 当评分细则不确定时，拒绝输出判定 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [OpenAI Agents SDK handoffs](https://openai.github.io/openai-agents-python/handoffs/)
-- [Anthropic Claude Code subagents](https://code.claude.com/docs/en/sub-agents)
-- [Cloudflare, Orchestrating AI Code Review at Scale](https://blog.cloudflare.com/ai-code-review/) 7名专家+协调员架构,131万次运行/30天
-- [Agent-as-a-Judge: Evaluating Agents with Agents (OpenReview / ICLR)](https://openreview.net/forum?id=DeVm3YUnpj) DevAI基准,366个层次解决方案要求
-- [Adnan Masood, Rubric-Based Evaluations and LLM-as-a-Judge: Methodologies, Biases, Empirical Validation](https://medium.com/@adnanmasood/rubric-based-evals-llm-as-a-judge-methodologies-and-empirical-validation-in-domain-context-71936b989e80)四个偏见和减轻
-- [MLflow, LLM-as-a-Judge Evaluation](https://mlflow.org/llm-as-a-judge) 对于分离的建筑/评估人员的生产工具
-- [LangChain, How to Calibrate LLM-as-a-Judge with Human Corrections](https://www.langchain.com/articles/llm-as-a-judge)校准设置工作流程
-- [Evidently AI, LLM-as-a-judge: a complete guide](https://www.evidentlyai.com/llm-guide/llm-as-a-judge)
-- [Arize, LLM as a Judge — Primer and Pre-Built Evaluators](https://arize.com/llm-as-a-judge/)
-- 阶段14 · 05 自我精炼和临界 (单代理自我审查的基准)
-- 阶段14 · 30  Eval驱动的代理开发 (校准组生成器)
-- 阶段14 · 38  审查员阅读的验证门
-- 阶段14 · 40  审查者报告提供的交付包
+- [OpenAI Agents SDK 交接](https://openai.github.io/openai-agents-python/handoffs/)
+- [Anthropic Claude Code 子代理](https://code.claude.com/docs/en/sub-agents)
+- [Cloudflare,大规模编排 AI 代码审查](https://blog.cloudflare.com/ai-code-review/) — 7 专家 + 协调器架构,131k 次运行 / 30 天
+- [Agent-as-a-Judge:用代理评估代理(OpenReview / ICLR)](https://openreview.net/forum?id=DeVm3YUnpj) — DevAI 基准，366 个分层解决方案需求
+- [Adnan Masood,基于评分细则的评估与 LLM-as-a-Judge:方法论、偏差、实证验证](https://medium.com/@adnanmasood/rubric-based-evals-llm-as-a-judge-methodologies-and-empirical-validation-in-domain-context-71936b989e80) — 四种偏差及缓解措施
+- [MLflow,LLM-as-a-Judge 评估](https://mlflow.org/llm-as-a-judge) — 分离构建者/评估者的生产工具
+- [LangChain,如何用人工校正校准 LLM-as-a-Judge](https://www.langchain.com/articles/llm-as-a-judge) — 校准集工作流
+- [Evidently AI,LLM-as-a-judge:完整指南](https://www.evidentlyai.com/llm-guide/llm-as-a-judge)
+- [Arize,LLM as a Judge — 入门与预构建评估器](https://arize.com/llm-as-a-judge/)
+- 第 14 阶段 · 05 — Self-Refine 与 CRITIC(单代理自审查基线)
+- 第 14 阶段 · 30 — 评估驱动的代理开发(校准集生成器)
+- 第 14 阶段 · 38 — 审查者读取的验证门
+- 第 14 阶段 · 40 — 审查者报告所馈送的交接包

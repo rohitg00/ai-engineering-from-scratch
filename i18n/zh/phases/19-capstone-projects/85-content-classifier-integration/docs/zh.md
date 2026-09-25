@@ -1,30 +1,30 @@
-#  内容分类器集成
+# 毕业项目 85 — 内容分类器集成
 
-> 输出侧的分类器回答了不同的问题,而不是输入侧的规则.
+> 输出侧的分类器回答的问题与输入侧的规则不同。两者都需要一个策略路由器。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
-**Time:** ~90 min
+**Prerequisites:** 第 18 阶段安全课程、第 19 阶段 Track A 第 25-29 课
+**Time:** 约 90 分钟
 
 ## 问题
 
-输入并不是唯一的攻击表面. 一个通过了每次输入检查的模型仍然可以产生泄漏PII的输出,重复其训练分布的谤,或回响系统提示回给用户以响应一个聪明的问题. 输出侧分类器看到模型的实际反应,而不是用户的提示,
+输入并非唯一的攻击面。一个通过了所有输入检查的模型仍可能产生泄露 PII 的输出、重复其训练分布中的侮辱性词汇，或在对付一个巧妙提问时把系统提示词回显给用户。输出侧分类器看到的是模型的实际响应，而不是用户的提示词，它回答的是另一个问题：无论这个提示词是怎么进来的，我们即将发送给用户的内容是否可接受。
 
-团队经常跳过输出分类,因为输入分类感觉足够,并且输出分类器引入额外的延迟. 两种论点都失败了. 跳过输出分类给攻击者一个单次绕过:输入管道不覆盖的任何新的攻击家族都会落地于用户身上. 延迟是真实的,但可以解决:分类器可以与代币流动并行运行,门将最后的部分缓冲,并在冲光之前应用分类器判决.
+团队常常跳过输出分类，因为觉得输入分类已经足够，也因为输出分类器会引入额外延迟。这两种论点都站不住脚。跳过输出分类会给攻击者留下一次性绕过手段：任何输入流水线未覆盖的新攻击类型都会直达用户。延迟问题确实存在，但可以解决：分类器可以与 token 流式传输并行运行，由网关缓冲最后一个 chunk，并在冲刷前应用分类器判定。
 
-这块顶石将三个独立的输出侧分类器连接到单个政策路由器. 毒性 (基于规则的和骚扰检测). 信息信息 (电子邮件,电话号码,SSN形字符串,信用卡形字符串,IP地址). 指示泄漏 (系统提示回声的统计,通过三重图重叠来将输出与已知系统提示进行比较). 路由器收集分类器的判决,选择严格度,并执行行动政策:`block`现在`redact`现在`warn`其他`log`现在,我们要去.
+本毕业项目将三个独立的输出侧分类器接入一个统一的策略路由器之后。毒性检测（基于规则的侮辱词和骚扰检测）。PII 检测（用正则表达式检测电子邮件、电话号码、SSN 形状的字符串、信用卡形状的字符串、IP 地址）。指令泄露（一种针对系统提示词回显的启发式方法，通过 trigram 重叠度将输出与已知系统提示词进行比较）。路由器收集分类器判定结果，选取严重级别，并应用动作策略：`block`、`redact`、`warn` 或 `log`。
 
 ## 概念
 
-每个分类器都是一个返回一个可调用的`ClassifierVerdict`随着`name`现在`score in [0,1]`现在`severity`(`none`现在`low`现在`medium`现在`high`),以及`findings`路由器将判决列表进行,并应用规则表:
+每个分类器都是一个可调用对象，返回一个 `ClassifierVerdict`，其中包含 `name`、`score in [0,1]`、`severity`（`none`、`low`、`medium`、`high`）以及 `findings`（一个描述其所标记内容的字符串列表）。路由器接收一组判定结果并应用规则表：
 
 | Severity | Action |
 |---|---|
-| high | block (drop output, return policy refusal) |
-| medium | redact (apply per-classifier redactor to the output) |
-| low | warn (log and append a soft notice to the response) |
-| none | log (record verdict in the trace, ship as-is) |
+| high | block（丢弃输出，返回策略拒绝） |
+| medium | redact（对输出应用对应分类器的脱敏器） |
+| low | warn（记录日志并在响应末尾附加一条软提示） |
+| none | log（在 trace 中记录判定，原样发送） |
 
 ```mermaid
 flowchart TB
@@ -40,44 +40,44 @@ flowchart TB
   R -->|max severity = none| LG[log]
 ```
 
-路由器在分类器中采取最大的严重程度并执行相应的操作. 阻塞获胜. 编辑+警告变成编辑. 记录+警告变成警告. 路由器发出一个`Action`具有的对象`verb`现在`output`现在`severity`现在`verdicts`其他`metadata`后游,课87中的安全门将元数据记录在一个跟踪中,将删除的输出发送,将原始输出发送,或将输出取代,以政策拒绝.
+路由器取所有分类器中的最高严重级别并应用对应动作。Block 优先。redact + warn 变为 redact。log + warn 变为 warn。路由器输出一个 `Action` 对象，包含 `verb`、`output`、`severity`、`verdicts` 和 `metadata`。在下游，第 87 课的安全网关将这些元数据写入 trace，然后要么发送脱敏后的输出，要么附带警告发送原始输出，要么用策略拒绝替换输出。
 
-每个分类器都有自己的编辑器.`name@example.com`随着`[redacted-email]`信用卡形状的数字`[redacted-card]`指示泄漏分类器删除类似系统提示标题的线条.毒性分类器取代匹配的语器使用`[redacted-language]`编辑是独立的,因此毒性和PII输出通过两个编辑器流动.
+每个分类器都有自己的脱敏器。PII 分类器将 `name@example.com` 替换为 `[redacted-email]`，并将信用卡形状的数字替换为 `[redacted-card]`。指令泄露分类器移除看起来像系统提示词头部的行。毒性分类器将匹配到的侮辱词替换为 `[redacted-language]`。脱敏是相互独立的，因此一个同时含毒性和 PII 的输出会经过两个脱敏器。
 
-毒性分类器基于规则的目的:一个精选的骚扰关键词清单,白色空间限制的匹配和一个小的否定窗口检查,所以"你不是"不会颠覆规则.列表是故意短的 (课程是关于管道,而不是词典构建).PII分类器使用标准的调解符来对普通形状进行调整.指示泄漏分类器接受一个`system_prompt`构建时的参数,并将三重图重叠与输出进行比较;高重叠是泄漏信号.
+毒性分类器有意采用基于规则的方式：一个精心整理的骚扰关键词列表，使用以空白词界为边界的匹配，并加上一个小的否定窗口检查，这样"你不是某个侮辱词"这类表述不会误触发规则。这个列表刻意保持简短（本课讲的是管道搭建，而不是词表构建）。PII 分类器对常见形状使用标准正则表达式。指令泄露分类器在构造时接受一个 `system_prompt` 参数，并将其与输出的 trigram 重叠度进行比较；高重叠度即为泄露信号。
 
 ```figure
 cd-output-router
 ```
 
-## 建立它
+## 动手构建
 
-`code/classifiers.py`它们的分类是:`classify(text) -> ClassifierVerdict`方法和一个`redact(text) -> str`如何使用`code/main.py`定义了`Router`课程`decide(text, verdicts) -> Action`其他`run(text) -> Action`演示器将三个分类器连接到一个路由器后面,并运行一个小组的制作输出,
+`code/classifiers.py` 定义了全部三个分类器。每个分类器都有一个 `classify(text) -> ClassifierVerdict` 方法和一个 `redact(text) -> str` 方法。`code/main.py` 定义了 `Router` 类，包含 `decide(text, verdicts) -> Action` 和一个 `run(text) -> Action` 快捷方式。示例将三个分类器接入同一个路由器之后，并运行一个由精心构造的输出组成的小语料库，以覆盖每种严重级别。
 
-## 用它
+## 使用
 
-跑步`python3 main.py`演示程序将每次测试输出的动词打印出来,写道`outputs/classifier_report.json`延迟是人工零的,因为所有分类器都是基于规则的;对于一个具有神经分类器的真实模型,每分类器延迟增加后,同样的管道应用.
+运行 `python3 main.py`。示例会为每个测试输出打印动作动词，写入 `outputs/classifier_report.json`，并确认 block、redact、warn 和 log 各自至少在一个测试样例上触发。由于所有分类器都是基于规则的，延迟被人为设为零；对于使用神经分类器的真实模型，在单个分类器延迟上升之后，同样的管道依然适用。
 
-## 运送它
+## 上线
 
-`outputs/skill-content-classifier-integration.md`文件记录了判决和行动结构,
+`outputs/skill-content-classifier-integration.md` 记录了判定和动作的结构，以便第 87 课的网关可以使用它们。
 
-## 运动
+## 练习
 
-1. 添加代码注射的第四个分类器 (输出含有 `<script>`现在`eval(`决定其严格政策并将其整合.
-2. 让路由器按每个分类器的重量量,使 PII 比毒性更重要.
-3. 增加一个信任门,以使得低分的判决降低1级重度.
+1. 为代码注入添加第四个分类器（输出包含 `<script>`、`eval(` 等）。确定其严重级别策略并集成进来。
+2. 让路由器对每个分类器应用严重级别权重，使 PII 的权重高于毒性。在同样的测试样例上演示这一变化。
+3. 添加一个置信度阈值，使低分判定降一级严重级别。扫参该阈值并报告 block 率如何变化。
 
-## 关键词
+## 关键术语
 
-| Term | Common usage | Precise meaning |
+| 术语 | 常见用法 | 精确定义 |
 |---|---|---|
-| output classifier | a model that detects bad outputs | a callable returning a structured verdict with severity, score, and findings, plus a redactor |
-| severity | how bad it is | one of none, low, medium, high |
-| router | a switch | a function from verdict list to action (block, redact, warn, log) |
-| redact | hide the bad parts | per-classifier replacement of matched spans with a tag like [redacted-pii] |
-| instruction leakage | the model leaks the system prompt | a heuristic comparing model output to a known system prompt by trigram overlap |
+| output classifier | 检测不良输出的模型 | 一个返回结构化判定（含 severity、score 和 findings）的可调用对象，外加一个脱敏器 |
+| severity | 问题有多严重 | none、low、medium、high 之一 |
+| router | 一个开关 | 从判定列表到动作（block、redact、warn、log）的函数 |
+| redact | 隐藏不良部分 | 各分类器将匹配到的片段替换为类似 [redacted-pii] 的标签 |
+| instruction leakage | 模型泄露系统提示词 | 一种启发式方法，通过 trigram 重叠度将模型输出与已知系统提示词进行比较 |
 
-## 进一步阅读
+## 延伸阅读
 
-第86课增加了对不自然有分类器形状的约束的声明规则引擎. 第87课组合了输入侧检测器.
+第 86 课添加一个声明式规则引擎，用于处理天然不适合做成分类器的约束。第 87 课将两者与输入侧检测器组合起来。

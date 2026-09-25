@@ -1,41 +1,41 @@
-# 时间系列的基本知识
+# 时间序列基础
 
-> 如果先检查停滞,过去的表现确实能预测未来的结果.
+> 过去的业绩确实能预测未来的结果——前提是你先检验了平稳性。
 
 **Type:** Build
-**Language:**字符串
+**Language:** Python
 **Prerequisites:** Phase 2, Lessons 01-09
-**Time:** ~90 minutes
+**Time:** 约90分钟
 
 ## 学习目标
 
-- 分解时间序列成趋势,季节性和残留组件,测试静止性
-- 实现延迟功能和滚动统计数据,将时间序列转化为监督学习问题
-- 建立一个前进验证框架,以防止未来数据泄露到培训中
-- 解释为什么随机列车/测试分区对时间序列不有效,并证明性能差距与适当的时间分区
+- 将时间序列分解为趋势、季节性和残差成分，并检验平稳性
+- 实现滞后特征和滚动统计，将时间序列转换为监督学习问题
+- 构建一个防止未来数据泄漏到训练集的前向行走验证框架
+- 解释为什么随机训练/测试划分对时间序列无效，并展示与正确的时间划分之间的性能差距
 
-## 问题
+## 问题所在
 
-您有时间排列的数据,每天的销售,每小时的温度,每分钟的CPU使用,每周的股价.
+你拥有按时间排序的数据。每日销售额、每小时气温、每分钟 CPU 使用率、每周股票价格。你想预测下一个值、下一周、下一个季度。
 
-你需要一个标准的 ML 工具包:随机列车/测试分区,交叉验证,功能矩阵进入,预测出.
+你拿起了标准 ML 工具箱：随机训练/测试划分、交叉验证、特征矩阵输入、预测输出。每一步都是错的。
 
-时间系列打破了标准ML依赖的假设. 样本并不独立 - - 今天的温度取决于昨天的温度. 随机分区泄漏未来的信息到过去. 后测试中看起来很好的功能在生产中失败,因为它们依赖于随时间而改变的模式.
+时间序列打破了标准 ML 依赖的假设。样本不是独立的——今天的气温取决于昨天的。随机划分会把未来信息泄漏到过去。在回测中表现很好的特征在生产环境中会失效，因为它们依赖的模式会随时间变化。
 
-随机交叉验证的模型可以获得95%的准确性,但如果进行适当的时间评估,则可能会获得55%.
+一个在随机交叉验证下达到 95% 准确率的模型，在使用正确的时间评估时可能只有 55%。这个差距不是技术细节问题。它是纸上能用的模型和生产环境中能用的模型之间的差距。
 
-这一课涵盖了基本知识:什么使时间数据变得不同,如何诚实地评估模型,以及如何将时间系列转化为标准ML模型可以使用的功能.
+本课涵盖基础知识：时间数据有何不同、如何诚实地评估模型，以及如何将时间序列转换为标准 ML 模型可以使用的特征。
 
-## 概念
+## 核心概念
 
-### 时间系列是什么不同?
+### 时间序列为何不同
 
-标准ML假设i.i.d. - 独立且分布相同.每个样本都是从相同的分布中抽取的,独立于其他样本.时间系列违反了以下两种:
+标准 ML 假设 i.i.d.——独立同分布。每个样本从同一分布中独立抽取。时间序列打破了这两点：
 
-- **Not independent.**今天的股价取决于昨天的股价. 本周的销售与上周的销售相对.
-- **Not identically distributed.**随着时间的推移,分销量变化.
+- **不独立。** 今天的股价取决于昨天。本周的销售额与上周相关。
+- **不同分布。** 分布随时间变化。十二月的销售额与三月的看起来不同。
 
-这些违规行为并不小,而是改变了你构建功能的方式,
+这些违背不是小事。它们改变了你构建特征的方式、评估模型的方式，以及哪些算法有效。
 
 ```mermaid
 flowchart LR
@@ -60,11 +60,11 @@ flowchart LR
     style T4 fill:#ffd
 ```
 
-在标准ML中,样本是可替换的. 混动它们不会改变任何东西. 在时间序列中,顺序是一切. 混动破坏信号.
+在标准 ML 中，样本是可互换的。打乱它们不改变任何东西。在时间序列中，顺序就是一切。打乱会破坏信号。
 
-### 时间系列的组成部分
+### 时间序列的组成成分
 
-每个时间系列都是:
+每个时间序列都是以下成分的组合：
 
 ```mermaid
 flowchart TD
@@ -77,52 +77,52 @@ flowchart TD
     D --> G[Random variation after removing trend and seasonality]
 ```
 
-- **Trend**长期方向:收入每年增长10% 全球气温上升
-- **Seasonality**零售销售量在12月升.空调使用量在7月升.
-- **Residual**随着移除趋势和季节性之后所剩下的任何东西. 如果残留物看起来像白噪声,分解就捕获了信号.
+- **趋势**：长期方向。收入每年增长 10%。全球气温上升。
+- **季节性**：固定间隔的重复模式。零售销售额在十二月激增。空调使用量在七月达到峰值。
+- **残差**：去除趋势和季节性后剩下的部分。如果残差看起来像白噪声，说明分解捕捉到了信号。
 
-### 固定性
+### 平稳性
 
-时间序列是静止的,如果其统计性质 (平均值,变异性,自相相性) 随着时间的推移不变.大多数预测方法都假设静止性.
+如果一个时间序列的统计特性（均值、方差、自相关）不随时间变化，则它是平稳的。大多数预测方法都假设平稳性。
 
-**Why it matters:**没有固定的系列有漂移的平均值.一个基于1月的数据训练的模型已经学到了与2月的平均值不同.
+**为什么重要：** 非平稳序列的均值会漂移。用一月份的数据训练的模型学到的均值与二月份的实际均值不同。它会系统性地出错。
 
-**How to check:**计算滚动平均值和滚动标准偏差在窗户上.如果它们漂移,则系列是非静止的.
+**如何检验：** 计算窗口上的滚动均值和滚动标准差。如果它们漂移，则序列是非平稳的。
 
-**How to fix:**区分. 代替模拟原价值,模拟连续值之间的变化:
+**如何修复：** 差分。不建模原始值，而是建模相邻值之间的变化：
 
 ```
 diff[t] = value[t] - value[t-1]
 ```
 
-如果一个分化轮不使系列停滞,请再次应用 (二级分化).大多数现实世界系列需要最多两轮.
+如果一轮差分不能使序列平稳，则再次应用（二阶差分）。大多数真实世界的序列最多需要两轮。
 
-**Example:**
+**示例：**
 
-首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页: 首页:
-第一个差异: [2, 4, 6, 8] (仍然向上趋势)
-第二种差异: [2,2, 2] (恒定--静止)
+原始序列：[100, 102, 106, 112, 120]
+一阶差分：[2, 4, 6, 8]（仍在上升）
+二阶差分：[2, 2, 2]（恒定——平稳）
 
-实际上,你很少需要超过两个轮. 实际上,你很少需要两个轮.
+原始序列具有二次趋势。一阶差分将其变为线性趋势。二阶差分使其变平。在实践中，你很少需要超过两轮。
 
-**Formal test:**增强式式式测试 (ADF) 是静止性的标准统计测试.零假设是"系列是非静止的".0.05以下的p值意味着你可以拒绝零并得出静止性结论.我们从零开始不实现ADF (它需要无比分分布表),但我们的代码中的滚动统计方法提供了实际的视觉检查.
+**正式检验：** Augmented Dickey-Fuller (ADF) 检验是平稳性的标准统计检验。原假设是"序列非平稳"。p 值低于 0.05 意味着你可以拒绝原假设并得出平稳的结论。我们不从头实现 ADF（它需要渐近分布表），但我们代码中的滚动统计方法提供了一个实用的可视化检验。
 
-### 自身相关性
+### 自相关
 
-自动相对度测量时间 t 的值与时间 t-k 的值相对度 (过去的 k 步骤).自动相对度函数 (ACF) 为每个 lag k 绘制了这种相对度.
+自相关衡量时刻 t 的值与时刻 t-k（k 步之前）的值之间的相关程度。自相关函数（ACF）绘制每个滞后 k 的这种相关性。
 
-**ACF tells you:**
-- 如果在5步后ACF下降到零,则5步前的值是无关的.
-- 如果ACF在12次 (月度数据) 后期上升,则会有年度季度性.
-- 运用延迟到ACF变得微不足道的地方.
+**ACF 告诉你：**
+- 序列的记忆有多远。如果 ACF 在滞后 5 之后降至零，那么 5 步之前的值就无关紧要了。
+- 是否存在季节性。如果 ACF 在滞后 12 处出现峰值（月度数据），则存在年度季节性。
+- 需要创建多少个滞后特征。使用直到 ACF 变得可忽略不计为止的滞后。
 
-**PACF (Partial Autocorrelation Function)**如果今天与3天前相对应,因为两者都与昨天相对应,PACF在3次滞后时将是零,而ACF在3次滞后时不会.
+**PACF（偏自相关函数）** 去除间接相关性。如果今天与 3 天前相关仅仅是因为两者都与昨天相关，那么滞后 3 处的 PACF 将为零，而滞后 3 处的 ACF 不会为零。
 
-### 延迟特征:将时间系列转化为监督学习
+### 滞后特征：将时间序列转换为监督学习
 
-标准ML模型需要一个特征矩阵X和一个目标y.时间系列给你一个单一的值列.桥梁是滞后特征.
+标准 ML 模型需要特征矩阵 X 和目标 y。时间序列只给你一列值。桥梁是滞后特征。
 
-设置一个后期的位置,
+取序列 [10, 12, 14, 13, 15]，创建 lag-1 和 lag-2 特征：
 
 | lag_2 | lag_1 | target |
 |-------|-------|--------|
@@ -130,23 +130,23 @@ diff[t] = value[t] - value[t-1]
 | 12    | 14    | 13     |
 | 14    | 13    | 15     |
 
-任何ML模型 (线性回归,随机森林,梯度增强) 都可以从滞后预测目标.
+现在你有了一个标准的回归问题。任何 ML 模型（线性回归、随机森林、梯度提升）都可以从滞后值预测目标。
 
-您可以设计的其他功能:
-- **Rolling statistics:**平均值,std,min,max 在最后的k值上
-- **Calendar features:**周日,月,节日,周末
-- **Differenced values:**与前一步的变化
-- **Expanding statistics:**累计平均,累计总额
-- **Ratio features:**现行值/滚动平均值 (与最近的平均值有多远)
-- **Interaction features:**_1 * 周日 (周日对动力的影响)
+你还可以构造的其他特征：
+- **滚动统计：** 最近 k 个值上的均值、标准差、最小值、最大值
+- **日历特征：** 星期几、月份、is_holiday、is_weekend
+- **差分值：** 相对于上一步的变化
+- **扩展统计：** 累计均值、累计和
+- **比率特征：** 当前值 / 滚动均值（距离近期平均有多远）
+- **交互特征：** lag_1 * day_of_week（星期几对动量的影响）
 
-**How many lags?**如果 ACF 值高于10个滞后,则至少使用10个滞后.如果有周季节性,则包括7个滞后 (可能14个).更多的滞后给模型更多的历史,但也增加了更大的功能,增加了过度适应的风险.
+**用多少个滞后？** 使用自相关函数。如果 ACF 显著到滞后 10，则至少使用 10 个滞后。如果存在周季节性，则包含滞后 7（可能还有 14）。更多的滞后给模型更多的历史信息，但也带来更多的特征需要拟合，增加了过拟合的风险。
 
-**The target alignment trap.**创建时,目标必须是时间 t 的值,所有功能必须使用时间 t-1 或更早的值.如果你意外地将时间 t 的值作为一个功能,你有一个完美的预测器 - - 和一个完全无用的模型.这是时间系列功能工程中最常见的错误.
+**目标对齐陷阱。** 创建滞后特征时，目标必须是时刻 t 的值，且所有特征必须使用时刻 t-1 或更早的值。如果你不小心把时刻 t 的值作为特征包含进去，你就拥有了一个完美预测器——以及一个完全无用的模型。这是时间序列特征工程中最常见的 bug。
 
-### 经验证
+### 前向行走验证
 
-这就是这个课程中最重要的概念.标准的k倍交叉验证随机分配样本进行训练和测试.对于时间序列,这泄露未来的信息.
+这是本课最重要的概念。标准 k 折交叉验证随机地将样本分配到训练集和测试集。对于时间序列，这会泄漏未来信息。
 
 ```mermaid
 flowchart TD
@@ -177,72 +177,72 @@ flowchart TD
     end
 ```
 
-进行前进验证:
-1. 运行数据到时间 t
-2. 在时间 t+1 (或 t+1 到 t+k 多步) 中预测
-3. 滑向前窗户
-4. 复制
+前向行走验证：
+1. 用直到时刻 t 的数据训练
+2. 在时刻 t+1 预测（多步预测则为 t+1 到 t+k）
+3. 将窗口向前滑动
+4. 重复
 
-每个测试折叠只包含所有训练数据后的数据. 没有未来泄漏. 这让你一个诚实的估计模型将在部署时表现如何.
+每个测试折只包含位于所有训练数据之后的数据。没有未来泄漏。这为你提供了模型部署后表现的诚实估计。
 
-**Expanding window**通过使用所有历史数据进行培训 (窗口增长).**Sliding window**使用固定尺寸的训练窗口 (窗口幻灯片). 扩展使用当你认为旧数据仍然相关时. 改变世界和旧数据伤害时使用幻灯片.
+**扩展窗口** 使用所有历史数据进行训练（窗口增长）。**滑动窗口** 使用固定大小的训练窗口（窗口滑动）。当你认为较旧的数据仍然相关时，使用扩展窗口。当世界发生变化、旧数据有害时，使用滑动窗口。
 
-### 艾里马直觉
+### ARIMA 直觉
 
-亚里马是经典时间序列模型. 它有三个组成部分:
+ARIMA 是经典的时间序列模型。它有三个组成部分：
 
-- **AR (Autoregressive):**预测从过去的值.AR(p) 使用最后的p值.
-- **I (Integrated):**为了实现静止性,进行分化.
-- **MA (Moving Average):**预测从过去的预测错误.
+- **AR（自回归）：** 从过去的值预测。AR(p) 使用最近 p 个值。
+- **I（差分）：** 通过差分实现平稳性。I(d) 应用 d 轮差分。
+- **MA（移动平均）：** 从过去的预测误差预测。MA(q) 使用最近 q 个误差。
 
-根据ACF/PACF分析或自动搜索 (自动ARIMA) 选择p,d,q.
+ARIMA(p, d, q) 将三者结合。你可以基于 ACF/PACF 分析或自动搜索（auto-ARIMA）来选择 p、d、q。
 
-我们不会从零开始实现ARIMA,它需要数字优化,这超出了本课程的范围.关键的见解是了解每个组件的作用,
+我们不会从头实现 ARIMA——它需要超出本课范围的数值优化。关键洞察是理解每个组成部分的作用，这样你才能解释 ARIMA 的结果，并知道何时使用它。
 
-### 什么时候使用
+### 何时用什么
 
-| Approach | Best For | Handles Seasonality | Handles External Features |
+| 方法 | 最适合 | 处理季节性 | 处理外部特征 |
 |----------|---------|-------------------|------------------------|
-| Lag features + ML | Tabular with many external features | With calendar features | Yes |
-| ARIMA | Single univariate series, short-term | SARIMA variant | No (ARIMAX for limited) |
-| Exponential smoothing | Simple trend + seasonality | Yes (Holt-Winters) | No |
-| Prophet | Business forecasting, holidays | Yes (Fourier terms) | Limited |
-| Neural networks (LSTM, Transformer) | Long sequences, many series | Learned | Yes |
+| 滞后特征 + ML | 有许多外部特征的表格数据 | 借助日历特征 | 是 |
+| ARIMA | 单一单变量序列、短期预测 | SARIMA 变体 | 否（有限支持可用 ARIMAX） |
+| 指数平滑 | 简单趋势 + 季节性 | 是（Holt-Winters） | 否 |
+| Prophet | 商业预测、节假日 | 是（Fourier 项） | 有限 |
+| 神经网络（LSTM, Transformer） | 长序列、多序列 | 学习得到 | 是 |
 
-对于大多数实际问题来说,延迟功能+梯度增强是最强的起点.它自然处理外部功能,不需要静止性,并且很容易调试.
+对于大多数实际问题，滞后特征 + 梯度提升是最强的起点。它天然处理外部特征，不要求平稳性，并且易于调试。
 
-### 预测水平和战略
+### 预测视界与策略
 
-单步预测预测一个步骤前进.多步预测预测多步骤.有三个策略:
+单步预测预测未来一个时间步。多步预测预测未来多个时间步。有三种策略：
 
-**Recursive (iterated):**预测一个步骤前进,使用预测作为下一步的输入. 简单,但错误积累 - 每个预测都使用了之前的预测,所以错误复合.
+**递归（迭代）：** 预测一步，将预测作为下一步的输入。简单但误差会累积——每次预测都使用上一次的预测，因此错误会复合。
 
-**Direct:**训练一个单独的模型,为每个视界.模型-1预测t+1,模型-5预测t+5.没有错误积累,但每个模型都有较少的训练样本,并且它们没有分享信息.
+**直接：** 为每个视界训练一个单独的模型。Model-1 预测 t+1，Model-5 预测 t+5。没有误差累积，但每个模型的训练样本更少，且它们之间不共享信息。
 
-**Multi-output:**训练一个同时输出所有视野的模型. 通过视野共享信息,但需要支持多个输出 (或自定义输失函数) 的模型.
+**多输出：** 训练一个同时输出所有视界的模型。跨视界共享信息，但需要一个支持多输出的模型（或自定义损失函数）。
 
-对于大多数实际问题,开始用短视野 (1-5 步) 的递归和长视野的直径.
+对于大多数实际问题，短视界（1-5 步）从递归开始，较长视界使用直接策略。
 
 ### 时间序列中的常见错误
 
-| Mistake | Why it happens | How to fix |
+| 错误 | 为什么会发生 | 如何修复 |
 |---------|---------------|-----------|
-| Random train/test split | Habit from standard ML | Use walk-forward or temporal split |
-| Using future features | Feature at time t included by mistake | Audit every feature for temporal alignment |
-| Overfitting to seasonality | Model memorizes calendar patterns | Hold out a full seasonal cycle in the test set |
-| Ignoring scale changes | Revenue doubles but patterns stay | Model percentage change instead of absolute |
-| Too many lag features | "More history is better" | Use ACF to determine relevant lags |
-| Not differencing | "The model will figure it out" | Tree models handle trends; linear models need stationarity |
+| 随机训练/测试划分 | 标准 ML 的习惯 | 使用前向行走或时间划分 |
+| 使用未来特征 | 不小心包含了时刻 t 的特征 | 审计每个特征的时间对齐 |
+| 对季节性过拟合 | 模型记住了日历模式 | 在测试集中保留完整的季节周期 |
+| 忽略尺度变化 | 收入翻倍但模式不变 | 建模百分比变化而非绝对值 |
+| 滞后特征过多 | "历史越多越好" | 使用 ACF 确定相关滞后 |
+| 不做差分 | "模型自己会搞定" | 树模型可以处理趋势；线性模型需要平稳性 |
 
 ```figure
 f3-series-decompose
 ```
 
-## 建立它
+## 动手构建
 
-编码在`code/time_series.py`实现了从零开始的核心构建块.
+`code/time_series.py` 中的代码从零实现了核心构建模块。
 
-### 拉格特征创作者
+### 滞后特征生成器
 
 ```python
 def make_lag_features(series, n_lags):
@@ -254,9 +254,9 @@ def make_lag_features(series, n_lags):
     return X[valid], series[valid]
 ```
 
-这将1D系列转换为一个特征矩阵,每个行都有最后一个`n_lags`作为特征的值,作为目标的当前值.
+这会将一维序列转换为特征矩阵，其中每一行以最近 `n_lags` 个值作为特征，当前值作为目标。
 
-### 走向向的十字验证
+### 前向行走交叉验证
 
 ```python
 def walk_forward_split(n_samples, n_splits=5, min_train=50):
@@ -270,11 +270,11 @@ def walk_forward_split(n_samples, n_splits=5, min_train=50):
         yield slice(0, train_end), slice(train_end, test_end)
 ```
 
-每个分区都确保训练数据都在测试数据之前得到严格的准备.
+每次划分都确保训练数据严格位于测试数据之前。训练窗口随每一折扩展。
 
-### 简单的自动降低模式
+### 简单自回归模型
 
-纯 AR 模型只是延迟特性的线性回归:
+纯 AR 模型就是对滞后特征做线性回归：
 
 ```python
 class SimpleAR:
@@ -293,11 +293,11 @@ class SimpleAR:
         return self
 ```
 
-这在概念上与课02中的线性回归相同,但适用于相同变量的时间延迟版本.
+这在概念上与 Lesson 02 的线性回归完全相同，只是应用于同一变量的时间滞后版本。
 
-### 停留性检查
+### 平稳性检验
 
-该代码计算滚动统计数据以视觉和数字评估静止性:
+代码计算滚动统计，以可视化和数值方式评估平稳性：
 
 ```python
 def check_stationarity(series, window=50):
@@ -312,11 +312,11 @@ def check_stationarity(series, window=50):
     return rolling_mean, rolling_std
 ```
 
-如果滚动平均波动或滚动STD变化,则系列是非静止的. 应用区分和检查再次.
+如果滚动均值漂移或滚动标准差发生变化，则序列是非平稳的。应用差分后再次检验。
 
-代码还通过对比系列的第一半和第二半的静止性来检查. 如果介质差异超过一半的标准偏差或变异比重超过2倍,则该系列被标记为非静止.
+代码还通过比较序列的前半部分和后半部分来检验平稳性。如果均值相差超过半个标准差，或方差比超过 2 倍，则该序列被标记为非平稳。
 
-### 自身相关性
+### 自相关
 
 ```python
 def autocorrelation(series, max_lag=20):
@@ -330,9 +330,9 @@ def autocorrelation(series, max_lag=20):
     return acf
 ```
 
-## 用它
+## 使用它
 
-通过 sklearn,您可以直接使用任何回归器的延迟功能:
+使用 sklearn 时，你可以将滞后特征直接用于任何回归器：
 
 ```python
 from sklearn.linear_model import Ridge
@@ -346,7 +346,7 @@ for train_idx, test_idx in walk_forward_split(len(X)):
     predictions = model.predict(X[test_idx])
 ```
 
-对于ARIMA,使用统计模型:
+对于 ARIMA，使用 statsmodels：
 
 ```python
 from statsmodels.tsa.arima.model import ARIMA
@@ -356,11 +356,11 @@ fitted = model.fit()
 forecast = fitted.forecast(steps=30)
 ```
 
-编码在`time_series.py`通过步行前进验证来证明两种方法并进行比较.
+`time_series.py` 中的代码演示了这两种方法，并使用前向行走验证对它们进行比较。
 
-### 时间系列 分类
+### sklearn TimeSeriesSplit
 
- sklearn提供了`TimeSeriesSplit`执行前行验证:
+sklearn 提供了 `TimeSeriesSplit`，它实现了前向行走验证：
 
 ```python
 from sklearn.model_selection import TimeSeriesSplit
@@ -373,7 +373,7 @@ for train_index, test_index in tscv.split(X):
     score = model.score(X_test, y_test)
 ```
 
-这相当于我们从零开始的`walk_forward_split`您可以使用它与`cross_val_score`其他:
+这等价于我们从零实现的 `walk_forward_split`，但集成到了 sklearn 的交叉验证框架中。你可以将它与 `cross_val_score` 一起使用：
 
 ```python
 from sklearn.model_selection import cross_val_score
@@ -384,80 +384,80 @@ print(f"Mean score: {scores.mean():.4f} +/- {scores.std():.4f}")
 
 ### 评估指标
 
-时间系列预测使用回归指标,但在时间意识的背景下:
+时间序列预测使用回归指标，但需要结合时间感知的上下文：
 
-- **MAE (Mean Absolute Error):**平均 y_true - y_pred 语. 简单地解释在原始单位. "平均,预测是3.2度. "
-- **RMSE (Root Mean Squared Error):**平均二次错误的平方根. 惩罚大错误比MAE. 使用当大错误比许多小错误更糟时.
-- **MAPE (Mean Absolute Percentage Error):**平均错误/真值是100. 独立于规模,可用于不同的数组进行比较. 但在真值为零时未定义.
-- **Naive baseline comparison:**总是与简单的基线进行比较.季节性天真基线预测了过去一段时间的值 (昨天,上周).如果你的模型不能击败天真,那么有什么不对.
+- **MAE（平均绝对误差）：** |y_true - y_pred| 的平均值。易于用原始单位解释。"预测平均偏差 3.2 度。"
+- **RMSE（均方根误差）：** 均方误差的平方根。比 MAE 更重罚大误差。当大错误比多个小错误更糟糕时使用。
+- **MAPE（平均绝对百分比误差）：** |error / true_value| * 100 的平均值。与尺度无关，适合跨不同序列进行比较。但真实值为零时无定义。
+- **朴素基线比较：** 始终与简单基线比较。季节朴素基线预测一个周期前的值（昨天、上周）。如果你的模型无法胜过朴素基线，那就有问题了。
 
 ### 滚动特征
 
-代码显示,在7天和14天的窗口中增加滚动统计数据 (平均,STD,min,max).这些数据为模型提供了有关近期趋势和波动性的信息,而仅仅拖延特征无法捕获.
+代码演示了在滞后特征基础上添加滚动统计（7 天和 14 天窗口上的均值、标准差、最小值、最大值）。这些为模型提供了关于近期趋势和波动性的信息，而单靠滞后特征无法捕捉。
 
-例如,如果滚动平均值上升,这表明上升趋势.如果滚动STD增加,这表明不断增长的波动性.这些是树型模型可以从中学习的模式,但线性模型不能.
+例如，如果滚动均值在上升，则表明存在上升趋势。如果滚动标准差在增大，则表明波动性在增加。这些是树模型可以学习但线性模型无法学习的模式类型。
 
-## 运送它
+## 上线交付
 
-这一课产生了:
-- `outputs/prompt-time-series-advisor.md`-- 时间序列问题框架的提示
-- `code/time_series.py`-- 延迟功能,前进验证,AR模型,静止性检查
+本课产出：
+- `outputs/prompt-time-series-advisor.md`——用于框定时间序列问题的提示词
+- `code/time_series.py`——滞后特征、前向行走验证、AR 模型、平稳性检验
 
-### 你必须克服的基本标准
+### 你必须超越的基线
 
-在构建任何模型之前,建立基线:
+在构建任何模型之前，先建立基线：
 
-1. **Last value (persistence).**预测明天会像今天一样.
-2. **Seasonal naive.**预测今天将与上周 (或去年) 的同一天相同.
-3. **Moving average.**预测最后一个k值的平均值. 缓解噪音,但不能捕捉突然的变化.
+1. **上一个值（持续性）。** 预测明天与今天相同。对于许多序列，这个基线出奇地难以超越。
+2. **季节朴素。** 预测今天与上周（或去年）同一天相同。如果你的模型无法超越它，说明它没有学到季节性之外的任何有用模式。
+3. **移动平均。** 预测最近 k 个值的平均值。能平滑噪声，但无法捕捉突变。
 
-如果你的精彩的ML模型失去了季节性天真的基线,你会出现错误.
+如果你的花哨 ML 模型输给了季节朴素基线，那你就有 bug。最常见的原因是：特征中的未来泄漏、错误的评估方法，或者该序列确实是随机且不可预测的。
 
-### 实际的建议
+### 实用技巧
 
-1. **Start with plotting.**在进行模型之前,请绘制原始系列. 寻找趋势,季节性,异常值,结构性间断 (行为突然变化). 30 秒的视觉检查通常告诉你超过一个小时的自动分析.
+1. **从绘图开始。** 在任何建模之前，先绘制原始序列。寻找趋势、季节性、异常值、结构断点（行为的突然变化）。30 秒的目视检查往往比一小时的自动化分析告诉你更多。
 
-2. **Difference first, model second.**如果系列有明显的趋势,在创建滞后特征之前,请区分它.树型模型可以处理趋势,但线性模型不能,区分永远不会伤害.
+2. **先差分，后建模。** 如果序列有明显的趋势，在创建滞后特征之前先做差分。树模型可以处理趋势，但线性模型不能，而且差分从不有害。
 
-3. **Hold out at least one full seasonal cycle.**如果您有每周的季节性,您的测试组需要至少一个完整的星期. 如果每月,至少一个完整的月份.否则您无法评估模型是否捕获了季节性模式.
+3. **至少保留一个完整的季节周期。** 如果你有周季节性，你的测试集至少需要一个完整的星期。如果是月度，至少需要一个完整的月。否则你无法评估模型是否捕捉到了季节模式。
 
-4. **Monitor in production.**随着世界变化的时间序列模型随着时间的推移而降低.随着时间的推移,随着时间的推移而降低.随着时间的推移而追踪预测错误.
+4. **在生产环境中监控。** 随着世界变化，时间序列模型会随时间退化。以滚动方式跟踪预测误差。当误差开始增加时，用最近的数据重新训练模型。
 
-5. **Beware of regime changes.**基于疫情前数据训练的模型不会预测疫情后行为. 包含已知政权变化的指标作为特征,或使用忘记旧数据的滑动窗口.
+5. **警惕制度变化。** 用疫情前数据训练的模型无法预测疫情后的行为。将已知制度变化的指标作为特征包含进来，或者使用会遗忘旧数据的滑动窗口。
 
-6. **Log-transform skewed series.**收入,价格和计数往往偏向右. 取日志稳定变化,使乘法模式加值,直线模型可以处理. 预测日志空间,然后指数回归原始单位.
+6. **对偏态序列做对数变换。** 收入、价格和计数通常是右偏的。取对数可以稳定方差，并将乘性模式变为加性模式，线性模型可以处理加性模式。在对数空间中预测，然后取指数回到原始单位。
 
-## 运动
+## 练习
 
-1. **Stationarity experiment.**通过滚动统计检查静止性,应用第一次差异化,再检查.一个四旋翼趋势需要多少次差异化?
+1. **平稳性实验。** 生成一个具有线性趋势的序列。用滚动统计检验平稳性。应用一阶差分。再次检验。对二次趋势需要几轮差分？
 
-2. **Lag selection.**根据季节系列 (周期=7) 计算ACF. 哪些滞后具有最高的自动相关性?仅使用这些滞后 (而不是连续滞后) 创建滞后特性.与使用滞后1到7相比,准确性是否提高?
+2. **滞后选择。** 在一个季节性序列（period=7）上计算 ACF。哪些滞后的自相关最高？仅使用这些滞后（而非连续滞后）创建滞后特征。与使用滞后 1 到 7 相比，准确率是否提高？
 
-3. **Walk-forward vs random split.**训练一个坡回归在滞后功能. 随机80/20分分和前进验证评估. 随机分数过度估算性能多少?
+3. **前向行走 vs 随机划分。** 在滞后特征上训练 Ridge 回归。分别用随机 80/20 划分和前向行走验证进行评估。随机划分高估了多少性能？
 
-4. **Feature engineering.**加入滚动平均值 (window=7),滚动 std (window=7),以及周一功能.使用前进验证来比较这些额外的精度.
+4. **特征工程。** 在滞后特征基础上添加滚动均值（window=7）、滚动标准差（window=7）和星期几特征。使用前向行走验证比较有和没有这些附加特征的准确率。
 
-5. **Multi-step forecasting.**修改AR模型,以预测前进5步,而不是1.比较两种策略: (a) 预测一步,将预测作为下一步的输入 (反转), (b) 训练每个视界的单独模型 (直接).哪个更准确?
+5. **多步预测。** 修改 AR 模型以预测未来 5 步而非 1 步。比较两种策略：(a) 预测一步，将预测作为下一步的输入（递归），以及 (b) 为每个视界训练单独的模型（直接）。哪个更准确？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Stationarity | "The stats don't change over time" | A series whose mean, variance, and autocorrelation structure are constant over time |
-| Differencing | "Subtract consecutive values" | Computing y[t] - y[t-1] to remove trends and achieve stationarity |
-| Autocorrelation (ACF) | "How a series correlates with itself" | The correlation between a time series and a lagged copy of itself, as a function of the lag |
-| Partial autocorrelation (PACF) | "Direct correlation only" | Autocorrelation at lag k after removing the effect of all shorter lags |
-| Lag features | "Past values as inputs" | Using y[t-1], y[t-2], ..., y[t-k] as features to predict y[t] |
-| Walk-forward validation | "Time-respecting cross-validation" | Evaluation where training data always precedes test data chronologically |
-| ARIMA | "The classic time series model" | AutoRegressive Integrated Moving Average: combines past values (AR), differencing (I), and past errors (MA) |
-| Seasonality | "Repeating calendar patterns" | Regular, predictable cycles in a time series tied to calendar periods (daily, weekly, yearly) |
-| Trend | "The long-term direction" | A persistent increase or decrease in the series level over time |
-| Expanding window | "Use all history" | Walk-forward validation where the training set grows with each fold |
-| Sliding window | "Fixed-size history" | Walk-forward validation where the training set is a fixed-length window that slides forward |
+| 平稳性 | "统计特性不随时间变化" | 均值、方差和自相关结构随时间保持恒定的序列 |
+| 差分 | "相邻值相减" | 计算 y[t] - y[t-1] 以去除趋势并实现平稳性 |
+| 自相关（ACF） | "序列与自身的相关程度" | 时间序列与其滞后副本之间的相关性，作为滞后的函数 |
+| 偏自相关（PACF） | "仅直接相关性" | 去除所有更短滞后的影响后，滞后 k 处的自相关 |
+| 滞后特征 | "用过去的值作为输入" | 使用 y[t-1], y[t-2], ..., y[t-k] 作为特征来预测 y[t] |
+| 前向行走验证 | "尊重时间的交叉验证" | 训练数据在时间上始终先于测试数据的评估方式 |
+| ARIMA | "经典时间序列模型" | 自回归差分移动平均：结合过去值（AR）、差分（I）和过去误差（MA） |
+| 季节性 | "重复的日历模式" | 时间序列中与日历周期（日、周、年）相关的规律、可预测的循环 |
+| 趋势 | "长期方向" | 序列水平随时间的持续上升或下降 |
+| 扩展窗口 | "使用全部历史" | 训练集随每一折增长的前向行走验证 |
+| 滑动窗口 | "固定大小的历史" | 训练集是一个向前滑动的固定长度窗口的前向行走验证 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Hyndman and Athanasopoulos, Forecasting: Principles and Practice (3rd ed.)](https://otexts.com/fpp3/)时间序列预测的最佳免费教科书
-- [scikit-learn Time Series Split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html)-- 斯克拉恩的前行分离器
-- [statsmodels ARIMA docs](https://www.statsmodels.org/stable/generated/statsmodels.tsa.arima.model.ARIMA.html)-- 诊断的ARIMA实施
-- [Makridakis et al., The M5 Competition (2022)](https://www.sciencedirect.com/science/article/pii/S0169207021001874)-- 显示ML方法与统计方法的大型预测竞争
+- [Hyndman and Athanasopoulos, Forecasting: Principles and Practice (3rd ed.)](https://otexts.com/fpp3/)——最好的免费时间序列预测教材
+- [scikit-learn Time Series Split](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html)——sklearn 的前向行走划分器
+- [statsmodels ARIMA docs](https://www.statsmodels.org/stable/generated/statsmodels.tsa.arima.model.ARIMA.html)——带诊断功能的 ARIMA 实现
+- [Makridakis et al., The M5 Competition (2022)](https://www.sciencedirect.com/science/article/pii/S0169207021001874)——展示 ML 方法与统计方法对比的大规模预测竞赛

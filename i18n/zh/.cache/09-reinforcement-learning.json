@@ -1,14 +1,14 @@
 {
   "phases/09-reinforcement-learning/01-mdps-states-actions-rewards/docs/en.md": "f76f951e47c846acfca9192d910a9e72a28944d109a90b76e403131ffd07af9b",
   "phases/09-reinforcement-learning/02-dynamic-programming/docs/en.md": "131aab723d6114b139761208cdc5fb9ae0363262c57d31e66903650a2fbd81a5",
+  "phases/09-reinforcement-learning/09-reward-modeling-rlhf/docs/en.md": "52938057ecc955bf7b5bb45f449a469de2edde2f8390cf64e207f5625d4fc126",
+  "phases/09-reinforcement-learning/11-sim-to-real-transfer/docs/en.md": "6588758487ca47b17df37c89845e4e6e23d9770205a992c0285ebe9ebfd5a165",
   "phases/09-reinforcement-learning/03-monte-carlo-methods/docs/en.md": "59ed85c22bceb45e65a953b3cc10cc54fec517a3ef5a35a901f69d433b947991",
-  "phases/09-reinforcement-learning/04-q-learning-sarsa/docs/en.md": "05b289d714aec7c06d0f1c9d5e048fb35dd020a71607f3c27c4983f3675563da",
   "phases/09-reinforcement-learning/05-dqn/docs/en.md": "002242aabbe794433e55c2e708831e30ac786362b9de326ccea60b0c0c1de1c9",
+  "phases/09-reinforcement-learning/12-rl-for-games/docs/en.md": "fbd5ca23db373b9902bdde62d877b231a4096787a4485183971891812fcf1f35",
   "phases/09-reinforcement-learning/06-policy-gradients-reinforce/docs/en.md": "2f358ef609291528bc89714ac09804eca44030072138f39224f60dc138096a7a",
   "phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/docs/en.md": "d57df3347b10a07e55f83e04d3a9b405d9d4a74cb45410a1b7aa89f18a1aa7a3",
   "phases/09-reinforcement-learning/08-ppo/docs/en.md": "73a716e026da377584800f445b20d711310c81d4513df6f8f161b4afc62083e1",
-  "phases/09-reinforcement-learning/09-reward-modeling-rlhf/docs/en.md": "52938057ecc955bf7b5bb45f449a469de2edde2f8390cf64e207f5625d4fc126",
   "phases/09-reinforcement-learning/10-multi-agent-rl/docs/en.md": "431299b046633654b4ca57b5dab3a4a916fa7ec866382caab0cfc4c18d193431",
-  "phases/09-reinforcement-learning/11-sim-to-real-transfer/docs/en.md": "6588758487ca47b17df37c89845e4e6e23d9770205a992c0285ebe9ebfd5a165",
-  "phases/09-reinforcement-learning/12-rl-for-games/docs/en.md": "fbd5ca23db373b9902bdde62d877b231a4096787a4485183971891812fcf1f35"
+  "phases/09-reinforcement-learning/04-q-learning-sarsa/docs/en.md": "05b289d714aec7c06d0f1c9d5e048fb35dd020a71607f3c27c4983f3675563da"
 }

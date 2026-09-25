@@ -1,47 +1,47 @@
-# 组建方法
+# 集成方法
 
-> 没有什么比喻,这是一个定理.
+> 一群弱学习器，只要组合得当，就会成为强学习器。这不是比喻，而是一个定理。
 
 **Type:** Build
-**Language:**字符串
+**Language:** Python
 **Prerequisites:** Phase 2, Lesson 10 (Bias-Variance Tradeoff)
 **Time:** ~120 minutes
 
 ## 学习目标
 
-- 从零开始实现AdaBoost和梯度推进,并解释推进如何顺序减少偏差
-- 建立一个包装组件,展示平均不对称模型如何减少差异性,而不会增加偏见
-- 根据每个方法的错误组件目标进行包装,增强和堆
-- 评估组合多样性,解释为什么大多数投票的准确性在较独立的弱者学习时会提高
+- 从零实现 AdaBoost 和梯度提升（gradient boosting），并解释 boosting 如何逐步降低偏差
+- 构建一个 bagging 集成，并展示对去相关模型取平均如何在几乎不增加偏差的情况下降低方差
+- 从各自针对的误差成分角度比较 bagging、boosting 和 stacking
+- 评估集成多样性，并解释为什么多数投票的准确率会随着更多独立弱学习器而提升
 
-## 问题
+## 问题所在
 
-一个决策树是快速训练和易解释的,但它超越了. 一个线性模型适合复杂的边界.你可以花费几天时间设计完美的模型架构.或者你可以组合一堆不完美的模型,并得到比他们任何一个更好的东西.
+单棵决策树训练快、易于解释，但容易过拟合。单个线性模型在复杂边界上会欠拟合。你可以花几天时间设计完美的模型架构，或者把一堆不完美的模型组合起来，得到比其中任何一个都更好的结果。
 
-组装方法是这样做的.它们是最可靠的技术来赢得卡格尔比赛,它们支持大多数生产ML系统,并说明了偏差差差异的交易.包装减少差异.增强减少偏差.堆叠学习哪些模型可以信任哪些输入.
+集成方法做的正是这件事。它们是赢得 Kaggle 表格数据竞赛最可靠的技术，支撑着大多数生产环境中的机器学习系统，并且生动地展示了偏差-方差权衡。Bagging 降低方差。Boosting 降低偏差。Stacking 学习在哪些输入上信任哪些模型。
 
-## 概念
+## 核心概念
 
-### 为什么团队工作
+### 为什么集成有效
 
-假设您有N个独立的分类器,每个分类器的准确度为p > 0.5.
+假设你有 N 个相互独立的分类器，每个准确率为 p > 0.5。多数投票的准确率为：
 
 ```
 P(majority correct) = sum over k > N/2 of C(N,k) * p^k * (1-p)^(N-k)
 ```
 
-对于21个分类器,每种分类器具有60%的精度,多数票的精度约为74%. 在101个分类器,它上升到84%.
+对于 21 个准确率各为 60% 的分类器，多数投票准确率约为 74%。有 101 个分类器时，会升至 84%。当模型犯的错误各不相同时，误差会相互抵消。
 
-关键要求是**diversity**如果所有模型都犯相同的错误,将它们结合起来就没有什么帮助.
+关键要求是**多样性**。如果所有模型犯同样的错误，组合它们毫无帮助。集成之所以有效，是因为它们通过以下方式产生多样化的模型：
 
-- 不同培训子组 (背后)
-- 不同特征子集 (随机森林)
-- 顺序错误纠正 (增强)
-- 不同型号家族 (堆叠)
+- 不同的训练子集（bagging）
+- 不同的特征子集（随机森林）
+- 顺序纠错（boosting）
+- 不同的模型族（stacking）
 
-### 包装 (带集成)
+### Bagging（Bootstrap 聚合）
 
-包装通过训练每个模型在训练数据的不同启动样本来创造多样性.
+Bagging 通过在每个模型上使用训练数据的不同 bootstrap 样本来创造多样性。
 
 ```mermaid
 flowchart TD
@@ -63,15 +63,15 @@ flowchart TD
     V --> P[Final Prediction]
 ```
 
-根据原始数据的尺寸,将取代原始数据进行启动样本.每一个启动样本中出现了约63.2%的独特样本.剩余的36.8% (袋外样本) 提供了免费验证集.
+bootstrap 样本是从原始数据中有放回地抽取的，大小与原始数据相同。每个 bootstrap 中大约出现 63.2% 的不重复样本。剩余的 36.8%（袋外样本）提供了一个免费的验证集。
 
-每个树都过度过到其引导样本,但过度过对每个树不同,因此平均取消噪音.
+Bagging 能降低方差而几乎不增加偏差。每棵树都会对自己的 bootstrap 样本过拟合，但过拟合的方式各不相同，因此取平均可以抵消噪声。
 
-**Random Forests**树木的种类型是多样性,但它们的种类型是多样性,它们的种类型是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类是多样性,它们的种类型是多样性,它们的种类是多样性,它们的种类型是多样性,它们的种类型是多样性,它们的种类型是多样性,它们的种类型是多样性,它们的种类型的种类型是多样性,它们的种类型的种类型是多样性,它们的种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种种`sqrt(n_features)`类别和`n_features / 3`对于回归.
+**随机森林**是带有一个额外技巧的 bagging：每次分裂时只考虑一个随机的特征子集。这迫使树之间产生更多的多样性。分类时候选特征数通常为 `sqrt(n_features)`，回归时为 `n_features / 3`。
 
-### 增强 (顺序错误纠正)
+### Boosting（顺序纠错）
 
-每个新车型都集中在之前的车型错误的例子上.
+Boosting 顺序地训练模型。每个新模型都关注之前模型做错的样本。
 
 ```mermaid
 flowchart LR
@@ -85,15 +85,15 @@ flowchart LR
     M3 --> F[Weighted sum of all models]
 ```
 
-增强减少偏见.每一个新模型都纠正了迄今为止的组合系统错误. 最终预测是所有模型的权重总和,而更好的模型则获得更高的权重.
+Boosting 降低偏差。每个新模型纠正到目前为止集成所犯的系统性错误。最终预测是所有模型的加权和，其中更好的模型获得更高的权重。
 
-换句话说,如果你跑过多次, 放大就会过度适应, 因为它会不断适应更难的例子,
+代价是：如果运行过多轮次，boosting 可能过拟合，因为它不断拟合更难的样本，而其中一些可能只是噪声。
 
-### 适应性
+### AdaBoost
 
-适应性增强是第一个实用增强算法.它与任何基础学习者,通常是决策 (深度-1树) 合作.
+AdaBoost（Adaptive Boosting）是第一个实用的 boosting 算法。它可以搭配任意基学习器，通常是决策树桩（深度为 1 的树）。
 
-算法:
+算法流程：
 
 ```
 1. Initialize sample weights: w_i = 1/N for all i
@@ -111,11 +111,11 @@ flowchart LR
 3. Final prediction: H(x) = sign(sum(alpha_t * h_t(x)))
 ```
 
-错误较低的模型会得到更高的阿尔法. 错误分类的样本会得到更高的重量,所以下一个模型将集中在它们上.
+误差较低的模型获得较高的 alpha。被误分类的样本获得更高的权重，使下一个模型关注它们。
 
-### 逐步增长
+### 梯度提升（Gradient Boosting）
 
-渐进式增强将增强扩大到任意损失函数. 代替重量化样本,它将每个新模型与当前组的残余 (损失负梯度) 匹配.
+梯度提升将 boosting 推广到任意损失函数。它不再对样本重新加权，而是让每个新模型拟合当前集成的残差（损失的负梯度）。
 
 ```
 1. Initialize: F_0(x) = argmin_c sum(L(y_i, c))
@@ -132,26 +132,26 @@ flowchart LR
 3. Final prediction: F_T(x)
 ```
 
-对于二次错误损失,伪残留仅仅是实际残留:`r_i = y_i - F_{t-1}(x_i)`每棵树都符合前一个树的错误.
+对于平方误差损失，伪残差就是实际的残差：`r_i = y_i - F_{t-1}(x_i)`。每棵树确实是在拟合前一个集成的误差。
 
-学习速度 (缩小) 控制着每个树的贡献.较小的学习速度需要更多的树木,但更好地概括.典型值:0.01到0.3.
+学习率（shrinkage）控制每棵树的贡献程度。较小的学习率需要更多的树，但泛化能力更好。典型取值：0.01 到 0.3。
 
-### 图表数据为什么占据主导地位
+### XGBoost：为什么它称霸表格数据
 
-升级是通过工程优化提高升率,使其快速,准确,并且能抵御过度适应:
+XGBoost (eXtreme Gradient Boosting) 是经过工程优化的梯度提升，速度快、精度高、抗过拟合：
 
-- **Regularized objective:**对于叶子重量,L1和L2处罚防止单个树木过于自信
-- **Second-order approximation:**通过使用损失的第一和第二衍生品,更好的分断决策
-- **Sparsity-aware splits:**通过学习每次分区的最佳方向来处理缺失值
-- **Column subsampling:**像随机森林一样,每个分区都有样本,以确保多样性
-- **Weighted quantile sketch:**有效地找到分布式数据中连续特征的分点
-- **Cache-aware block structure:**优化用于CPU缓存线的内存布局
+- **正则化目标函数：** 对叶子权重的 L1 和 L2 惩罚防止单棵树过于自信
+- **二阶近似：** 同时使用损失的一阶和二阶导数，做出更好的分裂决策
+- **稀疏感知分裂：** 原生处理缺失值，在每个分裂处学习缺失数据的最佳方向
+- **列子采样：** 类似随机森林，在每次分裂时对特征采样以增加多样性
+- **加权分位数草图：** 在分布式数据上高效查找连续特征的分裂点
+- **缓存友好的块结构：** 针对 CPU 缓存行优化的内存布局
 
-对于表格数据,XGBoost (及其继任者LightGBM) 始终优于神经网络.这不会很快改变.如果您的数据适合一张有行列和列的表格,请开始加大梯度.
+对于表格数据，XGBoost（及其后继者 LightGBM）持续优于神经网络。这在短期内不会改变。如果你的数据能放进一个有行列的表格，就从梯度提升开始。
 
-### 堆叠 (Meta-Learning)
+### Stacking（元学习）
 
-堆使用多个基模型的预测作为一个超学习者的特征.
+Stacking 将多个基模型的预测作为特征输入元学习器。
 
 ```mermaid
 flowchart TD
@@ -170,26 +170,26 @@ flowchart TD
     META --> F[Final Prediction]
 ```
 
-测量学习者学习哪个基模型可信任哪些输入.如果随机森林在某些地区更好,而SVM在其他地区,测量学习者将学习相应的路由.
+元学习器学习在哪些输入上信任哪个基模型。如果随机森林在某些区域表现更好而 SVM 在另一些区域更好，元学习器会学会相应地进行选择。
 
-为了避免数据泄露,必须通过训练集的交叉验证生成基模型预测.
+为避免数据泄漏，基模型的预测必须通过在训练集上做交叉验证来生成。绝不能在同一份数据上既训练基模型又生成元特征。
 
-### 投票
+### 投票（Voting）
 
-简单的组合,直接结合预测.
+最简单的集成方式。直接组合预测结果。
 
-- **Hard voting:**多数人投票对班级标签.
-- **Soft voting:**平均预测概率,选择具有最高平均概率的类别. 通常更好,因为它使用信任信息.
+- **硬投票：** 对类别标签进行多数投票。
+- **软投票：** 对预测概率取平均，选择平均概率最高的类别。通常更好，因为它利用了置信度信息。
 
 ```figure
 f3-ensemble-average
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:决定的 (基础学习者)
+### 第 1 步：决策树桩（基学习器）
 
-编码在`code/ensembles.py`我们从一个决定的子开始:一个单个分断的树.
+`code/ensembles.py` 中的代码从零实现了所有内容。我们从一个决策树桩开始：只有一次分裂的树。
 
 ```python
 class DecisionStump:
@@ -224,7 +224,7 @@ class DecisionStump:
         return pred
 ```
 
-### 步骤2:从零开始调动
+### 第 2 步：从零实现 AdaBoost
 
 ```python
 class AdaBoostScratch:
@@ -258,7 +258,7 @@ class AdaBoostScratch:
         return np.sign(total)
 ```
 
-### 步骤3:从零开始逐步增强
+### 第 3 步：从零实现梯度提升
 
 ```python
 class GradientBoostingScratch:
@@ -288,68 +288,68 @@ class GradientBoostingScratch:
         return pred
 ```
 
-### 步骤 4:与 sklearn 相比
+### 第 4 步：与 sklearn 对比
 
-编码验证我们的从头开始的实现与Skularn的准确度相似.`AdaBoostClassifier`其他`GradientBoostingClassifier`并且将所有方法与其相比.
+代码验证我们的从零实现能否达到与 sklearn 的 `AdaBoostClassifier` 和 `GradientBoostingClassifier` 相近的准确率，并将所有方法放在一起比较。
 
-## 用它
+## 实际应用
 
-### 每种方法何时使用
+### 何时使用哪种方法
 
-| Method | Reduces | Best for | Watch out for |
+| 方法 | 降低 | 最适合 | 注意事项 |
 |--------|---------|----------|---------------|
-| Bagging / Random Forest | Variance | Noisy data, many features | Does not help with bias |
-| AdaBoost | Bias | Clean data, simple base learners | Sensitive to outliers and noise |
-| Gradient Boosting | Bias | Tabular data, competitions | Slow to train, easy to overfit without tuning |
-| XGBoost / LightGBM | Both | Production tabular ML | Many hyperparameters |
-| Stacking | Both | Getting last 1-2% accuracy | Complex, risk of overfitting meta-learner |
-| Voting | Variance | Quick combination of diverse models | Only helps if models are diverse |
+| Bagging / 随机森林 | 方差 | 噪声数据、特征多 | 对偏差无帮助 |
+| AdaBoost | 偏差 | 干净的数据、简单的基学习器 | 对离群点和噪声敏感 |
+| 梯度提升 | 偏差 | 表格数据、竞赛 | 训练慢，不调参容易过拟合 |
+| XGBoost / LightGBM | 两者 | 生产环境的表格数据机器学习 | 超参数众多 |
+| Stacking | 两者 | 追求最后 1-2% 的准确率 | 复杂，元学习器有过拟合风险 |
+| 投票 | 方差 | 快速组合多样化模型 | 只有在模型多样化时才有帮助 |
 
-### 表格数据的生产堆
+### 表格数据的生产环境技术栈
 
-对于大多数表式预测问题,这是尝试的顺序:
+对于大多数表格数据预测问题，按以下顺序尝试：
 
-1. **LightGBM or XGBoost**具有默认参数
-2. 调整 n_estimators,学习率,最大深度,小孩体重
-3. 如果你需要最后的0.5%, 建立一个堆组, 3-5个不同的模型
-4. 通过使用截止验证
+1. 使用默认参数的 **LightGBM 或 XGBoost**
+2. 调整 n_estimators、learning_rate、max_depth、min_child_weight
+3. 如果需要最后的 0.5%，用 3-5 个多样化的模型构建 stacking 集成
+4. 全程使用交叉验证
 
-尽管继续进行研究,表格数据上的神经网络几乎总是比梯度增强更糟糕.TabNet,NODE和类似的架构偶尔匹配,但很少击败了精确的XGBoost.
+在表格数据上，神经网络几乎总是不如梯度提升，尽管相关研究尝试从未停止。TabNet、NODE 及类似架构偶尔能持平，但很少能击败调参得当的 XGBoost。
 
-## 运送它
+## 上线交付
 
-这一课产生了`outputs/prompt-ensemble-selector.md`--一个提示提示提示提示提示提示提示提示提示建议启动超参数,并警告有关该方法的常见错误.`outputs/skill-ensemble-builder.md`随着选择指南的完整性.
+本课产出 `outputs/prompt-ensemble-selector.md` —— 一个帮助你为给定数据集选择正确集成方法的提示。描述你的数据（规模、特征类型、噪声水平、类别平衡）和你要解决的问题。该提示会引导你过一遍决策清单，推荐一种方法，给出起始超参数，并指出该方法的常见错误。同时还产出包含完整选择指南的 `outputs/skill-ensemble-builder.md`。
 
-## 运动
+## 练习
 
-1. 修改AdaBoost实现,以追踪训练精度每轮后. 图谱精度与估计器数量. 它什么时候融合?
+1. 修改 AdaBoost 实现，跟踪每一轮之后的训练准确率。绘制准确率与估计器数量的关系图。它何时收敛？
 
-2. 通过添加随机的子样本功能,从零开始实现随机森林.`max_features=sqrt(n_features)`它们可以将变异减少与单一树进行比较.
+2. 在回归树中加入随机特征子采样，从零实现一个随机森林。用 `max_features=sqrt(n_features)` 训练 100 棵树并对预测取平均。比较与单棵树相比的方差降低程度。
 
-3. 在梯度增强实现中,添加早期停止:每轮后追踪验证损失,并在连续10轮没有改善时停止.它实际上需要多少树?
+3. 在梯度提升实现中加入早停：跟踪每轮之后的验证损失，连续 10 轮未改善时停止。它实际上需要多少棵树？
 
-4. 构建一个堆叠组合,包括三个基模型 (物流回归,决策树,k-近邻) 和一个物流回归的元学习器.使用5倍的交叉验证来生成元特征.单独比较每个基模型.
+4. 用三个基模型（逻辑回归、决策树、k 近邻）和一个逻辑回归元学习器构建 stacking 集成。使用 5 折交叉验证生成元特征。与每个单独的基模型进行比较。
 
-5. 运行XGBoost在相同的数据集上,使用默认参数. 比较其准确度和从零开始的梯度增强. 时间两者. 速度差距是多大?
+5. 在同一数据集上用默认参数运行 XGBoost。将其准确率与你的从零实现的梯度提升进行比较。对两者计时。速度差异有多大？
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Bagging | "Train on random subsets" | Bootstrap aggregating: train models on bootstrap samples, average predictions to reduce variance |
-| Boosting | "Focus on hard examples" | Train models sequentially, each correcting errors of the ensemble so far, to reduce bias |
-| AdaBoost | "Reweight the data" | Boosting via sample weight updates; misclassified points get higher weight for the next learner |
-| Gradient boosting | "Fit the residuals" | Boosting via fitting each new model to the negative gradient of the loss function |
-| XGBoost | "The Kaggle weapon" | Gradient boosting with regularization, second-order optimization, and systems-level speed tricks |
-| Stacking | "Models on top of models" | Use predictions of base models as input features for a meta-learner |
-| Random forest | "Many randomized trees" | Bagging with decision trees, adding random feature subsampling at each split for diversity |
-| Ensemble diversity | "Make different mistakes" | Models must be uncorrelated in their errors for the ensemble to improve over individuals |
-| Out-of-bag error | "Free validation" | Samples not in a bootstrap draw (~36.8%) serve as a validation set without needing a holdout |
+| Bagging | "在随机子集上训练" | Bootstrap 聚合：在 bootstrap 样本上训练模型，对预测取平均以降低方差 |
+| Boosting | "关注难样本" | 顺序训练模型，每个模型纠正到目前为止集成的错误，以降低偏差 |
+| AdaBoost | "重新加权数据" | 通过更新样本权重实现 boosting；被误分类的点在下一轮获得更高的权重 |
+| 梯度提升 | "拟合残差" | 通过让每个新模型拟合损失函数的负梯度实现 boosting |
+| XGBoost | "Kaggle 神器" | 带正则化、二阶优化和系统级速度优化的梯度提升 |
+| Stacking | "模型之上再叠模型" | 将基模型的预测作为元学习器的输入特征 |
+| 随机森林 | "很多随机化的树" | 决策树的 bagging，在每次分裂时加入随机特征子采样以增加多样性 |
+| 集成多样性 | "犯不同的错误" | 模型之间的误差必须不相关，集成才能优于单个模型 |
+| 袋外误差 | "免费的验证" | 未出现在某个 bootstrap 抽样中的样本（约 36.8%）可作为验证集，无需单独留出 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Schapire & Freund: Boosting: Foundations and Algorithms](https://mitpress.mit.edu/9780262526036/)亚达博斯创作者的书
-- [Friedman: Greedy Function Approximation: A Gradient Boosting Machine (2001)](https://statweb.stanford.edu/~jhf/ftp/trebst.pdf)-- 原始的梯度增强纸
-- [Chen & Guestrin: XGBoost (2016)](https://arxiv.org/abs/1603.02754)-- 博的纸
-- [Wolpert: Stacked Generalization (1992)](https://www.sciencedirect.com/science/article/abs/pii/S0893608005800231)-- 原始的堆叠纸
-- [scikit-learn Ensemble Methods](https://scikit-learn.org/stable/modules/ensemble.html)-- 实际参考
+- [Schapire & Freund: Boosting: Foundations and Algorithms](https://mitpress.mit.edu/9780262526036/) —— AdaBoost 创造者所著的书
+- [Friedman: Greedy Function Approximation: A Gradient Boosting Machine (2001)](https://statweb.stanford.edu/~jhf/ftp/trebst.pdf) —— 梯度提升的原始论文
+- [Chen & Guestrin: XGBoost (2016)](https://arxiv.org/abs/1603.02754) —— XGBoost 论文
+- [Wolpert: Stacked Generalization (1992)](https://www.sciencedirect.com/science/article/abs/pii/S0893608005800231) —— stacking 的原始论文
+- [scikit-learn Ensemble Methods](https://scikit-learn.org/stable/modules/ensemble.html) —— 实用参考

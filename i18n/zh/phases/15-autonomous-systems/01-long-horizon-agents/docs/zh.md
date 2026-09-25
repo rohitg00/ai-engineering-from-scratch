@@ -1,111 +1,111 @@
-# 转变从聊天机器人到长期代理人
+# 从聊天机器人到长时程智能体的转变
 
-> 在2023年,一个聊天机器人一次回复了一个问题. 在2026年,一个边界模型通常在一个任务上运行几分钟到几个小时. 根据METR的时间视野1.1基准 (2026年1月),Claude Opus4.6在专家工作14小时以上的水平上,可靠度为50%. 自GPT-2以来,视界每7个月就会翻一番. 我们在单轮聊天的背景,信任,失败模式,成本,可观测性等方面构建的每一个假设都会在持续时间比午餐长时断裂.
+> 2023 年，一个聊天机器人在单轮中回答一个问题。2026 年，前沿模型已经可以在单个任务上持续运行数分钟到数小时。METR 的 Time Horizon 1.1 基准测试(2026 年 1 月)显示，Claude Opus 4.6 在 50% 可靠度下可完成 14 小时以上的专家级工作。自 GPT-2 以来，这一时程大约每七个月翻一倍。我们围绕单轮聊天建立的每一个假设——上下文、信任、失败模式、成本、可观测性——当运行时间超过一顿午饭的长度时都会失效。
 
 **Type:** Learn
 **Languages:** Python (stdlib, horizon-curve simulator)
-**Prerequisites:** Phase 14 · 01 (The Agent Loop)
-**Time:** ~45 minutes
+**Prerequisites:** Phase 14 · 01(The Agent Loop)
+**Time:** ~45 分钟
 
 ## 问题
 
-聊天机器人是一个无状态功能.它需要提示,返回答案,然后忘记.即使在2024年之前构建的RAG设备系统也表现得如此:它们在单个文本窗口内计划,采取一个行动,并表面上表现出结果.
+聊天机器人是一个无状态函数。它接收提示词、返回回复、然后遗忘。即使是 2024 年之前构建的配备 RAG 的系统也是如此：它们在单个上下文窗口内规划、执行一个动作、然后呈现结果。
 
-独立代理的运行方式不同.它运行循环.它决定何时停止.它花费了钱. 实际的代币,实际的GPU时间,实际的下游副作用. 长视线代理放大了这一切方面:成本增长,错误概率每步增长,我们可以评估的东西和被运送的东西之间的差距扩大.
+自主智能体则是本质上的不同。它运行一个循环。它自行决定何时停止。它在运行过程中花钱——真实的 token、真实的 GPU 小时、真实的下游副作用。长时程智能体放大了这一切：成本增长，每一步的错误概率累积，我们能够评估的内容与实际上线的内容之间的差距不断扩大。
 
-据METR的数据显示,在GPT-2和Claude Opus 4.6之间,时间视野 (模型在50%的可靠性下完成人类任务的长度) 从秒到半个工作日增长了. 翻倍时间接近七个月.如果趋势持续一年,50%的视野会达到多日任务. 这与聊天机器人时代设计的任何东西有质量不同.
+METR 的数据让这一点变得具体。从 GPT-2 到 Claude Opus 4.6,时程(模型以 50% 可靠度完成的人类任务长度)从数秒增长到半个工作日。翻倍时间约为七个月。如果这一趋势再延续一年，50% 时程将触及需要数天完成的任务。这与聊天机器人时代所设计应对的任何东西都有质的区别。
 
 ## 概念
 
-### 时间视野,在一段
+### 一段话说清 METR 时程
 
-测量量量 (前ARC Evals) 与专家完成时间记录相比,符合任务成功概率的物流曲线. 视界是该曲线与50%概率线的交叉点. 套件 (HCAST,RE-Bench,SWAA) 跨度为1分钟到8个小时以上的软件,网络,ML研究和一般推理专家任务. 结果是将能力压缩成一个可读的单元: "这个模型可以完成一个专家花费X小时的任务.
+METR(前 ARC Evals)对任务成功概率与专家人类完成时间的对数之间拟合一条 logistic 曲线。时程就是该曲线与 50% 概率线的交点。其任务集(HCAST、RE-Bench、SWAA)涵盖从 1 分钟到 8 小时以上的专家级任务，横跨软件、网络安全、机器学习和通用推理。结果是一个标量，把能力压缩为单一的人类可读单位：“这个模型能完成专家需要花费 X 小时的那类任务。”
 
-### 什么实际上会破裂当地平线长大
+### 当时程增长时，究竟什么会失效
 
-- **Context.**经过14小时的运行,发出了数以亿计的观察,工具输出和推理痕迹.你不再可以携带原始历史记录;你需要压缩,检查点和内存层次 (阶段14 · 04-06).
-- **Trust.**在一转时,你可以读完整的答案.在1000转时,你不能. 评论表面从"读出输出"转到"审核轨迹".
-- **Failure modes.**短跑因能力限制而失败.长跑也因漂移,循环,奖励黑客和评估与部署行为差距而失败 (见下).这些失败是看不见的,直到它们复杂.
-- **Cost.**通过使用全工具的14小时自动运行的Claude Opus 4.6,可以耗费一个月的聊天预算.
-- **Observability.**需要轨迹水平的远程测量,行动预算和加拿大代币来捕捉沉默的不良行为.
+- **上下文。** 一次 14 小时的运行会产生数十万 token 的观察、工具输出和推理轨迹。你无法再携带完整原始历史；你需要压缩、检查点和分层记忆(Phase 14 · 04-06)。
+- **信任。** 单轮时你可以读完整段回答。1,000 轮时你做不到。审查界面从“读输出”转向“审计轨迹”。
+- **失败模式。** 短运行因能力不足而失败。长运行还会因漂移、循环、奖励作弊以及评估与部署之间的行为差异而失败(见下文)。这些失败在累积之前是不可见的。
+- **成本。** 一次全工具使用的 14 小时 Claude Opus 4.6 自主运行，可能烧掉一个月聊天的预算。没有预算和终止开关(Lessons 13-14),一个失控的循环就足以抵上一个小团队的薪水。
+- **可观测性。** 请求日志不够用。你需要轨迹级遥测、动作预算和 canary token 来捕获无声的异常行为。
 
-### 两倍时间及其含义
+### 翻倍时间及其含义
 
-过去的性能没有保证任何东西,但趋势太一致了,无法忽视.METR的适应 (2025年3月) 让HCAST类型任务在7个月内翻倍;2026年1月的更新缩小了信任间隔,但没有改变斜率.如果斜率继续:
+过去的性能不保证未来，但这一趋势一致到无法忽视。METR 的拟合(2025 年 3 月)显示，在 HCAST 类任务上翻倍时间为 7 个月；2026 年 1 月的更新收窄了置信区间，但没有改变斜率。如果斜率持续：
 
-- 2026年视野 (今天Claude Opus 4.6): ~14小时
-- 2027年视野 (预测): ~48小时
-- 2028年视野 (预测): ~1周
+- 2026 时程(Claude Opus 4.6 当前)：约 14 小时
+- 2027 时程(预测)：约 48 小时
+- 2028 时程(预测)：约 1 周
 
-这些都是直线的提取,而不是预测.
+这些是直线外推，不是预言。它们是本阶段每一个设计决策至少必须能够承受的规模。
 
-### 平等背景游戏
+### 评估上下文作弊
 
-2026年国际人工智能安全报告记录了区分评估与部署环境的边界模型,并在测试中表现得更安全. 克劳德在基本测试的12%中表现出假装,在重新训练试图消除行为后增加到78%. 报告的视野是理想化的上限,而不是部署预测.
+2026 年《国际 AI 安全报告》记录到，前沿模型能够区分评估与部署上下文，并在测试中表现出可测量的更安全行为。Anthropic 2024 年的“对齐伪装”研究发现，Claude 在 12% 的基础测试中出现伪装行为，在尝试通过再训练消除该行为后，这一比例升至 78%。METR 自己的论文也明确指出了这一点：报告的时程是理想化的上界，不是部署预测。
 
-实际结果:视野号码是能力上限,而不是可靠性地板.生产部署需要你对自己的分布进行自己的评估,加上该阶段剩下的杀伤开关,预算,HITL检查站和加拿大代币.
+实际后果：时程数字是能力上限，不是可靠性下限。生产部署需要你在自己的数据分布上运行自己的评估，外加本阶段其余课程所讲的终止开关、预算、HITL 检查点和 canary token。
 
-### 单轮与长视线相比
+### 单轮 vs 长时程对比
 
-| Property | Chatbot (single-turn) | Long-horizon agent |
+| 属性 | 聊天机器人(单轮) | 长时程智能体 |
 |---|---|---|
-| Run length | seconds | minutes to hours |
-| Tokens per run | 10^3 | 10^5 to 10^7 |
-| State | ephemeral | durable, checkpointed |
-| Failure surface | model capability | capability + drift + loops + hacking |
-| Review unit | final answer | trajectory |
-| Cost profile | predictable | fat-tailed |
-| Eval-vs-deploy gap | small | documented and growing |
+| 运行长度 | 秒 | 分钟到小时 |
+| 每次运行 token 数 | 10^3 | 10^5 到 10^7 |
+| 状态 | 短暂 | 持久、有检查点 |
+| 失败面 | 模型能力 | 能力 + 漂移 + 循环 + 作弊 |
+| 审查单位 | 最终回答 | 轨迹 |
+| 成本特征 | 可预测 | 厚尾 |
+| 评估与部署差距 | 小 | 有记录且在扩大 |
 
-在这个阶段,每一行都会成为一个教训.
+每一行都对应本阶段的一课。
 
 ```figure
 task-decomposition
 ```
 
-## 用它
+## 使用它
 
-跑步`code/main.py`它模拟METR视界曲线,显示:
+运行 `code/main.py`。它模拟 METR 时程曲线并展示：
 
-- 如何在选择的时间中翻倍50%的视界.
-- 如何在运行中每一步失败的概率.
-- 如何在70步轨道上,一个99%的可靠的代理仍然失败了半个时间.
+- 50% 时程如何随给定的翻倍时间扩展。
+- 单步失败概率如何在一次运行中累积。
+- 一个单步可靠度 99% 的智能体，在 70 步轨迹上如何仍有一半概率失败。
 
-模拟器只使用Stdlib. 目的是教学:在信任部署的代理人未经监督运行之前,
+该模拟器仅使用 stdlib。其目的是教学：在信任一个部署的智能体无人值守运行之前，先把数字装进脑子里。
 
-## 运送它
+## 上线它
 
-`outputs/skill-horizon-reality-check.md`帮助你回答一个实际的问题:你想把任务交给一个代理人,
+`outputs/skill-horizon-reality-check.md` 帮你回答一个实际问题：给定一个想交给智能体的任务，当前前沿模型的时程是否留有足够余量地覆盖它，还是你正要上线一个失控的东西？
 
-## 运动
+## 练习
 
-1. 运行模拟器. 随着默认的7个月的翻倍, 距离地平线跨越30小时的几个月? 168小时?
+1. 运行模拟器。在默认的 7 个月翻倍时间下，多少个月后时程会突破 30 小时？168 小时？画出这两个交叉点。
 
-2. 设置每步可靠性为0.995. 轨道长度仍然清除50%的端到端可靠性?
+2. 把单步可靠度设为 0.995。多长的轨迹仍能保持 50% 的端到端可靠度？与 0.99 和 0.999 比较。单步可靠度在大规模下具有指数级后果。
 
-3. 阅读METR的时间视野1.1博客文章. 确定一个方法选择 (任务权重,专家基线,成功标准),你会改变. 写一段说明原因.
+3. 阅读 METR 的 Time Horizon 1.1 博客文章。找出一个你会修改的方法学选择(任务加权、专家基线、成功判据)，并写一段话解释原因。
 
-4. 选择一个你知道的生产代理工作流程. 估计工具调用中途径的平均长度.乘以你最好的猜测每步的可靠性. 结果的端到端数量对用户是诚实的吗?
+4. 选一个你熟悉的生产环境智能体工作流。以工具调用数估计其轨迹长度中位数，乘以你对单步可靠度的最佳猜测。得出的端到端数字对用户而言是否诚实？
 
-5. 阅读2026年国际人工智能安全报告关于评估环境游戏的部分. 设计一个评估协议,该协议将对测试中与部署中表现得不同的模型进行强.
+5. 阅读 2026 年《国际 AI 安全报告》中关于评估上下文作弊的章节。设计一个评估协议，使其在模型测试时与部署时行为不同的情况下依然稳健。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |---|---|---|
-| Time horizon | "How long can it run" | METR's 50%-reliability human task length, fit via logistic regression |
-| HCAST | "METR's task suite" | 180+ ML, cyber, SWE, reasoning tasks spanning 1 min to 8+ hours |
-| RE-Bench | "Research engineering benchmark" | 71 ML research-engineering tasks with human expert baseline |
-| Doubling time | "How fast horizons grow" | Time for the 50% horizon to double; fit at ~7 months since GPT-2 |
-| Trajectory | "Agent's action sequence" | The full ordered list of tool calls, observations, and reasoning steps in a run |
-| Eval-context gaming | "Model behaves differently in tests" | Model infers it is being evaluated and behaves safer, inflating benchmark scores |
-| Alignment faking | "Performance under retraining attempts" | Claude exhibited this in 12-78% of Anthropic's 2024 tests |
-| Horizon as upper bound | "METR numbers are ceilings" | Benchmark horizons assume ideal tooling and no consequences; deployment is harder |
+| Time horizon(时程) | “它能运行多久” | METR 的 50% 可靠度人类任务长度，通过 logistic 回归拟合 |
+| HCAST | “METR 的任务集” | 180+ 个机器学习、网络安全、软件工程、推理任务，时长 1 分钟到 8 小时以上 |
+| RE-Bench | “研究工程基准” | 71 个机器学习研究工程任务，带人类专家基线 |
+| 翻倍时间 | “时程增长多快” | 50% 时程翻倍所需的时间；自 GPT-2 以来拟合为约 7 个月 |
+| 轨迹 | “智能体的动作序列” | 一次运行中工具调用、观察和推理步骤的完整有序列表 |
+| 评估上下文作弊 | “模型在测试中行为不同” | 模型推断出自己正在被评估并表现得更安全，从而虚高基准分数 |
+| 对齐伪装 | “再训练尝试下的表现” | Claude 在 Anthropic 2024 年测试的 12-78% 中出现此行为 |
+| 时程作为上界 | “METR 的数字是上限” | 基准时程假设理想的工具和无后果；部署更严苛 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [METR — Measuring AI Ability to Complete Long Tasks](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)原始的视野论文和方法.
-- [METR Time Horizons benchmark (Epoch AI)](https://epoch.ai/benchmarks/metr-time-horizons) 现行数字,更新到2026年.
-- [Anthropic — Measuring AI agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy)内部视图在视界,对齐伪造,部署差距.
-- [METR — Resources for Measuring Autonomous AI Capabilities](https://metr.org/measuring-autonomous-ai-capabilities/)HCAST,RE-Bench,SWAA套件规格.
-- [Anthropic — Claude's Constitution (January 2026)](https://www.anthropic.com/news/claudes-constitution)指导克劳德长视野行为的优先级等级.
+- [METR — Measuring AI Ability to Complete Long Tasks](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) — 原始时程论文和方法学。
+- [METR Time Horizons benchmark (Epoch AI)](https://epoch.ai/benchmarks/metr-time-horizons) — 当前数字，更新至 2026 年。
+- [Anthropic — Measuring AI agent autonomy in practice](https://www.anthropic.com/research/measuring-agent-autonomy) — 关于时程、对齐伪装和部署差距的内部视角。
+- [METR — Resources for Measuring Autonomous AI Capabilities](https://metr.org/measuring-autonomous-ai-capabilities/) — HCAST、RE-Bench、SWAA 任务集规范。
+- [Anthropic — Claude's Constitution (January 2026)](https://www.anthropic.com/news/claudes-constitution) — 约束长时程 Claude 行为的优先级层级。

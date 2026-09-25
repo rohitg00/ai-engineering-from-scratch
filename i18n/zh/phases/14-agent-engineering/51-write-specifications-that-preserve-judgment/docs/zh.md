@@ -1,39 +1,39 @@
-# 写出保存判断的具体说明
+# 编写能保留判断空间的规格说明
 
-> 有用的规格可以修复变量和证据,同时让可逆的实施选择保持开放.
+> 一份有用的规格说明固定不变量与证据，同时将可逆的实现选择保持开放。它是一条决策边界，而不是剧本。
 
 **Type:** Learn + Build
 **Languages:** Python (stdlib)
 **Prerequisites:** Phase 14 lesson 50
-**Time:** ~75 minutes
+**Time:** ~75 分钟
 
 ## 学习目标
 
-- 单独的结果,不变量,例子,非目标和证据.
-- 标记决定为被锁定,限制或委托.
-- 保持代理判断力,在选择便宜和可逆的情况下.
-- 要求人检查点,
+- 区分结果、不变量、示例、非目标和证明。
+- 将决策标记为锁定、有界或委托。
+- 在选择代价低且可逆的地方保留代理的判断空间。
+- 在后果或公开行为发生变化的地方要求人工检查点。
 
-## 两种极端的恶性
+## 两种糟糕的极端
 
-过度指定任务要求代理猜测系统,过度指定任务要求它转载可能已经错误的设计.
+规格不足的任务要求代理去猜测系统。规格过度的任务要求它誊写一份可能早已出错的设计。
 
-有效的中位是可执行的合同:
+有用的中间态是一份可执行的契约：
 
-| Surface | Purpose |
+| 层面 | 目的 |
 |---|---|
-| Outcome | The observable result |
-| Invariants | Conditions that must always remain true |
-| Examples | Concrete cases that reveal intent |
-| Non-goals | Adjacent behavior intentionally excluded |
-| Decision policy | Which choices are locked, bounded, or delegated |
-| Proof | Evidence required before completion |
+| 结果 | 可观察的结果 |
+| 不变量 | 必须始终为真的条件 |
+| 示例 | 揭示意图的具体用例 |
+| 非目标 | 有意排除的相邻行为 |
+| 决策策略 | 哪些选择是锁定、有界或委托的 |
+| 证明 | 完成前所需的证据 |
 
-## 三种决策方式
+## 三种决策模式
 
-- **Locked:**代理人不得选择使用,用于公共兼容性,权威性,安全性,不可逆转的成本或产品承诺.
-- **Bounded:**代理可以在明确的限制内选择.用于搜索预算,重复计算,允许的依赖性或已知界面家族.
-- **Delegated:**经理拥有选择,必须解释它. 用于本地结构,名称,可逆的回变器和实施细节.
+- **锁定：** 代理不得自行选择。用于公开兼容性、权限、安全性、不可逆成本或产品承诺。
+- **有界：** 代理可以在明确的限制内选择。用于搜索预算、重试次数、允许的依赖或已知的接口族。
+- **委托：** 代理拥有该选择权并必须解释它。用于局部结构、命名、可逆的重构和实现细节。
 
 ```mermaid
 flowchart LR
@@ -46,53 +46,53 @@ flowchart LR
   A --> I[Agent implements and proves]
 ```
 
-## 通过例子说明行为
+## 通过示例指定行为
 
-  强,  生产准备的是无法执行的.一个小组的正常,边缘,失败和禁止的例子给了构建者和验证者都具备了具体的东西.
+示例比形容词更能压缩意图。“有用”、“健壮”和“可用于生产环境”都不是可执行的。一小组正常、边界、失败和禁止示例能给构建者和验证者提供具体的东西。
 
-没有任何例子可以取代不变的元素.
+示例不能替代不变量。一个通过的用例无法证明一条普适的安全规则。
 
-## 证据必须与说法相匹配
+## 证明必须与主张匹配
 
-- 一个单位测试证明了本地函数合同.
-- 电线测试证明了序列化和运输行为.
-- 浏览器的旅行证明了接口路径.
-- 复制集证明了对代表性案件的行为.
-- 审计日志证明了权限限制.
+- 单元测试证明局部函数契约。
+- 线缆测试（wire test）证明序列化与传输行为。
+- 浏览器旅程证明接口路径。
+- 回放集证明在代表性用例上的行为。
+- 审计日志证明权限边界未被突破。
 
-应不要接受低层作为高层的证据.
+不要接受用较低层次的证据来证明较高层次的主张。
 
-## 故意保存未知的东西
+## 有意识地保留未知
 
-具体说明可以说: 执行程序可以选择任何在预算内返回的只可读的来源.
+规格说明可以写“实现可以选择任何在时间预算内返回的只读数据源”。这不是模糊。这是一项有边界和证明的有意委托的决策。
 
-根据证据的变化,规格应不断变化. 保持锁定和限制的选择背后的原因,以便后来的团队可以在没有考古学的情况下修改它们.
+当证据变化时，规格说明应当演进。保留锁定和有界选择背后的理由，以便后来的团队无需考古就能修订它们。
 
-## 建立它
+## 动手实践
 
-实验室验证了每一个合同表面,检查了决策模式,`outputs/executable-specification.json`现在,我们要去.
+实验会验证每个契约层面、检查决策模式，并写出 `outputs/executable-specification.json`。
 
 ```bash
 python3 code/main.py
 python3 -m unittest discover code/tests -v
 ```
 
-移动生产写决策从锁定到委托.解释为什么方案接受值,而产品风险不接受.
+将生产写入决策从锁定改为委托。解释为什么 schema 接受该值但产品风险不接受。
 
-## 运动
+## 练习
 
-1. 转换一个后期票到六个规格表面.
-2. 取代三个执行说明一个不变和两个例子.
-3. 记住每一个决定,并证明每个被锁定或限制的选择是正确的.
-4. 添加每一个不变的证明收据.
-5. 消除没有证据或风险合理性的限制.
+1. 将一张待办工单转换为六个规格层面。
+2. 用一个不变量和两个示例替换三条实现指令。
+3. 标记每个决策，并为每个锁定或有界的选择给出理由。
+4. 为每个不变量添加一张证明回执。
+5. 移除一条既无证据也无风险理由的约束。
 
-## 进一步阅读
+## 延伸阅读
 
-- [Nuseibeh and Easterbrook, Requirements Engineering: A Roadmap](https://www.cs.toronto.edu/~sme/papers/2000/ICSE2000.pdf)对于目标,精确规格,验证,一致性和进化之间的关系.
-- [Zave and Jackson, Four Dark Corners of Requirements Engineering](https://doi.org/10.1145/267895.267896)对于环境假设,要求和规格的分离.
-- [Gotel and Finkelstein, An Analysis of the Requirements Traceability Problem](https://doi.org/10.1109/ICRE.1994.292398)为了保护要求的存在和来源.
+- [Nuseibeh 和 Easterbrook，Requirements Engineering: A Roadmap](https://www.cs.toronto.edu/~sme/papers/2000/ICSE2000.pdf)，关于目标、精确规格、验证、共识与演进之间的关系。
+- [Zave 和 Jackson，Four Dark Corners of Requirements Engineering](https://doi.org/10.1145/267895.267896)，关于区分环境假设、需求和规格。
+- [Gotel 和 Finkelstein，An Analysis of the Requirements Traceability Problem](https://doi.org/10.1109/ICRE.1994.292398)，关于保留需求存在的原因及其来源。
 
-## 你留下什么
+## 你将获得
 
-保持`outputs/executable-specification.json`编码代理人和人类审查员的合同.
+保留 `outputs/executable-specification.json`。它将成为编码代理与人工评审者共享的契约。

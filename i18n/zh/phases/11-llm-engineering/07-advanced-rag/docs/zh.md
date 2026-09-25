@@ -1,77 +1,77 @@
-# 技术的发展
+# 高级 RAG(分块、重排序、混合检索)
 
-> 基本RAG检索了最相似的顶部k块. 这适用于简单的问题. 它用于多个跳槽推理,模糊的查询和大体. 高级RAG是 10 文件的演示和 10 百万文件的系统之间的区别.
+> 基础 RAG 检索最相似的前 k 个分块。这对简单问题有效,但在多跳推理、模糊查询和大规模语料库上会失效。高级 RAG 区别在于:一个是能在 10 篇文档上运行的演示,一个是能在 1000 万篇文档上运行的系统。
 
 **Type:** Build
 **Languages:** Python
-**Prerequisites:** Phase 11, Lesson 06 (RAG)
-**Time:** ~90 minutes
-**Related:**阶段5 · 23 (RAG的零碎策略) 涵盖了所有六种零碎算法复式,语义,句子,母文档,晚期零碎,文本检索使用VECTARA/Anthropic基准.本课程建立在上面:混合搜索,重排,查询转换.
+**Prerequisites:** Phase 11, Lesson 06(RAG)
+**Time:** 约 90 分钟
+**Related:** Phase 5 · 23(RAG 的分块策略)涵盖全部六种分块算法——递归、语义、句子、父子文档、late chunking、上下文检索——并附 Vectara/Anthropic 基准测试。本课在此基础上构建:混合检索、重排序、查询变换。
 
 ## 学习目标
 
-- 实施先进的分断策略 (语义,递归,父母和孩子) 保存文档结构和文本
-- 构建一个混合搜索管道,结合BM25关键字匹配与语义向量搜索和跨编码重排器
-- 应用查询转换技术 (HyDE,多查询,退步) 改善对模糊或复杂的问题的检索
-- 诊断和修复常见的RAG故障:错误的部分检索,答案不在文本中,多跳推理分断
+- 实现保留文档结构和上下文的高级分块策略(语义、递归、父子分块)
+- 构建结合 BM25 关键词匹配、语义向量检索和交叉编码器重排序器的混合检索管线
+- 应用查询变换技术(HyDE、多查询、step-back)以提升模糊或复杂问题的检索效果
+- 诊断并修复常见 RAG 故障:检索到错误分块、答案不在上下文中、多跳推理失败
 
-## 问题
+## 问题所在
 
-在第06课中,你建立了一个基本的RAG管道.
+你在 Lesson 06 中构建了基础 RAG 管线。它对小型语料库上的直接问题有效。现在试试这些:
 
-**Ambiguous query**语义搜索显示了收入战略,收入预测和财务总监对收入增长的想法.所有这些都与"收入"这个词类似.没有包含实际数字.正确的部分说:"$47.2M in Q3 2025" but uses the word "earnings" instead of "revenue." The embedding model thinks "revenue strategy" is closer to the query than "Q3 earnings were $其他国家
+**模糊查询**:"上个季度营收是多少?"语义检索返回关于营收战略、营收预测和 CFO 对营收增长看法的分块。它们都与"营收"一词语义相似,但没有一个包含实际数字。正确的分块写着"$47.2M in Q3 2025" but uses the word "earnings" instead of "revenue." The embedding model thinks "revenue strategy" is closer to the query than "Q3 earnings were $47.2M"。
 
-**Multi-hop question**答案: "哪个团队获得了最高的客户满意度评分改善?" 这需要找到每个团队的满意度评分,将它们比较,并确定最大的.没有单个部分包含答案.信息分散在团队报告中.
+**多跳问题**:"哪个团队的客户满意度评分提升最高?"这需要找到每个团队的满意度评分,进行比较,并确定最大值。没有单个分块包含答案。信息分散在各个团队报告中。
 
-**Large corpus problem**您有200万块.正确的答案是#1,847,293块.您的前五个检索引入了#14,#89,201,#1,200,000,#44,#901,333块. 嵌入空间很近,但没有包含答案.在这个规模上,近邻搜索引入了足够的错误,使相关结果被推出了上层k.
+**大规模语料库问题**:你有 200 万个分块。正确答案在第 1,847,293 号分块中。你的 top-5 检索返回第 #14、#89,201、#1,200,000、#44 和 #901,333 号分块。它们在嵌入空间中很接近,但没有一个包含答案。在这个规模下,近似最近邻搜索引入的误差足以把相关结果挤出 top-k。
 
-基本RAG失败,因为向量相似性与相关性不同. 一个部分可以从语义上看似一个查询,但没有用于回答它. 高级RAG使用四种技术解决这一问题:混合搜索 (添加关键词匹配),重新排名 (更仔细评分候选人),查询转换 (在搜索之前修复查询),更好的分量 (在正确的细分度中检索).
+基础 RAG 失败是因为向量相似度不等于相关性。一个分块可以与查询语义相似,但对回答查询毫无用处。高级 RAG 用四种技术解决这个问题:混合检索(加入关键词匹配)、重排序(更仔细地为候选打分)、查询变换(在检索前修正查询),以及更好的分块(以正确的粒度检索)。
 
-## 概念
+## 核心概念
 
-### 混合搜索:语义 +关键词
+### 混合检索:语义 + 关键词
 
-语义搜索 (向量相似性) 很好理解意义. "我如何取消订阅?"与"取消你的计划的步骤"相匹配,尽管他们没有分享任何单词.但它没有准确的匹配. "错误代码E-4021"可能不匹配含有"E-4021"的部分,如果嵌入模型把它视为噪音.
+语义检索(向量相似度)擅长理解含义。"如何取消我的订阅?"能匹配"终止你的套餐的步骤",即使两者没有共同词汇。但它会漏掉精确匹配。如果嵌入模型把"E-4021"当作噪声,"Error code E-4021"可能匹配不到包含"E-4021"的分块。
 
-关键字搜索 (BM25) 是相反的.它在精确匹配时优异. "E-4021"匹配完美. 但如果文件说"终止你的计划",则"取消我的订阅"返回零结果.
+关键词检索(BM25)则相反。它擅长精确匹配。"E-4021"完美匹配。但如果文档写的是"终止你的套餐","取消我的订阅"会返回零结果。
 
-混合搜索运行了两者,然后将结果合并.
+混合检索同时运行两者,然后合并结果。
 
-**BM25**搜索引擎的核心是自1990年代以来.
+**BM25**(Best Matching 25)是标准的关键词检索算法。自 20 世纪 90 年代以来,它一直是搜索引擎的支柱。公式:
 
 ```
 BM25(q, d) = sum over terms t in q:
     IDF(t) * (tf(t,d) * (k1 + 1)) / (tf(t,d) + k1 * (1 - b + b * |d| / avgdl))
 ```
 
-在文件d中的tf,d是t的术语频率, IDF(t) 是反向文件频率,
+其中 tf(t,d) 是词 t 在文档 d 中的词频,IDF(t) 是逆文档频率,|d| 是文档长度,avgdl 是平均文档长度,k1 控制词频饱和(默认 1.2),b 控制长度归一化(默认 0.75)。
 
-简单地说:当包含查询术语 (特别是罕见的) 时,BM25的文档得分更高,但重复术语的回报率却下降.一个用字母"收入"50倍的文档并不比一次使用的文档50倍更相关.
+简而言之:当文档包含查询词(尤其是稀有词)时,BM25 给出更高的分数,但对重复词的收益递减。一个出现"营收"50 次的文档,相关性并不是只出现一次的文档的 50 倍。
 
-### 相互级别融合 (RRF)
+### 倒数排名融合(RRF)
 
-它们是如何组合的? 相互排列融合是标准方法.
+你有两个排序列表:一个来自向量检索,一个来自 BM25。如何合并它们?倒数排名融合是标准方法。
 
 ```
 RRF_score(d) = sum over rankings R:
     1 / (k + rank_R(d))
 ```
 
-在这种情况下, k 是一个常数 (通常是60),它阻止了排名最高的结果占据主导地位.
+其中 k 是一个常数(通常为 60),用于防止排名最高的结果占据主导地位。
 
-在向量搜索中排名第一的文件和BM25中排名第五的文件得到: 1/(60+1) + 1/(60+5) = 0.0164 + 0.0154 = 0.0318
+在向量检索中排第 1、在 BM25 中排第 5 的文档得分为:1/(60+1) + 1/(60+5) = 0.0164 + 0.0154 = 0.0318
 
-在向量搜索中排名第3的文件和BM25中排名第2的文件得到: 1/(60+3) + 1/(60+2) = 0.0159 + 0.0161 = 0.0320
+在向量检索中排第 3、在 BM25 中排第 2 的文档得分为:1/(60+3) + 1/(60+2) = 0.0159 + 0.0161 = 0.0320
 
-根据RRF的数据,RRF自然会平衡两个信号.在两个列表中排名高的文档获得最佳分数.在一个列表中排名第一但不在另一个列表中排名的文档获得中等分数.这是强大的,因为它使用排名,而不是原始分数,因此两种系统之间的分数分布差异并不重要.
+RRF 自然地平衡两种信号。在两个列表中都排名靠前的文档获得最高分。在一个列表中排第 1 但在另一个列表中缺席的文档获得中等分数。这种方法很稳健,因为它使用排名而非原始分数,因此两个系统之间分数分布的差异无关紧要。
 
-### 排名重定
+### 重排序
 
-检索 (无论是向量,关键字或混合) 是快速的,但不准确的.它使用双编码器:查询和每个文档都独立嵌入,然后进行比较.嵌入式计算一次并缓存.这可扩展到数百万文档.
+检索(无论是向量、关键词还是混合)速度快但不精确。它使用双编码器:查询和每个文档被独立嵌入,然后进行比较。嵌入只计算一次并缓存。这可以扩展到数百万文档。
 
-排名使用跨编码器:查询和候选文件被合并成一个输出相关性分数的模型.该模型同时看到两个文本,并可以捕获它们之间的细微互动.跨编码器可以理解"Q3的收益是什么?"对于包含"Q3中的47.2M美元"的部分非常相关,即使双编码器错过了连接.
+重排序使用交叉编码器:查询和候选文档一起输入一个输出相关性分数的模型。模型同时看到两段文本,能够捕捉它们之间的细粒度交互。交叉编码器能理解"What were Q3 earnings?"与包含"$47.2M in Q3"的分块高度相关,即使双编码器错过了这种关联。
 
-交换:交叉编码器比双编码器100-1000倍慢,因为它们共同处理查询文档对.你不能预先计算100万份文档的交叉编码分数.解决方案:获取更大的候选人集 (来自混合搜索的Top-50),然后再使用交叉编码器排名以获得最终的Top-5.
+代价是:交叉编码器比双编码器慢 100-1000 倍,因为它们要联合处理查询-文档对。你无法为 100 万个文档预计算交叉编码器分数。解决方案:先检索更大的候选集(混合检索的 top-50),再用交叉编码器重排序得到最终的 top-5。
 
 ```mermaid
 graph LR
@@ -83,26 +83,26 @@ graph LR
     P --> LLM["Generate answer"]
 ```
 
-常见的重新排名模型 (2026年排行):
-- 协同排名3.5:管理 API,多语言,混合体中最佳回忆收益
-- 旅行重新排名-2.5:管理 API,最低的延迟
-- 简单的语言:开放式,100多种语言
-- bge-renanker-v2-m3:开放权重,强基线
-- 跨码码器/ms-marco-MiniLM-L-6-v2:开放权重,运行于CPU用于原型设计
-- 结合后期交互多向量重排器  O(代币) 不是 O(doc) 在得分时间
+常见的重排序模型(2026 年阵容):
+- Cohere Rerank 3.5:托管 API,多语言,在混合语料库上召回率提升最佳
+- Voyage rerank-2.5:托管 API,托管选项中延迟最低
+- Jina-Reranker-v2 Multilingual:开放权重,支持 100+ 种语言
+- bge-reranker-v2-m3:开放权重,强基线
+- cross-encoder/ms-marco-MiniLM-L-6-v2:开放权重,可在 CPU 上运行,适合原型开发
+- ColBERTv2 / Jina-ColBERT-v2:late-interaction 多向量重排序器——打分时复杂度为 O(tokens) 而非 O(docs)
 
-### 查询转换
+### 查询变换
 
-有时问题不是检索,而是查询本身. "新政策变化是什么?"是一个可怕的搜索查询.它没有具体的术语.嵌入模糊.没有检索系统可以从中找到正确的文件.
+有时问题不在检索,而在查询本身。"那个关于新政策变更的事情是什么?"是一个糟糕的搜索查询。它不包含任何具体词汇,嵌入很模糊。任何检索系统都无法据此找到正确的文档。
 
-**Query rewriting**通过将用户的查询转换为更好的搜索查询.
+**查询重写**:把用户的查询改写成更好的搜索查询。LLM 可以做到:
 
 ```
 User: "What was that thing about the new policy change?"
 Rewritten: "Recent policy changes and updates"
 ```
 
-**HyDE (Hypothetical Document Embeddings)**代替查询,生成一个假设答案,嵌入,并搜索类似的真实文档.
+**HyDE(Hypothetical Document Embeddings,假设文档嵌入)**:不用查询直接检索,而是生成一个假设性答案,嵌入它,然后检索相似的真实文档。
 
 ```
 Query: "What is the refund policy for enterprise?"
@@ -111,15 +111,15 @@ within 60 days of purchase. Refunds are pro-rated based on the remaining
 subscription period and processed within 5-7 business days."
 ```
 
-嵌入假设答案,并寻找类似于它的真实文档.直觉:假设答案在嵌入空间中比原始问题更接近真实答案.问题和答案具有不同的语言结构.通过生成假设答案,你将在嵌入中的"问题空间"和"答案空间"之间的差距弥合.
+嵌入假设性答案并检索与之相似的真实文档。直觉是:假设性答案在嵌入空间中比原始问题更接近真实答案。问题和答案有不同的语言结构。通过生成假设性答案,你在嵌入空间中弥合了"问题空间"与"答案空间"之间的差距。
 
-代在检索之前添加一个LLM调用. 这增加了500-2000ms的延迟.
+HyDE 在检索前增加一次 LLM 调用。这会增加 500-2000ms 的延迟。当原始查询的检索质量较差时,这是值得的。
 
-### 亲子的分手
+### 父子分块
 
-标准的碎片化需要进行折扣:小块用于精确的检索,大块用于足够的文本化.
+标准分块迫使你做出取舍:小分块利于精确检索,大分块提供充足上下文。父子分块消除了这种取舍。
 
-索引小块 (128个代币) 获取.当一个小块被获取时,返回其母块 (512个代币) 为提示.小块与查询精确匹配.母块为LLM产生一个好的答案提供了足够的背景.
+用小分块(128 token)建立索引用于检索。当检索到一个小分块时,将其父分块(512 token)返回给提示。小分块精确匹配查询,父分块为 LLM 提供足够上下文以生成好的答案。
 
 ```mermaid
 graph TD
@@ -138,27 +138,27 @@ graph TD
     C2 -.->|"return parent"| P
 ```
 
-查询"企业退款?"与小部分C2精确相匹配. 但提示收到完整的父母部分P,其中包括处理时间和提交过程的周围环境.
+查询"enterprise refund?"精确匹配子分块 C2。但提示接收的是完整的父分块 P,其中包含关于处理时间和提交流程的周围上下文。
 
-### 分析数据
+### 元数据过滤
 
-在执行向量搜索之前,按日期,来源,类别,作者,语言过数据. 这减少了搜索空间,防止无关的结果.
+在运行向量检索之前,按元数据过滤语料库:日期、来源、类别、作者、语言。这缩小了搜索空间并防止无关结果。
 
-没有过度过的元数据,你会搜索整个库,并可能找到一个两年历史的安全文件,
+"上个月安全策略有什么变化?"应只检索最近 30 天内、安全类别的文档。没有元数据过滤,你会检索整个语料库,可能取回一个恰好语义相似的两年前的安全文档。
 
-产品RAG系统将元数据存储在每个部分旁边:源文件,创建日期,类别,作者,版本.向量数据库支持在搜索相似性之前预先过元数据,这对于规模性能至关重要.
+生产级 RAG 系统在每个分块旁存储元数据:源文档、创建日期、类别、作者、版本。向量数据库支持在相似度检索前按元数据预过滤,这对大规模性能至关重要。
 
 ### 评估
 
-你建立了RAG系统.你怎么知道它是否有效?
+你构建了一个 RAG 系统。如何知道它是否有效?三个指标:
 
-**Retrieval relevance (Recall@k)**对于已知相关文件的测试问题,在前k结果中显示的相关文件的百分比是多少?
+**检索相关性(Recall@k)**:对于一组带有已知相关文档的测试问题,相关文档出现在 top-k 结果中的比例是多少?如果某问题的答案在第 47 号分块中,该分块是否出现在 top-5 中?
 
-**Faithfulness**如果检索的部分写"60天退款窗口"和模型说"90天退款窗口",那就是忠诚度失败.模型虽然有正确的文本,但却产生了幻觉.
+**忠实度**:生成的答案是否基于检索到的文档?如果检索到的分块说"60 天退款窗口"而模型说"90 天退款窗口",这就是忠实度失败。模型在拥有正确上下文的情况下仍然产生了幻觉。
 
-**Answer correctness**产生的答案是否符合预期答案?这是端到端的指标. 它结合检索质量和生成质量.
+**答案正确性**:生成的答案是否与预期答案一致?这是端到端指标,结合了检索质量和生成质量。
 
-简单的忠实性检查:在生成的答案中,检查每一个索赔,并验证它在检索的部分中出现 (实质上).如果答案中包含一个没有检索的部分的事实,那么它可能是幻觉的.
+一个简单的忠实度检查:对生成答案中的每个论断,验证它(实质上)出现在检索到的分块中。如果答案包含任何检索分块中都没有的事实,它很可能是幻觉。
 
 ```mermaid
 graph TD
@@ -174,9 +174,9 @@ graph TD
 agentic-rag-loop
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:BM25的实施
+### 步骤 1:BM25 实现
 
 ```python
 import math
@@ -232,7 +232,7 @@ class BM25:
         return scores[:top_k]
 ```
 
-### 步骤2:相互级别的融合
+### 步骤 2:倒数排名融合
 
 ```python
 def reciprocal_rank_fusion(ranked_lists, k=60):
@@ -246,7 +246,7 @@ def reciprocal_rank_fusion(ranked_lists, k=60):
     return fused
 ```
 
-### 步骤3:混合搜索管道
+### 步骤 3:混合检索管线
 
 ```python
 def hybrid_search(query, chunks, vector_embeddings, vocab, idf, bm25_index, top_k=5, fusion_k=60):
@@ -257,9 +257,9 @@ def hybrid_search(query, chunks, vector_embeddings, vocab, idf, bm25_index, top_
     return fused[:top_k]
 ```
 
-### 步骤4:简单的重排
+### 步骤 4:简易重排序器
 
-在制作中,你会使用一个跨编码模型.在这里我们构建一个重排器,
+在生产环境中,你会使用交叉编码器模型。这里我们构建一个使用词汇重叠、词项重要性和短语匹配来为查询-文档相关性打分的重排序器。
 
 ```python
 def rerank(query, candidates, chunks):
@@ -301,7 +301,7 @@ def rerank(query, candidates, chunks):
     return scored
 ```
 
-### 步骤5:HyDE (假设文件嵌入)
+### 步骤 5:HyDE(假设文档嵌入)
 
 ```python
 def hyde_generate_hypothesis(query):
@@ -333,7 +333,7 @@ def hyde_search(query, chunks, vector_embeddings, vocab, idf, top_k=5):
     return results, hypothesis
 ```
 
-### 第六步:父母与孩子的分化
+### 步骤 6:父子分块
 
 ```python
 def create_parent_child_chunks(text, parent_size=200, child_size=50):
@@ -364,7 +364,7 @@ def create_parent_child_chunks(text, parent_size=200, child_size=50):
     return parents, children, child_to_parent
 ```
 
-### 第七步: 评估忠诚
+### 步骤 7:忠实度评估
 
 ```python
 def evaluate_faithfulness(answer, retrieved_chunks):
@@ -419,9 +419,9 @@ def evaluate_retrieval_recall(queries_with_relevant, retrieval_fn, k=5):
     return avg_recall, results
 ```
 
-## 用它
+## 使用它
 
-通过一个真正的跨编码器来重新排名:
+使用真实的交叉编码器进行重排序:
 
 ```python
 from sentence_transformers import CrossEncoder
@@ -436,7 +436,7 @@ def rerank_with_cross_encoder(query, candidates, chunks, top_k=5):
     return scored[:top_k]
 ```
 
-科赫的管理者:
+使用 Cohere 的托管重排序器:
 
 ```python
 import cohere
@@ -454,7 +454,7 @@ def rerank_with_cohere(query, candidates, chunks, top_k=5):
     return [(candidates[r.index][0], r.relevance_score) for r in response.results]
 ```
 
-对于HyDE,具有真正的法学士学位:
+使用真实 LLM 的 HyDE:
 
 ```python
 import anthropic
@@ -473,7 +473,7 @@ def hyde_with_llm(query):
     return response.content[0].text
 ```
 
-对于Weaviate的生产混合搜索:
+使用 Weaviate 的生产级混合检索:
 
 ```python
 import weaviate
@@ -488,48 +488,48 @@ response = collection.query.hybrid(
 )
 ```
 
-位数控制了平衡:0.0 =纯键词 (BM25),1.0 =纯向量,0.5 =等重.大多数生产系统使用0.3至0.7之间的位数.
+alpha 参数控制平衡:0.0 = 纯关键词(BM25),1.0 = 纯向量,0.5 = 等权重。大多数生产系统使用 0.3 到 0.7 之间的 alpha。
 
-## 运送它
+## 上线交付
 
-这一课产生了:
-- `outputs/prompt-advanced-rag-debugger.md`-- 诊断和解决RAG质量问题的提示
-- `outputs/skill-advanced-rag.md`-- 通过混合搜索和重新排名建立生产级RAG的技能
+本课产出:
+- `outputs/prompt-advanced-rag-debugger.md` -- 用于诊断和修复 RAG 质量问题的提示
+- `outputs/skill-advanced-rag.md` -- 用于构建带混合检索和重排序的生产级 RAG 的技能
 
-## 运动
+## 练习
 
-1. 对于每一个5个测试查询,记录哪个方法返回最相关的部分位置#1. 混合搜索应该至少在5中赢得3个.
+1. 在示例文档上比较 BM25、向量检索和混合检索。对每个测试查询,记录哪种方法在位置 #1 返回最相关的分块。混合检索应在 5 个查询中至少 3 个上胜出。
 
-2. 执行一个元数据过器. 添加一个"类别"字段到每个文档 (安全,账单,API,产品). 在运行向量搜索之前,过块到只有相关类别. 测试使用"使用什么加密?"并验证它只搜索安全类别的块.
+2. 实现一个元数据过滤器。为每个文档添加"category"字段(security、billing、api、product)。在运行向量检索前,将分块过滤到相关类别。用"What encryption is used?"测试,并验证它只检索 security 类别的分块。
 
-3. 通过从06课程中简单生成函数构建一个完整的HyDE管道.在所有5项测试查询中,比较直接查询和HyDE搜索之间的检索质量 (前三相关性).HyDE应改善模糊查询的结果.
+3. 使用 Lesson 06 的简易 generate 函数构建完整的 HyDE 管线。在全部 5 个测试查询上比较直接查询检索与 HyDE 检索的质量(top-3 相关性)。HyDE 应改善模糊查询的结果。
 
-4. 执行父母-孩子分量策略.使用 child_size=30和 parent_size=100.使用儿童分量搜索,但返回提示中父母分量.将生成的标准分量答案与 chunk_size=50进行比较.
+4. 在示例文档上实现父子分块策略。使用 child_size=30 和 parent_size=100。用子分块检索,但在提示中返回父分块。将生成的答案与 chunk_size=50 的标准分块进行比较。
 
-5. 创建评估数据集: 10 个问题,已知答案分类. 测量 Recall@3, Recall@5, Recall@10 仅用于 (a) 矢量搜索, (b) 仅用于 BM25, (c) 混合搜索, (d) 混合+重新排名. 绘制结果并确定重新排名最有帮助的地方.
+5. 创建一个评估数据集:10 个问题及已知答案分块。测量(a)仅向量检索、(b)仅 BM25、(c)混合检索、(d)混合 + 重排序的 Recall@3、Recall@5 和 Recall@10。绘制结果并找出重排序帮助最大的地方。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| BM25 | "Keyword search" | A probabilistic ranking algorithm that scores documents by term frequency, inverse document frequency, and document length normalization |
-| Hybrid search | "Best of both worlds" | Running semantic (vector) and keyword (BM25) search in parallel, then merging results with rank fusion |
-| Reciprocal Rank Fusion | "Merge ranked lists" | Combining multiple ranked lists by summing 1/(k + rank) for each document across all lists |
-| Reranking | "Second pass scoring" | Using a more expensive cross-encoder model to re-score a candidate set from initial retrieval |
-| Cross-encoder | "Joint query-document model" | A model that takes a query and document as a single input, producing a relevance score; more accurate than bi-encoders but too slow for full corpus search |
-| Bi-encoder | "Independent embedding model" | A model that embeds queries and documents independently; fast because embeddings are precomputed, but less accurate than cross-encoders |
-| HyDE | "Search with a fake answer" | Generate a hypothetical answer to the query, embed it, and search for real documents similar to it |
-| Parent-child chunking | "Small search, big context" | Index small chunks for precise retrieval but return the larger parent chunk to provide sufficient context |
-| Metadata filtering | "Narrow before searching" | Filtering documents by attributes (date, source, category) before running vector search to reduce the search space |
-| Faithfulness | "Did it stay grounded" | Whether the generated answer is supported by the retrieved documents, as opposed to hallucinated from the model's training data |
+| BM25 | "关键词检索" | 一种概率排序算法,根据词频、逆文档频率和文档长度归一化为文档打分 |
+| 混合检索 | "两全其美" | 并行运行语义(向量)和关键词(BM25)检索,然后用排名融合合并结果 |
+| 倒数排名融合 | "合并排序列表" | 对每个文档在所有列表中求 1/(k + rank) 之和,以合并多个排序列表 |
+| 重排序 | "二次打分" | 使用更昂贵的交叉编码器模型对初始检索的候选集重新打分 |
+| 交叉编码器 | "联合查询-文档模型" | 将查询和文档作为单一输入、输出相关性分数的模型;比双编码器更准确,但对全语料库检索而言太慢 |
+| 双编码器 | "独立嵌入模型" | 独立嵌入查询和文档的模型;因为嵌入可预计算所以速度快,但不如交叉编码器准确 |
+| HyDE | "用假答案检索" | 为查询生成一个假设性答案,嵌入它,并检索与之相似的真实文档 |
+| 父子分块 | "小块检索,大块上下文" | 为精确检索索引小分块,但返回更大的父分块以提供充足上下文 |
+| 元数据过滤 | "检索前先缩小范围" | 在运行向量检索前按属性(日期、来源、类别)过滤文档,以缩小搜索空间 |
+| 忠实度 | "它是否贴合原文" | 生成的答案是否得到检索文档的支持,而非从模型训练数据中凭空编造 |
 
-## 进一步阅读
+## 延伸阅读
 
-- 罗伯逊和萨拉戈萨,"概率相关性框架:BM25和其它" (2009) - - 概率相关性框架的最终参考,解释了公式背后的概率基础
-- 科尔麦克等人",互惠级合并优于康多塞特和个人级学习方法" (2009) - 原始的RRF论文显示它超过了更复杂的合并方法
-- 盖奥等人",没有相关标签的精确零射击密集检索" (2022) -- HyDE论文证明假设文件嵌入式改善了没有任何培训数据的检索
-- 诺格耶拉和乔, "通过BERT重新排名" (2019) -- 显示,在BM25上方的跨编码重新排名显著提高了检索质量
-- [Khattab et al., "DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines" (2023)](https://arxiv.org/abs/2310.03714)根据"快速LLM"的定义, 快速构建和重量选择是对检索管道进行优化的问题.
-- [Edge et al., "From Local to Global: A Graph RAG Approach to Query-Focused Summarization" (Microsoft Research 2024)](https://arxiv.org/abs/2404.16130)-- 图形RAG论文:实体关系提取+莱登社区检测,以查询为重点的总结;全球与本地检索区别.
-- [Asai et al., "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection" (ICLR 2024)](https://arxiv.org/abs/2310.11511)通过反射代币进行自我评估, 通过静态检索生成的代理边界.
-- [LangChain Query Construction blog](https://blog.langchain.dev/query-construction/)如何将自然语言查询转化为结构化数据库查询 (文本到SQL,加密)
+- Robertson & Zaragoza,"The Probabilistic Relevance Framework: BM25 and Beyond"(2009)-- BM25 的权威参考,阐述该公式背后的概率论基础
+- Cormack et al.,"Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank Learning Methods"(2009)-- RRF 的原始论文,证明它胜过更复杂的融合方法
+- Gao et al.,"Precise Zero-Shot Dense Retrieval without Relevance Labels"(2022)-- HyDE 论文,证明假设文档嵌入无需任何训练数据即可改善检索
+- Nogueira & Cho,"Passage Re-ranking with BERT"(2019)-- 展示了在 BM25 之上使用交叉编码器重排序能显著提升检索质量
+- [Khattab et al.,"DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines"(2023)](https://arxiv.org/abs/2310.03714)-- 将提示构建和权重选择视为检索管线上的优化问题;阅读此文以理解"对 LLM 编程"而非"给 LLM 写提示"。
+- [Edge et al.,"From Local to Global: A Graph RAG Approach to Query-Focused Summarization"(Microsoft Research 2024)](https://arxiv.org/abs/2404.16130)-- GraphRAG 论文:实体关系抽取 + Leiden 社区发现,用于面向查询的摘要;区分全局检索与局部检索。
+- [Asai et al.,"Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"(ICLR 2024)](https://arxiv.org/abs/2310.11511)-- 使用反思 token 的自我评估 RAG;超越静态"检索后生成"的智能体前沿。
+- [LangChain Query Construction 博客](https://blog.langchain.dev/query-construction/)-- 如何将自然语言查询转换为结构化数据库查询(Text-to-SQL、Cypher),作为检索前的步骤。

@@ -1,42 +1,42 @@
 # 支持向量机
 
-> 找出两个阶级之间的最宽的街道.
+> 在两个类别之间找出最宽的街道。这就是全部思想。
 
 **Type:** Build
-**Language:**字符串
-**Prerequisites:** Phase 1 (Lessons 08 Optimization, 14 Norms and Distances, 18 Convex Optimization)
-**Time:** ~90 minutes
+**Language:** Python
+**Prerequisites:** 阶段 1（第 08 课 优化、第 14 课 范数与距离、第 18 课 凸优化）
+**Time:** 约 90 分钟
 
 ## 学习目标
 
-- 实现从零开始使用原始配方的链损失和梯度下降的线性SVM
-- 解释最大边缘原则,并从训练有素的模型中确定支持向量
-- 比较线性,多项和RBF内核,并解释内核技巧如何避免明确的高维映射
-- 评估边缘宽度和分类错误之间的C参数控制的权衡
+- 从零实现线性 SVM，使用 hinge 损失和基于原始形式的梯度下降
+- 解释最大间隔原理，并从训练好的模型中识别支持向量
+- 比较线性、多项式和 RBF 核，解释核技巧如何避免显式的高维映射
+- 评估 C 参数在间隔宽度与分类错误之间控制的权衡
 
 ## 问题
 
-您有两个类的数据点,需要画一个线 (或超平面) 分离它们.无限的许多线可以工作.你应该选择哪一个?
+你有一份包含两个类别的数据点，需要画一条线（或超平面）将它们分开。可行的方式有无穷多种。你应该选哪一条？
 
-差距是决定边界和每一边最接近的数据点之间的距离. 较宽的差距意味着分类器更有信心,更好地将未见的数据概括.
+间隔最大的那一条。间隔是决策边界与两侧最近数据点之间的距离。间隔越宽，分类器越有信心，对未见数据的泛化能力也越好。
 
-这种直觉导致了支持向量机,这是 ML 中最具数学优雅的算法之一.SVM在深度学习之前是主导分类方法,并且仍然是小数据集,高维度数据和需要原则,理解良好模型的理论保障的问题最好的选择.
+这一直觉引出了支持向量机（SVM），它是机器学习中最具数学美感的算法之一。在深度学习兴起之前，SVM 曾是主流的分类方法，并且至今仍是小数据集、高维数据以及需要具有理论保证、原理清晰且易于理解的模型的问题的最佳选择。
 
- SVM 直接连接到第1阶段:优化是曲的 (课时18),边缘是用规范 (课时14) 测量的,并且内核技巧利用点产品来处理非线性界限,而无需在高维空间中计算.
+SVM 与阶段 1 直接相关：其优化问题是凸的（第 18 课），间隔用范数来度量（第 14 课），而核技巧利用点积来处理非线性边界，而无需在高维空间中进行计算。
 
 ## 概念
 
-### 最大利分类器
+### 最大间隔分类器
 
-由于线性分离的数据, 标签 y_i 在 {-1, +1} 和特征向量 x_i, 我们想要一个超平面 w^T x + b = 0 分离类.
+给定线性可分的数据，标签 y_i 属于 {-1, +1}，特征向量为 x_i，我们希望找到一个超平面 w^T x + b = 0 将两个类别分开。
 
-从点 x_i 到超平面的距离是:
+点 x_i 到超平面的距离为：
 
 ```
 distance = |w^T x_i + b| / ||w||
 ```
 
-对于正确分类的点:y_i * (w^T x_i + b) > 0. 边缘是从超平面到两侧最近的点的距离的两倍.
+对于被正确分类的点：y_i * (w^T x_i + b) > 0。间隔是超平面到任一侧最近点距离的两倍。
 
 ```mermaid
 graph LR
@@ -49,23 +49,23 @@ graph LR
     B --- F["Decision boundary"]
 ```
 
-优化问题:
+优化问题：
 
 ```
 maximize    2 / ||w||     (the margin width)
 subject to  y_i * (w^T x_i + b) >= 1  for all i
 ```
 
-同样 (最小化时的时间更容易优化):
+等价形式（最小化 ||w||^2 更容易优化）：
 
 ```
 minimize    (1/2) ||w||^2
 subject to  y_i * (w^T x_i + b) >= 1  for all i
 ```
 
-这是一个曲的方形程序. 它有一个独特的全球解决方案.坐落在边界边界 (w^T x_i + b) = 1) 的数据点是支持向量.它们是决定边界的唯一点.移动或移除任何非支持向量点,边界不会改变.
+这是一个凸二次规划，具有唯一的全局解。恰好位于间隔边界上的数据点（即满足 y_i * (w^T x_i + b) = 1 的点）就是支持向量。只有它们决定了决策边界。移动或删除任何非支持向量的点，边界都不会改变。
 
-### 支持向量:少数关键
+### 支持向量：关键的少数
 
 ```mermaid
 graph TD
@@ -77,13 +77,13 @@ graph TD
     O2["Other - points<br>(do not affect boundary)"] -.-> SV2
 ```
 
-大多数训练点是无关紧要的.只有支持向量才有所重要.这就是为什么SVM在预测时间上具有记忆效率:你只需要存储支持向量,而不是整个训练集.
+大多数训练点都是无关紧要的。只有支持向量才重要。这就是 SVM 在预测时内存高效的原因：你只需存储支持向量，而不需要存储整个训练集。
 
-支持向量数量也给出了通用错误的限制.与数据集尺寸相比,支持向量较少意味着更好的通用.
+支持向量的数量也给出了泛化误差的一个界。相对于数据集大小，支持向量越少，泛化越好。
 
-### 软边缘:使用C参数处理噪音
+### 软间隔：用 C 参数处理噪声
 
-实际数据很少完全可以分开.一些点可能位于边界的错误侧面或边界内部.软边界公式允许通过引入宽松变量来违反.
+真实数据很少是完全可分的。有些点可能位于边界的错误一侧，或落在间隔之内。软间隔形式通过引入松弛变量来允许违反。
 
 ```
 minimize    (1/2) ||w||^2 + C * sum(xi_i)
@@ -91,24 +91,24 @@ subject to  y_i * (w^T x_i + b) >= 1 - xi_i
             xi_i >= 0  for all i
 ```
 
-宽松变量 xi_i 测量了 i 点违反了边际的程度. C 控制了交易:
+松弛变量 xi_i 度量点 i 违反间隔的程度。C 控制这一权衡：
 
-| C value | Behavior |
+| C 值 | 行为 |
 |---------|----------|
-| Large C | Penalizes violations heavily. Narrow margin, fewer misclassifications. Overfits |
-| Small C | Allows more violations. Wide margin, more misclassifications. Underfits |
+| 大 C | 对违反施加重罚。间隔窄，误分类少。过拟合 |
+| 小 C | 允许更多违反。间隔宽，误分类多。欠拟合 |
 
-是规律化强度,逆转.大 C = 规律化较少.小 C = 规律化较大.
+C 是反过来的正则化强度。大 C = 弱正则化。小 C = 强正则化。
 
-### 损失:SVM损失函数
+### Hinge 损失：SVM 的损失函数
 
-软边缘SVM可以被重写为无限制优化:
+软间隔 SVM 可以重写为无约束优化：
 
 ```
 minimize    (1/2) ||w||^2 + C * sum(max(0, 1 - y_i * (w^T x_i + b)))
 ```
 
-术语max(0,1 - y_i * f(x_i)) 是链损失.当点正确分类后,它是零.当点在边缘内或错误分类后,它是线性.
+项 max(0, 1 - y_i * f(x_i)) 就是 hinge 损失。当点被正确分类且超出间隔时，它为零。当点位于间隔之内或被误分类时，它是线性的。
 
 ```
 Hinge loss for a single point:
@@ -128,18 +128,18 @@ Zero loss when y*f(x) >= 1 (correctly classified, outside margin).
 Linear penalty when y*f(x) < 1.
 ```
 
-进行物流损失 (物流回归) 的比较:
+与 logistic 损失（logistic 回归）对比：
 
 ```
 Hinge:     max(0, 1 - y*f(x))          Hard cutoff at margin
 Logistic:  log(1 + exp(-y*f(x)))        Smooth, never exactly zero
 ```
 
-损产生稀缺的解决方案 (只有支持向量有非零的贡献).物流损失使用所有数据点.这使得SVM在预测时间更有效的存储.
+Hinge 损失产生稀疏解（只有支持向量有非零贡献）。Logistic 损失使用所有数据点。这使得 SVM 在预测时更节省内存。
 
-### 训练直线SVM,梯度下降
+### 用梯度下降训练线性 SVM
 
-您可以使用链损失的梯度下降加上L2规律化来训练线性SVM,而不需要解决限制的QP:
+你可以在 hinge 损失加 L2 正则化上使用梯度下降来训练线性 SVM，而无需求解带约束的 QP：
 
 ```
 L(w, b) = (lambda/2) * ||w||^2 + (1/n) * sum(max(0, 1 - y_i * (w^T x_i + b)))
@@ -153,11 +153,11 @@ Gradient with respect to b:
   If y_i * (w^T x_i + b) < 1:   dL/db = -y_i
 ```
 
-这称为原始式.它运行在O(n * d) 每个时代,其中n是样本数,d是特征数.对于大小,稀少,高维度数据 (文本分类),这是快速的.
+这称为原始形式。每个 epoch 的复杂度为 O(n * d)，其中 n 是样本数，d 是特征数。对于大型、稀疏、高维数据（文本分类），这非常快。
 
-### 双重配方和核心技巧
+### 对偶形式与核技巧
 
-根据第一阶段18课,KKT条件,SVM问题的拉格兰基双数是:
+SVM 问题的拉格朗日对偶（来自阶段 1 第 18 课的 KKT 条件）为：
 
 ```
 maximize    sum(alpha_i) - (1/2) * sum_ij(alpha_i * alpha_j * y_i * y_j * (x_i . x_j))
@@ -165,7 +165,7 @@ subject to  0 <= alpha_i <= C
             sum(alpha_i * y_i) = 0
 ```
 
-双只涉及数据点之间的点产品x_i.x_j.这是关键见解.用内核函数K(x_i,x_j) 取代每个点产品,SVM可以学习非线性界限,而不会明确计算转换.
+对偶形式只涉及数据点之间的点积 x_i . x_j。这是关键的洞见。将每个点积替换为核函数 K(x_i, x_j)，SVM 就能学习非线性边界，而无需显式计算变换。
 
 ```
 Linear kernel:      K(x, z) = x . z
@@ -173,7 +173,7 @@ Polynomial kernel:  K(x, z) = (x . z + c)^d
 RBF (Gaussian):     K(x, z) = exp(-gamma * ||x - z||^2)
 ```
 
- RBF 核将数据映射到无限维度空间中.输入空间中接近的点具有接近 1 的核值.距离较远的点具有接近 0 的核值.它可以学习任何平滑的决策界限.
+RBF 核将数据映射到无限维空间。在输入空间中接近的点，其核值接近 1。相距很远的点，其核值接近 0。它可以学习任意平滑的决策边界。
 
 ```mermaid
 graph LR
@@ -186,11 +186,11 @@ graph LR
     A -->|"Kernel trick<br>K(x,z) = phi(x).phi(z)"| B
 ```
 
-核技巧在高维空间中计算点产量,但从来没有到达那里.对于 D 维度的多项内核,明确的特征空间有 O  D 维度.但 K  x, z 计算在 O  D 时间.
+核技巧在高维空间中计算点积，而无须真正进入那个空间。对于 D 维空间中次数为 d 的多项式核，显式特征空间有 O(D^d) 维。但 K(x, z) 只需 O(D) 时间即可计算。
 
-### 逆转的SVM (SVR)
+### 用于回归的 SVM（SVR）
 
-支持向量回归将宽度的子环绕数据.子内部的点是零损失的.子以外的点是线性地处罚的.
+支持向量回归在数据周围拟合一个宽度为 epsilon 的管道。管道内的点损失为零。管道外的点受到线性惩罚。
 
 ```
 minimize    (1/2) ||w||^2 + C * sum(xi_i + xi_i*)
@@ -199,37 +199,37 @@ subject to  y_i - (w^T x_i + b) <= epsilon + xi_i
             xi_i, xi_i* >= 0
 ```
 
-宽管 = 支持向量较少 = 适合性更高.窄管 = 支持向量较多 = 适合性更紧.
+参数 epsilon 控制管道宽度。更宽的管道 = 更少支持向量 = 更平滑的拟合。更窄的管道 = 更多支持向量 = 更紧的拟合。
 
-### 为什么SVM输给深度学习 (以及当他们仍然赢得时)
+### 为什么 SVM 输给了深度学习（以及它们何时仍然胜出）
 
-从1990年代末到2010年代初,SVM主导了 ML.深度学习因多种原因超过了它们:
+SVM 从 20 世纪 90 年代末到 2010 年代初一直主导着机器学习。深度学习超越它们有几个原因：
 
-| Factor | SVMs | Deep learning |
+| 因素 | SVM | 深度学习 |
 |--------|------|---------------|
-| Feature engineering | Requires it | Learns features |
-| Scalability | O(n^2) to O(n^3) for kernel | O(n) per epoch with SGD |
-| Image/text/audio | Needs handcrafted features | Learns from raw data |
-| Large datasets (>100k) | Slow | Scales well |
-| GPU acceleration | Limited benefit | Massive speedup |
+| 特征工程 | 需要人工设计 | 自动学习特征 |
+| 可扩展性 | 核方法为 O(n^2) 到 O(n^3) | 使用 SGD 时每 epoch 为 O(n) |
+| 图像/文本/音频 | 需要手工特征 | 从原始数据中学习 |
+| 大数据集（>100k） | 慢 | 扩展性良好 |
+| GPU 加速 | 收益有限 | 大幅提速 |
 
-在这些情况下,SVM仍然赢得胜利:
-- 小数据集 (数百到数千个样本)
-- 高维度稀疏数据 (含TF-IDF功能的文本)
-- 需要数学保证时 (边际额度)
-- 训练时间必须最小 (线性SVM非常快)
-- 具有明确的利结构的二元分类
-- 异常检测 (单类SVM)
+SVM 在以下情况下仍然胜出：
+- 小数据集（数百到数千个样本）
+- 高维稀疏数据（使用 TF-IDF 特征的文本）
+- 需要数学保证时（间隔界）
+- 训练时间必须极短时（线性 SVM 非常快）
+- 具有清晰间隔结构的二分类
+- 异常检测（单类 SVM）
 
 ```figure
 svm-margin
 ```
 
-## 建立它
+## 动手实现
 
-### 步骤1:痕损失和梯度
+### 步骤 1：Hinge 损失与梯度
 
-根据,计算一批的杆损失及其梯度.
+基础部分。计算一个批次的 hinge 损失及其梯度。
 
 ```python
 def hinge_loss(X, y, w, b):
@@ -241,9 +241,9 @@ def hinge_loss(X, y, w, b):
     return total_loss / n
 ```
 
-### 步骤2:通过梯度下降的线性SVM
+### 步骤 2：用梯度下降训练线性 SVM
 
-通过减少规律化关损失来训练.
+通过最小化带正则化的 hinge 损失来训练。无需 QP 求解器。
 
 ```python
 class LinearSVM:
@@ -274,9 +274,9 @@ class LinearSVM:
         return [1 if dot(self.w, x) + self.b >= 0 else -1 for x in X]
 ```
 
-### 步骤3:内核函数
+### 步骤 3：核函数
 
-实现线性,多项和RBF核.
+实现线性、多项式和 RBF 核。
 
 ```python
 def linear_kernel(x, z):
@@ -290,9 +290,9 @@ def rbf_kernel(x, z, gamma=0.5):
     return math.exp(-gamma * dot(diff, diff))
 ```
 
-### 步骤4:边缘和支持向量识别
+### 步骤 4：间隔与支持向量识别
 
-训练后,确定哪些点是支向量,并计算边缘宽度.
+训练完成后，识别哪些点是支持向量，并计算间隔宽度。
 
 ```python
 def find_support_vectors(X, y, w, b, tol=1e-3):
@@ -304,11 +304,11 @@ def find_support_vectors(X, y, w, b, tol=1e-3):
     return support_vectors
 ```
 
-看到`code/svm.py`对于所有演示的全面实施.
+完整实现及所有演示请见 `code/svm.py`。
 
-## 用它
+## 使用它
 
-通过"学习"
+使用 scikit-learn：
 
 ```python
 from sklearn.svm import SVC, LinearSVC, SVR
@@ -324,9 +324,9 @@ print(f"Accuracy: {clf.score(X_test, y_test):.4f}")
 print(f"Support vectors: {clf['svm'].n_support_}")
 ```
 
-重要:在训练SVM之前,总是扩展特征.SVM对特征大小敏感,因为边缘取决于未扩展的特征,而扭曲了几何学.
+重要提示：在训练 SVM 之前，务必对特征进行缩放。SVM 对特征的量级很敏感，因为间隔取决于 ||w||，未缩放的特征会扭曲几何结构。
 
-对于大型数据集,使用`LinearSVC`(原始表达式,O(n) 按时代)`SVC`(双式表达,O(n^2) 到O(n^3)):
+对于大型数据集，请使用 `LinearSVC`（原始形式，每 epoch 为 O(n)）而不是 `SVC`（对偶形式，O(n^2) 到 O(n^3)）：
 
 ```python
 from sklearn.svm import LinearSVC
@@ -337,40 +337,40 @@ clf = Pipeline([
 ])
 ```
 
-## 运动
+## 练习
 
-1. 生成一个2D线性可分离的数据集.训练你的线性SVM并识别支持向量. 检查支持向量是决策边界最接近的点.
+1. 生成一个二维线性可分数据集。训练你的 LinearSVM 并识别支持向量。验证支持向量正是离决策边界最近的点。
 
-2. 在噪音集中的C从0.001到1000变化.为每个C值绘制决定界限.观察从宽边缘 (不适合) 到狭窄边缘 (过适合) 的过渡.
+2. 在一个带噪声的数据集上，将 C 从 0.001 变化到 1000。绘制每个 C 值对应的决策边界。观察从宽间隔（欠拟合）到窄间隔（过拟合）的转变。
 
-3. 创建一个类界限圆形 (非线性) 的数据集. 显示线性SVM失败.计算RBF内核矩阵,并显示内核诱导的功能空间中类变得可分离.
+3. 创建一个类别边界呈圆形（而非线性）的数据集。展示线性 SVM 会失败。计算 RBF 核矩阵，并展示在核诱导的特征空间中类别变得可分。
 
-4. 根据数据集进行链损失与物流损失的比较.训练线性SVM和物流回归.计算每个模型的决策边界 (支持向量与所有点) 贡献多少训练点.
+4. 在同一数据集上比较 hinge 损失与 logistic 损失。训练一个线性 SVM 和一个 logistic 回归。统计每个模型的决策边界有多少训练点参与（支持向量 vs 全部点）。
 
-5. 执行SVR (epsilon-insensitive loss).将其调整为y = sin(x) +噪音. 围绕预测图画出epsilon管,并突出支持向量 (管外的点).
+5. 实现 SVR（epsilon 不敏感损失）。将其拟合到 y = sin(x) + 噪声。绘制预测周围的 epsilon 管道，并高亮支持向量（管道外的点）。
 
-## 关键词
+## 关键术语
 
-| Term | What it actually means |
+| 术语 | 实际含义 |
 |------|----------------------|
-| Support vectors | The training points closest to the decision boundary. The only points that determine the hyperplane |
-| Margin | The distance between the decision boundary and the nearest support vectors. SVMs maximize this |
-| Hinge loss | max(0, 1 - y*f(x)). Zero when correctly classified and outside the margin. Linear penalty otherwise |
-| C parameter | Trade-off between margin width and classification errors. Large C = narrow margin, small C = wide margin |
-| Soft margin | SVM formulation that allows margin violations via slack variables. Handles non-separable data |
-| Kernel trick | Computing dot products in a high-dimensional feature space without explicitly mapping to that space |
-| Linear kernel | K(x, z) = x . z. Equivalent to standard dot product. For linearly separable data |
-| RBF kernel | K(x, z) = exp(-gamma * \|\|x-z\|\|^2). Maps to infinite dimensions. Learns any smooth boundary |
-| Polynomial kernel | K(x, z) = (x . z + c)^d. Maps to a feature space of polynomial combinations |
-| Dual formulation | Reformulation of the SVM problem that depends only on dot products between data points. Enables kernels |
-| SVR | Support Vector Regression. Fits an epsilon-tube around the data. Points inside the tube have zero loss |
-| Slack variables | xi_i: measures how much a point violates the margin. Zero for correctly classified points outside margin |
-| Maximum margin | The principle of choosing the hyperplane that maximizes the distance to the nearest points of each class |
+| 支持向量 | 离决策边界最近的训练点。唯一决定超平面的点 |
+| 间隔 | 决策边界与最近支持向量之间的距离。SVM 最大化这一间隔 |
+| Hinge 损失 | max(0, 1 - y*f(x))。当被正确分类且在间隔之外时为零。否则为线性惩罚 |
+| C 参数 | 间隔宽度与分类错误之间的权衡。大 C = 窄间隔，小 C = 宽间隔 |
+| 软间隔 | 通过松弛变量允许违反间隔的 SVM 形式。处理不可分数据 |
+| 核技巧 | 在高维特征空间中计算点积，而无需显式映射到该空间 |
+| 线性核 | K(x, z) = x . z。等价于标准点积。用于线性可分数据 |
+| RBF 核 | K(x, z) = exp(-gamma * \|\|x-z\|\|^2)。映射到无限维。可学习任意平滑边界 |
+| 多项式核 | K(x, z) = (x . z + c)^d。映射到多项式组合的特征空间 |
+| 对偶形式 | SVM 问题的一种重写形式，只依赖于数据点之间的点积。使核方法成为可能 |
+| SVR | 支持向量回归。在数据周围拟合一个 epsilon 管道。管道内的点损失为零 |
+| 松弛变量 | xi_i：度量点违反间隔的程度。对被正确分类且在间隔之外的点为零 |
+| 最大间隔 | 选择使到每类最近点距离最大化的超平面的原则 |
 
-## 进一步阅读
+## 延伸阅读
 
-- [Vapnik: The Nature of Statistical Learning Theory (1995)](https://link.springer.com/book/10.1007/978-1-4757-3264-1)- 关于SVM和统计学学习的基础文本
-- [Cortes & Vapnik: Support-vector networks (1995)](https://link.springer.com/article/10.1007/BF00994018)- 原始的SVM纸
-- [Platt: Sequential Minimal Optimization (1998)](https://www.microsoft.com/en-us/research/publication/sequential-minimal-optimization-a-fast-algorithm-for-training-support-vector-machines/)-使SM培训成为实践的SMO算法
-- [scikit-learn SVM documentation](https://scikit-learn.org/stable/modules/svm.html)- 具体实施的实践指南
-- [LIBSVM: A Library for Support Vector Machines](https://www.csie.ntu.edu.tw/~cjlin/libsvm/)- 支持大多数SVM实现的C++库
+- [Vapnik: The Nature of Statistical Learning Theory (1995)](https://link.springer.com/book/10.1007/978-1-4757-3264-1) - 关于 SVM 与统计学习的奠基性著作
+- [Cortes & Vapnik: Support-vector networks (1995)](https://link.springer.com/article/10.1007/BF00994018) - SVM 的原始论文
+- [Platt: Sequential Minimal Optimization (1998)](https://www.microsoft.com/en-us/research/publication/sequential-minimal-optimization-a-fast-algorithm-for-training-support-vector-machines/) - 使 SVM 训练变得实用的 SMO 算法
+- [scikit-learn SVM 文档](https://scikit-learn.org/stable/modules/svm.html) - 包含实现细节的实用指南
+- [LIBSVM: A Library for Support Vector Machines](https://www.csie.ntu.edu.tw/~cjlin/libsvm/) - 大多数 SVM 实现背后的 C++ 库

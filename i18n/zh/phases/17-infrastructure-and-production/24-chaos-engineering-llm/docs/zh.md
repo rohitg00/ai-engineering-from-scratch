@@ -1,131 +1,131 @@
-# 乱工程 对于LLM生产
+# LLM 生产环境的混沌工程
 
-> 士专业的混乱工程将在2026年成为自己的学科. 在生产中进行实验之前的先决条件:定义的SLI/SLO,跟踪+计量+日志可观测性,自动回滚,运行簿,调用. 建筑有四个层面:控制 (实验安排器),目标 (服务,基础设施,数据存储),安全 (监护+中断+交通过器),可观察性 (计量+痕迹+日志),反 (SLO调整). 防护轨道是强制性的:如果预计每天错误预算燃烧> 2x,燃烧率警报暂停实验;压制窗户 + 追踪识别相关性减持警报噪音. 时间:每周的小鱼+SLO审查;每月的游戏日+死后测试;每季度的跨团队弹性审计+依赖性映射. 专业化实验:内存过载,网络故障,供应商中断,错误的提示,KV缓存驱逐风暴. 工具:利用混沌工程 (LLM衍生的建议,爆炸射线缩放,MCP工具集成);LitmusChaos (CNCF);混沌网 (CNCF Kubernetes本土).
+> 在 2026 年，面向 LLM 的混沌工程已自成一派。在生产环境运行实验前的先决条件：定义好的 SLI/SLO、trace+指标+日志可观测性、自动回滚、runbook、on-call。架构包含四个平面：控制平面（实验调度器）、目标平面（服务、基础设施、数据存储）、安全平面（防护 + 中止 + 流量过滤器）、可观测性平面（指标 + trace + 日志），以及反馈环（回灌至 SLO 调整）。防护措施是强制性的：当每日错误预算消耗超过预期的 2 倍时，燃耗率告警会暂停实验；抑制窗口 + trace-ID 关联可对告警噪声去重。节奏：每周小型金丝雀实验 + SLO 评审；每月演练日 + 复盘；每季度跨团队韧性审计 + 依赖关系梳理。LLM 特有的实验：内存过载、网络故障、提供商宕机、畸形 prompt、KV 缓存逐出风暴。工具：Harness Chaos Engineering（基于 LLM 的实验推荐、爆炸半径缩减、MCP 工具集成）；LitmusChaos（CNCF）；Chaos Mesh（CNCF，Kubernetes 原生）。
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy chaos experiment runner)
-**Prerequisites:** Phase 17 · 23 (SRE for AI), Phase 17 · 13 (Observability)
-**Time:** ~60 minutes
+**Languages:** Python（标准库，玩具级混沌实验运行器）
+**Prerequisites:** Phase 17 · 23（AI 的 SRE）、Phase 17 · 13（可观测性）
+**Time:** 约 60 分钟
 
 ## 学习目标
 
-- 举个五个混乱工程前列条件 (SLI/SLO,可观测性,反弹,跑本,通话) 并解释为什么跳过任何情况会破坏实践.
-- 绘制四个平面 (控制,目标,安全,可观测性) 和反循环成SLO.
-- 列出五项专业管理师专业实验 (内存过载,网络故障,供应商停机,错误的提示,KV驱逐风暴).
-- 选择一个工具                 
+- 说出混沌工程的五个先决条件（SLI/SLO、可观测性、回滚、runbook、on-call），并解释为什么缺了任何一个都会破坏这套实践。
+- 绘制四个平面（控制、目标、安全、可观测性）以及回灌到 SLO 的反馈环。
+- 列举五个 LLM 特有的实验（内存过载、网络故障、提供商宕机、畸形 prompt、KV 逐出风暴）。
+- 根据技术栈在 Harness、LitmusChaos、Chaos Mesh 中选型。
 
 ## 问题
 
-在传统堆中建立了混乱测试.LLM堆增加了新的故障模式.一个有毒字符的4K代码提示会停滞12秒.一个上游提供商429;你的网关重新尝试;你的服务OOM在重新加大同时尝试.在爆发负载下KV缓存驱逐风暴导致重新填充布,使计算机和.
+传统技术栈中的混沌测试已经很成熟。LLM 技术栈引入了新的故障模式。一个含毒字符的 4K-token prompt 会让分词器卡住 12 秒。上游提供商返回 429；你的网关重试；你的服务因重试放大的并发量而 OOM。突发负载下的 KV 缓存逐出风暴会引发重复预填充（re-prefill）级联，使算力饱和。
 
-混沌工程是你在用户之前发现它们的方式.
+这些问题都不会出现在单元测试中。混沌工程就是让你抢在用户之前发现它们的方法。
 
 ## 概念
 
-### 条件
+### 先决条件
 
-没有:
+在没有以下条件时不要在生产环境运行混沌实验：
 
-1. **SLI/SLO**确定服务水平指标和目标.
-2. **Observability**跟踪,指标,日志,连接到仪表板.
-3. **Automated rollback** 17 阶段 · 20 政策旗反弹.
-4. **Runbooks**结构化,第17阶段 · 23.
-5. **On-call**有人要回应.
+1. **SLI/SLO** — 定义好的服务级指标与目标。
+2. **可观测性** — trace、指标、日志，并接入仪表盘。
+3. **自动回滚** — Phase 17 · 20 的策略标志回滚。
+4. **Runbook** — 结构化的，见 Phase 17 · 23。
+5. **On-call** — 有人负责响应。
 
-没有任何手段,混乱变成了真实的事件.
+缺了任何一项，混沌就会变成真实事故。
 
-### 四个飞机+反
+### 四个平面 + 反馈
 
-**Control plane**实验安排器 (Litmus工作流程,混沌网时间表,利用 UI).
+**控制平面** — 实验调度器（Litmus workflow、Chaos Mesh schedule、Harness UI）。
 
-**Target plane**服务,片,节点,负载平衡器,数据存储器.
+**目标平面** — 服务、pod、节点、负载均衡器、数据存储。
 
-**Safety plane**杀死开关,压制窗户,爆炸射线限制,错误预算门.
+**安全平面** — 终止开关、抑制窗口、爆炸半径限制、错误预算门禁。
 
-**Observability plane**正常的指标 + 痕迹-ID相关性,以区分导致混乱的故障与自然故障.
+**可观测性平面** — 常规指标 + trace-ID 关联，以区分混沌引发和自然发生的故障。
 
-**Feedback loop**结果回应SLO调整,运行簿更新,代码修复.
+**反馈环** — 实验发现回灌到 SLO 调整、runbook 更新和代码修复。
 
-### 护卫是强制性的
+### 防护措施是强制性的
 
-- **Burn-rate alert**假设每天的错误预算损耗超过预期的2倍.
-- **Suppression windows**试验期间,在爆炸半径中制非试验警报.
-- **Trace-ID correlation**试验引起的错误都包含一个标签,以便在调用时可以推断.
+- **燃耗率告警**：当每日错误预算消耗超过预期的 2 倍时暂停实验。
+- **抑制窗口**：实验期间在爆炸半径内屏蔽非实验告警。
+- **Trace-ID 关联**：所有由实验引发的错误都带上标签，便于 on-call 去重。
 
-### 五项专业士专业实验
+### 五个 LLM 特有的实验
 
-1. **Memory overload**通过发送高同步度的长文本请求,强加KV缓存预先风暴. 注意:服务是否优雅地流失或崩?
+1. **内存过载** — 通过高并发发送长上下文请求，强制制造 KV 缓存抢占风暴。观察：服务是优雅降级还是崩溃？
 
-2. **Network failure**断断推断网关与提供商之间的连接. 观察:SLA内是否会出现反弹? (阶段17 · 19)
+2. **网络故障** — 切断推理网关与提供商之间的连接。观察：回退机制是否在 SLA 内生效？（Phase 17 · 19）
 
-3. **Provider outage simulation** 100% 429 来自OpenAI. 观察:路由向人类转移吗? (阶段 17 · 16, 19)
+3. **提供商宕机模拟** — 让 OpenAI 100% 返回 429。观察：路由是否故障转移到 Anthropic？（Phase 17 · 16、19）
 
-4. **Malformed prompt**注入标记器安装有效载荷 (例如,深嵌入式单码,巨大的UTF-8代码点).观察:单个请求是否锁定了员工?
+4. **畸形 prompt** — 注入能让分词器卡住的载荷（如深度嵌套的 unicode、超大 UTF-8 码点）。观察：单个请求是否会锁死一个 worker？
 
-5. **KV eviction storm**通过和VLLM区块预算强迫流离失所.
+5. **KV 逐出风暴** — 通过打满 vLLM 块预算来强制逐出。观察：LMCache 能否恢复，还是服务降级？
 
-### 率
+### 节奏
 
-- **Weekly**小鱼实验,可能是5%的推进.
-- **Monthly** 规划的比赛日,具体场景;跨团队出席;死后.
-- **Quarterly**跨团队弹性审计;依赖性地图更新.
+- **每周** — 在 staging 中进行小型金丝雀实验，也可在 prod 中占 5%。
+- **每月** — 针对特定场景的演练日；跨团队参与；复盘。
+- **每季度** — 跨团队韧性审计；更新依赖关系图。
 
 ### 工具
 
-- **Harness Chaos Engineering**商业;人工智能衍生的实验建议;爆炸射线缩放;MCP工具集成.
-- **LitmusChaos** CNCF毕业;库伯内特工作流程.
-- **Chaos Mesh** CNCF沙盒;古伯内特斯原生CRD风格.
-- **Gremlin**商业;广泛支持.
-- **AWS FIS**现在,**Azure Chaos Studio**管理云服务.
+- **Harness Chaos Engineering** — 商业产品；AI 推荐实验；爆炸半径缩减；MCP 工具集成。
+- **LitmusChaos** — CNCF 毕业项目；基于 Kubernetes workflow。
+- **Chaos Mesh** — CNCF sandbox 项目；Kubernetes 原生 CRD 风格。
+- **Gremlin** — 商业产品；支持范围广。
+- **AWS FIS** / **Azure Chaos Studio** — 托管云服务。
 
-### 开始小
+### 从小处着手
 
-首先,在稳定的流量下,杀死一个解码复制器. 观察转向和恢复. 如果这有效,看起来很安全,则会导致网络混乱.
+第一个实验：在稳定流量下 kill 掉一个 decode 副本的 pod。观察重新路由和恢复。如果成功且看起来安全，再进阶到网络混沌。
 
-首先,一个专业专业实验:给一个提供者注射429药物5分钟.观察倒退.大多数团队发现他们的倒退还没有完全测试.
+第一个 LLM 特有的实验：注入一个提供商的 429，持续 5 分钟。观察回退行为。大多数团队会发现他们的回退机制从未被完整测试过。
 
 ### 你应该记住的数字
 
-- 控制,目标,安全,可观察.
-- 预期每日预算的燃烧量是两倍.
-- 率:每周的鱼,每月的游戏日,每季度的审计.
-- 五次LLM实验:记忆,网络,提供商,错误的提示,KV风暴.
+- 四个平面：控制、目标、安全、可观测性。
+- 燃耗率暂停阈值：每日预算消耗超过预期的 2 倍。
+- 节奏：每周金丝雀、每月演练日、每季度审计。
+- 五个 LLM 实验：内存、网络、提供商、畸形 prompt、KV 风暴。
 
 ```figure
 i4-chaos-guard
 ```
 
-## 用它
+## 使用它
 
-`code/main.py`报告了哪些实验会使燃烧率失效.
+`code/main.py` 模拟三个带安全平面门禁的混沌实验。报告哪些实验会触发燃耗率中止。
 
-## 运送它
+## 交付它
 
-这一课产生了`outputs/skill-chaos-plan.md`鉴于积和成熟度, 选择了第3次实验和工具.
+本课产出 `outputs/skill-chaos-plan.md`。根据技术栈和成熟度，选出前三个实验及所用工具。
 
-## 运动
+## 练习
 
-1. 跑步`code/main.py`什么实验会打破燃烧率的门,为什么?
-2. 设计一个基于vLLM的RAG服务的前五次混乱实验.
-3. 你的燃烧率警报暂停了实验.
-4. 争辩,生产中应该发生混乱还是仅仅是舞台化.
-5. 举个简单的网络混乱无法复制的三种LLM特定故障模式.
+1. 运行 `code/main.py`。哪个实验触发了燃耗率门禁，为什么？
+2. 为基于 vLLM 的 RAG 服务设计前五个混沌实验。包含成功标准。
+3. 你的燃耗率告警暂停了一个实验。你如何判断根因是混沌还是自然故障？
+4. 论证混沌实验应该跑在生产环境还是只在 staging。什么时候生产环境才是正确答案？
+5. 列举三种通用网络混沌无法复现的 LLM 特有故障模式。
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|------------------------|
-| SLI / SLO | "service targets" | Indicator + objective; required prerequisite |
-| Blast radius | "scope" | Set of services / users affected by experiment |
-| Burn-rate alert | "budget gate" | Fires when error-budget burn rate > 2x expected |
-| Game day | "monthly drill" | Scheduled cross-team chaos exercise |
-| LitmusChaos | "CNCF workflow" | Graduated CNCF Kubernetes chaos tool |
-| Chaos Mesh | "CNCF CRD" | CNCF sandbox Kubernetes-native chaos |
-| Harness CE | "commercial AI-assisted" | Harness chaos with AI recommendations |
-| Malformed prompt | "tokenizer bomb" | Input that stalls tokenization |
-| KV eviction storm | "preemption cascade" | Mass eviction triggering re-prefills |
+| SLI / SLO | “服务目标” | 指标 + 目标；必备先决条件 |
+| 爆炸半径 | “范围” | 实验影响到的服务 / 用户集合 |
+| 燃耗率告警 | “预算门禁” | 当错误预算消耗速率 > 预期的 2 倍时触发 |
+| 演练日 | “每月演练” | 计划好的跨团队混沌演习 |
+| LitmusChaos | “CNCF workflow” | CNCF 毕业的 Kubernetes 混沌工具 |
+| Chaos Mesh | “CNCF CRD” | CNCF sandbox 的 Kubernetes 原生混沌工具 |
+| Harness CE | “商业 AI 辅助” | 带 AI 推荐的 Harness 混沌工程 |
+| 畸形 prompt | “分词器炸弹” | 会卡住分词过程的输入 |
+| KV 逐出风暴 | “抢占级联” | 大规模逐出引发的重复预填充 |
 
-## 进一步阅读
+## 延伸阅读
 
 - [DevSecOps School — Chaos Engineering 2026 Guide](https://devsecopsschool.com/blog/chaos-engineering/)
 - [Ankush Sharma — Observability for LLMs (book)](https://www.amazon.com/Observability-Large-Language-Models-Engineering-ebook/dp/B0DJSR65TR)

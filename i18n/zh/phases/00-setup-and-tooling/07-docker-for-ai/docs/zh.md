@@ -1,28 +1,28 @@
-# 对于AI的Docker
+# AI 方向的 Docker
 
-> 容器将"我的机器工作"变成了过去的事情.
+> 容器让“在我机器上能跑”成为过去。
 
 **Type:** Build
 **Languages:** Docker
-**Prerequisites:** Phase 0, Lessons 01 and 03
-**Time:** ~60 minutes
+**Prerequisites:** Phase 0, 第 01 和 03 课
+**Time:** 约 60 分钟
 
 ## 学习目标
 
-- 从Docker文件中构建一个GPU启用的Docker图像,使用CUDA,PyTorch和AI库
-- 作为数量来维持模型,数据集和代码的集装箱重建
-- 配置NVIDIA集装箱工具包,以显示集装箱内的GPU
-- 使用Docker Compose编程多服务人工智能应用程序 (输入服务器+向量数据库)
+- 从 Dockerfile 构建一个包含 CUDA、PyTorch 和 AI 库的启用 GPU 的 Docker 镜像
+- 将宿主机目录挂载为卷，以便在容器重建之间持久保存模型、数据集和代码
+- 配置 NVIDIA Container Toolkit 以便在容器内暴露 GPU
+- 使用 Docker Compose 编排多服务 AI 应用（推理服务器 + 向量数据库）
 
-## 问题
+## 问题所在
 
-你在笔记本电脑上训练了一个模型使用PyTorch 2.3,CUDA 12.4和Python 3.12. 你的同事有PyTorch 2.1,CUDA 11.8和Python 3.10.
+你在自己的笔记本上用 PyTorch 2.3、CUDA 12.4 和 Python 3.12 训练了一个模型。你的同事用的是 PyTorch 2.1、CUDA 11.8 和 Python 3.10。你的模型在他们的机器上崩溃了。而你的 Dockerfile 在两边都能正常工作。
 
-智能人工智能项目是依赖性梦.典型的堆包括Python,PyTorch,CUDA驱动程序,cuDNN,系统级C库以及需要精确编译版本的闪电attn等专业包.Docker将所有这些包装成一个图像,在任何地方都运行相同.
+AI 项目是依赖关系的噩梦。一个典型的技术栈包括 Python、PyTorch、CUDA 驱动、cuDNN、系统级 C 库，以及像 flash-attn 这样需要特定编译器版本的专业软件包。Docker 将所有这些打包成一个在所有地方都以相同方式运行的单一镜像。
 
 ## 概念
 
-据悉,Docker 将你的代码,运行时间,库库和系统工具包装成一个孤立的单元,称为容器. 想象它是一个轻量级的虚拟机,但它分享主机操作系统内核,而不是运行自己的,所以它开始在几秒钟而不是几分钟.
+Docker 将你的代码、运行时、库和系统工具封装成一个称为容器的隔离单元。可以把它看作一个轻量级虚拟机，不同的是它共享宿主机的操作系统内核，而不是运行自己的内核，因此它能在几秒内而不是几分钟内启动。
 
 ```mermaid
 graph TD
@@ -39,25 +39,25 @@ graph TD
     end
 ```
 
-### 为什么人工智能项目需要多克
+### 为什么 AI 项目比大多数项目更需要 Docker
 
-1. **GPU drivers are fragile.**库达 12.4 代码不运行在库达 11.8 上.Docker 通过NVIDIA 集装箱工具包共享主机GPU驱动器,同时将CUDA 工具包隔离在容器内.
+1. **GPU 驱动很脆弱。** CUDA 12.4 的代码无法在 CUDA 11.8 上运行。Docker 将 CUDA 工具包隔离在容器内部，同时通过 NVIDIA Container Toolkit 共享宿主机的 GPU 驱动。
 
-2. **Model weights are large.**对于 7B 参数模型, fp16 的容量为 14 GB.每次重建时,您不需要重新下载它. Docker 卷允许您从主机上安装模型目录.
+2. **模型权重很大。** 一个 7B 参数的模型以 fp16 存储为 14 GB。你不会希望每次重建时都重新下载它。Docker 卷允许你从宿主机挂载一个模型目录。
 
-3. **Multi-service architectures are common.**实际上,人工智能应用程序不仅仅是Python脚本. 它是一个推理服务器,一个RAG的向量数据库,也许是一个网络前端.Docker Compose用一个命令编程所有这些.
+3. **多服务架构很常见。** 真实的 AI 应用不只是一个 Python 脚本。它是一个推理服务器、一个用于 RAG 的向量数据库，也许还有一个 Web 前端。Docker Compose 用一条命令编排所有这些服务。
 
 ### 关键词汇
 
-| Term | What it means |
+| 术语 | 含义 |
 |------|---------------|
-| Image | A read-only template. Your recipe. Built from a Dockerfile. |
-| Container | A running instance of an image. Your kitchen. |
-| Dockerfile | Instructions to build an image. Layer by layer. |
-| Volume | Persistent storage that survives container restarts. |
-| docker-compose | A tool for defining multi-container applications in YAML. |
+| Image（镜像） | 只读模板。你的配方。由 Dockerfile 构建而来。 |
+| Container（容器） | 镜像的一个运行实例。你的厨房。 |
+| Dockerfile | 构建镜像的指令。一层一层地。 |
+| Volume（卷） | 在容器重启后仍然存在的持久化存储。 |
+| docker-compose | 用于在 YAML 中定义多容器应用的工具。 |
 
-### 常见的 AI 容器模式
+### AI 中常见的容器模式
 
 ```
 Dev Container
@@ -77,9 +77,9 @@ Inference Container
 s0-image-layers
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:安装Docker
+### 步骤 1：安装 Docker
 
 ```bash
 # macOS
@@ -92,16 +92,16 @@ sudo usermod -aG docker $USER
 # Log out and back in for group change to take effect
 ```
 
-检查:
+验证：
 
 ```bash
 docker --version
 docker run hello-world
 ```
 
-### 步骤 2:安装NVIDIA容器工具包 (Linux与NVIDIA GPU)
+### 步骤 2：安装 NVIDIA Container Toolkit（带有 NVIDIA GPU 的 Linux）
 
-这使得Docker容器能够访问你的GPU. macOS和Windows (WSL2) 用户可以跳过此;Docker Desktop在这些平台上处理GPU的方式不同.
+这允许 Docker 容器访问你的 GPU。macOS 和 Windows (WSL2) 用户可以跳过这一步；Docker Desktop 在这些平台上以不同方式处理 GPU 直通。
 
 ```bash
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
@@ -116,17 +116,17 @@ sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
 ```
 
-测试容器内GPU访问:
+在容器内测试 GPU 访问：
 
 ```bash
 docker run --rm --gpus all nvidia/cuda:12.4.1-base-ubuntu22.04 nvidia-smi
 ```
 
-如果你看到你的GPU信息,工具包正在工作.
+如果你看到了自己的 GPU 信息，说明该工具包工作正常。
 
-### 步骤3:理解基本图像
+### 步骤 3：理解基础镜像
 
-选择正确的基图像可以节省几个小时的调试.
+选择正确的基础镜像可以节省数小时的调试时间。
 
 ```
 nvidia/cuda:12.4.1-devel-ubuntu22.04
@@ -150,9 +150,9 @@ python:3.12-slim
   Size: ~150 MB
 ```
 
-### 步骤4:为人工智能开发编写Docker文件
+### 步骤 4：编写用于 AI 开发的 Dockerfile
 
-这里是Docker文件.`code/Dockerfile`走过它:
+下面是 `code/Dockerfile` 中的 Dockerfile。逐步讲解：
 
 ```dockerfile
 FROM --platform=linux/amd64 nvidia/cuda:12.4.1-devel-ubuntu22.04
@@ -208,17 +208,17 @@ EXPOSE 8888
 CMD ["python"]
 ```
 
-建立它:
+构建它：
 
 ```bash
 docker build -t ai-dev -f phases/00-setup-and-tooling/07-docker-for-ai/code/Dockerfile .
 ```
 
-后续构建使用缓存层.
+第一次构建需要一段时间（下载 CUDA 基础镜像 + PyTorch）。后续构建会使用缓存的层。
 
-**macOS / Apple Silicon (M1/M2/M3/M4):**其他`--platform=linux/amd64`在`FROM`图像也发送一个 arm64 变体,Docker 桌面自动在 Apple Silicon 上选择它,但 PyTorch 发布了其`cu124`只有 x86_64 的轮子,所以 `pip install torch==2.6.0+cu124`层失败了`No matching distribution found for torch==2.6.0+cu124`上平台将x86_64图像拉出来,并运行在模拟下:构建速度较慢,容器没有GPU (Mac上无论如何都没有CUDA).`--gpus all`其他`docker run`在Mac上下面的命令.对于在Apple Silicon上进行GPU工作,用MPS构建从01课程进行本地运行课程,并为NVIDIAGPU的x86_64 Linux主机保存此图像.
+**macOS / Apple Silicon (M1/M2/M3/M4)：** Dockerfile 的 `FROM` 行使用 `--platform=linux/amd64`，这是让构建在 Mac 上成功的关键。CUDA 基础镜像也提供 arm64 版本，Docker Desktop 在 Apple Silicon 上会自动选用它；但 PyTorch 的 `cu124` wheel 只提供 x86_64 版本，导致 `pip install torch==2.6.0+cu124` 报错 `No matching distribution found for torch==2.6.0+cu124`。指定平台后，Docker 会拉取 x86_64 镜像并通过模拟运行，因此构建较慢，容器也没有 GPU（Mac 本身不支持 CUDA）。在 Mac 上运行下面的 `docker run` 命令时去掉 `--gpus all`。如需在 Apple Silicon 上使用 GPU，请按第 01 课的方法在本机使用 MPS 版本；这个镜像适合配备 NVIDIA GPU 的 x86_64 Linux 主机。
 
-运行它:
+运行它：
 
 ```bash
 docker run --rm -it --gpus all \
@@ -227,7 +227,7 @@ docker run --rm -it --gpus all \
     ai-dev python -c "import torch; print(f'PyTorch {torch.__version__}, CUDA: {torch.cuda.is_available()}')"
 ```
 
-运行Jupyter在容器内:
+在容器内运行 Jupyter：
 
 ```bash
 docker run --rm -it --gpus all \
@@ -237,9 +237,9 @@ docker run --rm -it --gpus all \
     ai-dev jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
 ```
 
-### 步骤5:数据和模型的音量安装
+### 步骤 5：为数据和模型挂载卷
 
-没有它们,当容器停下来,你的14GB模型下载就会消失.
+卷挂载对 AI 工作至关重要。没有它们，你的 14 GB 模型下载会在容器停止时消失。
 
 ```bash
 # Mount your code
@@ -252,7 +252,7 @@ docker run --rm -it --gpus all \
 -v ~/datasets:/data
 ```
 
-在你的训练脚本中,从安装路径上加载:
+在你的训练脚本中，从挂载的路径加载：
 
 ```python
 from transformers import AutoModel
@@ -260,13 +260,13 @@ from transformers import AutoModel
 model = AutoModel.from_pretrained("/models/llama-7b")
 ```
 
-模型存活在你的主机文件系统上. 尽可能多重建容器,
+模型存放在宿主机的文件系统上。你可以随心所欲地重建容器，而无需重新下载。
 
-### 步骤 6: 多服务人工智能应用程序的Docker编译
+### 步骤 6：使用 Docker Compose 构建多服务 AI 应用
 
-实际的RAG应用需要一个推理服务器和一个向量数据库.Docker Compose都用一个命令运行.
+一个真实的 RAG 应用需要一个推理服务器和一个向量数据库。Docker Compose 用一条命令同时运行两者。
 
-看到`code/docker-compose.yml`其他:
+参见 `code/docker-compose.yml`：
 
 ```yaml
 services:
@@ -303,16 +303,16 @@ volumes:
   qdrant_data:
 ```
 
-开始一切:
+启动一切：
 
 ```bash
 cd phases/00-setup-and-tooling/07-docker-for-ai/code
 docker compose up -d
 ```
 
-现在你的AI开发容器可以访问向量数据库`http://qdrant:6333`通过服务名称.Docker Compose自动创建共享网络.
+现在你的 AI 开发容器可以通过服务名访问位于 `http://qdrant:6333` 的向量数据库。Docker Compose 会自动创建一个共享网络。
 
-测试AI容器内部的连接:
+从 AI 容器内部测试连接：
 
 ```python
 from qdrant_client import QdrantClient
@@ -321,19 +321,19 @@ client = QdrantClient(host="qdrant", port=6333)
 print(client.get_collections())
 ```
 
-停止一切:
+停止一切：
 
 ```bash
 docker compose down
 ```
 
-加入`-v`删除了qdrant的量:
+添加 `-v` 以同时删除 qdrant 卷：
 
 ```bash
 docker compose down -v
 ```
 
-### 步骤7:用于人工智能工作的有用Docker命令
+### 步骤 7：AI 工作中常用的 Docker 命令
 
 ```bash
 # List running containers
@@ -355,32 +355,32 @@ docker cp <container_id>:/workspace/results.csv ./results.csv
 docker logs -f <container_id>
 ```
 
-## 用它
+## 使用它
 
-现在你有一个可复制的人工智能开发环境.
+你现在已经拥有一个可复现的 AI 开发环境。在本课程的其余部分：
 
-- 使用`docker compose up`开始开发环境和向量数据库
-- 装配你的代码,模型和数据成卷,所以在重建之间没有什么丢失
-- 当一个课程需要一个新的Python包时,将其添加到Docker文件中,然后重建
-- 让你的小组档案与队友分享,他们得到了完全相同的环境.
+- 使用 `docker compose up` 同时启动你的开发环境和向量数据库
+- 将你的代码、模型和数据挂载为卷，以免在重建之间丢失任何内容
+- 当某一课需要新的 Python 包时，把它添加到 Dockerfile 中并重新构建
+- 与队友分享你的 Dockerfile。他们将获得完全相同的环境。
 
-### 没有GPU?
+### 没有 GPU？
 
-删除`--gpus all`现在,我们需要一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个新的系统,一个系统,一个新的系统,一个新的系统,一个系统,一个新的系统,一个系统,一个,一个系统,一个系统,一个,一个系统,一个,一个新的系统,一个,一个,一个系统,一个,一个系统,一个,一个,一个,一个系统,一个,一个,一个系统,一个,一个,一个,一个,一个, 系统, 系统,一个, 系统, 系统,一个, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 系统, 
+移除 `--gpus all` 标志和 NVIDIA deploy 代码块。该容器仍然可用于基于 CPU 的课程。PyTorch 会自动检测 CUDA 是否缺失并回退到 CPU。
 
-## 运动
+## 练习
 
-1. 建立Docker文件,然后运行`python -c "import torch; print(torch.__version__)"`在容器内
-2. 启动Docker组合堆并验证Qdrant可以从AI容器访问`http://qdrant:6333/collections`
-3. 加入`flask`运行一个简单的API服务器在端口5000.`-p 5000:5000`
-4. 通过 测量图像大小`docker images`试试把基图从`devel`为了`runtime`并且比较尺寸
+1. 构建 Dockerfile 并在容器内运行 `python -c "import torch; print(torch.__version__)"`
+2. 启动 docker-compose 堆栈，并验证可以从 AI 容器访问位于 `http://qdrant:6333/collections` 的 Qdrant
+3. 将 `flask` 添加到 Dockerfile 中，重新构建，并在端口 5000 上运行一个简单的 API 服务器。使用 `-p 5000:5000` 映射该端口
+4. 使用 `docker images` 测量镜像大小。尝试将基础镜像从 `devel` 切换到 `runtime` 并比较大小
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们的说法 | 实际含义 |
 |------|----------------|----------------------|
-| Container | "Lightweight VM" | An isolated process using the host kernel, with its own filesystem and network |
-| Image layer | "Cached step" | Each Dockerfile instruction creates a layer. Unchanged layers are cached, so rebuilds are fast. |
-| NVIDIA Container Toolkit | "GPU in Docker" | A runtime hook that exposes host GPUs to containers via `--gpus` flag |
-| Volume mount | "Shared folder" | A directory on the host mapped into the container. Changes persist after the container stops. |
-| Base image | "Starting point" | The `FROM` image your Dockerfile builds on top of. Determines what is pre-installed. |
+| Container（容器） | “轻量级虚拟机” | 一个使用宿主机内核的隔离进程，拥有自己的文件系统和网络 |
+| Image layer（镜像层） | “缓存步骤” | 每条 Dockerfile 指令都会创建一层。未更改的层会被缓存，因此重建很快。 |
+| NVIDIA Container Toolkit | “Docker 中的 GPU” | 一个运行时钩子，通过 `--gpus` 标志将宿主机 GPU 暴露给容器 |
+| Volume mount（卷挂载） | “共享文件夹” | 一个映射到容器中的宿主机目录。在容器停止后更改仍然保留。 |
+| Base image（基础镜像） | “起点” | 你的 Dockerfile 所基于的 `FROM` 镜像。它决定了哪些内容已预先安装。 |
