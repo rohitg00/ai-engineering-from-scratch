@@ -467,10 +467,13 @@ test('shared site asset families use the expected cache keys on every page', () 
     'catalog.html',
     'certification.html',
     'certifications.html',
+    'contact.html',
+    'developer.html',
     'glossary.html',
     'index.html',
     'lesson.html',
     'prereqs.html',
+    'privacy.html',
     'sponsors.html',
   ];
   const sourceFor = page => fs.readFileSync(path.join(__dirname, page), 'utf8');
