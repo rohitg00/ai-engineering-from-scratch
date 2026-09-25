@@ -232,9 +232,9 @@
 
   function examFacts(track) {
     return [
-      { value: questions(track), label: 'Questions' },
+      { value: questions(track), label: 'Questions', unpublished: unpublished(track, 'itemCountPublished') },
       { value: String(minutes(track)).match(/^\d+$/) ? minutes(track) + ' min' : minutes(track), label: 'Time limit' },
-      { value: passing(track), label: 'Passing score' },
+      { value: passing(track), label: 'Passing score', unpublished: unpublished(track, 'passingScorePublished') },
       { value: price(track), label: 'Exam fee' },
       { value: examValue(track, ['format'], 'Closed book'), label: 'Format' },
       { value: examValue(track, ['validityMonths', 'validForMonths'], 'See provider'), label: 'Validity' },
@@ -242,7 +242,7 @@
   }
 
   function renderCardFacts(track, limit) {
-    return examFacts(track).slice(0, limit || 3).map(function (fact) {
+    return examFacts(track).filter(function (fact) { return !fact.unpublished; }).slice(0, limit || 3).map(function (fact) {
       var value = fact.value;
       if (fact.label === 'Validity' && typeof value === 'number') value += ' months';
       return '<div class="cert-card-fact"><strong>' + esc(value) + '</strong><span class="cert-fact-label">' + esc(fact.label) + '</span></div>';
