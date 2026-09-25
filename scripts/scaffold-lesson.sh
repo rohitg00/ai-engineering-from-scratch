@@ -9,7 +9,7 @@ Examples:
   scripts/scaffold-lesson.sh 05-nlp-foundations-to-advanced 03-tokenizers
   scripts/scaffold-lesson.sh 05-nlp-foundations-to-advanced 03-tokenizers "Tokenizers from Scratch"
 
-Creates phases/<phase-dir>/<lesson-slug>/ with code/, notebook/, docs/, outputs/
+Creates phases/<phase-dir>/<lesson-slug>/ with code/, docs/, outputs/
 and a docs/en.md skeleton prefilled from LESSON_TEMPLATE.md.
 USAGE
   exit 2
@@ -44,7 +44,7 @@ if [[ ! "$LESSON" =~ ^[0-9]{2}-[a-z0-9-]+$ ]]; then
   exit 1
 fi
 
-mkdir -p "$LESSON_DIR/code" "$LESSON_DIR/notebook" "$LESSON_DIR/docs" "$LESSON_DIR/outputs"
+mkdir -p "$LESSON_DIR/code" "$LESSON_DIR/docs" "$LESSON_DIR/outputs"
 
 PRETTY_TITLE="$TITLE"
 if [[ -z "$PRETTY_TITLE" ]]; then
@@ -117,14 +117,13 @@ EOF
 
 cat >"$LESSON_DIR/code/main.py" <<'EOF'
 def main():
-    raise NotImplementedError("implement the lesson")
+    print("scaffold ok: implement the lesson")
 
 
 if __name__ == "__main__":
     main()
 EOF
 
-touch "$LESSON_DIR/notebook/.gitkeep"
 touch "$LESSON_DIR/outputs/.gitkeep"
 
 echo "created phases/$PHASE/$LESSON/"
@@ -132,6 +131,6 @@ echo ""
 echo "next:"
 echo "  1. edit phases/$PHASE/$LESSON/docs/en.md"
 echo "  2. write phases/$PHASE/$LESSON/code/main.py"
-echo "  3. add a markdown-link row to ROADMAP.md under Phase $PHASE_NUM:"
-echo "     | $LESSON_NUM | [$PRETTY_TITLE](phases/$PHASE/$LESSON) | ✅ | ~75 min |"
+echo "  3. add a row to ROADMAP.md under Phase $PHASE_NUM (plain name, 3 columns):"
+echo "     | $LESSON_NUM | $PRETTY_TITLE | ⬚ |"
 echo "  4. atomic commit: git add phases/$PHASE/$LESSON ROADMAP.md && git commit -m \"feat(phase-$PHASE_NUM/$LESSON_NUM): $PRETTY_TITLE\""
