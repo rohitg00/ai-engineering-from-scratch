@@ -2305,3 +2305,39 @@ test('MCP registry drift quarantines and deactivates only the drifted release', 
   assert.equal(result.evidence.rollbackCandidate.activationRequires, 'explicit rollback decision');
   assert.match(result.verdict, /separately admitted, healthy 3\.9\.2 release/i);
 });
+
+test('lesson page includes completion panel and button contract', () => {
+  const lessonHtml = fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8');
+  assert.match(lessonHtml, /renderLessonCompletionPanel\(container\)/);
+  assert.match(lessonHtml, /function mountLessonCompletionPanel/);
+  assert.match(lessonHtml, /function renderLessonCompletionPanel/);
+  assert.match(lessonHtml, /function syncLessonCompletionUi/);
+  assert.match(lessonHtml, /Complete Lesson/);
+  assert.match(lessonHtml, /Completed \\u2713/);
+  assert.match(lessonHtml, /Mark as incomplete/);
+  assert.match(lessonHtml, /\.ai-panel--complete/);
+  assert.match(lessonHtml, /\.lesson-complete-btn/);
+  assert.match(lessonHtml, /\.lesson-complete-btn\.is-completed/);
+  assert.match(lessonHtml, /\.lesson-complete-btn:disabled\.is-completed/);
+  assert.match(lessonHtml, /\.lesson-unmark-btn/);
+  assert.match(lessonHtml, /completeBtn\.disabled = isDone/);
+  assert.doesNotMatch(lessonHtml, /completeBtn\.setAttribute\('aria-pressed'/);
+
+  const runtime = loadProgressRuntime();
+  const lesson = 'phases/01-math-foundations/01-scalar-derivatives';
+  assert.equal(runtime.api.isLessonComplete(lesson), false);
+
+  runtime.api.markLessonComplete(lesson, 'learner');
+  assert.equal(runtime.api.isLessonComplete(lesson), true);
+  const firstCompletedAt = runtime.api.getLessonProgress(lesson).completedAt;
+  assert.ok(firstCompletedAt > 0);
+
+  // Calling markLessonComplete again must prevent duplicate actions
+  runtime.api.markLessonComplete(lesson, 'learner');
+  assert.equal(runtime.api.getLessonProgress(lesson).completedAt, firstCompletedAt);
+
+  // Unmark must reset completion state
+  runtime.api.unmarkLessonComplete(lesson);
+  assert.equal(runtime.api.isLessonComplete(lesson), false);
+  assert.equal(runtime.api.getLessonProgress(lesson).completedAt, null);
+});

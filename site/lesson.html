@@ -1424,6 +1424,122 @@
       margin: 0 0 14px;
     }
 
+    .ai-panel--complete {
+      padding: 20px;
+    }
+
+    .ai-panel--complete .ai-panel-header {
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+    }
+
+    .lesson-complete-body {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .lesson-complete-desc {
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .lesson-complete-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .lesson-complete-btn {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      border: 1px solid var(--blueprint);
+      background: var(--blueprint);
+      color: var(--bg);
+      transition: background-color var(--motion-feedback, 0.15s) ease,
+                  border-color var(--motion-feedback, 0.15s) ease,
+                  color var(--motion-feedback, 0.15s) ease,
+                  transform var(--motion-press, 0.1s) ease;
+    }
+
+    .lesson-complete-btn:hover {
+      background: var(--accent-hover, #2340d9);
+      border-color: var(--accent-hover, #2340d9);
+      color: var(--bg);
+    }
+
+    .lesson-complete-btn:active {
+      transform: scale(0.98);
+    }
+
+    .lesson-complete-btn.is-completed,
+    .lesson-complete-btn:disabled.is-completed {
+      background: var(--blueprint-tint);
+      color: var(--blueprint);
+      border-color: var(--blueprint);
+      cursor: default;
+      opacity: 1;
+    }
+
+    .lesson-complete-btn.is-completed:hover,
+    .lesson-complete-btn:disabled.is-completed:hover {
+      background: var(--blueprint-tint);
+      border-color: var(--blueprint);
+      color: var(--blueprint);
+    }
+
+    .lesson-unmark-btn {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 9px 16px;
+      min-height: 44px;
+      border: 1px solid var(--rule-soft);
+      background: transparent;
+      color: var(--ink-soft);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color var(--motion-feedback, 0.15s) ease,
+                  border-color var(--motion-feedback, 0.15s) ease;
+    }
+
+    .lesson-unmark-btn:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .lesson-unmark-btn[hidden] {
+      display: none;
+    }
+
+    .lesson-complete-status {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+      min-height: 1.2em;
+    }
+
+    .lesson-complete-status.is-success {
+      color: var(--blueprint);
+    }
+
     .output-cards,
     .code-cards {
       display: grid;
@@ -2121,6 +2237,8 @@
       .output-btn:active,
       .code-card-btn:active,
       .code-copy:active,
+      .lesson-complete-btn:active,
+      .lesson-unmark-btn:active,
       .mermaid-btn:active {
         transform: none;
       }
@@ -2336,7 +2454,8 @@
       .ai-panel { padding: 22px 16px; }
       .ai-panel--compact,
       .ai-panel--path,
-      .ai-panel--continue { padding: 16px; }
+      .ai-panel--continue,
+      .ai-panel--complete { padding: 16px; }
       .ai-panel-header {
         align-items: flex-start;
         gap: 10px;
@@ -2444,6 +2563,15 @@
       }
       .learning-path-preflight-actions {
         align-items: stretch;
+      }
+      .lesson-complete-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .lesson-complete-btn,
+      .lesson-unmark-btn {
+        width: 100%;
+        text-align: center;
       }
     }
   </style>
@@ -5031,6 +5159,7 @@
         renderOutputsPanel(container);
         renderCodePanel(container);
         renderQuizPanel(container);
+        renderLessonCompletionPanel(container);
         renderLearningPathPanel(container);
         renderContinuePanel(container);
       }
@@ -5549,6 +5678,7 @@
       function refreshProgressUi() {
         buildSidebar();
         syncLessonActionProgress();
+        syncLessonCompletionUi();
         var container = document.getElementById('aiPanels');
         if (container) {
           renderLearningPathPanel(container);
@@ -5664,6 +5794,103 @@
         else container.appendChild(panel);
         revealPhaseCompletion(panel, true);
         return panel;
+      }
+
+      function mountLessonCompletionPanel(container, panel) {
+        panel.id = 'lessonCompletionPanel';
+        var existing = document.getElementById('lessonCompletionPanel');
+        if (existing && existing.parentNode) existing.parentNode.replaceChild(panel, existing);
+        else container.appendChild(panel);
+        return panel;
+      }
+
+      function renderLessonCompletionPanel(container) {
+        if (!container || !lessonPath) return;
+
+        var panel = document.createElement('div');
+        panel.className = 'ai-panel ai-panel--complete';
+        panel.setAttribute('aria-labelledby', 'lessonCompletionTitle');
+
+        var html = '<div class="ai-panel-header">' +
+          '<div class="ai-panel-icon">&#10003;</div>' +
+          '<div class="ai-panel-title" id="lessonCompletionTitle">Complete Lesson</div>' +
+          '</div>' +
+          '<div class="lesson-complete-body">' +
+          '<p class="lesson-complete-desc">Mark this lesson as completed to update your progress and continue through the curriculum.</p>' +
+          '<div class="lesson-complete-actions">' +
+          '<button class="btn btn-primary lesson-complete-btn" id="lessonCompleteBtn" type="button">' +
+          '<span class="lesson-complete-btn-text">Complete Lesson</span>' +
+          '</button>' +
+          '<button class="lesson-unmark-btn" id="lessonUnmarkBtn" type="button" hidden>' +
+          'Mark as incomplete' +
+          '</button>' +
+          '</div>' +
+          '<div class="lesson-complete-status" id="lessonCompleteStatus" role="status" aria-live="polite"></div>' +
+          '</div>';
+
+        panel.innerHTML = html;
+        mountLessonCompletionPanel(container, panel);
+
+        var completeBtn = panel.querySelector('#lessonCompleteBtn');
+        var unmarkBtn = panel.querySelector('#lessonUnmarkBtn');
+        var statusEl = panel.querySelector('#lessonCompleteStatus');
+
+        if (completeBtn) {
+          completeBtn.addEventListener('click', function () {
+            if (!window.AIFSProgress || !lessonPath) return;
+            if (window.AIFSProgress.isLessonComplete(lessonPath)) return;
+            window.AIFSProgress.markLessonComplete(lessonPath, 'learner');
+            if (statusEl) {
+              statusEl.textContent = 'Lesson marked as completed. Progress updated.';
+              statusEl.className = 'lesson-complete-status is-success';
+            }
+          });
+        }
+
+        if (unmarkBtn) {
+          unmarkBtn.addEventListener('click', function () {
+            if (!window.AIFSProgress || !lessonPath) return;
+            if (!window.AIFSProgress.isLessonComplete(lessonPath)) return;
+            window.AIFSProgress.unmarkLessonComplete(lessonPath);
+            if (statusEl) {
+              statusEl.textContent = 'Lesson marked as incomplete.';
+              statusEl.className = 'lesson-complete-status';
+            }
+          });
+        }
+
+        syncLessonCompletionUi();
+      }
+
+      function syncLessonCompletionUi() {
+        var panel = document.getElementById('lessonCompletionPanel');
+        if (!panel || !window.AIFSProgress || !lessonPath) return;
+
+        var completeBtn = panel.querySelector('#lessonCompleteBtn');
+        var unmarkBtn = panel.querySelector('#lessonUnmarkBtn');
+        var textSpan = panel.querySelector('.lesson-complete-btn-text');
+        var isDone = window.AIFSProgress.isLessonComplete(lessonPath);
+
+        if (completeBtn) {
+          completeBtn.disabled = isDone;
+          completeBtn.removeAttribute('aria-pressed');
+          completeBtn.setAttribute('title', isDone ? 'Lesson completed' : 'Mark lesson as complete');
+          if (isDone) {
+            completeBtn.classList.remove('btn-primary');
+            completeBtn.classList.add('is-completed');
+            if (textSpan) textSpan.textContent = 'Completed \u2713';
+            else completeBtn.textContent = 'Completed \u2713';
+          } else {
+            completeBtn.classList.add('btn-primary');
+            completeBtn.classList.remove('is-completed');
+            if (textSpan) textSpan.textContent = 'Complete Lesson';
+            else completeBtn.textContent = 'Complete Lesson';
+          }
+        }
+
+        if (unmarkBtn) {
+          unmarkBtn.hidden = !isDone;
+        }
       }
 
       function mountContinuePanel(container, panel) {
