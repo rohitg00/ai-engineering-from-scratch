@@ -35,10 +35,11 @@ sequenceDiagram
     LR->>WD: git pull
 ```
 
-Three things to remember:
+Four things to remember:
 1. Save often (`git commit`)
 2. Push to remote (`git push`)
-3. Branch for experiments (`git checkout -b experiment`)
+3. Pull to local (`git pull`)
+4. Branch for experiments (`git checkout -b experiment`)
 
 ```figure
 s0-commit-dag
@@ -49,6 +50,7 @@ s0-commit-dag
 ### Step 1: Configure git
 
 ```bash
+# Set up your identity(name & email) once after installing Git
 git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 ```
@@ -65,6 +67,7 @@ git push origin main
 ### Step 3: Branching for experiments
 
 ```bash
+# Create a new branch and switch to it immediately
 git checkout -b experiment/new-optimizer
 
 # ... make changes, commit ...
@@ -113,4 +116,5 @@ That's it. You don't need rebase, cherry-pick, or submodules for this course.
 | Commit | "Saving" | A snapshot of your entire project at a point in time |
 | Branch | "A copy" | A pointer to a commit that moves forward as you work |
 | Merge | "Combining code" | Taking changes from one branch and applying them to another |
+| Status | "Checking my files" | A real-time report showing staged, unstaged, and untracked changes|
 | Remote | "The cloud" | A copy of your repo hosted somewhere else (GitHub, GitLab) |
