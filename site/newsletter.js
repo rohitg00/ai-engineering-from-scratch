@@ -5,13 +5,6 @@
   let dialog;
   let trigger;
 
-  function embedUrl() {
-    const url = new URL(publicationUrl + '/embed');
-    url.searchParams.set('transparent', '1');
-    if (document.documentElement.dataset.theme === 'dark') url.searchParams.set('light', '1');
-    return url.href;
-  }
-
   function signupSection(variant) {
     const lesson = variant === 'lesson';
     const id = variant === 'dialog' ? 'newsletter-modal' : 'newsletter';
@@ -26,17 +19,16 @@
         <p>${lesson ? 'Practical lessons and updates on AI, DevOps, and cloud native. One email a week.' : 'Practical lessons, tools worth trying, and the week’s key developments across AI, DevOps, and cloud native. One free email, every week.'}</p>
       </div>
       <div class="newsletter-signup">
-        <p class="newsletter-note">Free. Unsubscribe anytime. <a href="${publicationUrl}/subscribe" target="_blank" rel="noopener">Open signup on Substack</a></p>
+        <form action="${publicationUrl}/subscribe" method="get" aria-describedby="${id}-note">
+          <label class="newsletter-email-label" for="${id}-email">Email address</label>
+          <div class="newsletter-input-row">
+            <input id="${id}-email" name="email" type="email" placeholder="Your email address" autocomplete="email" required>
+            <button type="submit">Subscribe free <span aria-hidden="true">↗</span></button>
+          </div>
+        </form>
+        <p id="${id}-note" class="newsletter-note">Free. Unsubscribe anytime. Finish signup on Substack.</p>
       </div>
     </div>`;
-    const iframe = document.createElement('iframe');
-    iframe.className = 'newsletter-embed';
-    iframe.title = 'Subscribe to AI Engineering Newsletter on Substack';
-    iframe.width = '480';
-    iframe.height = '150';
-    iframe.loading = variant === 'dialog' ? 'eager' : 'lazy';
-    iframe.src = embedUrl();
-    section.querySelector('.newsletter-signup').prepend(iframe);
     return section;
   }
 
@@ -170,13 +162,6 @@
       addLessonPlacement();
     }
     revealAnchor();
-    const themeObserver = new MutationObserver(function () {
-      const src = embedUrl();
-      document.querySelectorAll('.newsletter-embed').forEach(function (iframe) {
-        if (iframe.src !== src) iframe.src = src;
-      });
-    });
-    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize);
