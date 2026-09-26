@@ -104,7 +104,6 @@ def train_pair(W, W_prime, center_idx, context_idx, negative_indices, lr):
     for i, u in enumerate(u_negs):
         grad_center += neg_scores[i] * u
 
-    W[context_idx] = W[context_idx]
     W_prime[context_idx] -= lr * (pos_score - 1) * v_c
     for i, neg_idx in enumerate(negative_indices):
         W_prime[neg_idx] -= lr * neg_scores[i] * v_c
@@ -128,8 +127,8 @@ def train(docs, dim=16, window=2, k_neg=5, epochs=100, lr=0.05, seed=0):
         for center, context in pairs:
             c_idx = vocab[center]
             ctx_idx = vocab[context]
-            negs = rng.integers(0, vocab_size, size=k_neg)
-            negs = [n for n in negs if n != ctx_idx and n != c_idx]
+            negs = rng.integers(0, vocab_size, size=k_neg * 2)
+            negs = [int(n) for n in negs if n != ctx_idx and n != c_idx][:k_neg]
             train_pair(W, W_prime, c_idx, ctx_idx, negs, lr)
     return vocab, W
 ```
@@ -149,9 +148,9 @@ def nearest(vocab, W, target_vec, topk=5, exclude=None):
     order = np.argsort(-sims)
     out = []
     for i in order:
-        if i in exclude:
+        if int(i) in exclude:
             continue
-        out.append((inv_vocab[i], float(sims[i])))
+        out.append((inv_vocab[int(i)], float(sims[i])))
         if len(out) == topk:
             break
     return out
