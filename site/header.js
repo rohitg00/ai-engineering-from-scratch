@@ -171,6 +171,19 @@
     document.head.appendChild(script);
   }
 
+  function ensureNewsletter() {
+    if (document.querySelector('script[data-aifs-newsletter]')) return;
+    var stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = 'newsletter.css?v=20260926a';
+    document.head.appendChild(stylesheet);
+    var script = document.createElement('script');
+    script.src = 'newsletter.js?v=20260926a';
+    script.async = true;
+    script.setAttribute('data-aifs-newsletter', 'true');
+    document.head.appendChild(script);
+  }
+
   function pageFile(url) {
     try {
       var parsed = new URL(url, location.href);
@@ -424,6 +437,7 @@
     loadStars();
     ensureNarration();
     ensureUiI18n();
+    ensureNewsletter();
   }
 
   setupRouteLinks();
