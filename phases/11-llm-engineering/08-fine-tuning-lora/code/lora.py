@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import math
+import numpy as np
 
 
 class LoRALayer(nn.Module):
@@ -156,23 +157,23 @@ def save_lora_adapter(model, path):
     adapter_state = {}
     for name, module in model.named_modules():
         if isinstance(module, LoRALayer):
-            adapter_state[f"{name}.A"] = module.A.data.clone()
-            adapter_state[f"{name}.B"] = module.B.data.clone()
-            adapter_state[f"{name}.rank"] = module.rank
-            adapter_state[f"{name}.alpha"] = module.alpha
-    torch.save(adapter_state, path)
+            adapter_state[f"{name}.A"] = module.A.data.cpu().numpy()
+            adapter_state[f"{name}.B"] = module.B.data.cpu().numpy()
+            adapter_state[f"{name}.rank"] = np.array([module.rank])
+            adapter_state[f"{name}.alpha"] = np.array([module.alpha])
+    np.savez(path, **adapter_state)
     return len(adapter_state) // 4
 
 
 def load_lora_adapter(model, path):
-    adapter_state = torch.load(path, weights_only=False)
+    adapter_state = np.load(path)
     for name, module in model.named_modules():
         if isinstance(module, LoRALayer):
             a_key = f"{name}.A"
             b_key = f"{name}.B"
             if a_key in adapter_state:
-                module.A.data = adapter_state[a_key]
-                module.B.data = adapter_state[b_key]
+                module.A.data = torch.from_numpy(adapter_state[a_key])
+                module.B.data = torch.from_numpy(adapter_state[b_key])
 
 
 def create_demo_model(d_model=256, hidden=512, n_classes=10):
@@ -310,7 +311,7 @@ if __name__ == "__main__":
     import tempfile
     import os
 
-    with tempfile.NamedTemporaryFile(suffix=".pt", delete=False) as f:
+    with tempfile.NamedTemporaryFile(suffix=".npz", delete=False) as f:
         adapter_path = f.name
 
     n_saved = save_lora_adapter(model_a, adapter_path)
