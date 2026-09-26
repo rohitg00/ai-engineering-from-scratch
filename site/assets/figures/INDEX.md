@@ -2,7 +2,9 @@
 
 Every figure shipped under `site/assets/figures/` is listed below. FIG numbers are global, monotonically increasing, and never reused.
 
-The aesthetic is documented in the `blueprint-diagram` Claude Code skill, which is distributed separately from this repo (per the project's "no vendor/tooling artifacts in repos" rule). The skill source lives under `~/.claude/skills/blueprint-diagram/` once installed; ask a maintainer for the install path or follow the [How to add](#how-to-add) section below for a manual workflow that does not require the skill.
+The visual style is defined in [`STYLE.md`](STYLE.md) — read it before authoring a new figure. For the interactive widget system (slider-driven, theme-aware figures embedded via the ` ```figure ` fence), see [`site/CONTRIBUTING-FIGURES.md`](../CONTRIBUTING-FIGURES.md).
+
+The aesthetic is also documented in the `blueprint-diagram` Claude Code skill, distributed separately from this repo. The skill source lives under `~/.claude/skills/blueprint-diagram/` once installed; ask a maintainer for the install path or follow the [How to add](#how-to-add) section below for a manual workflow that does not require the skill.
 
 | FIG | slug | phase | lesson | added | notes |
 |---|---|---|---|---|---|
@@ -27,6 +29,21 @@ The aesthetic is documented in the `blueprint-diagram` Claude Code skill, which 
 
 ## How to add
 
+### Interactive figure (slider-driven, theme-aware)
+
+1. Add a widget function in the appropriate `site/figures-<topic>.js` module file.
+2. Register it via `LF.register({ 'slug-name': fn })`.
+3. Embed in the lesson's `docs/en.md` with a ` ```figure ` fence block.
+4. See [`site/CONTRIBUTING-FIGURES.md`](../CONTRIBUTING-FIGURES.md) for the full walkthrough.
+
+### Animated SVG explainer (auto-loop, hover-pause)
+
+1. Add a function in `site/figures.js` using the `loop()` utility.
+2. Add to the `FIGURES` map at the bottom of the file.
+3. Embed via the same ` ```figure ` fence.
+
+### Static SVG diagram
+
 If you have the `blueprint-diagram` skill installed:
 
 1. Run the skill with a description of the concept.
@@ -34,7 +51,7 @@ If you have the `blueprint-diagram` skill installed:
 
 If you don't have the skill, do it manually:
 
-1. Author an SVG in the cream + blueprint aesthetic (cream `#fafaf5` paper, `#3553ff` blueprint blue strokes, JetBrains Mono uppercase labels with leader lines, no other chromatic accents).
+1. Follow the style conventions in [`STYLE.md`](STYLE.md) (cream `#fafaf5` paper, `#3553ff` blueprint blue strokes, JetBrains Mono uppercase labels with leader lines, no other chromatic accents).
 2. Save as `site/assets/figures/<NNN>-<slug>.svg` using the next available FIG number from the table above.
 3. Add a row to the table here with the FIG number, slug, target phase + lesson, today's date, and a one-line note.
 4. Reference the figure from the lesson markdown as `![FIG_NNN](../../site/assets/figures/<NNN>-<slug>.svg)`.
