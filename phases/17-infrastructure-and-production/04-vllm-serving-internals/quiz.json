@@ -52,14 +52,14 @@
     },
     {
       "stage": "post",
-      "question": "In vLLM v0.18.0, which speculative-decoding variant remains compatible with --enable-chunked-prefill?",
+      "question": "What does the vLLM v0.18.0 feature compatibility matrix say about speculative decoding with --enable-chunked-prefill?",
       "options": [
-        "No speculative decoding is compatible",
-        "N-gram GPU speculative decoding in the V1 scheduler",
-        "Draft-model speculative decoding",
-        "EAGLE-1 only"
+        "The matrix marks the combination as compatible",
+        "They cannot be combined in any configuration",
+        "Only EAGLE-1 draft heads work with chunked prefill",
+        "Only draft-model speculation works with chunked prefill"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": ""
     },
     {

@@ -14,7 +14,7 @@ Produce:
 1. Config read. For each flag, name the scheduler behavior it controls and the 2026 default. Flag any flag set to a non-default value and call out why.
 2. Bottleneck identification. Classify the bottleneck as one of: PagedAttention under-provisioned (KV block starvation), continuous-batching stall (WAITING queue growth), chunked-prefill mis-sized (TTFT tail spike), decode compute-bound (ITL floor), or HBM-bound (cannot fit batch). Justify with the reported metrics.
 3. Knob recommendations. Specific, ordered actions — which flag to flip, which value to try, and which metric to watch. Do not suggest "try more GPUs" without first exhausting scheduler-level tuning.
-4. Compatibility check. For vLLM v0.18.0 specifically: flag the `--enable-chunked-prefill` + draft-model `--speculative-config` combination as a hard incompatibility. Recommend N-gram GPU speculative decoding in V1 as the documented exception if both are desired.
+4. Compatibility check. Check every enabled feature pair against the compatibility matrix for the exact vLLM version in the config. For v0.18.0 the matrix marks speculative decoding compatible with chunked prefill and prefix caching, and incompatible with LoRA.
 5. What to read next. Point to one of the vLLM v0.18.0 release notes, the PagedAttention paper, or the Aleksa Gordic V1 scheduler walkthrough depending on what the diagnosis surfaced.
 
 Hard rejects:
@@ -25,6 +25,6 @@ Hard rejects:
 Refusal rules:
 - If the reported throughput is under 100 tok/s on an H100, the bottleneck is likely not vLLM — check for tokenizer on client side, Python GIL, or request-level serialization.
 - If `--gpu-memory-utilization` is set below 0.7, refuse to tune further — the operator chose to leave HBM on the table and the fix is to raise the ceiling before flipping scheduler flags.
-- If the operator asks for a speculative-decoding + chunked-prefill recipe on draft-model speculation, refuse and name the v0.18.0 incompatibility. Point to EAGLE-3 in Phase 17 · 05 instead.
+- If the operator asks for a speculative-decoding + chunked-prefill recipe, check the combination against the compatibility matrix for their vLLM version before answering, and point to EAGLE-3 in Phase 17 · 05 for the draft method.
 
 Output: a one-page scheduler diagnosis listing flags, bottleneck, ordered recommendations, compatibility notes, and a next-read pointer. End with a "what to measure next" paragraph naming one of P99 ITL, block allocation rate, or WAITING queue depth, depending on the bottleneck identified.

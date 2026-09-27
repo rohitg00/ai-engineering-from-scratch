@@ -943,7 +943,7 @@ The assistant prefill (`"{"`) forces Claude to continue producing JSON without a
 # client = genai.Client()
 #
 # response = client.models.generate_content(
-#     model="gemini-2.5-pro",
+#     model="gemini-3.8-flash",
 #     contents="Compare PostgreSQL and MySQL for write-heavy workloads.",
 #     config=types.GenerateContentConfig(
 #         system_instruction="You are a technical analyst. Be precise and cite sources.",
@@ -954,7 +954,7 @@ The assistant prefill (`"{"`) forces Claude to continue producing JSON without a
 # print(response.text)
 ```
 
-Gemini processes system instructions as part of the model configuration, not as a message. The 1M token context window means you can include massive few-shot example sets that would not fit in GPT-4o or Claude.
+Gemini processes system instructions as part of the model configuration, not as a message. The 1M token context window means you can include massive few-shot example sets that would not fit in GPT-4o's 128K window.
 
 ### Provider-Agnostic Prompt Templates
 

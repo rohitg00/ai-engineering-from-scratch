@@ -13,7 +13,7 @@ Produce:
 
 1. Baseline measurement plan. Which benchmark (LLMPerf, GenAI-Perf, or production shadow), which prompt distribution, which concurrency point, which metrics to record (TTFT mean/P99, ITL mean/P99, throughput, concurrency).
 2. Draft-head selection. ShareGPT-trained EAGLE-3 for general chat. Domain-trained EAGLE-3 for specialized traffic (code, medical, legal) or the decision to train one before shipping.
-3. Config. Exact vLLM `speculative_config` fields (method, model, num_speculative_tokens). Note the v0.18.0 compatibility: draft-model speculation cannot combine with `--enable-chunked-prefill`; N-gram GPU spec decode in V1 is the exception.
+3. Config. Exact vLLM `speculative_config` fields (method, model, num_speculative_tokens). Check the combination against the compatibility matrix for the deployed vLLM version (v0.18.0 marks speculative decoding compatible with chunked prefill and incompatible with LoRA).
 4. Alpha gate. Target alpha >= 0.55 at production concurrency. Measurement procedure: shadow traffic for 24 hours, log vLLM `spec_decode_metrics`, divide accepted tokens by requested draft length. Kill switch if alpha drops below 0.45 in any 1-hour window.
 5. Tail watch. Plot P99 ITL delta (spec on - spec off). If delta is positive, the rejected-draft two-pass pattern is biting. Reduce K or disable on this workload.
 6. Break-even check. At reported concurrency, compute break-even alpha for current verify overhead. Ship only if measured alpha clears break-even by at least 0.1.
@@ -22,7 +22,7 @@ Hard rejects:
 - Shipping without measuring alpha on production traffic. Refuse and require a 24-hour shadow measurement.
 - Claiming 2-3x speedup without naming the measured alpha.
 - Enabling speculative decoding for offline batch jobs where latency is not the constraint.
-- Combining draft-model speculation with chunked prefill on vLLM v0.18.0. Hard incompatibility.
+- Combining speculative decoding with LoRA on vLLM v0.18.0. The feature matrix marks it incompatible.
 
 Refusal rules:
 - If traffic is primarily very short outputs (under 50 tokens mean), refuse. Draft overhead dominates; ship plain target.

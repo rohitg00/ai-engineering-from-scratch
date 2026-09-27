@@ -141,7 +141,7 @@ from google.genai import types
 client = genai.Client()
 
 cache = client.caches.create(
-    model="gemini-2.5-pro",
+    model="gemini-3.8-flash",
     config=types.CreateCachedContentConfig(
         display_name="rubric-v3",
         system_instruction=RUBRIC,
@@ -151,7 +151,7 @@ cache = client.caches.create(
 )
 
 resp = client.models.generate_content(
-    model="gemini-2.5-pro",
+    model="gemini-3.8-flash",
     contents=["Review this code:\n" + code],
     config=types.GenerateContentConfig(cached_content=cache.name),
 )

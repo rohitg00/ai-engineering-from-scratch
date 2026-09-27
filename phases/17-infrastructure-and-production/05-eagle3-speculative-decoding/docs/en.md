@@ -57,7 +57,7 @@ Mean ITL drops with spec decode. P99 can get worse if you do not tune. Rejected 
 
 ### Where EAGLE-3 is already deployed
 
-Google deployed speculative decoding in AI Overviews in 2025 (same quality, faster response). vLLM V1 ships `speculative_config` as the documented interface; N-gram GPU speculative decoding in V1 is the variant compatible with chunked prefill. SGLang supports EAGLE-3 as the recommended draft path for prefix-heavy workloads.
+Google deployed speculative decoding in AI Overviews in 2025 (same quality, faster response). vLLM V1 ships `speculative_config` as the documented interface, and its feature matrix marks speculative decoding as compatible with chunked prefill. SGLang supports EAGLE-3 as the recommended draft path for prefix-heavy workloads.
 
 ### Break-even math in one line
 
@@ -68,7 +68,7 @@ Expected speedup: `S(alpha, K) = (1 + K*alpha) / (1 + verify_overhead)`. Setting
 - Batch-1 offline generation where latency does not matter. Use plain target.
 - Very short outputs (under 50 tokens). Draft overhead and verify cost dominate.
 - Specialized domains without a domain-trained draft head. Alpha too low.
-- vLLM v0.18.0 plus draft-model spec decode plus `--enable-chunked-prefill`. This combination does not compile. The documented exception is N-gram GPU spec decode in V1.
+- Assuming every feature pair composes. Check the vLLM compatibility matrix for your version: v0.18.0 marks speculative decoding compatible with chunked prefill but not with LoRA.
 
 ```figure
 mx-speculative-tree
@@ -86,7 +86,7 @@ This lesson produces `outputs/skill-eagle3-rollout.md`. Given a target model, tr
 
 1. Run `code/main.py`. At K=5, what alpha do you need for a 2x speedup? For a 3x speedup? How sensitive is that to verify_overhead?
 2. Imagine production traffic splits 70% general chat, 30% code. General chat hits alpha 0.7 with EAGLE-3 trained on ShareGPT; code hits alpha 0.4. What is blended alpha and is spec decode net-positive?
-3. Read the vLLM `speculative_config` documentation. Name the three modes (draft model, EAGLE, N-gram) and which one is compatible with chunked prefill.
+3. Read the vLLM `speculative_config` documentation. Name the three modes (draft model, EAGLE, N-gram) and check which features each one composes with in your vLLM version.
 4. You see mean ITL drop 25% after enabling EAGLE-3 but P99 ITL went up 15%. Diagnose and propose a mitigation.
 5. Compute the memory cost of the EAGLE-3 draft head for Llama 3.3 70B. How does it compare to running Llama 3.2 1B as a classic draft?
 

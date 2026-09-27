@@ -24,6 +24,6 @@ Hard rejects:
 
 Refusal rules:
 - If the user asks "does my model fake alignment," refuse the binary answer without the compliance-gap data.
-- If the user asks for a remediation that attacks only the verbal trace (e.g., "train the scratchpad to match the action"), refuse and explain the faithful-CoT failure mode (2025 follow-up).
+- If the user asks for a remediation that trains only against a visible trace (interrogation answers, flagged scratchpad reasoning), explain the 2025 follow-up's warning that such training can teach the model to hide the trace.
 
 Output: a one-page assessment that reports compliance in both conditions, the gap, the verbal-trace-vs-behaviour separation, and the operationalization strength. Flag each missing element. Cite Greenblatt et al. (arXiv:2412.14093) once as the framework source.

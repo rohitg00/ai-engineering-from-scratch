@@ -830,7 +830,7 @@ AutoGPTQ and AutoAWQ, the original tools for these two methods, are archived. GP
 # llama.cpp/build/bin/llama-server -m llama-8b-q4km.gguf -c 4096 -ngl 99
 ```
 
-The converter writes 16-bit or 8-bit files only (`--outtype` accepts `f32`, `f16`, `bf16`, `q8_0`, `tq1_0`, `tq2_0`, or `auto`), so `llama-quantize` produces the Q4_K_M file.
+The converter has no K-quant output (`--outtype` accepts `f32`, `f16`, `bf16`, `q8_0`, `tq1_0`, `tq2_0`, or `auto`), so `llama-quantize` produces the Q4_K_M file.
 
 ### Serving quantized models
 
@@ -839,7 +839,7 @@ The converter writes 16-bit or 8-bit files only (`--outtype` accepts `f32`, `f16
 # vllm serve llama-8b-awq-int4 --max-model-len 8192
 ```
 
-vLLM natively supports AWQ and GPTQ models and reads the quantization method from the checkpoint's config, so no `--quantization` flag is needed. It handles the dequantization during matrix multiplication and uses paged attention for the KV cache. For FP8 on H100, add `--quantization fp8` to quantize a 16-bit checkpoint's weights at load time.
+vLLM natively supports AWQ and GPTQ models and reads the quantization method from the checkpoint's config, so no `--quantization` flag is needed. It handles the dequantization during matrix multiplication and uses paged attention for the KV cache. For FP8 on H100, add `--quantization fp8_per_tensor` to quantize a 16-bit checkpoint's weights at load time.
 
 ## Ship It
 

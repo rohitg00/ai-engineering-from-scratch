@@ -140,7 +140,7 @@ for item in mcq:
 print(f"Accuracy: {correct / len(mcq):.3f}")
 ```
 
-`audio_path` points into the dataset repo's `data.zip` (about 47 GB), so download and unzip it before scoring. The filter keeps multiple-choice items; open-ended and instruction-following items need a judge instead of exact match. Report each `category` (speech, sound, music, multi, and the rest) separately. Aggregate numbers hide where the model fails.
+`audio_path` points into the dataset repo's `data.zip` (about 47 GB), so download and unzip it before scoring. This exact-match loop is a sanity check, not the benchmark scorer, so its number is not comparable with published MMAU-Pro results. The official evaluator matches multiple-choice answers by embedding similarity (NV-Embed-v2), grades open-ended answers with an LLM judge, and checks instruction-following answers with regex rules: write predictions to a `model_output` column and run `evaluate_mmau_pro_comprehensive.py` from the [MMAU-Pro repo](https://github.com/sonalkum/MMAUPro). Report each `category` (speech, sound, music, multi, and the rest) separately. Aggregate numbers hide where the model fails.
 
 ## Use It
 
