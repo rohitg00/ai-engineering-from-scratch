@@ -4,7 +4,7 @@
 // without dragging in tiktoken. Real assemblers swap in a tokenizer at the seam.
 // Refs: https://arxiv.org/abs/2307.03172  (Lost in the Middle — Liu et al.)
 //       https://www.anthropic.com/news/contextual-retrieval
-//       https://platform.openai.com/docs/guides/context-window
+//       https://platform.openai.com/docs/guides/conversation-state
 
 import process from "node:process";
 
