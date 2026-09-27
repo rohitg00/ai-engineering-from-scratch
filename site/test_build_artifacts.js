@@ -2309,11 +2309,9 @@ test('lesson page includes completion panel and button contract', () => {
   const firstCompletedAt = runtime.api.getLessonProgress(lesson).completedAt;
   assert.ok(firstCompletedAt > 0);
 
-  // Calling markLessonComplete again must prevent duplicate actions
   runtime.api.markLessonComplete(lesson, 'learner');
   assert.equal(runtime.api.getLessonProgress(lesson).completedAt, firstCompletedAt);
 
-  // Unmark must reset completion state
   runtime.api.unmarkLessonComplete(lesson);
   assert.equal(runtime.api.isLessonComplete(lesson), false);
   assert.equal(runtime.api.getLessonProgress(lesson).completedAt, null);
