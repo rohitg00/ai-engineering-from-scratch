@@ -1,6 +1,7 @@
 (function () {
   var root = document.documentElement;
-  var stored = localStorage.getItem('theme');
+  var stored = '';
+  try { stored = localStorage.getItem('theme') || ''; } catch (_) {}
   if (stored) {
     root.setAttribute('data-theme', stored);
   } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -53,7 +54,7 @@
       var current = root.getAttribute('data-theme');
       var next = current === 'light' ? 'dark' : 'light';
       root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
+      try { localStorage.setItem('theme', next); } catch (_) {}
       updateThemeIcon();
     });
     updateThemeIcon();

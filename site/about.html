@@ -163,7 +163,8 @@
   <script>
     (function () {
       var root = document.documentElement;
-      var stored = localStorage.getItem('theme');
+      var stored = '';
+      try { stored = localStorage.getItem('theme') || ''; } catch (_) {}
       if (stored) {
         root.setAttribute('data-theme', stored);
       } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -196,7 +197,7 @@
           btn.addEventListener('click', function () {
             var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
             root.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
+            try { localStorage.setItem('theme', next); } catch (_) {}
             updateIcon();
           });
         }

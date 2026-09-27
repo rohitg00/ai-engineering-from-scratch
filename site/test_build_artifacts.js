@@ -461,6 +461,7 @@ test('shared site asset families use the expected cache keys on every page', () 
   const styleRelease = '20260824a';
   const navigationRelease = '20260927a';
   const narrationRelease = '20260829a';
+  const homepageRelease = '20260927a';
   const pages = [
     'about.html',
     'assessment.html',
@@ -497,7 +498,7 @@ test('shared site asset families use the expected cache keys on every page', () 
     }
   }
 
-  assert.equal(versionFor(sourceFor('index.html'), 'app.js'), release);
+  assert.equal(versionFor(sourceFor('index.html'), 'app.js'), homepageRelease);
   assert.equal(versionFor(sourceFor('prereqs.html'), 'roadmap.css'), release);
   assert.equal(versionFor(sourceFor('prereqs.html'), 'roadmap.js'), release);
   assert.match(
