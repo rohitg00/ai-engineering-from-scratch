@@ -129,17 +129,18 @@ That's it. The projector is usually 1-3 linear layers. Training it on ASR pairs 
 
 ```python
 from datasets import load_dataset
-mmau = load_dataset("MMAU/MMAU-Pro")
+mmau = load_dataset("gamma-lab-umd/MMAU-Pro", split="test")
+mcq = mmau.filter(lambda item: len(item["choices"] or []) > 1)
 
 correct = 0
-for item in mmau["test"]:
-    answer = call_model(item["audio"], item["question"], item["choices"])
-    if answer == item["correct_choice"]:
+for item in mcq:
+    answer = call_model(item["audio_path"], item["question"], item["choices"])
+    if answer == item["answer"]:
         correct += 1
-print(f"Accuracy: {correct / len(mmau['test']):.3f}")
+print(f"Accuracy: {correct / len(mcq):.3f}")
 ```
 
-Report per-category (speech / sound / music / multi-audio) separately. Aggregate numbers hide where the model fails.
+`audio_path` points into the dataset repo's `data.zip` (about 47 GB), so download and unzip it before scoring. The filter keeps multiple-choice items; open-ended and instruction-following items need a judge instead of exact match. Report each `category` (speech, sound, music, multi, and the rest) separately. Aggregate numbers hide where the model fails.
 
 ## Use It
 

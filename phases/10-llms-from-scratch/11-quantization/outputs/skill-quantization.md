@@ -52,7 +52,7 @@ Not all tensors should get the same treatment.
 - **When:** GPU inference, you want a Hugging Face-compatible model
 - **Calibration data:** 128 examples, 2048 tokens each
 - **Time:** 30-60 minutes for 70B on A100
-- **Tooling:** `auto-gptq`, `exllama`, `exllamav2`
+- **Tooling:** `gptqmodel`, `exllama`, `exllamav2`
 - **Strength:** Well-tested, huge model zoo on Hugging Face
 - **Weakness:** Slower than AWQ to apply, slightly lower quality than AWQ on some models
 
@@ -60,7 +60,7 @@ Not all tensors should get the same treatment.
 - **When:** GPU inference, you want best quality-per-bit
 - **Calibration data:** 128 examples
 - **Time:** 15-30 minutes for 70B on A100
-- **Tooling:** `autoawq`, `vLLM` (native support)
+- **Tooling:** `llmcompressor`, `vLLM` (native support)
 - **Strength:** Best INT4 quality, fast to apply, vLLM integration
 - **Weakness:** Smaller model zoo than GPTQ
 
@@ -124,7 +124,7 @@ Example for Llama 3 70B at INT4, 32K context:
 
 ### Recipe 1: vLLM with AWQ (GPU server)
 ```
-pip install vllm autoawq
+pip install vllm
 vllm serve model-awq --quantization awq --dtype half --max-model-len 8192
 ```
 

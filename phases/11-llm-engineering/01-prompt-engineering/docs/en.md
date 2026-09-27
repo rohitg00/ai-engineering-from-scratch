@@ -937,24 +937,24 @@ The assistant prefill (`"{"`) forces Claude to continue producing JSON without a
 ### Google: Gemini with Safety Settings
 
 ```python
-# import google.generativeai as genai
+# from google import genai
+# from google.genai import types
 #
-# genai.configure(api_key="your-key")
+# client = genai.Client()
 #
-# model = genai.GenerativeModel(
-#     "gemini-1.5-pro",
-#     system_instruction="You are a technical analyst. Be precise and cite sources.",
-#     generation_config=genai.GenerationConfig(
+# response = client.models.generate_content(
+#     model="gemini-2.5-pro",
+#     contents="Compare PostgreSQL and MySQL for write-heavy workloads.",
+#     config=types.GenerateContentConfig(
+#         system_instruction="You are a technical analyst. Be precise and cite sources.",
 #         temperature=0.3,
 #         max_output_tokens=2048,
 #     ),
 # )
-#
-# response = model.generate_content("Compare PostgreSQL and MySQL for write-heavy workloads.")
 # print(response.text)
 ```
 
-Gemini processes system instructions as part of the model configuration, not as a message. The 2M token context window means you can include massive few-shot example sets that would not fit in GPT-4o or Claude.
+Gemini processes system instructions as part of the model configuration, not as a message. The 1M token context window means you can include massive few-shot example sets that would not fit in GPT-4o or Claude.
 
 ### Provider-Agnostic Prompt Templates
 

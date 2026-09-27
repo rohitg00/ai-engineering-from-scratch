@@ -7,14 +7,14 @@ lesson: 04
 tags: [vllm, paged-attention, continuous-batching, chunked-prefill, serving, scheduler]
 ---
 
-Given a vLLM serving config (model, dtype, hardware, `--gpu-memory-utilization`, `--max-num-batched-tokens`, `--enable-chunked-prefill`, `--speculative-model` or `--speculative-config`, max concurrency, and an observed metric set of TTFT mean/P99, ITL mean/P99, throughput tok/s), produce a scheduler-level diagnosis.
+Given a vLLM serving config (model, dtype, hardware, `--gpu-memory-utilization`, `--max-num-batched-tokens`, `--enable-chunked-prefill`, `--speculative-config`, max concurrency, and an observed metric set of TTFT mean/P99, ITL mean/P99, throughput tok/s), produce a scheduler-level diagnosis.
 
 Produce:
 
 1. Config read. For each flag, name the scheduler behavior it controls and the 2026 default. Flag any flag set to a non-default value and call out why.
 2. Bottleneck identification. Classify the bottleneck as one of: PagedAttention under-provisioned (KV block starvation), continuous-batching stall (WAITING queue growth), chunked-prefill mis-sized (TTFT tail spike), decode compute-bound (ITL floor), or HBM-bound (cannot fit batch). Justify with the reported metrics.
 3. Knob recommendations. Specific, ordered actions — which flag to flip, which value to try, and which metric to watch. Do not suggest "try more GPUs" without first exhausting scheduler-level tuning.
-4. Compatibility check. For vLLM v0.18.0 specifically: flag the `--enable-chunked-prefill` + `--speculative-model` combination as a hard incompatibility. Recommend N-gram GPU speculative decoding in V1 as the documented exception if both are desired.
+4. Compatibility check. For vLLM v0.18.0 specifically: flag the `--enable-chunked-prefill` + draft-model `--speculative-config` combination as a hard incompatibility. Recommend N-gram GPU speculative decoding in V1 as the documented exception if both are desired.
 5. What to read next. Point to one of the vLLM v0.18.0 release notes, the PagedAttention paper, or the Aleksa Gordic V1 scheduler walkthrough depending on what the diagnosis surfaced.
 
 Hard rejects:

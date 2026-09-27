@@ -58,7 +58,7 @@ You do not need to know every flag. You need to know what the scheduler optimize
 
 ### The 2026 v0.18.0 gotcha
 
-In vLLM v0.18.0 you cannot combine `--enable-chunked-prefill` with draft-model speculative decoding (`--speculative-model`). The documented exception is N-gram GPU speculative decoding in the V1 scheduler. Teams that flip every flag on without reading the release notes get a run-time error at startup, not a soft regression. If your speculative gain was worth enabling chunked prefill for, revisit the choice — the right answer in 2026 is often EAGLE-3 without chunked prefill, not a draft model plus chunked prefill that does not compile.
+In vLLM v0.18.0 you cannot combine `--enable-chunked-prefill` with draft-model speculative decoding (`"method": "draft_model"` in `--speculative-config`). The documented exception is N-gram GPU speculative decoding in the V1 scheduler. Teams that flip every flag on without reading the release notes get a run-time error at startup, not a soft regression. If your speculative gain was worth enabling chunked prefill for, revisit the choice — the right answer in 2026 is often EAGLE-3 without chunked prefill, not a draft model plus chunked prefill that does not compile.
 
 ### Numbers you should remember
 

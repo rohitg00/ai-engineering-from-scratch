@@ -135,7 +135,7 @@ inputs = ext(audio, sampling_rate=16000, return_tensors="pt")
 logits = model(**inputs).logits
 ```
 
-For BEATs, use `microsoft/BEATs-base` via the `beats` library; the transformers API is the same shape.
+BEATs checkpoints are not on the Hugging Face Hub. Download them from the [BEATs release in microsoft/unilm](https://github.com/microsoft/unilm/tree/master/beats) and load them with that repo's `BEATs` and `BEATsConfig` classes; the fine-tuning loop keeps the same shape.
 
 ## Use It
 
