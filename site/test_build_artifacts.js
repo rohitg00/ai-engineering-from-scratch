@@ -459,7 +459,7 @@ function writeMarkdown(file, { name, description, version }) {
 test('shared site asset families use the expected cache keys on every page', () => {
   const release = '20260822a';
   const styleRelease = '20260824a';
-  const navigationRelease = '20260925a';
+  const navigationRelease = '20260927a';
   const narrationRelease = '20260829a';
   const pages = [
     'about.html',
@@ -488,7 +488,13 @@ test('shared site asset families use the expected cache keys on every page', () 
     const source = sourceFor(page);
     assert.equal(versionFor(source, 'style.css'), styleRelease, `${page} has stale style.css`);
     assert.equal(versionFor(source, 'progress.js'), release, `${page} has stale progress.js`);
-    assert.equal(versionFor(source, 'header.js'), navigationRelease, `${page} has stale header.js`);
+  }
+
+  for (const page of fs.readdirSync(__dirname).filter(name => name.endsWith('.html'))) {
+    const source = sourceFor(page);
+    if (source.includes('header.js')) {
+      assert.equal(versionFor(source, 'header.js'), navigationRelease, `${page} has stale header.js`);
+    }
   }
 
   assert.equal(versionFor(sourceFor('index.html'), 'app.js'), release);
