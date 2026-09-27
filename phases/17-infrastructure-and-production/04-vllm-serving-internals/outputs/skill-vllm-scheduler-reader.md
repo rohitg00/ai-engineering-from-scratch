@@ -14,7 +14,7 @@ Produce:
 1. Config read. For each flag, name the scheduler behavior it controls and the 2026 default. Flag any flag set to a non-default value and call out why.
 2. Bottleneck identification. Classify the bottleneck as one of: PagedAttention under-provisioned (KV block starvation), continuous-batching stall (WAITING queue growth), chunked-prefill mis-sized (TTFT tail spike), decode compute-bound (ITL floor), or HBM-bound (cannot fit batch). Justify with the reported metrics.
 3. Knob recommendations. Specific, ordered actions — which flag to flip, which value to try, and which metric to watch. Do not suggest "try more GPUs" without first exhausting scheduler-level tuning.
-4. Compatibility check. Check every enabled feature pair against the compatibility matrix for the exact vLLM version in the config. For v0.18.0 the matrix marks speculative decoding compatible with chunked prefill and prefix caching, and incompatible with LoRA.
+4. Compatibility check. Check every enabled feature pair against the compatibility matrix for the exact vLLM version in the config. For v0.18.0 the matrix marks speculative decoding compatible with chunked prefill and prefix caching.
 5. What to read next. Point to one of the vLLM v0.18.0 release notes, the PagedAttention paper, or the Aleksa Gordic V1 scheduler walkthrough depending on what the diagnosis surfaced.
 
 Hard rejects:

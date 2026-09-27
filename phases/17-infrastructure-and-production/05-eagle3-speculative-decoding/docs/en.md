@@ -68,7 +68,7 @@ Expected speedup: `S(alpha, K) = (1 + K*alpha) / (1 + verify_overhead)`. Setting
 - Batch-1 offline generation where latency does not matter. Use plain target.
 - Very short outputs (under 50 tokens). Draft overhead and verify cost dominate.
 - Specialized domains without a domain-trained draft head. Alpha too low.
-- Assuming every feature pair composes. Check the vLLM compatibility matrix for your version: v0.18.0 marks speculative decoding compatible with chunked prefill but not with LoRA.
+- Assuming every feature pair composes. Check the vLLM compatibility matrix for your version: v0.18.0 marks speculative decoding compatible with chunked prefill.
 
 ```figure
 mx-speculative-tree

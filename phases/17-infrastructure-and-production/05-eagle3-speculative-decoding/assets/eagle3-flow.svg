@@ -66,5 +66,5 @@
   <text x="60" y="490" class="small">2. enable speculative_config with EAGLE-3 draft ; rerun benchmark</text>
   <text x="60" y="506" class="small">3. log alpha (vLLM V1 reports accepted tokens per request) ; gate on alpha &gt;= 0.55</text>
   <text x="60" y="522" class="small">4. watch P99 ITL, not P50 — rejected-draft two-pass drives tail</text>
-  <text x="60" y="538" class="small">5. vLLM v0.18.0 : check the feature matrix ; spec decode composes with chunked prefill, not with LoRA</text>
+  <text x="60" y="538" class="small">5. vLLM v0.18.0 : check the feature matrix ; spec decode composes with chunked prefill</text>
 </svg>

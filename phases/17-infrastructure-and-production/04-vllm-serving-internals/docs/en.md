@@ -58,7 +58,7 @@ You do not need to know every flag. You need to know what the scheduler optimize
 
 ### Check the compatibility matrix
 
-Check every feature combination against the compatibility matrix for your exact vLLM version before enabling all of them at once, because what composes changes between releases. In v0.18.0 the feature matrix marks speculative decoding as compatible with chunked prefill and prefix caching but not with LoRA, and the speculative-decoding page lists two known incompatibilities: pipeline parallelism through v0.15.0, and draft-model speculation through v0.10.0. For the draft method itself, the 2026 default is often EAGLE-3 (`"method": "eagle3"`), covered in Phase 17 · 05.
+Check every feature combination against the compatibility matrix for your exact vLLM version before enabling all of them at once, because what composes changes between releases. In v0.18.0 the feature matrix marks speculative decoding as compatible with chunked prefill and prefix caching, and the speculative-decoding page lists two known incompatibilities: pipeline parallelism through v0.15.0, and draft-model speculation through v0.10.0. For the draft method itself, the 2026 default is often EAGLE-3 (`"method": "eagle3"`), covered in Phase 17 · 05.
 
 ### Numbers you should remember
 

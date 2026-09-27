@@ -74,7 +74,7 @@
   <rect x="660" y="240" width="240" height="70" class="dsk"/>
   <text x="780" y="262" text-anchor="middle" class="step">vLLM v0.18.0 feature matrix</text>
   <text x="780" y="280" text-anchor="middle" class="small">spec decode + chunked prefill</text>
-  <text x="780" y="296" text-anchor="middle" class="small">marked compatible (not LoRA)</text>
+  <text x="780" y="296" text-anchor="middle" class="small">marked compatible</text>
   <rect x="660" y="320" width="240" height="90" class="old"/>
   <text x="780" y="342" text-anchor="middle" class="step">known spec-decode issues</text>
   <text x="780" y="360" text-anchor="middle" class="small">pipeline parallelism:</text>
