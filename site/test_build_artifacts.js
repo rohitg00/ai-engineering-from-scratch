@@ -2303,7 +2303,7 @@ test('lesson page includes completion panel and button contract', () => {
   assert.match(lessonHtml, /statusEl\.setAttribute\('data-state', 'incomplete'\)/);
   assert.match(lessonHtml, /statusState !== \(isDone \? 'complete' : 'incomplete'\)/);
 
-  const uiKeys = JSON.parse(fs.readFileSync(path.join(__dirname, 'ui-strings.json'), 'utf8')).keys;
+  const uiStrings = JSON.parse(fs.readFileSync(path.join(__dirname, 'ui-strings.json'), 'utf8'));
   for (const label of [
     'Complete Lesson',
     'Mark this lesson as completed to update your progress and continue through the curriculum.',
@@ -2314,7 +2314,10 @@ test('lesson page includes completion panel and button contract', () => {
     'Lesson marked as completed. Progress updated.',
     'Lesson marked as incomplete.',
   ]) {
-    assert.ok(uiKeys.includes(label), `${label} is missing from ui-strings.json`);
+    assert.ok(uiStrings.keys.includes(label), `${label} is missing from ui-strings.json`);
+    for (const [lang, pinned] of Object.entries(uiStrings.overrides)) {
+      assert.ok(pinned[label], `${label} has no ${lang} translation in ui-strings.json`);
+    }
   }
 
   const runtime = loadProgressRuntime();
