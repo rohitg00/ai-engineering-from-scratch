@@ -5841,6 +5841,7 @@
             if (statusEl) {
               statusEl.textContent = 'Lesson marked as completed. Progress updated.';
               statusEl.className = 'lesson-complete-status is-success';
+              statusEl.setAttribute('data-state', 'complete');
             }
           });
         }
@@ -5853,6 +5854,7 @@
             if (statusEl) {
               statusEl.textContent = 'Lesson marked as incomplete.';
               statusEl.className = 'lesson-complete-status';
+              statusEl.setAttribute('data-state', 'incomplete');
             }
           });
         }
@@ -5868,6 +5870,14 @@
         var unmarkBtn = panel.querySelector('#lessonUnmarkBtn');
         var textSpan = panel.querySelector('.lesson-complete-btn-text');
         var isDone = window.AIFSProgress.isLessonComplete(lessonPath);
+        var statusEl = panel.querySelector('#lessonCompleteStatus');
+        var statusState = statusEl ? statusEl.getAttribute('data-state') : null;
+
+        if (statusState && statusState !== (isDone ? 'complete' : 'incomplete')) {
+          statusEl.textContent = '';
+          statusEl.className = 'lesson-complete-status';
+          statusEl.removeAttribute('data-state');
+        }
 
         if (completeBtn) {
           completeBtn.disabled = isDone;
@@ -5876,8 +5886,8 @@
           if (isDone) {
             completeBtn.classList.remove('btn-primary');
             completeBtn.classList.add('is-completed');
-            if (textSpan) textSpan.textContent = 'Completed \u2713';
-            else completeBtn.textContent = 'Completed \u2713';
+            if (textSpan) textSpan.textContent = 'Completed ✓';
+            else completeBtn.textContent = 'Completed ✓';
           } else {
             completeBtn.classList.add('btn-primary');
             completeBtn.classList.remove('is-completed');

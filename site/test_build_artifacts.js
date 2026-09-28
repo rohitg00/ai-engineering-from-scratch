@@ -2290,7 +2290,7 @@ test('lesson page includes completion panel and button contract', () => {
   assert.match(lessonHtml, /function renderLessonCompletionPanel/);
   assert.match(lessonHtml, /function syncLessonCompletionUi/);
   assert.match(lessonHtml, /Complete Lesson/);
-  assert.match(lessonHtml, /Completed \\u2713/);
+  assert.match(lessonHtml, /Completed ✓/);
   assert.match(lessonHtml, /Mark as incomplete/);
   assert.match(lessonHtml, /\.ai-panel--complete/);
   assert.match(lessonHtml, /\.lesson-complete-btn/);
@@ -2299,6 +2299,23 @@ test('lesson page includes completion panel and button contract', () => {
   assert.match(lessonHtml, /\.lesson-unmark-btn/);
   assert.match(lessonHtml, /completeBtn\.disabled = isDone/);
   assert.doesNotMatch(lessonHtml, /completeBtn\.setAttribute\('aria-pressed'/);
+  assert.match(lessonHtml, /statusEl\.setAttribute\('data-state', 'complete'\)/);
+  assert.match(lessonHtml, /statusEl\.setAttribute\('data-state', 'incomplete'\)/);
+  assert.match(lessonHtml, /statusState !== \(isDone \? 'complete' : 'incomplete'\)/);
+
+  const uiKeys = JSON.parse(fs.readFileSync(path.join(__dirname, 'ui-strings.json'), 'utf8')).keys;
+  for (const label of [
+    'Complete Lesson',
+    'Mark this lesson as completed to update your progress and continue through the curriculum.',
+    'Completed ✓',
+    'Mark as incomplete',
+    'Lesson completed',
+    'Mark lesson as complete',
+    'Lesson marked as completed. Progress updated.',
+    'Lesson marked as incomplete.',
+  ]) {
+    assert.ok(uiKeys.includes(label), `${label} is missing from ui-strings.json`);
+  }
 
   const runtime = loadProgressRuntime();
   const lesson = 'phases/01-math-foundations/01-scalar-derivatives';
