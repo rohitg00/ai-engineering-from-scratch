@@ -42,7 +42,7 @@ The CLI and importable functions consume ordinary local files and return structu
 python3 scripts/project_test.py calendar-focus-planner --all --solution --strict
 ```
 
-The parser supports explicit UTC events and all-day dates. Recurrence and named time zones must be expanded by a calendar exporter first and are rejected when encountered. The CLI plans a 09:00–17:00 UTC day. It creates local proposals and never changes an account calendar.
+The parser requires explicit `DTSTART` and `DTEND` for both UTC events and all-day dates. For an all-day event, `DTEND;VALUE=DATE` is exclusive: an event on October 14 uses start `20261014` and end `20261015`. Implicit one-day ends and `DURATION` in place of `DTEND` are outside this teaching subset. Recurrence and named time zones must be expanded by a calendar exporter first and are rejected when encountered. The CLI plans a 09:00–17:00 UTC day. It creates local proposals and never changes an account calendar.
 
 Grading validates the supplied deterministic contracts. A learner certificate is a self-attested completion record; it does not claim live-provider verification or professional certification. Read the JSON receipt and test at least one new input before treating the tool as integrated.
 

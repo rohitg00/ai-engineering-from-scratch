@@ -16,7 +16,7 @@ Your public contract is `parseCalendar(text)`. The supplied CLI and sample files
 
 Calendar text is a protocol, not a loose list of dates. Unfold continuation lines before reading properties. Keep each event identity, summary, start and end together. Reject missing or reversed endpoints and duplicate identities. Cancelled or transparent events should not occupy focus time.
 
-This bounded parser accepts UTC timestamps and date-only events. It refuses recurrence and timezone rules because silently treating them as one UTC event would create false free time. An event uses a half-open interval: its end is the first instant no longer occupied.
+This bounded parser accepts UTC timestamps and date-only events with explicit `DTSTART` and `DTEND`. An all-day `20261014` event needs exclusive `DTEND;VALUE=DATE:20261015`; do not infer an omitted end or substitute `DURATION`. It refuses recurrence and timezone rules because silently treating them as one UTC event would create false free time. An event uses a half-open interval: its end is the first instant no longer occupied.
 
 | Event | Start | End |
 |---|---|---|
