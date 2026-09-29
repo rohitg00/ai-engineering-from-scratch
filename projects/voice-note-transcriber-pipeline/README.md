@@ -24,7 +24,7 @@ Use an explicit OpenAI-compatible audio/transcriptions endpoint that accepts mul
 python3 pipeline.py --input YOUR_NOTE.wav --endpoint http://127.0.0.1:8080/v1/audio/transcriptions --model YOUR_MODEL --out voice-output
 ```
 
-The selected audio is uploaded only in endpoint mode. TRANSCRIPTION_API_KEY supplies authentication if your endpoint requires it. The adapter sends actual WAV bytes, checks response text, bounds request time and response size, and propagates non-timeout failures. Tests inspect its multipart request using controlled responses; they do not measure a live recognizer's accuracy.
+The selected audio is uploaded only in endpoint mode. TRANSCRIPTION_API_KEY supplies authentication if your endpoint requires it. Remote recognizers require HTTPS; HTTP is accepted only for localhost and explicit loopback IP addresses. URL credentials and redirects are rejected. The adapter sends actual WAV bytes, checks response text, bounds request time and response size, and propagates non-timeout failures. Tests inspect its multipart request using controlled responses; they do not measure a live recognizer's accuracy.
 
 The core accepts mono signed 16-bit PCM WAV, up to 20 MB through the CLI. If you already use FFmpeg, convert a phone recording explicitly before running it:
 

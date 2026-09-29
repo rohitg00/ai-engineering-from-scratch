@@ -24,7 +24,7 @@ Write the returned fields and the expected side-effect count before coding. Keep
 
 Implement `transcribe(...) in transcribe.py; http_recognizer(endpoint, model, api_key, timeout) in provider.py` in your learner workspace. Preserve the exported names and continue using earlier stages rather than duplicating their policies.
 
-Allow zero through five retries, retry only TimeoutError, and count attempts. The adapter checks HTTP(S), a WAV signature, a 20 MB upload bound, a 1 MB response bound and a timeout of at most 120 seconds. TRANSCRIPTION_API_KEY supplies optional authentication. Controlled transport tests verify real multipart serialization; they do not measure recognition accuracy.
+Allow zero through five retries, retry only TimeoutError, and count attempts. The adapter requires HTTPS remotely and permits HTTP only for localhost or an explicit loopback IPv4/IPv6 address. Validate a hostname and port, rejecting URL credentials, fragments and whitespace. Reject every redirect with a dedicated urllib opener whose HTTPRedirectHandler.redirect_request returns None; credentials and audio stay tied to the selected endpoint. It also checks a WAV signature, a 20 MB upload bound, a 1 MB response bound and a timeout of at most 120 seconds. TRANSCRIPTION_API_KEY supplies optional authentication. Controlled transport tests verify real multipart serialization; they do not measure recognition accuracy.
 
 ## Hints
 

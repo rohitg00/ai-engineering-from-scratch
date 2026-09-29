@@ -11,7 +11,7 @@ class RecognizerTests(unittest.TestCase):
     def test_multipart_contains_real_wav_and_model(self):
         wav = encode_wav([0.1] * 50)
         with patch(
-            "urllib.request.urlopen",
+            "urllib.request.OpenerDirector.open",
             return_value=io.BytesIO(b'{"text":"A held-out sentence."}'),
         ) as opened:
             text = http_recognizer(
@@ -26,7 +26,7 @@ class RecognizerTests(unittest.TestCase):
 
     def test_empty_provider_text_is_rejected(self):
         with (
-            patch("urllib.request.urlopen", return_value=io.BytesIO(b'{"text":" "}')),
+            patch("urllib.request.OpenerDirector.open", return_value=io.BytesIO(b'{"text":" "}')),
             self.assertRaises(ValueError),
         ):
             http_recognizer("http://localhost/asr")(encode_wav([0]))
