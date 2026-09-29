@@ -120,6 +120,8 @@ jobs:
         run: python3 scripts/test_skill_artifact_bundles.py
       - name: skill artifact bundles render as one lesson output
         run: node --test site/test_build_artifacts.js
+      - name: returning visitors receive updated site assets
+        run: node --test site/test_asset_cache.js
       - name: build the static site
         run: node site/build.js
       - name: dynamic lesson and certification routes preserve their public contracts

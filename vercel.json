@@ -1,5 +1,5 @@
 {
-  "buildCommand": "node site/build.js && node site/build-projects.js --strict",
+  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/version-assets.js",
   "outputDirectory": "site",
   "framework": null,
   "installCommand": "echo skip",
@@ -36,9 +36,15 @@
   ],
   "headers": [
     {
-      "source": "/(.*)\\.(css|js|png|jpg|jpeg|svg|webp|woff2|woff|ttf|ico)",
+      "source": "/(.*)\\.(png|jpg|jpeg|svg|webp|woff2|woff|ttf|ico)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(css|js)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
     },
     {
@@ -62,21 +68,21 @@
     {
       "source": "/(.*)\\.html",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
         { "key": "Vary", "value": "Accept, Accept-Encoding" }
       ]
     },
     {
       "source": "/",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
         { "key": "Vary", "value": "Accept, Accept-Encoding" }
       ]
     },
     {
       "source": "/(glossary|catalog|certifications|certification|assessment|path|roadmap|about|developer|docs|contact|privacy)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
         { "key": "Vary", "value": "Accept, Accept-Encoding" }
       ]
     },
@@ -85,7 +91,7 @@
       "headers": [
         { "key": "Content-Type", "value": "text/markdown; charset=utf-8" },
         { "key": "Vary", "value": "Accept, Accept-Encoding" },
-        { "key": "Cache-Control", "value": "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800" }
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
     }
   ]

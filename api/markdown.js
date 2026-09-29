@@ -63,7 +63,7 @@ module.exports = (req, res) => {
   const markdownQ = qualityFor(accepted, 'text/markdown');
   const htmlQ = qualityFor(accepted, 'text/html');
   res.setHeader('Vary', 'Accept, Accept-Encoding');
-  res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=86400, stale-while-revalidate=604800');
+  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=86400, must-revalidate');
   res.setHeader('X-API-Version', '1');
 
   if (method !== 'GET' && method !== 'HEAD') {
