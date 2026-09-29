@@ -104,7 +104,11 @@
       "title": "Stream bounded JSON events through real stdin",
       "summary": "Read input incrementally with BufRead and cap each line before allocating an unbounded string.",
       "hours": 2,
-      "language": "rust",
+      "language": "rust+python",
+      "runners": [
+        {"language": "rust"},
+        {"language": "python"}
+      ],
       "languageWhy": "Rust makes state ownership and fallible system calls explicit while keeping the implementation in the standard library.",
       "requires": [
         "rustc"
