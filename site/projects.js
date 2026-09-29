@@ -126,7 +126,7 @@
   function bindCopy(scope) {
     scope.addEventListener('click', async function (event) {
       var button = event.target.closest('.pj-copy');
-      if (!button || button.disabled) return;
+      if (!button || button.dataset.copyPending === 'true') return;
       var text = button.getAttribute('data-copy');
       var block = button.closest('.pj-cmd-wrap, .pj-code');
       var status = block.querySelector('.pj-copy-status');
@@ -138,8 +138,7 @@
       }
       clearTimeout(button.copyTimer);
       status.textContent = '';
-      var hadFocus = document.activeElement === button;
-      button.disabled = true;
+      button.dataset.copyPending = 'true';
       var copied = false;
       try {
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -150,8 +149,7 @@
       if (!copied) {
         try { copied = fallbackCopy(text); } catch (_) {}
       }
-      button.disabled = false;
-      if (hadFocus) button.focus({ preventScroll: true });
+      delete button.dataset.copyPending;
       button.textContent = copied ? 'Copied' : 'Copy';
       status.toggleAttribute('data-success', copied);
       status.textContent = copied ? 'Command copied.' : 'Copy unavailable. Select the command and copy it manually.';

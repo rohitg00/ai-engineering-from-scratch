@@ -1574,12 +1574,13 @@ test('reader prose stays ragged-right without browser-inserted hyphens', () => {
   });
 });
 
-test('shared header progressively compacts without hiding GitHub stars or search', () => {
+test('shared header keeps its menu at desktop widths without hiding GitHub stars or search', () => {
   const headerSource = fs.readFileSync(path.join(__dirname, 'header.js'), 'utf8');
   const styles = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
   const movableTools = headerSource.match(/function isMovableTool\(child\) \{([\s\S]*?)\n    \}/);
 
-  assert.match(headerSource, /var COMPACT_HEADER_QUERY = '\(max-width: 1400px\)'/);
+  assert.doesNotMatch(headerSource, /COMPACT_HEADER_QUERY|restoreDesktopTools/);
+  assert.match(headerSource, /nav\.hidden = !open;/);
   assert.match(headerSource, /var NARROW_HEADER_QUERY = '\(max-width: 820px\)'/);
   assert.match(headerSource, /priorityNav\.className = 'header-priority-nav'/);
   assert.match(headerSource, /label !== 'contents' && label !== 'catalog' && label !== 'learning paths'/);
@@ -1606,8 +1607,8 @@ test('shared header progressively compacts without hiding GitHub stars or search
 
   assert.match(styles, /\.header-inner\s*\{[\s\S]*?width: 100%;[\s\S]*?max-width: 1360px;[\s\S]*?min-width: 0;/);
   assert.match(styles, /\.header-nav,\s*\n\.header-priority-nav\s*\{[\s\S]*?white-space: nowrap;/);
-  assert.match(styles, /@media \(max-width: 1480px\) and \(min-width: 1401px\)/);
-  assert.match(styles, /@media \(max-width: 1400px\) \{[\s\S]*?\.header-priority-nav\s*\{[\s\S]*?\.header-inner > \.header-github[\s\S]*?\.header-inner > \.search-toggle[\s\S]*?\.header-nav\s*\{[\s\S]*?width: min\(360px, calc\(100vw - 32px\)\);[\s\S]*?overflow-y: auto;/);
+  assert.doesNotMatch(styles, /@media \(max-width: (?:1400|1480)px\)/);
+  assert.match(styles, /\.header-menu-toggle\s*\{\s*order: 5;\s*display: inline-flex;[\s\S]*?\.header-priority-nav\s*\{[\s\S]*?\.header-inner > \.header-github[\s\S]*?\.header-inner > \.search-toggle[\s\S]*?\.header-nav\s*\{[\s\S]*?width: min\(360px, calc\(100vw - 32px\)\);[\s\S]*?overflow-y: auto;/);
   assert.match(styles, /@media \(max-width: 820px\) \{[\s\S]*?\.header-priority-nav\s*\{\s*display: none;[\s\S]*?\.header-inner > \.header-github[\s\S]*?\.header-inner > \.search-toggle/);
   assert.match(styles, /@media \(max-width: 480px\) \{[\s\S]*?\.header-inner > \.header-github svg\s*\{\s*display: none;[\s\S]*?\.header-inner > \.header-github::before/);
 });

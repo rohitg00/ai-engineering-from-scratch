@@ -1112,152 +1112,116 @@ body.js-anim .toc-row.in-view {
   }
 }
 
-@media (max-width: 1480px) and (min-width: 1401px) {
-  .header-inner {
-    padding: 0 24px;
-    gap: 8px;
-  }
-
-  .logo {
-    font-size: 1.4rem;
-  }
-
-  .header-nav,
-  .header-priority-nav {
-    gap: 14px;
-  }
-
-  .header-nav a,
-  .header-priority-nav a {
-    font-size: 0.74rem;
-    letter-spacing: 0.06em;
-  }
-
-  .header-github {
-    padding: 5px 9px;
-  }
-
-  .lang-picker-btn {
-    padding-inline: 8px;
-  }
-
-  .lang-current {
-    max-width: 6ch;
-  }
+.header-inner {
+  position: relative;
+  justify-content: flex-start;
+  gap: 8px;
 }
 
-@media (max-width: 1400px) {
-  .header-inner {
-    position: relative;
-    justify-content: flex-start;
-    gap: 8px;
-  }
+.logo {
+  order: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-inline-end: auto;
+  white-space: nowrap;
+}
 
-  .logo {
-    order: 1;
-    flex: 1 1 auto;
-    min-width: 0;
-    margin-inline-end: auto;
-    white-space: nowrap;
-  }
+.header-menu-toggle {
+  order: 5;
+  display: inline-flex;
+}
 
-  .header-menu-toggle {
-    order: 5;
-    display: inline-flex;
-  }
+.header-priority-nav {
+  order: 2;
+  display: flex;
+  gap: 14px;
+  flex: 0 0 auto;
+}
 
-  .header-priority-nav {
-    order: 2;
-    display: flex;
-    gap: 14px;
-    flex: 0 0 auto;
-  }
+.header-priority-nav[hidden] {
+  display: none;
+}
 
-  .header-priority-nav[hidden] {
-    display: none;
-  }
+.header-inner > .header-github {
+  order: 3;
+}
 
-  .header-inner > .header-github {
-    order: 3;
-  }
+.header-inner > .search-toggle {
+  order: 4;
+}
 
-  .header-inner > .search-toggle {
-    order: 4;
-  }
+.header-nav {
+  order: 6;
+  position: absolute;
+  inset-block-start: calc(100% + 1px);
+  inset-inline-end: 16px;
+  inset-inline-start: auto;
+  width: min(360px, calc(100vw - 32px));
+  max-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--modal-bg);
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow-hard);
+}
 
-  .header-nav {
-    order: 6;
-    position: absolute;
-    inset-block-start: calc(100% + 1px);
-    inset-inline-end: 16px;
-    inset-inline-start: auto;
-    width: min(360px, calc(100vw - 32px));
-    max-height: calc(100vh - 80px);
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: 8px;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    background: var(--modal-bg);
-    border: 1px solid var(--rule);
-    box-shadow: var(--shadow-hard);
-  }
+.header-nav[hidden] {
+  display: none;
+}
 
-  .header-nav[hidden] {
-    display: none;
-  }
+.header-nav a,
+.header-nav .header-github {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 12px;
+  transform-origin: right center;
+}
 
-  .header-nav a,
-  .header-nav .header-github {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    min-height: 44px;
-    padding: 9px 12px;
-    transform-origin: right center;
-  }
+.header-nav a + a {
+  border-top: 1px solid var(--rule-soft);
+}
 
-  .header-nav a + a {
-    border-top: 1px solid var(--rule-soft);
-  }
+.header-nav a[aria-current="page"] {
+  background: var(--blueprint-tint);
+}
 
-  .header-nav a[aria-current="page"] {
-    background: var(--blueprint-tint);
-  }
+.header-nav a.header-mobile-only {
+  display: flex;
+}
 
-  .header-nav a.header-mobile-only {
-    display: flex;
-  }
+.header-mobile-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px 4px 4px;
+  border-top: 1px solid var(--rule-soft);
+}
 
-  .header-mobile-tools {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
-    padding: 8px 4px 4px;
-    border-top: 1px solid var(--rule-soft);
-  }
+.header-mobile-tools .search-toggle,
+.header-mobile-tools .theme-toggle,
+.header-mobile-tools .tts-toggle {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+}
 
-  .header-mobile-tools .search-toggle,
-  .header-mobile-tools .theme-toggle,
-  .header-mobile-tools .tts-toggle {
-    width: 44px;
-    height: 44px;
-    flex: 0 0 44px;
-  }
+.header-mobile-tools .lang-picker-btn {
+  min-width: 44px;
+  min-height: 44px;
+}
 
-  .header-mobile-tools .lang-picker-btn {
-    min-width: 44px;
-    min-height: 44px;
-  }
-
-  .header-mobile-tools .lang-item {
-    min-height: 44px;
-  }
+.header-mobile-tools .lang-item {
+  min-height: 44px;
 }
 
 @media (max-width: 820px) {
