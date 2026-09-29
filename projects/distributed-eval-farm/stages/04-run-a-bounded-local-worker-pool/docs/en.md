@@ -18,7 +18,7 @@ Implement a bounded goroutine pool around an injected callback. A channel carrie
 
 The final `run` command uses this pool to launch operating-system worker processes. Each callback executes this same compiled binary with the worker command. Each process acquires one persisted shard, evaluates its recorded predictions and submits through the current lease. Work runs in bounded waves until all shards finish or every remaining shard has an unexpired owner.
 
-For the four-case sample and workers 2, two waves create four short-lived processes. The bound2 describes simultaneous processes, not total process count. The resulting report shows3 correct out of 4, complete coverage, the dataset hash, shard owners and actual process IDs. PIDs vary between runs; the scores come from the supplied responses.
+For the four-case sample and workers 2, two waves create four short-lived processes. The bound 2 describes simultaneous processes, not total process count. The resulting report shows 3 correct out of 4, complete coverage, the dataset hash, shard owners and actual process IDs. PIDs vary between runs; the scores come from the supplied responses.
 
 The final-stage tests run a delayed old worker alongside a replacement. After the replacement commits, the old process exits with a fencing error and the persisted snapshot remains unchanged. The tests also crash a worker, restart from disk, reject changed datasets and preserve corrupt input for diagnosis. This is same-host coordination, not a multi-machine transport.
 
@@ -50,7 +50,7 @@ The grader exercises your selected workspace, including the earlier stages. Its 
 
 ## Investigate a failure
 
-Run the sample with workers 1 and2 and compare coverage and receipts, not wall-clock speed. Try workers 0 and a canceled context. Explain why a callback that ignores context can still delay pool shutdown.
+Run the sample with workers 1 and 2 and compare coverage and receipts, not wall-clock speed. Try workers 0 and a canceled context. Explain why a callback that ignores context can still delay pool shutdown.
 
 ## Sources and limits
 
