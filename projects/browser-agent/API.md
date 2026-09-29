@@ -22,4 +22,6 @@ export function scoreRuns(statuses: string[])
 
 Record and class interfaces are supplied in the starter. Methods deliberately throw until implemented.
 
+`inspectPNG` throws for missing or invalid PNG data. `runAgent` catches capture and inspection errors and returns `status: "screenshot-error"`, `trace`, `reason`, and `screenshot` (the returned path or `null` if capture failed), with no fabricated `visual` metrics. The CLI saves this receipt and exits with status 2.
+
 The stage tests specify ordinary results and rejected inputs. Do not replace the learner imports with reference imports. The final stage also runs the supplied input driver against your cumulative implementation.

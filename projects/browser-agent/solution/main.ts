@@ -137,14 +137,24 @@ export async function runAgent(driver: Driver, task: Task, maxSteps = 5) {
     if (action.kind === "blocked")
       return { status: "blocked", reason: action.reason, trace };
     if (action.kind === "done") {
-      const screenshot = await driver.capture();
-      const visual = inspectPNG(screenshot);
-      return {
-        status: visual.greenFraction > 0.0005 ? "complete" : "visual-mismatch",
-        trace,
-        visual,
-        screenshot,
-      };
+      let screenshot: string | null = null;
+      try {
+        screenshot = await driver.capture();
+        const visual = inspectPNG(screenshot);
+        return {
+          status: visual.greenFraction > 0.0005 ? "complete" : "visual-mismatch",
+          trace,
+          visual,
+          screenshot,
+        };
+      } catch (error) {
+        return {
+          status: "screenshot-error",
+          reason: error instanceof Error ? error.message : String(error),
+          trace,
+          screenshot,
+        };
+      }
     }
     const signature = JSON.stringify(o);
     if (signature === previous) return { status: "stalled", trace };

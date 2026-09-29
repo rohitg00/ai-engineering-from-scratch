@@ -47,12 +47,6 @@
       "languageWhy": "TypeScript expresses observations and an action union with no arbitrary-script action.",
       "concepts": ["parseObservation", "choose"],
       "difficulty": "starter",
-      "runner": [
-        "node",
-        "--experimental-strip-types",
-        "--test",
-        "{tests}/stage.test.ts"
-      ],
       "requires": ["node", "python3"],
       "timeout": 90,
       "figure": "pj-browser-agent-1"
@@ -66,12 +60,6 @@
       "languageWhy": "An injected driver separates the policy from Chromium and enables deterministic failure tests.",
       "concepts": ["runAgent", "FixtureDriver"],
       "difficulty": "core",
-      "runner": [
-        "node",
-        "--experimental-strip-types",
-        "--test",
-        "{tests}/stage.test.ts"
-      ],
       "requires": ["node", "python3"],
       "timeout": 90,
       "figure": "pj-browser-agent-2"
@@ -85,12 +73,6 @@
       "languageWhy": "Python stdlib can decode a bounded RGB/RGBA PNG without adding an imaging dependency.",
       "concepts": ["inspectPNG"],
       "difficulty": "core",
-      "runner": [
-        "node",
-        "--experimental-strip-types",
-        "--test",
-        "{tests}/stage.test.ts"
-      ],
       "requires": ["node", "python3"],
       "timeout": 90,
       "figure": "pj-browser-agent-3"
@@ -104,13 +86,6 @@
       "languageWhy": "Node child-process argv calls adapt the same driver contract to the installed gstack browser.",
       "concepts": ["GstackDriver", "scoreRuns"],
       "difficulty": "core",
-      "runner": [
-        "node",
-        "--experimental-strip-types",
-        "--test",
-        "{tests}/stage.test.ts",
-        "{tests}/integration.test.ts"
-      ],
       "requires": ["node", "python3"],
       "timeout": 90,
       "figure": "pj-browser-agent-4"

@@ -10,7 +10,7 @@ The boundary for this stage is `runAgent, FixtureDriver`. Keep earlier stage beh
 
 ## Work through one concrete case
 
-An empty two-field form needs four observations: fill name, fill email, submit, verify. A budget of3 can perform the submit but cannot establish completion, so the terminal state remains budget-exhausted.
+An empty two-field form needs four observations: fill name, fill email, submit, verify. A budget of 3 can perform the submit but cannot establish completion, so the terminal state remains budget-exhausted.
 
 ```figure
 pj-browser-agent-2
@@ -24,7 +24,7 @@ Implement `runAgent, FixtureDriver` in your workspace `main.ts`. Read the export
 
 Use the [public API contract](../../../API.md) and the typed starter signatures. Return values from core functions and let the supplied driver own file input, argument parsing and presentation.
 
-Observe after every mutation. Compare successive complete observations to detect a stalled driver; compare requested values before accepting done.
+Observe after every mutation. Compare successive complete observations to detect a stalled driver; compare requested values before accepting done. If capturing or inspecting the screenshot fails, return `status: "screenshot-error"`, the trace, a reason, and the screenshot path when available (`null` if capture failed). Omit visual metrics when no image was inspected. Direct calls to `inspectPNG` still throw on invalid images.
 
 ## Verify and inspect
 
