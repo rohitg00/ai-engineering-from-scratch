@@ -71,20 +71,33 @@ export function inspect(lines: AddedLine[]): Finding[] {
   );
 }
 export function verify(
-  findings: Finding[],
+  findings: unknown[],
   lines: AddedLine[],
-): { accepted: Finding[]; rejected: Finding[] } {
-  const accepted: Finding[] = [],
-    rejected: Finding[] = [];
-  for (const f of findings) {
+): { accepted: Finding[]; rejected: unknown[] } {
+  if (!Array.isArray(findings)) throw new Error("candidates must be an array");
+  const accepted: Finding[] = [];
+  const rejected: unknown[] = [];
+  for (const candidate of findings) {
+    if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) {
+      rejected.push(candidate);
+      continue;
+    }
+    const f = candidate as Finding;
+    if (
+      ![f.file, f.quote, f.rule, f.message].every((value) => typeof value === "string") ||
+      !Number.isSafeInteger(f.line) || f.line < 1
+    ) {
+      rejected.push(candidate);
+      continue;
+    }
     const line = lines.find((l) => l.file === f.file && l.line === f.line);
     if (
       !line ||
       !f.quote.trim() ||
       !line.text.includes(f.quote) ||
       !["high", "medium", "low"].includes(f.severity) ||
-      !f.rule ||
-      !f.message
+      !f.rule.trim() ||
+      !f.message.trim()
     )
       rejected.push(f);
     else accepted.push(f);

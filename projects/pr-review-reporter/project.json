@@ -20,7 +20,7 @@
     "Publish a local escaped report"
   ],
   "prerequisites": [
-    "Node22.18+, Python3 and Git only for --repo mode",
+    "Node 22.18+, Python 3 and Git only for --repo mode",
     "unified diff counters, JSON, exact source quotes and HTML escaping."
   ],
   "youWillBuild": "A local patch-review artifact that preserves Git line evidence and can enter CI as SARIF.",
@@ -52,12 +52,6 @@
       "languageWhy": "Python handles a streaming text grammar while TypeScript consumes a typed JSON boundary.",
       "concepts": ["parseDiff"],
       "difficulty": "starter",
-      "runner": [
-        "node",
-        "--experimental-strip-types",
-        "--test",
-        "{tests}/stage.test.ts"
-      ],
       "requires": ["node", "python3"],
       "timeout": 90,
       "figure": "pj-pr-review-reporter-1"
@@ -71,12 +65,6 @@
       "languageWhy": "Typed findings require a source quote, location and rule id before entering the report pipeline.",
       "concepts": ["inspect"],
       "difficulty": "core",
-      "runner": [
-        "node",
-        "--experimental-strip-types",
-        "--test",
-        "{tests}/stage.test.ts"
-      ],
       "requires": ["node", "python3"],
       "timeout": 90,
       "figure": "pj-pr-review-reporter-2"
@@ -90,12 +78,6 @@
       "languageWhy": "A typed verification result keeps rejected model suggestions out of the renderer.",
       "concepts": ["verify", "merge"],
       "difficulty": "core",
-      "runner": [
-        "node",
-        "--experimental-strip-types",
-        "--test",
-        "{tests}/stage.test.ts"
-      ],
       "requires": ["node", "python3"],
       "timeout": 90,
       "figure": "pj-pr-review-reporter-3"
@@ -109,13 +91,6 @@
       "languageWhy": "TypeScript joins verified data to HTML while escaping every untrusted string.",
       "concepts": ["escapeHTML", "render"],
       "difficulty": "core",
-      "runner": [
-        "node",
-        "--experimental-strip-types",
-        "--test",
-        "{tests}/stage.test.ts",
-        "{tests}/integration.test.ts"
-      ],
       "requires": ["node", "python3"],
       "timeout": 90,
       "figure": "pj-pr-review-reporter-4"

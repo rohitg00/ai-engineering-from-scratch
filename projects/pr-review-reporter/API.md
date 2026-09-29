@@ -16,12 +16,14 @@ def parse(raw)
 ```typescript
 export function parseDiff(raw: string): AddedLine[]
 export function inspect(lines: AddedLine[]): Finding[]
-export function verify( findings: Finding[], lines: AddedLine[], ):
+export function verify(findings: unknown[], lines: AddedLine[]): { accepted: Finding[]; rejected: unknown[] }
 export function merge(findings: Finding[]): Finding[]
 export function escapeHTML(value: string): string
 export function render(findings: Finding[], rejected = 0): string
 ```
 
 Record and class interfaces are supplied in the starter. Methods deliberately throw until implemented.
+
+The candidates input must be an array. Keep malformed entries unchanged in `rejected`: reject nulls, arrays, non-object values, non-string `file`, `quote`, `rule` or `message`, and non-positive or non-integer line numbers before reading source evidence. Require nonempty trimmed quote, rule and message, a supported severity, and the existing exact location and quote match. Only accepted findings reach rendering or SARIF export.
 
 The stage tests specify ordinary results and rejected inputs. Do not replace the learner imports with reference imports. The final stage also runs the supplied input driver against your cumulative implementation.

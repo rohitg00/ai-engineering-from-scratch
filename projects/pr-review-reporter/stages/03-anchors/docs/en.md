@@ -24,7 +24,7 @@ Implement `verify, merge` in your workspace `main.ts`. Read the exported types i
 
 Use the [public API contract](../../../API.md) and the typed starter signatures. Return values from core functions and let the supplied driver own file input, argument parsing and presentation.
 
-Separate accepted and rejected collections so debugging a review does not require trusting every suggestion. Validate severity and nonempty message before rendering or SARIF export.
+Separate accepted and rejected collections so debugging a review does not require trusting every suggestion. Treat supplied JSON as unknown data: require an outer array, then reject nulls, arrays and non-object entries before accessing fields. Require string file, quote, rule and message fields, a positive integer line, a supported severity, and nonempty trimmed quote, rule and message. Preserve malformed entries in `rejected`; valid neighbors must still reach rendering and SARIF export.
 
 ## Verify and inspect
 
