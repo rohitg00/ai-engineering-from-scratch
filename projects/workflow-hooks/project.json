@@ -71,7 +71,7 @@
     {
       "id": "02-consolidate",
       "title": "Count independent sessions",
-      "summary": "Group by scope and normalized rule text. Deduplicate event ids and reject a reused id with different content. Count unique sessions rather than event count, so repeated hook delivery cannot promote a rule. Keep every source id attached to the candidate and sort the final output for reproducible files.",
+      "summary": "Group by scope and rule text with whitespace collapsed and case preserved. Deduplicate event ids and reject a reused id with different content. Count unique sessions rather than event count, so repeated hook delivery cannot promote a rule. Keep every source id attached to the candidate and sort the final output for reproducible files.",
       "hours": 2,
       "language": "typescript",
       "languageWhy": "Maps and sets let you separate repeated events from independent supporting evidence.",
@@ -79,12 +79,6 @@
         "consolidate"
       ],
       "difficulty": "core",
-      "runner": [
-        "node",
-        "--experimental-strip-types",
-        "--test",
-        "{tests}/stage.test.ts"
-      ],
       "requires": [
         "node"
       ],
@@ -127,12 +121,6 @@
         "load"
       ],
       "difficulty": "core",
-      "runner": [
-        "node",
-        "--experimental-strip-types",
-        "--test",
-        "{tests}/stage.test.ts"
-      ],
       "requires": [
         "node"
       ],

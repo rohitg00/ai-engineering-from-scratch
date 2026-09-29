@@ -2,7 +2,7 @@
 
 **Stage 1 of 4.** Typescript. Plan about 2 hours.
 
-Require a correction id, session id, scope, rule and source excerpt. Normalize scope while preserving rule case while preserving source evidence. Reject oversized values and obvious credential-shaped content. This heuristic is not a complete secret scanner: callers must redact source data before ingestion.
+Require a correction id, session id, scope, rule and source excerpt. Normalize scope while preserving rule case and source evidence. Reject oversized values and obvious credential-shaped content. This heuristic is not a complete secret scanner: callers must redact source data before ingestion.
 
 The boundary for this stage is `normalize, ingest`. Keep earlier stage behavior intact: the final grader runs every stage against the same workspace.
 
