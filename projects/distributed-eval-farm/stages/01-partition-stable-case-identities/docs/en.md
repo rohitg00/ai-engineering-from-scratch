@@ -18,7 +18,7 @@ Partitioning assigns identifiers to buckets. Start the FNV-1a32 hash at 21661362
 
 With four shards, the sample identifiers land as case-d in 0, case-c in 1, case-b in 2 and case-a in 3. Reordering the input changes each bucket's local order but never an identifier's bucket. Do not assert that every bucket has equal size: deterministic assignment is not a load-balancing guarantee.
 
-Reject empty identifiers, duplicates and shard counts outside1..1024. The supplied persistent store also fingerprints the ordered input records, including prompts, expected answers and recorded responses. A changed prediction or shard count needs a different store. Otherwise a resumed run could combine results from two experiments while keeping one apparent dataset name.
+Reject empty identifiers, duplicates and shard counts outside 1..1024. The supplied persistent store also fingerprints the ordered input records, including prompts, expected answers and recorded responses. A changed prediction or shard count needs a different store. Otherwise a resumed run could combine results from two experiments while keeping one apparent dataset name.
 
 Empty partitions need no lease and are omitted from the stored active shard list. Coverage still counts every actual case. A sample with one record and four buckets has one active shard, not four artificial completed tasks.
 

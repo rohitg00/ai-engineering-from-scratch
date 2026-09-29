@@ -37,9 +37,9 @@ STORE=$(mktemp -d /tmp/eval-farm.XXXXXX)
 /tmp/eval-farm status --store "$STORE"
 ```
 
-Each input record has id, prompt, expected and response. Pass your own JSON array or edit a copy of the sample. Scoring lowercases and collapses whitespace before comparing expected with response. The four authored records score 3/4. Before run, completed_shards and evaluated are0. Afterwards, complete is true, completed_shards is 4, evaluated is 4 and correct is 3.
+Each input record has id, prompt, expected and response. Pass your own JSON array or edit a copy of the sample. Scoring lowercases and collapses whitespace before comparing expected with response. The four authored records score 3/4. Before run, completed_shards and evaluated are 0. Afterwards, complete is true, completed_shards is 4, evaluated is 4 and correct is 3.
 
-The report retains the SHA256 of the ordered dataset and per-shard case results, owners, versions and actual worker PIDs. With the sample and workers 2, two bounded waves launch four short-lived processes. PIDs vary; the concurrency cap remains2. A finished rerun emits no new worker events and preserves receipts. Recorded sample answers demonstrate coordination, not a model benchmark.
+The report retains the SHA256 of the ordered dataset and per-shard case results, owners, versions and actual worker PIDs. With the sample and workers 2, two bounded waves launch four short-lived processes. PIDs vary; the concurrency cap remains 2. A finished rerun emits no new worker events and preserves receipts. Recorded sample answers demonstrate coordination, not a model benchmark.
 
 ## Recover a crashed worker
 
@@ -53,7 +53,7 @@ CRASH_STORE=$(mktemp -d /tmp/eval-crash.XXXXXX)
 /tmp/eval-farm run --store "$CRASH_STORE" --input samples/cases.json --shards 1 --workers 2 --now-ms 110 --lease-ms 10
 ```
 
-The crash intentionally exits86. Status shows owner old, version 1, expiry 110 and Done false. Recovery at 110 finishes version 2 with all four case results. Recovery at 109 instead reports a pending run and exits1; it does not steal a live lease. Omit now-ms for wall-clock operation. `--delay-ms` pauses after a claim to expose a stale-worker race without changing the scoring function.
+The crash intentionally exits 86. Status shows owner old, version 1, expiry 110 and Done false. Recovery at 110 finishes version 2 with all four case results. Recovery at 109 instead reports a pending run and exits 1; it does not steal a live lease. Omit now-ms for wall-clock operation. `--delay-ms` pauses after a claim to expose a stale-worker race without changing the scoring function.
 
 ## Learn and integrate
 
