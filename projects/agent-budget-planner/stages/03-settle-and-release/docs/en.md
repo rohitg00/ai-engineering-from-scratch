@@ -10,7 +10,7 @@ A reported actual cost above the reservation is an accounting violation. Preserv
 
 ## Work through one concrete case
 
-A70-unit hold with an actual 20-unit receipt releases 50 and moves 20 into spending. A missing receipt preserves the 70-unit hold; a reported 71 triggers reconciliation instead of silently increasing the budget.
+A 70-unit hold with an actual 20-unit receipt releases 50 and moves 20 into spending. A missing receipt preserves the 70-unit hold; a reported 71 triggers reconciliation instead of silently increasing the budget.
 
 ```figure
 pj-agent-budget-planner-3
