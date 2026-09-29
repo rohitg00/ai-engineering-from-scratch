@@ -24,7 +24,7 @@ Implement `publish` against the stated contract.
 
 Use the [public API contract](../../../API.md) and the typed starter signatures. Return values from core functions and let the supplied driver own file input, argument parsing and presentation.
 
-Stable ids bind review choices to owner, due, task and source lines. Escape every imported field; the only executable script in the HTML is the authored decision-file downloader.
+Stable ids bind review choices to owner, due, task and source lines. The supplied driver assigns every current id before validating decisions, then rejects any unknown or stale id before writing outputs. A decision file from changed source lines must be reviewed again. Selectors retain current approved and rejected choices when downloading decisions. Escape every imported field; the only executable script in the HTML is the authored decision-file downloader.
 
 ## Verify and inspect
 
