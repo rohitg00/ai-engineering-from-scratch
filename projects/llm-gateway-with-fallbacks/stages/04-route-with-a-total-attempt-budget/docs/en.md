@@ -12,7 +12,7 @@
 
 Implement `Route` by walking validated endpoints once, charging attempts before calling `Attempt`, and recording status, elapsed milliseconds and failure kind. Stop on success, a terminal status, response overflow, cancellation or the call ceiling. Give the entire route a five-second maximum even without a caller deadline.
 
-Provided `RouteConfigured` composes your route with stricter operator settings: 1 through 5000 milliseconds, response ceiling and named providers. Its transport creates a provider-specific Authorization header from `key_env` and may rewrite `model`. `GatewayHandler` copies the JSON body only; caller headers never become provider credentials.
+Provided `RouteConfigured` composes your route with stricter operator settings: 1 through 5000 milliseconds, response ceiling and named providers. Its transport creates a provider-specific Authorization header from `key_env` and may rewrite `model`. `GatewayHandler` copies the JSON body only; caller headers never become provider credentials. When the supplied transport rewrites a model, Body, GetBody and ContentLength must describe the same bytes. Go may replay a request after a zero-byte write failure on a reused connection; that replay must retain the configured model. Redirects remain disabled.
 
 ## Worked example
 
