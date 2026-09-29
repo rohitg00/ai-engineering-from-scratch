@@ -4,7 +4,7 @@
 
 **Type:** Build
 **Languages:** Go
-**Prerequisites:** Complete stages 1 through 1; understand their exported types and failure contracts.
+**Prerequisites:** Complete stage 1; understand its exported types and failure contracts.
 **Stage:** 2 of 4
 **Time:** ~2 hours
 
@@ -14,11 +14,11 @@ Let another process take over safely. Implement `stage2.go` in your initialized 
 
 ## Work through the mechanism
 
-The first worker claims shard-0 at 100 ms with a 10 ms lease. Its stored record has owner old, version 1 and until 110. A second worker at 109 cannot acquire it. At110 it can become owner new with version 2. Completed shards stay closed regardless of time.
+The first worker claims shard-0 at 100 ms with a 10 ms lease. Its stored record has owner old, version 1 and until 110. A second worker at 109 cannot acquire it. At 110 it can become owner new with version 2. Completed shards stay closed regardless of time.
 
 `Acquire` changes one Lease in memory. `ClaimShard` composes it with a whole-run snapshot under `ledger.lock`. It reloads while holding the lock, chooses an eligible shard, calls Acquire, saves, and only then returns cases to the worker. Starting an evaluation before the claim is durable would leave no recoverable owner after a crash.
 
-Run `farm worker --crash-after-claim` after initialization. This starts a real process and exits86 after the rename, leaving its lease on disk. A replacement process at the expiry boundary can recover the shard. No network, model service or synthetic callback is needed to observe that failure.
+Run `farm worker --crash-after-claim` after initialization. This starts a real process and exits 86 after the rename, leaving its lease on disk. A replacement process at the expiry boundary can recover the shard. No network, model service or synthetic callback is needed to observe that failure.
 
 All participants must use the locking wrapper on a local Linux or macOS filesystem. A raw call to Acquire does not coordinate processes. A network filesystem or remote database requires its own transaction and clock contract.
 
