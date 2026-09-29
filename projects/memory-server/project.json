@@ -20,7 +20,7 @@
     "Expose REST and MCP tools"
   ],
   "prerequisites": [
-    "Node 22.18+, Rust2021 and Python3 for the grader",
+    "Node 22.18+, Rust 2021 and Python 3 for the grader",
     "promises, append logs, HTTP, namespaces, revisions and vector dot products."
   ],
   "youWillBuild": "A persistent memory workbench with revision history and one boundary for REST and MCP.",

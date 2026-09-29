@@ -77,3 +77,53 @@ test("unknown method protocol error", async () =>
     });
     assert.equal((await r.json()).error.code, -32601);
   }));
+
+async function rawRequest(url: string, headers: string, chunks: Buffer[]) {
+  const { createConnection } = await import("node:net");
+  const socket = createConnection({ host: "127.0.0.1", port: Number(new URL(url).port) });
+  let response = "";
+  await new Promise<void>((resolve, reject) => {
+    const deadline = setTimeout(() => {
+      socket.destroy();
+      reject(new Error("Response connection did not close"));
+    }, 1500);
+    socket.on("error", reject);
+    socket.on("data", (chunk) => { response += chunk.toString("utf8"); });
+    socket.on("close", () => { clearTimeout(deadline); resolve(); });
+    socket.on("connect", async () => {
+      socket.write(`POST /memories HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test-token\r\n${headers}\r\n\r\n`);
+      for (const chunk of chunks) {
+        if (socket.destroyed) break;
+        socket.write(chunk);
+        await new Promise((resolve) => setTimeout(resolve, 15));
+      }
+    });
+  });
+  return response;
+}
+
+for (const transfer of ["content-length", "chunked"]) {
+  test(`oversized unfinished ${transfer} upload returns 413 and closes`, async () =>
+    serve(async (url: string, store: any) => {
+      const header = transfer === "chunked" ? "Transfer-Encoding: chunked" : "Content-Length: 200000";
+      const data = Buffer.from("x".repeat(60000));
+      const chunk = transfer === "chunked"
+        ? Buffer.concat([Buffer.from(data.length.toString(16) + "\r\n"), data, Buffer.from("\r\n")])
+        : data;
+      const response = await rawRequest(url, header, [chunk]);
+      assert.match(response, /^HTTP\/1\.1 413 /);
+      assert.match(response, /\r\nconnection: close\r\n/i);
+      assert.match(response, /\{"error":"body too large"\}/);
+      assert.deepEqual(await store.list("n"), []);
+    }));
+}
+
+test("HTTP body preserves UTF-8 code points split between chunks", async () =>
+  serve(async (url: string, store: any) => {
+    const text = "A café with green chairs";
+    const body = Buffer.from(JSON.stringify({ memory: { id: "unicode", namespace: "n", text, source: "notes:1" } }));
+    const split = body.indexOf(Buffer.from("é")) + 1;
+    const response = await rawRequest(url, `Content-Length: ${body.length}\r\nConnection: close`, [body.subarray(0, split), body.subarray(split)]);
+    assert.match(response, /^HTTP\/1\.1 201 /);
+    assert.equal((await store.list("n"))[0].text, text);
+  }));

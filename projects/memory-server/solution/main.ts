@@ -192,15 +192,18 @@ export function createMemoryServer(store: MemoryStore, token: string) {
         send(404, { error: "not found" });
         return;
       }
-      let body = "";
+      const chunks: Buffer[] = [];
+      let bytes = 0;
       for await (const chunk of req) {
-        body += chunk;
-        if (Buffer.byteLength(body) > 50000) {
+        bytes += chunk.length;
+        if (bytes > 50000) {
+          res.setHeader("Connection", "close");
           send(413, { error: "body too large" });
           return;
         }
+        chunks.push(chunk);
       }
-      const data = JSON.parse(body);
+      const data = JSON.parse(Buffer.concat(chunks).toString("utf8"));
       if (url.pathname === "/memories") {
         send(201, await store.put(data.memory, data.expectedRevision ?? 0));
         return;

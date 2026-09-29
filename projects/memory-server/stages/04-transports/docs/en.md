@@ -24,6 +24,8 @@ Implement `createMemoryServer` in your workspace `main.ts`. Read the exported ty
 
 Use the [public API contract](../../../API.md) and the typed starter signatures. Return values from core functions and let the supplied driver own file input, argument parsing and presentation.
 
+Collect body chunks as bytes and decode UTF-8 once after the complete request arrives, so a code point split between network chunks stays intact. Limit the incoming body to 50,000 bytes. If it exceeds the limit, send HTTP 413 with {"error":"body too large"} and Connection: close; the unfinished upload must not keep a connection open.
+
 Set the bearer token through MEMORY_TOKEN and never print it. Initialize with a supported version, inspect the complete memory_put schema, then send malformed arguments to confirm a tool-level isError response.
 
 ## Verify and inspect
