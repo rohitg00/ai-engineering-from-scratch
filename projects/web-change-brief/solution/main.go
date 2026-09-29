@@ -233,6 +233,9 @@ func FetchHTML(ctx context.Context, rawURL string, client *http.Client) (string,
 		if req.URL.Host != via[0].URL.Host {
 			return errors.New("Cross-host redirect requires a new explicit URL")
 		}
+		if via[0].URL.Scheme == "https" && req.URL.Scheme != "https" {
+			return errors.New("HTTPS fetch cannot redirect to HTTP")
+		}
 		return nil
 	}
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, canonical, nil)

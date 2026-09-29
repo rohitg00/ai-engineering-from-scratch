@@ -46,7 +46,7 @@ python3 demo.py
 
 The extractor is a deliberately limited readable-block scanner, not an HTML5 DOM or browser. It does not execute JavaScript, evaluate CSS visibility or fetch linked resources. Block order is ignored; repeated text counts are retained. Filtering phrases can hide useful changes, so use the same explicit filter policy for both snapshots.
 
-Live mode: go run . --fetch https://YOUR_HOST/YOUR_PAGE --baseline ./web-change-output/baseline.json --out ./next-report. Only the selected page is fetched, with an HTTP timeout, a 2 MB body limit and same-host redirects. The existing baseline remains untouched unless --accept is explicitly passed after a successful report. No background monitoring or notifications are installed.
+Live mode: go run . --fetch https://YOUR_HOST/YOUR_PAGE --baseline ./web-change-output/baseline.json --out ./next-report. Only the selected page is fetched, with an HTTP timeout, a 2 MB body limit and same-host redirects. HTTPS fetches reject redirects to HTTP. The existing baseline remains untouched unless --accept is explicitly passed after a successful report. No background monitoring or notifications are installed.
 
 Provider tests use controlled responses or loopback HTTP. They verify request and response contracts, not a model's quality or live service availability. No account connection, outgoing message, recurring task or cloud deployment is configured by this project.
 

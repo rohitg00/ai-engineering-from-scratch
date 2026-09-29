@@ -27,7 +27,7 @@ Before coding, write down the returned fields for that example and one input tha
 - `SaveSnapshot(path string, snapshot Snapshot) error`
 - `LoadSnapshot(path string) (Snapshot, error)`
 
-Accept only HTTP(S) URLs without credentials, status 200, and text/html or application/xhtml+xml. Read through a limit of MaxHTMLBytes+1 to detect overflow. Apply cancellation and a default 15-second client timeout, with at most three requests and same-host redirects. Save via a temporary file in the same directory followed by rename. Load validates the canonical URL and content checksum.
+Accept only HTTP(S) URLs without credentials, status 200, and text/html or application/xhtml+xml. Read through a limit of MaxHTMLBytes+1 to detect overflow. Apply cancellation and a default 15-second client timeout, with at most three requests and same-host redirects (including an unchanged explicit port). When the selected URL uses HTTPS, every redirect must keep HTTPS. An explicitly selected HTTP URL remains supported. Save via a temporary file in the same directory followed by rename. Load validates the canonical URL and content checksum.
 
 Keep earlier stages working. Implement these functions in your learner workspace, leaving the reference solution closed while you work through the example.
 
