@@ -23,6 +23,11 @@ def tokenize(text):
     raise NotImplementedError("Stage 1: implement tokenize in report_agent/search.py")
 
 
+def engine_binary():
+    """Return the compiled search Path from a private rra-private-build- directory."""
+    raise NotImplementedError("Stage 1: implement engine_binary in report_agent/search.py")
+
+
 class BM25Index:
     def __init__(self, documents, k1=1.5, b=0.75):
         """Compile search/main.rs and use its JSON idf response.

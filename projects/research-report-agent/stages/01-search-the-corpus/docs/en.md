@@ -57,11 +57,13 @@ A request has an operation and typed fields. The engine flushes each response li
 
 The second request returns exactly `{"tokens":["kernel","vm"]}`. The protocol also supports `idf`, `docs`, `doc` and `score`. Invalid JSON or wrong field types return an `error` object. The supplied codec handles strings and escapes according to [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259), including Unicode surrogate pairs. A fractional result limit is invalid; zero is a valid empty result request.
 
-Python compiles the source once per process into a fresh private temporary directory; it never trusts a predictable shared executable cache. Each index writes its input documents to a private temporary directory. Use an argument list with `subprocess.run`, a timeout, and explicit return-code checks. Never put a question into a shell command.
+Implement `engine_binary()` to return a `pathlib.Path` to the compiled executable named `search`. Compile once per process in a fresh private temporary directory with the prefix `rra-private-build-` and mode `0700`; reuse that path within the process and register cleanup on exit. Never trust a predictable shared executable cache.
+
+Each index writes its input documents to a private temporary directory. Use an argument list with `subprocess.run`, a timeout, and explicit return-code checks. Never put a question into a shell command.
 
 ## Your task
 
-The starter provides `wire.rs` for JSON parsing/escaping and the stdin loop. Implement the corpus parser, tokenizer, `Index` and `handle_line`. Complete the Python corpus loader and adapter with the existing `BM25Index`, `search`, `score` and `idf` API. Python sentence scoring later reuses the same tokenization rule, while document ranking stays in Rust.
+The starter provides `wire.rs` for JSON parsing/escaping and the stdin loop. Implement the corpus parser, tokenizer, `Index` and `handle_line`. Complete the Python corpus loader and adapter with the existing `engine_binary`, `BM25Index`, `search`, `score` and `idf` API. Python sentence scoring later reuses the same tokenization rule, while document ranking stays in Rust.
 
 ```bash
 python3 scripts/project_test.py research-report-agent --init my-report-agent
@@ -72,7 +74,7 @@ printf '%s\n' '{"query":"daemon socket","k":3}' | /tmp/rra-search projects/resea
 
 ## What you should see
 
-The fresh workspace fails with a clear stage 1 implementation message. A completed workspace passes 7 Rust tests and 11 Python integration tests. The query ranks `03-daemon-socket-escape` first, with a positive score; the exact score depends on the fixture text. The native tests cover malformed JSON, Unicode round trips, rare-term weighting and deterministic ties.
+The fresh workspace fails with a clear stage 1 implementation message. A completed workspace passes 7 Rust tests and 12 Python integration tests. The query ranks `03-daemon-socket-escape` first, with a positive score; the exact score depends on the fixture text. The native tests cover malformed JSON, Unicode round trips, rare-term weighting and deterministic ties.
 
 ## Check yourself
 

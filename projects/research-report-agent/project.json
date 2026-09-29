@@ -6,8 +6,8 @@
   "tagline": "Turn a question and a pile of documents into a report where every sentence can be checked.",
   "summary": "Build the pipeline behind deep research tools: search a corpus, pull exact snippets, plan the research, write only from evidence, verify every claim, publish an HTML report with footnotes and a trace, then score it on checked-in public evaluation fixtures.",
   "usefulFor": [
-    "An evidence ledger for technical decisions showing how source updates change published claims.",
-    "The default uses deterministic planning and extractive writing."
+    "Prepare a technical decision memo whose claims link to the supporting source passages.",
+    "Compare reports after source documents change and inspect which claims need revision."
   ],
   "youWillBuild": "An evidence ledger for technical decisions showing how source updates change published claims.",
   "hours": 20,
