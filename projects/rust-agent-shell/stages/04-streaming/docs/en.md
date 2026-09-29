@@ -37,6 +37,8 @@ python3 learning-artifacts/rust-agent-shell/client.py projects/rust-agent-shell/
 
 JSONL requests use caller ids and explicit tool argument objects. The adapter translates them to the bounded Rust stdin grammar. --limit controls actions; native file reads remain capped at 16 KiB. Application path checks do not provide OS isolation or close adversarial replacement races.
 
+The supplied Python adapter writes one receipt per input id, retaining all native responses. Requests without a response after quit, budget exhaustion, or process termination receive terminal `kind: "not-executed"` receipts with the stopping reason. A process error or timeout saves the partial receipt stream and exits nonzero. For unexpected termination, an unanswered request has no execution evidence; inspect the reason before retrying. Empty input produces no events.
+
 ## Investigate next
 
 What happens if a file contains quotes, tabs or a newline?
