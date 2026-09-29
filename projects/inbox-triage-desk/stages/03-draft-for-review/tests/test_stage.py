@@ -69,7 +69,7 @@ class DraftTests(unittest.TestCase):
                 ]
             }
         ).encode()
-        with patch("urllib.request.urlopen", return_value=io.BytesIO(raw)) as opened:
+        with patch("urllib.request.OpenerDirector.open", return_value=io.BytesIO(raw)) as opened:
             p = provider_proposal(
                 msg(), "http://localhost:1234/v1/chat/completions", "test-model"
             )
@@ -95,7 +95,7 @@ class DraftTests(unittest.TestCase):
             }
         ).encode()
         with (
-            patch("urllib.request.urlopen", return_value=io.BytesIO(raw)),
+            patch("urllib.request.OpenerDirector.open", return_value=io.BytesIO(raw)),
             self.assertRaises(ValueError),
         ):
             provider_proposal(msg(), "https://example.invalid/chat", "m")

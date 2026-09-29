@@ -46,7 +46,7 @@ python3 demo.py
 
 The default classifier uses explicit phrase rules, not an LLM. It handles a folder of exported messages and never connects to your mailbox or sends replies. Dates, urgency and promised actions are not inferred.
 
-Optional: append --provider-url http://127.0.0.1:1234/v1/chat/completions --model YOUR_MODEL. An OpenAI-compatible chat endpoint receives message bodies only when explicitly selected. INBOX_MODEL_API_KEY supplies authentication if needed. Proposals must contain an exact source quote and stay in model-proposals.json for review; they do not overwrite the rule decisions.
+Optional: append --provider-url http://127.0.0.1:1234/v1/chat/completions --model YOUR_MODEL. An OpenAI-compatible chat endpoint receives message bodies only when explicitly selected. INBOX_MODEL_API_KEY supplies authentication if needed. Remote providers require HTTPS; HTTP is accepted only for localhost and explicit loopback IP addresses. URL credentials and redirects are rejected. Proposals must contain an exact source quote and stay in model-proposals.json for review; they do not overwrite the rule decisions.
 
 Provider tests use controlled responses or loopback HTTP. They verify request and response contracts, not a model's quality or live service availability. No account connection, outgoing message, recurring task or cloud deployment is configured by this project.
 

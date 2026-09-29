@@ -26,7 +26,7 @@ Before coding, write down the returned fields for that example and one input tha
 - `build_draft(message: dict, decision: dict) -> dict`
 - `provider_proposal(message, endpoint, model, api_key="") -> dict`
 
-Check that the decision belongs to the message and every supplied evidence span matches. Return message_id, to, subject, body, eml, status=draft-only and source_quote. Add In-Reply-To and deduplicated References. The optional HTTP classifier must reject unsupported categories, empty quotes and quotes absent from the body. It returns review_required=True.
+Check that the decision belongs to the message and every supplied evidence span matches. Return message_id, to, subject, body, eml, status=draft-only and source_quote. Add In-Reply-To and deduplicated References. The optional HTTP classifier must reject unsupported categories, empty quotes and quotes absent from the body. It returns review_required=True. Require HTTPS for remote endpoints. Permit HTTP only for localhost or an explicit loopback IP address (IPv4 or IPv6), with a valid hostname and port. Reject URL credentials, fragments and whitespace. Use a dedicated urllib opener whose HTTPRedirectHandler.redirect_request returns None, so all redirects fail before a second request can forward credentials.
 
 Keep earlier stages working. Implement these functions in your learner workspace, leaving the reference solution closed while you work through the example.
 

@@ -3,8 +3,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import html
+import ipaddress
 import json
 import re
+import urllib.parse
 import urllib.request
 from email import policy
 from email.parser import BytesParser
@@ -176,13 +178,63 @@ def build_draft(message: dict, decision: dict) -> dict:
     }
 
 
+def _validate_endpoint(endpoint):
+    if (
+        not isinstance(endpoint, str)
+        or not endpoint
+        or any(ord(char) <= 32 or ord(char) == 127 or char == "\\" for char in endpoint)
+    ):
+        raise ValueError("Use an explicit endpoint without whitespace or backslashes")
+    try:
+        parsed = urllib.parse.urlsplit(endpoint)
+        host, port = parsed.hostname, parsed.port
+    except ValueError as error:
+        raise ValueError("Invalid endpoint authority") from error
+    if (
+        parsed.scheme not in ("http", "https")
+        or not host
+        or parsed.username is not None
+        or parsed.password is not None
+        or parsed.netloc.endswith(":")
+        or (
+            parsed.netloc.startswith("[")
+            and not re.fullmatch(r"\[[^\]]+\](?::[0-9]+)?", parsed.netloc)
+        )
+        or port == 0
+        or "#" in endpoint
+    ):
+        raise ValueError(
+            "Use an HTTP(S) endpoint without URL credentials or a fragment"
+        )
+    try:
+        address = ipaddress.ip_address(host)
+    except ValueError:
+        try:
+            dns_name = host.encode("idna").decode("ascii")
+        except UnicodeError as error:
+            raise ValueError("Invalid endpoint hostname") from error
+        labels = dns_name.rstrip(".").split(".")
+        if len(dns_name) > 253 or any(
+            not re.fullmatch(r"[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?", label)
+            for label in labels
+        ):
+            raise ValueError("Invalid endpoint hostname")
+        loopback = host == "localhost"
+    else:
+        loopback = address.is_loopback
+    if parsed.scheme == "http" and not loopback:
+        raise ValueError("Remote endpoints require HTTPS; HTTP is only for loopback")
+
+
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, request, fp, code, message, headers, new_url):
+        return None
+
+
 def provider_proposal(
     message: dict, endpoint: str, model: str, api_key: str = ""
 ) -> dict:
-    from urllib.parse import urlparse
-
-    if urlparse(endpoint).scheme not in ("http", "https"):
-        raise ValueError("Provider endpoint must use HTTP(S)")
+    _validate_endpoint(endpoint)
     payload = {
         "model": model,
         "messages": [
@@ -198,7 +250,8 @@ def provider_proposal(
     if api_key:
         headers["Authorization"] = "Bearer " + api_key
     request = urllib.request.Request(endpoint, json.dumps(payload).encode(), headers)
-    with urllib.request.urlopen(request, timeout=20) as response:
+    opener = urllib.request.build_opener(_NoRedirect())
+    with opener.open(request, timeout=20) as response:
         raw = response.read(1_000_001)
     if len(raw) > 1_000_000:
         raise ValueError("Provider response too large")
