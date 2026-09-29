@@ -17,7 +17,7 @@ export function parseDiff(raw: string): any[] {
 export function inspect(lines: AddedLine[]): any[] {
   throw new Error("Not implemented: inspect");
 }
-export function verify(findings: Finding[], lines: AddedLine[]): any {
+export function verify(findings: unknown[], lines: AddedLine[]): any {
   throw new Error("Not implemented: verify");
 }
 export function merge(findings: Finding[]): any[] {
