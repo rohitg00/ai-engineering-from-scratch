@@ -49,9 +49,21 @@
     <section class="pj-container pj-section" aria-labelledby="howTitle">
       <div class="pj-section-heading"><div><div class="pj-eyebrow">HOW IT WORKS</div><h2 id="howTitle">Three commands, one project</h2></div><p>Choose Python, Rust, TypeScript, or Go for the job. Core tests run offline; optional framework labs list their dependencies.</p></div>
       <ol class="pj-steps">
-        <li><span class="pj-step-n">1</span><div><h3>Copy the starters</h3><p>Stub files with the exact signatures you will fill in.</p><pre class="pj-cmd"><code>python3 scripts/project_test.py research-report-agent --init my-report-agent</code></pre></div></li>
-        <li><span class="pj-step-n">2</span><div><h3>Build one stage, run the grader</h3><p>The grader runs every stage up to yours, so new work never breaks old work.</p><pre class="pj-cmd"><code>python3 scripts/project_test.py research-report-agent --stage 1 --path my-report-agent</code></pre></div></li>
-        <li><span class="pj-step-n">3</span><div><h3>Or learn with the tutor</h3><p>One stage per session. Predict, build, run, reflect. Hints, not answers.</p><pre class="pj-cmd"><code>/build-project research-report-agent</code></pre></div></li>
+        <li>
+          <div class="pj-step-head"><span class="pj-step-n" aria-hidden="true">01</span><h3>Create your workspace</h3></div>
+          <p>Copy the starter files. Each stub gives you the exact signature to implement.</p>
+          <pre class="pj-cmd" data-copy-label="Copy starter command"><code>python3 scripts/project_test.py research-report-agent --init my-report-agent</code></pre>
+        </li>
+        <li>
+          <div class="pj-step-head"><span class="pj-step-n" aria-hidden="true">02</span><h3>Run the grader</h3></div>
+          <p>Build one stage at a time. The grader checks your work and every earlier stage.</p>
+          <pre class="pj-cmd" data-copy-label="Copy grader command"><code>python3 scripts/project_test.py research-report-agent --stage 1 --path my-report-agent</code></pre>
+        </li>
+        <li>
+          <div class="pj-step-head"><span class="pj-step-n" aria-hidden="true">03</span><h3>Learn with the tutor</h3></div>
+          <p>Want guidance? In Claude Code, work through each stage with hints and feedback.</p>
+          <pre class="pj-cmd" data-command-label="Claude Code" data-copy-label="Copy tutor command"><code>/build-project research-report-agent</code></pre>
+        </li>
       </ol>
     </section>
 

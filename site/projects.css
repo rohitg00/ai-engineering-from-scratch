@@ -172,33 +172,41 @@
 }
 
 .pj-steps li {
-  display: flex;
-  gap: 14px;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  row-gap: 18px;
   min-width: 0;
-  padding: 20px;
+  padding: 22px;
   border: 1px solid var(--rule-soft);
   background: var(--bg-surface);
 }
 
+.pj-step-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
 .pj-steps h3 {
-  margin: 0 0 6px;
+  margin: 0;
   font-size: 1.5rem;
+  line-height: 1.15;
 }
 
 .pj-steps p {
-  margin: 0 0 12px;
+  margin: 0;
   color: var(--ink-soft);
-}
-
-.pj-steps > li > div {
-  min-width: 0;
 }
 
 .pj-step-n {
   flex: none;
-  font-family: var(--font-display);
-  font-size: 2.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
   line-height: 1;
+  padding: 8px 6px;
+  border: 1px solid var(--blueprint);
   color: var(--blueprint);
 }
 
@@ -228,9 +236,68 @@
   margin: 8px 0;
 }
 
-.pj-cmd-wrap .pj-cmd,
 .pj-code.is-command pre {
   padding-right: 72px;
+}
+
+.pj-cmd-wrap {
+  min-width: 0;
+  border: 1px solid var(--rule-soft);
+  background: var(--code-bg);
+}
+
+.pj-cmd-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px 6px 14px;
+  border-bottom: 1px solid var(--rule-soft);
+  font: 0.65rem var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-mute);
+}
+
+.pj-cmd-wrap .pj-cmd {
+  border: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.pj-cmd-wrap .pj-cmd code {
+  white-space: inherit;
+}
+
+.pj-steps .pj-cmd-wrap {
+  margin: 0;
+}
+
+.pj-cmd-toolbar .pj-copy {
+  position: static;
+  min-width: 68px;
+  min-height: 34px;
+}
+
+.pj-copy-status {
+  display: block;
+  margin: 0;
+  padding: 8px 14px;
+  font: 0.76rem/1.4 var(--font-body);
+  color: var(--ink-soft);
+}
+
+.pj-copy-status:empty {
+  display: none;
+}
+
+.pj-copy-status[data-success] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
 .pj-copy {
@@ -243,6 +310,11 @@
   color: var(--ink-soft);
   font-size: 0.64rem;
   cursor: pointer;
+}
+
+.pj-copy:focus-visible {
+  outline: 2px solid var(--blueprint);
+  outline-offset: 3px;
 }
 
 .pj-copy:hover {
@@ -827,6 +899,10 @@
 
   .pj-action {
     width: 100%;
+  }
+
+  .pj-cmd-toolbar .pj-copy {
+    min-height: 44px;
   }
 }
 
