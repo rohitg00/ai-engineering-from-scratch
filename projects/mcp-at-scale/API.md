@@ -1,6 +1,6 @@
 # Public implementation contract
 
-Run python 3 cli.py /absolute/inventory.json --serve as a stdio server. tools/call catalog_search takes query, max_chars and k; the response returns selected public schemas and their character count.
+Run `python3 cli.py /absolute/inventory.json --serve` as a stdio server. tools/call catalog_search takes query, max_chars and k; the response returns selected public schemas and their character count.
 
 The stdio transport implements the documented 2025-06-18 and 2025-11-25 initialization/tools subset. It is not a claim of full current MCP conformance. Inventory reads are local recordings; the generated tool count is not 250 distinct integrations.
 
