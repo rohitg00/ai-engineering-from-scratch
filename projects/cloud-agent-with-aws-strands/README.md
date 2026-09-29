@@ -69,10 +69,10 @@ The default grader covers the offline core and input integration. `--optional` a
 
 ## Primary references
 
-
+[Strands custom model providers](https://strandsagents.com/docs/user-guide/concepts/model-providers/custom_model_provider/) explains the optional deterministic model adapter.
 
 ## Configure the optional AWS reader
 
-Before --mode aws, add an aws object keyed by each scoped service. Every entry needs region and cluster; logs.read also needs log_group, while metrics.read needs explicit ISO start/end timestamps. The adapter issues ECS describe-services, CloudWatch get-metric-statistics for CPUUtilization and Logs filter-log-events with limit 20.
+Before --mode aws, add an aws object keyed by each scoped service. Every entry needs region. inventory.list and metrics.read also need cluster; logs.read needs log_group. metrics.read requires start and end as timezone-aware ISO timestamps, such as 2026-01-01T00:00:00Z and 2026-01-01T01:00:00Z. logs.read accepts the same optional pair, converted to epoch milliseconds for --start-time and --end-time. Omitting both preserves an unwindowed log read; supplying only one is an error. Both operations reject invalid, timezone-free, pre-epoch or non-increasing windows. The adapter issues ECS describe-services, CloudWatch get-metric-statistics for CPUUtilization and Logs filter-log-events with limit 20.
 
 Credentials come from the AWS CLI's environment or configured credential chain. Scope validation does not replace IAM: configure permission for only the intended reads and service resources. Region and time window are caller configuration, not model-supplied executable arguments. Each CLI call has a ten-second timeout; only timeout errors are retried.
