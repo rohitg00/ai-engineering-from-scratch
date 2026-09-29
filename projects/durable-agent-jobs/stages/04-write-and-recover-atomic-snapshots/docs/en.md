@@ -18,7 +18,7 @@ Validate every job and reject duplicate identifiers before opening a temporary s
 
 The composed worker persists its claim, reads its immutable input, creates `effects/<id>.json`, then persists completion. The receipt contains the input SHA256, byte count and word count. A temporary receipt is synced, then linked into its final name without replacement. If that final receipt already contains the expected values, recovery reuses it.
 
-Run `go run . demo` from your completed workspace. The demo starts a real worker that exits86 after writing the first effect. Status shows running v1 with one receipt. The next worker uses logical time111, reclaims and claims v3, observes the existing receipt and completes v4 with `reused_effect: true`. The second sample job completes normally.
+Run `go run . demo` from your completed workspace. The demo starts a real worker that exits 86 after writing the first effect. Status shows running v1 with one receipt. The next worker uses logical time 111, reclaims and claims v3, observes the existing receipt and completes v4 with `reused_effect: true`. The second sample job completes normally.
 
 Atomic rename protects readers from partial JSON. It does not turn the input, receipt and ledger into one transaction. A producer crash can leave an unreferenced input file; an identical enqueue safely adopts it. File sync without directory sync is not a proof of power-loss durability. These exercises establish process-crash recovery on a local filesystem.
 
