@@ -21,8 +21,10 @@ The CLI returns paths, previews and matching tokens for your own markdown folder
 ```text
 query=release replicas
 alias release=deploy
-matching note: release.md; matched terms: deploy,replicas
+matching note: release.md; matched terms: deploy
 ```
+
+The supplied note contains singular `replica`, so plural `replicas` does not match. This lexical tokenizer does not stem words. The editable figure starts with a shorter note containing the literal phrase `deploy replicas`, so its two-term match is a different input.
 
 ## Build and inspect
 

@@ -55,25 +55,25 @@
       const [from, to] = v.alias.split("=");
       const tokens = (s) => words(s).map((w) => (w === from ? to : w));
       const docs = v.notes.split("|").map(tokens);
-      const df = {};
+      const df = Object.create(null);
       docs.forEach((d) => unique(d).forEach((t) => (df[t] = (df[t] || 0) + 1)));
-      const idf = Object.fromEntries(
-        Object.entries(df).map(([t, n]) => [
-          t,
-          Math.log((1 + docs.length) / (1 + n)) + 1,
-        ]),
-      );
+      const idf = Object.create(null);
+      for (const [term, count] of Object.entries(df)) {
+        idf[term] = Math.log((1 + docs.length) / (1 + count)) + 1;
+      }
       const vector = (terms) => {
-        const counts = {};
+        const counts = Object.create(null);
         terms.forEach((t) => {
           if (idf[t]) counts[t] = (counts[t] || 0) + idf[t];
         });
         const norm = Math.sqrt(
           Object.values(counts).reduce((s, n) => s + n * n, 0),
         );
-        return Object.fromEntries(
-          Object.entries(counts).map(([t, n]) => [t, n / norm]),
-        );
+        const weights = Object.create(null);
+        for (const [term, count] of Object.entries(counts)) {
+          weights[term] = count / norm;
+        }
+        return weights;
       };
       const q = vector(tokens(v.query));
       const ranked = docs
@@ -193,7 +193,7 @@
           {
             label: "Dot product",
             detail:
-              "query=release replicas\nalias release=deploy\nmatching note: release.md; matched terms: deploy,replicas",
+              "query=release replicas\nalias release=deploy\nmatching note: release.md; matched terms: deploy (replica is singular in the file fixture)",
           },
           {
             label: "Top k",
