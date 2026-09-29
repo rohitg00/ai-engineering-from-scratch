@@ -52,7 +52,7 @@
     {
       "id": "01-validate-rankings",
       "title": "Validate rankings and graded judgments",
-      "summary": "Reject duplicate ranking ids, nonpositive cutoffs, and invalid relevance grades..",
+      "summary": "Reject duplicate ranking ids, nonpositive cutoffs, and invalid relevance grades.",
       "hours": 2,
       "difficulty": "starter",
       "language": "python",
@@ -66,7 +66,7 @@
     {
       "id": "02-precision-and-recall",
       "title": "Compute precision and recall at k",
-      "summary": "Compute binary precision and recall for positive-grade judgments at cutoff k..",
+      "summary": "Compute binary precision and recall for positive-grade judgments at cutoff k.",
       "hours": 2,
       "difficulty": "core",
       "language": "python",
@@ -96,7 +96,7 @@
     {
       "id": "04-compare-systems",
       "title": "Compare systems query by query",
-      "summary": "Produce per-query metrics and macro means for each named system, with unjudged result counts..",
+      "summary": "Produce per-query metrics and macro means for each named system, with unjudged result counts.",
       "hours": 2,
       "difficulty": "stretch",
       "language": "python",
