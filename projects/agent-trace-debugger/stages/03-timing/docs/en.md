@@ -10,7 +10,7 @@ The boundary for this stage is `unionDuration, analyze`. Keep earlier stage beha
 
 ## Work through one concrete case
 
-ChildA runs 10..60 and childB runs 40..90. Their summed duration is100, their overlap is20, and their union is80. The 100 ms parent therefore owns 20 ms, not zero.
+ChildA runs 10..60 and childB runs 40..90. Their summed duration is 100, their overlap is 20, and their union is 80. The 100 ms parent therefore owns 20 ms, not zero.
 
 ```figure
 pj-agent-trace-debugger-3
@@ -43,7 +43,7 @@ node cli.ts --input samples/trace.jsonl --baseline samples/before.jsonl --output
 
 ## Investigate the failure boundary
 
-Move B start from 40 to70 in the lab. Predict union 70 and parent own time 30 before observing the bars.
+Move B start from 40 to 70 in the lab. Predict union 70 and parent own time 30 before observing the bars.
 
 
 

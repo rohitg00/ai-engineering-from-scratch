@@ -2,7 +2,9 @@
 
 Export one Span JSON object per line from your instrumentation and retain trace.json beside trace.html in CI.
 
-Input is the documented JSONL Span contract, not a native OTLP export. Tokens must be exclusive per-span usage. Cross-machine clocks must be normalized before import.
+By default, input uses the documented JSONL Span contract. `--format otlp` also accepts the supplied OTLP JSON subset: `resourceSpans[].scopeSpans[].spans`, trace/span IDs, parent IDs, Unix nanosecond timestamps, status codes and numeric GenAI input/output token attributes. The adapter converts timestamps to relative milliseconds before the normal span validation. It does not accept protobuf or provide an OTLP receiver. Baseline files still use JSONL.
+
+Tokens must be exclusive per-span usage. Cross-machine clocks must be normalized before import.
 
 ### main.ts
 
