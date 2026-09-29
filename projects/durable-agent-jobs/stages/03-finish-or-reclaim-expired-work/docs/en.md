@@ -14,7 +14,7 @@ Separate completion from permission. Implement `stage3.go` in your initialized w
 
 ## Work through the mechanism
 
-Worker A owns version 1 until 110. At110, finishing version 1 fails. Reclaim changes running v1 to queued v2 and clears the lease, while keeping attempts 1. Worker B claims queued v2 and receives running v3 with attempts 2. A late completion from A still carries1, so it fails even if its clock says105. The version check protects against a stale view of time.
+Worker A owns version 1 until 110. At 110, finishing version 1 fails. Reclaim changes running v1 to queued v2 and clears the lease, while keeping attempts 1. Worker B claims queued v2 and receives running v3 with attempts 2. A late completion from A still carries 1, so it fails even if its clock says 105. The version check protects against a stale view of time.
 
 Worker B completes before its expiry, producing completed v4. Completion is a new state transition; its version is not the claim version. Duplicate calls to `Finish` fail because the job is no longer running. This differs deliberately from an idempotent output receipt: ledger transitions and business effects have separate contracts.
 
@@ -49,7 +49,7 @@ The grader exercises your selected workspace, including the earlier stages. Its 
 
 ## Investigate a failure
 
-Test109 and110 against lease 110. Then allow A to finish after B has claimed v3. Describe why extending A's timeout cannot restore A's authority.
+Test 109 and 110 against lease 110. Then allow A to finish after B has claimed v3. Describe why extending A's timeout cannot restore A's authority.
 
 ## Sources and limits
 
