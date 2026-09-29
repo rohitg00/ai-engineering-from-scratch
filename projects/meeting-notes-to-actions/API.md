@@ -1,6 +1,8 @@
 # Public implementation contract
 
-Use the schema_version1 actions.json receipt with stable action ids and original source lines. CSV columns are id, owner, due and task, and contain approved actions only.
+Use the schema_version 1 actions.json receipt with stable action ids and original source lines. CSV columns are id, owner, due and task, and contain approved actions only.
+
+Decisions must be a JSON object mapping current action ids to `pending`, `approved` or `rejected`. Unknown or stale ids reject the entire input before exporting any artifacts. Changing source lines changes ids, so regenerate the inbox and review again. HTML selectors preserve existing decisions when you download another decision file.
 
 ACTION lines are authoritative candidates; NAME will TASK by YYYY-MM-DD is a conservative proposal grammar. Unstructured suggestions outside those grammars stay unassigned. HTML review does not post tasks or send messages.
 

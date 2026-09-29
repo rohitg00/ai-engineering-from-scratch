@@ -33,6 +33,8 @@ def proposals(text):
 
 
 def inbox(text, today, decisions):
+    if not isinstance(decisions, dict):
+        raise ValueError("decisions must be an object mapping action ids to choices")
     report = publish(proposals(text), today)
     for row in report["actions"]:
         row["id"] = hashlib.sha256(
@@ -41,6 +43,11 @@ def inbox(text, today, decisions):
                 separators=(",", ":"),
             ).encode()
         ).hexdigest()[:16]
+    current_ids = {row["id"] for row in report["actions"]}
+    unknown = set(decisions) - current_ids
+    if unknown:
+        raise ValueError("unknown or stale action ids: " + ", ".join(sorted(map(str, unknown))))
+    for row in report["actions"]:
         choice = decisions.get(row["id"], "pending")
         if choice not in ["pending", "approved", "rejected"]:
             raise ValueError("unknown review decision")
@@ -61,7 +68,12 @@ def inbox(text, today, decisions):
         + r["id"]
         + '"'
         + (" disabled" if r["flags"] else "")
-        + '><option>pending</option><option>approved</option><option>rejected</option></select> <a href="#line-'
+        + ">"
+        + "".join(
+            "<option" + (" selected" if choice == r["decision"] else "") + ">" + choice + "</option>"
+            for choice in ("pending", "approved", "rejected")
+        )
+        + '</select> <a href="#line-'
         + str(r["lines"][0])
         + '">source</a><code>'
         + r["id"]
