@@ -4,7 +4,7 @@
 
 **Type:** Build
 **Languages:** Go
-**Prerequisites:** Complete stages 1 through 1; understand their exported types and failure contracts.
+**Prerequisites:** Complete stage 1; understand its exported types and failure contracts.
 **Stage:** 2 of 4
 **Time:** ~2 hours
 
@@ -14,7 +14,7 @@ Reserve an execution window. Implement `stage2.go` in your initialized workspace
 
 ## Work through the mechanism
 
-Start with queued version 0, attempts 0. A claim at 100 ms for10ms with expected version 0 becomes running version 1, attempts 1, lease 110. The lease interval is [100,110): its right endpoint is excluded.
+Start with queued version 0, attempts 0. A claim at 100 ms for 10 ms with expected version 0 becomes running version 1, attempts 1, lease 110. The lease interval is [100,110): its right endpoint is excluded.
 
 Two workers may read version 0. Only the first successful claim may proceed. Checking the expected version after changing the record would lose the evidence needed to reject the second worker. Validate state, expected version, attempt cap, clock and overflow before assigning any field.
 
@@ -50,7 +50,7 @@ The grader exercises your selected workspace, including the earlier stages. Its 
 
 ## Investigate a failure
 
-Predict the snapshot after two callers both supply expected0. Then set maxAttempts1 and reclaim the first attempt. Why does the next claim fail even though the state is queued?
+Predict the snapshot after two callers both supply expected 0. Then set maxAttempts 1 and reclaim the first attempt. Why does the next claim fail even though the state is queued?
 
 ## Sources and limits
 
