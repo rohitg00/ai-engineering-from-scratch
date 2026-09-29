@@ -45,6 +45,12 @@
 <p align="center"><sub><b>114,584</b> readers &nbsp;·&nbsp; <b>181,995</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-08-29</sub></p>
 <!-- STATS:END -->
 
+## Demo
+
+<a href="assets/ai-engineering-from-scratch-launch.mp4"><img src="assets/ai-engineering-from-scratch-launch.jpg" width="560" alt="AI Engineering from Scratch launch video"></a>
+
+A 22-second 16:9 launch video with sound ([captions](assets/ai-engineering-from-scratch-launch.srt)). Click the poster to play.
+
 ## Start here: choose what you want to build
 
 You do not need to scan 523 lessons before beginning. Pick one goal. Each link
