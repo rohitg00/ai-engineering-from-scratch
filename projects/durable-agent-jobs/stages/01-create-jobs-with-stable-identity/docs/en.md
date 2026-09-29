@@ -16,7 +16,7 @@ Give retries one identity. Implement `stage1.go` in your initialized workspace. 
 
 A job is the durable record of an intention. Your function creates that record without executing the intention. Keep `ID`, `State`, `Version`, `LeaseUntil` and `Attempts` visible instead of compressing them into a boolean. A boolean cannot tell you whether another worker currently owns the work.
 
-For `report-1`, return queued, version 0, attempts 0 and lease 0. Reject `../report`, an empty string, uppercase initials, spaces and identifiers longer than64 characters. The accepted form is a lowercase letter followed by lowercase letters, digits or hyphens. Do not trim an invalid identifier into a different valid identity.
+For `report-1`, return queued, version 0, attempts 0 and lease 0. Reject `../report`, an empty string, uppercase initials, spaces and identifiers longer than 64 characters. The accepted form is a lowercase letter followed by lowercase letters, digits or hyphens. Do not trim an invalid identifier into a different valid identity.
 
 The supplied CLI later stores `{id,text}` separately from the job state. Enqueueing the same identifier and identical text is a no-op; changing the text under an existing identifier is a conflict. This is how a producer can retry without accidentally replacing work that already ran.
 

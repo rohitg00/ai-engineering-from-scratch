@@ -1,6 +1,6 @@
 # Durable queue integration
 
-Build `go build -o jobs .` inside the completed workspace. The CLI has no dependencies or network connection. JSON goes to stdout, errors to stderr; ordinary failures exit 1. Crash injection exits86 by design.
+Build `go build -o jobs .` inside the completed workspace. The CLI has no dependencies or network connection. JSON goes to stdout, errors to stderr; ordinary failures exit 1. Crash injection exits 86 by design.
 
 | Command | Input | Result |
 |---|---|---|
@@ -11,7 +11,7 @@ Build `go build -o jobs .` inside the completed workspace. The CLI has no depend
 
 Identifiers match `[a-z][a-z0-9-]{0,63}`. Text is limited to 1,000,000 UTF-8 bytes per record, request arrays to 10,000 records and each JSON document to 4 MiB. Unknown input fields and trailing JSON documents fail. An identifier permanently binds its original text; use a new identifier for a changed report.
 
-Worker options are `--lease-ms` (default 30000), `--max-attempts` (3), `--max-jobs` (1), `--delay-ms` (0..60000), `--crash-after claim|effect` and `--now-ms` (default-1 means current wall time). Explicit nonnegative now-ms supplies a fixed logical clock for demonstrations. Avoid mixing logical and real clocks in one store.
+Worker options are `--lease-ms` (default 30000), `--max-attempts` (3), `--max-jobs` (1), `--delay-ms` (0..60000), `--crash-after claim|effect` and `--now-ms` (default -1 means current wall time). Explicit nonnegative now-ms supplies a fixed logical clock for demonstrations. Avoid mixing logical and real clocks in one store.
 
 The store contains `ledger.lock`, `jobs.json`, immutable `inputs/<id>.json` and immutable `effects/<id>.json`. Job fields preserve the stage API's Go names: ID, State, Version, LeaseUntil and Attempts. Leases use integer milliseconds. Effect fields are id, input_sha256, bytes and words.
 

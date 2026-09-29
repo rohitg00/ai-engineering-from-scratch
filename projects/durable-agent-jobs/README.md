@@ -48,7 +48,7 @@ CRASH_STORE=$(mktemp -d /tmp/durable-crash.XXXXXX)
 /tmp/durable-jobs status --store "$CRASH_STORE"
 ```
 
-The crash command intentionally exits86. Before recovery, `incident-summary` is running v1 and its receipt already exists:95 bytes,11 words. After recovery it is completed v4, attempts 2, and the worker reports `reused_effect: true`. The second sample completes v2 with a 79-byte,12-word receipt. Change `--crash-after effect` to `claim` to observe recovery before an output exists. `go run . demo` automates the effect-crash sequence and cleans up only its own temporary directory.
+The crash command intentionally exits 86. Before recovery, `incident-summary` is running v1 and its receipt already exists: 95 bytes, 11 words. After recovery it is completed v4, attempts 2, and the worker reports `reused_effect: true`. The second sample completes v2 with a 79-byte, 12-word receipt. Change `--crash-after effect` to `claim` to observe recovery before an output exists. `go run . demo` automates the effect-crash sequence and cleans up only its own temporary directory.
 
 `--now-ms` is an injected test clock. Omit it for real wall-clock execution. `--delay-ms 500` lets another process recover an expired claim before the old one finishes. Stale completions fail; two ordinary worker processes can claim different jobs safely.
 
