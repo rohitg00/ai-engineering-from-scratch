@@ -16,6 +16,8 @@ Your public contract is `typed_value(quote, kind); review_document(text, schema,
 
 Type validation checks whether a quote can become the requested value: an ISO date must be a real calendar date and a number must be finite. Evidence validation checks that the quote exists at the declared position. A human still decides whether that value belongs to the intended field. These are three separate judgments.
 
+For `number`, accept Python `float` text syntax, including signs, decimal fractions, exponents and underscores between digits: `-2.5`, `.5`, `1e3` and `1_000` are valid. Commas and unit suffixes such as `1,000` or `3.5 kg` are invalid. Reject nonfinite results, including `inf`, `NaN` and overflow such as `1e309`. The `integer` type remains stricter: an optional sign followed by digits.
+
 Approval contains the source fingerprint and the selected start/end pair for each field. If the document changes, the old decision cannot silently approve a different value at the same location. Missing, invalid, ambiguous, proposed and approved states keep the workflow inspectable.
 
 | Situation | State | Export consequence |
