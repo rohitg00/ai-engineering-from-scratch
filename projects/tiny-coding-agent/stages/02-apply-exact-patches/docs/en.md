@@ -26,7 +26,7 @@ occurrences=1 -> write; occurrences=0 or 2 -> reject
 
 ## Build and inspect
 
-Count exact matches before opening a temporary output file. Preserve file permissions when replacing the original.
+Count exact matches before opening a temporary output file. Preserve file permissions when replacing the original. Capture the temporary path before writing and remove it in a `finally` block, including when writing, closing, or replacing fails. The original stays unchanged until replacement succeeds.
 
 Implement the stage in your learner workspace. The CLI helpers are provided adapters and import your functions; they do not substitute the reference solution.
 

@@ -52,7 +52,7 @@
     {
       "id": "01-confine-paths",
       "title": "Confine file tools to a workspace",
-      "summary": "Resolve existing relative file paths under a workspace and reject traversal, absolute paths, symlink escapes, and nonfiles..",
+      "summary": "Resolve existing relative file paths under a workspace and reject traversal, absolute paths, symlink escapes, and nonfiles.",
       "hours": 2,
       "difficulty": "starter",
       "language": "python",
@@ -66,7 +66,7 @@
     {
       "id": "02-apply-exact-patches",
       "title": "Apply exact patches with preconditions",
-      "summary": "Replace one exact occurrence and preserve the file on missing or ambiguous matches..",
+      "summary": "Replace one exact occurrence and preserve the file on missing or ambiguous matches.",
       "hours": 2,
       "difficulty": "core",
       "language": "python",

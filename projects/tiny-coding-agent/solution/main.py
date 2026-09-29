@@ -27,14 +27,15 @@ def apply_patch(workspace, relative, old, new):
     if content.count(old) != 1:
         raise ValueError("patch must match exactly once")
     permissions = stat.S_IMODE(target.stat().st_mode)
-    with tempfile.NamedTemporaryFile("w", dir=target.parent, delete=False) as temporary:
-        temporary.write(content.replace(old, new, 1))
-        name = temporary.name
+    name = None
     try:
+        with tempfile.NamedTemporaryFile("w", dir=target.parent, delete=False) as temporary:
+            name = temporary.name
+            temporary.write(content.replace(old, new, 1))
         os.chmod(name, permissions)
         os.replace(name, target)
     finally:
-        if os.path.exists(name):
+        if name is not None and os.path.exists(name):
             os.unlink(name)
     return {"path": relative, "replacements": 1}
 
