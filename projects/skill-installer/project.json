@@ -126,12 +126,6 @@
         "install"
       ],
       "difficulty": "core",
-      "runner": [
-        "node",
-        "--experimental-strip-types",
-        "--test",
-        "{tests}/stage.test.ts"
-      ],
       "requires": [
         "node"
       ],
