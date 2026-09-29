@@ -10,7 +10,7 @@ This single-process state machine teaches the invariant. It does not claim distr
 
 ## Work through one concrete case
 
-Start at limit 100, spent 20, holds={A:30}. Available capacity is50, so reserving B:60 fails without changing A. A second reservation using idA also fails even if its amount is1.
+Start at limit 100, spent 20, holds={A:30}. Available capacity is 50, so reserving B:60 fails without changing A. A second reservation using id A also fails even if its amount is 1.
 
 ```figure
 pj-agent-budget-planner-2
