@@ -37,17 +37,14 @@ export function parseSkill(raw: string): Skill {
 }
 export function matchPath(file: string, rule: string): boolean {
   const normalized = file.replaceAll("\\", "/");
-  if (normalized.split("/").includes("..") || normalized.startsWith("/"))
+  if (normalized.split("/").includes("..") || /^(?:\/|[a-z]:\/)/i.test(normalized))
     return false;
-  const escaped = rule
-    .split("**")
-    .map((p) =>
-      p
-        .split("*")
-        .map((x) => x.replace(/[.+?^${}()|[\]\\]/g, "\\$&"))
-        .join("[^/]*"),
-    )
-    .join(".*");
+  const escaped = rule.replace(/\*\*\/|\*\*|\*|[.+?^${}()|[\]\\]/g, (token) => {
+    if (token === "**/") return "(?:[^/]+/)*";
+    if (token === "**") return ".*";
+    if (token === "*") return "[^/]*";
+    return "\\" + token;
+  });
   return new RegExp(`^${escaped}$`).test(normalized);
 }
 export function rank(skills: Skill[], query: string, files: string[] = []) {

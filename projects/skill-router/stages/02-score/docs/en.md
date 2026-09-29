@@ -2,7 +2,7 @@
 
 **Stage 2 of 4.** Typescript. Plan about 2 hours.
 
-Award two points for each matched keyword and three for each matched file path. Return score reasons alongside the score. Support star within one path segment and double-star across segments, escape regular expression punctuation, and reject absolute or parent-traversing file paths. Resolve tied scores by priority and then id so ranking is reproducible.
+Award two points for each matched keyword and three for each matched file path. Return score reasons alongside the score. Support star within one path segment and double-star across segments, escape regular expression punctuation, and reject absolute or parent-traversing file paths. `**/` matches zero or more complete directories: `**/*.ts` matches `main.ts`, and `src/**/*.ts` matches both `src/main.ts` and `src/lib/main.ts`. Normalize backslashes and reject Windows drive-absolute paths as well as slash-rooted paths. Resolve tied scores by priority and then id so ranking is reproducible.
 
 The boundary for this stage is `matchPath, rank`. Keep earlier stage behavior intact: the final grader runs every stage against the same workspace.
 
