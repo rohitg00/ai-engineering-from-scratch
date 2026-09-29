@@ -41,7 +41,7 @@ python3 cli.py samples/input.json --output incident.json
 
 ## Investigate the failure boundary
 
-Return a1000-character string from the first read. Show why bounding provider response bytes is a separate adapter responsibility.
+Return a 1000-character string from the first read. Show why bounding provider response bytes is a separate adapter responsibility.
 
 
 
