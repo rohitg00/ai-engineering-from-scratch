@@ -5,7 +5,7 @@ export type ThemeResult = Theme & { evidence: Evidence[]; distinctSources: numbe
 export type Board = { schemaVersion: number; inputSha256: string; records: number; themes: ThemeResult[]; unassigned: Feedback[]; duplicates: { id: string; originalId: string }[] };
 
 export function parseFeedback(text: string): Feedback[] { throw new Error("Stage 1: implement parseFeedback"); }
-export function validateThemes(value: unknown): Theme[] { throw new Error("Stage 2: implement validateThemes"); }
+export function validateThemes(value: unknown): Theme[] { throw new Error("Stage 1: implement validateThemes"); }
 export function findEvidence(row: Feedback, phrase: string): Evidence | null { throw new Error("Stage 2: implement findEvidence"); }
 export function buildBoard(rows: Feedback[], themes: Theme[]): Board { throw new Error("Stage 3: implement buildBoard"); }
 export function draftIssue(theme: ThemeResult): string { throw new Error("Stage 4: implement draftIssue"); }
