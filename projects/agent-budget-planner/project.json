@@ -48,7 +48,7 @@
     {
       "id": "01-estimate-cost",
       "title": "Estimate requests in integer microcredits",
-      "summary": "Validate nonnegative integer token counts and rates, then compute the worst-case cost..",
+      "summary": "Validate nonnegative integer token counts and rates, then compute the worst-case cost.",
       "hours": 2,
       "difficulty": "starter",
       "language": "python",

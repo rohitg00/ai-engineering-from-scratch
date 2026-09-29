@@ -10,7 +10,7 @@ Rates in this fixture are arbitrary teaching units, not provider prices. Output 
 
 ## Work through one concrete case
 
-A prompt has 120 tokens and allows 40 output tokens. At integer rates 2 and 5, its ceiling is120*2+40*5=440 units. With output_limit=0 the ceiling is still 240.
+A prompt has 120 tokens and allows 40 output tokens. At integer rates 2 and 5, its ceiling is 120*2+40*5=440 units. With output_limit=0 the ceiling is still 240.
 
 ```figure
 pj-agent-budget-planner-1
@@ -43,7 +43,7 @@ python3 cli.py samples/input.json --mode execute --output budget.json
 
 ## Investigate the failure boundary
 
-Change the output ceiling from 40 to400; explain why an estimate and an invoice now differ by up to1800 units.
+Change the output ceiling from 40 to 400. The estimate becomes 2240 units. With 40 actual output tokens the invoice is 440, a gap of 1800; with zero actual output tokens the invoice is 240, the maximum gap of 2000. Explain why reserving a ceiling differs from settling a receipt.
 
 
 
