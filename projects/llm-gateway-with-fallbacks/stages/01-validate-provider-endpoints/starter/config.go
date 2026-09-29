@@ -114,6 +114,7 @@ func (t providerTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 			return nil, err
 		}
 		outbound.Body = io.NopCloser(bytes.NewReader(data))
+		outbound.GetBody = func() (io.ReadCloser, error) { return io.NopCloser(bytes.NewReader(data)), nil }
 		outbound.ContentLength = int64(len(data))
 	}
 	return t.base.RoundTrip(outbound)
