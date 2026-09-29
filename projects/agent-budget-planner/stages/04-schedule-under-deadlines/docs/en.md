@@ -20,7 +20,7 @@ Change the lab inputs and calculate the result before reading its metrics. The f
 
 ## Implement the contract
 
-Implement `schedule` against the stated contract.
+Implement `schedule` against the stated contract. Emit each outcome in `events[].status`: `completed` for an admitted job, or `rejected` with its deadline or budget reason. The execution driver uses the same status field and adds `needs_reconciliation` for uncertain receipts.
 
 Use the [public API contract](../../../API.md) and the typed starter signatures. Return values from core functions and let the supplied driver own file input, argument parsing and presentation.
 

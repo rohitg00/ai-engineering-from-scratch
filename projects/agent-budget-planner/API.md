@@ -4,6 +4,8 @@ Import execute_jobs and provide invoke(job) -> (value, actual_cost). Use unit=na
 
 Costs are caller-supplied integer receipts. A monotonic deadline gates dispatch but cannot interrupt a synchronous callback. The ledger is single-process and in-memory.
 
+Both replay (`schedule`) and execution (`execute_jobs`) emit `events[].status`. Replay outcomes are `completed` or `rejected`; rejected events include a `reason` of `deadline` or `budget exceeded`. Execution may also return `needs_reconciliation` when actual usage is unknown or exceeds the reservation. Mode-specific cost and timing fields retain their distinct meanings.
+
 ### main.py
 
 ```python

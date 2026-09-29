@@ -162,7 +162,7 @@
           snapshot(job.id + ': check deadline', `Predicted completion is ${predicted} ms against a ${deadline} ms deadline. Equality is allowed.`, `${elapsed} + ${job.duration_ms} = ${predicted} ms`);
           if (predicted > deadline) {
             locations[job.id] = 'rejected'; notes[job.id] = 'deadline';
-            events.push({ id: job.id, state: 'rejected', reason: 'deadline' });
+            events.push({ id: job.id, status: 'rejected', reason: 'deadline' });
             snapshot(job.id + ': reject for deadline', `${predicted} > ${deadline}. Skip the budget gate. This rejection does not spend or advance time.`);
             continue;
           }
@@ -170,7 +170,7 @@
           snapshot(job.id + ': check budget', `The deadline passes. Compare cost ${job.cost} with available capacity ${available(state)}.`, `${job.cost} ≤ ${available(state)}?`);
           if (job.cost > available(state)) {
             locations[job.id] = 'rejected'; notes[job.id] = 'budget exceeded';
-            events.push({ id: job.id, state: 'rejected', reason: 'budget exceeded' });
+            events.push({ id: job.id, status: 'rejected', reason: 'budget exceeded' });
             snapshot(job.id + ': reject for budget', `${job.cost} exceeds available capacity. Spending and elapsed time remain unchanged.`);
             continue;
           }
@@ -180,7 +180,7 @@
           state = { ...state, spent: state.spent + job.cost, holds: {}, closed: [...state.closed, job.id] };
           elapsed = predicted;
           locations[job.id] = 'completed'; notes[job.id] = `completed at ${elapsed} ms`;
-          events.push({ id: job.id, state: 'completed', cost: job.cost, elapsed_ms: elapsed });
+          events.push({ id: job.id, status: 'completed', cost: job.cost, elapsed_ms: elapsed });
           snapshot(job.id + ': complete', `Settle the known ${job.cost}-unit cost and advance time by ${job.duration_ms} ms. No unresolved hold remains.`);
         }
         return finish(frames);

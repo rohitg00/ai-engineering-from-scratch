@@ -178,7 +178,7 @@ test('ordered replay exposes deadline then budget, preserves rejected state and 
   assert.deepEqual(result.frames[0].receipt.events, []);
   assert.equal(result.receipt.ledger.spent, 80);
   assert.equal(result.receipt.elapsed_ms, 60);
-  assert.deepEqual(result.receipt.events.map(event => [event.id, event.state, event.reason]), [['A', 'completed', undefined], ['B', 'rejected', 'budget exceeded'], ['C', 'rejected', 'deadline'], ['D', 'completed', undefined]]);
+  assert.deepEqual(result.receipt.events.map(event => [event.id, event.status, event.reason]), [['A', 'completed', undefined], ['B', 'rejected', 'budget exceeded'], ['C', 'rejected', 'deadline'], ['D', 'completed', undefined]]);
   assert.equal(result.frames.some(frame => frame.label === 'C: check budget'), false);
   for (let index = 1; index < result.frames.length; index++) {
     const frame = result.frames[index];
@@ -190,7 +190,7 @@ test('ordered replay exposes deadline then budget, preserves rejected state and 
   const separate = calculate(4, { deadline: 200 });
   assert.ok(separate.bars.filter(bar => bar.unit === 'teaching units').every(bar => bar.max === 100));
   assert.equal(separate.bars.find(bar => bar.unit === 'ms').max, 200);
-  assert.equal(calculate(4, { deadline: 60 }).receipt.events.at(-1).state, 'completed');
+  assert.equal(calculate(4, { deadline: 60 }).receipt.events.at(-1).status, 'completed');
   assert.equal(calculate(4, { deadline: 10, limit: 10 }).receipt.events[0].reason, 'deadline');
 });
 

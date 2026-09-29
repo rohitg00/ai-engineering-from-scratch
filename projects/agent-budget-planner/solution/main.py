@@ -61,16 +61,16 @@ def schedule(jobs, limit, deadline_ms):
         duration = nonnegative(job["duration_ms"])
         cost = nonnegative(job["cost"])
         if elapsed + duration > deadline_ms:
-            events.append({"id": job["id"], "state": "rejected", "reason": "deadline"})
+            events.append({"id": job["id"], "status": "rejected", "reason": "deadline"})
             continue
         try:
             state = reserve(state, job["id"], cost)
         except ValueError as error:
-            events.append({"id": job["id"], "state": "rejected", "reason": str(error)})
+            events.append({"id": job["id"], "status": "rejected", "reason": str(error)})
             continue
         state = settle(state, job["id"], cost)
         elapsed += duration
         events.append(
-            {"id": job["id"], "state": "completed", "cost": cost, "elapsed_ms": elapsed}
+            {"id": job["id"], "status": "completed", "cost": cost, "elapsed_ms": elapsed}
         )
     return {"ledger": state, "events": events, "elapsed_ms": elapsed}
