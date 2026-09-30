@@ -37,6 +37,21 @@ function cleanSite(siteRoot = __dirname) {
     }
     if (source !== output) fs.writeFileSync(filename, output);
   }
+  const markdownRoot = path.join(siteRoot, 'agent-pages');
+  if (fs.existsSync(markdownRoot)) {
+    for (const name of fs.readdirSync(markdownRoot).filter(name => name.endsWith('.md'))) {
+      const filename = path.join(markdownRoot, name);
+      const source = fs.readFileSync(filename, 'utf8');
+      const output = cleanPublicUrls(source, pages);
+      if (source !== output) fs.writeFileSync(filename, output);
+    }
+  }
+  const resourcesPath = path.join(siteRoot, '../generated/agent-content.json');
+  if (fs.existsSync(resourcesPath)) {
+    const resources = JSON.parse(fs.readFileSync(resourcesPath, 'utf8'));
+    for (const entry of resources) entry.url = cleanHref(entry.url, pages);
+    fs.writeFileSync(resourcesPath, JSON.stringify(resources));
+  }
   return pages.size;
 }
 

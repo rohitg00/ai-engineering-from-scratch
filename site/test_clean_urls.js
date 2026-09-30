@@ -79,6 +79,27 @@ test('bare project requests recover through the catalog while selected projects 
   assert.equal(config.rewrites.find(rule => rule.source === '/project').destination, '/project.html');
 });
 
+test('agent discovery uses clean URLs without changing lesson or project source Markdown', t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-clean-agents-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const site = path.join(root, 'site');
+  fs.mkdirSync(path.join(site, 'agent-pages'), { recursive: true });
+  fs.mkdirSync(path.join(root, 'generated'));
+  fs.writeFileSync(path.join(site, 'project.html'), '');
+  fs.writeFileSync(path.join(site, 'projects.html'), '');
+  const markdown = '[Example](https://aiengineeringfromscratch.com/project.html?id=demo)';
+  const resources = [{ url: 'https://aiengineeringfromscratch.com/project.html?id=demo', markdown,
+    sourceUrl: 'https://github.com/example/repo/blob/main/project.html' }];
+  const resourcesPath = path.join(root, 'generated/agent-content.json');
+  fs.writeFileSync(resourcesPath, JSON.stringify(resources));
+  const pagePath = path.join(site, 'agent-pages/projects.md');
+  fs.writeFileSync(pagePath, '[Projects](https://aiengineeringfromscratch.com/projects.html)');
+  cleanSite(site);
+  assert.equal(fs.readFileSync(pagePath, 'utf8'), '[Projects](https://aiengineeringfromscratch.com/projects)');
+  assert.deepEqual(JSON.parse(fs.readFileSync(resourcesPath, 'utf8')), [{ ...resources[0],
+    url: 'https://aiengineeringfromscratch.com/project?id=demo' }]);
+});
+
 test('HTTP redirects preserve selected projects, query encoding and clean-page content', async t => {
   const server = createServer().listen(0, '127.0.0.1');
   await once(server, 'listening');
