@@ -202,7 +202,7 @@ Refuse to run DP on state spaces > 10⁷. Refuse to claim convergence without a 
 ## 延伸閱讀
 
 - [Sutton & Barto (2018). Ch. 4 — Dynamic Programming](http://incompleteideas.net/book/RLbook2020.pdf) —— 策略迭代與價值迭代最經典的呈現。
-- [Bertsekas (2019). Reinforcement Learning and Optimal Control](http://www.athenasc.com/rlbook.html) —— 對壓縮映射論證的嚴謹處理。
+- [Bertsekas (2019). Reinforcement Learning and Optimal Control](http://www.athenasc.com/rlbook_athena.html) —— 對壓縮映射論證的嚴謹處理。
 - [Puterman (2005). Markov Decision Processes](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470316887) —— 修正型策略迭代及其收斂分析。
 - [Howard (1960). Dynamic Programming and Markov Processes](https://mitpress.mit.edu/9780262582300/dynamic-programming-and-markov-processes/) —— 策略迭代的原始論文。
 - [Bertsekas & Tsitsiklis (1996). Neuro-Dynamic Programming](http://www.athenasc.com/ndpbook.html) —— 從動態規劃通往近似動態規劃／深度強化學習的橋樑，後續每一單元都用得上。

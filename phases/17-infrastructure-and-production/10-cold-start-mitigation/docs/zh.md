@@ -125,6 +125,6 @@ cold-start-pipeline
 - [Modal — Cold start performance](https://modal.com/docs/guide/cold-start) —— Modal 公布的基準與檢查點架構。
 - [AWS Bottlerocket](https://github.com/bottlerocket-os/bottlerocket) —— 預先播種資料磁碟區快照的模式。
 - [NVIDIA Run:ai Model Streamer](https://github.com/run-ai/runai-model-streamer) —— 把權重載入與運算設定重疊。
-- [Baseten — Cold-start mitigation](https://www.baseten.co/blog/cold-start-mitigation/) —— 預熱的操作手冊。
+- [Baseten — Cold starts](https://docs.baseten.co/deployment/autoscaling/cold-starts) —— 預熱的操作手冊。
 - [ServerlessLLM paper (USENIX OSDI'24)](https://www.usenix.org/conference/osdi24/presentation/fu) —— 分層載入的設計。
 - [NVIDIA — Disaggregated LLM Inference on Kubernetes](https://developer.nvidia.com/blog/deploying-disaggregated-llm-inference-workloads-on-kubernetes/) —— 分離式部署的即時遷移。

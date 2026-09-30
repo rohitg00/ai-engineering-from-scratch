@@ -438,22 +438,20 @@ def tree_of_thought_solve(question, client, model, breadth=3, depth=3):
 
 ```python
 def solve_with_escalation(question, examples, client, model):
-    system, user = build_cot_prompt(question, examples)
-    single_response = call_llm(client, model, system, user, temperature=0.0)
-    single_answer = extract_answer(single_response)
+    single_answer, _ = few_shot_cot_solve(question, examples, client, model)
 
     sc_answer, confidence, _, _ = self_consistency_solve(
         question, examples, client, model, n_samples=5
     )
 
-    if confidence >= 0.8:
+    if confidence >= 0.8 and single_answer == sc_answer:
         return sc_answer, "self_consistency", confidence
 
     tot_answer, _ = tree_of_thought_solve(question, client, model)
     return tot_answer, "tree_of_thought", None
 ```
 
-升壓邏輯是：先試便宜的（單條 CoT）。如果自我一致性的信心低於 0.8（5 次取樣裡同意的少於 4 次），就升級到 ToT。這在成本與正確率之間取得平衡 —— 大多數問題便宜地解掉，難題才拿到更多算力。
+升壓邏輯是：先試便宜的（單條 CoT）。單一條確定性路徑沒有得票比例可言，所以它的品質檢查是一致性：溫度 0 的答案必須與取樣路徑的多數答案相符。如果不相符，或者自我一致性的信心低於 0.8（5 次取樣裡同意的少於 4 次），就升級到 ToT。這在成本與正確率之間取得平衡 —— 大多數問題便宜地解掉，難題才拿到更多算力。
 
 ## 實務應用
 

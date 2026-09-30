@@ -156,4 +156,4 @@ $ ai-scientist run --seed "attention sparsity in sub-1B transformers" --budget 3
 - [LangGraph documentation](https://langchain-ai.github.io/langgraph/) —— 參考用的編排層
 - [Semantic Scholar Graph API](https://api.semanticscholar.org/) —— 文獻搜尋
 - [E2B sandboxes](https://e2b.dev) —— 實驗隔離的參考
-- [NeurIPS reviewer guidelines](https://neurips.cc/Conferences/2026/Reviewer-Guidelines) —— 審稿人集成所編碼的那套評分準則
+- [NeurIPS reviewer guidelines](https://neurips.cc/Conferences/2026/ReviewerGuidelines) —— 審稿人集成所編碼的那套評分準則

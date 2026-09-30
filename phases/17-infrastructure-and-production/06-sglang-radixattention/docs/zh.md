@@ -125,4 +125,4 @@ roofline
 - [SGLang documentation](https://sgl-project.github.io/) —— RadixAttention 與排程的細節。
 - [SGLang paper — Efficiently Programming Large Language Models (arXiv:2312.07104)](https://arxiv.org/abs/2312.07104) —— 那份設計參考。
 - [LMSYS blog — SGLang with RadixAttention](https://www.lmsys.org/blog/2024-01-17-sglang/) —— 基準數字與排程器的理據。
-- [vLLM — Prefix Caching](https://docs.vllm.ai/en/latest/features/prefix_caching.html) —— vLLM 自己那份類基數的實作，供比較用。
+- [vLLM — Prefix Caching](https://docs.vllm.ai/en/latest/features/automatic_prefix_caching/) —— vLLM 自己那份類基數的實作，供比較用。

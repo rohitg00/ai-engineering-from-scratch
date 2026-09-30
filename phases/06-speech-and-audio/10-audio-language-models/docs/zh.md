@@ -129,17 +129,18 @@ class AudioProjector(nn.Module):
 
 ```python
 from datasets import load_dataset
-mmau = load_dataset("MMAU/MMAU-Pro")
+mmau = load_dataset("gamma-lab-umd/MMAU-Pro", split="test")
+mcq = mmau.filter(lambda item: len(item["choices"] or []) > 1)
 
 correct = 0
-for item in mmau["test"]:
-    answer = call_model(item["audio"], item["question"], item["choices"])
-    if answer == item["correct_choice"]:
+for item in mcq:
+    answer = call_model(item["audio_path"], item["question"], item["choices"])
+    if answer == item["answer"]:
         correct += 1
-print(f"Accuracy: {correct / len(mmau['test']):.3f}")
+print(f"Accuracy: {correct / len(mcq):.3f}")
 ```
 
-要分類別（語音／聲音／音樂／多段音訊）分開回報。彙總的數字會蓋掉模型到底在哪裡失敗。
+`audio_path` 指向資料集 repo 裡的 `data.zip`（約 47 GB），所以計分前要先下載並解壓縮。這個完全比對的迴圈只是健全性檢查，不是基準測試的計分器，所以它的數字不能和公開發表的 MMAU-Pro 結果相比。官方評估器用嵌入相似度（NV-Embed-v2）比對選擇題答案，用 LLM 評審為開放式答案評分，並用 regex 規則檢查遵循指令類的答案：把預測寫進 `model_output` 欄位，再執行 [MMAU-Pro repo](https://github.com/sonalkum/MMAUPro) 裡的 `evaluate_mmau_pro_comprehensive.py`。每個 `category`（speech、sound、music、multi 以及其餘類別）都要分開回報。彙總的數字會蓋掉模型到底在哪裡失敗。
 
 ## 框架應用
 
@@ -187,4 +188,4 @@ print(f"Accuracy: {correct / len(mmau['test']):.3f}")
 - [NVIDIA (2025). Audio Flamingo 3](https://arxiv.org/abs/2507.08128) —— 開源的長音訊領先者。
 - [NVIDIA (2026). Audio Flamingo Next](https://arxiv.org/abs/2604.10905) —— LongAudioBench 的 SOTA。
 - [Tang et al. (2023). SALMONN](https://arxiv.org/abs/2310.13289) —— 雙編碼器的先行者。
-- [MMAU-Pro leaderboard](https://mmaubenchmark.github.io/) —— 2026 年的即時排名。
+- [MMAU-Pro leaderboard](https://sonalkum.github.io/mmau-pro/) —— 2026 年的即時排名。

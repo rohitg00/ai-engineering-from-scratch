@@ -469,6 +469,6 @@ A/B 測試其實就是換了個外貌的貝氏推論。
 ## 延伸閱讀
 
 - [3Blue1Brown: Bayes' theorem](https://www.youtube.com/watch?v=HZGCoVF3YvM) —— 用醫學檢驗例子做的視覺化說明
-- [Stanford CS229: Generative Learning Algorithms](https://cs229.stanford.edu/notes2022fall/cs229-notes2.pdf) —— 單純貝氏及其與判別式模型的關聯
+- [Stanford CS229: Generative Learning Algorithms](https://cs229.stanford.edu/main_notes.pdf) —— 單純貝氏及其與判別式模型的關聯
 - [Think Bayes](https://greenteapress.com/wp/think-bayes/) —— 免費書，用 Python 程式碼講貝氏統計
 - [scikit-learn Naive Bayes](https://scikit-learn.org/stable/modules/naive_bayes.html) —— 生產級實作，以及各個變體的適用時機

@@ -577,5 +577,5 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 
 - [MIT 18.06: Linear Algebra](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/)（Gilbert Strang）—— 講線性方程組與矩陣分解最權威的課程
 - [Numerical Linear Algebra](https://people.maths.ox.ac.uk/trefethen/text.html)（Trefethen & Bau）—— 理解數值穩定性、條件數，以及演算法為什麼會失敗的標準參考
-- [Matrix Computations](https://www.cs.cornell.edu/cv/GolubVanLoan4/golubandvanloan.htm)（Golub & Van Loan）—— 收羅所有矩陣演算法的百科式參考
+- [Matrix Computations](https://www.press.jhu.edu/books/title/10678/matrix-computations)（Golub & Van Loan）—— 收羅所有矩陣演算法的百科式參考
 - [3Blue1Brown: Inverse Matrices](https://www.3blue1brown.com/lessons/inverse-matrices) —— 用視覺直觀說明解 Ax = b 在幾何上是什麼意思

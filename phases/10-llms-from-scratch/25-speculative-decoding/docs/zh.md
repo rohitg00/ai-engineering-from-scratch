@@ -165,9 +165,9 @@ def speculative_step(p_target, q_draft, K, temperature=1.0):
 
 ## 框架應用
 
-- **vLLM** 與 **SGLang** 都出貨了一級支援的推測式解碼。旗標：`--speculative_model`、`--num_speculative_tokens`。EAGLE-2/3 透過 `--spec_decoding_algorithm eagle` 旗標啟用。
+- **vLLM** 與 **SGLang** 都出貨了一級支援的推測式解碼。在 vLLM 裡，把一個含有 `method`、`model` 與 `num_speculative_tokens` 的 JSON 物件傳給 `--speculative-config`；EAGLE-3 就是 `"method": "eagle3"`。
 - **NVIDIA TensorRT-LLM** 原生支援 Medusa 與 EAGLE 樹。
-- **參考草稿模型**：`Qwen/Qwen3-0.6B-spec`（替 Qwen3-32B 起草）、`meta-llama/Llama-3.2-1B-Instruct-spec`（替 70B 起草）。
+- **參考草稿模型**：`Qwen/Qwen3-0.6B`（替 Qwen3-32B 起草）、`meta-llama/Llama-3.2-1B-Instruct`（替 Llama 3.x 70B 起草）。
 - **Medusa heads**（Cai 等人，2024，"Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads"）：不用草稿模型，改成在驗證模型自己身上加 K 個平行的預測 head。部署比較簡單，接受率略低於 EAGLE。
 
 ## 產出交付

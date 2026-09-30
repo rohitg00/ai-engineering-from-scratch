@@ -151,7 +151,7 @@ learner: "6"
 
 - [Khanmigo (Khan Academy)](https://www.khanmigo.ai) —— 消費性 K-12 家教的參考
 - [Duolingo Max](https://blog.duolingo.com/duolingo-max/) —— 語言學習家教的參考
-- [Google LearnLM / Gemini for Education](https://blog.google/technology/google-deepmind/learnlm) —— 託管式的參考模型
+- [Google LearnLM / Gemini for Education](https://blog.google/products-and-platforms/products/education/google-learnlm-gemini-generative-ai/) —— 託管式的參考模型
 - [Quizlet Q-Chat](https://quizlet.com) —— 另一個參考
 - [Synthesis Tutor](https://www.synthesis.com) —— 新創的參考
 - [FSRS algorithm](https://github.com/open-spaced-repetition/fsrs4anki) —— 間隔重複排程器

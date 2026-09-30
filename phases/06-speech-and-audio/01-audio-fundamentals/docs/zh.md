@@ -137,6 +137,6 @@ def dft(x):
 
 - [Shannon (1949). Communication in the Presence of Noise](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf) —— 取樣定理背後的那篇論文。
 - [Smith — The Scientist and Engineer's Guide to Digital Signal Processing](https://www.dspguide.com/ch8.htm) —— 免費的 DSP 經典教科書。
-- [librosa docs — audio primer](https://librosa.org/doc/latest/tutorial.html) —— 附程式碼的實用導覽。
-- [Heinrich Kuttruff — Room Acoustics (6th ed.)](https://www.routledge.com/Room-Acoustics/Kuttruff/p/book/9781482260434) —— 解釋真實世界的音訊為何不是乾淨正弦波的參考書。
+- [librosa docs — audio primer](https://librosa.org/doc/latest/auto_tutorials/index.html) —— 附程式碼的實用導覽。
+- [Heinrich Kuttruff — Room Acoustics (6th ed.)](https://www.taylorfrancis.com/books/mono/10.1201/9781315372150/room-acoustics-heinrich-kuttruff) —— 解釋真實世界的音訊為何不是乾淨正弦波的參考書。
 - [Steve Eddins — FFT Interpretation notebook](https://blogs.mathworks.com/steve/2020/03/30/fft-spectrum-and-spectral-densities/) —— 10 分鐘講清楚頻率 bin 的直覺。

@@ -119,7 +119,7 @@ class AudioCNN(nn.Module):
 
 300 萬個參數。用單張 RTX 4090 在 ESC-50 上約 10 分鐘就訓練完。準確率 80% 以上。
 
-### 步驟 5：2026 年的預設做法 —— 微調 BEATs
+### 步驟 5：微調一個預訓練的音訊 transformer（以 AST 示範）
 
 ```python
 from transformers import ASTFeatureExtractor, ASTForAudioClassification
@@ -135,7 +135,7 @@ inputs = ext(audio, sampling_rate=16000, return_tensors="pt")
 logits = model(**inputs).logits
 ```
 
-要用 BEATs 的話，透過 `beats` 函式庫使用 `microsoft/BEATs-base`；transformers 的 API 形狀是一樣的。
+這個範例從 Hub 微調 AST。BEATs 是 2026 年的預設選擇，但它不在 Hugging Face Hub 上：請從 [microsoft/unilm 裡的 BEATs 發布](https://github.com/microsoft/unilm/tree/master/beats) 下載檢查點，再用那個 repo 的 `BEATs` 與 `BEATsConfig` 類別載入；微調迴圈的形狀不變。
 
 ## 框架應用
 

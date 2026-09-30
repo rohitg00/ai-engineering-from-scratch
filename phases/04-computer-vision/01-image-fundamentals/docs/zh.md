@@ -440,7 +440,7 @@ print(f"per-channel std:  {batch.std(dim=(0, 2, 3)).tolist()}")
 
 ## 延伸閱讀
 
-- [Charles Poynton — A Guided Tour of Color Space](https://poynton.ca/PDFs/Guided_tour.pdf) —— 關於為什麼會有這麼多色彩空間、每一個又在什麼時候重要，寫得最清楚的技術性論述
+- [Charles Poynton — A Guided Tour of Color Space](https://web.archive.org/web/20251220000525/https://poynton.ca/PDFs/Guided_tour.pdf) —— 關於為什麼會有這麼多色彩空間、每一個又在什麼時候重要，寫得最清楚的技術性論述
 - [PyTorch Vision Transforms Docs](https://pytorch.org/vision/stable/transforms.html) —— 你在生產環境裡真的會組起來的那整條轉換流程
 - [How JPEG Works (Colt McAnlis)](https://www.youtube.com/watch?v=F1kYBnY6mwg) —— 對色度次取樣、DCT，以及 JPEG 為什麼編碼 YCbCr 而不是 RGB 的一趟犀利視覺導覽
 - [ImageNet Preprocessing Conventions (torchvision models)](https://pytorch.org/vision/stable/models.html) —— `mean=[0.485, 0.456, 0.406]` 的真相來源，以及為什麼模型庫裡每個模型都期待它

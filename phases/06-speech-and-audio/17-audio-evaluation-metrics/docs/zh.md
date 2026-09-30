@@ -106,7 +106,7 @@
 | Open ASR Leaderboard（HF） | 英語 ＋ 多語言 ＋ 長音訊 | `huggingface.co/spaces/hf-audio/open_asr_leaderboard` |
 | TTS Arena（HF） | 英語 TTS | `huggingface.co/spaces/TTS-AGI/TTS-Arena` |
 | Artificial Analysis Speech | TTS ＋ STT，由成對投票算 ELO | `artificialanalysis.ai/speech` |
-| MMAU-Pro | 音訊語言模型的推論能力 | `mmaubenchmark.github.io` |
+| MMAU-Pro | 音訊語言模型的推論能力 | `sonalkum.github.io/mmau-pro` |
 | SpeakerBench／VoxSRC | 說話人辨識 | `voxsrc.github.io` |
 | MMAU 音樂子集 | 音樂類音訊語言模型 | （在 MMAU 之內） |
 | HEAR benchmark | 自監督音訊 | `hearbenchmark.com` |
@@ -224,5 +224,5 @@ def eer(same_scores, diff_scores):
 - [Fréchet Audio Distance (Kilgour et al. 2019)](https://arxiv.org/abs/1812.08466) —— 音樂生成的標準指標。
 - [Open ASR Leaderboard](https://huggingface.co/spaces/hf-audio/open_asr_leaderboard) —— 2026 年的即時排名。
 - [TTS Arena](https://huggingface.co/spaces/TTS-AGI/TTS-Arena) —— 人類投票的 TTS 排行榜。
-- [MMAU-Pro benchmark](https://mmaubenchmark.github.io/) —— 音訊語言模型推論能力的排行榜。
+- [MMAU-Pro benchmark](https://sonalkum.github.io/mmau-pro/) —— 音訊語言模型推論能力的排行榜。
 - [HEAR benchmark](https://hearbenchmark.com/) —— 音訊自監督學習的基準。

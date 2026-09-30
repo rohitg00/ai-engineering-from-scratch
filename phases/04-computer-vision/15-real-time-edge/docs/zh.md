@@ -270,5 +270,5 @@ def compare_regimes():
 
 - [EfficientNet (Tan & Le, 2019)](https://arxiv.org/abs/1905.11946) —— 高效架構的複合縮放法
 - [MobileNetV3 (Howard et al., 2019)](https://arxiv.org/abs/1905.02244) —— 行動優先的架構，帶 h-swish 與 squeeze-excite
-- [A Practical Guide to TensorRT Optimization (NVIDIA)](https://developer.nvidia.com/blog/accelerating-model-inference-with-tensorrt-tips-and-best-practices-for-pytorch-users/) —— 怎麼真的量到論文裡那些吞吐量數字
+- [Accelerating Inference Up to 6x Faster in PyTorch with Torch-TensorRT (NVIDIA)](https://developer.nvidia.com/blog/accelerating-inference-up-to-6x-faster-in-pytorch-with-torch-tensorrt/) —— 怎麼真的量到論文裡那些吞吐量數字
 - [ONNX Runtime docs](https://onnxruntime.ai/docs/) —— 量化、圖最佳化、provider 選擇

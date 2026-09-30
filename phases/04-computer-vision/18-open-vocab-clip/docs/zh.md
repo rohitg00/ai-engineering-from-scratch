@@ -224,4 +224,4 @@ SigLIP 比較新，在小規模下訓練得更好，新專案優先選它：`goo
 - [CLIP: Learning Transferable Visual Models from Natural Language Supervision (Radford et al., 2021)](https://arxiv.org/abs/2103.00020)
 - [SigLIP: Sigmoid Loss for Language-Image Pre-Training (Zhai et al., 2023)](https://arxiv.org/abs/2303.15343)
 - [OpenCLIP](https://github.com/mlfoundations/open_clip) —— 社群維護的程式庫
-- [DINOv2 vs CLIP vs MAE: a features comparison](https://huggingface.co/blog/dinov2) —— HF 的指南，附並列的使用情境對照
+- [Oquab et al. (2023). DINOv2: Learning Robust Visual Features without Supervision](https://arxiv.org/abs/2304.07193) —— 論文本身，附上與 CLIP 類與 MAE 類模型對照的特徵基準測試

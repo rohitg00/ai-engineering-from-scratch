@@ -937,24 +937,24 @@ OpenAI 的系統訊息會被最先處理，並被賦予高注意力權重。temp
 ### Google：帶安全設定的 Gemini
 
 ```python
-# import google.generativeai as genai
+# from google import genai
+# from google.genai import types
 #
-# genai.configure(api_key="your-key")
+# client = genai.Client()
 #
-# model = genai.GenerativeModel(
-#     "gemini-1.5-pro",
-#     system_instruction="You are a technical analyst. Be precise and cite sources.",
-#     generation_config=genai.GenerationConfig(
+# response = client.models.generate_content(
+#     model="gemini-3.8-flash",
+#     contents="Compare PostgreSQL and MySQL for write-heavy workloads.",
+#     config=types.GenerateContentConfig(
+#         system_instruction="You are a technical analyst. Be precise and cite sources.",
 #         temperature=0.3,
 #         max_output_tokens=2048,
 #     ),
 # )
-#
-# response = model.generate_content("Compare PostgreSQL and MySQL for write-heavy workloads.")
 # print(response.text)
 ```
 
-Gemini 把系統指令當成模型設定的一部分處理，而不是一則訊息。2M 詞元的上下文視窗意味著你可以塞進龐大的少樣本範例集，那些在 GPT-4o 或 Claude 裡是放不下的。
+Gemini 把系統指令當成模型設定的一部分處理，而不是一則訊息。1M 詞元的上下文視窗意味著你可以塞進龐大的少樣本範例集，那些在 GPT-4o 的 128K 視窗裡是放不下的。
 
 ### 與供應商無關的提示詞模板
 
@@ -1023,6 +1023,6 @@ Python 程式碼（`code/prompt_engineering.py`）是一套獨立可跑的測試
 - [Wei et al., 2022 —— "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models"](https://arxiv.org/abs/2201.11903) —— 奠基性論文，證明「一步一步想」能讓 LLM 在推理任務上的正確率提升 10-40%
 - [Zamfirescu-Pereira et al., 2023 —— "Why Johnny Can't Prompt"](https://arxiv.org/abs/2304.13529) —— 研究非專家為何寫不好提示詞，以及什麼讓提示詞有效
 - [Shin et al., 2023 —— "Prompt Engineering a Prompt Engineer"](https://arxiv.org/abs/2311.05661) —— 用 LLM 自動最佳化提示詞，元提示的基礎
-- [LMSYS Chatbot Arena](https://chat.lmsys.org/) —— LLM 的即時盲測比較，你可以把同一個提示詞跨模型測試，並投票哪個回應更好
+- [Arena（前身為 LMSYS Chatbot Arena）](https://arena.ai/) —— LLM 的即時盲測比較，你可以把同一個提示詞跨模型測試，並投票哪個回應更好
 - [DAIR.AI Prompt Engineering Guide](https://www.promptingguide.ai/) —— 提示詞技巧的完整目錄與範例（零樣本、少樣本、CoT、ReAct、自我一致性）；業界在「提示詞工程」這個大面向上最常翻的參考資料。
 - [Anthropic prompt library](https://docs.anthropic.com/en/prompt-library) —— 依使用場景整理、已知可用的提示詞；展示了實際上線的結構性模式。

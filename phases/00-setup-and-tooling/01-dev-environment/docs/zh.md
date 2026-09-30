@@ -49,7 +49,7 @@ xcode-select --install
 brew install git curl wget
 
 # Ubuntu/Debian
-sudo apt update && sudo apt install -y build-essential git curl wget
+sudo apt update && sudo apt install -y build-essential git curl wget unzip
 
 # Windows (use WSL2)
 wsl --install -d Ubuntu-24.04
@@ -95,6 +95,8 @@ npm install -g pnpm
 
 node -e "console.log('Node', process.version)"
 ```
+
+fnm 安裝程式會先檢查 `unzip`，找不到時就以 `Not installing fnm due to missing dependencies.` 結束：在 Linux 上它要解開 zip 壓縮檔，在 macOS 上則透過 Homebrew 安裝。macOS 內建 `unzip`；Ubuntu、Debian 與 WSL2 則由步驟 1 那行 apt 命令裝好（如果你跳過了那一步，就執行 `sudo apt install -y unzip`）。
 
 **macOS ／ Apple Silicon（M1/M2/M3/M4）：** 如果安裝程式停在 `Error: Cannot install under Rosetta 2 in ARM default prefix (/opt/homebrew)`，表示你的終端機正在 Rosetta 2 底下執行（`arch` 會印出 `i386`），而 Homebrew 是原生的 arm64 版本。強制以 arm64 安裝 fnm，把它接進你的 shell，然後從上面的 `fnm install 22` 開始重跑那幾行命令：
 

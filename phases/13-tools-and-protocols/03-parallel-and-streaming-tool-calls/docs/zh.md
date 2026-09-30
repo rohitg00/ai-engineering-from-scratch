@@ -158,7 +158,7 @@ tp-parallel-fanout
 ## 延伸閱讀
 
 - [OpenAI — Parallel function calling](https://platform.openai.com/docs/guides/function-calling#parallel-function-calling) —— 預設行為與退出旗標
-- [Anthropic — Tool use: implementing tool use](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/implementing-tool-use) —— `disable_parallel_tool_use` 與結果批次處理
+- [Anthropic — Parallel tool use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/parallel-tool-use) —— `disable_parallel_tool_use` 與結果批次處理
 - [Google — Gemini function calling parallel section](https://ai.google.dev/gemini-api/docs/function-calling) —— 從 Gemini 3 起帶 id 對應的平行呼叫
 - [OpenAI — Streaming responses with tools](https://platform.openai.com/docs/api-reference/responses-streaming) —— OpenAI 串流的分塊參數重組
 - [Anthropic — Streaming messages](https://docs.anthropic.com/en/api/messages-streaming) —— 帶 `input_json_delta` 的 `content_block_delta`

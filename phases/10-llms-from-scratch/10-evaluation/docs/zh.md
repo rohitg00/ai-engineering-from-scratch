@@ -516,4 +516,4 @@ RAGAS 量的是通用評估漏掉的東西：模型的答案是否有紮根在�
 - [Hendrycks et al., 2021 -- "Measuring Massive Multitask Language Understanding"](https://arxiv.org/abs/2009.03300) —— MMLU 論文，儘管已經飽和，仍是被引用最多的 LLM 基準測試
 - [Chen et al., 2021 -- "Evaluating Large Language Models Trained on Code"](https://arxiv.org/abs/2107.03374) —— OpenAI 的 HumanEval 論文，奠定了程式碼生成的評估方法學
 - [Zheng et al., 2023 -- "Judging LLM-as-a-Judge"](https://arxiv.org/abs/2306.05685) —— 系統性分析用 LLM 評估 LLM，包含位置偏誤與冗長偏誤的發現
-- [LMSYS Chatbot Arena](https://chat.lmsys.org/) —— 群眾外包的模型比較平台，累積 200 萬張以上的票，是最受信任的真實世界 LLM 排名
+- [Arena（前身為 LMSYS Chatbot Arena）](https://arena.ai/leaderboard) —— 群眾外包的模型比較平台，累積 200 萬張以上的票，是最受信任的真實世界 LLM 排名

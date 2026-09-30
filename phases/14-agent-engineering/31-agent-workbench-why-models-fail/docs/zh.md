@@ -214,7 +214,6 @@ python3 code/main.py
 - [preprints.org, Harness Engineering for Language Agents (March 2026)](https://www.preprints.org/manuscript/202603.1756) —— 以控制／能動性／執行環境切入的學術框架
 - [walkinglabs/awesome-harness-engineering](https://github.com/walkinglabs/awesome-harness-engineering) —— 橫跨脈絡、評測、可觀測性、編排的策展閱讀清單
 - [ai-boost/awesome-harness-engineering](https://github.com/ai-boost/awesome-harness-engineering) —— 另一份策展清單（工具、評測、記憶、MCP、權限）
-- [andrewgarst/agentic_harness](https://github.com/andrewgarst/agentic_harness) —— 生產就緒的參考實作，帶 Redis 支撐的記憶與評測套組
 - [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) —— 內建個人代理的開放式 agent harness
 
 值得為了那些歧異（而不是為了共識）去讀的 Hacker News 討論串：

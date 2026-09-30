@@ -140,7 +140,6 @@ python3 code/main.py
 - [Type-Checked Compliance: Deterministic Guardrails (arXiv 2604.01483)](https://arxiv.org/pdf/2604.01483) —— 以 Lean 4 作為決定性把關的上限
 - [logi-cmd/agent-guardrails — merge gate spec](https://github.com/logi-cmd/agent-guardrails) —— 範圍 + 突變測試的閘門
 - [Guardrails AI x MLflow](https://guardrailsai.com/blog/guardrails-mlflow) —— 把決定性驗證器當成 CI 的評分器
-- [Akira, Real-Time Guardrails for Agentic Systems](https://www.akira.ai/blog/real-time-guardrails-agentic-systems) —— 工具前／後的閘門
 - 階段 14 · 27 —— 提示詞注入防禦（閘門的對抗性搭檔）
 - 階段 14 · 36 —— 這道閘門所強制執行的範圍契約
 - 階段 14 · 37 —— 這道閘門所評分的回饋日誌

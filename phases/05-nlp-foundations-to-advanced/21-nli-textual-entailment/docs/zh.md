@@ -71,7 +71,7 @@ print(result)
 #  {'label': 'contradiction', 'score': 0.01}]
 ```
 
-要在生產環境做 NLI，`facebook/bart-large-mnli` 與 `microsoft/deberta-v3-large-mnli` 是開源界的預設選擇。DeBERTa-v3 在排行榜上居首。
+要在生產環境做 NLI，`facebook/bart-large-mnli` 與 `MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli` 是開源界的預設選擇。DeBERTa-v3 在排行榜上居首。
 
 ### 步驟 2：零樣本分類
 
@@ -118,7 +118,7 @@ def is_faithful(answer, context, threshold=0.5):
 
 | 使用場景 | 模型 |
 |---------|-------|
-| 通用 NLI | `microsoft/deberta-v3-large-mnli` |
+| 通用 NLI | `MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli` |
 | 快速／邊緣裝置 | `cross-encoder/nli-deberta-v3-base` |
 | 零樣本分類（輕量） | `facebook/bart-large-mnli` |
 | 文件層級 NLI | `MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli` |

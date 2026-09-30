@@ -170,5 +170,5 @@ def dct_ii(x, n_coeffs):
 - [Davis, Mermelstein (1980). Comparison of parametric representations for monosyllabic word recognition](https://ieeexplore.ieee.org/document/1163420) —— MFCC 那篇論文。
 - [Stevens, Volkmann, Newman (1937). A Scale for the Measurement of the Psychological Magnitude Pitch](https://pubs.aip.org/asa/jasa/article-abstract/8/3/185/735757/) —— 最原始的梅爾刻度。
 - [OpenAI — Whisper source, log_mel_spectrogram](https://github.com/openai/whisper/blob/main/whisper/audio.py) —— 讀一下參考實作。
-- [librosa feature extraction docs](https://librosa.org/doc/main/feature.html) —— `mfcc`、`melspectrogram` 以及幀移／窗長的參考文件。
+- [librosa feature extraction docs](https://librosa.org/doc/latest/api/feature.html) —— `mfcc`、`melspectrogram` 以及幀移／窗長的參考文件。
 - [NVIDIA NeMo — audio preprocessing](https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/main/asr/asr_all.html#featurizers) —— Parakeet + Canary 模型正式規模的流程。

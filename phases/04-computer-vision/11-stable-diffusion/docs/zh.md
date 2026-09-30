@@ -193,13 +193,16 @@ out = inpaint(
 ### 步驟 5：載入 LoRA
 
 ```python
-pipe.load_lora_weights("sayakpaul/sd-lora-ghibli")
+pipe.load_lora_weights(
+    "artificialguybr/studioghibli-redmond-1-5v-studio-ghibli-lora-for-liberteredmond-sd-1-5",
+    weight_name="StudioGhibliRedmond-15V-LiberteRedmond-StdGBRedmAF-StudioGhibli.safetensors",
+)
 pipe.fuse_lora(lora_scale=0.8)
 
-image = pipe(prompt="a village square in ghibli style").images[0]
+image = pipe(prompt="a village square, StdGBRedmAF, Studio Ghibli").images[0]
 ```
 
-`lora_scale` 控制強度；0.0 = 沒有效果，1.0 = 完整效果。`fuse_lora` 會就地把轉接器烙進權重裡以換取速度，但這樣就不能再換了。要載入另一個轉接器之前，先呼叫 `pipe.unfuse_lora()`。
+模型卡上的觸發詞（`StdGBRedmAF, Studio Ghibli`）會把這個風格打開。`lora_scale` 控制強度；0.0 = 沒有效果，1.0 = 完整效果。`fuse_lora` 會就地把轉接器烙進權重裡以換取速度，但這樣就不能再換了。要載入另一個轉接器之前，先呼叫 `pipe.unfuse_lora()`。
 
 ### 步驟 6：LoRA 訓練（草圖）
 

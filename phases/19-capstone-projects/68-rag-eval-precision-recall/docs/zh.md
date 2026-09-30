@@ -182,7 +182,7 @@ python3 code/main.py
 - Buckley、Voorhees，〈Evaluating Evaluation Measure Stability〉，SIGIR 2000 —— 關於排序指標那篇經典論文
 - Jarvelin、Kekalainen，〈Cumulated Gain-based Evaluation of IR Techniques〉 —— 那篇 nDCG 論文
 - [Ragas: Automated Evaluation of RAG Pipelines](https://docs.ragas.io)
-- [Anthropic, Evaluating RAG](https://www.anthropic.com/news/evaluating-rag)
+- [Anthropic, Introducing Contextual Retrieval](https://www.anthropic.com/engineering/contextual-retrieval) - 以 1 減去 recall@20 來為檢索評分
 - 階段 11 第 10 課 —— 評估框架的基礎
 - 階段 19 第 64-67 課 —— 這裡所評估的那些元件
 - 階段 19 第 69 課 —— 這份評估所評分的那條端到端管線

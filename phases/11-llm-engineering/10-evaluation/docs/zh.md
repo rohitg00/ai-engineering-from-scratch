@@ -856,7 +856,7 @@ DeepEval 與 Pytest 整合。執行 `deepeval test run test_evals.py`，就能�
 - [DeepEval Documentation](https://docs.confident-ai.com) —— Python 原生評估框架，14 種以上指標、Pytest 整合與幻覺偵測
 - [Braintrust Eval Guide](https://www.braintrust.dev/docs) —— 生產級評估平台，含實驗追蹤、評分函數與資料集管理
 - [Ribeiro et al., 2020 —— "Beyond Accuracy: Behavioral Testing of NLP Models with CheckList"](https://arxiv.org/abs/2005.04118) —— 系統性的行為測試方法論（最小功能性、不變性、方向性期望），也適用於 LLM 評估
-- [LMSYS Chatbot Arena](https://chat.lmsys.org) —— 即時的人類評估平台，使用者為模型輸出投票，是 LLM 最大的成對比較資料集
+- [Arena（前身為 LMSYS Chatbot Arena）](https://arena.ai/) —— 即時的人類評估平台，使用者為模型輸出投票，是 LLM 最大的成對比較資料集
 - [Es et al., "RAGAS: Automated Evaluation of Retrieval Augmented Generation" (EACL 2024 demo)](https://arxiv.org/abs/2309.15217) —— RAG 的免參考指標（忠實度、答案相關性、上下文 precision/recall）；不需標註人力就能擴展到生產的評估模式。
 - [Liu et al., "G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment" (EMNLP 2023)](https://arxiv.org/abs/2303.16634) —— 把思維鏈 + 填表當成評審協定；每個要打造評審的人都需要的校準與偏誤結果。
 - [Hugging Face LLM Evaluation Guidebook](https://huggingface.co/spaces/OpenEvals/evaluation-guidebook) —— 來自維護 Open LLM Leaderboard 團隊的實務建議，涵蓋資料汙染、指標挑選與可重現性。

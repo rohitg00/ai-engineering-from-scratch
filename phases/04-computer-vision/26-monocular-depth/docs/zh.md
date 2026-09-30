@@ -192,21 +192,21 @@ print(f"before align  absRel = {abs_rel_error(pred, gt):.3f}")
 print(f"after align   absRel = {abs_rel_error(aligned, gt):.3f}")
 ```
 
-### 步驟 5：Depth Anything V3 用法（參考）
+### 步驟 5：Depth Anything V2 用法（參考）
 
 ```python
-import torch
+import numpy as np
 from transformers import pipeline
 from PIL import Image
 
-pipe = pipeline(task="depth-estimation", model="LiheYoung/depth-anything-v2-large")
+pipe = pipeline(task="depth-estimation", model="depth-anything/Depth-Anything-V2-Large-hf")
 
 image = Image.open("street.jpg").convert("RGB")
 out = pipe(image)
 depth_np = np.array(out["depth"])
 ```
 
-三行。`out["depth"]` 是一張 PIL 灰階圖；要做數學運算就轉成 numpy。要用 Depth Anything V3 的話，等它釋出後把 model id 換掉就好，API 沒有變。
+三行。`out["depth"]` 是一張 PIL 灰階圖；要做數學運算就轉成 numpy。Depth Anything 3（2025 年 11 月）無法透過這個 pipeline 載入。它有自己的 `depth_anything_3` 套件：`DepthAnything3.from_pretrained("depth-anything/DA3MONO-LARGE")` 會載入相對深度的單目模型，而 `model.inference(images).depth` 會回傳一個 `[N, H, W]` 的深度陣列。
 
 ## 框架應用
 

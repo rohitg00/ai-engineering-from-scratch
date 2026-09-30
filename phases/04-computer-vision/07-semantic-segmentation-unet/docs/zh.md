@@ -400,4 +400,4 @@ model = smp.Unet(
 - [U-Net: Convolutional Networks for Biomedical Image Segmentation (Ronneberger et al., 2015)](https://arxiv.org/abs/1505.04597) —— 原始論文；大家都在抄的那張圖在第 2 頁
 - [Fully Convolutional Networks (Long et al., 2015)](https://arxiv.org/abs/1411.4038) —— 第一篇把分割變成端到端卷積問題的論文
 - [segmentation_models_pytorch](https://github.com/qubvel/segmentation_models.pytorch) —— 生產級分割的參考實作；每一種標準架構加上每一種標準損失
-- [Lessons learned from training SOTA segmentation (kaggle.com competitions)](https://www.kaggle.com/code/iafoss/carvana-unet-pytorch) —— 一份逐步說明，講清楚 TTA、偽標註與類別權重在真實資料上為什麼重要
+- [iafoss, Unet34 submission with TTA (Kaggle notebook)](https://www.kaggle.com/code/iafoss/unet34-submission-tta-0-699-new-public-lb) —— 在一場真實的分割競賽中，為 U-Net 做測試時增強（TTA）

@@ -57,7 +57,7 @@ Alpha 隨工作負載而變。在 ShareGPT 式的一般聊天上，用 ShareGPT 
 
 ### EAGLE-3 已經被部署在哪裡
 
-Google 在 2025 年把推測解碼部署進 AI Overviews（品質相同、回應更快）。vLLM V1 以 `speculative_config` 作為有文件的介面出貨；V1 中的 N-gram GPU 推測解碼是與分塊預填相容的那個變體。SGLang 支援 EAGLE-3，並把它當成前綴吃重工作負載的建議草稿路徑。
+Google 在 2025 年把推測解碼部署進 AI Overviews（品質相同、回應更快）。vLLM V1 以 `speculative_config` 作為有文件的介面出貨，而它的功能矩陣把推測解碼標為與分塊預填相容。SGLang 支援 EAGLE-3，並把它當成前綴吃重工作負載的建議草稿路徑。
 
 ### 一行的損益平衡數學
 
@@ -68,7 +68,7 @@ Google 在 2025 年把推測解碼部署進 AI Overviews（品質相同、回應
 - 延遲不重要的批次 1 離線生成。用純目標模型。
 - 非常短的輸出（50 個詞元以下）。草稿開銷與驗證成本會主導。
 - 沒有領域訓練草稿頭的特化領域。Alpha 太低。
-- vLLM v0.18.0 加草稿模型推測解碼加 `--enable-chunked-prefill`。這個組合編不起來。有文件的例外是 V1 裡的 N-gram GPU 推測解碼。
+- 假設每一對功能都能組合。對照你所用版本的 vLLM 相容性矩陣：v0.18.0 把推測解碼標為與分塊預填相容。
 
 ```figure
 mx-speculative-tree
@@ -86,7 +86,7 @@ mx-speculative-tree
 
 1. 跑 `code/main.py`。在 K=5 時，你需要多少 alpha 才有 2 倍加速？3 倍呢？那對 verify_overhead 有多敏感？
 2. 想像生產流量是 70% 一般聊天、30% 程式碼。一般聊天在 ShareGPT 訓練的 EAGLE-3 上打到 alpha 0.7；程式碼打到 0.4。混合後的 alpha 是多少，推測解碼是淨正面的嗎？
-3. 讀 vLLM 的 `speculative_config` 文件。說出那三種模式（草稿模型、EAGLE、N-gram），以及哪一種與分塊預填相容。
+3. 讀 vLLM 的 `speculative_config` 文件。說出那三種模式（草稿模型、EAGLE、N-gram），並檢查在你的 vLLM 版本中，每一種能與哪些功能組合。
 4. 你看到啟用 EAGLE-3 後平均 ITL 掉了 25%，但 P99 ITL 上升 15%。診斷並提出一項緩解。
 5. 算出 Llama 3.3 70B 的 EAGLE-3 草稿頭的記憶體成本。它跟拿 Llama 3.2 1B 當經典草稿相比如何？
 

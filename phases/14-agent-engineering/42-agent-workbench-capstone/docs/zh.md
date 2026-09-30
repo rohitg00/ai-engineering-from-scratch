@@ -150,7 +150,6 @@ python3 code/main.py
 - [Nx Blog, Teach Your AI Agent How to Work in a Monorepo](https://nx.dev/blog/nx-ai-agent-skills) —— 橫跨六種工具的單一來源產生器
 - [agents.md — the open spec](https://agents.md/) —— 你套件裡的路由器必須實作什麼
 - [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) —— 等同於套件的參考實作
-- [andrewgarst/agentic_harness](https://github.com/andrewgarst/agentic_harness) —— 由 Redis 支撐、帶評測套組的參考實作
 - [Augment Code, A good AGENTS.md is a model upgrade](https://www.augmentcode.com/blog/how-to-write-good-agents-dot-md-files) —— 套件文件的品質門檻
 - [Anthropic, Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
 - [Anthropic, Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps)

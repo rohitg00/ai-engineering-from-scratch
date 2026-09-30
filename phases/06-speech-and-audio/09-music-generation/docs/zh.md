@@ -169,4 +169,4 @@ music = musicgen.generate([description], duration=30)
 - [ACE-Step](https://github.com/ace-step/ACE-Step) —— 開源的 40 億參數完整歌曲生成器，2026 年 4 月。
 - [Suno v5 platform docs](https://suno.com) —— 商業端的品質領先者。
 - [AudioLDM2](https://arxiv.org/abs/2308.05734) —— 用於音樂 + 音效的潛在擴散。
-- [WMG-Suno settlement coverage](https://www.musicbusinessworldwide.com/suno-warner-music-settlement/) —— 2025 年 11 月的判例。
+- [WMG-Suno settlement coverage](https://www.musicbusinessworldwide.com/warner-music-group-settles-with-suno-strikes-first-of-its-kind-deal-with-ai-song-generator/) —— 2025 年 11 月的判例。

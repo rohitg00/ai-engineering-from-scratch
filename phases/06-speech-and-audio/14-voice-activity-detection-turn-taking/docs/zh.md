@@ -170,7 +170,7 @@ STT（Kyutai、Deepgram、AssemblyAI）必須支援 flush 這招才行得通。W
 ## 延伸閱讀
 
 - [Silero VAD](https://github.com/snakers4/silero-vad) —— 開源 VAD 的參考實作。
-- [Picovoice Cobra VAD](https://picovoice.ai/products/cobra/) —— 商業方案的準確度領先者。
+- [Picovoice Cobra VAD](https://picovoice.ai/products/voice/voice-activity-detection/) —— 商業方案的準確度領先者。
 - [Kyutai — Unmute + flush trick](https://kyutai.org/stt) —— 壓到 200 ms 以下的工程妙招。
 - [LiveKit — turn detection](https://docs.livekit.io/agents/logic/turns/) —— 正式環境裡的語意端點偵測。
 - [WebRTC VAD](https://webrtc.googlesource.com/src/) —— 舊時代的基準線。
