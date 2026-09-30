@@ -52,14 +52,14 @@
     },
     {
       "stage": "post",
-      "question": "在 vLLM v0.18.0 中，哪一種推測式解碼變體仍與 --enable-chunked-prefill 相容？",
+      "question": "vLLM v0.18.0 的功能相容性矩陣對推測式解碼搭配 --enable-chunked-prefill 怎麼說？",
       "options": [
-        "沒有任何推測式解碼與它相容",
-        "V1 排程器中的 N-gram GPU 推測式解碼",
-        "draft-model 推測式解碼",
-        "只有 EAGLE-1"
+        "矩陣將這個組合標示為相容",
+        "兩者在任何設定下都無法同時使用",
+        "只有 EAGLE-1 draft head 能搭配 chunked prefill",
+        "只有 draft-model 推測式解碼能搭配 chunked prefill"
       ],
-      "correct": 1,
+      "correct": 0,
       "explanation": ""
     },
     {

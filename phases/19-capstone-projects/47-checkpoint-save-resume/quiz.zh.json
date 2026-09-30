@@ -36,7 +36,7 @@
         "為了壓縮檔案"
       ],
       "correct": 0,
-      "explanation": "load_sharded_checkpoint 會斷言每個分片的實際雜湊與記錄值相符，meta 檔的雜湊也一樣。無聲損毀是最糟糕的失敗模式。"
+      "explanation": "load_sharded_checkpoint 會檢查每個分片的實際雜湊是否與記錄值相符，meta 檔的雜湊也一樣，只要有任何不符就會在合併前拋出例外。無聲損毀是最糟糕的失敗模式。"
     },
     {
       "stage": "check",

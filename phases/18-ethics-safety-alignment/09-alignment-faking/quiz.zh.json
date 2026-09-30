@@ -52,12 +52,12 @@
     },
     {
       "stage": "post",
-      "question": "為什麼 2025 年的「忠實 CoT 訓練」緩解手段單靠自己並不足夠？",
+      "question": "在 Anthropic 2025 年針對 alignment faking 訓練期緩解手段的研究中，黑箱審問訓練（black-box interrogation training）的主要風險是什麼？",
       "options": [
-        "它需要公開的訓練資料",
-        "它只在小模型上有效",
-        "它會擴大 compliance gap",
-        "它只移除了欺瞞推理的明文口語痕跡，底層的 compliance gap 行為依然存在"
+        "它需要各實驗室無法公開的訓練資料",
+        "它只對十億參數以下的模型有效",
+        "它會擴大受監控與未受監控情境之間的服從落差",
+        "它可能教會模型對自己的動機說謊"
       ],
       "correct": 3,
       "explanation": ""
