@@ -5,6 +5,8 @@ const path = require('node:path');
 const test = require('node:test');
 const { cleanHref, cleanHtml, cleanSite } = require('./clean-urls');
 const config = require('../vercel.json');
+const { once } = require('node:events');
+const { createServer } = require('../scripts/serve-agent-site');
 
 test('every public HTML page has a clean route and an old-URL redirect', () => {
   const pages = fs.readdirSync(__dirname).filter(name => name.endsWith('.html') && name !== '404.html');
@@ -75,4 +77,27 @@ test('bare project requests recover through the catalog while selected projects 
   assert.equal(rule.destination, '/projects');
   assert.equal(rule.permanent, false);
   assert.equal(config.rewrites.find(rule => rule.source === '/project').destination, '/project.html');
+});
+
+test('HTTP redirects preserve selected projects, query encoding and clean-page content', async t => {
+  const server = createServer().listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  t.after(() => server.close());
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const pages = fs.readdirSync(__dirname).filter(name => name.endsWith('.html') && !['404.html', 'lesson.html', 'certification.html'].includes(name));
+  for (const name of pages) {
+    const query = '?id=dataset-split-auditor&stage=03-split-groups&q=a%26b';
+    const response = await fetch(base + '/' + name + query, { redirect: 'manual' });
+    assert.equal(response.status, 308, name);
+    const destination = (name === 'index.html' ? '/' : '/' + name.slice(0, -5)) + query;
+    assert.equal(response.headers.get('location'), destination);
+    assert.equal((await fetch(base + destination)).status, 200, destination);
+  }
+  const bare = await fetch(base + '/project', { redirect: 'manual' });
+  assert.equal(bare.status, 307);
+  assert.equal(bare.headers.get('location'), '/projects');
+  assert.equal((await fetch(base + '/no-such-clean-page')).status, 404);
+  const head = await fetch(base + '/projects', { method: 'HEAD' });
+  assert.equal(head.status, 200);
+  assert.equal(await head.text(), '');
 });

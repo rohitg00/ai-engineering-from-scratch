@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Developer resources · AI Engineering from Scratch</title>
-  <meta name="description" content="Machine-readable developer resources, public URLs, OpenAPI description, sitemap, and agent integration notes for AI Engineering from Scratch.">
+  <title>API and MCP documentation · AI Engineering from Scratch</title>
+  <meta name="description" content="AI Engineering from Scratch API documentation: public curriculum search, Markdown, OpenAPI, hosted MCP, authentication policy, rate limits, and CLI.">
+  <link rel="alternate" type="text/markdown" href="https://aiengineeringfromscratch.com/developer.md">
   <link rel="canonical" href="https://aiengineeringfromscratch.com/developer.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +19,7 @@
     .trust-page p, .trust-page li { font-family: var(--font-body); font-size: 1.05rem; line-height: 1.7; color: var(--ink); }
     .trust-page a { color: var(--blueprint); }
     .trust-page .about-eyebrow { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--blueprint); margin: 0 0 12px; }
+    .trust-page { overflow-wrap: anywhere; }
     .trust-page code { font-family: var(--font-mono); background: var(--bg-surface); border: 1px solid var(--rule-soft); padding: 1px 5px; }
   </style>
 </head>
@@ -55,23 +57,30 @@
   </header>
   <main class="container" id="main"><article class="trust-page">
     <p class="about-eyebrow">AI Engineering from Scratch</p>
-    <h1>Developer resources</h1>
-    <p>This is the machine-readable entry point for AI Engineering from Scratch. The curriculum is static and open source, with a read-only representation API for agents and developer tools. Start with <a href="llms.txt">llms.txt</a>, which maps the lessons to their canonical pages and raw Markdown sources.</p>
-    <h2>Stable resources</h2>
+    <h1>API and MCP documentation</h1>
+    <p>Search AI Engineering from Scratch lessons and projects, then read their original Markdown from your own tools. The public API and hosted MCP server are read-only. No API key or login is required.</p>
+    <p><a href="developer.md">Read the complete integration guide in Markdown</a>, including request examples, errors, authentication, transport behavior, versioning, and release instructions.</p>
+    <h2>Public REST API</h2>
     <ul>
-      <li><a href="llms.txt"><code>/llms.txt</code></a> is the agent-oriented curriculum map.</li>
-      <li><a href="sitemap.xml"><code>/sitemap.xml</code></a> lists canonical public URLs.</li>
-      <li><a href="openapi.json"><code>/openapi.json</code></a> describes the read-only resource surface.</li>
-      <li><a href="/api/v1/markdown"><code>/api/v1/markdown</code></a> serves HTML or Markdown for a public navigation page selected by the <code>path</code> query parameter.</li>
-      <li><a href="catalog.html"><code>/catalog.html</code></a> is the searchable human catalog.</li>
-      <li><a href="https://github.com/rohitg00/ai-engineering-from-scratch"><code>GitHub</code></a> is the source of truth for lessons, code, quizzes, and reusable artifacts.</li>
+      <li><a href="/api/v1/catalog?q=attention&amp;limit=3"><code>/api/v1/catalog</code></a>: search with <code>q</code>, filter by <code>kind</code>, and page with <code>limit</code> and <code>offset</code>.</li>
+      <li><a href="/api/v1/resource?path=phases%2F00-setup-and-tooling%2F01-dev-environment"><code>/api/v1/resource</code></a>: supply a returned <code>path</code> to retrieve the original Markdown and source links.</li>
+      <li><a href="/api/v1/markdown?path=/about"><code>/api/v1/markdown</code></a>: request a navigation page as HTML or Markdown.</li>
+      <li><a href="openapi.json">OpenAPI 3.1 specification</a>: operation IDs, typed inputs, response schemas, and errors for tool integration.</li>
     </ul>
-    <h2>Markdown negotiation</h2>
-    <p>Requests for the homepage or major navigation routes with <code>Accept: text/markdown</code> receive the agent map with <code>Content-Type: text/markdown</code>. Responses vary on <code>Accept</code> so a cache cannot mix the HTML and Markdown representations.</p>
-    <p>The representation API accepts <code>GET</code> and <code>HEAD</code>. Responses include <code>X-API-Version: 1</code>; HEAD returns the same metadata without a body. Unsupported representations and methods receive <a href="https://www.rfc-editor.org/rfc/rfc9457.html">RFC 9457 problem details</a>. Missing pages retain HTML or Markdown recovery links for readers and agents, with problem details for other API clients.</p>
-    <p><code>/api/markdown</code> remains a compatible alias. Additive changes stay under <code>/api/v1/markdown</code>; breaking representation changes require a new versioned path. The API does not publish quota headers because it does not implement per-client rate limiting.</p>
-    <h2>MCP status</h2>
-    <p>The website does not currently expose a hosted MCP server or authenticated product API. The curriculum does teach how to build and operate MCP servers, and those lesson artifacts live in the repository. A remote Streamable HTTP MCP endpoint would require a separate product decision, authentication policy, and operational owner.</p>
+    <h2>Authentication, errors, and quotas</h2>
+    <p>No credentials are needed for public content. There are no write endpoints, accounts, or webhooks. The service does not store learner progress or execute lesson code. Do not send private learner data.</p>
+    <p>REST reads support GET and HEAD. Errors use RFC 9457 problem details with a stable <code>code</code>, explanatory <code>detail</code>, and recovery <code>hint</code>. Missing resources return a real 404.</p>
+    <p>Catalog, resource, and MCP handlers each enforce 120 requests per minute per running function instance, shared by its clients. <code>RateLimit-Policy</code> and <code>RateLimit</code> report the actual instance window; 429 responses include <code>Retry-After</code>. This is an overload guard, not a distributed per-account quota. See the full guide for the precise header format and scope.</p>
+    <h2>Versioning and Markdown</h2>
+    <p>REST v1 uses <code>/api/v1/</code> and <code>X-API-Version: 1</code>. Breaking changes require a new major path. Any retirement will be announced at least 90 days ahead with a migration guide and Deprecation and Sunset headers. No v1 operation is currently deprecated.</p>
+    <p>The homepage and public navigation pages, including their .html URLs, support <code>Accept: text/markdown</code> and quality values. HTML remains the browser default. Responses send <code>Vary: Accept, Accept-Encoding</code>. Lesson and certification readers keep their existing HTML behavior; retrieve lesson Markdown through the resource API.</p>
+    <h2>Hosted MCP server</h2>
+    <p>Connect a Streamable HTTP client to <code>https://aiengineeringfromscratch.com/mcp</code>. The server negotiates MCP 2025-11-25 or 2025-03-26 and exposes <code>search_curriculum</code> and <code>read_resource</code>, with input and output schemas.</p>
+    <p>This stateless server returns JSON and accepts notifications without a response body. It does not open GET event streams or create sessions. The <a href="server.json">MCP Registry-format manifest</a> also resolves at <code>/.well-known/mcp.json</code>; publishing in a registry is a separate release step.</p>
+    <h2>Command-line client</h2>
+    <p>With Node.js 20 or newer, run <code>node packages/cli/bin/aiefs.js search attention</code> from a clone. The CLI supports search, reading Markdown, JSON output, and downloading the API schema. <a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/packages/cli">CLI source and release instructions</a>. The package is prepared for npm publication; no registry release is claimed here.</p>
+    <h2>Discover and contribute</h2>
+    <p>Start with the <a href="llms.txt">agent curriculum index</a>, <a href="sitemap.xml">sitemap</a>, <a href="catalog.html">course catalog</a>, or <a href="projects.html">projects</a>. The <a href="https://github.com/rohitg00/ai-engineering-from-scratch">GitHub repository</a> contains the lessons, tests, and artifacts. Use the <a href="contact.html">contact page</a> to reach maintainers.</p>
   </article></main>
   <footer class="site-footer"><div class="container footer-inner"><p>© 2026 · open source · free forever</p><div class="footer-links"><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a><a href="llms.txt">Agents</a><a href="sponsors.html">Sponsor us</a></div></div></footer>
   <script>

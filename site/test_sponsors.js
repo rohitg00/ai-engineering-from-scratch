@@ -139,7 +139,8 @@ test('the hamburger menu and every page footer link to the sponsors page', () =>
   assert.ok(read('site/header.js').includes("ensureNavigationLink(nav, 'sponsors.html', 'Sponsor us', 'header-mobile-only');"));
   assert.ok(JSON.parse(read('site/ui-strings.json')).keys.includes('Sponsor us'));
   const vercel = JSON.parse(read('vercel.json'));
-  assert.ok(vercel.rewrites.some(rule => rule.source === '/sponsors' && rule.destination === '/sponsors.html'));
+  assert.ok(vercel.rewrites.some(rule => rule.source === '/sponsors' && rule.destination === '/api/markdown?path=/sponsors'));
+  assert.equal(require('../lib/agent-content').PAGES['/sponsors'], 'sponsors.html');
 });
 
 test('sponsor changes are reserved for maintainers', () => {
