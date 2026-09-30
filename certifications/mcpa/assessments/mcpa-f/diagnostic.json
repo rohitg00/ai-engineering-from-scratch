@@ -1,0 +1,625 @@
+{
+  "id": "mcpa-f-diagnostic",
+  "track": "mcpa-f",
+  "kind": "diagnostic",
+  "title": "MCPA Foundations Diagnostic",
+  "timeLimitMinutes": 30,
+  "version": 1,
+  "questions": [
+    {
+      "id": "mcpa-f-diag-001",
+      "domain": "mcp-fundamentals",
+      "objective": "Explain the purpose and scope of MCP and the integration problem it standardizes between AI applications and external systems",
+      "type": "single",
+      "prompt": "Without a shared protocol, an organization connecting N AI applications to M external systems must build and maintain roughly how many custom integrations?",
+      "options": [
+        "M minus N separate integrations",
+        "N multiplied by M separate integrations",
+        "A single integration shared by every application",
+        "N plus M separate integrations"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Each application-system pair needs its own custom connector without a shared protocol, so the integration count grows as N times M. A standard protocol like MCP turns that multiplicative cost into an additive N plus M relationship.",
+      "references": [
+        "certifications/mcpa/lessons/02-the-integration-problem"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-002",
+      "domain": "mcp-fundamentals",
+      "objective": "Describe the core MCP concepts of hosts, clients, servers, primitives, and the stateless JSON-RPC request model",
+      "type": "single",
+      "prompt": "In MCP 2026-07-28, what may a server use to decide how to answer a new request?",
+      "options": [
+        "The sequence of earlier calls made on the same connection",
+        "Assumptions carried over from the previous request it answered",
+        "The fields inside that request, plus any handle it names",
+        "A session object created when the connection was first opened"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "MCP 2026-07-28 is stateless: a server must treat each request as self-describing and must not infer identity, version, or capabilities from earlier traffic on the same connection. Any state that spans calls travels explicitly as a server-minted handle passed back as an argument.",
+      "references": [
+        "certifications/mcpa/lessons/04-the-stateless-core"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-003",
+      "domain": "mcp-fundamentals",
+      "objective": "Reason about interoperability, protocol versioning, and the value of one open protocol over per-system custom integrations",
+      "type": "single",
+      "prompt": "A client sends a request and receives UnsupportedProtocolVersionError. What should it do next?",
+      "options": [
+        "Resend the identical unchanged request and simply wait for a new result",
+        "Fall back permanently to the older 2024-11-05 initialize handshake flow",
+        "Close the connection permanently and refuse to contact that server again",
+        "Retry the request once using a version from the error's supported list"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "UnsupportedProtocolVersionError carries the versions the server supports in its data, so a client negotiates by retrying with one of those values rather than guessing, giving up, or assuming a legacy handshake is required.",
+      "references": [
+        "certifications/mcpa/lessons/05-protocol-eras-and-compatibility",
+        "https://modelcontextprotocol.io/specification/2026-07-28/changelog"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-004",
+      "domain": "mcp-fundamentals",
+      "objective": "Read the MCP specification, its revision history, and its feature lifecycle to tell current, deprecated, and removed behavior apart",
+      "type": "single",
+      "prompt": "In the MCP specification's use of RFC 2119 keywords, what does a requirement written with MUST mean for an implementation?",
+      "options": [
+        "The behavior is mandatory, and non-conformant implementations fail",
+        "The behavior is recommended but implementations may reasonably skip it",
+        "The behavior is one optional idea among several equally valid designs",
+        "The behavior is only a suggestion for future specification drafts"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "RFC 2119 and RFC 8174 define MUST as an absolute requirement. Reading requirement strength correctly separates mandatory behavior from SHOULD recommendations and MAY options, which is essential for interpreting any specification clause precisely.",
+      "references": [
+        "certifications/mcpa/lessons/01-reading-the-specification"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-005",
+      "domain": "mcp-fundamentals",
+      "objective": "Describe the core MCP concepts of hosts, clients, servers, primitives, and the stateless JSON-RPC request model",
+      "type": "multiple",
+      "prompt": "Which two statements correctly describe MCP's JSON-RPC message shapes? Select two.",
+      "options": [
+        "Several requests may still be batched together inside one array",
+        "A request's id must be non-null and cannot repeat a still-pending id",
+        "A result response may safely omit resultType whenever a server prefers",
+        "A notification never carries an id and never gets a reply"
+      ],
+      "correct": [
+        1,
+        3
+      ],
+      "explanation": "A notification has no id and the receiver must never answer it, while a request id must be non-null and must not repeat while an earlier request with that id is still awaiting a response. Batching was removed, and a modern result must include resultType.",
+      "references": [
+        "certifications/mcpa/lessons/03-json-rpc-and-meta"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-006",
+      "domain": "architecture-and-components",
+      "objective": "Read the schemas and structured data that define MCP messages, tool definitions, capabilities, and server manifests",
+      "type": "single",
+      "prompt": "A tool definition omits its annotations object entirely. Under the default values, how should a client treat that tool?",
+      "options": [
+        "As destructive, read-only, idempotent, and closed-world",
+        "As destructive, not read-only, not idempotent, and open-world",
+        "As non-destructive, non-idempotent, closed-world, and read-only",
+        "As read-only, non-destructive, idempotent, and closed-world"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "When annotations are omitted, the defaults apply: readOnlyHint false, destructiveHint true, idempotentHint false, and openWorldHint true. Clients must treat these as untrusted hints from the server, not enforced guarantees, when deciding whether to prompt for confirmation.",
+      "references": [
+        "certifications/mcpa/lessons/09-reading-server-manifests",
+        "certifications/mcpa/lessons/08-tool-schemas-and-structured-content"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-007",
+      "domain": "architecture-and-components",
+      "objective": "Read the schemas and structured data that define MCP messages, tool definitions, capabilities, and server manifests",
+      "type": "single",
+      "prompt": "A server publishes a tool that takes no parameters. Which inputSchema value is correct for that tool under 2026-07-28?",
+      "options": [
+        "An empty JSON array standing in for the schema",
+        "A null value marking the tool as taking no arguments",
+        "An object schema with type object and additionalProperties false",
+        "Leaving inputSchema absent from the tool definition entirely"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "inputSchema is never null and is never left out; a tool that takes no parameters still declares an object schema, conventionally type object with additionalProperties false, so only an empty arguments object validates against it.",
+      "references": [
+        "certifications/mcpa/lessons/08-tool-schemas-and-structured-content"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-008",
+      "domain": "architecture-and-components",
+      "objective": "Distinguish the responsibilities of MCP hosts, clients, and servers and how discovery and capability negotiation connect them",
+      "type": "multiple",
+      "prompt": "Which two statements correctly describe how a host manages connections to multiple MCP servers? Select two.",
+      "options": [
+        "Colliding tool names from different servers are disambiguated with a server prefix",
+        "A server's self-reported serverInfo.name is guaranteed unique for routing",
+        "One client instance is shared across every server connection",
+        "The host embeds a separate client for each server connection"
+      ],
+      "correct": [
+        0,
+        3
+      ],
+      "explanation": "A host binds one client to each server so responsibilities and trust stay separated, and it commonly prefixes tool names by server identifier to resolve collisions, since serverInfo is self-reported and not guaranteed unique.",
+      "references": [
+        "certifications/mcpa/lessons/06-hosts-clients-and-servers",
+        "certifications/mcpa/lessons/07-discovery-and-capability-negotiation"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-009",
+      "domain": "architecture-and-components",
+      "objective": "Trace the model interaction flow from a user request through the host, model, client, and server and back into model context",
+      "type": "single",
+      "prompt": "A tool call returns a result with isError true because the arguments failed validation. What should the host do with that result?",
+      "options": [
+        "Silently drop the call without ever informing the model",
+        "Treat it exactly like a protocol error and stop all retries",
+        "Discard the conversation and restart the request from scratch",
+        "Feed the error content back so the model can retry correctly"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Tool execution errors are ordinary results carrying isError and explanatory content, designed to flow back into the model's context so the model can revise its arguments and try again, unlike a protocol-level failure.",
+      "references": [
+        "certifications/mcpa/lessons/10-model-interaction-flow"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-010",
+      "domain": "interactions-and-execution",
+      "objective": "Apply the request, notification, subscription, and multi round-trip interaction patterns and handle each result type",
+      "type": "single",
+      "prompt": "A client answers an input_required result from a tools/call request. How should it send its answers back to the server?",
+      "options": [
+        "Retry the same request with a new id and matching requestState",
+        "Open a brand-new elicitation/create request completely on its own",
+        "Reply by reusing the original request id the server first saw",
+        "Send it as a notification, since no server reply is expected"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Multi round-trip requests require the retry to carry a new JSON-RPC id along with inputResponses and the requestState echoed exactly as received; reusing the old id or inventing a fresh state value breaks the round trip.",
+      "references": [
+        "certifications/mcpa/lessons/14-multi-round-trip-requests-and-elicitation"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-011",
+      "domain": "interactions-and-execution",
+      "objective": "Apply the request, notification, subscription, and multi round-trip interaction patterns and handle each result type",
+      "type": "single",
+      "prompt": "What must be the first message a server sends after accepting a subscriptions/listen request?",
+      "options": [
+        "A progress notification carrying the newly assigned subscriptionId",
+        "An acknowledged message naming the filters the server will honor",
+        "The first list_changed notification that happens to be pending",
+        "An empty result that closes the stream right after it opens"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "The stream must open with an acknowledgment naming the subset of requested notification types the server will actually honor, before any list-changed or resource-updated events, so the client knows exactly what it will receive.",
+      "references": [
+        "certifications/mcpa/lessons/16-notifications-and-subscriptions"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-012",
+      "domain": "interactions-and-execution",
+      "objective": "Apply the request, notification, subscription, and multi round-trip interaction patterns and handle each result type",
+      "type": "multiple",
+      "prompt": "Which two statements are true about the tasks extension in 2026-07-28? Select two.",
+      "options": [
+        "A client polls task progress by repeatedly calling tasks/list",
+        "tasks/cancel asks the server to stop cooperatively, not instantly",
+        "A client must declare the extension before a server returns a task",
+        "Tasks belong to the required core protocol every server implements"
+      ],
+      "correct": [
+        1,
+        2
+      ],
+      "explanation": "Tasks moved out of the core protocol into an opt-in extension, so a server only returns a task result when the client has declared support, the client polls with tasks/get rather than a list method, and cancellation is cooperative rather than instant.",
+      "references": [
+        "certifications/mcpa/lessons/21-long-running-work-and-tasks"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-013",
+      "domain": "interactions-and-execution",
+      "objective": "Handle protocol errors and tool execution errors, including version, capability, header, and validation failures",
+      "type": "single",
+      "prompt": "An unknown tool name, an invalid prompt name, and a missing required prompt argument all map to which JSON-RPC error code in 2026-07-28?",
+      "options": [
+        "-32021, because the client is missing a required capability",
+        "-32601, because each names a method the server does not recognize",
+        "-32602, because each is an invalid-parameters failure before any execution",
+        "-32002, the legacy not-found code every current server should still emit"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "All three failures are recognized before any tool or prompt runs, so 2026-07-28 groups them under Invalid params rather than treating them as unknown methods, legacy not-found errors, or a missing client capability.",
+      "references": [
+        "certifications/mcpa/lessons/18-error-handling",
+        "certifications/mcpa/lessons/13-prompts-and-completion"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-014",
+      "domain": "interactions-and-execution",
+      "objective": "Handle protocol errors and tool execution errors, including version, capability, header, and validation failures",
+      "type": "single",
+      "prompt": "An HTTP request's Mcp-Method header names tools/call, but the JSON body's method field says prompts/get. What should the server do?",
+      "options": [
+        "Merge both methods and attempt to satisfy each partially",
+        "Process the request as tools/call because headers take precedence",
+        "Trust the JSON body and silently ignore the header value",
+        "Reject it with -32020 because the header disagrees with the body"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Required headers exist so gateways can route without parsing bodies, so a server must reject a request whose header disagrees with its body using the HeaderMismatch code rather than picking one side or blending both methods.",
+      "references": [
+        "certifications/mcpa/lessons/19-transports-and-http-headers"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-015",
+      "domain": "interactions-and-execution",
+      "objective": "Walk the tool invocation lifecycle from discovery and selection through call, user input, progress, cancellation, and result",
+      "type": "single",
+      "prompt": "A tool call's Streamable HTTP response stream breaks before a result arrives. What is the correct recovery?",
+      "options": [
+        "Reissue the same call as a new request with a new id",
+        "Treat the broken stream as a successful empty result",
+        "Abandon the tool entirely and remove it from the tool list",
+        "Wait indefinitely on the same stream since the result is still coming"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "A broken stream loses whatever response was in flight, and since MCP dropped stream resumability, the only correct recovery is reissuing the call as a fresh request with a new id rather than waiting forever or assuming success.",
+      "references": [
+        "certifications/mcpa/lessons/17-tool-invocation-lifecycle",
+        "certifications/mcpa/lessons/11-the-tools-primitive"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-016",
+      "domain": "interactions-and-execution",
+      "objective": "Identify the protocol primitives and utilities, including tools, resources, prompts, completion, caching, pagination, transports, and deprecated client features",
+      "type": "multiple",
+      "prompt": "Which two features are deprecated but still functional in MCP 2026-07-28? Select two.",
+      "options": [
+        "Roots, reached now through a multi round-trip input request",
+        "Sampling, reached now through a multi round-trip input request",
+        "The subscriptions/listen request used to open a notification stream",
+        "The server/discover request every server must implement"
+      ],
+      "correct": [
+        0,
+        1
+      ],
+      "explanation": "Roots and sampling were deprecated in 2026-07-28 but keep working through multi round-trip input requests of type roots/list and sampling/createMessage, unlike server/discover and subscriptions/listen, which remain current, non-deprecated parts of the core protocol.",
+      "references": [
+        "certifications/mcpa/lessons/15-deprecated-client-features",
+        "https://modelcontextprotocol.io/specification/2026-07-28/deprecated"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-017",
+      "domain": "interactions-and-execution",
+      "objective": "Identify the protocol primitives and utilities, including tools, resources, prompts, completion, caching, pagination, transports, and deprecated client features",
+      "type": "single",
+      "prompt": "A resources/read result is marked cacheScope public. What does that scope actually control?",
+      "options": [
+        "Whether the server enforces access control before returning the resource",
+        "Whether the cached entry may be shared across different users and tokens",
+        "Whether the resource content itself is readable by any user",
+        "Whether the underlying file on disk is writable by the client"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "cacheScope only governs whether a cached response may be reused across different callers; it is never an access-control mechanism, so a server must still authorize every read independent of whether the result happens to be publicly cacheable.",
+      "references": [
+        "certifications/mcpa/lessons/20-caching-and-pagination",
+        "certifications/mcpa/lessons/12-the-resources-primitive"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-018",
+      "domain": "security-and-governance",
+      "objective": "Locate the trust boundaries between host, client, server, model, and the tools and content a server exposes",
+      "type": "single",
+      "prompt": "A server's discover result reports serverInfo with a trustworthy-sounding name. What role may serverInfo correctly play?",
+      "options": [
+        "Proof that the server's tool descriptions are safe to trust",
+        "Granting that server elevated access without further checks",
+        "Display and logging only, never an authorization decision",
+        "A substitute for validating the server's OAuth token audience"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "clientInfo and serverInfo are self-reported fields meant for display, logging, and debugging. A host must never use them to grant access, vouch for tool safety, or replace audience validation, since any server can claim any name.",
+      "references": [
+        "certifications/mcpa/lessons/22-trust-boundaries"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-019",
+      "domain": "security-and-governance",
+      "objective": "Apply OAuth-based authorization, client registration, scopes, and user consent so a user approves what a server may see and do",
+      "type": "single",
+      "prompt": "An authorization server's metadata does not list code_challenge_methods_supported. What must a compliant MCP client do?",
+      "options": [
+        "Fall back to sending the client secret in the URL",
+        "Assume S256 support and continue the flow as normal",
+        "Proceed without PKCE since the field is optional for legacy servers",
+        "Refuse to proceed with authorization against that server"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "PKCE is mandatory for every MCP authorization flow, so when an authorization server does not advertise its supported challenge methods the client cannot confirm PKCE support and must refuse to continue rather than guessing or skipping it.",
+      "references": [
+        "certifications/mcpa/lessons/23-oauth-authorization"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-020",
+      "domain": "security-and-governance",
+      "objective": "Apply OAuth-based authorization, client registration, scopes, and user consent so a user approves what a server may see and do",
+      "type": "single",
+      "prompt": "An MCP client has no pre-registered credentials, and the authorization server advertises client_id_metadata_document_supported. What should it try next?",
+      "options": [
+        "Register using a Client ID Metadata Document at an HTTPS URL",
+        "Wait for the server to push credentials to the client",
+        "Skip straight to Dynamic Client Registration since it is fastest",
+        "Ask the end user to type in a client id manually"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The registration priority places pre-registration first, then Client ID Metadata Documents whenever the authorization server advertises support for them, ahead of the deprecated Dynamic Client Registration path and asking the user as a last resort.",
+      "references": [
+        "certifications/mcpa/lessons/24-client-registration-and-identity"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-021",
+      "domain": "security-and-governance",
+      "objective": "Apply OAuth-based authorization, client registration, scopes, and user consent so a user approves what a server may see and do",
+      "type": "single",
+      "prompt": "A request fails with 403 and error insufficient_scope, listing three required scopes the client never held. What should the client request on retry?",
+      "options": [
+        "The same original scope set, unchanged, retried again until it works",
+        "The union of its earlier granted scopes and the newly required ones",
+        "Every scope the authorization server has ever defined, just to be safe",
+        "Only the three newly required scopes, dropping what it already held"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "Step-up authorization asks for the union of the client's prior scopes and the scopes named in the challenge, within a limited number of retries, so access grows precisely rather than shrinking, over-requesting, or repeating an insufficient request unchanged.",
+      "references": [
+        "certifications/mcpa/lessons/25-consent-and-least-privilege"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-022",
+      "domain": "security-and-governance",
+      "objective": "Choose risk and safety controls against tool poisoning, injection, token misuse, and over-broad access",
+      "type": "multiple",
+      "prompt": "Which two practices help a host defend against a tool definition changing maliciously after a user first approved it? Select two.",
+      "options": [
+        "Trusting every list_changed notification as automatically re-approved",
+        "Disabling tools/list caching entirely so nothing is ever pinned",
+        "Treating a changed listing as a rug pull until it is re-reviewed",
+        "Pinning approved tool definitions and reviewing any change before reuse"
+      ],
+      "correct": [
+        2,
+        3
+      ],
+      "explanation": "A rug pull happens when a previously approved tool's definition drifts silently, so defenses pin the approved definition and hold any change for re-review rather than auto-trusting every update or abandoning caching altogether, which would not by itself detect drift.",
+      "references": [
+        "certifications/mcpa/lessons/26-risk-and-safety-controls"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-023",
+      "domain": "security-and-governance",
+      "objective": "Design auditability and observability so protocol activity can be traced, attributed, and reviewed",
+      "type": "single",
+      "prompt": "A request carries traceparent in its _meta and calls through to an upstream system. What should happen to that trace context?",
+      "options": [
+        "It is stored only in server logs and never forwarded onward",
+        "It is regenerated at every hop so each hop gets a new trace",
+        "It propagates through the call chain so spans share one trace id",
+        "It is discarded once the request leaves the originating client"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "W3C Trace Context fields such as traceparent are meant to propagate across the whole call chain so that spans in the host, client, server, and any upstream system can be correlated under one shared trace id for observability.",
+      "references": [
+        "certifications/mcpa/lessons/27-auditability-and-observability"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-024",
+      "domain": "security-and-governance",
+      "objective": "Design auditability and observability so protocol activity can be traced, attributed, and reviewed",
+      "type": "single",
+      "prompt": "An audit log needs to prove that no earlier record was altered after the fact. What technique gives that tamper evidence?",
+      "options": [
+        "Encrypting the log so only an administrator can open the file",
+        "Rotating the log file each day and deleting the old copies",
+        "Storing every record in a plain text file with no structure",
+        "Chaining each record's checksum to the one stored before it"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "A hash chain links each audit record to the hash of its predecessor, so altering or removing any earlier entry breaks the chain and is detectable, which plain storage, rotation, or encryption alone do not guarantee.",
+      "references": [
+        "certifications/mcpa/lessons/27-auditability-and-observability"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-025",
+      "domain": "use-cases-and-ecosystem",
+      "objective": "Map the roles, responsibilities, governance, and adoption patterns of teams building and deploying MCP",
+      "type": "single",
+      "prompt": "A proposed change to the MCP specification has been merged as a Final SEP, and its deprecation window has now elapsed. Who decides to actually remove that feature?",
+      "options": [
+        "The Core Maintainers, after the minimum deprecation window has passed",
+        "An automated script once the deprecation window elapses",
+        "Any single contributor who opens a pull request",
+        "The end users of the AI application, by majority vote"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "The feature lifecycle sets a minimum deprecation window, but reaching that window only makes removal eligible; the Core Maintainers still decide when a deprecated feature is actually removed, rather than an individual contributor, a vote, or automation.",
+      "references": [
+        "certifications/mcpa/lessons/28-roles-and-adoption",
+        "https://modelcontextprotocol.io/specification/2026-07-28/deprecated"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-026",
+      "domain": "use-cases-and-ecosystem",
+      "objective": "Map the roles, responsibilities, governance, and adoption patterns of teams building and deploying MCP",
+      "type": "single",
+      "prompt": "A team deploys an MCP server that runs as a local stdio subprocess. Whose responsibility is it to supply that server's credentials?",
+      "options": [
+        "The model, which requests them through a tool call",
+        "The operator, who provides them through the local environment",
+        "The end user, typed into the model's chat window",
+        "The authorization server, through a browser redirect flow"
+      ],
+      "correct": [
+        1
+      ],
+      "explanation": "stdio servers should not run the OAuth browser flow and instead read credentials from the environment the operator controls, which is a deployment responsibility distinct from asking the end user directly or routing credentials through the model or a redirect.",
+      "references": [
+        "certifications/mcpa/lessons/28-roles-and-adoption"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-027",
+      "domain": "use-cases-and-ecosystem",
+      "objective": "Select operational use cases and the primitives or extensions that fit each one",
+      "type": "multiple",
+      "prompt": "Which three recommendations correctly match a use case to its fitting MCP mechanism? Select three.",
+      "options": [
+        "A read of one user's private data should cache with a private cacheScope",
+        "A user-initiated slash-command template should be exposed as a tool",
+        "A multi-minute build job should use the tasks extension",
+        "A machine-to-machine integration with no human present should use the client credentials extension"
+      ],
+      "correct": [
+        0,
+        2,
+        3
+      ],
+      "explanation": "Long jobs fit the tasks extension, unattended service-to-service calls fit the client credentials authorization extension, and private per-user reads should cache with a private scope; a user-triggered template belongs to the user-controlled prompts primitive, not tools.",
+      "references": [
+        "certifications/mcpa/lessons/29-operational-use-cases"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-028",
+      "domain": "use-cases-and-ecosystem",
+      "objective": "Select operational use cases and the primitives or extensions that fit each one",
+      "type": "single",
+      "prompt": "In the MCP Apps extension, a tool's _meta.ui object carries resourceUri together with which other field?",
+      "options": [
+        "csp, listing which domains the rendered iframe may contact",
+        "domain, naming the origin that the UI resource is served from",
+        "visibility, controlling whether the model or the app may call it",
+        "permissions, granting the iframe access to a camera or microphone"
+      ],
+      "correct": [
+        2
+      ],
+      "explanation": "A tool's _meta.ui carries resourceUri plus visibility, which defaults to both model and app; a host must not list the tool to the model when visibility lacks model, and must reject an app-originated call when it lacks app. The csp, permissions, and domain fields describe the UI resource itself, not the tool.",
+      "references": [
+        "certifications/mcpa/lessons/31-mcp-apps"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-029",
+      "domain": "use-cases-and-ecosystem",
+      "objective": "Reason about ecosystem portability across clients, servers, SDKs, extensions, gateways, and registries",
+      "type": "single",
+      "prompt": "A third party wants to define a new MCP extension identifier. Which form is correct under the naming rules?",
+      "options": [
+        "Any string at all, since extension names are not validated",
+        "A single word with no domain or prefix at all",
+        "The reserved io.modelcontextprotocol prefix, used for any extension author",
+        "A reversed domain the author owns, such as com.example/my-extension"
+      ],
+      "correct": [
+        3
+      ],
+      "explanation": "Extension identifiers follow the _meta naming rules: official extensions use io.modelcontextprotocol, while third parties must use a reversed domain they actually own, so a single unvalidated word or the reserved official prefix would both be incorrect choices.",
+      "references": [
+        "certifications/mcpa/lessons/30-the-extensions-framework"
+      ]
+    },
+    {
+      "id": "mcpa-f-diag-030",
+      "domain": "use-cases-and-ecosystem",
+      "objective": "Reason about ecosystem portability across clients, servers, SDKs, extensions, gateways, and registries",
+      "type": "single",
+      "prompt": "What percentage of the conformance test suite must an SDK pass to qualify for Tier 1?",
+      "options": [
+        "A full one hundred percent, plus very early feature delivery",
+        "Fifty percent, with the remainder scheduled for a later release",
+        "Sixty percent, matching the floor set for any listed SDK",
+        "Eighty percent, the same bar that Tier 2 must clear"
+      ],
+      "correct": [
+        0
+      ],
+      "explanation": "Tier 1 is the strongest SDK tier: it requires passing the full conformance suite, shipping features before the related spec release, and meeting fast triage and bug-fix windows, which is a stricter bar than the eighty percent required for Tier 2.",
+      "references": [
+        "certifications/mcpa/lessons/32-registry-gateways-and-sdk-tiers"
+      ]
+    }
+  ]
+}

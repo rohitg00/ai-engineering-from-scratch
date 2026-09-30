@@ -1,0 +1,48 @@
+{
+  "title": "Agent Budget Planner | Build and verify",
+  "recordedAt": "2026-09-28T19:22:51Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "agent-budget-planner",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-_0wgi21d"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-_0wgi21d\n  created  cli.py\n  created  main.py\n  created  samples/input.json\n  created  STAGE.md\n  kept     STAGE.md\n  kept     STAGE.md\nnext: python3 scripts/project_test.py agent-budget-planner --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-_0wgi21d\n",
+      "durationMs": 50
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "agent-budget-planner",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-_0wgi21d"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Agent Budget Planner: grading learner\n  FAIL stage 1: Estimate requests in integer microcredits (5 tests)\n       not implemented yet: estimate\n",
+      "durationMs": 96
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "agent-budget-planner",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Agent Budget Planner: grading solution\n  PASS stage 1: Estimate requests in integer microcredits (5 tests)\n  PASS stage 2: Reserve capacity before dispatch (5 tests)\n  PASS stage 3: Settle actual usage and release unused budget (5 tests)\n  PASS stage 4: Schedule within cost and time limits (10 tests)\n",
+      "durationMs": 248
+    }
+  ]
+}

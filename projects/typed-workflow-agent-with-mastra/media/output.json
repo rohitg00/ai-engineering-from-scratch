@@ -1,0 +1,11 @@
+{
+  "title": "typed-workflow-agent-with-mastra | Actual application output",
+  "url": "file:///tmp/aiefs-reviewed-apps/workflow/index.html",
+  "actions": [
+    [
+      "js",
+      "window.scrollTo(0,250)"
+    ]
+  ],
+  "kind": "browser capture"
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "30-the-extensions-framework",
+  "title": "The Extensions Framework",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team wants to add a capability beyond MCP's core primitives without colliding with anyone else who had the same idea. What must its extension identifier include?",
+      "options": [
+        "A checksum computed over the settings object it carries",
+        "A numeric version suffix placed right after the name",
+        "A mandatory vendor prefix before the slash and name",
+        "A leading underscore marking the field as experimental"
+      ],
+      "correct": 2,
+      "explanation": "Extension identifiers follow vendor-prefix/extension-name, and unlike an ordinary _meta key the prefix is mandatory, so unrelated vendors and official extensions never collide on the same name."
+    },
+    {
+      "stage": "check",
+      "question": "Under the 2026-07-28 revision, where does a client declare which extensions it wants active for one particular tools/call request?",
+      "options": [
+        "In the initialize request's capabilities, sent once when the connection opens",
+        "In an Mcp-Extensions header attached to that same HTTP request",
+        "In a separate extensions negotiate call sent immediately before it",
+        "In that request's own _meta, under clientCapabilities extensions"
+      ],
+      "correct": 3,
+      "explanation": "There is no initialize handshake or session in 2026-07-28; a client declares its extensions fresh in _meta on every request, under io.modelcontextprotocol/clientCapabilities.extensions."
+    },
+    {
+      "stage": "check",
+      "question": "A client's request declares extensions A and B. The server's capabilities list extensions B and C. Which extension is active for this call?",
+      "options": [
+        "Only B, because it is the one both sides named",
+        "None of them, because activation needs a separate confirmation step",
+        "A, B, and C, because declaring any of them activates all three",
+        "Only A, because the client is the one asking for behavior"
+      ],
+      "correct": 0,
+      "explanation": "An extension is active only when both the client's declared capabilities and the server's own capabilities name the same identifier, so the negotiated set here is just B."
+    },
+    {
+      "stage": "check",
+      "question": "A tool has no meaningful core-only behavior and only works with one specific mandatory extension active. A client calls it without that extension declared. What does a conformant server return?",
+      "options": [
+        "A JSON-RPC error -32001, an old tool-failure code",
+        "A JSON-RPC error -32021, naming the extension it still needs",
+        "A JSON-RPC error -32601, because the method itself is unknown",
+        "A normal result with isError true and no other detail"
+      ],
+      "correct": 1,
+      "explanation": "A request that needs a capability, including an extension, that its own clientCapabilities did not declare is refused with MissingRequiredClientCapabilityError, -32021, naming what was missing in data.requiredCapabilities."
+    },
+    {
+      "stage": "post",
+      "question": "Before Core Maintainers will review a new official extension proposal at all, what must already exist?",
+      "options": [
+        "A public vote among every registered MCP server operator",
+        "A full year of production traffic logged against the draft",
+        "A working reference implementation of it in an official SDK",
+        "A completed client support matrix showing every major client"
+      ],
+      "correct": 2,
+      "explanation": "An Extensions Track SEP must already have a reference implementation in an official SDK before the Core Maintainers will review it, unlike a Standards Track SEP."
+    },
+    {
+      "stage": "post",
+      "question": "An official extension's maintainers need to remove a field that existing implementations depend on. What does the framework require them to do?",
+      "options": [
+        "Ask every client vendor to update on the very same day",
+        "Wait for a twelve month deprecation window like a core feature",
+        "Publish the change quietly, since extensions evolve without core review",
+        "Ship it under a new identifier instead of the existing one"
+      ],
+      "correct": 3,
+      "explanation": "A breaking change such as removing a field must ship under a new extension identifier, for example an added v2 suffix, so implementations still declaring the old one keep the old, unmodified behavior."
+    }
+  ]
+}

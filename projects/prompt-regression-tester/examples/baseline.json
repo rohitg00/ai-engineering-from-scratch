@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "case_sha256": "6e1f0a4a9b9ad6a63043cb26cdfcaa414ea4857cefee612519bf36c805a2c144",
+  "model": "recorded-local-fixture",
+  "settings": {
+    "temperature": 0
+  },
+  "revision": "before",
+  "responses": {
+    "format": "{}",
+    "source": "uncited",
+    "secret": "safe"
+  },
+  "recording_kind": "authored_fixture",
+  "prompt_template": "Answer the supplied task.",
+  "template_sha256": "e6e43b59b92c568e5aca7e3db55d47e533c514a8a5fbaf7b3d6fc63cee3f7e99"
+}

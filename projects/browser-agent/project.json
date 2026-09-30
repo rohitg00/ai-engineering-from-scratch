@@ -1,0 +1,108 @@
+{
+  "id": "browser-agent",
+  "title": "Browser Agent",
+  "level": 5,
+  "levelName": "Frontier",
+  "tagline": "A form-run receipt that checks the requested values before trusting the success banner.",
+  "summary": "A form-run receipt that checks the requested values before trusting the success banner. Replace Driver with an adapter that implements observe, act and capture. Run cli.ts --live only after serving the authored fixture and setting BROWSE_BIN.",
+  "hours": 8,
+  "languages": ["TypeScript", "Python"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Turn DOM state into constrained actions",
+    "Stop on completion, stalling or budget",
+    "Verify screenshot pixels in Python",
+    "Drive the real fixture and score the run"
+  ],
+  "prerequisites": [
+    "Node 22.18+, Python 3, DOM labels, async functions, subprocess arguments and byte arrays. Live Chromium additionally requires an installed gstack browse executable."
+  ],
+  "youWillBuild": "A form-run receipt that checks the requested values before trusting the success banner.",
+  "usefulFor": [
+    "Replace Driver with an adapter that implements observe, act and capture. Run cli.ts --live only after serving the authored fixture and setting BROWSE_BIN."
+  ],
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "node",
+      "cli.ts",
+      "--task",
+      "samples/contact.json",
+      "--output",
+      "browser-run.json"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-observations",
+      "title": "Turn DOM state into constrained actions",
+      "summary": "Read labels, values, disabled states and stable ids from a small form. Validate unique ids and field types. Choose one action at a time: fill the name, fill email, then click the uniquely identified Save request button. Page prose is never interpreted as instructions. Missing fields, ambiguous labels, dangerous buttons and unexpected origins cause an explicit blocked result.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "TypeScript expresses observations and an action union with no arbitrary-script action.",
+      "concepts": ["parseObservation", "choose"],
+      "difficulty": "starter",
+      "requires": ["node", "python3"],
+      "timeout": 90,
+      "figure": "pj-browser-agent-1"
+    },
+    {
+      "id": "02-bounded-loop",
+      "title": "Stop on completion, stalling or budget",
+      "summary": "Observe after every action. Stop if the state repeats, if policy blocks an action, or if the step budget is consumed. Completion requires the DOM success flag and a separate screenshot check. Trace every selected action before execution. The fixture backend is explicitly a simulator; it supplies deterministic observations to test the loop and does not claim browser coverage.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "An injected driver separates the policy from Chromium and enables deterministic failure tests.",
+      "concepts": ["runAgent", "FixtureDriver"],
+      "difficulty": "core",
+      "requires": ["node", "python3"],
+      "timeout": 90,
+      "figure": "pj-browser-agent-2"
+    },
+    {
+      "id": "03-visual-proof",
+      "title": "Verify screenshot pixels in Python",
+      "summary": "Read the PNG signature, chunk lengths and CRCs, then decompress a bounded image payload. Reverse PNG row filters and count green success pixels. Combine this visual signal with the DOM flag; neither alone is sufficient. This is a narrow pixel-state detector for the authored fixture, not OCR or general vision. Corrupt, oversized, interlaced and unsupported color formats fail explicitly.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Python stdlib can decode a bounded RGB/RGBA PNG without adding an imaging dependency.",
+      "concepts": ["inspectPNG"],
+      "difficulty": "core",
+      "requires": ["node", "python3"],
+      "timeout": 90,
+      "figure": "pj-browser-agent-3"
+    },
+    {
+      "id": "04-real-browser",
+      "title": "Drive the real fixture and score the run",
+      "summary": "Serve fixture.html over loopback and navigate to it with gstack browse. GstackDriver reads DOM observations, fills labels, clicks the observed button and captures a real screenshot. Commands use argument arrays instead of a shell. Run the same bounded policy with --live and compare its trace with the fixture backend. Keep completion scores separate for simulated and real-browser runs.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Node child-process argv calls adapt the same driver contract to the installed gstack browser.",
+      "concepts": ["GstackDriver", "scoreRuns"],
+      "difficulty": "core",
+      "requires": ["node", "python3"],
+      "timeout": 90,
+      "figure": "pj-browser-agent-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

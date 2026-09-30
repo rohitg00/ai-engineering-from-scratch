@@ -1,0 +1,150 @@
+{
+  "id": "skill-installer",
+  "title": "Cross-Agent Skill Installer",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Validate local skill bundles, translate agent metadata, verify content digests, and atomically install without overwriting learner edits.",
+  "summary": "Validate local skill bundles, translate agent metadata, verify content digests, and atomically install without overwriting learner edits.",
+  "hours": 8,
+  "languages": [
+    "TypeScript"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Validate a portable bundle",
+    "Translate metadata and hash content",
+    "Install atomically within a root",
+    "Protect edits during upgrades"
+  ],
+  "prerequisites": [
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    },
+    {
+      "title": "Security and secrets audit",
+      "path": "phases/17-infrastructure-and-production/25-security-secrets-audit"
+    }
+  ],
+  "youWillBuild": "A cross-agent upgrade tool promising a reviewable diff and no lost local edits.",
+  "usefulFor": [
+    "A cross-agent upgrade tool promising a reviewable diff and no lost local edits.",
+    "inspect is a dry run."
+  ],
+  "demo": {
+    "command": [
+      "node",
+      "demo.ts"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-bundle",
+      "title": "Validate a portable bundle",
+      "summary": "Accept a named bundle with a SKILL.md and optional reference files. Validate every relative path before touching disk. Reject dot segments, absolute paths, drive prefixes, backslashes and reserved installation metadata. Limit each text file to 100 KB. The installer reads an in-memory bundle, leaving network fetching and signature trust as separate responsibilities.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "TypeScript gives the bundle and agent destinations explicit contracts.",
+      "concepts": [
+        "safePath",
+        "validate"
+      ],
+      "difficulty": "starter",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-skill-installer-1"
+    },
+    {
+      "id": "02-translate",
+      "title": "Translate metadata and hash content",
+      "summary": "Keep one body of instructions while regenerating a small quoted metadata header. Preserve references byte-for-byte. Compute a SHA-256 digest over sorted path/content pairs, so file insertion order cannot change integrity. The digest detects changed content but does not establish publisher identity; obtaining a trusted expected digest is the caller's responsibility.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Typed destination names constrain supported adapters to three known agents.",
+      "concepts": [
+        "digest",
+        "translate"
+      ],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-skill-installer-2"
+    },
+    {
+      "id": "03-install",
+      "title": "Install atomically within a root",
+      "summary": "Check the expected digest before creating directories. Inspect each agent directory with lstat and reject symlinks. Stage the complete translated bundle beside the destination, then rename it. An existing managed installation moves to a temporary backup so a failed final rename can restore it. This educational transaction assumes a single trusted local writer; hostile concurrent filesystem replacement requires OS-level isolation.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Node provides lstat, exclusive writes and directory rename for a bounded local transaction.",
+      "concepts": [
+        "install"
+      ],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-skill-installer-3"
+    },
+    {
+      "id": "04-upgrades",
+      "title": "Protect edits during upgrades",
+      "summary": "Before replacing an installation, verify that every tracked file still matches the prior digest and no unmanaged files have appeared. Refuse upgrades when users edited a tracked file or added their own file. The user can move those changes into the source bundle deliberately. Successful repeated installs leave no staging or backup directories behind.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Digest comparison makes update behavior explicit instead of relying on timestamps.",
+      "concepts": [
+        "install"
+      ],
+      "difficulty": "core",
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-skill-installer-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

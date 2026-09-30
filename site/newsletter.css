@@ -1,0 +1,45 @@
+.newsletter-section { scroll-margin-top: 90px; }
+.newsletter-strip { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, 1fr); gap: 38px; align-items: center; padding: 26px 0; border-top: 1px solid var(--rule-soft); border-bottom: 1px solid var(--rule-soft); }
+.newsletter-section .newsletter-copy h2 { margin: 0 0 8px; color: var(--blueprint); font: 400 30px/1.1 var(--font-display); letter-spacing: .01em; text-transform: uppercase; }
+.newsletter-section .newsletter-copy p { margin: 0; color: var(--ink-soft); font: 16px/1.6 var(--font-body); max-width: 500px; }
+.newsletter-signup { min-width: 0; width: 100%; max-width: 480px; }
+.newsletter-email-label { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.newsletter-input-row { display: flex; gap: 8px; }
+.newsletter-input-row input { flex: 1; min-width: 0; height: 44px; border: 1px solid var(--rule-soft); background: var(--bg); color: var(--ink); padding: 0 13px; border-radius: 0; font: 12px/1.5 var(--font-mono); }
+.newsletter-input-row input::placeholder { color: var(--ink-soft); opacity: 1; }
+.newsletter-input-row button { min-height: 44px; border: 1px solid var(--blueprint); border-radius: 0; background: var(--blueprint); color: var(--bg); padding: 0 15px; font: 12px/1.5 var(--font-mono); cursor: pointer; white-space: nowrap; }
+.newsletter-input-row button:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.newsletter-section .newsletter-note { color: var(--ink-soft); margin: 8px 0 0; font: 10px/1.6 var(--font-mono); }
+.newsletter-section :focus-visible { outline: 2px solid var(--blueprint); outline-offset: 3px; }
+.newsletter-home { padding-top: 24px; padding-bottom: 24px; }
+.newsletter-home .newsletter-strip { padding: 22px 24px; border: 1px solid var(--rule-soft); border-left: 3px solid var(--blueprint); background: var(--blueprint-tint); }
+.newsletter-home .newsletter-copy h2 { font: 600 24px/1.2 var(--font-body); color: var(--ink); text-transform: none; letter-spacing: -.02em; }
+.newsletter-home .newsletter-copy p { font-size: 15px; }
+.newsletter-lesson { padding: 0; margin: 30px 0; }
+.newsletter-lesson .newsletter-strip { grid-template-columns: minmax(0, 1fr); gap: 18px; padding: 24px 0; }
+.newsletter-about { margin-top: 32px; }
+.newsletter-about .newsletter-strip, .newsletter-dialog .newsletter-strip { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.newsletter-about .newsletter-copy h2, .newsletter-dialog .newsletter-copy h2 { font: 600 26px/1.2 var(--font-body); color: var(--ink); text-transform: none; letter-spacing: -.02em; }
+.newsletter-callout { margin-top: 20px; margin-bottom: 24px; scroll-margin-top: 90px; }
+.newsletter-callout-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 24px; padding: 16px 0; border-top: 1px solid var(--rule-soft); border-bottom: 1px solid var(--rule-soft); }
+.newsletter-callout .newsletter-callout-row p { margin: 0; color: var(--ink-soft); font: 16px/1.6 var(--font-body); }
+.newsletter-callout-row a { color: var(--blueprint); font: 12px/1.6 var(--font-mono); text-decoration: underline; text-underline-offset: 4px; padding: 8px 0; }
+.newsletter-callout-row a:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 3px; }
+.newsletter-modal { position: fixed; inset: 0; margin: auto; width: min(560px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow: auto; padding: 28px; border: 1px solid var(--rule-soft); background: var(--bg); color: var(--ink); box-shadow: 0 24px 80px #0005; }
+.newsletter-modal::backdrop { background: #0009; }
+.newsletter-modal-close { display: block; margin: 0 0 20px auto; padding: 10px; border: 0; background: transparent; color: var(--ink-soft); font: 12px/1.5 var(--font-mono); cursor: pointer; }
+.newsletter-modal-close:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 3px; }
+.newsletter-dialog .newsletter-strip { border: 0; padding: 0; }
+@media (max-width: 820px) {
+  .newsletter-strip { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}
+@media (max-width: 480px) {
+  .newsletter-modal { padding: 20px; }
+  .newsletter-home { padding: 24px 20px; }
+  .newsletter-home .newsletter-strip { padding: 18px 16px; }
+  .newsletter-home .newsletter-copy h2 { font-size: 22px; }
+  .newsletter-section .newsletter-copy p { font-size: 14px; }
+  .newsletter-input-row { gap: 6px; }
+  .newsletter-input-row input { font-size: 11px; padding: 0 10px; }
+  .newsletter-input-row button { font-size: 11px; padding: 0 11px; }
+}

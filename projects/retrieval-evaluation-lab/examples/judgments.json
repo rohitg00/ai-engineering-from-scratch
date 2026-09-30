@@ -1,0 +1,15 @@
+{
+  "release": {
+    "new": 3,
+    "check": 2,
+    "old": 0
+  },
+  "restore": {
+    "runbook": 3,
+    "old": 0
+  },
+  "cafe": {
+    "network": 2,
+    "tablet": 3
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "id": "feedback-theme-board",
+  "title": "Feedback Theme Board",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "Group product feedback with inspectable phrase evidence, count distinct sources, and export local issue drafts.",
+  "summary": "Group product feedback with inspectable phrase evidence, count distinct sources, and export local issue drafts.",
+  "youWillBuild": "A portable evidence board, JSON summary and unsent Markdown investigation drafts.",
+  "usefulFor": [
+    "Use your own input to produce a reviewable artifact another application can consume."
+  ],
+  "hours": 8,
+  "languages": [
+    "TypeScript"
+  ],
+  "languageWhy": {
+    "TypeScript": "Standard-library parsing, explicit contracts and portable artifacts keep the mechanism visible."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Import feedback with stable identities",
+    "Match phrases while preserving original spans",
+    "Count evidence without inflating source support",
+    "Publish evidence and reviewable investigation drafts"
+  ],
+  "prerequisites": [
+    {
+      "title": "Development environment",
+      "path": "phases/00-setup-and-tooling/01-dev-environment"
+    },
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-feedback-theme-board-1",
+  "demo": {
+    "command": [
+      "node",
+      "cli.ts",
+      "sample.jsonl",
+      "themes.json",
+      "output"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-import-feedback",
+      "title": "Import feedback with stable identities",
+      "summary": "parseFeedback(text); validateThemes(value)",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "concepts": [
+        "Import feedback with stable identities"
+      ],
+      "figure": "pj-feedback-theme-board-1"
+    },
+    {
+      "id": "02-match-evidence",
+      "title": "Match phrases while preserving original spans",
+      "summary": "findEvidence(row, phrase)",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "concepts": [
+        "Match phrases while preserving original spans"
+      ],
+      "figure": "pj-feedback-theme-board-2"
+    },
+    {
+      "id": "03-count-without-inflation",
+      "title": "Count evidence without inflating source support",
+      "summary": "buildBoard(rows, themes)",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "concepts": [
+        "Count evidence without inflating source support"
+      ],
+      "figure": "pj-feedback-theme-board-3"
+    },
+    {
+      "id": "04-publish-and-integrate",
+      "title": "Publish evidence and reviewable investigation drafts",
+      "summary": "draftIssue(theme); renderBoard(board)",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "concepts": [
+        "Publish evidence and reviewable investigation drafts"
+      ],
+      "figure": "pj-feedback-theme-board-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Build and verify",
+      "caption": "Actual starter failure and reference grader output; reference passes do not earn a learner certificate."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Use the finished artifact",
+      "caption": "Recorded real input, computed output and the resulting portable report."
+    }
+  ]
+}

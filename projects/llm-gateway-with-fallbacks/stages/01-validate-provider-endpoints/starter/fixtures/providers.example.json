@@ -1,0 +1,18 @@
+{
+  "providers": [
+    {
+      "name": "primary",
+      "url": "http://127.0.0.1:11434/v1/chat/completions",
+      "model": "YOUR_LOCAL_MODEL"
+    },
+    {
+      "name": "backup",
+      "url": "http://127.0.0.1:11435/v1/chat/completions",
+      "model": "YOUR_BACKUP_MODEL",
+      "key_env": "ORCHARD_BACKUP_KEY"
+    }
+  ],
+  "max_attempts": 2,
+  "max_response_bytes": 65536,
+  "timeout_ms": 4000
+}

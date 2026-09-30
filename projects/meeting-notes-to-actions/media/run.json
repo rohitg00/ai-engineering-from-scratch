@@ -1,0 +1,48 @@
+{
+  "title": "Meeting Notes to Actions | Build and verify",
+  "recordedAt": "2026-09-28T19:22:59Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "meeting-notes-to-actions",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-xuecyi20"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-xuecyi20\n  created  cli.py\n  created  main.py\n  created  samples/notes.txt\n  created  STAGE.md\n  kept     STAGE.md\n  kept     STAGE.md\nnext: python3 scripts/project_test.py meeting-notes-to-actions --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-xuecyi20\n",
+      "durationMs": 49
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "meeting-notes-to-actions",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-xuecyi20"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Meeting Notes to Actions: grading learner\n  FAIL stage 1: Parse explicit action records with line provenance (5 tests)\n       not implemented yet: parse_notes\n",
+      "durationMs": 101
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "meeting-notes-to-actions",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Meeting Notes to Actions: grading solution\n  PASS stage 1: Parse explicit action records with line provenance (5 tests)\n  PASS stage 2: Validate owners and calendar dates (9 tests)\n  PASS stage 3: Deduplicate exact commitments without losing citations (5 tests)\n  PASS stage 4: Publish an escaped HTML checklist and summary (12 tests)\n",
+      "durationMs": 263
+    }
+  ]
+}

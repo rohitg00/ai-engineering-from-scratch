@@ -1,0 +1,125 @@
+{
+  "id": "retrieval-evaluation-lab",
+  "title": "Retrieval Evaluation Lab",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "Measure ranking quality with precision, recall, reciprocal rank, and discounted gain while exposing duplicates and missing judgments.",
+  "summary": "Measure ranking quality with precision, recall, reciprocal rank, and discounted gain while exposing duplicates and missing judgments.",
+  "youWillBuild": "A retrieval regression detective revealing which evidence moved and why the aggregate changed.",
+  "usefulFor": [
+    "A retrieval regression detective revealing which evidence moved and why the aggregate changed.",
+    "Metrics apply to supplied labels."
+  ],
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "languageWhy": {
+    "Python": "The standard library makes parsing, scoring, and failure handling visible without hiding the mechanism behind a framework."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Validate rankings and graded judgments",
+    "Compute precision and recall at k",
+    "Reward useful evidence near the top",
+    "Compare systems query by query"
+  ],
+  "prerequisites": [
+    {
+      "title": "Retrieval augmented generation",
+      "path": "phases/11-llm-engineering/06-rag"
+    },
+    {
+      "title": "Model evaluation",
+      "path": "phases/02-ml-fundamentals/09-model-evaluation"
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-retrieval-evaluation-lab-1",
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-validate-rankings",
+      "title": "Validate rankings and graded judgments",
+      "summary": "Reject duplicate ranking ids, nonpositive cutoffs, and invalid relevance grades.",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "evaluation contracts",
+        "graded relevance"
+      ],
+      "figure": "pj-retrieval-evaluation-lab-1"
+    },
+    {
+      "id": "02-precision-and-recall",
+      "title": "Compute precision and recall at k",
+      "summary": "Compute binary precision and recall for positive-grade judgments at cutoff k.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "precision",
+        "recall",
+        "cutoff"
+      ],
+      "figure": "pj-retrieval-evaluation-lab-2"
+    },
+    {
+      "id": "03-rank-sensitive-metrics",
+      "title": "Reward useful evidence near the top",
+      "summary": "Return reciprocal rank and NDCG at k.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "MRR",
+        "NDCG",
+        "discounted gain"
+      ],
+      "figure": "pj-retrieval-evaluation-lab-3"
+    },
+    {
+      "id": "04-compare-systems",
+      "title": "Compare systems query by query",
+      "summary": "Produce per-query metrics and macro means for each named system, with unjudged result counts.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "macro averaging",
+        "paired systems"
+      ],
+      "figure": "pj-retrieval-evaluation-lab-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

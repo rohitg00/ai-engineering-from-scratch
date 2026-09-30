@@ -1,0 +1,10 @@
+{
+  "model": "caller-default",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Give one practical way to check whether an export link has expired."
+    }
+  ],
+  "stream": false
+}

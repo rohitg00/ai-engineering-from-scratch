@@ -1,0 +1,136 @@
+{
+  "id": "multi-agent-code-review-panel",
+  "title": "Multi-Agent Code Review Panel",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "A review disagreement workbench that measures when quorum helps and when it hides findings.",
+  "summary": "A review disagreement workbench that measures when quorum helps and when it hides findings. Input files maps names to text or lines. Optional reviewers contain id,cost,findings recordings. Expected labels use {file,line,rule}; the report records the source fingerprint and per-reviewer versus consensus metrics.",
+  "hours": 8,
+  "languages": ["TypeScript"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Validate reviewer evidence",
+    "Aggregate independent support",
+    "Reserve costs and enforce deadlines",
+    "Measure panel precision and recall"
+  ],
+  "prerequisites": [
+    "Node22.18+ and Python3 for the grader",
+    "TypeScript objects, sets, promises, AbortSignal and precision/recall."
+  ],
+  "youWillBuild": "A review disagreement workbench that measures when quorum helps and when it hides findings.",
+  "usefulFor": [
+    "Input files maps names to text or lines. Optional reviewers contain id,cost,findings recordings. Expected labels use {file,line,rule}; the report records the source fingerprint and per-reviewer versus consensus metrics."
+  ],
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "node",
+      "cli.ts",
+      "--input",
+      "samples/review.json",
+      "--output",
+      "panel.json",
+      "--html",
+      "panel.html"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-evidence",
+      "title": "Validate reviewer evidence",
+      "summary": "Require a file present in the supplied snapshot, a positive one-based line, an exact nonempty quote, a stable rule id and a severity from one through three. Evidence validation is shared across all reviewers. It protects the aggregation boundary against fabricated locations, but agreement and quoted text still do not prove a finding is correct.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Unknown reviewer output must become a typed finding only after runtime validation.",
+      "concepts": ["validateFinding"],
+      "difficulty": "starter",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-multi-agent-code-review-panel-1"
+    },
+    {
+      "id": "02-agreement",
+      "title": "Aggregate independent support",
+      "summary": "Group valid findings by file, line and rule. Count one vote per reviewer per group, reject duplicate reviewer identities, and retain every severity vote. A quorum produces consensus; a singleton remains visible as needs-review. A disagreement flag survives consensus so the user can inspect conflicting severity judgments.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Sets make reviewer identity and per-review deduplication explicit.",
+      "concepts": ["aggregate"],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-multi-agent-code-review-panel-2"
+    },
+    {
+      "id": "03-budgets",
+      "title": "Reserve costs and enforce deadlines",
+      "summary": "Reserve each reviewer cost before launching it. Skip work that cannot fit the remaining budget and record the decision. Race each reviewer against a deadline and abort its signal when time expires. Failures remain in the trace while completed reviews can still be aggregated. Adapters must honor AbortSignal to stop external work; the runner cannot force a remote service to cancel.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Promises and AbortSignal allow parallel reviewer calls with explicit terminal states.",
+      "concepts": ["runPanel"],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-multi-agent-code-review-panel-3"
+    },
+    {
+      "id": "04-evaluate",
+      "title": "Measure panel precision and recall",
+      "summary": "Evaluate unique finding ids against an expected set. Precision measures how many predicted findings are expected; recall measures how much of the expected set was found. Deduplicate both sets so repeated reviewers cannot inflate the metric. Zero predictions produce precision zero rather than a misleading perfect score. Try held-out inputs before adjusting quorum.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Small pure metrics let deterministic fixtures establish a baseline before model integrations.",
+      "concepts": ["evaluate"],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts",
+        "{tests}/integration.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-multi-agent-code-review-panel-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

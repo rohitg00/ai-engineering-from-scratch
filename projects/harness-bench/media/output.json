@@ -1,0 +1,17 @@
+{
+  "title": "Harness Bench | Actual artifact output",
+  "recordedAt": "2026-09-28T19:36:39Z",
+  "records": [
+    {
+      "command": [
+        "go",
+        "run",
+        "."
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/harness-bench/solution",
+      "exitCode": 0,
+      "output": "SCOPE authored_fixture\nMODEL orchard-authored-responses-v1\nDATASET bd210045d336a39c571b3b95db324c338d3eb82b0c477175ba70e8c4317d9524\nSCOPED HARNESS COMPARISON\nevidence correct=3/3 attempted=3 errors=0 calls=3/4 state=completed\nretry-errors correct=2/3 attempted=3 errors=0 calls=4/4 state=completed\nbaseline correct=1/3 attempted=3 errors=1 calls=3/4 state=completed\n",
+      "durationMs": 905
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "id": "memory-server",
+  "title": "Persistent Memory Server",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "A persistent memory workbench with revision history and one boundary for REST and MCP.",
+  "summary": "A persistent memory workbench with revision history and one boundary for REST and MCP. Set MEMORY_TOKEN in the environment and run node cli.ts --data-dir memory-data --serve --port 8788. REST and MCP share the same store; no token is written into files.",
+  "hours": 8,
+  "languages": ["TypeScript", "Rust"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Keep text, namespace and provenance together",
+    "Serialize revisioned writes",
+    "Score vectors in a real Rust process",
+    "Expose REST and MCP tools"
+  ],
+  "prerequisites": [
+    "Node 22.18+, Rust 2021 and Python 3 for the grader",
+    "promises, append logs, HTTP, namespaces, revisions and vector dot products."
+  ],
+  "youWillBuild": "A persistent memory workbench with revision history and one boundary for REST and MCP.",
+  "usefulFor": [
+    "Set MEMORY_TOKEN in the environment and run node cli.ts --data-dir memory-data --serve --port 8788. REST and MCP share the same store; no token is written into files."
+  ],
+  "demo": {
+    "command": ["node", "demo-persistent.ts"],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-record-contract",
+      "title": "Keep text, namespace and provenance together",
+      "summary": "Every memory needs a bounded id, namespace, text and source locator. Never return a detached string without its provenance. The small feature-hashing embedding maps normalized terms into a fixed vector; it is a deterministic lexical projection, not a pretrained semantic model. Hash collisions are expected and explain why lexical evidence remains part of retrieval.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "TypeScript provides typed memory records; runtime validation protects JSON inputs.",
+      "concepts": ["validateMemory", "embed"],
+      "difficulty": "starter",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node", "rustc"],
+      "timeout": 90,
+      "figure": "pj-memory-server-1"
+    },
+    {
+      "id": "02-durable-log",
+      "title": "Serialize revisioned writes",
+      "summary": "Load a versioned event log and reconstruct the latest record for each namespace/id pair. An update must name its expected revision. Serialize writes so two callers racing from revision zero cannot both succeed. Append before mutating the in-memory map. This is a single-process store: append completion is not a power-loss durability guarantee, and multiple server processes require an external lock or database.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Promises serialize local writes while JSONL makes the durable history inspectable.",
+      "concepts": ["MemoryStore.put", "MemoryStore.list"],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node", "rustc"],
+      "timeout": 90,
+      "figure": "pj-memory-server-2"
+    },
+    {
+      "id": "03-hybrid-search",
+      "title": "Score vectors in a real Rust process",
+      "summary": "Compile score.rs with the standard Rust toolchain and send query and document vectors over stdin. Compute cosine similarity, returning zero for a zero-norm vector. Combine 60 percent lexical query coverage with 40 percent cosine score and use ids to break ties. Test dimensions and finite values before crossing the process boundary. The Rust binary is compiled into a private temporary directory and removed on normal process exit.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Rust handles the numerical kernel through a narrow line protocol; TypeScript owns retrieval and provenance.",
+      "concepts": ["cosineScores", "MemoryStore.search"],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node", "rustc"],
+      "timeout": 90,
+      "figure": "pj-memory-server-3"
+    },
+    {
+      "id": "04-transports",
+      "title": "Expose REST and MCP tools",
+      "summary": "Bind a local server, require a bearer token, bound request bodies, and implement health, REST writes/search and the MCP initialization/tools subset over JSON-RPC POST. Tool execution failures use isError inside a successful JSON-RPC response; unknown protocol methods use a JSON-RPC error. This is a teaching subset without sessions, streaming or production authentication. Test actual HTTP bytes so serialization cannot drop source or revision.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Node HTTP serves the same MemoryStore methods across two wire formats.",
+      "concepts": ["createMemoryServer"],
+      "difficulty": "core",
+      "requires": ["node", "rustc"],
+      "timeout": 90,
+      "figure": "pj-memory-server-4",
+      "runners": [
+        {
+          "language": "typescript",
+          "argv": [
+            "node",
+            "--experimental-strip-types",
+            "--test",
+            "{tests}/stage.test.ts",
+            "{tests}/integration.test.ts"
+          ]
+        },
+        {
+          "language": "python",
+          "optional": true,
+          "requires": ["python:mcp"],
+          "argv": [
+            "{python}",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "{stage}/tests-framework",
+            "-p",
+            "test_standard_client.py"
+          ]
+        }
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

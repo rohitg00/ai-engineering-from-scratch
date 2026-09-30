@@ -1,0 +1,78 @@
+{
+  "lesson": "03-json-rpc-and-meta",
+  "title": "The JSON-RPC Envelope",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A raw JSON-RPC message has a method field but no id field at all. Which of the four MCP message shapes is it?",
+      "options": [
+        "A request, because every message with a method field is a request",
+        "A result response, because the absence of an id means the exchange is already complete",
+        "An error response, because errors are the only shape that can omit an id",
+        "A notification, since only requests and results are required to carry an id"
+      ],
+      "correct": 3,
+      "explanation": "A message with a method and no id field at all is a notification; JSON-RPC uses the presence of id to separate a request, which expects a reply, from a notification, which does not."
+    },
+    {
+      "stage": "check",
+      "question": "A 2026-07-28 client receives a result object from a server implementing an earlier protocol version that never sends resultType. How must the client interpret the missing field?",
+      "options": [
+        "As complete, the backward-compatible default for servers that predate resultType",
+        "As an error, since resultType is mandatory and its absence makes the result malformed",
+        "As whichever value the client used in its most recent request",
+        "As input_required, since missing information usually blocks completion"
+      ],
+      "correct": 0,
+      "explanation": "For backward compatibility with servers implementing earlier protocol versions, a client must treat an absent resultType as complete rather than reject the response."
+    },
+    {
+      "stage": "check",
+      "question": "Which _meta key prefix is reserved for MCP because its second dot-separated label is modelcontextprotocol or mcp?",
+      "options": [
+        "com.example.mcp/, since mcp appears as its third label",
+        "dev.mcp/, since its second label is mcp",
+        "mcp.example/, since its first label is literally mcp",
+        "org.tools.mcp/, since mcp appears at the end of the prefix"
+      ],
+      "correct": 1,
+      "explanation": "A prefix is reserved for MCP only when its second dot-separated label is modelcontextprotocol or mcp; dev.mcp qualifies because mcp sits in that second position, while the other prefixes place mcp elsewhere."
+    },
+    {
+      "stage": "check",
+      "question": "A request's params._meta includes io.modelcontextprotocol/protocolVersion but omits io.modelcontextprotocol/clientCapabilities entirely. What must a conformant server do?",
+      "options": [
+        "Process the request as if the client declared no optional capabilities",
+        "Reject it with JSON-RPC error -32601, since the method itself is now unrecognized",
+        "Reject it with JSON-RPC error -32602, and 400 Bad Request on HTTP",
+        "Hold the request open until the client sends the missing field in a follow-up"
+      ],
+      "correct": 2,
+      "explanation": "A request missing a required _meta field such as clientCapabilities is malformed, and a conformant server must reject it with -32602, returning 400 Bad Request on an HTTP transport."
+    },
+    {
+      "stage": "post",
+      "question": "A gateway operator wants to route requests differently depending on which client sent them, reading io.modelcontextprotocol/clientInfo to decide. Why is that unsafe?",
+      "options": [
+        "Only servers may read clientInfo; gateways are restricted to reading _meta.progressToken",
+        "The field never reaches the gateway because it is stripped before the request leaves the client",
+        "The field is only populated on the first request of a brand-new connection",
+        "clientInfo is self-reported by the sender and is never verified by the protocol"
+      ],
+      "correct": 3,
+      "explanation": "clientInfo and serverInfo are self-reported by whoever sends them and are intended only for display, logging, and debugging, so a routing or authorization decision must never depend on them."
+    },
+    {
+      "stage": "post",
+      "question": "A client has three independent requests ready to send to a Streamable HTTP server. What does 2026-07-28 require it to do?",
+      "options": [
+        "Send three separate POST requests, one request or notification per body",
+        "Join them with newlines in one POST body, one message per line",
+        "Open a single SSE stream and push all three requests through it",
+        "Combine them into a single JSON-RPC batch array and POST it once"
+      ],
+      "correct": 0,
+      "explanation": "JSON-RPC batching was removed from MCP in the 2025-06-18 revision, so each Streamable HTTP POST body must carry exactly one request or notification."
+    }
+  ]
+}

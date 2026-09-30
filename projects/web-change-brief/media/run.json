@@ -1,0 +1,48 @@
+{
+  "title": "Web Change Brief | Build and verify",
+  "recordedAt": "2026-09-28T19:19:42Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "web-change-brief",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-qaduj2kp"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-qaduj2kp\n  created  STAGE.md\n  created  fixtures/after.html\n  created  fixtures/before.html\n  created  go.mod\n  created  main.go\n  created  STAGE-2.md\n  created  STAGE-3.md\n  created  STAGE-4.md\nnext: python3 scripts/project_test.py web-change-brief --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-qaduj2kp\n",
+      "durationMs": 49
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "web-change-brief",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-qaduj2kp"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Web Change Brief: grading learner\n  FAIL stage 1: Extract text before comparing pages (1 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 823
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "web-change-brief",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Web Change Brief: grading solution\n  PASS stage 1: Extract text before comparing pages (7 tests)\n  PASS stage 2: Compare exact text and preserve duplicates (7 tests)\n  PASS stage 3: Fetch one page without losing the baseline (7 tests)\n  PASS stage 4: Export a brief a person can inspect (6 tests)\n",
+      "durationMs": 6223
+    }
+  ]
+}

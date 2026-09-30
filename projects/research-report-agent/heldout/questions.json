@@ -1,0 +1,99 @@
+{
+  "questions": [
+    {
+      "id": "h1",
+      "question": "Why are containers a weak sandbox for code written by an AI agent?",
+      "expected_docs": [
+        "02-containers-shared-kernel",
+        "03-daemon-socket-escape"
+      ],
+      "key_facts": [
+        [
+          "kernel"
+        ],
+        [
+          "escape"
+        ]
+      ]
+    },
+    {
+      "id": "h2",
+      "question": "How does user-space kernel reduce the host attack surface?",
+      "expected_docs": [
+        "04-user-space-kernel"
+      ],
+      "key_facts": [
+        [
+          "interceptor"
+        ],
+        [
+          "system calls"
+        ]
+      ]
+    },
+    {
+      "id": "h3",
+      "question": "What isolation does a microVM monitor microVM give each agent session?",
+      "expected_docs": [
+        "05-microvm-monitor",
+        "11-disposable-sessions"
+      ],
+      "key_facts": [
+        [
+          "own",
+          "kernel"
+        ],
+        [
+          "hardware virtualization"
+        ]
+      ]
+    },
+    {
+      "id": "h4",
+      "question": "How does a secrets proxy protect API keys from prompt injection?",
+      "expected_docs": [
+        "07-secrets-proxy",
+        "12-prompt-injection-tool-output"
+      ],
+      "key_facts": [
+        [
+          "proxy"
+        ],
+        [
+          "never"
+        ]
+      ]
+    },
+    {
+      "id": "h5",
+      "question": "How can a network egress policy stop an agent from exfiltrating data?",
+      "expected_docs": [
+        "08-egress-network-policy"
+      ],
+      "key_facts": [
+        [
+          "allowlist"
+        ],
+        [
+          "exfiltration"
+        ]
+      ]
+    },
+    {
+      "id": "h6",
+      "question": "What do remote sandboxes provide for long agent tasks?",
+      "expected_docs": [
+        "09-remote-sandboxes",
+        "07-secrets-proxy"
+      ],
+      "key_facts": [
+        [
+          "microvm"
+        ],
+        [
+          "templates"
+        ]
+      ]
+    }
+  ]
+}

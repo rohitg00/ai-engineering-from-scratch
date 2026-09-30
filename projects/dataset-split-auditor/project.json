@@ -1,0 +1,107 @@
+{
+  "id": "dataset-split-auditor",
+  "title": "Dataset Split Auditor",
+  "level": 1,
+  "levelName": "Starter",
+  "tagline": "A dataset gate that names the records responsible for content and incident leakage.",
+  "summary": "A dataset gate that names the records responsible for content and incident leakage. Pass {train,test} records to the CLI, or {records} with --split 0.25 --seed experiment-1. Add --check in CI to return exit2 when the split is unusable.",
+  "youWillBuild": "A dataset gate that names the records responsible for content and incident leakage.",
+  "usefulFor": [
+    "Pass {train,test} records to the CLI, or {records} with --split 0.25 --seed experiment-1. Add --check in CI to return exit2 when the split is unusable."
+  ],
+  "hours": 8,
+  "languages": ["Python"],
+  "languageWhy": {
+    "Python": "The standard library makes parsing, scoring, and failure handling visible without hiding the mechanism behind a framework."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Fingerprint normalized records",
+    "Audit duplicate and group leakage",
+    "Split groups with stable hashing",
+    "Report split size and leakage together"
+  ],
+  "prerequisites": [
+    "Python 3.10+",
+    "lists, sets, dictionaries, Unicode normalization and hash functions."
+  ],
+  "figures": true,
+  "overviewFigure": "pj-dataset-split-auditor-1",
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--output",
+      "split-audit.json",
+      "--html",
+      "split-audit.html"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-fingerprint-records",
+      "title": "Fingerprint normalized records",
+      "summary": "Create stable SHA-256 fingerprints for text after NFKC normalization, case folding, and whitespace collapse..",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["fingerprints", "Unicode normalization"],
+      "figure": "pj-dataset-split-auditor-1"
+    },
+    {
+      "id": "02-audit-leakage",
+      "title": "Audit duplicate and group leakage",
+      "summary": "Validate ids, text, and groups, then report intersections across train and test..",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["data leakage", "groups", "evidence"],
+      "figure": "pj-dataset-split-auditor-2"
+    },
+    {
+      "id": "03-split-groups",
+      "title": "Split groups with stable hashing",
+      "summary": "Return train and test arrays with no group overlap.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["deterministic splitting", "group isolation"],
+      "figure": "pj-dataset-split-auditor-3"
+    },
+    {
+      "id": "04-report-distribution",
+      "title": "Report split size and leakage together",
+      "summary": "Produce a JSON audit with partition sizes, group counts, and a usable flag requiring both nonempty partitions and no leakage..",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["evaluation readiness", "dataset audit"],
+      "figure": "pj-dataset-split-auditor-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

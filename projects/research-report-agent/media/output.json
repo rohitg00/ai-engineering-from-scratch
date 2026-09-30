@@ -1,0 +1,15 @@
+{
+  "title": "research-report-agent | Actual application output",
+  "url": "file:///tmp/aiefs-recorded-artifacts/research-report-agent/solution/out/report.html",
+  "actions": [
+    [
+      "js",
+      "document.querySelector('.citation a').focus()"
+    ],
+    [
+      "js",
+      "document.querySelector('details').open=true;document.querySelector('details').scrollIntoView()"
+    ]
+  ],
+  "kind": "browser capture"
+}

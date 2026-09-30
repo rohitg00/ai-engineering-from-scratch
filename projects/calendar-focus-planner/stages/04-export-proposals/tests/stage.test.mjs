@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {mkdtempSync,readFileSync,rmSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+const work=process.env.PROJECT_WORKSPACE;
+const f=await import(pathToFileURL(join(work,'main.ts')).href);
+const ICS='BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nUID:a\nDTSTART:20261014T100000Z\nDTEND:20261014T110000Z\nSUMMARY:Sync\nEND:VEVENT\nEND:VCALENDAR\n';
+const WINDOW={start:Date.parse('2026-10-14T09:00:00Z'),end:Date.parse('2026-10-14T17:00:00Z')};
+test('export parses back',()=>{const p=f.schedule([{id:'a',title:'Read, then\nwrite',minutes:30,priority:5}],[],WINDOW);const result=f.parseCalendar(f.exportCalendar(p,WINDOW.start));assert.equal(result[0].title,'Read, then\nwrite');assert.equal(result[0].start,p.scheduled[0].start);});
+test('folding respects byte widths',()=>{const p=f.schedule([{id:'a',title:'é'.repeat(90),minutes:30,priority:5}],[],WINDOW);const ics=f.exportCalendar(p,WINDOW.start);for(const line of ics.split('\r\n'))assert.ok(Buffer.byteLength(line)<=75);assert.equal(f.parseCalendar(ics)[0].title,'é'.repeat(90));});
+test('HTML treats title as text',()=>assert.ok(f.renderPlan(f.schedule([{id:'a',title:'<script>x</script>',minutes:30,priority:5}],[],WINDOW)).includes('&lt;script&gt;')));
+test('empty export is valid',()=>assert.equal(f.parseCalendar(f.exportCalendar(f.schedule([],[],WINDOW),WINDOW.start)).length,0));
+test('actual CLI writes reusable files',()=>{const dir=mkdtempSync(join(tmpdir(),'focus-test-'));try{const r=spawnSync(process.execPath,[join(work,'cli.ts'),join(work,'sample.ics'),join(work,'tasks.json'),'2026-10-14',dir],{encoding:'utf8'});assert.equal(r.status,0,r.stderr);assert.ok(readFileSync(join(dir,'plan.html'),'utf8').includes('needs')||readFileSync(join(dir,'plan.html'),'utf8').includes('Needs'));assert.equal(JSON.parse(readFileSync(join(dir,'plan.json'),'utf8')).unscheduled.length,1);}finally{rmSync(dir,{recursive:true,force:true});}});

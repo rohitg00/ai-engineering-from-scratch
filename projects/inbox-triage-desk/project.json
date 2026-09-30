@@ -1,0 +1,121 @@
+{
+  "id": "inbox-triage-desk",
+  "title": "Inbox Triage Desk",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "Turn exported email into an evidence-backed review queue and unsent reply drafts.",
+  "summary": "Turn exported email into an evidence-backed review queue and unsent reply drafts.",
+  "youWillBuild": "An HTML review desk, triage.json, and downloadable unsent .eml drafts.",
+  "usefulFor": [
+    "A directory of exported .eml messages. Only plain-text bodies are classified; HTML-only messages remain visible for manual review."
+  ],
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "languageWhy": {
+    "Python": "Python ships MIME parsing, structured email generation and portable document export in its standard library."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Read MIME without losing message identity",
+    "Group references and explain the queue",
+    "Create an unsent draft with a source quote",
+    "Export an auditable inbox desk"
+  ],
+  "prerequisites": [
+    "Read and write dictionaries and lists in Python.",
+    "Understand a function returning a value or raising ValueError.",
+    "Know that email headers and a MIME body are different data structures."
+  ],
+  "figures": true,
+  "overviewFigure": "pj-inbox-triage-desk-1",
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-parse-messages",
+      "title": "Read MIME without losing message identity",
+      "summary": "Parse exported messages and preserve their exact plain-text evidence.",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Python ships MIME parsing, structured email generation and portable document export in its standard library.",
+      "concepts": [
+        "MIME",
+        "message identity",
+        "input bounds"
+      ],
+      "figure": "pj-inbox-triage-desk-1"
+    },
+    {
+      "id": "02-group-and-triage",
+      "title": "Group references and explain the queue",
+      "summary": "Use message references for threads and explicit phrases for triage.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Python ships MIME parsing, structured email generation and portable document export in its standard library.",
+      "concepts": [
+        "union find",
+        "rule conflicts",
+        "evidence spans"
+      ],
+      "figure": "pj-inbox-triage-desk-2"
+    },
+    {
+      "id": "03-draft-for-review",
+      "title": "Create an unsent draft with a source quote",
+      "summary": "Generate reviewable email drafts without inventing commitments.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Python ships MIME parsing, structured email generation and portable document export in its standard library.",
+      "concepts": [
+        "email serialization",
+        "evidence validation",
+        "provider proposals"
+      ],
+      "figure": "pj-inbox-triage-desk-3"
+    },
+    {
+      "id": "04-export-the-desk",
+      "title": "Export an auditable inbox desk",
+      "summary": "Write portable HTML, JSON and draft files from the same review records.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "python",
+      "languageWhy": "Python ships MIME parsing, structured email generation and portable document export in its standard library.",
+      "concepts": [
+        "HTML escaping",
+        "stable filenames",
+        "portable artifacts"
+      ],
+      "figure": "pj-inbox-triage-desk-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Build and grade",
+      "caption": "A fresh starter fails; the complete original solution passes all four stages."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the application output",
+      "caption": "Actual output from authored offline fixtures. See the README for provider and evidence boundaries."
+    }
+  ]
+}

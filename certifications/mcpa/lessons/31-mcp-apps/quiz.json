@@ -1,0 +1,78 @@
+{
+  "lesson": "31-mcp-apps",
+  "title": "Interactive Interfaces Inside the Conversation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why would a server reach for an interactive interface instead of returning ordinary tool content?",
+      "options": [
+        "To let a user explore or configure something a paragraph of text cannot",
+        "To require a login step that completes before any tool call can run",
+        "To let the model silently rewrite the tool's own arguments before each call",
+        "To replace every text response in the conversation with one binary block"
+      ],
+      "correct": 0,
+      "explanation": "MCP Apps exists for results a user wants to explore or configure directly, such as drilling into a chart or filling out a form, not for content a plain text answer already serves well."
+    },
+    {
+      "stage": "check",
+      "question": "Where does a client declare that it supports interactive interfaces before any resource is fetched?",
+      "options": [
+        "In a dedicated `ui/register` call the client sends before any tool list",
+        "In `io.modelcontextprotocol/clientCapabilities.extensions` on the request",
+        "In the HTTP `Accept` header, listed alongside `text/event-stream` always",
+        "In a one-time `initialize` handshake both sides complete before any request"
+      ],
+      "correct": 1,
+      "explanation": "Extension support is declared per request in clientCapabilities.extensions, the same stateless pattern every capability in the 2026-07-28 protocol follows; there is no handshake or one-time registration call."
+    },
+    {
+      "stage": "check",
+      "question": "A tool definition carries `_meta.ui.resourceUri`. What does a host do with that field?",
+      "options": [
+        "Treat it as a local template path bundled with the host application",
+        "Store it as the cache key for the tool's next `structuredContent` result",
+        "Fetch the `ui://` resource it names through an ordinary `resources/read`",
+        "Open the address in a new browser tab outside the conversation entirely"
+      ],
+      "correct": 2,
+      "explanation": "The field points at a ui:// resource, and a host resolves it the same way it resolves any other MCP resource, through resources/read, not through a special fetch method."
+    },
+    {
+      "stage": "check",
+      "question": "A host fetches a `ui://` resource and its `mimeType` comes back as plain `text/html`. What should the host conclude?",
+      "options": [
+        "The resource is a valid app already, since its scheme is `ui://` at all",
+        "The resource is valid as long as its `_meta.ui.csp` domains are all trusted",
+        "The resource is valid because plain `text/html` is a safe default type",
+        "The resource is not a valid app; the required profile parameter is missing"
+      ],
+      "correct": 3,
+      "explanation": "Only text/html;profile=mcp-app marks a fetched resource as a renderable app; plain text/html is an ordinary HTML document the host should not treat as one, whatever the scheme says."
+    },
+    {
+      "stage": "post",
+      "question": "A host that never declared the interactive-interface extension calls a UI-capable tool anyway. What happens?",
+      "options": [
+        "The tool still returns a normal result whose text content stays useful",
+        "The server silently upgrades the request as though the extension were declared",
+        "The call fails immediately with the unknown-method error `-32601`",
+        "The host receives an `input_required` result asking it to add the extension"
+      ],
+      "correct": 0,
+      "explanation": "A UI-capable tool keeps a meaningful text result for hosts that never declare the extension, and the side without support simply falls back to core behavior instead of the request failing."
+    },
+    {
+      "stage": "post",
+      "question": "Why does an interactive interface render inside a sandboxed iframe instead of a directly embedded page?",
+      "options": [
+        "So the app can freely reach the host page's cookies and local storage",
+        "So the app stays isolated from the host while privileged actions need consent",
+        "So the model can execute the app's own JavaScript in the host's context",
+        "So the server is allowed to skip returning any text content at all"
+      ],
+      "correct": 1,
+      "explanation": "The sandbox keeps the app from reaching the host page's cookies, storage, or DOM directly, so a host can render a server's app without auditing it line by line, while any privileged action still crosses a consent-gated bridge."
+    }
+  ]
+}

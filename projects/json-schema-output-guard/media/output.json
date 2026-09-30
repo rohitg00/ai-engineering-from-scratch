@@ -1,0 +1,24 @@
+{
+  "title": "JSON Schema Output Guard | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:58Z",
+  "records": [
+    {
+      "command": [
+        "node",
+        "cli.ts",
+        "--schema",
+        "samples/schema.json",
+        "--attempts",
+        "samples/attempts.json",
+        "--output",
+        "guard.json",
+        "--html",
+        "guard.html"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/json-schema-output-guard/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"mode\": \"recorded-repair\",\n  \"status\": \"accepted\",\n  \"value\": {\n    \"answer\": \"check source\",\n    \"confidence\": 0.8\n  },\n  \"trace\": [\n    {\n      \"attempt\": 1,\n      \"accepted\": false,\n      \"issues\": [\n        {\n          \"path\": \"$/confidence\",\n          \"message\": \"above maximum\"\n        }\n      ]\n    },\n    {\n      \"attempt\": 2,\n      \"accepted\": true,\n      \"issues\": []\n    }\n  ]\n}\n",
+      "durationMs": 115
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "keywords": [
+    "test"
+  ],
+  "paths": [
+    "tests/**"
+  ],
+  "priority": 1,
+  "requires": [],
+  "permissions": [
+    "read"
+  ]
+}

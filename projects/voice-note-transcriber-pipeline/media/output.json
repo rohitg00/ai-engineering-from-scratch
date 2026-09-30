@@ -1,0 +1,11 @@
+{
+  "title": "voice-note-transcriber-pipeline | Actual application output",
+  "url": "file:///tmp/aiefs-reviewed-apps/voice/index.html",
+  "actions": [
+    [
+      "js",
+      "window.scrollTo(0,250)"
+    ]
+  ],
+  "kind": "browser capture"
+}

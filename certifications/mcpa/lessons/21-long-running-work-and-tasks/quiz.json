@@ -1,0 +1,78 @@
+{
+  "lesson": "21-long-running-work-and-tasks",
+  "title": "Long-Running Work and the Tasks Extension",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why can a server not just hold the connection open until a twenty-minute pipeline finishes?",
+      "options": [
+        "Transport timeouts, no input channel during execution, and no crash recovery at all",
+        "Because MCP requires every tool call to use the tasks extension for any tool",
+        "Because the client always closes the connection after exactly one request completes",
+        "Because JSON-RPC forbids any request from taking longer than one second to answer"
+      ],
+      "correct": 0,
+      "explanation": "Blocking runs into transport timeouts that are not the server's to set, no channel to ask for input mid-call, and no way to recover after a crash or dropped connection."
+    },
+    {
+      "stage": "check",
+      "question": "Where does a client declare support for io.modelcontextprotocol/tasks on a given request?",
+      "options": [
+        "In the tasks field of the tools/list response the server returned earlier",
+        "In that request's own params._meta, under clientCapabilities.extensions field",
+        "In a session header the server issues after the first successful tool call",
+        "In a one-time initialize handshake that both sides remember for the connection"
+      ],
+      "correct": 1,
+      "explanation": "Extension support is declared per request in clientCapabilities.extensions inside params._meta, because there is no session or handshake that would let the server remember an earlier declaration."
+    },
+    {
+      "stage": "check",
+      "question": "A tasks/get response shows resultType complete and, nested inside it, status working. What does that combination mean?",
+      "options": [
+        "Both the poll request and the underlying job have now fully finished",
+        "The client must resend tools/call to keep the underlying job moving forward",
+        "The poll request itself succeeded, but the underlying job is still running",
+        "The server rejected the poll because the task is not ready to be read"
+      ],
+      "correct": 2,
+      "explanation": "tasks/get always completes, so its own resultType is complete; the job's real state travels in the separate, nested status field, which here still says working."
+    },
+    {
+      "stage": "check",
+      "question": "A task moves to input_required and tasks/get returns an inputRequests map. How does the client respond?",
+      "options": [
+        "It waits, since input_required tasks resume automatically without any reply at all",
+        "It retries the original tools/call with a new id and the same inputRequests key",
+        "It sends a fresh elicitation/create request directly to the server on its own",
+        "It sends tasks/update with inputResponses keyed to the still outstanding entries"
+      ],
+      "correct": 3,
+      "explanation": "Task input is answered through tasks/update with inputResponses keyed to the outstanding entries; the client never resends the original tools/call for this."
+    },
+    {
+      "stage": "post",
+      "question": "A tools/call finishes with isError true inside its content. What status does its task reach?",
+      "options": [
+        "completed, because the tool call still produced its own normally defined result",
+        "cancelled, because an error inside a result counts as an implicit cancellation",
+        "input_required, because the model must approve the error before it counts at all",
+        "failed, because any error anywhere in the result is treated as a JSON-RPC failure"
+      ],
+      "correct": 0,
+      "explanation": "A tool result with isError true is still a successful protocol exchange, so the task reaches completed; failed is reserved for a JSON-RPC error during execution, not a tool-level failure."
+    },
+    {
+      "stage": "post",
+      "question": "Which piece of work is the best fit for the tasks extension rather than a plain call or an MRTR round trip?",
+      "options": [
+        "Reading one resource whose contents never change between separate requests",
+        "A deploy pipeline that may pause for approval and could outlive a timeout",
+        "Listing the tools a server currently exposes to a newly connecting client",
+        "Asking the user to confirm a single value before finishing the current request"
+      ],
+      "correct": 1,
+      "explanation": "A task earns its added complexity when work might outlive a timeout, pause for input mid-execution, or need to survive a restart or cancellation, unlike the other options here."
+    }
+  ]
+}

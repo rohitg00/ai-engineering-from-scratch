@@ -1,0 +1,48 @@
+{
+  "title": "PR Review Reporter | Build and verify",
+  "recordedAt": "2026-09-28T19:23:02Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "pr-review-reporter",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-og36xyyn"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-og36xyyn\n  created  cli.ts\n  created  diff_parser.py\n  created  main.ts\n  created  package.json\n  created  samples/change.diff\n  created  stage-1.md\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py pr-review-reporter --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-og36xyyn\n",
+      "durationMs": 53
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "pr-review-reporter",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-og36xyyn"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "PR Review Reporter: grading learner\n  FAIL stage 1: Recover new-file line numbers (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 280
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "pr-review-reporter",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "PR Review Reporter: grading solution\n  PASS stage 1: Recover new-file line numbers (6 tests)\n  PASS stage 2: Generate narrow review candidates (6 tests)\n  PASS stage 3: Verify and merge findings (6 tests)\n  PASS stage 4: Publish a local escaped report (11 tests)\n",
+      "durationMs": 1355
+    }
+  ]
+}

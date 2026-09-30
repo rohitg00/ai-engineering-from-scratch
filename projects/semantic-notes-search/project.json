@@ -1,0 +1,127 @@
+{
+  "id": "semantic-notes-search",
+  "title": "Semantic Notes Search",
+  "level": 1,
+  "levelName": "Starter",
+  "tagline": "Search your markdown notes with Unicode normalization, explicit aliases and inspectable lexical scores.",
+  "summary": "Search local notes with explicit synonym expansion and normalized TF-IDF scores. Explain every match rather than hiding retrieval in a hosted embedding service.",
+  "youWillBuild": "Local notes search explaining each match and showing when aliases help or harm.",
+  "usefulFor": [
+    "Local notes search explaining each match and showing when aliases help or harm.",
+    "This is an explainable lexical TF-IDF baseline with explicit aliases, not a learned embedding model."
+  ],
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "languageWhy": {
+    "Python": "The standard library makes parsing, scoring, and failure handling visible without hiding the mechanism behind a framework."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Normalize notes without losing identity",
+    "Weight terms by document rarity",
+    "Rank queries with a stable tie rule",
+    "Measure retrieval before adding embeddings"
+  ],
+  "prerequisites": [
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    },
+    {
+      "title": "Retrieval augmented generation",
+      "path": "phases/11-llm-engineering/06-rag"
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-semantic-notes-search-1",
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-normalize-notes",
+      "title": "Normalize notes without losing identity",
+      "summary": "Return canonical Unicode word tokens.",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "Unicode",
+        "tokenization",
+        "synonyms"
+      ],
+      "figure": "pj-semantic-notes-search-1"
+    },
+    {
+      "id": "02-weight-the-index",
+      "title": "Weight terms by document rarity",
+      "summary": "Build an index from a mapping of ids to strings.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "TF-IDF",
+        "normalization",
+        "document frequency"
+      ],
+      "figure": "pj-semantic-notes-search-2"
+    },
+    {
+      "id": "03-rank-queries",
+      "title": "Rank queries with a stable tie rule",
+      "summary": "Return at most k objects with id, score, and matched terms.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "cosine similarity",
+        "top k",
+        "stable ranking"
+      ],
+      "figure": "pj-semantic-notes-search-3"
+    },
+    {
+      "id": "04-measure-recall",
+      "title": "Measure retrieval before adding embeddings",
+      "summary": "Evaluate labeled query-to-id cases and report hits, total, and recall.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "recall",
+        "evaluation fixtures",
+        "error analysis"
+      ],
+      "figure": "pj-semantic-notes-search-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

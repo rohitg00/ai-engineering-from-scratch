@@ -1,0 +1,24 @@
+{
+  "title": "PR Review Reporter | Actual artifact output",
+  "recordedAt": "2026-09-28T19:23:03Z",
+  "records": [
+    {
+      "command": [
+        "node",
+        "cli.ts",
+        "--diff",
+        "samples/change.diff",
+        "--output",
+        "review.json",
+        "--html",
+        "review.html",
+        "--sarif",
+        "review.sarif"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/pr-review-reporter/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"diff_sha256\": \"adbbb6a617939dc7448de34db7e3be098205cd7b32876e9385d8f702b447af7c\",\n  \"added_lines\": 2,\n  \"findings\": [\n    {\n      \"file\": \"src/run.ts\",\n      \"line\": 2,\n      \"text\": \"eval(input);\",\n      \"quote\": \"eval(input);\",\n      \"rule\": \"dynamic-eval\",\n      \"severity\": \"high\",\n      \"message\": \"Untrusted input can execute code.\"\n    }\n  ],\n  \"rejected\": [],\n  \"detector\": \"four conservative lexical rules; not semantic review\"\n}\n",
+      "durationMs": 147
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "28-roles-and-adoption",
+  "title": "Every MUST Needs an Owner",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team adopts a second AI host for the same internal MCP server. Which statement is true about the server's code?",
+      "options": [
+        "It must be rebuilt once for every extra host that joins",
+        "It is re-registered by the registry for each new host",
+        "It needs a new branch of logic for each host it serves",
+        "It answers every host's client with the same result each time"
+      ],
+      "correct": 3,
+      "explanation": "A server's capability contract is fixed by the specification and does not vary by host, so adding a host is a client-side cost, never a server change."
+    },
+    {
+      "stage": "check",
+      "question": "On a remote Streamable HTTP deployment with no gateway in front of it, which role implements OAuth 2.0 Protected Resource Metadata?",
+      "options": [
+        "The server author, since the MUST is written for the server",
+        "The end user, since consent metadata names what they saw",
+        "The platform or gateway operator, since it runs the process",
+        "The registry publisher, since metadata sits with a listing"
+      ],
+      "correct": 0,
+      "explanation": "The specification makes Protected Resource Metadata a server MUST, so without a gateway in front of it, the server author's own implementation is the one that has to carry it."
+    },
+    {
+      "stage": "check",
+      "question": "A gateway now fronts that same server. Which role becomes responsible for validating the Origin header before a request reaches the server's own code?",
+      "options": [
+        "The security and governance owner, who writes the policy",
+        "The gateway operator, who terminates the connection first",
+        "The server author, who still owns every transport check here",
+        "The host and client developer, who builds the OAuth client"
+      ],
+      "correct": 1,
+      "explanation": "Once a gateway terminates the connection, it is the first code to see the Origin header, so the platform or gateway operator inherits the MUST that the server author carried alone under plain HTTP."
+    },
+    {
+      "stage": "check",
+      "question": "A stdio deployment needs a credential for an internal API call. Per the specification's transport guidance, where should that credential come from?",
+      "options": [
+        "An OAuth access token negotiated over the stdio channel itself",
+        "A bearer token embedded directly in the tool's input schema",
+        "The environment the operator configures before the process starts",
+        "A session id the server assigns on the connection's first call"
+      ],
+      "correct": 2,
+      "explanation": "STDIO implementations SHOULD NOT follow the OAuth authorization flow and instead retrieve credentials from the environment, which is the platform or gateway operator's responsibility to configure."
+    },
+    {
+      "stage": "post",
+      "question": "A curated requirement catalog includes a MUST whose default role is deliberately left unset because no single one of the six roles cleanly owns it. What should a responsibility matrix built from that catalog do with it?",
+      "options": [
+        "Drop it from the matrix, since a MUST NOT is not a MUST",
+        "Assign it to the publisher by default, since it lists last",
+        "Assign it to the end user by default, since they consent",
+        "Report it as a gap so the team assigns an explicit owner"
+      ],
+      "correct": 3,
+      "explanation": "A responsibility matrix should surface an unowned MUST as a gap rather than guess an owner, because a silently misassigned requirement is as risky as an unassigned one."
+    },
+    {
+      "stage": "post",
+      "question": "A host and client developer needs an SDK that ships new protocol features before a spec release and resolves critical bugs within a week. Which SDK tier commits to that bar?",
+      "options": [
+        "Tier 1, since it commits to full conformance and fast fixes",
+        "Any tier, since tiers only describe documentation quality, not speed",
+        "Tier 2, since six months is close enough for production use",
+        "Tier 3, since experimental SDKs move the fastest of the three"
+      ],
+      "correct": 0,
+      "explanation": "Tier 1 is the only tier that commits to shipping new features before or alongside a spec release and fixing critical bugs within seven days, the bar this scenario requires."
+    }
+  ]
+}

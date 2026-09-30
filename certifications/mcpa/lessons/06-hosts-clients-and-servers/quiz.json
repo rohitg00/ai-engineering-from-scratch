@@ -1,0 +1,78 @@
+{
+  "lesson": "06-hosts-clients-and-servers",
+  "title": "Hosts, Clients, and Servers: MCP's Process Topology",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A host application needs data from three different MCP servers in one session. How many MCP client instances does the host create to do this?",
+      "options": [
+        "Two clients, since one client can safely serve two servers at once",
+        "Three clients, each holding a dedicated connection to one server",
+        "One client that opens three separate connections in turn",
+        "Zero, because the host process talks to servers directly without a client layer"
+      ],
+      "correct": 1,
+      "explanation": "The host embeds exactly one client per server connection, so three connected servers require three separate client instances, each bound to exactly one server."
+    },
+    {
+      "stage": "check",
+      "question": "A filesystem server launches as a local subprocess over stdio, while a billing server runs on another company's infrastructure and is reached over Streamable HTTP. What follows from that difference?",
+      "options": [
+        "Streamable HTTP servers can only expose resources and prompts, never tools",
+        "The stdio server must use OAuth while the HTTP server reads credentials from the environment",
+        "The local server crosses a process boundary, the remote one a network boundary",
+        "Nothing changes: MCP message shapes stay identical no matter which transport carries them"
+      ],
+      "correct": 2,
+      "explanation": "Local stdio servers are separate processes on the same machine while remote Streamable HTTP servers cross a network boundary, and a server's trust considerations follow whichever boundary it actually crosses."
+    },
+    {
+      "stage": "check",
+      "question": "Which pairing correctly matches an MCP server primitive with who decides when it is used?",
+      "options": [
+        "Tools are user-controlled, resources are model-controlled, prompts are application-driven",
+        "Resources are model-controlled, prompts are application-driven, tools are user-controlled",
+        "All three primitives are selected by the server operator before the connection opens",
+        "Tools are model-controlled, resources are application-driven, prompts are user-controlled"
+      ],
+      "correct": 3,
+      "explanation": "The model decides when to call a tool, the host application decides which resources enter context, and the user explicitly selects which prompt to run."
+    },
+    {
+      "stage": "check",
+      "question": "A server wants an on-demand language model completion routed through the client's own model access, without embedding a model SDK itself. Which client feature exists for that, and what is its status in 2026-07-28?",
+      "options": [
+        "Sampling, which is deprecated with a migration to LLM provider APIs directly",
+        "Elicitation, and it is the current, actively recommended mechanism for this",
+        "Logging, and it is deprecated with a migration to stderr or OpenTelemetry",
+        "Roots, and it is deprecated with a migration to passing paths as tool arguments"
+      ],
+      "correct": 0,
+      "explanation": "Sampling lets a server ask the client to run a model completion on its behalf, but it is deprecated in 2026-07-28 and new implementations should call LLM provider APIs directly instead."
+    },
+    {
+      "stage": "post",
+      "question": "Two independently written servers both self-report serverInfo.name as \"primary\" during server/discover, yet a host aggregating both must still route tool calls to the correct one. What does the host key its routing on?",
+      "options": [
+        "The protocol version string that server declares in its capabilities",
+        "The connection identifier the host itself assigned when it connected",
+        "Whichever server happens to answer the discovery request first",
+        "The self-reported serverInfo.name value returned by that server's discover result"
+      ],
+      "correct": 1,
+      "explanation": "serverInfo is self-reported and never guaranteed unique across independently written servers, so a host must route by the connection identifier it assigned itself, not by a server's own claimed name."
+    },
+    {
+      "stage": "post",
+      "question": "A host connects to a files server and a notes server. Both declare a tool literally named search. After the host builds its aggregated registry, how does it expose the second one?",
+      "options": [
+        "It merges both into a single combined search tool that queries both servers at once",
+        "It silently overwrites the first entry so only the newest search remains",
+        "It keeps the first search as canonical and prefixes the second by server id",
+        "It drops the second search tool entirely so the model never sees it"
+      ],
+      "correct": 2,
+      "explanation": "A collision-safe aggregator keeps the first canonical tool name and exposes a later collision as a server-prefixed name, such as notes/search, so the model can still reach both tools by distinct names."
+    }
+  ]
+}

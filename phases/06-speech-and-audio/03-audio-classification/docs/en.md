@@ -119,7 +119,7 @@ class AudioCNN(nn.Module):
 
 3M parameters. Trains in ~10 min on ESC-50 with a single RTX 4090. 80%+ accuracy.
 
-### Step 5: the 2026 default — fine-tune BEATs
+### Step 5: fine-tune a pretrained audio transformer (AST shown)
 
 ```python
 from transformers import ASTFeatureExtractor, ASTForAudioClassification
@@ -135,7 +135,7 @@ inputs = ext(audio, sampling_rate=16000, return_tensors="pt")
 logits = model(**inputs).logits
 ```
 
-For BEATs, use `microsoft/BEATs-base` via the `beats` library; the transformers API is the same shape.
+The example fine-tunes AST from the Hub. BEATs, the 2026 default, is not on the Hugging Face Hub: download a checkpoint from the [BEATs release in microsoft/unilm](https://github.com/microsoft/unilm/tree/master/beats) and load it with that repo's `BEATs` and `BEATsConfig` classes; the fine-tuning loop keeps the same shape.
 
 ## Use It
 

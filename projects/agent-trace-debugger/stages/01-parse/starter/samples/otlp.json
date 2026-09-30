@@ -1,0 +1,36 @@
+{
+  "resourceSpans": [
+    {
+      "scopeSpans": [
+        {
+          "spans": [
+            {
+              "traceId": "a1",
+              "spanId": "01",
+              "name": "Model call",
+              "startTimeUnixNano": "1780000000000000000",
+              "endTimeUnixNano": "1780000000015000000",
+              "status": {
+                "code": 2
+              },
+              "attributes": [
+                {
+                  "key": "gen_ai.usage.input_tokens",
+                  "value": {
+                    "intValue": "40"
+                  }
+                },
+                {
+                  "key": "gen_ai.usage.output_tokens",
+                  "value": {
+                    "intValue": "20"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

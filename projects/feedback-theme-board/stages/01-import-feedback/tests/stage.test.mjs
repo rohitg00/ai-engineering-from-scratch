@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {mkdtempSync,readFileSync,rmSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+const work=process.env.PROJECT_WORKSPACE;
+const f=await import(pathToFileURL(join(work,'main.ts')).href);
+const ROW={id:'1',text:'Search shows old pages',source:'s1'};
+const THEMES=[{id:'stale',title:'Stale results',phrases:['old pages']}];
+test('imports identity and source',()=>assert.equal(f.parseFeedback(JSON.stringify(ROW))[0].source,'s1'));
+test('physical line diagnostics',()=>assert.throws(()=>f.parseFeedback('\n'+JSON.stringify(ROW)+'\nno-json'),/line 3/));
+test('duplicate IDs fail',()=>assert.throws(()=>f.parseFeedback(JSON.stringify(ROW)+'\n'+JSON.stringify(ROW))));
+test('theme ids are bounded',()=>assert.throws(()=>f.validateThemes([{id:'../bad',title:'Bad',phrases:['old pages']}])));
+test('empty phrase rejected',()=>assert.throws(()=>f.validateThemes([{id:'a',title:'A',phrases:['  ']}])));
+test('empty feedback remains valid empty dataset',()=>assert.deepEqual(f.parseFeedback('\n'),[]));

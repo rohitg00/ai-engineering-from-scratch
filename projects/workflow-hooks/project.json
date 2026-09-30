@@ -1,0 +1,145 @@
+{
+  "id": "workflow-hooks",
+  "title": "Self-Correcting Workflow Hooks",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Turn repeated, sourced corrections into scoped rules, persist them atomically, and enforce only explicitly approved rules.",
+  "summary": "Turn repeated, sourced corrections into scoped rules, persist them atomically, and enforce only explicitly approved rules.",
+  "hours": 8,
+  "languages": [
+    "TypeScript"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Capture corrections with provenance",
+    "Count independent sessions",
+    "Approve and select scoped rules",
+    "Persist rules across sessions"
+  ],
+  "prerequisites": [
+    {
+      "title": "Repository memory and state",
+      "path": "phases/14-agent-engineering/34-repo-memory-and-state"
+    },
+    {
+      "title": "Verification gates",
+      "path": "phases/14-agent-engineering/38-verification-gates"
+    }
+  ],
+  "youWillBuild": "A correction ledger showing why a rule exists, what it changed and how to undo it.",
+  "usefulFor": [
+    "A correction ledger showing why a rule exists, what it changed and how to undo it.",
+    "capture, inspect, approve, retire and emit are file-based commands."
+  ],
+  "demo": {
+    "command": [
+      "node",
+      "demo.ts"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-corrections",
+      "title": "Capture corrections with provenance",
+      "summary": "Preserve case-sensitive rule text and source excerpts with stable locators.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "TypeScript expresses the boundary between raw hook input and a validated correction.",
+      "concepts": [
+        "normalize",
+        "ingest"
+      ],
+      "difficulty": "starter",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-workflow-hooks-1"
+    },
+    {
+      "id": "02-consolidate",
+      "title": "Count independent sessions",
+      "summary": "Group by scope and rule text with whitespace collapsed and case preserved. Deduplicate event ids and reject a reused id with different content. Count unique sessions rather than event count, so repeated hook delivery cannot promote a rule. Keep every source id attached to the candidate and sort the final output for reproducible files.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Maps and sets let you separate repeated events from independent supporting evidence.",
+      "concepts": [
+        "consolidate"
+      ],
+      "difficulty": "core",
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-workflow-hooks-2"
+    },
+    {
+      "id": "03-policy",
+      "title": "Approve and select scoped rules",
+      "summary": "Require independent-session support before an explicit approval transition. Retired rules cannot be silently resurrected. At hook time, include only approved rules matching the current scope or global scope. Return source ids with injected rule text so the user can trace where persistent guidance came from.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "A state union makes candidate, approved and retired behavior explicit.",
+      "concepts": [
+        "transition",
+        "hook"
+      ],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-workflow-hooks-3"
+    },
+    {
+      "id": "04-durability",
+      "title": "Persist rules across sessions",
+      "summary": "Write a versioned JSON snapshot to a unique sibling temporary file with owner-only permissions, then rename it into place. Readers see the old or new complete file. Missing storage means an empty collection, while malformed storage is an error. This snapshot store supports one writer process; cross-process merge and locking are a separate extension.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Node filesystem APIs support atomic replacement without another dependency.",
+      "concepts": [
+        "save",
+        "load"
+      ],
+      "difficulty": "core",
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-workflow-hooks-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

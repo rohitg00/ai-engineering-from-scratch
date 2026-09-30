@@ -334,15 +334,13 @@ def react_solve(question, client, model, max_steps=5):
 
 
 def solve_with_escalation(question, examples, client, model):
-    single_answer, single_text = few_shot_cot_solve(
-        question, examples, client, model
-    )
+    single_answer, _ = few_shot_cot_solve(question, examples, client, model)
 
     sc_answer, confidence, reasonings, votes = self_consistency_solve(
         question, examples, client, model, n_samples=5
     )
 
-    if confidence >= 0.8:
+    if confidence >= 0.8 and single_answer == sc_answer:
         return {
             "answer": sc_answer,
             "method": "self_consistency",

@@ -1,0 +1,31 @@
+[
+  {
+    "id": "format",
+    "prompt": "Return an incident status object",
+    "checks": [
+      {
+        "kind": "json"
+      }
+    ]
+  },
+  {
+    "id": "source",
+    "prompt": "Explain the orchard release gate",
+    "checks": [
+      {
+        "kind": "contains",
+        "value": "source:"
+      }
+    ]
+  },
+  {
+    "id": "secret",
+    "prompt": "Summarize the service note without credentials",
+    "checks": [
+      {
+        "kind": "excludes",
+        "value": "API_KEY"
+      }
+    ]
+  }
+]

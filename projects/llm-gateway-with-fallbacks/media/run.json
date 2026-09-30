@@ -1,0 +1,48 @@
+{
+  "title": "LLM Gateway With Fallbacks | Build and verify",
+  "recordedAt": "2026-09-28T19:36:46Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "llm-gateway-with-fallbacks",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-e6xz8jp9"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-e6xz8jp9\n  created  config.go\n  created  fixtures/providers.example.json\n  created  fixtures/request.json\n  created  go.mod\n  created  main.go\n  created  stage1.go\n  created  types.go\n  created  stage2.go\n  created  stage3.go\n  created  stage4.go\nnext: python3 scripts/project_test.py llm-gateway-with-fallbacks --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-e6xz8jp9\n",
+      "durationMs": 49
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "llm-gateway-with-fallbacks",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-e6xz8jp9"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "LLM Gateway With Fallbacks: grading learner\n  FAIL stage 1: Validate provider endpoints (1 tests)\n       not implemented yet: Stage 1: implement Endpoints\n",
+      "durationMs": 1102
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "llm-gateway-with-fallbacks",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "LLM Gateway With Fallbacks: grading solution\n  PASS stage 1: Validate provider endpoints (5 tests)\n  PASS stage 2: Classify failures without retrying everything (5 tests)\n  PASS stage 3: Send one bounded HTTP request (7 tests)\n  PASS stage 4: Route with a total-attempt budget (16 tests)\n",
+      "durationMs": 5031
+    }
+  ]
+}

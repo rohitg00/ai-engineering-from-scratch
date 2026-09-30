@@ -1,0 +1,11 @@
+{
+  "title": "web-change-brief | Actual application output",
+  "url": "file:///tmp/aiefs-reviewed-apps/web/index.html",
+  "actions": [
+    [
+      "js",
+      "window.scrollTo(0,250)"
+    ]
+  ],
+  "kind": "browser capture"
+}

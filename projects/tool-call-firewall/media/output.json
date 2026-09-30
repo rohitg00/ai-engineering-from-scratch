@@ -1,0 +1,16 @@
+{
+  "title": "Tool Call Firewall | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:17Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "demo.py"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/tool-call-firewall/solution",
+      "exitCode": 0,
+      "output": "{\n  \"request_id\": \"r1\",\n  \"exit\": 0,\n  \"result\": {\n    \"schema_version\": 1,\n    \"request_id\": \"r1\",\n    \"argument\": \"notes.md\",\n    \"decision\": \"Allow\",\n    \"output\": \"Orchard release remains pending.\\n\",\n    \"approval_consumed\": false,\n    \"replay_denied\": false\n  }\n}\n{\n  \"request_id\": \"r2\",\n  \"exit\": 1,\n  \"result\": \"Invalid(\\\"policy denied\\\")\"\n}\n{\n  \"request_id\": \"r3\",\n  \"exit\": 0,\n  \"result\": {\n    \"schema_version\": 1,\n    \"request_id\": \"r3\",\n    \"argument\": \"notes.md\",\n    \"decision\": \"ApprovalRequired\",\n    \"output\": \"wrote 50 bytes\",\n    \"approval_consumed\": true,\n    \"replay_denied\": true\n  }\n}\n",
+      "durationMs": 697
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "id": "typed-workflow-agent-with-mastra",
+  "title": "Typed Workflow Agent with Mastra",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Build a typed approval workflow, then preserve and resume real Mastra suspension through a local SQLite store.",
+  "summary": "Build a typed approval workflow, then preserve and resume real Mastra suspension through a local SQLite store.",
+  "hours": 8,
+  "languages": [
+    "TypeScript"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Validate typed step inputs at runtime",
+    "Make the approval invariant explicit in the plan",
+    "Suspend before effects and count failed attempts",
+    "Persist real Mastra approval state and resume it"
+  ],
+  "prerequisites": [
+    "TypeScript object types, unions and async functions.",
+    "Runtime validation of unknown JSON input.",
+    "An explicit approval decision and a local database file."
+  ],
+  "youWillBuild": "A scratch HTML/JSON workflow review and a real Mastra run stored in SQLite with a plan-bound approval document.",
+  "usefulFor": [
+    "A scratch HTML/JSON workflow review and a real Mastra run stored in SQLite with a plan-bound approval document."
+  ],
+  "demo": {
+    "command": [
+      "node",
+      "--experimental-strip-types",
+      "demo.ts"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-contracts",
+      "title": "Validate typed step inputs at runtime",
+      "summary": "Find the workshop policy produces read intent. Update the workshop label produces write intent. A blank ID fails before a tool is chosen. The word change inside unchanged does not match the mutation-verb word boundary.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "TypeScript discriminated unions make workflow states and tool names visible to the compiler.",
+      "concepts": [
+        "runtime contracts",
+        "intent baseline",
+        "typed outputs"
+      ],
+      "difficulty": "starter",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-typed-workflow-agent-with-mastra-1"
+    },
+    {
+      "id": "02-plan",
+      "title": "Make the approval invariant explicit in the plan",
+      "summary": "An update action with requiresApproval=false fails. A lookup-only plan with requiresApproval=true also violates the stated representation. One through ten actions are allowed, and every action has a supported tool and nonempty query.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "A typed Plan exposes both action shape and the approval bit that must match it.",
+      "concepts": [
+        "plan validation",
+        "capability selection",
+        "approval invariant"
+      ],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-typed-workflow-agent-with-mastra-2"
+    },
+    {
+      "id": "03-runtime",
+      "title": "Suspend before effects and count failed attempts",
+      "summary": "A lookup returning a result completes in one call. A tool returning empty text twice fails after two calls. A write without approval returns a checkpoint and zero calls; resuming that checkpoint with approved=true executes the original query.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Async functions keep tool adapters injectable while result unions preserve terminal states.",
+      "concepts": [
+        "retry limits",
+        "call budgets",
+        "checkpoint results"
+      ],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-typed-workflow-agent-with-mastra-3"
+    },
+    {
+      "id": "04-framework-boundary",
+      "title": "Persist real Mastra approval state and resume it",
+      "summary": "Start the authored workshop update and observe status=suspended with zero tool calls. Close the local LibSQL store, create a fresh workflow over the same SQLite file and resume by runId. Matching approval produces success and exactly one observed local tool call in the recovery test; a wrong hash fails with zero calls.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "The optional adapter uses real createStep and createWorkflow imports after the contracts are understood.",
+      "concepts": [
+        "Mastra suspension",
+        "plan-bound approval",
+        "SQLite recovery"
+      ],
+      "difficulty": "core",
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-typed-workflow-agent-with-mastra-4",
+      "runners": [
+        {
+          "language": "typescript",
+          "argv": [
+            "node",
+            "--experimental-strip-types",
+            "--test",
+            "{tests}/stage.test.ts"
+          ]
+        },
+        {
+          "language": "typescript",
+          "optional": true,
+          "requires": [
+            "node:@mastra/core",
+            "node:zod",
+            "node:@mastra/libsql"
+          ],
+          "argv": [
+            "node",
+            "--experimental-strip-types",
+            "--test",
+            "{stage}/tests-framework/adapter.test.ts"
+          ]
+        }
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    },
+    {
+      "gif": "media/framework.gif",
+      "poster": "media/framework.png",
+      "title": "Verify the real SDK",
+      "caption": "Actual optional SDK tests with installed dependencies and deterministic local models. No live cloud or model provider calls."
+    }
+  ]
+}

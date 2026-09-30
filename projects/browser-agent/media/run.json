@@ -1,0 +1,48 @@
+{
+  "title": "Browser Agent | Build and verify",
+  "recordedAt": "2026-09-28T19:22:53Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "browser-agent",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-4gs7w5b9"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-4gs7w5b9\n  created  cli.ts\n  created  failure.png\n  created  fixture.html\n  created  main.ts\n  created  package.json\n  created  pixels.py\n  created  samples/accessibility.json\n  created  samples/contact.json\n  created  stage-1.md\n  created  success.png\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py browser-agent --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-4gs7w5b9\n",
+      "durationMs": 53
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "browser-agent",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-4gs7w5b9"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Browser Agent: grading learner\n  FAIL stage 1: Turn DOM state into constrained actions (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 278
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "browser-agent",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Browser Agent: grading solution\n  PASS stage 1: Turn DOM state into constrained actions (6 tests)\n  PASS stage 2: Stop on completion, stalling or budget (6 tests)\n  PASS stage 3: Verify screenshot pixels in Python (6 tests)\n  PASS stage 4: Drive the real fixture and score the run (11 tests)\n",
+      "durationMs": 1483
+    }
+  ]
+}

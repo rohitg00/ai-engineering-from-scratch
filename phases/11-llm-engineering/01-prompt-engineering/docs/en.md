@@ -937,24 +937,24 @@ The assistant prefill (`"{"`) forces Claude to continue producing JSON without a
 ### Google: Gemini with Safety Settings
 
 ```python
-# import google.generativeai as genai
+# from google import genai
+# from google.genai import types
 #
-# genai.configure(api_key="your-key")
+# client = genai.Client()
 #
-# model = genai.GenerativeModel(
-#     "gemini-1.5-pro",
-#     system_instruction="You are a technical analyst. Be precise and cite sources.",
-#     generation_config=genai.GenerationConfig(
+# response = client.models.generate_content(
+#     model="gemini-3.8-flash",
+#     contents="Compare PostgreSQL and MySQL for write-heavy workloads.",
+#     config=types.GenerateContentConfig(
+#         system_instruction="You are a technical analyst. Be precise and cite sources.",
 #         temperature=0.3,
 #         max_output_tokens=2048,
 #     ),
 # )
-#
-# response = model.generate_content("Compare PostgreSQL and MySQL for write-heavy workloads.")
 # print(response.text)
 ```
 
-Gemini processes system instructions as part of the model configuration, not as a message. The 2M token context window means you can include massive few-shot example sets that would not fit in GPT-4o or Claude.
+Gemini processes system instructions as part of the model configuration, not as a message. The 1M token context window means you can include massive few-shot example sets that would not fit in GPT-4o's 128K window.
 
 ### Provider-Agnostic Prompt Templates
 
@@ -1023,6 +1023,6 @@ The Python code (`code/prompt_engineering.py`) is a standalone testing harness. 
 - [Wei et al., 2022 -- "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models"](https://arxiv.org/abs/2201.11903) -- the foundational paper showing that "think step by step" improves LLM accuracy by 10-40% on reasoning tasks
 - [Zamfirescu-Pereira et al., 2023 -- "Why Johnny Can't Prompt"](https://arxiv.org/abs/2304.13529) -- research on how non-experts struggle with prompt engineering and what makes prompts effective
 - [Shin et al., 2023 -- "Prompt Engineering a Prompt Engineer"](https://arxiv.org/abs/2311.05661) -- using LLMs to automatically optimize prompts, the foundation of meta-prompting
-- [LMSYS Chatbot Arena](https://chat.lmsys.org/) -- live blind comparison of LLMs where you can test the same prompt across models and vote on which response is better
+- [Arena (formerly LMSYS Chatbot Arena)](https://arena.ai/) -- live blind comparison of LLMs where you can test the same prompt across models and vote on which response is better
 - [DAIR.AI Prompt Engineering Guide](https://www.promptingguide.ai/) -- exhaustive catalogue of prompt techniques with examples (zero-shot, few-shot, CoT, ReAct, self-consistency); the reference practitioners use for the broader "Prompt engineering" surface.
 - [Anthropic prompt library](https://docs.anthropic.com/en/prompt-library) -- curated, known-good prompts by use case; shows the structural patterns that ship in production.

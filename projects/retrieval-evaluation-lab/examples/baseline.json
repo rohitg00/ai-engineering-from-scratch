@@ -1,0 +1,15 @@
+{
+  "release": [
+    "old",
+    "check",
+    "new"
+  ],
+  "restore": [
+    "runbook",
+    "old"
+  ],
+  "cafe": [
+    "network",
+    "tablet"
+  ]
+}

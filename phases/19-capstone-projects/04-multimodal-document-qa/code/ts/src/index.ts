@@ -2,7 +2,7 @@
 // Source: ../../docs/en.md (viewer UI with canvas overlay for evidence regions).
 // References:
 //   ColPali late-interaction retrieval https://arxiv.org/abs/2407.01449
-//   Qwen3-VL bounding-box output spec  https://qwenlm.github.io/blog/qwen3-vl/
+//   Qwen3-VL bounding-box output spec  https://github.com/QwenLM/Qwen3-VL/blob/main/cookbooks/2d_grounding.ipynb
 //   Canvas 2D rendering context (MDN)  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
 
 import { createServer, IncomingMessage, ServerResponse } from "node:http";

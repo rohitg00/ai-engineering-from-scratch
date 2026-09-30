@@ -9,10 +9,14 @@ on:
       - "skills/**"
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
+      - "scripts/run_lesson_tests.py"
       - "scripts/audit_certifications.py"
+      - "scripts/check_mcpa_wire.py"
+      - "scripts/test_check_mcpa_wire.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
+      - "scripts/check_quiz_bias.py"
       - "scripts/build_readme_i18n.py"
       - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
@@ -23,6 +27,8 @@ on:
       - "scripts/test_seo_routes.js"
       - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
+      - "scripts/translate_ui_strings.py"
+      - "scripts/test_translate_ui_strings.py"
       - "site/test_learning_paths.js"
       - "languages.json"
       - "README.md"
@@ -46,10 +52,14 @@ on:
       - "skills/**"
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
+      - "scripts/run_lesson_tests.py"
       - "scripts/audit_certifications.py"
+      - "scripts/check_mcpa_wire.py"
+      - "scripts/test_check_mcpa_wire.py"
       - "scripts/backfill_certification_references.py"
       - "scripts/debias_certification_questions.py"
       - "scripts/debias_quizzes.py"
+      - "scripts/check_quiz_bias.py"
       - "scripts/build_readme_i18n.py"
       - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
@@ -60,6 +70,8 @@ on:
       - "scripts/test_seo_routes.js"
       - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
+      - "scripts/translate_ui_strings.py"
+      - "scripts/test_translate_ui_strings.py"
       - "site/test_learning_paths.js"
       - "languages.json"
       - "README.md"
@@ -97,13 +109,21 @@ jobs:
       - name: certification remediation references are complete
         run: python3 scripts/backfill_certification_references.py --check
       - name: run certification lab tests
-        run: find certifications/claude/lessons -path '*/code/tests/test_*.py' -print0 | xargs -0 -r -n1 python3
+        run: find certifications/*/lessons -path '*/code/tests/test_*.py' -print0 | xargs -0 -r -n1 python3
       - name: run certification lab demos
-        run: find certifications/claude/lessons -path '*/code/main.py' -print0 | xargs -0 -r -n1 python3
+        run: find certifications/*/lessons -path '*/code/main.py' -print0 | xargs -0 -r -n1 python3
+      - name: MCPA wire-shape checker tests
+        run: python3 scripts/test_check_mcpa_wire.py
+      - name: MCPA lesson transcripts match the 2026-07-28 wire shape
+        run: python3 scripts/check_mcpa_wire.py
       - name: skill artifact bundles install without losing companion files
         run: python3 scripts/test_skill_artifact_bundles.py
       - name: skill artifact bundles render as one lesson output
         run: node --test site/test_build_artifacts.js
+      - name: returning visitors receive updated site assets
+        run: node --test site/test_asset_cache.js
+      - name: command copying preserves keyboard focus
+        run: node --test site/test_project_copy.js
       - name: build the static site
         run: node site/build.js
       - name: dynamic lesson and certification routes preserve their public contracts
@@ -118,19 +138,42 @@ jobs:
         run: node --test site/test_learning_paths.js
       - name: sponsor placement preserves approved artwork and ownership
         run: node --test site/test_sponsors.js
+      - name: site chrome translations cover every CI language and match the pages
+        run: node --test site/test_ui_i18n.js
       - name: quiz answer positions are de-biased
         run: python3 scripts/debias_quizzes.py --check
+      - name: quiz answer lengths do not give away the answer
+        run: python3 scripts/check_quiz_bias.py --check
       - name: certification answer positions are de-biased
         run: python3 scripts/debias_certification_questions.py --check
       - name: README translations are in sync with English
         run: python3 scripts/build_readme_i18n.py --check
       - name: translation workflow publisher retries safely
         run: python3 scripts/test_translate_workflow.py
+      - name: interface-string translator pins, reuses, and protects correctly
+        run: python3 scripts/test_translate_ui_strings.py
       - name: learning skills mirror is in sync
         # skills/ is the canonical, agent-neutral home (what `npx skills add`
         # installs for every agent); .claude/skills/ is a mirror so cloning the
         # repo auto-loads them in Claude Code. They must never diverge.
         run: diff -r skills .claude/skills
+
+  lesson-tests:
+    name: lesson tests (stdlib)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
+        with:
+          python-version: "3.12"
+      - name: run each lesson's own tests
+        # No scientific dependencies are installed here, so lessons that need
+        # one (torch, numpy, and the rest of the allowlist in the script) are
+        # skipped, not failed. The stdlib lessons run for real, which catches
+        # the class of breakage where a lesson cannot import its own module.
+        run: python3 scripts/run_lesson_tests.py
 
   readme-counts-sync:
     name: README counts auto-fix (main only)

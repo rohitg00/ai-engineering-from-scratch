@@ -9,8 +9,8 @@
 // Stdlib only; in-process transport stands in for JSON-RPC over HTTP.
 //
 // Spec references:
-//   A2A protocol         https://a2aproject.github.io/A2A/specification
-//   Agent Card schema    https://a2aproject.github.io/A2A/specification/#agent-card
+//   A2A protocol         https://a2a-protocol.org/latest/specification/
+//   Agent Card schema    https://a2a-protocol.org/latest/specification/#8-agent-discovery-the-agent-card
 //
 // Run: npx tsx code/main.ts
 

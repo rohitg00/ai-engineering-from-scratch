@@ -1,0 +1,16 @@
+{
+  "title": "Prompt Regression Tester | Actual artifact output",
+  "recordedAt": "2026-09-28T19:21:53Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "demo.py"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/prompt-regression-tester/solution",
+      "exitCode": 0,
+      "output": "{\n  \"revision\": \"candidate\",\n  \"schema_version\": 1,\n  \"case_sha256\": \"6e1f0a4a9b9ad6a63043cb26cdfcaa414ea4857cefee612519bf36c805a2c144\",\n  \"revisions\": [\n    \"before\",\n    \"after\"\n  ],\n  \"configuration_changed\": false,\n  \"prompt_templates\": [\n    {\n      \"revision\": \"before\",\n      \"text\": \"Answer the supplied task.\",\n      \"sha256\": \"e6e43b59b92c568e5aca7e3db55d47e533c514a8a5fbaf7b3d6fc63cee3f7e99\"\n    },\n    {\n      \"revision\": \"after\",\n      \"text\": \"Answer the supplied task with source attribution and the requested format.\",\n      \"sha256\": \"873a3de850fce392d638234fac55492de01c72b4942c432eddcf5f57613e5946\"\n    }\n  ],\n  \"comparison\": {\n    \"cases\": [\n      {\n        \"id\": \"format\",\n        \"state\": \"stable_pass\",\n        \"passed\": true\n      },\n      {\n        \"id\": \"source\",\n        \"state\": \"improved\",\n        \"passed\": true\n      },\n      {\n        \"id\": \"secret\",\n        \"state\": \"stable_pass\",\n        \"passed\": true\n      }\n    ],\n    \"regressions\": 0,\n    \"improvements\": 1,\n    \"pass_rate\": 1.0\n  },\n  \"gate\": {\n    \"decision\": \"ship\",\n    \"pass_rate\": 1.0,\n    \"regressions\": 0\n  }\n}\n{\n  \"revision\": \"regressed\",\n  \"schema_version\": 1,\n  \"case_sha256\": \"6e1f0a4a9b9ad6a63043cb26cdfcaa414ea4857cefee612519bf36c805a2c144\",\n  \"revisions\": [\n    \"before\",\n    \"overconfident\"\n  ],\n  \"configuration_changed\": false,\n  \"prompt_templates\": [\n    {\n      \"revision\": \"before\",\n      \"text\": \"Answer the supplied task.\",\n      \"sha256\": \"e6e43b59b92c568e5aca7e3db55d47e533c514a8a5fbaf7b3d6fc63cee3f7e99\"\n    },\n    {\n      \"revision\": \"overconfident\",\n      \"text\": \"Answer the supplied task with source attribution and the requested format.\",\n      \"sha256\": \"873a3de850fce392d638234fac55492de01c72b4942c432eddcf5f57613e5946\"\n    }\n  ],\n  \"comparison\": {\n    \"cases\": [\n      {\n        \"id\": \"format\",\n        \"state\": \"regressed\",\n        \"passed\": false\n      },\n      {\n        \"id\": \"source\",\n        \"state\": \"improved\",\n        \"passed\": true\n      },\n      {\n        \"id\": \"secret\",\n        \"state\": \"stable_pass\",\n        \"passed\": true\n      }\n    ],\n    \"regressions\": 1,\n    \"improvements\": 1,\n    \"pass_rate\": 0.6666666666666666\n  },\n  \"gate\": {\n    \"decision\": \"block\",\n    \"pass_rate\": 0.6666666666666666,\n    \"regressions\": 1\n  }\n}\n",
+      "durationMs": 44
+    }
+  ]
+}

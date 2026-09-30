@@ -1,0 +1,24 @@
+{
+  "title": "Agent Trace Debugger | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:53Z",
+  "records": [
+    {
+      "command": [
+        "node",
+        "cli.ts",
+        "--input",
+        "samples/trace.jsonl",
+        "--baseline",
+        "samples/before.jsonl",
+        "--output",
+        "trace.html",
+        "--json",
+        "trace.json"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/agent-trace-debugger/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"rows\": [\n    {\n      \"id\": \"root\",\n      \"name\": \"Report pipeline\",\n      \"start\": 0,\n      \"end\": 100,\n      \"status\": \"ok\",\n      \"tokens\": 0,\n      \"inclusive\": 100,\n      \"exclusive\": 15\n    },\n    {\n      \"id\": \"search\",\n      \"parent\": \"root\",\n      \"name\": \"Search\",\n      \"start\": 10,\n      \"end\": 70,\n      \"status\": \"ok\",\n      \"tokens\": 40,\n      \"inclusive\": 60,\n      \"exclusive\": 60\n    },\n    {\n      \"id\": \"draft\",\n      \"parent\": \"root\",\n      \"name\": \"Draft retry\",\n      \"start\": 50,\n      \"end\": 95,\n      \"status\": \"error\",\n      \"tokens\": 300,\n      \"inclusive\": 45,\n      \"exclusive\": 45\n    }\n  ],\n  \"totalTokens\": 340,\n  \"errors\": [\n    \"draft\"\n  ],\n  \"wallTime\": 100,\n  \"slowest\": \"search\",\n  \"comparison\": {\n    \"wall_time_delta_ms\": 0,\n    \"token_delta\": 200,\n    \"error_delta\": 1\n  },\n  \"artifact\": \"trace.html\"\n}\n",
+      "durationMs": 123
+    }
+  ]
+}

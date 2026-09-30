@@ -1,0 +1,26 @@
+[
+  {
+    "ID": "orchard-ttl",
+    "Prompt": "How long does the Orchard export link last? Answer with a duration only.",
+    "Expected": "15 minutes",
+    "Evidence": [
+      "Orchard runbook revision 7: an export link expires 15 minutes after creation."
+    ]
+  },
+  {
+    "ID": "orchard-restore",
+    "Prompt": "What is the final Orchard restore state? Answer with the state only.",
+    "Expected": "ready",
+    "Evidence": [
+      "Restore receipt R-42: verification passed; final state ready."
+    ]
+  },
+  {
+    "ID": "orchard-price",
+    "Prompt": "What is the private Orchard enterprise price? Use unknown when absent.",
+    "Expected": "unknown",
+    "Evidence": [
+      "The public Orchard sheet contains no enterprise price."
+    ]
+  }
+]

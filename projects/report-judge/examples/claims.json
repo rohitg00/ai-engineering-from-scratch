@@ -1,0 +1,21 @@
+{
+  "text": "Worker A invokes Worker B [S1]. Worker B invokes Worker A [S1]. Every request allows 99 retries [S2].",
+  "evidence": {
+    "S1": "Worker A invokes Worker B.",
+    "S2": "Every request allows 2 retries."
+  },
+  "expected_sources": [
+    "S1",
+    "S2"
+  ],
+  "facts": [
+    [
+      "Worker A",
+      "invokes"
+    ],
+    [
+      "2",
+      "retries"
+    ]
+  ]
+}

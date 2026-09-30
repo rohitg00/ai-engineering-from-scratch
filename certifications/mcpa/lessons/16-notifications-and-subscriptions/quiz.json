@@ -1,0 +1,78 @@
+{
+  "lesson": "16-notifications-and-subscriptions",
+  "title": "The Subscription Stream: Notifications, Progress, and Cancellation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A server tool list just changed. Why can it not report that change as the reply to an ordinary request?",
+      "options": [
+        "The tool capability has to be renegotiated with a fresh discovery call first",
+        "The client must poll the tool list again before any change becomes visible",
+        "A reply closes the request it answers, leaving nothing open for the change",
+        "JSON-RPC does not allow a server to send an unsolicited message at all"
+      ],
+      "correct": 2,
+      "explanation": "A JSON-RPC reply is tied to the one request it closes, so an ongoing change with no request in flight needs a notification on a stream instead."
+    },
+    {
+      "stage": "check",
+      "question": "A client opens a subscriptions/listen stream with a fresh request id. What must the very first message on that stream be?",
+      "options": [
+        "resources/subscribe, confirming the resource watch was registered successfully",
+        "an empty tools/list result that only confirms the new stream opened",
+        "notifications/resources/updated, reporting whatever the server produces first",
+        "notifications/subscriptions/acknowledged, carrying the listen request id as subscriptionId"
+      ],
+      "correct": 3,
+      "explanation": "The server must send the acknowledgment first, and it carries the id of that listen request as the subscription id in _meta, before any other notification on that stream."
+    },
+    {
+      "stage": "check",
+      "question": "A tools/call request includes a progressToken and the server reports progress while it runs. Where do those progress notifications appear?",
+      "options": [
+        "Only on the same request response channel, never on a listen stream",
+        "On a separate logging channel that is gated by a logLevel setting",
+        "On whichever stream last acknowledged a subscription for that client",
+        "On the subscriptions/listen stream, tagged with that same subscription id"
+      ],
+      "correct": 0,
+      "explanation": "Progress notifications are scoped to the request that carried the progressToken and travel only on that response channel; they never carry a subscription id and never appear on a listen stream."
+    },
+    {
+      "stage": "check",
+      "question": "A client on stdio decides to cancel a tools/call request that is still running. What should it do?",
+      "options": [
+        "Close the subprocess stdin so the server treats the closed pipe as a cancel",
+        "Send a notifications/cancelled notification that names the exact request id",
+        "Send a fresh tools/call for the same id with an empty arguments object",
+        "Wait, since stdio has no way to cancel a request once it starts"
+      ],
+      "correct": 1,
+      "explanation": "On stdio there is no per-request stream to close, so the client cancels by sending notifications/cancelled with the id of the request it no longer wants answered."
+    },
+    {
+      "stage": "post",
+      "question": "A server ends a subscription during a planned shutdown, rather than the connection simply dropping. What should it send before closing the stream?",
+      "options": [
+        "A fresh subscriptions/listen request of its own, addressed back to the client",
+        "A notifications/cancelled message naming every resource the subscription was watching",
+        "A result for the original listen request, complete, with the subscription id",
+        "Nothing at all, since a notification driven stream never gets a closing message"
+      ],
+      "correct": 2,
+      "explanation": "A server that ends a subscription on purpose should answer the original listen request with a complete result carrying the subscription id, so the client can tell a clean end from an abrupt transport drop."
+    },
+    {
+      "stage": "post",
+      "question": "A stdio server process restarts after a crash. What must the client do to keep receiving the notifications it had subscribed to?",
+      "options": [
+        "Send a Last-Event-ID header so the stream continues from where it left off",
+        "Reconnect and wait, since the new process resumes every prior subscription automatically",
+        "Do nothing, because subscription state survives a restart on disk",
+        "Resend subscriptions/listen with a new id, since the new process remembers nothing"
+      ],
+      "correct": 3,
+      "explanation": "A restarted server holds no subscription state from before the crash, so the client has to resend subscriptions/listen and rebuild each stream, the same statelessness that governs every other request."
+    }
+  ]
+}

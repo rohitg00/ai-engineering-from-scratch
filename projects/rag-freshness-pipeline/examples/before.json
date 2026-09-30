@@ -1,0 +1,12 @@
+[
+  {
+    "id": "orchard-auth",
+    "text": "Orchard guest tokens expire after 60 minutes.",
+    "updated": 100
+  },
+  {
+    "id": "retired-backup",
+    "text": "Backups use the old archive bucket.",
+    "updated": 100
+  }
+]

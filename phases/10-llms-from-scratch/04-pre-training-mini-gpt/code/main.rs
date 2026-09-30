@@ -2,7 +2,7 @@
 // Topic: embedding + pos embedding, N transformer blocks (LayerNorm, MHA, FFN), LM head.
 // References (cited in spirit, not as deps):
 //   - Karpathy nanoGPT / llm.c:    https://github.com/karpathy/llm.c/blob/master/train_gpt2.c
-//   - candle gpt-2:                https://github.com/huggingface/candle/blob/main/candle-transformers/src/models/gpt2.rs
+//   - candle gpt-bigcode:          https://github.com/huggingface/candle/blob/main/candle-transformers/src/models/bigcode.rs
 //   - GPT-2 paper:                 https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf
 //
 // Compile + run:  rustc --edition 2021 main.rs -o /tmp/mini && /tmp/mini

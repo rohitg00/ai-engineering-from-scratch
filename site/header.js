@@ -8,9 +8,9 @@
   var REPO = 'rohitg00/ai-engineering-from-scratch';
   var CACHE_KEY = 'gh:stars:' + REPO;
   var CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
-  var COMPACT_HEADER_QUERY = '(max-width: 1400px)';
   var NARROW_HEADER_QUERY = '(max-width: 820px)';
   var NARRATION_VERSION = '20260829a';
+  var UI_I18N_VERSION = '20260923a';
   var navId = 0;
 
   function isStaticPreview(locationValue) {
@@ -161,6 +161,28 @@
     document.head.appendChild(script);
   }
 
+  function ensureUiI18n() {
+    if (window.AIFSUiI18n || document.querySelector('script[data-aifs-ui-i18n="' + UI_I18N_VERSION + '"]')) return;
+    var script = document.createElement('script');
+    script.src = 'ui-i18n.js?v=' + UI_I18N_VERSION;
+    script.async = true;
+    script.setAttribute('data-aifs-ui-i18n', UI_I18N_VERSION);
+    document.head.appendChild(script);
+  }
+
+  function ensureNewsletter() {
+    if (document.querySelector('script[data-aifs-newsletter]')) return;
+    var stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = 'newsletter.css?v=20260926b';
+    document.head.appendChild(stylesheet);
+    var script = document.createElement('script');
+    script.src = 'newsletter.js?v=20260926b';
+    script.async = true;
+    script.setAttribute('data-aifs-newsletter', 'true');
+    document.head.appendChild(script);
+  }
+
   function pageFile(url) {
     try {
       var parsed = new URL(url, location.href);
@@ -225,7 +247,9 @@
 
   function addNavigationLinks(nav) {
     ensureNavigationLink(nav, 'learning-paths.html', 'Learning Paths', '');
+    ensureNavigationLink(nav, 'projects.html', 'Projects', '');
     ensureNavigationLink(nav, 'certifications.html', 'Certifications', 'header-mobile-only');
+    ensureNavigationLink(nav, 'sponsors.html', 'Sponsor us', 'header-mobile-only');
   }
 
   function setupNavigation(header) {
@@ -281,17 +305,10 @@
     tools.setAttribute('aria-label', 'Site tools');
     nav.appendChild(tools);
 
-    var toolAnchor = document.createComment('header-tools');
     var directChildren = Array.prototype.slice.call(inner.children);
     var search = directChildren.find(function (child) {
       return child.classList && child.classList.contains('search-toggle');
     });
-    var firstTool = directChildren.find(function (child) {
-      return child !== logo && child !== nav && child !== toggle && child !== priorityNav && child !== github && child !== search;
-    });
-    inner.insertBefore(toolAnchor, search ? search.nextSibling : (firstTool || null));
-
-    var compact = window.matchMedia ? window.matchMedia(COMPACT_HEADER_QUERY) : null;
     var narrow = window.matchMedia ? window.matchMedia(NARROW_HEADER_QUERY) : null;
     var open = false;
 
@@ -315,10 +332,6 @@
       });
     }
 
-    function restoreDesktopTools() {
-      while (tools.firstChild) inner.insertBefore(tools.firstChild, toolAnchor);
-    }
-
     function movePriorityLinksOut() {
       for (var i = 0; i < priorityEntries.length; i++) {
         priorityNav.appendChild(priorityEntries[i].link);
@@ -339,27 +352,18 @@
       header.classList.toggle('header-nav-open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-      if (compact && compact.matches) nav.hidden = !open;
-      else nav.hidden = false;
+      nav.hidden = !open;
       if (restoreFocus && !open) toggle.focus();
     }
 
     function syncLayout() {
-      var isCompact = compact ? compact.matches : false;
       var isNarrow = narrow ? narrow.matches : false;
       var menuHadFocus = nav.contains(document.activeElement);
       var priorityHadFocus = priorityNav.contains(document.activeElement);
-      if (isCompact) {
-        if (isNarrow) restorePriorityLinks();
-        else movePriorityLinksOut();
-        moveToolsIntoMenu();
-        setOpen(false, menuHadFocus || (isNarrow && priorityHadFocus));
-      } else {
-        restorePriorityLinks();
-        setOpen(false, false);
-        restoreDesktopTools();
-        nav.hidden = false;
-      }
+      if (isNarrow) restorePriorityLinks();
+      else movePriorityLinksOut();
+      moveToolsIntoMenu();
+      setOpen(false, menuHadFocus || (isNarrow && priorityHadFocus));
     }
 
     toggle.addEventListener('click', function () { setOpen(!open, false); });
@@ -383,10 +387,6 @@
       }
     });
 
-    if (compact) {
-      if (typeof compact.addEventListener === 'function') compact.addEventListener('change', syncLayout);
-      else if (typeof compact.addListener === 'function') compact.addListener(syncLayout);
-    }
     if (narrow) {
       if (typeof narrow.addEventListener === 'function') narrow.addEventListener('change', syncLayout);
       else if (typeof narrow.addListener === 'function') narrow.addListener(syncLayout);
@@ -394,7 +394,6 @@
 
     if (typeof MutationObserver === 'function') {
       var observer = new MutationObserver(function (mutations) {
-        if (!compact || !compact.matches) return;
         for (var i = 0; i < mutations.length; i++) {
           var added = mutations[i].addedNodes;
           for (var j = 0; j < added.length; j++) {
@@ -412,6 +411,8 @@
     for (var i = 0; i < headers.length; i++) setupNavigation(headers[i]);
     loadStars();
     ensureNarration();
+    ensureUiI18n();
+    ensureNewsletter();
   }
 
   setupRouteLinks();

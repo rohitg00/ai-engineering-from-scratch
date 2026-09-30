@@ -1,0 +1,138 @@
+{
+  "id": "json-schema-output-guard",
+  "title": "JSON Schema Output Guard",
+  "level": 1,
+  "levelName": "Starter",
+  "tagline": "A schema preflight and bounded-repair receipt for model output contracts.",
+  "summary": "A schema preflight and bounded-repair receipt for model output contracts. Call guard(raw,schema) at the application boundary, or repair(generate,schema,maxAttempts) where generate receives structured Issue[] and a one-based attempt number.",
+  "hours": 8,
+  "languages": ["TypeScript"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Parse the untrusted boundary",
+    "Walk a schema recursively",
+    "Reject ambiguous and unsupported contracts",
+    "Repair with a finite budget"
+  ],
+  "prerequisites": [
+    "Node 22.18+ and Python 3 for the grader",
+    "TypeScript unions, recursive functions, JSON and async callbacks."
+  ],
+  "youWillBuild": "A schema preflight and bounded-repair receipt for model output contracts.",
+  "usefulFor": [
+    "Call guard(raw,schema) at the application boundary, or repair(generate,schema,maxAttempts) where generate receives structured Issue[] and a one-based attempt number."
+  ],
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "node",
+      "cli.ts",
+      "--schema",
+      "samples/schema.json",
+      "--attempts",
+      "samples/attempts.json",
+      "--output",
+      "guard.json",
+      "--html",
+      "guard.html"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-parse-json",
+      "title": "Parse the untrusted boundary",
+      "summary": "A model response is a byte string. Parse the entire string as JSON, reject markdown wrappers and trailing text, and cap its UTF-8 byte size before parsing. Accept JSON primitives as well as objects: the schema, not the parser, determines whether a primitive is useful. Do not remove text until it happens to parse because that hides the actual output contract.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "TypeScript keeps unknown data separate from typed application values.",
+      "concepts": ["parseJSON"],
+      "difficulty": "starter",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-json-schema-output-guard-1"
+    },
+    {
+      "id": "02-validate-types",
+      "title": "Walk a schema recursively",
+      "summary": "Implement object, array and primitive validation. Required properties are checked with own-property semantics. An inherited property does not satisfy the contract. Treat integer as a refinement of number, reject non-finite numbers, and preserve a path for every failure. Bound recursive descent at depth 32 so a schema and value cannot consume the stack indefinitely.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Recursive union types describe the schema subset without importing a validator.",
+      "concepts": ["validate"],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-json-schema-output-guard-2"
+    },
+    {
+      "id": "03-constraints",
+      "title": "Reject ambiguous and unsupported contracts",
+      "summary": "Add numeric bounds, enum membership, minimum Unicode string length, array bounds, and closed objects. Escape slash and tilde inside property paths. A keyword outside this educational subset is a configuration error, not silent success. This implementation intentionally does not claim complete JSON Schema conformance: references, formats and combinators require additional work.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Typed issue objects make error reporting stable across the CLI and retry loop.",
+      "concepts": ["validate", "guard"],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-json-schema-output-guard-3"
+    },
+    {
+      "id": "04-bounded-repair",
+      "title": "Repair with a finite budget",
+      "summary": "Feed only structured validation feedback into a generation callback. Count each call before interpreting its output. Stop immediately after acceptance and return an explicit exhausted state after the final rejected attempt. Provider failures propagate instead of being disguised as schema failures. The trace records each attempt so a successful third response does not conceal two earlier contract violations.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Async function types allow deterministic fake generation and a later provider adapter.",
+      "concepts": ["repair"],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts",
+        "{tests}/integration.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-json-schema-output-guard-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

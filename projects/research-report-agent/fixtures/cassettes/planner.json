@@ -1,0 +1,15 @@
+{
+  "note": "Recorded planner responses. Keys are purpose plus the exact prompt text.",
+  "entries": [
+    {
+      "purpose": "plan",
+      "prompt": "You plan research for a cited report.\nSplit the question into at most 4 facets.\nReply with JSON only: {\"facets\": [{\"sub_question\": \"...\", \"keywords\": [\"...\"]}]}\nQuestion: Are command denylists enough to sandbox an agent?",
+      "response": "{\"facets\": [{\"label\": \"What denylists catch\", \"sub_question\": \"What do command denylists block?\", \"keywords\": [\"denylist\", \"command\", \"blocked\"]}, {\"label\": \"How they fail\", \"sub_question\": \"How can an agent get around a denylist?\", \"keywords\": [\"interpreter\", \"script\", \"bypass\"]}, {\"label\": \"What to add\", \"sub_question\": \"What isolation should sit under a denylist?\", \"keywords\": [\"isolation\", \"least\", \"privilege\"]}]}"
+    },
+    {
+      "purpose": "plan",
+      "prompt": "You plan research for a cited report.\nSplit the question into at most 4 facets.\nReply with JSON only: {\"facets\": [{\"sub_question\": \"...\", \"keywords\": [\"...\"]}]}\nQuestion: What is the stateful sandbox controller for?",
+      "response": "Sure! Here are some facets: 1. what it is 2. why it matters"
+    }
+  ]
+}

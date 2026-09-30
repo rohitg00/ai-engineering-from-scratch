@@ -1,0 +1,8 @@
+{
+  "url": "http://127.0.0.1:8877/fixture.html",
+  "task": {
+    "name": "Mira Chen",
+    "email": "mira@example.test",
+    "allowedOrigin": "http://127.0.0.1:8877"
+  }
+}

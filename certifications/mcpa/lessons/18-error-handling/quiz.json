@@ -1,0 +1,78 @@
+{
+  "lesson": "18-error-handling",
+  "title": "Two Ways for a Request to Fail",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A tools/call request names a tool this server has never registered. Which response is correct for MCP 2026-07-28?",
+      "options": [
+        "A JSON-RPC error with code -32601, the method-not-found code",
+        "A JSON-RPC error with code -32602, the invalid-params code",
+        "A normal result with isError true and a short explanation",
+        "A JSON-RPC error with code -32002, the old resource code"
+      ],
+      "correct": 1,
+      "explanation": "An unknown tool is a protocol error reported as -32602 Invalid params; -32601 means the method itself was not found, and -32002 was retired before 2026-07-28."
+    },
+    {
+      "stage": "check",
+      "question": "A client omits io.modelcontextprotocol/clientCapabilities from a request's _meta. What must the server do?",
+      "options": [
+        "Reject the request with error code -32021, Missing capability",
+        "Wait for the next request on the connection to supply it",
+        "Reject the request with error code -32602, Invalid params",
+        "Assume an empty capability set and continue processing the request"
+      ],
+      "correct": 2,
+      "explanation": "A request missing a required _meta field, including clientCapabilities, is malformed, and the server must reject it with -32602 rather than assume a default or wait for a later request that will never arrive."
+    },
+    {
+      "stage": "check",
+      "question": "Which pair of JSON-RPC error codes must a 2026-07-28 implementation never emit?",
+      "options": [
+        "-32601 and -32603, both standard JSON-RPC codes",
+        "-32700 and -32600, both standard JSON-RPC codes",
+        "-32020 and -32021, both defined by this revision",
+        "-32002 and -32042, both retired before this revision"
+      ],
+      "correct": 3,
+      "explanation": "The specification retires -32002, the pre-2026-07-28 resource-not-found code, and -32042, the 2025-11-25 URL-elicitation code, while -32020 through -32022 are current and the standard codes remain in use."
+    },
+    {
+      "stage": "check",
+      "question": "A tool's arguments fail its declared input schema, for example a missing required field. How should a conformant server report this?",
+      "options": [
+        "As a normal result with isError true and the reason",
+        "As a JSON-RPC error with code -32602, Invalid params",
+        "By closing the connection so the client must reconnect",
+        "As a JSON-RPC error with code -32600, Invalid Request"
+      ],
+      "correct": 0,
+      "explanation": "SEP-1303 moved input validation failures into tool execution errors, a normal result with isError true, so the model reads the reason and can retry with corrected arguments."
+    },
+    {
+      "stage": "post",
+      "question": "A Streamable HTTP server rejects a request because the MCP-Protocol-Version header does not match the body's protocol version. Which HTTP status and code pair is correct?",
+      "options": [
+        "401 Unauthorized with code -32021",
+        "400 Bad Request with code -32020",
+        "403 Forbidden with code -32022",
+        "404 Not Found with code -32601"
+      ],
+      "correct": 1,
+      "explanation": "A header that disagrees with the body is a HeaderMismatch, code -32020, and the server must answer with 400 Bad Request rather than a method, authorization, or version error."
+    },
+    {
+      "stage": "post",
+      "question": "A server needs the client to have declared the elicitation capability before it can complete a request, but that request's clientCapabilities does not include it. What must the server return?",
+      "options": [
+        "Error code -32602 with data.uri naming the missing resource",
+        "An input_required result with an empty inputRequests map here",
+        "Error code -32021 with data.requiredCapabilities naming what is missing",
+        "A normal result with isError true and no further data"
+      ],
+      "correct": 2,
+      "explanation": "A server must not rely on a capability the client did not declare on that request; it answers with MissingRequiredClientCapabilityError, code -32021, listing the missing capability in data.requiredCapabilities."
+    }
+  ]
+}

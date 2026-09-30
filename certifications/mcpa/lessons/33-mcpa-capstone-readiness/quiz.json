@@ -1,0 +1,78 @@
+{
+  "lesson": "33-mcpa-capstone-readiness",
+  "title": "Reading One MCP Exchange End to End",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before tracing an incident through an MCP transcript, which distinction should you check first to decide where the failure sits?",
+      "options": [
+        "Whether the call happened over stdio only, since Streamable HTTP cannot produce this particular kind of failure",
+        "Whether the transcript runs longer than a handful of messages, since length alone predicts which particular domain a failure actually belongs to",
+        "Whether the connection kept a negotiated session open, since a lost session explains nearly every failure a server reports",
+        "Whether the message is a JSON-RPC error object with a code, or a normal result that instead carries isError true"
+      ],
+      "correct": 3,
+      "explanation": "A protocol error is a JSON-RPC error object with a numeric code, while a tool execution error is a normal result with isError true, and the two need different fixes from the model."
+    },
+    {
+      "stage": "check",
+      "question": "A client configured for protocol version 2025-11-25 calls server/discover against this lesson's incident-console server. What happens next in a conformant 2026-07-28 exchange?",
+      "options": [
+        "The server returns UnsupportedProtocolVersionError, and the client retries using a version the error itself names",
+        "The server downgrades every later request on the connection to match whatever version the client asked for first",
+        "The server opens a legacy initialize handshake so both sides can negotiate a shared version before anything else proceeds",
+        "The server silently applies its own default version and logs a warning that nobody is guaranteed to read later"
+      ],
+      "correct": 0,
+      "explanation": "A mismatched version returns error code -32022 with data.supported naming the versions the server accepts, and the client simply retries server/discover with a supported one, since there is no handshake or session to renegotiate instead."
+    },
+    {
+      "stage": "check",
+      "question": "bob-readonly sends restart_service with complete, valid arguments but declares no elicitation capability on that specific request. What does the server return?",
+      "options": [
+        "A normal result with isError true, explaining that the environment argument bob supplied does not satisfy the schema",
+        "Error code -32021, MissingRequiredClientCapability, which explicitly names elicitation as the missing capability",
+        "resultType input_required anyway, trusting that bob will supply a client that can somehow still answer the elicitation",
+        "Error code -32602, since a caller missing a needed capability is treated the same as calling an unknown tool"
+      ],
+      "correct": 1,
+      "explanation": "A server must never assume a capability a request did not declare, so it answers with -32021, MissingRequiredClientCapability, and names exactly which capability was missing."
+    },
+    {
+      "stage": "check",
+      "question": "alice's accepted restart_service retry carries the correct requestState but reuses the JSON-RPC id from the original ask. What is wrong with this retry?",
+      "options": [
+        "The retry should have left requestState out entirely, since the server already has the original arguments recorded",
+        "The retry needed a shared session identifier instead of an id to prove it belongs to the same connection",
+        "The retry must use a brand new JSON-RPC id, since reusing the original id on a retry breaks the MRTR rule",
+        "Nothing; reusing the original id is exactly how a server is supposed to match a retry to its request"
+      ],
+      "correct": 2,
+      "explanation": "An MRTR retry always carries a new JSON-RPC id while echoing requestState exactly, so the id lesson 14 assigns to the original ask must never be reused on the retry that answers it."
+    },
+    {
+      "stage": "post",
+      "question": "run_full_diagnostics is sent twice with identical arguments, once without declaring io.modelcontextprotocol/tasks and once declaring it. Why do the two calls return a different resultType?",
+      "options": [
+        "The first call failed without telling the client, which then retried automatically with a different set of capabilities",
+        "The server alternates between a task and a synchronous result at random, purely to show the client both code paths",
+        "A task can only be created after the client has already polled tasks/get once to register interest in one",
+        "Capabilities are declared per request rather than for a whole connection, so only the request that opts in gets a task"
+      ],
+      "correct": 3,
+      "explanation": "MCP capabilities are declared per request, not once for a whole connection, so the server only returns resultType task when that specific request declares the tasks extension and it also advertised support for it."
+    },
+    {
+      "stage": "post",
+      "question": "After a full run, one field on an early entry of the audit log is edited in place and audit.verify() is called again. What does it report?",
+      "options": [
+        "False, naming the exact index of the edited entry, since its hash no longer matches what was recorded",
+        "True, because verify only ever recomputes the hash of the single most recent entry written to the log",
+        "False, naming the index of the entry recorded immediately before the one that was actually edited",
+        "True, because the edited field happens to fall outside what the hash function was actually designed to cover"
+      ],
+      "correct": 0,
+      "explanation": "Each entry's hash covers the entry before it, so editing one entry breaks the recomputed hash starting at that entry's own index, and verify reports precisely that index rather than the entry before it or a generic failure."
+    }
+  ]
+}

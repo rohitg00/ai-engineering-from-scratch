@@ -1,0 +1,78 @@
+{
+  "lesson": "10-model-interaction-flow",
+  "title": "The Model Interaction Flow",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before a host ever sends a tools/call, what exactly does the model see about a tool?",
+      "options": [
+        "The tool's full server side implementation, its source code, and stored secrets",
+        "The complete registry server.json entry the tool was originally published under",
+        "The tool's name, description, input schema, and any annotations the server sent",
+        "A cached session identifier the server assigned during an earlier handshake"
+      ],
+      "correct": 2,
+      "explanation": "The model only sees the definition fields from tools/list, name, description, inputSchema, and annotations when the server sent them, never the server's implementation, a registry entry, or a session, since 2026-07-28 has none of those."
+    },
+    {
+      "stage": "check",
+      "question": "A drafted close_ticket call targets a tool with no annotations block at all. What must the host do before the client sends anything?",
+      "options": [
+        "Wait for a list_changed notification before deciding whether to confirm",
+        "Send the call immediately, since a missing annotations block means the tool is safe",
+        "Reject the call outright, since a tool with no annotations is invalid",
+        "Treat the tool as destructive by default and confirm with a human first"
+      ],
+      "correct": 3,
+      "explanation": "readOnlyHint defaults to false and destructiveHint defaults to true, so a tool shipped with no annotations block at all is destructive under the specification's own defaults, and the host should confirm with a human before sending it."
+    },
+    {
+      "stage": "check",
+      "question": "A tools/call result comes back with isError true because a required argument was missing. What should the model do next?",
+      "options": [
+        "Read the explanation in content and retry with corrected arguments and a new id",
+        "Resend the identical call again, because most transient failures resolve themselves",
+        "Wait for the server to send an input_required result before trying again",
+        "Stop the whole conversation, since isError true always means the call cannot be retried"
+      ],
+      "correct": 0,
+      "explanation": "A tool execution error is a normal result with isError true and actionable content the model can read, and it retries with corrected arguments using a fresh id, which is a different mechanism from the input_required pattern."
+    },
+    {
+      "stage": "check",
+      "question": "An open_ticket call comes back with resultType input_required. How must the client's retry differ from the original request?",
+      "options": [
+        "It omits requestState entirely, since the server already has that context",
+        "It uses a new JSON-RPC id and echoes requestState back exactly",
+        "It reuses the same JSON-RPC id so the server can match the two calls",
+        "It sends the request over a newly opened subscriptions/listen stream instead"
+      ],
+      "correct": 1,
+      "explanation": "An MRTR retry must use a new JSON-RPC id and echo requestState byte for byte when the server sent one, so reusing the original id or inventing a different state value breaks the pattern the specification defines."
+    },
+    {
+      "stage": "post",
+      "question": "The model tries a tool name the server does not expose and gets back a JSON-RPC error coded -32602. What should the loop do next?",
+      "options": [
+        "Convert the error into an isError true result and retry with corrections",
+        "Open an input_required round trip to ask the user which tool to use",
+        "Move on without resending the identical call, since nothing about the request changed",
+        "Resend the exact same tools/call again with the same arguments"
+      ],
+      "correct": 2,
+      "explanation": "A protocol error such as an unknown tool gives the model nothing to fix, so a well built loop does not retry the identical request, unlike a tool execution error, which does invite a corrected retry with a new id."
+    },
+    {
+      "stage": "post",
+      "question": "Why does returning tools/list in the same deterministic order every turn matter for a host holding a long conversation?",
+      "options": [
+        "It allows the host to skip sending required protocol metadata on later requests",
+        "It is required before the client can open a subscriptions/listen stream at all",
+        "It lets the server skip validating arguments on every later call it receives",
+        "It keeps the cached prefix stable and protects the provider's own prompt cache"
+      ],
+      "correct": 3,
+      "explanation": "Most model providers cache the prompt prefix that holds the tool array, so a stable and deterministic order lets the host reuse that context across turns without invalidating the provider's cache and paying for the definitions again."
+    }
+  ]
+}

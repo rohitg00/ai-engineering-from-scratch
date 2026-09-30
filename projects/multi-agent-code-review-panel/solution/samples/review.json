@@ -1,0 +1,21 @@
+{
+  "files": {
+    "run.ts": [
+      "// eval(input) is dangerous",
+      "eval(input);",
+      "const client = {rejectUnauthorized: false};"
+    ]
+  },
+  "expected": [
+    {
+      "file": "run.ts",
+      "line": 2,
+      "rule": "dynamic-eval"
+    },
+    {
+      "file": "run.ts",
+      "line": 3,
+      "rule": "tls-disabled"
+    }
+  ]
+}

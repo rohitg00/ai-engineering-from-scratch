@@ -1,0 +1,141 @@
+{
+  "id": "rust-agent-shell",
+  "title": "Streaming Agent Shell in Rust",
+  "level": 4,
+  "levelName": "Systems",
+  "tagline": "Build a real stdin/stdout Rust action loop with bounded reads, an explicit command grammar, path containment, and streamed JSON events.",
+  "summary": "Build a real stdin/stdout Rust action loop with bounded reads, an explicit command grammar, path containment, and streamed JSON events.",
+  "hours": 8,
+  "languages": [
+    "Rust"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Parse a deliberately small action language",
+    "Confine file tools to a bounded root",
+    "Track budgets and terminal state",
+    "Stream bounded JSON events through real stdin"
+  ],
+  "prerequisites": [
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    },
+    {
+      "title": "Tool schema design",
+      "path": "phases/13-tools-and-protocols/05-tool-schema-design"
+    }
+  ],
+  "youWillBuild": "An inspectable repository-observation process usable by different coding agents.",
+  "usefulFor": [
+    "An inspectable repository-observation process usable by different coding agents.",
+    "JSONL requests use caller ids and explicit tool argument objects."
+  ],
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-grammar",
+      "title": "Parse a deliberately small action language",
+      "summary": "Define an action enum for help, pwd, list, read, literal search and quit.",
+      "hours": 2,
+      "language": "rust",
+      "languageWhy": "Rust makes state ownership and fallible system calls explicit while keeping the implementation in the standard library.",
+      "requires": [
+        "rustc"
+      ],
+      "difficulty": "starter",
+      "concepts": [
+        "Action",
+        "parse_action"
+      ],
+      "figure": "pj-rust-agent-shell-1",
+      "timeout": 90
+    },
+    {
+      "id": "02-filesystem",
+      "title": "Confine file tools to a bounded root",
+      "summary": "Canonicalize the workspace root and requested targets, reject absolute and parent-traversing paths, and verify that symlinks remain inside the root.",
+      "hours": 2,
+      "language": "rust",
+      "languageWhy": "Rust makes state ownership and fallible system calls explicit while keeping the implementation in the standard library.",
+      "requires": [
+        "rustc"
+      ],
+      "difficulty": "core",
+      "concepts": [
+        "contained",
+        "read_text",
+        "execute"
+      ],
+      "figure": "pj-rust-agent-shell-2",
+      "timeout": 90
+    },
+    {
+      "id": "03-session",
+      "title": "Track budgets and terminal state",
+      "summary": "Wrap the tools in a session that owns its root, request count and closed state.",
+      "hours": 2,
+      "language": "rust",
+      "languageWhy": "Rust makes state ownership and fallible system calls explicit while keeping the implementation in the standard library.",
+      "requires": [
+        "rustc"
+      ],
+      "difficulty": "core",
+      "concepts": [
+        "Session.new",
+        "Session.handle"
+      ],
+      "figure": "pj-rust-agent-shell-3",
+      "timeout": 90
+    },
+    {
+      "id": "04-streaming",
+      "title": "Stream bounded JSON events through real stdin",
+      "summary": "Read input incrementally with BufRead and cap each line before allocating an unbounded string.",
+      "hours": 2,
+      "language": "rust+python",
+      "runners": [
+        {"language": "rust"},
+        {"language": "python"}
+      ],
+      "languageWhy": "Rust makes state ownership and fallible system calls explicit while keeping the implementation in the standard library.",
+      "requires": [
+        "rustc"
+      ],
+      "difficulty": "core",
+      "concepts": [
+        "read_bounded",
+        "json_string",
+        "Event.json",
+        "run_loop"
+      ],
+      "figure": "pj-rust-agent-shell-4",
+      "timeout": 90
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

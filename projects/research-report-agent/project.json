@@ -1,0 +1,248 @@
+{
+  "id": "research-report-agent",
+  "title": "Research Report Agent",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "Turn a question and a pile of documents into a report where every sentence can be checked.",
+  "summary": "Build the pipeline behind deep research tools: search a corpus, pull exact snippets, plan the research, write only from evidence, verify every claim, publish an HTML report with footnotes and a trace, then score it on checked-in public evaluation fixtures.",
+  "usefulFor": [
+    "Prepare a technical decision memo whose claims link to the supporting source passages.",
+    "Compare reports after source documents change and inspect which claims need revision."
+  ],
+  "youWillBuild": "An evidence ledger for technical decisions showing how source updates change published claims.",
+  "hours": 20,
+  "languages": [
+    "Rust",
+    "Python",
+    "TypeScript"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "BM25 retrieval",
+    "snippet extraction with offsets",
+    "research planning",
+    "record and replay model calls",
+    "citation grounding",
+    "claim verification",
+    "run budgets and terminal states",
+    "tracing",
+    "public fixture evaluation"
+  ],
+  "prerequisites": [
+    {
+      "title": "Retrieval augmented generation",
+      "path": "phases/11-llm-engineering/06-rag"
+    },
+    {
+      "title": "Structured outputs",
+      "path": "phases/11-llm-engineering/03-structured-outputs"
+    },
+    {
+      "title": "The agent loop",
+      "path": "phases/14-agent-engineering/01-the-agent-loop"
+    },
+    {
+      "title": "Verification gates",
+      "path": "phases/14-agent-engineering/38-verification-gates"
+    }
+  ],
+  "stages": [
+    {
+      "id": "01-search-the-corpus",
+      "title": "Search the corpus",
+      "summary": "Load markdown documents with headers and rank them with BM25.",
+      "hours": 5,
+      "concepts": [
+        "document parsing",
+        "tokenization",
+        "BM25",
+        "IDF"
+      ],
+      "difficulty": "core",
+      "language": "rust+python",
+      "languageWhy": "Rust owns ranking and JSON parsing; Python exposes a small process adapter to later stages.",
+      "figure": "pj-rra-bm25",
+      "runners": [
+        {
+          "language": "rust"
+        },
+        {
+          "language": "python"
+        }
+      ]
+    },
+    {
+      "id": "02-extract-snippets",
+      "title": "Extract snippets you can cite",
+      "summary": "Split documents into sentences and keep exact character offsets for every snippet.",
+      "hours": 2,
+      "concepts": [
+        "sentence spans",
+        "offsets",
+        "snippet scoring",
+        "context-free sentences"
+      ],
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Python string slices preserve the exact evidence spans used by the verifier.",
+      "figure": "pj-rra-snippet-offsets",
+      "runners": [
+        {
+          "language": "python"
+        }
+      ]
+    },
+    {
+      "id": "03-plan-the-research",
+      "title": "Plan the research",
+      "summary": "Split the question into facets with a rule planner, then swap in a recorded model safely.",
+      "hours": 2,
+      "concepts": [
+        "query decomposition",
+        "Model protocol",
+        "record and replay",
+        "fallbacks"
+      ],
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "A Python protocol isolates planning from live model transport and recorded replies.",
+      "figure": "pj-rra-plan-facets",
+      "runners": [
+        {
+          "language": "python"
+        }
+      ]
+    },
+    {
+      "id": "04-write-with-citations",
+      "title": "Write only from evidence",
+      "summary": "Compose sections from snippets and reject any sentence without a valid citation.",
+      "hours": 2,
+      "concepts": [
+        "extractive writing",
+        "citation format",
+        "validators"
+      ],
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Python dataclasses keep snippets, sections and citation references explicit.",
+      "figure": "pj-rra-cited-writer",
+      "runners": [
+        {
+          "language": "python"
+        }
+      ]
+    },
+    {
+      "id": "05-verify-every-claim",
+      "title": "Verify every claim",
+      "summary": "Catch swapped names, flipped negations and changed numbers, under a run budget.",
+      "hours": 2,
+      "concepts": [
+        "claim support",
+        "poisoned drafts",
+        "budgets",
+        "terminal states"
+      ],
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Python sets and counters make support rules and budgets inspectable.",
+      "figure": "pj-rra-critic",
+      "runners": [
+        {
+          "language": "python"
+        }
+      ]
+    },
+    {
+      "id": "06-publish-the-report",
+      "title": "Publish the report",
+      "summary": "Render HTML with numbered footnotes and write a trace of the whole run.",
+      "hours": 2,
+      "concepts": [
+        "HTML rendering",
+        "footnotes",
+        "tracing",
+        "pipelines"
+      ],
+      "difficulty": "core",
+      "language": "python+typescript",
+      "languageWhy": "Python serializes evidence; TypeScript validates it and renders accessible HTML.",
+      "figure": "pj-rra-publish",
+      "runners": [
+        {
+          "language": "python"
+        },
+        {
+          "language": "typescript"
+        }
+      ]
+    },
+    {
+      "id": "07-score-the-report",
+      "title": "Score the public fixtures",
+      "summary": "Measure citation precision, source recall and fact coverage on checked-in public evaluation fixtures.",
+      "hours": 2,
+      "concepts": [
+        "public fixture evaluation",
+        "citation precision",
+        "recall",
+        "scorecards"
+      ],
+      "difficulty": "stretch",
+      "language": "python",
+      "languageWhy": "Python computes per-question metrics and a reproducible aggregate score.",
+      "figure": "pj-rra-scorecard",
+      "runners": [
+        {
+          "language": "python"
+        }
+      ]
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-rra-pipeline",
+  "languageReasons": [
+    {
+      "language": "Rust",
+      "why": "Build the BM25 index and parse JSON requests using only the standard library."
+    },
+    {
+      "language": "Python",
+      "why": "Compose evidence extraction, recorded model calls, verification and evaluation."
+    },
+    {
+      "language": "TypeScript",
+      "why": "Validate the evidence contract and render an interactive, portable HTML report."
+    }
+  ],
+  "demo": {
+    "command": [
+      "python3",
+      "run_report.py",
+      "How does a secrets proxy protect API keys from prompt injection?",
+      "--out",
+      "out"
+    ],
+    "cwd": "solution"
+  },
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Real browser recording of the generated HTML report, source hover evidence, and expanded run trace."
+    }
+  ]
+}

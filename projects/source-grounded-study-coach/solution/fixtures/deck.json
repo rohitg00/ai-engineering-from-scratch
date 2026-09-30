@@ -1,0 +1,45 @@
+{
+  "sources": [
+    {
+      "id": "storage-notes",
+      "title": "Seed library storage",
+      "text": "The seed library stores dry seeds in paper envelopes. Each packet records the harvest year. A blue dot marks a packet ready for exchange."
+    },
+    {
+      "id": "catalog-notes",
+      "title": "Catalog rules",
+      "text": "Volunteers sort the catalog by plant name. A borrowed packet stays in the catalog until its return is recorded."
+    }
+  ],
+  "cards": [
+    {
+      "id": "storage",
+      "sourceId": "storage-notes",
+      "question": "What container stores the dry seeds?",
+      "answer": "paper envelopes",
+      "accepted": [
+        "a paper envelope"
+      ],
+      "start": 0,
+      "end": 53
+    },
+    {
+      "id": "year",
+      "sourceId": "storage-notes",
+      "question": "Which year does each packet record?",
+      "answer": "harvest year",
+      "accepted": [],
+      "start": 54,
+      "end": 91
+    },
+    {
+      "id": "sort",
+      "sourceId": "catalog-notes",
+      "question": "What field do volunteers sort the catalog by?",
+      "answer": "plant name",
+      "accepted": [],
+      "start": 0,
+      "end": 42
+    }
+  ]
+}

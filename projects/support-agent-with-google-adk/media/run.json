@@ -1,0 +1,48 @@
+{
+  "title": "Support Agent With Google ADK | Build and verify",
+  "recordedAt": "2026-09-28T19:23:51Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "support-agent-with-google-adk",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-zwx0um9s"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-zwx0um9s\n  created  intake.py\n  created  routing.py\n  created  handoff.py\n  created  adk_adapter.py\n  created  fixtures/ticket.json\n  created  main.py\n  created  support.py\nnext: python3 scripts/project_test.py support-agent-with-google-adk --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-zwx0um9s\n",
+      "durationMs": 52
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "support-agent-with-google-adk",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-zwx0um9s"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Support Agent With Google ADK: grading learner\n  FAIL stage 1: Validate before starting a session (5 tests)\n       not implemented yet: Stage 1: implement ticket\n",
+      "durationMs": 94
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "support-agent-with-google-adk",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Support Agent With Google ADK: grading solution\n  PASS stage 1: Validate before starting a session (5 tests)\n  PASS stage 2: Route and authorize as separate decisions (5 tests)\n  PASS stage 3: Retain the actual response in the handoff (5 tests)\n  PASS stage 4: Reuse the policy inside the real ADK path (10 tests)\n",
+      "durationMs": 244
+    }
+  ]
+}

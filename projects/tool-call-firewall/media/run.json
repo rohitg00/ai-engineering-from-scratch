@@ -1,0 +1,48 @@
+{
+  "title": "Tool Call Firewall | Build and verify",
+  "recordedAt": "2026-09-28T19:22:16Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "tool-call-firewall",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-6kpf4mum"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-6kpf4mum\n  created  cli.rs\n  created  main.rs\n  created  stage1.rs\n  created  types.rs\n  created  stage2.rs\n  created  stage3.rs\n  created  stage4.rs\nnext: python3 scripts/project_test.py tool-call-firewall --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-6kpf4mum\n",
+      "durationMs": 61
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "tool-call-firewall",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-6kpf4mum"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Tool Call Firewall: grading learner\n  FAIL stage 1: Validate an unambiguous call envelope (5 tests)\n       not implemented yet: Stage 1: implement call\n",
+      "durationMs": 939
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "tool-call-firewall",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Tool Call Firewall: grading solution\n  PASS stage 1: Validate an unambiguous call envelope (5 tests)\n  PASS stage 2: Evaluate role and path policy (5 tests)\n  PASS stage 3: Consume a request-bound approval once (8 tests)\n  PASS stage 4: Record bounded audit evidence (5 tests)\n",
+      "durationMs": 3710
+    }
+  ]
+}

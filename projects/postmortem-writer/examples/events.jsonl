@@ -1,0 +1,3 @@
+{"id": "e1", "second": 0, "kind": "deploy", "message": "version B started"}
+{"id": "e2", "second": 35, "kind": "alert", "message": "latency exceeded SLO"}
+{"id": "e3", "second": 90, "kind": "rollback", "message": "version A restored"}

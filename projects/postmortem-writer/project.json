@@ -1,0 +1,122 @@
+{
+  "id": "postmortem-writer",
+  "title": "Incident Postmortem Writer",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "Turn incident events into a timeline with evidence-backed claims.",
+  "summary": "Turn your JSONL incident logs and review decisions into an HTML evidence desk, exact-quote checks, owned actions and a source-bound approval receipt.",
+  "usefulFor": [
+    "Turn your JSONL incident logs and review decisions into an HTML evidence desk, exact-quote checks, owned actions and a source-bound approval receipt.",
+    "Pipe portable JSON receipts into your own review or publishing workflow."
+  ],
+  "youWillBuild": "Turn your JSONL incident logs and review decisions into an HTML evidence desk, exact-quote checks, owned actions and a source-bound approval receipt.",
+  "hours": 8,
+  "languages": [
+    "Go"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Parse an incident event ledger",
+    "Build a stable bounded timeline",
+    "Require evidence for each claim",
+    "Publish a deterministic incident packet"
+  ],
+  "prerequisites": [
+    {
+      "title": "Development environment",
+      "path": "phases/00-setup-and-tooling/01-dev-environment"
+    },
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    }
+  ],
+  "inspiredBy": [],
+  "demo": {
+    "command": [
+      "go",
+      "run",
+      "."
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-parse-an-incident-event-ledger",
+      "title": "Parse an incident event ledger",
+      "summary": "Use one tab-separated record per event: stable ID, nonnegative second, event kind and message.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "starter",
+      "concepts": [
+        "Split record",
+        "Parse time",
+        "Unique identity",
+        "Validated ledger"
+      ]
+    },
+    {
+      "id": "02-build-a-stable-bounded-timeline",
+      "title": "Build a stable bounded timeline",
+      "summary": "Sort a copy by elapsed seconds and then ID to make tied timestamps deterministic.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Copy ledger",
+        "Horizon gate",
+        "Time sort",
+        "ID tie break"
+      ]
+    },
+    {
+      "id": "03-require-evidence-for-each-claim",
+      "title": "Require evidence for each claim",
+      "summary": "A claim needs nonblank text and at least one distinct known event ID.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Claim text",
+        "Evidence list",
+        "Known IDs",
+        "Provenance gate"
+      ]
+    },
+    {
+      "id": "04-publish-a-deterministic-incident-packet",
+      "title": "Publish a deterministic incident packet",
+      "summary": "Render the validated timeline and claims with quoted message text and explicit references.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Validate claims",
+        "Bound output",
+        "Order evidence",
+        "Publish packet"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-postmortem-writer-1"
+}

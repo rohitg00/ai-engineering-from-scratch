@@ -1,0 +1,78 @@
+{
+  "lesson": "00-mcp-exam-strategy",
+  "title": "The MCPA Blueprint Is a Study Budget, Not a Checklist",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does a domain's weight in the MCPA blueprint most directly tell a candidate?",
+      "options": [
+        "The order in which the five domains appear in the official guide",
+        "The share of exam questions drawn from that domain, on average",
+        "The minimum score a candidate must reach in that domain alone",
+        "The number of official training hours required before attempting it"
+      ],
+      "correct": 1,
+      "explanation": "A domain's published weight is its share of the blueprint, the proportion of exam content the domain represents; it does not set a reading order, a required hour count, or a per-domain minimum score."
+    },
+    {
+      "stage": "check",
+      "question": "Which pair of domains carries the largest combined share of the MCPA blueprint?",
+      "options": [
+        "MCP Fundamentals and Architecture and Components, the two foundational domains",
+        "Architecture and Components and Use Cases and Ecosystem, the two mid-weight domains",
+        "Interactions and Execution and Security and Governance, the two heaviest domains",
+        "Use Cases and Ecosystem and MCP Fundamentals, the two adoption-facing domains"
+      ],
+      "correct": 2,
+      "explanation": "Interactions and Execution is weighted 26 percent and Security and Governance is weighted 24 percent, together half the blueprint, which is why they deserve the largest share of study hours."
+    },
+    {
+      "stage": "check",
+      "question": "The MCPA certification page and the Linux Foundation's own launch press release disagree about one exam fact. Which fact is it, and which source does this curriculum follow?",
+      "options": [
+        "The included retake count",
+        "The credential validity period",
+        "The exam fee",
+        "The exam duration"
+      ],
+      "correct": 3,
+      "explanation": "The certification page states a 90 minute duration while the press release states 120 minutes; this curriculum follows the certification page as the exam-specific source and records the conflict rather than silently choosing a number."
+    },
+    {
+      "stage": "check",
+      "question": "A practice question claims a client must call initialize before a 2026-07-28 server will accept any other request. How should a prepared candidate read that claim?",
+      "options": [
+        "A legacy-era protocol distractor",
+        "True only for older MCP servers",
+        "A detail specific to stdio only",
+        "A true, still current requirement"
+      ],
+      "correct": 0,
+      "explanation": "The 2026-07-28 revision removed the initialize handshake and protocol sessions entirely, so every request now carries its own protocol version and capabilities in its metadata instead of relying on a prior handshake."
+    },
+    {
+      "stage": "post",
+      "question": "A candidate scores 100 percent in MCP Fundamentals, weighted 16 percent, and 0 percent everywhere else. Why is a weighted readiness estimate more useful here than a plain five-way average?",
+      "options": [
+        "It rounds every domain score upward so the candidate always looks prepared",
+        "It shows readiness near 16 percent instead of a misleading 20 percent average",
+        "It replaces the five domains with a single combined pass or fail flag",
+        "It discards the weakest domain scores before computing any final result"
+      ],
+      "correct": 1,
+      "explanation": "A plain average shows 20 percent because one of five domains is perfect, but a weighted estimate reflects that the mastered domain is only 16 percent of the exam, which is a more honest picture of overall readiness."
+    },
+    {
+      "stage": "post",
+      "question": "A few lessons in the 34-lesson route, such as JSON-RPC and Meta, are tagged with two domains instead of one. What does that reflect about the route?",
+      "options": [
+        "A sign those lessons are optional to skip",
+        "A sign those lessons get double the study time",
+        "A concept tested from two domains at once",
+        "A numbering error the curriculum needs to fix"
+      ],
+      "correct": 2,
+      "explanation": "A lesson can sit at a genuine intersection, such as a message envelope that is both a core concept and a piece of the architecture, so the route tags it under both domains rather than forcing one arbitrary choice."
+    }
+  ]
+}

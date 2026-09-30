@@ -2,7 +2,7 @@
 # attention-style parallel reduction, and verifies that Hillis-Steele
 # parallel prefix scan matches the serial scan. Stdlib only. Sources:
 #   https://docs.julialang.org/en/v1/manual/control-flow/
-#   https://docs.julialang.org/en/v1/stdlib/Base/
+#   https://docs.julialang.org/en/v1/base/base/
 #   https://en.wikipedia.org/wiki/Prefix_sum
 
 using Printf

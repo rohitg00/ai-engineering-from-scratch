@@ -1,0 +1,78 @@
+{
+  "lesson": "27-auditability-and-observability",
+  "title": "One Trace ID Ties Auditability to Observability",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Under the 2026-07-28 stateless model, why can't a server correlate a tool call with an earlier one just from the connection it arrived on?",
+      "options": [
+        "A server is required to discard the name of whichever tool a client most recently asked it to run",
+        "JSON-RPC forbids a client from ever sending a second request over a connection that is already open",
+        "Every request always opens a brand new network connection, so no two requests ever share a transport path at all",
+        "A connection carries no assumed meaning between requests, so correlation has to travel explicitly in each request's own metadata"
+      ],
+      "correct": 3,
+      "explanation": "Because the protocol is stateless, a server must not infer anything from a shared connection, so any correlation identifier, such as a trace id, has to be carried explicitly in the request's own _meta."
+    },
+    {
+      "stage": "check",
+      "question": "A request's _meta carries traceparent: \"00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01\". What do the third and fourth hyphen-separated segments represent?",
+      "options": [
+        "The parent id naming this one span, followed by flags such as whether the trace is sampled",
+        "A session identifier the server can use to recall facts learned from that client's earlier requests",
+        "A cache key the server hashes together with the method name to look up a stored result",
+        "A signature the client generates so the server can verify the request has not been tampered with"
+      ],
+      "correct": 0,
+      "explanation": "The W3C traceparent format is version-traceid-parentid-flags, so the third segment is the 16-character parent id for this span and the fourth is the flags byte, such as the sampled bit."
+    },
+    {
+      "stage": "check",
+      "question": "ops-desk must call credential-vault to finish handling reset_api_key. What should the traceparent on that outbound call contain?",
+      "options": [
+        "The exact same traceparent value ops-desk itself received, forwarded to credential-vault without any change at all",
+        "The same trace id ops-desk received, paired with a freshly generated parent id for this new hop",
+        "No traceparent at all, since credential-vault is a different server and cannot share ops-desk's active trace",
+        "A brand new trace id, so credential-vault's own log never mixes with any other server's records"
+      ],
+      "correct": 1,
+      "explanation": "A well-behaved hop keeps the trace id constant so the whole operation stays correlated, but mints its own fresh parent id rather than reusing the one it received."
+    },
+    {
+      "stage": "check",
+      "question": "An audit entry has to record who actually made a tool call. Which value belongs in that field?",
+      "options": [
+        "The name field inside the request's self-reported clientInfo block, since it is already sitting in _meta",
+        "The server's own serverInfo name, since the server is the one writing the audit entry itself",
+        "The principal a validated credential, such as a bearer token, actually resolves to for that request",
+        "Whatever free-text label the tool's description happens to suggest for the caller who invoked it"
+      ],
+      "correct": 2,
+      "explanation": "clientInfo and serverInfo are self-reported and never a security signal, so the audit record's who has to be the authenticated principal a validated credential actually resolves to."
+    },
+    {
+      "stage": "post",
+      "question": "In ops-desk's log, an attacker edits entry 0's arguments and also recomputes entry 0's own stored hash so it matches the new content. What happens when verify() runs next?",
+      "options": [
+        "Verification stops running entirely, since patching one entry's hash disables every check after that point",
+        "Verification fails immediately at entry 0, regardless of which entry the attacker actually finished editing",
+        "Verification passes cleanly, because a hash chain can only ever detect damage to its very last entry",
+        "Verification still fails, at entry 1, because its stored prev_hash no longer matches entry 0's new hash"
+      ],
+      "correct": 3,
+      "explanation": "Patching entry 0's own hash hides the change at entry 0, but entry 1 still stores the original hash as its prev_hash, and that link no longer matches, so the break surfaces one entry later."
+    },
+    {
+      "stage": "post",
+      "question": "ops-desk and credential-vault each keep their own independent hash-chained log. How does a reviewer confirm two entries, one in each, came from the same end-user operation?",
+      "options": [
+        "Both entries carry the identical trace id, even though their request ids and their hash chains differ",
+        "Both entries carry the identical request id, since every hop of one operation reuses that same id",
+        "credential-vault's log silently copies every entry ops-desk already wrote into its own hash chain first",
+        "The reviewer matches the two entries' timestamps, since both servers share one synchronized system clock"
+      ],
+      "correct": 0,
+      "explanation": "Each hop mints its own request id and keeps its own chain, so correlation across servers works only through the one value that stays constant for the whole operation, the trace id."
+    }
+  ]
+}

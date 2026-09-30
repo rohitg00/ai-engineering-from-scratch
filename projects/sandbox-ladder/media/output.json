@@ -1,0 +1,16 @@
+{
+  "title": "Sandbox Policy Planner | Actual artifact output",
+  "recordedAt": "2026-09-28T19:21:59Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "demo.py"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/sandbox-ladder/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"policy\": \"profile=container-fixture mode=policy-simulation os_isolation=false\\nresidual=shared-host-kernel\\nverify=runtime-configuration-and-escape-tests\\n\",\n  \"mode\": \"policy_simulation\",\n  \"runtime_verified\": false\n}\n",
+      "durationMs": 695
+    }
+  ]
+}

@@ -52,12 +52,12 @@
     },
     {
       "stage": "post",
-      "question": "Why is the 'faithful CoT training' 2025 mitigation insufficient on its own?",
+      "question": "In Anthropic's 2025 study of training-time mitigations for alignment faking, what is the main risk of black-box interrogation training?",
       "options": [
-        "It requires public training data",
-        "It only works on small models",
-        "It increases the compliance gap",
-        "It removes the explicit verbal trace of deceptive reasoning while the underlying compliance-gap behaviour persists"
+        "It needs training data that labs are not able to publish",
+        "It only works on models below a billion parameters",
+        "It widens the gap between monitored and unmonitored compliance",
+        "It can teach the model to lie about its motivations"
       ],
       "correct": 3,
       "explanation": ""

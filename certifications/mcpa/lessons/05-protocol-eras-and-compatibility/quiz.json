@@ -1,0 +1,78 @@
+{
+  "lesson": "05-protocol-eras-and-compatibility",
+  "title": "Telling a Modern MCP Server From a Legacy One",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before sending any other request, how does a dual-era client learn whether a stdio MCP server is modern or legacy?",
+      "options": [
+        "It assumes every server is modern until a later request happens to fail",
+        "It sends a server/discover probe first and reads the shape of the reply",
+        "It reads a version banner the server prints to stderr when it launches",
+        "It opens two connections and always compares how long each takes to answer"
+      ],
+      "correct": 1,
+      "explanation": "A dual-era client probes with server/discover before anything else: a DiscoverResult, a recognized modern error, or a non-modern outcome each point to a different era."
+    },
+    {
+      "stage": "check",
+      "question": "A dual-era client on stdio probes a server and receives a JSON-RPC error with code -32022. What should the client do next?",
+      "options": [
+        "Fall back right away to the legacy handshake for that particular server instead",
+        "Treat the server as permanently unreachable and stop trying to contact it",
+        "Retry the same request using a version the error itself lists as supported",
+        "Wait a fixed number of seconds, then repeat the identical request again"
+      ],
+      "correct": 2,
+      "explanation": "UnsupportedProtocolVersionError is a recognized modern error, so the server is modern: the client retries with a version from data.supported instead of falling back to legacy."
+    },
+    {
+      "stage": "check",
+      "question": "Which outcome of a server/discover probe means the server is modern but speaks a different version than the client asked for?",
+      "options": [
+        "An unrecognized error the client has never once seen, with no version data",
+        "A DiscoverResult that lists exactly the version the client had requested",
+        "No response at all within the client's own configured probe timeout",
+        "A recognized version error that also names the versions it does support"
+      ],
+      "correct": 3,
+      "explanation": "A recognized modern error such as UnsupportedProtocolVersionError still identifies a modern server, just one that needs a different mutually supported version."
+    },
+    {
+      "stage": "check",
+      "question": "On the Streamable HTTP transport, how should a dual-era client decide whether a server that just answered with 400 Bad Request is modern or legacy?",
+      "options": [
+        "Read the response body; a recognized modern error still means modern",
+        "Treat every 400 response as proof the server only speaks the legacy revision",
+        "Retry the exact same unmodified request until the server somehow accepts it",
+        "Close the connection and ask whoever configured it to try another server"
+      ],
+      "correct": 0,
+      "explanation": "Modern servers also answer 400 for version, capability, and header errors, so a dual-era client inspects the body for a recognized modern error before assuming legacy."
+    },
+    {
+      "stage": "post",
+      "question": "A client's cached assumption that a particular server is modern turns out to be wrong on the next call. What does the spec say the client may do?",
+      "options": [
+        "Nothing at all; a cached era decision can never be revisited later on",
+        "Re-probe the server, since a cached era may be rechecked later if it fails",
+        "Permanently block that whole server address for every other client that connects",
+        "Switch every other cached server's era over to legacy as a precaution"
+      ],
+      "correct": 1,
+      "explanation": "Clients should cache the era decision for the life of the process or origin, and may re-probe if that cached assumption later fails."
+    },
+    {
+      "stage": "post",
+      "question": "What does 2026-07-28 remove that a client written for the current revision should never send to a modern server?",
+      "options": [
+        "A tools/call request that names a tool the server has never listed",
+        "A server/discover request sent before any other request on the connection",
+        "A request opening the connection with a version and capability handshake",
+        "A resources/read request naming a URI the server does not recognize"
+      ],
+      "correct": 2,
+      "explanation": "The handshake and the session it used to open a connection are gone in 2026-07-28; every request now carries its own version and capabilities in _meta."
+    }
+  ]
+}

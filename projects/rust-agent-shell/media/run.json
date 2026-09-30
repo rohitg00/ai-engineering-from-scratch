@@ -1,0 +1,48 @@
+{
+  "title": "Streaming Agent Shell in Rust | Build and verify",
+  "recordedAt": "2026-09-28T19:21:56Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "rust-agent-shell",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-cwecviqf"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-cwecviqf\n  created  client.py\n  created  demo.py\n  created  main.rs\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py rust-agent-shell --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-cwecviqf\n",
+      "durationMs": 47
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "rust-agent-shell",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-cwecviqf"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Streaming Agent Shell in Rust: grading learner\n  FAIL stage 1: Parse a deliberately small action language (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 939
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "rust-agent-shell",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Streaming Agent Shell in Rust: grading solution\n  PASS stage 1: Parse a deliberately small action language (6 tests)\n  PASS stage 2: Confine file tools to a bounded root (7 tests)\n  PASS stage 3: Track budgets and terminal state (6 tests)\n  PASS stage 4: Stream bounded JSON events through real stdin (6 tests)\n",
+      "durationMs": 1844
+    }
+  ]
+}

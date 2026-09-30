@@ -129,17 +129,18 @@ That's it. The projector is usually 1-3 linear layers. Training it on ASR pairs 
 
 ```python
 from datasets import load_dataset
-mmau = load_dataset("MMAU/MMAU-Pro")
+mmau = load_dataset("gamma-lab-umd/MMAU-Pro", split="test")
+mcq = mmau.filter(lambda item: len(item["choices"] or []) > 1)
 
 correct = 0
-for item in mmau["test"]:
-    answer = call_model(item["audio"], item["question"], item["choices"])
-    if answer == item["correct_choice"]:
+for item in mcq:
+    answer = call_model(item["audio_path"], item["question"], item["choices"])
+    if answer == item["answer"]:
         correct += 1
-print(f"Accuracy: {correct / len(mmau['test']):.3f}")
+print(f"Accuracy: {correct / len(mcq):.3f}")
 ```
 
-Report per-category (speech / sound / music / multi-audio) separately. Aggregate numbers hide where the model fails.
+`audio_path` points into the dataset repo's `data.zip` (about 47 GB), so download and unzip it before scoring. This exact-match loop is a sanity check, not the benchmark scorer, so its number is not comparable with published MMAU-Pro results. The official evaluator matches multiple-choice answers by embedding similarity (NV-Embed-v2), grades open-ended answers with an LLM judge, and checks instruction-following answers with regex rules: write predictions to a `model_output` column and run `evaluate_mmau_pro_comprehensive.py` from the [MMAU-Pro repo](https://github.com/sonalkum/MMAUPro). Report each `category` (speech, sound, music, multi, and the rest) separately. Aggregate numbers hide where the model fails.
 
 ## Use It
 
@@ -187,4 +188,4 @@ Save as `outputs/skill-alm-picker.md`. Pick LALM + benchmark subset + output-mod
 - [NVIDIA (2025). Audio Flamingo 3](https://arxiv.org/abs/2507.08128) — the open long-audio leader.
 - [NVIDIA (2026). Audio Flamingo Next](https://arxiv.org/abs/2604.10905) — LongAudioBench SOTA.
 - [Tang et al. (2023). SALMONN](https://arxiv.org/abs/2310.13289) — dual-encoder pioneer.
-- [MMAU-Pro leaderboard](https://mmaubenchmark.github.io/) — live 2026 rankings.
+- [MMAU-Pro leaderboard](https://sonalkum.github.io/mmau-pro/) — live 2026 rankings.

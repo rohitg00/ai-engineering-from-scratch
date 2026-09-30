@@ -1,0 +1,131 @@
+{
+  "id": "rag-freshness-pipeline",
+  "title": "RAG Freshness Pipeline",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Build a content-addressed document index with deletion tracking, version checks, and freshness-aware retrieval.",
+  "summary": "Build a content-addressed document index with deletion tracking, version checks, and freshness-aware retrieval.",
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "A stale-answer incident lab proving an edited or deleted policy can no longer be cited.",
+  "usefulFor": [
+    "A stale-answer incident lab proving an edited or deleted policy can no longer be cited.",
+    "The importer expects the complete corpus, not a partial change feed."
+  ],
+  "skills": [
+    "Normalize documents and fingerprint content",
+    "Plan inserts updates deletions and refreshes",
+    "Persist an index with atomic replacement",
+    "Exclude expired evidence at query time"
+  ],
+  "prerequisites": [
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    },
+    {
+      "title": "Retrieval augmented generation",
+      "path": "phases/11-llm-engineering/06-rag"
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-rag-freshness-pipeline-1",
+  "languageWhy": {
+    "Python": "Stdlib data structures, explicit algorithms and deterministic local tests."
+  },
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-fingerprint",
+      "title": "Normalize documents and fingerprint content",
+      "summary": "Canonically equivalent é encodings receive identical content hashes.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "starter",
+      "figure": "pj-rag-freshness-pipeline-1",
+      "concepts": [
+        "normalize",
+        "documents",
+        "and",
+        "fingerprint"
+      ]
+    },
+    {
+      "id": "02-changes",
+      "title": "Plan inserts updates deletions and refreshes",
+      "summary": "A removed document appears in delete, so stale chunks cannot remain searchable.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-rag-freshness-pipeline-2",
+      "concepts": [
+        "plan",
+        "inserts",
+        "updates",
+        "deletions"
+      ]
+    },
+    {
+      "id": "03-snapshot",
+      "title": "Persist an index with atomic replacement",
+      "summary": "A stale writer is rejected and the last committed snapshot stays readable.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-rag-freshness-pipeline-3",
+      "concepts": [
+        "persist",
+        "an",
+        "index",
+        "with"
+      ]
+    },
+    {
+      "id": "04-retrieve",
+      "title": "Exclude expired evidence at query time",
+      "summary": "An expired matching note is excluded even when its keyword score is perfect.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "figure": "pj-rag-freshness-pipeline-4",
+      "concepts": [
+        "exclude",
+        "expired",
+        "evidence",
+        "at"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

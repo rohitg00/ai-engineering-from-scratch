@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {mkdtempSync,readFileSync,rmSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+const work=process.env.PROJECT_WORKSPACE;
+const f=await import(pathToFileURL(join(work,'main.ts')).href);
+const ICS='BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nUID:a\nDTSTART:20261014T100000Z\nDTEND:20261014T110000Z\nSUMMARY:Sync\nEND:VEVENT\nEND:VCALENDAR\n';
+const WINDOW={start:Date.parse('2026-10-14T09:00:00Z'),end:Date.parse('2026-10-14T17:00:00Z')};
+test('merges overlaps',()=>{const r=f.availableSlots([{id:'a',title:'a',start:10,end:30},{id:'b',title:'b',start:20,end:40}],{start:0,end:50});assert.deepEqual(r.busy,[{start:10,end:40}]);assert.deepEqual(r.free,[{start:0,end:10},{start:40,end:50}]);});
+test('clips outside events',()=>assert.deepEqual(f.availableSlots([{id:'a',title:'a',start:-20,end:10}],{start:0,end:50}).free,[{start:10,end:50}]));
+test('buffer consumes real time',()=>assert.equal(f.availableSlots(f.parseCalendar(ICS),WINDOW,10).busy[0].start,Date.parse('2026-10-14T09:50:00Z')));
+test('empty calendar is all free',()=>assert.deepEqual(f.availableSlots([],WINDOW).free,[WINDOW]));
+test('adjacent intervals merge',()=>assert.equal(f.availableSlots([{id:'a',title:'a',start:10,end:20},{id:'b',title:'b',start:20,end:30}],{start:0,end:40}).busy.length,1));
+test('invalid window rejected',()=>assert.throws(()=>f.availableSlots([],{start:2,end:1})));

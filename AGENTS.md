@@ -104,6 +104,8 @@ The `**Languages:**` field must match the languages with a `main.*` file in `cod
 
 Exactly 6 questions: 1 pre + 3 check + 2 post. `correct` is zero-indexed. The site renderer only understands this shape — legacy `q/choices/answer` schemas crash silently.
 
+Keep the distractors comparable in length to the correct option. When the correct answer is the longest by a wide margin, a reader can guess it without knowing the material. `scripts/check_quiz_bias.py --check` gates this, and `scripts/debias_quizzes.py` spreads the correct option across positions.
+
 ### Claude certification contract
 
 Certification lessons under `certifications/claude/lessons/` follow the same

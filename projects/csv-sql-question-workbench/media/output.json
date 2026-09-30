@@ -1,0 +1,15 @@
+{
+  "title": "csv-sql-question-workbench | Actual application output",
+  "url": "file:///tmp/aiefs-recorded-artifacts/csv-sql-question-workbench/solution/output/report.html",
+  "actions": [
+    [
+      "js",
+      "document.querySelector('details').open=true"
+    ],
+    [
+      "js",
+      "window.scrollTo(0,300)"
+    ]
+  ],
+  "kind": "browser capture"
+}

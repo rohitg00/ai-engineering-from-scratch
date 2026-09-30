@@ -1,0 +1,78 @@
+{
+  "lesson": "26-risk-and-safety-controls",
+  "title": "Risk and Safety Controls for MCP Tool Calls",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A gateway asks a human to confirm every destructive tool call, and treats that as its complete security design. Which risk survives this design unchanged?",
+      "options": [
+        "A tool call that exceeds its declared timeout and returns after the connection closes",
+        "A response that arrives in more than one content block instead of exactly one",
+        "A confirmation dialog that renders too slowly for the user to read its contents",
+        "A tool description that already embeds an instruction the model follows before any confirmation"
+      ],
+      "correct": 3,
+      "explanation": "Confirmation only gates the destructive call itself; a poisoned description can already have steered which call the model chose to make or how it filled in the arguments, so descriptions and results have to be treated as untrusted earlier than the confirmation step."
+    },
+    {
+      "stage": "check",
+      "question": "A previously approved tool keeps its name and its hash-pinned description, but a fresh discovery response shows a different inputSchema for the same tool. What should a gateway that pins whole descriptors do?",
+      "options": [
+        "Quarantine the tool as a rug pull and hold it for re-review before allowing calls again",
+        "Accept the change automatically, since the tool's name and description both stayed the same",
+        "Ignore the schema field entirely, since only description text can carry an injected instruction",
+        "Trust the new schema because its annotations already marked the tool as read only"
+      ],
+      "correct": 0,
+      "explanation": "Hashing only the description text misses a schema or annotation change, so a whole-descriptor pin catches this drift, and the correct response is to quarantine the tool as a rug pull until someone re-approves the new descriptor and its hash."
+    },
+    {
+      "stage": "check",
+      "question": "A tool handler needs to call an unrelated upstream billing API for the current request, and it has the bearer token the client used to authenticate to the MCP server itself. What must the handler do?",
+      "options": [
+        "Forward that same bearer token to the upstream API, since it already proves the user authenticated",
+        "Use a separately minted, upstream-scoped credential instead of forwarding the inbound MCP token",
+        "Cache the inbound token and reuse it for every future upstream call in the session",
+        "Strip the signature from the token and forward only the remaining claims upstream"
+      ],
+      "correct": 1,
+      "explanation": "Token passthrough, forwarding a token scoped to the MCP server on to an unrelated upstream API, is explicitly forbidden; a compliant handler validates the inbound token for its own purposes and uses a distinct, upstream-scoped credential for the outbound call."
+    },
+    {
+      "stage": "check",
+      "question": "A tool's inputSchema contains a property whose $ref points at https://partner.example/schema.json. Under 2026-07-28, what is the correct handling?",
+      "options": [
+        "Replace the $ref with an empty schema object so validation always passes silently",
+        "Fetch and cache the schema once, then trust it for every validation after that",
+        "Never auto-dereference a network reference by default; treat it as an opt-in, allowlisted fetch",
+        "Resolve the reference automatically, since JSON Schema 2020-12 requires every $ref to resolve"
+      ],
+      "correct": 2,
+      "explanation": "A validator must never auto-dereference a network $ref by default; fetching one, if it is ever necessary, has to be an explicit opt-in behind a host allowlist, a block on private addresses, and a timeout, which is the SSRF defense this lesson's registration check enforces."
+    },
+    {
+      "stage": "post",
+      "question": "A server wants to refuse a tool call because a per-tool rate limit tripped, in a way the model can read and react to. Which response is correct for 2026-07-28?",
+      "options": [
+        "A JSON-RPC error using code -32042, reserved for elicitation in the prior revision",
+        "A normal result with an empty content list and no isError field at all",
+        "A JSON-RPC error using code -32001, a custom code in the legacy range",
+        "A normal result with isError set to true and an explanation in its content"
+      ],
+      "correct": 3,
+      "explanation": "A policy refusal the model should see and possibly adjust for, such as a tripped rate limit or a tool held after a rug pull, belongs in an isError tool execution result; -32001 sits in the legacy -32000 to -32019 block new implementations must not use, and -32042 was retired with the prior revision's elicitation design."
+    },
+    {
+      "stage": "post",
+      "question": "Two independently written MCP servers behind the same gateway both expose a tool literally named search, and neither server knows the other exists. What should the gateway do before exposing either tool to the model?",
+      "options": [
+        "Prefix each tool with a stable server identifier so the two names never collide",
+        "Drop both tools silently until one of the two servers renames its own tool",
+        "Merge both tools into a single entry and pick arguments from whichever call succeeds",
+        "Expose whichever server's search tool happened to answer the most recent discover call"
+      ],
+      "correct": 0,
+      "explanation": "Server names are not guaranteed unique, so an aggregator that lets two identically named tools reach the model risks tool shadowing, where routing silently picks one server's tool for a call meant for the other; the standard fix is a stable, server-qualified prefix on every aggregated name."
+    }
+  ]
+}

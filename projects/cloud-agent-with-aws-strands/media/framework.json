@@ -1,0 +1,34 @@
+{
+  "title": "Real SDK / current local fixture tests",
+  "recordedAt": "2026-09-28T19:39:55Z",
+  "records": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/project_test.py",
+        "cloud-agent-with-aws-strands",
+        "--all",
+        "--solution",
+        "--optional",
+        "--strict",
+        "--report",
+        "<review-reports>/cloud-agent-with-aws-strands.json"
+      ],
+      "cwd": "<repo>",
+      "exitCode": 0,
+      "output": "Cloud Agent With AWS Strands: grading solution\n  PASS stage 1: Validate a scoped cloud inspection plan (5 tests)\n  PASS stage 2: Execute reads within step and response budgets (5 tests)\n  PASS stage 3: Retry transient reads and reuse completed requests (5 tests)\n  PASS stage 4: Drive the actual Strands loop with a local model (15 tests)\nreport: <review-reports>/cloud-agent-with-aws-strands.json\n",
+      "durationMs": 928
+    }
+  ],
+  "provenance": "Executed the current optional project grader. Host-specific paths are normalized; output and test counts are unchanged. These fixtures make no live model or cloud requests.",
+  "pathAliases": {
+    ".venv/bin/python": "Healthy Python 3.12 SDK environment",
+    "<repo>": "Repository root",
+    "<review-reports>": "Local verification reports directory outside the repository"
+  },
+  "tests": {
+    "core": 25,
+    "additionalSDK": 5,
+    "skipped": 0
+  }
+}

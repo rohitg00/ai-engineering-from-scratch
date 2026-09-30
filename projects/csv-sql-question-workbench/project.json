@@ -1,0 +1,123 @@
+{
+  "id": "csv-sql-question-workbench",
+  "title": "CSV Question Workbench",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "Ask a CSV a question, inspect the executed SQL, and keep a reproducible read-only answer receipt.",
+  "summary": "Ask a CSV a question, inspect the executed SQL, and keep a reproducible read-only answer receipt.",
+  "youWillBuild": "A self-contained HTML result table and JSON receipt containing the exact SQL and source fingerprint.",
+  "usefulFor": [
+    "Use your own input to produce a reviewable artifact another application can consume."
+  ],
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "languageWhy": {
+    "Python": "Standard-library parsing, explicit contracts and portable artifacts keep the mechanism visible."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Import a table without guessing away errors",
+    "Translate a small question into an inspectable plan",
+    "Execute a proposal inside a read-only boundary",
+    "Publish an answer another developer can reproduce"
+  ],
+  "prerequisites": [
+    {
+      "title": "Development environment",
+      "path": "phases/00-setup-and-tooling/01-dev-environment"
+    },
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    },
+    {
+      "title": "Structured outputs",
+      "path": "phases/11-llm-engineering/03-structured-outputs"
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-csv-sql-question-workbench-1",
+  "demo": {
+    "command": [
+      "python3",
+      "cli.py",
+      "sample.csv",
+      "--question",
+      "sum units by region",
+      "--output",
+      "output/report.html"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-import-table",
+      "title": "Import a table without guessing away errors",
+      "summary": "load_csv(text, max_rows=10000)",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "concepts": [
+        "Import a table without guessing away errors"
+      ],
+      "figure": "pj-csv-sql-question-workbench-1"
+    },
+    {
+      "id": "02-plan-question",
+      "title": "Translate a small question into an inspectable plan",
+      "summary": "plan_question(question, data)",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "concepts": [
+        "Translate a small question into an inspectable plan"
+      ],
+      "figure": "pj-csv-sql-question-workbench-2"
+    },
+    {
+      "id": "03-enforce-read-boundary",
+      "title": "Execute a proposal inside a read-only boundary",
+      "summary": "run_query(data, sql, max_rows=100, max_steps=100000)",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "concepts": [
+        "Execute a proposal inside a read-only boundary"
+      ],
+      "figure": "pj-csv-sql-question-workbench-3"
+    },
+    {
+      "id": "04-publish-receipt",
+      "title": "Publish an answer another developer can reproduce",
+      "summary": "render_report(report)",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "python",
+      "concepts": [
+        "Publish an answer another developer can reproduce"
+      ],
+      "figure": "pj-csv-sql-question-workbench-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Build and verify",
+      "caption": "Actual starter failure and reference grader output; reference passes do not earn a learner certificate."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Use the finished artifact",
+      "caption": "Recorded real input, computed output and the resulting portable report."
+    }
+  ]
+}

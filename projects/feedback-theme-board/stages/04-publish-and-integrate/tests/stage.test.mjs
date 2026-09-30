@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {mkdtempSync,readFileSync,rmSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+const work=process.env.PROJECT_WORKSPACE;
+const f=await import(pathToFileURL(join(work,'main.ts')).href);
+const ROW={id:'1',text:'Search shows old pages',source:'s1'};
+const THEMES=[{id:'stale',title:'Stale results',phrases:['old pages']}];
+test('HTML escapes source text',()=>{const b=f.buildBoard([{...ROW,text:'<script>old pages</script>',source:'<img src=x>'}],THEMES);const page=f.renderBoard(b);assert.ok(page.includes('&lt;img'));assert.ok(!page.includes('<img src=x>'));});
+test('draft clearly stays local',()=>assert.match(f.draftIssue(f.buildBoard([ROW],THEMES).themes[0]),/local draft, not posted/));
+test('draft includes exact evidence',()=>assert.match(f.draftIssue(f.buildBoard([ROW],THEMES).themes[0]),/old pages/));
+test('empty board stays inspectable',()=>assert.ok(f.renderBoard(f.buildBoard([],THEMES)).includes('0 input records')));
+test('actual CLI writes JSON HTML and drafts',()=>{const dir=mkdtempSync(join(tmpdir(),'feedback-test-'));try{const r=spawnSync(process.execPath,[join(work,'cli.ts'),join(work,'sample.jsonl'),join(work,'themes.json'),dir],{encoding:'utf8'});assert.equal(r.status,0,r.stderr);const b=JSON.parse(readFileSync(join(dir,'board.json'),'utf8'));assert.equal(b.duplicates.length,1);assert.match(readFileSync(join(dir,'first-run.md'),'utf8'),/1 distinct source labels/);}finally{rmSync(dir,{recursive:true,force:true});}});

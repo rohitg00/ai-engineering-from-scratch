@@ -1,0 +1,19 @@
+{
+  "title": "Cloud Agent With AWS Strands | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:54Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "cli.py",
+        "samples/input.json",
+        "--output",
+        "incident.json"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/cloud-agent-with-aws-strands/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"state\": \"completed\",\n  \"results\": [\n    {\n      \"action\": {\n        \"operation\": \"metrics.read\",\n        \"resource\": \"checkout\"\n      },\n      \"value\": {\n        \"cpu_percent\": 83,\n        \"source\": \"authored offline incident\"\n      }\n    },\n    {\n      \"action\": {\n        \"operation\": \"metrics.read\",\n        \"resource\": \"checkout\"\n      },\n      \"value\": {\n        \"cpu_percent\": 83,\n        \"source\": \"authored offline incident\"\n      }\n    },\n    {\n      \"action\": {\n        \"operation\": \"logs.read\",\n        \"resource\": \"checkout\"\n      },\n      \"value\": {\n        \"errors\": 12,\n        \"window_seconds\": 60\n      }\n    }\n  ],\n  \"characters\": 152,\n  \"receipts\": [\n    {\n      \"operation\": \"metrics.read\",\n      \"resource\": \"checkout\",\n      \"cached\": false,\n      \"attempts\": 1\n    },\n    {\n      \"operation\": \"metrics.read\",\n      \"resource\": \"checkout\",\n      \"cached\": true,\n      \"attempts\": 0\n    },\n    {\n      \"operation\": \"logs.read\",\n      \"resource\": \"checkout\",\n      \"cached\": false,\n      \"attempts\": 1\n    }\n  ],\n  \"mode\": \"recording\"\n}\n",
+      "durationMs": 42
+    }
+  ]
+}

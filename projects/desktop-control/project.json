@@ -1,0 +1,106 @@
+{
+  "id": "desktop-control",
+  "title": "Desktop Control Backend",
+  "level": 4,
+  "levelName": "Systems",
+  "tagline": "An auditable coordinate-and-frame action runner with reproducible before/after pixel artifacts.",
+  "summary": "An auditable coordinate-and-frame action runner with reproducible before/after pixel artifacts. The Backend trait is the reusable boundary. TSV uses capture, click<TAB>x<TAB>y<TAB>generation and type<TAB>text; the runner refuses unknown actions and caps32 calls.",
+  "hours": 8,
+  "languages": ["Rust"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Validate frames and coordinate spaces",
+    "Render and manipulate a fixture scene",
+    "Reject stale observations and exhausted budgets",
+    "Build an opt-in native boundary"
+  ],
+  "prerequisites": [
+    "Rust 2021 toolchain",
+    "structs, traits, generics, Result, mutable borrowing and byte vectors. Python 3 runs the grader and demo wrapper."
+  ],
+  "youWillBuild": "An auditable coordinate-and-frame action runner with reproducible before/after pixel artifacts.",
+  "usefulFor": [
+    "The Backend trait is the reusable boundary. TSV uses capture, click<TAB>x<TAB>y<TAB>generation and type<TAB>text; the runner refuses unknown actions and caps32 calls."
+  ],
+  "demo": {
+    "command": ["python3", "demo.py"],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-frame-contract",
+      "title": "Validate frames and coordinate spaces",
+      "summary": "A screenshot has physical pixel dimensions while native desktop clicks may use logical coordinates.",
+      "hours": 2,
+      "language": "rust",
+      "languageWhy": "Rust makes state ownership and fallible system calls explicit while keeping the implementation in the standard library.",
+      "requires": ["rustc"],
+      "difficulty": "starter",
+      "concepts": ["Frame.validate", "Frame.logical_point"],
+      "figure": "pj-desktop-control-1",
+      "timeout": 90
+    },
+    {
+      "id": "02-backend-trait",
+      "title": "Render and manipulate a fixture scene",
+      "summary": "Define capture, click and type_text behind one Backend trait.",
+      "hours": 2,
+      "language": "rust",
+      "languageWhy": "Rust makes state ownership and fallible system calls explicit while keeping the implementation in the standard library.",
+      "requires": ["rustc"],
+      "difficulty": "core",
+      "concepts": ["Backend", "FixtureBackend"],
+      "figure": "pj-desktop-control-2",
+      "timeout": 90
+    },
+    {
+      "id": "03-controller",
+      "title": "Reject stale observations and exhausted budgets",
+      "summary": "Place a Controller around the backend.",
+      "hours": 2,
+      "language": "rust",
+      "languageWhy": "Rust makes state ownership and fallible system calls explicit while keeping the implementation in the standard library.",
+      "requires": ["rustc"],
+      "difficulty": "core",
+      "concepts": [
+        "Controller.capture",
+        "Controller.click",
+        "Controller.type_text"
+      ],
+      "figure": "pj-desktop-control-3",
+      "timeout": 90
+    },
+    {
+      "id": "04-native-adapter",
+      "title": "Build an opt-in native boundary",
+      "summary": "Construct macOS screencapture and AppleScript argument arrays without a shell.",
+      "hours": 2,
+      "language": "rust",
+      "languageWhy": "Rust makes state ownership and fallible system calls explicit while keeping the implementation in the standard library.",
+      "requires": ["rustc"],
+      "difficulty": "core",
+      "concepts": ["click_argv", "text_argv", "png_dimensions", "MacBackend"],
+      "figure": "pj-desktop-control-4",
+      "timeout": 90
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

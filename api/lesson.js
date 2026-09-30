@@ -96,7 +96,7 @@ function hasQuery(req, name) {
 
 function validLessonPath(value) {
   if (!value || value.includes('..') || value.includes('\\') || value.includes('\0')) return false;
-  return /^(?:phases\/[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9-]*|certifications\/claude\/lessons\/[a-z0-9][a-z0-9-]*)$/.test(value);
+  return /^(?:phases\/[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9-]*|certifications\/[a-z0-9][a-z0-9-]*\/lessons\/[a-z0-9][a-z0-9-]*)$/.test(value);
 }
 
 function validTrackId(value) {
@@ -277,7 +277,7 @@ function send(res, method, status, body, cacheControl) {
 
 function normalizedLessonLocation(req, lessonPath, entry, assets) {
   const params = new URLSearchParams();
-  const certificationLesson = lessonPath.startsWith('certifications/claude/lessons/');
+  const certificationLesson = /^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//.test(lessonPath);
   const navigationByTrack = entry.navigationByTrack && typeof entry.navigationByTrack === 'object'
     ? entry.navigationByTrack
     : {};
@@ -355,7 +355,7 @@ function normalizedLessonLocation(req, lessonPath, entry, assets) {
 
 function sendRedirect(res, method, location) {
   res.setHeader('Location', location);
-  send(res, method, 308, '', 'public, max-age=300, s-maxage=86400, stale-while-revalidate=604800');
+  send(res, method, 308, '', 'public, max-age=0, s-maxage=86400, must-revalidate');
 }
 
 function createHandler(options) {
@@ -391,7 +391,7 @@ function createHandler(options) {
       const normalized = normalizedLessonLocation(req, lessonPath, entry, assets);
       if (normalized.needsRedirect) {
         res.setHeader('Location', normalized.location);
-        send(res, method, 308, '', 'public, max-age=300, s-maxage=86400, stale-while-revalidate=604800');
+        send(res, method, 308, '', 'public, max-age=0, s-maxage=86400, must-revalidate');
         return;
       }
       const contextParams = {};
@@ -401,7 +401,7 @@ function createHandler(options) {
       const heading = lessonHeading(entry, manifest);
       let html = replaceMarkedRegion(template, SEO_START, SEO_END, lessonHead(entry, lessonPath, heading));
       html = replaceMarkedRegion(html, FALLBACK_START, FALLBACK_END, lessonFallback(entry, lessonPath, contextParams, heading));
-      send(res, method, 200, html, 'public, max-age=300, s-maxage=86400, stale-while-revalidate=604800');
+      send(res, method, 200, html, 'public, max-age=0, s-maxage=86400, must-revalidate');
     } catch (_) {
       send(res, method, 500, errorPage('Lesson page unavailable', 'The lesson page could not be assembled. Continue from the course catalog while this page is restored.'), 'no-store');
     }

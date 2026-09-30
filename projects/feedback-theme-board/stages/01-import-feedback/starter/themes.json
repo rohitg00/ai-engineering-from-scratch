@@ -1,0 +1,5 @@
+[
+  {"id":"first-run","title":"First useful run","phrases":["setup guide","sample file"]},
+  {"id":"stale-search","title":"Stale search results","phrases":["old pages","update the docs"]},
+  {"id":"search-latency","title":"Search latency","phrases":["long time"]}
+]

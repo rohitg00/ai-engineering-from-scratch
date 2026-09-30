@@ -1,0 +1,18 @@
+{
+  "title": "Durable Agent Jobs | Actual artifact output",
+  "recordedAt": "2026-09-28T19:36:40Z",
+  "records": [
+    {
+      "command": [
+        "go",
+        "run",
+        ".",
+        "demo"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/durable-agent-jobs/solution",
+      "exitCode": 0,
+      "output": "{\n  \"enqueued_or_already_present\": 2,\n  \"store\": \"/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/durable-demo-2871006913\"\n}\n{\"crash_after\":\"effect\",\"id\":\"incident-summary\",\"version\":1}\n{\n  \"effects\": [\n    {\n      \"id\": \"incident-summary\",\n      \"input_sha256\": \"00d10f911cf30d22a459820abca95d3a9b819e5a500c8258966bfe5666e92418\",\n      \"bytes\": 95,\n      \"words\": 11\n    }\n  ],\n  \"jobs\": [\n    {\n      \"ID\": \"incident-summary\",\n      \"State\": \"running\",\n      \"Version\": 1,\n      \"LeaseUntil\": 110,\n      \"Attempts\": 1\n    },\n    {\n      \"ID\": \"followup-checklist\",\n      \"State\": \"queued\",\n      \"Version\": 0,\n      \"LeaseUntil\": 0,\n      \"Attempts\": 0\n    }\n  ],\n  \"schema_version\": 1,\n  \"scope\": \"same-host local POSIX filesystem; immutable local text receipts\"\n}\n{\n  \"clock\": \"milliseconds; explicit now-ms uses a logical test clock\",\n  \"events\": [\n    {\n      \"id\": \"incident-summary\",\n      \"version\": 3,\n      \"reused_effect\": true,\n      \"state\": \"completed\"\n    },\n    {\n      \"id\": \"followup-checklist\",\n      \"version\": 1,\n      \"reused_effect\": false,\n      \"state\": \"completed\"\n    }\n  ],\n  \"schema_version\": 1\n}\n{\n  \"effects\": [\n    {\n      \"id\": \"incident-summary\",\n      \"input_sha256\": \"00d10f911cf30d22a459820abca95d3a9b819e5a500c8258966bfe5666e92418\",\n      \"bytes\": 95,\n      \"words\": 11\n    },\n    {\n      \"id\": \"followup-checklist\",\n      \"input_sha256\": \"7f59b477c227769a0cbed25bbb8761fb77eb75f2e113156b32063800acb32233\",\n      \"bytes\": 79,\n      \"words\": 12\n    }\n  ],\n  \"jobs\": [\n    {\n      \"ID\": \"incident-summary\",\n      \"State\": \"completed\",\n      \"Version\": 4,\n      \"LeaseUntil\": 0,\n      \"Attempts\": 2\n    },\n    {\n      \"ID\": \"followup-checklist\",\n      \"State\": \"completed\",\n      \"Version\": 2,\n      \"LeaseUntil\": 0,\n      \"Attempts\": 1\n    }\n  ],\n  \"schema_version\": 1,\n  \"scope\": \"same-host local POSIX filesystem; immutable local text receipts\"\n}\n",
+      "durationMs": 1366
+    }
+  ]
+}

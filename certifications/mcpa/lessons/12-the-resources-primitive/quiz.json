@@ -1,0 +1,78 @@
+{
+  "lesson": "12-the-resources-primitive",
+  "title": "Resources: Addressable Content for a Stateless Server",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A client sends resources/read for a URI the server does not recognize. What must a conformant 2026-07-28 server return?",
+      "options": [
+        "A JSON-RPC error -32602 whose data names the requested URI",
+        "A JSON-RPC error -32601 because the read method is unknown",
+        "A complete result whose contents array is left empty",
+        "A tool execution error result with isError set to true"
+      ],
+      "correct": 0,
+      "explanation": "A missing resource is JSON-RPC error -32602 with data.uri identifying the request; an empty contents array is disallowed because it cannot distinguish absence from an empty document."
+    },
+    {
+      "stage": "check",
+      "question": "Before SEP-2164, servers commonly used -32002 for a missing resource. What should a 2026-07-28 server do with that code?",
+      "options": [
+        "Emit -32002 on stdio and -32602 on Streamable HTTP transports",
+        "Use -32602 going forward; still accept -32002 from legacy peers",
+        "Treat -32002 and -32602 as two unrelated, unrecognized error codes",
+        "Emit -32002 whenever the resource lives under the file scheme"
+      ],
+      "correct": 1,
+      "explanation": "SEP-2164 standardized resource-not-found as -32602, the ordinary Invalid params code; a 2026-07-28 server must not emit -32002 itself, though a client should still recognize it from an older peer."
+    },
+    {
+      "stage": "check",
+      "question": "A resources/read call succeeds with resultType complete. Which two fields must the result carry alongside contents?",
+      "options": [
+        "nextCursor and pageSize, so the client can page through content",
+        "supportedVersions and capabilities, so the client can renegotiate its version",
+        "ttlMs and cacheScope, the freshness and sharing hints for caching",
+        "inputRequests and requestState, so the client can retry with input"
+      ],
+      "correct": 2,
+      "explanation": "Resources/read is one of the six cacheable operations; a complete result must carry ttlMs, how long the client may treat it as fresh, and cacheScope, public or private."
+    },
+    {
+      "stage": "check",
+      "question": "A server holds a document that only it can reach; no client could fetch the same bytes straight from the open web. Which URI scheme guidance applies?",
+      "options": [
+        "Use https, since any URI can be marked directly fetchable",
+        "Use git only for resources kept under real version control",
+        "Use https, then a header tells clients to skip it",
+        "Use file or a custom scheme; keep https for direct fetches"
+      ],
+      "correct": 3,
+      "explanation": "The specification reserves https for content a client can fetch directly from the web on its own; content only the server can reach should use file, git, or a scheme of the server's own."
+    },
+    {
+      "stage": "post",
+      "question": "A resource read returns a note that belongs to one authenticated user. Which cacheScope keeps that read from leaking into another user's cache?",
+      "options": [
+        "private, so cached copies never cross authorization contexts",
+        "public, because notes are small enough to share safely",
+        "private, but only when the transport is stdio",
+        "public, combined with a very short ttlMs value"
+      ],
+      "correct": 0,
+      "explanation": "cacheScope private means a cached response may be reused for the same authorization context but must never be shared across different callers, exactly what user-specific content needs."
+    },
+    {
+      "stage": "post",
+      "question": "A client wants to learn when a specific resource changes. What does it send under the 2026-07-28 revision?",
+      "options": [
+        "server/discover with a capabilities.resources.subscribe flag set to true",
+        "subscriptions/listen with the URI listed under resourceSubscriptions",
+        "resources/subscribe naming the URI, as in earlier revisions",
+        "resources/read repeated on a short polling interval"
+      ],
+      "correct": 1,
+      "explanation": "The standalone resources/subscribe request was retired; a client now sends subscriptions/listen with the resourceSubscriptions filter naming the URIs it wants updates for."
+    }
+  ]
+}

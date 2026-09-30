@@ -1,0 +1,22 @@
+{
+  "title": "Multi-Agent Code Review Panel | Actual artifact output",
+  "recordedAt": "2026-09-28T19:23:04Z",
+  "records": [
+    {
+      "command": [
+        "node",
+        "cli.ts",
+        "--input",
+        "samples/review.json",
+        "--output",
+        "panel.json",
+        "--html",
+        "panel.html"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/multi-agent-code-review-panel/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"pr_diff_sha256\": null,\n  \"dataset_sha256\": \"cd4eb0b98a2da9fda8900e3744c155e3bc92de871a1cfaca4d4066db39d7fd39\",\n  \"mode\": \"local static reviewers or supplied recordings; no LLM independence claim\",\n  \"spent\": 3,\n  \"trace\": [\n    {\n      \"reviewer\": \"broad\",\n      \"status\": \"complete\",\n      \"cost\": 1\n    },\n    {\n      \"reviewer\": \"focused\",\n      \"status\": \"complete\",\n      \"cost\": 1\n    },\n    {\n      \"reviewer\": \"eval-only\",\n      \"status\": \"complete\",\n      \"cost\": 1\n    }\n  ],\n  \"reviews\": [\n    {\n      \"reviewer\": \"broad\",\n      \"findings\": [\n        {\n          \"file\": \"run.ts\",\n          \"line\": 1,\n          \"quote\": \"// eval(input) is dangerous\",\n          \"rule\": \"dynamic-eval\",\n          \"severity\": 3\n        },\n        {\n          \"file\": \"run.ts\",\n          \"line\": 2,\n          \"quote\": \"eval(input);\",\n          \"rule\": \"dynamic-eval\",\n          \"severity\": 3\n        },\n        {\n          \"file\": \"run.ts\",\n          \"line\": 3,\n          \"quote\": \"const client = {rejectUnauthorized: false};\",\n          \"rule\": \"tls-disabled\",\n          \"severity\": 2\n        }\n      ]\n    },\n    {\n      \"reviewer\": \"focused\",\n      \"findings\": [\n        {\n          \"file\": \"run.ts\",\n          \"line\": 2,\n          \"quote\": \"eval(input);\",\n          \"rule\": \"dynamic-eval\",\n          \"severity\": 3\n        },\n        {\n          \"file\": \"run.ts\",\n          \"line\": 3,\n          \"quote\": \"const client = {rejectUnauthorized: false};\",\n          \"rule\": \"tls-disabled\",\n          \"severity\": 3\n        }\n      ]\n    },\n    {\n      \"reviewer\": \"eval-only\",\n      \"findings\": [\n        {\n          \"file\": \"run.ts\",\n          \"line\": 2,\n          \"quote\": \"eval(input);\",\n          \"rule\": \"dynamic-eval\",\n          \"severity\": 3\n        }\n      ]\n    }\n  ],\n  \"findings\": [\n    {\n      \"finding\": {\n        \"file\": \"run.ts\",\n        \"line\": 2,\n        \"quote\": \"eval(input);\",\n        \"rule\": \"dynamic-eval\",\n        \"severity\": 3\n      },\n      \"supporters\": [\n        \"broad\",\n        \"focused\",\n        \"eval-only\"\n      ],\n      \"severities\": [\n        3,\n        3,\n        3\n      ],\n      \"status\": \"consensus\",\n      \"disagreement\": false\n    },\n    {\n      \"finding\": {\n        \"file\": \"run.ts\",\n        \"line\": 3,\n        \"quote\": \"const client = {rejectUnauthorized: false};\",\n        \"rule\": \"tls-disabled\",\n        \"severity\": 2\n      },\n      \"supporters\": [\n        \"broad\",\n        \"focused\"\n      ],\n      \"severities\": [\n        2,\n        3\n      ],\n      \"status\": \"consensus\",\n      \"disagreement\": true\n    },\n    {\n      \"finding\": {\n        \"file\": \"run.ts\",\n        \"line\": 1,\n        \"quote\": \"// eval(input) is dangerous\",\n        \"rule\": \"dynamic-eval\",\n        \"severity\": 3\n      },\n      \"supporters\": [\n        \"broad\"\n      ],\n      \"severities\": [\n        3\n      ],\n      \"status\": \"needs-review\",\n      \"disagreement\": false\n    }\n  ],\n  \"rejected\": 0,\n  \"measurements\": {\n    \"individual\": [\n      {\n        \"reviewer\": \"broad\",\n        \"precision\": 0.6666666666666666,\n        \"recall\": 1,\n        \"hits\": 2\n      },\n      {\n        \"reviewer\": \"focused\",\n        \"precision\": 1,\n        \"recall\": 1,\n        \"hits\": 2\n      },\n      {\n        \"reviewer\": \"eval-only\",\n        \"precision\": 1,\n        \"recall\": 0.5,\n        \"hits\": 1\n      }\n    ],\n    \"consensus\": {\n      \"precision\": 1,\n      \"recall\": 1,\n      \"hits\": 2\n    }\n  }\n}\n",
+      "durationMs": 115
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "32-registry-gateways-and-sdk-tiers",
+  "title": "Finding, Routing To, and Trusting a Server",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "When a team publishes a server to the MCP Registry, what does the registry actually store?",
+      "options": [
+        "A cached copy of every tool description the server has ever returned",
+        "A cryptographic attestation that the server's code contains no security vulnerabilities",
+        "The server's own runtime logs, kept so a client can audit past tool calls",
+        "Metadata that names, versions, and locates the server, not the server's own code"
+      ],
+      "correct": 3,
+      "explanation": "The MCP Registry stores server.json metadata, name, version, and package or remote locations, and never hosts the server's own source code."
+    },
+    {
+      "stage": "check",
+      "question": "A publisher who has never proven ownership of the io.github.acme account tries to publish a server named io.github.acme/reporting-tool. What does the registry do?",
+      "options": [
+        "Rejects the publish, since that namespace belongs to another verified owner",
+        "Accepts the publish, since anyone may choose any name they like",
+        "Publishes it but marks the version string as a prohibited range",
+        "Silently reassigns the name to a namespace the publisher does control"
+      ],
+      "correct": 0,
+      "explanation": "Namespace authentication ties a reverse DNS name to the specific GitHub account or domain that proved ownership of it, so a different publisher cannot claim it."
+    },
+    {
+      "stage": "check",
+      "question": "A server.json's $schema field points at the 2025-12-11 schema revision. What does that date tell you about the server itself?",
+      "options": [
+        "The server refuses connections unless their date matches 2025-12-11 exactly",
+        "Nothing; the schema date and the protocol version are tracked separately",
+        "The server speaks MCP protocol version 2025-12-11 at the wire level",
+        "The server will stop working once the 2026-07-28 revision ships"
+      ],
+      "correct": 1,
+      "explanation": "A server.json's schema version describes the shape of the metadata document itself and is tracked completely separately from the MCP protocol version the server speaks at runtime."
+    },
+    {
+      "stage": "check",
+      "question": "A gateway receives a request whose Mcp-Method header says prompts/get, but the JSON-RPC body's method field says tools/call. What must the gateway do?",
+      "options": [
+        "Trust the header for routing and let the body's method execute unchanged",
+        "Execute the body's method first, then correct the header in its response",
+        "Reject the request as a header mismatch before any backend is reached",
+        "Fall back to a legacy session so the two methods can be reconciled"
+      ],
+      "correct": 2,
+      "explanation": "Header and body must agree before a gateway routes or executes a request; a mismatch is rejected as HeaderMismatch with a 400 response before any backend is touched."
+    },
+    {
+      "stage": "post",
+      "question": "Two different authenticated callers both request the same private scope resource through a gateway. What is the correct caching behavior?",
+      "options": [
+        "The gateway never caches a private scope result for any caller at all",
+        "The gateway serves the second caller's request from the first caller's cached entry",
+        "The gateway serves both callers from cache once the first request completes",
+        "The gateway fetches the resource again for each caller and never shares that entry"
+      ],
+      "correct": 3,
+      "explanation": "A private cacheScope result must never be shared across different callers, so the gateway fetches it again for each caller rather than reusing another caller's cached entry."
+    },
+    {
+      "stage": "post",
+      "question": "An SDK rated Tier 1 then fails one conformance test on every run for five straight weeks. What happens to its tier?",
+      "options": [
+        "It drops to Tier 2, since a sustained failure past four weeks relegates it",
+        "It stays at Tier 1, since one failing test is never enough to matter",
+        "It drops straight to Tier 3, since any conformance failure is treated as critical",
+        "It is removed from the tiering system until it is manually resubmitted"
+      ],
+      "correct": 0,
+      "explanation": "An SDK is relegated only after a conformance test fails continuously for four full weeks; five weeks of failure crosses that threshold and drops Tier 1 to Tier 2."
+    }
+  ]
+}

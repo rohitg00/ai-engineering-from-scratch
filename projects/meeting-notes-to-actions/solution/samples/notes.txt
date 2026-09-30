@@ -1,0 +1,4 @@
+Decision: wait for review.
+ACTION Alex | 2026-10-02 | Publish release notes
+Priya will verify the rollback by 2026-10-01.
+ACTION ? | ? | Verify migration

@@ -155,7 +155,7 @@ python:3.12-slim
 Here is the Dockerfile in `code/Dockerfile`. Walk through it:
 
 ```dockerfile
-FROM nvidia/cuda:12.4.1-devel-ubuntu22.04
+FROM --platform=linux/amd64 nvidia/cuda:12.4.1-devel-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
@@ -215,6 +215,8 @@ docker build -t ai-dev -f phases/00-setup-and-tooling/07-docker-for-ai/code/Dock
 ```
 
 This takes a while the first time (downloading CUDA base image + PyTorch). Subsequent builds use cached layers.
+
+**macOS / Apple Silicon (M1/M2/M3/M4):** The `--platform=linux/amd64` on the `FROM` line is what makes this build succeed on a Mac. The CUDA base image also ships an arm64 variant and Docker Desktop picks it automatically on Apple Silicon, but PyTorch publishes its `cu124` wheels for x86_64 only, so the `pip install torch==2.6.0+cu124` layer fails with `No matching distribution found for torch==2.6.0+cu124`. Pinning the platform pulls the x86_64 image and runs it under emulation: the build is slower and the container has no GPU (there is no CUDA on a Mac either way). Drop `--gpus all` from the `docker run` commands below on a Mac. For GPU work on Apple Silicon, run the lessons natively with the MPS build from Lesson 01 and keep this image for x86_64 Linux hosts with an NVIDIA GPU.
 
 Run it:
 

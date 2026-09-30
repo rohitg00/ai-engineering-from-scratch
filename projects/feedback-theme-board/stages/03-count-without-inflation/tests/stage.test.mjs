@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {mkdtempSync,readFileSync,rmSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+const work=process.env.PROJECT_WORKSPACE;
+const f=await import(pathToFileURL(join(work,'main.ts')).href);
+const ROW={id:'1',text:'Search shows old pages',source:'s1'};
+const THEMES=[{id:'stale',title:'Stale results',phrases:['old pages']}];
+test('one source with two records counts once',()=>{const b=f.buildBoard([ROW,{...ROW,id:'2',text:'More old pages'}],THEMES);assert.equal(b.themes[0].records,2);assert.equal(b.themes[0].distinctSources,1);});
+test('exact duplicates retained separately',()=>{const b=f.buildBoard([ROW,{...ROW,id:'2'}],THEMES);assert.equal(b.duplicates.length,1);assert.equal(b.themes[0].records,1);});
+test('different sources count independently',()=>assert.equal(f.buildBoard([ROW,{...ROW,id:'2',source:'s2'}],THEMES).themes[0].distinctSources,2));
+test('unmatched feedback retained',()=>assert.equal(f.buildBoard([{...ROW,text:'Keyboard focus'}],THEMES).unassigned.length,1));
+test('input fingerprint changes with evidence',()=>assert.notEqual(f.buildBoard([ROW],THEMES).inputSha256,f.buildBoard([{...ROW,text:'Different old pages'}],THEMES).inputSha256));
+test('theme overlaps are explicit',()=>{const b=f.buildBoard([ROW],[...THEMES,{id:'pages',title:'Pages',phrases:['pages']}]);assert.equal(b.themes.filter(t=>t.records===1).length,2);});

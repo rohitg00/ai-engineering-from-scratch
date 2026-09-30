@@ -1,0 +1,48 @@
+{
+  "title": "Sandbox Policy Planner | Build and verify",
+  "recordedAt": "2026-09-28T19:21:58Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "sandbox-ladder",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-on1fl58f"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-on1fl58f\n  created  cli.py\n  created  cli.rs\n  created  main.rs\n  created  stage1.rs\n  created  types.rs\n  created  stage2.rs\n  created  stage3.rs\n  created  stage4.rs\nnext: python3 scripts/project_test.py sandbox-ladder --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-on1fl58f\n",
+      "durationMs": 53
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "sandbox-ladder",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-on1fl58f"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Sandbox Policy Planner: grading learner\n  FAIL stage 1: Parse the capability request (5 tests)\n       not implemented yet: Stage 1: implement needs\n",
+      "durationMs": 715
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "sandbox-ladder",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Sandbox Policy Planner: grading solution\n  PASS stage 1: Parse the capability request (5 tests)\n  PASS stage 2: Define modeled control profiles (5 tests)\n  PASS stage 3: Select the least costly sufficient profile (5 tests)\n  PASS stage 4: Report residual assumptions (5 tests)\n",
+      "durationMs": 1700
+    }
+  ]
+}

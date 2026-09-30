@@ -1,0 +1,119 @@
+{
+  "id": "skill-validator",
+  "title": "SKILL.md Validator and Loader",
+  "level": 1,
+  "levelName": "Starter",
+  "tagline": "Validate skill metadata and load only the context the task needs.",
+  "summary": "Build a bounded Agent Skills loader with a deliberately small frontmatter grammar, strict metadata validation, safe reference paths, and progressive disclosure. The supported YAML subset is explicit; unsupported forms fail instead of being guessed.",
+  "usefulFor": [
+    "A compatibility linter explaining why a skill works in one agent but fails in another.",
+    "The parser accepts plain single-line values and JSON-compatible quoted strings."
+  ],
+  "youWillBuild": "A compatibility linter explaining why a skill works in one agent but fails in another.",
+  "hours": 8,
+  "languages": [
+    "Rust"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Parse an explicit frontmatter subset",
+    "Validate names and descriptions",
+    "Contain resource paths",
+    "Load context within a character budget"
+  ],
+  "prerequisites": [
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    },
+    {
+      "title": "Structured outputs",
+      "path": "phases/11-llm-engineering/03-structured-outputs"
+    }
+  ],
+  "inspiredBy": [],
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-parse-an-explicit-frontmatter-subset",
+      "title": "Parse an explicit frontmatter subset",
+      "summary": "Split only a leading --- block.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "starter",
+      "concepts": [
+        "Header boundary",
+        "Key split",
+        "Duplicate gate",
+        "Body retained"
+      ]
+    },
+    {
+      "id": "02-validate-names-and-descriptions",
+      "title": "Validate names and descriptions",
+      "summary": "The loader accepts only lowercase names of 1 to 64 bytes with single interior hyphens, no leading digit restriction, and a nonblank description up to 1024 characters.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Read fields",
+        "Name grammar",
+        "Folder identity",
+        "Typed skill"
+      ]
+    },
+    {
+      "id": "03-contain-resource-paths",
+      "title": "Contain resource paths",
+      "summary": "Resolve resource names relative to a skill root.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Relative input",
+        "Component gate",
+        "Canonicalize",
+        "Containment"
+      ]
+    },
+    {
+      "id": "04-load-context-within-a-character-budget",
+      "title": "Load context within a character budget",
+      "summary": "Discovery returns name and description.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Discover metadata",
+        "Choose activation",
+        "Count characters",
+        "Complete or reject"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

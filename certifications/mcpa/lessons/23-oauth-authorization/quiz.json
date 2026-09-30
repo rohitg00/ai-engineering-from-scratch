@@ -1,0 +1,78 @@
+{
+  "lesson": "23-oauth-authorization",
+  "title": "Authorizing Access to an MCP Server",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Before a client has ever authenticated to a particular MCP server, what is the very first sign that the server requires authorization?",
+      "options": [
+        "The server's tools/list result silently omits every tool until login completes",
+        "A tools/call receives a plain HTTP 401 response with no JSON-RPC body",
+        "The server requires a legacy initialize handshake to complete before any token is issued",
+        "The client's connection attempt times out repeatedly until credentials are supplied"
+      ],
+      "correct": 1,
+      "explanation": "An unauthenticated request is rejected at the HTTP layer with a 401 before it is ever parsed as a protocol message, so there is no result or error body to read."
+    },
+    {
+      "stage": "check",
+      "question": "A 401 response's WWW-Authenticate header does not include a resource_metadata value. What must the client do next to find the Protected Resource Metadata document?",
+      "options": [
+        "Ask the user to paste the authorization server's URL into a configuration file",
+        "Abort the flow immediately, since the header is the only discovery path the specification allows",
+        "Fall back to the well-known URIs, trying the path-specific location before the root",
+        "Fall back to the well-known URIs, trying the root location before the path-specific one"
+      ],
+      "correct": 2,
+      "explanation": "When the header omits resource_metadata, the client must construct the well-known URIs itself and try the path-specific location before falling back to the root."
+    },
+    {
+      "stage": "check",
+      "question": "An authorization server's issuer is https://auth.example.com/tenant1, a URL with a path component. In which order must a client try metadata endpoints?",
+      "options": [
+        "oauth-authorization-server at the root only, since path components are stripped before discovery begins",
+        "openid-configuration with the path appended, then oauth-authorization-server with the path inserted, then openid-configuration with the path inserted",
+        "openid-configuration with the path inserted only, since MCP does not define an OAuth-specific well-known suffix",
+        "oauth-authorization-server with the path inserted, then openid-configuration with the path inserted, then openid-configuration with the path appended"
+      ],
+      "correct": 3,
+      "explanation": "For a path issuer the client tries OAuth metadata with the path inserted, then OpenID Connect discovery with the path inserted, then OpenID Connect discovery with the path appended."
+    },
+    {
+      "stage": "check",
+      "question": "MCP servers MUST validate an incoming bearer token's audience before accepting a call. What does that check actually verify?",
+      "options": [
+        "That the token was issued specifically for this MCP server's own canonical URI",
+        "That the token carries every scope the requested tool could ever need",
+        "That the token has not expired since the authorization server issued it",
+        "That the token was issued by an authorization server the client has used before"
+      ],
+      "correct": 0,
+      "explanation": "Audience validation confirms the token names this server's own canonical resource URI, which is why a well-formed token issued for a different server must still be rejected."
+    },
+    {
+      "stage": "post",
+      "question": "A client is about to redirect a user's browser to an authorization server for the first time in this flow. What must it do before sending that redirect, to defend against a mix-up attack?",
+      "options": [
+        "Request a fresh access token first, then discard it once the redirect completes",
+        "Record the expected issuer from the validated metadata to compare against the returned iss value",
+        "Cache the authorization server's TLS certificate fingerprint and compare it once the redirect returns",
+        "Register a brand-new redirect URI just for this one authorization attempt"
+      ],
+      "correct": 1,
+      "explanation": "RFC 9207 mix-up defenses depend on the client recording the expected issuer before redirecting and comparing it exactly against the iss value the authorization response returns."
+    },
+    {
+      "stage": "post",
+      "question": "A resource server receives a token that is well formed and unexpired, but was issued with an audience naming a different MCP server. What should it do?",
+      "options": [
+        "Accept the call, since a well-formed token from a known authorization server can be trusted",
+        "Forward the token to the intended server and proxy the response back to the caller",
+        "Reject the call with 401 Unauthorized, since the token is not valid for this server",
+        "Reject the call with 403 Forbidden, since the token lacks a required scope"
+      ],
+      "correct": 2,
+      "explanation": "A token whose audience names a different server is invalid for this one regardless of its signature or expiry, so the server rejects it with 401, not a scope-related 403."
+    }
+  ]
+}

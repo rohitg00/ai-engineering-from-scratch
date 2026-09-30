@@ -1,0 +1,16 @@
+{
+  "title": "Tiny Coding Agent | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:06Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "demo.py"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/tiny-coding-agent/solution",
+      "exitCode": 0,
+      "output": "{\n  \"state\": \"completed\",\n  \"trace\": [\n    {\n      \"tool\": \"test\",\n      \"result\": {\n        \"state\": \"failed\",\n        \"passed\": false,\n        \"tests\": 2,\n        \"output\": \"FF\\n======================================================================\\nFAIL: test_empty_basket (test_basket.Basket.test_empty_basket)\\n----------------------------------------------------------------------\\nTraceback (most recent call last):\\n  File \\\"/private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/basket-repair-a0ncfuwl/workspace/tests/test_basket.py\\\", line 10, in test_empty_basket\\n    self.assertEqual(total(7, 0), 0)\\nAssertionError: 7 != 0\\n\\n======================================================================\\nFAIL: test_three_items (test_basket.Basket.test_three_items)\\n----------------------------------------------------------------------\\nTraceback (most recent call last):\\n  File \\\"/private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/basket-repair-a0ncfuwl/workspace/tests/test_basket.py\\\", line 7, in test_three_items\\n    self.assertEqual(total(7, 3), 21)\\nAssertionError: 10 != 21\\n\\n----------------------------------------------------------------------\\nRan 2 tests in 0.000s\\n\\nFAILED (failures=2)\\n\"\n      },\n      \"action\": {\n        \"tool\": \"test\"\n      }\n    },\n    {\n      \"tool\": \"patch\",\n      \"result\": {\n        \"path\": \"basket.py\",\n        \"replacements\": 1\n      },\n      \"action\": {\n        \"tool\": \"patch\",\n        \"path\": \"basket.py\",\n        \"old\": \"price + quantity\",\n        \"new\": \"price * quantity\"\n      }\n    },\n    {\n      \"tool\": \"test\",\n      \"result\": {\n        \"state\": \"passed\",\n        \"passed\": true,\n        \"tests\": 2,\n        \"output\": \"..\\n----------------------------------------------------------------------\\nRan 2 tests in 0.000s\\n\\nOK\\n\"\n      },\n      \"action\": {\n        \"tool\": \"test\"\n      }\n    }\n  ]\n}\n",
+      "durationMs": 110
+    }
+  ]
+}

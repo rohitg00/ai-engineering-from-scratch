@@ -1,0 +1,78 @@
+{
+  "lesson": "25-consent-and-least-privilege",
+  "title": "Consent and Least Privilege",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A destructive tool call needs a human to approve it before the server will run it. How does the server ask for that approval in MCP 2026-07-28?",
+      "options": [
+        "It sends a fresh server-initiated request straight to the client over the still-open connection right away without delay",
+        "It returns an input_required result carrying an elicitation/create request, and the client retries with an answer",
+        "It refuses the call with a JSON-RPC error until a person runs a separate approval step",
+        "It opens a brand new Mcp-Session-Id scoped to this approval and simply waits on that session"
+      ],
+      "correct": 1,
+      "explanation": "Servers never push requests to the client; a tools/call that needs human approval returns resultType input_required with an elicitation/create inputRequest, and the client answers by retrying with inputResponses and a new id."
+    },
+    {
+      "stage": "check",
+      "question": "A client is requesting an access token for an MCP server for the first time, and the 401 challenge carried no scope parameter at all. Which scopes should the client request?",
+      "options": [
+        "A single administrative scope that some human operator chooses on the client's behalf, entirely by hand",
+        "No scopes at all, letting the server assign a default working set once the user logs in",
+        "Only the scopes the WWW-Authenticate challenge named, or all of scopes_supported if the challenge left that field out",
+        "Every scope the authorization server has ever issued to any client, just to save a round trip"
+      ],
+      "correct": 2,
+      "explanation": "The scope selection strategy is to use the scope from the WWW-Authenticate challenge when one is present, and to fall back to scopes_supported as the minimal starting set when the challenge omits it."
+    },
+    {
+      "stage": "check",
+      "question": "A client already holds a token scoped to files:read. A tool call now gets HTTP 403 with error insufficient_scope and scope files:write. What should the client request next?",
+      "options": [
+        "Only files:write, discarding files:read, since the server only asked for the new scope this time only",
+        "Every scope the server has ever defined, so no future call can ever trigger a 403 again",
+        "Whatever scope the previous tool call in this same session happened to already be using instead",
+        "The union of files:read and files:write, so the earlier grant is not lost during re-authorization"
+      ],
+      "correct": 3,
+      "explanation": "Step-up authorization computes the union of the previously granted scopes and the scopes in the current challenge, so a per-operation scope challenge never silently drops permissions the client already had."
+    },
+    {
+      "stage": "check",
+      "question": "A user approves the delete_file tool on a server. What does that one approval cover?",
+      "options": [
+        "Only delete_file itself; a different tool on that same server still needs its own separate approval",
+        "Whatever the destructiveHint annotation on the tool currently claims is safe, even once that value changes",
+        "Every tool on that server, because the user already trusts the server as a whole from then on",
+        "Every future call to delete_file plus any other tool whose name also happens to start with delete"
+      ],
+      "correct": 0,
+      "explanation": "Consent is scoped to the exact named tool it was granted for, never to a server, a naming pattern, or a category, so a second sensitive tool always needs its own explicit approval."
+    },
+    {
+      "stage": "post",
+      "question": "A server's tools/call result comes back with resultType input_required. How must the client's next attempt at that same call be shaped?",
+      "options": [
+        "It must reuse the original request id so the server can match the two attempts to each other, always",
+        "It must use a new request id, include inputResponses, and echo requestState back byte for byte as received",
+        "It must wait for the server to push a follow-up request instead of retrying on its own",
+        "It must open a brand new connection to the server so the retry starts from a clean session"
+      ],
+      "correct": 1,
+      "explanation": "A multi round-trip retry always carries a new JSON-RPC id, gathers answers into inputResponses under the same keys the server used, and echoes requestState byte for byte if the server sent one."
+    },
+    {
+      "stage": "post",
+      "question": "A caller's token carries only payments:read. The server also exposes a send_payment tool gated on payments:write. What should tools/list return to this caller?",
+      "options": [
+        "An error result, because a client should never call tools/list without holding every scope the server defines",
+        "The full tool list, but with send_payment marked isError so the model learns not to call it",
+        "A tool list that omits send_payment, since the result may vary by the authorization on the request",
+        "The full tool list including send_payment, since tools/list must never vary between different callers"
+      ],
+      "correct": 2,
+      "explanation": "Least privilege applies to list results too: tools/list must not change as a side effect of unrelated requests, but it may vary by the authorization presented, so a caller only sees the tools its current scopes actually permit."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "01-reading-the-specification",
+  "title": "Reading the MCP Specification",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "According to the specification overview, which three components MUST every MCP implementation support?",
+      "options": [
+        "Server features, client features, and utilities",
+        "Resources, prompts, tools, and elicitation together",
+        "The base protocol, versioning, and message patterns",
+        "Authorization, extensions, and completion utilities"
+      ],
+      "correct": 2,
+      "explanation": "The specification states that all implementations MUST support the base protocol, versioning, and the message patterns, while server features, client features, authorization, and utilities MAY be implemented as the application needs them."
+    },
+    {
+      "stage": "check",
+      "question": "A sentence reads, written in lowercase, that a client must not batch requests. What normative weight does that carry under BCP 14?",
+      "options": [
+        "The same forbidding weight as MUST NOT written in capitals",
+        "It makes that whole paragraph an invalid specification page",
+        "A soft recommendation, treated the same as SHOULD NOT",
+        "No normative weight; only capitalized keywords count"
+      ],
+      "correct": 3,
+      "explanation": "BCP 14 keywords carry their defined meaning only when they appear in all capitals; the identical words in lowercase are ordinary prose with no normative force."
+    },
+    {
+      "stage": "check",
+      "question": "Which statement correctly describes the relationship between schema.ts and schema.json in the specification repository?",
+      "options": [
+        "schema.ts is the source of truth and schema.json is generated from it",
+        "schema.json is authoritative for SDKs and schema.ts is only a draft",
+        "schema.json is written by hand first and schema.ts is generated from it",
+        "The two files are maintained independently and are free to disagree"
+      ],
+      "correct": 0,
+      "explanation": "The specification names schema.ts the source of truth for every protocol message and structure, with schema.json generated automatically from it for tooling."
+    },
+    {
+      "stage": "check",
+      "question": "A feature is marked Deprecated in the specification revision released on 2026-07-28 with a twelve-month window. From what point is that window measured?",
+      "options": [
+        "From the day the Core Maintainers approved the SEP in review",
+        "From the release of the specification revision that marks it Deprecated",
+        "From the day the deprecation SEP itself reached Final status",
+        "From the day the deprecation SEP was first opened as a pull request"
+      ],
+      "correct": 1,
+      "explanation": "SEP-2596 measures the deprecation window from the release of the revision that first marks the feature Deprecated, not from whenever its own SEP happened to reach Final."
+    },
+    {
+      "stage": "post",
+      "question": "Roots, Sampling, and Logging are sometimes described as having been removed in the 2026-07-28 revision. What does the specification actually say about their state?",
+      "options": [
+        "Active still; nothing about their status changed in this revision",
+        "Removed outright; a conformant server MUST NOT implement them",
+        "Deprecated, not removed; still fully specified and functional",
+        "Experimental now; only Tier 3 SDKs are required to support them"
+      ],
+      "correct": 2,
+      "explanation": "SEP-2577 deprecated Roots, Sampling, and Logging in the 2026-07-28 revision; they remain fully specified and functional, with removal not eligible before the first revision released on or after 2027-07-28."
+    },
+    {
+      "stage": "post",
+      "question": "A changelog entry cites a SEP number as the source of a major protocol change. What should a careful reader do before repeating that claim?",
+      "options": [
+        "Assume the change is still in review until the next revision ships",
+        "Read only the schema.json diff, since SEPs rarely touch the schema",
+        "Trust the one-line changelog summary, since SEPs close once accepted",
+        "Open the SEP file for its text, rationale, and final status"
+      ],
+      "correct": 3,
+      "explanation": "A changelog entry links back to the SEP that produced it, and reading the SEP itself confirms the exact specification text, the rationale, and whether it actually reached Final status."
+    }
+  ]
+}

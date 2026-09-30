@@ -106,6 +106,49 @@ function makeAssets() {
   };
 }
 
+function withSecondProgram(assets) {
+  assets.lesson.manifest.certificationTrackIds.push('mcpa-example');
+  assets.lesson.manifest.lessons['certifications/mcpa/lessons/01-discovery'] = {
+    path: 'certifications/mcpa/lessons/01-discovery',
+    title: 'Discovery Decisions',
+    seoTitle: 'Discovery Decisions - AI Engineering from Scratch',
+    description: 'Negotiate protocol capabilities on every request instead of once per session.',
+    excerpt: 'A certification lesson about stateless discovery and capability negotiation.',
+    context: {
+      kind: 'certification',
+      programName: 'Independent MCPA Certification Preparation',
+      trackIds: ['mcpa-example'],
+    },
+    previous: null,
+    next: null,
+    navigationByTrack: {
+      'mcpa-example': {
+        previous: null,
+        next: { path: 'certifications/mcpa/lessons/02-tools', title: 'Tool Contracts' },
+      },
+    },
+    learningPathIds: [],
+    fromTrackIds: [],
+    sourceUrl: 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/certifications/mcpa/lessons/01-discovery',
+    canonicalUrl: 'https://aiengineeringfromscratch.com/lesson?path=certifications%2Fmcpa%2Flessons%2F01-discovery',
+  };
+  assets.certification.manifest.tracks['mcpa-example'] = {
+    id: 'mcpa-example',
+    slug: 'mcpa-example',
+    examCode: 'MCPA',
+    title: 'Example Protocol Track',
+    seoTitle: 'Example Protocol Track - AI Engineering from Scratch',
+    description: 'Independent preparation through practical protocol decisions.',
+    excerpt: 'Move from protocol blueprint domains to working hosts, clients, and servers.',
+    canonicalUrl: 'https://aiengineeringfromscratch.com/certification?id=mcpa-example',
+    lessons: [
+      { path: 'certifications/mcpa/lessons/01-discovery', title: 'Discovery Decisions' },
+      { path: 'phases/13-tools-and-protocols/06-mcp-fundamentals', title: 'MCP Fundamentals' },
+    ],
+  };
+  return assets;
+}
+
 function invoke(handler, req) {
   const response = { statusCode: 200, headers: {}, body: undefined };
   const res = {
@@ -160,6 +203,20 @@ test('lesson route keeps certification navigation inside the selected track', fu
   assert.match(response.body, /path=certifications%2Fclaude%2Flessons%2F02-tools&amp;track=claude-example/);
   assert.doesNotMatch(response.body, /path=phases%2F14-agent-engineering%2F01-the-agent-loop/);
   assert.doesNotMatch(response.body, /canonical"[^>]+track=/);
+});
+
+test('lesson route serves every certification program and keeps its track navigation', function () {
+  const assets = withSecondProgram(makeAssets());
+  const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
+  const response = invoke(handler, {
+    method: 'GET',
+    url: '/lesson?path=certifications%2Fmcpa%2Flessons%2F01-discovery&track=mcpa-example',
+    query: { path: 'certifications/mcpa/lessons/01-discovery', track: 'mcpa-example' },
+  });
+
+  assert.equal(response.statusCode, 200);
+  assert.match(response.body, /rel="canonical" href="https:\/\/aiengineeringfromscratch\.com\/lesson\?path=certifications%2Fmcpa%2Flessons%2F01-discovery"/);
+  assert.match(response.body, /path=certifications%2Fmcpa%2Flessons%2F02-tools&amp;track=mcpa-example/);
 });
 
 test('lesson route disambiguates duplicate H1 values across pages', function () {
@@ -399,6 +456,20 @@ test('certification route renders a crawlable track with an id-only canonical', 
   assert.match(response.body, /"@type":"CollectionPage"/);
   assert.match(response.body, /path=certifications%2Fclaude%2Flessons%2F01-models&amp;track=claude-example/);
   assert.match(response.body, /path=phases%2F14-agent-engineering%2F01-the-agent-loop&amp;fromTrack=claude-example/);
+});
+
+test('certification route links a second program\'s own lessons in track context', function () {
+  const assets = withSecondProgram(makeAssets());
+  const handler = certificationApi.createHandler({ loadAssets: function () { return assets.certification; } });
+  const response = invoke(handler, {
+    method: 'GET',
+    url: '/certification?id=mcpa-example',
+    query: { id: 'mcpa-example' },
+  });
+
+  assert.equal(response.statusCode, 200);
+  assert.match(response.body, /path=certifications%2Fmcpa%2Flessons%2F01-discovery&amp;track=mcpa-example/);
+  assert.match(response.body, /path=phases%2F13-tools-and-protocols%2F06-mcp-fundamentals&amp;fromTrack=mcpa-example/);
 });
 
 test('certification route strips unknown query parameters before serving cached HTML', function () {

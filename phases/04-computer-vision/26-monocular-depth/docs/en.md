@@ -192,21 +192,21 @@ print(f"before align  absRel = {abs_rel_error(pred, gt):.3f}")
 print(f"after align   absRel = {abs_rel_error(aligned, gt):.3f}")
 ```
 
-### Step 5: Depth Anything V3 usage (reference)
+### Step 5: Depth Anything V2 usage (reference)
 
 ```python
-import torch
+import numpy as np
 from transformers import pipeline
 from PIL import Image
 
-pipe = pipeline(task="depth-estimation", model="LiheYoung/depth-anything-v2-large")
+pipe = pipeline(task="depth-estimation", model="depth-anything/Depth-Anything-V2-Large-hf")
 
 image = Image.open("street.jpg").convert("RGB")
 out = pipe(image)
 depth_np = np.array(out["depth"])
 ```
 
-Three lines. `out["depth"]` is a PIL grayscale; convert to numpy for math. For Depth Anything V3 specifically, swap the model id once released; the API is unchanged.
+Three lines. `out["depth"]` is a PIL grayscale; convert to numpy for math. Depth Anything 3 (November 2025) does not load through this pipeline. It ships its own `depth_anything_3` package: `DepthAnything3.from_pretrained("depth-anything/DA3MONO-LARGE")` loads the relative monocular model, and `model.inference(images).depth` returns an `[N, H, W]` depth array.
 
 ## Use It
 

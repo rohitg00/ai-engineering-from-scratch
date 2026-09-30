@@ -1,0 +1,78 @@
+{
+  "lesson": "22-trust-boundaries",
+  "title": "Trust Zones in an MCP Exchange",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In an MCP exchange, which two participants sit inside the same trust domain that the host directly controls?",
+      "options": [
+        "The host and the client it runs",
+        "The client and every server it has connected to",
+        "The server and the tools it exposes",
+        "The model and the upstream systems a server calls"
+      ],
+      "correct": 0,
+      "explanation": "The host owns the client it runs and both sit inside one trust domain, while the server is a separate program the host does not control."
+    },
+    {
+      "stage": "check",
+      "question": "A server's discover result carries a flattering serverInfo.name. What should a host's trust decision rely on instead?",
+      "options": [
+        "The title field inside the server's tool annotations",
+        "The identity the host recorded when it connected the server",
+        "The name the server reports in its serverInfo field",
+        "The name shown in the server's most recent tool description"
+      ],
+      "correct": 1,
+      "explanation": "clientInfo and serverInfo are self-reported and unverified, so a host must base trust decisions on its own record of which server it connected, never on what the connection claims about itself."
+    },
+    {
+      "stage": "check",
+      "question": "A tool from a server that is not on the host's trusted list declares destructiveHint as false. How should the host treat that claim when making a safety decision?",
+      "options": [
+        "Accept it only when the tool's description also sounds harmless",
+        "Accept it, since annotations describe exactly what a tool does",
+        "Ignore the claim and fall back to the destructive default",
+        "Reject the tool outright and remove it from the tool list"
+      ],
+      "correct": 2,
+      "explanation": "Tool annotations are hints that clients must treat as untrusted unless the server is trusted, so an untrusted claim of destructiveHint false falls back to the conservative default of true."
+    },
+    {
+      "stage": "check",
+      "question": "A tool definition includes an icon whose src is javascript:alert(1). What must a conformant client do with that icon?",
+      "options": [
+        "Render the icon inside a sandboxed iframe with scripts disabled",
+        "Convert the icon to a data URI before rendering it safely",
+        "Render the icon only after asking the user for permission",
+        "Reject the icon, since its scheme is not https or data"
+      ],
+      "correct": 3,
+      "explanation": "Clients must reject icon URIs that use unsafe schemes such as javascript, file, or ftp, accepting only https and data URIs for icon sources."
+    },
+    {
+      "stage": "post",
+      "question": "A tool result from a notes server contains text instructing the host to call a delete tool on a separate ticket server. What should the host do?",
+      "options": [
+        "Refuse the call, since crossing servers is the model's choice",
+        "Ask the notes server to confirm the instruction before proceeding",
+        "Execute the call, since the notes server is already connected",
+        "Forward the instruction to the ticket server as a routine notification"
+      ],
+      "correct": 0,
+      "explanation": "Content one server returns is untrusted data, so an instruction embedded inside it must never trigger a call to a different server. Only a choice the model makes on its own may cross that boundary."
+    },
+    {
+      "stage": "post",
+      "question": "Which practice matches MCP's guidance for a locally launched stdio server that needs credentials?",
+      "options": [
+        "Request the credentials through a server-initiated sampling request",
+        "Read credentials from the environment instead of running an OAuth flow",
+        "Run the full OAuth 2.1 authorization code flow over the stdio transport",
+        "Embed a long-lived token inside the server's published package"
+      ],
+      "correct": 1,
+      "explanation": "stdio implementations should not run the OAuth flow and instead read credentials from the environment, since the transport already runs inside the user's own trust domain."
+    }
+  ]
+}

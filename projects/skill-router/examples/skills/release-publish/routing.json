@@ -1,0 +1,13 @@
+{
+  "keywords": [
+    "publish"
+  ],
+  "paths": [],
+  "priority": 1,
+  "requires": [
+    "release-review"
+  ],
+  "permissions": [
+    "network"
+  ]
+}

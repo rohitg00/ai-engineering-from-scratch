@@ -49,7 +49,7 @@ xcode-select --install
 brew install git curl wget
 
 # Ubuntu/Debian
-sudo apt update && sudo apt install -y build-essential git curl wget
+sudo apt update && sudo apt install -y build-essential git curl wget unzip
 
 # Windows (use WSL2)
 wsl --install -d Ubuntu-24.04
@@ -95,6 +95,8 @@ npm install -g pnpm
 
 node -e "console.log('Node', process.version)"
 ```
+
+The fnm installer checks for `unzip` first and exits with `Not installing fnm due to missing dependencies.` when it is absent: on Linux it unpacks a zip archive, on macOS it installs through Homebrew. macOS ships `unzip`; Ubuntu, Debian, and WSL2 get it from the Step 1 apt line (`sudo apt install -y unzip` if you skipped that step).
 
 **macOS / Apple Silicon (M1/M2/M3/M4):** If the installer stops with `Error: Cannot install under Rosetta 2 in ARM default prefix (/opt/homebrew)`, your terminal is running under Rosetta 2 (`arch` prints `i386`) while Homebrew is a native arm64 build. Install fnm forcing arm64, wire it into your shell, then rerun the commands above from `fnm install 22`:
 

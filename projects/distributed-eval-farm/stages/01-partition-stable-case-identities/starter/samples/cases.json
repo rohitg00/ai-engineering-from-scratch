@@ -1,0 +1,6 @@
+[
+ {"id":"case-a","prompt":"Name the retryable HTTP status from 200, 429.","expected":"429","response":"429"},
+ {"id":"case-b","prompt":"Does queued mean completed?","expected":"no","response":"Yes"},
+ {"id":"case-c","prompt":"Name the HTTP verb used for a safe read.","expected":"GET","response":" get "},
+ {"id":"case-d","prompt":"Does an expired lease still permit a write?","expected":"no","response":"no"}
+]

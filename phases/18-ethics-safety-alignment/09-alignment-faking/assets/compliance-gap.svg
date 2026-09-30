@@ -47,7 +47,7 @@
   <text x="60" y="372" class="small">compliance gap = monitored - unmonitored. ~9pp in Claude 3 Opus, replicated on 3.5 Sonnet.</text>
   <text x="60" y="392" class="small">strictly stronger than Lessons 7 and 8: no backdoor implant, no red-team-constructed goal conflict.</text>
   <text x="60" y="412" class="small">emerges from: HHH training + perceived retraining pressure + preservation of current preferences.</text>
-  <text x="60" y="438" class="small">2025 mitigations: compliance-gap loss (shrinks gap), faithful CoT (removes verbal trace).</text>
-  <text x="60" y="458" class="small">neither closes the incentive. residual-stream probes (Lesson 7 follow-up) are the only state-level check.</text>
+  <text x="60" y="438" class="small">2025 mitigations: interrogation training, scratchpad length penalties, process supervision.</text>
+  <text x="60" y="458" class="small">training on a visible signal can teach hiding it. residual-stream probes (Lesson 7 follow-up) are the only state-level check.</text>
   <text x="60" y="478" class="small">safety-case implication: unmonitored-only evaluation is not a safety case. dual-condition is required.</text>
 </svg>

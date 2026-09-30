@@ -1,0 +1,48 @@
+{
+  "title": "Durable Agent Jobs | Build and verify",
+  "recordedAt": "2026-09-28T19:36:38Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "durable-agent-jobs",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-imvpwya0"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-imvpwya0\n  created  go.mod\n  created  lock_other.go\n  created  lock_unix.go\n  created  main.go\n  created  runner.go\n  created  samples/jobs.json\n  created  stage1.go\n  created  types.go\n  created  stage2.go\n  created  stage3.go\n  created  stage4.go\nnext: python3 scripts/project_test.py durable-agent-jobs --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-imvpwya0\n",
+      "durationMs": 57
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "durable-agent-jobs",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-imvpwya0"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Durable Agent Jobs: grading learner\n  FAIL stage 1: Create jobs with stable identity (1 tests)\n       not implemented yet: Stage 1: implement NewJob\n",
+      "durationMs": 915
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "durable-agent-jobs",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Durable Agent Jobs: grading solution\n  PASS stage 1: Create jobs with stable identity (5 tests)\n  PASS stage 2: Claim with a lease and version (5 tests)\n  PASS stage 3: Finish or reclaim expired work (5 tests)\n  PASS stage 4: Write and recover atomic snapshots (12 tests)\n",
+      "durationMs": 16307
+    }
+  ]
+}

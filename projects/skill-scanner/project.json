@@ -1,0 +1,119 @@
+{
+  "id": "skill-scanner",
+  "title": "Skill Supply-Chain Scanner",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Find risky instruction patterns with exact source evidence.",
+  "summary": "Build an offline advisory scanner that preserves UTF-8 offsets, reports explicit policy patterns, scores distinct findings and emits a review gate. It is a transparent heuristic, not a malware detector or a promise that unflagged skills are safe.",
+  "usefulFor": [
+    "A skill-change review assistant quoting newly introduced capabilities.",
+    "The scanner emits versioned JSON with file paths, exact UTF-8 byte spans and advisory rules."
+  ],
+  "youWillBuild": "A skill-change review assistant quoting newly introduced capabilities.",
+  "hours": 8,
+  "languages": [
+    "Rust"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Retain byte-accurate source spans",
+    "Detect named advisory patterns",
+    "Score distinct evidence without inflation",
+    "Build an explicit review gate"
+  ],
+  "prerequisites": [
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    },
+    {
+      "title": "Security and secrets audit",
+      "path": "phases/17-infrastructure-and-production/25-security-secrets-audit"
+    }
+  ],
+  "inspiredBy": [],
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-retain-byte-accurate-source-spans",
+      "title": "Retain byte-accurate source spans",
+      "summary": "Split UTF-8 source into numbered lines and retain exclusive byte offsets into the original buffer.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "starter",
+      "concepts": [
+        "Read bytes",
+        "Split terminators",
+        "Track offsets",
+        "Exact source slice"
+      ]
+    },
+    {
+      "id": "02-detect-named-advisory-patterns",
+      "title": "Detect named advisory patterns",
+      "summary": "Rules inspect lowercase line text but report original offsets.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Normalize view",
+        "Match named rule",
+        "Retain evidence",
+        "Emit findings"
+      ]
+    },
+    {
+      "id": "03-score-distinct-evidence-without-inflation",
+      "title": "Score distinct evidence without inflation",
+      "summary": "Count each rule once per source line even if a collector repeats a finding.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Validate finding",
+        "Rule-line identity",
+        "Deduplicate",
+        "Checked score"
+      ]
+    },
+    {
+      "id": "04-build-an-explicit-review-gate",
+      "title": "Build an explicit review gate",
+      "summary": "A threshold crossing requests review; below threshold means only that these rules did not cross the configured threshold.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Check bounds",
+        "Validate slices",
+        "Compare threshold",
+        "Human review report"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

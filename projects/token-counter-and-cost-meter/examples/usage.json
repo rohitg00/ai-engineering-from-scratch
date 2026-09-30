@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "unit": "nano_dollars",
+  "limit": 1000,
+  "rates": {
+    "input": 2,
+    "output": 5,
+    "cached": 1
+  },
+  "requests": [
+    {
+      "id": "orchard-summary",
+      "estimate": {
+        "input_tokens": 100,
+        "output_limit": 80
+      },
+      "usage": {
+        "input_tokens": 100,
+        "output_tokens": 20,
+        "input_tokens_details": {
+          "cached_tokens": 40
+        }
+      }
+    },
+    {
+      "id": "orchard-check",
+      "estimate": {
+        "input_tokens": 100,
+        "output_limit": 80
+      },
+      "usage": {
+        "input_tokens": 100,
+        "output_tokens": 30,
+        "input_tokens_details": {
+          "cached_tokens": 40
+        }
+      }
+    },
+    {
+      "id": "long-report",
+      "estimate": {
+        "input_tokens": 500,
+        "output_limit": 100
+      },
+      "usage": {
+        "input_tokens": 500,
+        "output_tokens": 20
+      }
+    }
+  ]
+}

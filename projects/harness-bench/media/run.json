@@ -1,0 +1,48 @@
+{
+  "title": "Harness Bench | Build and verify",
+  "recordedAt": "2026-09-28T19:36:38Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "harness-bench",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-oy_bqa30"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-oy_bqa30\n  created  adapters.go\n  created  fixtures/orchard-cases.json\n  created  fixtures/orchard-recording.json\n  created  go.mod\n  created  main.go\n  created  stage1.go\n  created  types.go\n  created  stage2.go\n  created  stage3.go\n  created  stage4.go\nnext: python3 scripts/project_test.py harness-bench --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-oy_bqa30\n",
+      "durationMs": 53
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "harness-bench",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-oy_bqa30"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Harness Bench: grading learner\n  FAIL stage 1: Load unseen benchmark cases (1 tests)\n       not implemented yet: Stage 1: implement Cases\n",
+      "durationMs": 1860
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "harness-bench",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Harness Bench: grading solution\n  PASS stage 1: Load unseen benchmark cases (5 tests)\n  PASS stage 2: Define exactly what a correct answer means (5 tests)\n  PASS stage 3: Run a harness under a call budget (10 tests)\n  PASS stage 4: Compare runs on equal denominators (12 tests)\n",
+      "durationMs": 5967
+    }
+  ]
+}

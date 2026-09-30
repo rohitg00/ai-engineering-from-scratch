@@ -1,0 +1,11 @@
+{
+  "title": "support-agent-with-google-adk | Actual application output",
+  "url": "file:///tmp/aiefs-reviewed-apps/support/index.html",
+  "actions": [
+    [
+      "js",
+      "window.scrollTo(0,250)"
+    ]
+  ],
+  "kind": "browser capture"
+}

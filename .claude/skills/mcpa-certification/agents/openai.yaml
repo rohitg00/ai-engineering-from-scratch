@@ -1,0 +1,4 @@
+interface:
+  display_name: "MCPA Certification Tutor"
+  short_description: "AI-native certification path, labs, and review"
+  default_prompt: "Use mcpa-certification to prepare for the MCPA certification and teach me the next step."

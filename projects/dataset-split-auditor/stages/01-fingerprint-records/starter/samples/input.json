@@ -1,0 +1,24 @@
+{
+  "train": [
+    {
+      "id": "train-a",
+      "group": "incident-1",
+      "text": "Timeout after rollout",
+      "source": "train.jsonl:1"
+    }
+  ],
+  "test": [
+    {
+      "id": "test-a",
+      "group": "incident-2",
+      "text": " TIMEOUT after rollout ",
+      "source": "test.jsonl:1"
+    },
+    {
+      "id": "test-b",
+      "group": "incident-1",
+      "text": "Rollback restored health",
+      "source": "test.jsonl:2"
+    }
+  ]
+}

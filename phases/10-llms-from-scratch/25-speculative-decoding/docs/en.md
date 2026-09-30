@@ -162,9 +162,9 @@ def speculative_step(p_target, q_draft, K, temperature=1.0):
 
 ## Use It
 
-- **vLLM** and **SGLang** ship first-class speculative decoding. Flags: `--speculative_model`, `--num_speculative_tokens`. EAGLE-2/3 support via the `--spec_decoding_algorithm eagle` flag.
+- **vLLM** and **SGLang** ship first-class speculative decoding. In vLLM, pass `--speculative-config` a JSON object with `method`, `model`, and `num_speculative_tokens`; EAGLE-3 is `"method": "eagle3"`.
 - **NVIDIA TensorRT-LLM** supports Medusa and EAGLE trees natively.
-- **Reference draft models**: `Qwen/Qwen3-0.6B-spec` (drafts for Qwen3-32B), `meta-llama/Llama-3.2-1B-Instruct-spec` (drafts for 70B).
+- **Reference draft models**: `Qwen/Qwen3-0.6B` (drafts for Qwen3-32B), `meta-llama/Llama-3.2-1B-Instruct` (drafts for Llama 3.x 70B).
 - **Medusa heads** (Cai et al. 2024, "Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads"): instead of a draft model, add K parallel prediction heads to the target itself. Simpler to deploy, slightly lower acceptance than EAGLE.
 
 ## Ship It

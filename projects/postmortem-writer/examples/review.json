@@ -1,0 +1,31 @@
+{
+  "sourceSHA256": "",
+  "impact": "Latency alert observed. Affected request count is still under investigation.",
+  "claims": [
+    {
+      "text": "An alert followed the deployment. Causality remains unconfirmed.",
+      "evidence": [
+        "e1",
+        "e2"
+      ],
+      "quotes": {
+        "e1": "version B started",
+        "e2": "latency exceeded SLO"
+      },
+      "state": "pending",
+      "reviewer": ""
+    }
+  ],
+  "actions": [
+    {
+      "task": "Measure affected requests from access logs",
+      "owner": "service-team",
+      "state": "open"
+    },
+    {
+      "task": "Check whether rollback changed latency",
+      "owner": "",
+      "state": "open"
+    }
+  ]
+}

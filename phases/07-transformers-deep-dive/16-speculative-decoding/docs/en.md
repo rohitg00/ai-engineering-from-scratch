@@ -78,7 +78,7 @@ EAGLE-3 (2025) added tree search over candidate continuations. vLLM and SGLang s
 
 Verification feeds `N` draft tokens into the verifier in one forward pass. This extends the verifier's KV cache by `N` entries. If some drafts are rejected, you must roll the cache back to the accepted prefix length.
 
-Production implementations (vLLM's `--speculative-model`, TensorRT-LLM's LookaheadDecoder) handle this with scratch KV buffers. Write first, commit on acceptance. It's not conceptually hard, but it is fiddly.
+Production implementations (vLLM's `--speculative-config`, TensorRT-LLM's LookaheadDecoder) handle this with scratch KV buffers. Write first, commit on acceptance. It's not conceptually hard, but it is fiddly.
 
 ```figure
 draft-verify-tokens
@@ -160,14 +160,11 @@ Production:
 ```bash
 # vLLM with EAGLE
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
-    --speculative-model /models/llama-3.1-eagle-70b \
-    --speculative-draft-tensor-parallel-size 1 \
-    --num-speculative-tokens 5
+    --speculative-config '{"method": "eagle", "model": "/models/llama-3.1-eagle-70b", "draft_tensor_parallel_size": 1, "num_speculative_tokens": 5}'
 
 # vLLM with vanilla draft model
 vllm serve meta-llama/Llama-3.1-70B-Instruct \
-    --speculative-model meta-llama/Llama-3.2-1B-Instruct \
-    --num-speculative-tokens 5
+    --speculative-config '{"method": "draft_model", "model": "meta-llama/Llama-3.2-1B-Instruct", "num_speculative_tokens": 5}'
 ```
 
 TensorRT-LLM has the fastest Medusa path as of mid-2026. `faster-whisper` wraps speculative decoding for Whisper-large with a small draft.

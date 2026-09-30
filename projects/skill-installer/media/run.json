@@ -1,0 +1,48 @@
+{
+  "title": "Cross-Agent Skill Installer | Build and verify",
+  "recordedAt": "2026-09-28T19:22:02Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "skill-installer",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-urojhk7x"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-urojhk7x\n  created  cli.ts\n  created  main.ts\n  created  package.json\n  created  stage-1.md\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py skill-installer --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-urojhk7x\n",
+      "durationMs": 52
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "skill-installer",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-urojhk7x"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Cross-Agent Skill Installer: grading learner\n  FAIL stage 1: Validate a portable bundle (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 288
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "skill-installer",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Cross-Agent Skill Installer: grading solution\n  PASS stage 1: Validate a portable bundle (6 tests)\n  PASS stage 2: Translate metadata and hash content (6 tests)\n  PASS stage 3: Install atomically within a root (5 tests)\n  PASS stage 4: Protect edits during upgrades (5 tests)\n",
+      "durationMs": 1127
+    }
+  ]
+}

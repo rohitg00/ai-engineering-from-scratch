@@ -1,0 +1,78 @@
+{
+  "lesson": "13-prompts-and-completion",
+  "title": "Prompt Templates and Argument Completion",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In MCP 2026-07-28, who decides when a particular prompt is invoked?",
+      "options": [
+        "The user selects it explicitly, since prompts are designed to be user controlled",
+        "The model selects it automatically whenever the conversation needs more context",
+        "The server schedules it automatically on a fixed recurring time interval",
+        "The host renders it without asking the user or the model at all"
+      ],
+      "correct": 0,
+      "explanation": "Prompts are user-controlled: a server authors their content, but the user is the one who explicitly selects when a prompt runs, often through a menu or slash command."
+    },
+    {
+      "stage": "check",
+      "question": "A client calls prompts/get for a prompt with one required argument and supplies no arguments at all. What does a conformant server return?",
+      "options": [
+        "A JSON-RPC error with code -32601 because the prompt itself is missing",
+        "A JSON-RPC error with code -32602 because a required argument is missing",
+        "An input_required result that asks the model to supply the value",
+        "A normal result whose messages array is simply left completely empty"
+      ],
+      "correct": 1,
+      "explanation": "Missing a required prompt argument is a JSON-RPC error with code -32602 Invalid params; -32601 is reserved for a method the server does not implement at all."
+    },
+    {
+      "stage": "check",
+      "question": "A completion/complete request matches 137 possible values for one argument. How many does the result's values array contain, and what else must it report?",
+      "options": [
+        "Zero values, because completion refuses requests above 100 possible matches",
+        "All 137 values plus a total field and hasMore set to false",
+        "At most 100 values, with hasMore true since more matches exist",
+        "Exactly 10 values by default, with pagination handled by a cursor"
+      ],
+      "correct": 2,
+      "explanation": "A completion result never carries more than 100 ranked values; when more matches exist than that cap, the result also sets hasMore to true so the client knows the list was cut short."
+    },
+    {
+      "stage": "check",
+      "question": "A client is completing a prompt's second argument and has already resolved the first one. How should it help the server narrow the suggestions?",
+      "options": [
+        "Repeat the first argument inside the value field of the one being completed",
+        "Send a separate tools/call first so the server remembers the earlier answer",
+        "Open a subscriptions/listen stream and publish the earlier answer onto it",
+        "Carry the earlier answer in context.arguments on the completion request"
+      ],
+      "correct": 3,
+      "explanation": "completion/complete accepts a context.arguments map of already-resolved argument names to values, which lets the server narrow suggestions for the argument currently being typed."
+    },
+    {
+      "stage": "post",
+      "question": "A prompt message needs to point at a large reference file without inlining its bytes into the message. Which content type fits that job?",
+      "options": [
+        "A resource_link block with the file's uri, a name, and its mime type",
+        "An audio block, since resource references are only valid for sound content",
+        "A text block that copies the entire file inline as one long block of text",
+        "An image block, since resource references are only valid for picture content"
+      ],
+      "correct": 0,
+      "explanation": "A resource_link content block lets a prompt message point at a resource by uri, name, and mime type without embedding the resource's full contents in the message."
+    },
+    {
+      "stage": "post",
+      "question": "A client sends prompts/list with a cursor value the server never issued. What should a conformant server do with that request?",
+      "options": [
+        "Silently ignore the bad cursor and return the very first page again",
+        "Reject the request with a JSON-RPC error, code -32602 invalid params",
+        "Treat the cursor as valid and return an empty prompts array only",
+        "Start an entirely new connection and replay the whole prompt catalog"
+      ],
+      "correct": 1,
+      "explanation": "Cursors are opaque tokens the server itself issues; a cursor the server does not recognize is an invalid parameter and must be rejected with error code -32602."
+    }
+  ]
+}

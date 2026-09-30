@@ -1,0 +1,21 @@
+{
+  "title": "Dataset Split Auditor | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:55Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "cli.py",
+        "samples/input.json",
+        "--output",
+        "split-audit.json",
+        "--html",
+        "split-audit.html"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/dataset-split-auditor/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"train_rows\": 1,\n  \"test_rows\": 2,\n  \"train_groups\": 1,\n  \"test_groups\": 2,\n  \"audit\": {\n    \"content_leaks\": [\n      \"8510f6ddf3dc77c86a28406b95b28f5dab2c1ed6f1294d7cdd97651d6d408bb5\"\n    ],\n    \"group_leaks\": [\n      \"incident-1\"\n    ],\n    \"clean\": false,\n    \"content_evidence\": [\n      {\n        \"fingerprint\": \"8510f6ddf3dc77c86a28406b95b28f5dab2c1ed6f1294d7cdd97651d6d408bb5\",\n        \"train_ids\": [\n          \"train-a\"\n        ],\n        \"test_ids\": [\n          \"test-a\"\n        ],\n        \"sources\": [\n          {\n            \"id\": \"train-a\",\n            \"source\": \"train.jsonl:1\"\n          },\n          {\n            \"id\": \"test-a\",\n            \"source\": \"test.jsonl:1\"\n          }\n        ]\n      }\n    ],\n    \"group_evidence\": [\n      {\n        \"group\": \"incident-1\",\n        \"train_ids\": [\n          \"train-a\"\n        ],\n        \"test_ids\": [\n          \"test-b\"\n        ],\n        \"sources\": [\n          {\n            \"id\": \"train-a\",\n            \"source\": \"train.jsonl:1\"\n          },\n          {\n            \"id\": \"test-b\",\n            \"source\": \"test.jsonl:2\"\n          }\n        ]\n      }\n    ]\n  },\n  \"usable\": false,\n  \"partitions\": {\n    \"train\": [\n      {\n        \"id\": \"train-a\",\n        \"group\": \"incident-1\",\n        \"text\": \"Timeout after rollout\",\n        \"source\": \"train.jsonl:1\"\n      }\n    ],\n    \"test\": [\n      {\n        \"id\": \"test-a\",\n        \"group\": \"incident-2\",\n        \"text\": \" TIMEOUT after rollout \",\n        \"source\": \"test.jsonl:1\"\n      },\n      {\n        \"id\": \"test-b\",\n        \"group\": \"incident-1\",\n        \"text\": \"Rollback restored health\",\n        \"source\": \"test.jsonl:2\"\n      }\n    ]\n  }\n}\n",
+      "durationMs": 39
+    }
+  ]
+}

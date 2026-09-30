@@ -1,0 +1,78 @@
+{
+  "lesson": "02-the-integration-problem",
+  "title": "The Integration Problem MCP Solves",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Four AI applications each need to reach six external systems. How many implementations does one shared protocol require?",
+      "options": [
+        "Six, because only the external systems implement anything at all",
+        "Four, because only the AI applications implement anything at all",
+        "Ten, because each application and each system implements it once",
+        "Twenty-four, because each pair still needs its own custom glue"
+      ],
+      "correct": 2,
+      "explanation": "A shared protocol turns N times M pairings into N plus M implementations: four clients plus six servers is ten."
+    },
+    {
+      "stage": "check",
+      "question": "In the 2026-07-28 revision, how does a server learn which protocol version a request uses?",
+      "options": [
+        "From the version the server advertised in its latest tools/list reply",
+        "From the initialize handshake that opened the connection earlier on",
+        "From a session identifier the server assigned on the first request",
+        "From io.modelcontextprotocol/protocolVersion in the request's _meta"
+      ],
+      "correct": 3,
+      "explanation": "The protocol is stateless: every request carries its own protocol version and client capabilities in params._meta, with no handshake or session."
+    },
+    {
+      "stage": "check",
+      "question": "A client sends tools/call naming a tool the server does not expose. What does a conformant server return?",
+      "options": [
+        "A JSON-RPC error with code -32602 because the params are invalid",
+        "An input_required result asking the user to pick a different tool",
+        "A JSON-RPC error with code -32601 because the method is unknown",
+        "A normal result with isError set to true and an empty content list"
+      ],
+      "correct": 0,
+      "explanation": "An unknown tool is a protocol error reported as -32602 Invalid params; -32601 is reserved for an unknown JSON-RPC method."
+    },
+    {
+      "stage": "check",
+      "question": "Which statement correctly describes who controls each server primitive?",
+      "options": [
+        "All three primitives are chosen by the server operator ahead of time",
+        "Tools are model-controlled, resources app-driven, prompts user-controlled",
+        "Tools are user-controlled, resources model-controlled, prompts app-driven",
+        "All three primitives are chosen by the model at runtime without the host"
+      ],
+      "correct": 1,
+      "explanation": "The model decides when to invoke tools, the host application decides which resources enter context, and the user explicitly selects prompts."
+    },
+    {
+      "stage": "post",
+      "question": "A call to get_forecast omits its required city argument. Which response best helps the model recover?",
+      "options": [
+        "An empty successful result so that the conversation keeps going",
+        "A JSON-RPC error -32603 that reports an internal server failure",
+        "A result with isError true that explains the city is required",
+        "A JSON-RPC error -32602 that the host withholds from the model"
+      ],
+      "correct": 2,
+      "explanation": "Input problems are tool execution errors: a normal result with isError true lets the model read the explanation and retry with a city."
+    },
+    {
+      "stage": "post",
+      "question": "Which of these does MCP deliberately leave to the host application instead of standardizing?",
+      "options": [
+        "How a server describes the tools it offers to connecting clients",
+        "How a client invokes a tool and then reads the result that returns",
+        "How results and errors are shaped when they travel on the wire",
+        "Which model the host uses and how it assembles its model prompt"
+      ],
+      "correct": 3,
+      "explanation": "MCP standardizes the conversation between applications and systems; the choice of model and prompt construction remain the host's decisions."
+    }
+  ]
+}

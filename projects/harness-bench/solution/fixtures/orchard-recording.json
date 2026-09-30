@@ -1,0 +1,44 @@
+{
+  "kind": "authored_fixture",
+  "model": "orchard-authored-responses-v1",
+  "settings": {
+    "temperature": 0,
+    "max_tokens": 128
+  },
+  "responses": {
+    "How long does the Orchard export link last? Answer with a duration only.": [
+      {
+        "answer": "60 minutes"
+      }
+    ],
+    "How long does the Orchard export link last? Answer with a duration only.\n\nEvidence:\nOrchard runbook revision 7: an export link expires 15 minutes after creation.": [
+      {
+        "answer": "15 minutes"
+      }
+    ],
+    "What is the final Orchard restore state? Answer with the state only.": [
+      {
+        "answer": "",
+        "error": "transient"
+      },
+      {
+        "answer": "ready"
+      }
+    ],
+    "What is the final Orchard restore state? Answer with the state only.\n\nEvidence:\nRestore receipt R-42: verification passed; final state ready.": [
+      {
+        "answer": "ready"
+      }
+    ],
+    "What is the private Orchard enterprise price? Use unknown when absent.": [
+      {
+        "answer": "unknown"
+      }
+    ],
+    "What is the private Orchard enterprise price? Use unknown when absent.\n\nEvidence:\nThe public Orchard sheet contains no enterprise price.": [
+      {
+        "answer": "unknown"
+      }
+    ]
+  }
+}

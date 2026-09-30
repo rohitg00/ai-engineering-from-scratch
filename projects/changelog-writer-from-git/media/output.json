@@ -1,0 +1,17 @@
+{
+  "title": "Changelog Writer From Git | Actual artifact output",
+  "recordedAt": "2026-09-28T19:19:43Z",
+  "records": [
+    {
+      "command": [
+        "go",
+        "run",
+        "."
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/changelog-writer-from-git/solution",
+      "exitCode": 0,
+      "output": "# v0.2.0\n\n## Breaking changes\n- preserve citation offsets (def5678)\n\n## Features\n- cache evidence (abc1234)\n\n## Migration and revert review\n- def5678: Rebuild cached citation offsets before upgrading.\n\nSource range: export..export\nExport SHA-256: 3cbf69183b271d6fea2106d500fc2f542a7632a71deb6895ed9f29ab479aba16\n",
+      "durationMs": 744
+    }
+  ]
+}

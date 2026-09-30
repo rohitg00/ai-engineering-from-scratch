@@ -1,0 +1,78 @@
+{
+  "lesson": "29-operational-use-cases",
+  "title": "Choosing MCP's Shape for the Job",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which factor most directly decides whether a capability should be exposed as a tool, a resource, or a prompt?",
+      "options": [
+        "Whether the transport is stdio or Streamable HTTP, a detail the primitive never depends on",
+        "Who is meant to control it: the model, the application, or the user decide separately",
+        "How many bytes the response contains, a size limit no part of the protocol sets",
+        "Which language the server is written in, since MCP treats every runtime the same way"
+      ],
+      "correct": 1,
+      "explanation": "MCP assigns control of each primitive to a specific party: a tool is model controlled, a resource is application driven, and a prompt is user controlled, and that split is what a use case's initiator should decide."
+    },
+    {
+      "stage": "check",
+      "question": "A workflow automation use case kicks off a deploy pipeline that can run for twenty minutes before it finishes. Which result shape fits a request that long?",
+      "options": [
+        "A normal complete result, because MCP places no ceiling on how long one response may take",
+        "A resource read that streams the growing output back as one ever-expanding text block",
+        "A CreateTaskResult from the tasks extension, returning a taskId the client polls to finish",
+        "An input_required result, because the client must supply an argument before anything can run"
+      ],
+      "correct": 2,
+      "explanation": "Work that risks a transport timeout is a good fit for the tasks extension, which returns a durable taskId and status instead of holding the connection open for the full duration."
+    },
+    {
+      "stage": "check",
+      "question": "A nightly CI job calls an MCP server with no human present to approve anything. Which authorization path fits that caller?",
+      "options": [
+        "The interactive OAuth 2.1 code flow with PKCE, the same path a person would use",
+        "Dynamic Client Registration, completed once by a person before the nightly job ever runs",
+        "Credentials read from the environment, since every authorization path assumes a local stdio transport",
+        "The OAuth client credentials extension, which authenticates the machine caller with no user present"
+      ],
+      "correct": 3,
+      "explanation": "The OAuth client credentials authorization extension exists for exactly this case: an unattended, machine-to-machine caller that has no user available to complete an interactive redirect."
+    },
+    {
+      "stage": "check",
+      "question": "An internal ticket search tool's tools/list result is only meaningful within one authenticated organization. What must the result carry, and what does that setting not do?",
+      "options": [
+        "cacheScope private, which limits sharing across contexts but is not an access control itself",
+        "cacheScope private, which the server also uses as its access control for this list",
+        "No cache fields, because the result stays scoped to the session opened earlier on",
+        "cacheScope public, because only server/discover results ever carry any caching hints at all"
+      ],
+      "correct": 0,
+      "explanation": "tools/list is one of the six cacheable operations and must carry cacheScope; private only limits sharing across authorization contexts, it does not itself enforce access control, and 2026-07-28 has no session to scope anything by."
+    },
+    {
+      "stage": "post",
+      "question": "A function formats a currency string entirely inside one application process, with no external system, no separate host, and no second consumer. What does this scenario call for?",
+      "options": [
+        "An MCP resource, so the application can read the formatted string as added context",
+        "A direct function call, since no external system or second consumer needs a protocol boundary",
+        "An MCP tool, so the model can invoke the formatter whenever a number appears",
+        "An MCP prompt, so the user can pick a formatting template from a menu"
+      ],
+      "correct": 1,
+      "explanation": "MCP's value comes from interoperability across hosts and servers; a capability with no second consumer and no separate system to standardize access to gains nothing from a protocol boundary."
+    },
+    {
+      "stage": "post",
+      "question": "A usage-dashboard tool ships an MCP Apps UI resource. A client that never declared the io.modelcontextprotocol/ui extension calls it. What should a well-behaved server do?",
+      "options": [
+        "Reject the call outright, because a server treats every extension it offers as mandatory",
+        "Return the same interactive iframe, regardless of which capabilities the client happened to declare",
+        "Return a normal result with meaningful text, the fallback path for a client lacking it",
+        "Add the extension to the client's declared capabilities automatically so the call can proceed"
+      ],
+      "correct": 2,
+      "explanation": "Extensions are disabled by default and never assumed: a server offering a UI-enhanced tool should still return meaningful text content for a client that has not declared support for it."
+    }
+  ]
+}

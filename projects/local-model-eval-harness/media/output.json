@@ -1,0 +1,21 @@
+{
+  "title": "Local Model Evaluation Harness | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:57Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "cli.py",
+        "samples/input.json",
+        "--output",
+        "scorecard.json",
+        "--html",
+        "reliability.html"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/local-model-eval-harness/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"manifest\": {\n    \"model\": \"fixture-classifier\",\n    \"model_revision\": \"1\",\n    \"prompt_revision\": \"p1\",\n    \"hardware\": \"offline fixture\",\n    \"confidence_method\": \"authored teaching values\",\n    \"dataset_sha256\": \"18c311870ef7d3534fbaccfbabfc2954aa7bc0236caa519aecb4fbdc073e832e\"\n  },\n  \"correct\": 2,\n  \"total\": 3,\n  \"accuracy\": 0.6666666666666666,\n  \"coverage\": 1.0,\n  \"calibration\": {\n    \"ece\": 0.3666666666666667,\n    \"bins\": [\n      {\n        \"bin\": 3,\n        \"count\": 1,\n        \"confidence\": 0.6,\n        \"accuracy\": 1.0,\n        \"gap\": 0.4\n      },\n      {\n        \"bin\": 4,\n        \"count\": 2,\n        \"confidence\": 0.8500000000000001,\n        \"accuracy\": 0.5,\n        \"gap\": 0.3500000000000001\n      }\n    ]\n  },\n  \"p50_ms\": 150,\n  \"p95_ms\": 200,\n  \"measured_predictions\": 3,\n  \"source\": \"authored offline recording, synthetic latency\"\n}\n",
+      "durationMs": 41
+    }
+  ]
+}

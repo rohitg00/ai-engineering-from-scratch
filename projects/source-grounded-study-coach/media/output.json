@@ -1,0 +1,15 @@
+{
+  "title": "source-grounded-study-coach | Actual application output",
+  "url": "file:///tmp/aiefs-reviewed-apps/study/index.html",
+  "actions": [
+    [
+      "js",
+      "document.querySelector('article input').value='paper envelopes';document.querySelector('article details').open=true"
+    ],
+    [
+      "js",
+      "document.querySelector('article button').click();window.scrollTo(0,180)"
+    ]
+  ],
+  "kind": "browser capture"
+}

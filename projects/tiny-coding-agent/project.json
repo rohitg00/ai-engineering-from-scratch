@@ -1,0 +1,125 @@
+{
+  "id": "tiny-coding-agent",
+  "title": "Tiny Coding Agent",
+  "level": 1,
+  "levelName": "Starter",
+  "tagline": "Build a bounded coding loop that applies exact patches to a disposable workspace and runs its real tests through an allowlisted tool contract.",
+  "summary": "Build a bounded coding loop that applies exact patches to a disposable workspace and runs its real tests through an allowlisted tool contract.",
+  "youWillBuild": "A repair agent that exposes the patch/test evidence trail and refuses unsupported success claims.",
+  "usefulFor": [
+    "A repair agent that exposes the patch/test evidence trail and refuses unsupported success claims.",
+    "The CLI copies a trusted Python workspace to a new destination, then runs its tests as local code."
+  ],
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "languageWhy": {
+    "Python": "The standard library makes parsing, scoring, and failure handling visible without hiding the mechanism behind a framework."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Confine file tools to a workspace",
+    "Apply exact patches with preconditions",
+    "Run real tests through one allowed command",
+    "Stop the coding loop on evidence or budget"
+  ],
+  "prerequisites": [
+    {
+      "title": "The agent loop",
+      "path": "phases/14-agent-engineering/01-the-agent-loop"
+    },
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-tiny-coding-agent-1",
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-confine-paths",
+      "title": "Confine file tools to a workspace",
+      "summary": "Resolve existing relative file paths under a workspace and reject traversal, absolute paths, symlink escapes, and nonfiles.",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "path containment",
+        "tool boundaries"
+      ],
+      "figure": "pj-tiny-coding-agent-1"
+    },
+    {
+      "id": "02-apply-exact-patches",
+      "title": "Apply exact patches with preconditions",
+      "summary": "Replace one exact occurrence and preserve the file on missing or ambiguous matches.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "patch preconditions",
+        "atomic writes"
+      ],
+      "figure": "pj-tiny-coding-agent-2"
+    },
+    {
+      "id": "03-run-real-tests",
+      "title": "Run real tests through one allowed command",
+      "summary": "Run unittest discovery in the workspace and report passed, tests, output, and a terminal state.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "subprocess",
+        "timeouts",
+        "test evidence"
+      ],
+      "figure": "pj-tiny-coding-agent-3"
+    },
+    {
+      "id": "04-bound-the-loop",
+      "title": "Stop the coding loop on evidence or budget",
+      "summary": "Consume patch and test actions, record results, and return completed, failed, or budget_exhausted.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "agent loop",
+        "allowlisted tools",
+        "terminal states"
+      ],
+      "figure": "pj-tiny-coding-agent-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

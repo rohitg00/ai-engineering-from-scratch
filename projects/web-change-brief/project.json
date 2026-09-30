@@ -1,0 +1,121 @@
+{
+  "id": "web-change-brief",
+  "title": "Web Change Brief",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Turn noisy HTML snapshots into a small report of exact readable text changes.",
+  "summary": "Turn noisy HTML snapshots into a small report of exact readable text changes.",
+  "youWillBuild": "A standalone change report, changes.json and a reusable baseline.json snapshot.",
+  "usefulFor": [
+    "Two saved HTML snapshots of the same URL, or a saved JSON baseline and one explicit live HTTP(S) URL."
+  ],
+  "hours": 8,
+  "languages": [
+    "Go"
+  ],
+  "languageWhy": {
+    "Go": "Go's standard library exposes HTTP limits, context cancellation, atomic file replacement and safe HTML templates with no framework."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Extract text before comparing pages",
+    "Compare exact text and preserve duplicates",
+    "Fetch one page without losing the baseline",
+    "Export a brief a person can inspect"
+  ],
+  "prerequisites": [
+    "Write Go functions, slices, maps and error returns.",
+    "Understand an HTTP response status, Content-Type and body.",
+    "Understand that a text snapshot and a rendered web page expose different information."
+  ],
+  "figures": true,
+  "overviewFigure": "pj-web-change-brief-1",
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-extract-readable-blocks",
+      "title": "Extract text before comparing pages",
+      "summary": "Scan HTML into normalized readable blocks and exclude known noise regions.",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "go",
+      "languageWhy": "Go's standard library exposes HTTP limits, context cancellation, atomic file replacement and safe HTML templates with no framework.",
+      "concepts": [
+        "scanning",
+        "normalization",
+        "noise filtering"
+      ],
+      "figure": "pj-web-change-brief-1"
+    },
+    {
+      "id": "02-compare-snapshots",
+      "title": "Compare exact text and preserve duplicates",
+      "summary": "Build stable snapshots and count added and removed text occurrences.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "go",
+      "languageWhy": "Go's standard library exposes HTTP limits, context cancellation, atomic file replacement and safe HTML templates with no framework.",
+      "concepts": [
+        "canonical URLs",
+        "content hashes",
+        "multiset diffs"
+      ],
+      "figure": "pj-web-change-brief-2"
+    },
+    {
+      "id": "03-fetch-and-save",
+      "title": "Fetch one page without losing the baseline",
+      "summary": "Bound live HTTP work and verify saved snapshot integrity.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "go",
+      "languageWhy": "Go's standard library exposes HTTP limits, context cancellation, atomic file replacement and safe HTML templates with no framework.",
+      "concepts": [
+        "HTTP bounds",
+        "context cancellation",
+        "atomic writes"
+      ],
+      "figure": "pj-web-change-brief-3"
+    },
+    {
+      "id": "04-export-change-evidence",
+      "title": "Export a brief a person can inspect",
+      "summary": "Show exact added and removed statements beside the source and hashes.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "go",
+      "languageWhy": "Go's standard library exposes HTTP limits, context cancellation, atomic file replacement and safe HTML templates with no framework.",
+      "concepts": [
+        "safe templates",
+        "portable reports",
+        "explicit acceptance"
+      ],
+      "figure": "pj-web-change-brief-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Build and grade",
+      "caption": "A fresh starter fails; the complete original solution passes all four stages."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the application output",
+      "caption": "Actual output from authored offline fixtures. See the README for provider and evidence boundaries."
+    }
+  ]
+}

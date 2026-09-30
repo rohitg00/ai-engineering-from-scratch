@@ -36,7 +36,7 @@
         "To compress the file"
       ],
       "correct": 0,
-      "explanation": "load_sharded_checkpoint asserts each shard's actual hash matches the recorded one and the meta file's hash too. Silent corruption is the worst failure mode."
+      "explanation": "load_sharded_checkpoint checks each shard's actual hash against the recorded one, and the meta file's hash too, and raises before merging on any mismatch. Silent corruption is the worst failure mode."
     },
     {
       "stage": "check",

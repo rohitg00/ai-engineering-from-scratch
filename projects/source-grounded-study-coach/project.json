@@ -1,0 +1,122 @@
+{
+  "id": "source-grounded-study-coach",
+  "title": "Source-Grounded Study Coach",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "Build practice questions with source evidence and a visible review schedule.",
+  "summary": "Build practice questions with source evidence and a visible review schedule.",
+  "youWillBuild": "A standalone answer-reveal practice page and progress.json with due cards and reproducible schedule state.",
+  "usefulFor": [
+    "A JSON deck with source passages, authored questions, accepted answers and evidence offsets, plus dated attempt events."
+  ],
+  "hours": 8,
+  "languages": [
+    "TypeScript"
+  ],
+  "languageWhy": {
+    "TypeScript": "TypeScript uses one set of explicit data types for deck validation, event processing and a portable HTML practice view."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Give every answer a source location",
+    "Return feedback that shows its source",
+    "Replay attempts into a visible schedule",
+    "Make the reading useful as a practice page"
+  ],
+  "prerequisites": [
+    "Write TypeScript functions, arrays and object types.",
+    "Read JSON from local files and handle thrown errors.",
+    "Understand that matching an answer string does not establish semantic understanding."
+  ],
+  "figures": true,
+  "overviewFigure": "pj-source-grounded-study-coach-1",
+  "demo": {
+    "command": [
+      "node",
+      "--experimental-strip-types",
+      "demo.ts"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-ground-the-deck",
+      "title": "Give every answer a source location",
+      "summary": "Validate authored cards against immutable source passages.",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "languageWhy": "TypeScript uses one set of explicit data types for deck validation, event processing and a portable HTML practice view.",
+      "concepts": [
+        "evidence offsets",
+        "unique IDs",
+        "input validation"
+      ],
+      "figure": "pj-source-grounded-study-coach-1"
+    },
+    {
+      "id": "02-grade-with-evidence",
+      "title": "Return feedback that shows its source",
+      "summary": "Grade constrained short answers and reveal the supporting passage.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "languageWhy": "TypeScript uses one set of explicit data types for deck validation, event processing and a portable HTML practice view.",
+      "concepts": [
+        "normalization",
+        "accepted variants",
+        "grounded feedback"
+      ],
+      "figure": "pj-source-grounded-study-coach-2"
+    },
+    {
+      "id": "03-schedule-review",
+      "title": "Replay attempts into a visible schedule",
+      "summary": "Derive due dates from stable, dated attempt events.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "languageWhy": "TypeScript uses one set of explicit data types for deck validation, event processing and a portable HTML practice view.",
+      "concepts": [
+        "event replay",
+        "idempotency",
+        "calendar arithmetic"
+      ],
+      "figure": "pj-source-grounded-study-coach-3"
+    },
+    {
+      "id": "04-export-practice",
+      "title": "Make the reading useful as a practice page",
+      "summary": "Export a portable reveal-and-review view with reproducible progress.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "languageWhy": "TypeScript uses one set of explicit data types for deck validation, event processing and a portable HTML practice view.",
+      "concepts": [
+        "HTML rendering",
+        "progress export",
+        "provider boundaries"
+      ],
+      "figure": "pj-source-grounded-study-coach-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Build and grade",
+      "caption": "A fresh starter fails; the complete original solution passes all four stages."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the application output",
+      "caption": "Actual output from authored offline fixtures. See the README for provider and evidence boundaries."
+    }
+  ]
+}

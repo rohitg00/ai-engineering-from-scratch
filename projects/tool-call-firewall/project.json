@@ -1,0 +1,119 @@
+{
+  "id": "tool-call-firewall",
+  "title": "Tool Call Firewall",
+  "level": 4,
+  "levelName": "Systems",
+  "tagline": "Authorize structured tool requests before they cross a side-effect boundary.",
+  "summary": "Build a deny-by-default policy evaluator with bounded arguments, role permissions, single-use approvals and a structured audit log. The artifact is a library gate; applications must place it before every real tool execution.",
+  "usefulFor": [
+    "An approval receipt proving exactly which operation was authorized and executed.",
+    "The native CLI requires a trusted role from the invoking application."
+  ],
+  "youWillBuild": "An approval receipt proving exactly which operation was authorized and executed.",
+  "hours": 8,
+  "languages": [
+    "Rust"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Validate an unambiguous call envelope",
+    "Evaluate role and path policy",
+    "Consume a request-bound approval once",
+    "Record bounded audit evidence"
+  ],
+  "prerequisites": [
+    {
+      "title": "Tool schema design",
+      "path": "phases/13-tools-and-protocols/05-tool-schema-design"
+    },
+    {
+      "title": "Security and secrets audit",
+      "path": "phases/17-infrastructure-and-production/25-security-secrets-audit"
+    }
+  ],
+  "inspiredBy": [],
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-validate-an-unambiguous-call-envelope",
+      "title": "Validate an unambiguous call envelope",
+      "summary": "Parse a bounded four-field envelope using a pipe delimiter for this local exercise.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "starter",
+      "concepts": [
+        "Byte budget",
+        "Envelope fields",
+        "Control gate",
+        "Call identity"
+      ]
+    },
+    {
+      "id": "02-evaluate-role-and-path-policy",
+      "title": "Evaluate role and path policy",
+      "summary": "Only reader and editor roles exist.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Known role",
+        "Path components",
+        "Tool permission",
+        "Decision"
+      ]
+    },
+    {
+      "id": "03-consume-a-request-bound-approval-once",
+      "title": "Consume a request-bound approval once",
+      "summary": "An approval is bound to the complete call identity supplied by a trusted application and is consumed only for an approval-required decision.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Decision gate",
+        "Match identity",
+        "Check unused",
+        "Consume once"
+      ]
+    },
+    {
+      "id": "04-record-bounded-audit-evidence",
+      "title": "Record bounded audit evidence",
+      "summary": "Format a stable tab-separated audit row after the policy decision.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Unique call",
+        "Capacity check",
+        "Omit arguments",
+        "Record decision"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

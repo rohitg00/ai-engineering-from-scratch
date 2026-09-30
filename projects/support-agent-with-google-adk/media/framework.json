@@ -1,0 +1,34 @@
+{
+  "title": "Real SDK / current local fixture tests",
+  "recordedAt": "2026-09-28T19:39:55Z",
+  "records": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/project_test.py",
+        "support-agent-with-google-adk",
+        "--all",
+        "--solution",
+        "--optional",
+        "--strict",
+        "--report",
+        "<review-reports>/support-agent-with-google-adk.json"
+      ],
+      "cwd": "<repo>",
+      "exitCode": 0,
+      "output": "Support Agent With Google ADK: grading solution\n  PASS stage 1: Validate before starting a session (5 tests)\n  PASS stage 2: Route and authorize as separate decisions (5 tests)\n  PASS stage 3: Retain the actual response in the handoff (5 tests)\n  PASS stage 4: Reuse the policy inside the real ADK path (20 tests)\nreport: <review-reports>/support-agent-with-google-adk.json\n",
+      "durationMs": 1431
+    }
+  ],
+  "provenance": "Executed the current optional project grader. Host-specific paths are normalized; output and test counts are unchanged. These fixtures make no live model or cloud requests.",
+  "pathAliases": {
+    ".venv/bin/python": "Healthy Python 3.12 SDK environment",
+    "<repo>": "Repository root",
+    "<review-reports>": "Local verification reports directory outside the repository"
+  },
+  "tests": {
+    "core": 25,
+    "additionalSDK": 10,
+    "skipped": 0
+  }
+}

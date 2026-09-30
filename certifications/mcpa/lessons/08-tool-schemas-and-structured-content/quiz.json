@@ -1,0 +1,78 @@
+{
+  "lesson": "08-tool-schemas-and-structured-content",
+  "title": "The Contract Inside a Tool Definition",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A tool takes no parameters. Which inputSchema is the recommended way to declare that, so only an empty object is accepted?",
+      "options": [
+        "A null value, left out entirely so no client validates the call at all",
+        "type object alone, which accepts any object, including one with properties",
+        "type object with additionalProperties false, accepting only empty objects",
+        "An empty schema with no type keyword, which accepts any JSON value at all"
+      ],
+      "correct": 2,
+      "explanation": "The recommended no-parameter form is type object with additionalProperties false, which explicitly accepts only an empty object; inputSchema must never be null."
+    },
+    {
+      "stage": "check",
+      "question": "A tool's inputSchema has no $schema field at all. Which dialect governs how a client validates arguments against it in 2026-07-28?",
+      "options": [
+        "Draft-07, kept as the fallback default for compatibility with older servers",
+        "Whichever dialect the connecting client's own SDK happens to be built against",
+        "OpenAPI 3.1's schema object, since MCP tool schemas reuse its object model",
+        "JSON Schema 2020-12, the default dialect a schema uses when $schema is absent"
+      ],
+      "correct": 3,
+      "explanation": "When a schema omits $schema, MCP defaults it to JSON Schema 2020-12; a schema may declare a different dialect explicitly, but 2020-12 is always the fallback."
+    },
+    {
+      "stage": "check",
+      "question": "A tool declares an outputSchema and a call to it succeeds. What should the result contain, per the 2026-07-28 tools specification?",
+      "options": [
+        "structuredContent conforming to outputSchema, plus the same data serialized as text",
+        "Only structuredContent, since a schema-conformant value makes any text redundant",
+        "A resource_link pointing at a URI where the structured value can be fetched later",
+        "Only a text content block, because structuredContent belongs to resources, not tools"
+      ],
+      "correct": 0,
+      "explanation": "A result should carry structuredContent that conforms to outputSchema, and for backward compatibility it should also serialize that same value into a TextContent block."
+    },
+    {
+      "stage": "check",
+      "question": "A tools/call argument fails the tool's inputSchema, for instance a required field is missing. What does a conformant 2026-07-28 server return?",
+      "options": [
+        "A normal result with isError set to false, since the server produced a response",
+        "A normal result with isError set to true and content explaining what to fix",
+        "A JSON-RPC error, code -32602, because invalid arguments are a protocol-level fault",
+        "A JSON-RPC error, code -32601, because the requested method could not be located"
+      ],
+      "correct": 1,
+      "explanation": "SEP-1303 moved input validation failures into tool execution errors: a normal result with isError true and an explanation the model can read and correct on its next call."
+    },
+    {
+      "stage": "post",
+      "question": "A tool's inputSchema has a $ref that resolves to https://schemas.example.com/common.json. What should a conformant implementation do with that reference by default?",
+      "options": [
+        "Reject the whole tool definition outright, since inputSchema may never contain a ref",
+        "Fetch the URL the first time it validates the schema, then cache the response",
+        "Refuse to dereference it automatically, since network refs need an explicit opt-in",
+        "Treat the referenced property as unconstrained and accept whatever value arrives there"
+      ],
+      "correct": 2,
+      "explanation": "Implementations must not automatically dereference a $ref that resolves to a network URI; fetching one is opt-in only, disabled by default, and guarded by an allowlist when offered."
+    },
+    {
+      "stage": "post",
+      "question": "Which of these candidate tool names satisfies the naming rules a conformant 2026-07-28 server should follow?",
+      "options": [
+        "A 200 character name built by concatenating a full sentence about the tool",
+        "\"get user\", separating the two words in the name with a plain space",
+        "get/user@2026, mixing a forward slash with an at sign in one name",
+        "admin.tools.list, built only from letters and dots and no spaces at all"
+      ],
+      "correct": 3,
+      "explanation": "Tool names should stay within 1 to 128 characters of letters, digits, underscore, hyphen, and dot; spaces, an at sign, and a slash all fall outside that allowed character set."
+    }
+  ]
+}

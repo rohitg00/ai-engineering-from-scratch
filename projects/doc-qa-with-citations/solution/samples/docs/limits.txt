@@ -1,0 +1,1 @@
+Gateway retries stop after three attempts. Requests have a ten second deadline.

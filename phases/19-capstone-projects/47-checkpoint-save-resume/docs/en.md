@@ -90,7 +90,7 @@ cc-atomic-checkpoint
 
 ### Step 1: capture and restore RNG state
 
-`capture_rng_state` returns a dict with Python's `random.getstate`, NumPy's `np.random.get_state`, and PyTorch CPU and CUDA RNG bytes. `restore_rng_state` reverses it. The CPU tensor is a uint8 byte buffer that PyTorch's RNG knows how to consume.
+`capture_rng_state` returns a dict with Python's `random.getstate`, NumPy's `np.random.get_state`, and PyTorch CPU and CUDA RNG bytes. Every piece is stored as plain Python numbers, tuples, and lists (NumPy's key array goes through `tolist()`), so the loader in Step 3 can read it back without unpickling arbitrary objects. `restore_rng_state` reverses it. The CPU tensor is a uint8 byte buffer that PyTorch's RNG knows how to consume.
 
 ### Step 2: atomic save
 
@@ -100,9 +100,11 @@ cc-atomic-checkpoint
 
 `save_checkpoint` packages the model, optimizer, scheduler, train state, and RNG into one dict. `load_checkpoint` reverses it and returns a `TrainState`. The schema field is the upgrade hook: future format changes bump the version string and the loader dispatches.
 
+`load_checkpoint` calls `torch.load(..., weights_only=True)`. A `.pt` file is a pickle, and unpickling an untrusted file with `weights_only=False` runs whatever code the file names. The weights-only loader accepts tensors and primitive containers and rejects everything else, which is why Step 1 keeps the RNG state in plain lists. Integrity checks raise `ValueError` instead of using `assert`, because `python -O` strips asserts. Use torch 2.6 or newer: before that release `weights_only=True` had a known bypass (CVE-2025-32434), so the guarantee this lesson relies on holds only from 2.6 on.
+
 ### Step 4: sharded variant
 
-`save_sharded_checkpoint` round-robins the parameter keys across N shards, writes each shard with its own atomic save, writes a meta file with optimizer and scheduler and train state, and writes the JSON index with shard sha256s. `load_sharded_checkpoint` verifies every shard before merging.
+`save_sharded_checkpoint` round-robins the parameter keys across N shards, writes each shard with its own atomic save, writes a meta file with optimizer and scheduler and train state, and writes the JSON index with shard sha256s. `load_sharded_checkpoint` verifies every shard before merging and refuses any shard path that resolves outside the checkpoint directory.
 
 ### Step 5: resume demo
 
@@ -120,8 +122,9 @@ The single-file and sharded demos both assert max-diff under 1e-4. The summary l
 
 Production training stacks ship checkpointing as part of the trainer. The shape is the same: model + optimizer + scheduler + counters + RNG, written atomically, named by step so the latest is easy to find. Sharded layouts power large model loading with parallel reads; the index.json is what makes that work.
 
-Three patterns to enforce:
+Four patterns to enforce:
 
+- **Load with `weights_only=True`.** A checkpoint pulled from a shared drive or a download is untrusted input. The weights-only loader keeps a malicious file from running code on the machine that resumes.
 - **Schema is a string in the payload.** Migrations branch on it. Without it you cannot evolve the format without breaking old runs.
 - **Sha256 every shard.** A silently truncated download is the worst kind of bug; the loader fails fast or it fails late.
 - **Keep checkpoint cadence honest.** Save every N steps and every wallclock-minute, whichever is shorter. Otherwise the long step that crashes wastes a full window of work.
@@ -151,7 +154,7 @@ Three patterns to enforce:
 ## Further Reading
 
 - POSIX `rename` semantics for the atomicity claim that `os.replace` relies on.
-- PyTorch documentation on `torch.save` and `torch.load`, including `map_location` for cross-device restores.
+- PyTorch documentation on `torch.save` and `torch.load`, including `map_location` for cross-device restores and `weights_only` for loading untrusted files.
 - Phase 19 lesson 46 covers the gradient accumulation that this lesson's checkpoint payload survives across.
 - Phase 19 lesson 48 covers the distributed wrappers whose state dict format this scheme accommodates.
 - The Linux kernel `fsync` documentation for the durability guarantee behind atomic rename.

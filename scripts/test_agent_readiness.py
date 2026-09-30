@@ -16,7 +16,7 @@ COURSE_ID = "https://aiengineeringfromscratch.com/#course"
 def load_json_ld(path: Path) -> list[dict]:
     blocks = re.findall(
         r'<script\s+type="application/ld\+json"\s*>(.*?)</script>',
-        path.read_text(),
+        path.read_text(encoding="utf-8"),
         flags=re.IGNORECASE | re.DOTALL,
     )
     return [json.loads(block) for block in blocks]
@@ -63,12 +63,21 @@ def assert_legacy_redirect(paths: dict, route: str, parameter_name: str) -> None
 
 
 def main() -> None:
-    config = json.loads((ROOT / "vercel.json").read_text())
+    config = json.loads((ROOT / "vercel.json").read_text(encoding="utf-8"))
     rewrites = config["rewrites"]
     markdown_rewrites = [r for r in rewrites if "has" in r and r["destination"] == "/llms.txt"]
     negotiator_rewrites = [r for r in rewrites if r.get("destination", "").startswith("/api/markdown")]
     assert negotiator_rewrites, "markdown negotiation rewrite is missing"
     assert all("accept" in h["key"].lower() for r in negotiator_rewrites for h in r["has"])
+    shadowed = [
+        r["source"]
+        for r in negotiator_rewrites
+        if any(
+            candidate.is_file()
+            for candidate in (SITE / r["source"].strip("/") / "index.html", SITE / r["source"].strip("/"))
+        )
+    ]
+    assert not shadowed, f"a static file wins over these negotiation rewrites: {shadowed}"
 
     route_rewrites = {rewrite["source"]: rewrite["destination"] for rewrite in rewrites}
     assert route_rewrites["/lesson"] == "/api/lesson"
@@ -87,6 +96,12 @@ def main() -> None:
         "methods": ["GET", "HEAD"],
         "dest": "/api/certification?legacy=1",
     }
+    root_route = legacy_routes["/"]
+    assert root_route["dest"] == "/api/markdown?path=/"
+    assert any(
+        h["type"] == "header" and h["key"].lower() == "accept" and "text/markdown" in h["value"]
+        for h in root_route["has"]
+    )
 
     headers = config["headers"]
     llms_header = next(h for h in headers if h["source"] == "/llms.txt")
@@ -98,11 +113,11 @@ def main() -> None:
         assert (SITE / name).is_file(), f"missing {name}"
 
     for name in ("developer.html", "contact.html", "privacy.html"):
-        text = (SITE / name).read_text()
+        text = (SITE / name).read_text(encoding="utf-8")
         assert "AI Engineering from Scratch" in text
         assert len(" ".join(text.split())) > 500, f"{name} is too thin to be a trust page"
 
-    openapi = json.loads((SITE / "openapi.json").read_text())
+    openapi = json.loads((SITE / "openapi.json").read_text(encoding="utf-8"))
     assert openapi["openapi"].startswith("3.")
     assert "https://aiengineeringfromscratch.com" in openapi["servers"][0]["url"]
     paths = openapi["paths"]
@@ -131,7 +146,7 @@ def main() -> None:
     assert problem["properties"]["type"]["const"] == "about:blank"
     assert set(problem["required"]) == {"type", "title", "status", "code", "detail"}
     assert (ROOT / "api/v1/markdown.js").is_file()
-    assert "/api/v1/markdown" in (SITE / "developer.html").read_text()
+    assert "/api/v1/markdown" in (SITE / "developer.html").read_text(encoding="utf-8")
 
     def check_refs(value):
         if isinstance(value, dict):
@@ -150,7 +165,7 @@ def main() -> None:
     redirect_response = openapi["components"]["responses"]["PermanentRedirect"]
     assert redirect_response["headers"]["Location"]["schema"]["type"] == "string"
 
-    lesson_manifest = json.loads((SITE / "lesson-seo.json").read_text())
+    lesson_manifest = json.loads((SITE / "lesson-seo.json").read_text(encoding="utf-8"))
     lessons = lesson_manifest["lessons"]
     assert len(lessons) >= 500, "lesson SEO manifest regressed to a generic shell"
     assert all(entry["path"] == lesson_path for lesson_path, entry in lessons.items())
@@ -162,7 +177,7 @@ def main() -> None:
         for entry in lessons.values()
     )
 
-    certification_manifest = json.loads((SITE / "certification-seo.json").read_text())
+    certification_manifest = json.loads((SITE / "certification-seo.json").read_text(encoding="utf-8"))
     tracks = certification_manifest["tracks"]
     assert len(tracks) >= 4, "certification SEO manifest regressed to a generic shell"
     assert all(entry["id"] == track_id for track_id, entry in tracks.items())
@@ -174,7 +189,7 @@ def main() -> None:
         for entry in tracks.values()
     )
 
-    sitemap = (SITE / "sitemap.xml").read_text()
+    sitemap = (SITE / "sitemap.xml").read_text(encoding="utf-8")
     assert sitemap.count("/lesson?path=") == len(lessons)
     sitemap_lessons = {
         unquote(value)
@@ -194,7 +209,7 @@ def main() -> None:
         ),
     )
     for template_name, seo_marker, fallback_marker in templates_and_markers:
-        template = (SITE / template_name).read_text()
+        template = (SITE / template_name).read_text(encoding="utf-8")
         assert template.count(seo_marker) == 1
         assert template.count(fallback_marker) == 1
 
@@ -231,10 +246,10 @@ def main() -> None:
     ):
         assert false_field not in identity_json
 
-    not_found = (SITE / "404.html").read_text()
+    not_found = (SITE / "404.html").read_text(encoding="utf-8")
     assert "/llms.txt" in not_found and "/sitemap.xml" in not_found
     assert (ROOT / "api" / "markdown.js").is_file()
-    assert "Vary" in (ROOT / "api" / "markdown.js").read_text()
+    assert "Vary" in (ROOT / "api" / "markdown.js").read_text(encoding="utf-8")
     print("agent readiness contracts: ok")
 
 

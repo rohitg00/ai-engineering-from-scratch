@@ -1,0 +1,48 @@
+{
+  "title": "Source-Grounded Study Coach | Build and verify",
+  "recordedAt": "2026-09-28T19:26:12Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "source-grounded-study-coach",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-ds2m6j90"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-ds2m6j90\n  created  STAGE.md\n  created  fixtures/attempts.json\n  created  fixtures/deck.json\n  created  main.ts\n  created  STAGE-2.md\n  created  STAGE-3.md\n  created  STAGE-4.md\nnext: python3 scripts/project_test.py source-grounded-study-coach --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-ds2m6j90\n",
+      "durationMs": 48
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "source-grounded-study-coach",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-ds2m6j90"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Source-Grounded Study Coach: grading learner\n  FAIL stage 1: Give every answer a source location (7 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 263
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "source-grounded-study-coach",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Source-Grounded Study Coach: grading solution\n  PASS stage 1: Give every answer a source location (7 tests)\n  PASS stage 2: Return feedback that shows its source (7 tests)\n  PASS stage 3: Replay attempts into a visible schedule (7 tests)\n  PASS stage 4: Make the reading useful as a practice page (9 tests)\n",
+      "durationMs": 1034
+    }
+  ]
+}

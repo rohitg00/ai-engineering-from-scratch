@@ -1,0 +1,16 @@
+{
+  "title": "Skill Router | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:04Z",
+  "records": [
+    {
+      "command": [
+        "node",
+        "demo.ts"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/skill-router/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"status\": \"ready\",\n  \"ranked\": [\n    {\n      \"skill\": {\n        \"keywords\": [\n          \"release\",\n          \"replicas\"\n        ],\n        \"paths\": [\n          \"deploy/**\"\n        ],\n        \"priority\": 1,\n        \"requires\": [\n          \"check-tests\"\n        ],\n        \"permissions\": [\n          \"read\"\n        ],\n        \"id\": \"release-review\",\n        \"description\": \"Review Orchard deployment manifests\"\n      },\n      \"score\": 7,\n      \"reasons\": [\n        \"keyword:release\",\n        \"keyword:replicas\",\n        \"path:deploy/orchard.yaml\"\n      ]\n    }\n  ],\n  \"plan\": [\n    \"check-tests\",\n    \"release-review\"\n  ]\n}\n",
+      "durationMs": 120
+    }
+  ]
+}

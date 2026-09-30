@@ -1,0 +1,11 @@
+{
+  "title": "inbox-triage-desk | Actual application output",
+  "url": "file:///tmp/aiefs-reviewed-apps/inbox/index.html",
+  "actions": [
+    [
+      "js",
+      "window.scrollTo(0,400)"
+    ]
+  ],
+  "kind": "browser capture"
+}

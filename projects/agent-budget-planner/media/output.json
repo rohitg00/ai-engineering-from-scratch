@@ -1,0 +1,21 @@
+{
+  "title": "Agent Budget Planner | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:52Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "cli.py",
+        "samples/input.json",
+        "--mode",
+        "execute",
+        "--output",
+        "budget.json"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/agent-budget-planner/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"ledger\": {\n    \"limit\": 100,\n    \"spent\": 95,\n    \"holds\": {},\n    \"closed\": [\n      \"index\",\n      \"extra\"\n    ]\n  },\n  \"events\": [\n    {\n      \"id\": \"index\",\n      \"status\": \"completed\",\n      \"reserved\": 60,\n      \"actual\": 35,\n      \"unused\": 25,\n      \"value\": \"8ea1a14d08a3644b6fc8fd8819da4b1eba64624afff6654e8dd8cd87bf136cea\"\n    },\n    {\n      \"id\": \"report\",\n      \"status\": \"rejected\",\n      \"reason\": \"budget exceeded\"\n    },\n    {\n      \"id\": \"extra\",\n      \"status\": \"completed\",\n      \"reserved\": 60,\n      \"actual\": 60,\n      \"unused\": 0,\n      \"value\": \"c8dee78f8c7b466c881847accc196998bad00e2b96c5ef913dfbe454d3807c96\"\n    }\n  ],\n  \"elapsed_ms\": 0.027,\n  \"unit\": \"teaching_units\",\n  \"mode\": \"execute\",\n  \"cost_source\": \"caller supplied receipts; not provider metering\"\n}\n",
+      "durationMs": 39
+    }
+  ]
+}

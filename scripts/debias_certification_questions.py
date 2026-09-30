@@ -26,8 +26,7 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parent.parent
-LESSON_QUIZZES = ROOT / "certifications" / "claude" / "lessons"
-ASSESSMENTS = ROOT / "certifications" / "claude" / "assessments"
+CERTIFICATIONS_ROOT = ROOT / "certifications"
 POSITIONAL_ANCHOR = re.compile(
     r"\b(?:all|none)\s+of\s+(?:the\s+)?(?:above|below|these)\b"
     r"|\b(?:both|neither|either)\s+[A-D]\s+(?:and|or)\s+[A-D]\b",
@@ -36,7 +35,7 @@ POSITIONAL_ANCHOR = re.compile(
 
 
 def question_files() -> list[Path]:
-    return sorted(LESSON_QUIZZES.glob("*/quiz.json")) + sorted(ASSESSMENTS.glob("*/*.json"))
+    return sorted(CERTIFICATIONS_ROOT.glob("*/lessons/*/quiz.json")) + sorted(CERTIFICATIONS_ROOT.glob("*/assessments/*/*.json"))
 
 
 def seed_for(path: str, value: str) -> int:

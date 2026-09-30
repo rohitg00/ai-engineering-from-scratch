@@ -1,0 +1,78 @@
+{
+  "lesson": "17-tool-invocation-lifecycle",
+  "title": "The Tool Invocation Lifecycle",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which two checkpoints in a tool invocation never produce a JSON-RPC message of their own?",
+      "options": [
+        "Discover and list, since caching means they are skipped",
+        "Select and confirm, since both happen only inside the host",
+        "Call and result, since both are folded into a single round trip",
+        "Validate and execute, since both happen only on the server"
+      ],
+      "correct": 1,
+      "explanation": "Select is the model choosing a tool and confirm is the host's own approval gate; neither one is a wire method, so neither can appear as a request or a response."
+    },
+    {
+      "stage": "check",
+      "question": "A tools/call names a tool the server has never registered. Which response is correct for 2026-07-28?",
+      "options": [
+        "An input_required result asking the client to supply a different tool name",
+        "A complete result with isError true, since the model can retry with a new name",
+        "A JSON-RPC error with code -32602, since the tool itself was never registered",
+        "A JSON-RPC error with code -32601, since the method itself is unknown"
+      ],
+      "correct": 2,
+      "explanation": "The tools/call method was recognized fine; only the tool name inside it was invalid, which is Invalid params, -32602, not the -32601 reserved for an unrecognized method."
+    },
+    {
+      "stage": "check",
+      "question": "publish_release is called with a missing required argument. Where does this fail and how is it reported?",
+      "options": [
+        "At execute, as a JSON-RPC error with code -32603",
+        "At execute, as a complete result with isError set to true",
+        "At confirm, since the host should have caught it before sending the call",
+        "At validate, as a JSON-RPC error with code -32602"
+      ],
+      "correct": 3,
+      "explanation": "Validate only confirms the tool is known; a missing or malformed argument is caught once execute checks the arguments against the tool's own schema, and it comes back as an actionable isError result."
+    },
+    {
+      "stage": "check",
+      "question": "A client's request to get_build_status timed out. What is the resultType of the response that ends this call?",
+      "options": [
+        "There is no such result: the caller simply stops waiting",
+        "\"timed_out\", a dedicated resultType the server returns for this case",
+        "\"complete\", with isError true and a message about the timeout",
+        "\"cancelled\", since the client gave up and tore down the request"
+      ],
+      "correct": 0,
+      "explanation": "Neither a timeout nor a cancellation is a resultType; the server never gets to send a result the client still cares about, so the caller simply stops waiting and moves on."
+    },
+    {
+      "stage": "post",
+      "question": "get_build_status is mid-poll when the stream breaks before any response arrives. What should the client do next?",
+      "options": [
+        "Start a brand new build, since the original handle is now permanently invalid",
+        "Send a fresh id for the same handle, since idempotentHint marks it safe",
+        "Reuse the same JSON-RPC id, since the server is still processing that request",
+        "Wait indefinitely, since a broken stream always resumes once the connection recovers"
+      ],
+      "correct": 1,
+      "explanation": "Nothing about this transport is resumable, so the lost request must be reissued with a new id; get_build_status is annotated idempotentHint true, which is what makes a blind reissue reasonable here."
+    },
+    {
+      "stage": "post",
+      "question": "A publish_release call returns input_required, the client gathers the change ticket, and retries. What must that retry include?",
+      "options": [
+        "The same JSON-RPC id, plus a fresh requestState the client generates itself",
+        "A new JSON-RPC id only, requestState is never sent back to the server",
+        "A new JSON-RPC id, together with inputResponses and the exact requestState echoed back",
+        "The same JSON-RPC id as the first attempt, so the server can match them"
+      ],
+      "correct": 2,
+      "explanation": "A retry is an independent request: it needs its own new id, inputResponses keyed to match inputRequests, and requestState echoed back exactly as the server sent it, never invented or reused from a prior id."
+    }
+  ]
+}

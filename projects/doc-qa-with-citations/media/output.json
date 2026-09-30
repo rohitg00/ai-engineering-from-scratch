@@ -1,0 +1,22 @@
+{
+  "title": "Document QA With Citations and LangChain | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:55Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "cli.py",
+        "samples/docs",
+        "When does cache expire?",
+        "--output",
+        "answer.json",
+        "--html",
+        "answer.html"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/doc-qa-with-citations/solution",
+      "exitCode": 0,
+      "output": "{\n  \"answer\": \"Private answers never enter the shared cache.\",\n  \"citations\": [\n    {\n      \"source\": \"cache.txt\",\n      \"start\": 56,\n      \"end\": 101,\n      \"sha256\": \"a79d26e83e350f271a671f10a819d5d78e3e6bbd27da328396c999cdab9d6591\",\n      \"start_line\": 1\n    }\n  ],\n  \"state\": \"answered\",\n  \"schema_version\": 1,\n  \"question\": \"When does cache expire?\",\n  \"candidates\": [\n    {\n      \"id\": \"cache.txt:0\",\n      \"score\": 1.1736001944781467\n    }\n  ],\n  \"relevance\": \"lexical overlap; human judgment still required\",\n  \"mode\": \"local-extractive\"\n}\n",
+      "durationMs": 40
+    }
+  ]
+}

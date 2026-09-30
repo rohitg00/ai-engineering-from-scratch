@@ -1,0 +1,122 @@
+{
+  "id": "changelog-writer-from-git",
+  "title": "Changelog Writer From Git",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "Turn conventional commit records into a stable release note.",
+  "summary": "Read a real Git revision range, preserve migration footers and revert references, then export reproducible Markdown with a source receipt.",
+  "usefulFor": [
+    "Read a real Git revision range, preserve migration footers and revert references, then export reproducible Markdown with a source receipt.",
+    "Pipe portable JSON receipts into your own review or publishing workflow."
+  ],
+  "youWillBuild": "Read a real Git revision range, preserve migration footers and revert references, then export reproducible Markdown with a source receipt.",
+  "hours": 8,
+  "languages": [
+    "Go"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Read an immutable Git export",
+    "Classify conventional subjects",
+    "Group commits with stable ordering",
+    "Render bounded release notes"
+  ],
+  "prerequisites": [
+    {
+      "title": "Development environment",
+      "path": "phases/00-setup-and-tooling/01-dev-environment"
+    },
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    }
+  ],
+  "inspiredBy": [],
+  "demo": {
+    "command": [
+      "go",
+      "run",
+      "."
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-read-an-immutable-git-export",
+      "title": "Read an immutable Git export",
+      "summary": "Consume one hash and subject per tab-separated line, rejecting duplicate hashes, malformed hexadecimal IDs and empty subjects.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "starter",
+      "concepts": [
+        "Read snapshot",
+        "Validate hash",
+        "Unique commit",
+        "Preserve subject"
+      ]
+    },
+    {
+      "id": "02-classify-conventional-subjects",
+      "title": "Classify conventional subjects",
+      "summary": "Parse type, optional scope and optional breaking marker from the first colon-space boundary.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "First grammar",
+        "Optional scope",
+        "Breaking marker",
+        "Retained description"
+      ]
+    },
+    {
+      "id": "03-group-commits-with-stable-ordering",
+      "title": "Group commits with stable ordering",
+      "summary": "Map breaking changes to their own section before feature and fix groups.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Classify",
+        "Breaking precedence",
+        "Group map",
+        "Stable hash order"
+      ]
+    },
+    {
+      "id": "04-render-bounded-release-notes",
+      "title": "Render bounded release notes",
+      "summary": "Validate a release label, enforce a maximum commit count and emit sections in a fixed order.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Release label",
+        "Commit budget",
+        "Escape content",
+        "Fixed section order"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-changelog-writer-from-git-1"
+}

@@ -1,0 +1,111 @@
+{
+  "id": "meeting-notes-to-actions",
+  "title": "Meeting Notes to Actions",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "A source-linked commitment inbox whose export requires an explicit review decision.",
+  "summary": "A source-linked commitment inbox whose export requires an explicit review decision. Use the schema_version1 actions.json receipt with stable action ids and original source lines. CSV columns are id, owner, due and task, and contain approved actions only.",
+  "youWillBuild": "A source-linked commitment inbox whose export requires an explicit review decision.",
+  "usefulFor": [
+    "Use the schema_version1 actions.json receipt with stable action ids and original source lines. CSV columns are id, owner, due and task, and contain approved actions only."
+  ],
+  "hours": 8,
+  "languages": ["Python"],
+  "languageWhy": {
+    "Python": "The standard library makes parsing, scoring, and failure handling visible without hiding the mechanism behind a framework."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Parse explicit action records with line provenance",
+    "Validate owners and calendar dates",
+    "Deduplicate exact commitments without losing citations",
+    "Publish an escaped HTML checklist and summary"
+  ],
+  "prerequisites": [
+    "Python 3.10+",
+    "line-oriented parsing, dictionaries, ISO dates, escaping and JSON files."
+  ],
+  "figures": true,
+  "overviewFigure": "pj-meeting-notes-to-actions-1",
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/notes.txt",
+      "--today",
+      "2026-09-29",
+      "--output",
+      "actions.json",
+      "--html",
+      "actions.html",
+      "--csv",
+      "approved.csv"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-parse-lines",
+      "title": "Parse explicit action records with line provenance",
+      "summary": "Parse ACTION lines, keep source line numbers, and reject malformed marked lines..",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["conservative extraction", "provenance"],
+      "figure": "pj-meeting-notes-to-actions-1"
+    },
+    {
+      "id": "02-validate-commitments",
+      "title": "Validate owners and calendar dates",
+      "summary": "Validate owner, task, and ISO date.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["date validation", "uncertainty"],
+      "figure": "pj-meeting-notes-to-actions-2"
+    },
+    {
+      "id": "03-deduplicate-actions",
+      "title": "Deduplicate exact commitments without losing citations",
+      "summary": "Merge exact normalized duplicates and sort provenance line numbers.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["deduplication", "stable identity"],
+      "figure": "pj-meeting-notes-to-actions-3"
+    },
+    {
+      "id": "04-publish-checklist",
+      "title": "Publish an escaped HTML checklist and summary",
+      "summary": "Return HTML and counts for ready, review, and overdue actions.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["HTML escaping", "review queues", "artifact publishing"],
+      "figure": "pj-meeting-notes-to-actions-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

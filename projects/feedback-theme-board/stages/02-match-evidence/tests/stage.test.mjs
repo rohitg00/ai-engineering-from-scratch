@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {mkdtempSync,readFileSync,rmSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+const work=process.env.PROJECT_WORKSPACE;
+const f=await import(pathToFileURL(join(work,'main.ts')).href);
+const ROW={id:'1',text:'Search shows old pages',source:'s1'};
+const THEMES=[{id:'stale',title:'Stale results',phrases:['old pages']}];
+test('returns exact quote',()=>assert.equal(f.findEvidence(ROW,'old pages').quote,'old pages'));
+test('word boundaries',()=>assert.equal(f.findEvidence({...ROW,text:'The old homepage'},'old pages'),null));
+test('case-insensitive matching retains case',()=>assert.equal(f.findEvidence({...ROW,text:'OLD pages'},'old pages').quote,'OLD pages'));
+test('UTF16 offsets survive emoji',()=>{const row={...ROW,text:'🚀 old pages'};const e=f.findEvidence(row,'old pages');assert.equal(row.text.slice(e.start,e.end),e.quote);assert.equal(e.start,3);});
+test('negation is not interpreted as truth',()=>assert.ok(f.findEvidence({...ROW,text:'No old pages remain'},'old pages')));
+test('nonconsecutive phrase does not match',()=>assert.equal(f.findEvidence({...ROW,text:'old archived pages'},'old pages'),null));

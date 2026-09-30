@@ -1,0 +1,149 @@
+{
+  "id": "support-agent-with-google-adk",
+  "title": "Support Agent With Google ADK",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Build a redacted, authorized support review with retained replies and evidence, then run the same policy through real Google ADK agents.",
+  "summary": "Build a redacted, authorized support review with retained replies and evidence, then run the same policy through real Google ADK agents.",
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "An HTML review page and support.json with the redacted ticket, selected capability, source guidance, reply or escalation and state history.",
+  "usefulFor": [
+    "An HTML review page and support.json with the redacted ticket, selected capability, source guidance, reply or escalation and state history."
+  ],
+  "skills": [
+    "Validate before starting a session",
+    "Route and authorize as separate decisions",
+    "Retain the actual response in the handoff",
+    "Reuse the policy inside the real ADK path"
+  ],
+  "prerequisites": [
+    "Python dictionaries, exceptions and module imports.",
+    "An async function and an iterator of model events.",
+    "The distinction between classifying a request and authorizing a capability."
+  ],
+  "figures": true,
+  "overviewFigure": "pj-support-agent-with-google-adk-1",
+  "languageWhy": {
+    "Python": "Stdlib data structures, explicit algorithms and deterministic local tests."
+  },
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-intake",
+      "title": "Validate before starting a session",
+      "summary": "For invoice for sam@example.invalid api_key=EXAMPLE_TOKEN, the usable ticket text becomes invoice for [email] api_key=[redacted]. An empty string fails before routing. The same cleaned text must reach both the baseline and ADK path.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "starter",
+      "figure": "pj-support-agent-with-google-adk-1",
+      "concepts": [
+        "input validation",
+        "redaction",
+        "source handling"
+      ]
+    },
+    {
+      "id": "02-routing",
+      "title": "Route and authorize as separate decisions",
+      "summary": "invoice refund selects billing and can use read_invoice. invoice login ties billing and access, so it escalates. A billing route requesting read_account is rejected even though that tool is valid for another specialist.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-support-agent-with-google-adk-2",
+      "concepts": [
+        "routing scores",
+        "ties",
+        "capability allowlists"
+      ]
+    },
+    {
+      "id": "03-handoff",
+      "title": "Retain the actual response in the handoff",
+      "summary": "begin followed by classify on invoice then respond with Check the invoice reference produces answered and retains response=\"Check the invoice reference\". The history records classify and respond. Classifying invoice login followed by respond fails; escalate is the valid transition.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-support-agent-with-google-adk-3",
+      "concepts": [
+        "state transitions",
+        "immutable history",
+        "response retention"
+      ]
+    },
+    {
+      "id": "04-adk-adapter",
+      "title": "Reuse the policy inside the real ADK path",
+      "summary": "A login ticket chooses read_account and access-recovery guidance. The fixture specialist replies using that guidance, and the final handoff stores the reply. A request for read_invoice under the access route raises PermissionError before a graph is run. Optional tests inspect model requests to ensure raw email and example keys did not cross the boundary.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "figure": "pj-support-agent-with-google-adk-4",
+      "concepts": [
+        "ADK Workflow",
+        "shared policy boundary",
+        "provider injection"
+      ],
+      "runners": [
+        {
+          "language": "python"
+        },
+        {
+          "language": "python",
+          "optional": true,
+          "requires": [
+            "python:google.adk"
+          ],
+          "argv": [
+            "{python}",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "{stage}/tests-framework",
+            "-p",
+            "test_framework.py"
+          ]
+        }
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    },
+    {
+      "gif": "media/framework.gif",
+      "poster": "media/framework.png",
+      "title": "Verify the real SDK",
+      "caption": "Actual optional SDK tests with installed dependencies and deterministic local models. No live cloud or model provider calls."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "id": "prompt-regression-tester",
+  "title": "Prompt Regression Tester",
+  "level": 1,
+  "levelName": "Starter",
+  "tagline": "Compare prompt revisions on recorded responses with explicit checks, paired regressions, and a reproducible release gate.",
+  "summary": "Compare prompt revisions on recorded responses with explicit checks, paired regressions, and a reproducible release gate.",
+  "youWillBuild": "A prompt-change review kit that identifies exactly which user commitments broke.",
+  "usefulFor": [
+    "A prompt-change review kit that identifies exactly which user commitments broke.",
+    "The supplied recordings are authored fixtures."
+  ],
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "languageWhy": {
+    "Python": "The standard library makes parsing, scoring, and failure handling visible without hiding the mechanism behind a framework."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Validate cases before scoring",
+    "Score recorded outputs without a model",
+    "Compare the same cases across revisions",
+    "Gate releases on explicit tolerances"
+  ],
+  "prerequisites": [
+    {
+      "title": "Structured outputs",
+      "path": "phases/11-llm-engineering/03-structured-outputs"
+    },
+    {
+      "title": "Model evaluation",
+      "path": "phases/02-ml-fundamentals/09-model-evaluation"
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-prompt-regression-tester-1",
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-validate-cases",
+      "title": "Validate cases before scoring",
+      "summary": "Validate unique case ids, prompts, and supported checks: contains, excludes, and json..",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "evaluation contract",
+        "schema validation"
+      ],
+      "figure": "pj-prompt-regression-tester-1"
+    },
+    {
+      "id": "02-score-recordings",
+      "title": "Score recorded outputs without a model",
+      "summary": "Score contains, excludes, and valid JSON checks.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "replay",
+        "assertions",
+        "failure evidence"
+      ],
+      "figure": "pj-prompt-regression-tester-2"
+    },
+    {
+      "id": "03-pair-revisions",
+      "title": "Compare the same cases across revisions",
+      "summary": "Return paired case outcomes and counts for regressions and improvements..",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "paired comparison",
+        "regression detection"
+      ],
+      "figure": "pj-prompt-regression-tester-3"
+    },
+    {
+      "id": "04-gate-releases",
+      "title": "Gate releases on explicit tolerances",
+      "summary": "Apply a finite minimum pass fraction and integer regression budget to a comparison report..",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": [
+        "release gates",
+        "budgets",
+        "empty evidence"
+      ],
+      "figure": "pj-prompt-regression-tester-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

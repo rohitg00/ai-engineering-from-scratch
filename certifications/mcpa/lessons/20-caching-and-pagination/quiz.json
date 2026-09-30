@@ -1,0 +1,78 @@
+{
+  "lesson": "20-caching-and-pagination",
+  "title": "Cache Freshness and Cursor-Based Pagination",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which two fields does a complete resources/read or resources/list result always carry?",
+      "options": [
+        "A cursor value and an echoed requestState from the prior call",
+        "A Mcp-Session-Id header value and a Last-Event-ID stream marker",
+        "A protocolVersion string and a clientCapabilities object under _meta",
+        "An integer ttlMs and a cacheScope of public or private"
+      ],
+      "correct": 3,
+      "explanation": "A complete result from any of the six cacheable operations must carry an integer ttlMs of zero or more and a cacheScope of public or private, the fields SEP-2549 added for the 2026-07-28 caching rules."
+    },
+    {
+      "stage": "check",
+      "question": "A resources/read result for a caller's private note comes back with cacheScope set to private. What does that field actually control?",
+      "options": [
+        "It limits reuse of the cached bytes to the same authorization context as before",
+        "It tells the client to encrypt the cached bytes before writing them to disk",
+        "It grants any caller who reuses the cache full read access to that note",
+        "It replaces the need for the server to check the caller's access on future calls"
+      ],
+      "correct": 0,
+      "explanation": "cacheScope only tells a cache who may store and replay the bytes; it is never a substitute for the server's own per-primitive access control on each request."
+    },
+    {
+      "stage": "check",
+      "question": "A resources/list response carries nextCursor set to an empty string. What should a conformant client do next?",
+      "options": [
+        "Report -32602 because an empty cursor value is never valid on the wire",
+        "Send the same empty cursor value back, since it is a valid list position",
+        "Treat the empty string as the end of the list and stop paginating",
+        "Restart pagination from the very beginning by omitting the cursor field entirely"
+      ],
+      "correct": 1,
+      "explanation": "An empty string is a legal opaque cursor; only the absence of nextCursor signals the end of a list, so a client that treats an empty string as the end will stop paginating one page too early."
+    },
+    {
+      "stage": "check",
+      "question": "A client retries a resources/read request after answering an input_required elicitation. Under the 2026-07-28 caching rules, what happens to the completed result that comes back?",
+      "options": [
+        "It is cached only if the server also set listChanged to true in its capabilities",
+        "It is cached with a cacheScope of public regardless of the resource's real scope",
+        "It is never cached, because it depended on inputResponses outside the cache key",
+        "It is cached under the original request's id so the retry never has to repeat"
+      ],
+      "correct": 2,
+      "explanation": "Results produced by retrying an MRTR request carry inputResponses that are not part of the cache key, so the specification requires clients to skip caching them even though the result itself still reports ttlMs and cacheScope."
+    },
+    {
+      "stage": "post",
+      "question": "A client's cached tools/list entry still has two minutes left on its ttlMs when a notifications/tools/list_changed notification arrives on the listen stream. What should the client do?",
+      "options": [
+        "Extend the TTL window, since a notification proves the server is still reachable",
+        "Wait for the TTL to expire naturally before treating the entry as stale",
+        "Ignore the notification, since the cached entry is still inside its TTL window",
+        "Treat the entry as stale right away and refetch it when next needed"
+      ],
+      "correct": 3,
+      "explanation": "TTL and push notifications are complementary: a relevant list_changed notification invalidates a cached response immediately, overriding however much time was left on the TTL clock."
+    },
+    {
+      "stage": "post",
+      "question": "Besides helping a client's own cache and pagination stay predictable, why does the specification recommend that tools/list return entries in a deterministic order?",
+      "options": [
+        "A stable prefix lets an upstream provider's own prompt cache hit more often",
+        "A stable order lets a client skip sending clientCapabilities on repeated tools/list calls",
+        "A stable order is required before a server may advertise the listChanged capability at all",
+        "A stable order is the only way a cursor can ever be treated as opaque"
+      ],
+      "correct": 0,
+      "explanation": "When a tool catalog serializes identically every time, an LLM provider's own prompt caching can reuse the cached prefix instead of reprocessing it, a real latency and cost benefit distinct from MCP's own ttlMs mechanism."
+    }
+  ]
+}

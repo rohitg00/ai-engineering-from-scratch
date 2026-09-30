@@ -1,6 +1,8 @@
 {
   "id": "claude-certifications",
   "name": "Claude Certification Curriculum",
+  "shortName": "Claude",
+  "accessNoticeTitle": "Official exam access is currently restricted",
   "provider": "Anthropic",
   "publisher": "AI Engineering from Scratch",
   "version": "1.0.0-local-preview",

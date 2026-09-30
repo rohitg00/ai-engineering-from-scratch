@@ -1,0 +1,116 @@
+{
+  "id": "llm-gateway-with-fallbacks",
+  "title": "LLM Gateway With Fallbacks",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Route a bounded request through providers with explicit failure semantics.",
+  "summary": "Build a local non-streaming HTTP proxy with real provider fallback, per-provider environment credentials, response limits, and one overall deadline. Verify the complete wire path with loopback servers.",
+  "usefulFor": [
+    "Connect an existing chat-completions client to a local fallback endpoint",
+    "Trace provider outages without forwarding caller credentials"
+  ],
+  "youWillBuild": "Build a local non-streaming HTTP proxy with real provider fallback, per-provider environment credentials, response limits, and one overall deadline. Verify the complete wire path with loopback servers.",
+  "hours": 8,
+  "languages": [
+    "Go"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Validate provider endpoints",
+    "Classify failures without retrying everything",
+    "Send one bounded HTTP request",
+    "Route with a total-attempt budget"
+  ],
+  "prerequisites": [
+    {
+      "title": "Structured outputs",
+      "path": "phases/11-llm-engineering/03-structured-outputs"
+    }
+  ],
+  "inspiredBy": [],
+  "demo": {
+    "command": [
+      "go",
+      "run",
+      "."
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-validate-provider-endpoints",
+      "title": "Validate provider endpoints",
+      "summary": "Treat the provider list as trusted configuration.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "starter",
+      "concepts": [
+        "Parse URL",
+        "Transport rule",
+        "No credentials",
+        "Stable endpoint list"
+      ]
+    },
+    {
+      "id": "02-classify-failures-without-retrying-everything",
+      "title": "Classify failures without retrying everything",
+      "summary": "Separate a repairable outage from a broken request.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Status bounds",
+        "2xx success",
+        "429 and 5xx",
+        "Terminal client error"
+      ]
+    },
+    {
+      "id": "03-send-one-bounded-http-request",
+      "title": "Send one bounded HTTP request",
+      "summary": "Bound one request in both bytes and time.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Context-bound POST",
+        "HTTP transport",
+        "Limit plus one",
+        "Close response body"
+      ]
+    },
+    {
+      "id": "04-route-with-a-total-attempt-budget",
+      "title": "Route with a total-attempt budget",
+      "summary": "Route the caller body while keeping credentials private.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Provider order",
+        "Attempt budget",
+        "Failure class",
+        "Terminal outcome"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "title": "Token Counter and Cost Meter | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:12Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "demo.py"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/token-counter-and-cost-meter/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"unit\": \"nano_dollars\",\n  \"mode\": \"recorded_usage_replay\",\n  \"limit\": 1000,\n  \"spent\": 570,\n  \"remaining\": 430,\n  \"over_budget\": false,\n  \"settlements\": [\n    {\n      \"id\": \"orchard-summary\",\n      \"reserved\": 600,\n      \"cost\": 600,\n      \"actual\": 260,\n      \"unused\": 340,\n      \"overrun\": 0,\n      \"status\": \"settled\"\n    },\n    {\n      \"id\": \"orchard-check\",\n      \"reserved\": 600,\n      \"cost\": 600,\n      \"actual\": 310,\n      \"unused\": 290,\n      \"overrun\": 0,\n      \"status\": \"settled\"\n    },\n    {\n      \"id\": \"long-report\",\n      \"reserved\": 0,\n      \"actual\": 0,\n      \"unused\": 0,\n      \"status\": \"blocked\",\n      \"reason\": \"reservation exceeds remaining budget\"\n    }\n  ]\n}\n",
+      "durationMs": 880
+    }
+  ]
+}

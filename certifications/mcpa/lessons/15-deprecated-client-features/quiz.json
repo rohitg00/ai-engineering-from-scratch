@@ -1,0 +1,78 @@
+{
+  "lesson": "15-deprecated-client-features",
+  "title": "Deprecated, Not Removed: Roots, Sampling, and Logging",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Under the MCP feature lifecycle, what does Deprecated mean for roots, sampling, and logging in the 2026-07-28 revision?",
+      "options": [
+        "They were renamed but otherwise work exactly as before",
+        "They keep working fully now and face removal much later",
+        "They turned into optional extensions instead of core features",
+        "They were deleted from the schema when this revision shipped"
+      ],
+      "correct": 1,
+      "explanation": "Deprecated under the feature lifecycle policy means a feature stays fully specified and functional, with a migration path and at least a twelve month window before it is even eligible for removal."
+    },
+    {
+      "stage": "check",
+      "question": "A server needs a client side language model generation while still handling a tools/call request. How does 2026-07-28 let it ask?",
+      "options": [
+        "It waits for the client to poll a background task",
+        "It pushes a createMessage request to the client mid call",
+        "It returns input_required with a createMessage entry to answer",
+        "It opens a second connection and queries a model directly"
+      ],
+      "correct": 2,
+      "explanation": "Sampling still exists as a deprecated client feature, and a server requests it through the multi round-trip pattern: an input_required result whose inputRequests map carries a sampling createMessage entry for the client to answer."
+    },
+    {
+      "stage": "check",
+      "question": "A client declares no roots capability and no sampling capability on a request. What must a server needing both do?",
+      "options": [
+        "Send the requests anyway since defaults cover every client",
+        "Fall back to the removed initialize handshake instead",
+        "Assume the client meant to declare both capabilities",
+        "Skip those input requests or refuse the call outright"
+      ],
+      "correct": 3,
+      "explanation": "A server must not rely on a capability the caller did not declare on that request, so it can only omit the undeclared input requests or refuse the call, never assume or silently send them anyway."
+    },
+    {
+      "stage": "check",
+      "question": "When may a server send a notifications/message notification for a given request under 2026-07-28?",
+      "options": [
+        "Only when that request itself carries a logLevel in its meta",
+        "Whenever the server declares the logging capability at all",
+        "Only after the client calls the removed logging setLevel method",
+        "On the shared subscriptions listen stream once logging starts"
+      ],
+      "correct": 0,
+      "explanation": "Logging now travels per request: a server may send notifications/message only on the response stream of a request whose meta carried io.modelcontextprotocol logLevel, and it must stay silent when that key is absent."
+    },
+    {
+      "stage": "post",
+      "question": "Which of these is actually gone from the wire in 2026-07-28, rather than merely deprecated?",
+      "options": [
+        "roots/list sent as an MRTR input request",
+        "logging/setLevel, the old session wide log level setter",
+        "A per-request logLevel key paired with notifications/message",
+        "sampling/createMessage sent as an MRTR input request"
+      ],
+      "correct": 1,
+      "explanation": "Roots and sampling still travel as MRTR input requests and a per-request logLevel still triggers notifications/message, but logging/setLevel depended on a connection wide session that the stateless core removed outright."
+    },
+    {
+      "stage": "post",
+      "question": "Roots was marked Deprecated in the specification revision released 2026-07-28. What is its earliest possible removal?",
+      "options": [
+        "Immediately, in whichever revision ships next after this one",
+        "Never, because deprecated features stay forever by policy",
+        "The first revision released on or after 2027-07-28",
+        "Exactly 2027-07-28, regardless of when a revision actually ships"
+      ],
+      "correct": 2,
+      "explanation": "The minimum deprecation window is twelve months measured from this revision's release, so the earliest removal is the first specification revision that ships as Current on or after 2027-07-28, not a fixed calendar date."
+    }
+  ]
+}

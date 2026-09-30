@@ -1,0 +1,35 @@
+{
+  "source": "authored offline recording, synthetic latency",
+  "manifest": {
+    "model": "fixture-classifier",
+    "model_revision": "1",
+    "prompt_revision": "p1",
+    "hardware": "offline fixture",
+    "confidence_method": "authored teaching values"
+  },
+  "labels": {
+    "a": "yes",
+    "b": "no",
+    "c": "no"
+  },
+  "records": [
+    {
+      "id": "a",
+      "answer": "yes",
+      "confidence": 0.8,
+      "latency_ms": 120
+    },
+    {
+      "id": "b",
+      "answer": "yes",
+      "confidence": 0.9,
+      "latency_ms": 200
+    },
+    {
+      "id": "c",
+      "answer": "no",
+      "confidence": 0.6,
+      "latency_ms": 150
+    }
+  ]
+}

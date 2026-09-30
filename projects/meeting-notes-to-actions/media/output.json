@@ -1,0 +1,25 @@
+{
+  "title": "Meeting Notes to Actions | Actual artifact output",
+  "recordedAt": "2026-09-28T19:23:00Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "cli.py",
+        "samples/notes.txt",
+        "--today",
+        "2026-09-29",
+        "--output",
+        "actions.json",
+        "--html",
+        "actions.html",
+        "--csv",
+        "approved.csv"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/meeting-notes-to-actions/solution",
+      "exitCode": 0,
+      "output": "{\n  \"ready\": 2,\n  \"review\": 1,\n  \"overdue\": 0,\n  \"actions\": [\n    {\n      \"owner\": \"Alex\",\n      \"due\": \"2026-10-02\",\n      \"task\": \"Publish release notes\",\n      \"lines\": [\n        2\n      ],\n      \"source\": \"ACTION Alex | 2026-10-02 | Publish release notes\",\n      \"flags\": [],\n      \"id\": \"fec271872fd3392a\",\n      \"decision\": \"pending\"\n    },\n    {\n      \"owner\": \"?\",\n      \"due\": \"?\",\n      \"task\": \"Verify migration\",\n      \"lines\": [\n        4\n      ],\n      \"source\": \"ACTION ? | ? | Verify migration\",\n      \"flags\": [\n        \"needs_owner\",\n        \"needs_date\"\n      ],\n      \"id\": \"2ce17ff7d0b072d6\",\n      \"decision\": \"pending\"\n    },\n    {\n      \"owner\": \"Priya\",\n      \"task\": \"verify the rollback\",\n      \"due\": \"2026-10-01\",\n      \"lines\": [\n        3\n      ],\n      \"source\": \"Priya will verify the rollback by 2026-10-01.\",\n      \"proposal\": true,\n      \"flags\": [],\n      \"id\": \"94b15a0aa8897f02\",\n      \"decision\": \"pending\"\n    }\n  ],\n  \"schema_version\": 1,\n  \"source_sha256\": \"9f3cdd8b3e5a7b814a678db1a9b5ec3619a16a921279918e0ee77ca1344f07a4\",\n  \"approved\": []\n}\n",
+      "durationMs": 41
+    }
+  ]
+}

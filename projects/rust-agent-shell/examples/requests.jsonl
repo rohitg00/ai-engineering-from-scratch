@@ -1,0 +1,3 @@
+{"id": "inspect", "tool": "list", "arguments": {}}
+{"id": "evidence", "tool": "search", "arguments": {"pattern": "Restore", "path": "release.md"}}
+{"id": "leave", "tool": "quit", "arguments": {}}

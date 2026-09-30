@@ -1,0 +1,119 @@
+{
+  "id": "token-counter-and-cost-meter",
+  "title": "Token Counter and Cost Meter",
+  "level": 1,
+  "levelName": "Starter",
+  "tagline": "Account for usage and budgets with integer arithmetic.",
+  "summary": "Build an explicit approximate tokenizer, exact recorded-usage accounting, rate-card cost calculation and budget admission. Estimates are labeled and never presented as provider tokenizer counts. Prices are fixture inputs rather than claims about current provider pricing.",
+  "usefulFor": [
+    "Usage reconciliation explaining why real billing differs from preflight estimates.",
+    "Rates are explicit fixture inputs in integer nano-dollars per token, not current provider prices."
+  ],
+  "youWillBuild": "Usage reconciliation explaining why real billing differs from preflight estimates.",
+  "hours": 8,
+  "languages": [
+    "Rust"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Estimate text with a documented bound",
+    "Validate recorded usage",
+    "Price with checked integers",
+    "Admit work against a ledger"
+  ],
+  "prerequisites": [
+    {
+      "title": "Tokenizers",
+      "path": "phases/10-llms-from-scratch/01-tokenizers"
+    },
+    {
+      "title": "Verification gates",
+      "path": "phases/14-agent-engineering/38-verification-gates"
+    }
+  ],
+  "inspiredBy": [],
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-estimate-text-with-a-documented-bound",
+      "title": "Estimate text with a documented bound",
+      "summary": "Count Unicode scalar values and use a configurable characters-per-token ratio with ceiling division.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "starter",
+      "concepts": [
+        "Count scalars",
+        "Read ratio",
+        "Ceiling division",
+        "Label estimate"
+      ]
+    },
+    {
+      "id": "02-validate-recorded-usage",
+      "title": "Validate recorded usage",
+      "summary": "Cached input is a subset of input, never an extra token category to add twice.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Parse counters",
+        "Check unsigned",
+        "Cached subset",
+        "Usage record"
+      ]
+    },
+    {
+      "id": "03-price-with-checked-integers",
+      "title": "Price with checked integers",
+      "summary": "The fixture rate card uses nano-dollars per token.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Uncached charge",
+        "Cache charge",
+        "Output charge",
+        "Checked sum"
+      ]
+    },
+    {
+      "id": "04-admit-work-against-a-ledger",
+      "title": "Admit work against a ledger",
+      "summary": "Reserve a quoted amount only if spent plus quote is within the configured limit.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Read ledger",
+        "Checked addition",
+        "Compare limit",
+        "Commit reservation"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

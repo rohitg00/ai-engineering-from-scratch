@@ -36,7 +36,8 @@ Any training run longer than the wallclock cap of the cluster, any run that must
 - `model.shard-NNN.pt` per shard, round robin on keys or split by parameter group.
 - `meta.pt` carries optimizer, scheduler, train state, RNG, and the shard manifest.
 - `index.json` carries `sha256` for every shard and for `meta.pt`.
-- Loader verifies every hash before merging.
+- Loader verifies every hash before merging and rejects shard paths outside the checkpoint directory.
+- Load every file with `torch.load(path, map_location="cpu", weights_only=True)`. Keep RNG state as plain lists so it survives the weights-only loader.
 
 ## Mid-epoch resume
 
@@ -50,3 +51,4 @@ Any training run longer than the wallclock cap of the cluster, any run that must
 - Forgetting RNG: resumed loss diverges from baseline. Run the demo's assertion.
 - Forgetting optimizer state: next step lurches. Same diff blows up.
 - Pruning the wrong checkpoint: keep last K plus best.
+- Loading with `weights_only=False`: a `.pt` file is a pickle, so an untrusted checkpoint runs code on load.

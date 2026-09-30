@@ -1,0 +1,48 @@
+{
+  "title": "JSON Schema Output Guard | Build and verify",
+  "recordedAt": "2026-09-28T19:22:58Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "json-schema-output-guard",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-o5og__uq"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-o5og__uq\n  created  cli.ts\n  created  main.ts\n  created  package.json\n  created  samples/attempts.json\n  created  samples/schema.json\n  created  stage-1.md\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py json-schema-output-guard --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-o5og__uq\n",
+      "durationMs": 53
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "json-schema-output-guard",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-o5og__uq"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "JSON Schema Output Guard: grading learner\n  FAIL stage 1: Parse the untrusted boundary (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 288
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "json-schema-output-guard",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "JSON Schema Output Guard: grading solution\n  PASS stage 1: Parse the untrusted boundary (6 tests)\n  PASS stage 2: Walk a schema recursively (6 tests)\n  PASS stage 3: Reject ambiguous and unsupported contracts (8 tests)\n  PASS stage 4: Repair with a finite budget (12 tests)\n",
+      "durationMs": 1214
+    }
+  ]
+}

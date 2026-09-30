@@ -1,0 +1,134 @@
+{
+  "id": "doc-qa-with-citations",
+  "title": "Document QA With Citations and LangChain",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "A citation receipt that separates exact source support from relevance to the question.",
+  "summary": "A citation receipt that separates exact source support from relevance to the question. Import query(directory, question, model). A model callback returns JSON {source:chunk_id,quote:exact_text}. --response accepts a recorded response and applies the same gate.",
+  "hours": 8,
+  "languages": ["Python"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "A citation receipt that separates exact source support from relevance to the question.",
+  "usefulFor": [
+    "Import query(directory, question, model). A model callback returns JSON {source:chunk_id,quote:exact_text}. --response accepts a recorded response and applies the same gate."
+  ],
+  "skills": [
+    "Load local documents with stable provenance",
+    "Rank chunks with an inspectable keyword score",
+    "Accept only answers grounded in retrieved spans",
+    "Use a framework splitter without losing offsets"
+  ],
+  "prerequisites": [
+    "Python 3.10+",
+    "pathlib, strings, offsets, dictionaries and callback functions. Optional LangChain dependencies are pinned separately."
+  ],
+  "figures": true,
+  "overviewFigure": "pj-doc-qa-with-citations-1",
+  "languageWhy": {
+    "Python": "Stdlib data structures, explicit algorithms and deterministic local tests."
+  },
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/docs",
+      "When does cache expire?",
+      "--output",
+      "answer.json",
+      "--html",
+      "answer.html"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-documents",
+      "title": "Load local documents with stable provenance",
+      "summary": "The second overlapping chunk of abcdef starts at offset 3 when size=4 and overlap=1.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "starter",
+      "figure": "pj-doc-qa-with-citations-1",
+      "concepts": ["load", "local", "documents", "with"]
+    },
+    {
+      "id": "02-retrieval",
+      "title": "Rank chunks with an inspectable keyword score",
+      "summary": "A socket query selects the socket chunk, while an unknown term abstains.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-doc-qa-with-citations-2",
+      "concepts": ["rank", "chunks", "with", "an"]
+    },
+    {
+      "id": "03-answer",
+      "title": "Accept only answers grounded in retrieved spans",
+      "summary": "A model response containing words absent from its cited chunk is rejected.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-doc-qa-with-citations-3",
+      "concepts": ["accept", "only", "answers", "grounded"]
+    },
+    {
+      "id": "04-adapter",
+      "title": "Use a framework splitter without losing offsets",
+      "summary": "Framework chunks are converted to the same source-span contract used by the baseline.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "figure": "pj-doc-qa-with-citations-4",
+      "concepts": ["use", "a", "framework", "splitter"],
+      "runners": [
+        {
+          "language": "python"
+        },
+        {
+          "language": "python",
+          "optional": true,
+          "requires": ["python:langchain_text_splitters"],
+          "argv": [
+            "{python}",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "{stage}/tests-framework",
+            "-p",
+            "test_framework.py"
+          ]
+        }
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    },
+    {
+      "gif": "media/framework.gif",
+      "poster": "media/framework.png",
+      "title": "Verify the real SDK",
+      "caption": "Actual optional SDK tests with installed dependencies and deterministic local models. No live cloud or model provider calls."
+    }
+  ]
+}

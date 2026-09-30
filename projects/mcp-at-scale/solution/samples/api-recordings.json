@@ -1,0 +1,14 @@
+{
+  "recordings": {
+    "incident_get": {
+      "arguments": {
+        "id": "checkout-1"
+      },
+      "value": {
+        "id": "checkout-1",
+        "state": "mitigated",
+        "error_count": 12
+      }
+    }
+  }
+}

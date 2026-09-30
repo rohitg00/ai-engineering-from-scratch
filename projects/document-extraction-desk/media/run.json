@@ -1,0 +1,48 @@
+{
+  "title": "Document Extraction Review Desk | Build and verify",
+  "recordedAt": "2026-09-28T19:36:19Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "document-extraction-desk",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-x9eyw51x"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-x9eyw51x\n  created  cli.py\n  created  main.py\n  created  sample.txt\n  created  schema.json\n  created  stage-1.md\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py document-extraction-desk --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-x9eyw51x\n",
+      "durationMs": 60
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "document-extraction-desk",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-x9eyw51x"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Document Extraction Review Desk: grading learner\n  FAIL stage 1: Define the fields before extracting values (6 tests)\n       not implemented yet: Implement validate_schema\n",
+      "durationMs": 111
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "document-extraction-desk",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Document Extraction Review Desk: grading solution\n  PASS stage 1: Define the fields before extracting values (6 tests)\n  PASS stage 2: Extract candidates without losing their evidence (6 tests)\n  PASS stage 3: Bind approval to one document version (6 tests)\n  PASS stage 4: Show evidence and export reviewed values (6 tests)\n",
+      "durationMs": 318
+    }
+  ]
+}

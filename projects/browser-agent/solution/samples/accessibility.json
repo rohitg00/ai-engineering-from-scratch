@@ -1,0 +1,45 @@
+{
+  "url": "http://127.0.0.1:8877/fixture.html",
+  "task": {
+    "name": "Dev Learner",
+    "email": "dev@example.test",
+    "allowedOrigin": "http://127.0.0.1:8877",
+    "fields": [
+      {
+        "label": "Full name",
+        "value": "Dev Learner"
+      },
+      {
+        "label": "Email address",
+        "value": "dev@example.test"
+      }
+    ],
+    "submitLabel": "Save request"
+  },
+  "observation": {
+    "url": "http://127.0.0.1:8877/fixture.html",
+    "fields": [
+      {
+        "id": "name",
+        "label": "Full name",
+        "value": "Dev Learner",
+        "disabled": false
+      },
+      {
+        "id": "email",
+        "label": "Email address",
+        "value": "",
+        "disabled": false
+      }
+    ],
+    "buttons": [
+      {
+        "id": "save",
+        "label": "Save request",
+        "disabled": false,
+        "dangerous": false
+      }
+    ],
+    "done": false
+  }
+}

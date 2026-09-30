@@ -1,0 +1,84 @@
+{
+  "drafts": [
+    {
+      "id": "p1-entity-swap",
+      "snippets": {
+        "S1": "A user-space kernel implements an application kernel.",
+        "S2": "The interceptor handles system calls from the sandboxed application."
+      },
+      "draft": "## Kernels\n\nA user-space kernel implements an application kernel [S1]. The Hypervisor component handles system calls from the sandboxed application [S2].",
+      "expected": [
+        true,
+        false
+      ],
+      "attack": "entity swap: an uncited Hypervisor is inserted"
+    },
+    {
+      "id": "p2-negation-flip",
+      "snippets": {
+        "S1": "Denylists are not a security boundary.",
+        "S2": "The agent never sees the real key."
+      },
+      "draft": "## Denylists\n\nDenylists are a security boundary [S1]. The agent never sees the real key [S2].",
+      "expected": [
+        false,
+        true
+      ],
+      "attack": "negation removed from a sourced claim"
+    },
+    {
+      "id": "p3-number-swap",
+      "snippets": {
+        "S1": "The sandbox policy allows 10 destinations."
+      },
+      "draft": "## Policy\n\nThe sandbox policy allows 5 destinations [S1]. The sandbox policy allows 10 destinations [S1].",
+      "expected": [
+        false,
+        true
+      ],
+      "attack": "number changed"
+    },
+    {
+      "id": "p4-unsupported-claim",
+      "snippets": {
+        "S1": "microVM monitor is an open source virtual machine monitor that creates lightweight virtual machines called microVMs.",
+        "S2": "Each microVM runs its own guest kernel."
+      },
+      "draft": "## microVM monitor\n\nmicroVM monitor is an open source virtual machine monitor that creates lightweight virtual machines called microVMs [S1]. microVM monitor guarantees that no agent can ever exfiltrate data over the network [S1]. Each microVM runs its own guest kernel [S2].",
+      "expected": [
+        true,
+        false,
+        true
+      ],
+      "attack": "claim cites a real snippet that does not support it"
+    },
+    {
+      "id": "p5-dangling-and-uncited",
+      "snippets": {
+        "S1": "Any process that can write to this socket can ask the daemon to start new containers with any settings, including a container that mounts the host root filesystem.",
+        "S2": "A proxy outside the sandbox checks the destination, adds the credential to the request and forwards it."
+      },
+      "draft": "## Socket\n\nAny process that can write to the socket can ask the daemon to start new containers with any settings [S1]. The socket is safe to mount in production. A proxy outside the sandbox adds the credential to the request and forwards it [S2]. Mounting the socket is standard practice [S9].",
+      "expected": [
+        true,
+        false,
+        true,
+        false
+      ],
+      "attack": "uncited sentence and a citation to a snippet that does not exist"
+    },
+    {
+      "id": "p6-paraphrase-ok",
+      "snippets": {
+        "S1": "virtualized containers can use different hypervisors underneath, including microVM monitor.",
+        "S2": "Each microVM runs its own guest kernel."
+      },
+      "draft": "## virtualized containers\n\nvirtualized containers can use several hypervisors underneath, including microVM monitor [S1]. Every microVM runs its own guest kernel [S2].",
+      "expected": [
+        true,
+        true
+      ],
+      "attack": "none: faithful paraphrases must pass"
+    }
+  ]
+}

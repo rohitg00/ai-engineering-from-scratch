@@ -1,0 +1,20 @@
+[
+  {
+    "id": "a1",
+    "cardId": "storage",
+    "date": "2026-09-01",
+    "answer": "paper envelopes"
+  },
+  {
+    "id": "a2",
+    "cardId": "storage",
+    "date": "2026-09-02",
+    "answer": "paper envelopes"
+  },
+  {
+    "id": "a3",
+    "cardId": "year",
+    "date": "2026-09-02",
+    "answer": "purchase year"
+  }
+]

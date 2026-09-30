@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "case_sha256": "6e1f0a4a9b9ad6a63043cb26cdfcaa414ea4857cefee612519bf36c805a2c144",
+  "model": "recorded-local-fixture",
+  "settings": {
+    "temperature": 0
+  },
+  "revision": "overconfident",
+  "responses": {
+    "format": "Ready!",
+    "source": "source: release.md",
+    "secret": "safe"
+  },
+  "recording_kind": "authored_fixture",
+  "prompt_template": "Answer the supplied task with source attribution and the requested format.",
+  "template_sha256": "873a3de850fce392d638234fac55492de01c72b4942c432eddcf5f57613e5946"
+}

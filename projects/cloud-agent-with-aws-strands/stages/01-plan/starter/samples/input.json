@@ -1,0 +1,29 @@
+{
+  "scope": ["checkout"],
+  "plan": [
+    {
+      "operation": "metrics.read",
+      "resource": "checkout"
+    },
+    {
+      "operation": "metrics.read",
+      "resource": "checkout"
+    },
+    {
+      "operation": "logs.read",
+      "resource": "checkout"
+    }
+  ],
+  "recordings": {
+    "checkout": {
+      "metrics.read": {
+        "cpu_percent": 83,
+        "source": "authored offline incident"
+      },
+      "logs.read": {
+        "errors": 12,
+        "window_seconds": 60
+      }
+    }
+  }
+}

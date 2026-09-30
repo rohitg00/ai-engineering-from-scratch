@@ -1,0 +1,135 @@
+{
+  "id": "report-judge",
+  "title": "Report Judge",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Audit sentence-level citations, test lexical support, and compare report revisions with a paired uncertainty interval.",
+  "summary": "Audit sentence-level citations, test lexical support, and compare report revisions with a paired uncertainty interval.",
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "An evidence-audit workbench showing uncertainty and claims requiring human review.",
+  "usefulFor": [
+    "An evidence-audit workbench showing uncertainty and claims requiring human review.",
+    "The judge provides conservative lexical evidence checks."
+  ],
+  "skills": [
+    "Parse claims and citation references",
+    "Check evidence before averaging scores",
+    "Report precision coverage and source recall",
+    "Compare paired revisions with bootstrap intervals"
+  ],
+  "prerequisites": [
+    {
+      "title": "Retrieval augmented generation",
+      "path": "phases/11-llm-engineering/06-rag"
+    },
+    {
+      "title": "Model evaluation",
+      "path": "phases/02-ml-fundamentals/09-model-evaluation"
+    },
+    {
+      "title": "Verification gates",
+      "path": "phases/14-agent-engineering/38-verification-gates"
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-report-judge-1",
+  "languageWhy": {
+    "Python": "Stdlib data structures, explicit algorithms and deterministic local tests."
+  },
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-claims",
+      "title": "Parse claims and citation references",
+      "summary": "One [S1]. Two [S2]. becomes two independently auditable claims.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "starter",
+      "figure": "pj-report-judge-1",
+      "concepts": [
+        "parse",
+        "claims",
+        "and",
+        "citation"
+      ]
+    },
+    {
+      "id": "02-support",
+      "title": "Check evidence before averaging scores",
+      "summary": "Changing a sourced limit from 10 to 5 yields reason number and support zero.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-report-judge-2",
+      "concepts": [
+        "check",
+        "evidence",
+        "before",
+        "averaging"
+      ]
+    },
+    {
+      "id": "03-metrics",
+      "title": "Report precision coverage and source recall",
+      "summary": "A report citing one of two expected sources has recall 0.5, even with perfect precision.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-report-judge-3",
+      "concepts": [
+        "report",
+        "precision",
+        "coverage",
+        "and"
+      ]
+    },
+    {
+      "id": "04-compare",
+      "title": "Compare paired revisions with bootstrap intervals",
+      "summary": "Uniform +1 improvements yield mean delta 1 and interval [1, 1].",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "figure": "pj-report-judge-4",
+      "concepts": [
+        "compare",
+        "paired",
+        "revisions",
+        "with"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

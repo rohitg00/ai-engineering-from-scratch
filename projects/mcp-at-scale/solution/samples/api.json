@@ -1,0 +1,25 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Authored incident reads",
+    "version": "1"
+  },
+  "paths": {
+    "/incidents/{id}": {
+      "get": {
+        "operationId": "incident_get",
+        "summary": "Read one incident with provenance",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

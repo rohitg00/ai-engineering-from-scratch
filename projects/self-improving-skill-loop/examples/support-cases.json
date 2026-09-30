@@ -1,0 +1,49 @@
+{
+  "development": [
+    {
+      "id": "dev-1",
+      "group": "invoice-june",
+      "text": "invoice charged twice",
+      "label": "billing",
+      "source": "local:invoice-june"
+    },
+    {
+      "id": "dev-2",
+      "group": "invoice-july",
+      "text": "invoice refund pending",
+      "label": "billing",
+      "source": "local:invoice-july"
+    },
+    {
+      "id": "dev-3",
+      "group": "login-may",
+      "text": "password reset link expired",
+      "label": "access",
+      "source": "local:login-may"
+    },
+    {
+      "id": "dev-4",
+      "group": "login-june",
+      "text": "password reset email missing",
+      "label": "access",
+      "source": "local:login-june"
+    }
+  ],
+  "holdout": [
+    {
+      "id": "hold-1",
+      "group": "invoice-august",
+      "text": "invoice tax needs correction",
+      "label": "billing",
+      "source": "local:invoice-august"
+    },
+    {
+      "id": "hold-2",
+      "group": "login-july",
+      "text": "password rejected after rotation",
+      "label": "access",
+      "source": "local:login-july"
+    }
+  ],
+  "rules": []
+}

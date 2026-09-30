@@ -1,0 +1,16 @@
+{
+  "title": "Retrieval Evaluation Lab | Actual artifact output",
+  "recordedAt": "2026-09-28T19:21:55Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "demo.py"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/retrieval-evaluation-lab/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"cutoff\": 3,\n  \"systems\": {\n    \"baseline\": {\n      \"queries\": {\n        \"release\": {\n          \"precision\": 0.6666666666666666,\n          \"recall\": 1.0,\n          \"rr\": 0.5,\n          \"ndcg\": 0.606422698504514,\n          \"unjudged\": 0\n        },\n        \"restore\": {\n          \"precision\": 0.3333333333333333,\n          \"recall\": 1.0,\n          \"rr\": 1.0,\n          \"ndcg\": 1.0,\n          \"unjudged\": 0\n        },\n        \"cafe\": {\n          \"precision\": 0.6666666666666666,\n          \"recall\": 1.0,\n          \"rr\": 1.0,\n          \"ndcg\": 0.8339912323981488,\n          \"unjudged\": 0\n        }\n      },\n      \"mean\": {\n        \"precision\": 0.5555555555555555,\n        \"recall\": 1.0,\n        \"rr\": 0.8333333333333334,\n        \"ndcg\": 0.8134713103008876\n      }\n    },\n    \"candidate\": {\n      \"queries\": {\n        \"release\": {\n          \"precision\": 0.6666666666666666,\n          \"recall\": 1.0,\n          \"rr\": 1.0,\n          \"ndcg\": 1.0,\n          \"unjudged\": 0\n        },\n        \"restore\": {\n          \"precision\": 0.3333333333333333,\n          \"recall\": 1.0,\n          \"rr\": 0.5,\n          \"ndcg\": 0.6309297535714575,\n          \"unjudged\": 0\n        },\n        \"cafe\": {\n          \"precision\": 0.6666666666666666,\n          \"recall\": 1.0,\n          \"rr\": 1.0,\n          \"ndcg\": 1.0,\n          \"unjudged\": 0\n        }\n      },\n      \"mean\": {\n        \"precision\": 0.5555555555555555,\n        \"recall\": 1.0,\n        \"rr\": 0.8333333333333334,\n        \"ndcg\": 0.8769765845238192\n      }\n    }\n  },\n  \"deltas\": [\n    {\n      \"query\": \"restore\",\n      \"delta_ndcg\": -0.36907024642854247,\n      \"before\": [\n        \"runbook\",\n        \"old\"\n      ],\n      \"after\": [\n        \"old\",\n        \"runbook\"\n      ]\n    },\n    {\n      \"query\": \"cafe\",\n      \"delta_ndcg\": 0.16600876760185124,\n      \"before\": [\n        \"network\",\n        \"tablet\"\n      ],\n      \"after\": [\n        \"tablet\",\n        \"network\"\n      ]\n    },\n    {\n      \"query\": \"release\",\n      \"delta_ndcg\": 0.393577301495486,\n      \"before\": [\n        \"old\",\n        \"check\",\n        \"new\"\n      ],\n      \"after\": [\n        \"new\",\n        \"check\",\n        \"old\"\n      ]\n    }\n  ],\n  \"regressions\": 1,\n  \"evaluation_scope\": \"supplied judgments; unjudged documents receive zero gain\"\n}\n",
+      "durationMs": 39
+    }
+  ]
+}

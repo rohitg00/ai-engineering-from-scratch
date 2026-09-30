@@ -1,0 +1,78 @@
+{
+  "lesson": "04-the-stateless-core",
+  "title": "The Stateless Core of MCP",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Under MCP 2026-07-28, what must be true of the information a server needs to answer one request?",
+      "options": [
+        "It is retrieved from a session record tied to the connection",
+        "It builds up gradually across several requests on one connection",
+        "It is fully contained in that one single request, nothing inferred",
+        "It is cached from the connection's opening handshake exchange"
+      ],
+      "correct": 2,
+      "explanation": "MCP 2026-07-28 is a stateless protocol: every request is self-describing, and a server must not infer context from requests that arrived earlier, even on the same connection."
+    },
+    {
+      "stage": "check",
+      "question": "A server just finished handling a client's third request on a long-lived HTTP connection. What may it assume about the fourth request on that same connection?",
+      "options": [
+        "The same client capabilities declared earlier still apply to the fourth request",
+        "The connection itself now counts as an authenticated session for later requests",
+        "The same protocol version negotiated for the third request still applies",
+        "Nothing: the fourth request must supply its own version and capabilities again"
+      ],
+      "correct": 3,
+      "explanation": "Servers must not rely on prior requests over the same connection for capabilities, protocol version, or identity; every request supplies that metadata in its own _meta field."
+    },
+    {
+      "stage": "check",
+      "question": "Why does MCP 2026-07-28 make every request self-describing instead of relying on a connection-scoped handshake?",
+      "options": [
+        "So any replica can answer it, and a retry is safe to send anywhere",
+        "So a server can safely skip validating capabilities on most requests",
+        "So a single server process can hold more concurrent connections open",
+        "So a client only has to authenticate once per application launch"
+      ],
+      "correct": 0,
+      "explanation": "Because no state is tied to a specific process, any replica can serve any request, a retry is safe to send to a different replica, and load balancers need no session stickiness."
+    },
+    {
+      "stage": "check",
+      "question": "A client opens one stdio connection and, without closing it, sends a request for user A followed by an unrelated request for user B. What does MCP 2026-07-28 say about this?",
+      "options": [
+        "It is fine only if both requests share one authorization token",
+        "It is fine; an open connection is never a session or a conversation",
+        "It is invalid unless the server issues a new session identifier first",
+        "It is invalid; a stdio process may carry only one conversation"
+      ],
+      "correct": 1,
+      "explanation": "An open connection, such as a stdio process, is not a conversation or session: clients may interleave unrelated requests on the same transport, and a server must not treat connection identity as a proxy for continuity."
+    },
+    {
+      "stage": "post",
+      "question": "A server needs a shopping cart to survive across several tool calls. Which design matches SEP-2567 guidance for MCP 2026-07-28?",
+      "options": [
+        "Store the cart under the client's connection identifier on the server",
+        "Keep the cart in server memory and trust the order requests arrive in",
+        "Return an opaque handle from a create tool and reuse it later",
+        "Ask the client to resend a session identifier on every cart request"
+      ],
+      "correct": 2,
+      "explanation": "State that spans multiple requests must be referenced by an explicit identifier the client passes on each request: a server-minted handle returned from a creation tool and threaded through later calls as an ordinary argument."
+    },
+    {
+      "stage": "post",
+      "question": "Which of these did MCP 2026-07-28 remove in order to make statelessness the default?",
+      "options": [
+        "The tools/call method and its CallToolResult content list",
+        "The per-request _meta field and its protocolVersion value",
+        "The server/discover method and its supportedVersions list",
+        "The initialize handshake and the Mcp-Session-Id header"
+      ],
+      "correct": 3,
+      "explanation": "2026-07-28 removes the initialize handshake, notifications/initialized, and the Mcp-Session-Id header; per-request _meta with protocolVersion, and server/discover, are exactly what replaced them and remain current."
+    }
+  ]
+}

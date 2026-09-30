@@ -1,0 +1,16 @@
+{
+  "files": {
+    "src/run.ts": [
+      "const input = request.body;",
+      "eval(input);",
+      "// eval is mentioned here as documentation"
+    ]
+  },
+  "expected": [
+    {
+      "file": "src/run.ts",
+      "line": 2,
+      "rule": "dynamic-eval"
+    }
+  ]
+}

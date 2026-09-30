@@ -1,0 +1,113 @@
+{
+  "id": "pr-review-reporter",
+  "title": "PR Review Reporter",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "A local patch-review artifact that preserves Git line evidence and can enter CI as SARIF.",
+  "summary": "A local patch-review artifact that preserves Git line evidence and can enter CI as SARIF. Use --diff - for stdin, --repo /path --base REF --head REF for a read-only Git diff, or --candidates recorded-findings.json to validate another reviewer's findings against the supplied patch.",
+  "hours": 8,
+  "languages": ["Python", "TypeScript"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Recover new-file line numbers",
+    "Generate narrow review candidates",
+    "Verify and merge findings",
+    "Publish a local escaped report"
+  ],
+  "prerequisites": [
+    "Node 22.18+, Python 3 and Git only for --repo mode",
+    "unified diff counters, JSON, exact source quotes and HTML escaping."
+  ],
+  "youWillBuild": "A local patch-review artifact that preserves Git line evidence and can enter CI as SARIF.",
+  "usefulFor": [
+    "Use --diff - for stdin, --repo /path --base REF --head REF for a read-only Git diff, or --candidates recorded-findings.json to validate another reviewer's findings against the supplied patch."
+  ],
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "node",
+      "cli.ts",
+      "--diff",
+      "samples/change.diff",
+      "--output",
+      "review.json",
+      "--html",
+      "review.html",
+      "--sarif",
+      "review.sarif"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-diff-lines",
+      "title": "Recover new-file line numbers",
+      "summary": "Parse hunk headers into old and new counters. Context consumes both counters, deletions consume only the old counter, and additions consume the new counter while producing a reviewable location. Reject truncated hunks and parent-traversing paths. The parser is deliberately for text unified diffs; binary patches and combined merge diffs are outside the contract. Wire Python into TypeScript using execFileSync and stdin, never an interpolated shell command.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Python handles a streaming text grammar while TypeScript consumes a typed JSON boundary.",
+      "concepts": ["parseDiff"],
+      "difficulty": "starter",
+      "requires": ["node", "python3"],
+      "timeout": 90,
+      "figure": "pj-pr-review-reporter-1"
+    },
+    {
+      "id": "02-inspect",
+      "title": "Generate narrow review candidates",
+      "summary": "Build explicit static detectors for dynamic eval, shell exec, disabled TLS validation and empty catch handlers. Inspect only added lines. These patterns produce review candidates rather than proof of exploitable behavior. Keeping rule ids stable makes deduplication possible when a later model reviewer reports the same concern.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Typed findings require a source quote, location and rule id before entering the report pipeline.",
+      "concepts": ["inspect"],
+      "difficulty": "core",
+      "requires": ["node", "python3"],
+      "timeout": 90,
+      "figure": "pj-pr-review-reporter-2"
+    },
+    {
+      "id": "03-anchors",
+      "title": "Verify and merge findings",
+      "summary": "Require an existing added-line location and a nonempty exact source substring for every candidate. Reject fabricated files, deleted-line locations, empty quotes and invalid severity values. Merge findings by file, line and rule; keep the stronger severity when reviewers disagree. The quote gate establishes location support, not the truth of a security claim, which still needs review.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "A typed verification result keeps rejected model suggestions out of the renderer.",
+      "concepts": ["verify", "merge"],
+      "difficulty": "core",
+      "requires": ["node", "python3"],
+      "timeout": 90,
+      "figure": "pj-pr-review-reporter-3"
+    },
+    {
+      "id": "04-report",
+      "title": "Publish a local escaped report",
+      "summary": "Render a self-contained report with source locations, quoted evidence, severity and message. Escape source text as carefully as prose: a diff can contain executable HTML. Keep external publication outside the tool. The CLI writes review.html locally and prints a machine-readable summary for automation.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "TypeScript joins verified data to HTML while escaping every untrusted string.",
+      "concepts": ["escapeHTML", "render"],
+      "difficulty": "core",
+      "requires": ["node", "python3"],
+      "timeout": 90,
+      "figure": "pj-pr-review-reporter-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

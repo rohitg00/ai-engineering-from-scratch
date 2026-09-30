@@ -1,0 +1,15 @@
+{
+  "title": "feedback-theme-board | Actual application output",
+  "url": "file:///tmp/aiefs-recorded-artifacts/feedback-theme-board/solution/output/board.html",
+  "actions": [
+    [
+      "js",
+      "window.scrollTo(0,350)"
+    ],
+    [
+      "js",
+      "window.scrollTo(0,700)"
+    ]
+  ],
+  "kind": "browser capture"
+}

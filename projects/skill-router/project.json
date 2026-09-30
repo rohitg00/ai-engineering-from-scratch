@@ -1,0 +1,132 @@
+{
+  "id": "skill-router",
+  "title": "Skill Router",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "Route a request to a skill using explainable keyword scores, path rules, permission gates, and dependency ordering.",
+  "summary": "Route a request to a skill using explainable keyword scores, path rules, permission gates, and dependency ordering.",
+  "hours": 8,
+  "languages": [
+    "TypeScript"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Parse a typed skill catalog",
+    "Score words and repository paths",
+    "Resolve dependencies before execution",
+    "Abstain on ambiguous or blocked requests"
+  ],
+  "prerequisites": [
+    {
+      "title": "Tool schema design",
+      "path": "phases/13-tools-and-protocols/05-tool-schema-design"
+    },
+    {
+      "title": "Verification gates",
+      "path": "phases/14-agent-engineering/38-verification-gates"
+    }
+  ],
+  "youWillBuild": "A routing debugger showing why the wrong skill activated and how to fix a rule.",
+  "usefulFor": [
+    "A routing debugger showing why the wrong skill activated and how to fix a rule.",
+    "SKILL.md provides standard name and description; routing.json is this project's documented local extension."
+  ],
+  "demo": {
+    "command": [
+      "node",
+      "demo.ts"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-catalog",
+      "title": "Parse a typed skill catalog",
+      "summary": "A skill manifest declares an id, description, keywords, path patterns, priority, dependencies and permissions. Validate arrays and numbers at runtime rather than trusting a JSON cast. Tokenization normalizes punctuation and case and removes repeated words, so repeating a prompt cannot inflate its score.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "TypeScript makes permission and dependency declarations visible before routing.",
+      "concepts": [
+        "parseSkill",
+        "tokens"
+      ],
+      "difficulty": "starter",
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-skill-router-1"
+    },
+    {
+      "id": "02-score",
+      "title": "Score words and repository paths",
+      "summary": "Award two points for each matched keyword and three for each matched file path. Return score reasons alongside the score. Support star within one path segment and double-star across segments, escape regular expression punctuation, and reject absolute or parent-traversing file paths. Resolve tied scores by priority and then id so ranking is reproducible.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Small pure scoring functions are easy to inspect in a terminal and reuse in a web UI.",
+      "concepts": [
+        "matchPath",
+        "rank"
+      ],
+      "difficulty": "core",
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-skill-router-2"
+    },
+    {
+      "id": "03-dependencies",
+      "title": "Resolve dependencies before execution",
+      "summary": "Use depth-first traversal with separate active and visited sets. Active membership catches a cycle; visited membership avoids duplicate execution through a diamond. Validate permission requirements on dependencies as well as the selected skill. Emit dependencies before their consumers and reject unknown dependency ids instead of silently skipping work.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "A directed graph maps naturally onto typed arrays and sets.",
+      "concepts": [
+        "plan"
+      ],
+      "difficulty": "core",
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-skill-router-3"
+    },
+    {
+      "id": "04-route",
+      "title": "Abstain on ambiguous or blocked requests",
+      "summary": "Join ranking and dependency planning while preserving four distinct outcomes: ready, no-match, ambiguous and blocked. A score gap below the margin is ambiguous even if the tie-breaker produces a first result. A ranked winner can still be blocked by permissions. Return the ranked explanations in every outcome so a caller can display the decision.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Discriminated status values prevent an uncertain route from becoming an execution request.",
+      "concepts": [
+        "route"
+      ],
+      "difficulty": "core",
+      "requires": [
+        "node"
+      ],
+      "timeout": 90,
+      "figure": "pj-skill-router-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

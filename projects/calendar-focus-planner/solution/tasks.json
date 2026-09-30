@@ -1,0 +1,6 @@
+[
+  {"id":"lesson","title":"Write the lesson example","minutes":75,"priority":5},
+  {"id":"review","title":"Review learner submissions","minutes":45,"priority":4},
+  {"id":"record","title":"Record a project walkthrough","minutes":90,"priority":3},
+  {"id":"deep","title":"Design the next evaluation corpus","minutes":120,"priority":2}
+]

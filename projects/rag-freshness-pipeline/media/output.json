@@ -1,0 +1,16 @@
+{
+  "title": "RAG Freshness Pipeline | Actual artifact output",
+  "recordedAt": "2026-09-28T19:21:53Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "demo.py"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/rag-freshness-pipeline/solution",
+      "exitCode": 0,
+      "output": "{\n  \"before\": {\n    \"schema_version\": 1,\n    \"snapshot_version\": 1,\n    \"query\": \"tokens\",\n    \"matches\": [\n      {\n        \"id\": \"orchard-auth\",\n        \"score\": 1.0,\n        \"age\": 10,\n        \"hash\": \"b0d5ef32a4909ffaae75cfa8efc0a073c09214a8a3bb5100c72d8f06263a7f2b\",\n        \"text\": \"Orchard guest tokens expire after 60 minutes.\"\n      }\n    ]\n  },\n  \"changes\": {\n    \"schema_version\": 1,\n    \"version\": 2,\n    \"changes\": {\n      \"insert\": [\n        \"restore-runbook\"\n      ],\n      \"update\": [\n        \"orchard-auth\"\n      ],\n      \"refresh\": [],\n      \"delete\": [\n        \"retired-backup\"\n      ],\n      \"unchanged\": []\n    }\n  },\n  \"after\": {\n    \"schema_version\": 1,\n    \"snapshot_version\": 2,\n    \"query\": \"tokens\",\n    \"matches\": [\n      {\n        \"id\": \"orchard-auth\",\n        \"score\": 1.0,\n        \"age\": 10,\n        \"hash\": \"8180e886dc2c8e987dffcfe5628cc55675b7035a97a21e2c1e29affec056602f\",\n        \"text\": \"Orchard guest tokens expire after 15 minutes.\"\n      }\n    ]\n  },\n  \"expired\": {\n    \"schema_version\": 1,\n    \"snapshot_version\": 2,\n    \"query\": \"tokens\",\n    \"matches\": []\n  }\n}\n",
+      "durationMs": 50
+    }
+  ]
+}

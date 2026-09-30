@@ -1,0 +1,106 @@
+{
+  "id": "distributed-eval-farm",
+  "title": "Distributed Eval Farm Coordinator",
+  "level": 5,
+  "levelName": "Frontier",
+  "tagline": "Partition cases, lease shards and aggregate bounded concurrent workers.",
+  "summary": "Build a persistent same-host evaluation coordinator that partitions recorded predictions, leases shards to real worker processes, fences stale completions and retains dataset-bound receipts.",
+  "usefulFor": [
+    "Resume interrupted batch evaluations with exact dataset identity",
+    "Inspect shard ownership, process receipts and stale-worker rejection"
+  ],
+  "youWillBuild": "Build a persistent same-host evaluation coordinator that partitions recorded predictions, leases shards to real worker processes, fences stale completions and retains dataset-bound receipts.",
+  "hours": 8,
+  "languages": ["Go"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Partition stable case identities",
+    "Fence each shard lease",
+    "Accept idempotent completion receipts",
+    "Run a bounded local worker pool"
+  ],
+  "prerequisites": [
+    "Go 1.22 or later on Linux or macOS",
+    "Python 3.10 or later for the grader",
+    "Go structs, pointers, errors and JSON files",
+    "Goroutines, channels and context cancellation"
+  ],
+  "inspiredBy": [],
+  "demo": {
+    "command": ["go", "run", ".", "demo"],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-partition-stable-case-identities",
+      "title": "Partition stable case identities",
+      "summary": "Assign each nonempty unique case ID to one of a positive number of shards using FNV-1a.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "starter",
+      "concepts": ["Stable ID", "Hash bytes", "Modulo count", "One partition"]
+    },
+    {
+      "id": "02-fence-each-shard-lease",
+      "title": "Fence each shard lease",
+      "summary": "A coordinator owns a lease record.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Unfinished shard",
+        "Expiry check",
+        "New owner",
+        "Increment version"
+      ]
+    },
+    {
+      "id": "03-accept-idempotent-completion-receipts",
+      "title": "Accept idempotent completion receipts",
+      "summary": "A completion carries shard owner, lease version and a nonempty result.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Owner and version",
+        "Lease boundary",
+        "Result identity",
+        "Idempotent receipt"
+      ]
+    },
+    {
+      "id": "04-run-a-bounded-local-worker-pool",
+      "title": "Run a bounded local worker pool",
+      "summary": "Compose the bounded pool with persistent leases and actual worker processes; retain scored case coverage and reject stale receipts.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Bounded goroutines",
+        "Unique dispatch",
+        "Cooperative cancellation",
+        "Stable results"
+      ],
+      "timeout": 120
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

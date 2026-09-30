@@ -1,0 +1,48 @@
+{
+  "title": "Visual Evidence Library | Build and verify",
+  "recordedAt": "2026-09-28T19:19:34Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "visual-evidence-library",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-8wz_gvqs"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-8wz_gvqs\n  created  STAGE.md\n  created  fixtures/manifest.json\n  created  fixtures/seed-sign.svg\n  created  fixtures/tool-sign.svg\n  created  main.py\n  created  STAGE-2.md\n  created  STAGE-3.md\n  created  STAGE-4.md\nnext: python3 scripts/project_test.py visual-evidence-library --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-8wz_gvqs\n",
+      "durationMs": 50
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "visual-evidence-library",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-8wz_gvqs"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Visual Evidence Library: grading learner\n  FAIL stage 1: Validate image paths and text rectangles (6 tests)\n       not implemented yet: Implement this contract in the matching stage\n",
+      "durationMs": 102
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "visual-evidence-library",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Visual Evidence Library: grading solution\n  PASS stage 1: Validate image paths and text rectangles (6 tests)\n  PASS stage 2: Rank matches and preserve the rectangle (6 tests)\n  PASS stage 3: Keep extraction proposals separate from labels (6 tests)\n  PASS stage 4: Export evidence you can point to (6 tests)\n",
+      "durationMs": 374
+    }
+  ]
+}

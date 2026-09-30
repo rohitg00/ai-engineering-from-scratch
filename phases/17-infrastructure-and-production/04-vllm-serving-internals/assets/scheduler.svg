@@ -57,8 +57,8 @@
   <text x="480" y="342" text-anchor="middle" class="step">V1 scheduler (2026)</text>
   <text x="480" y="360" text-anchor="middle" class="small">scheduler runs per iteration</text>
   <text x="480" y="376" text-anchor="middle" class="small">not per request</text>
-  <text x="480" y="394" text-anchor="middle" class="small">N-gram spec decode is the</text>
-  <text x="480" y="408" text-anchor="middle" class="small">chunked-prefill-compatible path</text>
+  <text x="480" y="394" text-anchor="middle" class="small">check feature pairs against</text>
+  <text x="480" y="408" text-anchor="middle" class="small">the version's compat matrix</text>
   <text x="480" y="430" text-anchor="middle" class="caption">3-4x over naive at 128 concurrent</text>
 
   <rect x="640" y="50" width="280" height="490" class="box"/>
@@ -72,14 +72,14 @@
   <text x="780" y="200" text-anchor="middle" class="small">without chunking: ~50 ms</text>
   <text x="780" y="216" text-anchor="middle" class="small">with chunking: ~15 ms</text>
   <rect x="660" y="240" width="240" height="70" class="dsk"/>
-  <text x="780" y="262" text-anchor="middle" class="step">gotcha — vLLM v0.18.0</text>
-  <text x="780" y="280" text-anchor="middle" class="small">--enable-chunked-prefill</text>
-  <text x="780" y="296" text-anchor="middle" class="small">incompatible with draft-model spec</text>
+  <text x="780" y="262" text-anchor="middle" class="step">vLLM v0.18.0 feature matrix</text>
+  <text x="780" y="280" text-anchor="middle" class="small">spec decode + chunked prefill</text>
+  <text x="780" y="296" text-anchor="middle" class="small">marked compatible</text>
   <rect x="660" y="320" width="240" height="90" class="old"/>
-  <text x="780" y="342" text-anchor="middle" class="step">exception</text>
-  <text x="780" y="360" text-anchor="middle" class="small">N-gram GPU speculative decoding</text>
-  <text x="780" y="376" text-anchor="middle" class="small">in V1 scheduler works with</text>
-  <text x="780" y="394" text-anchor="middle" class="small">chunked prefill</text>
+  <text x="780" y="342" text-anchor="middle" class="step">known spec-decode issues</text>
+  <text x="780" y="360" text-anchor="middle" class="small">pipeline parallelism:</text>
+  <text x="780" y="376" text-anchor="middle" class="small">vllm &lt;= 0.15.0</text>
+  <text x="780" y="394" text-anchor="middle" class="small">draft models: vllm &lt;= 0.10.0</text>
   <text x="780" y="430" text-anchor="middle" class="caption">read the release notes before flipping flags</text>
 
   <rect x="40" y="470" width="880" height="70" class="box"/>

@@ -1,0 +1,107 @@
+{
+  "id": "agent-budget-planner",
+  "title": "Agent Budget Planner",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "A receipt-aware budget controller that keeps uncertain spending visible.",
+  "summary": "A receipt-aware budget controller that keeps uncertain spending visible. Import execute_jobs and provide invoke(job) -> (value, actual_cost). Use unit=nano_dollars only when rates and receipts have actually been converted to that unit.",
+  "youWillBuild": "A receipt-aware budget controller that keeps uncertain spending visible.",
+  "usefulFor": [
+    "Import execute_jobs and provide invoke(job) -> (value, actual_cost). Use unit=nano_dollars only when rates and receipts have actually been converted to that unit."
+  ],
+  "hours": 8,
+  "languages": ["Python"],
+  "languageWhy": {
+    "Python": "The standard library makes parsing, scoring, and failure handling visible without hiding the mechanism behind a framework."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Estimate requests in integer microcredits",
+    "Reserve capacity before dispatch",
+    "Settle actual usage and release unused budget",
+    "Schedule within cost and time limits"
+  ],
+  "prerequisites": [
+    "Python 3.10+",
+    "functions, dictionaries, exceptions, integer arithmetic and callback functions."
+  ],
+  "figures": true,
+  "overviewFigure": "pj-agent-budget-planner-1",
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--mode",
+      "execute",
+      "--output",
+      "budget.json"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-estimate-cost",
+      "title": "Estimate requests in integer microcredits",
+      "summary": "Validate nonnegative integer token counts and rates, then compute the worst-case cost.",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["integer accounting", "cost estimates"],
+      "figure": "pj-agent-budget-planner-1"
+    },
+    {
+      "id": "02-reserve-capacity",
+      "title": "Reserve capacity before dispatch",
+      "summary": "Return a new ledger with a unique request reservation.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["reservations", "admission control"],
+      "figure": "pj-agent-budget-planner-2"
+    },
+    {
+      "id": "03-settle-and-release",
+      "title": "Settle actual usage and release unused budget",
+      "summary": "Settle each request exactly once with actual cost no greater than its reservation.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["settlement", "idempotency", "immutability"],
+      "figure": "pj-agent-budget-planner-3"
+    },
+    {
+      "id": "04-schedule-under-deadlines",
+      "title": "Schedule within cost and time limits",
+      "summary": "Schedule known job estimates under integer cost and millisecond limits.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "python",
+      "languageWhy": "Use explicit data structures and deterministic standard-library operations.",
+      "concepts": ["deadlines", "trace events", "bounded execution"],
+      "figure": "pj-agent-budget-planner-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "id": "self-improving-skill-loop",
+  "title": "Self-Improving Skill Loop",
+  "level": 5,
+  "levelName": "Frontier",
+  "tagline": "Improve an explicit routing skill from labeled development errors, then require a separate evaluation gate before promotion.",
+  "summary": "Improve an explicit routing skill from labeled development errors, then require a separate evaluation gate before promotion.",
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "A correction-to-skill experiment runner preserving sources, preventing leakage and supporting rollback.",
+  "usefulFor": [
+    "A correction-to-skill experiment runner preserving sources, preventing leakage and supporting rollback.",
+    "The experiment proposes deterministic routing rules from development data."
+  ],
+  "skills": [
+    "Split labeled cases without identity leakage",
+    "Execute and score a transparent routing skill",
+    "Propose rules from development errors only",
+    "Require a separate gate before promotion"
+  ],
+  "prerequisites": [
+    {
+      "title": "Model evaluation",
+      "path": "phases/02-ml-fundamentals/09-model-evaluation"
+    },
+    {
+      "title": "Repository memory and state",
+      "path": "phases/14-agent-engineering/34-repo-memory-and-state"
+    },
+    {
+      "title": "Verification gates",
+      "path": "phases/14-agent-engineering/38-verification-gates"
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-self-improving-skill-loop-1",
+  "languageWhy": {
+    "Python": "Stdlib data structures, explicit algorithms and deterministic local tests."
+  },
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-dataset",
+      "title": "Split labeled cases without identity leakage",
+      "summary": "Every case appears in exactly one partition; a repeated id stops the run.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "starter",
+      "figure": "pj-self-improving-skill-loop-1",
+      "concepts": [
+        "split",
+        "labeled",
+        "cases",
+        "without"
+      ]
+    },
+    {
+      "id": "02-skill",
+      "title": "Execute and score a transparent routing skill",
+      "summary": "The rule [reset, password] matches reset password but does not match reset only.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-self-improving-skill-loop-2",
+      "concepts": [
+        "execute",
+        "and",
+        "score",
+        "a"
+      ]
+    },
+    {
+      "id": "03-propose",
+      "title": "Propose rules from development errors only",
+      "summary": "A repeated refund token proposes billing; a token shared by two labels is rejected.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-self-improving-skill-loop-3",
+      "concepts": [
+        "propose",
+        "rules",
+        "from",
+        "development"
+      ]
+    },
+    {
+      "id": "04-promotion",
+      "title": "Require a separate gate before promotion",
+      "summary": "A candidate that fixes one case but breaks a previously correct case cannot be promoted.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "figure": "pj-self-improving-skill-loop-4",
+      "concepts": [
+        "require",
+        "a",
+        "separate",
+        "gate"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

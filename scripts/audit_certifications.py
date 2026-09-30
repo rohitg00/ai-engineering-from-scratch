@@ -20,13 +20,6 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parent.parent
-CERT_ROOT = ROOT / "certifications" / "claude"
-CERT_README_PATH = CERT_ROOT / "README.md"
-GETTING_STARTED_PATH = CERT_ROOT / "GETTING_STARTED.md"
-PROGRAM_PATH = CERT_ROOT / "program.json"
-TRACKS_DIR = CERT_ROOT / "tracks"
-LESSONS_DIR = CERT_ROOT / "lessons"
-PREREQUISITES_PATH = CERT_ROOT / "prerequisites.json"
 CERT_SKILL_PATH = ROOT / "skills" / "claude-certification" / "SKILL.md"
 CLAUDE_CERT_SKILL_PATH = ROOT / ".claude" / "skills" / "claude-certification" / "SKILL.md"
 CERT_SKILL_OPENAI_PATH = CERT_SKILL_PATH.parent / "agents" / "openai.yaml"
@@ -34,7 +27,6 @@ CLAUDE_CERT_SKILL_OPENAI_PATH = CLAUDE_CERT_SKILL_PATH.parent / "agents" / "open
 ROOT_README_PATH = ROOT / "README.md"
 BOOK_WORKFLOW_PATH = ROOT / ".github" / "workflows" / "build-book.yml"
 BOOK_SCRIPT_PATH = ROOT / "scripts" / "build_book.py"
-FIGURE_RUNTIME_PATH = ROOT / "site" / "figures-claude-certifications.js"
 PUBLIC_CERT_PAGES = (
     ROOT / "site" / "certifications.html",
     ROOT / "site" / "certification.html",
@@ -51,19 +43,6 @@ CODE_EXTENSIONS = {".py": "Python", ".ts": "TypeScript", ".rs": "Rust", ".jl": "
 QUIZ_KEYS = {"stage", "question", "options", "correct", "explanation"}
 STAGES = Counter({"pre": 1, "check": 3, "post": 2})
 DISALLOWED_DASHES = {"\u2013": "en dash", "\u2014": "em dash"}
-OFFICIAL_EXAM_FACTS = {
-    "claude-ccao-f": {"items": 60, "timeLimitMinutes": 120, "feeUsd": 99},
-    "claude-ccdv-f": {"items": 53, "timeLimitMinutes": 120, "feeUsd": 125},
-    "claude-ccar-f": {"items": 60, "timeLimitMinutes": 120, "feeUsd": 125},
-    "claude-ccar-p": {"items": 63, "timeLimitMinutes": 120, "feeUsd": 175},
-}
-COMMON_OFFICIAL_EXAM_FACTS = {
-    "passingScaledScore": 720,
-    "scoreScale": "100-1000",
-    "validityMonths": 12,
-    "guideVersion": "1.0",
-    "effective": "July 2026",
-}
 PARITY_HEADINGS = (
     "Interactive Lab",
     "Practice Lab",
@@ -71,41 +50,138 @@ PARITY_HEADINGS = (
     "Verify It",
     "Capstone Connection",
 )
-EXPECTED_FIGURES = {
-    "00": "00-certification-route-map",
-    "01": "01-claude-model-fit",
-    "02": "02-responsible-ai-risk",
-    "03": "03-prompt-contract",
-    "04": "04-context-cache",
-    "05": "05-document-vision-pipeline",
-    "06": "06-data-analysis-confidence",
-    "07": "07-human-review-threshold",
-    "08": "08-messages-lifecycle",
-    "09": "09-structured-output-recovery",
-    "10": "10-tool-loop-budget",
-    "11": "11-mcp-permission-boundary",
-    "12": "12-agent-hook-lifecycle",
-    "13": "13-secrets-threat-model",
-    "14": "14-eval-observability-loop",
-    "15": "15-team-agent-loop",
-    "16": "16-multi-agent-topology",
-    "17": "17-session-context-budget",
-    "18": "18-tool-discovery-contract",
-    "19": "19-memory-rule-precedence",
-    "20": "20-batch-review-confidence",
-    "21": "21-provenance-escalation",
-    "22": "22-sla-value-tradeoff",
-    "23": "23-architecture-tradeoff",
-    "24": "24-rag-ranking",
-    "25": "25-identity-permission-path",
-    "26": "26-latency-cost-slo",
-    "27": "27-governance-approval-flow",
-    "28": "28-adr-lifecycle",
-    "29": "29-associate-capstone-readiness",
-    "30": "30-developer-capstone-readiness",
-    "31": "31-architect-foundation-readiness",
-    "32": "32-architect-professional-readiness",
+
+PROVIDERS: dict[str, dict[str, Any]] = {
+    "claude": {
+        "entity": "anthropic",
+        "commonFacts": {
+            "passingScaledScore": 720,
+            "scoreScale": "100-1000",
+            "validityMonths": 12,
+            "guideVersion": "1.0",
+            "effective": "July 2026",
+        },
+        "examFacts": {
+            "claude-ccao-f": {"items": 60, "timeLimitMinutes": 120, "feeUsd": 99},
+            "claude-ccdv-f": {"items": 53, "timeLimitMinutes": 120, "feeUsd": 125},
+            "claude-ccar-f": {"items": 60, "timeLimitMinutes": 120, "feeUsd": 125},
+            "claude-ccar-p": {"items": 63, "timeLimitMinutes": 120, "feeUsd": 175},
+        },
+        "expectedFigures": {
+            "00": "00-certification-route-map",
+            "01": "01-claude-model-fit",
+            "02": "02-responsible-ai-risk",
+            "03": "03-prompt-contract",
+            "04": "04-context-cache",
+            "05": "05-document-vision-pipeline",
+            "06": "06-data-analysis-confidence",
+            "07": "07-human-review-threshold",
+            "08": "08-messages-lifecycle",
+            "09": "09-structured-output-recovery",
+            "10": "10-tool-loop-budget",
+            "11": "11-mcp-permission-boundary",
+            "12": "12-agent-hook-lifecycle",
+            "13": "13-secrets-threat-model",
+            "14": "14-eval-observability-loop",
+            "15": "15-team-agent-loop",
+            "16": "16-multi-agent-topology",
+            "17": "17-session-context-budget",
+            "18": "18-tool-discovery-contract",
+            "19": "19-memory-rule-precedence",
+            "20": "20-batch-review-confidence",
+            "21": "21-provenance-escalation",
+            "22": "22-sla-value-tradeoff",
+            "23": "23-architecture-tradeoff",
+            "24": "24-rag-ranking",
+            "25": "25-identity-permission-path",
+            "26": "26-latency-cost-slo",
+            "27": "27-governance-approval-flow",
+            "28": "28-adr-lifecycle",
+            "29": "29-associate-capstone-readiness",
+            "30": "30-developer-capstone-readiness",
+            "31": "31-architect-foundation-readiness",
+            "32": "32-architect-professional-readiness",
+        },
+        "figureRuntime": "site/figures-claude-certifications.js",
+        "lessonRefPrefix": "certifications/claude/lessons/",
+        "aiNativeSurface": True,
+    },
+    "mcpa": {
+        "entity": "agentic ai foundation",
+        "commonFacts": {
+            "validityMonths": 24,
+            "effective": "September 2026",
+        },
+        "examFacts": {
+            "mcpa-f": {"timeLimitMinutes": 90, "feeUsd": 250},
+        },
+        "expectedFigures": {
+            "00": "mcpa-00-blueprint-weights",
+            "01": "mcpa-01-spec-map",
+            "02": "mcpa-02-n-by-m",
+            "03": "mcpa-03-envelope",
+            "04": "mcpa-04-stateless-requests",
+            "05": "mcpa-05-era-matrix",
+            "06": "mcpa-06-topology",
+            "07": "mcpa-07-discover",
+            "08": "mcpa-08-schema-contract",
+            "09": "mcpa-09-manifest-anatomy",
+            "10": "mcpa-10-interaction-flow",
+            "11": "mcpa-11-tool-call",
+            "12": "mcpa-12-resource-read",
+            "13": "mcpa-13-prompt-template",
+            "14": "mcpa-14-mrtr",
+            "15": "mcpa-15-deprecation-timeline",
+            "16": "mcpa-16-subscription-stream",
+            "17": "mcpa-17-lifecycle",
+            "18": "mcpa-18-error-taxonomy",
+            "19": "mcpa-19-transports",
+            "20": "mcpa-20-cache-freshness",
+            "21": "mcpa-21-task-states",
+            "22": "mcpa-22-trust-zones",
+            "23": "mcpa-23-oauth-flow",
+            "24": "mcpa-24-registration-paths",
+            "25": "mcpa-25-consent-gates",
+            "26": "mcpa-26-attack-surface",
+            "27": "mcpa-27-trace-propagation",
+            "28": "mcpa-28-roles-map",
+            "29": "mcpa-29-use-case-matrix",
+            "30": "mcpa-30-extension-negotiation",
+            "31": "mcpa-31-app-sandbox",
+            "32": "mcpa-32-registry-flow",
+            "33": "mcpa-33-capstone-flow",
+        },
+        "figureRuntime": "site/figures-mcpa-certifications.js",
+        "lessonRefPrefix": "certifications/mcpa/lessons/",
+    },
 }
+
+
+def use_provider(slug: str) -> None:
+    """Point the module-level path and fact globals at one provider's certification tree."""
+    global CERT_ROOT, CERT_README_PATH, GETTING_STARTED_PATH, PROGRAM_PATH
+    global TRACKS_DIR, LESSONS_DIR, PREREQUISITES_PATH, FIGURE_RUNTIME_PATH
+    global OFFICIAL_EXAM_FACTS, COMMON_OFFICIAL_EXAM_FACTS, EXPECTED_FIGURES
+    global LESSON_REF_PREFIX, PROVIDER_ENTITY, PROVIDER_AI_NATIVE_SURFACE
+
+    config = PROVIDERS[slug]
+    CERT_ROOT = ROOT / "certifications" / slug
+    CERT_README_PATH = CERT_ROOT / "README.md"
+    GETTING_STARTED_PATH = CERT_ROOT / "GETTING_STARTED.md"
+    PROGRAM_PATH = CERT_ROOT / "program.json"
+    TRACKS_DIR = CERT_ROOT / "tracks"
+    LESSONS_DIR = CERT_ROOT / "lessons"
+    PREREQUISITES_PATH = CERT_ROOT / "prerequisites.json"
+    FIGURE_RUNTIME_PATH = ROOT / config["figureRuntime"]
+    OFFICIAL_EXAM_FACTS = config["examFacts"]
+    COMMON_OFFICIAL_EXAM_FACTS = config["commonFacts"]
+    EXPECTED_FIGURES = config["expectedFigures"]
+    LESSON_REF_PREFIX = config["lessonRefPrefix"]
+    PROVIDER_ENTITY = config["entity"]
+    PROVIDER_AI_NATIVE_SURFACE = config.get("aiNativeSurface")
+
+
+use_provider("claude")
 
 
 @dataclass(frozen=True)
@@ -470,7 +546,7 @@ def check_assessment_question(
     if not isinstance(references, list) or not references or not all(isinstance(item, str) and item.strip() for item in references):
         audit.add("C059", path, f"{location}.references must contain at least one source or lesson reference")
     else:
-        internal = [item for item in references if item.startswith("certifications/claude/lessons/")]
+        internal = [item for item in references if item.startswith(LESSON_REF_PREFIX)]
         if not internal:
             audit.add("C059", path, f"{location}.references must include an internal lesson remediation path")
         for reference in internal:
@@ -654,7 +730,7 @@ def check_track(audit: Audit, path: Path, track: Any, global_ids: set[str]) -> t
                             continue
                         assessment_lesson_refs.update(
                             reference for reference in question.get("references", [])
-                            if isinstance(reference, str) and reference.startswith("certifications/claude/lessons/")
+                            if isinstance(reference, str) and reference.startswith(LESSON_REF_PREFIX)
                         )
         uncovered = lesson_paths - assessment_lesson_refs
         if uncovered:
@@ -831,20 +907,23 @@ def check_ai_native_learning_surface(audit: Audit, actual_lessons: set[str]) -> 
         audit.add("C081", BOOK_SCRIPT_PATH, "book builder must not ingest certification curriculum")
 
 
-def run_audit() -> Audit:
-    audit = Audit()
+def check_public_pages(audit: Audit) -> None:
+    for page in PUBLIC_CERT_PAGES:
+        if not page.is_file() or "not affiliated" not in page.read_text(encoding="utf-8").lower():
+            audit.add("C007", page, "public certification page must display the non-affiliation statement")
+
+
+def run_provider_audit(audit: Audit, slug: str) -> None:
+    use_provider(slug)
     program = load_json(audit, PROGRAM_PATH)
     if not isinstance(program, dict):
-        return audit
+        return
     check_id(audit, PROGRAM_PATH, program.get("id"), "id")
     for field in ("name", "provider", "publisher", "lastVerified", "guideVersion", "guideEffective", "summary", "disclaimer", "scoringNotice", "sourcePolicy"):
         require_string(audit, PROGRAM_PATH, program.get(field), field)
     disclaimer = str(program.get("disclaimer", "")).lower()
-    if "not affiliated" not in disclaimer or "not" not in disclaimer or "anthropic" not in disclaimer:
-        audit.add("C007", PROGRAM_PATH, "disclaimer must state that the curriculum is not affiliated with Anthropic")
-    for page in PUBLIC_CERT_PAGES:
-        if not page.is_file() or "not affiliated" not in page.read_text(encoding="utf-8").lower():
-            audit.add("C007", page, "public certification page must display the non-affiliation statement")
+    if "not affiliated" not in disclaimer or "not" not in disclaimer or PROVIDER_ENTITY not in disclaimer:
+        audit.add("C007", PROGRAM_PATH, f"disclaimer must state that the curriculum is not affiliated with {PROVIDER_ENTITY}")
 
     declared_tracks = program.get("tracks")
     if not isinstance(declared_tracks, list) or not declared_tracks:
@@ -867,7 +946,7 @@ def run_audit() -> Audit:
     readme_text = CERT_README_PATH.read_text(encoding="utf-8") if CERT_README_PATH.is_file() else ""
     readme_counts = {
         code: int(count)
-        for code, count in re.findall(r"^\|\s*(CC[A-Z-]+)\s*\|.*\|\s*(\d+)\s+lessons\s*\|$", readme_text, re.MULTILINE)
+        for code, count in re.findall(r"^\|\s*([A-Z][A-Z0-9-]+)\s*\|.*\|\s*(\d+)\s+lessons\s*\|$", readme_text, re.MULTILINE)
     }
     for track in tracks_by_id.values():
         exam_code = track.get("examCode")
@@ -880,11 +959,11 @@ def run_audit() -> Audit:
         check_lesson(audit, lesson_dir)
     actual_lesson_paths = {path.relative_to(ROOT).as_posix() for path in lesson_dirs}
     check_prerequisite_graph(audit, program, tracks_by_id, actual_lesson_paths)
-    check_ai_native_learning_surface(audit, actual_lesson_paths)
+    if PROVIDER_AI_NATIVE_SURFACE:
+        check_ai_native_learning_surface(audit, actual_lesson_paths)
     orphaned = actual_lesson_paths - referenced_lessons
     if orphaned:
         audit.add("C018", LESSONS_DIR, f"orphan certification lessons are not referenced by any track: {sorted(orphaned)}")
-    return audit
 
 
 def render(audit: Audit) -> str:
@@ -909,7 +988,10 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--json", action="store_true", help="emit machine-readable JSON")
     args = parser.parse_args(argv)
-    audit = run_audit()
+    audit = Audit()
+    check_public_pages(audit)
+    for program_path in sorted(ROOT.glob("certifications/*/program.json")):
+        run_provider_audit(audit, program_path.parent.name)
     if args.json:
         payload = {
             "lessons_checked": audit.lessons_checked,

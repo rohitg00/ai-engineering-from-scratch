@@ -1,0 +1,78 @@
+{
+  "lesson": "19-transports-and-http-headers",
+  "title": "Transports and the HTTP Header Contract",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team debates whether Streamable HTTP and stdio need separate MCP message formats. What does the 2026-07-28 specification say?",
+      "options": [
+        "Only Streamable HTTP requests carry a protocol version and capabilities; stdio requests do not.",
+        "Streamable HTTP requires a newer JSON-RPC version than the stdio transport can use.",
+        "Each transport binding defines its own private set of methods and result types.",
+        "Message semantics are identical everywhere; only framing and metadata delivery differ."
+      ],
+      "correct": 3,
+      "explanation": "Protocol semantics are identical on every transport; stdio and Streamable HTTP only differ in how messages are framed and how metadata like protocol version and capabilities is carried alongside them."
+    },
+    {
+      "stage": "check",
+      "question": "A gateway forwards a tools/call request whose MCP-Protocol-Version header disagrees with the protocol version carried in the request body's _meta. What must the server do?",
+      "options": [
+        "Reject it with HTTP 400 and a HeaderMismatch JSON-RPC error.",
+        "Mint a fresh Mcp-Session-Id for the request and keep processing normally.",
+        "Reject it with an UnsupportedProtocolVersionError naming the versions it supports.",
+        "Trust the header value and continue processing the request normally."
+      ],
+      "correct": 0,
+      "explanation": "The MCP-Protocol-Version header must equal the protocol version in the request body's _meta; when they disagree the server rejects the request with HTTP 400 and a HeaderMismatch (-32020) JSON-RPC error."
+    },
+    {
+      "stage": "check",
+      "question": "A tool's inputSchema marks its region parameter with x-mcp-header set to Region, and the call argument for region is the plain ASCII value us-west1. What must the Mcp-Param-Region header contain?",
+      "options": [
+        "Nothing at all, since x-mcp-header only ever applies to the Mcp-Name header.",
+        "The plain value us-west1, unchanged, since it needs no base64 sentinel encoding.",
+        "The value base64 encoded, because every mirrored parameter header needs encoding.",
+        "The value percent-encoded with URL escapes instead of the base64 sentinel format."
+      ],
+      "correct": 1,
+      "explanation": "Header values use the base64 sentinel format only when they cannot be safely represented as plain ASCII, such as non-ASCII characters, control characters, leading or trailing whitespace, or a value matching the sentinel pattern; a plain value like us-west1 is mirrored unchanged."
+    },
+    {
+      "stage": "check",
+      "question": "A Streamable HTTP server receives a POST whose Origin header does not match any origin it allows. What does the specification require here?",
+      "options": [
+        "Respond 401 Unauthorized instead, since Origin is treated as authentication proof.",
+        "Log the mismatch but continue processing the request as usual.",
+        "Respond 403 Forbidden, since this defends against DNS rebinding attacks.",
+        "Accept it anyway if the request also carries a valid bearer token."
+      ],
+      "correct": 2,
+      "explanation": "Streamable HTTP servers validate the Origin header on every connection to prevent DNS rebinding attacks and respond 403 Forbidden when it is present and not allowed; Origin validation is a defense in addition to authentication, not a substitute for it."
+    },
+    {
+      "stage": "post",
+      "question": "A client sends an HTTP GET to the MCP endpoint, expecting the old standalone event stream to open. How does a modern 2026-07-28 server respond?",
+      "options": [
+        "With 404 Not Found, since GET was never part of any MCP transport.",
+        "By opening an SSE stream and sending an endpoint event, as before.",
+        "By minting a fresh Mcp-Session-Id and starting a new session for it.",
+        "With 405 Method Not Allowed, since the modern endpoint only accepts POST."
+      ],
+      "correct": 3,
+      "explanation": "The 2026-07-28 Streamable HTTP transport removed the standalone GET stream and protocol sessions; a modern server answers GET or DELETE on the MCP endpoint with 405 Method Not Allowed instead of opening the deprecated HTTP+SSE event stream."
+    },
+    {
+      "stage": "post",
+      "question": "Why does an accepted notification POST return 202 Accepted with no body, instead of a JSON-RPC result?",
+      "options": [
+        "Because a notification never gets a JSON-RPC reply; only its delivery is acknowledged.",
+        "Because notifications always fail validation, so the server returns nothing useful.",
+        "Because 202 itself carries a JSON-RPC result whose resultType is accepted.",
+        "Because the client already learns the outcome from the Mcp-Method header alone."
+      ],
+      "correct": 0,
+      "explanation": "A notification has no id and never receives a JSON-RPC response; the transport instead acknowledges its delivery with HTTP 202 Accepted and no body, which is a transport-level outcome rather than a JSON-RPC result carrying a resultType."
+    }
+  ]
+}

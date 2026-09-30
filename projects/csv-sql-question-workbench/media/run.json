@@ -1,0 +1,48 @@
+{
+  "title": "CSV Question Workbench | Build and verify",
+  "recordedAt": "2026-09-28T19:36:21Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "csv-sql-question-workbench",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-yixq1znl"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-yixq1znl\n  created  cli.py\n  created  main.py\n  created  sample.csv\n  created  stage-1.md\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py csv-sql-question-workbench --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-yixq1znl\n",
+      "durationMs": 65
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "csv-sql-question-workbench",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-yixq1znl"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "CSV Question Workbench: grading learner\n  FAIL stage 1: Import a table without guessing away errors (9 tests)\n       not implemented yet: Implement load_csv\n",
+      "durationMs": 116
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "csv-sql-question-workbench",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "CSV Question Workbench: grading solution\n  PASS stage 1: Import a table without guessing away errors (9 tests)\n  PASS stage 2: Translate a small question into an inspectable plan (6 tests)\n  PASS stage 3: Execute a proposal inside a read-only boundary (6 tests)\n  PASS stage 4: Publish an answer another developer can reproduce (8 tests)\n",
+      "durationMs": 1530
+    }
+  ]
+}

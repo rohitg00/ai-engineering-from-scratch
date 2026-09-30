@@ -1,0 +1,9 @@
+Workshop equipment request
+Requester: Mira Chen
+Team: Developer education
+Seats: 18
+Delivery: 2026-10-14
+
+Follow-up note, awaiting confirmation:
+Seats: 24
+Contact: mira@example.test

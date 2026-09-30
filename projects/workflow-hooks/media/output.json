@@ -1,0 +1,16 @@
+{
+  "title": "Self-Correcting Workflow Hooks | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:14Z",
+  "records": [
+    {
+      "command": [
+        "node",
+        "demo.ts"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/workflow-hooks/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"before\": {\n    \"schema_version\": 1,\n    \"additional_context\": \"\",\n    \"rules\": [],\n    \"evidence\": [],\n    \"sources\": []\n  },\n  \"approved\": {\n    \"schema_version\": 1,\n    \"additional_context\": \"Read API_KEY from the environment; never rename it to api_key.\",\n    \"rules\": [\n      \"Read API_KEY from the environment; never rename it to api_key.\"\n    ],\n    \"evidence\": [\n      {\n        \"id\": \"orchard-a\",\n        \"session\": \"review-a\",\n        \"source\": \"The runtime reads the uppercase environment key.\",\n        \"locator\": \"local:orchard/config.py:12\"\n      },\n      {\n        \"id\": \"orchard-b\",\n        \"session\": \"review-b\",\n        \"source\": \"The deployment manifest provides API_KEY.\",\n        \"locator\": \"local:orchard/deploy.yaml:18\"\n      }\n    ],\n    \"sources\": [\n      \"orchard-a\",\n      \"orchard-b\"\n    ]\n  },\n  \"retired\": {\n    \"schema_version\": 1,\n    \"additional_context\": \"\",\n    \"rules\": [],\n    \"evidence\": [],\n    \"sources\": []\n  }\n}\n",
+      "durationMs": 118
+    }
+  ]
+}

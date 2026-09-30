@@ -1,0 +1,20 @@
+{
+  "title": "Browser Agent | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:54Z",
+  "records": [
+    {
+      "command": [
+        "node",
+        "cli.ts",
+        "--task",
+        "samples/contact.json",
+        "--output",
+        "browser-run.json"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/browser-agent/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"mode\": \"fixture transitions with recorded success pixels\",\n  \"status\": \"complete\",\n  \"trace\": [\n    {\n      \"step\": 1,\n      \"action\": {\n        \"kind\": \"fill\",\n        \"id\": \"name\",\n        \"value\": \"Mira Chen\"\n      }\n    },\n    {\n      \"step\": 2,\n      \"action\": {\n        \"kind\": \"fill\",\n        \"id\": \"email\",\n        \"value\": \"mira@example.test\"\n      }\n    },\n    {\n      \"step\": 3,\n      \"action\": {\n        \"kind\": \"click\",\n        \"id\": \"save\"\n      }\n    },\n    {\n      \"step\": 4,\n      \"action\": {\n        \"kind\": \"done\"\n      }\n    }\n  ],\n  \"visual\": {\n    \"width\": 4,\n    \"height\": 4,\n    \"greenFraction\": 1\n  },\n  \"screenshot\": \"/private/tmp/aiefs-recorded-artifacts/browser-agent/solution/success.png\"\n}\n",
+      "durationMs": 145
+    }
+  ]
+}

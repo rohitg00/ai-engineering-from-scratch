@@ -1,0 +1,81 @@
+{
+  "questions": [
+    {
+      "id": "d1",
+      "question": "How do microVMs isolate AI agents compared to containers?",
+      "expected_docs": [
+        "05-microvm-monitor",
+        "02-containers-shared-kernel",
+        "06-virtualized-containers"
+      ],
+      "key_facts": [
+        [
+          "own",
+          "kernel"
+        ],
+        [
+          "share",
+          "kernel"
+        ]
+      ]
+    },
+    {
+      "id": "d2",
+      "question": "Why is mounting the container socket into an agent container dangerous?",
+      "expected_docs": [
+        "03-daemon-socket-escape"
+      ],
+      "key_facts": [
+        [
+          "socket"
+        ],
+        [
+          "privileged container"
+        ]
+      ]
+    },
+    {
+      "id": "d3",
+      "question": "Are command denylists enough to sandbox an agent?",
+      "expected_docs": [
+        "01-process-denylists"
+      ],
+      "key_facts": [
+        [
+          "denylist"
+        ],
+        [
+          "interpreter"
+        ]
+      ]
+    },
+    {
+      "id": "d4",
+      "question": "What is the stateful sandbox controller for?",
+      "expected_docs": [
+        "10-stateful-sandbox"
+      ],
+      "key_facts": [
+        [
+          "sandbox",
+          "resource"
+        ]
+      ]
+    },
+    {
+      "id": "d5",
+      "question": "What does user-space kernel do and what does it cost?",
+      "expected_docs": [
+        "04-user-space-kernel"
+      ],
+      "key_facts": [
+        [
+          "application kernel"
+        ],
+        [
+          "performance"
+        ]
+      ]
+    }
+  ]
+}

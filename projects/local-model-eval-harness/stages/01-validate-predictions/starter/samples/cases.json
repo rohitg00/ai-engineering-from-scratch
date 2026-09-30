@@ -1,0 +1,12 @@
+[
+  {
+    "id": "refund",
+    "prompt": "Classify as yes or no: May a customer request a refund within the stated 14 day return window?",
+    "expected": "yes"
+  },
+  {
+    "id": "expired",
+    "prompt": "Classify as yes or no: Does a 90 day old purchase qualify for a 14 day return policy?",
+    "expected": "no"
+  }
+]

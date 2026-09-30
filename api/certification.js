@@ -172,7 +172,7 @@ function certificationFallback(entry, trackId) {
     const params = new URLSearchParams();
     params.set('path', lesson.path);
     params.set(
-      lesson.path.startsWith('certifications/claude/lessons/') ? 'track' : 'fromTrack',
+      /^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//.test(lesson.path) ? 'track' : 'fromTrack',
       trackId
     );
     const href = `/lesson?${params.toString()}`;
@@ -211,7 +211,7 @@ function send(res, method, status, body, cacheControl) {
 
 function sendRedirect(res, method, trackId) {
   res.setHeader('Location', `/certification?id=${encodeURIComponent(trackId)}`);
-  send(res, method, 308, '', 'public, max-age=300, s-maxage=86400, stale-while-revalidate=604800');
+  send(res, method, 308, '', 'public, max-age=0, s-maxage=86400, must-revalidate');
 }
 
 function createHandler(options) {
@@ -251,7 +251,7 @@ function createHandler(options) {
       }
       let html = replaceMarkedRegion(template, SEO_START, SEO_END, certificationHead(entry, trackId));
       html = replaceMarkedRegion(html, FALLBACK_START, FALLBACK_END, certificationFallback(entry, trackId));
-      send(res, method, 200, html, 'public, max-age=300, s-maxage=86400, stale-while-revalidate=604800');
+      send(res, method, 200, html, 'public, max-age=0, s-maxage=86400, must-revalidate');
     } catch (_) {
       send(res, method, 500, errorPage('Certification page unavailable', 'The certification page could not be assembled. Continue from the certification index while this page is restored.'), 'no-store');
     }

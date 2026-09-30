@@ -1,0 +1,45 @@
+{
+  "id": "mcpa-certification",
+  "name": "MCPA Certification Curriculum",
+  "shortName": "MCPA",
+  "accessNoticeTitle": "Official exam access is open",
+  "provider": "Agentic AI Foundation",
+  "publisher": "AI Engineering from Scratch",
+  "version": "1.0.0-local-preview",
+  "lastVerified": "2026-09-24",
+  "guideVersion": "1.0",
+  "guideEffective": "September 2026",
+  "summary": "A free, open-source path to the Model Context Protocol Associate exam, built by implementing MCP hosts, clients, servers, and tools against the 2026-07-28 specification.",
+  "promise": "Learn the judgment the exam measures by building the protocol the exam describes.",
+  "accessNotice": "As verified on September 24, 2026, the MCPA exam is open enrollment through Linux Foundation Training and Certification. This open curriculum is available to everyone. Verify current pricing, format, and eligibility on the official page before scheduling, because program details can change.",
+  "disclaimer": "This is an independent community curriculum. It is not affiliated with, endorsed by, sponsored by, or authorized by the Agentic AI Foundation or the Linux Foundation. It does not contain live exam questions. The official exam page and current program policies always take precedence.",
+  "scoringNotice": "Practice percentages in this curriculum are raw scores over original questions. The official passing score and scoring scale for the MCPA are not published, so practice results cannot predict an official outcome.",
+  "sourcePolicy": "Every exam fact is mapped to the official MCPA certification page and the launch announcement, with the retrieval date recorded in research/source-verification-ledger.md. Protocol facts are mapped to the MCP 2026-07-28 specification. Lessons and questions are original.",
+  "prerequisitesPath": "certifications/mcpa/prerequisites.json",
+  "specVersion": "2026-07-28",
+  "officialLinks": [
+    {
+      "label": "MCPA certification page",
+      "url": "https://training.linuxfoundation.org/certification/model-context-protocol-associate-mcpa/"
+    },
+    {
+      "label": "MCPA launch announcement",
+      "url": "https://www.linuxfoundation.org/press/agentic-ai-foundation-launches-mcpa-certification-to-validate-mcp-expertise"
+    },
+    {
+      "label": "Model Context Protocol specification 2026-07-28",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28"
+    },
+    {
+      "label": "Model Context Protocol documentation",
+      "url": "https://modelcontextprotocol.io/docs/getting-started/intro"
+    },
+    {
+      "label": "Agentic AI Foundation",
+      "url": "https://aaif.io/"
+    }
+  ],
+  "tracks": [
+    "mcpa-f"
+  ]
+}

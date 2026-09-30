@@ -1,0 +1,120 @@
+{
+  "id": "harness-bench",
+  "title": "Harness Bench",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Compare harness behavior under the same tasks and call budget.",
+  "summary": "Compare baseline, error-retry and evidence policies against the same ordered cases and model configuration. Count actual calls, reject incomparable receipts, replay finite recordings or call a configured HTTP model.",
+  "usefulFor": [
+    "Decide whether retries or supplied evidence improve your assistant under a fixed call budget",
+    "Export reviewable per-call traces with dataset and model receipts"
+  ],
+  "youWillBuild": "Compare baseline, error-retry and evidence policies against the same ordered cases and model configuration. Count actual calls, reject incomparable receipts, replay finite recordings or call a configured HTTP model.",
+  "hours": 8,
+  "languages": [
+    "Go"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Load unseen benchmark cases",
+    "Define exactly what a correct answer means",
+    "Run a harness under a call budget",
+    "Compare runs on equal denominators"
+  ],
+  "prerequisites": [
+    {
+      "title": "Model evaluation",
+      "path": "phases/02-ml-fundamentals/09-model-evaluation"
+    },
+    {
+      "title": "Structured outputs",
+      "path": "phases/11-llm-engineering/03-structured-outputs"
+    }
+  ],
+  "inspiredBy": [],
+  "demo": {
+    "command": [
+      "go",
+      "run",
+      "."
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-load-unseen-benchmark-cases",
+      "title": "Load unseen benchmark cases",
+      "summary": "Freeze the cases before comparing policies.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "starter",
+      "concepts": [
+        "JSON fields",
+        "Case budget",
+        "Unique IDs",
+        "Held-out records"
+      ]
+    },
+    {
+      "id": "02-define-exactly-what-a-correct-answer-means",
+      "title": "Define exactly what a correct answer means",
+      "summary": "Define the answer contract before seeing the scores.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Normalize whitespace",
+        "Lowercase",
+        "Preserve content",
+        "Exact equality"
+      ]
+    },
+    {
+      "id": "03-run-a-harness-under-a-call-budget",
+      "title": "Run a harness under a call budget",
+      "summary": "Spend calls on a policy, not on answer leakage.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Prompt-only input",
+        "Charge attempt",
+        "Evaluate answer",
+        "Named terminal state"
+      ]
+    },
+    {
+      "id": "04-compare-runs-on-equal-denominators",
+      "title": "Compare runs on equal denominators",
+      "summary": "Prove the runs are comparable before ranking them.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Counter invariants",
+        "Same dataset size",
+        "Stable ranking",
+        "Scoped measurement"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

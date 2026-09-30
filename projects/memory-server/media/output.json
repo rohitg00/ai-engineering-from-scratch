@@ -1,0 +1,16 @@
+{
+  "title": "Persistent Memory Server | Actual artifact output",
+  "recordedAt": "2026-09-28T19:23:04Z",
+  "records": [
+    {
+      "command": [
+        "node",
+        "demo-persistent.ts"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/memory-server/solution",
+      "exitCode": 0,
+      "output": "{\n  \"mode\": \"actual separate processes sharing an append log; demo removes its temporary directory afterward\",\n  \"created\": {\n    \"id\": \"cache-policy\",\n    \"namespace\": \"docs\",\n    \"text\": \"Cache entries expire after sixty seconds. Never cache private responses.\",\n    \"source\": \"policies/cache.md:12\",\n    \"revision\": 1\n  },\n  \"recovered\": [\n    {\n      \"id\": \"cache-policy\",\n      \"namespace\": \"docs\",\n      \"text\": \"Cache entries expire after sixty seconds. Never cache private responses.\",\n      \"source\": \"policies/cache.md:12\",\n      \"revision\": 1,\n      \"score\": 0.4511857892\n    }\n  ],\n  \"updated\": {\n    \"id\": \"cache-policy\",\n    \"namespace\": \"docs\",\n    \"text\": \"Cache entries now expire after ninety seconds. Private responses remain excluded.\",\n    \"source\": \"policies/cache.md:18\",\n    \"revision\": 2\n  },\n  \"history\": [\n    {\n      \"id\": \"cache-policy\",\n      \"namespace\": \"docs\",\n      \"text\": \"Cache entries expire after sixty seconds. Never cache private responses.\",\n      \"source\": \"policies/cache.md:12\",\n      \"revision\": 1\n    },\n    {\n      \"id\": \"cache-policy\",\n      \"namespace\": \"docs\",\n      \"text\": \"Cache entries now expire after ninety seconds. Private responses remain excluded.\",\n      \"source\": \"policies/cache.md:18\",\n      \"revision\": 2\n    }\n  ]\n}\n",
+      "durationMs": 1292
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+{"id": "root", "name": "Report pipeline", "start": 0, "end": 100, "status": "ok", "tokens": 0}
+{"id": "search", "parent": "root", "name": "Search", "start": 10, "end": 70, "status": "ok", "tokens": 40}
+{"id": "draft", "parent": "root", "name": "Draft retry", "start": 50, "end": 95, "status": "error", "tokens": 300}

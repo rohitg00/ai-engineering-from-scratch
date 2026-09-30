@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "unit": "teaching_units",
+  "limit": 100,
+  "deadline_ms": 5000,
+  "jobs": [
+    {
+      "id": "index",
+      "cost": 60,
+      "actual_cost": 35,
+      "duration_ms": 10,
+      "action": {
+        "kind": "sha256",
+        "text": "source receipt"
+      }
+    },
+    {
+      "id": "report",
+      "cost": 70,
+      "actual_cost": 40,
+      "duration_ms": 20,
+      "action": {
+        "kind": "sha256",
+        "text": "report draft"
+      }
+    },
+    {
+      "id": "extra",
+      "cost": 60,
+      "actual_cost": 60,
+      "duration_ms": 20,
+      "action": {
+        "kind": "sha256",
+        "text": "extra"
+      }
+    }
+  ]
+}

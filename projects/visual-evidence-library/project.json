@@ -1,0 +1,121 @@
+{
+  "id": "visual-evidence-library",
+  "title": "Visual Evidence Library",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Find text inside screenshots and diagrams with inspectable coordinate evidence.",
+  "summary": "Find text inside screenshots and diagrams with inspectable coordinate evidence.",
+  "youWillBuild": "A standalone HTML evidence gallery with highlighted rectangles and evidence.json for reuse.",
+  "usefulFor": [
+    "A JSON manifest naming local SVG, PNG or JPEG assets, their declared dimensions and explicitly supplied text rectangles."
+  ],
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "languageWhy": {
+    "Python": "Python makes file validation, Unicode token search, HTTP payloads and SVG parsing explicit without an OCR framework."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Validate image paths and text rectangles",
+    "Rank matches and preserve the rectangle",
+    "Keep extraction proposals separate from labels",
+    "Export evidence you can point to"
+  ],
+  "prerequisites": [
+    "Work with nested Python dictionaries and lists.",
+    "Understand x/y coordinates and width/height in image pixels.",
+    "Understand the difference between supplied labels and independently observed evidence."
+  ],
+  "figures": true,
+  "overviewFigure": "pj-visual-evidence-library-1",
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-validate-evidence",
+      "title": "Validate image paths and text rectangles",
+      "summary": "Preserve where a text assertion came from before indexing it.",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Python makes file validation, Unicode token search, HTTP payloads and SVG parsing explicit without an OCR framework.",
+      "concepts": [
+        "path containment",
+        "bounding boxes",
+        "provenance"
+      ],
+      "figure": "pj-visual-evidence-library-1"
+    },
+    {
+      "id": "02-search-text-regions",
+      "title": "Rank matches and preserve the rectangle",
+      "summary": "Search region text with transparent lexical query coverage.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Python makes file validation, Unicode token search, HTTP payloads and SVG parsing explicit without an OCR framework.",
+      "concepts": [
+        "Unicode tokens",
+        "query coverage",
+        "stable ranking"
+      ],
+      "figure": "pj-visual-evidence-library-2"
+    },
+    {
+      "id": "03-review-vision-proposals",
+      "title": "Keep extraction proposals separate from labels",
+      "summary": "Call an optional vision endpoint and require review before indexing.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Python makes file validation, Unicode token search, HTTP payloads and SVG parsing explicit without an OCR framework.",
+      "concepts": [
+        "HTTP adapters",
+        "structured output",
+        "human review"
+      ],
+      "figure": "pj-visual-evidence-library-3"
+    },
+    {
+      "id": "04-export-the-gallery",
+      "title": "Export evidence you can point to",
+      "summary": "Render a portable gallery with exact region overlays and JSON results.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "python",
+      "languageWhy": "Python makes file validation, Unicode token search, HTTP payloads and SVG parsing explicit without an OCR framework.",
+      "concepts": [
+        "coordinate transforms",
+        "safe rendering",
+        "portable reports"
+      ],
+      "figure": "pj-visual-evidence-library-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Build and grade",
+      "caption": "A fresh starter fails; the complete original solution passes all four stages."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the application output",
+      "caption": "Actual output from authored offline fixtures. See the README for provider and evidence boundaries."
+    }
+  ]
+}

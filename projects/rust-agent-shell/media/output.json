@@ -1,0 +1,16 @@
+{
+  "title": "Streaming Agent Shell in Rust | Actual artifact output",
+  "recordedAt": "2026-09-28T19:21:57Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "demo.py"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/rust-agent-shell/solution",
+      "exitCode": 0,
+      "output": "{\"schema_version\": 1, \"request_id\": \"inspect\", \"seq\": 1, \"kind\": \"ok\", \"output\": \"release.md\", \"terminal\": false}\n{\"schema_version\": 1, \"request_id\": \"evidence\", \"seq\": 2, \"kind\": \"ok\", \"output\": \"2:Restore evidence: rehearsal completed at 09:20 UTC.\", \"terminal\": false}\n{\"schema_version\": 1, \"request_id\": \"leave\", \"seq\": 3, \"kind\": \"ok\", \"output\": \"session closed\", \"terminal\": true}\n",
+      "durationMs": 708
+    }
+  ]
+}

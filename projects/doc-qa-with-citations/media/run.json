@@ -1,0 +1,48 @@
+{
+  "title": "Document QA With Citations and LangChain | Build and verify",
+  "recordedAt": "2026-09-28T19:22:55Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "doc-qa-with-citations",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-tu_ij1no"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-tu_ij1no\n  created  cli.py\n  created  documents.py\n  created  samples/docs/cache.txt\n  created  samples/docs/limits.txt\n  created  retrieval.py\n  created  answer.py\n  created  adapter.py\nnext: python3 scripts/project_test.py doc-qa-with-citations --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-tu_ij1no\n",
+      "durationMs": 51
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "doc-qa-with-citations",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-tu_ij1no"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Document QA With Citations and LangChain: grading learner\n  FAIL stage 1: Load local documents with stable provenance (5 tests)\n       not implemented yet: Stage 1: implement chunk_document\n",
+      "durationMs": 103
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "doc-qa-with-citations",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Document QA With Citations and LangChain: grading solution\n  PASS stage 1: Load local documents with stable provenance (5 tests)\n  PASS stage 2: Rank chunks with an inspectable keyword score (5 tests)\n  PASS stage 3: Accept only answers grounded in retrieved spans (5 tests)\n  PASS stage 4: Use a framework splitter without losing offsets (10 tests)\n",
+      "durationMs": 290
+    }
+  ]
+}

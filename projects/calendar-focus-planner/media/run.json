@@ -1,0 +1,48 @@
+{
+  "title": "calendar-focus-planner | Build and verify",
+  "recordedAt": "2026-09-28T19:29:30Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "calendar-focus-planner",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/learner-demo-hwi4q7u3"
+      ],
+      "cwd": "/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/learner-demo-hwi4q7u3\n  created  cli.ts\n  created  main.ts\n  created  sample.ics\n  created  stage-1.md\n  created  tasks.json\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py calendar-focus-planner --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/learner-demo-hwi4q7u3\n",
+      "durationMs": 51
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "calendar-focus-planner",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/learner-demo-hwi4q7u3"
+      ],
+      "cwd": "/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Calendar Focus Planner: grading learner\n  FAIL stage 1: Read explicit calendar intervals (9 tests)\n       not implemented yet: Stage 1: implement parseCalendar\n",
+      "durationMs": 286
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "calendar-focus-planner",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Calendar Focus Planner: grading solution\n  PASS stage 1: Read explicit calendar intervals (9 tests)\n  PASS stage 2: Merge overlaps before finding gaps (6 tests)\n  PASS stage 3: Schedule priorities without pretending everything fits (6 tests)\n  PASS stage 4: Export a reviewable calendar proposal (5 tests)\n",
+      "durationMs": 1216
+    }
+  ]
+}

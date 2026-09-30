@@ -1,0 +1,4 @@
+[
+  {"id":"incident-summary","text":"The checkout deployment increased timeout errors. Reverting the configuration restored service."},
+  {"id":"followup-checklist","text":"Add a timeout regression test. Verify the rollback procedure. Record the owner."}
+]

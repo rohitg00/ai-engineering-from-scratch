@@ -1,0 +1,111 @@
+{
+  "id": "durable-agent-jobs",
+  "title": "Durable Agent Jobs",
+  "level": 4,
+  "levelName": "Systems",
+  "tagline": "Persist job states and reject stale worker completions.",
+  "summary": "Build a persistent local report queue with versioned leases, immutable input, idempotent output receipts and reproducible worker-process crash recovery.",
+  "usefulFor": [
+    "Resume local report jobs after a worker crash",
+    "Observe and test the gap between an output effect and durable completion"
+  ],
+  "youWillBuild": "Build a persistent local report queue with versioned leases, immutable input, idempotent output receipts and reproducible worker-process crash recovery.",
+  "hours": 8,
+  "languages": ["Go"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Create jobs with stable identity",
+    "Claim with a lease and version",
+    "Finish or reclaim expired work",
+    "Write and recover atomic snapshots"
+  ],
+  "prerequisites": [
+    "Go 1.22 or later on Linux or macOS",
+    "Python 3.10 or later for the grader",
+    "Go structs, pointers, errors and JSON files",
+    "Basic process lifecycle and filesystem operations"
+  ],
+  "inspiredBy": [],
+  "demo": {
+    "command": ["go", "run", ".", "demo"],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-create-jobs-with-stable-identity",
+      "title": "Create jobs with stable identity",
+      "summary": "Accept a bounded identifier and start every job in queued state with version zero.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "starter",
+      "concepts": [
+        "Validate ID",
+        "Initial state",
+        "Zero version",
+        "No side effect"
+      ]
+    },
+    {
+      "id": "02-claim-with-a-lease-and-version",
+      "title": "Claim with a lease and version",
+      "summary": "Only queued work can be claimed.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Expected version",
+        "Attempt cap",
+        "Lease arithmetic",
+        "Atomic state mutation"
+      ]
+    },
+    {
+      "id": "03-finish-or-reclaim-expired-work",
+      "title": "Finish or reclaim expired work",
+      "summary": "Finish succeeds only for the current running version before its lease expires.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Lease boundary",
+        "Requeue expired",
+        "Increment version",
+        "Fence stale worker"
+      ]
+    },
+    {
+      "id": "04-write-and-recover-atomic-snapshots",
+      "title": "Write and recover atomic snapshots",
+      "summary": "Compose validated snapshots with locked enqueue, durable claims and crash-safe local receipt reuse.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "Validate snapshot",
+        "Write temp",
+        "Flush and rename",
+        "Recover records"
+      ],
+      "timeout": 120
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

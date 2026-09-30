@@ -71,7 +71,7 @@ print(result)
 #  {'label': 'contradiction', 'score': 0.01}]
 ```
 
-For production NLI, `facebook/bart-large-mnli` and `microsoft/deberta-v3-large-mnli` are the open defaults. DeBERTa-v3 tops leaderboards.
+For production NLI, `facebook/bart-large-mnli` and `MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli` are the open defaults. DeBERTa-v3 tops leaderboards.
 
 ### Step 2: zero-shot classification
 
@@ -118,7 +118,7 @@ The 2026 stack:
 
 | Use case | Model |
 |---------|-------|
-| General-purpose NLI | `microsoft/deberta-v3-large-mnli` |
+| General-purpose NLI | `MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli` |
 | Fast / edge | `cross-encoder/nli-deberta-v3-base` |
 | Zero-shot classification (lightweight) | `facebook/bart-large-mnli` |
 | Document-level NLI | `MoritzLaurer/DeBERTa-v3-large-mnli-fever-anli-ling-wanli` |

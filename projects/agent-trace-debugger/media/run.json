@@ -1,0 +1,48 @@
+{
+  "title": "Agent Trace Debugger | Build and verify",
+  "recordedAt": "2026-09-28T19:22:53Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "agent-trace-debugger",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-xo17spo9"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-xo17spo9\n  created  cli.ts\n  created  main.ts\n  created  otlp.ts\n  created  package.json\n  created  samples/before.jsonl\n  created  samples/otlp.json\n  created  samples/trace.jsonl\n  created  stage-1.md\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py agent-trace-debugger --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-xo17spo9\n",
+      "durationMs": 53
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "agent-trace-debugger",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-xo17spo9"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Agent Trace Debugger: grading learner\n  FAIL stage 1: Read a JSONL trace (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 278
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "agent-trace-debugger",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Agent Trace Debugger: grading solution\n  PASS stage 1: Read a JSONL trace (6 tests)\n  PASS stage 2: Validate parent relationships (6 tests)\n  PASS stage 3: Separate work time from waiting time (6 tests)\n  PASS stage 4: Render an inspectable timeline (12 tests)\n",
+      "durationMs": 1221
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "title": "Desktop Control Backend | Build and verify",
+  "recordedAt": "2026-09-28T19:26:15Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "desktop-control",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-u9a8w9gh"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-u9a8w9gh\n  created  cli.rs\n  created  demo.py\n  created  main.rs\n  created  samples/actions.tsv\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py desktop-control --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-u9a8w9gh\n",
+      "durationMs": 48
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "desktop-control",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-u9a8w9gh"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Desktop Control Backend: grading learner\n  FAIL stage 1: Validate frames and coordinate spaces (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 778
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "desktop-control",
+        "--all",
+        "--solution",
+        "--strict",
+        "--verbose"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Desktop Control Backend: grading solution\n  PASS stage 1: Validate frames and coordinate spaces (6 tests)\n  PASS stage 2: Render and manipulate a fixture scene (6 tests)\n  PASS stage 3: Reject stale observations and exhausted budgets (6 tests)\n  PASS stage 4: Build an opt-in native boundary (11 tests)\n\n\nrunning 6 tests\ntest invalid_scale ... ok\ntest nan_rejected ... ok\ntest negative_rejected ... ok\ntest right_edge_rejected ... ok\ntest valid_frame ... ok\ntest retina_coordinates ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\n\n\nrunning 6 tests\ntest click_focuses_field ... ok\ntest control_characters_rejected ... ok\ntest complete_scene ... ok\ntest submit_requires_text ... ok\ntest typing_needs_focus ... ok\ntest ppm_capture ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\n\n\nrunning 6 tests\ntest invalid_budget_rejected ... ok\ntest capture_before_click ... ok\ntest failed_backend_consumes_call ... ok\ntest mutation_invalidates_frame ... ok\ntest budget_enforced ... ok\ntest stale_generation_rejected ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\n\n\nrunning 5 tests\ntest unknown_action_is_not_executed ... ok\ntest type_without_focus_fails ... ok\ntest stale_generation_reports_input_line ... ok\ntest executes_input_and_writes_pixels ... ok\ntest input_budget_is_enforced ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.73s\n\n\n\n\nrunning 6 tests\ntest png_header_parsed ... ok\ntest newline_rejected ... ok\ntest click_arguments_are_numeric ... ok\ntest invalid_png_rejected ... ok\ntest text_is_argument_not_script ... ok\ntest zero_dimension_rejected ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\n",
+      "durationMs": 2335
+    }
+  ]
+}

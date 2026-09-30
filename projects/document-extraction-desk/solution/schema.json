@@ -1,0 +1,6 @@
+[
+  {"name":"requester","type":"text","required":true,"labels":["Requester","Requested by"]},
+  {"name":"seats","type":"integer","required":true,"labels":["Seats","Attendees"]},
+  {"name":"delivery","type":"date","required":true,"labels":["Delivery","Delivery date"]},
+  {"name":"team","type":"text","required":false,"labels":["Team"]}
+]

@@ -773,59 +773,73 @@ if __name__ == "__main__":
 
 ## Use It
 
-### Quantizing with AutoGPTQ
+### Quantizing with GPTQModel
 
 ```python
-# pip install auto-gptq transformers
-# from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
-# from transformers import AutoTokenizer
+# pip install gptqmodel
+# from gptqmodel import GPTQConfig, GPTQModel
 #
 # model_id = "meta-llama/Llama-3.1-8B"
-# quantize_config = BaseQuantizeConfig(
-#     bits=4,
-#     group_size=128,
-#     desc_act=False,
+# quant_config = GPTQConfig(bits=4, group_size=128)
+#
+# model = GPTQModel.load(model_id, quant_config)
+# model.quantize(calibration_texts[:128], batch_size=1)
+# model.save("llama-8b-gptq-int4")
+```
+
+### Quantizing to AWQ with LLM Compressor
+
+```python
+# pip install llmcompressor
+# from transformers import AutoModelForCausalLM, AutoTokenizer
+# from llmcompressor import oneshot
+# from llmcompressor.modifiers.quantization import QuantizationModifier
+# from llmcompressor.modifiers.transform.awq import AWQModifier
+#
+# model_id = "meta-llama/Llama-3.1-8B"
+# model = AutoModelForCausalLM.from_pretrained(model_id)
+# tokenizer = AutoTokenizer.from_pretrained(model_id)
+#
+# recipe = [
+#     AWQModifier(duo_scaling="both"),
+#     QuantizationModifier(ignore=["lm_head"], scheme="W4A16_ASYM", targets=["Linear"]),
+# ]
+# oneshot(
+#     model=model,
+#     dataset="perfectblend",
+#     splits="train[:512]",
+#     recipe=recipe,
+#     max_seq_length=512,
+#     num_calibration_samples=256,
 # )
-#
-# tokenizer = AutoTokenizer.from_pretrained(model_id)
-# model = AutoGPTQForCausalLM.from_pretrained(model_id, quantize_config)
-#
-# calibration = [tokenizer(t, return_tensors="pt") for t in calibration_texts[:128]]
-# model.quantize(calibration)
-# model.save_quantized("llama-8b-gptq-int4")
+# model.save_pretrained("llama-8b-awq-int4", save_compressed=True)
+# tokenizer.save_pretrained("llama-8b-awq-int4")
 ```
 
-### Quantizing with AutoAWQ
-
-```python
-# pip install autoawq
-# from awq import AutoAWQForCausalLM
-# from transformers import AutoTokenizer
-#
-# model_id = "meta-llama/Llama-3.1-8B"
-# model = AutoAWQForCausalLM.from_pretrained(model_id)
-# tokenizer = AutoTokenizer.from_pretrained(model_id)
-#
-# model.quantize(tokenizer, quant_config={"zero_point": True, "q_group_size": 128, "w_bit": 4})
-# model.save_quantized("llama-8b-awq-int4")
-```
+AutoGPTQ and AutoAWQ, the original tools for these two methods, are archived. GPTQModel and LLM Compressor are the maintained successors.
 
 ### Converting to GGUF
 
 ```bash
-# pip install llama-cpp-python
-# python convert_hf_to_gguf.py meta-llama/Llama-3.1-8B --outtype q4_k_m --outfile llama-8b-q4km.gguf
-# llama-server -m llama-8b-q4km.gguf -c 4096 -ngl 99
+# git clone https://github.com/ggml-org/llama.cpp
+# cmake -S llama.cpp -B llama.cpp/build && cmake --build llama.cpp/build --config Release
+# pip install -r llama.cpp/requirements.txt
+# hf download meta-llama/Llama-3.1-8B --local-dir Llama-3.1-8B
+# python llama.cpp/convert_hf_to_gguf.py Llama-3.1-8B --outtype f16 --outfile llama-8b-f16.gguf
+# llama.cpp/build/bin/llama-quantize llama-8b-f16.gguf llama-8b-q4km.gguf Q4_K_M
+# llama.cpp/build/bin/llama-server -m llama-8b-q4km.gguf -c 4096 -ngl 99
 ```
+
+The converter has no K-quant output (`--outtype` accepts `f32`, `f16`, `bf16`, `q8_0`, `tq1_0`, `tq2_0`, or `auto`), so `llama-quantize` produces the Q4_K_M file.
 
 ### Serving quantized models
 
 ```python
 # pip install vllm
-# vllm serve model-awq --quantization awq --dtype half --max-model-len 8192
+# vllm serve llama-8b-awq-int4 --max-model-len 8192
 ```
 
-vLLM natively supports AWQ and GPTQ models. It handles the dequantization during matrix multiplication and uses paged attention for the KV cache. For FP8 on H100, add `--dtype float8_e4m3fn`.
+vLLM natively supports AWQ and GPTQ models and reads the quantization method from the checkpoint's config, so no `--quantization` flag is needed. It handles the dequantization during matrix multiplication and uses paged attention for the KV cache. For FP8 on H100, add `--quantization fp8_per_tensor` to quantize a 16-bit checkpoint's weights at load time.
 
 ## Ship It
 

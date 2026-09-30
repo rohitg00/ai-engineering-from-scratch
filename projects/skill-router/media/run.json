@@ -1,0 +1,48 @@
+{
+  "title": "Skill Router | Build and verify",
+  "recordedAt": "2026-09-28T19:22:03Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "skill-router",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-1u383_ej"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-1u383_ej\n  created  cli.ts\n  created  main.ts\n  created  package.json\n  created  stage-1.md\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py skill-router --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-1u383_ej\n",
+      "durationMs": 51
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "skill-router",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-1u383_ej"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Skill Router: grading learner\n  FAIL stage 1: Parse a typed skill catalog (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 287
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "skill-router",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Skill Router: grading solution\n  PASS stage 1: Parse a typed skill catalog (6 tests)\n  PASS stage 2: Score words and repository paths (6 tests)\n  PASS stage 3: Resolve dependencies before execution (6 tests)\n  PASS stage 4: Abstain on ambiguous or blocked requests (6 tests)\n",
+      "durationMs": 961
+    }
+  ]
+}

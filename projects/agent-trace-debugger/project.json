@@ -1,0 +1,138 @@
+{
+  "id": "agent-trace-debugger",
+  "title": "Agent Trace Debugger",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "A before-and-after regression report that explains overlap, own time and failed-token spending.",
+  "summary": "A before-and-after regression report that explains overlap, own time and failed-token spending. Export one Span JSON object per line from your instrumentation and retain trace.json beside trace.html in CI.",
+  "hours": 8,
+  "languages": ["TypeScript"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Read a JSONL trace",
+    "Validate parent relationships",
+    "Separate work time from waiting time",
+    "Render an inspectable timeline"
+  ],
+  "prerequisites": [
+    "Node 22.18+ and Python 3 for the grader",
+    "TypeScript objects, arrays, Map, sorting and interval arithmetic."
+  ],
+  "youWillBuild": "A before-and-after regression report that explains overlap, own time and failed-token spending.",
+  "usefulFor": [
+    "Export one Span JSON object per line from your instrumentation and retain trace.json beside trace.html in CI."
+  ],
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "node",
+      "cli.ts",
+      "--input",
+      "samples/trace.jsonl",
+      "--baseline",
+      "samples/before.jsonl",
+      "--output",
+      "trace.html",
+      "--json",
+      "trace.json"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-parse",
+      "title": "Read a JSONL trace",
+      "summary": "Parse one JSON object per nonempty line. Require stable ids, names, finite start and end times, nonnegative token counts and an explicit ok or error state. A malformed line stops processing with its line number. Silently dropping bad spans would distort timing and cost conclusions. Times are relative milliseconds, not wall-clock timestamps.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "TypeScript models spans while preserving runtime checks at the log boundary.",
+      "concepts": ["parseTrace"],
+      "difficulty": "starter",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-agent-trace-debugger-1"
+    },
+    {
+      "id": "02-tree",
+      "title": "Validate parent relationships",
+      "summary": "A child span must reference an existing parent and fit inside the parent interval. Check every ancestor chain for cycles and reject duplicate ids. Multiple roots are allowed because a trace can contain overlapping independent runs. Validation happens before aggregation so corrupted graphs cannot produce convincing charts.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Maps provide stable identity lookup and sets expose cycles.",
+      "concepts": ["validateTree"],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-agent-trace-debugger-2"
+    },
+    {
+      "id": "03-timing",
+      "title": "Separate work time from waiting time",
+      "summary": "Inclusive duration is end minus start. Exclusive duration subtracts the union of immediate child intervals, not their sum, because parallel children overlap. Root interval union provides wall time across runs. Tokens are local per span and summed once. The slowest result names the span with greatest exclusive duration, avoiding a root that is mostly waiting on children.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "Interval arithmetic exposes concurrency without relying on a tracing library.",
+      "concepts": ["unionDuration", "analyze"],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-agent-trace-debugger-3"
+    },
+    {
+      "id": "04-timeline",
+      "title": "Render an inspectable timeline",
+      "summary": "Generate a standalone HTML timeline with one row per span, scaled bars and error coloring. Escape span names before inserting them into markup. Include own time, total time, wall time, tokens and error count. Empty traces still produce a readable artifact. The output is a local static report and does not load third-party scripts.",
+      "hours": 2,
+      "language": "typescript",
+      "languageWhy": "HTML can present the same typed analysis without a build pipeline or chart dependency.",
+      "concepts": ["render"],
+      "difficulty": "core",
+      "runner": [
+        "node",
+        "--experimental-strip-types",
+        "--test",
+        "{tests}/stage.test.ts",
+        "{tests}/integration.test.ts"
+      ],
+      "requires": ["node"],
+      "timeout": 90,
+      "figure": "pj-agent-trace-debugger-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

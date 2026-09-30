@@ -1,0 +1,17 @@
+{
+  "title": "LLM Gateway With Fallbacks | Actual artifact output",
+  "recordedAt": "2026-09-28T19:36:47Z",
+  "records": [
+    {
+      "command": [
+        "go",
+        "run",
+        "."
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/llm-gateway-with-fallbacks/solution",
+      "exitCode": 0,
+      "output": "MODE actual loopback HTTP, authored provider responses\nHTTP 200\nATTEMPTS 2\nPROVIDER backup\nBODY {\"choices\":[{\"message\":{\"content\":\"Orchard export links last 15 minutes.\",\"role\":\"assistant\"}}],\"model\":\"orchard-backup\"}\n",
+      "durationMs": 1316
+    }
+  ]
+}

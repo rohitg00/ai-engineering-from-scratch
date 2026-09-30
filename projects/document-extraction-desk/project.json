@@ -1,0 +1,119 @@
+{
+  "id": "document-extraction-desk",
+  "title": "Document Extraction Review Desk",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "Extract structured fields from a text document, inspect exact source spans, and approve ambiguous values before export.",
+  "summary": "Extract structured fields from a text document, inspect exact source spans, and approve ambiguous values before export.",
+  "youWillBuild": "A local HTML review desk that downloads source-bound approval decisions and an approved JSON value map.",
+  "usefulFor": [
+    "Use your own input to produce a reviewable artifact another application can consume."
+  ],
+  "hours": 8,
+  "languages": [
+    "Python"
+  ],
+  "languageWhy": {
+    "Python": "Standard-library parsing, explicit contracts and portable artifacts keep the mechanism visible."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Define the fields before extracting values",
+    "Extract candidates without losing their evidence",
+    "Bind approval to one document version",
+    "Show evidence and export reviewed values"
+  ],
+  "prerequisites": [
+    {
+      "title": "Development environment",
+      "path": "phases/00-setup-and-tooling/01-dev-environment"
+    },
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-document-extraction-desk-1",
+  "demo": {
+    "command": [
+      "python3",
+      "cli.py",
+      "sample.txt",
+      "--schema",
+      "schema.json",
+      "--output",
+      "output/review.html"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-define-fields",
+      "title": "Define the fields before extracting values",
+      "summary": "validate_schema(schema)",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "concepts": [
+        "Define the fields before extracting values"
+      ],
+      "figure": "pj-document-extraction-desk-1"
+    },
+    {
+      "id": "02-retain-source-spans",
+      "title": "Extract candidates without losing their evidence",
+      "summary": "extract_candidates(text, schema)",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "concepts": [
+        "Extract candidates without losing their evidence"
+      ],
+      "figure": "pj-document-extraction-desk-2"
+    },
+    {
+      "id": "03-review-and-approve",
+      "title": "Bind approval to one document version",
+      "summary": "typed_value(quote, kind); review_document(text, schema, candidates, decisions=None)",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "concepts": [
+        "Bind approval to one document version"
+      ],
+      "figure": "pj-document-extraction-desk-3"
+    },
+    {
+      "id": "04-export-review-desk",
+      "title": "Show evidence and export reviewed values",
+      "summary": "render_review(report)",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "python",
+      "concepts": [
+        "Show evidence and export reviewed values"
+      ],
+      "figure": "pj-document-extraction-desk-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Build and verify",
+      "caption": "Actual starter failure and reference grader output; reference passes do not earn a learner certificate."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Use the finished artifact",
+      "caption": "Recorded real input, computed output and the resulting portable report."
+    }
+  ]
+}

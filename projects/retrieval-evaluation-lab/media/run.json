@@ -1,0 +1,48 @@
+{
+  "title": "Retrieval Evaluation Lab | Build and verify",
+  "recordedAt": "2026-09-28T19:21:54Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "retrieval-evaluation-lab",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-f5m1nyfv"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-f5m1nyfv\n  created  cli.py\n  created  main.py\n  created  STAGE.md\n  kept     STAGE.md\n  kept     STAGE.md\nnext: python3 scripts/project_test.py retrieval-evaluation-lab --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-f5m1nyfv\n",
+      "durationMs": 49
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "retrieval-evaluation-lab",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-f5m1nyfv"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Retrieval Evaluation Lab: grading learner\n  FAIL stage 1: Validate rankings and graded judgments (5 tests)\n       not implemented yet: validate\n",
+      "durationMs": 96
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "retrieval-evaluation-lab",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Retrieval Evaluation Lab: grading solution\n  PASS stage 1: Validate rankings and graded judgments (5 tests)\n  PASS stage 2: Compute precision and recall at k (5 tests)\n  PASS stage 3: Reward useful evidence near the top (5 tests)\n  PASS stage 4: Compare systems query by query (6 tests)\n",
+      "durationMs": 234
+    }
+  ]
+}

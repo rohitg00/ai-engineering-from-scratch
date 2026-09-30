@@ -1,0 +1,11 @@
+{
+  "title": "calendar-focus-planner | Actual application output",
+  "url": "file:///tmp/aiefs-recorded-artifacts/calendar-focus-planner/solution/output/plan.html",
+  "actions": [
+    [
+      "js",
+      "window.scrollTo(0,250)"
+    ]
+  ],
+  "kind": "browser capture"
+}

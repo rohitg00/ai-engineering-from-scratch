@@ -1,0 +1,78 @@
+{
+  "lesson": "07-discovery-and-capability-negotiation",
+  "title": "Discovering a Server and Negotiating What It Can Do",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A client wants a server's identity, supported protocol versions, and capabilities in a single round trip before it sends anything else. Which request gives it all three together?",
+      "options": [
+        "resources/list, which returns the server's readable resources and their URIs",
+        "server/discover, which returns supported versions, capabilities, and identity together",
+        "prompts/list, which returns the reusable templates a user can select",
+        "the initialize handshake, which a connection completes before any request"
+      ],
+      "correct": 1,
+      "explanation": "server/discover is the single request built for this: its DiscoverResult carries supportedVersions, capabilities, and the server's self-reported identity together, and the 2026-07-28 revision removed the initialize handshake entirely."
+    },
+    {
+      "stage": "check",
+      "question": "Which statement correctly describes when server/discover must be implemented and when it must be called?",
+      "options": [
+        "Neither side is required to support it, since it is purely experimental tooling",
+        "Clients must call it before any other request, and servers may skip implementing it",
+        "Servers must implement it, and clients may call it or skip it entirely",
+        "Both sides must implement it and call it exactly once per connection"
+      ],
+      "correct": 2,
+      "explanation": "The specification requires every server to implement server/discover, but calling it is optional for a client, which may send any request directly and handle a version error if one comes back."
+    },
+    {
+      "stage": "check",
+      "question": "A tools/call request omits the elicitation capability from clientCapabilities, but the tool being called needs it to ask a follow-up question mid call. What does a conformant server do?",
+      "options": [
+        "It proceeds anyway and silently skips the follow-up question to stay fast",
+        "It returns a tools/call error -32602 because the arguments fail the input schema",
+        "It queues the call and waits for the client to reconnect with elicitation enabled",
+        "It returns MissingRequiredClientCapabilityError, code -32021, naming exactly which capability the request lacked"
+      ],
+      "correct": 3,
+      "explanation": "A server must not rely on a capability the client did not declare on that request, so it returns -32021 with data.requiredCapabilities naming exactly what the client needs to declare before retrying."
+    },
+    {
+      "stage": "check",
+      "question": "A client sends a request naming an older protocol version to a server whose supportedVersions list does not include it. What should the client do next?",
+      "options": [
+        "Retry the same request with a version taken from the error data",
+        "Treat the server as unreachable and stop sending it any further requests",
+        "Fall back to the initialize handshake from the earlier revision",
+        "Resend the identical request unchanged, since the server retries automatically"
+      ],
+      "correct": 0,
+      "explanation": "UnsupportedProtocolVersionError carries data.supported and data.requested, and the client should retry the request with a new id using a version from data.supported rather than assuming the server is legacy or unreachable."
+    },
+    {
+      "stage": "post",
+      "question": "A client discovers that a server offers tools with listChanged notifications, then later sends a tools/call request. Which capabilities may the server rely on when handling that specific call?",
+      "options": [
+        "The union of every clientCapabilities value the client has ever declared",
+        "Only the clientCapabilities included in that request's own _meta, checked fresh",
+        "Whatever the server advertised in its own DiscoverResult earlier in the exchange",
+        "Whatever capabilities the client declared on its very first request to it"
+      ],
+      "correct": 1,
+      "explanation": "Servers must not infer capabilities from prior requests, even on the same connection, so a server can only rely on the clientCapabilities declared in the _meta of the request it is currently handling."
+    },
+    {
+      "stage": "post",
+      "question": "A DiscoverResult's _meta carries io.modelcontextprotocol/serverInfo with the server's self-reported name and version. What is this field appropriate for?",
+      "options": [
+        "Selecting which OAuth scopes the client requests from the authorization server",
+        "Deciding whether to grant the server elevated tool permissions",
+        "Display, logging, and debugging, never a security or authorization decision",
+        "Authenticating the server before the client sends its first real request"
+      ],
+      "correct": 2,
+      "explanation": "serverInfo is self-reported and unverified by the protocol, so the specification says to use it for display, logging, and debugging only, never for security or authorization decisions."
+    }
+  ]
+}

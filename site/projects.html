@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects - AI Engineering from Scratch</title>
+  <meta name="description" content="Build real AI projects from simple to advanced. Every project ships a useful artifact, stage-by-stage tests, and a tutor. Open to community submissions.">
+  <link rel="canonical" href="https://aiengineeringfromscratch.com/projects.html">
+  <meta property="og:title" content="Projects · AI Engineering from Scratch">
+  <meta property="og:description" content="Build real AI projects from simple to advanced, graded stage by stage.">
+  <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260824a">
+  <link rel="stylesheet" href="projects.css?v=20260929c">
+</head>
+<body data-projects-page="catalog">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH</a>
+      <nav class="header-nav">
+        <a href="index.html#contents">Contents</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="projects.html">Projects</a>
+        <a href="prereqs.html">Roadmap</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="about.html">About</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github"><span>GitHub</span><span class="star-count" data-loading="true">…</span></a>
+      </nav>
+      <button class="search-toggle" type="button" data-cmd-palette aria-label="Search"><span aria-hidden="true">⌕</span></button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button"><span class="theme-icon" id="themeIcon">N</span></button>
+    </div>
+  </header>
+
+  <main id="main" class="pj-page">
+    <section class="pj-container pj-hero" aria-labelledby="pjTitle">
+      <div class="pj-eyebrow">PROJECTS · SIMPLE TO ADVANCED</div>
+      <h1 id="pjTitle">Build things people actually use.</h1>
+      <p class="pj-lede">Each project turns course lessons into a working artifact: a report generator, a memory server, a task queue, an agent. You build it stage by stage, a grader checks every stage, and a tutor walks you through it.</p>
+      <div class="pj-hero-stats" id="pjStats"></div>
+      <div class="pj-actions">
+        <a class="pj-action" id="pjStartLink" href="#ladder">Start the first project</a>
+        <a class="pj-action secondary" href="#submit">Submit your project</a>
+      </div>
+    </section>
+
+    <section class="pj-container pj-section" aria-labelledby="howTitle">
+      <div class="pj-section-heading"><div><div class="pj-eyebrow">HOW IT WORKS</div><h2 id="howTitle">Three commands, one project</h2></div><p>Choose Python, Rust, TypeScript, or Go for the job. Core tests run offline; optional framework labs list their dependencies.</p></div>
+      <ol class="pj-steps">
+        <li>
+          <div class="pj-step-head"><span class="pj-step-n" aria-hidden="true">01</span><h3>Create your workspace</h3></div>
+          <p>Copy the starter files. Each stub gives you the exact signature to implement.</p>
+          <pre class="pj-cmd" data-copy-label="Copy starter command"><code>python3 scripts/project_test.py research-report-agent --init my-report-agent</code></pre>
+        </li>
+        <li>
+          <div class="pj-step-head"><span class="pj-step-n" aria-hidden="true">02</span><h3>Run the grader</h3></div>
+          <p>Build one stage at a time. The grader checks your work and every earlier stage.</p>
+          <pre class="pj-cmd" data-copy-label="Copy grader command"><code>python3 scripts/project_test.py research-report-agent --stage 1 --path my-report-agent</code></pre>
+        </li>
+        <li>
+          <div class="pj-step-head"><span class="pj-step-n" aria-hidden="true">03</span><h3>Learn with the tutor</h3></div>
+          <p>Want guidance? In Claude Code, work through each stage with hints and feedback.</p>
+          <pre class="pj-cmd" data-command-label="Claude Code" data-copy-label="Copy tutor command"><code>/build-project research-report-agent</code></pre>
+        </li>
+      </ol>
+    </section>
+
+    <section class="pj-container pj-section" id="ladder" aria-labelledby="ladderTitle">
+      <div class="pj-section-heading"><div><div class="pj-eyebrow">THE LADDER</div><h2 id="ladderTitle">Pick your level</h2></div><p>Five levels. Each adds one new kind of engineering. New projects join a level as they are written or submitted.</p></div>
+      <div class="pj-filters" role="toolbar" aria-label="Filter projects">
+        <div class="pj-filter-group" id="pjSourceFilter"></div>
+        <label class="pj-toggle"><input type="checkbox" id="pjShowPlanned" checked> Show planned</label>
+      </div>
+      <div class="pj-ladder" id="pjLadder" aria-live="polite"></div>
+    </section>
+
+    <section class="pj-container pj-section" id="submit" aria-labelledby="submitTitle">
+      <div class="pj-submit">
+        <div>
+          <div class="pj-eyebrow">COMMUNITY</div>
+          <h2 id="submitTitle">Built something useful? Add it to the ladder.</h2>
+          <p>Community projects use the same layout as core ones: a <code>project.json</code>, stages with a lesson, a starter, and tests, plus a reference solution. They appear here with your GitHub handle.</p>
+          <ul class="pj-checklist">
+            <li>Produces a real artifact, not a chat demo</li>
+            <li>Every stage has tests that pass offline, with no API key</li>
+            <li>Independent evaluation fixtures and clear limits on what the score proves</li>
+            <li>Original implementations with links to official specs and research</li>
+          </ul>
+        </div>
+        <div class="pj-submit-card">
+          <p>After copying, set <code>id</code> in <code>projects/my-project/project.json</code> to <code>my-project</code> before running the grader.</p>
+          <pre class="pj-cmd"><code>cp -r projects/_template projects/my-project
+python3 scripts/project_test.py my-project \
+  --all --solution --strict</code></pre>
+          <a class="pj-action" id="pjSubmitGuide" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/projects/SUBMITTING.md" target="_blank" rel="noopener">Read the submission guide</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><p>AI Engineering from Scratch · open source · free forever.</p><div class="footer-links"><a href="index.html">Home</a><a href="catalog.html">Course catalog</a><a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a><a href="sponsors.html">Sponsor us</a></div></div></footer>
+
+  <script src="data.js?v=20260821c"></script>
+  <script src="projects-data.js?v=20260929b"></script>
+  <script src="content-source.js?v=20260821a"></script>
+  <script src="header.js?v=20260927a" defer></script>
+  <script src="cmdpalette.js?v=20260821a" defer></script>
+  <script src="projects.js?v=20260929c" defer></script>
+</body>
+</html>

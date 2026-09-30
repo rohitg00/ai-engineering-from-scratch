@@ -1,0 +1,78 @@
+{
+  "lesson": "24-client-registration-and-identity",
+  "title": "Proving a Client's Identity to an Authorization Server",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An MCP client is about to connect to a server whose authorization server it has never used before, and the client already has information on file for that authorization server. Per the specification's registration priority order, what should the client do?",
+      "options": [
+        "Register a brand new client through Dynamic Client Registration to avoid using stale credentials",
+        "Use the pre-registered credentials it already has on file for that authorization server",
+        "Prompt the person to type in a client id before any request is sent to the server",
+        "Fetch a Client ID Metadata Document anyway, since that path is always preferred over stored information"
+      ],
+      "correct": 1,
+      "explanation": "Pre-registered credentials come first in the priority order; a client only turns to Client ID Metadata Documents, then Dynamic Client Registration, then the user, when nothing is already on file for that issuer."
+    },
+    {
+      "stage": "check",
+      "question": "A Client ID Metadata Document is fetched from https://app.example.com/oauth/client.json. Which property must the authorization server confirm before it trusts the document?",
+      "options": [
+        "The document was fetched over plain HTTP so the authorization server can cache it",
+        "The document was registered ahead of time through a registration_endpoint call",
+        "The document's client_id field matches that URL exactly, character for character",
+        "The document includes a client secret the authorization server can verify locally"
+      ],
+      "correct": 2,
+      "explanation": "The authorization server must validate that the client_id inside the fetched document equals the URL it was fetched from exactly; a mismatch means the document cannot be trusted as that client's identity."
+    },
+    {
+      "stage": "check",
+      "question": "A desktop CLI tool registers through Dynamic Client Registration and redirects to http://127.0.0.1:PORT/callback. Which application_type should it declare?",
+      "options": [
+        "confidential, because a CLI tool can store a client secret safely on local disk",
+        "It should omit application_type, since non-OIDC servers always ignore that field",
+        "web, because the authorization server only reads application_type for browser clients",
+        "native, because the tool is a locally hosted application reached through localhost"
+      ],
+      "correct": 3,
+      "explanation": "Native applications, including desktop tools, CLIs, and locally hosted apps reached through localhost, should declare application_type native; omitting it defaults to web under OIDC and can conflict with a localhost redirect URI."
+    },
+    {
+      "stage": "check",
+      "question": "A client's persisted credentials were issued by authorization server A. The protected resource metadata for the same MCP server now names authorization server B instead. What must the client do?",
+      "options": [
+        "Treat the credentials as invalid for B, and register again with the correct server",
+        "Merge both authorization servers into one trust domain sharing a single client id",
+        "Forward the credentials from A to B and let B decide whether to accept them",
+        "Keep using the credentials from A, since the resource server itself has not changed"
+      ],
+      "correct": 0,
+      "explanation": "Credentials are bound to the issuer that issued them; when the authorization server changes, the client must not reuse the old credentials and must re-register with the new one."
+    },
+    {
+      "stage": "post",
+      "question": "An MCP proxy uses one static client id to reach a third-party authorization server on behalf of many dynamically registered downstream clients. What does the specification require of that proxy?",
+      "options": [
+        "Nothing extra, because the static client id already represents every downstream client",
+        "It must obtain the user's consent for each dynamically registered client before forwarding",
+        "It must disable Dynamic Client Registration entirely for every downstream client it serves",
+        "It must rotate the static client id every single time a new downstream client appears"
+      ],
+      "correct": 1,
+      "explanation": "A proxy using a static client id is a confused deputy risk; the specification requires it to obtain user consent for each dynamically registered client before forwarding that client's request to the third-party authorization server."
+    },
+    {
+      "stage": "post",
+      "question": "A CI pipeline needs to call an MCP server on a nightly schedule with no person available to approve access. Which mechanism fits, and how must the server learn the client supports it?",
+      "options": [
+        "Dynamic Client Registration, because it is the only flow built for an unattended client",
+        "Enterprise-Managed Authorization, since it removes the need for any access token entirely",
+        "The OAuth Client Credentials extension, declared in the client's per-request capabilities",
+        "The standard interactive authorization code flow, approved once in advance by an administrator"
+      ],
+      "correct": 2,
+      "explanation": "Machine-to-machine access without an interactive user fits the OAuth Client Credentials extension, which a client declares in io.modelcontextprotocol/clientCapabilities.extensions on each request; extensions are opt-in and never active by default."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "title": "SKILL.md Validator and Loader | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:11Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "demo.py"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/skill-validator/solution",
+      "exitCode": 0,
+      "output": "{\"schema_version\":1,\"name\":\"orchard-release\",\"activated\":true,\"characters\":239,\"context\":\"orchard-release: Check deployment evidence and recovery conditions.\\n\\n\\n# Release review\\n\\nRead references/restore.md and include the timestamp in your decision.\\n\\nThe Orchard restore rehearsal finished at 09:20 UTC with two verified records.\\n\"}\n",
+      "durationMs": 660
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "answer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  },
+  "required": ["answer", "confidence"],
+  "additionalProperties": false
+}

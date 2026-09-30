@@ -1,0 +1,492 @@
+{
+  "id": "mcpa-f",
+  "slug": "mcpa-f",
+  "examCode": "MCPA",
+  "credential": "Model Context Protocol Associate",
+  "shortName": "MCP Associate",
+  "level": "Foundational",
+  "accent": "blue",
+  "badge": {
+    "imageUrl": "https://training.linuxfoundation.org/wp-content/uploads/2026/06/MCPA_Badge-1.png",
+    "width": 300,
+    "height": 300,
+    "shape": "square"
+  },
+  "summary": "Prove you understand how the Model Context Protocol works: its hosts, clients, servers, and tools, the message flow and primitives that connect them, and the trust boundaries that keep the connection safe.",
+  "audience": "AI engineers, platform engineers, and AI governance professionals who connect agents to external systems and need to reason about how the protocol works and how its components communicate.",
+  "recommendedExperience": [
+    "Foundational knowledge of JSON-RPC or a similar message-based protocol",
+    "Experience calling LLM APIs such as OpenAI, Anthropic, or a local model",
+    "Understanding of agentic patterns such as tool use and the think-act-observe loop",
+    "Basic security literacy: API keys, OAuth 2.1, token handling, and authentication headers",
+    "Ability to read an MCP server manifest and its capability definitions"
+  ],
+  "exam": {
+    "items": 60,
+    "timeLimitMinutes": 90,
+    "feeUsd": 250,
+    "validityMonths": 24,
+    "eligibilityMonths": 12,
+    "retakes": 1,
+    "level": "Beginner",
+    "specVersion": "2026-07-28",
+    "itemCountPublished": false,
+    "passingScorePublished": false,
+    "format": "Multiple choice",
+    "delivery": "Online proctored",
+    "effective": "September 2026",
+    "officialGuideUrl": "https://training.linuxfoundation.org/certification/model-context-protocol-associate-mcpa/"
+  },
+  "domains": [
+    {
+      "id": "mcp-fundamentals",
+      "name": "MCP Fundamentals",
+      "weight": 16,
+      "objectives": [
+        "Explain the purpose and scope of MCP and the integration problem it standardizes between AI applications and external systems",
+        "Describe the core MCP concepts of hosts, clients, servers, primitives, and the stateless JSON-RPC request model",
+        "Reason about interoperability, protocol versioning, and the value of one open protocol over per-system custom integrations",
+        "Read the MCP specification, its revision history, and its feature lifecycle to tell current, deprecated, and removed behavior apart"
+      ]
+    },
+    {
+      "id": "architecture-and-components",
+      "name": "Architecture and Components",
+      "weight": 14,
+      "objectives": [
+        "Read the schemas and structured data that define MCP messages, tool definitions, capabilities, and server manifests",
+        "Distinguish the responsibilities of MCP hosts, clients, and servers and how discovery and capability negotiation connect them",
+        "Trace the model interaction flow from a user request through the host, model, client, and server and back into model context"
+      ]
+    },
+    {
+      "id": "interactions-and-execution",
+      "name": "Interactions and Execution",
+      "weight": 26,
+      "objectives": [
+        "Apply the request, notification, subscription, and multi round-trip interaction patterns and handle each result type",
+        "Handle protocol errors and tool execution errors, including version, capability, header, and validation failures",
+        "Walk the tool invocation lifecycle from discovery and selection through call, user input, progress, cancellation, and result",
+        "Identify the protocol primitives and utilities, including tools, resources, prompts, completion, caching, pagination, transports, and deprecated client features"
+      ]
+    },
+    {
+      "id": "security-and-governance",
+      "name": "Security and Governance",
+      "weight": 24,
+      "objectives": [
+        "Locate the trust boundaries between host, client, server, model, and the tools and content a server exposes",
+        "Apply OAuth-based authorization, client registration, scopes, and user consent so a user approves what a server may see and do",
+        "Choose risk and safety controls against tool poisoning, injection, token misuse, and over-broad access",
+        "Design auditability and observability so protocol activity can be traced, attributed, and reviewed"
+      ]
+    },
+    {
+      "id": "use-cases-and-ecosystem",
+      "name": "Use Cases and Ecosystem",
+      "weight": 20,
+      "objectives": [
+        "Map the roles, responsibilities, governance, and adoption patterns of teams building and deploying MCP",
+        "Select operational use cases and the primitives or extensions that fit each one",
+        "Reason about ecosystem portability across clients, servers, SDKs, extensions, gateways, and registries"
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "path": "certifications/mcpa/lessons/00-mcp-exam-strategy",
+      "domains": [
+        "mcp-fundamentals"
+      ],
+      "role": "orientation",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/01-reading-the-specification",
+      "domains": [
+        "mcp-fundamentals"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/02-the-integration-problem",
+      "domains": [
+        "mcp-fundamentals"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/03-json-rpc-and-meta",
+      "domains": [
+        "mcp-fundamentals",
+        "architecture-and-components"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/04-the-stateless-core",
+      "domains": [
+        "mcp-fundamentals"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/05-protocol-eras-and-compatibility",
+      "domains": [
+        "mcp-fundamentals"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/06-hosts-clients-and-servers",
+      "domains": [
+        "architecture-and-components"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/07-discovery-and-capability-negotiation",
+      "domains": [
+        "architecture-and-components"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/08-tool-schemas-and-structured-content",
+      "domains": [
+        "architecture-and-components"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/09-reading-server-manifests",
+      "domains": [
+        "architecture-and-components"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/10-model-interaction-flow",
+      "domains": [
+        "architecture-and-components"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/11-the-tools-primitive",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/12-the-resources-primitive",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/13-prompts-and-completion",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/14-multi-round-trip-requests-and-elicitation",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/15-deprecated-client-features",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/16-notifications-and-subscriptions",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/17-tool-invocation-lifecycle",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/18-error-handling",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/19-transports-and-http-headers",
+      "domains": [
+        "interactions-and-execution",
+        "architecture-and-components"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/20-caching-and-pagination",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/21-long-running-work-and-tasks",
+      "domains": [
+        "interactions-and-execution"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/22-trust-boundaries",
+      "domains": [
+        "security-and-governance"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/23-oauth-authorization",
+      "domains": [
+        "security-and-governance"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/24-client-registration-and-identity",
+      "domains": [
+        "security-and-governance"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/25-consent-and-least-privilege",
+      "domains": [
+        "security-and-governance"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/26-risk-and-safety-controls",
+      "domains": [
+        "security-and-governance"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/27-auditability-and-observability",
+      "domains": [
+        "security-and-governance"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/28-roles-and-adoption",
+      "domains": [
+        "use-cases-and-ecosystem"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/29-operational-use-cases",
+      "domains": [
+        "use-cases-and-ecosystem"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/30-the-extensions-framework",
+      "domains": [
+        "use-cases-and-ecosystem"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/31-mcp-apps",
+      "domains": [
+        "use-cases-and-ecosystem"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/32-registry-gateways-and-sdk-tiers",
+      "domains": [
+        "use-cases-and-ecosystem"
+      ],
+      "role": "core",
+      "required": true
+    },
+    {
+      "path": "certifications/mcpa/lessons/33-mcpa-capstone-readiness",
+      "domains": [
+        "mcp-fundamentals",
+        "architecture-and-components",
+        "interactions-and-execution",
+        "security-and-governance",
+        "use-cases-and-ecosystem"
+      ],
+      "role": "capstone",
+      "required": true
+    }
+  ],
+  "deepDives": [
+    {
+      "path": "phases/13-tools-and-protocols/06-mcp-fundamentals",
+      "label": "Stateless Requests and Discovery",
+      "reason": "Build the per-request metadata model and server/discover from first principles"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/07-building-an-mcp-server",
+      "label": "Building a Server",
+      "reason": "Implement tools, resources, and prompts on the stateless core"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/08-building-an-mcp-client",
+      "label": "Building a Client",
+      "reason": "Drive servers you did not write through discovery and capability negotiation"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/09-mcp-transports",
+      "label": "Transports",
+      "reason": "Frame stdio and Streamable HTTP correctly, including the required headers"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/10-mcp-resources-and-prompts",
+      "label": "Resources and Prompts",
+      "reason": "Application-driven context and user-controlled templates in depth"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/11-mcp-sampling",
+      "label": "Model Completions Through the Client",
+      "reason": "The deprecated sampling feature, how it works under MRTR, and its migration"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/12-mcp-roots-and-elicitation",
+      "label": "Scope and User Input",
+      "reason": "Roots, elicitation, and multi round-trip requests in depth"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/13-mcp-async-tasks",
+      "label": "Durable Long-Running Work",
+      "reason": "Task handles, polling, and mid-flight input"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/14-mcp-apps",
+      "label": "Interactive Interfaces",
+      "reason": "Sandboxed UI resources rendered by the host"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning",
+      "label": "Tool Poisoning Defenses",
+      "reason": "Untrusted descriptions, results, and definition drift"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1",
+      "label": "Authorization",
+      "reason": "OAuth 2.1, protected resource metadata, and audience binding"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/18-mcp-auth-production",
+      "label": "Production Tokens",
+      "reason": "Token handling, rotation, and step-up authorization in deployed systems"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/17-mcp-gateways-and-registries",
+      "label": "Gateways and Registries",
+      "reason": "Routing, policy enforcement, and registry admission"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content",
+      "label": "Tool Contracts and Content",
+      "reason": "Schemas, structured content, and content blocks under load"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control",
+      "label": "Reliability and Flow Control",
+      "reason": "Cancellation races, progress, and timeouts"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift",
+      "label": "Supply Chain and Drift",
+      "reason": "Registry trust and definition drift detection"
+    },
+    {
+      "path": "phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations",
+      "label": "Conformance and Operations",
+      "reason": "Versioning, conformance tests, and release evidence"
+    }
+  ],
+  "assessments": [
+    {
+      "id": "mcpa-f-diagnostic",
+      "path": "certifications/mcpa/assessments/mcpa-f/diagnostic.json",
+      "kind": "diagnostic",
+      "title": "MCPA Foundations Diagnostic",
+      "timeLimitMinutes": 30
+    },
+    {
+      "id": "mcpa-f-mock-01",
+      "path": "certifications/mcpa/assessments/mcpa-f/mock-01.json",
+      "kind": "mock",
+      "title": "MCPA Full-Length Mock 1: Operational Scenarios",
+      "timeLimitMinutes": 90
+    },
+    {
+      "id": "mcpa-f-mock-02",
+      "path": "certifications/mcpa/assessments/mcpa-f/mock-02.json",
+      "kind": "mock",
+      "title": "MCPA Full-Length Mock 2: Wire-Level Messages",
+      "timeLimitMinutes": 90
+    },
+    {
+      "id": "mcpa-f-mock-03",
+      "path": "certifications/mcpa/assessments/mcpa-f/mock-03.json",
+      "kind": "mock",
+      "title": "MCPA Full-Length Mock 3: Design and Security Trade-offs",
+      "timeLimitMinutes": 90
+    }
+  ]
+}

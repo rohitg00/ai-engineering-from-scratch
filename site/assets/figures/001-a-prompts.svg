@@ -1,35 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="FIG_001.A — prompt as instruction text">
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="FIG_001.A: a prompt, an instruction document sent to a model">
   <defs>
     <style>
-      .bp { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
-      .bp-fill { fill: #3553ff; }
-      .face { fill: rgba(53, 83, 255, 0.08); }
-      .mono { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; }
+      .bp { stroke: #3553ff; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+      .ink { fill: #3553ff; }
+      .face { fill: #3553ff; fill-opacity: 0.08; }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 600; }
     </style>
   </defs>
 
   <rect width="120" height="120" fill="#fafaf5"/>
+  <text class="mono ink" x="10" y="15" font-size="7" letter-spacing="1.4">FIG_001.A</text>
 
-  <text class="mono bp-fill" x="8" y="14" font-size="6.5" letter-spacing="1.5">FIG_001.A</text>
+  <path class="face" d="M22 24 H62 L76 38 V94 H22 Z"/>
+  <path class="bp" d="M22 24 H62 L76 38 V94 H22 Z" stroke-width="1.6"/>
+  <path class="bp" d="M62 24 V38 H76" stroke-width="1.2"/>
 
-  <!-- document body -->
-  <rect class="face" x="24" y="26" width="62" height="74"/>
-  <rect class="bp" x="24" y="26" width="62" height="74" stroke-width="1.5"/>
+  <polyline class="bp" points="29,44 34,48.5 29,53" stroke-width="1.6"/>
+  <line class="bp" x1="38" y1="53" x2="48" y2="53" stroke-width="1.6"/>
+  <line class="bp" x1="29" y1="63" x2="68" y2="63" stroke-width="1.2"/>
+  <line class="bp" x1="29" y1="71" x2="62" y2="71" stroke-width="1.2"/>
+  <line class="bp" x1="29" y1="79" x2="68" y2="79" stroke-width="1.2"/>
+  <line class="bp" x1="29" y1="87" x2="52" y2="87" stroke-width="1.2"/>
 
-  <!-- folded corner -->
-  <polyline class="bp" points="76,26 86,36 76,36 76,26" stroke-width="1.5"/>
-  <line class="bp" x1="76" y1="36" x2="86" y2="36" stroke-width="1.5"/>
+  <line class="bp" x1="80" y1="59" x2="100" y2="59" stroke-width="1.6"/>
+  <polyline class="bp" points="94,53 100,59 94,65" stroke-width="1.6"/>
 
-  <!-- text lines (instruction) -->
-  <line class="bp" x1="32" y1="46" x2="78" y2="46" stroke-width="1.2"/>
-  <line class="bp" x1="32" y1="54" x2="78" y2="54" stroke-width="1.2"/>
-  <line class="bp" x1="32" y1="62" x2="70" y2="62" stroke-width="1.2"/>
-  <line class="bp" x1="32" y1="76" x2="78" y2="76" stroke-width="1.2"/>
-  <line class="bp" x1="32" y1="84" x2="62" y2="84" stroke-width="1.2"/>
-
-  <!-- prompt arrow leaving the document (instruction sent to model) -->
-  <line class="bp" x1="88" y1="62" x2="104" y2="62" stroke-width="1.5"/>
-  <polyline class="bp" points="100,58 104,62 100,66" stroke-width="1.5"/>
-
-  <text class="mono bp-fill" x="60" y="114" font-size="7" letter-spacing="1.5" text-anchor="middle">PROMPT</text>
+  <text class="mono ink" x="60" y="110" font-size="8.5" letter-spacing="2.2" text-anchor="middle">PROMPT</text>
 </svg>

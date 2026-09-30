@@ -8,279 +8,258 @@
   if (!LF) return;
 
   var el = LF.el;
+  var svgEl = LF.svgEl;
   var slider = LF.slider;
   var select = LF.select;
   var clamp = LF.clamp;
+  var INK = 'var(--ink,#1a1a1a)';
+  var MUTE = 'var(--ink-mute,#777)';
+  var BP = 'var(--blueprint,#3553ff)';
+  var BG = 'var(--bg,#fafaf5)';
+  var SURF = 'var(--bg-surface,#eee)';
+  var RULE = 'var(--rule-soft,#ddd)';
+  var WARN = 'var(--warn,#b8870f)';
+  var STRONG = { 'text-anchor': 'middle', 'font-weight': 700 };
+  var SMALL = { 'font-size': 10 };
+  var VALUE = { 'text-anchor': 'end', 'font-weight': 700 };
 
   function ensureStyles() {
     if (document.getElementById('cert-figure-styles')) return;
     var style = document.createElement('style');
     style.id = 'cert-figure-styles';
     style.textContent = [
-      '.cf-shell{border:1px solid var(--rule-soft,#ddd);background:var(--bg,#fafaf5);margin:28px 0;font-family:var(--font-body,serif)}',
-      '.cf-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 16px;border-bottom:1px solid var(--rule-soft,#ddd);font-family:var(--font-mono,monospace);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute,#777)}',
-      '.cf-head strong{color:var(--blueprint,#3553ff);font-weight:600}',
-      '.cf-body{padding:16px}',
-      '.cf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 22px}',
-      '.cf-output{margin-top:18px;padding-top:16px;border-top:1px dashed var(--rule-soft,#ddd)}',
       '.cf-status{font-family:var(--font-display,monospace);font-size:clamp(2rem,7vw,3.4rem);line-height:1;color:var(--blueprint,#3553ff)}',
       '.cf-status small{display:block;margin-top:8px;font-family:var(--font-mono,monospace);font-size:.68rem;line-height:1.45;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft,#555)}',
-      '.cf-meta,.cf-formula{margin-top:8px;font-family:var(--font-mono,monospace);font-size:.7rem;line-height:1.5;color:var(--ink-mute,#777)}',
-      '.cf-formula{color:var(--ink-soft,#555)}',
-      '.cf-caption{padding:12px 16px;border-top:1px solid var(--rule-soft,#ddd);font-size:.92rem;line-height:1.55;color:var(--ink-soft,#555)}',
-      '.cf-meter-list{display:grid;gap:10px;margin-top:14px}',
-      '.cf-meter-row{display:grid;gap:4px}',
-      '.cf-meter-label{display:flex;justify-content:space-between;gap:12px;font-family:var(--font-mono,monospace);font-size:.68rem;color:var(--ink-soft,#555)}',
-      '.cf-meter{height:10px;overflow:hidden;background:var(--rule-soft,#ddd)}',
-      '.cf-meter>i{display:block;width:100%;height:100%;background:var(--blueprint,#3553ff);transform:scaleX(0);transform-origin:left;transition:transform 120ms var(--ease-out,cubic-bezier(.23,1,.32,1))}',
-      '.cf-meter.is-warning>i{background:var(--warn,#b8870f)}',
-      '.cf-pipeline{display:grid;grid-template-columns:repeat(var(--cf-steps),minmax(0,1fr));gap:6px;margin-top:14px}',
-      '.cf-step{min-height:72px;padding:9px;border:1px solid var(--rule-soft,#ddd);background:var(--bg-surface,#eee);font-family:var(--font-mono,monospace);font-size:.65rem;line-height:1.35;color:var(--ink-mute,#777)}',
-      '.cf-step strong,.cf-step span{display:block}',
-      '.cf-step strong{margin-bottom:5px;color:var(--ink,#111)}',
-      '.cf-step.is-done{border-color:var(--blueprint,#3553ff);color:var(--blueprint,#3553ff)}',
-      '.cf-step.is-active{border-color:var(--blueprint,#3553ff);background:var(--blueprint,#3553ff);color:var(--bg,#fff)}',
-      '.cf-step.is-active strong{color:var(--bg,#fff)}',
       '.cf-lanes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}',
       '.cf-lane{padding:10px;border:1px solid var(--rule-soft,#ddd);font-family:var(--font-mono,monospace);font-size:.68rem;text-align:center;color:var(--ink-mute,#777)}',
       '.cf-lane.is-active{border-color:var(--blueprint,#3553ff);background:var(--blueprint-tint,rgba(53,83,255,.08));color:var(--blueprint,#3553ff)}',
-      '@media(max-width:640px){.cf-grid{grid-template-columns:1fr}.cf-pipeline{grid-template-columns:1fr}.cf-lanes{grid-template-columns:1fr}.cf-step{min-height:0}}',
-      '@media(prefers-reduced-motion:reduce){.cf-meter>i,.cf-shell .lf-bar i{transition:none}}'
+      '.lesson-figure .lf-out svg.cf-strip{max-width:460px;margin:0 auto 14px}',
+      '@media(max-width:640px){.cf .lf-head{flex-direction:column;align-items:flex-start;gap:4px}.cf-lanes{grid-template-columns:1fr}.lesson-figure .lf-out svg.cf-strip{width:calc(100% + 24px);max-width:none;margin:0 -12px 14px}}'
     ].join('\n');
     document.head.appendChild(style);
   }
 
-  function labelControls(root) {
-    var groups = root.querySelectorAll('.lf-ctrl');
-    for (var index = 0; index < groups.length; index++) {
-      var control = groups[index].querySelector('input,select');
-      var label = groups[index].querySelector('label');
-      if (!control || !label || control.getAttribute('aria-label')) continue;
-      var name = '';
-      for (var node = label.firstChild; node; node = node.nextSibling) {
-        if (node.nodeType === 3) name += node.nodeValue;
-      }
-      control.setAttribute('aria-label', name.trim() || 'Interactive value');
-    }
-  }
-
   function shell(host, config, controls, output) {
     ensureStyles();
-    var section = el('section', { class: 'cf-shell' }, [
-      el('div', { class: 'cf-head' }, [
-        el('strong', {}, [config.title]),
-        el('span', {}, [config.hint || 'change the inputs'])
+    host.setAttribute('data-static-time', '3.2');
+    host.appendChild(el('div', { class: 'lf cf' }, [
+      el('div', { class: 'lf-head' }, [
+        el('span', { class: 'lf-label' }, [config.title]),
+        el('span', {}, [config.hint])
       ]),
-      el('div', { class: 'cf-body' }, [controls, output]),
-      el('div', { class: 'cf-caption' }, [config.caption])
-    ]);
-    host.appendChild(section);
-    labelControls(section);
+      el('div', { class: 'lf-body' }, [controls, output]),
+      el('div', { class: 'lf-cap' }, [config.caption])
+    ]));
   }
 
-  function meterRow(name) {
-    var value = el('span', {}, ['0']);
-    var fill = el('i');
-    var meter = el('div', {
-      class: 'cf-meter', role: 'progressbar',
-      'aria-label': name,
-      'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': '0'
-    }, [fill]);
-    return {
-      root: el('div', { class: 'cf-meter-row' }, [
-        el('div', { class: 'cf-meter-label' }, [el('span', {}, [name]), value]),
-        meter
-      ]),
-      update: function (score, warning) {
-        var safe = clamp(Math.round(score), 0, 100);
-        value.textContent = safe + '%';
-        meter.setAttribute('aria-valuenow', String(safe));
-        meter.classList.toggle('is-warning', !!warning);
-        fill.style.transform = 'scaleX(' + (safe / 100).toFixed(3) + ')';
-      }
+  function anim(attr, values, dur, extra) {
+    var attrs = { attributeName: attr, values: values, dur: dur + 's', repeatCount: 'indefinite' };
+    for (var key in extra) attrs[key] = extra[key];
+    return svgEl(extra && extra.type ? 'animateTransform' : 'animate', attrs);
+  }
+
+  function add(svg, tag, attrs) {
+    return svg.appendChild(svgEl(tag, attrs));
+  }
+
+  function txt(svg, x, y, s, fill, extra) {
+    var attrs = { x: x, y: y, fill: fill || MUTE };
+    for (var key in extra) attrs[key] = extra[key];
+    return svg.appendChild(svgEl('text', attrs, [document.createTextNode(s)]));
+  }
+
+  function packet(svg, d, a, b, dur) {
+    var t = '0;' + a + ';' + b + ';1';
+    var dot = add(svg, 'circle', { r: 4, fill: BP, stroke: BG, 'stroke-width': 1.5, opacity: '0' });
+    dot.appendChild(anim('opacity', '0;1;0;0', dur, { calcMode: 'discrete', keyTimes: t }));
+    dot.appendChild(svgEl('animateMotion', { path: d, dur: dur + 's', repeatCount: 'indefinite', calcMode: 'linear', keyPoints: '0;0;1;1', keyTimes: t }));
+  }
+
+  function link(svg, d, a, b) {
+    add(svg, 'path', { d: d, fill: 'none', stroke: RULE, 'stroke-width': 1.4 });
+    packet(svg, d, a, b, 4);
+  }
+
+  function flowIn(svg, values, cy) {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    values.forEach(function (value, i) {
+      var y = cy + (i - (values.length - 1) / 2) * 24;
+      add(svg, 'rect', { x: 2, y: y - 10, width: 70, height: 20, rx: 10, fill: SURF, stroke: RULE });
+      txt(svg, 37, y + 4, String(value), INK, STRONG);
+      link(svg, 'M72 ' + y + 'C96 ' + y + ' 94 ' + cy + ' 118 ' + cy, (0.06 + i * 0.06).toFixed(2), (0.26 + i * 0.06).toFixed(2));
+    });
+    add(svg, 'circle', { cx: 132, cy: cy, r: 14, fill: BG, stroke: BP, 'stroke-width': 1.6 });
+    txt(svg, 132, cy + 4, 'f', BP, STRONG);
+  }
+
+  function fill(svg, y, w, h, color, a) {
+    add(svg, 'path', { d: 'M160 ' + (y + h / 2) + 'h' + w, stroke: color, 'stroke-width': h, 'stroke-dasharray': w + ' 999' })
+      .appendChild(anim('stroke-dashoffset', w + ';' + w + ';0;0;' + w, 4, {
+        calcMode: 'spline', keyTimes: '0;' + a + ';' + (a + 0.2).toFixed(2) + ';0.94;1',
+        keySplines: '0 0 1 1;0.23 1 0.32 1;0 0 1 1;0.4 0 1 1'
+      }));
+  }
+
+  function gauge(svg, name, percent, color, marks, zones) {
+    var value = clamp(Math.round(percent), 0, 100);
+    link(svg, 'M146 36H160', 0.34, 0.4);
+    txt(svg, 160, 20, name, MUTE, SMALL);
+    txt(svg, 318, 40, value + '%', color, VALUE);
+    add(svg, 'rect', { x: 160, y: 28, width: 126, height: 16, fill: RULE, 'fill-opacity': 0.6 });
+    (zones || []).forEach(function (zone) {
+      add(svg, 'rect', { x: 160 + zone[0] * 1.26, y: 28, width: (zone[1] - zone[0]) * 1.26, height: 16, fill: zone[2], 'fill-opacity': 0.3 });
+    });
+    fill(svg, 32, value * 1.26, 8, color, 0.42);
+    marks.forEach(function (mark) {
+      add(svg, 'path', { d: 'M' + (160 + mark * 1.26) + ' 24V48', stroke: INK });
+      txt(svg, 160 + mark * 1.26, 62, String(mark), MUTE, { 'text-anchor': 'middle' });
+    });
+  }
+
+  function stageRail(svg, steps, step) {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var gap = 272 / (steps.length - 1);
+    var end = 24 + step * gap;
+    add(svg, 'path', { d: 'M24 30H296', stroke: RULE, 'stroke-width': 2 });
+    add(svg, 'path', { d: 'M24 30H' + end, stroke: BP, 'stroke-width': 2 });
+    steps.forEach(function (item, i) {
+      var x = 24 + i * gap;
+      var edge = i === 0 ? 'start' : i === steps.length - 1 ? 'end' : 'middle';
+      add(svg, 'circle', { cx: x, cy: 30, r: 9, fill: i <= step ? BP : SURF, stroke: i <= step ? BP : RULE });
+      txt(svg, x, 34, String(i + 1), i <= step ? BG : MUTE, STRONG);
+      txt(svg, edge === 'start' ? 6 : edge === 'end' ? 314 : x, i % 2 ? 58 : 12, item.name, i === step ? BP : MUTE, { 'text-anchor': edge, 'font-weight': i === step ? 700 : 400 });
+    });
+    var ring = svgEl('circle', { r: 11, fill: 'none', stroke: BP, 'stroke-width': 2 });
+    ring.appendChild(anim('transform', '1;1.9', 1.8, { type: 'scale' }));
+    ring.appendChild(anim('opacity', '0.8;0', 1.8));
+    svg.appendChild(svgEl('g', { transform: 'translate(' + end + ' 30)' }, [ring]));
+    if (step) packet(svg, 'M24 30H' + end, 0.05, 0.55, 2.4);
+  }
+
+  function lab(host, config, state, controls, parts, render, height) {
+    var svg = svgEl('svg', { class: 'cf-strip', viewBox: '0 0 320 ' + height, 'font-family': 'var(--font-mono,monospace)', 'font-size': 11 });
+    var status = el('div', { class: 'cf-status', 'aria-live': 'polite' });
+    var out = {
+      meta: el('div', { class: 'lf-meta' }),
+      formula: el('div', { class: 'lf-formula' }),
+      say: function (main, detail) { status.innerHTML = main + '<small>' + detail + '</small>'; }
     };
+    state._render = function () { render(svg, out); };
+    shell(host, config,
+      el('div', { class: controls.length > 1 ? 'lf-grid' : '' }, controls.map(function (c) { return slider(state, c[0], c[1], c[2], c[3], c[4]); })),
+      el('div', { class: 'lf-out' }, [svg, status].concat(parts, [out.meta, out.formula])));
+    state._render();
   }
 
   function makeDecision(config) {
     return function (host) {
       var state = { a: config.a.defaultValue, b: config.b.defaultValue };
-      var status = el('div', { class: 'cf-status', 'aria-live': 'polite' });
-      var meta = el('div', { class: 'cf-meta' });
-      var formula = el('div', { class: 'cf-formula' });
-      var list = el('div', { class: 'cf-meter-list' });
-      var rows = config.choices.map(function (choice) {
-        var row = meterRow(choice.name);
-        list.appendChild(row.root);
-        return row;
-      });
-
-      state._render = function () {
-        var bestIndex = 0;
-        var bestScore = -1;
-        config.choices.forEach(function (choice, index) {
-          var score = choice.base + choice.a * ((state.a - 50) / 50) + choice.b * ((state.b - 50) / 50);
-          score = clamp(score, 0, 100);
-          rows[index].update(score, false);
-          if (score > bestScore) {
-            bestIndex = index;
-            bestScore = score;
-          }
+      lab(host, config, state, [['a', config.a.label, 0, 100, 1], ['b', config.b.label, 0, 100, 1]], [], function (svg, out) {
+        var scores = config.choices.map(function (choice) {
+          return clamp(choice.base + choice.a * ((state.a - 50) / 50) + choice.b * ((state.b - 50) / 50), 0, 100);
         });
-        var best = config.choices[bestIndex];
-        status.innerHTML = best.name + '<small>' + best.why + '</small>';
-        meta.textContent = config.a.label + ' ' + state.a + '  ·  ' + config.b.label + ' ' + state.b + '  ·  fit ' + Math.round(bestScore) + '%';
-        formula.textContent = config.formula;
-      };
-
-      var controls = el('div', { class: 'cf-grid' }, [
-        slider(state, 'a', config.a.label, 0, 100, 1),
-        slider(state, 'b', config.b.label, 0, 100, 1)
-      ]);
-      var output = el('div', { class: 'cf-output' }, [status, list, meta, formula]);
-      shell(host, config, controls, output);
-      state._render();
+        var best = scores.indexOf(Math.max.apply(null, scores));
+        flowIn(svg, [state.a, state.b], 42);
+        link(svg, 'M146 42C154 42 152 ' + (21 + best * 26) + ' 160 ' + (21 + best * 26), 0.34, 0.42);
+        config.choices.forEach(function (choice, i) {
+          var value = Math.round(scores[i]);
+          var color = i === best ? BP : MUTE;
+          txt(svg, 160, 13 + i * 26, choice.name, MUTE, SMALL);
+          txt(svg, 310, 13 + i * 26, value + '%', color, { 'text-anchor': 'end', 'font-size': 10, 'font-weight': 700 });
+          add(svg, 'rect', { x: 160, y: 18 + i * 26, width: 150, height: 6, fill: RULE, 'fill-opacity': 0.6 });
+          fill(svg, 18 + i * 26, value * 1.5, 6, color, 0.42 + i * 0.05);
+        });
+        out.say(config.choices[best].name, config.choices[best].why);
+        out.meta.textContent = config.a.label + ' ' + state.a + '  ·  ' + config.b.label + ' ' + state.b + '  ·  fit ' + Math.round(scores[best]) + '%';
+        out.formula.textContent = config.formula;
+      }, 84);
     };
   }
 
   function makeThreshold(config) {
     return function (host) {
       var state = { signal: config.signal.defaultValue, impact: config.impact.defaultValue, cut: config.cut };
-      var status = el('div', { class: 'cf-status', 'aria-live': 'polite' });
-      var meta = el('div', { class: 'cf-meta' });
-      var formula = el('div', { class: 'cf-formula' });
-      var scoreMeter = meterRow(config.scoreLabel || 'decision risk');
-      var lanes = config.decisions.map(function (name) {
-        var lane = el('div', { class: 'cf-lane' }, [name]);
-        return lane;
-      });
-
-      state._render = function () {
-        var score = Math.round(state.signal * config.signalWeight + state.impact * (1 - config.signalWeight));
-        var index = score < state.cut ? 0 : score < state.cut + config.escalationBand ? 1 : 2;
+      var lanes = config.decisions.map(function (name) { return el('div', { class: 'cf-lane' }, [name]); });
+      lab(host, config, state, [
+        ['signal', config.signal.label, 0, 100, 1],
+        ['impact', config.impact.label, 0, 100, 1],
+        ['cut', config.thresholdLabel, 20, 80, 1]
+      ], [el('div', { class: 'cf-lanes' }, lanes)], function (svg, out) {
+        var value = Math.round(state.signal * config.signalWeight + state.impact * (1 - config.signalWeight));
+        var band = state.cut + config.escalationBand;
+        var top = Math.min(100, band);
+        var index = value < state.cut ? 0 : value < band ? 1 : 2;
         lanes.forEach(function (lane, laneIndex) { lane.classList.toggle('is-active', laneIndex === index); });
-        scoreMeter.update(score, index === 2);
-        status.innerHTML = config.decisions[index] + '<small>' + config.reasons[index] + '</small>';
-        meta.textContent = config.signal.label + ' ' + state.signal + '  ·  ' + config.impact.label + ' ' + state.impact + '  ·  threshold ' + state.cut;
-        formula.textContent = config.formula;
-      };
-
-      var controls = el('div', { class: 'cf-grid' }, [
-        slider(state, 'signal', config.signal.label, 0, 100, 1),
-        slider(state, 'impact', config.impact.label, 0, 100, 1),
-        slider(state, 'cut', config.thresholdLabel || 'review threshold', 20, 80, 1)
-      ]);
-      var output = el('div', { class: 'cf-output' }, [status, scoreMeter.root, el('div', { class: 'cf-lanes' }, lanes), meta, formula]);
-      shell(host, config, controls, output);
-      state._render();
+        flowIn(svg, [state.signal, state.impact], 36);
+        gauge(svg, config.scoreLabel, value, index === 2 ? WARN : BP, [state.cut, top], [[0, state.cut, RULE], [state.cut, top, BP], [top, 100, WARN]]);
+        out.say(config.decisions[index], config.reasons[index]);
+        out.meta.textContent = config.signal.label + ' ' + state.signal + '  ·  ' + config.impact.label + ' ' + state.impact + '  ·  score ' + value + '  ·  threshold ' + state.cut;
+        out.formula.textContent = config.formula;
+      }, 68);
     };
   }
 
   function makePipeline(config) {
     return function (host) {
       var state = { step: 0 };
-      var status = el('div', { class: 'cf-status', 'aria-live': 'polite' });
-      var meta = el('div', { class: 'cf-meta' });
-      var pipeline = el('div', { class: 'cf-pipeline', style: '--cf-steps:' + config.steps.length });
-      var cards = config.steps.map(function (step, index) {
-        var card = el('div', { class: 'cf-step' }, [
-          el('strong', {}, [(index + 1) + '. ' + step.name]),
-          el('span', {}, [step.short])
-        ]);
-        pipeline.appendChild(card);
-        return card;
-      });
-
-      state._render = function () {
-        cards.forEach(function (card, index) {
-          card.classList.toggle('is-done', index < state.step);
-          card.classList.toggle('is-active', index === state.step);
-          card.querySelector('span').textContent = index < state.step ? 'verified' : index === state.step ? config.steps[index].short : 'waiting';
-        });
-        var active = config.steps[state.step];
-        status.innerHTML = active.name + '<small>' + active.detail + '</small>';
-        meta.textContent = 'stage ' + (state.step + 1) + ' of ' + config.steps.length + '  ·  ' + config.formula;
-      };
-
-      var controls = el('div', {}, [slider(state, 'step', config.controlLabel || 'active stage', 0, config.steps.length - 1, 1)]);
-      var output = el('div', { class: 'cf-output' }, [status, pipeline, meta]);
-      shell(host, config, controls, output);
-      state._render();
+      var id = LF.uid('cf-stages');
+      lab(host, config, state, [['step', config.controlLabel, 0, config.steps.length - 1, 1]], [], function (svg, out) {
+        stageRail(svg, config.steps, state.step);
+        add(svg, 'desc', { id: id }).appendChild(document.createTextNode(config.steps.map(function (item, i) {
+          return (i + 1) + '. ' + item.name + (i < state.step ? ' (verified)' : i === state.step ? ' (active)' : '');
+        }).join(', ')));
+        out.say(config.steps[state.step].name, config.steps[state.step].detail);
+        out.meta.textContent = 'stage ' + (state.step + 1) + ' of ' + config.steps.length + '  ·  ' + config.formula;
+      }, 64);
     };
   }
 
   function makeEquation(config) {
     return function (host) {
       var state = { a: config.a.defaultValue, b: config.b.defaultValue };
-      var status = el('div', { class: 'cf-status', 'aria-live': 'polite' });
-      var meta = el('div', { class: 'cf-meta' });
-      var formula = el('div', { class: 'cf-formula' });
-      var resultMeter = meterRow(config.meterLabel);
-
-      state._render = function () {
+      lab(host, config, state, ['a', 'b'].map(function (key) {
+        return [key, config[key].label, config[key].min, config[key].max, config[key].step];
+      }), [], function (svg, out) {
         var result = config.calculate(state.a, state.b);
-        resultMeter.update(result.percent, result.warning);
-        status.innerHTML = result.value + '<small>' + result.status + '</small>';
-        meta.textContent = result.meta;
-        formula.textContent = result.formula;
-      };
-
-      var controls = el('div', { class: 'cf-grid' }, [
-        slider(state, 'a', config.a.label, config.a.min, config.a.max, config.a.step),
-        slider(state, 'b', config.b.label, config.b.min, config.b.max, config.b.step)
-      ]);
-      var output = el('div', { class: 'cf-output' }, [status, resultMeter.root, meta, formula]);
-      shell(host, config, controls, output);
-      state._render();
+        flowIn(svg, [state.a, state.b], 36);
+        gauge(svg, config.meterLabel, result.percent, result.warning ? WARN : BP, []);
+        out.say(result.value, result.status);
+        out.meta.textContent = result.meta;
+        out.formula.textContent = result.formula;
+      }, 56);
     };
   }
 
   function makeReadiness(config) {
     return function (host) {
+      var keys = ['knowledge', 'practice', 'evidence'];
       var state = { knowledge: 55, practice: 35, evidence: 25 };
-      var status = el('div', { class: 'cf-status', 'aria-live': 'polite' });
-      var meta = el('div', { class: 'cf-meta' });
-      var readiness = meterRow('route readiness');
-
-      state._render = function () {
-        var score = Math.round(state.knowledge * config.weights[0] + state.practice * config.weights[1] + state.evidence * config.weights[2]);
-        var stage = score >= 80 ? config.ready : score >= 60 ? config.near : config.build;
-        readiness.update(score, score < 60);
-        status.innerHTML = score + '%<small>' + stage + '</small>';
-        meta.textContent = config.formula + '  ·  weakest dimension: ' + [
-          ['knowledge', state.knowledge], ['practice', state.practice], ['evidence', state.evidence]
-        ].sort(function (x, y) { return x[1] - y[1]; })[0][0];
-      };
-
-      var controls = el('div', { class: 'cf-grid' }, [
-        slider(state, 'knowledge', config.labels[0], 0, 100, 1),
-        slider(state, 'practice', config.labels[1], 0, 100, 1),
-        slider(state, 'evidence', config.labels[2], 0, 100, 1)
-      ]);
-      var output = el('div', { class: 'cf-output' }, [status, readiness.root, meta]);
-      shell(host, config, controls, output);
-      state._render();
+      lab(host, config, state, keys.map(function (key, i) { return [key, config.labels[i], 0, 100, 1]; }), [], function (svg, out) {
+        var values = keys.map(function (key) { return state[key]; });
+        var value = Math.round(values[0] * config.weights[0] + values[1] * config.weights[1] + values[2] * config.weights[2]);
+        flowIn(svg, values, 36);
+        gauge(svg, 'route readiness', value, value < 60 ? WARN : BP, [60, 80]);
+        out.say(value + '%', value >= 80 ? config.ready : value >= 60 ? config.near : config.build);
+        out.meta.textContent = config.formula + '  ·  weakest dimension: ' + keys[values.indexOf(Math.min.apply(null, values))];
+      }, 72);
     };
   }
 
   function contextCache(host) {
-    ensureStyles();
     var state = { mode: 'prefix' };
     var stage = el('div');
     state._render = function () {
       while (stage.firstChild) stage.removeChild(stage.firstChild);
-      var name = state.mode === 'prefix' ? 'prompt-cache-hit' : 'semantic-cache';
-      var figure = window.LESSON_FIGURES && window.LESSON_FIGURES[name];
+      var figure = window.LESSON_FIGURES && window.LESSON_FIGURES[state.mode === 'prefix' ? 'prompt-cache-hit' : 'semantic-cache'];
       if (figure) figure(stage, {});
-      labelControls(stage);
     };
-    var controls = el('div', { class: 'cf-grid' }, [
-      select(state, 'mode', 'cache mechanism', [['provider prefix cache', 'prefix'], ['application semantic cache', 'semantic']])
-    ]);
     shell(host, {
       title: 'CONTEXT CACHE LAB',
       hint: 'switch mechanisms, then drag the controls',
       caption: 'Prefix caching skips repeated prompt computation. Semantic caching reuses a previous answer for a similar query. One is exact and provider-side; the other is approximate and application-side, so its threshold is a safety decision.'
-    }, controls, el('div', { class: 'cf-output' }, [stage]));
+    }, el('div', { class: 'lf-grid' }, [
+      select(state, 'mode', 'cache mechanism', [['provider prefix cache', 'prefix'], ['application semantic cache', 'semantic']])
+    ]), el('div', { class: 'lf-out' }, [stage]));
     state._render();
   }
 

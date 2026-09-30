@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {mkdtempSync,readFileSync,rmSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+const work=process.env.PROJECT_WORKSPACE;
+const f=await import(pathToFileURL(join(work,'main.ts')).href);
+const ICS='BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nUID:a\nDTSTART:20261014T100000Z\nDTEND:20261014T110000Z\nSUMMARY:Sync\nEND:VEVENT\nEND:VCALENDAR\n';
+const WINDOW={start:Date.parse('2026-10-14T09:00:00Z'),end:Date.parse('2026-10-14T17:00:00Z')};
+test('places in earliest fitting interval',()=>{const p=f.schedule([{id:'a',title:'Deep work',minutes:90,priority:5}],f.parseCalendar(ICS),WINDOW);assert.equal(p.scheduled[0].start,Date.parse('2026-10-14T11:00:00Z'));});
+test('does not shrink impossible task',()=>{const p=f.schedule([{id:'a',title:'Large',minutes:480,priority:5}],f.parseCalendar(ICS),WINDOW);assert.equal(p.unscheduled[0].minutes,480);assert.equal(p.scheduled.length,0);});
+test('stable priority tie',()=>{const p=f.schedule([{id:'b',title:'B',minutes:30,priority:3},{id:'a',title:'A',minutes:30,priority:3}],[],WINDOW);assert.equal(p.scheduled[0].id,'a');});
+test('preserves caller tasks',()=>{const tasks=[{id:'b',title:'B',minutes:30,priority:1},{id:'a',title:'A',minutes:30,priority:5}];f.schedule(tasks,[],WINDOW);assert.equal(tasks[0].id,'b');});
+test('rejects invalid durations',()=>assert.throws(()=>f.schedule([{id:'a',title:'A',minutes:0,priority:5}],[],WINDOW)));
+test('scheduled tasks never overlap busy intervals',()=>{const p=f.schedule([{id:'a',title:'A',minutes:50,priority:5},{id:'b',title:'B',minutes:90,priority:4}],f.parseCalendar(ICS),WINDOW,10);for(const task of p.scheduled)for(const busy of p.busy)assert.ok(task.end<=busy.start||task.start>=busy.end);});

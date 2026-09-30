@@ -169,4 +169,4 @@ Save as `outputs/skill-music-designer.md`. Pick model, license strategy, length 
 - [ACE-Step](https://github.com/ace-step/ACE-Step) — open 4B full-song generator, April 2026.
 - [Suno v5 platform docs](https://suno.com) — the commercial quality leader.
 - [AudioLDM2](https://arxiv.org/abs/2308.05734) — latent diffusion for music + sound effects.
-- [WMG-Suno settlement coverage](https://www.musicbusinessworldwide.com/suno-warner-music-settlement/) — Nov 2025 precedent.
+- [WMG-Suno settlement coverage](https://www.musicbusinessworldwide.com/warner-music-group-settles-with-suno-strikes-first-of-its-kind-deal-with-ai-song-generator/) — Nov 2025 precedent.

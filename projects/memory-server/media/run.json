@@ -1,0 +1,48 @@
+{
+  "title": "Persistent Memory Server | Build and verify",
+  "recordedAt": "2026-09-28T19:23:02Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "memory-server",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-ixmvy5ao"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-ixmvy5ao\n  created  cli.ts\n  created  demo-persistent.ts\n  created  main.ts\n  created  package.json\n  created  samples/memory-updated.json\n  created  samples/memory.json\n  created  score.rs\n  created  stage-1.md\n  created  stage-2.md\n  created  stage-3.md\n  created  stage-4.md\nnext: python3 scripts/project_test.py memory-server --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-ixmvy5ao\n",
+      "durationMs": 51
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "memory-server",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-ixmvy5ao"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Persistent Memory Server: grading learner\n  FAIL stage 1: Keep text, namespace and provenance together (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 281
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "memory-server",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Persistent Memory Server: grading solution\n  PASS stage 1: Keep text, namespace and provenance together (6 tests)\n  PASS stage 2: Serialize revisioned writes (6 tests)\n  PASS stage 3: Score vectors in a real Rust process (6 tests)\n  PASS stage 4: Expose REST and MCP tools (11 tests)\n",
+      "durationMs": 2716
+    }
+  ]
+}

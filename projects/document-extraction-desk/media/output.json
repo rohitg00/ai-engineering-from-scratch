@@ -1,0 +1,15 @@
+{
+  "title": "document-extraction-desk | Actual application output",
+  "url": "file:///tmp/aiefs-recorded-artifacts/document-extraction-desk/solution/output/review.html",
+  "actions": [
+    [
+      "js",
+      "document.querySelector('input[name=seats][data-start=\"152\"]').click()"
+    ],
+    [
+      "js",
+      "window.scrollTo(0,250)"
+    ]
+  ],
+  "kind": "browser capture"
+}

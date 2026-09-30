@@ -1,0 +1,24 @@
+{
+  "pods": [
+    {
+      "name": "checkout-api",
+      "phase": "Running"
+    },
+    {
+      "name": "queue-worker",
+      "phase": "Pending"
+    }
+  ],
+  "logs": [
+    {
+      "name": "checkout-timeout",
+      "count": 12
+    }
+  ],
+  "metrics": [
+    {
+      "name": "checkout-cpu",
+      "value": 83
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+langchain-text-splitters==1.1.2

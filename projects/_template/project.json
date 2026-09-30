@@ -1,0 +1,53 @@
+{
+  "id": "your-project-id",
+  "title": "Your Project Title",
+  "level": 1,
+  "levelName": "Starter",
+  "tagline": "One sentence on what the finished project does for someone.",
+  "summary": "Two or three sentences on what learners build and which ideas they practice.",
+  "usefulFor": [
+    "A concrete situation where someone would run this"
+  ],
+  "youWillBuild": "The exact artifact: inputs, outputs and files produced.",
+  "hours": 6,
+  "languages": [
+    "Python"
+  ],
+  "status": "draft",
+  "source": "community",
+  "author": {
+    "name": "Your Name",
+    "github": "your-github-handle"
+  },
+  "skills": [
+    "skill one",
+    "skill two"
+  ],
+  "prerequisites": [
+    {
+      "title": "The agent loop",
+      "path": "phases/14-agent-engineering/01-the-agent-loop"
+    }
+  ],
+  "inspiredBy": [],
+  "stages": [
+    {
+      "id": "01-first-stage",
+      "title": "First stage",
+      "summary": "One line on what this stage adds.",
+      "hours": 1,
+      "concepts": [
+        "concept"
+      ],
+      "difficulty": "starter",
+      "language": "python"
+    }
+  ],
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  }
+}

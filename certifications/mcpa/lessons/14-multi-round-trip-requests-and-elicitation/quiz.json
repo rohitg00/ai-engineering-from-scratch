@@ -1,0 +1,78 @@
+{
+  "lesson": "14-multi-round-trip-requests-and-elicitation",
+  "title": "Multi Round-Trip Requests and Elicitation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A tool call needs the user to confirm a destructive action before a stateless 2026-07-28 server can finish it. What happens?",
+      "options": [
+        "The server blocks in place until a background worker resolves the confirmation for it",
+        "The server stores the call in memory and waits for a separate confirmation endpoint to eventually be hit",
+        "The server ends the call with an input_required result and the client retries as a new request",
+        "The server opens a stream and pushes a server-initiated request while the original call stays open"
+      ],
+      "correct": 2,
+      "explanation": "MRTR replaces server-initiated requests: the server ends the original call with resultType input_required, and the client gathers input, then retries the request independently."
+    },
+    {
+      "stage": "check",
+      "question": "When the client retries a tools/call after collecting the answers listed in inputRequests, what must be true of the JSON-RPC id?",
+      "options": [
+        "It is left out entirely because the retry is answered on the original response stream",
+        "It reuses the id from the input_required response so the server can match up its state",
+        "It is chosen by the server and returned to the client inside requestState itself",
+        "It is a brand new id, because the retry counts as an independent request entirely"
+      ],
+      "correct": 3,
+      "explanation": "The retry is a completely independent request, so its JSON-RPC id must differ from the id used on the original call that received input_required."
+    },
+    {
+      "stage": "check",
+      "question": "What is a client required to do with the requestState field carried on an input_required result?",
+      "options": [
+        "Echo it back on the retry exactly, without inspecting or altering its contents",
+        "Merge it into clientInfo so the server can read it back from a trusted field",
+        "Cache it alongside the tool definition so future calls can reuse the same value",
+        "Decode it locally to check whether the encoded expiry timestamp has already passed"
+      ],
+      "correct": 0,
+      "explanation": "requestState is opaque to the client; the client must echo it back unchanged on the retry and must not parse, inspect, or modify it in any way."
+    },
+    {
+      "stage": "check",
+      "question": "Which set of client requests may a server answer with an input_required result under MRTR?",
+      "options": [
+        "Only requests that already carry a progressToken value inside their _meta block",
+        "tools/call, prompts/get, and resources/read, and nothing else at all in the protocol",
+        "Any client request, since input_required works as a general purpose pause signal here",
+        "Only server/discover, because it is treated as the sole protocol entry point for it"
+      ],
+      "correct": 1,
+      "explanation": "Servers may send InputRequiredResult only on tools/call, prompts/get, and resources/read; every other client request must always finish as resultType complete."
+    },
+    {
+      "stage": "post",
+      "question": "A retry's requestState carries a valid signature and has not expired, but it was minted for a different authenticated principal than the one presenting it now. What should the server do?",
+      "options": [
+        "Accept it, since an unbroken HMAC signature already proves the state is trustworthy",
+        "Accept it only after asking the model to confirm the principal in plain text first",
+        "Reject it, because requestState stays bound to the one principal it was issued to",
+        "Accept it once, then flag the mismatch for a human to review during a later audit"
+      ],
+      "correct": 2,
+      "explanation": "Integrity alone is not enough: requestState must be bound to the authenticated principal it was minted for, and a mismatch must be rejected even when the signature verifies."
+    },
+    {
+      "stage": "post",
+      "question": "A deploy tool needs the user's payment card number before it can continue. How should it collect that value under 2026-07-28?",
+      "options": [
+        "Skip elicitation and let the model infer a plausible value from the conversation",
+        "Place the request inside clientInfo so the client can prefill it for the model",
+        "Send a form mode elicitation/create request with a requestedSchema for the card fields",
+        "Use URL mode elicitation so the interaction stays outside the MCP client itself"
+      ],
+      "correct": 3,
+      "explanation": "Servers must not use form mode for sensitive data such as payment credentials; URL mode elicitation keeps the interaction out of band so the value never transits the MCP client."
+    }
+  ]
+}

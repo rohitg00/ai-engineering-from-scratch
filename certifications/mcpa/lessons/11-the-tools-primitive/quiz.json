@@ -1,0 +1,78 @@
+{
+  "lesson": "11-the-tools-primitive",
+  "title": "The Tools Primitive: Calling Actions and Reading Their Results",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A tools/list request already returned some tools and a nextCursor of an empty string, not an absent field. What should a client do next?",
+      "options": [
+        "Send another tools/list request with cursor set to the empty string, since presence alone signals more",
+        "Repeat the exact same request again with no cursor at all, since an empty string can never be a valid cursor",
+        "Wait patiently for a notifications/tools/list_changed message before ever requesting another page at all",
+        "Stop paging right away, since an empty nextCursor value must always mean the server has nothing left to send"
+      ],
+      "correct": 0,
+      "explanation": "A nextCursor being present in the result, even as an empty string, means more tools may be available; only the field's absence signals that the list is finished."
+    },
+    {
+      "stage": "check",
+      "question": "A tool call succeeds and the server's result omits isError entirely. How must a conformant client read that result?",
+      "options": [
+        "As isError true, because a missing field always defaults to the more cautious reading",
+        "As isError false, since an absent isError field means the whole tool call succeeded",
+        "As invalid, because CallToolResult requires isError to be present on every single result",
+        "As undefined, so the client must ask the server which value it actually intended"
+      ],
+      "correct": 1,
+      "explanation": "CallToolResult treats a missing isError as false; the field only needs to appear, set to true, when the tool itself ran into a problem."
+    },
+    {
+      "stage": "check",
+      "question": "A client calls tools/call naming a tool the server never registered. Which response fits MCP 2026-07-28?",
+      "options": [
+        "A normal result with isError set to true and an empty content list carried back",
+        "A JSON-RPC error with code -32601, since the method itself could not be located on the server",
+        "A JSON-RPC error with code -32602, since the call names a tool the server never registered",
+        "An input_required result asking the client to choose a different tool right away"
+      ],
+      "correct": 2,
+      "explanation": "An unknown tool is a protocol error, code -32602 Invalid params; -32601 is reserved for a JSON-RPC method the server has never heard of, not a missing tool."
+    },
+    {
+      "stage": "check",
+      "question": "A tool definition ships with no annotations object at all. What must a client assume about its behavior?",
+      "options": [
+        "The tool quietly inherits the annotations of the last tool the client called",
+        "The tool cannot be listed at all until the server supplies annotations explicitly",
+        "readOnlyHint true and destructiveHint false, the single safest combination the schema allows",
+        "readOnlyHint false, destructiveHint true, idempotentHint false, openWorldHint true, the schema defaults"
+      ],
+      "correct": 3,
+      "explanation": "ToolAnnotations defaults to readOnlyHint false, destructiveHint true, idempotentHint false, and openWorldHint true; an absent annotations object leaves the client with those cautious defaults, not a safe assumption."
+    },
+    {
+      "stage": "post",
+      "question": "A server's tool list grows by one entry while a client already has a subscriptions/listen stream open with toolsListChanged set to true. How does the client find out?",
+      "options": [
+        "The server sends notifications/tools/list_changed on that stream, tagged with its subscription id",
+        "The server resends the entire tools/list result completely unprompted on that same open stream",
+        "The next tools/call response quietly folds the brand new tool into its own content list",
+        "The client must close and reopen its entire connection before any new tool ever becomes visible"
+      ],
+      "correct": 0,
+      "explanation": "A subscribed client learns of a changed tool list through notifications/tools/list_changed, carrying the same subscriptionId as the listen request that opened the stream, and then re-fetches with an ordinary tools/list."
+    },
+    {
+      "stage": "post",
+      "question": "A tool needs to point the model at a large file instead of inlining its contents in the result. Which content block fits, and what must it carry at minimum?",
+      "options": [
+        "An image block, carrying the file rendered as a small preview thumbnail",
+        "A resource_link block, carrying at least the file's uri and a name",
+        "A text block, carrying the file's path as a plain string with no other fields",
+        "A resource block, carrying the file's full text or base64 blob inline in the result"
+      ],
+      "correct": 1,
+      "explanation": "A resource_link block points at a resource by uri and name instead of inlining it, which fits large content the model may never need to read in full."
+    }
+  ]
+}

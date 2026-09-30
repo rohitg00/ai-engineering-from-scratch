@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "lessons": {
+    "certifications/mcpa/lessons/00-mcp-exam-strategy": [],
+    "certifications/mcpa/lessons/01-reading-the-specification": [
+      "certifications/mcpa/lessons/00-mcp-exam-strategy"
+    ],
+    "certifications/mcpa/lessons/02-the-integration-problem": [
+      "certifications/mcpa/lessons/01-reading-the-specification"
+    ],
+    "certifications/mcpa/lessons/03-json-rpc-and-meta": [
+      "certifications/mcpa/lessons/02-the-integration-problem"
+    ],
+    "certifications/mcpa/lessons/04-the-stateless-core": [
+      "certifications/mcpa/lessons/03-json-rpc-and-meta"
+    ],
+    "certifications/mcpa/lessons/05-protocol-eras-and-compatibility": [
+      "certifications/mcpa/lessons/04-the-stateless-core"
+    ],
+    "certifications/mcpa/lessons/06-hosts-clients-and-servers": [
+      "certifications/mcpa/lessons/05-protocol-eras-and-compatibility"
+    ],
+    "certifications/mcpa/lessons/07-discovery-and-capability-negotiation": [
+      "certifications/mcpa/lessons/06-hosts-clients-and-servers"
+    ],
+    "certifications/mcpa/lessons/08-tool-schemas-and-structured-content": [
+      "certifications/mcpa/lessons/07-discovery-and-capability-negotiation"
+    ],
+    "certifications/mcpa/lessons/09-reading-server-manifests": [
+      "certifications/mcpa/lessons/08-tool-schemas-and-structured-content"
+    ],
+    "certifications/mcpa/lessons/10-model-interaction-flow": [
+      "certifications/mcpa/lessons/09-reading-server-manifests"
+    ],
+    "certifications/mcpa/lessons/11-the-tools-primitive": [
+      "certifications/mcpa/lessons/10-model-interaction-flow"
+    ],
+    "certifications/mcpa/lessons/12-the-resources-primitive": [
+      "certifications/mcpa/lessons/11-the-tools-primitive"
+    ],
+    "certifications/mcpa/lessons/13-prompts-and-completion": [
+      "certifications/mcpa/lessons/12-the-resources-primitive"
+    ],
+    "certifications/mcpa/lessons/14-multi-round-trip-requests-and-elicitation": [
+      "certifications/mcpa/lessons/13-prompts-and-completion"
+    ],
+    "certifications/mcpa/lessons/15-deprecated-client-features": [
+      "certifications/mcpa/lessons/14-multi-round-trip-requests-and-elicitation"
+    ],
+    "certifications/mcpa/lessons/16-notifications-and-subscriptions": [
+      "certifications/mcpa/lessons/15-deprecated-client-features"
+    ],
+    "certifications/mcpa/lessons/17-tool-invocation-lifecycle": [
+      "certifications/mcpa/lessons/16-notifications-and-subscriptions"
+    ],
+    "certifications/mcpa/lessons/18-error-handling": [
+      "certifications/mcpa/lessons/17-tool-invocation-lifecycle"
+    ],
+    "certifications/mcpa/lessons/19-transports-and-http-headers": [
+      "certifications/mcpa/lessons/18-error-handling"
+    ],
+    "certifications/mcpa/lessons/20-caching-and-pagination": [
+      "certifications/mcpa/lessons/19-transports-and-http-headers"
+    ],
+    "certifications/mcpa/lessons/21-long-running-work-and-tasks": [
+      "certifications/mcpa/lessons/20-caching-and-pagination"
+    ],
+    "certifications/mcpa/lessons/22-trust-boundaries": [
+      "certifications/mcpa/lessons/21-long-running-work-and-tasks"
+    ],
+    "certifications/mcpa/lessons/23-oauth-authorization": [
+      "certifications/mcpa/lessons/22-trust-boundaries"
+    ],
+    "certifications/mcpa/lessons/24-client-registration-and-identity": [
+      "certifications/mcpa/lessons/23-oauth-authorization"
+    ],
+    "certifications/mcpa/lessons/25-consent-and-least-privilege": [
+      "certifications/mcpa/lessons/24-client-registration-and-identity"
+    ],
+    "certifications/mcpa/lessons/26-risk-and-safety-controls": [
+      "certifications/mcpa/lessons/25-consent-and-least-privilege"
+    ],
+    "certifications/mcpa/lessons/27-auditability-and-observability": [
+      "certifications/mcpa/lessons/26-risk-and-safety-controls"
+    ],
+    "certifications/mcpa/lessons/28-roles-and-adoption": [
+      "certifications/mcpa/lessons/27-auditability-and-observability"
+    ],
+    "certifications/mcpa/lessons/29-operational-use-cases": [
+      "certifications/mcpa/lessons/28-roles-and-adoption"
+    ],
+    "certifications/mcpa/lessons/30-the-extensions-framework": [
+      "certifications/mcpa/lessons/29-operational-use-cases"
+    ],
+    "certifications/mcpa/lessons/31-mcp-apps": [
+      "certifications/mcpa/lessons/30-the-extensions-framework"
+    ],
+    "certifications/mcpa/lessons/32-registry-gateways-and-sdk-tiers": [
+      "certifications/mcpa/lessons/31-mcp-apps"
+    ],
+    "certifications/mcpa/lessons/33-mcpa-capstone-readiness": [
+      "certifications/mcpa/lessons/32-registry-gateways-and-sdk-tiers"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "id": "multiply-price",
+    "failure_contains": "AssertionError",
+    "path": "basket.py",
+    "old": "price + quantity",
+    "new": "price * quantity"
+  }
+]

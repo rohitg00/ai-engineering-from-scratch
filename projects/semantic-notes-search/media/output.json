@@ -1,0 +1,16 @@
+{
+  "title": "Semantic Notes Search | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:01Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "demo.py"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/semantic-notes-search/solution",
+      "exitCode": 0,
+      "output": "{\n  \"without_alias\": {\n    \"schema_version\": 1,\n    \"query\": \"release replicas\",\n    \"documents\": 3,\n    \"matches\": [\n      {\n        \"id\": \"release.md\",\n        \"score\": 0.246073,\n        \"matched\": [\n          \"release\"\n        ],\n        \"preview\": \"# Release window\\nDeploy the orchard service after the replica catches up.\\n\"\n      },\n      {\n        \"id\": \"backup.md\",\n        \"score\": 0.215061,\n        \"matched\": [\n          \"release\"\n        ],\n        \"preview\": \"# Restore drill\\nThe orchard backup must be restored in a disposable namespace before release.\\n\"\n      }\n    ]\n  },\n  \"with_alias\": {\n    \"schema_version\": 1,\n    \"query\": \"release replicas\",\n    \"documents\": 3,\n    \"matches\": [\n      {\n        \"id\": \"release.md\",\n        \"score\": 0.474234,\n        \"matched\": [\n          \"deploy\"\n        ],\n        \"preview\": \"# Release window\\nDeploy the orchard service after the replica catches up.\\n\"\n      },\n      {\n        \"id\": \"backup.md\",\n        \"score\": 0.215061,\n        \"matched\": [\n          \"deploy\"\n        ],\n        \"preview\": \"# Restore drill\\nThe orchard backup must be restored in a disposable namespace before release.\\n\"\n      }\n    ]\n  },\n  \"unicode\": {\n    \"schema_version\": 1,\n    \"query\": \"cafe\u0301\",\n    \"documents\": 3,\n    \"matches\": [\n      {\n        \"id\": \"caf\u00e9.md\",\n        \"score\": 0.527132,\n        \"matched\": [\n          \"caf\u00e9\"\n        ],\n        \"preview\": \"# Caf\u00e9 incident\\nThe caf\u00e9 tablet cannot connect while the guest network rotates credentials.\\n\"\n      }\n    ]\n  }\n}\n",
+      "durationMs": 43
+    }
+  ]
+}

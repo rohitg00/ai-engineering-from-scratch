@@ -1,0 +1,10 @@
+{
+  "query": "review release replicas",
+  "files": [
+    "deploy/orchard.yaml",
+    "deploy/orchard.yaml"
+  ],
+  "allowed": [
+    "read"
+  ]
+}

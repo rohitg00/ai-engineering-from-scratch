@@ -1,0 +1,2 @@
+{"id": "orchard-a", "session": "review-a", "scope": "orchard", "rule": "Read API_KEY from the environment; never rename it to api_key.", "source": "The runtime reads the uppercase environment key.", "locator": "local:orchard/config.py:12"}
+{"id": "orchard-b", "session": "review-b", "scope": "orchard", "rule": "Read API_KEY from the environment; never rename it to api_key.", "source": "The deployment manifest provides API_KEY.", "locator": "local:orchard/deploy.yaml:18"}

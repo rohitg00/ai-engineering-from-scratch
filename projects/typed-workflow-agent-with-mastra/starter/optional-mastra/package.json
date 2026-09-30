@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@mastra/core": "1.71.0",
+    "zod": "4.3.6",
+    "@mastra/libsql": "1.23.3"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "title": "visual-evidence-library | Actual application output",
+  "url": "file:///tmp/aiefs-reviewed-apps/visual/index.html",
+  "actions": [
+    [
+      "js",
+      "window.scrollTo(0,350)"
+    ]
+  ],
+  "kind": "browser capture"
+}

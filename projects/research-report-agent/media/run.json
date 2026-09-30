@@ -1,0 +1,48 @@
+{
+  "title": "Research Report Agent | Build and verify",
+  "recordedAt": "2026-09-28T19:24:00Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "research-report-agent",
+        "--init",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-4waxtjfu"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-4waxtjfu\n  created  report_agent/__init__.py\n  created  report_agent/corpus.py\n  created  report_agent/search.py\n  created  search/main.rs\n  created  search/wire.rs\n  created  report_agent/snippets.py\n  created  report_agent/model.py\n  created  report_agent/planner.py\n  created  report_agent/citations.py\n  created  report_agent/writer.py\n  created  report_agent/critic.py\n  created  report_agent/changes.py\n  created  report_agent/pipeline.py\n  created  report_agent/publish.py\n  created  viewer/render.ts\n  created  report_agent/evaluate.py\nnext: python3 scripts/project_test.py research-report-agent --stage 1 --path /private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-4waxtjfu\n",
+      "durationMs": 55
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "research-report-agent",
+        "--stage",
+        "1",
+        "--path",
+        "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/project-demo-learner-4waxtjfu"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Research Report Agent: grading learner\n  FAIL stage 1: Search the corpus (19 tests)\n       not implemented yet: Stage 1: implement BM25 index; not implemented yet: Stage 1: implement load_corpus in report_agent/corpus.py\n",
+      "durationMs": 806
+    },
+    {
+      "command": [
+        "python3.12",
+        "scripts/project_test.py",
+        "research-report-agent",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Research Report Agent: grading solution\n  PASS stage 1: Search the corpus (19 tests)\n  PASS stage 2: Extract snippets you can cite (11 tests)\n  PASS stage 3: Plan the research (9 tests)\n  PASS stage 4: Write only from evidence (12 tests)\n  PASS stage 5: Verify every claim (9 tests)\n  PASS stage 6: Publish the report (14 tests)\n  PASS stage 7: Score the public fixtures (8 tests)\n",
+      "durationMs": 8362
+    }
+  ]
+}

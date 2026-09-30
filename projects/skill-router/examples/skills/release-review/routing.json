@@ -1,0 +1,16 @@
+{
+  "keywords": [
+    "release",
+    "replicas"
+  ],
+  "paths": [
+    "deploy/**"
+  ],
+  "priority": 1,
+  "requires": [
+    "check-tests"
+  ],
+  "permissions": [
+    "read"
+  ]
+}

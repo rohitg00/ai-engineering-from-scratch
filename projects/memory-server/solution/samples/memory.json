@@ -1,0 +1,6 @@
+{
+  "id": "cache-policy",
+  "namespace": "docs",
+  "text": "Cache entries expire after sixty seconds. Never cache private responses.",
+  "source": "policies/cache.md:12"
+}

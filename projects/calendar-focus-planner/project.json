@@ -1,0 +1,119 @@
+{
+  "id": "calendar-focus-planner",
+  "title": "Calendar Focus Planner",
+  "level": 2,
+  "levelName": "Builder",
+  "tagline": "Find real free time in a calendar, place prioritized tasks, and explain which tasks do not fit.",
+  "summary": "Find real free time in a calendar, place prioritized tasks, and explain which tasks do not fit.",
+  "youWillBuild": "An inspectable HTML plan, machine-readable schedule, and portable ICS proposals for manual import.",
+  "usefulFor": [
+    "Use your own input to produce a reviewable artifact another application can consume."
+  ],
+  "hours": 8,
+  "languages": [
+    "TypeScript"
+  ],
+  "languageWhy": {
+    "TypeScript": "Standard-library parsing, explicit contracts and portable artifacts keep the mechanism visible."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Read explicit calendar intervals",
+    "Merge overlaps before finding gaps",
+    "Schedule priorities without pretending everything fits",
+    "Export a reviewable calendar proposal"
+  ],
+  "prerequisites": [
+    {
+      "title": "Development environment",
+      "path": "phases/00-setup-and-tooling/01-dev-environment"
+    },
+    {
+      "title": "Data management",
+      "path": "phases/00-setup-and-tooling/09-data-management"
+    }
+  ],
+  "figures": true,
+  "overviewFigure": "pj-calendar-focus-planner-1",
+  "demo": {
+    "command": [
+      "node",
+      "cli.ts",
+      "sample.ics",
+      "tasks.json",
+      "2026-10-14",
+      "output",
+      "10"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-read-calendar",
+      "title": "Read explicit calendar intervals",
+      "summary": "parseCalendar(text)",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "concepts": [
+        "Read explicit calendar intervals"
+      ],
+      "figure": "pj-calendar-focus-planner-1"
+    },
+    {
+      "id": "02-compute-free-time",
+      "title": "Merge overlaps before finding gaps",
+      "summary": "availableSlots(events, window, bufferMinutes=0)",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "concepts": [
+        "Merge overlaps before finding gaps"
+      ],
+      "figure": "pj-calendar-focus-planner-2"
+    },
+    {
+      "id": "03-place-tasks",
+      "title": "Schedule priorities without pretending everything fits",
+      "summary": "schedule(tasks, events, window, bufferMinutes=0)",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "concepts": [
+        "Schedule priorities without pretending everything fits"
+      ],
+      "figure": "pj-calendar-focus-planner-3"
+    },
+    {
+      "id": "04-export-proposals",
+      "title": "Export a reviewable calendar proposal",
+      "summary": "exportCalendar(plan, createdAt); renderPlan(plan)",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "concepts": [
+        "Export a reviewable calendar proposal"
+      ],
+      "figure": "pj-calendar-focus-planner-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Build and verify",
+      "caption": "Actual starter failure and reference grader output; reference passes do not earn a learner certificate."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Use the finished artifact",
+      "caption": "Recorded real input, computed output and the resulting portable report."
+    }
+  ]
+}

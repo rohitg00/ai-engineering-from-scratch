@@ -104,6 +104,18 @@
   padding-top: 72px;
 }
 
+.cert-program-sections {
+  scroll-margin-top: 96px;
+}
+
+.cert-program-section .cert-access-notice {
+  margin: 0 0 22px;
+}
+
+.cert-program-section .cert-program-actions {
+  margin: 0 0 22px;
+}
+
 .cert-access-notice {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -263,6 +275,10 @@
   object-fit: contain;
   justify-self: end;
   clip-path: polygon(31% 0, 67% 0, 86% 6%, 97% 20%, 100% 36%, 99% 71%, 88% 84%, 61% 99%, 25% 97%, 6% 82%, 0 66%, 0 36%, 5% 20%);
+}
+
+.cert-track-badge--square {
+  clip-path: none;
 }
 
 .cert-track-card p {

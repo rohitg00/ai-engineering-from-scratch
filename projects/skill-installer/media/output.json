@@ -1,0 +1,16 @@
+{
+  "title": "Cross-Agent Skill Installer | Actual artifact output",
+  "recordedAt": "2026-09-28T19:22:03Z",
+  "records": [
+    {
+      "command": [
+        "node",
+        "demo.ts"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/skill-installer/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"source_digest\": \"b81601957f89ada04e984f4dd4ff31bdbdf3c8db311e115398a07303024d9eb8\",\n  \"installed\": {\n    \"schema_version\": 1,\n    \"source_digest\": \"b81601957f89ada04e984f4dd4ff31bdbdf3c8db311e115398a07303024d9eb8\",\n    \"agent\": \"codex\",\n    \"name\": \"orchard-release\",\n    \"digest\": \"146a6bcceb8871480ad9681bddf36b891892de8e5fd08c20f30471a4da962d77\",\n    \"files\": [\n      \"SKILL.md\",\n      \"references/checklist.md\"\n    ],\n    \"destination\": \".agents/skills/orchard-release\"\n  },\n  \"upgrade\": \"modified installation\",\n  \"local_edit_preserved\": true\n}\n",
+      "durationMs": 131
+    }
+  ]
+}

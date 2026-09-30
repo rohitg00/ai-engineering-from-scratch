@@ -1,0 +1,119 @@
+{
+  "id": "sandbox-ladder",
+  "title": "Sandbox Policy Planner",
+  "level": 4,
+  "levelName": "Systems",
+  "tagline": "Choose isolation controls from an explicit capability requirement.",
+  "summary": "Select a modeled isolation policy, inspect an optional local Docker invocation, and compare requested controls with observed harmless probes.",
+  "usefulFor": [
+    "A sandbox evidence planner mapping requested capabilities to observed runtime probes.",
+    "Default output is a policy simulation."
+  ],
+  "youWillBuild": "Select a modeled isolation policy, inspect an optional local Docker invocation, and compare requested controls with observed harmless probes.",
+  "hours": 8,
+  "languages": [
+    "Rust"
+  ],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Parse the capability request",
+    "Define modeled control profiles",
+    "Select the least costly sufficient profile",
+    "Report residual assumptions"
+  ],
+  "prerequisites": [
+    {
+      "title": "Docker for AI",
+      "path": "phases/00-setup-and-tooling/07-docker-for-ai"
+    },
+    {
+      "title": "Security and secrets audit",
+      "path": "phases/17-infrastructure-and-production/25-security-secrets-audit"
+    }
+  ],
+  "inspiredBy": [],
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-parse-the-capability-request",
+      "title": "Parse the capability request",
+      "summary": "Represent the threat model as four explicit booleans: untrusted code, secret-bearing host, denied network and required kernel separation.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "starter",
+      "concepts": [
+        "Parse keys",
+        "Reject duplicates",
+        "Exact booleans",
+        "Threat requirements"
+      ]
+    },
+    {
+      "id": "02-define-modeled-control-profiles",
+      "title": "Define modeled control profiles",
+      "summary": "Model process, filesystem, container-network and microVM boundaries as data.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Filesystem control",
+        "Network control",
+        "Kernel control",
+        "Requirement match"
+      ]
+    },
+    {
+      "id": "03-select-the-least-costly-sufficient-profile",
+      "title": "Select the least costly sufficient profile",
+      "summary": "Filter insufficient profiles before comparing cost.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Filter controls",
+        "Apply budget",
+        "Stable minimum",
+        "No downgrade"
+      ]
+    },
+    {
+      "id": "04-report-residual-assumptions",
+      "title": "Report residual assumptions",
+      "summary": "Return the selected fixture and state clearly that operating-system enforcement has not been performed.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "Recheck requirements",
+        "Name model",
+        "List residuals",
+        "Runtime verification"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    }
+  ]
+}

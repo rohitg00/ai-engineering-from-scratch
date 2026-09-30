@@ -1,0 +1,7 @@
+region,product,units,lead_days
+West,Guide,12,2
+East,Guide,7,4
+West,Workshop,5,1
+South,Workshop,9,3
+East,Guide,3,2
+West,Guide,4,5

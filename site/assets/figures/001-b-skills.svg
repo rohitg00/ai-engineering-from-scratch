@@ -1,40 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="FIG_001.B — SKILL.md packaged for agents">
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="FIG_001.B: a SKILL.md file dropping into an agent's skill folder">
   <defs>
     <style>
-      .bp { stroke: #3553ff; fill: none; stroke-linejoin: miter; stroke-linecap: square; }
-      .bp-fill { fill: #3553ff; }
-      .face { fill: rgba(53, 83, 255, 0.08); }
-      .face-strong { fill: rgba(53, 83, 255, 0.18); }
-      .mono { font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace; }
+      .bp { stroke: #3553ff; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+      .ink { fill: #3553ff; }
+      .face { fill: #3553ff; fill-opacity: 0.08; }
+      .face-strong { fill: #3553ff; fill-opacity: 0.18; }
+      .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 600; }
     </style>
   </defs>
 
   <rect width="120" height="120" fill="#fafaf5"/>
+  <text class="mono ink" x="10" y="15" font-size="7" letter-spacing="1.4">FIG_001.B</text>
 
-  <text class="mono bp-fill" x="8" y="14" font-size="6.5" letter-spacing="1.5">FIG_001.B</text>
+  <rect class="face" x="30" y="20" width="52" height="54"/>
+  <rect class="face-strong" x="30" y="20" width="52" height="13"/>
+  <rect class="bp" x="30" y="20" width="52" height="54" stroke-width="1.6"/>
+  <line class="bp" x1="30" y1="33" x2="82" y2="33" stroke-width="1.2"/>
+  <text class="mono ink" x="56" y="29.5" font-size="7" letter-spacing="0.8" text-anchor="middle">SKILL.md</text>
 
-  <!-- file body -->
-  <rect class="face" x="22" y="26" width="62" height="74"/>
-  <rect class="bp" x="22" y="26" width="62" height="74" stroke-width="1.5"/>
+  <line class="bp" x1="36" y1="42" x2="76" y2="42" stroke-width="1.2"/>
+  <line class="bp" x1="36" y1="49" x2="70" y2="49" stroke-width="1.2"/>
+  <line class="bp" x1="36" y1="56" x2="76" y2="56" stroke-width="1.2"/>
+  <line class="bp" x1="36" y1="63" x2="62" y2="63" stroke-width="1.2"/>
 
-  <!-- frontmatter header strip -->
-  <rect class="face-strong" x="22" y="26" width="62" height="14"/>
-  <line class="bp" x1="22" y1="40" x2="84" y2="40" stroke-width="1"/>
-  <text class="mono bp-fill" x="28" y="36" font-size="6.5" letter-spacing="1.2">SKILL.md</text>
+  <line class="bp" x1="56" y1="74" x2="56" y2="87" stroke-width="1.6"/>
+  <polyline class="bp" points="51,82 56,87 61,82" stroke-width="1.6"/>
 
-  <!-- body content lines -->
-  <line class="bp" x1="30" y1="52" x2="74" y2="52" stroke-width="1.2"/>
-  <line class="bp" x1="30" y1="60" x2="74" y2="60" stroke-width="1.2"/>
-  <line class="bp" x1="30" y1="68" x2="66" y2="68" stroke-width="1.2"/>
-  <line class="bp" x1="30" y1="80" x2="74" y2="80" stroke-width="1.2"/>
-  <line class="bp" x1="30" y1="88" x2="58" y2="88" stroke-width="1.2"/>
+  <rect class="face-strong" x="26" y="86" width="12" height="6"/>
+  <rect class="bp" x="26" y="86" width="12" height="6" stroke-width="1"/>
+  <rect class="face-strong" x="74" y="86" width="12" height="6"/>
+  <rect class="bp" x="74" y="86" width="12" height="6" stroke-width="1"/>
+  <path class="bp" d="M20 80 V96 H92 V80" stroke-width="1.6"/>
 
-  <!-- adapter plug coming out of file (drop-in shape) -->
-  <line class="bp" x1="84" y1="84" x2="98" y2="84" stroke-width="1.5"/>
-  <rect class="face-strong" x="98" y="80" width="10" height="8"/>
-  <rect class="bp" x="98" y="80" width="10" height="8" stroke-width="1.2"/>
-  <line class="bp" x1="100" y1="84" x2="100" y2="84.5" stroke-width="1"/>
-  <line class="bp" x1="106" y1="84" x2="106" y2="84.5" stroke-width="1"/>
-
-  <text class="mono bp-fill" x="60" y="114" font-size="7" letter-spacing="1.5" text-anchor="middle">SKILL</text>
+  <text class="mono ink" x="60" y="110" font-size="8.5" letter-spacing="2.2" text-anchor="middle">SKILL</text>
 </svg>

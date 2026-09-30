@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {join} from 'node:path';import {pathToFileURL} from 'node:url';
+const root=process.env.PROJECT_WORKSPACE!;const {exchange,initialize}=await import(pathToFileURL(join(root,'client.ts')).href);const server=join(root,'protocol.py');
+test('actual Python process returns typed count',async()=>{const rows=await exchange(server,[...initialize,{jsonrpc:'2.0',id:2,method:'tools/call',params:{name:'pods_count',arguments:{}}}]);assert.equal(rows[1].result.content[0].text,'2');});
+test('notifications have no response line',async()=>{assert.equal((await exchange(server,initialize)).length,1);});
+test('server errors preserve request id',async()=>{const rows=await exchange(server,[...initialize,{jsonrpc:'2.0',id:9,method:'unknown'}]);assert.equal(rows[1].id,9);assert.equal(rows[1].error.code,-32601);});
+test('all pages survive JSON serialization',async()=>{const requests=[...initialize,...Array.from({length:8},(_,i)=>({jsonrpc:'2.0',id:i+2,method:'tools/list',params:{cursor:String(i*32)}}))];const rows=await exchange(server,requests);const names=rows.slice(1).flatMap((r:any)=>r.result.tools.map((t:any)=>t.name));assert.equal(names.length,250);assert.equal(new Set(names).size,250);});
+test('duplicate request ids are rejected before execution',async()=>{await assert.rejects(exchange(server,[initialize[0],initialize[0]]),/duplicate request id/);});

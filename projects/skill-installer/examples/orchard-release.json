@@ -1,0 +1,8 @@
+{
+  "name": "orchard-release",
+  "description": "Review Orchard deployment evidence before approving a rollout.",
+  "files": {
+    "SKILL.md": "# Orchard release review\n\nUse this skill when a rollout changes replicas or the recovery procedure.\n\nRead references/checklist.md. Return the changed setting, source path and rollback condition. Ask for missing evidence before approval.\n",
+    "references/checklist.md": "# Evidence checklist\n\n- Confirm the replica count from the deployment manifest.\n- Confirm the recovery timestamp from the restore log.\n- Quote the health check result and its observation time.\n"
+  }
+}

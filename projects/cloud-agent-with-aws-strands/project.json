@@ -1,0 +1,131 @@
+{
+  "id": "cloud-agent-with-aws-strands",
+  "title": "Cloud Agent With AWS Strands",
+  "level": 4,
+  "levelName": "Systems",
+  "tagline": "A scoped cloud incident reader with an execution receipt for every cache hit and retry.",
+  "summary": "A scoped cloud incident reader with an execution receipt for every cache hit and retry. Import run(payload, provider). The provider receives only a validated operation and scoped resource. The optional Strands model proposes a plan; it never bypasses the deterministic validator.",
+  "hours": 8,
+  "languages": ["Python"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "A scoped cloud incident reader with an execution receipt for every cache hit and retry.",
+  "usefulFor": [
+    "Import run(payload, provider). The provider receives only a validated operation and scoped resource. The optional Strands model proposes a plan; it never bypasses the deterministic validator."
+  ],
+  "skills": [
+    "Validate a scoped cloud inspection plan",
+    "Execute reads within step and response budgets",
+    "Retry transient reads and reuse completed requests",
+    "Drive the actual Strands loop with a local model"
+  ],
+  "prerequisites": [
+    "Python 3.10+",
+    "JSON, sets, exceptions, callbacks and environment configuration. Optional SDK comparisons use requirements-framework.txt."
+  ],
+  "figures": true,
+  "overviewFigure": "pj-cloud-agent-with-aws-strands-1",
+  "languageWhy": {
+    "Python": "Stdlib data structures, explicit algorithms and deterministic local tests."
+  },
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--output",
+      "incident.json"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-plan",
+      "title": "Validate a scoped cloud inspection plan",
+      "summary": "A delete operation or an out-of-scope resource fails before any provider call.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "starter",
+      "figure": "pj-cloud-agent-with-aws-strands-1",
+      "concepts": ["validate", "a", "scoped", "cloud"]
+    },
+    {
+      "id": "02-executor",
+      "title": "Execute reads within step and response budgets",
+      "summary": "A zero-step budget performs no provider calls and returns budget_exhausted.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-cloud-agent-with-aws-strands-2",
+      "concepts": ["execute", "reads", "within", "step"]
+    },
+    {
+      "id": "03-retry",
+      "title": "Retry transient reads and reuse completed requests",
+      "summary": "A transient timeout retries, while a permission failure is propagated after one call.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "core",
+      "figure": "pj-cloud-agent-with-aws-strands-3",
+      "concepts": ["retry", "transient", "reads", "and"]
+    },
+    {
+      "id": "04-strands-adapter",
+      "title": "Drive the actual Strands loop with a local model",
+      "summary": "The framework produces one recorded JSON plan in one model call, then the independent validator checks it.",
+      "language": "python",
+      "languageWhy": "Python standard-library collections, bytes and file operations expose this stage directly.",
+      "hours": 2,
+      "difficulty": "stretch",
+      "figure": "pj-cloud-agent-with-aws-strands-4",
+      "concepts": ["drive", "the", "actual", "strands"],
+      "runners": [
+        {
+          "language": "python"
+        },
+        {
+          "language": "python",
+          "optional": true,
+          "requires": ["python:strands"],
+          "argv": [
+            "{python}",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "{stage}/tests-framework",
+            "-p",
+            "test_framework.py"
+          ]
+        }
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the local deterministic demo command. See the README for fixture and live-adapter limits."
+    },
+    {
+      "gif": "media/framework.gif",
+      "poster": "media/framework.png",
+      "title": "Verify the real SDK",
+      "caption": "Actual optional SDK tests with installed dependencies and deterministic local models. No live cloud or model provider calls."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "title": "Report Judge | Actual artifact output",
+  "recordedAt": "2026-09-28T19:21:53Z",
+  "records": [
+    {
+      "command": [
+        "python3.12",
+        "demo.py"
+      ],
+      "cwd": "/tmp/aiefs-recorded-artifacts/report-judge/solution",
+      "exitCode": 0,
+      "output": "{\n  \"empty\": {\n    \"precision\": 0.0,\n    \"recall\": null,\n    \"coverage\": null,\n    \"score\": 0.0,\n    \"claims\": 0,\n    \"state\": \"no_evidence\",\n    \"unavailable\": [\n      \"recall\",\n      \"coverage\"\n    ],\n    \"verdicts\": []\n  },\n  \"audit\": {\n    \"precision\": 0.3333333333333333,\n    \"recall\": 0.5,\n    \"coverage\": 0.5,\n    \"score\": 41.67,\n    \"claims\": 3,\n    \"state\": \"needs_review\",\n    \"unavailable\": [],\n    \"verdicts\": [\n      {\n        \"claim\": \"Worker A invokes Worker B \",\n        \"cites\": [\n          \"S1\"\n        ],\n        \"score\": 1.0,\n        \"reason\": \"lexical_overlap\",\n        \"supported\": true\n      },\n      {\n        \"claim\": \"Worker B invokes Worker A \",\n        \"cites\": [\n          \"S1\"\n        ],\n        \"score\": 0.0,\n        \"reason\": \"order_requires_review\",\n        \"supported\": false\n      },\n      {\n        \"claim\": \"Every request allows 99 retries \",\n        \"cites\": [\n          \"S2\"\n        ],\n        \"score\": 0.0,\n        \"reason\": \"number\",\n        \"supported\": false\n      }\n    ]\n  },\n  \"paired_change\": {\n    \"mean_delta\": -6.666666666666667,\n    \"interval\": [\n      -30.0,\n      5.0\n    ],\n    \"regressions\": [\n      \"q3\"\n    ],\n    \"promote\": false\n  }\n}\n",
+      "durationMs": 41
+    }
+  ]
+}
