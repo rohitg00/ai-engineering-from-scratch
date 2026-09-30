@@ -36,7 +36,7 @@
     },
     {
       "source": "/prereqs",
-      "destination": "/api/markdown?path=/roadmap"
+      "destination": "/api/markdown?path=/prereqs"
     },
     {
       "source": "/project",
