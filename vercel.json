@@ -1,8 +1,15 @@
 {
-  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/version-assets.js",
+  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/clean-urls.js && node site/version-assets.js",
   "outputDirectory": "site",
   "framework": null,
   "installCommand": "echo skip",
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/index", "destination": "/", "permanent": true },
+    { "source": "/:page(about|catalog|glossary|prereqs|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|assessment).html", "destination": "/:page", "permanent": true },
+    { "source": "/project", "missing": [{ "type": "query", "key": "id" }], "destination": "/projects", "permanent": false }
+  ],
   "routes": [
     { "src": "/lesson\\.html", "methods": ["GET", "HEAD"], "dest": "/api/lesson?legacy=1" },
     { "src": "/certification\\.html", "methods": ["GET", "HEAD"], "dest": "/api/certification?legacy=1" },
@@ -11,6 +18,10 @@
   "rewrites": [
     { "source": "/lesson", "destination": "/api/lesson" },
     { "source": "/certification", "destination": "/api/certification" },
+    { "source": "/project", "destination": "/project.html" },
+    { "source": "/projects", "destination": "/projects.html" },
+    { "source": "/learning-paths", "destination": "/learning-paths.html" },
+    { "source": "/prereqs", "destination": "/api/markdown?path=/roadmap" },
     { "source": "/about", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/about" },
     { "source": "/catalog", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/catalog" },
     { "source": "/glossary", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/glossary" },
@@ -80,7 +91,7 @@
       ]
     },
     {
-      "source": "/(glossary|catalog|certifications|certification|assessment|path|roadmap|about|developer|docs|contact|privacy)",
+      "source": "/(glossary|catalog|certifications|certification|assessment|path|prereqs|roadmap|about|developer|docs|contact|privacy|sponsors|projects|project|learning-paths)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
         { "key": "Vary", "value": "Accept, Accept-Encoding" }
