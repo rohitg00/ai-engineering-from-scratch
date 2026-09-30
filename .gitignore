@@ -96,6 +96,7 @@ site/developer/
 site/docs/
 site/contact/
 site/privacy/
+site/sponsors/
 book/_build/
 
 # Lesson translations are generated to a separate `translations` branch, never
