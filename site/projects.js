@@ -82,7 +82,8 @@
   }
 
   function projectHref(id, stageId) {
-    return 'project.html?id=' + encodeURIComponent(id) + (stageId ? '&stage=' + encodeURIComponent(stageId) : '');
+    var href = 'project?id=' + encodeURIComponent(id) + (stageId ? '&stage=' + encodeURIComponent(stageId) : '');
+    return window.AIFSRouteLinks ? window.AIFSRouteLinks.adaptHref(href) : href;
   }
 
   function totalHours(project) {

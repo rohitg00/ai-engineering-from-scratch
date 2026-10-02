@@ -41,6 +41,11 @@ on:
       - "site/build.js"
       - "site/**"
       - "api/**"
+      - "lib/**"
+      - "packages/cli/**"
+      - "scripts/test_agent_api.js"
+      - "scripts/test_agent_wire.js"
+      - "scripts/serve-agent-site.js"
       - "vercel.json"
       - ".github/workflows/curriculum.yml"
       - ".github/workflows/translate.yml"
@@ -84,6 +89,11 @@ on:
       - "site/build.js"
       - "site/**"
       - "api/**"
+      - "lib/**"
+      - "packages/cli/**"
+      - "scripts/test_agent_api.js"
+      - "scripts/test_agent_wire.js"
+      - "scripts/serve-agent-site.js"
       - "vercel.json"
       - ".github/workflows/curriculum.yml"
       - ".github/workflows/translate.yml"
@@ -125,7 +135,9 @@ jobs:
       - name: command copying preserves keyboard focus
         run: node --test site/test_project_copy.js
       - name: build the static site
-        run: node site/build.js
+        run: node site/build.js && node site/build-projects.js --strict && node site/build-agents.js
+      - name: public API, MCP, and CLI contracts
+        run: node --test scripts/test_agent_api.js scripts/test_agent_wire.js packages/cli/test/*.js
       - name: dynamic lesson and certification routes preserve their public contracts
         run: node --test scripts/test_seo_routes.js
       - name: agent-facing discovery surfaces stay complete
@@ -134,6 +146,8 @@ jobs:
         run: node --test scripts/test_agent_negotiation.js
       - name: static preview routes stay navigable
         run: node --test site/test_static_preview_routes.js
+      - name: clean page URLs and published discovery links stay consistent
+        run: node --test site/test_clean_urls.js
       - name: learning paths links and routes stay valid
         run: node --test site/test_learning_paths.js
       - name: sponsor placement preserves approved artwork and ownership

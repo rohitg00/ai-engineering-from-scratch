@@ -82,7 +82,7 @@ function responseHeaders(url) {
 }
 
 test('HTML and mutable scripts/styles must revalidate, including old query strings', () => {
-  for (const url of ['/', '/index.html', '/projects.html', '/project.html', '/about', '/catalog',
+  for (const url of ['/', '/index.html', '/projects.html', '/project.html', '/projects', '/project', '/learning-paths', '/prereqs', '/about', '/catalog',
     '/header.js?v=20260927a', '/style.css?v=old', '/figures/projects/dataset-split-auditor.js']) {
     const policy = responseHeaders(url)['cache-control'];
     assert.match(policy, /(?:^|, )max-age=0(?:,|$)/, url);

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.rohitg00/ai-engineering-from-scratch",
+  "title": "AI Engineering from Scratch",
+  "description": "Search free AI engineering lessons and projects and read their original Markdown.",
+  "version": "1.0.0",
+  "websiteUrl": "https://aiengineeringfromscratch.com/docs",
+  "repository": {
+    "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
+    "source": "github"
+  },
+  "remotes": [{ "type": "streamable-http", "url": "https://aiengineeringfromscratch.com/mcp" }]
+}

@@ -1,98 +1,501 @@
 {
-  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/version-assets.js",
+  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/build-agents.js && node site/clean-urls.js && node site/version-assets.js",
   "outputDirectory": "site",
   "framework": null,
   "installCommand": "echo skip",
   "routes": [
-    { "src": "/lesson\\.html", "methods": ["GET", "HEAD"], "dest": "/api/lesson?legacy=1" },
-    { "src": "/certification\\.html", "methods": ["GET", "HEAD"], "dest": "/api/certification?legacy=1" },
-    { "src": "/", "methods": ["GET", "HEAD"], "has": [{ "type": "header", "key": "accept", "value": "(?i).*text/markdown.*" }], "dest": "/api/markdown?path=/" }
+    {
+      "src": "/lesson\\.html",
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "dest": "/api/lesson?legacy=1"
+    },
+    {
+      "src": "/certification\\.html",
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "dest": "/api/certification?legacy=1"
+    },
+    {
+      "src": "/",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "dest": "/agent-pages/index.md"
+    }
   ],
   "rewrites": [
-    { "source": "/lesson", "destination": "/api/lesson" },
-    { "source": "/certification", "destination": "/api/certification" },
-    { "source": "/about", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/about" },
-    { "source": "/catalog", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/catalog" },
-    { "source": "/glossary", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/glossary" },
-    { "source": "/path", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/path" },
-    { "source": "/roadmap", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/roadmap" },
-    { "source": "/developer", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/developer" },
-    { "source": "/docs", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/docs" },
-    { "source": "/contact", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/contact" },
-    { "source": "/privacy", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/privacy" },
-    { "source": "/sponsors", "has": [{ "type": "header", "key": "accept", "value": ".*" }], "destination": "/api/markdown?path=/sponsors" },
-    { "source": "/glossary", "destination": "/glossary.html" },
-    { "source": "/catalog", "destination": "/catalog.html" },
-    { "source": "/certifications", "destination": "/certifications.html" },
-    { "source": "/assessment", "destination": "/assessment.html" },
-    { "source": "/path", "destination": "/prereqs.html" },
-    { "source": "/roadmap", "destination": "/prereqs.html" },
-    { "source": "/about", "destination": "/about.html" },
-    { "source": "/developer", "destination": "/developer.html" },
-    { "source": "/docs", "destination": "/developer.html" },
-    { "source": "/contact", "destination": "/contact.html" },
-    { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/sponsors", "destination": "/sponsors.html" }
+    {
+      "source": "/lesson",
+      "destination": "/api/lesson"
+    },
+    {
+      "source": "/certification",
+      "destination": "/api/certification"
+    },
+    {
+      "source": "/prereqs",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/prereqs.md"
+    },
+    {
+      "source": "/prereqs",
+      "destination": "/prereqs.html"
+    },
+    {
+      "source": "/project",
+      "destination": "/project.html"
+    },
+    {
+      "source": "/about",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/about.md"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/catalog",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/catalog.md"
+    },
+    {
+      "source": "/catalog",
+      "destination": "/catalog.html"
+    },
+    {
+      "source": "/glossary",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/glossary.md"
+    },
+    {
+      "source": "/glossary",
+      "destination": "/glossary.html"
+    },
+    {
+      "source": "/path",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/prereqs.md"
+    },
+    {
+      "source": "/path",
+      "destination": "/prereqs.html"
+    },
+    {
+      "source": "/roadmap",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/prereqs.md"
+    },
+    {
+      "source": "/roadmap",
+      "destination": "/prereqs.html"
+    },
+    {
+      "source": "/developer",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/developer.md"
+    },
+    {
+      "source": "/developer",
+      "destination": "/developer.html"
+    },
+    {
+      "source": "/docs",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/developer.md"
+    },
+    {
+      "source": "/docs",
+      "destination": "/developer.html"
+    },
+    {
+      "source": "/contact",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/contact.md"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/privacy",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/privacy.md"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/sponsors",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/sponsors.md"
+    },
+    {
+      "source": "/sponsors",
+      "destination": "/sponsors.html"
+    },
+    {
+      "source": "/assessment",
+      "destination": "/assessment.html"
+    },
+    {
+      "source": "/developers",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/developer.md"
+    },
+    {
+      "source": "/developers",
+      "destination": "/developer.html"
+    },
+    {
+      "source": "/api",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/developer.md"
+    },
+    {
+      "source": "/api",
+      "destination": "/developer.html"
+    },
+    {
+      "source": "/projects",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/projects.md"
+    },
+    {
+      "source": "/projects",
+      "destination": "/projects.html"
+    },
+    {
+      "source": "/learning-paths",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/learning-paths.md"
+    },
+    {
+      "source": "/learning-paths",
+      "destination": "/learning-paths.html"
+    },
+    {
+      "source": "/certifications",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/certifications.md"
+    },
+    {
+      "source": "/certifications",
+      "destination": "/certifications.html"
+    },
+    {
+      "source": "/mcp",
+      "destination": "/api/mcp"
+    },
+    {
+      "source": "/.well-known/mcp.json",
+      "destination": "/server.json"
+    },
+    {
+      "source": "/api/openapi.json",
+      "destination": "/openapi.json"
+    },
+    {
+      "source": "/api/:missing*",
+      "destination": "/api/not-found?api=1"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)\\.(png|jpg|jpeg|svg|webp|woff2|woff|ttf|ico)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000"
+        }
       ]
     },
     {
       "source": "/(.*)\\.(css|js)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/certification-data.js",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, must-revalidate"
+        }
       ]
     },
     {
       "source": "/projects-data.js",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, must-revalidate"
+        }
       ]
     },
     {
       "source": "/build-meta.js",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, must-revalidate"
+        }
       ]
     },
     {
       "source": "/(.*)\\.html",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
-        { "key": "Vary", "value": "Accept, Accept-Encoding" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Vary",
+          "value": "Accept, Accept-Encoding"
+        }
       ]
     },
     {
       "source": "/",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
-        { "key": "Vary", "value": "Accept, Accept-Encoding" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Vary",
+          "value": "Accept, Accept-Encoding"
+        }
       ]
     },
     {
-      "source": "/(glossary|catalog|certifications|certification|assessment|path|roadmap|about|developer|docs|contact|privacy)",
+      "source": "/(glossary|catalog|certifications|certification|assessment|path|prereqs|roadmap|about|developer|docs|contact|privacy|sponsors|projects|project|learning-paths|developers|api)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
-        { "key": "Vary", "value": "Accept, Accept-Encoding" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Vary",
+          "value": "Accept, Accept-Encoding"
+        }
       ]
     },
     {
       "source": "/llms.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/markdown; charset=utf-8" },
-        { "key": "Vary", "value": "Accept, Accept-Encoding" },
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "Vary",
+          "value": "Accept, Accept-Encoding"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
+    },
+    {
+      "source": "/developer.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/agent-pages/:page.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "api/lesson.js": {
+      "maxDuration": 10,
+      "includeFiles": "{site/lesson.html,site/lesson-seo.json,languages.json}"
+    },
+    "api/certification.js": {
+      "maxDuration": 10,
+      "includeFiles": "{site/certification.html,site/certification-seo.json}"
+    },
+    "api/markdown.js": {
+      "maxDuration": 10,
+      "includeFiles": "{site/*.html,site/agent-pages/*.md}"
+    },
+    "api/v1/markdown.js": {
+      "maxDuration": 10,
+      "includeFiles": "{site/*.html,site/agent-pages/*.md}"
+    },
+    "api/not-found.js": {
+      "maxDuration": 10,
+      "includeFiles": "site/404.html"
+    },
+    "api/mcp.js": {
+      "maxDuration": 10,
+      "includeFiles": "generated/agent-content.json"
+    },
+    "api/v1/catalog.js": {
+      "maxDuration": 10,
+      "includeFiles": "generated/agent-content.json"
+    },
+    "api/v1/resource.js": {
+      "maxDuration": 10,
+      "includeFiles": "generated/agent-content.json"
+    }
+  },
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/:page(about|catalog|glossary|prereqs|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|assessment).html",
+      "destination": "/:page",
+      "permanent": true
+    },
+    {
+      "source": "/project",
+      "missing": [
+        {
+          "type": "query",
+          "key": "id"
+        }
+      ],
+      "destination": "/projects",
+      "permanent": false
     }
   ]
 }

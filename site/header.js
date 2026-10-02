@@ -24,7 +24,7 @@
   }
 
   function adaptRouteHref(href, locationValue) {
-    if (typeof href !== 'string' || !isStaticPreview(locationValue)) return href;
+    if (typeof href !== 'string') return href;
     if (/^[a-z][a-z\d+.-]*:/i.test(href) || href.indexOf('//') === 0) {
       try {
         var resolved = new URL(href, (locationValue || window.location).href);
@@ -33,7 +33,16 @@
         return href;
       }
     }
-    return href.replace(/(^|\/)(lesson|certification)(?=[?#]|$)/, '$1$2.html');
+    var boundary = href.search(/[?#]/);
+    var pathname = boundary < 0 ? href : href.slice(0, boundary);
+    var suffix = boundary < 0 ? '' : href.slice(boundary);
+    var pages = '(index|about|catalog|glossary|prereqs|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|certification|assessment|lesson)';
+    if (isStaticPreview(locationValue)) {
+      return pathname.replace(new RegExp('(^|/)' + pages + '$'), '$1$2.html') + suffix;
+    }
+    return pathname.replace(new RegExp('(^|/)' + pages + '\\.html$'), function (_, prefix, page) {
+      return page === 'index' ? (prefix || './') : prefix + page;
+    }) + suffix;
   }
 
   function adaptRouteLink(link) {
@@ -58,8 +67,6 @@
       adaptLink: adaptRouteLink,
       adaptTree: adaptRouteTree
     };
-    if (!isStaticPreview()) return;
-
     adaptRouteTree(document);
     document.addEventListener('click', function (event) {
       var target = event.target;
@@ -211,7 +218,9 @@
     }
 
     var target = current;
-    if (current === 'certification.html' || current === 'assessment.html') {
+    if (current === 'project.html') {
+      target = 'projects.html';
+    } else if (current === 'certification.html' || current === 'assessment.html') {
       target = 'certifications.html';
     } else if (current === 'lesson.html') {
       try {
