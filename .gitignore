@@ -95,3 +95,15 @@ site/langs.js
 !.claude/skills/build-project/**
 site/projects-data.js
 site/project-content/
+
+# AI/ML Model Checkpoints and Large Artifacts
+*.pt
+*.pth
+*.bin
+*.onnx
+*.safetensors
+*.ckpt
+*.h5
+checkpoints/
+runs/
+wandb/
