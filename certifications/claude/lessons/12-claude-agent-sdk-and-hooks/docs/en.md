@@ -428,3 +428,4 @@ The quiz checks harness selection, event completion, hook placement, Computer Us
 - [Claude Code sandboxing](https://code.claude.com/docs/en/sandboxing)
 - [Agent Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
 - [Building effective agents](https://www.anthropic.com/research/building-effective-agents)
+- [OrcaPromptVault — Claude Code captures](https://github.com/Continuum-AI-Corp/OrcaPromptVault/tree/main/Claude-Code) — wire captures of what the Claude Code-derived harness actually sends, taken separately for the interactive CLI and the SDK entry point, so the difference between the two levels in the table above is readable rather than assumed
