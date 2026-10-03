@@ -527,6 +527,7 @@ This lesson produces:
 ## Further Reading
 
 - Srivastava et al., "Dropout: A Simple Way to Prevent Neural Networks from Overfitting" (2014) -- the original dropout paper with the ensemble interpretation and extensive experiments
+- [Zaremba, Sutskever, and Vinyals (2014). Recurrent Neural Network Regularization](https://arxiv.org/abs/1409.2329) -- applies dropout to non-recurrent connections; this lesson's generic dropout mask is not a recipe for dropping recurrent state.
 - Ioffe & Szegedy, "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift" (2015) -- introduced BatchNorm and its training procedure, one of the most cited deep learning papers
 - Zhang & Sennrich, "Root Mean Square Layer Normalization" (2019) -- showed RMSNorm matches LayerNorm accuracy with reduced computation; adopted by LLaMA and Mistral
 - Zhang et al., "Understanding Deep Learning Requires Rethinking Generalization" (2017) -- the landmark paper showing neural networks can memorize random labels, challenging traditional views of generalization
