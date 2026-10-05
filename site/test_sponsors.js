@@ -36,7 +36,7 @@ test('sponsor placements preserve copy, destinations, and local artwork without 
   assert.match(sponsors, /<img src="https:\/\/serpapi\.com\/assets\/media_kit\/logo-with-wordmark\.svg" alt="SerpApi" width="180">/);
   const readme = read('README.md');
   const placement = between(readme, '### Sponsors\n', '### Use every lesson the same way', 'README.md');
-  const banners = [...placement.matchAll(/<a href="([^"]+)">\s*<img\b([^>]+)>\s*<\/a>/g)];
+  const banners = [...placement.matchAll(/<a href="([^"]+)">\s*<picture><source\b([^>]+)><img\b([^>]+)><\/picture>\s*<\/a>/g)];
   const expectedBanners = [
     {
       url: sponsorUrl,
@@ -53,7 +53,11 @@ test('sponsor placements preserve copy, destinations, and local artwork without 
   for (const expected of expectedBanners) {
     const banner = banners.find(match => match[1] === expected.url);
     assert.ok(banner, expected.url);
-    const attrs = Object.fromEntries([...banner[2].matchAll(/([\w-]+)="([^"]*)"/g)].map(match => [match[1], match[2]]));
+    const source = Object.fromEntries([...banner[2].matchAll(/([\w-]+)="([^"]*)"/g)].map(match => [match[1], match[2]]));
+    assert.equal(source.media, '(min-width: 768px)');
+    assert.equal(source.srcset, expected.src);
+    assert.equal(source.width, '48%');
+    const attrs = Object.fromEntries([...banner[3].matchAll(/([\w-]+)="([^"]*)"/g)].map(match => [match[1], match[2]]));
     assert.equal(attrs.src, expected.src);
     assert.equal(attrs.alt, expected.alt);
     assert.ok(Number(attrs.width) > 0 && Number(attrs.width) <= 440);
@@ -104,6 +108,12 @@ test('supporter navigation survives translated README headings', () => {
     assert.ok(sponsorLink, file);
     assert.equal(path.resolve(root, path.dirname(file), sponsorLink[1]), path.join(root, 'SPONSORS.md'), file);
     assert.equal((text.match(/>Become a sponsor<\/a>/g) || []).length, 1, file);
+    const sources = [...text.matchAll(/<source media="\(min-width: 768px\)" srcset="([^"]+)" width="48%">/g)];
+    assert.equal(sources.length, 2, file);
+    for (const [, src] of sources) {
+      assert.ok(fs.statSync(path.resolve(root, path.dirname(file), src)).isFile(), file);
+      assert.ok(text.includes(`<img src="${src}"`), file);
+    }
     if (file !== 'README.md') {
       assert.doesNotMatch(
         text,

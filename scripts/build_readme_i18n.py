@@ -98,7 +98,7 @@ def spans(text):
 
 # repo-root-relative link/image targets, excluding absolute URLs, anchors, and
 # paths that already point upward. Two capture groups: the opener and the target.
-_HTML_LINK = re.compile(r'((?:href|src)=")(?!https?://|/|#|mailto:|data:|\.\.?/)([^"]+)')
+_HTML_LINK = re.compile(r'((?:href|src|srcset)=")(?!https?://|/|#|mailto:|data:|\.\.?/)([^"]+)')
 _MD_LINK = re.compile(r'(\]\()(?!https?://|/|#|mailto:|data:|\.\.?/)([^)]+)')
 _HTML_ALT = re.compile(r'(\balt=")([^"]+)(")')
 _HTML_TEXT = re.compile(r'>([^<>]+)<')
