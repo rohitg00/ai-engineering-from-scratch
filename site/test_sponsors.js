@@ -41,7 +41,7 @@ test('sponsor placements preserve copy, destinations, and local artwork without 
     {
       url: sponsorUrl,
       src: 'assets/sponsors/serpapi-banner-compact.png',
-      alt: `SerpApi. ${description} Try For Free.`,
+      alt: `SerpApi. ${description}`,
     },
     {
       url: 'https://nitrostack.ai/referral/aiengineeringfromscratch',

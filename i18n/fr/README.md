@@ -34,16 +34,13 @@
 
 ### Partenaires
 
-<a href="https://serpapi.com/ai-engineering-from-scratch">
-  <img align="left" src="../../assets/sponsors/serpapi-banner.png" alt="SerpApi. API de recherche Web pour vos applications d’IA. Disponible en Markdown et JSON pour toute intégration." width="600">
-</a>
+<p align="center">
+  <a href="https://serpapi.com/ai-engineering-from-scratch"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi. API de recherche Web pour vos applications d’IA. Disponible en Markdown et JSON pour toute intégration." width="440"></a>
+  <a href="https://nitrostack.ai/referral/aiengineeringfromscratch"><img src="../../assets/sponsors/nitrostack-banner.png" alt="NitroStack. Build Production Ready MCP Apps with NitroStack. An end-to-end development platform for building, testing, debugging, and deploying production-ready MCP servers and applications. Click to know more." width="440"></a>
+</p>
 
-<p><br><b>Merci à nos sponsors.</b></p>
-<p>Votre soutien permet à chaque leçon de rester gratuite et open source.</p>
-<p>
-  <a href="#supporters">Voir tous les soutiens</a><br>
-  <a href="../../SPONSORS.md">Become a sponsor</a>
-  <br clear="all">
+<p align="center">
+  <sub><span>Votre soutien permet à chaque leçon de rester gratuite et open source.</span> <a href="#supporters">Voir tous les soutiens</a> · <a href="../../SPONSORS.md">Become a sponsor</a></sub>
 </p>
 
 ```text

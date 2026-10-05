@@ -34,16 +34,13 @@
 
 ### 후원사
 
-<a href="https://serpapi.com/ai-engineering-from-scratch">
-  <img align="left" src="../../assets/sponsors/serpapi-banner.png" alt="SerpApi. AI 앱을 위한 웹 검색 API. 어떤 통합에도 사용할 수 있도록 Markdown과 JSON으로 제공합니다." width="600">
-</a>
+<p align="center">
+  <a href="https://serpapi.com/ai-engineering-from-scratch"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi. AI 앱을 위한 웹 검색 API. 어떤 통합에도 사용할 수 있도록 Markdown과 JSON으로 제공합니다." width="440"></a>
+  <a href="https://nitrostack.ai/referral/aiengineeringfromscratch"><img src="../../assets/sponsors/nitrostack-banner.png" alt="NitroStack. Build Production Ready MCP Apps with NitroStack. An end-to-end development platform for building, testing, debugging, and deploying production-ready MCP servers and applications. Click to know more." width="440"></a>
+</p>
 
-<p><br><b>후원사 여러분께 감사드립니다.</b></p>
-<p>여러분의 후원으로 모든 레슨을 무료 오픈소스로 유지할 수 있습니다.</p>
-<p>
-  <a href="#supporters">모든 후원자 보기</a><br>
-  <a href="../../SPONSORS.md">Become a sponsor</a>
-  <br clear="all">
+<p align="center">
+  <sub><span>여러분의 후원으로 모든 레슨을 무료 오픈소스로 유지할 수 있습니다.</span> <a href="#supporters">모든 후원자 보기</a> · <a href="../../SPONSORS.md">Become a sponsor</a></sub>
 </p>
 
 ```text

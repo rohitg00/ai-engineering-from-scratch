@@ -34,16 +34,13 @@
 
 ### प्रायोजक
 
-<a href="https://serpapi.com/ai-engineering-from-scratch">
-  <img align="left" src="../../assets/sponsors/serpapi-banner.png" alt="SerpApi। आपके AI ऐप्स के लिए वेब खोज API। किसी भी एकीकरण के लिए Markdown और JSON में उपलब्ध।" width="600">
-</a>
+<p align="center">
+  <a href="https://serpapi.com/ai-engineering-from-scratch"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi। आपके AI ऐप्स के लिए वेब खोज API। किसी भी एकीकरण के लिए Markdown और JSON में उपलब्ध।" width="440"></a>
+  <a href="https://nitrostack.ai/referral/aiengineeringfromscratch"><img src="../../assets/sponsors/nitrostack-banner.png" alt="NitroStack. Build Production Ready MCP Apps with NitroStack. An end-to-end development platform for building, testing, debugging, and deploying production-ready MCP servers and applications. Click to know more." width="440"></a>
+</p>
 
-<p><br><b>हमारे प्रायोजकों का धन्यवाद।</b></p>
-<p>आपका सहयोग हर पाठ को मुफ़्त और ओपन सोर्स बनाए रखता है।</p>
-<p>
-  <a href="#supporters">सभी समर्थक देखें</a><br>
-  <a href="../../SPONSORS.md">Become a sponsor</a>
-  <br clear="all">
+<p align="center">
+  <sub><span>आपका सहयोग हर पाठ को मुफ़्त और ओपन सोर्स बनाए रखता है।</span> <a href="#supporters">सभी समर्थक देखें</a> · <a href="../../SPONSORS.md">Become a sponsor</a></sub>
 </p>
 
 ```text

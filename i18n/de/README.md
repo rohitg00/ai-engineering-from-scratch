@@ -34,16 +34,13 @@
 
 ### Sponsoren
 
-<a href="https://serpapi.com/ai-engineering-from-scratch">
-  <img align="left" src="../../assets/sponsors/serpapi-banner.png" alt="SerpApi. Websuch-API für deine KI-Anwendungen. Für jede Integration in Markdown und JSON verfügbar." width="600">
-</a>
+<p align="center">
+  <a href="https://serpapi.com/ai-engineering-from-scratch"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi. Websuch-API für deine KI-Anwendungen. Für jede Integration in Markdown und JSON verfügbar." width="440"></a>
+  <a href="https://nitrostack.ai/referral/aiengineeringfromscratch"><img src="../../assets/sponsors/nitrostack-banner.png" alt="NitroStack. Build Production Ready MCP Apps with NitroStack. An end-to-end development platform for building, testing, debugging, and deploying production-ready MCP servers and applications. Click to know more." width="440"></a>
+</p>
 
-<p><br><b>Vielen Dank an unsere Sponsoren.</b></p>
-<p>Deine Unterstützung hält jede Lektion kostenlos und quelloffen.</p>
-<p>
-  <a href="#supporters">Alle Unterstützer ansehen</a><br>
-  <a href="../../SPONSORS.md">Become a sponsor</a>
-  <br clear="all">
+<p align="center">
+  <sub><span>Deine Unterstützung hält jede Lektion kostenlos und quelloffen.</span> <a href="#supporters">Alle Unterstützer ansehen</a> · <a href="../../SPONSORS.md">Become a sponsor</a></sub>
 </p>
 
 ```text

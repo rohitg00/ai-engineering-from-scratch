@@ -34,16 +34,13 @@
 
 ### 赞助方
 
-<a href="https://serpapi.com/ai-engineering-from-scratch">
-  <img align="left" src="../../assets/sponsors/serpapi-banner.png" alt="SerpApi。面向 AI 应用的网页搜索 API，可为任何集成提供 Markdown 和 JSON 格式。" width="600">
-</a>
+<p align="center">
+  <a href="https://serpapi.com/ai-engineering-from-scratch"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi。面向 AI 应用的网页搜索 API，可为任何集成提供 Markdown 和 JSON 格式。" width="440"></a>
+  <a href="https://nitrostack.ai/referral/aiengineeringfromscratch"><img src="../../assets/sponsors/nitrostack-banner.png" alt="NitroStack. Build Production Ready MCP Apps with NitroStack. An end-to-end development platform for building, testing, debugging, and deploying production-ready MCP servers and applications. Click to know more." width="440"></a>
+</p>
 
-<p><br><b>感谢我们的赞助方。</b></p>
-<p>你的支持让每节课都能保持免费和开源。</p>
-<p>
-  <a href="#supporters">查看所有支持者</a><br>
-  <a href="../../SPONSORS.md">Become a sponsor</a>
-  <br clear="all">
+<p align="center">
+  <sub><span>你的支持让每节课都能保持免费和开源。</span> <a href="#supporters">查看所有支持者</a> · <a href="../../SPONSORS.md">Become a sponsor</a></sub>
 </p>
 
 ```text
