@@ -21,6 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20260824a">
+  <link rel="stylesheet" href="intelligence-check.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -87,7 +88,7 @@
         grid-template-columns: minmax(0, 1fr) minmax(360px, 400px);
         grid-template-areas:
           "meta meta"
-          "title figure"
+          "title curiosity"
           "tagline figure"
           "attribution figure"
           "actions figure"
@@ -2146,6 +2147,34 @@
         </div>
       </div>
       <p class="masthead-install-caption reveal" style="--stagger-delay: 160ms;">Your agent becomes your tutor: placement quiz, personalized path, lessons taught interactively in your terminal.</p>
+      <aside class="intelligence-check" data-intelligence-check data-state="idle" aria-labelledby="intelligence-question">
+        <div class="intelligence-check-meta"><span>Thought experiment</span><span aria-hidden="true">001 / ?</span></div>
+        <div class="intelligence-check-body">
+          <svg class="intelligence-check-dial" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+            <circle class="intelligence-check-ring" cx="48" cy="48" r="40"/>
+            <circle class="intelligence-check-ring" cx="48" cy="48" r="29" stroke-dasharray="1 5"/>
+            <path class="intelligence-check-guides" d="M48 2v12 M48 82v12 M2 48h12 M82 48h12 M16 16l8 8 M72 72l8 8 M16 80l8-8 M72 24l8-8"/>
+            <g class="intelligence-check-needle">
+              <path d="M48 48V19"/>
+              <circle cx="48" cy="17" r="3"/>
+              <path class="intelligence-check-tail" d="M48 53v9"/>
+            </g>
+            <circle class="intelligence-check-hub" cx="48" cy="48" r="5"/>
+          </svg>
+          <div class="intelligence-check-copy">
+            <p class="intelligence-check-question" id="intelligence-question">Is superintelligence here yet?</p>
+            <button class="intelligence-check-trigger" type="button" data-intelligence-trigger aria-controls="intelligence-answer" disabled>
+              <span data-intelligence-label>Ask the machine</span>
+              <svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true"><path d="M3 13 13 3 M4 3h9v9" stroke="currentColor" stroke-width="1.3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="intelligence-check-response" id="intelligence-answer" role="status" aria-live="polite" aria-atomic="true">
+          <p class="intelligence-check-answer" data-intelligence-answer>A very unofficial test.</p>
+          <p class="intelligence-check-hint" data-intelligence-hint>Ask a big question. Get a small answer.</p>
+        </div>
+        <noscript><p class="intelligence-check-hint">Define “here”. In the meantime, build something.</p></noscript>
+      </aside>
       <figure class="masthead-figure" data-masthead-figure aria-label="Three views of how the course teaches AI engineering">
         <div class="fig-plate">
         <div class="fig-panel is-active" data-caption="Every layer of this diagram is a lesson you implement by hand." role="group" aria-label="Plate 1 of 3: Forward pass" aria-hidden="false">
@@ -2662,6 +2691,7 @@
   <script src="header.js?v=20260927a" defer></script>
   <script src="cmdpalette.js?v=20260821a" defer></script>
   <script src="app.js?v=20260927a"></script>
+  <script src="intelligence-check.js" defer></script>
   <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
 </body>
 </html>

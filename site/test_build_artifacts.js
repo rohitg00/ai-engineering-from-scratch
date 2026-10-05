@@ -1508,7 +1508,7 @@ test('homepage preserves live GitHub CTAs and the motion-aware learner marquee',
   assert.match(homepage, /@media \(min-width: 601px\) and \(max-width: 1279px\) \{[\s\S]*?\.manual-masthead\.container\s*\{[\s\S]*?padding-left: clamp\(24px, 2\.5vw, 32px\);[\s\S]*?padding-right: clamp\(24px, 2\.5vw, 32px\);/);
   assert.ok(wideMasthead, 'wide-screen masthead layout is missing');
   assert.match(wideMasthead[0], /grid-template-columns: minmax\(0, 1fr\) minmax\(360px, 400px\)/);
-  assert.match(wideMasthead[0], /"title figure"/);
+  assert.match(wideMasthead[0], /"title curiosity"/);
   assert.match(wideMasthead[0], /"install figure"/);
   assert.match(wideMasthead[0], /\.masthead-figure\s*\{[\s\S]*?position: static;[\s\S]*?grid-area: figure/);
   assert.match(homepage, /\.masthead-cta\s*\{\s*display: grid;\s*grid-template-columns: 1fr/);

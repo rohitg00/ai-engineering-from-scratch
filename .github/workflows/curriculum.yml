@@ -124,6 +124,8 @@ jobs:
         run: node --test site/test_asset_cache.js
       - name: command copying preserves keyboard focus
         run: node --test site/test_project_copy.js
+      - name: homepage curiosity supports pointer and keyboard input
+        run: node --test site/test_intelligence_check.js
       - name: build the static site
         run: node site/build.js
       - name: dynamic lesson and certification routes preserve their public contracts
