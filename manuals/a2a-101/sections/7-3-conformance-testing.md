@@ -25,7 +25,24 @@ In the first run, 63 of the 85 JSON-RPC records failed for one reason. The TCK's
 
 Of the 31 failures, 21 are skips inside a test body, which the tag records as FAIL and `main` records as SKIPPED. Most expect a task parked in `TASK_STATE_INPUT_REQUIRED`, which `test-runner` never does. With the `main` rule the run reads 62 PASS, 10 FAIL, and 32 SKIPPED, or 86.1 percent.
 
-One of the ten is the kit's. `Handler.rest` serves no route under `tasks/{id}/pushNotificationConfigs`, while the card declares both JSON bindings with `pushNotifications`, and every declared binding must offer the same operations {{spec §5.1}}. `PUSH-CREATE-001` fails over HTTP+JSON, and five push tests skip behind it. Two `SHOULD` failures are the card's missing `Cache-Control` and `ETag` headers {{spec §8.6}}. The rest are the TCK's own, or its sample inputs. The per-requirement list is `research/v2/tck-run/summary.txt`, and `RESULTS.md` beside it classifies every row.
+One of the ten was the kit's. Its `Handler.rest` served no route under `tasks/{id}/pushNotificationConfigs`, although the card declares `pushNotifications` on both JSON bindings. Every declared binding must offer the same operations {{spec §5.1}}. The kit now serves those four routes, and the six HTTP+JSON push records pass. Each requirement still fails on its JSON-RPC side, where the TCK sends `task_id` instead of `taskId`. Two `SHOULD` failures are the card's missing `Cache-Control` and `ETag` headers {{spec §8.6}}. The rest are the TCK's own, or its sample inputs.
+
+```listing
+title: six push requirements after the kit fix
+source: research/tck-summary.txt
+lang: text
+note: One line per requirement: its id, its level, the verdict on each binding, and the verdict the TCK records. The six HTTP+JSON records pass. The JSON-RPC records fail on the TCK's snake_case parameters, so the TCK records each requirement as FAIL.
+---
+PUSH-CREATE-001 MUST grpc=SKIPPED,http_json=PASS,jsonrpc=FAIL FAIL
+PUSH-CREATE-002 MUST grpc=SKIPPED,http_json=PASS,jsonrpc=FAIL FAIL
+PUSH-DEL-001 MUST grpc=SKIPPED,http_json=PASS,jsonrpc=FAIL FAIL
+PUSH-DEL-002 MUST grpc=SKIPPED,http_json=PASS,jsonrpc=FAIL FAIL
+PUSH-GET-001 MUST grpc=SKIPPED,http_json=PASS,jsonrpc=FAIL FAIL
+PUSH-GET-002 MUST grpc=SKIPPED,http_json=PASS,jsonrpc=PASS PASS
+PUSH-LIST-001 MUST grpc=SKIPPED,http_json=PASS,jsonrpc=FAIL FAIL
+```
+
+`research/tck-run.md` classifies every row of the run.
 
 ## Where the TCK departs from v1.0.1
 
@@ -61,4 +78,4 @@ a2a-itk has no release. It is a cross-SDK harness: each agent forwards a nested 
 - Test owner scoping, duplicate messages, and artifact appends yourself.
 ```
 
-Sources: spec §3.3.2, §5.1, §5.4, §5.5, §8.3.1, §8.6, §11.1 (research/sources/specification.md); the TCK run of 2026-10-06 in research/v2/tck-run (RESULTS.md, summary.txt, summary-run2-jsonrpc-url-patch.txt, reports/, wire-check.txt, push-check.txt); a2a-tck at tag 1.0.0.alpha2 (README.md, run_tck.py, tck/requirements/base.py, tck/transport/jsonrpc_client.py, tests/compatibility/conftest.py) and main 263b9cf; a2a-inspector main 8aa0646 (README.md, backend/validators.py, backend/app.py); a2a-cli v0.3.0 (README.md, internal/README.md, specification/SPEC.md); a2a-itk main b57c533 (README.md, matrix.yaml, known_failures.yaml); capture/a2a_ref.py, capture/agents.py, capture/README.md
+Sources: spec §3.3.2, §5.1, §5.4, §5.5, §8.3.1, §8.6, §11.1 (research/sources/specification.md); the TCK run of 2026-10-06 (research/tck-run.md, research/tck-summary.txt); a2a-tck at tag 1.0.0.alpha2 (README.md, run_tck.py, tck/requirements/base.py, tck/transport/jsonrpc_client.py, tests/compatibility/conftest.py) and main 263b9cf; a2a-inspector main 8aa0646 (README.md, backend/validators.py, backend/app.py); a2a-cli v0.3.0 (README.md, internal/README.md, specification/SPEC.md); a2a-itk main b57c533 (README.md, matrix.yaml, known_failures.yaml); capture/a2a_ref.py, capture/agents.py, capture/README.md
