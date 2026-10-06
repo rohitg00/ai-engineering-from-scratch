@@ -1,9 +1,7 @@
 .intelligence-check {
   grid-area: curiosity;
   align-self: center;
-  justify-self: end;
   width: 100%;
-  max-width: 430px;
   min-width: 0;
   margin: 28px 0 0;
   padding: 14px 18px 12px;
@@ -112,13 +110,31 @@
 }
 .intelligence-check[data-state="answered"] .intelligence-check-answer { color: var(--blueprint); }
 .intelligence-check-hint { color: var(--ink-soft); font-size: 0.7rem; line-height: 1.5; }
+.intelligence-check-sponsor:not([hidden]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  margin-top: 10px;
+  padding: 0 12px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 180ms cubic-bezier(0.23, 1, 0.32, 1), color 180ms cubic-bezier(0.23, 1, 0.32, 1), transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.intelligence-check-sponsor:active { transform: scale(0.97); }
+.intelligence-check-sponsor:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 4px; }
 
-@media (min-width: 1280px) {
-  .intelligence-check { margin: 0; }
+@media (hover: hover) and (pointer: fine) {
+  .intelligence-check-sponsor:hover { background: var(--ink); color: var(--bg); }
 }
 
-@media (max-width: 600px) {
-  .intelligence-check { max-width: none; }
+@media (min-width: 1280px) {
+  .intelligence-check { justify-self: end; max-width: 430px; margin: 0; }
 }
 
 @media (max-width: 360px) {

@@ -15,11 +15,13 @@ function setup() {
   const answer = { textContent: 'A very unofficial test.' };
   const hint = { textContent: 'Ask a big question. Get a small answer.' };
   const label = { textContent: 'Ask the machine' };
+  const sponsor = { hidden: true };
   const children = {
     '[data-intelligence-trigger]': button,
     '[data-intelligence-answer]': answer,
     '[data-intelligence-hint]': hint,
     '[data-intelligence-label]': label,
+    '[data-intelligence-sponsor]': sponsor,
   };
   const card = {
     getAttribute(name) { return attributes.get(name) ?? null; },
@@ -40,7 +42,7 @@ function setup() {
     },
   };
   return {
-    doc, card, button, answer, hint, label, children, environment, handlers,
+    doc, card, button, answer, hint, label, sponsor, children, environment, handlers,
     click(detail = 1) { handlers.forEach(handler => handler({ detail })); },
   };
 }
@@ -136,4 +138,24 @@ test('the optional button label and unavailable matchMedia do not prevent activa
   state.click();
   assert.equal(state.answer.textContent, 'Define “here”.');
   assert.equal(state.card.getAttribute('data-motion'), 'animate');
+});
+
+test('the sponsor link appears after the second answer and stays', () => {
+  const state = setup();
+  init(state.doc, state.environment);
+  state.click();
+  assert.equal(state.sponsor.hidden, true);
+  state.click();
+  assert.equal(state.sponsor.hidden, false);
+  state.click();
+  assert.equal(state.sponsor.hidden, false);
+});
+
+test('a card without the sponsor link still answers', () => {
+  const state = setup();
+  delete state.children['[data-intelligence-sponsor]'];
+  assert.equal(init(state.doc, state.environment), true);
+  state.click();
+  state.click();
+  assert.equal(state.answer.textContent, 'Define “intelligence”.');
 });
