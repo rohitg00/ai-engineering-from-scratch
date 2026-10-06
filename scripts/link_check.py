@@ -63,8 +63,16 @@ DEFAULT_SKIP_DOMAINS = (
 )
 EXCLUDE_DIRS = {".git", "node_modules", "outputs"}
 
-MD_LINK_RE = re.compile(r"\[[^\]]*\]\((<?)(https?://[^\s)>]+)>?\)")
-BARE_URL_RE = re.compile(r"(?<![\w(\[=\"'])(https?://[^\s)\]<>\"'`]+)")
+# URLs may contain balanced parentheses, e.g. DOIs like
+# https://doi.org/10.1016/0010-0277(85)90022-8. The patterns allow one level
+# of balanced parens; strip_trailing_punct() then removes only *unmatched*
+# trailing punctuation such as the Markdown link's closing paren.
+MD_LINK_RE = re.compile(
+    r"\[[^\]]*\]\((<?)(https?://[^\s()<>]+(?:\([^()\s]*\)[^\s()<>]*)*)>?\)"
+)
+BARE_URL_RE = re.compile(
+    r"(?<![\w(\[=\"'])(https?://[^\s()<>\]\"'`]+(?:\([^()\s]*\)[^\s()<>\]\"'`]*)*)"
+)
 TRAILING_PUNCT = ".,;:!?)\"'>"
 
 
@@ -137,7 +145,7 @@ def iter_markdown_files(
     for r in roots:
         if r.is_file():
             if r.suffix == ".md":
-                yield r
+                yield path
             continue
         for dirpath, dirnames, filenames in os.walk(r):
             dirnames[:] = [d for d in dirnames if d not in EXCLUDE_DIRS]
@@ -279,7 +287,7 @@ def run(args: argparse.Namespace) -> int:
     if args.path is not None:
         path_arg: Path | None = Path(args.path)
         if not path_arg.is_absolute():
-            path_arg = (Path.cwd() / path_arg).resolve()
+            path_arg = (Path.cwd() / args.path).resolve()
     else:
         path_arg = None
 
