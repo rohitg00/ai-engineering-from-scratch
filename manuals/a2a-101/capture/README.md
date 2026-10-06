@@ -15,7 +15,7 @@ The output is deterministic. Ids come from seeded generators, timestamps from a 
 |---|---|---|---|
 | `test-runner` | 41241 | runs a test suite and streams the log | streaming, artifacts in chunks, polling, cancel, push notifications, both JSON bindings |
 | `code-reviewer` | 41242 | reviews a diff against a base branch | direct message replies, `TASK_STATE_INPUT_REQUIRED`, rejected content types, no push support |
-| `deployer` | 41243 | deploys a build to staging after an operator approves | bearer authentication, `TASK_STATE_AUTH_REQUIRED` with out-of-band approval, rejection, extended and signed cards |
+| `deployer` | 41243 | deploys a build to staging after an operator approves | bearer authentication, `TASK_STATE_AUTH_REQUIRED` with approval outside A2A, rejection, extended and signed cards |
 
 `planner.py` is the client agent of section 7.2. It reads the three cards, picks an agent for each skill, and handles every state a task reaches.
 
@@ -61,7 +61,6 @@ The records were compared with traffic from `a2a-sdk` 1.2.2, the Python referenc
 - The input check reads only the card's `defaultInputModes`. It treats a `text` part without a `mediaType` as `text/plain` and a `data` part as `application/json`. The SDK's check is off by default. When it is on, the SDK also accepts each skill's `inputModes` and skips parts without a `mediaType`.
 - An `artifactUpdate` with `append` for an unknown `artifactId` starts a new artifact. The SDK rejects it with `InvalidAgentResponseError`.
 - When a client answers an interrupted task, the kit's server sets `TASK_STATE_WORKING` itself, with no message, before the agent code resumes.
-- The HTTP+JSON binding serves the message, task, and card operations. The four push configuration operations run over JSON-RPC only.
 - Webhooks receive status and artifact updates, never the first Task snapshot. The SDK pushes that Task too.
 - The version check accepts exactly `1.0`, from the `A2A-Version` header or an `A2A-Version` query parameter, as §3.6.1 allows. The SDK compares only the major version and reads only the header.
 - Authentication runs in front of the protocol. A missing or wrong bearer token gets HTTP 401 with a `WWW-Authenticate` challenge before any A2A method runs, for both bindings.
@@ -69,4 +68,4 @@ The records were compared with traffic from `a2a-sdk` 1.2.2, the Python referenc
 - The canonical form sorts keys and drops spaces. That matches RFC 8785 for the plain ASCII text of these cards, and for the deployer card it equals the SDK's canonical bytes.
 - The card response carries no `Cache-Control` or `ETag` header. The SDK sends a weak `ETag` and answers a matching request with `304`.
 - A client message with any role other than `ROLE_USER` gets `-32602`. The specification names no error for that case.
-- `POST /approve/<task id>` on the deployer stands for an operator approving a deploy out of band. It is not part of A2A.
+- `POST /approve/<task id>` on the deployer stands for an operator who approves a deploy outside A2A. It is not part of A2A.

@@ -623,6 +623,30 @@ class Handler(BaseHTTPRequestHandler):
         except A2AError as error:
             return self.write_json(200, {"jsonrpc": "2.0", "id": request_id, "error": error.jsonrpc()}, "application/json")
 
+    def rest_push(self, verb, route, body):
+        agent = self.agent
+        task_id, _, rest = route[len("/tasks/"):].partition("/pushNotificationConfigs")
+        config_id = rest[1:] if rest.startswith("/") else None
+        if not agent.card["capabilities"].get("pushNotifications"):
+            raise A2AError("PushNotificationNotSupportedError")
+        configs = agent.push_configs.get(task_id, [])
+        if verb == "POST" and config_id is None:
+            with agent.lock:
+                agent.find(task_id)
+                return self.write_json(200, agent.add_push(task_id, body), "application/a2a+json")
+        if verb == "GET" and config_id is None:
+            agent.find(task_id)
+            return self.write_json(200, prune({"configs": configs}), "application/a2a+json")
+        if verb == "GET":
+            config = next((c for c in configs if c["id"] == config_id), None)
+            if config is None:
+                raise A2AError("TaskNotFoundError", metadata={"taskId": task_id})
+            return self.write_json(200, config, "application/a2a+json")
+        if verb == "DELETE" and config_id is not None:
+            agent.push_configs[task_id] = [c for c in configs if c["id"] != config_id]
+            return self.write_json(200, {}, "application/a2a+json")
+        raise A2AError("MethodNotFoundError")
+
     def rest(self, verb, url, raw=b""):
         route = url.path[len("/a2a/rest"):]
         query = {key: values[0] for key, values in parse_qs(url.query).items()}
@@ -654,6 +678,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.write_json(200, agent.cancel(route[len("/tasks/"):-len(":cancel")]), "application/a2a+json")
             if verb == "GET" and route == "/extendedAgentCard":
                 return self.write_json(200, agent.extended_card(), "application/a2a+json")
+            if route.startswith("/tasks/") and "/pushNotificationConfigs" in route:
+                return self.rest_push(verb, route, body)
             raise A2AError("MethodNotFoundError")
         except A2AError as error:
             payload = error.status()
