@@ -83,7 +83,7 @@
     for (var i = 0; i < n; i++) {
       var ey = by + i * (bh + bg);
       var er = svgEl('rect', { x: encX, y: ey, width: 90, height: bh, rx: 4, fill: SOFT, stroke: MUTE, 'stroke-width': 1 });
-      er.appendChild(anim('fill', 'var(--bg,#fafaf5);' + SOFT + ';' + SOFT, '4s', { keyTimes: '0;0.2;1', fill: 'freeze', repeatCount: '1' }));
+      er.appendChild(anim('fill-opacity', '0;1;1', '4s', { keyTimes: '0;0.2;1', fill: 'freeze', repeatCount: '1' }));
       svg.appendChild(er);
     }
     svg.appendChild(svgEl('text', { x: encX + 45, y: 28, 'text-anchor': 'middle', 'font-family': 'var(--font-mono,monospace)',
@@ -251,8 +251,9 @@
     stages.forEach(function (s, i) {
       var rad = s.a * Math.PI / 180;
       var nx = cx + r * Math.cos(rad), ny = cy + r * Math.sin(rad);
-      var node = svgEl('circle', { cx: nx, cy: ny, r: 11, fill: 'var(--bg,#fafaf5)', stroke: BP, 'stroke-width': 1.6 });
-      node.appendChild(anim('fill', 'var(--bg,#fafaf5);' + BP + ';var(--bg,#fafaf5);var(--bg,#fafaf5)', '6s', { keyTimes: '0;' + (0.04 + i * 0.333).toFixed(3) + ';' + (0.2 + i * 0.333).toFixed(3) + ';1' }));
+      svg.appendChild(svgEl('circle', { cx: nx, cy: ny, r: 11, fill: 'var(--bg,#fafaf5)', stroke: BP, 'stroke-width': 1.6 }));
+      var node = svgEl('circle', { cx: nx, cy: ny, r: 11, fill: BP, stroke: BP, 'stroke-width': 1.6, opacity: 0 });
+      node.appendChild(anim('opacity', '0;1;0;0', '6s', { keyTimes: '0;' + (0.04 + i * 0.333).toFixed(3) + ';' + (0.2 + i * 0.333).toFixed(3) + ';1' }));
       svg.appendChild(node);
       var lx = nx + (s.a === 30 ? 18 : s.a === 150 ? -18 : 0);
       svg.appendChild(svgEl('text', { x: lx, y: ny + (s.a === -90 ? -18 : 30), 'text-anchor': 'middle',
