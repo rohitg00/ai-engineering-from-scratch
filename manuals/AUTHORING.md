@@ -52,7 +52,7 @@ The `<id>` is lowercase and hyphenated, such as `a2a-101`. It matches the direct
 | `reference` | the reference part: `title`, `thesis`, `accent`, `sections` |
 | `related` | repository paths of lessons that go deeper |
 
-[manual.schema.json](manual.schema.json) is the machine-readable form. Section ids are `<part>.<n>` in order, such as `3.2`, and reference ids are `R.<n>`.
+[manual.schema.json](manual.schema.json) is the machine-readable form, and the build validates every manifest against it. Section ids are `<part>.<n>` in order, such as `3.2`, and reference ids are `R.<n>`.
 
 ## The shape of a manual
 

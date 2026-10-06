@@ -27,7 +27,7 @@
       "properties": {
         "subject": { "type": "string", "minLength": 1 },
         "version": { "type": "string", "minLength": 1 },
-        "source": { "type": "string", "format": "uri" },
+        "source": { "type": "string", "pattern": "^https://\\S+$" },
         "commit": { "type": "string", "minLength": 7 },
         "date": { "$ref": "#/$defs/date" },
         "verified": { "$ref": "#/$defs/date" }
@@ -54,7 +54,7 @@
         "properties": { "name": { "type": "string" }, "path": { "type": "string" }, "usedFor": { "type": "string" } }
       }
     },
-    "quoteSources": { "type": "object", "additionalProperties": { "type": ["string", "null"] }, "description": "Citation key to a vendored source file. null declares a key whose quotes cannot be checked." },
+    "quoteSources": { "type": "object", "propertyNames": { "pattern": "^[a-z][a-z0-9-]*$" }, "additionalProperties": { "type": ["string", "null"] }, "description": "Citation key to a vendored source file. null declares a key whose quotes cannot be checked." },
     "capture": {
       "type": "object",
       "required": ["run", "check"],
@@ -66,7 +66,7 @@
       "type": "object",
       "required": ["figure", "title", "caption"],
       "additionalProperties": false,
-      "properties": { "figure": { "type": "string" }, "title": { "type": "string" }, "caption": { "type": "string" } }
+      "properties": { "figure": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }, "title": { "type": "string", "minLength": 1 }, "caption": { "type": "string", "minLength": 1 } }
     },
     "parts": {
       "type": "array",
@@ -77,8 +77,8 @@
         "additionalProperties": false,
         "properties": {
           "number": { "type": "integer", "minimum": 1 },
-          "title": { "type": "string" },
-          "thesis": { "type": "string" },
+          "title": { "type": "string", "minLength": 1 },
+          "thesis": { "type": "string", "minLength": 1 },
           "summary": { "type": "string" },
           "accent": { "$ref": "#/$defs/hue" },
           "sections": {

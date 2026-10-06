@@ -37,7 +37,6 @@ function slugify(text) {
 }
 function sectionAnchor(id) { return `s-${String(id).toLowerCase().replace(/[^a-z0-9]+/g, '-')}`; }
 function pageName(id) { return `manual-${id}.html`; }
-function text(value, label) { ensure(typeof value === 'string' && value.trim(), `${label}: nonempty text required`); return value; }
 
 function keyValues(lines, label, kind, required, optional = []) {
   const allowed = [...required, ...optional];
@@ -290,36 +289,44 @@ function loadSvg(file, id, where) {
   return { svg: raw };
 }
 
+function schemaErrors(value, rule, where = '', errors = []) {
+  const schema = rule.$ref ? SCHEMA.$defs[rule.$ref.replace('#/$defs/', '')] : rule;
+  const kind = value === null ? 'null' : Array.isArray(value) ? 'array' : Number.isInteger(value) ? 'integer' : typeof value;
+  const fail = message => errors.push(`${where || 'manifest'} ${message}`);
+  const types = [].concat(schema.type || []);
+  if (types.length && !types.includes(kind) && !(kind === 'integer' && types.includes('number'))) {
+    fail(`must be ${types.join(' or ')}`);
+    return errors;
+  }
+  if (schema.enum && !schema.enum.includes(value)) fail(`must be one of ${schema.enum.join(', ')}`);
+  if (kind === 'string' && schema.minLength && value.length < schema.minLength) fail(`needs at least ${schema.minLength} character(s)`);
+  if (kind === 'string' && schema.pattern && !new RegExp(schema.pattern).test(value)) fail(`"${value}" must match ${schema.pattern}`);
+  if (kind === 'integer' && schema.minimum !== undefined && value < schema.minimum) fail(`must be at least ${schema.minimum}`);
+  if (kind === 'array') {
+    if (schema.minItems && value.length < schema.minItems) fail(`needs at least ${schema.minItems} item(s)`);
+    if (schema.items) value.forEach((item, index) => schemaErrors(item, schema.items, `${where}[${index}]`, errors));
+  }
+  if (kind === 'object') {
+    for (const key of schema.required || []) if (!(key in value)) fail(`needs "${key}"`);
+    for (const [key, item] of Object.entries(value)) {
+      const path = where ? `${where}.${key}` : key;
+      if (schema.propertyNames && !new RegExp(schema.propertyNames.pattern).test(key)) fail(`key "${key}" must match ${schema.propertyNames.pattern}`);
+      if (schema.properties && schema.properties[key]) schemaErrors(item, schema.properties[key], path, errors);
+      else if (schema.additionalProperties === false) fail(`has unknown key "${key}"`);
+      else if (schema.additionalProperties) schemaErrors(item, schema.additionalProperties, path, errors);
+    }
+  }
+  return errors;
+}
+
 function validateManifest(manual, label, dir) {
   const need = scope(label);
-  for (const key of Object.keys(manual)) need(key in SCHEMA.properties, `unknown key "${key}"`);
-  for (const key of SCHEMA.required) need(key in manual, `"${key}" required`);
-  for (const key of ['title', 'subtitle', 'summary', 'audience']) text(manual[key], `${label}.${key}`);
-  need(new RegExp(SCHEMA.properties.edition.pattern).test(manual.edition || ''), `edition must be YYYY.MM`);
-  need(['draft', 'ready'].includes(manual.status), `status must be draft or ready`);
-  const pin = manual.pin || {};
-  for (const key of SCHEMA.properties.pin.required) text(pin[key], `${label}.pin.${key}`);
-  need(/^https:\/\/\S+$/.test(pin.source), `pin.source must be an https URL`);
-  need(pin.commit.length >= 7, `pin.commit needs at least seven characters`);
-  need(/^\d{4}-\d{2}-\d{2}$/.test(pin.date) && /^\d{4}-\d{2}-\d{2}$/.test(pin.verified), `pin dates must be YYYY-MM-DD`);
-  need(Array.isArray(manual.outcomes) && manual.outcomes.length >= 3, `at least three outcomes required`);
-  need(Array.isArray(manual.palette) && manual.palette.length >= 3, `the palette must map at least three hues`);
-  const hues = new Set();
-  for (const entry of manual.palette) {
-    need(figkit.HUES.includes(entry.hue) && !hues.has(entry.hue), `palette hue "${entry.hue}" is unknown or repeated`);
-    text(entry.meaning, `${label}: palette ${entry.hue}`);
-    hues.add(entry.hue);
-  }
-  need(Array.isArray(manual.sources) && manual.sources.length, `a ranked sources list is required`);
-  need(Array.isArray(manual.parts) && manual.parts.length, `parts required`);
+  const errors = schemaErrors(manual, SCHEMA);
+  need(!errors.length, errors[0]);
+  const hues = manual.palette.map(entry => entry.hue);
+  need(new Set(hues).size === hues.length, 'palette hues must not repeat');
   const quoteSources = {};
-  for (const [key, file] of Object.entries(manual.quoteSources || {})) {
-    need(/^[a-z][a-z0-9-]*$/.test(key), `quoteSources key "${key}" must be lowercase`);
-    quoteSources[key] = file === null ? null : localPath(dir, file, `${label}.quoteSources.${key}`);
-  }
-  if (manual.capture !== undefined) {
-    for (const key of ['run', 'check']) need(Array.isArray(manual.capture[key]) && manual.capture[key].length && manual.capture[key].every(arg => typeof arg === 'string' && arg), `capture.${key} must be a nonempty argv array`);
-  }
+  for (const [key, file] of Object.entries(manual.quoteSources || {})) quoteSources[key] = file === null ? null : localPath(dir, file, `${label}.quoteSources.${key}`);
   return quoteSources;
 }
 
@@ -334,7 +341,6 @@ function loadManual(dir) {
   const quoteSources = validateManifest(manual, label, dir);
   const documents = [];
   const readDoc = (file, meta) => {
-    need(typeof file === 'string' && file.endsWith('.md'), `document path "${file}" must end in .md`);
     const full = localPath(dir, file, `${label}: document`);
     const docLabel = rel(full);
     const doc = { ...meta, file, label: docLabel, ...parseDocument(fs.readFileSync(full, 'utf8'), docLabel) };
@@ -345,10 +351,6 @@ function loadManual(dir) {
   const parts = manual.parts.map((part, index) => {
     const number = index + 1;
     need(part.number === number, `parts must be numbered 1..N in order`);
-    text(part.title, `${label}: part ${number} title`);
-    text(part.thesis, `${label}: part ${number} thesis`);
-    need(figkit.HUES.includes(part.accent), `part ${number} accent must be a palette hue`);
-    need(Array.isArray(part.sections) && part.sections.length, `part ${number} needs sections`);
     const sections = part.sections.map((entry, position) => {
       need(entry.id === `${number}.${position + 1}`, `part ${number} section ${position + 1} must have id "${number}.${position + 1}"`);
       return readDoc(entry.file, { kind: 'section', id: entry.id, anchor: sectionAnchor(entry.id), prefix: String(number), accent: part.accent });
@@ -357,9 +359,7 @@ function loadManual(dir) {
   });
   let reference = null;
   if (manual.reference) {
-    need(Array.isArray(manual.reference.sections) && manual.reference.sections.length, `reference needs sections`);
     const accent = manual.reference.accent || 'grey';
-    need(figkit.HUES.includes(accent), `the reference accent must be a palette hue`);
     const sections = manual.reference.sections.map((entry, position) => {
       need(entry.id === `R.${position + 1}`, `reference section ${position + 1} must have id "R.${position + 1}"`);
       return readDoc(entry.file, { kind: 'reference', id: entry.id, anchor: sectionAnchor(entry.id), prefix: 'R', accent });
@@ -397,7 +397,6 @@ function loadManual(dir) {
   }
   let plate = null;
   if (manual.plate) {
-    need(SLUG.test(manual.plate.figure || '') && manual.plate.title && manual.plate.caption, `plate needs a figure id, a title, and a caption`);
     plate = { ...manual.plate, art: loadSvg(localPath(dir, `figures/${manual.plate.figure}.svg`, `${label}: plate`), manual.plate.figure, label) };
   }
   const built = { ...manual, label, dir, front, parts, reference, figures, plate, documents, quoteSources };

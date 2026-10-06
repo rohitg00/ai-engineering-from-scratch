@@ -186,9 +186,11 @@ test('the build rejects unsafe or malformed figures', () => {
 test('paths and quote keys fail closed', () => {
   assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ quoteSources: { spec: 'research/sources/missing.md' } }) }).dir), /quoteSources\.spec: missing/);
   assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ quoteSources: {} }) }).dir), /rule source key "spec" is not declared/);
-  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ plate: { figure: '../outside', title: 't', caption: 'c.' } }) }).dir), /plate needs a figure id/);
-  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ edition: 'Fall 2026' }) }).dir), /edition must be YYYY\.MM/);
+  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ plate: { figure: '../outside', title: 't', caption: 'c.' } }) }).dir), /plate\.figure "\.\.\/outside" must match/);
+  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ edition: 'Fall 2026' }) }).dir), /edition "Fall 2026" must match/);
   assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ surprise: true }) }).dir), /unknown key "surprise"/);
+  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ status: 'final' }) }).dir), /status must be one of draft, ready/);
+  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ quoteSources: { Spec: null } }) }).dir), /quoteSources key "Spec" must match/);
   const inline = SECTION.replace('**Task:** a unit of work with an id {{spec §1}}.', '**Task:** as the guide says, "the server answers every message quickly" {{guide §2}}.');
   assert.ok(rules(fixture({ 'sections/1-1-intro.md': inline }).dir).has('quote-key'));
   const declared = fixture({ 'sections/1-1-intro.md': inline, 'manual.json': manifest({ quoteSources: { spec: 'research/sources/spec.md', guide: null } }) });
