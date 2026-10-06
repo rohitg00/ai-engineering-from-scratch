@@ -17,7 +17,7 @@ const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const KINDS = ['sequence', 'structure', 'flow', 'comparison', 'timeline', 'tree', 'state', 'decision', 'layers'];
 const CONTINUATION = /^\s{2,}\S/;
 const NESTED_ITEM = /^\s+([-*]|\d+\.)\s+/;
-const WIRE_LANGS = new Set(['json', 'jsonl', 'http', 'sse']);
+const LISTING_LANGS = new Set(['json', 'jsonl', 'http', 'sse']);
 const SCHEMA = JSON.parse(fs.readFileSync(path.join(MANUALS, 'manual.schema.json'), 'utf8'));
 const FONT_LINK = 'https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap';
 const TAKEAWAYS_LABEL = 'What to do with this';
@@ -35,7 +35,7 @@ function shared(name) { return fs.readFileSync(path.join(MANUALS, '_shared', nam
 function slugify(text) {
   return String(text).toLowerCase().replace(/`/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 64);
 }
-function sectionAnchor(id) { return `s-${String(id).toLowerCase().replace(/[^a-z0-9]+/g, '-')}`; }
+function sectionAnchor(file) { return `s-${path.basename(file, '.md').replace(/^\d+-\d+-/, '').replace(/^r-\d+-/, 'ref-')}`; }
 function pageName(id) { return `manual-${id}.html`; }
 
 function keyValues(lines, label, kind, required, optional = []) {
@@ -278,7 +278,7 @@ function highlightLine(line, lang) {
 }
 
 function highlight(code, lang) {
-  if (!WIRE_LANGS.has(lang)) return escapeHtml(code);
+  if (!LISTING_LANGS.has(lang)) return escapeHtml(code);
   return code.split('\n').map(line => highlightLine(line, lang)).join('\n');
 }
 
@@ -353,7 +353,7 @@ function loadManual(dir) {
     need(part.number === number, `parts must be numbered 1..N in order`);
     const sections = part.sections.map((entry, position) => {
       need(entry.id === `${number}.${position + 1}`, `part ${number} section ${position + 1} must have id "${number}.${position + 1}"`);
-      return readDoc(entry.file, { kind: 'section', id: entry.id, anchor: sectionAnchor(entry.id), prefix: String(number), accent: part.accent });
+      return readDoc(entry.file, { kind: 'section', id: entry.id, anchor: sectionAnchor(entry.file), prefix: String(number), accent: part.accent });
     });
     return { ...part, anchor: `p-${number}`, sections };
   });
@@ -362,7 +362,7 @@ function loadManual(dir) {
     const accent = manual.reference.accent || 'grey';
     const sections = manual.reference.sections.map((entry, position) => {
       need(entry.id === `R.${position + 1}`, `reference section ${position + 1} must have id "R.${position + 1}"`);
-      return readDoc(entry.file, { kind: 'reference', id: entry.id, anchor: sectionAnchor(entry.id), prefix: 'R', accent });
+      return readDoc(entry.file, { kind: 'reference', id: entry.id, anchor: sectionAnchor(entry.file), prefix: 'R', accent });
     });
     reference = { title: manual.reference.title || 'Reference', thesis: manual.reference.thesis || '', summary: manual.reference.summary || '', accent, anchor: 'p-r', sections };
   }
@@ -438,7 +438,7 @@ function* proseSpans(manual) {
       const where = docLine(doc, block.line);
       if (block.type === 'paragraph' && !/^Sources:\s/.test(block.text)) yield { text: block.text, kind: 'sentence', where };
       if (block.type === 'heading') yield { text: block.text, kind: 'label', where };
-      if (block.type === 'list' || block.type === 'takeaways') for (const item of block.items) yield { text: item, kind: 'sentence', where };
+      if (block.type === 'list' || block.type === 'takeaways') for (const item of block.items) yield { text: item, kind: block.type === 'takeaways' ? 'step' : 'sentence', where };
       if (block.type === 'table') for (const row of [block.head, ...block.rows]) for (const cell of row) yield { text: cell, kind: 'label', where };
       if (block.type === 'figure') {
         yield { text: block.title, kind: 'label', where };
@@ -497,6 +497,10 @@ function blockHtml(block, doc, manual, acc) {
   }
 }
 
+function numberFigureLinks(html, manual) {
+  return html.replace(/<a class="m-xref" href="#([a-z0-9-]+)">([Ff]igure)<\/a>/g, (match, id, word) => (manual.figures.has(id) ? `<a class="m-xref" href="#${id}">${word} ${manual.figures.get(id).number}</a>` : match));
+}
+
 function renderAll(manual, acc) {
   const label = manual.label;
   manual.paletteHtml = manual.palette.map(entry => ({ hue: entry.hue, html: inlineHtml(entry.meaning, `${label} palette`, acc) }));
@@ -511,8 +515,9 @@ function renderAll(manual, acc) {
   }
   for (const doc of manual.documents) {
     doc.thesisHtml = doc.thesis ? inlineHtml(doc.thesis, docLine(doc, doc.thesisLine), acc) : '';
-    doc.html = doc.blocks.map(block => blockHtml(block, doc, manual, acc)).join('\n');
+    doc.html = numberFigureLinks(doc.blocks.map(block => blockHtml(block, doc, manual, acc)).join('\n'), manual);
   }
+  if (manual.plate) manual.plate.captionHtml = numberFigureLinks(manual.plate.captionHtml, manual);
 }
 
 function tocHtml(manual, mode) {
@@ -531,49 +536,71 @@ function docHtml(doc) {
   return `<section class="${front ? 'm-front-section' : 'm-section'}" id="${doc.anchor}" data-accent="${doc.accent}"><header class="m-section-head"><div class="m-section-num">${front ? '00' : doc.id}</div><h1 class="m-section-title">${escapeHtml(doc.title)}</h1>${doc.thesisHtml ? `<p class="m-thesis">${doc.thesisHtml}</p>` : ''}</header>${doc.html}</section>`;
 }
 
-function partHtml(part, kicker) {
-  return `<section class="m-part" id="${part.anchor}" data-accent="${part.accent}"><div class="m-kicker m-part-kicker">${kicker}</div><h1 class="m-part-title">${escapeHtml(part.title)}</h1>${part.thesis ? `<p class="m-part-thesis">${escapeHtml(part.thesis)}</p>` : ''}<ol class="m-part-list">${part.sections.map(section => `<li><span class="m-kicker">${section.id}</span><a href="#${section.anchor}">${escapeHtml(section.title)}</a></li>`).join('')}</ol></section>`;
+function ditherHtml(seed, label, slim) {
+  return `<div class="m-dither${slim ? ' is-slim' : ''}" data-seed="${escapeHtml(seed)}" aria-hidden="true"><span class="m-dither-label">${escapeHtml(label)}</span></div>`;
+}
+
+function partHtml(part, kicker, band = '') {
+  return `<section class="m-part" id="${part.anchor}" data-accent="${part.accent}">${band}<div class="m-kicker m-part-kicker">${kicker}</div><h1 class="m-part-title">${escapeHtml(part.title)}</h1>${part.thesis ? `<p class="m-part-thesis">${escapeHtml(part.thesis)}</p>` : ''}<ol class="m-part-list">${part.sections.map(section => `<li><span class="m-kicker">${section.id}</span><a href="#${section.anchor}">${escapeHtml(section.title)}</a></li>`).join('')}</ol></section>`;
+}
+
+function pdfUrl(manual) { return `${RELEASE_URL}/aiefs-manual-${manual.id}.pdf`; }
+function sectionCount(manual) { return manual.parts.reduce((total, part) => total + part.sections.length, 0); }
+function action(href, label, primary = false) { return `<a class="m-action${primary ? ' is-primary' : ''}" href="${href}">${label}</a>`; }
+function sourceAction(manual) { return action(escapeHtml(githubSourceUrl(`manuals/${manual.id}`)), 'Source files'); }
+
+function pinLine(manual) {
+  const pin = manual.pin;
+  return `${escapeHtml(pin.subject)} ${escapeHtml(pin.version)} · ${escapeHtml(pin.commit)} · ${escapeHtml(pin.date)} · Edition ${escapeHtml(manual.edition)}`;
+}
+
+function plateHtml(manual, attrs) {
+  return manual.plate ? frameHtml({ attrs, num: 'Plate I', title: manual.plate.title, svg: manual.plate.art.svg, caption: manual.plate.captionHtml }) : '';
+}
+
+function partDots(manual) {
+  return `<ul class="m-cover-parts">${manual.parts.map(part => `<li data-accent="${part.accent}">${escapeHtml(part.title)}</li>`).join('')}</ul>`;
 }
 
 function coverHtml(manual, mode) {
-  const pin = manual.pin;
-  const pinLine = `${escapeHtml(pin.subject)} ${escapeHtml(pin.version)} · ${escapeHtml(pin.commit)} · ${escapeHtml(pin.date)} · Edition ${escapeHtml(manual.edition)}`;
-  const parts = manual.parts.map(part => `<li data-accent="${part.accent}">${escapeHtml(part.title)}</li>`).join('');
-  const plate = manual.plate ? frameHtml({ attrs: 'class="m-fig m-plate" id="plate"', num: 'Plate I', title: manual.plate.title, svg: manual.plate.art.svg, caption: manual.plate.captionHtml }) : '';
-  const head = `<div class="m-kicker m-cover-kicker">AI Engineering from Scratch · Manual</div><h1 class="m-cover-title">${escapeHtml(manual.title)}</h1><p class="m-cover-subtitle">${escapeHtml(manual.subtitle)}</p><div class="m-cover-pin">${pinLine}</div>`;
-  if (mode === 'print') return `<section class="m-cover" id="cover">${plate}${head}<ul class="m-cover-parts">${parts}</ul></section>`;
-  const download = manual.status === 'ready' ? `<a class="m-action is-primary" href="${RELEASE_URL}/aiefs-manual-${manual.id}.pdf">Download the PDF</a>` : '';
+  const plate = plateHtml(manual, 'class="m-fig m-plate" id="plate"');
+  const head = `<div class="m-kicker m-cover-kicker">AI Engineering from Scratch · Manual</div><h1 class="m-cover-title">${escapeHtml(manual.title)}</h1><p class="m-cover-subtitle">${escapeHtml(manual.subtitle)}</p><div class="m-cover-pin">${pinLine(manual)}</div>`;
+  if (mode === 'print') return `<section class="m-cover" id="cover">${plate}${head}${partDots(manual)}</section>`;
+  const band = ditherHtml(manual.id, `${manual.pin.subject} ${manual.pin.version}`, false);
+  const download = manual.status === 'ready' ? action(pdfUrl(manual), 'Download the PDF', true) : '';
   const draft = manual.status === 'draft' ? '<div class="m-draft-note">Draft edition, not yet listed</div>' : '';
-  return `<section class="m-cover" id="cover">${draft}${head}<div class="m-cover-actions">${download}<a class="m-action${download ? '' : ' is-primary'}" href="#s-front">Start reading</a><a class="m-action" href="${escapeHtml(githubSourceUrl(`manuals/${manual.id}`))}">Source and traces</a></div><ul class="m-cover-parts">${parts}</ul>${plate}</section>`;
+  return `<section class="m-cover" id="cover">${band}${draft}${head}<div class="m-cover-actions">${download}${action('#s-front', 'Start reading', !download)}${sourceAction(manual)}</div>${partDots(manual)}${plate}</section>`;
 }
 
 function manualArticle(manual, mode) {
+  const band = (seed, label) => (mode === 'web' ? ditherHtml(`${manual.id}-${seed}`, label, true) : '');
   const body = [];
   if (manual.front) body.push(docHtml(manual.front));
   for (const part of manual.parts) {
-    body.push(partHtml(part, `Part ${part.number}`));
+    body.push(partHtml(part, `Part ${part.number}`, band(part.anchor, `Part ${part.number} · ${part.title}`)));
     for (const section of part.sections) body.push(docHtml(section));
   }
   if (manual.reference) {
-    body.push(partHtml(manual.reference, 'Reference'));
+    body.push(partHtml(manual.reference, 'Reference', band('reference', manual.reference.title)));
     for (const section of manual.reference.sections) body.push(docHtml(section));
   }
   return `<article class="manual">${coverHtml(manual, mode)}${mode === 'print' ? tocHtml(manual, 'print') : ''}${body.join('\n')}</article>`;
 }
 
-function webPage(manual) {
-  const url = `${SITE_ORIGIN}/${pageName(manual.id)}`;
+const SITE_HEADER = '<header class="site-header"><div class="header-inner"><a href="index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH</a><nav class="header-nav"><a href="index.html#contents">Contents</a><a href="catalog.html">Catalog</a><a href="projects.html">Projects</a><a href="manuals.html">Manuals</a><a href="prereqs.html">Roadmap</a><a href="glossary.html">Glossary</a><a href="about.html">About</a><a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github"><span>GitHub</span><span class="star-count" data-loading="true">…</span></a></nav><button class="search-toggle" type="button" data-cmd-palette aria-label="Search"><span aria-hidden="true">⌕</span></button><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button"><span class="theme-icon" id="themeIcon">N</span></button></div></header>';
+
+function pageShell({ title, ogTitle, description, canonical, noindex, main }) {
   const css = shared('tokens.css') + shared('manual.css') + shared('web.css');
   return `<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${escapeHtml(manual.title)}: ${escapeHtml(manual.subtitle)} - AI Engineering from Scratch</title>
-<meta name="description" content="${escapeHtml(manual.summary)}">
-${manual.status === 'draft' ? '<meta name="robots" content="noindex">\n' : ''}<link rel="canonical" href="${url}">
-<meta property="og:title" content="${escapeHtml(manual.title)} · AI Engineering from Scratch">
-<meta property="og:description" content="${escapeHtml(manual.summary)}">
+<title>${escapeHtml(title)}</title>
+<meta name="description" content="${escapeHtml(description)}">
+${noindex ? '<meta name="robots" content="noindex">\n' : ''}<link rel="canonical" href="${canonical}">
+<meta property="og:title" content="${escapeHtml(ogTitle)}">
+<meta property="og:description" content="${escapeHtml(description)}">
 <meta property="og:image" content="${SITE_ORIGIN}/og-image.png?v=4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -584,15 +611,60 @@ ${manual.status === 'draft' ? '<meta name="robots" content="noindex">\n' : ''}<l
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
-<header class="site-header"><div class="header-inner"><a href="index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH</a><nav class="header-nav"><a href="index.html#contents">Contents</a><a href="catalog.html">Catalog</a><a href="projects.html">Projects</a><a href="prereqs.html">Roadmap</a><a href="glossary.html">Glossary</a><a href="about.html">About</a><a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github"><span>GitHub</span><span class="star-count" data-loading="true">…</span></a></nav><button class="search-toggle" type="button" data-cmd-palette aria-label="Search"><span aria-hidden="true">⌕</span></button><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button"><span class="theme-icon" id="themeIcon">N</span></button></div></header>
-<main id="main" class="m-web"><div class="m-layout"><aside class="m-sidebar">${tocHtml(manual, 'web')}</aside>${manualArticle(manual, 'web')}</div></main>
+${SITE_HEADER}
+${main}
 <script src="data.js"></script>
 <script src="content-source.js"></script>
 <script src="header.js" defer></script>
 <script src="cmdpalette.js" defer></script>
+<script>${shared('dither.js')}</script>
+<script>${shared('motion.js')}</script>
 </body>
 </html>
 `;
+}
+
+function webPage(manual) {
+  return pageShell({
+    title: `${manual.title}: ${manual.subtitle} - AI Engineering from Scratch`,
+    ogTitle: `${manual.title} · AI Engineering from Scratch`,
+    description: manual.summary,
+    canonical: `${SITE_ORIGIN}/${pageName(manual.id)}`,
+    noindex: manual.status === 'draft',
+    main: `<main id="main" class="m-web"><div class="m-layout"><aside class="m-sidebar">${tocHtml(manual, 'web')}</aside>${manualArticle(manual, 'web')}</div></main>`,
+  });
+}
+
+const INDEX_LEDE = 'Each manual explains one subject at one exact version, from its purpose to each request and response. The examples come from recorded runs of a working system, and each rule links to the specification text that it comes from.';
+const INDEX_GIVES = [
+  ['Read', 'The web edition, with figures that play as you scroll.'],
+  ['Keep', 'A PDF of the same text, attached to every release of the course.'],
+  ['Rerun', 'A capture kit that regenerates every listing in the manual with one command.'],
+];
+
+function manualCard(manual) {
+  const actions = [action(pageName(manual.id), 'Read the manual', true)];
+  if (manual.status === 'ready') actions.push(action(pdfUrl(manual), 'Download the PDF'));
+  actions.push(sourceAction(manual));
+  const draft = manual.status === 'draft' ? '<div class="m-draft-note">Draft edition</div>' : '';
+  return `<article class="m-index-card">${draft}<div class="m-kicker m-index-pin">${pinLine(manual)}</div><h2 class="m-index-name"><a href="${pageName(manual.id)}">${escapeHtml(manual.title)}</a></h2><p class="m-index-subtitle">${escapeHtml(manual.subtitle)}</p><p class="m-index-summary">${escapeHtml(manual.summary)}</p>${partDots(manual)}<div class="m-kicker m-index-stats">${manual.parts.length} parts · ${sectionCount(manual)} sections · ${manual.figures.size} figures</div><div class="m-index-actions">${actions.join('')}</div>${plateHtml(manual, 'class="m-fig m-plate"')}</article>`;
+}
+
+function indexPage(listed) {
+  const gives = INDEX_GIVES.map(([label, text]) => `<li><span class="m-kicker">${label}</span><p>${text}</p></li>`).join('');
+  const body = listed.length ? listed.map(manualCard).join('') : '<p class="m-index-empty">No manual is published yet.</p>';
+  return pageShell({
+    title: 'Manuals - AI Engineering from Scratch',
+    ogTitle: 'Manuals · AI Engineering from Scratch',
+    description: 'Long technical manuals that explain one subject at one exact version, from its purpose to each request and response.',
+    canonical: `${SITE_ORIGIN}/manuals.html`,
+    noindex: !listed.some(manual => manual.status === 'ready'),
+    main: `<main id="main" class="m-web"><div class="manual m-index"><section class="m-index-hero">${ditherHtml('manuals', 'Manuals', false)}<div class="m-kicker m-cover-kicker">AI Engineering from Scratch</div><h1 class="m-index-title">Manuals</h1><p class="m-index-lede">${INDEX_LEDE}</p><ul class="m-index-gives">${gives}</ul></section>${body}</div></main>`,
+  });
+}
+
+function stripMotion(html) {
+  return html.replace(/<circle class="m-packet"[^>]*>[\s\S]*?<\/circle>/g, '').replace(/<animate(?:Transform|Motion)?\b[^>]*\/>/g, '');
 }
 
 function printPage(manual) {
@@ -606,7 +678,7 @@ function printPage(manual) {
 <style>${css}</style>
 </head>
 <body>
-${manualArticle(manual, 'print')}
+${stripMotion(manualArticle(manual, 'print'))}
 </body>
 </html>
 `;
@@ -622,10 +694,10 @@ function manualSummary(manual) {
     edition: manual.edition,
     pin: manual.pin,
     parts: manual.parts.map(part => ({ number: part.number, title: part.title, accent: part.accent })),
-    sections: manual.parts.reduce((total, part) => total + part.sections.length, 0),
+    sections: sectionCount(manual),
     figures: manual.figures.size,
     url: pageName(manual.id),
-    pdf: `${RELEASE_URL}/aiefs-manual-${manual.id}.pdf`,
+    pdf: pdfUrl(manual),
   };
 }
 
@@ -644,8 +716,9 @@ function writeWeb(manuals, siteDir = SITE, options = {}) {
   }
   for (const manual of manuals) fs.writeFileSync(path.join(siteDir, pageName(manual.id)), webPage(manual), 'utf8');
   if (options.only) return null;
-  const listed = manuals.filter(manual => manual.status === 'ready').map(manualSummary);
-  fs.writeFileSync(path.join(siteDir, 'manuals-data.js'), `window.AIFS_MANUALS = ${JSON.stringify(listed, null, 2)};\n`, 'utf8');
+  const listed = manuals.filter(manual => options.drafts || manual.status === 'ready');
+  fs.writeFileSync(path.join(siteDir, 'manuals-data.js'), `window.AIFS_MANUALS = ${JSON.stringify(listed.map(manualSummary), null, 2)};\n`, 'utf8');
+  fs.writeFileSync(path.join(siteDir, 'manuals.html'), indexPage(listed), 'utf8');
   return listed.length;
 }
 
@@ -661,7 +734,7 @@ function main(argv) {
   const args = argv.slice(2);
   const flag = name => args.includes(name);
   const value = name => { const index = args.indexOf(name); return index >= 0 ? args[index + 1] : undefined; };
-  const options = { only: value('--manual') };
+  const options = { only: value('--manual'), drafts: flag('--drafts') };
   const manuals = loadAll(options);
   const printDir = value('--print');
   if (printDir) {
@@ -671,7 +744,7 @@ function main(argv) {
     return;
   }
   const listed = writeWeb(manuals, SITE, options);
-  console.log(`built ${manuals.length} manual page(s)${listed === null ? '' : `; ${listed} listed in manuals-data.js`}`);
+  console.log(`built ${manuals.length} manual page(s)${listed === null ? '' : `; ${listed} listed on manuals.html`}`);
 }
 
 if (require.main === module) {
@@ -687,7 +760,7 @@ module.exports = {
   KINDS,
   OUTCOME_PHRASE,
   SCHEMA,
-  WIRE_LANGS,
+  LISTING_LANGS,
   inlineHtml,
   loadAll,
   loadManual,

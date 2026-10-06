@@ -213,6 +213,8 @@
     var target = current;
     if (current === 'certification.html' || current === 'assessment.html') {
       target = 'certifications.html';
+    } else if (/^manual-[a-z0-9-]+\.html$/.test(current)) {
+      target = 'manuals.html';
     } else if (current === 'lesson.html') {
       try {
         var params = new URLSearchParams(location.search);
@@ -248,6 +250,7 @@
   function addNavigationLinks(nav) {
     ensureNavigationLink(nav, 'learning-paths.html', 'Learning Paths', '');
     ensureNavigationLink(nav, 'projects.html', 'Projects', '');
+    ensureNavigationLink(nav, 'manuals.html', 'Manuals', '');
     ensureNavigationLink(nav, 'certifications.html', 'Certifications', 'header-mobile-only');
     ensureNavigationLink(nav, 'sponsors.html', 'Sponsor us', 'header-mobile-only');
   }

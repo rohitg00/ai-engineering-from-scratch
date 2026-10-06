@@ -2,8 +2,12 @@
   var root = document.documentElement;
   var stored = '';
   try { stored = localStorage.getItem('theme') || ''; } catch (_) {}
-  var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  root.setAttribute('data-theme', stored || (dark ? 'dark' : 'light'));
+  function prefers(query) { return !!(window.matchMedia && window.matchMedia(query).matches); }
+  root.setAttribute('data-theme', stored || (prefers('(prefers-color-scheme: dark)') ? 'dark' : 'light'));
+  if (!prefers('(prefers-reduced-motion: reduce)')) {
+    root.classList.add('m-motion');
+    setTimeout(function () { if (!root.hasAttribute('data-motion-ready')) root.classList.remove('m-motion'); }, 4000);
+  }
   function icon() {
     var el = document.getElementById('themeIcon');
     if (el) el.textContent = root.getAttribute('data-theme') === 'light' ? 'N' : 'D';

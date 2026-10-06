@@ -219,7 +219,7 @@
 .m-cover-title { font-size: 96px; margin: 0.12em 0 0.05em; }
 .m-cover-subtitle { font-style: italic; font-size: 1.35em; color: var(--m-ink-soft); margin: 0 0 0.8em; }
 .m-cover-pin { font-family: var(--m-font-mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--m-ink-mute); }
-.m-cover-parts { display: flex; flex-wrap: wrap; gap: 0.4em 1.2em; padding: 0; margin: 1.2em 0 0; list-style: none; }
+.manual .m-cover-parts { display: flex; flex-wrap: wrap; gap: 0.4em 1.2em; padding: 0; margin: 1.2em 0 0; list-style: none; }
 .m-cover-parts li { margin: 0; font-family: var(--m-font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--m-ink-mute); }
 .m-cover-parts li::before { content: ""; display: inline-block; width: 0.55em; height: 0.55em; border-radius: 50%; background: var(--m-part); margin-right: 0.5em; }
 

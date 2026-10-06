@@ -1,12 +1,13 @@
 'use strict';
 
-const ELEMENTS = new Set(['svg', 'title', 'desc', 'defs', 'g', 'rect', 'line', 'path', 'polyline', 'polygon', 'circle', 'ellipse', 'text', 'tspan', 'marker', 'pattern']);
+const ELEMENTS = new Set(['svg', 'title', 'desc', 'defs', 'g', 'rect', 'line', 'path', 'polyline', 'polygon', 'circle', 'ellipse', 'text', 'tspan', 'marker', 'pattern', 'animate', 'animateTransform', 'animateMotion']);
 const ATTRIBUTES = new Set([
   'xmlns', 'viewBox', 'role', 'aria-labelledby', 'font-family', 'id', 'class',
   'x', 'y', 'x1', 'y1', 'x2', 'y2', 'cx', 'cy', 'r', 'rx', 'ry', 'width', 'height', 'd', 'points',
   'fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-linecap', 'stroke-linejoin', 'stroke-opacity', 'fill-opacity', 'opacity',
   'transform', 'font-size', 'font-weight', 'font-style', 'text-anchor', 'letter-spacing',
   'marker-start', 'marker-end', 'refX', 'refY', 'markerWidth', 'markerHeight', 'markerUnits', 'orient', 'patternUnits', 'patternTransform',
+  'data-beat', 'attributeName', 'type', 'values', 'keyTimes', 'keySplines', 'keyPoints', 'calcMode', 'dur', 'begin', 'path',
 ]);
 
 function decode(text) {

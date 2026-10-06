@@ -45,7 +45,7 @@ source: spec §1
 "The server MUST reply with a task."
 \`\`\`
 
-**Task:** a unit of work with an id {{spec §1}}. See [the figures](#s-r-1) and [the figure](#fig-1-1).
+**Task:** a unit of work with an id {{spec §1}}. See [the figures](#s-ref-figures) and [figure](#fig-1-1).
 
 \`\`\`figure
 id: fig-1-1
@@ -107,7 +107,7 @@ function fixture(overrides = {}) {
     'manual.json': manifest(),
     'research/sources/spec.md': 'The server **MUST** reply with a task.\n',
     'capture/out/task.json': '{\n  "kind": "task",\n  "id": "t-1"\n}\n',
-    'front.md': '# How to read this manual\n\n> This manual maps one protocol at one version.\n\nThe parts run from the idea to the wire.\n\n```parts\n```\n\n```palette\n```\n\nSources: manual.json\n',
+    'front.md': '# How to read this manual\n\n> This manual maps one protocol at one version.\n\nThe parts run from the purpose of the protocol to each request.\n\n```parts\n```\n\n```palette\n```\n\nSources: manual.json\n',
     'sections/1-1-intro.md': SECTION,
     'sections/r-1-figures.md': '# Index of figures\n\n> Every figure, by the claim it makes.\n\n```figure-index\n```\n\nSources: every section.\n',
     'figures/fig-1-1.svg': SVG,
@@ -249,8 +249,8 @@ test('figure lint rejects hatch under text and ellipsis labels, and knockouts ne
   assert.ok(rules(fixture({ 'figures/fig-1-1.svg': knocked }).dir).has('figure-spill'));
 });
 
-test('wire data must come through a listing with a source', () => {
-  assert.ok(rules(fixture({ 'sections/1-1-intro.md': SECTION.replace('| Field | Meaning |', '```json\n{"a": 1}\n```\n\n| Field | Meaning |') }).dir).has('wire-fence'));
+test('protocol data must come through a listing with a source', () => {
+  assert.ok(rules(fixture({ 'sections/1-1-intro.md': SECTION.replace('| Field | Meaning |', '```json\n{"a": 1}\n```\n\n| Field | Meaning |') }).dir).has('listing-fence'));
 });
 
 test('web output is flat, lists only ready manuals, and a scoped build leaves other pages alone', () => {
@@ -309,4 +309,54 @@ test('figkit build writes figures and check reports drift', () => {
   assert.deepEqual(figkit.build(dir, true), []);
   assert.deepEqual(issuesFor(dir), []);
   assert.throws(() => figkit.figure('fig-x', { height: 60, title: 't', desc: 'a description that is long enough to pass the check' }, f => f.box({ x: 0, y: 0, w: 40, h: 30, title: 'a label far too long' })), /wide, max/);
+});
+
+test('the audit flags figurative words, long steps, and long paragraphs, and quotes stay exempt', () => {
+  const prose = SECTION
+    .replace('Your test needs a manual.', 'Your test needs a manual on the wire.')
+    .replace('- Render the manual.', '- Render the manual, then open the new page and read each part of it slowly before you check the whole output twice.')
+    .replace('**Task:** a unit of work', 'One. Two. Three. Four. Five. Six. Seven.\n\n**Task:** a unit of work');
+  const found = rules(fixture({ 'sections/1-1-intro.md': prose }).dir);
+  for (const rule of ['lexicon', 'long-step', 'long-paragraph']) assert.ok(found.has(rule), rule);
+  const quoted = SECTION.replace('Your test needs a manual.', 'The spec says "on the wire" here.');
+  assert.ok(!rules(fixture({ 'sections/1-1-intro.md': quoted }).dir).has('lexicon'));
+  assert.deepEqual(audit.lexiconHits('The planner sends a request.'), []);
+  assert.equal(audit.lexiconHits('A capability flag gates the call.').length, 1);
+});
+
+test('figure beats render as SMIL groups that the lint accepts, and the print edition strips them', () => {
+  const svg = figkit.figure('fig-1-1', { height: 80, title: 'Two beats', desc: 'A box and an arrow that appear in two steps, used to test the animation layer.' }, f => {
+    f.box({ x: 20, y: 20, w: 120, h: 40, hue: 'grey', title: 'client' });
+    f.beat(1);
+    f.arrow([140, 40], [300, 40], { label: 'SendMessage' });
+    f.beat(2);
+    f.box({ x: 310, y: 20, w: 120, h: 40, hue: 'amber', title: 'task' });
+  });
+  assert.match(svg, /<g data-beat="1"><animate attributeName="opacity"/);
+  assert.match(svg, /<circle class="m-packet"[^>]*><animateMotion path="M140 40 L300 40"/);
+  const { dir } = fixture({ 'figures/fig-1-1.svg': svg });
+  assert.deepEqual(issuesFor(dir), []);
+  const page = manuals.printPage(manuals.loadManual(dir));
+  assert.doesNotMatch(page, /<animate|m-packet/);
+  assert.match(page, /data-beat="2"/);
+  assert.ok(rules(fixture({ 'figures/fig-1-1.svg': svg.replace('keyTimes="0;0;1"', 'keyTimes="0;1"') }).dir).has('figure-smil'));
+  assert.ok(rules(fixture({ 'figures/fig-1-1.svg': svg.replace('>task<', '>over the wire<') }).dir).has('figure-lexicon'));
+  assert.throws(() => figkit.figure('fig-x', { height: 60, title: 't', desc: 'a description that is long enough to pass the check' }, f => f.beat(-1)), /beat must be/);
+});
+
+test('the manuals index lists ready manuals, and lists drafts only on request', () => {
+  const { root } = fixture();
+  const site = tempDir('manuals-index-');
+  assert.equal(manuals.writeWeb(manuals.loadAll({ root }), site), 0);
+  let index = fs.readFileSync(path.join(site, 'manuals.html'), 'utf8');
+  assert.match(index, /No manual is published yet/);
+  assert.match(index, /noindex/);
+  assert.equal(manuals.writeWeb(manuals.loadAll({ root }), site, { drafts: true }), 1);
+  index = fs.readFileSync(path.join(site, 'manuals.html'), 'utf8');
+  assert.match(index, /href="manual-demo-101\.html"/);
+  assert.match(index, /Draft edition/);
+  assert.match(index, /<a href="manuals\.html">Manuals<\/a>/);
+  const page = fs.readFileSync(path.join(site, 'manual-demo-101.html'), 'utf8');
+  assert.match(page, /class="m-dither"/);
+  assert.match(page, /m-fig-replay/);
 });

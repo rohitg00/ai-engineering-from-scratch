@@ -17,10 +17,21 @@ const TELLS = [
   [/\b(serves as|stands as|acts as a testament|underscores|highlights the)\b/i, 'avoids is/has'],
   [/\bhere'?s (the thing|why|what)\b/i, 'staged run-up'],
 ];
-const LIMITS = { sentence: 25, thesis: 30, claim: 28 };
-const RULES = { claim: 'figure-claim', thesis: 'thesis' };
+const LEXICON = [
+  [/\bwir(e|es|ed|ing)\b/i, 'name the real thing: the request, the response, the stream, the network'],
+  [/\b(stick(s|y|ing)?|stuck)\b/i, 'use stay, remain, or keep'],
+  [/\b(glue|plumbing|knobs?|gotchas?|footguns?)\b/i, 'name the code, the setting, or the defect'],
+  [/\b(under the hood|escape hatch|sharp edges?|first[- ]class|out of the box|heavy lifting|moving parts|sweet spot|deep[- ]dive)\b/i, 'say it in plain words'],
+  [/\b(boils? down|spin(s|ning)? up|spun up|kick(s|ed|ing)? off|bak(e|es|ed|ing)[- ]in|baked|fall(s|ing)? back|fallbacks?)\b/i, 'use one plain verb'],
+  [/\b(gat(e|es|ed|ing)|surfac(e|es|ed|ing)|front(s|ed|ing)|land(s|ed|ing)?|ship(s|ped|ping)?|fan(s|ned|ning)?[- ]out|catch(es|ing)?)\b/i, 'do not use a noun or a metaphor as a verb'],
+  [/\b(in[- ]flight|out[- ]of[- ]band|bare|hand(s|ed|ing)? (off|over|to)|handoffs?)\b/i, 'use concrete words: outside A2A, plain, send, give'],
+  [/\b(delv(e|es|ing)|robust(ly|ness)?|seamless(ly)?|crucial(ly)?|comprehensive(ly)?|landscape|tapestry|testament|furthermore|moreover|leverag(e|es|ed|ing)|additionally|actually|foster(s|ed|ing)?|garner(s|ed|ing)?|intricate|intricacies|meticulous(ly)?|quietly|showcas(e|es|ed|ing)|underscor(e|es|ed|ing)|vibrant|enhanc(e|es|ed|ing)|interplay|align(s|ed)? with|enduring|bolster(s|ed|ing)?|highlight(s|ed|ing)?|valuable|journey|unlock(s|ed|ing)?|supercharg\w*)\b/i, 'AI vocabulary: use a plain word'],
+];
+const LIMITS = { sentence: 25, step: 20, thesis: 30, claim: 28 };
+const RULES = { claim: 'figure-claim', thesis: 'thesis', step: 'long-step' };
 const COLOR_ATTRS = ['fill', 'stroke', 'stop-color', 'color', 'flood-color', 'lighting-color'];
-const ALLOWED_CLASSES = new Set(['m-serif', 'm-knock']);
+const ALLOWED_CLASSES = new Set(['m-serif', 'm-knock', 'm-packet']);
+const ANIMATION = new Set(['animate', 'animateTransform', 'animateMotion']);
 const TEXT_POSITION = ['x', 'y', 'dx', 'dy', 'rotate', 'transform'];
 
 function rel(file) { return path.relative(ROOT, file).split(path.sep).join('/'); }
@@ -44,6 +55,15 @@ function sentences(text) {
 
 function wordCount(sentence) { return (sentence.match(/[\w$%.'/-]+/g) || []).length; }
 
+function lexiconHits(text) {
+  const hits = [];
+  for (const [pattern, hint] of LEXICON) {
+    const match = pattern.exec(text);
+    if (match) hits.push(`"${match[0]}": ${hint}`);
+  }
+  return hits;
+}
+
 function proseIssues(span, add) {
   const raw = String(span.text);
   const stripped = raw.replace(/`[^`]*`/g, '').replace(/\{\{[^}]*\}\}/g, '').replace(/[“"][^”"]*[”"]/g, '');
@@ -51,6 +71,7 @@ function proseIssues(span, add) {
   if (stripped.includes(';')) add(span.where, 'semicolon', 'semicolon in prose: split the sentence');
   if (/\bmay\b/i.test(stripped)) add(span.where, 'may', '"may" as a verb: use "can" or state the condition');
   for (const match of stripped.matchAll(CONTRACTION)) add(span.where, 'contraction', `contraction "${match[0]}"`);
+  for (const word of lexiconHits(stripped)) add(span.where, 'lexicon', word);
   const parts = sentences(plain(raw));
   const rule = RULES[span.kind] || 'long-sentence';
   const limit = LIMITS[span.kind];
@@ -61,6 +82,35 @@ function proseIssues(span, add) {
     if (limit && count > limit) add(span.where, rule, `${count} words (limit ${limit}): "${sentence.slice(0, 90)}"`);
     for (const [pattern, name] of TELLS) if (pattern.test(sentence)) add(span.where, 'tell', `${name}: "${sentence.slice(0, 90)}"`);
   }
+}
+
+function smilIssues(attrs) {
+  const issues = [];
+  const fail = message => issues.push(message);
+  const list = value => String(value).split(';').map(item => item.trim()).filter(Boolean);
+  if (attrs.begin !== 'indefinite') fail('begin must be "indefinite", because the page script starts each animation');
+  if (attrs.fill !== 'freeze') fail('fill must be "freeze", so that the last frame stays');
+  if (!/^\d+(\.\d+)?s$/.test(attrs.dur || '') || !(parseFloat(attrs.dur) > 0)) fail('dur must be a positive number of seconds, such as "0.45s"');
+  if (/var\(/.test(attrs.values || '')) fail('values cannot use var(), because SMIL cannot interpolate it');
+  const times = attrs.keyTimes === undefined ? null : list(attrs.keyTimes).map(Number);
+  const listed = attrs.keyPoints !== undefined ? attrs.keyPoints : attrs.values;
+  const count = listed === undefined ? null : list(listed).length;
+  if (times) {
+    if (times.some(Number.isNaN)) fail('keyTimes must be numbers');
+    else if (times[0] !== 0 || times[times.length - 1] !== 1) fail('keyTimes must start at 0 and end at 1');
+    if (times.some((value, index) => index > 0 && value < times[index - 1])) fail('keyTimes must not decrease');
+    if (count !== null && count !== times.length) fail(`keyTimes has ${times.length} entries for ${count} values`);
+  }
+  if (attrs.calcMode === 'spline') {
+    const splines = list(attrs.keySplines || '');
+    if (!times || splines.length !== times.length - 1) fail('keySplines needs one entry fewer than keyTimes');
+    for (const spline of splines) {
+      const numbers = spline.split(/[\s,]+/).map(Number);
+      if (numbers.length !== 4 || numbers.some(value => !(value >= 0 && value <= 1))) fail(`keySplines entry "${spline}" needs four numbers from 0 to 1`);
+    }
+  }
+  if (attrs.keyPoints !== undefined && attrs.calcMode !== 'linear') fail('keyPoints needs calcMode="linear"');
+  return issues;
 }
 
 function pathSegments(d) {
@@ -120,15 +170,21 @@ function lintFigure(file, id, add) {
   try { svg = parseSvg(source); } catch (error) { add(where, 'figure-parse', error.message); return; }
   const [vbWidth, vbHeight] = (svg.attrs.viewBox || '').split(/\s+/).map(Number).slice(2);
   if (vbHeight > 760) add(where, 'figure-viewbox', `viewBox height ${vbHeight} is taller than one page allows (760)`);
+  for (const node of svg.children.filter(child => child.name === 'title' || child.name === 'desc')) for (const word of lexiconHits(textContent(node))) add(`${where} <${node.name}>`, 'figure-lexicon', word);
   const texts = [];
   const rects = [];
   const segments = [];
   let order = 0;
   const walk = (node, inherited) => {
     if (node.name === '#text' || ['defs', 'marker', 'pattern', 'title', 'desc'].includes(node.name)) return;
-    order += 1;
     const attrs = node.attrs;
     const label = `${where} <${node.name}${attrs.id ? ` id=${attrs.id}` : ''}>`;
+    if (ANIMATION.has(node.name)) {
+      for (const issue of smilIssues(attrs)) add(label, 'figure-smil', issue);
+      return;
+    }
+    order += 1;
+    if (attrs['data-beat'] !== undefined && !node.children.some(child => child.name === 'animate' && child.attrs.attributeName === 'opacity')) add(label, 'figure-smil', 'a beat group needs an opacity animation, or it stays hidden');
     if (attrs.class) for (const name of attrs.class.split(/\s+/)) if (!ALLOWED_CLASSES.has(name)) add(label, 'figure-class', `class "${name}" is not allowed`);
     for (const key of COLOR_ATTRS) {
       const value = attrs[key];
@@ -175,6 +231,7 @@ function lintFigure(file, id, add) {
       }
       const content = textContent(node).replace(/\s+/g, ' ').trim();
       if (!content) return;
+      for (const word of lexiconHits(content)) add(label, 'figure-lexicon', word);
       if (/…|\.\.\./.test(content)) add(label, 'figure-ellipsis', `ellipsis in figure text "${content}": shorten the label or move it outside`);
       if (!Number.isFinite(state.size)) { add(label, 'figure-font', `no font-size for "${content}"`); return; }
       if (state.size < figkit.MIN_FONT) add(label, 'figure-font', `font-size ${state.size} below ${figkit.MIN_FONT} for "${content}"`);
@@ -240,7 +297,7 @@ function auditManual(manual, add) {
   const stats = { words: 0, listings: 0, takeaways: 0 };
   for (const span of manuals.proseSpans(manual)) {
     proseIssues(span, add);
-    if (span.kind === 'sentence') stats.words += plain(span.text).split(' ').filter(Boolean).length;
+    if (span.kind === 'sentence' || span.kind === 'step') stats.words += plain(span.text).split(' ').filter(Boolean).length;
     for (const match of String(span.text).matchAll(/[“"]([^”"]{24,}?)[”"]\s*\{\{([^}]+)\}\}/g)) checkQuote(match[1], match[2], span.where);
   }
   for (const doc of manual.documents) {
@@ -254,7 +311,8 @@ function auditManual(manual, add) {
     if (!last || last.type !== 'paragraph' || !/^Sources:\s\S/.test(last.text)) add(doc.label, 'sources', 'the last block must be a "Sources: ..." paragraph');
     for (const block of doc.blocks) {
       const where = `${doc.label}:${block.line}`;
-      if (block.type === 'code' && manuals.WIRE_LANGS.has(block.lang)) add(where, 'wire-fence', `a ${block.lang} block must be a listing with a capture source`);
+      if (block.type === 'paragraph' && sentences(plain(block.text)).length > 6) add(where, 'long-paragraph', 'more than six sentences: split the paragraph by topic');
+      if (block.type === 'code' && manuals.LISTING_LANGS.has(block.lang)) add(where, 'listing-fence', `a ${block.lang} block must be a listing with a capture source`);
       if (block.type === 'rule') checkQuote(block.quote, block.source, where);
       if (block.type === 'listing') {
         stats.listings += 1;
@@ -332,4 +390,4 @@ function main(argv) {
 
 if (require.main === module) process.exit(main(process.argv));
 
-module.exports = { auditManual, lintFigure };
+module.exports = { auditManual, lexiconHits, lintFigure };

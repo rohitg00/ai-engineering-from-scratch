@@ -12,6 +12,10 @@ const ASCENT = 0.78;
 const DESCENT = 0.22;
 const NEUTRALS = ['ink', 'ink-soft', 'ink-mute', 'panel', 'panel-edge', 'paper', 'accent', 'code-bg'];
 const DASH = { solid: null, dashed: '5 4', dotted: '1.5 3.5' };
+const STEP = 0.6;
+const FADE = 0.45;
+const MOVE = 0.55;
+const EASE = '0 0 1 1;0.23 1 0.32 1';
 const STYLES = {
   call: { hue: 'ink', dash: 'solid' },
   reply: { hue: 'ink', dash: 'dashed' },
@@ -40,6 +44,7 @@ function color(name) {
 function inkOf(hue) { return NEUTRALS.includes(hue) ? color(hue) : color(`${hue}-ink`); }
 function fillOf(hue) { return NEUTRALS.includes(hue) ? color(hue) : color(`${hue}-fill`); }
 function num(value) { return Number.isInteger(value) ? String(value) : String(Math.round(value * 100) / 100); }
+function fraction(value, total) { return String(Math.round((value / total) * 1000) / 1000); }
 function attrs(map) { return Object.entries(map).filter(([, v]) => v !== undefined && v !== null && v !== false).map(([k, v]) => ` ${k}="${typeof v === 'number' ? num(v) : escapeHtml(v)}"`).join(''); }
 
 function measure(text, size, serif = false, spacing = 0) {
@@ -63,7 +68,18 @@ class Figure {
     this.parts = [];
     this.markers = new Set();
     this.hatch = false;
+    this.current = 0;
     if (!this.title || !this.desc || this.desc.length < 40) throw new Error(`${id}: title and a desc of at least 40 characters are required`);
+  }
+
+  emit(svg) {
+    this.parts.push({ beat: this.current, svg });
+  }
+
+  beat(n) {
+    if (!Number.isInteger(n) || n < 0 || n > 40) throw new Error(`${this.id}: beat must be an integer from 0 to 40`);
+    this.current = n;
+    return this;
   }
 
   text(x, y, content, options = {}) {
@@ -74,8 +90,8 @@ class Figure {
     if (box.left < 1 || box.right > WIDTH - 1) throw new Error(`${this.id}: "${content}" runs outside the figure`);
     if (/…|\.\.\./.test(content)) throw new Error(`${this.id}: no ellipsis in labels ("${content}")`);
     if (size < MIN_FONT) throw new Error(`${this.id}: font-size ${size} is below ${MIN_FONT}`);
-    if (options.knock) this.parts.push(`<rect${attrs({ class: 'm-knock', x: box.left - 3, y: box.top - 2, width: box.width + 6, height: size + 4, fill: color('panel') })}/>`);
-    this.parts.push(`<text${attrs({
+    if (options.knock) this.emit(`<rect${attrs({ class: 'm-knock', x: box.left - 3, y: box.top - 2, width: box.width + 6, height: size + 4, fill: color('panel') })}/>`);
+    this.emit(`<text${attrs({
       x, y,
       'font-size': size,
       'text-anchor': anchor === 'start' ? undefined : anchor,
@@ -93,7 +109,7 @@ class Figure {
   }
 
   rect(x, y, w, h, options = {}) {
-    this.parts.push(`<rect${attrs({
+    this.emit(`<rect${attrs({
       x, y, width: w, height: h,
       fill: options.fill || (options.hue ? fillOf(options.hue) : 'none'),
       stroke: options.stroke === 'none' ? undefined : options.stroke || (options.hue ? inkOf(options.hue) : undefined),
@@ -105,7 +121,7 @@ class Figure {
 
   hatchRect(x, y, w, h) {
     this.hatch = true;
-    this.parts.push(`<rect${attrs({ x, y, width: w, height: h, fill: `url(#${this.id}-hatch)`, stroke: color('ink-mute'), 'stroke-opacity': 0.35 })}/>`);
+    this.emit(`<rect${attrs({ x, y, width: w, height: h, fill: `url(#${this.id}-hatch)`, stroke: color('ink-mute'), 'stroke-opacity': 0.35 })}/>`);
     return { x, y, w, h };
   }
 
@@ -142,7 +158,7 @@ class Figure {
   stroke(tag, geometry, options) {
     const style = resolveStyle(options);
     const marker = options.head === false ? undefined : this.marker(style.hue);
-    this.parts.push(`<${tag}${attrs({
+    this.emit(`<${tag}${attrs({
       ...geometry,
       fill: tag === 'path' ? 'none' : undefined,
       stroke: inkOf(style.hue),
@@ -153,7 +169,16 @@ class Figure {
       'marker-end': marker ? `url(#${marker})` : undefined,
       'marker-start': options.both && marker ? `url(#${marker})` : undefined,
     })}/>`);
+    if (this.current && marker && options.packet !== false) this.packet(tag, geometry, style.hue);
     return this;
+  }
+
+  packet(tag, geometry, hue) {
+    const d = tag === 'path' ? geometry.d : `M${num(geometry.x1)} ${num(geometry.y1)} L${num(geometry.x2)} ${num(geometry.y2)}`;
+    const length = MOVE + 0.25;
+    const motion = timing(this.current, length, [0, MOVE], { calcMode: 'linear' });
+    const opacity = timing(this.current, length, [0, 0.08, MOVE]);
+    this.emit(`<circle${attrs({ class: 'm-packet', r: 3.5, fill: inkOf(hue), opacity: 0 })}><animateMotion${attrs({ path: d, keyPoints: '0;0;1;1', ...motion })}/><animate${attrs({ attributeName: 'opacity', values: '0;0;1;1;0', ...opacity })}/></circle>`);
   }
 
   line(x1, y1, x2, y2, options = {}) { return this.stroke('line', { x1, y1, x2, y2 }, options); }
@@ -174,29 +199,44 @@ class Figure {
   }
 
   step(x, y, n, options = {}) {
-    this.parts.push(`<circle${attrs({ cx: x, cy: y, r: 9, fill: color('paper'), stroke: inkOf(options.hue || 'ink'), 'stroke-width': 1 })}/>`);
+    this.emit(`<circle${attrs({ cx: x, cy: y, r: 9, fill: color('paper'), stroke: inkOf(options.hue || 'ink'), 'stroke-width': 1 })}/>`);
     this.text(x, y + 4, String(n), { size: 11, anchor: 'middle', hue: options.hue && options.hue !== 'ink' ? options.hue : undefined });
     return this;
   }
 
   lifeline(x, y1, y2) {
-    this.parts.push(`<line${attrs({ x1: x, y1, x2: x, y2, stroke: color('ink-mute'), 'stroke-width': 1, 'stroke-dasharray': '2 3' })}/>`);
+    this.emit(`<line${attrs({ x1: x, y1, x2: x, y2, stroke: color('ink-mute'), 'stroke-width': 1, 'stroke-dasharray': '2 3' })}/>`);
     return this;
   }
 
   rule(x1, y1, x2, y2, options = {}) {
-    this.parts.push(`<line${attrs({ x1, y1, x2, y2, stroke: inkOf(options.hue || 'ink-mute'), 'stroke-width': options.width || 1, 'stroke-dasharray': options.dash ? DASH[options.dash] : undefined, 'stroke-opacity': options.opacity })}/>`);
+    this.emit(`<line${attrs({ x1, y1, x2, y2, stroke: inkOf(options.hue || 'ink-mute'), 'stroke-width': options.width || 1, 'stroke-dasharray': options.dash ? DASH[options.dash] : undefined, 'stroke-opacity': options.opacity })}/>`);
     return this;
   }
 
   dot(x, y, options = {}) {
-    this.parts.push(`<circle${attrs({ cx: x, cy: y, r: options.r || 2.5, fill: inkOf(options.hue || 'ink') })}/>`);
+    this.emit(`<circle${attrs({ cx: x, cy: y, r: options.r || 2.5, fill: inkOf(options.hue || 'ink') })}/>`);
     return this;
   }
 
   marker(hue) {
     this.markers.add(hue);
     return `${this.id}-head-${hue}`;
+  }
+
+  body() {
+    const lines = [];
+    let open = 0;
+    for (const part of this.parts) {
+      if (part.beat !== open) {
+        if (open) lines.push('</g>');
+        if (part.beat) lines.push(beatOpen(part.beat));
+        open = part.beat;
+      }
+      lines.push(part.svg);
+    }
+    if (open) lines.push('</g>');
+    return lines;
   }
 
   toString() {
@@ -208,11 +248,22 @@ class Figure {
       `  <title id="${this.id}-title">${escapeHtml(this.title)}</title>`,
       `  <desc id="${this.id}-desc">${escapeHtml(this.desc)}</desc>`,
       defs.length ? `  <defs>${defs.join('')}</defs>` : null,
-      ...this.parts.map(part => `  ${part}`),
+      ...this.body().map(line => `  ${line}`),
       '</svg>',
       '',
     ].filter(line => line !== null).join('\n');
   }
+}
+
+function timing(beat, length, marks, extra = {}) {
+  const start = (beat - 1) * STEP;
+  const total = start + length;
+  return { keyTimes: ['0', ...marks.map(mark => fraction(start + mark, total)), '1'].join(';'), ...extra, dur: `${num(total)}s`, begin: 'indefinite', fill: 'freeze' };
+}
+
+function beatOpen(beat) {
+  const fade = timing(beat, FADE, [0], { calcMode: 'spline', keySplines: EASE });
+  return `<g data-beat="${beat}"><animate${attrs({ attributeName: 'opacity', values: '0;0;1', ...fade })}/><animateTransform${attrs({ attributeName: 'transform', type: 'translate', values: '0 4;0 4;0 0', ...fade })}/>`;
 }
 
 function resolveStyle(options) {
