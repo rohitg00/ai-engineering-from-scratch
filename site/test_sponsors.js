@@ -144,6 +144,7 @@ test('sponsors page is rendered from SPONSORS.md at build time', () => {
   assert.ok(generated.includes('<td class="align-right">521,690</td>'));
   assert.ok(generated.includes('<td class="align-right">280,632</td>'));
   assert.ok(generated.includes('<td class="align-right">65,223</td>'));
+  assert.ok(generated.includes('<td class="align-right">11,000+</td>'));
   assert.ok(generated.includes('<li><strong>Open-source baseline</strong>'));
   assert.doesNotMatch(generated, /\n\s*\[Babel\]/);
 });

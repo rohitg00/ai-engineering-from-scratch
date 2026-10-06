@@ -36,12 +36,13 @@ anything else using this project's name is unaffiliated.
 
 These are real numbers, not pitch decks. Website figures come from the production
 [Vercel Web Analytics](https://vercel.com/docs/analytics) dashboard. GitHub figures come
-from the repository traffic API, which reports the last 14 days. All figures were verified
-2026-10-07.
+from the repository traffic API, which reports the last 14 days. Newsletter figures come
+from the Substack dashboard. All figures were verified 2026-10-07.
 
 | Channel | Window | Figure |
 |---|---|---:|
 | Website page views | last 30 days | 521,690 |
+| [AI Engineering Newsletter](https://thatdevopsguy.substack.com) subscribers | all time | 11,000+ |
 | GitHub repository views | 2026-09-22 to 2026-10-05 | 280,632 |
 | GitHub repository views, 30-day rate | estimate from the 14-day figure | about 601,000 |
 | GitHub unique visitors | 2026-09-22 to 2026-10-05 | 72,761 |
@@ -56,8 +57,9 @@ from the repository traffic API, which reports the last 14 days. All figures wer
 
 GitHub reports traffic for 14 days only. At the same daily rate, the repository draws
 about 601,000 views in 30 days, more than the website. Across both, the project draws
-more than 1.1 million views a month. Gold, Platinum, and Diamond sponsors also receive the
-cross-platform co-features defined in the tier ladder below.
+more than 1.1 million views a month. The AI Engineering Newsletter sends a weekly issue
+on AI to more than 11,000 subscribers. Gold, Platinum, and Diamond sponsors also receive
+the cross-platform co-features defined in the tier ladder below.
 
 A sponsor placement at this scale is in the same range as a paid slot in a dev publication
 with one million monthly page views.
