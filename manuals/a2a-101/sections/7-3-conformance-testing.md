@@ -25,7 +25,9 @@ In the first run, 63 of the 85 JSON-RPC records failed for one reason. The TCK's
 
 Of the 31 failures, 21 are skips inside a test body, which the tag records as FAIL and `main` records as SKIPPED. Most expect a task parked in `TASK_STATE_INPUT_REQUIRED`, which `test-runner` never does. With the `main` rule the run reads 62 PASS, 10 FAIL, and 32 SKIPPED, or 86.1 percent.
 
-One of the ten was the kit's. Its `Handler.rest` served no route under `tasks/{id}/pushNotificationConfigs`, although the card declares `pushNotifications` on both JSON bindings. Every declared binding must offer the same operations {{spec §5.1}}. The kit now serves those four routes, and the six HTTP+JSON push records pass. Each requirement still fails on its JSON-RPC side, where the TCK sends `task_id` instead of `taskId`. Two `SHOULD` failures are the card's missing `Cache-Control` and `ETag` headers {{spec §8.6}}. The rest are the TCK's own, or its sample inputs.
+One of the ten was the kit's. Its `Handler.rest` served no route under `tasks/{id}/pushNotificationConfigs`, although the card declares `pushNotifications` on both JSON bindings. Every declared binding must offer the same operations {{spec §5.1}}. The kit now serves those four routes, and the six HTTP+JSON push records pass. Each requirement still fails on its JSON-RPC side, where the TCK sends `task_id` instead of `taskId`.
+
+Two `SHOULD` failures are the card's missing `Cache-Control` and `ETag` headers {{spec §8.6}}. The rest are the TCK's own, or its sample inputs.
 
 ```listing
 title: six push requirements after the kit fix
