@@ -142,37 +142,59 @@
   //    through its lifecycle states (A2A) ──────────────────────────────────────
   function agentCard(host) {
     var W = 520, H = 250, period = 8;
+    var INK = 'var(--ink-soft,#555)';
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
-    var cx = 80, cy = 120;
-    svg.appendChild(svgEl('rect', { x: cx - 36, y: cy - 26, width: 72, height: 52, fill: SURF, stroke: BP, 'stroke-width': '2', rx: '4' }));
-    svg.appendChild(txt(cx, cy - 4, 'client', '10', BP));
-    svg.appendChild(txt(cx, cy + 12, 'reads card', '7', MUTE));
-    // remote agent with a card
-    var rx = 250, ry = 60;
-    svg.appendChild(svgEl('rect', { x: rx - 40, y: ry - 22, width: 80, height: 44, fill: SURF, stroke: MUTE, 'stroke-width': '2', rx: '4' }));
-    svg.appendChild(txt(rx, ry - 2, 'agent card', '9', MUTE));
-    svg.appendChild(txt(rx, ry + 12, '/.well-known', '7', MUTE));
-    // discovery packet client -> card
-    var disc = svgEl('circle', { r: '4', fill: BP });
-    disc.appendChild(anim('opacity', '0;1;1;0;0', '0;0.04;0.16;0.2;1', period));
-    disc.appendChild(motion('M' + cx + ',' + (cy - 20) + ' L' + rx + ',' + (ry + 14), '0;0.18;1', '0;1;1', period));
-    svg.appendChild(disc);
-    // task lifecycle: submitted -> working -> completed
-    var states = ['SUBMITTED', 'WORKING', 'COMPLETED'];
-    var sx = [330, 410, 480], sy = 175;
-    for (var i = 0; i < 3; i++) {
-      var on = i === 0 ? '0;0.2;0.45;0.5' : i === 1 ? '0.5;0.55;0.78;0.8' : '0.8;0.85;0.98;1';
-      var kt = i === 0 ? '0;0.2;0.45;0.5;1' : i === 1 ? '0;0.5;0.55;0.78;0.8;1' : '0;0.8;0.85;0.98;1';
-      var vals = i === 0 ? (SURF + ';' + WARN + ';' + WARN + ';' + SURF + ';' + SURF)
-        : i === 1 ? (SURF + ';' + SURF + ';' + WARN + ';' + WARN + ';' + SURF + ';' + SURF)
-          : (SURF + ';' + SURF + ';' + WARN + ';' + WARN + ';' + WARN);
-      if (i < 2) svg.appendChild(svgEl('line', { x1: sx[i] + 14, y1: sy, x2: sx[i + 1] - 14, y2: sy, stroke: SOFT, 'stroke-width': '1.2' }));
-      var c = svgEl('circle', { cx: sx[i], cy: sy, r: '13', stroke: WARN, 'stroke-width': '1.8', fill: SURF });
-      c.appendChild(anim('fill', vals, kt, period));
-      svg.appendChild(c);
-      svg.appendChild(txt(sx[i], sy + 24, 'TASK_STATE_', '6', MUTE));
-      svg.appendChild(txt(sx[i], sy + 33, states[i], '7', MUTE));
+    host.setAttribute('data-static-time', '6.2');
+    function box(x, y, w, h, stroke, title, titleFill, sub) {
+      svg.appendChild(svgEl('rect', { x: x, y: y, width: w, height: h, fill: SURF, stroke: stroke, 'stroke-width': '2', rx: '4' }));
+      svg.appendChild(txt(x + w / 2, y + h / 2 - 3, title, '10', titleFill));
+      svg.appendChild(txt(x + w / 2, y + h / 2 + 11, sub, '7', MUTE));
     }
+    function edge(d, dashed) {
+      var attrs = { d: d, fill: 'none', stroke: SOFT, 'stroke-width': '1.2' };
+      if (dashed) attrs['stroke-dasharray'] = '4 3';
+      svg.appendChild(svgEl('path', attrs));
+    }
+    function packet(d, color, from, to) {
+      var a = from.toFixed(2), b = (from + 0.01).toFixed(2), c = (to - 0.01).toFixed(2), e = to.toFixed(2);
+      var dot = svgEl('circle', { r: '4', fill: color, opacity: '0' });
+      dot.appendChild(anim('opacity', '0;0;1;1;0;0', '0;' + a + ';' + b + ';' + c + ';' + e + ';1', period));
+      dot.appendChild(motion(d, '0;' + a + ';' + e + ';1', '0;0;1;1', period));
+      svg.appendChild(dot);
+    }
+    var toCard = 'M72 92 L72 37 L300 37', fromCard = 'M300 37 L72 37 L72 92';
+    var send = 'M124 112 L300 112', reply = 'M300 130 L124 130';
+    edge(toCard, true);
+    edge(send, false);
+    edge(reply, true);
+    edge('M400 148 L400 170', false);
+    box(20, 92, 104, 56, BP, 'client agent', BP, 'reads the card first');
+    box(300, 14, 200, 46, MUTE, 'Agent Card', INK, 'skills, interfaces, auth');
+    box(300, 92, 200, 56, WARN, 'remote agent', WARN, 'internals stay opaque');
+    svg.appendChild(txt(186, 31, 'GET /.well-known/agent-card.json', '7', MUTE));
+    svg.appendChild(txt(212, 106, 'SendMessage (POST /message:send)', '7', MUTE));
+    svg.appendChild(txt(212, 143, 'task status + artifact', '7', MUTE));
+    svg.appendChild(txt(296, 188, 'status.state', '7', MUTE, 'end'));
+    var states = ['SUBMITTED', 'WORKING', 'COMPLETED'];
+    var spans = [[0.35, 0.47], [0.47, 0.66], [0.66, 0.97]];
+    for (var i = 0; i < 3; i++) {
+      var x = 306 + i * 64, from = spans[i][0], to = spans[i][1];
+      var on = (from + 0.02).toFixed(2);
+      svg.appendChild(svgEl('rect', { x: x, y: 170, width: 60, height: 28, rx: '4', fill: SURF, stroke: SOFT, 'stroke-width': '1.2' }));
+      var lit = svgEl('rect', { x: x, y: 170, width: 60, height: 28, rx: '4', fill: WARN, 'fill-opacity': '0.35', stroke: WARN, 'stroke-width': '1.8', opacity: '0' });
+      if (i < 2) {
+        lit.appendChild(anim('opacity', '0;0;1;1;0.35;0.35;0', '0;' + from.toFixed(2) + ';' + on + ';' + to.toFixed(2) + ';' + (to + 0.02).toFixed(2) + ';0.97;1', period));
+      } else {
+        lit.appendChild(anim('opacity', '0;0;1;1;0', '0;' + from.toFixed(2) + ';' + on + ';0.97;1', period));
+      }
+      svg.appendChild(lit);
+      svg.appendChild(txt(x + 30, 181, 'TASK_STATE_', '6', MUTE));
+      svg.appendChild(txt(x + 30, 192, states[i], '7.5', INK));
+    }
+    packet(toCard, BP, 0.02, 0.12);
+    packet(fromCard, MUTE, 0.13, 0.23);
+    packet(send, BP, 0.25, 0.35);
+    packet(reply, WARN, 0.70, 0.86);
     svg.appendChild(txt(W / 2, H - 12, 'discover via Agent Card  ->  SendMessage  ->  opaque lifecycle returns artifacts', '9', MUTE));
     shell(host, 'A2A DISCOVERY', 'card then task', svg,
       'A2A is the horizontal wire protocol between agents. A client first fetches an Agent Card from a well-known URL to learn what a remote agent can do, then sends a message that the remote agent turns into a task. The task moves through an opaque lifecycle (TASK_STATE_SUBMITTED, TASK_STATE_WORKING, TASK_STATE_COMPLETED) and returns artifacts. It is HTTP plus REST, reframed with agents as first-class peers.');
