@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 474" role="img" aria-labelledby="fig-artifact-chunks-title fig-artifact-chunks-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-artifact-chunks-title">Five chunks become one stored artifact</title>
+  <desc id="fig-artifact-chunks-desc">Top: the nine stream frames of the streamed run on the kit clock. Frames 1, 2 and 9 are status frames stamped 09:00:01.750Z, 09:00:02.000Z and 09:00:02.250Z, 250 ms apart. Frames 3 to 8 are artifact updates that carry no timestamp and fall between the second and third stamps. Middle: a table of the artifactId and flags each of frames 3 to 8 carries and what it does to the stored task: frame 3 creates artifact test-log with its first part, frames 4 to 7 append one part each, frame 7 sets lastChunk, and frame 8 creates the summary artifact. Bottom: the stored test-log.txt artifact with its five text parts, one per chunk.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE NINE FRAMES ON THE KIT CLOCK</text>
+  <line x1="36" y1="70" x2="51" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="69" y1="70" x2="301" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="319" y1="70" x2="337" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="355" y1="70" x2="372" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="390" y1="70" x2="408" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="426" y1="70" x2="444" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="462" y1="70" x2="480" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="498" y1="70" x2="515" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="533" y1="70" x2="551" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="569" y1="70" x2="604" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="435" y="98" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">frames 3 to 8 carry no timestamp</text>
+  <rect x="20" y="114" width="330" height="26" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="32" y="130.6" font-size="12" font-weight="700">in the stream: artifactId and flags</text>
+  <rect x="356" y="114" width="264" height="26" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="368" y="130.6" font-size="12" font-weight="700">in the stored task</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <line x1="60" y1="44" x2="60" y2="61" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="60" y="38" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">09:00:01.750Z</text>
+  <circle cx="60" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="60" y="74" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">1</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <line x1="310" y1="44" x2="310" y2="61" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="310" y="38" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">09:00:02.000Z</text>
+  <text x="185" y="54" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">250 ms</text>
+  <circle cx="310" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="310" y="74" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">2</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="346" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="346" y="74" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">3</text>
+  <rect x="20" y="140" width="330" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="356" y="140" width="264" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="36" cy="153" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="36" y="157" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">3</text>
+  <text x="54" y="157" font-size="11">test-log, name: test-log.txt</text>
+  <text x="366" y="157" font-size="11">creates artifacts[0] and parts[0]</text>
+  <rect x="20" y="322" width="600" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="32" y="339.6" font-size="12" font-weight="700">artifacts[0] · artifactId test-log · name test-log.txt</text>
+  <rect x="20" y="350" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="366" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">parts[0]</text>
+  <text x="94" y="366" font-size="11">collected 12 items</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="381" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="381" y="74" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">4</text>
+  <rect x="20" y="166" width="330" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="356" y="166" width="264" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="36" cy="179" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="36" y="183" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">4</text>
+  <text x="54" y="183" font-size="11">test-log, append: true</text>
+  <text x="366" y="183" font-size="11">adds parts[1]</text>
+  <rect x="20" y="374" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="390" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">parts[1]</text>
+  <text x="94" y="390" font-size="11" font-style="italic" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">progress line for tests/test_charges.py, at 66%</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="417" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="417" y="74" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">5</text>
+  <rect x="20" y="192" width="330" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="356" y="192" width="264" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="36" cy="205" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="36" y="209" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">5</text>
+  <text x="54" y="209" font-size="11">test-log, append: true</text>
+  <text x="366" y="209" font-size="11">adds parts[2]</text>
+  <rect x="20" y="398" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="414" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">parts[2]</text>
+  <text x="94" y="414" font-size="11" font-style="italic" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">progress line for tests/test_refunds.py, at 100%</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="453" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="453" y="74" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">6</text>
+  <rect x="20" y="218" width="330" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="356" y="218" width="264" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="36" cy="231" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="36" y="235" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">6</text>
+  <text x="54" y="235" font-size="11">test-log, append: true</text>
+  <text x="366" y="235" font-size="11">adds parts[3]</text>
+  <rect x="20" y="422" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="438" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">parts[3]</text>
+  <text x="94" y="438" font-size="11">FAILED tests/test_refunds.py::test_partial_refund - AssertionError: 450 != 500</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="489" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="489" y="74" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">7</text>
+  <rect x="20" y="244" width="330" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="356" y="244" width="264" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="36" cy="257" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="36" y="261" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">7</text>
+  <text x="54" y="261" font-size="11">test-log, append: true, lastChunk: true</text>
+  <text x="366" y="261" font-size="11">adds parts[4], the last chunk</text>
+  <rect x="20" y="446" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="462" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">parts[4]</text>
+  <text x="94" y="462" font-size="11">1 failed, 11 passed in 4.21s</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="524" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="524" y="74" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">8</text>
+  <rect x="20" y="270" width="330" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="356" y="270" width="264" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="36" cy="283" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="36" y="287" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">8</text>
+  <text x="54" y="287" font-size="11">summary, name: summary.json, lastChunk: true</text>
+  <text x="366" y="287" font-size="11">creates artifacts[1], one data part</text>
+  </g>
+  <g data-beat="9"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/>
+  <line x1="560" y1="44" x2="560" y2="61" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="560" y="38" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">09:00:02.250Z</text>
+  <text x="435" y="54" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">250 ms</text>
+  <circle cx="560" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="560" y="74" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">9</text>
+  </g>
+</svg>
