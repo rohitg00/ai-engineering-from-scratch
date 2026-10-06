@@ -259,14 +259,13 @@
     }
     // rising spend bar
     var bar = svgEl('rect', { x: gx + 40, y: 220, width: 40, height: 0, rx: '2', fill: BP });
-    bar.appendChild(anim('y', { values: '220;110;110', dur: '4s', keyTimes: '0;0.7;1', fill: 'freeze' }));
-    bar.appendChild(anim('height', { values: '0;110;110', dur: '4s', keyTimes: '0;0.7;1', fill: 'freeze' }));
-    svg.appendChild(bar);
     var tripped = svgEl('rect', { x: gx + 40, y: 220, width: 40, height: 0, rx: '2', fill: WARN, opacity: '0' });
-    tripped.appendChild(anim('y', { values: '220;110;110', dur: '4s', keyTimes: '0;0.7;1', fill: 'freeze' }));
-    tripped.appendChild(anim('height', { values: '0;110;110', dur: '4s', keyTimes: '0;0.7;1', fill: 'freeze' }));
+    [bar, tripped].forEach(function (r) {
+      r.appendChild(anim('y', { values: '220;110;110', dur: '4s', keyTimes: '0;0.7;1', fill: 'freeze' }));
+      r.appendChild(anim('height', { values: '0;110;110', dur: '4s', keyTimes: '0;0.7;1', fill: 'freeze' }));
+      svg.appendChild(r);
+    });
     tripped.appendChild(anim('opacity', { values: '0;0;1;1', dur: '4s', keyTimes: '0;0.68;0.72;1', fill: 'freeze' }));
-    svg.appendChild(tripped);
     svg.appendChild(txt(gx + 60, 234, '$ spend', { mono: true, size: '9', fill: MUTE }));
     // "CUT" flash when velocity cap trips
     var cut = svgEl('text', { x: gx + 160, y: 100, 'text-anchor': 'middle', 'font-family': 'var(--font-mono,monospace)', 'font-size': '14', fill: WARN, opacity: '0' });

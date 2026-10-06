@@ -271,9 +271,10 @@
     var burn = svgEl('g', { opacity: '0.45' });
     var calm = svgEl('rect', { x: bx + 3, y: by + bh - 3, width: 34, height: 0, fill: BP });
     var hot = svgEl('rect', { x: bx + 3, y: by + bh - 3, width: 34, height: 0, fill: WARN, opacity: '0' });
+    var burnSpline = { keyTimes: '0;0.2;0.45;0.68;0.94;1', calcMode: 'spline', keySplines: EASE + ';' + EASE + ';' + EASE + ';0 0 1 1;0.4 0 1 1' };
     [calm, hot].forEach(function (bar) {
-      bar.appendChild(anim('height', '0;20;44;80;80;0', '5.4s', { keyTimes: '0;0.2;0.45;0.68;0.94;1', calcMode: 'spline', keySplines: EASE + ';' + EASE + ';' + EASE + ';0 0 1 1;0.4 0 1 1' }));
-      bar.appendChild(anim('y', (by + bh - 3) + ';' + (by + bh - 23) + ';' + (by + bh - 47) + ';' + (by + bh - 83) + ';' + (by + bh - 83) + ';' + (by + bh - 3), '5.4s', { keyTimes: '0;0.2;0.45;0.68;0.94;1', calcMode: 'spline', keySplines: EASE + ';' + EASE + ';' + EASE + ';0 0 1 1;0.4 0 1 1' }));
+      bar.appendChild(anim('height', '0;20;44;80;80;0', '5.4s', burnSpline));
+      bar.appendChild(anim('y', (by + bh - 3) + ';' + (by + bh - 23) + ';' + (by + bh - 47) + ';' + (by + bh - 83) + ';' + (by + bh - 83) + ';' + (by + bh - 3), '5.4s', burnSpline));
       burn.appendChild(bar);
     });
     hot.appendChild(anim('opacity', '0;0;0;1;1;0', '5.4s', { keyTimes: '0;0.2;0.45;0.68;0.94;1' }));

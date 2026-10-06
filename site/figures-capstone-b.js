@@ -209,13 +209,13 @@
       s.appendChild(wl);
     }
     var seed = [1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1];
-    var under = svgEl('path', { fill: 'var(--bg-surface,#eee)' }), cells = '';
+    var under = svgEl('path', { fill: 'var(--bg-surface,#eee)' }), cells = '', bw = cw - 6, bh = ch - 4;
     s.appendChild(under);
     for (w = 0; w < rows; w++) {
       for (c = 0; c < cols; c++) {
         var idx = w * cols + c, ok = seed[idx], x = gx0 + c * cw, y = gy0 + w * (ch + 6) + 14, beg = (c * 0.18 + w * 0.06);
-        cells += 'M' + (x + 4) + ' ' + y + 'h' + (cw - 14) + 'a4 4 0 0 1 4 4v' + (ch - 12) + 'a4 4 0 0 1 -4 4h' + (14 - cw) + 'a4 4 0 0 1 -4 -4v' + (12 - ch) + 'a4 4 0 0 1 4 -4z';
-        var cell = rect(x, y, cw - 6, ch - 4, ok ? 'var(--blueprint,#3553ff)' : 'var(--warn,#b8870f)', 'var(--rule-soft,#ddd)');
+        cells += 'M' + (x + 4) + ' ' + y + 'h' + (bw - 8) + 'a4 4 0 0 1 4 4v' + (bh - 8) + 'a4 4 0 0 1 -4 4h' + (8 - bw) + 'a4 4 0 0 1 -4 -4v' + (8 - bh) + 'a4 4 0 0 1 4 -4z';
+        var cell = rect(x, y, bw, bh, ok ? 'var(--blueprint,#3553ff)' : 'var(--warn,#b8870f)', 'var(--rule-soft,#ddd)');
         cell.setAttribute('fill-opacity', '0');
         cell.appendChild(anim('fill-opacity', '0;0;1;1', '4s', { begin: beg + 's', keyTimes: '0;0.2;0.35;1' }));
         s.appendChild(cell);

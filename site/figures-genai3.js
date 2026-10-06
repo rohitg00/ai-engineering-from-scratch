@@ -95,11 +95,11 @@
     svg.appendChild(svgEl('circle', { cx: realC[0], cy: realC[1], r: '3', fill: INK }));
     svg.appendChild(txt(110, 215, 'real (blue)   generated (amber)', 11, MUTE, 'start'));
     var fidLabel = txt(W - 40, 215, 'FID = high', 12, WARN, 'end');
-    fidLabel.appendChild(svgEl('animate', { attributeName: 'opacity', values: '1;0;0;1', keyTimes: '0;0.45;0.7;1', dur: '9s', repeatCount: 'indefinite' }));
+    fidLabel.appendChild(anim('opacity', '1;0;0;1', '9s', { keyTimes: '0;0.45;0.7;1' }));
     svg.appendChild(fidLabel);
     var fidMatch = txt(W - 40, 215, 'FID = high', 12, BP, 'end');
     fidMatch.setAttribute('opacity', '0');
-    fidMatch.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;1;1;0', keyTimes: '0;0.45;0.7;1', dur: '9s', repeatCount: 'indefinite' }));
+    fidMatch.appendChild(anim('opacity', '0;1;1;0', '9s', { keyTimes: '0;0.45;0.7;1' }));
     svg.appendChild(fidMatch);
     frame(host, 'FRECHET INCEPTION DISTANCE', 'two distributions', svg,
       'FID does not score images one by one. It fits a Gaussian to the real images and another to the generated images in Inception feature space, then measures the distance between those two distributions through their means and covariances. As the generated cloud moves to overlap the real one, the distance, and the FID, falls toward zero.');
