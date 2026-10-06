@@ -1,5 +1,5 @@
 {
-  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/version-assets.js",
+  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/build-manuals.js --strict && node site/version-assets.js",
   "outputDirectory": "site",
   "framework": null,
   "installCommand": "echo skip",

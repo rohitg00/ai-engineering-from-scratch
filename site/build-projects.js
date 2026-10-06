@@ -202,4 +202,4 @@ function main() {
 if (require.main === module) {
   try { main(); } catch (error) { console.error(`projects build: ${error.message}`); process.exitCode = 1; }
 }
-module.exports = { buildData, loadProject, bundleContent, within, LEVELS };
+module.exports = { buildData, loadProject, bundleContent, within, localPath, LEVELS };
