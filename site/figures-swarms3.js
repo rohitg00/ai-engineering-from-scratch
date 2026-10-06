@@ -158,7 +158,7 @@
     disc.appendChild(motion('M' + cx + ',' + (cy - 20) + ' L' + rx + ',' + (ry + 14), '0;0.18;1', '0;1;1', period));
     svg.appendChild(disc);
     // task lifecycle: submitted -> working -> completed
-    var states = ['submitted', 'working', 'completed'];
+    var states = ['SUBMITTED', 'WORKING', 'COMPLETED'];
     var sx = [330, 410, 480], sy = 175;
     for (var i = 0; i < 3; i++) {
       var on = i === 0 ? '0;0.2;0.45;0.5' : i === 1 ? '0.5;0.55;0.78;0.8' : '0.8;0.85;0.98;1';
@@ -170,11 +170,12 @@
       var c = svgEl('circle', { cx: sx[i], cy: sy, r: '13', stroke: WARN, 'stroke-width': '1.8', fill: SURF });
       c.appendChild(anim('fill', vals, kt, period));
       svg.appendChild(c);
-      svg.appendChild(txt(sx[i], sy + 27, states[i], '7', MUTE));
+      svg.appendChild(txt(sx[i], sy + 24, 'TASK_STATE_', '6', MUTE));
+      svg.appendChild(txt(sx[i], sy + 33, states[i], '7', MUTE));
     }
-    svg.appendChild(txt(W / 2, H - 12, 'discover via Agent Card  ->  submit task  ->  opaque lifecycle returns artifacts', '9', MUTE));
+    svg.appendChild(txt(W / 2, H - 12, 'discover via Agent Card  ->  SendMessage  ->  opaque lifecycle returns artifacts', '9', MUTE));
     shell(host, 'A2A DISCOVERY', 'card then task', svg,
-      'A2A is the horizontal wire protocol between agents. A client first fetches an Agent Card from a well-known URL to learn what a remote agent can do, then submits a task that moves through an opaque lifecycle (submitted, working, completed) and returns artifacts. It is HTTP plus REST, reframed with agents as first-class peers.');
+      'A2A is the horizontal wire protocol between agents. A client first fetches an Agent Card from a well-known URL to learn what a remote agent can do, then sends a message that the remote agent turns into a task. The task moves through an opaque lifecycle (TASK_STATE_SUBMITTED, TASK_STATE_WORKING, TASK_STATE_COMPLETED) and returns artifacts. It is HTTP plus REST, reframed with agents as first-class peers.');
   }
 
   // ── sw-debate-topology: the same five agents rewire through star, chain,
