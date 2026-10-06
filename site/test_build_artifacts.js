@@ -313,6 +313,7 @@ function loadFigureRuntime({ reducedMotion = false } = {}) {
       disabled: false,
       hidden: false,
       dataset: {},
+      style: {},
       attributes: {},
       children: [],
       parentNode: null,
@@ -2045,6 +2046,43 @@ test('every Agent Skills figure mounts through the shared lesson runtime', () =>
   }
 
   runtime.window.AIFSFigureRuntime.disposeRoot(root);
+});
+
+test('lesson figures never animate a color through CSS var() values', () => {
+  const manifest = buildFigureProviderManifest(path.resolve(__dirname, '..'), __dirname);
+  const runtime = loadFigureRuntime({ reducedMotion: true });
+  const context = { console, document: runtime.window.document, window: runtime.window };
+  for (const provider of manifest.providerOrder) {
+    const file = path.join(__dirname, provider);
+    vm.runInNewContext(fs.readFileSync(file, 'utf8'), context, { filename: file });
+  }
+
+  const colorAttributes = new Set(['fill', 'stroke', 'stop-color', 'color', 'flood-color', 'lighting-color']);
+  const offenders = new Set();
+  const visit = (figureId, node) => {
+    const attribute = node.getAttribute ? node.getAttribute('attributeName') : null;
+    if (colorAttributes.has(attribute)) {
+      const values = ['values', 'from', 'to'].map(name => node.getAttribute(name) || '').join(';');
+      if (values.includes('var(')) offenders.add(`${figureId} animates ${attribute} through var()`);
+    }
+    for (const child of node.children || []) visit(figureId, child);
+  };
+
+  const figures = Object.entries(runtime.window.LESSON_FIGURES);
+  let mounted = 0;
+  for (const [figureId, figure] of figures) {
+    const host = runtime.element('div');
+    try {
+      figure(host, {});
+    } catch {
+      continue;
+    }
+    mounted++;
+    visit(figureId, host);
+  }
+
+  assert.ok(mounted >= figures.length * 0.95, `only ${mounted} of ${figures.length} figures mounted in the test DOM`);
+  assert.deepEqual([...offenders], []);
 });
 
 test('figure manifest deterministically routes only providers needed by lesson figure IDs', () => {
