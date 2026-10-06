@@ -1,6 +1,6 @@
 @page {
   size: letter;
-  margin: 0.72in 0.7in 0.7in;
+  margin: 0.64in 0.62in 0.62in;
   background: #fafaf5;
   @top-left {
     content: string(msection);
@@ -72,8 +72,8 @@ html { background: #fafaf5; }
 body { margin: 0; }
 
 .manual {
-  font-size: 9.6pt;
-  line-height: 1.44;
+  font-size: 9.2pt;
+  line-height: 1.4;
   orphans: 3;
   widows: 3;
 }
@@ -83,16 +83,16 @@ body { margin: 0; }
 .m-toc { page: front; }
 .m-toc { break-after: page; }
 .m-part { page: part; break-before: page; break-after: page; padding-top: 1.6in; }
-.m-section { margin-top: 30pt; padding-top: 16pt; border-top: 1.5pt solid var(--m-part); }
+.m-section { margin-top: 22pt; padding-top: 10pt; border-top: 1.5pt solid var(--m-part); }
 .m-part + .m-section { margin-top: 0; padding-top: 0; border-top: 0; }
 
 .m-section-title { font-size: 36pt; string-set: msection content(text); }
 .m-thesis { font-size: 11.5pt; }
 .m-part-title { font-size: 56pt; }
 .m-cover-title { font-size: 66pt; string-set: mtitle content(text); }
-.m-section-head { margin-bottom: 14pt; padding-bottom: 10pt; }
+.m-section-head { margin-bottom: 10pt; padding-bottom: 7pt; }
 
-.manual h2 { font-size: 13pt; margin: 16pt 0 5pt; break-after: avoid; }
+.manual h2 { font-size: 12.5pt; margin: 12pt 0 4pt; break-after: avoid; }
 .manual h3 { font-size: 7.4pt; margin: 12pt 0 4pt; break-after: avoid; }
 .manual code { font-size: 0.86em; }
 
@@ -107,17 +107,17 @@ body { margin: 0; }
 .m-fig,
 .m-takeaways,
 .m-rule { break-inside: avoid; }
-.m-fig { margin: 12pt 0 14pt; }
-.m-fig-box { padding: 9pt 10pt 10pt; }
-.m-fig-head { margin-bottom: 8pt; }
+.m-fig { margin: 9pt 0 10pt; }
+.m-fig-box { padding: 7pt 8pt 8pt; }
+.m-fig-head { margin-bottom: 6pt; }
 .m-fig-art { overflow: visible; }
 .m-fig-art svg { min-width: 0; }
 .m-fig-cap { font-size: 8pt; }
 
-.m-listing { break-inside: avoid; margin: 10pt 0 12pt; }
-.m-listing-head { padding: 5pt 8pt; }
+.m-listing { break-inside: avoid; margin: 8pt 0 9pt; }
+.m-listing-head { padding: 4pt 8pt; }
 .m-listing pre,
-.m-code { font-size: 7.6pt; line-height: 1.5; padding: 8pt 10pt; white-space: pre-wrap; overflow: visible; }
+.m-code { font-size: 7.6pt; line-height: 1.45; padding: 6pt 8pt; white-space: pre-wrap; overflow: visible; }
 .m-listing-note { font-size: 7.6pt; }
 
 .m-table-wrap { overflow: visible; }
@@ -126,8 +126,8 @@ body { margin: 0; }
 .m-palette { font-size: 8.6pt; }
 
 .m-takeaways,
-.m-rule { padding: 8pt 11pt 3pt; margin: 12pt 0 13pt; }
-.m-sources { font-size: 7.2pt; margin-top: 16pt; }
+.m-rule { padding: 7pt 10pt 2pt; margin: 9pt 0 10pt; }
+.m-sources { font-size: 7.2pt; margin-top: 10pt; }
 
 .m-toc a::after {
   content: target-counter(attr(href), page);

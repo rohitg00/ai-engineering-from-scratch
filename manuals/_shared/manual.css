@@ -96,7 +96,7 @@
   font-family: var(--m-font-mono);
   font-size: 0.72em;
   color: var(--m-ink-mute);
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .m-xref { text-decoration-style: dotted; }
@@ -120,7 +120,7 @@
   border-left: 3px solid var(--m-part);
   padding: 12px 14px 14px;
 }
-.m-fig-head { display: flex; gap: 0.9em; align-items: baseline; margin-bottom: 12px; color: var(--m-ink-mute); }
+.m-fig-head { display: flex; flex-wrap: wrap; gap: 0.5em 0.9em; align-items: baseline; margin-bottom: 12px; color: var(--m-ink-mute); }
 .m-fig-num { color: var(--m-ink); font-weight: 700; white-space: nowrap; }
 .m-fig-title { color: var(--m-part); flex: 1; }
 .m-fig-kind { white-space: nowrap; }
@@ -196,6 +196,7 @@
   font-size: 11.5px;
   line-height: 1.6;
   color: var(--m-ink-mute);
+  overflow-wrap: anywhere;
 }
 .m-sources-label { color: var(--m-ink); margin-right: 0.4em; }
 
