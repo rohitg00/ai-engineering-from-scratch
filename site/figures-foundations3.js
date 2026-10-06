@@ -91,11 +91,15 @@
     for (i = 0; i < 4; i++) {
       c = svgEl('circle', { cx: A[i][0], cy: A[i][1], r: '5', fill: MUTE, opacity: '0' });
       enter(c, (0.1 + i * 0.08) + 's');
-      c.appendChild(svgEl('animate', { attributeName: 'fill', values: MUTE + ';' + BP, dur: '0.01s', begin: (2.1 + i * 0.08) + 's', fill: 'freeze', calcMode: 'discrete' }));
+      svg.appendChild(c);
+      c = svgEl('circle', { cx: A[i][0], cy: A[i][1], r: '5', fill: BP, opacity: '0' });
+      c.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;1', dur: '0.01s', begin: (2.1 + i * 0.08) + 's', fill: 'freeze', calcMode: 'discrete' }));
       svg.appendChild(c);
       c = svgEl('circle', { cx: B[i][0], cy: B[i][1], r: '5', fill: MUTE, opacity: '0' });
       enter(c, (0.14 + i * 0.08) + 's');
-      c.appendChild(svgEl('animate', { attributeName: 'fill', values: MUTE + ';' + WARN, dur: '0.01s', begin: (2.14 + i * 0.08) + 's', fill: 'freeze', calcMode: 'discrete' }));
+      svg.appendChild(c);
+      c = svgEl('circle', { cx: B[i][0], cy: B[i][1], r: '5', fill: WARN, opacity: '0' });
+      c.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;1', dur: '0.01s', begin: (2.14 + i * 0.08) + 's', fill: 'freeze', calcMode: 'discrete' }));
       svg.appendChild(c);
     }
     var cenA = grp(145, 86);
