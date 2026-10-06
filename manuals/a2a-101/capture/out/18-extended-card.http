@@ -1,0 +1,118 @@
+### 1 · GetExtendedAgentCard: no token
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41243
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "GetExtendedAgentCard",
+  "params": {}
+}
+
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+WWW-Authenticate: Bearer realm="deployer"
+
+{
+  "error": {
+    "code": 401,
+    "status": "UNAUTHENTICATED",
+    "message": "Send Authorization: Bearer <token>"
+  }
+}
+
+### 2 · GetExtendedAgentCard: with a token
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41243
+Content-Type: application/json
+A2A-Version: 1.0
+Authorization: Bearer dpl_test_7c1e4b
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "GetExtendedAgentCard",
+  "params": {}
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "name": "deployer",
+    "description": "Deploys a tagged build to staging after an operator approves it.",
+    "supportedInterfaces": [
+      {
+        "url": "http://localhost:41243/a2a/jsonrpc",
+        "protocolBinding": "JSONRPC",
+        "protocolVersion": "1.0"
+      },
+      {
+        "url": "http://localhost:41243/a2a/rest",
+        "protocolBinding": "HTTP+JSON",
+        "protocolVersion": "1.0"
+      }
+    ],
+    "provider": {
+      "url": "https://deploy.example.com",
+      "organization": "Platform Team"
+    },
+    "version": "1.4.1",
+    "capabilities": {
+      "streaming": true,
+      "extendedAgentCard": true
+    },
+    "securitySchemes": {
+      "bearer": {
+        "httpAuthSecurityScheme": {
+          "description": "A token issued by the platform team.",
+          "scheme": "Bearer"
+        }
+      }
+    },
+    "securityRequirements": [
+      {
+        "schemes": {
+          "bearer": {
+            "list": []
+          }
+        }
+      }
+    ],
+    "defaultInputModes": [
+      "text/plain"
+    ],
+    "defaultOutputModes": [
+      "text/plain",
+      "application/json"
+    ],
+    "skills": [
+      {
+        "id": "deploy",
+        "name": "Deploy a build",
+        "description": "Deploy one tagged build to staging, with operator approval.",
+        "tags": [
+          "deploy",
+          "staging"
+        ],
+        "examples": [
+          "Deploy build 2026.10.06-1 to staging"
+        ]
+      },
+      {
+        "id": "rollback",
+        "name": "Roll back a deploy",
+        "description": "Return staging to the previous build. Shown only to authenticated callers.",
+        "tags": [
+          "deploy",
+          "rollback"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,234 @@
+### 1 · POST /message:send
+POST /a2a/rest/message:send HTTP/1.1
+Host: localhost:41241
+A2A-Version: 1.0
+Content-Type: application/a2a+json
+
+{
+  "message": {
+    "messageId": "48f165d5-7b00-47f4-b81e-f86f5c8cc1ab",
+    "role": "ROLE_USER",
+    "parts": [
+      {
+        "text": "Run the unit tests for payments-api at commit 9f3c2e1"
+      }
+    ]
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/a2a+json
+
+{
+  "task": {
+    "id": "bbfb9ea5-50ea-4441-b991-2a8ba0d6f3f3",
+    "contextId": "41c0d462-fed8-4f6b-8569-6c9afe9497c3",
+    "status": {
+      "state": "TASK_STATE_COMPLETED",
+      "message": {
+        "messageId": "722a91ae-18d4-44c4-84a5-94ba73685d3a",
+        "contextId": "41c0d462-fed8-4f6b-8569-6c9afe9497c3",
+        "taskId": "bbfb9ea5-50ea-4441-b991-2a8ba0d6f3f3",
+        "role": "ROLE_AGENT",
+        "parts": [
+          {
+            "text": "1 failed, 11 passed"
+          }
+        ]
+      },
+      "timestamp": "2026-10-06T09:00:06.000Z"
+    },
+    "history": [
+      {
+        "messageId": "48f165d5-7b00-47f4-b81e-f86f5c8cc1ab",
+        "contextId": "41c0d462-fed8-4f6b-8569-6c9afe9497c3",
+        "taskId": "bbfb9ea5-50ea-4441-b991-2a8ba0d6f3f3",
+        "role": "ROLE_USER",
+        "parts": [
+          {
+            "text": "Run the unit tests for payments-api at commit 9f3c2e1"
+          }
+        ]
+      },
+      {
+        "messageId": "43c01fc6-0420-49c3-bc96-d0b839234665",
+        "contextId": "41c0d462-fed8-4f6b-8569-6c9afe9497c3",
+        "taskId": "bbfb9ea5-50ea-4441-b991-2a8ba0d6f3f3",
+        "role": "ROLE_AGENT",
+        "parts": [
+          {
+            "text": "Checking out 9f3c2e1 and starting the suite"
+          }
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "test-log",
+        "name": "test-log.txt",
+        "parts": [
+          {
+            "text": "collected 12 items\n"
+          },
+          {
+            "text": "tests/test_charges.py ........  [ 66%]\n"
+          },
+          {
+            "text": "tests/test_refunds.py ..F.  [100%]\n"
+          },
+          {
+            "text": "FAILED tests/test_refunds.py::test_partial_refund - AssertionError: 450 != 500\n"
+          },
+          {
+            "text": "1 failed, 11 passed in 4.21s\n"
+          }
+        ]
+      },
+      {
+        "artifactId": "summary",
+        "name": "summary.json",
+        "parts": [
+          {
+            "data": {
+              "passed": 11,
+              "failed": 1,
+              "failures": [
+                {
+                  "test": "tests/test_refunds.py::test_partial_refund",
+                  "error": "AssertionError: 450 != 500"
+                }
+              ]
+            },
+            "mediaType": "application/json"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+### 2 · GET /tasks/{id}
+GET /a2a/rest/tasks/bbfb9ea5-50ea-4441-b991-2a8ba0d6f3f3?historyLength=0 HTTP/1.1
+Host: localhost:41241
+A2A-Version: 1.0
+
+HTTP/1.1 200 OK
+Content-Type: application/a2a+json
+
+{
+  "id": "bbfb9ea5-50ea-4441-b991-2a8ba0d6f3f3",
+  "contextId": "41c0d462-fed8-4f6b-8569-6c9afe9497c3",
+  "status": {
+    "state": "TASK_STATE_COMPLETED",
+    "message": {
+      "messageId": "722a91ae-18d4-44c4-84a5-94ba73685d3a",
+      "contextId": "41c0d462-fed8-4f6b-8569-6c9afe9497c3",
+      "taskId": "bbfb9ea5-50ea-4441-b991-2a8ba0d6f3f3",
+      "role": "ROLE_AGENT",
+      "parts": [
+        {
+          "text": "1 failed, 11 passed"
+        }
+      ]
+    },
+    "timestamp": "2026-10-06T09:00:06.000Z"
+  },
+  "artifacts": [
+    {
+      "artifactId": "test-log",
+      "name": "test-log.txt",
+      "parts": [
+        {
+          "text": "collected 12 items\n"
+        },
+        {
+          "text": "tests/test_charges.py ........  [ 66%]\n"
+        },
+        {
+          "text": "tests/test_refunds.py ..F.  [100%]\n"
+        },
+        {
+          "text": "FAILED tests/test_refunds.py::test_partial_refund - AssertionError: 450 != 500\n"
+        },
+        {
+          "text": "1 failed, 11 passed in 4.21s\n"
+        }
+      ]
+    },
+    {
+      "artifactId": "summary",
+      "name": "summary.json",
+      "parts": [
+        {
+          "data": {
+            "passed": 11,
+            "failed": 1,
+            "failures": [
+              {
+                "test": "tests/test_refunds.py::test_partial_refund",
+                "error": "AssertionError: 450 != 500"
+              }
+            ]
+          },
+          "mediaType": "application/json"
+        }
+      ]
+    }
+  ]
+}
+
+### 3 · GET /tasks/{id}: not found
+GET /a2a/rest/tasks/00000000-0000-4000-8000-000000000000 HTTP/1.1
+Host: localhost:41241
+A2A-Version: 1.0
+
+HTTP/1.1 404 Not Found
+Content-Type: application/a2a+json
+
+{
+  "error": {
+    "code": 404,
+    "status": "NOT_FOUND",
+    "message": "Task not found",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "TASK_NOT_FOUND",
+        "domain": "a2a-protocol.org",
+        "metadata": {
+          "taskId": "00000000-0000-4000-8000-000000000000"
+        }
+      }
+    ]
+  }
+}
+
+### 4 · POST /tasks/{id}:cancel: already completed
+POST /a2a/rest/tasks/bbfb9ea5-50ea-4441-b991-2a8ba0d6f3f3:cancel HTTP/1.1
+Host: localhost:41241
+A2A-Version: 1.0
+Content-Type: application/a2a+json
+
+{}
+
+HTTP/1.1 400 Bad Request
+Content-Type: application/a2a+json
+
+{
+  "error": {
+    "code": 400,
+    "status": "FAILED_PRECONDITION",
+    "message": "Task cannot be canceled",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "TASK_NOT_CANCELABLE",
+        "domain": "a2a-protocol.org",
+        "metadata": {
+          "taskId": "bbfb9ea5-50ea-4441-b991-2a8ba0d6f3f3",
+          "state": "TASK_STATE_COMPLETED"
+        }
+      }
+    ]
+  }
+}

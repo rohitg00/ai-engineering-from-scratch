@@ -1,0 +1,210 @@
+### 1 · SendMessage: review a diff
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41242
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "14a03569-d26b-4496-92e5-dfe8cb1855fe",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Review this diff of payments-api."
+        },
+        {
+          "raw": "LS0tIGEvcGF5bWVudHMvcmVmdW5kcy5weQorKysgYi9wYXltZW50cy9yZWZ1bmRzLnB5CkBAIC00MCwzICs0MCw0IEBAIGRlZiBwYXJ0aWFsX3JlZnVuZChjaGFyZ2UsIGFtb3VudCk6Ci0gICAgbmV0ID0gYW1vdW50IC0gZmVlKGNoYXJnZSkKKyAgICBuZXQgPSBpbnQoYW1vdW50KSAtIGZlZShjaGFyZ2UpCg==",
+          "filename": "refunds.diff",
+          "mediaType": "text/x-diff"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "task": {
+      "id": "e5c95b09-6d4b-4b3b-8693-91e81472d12f",
+      "contextId": "49c5a238-4158-455d-8d63-b2cb39c0ecac",
+      "status": {
+        "state": "TASK_STATE_INPUT_REQUIRED",
+        "message": {
+          "messageId": "46494a30-e224-4d71-8d6f-50c110597e3b",
+          "contextId": "49c5a238-4158-455d-8d63-b2cb39c0ecac",
+          "taskId": "e5c95b09-6d4b-4b3b-8693-91e81472d12f",
+          "role": "ROLE_AGENT",
+          "parts": [
+            {
+              "text": "Which base branch should I compare this diff against?"
+            }
+          ]
+        },
+        "timestamp": "2026-10-06T09:00:00.500Z"
+      },
+      "history": [
+        {
+          "messageId": "14a03569-d26b-4496-92e5-dfe8cb1855fe",
+          "contextId": "49c5a238-4158-455d-8d63-b2cb39c0ecac",
+          "taskId": "e5c95b09-6d4b-4b3b-8693-91e81472d12f",
+          "role": "ROLE_USER",
+          "parts": [
+            {
+              "text": "Review this diff of payments-api."
+            },
+            {
+              "raw": "LS0tIGEvcGF5bWVudHMvcmVmdW5kcy5weQorKysgYi9wYXltZW50cy9yZWZ1bmRzLnB5CkBAIC00MCwzICs0MCw0IEBAIGRlZiBwYXJ0aWFsX3JlZnVuZChjaGFyZ2UsIGFtb3VudCk6Ci0gICAgbmV0ID0gYW1vdW50IC0gZmVlKGNoYXJnZSkKKyAgICBuZXQgPSBpbnQoYW1vdW50KSAtIGZlZShjaGFyZ2UpCg==",
+              "filename": "refunds.diff",
+              "mediaType": "text/x-diff"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+### 2 · SendMessage: answer the question
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41242
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "096d3737-42f9-4039-8320-a4737c2b3abe",
+      "contextId": "49c5a238-4158-455d-8d63-b2cb39c0ecac",
+      "taskId": "e5c95b09-6d4b-4b3b-8693-91e81472d12f",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "main"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "task": {
+      "id": "e5c95b09-6d4b-4b3b-8693-91e81472d12f",
+      "contextId": "49c5a238-4158-455d-8d63-b2cb39c0ecac",
+      "status": {
+        "state": "TASK_STATE_COMPLETED",
+        "message": {
+          "messageId": "cdf017cb-27ab-4cd1-9b83-6d0995c9da8b",
+          "contextId": "49c5a238-4158-455d-8d63-b2cb39c0ecac",
+          "taskId": "e5c95b09-6d4b-4b3b-8693-91e81472d12f",
+          "role": "ROLE_AGENT",
+          "parts": [
+            {
+              "text": "2 findings"
+            }
+          ]
+        },
+        "timestamp": "2026-10-06T09:00:01.250Z"
+      },
+      "history": [
+        {
+          "messageId": "14a03569-d26b-4496-92e5-dfe8cb1855fe",
+          "contextId": "49c5a238-4158-455d-8d63-b2cb39c0ecac",
+          "taskId": "e5c95b09-6d4b-4b3b-8693-91e81472d12f",
+          "role": "ROLE_USER",
+          "parts": [
+            {
+              "text": "Review this diff of payments-api."
+            },
+            {
+              "raw": "LS0tIGEvcGF5bWVudHMvcmVmdW5kcy5weQorKysgYi9wYXltZW50cy9yZWZ1bmRzLnB5CkBAIC00MCwzICs0MCw0IEBAIGRlZiBwYXJ0aWFsX3JlZnVuZChjaGFyZ2UsIGFtb3VudCk6Ci0gICAgbmV0ID0gYW1vdW50IC0gZmVlKGNoYXJnZSkKKyAgICBuZXQgPSBpbnQoYW1vdW50KSAtIGZlZShjaGFyZ2UpCg==",
+              "filename": "refunds.diff",
+              "mediaType": "text/x-diff"
+            }
+          ]
+        },
+        {
+          "messageId": "46494a30-e224-4d71-8d6f-50c110597e3b",
+          "contextId": "49c5a238-4158-455d-8d63-b2cb39c0ecac",
+          "taskId": "e5c95b09-6d4b-4b3b-8693-91e81472d12f",
+          "role": "ROLE_AGENT",
+          "parts": [
+            {
+              "text": "Which base branch should I compare this diff against?"
+            }
+          ]
+        },
+        {
+          "messageId": "096d3737-42f9-4039-8320-a4737c2b3abe",
+          "contextId": "49c5a238-4158-455d-8d63-b2cb39c0ecac",
+          "taskId": "e5c95b09-6d4b-4b3b-8693-91e81472d12f",
+          "role": "ROLE_USER",
+          "parts": [
+            {
+              "text": "main"
+            }
+          ]
+        },
+        {
+          "messageId": "8f9ee658-e185-409a-9294-8d4d97ef77bb",
+          "contextId": "49c5a238-4158-455d-8d63-b2cb39c0ecac",
+          "taskId": "e5c95b09-6d4b-4b3b-8693-91e81472d12f",
+          "role": "ROLE_AGENT",
+          "parts": [
+            {
+              "text": "Comparing the diff against main"
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "artifactId": "review",
+          "name": "review.json",
+          "parts": [
+            {
+              "text": "2 findings in payments/refunds.py"
+            },
+            {
+              "data": {
+                "base": "main",
+                "findings": [
+                  {
+                    "file": "payments/refunds.py",
+                    "line": 42,
+                    "severity": "high",
+                    "finding": "Partial refunds round the amount down before the fee is subtracted."
+                  },
+                  {
+                    "file": "payments/refunds.py",
+                    "line": 57,
+                    "severity": "low",
+                    "finding": "The new branch has no test."
+                  }
+                ]
+              },
+              "mediaType": "application/json"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

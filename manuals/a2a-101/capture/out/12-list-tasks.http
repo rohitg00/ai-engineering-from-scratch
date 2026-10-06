@@ -1,0 +1,211 @@
+### 1 · ListTasks: first page
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "ListTasks",
+  "params": {
+    "pageSize": 2,
+    "historyLength": 0
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "tasks": [
+      {
+        "id": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+        "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+        "status": {
+          "state": "TASK_STATE_CANCELED",
+          "message": {
+            "messageId": "9f730657-74a7-43df-b405-5a8270fe73a9",
+            "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+            "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+            "role": "ROLE_AGENT",
+            "parts": [
+              {
+                "text": "Canceled at the client's request."
+              }
+            ]
+          },
+          "timestamp": "2026-10-06T09:00:03.750Z"
+        }
+      },
+      {
+        "id": "8ae21dcb-7449-4d90-82a6-ac01b20fd782",
+        "contextId": "b94d852b-2a8c-4a94-98ca-59286e63871e",
+        "status": {
+          "state": "TASK_STATE_FAILED",
+          "message": {
+            "messageId": "dfc0f22a-ebc5-4883-b3ce-4926752f0a2e",
+            "contextId": "b94d852b-2a8c-4a94-98ca-59286e63871e",
+            "taskId": "8ae21dcb-7449-4d90-82a6-ac01b20fd782",
+            "role": "ROLE_AGENT",
+            "parts": [
+              {
+                "text": "Commit deadbee does not exist in payments-api."
+              }
+            ]
+          },
+          "timestamp": "2026-10-06T09:00:03.000Z"
+        }
+      }
+    ],
+    "nextPageToken": "eyJ0cyI6IjIwMjYtMTAtMDZUMDk6MDA6MDMuMDAwWiIsImlkIjoiOGFlMjFkY2ItNzQ0OS00ZDkwLTgyYTYtYWMwMWIyMGZkNzgyIn0",
+    "pageSize": 2,
+    "totalSize": 5
+  }
+}
+
+### 2 · ListTasks: next page
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "ListTasks",
+  "params": {
+    "pageSize": 2,
+    "pageToken": "eyJ0cyI6IjIwMjYtMTAtMDZUMDk6MDA6MDMuMDAwWiIsImlkIjoiOGFlMjFkY2ItNzQ0OS00ZDkwLTgyYTYtYWMwMWIyMGZkNzgyIn0",
+    "historyLength": 0
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "tasks": [
+      {
+        "id": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+        "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+        "status": {
+          "state": "TASK_STATE_COMPLETED",
+          "message": {
+            "messageId": "eebf738b-ebf0-4246-b7cc-52fbeb0181c5",
+            "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+            "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+            "role": "ROLE_AGENT",
+            "parts": [
+              {
+                "text": "1 failed, 11 passed"
+              }
+            ]
+          },
+          "timestamp": "2026-10-06T09:00:02.250Z"
+        }
+      },
+      {
+        "id": "d0c28826-28b8-4b15-8b53-4e01ae7a5a3c",
+        "contextId": "3afa8576-7a83-4167-bb58-01c3b0942c8f",
+        "status": {
+          "state": "TASK_STATE_COMPLETED",
+          "message": {
+            "messageId": "cea54ab9-aab6-406a-9398-a67a67c85207",
+            "contextId": "3afa8576-7a83-4167-bb58-01c3b0942c8f",
+            "taskId": "d0c28826-28b8-4b15-8b53-4e01ae7a5a3c",
+            "role": "ROLE_AGENT",
+            "parts": [
+              {
+                "text": "1 failed, 11 passed"
+              }
+            ]
+          },
+          "timestamp": "2026-10-06T09:00:01.500Z"
+        }
+      }
+    ],
+    "nextPageToken": "eyJ0cyI6IjIwMjYtMTAtMDZUMDk6MDA6MDEuNTAwWiIsImlkIjoiZDBjMjg4MjYtMjhiOC00YjE1LThiNTMtNGUwMWFlN2E1YTNjIn0",
+    "pageSize": 2,
+    "totalSize": 5
+  }
+}
+
+### 3 · ListTasks: only canceled tasks
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "ListTasks",
+  "params": {
+    "status": "TASK_STATE_CANCELED"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "result": {
+    "tasks": [
+      {
+        "id": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+        "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+        "status": {
+          "state": "TASK_STATE_CANCELED",
+          "message": {
+            "messageId": "9f730657-74a7-43df-b405-5a8270fe73a9",
+            "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+            "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+            "role": "ROLE_AGENT",
+            "parts": [
+              {
+                "text": "Canceled at the client's request."
+              }
+            ]
+          },
+          "timestamp": "2026-10-06T09:00:03.750Z"
+        },
+        "history": [
+          {
+            "messageId": "7b89296c-6dcb-4c50-8857-7eb1924770d3",
+            "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+            "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+            "role": "ROLE_USER",
+            "parts": [
+              {
+                "text": "Run the full suite for payments-api at commit 9f3c2e1"
+              }
+            ]
+          },
+          {
+            "messageId": "4e4233ac-1dca-4ecc-8b5f-0a7afff7c0bf",
+            "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+            "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+            "role": "ROLE_AGENT",
+            "parts": [
+              {
+                "text": "Checking out 9f3c2e1 and starting the suite"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "nextPageToken": "",
+    "pageSize": 50,
+    "totalSize": 1
+  }
+}
