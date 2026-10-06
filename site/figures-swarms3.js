@@ -64,11 +64,15 @@
     svg.appendChild(txt(mx, my + 4, 'mgr', '10', BP));
     var labels = ['$9', '$7', '$4'];
     for (i = 0; i < 3; i++) {
-      var c = svgEl('circle', { cx: bx, cy: bys[i], r: '16', stroke: (i === win ? WARN : MUTE), 'stroke-width': '2', fill: SURF });
-      if (i === win) c.appendChild(anim('fill', SURF + ';' + SURF + ';' + WARN + ';' + WARN + ';' + SURF, '0;0.6;0.66;0.9;1', period));
-      svg.appendChild(c);
+      svg.appendChild(svgEl('circle', { cx: bx, cy: bys[i], r: '16', stroke: (i === win ? WARN : MUTE), 'stroke-width': '2', fill: SURF }));
       svg.appendChild(txt(bx, bys[i] + 4, labels[i], '10', (i === win ? WARN : MUTE)));
     }
+    var award = svgEl('g', { opacity: '0' }, [
+      svgEl('circle', { cx: bx, cy: bys[win], r: '16', stroke: WARN, 'stroke-width': '2', fill: WARN }),
+      txt(bx, bys[win] + 4, labels[win], '10', BG)
+    ]);
+    award.appendChild(anim('opacity', '0;0;1;1;0', '0;0.6;0.66;0.9;1', period));
+    svg.appendChild(award);
     svg.appendChild(txt(W / 2, H - 14, 'announce  ->  bids return  ->  cheapest bid wins the contract', '10', MUTE));
     shell(host, 'CONTRACT NET', 'announce, bid, award', svg,
       'The FIPA contract-net protocol turns task allocation into a sealed auction. A manager broadcasts a call for proposals, idle agents reply with bids, and the manager awards the contract to the best bid. MCP tools/call and modern task markets are JSON-native restatements of this 1980 mechanism.');
@@ -121,16 +125,17 @@
     var tok = svgEl('circle', { r: '7', fill: WARN });
     var mpath = 'M' + ax[0] + ',' + ay[0] + ' L' + ax[1] + ',' + ay[1] + ' L' + ax[2] + ',' + ay[2] + ' L' + ax[0] + ',' + ay[0];
     tok.appendChild(motion(mpath, '0;0.33;0.66;1', '0;0.249;0.519;1', period));
+    var kts = ['0;0.05;0.28;0.33;1', '0;0.33;0.38;0.61;0.66;1', '0;0.66;0.71;0.94;1'];
+    var lights = ['0;1;1;0;0', '0;0;1;1;0;0', '0;0;1;1;0'];
     for (i = 0; i < 3; i++) {
-      var lit = i === 0 ? '0;0.05;0.28;0.33' : (i === 1 ? '0.33;0.38;0.61;0.66' : '0.66;0.71;0.94;1');
-      var kt = i === 0 ? '0;0.05;0.28;0.33;1' : (i === 1 ? '0;0.33;0.38;0.61;0.66;1' : '0;0.66;0.71;0.94;1');
-      var vals = i === 0 ? (SURF + ';' + BP + ';' + BP + ';' + SURF + ';' + SURF)
-        : i === 1 ? (SURF + ';' + SURF + ';' + BP + ';' + BP + ';' + SURF + ';' + SURF)
-          : (SURF + ';' + SURF + ';' + BP + ';' + BP + ';' + SURF);
-      var c = svgEl('circle', { cx: ax[i], cy: ay[i], r: '24', stroke: BP, 'stroke-width': '2', fill: SURF });
-      c.appendChild(anim('fill', vals, kt, period));
-      svg.appendChild(c);
+      svg.appendChild(svgEl('circle', { cx: ax[i], cy: ay[i], r: '24', stroke: BP, 'stroke-width': '2', fill: SURF }));
       svg.appendChild(txt(ax[i], ay[i] + 4, names[i], '9', BP));
+      var c = svgEl('g', { opacity: '0' }, [
+        svgEl('circle', { cx: ax[i], cy: ay[i], r: '24', stroke: BP, 'stroke-width': '2', fill: BP }),
+        txt(ax[i], ay[i] + 4, names[i], '9', BG)
+      ]);
+      c.appendChild(anim('opacity', lights[i], kts[i], period));
+      svg.appendChild(c);
     }
     svg.appendChild(tok);
     svg.appendChild(txt(W / 2, H - 14, 'handoff = a tool call returning the next agent  ·  whoever holds the token is the orchestrator', '10', MUTE));
@@ -331,9 +336,9 @@
     svg.appendChild(svgEl('line', { x1: 80, y1: sty, x2: 440, y2: sty, stroke: SOFT, 'stroke-width': '1.4' }));
     for (i = 0; i < 4; i++) {
       var lit = i === 0 ? '0;0.05;1' : i === 1 ? '0;0.2;0.25;1' : i === 2 ? '0;0.35;0.4;1' : '0;0.78;0.83;1';
-      var vals = i === 0 ? (SURF + ';' + BP + ';' + BP) : i === 1 ? (SURF + ';' + SURF + ';' + BP + ';' + BP) : i === 2 ? (SURF + ';' + SURF + ';' + BP + ';' + BP) : (SURF + ';' + SURF + ';' + BP + ';' + BP);
-      var c = svgEl('rect', { x: stx[i] - 11, y: sty - 11, width: 22, height: 22, rx: '3', stroke: BP, 'stroke-width': '1.8', fill: SURF });
-      c.appendChild(anim('fill', vals, lit, period));
+      svg.appendChild(svgEl('rect', { x: stx[i] - 11, y: sty - 11, width: 22, height: 22, rx: '3', stroke: BP, 'stroke-width': '1.8', fill: SURF }));
+      var c = svgEl('rect', { x: stx[i] - 11, y: sty - 11, width: 22, height: 22, rx: '3', stroke: BP, 'stroke-width': '1.8', fill: BP, opacity: '0' });
+      c.appendChild(anim('opacity', i === 0 ? '0;1;1' : '0;0;1;1', lit, period));
       svg.appendChild(c);
       svg.appendChild(txt(stx[i], sty + 26, 'ckpt ' + i, '7', MUTE));
     }
