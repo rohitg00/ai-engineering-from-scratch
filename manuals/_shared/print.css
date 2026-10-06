@@ -19,21 +19,22 @@
     padding-bottom: 10pt;
   }
   @bottom-left {
-    content: string(mtitle);
+    content: "aiengineeringfromscratch.com";
     text-transform: uppercase;
     font-family: 'JetBrains Mono', monospace;
     font-size: 6.8pt;
     letter-spacing: 0.16em;
-    color: #6f6f6a;
+    color: #3553ff;
     vertical-align: top;
     padding-top: 12pt;
   }
   @bottom-center {
-    content: "AI Engineering from Scratch";
+    content: string(mcopy);
     text-transform: uppercase;
     font-family: 'JetBrains Mono', monospace;
     font-size: 6.8pt;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
     color: #6f6f6a;
     vertical-align: top;
     padding-top: 12pt;
@@ -90,6 +91,12 @@ body { margin: 0; }
 .m-thesis { font-size: 11.5pt; }
 .m-part-title { font-size: 56pt; }
 .m-cover-title { font-size: 66pt; string-set: mtitle content(text); }
+.m-cover-stamp .m-copy { string-set: mcopy content(text); }
+.m-cover-edition { margin-top: 26pt; padding-top: 8pt; border-top: 0.8pt solid #3553ff; }
+.m-cover-links { display: flex; justify-content: space-between; margin-top: 6pt; font-family: 'JetBrains Mono', monospace; font-size: 9pt; }
+.m-cover-links a { color: #3553ff; text-decoration: none; }
+.m-colophon { break-before: page; page: part; margin-top: 0; padding-top: 1.6in; border-top: 0; font-size: 9pt; max-width: 34em; }
+.m-colophon p { margin: 0.6em 0; }
 .m-section-head { margin-bottom: 10pt; padding-bottom: 7pt; }
 
 .manual h2 { font-size: 12.5pt; margin: 12pt 0 4pt; break-after: avoid; }

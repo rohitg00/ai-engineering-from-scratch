@@ -216,7 +216,13 @@
 .m-toc a { text-decoration: none; display: flex; gap: 0.7em; }
 .m-toc .m-kicker { color: var(--m-part); min-width: 2.6em; }
 
+.m-cover-stamp { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4em 1.5em; }
 .m-cover-kicker { color: var(--m-ink-mute); }
+.m-copy { color: var(--m-ink-mute); }
+.m-cover-edition .m-kicker { color: var(--m-ink-mute); }
+.m-colophon { margin-top: 3em; padding-top: 1.2em; border-top: 1px solid var(--m-rule); color: var(--m-ink-soft); }
+.m-colophon .m-kicker { color: var(--m-ink-mute); margin-bottom: 0.6em; }
+.m-colophon p { font-size: 0.92em; max-width: 36em; }
 .m-cover-title { font-size: 96px; margin: 0.12em 0 0.05em; }
 .m-cover-subtitle { font-style: italic; font-size: 1.35em; color: var(--m-ink-soft); margin: 0 0 0.8em; }
 .m-cover-pin { font-family: var(--m-font-mono); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--m-ink-mute); }

@@ -13,6 +13,9 @@ const MANUALS = path.join(ROOT, 'manuals');
 const SITE = __dirname;
 const SITE_ORIGIN = 'https://aiengineeringfromscratch.com';
 const RELEASE_URL = 'https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download';
+const ISSUES_URL = 'https://github.com/rohitg00/ai-engineering-from-scratch/issues';
+const AUTHOR = 'Rohit Ghumare';
+const LICENSE = 'MIT license';
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const KINDS = ['sequence', 'structure', 'flow', 'comparison', 'timeline', 'tree', 'state', 'decision', 'layers'];
 const CONTINUATION = /^\s{2,}\S/;
@@ -562,10 +565,23 @@ function partDots(manual) {
   return `<ul class="m-cover-parts">${manual.parts.map(part => `<li data-accent="${part.accent}">${escapeHtml(part.title)}</li>`).join('')}</ul>`;
 }
 
+function copyLine(manual) { return `© ${manual.edition.slice(0, 4)} ${AUTHOR} · ${LICENSE}`; }
+
+function editionHtml(manual) {
+  const page = `${SITE_ORIGIN}/${pageName(manual.id)}`;
+  return `<div class="m-cover-edition"><div class="m-kicker">Edition ${escapeHtml(manual.edition)} · a snapshot of a living manual · the newest edition is at the link below</div><div class="m-cover-links"><a href="${page}">${page.replace('https://', '')}</a><a href="${escapeHtml(githubSourceUrl(`manuals/${manual.id}`))}">source on GitHub</a></div></div>`;
+}
+
+function colophonHtml(manual) {
+  const page = `${SITE_ORIGIN}/${pageName(manual.id)}`;
+  const pin = manual.pin;
+  return `<section class="m-colophon" id="colophon"><div class="m-kicker">About this edition</div><p>${escapeHtml(manual.title)}, edition ${escapeHtml(manual.edition)}, by ${AUTHOR}. It is part of AI Engineering from Scratch, an open source course at <a href="${SITE_ORIGIN}">aiengineeringfromscratch.com</a>. The newest edition is always at <a href="${page}">${page.replace('https://', '')}</a>.</p><p>${escapeHtml(pin.subject)} ${escapeHtml(pin.version)} is the subject, at commit ${escapeHtml(pin.commit)} of ${escapeHtml(pin.date)}, checked on ${escapeHtml(pin.verified)}. Every listing comes from a recorded run of the capture kit in the manual's source directory, and every quoted rule is checked word for word against the vendored sources.</p><p>${copyLine(manual)}. You can copy and share this manual. Keep this page and the copyright line with it. Report an error at <a href="${ISSUES_URL}">${ISSUES_URL.replace('https://', '')}</a>.</p></section>`;
+}
+
 function coverHtml(manual, mode) {
   const plate = plateHtml(manual, 'class="m-fig m-plate" id="plate"');
-  const head = `<div class="m-kicker m-cover-kicker">AI Engineering from Scratch · Manual</div><h1 class="m-cover-title">${escapeHtml(manual.title)}</h1><p class="m-cover-subtitle">${escapeHtml(manual.subtitle)}</p><div class="m-cover-pin">${pinLine(manual)}</div>`;
-  if (mode === 'print') return `<section class="m-cover" id="cover">${plate}${head}${partDots(manual)}</section>`;
+  const head = `<div class="m-cover-stamp"><span class="m-kicker m-cover-kicker">AI Engineering from Scratch · Manual</span><span class="m-kicker m-copy">${copyLine(manual)}</span></div><h1 class="m-cover-title">${escapeHtml(manual.title)}</h1><p class="m-cover-subtitle">${escapeHtml(manual.subtitle)}</p><div class="m-cover-pin">${pinLine(manual)}</div>`;
+  if (mode === 'print') return `<section class="m-cover" id="cover">${plate}${head}${partDots(manual)}${editionHtml(manual)}</section>`;
   const band = ditherHtml(manual.id, `${manual.pin.subject} ${manual.pin.version}`, false);
   const download = manual.status === 'ready' ? action(pdfUrl(manual), 'Download the PDF', true) : '';
   const draft = manual.status === 'draft' ? '<div class="m-draft-note">Draft edition, not yet listed</div>' : '';
@@ -584,7 +600,7 @@ function manualArticle(manual, mode) {
     body.push(partHtml(manual.reference, 'Reference', band('reference', manual.reference.title)));
     for (const section of manual.reference.sections) body.push(docHtml(section));
   }
-  return `<article class="manual">${coverHtml(manual, mode)}${mode === 'print' ? tocHtml(manual, 'print') : ''}${body.join('\n')}</article>`;
+  return `<article class="manual">${coverHtml(manual, mode)}${mode === 'print' ? tocHtml(manual, 'print') : ''}${body.join('\n')}\n${colophonHtml(manual)}</article>`;
 }
 
 const SITE_HEADER = '<header class="site-header"><div class="header-inner"><a href="index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH</a><nav class="header-nav"><a href="index.html#contents">Contents</a><a href="catalog.html">Catalog</a><a href="projects.html">Projects</a><a href="manuals.html">Manuals</a><a href="prereqs.html">Roadmap</a><a href="glossary.html">Glossary</a><a href="about.html">About</a><a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github"><span>GitHub</span><span class="star-count" data-loading="true">…</span></a></nav><button class="search-toggle" type="button" data-cmd-palette aria-label="Search"><span aria-hidden="true">⌕</span></button><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button"><span class="theme-icon" id="themeIcon">N</span></button></div></header>';
@@ -613,6 +629,7 @@ ${noindex ? '<meta name="robots" content="noindex">\n' : ''}<link rel="canonical
 <a href="#main" class="skip-link">Skip to content</a>
 ${SITE_HEADER}
 ${main}
+<footer class="site-footer"><div class="container footer-inner"><p>AI Engineering from Scratch · open source · free forever.</p><div class="footer-links"><a href="index.html">Home</a><a href="manuals.html">Manuals</a><a href="catalog.html">Course catalog</a><a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a><a href="sponsors.html">Sponsor us</a></div></div></footer>
 <script src="data.js"></script>
 <script src="content-source.js"></script>
 <script src="header.js" defer></script>
@@ -674,6 +691,9 @@ function printPage(manual) {
 <head>
 <meta charset="UTF-8">
 <title>${escapeHtml(manual.title)}: ${escapeHtml(manual.subtitle)}</title>
+<meta name="author" content="${AUTHOR}">
+<meta name="subject" content="${escapeHtml(manual.summary)}">
+<meta name="keywords" content="${escapeHtml(manual.pin.subject)},AI Engineering from Scratch,${escapeHtml(manual.id)}">
 <link href="${FONT_LINK}" rel="stylesheet">
 <style>${css}</style>
 </head>
