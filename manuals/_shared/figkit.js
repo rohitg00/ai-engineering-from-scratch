@@ -23,15 +23,9 @@ const STYLES = {
   fail: { hue: 'rose', dash: 'dashed' },
 };
 
-function readTokens(css = fs.readFileSync(path.join(__dirname, 'tokens.css'), 'utf8')) {
-  const block = /:root\s*\{([\s\S]*?)\}/.exec(css);
-  if (!block) throw new Error('tokens.css: :root block missing');
-  const tokens = new Map();
-  for (const match of block[1].matchAll(/--(m-[a-z-]+):\s*([^;]+);/g)) tokens.set(match[1], match[2].trim().toLowerCase());
-  return tokens;
-}
-
-const TOKENS = readTokens();
+const ROOT_BLOCK = /:root\s*\{([\s\S]*?)\}/.exec(fs.readFileSync(path.join(__dirname, 'tokens.css'), 'utf8'));
+if (!ROOT_BLOCK) throw new Error('tokens.css: :root block missing');
+const TOKENS = new Map([...ROOT_BLOCK[1].matchAll(/--(m-[a-z-]+):\s*([^;]+);/g)].map(match => [match[1], match[2].trim().toLowerCase()]));
 const HUES = [...TOKENS.keys()].map(name => /^m-([a-z]+)-ink$/.exec(name)).filter(Boolean).map(match => match[1]).filter(hue => TOKENS.has(`m-${hue}-fill`));
 
 function escapeHtml(value) {
@@ -273,6 +267,8 @@ function build(dir, check = false) {
   return drift;
 }
 
+module.exports = { HUES, MIN_FONT, TOKENS, WIDTH, build, color, escapeHtml, figure, measure, textBox };
+
 if (require.main === module) {
   const [command, dir] = process.argv.slice(2);
   if (!['build', 'check'].includes(command) || !dir) {
@@ -292,4 +288,3 @@ if (require.main === module) {
   }
 }
 
-module.exports = { ASCENT, DASH, DESCENT, HUES, MIN_FONT, MONO, SERIF, STYLES, TOKENS, WIDTH, Figure, build, color, escapeHtml, figure, measure, readTokens, sources, textBox };

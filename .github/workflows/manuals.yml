@@ -74,26 +74,22 @@ jobs:
           SCOPE: ${{ github.event_name == 'release' && '--ready' || '' }}
         run: node site/build-manuals.js --print dist/manuals $SCOPE
       - name: Paginate with Paged.js
-        id: paginate
         run: |
           set -euo pipefail
           shopt -s nullglob
-          count=0
           for page in dist/manuals/*/print.html; do
             id="$(basename "$(dirname "$page")")"
             npx --yes pagedjs-cli@0.4.3 "$page" -o "dist/manuals/aiefs-manual-${id}.pdf"
-            count=$((count + 1))
           done
-          echo "count=$count" >> "$GITHUB_OUTPUT"
-          echo "paginated $count manual(s)"
       - name: Upload PDFs
-        if: github.event_name == 'workflow_dispatch' && steps.paginate.outputs.count != '0'
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           name: manuals-pdf
           path: dist/manuals/*.pdf
+          if-no-files-found: ignore
       - name: Attach to release
-        if: github.event_name == 'release' && steps.paginate.outputs.count != '0'
+        if: github.event_name == 'release' && hashFiles('dist/manuals/*.pdf') != ''
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}

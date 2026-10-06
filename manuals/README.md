@@ -17,6 +17,6 @@ Read [AUTHORING.md](AUTHORING.md) first. It defines the shape of a manual and of
 
 ```bash
 node --test site/test_manuals.js
-node site/build-manuals.js --strict
+node site/build-manuals.js
 node scripts/audit_manuals.js --manual <id>
 ```

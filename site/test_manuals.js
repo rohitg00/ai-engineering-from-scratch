@@ -122,7 +122,7 @@ function fixture(overrides = {}) {
 }
 
 function issuesFor(dir) {
-  const manual = manuals.loadManual(dir, { strict: true });
+  const manual = manuals.loadManual(dir);
   const issues = [];
   audit.auditManual(manual, (where, rule, message) => issues.push({ where, rule, message }));
   return issues;
@@ -157,7 +157,7 @@ test('inline markup escapes HTML and records cross references with their locatio
 
 test('numbers figures per part and renders the print edition', () => {
   const { dir } = fixture();
-  const manual = manuals.loadManual(dir, { strict: true });
+  const manual = manuals.loadManual(dir);
   assert.equal(manual.figures.get('fig-1-1').number, '1.1');
   const html = manuals.printPage(manual);
   assert.match(html, /Fig\. 1\.1/);
@@ -167,9 +167,9 @@ test('numbers figures per part and renders the print edition', () => {
 });
 
 test('fails the build on dangling cross references anywhere, including the plate caption', () => {
-  assert.throws(() => manuals.loadManual(fixture({ 'sections/1-1-intro.md': SECTION.replace('(#fig-1-1)', '(#fig-9-9)') }).dir, { strict: true }), /intro\.md:\d+: link to unknown anchor #fig-9-9/);
+  assert.throws(() => manuals.loadManual(fixture({ 'sections/1-1-intro.md': SECTION.replace('(#fig-1-1)', '(#fig-9-9)') }).dir), /intro\.md:\d+: link to unknown anchor #fig-9-9/);
   const plated = fixture({ 'manual.json': manifest({ plate: { figure: 'fig-1-1', title: 'plate', caption: 'See [nothing](#s-9-9).' } }) });
-  assert.throws(() => manuals.loadManual(plated.dir, { strict: true }), /plate caption: link to unknown anchor #s-9-9/);
+  assert.throws(() => manuals.loadManual(plated.dir), /plate caption: link to unknown anchor #s-9-9/);
 });
 
 test('the build rejects unsafe or malformed figures', () => {
@@ -180,15 +180,15 @@ test('the build rejects unsafe or malformed figures', () => {
     [SVG.replace(' id="fig-1-1-title"', ''), /<title id="fig-1-1-title">/],
     [SVG.replace('viewBox="0 0 640 120"', 'viewBox="0 0 600 120"'), /viewBox must be/],
   ];
-  for (const [svg, message] of variants) assert.throws(() => manuals.loadManual(fixture({ 'figures/fig-1-1.svg': svg }).dir, { strict: true }), message);
+  for (const [svg, message] of variants) assert.throws(() => manuals.loadManual(fixture({ 'figures/fig-1-1.svg': svg }).dir), message);
 });
 
 test('paths and quote keys fail closed', () => {
-  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ quoteSources: { spec: 'research/sources/missing.md' } }) }).dir, { strict: true }), /quoteSources\.spec: missing/);
-  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ quoteSources: {} }) }).dir, { strict: true }), /rule source key "spec" is not declared/);
-  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ plate: { figure: '../outside', title: 't', caption: 'c.' } }) }).dir, { strict: true }), /plate needs a figure id/);
-  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ edition: 'Fall 2026' }) }).dir, { strict: true }), /edition must be YYYY\.MM/);
-  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ surprise: true }) }).dir, { strict: true }), /unknown key "surprise"/);
+  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ quoteSources: { spec: 'research/sources/missing.md' } }) }).dir), /quoteSources\.spec: missing/);
+  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ quoteSources: {} }) }).dir), /rule source key "spec" is not declared/);
+  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ plate: { figure: '../outside', title: 't', caption: 'c.' } }) }).dir), /plate needs a figure id/);
+  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ edition: 'Fall 2026' }) }).dir), /edition must be YYYY\.MM/);
+  assert.throws(() => manuals.loadManual(fixture({ 'manual.json': manifest({ surprise: true }) }).dir), /unknown key "surprise"/);
   const inline = SECTION.replace('**Task:** a unit of work with an id {{spec §1}}.', '**Task:** as the guide says, "the server answers every message quickly" {{guide §2}}.');
   assert.ok(rules(fixture({ 'sections/1-1-intro.md': inline }).dir).has('quote-key'));
   const declared = fixture({ 'sections/1-1-intro.md': inline, 'manual.json': manifest({ quoteSources: { spec: 'research/sources/spec.md', guide: null } }) });
@@ -248,10 +248,10 @@ test('web output is flat, lists only ready manuals, and a scoped build leaves ot
   const { root, dir } = fixture();
   const site = tempDir('manuals-site-');
   fs.writeFileSync(path.join(site, 'manual-other-101.html'), 'keep');
-  assert.equal(manuals.writeWeb(manuals.loadAll({ root, strict: true, only: 'demo-101' }), site, { only: 'demo-101' }), null);
+  assert.equal(manuals.writeWeb(manuals.loadAll({ root, only: 'demo-101' }), site, { only: 'demo-101' }), null);
   assert.ok(fs.existsSync(path.join(site, 'manual-other-101.html')));
   assert.ok(!fs.existsSync(path.join(site, 'manuals-data.js')));
-  assert.equal(manuals.writeWeb(manuals.loadAll({ root, strict: true }), site), 0);
+  assert.equal(manuals.writeWeb(manuals.loadAll({ root }), site), 0);
   assert.ok(!fs.existsSync(path.join(site, 'manual-other-101.html')));
   const page = fs.readFileSync(path.join(site, 'manual-demo-101.html'), 'utf8');
   assert.match(page, /noindex/);
@@ -259,7 +259,7 @@ test('web output is flat, lists only ready manuals, and a scoped build leaves ot
   assert.doesNotMatch(page, /Download the PDF/);
   fs.writeFileSync(path.join(dir, 'manual.json'), manifest({ status: 'ready' }));
   fs.writeFileSync(path.join(dir, 'README.md'), '# Demo\n');
-  assert.equal(manuals.writeWeb(manuals.loadAll({ root, strict: true }), site), 1);
+  assert.equal(manuals.writeWeb(manuals.loadAll({ root }), site), 1);
   assert.match(fs.readFileSync(path.join(site, 'manuals-data.js'), 'utf8'), /"url": "manual-demo-101\.html"/);
 });
 
@@ -267,8 +267,8 @@ test('scoped loading ignores a broken sibling manual', () => {
   const { root } = fixture();
   fs.mkdirSync(path.join(root, 'broken-101'));
   fs.writeFileSync(path.join(root, 'broken-101', 'manual.json'), '{ not json');
-  assert.throws(() => manuals.loadAll({ root, strict: true }), /broken-101\/manual\.json/);
-  assert.equal(manuals.loadAll({ root, strict: true, only: 'demo-101' }).length, 1);
+  assert.throws(() => manuals.loadAll({ root }), /broken-101\/manual\.json/);
+  assert.equal(manuals.loadAll({ root, only: 'demo-101' }).length, 1);
 });
 
 test('the schema, the hues, and the figure kinds stay in step', () => {

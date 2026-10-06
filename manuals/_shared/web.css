@@ -6,7 +6,6 @@
   justify-content: center;
   padding: 40px 24px 96px;
 }
-.m-sidebar { position: relative; }
 .m-sidebar .m-toc {
   position: sticky;
   top: calc(var(--header-offset, 92px) + 12px);

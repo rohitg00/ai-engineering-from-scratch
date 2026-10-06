@@ -273,7 +273,7 @@ Quotes, code, and citations are exempt.
 
 ```bash
 node --test site/test_manuals.js
-node site/build-manuals.js --strict
+node site/build-manuals.js
 node scripts/audit_manuals.js --manual <id>
 node site/build-manuals.js --print dist/manuals
 npx --yes pagedjs-cli@0.4.3 dist/manuals/<id>/print.html -o dist/manuals/aiefs-manual-<id>.pdf

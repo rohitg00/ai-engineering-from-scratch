@@ -92,8 +92,7 @@
 .m-def { border-top: 1px solid var(--m-rule); padding-top: 0.75em; }
 .m-def + .m-def { margin-top: -0.1em; }
 
-.m-cite,
-.m-path {
+.m-cite {
   font-family: var(--m-font-mono);
   font-size: 0.72em;
   color: var(--m-ink-mute);

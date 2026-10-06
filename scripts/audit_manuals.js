@@ -18,6 +18,7 @@ const TELLS = [
   [/\bhere'?s (the thing|why|what)\b/i, 'staged run-up'],
 ];
 const LIMITS = { sentence: 25, thesis: 30, claim: 28 };
+const RULES = { claim: 'figure-claim', thesis: 'thesis' };
 const COLOR_ATTRS = ['fill', 'stroke', 'stop-color', 'color', 'flood-color', 'lighting-color'];
 const ALLOWED_CLASSES = new Set(['m-serif', 'm-knock']);
 const TEXT_POSITION = ['x', 'y', 'dx', 'dy', 'rotate', 'transform'];
@@ -51,11 +52,11 @@ function proseIssues(span, add) {
   if (/\bmay\b/i.test(stripped)) add(span.where, 'may', '"may" as a verb: use "can" or state the condition');
   for (const match of stripped.matchAll(CONTRACTION)) add(span.where, 'contraction', `contraction "${match[0]}"`);
   const parts = sentences(plain(raw));
-  const rule = span.kind === 'claim' ? 'figure-claim' : span.kind === 'thesis' ? 'thesis' : 'long-sentence';
+  const rule = RULES[span.kind] || 'long-sentence';
+  const limit = LIMITS[span.kind];
   if (span.kind === 'claim' && !/\.$/.test(raw.trim())) add(span.where, rule, 'a figure claim is one sentence that ends with a period');
   if ((span.kind === 'claim' || span.kind === 'thesis') && parts.length !== 1) add(span.where, rule, `a ${span.kind} must be one sentence`);
   for (const sentence of parts) {
-    const limit = LIMITS[span.kind];
     const count = wordCount(sentence);
     if (limit && count > limit) add(span.where, rule, `${count} words (limit ${limit}): "${sentence.slice(0, 90)}"`);
     for (const [pattern, name] of TELLS) if (pattern.test(sentence)) add(span.where, 'tell', `${name}: "${sentence.slice(0, 90)}"`);
@@ -122,11 +123,9 @@ function lintFigure(file, id, add) {
   const texts = [];
   const rects = [];
   const segments = [];
-  let nodes = 0;
   let order = 0;
   const walk = (node, inherited) => {
     if (node.name === '#text' || ['defs', 'marker', 'pattern', 'title', 'desc'].includes(node.name)) return;
-    nodes += 1;
     order += 1;
     const attrs = node.attrs;
     const label = `${where} <${node.name}${attrs.id ? ` id=${attrs.id}` : ''}>`;
@@ -151,6 +150,7 @@ function lintFigure(file, id, add) {
     };
     if (node.name === 'rect') {
       const fill = attrs.fill || '';
+      const filled = !!fill && !['none', 'transparent'].includes(fill);
       const rect = {
         x: Number(attrs.x || 0) + state.tx,
         y: Number(attrs.y || 0) + state.ty,
@@ -158,14 +158,16 @@ function lintFigure(file, id, add) {
         h: Number(attrs.height || 0),
         knock: /\bm-knock\b/.test(attrs.class || ''),
         hatch: /hatch/.test(fill),
-        box: (fill && !['none', 'transparent'].includes(fill)) || (attrs.stroke && attrs.stroke !== 'none'),
-        opaque: !!fill && !['none', 'transparent'].includes(fill) && !fill.startsWith('url(') && attrs['fill-opacity'] === undefined,
+        box: filled || (attrs.stroke && attrs.stroke !== 'none'),
+        opaque: filled && !fill.startsWith('url(') && attrs['fill-opacity'] === undefined,
         order,
       };
       if (rect.w > 0 && rect.h > 0) rects.push(rect);
     }
-    if (node.name === 'line' && attrs.stroke && attrs.stroke !== 'none') segments.push({ x1: Number(attrs.x1 || 0) + state.tx, y1: Number(attrs.y1 || 0) + state.ty, x2: Number(attrs.x2 || 0) + state.tx, y2: Number(attrs.y2 || 0) + state.ty, order });
-    if (node.name === 'path' && attrs.stroke && attrs.stroke !== 'none' && attrs.d) for (const s of pathSegments(attrs.d)) segments.push({ x1: s[0] + state.tx, y1: s[1] + state.ty, x2: s[2] + state.tx, y2: s[3] + state.ty, order });
+    const stroked = attrs.stroke && attrs.stroke !== 'none';
+    const addSegment = (x1, y1, x2, y2) => segments.push({ x1: x1 + state.tx, y1: y1 + state.ty, x2: x2 + state.tx, y2: y2 + state.ty, order });
+    if (node.name === 'line' && stroked) addSegment(Number(attrs.x1 || 0), Number(attrs.y1 || 0), Number(attrs.x2 || 0), Number(attrs.y2 || 0));
+    if (node.name === 'path' && stroked && attrs.d) for (const segment of pathSegments(attrs.d)) addSegment(...segment);
     if (node.name === 'text') {
       for (const child of node.children) {
         if (child.name === 'tspan') for (const key of TEXT_POSITION) if (child.attrs[key] !== undefined) add(label, 'figure-tspan', `positioned tspan (${key}) is not allowed: use one <text> per line`);
@@ -177,22 +179,25 @@ function lintFigure(file, id, add) {
       if (!Number.isFinite(state.size)) { add(label, 'figure-font', `no font-size for "${content}"`); return; }
       if (state.size < figkit.MIN_FONT) add(label, 'figure-font', `font-size ${state.size} below ${figkit.MIN_FONT} for "${content}"`);
       const box = figkit.textBox(content, Number(attrs.x || 0) + state.tx, Number(attrs.y || 0) + state.ty, state.size, { serif: state.serif, spacing: state.spacing || 0, anchor: state.anchor });
-      texts.push({ content, label, ...box, cx: (box.left + box.right) / 2, cy: (box.top + box.bottom) / 2, order });
+      texts.push({ content, label, ...box, order });
       return;
     }
     for (const child of node.children) walk(child, state);
   };
   walk(svg, { tx: 0, ty: 0, size: NaN, anchor: 'start', spacing: 0, serif: false });
-  if (nodes > 450) add(where, 'figure-size', `${nodes} elements: simplify the figure`);
+  if (order > 450) add(where, 'figure-size', `${order} elements: simplify the figure`);
   const inside = (text, rect) => text.left >= rect.x - 0.5 && text.right <= rect.x + rect.w + 0.5 && text.top >= rect.y - 0.5 && text.bottom <= rect.y + rect.h + 0.5;
+  const hatches = rects.filter(rect => rect.hatch);
   for (const text of texts) {
     if (text.left < 1 || text.top < 1 || text.right > vbWidth - 1 || text.bottom > vbHeight - 1) add(text.label, 'figure-bounds', `"${text.content}" runs outside the viewBox`);
-    const containers = rects.filter(rect => rect.box && !rect.hatch && !rect.knock && text.cx > rect.x && text.cx < rect.x + rect.w && text.cy > rect.y && text.cy < rect.y + rect.h);
+    const cx = (text.left + text.right) / 2;
+    const cy = (text.top + text.bottom) / 2;
+    const containers = rects.filter(rect => rect.box && !rect.hatch && !rect.knock && cx > rect.x && cx < rect.x + rect.w && cy > rect.y && cy < rect.y + rect.h);
     if (containers.length) {
       const box = containers.reduce((best, rect) => (rect.w * rect.h < best.w * best.h ? rect : best));
       if (text.left < box.x + 2 || text.right > box.x + box.w - 2 || text.top < box.y + 1 || text.bottom > box.y + box.h - 1) add(text.label, 'figure-spill', `"${text.content}" spills out of its box`);
     }
-    for (const rect of rects.filter(r => r.hatch)) {
+    for (const rect of hatches) {
       if (text.left < rect.x + rect.w && text.right > rect.x && text.top < rect.y + rect.h && text.bottom > rect.y) add(text.label, 'figure-hatch', `"${text.content}" sits on a hatched fill`);
     }
     for (const segment of segments) {
@@ -229,13 +234,10 @@ function auditManual(manual, add) {
   };
   const sources = new Map();
   const sourceFor = file => {
-    if (!sources.has(file)) {
-      const content = fs.readFileSync(file, 'utf8');
-      sources.set(file, { content, lines: new Set(content.split('\n').map(line => line.trim())) });
-    }
+    if (!sources.has(file)) sources.set(file, fs.readFileSync(file, 'utf8'));
     return sources.get(file);
   };
-  const stats = { documents: manual.documents.length, words: 0, figures: manual.figures.size, listings: 0, takeaways: 0 };
+  const stats = { words: 0, listings: 0, takeaways: 0 };
   for (const span of manuals.proseSpans(manual)) {
     proseIssues(span, add);
     if (span.kind === 'sentence') stats.words += plain(span.text).split(' ').filter(Boolean).length;
@@ -260,8 +262,8 @@ function auditManual(manual, add) {
         block.code.split('\n').forEach((line, index) => {
           const trimmed = line.trim();
           if (!trimmed || trimmed === '…') return;
-          const fragments = trimmed.includes('…') ? trimmed.split('…').map(part => part.trim()).filter(part => part.length >= 3) : null;
-          const missing = fragments ? fragments.filter(part => !source.content.includes(part)) : (source.lines.has(trimmed) || source.content.includes(trimmed) ? [] : [trimmed]);
+          const pieces = trimmed.includes('…') ? trimmed.split('…').map(part => part.trim()).filter(part => part.length >= 3) : [trimmed];
+          const missing = pieces.filter(part => !source.includes(part));
           for (const part of missing) add(`${doc.label}:${block.line + index + 1}`, 'provenance', `listing line not in ${block.source}: "${part.slice(0, 80)}"`);
         });
       }
@@ -301,7 +303,7 @@ function main(argv) {
   const add = (where, rule, message) => issues.push({ where, rule, message });
   let loaded;
   try {
-    loaded = manuals.loadAll({ only, strict: true });
+    loaded = manuals.loadAll({ only });
   } catch (error) {
     console.error(`audit-manuals: ${error.message}`);
     return 1;
@@ -317,7 +319,7 @@ function main(argv) {
   };
   for (const manual of loaded) {
     const stats = auditManual(manual, add);
-    console.log(`${manual.id}: ${stats.documents} documents, ${stats.words} prose words, ${stats.figures} figures, ${stats.listings} listings, ${stats.takeaways} takeaways`);
+    console.log(`${manual.id}: ${manual.documents.length} documents, ${stats.words} prose words, ${manual.figures.size} figures, ${stats.listings} listings, ${stats.takeaways} takeaways`);
   }
   flush();
   if (!args.includes('--skip-capture')) {
@@ -330,4 +332,4 @@ function main(argv) {
 
 if (require.main === module) process.exit(main(process.argv));
 
-module.exports = { auditManual, checkCapture, lintFigure, normalizeQuote, proseIssues, sentences, wordCount };
+module.exports = { auditManual, lintFigure };
