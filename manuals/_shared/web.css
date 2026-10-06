@@ -1,0 +1,59 @@
+.m-web { background: var(--m-paper); }
+.m-layout {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 760px);
+  gap: 56px;
+  justify-content: center;
+  padding: 40px 24px 96px;
+}
+.m-sidebar { position: relative; }
+.m-sidebar .m-toc {
+  position: sticky;
+  top: calc(var(--header-offset, 92px) + 12px);
+  max-height: calc(100vh - var(--header-offset, 92px) - 32px);
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.4;
+  padding-right: 8px;
+}
+.m-sidebar .m-toc a { padding: 3px 0; color: var(--m-ink-soft); }
+.m-sidebar .m-toc a:hover { color: var(--m-ink); }
+.m-sidebar .m-toc .m-toc-part > a { color: var(--m-ink); margin-top: 6px; }
+.m-toc-label { margin-bottom: 10px; color: var(--m-ink-mute); }
+
+.m-web .m-cover { padding: 8px 0 40px; border-bottom: 1px solid var(--m-rule); margin-bottom: 24px; }
+.m-web .m-cover-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 22px 0 6px; }
+.m-web .m-action {
+  font-family: var(--m-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--m-ink);
+  padding: 9px 14px;
+  color: var(--m-ink);
+  background: transparent;
+  transition: background 180ms cubic-bezier(0.23, 1, 0.32, 1), color 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.m-web .m-action:hover { background: var(--m-ink); color: var(--m-paper); }
+.m-web .m-action.is-primary { background: var(--m-ink); color: var(--m-paper); }
+.m-web .m-action.is-primary:hover { background: var(--m-accent); border-color: var(--m-accent); }
+.m-web .m-draft-note {
+  font-family: var(--m-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--m-amber-ink);
+  border: 1px dashed var(--m-amber-ink);
+  display: inline-block;
+  padding: 4px 8px;
+  margin-bottom: 14px;
+}
+.m-web .m-section,
+.m-web .m-front-section { padding-top: 56px; margin-top: 8px; }
+.m-web .m-part { border-top: 2px solid var(--m-part); margin-top: 72px; }
+
+@media (max-width: 1080px) {
+  .m-layout { grid-template-columns: minmax(0, 760px); gap: 0; }
+  .m-sidebar { display: none; }
+}
