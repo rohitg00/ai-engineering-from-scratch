@@ -1,6 +1,6 @@
 @page {
   size: letter;
-  margin: 0.78in 0.72in 0.74in;
+  margin: 0.72in 0.7in 0.7in;
   background: #fafaf5;
   @top-left {
     content: string(msection);
@@ -72,8 +72,8 @@ html { background: #fafaf5; }
 body { margin: 0; }
 
 .manual {
-  font-size: 10pt;
-  line-height: 1.48;
+  font-size: 9.6pt;
+  line-height: 1.44;
   orphans: 3;
   widows: 3;
 }
@@ -82,8 +82,9 @@ body { margin: 0; }
 .m-front-section,
 .m-toc { page: front; }
 .m-toc { break-after: page; }
-.m-part { page: part; break-before: page; padding-top: 1.6in; }
-.m-section { break-before: page; }
+.m-part { page: part; break-before: page; break-after: page; padding-top: 1.6in; }
+.m-section { margin-top: 30pt; padding-top: 16pt; border-top: 1.5pt solid var(--m-part); }
+.m-part + .m-section { margin-top: 0; padding-top: 0; border-top: 0; }
 
 .m-section-title { font-size: 36pt; string-set: msection content(text); }
 .m-thesis { font-size: 11.5pt; }
