@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 596" role="img" aria-labelledby="fig-planner-run-title fig-planner-run-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-planner-run-title">The planner run, decision by decision</title>
+  <desc id="fig-planner-run-desc">The planner reads three cards and maps skills to agents. Lane one: SendMessage for run-tests on commit a41d7c3 returns task 954267b7 completed, and summary.json shows 13 passed and 0 failed. Lane two: SendMessage for review-diff returns TASK_STATE_INPUT_REQUIRED asking for the base branch, the planner answers main on the same task, the task completes, and review.json holds one low-severity finding. Lane three: SendMessage with a bearer token for deploy returns TASK_STATE_AUTH_REQUIRED, the planner subscribes, an operator approves outside A2A on the first frame, and the stream ends at TASK_STATE_COMPLETED. The planner decides after each lane and would stop on a failed test or a high-severity finding.</desc>
+  <defs><marker id="fig-planner-run-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-planner-run-head-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-olive-ink, #515f26)"/></marker><marker id="fig-planner-run-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker><marker id="fig-planner-run-head-ink-mute" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink-mute, #6f6f6a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">DISCOVER: ONE CARD PER PORT, SKILLS MAPPED TO AGENTS</text>
+  <rect x="20" y="26" width="192" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="116" y="44.1" font-size="12" text-anchor="middle" font-weight="700">test-runner</text>
+  <text x="116" y="61.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">run-tests</text>
+  <rect x="224" y="26" width="192" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="320" y="44.1" font-size="12" text-anchor="middle" font-weight="700">code-reviewer</text>
+  <text x="320" y="61.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">review-diff, answer-question</text>
+  <rect x="428" y="26" width="192" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="524" y="44.1" font-size="12" text-anchor="middle" font-weight="700">deployer</text>
+  <text x="524" y="61.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">deploy, needs a bearer token</text>
+  <line x1="116" y1="72" x2="116" y2="115" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <rect class="m-knock" x="121" y="82.53" width="130.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="124" y="93.5" font-size="11.5">delegate run-tests</text>
+  <line x1="320" y1="72" x2="320" y2="115" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <rect class="m-knock" x="325" y="82.53" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="328" y="93.5" font-size="11.5">delegate review-diff</text>
+  <line x1="524" y1="72" x2="524" y2="115" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <rect class="m-knock" x="529" y="82.53" width="109.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="532" y="93.5" font-size="11.5">delegate deploy</text>
+  <rect x="20" y="116" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="116" y="133.1" font-size="12" text-anchor="middle" font-weight="700">SendMessage</text>
+  <text x="116" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">commit a41d7c3</text>
+  <rect x="20" y="186" width="192" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="23" y="189" width="186" height="38" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="116" y="202.95" font-size="11.5" text-anchor="middle" font-weight="700">TASK_STATE_COMPLETED</text>
+  <text x="116" y="220.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">task 954267b7</text>
+  <rect x="20" y="256" width="192" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="116" y="273.1" font-size="12" text-anchor="middle" font-weight="700">summary.json</text>
+  <text x="116" y="290.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">passed 13, failed 0</text>
+  <line x1="116" y1="160" x2="116" y2="185" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <line x1="116" y1="230" x2="116" y2="255" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <rect x="224" y="116" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="133.1" font-size="12" text-anchor="middle" font-weight="700">SendMessage</text>
+  <text x="320" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refunds.diff as a raw part</text>
+  <rect x="224" y="186" width="192" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="320" y="202.95" font-size="11.5" text-anchor="middle" font-weight="700">TASK_STATE_INPUT_REQUIRED</text>
+  <text x="320" y="220.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">which base branch?</text>
+  <rect x="224" y="256" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="272.95" font-size="11.5" text-anchor="middle" font-weight="700">SendMessage, same task</text>
+  <text x="320" y="290.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">answer from context: main</text>
+  <rect x="224" y="326" width="192" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="227" y="329" width="186" height="38" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="320" y="342.95" font-size="11.5" text-anchor="middle" font-weight="700">TASK_STATE_COMPLETED</text>
+  <text x="320" y="360.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">task 80bc7784</text>
+  <rect x="224" y="396" width="192" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="320" y="413.1" font-size="12" text-anchor="middle" font-weight="700">review.json</text>
+  <text x="320" y="430.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 finding, severity low</text>
+  <line x1="320" y1="160" x2="320" y2="185" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <line x1="320" y1="230" x2="320" y2="255" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <rect class="m-knock" x="325" y="231.53" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="328" y="242.5" font-size="11.5">answer</text>
+  <line x1="320" y1="300" x2="320" y2="325" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <line x1="320" y1="370" x2="320" y2="395" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <rect x="428" y="116" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="524" y="133.1" font-size="12" text-anchor="middle" font-weight="700">SendMessage</text>
+  <text x="524" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">build 2026.10.06-1, token</text>
+  <rect x="428" y="186" width="192" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="524" y="202.95" font-size="11.5" text-anchor="middle" font-weight="700">TASK_STATE_AUTH_REQUIRED</text>
+  <text x="524" y="220.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">an operator must approve</text>
+  <rect x="428" y="256" width="192" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="524" y="273.1" font-size="12" text-anchor="middle" font-weight="700">SubscribeToTask</text>
+  <text x="524" y="290.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">frame 1: the Task snapshot</text>
+  <rect x="428" y="326" width="192" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="524" y="343.1" font-size="12" text-anchor="middle" font-weight="700">operator approves</text>
+  <text x="524" y="360.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">POST /approve, not A2A</text>
+  <rect x="428" y="396" width="192" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="431" y="399" width="186" height="38" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="524" y="412.95" font-size="11.5" text-anchor="middle" font-weight="700">TASK_STATE_COMPLETED</text>
+  <text x="524" y="430.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">task a31361b3, stream ends</text>
+  <line x1="524" y1="160" x2="524" y2="185" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <line x1="524" y1="230" x2="524" y2="255" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <rect class="m-knock" x="529" y="231.53" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="532" y="242.5" font-size="11.5">follow</text>
+  <line x1="524" y1="300" x2="524" y2="325" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-olive)"/>
+  <rect class="m-knock" x="529" y="301.53" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="532" y="312.5" font-size="11.5" fill="var(--m-olive-ink, #515f26)">on frame 1</text>
+  <line x1="524" y1="370" x2="524" y2="395" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-planner-run-head-indigo)"/>
+  <rect class="m-knock" x="529" y="371.53" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="532" y="382.5" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">3 more frames</text>
+  <rect x="20" y="476" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="116" y="493.1" font-size="12" text-anchor="middle" font-weight="700">tests</text>
+  <text x="116" y="510.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">13 passed, go on</text>
+  <rect x="224" y="476" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="493.1" font-size="12" text-anchor="middle" font-weight="700">review</text>
+  <text x="320" y="510.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 finding, 0 blocking</text>
+  <rect x="428" y="476" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="524" y="493.1" font-size="12" text-anchor="middle" font-weight="700">deploy</text>
+  <text x="524" y="510.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">TASK_STATE_COMPLETED</text>
+  <line x1="116" y1="300" x2="116" y2="475" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink-mute)"/>
+  <line x1="320" y1="440" x2="320" y2="475" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink-mute)"/>
+  <line x1="524" y1="440" x2="524" y2="475" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink-mute)"/>
+  <line x1="212" y1="498" x2="223" y2="498" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <line x1="416" y1="498" x2="427" y2="498" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <text x="20" y="466" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">DECISIONS</text>
+  <rect x="20" y="540" width="600" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="320" y="557.1" font-size="12" text-anchor="middle" font-weight="700">stop</text>
+  <text x="320" y="574.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">if the test task does not complete, a test fails, or a finding is high severity</text>
+</svg>
