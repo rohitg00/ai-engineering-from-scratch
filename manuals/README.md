@@ -1,6 +1,6 @@
 # Manuals
 
-A manual takes one subject at one pinned version and explains it from the first idea down to the wire or the bytes. Lessons teach a concept and move on. A manual stays with one system until you can predict what it does in a case the manual never showed.
+A manual takes one subject at one exact version and explains it from its purpose to each request and response. Lessons teach a concept and move on. A manual stays with one system until you can predict what it does in a case the manual never showed.
 
 Every manual follows the same rules:
 

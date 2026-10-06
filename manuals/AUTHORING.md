@@ -1,6 +1,6 @@
 # Manual authoring contract
 
-A manual explains one subject at one pinned version, from the first idea down to the wire or the bytes. A lesson teaches a concept and moves on. A manual stays with one system until a reader can predict what it will do in a case the manual never showed.
+A manual explains one subject at one exact version, from its purpose to each request and response. A lesson teaches a concept and moves on. A manual stays with one system until a reader can predict what it will do in a case the manual never showed.
 
 A 101 manual runs 60 to 100 pages: 6 to 8 parts, about 25 sections, 30 to 40 figures. Every record it shows came from a run. Every claim it makes traces to a ranked source. A claim that cannot be traced is cut.
 
@@ -39,7 +39,7 @@ The `<id>` is lowercase and hyphenated, such as `a2a-101`. It matches the direct
 | `id`, `title`, `subtitle`, `summary` | identity and the one-paragraph pitch |
 | `audience` | who the reader is and what they already know |
 | `edition` | `YYYY.MM` of this edition |
-| `status` | `draft` builds the page without listing it; `ready` lists it and ships the PDF |
+| `status` | `draft` builds the page and does not list it. `ready` lists the page and adds the PDF to each release |
 | `pin` | `subject`, `version`, `source` URL, `commit`, release `date`, `verified` date |
 | `outcomes` | at least three things the reader can do after the manual |
 | `palette` | the colour table: each `hue` and the one `meaning` it has in this manual |
@@ -58,22 +58,20 @@ The `<id>` is lowercase and hyphenated, such as `a2a-101`. It matches the direct
 
 **Front matter.** One document, `front.md`, titled "How to read this manual". It covers, in order: who the manual is for and what they can do after it, how it was made (the ranked sources table), the capture kit, the conventions, a first run the reader can do offline, how the parts are ordered (a `parts` block), colour in figures (a `palette` block), and figure 0.1, which teaches the arrow and colour grammar this manual uses.
 
-**Part 1, the model.** The whole subject in four sections, read once and completely:
+**Part 1, the subject on one page.** Two sections, read once and completely:
 
-1. what it is for, with the failure it prevents;
-2. the architecture in one page;
-3. the core rule and the invariants that make it true;
-4. the life of one request, end to end, from a capture.
+1. what the subject standardizes, and what it leaves to each implementation;
+2. one complete exchange from a capture, from the first request to the last response.
 
-**Middle parts.** Each part zooms into one layer of the model from Part 1. Order them from the idea toward the bytes.
+**Middle parts.** One part for each layer of the subject, such as its discovery document, its data model, its operations, its bindings, and its security and extension rules. Each section title names one thing that the reader can find in the specification: an object, an operation, a binding, a header, an error, or an extension. Do not write a section about a general idea, such as state machines or threats. Put the idea in the section about the object or the operation that has it.
 
-**Last part, practice.** Build one real thing with the subject. Then a sharp edges table (rule, what breaks, what to do instead) that doubles as a review checklist. Then the limits and non-goals.
+**Last part, implementation.** Build a client and a server with the subject. Then show how to test both with the official conformance tools, and how to move from the previous version.
 
 **Reference.** API or method tables, objects and fields, states, errors, a glossary, the sources, and the index of figures (a `figure-index` block).
 
 ## The shape of a section
 
-1. `# Title`. Teach the mechanism, not the product. "Tasks as state machines", never a product name first.
+1. `# Title`. Name the part of the subject that the section explains, with the name that the specification uses, such as "CancelTask and terminal states".
 2. `> Thesis`. One sentence of at most 30 words: the claim the section proves.
 3. An opening paragraph that starts from a concrete situation, then says "When you finish this section, you can ...". The outcome sentence must be in the first two paragraphs.
 4. The body: `##` subsections, definition paragraphs that start with `**Term:**`, figures, listings, and tables.
@@ -244,7 +242,7 @@ Save it as `figures/src/fig-1-2.js` and run `node manuals/_shared/figkit.js buil
 
 ## Listings and the capture kit
 
-- A JSON, HTTP, SSE, or JSONL block must be a `listing` with a `source`. The audit fails a bare `json` fence.
+- A JSON, HTTP, SSE, or JSONL block must be a `listing` with a `source`. The audit fails a `json` fence that is not a listing.
 - The capture kit lives in `capture/`. It runs offline, needs no network and no keys, and follows the repository dependency allowlist.
 - `capture.run` writes `capture/out/`. `capture.check` writes to a temporary directory and compares with `capture/out/` after masking values that change on every run, such as timestamps and generated ids. The audit runs `capture.check` and fails on drift.
 - A listing head names its source file, so a reader can open the full record.
@@ -265,7 +263,13 @@ The audit enforces these limits from Simplified Technical English:
 - at most 25 words in a sentence, 30 in a thesis, 28 in a figure claim;
 - no semicolons, no contractions, no em or en dashes;
 - no "may" as a verb: say "can", or state the condition;
+- at most 20 words in each takeaway, which is an instruction, and at most six sentences in a paragraph;
+- no figurative or slang words: write "the HTTP request" or "the stream", never "the wire";
+- no technical noun used as a verb, such as "gate", "ship", or "surface";
+- no stock AI vocabulary, such as "robust", "seamless", "crucial", or "leverage";
 - no filler intensifiers or "not X but Y" constructions.
+
+The word list is `LEXICON` in `scripts/audit_manuals.js`. Each entry names the plain word to use instead.
 
 Quotes, code, and citations are exempt.
 
@@ -279,10 +283,10 @@ node site/build-manuals.js --print dist/manuals
 npx --yes pagedjs-cli@0.4.3 dist/manuals/<id>/print.html -o dist/manuals/aiefs-manual-<id>.pdf
 ```
 
-`site/build-manuals.js` writes `site/manual-<id>.html` and `site/manuals-data.js`. Both are generated on deploy and never committed. The PDF is built in CI and attached to each release as `aiefs-manual-<id>.pdf`.
+`site/build-manuals.js` writes `site/manual-<id>.html`, the index `site/manuals.html`, and `site/manuals-data.js`. All three are generated on deploy and never committed. The index lists `ready` manuals only. Add `--drafts` to list drafts too when you preview locally. The PDF is built in CI and attached to each release as `aiefs-manual-<id>.pdf`.
 
 ## Status and commits
 
 - A `draft` manual builds at `/manual-<id>.html` with `noindex` and is not listed.
-- A `ready` manual is listed on the manuals page, needs a `README.md`, and ships a PDF with each release.
+- A `ready` manual is listed on the manuals page, needs a `README.md`, and adds a PDF to each release.
 - Commit one section per commit, with its figures and the captures it adds: `feat(manual/<id>): <section slug>`.
