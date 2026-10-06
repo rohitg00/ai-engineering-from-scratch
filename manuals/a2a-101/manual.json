@@ -5,7 +5,7 @@
   "summary": "How one agent gives work to another agent that it cannot see inside. Each request, response, and stream event in this manual comes from a recorded run.",
   "audience": "You are an engineer who has built an agent that calls tools or a model API. You know HTTP and JSON. You have not read the A2A specification.",
   "edition": "2026.10",
-  "status": "draft",
+  "status": "ready",
   "pin": {
     "subject": "A2A protocol",
     "version": "1.0.1",
