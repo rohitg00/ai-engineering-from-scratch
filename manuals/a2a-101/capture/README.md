@@ -17,7 +17,7 @@ The output is deterministic. Ids come from seeded generators, timestamps from a 
 | `code-reviewer` | 41242 | reviews a diff against a base branch | direct message replies, `TASK_STATE_INPUT_REQUIRED`, rejected content types, no push support |
 | `deployer` | 41243 | deploys a build to staging after an operator approves | bearer authentication, `TASK_STATE_AUTH_REQUIRED` with approval outside A2A, rejection, extended and signed cards |
 
-`planner.py` is the client agent of section 7.2. It reads the three cards, picks an agent for each skill, and handles every state a task reaches.
+`planner.py` is the client agent of section 7.1. It reads the three cards, picks an agent for each skill, and handles every state a task reaches.
 
 ## The scenarios
 
