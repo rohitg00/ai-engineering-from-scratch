@@ -141,7 +141,9 @@ test('sponsors page is rendered from SPONSORS.md at build time', () => {
   assert.ok(generated.includes(`<a href="${sponsorUrl}" target="_blank" rel="noopener"><picture><source media="(prefers-color-scheme: dark)" srcset="https://serpapi.com/assets/media_kit/logo-with-wordmark-white.svg">`));
   assert.ok(generated.includes(`<a href="${nitroUrl}" target="_blank" rel="noopener"><img src="${nitroLogo}" alt="NitroStack" width="56"></a> <strong>NitroStack</strong></td><td>${nitroDescription}</td>`));
   assert.ok(generated.includes('href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/BACKERS.md" target="_blank" rel="noopener"'));
-  assert.ok(generated.includes('<td class="align-right">114,584 (+4%)</td>'));
+  assert.ok(generated.includes('<td class="align-right">521,690</td>'));
+  assert.ok(generated.includes('<td class="align-right">280,632</td>'));
+  assert.ok(generated.includes('<td class="align-right">65,223</td>'));
   assert.ok(generated.includes('<li><strong>Open-source baseline</strong>'));
   assert.doesNotMatch(generated, /\n\s*\[Babel\]/);
 });
