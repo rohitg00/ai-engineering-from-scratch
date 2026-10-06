@@ -109,8 +109,12 @@
     var gx = [160, 372], glab = ['guard in', 'guard out'], i;
     for (i = 0; i < 2; i++) {
       var g = svgEl('rect', { x: gx[i] - 9, y: y - 38, width: 18, height: 76, fill: SURF, stroke: BP, 'stroke-width': '2', rx: '3' });
-      if (i === 0) g.appendChild(anim('stroke', BP + ';' + BP + ';' + WARN + ';' + WARN + ';' + BP + ';' + BP, '0;0.4;0.43;0.52;0.56;1', period));
       svg.appendChild(g);
+      if (i === 0) {
+        var hit = svgEl('rect', { x: gx[i] - 9, y: y - 38, width: 18, height: 76, fill: 'none', stroke: WARN, 'stroke-width': '2', rx: '3', opacity: '0' });
+        hit.appendChild(anim('opacity', '0;0;1;1;0;0', '0;0.4;0.43;0.52;0.56;1', period));
+        svg.appendChild(hit);
+      }
       svg.appendChild(txt(gx[i], y - 46, glab[i], '8', BP));
       svg.appendChild(txt(gx[i], y + 52, 'S1-S14', '7', MUTE));
     }
