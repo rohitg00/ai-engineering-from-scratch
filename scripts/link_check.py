@@ -145,7 +145,7 @@ def iter_markdown_files(
     for r in roots:
         if r.is_file():
             if r.suffix == ".md":
-                yield path
+                yield r
             continue
         for dirpath, dirnames, filenames in os.walk(r):
             dirnames[:] = [d for d in dirnames if d not in EXCLUDE_DIRS]
@@ -287,7 +287,7 @@ def run(args: argparse.Namespace) -> int:
     if args.path is not None:
         path_arg: Path | None = Path(args.path)
         if not path_arg.is_absolute():
-            path_arg = (Path.cwd() / args.path).resolve()
+            path_arg = (Path.cwd() / path_arg).resolve()
     else:
         path_arg = None
 
