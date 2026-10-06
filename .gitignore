@@ -98,3 +98,5 @@ site/projects-data.js
 site/project-content/
 site/manual-*.html
 site/manuals-data.js
+
+!manuals/*/capture/out/*.log
