@@ -45,8 +45,8 @@ test('sponsor placements preserve copy, destinations, and local artwork without 
     },
     {
       url: 'https://nitrostack.ai/referral/aiengineeringfromscratch',
-      src: 'assets/sponsors/nitrostack-banner.png',
-      alt: 'NitroStack. Build Production Ready MCP Apps with NitroStack. An end-to-end development platform for building, testing, debugging, and deploying production-ready MCP servers and applications. Click to know more.',
+      src: 'assets/sponsors/nitrostack-banner-equal.png',
+      alt: 'NitroStack. Build and deploy your MCP app in 10 minutes. Get your product into ChatGPT and Claude marketplaces with free cloud deployment.',
     },
   ];
   assert.equal(banners.length, expectedBanners.length);
