@@ -17,6 +17,7 @@ build/
 node_modules/
 .next/
 out/
+!manuals/*/capture/out/
 .vercel
 
 target/
