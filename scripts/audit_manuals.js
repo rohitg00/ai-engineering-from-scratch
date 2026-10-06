@@ -27,10 +27,10 @@ function rel(file) { return path.relative(ROOT, file).split(path.sep).join('/');
 
 function plain(text) {
   return String(text)
-    .replace(/`[^`]*`/g, 'code')
+    .replace(/`[^`]*`/g, 'Code')
     .replace(/\{\{[^}]*\}\}/g, '')
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
-    .replace(/[“"][^”"]*[”"]/g, 'quote')
+    .replace(/[“"][^”"]*[”"]/g, 'Quote')
     .replace(/\*\*?/g, '')
     .replace(/\s+/g, ' ')
     .trim();
@@ -38,7 +38,7 @@ function plain(text) {
 
 function sentences(text) {
   let s = text.replace(/\b(e\.g|i\.e|vs|etc|approx|Fig|No|U\.S|Inc|Dr|Mr|Ms|p)\./g, match => match.replace(/\./g, '<dot>'));
-  s = s.replace(/([.!?]["”)])\s+(?=[A-Z0-9"(“])/g, '$1<split>').replace(/([.!?])\s+(?=[A-Z0-9"(“])/g, '$1<split>');
+  s = s.replace(/([.!?]["”)])\s+(?=[A-Z0-9"(“§])/g, '$1<split>').replace(/([.!?])\s+(?=[A-Z0-9"(“§])/g, '$1<split>');
   return s.split('<split>').map(part => part.replace(/<dot>/g, '.').trim()).filter(Boolean);
 }
 

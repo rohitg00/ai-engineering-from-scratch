@@ -217,6 +217,13 @@ test('every reader-visible string goes through the prose lint', () => {
   assert.ok(issues.some(issue => issue.rule === 'semicolon' && /palette blue/.test(issue.where)));
 });
 
+test('sentences that open with code, a quote, or a section sign count on their own', () => {
+  const opener = 'Your test needs a manual and a small task that the renderer can draw for it.';
+  const text = `${opener} \`GetTask\` reads the stored task back and returns its state and history to you. "Every reply carries a task" is how the guide puts it in its overview. §3.1.3 names the moments when a client calls it after a stream ends.`;
+  const found = rules(fixture({ 'sections/1-1-intro.md': SECTION.replace('Your test needs a manual.', text) }).dir);
+  assert.ok(!found.has('long-sentence'));
+});
+
 test('audit enforces section shape', () => {
   const shapeless = SECTION.replace('When you finish this section, you can render one and check it.', 'It renders.').replace(/```takeaways[\s\S]*?```\n/, '').replace(/\nSources:.*\n$/, '\n');
   const found = rules(fixture({ 'sections/1-1-intro.md': shapeless }).dir);
