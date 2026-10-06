@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 334" role="img" aria-labelledby="fig-blocking-and-return-title fig-blocking-and-return-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-blocking-and-return-title">A blocking call and a call that returns at once</title>
+  <desc id="fig-blocking-and-return-desc">Two timelines aligned at the request, on the kit clock. Track A: one blocking SendMessage for task 3d8f7801 stays open while the task passes TASK_STATE_SUBMITTED and TASK_STATE_WORKING, which the client never sees, and six artifact chunks arrive. The reply comes at TASK_STATE_COMPLETED, 09:00:00.750. Track B: SendMessage with returnImmediately for task d0c28826 returns at TASK_STATE_SUBMITTED, 09:00:01.000. A first GetTask sees TASK_STATE_WORKING at 09:00:01.250 with one log part, and a second GetTask sees TASK_STATE_COMPLETED at 09:00:01.500 with all artifacts.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · BLOCKING</text>
+  <text x="150" y="18" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SendMessage with no configuration, task 3d8f7801</text>
+  <line x1="40" y1="64" x2="620" y2="64" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="20" y="118" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · AT ONCE</text>
+  <text x="150" y="118" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">returnImmediately, then GetTask twice, task d0c28826</text>
+  <line x1="40" y1="164" x2="620" y2="164" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="40" y1="212" x2="620" y2="212" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="200" y1="208" x2="200" y2="216" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="200" y="230" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">TASK_STATE_SUBMITTED</text>
+  <line x1="360" y1="208" x2="360" y2="216" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="360" y="230" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">TASK_STATE_WORKING</text>
+  <line x1="520" y1="208" x2="520" y2="216" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="520" y="230" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">TASK_STATE_COMPLETED</text>
+  <text x="20" y="230" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">KIT CLOCK</text>
+  <circle cx="30" cy="254" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="258" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">1</text>
+  <text x="48" y="258" font-size="11" class="m-serif">SendMessage, blocking: one reply, the completed task with test-log.txt and summary.json</text>
+  <circle cx="30" cy="274" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="278" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">2</text>
+  <text x="48" y="278" font-size="11" class="m-serif">SendMessage with returnImmediately: the reply holds TASK_STATE_SUBMITTED</text>
+  <circle cx="30" cy="294" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="298" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">3</text>
+  <text x="48" y="298" font-size="11" class="m-serif">GetTask, historyLength 0: TASK_STATE_WORKING and the first of five log parts</text>
+  <circle cx="30" cy="314" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="318" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">4</text>
+  <text x="48" y="318" font-size="11" class="m-serif">GetTask, historyLength 0: TASK_STATE_COMPLETED, five log parts, and summary.json</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="50" y="74" width="470" height="20" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="63" cy="84" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="63" y="88" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">1</text>
+  <text x="78" y="88" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">one request, held open until the reply</text>
+  <line x1="375" y1="58" x2="375" y2="70" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="440" y1="58" x2="440" y2="70" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="455" y1="58" x2="455" y2="70" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="470" y1="58" x2="470" y2="70" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="485" y1="58" x2="485" y2="70" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="500" y1="58" x2="500" y2="70" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <rect x="196" y="60" width="8" height="8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="200" y="50" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">not seen</text>
+  <rect x="356" y="60" width="8" height="8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="360" y="50" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">not seen</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="516" y="60" width="8" height="8" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="520" y="50" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-amber-ink, #85590c)">09:00:00.750</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="50" y="174" width="150" height="20" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="63" cy="184" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="63" y="188" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">2</text>
+  <text x="78" y="188" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">SendMessage</text>
+  <rect x="196" y="160" width="8" height="8" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="200" y="150" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-amber-ink, #85590c)">09:00:01.000</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="392" y="174" width="40" height="20" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="412" cy="184" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="412" y="188" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">3</text>
+  <line x1="375" y1="158" x2="375" y2="170" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <rect x="356" y="160" width="8" height="8" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="360" y="150" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-amber-ink, #85590c)">09:00:01.250</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <rect x="540" y="174" width="40" height="20" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="560" cy="184" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="560" y="188" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">4</text>
+  <line x1="440" y1="158" x2="440" y2="170" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="455" y1="158" x2="455" y2="170" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="470" y1="158" x2="470" y2="170" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="485" y1="158" x2="485" y2="170" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="500" y1="158" x2="500" y2="170" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <rect x="516" y="160" width="8" height="8" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="520" y="150" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-amber-ink, #85590c)">09:00:01.500</text>
+  </g>
+</svg>
