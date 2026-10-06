@@ -1,20 +1,20 @@
-# Building a planner
+# A client
 
 > A working client is a loop that reads cards, picks an agent for each skill, and has a branch for every state a task can reach.
 
-The planner has one job: ship a change to `payments-api`. It must run the tests on commit `a41d7c3`, get the diff reviewed, and deploy build `2026.10.06-1` to staging. It starts with three port numbers, a token for the deployer, and the name of the base branch. The file `capture/planner.py` does the whole job in 88 lines, and `19-planner.log` records each decision.
+The planner has one job: deliver a change to `payments-api`. It must run the tests on commit `a41d7c3`, get the diff reviewed, and deploy build `2026.10.06-1` to staging. It starts with three port numbers, a token for the deployer, and the name of the base branch. The file `capture/planner.py` does the whole job in 86 lines, and `19-planner.log` records each decision.
 
 When you finish this section, you can write a client that delegates by skill and handles every state a task reaches.
 
 ## Discover: read every card first
 
-Before it sends anything, the planner reads the card on each port. It takes the interface whose `protocolBinding` is `JSONRPC` at `protocolVersion` `1.0`, and it files each skill id under the agent that offers it. For each agent it also notes whether the card sets `streaming` and whether it lists `securityRequirements`.
+Before it sends anything, the planner reads the card on each port. It takes the interface whose `protocolBinding` is `JSONRPC` at `protocolVersion` `1.0`, and it files each skill id under the agent that offers it. It also notes each card's `streaming` flag and `securityRequirements`.
 
-The specification's rule is positional, to "select the first supported transport" {{spec §8.3.2}}. Both rules agree here, because JSON-RPC comes first on all three cards.
+The specification's rule is positional, to "select the first supported transport" {{spec §8.3.2}}. Both rules agree here, because JSON-RPC comes first on all three cards. [Discovery and supported interfaces](#s-discovery-and-supported-interfaces) gives the full selection rule.
 
 ## Delegate: send once, then switch on the reply
 
-Each delegation is one `SendMessage` without `returnImmediately`. It blocks until the task reaches a terminal or an interrupted state, as [blocking and polling](#s-send-message) explains. The bearer token goes only to agents whose card asked for one, as [authentication and authorization](#s-security-schemes-and-in-task-authorization) describes. A loop then switches on the reply.
+Each delegation is one `SendMessage` without `returnImmediately`. It blocks until the task reaches a terminal or an interrupted state, as [SendMessage](#s-send-message) explains. The bearer token goes only to agents whose card asked for one, as [security schemes](#s-security-schemes-and-in-task-authorization) describes. A loop then switches on the reply.
 
 ```listing
 title: delegate, the loop that switches on every reply
@@ -46,13 +46,13 @@ note: The loop of the delegate method, complete. The lines above it, which pick 
                 return self.follow(agent, task, headers)
 ```
 
-The reply has three shapes, checked in order: an error, a direct `message`, or a `task` {{proto SendMessageResponse}}. The server picks between the last two on every send, as [message or task](#s-send-message) shows. The `TERMINAL` tuple holds all four terminal states, `TASK_STATE_REJECTED` included, the one clients forget most often.
+The reply has three shapes, checked in order: an error, a direct `message`, or a `task` {{proto SendMessageResponse}}. The `TERMINAL` tuple holds all four terminal states, `TASK_STATE_REJECTED` included, the one clients forget most often.
 
-On `TASK_STATE_INPUT_REQUIRED`, the planner answers on the same task, with its `taskId` and `contextId`, as [interrupted states](#s-input-required-and-auth-required) explains. The reviewer asked for a base branch, and the planner answered `main` from its own context. On `TASK_STATE_AUTH_REQUIRED`, the planner has nothing to send, so it hands the task to `follow`.
+On `TASK_STATE_INPUT_REQUIRED`, the planner answers on the same task, with its `taskId` and `contextId`, as [interrupted states](#s-input-required-and-auth-required) explains. On `TASK_STATE_AUTH_REQUIRED`, the planner has nothing to send, so it passes the task to `follow`.
 
 ## Follow: subscribe, then call the operator
 
-The first frame of a subscription is a snapshot of the task, as [streaming and subscribing](#s-streaming-and-subscribe-to-task) shows. The planner subscribes first and calls the operator only when that snapshot arrives.
+The first frame of a subscription is a snapshot of the task, as [streaming](#s-streaming-and-subscribe-to-task) shows. The planner subscribes first and calls the operator only when that snapshot arrives.
 
 ```listing
 title: follow, until the stream ends
@@ -71,9 +71,7 @@ note: The whole method. The operator call stands in for a person who approves ou
         return {"id": task["id"], "status": {"state": final}}
 ```
 
-The log line names the two steps in the other order, and the code runs them in this one. The operator call is a `POST /approve/<task id>`, outside A2A.
-
-The stream is open before the operator acts, so no update after the approval can slip past the planner {{spec §7.6.2}}. Three more frames follow the snapshot, and the last one carries `TASK_STATE_COMPLETED`.
+The operator call is a `POST /approve/<task id>`, outside A2A. The stream is open before the operator acts, so no update after the approval can pass the planner unseen {{spec §7.6.2}}. Three more frames follow the snapshot, and the last one carries `TASK_STATE_COMPLETED`.
 
 ## The run, decision by decision
 
@@ -93,12 +91,12 @@ Each decision reads a data part, never free text: `passed` and `failed` from `su
 
 Against agents it does not control, a planner needs more than the kit's loop.
 
-- **Safe retries.** Resend a failed message with the same `messageId` {{spec §3.3.1}}, and retry only errors the server marks as temporary {{spec §3.3.2}}.
+- **Safe retries.** Resend a failed message with the same `messageId` {{spec §3.3.1}}. Keep the first reply, because a resend without `taskId` creates a second task in the reference SDK {{sdk src/a2a/server/agent_execution/active_task.py}}.
 - **Timeouts.** The kit's client gives each request 15 seconds, in `capture/wire.py`, and the specification sets none. For long work, set `returnImmediately` and follow the task.
 - **Card checks.** Cache cards with standard HTTP caching {{spec §8.6}}, and verify the deployer's `signatures` as [extended and signed cards](#s-extended-cards-and-signatures) shows.
 - **Capability checks.** The planner records `streaming` and never reads it. Against an agent without streaming, its `SubscribeToTask` gets `UnsupportedOperationError` {{spec §3.3.4}}.
-- **A branch for every state.** The loop has no branch for `TASK_STATE_SUBMITTED` or `TASK_STATE_WORKING`. A server that answers a blocking send at once ([conflict D2](#s-ref-sources)) would leave it spinning on the same reply.
-- **Checks on every result.** The `ship` method reads the review artifact without checking that the review task completed, and `follow` needs a `GetTask` fallback when a stream drops.
+- **A branch for every state.** The loop has no branch for `TASK_STATE_SUBMITTED` or `TASK_STATE_WORKING`. A server that answers a blocking send at once ([conflict D2](#s-ref-sources)) would leave it looping on the same reply.
+- **Checks on every result.** The `ship` method reads the review artifact without checking that the review task completed, and `follow` needs a `GetTask` call when a stream drops.
 - **A real operator channel.** Route each approval to a person through an authenticated channel, and record who approved.
 
 ```rule
@@ -114,4 +112,4 @@ source: spec §3.3.4
 - Subscribe to a task in `TASK_STATE_AUTH_REQUIRED` before the operator approves it.
 ```
 
-Sources: spec §3.3.1, §3.3.2, §3.3.4, §7.6.2, §8.3.2, §8.6 (research/sources/specification.md); proto SendMessageResponse (research/sources/a2a.proto); capture/planner.py, capture/wire.py, capture/run.py, capture/agents.py; capture/out/19-planner.http, 19-planner.log
+Sources: spec §3.3.1, §3.3.4, §7.6.2, §8.3.2, §8.6 (research/sources/specification.md); proto SendMessageResponse (research/sources/a2a.proto); sdk src/a2a/server/agent_execution/active_task.py at a2a-python 1.2.2; capture/planner.py, capture/wire.py, capture/run.py, capture/agents.py; capture/out/19-planner.http, 19-planner.log
