@@ -711,6 +711,44 @@ class ReleaseGateTests(unittest.TestCase):
         self.assertEqual(report["packaging"]["installed_tree"]["mismatched"], ["scripts/check.py"])
         self.assertFalse(report["passed"])
 
+    def test_manifest_normalizes_text_line_endings_but_keeps_binary_bytes(self) -> None:
+        bundle = make_bundle(self.root)
+        text_path = bundle / "references" / "contract.md"
+        binary_path = bundle / "assets.bin"
+        binary_path.write_bytes(b"\x00\r\n\xff")
+        manifest = build_manifest(bundle)
+        text_path.write_bytes(b"# Contract\r\n")
+        self.assertEqual(build_manifest(bundle), manifest)
+        self.assertTrue(verify_manifest(bundle, manifest)["passed"])
+        shipped = load_bundled_evaluator().verify_manifest(
+            bundle,
+            {"manifestVersion": 1, "algorithm": "sha256", "files": manifest},
+        )
+        self.assertTrue(shipped["passed"])
+
+        binary_path.write_bytes(b"\x00\n\xff")
+        self.assertEqual(verify_manifest(bundle, manifest)["mismatched"], ["assets.bin"])
+        shipped = load_bundled_evaluator().verify_manifest(
+            bundle,
+            {"manifestVersion": 1, "algorithm": "sha256", "files": manifest},
+        )
+        self.assertEqual(shipped["mismatched"], ["assets.bin"])
+
+    def test_manifest_text_content_drift_still_fails_after_line_ending_normalization(self) -> None:
+        bundle = make_bundle(self.root)
+        manifest = build_manifest(bundle)
+        text_path = bundle / "references" / "contract.md"
+        text_path.write_bytes(b"# Changed\r\n")
+        self.assertEqual(
+            verify_manifest(bundle, manifest)["mismatched"],
+            ["references/contract.md"],
+        )
+        shipped = load_bundled_evaluator().verify_manifest(
+            bundle,
+            {"manifestVersion": 1, "algorithm": "sha256", "files": manifest},
+        )
+        self.assertEqual(shipped["mismatched"], ["references/contract.md"])
+
     def test_manifest_rejects_parent_paths(self) -> None:
         bundle = make_bundle(self.root)
         report = verify_manifest(bundle, {"../SKILL.md": "sha256:" + "0" * 64})
