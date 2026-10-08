@@ -2366,6 +2366,7 @@ function writeSitemap(lessonManifest, glossaryCount, certifications) {
     { loc: '/catalog.html', priority: '0.8', freq: 'weekly' },
     { loc: '/prereqs.html', priority: '0.7', freq: 'monthly' },
     { loc: '/learning-paths.html', priority: '0.8', freq: 'monthly' },
+    { loc: '/blogs', priority: '0.7', freq: 'daily' },
     { loc: '/about.html', priority: '0.5', freq: 'yearly' },
     { loc: '/developer.html', priority: '0.6', freq: 'monthly' },
     { loc: '/contact.html', priority: '0.3', freq: 'yearly' },
@@ -2428,6 +2429,7 @@ function writeLlms(phases, glossaryCount, artifactCount, certifications) {
   }
   out += `## Optional\n`;
   out += `- [Catalog](${SITE_ORIGIN}/catalog.html) — full searchable lesson index\n`;
+  out += `- [Blogs & Guides](${SITE_ORIGIN}/blogs) - articles and practical guides on AI engineering, developer tools, and building software\n`;
   out += `- [Roadmap](${SITE_ORIGIN}/prereqs.html) — prerequisite ordering across phases\n`;
   out += `- [AI Engineering Learning Paths](${SITE_ORIGIN}/learning-paths.html) — four core domain paths and six career routes connected to practical lessons\n`;
   if (glossaryCount > 0) out += `- [Glossary](${SITE_ORIGIN}/glossary.html) — plain-language definitions of ${glossaryCount} terms\n`;

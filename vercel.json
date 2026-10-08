@@ -3,7 +3,13 @@
   "outputDirectory": "site",
   "framework": null,
   "installCommand": "echo skip",
+  "functions": {
+    "api/blogs.js": { "includeFiles": "site/blogs.html" }
+  },
   "routes": [
+    { "src": "/blogs(?:\\.html)?/", "status": 308, "headers": { "Location": "/blogs" } },
+    { "src": "/blogs(?:\\.html)?", "methods": ["GET", "HEAD"], "dest": "/api/blogs" },
+    { "src": "/(blog|guides)/([a-z0-9][a-z0-9-]*)/?", "methods": ["GET", "HEAD"], "dest": "/api/writing?path=/$1/$2/" },
     { "src": "/lesson\\.html", "methods": ["GET", "HEAD"], "dest": "/api/lesson?legacy=1" },
     { "src": "/certification\\.html", "methods": ["GET", "HEAD"], "dest": "/api/certification?legacy=1" },
     { "src": "/", "methods": ["GET", "HEAD"], "has": [{ "type": "header", "key": "accept", "value": "(?i).*text/markdown.*" }], "dest": "/api/markdown?path=/" }
@@ -80,7 +86,7 @@
       ]
     },
     {
-      "source": "/(glossary|catalog|certifications|certification|assessment|path|roadmap|about|developer|docs|contact|privacy)",
+      "source": "/(blogs|glossary|catalog|certifications|certification|assessment|path|roadmap|about|developer|docs|contact|privacy)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
         { "key": "Vary", "value": "Accept, Accept-Encoding" }

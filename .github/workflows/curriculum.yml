@@ -136,6 +136,8 @@ jobs:
         run: node --test scripts/test_agent_negotiation.js
       - name: static preview routes stay navigable
         run: node --test site/test_static_preview_routes.js
+      - name: synced writing keeps full articles and canonical metadata
+        run: node --test site/test_portfolio_sync.js site/test_writing_mirror.js
       - name: learning paths links and routes stay valid
         run: node --test site/test_learning_paths.js
       - name: sponsor placement preserves approved artwork and ownership

@@ -251,6 +251,7 @@
     ensureNavigationLink(nav, 'learning-paths.html', 'Learning Paths', '');
     ensureNavigationLink(nav, 'projects.html', 'Projects', '');
     ensureNavigationLink(nav, 'manuals.html', 'Manuals', '');
+    ensureNavigationLink(nav, 'blogs.html', 'Blogs & Guides', '');
     ensureNavigationLink(nav, 'certifications.html', 'Certifications', 'header-mobile-only');
     ensureNavigationLink(nav, 'sponsors.html', 'Sponsor us', 'header-mobile-only');
   }
@@ -412,6 +413,10 @@
   function load() {
     var headers = document.querySelectorAll('.site-header');
     for (var i = 0; i < headers.length; i++) setupNavigation(headers[i]);
+    var footers = document.querySelectorAll('.footer-links');
+    for (var j = 0; j < footers.length; j++) {
+      ensureNavigationLink(footers[j], 'blogs.html', 'Blogs & Guides', '');
+    }
     loadStars();
     ensureNarration();
     ensureUiI18n();
