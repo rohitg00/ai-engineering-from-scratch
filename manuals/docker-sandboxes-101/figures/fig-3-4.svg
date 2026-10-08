@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="fig-3-4-title fig-3-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-4-title">One blocked and one allowed request to example.com</title>
+  <desc id="fig-3-4-desc">Five lifelines: curl inside m101-policy, the forward proxy on gateway.docker.internal:3128, sandboxd with its authorizer, the policy store, and example.com. The first CONNECT is checked by sandboxd, finds no applicable policy, and the proxy answers 403 Forbidden inside the TLS session with a 90-byte approval message, then logs the host as blocked with proxy type forward. An allow rule for example.com is written in the sandbox scope. The second CONNECT is allowed as forward-bypass, the proxy opens a tunnel without inspection, example.com answers HTTP/2 200, and the host is logged as allowed.</desc>
+  <defs><marker id="fig-3-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-4-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-3-4-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <rect x="20" y="10" width="110" height="30" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="75" y="28.3" font-size="11" text-anchor="middle" font-weight="700">curl inside</text>
+  <line x1="75" y1="40" x2="75" y2="628" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="145" y="10" width="110" height="30" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="200" y="28.3" font-size="11" text-anchor="middle" font-weight="700">proxy :3128</text>
+  <line x1="200" y1="40" x2="200" y2="628" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="270" y="10" width="110" height="30" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="325" y="28.3" font-size="11" text-anchor="middle" font-weight="700">sandboxd</text>
+  <line x1="325" y1="40" x2="325" y2="628" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="395" y="10" width="110" height="30" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="450" y="28.3" font-size="11" text-anchor="middle" font-weight="700">policy store</text>
+  <line x1="450" y1="40" x2="450" y2="628" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="520" y="10" width="110" height="30" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="575" y="28.3" font-size="11" text-anchor="middle" font-weight="700">example.com</text>
+  <line x1="575" y1="40" x2="575" y2="628" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="76" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="80" font-size="11" text-anchor="middle">1</text>
+  <line x1="75" y1="76" x2="199" y2="76" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M75 76 L199 76" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="109.65" y="59.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="192" y="70" font-size="11.5" text-anchor="middle">CONNECT example.com:443</text>
+  <rect class="m-knock" x="99.9" y="80.42" width="184.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="192" y="91" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HTTPS_PROXY in the environment</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="119" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="123" font-size="11" text-anchor="middle">2</text>
+  <line x1="200" y1="119" x2="324" y2="119" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M200 119 L324 119" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="135.3" y="102.03" width="254.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="262.5" y="113" font-size="11.5" text-anchor="middle">op(net:connect:tcp, example.com:443)</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="162" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="166" font-size="11" text-anchor="middle">3</text>
+  <line x1="325" y1="162" x2="449" y2="162" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M325 162 L449 162" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="263.75" y="145.03" width="247.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="387.5" y="156" font-size="11.5" text-anchor="middle">match rules for sandbox:m101-policy</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="205" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="209" font-size="11" text-anchor="middle">4</text>
+  <line x1="450" y1="205" x2="326" y2="205" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M450 205 L326 205" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="308.6" y="188.03" width="157.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="387.5" y="199" font-size="11.5" text-anchor="middle">no applicable policies</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="248" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="24" y="252" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">5</text>
+  <line x1="325" y1="248" x2="201" y2="248" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-4-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M325 248 L201 248" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="131.85" y="231.03" width="261.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="262.5" y="242" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">No matching allow rule (default deny)</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="291" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="24" y="295" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">6</text>
+  <line x1="200" y1="291" x2="76" y2="291" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-4-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M200 291 L76 291" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="78.6" y="274.03" width="226.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="192" y="285" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">HTTP/1.1 403 Forbidden, 90 bytes</text>
+  <rect class="m-knock" x="99.9" y="295.42" width="184.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="192" y="306" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">inside TLS, under the proxy CA</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="334" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="338" font-size="11" text-anchor="middle">7</text>
+  <line x1="325" y1="334" x2="449" y2="334" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-3-4-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M325 334 L449 334" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="260.3" y="317.03" width="254.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="387.5" y="328" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">log: blocked example.com:443 forward</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="377" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="381" font-size="11" text-anchor="middle">8</text>
+  <line x1="325" y1="377" x2="449" y2="377" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-3-4-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M325 377 L449 377" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="239.6" y="360.03" width="295.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="387.5" y="371" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">policy allow network --sandbox m101-policy</text>
+  <rect class="m-knock" x="298.37" y="381.42" width="178.26" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="387.5" y="392" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rule &lt;uuid&gt; example.com [tcp]</text>
+  </g>
+  <g data-beat="9"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="420" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="424" font-size="11" text-anchor="middle">9</text>
+  <line x1="75" y1="420" x2="199" y2="420" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M75 420 L199 420" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="109.65" y="403.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="192" y="414" font-size="11.5" text-anchor="middle">CONNECT example.com:443</text>
+  </g>
+  <g data-beat="10"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="463" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="467" font-size="11" text-anchor="middle">10</text>
+  <line x1="325" y1="463" x2="201" y2="463" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M325 463 L201 463" keyPoints="0;0;1;1" keyTimes="0;0.871;0.96;1" calcMode="linear" dur="6.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.871;0.884;0.96;1" dur="6.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="180.15" y="446.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="262.5" y="457" font-size="11.5" text-anchor="middle">allowed, forward-bypass</text>
+  </g>
+  <g data-beat="11"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.93;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="6.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.93;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="6.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="506" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="510" font-size="11" text-anchor="middle">11</text>
+  <line x1="200" y1="506" x2="574" y2="506" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M200 506 L574 506" keyPoints="0;0;1;1" keyTimes="0;0.882;0.963;1" calcMode="linear" dur="6.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.882;0.894;0.963;1" dur="6.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="298.25" y="489.03" width="178.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="387.5" y="500" font-size="11.5" text-anchor="middle">TLS tunnel, no inspection</text>
+  <rect class="m-knock" x="280.55" y="510.42" width="213.9" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="387.5" y="521" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HTTP/1.0 200 Connection established</text>
+  </g>
+  <g data-beat="12"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.936;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.936;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="549" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="553" font-size="11" text-anchor="middle">12</text>
+  <line x1="575" y1="549" x2="76" y2="549" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M575 549 L76 549" keyPoints="0;0;1;1" keyTimes="0;0.892;0.966;1" calcMode="linear" dur="7.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.892;0.903;0.966;1" dur="7.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="218.5" y="532.03" width="213" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="325" y="543" font-size="11.5" text-anchor="middle">HTTP/2 200, server: cloudflare</text>
+  </g>
+  <g data-beat="13"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.941;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.941;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="592" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="596" font-size="11" text-anchor="middle">13</text>
+  <line x1="325" y1="592" x2="449" y2="592" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-3-4-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M325 592 L449 592" keyPoints="0;0;1;1" keyTimes="0;0.9;0.969;1" calcMode="linear" dur="8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.9;0.91;0.969;1" dur="8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="236.15" y="575.03" width="302.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="387.5" y="586" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">log: allowed example.com:443 forward-bypass</text>
+  </g>
+</svg>
