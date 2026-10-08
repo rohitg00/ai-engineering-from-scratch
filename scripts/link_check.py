@@ -63,9 +63,9 @@ DEFAULT_SKIP_DOMAINS = (
 )
 EXCLUDE_DIRS = {".git", "node_modules", "outputs"}
 
-MD_LINK_RE = re.compile(r"\[[^\]]*\]\((<?)(https?://[^\s)>]+)>?\)")
-BARE_URL_RE = re.compile(r"(?<![\w(\[=\"'])(https?://[^\s)\]<>\"'`]+)")
-TRAILING_PUNCT = ".,;:!?)\"'>"
+MD_LINK_START_RE = re.compile(r"\]\(")
+BARE_URL_RE = re.compile(r'''(?<![\w\[="'])(https?://[^\s\]<>"'`]+)''')
+TRAILING_PUNCT = ".,;:!?\"'>"
 
 
 @dataclass
@@ -149,7 +149,66 @@ def iter_markdown_files(
 def strip_trailing_punct(url: str) -> str:
     while url and url[-1] in TRAILING_PUNCT:
         url = url[:-1]
+
+    pairs = {")": "(", "]": "["}
+    while url and url[-1] in pairs:
+        closer = url[-1]
+        opener = pairs[closer]
+        depth = 0
+        excess = 0
+        for ch in url:
+            if ch == opener:
+                depth += 1
+            elif ch == closer:
+                if depth == 0:
+                    excess += 1
+                else:
+                    depth -= 1
+        if excess > 0:
+            url = url[:-1]
+        else:
+            break
+
+    while url and url[-1] in TRAILING_PUNCT:
+        url = url[:-1]
     return url
+
+
+def extract_markdown_urls(line: str) -> list[tuple[str, int, int]]:
+    """Return inline Markdown URLs and their destination spans in one line."""
+    out: list[tuple[str, int, int]] = []
+    for match in MD_LINK_START_RE.finditer(line):
+        destination_start = match.end()
+        if destination_start >= len(line):
+            continue
+        if line[destination_start] == "<":
+            url_start = destination_start + 1
+            destination_end = line.find(">", url_start)
+            if destination_end < 0:
+                continue
+            url = line[url_start:destination_end]
+            if url.startswith(("http://", "https://")):
+                out.append((strip_trailing_punct(url), destination_start, destination_end + 1))
+            continue
+        if not line.startswith(("http://", "https://"), destination_start):
+            continue
+        cursor = destination_start
+        depth = 0
+        while cursor < len(line):
+            char = line[cursor]
+            if char.isspace() or char in "<>":
+                break
+            if char == "(":
+                depth += 1
+            elif char == ")":
+                if depth == 0:
+                    break
+                depth -= 1
+            cursor += 1
+        url = strip_trailing_punct(line[destination_start:cursor])
+        if url:
+            out.append((url, destination_start, cursor))
+    return out
 
 
 def extract_urls(text: str) -> list[tuple[str, int]]:
@@ -157,15 +216,26 @@ def extract_urls(text: str) -> list[tuple[str, int]]:
     out: list[tuple[str, int]] = []
     seen_per_line: set[tuple[int, str]] = set()
     for lineno, line in enumerate(text.splitlines(), start=1):
-        for m in MD_LINK_RE.finditer(line):
-            url = strip_trailing_punct(m.group(2))
+        masked = list(line)
+        for url, start, end in extract_markdown_urls(line):
+            link_end = start - 2  # the `](` immediately before the destination
+            depth = 0
+            mask_start = start
+            for index in range(link_end, -1, -1):
+                if line[index] == "]":
+                    depth += 1
+                elif line[index] == "[":
+                    depth -= 1
+                    if depth == 0:
+                        mask_start = index
+                        break
+            masked[mask_start:end] = [" "] * (end - mask_start)
             key = (lineno, url)
             if key in seen_per_line:
                 continue
             seen_per_line.add(key)
             out.append((url, lineno))
-        masked = MD_LINK_RE.sub(" ", line)
-        for m in BARE_URL_RE.finditer(masked):
+        for m in BARE_URL_RE.finditer("".join(masked)):
             url = strip_trailing_punct(m.group(1))
             key = (lineno, url)
             if key in seen_per_line:
