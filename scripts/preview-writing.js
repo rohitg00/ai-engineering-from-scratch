@@ -39,8 +39,9 @@ async function main() {
       return reader(req, res);
     }
     try {
-      const filename = path.resolve(site, '.' + decodeURIComponent(pathname === '/' ? '/index.html' : pathname));
+      let filename = path.resolve(site, '.' + decodeURIComponent(pathname === '/' ? '/index.html' : pathname));
       if (!filename.startsWith(site + path.sep)) throw new Error('Outside site');
+      if (!path.extname(filename) && !fs.existsSync(filename)) filename += '.html';
       const data = fs.readFileSync(filename);
       res.setHeader('Content-Type', (types[path.extname(filename)] || 'application/octet-stream') + '; charset=utf-8');
       res.end(req.method === 'HEAD' ? undefined : data);

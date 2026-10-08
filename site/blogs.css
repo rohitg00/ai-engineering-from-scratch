@@ -45,6 +45,23 @@
   color: var(--ink-soft);
 }
 
+.writing-topic-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+.writing-topic-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  text-underline-offset: 4px;
+}
+
 .writing-controls {
   display: flex;
   align-items: end;

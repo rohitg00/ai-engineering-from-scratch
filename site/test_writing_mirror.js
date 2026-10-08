@@ -34,7 +34,8 @@ test('the complete article keeps executable figures, anchors, source metadata, a
   assert.match(result, /href="#figure"/);
   assert.match(result, /marker-end="url\(#head\)"/);
   assert.match(result, /<link rel="canonical" href="https:\/\/rohitghumare.com\/blog\/example\/">/);
-  assert.match(result, /<meta property="og:url" content="https:\/\/rohitghumare.com\/blog\/example\/">/);
+  assert.match(result, /<meta property="og:url" content="https:\/\/aiengineeringfromscratch.com\/blog\/example\/">/);
+  assert.match(result, /<meta property="og:site_name" content="AI Engineering from Scratch">/);
   assert.match(result, /class="byline">Rohit Ghumare/);
   assert.match(result, /class="n">Rohit Ghumare/);
   assert.match(result, /AI \/ FROM SCRATCH/);
@@ -121,4 +122,52 @@ test('absolute or versioned portfolio search is removed without removing unrelat
   const result = mirrorArticle(html, item, catalog);
   assert.doesNotMatch(result, /rohitghumare.com\/search.js/);
   assert.match(result, /src="https:\/\/example.org\/search.js"/);
+});
+
+test('social sharing uses the course URL and site name while the search canonical stays original', () => {
+  const result = mirrorArticle(fixture({ head: '<meta name="twitter:url" content="' + item.url + '"><meta property="og:site_name" content="Rohit Ghumare">' }), item, catalog);
+  assert.match(result, /name="twitter:url" content="https:\/\/aiengineeringfromscratch.com\/blog\/example\/"/);
+  assert.match(result, /property="og:url" content="https:\/\/aiengineeringfromscratch.com\/blog\/example\/"/);
+  assert.match(result, /rel="canonical" href="https:\/\/rohitghumare.com\/blog\/example\/"/);
+  assert.equal((result.match(/og:site_name/g) || []).length, 1);
+  assert.match(result, /property="og:site_name" content="AI Engineering from Scratch"/);
+});
+
+test('structured breadcrumbs match the course navigation without altering article identity or other schema', () => {
+  const article = {
+    '@type': 'Article', headline: 'Example', description: 'Use <tools> safely.',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': item.url },
+    author: { '@type': 'Person', name: 'Rohit Ghumare', url: 'https://rohitghumare.com/' },
+    publisher: { '@type': 'Organization', name: 'Rohit Ghumare' },
+  };
+  const faq = { '@type': 'FAQPage', mainEntity: [{ '@type': 'Question', name: 'What is <tool>?' }] };
+  const breadcrumb = { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Blog', item: 'https://rohitghumare.com/blog/' }] };
+  const title = 'Example </script><script>alert(1)</script>';
+  const nodes = [article, breadcrumb, faq];
+  for (const data of [{ '@context': 'https://schema.org', '@graph': nodes }, nodes]) {
+    const source = '<script type="application/ld+json">' + JSON.stringify(data) + '</script>';
+    const result = mirrorArticle(fixture({ head: source }), { ...item, title }, catalog);
+    const body = result.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1];
+    assert.doesNotMatch(body, /</);
+    const parsed = JSON.parse(body);
+    const actual = parsed['@graph'] || parsed;
+    assert.deepEqual(actual[0], article);
+    assert.deepEqual(actual[2], faq);
+    assert.deepEqual(actual[1].itemListElement, [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://aiengineeringfromscratch.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Blogs & Guides', item: 'https://aiengineeringfromscratch.com/blogs' },
+      { '@type': 'ListItem', position: 3, name: title, item: 'https://aiengineeringfromscratch.com/blog/example/' },
+    ]);
+    assert.ok(result.includes('<script>' + script + '</script>'));
+    assert.ok(result.includes('<style>' + style + '</style>'));
+  }
+});
+
+test('malformed and non-breadcrumb JSON-LD stays intact and does not prevent rendering', () => {
+  for (const body of ['{ "@type": "BreadcrumbList", invalid }', '{ "@type": "Article", "headline": "Example" }', 'null']) {
+    const source = '<script type="application/ld+json">' + body + '</script>';
+    const result = mirrorArticle(fixture({ head: source }), item, catalog);
+    assert.ok(result.includes(source));
+    assert.match(result, /<h1>Example<\/h1>/);
+  }
 });

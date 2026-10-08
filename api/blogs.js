@@ -25,7 +25,42 @@ function renderCollection(template, items) {
   const after = template.indexOf(end);
   if (before < 0 || after < before) throw new Error('Missing writing template markers');
   const content = items.length ? renderCards(items) : '<p>No articles or guides have been published yet.</p>';
-  return template.slice(0, before + start.length) + '\n' + content + '\n' + template.slice(after);
+  const document = template.slice(0, before + start.length) + '\n' + content + '\n' + template.slice(after);
+  const schemaPattern = /(<script id="writing-schema" type="application\/ld\+json">)([\s\S]*?)(<\/script>)/;
+  const schemaMatch = document.match(schemaPattern);
+  if (!schemaMatch) throw new Error('Missing writing structured data');
+  const collection = JSON.parse(schemaMatch[2]);
+  const origin = new URL(collection.url).origin;
+  const breadcrumbId = collection.url + '#breadcrumb';
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        ...collection,
+        '@id': collection.url + '#collection',
+        inLanguage: 'en',
+        author: { '@type': 'Person', name: 'Rohit Ghumare', url: origin + '/about' },
+        breadcrumb: { '@id': breadcrumbId },
+        mainEntity: {
+          '@type': 'ItemList',
+          numberOfItems: items.length,
+          itemListElement: items.map((item, index) => ({
+            '@type': 'ListItem', position: index + 1, name: item.title, url: origin + item.id,
+          })),
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': breadcrumbId,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'AI Engineering from Scratch', item: origin + '/' },
+          { '@type': 'ListItem', position: 2, name: 'Blogs & Guides', item: collection.url },
+        ],
+      },
+    ],
+  };
+  const json = JSON.stringify(schema).replace(/</g, '\\u003c');
+  return document.replace(schemaPattern, (_, open, body, close) => open + json + close);
 }
 
 function errorPage(status) {

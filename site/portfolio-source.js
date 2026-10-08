@@ -1,6 +1,7 @@
 const SOURCE = 'https://rohitghumare.com';
 const ARTICLE_PATH = /^\/(blog|guides)\/[a-z0-9][a-z0-9-]*\/$/;
 const TTL = 5 * 60 * 1000;
+const RETRY_BACKOFF = 30 * 1000;
 
 function validateFeed(feed) {
   if (feed?.version !== 1 || feed.homeUrl !== SOURCE || !Array.isArray(feed.items) || feed.items.length > 2000) {
@@ -54,7 +55,11 @@ function createPortfolioSource({ fetchImpl = fetch, now = Date.now, ttl = TTL, s
 
   async function cached(key, load) {
     const previous = cache.get(key);
-    if (previous && now() - previous.time < ttl) return { value: previous.value, stale: false };
+    const current = now();
+    if (previous && current - previous.time < ttl) return { value: previous.value, stale: false };
+    if (previous && current < previous.retryAt && current - previous.time < staleTtl) {
+      return { value: previous.value, stale: true };
+    }
     if (pending.has(key)) return pending.get(key);
     const promise = (async () => {
       try {
@@ -67,7 +72,11 @@ function createPortfolioSource({ fetchImpl = fetch, now = Date.now, ttl = TTL, s
         }
         return { value, stale: false };
       } catch (error) {
-        if (previous && now() - previous.time < staleTtl) return { value: previous.value, stale: true };
+        const failedAt = now();
+        if (previous && failedAt - previous.time < staleTtl) {
+          previous.retryAt = failedAt + RETRY_BACKOFF;
+          return { value: previous.value, stale: true };
+        }
         throw error;
       } finally {
         pending.delete(key);

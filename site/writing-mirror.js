@@ -1,4 +1,6 @@
 const SOURCE_ORIGIN = 'https://rohitghumare.com';
+const COURSE_ORIGIN = 'https://aiengineeringfromscratch.com';
+const COURSE_NAME = 'AI Engineering from Scratch';
 const ARTICLE_PATH = /^\/(?:blog|guides)\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/;
 const VOID_ELEMENTS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
 const ATTRIBUTE = /([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g;
@@ -111,6 +113,37 @@ function readerNavigation(themeButton = '', fallback = false) {
   return '<nav class="aiefs-reader-nav" aria-label="Primary"' + fallbackAttribute + '><a class="aiefs-reader-brand" href="/">AI / FROM SCRATCH</a><div class="aiefs-reader-links"><a href="/blogs">Blogs &amp; Guides</a>' + themeButton + '</div></nav>';
 }
 
+function rewriteBreadcrumbs(body, item) {
+  let data;
+  try {
+    data = JSON.parse(body);
+  } catch {
+    return body;
+  }
+  let changed = false;
+  function visit(node) {
+    if (Array.isArray(node)) {
+      node.forEach(visit);
+      return;
+    }
+    if (!node || typeof node !== 'object') return;
+    const types = [].concat(node['@type'] || []);
+    if (types.includes('BreadcrumbList')) {
+      node.itemListElement = [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: COURSE_ORIGIN + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Blogs & Guides', item: COURSE_ORIGIN + '/blogs' },
+        { '@type': 'ListItem', position: 3, name: item.title, item: COURSE_ORIGIN + item.id },
+      ];
+      changed = true;
+      return;
+    }
+    if (types.some(type => ['Article', 'BlogPosting', 'TechArticle', 'HowTo'].includes(type))) return;
+    Object.values(node).forEach(visit);
+  }
+  visit(data);
+  return changed ? JSON.stringify(data).replace(/</g, '\\u003c') : body;
+}
+
 function mirrorArticle(html, item, items) {
   const sourceUrl = canonicalUrl(item);
   if (typeof html !== 'string' || !html.trim()) throw new Error('Article HTML is missing');
@@ -119,10 +152,12 @@ function mirrorArticle(html, item, items) {
 
   const tokens = tokenize(html);
   const canonicals = [];
+  let hasSiteName = false;
   for (const token of tokens) {
     if (token.type !== 'tag' || token.closing) continue;
     if (token.name === 'base') throw new Error('Article base URL is unsupported');
     if (token.name === 'meta') {
+      if ((token.attrs.get('property') || token.attrs.get('name') || '').toLowerCase() === 'og:site_name') hasSiteName = true;
       if ((token.attrs.get('http-equiv') || '').toLowerCase().trim() === 'refresh') throw new Error('Article redirects with a meta refresh');
       const name = (token.attrs.get('name') || '').toLowerCase();
       if (/^(robots|googlebot|bingbot)$/.test(name) && /(?:^|[\s,;:])(noindex|none)(?:$|[\s,;])/.test((token.attrs.get('content') || '').toLowerCase())) {
@@ -162,6 +197,8 @@ function mirrorArticle(html, item, items) {
         const resolved = new URL(token.attrs.get('src'), sourceUrl);
         if (resolved.origin === SOURCE_ORIGIN && resolved.pathname === '/search.js') continue;
         output.push(rewriteAttributes(token, (name, value) => name === 'src' ? assetUrl(value) : value) + token.body + token.end);
+      } else if (token.name === 'script' && (token.attrs.get('type') || '').toLowerCase() === 'application/ld+json') {
+        output.push(token.raw + rewriteBreadcrumbs(token.body, item) + token.end);
       } else {
         output.push(serialize(token));
       }
@@ -172,7 +209,10 @@ function mirrorArticle(html, item, items) {
       continue;
     }
     if (token.closing) {
-      if (token.name === 'head') output.push(READER_STYLE);
+      if (token.name === 'head') {
+        if (!hasSiteName) output.push('<meta property="og:site_name" content="' + COURSE_NAME + '">');
+        output.push(READER_STYLE);
+      }
       const matching = ancestors.findLastIndex(ancestor => ancestor.name === token.name);
       if (matching >= 0) ancestors.splice(matching);
       output.push(token.raw);
@@ -204,6 +244,11 @@ function mirrorArticle(html, item, items) {
       }
     }
     output.push(rewriteAttributes(token, (name, value) => {
+      if (token.name === 'meta' && name === 'content') {
+        const property = (token.attrs.get('property') || token.attrs.get('name') || '').toLowerCase();
+        if (property === 'og:url' || property === 'twitter:url') return COURSE_ORIGIN + item.id;
+        if (property === 'og:site_name') return COURSE_NAME;
+      }
       if (name === 'href') {
         if (token.name === 'a' || token.name === 'area') return navigationUrl(value);
         if (token.name === 'link' && (token.attrs.get('rel') || '').toLowerCase().split(/\s+/).includes('canonical')) return value;
