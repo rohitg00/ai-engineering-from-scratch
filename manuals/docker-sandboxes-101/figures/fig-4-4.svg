@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" role="img" aria-labelledby="fig-4-4-title fig-4-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-4-title">An environment file becomes a plan, an approval, and a state record</title>
+  <desc id="fig-4-4-desc">Top: the captured sbxenv.yaml with its agent, workspace, args, kits, env, lifecycle, and ports keys. An arrow for sbx env plan leads to the plan it printed, eight rows with a plus sign in the margin for each addition, the workspace row that needs approval, the totals line, and the warning that host commands run outside the sandbox. Below, two branches. Left: approval on sbx env create writes the state record under the sbx state directory, and a later plan prints only the rows that moved. Right: the same plan with the env-arg greeting set to servus still prints every row as an addition because nothing was applied.</desc>
+  <defs><marker id="fig-4-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-4-4-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE FILE (CAPTURE/FIXTURES/ENV/SBXENV.YAML)</text>
+  <rect x="20" y="26" width="600" height="80" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="32" y="46.25" font-size="12.5" font-weight="700">sbxenv.yaml</text>
+  <text x="32" y="63.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">schemaVersion 1, name m101-env, agent shell, workspace ., args greeting (default hello),</text>
+  <text x="32" y="78.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kits ../kits/hello-mixin, env GREETING: ${{ env.args.greeting }},</text>
+  <text x="32" y="93.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">lifecycle initialize echo init, ports sandbox 8080 host 18083</text>
+  <line x1="320" y1="106" x2="320" y2="137" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <rect class="m-knock" x="325" y="110.53" width="192.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="328" y="121.5" font-size="11.5">sbx env plan ./fixtures/env</text>
+  <rect x="20" y="138" width="600" height="222" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="32" y="158" font-size="12" font-weight="700" fill="var(--m-teal-ink, #18696a)">ENVIRONMENT PLAN m101-env (14-env-plan.txt)</text>
+  <rect x="32" y="166" width="576" height="20" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="40" y="180" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">+</text>
+  <text x="54" y="180" font-size="11">kits: source $CAPTURE/fixtures/kits/hello-mixin</text>
+  <rect x="32" y="188" width="576" height="20" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="54" y="202" font-size="11">workspace: $CAPTURE/fixtures/env (not recorded as applied, needs your approval)</text>
+  <rect x="32" y="210" width="576" height="20" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="40" y="224" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">+</text>
+  <text x="54" y="224" font-size="11">env: GREETING: hello</text>
+  <rect x="32" y="232" width="576" height="20" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="40" y="246" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">+</text>
+  <text x="54" y="246" font-size="11">sandbox: name m101-env, agent shell</text>
+  <rect x="32" y="254" width="576" height="20" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="40" y="268" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">+</text>
+  <text x="54" y="268" font-size="11">ports: sandbox 8080, protocol tcp4, host 18083</text>
+  <rect x="32" y="276" width="576" height="20" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="40" y="290" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">+</text>
+  <text x="54" y="290" font-size="11">lifecycle: initialize: command echo init, workdir $CAPTURE/fixtures/env</text>
+  <rect x="32" y="298" width="576" height="20" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="54" y="312" font-size="11">Plan: + 5 to add, ~ 0 to change, - 0 to destroy.</text>
+  <rect x="32" y="320" width="576" height="20" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="54" y="334" font-size="11">runs commands on this machine, outside the sandbox, with your own privileges</text>
+  <text x="32" y="354" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">margin symbols: + add, ~ change, - destroy, &gt; run, ! forget (help-sbx sbx env)</text>
+  <text x="60" y="392" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AFTER APPROVAL (NOT CAPTURED)</text>
+  <text x="380" y="392" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE ARGUMENT CHANGED (CAPTURED)</text>
+  <rect x="20" y="402" width="280" height="48" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="160" y="421.1" font-size="12" text-anchor="middle" font-weight="700">you answer y on sbx env create</text>
+  <text x="160" y="438.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">host commands are asked on every invocation</text>
+  <rect x="20" y="480" width="280" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="160" y="499.1" font-size="12" text-anchor="middle" font-weight="700">state record, per environment</text>
+  <text x="160" y="516.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in the sbx state directory, not by the file</text>
+  <rect x="20" y="536" width="280" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-dasharray="5 4"/>
+  <text x="160" y="555.1" font-size="12" text-anchor="middle" font-weight="700">a later plan shows what moved</text>
+  <text x="160" y="572.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">~ GREETING: hello -&gt; servus, nothing else</text>
+  <line x1="40" y1="360" x2="40" y2="401" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <rect class="m-knock" x="45" y="369.53" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="48" y="380.5" font-size="11.5">sbx env create</text>
+  <line x1="40" y1="450" x2="40" y2="479" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-teal)"/>
+  <rect class="m-knock" x="45" y="453.53" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="48" y="464.5" font-size="11.5" fill="var(--m-teal-ink, #18696a)">records the plan</text>
+  <path d="M160 528 V535" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <rect x="340" y="402" width="280" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="480" y="420.95" font-size="11.5" text-anchor="middle" font-weight="700">sbx env plan --env-arg greeting=servus</text>
+  <text x="480" y="438.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the arg replaces the default hello</text>
+  <rect x="340" y="480" width="280" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="480" y="499.1" font-size="12" text-anchor="middle" font-weight="700">+ env: GREETING: servus</text>
+  <text x="480" y="516.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">still + 5 to add: nothing was applied</text>
+  <line x1="360" y1="360" x2="360" y2="401" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <rect class="m-knock" x="365" y="369.53" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="368" y="380.5" font-size="11.5">one argument</text>
+  <line x1="360" y1="450" x2="360" y2="479" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-4-head-ink)"/>
+</svg>
