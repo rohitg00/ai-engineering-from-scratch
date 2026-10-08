@@ -1,0 +1,23 @@
+.ascii-motion {
+  min-width: 0;
+  overflow: hidden;
+  background: #08090b;
+}
+
+.ascii-motion[data-kind="signal"] {
+  background: #05080f;
+}
+
+.ascii-motion-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  contain: layout paint;
+  color: #e4dfd4;
+}
+
+@media print {
+  .ascii-motion { break-inside: avoid; }
+}

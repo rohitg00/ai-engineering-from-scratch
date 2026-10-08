@@ -126,6 +126,8 @@ jobs:
         run: node --test site/test_project_copy.js
       - name: homepage curiosity supports pointer and keyboard input
         run: node --test site/test_intelligence_check.js
+      - name: motion studies honor playback and accessibility preferences
+        run: node --test site/test_ascii_motion.js site/test_loss_landscape.js site/test_attention_motion.js
       - name: build the static site
         run: node site/build.js
       - name: dynamic lesson and certification routes preserve their public contracts
