@@ -244,6 +244,7 @@ Save it as `figures/src/fig-1-2.js` and run `node manuals/_shared/figkit.js buil
 
 - A JSON, HTTP, SSE, or JSONL block must be a `listing` with a `source`. The audit fails a `json` fence that is not a listing.
 - The capture kit lives in `capture/`. It runs offline, needs no network and no keys, and follows the repository dependency allowlist.
+- A subject that is a proprietary binary or a hosted service cannot run offline in CI. Its kit records on the author's machine with the pinned binaries installed. Its `check` compares stored outputs after masking, and when the subject is not installed it prints `skipped` with the reason and exits 0. The front matter names the captures recorded that way and the machine they were recorded on.
 - `capture.run` writes `capture/out/`. `capture.check` writes to a temporary directory and compares with `capture/out/` after masking values that change on every run, such as timestamps and generated ids. The audit runs `capture.check` and fails on drift.
 - A listing head names its source file, so a reader can open the full record.
 
