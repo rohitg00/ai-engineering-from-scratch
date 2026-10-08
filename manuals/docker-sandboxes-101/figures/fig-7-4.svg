@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 390" role="img" aria-labelledby="fig-7-4-title fig-7-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-4-title">Confirmed by a file, or only reported</title>
+  <desc id="fig-7-4-desc">Two columns. The left column lists seven claims a recorded capture file confirms: the sentinel inside and the real secret outside, default deny on example.com:443, a private Docker Engine 29.8.1 inside, commits fetched through the sandbox-m101-clone remote, the proxy at gateway.docker.internal:3128, MCP_GATEWAY_URL set inside the sandbox, and docker-agent toolsets printing 27 types. The right column lists seven claims the manual reports without a test: a MITM proxy that re-signs HTTPS, libkrun as the VMM, a start in tens of milliseconds, a verified kit signature, a local model with no key, and two rose boxes for the contradicted sbx policy approval command and the disputed exfiltration path.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-teal-ink, #18696a)">CONFIRMED BY A CAPTURE FILE</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-grey-ink, #5e5e59)">REPORTED, NOT TESTED HERE</text>
+  <line x1="320" y1="8" x2="320" y2="382" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="30" width="284" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="162" y="46.1" font-size="12" text-anchor="middle" font-weight="700">sentinel inside, real secret outside</text>
+  <text x="162" y="63.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">10-env-sentinel.txt, 10-receiver.log</text>
+  <rect x="20" y="80" width="284" height="42" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="162" y="96.1" font-size="12" text-anchor="middle" font-weight="700">default deny on example.com:443</text>
+  <text x="162" y="113.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">09-blocked.txt, 09-check-verbose.json</text>
+  <rect x="20" y="130" width="284" height="42" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="162" y="146.1" font-size="12" text-anchor="middle" font-weight="700">private Docker Engine 29.8.1 inside</text>
+  <text x="162" y="163.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">04-guest.txt</text>
+  <rect x="20" y="180" width="284" height="42" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="162" y="196.1" font-size="12" text-anchor="middle" font-weight="700">fetched via sandbox-m101-clone</text>
+  <text x="162" y="213.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">08-clone-host.txt</text>
+  <rect x="20" y="230" width="284" height="42" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="162" y="246.1" font-size="12" text-anchor="middle" font-weight="700">proxy gateway.docker.internal:3128</text>
+  <text x="162" y="263.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">04-env.txt</text>
+  <rect x="20" y="280" width="284" height="42" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="162" y="296.1" font-size="12" text-anchor="middle" font-weight="700">MCP_GATEWAY_URL set inside</text>
+  <text x="162" y="313.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">11-static-inside.txt</text>
+  <rect x="20" y="330" width="284" height="42" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="162" y="346.1" font-size="12" text-anchor="middle" font-weight="700">toolsets prints 27 types</text>
+  <text x="162" y="363.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">16-toolsets.txt</text>
+  <rect x="336" y="30" width="284" height="42" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="478" y="46.1" font-size="12" text-anchor="middle" font-weight="700">HTTPS re-signed by a MITM proxy</text>
+  <text x="478" y="63.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">issue #12, not checked</text>
+  <rect x="336" y="80" width="284" height="42" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="478" y="96.1" font-size="12" text-anchor="middle" font-weight="700">the VMM is libkrun</text>
+  <text x="478" y="113.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">talk 2026-01-14, unverified</text>
+  <rect x="336" y="130" width="284" height="42" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="478" y="146.1" font-size="12" text-anchor="middle" font-weight="700">a start in tens of milliseconds</text>
+  <text x="478" y="163.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">talk 2026-02-10, K35 not run</text>
+  <rect x="336" y="180" width="284" height="42" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="478" y="196.1" font-size="12" text-anchor="middle" font-weight="700">a kit signature verifies</text>
+  <text x="478" y="213.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sbx kit sign, not recorded</text>
+  <rect x="336" y="230" width="284" height="42" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="478" y="246.1" font-size="12" text-anchor="middle" font-weight="700">a local model with no key</text>
+  <text x="478" y="263.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">16-doctor.txt: DMR unreachable</text>
+  <rect x="336" y="280" width="284" height="42" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="478" y="296.1" font-size="12" text-anchor="middle" font-weight="700">sbx policy approval is not a command</text>
+  <text x="478" y="313.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">09-blocked.txt names it</text>
+  <rect x="336" y="330" width="284" height="42" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="478" y="346.1" font-size="12" text-anchor="middle" font-weight="700">allowed host as exfiltration path</text>
+  <text x="478" y="363.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HN 2026-08-10, both sides printed</text>
+</svg>
