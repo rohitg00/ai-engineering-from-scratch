@@ -329,7 +329,7 @@
     "title": "Reference",
     "accent": "grey",
     "thesis": "Lookup tables for every name in the manual.",
-    "summary": "Every sbx and docker-agent command, the settings keys and paths, the agent file keys, the toolsets, the providers, the sources and conflicts, a glossary, and the figure index.",
+    "summary": "Every sbx and docker-agent command, settings keys and paths, agent file keys, toolsets, providers, sources and conflicts, a glossary, and the figure index.",
     "sections": [
       {
         "id": "R.1",

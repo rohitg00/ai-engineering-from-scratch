@@ -2,7 +2,7 @@
 
 > Every key that `sbx settings list` printed on 2026-10-08, every environment variable both tools read, and every path they use on macOS, each with its source.
 
-`sbx settings list` printed 31 keys on the capture machine, every one with SOURCE `default` (research/sources/probes/sbx-settings-list.txt). A value comes, in order, from the environment variable of the key, then a user override written with `sbx settings set`, then the built-in default {{docs-sbx Settings}}. RESTART `yes` means that daemon-side consumers that already exist need `sbx daemon restart`, while new sandboxes and supported CLI clients use the new value at once {{help-sbx sbx settings list}}. The CLI table cuts long descriptions. The Meaning column completes them from the docs settings page where the page has an entry, and says so where it has none.
+`sbx settings list` printed 31 keys on the capture machine, every one with SOURCE `default` (research/sources/probes/sbx-settings-list.txt). A value comes, in order, from the environment variable of the key, then a user override written with `sbx settings set`, then the built-in default {{docs-sbx Settings}}. RESTART `yes` means that daemon-side consumers that already exist need `sbx daemon restart`, while new sandboxes and supported CLI clients use the new value at once {{help-sbx sbx settings list}}. The CLI table cuts long descriptions. The Meaning column completes them from the docs settings page where the page has an entry. Where the page has none, the column says so and gives the full text of `sbx settings list --json` (capture/out/02-settings.json).
 
 ## The settings keys
 
@@ -34,17 +34,17 @@
 | `skills.defaultMode` | string | `readonly` | no | Mode of the shared skills store when `--skills` is omitted: `readonly`, `readwrite`, or `off` (docs) |
 | `ssh.agentForwardingEnabled` | bool | `true` | yes | Let clients forward an SSH agent into sandboxes. Private keys stay on the host (docs) |
 | `ssh.agentSocketPath` | string | empty | yes | Fixed host SSH agent socket path. Empty uses the socket each client supplies (docs) |
-| `ssh.autoCreate` | bool | `false` | yes | Create a sandbox on SSH connect when it does not exist. The CLI cuts the text after `does no`, and the docs have no entry ([conflict C20](#s-ref-sources-and-the-conflicts-register)) |
-| `ssh.defaultAgent` | string | `shell` | yes | Built-in agent used for SSH auto-created sandboxes. The CLI cuts the text after `sandbo`, and the docs have no entry |
-| `ssh.defaultTemplate` | string | empty | yes | Template image override for SSH auto-created sandboxes. The CLI cuts the text after `sa`, and the docs have no entry |
-| `ssh.workspaceRoot` | string | empty | yes | Host directory holding SSH auto-created sandbox workspaces. The CLI cuts the text after `sandbox`, and the docs have no entry |
+| `ssh.autoCreate` | bool | `false` | yes | Create a sandbox on SSH connect when it does not exist. The docs have no entry ([conflict C20](#s-ref-sources-and-the-conflicts-register)) |
+| `ssh.defaultAgent` | string | `shell` | yes | Built-in agent used for SSH auto-created sandboxes. The docs have no entry |
+| `ssh.defaultTemplate` | string | empty | yes | Template image override for SSH auto-created sandboxes (agent default if empty). The docs have no entry |
+| `ssh.workspaceRoot` | string | empty | yes | Host directory holding SSH auto-created sandbox workspaces (empty = mount-less, container-internal). The docs have no entry |
 | `tls.allowNegativeSerial` | bool | `false` | yes | Accept server certificates with a negative serial number, as some TLS-inspecting proxies issue (docs) |
 
 Value types are `bool`, `int`, `float`, `string`, and `json`, and an override that conflicts with an administrator constraint is rejected {{help-sbx sbx settings set}}. Most changes apply within about five seconds {{help-sbx sbx settings}}.
 
 ## Keys the docs name that the CLI did not print
 
-The docs settings page and three guides name keys that `sbx settings list` did not return ([conflict C19](#s-ref-sources-and-the-conflicts-register)). The manual prints them here and nowhere else.
+The docs settings page, three guides, and one release note name keys that `sbx settings list` did not return ([conflict C19](#s-ref-sources-and-the-conflicts-register)). The manual prints them here and nowhere else.
 
 | Key | Where the docs use it | What the docs say |
 |---|---|---|
@@ -52,7 +52,7 @@ The docs settings page and three guides name keys that `sbx settings list` did n
 | `feature.sandbox-gpu` | the GPU guide | the same pair of commands reveals the hidden `--gpu` flag {{docs-sbx Turn on the feature}} |
 | `feature.udp-egress` | the network policy page | the same pair of commands allows `sbx policy allow network --protocol udp` {{docs-sbx Allow outbound UDP}} |
 | `diagnostics.autoUploadErrorCooldownInDays` | the settings page | integer, default `1`, the number of days between automatic uploads, applied only when `diagnostics.autoUpload` is `yes` {{docs-sbx Settings}} |
-| `feature.ssh` | none of the vendored pages | not documented in the vendored sources. The register lists it from an earlier docs read |
+| `feature.ssh` | the v0.34.0 release note | `sbx settings set feature.ssh true` enables the experimental native SSH endpoint {{rel-sbx v0.34.0}} |
 
 ## Environment variables that sbx reads
 
@@ -146,4 +146,4 @@ The capture machine runs macOS, so the table gives macOS paths first and the Lin
 
 The directories of docker-agent keep the name `cagent` after the rename ([conflict C54](#s-ref-sources-and-the-conflicts-register)). Nothing migrates state from the plugin-era directories `~/.docker/sandboxes/` and `~/.sandboxd/` to the sbx state directory ([conflict C17](#s-ref-sources-and-the-conflicts-register)).
 
-Sources: research/sources/probes/sbx-settings-list.txt, sbx-daemon-status.txt, sbx-diagnose.txt; research/sources/help-sbx.md (`sbx settings`, `sbx settings list`, `sbx settings set`, `sbx env`, `sbx env create`, `sbx mcp add`, `sbx kit builder history ls`); research/sources/docs-sandboxes.md (pages configuration/settings, configuration/environment-files, troubleshooting, governance/audit, workflows/agent-skills, the credentials and local model and GPU and network policy guides); research/sources/help-docker-agent.md (root, `board`, `setup`, `share push`); research/sources/docs-docker-agent.md (pages features/cli, configuration/user-settings, configuration/hooks, configuration/tools, configuration/sandbox, features/sessions, guides/secrets, tools/memory, tools/shell); research/sources/docker-agent-CHANGELOG.md (v1.30.0, v1.74.0, v1.100.0, v1.102.0, v1.139.0, v1.147.0); research/conflicts-register.md rows C17, C18, C19, C20, C53, C54, C67
+Sources: research/sources/probes/sbx-settings-list.txt, sbx-daemon-status.txt, sbx-diagnose.txt; capture/out/02-settings.json (the full descriptions of the four `ssh.*` keys); research/sources/help-sbx.md (`sbx settings`, `sbx settings list`, `sbx settings set`, `sbx env`, `sbx env create`, `sbx mcp add`, `sbx kit builder history ls`); research/sources/docs-sandboxes.md (pages configuration/settings, configuration/environment-files, troubleshooting, governance/audit, workflows/agent-skills, the credentials and local model and GPU and network policy guides); research/sources/sbx-releases.md (v0.34.0); research/sources/help-docker-agent.md (root, `board`, `setup`, `share push`); research/sources/docs-docker-agent.md (pages features/cli, configuration/user-settings, configuration/hooks, configuration/tools, configuration/sandbox, features/sessions, guides/secrets, tools/memory, tools/shell); research/sources/docker-agent-CHANGELOG.md (v1.30.0, v1.74.0, v1.100.0, v1.102.0, v1.139.0, v1.147.0); research/conflicts-register.md rows C17, C18, C19, C20, C53, C54, C67

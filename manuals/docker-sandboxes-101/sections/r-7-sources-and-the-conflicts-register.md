@@ -76,7 +76,7 @@ The sbx help text and release notes are proprietary program output of Docker Inc
 | C17 | undocumented | plugin-era state directories, against the sbx state directory | No state migration exists |
 | C18 | docs vs CLI | `platform.allowExperimentalFeatures` default `false` in the docs, `true` in the CLI | The value and SOURCE column from the capture |
 | C19 | docs vs CLI | `feature.*` keys in the docs, absent from `sbx settings list` | Only keys the CLI returns, plus a note on the documented ones |
-| C20 | undocumented | four `ssh.*` keys in the CLI, absent from the docs | Included, with the CLI descriptions |
+| C20 | undocumented | four `ssh.*` keys in the CLI, absent from the docs: `ssh.autoCreate`, `ssh.defaultAgent`, `ssh.defaultTemplate`, and `ssh.workspaceRoot` | Included, with the full descriptions of `sbx settings list --json` |
 | C21 | docs vs CLI | 11 built-in secret services in the docs, 13 in the CLI | 13 services |
 | C25 | renamed | the plugin name rule, against the sbx rule | The sbx rule: 2 to 63 characters, letters, digits, hyphens, periods, `default` reserved |
 | C26 | undocumented | `host.docker.internal:3128` or `gateway.docker.internal:3128`, against docs with no address | The address and variables the capture shows |
