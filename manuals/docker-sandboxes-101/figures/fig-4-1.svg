@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 452" role="img" aria-labelledby="fig-4-1-title fig-4-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-1-title">A v3 descriptor and the image manifest that carries it</title>
+  <desc id="fig-4-1-desc">Left: the six top-level entries of capture/fixtures/kits/hello-kit/kit.yaml, from the syntax line to the capabilities block, each with the rule that applies to it. Two rows are marked refused: name is not a top-level field, and the capabilities block is written as a map where the grammar wants a list. Right: the OCI image manifest the frontend would publish, with its four vnd.docker.sandbox.kit annotations, the config blob, and the layers that stage kit.yaml at /usr/share/sandbox/kit/hello-kit/kit.yaml. Teal lines connect each descriptor row to the annotation it becomes.</desc>
+  <defs><marker id="fig-4-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">KIT.YAML OF HELLO-KIT (CAPTURED)</text>
+  <text x="356" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE IMAGE, KITSPEC 9.3 AND 10</text>
+  <rect x="20" y="28" width="306" height="26" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="28" y="44.45" font-size="11.5" font-weight="700">capture/fixtures/kits/hello-kit/kit.yaml</text>
+  <rect x="20" y="54" width="306" height="39" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="69" font-size="11"># syntax=docker/sandbox-kit:3</text>
+  <text x="28" y="86" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dispatches the BuildKit frontend (kitspec 1.1)</text>
+  <rect x="20" y="93" width="306" height="39" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="108" font-size="11">schemaVersion: &quot;3&quot;</text>
+  <text x="28" y="125" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">REQUIRED, exactly the string &quot;3&quot; (kitspec 4)</text>
+  <rect x="20" y="132" width="306" height="39" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="147" font-size="11">kind: workload</text>
+  <text x="28" y="164" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">workload or mixin (kitspec 1 and 4)</text>
+  <rect x="20" y="171" width="306" height="39" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="28" y="186" font-size="11" fill="var(--m-rose-ink, #b0344d)">name: hello-kit</text>
+  <text x="28" y="203" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">no such top-level field, refused (kitspec 1.2)</text>
+  <rect x="20" y="210" width="306" height="54" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="225" font-size="11">description: A shell workload with</text>
+  <text x="28" y="240" font-size="11">one network grant, in the v3 form.</text>
+  <text x="28" y="257" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">optional display metadata (kitspec 4)</text>
+  <rect x="20" y="264" width="306" height="69" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="28" y="279" font-size="11" fill="var(--m-rose-ink, #b0344d)">capabilities:</text>
+  <text x="28" y="294" font-size="11" fill="var(--m-rose-ink, #b0344d)">  com.docker.sandbox/network-policy@2:</text>
+  <text x="28" y="309" font-size="11" fill="var(--m-rose-ink, #b0344d)">    allow: [example.com]</text>
+  <text x="28" y="326" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">kitspec 7 wants a list of type and config</text>
+  <rect x="356" y="28" width="264" height="362" fill="var(--m-panel, #f3f1e8)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="364" y="45" font-size="12" font-weight="700">OCI image manifest</text>
+  <text x="364" y="60" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">application/vnd.oci.image.manifest.v1+json</text>
+  <text x="364" y="82" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">annotations</text>
+  <rect x="364" y="88" width="252" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="366" y="104" font-size="11" fill="var(--m-teal-ink, #18696a)">vnd.docker.sandbox.kit.descriptor</text>
+  <text x="366" y="121" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the published descriptor as compact JSON</text>
+  <rect x="364" y="134" width="252" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="366" y="150" font-size="11" fill="var(--m-teal-ink, #18696a)">vnd.docker.sandbox.kit.schema-version</text>
+  <text x="366" y="167" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&quot;3&quot;, equal to the field inside</text>
+  <rect x="364" y="180" width="252" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="366" y="196" font-size="11" fill="var(--m-teal-ink, #18696a)">vnd.docker.sandbox.kit.capabilities</text>
+  <text x="366" y="213" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">com.docker.sandbox/network-policy@2</text>
+  <rect x="364" y="226" width="252" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="366" y="242" font-size="11" fill="var(--m-teal-ink, #18696a)">vnd.docker.sandbox.kit.built-by</text>
+  <text x="366" y="259" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">name docker/sandbox-kit, version 3.0.0</text>
+  <rect x="364" y="278" width="252" height="44" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="368" y="295" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">config</text>
+  <text x="368" y="311" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">entrypoint, cmd, env, user, workdir</text>
+  <rect x="364" y="328" width="252" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="368" y="345" font-size="11" fill="var(--m-green-ink, #336b40)">layers 1..n</text>
+  <text x="368" y="361" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the workload root filesystem, plus</text>
+  <text x="368" y="376" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/usr/share/sandbox/kit/&lt;stem&gt;/kit.yaml</text>
+  <path d="M326 41 H334 V111 H355" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-teal)"/>
+  <path d="M326 112.5 H340 V157 H355" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-teal)"/>
+  <path d="M326 298.5 H346 V203 H355" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-teal)"/>
+  <path d="M326 73.5 H352 V249 H355" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-teal)"/>
+  <text x="20" y="412" font-size="11">docker buildx build ./hello-kit -f ./hello-kit/kit.yaml -t NAMESPACE/hello-kit:1.0.0 --push</text>
+  <text x="20" y="430" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">One manifest GET gives the descriptor and the runtime contract. Layers are pulled at run (kitspec 10).</text>
+  <text x="20" y="445" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The build did not run on the recording host (13-kit-v3-inspect.txt), so the right side follows the spec.</text>
+</svg>
