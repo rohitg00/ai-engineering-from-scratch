@@ -1,0 +1,3 @@
+$ sbx mcp load m101-deepwiki --sandbox m101-mcp-dyn
+MCP server "m101-deepwiki" loaded into sandbox "m101-mcp-dyn" (live)
+[exit 0]

@@ -1,0 +1,3 @@
+$ sbx kit validate ./fixtures/kits/hello-mixin
+VALID: ./fixtures/kits/hello-mixin (directory)
+[exit 0]

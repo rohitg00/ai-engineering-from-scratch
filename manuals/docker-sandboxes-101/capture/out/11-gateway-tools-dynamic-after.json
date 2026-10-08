@@ -1,0 +1,213 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "ttlMs": 0,
+    "cacheScope": "public",
+    "tools": [
+      {
+        "_meta": {
+          "_fastmcp": {
+            "tags": []
+          }
+        },
+        "description": "Ask any question about a GitHub repository's codebase and get an AI-powered answer\ngrounded in its DeepWiki.",
+        "inputSchema": {
+          "properties": {
+            "question": {
+              "description": "The question to ask about the repository.",
+              "type": "string"
+            },
+            "repoName": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              ],
+              "description": "GitHub repository or list of repositories (max 10) in owner/repo format."
+            }
+          },
+          "required": [
+            "repoName",
+            "question"
+          ],
+          "type": "object"
+        },
+        "name": "ask_wiki_question",
+        "outputSchema": {
+          "properties": {
+            "result": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "result"
+          ],
+          "type": "object",
+          "x-fastmcp-wrap-result": true
+        }
+      },
+      {
+        "description": "Create a sandboxed JavaScript execution tool from a set of available tools.\n\nCall this tool with a list of tool names. It returns a new tool that can\nexecute JavaScript programs with access to those tools. The JavaScript\nruns in an isolated container with no internet access — it can only call\nthe specified tools through the MCP gateway.\n\nExample: code-mode({ tools: [\"read_file\", \"query_database\"] })\nReturns: a new tool \"codemode-exec-<id>\" that accepts { code: \"...\" }",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "tools": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Tool names to make available in the JavaScript runtime"
+            }
+          },
+          "required": [
+            "tools"
+          ]
+        },
+        "name": "code-mode"
+      },
+      {
+        "description": "Add an MCP server to this session. The server is resolved from the gateway's catalogs and its tools become available immediately.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Server name (as shown by mcp-find)"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        },
+        "name": "mcp-add"
+      },
+      {
+        "description": "Set per-session configuration overrides for an MCP server. The overrides are saved to session checkpoint state.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "server": {
+              "type": "string",
+              "description": "Name of the MCP server to configure"
+            },
+            "config": {
+              "type": "object",
+              "description": "Configuration override object for the server"
+            }
+          },
+          "required": [
+            "server",
+            "config"
+          ]
+        },
+        "name": "mcp-config-set"
+      },
+      {
+        "description": "Execute a tool by name from the current gateway session.\n\nUse this to call tools that may not be in your initial tools/list,\nincluding dynamically created tools (e.g. from code-mode).",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Tool name to execute"
+            },
+            "arguments": {
+              "type": "object",
+              "description": "Arguments for the target tool"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        },
+        "name": "mcp-exec"
+      },
+      {
+        "description": "Search available MCP servers. Returns servers that can be added to this session via mcp-add.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Search query to match against server names and descriptions"
+            }
+          }
+        },
+        "name": "mcp-find"
+      },
+      {
+        "_meta": {
+          "_fastmcp": {
+            "tags": []
+          }
+        },
+        "description": "View documentation about a GitHub repository.",
+        "inputSchema": {
+          "properties": {
+            "repoName": {
+              "description": "GitHub repository in owner/repo format (e.g. \"facebook/react\").",
+              "type": "string"
+            }
+          },
+          "required": [
+            "repoName"
+          ],
+          "type": "object"
+        },
+        "name": "read_wiki_contents",
+        "outputSchema": {
+          "properties": {
+            "result": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "result"
+          ],
+          "type": "object",
+          "x-fastmcp-wrap-result": true
+        }
+      },
+      {
+        "_meta": {
+          "_fastmcp": {
+            "tags": []
+          }
+        },
+        "description": "Get a list of documentation topics for a GitHub repository.",
+        "inputSchema": {
+          "properties": {
+            "repoName": {
+              "description": "GitHub repository in owner/repo format (e.g. \"facebook/react\").",
+              "type": "string"
+            }
+          },
+          "required": [
+            "repoName"
+          ],
+          "type": "object"
+        },
+        "name": "read_wiki_structure",
+        "outputSchema": {
+          "properties": {
+            "result": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "result"
+          ],
+          "type": "object",
+          "x-fastmcp-wrap-result": true
+        }
+      }
+    ]
+  }
+}

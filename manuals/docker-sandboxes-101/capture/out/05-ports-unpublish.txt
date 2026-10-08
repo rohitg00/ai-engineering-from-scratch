@@ -1,0 +1,11 @@
+$ sbx ports m101-demo --unpublish 18081:8080
+Unpublish requested for port 18081 -> 8080
+[exit 0]
+
+$ sbx ports m101-demo --unpublish <port>:8080/tcp
+Unpublish requested for port <port> -> 8080/tcp
+[exit 0]
+
+$ sbx ports m101-demo --json
+[]
+[exit 0]

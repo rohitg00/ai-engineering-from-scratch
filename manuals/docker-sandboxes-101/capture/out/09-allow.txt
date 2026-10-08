@@ -1,0 +1,15 @@
+$ sbx policy allow network --sandbox m101-policy example.com
+Rule added to policy local (scope: sandbox:m101-policy): <uuid> (example.com [tcp])
+[exit 0]
+
+$ sbx policy ls m101-policy
+Policy for sandbox: m101-policy
+NETWORK
+  allow 195 hosts from <uuid>, local-policy
+
+FILESYSTEM
+  read allow all paths from local-policy
+  write allow all paths from local-policy
+
+Details: sbx policy ls m101-policy --wide
+[exit 0]

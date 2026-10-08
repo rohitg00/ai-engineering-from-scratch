@@ -1,0 +1,6 @@
+$ sbx template ls
+REPOSITORY                           TAG            IMAGE ID       FLAVOR         CREATED
+docker.io/docker/sandbox-templates   shell-docker   <id>   shell-docker   <age>
+docker.io/library/m101-tpl           v1             <id>   shell          <age>
+docker.io/sandboxes-swap/m101-demo   <id>       <id>   shell          <age>
+[exit 0]

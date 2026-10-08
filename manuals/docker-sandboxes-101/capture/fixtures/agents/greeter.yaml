@@ -1,0 +1,5 @@
+agents:
+  root:
+    model: dmr/ai/qwen3
+    description: Answers with one word.
+    instruction: Reply with exactly one word.

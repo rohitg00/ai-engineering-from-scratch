@@ -1,0 +1,38 @@
+$ docker-agent doctor
+User configuration
+  $HOME/.config/cagent/config.yaml: ok
+
+Model provider credentials
+  PROVIDER         STATUS    CREDENTIAL                           SOURCE
+  anthropic        not set   ANTHROPIC_API_KEY                    -
+  openai           not set   OPENAI_API_KEY                       -
+  chatgpt          not set   CHATGPT_OAUTH_TOKEN                  -
+  github-copilot   not set   GITHUB_TOKEN (+1 more)               -
+  google           not set   GOOGLE_API_KEY (+2 more)             -
+  mistral          not set   MISTRAL_API_KEY                      -
+  openrouter       not set   OPENROUTER_API_KEY                   -
+  baseten          not set   BASETEN_API_KEY                      -
+  ovhcloud         not set   OVH_AI_ENDPOINTS_ACCESS_TOKEN        -
+  groq             not set   GROQ_API_KEY                         -
+  fireworks-ai     not set   FIREWORKS_API_KEY                    -
+  deepseek         not set   DEEPSEEK_API_KEY                     -
+  cerebras         not set   CEREBRAS_API_KEY                     -
+  togetherai       not set   TOGETHER_API_KEY                     -
+  huggingface      not set   HF_TOKEN                             -
+  moonshotai       not set   MOONSHOT_API_KEY                     -
+  vercel           not set   AI_GATEWAY_API_KEY                   -
+  amazon-bedrock   not set   AWS_BEARER_TOKEN_BEDROCK (+3 more)   -
+  opencode         not set   OPENCODE_API_KEY                     -
+  opencode-go      not set   OPENCODE_API_KEY                     -
+
+Docker Model Runner
+  Status: unreachable: docker --config=$HOME/.docker --context=desktop-linux model status --json: unable to initialize standalone model runner: unable to identify existing standalone model runner: unable to prune stopped model runner containers: unable to identify model runner containers: failed to connect to the docker API at unix://$HOME/.docker/run/docker.sock; check if the path is correct and if the daemon is running: dial unix $HOME/.docker/run/docker.sock: connect: no such file or directory: exit status 1
+  Install or start Docker Model Runner: https://docs.docker.com/ai/model-runner/get-started/
+
+Model auto-selection
+  auto -> dmr/ai/qwen3:latest
+
+Issues
+  - no usable model: no provider credential was found and Docker Model Runner is unreachable; run `docker agent setup`, or set an API key for one of the providers above (https://docs.docker.com/ai/docker-agent/guides/secrets/) or install Docker Model Runner (https://docs.docker.com/ai/model-runner/get-started/)
+Error: 1 issue(s) found
+[exit 1]

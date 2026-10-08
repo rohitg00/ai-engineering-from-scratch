@@ -1,0 +1,9 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: workload
+name: hello-kit
+description: A shell workload with one network grant, in the v3 descriptor form.
+capabilities:
+  com.docker.sandbox/network-policy@2:
+    allow:
+      - example.com

@@ -1,0 +1,3 @@
+$ docker-agent run --dry-run --exec $CAPTURE/fixtures/agents/greeter.yaml hi
+Error: failed to get models: docker --config=$HOME/.docker --context=desktop-linux model status --json: unable to initialize standalone model runner: unable to identify existing standalone model runner: unable to prune stopped model runner containers: unable to identify model runner containers: failed to connect to the docker API at unix://$HOME/.docker/run/docker.sock; check if the path is correct and if the daemon is running: dial unix $HOME/.docker/run/docker.sock: connect: no such file or directory: exit status 1
+[exit 1]

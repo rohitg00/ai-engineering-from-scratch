@@ -1,0 +1,4 @@
+$ sbx kit inspect ./fixtures/kits/hello-kit --json
+   → build kit ./fixtures/kits/hello-kit (sbx-kit-src:kit-<id>)
+error: build kit ./fixtures/kits/hello-kit: exit status 1 ERROR: failed to connect to the docker API at unix://$HOME/.docker/run/docker.sock; check if the path is correct and if the daemon is running: dial unix $HOME/.docker/run/docker.sock: connect: no such file or directory
+[exit 1]

@@ -1,0 +1,14 @@
+{
+  "action": "net:connect:tcp",
+  "allowed": false,
+  "context": "global",
+  "deny_kind": "implicit",
+  "governance": {
+    "active": false
+  },
+  "reason": "No matching allow rule (default deny)",
+  "resource_type": "net:domain",
+  "resource_value": "example.com:443",
+  "target": "example.com:443",
+  "type": "network"
+}

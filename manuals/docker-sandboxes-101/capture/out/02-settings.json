@@ -1,0 +1,297 @@
+[
+  {
+    "default": false,
+    "description": "Allow Claude Code's /remote-control channel to authenticate with its own session token instead of the host credential.",
+    "env_var": "DOCKER_SANDBOXES_CLAUDE_REMOTE_CONTROL",
+    "key": "claude.remoteControl",
+    "source": "default",
+    "type": "bool",
+    "value": false
+  },
+  {
+    "default": false,
+    "description": "Allow sandboxed agents to read the host clipboard for image paste (Ctrl+V).",
+    "env_var": "DOCKER_SANDBOXES_CLIPBOARD_IMAGE_PASTE",
+    "key": "clipboard.imagePaste",
+    "source": "default",
+    "type": "bool",
+    "value": false
+  },
+  {
+    "default": "",
+    "description": "Tri-state consent for automatic diagnostics bundle upload on error: \"\" (never asked; prompts and uploads nothing), \"yes\" (accepted; upload), \"no\" (declined; never prompt again).",
+    "key": "diagnostics.autoUpload",
+    "source": "default",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "default": false,
+    "description": "Let an approval of an environment's host commands cover later runs of the same commands, instead of asking each time.",
+    "key": "env.rememberHostCommands",
+    "source": "default",
+    "type": "bool",
+    "value": false
+  },
+  {
+    "default": true,
+    "description": "Admit the pinned kit references that replace formerly built-in agents even when kit.allowedSources does not list them, and exempt those references from kit.requireSignature. Credential trust for the fetched content is decided separately, by comparing it against the engine's compiled-in digest. Set to false to require an explicit allowlist entry.",
+    "env_var": "DOCKER_SANDBOXES_KIT_ALLOW_EXTRACTED_AGENTS",
+    "key": "kit.allowExtractedAgents",
+    "source": "default",
+    "type": "bool",
+    "value": true
+  },
+  {
+    "default": true,
+    "description": "Allow installing kits from local directories or ZIP files. Set to false to require a remote source.",
+    "env_var": "DOCKER_SANDBOXES_KIT_ALLOW_LOCAL",
+    "key": "kit.allowLocalKits",
+    "source": "default",
+    "type": "bool",
+    "value": true
+  },
+  {
+    "default": [
+      "docker.io/"
+    ],
+    "description": "JSON array of allowed kit source prefixes (e.g. [\"docker.io/\", \"ghcr.io/docker/\"]). Use [\"*\"] to allow any remote source.",
+    "env_var": "DOCKER_SANDBOXES_KIT_ALLOWED_SOURCES",
+    "key": "kit.allowedSources",
+    "source": "default",
+    "type": "json",
+    "value": [
+      "docker.io/"
+    ]
+  },
+  {
+    "default": false,
+    "description": "Verify keyless kit signatures without requiring a Rekor transparency-log entry (for private kits signed with --tlog-upload=false).",
+    "env_var": "DOCKER_SANDBOXES_KIT_IGNORE_TLOG",
+    "key": "kit.ignoreTransparencyLog",
+    "source": "default",
+    "type": "bool",
+    "value": false
+  },
+  {
+    "default": false,
+    "description": "Require a valid signature from a trusted signer (kit.trustedSigners) before installing a kit. The pinned kit references that replace formerly built-in agents are exempt while kit.allowExtractedAgents is true.",
+    "env_var": "DOCKER_SANDBOXES_KIT_REQUIRE_SIGNATURE",
+    "key": "kit.requireSignature",
+    "source": "default",
+    "type": "bool",
+    "value": false
+  },
+  {
+    "default": [
+      {
+        "identityRegexp": "^.*@docker\\.com$",
+        "issuer": "https://accounts.google.com"
+      }
+    ],
+    "description": "JSON array of trusted signer policies (key-based {\"key\":path} or keyless {\"issuer\":...,\"identity\":...}). Defaults to Docker employee identities (*@docker.com via https://accounts.google.com).",
+    "env_var": "DOCKER_SANDBOXES_KIT_TRUSTED_SIGNERS",
+    "key": "kit.trustedSigners",
+    "source": "default",
+    "type": "json",
+    "value": [
+      {
+        "identityRegexp": "^.*@docker\\.com$",
+        "issuer": "https://accounts.google.com"
+      }
+    ]
+  },
+  {
+    "default": false,
+    "description": "Force the local MCP gateway even when entitled to the SaaS gateway.",
+    "key": "mcp.forceLocalGateway",
+    "requires_restart": true,
+    "source": "default",
+    "type": "bool",
+    "value": false
+  },
+  {
+    "default": {},
+    "description": "JSON object of inference endpoints for `sbx run --model <model> --provider <id>`, keyed by id, e.g. {\"gpubox\": {\"url\": \"http://gpubox:8000/v1\"}}. Fields: url (required, absolute http(s)), wire (\"openai\" default or \"anthropic\"), apiKeyEnv (variable llmman serve reads the API key from), name.",
+    "env_var": "DOCKER_SANDBOXES_MODEL_PROVIDERS",
+    "key": "model.providers",
+    "source": "default",
+    "type": "json",
+    "value": {}
+  },
+  {
+    "default": "",
+    "description": "No-proxy exception list for sandbox, daemon, and supported CLI host egress (comma-separated hosts, domain suffixes, and CIDRs).",
+    "key": "no_proxy",
+    "requires_restart": true,
+    "source": "default",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "default": "",
+    "description": "No-proxy exception list for daemon and supported CLI host egress (overrides no_proxy).",
+    "key": "no_proxy.daemon",
+    "requires_restart": true,
+    "source": "default",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "default": "",
+    "description": "No-proxy exception list for sandbox egress only (overrides no_proxy).",
+    "env_var": "DOCKER_SANDBOXES_NO_PROXY",
+    "key": "no_proxy.sandbox",
+    "requires_restart": true,
+    "source": "default",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "default": true,
+    "description": "Allow experimental features.",
+    "env_var": "DOCKER_SANDBOXES_ALLOW_EXPERIMENTAL_FEATURES",
+    "key": "platform.allowExperimentalFeatures",
+    "source": "default",
+    "type": "bool",
+    "value": true
+  },
+  {
+    "default": "",
+    "description": "Registry mirror host for Docker Hub-resolving template and kit images (e.g. \"artifactory.corp/docker-remote\"). A bare host that is not a loopback or wildcard address also mirrors Docker Hub pulls made inside the sandbox, provided the sandbox trusts its certificate. Empty disables mirroring.",
+    "key": "platform.images.registryMirror",
+    "source": "default",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "default": false,
+    "description": "Use Docker Hardened Image (DHI) equivalents (dhi/sbx-templates) for agent template images.",
+    "env_var": "DOCKER_SANDBOXES_USE_DHI",
+    "key": "platform.images.useDHI",
+    "source": "default",
+    "type": "bool",
+    "value": false
+  },
+  {
+    "default": "",
+    "description": "Upstream proxy for sandbox, daemon, and supported CLI host egress (URL, PAC source, \"system\", or \"direct\"; empty = automatic: HTTP(S)_PROXY if set, otherwise the host OS proxy).",
+    "key": "proxy",
+    "requires_restart": true,
+    "source": "default",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "default": "",
+    "description": "Upstream proxy for daemon and supported CLI host egress (overrides proxy).",
+    "key": "proxy.daemon",
+    "requires_restart": true,
+    "source": "default",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "default": false,
+    "description": "Enable integrated NTLM/Kerberos authentication (Windows SSPI) for sandbox, daemon, and supported CLI host egress.",
+    "key": "proxy.integratedAuth",
+    "requires_restart": true,
+    "source": "default",
+    "type": "bool",
+    "value": false
+  },
+  {
+    "default": "",
+    "description": "Upstream proxy for sandbox egress only (overrides proxy).",
+    "env_var": "DOCKER_SANDBOXES_PROXY",
+    "key": "proxy.sandbox",
+    "requires_restart": true,
+    "source": "default",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "default": "10g",
+    "description": "Size of a sandbox's /var/lib/docker volume (minimum 512 MiB; e.g. \"10g\"). Applies to sandboxes created after the change; existing volumes are never resized. Set DOCKER_SANDBOXES_DOCKER_SIZE to override one sandbox.",
+    "key": "sandbox.disk.dockerVolume",
+    "source": "default",
+    "type": "string",
+    "value": "10g"
+  },
+  {
+    "default": "readonly",
+    "description": "Default for an omitted --skills flag or sbx.yaml `skills:` key: \"off\", \"readonly\", or \"readwrite\". Applies to sandboxes created after the change; existing sandboxes' mounts are never retroactively changed.",
+    "key": "skills.defaultMode",
+    "source": "default",
+    "type": "string",
+    "value": "readonly"
+  },
+  {
+    "default": true,
+    "description": "Allow clients to forward an SSH agent into sandboxes. Existing forwarders require a daemon restart after changes.",
+    "key": "ssh.agentForwardingEnabled",
+    "requires_restart": true,
+    "source": "default",
+    "type": "bool",
+    "value": true
+  },
+  {
+    "default": "",
+    "description": "Optional fixed host SSH agent socket path. Empty uses each client's current SSH_AUTH_SOCK. Existing forwarders require a daemon restart after changes.",
+    "key": "ssh.agentSocketPath",
+    "requires_restart": true,
+    "source": "default",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "default": false,
+    "description": "Create a sandbox on SSH connect when it does not exist.",
+    "env_var": "DOCKER_SANDBOXES_SSH_AUTO_CREATE",
+    "key": "ssh.autoCreate",
+    "requires_restart": true,
+    "source": "default",
+    "type": "bool",
+    "value": false
+  },
+  {
+    "default": "shell",
+    "description": "Built-in agent used for SSH auto-created sandboxes.",
+    "env_var": "DOCKER_SANDBOXES_SSH_DEFAULT_AGENT",
+    "key": "ssh.defaultAgent",
+    "requires_restart": true,
+    "source": "default",
+    "type": "string",
+    "value": "shell"
+  },
+  {
+    "default": "",
+    "description": "Template image override for SSH auto-created sandboxes (agent default if empty).",
+    "env_var": "DOCKER_SANDBOXES_SSH_DEFAULT_TEMPLATE",
+    "key": "ssh.defaultTemplate",
+    "requires_restart": true,
+    "source": "default",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "default": "",
+    "description": "Host directory holding SSH auto-created sandbox workspaces (empty = mount-less, container-internal).",
+    "env_var": "DOCKER_SANDBOXES_SSH_WORKSPACE_ROOT",
+    "key": "ssh.workspaceRoot",
+    "requires_restart": true,
+    "source": "default",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "default": false,
+    "description": "Accept server certificates with a negative serial number (needed by some TLS-inspecting proxies).",
+    "env_var": "DOCKER_SANDBOXES_TLS_ALLOW_NEGATIVE_SERIAL",
+    "key": "tls.allowNegativeSerial",
+    "requires_restart": true,
+    "source": "default",
+    "type": "bool",
+    "value": false
+  }
+]

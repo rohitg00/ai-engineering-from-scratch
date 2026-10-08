@@ -1,0 +1,5 @@
+$ sbx exec m101-policy sh -c 'curl -sS --max-time 10 https://example.com; echo; echo exit=$?'
+Blocked by local rule for example.com:443
+
+exit=0
+[exit 0]

@@ -1,0 +1,12 @@
+$ sbx kit inspect ./fixtures/kits/hello-mixin
+
+  Name:           hello-mixin
+  Kind:           mixin
+  Schema:         v2
+  Description:    Installs tree and adds a greeting file to the workspace.
+
+  Policies:
+    Network:      1 allow, 0 deny
+    Commands:     1 install, 0 startup, 0 init files
+    Files:        0 home, 1 workspace
+[exit 0]

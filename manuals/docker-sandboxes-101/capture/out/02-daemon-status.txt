@@ -1,0 +1,5 @@
+$ sbx daemon status
+Status: running
+Socket: $HOME/Library/Application Support/com.docker.sandboxes/sandboxes/sandboxd/sandboxd.sock
+Logs: $HOME/Library/Application Support/com.docker.sandboxes/sandboxes/sandboxd/daemon.log
+[exit 0]

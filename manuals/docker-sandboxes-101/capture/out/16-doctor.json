@@ -1,0 +1,166 @@
+{
+  "user_config": {
+    "path": "$HOME/.config/cagent/config.yaml",
+    "status": "ok"
+  },
+  "providers": [
+    {
+      "provider": "anthropic",
+      "env_vars": [
+        "ANTHROPIC_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "openai",
+      "env_vars": [
+        "OPENAI_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "chatgpt",
+      "env_vars": [
+        "CHATGPT_OAUTH_TOKEN"
+      ],
+      "found": false
+    },
+    {
+      "provider": "github-copilot",
+      "env_vars": [
+        "GITHUB_TOKEN",
+        "GH_TOKEN"
+      ],
+      "found": false
+    },
+    {
+      "provider": "google",
+      "env_vars": [
+        "GOOGLE_API_KEY",
+        "GEMINI_API_KEY",
+        "GOOGLE_GENAI_USE_VERTEXAI"
+      ],
+      "found": false
+    },
+    {
+      "provider": "mistral",
+      "env_vars": [
+        "MISTRAL_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "openrouter",
+      "env_vars": [
+        "OPENROUTER_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "baseten",
+      "env_vars": [
+        "BASETEN_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "ovhcloud",
+      "env_vars": [
+        "OVH_AI_ENDPOINTS_ACCESS_TOKEN"
+      ],
+      "found": false
+    },
+    {
+      "provider": "groq",
+      "env_vars": [
+        "GROQ_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "fireworks-ai",
+      "env_vars": [
+        "FIREWORKS_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "deepseek",
+      "env_vars": [
+        "DEEPSEEK_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "cerebras",
+      "env_vars": [
+        "CEREBRAS_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "togetherai",
+      "env_vars": [
+        "TOGETHER_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "huggingface",
+      "env_vars": [
+        "HF_TOKEN"
+      ],
+      "found": false
+    },
+    {
+      "provider": "moonshotai",
+      "env_vars": [
+        "MOONSHOT_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "vercel",
+      "env_vars": [
+        "AI_GATEWAY_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "amazon-bedrock",
+      "env_vars": [
+        "AWS_BEARER_TOKEN_BEDROCK",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_PROFILE",
+        "AWS_ROLE_ARN"
+      ],
+      "found": false
+    },
+    {
+      "provider": "opencode",
+      "env_vars": [
+        "OPENCODE_API_KEY"
+      ],
+      "found": false
+    },
+    {
+      "provider": "opencode-go",
+      "env_vars": [
+        "OPENCODE_API_KEY"
+      ],
+      "found": false
+    }
+  ],
+  "dmr": {
+    "status": "unreachable",
+    "error": "docker --config=$HOME/.docker --context=desktop-linux model status --json: unable to initialize standalone model runner: unable to identify existing standalone model runner: unable to prune stopped model runner containers: unable to identify model runner containers: failed to connect to the docker API at unix://$HOME/.docker/run/docker.sock; check if the path is correct and if the daemon is running: dial unix $HOME/.docker/run/docker.sock: connect: no such file or directory: exit status 1"
+  },
+  "auto_model": {
+    "provider": "dmr",
+    "model": "ai/qwen3:latest",
+    "usable": false
+  },
+  "issues": [
+    "no usable model: no provider credential was found and Docker Model Runner is unreachable; run `docker agent setup`, or set an API key for one of the providers above (https://docs.docker.com/ai/docker-agent/guides/secrets/) or install Docker Model Runner (https://docs.docker.com/ai/model-runner/get-started/)"
+  ]
+}

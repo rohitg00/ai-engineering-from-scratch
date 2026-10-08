@@ -1,0 +1,8 @@
+$ sbx policy ls --source org
+No policies match the selected filters.
+[exit 0]
+
+$ sbx policy ls --include-inactive
+POLICY         SOURCE   APPLIES TO   SUMMARY
+local-policy   local    all          network: 194 allow; filesystem read: 1 allow; filesystem write: 1 allow
+[exit 0]

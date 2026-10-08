@@ -1,0 +1,3 @@
+$ sbx skills ls
+No skills found in $HOME/Library/Application Support/com.docker.sandboxes/sandboxes/agent-skills
+[exit 0]

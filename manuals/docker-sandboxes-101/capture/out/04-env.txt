@@ -1,0 +1,45 @@
+$ sbx exec m101-demo sh -c 'env | sort'
+ANTHROPIC_API_KEY=proxy-managed
+BASH_ENV=/etc/sandbox-persistent.sh
+GH_TOKEN=gho_sbxproxymanaged000000000000000000000
+GOOGLE_API_KEY=proxy-managed
+HOME=/home/agent
+HTTPS_PROXY=http://gateway.docker.internal:3128
+HTTP_PROXY=http://gateway.docker.internal:3128
+JAVA_TOOL_OPTIONS=-Dhttp.proxyHost=gateway.docker.internal -Dhttp.proxyPort=3128 -Dhttps.proxyHost=gateway.docker.internal -Dhttps.proxyPort=3128 -Dhttp.nonProxyHosts=localhost|127.*|[::1]|gateway.docker.internal
+MCP_GATEWAY_URL=http://mcp-gateway.docker.internal/mcp
+MCP_SENTINEL_TOKEN_NAME=proxy-managed
+MISTRAL_API_KEY=proxy-managed
+NEBIUS_API_KEY=proxy-managed
+NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
+NODE_USE_ENV_PROXY=1
+NO_PROXY=localhost,127.0.0.1,::1,gateway.docker.internal
+NPM_CONFIG_PREFIX=/usr/local/share/npm-global
+OPENAI_API_KEY=proxy-managed
+OPENROUTER_API_KEY=proxy-managed
+PATH=/home/agent/.local/bin:/usr/local/share/npm-global/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PROXY_CA_CERT_B64=<base64>
+PWD=$CAPTURE/fixtures/repo
+REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+SANDBOX_ID=<uuid>
+SANDBOX_NAME=m101-demo
+SANDBOX_VM_ID=m101-demo
+SBX_CRED_ANTHROPIC_MODE=none
+SBX_CRED_GITHUB_MODE=none
+SBX_CRED_GOOGLE_MODE=none
+SBX_CRED_MISTRAL_MODE=none
+SBX_CRED_NEBIUS_MODE=none
+SBX_CRED_OPENAI_MODE=none
+SBX_CRED_OPENROUTER_MODE=none
+SBX_CRED_XAI_MODE=none
+SSH_AUTH_SOCK=/run/ssh-agent.sock
+SSH_AUTH_SOCK_GATEWAY=gateway.docker.internal:3129
+SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+WAYLAND_DISPLAY=wayland-0
+WORKSPACE_DIR=$CAPTURE/fixtures/repo
+XAI_API_KEY=proxy-managed
+XDG_RUNTIME_DIR=/run/user/1000
+http_proxy=http://gateway.docker.internal:3128
+https_proxy=http://gateway.docker.internal:3128
+no_proxy=localhost,127.0.0.1,::1,gateway.docker.internal
+[exit 0]

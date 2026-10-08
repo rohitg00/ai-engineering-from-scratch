@@ -1,0 +1,22 @@
+$ sbx ls
+No sandboxes found.
+Launch one: sbx run claude
+[exit 0]
+
+$ sbx template ls
+REPOSITORY                           TAG            IMAGE ID       FLAVOR         CREATED
+docker.io/docker/sandbox-templates   shell-docker   <id>   shell-docker   <age>
+[exit 0]
+
+$ sbx mcp ls
+No MCP servers registered
+[exit 0]
+
+$ sbx secret ls
+No secrets found. Run 'sbx secret set --help' to see available services.
+[exit 0]
+
+$ sbx policy ls
+POLICY         SOURCE   APPLIES TO   SUMMARY
+local-policy   local    all          network: 194 allow; filesystem read: 1 allow; filesystem write: 1 allow
+[exit 0]

@@ -1,0 +1,16 @@
+$ sbx stop m101-demo
+Sandbox 'm101-demo' stopped; state preserved. Restart with: sbx run --name m101-demo
+[exit 0]
+
+$ sbx prune --force
+Deleting sandbox m101-demo...
+Sandbox 'm101-demo' removed
+Deleting sandbox m101-demo-2...
+Sandbox 'm101-demo-2' removed
+[exit 0]
+
+$ sbx ls --json
+{
+  "sandboxes": []
+}
+[exit 0]

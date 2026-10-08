@@ -1,0 +1,19 @@
+$ sbx rm --force m101-clone
+Warning: sandbox "m101-clone" runs on an in-container clone (--clone). Any
+  commits the agent made inside the sandbox are lost on removal
+  unless preserved first. To keep them, before removing run:
+      git fetch sandbox-m101-clone
+  Fetched branches are mirrored into refs/sandboxes/m101-clone/* and survive
+  removal; recover any branch with:
+      git branch <local-name> refs/sandboxes/m101-clone/<branch>
+  Alternatively, ask the agent to push them to an upstream remote.
+Deleting sandbox m101-clone...
+Sandbox 'm101-clone' removed
+[exit 0]
+
+$ git -C $CAPTURE/fixtures/repo-clone remote -v
+[exit 0]
+
+$ git -C $CAPTURE/fixtures/repo-clone for-each-ref refs/sandboxes/
+81e11df2aceeb2e92c0b62f2486d8eddc262e55b commit	refs/sandboxes/m101-clone/main
+[exit 0]

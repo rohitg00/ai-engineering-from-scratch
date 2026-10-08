@@ -1,0 +1,9 @@
+$ sbx stop m101-demo-2
+Sandbox 'm101-demo-2' stopped; state preserved. Restart with: sbx run --name m101-demo-2
+[exit 0]
+
+$ sbx ls
+SANDBOX       AGENT   STATUS    PORTS                                            WORKSPACE
+m101-demo     shell   running   127.0.0.1:<port>->8080/tcp, ::1:<port>->8080/tcp   $CAPTURE/fixtures/repo
+m101-demo-2   shell   stopped                                                    $CAPTURE/fixtures/repo
+[exit 0]

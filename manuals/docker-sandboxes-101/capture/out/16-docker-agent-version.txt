@@ -1,0 +1,4 @@
+$ docker-agent version
+docker-agent version v1.149.0
+Commit: Homebrew
+[exit 0]

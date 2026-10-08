@@ -1,0 +1,15 @@
+{
+  "sandboxes": [
+    {
+      "name": "m101-demo",
+      "id": "<uuid>",
+      "agent": "shell",
+      "status": "running",
+      "last_used_at": "<ts>",
+      "workspaces": [
+        "$CAPTURE/fixtures/repo"
+      ],
+      "created_at": "<ts>"
+    }
+  ]
+}

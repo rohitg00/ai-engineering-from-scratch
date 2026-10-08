@@ -1,0 +1,22 @@
+GET /from-variable HTTP/1.1
+Host: localhost:18080
+User-Agent: curl/8.18.0
+Accept: */*
+Authorization: Bearer m101-dummy-receiver-0000
+X-Demo: m101-dummy-receiver-0000
+Accept-Encoding: gzip
+
+GET /from-literal HTTP/1.1
+Host: localhost:18080
+User-Agent: curl/8.18.0
+Accept: */*
+Authorization: Bearer m101-dummy-receiver-0000
+X-Demo: m101-dummy-receiver-0000
+Accept-Encoding: gzip
+
+GET /no-scheme HTTP/1.1
+Host: localhost:18080
+User-Agent: curl/8.18.0
+Accept: */*
+Authorization: m101-dummy-receiver-0000
+Accept-Encoding: gzip

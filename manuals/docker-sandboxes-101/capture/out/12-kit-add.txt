@@ -1,0 +1,14 @@
+$ sbx kit add m101-demo ./fixtures/kits/env-mixin
+Recreating sandbox "m101-demo" to apply augmented kit list...
+  Swap container m101-demo-swap-<id> started (id=<sha256>).
+Kit "env-mixin" added to sandbox "m101-demo"
+[exit 0]
+
+$ sbx exec m101-demo sh -c 'env | grep M101_FROM_KIT'
+M101_FROM_KIT=yes
+[exit 0]
+
+$ sbx policy ls m101-demo --source kit --wide
+SOURCE   CREATED VIA   APPLIES TO          POLICY   POLICY_ID                              RULE            RULE_ID                                TYPE      METHOD   PATH   DECISION   PROTOCOLS   RESOURCES
+kit      provisioned   sandbox:m101-demo   -        <uuid>   kit:m101-demo   <uuid>   network   -        -      allow      tcp         example.org
+[exit 0]
