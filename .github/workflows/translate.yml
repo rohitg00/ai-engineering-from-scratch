@@ -31,7 +31,7 @@ on:
   workflow_dispatch:
     inputs:
       langs:
-        description: "space-separated language codes; blank = the ci:true set in languages.json"
+        description: "space-separated non-source codes; blank = automatic lessons and all site UI languages"
         default: ""
       phase:
         description: "one phase directory (for example 01-math-foundations); blank = all phases"
@@ -48,6 +48,7 @@ jobs:
       contents: read
     outputs:
       langs: ${{ steps.set.outputs.langs }}
+      ui_langs: ${{ steps.set.outputs.ui_langs }}
       phases: ${{ steps.set.outputs.phases }}
     steps:
       - uses: actions/checkout@v4
@@ -58,17 +59,24 @@ jobs:
           REQUESTED: ${{ github.event.inputs.langs }}
           REQUESTED_PHASE: ${{ github.event.inputs.phase }}
         run: |
-          # every emitted code must exist in the registry; requested codes are
-          # intersected with it, so untrusted input can never reach matrix.lang
+          # Only registered non-source codes may reach a matrix. Explicit
+          # manual requests can translate languages outside the automatic set.
           if [ -n "$REQUESTED" ]; then
             JSON=$(jq -c --arg req "$REQUESTED" \
               '($req | split(" ") | map(select(length > 0))) as $want
-               | [.languages[].code] as $known
-               | [$want[] | select(. as $c | $known | index($c))]' languages.json)
+               | [.languages[] | select(.source != true) | .code] as $known
+               | [$want[] | select(. as $c | $known | index($c))] | unique' languages.json)
+            UI_JSON="$JSON"
           else
-            JSON=$(jq -c '[.languages[] | select(.ci == true) | .code]' languages.json)
+            JSON=$(jq -c '[.languages[] | select(.ci == true and .source != true) | .code]' languages.json)
+            UI_JSON=$(jq -c '[.languages[] | select((.ci == true or .site == true) and .source != true) | .code]' languages.json)
+          fi
+          if [ "$JSON" = '[]' ]; then
+            echo "no registered non-source languages selected" >&2
+            exit 1
           fi
           echo "langs=$JSON" >> "$GITHUB_OUTPUT"
+          echo "ui_langs=$UI_JSON" >> "$GITHUB_OUTPUT"
           # Manual runs can select one phase for a cheap end-to-end smoke test.
           # Push runs and blank manual inputs retain the full phase matrix.
           if [ -n "$REQUESTED_PHASE" ]; then
@@ -238,6 +246,7 @@ jobs:
     # The site's interface strings (navigation, sidebar, checkpoints, panels)
     # are translated the same way, from site/ui-strings.json, into one small
     # i18n/<lang>/ui.json that the browser fetches from the translations branch.
+    # Every site language gets UI strings, including contributor-managed ones.
     # Keys with a hand-pinned override or a previously published translation
     # are reused, so most runs load no model at all.
     needs: prepare
@@ -250,7 +259,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        lang: ${{ fromJSON(needs.prepare.outputs.langs) }}
+        lang: ${{ fromJSON(needs.prepare.outputs.ui_langs) }}
     steps:
       - name: Checkout main (English source)
         uses: actions/checkout@v4

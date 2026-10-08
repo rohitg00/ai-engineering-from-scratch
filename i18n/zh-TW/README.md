@@ -1,4 +1,4 @@
-<p align="center"><sub>Traduction communautaire. L'<a href="../../README.md">anglais fait foi</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
+<p align="center" lang="zh-TW"><sub>台灣繁體中文部分翻譯。課程簡介、入門指引與部分標題已翻譯，其餘內容保留<a href="../../README.md">英文原文</a>，並以英文版為準 · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
 <p align="center">
   <img src="../../assets/banner.svg" alt="AI Engineering from Scratch — reference manual banner" width="100%">
 </p>
@@ -36,68 +36,63 @@
 </p>
 </p>
 
-### Partenaires
+### 贊助者
 
 <p align="center">
-  <a href="https://serpapi.com/ai-engineering-from-scratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/serpapi-banner-compact.png" width="48%"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi. API de recherche Web pour vos applications d’IA. Disponible en Markdown et JSON pour toute intégration." width="440"></picture></a>
+  <a href="https://serpapi.com/ai-engineering-from-scratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/serpapi-banner-compact.png" width="48%"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi。為 AI 應用程式提供網頁搜尋 API，支援 Markdown 與 JSON 格式，方便整合。" width="440"></picture></a>
   <a href="https://nitrostack.ai/referral/aiengineeringfromscratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/nitrostack-banner-equal.png" width="48%"><img src="../../assets/sponsors/nitrostack-banner-equal.png" alt="NitroStack. Build and deploy your MCP app in 10 minutes. Get your product into ChatGPT and Claude marketplaces with free cloud deployment." width="440"></picture></a>
 </p>
 
 <p align="center">
-  <sub><span>Votre soutien permet à chaque leçon de rester gratuite et open source.</span> <a href="#supporters">Voir tous les soutiens</a> · <a href="../../SPONSORS.md">Become a sponsor</a></sub>
+  <sub><span>你的支持讓每堂課都能持續免費且開源。</span> <a href="#supporters">查看所有支持者</a> · <a href="../../SPONSORS.md">Become a sponsor</a></sub>
 </p>
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-> **84 % des étudiants utilisent déjà des outils d'IA. Seuls 18 % se sentent prêts à les utiliser de façon professionnelle.** Ce cursus comble cet écart.
+> **84% 的學生已經使用 AI 工具，但只有 18% 認為自己準備好在工作中專業地使用它們。** 這套課程幫助你補上這段差距。
 >
-> 523 leçons. 20 phases. ~342 heures. Python, TypeScript, Rust, Julia. Chaque leçon livre un artefact réutilisable : un prompt, une skill, un agent, un serveur MCP. Gratuit, open source, MIT.
+> 523 堂課。20 個階段。約 342 小時。Python、TypeScript、Rust、Julia。每堂課都會產出可重複使用的成果：提示詞、技能、代理程式或 MCP 伺服器。免費、開源，採用 MIT 授權。
 >
-> Vous n'apprenez pas seulement l'IA. Vous la construisez. De bout en bout. À la main.
+> 你不只學習 AI，也親手打造 AI。從頭到尾，自己實作。
 
 <!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
 <p align="center"><sub><b>114,584</b> readers &nbsp;·&nbsp; <b>181,995</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-## Start here: choose what you want to build
+## 從這裡開始：選擇你想打造的成果
 
-You do not need to scan 523 lessons before beginning. Pick one goal. Each link
-opens the same curriculum on GitHub or the website, and both versions use the
-same lesson code.
+開始前，你不需要瀏覽全部 523 堂課。先選一個目標。每個連結都會開啟 GitHub 或網站上的同一套課程，兩個版本使用相同的課程程式碼。
 
-| Your goal | Learn on GitHub | Learn on the website |
+| 你的目標 | 在 GitHub 上學習 | 在網站上學習 |
 |---|---|---|
-| I am new and want the complete foundation | [Phase 0: Setup and Tooling](../../phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](../../phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| I want to build production LLM applications | [Phase 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| I want to build agents | [Phase 14: Agent Engineering](../../phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| I want to use coding agents on real repositories | [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json) | [Agent-Assisted Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| I want to shape the right build before implementation | [Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json) | [Product Judgment and Delivery](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| I want to prepare for a Claude certification | [Certification onboarding](../../certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |
-| I want to prepare for the MCP Associate (MCPA) | [MCPA onboarding](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA track](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+| 我是初學者，想打好完整基礎 | [階段 0：環境設定與工具](../../phases/00-setup-and-tooling/) | [開發環境](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| 我會 Python，想學數學與機器學習基礎 | [階段 1：數學基礎](../../phases/01-math-foundations/) | [線性代數的直觀理解](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| 我想打造可正式上線的 LLM 應用程式 | [階段 11：LLM 工程](../../phases/11-llm-engineering/) | [提示工程](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| 我想打造代理程式 | [階段 14：代理程式工程](../../phases/14-agent-engineering/) | [代理程式迴圈](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| 我想在實際的儲存庫中使用程式開發代理 | [代理輔助工程學習路徑](../../learning-paths/using-coding-agents.json) | [代理輔助工程](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| 我想在實作前確定該打造什麼 | [產品判斷與交付學習路徑](../../learning-paths/shaping-the-build.json) | [產品判斷與交付](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| 我想使用 Model Context Protocol (MCP) 開發 | [Model Context Protocol (MCP) 路線](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) 學習路徑](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| 我想編寫並發布 Agent Skills | [Agent Skills 專題路線](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 學習路徑](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| 我想準備 Claude 認證 | [認證入門指引](../../certifications/claude/GETTING_STARTED.md) | [認證學院](https://aiengineeringfromscratch.com/certifications.html) |
+| 我想準備 MCP Associate (MCPA) 認證 | [MCPA 入門指引](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA 學習路徑](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
 
-Not sure where you fit? Use the [`start-learning` placement tutor](../../skills/start-learning/SKILL.md)
-or the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).
+不確定自己的程度？使用 [`start-learning` 程度評估導師](../../skills/start-learning/SKILL.md)或[網站的先備知識指引](https://aiengineeringfromscratch.com/prereqs.html)。
 
-Compare four core domains and six career routes in the [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+到 [AI 工程學習路徑](https://aiengineeringfromscratch.com/learning-paths.html)比較四個核心領域與六條職涯路線。
 
-### Use every lesson the same way
+### 用相同的方式完成每堂課
 
-1. **Read** `docs/en.md` and explain the core idea in your own words.
-2. **Type and build** the important code instead of treating the code block as decoration.
-3. **Run** the lesson command from the repository root, the directory containing `README.md` and `phases/`.
-4. **Keep evidence**: the command, working directory, exit code, meaningful output, and the artifact you changed or produced.
-5. **Continue** only when you can explain the output and make one small change without guessing.
+1. **閱讀** `docs/en.md`，並用自己的話解釋核心概念。
+2. **親手輸入並實作**關鍵程式碼，讓程式碼區塊成為練習的一部分。
+3. **執行**課程指令時，請從儲存庫根目錄開始，也就是包含 `README.md` 和 `phases/` 的目錄。
+4. **保留執行證據**：指令、工作目錄、結束代碼、有意義的輸出，以及你修改或產出的成果。
+5. 確認自己能解釋輸出，並有把握完成一項小修改後，再**繼續**。
 
-Commands in lesson pages are paths from the repository root unless the lesson
-explicitly says to change directories. If a lesson offers several languages,
-run the implementation for the language you are learning.
+課程頁面中的指令路徑都以儲存庫根目錄為起點，除非課程明確要求切換目錄。若課程提供多種程式語言，請執行你正在學習的語言版本。
 
-### Clone it and produce your first evidence
+### 複製儲存庫並產出第一份執行證據
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
@@ -106,11 +101,7 @@ python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route be
 python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-The preflight separates requirements needed now from tools needed later. Every
-required failure includes the detected reason and a corrective command. The
-second command is a dependency-free lesson and ends by showing that a matrix
-times a vector is the operation inside a neural network layer. Save that
-terminal output as your first evidence.
+環境預檢會區分現在必須具備的條件與稍後才需要的工具。每項必要條件若未通過，都會顯示偵測到的原因與修正指令。第二個指令執行一堂不需額外套件的課程，最後會展示矩陣乘以向量就是神經網路層內部的運算。請把這份終端機輸出存成你的第一份證據。
 
 ## Add the AI tutor in 30 seconds
 
@@ -170,7 +161,7 @@ concepts, but real-host discovery, invocation, script, and uninstall evidence
 remains pending until the preflight is available. Read the lessons at
 [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## Comment ça marche
+## 課程如何進行
 
 Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a
 flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't
@@ -190,7 +181,7 @@ Free, open source, and built to run on your own laptop.
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## La forme du cursus
+## 課程架構
 
 Twenty phases stack on top of each other. Math is the floor. Agents and production are the roof.
 Skip ahead if you already know the lower layers, but don't skip and then wonder why something at
@@ -226,7 +217,7 @@ flowchart TB
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## La forme d'une leçon
+## 單堂課的結構
 
 Each lesson lives in its own folder, with the same structure across the entire curriculum:
 
@@ -252,9 +243,9 @@ flowchart LR
   U --> S["SHIP IT<br/><sub>prompt · skill · agent · MCP</sub>"]
 ```
 
-## Pour commencer
+## 開始學習
 
-Trois façons de commencer. Choisissez-en une.
+三種開始方式，選擇一種。
 
 **Option A — learn in your terminal *(recommended)*.** After the Node.js,
 `npx`, host, and scope preflight above, install the learning skills into a
@@ -287,7 +278,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 Cloning also auto-loads the learning skills in Claude Code, and gives every
 lesson's code to the `learn` tutor for real execution instead of read-along.
 
-### Prérequis
+### 先備知識
 
 - You can write code (any language; Python helps).
 - You want to understand how AI **actually works**, not just call APIs.
@@ -376,7 +367,7 @@ The book is the snapshot; this repository is the living edition. Every chapter e
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Chaque leçon produit quelque chose
+## 每堂課都有成果
 
 Other curricula end with *"congratulations, you learned X."* Each lesson here ends with a
 **reusable tool** you can install or paste into your daily workflow.
@@ -458,7 +449,7 @@ the agent went wrong and explain why...
 
 <a id="contents"></a>
 
-## Sommaire
+## 目錄
 
 Twenty phases. Click any phase to expand its lesson list.
 
@@ -1192,7 +1183,7 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## La boîte à outils
+## 工具組
 
 Every lesson produces a reusable artifact. By the end you have:
 
@@ -1319,7 +1310,7 @@ the default skip-list (`twitter.com`, `x.com`, `linkedin.com`,
 `instagram.com`, `medium.com` — domains that aggressively block automated
 HEAD/GET).
 
-## Par où commencer
+## 從哪裡開始
 
 | Background | Start at | Estimated time |
 |---|---|---|
@@ -1335,7 +1326,7 @@ HEAD/GET).
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Pourquoi c'est important maintenant
+## 為什麼現在值得學習
 
 <table>
 <tr>
@@ -1374,7 +1365,7 @@ HEAD/GET).
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Contribuer
+## 參與貢獻
 
 | Goal | Read |
 |---|---|
@@ -1404,11 +1395,11 @@ relative links inside lesson docs.
 
 <a id="supporters"></a>
 
-## Soutenir le projet
+## 贊助這項工作
 
-Gratuit, sous licence MIT, 523 leçons. Merci aux sponsors et aux soutiens qui rendent ce travail possible. [Voir tous les sponsors et soutiens](../../BACKERS.md).
+免費、採用 MIT 授權，共 523 堂課。感謝讓這項工作得以持續的贊助者與支持者。[查看所有贊助者與支持者](../../BACKERS.md)。
 
-Vous souhaitez soutenir le projet ? Consultez les [options de sponsoring](../../SPONSORS.md), notamment le [sponsoring matériel](../../SPONSORS.md#hardware-lab-partner), ou [soutenez le projet sur GitHub](https://github.com/sponsors/rohitg00).
+想支持這項工作？請查看[贊助方案](../../SPONSORS.md)，包括[硬體贊助](../../SPONSORS.md#hardware-lab-partner)，或[透過 GitHub 贊助](https://github.com/sponsors/rohitg00)。
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -1416,11 +1407,11 @@ Vous souhaitez soutenir le projet ? Consultez les [options de sponsoring](../../
 
 If this manual helped you, star the repo. It keeps the project alive.
 
-## Licence
+## 授權條款
 
-MIT. Utilisez-le comme vous voulez : forkez-le, enseignez-le, vendez-le, publiez-le. L'attribution est appréciée, mais pas obligatoire.
+MIT 授權。你可以自由分叉、教學、販售或發布。歡迎註明出處，但並非必要。
 
-Maintenu par [Rohit Ghumare](https://github.com/rohitg00) et la communauté.
+由 [Rohit Ghumare](https://github.com/rohitg00) 與社群共同維護。
 
 <sub>
   <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;

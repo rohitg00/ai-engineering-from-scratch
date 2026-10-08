@@ -9,7 +9,7 @@ const KEYS = SOURCE.keys;
 const OVERRIDES = SOURCE.overrides || {};
 const i18n = require('./ui-i18n.js');
 const registry = JSON.parse(fs.readFileSync(path.join(SITE, '..', 'languages.json'), 'utf8')).languages;
-const CI_LANGS = registry.filter((lang) => lang.ci && !lang.source).map((lang) => lang.code);
+const SITE_LANGS = registry.filter((lang) => (lang.ci || lang.site) && !lang.source).map((lang) => lang.code);
 
 function decodeEntities(text) {
   return text
@@ -49,7 +49,7 @@ test('overrides only pin keys from the list and only for registered languages', 
       assert.equal(value, value.trim(), `${code}: ${key} has surrounding whitespace`);
     }
   }
-  assert.ok(CI_LANGS.length > 0);
+  assert.ok(SITE_LANGS.length > 0);
 });
 
 test('every key still appears in the site pages or scripts', () => {

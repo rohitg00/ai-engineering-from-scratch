@@ -146,6 +146,8 @@ class TranslateWorkflowContractTest(unittest.TestCase):
                     self.assertIsInstance(language["source"], bool)
                 if "ci" in language:
                     self.assertIsInstance(language["ci"], bool)
+                if "site" in language:
+                    self.assertIsInstance(language["site"], bool)
 
                 codes.append(language["code"])
                 if language.get("source") is True:
@@ -157,6 +159,64 @@ class TranslateWorkflowContractTest(unittest.TestCase):
             sources[0].get("ci", False),
             "the source language must not enter the translation matrix",
         )
+
+    def prepare(self, requested="", registry=None):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "phases/01-math-foundations").mkdir(parents=True)
+            (root / "languages.json").write_text(
+                json.dumps(registry) if registry else LANGUAGES.read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            output = root / "github-output"
+            env = os.environ.copy()
+            env.update({"REQUESTED": requested, "REQUESTED_PHASE": "", "GITHUB_OUTPUT": str(output)})
+            result = run(
+                "bash", "-euo", "pipefail", "-c", step_script(PREPARE_STEP),
+                cwd=root, env=env, capture=True, check=False,
+            )
+            outputs = {}
+            if output.is_file():
+                for line in output.read_text(encoding="utf-8").splitlines():
+                    key, value = line.split("=", 1)
+                    outputs[key] = json.loads(value)
+            return result, outputs
+
+    def test_default_matrices_separate_automatic_lessons_from_site_ui(self) -> None:
+        result, outputs = self.prepare()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("pt-BR", outputs["langs"])
+        self.assertIn("fa", outputs["langs"])
+        self.assertNotIn("zh-TW", outputs["langs"])
+        self.assertEqual(set(outputs["ui_langs"]), set(outputs["langs"]) | {"zh-TW"})
+        self.assertNotIn("en", outputs["langs"])
+        self.assertNotIn("en", outputs["ui_langs"])
+        workflow = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("lang: ${{ fromJSON(needs.prepare.outputs.langs) }}", workflow)
+        self.assertIn("lang: ${{ fromJSON(needs.prepare.outputs.ui_langs) }}", workflow)
+
+    def test_manual_requests_allow_non_ci_languages_and_exclude_source_and_unknown(self) -> None:
+        result, outputs = self.prepare("en pt-BR zh-TW pt-BR unknown ../../outside")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(outputs["langs"], ["pt-BR", "zh-TW"])
+        self.assertEqual(outputs["ui_langs"], outputs["langs"])
+
+    def test_source_and_unknown_only_requests_fail_before_building_a_matrix(self) -> None:
+        for requested in ("en", "unknown"):
+            with self.subTest(requested=requested):
+                result, outputs = self.prepare(requested)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("no registered non-source languages", result.stderr)
+                self.assertEqual(outputs, {})
+
+    def test_source_never_enters_default_matrices_even_if_flagged(self) -> None:
+        result, outputs = self.prepare(registry={"languages": [
+            {"code": "en", "source": True, "ci": True, "site": True},
+            {"code": "fa", "ci": True},
+        ]})
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(outputs["langs"], ["fa"])
+        self.assertEqual(outputs["ui_langs"], ["fa"])
 
     def test_default_translation_matrix_fits_github_limit(self) -> None:
         registry = json.loads(LANGUAGES.read_text(encoding="utf-8"))

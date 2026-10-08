@@ -17,7 +17,7 @@ pinned, so removing an override retranslates that key instead of freezing the ol
 pin. Output goes to the translations branch, never to main.
 
 Usage:
-    python3 scripts/translate_ui_strings.py                       # every ci:true language, NLLB
+    python3 scripts/translate_ui_strings.py                       # every site language, NLLB
     python3 scripts/translate_ui_strings.py --lang zh --provider anthropic
     python3 scripts/translate_ui_strings.py --dry-run             # report, no model load
 """
@@ -84,7 +84,10 @@ def check_source(keys, overrides):
 
 
 def ci_languages():
-    return [e["code"] for e in lessons._load_registry() if e.get("ci") and not e.get("source")]
+    return [
+        e["code"] for e in lessons._load_registry()
+        if (e.get("ci") or e.get("site")) and not e.get("source")
+    ]
 
 
 def protect_ui(text):
@@ -184,7 +187,7 @@ def build_language(keys, overrides, existing, translate_fn, pinned_before=frozen
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--lang", action="append", help="language code; repeat for several. Default: every ci:true language")
+    ap.add_argument("--lang", action="append", help="language code; repeat for several. Default: every ci:true or site:true language")
     ap.add_argument("--provider", default=os.environ.get("TRANSLATE_PROVIDER", "nllb"))
     ap.add_argument("--force", action="store_true", help="retranslate every key that has no override")
     ap.add_argument("--dry-run", action="store_true")
