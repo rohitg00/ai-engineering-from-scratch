@@ -4,16 +4,14 @@
   <text x="20" y="44" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SANDBOXES</text>
   <rect x="147" y="62" width="309" height="16" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
   <rect x="337" y="96" width="250" height="16" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="141" y="74" font-size="11" text-anchor="end" fill="var(--m-grey-ink, #5e5e59)">docker sandbox plugin</text>
+  <text x="159" y="55" font-size="11" fill="var(--m-grey-ink, #5e5e59)">docker sandbox plugin</text>
   <text x="349" y="89" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">sbx</text>
   <text x="20" y="142" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENT</text>
   <rect x="82" y="160" width="383" height="16" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
   <rect x="281" y="194" width="306" height="16" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="76" y="172" font-size="11" text-anchor="end" fill="var(--m-grey-ink, #5e5e59)">cagent</text>
+  <text x="94" y="153" font-size="11" fill="var(--m-grey-ink, #5e5e59)">cagent</text>
   <text x="293" y="187" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">docker-agent</text>
-  <line x1="253" y1="30" x2="253" y2="58" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
   <line x1="253" y1="82" x2="253" y2="226" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
-  <line x1="456" y1="30" x2="456" y2="58" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
   <line x1="456" y1="82" x2="456" y2="226" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
   <line x1="465" y1="30" x2="465" y2="156" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
   <line x1="465" y1="180" x2="465" y2="226" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>

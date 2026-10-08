@@ -38,14 +38,14 @@ module.exports = figure('fig-7-3', {
     f.kicker(20, track.old - 18, track.label);
     f.rect(xOf(track.oldSpan[0]), track.old, xOf(track.oldSpan[1]) - xOf(track.oldSpan[0]), 16, { fill: color('grey-fill'), stroke: color('grey-ink') });
     f.rect(xOf(track.newSpan[0]), track.new, xOf(track.newSpan[1]) - xOf(track.newSpan[0]), 16, { fill: color(`${track.hue}-fill`), stroke: color(`${track.hue}-ink`) });
-    f.text(xOf(track.oldSpan[0]) - 6, track.old + 12, track.oldName, { size: 11, hue: 'grey', anchor: 'end' });
+    f.text(xOf(track.oldSpan[0]) + 12, track.old - 7, track.oldName, { size: 11, hue: 'grey' });
     f.text(xOf(track.newSpan[0]) + 12, track.new - 7, track.newName, { size: 11, hue: track.hue });
   }
   for (const event of events.filter(item => item.removal)) {
     const track = tracks[event.track];
     const x = xOf(event.date);
     const cy = (event.row === 'old' ? track.old : track.new) + 8;
-    f.rule(x, 30, x, cy - 12, { hue: 'rose', dash: 'dashed', width: 1.4 });
+    if (track !== tracks.sandbox || event.row !== 'old') f.rule(x, 30, x, cy - 12, { hue: 'rose', dash: 'dashed', width: 1.4 });
     f.rule(x, cy + 12, x, 226, { hue: 'rose', dash: 'dashed', width: 1.4 });
   }
   f.rule(60, 236, 620, 236, { hue: 'ink' });
