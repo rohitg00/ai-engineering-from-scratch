@@ -306,7 +306,8 @@ def main() -> int:
             {"timestamp": time.time(), "probes": [{"name": n, "status": s, "detail": d} for n, s, d in probes]},
             indent=2,
         )
-        + "\\n"
+        + "\n",
+        encoding="utf-8",
     )
     width = max(len(n) for n, _, _ in probes)
     for name, status, detail in probes:
@@ -475,7 +476,7 @@ def main() -> int:
     report = run_checks(args.task_id)
     out = ROOT / "outputs" / "verification" / f"{args.task_id}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(report, indent=2) + "\\n")
+    out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
     if not report["passed"]:
         print("verification failed", file=sys.stderr)
@@ -557,8 +558,8 @@ def generate_handoff(task_id: str, session_id: str | None = None) -> dict[str, o
     }
     out = ROOT / "outputs" / "handoff" / payload["session_id"]
     out.mkdir(parents=True, exist_ok=True)
-    (out / "handoff.json").write_text(json.dumps(payload, indent=2) + "\\n")
-    (out / "handoff.md").write_text(_render_markdown(payload))
+    (out / "handoff.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    (out / "handoff.md").write_text(_render_markdown(payload), encoding="utf-8")
     return payload
 
 
