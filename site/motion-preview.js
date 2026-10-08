@@ -96,7 +96,7 @@
       } else if (reduced) {
         putText(motionNote, 'Still frames. Change an input or use Next step.');
       } else {
-        putText(motionNote, 'Pause or use Next step to inspect the computation.');
+        putText(motionNote, 'Pause or step through either lesson.');
       }
       controllers.forEach(function (controller) { controller.setReducedMotion(reduced); });
     }

@@ -9,9 +9,9 @@
 
 `site/motion-lessons/attention.js` uses the six tokens `The robot lifted the red box` and explicit two-dimensional toy Q/K/V vectors. Compute every query-key score as `q dot k / sqrt(2)`, apply a score temperature of 0.5, 1 or 2, normalize with stable softmax, and sum the weighted value vectors. This is full one-head attention without a causal mask, using hand-chosen vectors rather than trained embeddings.
 
-Draw a 6 by 6 matrix as an original 96 by 32 character frame with a native 2:1 character cell. Glyph density represents the computed weights. Highlight the selected query row, sweep its key contributions, and display the exact full output separately from the animated partial sum. The normal HTML UI exposes token buttons, score temperature, normalized weights and their sum, output vector, inspectable Q/K/V table, and the lesson link.
+Draw six original shaded monochrome streams merging into one output in a 128 by 40 character frame with a native 2:1 character cell. The sources follow sentence order from top to bottom. Stream radius and brightness depend on the selected query's computed attention weights, with a minimum radius so very small contributions stay visible. Moving packets illustrate the flow of weighted values. This is a schematic of the calculation, not a literal transformer architecture. The normal HTML UI exposes token buttons, score temperature, normalized weights and their sum, the exact output vector, an expandable Q/K/V table, and the lesson link.
 
-Selecting a token or changing temperature recomputes the actual calculation and redraws immediately. Do not animate text selection or input feedback. Reuse pause, replay, slow motion, single stepping, visibility and reduced-motion policy. On small screens, keep the numbers readable with a keyboard-accessible horizontal diagram viewport; all selected-query values also remain available in normal HTML.
+Selecting a token or changing temperature recomputes the actual calculation and redraws immediately. Do not animate text selection or input feedback. Reuse pause, replay, slow motion, single stepping, visibility and reduced-motion policy. Fit the text-free art to the viewport on small screens; all selected-query values remain readable in wrapping normal HTML below it.
 
 ## Verification
 

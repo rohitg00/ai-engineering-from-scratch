@@ -68,7 +68,7 @@ test('query selection changes the result and hotter temperature spreads the same
   assert.throws(() => frame.setTemperature(0));
 });
 
-test('frames are deterministic, animated, colored, and independent of metrics mutation', () => {
+test('weighted stream frames are deterministic, animated, monochrome, and independent of metrics mutation', () => {
   const frame = piece.create();
   const color = new Uint8Array(piece.meta.cols * piece.meta.rows);
   const still = frame(0, { color });
@@ -83,11 +83,15 @@ test('frames are deterministic, animated, colored, and independent of metrics mu
   assert.ok(lines.every(line => line.length === piece.meta.cols));
   assert.ok(new Set(color).size > 4);
   assert.ok(color.every(index => index < piece.meta.palette.length));
-  assert.match(still, /Synthetic Q\/K\/V/);
-  assert.match(still, /FULL OUTPUT/);
+  assert.match(still, /^[ .:\-=+*#%@\n]+$/);
+  assert.ok(piece.meta.palette.every(color => color.slice(1, 3) === color.slice(3, 5) && color.slice(3, 5) === color.slice(5, 7)));
   const metrics = frame.getMetrics();
   metrics.values[0][0] = 999;
   metrics.weights[0] = 999;
   assert.equal(frame(0), still);
   assert.notEqual(frame.getMetrics().values[0][0], 999);
+  frame.setToken(1);
+  assert.notEqual(frame(0), still);
+  frame.setToken(5);
+  assert.equal(frame(0), still);
 });

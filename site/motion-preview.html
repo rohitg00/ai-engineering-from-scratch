@@ -5,157 +5,128 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex,nofollow">
   <meta name="description" content="Explore gradient descent and self-attention through two interactive, illustrative models from AI Engineering from Scratch.">
-  <title>See the lesson. | AI Engineering from Scratch</title>
-  <script src="motion-preview.js?v=003"></script>
+  <title>Learning, in motion. | AI Engineering from Scratch</title>
+  <script src="motion-preview.js?v=004"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260824a">
-  <link rel="stylesheet" href="ascii-motion.css?v=003">
-  <link rel="stylesheet" href="motion-preview.css?v=003">
-  <script src="motion-lessons/loss-landscape.js?v=003" defer></script>
-  <script src="motion-lessons/attention.js?v=003" defer></script>
-  <script src="vendor/ascii-rest/canvas.js?v=003" defer></script>
-  <script src="ascii-motion.js?v=003" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ascii-motion.css?v=004">
+  <link rel="stylesheet" href="motion-preview.css?v=004">
+  <script src="motion-lessons/loss-landscape.js?v=004" defer></script>
+  <script src="motion-lessons/attention.js?v=004" defer></script>
+  <script src="vendor/ascii-rest/canvas.js?v=004" defer></script>
+  <script src="ascii-motion.js?v=004" defer></script>
 </head>
-<body class="motion-preview">
-  <a class="skip-link" href="#main">Skip to lesson examples</a>
-  <header class="preview-header">
-    <div class="preview-shell preview-nav">
-      <a class="preview-brand" href="/"><span aria-hidden="true"></span>AI / FROM SCRATCH</a>
-      <nav aria-label="Main navigation"><a href="/">Home</a><a href="/blogs">Blogs &amp; Guides</a></nav>
-    </div>
+<body>
+  <a class="skip-link" href="#main">Skip to lessons</a>
+  <header class="preview-shell preview-nav">
+    <a class="preview-brand" href="/">AI Engineering from Scratch</a>
+    <nav aria-label="Main navigation"><a href="/">Home</a><a href="/blogs">Blogs &amp; Guides</a></nav>
   </header>
   <main class="preview-shell" id="main">
     <section class="preview-intro" aria-labelledby="preview-title">
       <div>
-        <p class="preview-eyebrow">Lesson laboratory <span>/ v003</span></p>
-        <h1 id="preview-title">See the lesson.</h1>
-        <p class="preview-lede">Change an input. Follow the math.</p>
+        <div class="preview-title-row"><h1 id="preview-title">Learning, in motion.</h1><span class="preview-version">v004</span></div>
+        <p class="preview-lede">Two lessons you can pause, change, and inspect.</p>
       </div>
       <div class="preview-settings" aria-label="Preview settings">
         <div class="preview-setting-controls">
           <label class="preview-reduced"><input type="checkbox" id="preview-reduced" aria-describedby="preview-motion-note"><span>Reduced motion</span></label>
-          <button class="preview-theme" id="preview-theme" type="button" aria-label="Switch to dark theme"><span class="preview-theme-swatch" aria-hidden="true"></span><span data-theme-label>Dark theme</span></button>
+          <button class="preview-theme" id="preview-theme" type="button" aria-label="Switch to dark theme"><span data-theme-label>Dark theme</span></button>
         </div>
-        <p id="preview-motion-note">Pause or use Next step to inspect the computation.</p>
+        <p id="preview-motion-note">Pause or step through either lesson.</p>
       </div>
     </section>
 
-    <div class="lesson-examples">
-      <section class="motion-study" data-study="signal" aria-labelledby="signal-title" aria-describedby="signal-description">
-        <div class="study-heading">
-          <div><p class="study-placement">01 / Math foundations</p><h2 id="signal-title">Gradient descent</h2></div>
-          <a href="/lesson?path=phases%2F01-math-foundations%2F08-optimization">Read the optimization lesson <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="lesson-workbench">
-          <div class="study-visual">
-            <div class="study-art" data-motion-host="signal"><p class="study-fallback">Enable JavaScript to explore the loss landscape.</p></div>
-            <div class="study-toolbar" data-study-controls hidden>
-              <div class="study-playback" role="group" aria-label="Gradient descent playback">
-                <button type="button" class="study-play" data-action="play" aria-label="Play Gradient descent">Play</button>
-                <button type="button" data-action="replay" aria-label="Replay Gradient descent">Replay</button>
-                <button type="button" data-action="step" aria-label="Next step in Gradient descent">Next step</button>
-              </div>
-              <label class="study-speed"><span class="preview-a11y">Gradient descent speed</span>
-                <select data-study-speed aria-label="Gradient descent playback speed">
-                  <option value="0.25">0.25x</option><option value="0.5">0.5x</option><option value="1" selected>1x</option>
-                </select>
-              </label>
-              <span class="study-status" data-study-status>Ready</span>
+    <section class="motion-study" data-study="signal" aria-labelledby="signal-title" aria-describedby="signal-description">
+      <div class="study-heading"><h2 id="signal-title"><span>01 /</span> Gradient descent</h2><a href="/lesson?path=phases%2F01-math-foundations%2F08-optimization">Optimization lesson ↗</a></div>
+      <div class="study-art" data-motion-host="signal"><p class="study-fallback">Enable JavaScript to explore the loss landscape.</p></div>
+      <p class="study-caption" id="signal-description">Height is loss. The trail follows actual weight updates down the surface.</p>
+      <div class="study-bar">
+          <div class="study-toolbar" data-study-controls hidden>
+            <div class="study-playback" role="group" aria-label="Gradient descent playback">
+              <button type="button" class="study-play" data-action="play" aria-label="Play Gradient descent">Play</button>
+              <button type="button" data-action="replay" aria-label="Replay Gradient descent">Replay</button>
+              <button type="button" data-action="step" aria-label="Next step in Gradient descent">Next step</button>
             </div>
-            <p class="study-caption">The horizontal axes are the two weights; height is loss. The bright point marks the current weights, and the amber trail records earlier updates.</p>
+            <label class="study-speed"><span class="preview-a11y">Gradient descent speed</span><select data-study-speed aria-label="Gradient descent playback speed"><option value="0.25">0.25x</option><option value="0.5">0.5x</option><option value="1" selected>1x</option></select></label>
+            <span class="study-status" data-study-status>Ready</span>
           </div>
-          <div class="lesson-copy">
-            <p class="lesson-prompt" id="signal-description">How big should each update be?</p>
-            <p>Each move subtracts the learning rate times the gradient. Try a rate and compare the steps needed to settle.</p>
-            <label class="lesson-control" for="learning-rate"><span>Learning rate <span class="math-symbol">η</span></span>
-              <select id="learning-rate" data-parameter="learningRate" disabled><option value="0.03">0.03</option><option value="0.08" selected>0.08</option><option value="0.18">0.18</option></select>
-            </label>
-            <p class="control-note">Each rate starts at the same weights: (−1.9, 1.7).</p>
-            <dl class="lesson-metrics">
-              <div><dt>Loss</dt><dd data-metric="loss">--</dd></div>
-              <div><dt>Updates</dt><dd data-metric="step">--</dd></div>
-            </dl>
-            <p class="metric-line"><span>Current weights</span><output data-metric="weights">--</output></p>
-            <div class="lesson-equation">
-              <p>w ← w − η∇L</p>
-              <p>L = (w₁ − 1)² + 0.5(w₂ + 0.8)²<br>+ 0.2 sin²(2w₁)</p>
-            </div>
-            <p class="model-note">A two-weight illustrative loss function. Its minimum does not have to be zero.</p>
-          </div>
+        <label class="lesson-control" for="learning-rate"><span>Learning rate</span><select id="learning-rate" data-parameter="learningRate" disabled><option value="0.03">0.03</option><option value="0.08" selected>0.08</option><option value="0.18">0.18</option></select></label>
+        <dl class="lesson-metrics">
+          <div><dt>Loss</dt><dd data-metric="loss">--</dd></div>
+          <div><dt>Updates</dt><dd data-metric="step">--</dd></div>
+          <div><dt>Weights</dt><dd data-metric="weights">--</dd></div>
+        </dl>
+      </div>
+      <details class="lesson-details">
+        <summary>How this works</summary>
+        <div class="lesson-explanation">
+          <p>The horizontal coordinates are two weights. Each update subtracts the learning rate times the gradient. Choose a rate to restart at (−1.9, 1.7), then compare how many updates it takes to settle.</p>
+          <p class="lesson-equation">w ← w − η∇L<br>L = (w₁ − 1)² + 0.5(w₂ + 0.8)² + 0.2 sin²(2w₁)</p>
+          <p>This small illustrative loss function stops when the gradient norm is below 0.01. Its minimum does not have to be zero.</p>
         </div>
-      </section>
+      </details>
+    </section>
 
-      <section class="motion-study" data-study="agent" aria-labelledby="agent-title" aria-describedby="agent-description">
-        <div class="study-heading">
-          <div><p class="study-placement">02 / Transformers</p><h2 id="agent-title">Where does this token look?</h2></div>
-          <a href="/lesson?path=phases%2F07-transformers-deep-dive%2F02-self-attention-from-scratch">Read the self-attention lesson <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="lesson-workbench">
-          <div class="study-visual">
-            <div class="study-art" data-motion-host="agent" role="region" aria-label="Self-attention diagram" aria-describedby="attention-scroll-hint" tabindex="0"><p class="study-fallback">Enable JavaScript to explore the attention calculation.</p></div>
-            <p class="study-scroll-hint" id="attention-scroll-hint">Scroll the diagram sideways to inspect the numbers.</p>
-            <div class="study-toolbar" data-study-controls hidden>
-              <div class="study-playback" role="group" aria-label="Self-attention playback">
-                <button type="button" class="study-play" data-action="play" aria-label="Play Self-attention">Play</button>
-                <button type="button" data-action="replay" aria-label="Replay Self-attention">Replay</button>
-                <button type="button" data-action="step" aria-label="Next step in Self-attention">Next step</button>
-              </div>
-              <label class="study-speed"><span class="preview-a11y">Self-attention speed</span>
-                <select data-study-speed aria-label="Self-attention playback speed">
-                  <option value="0.25">0.25x</option><option value="0.5">0.5x</option><option value="1" selected>1x</option>
-                </select>
-              </label>
-              <span class="study-status" data-study-status>Ready</span>
+    <section class="motion-study" data-study="agent" aria-labelledby="agent-title" aria-describedby="agent-description">
+      <div class="study-heading"><h2 id="agent-title"><span>02 /</span> Self-attention</h2><a href="/lesson?path=phases%2F07-transformers-deep-dive%2F02-self-attention-from-scratch">Self-attention lesson ↗</a></div>
+      <div class="query-row"><span>Query token</span><div class="token-controls" role="group" aria-label="Choose a query token">
+            <button type="button" data-token="0" aria-pressed="false" disabled>The</button>
+            <button type="button" data-token="1" aria-pressed="false" disabled>robot</button>
+            <button type="button" data-token="2" aria-pressed="false" disabled>lifted</button>
+            <button type="button" data-token="3" aria-pressed="false" disabled>the</button>
+            <button type="button" data-token="4" aria-pressed="false" disabled>red</button>
+            <button type="button" data-token="5" aria-pressed="true" disabled>box</button>
+      </div></div>
+      <div class="study-art" data-motion-host="agent"><p class="study-fallback">Enable JavaScript to explore the attention calculation.</p></div>
+      <p class="study-caption" id="agent-description">Six weighted value contributions merge. Brighter, wider streams carry more weight.</p>
+      <div class="study-bar">
+          <div class="study-toolbar" data-study-controls hidden>
+            <div class="study-playback" role="group" aria-label="Self-attention playback">
+              <button type="button" class="study-play" data-action="play" aria-label="Play Self-attention">Play</button>
+              <button type="button" data-action="replay" aria-label="Replay Self-attention">Replay</button>
+              <button type="button" data-action="step" aria-label="Next step in Self-attention">Next step</button>
             </div>
-            <p class="study-caption">Select a query token. Follow its scores into normalized weights, then a weighted sum of the value vectors.</p>
+            <label class="study-speed"><span class="preview-a11y">Self-attention speed</span><select data-study-speed aria-label="Self-attention playback speed"><option value="0.25">0.25x</option><option value="0.5">0.5x</option><option value="1" selected>1x</option></select></label>
+            <span class="study-status" data-study-status>Ready</span>
           </div>
-          <div class="lesson-copy">
-            <p class="lesson-prompt" id="agent-description">Choose a token. See what contributes.</p>
-            <p>This tiny attention head uses hand-chosen Q/K/V vectors, not trained embeddings.</p>
-            <div class="token-controls" role="group" aria-label="Choose a query token">
-                  <button type="button" data-token="0" aria-pressed="false" disabled>The</button>
-                  <button type="button" data-token="1" aria-pressed="false" disabled>robot</button>
-                  <button type="button" data-token="2" aria-pressed="false" disabled>lifted</button>
-                  <button type="button" data-token="3" aria-pressed="false" disabled>the</button>
-                  <button type="button" data-token="4" aria-pressed="false" disabled>red</button>
-                  <button type="button" data-token="5" aria-pressed="true" disabled>box</button>
-            </div>
-            <label class="lesson-control" for="attention-temperature"><span>Score temperature</span>
-              <select id="attention-temperature" data-parameter="temperature" disabled><option value="0.5">0.5 · sharper</option><option value="1" selected>1 · default</option><option value="2">2 · flatter</option></select>
-            </label>
-            <div class="weight-heading"><span>Attention weights</span><span>Sum <output data-metric="weightSum">--</output></span></div>
-            <ul class="attention-weights" aria-label="Normalized attention weights">
-                  <li><div><span>The</span><span data-weight="0">--</span></div><span class="weight-track" aria-hidden="true"><span data-weight-bar="0"></span></span></li>
-                  <li><div><span>robot</span><span data-weight="1">--</span></div><span class="weight-track" aria-hidden="true"><span data-weight-bar="1"></span></span></li>
-                  <li><div><span>lifted</span><span data-weight="2">--</span></div><span class="weight-track" aria-hidden="true"><span data-weight-bar="2"></span></span></li>
-                  <li><div><span>the</span><span data-weight="3">--</span></div><span class="weight-track" aria-hidden="true"><span data-weight-bar="3"></span></span></li>
-                  <li><div><span>red</span><span data-weight="4">--</span></div><span class="weight-track" aria-hidden="true"><span data-weight-bar="4"></span></span></li>
-                  <li><div><span>box</span><span data-weight="5">--</span></div><span class="weight-track" aria-hidden="true"><span data-weight-bar="5"></span></span></li>
-            </ul>
-            <p class="metric-line"><span>Weighted output</span><output data-metric="output">--</output></p>
-            <div class="lesson-equation"><p>weights = softmax(q · k / (√2 × T))</p><p>output = Σ weightⱼ × vⱼ</p></div>
-            <details class="model-details">
-              <summary>Inspect the toy Q/K/V vectors</summary>
-              <p>Two dimensions per vector. Full attention across all six tokens.</p>
-              <div class="model-table-wrap"><table><thead><tr><th scope="col">Token</th><th scope="col">Q</th><th scope="col">K</th><th scope="col">V</th></tr></thead><tbody>
-                      <tr><th scope="row">The</th><td data-query="0">--</td><td data-key="0">--</td><td data-value="0">--</td></tr>
-                      <tr><th scope="row">robot</th><td data-query="1">--</td><td data-key="1">--</td><td data-value="1">--</td></tr>
-                      <tr><th scope="row">lifted</th><td data-query="2">--</td><td data-key="2">--</td><td data-value="2">--</td></tr>
-                      <tr><th scope="row">the</th><td data-query="3">--</td><td data-key="3">--</td><td data-value="3">--</td></tr>
-                      <tr><th scope="row">red</th><td data-query="4">--</td><td data-key="4">--</td><td data-value="4">--</td></tr>
-                      <tr><th scope="row">box</th><td data-query="5">--</td><td data-key="5">--</td><td data-value="5">--</td></tr>
-              </tbody></table></div>
-            </details>
-          </div>
+        <label class="lesson-control" for="attention-temperature"><span>Score temperature</span><select id="attention-temperature" data-parameter="temperature" disabled><option value="0.5">0.5</option><option value="1" selected>1</option><option value="2">2</option></select></label>
+        <p class="metric-line"><span>Output</span><output data-metric="output">--</output></p>
+      </div>
+      <div class="weight-heading"><span>Attention weights</span><span>Sum <output data-metric="weightSum">--</output></span></div>
+      <ul class="attention-weights" aria-label="Normalized attention weights">
+          <li><span>The</span><span data-weight="0">--</span><span class="weight-track" aria-hidden="true"><span data-weight-bar="0"></span></span></li>
+          <li><span>robot</span><span data-weight="1">--</span><span class="weight-track" aria-hidden="true"><span data-weight-bar="1"></span></span></li>
+          <li><span>lifted</span><span data-weight="2">--</span><span class="weight-track" aria-hidden="true"><span data-weight-bar="2"></span></span></li>
+          <li><span>the</span><span data-weight="3">--</span><span class="weight-track" aria-hidden="true"><span data-weight-bar="3"></span></span></li>
+          <li><span>red</span><span data-weight="4">--</span><span class="weight-track" aria-hidden="true"><span data-weight-bar="4"></span></span></li>
+          <li><span>box</span><span data-weight="5">--</span><span class="weight-track" aria-hidden="true"><span data-weight-bar="5"></span></span></li>
+      </ul>
+      <details class="lesson-details">
+        <summary>How this works</summary>
+        <div class="lesson-explanation">
+          <p>Choose a query token to change the six attention weights. The sources follow the sentence order from top to bottom. Lower score temperature concentrates the weights; higher temperature spreads them out.</p>
+          <p class="lesson-equation">weights = softmax(q · k / (√2 × T))<br>output = Σ weightⱼ × vⱼ</p>
+          <p>This tiny head uses hand-chosen, two-dimensional Q/K/V vectors, not trained embeddings. The stream widths and light represent weights; the output above is the actual weighted sum.</p>
+          <details class="model-details">
+            <summary>Inspect the toy Q/K/V vectors</summary>
+            <div class="model-table-wrap"><table><caption>Full attention across all six tokens.</caption><thead><tr><th scope="col">Token</th><th scope="col">Q</th><th scope="col">K</th><th scope="col">V</th></tr></thead><tbody>
+                <tr><th scope="row">The</th><td data-query="0">--</td><td data-key="0">--</td><td data-value="0">--</td></tr>
+                <tr><th scope="row">robot</th><td data-query="1">--</td><td data-key="1">--</td><td data-value="1">--</td></tr>
+                <tr><th scope="row">lifted</th><td data-query="2">--</td><td data-key="2">--</td><td data-value="2">--</td></tr>
+                <tr><th scope="row">the</th><td data-query="3">--</td><td data-key="3">--</td><td data-value="3">--</td></tr>
+                <tr><th scope="row">red</th><td data-query="4">--</td><td data-key="4">--</td><td data-value="4">--</td></tr>
+                <tr><th scope="row">box</th><td data-query="5">--</td><td data-key="5">--</td><td data-value="5">--</td></tr>
+            </tbody></table></div>
+          </details>
         </div>
-      </section>
-    </div>
+      </details>
+    </section>
   </main>
   <footer class="preview-shell preview-footer">
     <p>Glyph rendering adapted from <a href="https://ascii.rest/">ascii.rest</a> (<a href="https://github.com/bas3line/ascii/blob/2572c2612fee106858f47aec139e3657f79f3a63/LICENSE">MIT</a>).</p>
-    <p>Lesson visualizations use small illustrative models.</p>
+    <p>Small illustrative models. Preview only.</p>
   </footer>
 </body>
 </html>

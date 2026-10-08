@@ -8,8 +8,8 @@
   var meta = {
     name: 'Where does this token look?',
     note: 'Synthetic Q/K/V: score every key, normalize the row, then blend the values.',
-    cols: 96, rows: 32, cell: 2, fps: 20, ground: '#05080f',
-    palette: ['#15283f', '#57718e', '#a6b6cc', '#edf6ff', '#25566a', '#43849b', '#5eead4', '#c2fff4', '#9582d7', '#e0caff', '#ffc76b']
+    cols: 128, rows: 40, cell: 2, fps: 20, ground: '#050505',
+    palette: ['#484848', '#686868', '#888888', '#a4a4a4', '#bdbdbd', '#d0d0d0', '#e4e4e4', '#f4f4f4', '#ffffff']
   };
 
   function softmax(scores) {
@@ -39,8 +39,12 @@
     var outputs = new Float64Array(12);
     var glyphs = new Uint16Array(meta.cols * meta.rows);
     var colors = new Uint8Array(glyphs.length);
+    var depth = new Float32Array(glyphs.length);
+    var light = new Float32Array(glyphs.length);
+    var distance = new Float32Array(glyphs.length);
+    var surfaceWeight = new Float32Array(glyphs.length);
     var lines = new Array(meta.rows);
-    var ink = colors;
+    var geometryKey = '';
 
     function calculate() {
       queries.forEach(function (query, row) {
@@ -51,85 +55,82 @@
       });
     }
 
-    function put(x, y, character, color) {
-      if (x < 0 || x >= meta.cols || y < 0 || y >= meta.rows) return;
-      var index = y * meta.cols + x;
-      glyphs[index] = character.charCodeAt(0);
-      ink[index] = color;
+    function center(branch, position) {
+      if (branch === 6) {
+        return [2.3 + 1.05 * position, 0.06 * Math.sin(position * Math.PI), 0.08 * position];
+      }
+      var arc = Math.sin(Math.PI * position);
+      var sourceY = (2.5 - branch) * 0.66;
+      return [
+        -3.25 + 5.55 * position,
+        sourceY * (1 - Math.pow(position, 1.75)) + 0.14 * arc * Math.sin(branch * 0.8 + position * 3),
+        arc * (0.13 * (branch - 2.5) + 0.34 * Math.sin(position * Math.PI * 2 + branch * 0.7))
+      ];
     }
 
-    function write(x, y, text, color) {
-      for (var index = 0; index < text.length; index++) put(x + index, y, text[index], color);
+    function sample(x, y, z, nx, ny, nz, along, weight) {
+      var column = Math.round(64 + x * 17 + z * 2);
+      var row = Math.round(19.5 - y * 9.3 + z * 2.2);
+      if (column < 0 || column >= meta.cols || row < 0 || row >= meta.rows) return;
+      var index = row * meta.cols + column;
+      var cameraDepth = z + y * 0.08;
+      if (cameraDepth <= depth[index]) return;
+      depth[index] = cameraDepth;
+      var diffuse = Math.max(0, (-0.35 * nx + 0.55 * ny + nz) / 1.194);
+      var specular = Math.pow(Math.max(0, -0.17 * nx + 0.27 * ny + 0.947 * nz), 16);
+      light[index] = (0.24 + 0.68 * diffuse + 0.2 * specular) * (0.48 + 0.52 * Math.sqrt(weight));
+      distance[index] = along;
+      surfaceWeight[index] = weight;
     }
 
-    function vector(numbers, digits) {
-      return '[' + numbers.map(function (number) { return number.toFixed(digits); }).join(', ') + ']';
+    function buildGeometry() {
+      depth.fill(-Infinity);
+      for (var branch = 0; branch < 7; branch++) {
+        var weight = branch === 6 ? 1 : matrix[tokenIndex * 6 + branch];
+        // The minimum radius keeps very small contributions visible as thin wires.
+        var radius = 0.035 + 0.25 * Math.sqrt(weight);
+        var samples = branch === 6 ? 70 : 280;
+        for (var step = 0; step <= samples; step++) {
+          var position = step / samples;
+          var point = center(branch, position);
+          var before = center(branch, Math.max(0, position - 0.001));
+          var after = center(branch, Math.min(1, position + 0.001));
+          var tx = after[0] - before[0], ty = after[1] - before[1], tz = after[2] - before[2];
+          var length = Math.hypot(tx, ty, tz);
+          tx /= length; ty /= length; tz /= length;
+          var across = Math.hypot(tx, ty);
+          var ax = -ty / across, ay = tx / across;
+          var bx = -tz * ay, by = tz * ax, bz = tx * ay - ty * ax;
+          var along = branch === 6 ? 1 + position * 0.3 : position;
+          for (var ring = 0; ring < 40; ring++) {
+            var angle = ring * Math.PI / 20;
+            var cosine = Math.cos(angle), sine = Math.sin(angle);
+            var nx = ax * cosine + bx * sine, ny = ay * cosine + by * sine, nz = bz * sine;
+            sample(point[0] + radius * nx, point[1] + radius * ny, point[2] + radius * nz, nx, ny, nz, along, weight);
+          }
+        }
+      }
+      geometryKey = tokenIndex + ':' + temperature;
     }
 
     function frame(time, environment) {
-      ink = environment && environment.color || colors;
+      var ink = environment && environment.color || colors;
       if (ink.length !== glyphs.length) throw new Error('Attention color buffer has the wrong size');
+      if (geometryKey !== tokenIndex + ':' + temperature) buildGeometry();
       glyphs.fill(32);
       ink.fill(0);
-      var phase = Math.max(0, time) % 6;
-      var activeKey = Math.floor(phase);
-      var progress = phase - activeKey;
-      var selectedStart = tokenIndex * 6;
-      var partial = [0, 0];
-
-      write(3, 0, 'SELF-ATTENTION / ONE HEAD / NO CAUSAL MASK', 3);
-      write(3, 2, 'Synthetic Q/K/V   query: ' + tokens[tokenIndex] + ' ' + vector(queries[tokenIndex], 1) + '   T=' + temperature, 2);
-      write(3, 4, '01 / SOFTMAX ATTENTION MATRIX', 6);
-      write(68, 4, '02 / WEIGHT x VALUE', 10);
-      for (var column = 0; column < 6; column++) {
-        write(14 + column * 8, 6, tokens[column], column === activeKey ? 7 : 2);
+      var packet = Math.max(0, time) * 0.26 % 1.5;
+      var ramp = '.:-=+*#%@';
+      for (var pixel = 0; pixel < glyphs.length; pixel++) {
+        if (depth[pixel] === -Infinity) continue;
+        var separation = Math.abs(distance[pixel] - packet);
+        separation = Math.min(separation, 1.5 - separation);
+        var pulse = Math.exp(-separation * separation / 0.0024);
+        var intensity = Math.min(1, light[pixel] + pulse * (0.25 + 0.3 * Math.sqrt(surfaceWeight[pixel])));
+        var level = Math.min(8, Math.floor(intensity * 9));
+        glyphs[pixel] = ramp.charCodeAt(level);
+        ink[pixel] = level;
       }
-      for (var row = 0; row < 6; row++) {
-        var y = 8 + row * 3;
-        var selected = row === tokenIndex;
-        write(3, y, tokens[row], selected ? 7 : 2);
-        if (selected) write(10, y, '->', 7);
-        for (var key = 0; key < 6; key++) {
-          var weight = matrix[row * 6 + key];
-          var strength = Math.min(5, Math.floor(Math.sqrt(weight) * 7));
-          var character = '.:+*#@'[strength];
-          var cellColor = selected ? 6 : 4 + Math.min(1, Math.floor(weight * 3));
-          var x = 14 + key * 8;
-          for (var dy = 0; dy < 2; dy++) {
-            for (var dx = 0; dx < 7; dx++) {
-              put(x + dx, y + dy, character, cellColor);
-            }
-          }
-          write(x + 1, y + 2, weight.toFixed(3), selected ? 7 : 1);
-          if (selected && key === activeKey) put(x + Math.min(6, Math.floor(progress * 7)), y, '@', 3);
-        }
-      }
-
-      for (var index = 0; index < 6; index++) {
-        var contribution = [0, 0];
-        var selectedWeight = matrix[selectedStart + index];
-        var rowY = 8 + index * 3;
-        var contributionColor = index === activeKey ? 10 : 2;
-        for (var component = 0; component < 2; component++) {
-          contribution[component] = selectedWeight * values[index][component];
-          if (index < activeKey) partial[component] += contribution[component];
-          if (index === activeKey) partial[component] += progress * contribution[component];
-        }
-        write(68, rowY, tokens[index] + '  ' + (selectedWeight * 100).toFixed(1) + '%', contributionColor);
-        write(68, rowY + 1, 'x ' + vector(values[index], 1), contributionColor);
-        write(68, rowY + 2, '= ' + vector(contribution, 3), index === activeKey ? 3 : 1);
-      }
-
-      var fromY = 8 + tokenIndex * 3;
-      var toY = 8 + activeKey * 3;
-      for (var routeY = Math.min(fromY, toY); routeY <= Math.max(fromY, toY); routeY++) put(64, routeY, '|', 5);
-      write(62, fromY, '--+', 6);
-      write(64, toY, '+->', 10);
-      for (var divider = 3; divider < 93; divider++) put(divider, 27, '-', 0);
-      write(3, 28, '03 / FULL OUTPUT = ' + vector(Array.from(outputs.subarray(tokenIndex * 2, tokenIndex * 2 + 2)), 3), 7);
-      write(63, 28, 'ROW WEIGHTS SUM TO 1', 2);
-      write(3, 30, 'Animated partial sum: ' + vector(partial, 3), 10);
-      write(57, 30, 'Denser marks = higher weight', 1);
       for (var line = 0; line < meta.rows; line++) {
         lines[line] = String.fromCharCode.apply(null, glyphs.subarray(line * meta.cols, (line + 1) * meta.cols));
       }

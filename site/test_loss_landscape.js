@@ -38,6 +38,7 @@ test('each supported learning rate follows true decreasing-loss updates and conv
     }
     assert.equal(before.done, true);
     assert.ok(before.step <= piece.math.stepLimit);
+    assert.equal(before.step, { 0.03: 182, 0.08: 67, 0.18: 28 }[rate]);
     assert.ok(Math.hypot(...piece.math.gradient(before.w1, before.w2)) < piece.math.gradientTolerance);
     frame(1000000);
     assert.deepEqual(frame.getMetrics(), before);
@@ -74,7 +75,7 @@ test('changing learning rate resets the same start and a zero-time frame makes n
   assert.throws(() => frame(NaN), /Frame time/);
 });
 
-test('terrain and the optimization marker produce bounded, changing character and color frames', () => {
+test('dense dot terrain fits the frame and keeps the moving learner visible', () => {
   const frame = piece.create();
   const colors = new Uint8Array(piece.meta.cols * piece.meta.rows);
   const start = frame(0, { color: colors });
@@ -83,7 +84,17 @@ test('terrain and the optimization marker produce bounded, changing character an
   assert.equal(rows.length, piece.meta.rows);
   assert.ok(rows.every(row => row.length === piece.meta.cols));
   assert.notEqual(start, next);
+  assert.match(next, /^[ ·•●\n]+$/u);
+  assert.equal(rows[0].trim(), '');
+  assert.equal(rows[rows.length - 1].trim(), '');
+  assert.ok(next.replace(/[ \n]/g, '').length > piece.meta.cols * piece.meta.rows / 3);
   assert.ok([...colors].every(index => index < piece.meta.palette.length));
-  assert.ok([...colors].some(index => index === 14));
-  assert.ok([...colors].some(index => index === 13));
+  assert.ok(new Set(colors).size > 20);
+  const white = piece.meta.palette.indexOf('#ffffff');
+  const trailColors = ['#9d573b', '#c27b43', '#e5a251', '#ffd38a'].map(color => piece.meta.palette.indexOf(color));
+  for (const time of [0, 0.5, 2, 100]) {
+    frame(time, { color: colors });
+    assert.ok(colors.includes(white));
+    if (time > 0) assert.ok(colors.some(color => trailColors.includes(color)));
+  }
 });

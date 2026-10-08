@@ -7,7 +7,7 @@ The user requested a few working ASCII-style animations that relate directly to 
 | 001 Gradient descent | Math foundations / Optimization | DONE in local preview |
 | 002 Self-attention | Transformers / Self-Attention from Scratch | DONE in local preview |
 
-Both examples use shared playback, single stepping, slower playback, offscreen and hidden-tab suspension, and live system/preview reduced-motion preferences. Inputs change the actual toy calculations. Normal HTML exposes metrics, inputs, formulas and source vectors alongside the character visualizations.
+Both examples use shared playback, single stepping, slower playback, offscreen and hidden-tab suspension, and live system/preview reduced-motion preferences. Inputs change the actual toy calculations. The preview uses a quiet monospace gallery with full-width artwork, compact controls and metrics below it, and expandable formulas and source vectors. The loss surface uses full-color dots; attention uses monochrome shaded streams. Normal HTML keeps all calculations readable at mobile widths.
 
 The character-atlas painter is adapted from ascii.rest under MIT, with its license and pinned attribution in `site/vendor/ascii-rest/`. The mathematical examples and visualizations are original. No upstream scene or shape generators are included.
 
