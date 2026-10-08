@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-labelledby="fig-3-7-title fig-3-7-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-7-title">One registration, two gateways, two tool lists</title>
+  <desc id="fig-3-7-desc">On the host, the MCP store holds m101-deepwiki, registered with sbx mcp add from https://mcp.deepwiki.com/mcp as a remote streamable-http server that needs no OAuth. Each sandbox gets its own gateway at MCP_GATEWAY_URL http://mcp-gateway.docker.internal/mcp. The sandbox m101-mcp was created with --static-mcp m101-deepwiki and lists ask_wiki_question, read_wiki_contents, read_wiki_structure, code-mode, and mcp-exec. The sandbox m101-mcp-dyn started with code-mode, mcp-add, mcp-config-set, mcp-exec, and mcp-find, and sbx mcp load added the three deepwiki tools with a tools/list_changed notice. The remote server runs outside the VM, and no OAuth server was captured.</desc>
+  <defs><marker id="fig-3-7-head-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-olive-ink, #515f26)"/></marker><marker id="fig-3-7-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-7-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">HOST</text>
+  <text x="350" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SANDBOXES</text>
+  <rect x="350" y="26" width="270" height="50" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="485" y="46.25" font-size="12.5" text-anchor="middle" font-weight="700">mcp.deepwiki.com/mcp</text>
+  <text x="485" y="63.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">remote endpoint, outside the VM</text>
+  <rect x="20" y="26" width="270" height="84" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="155" y="48.25" font-size="12.5" text-anchor="middle" font-weight="700">sbx mcp add m101-deepwiki</text>
+  <text x="155" y="65.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--url https://mcp.deepwiki.com/mcp</text>
+  <text x="155" y="80.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">remote · streamable-http</text>
+  <text x="155" y="95.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">requires_oauth: false · auth status: []</text>
+  <line x1="290" y1="52" x2="349" y2="52" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-7-head-olive)"/>
+  <rect class="m-knock" x="285.95" y="35.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="320" y="46" font-size="11.5" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">no policy</text>
+  <rect x="70" y="150" width="230" height="56" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="185" y="173.25" font-size="12.5" text-anchor="middle" font-weight="700">mcp-gateway-m101-mcp</text>
+  <text x="185" y="190.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">static · --static-mcp</text>
+  <rect x="70" y="280" width="230" height="56" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="185" y="303.25" font-size="12.5" text-anchor="middle" font-weight="700">gateway of m101-mcp-dyn</text>
+  <text x="185" y="320.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dynamic · sbx mcp load</text>
+  <line x1="150" y1="110" x2="150" y2="149" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-7-head-ink)"/>
+  <rect class="m-knock" x="155" y="118.53" width="109.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="158" y="129.5" font-size="11.5">fixed at create</text>
+  <path d="M40 110 V308 H69" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-3-7-head-ink)"/>
+  <rect class="m-knock" x="45" y="239.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="48" y="250" font-size="11.5">load, live</text>
+  <rect x="380" y="128" width="240" height="100" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="500" y="150.75" font-size="12.5" text-anchor="middle" font-weight="700">m101-mcp · tools/list</text>
+  <text x="500" y="168.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ask_wiki_question read_wiki_contents</text>
+  <text x="500" y="183.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">read_wiki_structure</text>
+  <text x="500" y="198.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">code-mode mcp-exec</text>
+  <text x="500" y="213.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no mcp-find, mcp-add, mcp-config-set</text>
+  <rect x="380" y="250" width="240" height="124" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="500" y="277.25" font-size="12.5" text-anchor="middle" font-weight="700">m101-mcp-dyn · tools/list</text>
+  <text x="500" y="294.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">before: code-mode mcp-add</text>
+  <text x="500" y="309.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mcp-config-set mcp-exec mcp-find</text>
+  <text x="500" y="324.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">after load: + ask_wiki_question</text>
+  <text x="500" y="339.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">read_wiki_contents</text>
+  <text x="500" y="354.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">read_wiki_structure</text>
+  <line x1="300" y1="178" x2="379" y2="178" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-7-head-ink)"/>
+  <rect class="m-knock" x="300.2" y="161.42" width="78.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="339.5" y="172" font-size="11" text-anchor="middle">gateway URL</text>
+  <line x1="300" y1="308" x2="379" y2="308" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-3-7-head-indigo)"/>
+  <rect class="m-knock" x="296.9" y="291.42" width="85.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="339.5" y="302" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">list_changed</text>
+  <rect x="20" y="386" width="600" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="320" y="409.45" font-size="11.5" text-anchor="middle" font-weight="400">&lt;server&gt;-authorize and sbx mcp auth: no OAuth server in this capture</text>
+</svg>
