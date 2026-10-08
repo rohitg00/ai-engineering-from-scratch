@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-labelledby="fig-3-3-title fig-3-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-3-title">How one request to example.com:443 is decided</title>
+  <desc id="fig-3-3-desc">The authorizer walks five questions for op(action=net:connect:tcp, resource=net:domain:example.com:443) in the sandbox m101-policy. A matching deny rule ends in Denied by local rule with deny_kind explicit and rule local:&lt;uuid&gt;. Organization governance was inactive on the capture host, and when active only organization allow rules grant access. A sandbox-scoped allow or a global or kit allow returns allowed true, as the checks for example.com and api.anthropic.com show. When nothing matches, the result is No matching allow rule with deny_kind implicit, and the sandbox sees an approval request.</desc>
+  <defs><marker id="fig-3-3-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-3-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE REQUEST</text>
+  <text x="20" y="36" font-size="11">op(action=net:connect:tcp, resource=net:domain:example.com:443) · context sandbox:m101-policy</text>
+  <rect x="20" y="50" width="250" height="56" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="145" y="73.25" font-size="12.5" text-anchor="middle" font-weight="700">a deny rule matches?</text>
+  <text x="145" y="90.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">any scope, any source</text>
+  <rect x="300" y="50" width="320" height="56" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="460" y="65.6" font-size="12" text-anchor="middle" font-weight="700">Denied by local rule</text>
+  <text x="460" y="82.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">deny_kind: explicit · origin: local</text>
+  <text x="460" y="97.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rule: local:&lt;uuid&gt; · 09-check-deny.json</text>
+  <line x1="270" y1="78" x2="299" y2="78" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-3-head-rose)"/>
+  <line x1="80" y1="106" x2="80" y2="127" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-3-head-ink)"/>
+  <rect class="m-knock" x="85" y="105.92" width="19.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="88" y="116.5" font-size="11">no</text>
+  <rect x="20" y="128" width="250" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="145" y="151.25" font-size="12.5" text-anchor="middle" font-weight="700">org governance active?</text>
+  <text x="145" y="168.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">governance.active</text>
+  <rect x="300" y="128" width="320" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="460" y="143.6" font-size="12" text-anchor="middle" font-weight="700">false on the capture host</text>
+  <text x="460" y="160.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">when true, only org allow rules grant</text>
+  <text x="460" y="175.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">local and kit allow rules go inactive</text>
+  <line x1="270" y1="156" x2="299" y2="156" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-3-head-ink)"/>
+  <line x1="80" y1="184" x2="80" y2="205" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-3-head-ink)"/>
+  <rect x="20" y="206" width="250" height="56" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="145" y="229.25" font-size="12.5" text-anchor="middle" font-weight="700">a sandbox allow matches?</text>
+  <text x="145" y="246.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">scope sandbox:m101-policy</text>
+  <rect x="300" y="206" width="320" height="56" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="460" y="221.6" font-size="12" text-anchor="middle" font-weight="700">allowed: true</text>
+  <text x="460" y="238.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">local &lt;uuid&gt; example.com [tcp]</text>
+  <text x="460" y="253.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">09-check-allowed.json</text>
+  <line x1="270" y1="234" x2="299" y2="234" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-3-head-ink)"/>
+  <line x1="80" y1="262" x2="80" y2="283" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-3-head-ink)"/>
+  <rect x="20" y="284" width="250" height="56" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="145" y="307.25" font-size="12.5" text-anchor="middle" font-weight="700">a global or kit allow matches?</text>
+  <text x="145" y="324.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">local-policy, kit:&lt;name&gt;</text>
+  <rect x="300" y="284" width="320" height="56" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="460" y="299.6" font-size="12" text-anchor="middle" font-weight="700">allowed: true</text>
+  <text x="460" y="316.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">default-ai-services api.anthropic.com:443</text>
+  <text x="460" y="331.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">03-policy-check-anthropic.json</text>
+  <line x1="270" y1="312" x2="299" y2="312" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-3-head-ink)"/>
+  <line x1="80" y1="340" x2="80" y2="361" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-3-head-ink)"/>
+  <rect x="20" y="362" width="250" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="145" y="385.25" font-size="12.5" text-anchor="middle" font-weight="700">nothing matched</text>
+  <text x="145" y="402.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">default deny</text>
+  <rect x="300" y="362" width="320" height="56" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="460" y="377.6" font-size="12" text-anchor="middle" font-weight="700">No matching allow rule (default deny)</text>
+  <text x="460" y="394.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">deny_kind: implicit · 09-check-verbose.json</text>
+  <text x="460" y="409.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">inside: Approval required for example.com:443</text>
+  <line x1="270" y1="390" x2="299" y2="390" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-3-head-rose)"/>
+</svg>
