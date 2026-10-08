@@ -96,3 +96,7 @@ Every requested item was fetched. No curl was refused by the sandbox proxy and n
 - docs-docker-agent-repo.md and docker-agent-releases.md were removed: the first duplicates docs-docker-agent.md, the second duplicates the CHANGELOG.
 - Quotes from the Kit Spec use SPEC-v3-at-v3.0.0-m.8.md (the pinned tag); SPEC-v3.md is the main copy, cited only for unreleased changes.
 - sbx help text and release notes are Docker's proprietary program output and release text. The CLI reference pages under docs.docker.com/reference/cli/sbx publish the same help text under Apache-2.0.
+
+## Added on 2026-10-08 after the Desktop update
+
+- help-desktop-4.94.md: the plugin list of Docker Desktop 4.94.0 on the recording host (agent v1.144.0, model v1.2.6 client with v1.2.8 server, mcp v0.44.1, sandbox v0.13.0 shim) and the removal notice that `docker sandbox` prints. Program output, captured 2026-10-08.
