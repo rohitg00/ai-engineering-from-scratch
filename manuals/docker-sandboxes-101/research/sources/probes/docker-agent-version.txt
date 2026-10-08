@@ -1,0 +1,4 @@
+$ docker-agent version   # 2026-10-08T06:58Z
+docker-agent version v1.149.0
+Commit: Homebrew
+[exit 0]

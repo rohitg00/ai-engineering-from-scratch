@@ -1,0 +1,3 @@
+https://docs.docker.com/ai/compose/models-and-compose/
+https://docs.docker.com/reference/compose-file/models/
+https://docs.docker.com/compose/how-tos/provider-services/

@@ -1,0 +1,4 @@
+$ sbx policy ls   # 2026-10-08T06:57Z
+error: global network policy has not been initialized
+  try: sbx policy init <allow-all|balanced|deny-all>
+[exit 1]

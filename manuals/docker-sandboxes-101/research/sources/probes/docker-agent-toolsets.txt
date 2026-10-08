@@ -1,0 +1,30 @@
+$ docker-agent toolsets   # 2026-10-08T06:58Z
+TYPE                SUMMARY
+a2a                 Connect to remote agents via the Agent-to-Agent (A2A) protocol
+api                 Create custom tools that call HTTP APIs
+background_agents   Dispatch work to sub-agents concurrently and collect results
+background_jobs     Run and manage long-running shell commands
+environment         Report the OS and resolved shell (read-only, no arguments)
+fetch               Read content from HTTP/HTTPS URLs
+file                Read, write, and edit individual files
+filesystem          Read, write, list, search, and navigate files and directories
+git                 Read-only git repository inspection: status, log, branches, show, blame
+lsp                 Connect to Language Server Protocol servers for code intelligence
+mcp                 Extend agents with external tools via the Model Context Protocol
+mcp_catalog         Discover and activate remote MCP servers from the Docker MCP Catalog
+memory              Persistent key-value storage for cross-session recall
+model_picker        Let the agent pick between several models per turn
+open_url            Open a fixed URL in the user's default browser
+openapi             Generate tools automatically from an OpenAPI specification
+plan                Shared persistent scratchpad for multi-agent collaboration
+rag                 Search document knowledge bases with hybrid retrieval (RAG)
+scheduler           Schedule instructions to run at a time or on a recurring interval
+script              Define custom shell scripts as named tools with typed parameters
+session_context     Reference a previous session as context in the current one
+shell               Execute shell commands in the user's environment
+tasks               Persistent task database with priorities and dependencies
+think               Step-by-step reasoning scratchpad for planning
+todo                Manage a task list for complex multi-step workflows
+user_prompt         Ask the user questions and collect interactive input
+webhook             Send outbound notifications (Slack, Discord, Telegram, IFTTT, Teams, and more)
+[exit 0]

@@ -1,0 +1,4 @@
+$ sbx policy profile ls   # 2026-10-08T06:57Z
+warning: could not read policy rules; attached policies are unknown and profiles referenced only by policies may be missing
+No policy profiles found
+[exit 0]

@@ -1,0 +1,4 @@
+$ sbx kit ls   # 2026-10-08T06:55Z
+error: sbx: unknown command: sbx kit ls
+  try: sbx --help
+[exit 1]

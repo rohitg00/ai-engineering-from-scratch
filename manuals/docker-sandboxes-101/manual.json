@@ -1,0 +1,375 @@
+{
+  "id": "docker-sandboxes-101",
+  "title": "Docker Sandboxes and Docker Agent 101",
+  "subtitle": "Isolated microVMs for coding agents, and the agent runtime that runs inside them, command by command",
+  "summary": "How to run an agent you do not trust on files you do. Every listing in this manual comes from a recorded run of sbx and docker-agent on one Mac.",
+  "audience": "You are an engineer who runs coding agents such as Claude Code or Codex on real repositories. You know Docker, git, and YAML. You have not used Docker Sandboxes or Docker Agent.",
+  "edition": "2026.10",
+  "status": "draft",
+  "pin": {
+    "subject": "Docker Sandboxes (sbx) and Docker Agent (docker-agent)",
+    "version": "sbx 0.47.0, docker-agent 1.149.0",
+    "source": "https://github.com/docker/docker-agent",
+    "commit": "bf4169cdd31229d52385410c52c3dcc59b497858",
+    "date": "2026-10-07",
+    "verified": "2026-10-08"
+  },
+  "outcomes": [
+    "Run a coding agent inside a sandbox, give it only the files it needs, and get its commits back without giving it your credentials.",
+    "Read one line of sbx policy log and say which rule allowed or blocked the connection, and what to change.",
+    "Write an agent file that runs a team of agents over local tools and a local model, record it, and replay it from a cassette.",
+    "Serve the same agent file over the HTTP API, MCP, ACP, and A2A, and share it as a signed OCI artifact.",
+    "Map any command from the 2025 Docker Sandboxes plugin or the cagent material to its current form."
+  ],
+  "palette": [
+    {
+      "hue": "blue",
+      "meaning": "sbx, sandboxd, and the sandbox microVM"
+    },
+    {
+      "hue": "violet",
+      "meaning": "docker-agent, agent files, and the agent loop"
+    },
+    {
+      "hue": "green",
+      "meaning": "the workspace: files, mounts, clones, kits, and templates"
+    },
+    {
+      "hue": "amber",
+      "meaning": "lifecycle: sandbox states, sessions, and tool call phases"
+    },
+    {
+      "hue": "teal",
+      "meaning": "stored records: session.db, policy rules, the secret store, the audit log"
+    },
+    {
+      "hue": "indigo",
+      "meaning": "network traffic: the proxy, served endpoints, and streams"
+    },
+    {
+      "hue": "plum",
+      "meaning": "models and model calls: Docker Model Runner and hosted providers"
+    },
+    {
+      "hue": "olive",
+      "meaning": "tools and effects outside the agent: MCP servers, shell commands, HTTP APIs"
+    },
+    {
+      "hue": "rose",
+      "meaning": "failure: blocked connections, denied tool calls, errors"
+    },
+    {
+      "hue": "grey",
+      "meaning": "the host, the operator, Docker Hub, and anything outside both products"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Shipped help text",
+      "path": "research/sources/help-sbx.md and help-docker-agent.md (sbx 0.47.0, docker-agent 1.149.0)",
+      "usedFor": "every command, flag, default, and path; cited as help-sbx or help-agent with the command"
+    },
+    {
+      "name": "Agent file schema",
+      "path": "research/sources/agent-schema.json at v1.149.0 (bf4169c)",
+      "usedFor": "every key, type, and default of the agent file; cited as schema"
+    },
+    {
+      "name": "Sandbox Kit Spec v3",
+      "path": "research/sources/SPEC-v3-at-v3.0.0-m.8.md (tag v3.0.0-m.8, 2026-10-02)",
+      "usedFor": "the kit descriptor and each capability, quoted exactly; cited as kitspec"
+    },
+    {
+      "name": "Docker documentation (vendored)",
+      "path": "research/sources/docs-sandboxes.md, docs-docker-agent.md, docs-model-runner.md, docs-mcp.md, fetched 2026-10-08",
+      "usedFor": "rules and limits the help text does not state, quoted exactly; cited as docs-sbx, docs-agent, docs-dmr, docs-mcp"
+    },
+    {
+      "name": "Release notes",
+      "path": "research/sources/sbx-releases.md and docker-agent-CHANGELOG.md",
+      "usedFor": "when a behaviour appeared, changed, or was removed; cited as rel-sbx and rel-agent with the version"
+    },
+    {
+      "name": "Docker blog posts and talks",
+      "path": "research/conflicts-register.md and research/plan.md, with dates",
+      "usedFor": "history and positioning only, never for a rule; cited as blog or talk with the date"
+    },
+    {
+      "name": "Capture kit",
+      "path": "manuals/docker-sandboxes-101/capture/",
+      "usedFor": "every command output, file, and record shown; cited by file"
+    }
+  ],
+  "quoteSources": {
+    "help-sbx": "research/sources/help-sbx.md",
+    "help-agent": "research/sources/help-docker-agent.md",
+    "schema": "research/sources/agent-schema.json",
+    "kitspec": "research/sources/SPEC-v3-at-v3.0.0-m.8.md",
+    "kitspec-main": "research/sources/SPEC-v3.md",
+    "kitcap": "research/sources/kit-capabilities.md",
+    "docs-sbx-api": "research/sources/docs-sandboxes-api.md",
+    "docs-desktop": "research/sources/docs-desktop-release-notes.md",
+    "docs-sbx": "research/sources/docs-sandboxes.md",
+    "docs-agent": "research/sources/docs-docker-agent.md",
+    "docs-dmr": "research/sources/docs-model-runner.md",
+    "docs-mcp": "research/sources/docs-mcp.md",
+    "rel-sbx": "research/sources/sbx-releases.md",
+    "rel-agent": "research/sources/docker-agent-CHANGELOG.md",
+    "blog": null,
+    "talk": null
+  },
+  "capture": {
+    "run": [
+      "python3",
+      "capture/run.py"
+    ],
+    "check": [
+      "python3",
+      "capture/run.py",
+      "--check"
+    ]
+  },
+  "front": "front.md",
+  "plate": {
+    "figure": "plate-sandbox-run",
+    "title": "One agent, one microVM, one proxy",
+    "caption": "The agent runs inside a microVM that sbx owns, its connections leave through the host proxy, and its secret never enters the VM. Read top to bottom. From capture/out/02-run-sandbox.log."
+  },
+  "parts": [
+    {
+      "number": 1,
+      "title": "The Two Products on One Page",
+      "thesis": "sbx runs any agent inside a microVM it owns, docker-agent runs an agent file, and docker-agent run --sandbox joins them through a kit and the proxy.",
+      "accent": "blue",
+      "sections": [
+        {
+          "id": "1.1",
+          "file": "sections/1-1-sbx-and-docker-agent.md"
+        },
+        {
+          "id": "1.2",
+          "file": "sections/1-2-docker-agent-run-sandbox-end-to-end.md"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "sbx run",
+      "thesis": "A sandbox has a name, a workspace, a template, and a lifecycle that seven verbs and one daemon control.",
+      "accent": "violet",
+      "sections": [
+        {
+          "id": "2.1",
+          "file": "sections/2-1-sbx-run-create-stop-and-rm.md"
+        },
+        {
+          "id": "2.2",
+          "file": "sections/2-2-sbx-exec-cp-and-ports.md"
+        },
+        {
+          "id": "2.3",
+          "file": "sections/2-3-sbx-template-save-and-load.md"
+        },
+        {
+          "id": "2.4",
+          "file": "sections/2-4-sandboxd-diagnose-and-reset.md"
+        },
+        {
+          "id": "2.5",
+          "file": "sections/2-5-sbx-settings-list.md"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "sbx policy, sbx secret, sbx mcp",
+      "thesis": "Five layers isolate the agent, and each layer has its own commands: the hypervisor, the workspace, the policy and its proxy, the secret store, and the MCP gateway.",
+      "accent": "green",
+      "sections": [
+        {
+          "id": "3.1",
+          "file": "sections/3-1-sbx-diagnose-and-the-microvm-boundary.md"
+        },
+        {
+          "id": "3.2",
+          "file": "sections/3-2-clone-and-run-sandbox-source.md"
+        },
+        {
+          "id": "3.3",
+          "file": "sections/3-3-sbx-policy-init-allow-deny-and-check-network.md"
+        },
+        {
+          "id": "3.4",
+          "file": "sections/3-4-sbx-policy-log-and-the-proxy.md"
+        },
+        {
+          "id": "3.5",
+          "file": "sections/3-5-sbx-secret-set-import-and-set-custom.md"
+        },
+        {
+          "id": "3.6",
+          "file": "sections/3-6-sbx-mcp-add-load-and-static-mcp.md"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Kits and sbxenv.yaml",
+      "thesis": "A kit declares what a sandbox contains and can reach, and an environment file declares the sandbox and its secrets for approval before anything runs.",
+      "accent": "olive",
+      "sections": [
+        {
+          "id": "4.1",
+          "file": "sections/4-1-syntax-docker-sandbox-kit-3-and-kit-yaml.md"
+        },
+        {
+          "id": "4.2",
+          "file": "sections/4-2-com-docker-sandbox-capabilities.md"
+        },
+        {
+          "id": "4.3",
+          "file": "sections/4-3-sbx-kit-pack-push-sign-and-verify.md"
+        },
+        {
+          "id": "4.4",
+          "file": "sections/4-4-sbxenv-yaml-and-sbx-env-plan.md"
+        },
+        {
+          "id": "4.5",
+          "file": "sections/4-5-sbx-skills-add-and-skills-true.md"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "docker-agent run and the Agent File",
+      "thesis": "An agent file is agents, models, toolsets, and the rules between them, and docker-agent run drives the loop, records it, and replays it.",
+      "accent": "plum",
+      "sections": [
+        {
+          "id": "5.1",
+          "file": "sections/5-1-docker-agent-run-new-and-doctor.md"
+        },
+        {
+          "id": "5.2",
+          "file": "sections/5-2-agents-models-and-providers.md"
+        },
+        {
+          "id": "5.3",
+          "file": "sections/5-3-toolsets-and-mcps.md"
+        },
+        {
+          "id": "5.4",
+          "file": "sections/5-4-sub-agents-transfer-task-and-background-agents.md"
+        },
+        {
+          "id": "5.5",
+          "file": "sections/5-5-permissions-safety-and-hooks.md"
+        },
+        {
+          "id": "5.6",
+          "file": "sections/5-6-session-db-sessions-diff-and-eval.md"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "docker-agent serve and share",
+      "thesis": "One agent file answers over REST and SSE, an OpenAI-compatible endpoint, MCP, ACP, and A2A, travels as a signed OCI artifact, and runs on a local model.",
+      "accent": "indigo",
+      "sections": [
+        {
+          "id": "6.1",
+          "file": "sections/6-1-serve-api-and-serve-chat.md"
+        },
+        {
+          "id": "6.2",
+          "file": "sections/6-2-serve-mcp-and-serve-acp.md"
+        },
+        {
+          "id": "6.3",
+          "file": "sections/6-3-serve-a2a.md"
+        },
+        {
+          "id": "6.4",
+          "file": "sections/6-4-share-push-and-share-pull.md"
+        },
+        {
+          "id": "6.5",
+          "file": "sections/6-5-dmr-compose-models-and-the-mcp-gateway-service.md"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Operating It",
+      "thesis": "The same sandbox runs in the cloud, an organization narrows it with policies and reads its audit log, old commands map to new ones, and the claims are checked.",
+      "accent": "teal",
+      "sections": [
+        {
+          "id": "7.1",
+          "file": "sections/7-1-sbx-cloud-run-move-and-ttl.md"
+        },
+        {
+          "id": "7.2",
+          "file": "sections/7-2-org-policies-profiles-and-the-audit-log.md"
+        },
+        {
+          "id": "7.3",
+          "file": "sections/7-3-from-docker-sandbox-and-cagent-to-sbx-and-docker-agent.md"
+        },
+        {
+          "id": "7.4",
+          "file": "sections/7-4-kit-tck-diagnose-and-the-claims-this-manual-checked.md"
+        }
+      ]
+    }
+  ],
+  "reference": {
+    "title": "Reference",
+    "accent": "grey",
+    "thesis": "Lookup tables for every name in the manual.",
+    "summary": "Every sbx and docker-agent command, the settings keys and paths, the agent file keys, the toolsets, the providers, the sources and conflicts, a glossary, and the figure index.",
+    "sections": [
+      {
+        "id": "R.1",
+        "file": "sections/r-1-sbx-commands.md"
+      },
+      {
+        "id": "R.2",
+        "file": "sections/r-2-docker-agent-commands.md"
+      },
+      {
+        "id": "R.3",
+        "file": "sections/r-3-settings-keys-environment-variables-and-paths.md"
+      },
+      {
+        "id": "R.4",
+        "file": "sections/r-4-agent-file-keys.md"
+      },
+      {
+        "id": "R.5",
+        "file": "sections/r-5-toolsets.md"
+      },
+      {
+        "id": "R.6",
+        "file": "sections/r-6-providers-and-models.md"
+      },
+      {
+        "id": "R.7",
+        "file": "sections/r-7-sources-and-the-conflicts-register.md"
+      },
+      {
+        "id": "R.8",
+        "file": "sections/r-8-glossary-and-index-of-figures.md"
+      }
+    ]
+  },
+  "related": [
+    "phases/13-tools-and-protocols/06-mcp-fundamentals",
+    "phases/13-tools-and-protocols/19-a2a-protocol",
+    "phases/14-agent-engineering/01-the-agent-loop",
+    "phases/14-agent-engineering/26-skill-permissions-sandboxes-and-trust",
+    "phases/19-capstone-projects/01-terminal-native-coding-agent"
+  ]
+}
