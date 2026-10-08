@@ -260,7 +260,7 @@ Flags:
       --remote string             Use remote runtime with specified address
       --sandbox                   Run the agent inside a Docker sandbox (requires Docker Desktop with sandbox support)
       --session string            Continue from a previous session by ID or relative offset (e.g., -1 for last session)
-  -s, --session-db string         Path to the session database (default "/Users/rohitghumare/.cagent/session.db")
+  -s, --session-db string         Path to the session database (default "$HOME/.cagent/session.db")
       --template string           Template image for the sandbox (passed to docker sandbox create -t)
       --working-dir string        Set the working directory for the session (applies to tools and relative paths)
       --yolo                      Automatically approve all tool calls without prompting
@@ -336,7 +336,7 @@ Flags:
       --code-mode-tools         Provide a single tool to call other tools via Javascript
       --env-from-file strings   Set environment variables from file
       --models-gateway string   Set the models gateway address
-  -s, --session-db string       Path to the session database (default "/Users/rohitghumare/.cagent/session.db")
+  -s, --session-db string       Path to the session database (default "$HOME/.cagent/session.db")
       --working-dir string      Set the working directory for the session (applies to tools and relative paths)
 
 Global Flags:
