@@ -163,9 +163,13 @@ set -euo pipefail
 # Install the agent workbench pack into the current repo.
 # Usage: bin/install.sh [--force]
 
+if [[ $# -gt 1 || ( $# -eq 1 && "$1" != "--force" ) ]]; then
+    echo "Usage: bin/install.sh [--force]" >&2
+    exit 2
+fi
 FORCE="${1:-}"
-TARGET="$(pwd)"
-PACK_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+TARGET="$(pwd -P)"
+PACK_ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
 
 required=("AGENTS.md" "VERSION" "docs" "schemas" "scripts")
 for path in "${required[@]}"; do
@@ -175,17 +179,68 @@ for path in "${required[@]}"; do
     fi
 done
 
-if [[ -e "$TARGET/AGENTS.md" && "$FORCE" != "--force" ]]; then
-    echo "AGENTS.md already exists. Pass --force to overwrite." >&2
+sources=("$PACK_ROOT/AGENTS.md" "$PACK_ROOT/VERSION")
+while IFS= read -r -d '' source; do
+    sources+=("$source")
+done < <(find "$PACK_ROOT/docs" "$PACK_ROOT/schemas" "$PACK_ROOT/scripts" -type f -print0)
+
+conflicts=()
+for source in "${sources[@]}"; do
+    if [[ "$source" == "$PACK_ROOT/VERSION" ]]; then
+        relative=".workbench-version"
+    else
+        relative="${source#"$PACK_ROOT"/}"
+    fi
+    destination="$TARGET/$relative"
+    current="$TARGET"
+    IFS='/' read -r -a components <<< "$relative"
+    unsafe=false
+    for ((index = 0; index < ${#components[@]}; index++)); do
+        current="$current/${components[index]}"
+        if [[ -L "$current" ]]; then
+            conflicts+=("$relative (symlinked path)")
+            unsafe=true
+            break
+        fi
+        if (( index < ${#components[@]} - 1 )) && [[ -e "$current" && ! -d "$current" ]]; then
+            conflicts+=("$relative (non-directory parent)")
+            unsafe=true
+            break
+        fi
+    done
+    if [[ "$unsafe" == true ]]; then
+        continue
+    fi
+    if [[ -e "$destination" ]]; then
+        if [[ ! -f "$destination" ]]; then
+            conflicts+=("$relative (not a regular file)")
+        elif [[ "$FORCE" != "--force" ]] && ! cmp -s "$source" "$destination"; then
+            conflicts+=("$relative (different existing file)")
+        fi
+    fi
+done
+
+if (( ${#conflicts[@]} )); then
+    echo "target conflicts; no files were installed:" >&2
+    printf '  %s\\n' "${conflicts[@]}" >&2
+    echo "Use --force to replace conflicting regular files; resolve symlinked paths separately." >&2
     exit 1
 fi
 
-cp "$PACK_ROOT/AGENTS.md" "$TARGET/AGENTS.md"
 mkdir -p "$TARGET/docs" "$TARGET/schemas" "$TARGET/scripts"
-cp -r "$PACK_ROOT/docs/." "$TARGET/docs/"
-cp -r "$PACK_ROOT/schemas/." "$TARGET/schemas/"
-cp -r "$PACK_ROOT/scripts/." "$TARGET/scripts/"
-cat "$PACK_ROOT/VERSION" > "$TARGET/.workbench-version"
+for source in "${sources[@]}"; do
+    if [[ "$source" == "$PACK_ROOT/VERSION" ]]; then
+        relative=".workbench-version"
+    else
+        relative="${source#"$PACK_ROOT"/}"
+    fi
+    destination="$TARGET/$relative"
+    if [[ -e "$destination" && "$FORCE" != "--force" ]]; then
+        continue
+    fi
+    mkdir -p "$(dirname "$destination")"
+    cp -p "$source" "$destination"
+done
 
 echo "pack installed at version $(cat "$PACK_ROOT/VERSION")"
 echo "next: edit task_board.json, set acceptance commands, run scripts/init_agent.py"
@@ -251,7 +306,8 @@ def main() -> int:
             {"timestamp": time.time(), "probes": [{"name": n, "status": s, "detail": d} for n, s, d in probes]},
             indent=2,
         )
-        + "\\n"
+        + "\n",
+        encoding="utf-8",
     )
     width = max(len(n) for n, _, _ in probes)
     for name, status, detail in probes:
@@ -420,7 +476,7 @@ def main() -> int:
     report = run_checks(args.task_id)
     out = ROOT / "outputs" / "verification" / f"{args.task_id}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(report, indent=2) + "\\n")
+    out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
     if not report["passed"]:
         print("verification failed", file=sys.stderr)
@@ -502,8 +558,8 @@ def generate_handoff(task_id: str, session_id: str | None = None) -> dict[str, o
     }
     out = ROOT / "outputs" / "handoff" / payload["session_id"]
     out.mkdir(parents=True, exist_ok=True)
-    (out / "handoff.json").write_text(json.dumps(payload, indent=2) + "\\n")
-    (out / "handoff.md").write_text(_render_markdown(payload))
+    (out / "handoff.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    (out / "handoff.md").write_text(_render_markdown(payload), encoding="utf-8")
     return payload
 
 
@@ -592,7 +648,7 @@ The `VERSION` file is the contract. Major bumps require a state migration.
 
 def write(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content)
+    path.write_text(content, encoding="utf-8")
 
 
 def main() -> None:
