@@ -152,10 +152,21 @@ def strip_trailing_punct(url: str) -> str:
     pairs = {")": "(", "]": "["}
     while url and url[-1] in pairs:
         closer = url[-1]
-        if url.count(closer) <= url.count(pairs[closer]):
+        opener = pairs[closer]
+        depth = 0
+        balanced = False
+        for i in range(len(url) - 1, -1, -1):
+            ch = url[i]
+            if ch == closer:
+                depth += 1
+            elif ch == opener:
+                depth -= 1
+                if depth == 0:
+                    balanced = True
+                    break
+        if balanced:
             break
         url = url[:-1]
-    # Removing an unmatched closer can expose punctuation before it.
     while url and url[-1] in TRAILING_PUNCT:
         url = url[:-1]
     return url
