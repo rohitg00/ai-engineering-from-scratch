@@ -1,4 +1,4 @@
-<p align="center"><sub>सामुदायिक अनुवाद। <a href="../../README.md">अंग्रेज़ी संस्करण ही प्रामाणिक है</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
+<p align="center" lang="he" dir="rtl"><sub>תרגום חלקי לעברית של דף הפתיחה. המבוא, הוראות ההתחלה וחלק מהכותרות תורגמו; שאר החלקים שומרים על <a href="../../README.md">המקור באנגלית</a>, שהוא הגרסה הקובעת · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
 <p align="center">
   <img src="../../assets/banner.svg" alt="AI Engineering from Scratch — reference manual banner" width="100%">
 </p>
@@ -53,68 +53,63 @@
 </p>
 </p>
 
-### प्रायोजक
+### נותני חסות
 
 <p align="center">
-  <a href="https://serpapi.com/ai-engineering-from-scratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/serpapi-banner-compact.png" width="48%"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi। आपके AI ऐप्स के लिए वेब खोज API। किसी भी एकीकरण के लिए Markdown और JSON में उपलब्ध।" width="440"></picture></a>
+  <a href="https://serpapi.com/ai-engineering-from-scratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/serpapi-banner-compact.png" width="48%"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi. API לחיפוש ברשת עבור יישומי ה-AI שלכם. זמין בפורמטים Markdown ו-JSON לכל שילוב." width="440"></picture></a>
   <a href="https://nitrostack.ai/referral/aiengineeringfromscratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/nitrostack-banner-equal.png" width="48%"><img src="../../assets/sponsors/nitrostack-banner-equal.png" alt="NitroStack. Build and deploy your MCP app in 10 minutes. Get your product into ChatGPT and Claude marketplaces with free cloud deployment." width="440"></picture></a>
 </p>
 
 <p align="center">
-  <sub><span>आपका सहयोग हर पाठ को मुफ़्त और ओपन सोर्स बनाए रखता है।</span> <a href="#supporters">सभी समर्थक देखें</a> · <a href="../../SPONSORS.md">Become a sponsor</a></sub>
+  <sub><span>התמיכה שלכם שומרת על כל שיעור חינמי ובקוד פתוח.</span> <a href="#supporters">הצגת כל התומכים</a> · <a href="../../SPONSORS.md">Become a sponsor</a></sub>
 </p>
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-> **84% छात्र पहले से ही AI टूल इस्तेमाल करते हैं। पर केवल 18% ही उन्हें पेशेवर रूप से इस्तेमाल करने के लिए तैयार महसूस करते हैं।** यह पाठ्यक्रम इसी खाई को पाटता है।
+> **84% מהסטודנטים כבר משתמשים בכלי AI. רק 18% מרגישים מוכנים להשתמש בהם באופן מקצועי.** תוכנית הלימודים הזו מגשרת על הפער.
 >
-> 523 पाठ। 20 चरण। ~342 घंटे। Python, TypeScript, Rust, Julia। हर पाठ एक पुन: उपयोग योग्य कलाकृति देता है: एक प्रॉम्प्ट, एक स्किल, एक एजेंट, एक MCP सर्वर। मुफ़्त, ओपन सोर्स, MIT।
+> 523 שיעורים. 20 שלבים. ~342 שעות. Python, TypeScript, Rust, Julia. בכל שיעור נוצר תוצר לשימוש חוזר: פרומפט, מיומנות, סוכן או שרת MCP. בחינם, בקוד פתוח, ברישיון MIT.
 >
-> आप केवल AI सीखते नहीं। आप उसे बनाते हैं। शुरू से अंत तक। अपने हाथों से।
+> לא רק לומדים AI. בונים אותו בעצמכם, מההתחלה ועד הסוף.
 
 <!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
 <p align="center"><sub><b>114,584</b> readers &nbsp;·&nbsp; <b>181,995</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-## Start here: choose what you want to build
+## התחילו כאן: בחרו מה תרצו לבנות
 
-You do not need to scan 523 lessons before beginning. Pick one goal. Each link
-opens the same curriculum on GitHub or the website, and both versions use the
-same lesson code.
+אין צורך לעבור על 523 שיעורים לפני שמתחילים. בחרו מטרה אחת. כל קישור פותח את אותה תוכנית לימודים ב-GitHub או באתר, ובשתי הגרסאות משתמשים באותו קוד של השיעורים.
 
-| Your goal | Learn on GitHub | Learn on the website |
+| המטרה שלכם | למדו ב-GitHub | למדו באתר |
 |---|---|---|
-| I am new and want the complete foundation | [Phase 0: Setup and Tooling](../../phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](../../phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| I want to build production LLM applications | [Phase 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| I want to build agents | [Phase 14: Agent Engineering](../../phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| I want to use coding agents on real repositories | [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json) | [Agent-Assisted Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| I want to shape the right build before implementation | [Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json) | [Product Judgment and Delivery](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| I want to prepare for a Claude certification | [Certification onboarding](../../certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |
-| I want to prepare for the MCP Associate (MCPA) | [MCPA onboarding](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA track](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+| אני מתחיל ורוצה בסיס מלא | [שלב 0: התקנה וכלים](../../phases/00-setup-and-tooling/) | [סביבת פיתוח](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| אני יודע Python ורוצה ללמוד יסודות במתמטיקה ובלמידת מכונה | [שלב 1: יסודות מתמטיים](../../phases/01-math-foundations/) | [הבנה אינטואיטיבית של אלגברה לינארית](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| אני רוצה לבנות יישומי LLM לסביבת ייצור | [שלב 11: הנדסת LLM](../../phases/11-llm-engineering/) | [הנדסת פרומפטים](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| אני רוצה לבנות סוכנים | [שלב 14: הנדסת סוכנים](../../phases/14-agent-engineering/) | [לולאת הסוכן](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| אני רוצה להשתמש בסוכני תכנות במאגרי קוד אמיתיים | [מסלול הנדסה בעזרת סוכנים](../../learning-paths/using-coding-agents.json) | [הנדסה בעזרת סוכנים](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| אני רוצה להגדיר מה נכון לבנות לפני המימוש | [מסלול שיקול דעת במוצר ומסירה](../../learning-paths/shaping-the-build.json) | [שיקול דעת במוצר ומסירה](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| אני רוצה לבנות עם Model Context Protocol (MCP) | [מסלול Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [מסלול לימוד Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| אני רוצה לכתוב ולפרסם Agent Skills | [מסלול ממוקד ל-Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [מסלול לימוד Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| אני רוצה להתכונן להסמכת Claude | [תחילת ההכנה להסמכה](../../certifications/claude/GETTING_STARTED.md) | [אקדמיית ההסמכות](https://aiengineeringfromscratch.com/certifications.html) |
+| אני רוצה להתכונן ל-MCP Associate (MCPA) | [תחילת ההכנה ל-MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [מסלול MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
 
-Not sure where you fit? Use the [`start-learning` placement tutor](../../skills/start-learning/SKILL.md)
-or the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).
+לא בטוחים מאיפה להתחיל? השתמשו [בחונך הערכת הרמה `start-learning`](../../skills/start-learning/SKILL.md) או [במדריך דרישות הקדם באתר](https://aiengineeringfromscratch.com/prereqs.html).
 
-Compare four core domains and six career routes in the [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+השוו בין ארבעה תחומי ליבה ושישה מסלולי קריירה ב[מסלולי הלימוד להנדסת AI](https://aiengineeringfromscratch.com/learning-paths.html).
 
-### Use every lesson the same way
+### עבדו עם כל שיעור באותה דרך
 
-1. **Read** `docs/en.md` and explain the core idea in your own words.
-2. **Type and build** the important code instead of treating the code block as decoration.
-3. **Run** the lesson command from the repository root, the directory containing `README.md` and `phases/`.
-4. **Keep evidence**: the command, working directory, exit code, meaningful output, and the artifact you changed or produced.
-5. **Continue** only when you can explain the output and make one small change without guessing.
+1. **קראו** את `docs/en.md` והסבירו את הרעיון המרכזי במילים שלכם.
+2. **הקלידו ובנו** את הקוד החשוב במקום להתייחס לבלוק הקוד כקישוט.
+3. **הריצו** את פקודת השיעור משורש המאגר, התיקייה שמכילה את `README.md` ואת `phases/`.
+4. **שמרו ראיות**: הפקודה, תיקיית העבודה, קוד היציאה, פלט משמעותי והתוצר ששיניתם או יצרתם.
+5. **המשיכו** רק כשאתם יכולים להסביר את הפלט ולעשות שינוי קטן בלי לנחש.
 
-Commands in lesson pages are paths from the repository root unless the lesson
-explicitly says to change directories. If a lesson offers several languages,
-run the implementation for the language you are learning.
+הנתיבים בפקודות שבדפי השיעורים הם יחסיים לשורש המאגר, אלא אם השיעור מציין במפורש שיש להחליף תיקייה. אם שיעור מציע כמה שפות תכנות, הריצו את המימוש בשפה שאתם לומדים.
 
-### Clone it and produce your first evidence
+### שכפלו את המאגר וצרו את הראיה הראשונה שלכם
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
@@ -123,11 +118,7 @@ python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route be
 python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-The preflight separates requirements needed now from tools needed later. Every
-required failure includes the detected reason and a corrective command. The
-second command is a dependency-free lesson and ends by showing that a matrix
-times a vector is the operation inside a neural network layer. Save that
-terminal output as your first evidence.
+הבדיקה המקדימה מבדילה בין דרישות שצריך למלא עכשיו לבין כלים שיידרשו בהמשך. לכל דרישת חובה שלא מתקיימת מוצגות הסיבה שזוהתה ופקודה לתיקון. הפקודה השנייה מריצה שיעור ללא תלויות חיצוניות, ובסופו מראה שכפל מטריצה בווקטור הוא הפעולה שמתרחשת בתוך שכבה של רשת עצבית. שמרו את פלט המסוף הזה כראיה הראשונה שלכם.
 
 ## Add the AI tutor in 30 seconds
 
@@ -187,7 +178,7 @@ concepts, but real-host discovery, invocation, script, and uninstall evidence
 remains pending until the preflight is available. Read the lessons at
 [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## यह कैसे काम करता है
+## איך זה עובד
 
 Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a
 flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't
@@ -207,7 +198,7 @@ Free, open source, and built to run on your own laptop.
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## पाठ्यक्रम की संरचना
+## מבנה תוכנית הלימודים
 
 Twenty phases stack on top of each other. Math is the floor. Agents and production are the roof.
 Skip ahead if you already know the lower layers, but don't skip and then wonder why something at
@@ -243,7 +234,7 @@ flowchart TB
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## एक पाठ की संरचना
+## מבנה השיעור
 
 Each lesson lives in its own folder, with the same structure across the entire curriculum:
 
@@ -269,9 +260,9 @@ flowchart LR
   U --> S["SHIP IT<br/><sub>prompt · skill · agent · MCP</sub>"]
 ```
 
-## शुरुआत करें
+## תחילת העבודה
 
-शुरू करने के तीन तरीके। कोई एक चुनें।
+שלוש דרכים להתחיל. בחרו אחת.
 
 **Option A — learn in your terminal *(recommended)*.** After the Node.js,
 `npx`, host, and scope preflight above, install the learning skills into a
@@ -304,7 +295,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 Cloning also auto-loads the learning skills in Claude Code, and gives every
 lesson's code to the `learn` tutor for real execution instead of read-along.
 
-### आवश्यक शर्तें
+### דרישות קדם
 
 - You can write code (any language; Python helps).
 - You want to understand how AI **actually works**, not just call APIs.
@@ -393,7 +384,7 @@ The book is the snapshot; this repository is the living edition. Every chapter e
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## हर पाठ कुछ न कुछ देता है
+## כל שיעור מפיק תוצר
 
 Other curricula end with *"congratulations, you learned X."* Each lesson here ends with a
 **reusable tool** you can install or paste into your daily workflow.
@@ -475,7 +466,7 @@ the agent went wrong and explain why...
 
 <a id="contents"></a>
 
-## विषय-सूची
+## תוכן עניינים
 
 Twenty phases. Click any phase to expand its lesson list.
 
@@ -1209,7 +1200,7 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## टूलकिट
+## ארגז הכלים
 
 Every lesson produces a reusable artifact. By the end you have:
 
@@ -1336,7 +1327,7 @@ the default skip-list (`twitter.com`, `x.com`, `linkedin.com`,
 `instagram.com`, `medium.com` — domains that aggressively block automated
 HEAD/GET).
 
-## कहाँ से शुरू करें
+## מאיפה להתחיל
 
 | Background | Start at | Estimated time |
 |---|---|---|
@@ -1352,7 +1343,7 @@ HEAD/GET).
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## यह अभी क्यों मायने रखता है
+## למה זה חשוב עכשיו
 
 <table>
 <tr>
@@ -1391,7 +1382,7 @@ HEAD/GET).
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## योगदान करें
+## תרומה לפרויקט
 
 | Goal | Read |
 |---|---|
@@ -1421,11 +1412,11 @@ relative links inside lesson docs.
 
 <a id="supporters"></a>
 
-## काम को प्रायोजित करें
+## תמכו בעבודה
 
-मुफ़्त, MIT लाइसेंस के अंतर्गत, 523 पाठ। इस काम को संभव बनाने वाले प्रायोजकों और समर्थकों का धन्यवाद। [सभी प्रायोजक और समर्थक देखें](../../BACKERS.md)।
+בחינם, ברישיון MIT, 523 שיעורים. תודה לנותני החסות ולתומכים שמאפשרים את העבודה. [הצגת כל נותני החסות והתומכים](../../BACKERS.md).
 
-इस काम में सहयोग करना चाहते हैं? [प्रायोजन विकल्प](../../SPONSORS.md), जिनमें [हार्डवेयर प्रायोजन](../../SPONSORS.md#hardware-lab-partner) शामिल है, देखें या [GitHub पर प्रायोजित करें](https://github.com/sponsors/rohitg00)।
+רוצים לתמוך בעבודה? עיינו ב[אפשרויות החסות](../../SPONSORS.md), כולל [חסויות חומרה](../../SPONSORS.md#hardware-lab-partner), או [תמכו דרך GitHub](https://github.com/sponsors/rohitg00).
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -1433,11 +1424,11 @@ relative links inside lesson docs.
 
 If this manual helped you, star the repo. It keeps the project alive.
 
-## लाइसेंस
+## רישיון
 
-MIT। जैसे चाहें इस्तेमाल करें: फ़ोर्क करें, पढ़ाएँ, बेचें, प्रकाशित करें। श्रेय देना अच्छा है, पर ज़रूरी नहीं।
+MIT. השתמשו בחומר כרצונכם: צרו פיצול, למדו בעזרתו, מכרו או פרסמו אותו. ציון המקור מוערך אך אינו חובה.
 
-[Rohit Ghumare](https://github.com/rohitg00) और समुदाय द्वारा अनुरक्षित।
+מתוחזק בידי [Rohit Ghumare](https://github.com/rohitg00) והקהילה.
 
 <sub>
   <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;

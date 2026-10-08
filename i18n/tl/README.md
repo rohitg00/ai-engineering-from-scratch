@@ -1,4 +1,4 @@
-<p align="center"><sub>सामुदायिक अनुवाद। <a href="../../README.md">अंग्रेज़ी संस्करण ही प्रामाणिक है</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
+<p align="center" lang="tl"><sub>Bahagyang salin sa Tagalog. Isinalin ang panimula, gabay sa pagsisimula, at ilang pamagat; nananatili sa <a href="../../README.md">orihinal na Ingles na batayan</a> ang ibang bahagi. · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
 <p align="center">
   <img src="../../assets/banner.svg" alt="AI Engineering from Scratch — reference manual banner" width="100%">
 </p>
@@ -53,68 +53,63 @@
 </p>
 </p>
 
-### प्रायोजक
+### Mga sponsor
 
 <p align="center">
-  <a href="https://serpapi.com/ai-engineering-from-scratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/serpapi-banner-compact.png" width="48%"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi। आपके AI ऐप्स के लिए वेब खोज API। किसी भी एकीकरण के लिए Markdown और JSON में उपलब्ध।" width="440"></picture></a>
+  <a href="https://serpapi.com/ai-engineering-from-scratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/serpapi-banner-compact.png" width="48%"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi. API para sa paghahanap sa web para sa iyong mga AI app. May Markdown at JSON para sa anumang integrasyon." width="440"></picture></a>
   <a href="https://nitrostack.ai/referral/aiengineeringfromscratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/nitrostack-banner-equal.png" width="48%"><img src="../../assets/sponsors/nitrostack-banner-equal.png" alt="NitroStack. Build and deploy your MCP app in 10 minutes. Get your product into ChatGPT and Claude marketplaces with free cloud deployment." width="440"></picture></a>
 </p>
 
 <p align="center">
-  <sub><span>आपका सहयोग हर पाठ को मुफ़्त और ओपन सोर्स बनाए रखता है।</span> <a href="#supporters">सभी समर्थक देखें</a> · <a href="../../SPONSORS.md">Become a sponsor</a></sub>
+  <sub><span>Dahil sa suporta mo, nananatiling libre at open source ang bawat aralin.</span> <a href="#supporters">Tingnan ang lahat ng sumusuporta</a> · <a href="../../SPONSORS.md">Become a sponsor</a></sub>
 </p>
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-> **84% छात्र पहले से ही AI टूल इस्तेमाल करते हैं। पर केवल 18% ही उन्हें पेशेवर रूप से इस्तेमाल करने के लिए तैयार महसूस करते हैं।** यह पाठ्यक्रम इसी खाई को पाटता है।
+> **84% ng mga estudyante ay gumagamit na ng mga AI tool. 18% lamang ang nakakaramdam na handa silang gamitin ang mga ito sa propesyonal na trabaho.** Tinutugunan ng kurikulum na ito ang agwat na iyon.
 >
-> 523 पाठ। 20 चरण। ~342 घंटे। Python, TypeScript, Rust, Julia। हर पाठ एक पुन: उपयोग योग्य कलाकृति देता है: एक प्रॉम्प्ट, एक स्किल, एक एजेंट, एक MCP सर्वर। मुफ़्त, ओपन सोर्स, MIT।
+> 523 aralin. 20 yugto. ~342 oras. Python, TypeScript, Rust, Julia. Bawat aralin ay may nagagawang magagamit muli: isang prompt, skill, agent, o MCP server. Libre, open source, MIT.
 >
-> आप केवल AI सीखते नहीं। आप उसे बनाते हैं। शुरू से अंत तक। अपने हाथों से।
+> Hindi ka lang natututo ng AI. Ikaw mismo ang bubuo nito, mula simula hanggang dulo.
 
 <!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
 <p align="center"><sub><b>114,584</b> readers &nbsp;·&nbsp; <b>181,995</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-## Start here: choose what you want to build
+## Magsimula rito: piliin kung ano ang gusto mong buuin
 
-You do not need to scan 523 lessons before beginning. Pick one goal. Each link
-opens the same curriculum on GitHub or the website, and both versions use the
-same lesson code.
+Hindi mo kailangang tingnan ang lahat ng 523 aralin bago magsimula. Pumili ng isang layunin. Binubuksan ng bawat link ang parehong kurikulum sa GitHub o sa website, at pareho ang code ng aralin sa dalawang bersiyon.
 
-| Your goal | Learn on GitHub | Learn on the website |
+| Layunin mo | Matuto sa GitHub | Matuto sa website |
 |---|---|---|
-| I am new and want the complete foundation | [Phase 0: Setup and Tooling](../../phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](../../phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| I want to build production LLM applications | [Phase 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| I want to build agents | [Phase 14: Agent Engineering](../../phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| I want to use coding agents on real repositories | [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json) | [Agent-Assisted Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| I want to shape the right build before implementation | [Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json) | [Product Judgment and Delivery](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| I want to prepare for a Claude certification | [Certification onboarding](../../certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |
-| I want to prepare for the MCP Associate (MCPA) | [MCPA onboarding](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA track](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+| Baguhan ako at gusto ko ng kumpletong pundasyon | [Yugto 0: Pag-setup at mga tool](../../phases/00-setup-and-tooling/) | [Development environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Marunong ako ng Python at gusto ko ng pundasyon sa matematika at ML | [Yugto 1: Pundasyon sa matematika](../../phases/01-math-foundations/) | [Pag-unawa sa linear algebra](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| Gusto kong bumuo ng mga LLM application para sa aktuwal na paggamit | [Yugto 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Gusto kong bumuo ng mga agent | [Yugto 14: Agent Engineering](../../phases/14-agent-engineering/) | [Ang agent loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Gusto kong gumamit ng mga coding agent sa mga tunay na repository | [Landas sa engineering na may tulong ng agent](../../learning-paths/using-coding-agents.json) | [Engineering na may tulong ng agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| Gusto kong matukoy ang tamang bubuuin bago magpatupad | [Landas sa pagpapasya at paghahatid ng produkto](../../learning-paths/shaping-the-build.json) | [Pagpapasya at paghahatid ng produkto](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Gusto kong bumuo gamit ang Model Context Protocol (MCP) | [Ruta ng Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Landas ng Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Gusto kong magsulat at maglabas ng Agent Skills | [Nakatuong ruta ng Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Landas ng Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| Gusto kong maghanda para sa sertipikasyon ng Claude | [Panimulang gabay sa sertipikasyon](../../certifications/claude/GETTING_STARTED.md) | [Akademya ng sertipikasyon](https://aiengineeringfromscratch.com/certifications.html) |
+| Gusto kong maghanda para sa MCP Associate (MCPA) | [Panimulang gabay sa MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [Landas ng MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
 
-Not sure where you fit? Use the [`start-learning` placement tutor](../../skills/start-learning/SKILL.md)
-or the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).
+Hindi sigurado kung saan ka magsisimula? Gamitin ang [`start-learning` tutor para matukoy ang antas mo](../../skills/start-learning/SKILL.md) o ang [gabay sa mga kinakailangan sa website](https://aiengineeringfromscratch.com/prereqs.html).
 
-Compare four core domains and six career routes in the [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+Ihambing ang apat na pangunahing larangan at anim na ruta ng karera sa [Mga Landas sa Pag-aaral ng AI Engineering](https://aiengineeringfromscratch.com/learning-paths.html).
 
-### Use every lesson the same way
+### Gamitin ang parehong paraan sa bawat aralin
 
-1. **Read** `docs/en.md` and explain the core idea in your own words.
-2. **Type and build** the important code instead of treating the code block as decoration.
-3. **Run** the lesson command from the repository root, the directory containing `README.md` and `phases/`.
-4. **Keep evidence**: the command, working directory, exit code, meaningful output, and the artifact you changed or produced.
-5. **Continue** only when you can explain the output and make one small change without guessing.
+1. **Basahin** ang `docs/en.md` at ipaliwanag ang pangunahing ideya sa sarili mong mga salita.
+2. **I-type at buuin** ang mahalagang code sa halip na ituring na dekorasyon ang code block.
+3. **Patakbuhin** ang command ng aralin mula sa root directory ng repository, ang directory na may `README.md` at `phases/`.
+4. **Magtabi ng ebidensiya**: ang command, working directory, exit code, makabuluhang output, at artifact na binago o ginawa mo.
+5. **Magpatuloy** lamang kapag kaya mong ipaliwanag ang output at gumawa ng isang maliit na pagbabago nang hindi nanghuhula.
 
-Commands in lesson pages are paths from the repository root unless the lesson
-explicitly says to change directories. If a lesson offers several languages,
-run the implementation for the language you are learning.
+Ang mga path sa mga command ng aralin ay mula sa root directory ng repository maliban kung malinaw na sinasabi ng aralin na lumipat ng directory. Kung may ilang programming language ang aralin, patakbuhin ang implementasyon sa wikang pinag-aaralan mo.
 
-### Clone it and produce your first evidence
+### I-clone ito at gawin ang unang ebidensiya mo
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
@@ -123,11 +118,7 @@ python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route be
 python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-The preflight separates requirements needed now from tools needed later. Every
-required failure includes the detected reason and a corrective command. The
-second command is a dependency-free lesson and ends by showing that a matrix
-times a vector is the operation inside a neural network layer. Save that
-terminal output as your first evidence.
+Inihihiwalay ng paunang pagsusuri ang mga kinakailangan ngayon sa mga tool na kakailanganin sa susunod. Bawat hindi pumasa na kinakailangang pagsusuri ay may natukoy na dahilan at command para ayusin ito. Ang ikalawang command ay nagpapatakbo ng araling walang dagdag na dependency at nagtatapos sa pagpapakitang ang pag-multiply ng matrix at vector ang operasyon sa loob ng isang layer ng neural network. Itabi ang output na iyon sa terminal bilang una mong ebidensiya.
 
 ## Add the AI tutor in 30 seconds
 
@@ -187,7 +178,7 @@ concepts, but real-host discovery, invocation, script, and uninstall evidence
 remains pending until the preflight is available. Read the lessons at
 [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## यह कैसे काम करता है
+## Paano ito gumagana
 
 Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a
 flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't
@@ -207,7 +198,7 @@ Free, open source, and built to run on your own laptop.
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## पाठ्यक्रम की संरचना
+## Estruktura ng kurikulum
 
 Twenty phases stack on top of each other. Math is the floor. Agents and production are the roof.
 Skip ahead if you already know the lower layers, but don't skip and then wonder why something at
@@ -243,7 +234,7 @@ flowchart TB
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## एक पाठ की संरचना
+## Estruktura ng isang aralin
 
 Each lesson lives in its own folder, with the same structure across the entire curriculum:
 
@@ -269,9 +260,9 @@ flowchart LR
   U --> S["SHIP IT<br/><sub>prompt · skill · agent · MCP</sub>"]
 ```
 
-## शुरुआत करें
+## Pagsisimula
 
-शुरू करने के तीन तरीके। कोई एक चुनें।
+Tatlong paraan para magsimula. Pumili ng isa.
 
 **Option A — learn in your terminal *(recommended)*.** After the Node.js,
 `npx`, host, and scope preflight above, install the learning skills into a
@@ -304,7 +295,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 Cloning also auto-loads the learning skills in Claude Code, and gives every
 lesson's code to the `learn` tutor for real execution instead of read-along.
 
-### आवश्यक शर्तें
+### Mga kinakailangan
 
 - You can write code (any language; Python helps).
 - You want to understand how AI **actually works**, not just call APIs.
@@ -393,7 +384,7 @@ The book is the snapshot; this repository is the living edition. Every chapter e
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## हर पाठ कुछ न कुछ देता है
+## Bawat aralin ay may nagagawang bagay
 
 Other curricula end with *"congratulations, you learned X."* Each lesson here ends with a
 **reusable tool** you can install or paste into your daily workflow.
@@ -475,7 +466,7 @@ the agent went wrong and explain why...
 
 <a id="contents"></a>
 
-## विषय-सूची
+## Mga nilalaman
 
 Twenty phases. Click any phase to expand its lesson list.
 
@@ -1209,7 +1200,7 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## टूलकिट
+## Mga kasangkapan
 
 Every lesson produces a reusable artifact. By the end you have:
 
@@ -1336,7 +1327,7 @@ the default skip-list (`twitter.com`, `x.com`, `linkedin.com`,
 `instagram.com`, `medium.com` — domains that aggressively block automated
 HEAD/GET).
 
-## कहाँ से शुरू करें
+## Saan magsisimula
 
 | Background | Start at | Estimated time |
 |---|---|---|
@@ -1352,7 +1343,7 @@ HEAD/GET).
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## यह अभी क्यों मायने रखता है
+## Bakit ito mahalaga ngayon
 
 <table>
 <tr>
@@ -1391,7 +1382,7 @@ HEAD/GET).
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## योगदान करें
+## Pag-aambag
 
 | Goal | Read |
 |---|---|
@@ -1421,11 +1412,11 @@ relative links inside lesson docs.
 
 <a id="supporters"></a>
 
-## काम को प्रायोजित करें
+## Suportahan ang gawaing ito
 
-मुफ़्त, MIT लाइसेंस के अंतर्गत, 523 पाठ। इस काम को संभव बनाने वाले प्रायोजकों और समर्थकों का धन्यवाद। [सभी प्रायोजक और समर्थक देखें](../../BACKERS.md)।
+Libre, may lisensiyang MIT, 523 aralin. Salamat sa mga sponsor at tagasuportang ginagawang posible ang gawaing ito. [Tingnan ang lahat ng sponsor at tagasuporta](../../BACKERS.md).
 
-इस काम में सहयोग करना चाहते हैं? [प्रायोजन विकल्प](../../SPONSORS.md), जिनमें [हार्डवेयर प्रायोजन](../../SPONSORS.md#hardware-lab-partner) शामिल है, देखें या [GitHub पर प्रायोजित करें](https://github.com/sponsors/rohitg00)।
+Gustong suportahan ang gawaing ito? Tingnan ang [mga opsiyon sa sponsorship](../../SPONSORS.md), kasama ang [sponsorship ng hardware](../../SPONSORS.md#hardware-lab-partner), o [maging sponsor sa GitHub](https://github.com/sponsors/rohitg00).
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -1433,11 +1424,11 @@ relative links inside lesson docs.
 
 If this manual helped you, star the repo. It keeps the project alive.
 
-## लाइसेंस
+## Lisensiya
 
-MIT। जैसे चाहें इस्तेमाल करें: फ़ोर्क करें, पढ़ाएँ, बेचें, प्रकाशित करें। श्रेय देना अच्छा है, पर ज़रूरी नहीं।
+MIT. Gamitin ayon sa gusto mo: i-fork, ituro, ibenta, o ilabas. Pinahahalagahan ang pagkilala sa may-akda, pero hindi ito kailangan.
 
-[Rohit Ghumare](https://github.com/rohitg00) और समुदाय द्वारा अनुरक्षित।
+Pinananatili ni [Rohit Ghumare](https://github.com/rohitg00) at ng komunidad.
 
 <sub>
   <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
