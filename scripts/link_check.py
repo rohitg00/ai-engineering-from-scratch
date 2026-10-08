@@ -149,24 +149,26 @@ def iter_markdown_files(
 def strip_trailing_punct(url: str) -> str:
     while url and url[-1] in TRAILING_PUNCT:
         url = url[:-1]
+
     pairs = {")": "(", "]": "["}
     while url and url[-1] in pairs:
         closer = url[-1]
         opener = pairs[closer]
         depth = 0
-        balanced = False
-        for i in range(len(url) - 1, -1, -1):
-            ch = url[i]
-            if ch == closer:
+        excess = 0
+        for ch in url:
+            if ch == opener:
                 depth += 1
-            elif ch == opener:
-                depth -= 1
+            elif ch == closer:
                 if depth == 0:
-                    balanced = True
-                    break
-        if balanced:
+                    excess += 1
+                else:
+                    depth -= 1
+        if excess > 0:
+            url = url[:-1]
+        else:
             break
-        url = url[:-1]
+
     while url and url[-1] in TRAILING_PUNCT:
         url = url[:-1]
     return url
