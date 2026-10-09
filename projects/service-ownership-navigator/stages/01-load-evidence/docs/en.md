@@ -58,4 +58,4 @@ Static service directory and source-backed ownership lookup JSON. Open `output/r
 
 Add line-aware catalog parsing if catalog-entry evidence needs exact JSON line numbers.
 
-Scope: This is a documented subset inspired by repository ownership files, not a complete GitHub CODEOWNERS emulator. It operates entirely on supplied local data. It checks runbook references without executing instructions or sending notifications.
+Scope: This project uses a documented local ownership-rule format. It does not implement the full GitHub CODEOWNERS format. It operates entirely on supplied local data. It checks runbook references without executing instructions or sending notifications.

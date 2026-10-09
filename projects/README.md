@@ -132,7 +132,7 @@ All four framework projects document their dependency setup and use `--optional 
 
 ## Scope and evidence
 
-The [research notes](RESEARCH.md) explain the latest project selection. The [local validation report](VALIDATION.md) records the 26 roadmap implementations, two additional projects, manual scenarios and verification boundaries.
+The [local validation report](VALIDATION.md) records the 26 roadmap implementations, two additional projects, manual scenarios and verification boundaries.
 
 Published fixtures are reviewable, not secret. Evaluation scores describe those fixtures and do not establish production performance. The sandbox project plans policies; it does not provide OS isolation. Desktop control verifies its fixture backend and keeps native access explicit. The browser project includes a real browser adapter in addition to deterministic fixtures. Voice processing includes real PCM segmentation and a multipart HTTP recognition adapter; the offline spoken fixture uses an explicitly supplied reference transcript.
 

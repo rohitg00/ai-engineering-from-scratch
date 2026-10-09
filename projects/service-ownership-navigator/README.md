@@ -45,6 +45,6 @@ Read the stage documentation for exact input and return shapes, worked intermedi
 python3 scripts/project_test.py service-ownership-navigator --all --solution --strict
 ```
 
-This is a documented subset inspired by repository ownership files, not a complete GitHub CODEOWNERS emulator. It operates entirely on supplied local data. It checks runbook references without executing instructions or sending notifications.
+This project uses a documented local ownership-rule format. It does not implement the full GitHub CODEOWNERS format. It operates entirely on supplied local data. It checks runbook references without executing instructions or sending notifications.
 
 The core implementation, fixtures and lesson prose are original. Local reference checks do not grant a learner certificate. Learner completion is self-reported evidence from the full grader, not external certification.

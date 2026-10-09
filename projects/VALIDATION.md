@@ -6,7 +6,7 @@ The [2026-09-29 validation snapshot](validation/2026-09-29.md) retains earlier c
 
 ## Scope and results
 
-The starting catalog had 48 ready projects and 52 plans. This change implements 26 of those plans, exactly half, and adds two projects selected through [research across eleven repositories](RESEARCH.md). The resulting catalog has **76 ready projects and 26 plans, 102 total**.
+The starting catalog had 48 ready projects and 52 plans. This change implements 26 of those plans, exactly half, and adds Sensitive Text Redaction Gate and Dataset Contract Gate. The resulting catalog has **76 ready projects and 26 plans, 102 total**.
 
 - The full strict core grader passed all 76 projects and 308 stages with 2,049 tests and no skips. A subsequent glossary layout regression added one test; its focused 25-test run passed. Current coverage is **2,050 passing tests**, including **668 across the 112 new stages**.
 - All 28 additions passed their documented CLI/demo, a separate own-input scenario and an exported-artifact consumer. Fresh stage-one learner starters failed as intended. The 48 pre-existing canonical demos also exited successfully in isolated copies with their fixtures.
