@@ -135,6 +135,10 @@
     if (!grid) return;
     var hasProgress = !!window.AIFSProgress;
     var html = '';
+    if (!PHASES.length) {
+      grid.innerHTML = '<p class="toc-empty">No phases are published yet.</p>';
+      return;
+    }
     for (var i = 0; i < PHASES.length; i++) {
       var p = PHASES[i];
       var total = p.lessons.length;
@@ -148,7 +152,7 @@
         }
         if (staticDone || userDone) done++;
       }
-      var statusClass = p.status.replace(/ /g, '-');
+      var statusClass = escapeHtml(String(p.status || 'planned').replace(/ /g, '-'));
       var roman = toRoman(p.id);
       var num = String(p.id).padStart(2, '0');
       html += '<div class="toc-row" data-phase="' + i + '" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open Phase ' + num + ': ' + escapeHtml(p.name) + '">';
@@ -324,6 +328,10 @@
       }
       html += toggleHtml;
       html += '</div>';
+    }
+
+    if (!p.lessons.length) {
+      html = '<p class="modal-lessons-empty">No lessons are published in this phase yet.</p>';
     }
 
     container.innerHTML = html;

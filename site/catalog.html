@@ -1007,11 +1007,11 @@
             var l = p.lessons[j];
             allRows.push({
               phase: p.id,
-              phaseName: p.name,
-              name: l.name,
-              type: l.type,
-              lang: l.lang,
-              status: l.status,
+              phaseName: p.name || '',
+              name: l.name || '',
+              type: l.type || '',
+              lang: l.lang || '',
+              status: l.status || 'planned',
               url: l.url || ''
             });
           }
@@ -1103,7 +1103,7 @@
           tableWrap.setAttribute('aria-busy', 'false');
 
           if (rows.length === 0) {
-            bodyEl.innerHTML = '<tr><td colspan="5" class="catalog-empty">No lessons match your filters.</td></tr>';
+            bodyEl.innerHTML = '<tr><td colspan="5" class="catalog-empty">' + (allRows.length ? 'No lessons match your filters.' : 'No lessons are published yet.') + '</td></tr>';
             progressiveActions.hidden = true;
             return;
           }
@@ -1132,7 +1132,7 @@
             }
             html += '<td>' + escapeHtml(r.type) + '</td>';
             html += '<td><span class="catalog-lang">' + escapeHtml(r.lang) + '</span></td>';
-            html += '<td><span class="catalog-status-dot ' + r.status + '" aria-hidden="true"></span>' + r.status + '</td>';
+            html += '<td><span class="catalog-status-dot ' + escapeHtml(r.status) + '" aria-hidden="true"></span>' + escapeHtml(r.status) + '</td>';
             html += '</tr>';
           }
           bodyEl.innerHTML = html;

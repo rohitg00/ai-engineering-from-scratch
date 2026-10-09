@@ -762,6 +762,12 @@ p.dropcap::first-letter {
   padding: 8px 20px;
 }
 
+.modal-lessons-empty {
+  padding: 24px 12px;
+  color: var(--ink-mute);
+  font-size: 0.95rem;
+}
+
 .modal-lesson {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
