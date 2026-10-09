@@ -5,7 +5,7 @@
   "summary": "How to run an agent you do not trust on files you do. Every listing in this manual comes from a recorded run of sbx and docker-agent on one Mac.",
   "audience": "You are an engineer who runs coding agents such as Claude Code or Codex on real repositories. You know Docker, git, and YAML. You have not used Docker Sandboxes or Docker Agent.",
   "edition": "2026.10",
-  "status": "draft",
+  "status": "ready",
   "pin": {
     "subject": "Docker Sandboxes (sbx) and Docker Agent (docker-agent)",
     "version": "sbx 0.47.0, docker-agent 1.149.0",
