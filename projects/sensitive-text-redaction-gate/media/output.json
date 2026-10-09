@@ -1,0 +1,11 @@
+{
+  "title": "sensitive-text-redaction-gate",
+  "url": "http://127.0.0.1:8879/projects/sensitive-text-redaction-gate/solution/demo-output/review.html",
+  "actions": [
+    [
+      "click",
+      "summary"
+    ]
+  ],
+  "kind": "browser capture"
+}
