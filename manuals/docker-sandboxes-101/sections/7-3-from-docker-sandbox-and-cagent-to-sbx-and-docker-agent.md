@@ -133,7 +133,24 @@ The rename did not touch the directories. `docker-agent --help` still defaults `
 
 The OCI annotation became `io.docker.agent.version` with the old name kept {{rel-agent v1.23.3}}. The Hub image moved from `docker/cagent` to `docker/docker-agent`, and the image keeps `cagent` as a symlink {{rel-agent v1.30.0}}. In `sbx`, `cagent` remains an alias of the `docker-agent` create subcommand {{help-sbx sbx create docker-agent}}.
 
-Sandbox state did not migrate. The plugin kept VM state under `~/.docker/sandboxes/vm/` and an image cache under `~/.docker/sandboxes/image-cache/`, as its own `reset` help says. `sbx` keeps its socket and log under `~/Library/Application Support/com.docker.sandboxes/sandboxes/sandboxd/` (capture/out/02-daemon-status.txt), and no page describes a migration ([conflict C17](#s-ref-sources-and-the-conflicts-register)). The checks planned as capture K34, `docker sandbox version` on Desktop 4.94.0, `cagent version`, and the leftover directories, were not recorded in this edition. The removal dates above therefore rest on the release notes alone.
+Sandbox state did not migrate. The plugin kept VM state under `~/.docker/sandboxes/vm/` and an image cache under `~/.docker/sandboxes/image-cache/`, as its own `reset` help says. `sbx` keeps its socket and log under `~/Library/Application Support/com.docker.sandboxes/sandboxes/sandboxd/` (capture/out/02-daemon-status.txt), and no page describes a migration ([conflict C17](#s-ref-sources-and-the-conflicts-register)). No capture lists the leftover directories.
+
+On Desktop 4.94.0, `docker info` still lists the plugin as `sandbox v0.13.0` (`29-docker-plugins.txt`), and each of its commands prints the removal notice:
+
+```listing
+title: docker sandbox on Docker Desktop 4.94.0
+source: capture/out/29-docker-sandbox.txt
+lang: text
+note: docker sandbox version prints the same notice and is cut.
+---
+$ docker sandbox --help
+"docker sandbox" is deprecated and has been removed.
+
+Please migrate to Docker Sandboxes: https://www.docker.com/products/docker-sandboxes
+[exit 1]
+```
+
+The notice names the product page, not the `docker sbx` of the 4.80.0 note. On the same host, the bundled `docker agent version` prints v1.144.0 and the Homebrew `docker-agent version` prints v1.149.0 (`29-docker-agent-plugin.txt`).
 
 ```takeaways
 - Replace `docker sandbox` with `sbx` and `cagent` with `docker agent` before you follow any post from 2025 or early 2026.
@@ -142,4 +159,4 @@ Sandbox state did not migrate. The plugin kept VM state under `~/.docker/sandbox
 - Keep `~/.cagent` and `~/.config/cagent` where they are, because the rename left them alone.
 ```
 
-Sources: docs-desktop 4.49.0, 4.58.0, 4.61.0, 4.64.0, 4.80.0, 4.81.0, 4.94.0 (research/sources/docs-desktop-release-notes.md); rel-agent v1.23.3, v1.23.4, v1.30.0, v1.147.0 (research/sources/docker-agent-CHANGELOG.md); rel-sbx v0.21.0, v0.31.0, v0.35.0, v0.42.0, v0.43.0, v0.45.0 (research/sources/sbx-releases.md); docs-agent Installation (research/sources/docs-docker-agent.md); help-sbx sbx create docker-agent (research/sources/help-sbx.md); help-agent docker-agent (research/sources/help-docker-agent.md); research/sources/help-legacy-docker-sandbox.md; research/sources/help-legacy-docker-agent.md; blog 2025-09-18, 2025-11-25, and research/conflicts-register.md rows C1, C17, C49, C50, C54, C107 to C112, S1 to S30; research/plan.md (the timeline); capture/out/01-help-sbx.txt, 01-help-docker-agent.txt, 02-daemon-status.txt, 04-env.txt, 04-second-sandbox.txt, 09-bypass-grep.txt
+Sources: docs-desktop 4.49.0, 4.58.0, 4.61.0, 4.64.0, 4.80.0, 4.81.0, 4.94.0 (research/sources/docs-desktop-release-notes.md); rel-agent v1.23.3, v1.23.4, v1.30.0, v1.147.0 (research/sources/docker-agent-CHANGELOG.md); rel-sbx v0.21.0, v0.31.0, v0.35.0, v0.42.0, v0.43.0, v0.45.0 (research/sources/sbx-releases.md); docs-agent Installation (research/sources/docs-docker-agent.md); help-sbx sbx create docker-agent (research/sources/help-sbx.md); help-agent docker-agent (research/sources/help-docker-agent.md); research/sources/help-legacy-docker-sandbox.md; research/sources/help-legacy-docker-agent.md; blog 2025-09-18, 2025-11-25, and research/conflicts-register.md rows C1, C17, C49, C50, C54, C107 to C112, S1 to S30; research/plan.md (the timeline); capture/out/01-help-sbx.txt, 01-help-docker-agent.txt, 02-daemon-status.txt, 04-env.txt, 04-second-sandbox.txt, 09-bypass-grep.txt, 29-docker-sandbox.txt, 29-docker-plugins.txt, 29-docker-agent-plugin.txt
