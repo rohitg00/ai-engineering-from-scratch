@@ -1,0 +1,52 @@
+{
+  "title": "Dataset Contract Gate | initialize and grade",
+  "recordedAt": "2026-10-09T14:18:10Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "dataset-contract-gate",
+        "--init",
+        "./.project-validation/dataset-contract-gate/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/dataset-contract-gate/recording-starter\n  kept     cli.py\n  kept     main.py\n  kept     samples/contract.json\n  kept     samples/input.jsonl\n  kept     stage-2.md\n  kept     stage-3.md\n  kept     stage-4.md\nnext: python3 scripts/project_test.py dataset-contract-gate --stage 1 --path ./.project-validation/dataset-contract-gate/recording-starter\n",
+      "durationMs": 40
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "dataset-contract-gate",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/dataset-contract-gate/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Dataset Contract Gate: grading learner\n  FAIL stage 1: Validate an explicit quality contract (7 tests)\n       not implemented yet: Stage 1: implement validate_contract\n",
+      "durationMs": 101
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "dataset-contract-gate",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/dataset-contract-gate/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Dataset Contract Gate: grading solution\n  PASS stage 1: Validate an explicit quality contract (7 tests)\n  PASS stage 2: Check each record without coercion (8 tests)\n  PASS stage 3: Find all rows in a duplicate group (6 tests)\n  PASS stage 4: Export partitions and enforce the dataset gate (6 tests)\nreport: ./.project-validation/dataset-contract-gate/solution-final.json\n",
+      "durationMs": 350
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}
