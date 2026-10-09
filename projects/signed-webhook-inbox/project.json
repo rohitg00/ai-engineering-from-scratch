@@ -1,0 +1,106 @@
+{
+  "id": "signed-webhook-inbox",
+  "title": "Signed Webhook Inbox",
+  "tagline": "Accept a delivery once and retain the evidence needed to replay it safely.",
+  "summary": "Help developers feed external events into an agent workflow without losing retries or accepting altered payloads. Verify an authored signature scheme over the raw body, enforce timestamp bounds, and store stable delivery identities before dispatch. Export an HTTP receiver and a replay CLI that distinguishes a transport retry from a new business event.",
+  "level": 4,
+  "source": "core",
+  "status": "ready",
+  "hours": 8,
+  "languages": [
+    "Go"
+  ],
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "Local webhook receiver, delivery ledger and explicit replay CLI",
+  "prerequisiteProjects": [
+    "workflow-hooks",
+    "durable-agent-jobs"
+  ],
+  "demo": {
+    "command": [
+      "go",
+      "run",
+      "."
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-preserve-delivery",
+      "title": "Preserve raw bytes and delivery identity",
+      "summary": "Read the exact authenticated body before decoding business data.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "starter",
+      "concepts": [
+        "raw bytes",
+        "delivery ID",
+        "bounded body"
+      ],
+      "timeout": 120,
+      "figure": "pj-signed-webhook-inbox-1"
+    },
+    {
+      "id": "02-verify-authenticity",
+      "title": "Verify signatures and timestamp bounds",
+      "summary": "Authenticate identity, timestamp and raw bytes under an explicit teaching scheme.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "HMAC",
+        "timestamp window",
+        "constant-time comparison"
+      ],
+      "timeout": 120,
+      "figure": "pj-signed-webhook-inbox-2"
+    },
+    {
+      "id": "03-durable-deduplication",
+      "title": "Deduplicate retries with a durable inbox",
+      "summary": "Persist accepted identity and body before acknowledging delivery.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "fsync",
+        "atomic link",
+        "identity conflict"
+      ],
+      "timeout": 120,
+      "figure": "pj-signed-webhook-inbox-3"
+    },
+    {
+      "id": "04-replay-receipts",
+      "title": "Replay accepted deliveries with processing receipts",
+      "summary": "Make a new processing run explicit while keeping transport deduplication intact.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "replay identity",
+        "processing ledger",
+        "local artifact"
+      ],
+      "timeout": 120,
+      "figure": "pj-signed-webhook-inbox-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded local command output. See the README for input and scope."
+    }
+  ]
+}
