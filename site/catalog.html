@@ -374,8 +374,6 @@
         </select>
         <select class="catalog-filter" id="catalogStatus" aria-label="Filter by lesson status">
           <option value="">All Status</option>
-          <option value="complete">Complete</option>
-          <option value="planned">Planned</option>
         </select>
       </div>
       <div class="catalog-count" id="catalogCount" role="status" aria-live="polite" tabindex="-1">Loading lesson index...</div>
@@ -1024,6 +1022,23 @@
             });
           }
         }
+
+        var STATUS_ORDER = ['complete', 'in-progress', 'planned'];
+        var STATUS_LABELS = { complete: 'Complete', 'in-progress': 'In progress', planned: 'Planned' };
+        var presentStatuses = Object.create(null);
+        allRows.forEach(function (row) { presentStatuses[row.status] = true; });
+        function statusRank(status) {
+          var rank = STATUS_ORDER.indexOf(status);
+          return rank === -1 ? STATUS_ORDER.length : rank;
+        }
+        Object.keys(presentStatuses).sort(function (a, b) {
+          return statusRank(a) - statusRank(b) || a.localeCompare(b);
+        }).forEach(function (status) {
+          var option = document.createElement('option');
+          option.value = status;
+          option.textContent = STATUS_LABELS[status] || status;
+          statusSelect.appendChild(option);
+        });
 
         var sortCol = 'phase';
         var sortDir = 1;
