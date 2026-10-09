@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 424" role="img" aria-labelledby="fig-5-3-title fig-5-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-3-title">What each toolset entry gives the model</title>
+  <desc id="fig-5-3-desc">Three columns: the toolsets entry in the agent file, what the runtime starts for it, and the tool names that arrive in the model request. Captured rows: type filesystem is a built-in toolset in the docker-agent process and gives nine tools, directory_tree, edit_file, list_directory, read_file, read_multiple_files, search_files_content, write_file, create_directory and remove_directory; type shell gives one tool, shell, with cmd, cwd and timeout, one command per call. Rows from the docs, not run: type mcp with ref docker:duckduckgo runs a catalog server in a container through the MCP Gateway, type mcp with command, args and env starts a child process over stdio with aqua auto-install, and type mcp with remote.url reaches a network endpoint over streamable HTTP or SSE; each gives the tools its server lists.</desc>
+  <defs><marker id="fig-5-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENT FILE ENTRY</text>
+  <text x="215" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT RUNS</text>
+  <text x="400" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">TOOL NAMES THE MODEL GETS</text>
+  <rect x="20" y="30" width="170" height="104" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="105" y="77.25" font-size="12.5" text-anchor="middle" font-weight="700">type: filesystem</text>
+  <text x="105" y="94.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">files.yaml</text>
+  <rect x="215" y="30" width="160" height="104" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="295" y="69.75" font-size="12.5" text-anchor="middle" font-weight="700">built-in toolset</text>
+  <text x="295" y="87.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">inside the</text>
+  <text x="295" y="102.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">docker-agent process</text>
+  <rect x="400" y="30" width="220" height="104" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="410" y="50" font-size="11">directory_tree, edit_file,</text>
+  <text x="410" y="65" font-size="11">list_directory, read_file,</text>
+  <text x="410" y="80" font-size="11">read_multiple_files,</text>
+  <text x="410" y="95" font-size="11">search_files_content,</text>
+  <text x="410" y="110" font-size="11">write_file, create_directory,</text>
+  <text x="410" y="125" font-size="11">remove_directory</text>
+  <line x1="190" y1="82" x2="214" y2="82" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <line x1="375" y1="82" x2="399" y2="82" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect x="20" y="146" width="170" height="52" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="105" y="167.25" font-size="12.5" text-anchor="middle" font-weight="700">type: shell</text>
+  <text x="105" y="184.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">files.yaml, guarded.yaml</text>
+  <rect x="215" y="146" width="160" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="295" y="167.25" font-size="12.5" text-anchor="middle" font-weight="700">built-in toolset</text>
+  <text x="295" y="184.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one command per call</text>
+  <rect x="400" y="146" width="220" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="510" y="167.25" font-size="12.5" text-anchor="middle" font-weight="700">shell</text>
+  <text x="510" y="184.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cmd, cwd, timeout (30 s)</text>
+  <line x1="190" y1="172" x2="214" y2="172" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <line x1="375" y1="172" x2="399" y2="172" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-ink)"/>
+  <text x="20" y="226" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THREE FORMS OF TYPE: MCP, FROM THE DOCS, NOT RUN</text>
+  <rect x="20" y="236" width="170" height="52" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-dasharray="5 4"/>
+  <text x="105" y="257.25" font-size="12.5" text-anchor="middle" font-weight="700">type: mcp</text>
+  <text x="105" y="274.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ref: docker:duckduckgo</text>
+  <rect x="215" y="236" width="160" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)" stroke-dasharray="5 4"/>
+  <text x="295" y="257.25" font-size="12.5" text-anchor="middle" font-weight="700">MCP Gateway</text>
+  <text x="295" y="274.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">server in a container</text>
+  <rect x="400" y="236" width="220" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)" stroke-dasharray="5 4"/>
+  <text x="510" y="257.25" font-size="12.5" text-anchor="middle" font-weight="700">the server&#39;s tools</text>
+  <text x="510" y="274.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">names from tools/list</text>
+  <line x1="190" y1="262" x2="214" y2="262" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <line x1="375" y1="262" x2="399" y2="262" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect x="20" y="298" width="170" height="52" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-dasharray="5 4"/>
+  <text x="105" y="319.25" font-size="12.5" text-anchor="middle" font-weight="700">type: mcp</text>
+  <text x="105" y="336.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">command, args, env</text>
+  <rect x="215" y="298" width="160" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)" stroke-dasharray="5 4"/>
+  <text x="295" y="319.25" font-size="12.5" text-anchor="middle" font-weight="700">child process</text>
+  <text x="295" y="336.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">stdio, aqua install</text>
+  <rect x="400" y="298" width="220" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)" stroke-dasharray="5 4"/>
+  <text x="510" y="319.25" font-size="12.5" text-anchor="middle" font-weight="700">the server&#39;s tools</text>
+  <text x="510" y="336.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">names from tools/list</text>
+  <line x1="190" y1="324" x2="214" y2="324" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <line x1="375" y1="324" x2="399" y2="324" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect x="20" y="360" width="170" height="52" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-dasharray="5 4"/>
+  <text x="105" y="381.25" font-size="12.5" text-anchor="middle" font-weight="700">type: mcp</text>
+  <text x="105" y="398.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">remote.url</text>
+  <rect x="215" y="360" width="160" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)" stroke-dasharray="5 4"/>
+  <text x="295" y="381.25" font-size="12.5" text-anchor="middle" font-weight="700">network endpoint</text>
+  <text x="295" y="398.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">streamable or sse</text>
+  <rect x="400" y="360" width="220" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)" stroke-dasharray="5 4"/>
+  <text x="510" y="381.25" font-size="12.5" text-anchor="middle" font-weight="700">the server&#39;s tools</text>
+  <text x="510" y="398.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">names from tools/list</text>
+  <line x1="190" y1="386" x2="214" y2="386" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <line x1="375" y1="386" x2="399" y2="386" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-ink)"/>
+</svg>
