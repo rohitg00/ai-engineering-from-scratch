@@ -312,6 +312,7 @@
 
 .roadmap-graph-wrap {
   position: relative;
+  direction: ltr;
   height: clamp(560px, 66vh, 720px);
   overflow: auto;
   overscroll-behavior: contain;

@@ -314,11 +314,11 @@
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
       if (canOpen) {
         html += '<a href="' + lessonUrl + '" class="modal-lesson-open" aria-label="Open lesson: ' + lessonLabel + '">';
-        html += '<span class="modal-lesson-copy"><span class="modal-lesson-name">' + lessonLabel + '</span>' + lessonMeta + '</span>';
+        html += '<span class="modal-lesson-copy"><span class="modal-lesson-name" dir="auto" title="' + lessonLabel + '">' + lessonLabel + '</span>' + lessonMeta + '</span>';
         html += '<span class="modal-lesson-cta">' + (userComplete ? 'Review' : 'Open lesson') + '<span aria-hidden="true">→</span></span></a>';
       } else {
         html += '<span class="modal-lesson-open is-unavailable" aria-disabled="true">';
-        html += '<span class="modal-lesson-copy"><span class="modal-lesson-name">' + lessonLabel + '</span>' + lessonMeta + '</span>';
+        html += '<span class="modal-lesson-copy"><span class="modal-lesson-name" dir="auto" title="' + lessonLabel + '">' + lessonLabel + '</span>' + lessonMeta + '</span>';
         html += '<span class="modal-lesson-cta">Coming soon</span></span>';
       }
 

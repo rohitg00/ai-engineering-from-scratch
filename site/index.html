@@ -139,7 +139,7 @@
       opacity: 1;
       transition: opacity 300ms var(--ease-out) var(--motion-drawer);
     }
-    .fig-panel svg { width: 100%; height: 100%; }
+    .fig-panel svg { width: 100%; height: 100%; direction: ltr; }
 
     .fig-panel:not(.is-active) *,
     .masthead-figure[data-motion-paused="true"] .fig-panel.is-active * {
@@ -2111,7 +2111,7 @@
         <span class="right">open source · MIT</span>
       </div>
       <h1 class="manual-title">AI Engineering<br>from Scratch</h1>
-      <p class="manual-tagline reveal"><span id="mastheadLessonCount">Every published lesson</span>. <span id="mastheadPhaseCount">Every phase</span>. Every algorithm built from raw math before a single framework gets imported.</p>
+      <p class="manual-tagline reveal" dir="auto"><span id="mastheadLessonCount">Every published lesson</span>. <span id="mastheadPhaseCount">Every phase</span>. Every algorithm built from raw math before a single framework gets imported.</p>
       <p class="manual-attribution reveal" style="--stagger-delay: 40ms;">Maintained by Rohit Ghumare and contributors. Run on your own machine.</p>
       <div class="masthead-cta reveal" style="--stagger-delay: 80ms;">
         <a class="masthead-btn masthead-btn--primary" href="lesson?path=phases/00-setup-and-tooling/01-dev-environment">
@@ -2502,8 +2502,8 @@
         <button class="modal-close" id="modalClose" type="button">×</button>
         <div class="modal-header">
           <span class="modal-phase-num" id="modalPhaseNum"></span>
-          <h2 class="modal-title" id="modalTitle"></h2>
-          <p class="modal-desc" id="modalDesc"></p>
+          <h2 class="modal-title" id="modalTitle" dir="auto"></h2>
+          <p class="modal-desc" id="modalDesc" dir="auto"></p>
           <div class="modal-progress" id="modalProgress" style="display:none;"></div>
           <div class="modal-progress-bar" id="modalProgressBar" style="display:none;"><div class="modal-progress-bar-fill" id="modalProgressBarFill"></div></div>
         </div>
