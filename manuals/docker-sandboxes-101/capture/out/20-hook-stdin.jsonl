@@ -1,0 +1,3 @@
+{"agent_name": "root", "cwd": "$CAPTURE", "hook_event_name": "pre_tool_use", "safety_policy": "restricted", "session_id": "<uuid>", "tool_input": {"cmd": "echo m101-ok"}, "tool_name": "shell", "tool_use_id": "<call-id>"}
+{"agent_name": "root", "cwd": "$CAPTURE", "hook_event_name": "pre_tool_use", "safety_policy": "restricted", "session_id": "<uuid>", "tool_input": {"cmd": "pwd"}, "tool_name": "shell", "tool_use_id": "<call-id>"}
+{"agent_name": "root", "cwd": "$CAPTURE", "hook_event_name": "pre_tool_use", "safety_policy": "restricted", "session_id": "<uuid>", "tool_input": {"cmd": "rm -rf work/m101-nothing"}, "tool_name": "shell", "tool_use_id": "<call-id>"}

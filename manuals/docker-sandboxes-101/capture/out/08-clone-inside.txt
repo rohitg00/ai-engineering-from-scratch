@@ -1,4 +1,4 @@
-$ sbx exec m101-clone sh -c 'pwd; echo; git remote -v; echo; git log --oneline; echo; ls -la /run/sandbox/source; git -C /run/sandbox/source log --oneline -1; touch /run/sandbox/source/x; echo; mount | grep -E '"'"'virtiofs|/run/sandbox|repo-clone'"'"'; echo; git config --list --show-origin | grep -E '"'"'remote|branch'"'"''
+$ sbx exec m101-clone sh -c 'pwd; echo; git remote -v; echo; git log --oneline; echo; ls -la /run/sandbox/source; git -C /run/sandbox/source log --oneline -1; touch /run/sandbox/source/x 2>&1; echo; mount | grep -E '"'"'virtiofs|/run/sandbox|repo-clone'"'"'; echo; git config --list --show-origin | grep -E '"'"'remote|branch'"'"''
 $CAPTURE/fixtures/repo-clone
 
 origin	/run/sandbox/source (fetch)

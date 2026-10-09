@@ -1,0 +1,48 @@
+{
+  "id": "m101-count-lines",
+  "title": "Count the lines of README.md",
+  "messages": [
+    {
+      "message": {
+        "message": {
+          "role": "user",
+          "content": "How many lines does README.md have? Use a shell command to count."
+        }
+      }
+    },
+    {
+      "message": {
+        "agent_name": "root",
+        "message": {
+          "role": "assistant",
+          "tool_calls": [
+            {
+              "id": "call_m101_wc",
+              "type": "function",
+              "function": {
+                "name": "shell",
+                "arguments": "{\"cmd\":\"wc -l README.md\"}"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "message": {
+        "agent_name": "root",
+        "message": {
+          "role": "assistant",
+          "content": "README.md has 1 line."
+        }
+      }
+    }
+  ],
+  "evals": {
+    "relevance": [
+      "The response states that README.md has one line"
+    ],
+    "size": "S",
+    "working_dir": "repo"
+  }
+}

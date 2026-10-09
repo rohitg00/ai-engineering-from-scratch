@@ -1,0 +1,79 @@
+# Evidence of the failed pulls of ai/qwen3 (latest, 8B) on the recording host, 2026-10-08
+
+Two runs of `docker model pull ai/qwen3` by the operator ended after the last 5.03 GB blob
+with a digest mismatch, each time with a different observed hash; the model never appeared
+in `docker model ls`. The kit then used the documented 4B tag of the same repository,
+`ai/qwen3:4b`. This file is the Docker Model Runner log of those pulls
+(~/Library/Containers/com.docker.docker/Data/log/host/inference.log, also `docker model logs`),
+cut to the pull, resume, and cancel lines, timestamps in UTC. The "Request canceled/timed out"
+lines are the kit's and the operator's own probes that attached to the running pull and timed
+out. This file is written once and is not compared by --check.
+
+[2026-10-08T15:47:49.695215000Z][inference] pulling model
+[2026-10-08T15:47:49.695265000Z][inference.model-manager] starting model pull
+[2026-10-08T15:47:51.212752000Z][inference.model-manager] remote model digest
+[2026-10-08T15:47:53.267678000Z][inference.model-manager] model not found in local store, pulling from remote
+[2026-10-08T15:54:53.781028000Z][inference] pulling model
+[2026-10-08T15:54:53.781071000Z][inference.model-manager] starting model pull
+[2026-10-08T15:54:54.830864000Z][inference.model-manager] remote model digest
+[2026-10-08T15:54:56.898123000Z][inference.model-manager] Found incomplete download for layer
+[2026-10-08T15:54:56.898452000Z][inference.model-manager] Resuming interrupted layer download(s)
+[2026-10-08T15:54:56.898605000Z][inference.model-manager] Re-fetching model with original reference for resume
+[2026-10-08T15:55:00.011333000Z][inference.model-manager] model not found in local store, pulling from remote
+[2026-10-08T15:55:32.793332000Z][inference] Request canceled/timed out while pulling model
+[2026-10-08T16:02:31.253511000Z][inference] pulling model
+[2026-10-08T16:02:31.253557000Z][inference.model-manager] starting model pull
+[2026-10-08T16:02:32.173763000Z][inference.model-manager] remote model digest
+[2026-10-08T16:02:34.301512000Z][inference.model-manager] Found incomplete download for layer
+[2026-10-08T16:02:34.301709000Z][inference.model-manager] Resuming interrupted layer download(s)
+[2026-10-08T16:02:34.301795000Z][inference.model-manager] Re-fetching model with original reference for resume
+[2026-10-08T16:02:38.326383000Z][inference.model-manager] model not found in local store, pulling from remote
+[2026-10-08T16:03:41.907140000Z][inference] Request canceled/timed out while pulling model
+[2026-10-08T16:05:49.993210000Z][inference] pulling model
+[2026-10-08T16:05:49.993272000Z][inference.model-manager] starting model pull
+[2026-10-08T16:05:51.861655000Z][inference.model-manager] remote model digest
+[2026-10-08T16:05:53.569831000Z][inference.model-manager] Found incomplete download for layer
+[2026-10-08T16:05:53.571437000Z][inference.model-manager] Resuming interrupted layer download(s)
+[2026-10-08T16:05:53.571584000Z][inference.model-manager] Re-fetching model with original reference for resume
+[2026-10-08T16:05:56.197950000Z][inference.model-manager] model not found in local store, pulling from remote
+[2026-10-08T16:06:01.930296000Z][inference] Request canceled/timed out while pulling model
+[2026-10-08T16:10:13.961240000Z][inference] pulling model
+[2026-10-08T16:10:13.961286000Z][inference.model-manager] starting model pull
+[2026-10-08T16:10:15.461313000Z][inference.model-manager] remote model digest
+[2026-10-08T16:10:17.164889000Z][inference.model-manager] Found incomplete download for layer
+[2026-10-08T16:10:17.165002000Z][inference.model-manager] Resuming interrupted layer download(s)
+[2026-10-08T16:10:17.165063000Z][inference.model-manager] Re-fetching model with original reference for resume
+[2026-10-08T16:10:20.092645000Z][inference.model-manager] model not found in local store, pulling from remote
+[2026-10-08T16:10:21.901264000Z][inference] Request canceled/timed out while pulling model
+[2026-10-08T16:14:08.802861000Z][inference] pulling model
+[2026-10-08T16:14:08.802917000Z][inference.model-manager] starting model pull
+[2026-10-08T16:14:09.799659000Z][inference.model-manager] remote model digest
+[2026-10-08T16:14:10.607298000Z][inference.model-manager] model not found in local store, pulling from remote
+[2026-10-08T16:21:59.005222000Z][inference] pulling model
+[2026-10-08T16:21:59.005280000Z][inference.model-manager] starting model pull
+[2026-10-08T16:21:59.989896000Z][inference.model-manager] remote model digest
+[2026-10-08T16:22:01.703221000Z][inference.model-manager] Found incomplete download for layer
+[2026-10-08T16:22:01.703660000Z][inference.model-manager] Resuming interrupted layer download(s)
+[2026-10-08T16:22:01.703841000Z][inference.model-manager] Re-fetching model with original reference for resume
+[2026-10-08T16:22:05.302839000Z][inference.model-manager] model not found in local store, pulling from remote
+[2026-10-08T16:22:06.948228000Z][inference] Request canceled/timed out while pulling model
+[2026-10-08T16:22:19.488172000Z][inference] pulling model
+[2026-10-08T16:22:19.488211000Z][inference.model-manager] starting model pull
+[2026-10-08T16:22:20.493452000Z][inference.model-manager] remote model digest
+[2026-10-08T16:22:23.038688000Z][inference.model-manager] Found incomplete download for layer
+[2026-10-08T16:22:23.038824000Z][inference.model-manager] Resuming interrupted layer download(s)
+[2026-10-08T16:22:23.038904000Z][inference.model-manager] Re-fetching model with original reference for resume
+[2026-10-08T16:22:25.523239000Z][inference.model-manager] model not found in local store, pulling from remote
+[2026-10-08T16:22:39.440391000Z][inference] Request canceled/timed out while pulling model
+[2026-10-08T16:23:00.949825000Z][inference] pulling model
+[2026-10-08T16:23:00.949878000Z][inference.model-manager] starting model pull
+[2026-10-08T16:23:01.985137000Z][inference.model-manager] remote model digest
+[2026-10-08T16:23:03.981781000Z][inference.model-manager] Found incomplete download for layer
+[2026-10-08T16:23:03.982034000Z][inference.model-manager] Resuming interrupted layer download(s)
+[2026-10-08T16:23:03.982133000Z][inference.model-manager] Re-fetching model with original reference for resume
+[2026-10-08T16:23:07.200430000Z][inference.model-manager] model not found in local store, pulling from remote
+[2026-10-08T16:23:25.904509000Z][inference] Request canceled/timed out while pulling model
+[2026-10-08T16:40:53.451532000Z][inference] pulling model
+[2026-10-08T16:40:53.451655000Z][inference.model-manager] starting model pull
+[2026-10-08T16:40:55.011385000Z][inference.model-manager] remote model digest
+[2026-10-08T16:40:55.837455000Z][inference.model-manager] model not found in local store, pulling from remote

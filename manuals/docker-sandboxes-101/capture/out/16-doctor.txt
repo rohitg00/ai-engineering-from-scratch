@@ -26,7 +26,7 @@ Model provider credentials
   opencode-go      not set   OPENCODE_API_KEY                     -
 
 Docker Model Runner
-  Status: unreachable: docker --config=$HOME/.docker --context=desktop-linux model status --json: unable to initialize standalone model runner: unable to identify existing standalone model runner: unable to prune stopped model runner containers: unable to identify model runner containers: failed to connect to the docker API at unix://$HOME/.docker/run/docker.sock; check if the path is correct and if the daemon is running: dial unix $HOME/.docker/run/docker.sock: connect: no such file or directory: exit status 1
+  Status: unreachable: docker --config=$HOME/.docker --context=m101-no-daemon model status --json: Failed to initialize: unable to resolve docker endpoint: context "m101-no-daemon": context not found: open $HOME/.docker/contexts/meta/<sha256>/meta.json: no such file or directory: exit status 1
   Install or start Docker Model Runner: https://docs.docker.com/ai/model-runner/get-started/
 
 Model auto-selection

@@ -4,8 +4,9 @@ Launch one: sbx run claude
 [exit 0]
 
 $ sbx template ls
-REPOSITORY                           TAG            IMAGE ID       FLAVOR         CREATED
-docker.io/docker/sandbox-templates   shell-docker   <id>   shell-docker   <age>
+REPOSITORY                                    TAG            IMAGE ID       FLAVOR                CREATED
+docker.io/docker/docker-agent-sbx-templates   latest         <id>   docker-agent-docker   <age>
+docker.io/docker/sandbox-templates            shell-docker   <id>   shell-docker          <age>
 [exit 0]
 
 $ sbx mcp ls

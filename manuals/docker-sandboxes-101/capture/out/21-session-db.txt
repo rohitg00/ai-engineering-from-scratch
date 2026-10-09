@@ -1,0 +1,30 @@
+$ ls work/data/session.db
+work/data/session.db
+
+$ sqlite3 work/data/session.db .tables  (python sqlite3)
+generated_media_blobs generated_media_manifest migrations session_items sessions sqlite_sequence
+
+$ sqlite3 work/data/session.db 'pragma table_info(generated_media_blobs)'  (0 rows)
+session_id rel_path data
+
+$ sqlite3 work/data/session.db 'pragma table_info(generated_media_manifest)'  (0 rows)
+session_id rel_path mime_type created_at root_kind
+
+$ sqlite3 work/data/session.db 'pragma table_info(migrations)'  (30 rows)
+id name description applied_at
+
+$ sqlite3 work/data/session.db 'pragma table_info(session_items)'  (112 rows)
+id session_id position item_type agent_name message_json implicit subsession_id summary_text first_kept_entry cost model usage_json
+
+$ sqlite3 work/data/session.db 'pragma table_info(sessions)'  (12 rows)
+id created_at tools_approved input_tokens output_tokens title cost send_user_message max_iterations working_dir starred permissions agent_model_overrides custom_models_used thinking parent_id instruction_context safety_policy attributes origin
+
+$ sqlite3 work/data/session.db 'select id, title from sessions order by created_at desc limit 5'
+<uuid> | Running agent
+<uuid> | Running agent
+<uuid> | Running agent
+<uuid> | Running agent
+<uuid> | Running agent
+
+$ sqlite3 work/data/session.db 'pragma table_info(sqlite_sequence)'  (1 rows)
+name seq

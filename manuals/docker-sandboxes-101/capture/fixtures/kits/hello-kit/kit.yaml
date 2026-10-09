@@ -1,9 +1,16 @@
 # syntax=docker/sandbox-kit:3
 schemaVersion: "3"
 kind: workload
-name: hello-kit
+displayName: hello-kit
 description: A shell workload with one network grant, in the v3 descriptor form.
+version: "1.0.0"
+licenses: [Apache-2.0]
+build: |
+  FROM docker/sandbox-templates:shell
+  COPY HELLO.md /home/agent/HELLO.md
 capabilities:
-  com.docker.sandbox/network-policy@2:
-    allow:
-      - example.com
+  - type: com.docker.sandbox/network-policy@2
+    config:
+      runtime:
+        allow:
+          - example.com

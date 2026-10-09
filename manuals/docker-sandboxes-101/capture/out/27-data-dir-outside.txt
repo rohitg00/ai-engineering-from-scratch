@@ -1,0 +1,3 @@
+$ docker-agent run --sandbox --exec --working-dir fixtures/repo-sandbox fixtures/agents/files-sandbox.yaml 'List the files in the working directory and count the lines of README.md.'
+Error: --data-dir must be inside the sandbox's writable workspace $CAPTURE/fixtures/repo-sandbox
+[exit 1]

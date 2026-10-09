@@ -1,0 +1,4 @@
+$ docker-agent share push fixtures/agents/files.yaml localhost:15000/m101/agent:v1
+Pushing agent $CAPTURE/fixtures/agents/files.yaml to localhost:15000/m101/agent:v1
+Successfully pushed artifact to localhost:15000/m101/agent:v1
+[exit 0]

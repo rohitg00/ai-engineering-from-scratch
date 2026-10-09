@@ -1,0 +1,12 @@
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "docker.io/ai/qwen3:4b",
+      "object": "model",
+      "created": "<n>",
+      "owned_by": "docker",
+      "dmr": {}
+    }
+  ]
+}

@@ -2,6 +2,14 @@
   "images": [
     {
       "id": "<id>",
+      "repository": "docker.io/docker/docker-agent-sbx-templates",
+      "tag": "latest",
+      "flavor": "docker-agent-docker",
+      "created_at": "<ts>",
+      "size": "<n>"
+    },
+    {
+      "id": "<id>",
       "repository": "docker.io/docker/sandbox-templates",
       "tag": "shell-docker",
       "flavor": "shell-docker",

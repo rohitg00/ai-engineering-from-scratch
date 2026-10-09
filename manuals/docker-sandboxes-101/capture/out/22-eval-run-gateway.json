@@ -1,0 +1,28 @@
+{
+  "name": "<run>",
+  "timestamp": "<ts>",
+  "duration": "<dur>",
+  "config": {
+    "agent": "$CAPTURE/fixtures/agents/files.yaml",
+    "judge_model": "dmr/ai/qwen3:4b",
+    "judge_type": "llm",
+    "concurrency": 1,
+    "evals_dir": "$CAPTURE/fixtures/evals",
+    "agent_image": "docker/docker-agent:1.149.0",
+    "container_runtime": "docker"
+  },
+  "summary": {
+    "total_evals": 0,
+    "failed_evals": 0,
+    "total_cost": 0,
+    "sizes_passed": 0,
+    "sizes_total": 0,
+    "tools_f1_sum": 0,
+    "tools_count": 0,
+    "relevance_passed": 0,
+    "relevance_total": 0,
+    "assertions_passed": 0,
+    "assertions_total": 0
+  },
+  "sessions": null
+}

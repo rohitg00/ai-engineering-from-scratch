@@ -1,0 +1,18 @@
+version: "16"
+
+providers:
+  runner:
+    provider: dmr
+    base_url: http://localhost:12434/engines/llama.cpp/v1
+
+models:
+  qwen:
+    provider: runner
+    model: ai/qwen3:4b
+    temperature: 0
+
+agents:
+  root:
+    model: qwen
+    description: Answers with one word.
+    instruction: Reply with exactly one word.
