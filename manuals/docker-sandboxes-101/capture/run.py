@@ -38,6 +38,7 @@ DEEPWIKI_URL = "https://mcp.deepwiki.com/mcp"
 ONE_TIME_FILES = {"03-policy-init.txt", "25-model-pull-latest.txt"}
 AUTO_STOP_WAIT = 45
 COMMAND_TIMEOUT = 900
+PROBE_TIMEOUT = 30
 MODEL = "dmr/ai/qwen3:4b"
 MODEL_NAME = "ai/qwen3:4b"
 DMR_URL = "http://localhost:12434"
@@ -1057,8 +1058,20 @@ def ensure_repo():
     return repo
 
 
+def probe(args):
+    try:
+        return subprocess.run(args, capture_output=True, text=True, timeout=PROBE_TIMEOUT)
+    except subprocess.TimeoutExpired:
+        return None
+
+
+def probe_ok(args):
+    result = probe(args)
+    return result is not None and result.returncode == 0
+
+
 def docker_running():
-    return subprocess.run(["docker", "info", "--format", "{{.ServerVersion}}"], capture_output=True, text=True).returncode == 0
+    return probe_ok(["docker", "info", "--format", "{{.ServerVersion}}"])
 
 
 def model_rows(text):
@@ -1067,8 +1080,8 @@ def model_rows(text):
 
 
 def model_listed():
-    result = subprocess.run(["docker", "model", "ls"], capture_output=True, text=True)
-    return result.returncode == 0 and bool(model_rows(result.stdout))
+    result = probe(["docker", "model", "ls"])
+    return result is not None and result.returncode == 0 and bool(model_rows(result.stdout))
 
 
 def model_tier_reason():
@@ -1766,7 +1779,7 @@ def write_readme(kit, tiers):
 
 
 def daemon_running():
-    return subprocess.run(["sbx", "daemon", "status"], capture_output=True, text=True).returncode == 0
+    return probe_ok(["sbx", "daemon", "status"])
 
 
 def preflight(tiers):
