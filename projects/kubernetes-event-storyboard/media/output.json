@@ -1,0 +1,11 @@
+{
+  "title": "kubernetes-event-storyboard",
+  "url": "http://127.0.0.1:8879/.project-validation/kubernetes-event-storyboard/timeline.html",
+  "actions": [
+    [
+      "click",
+      "#warnings"
+    ]
+  ],
+  "kind": "browser capture"
+}
