@@ -414,7 +414,7 @@ Other curricula end with *"congratulations, you learned X."* Each lesson here en
 </tr>
 </table>
 
-> Install the lot with `python3 scripts/install_skills.py <target>`. Real tools, not homework.
+> Install the lot with `python3 scripts/install_skills.py <target> --type all`. Real tools, not homework.
 > By the end of the curriculum, you have a portfolio of 523 artifacts you actually
 > understand because you built them.
 

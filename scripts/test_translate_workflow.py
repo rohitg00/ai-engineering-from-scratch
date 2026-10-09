@@ -113,6 +113,27 @@ class TranslateWorkflowContractTest(unittest.TestCase):
         self.assertEqual(rendered[1], heading)
         self.assertEqual(rendered[3], "| Seu objetivo | Aprenda no GitHub | Aprenda no site |")
 
+    def test_chinese_invocation_prompts_translate_prose_and_keep_commands(self) -> None:
+        source = (
+            "| Other compatible hosts | `Use start-learning to begin the course.` | "
+            "`Use learn-mcp to start the Model Context Protocol (MCP) path.` | "
+            "`Use learn-agent-skills to start the Agent Skills Engineering path.` | "
+            "`Use check-understanding to quiz me on Phase 13.` |"
+        )
+        rendered = render(source, "zh", TRANSLATIONS)
+
+        self.assertNotIn("`Use ", rendered)
+        for command in (
+            "start-learning",
+            "learn-mcp",
+            "learn-agent-skills",
+            "check-understanding",
+        ):
+            with self.subTest(command=command):
+                self.assertIn(command, rendered)
+        self.assertIn("`使用 start-learning 开始课程。`", rendered)
+        self.assertIn("`使用 check-understanding 测验我对阶段 13 的掌握程度。`", rendered)
+
     def test_readme_hero_counts_match_the_canonical_curriculum(self) -> None:
         for language, translations in TRANSLATIONS.items():
             with self.subTest(language=language):
