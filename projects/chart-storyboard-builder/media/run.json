@@ -1,0 +1,52 @@
+{
+  "title": "Chart Storyboard Builder | initialize and grade",
+  "recordedAt": "2026-10-09T14:33:57Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "chart-storyboard-builder",
+        "--init",
+        "./.project-validation/chart-storyboard-builder/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/chart-storyboard-builder/recording-starter\n  kept     cli.py\n  kept     main.py\n  kept     presentation.py\n  kept     samples/input.json\n  kept     STAGE-2.md\n  kept     STAGE-3.md\n  kept     STAGE-4.md\nnext: python3 scripts/project_test.py chart-storyboard-builder --stage 1 --path ./.project-validation/chart-storyboard-builder/recording-starter\n",
+      "durationMs": 38
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "chart-storyboard-builder",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/chart-storyboard-builder/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Chart Storyboard Builder: grading learner\n  FAIL stage 1: Profile columns and declare their roles and units (5 tests)\n       not implemented yet: Implement parse_table using API.md and the stage lesson\n",
+      "durationMs": 111
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "chart-storyboard-builder",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/chart-storyboard-builder/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Chart Storyboard Builder: grading solution\n  PASS stage 1: Profile columns and declare their roles and units (5 tests)\n  PASS stage 2: Compute aggregates and choose a chart grammar (5 tests)\n  PASS stage 3: Attach annotations to the actual plotted values (5 tests)\n  PASS stage 4: Export an accessible visual storyboard and data receipt (5 tests)\nreport: ./.project-validation/chart-storyboard-builder/solution-final.json\n",
+      "durationMs": 278
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

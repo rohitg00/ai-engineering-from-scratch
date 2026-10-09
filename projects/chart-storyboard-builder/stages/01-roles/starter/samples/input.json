@@ -1,0 +1,30 @@
+{
+  "csv": "week,attendance\nW1,8\nW1,10\nW2,\nW4,12\n",
+  "roles": {
+    "group": "week",
+    "value": "attendance",
+    "unit": "people"
+  },
+  "periods": [
+    "W1",
+    "W2",
+    "W3",
+    "W4"
+  ],
+  "charts": [
+    {
+      "grammar": "bar",
+      "reducer": "sum",
+      "annotations": [
+        {
+          "group": "W1",
+          "text": "Opening event"
+        }
+      ]
+    },
+    {
+      "grammar": "line",
+      "reducer": "mean"
+    }
+  ]
+}
