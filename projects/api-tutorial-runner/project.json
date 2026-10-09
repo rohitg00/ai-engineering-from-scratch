@@ -1,0 +1,103 @@
+{
+  "id": "api-tutorial-runner",
+  "title": "API Tutorial Runner",
+  "tagline": "Check that an API tutorial still works from its first request to its final result.",
+  "summary": "Help a documentation author verify a sequence of HTTP examples. Parse explicit request blocks, substitute only declared variables from prior responses, and run against a local fixture or an opted-in test endpoint. Produce a source-linked report that exposes stale examples and lets an assistant propose a reviewed correction.",
+  "level": 2,
+  "languages": [
+    "TypeScript"
+  ],
+  "source": "core",
+  "prerequisiteProjects": [
+    "json-schema-output-guard"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "youWillBuild": "Replayable request manifest, JUnit results and annotated tutorial HTML",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "languageWhy": {
+    "TypeScript": "Typed local transformations and portable browser interfaces run with Node standard libraries."
+  },
+  "figures": true,
+  "overviewFigure": "pj-api-tutorial-runner-1",
+  "demo": {
+    "command": [
+      "node",
+      "cli.ts",
+      "sample.json",
+      "output"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-extract-requests",
+      "title": "Extract explicit requests from an authored tutorial",
+      "summary": "extractRequests(markdown:string):RequestStep[]",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-api-tutorial-runner-1",
+      "concepts": [
+        "Extract explicit requests from an authored tutorial"
+      ]
+    },
+    {
+      "id": "02-typed-variables",
+      "title": "Resolve typed variables across steps",
+      "summary": "resolveValue(value:unknown,variables:Record<string,string|number|boolean>):unknown; captureVariables(body,declarations,previous?):Record<string,string|number|boolean>",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-api-tutorial-runner-2",
+      "concepts": [
+        "Resolve typed variables across steps"
+      ]
+    },
+    {
+      "id": "03-bounded-http",
+      "title": "Run bounded requests against a test service",
+      "summary": "runTutorial(steps:RequestStep[],baseURL:string,options?):Promise<Receipt[]>",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-api-tutorial-runner-3",
+      "concepts": [
+        "Run bounded requests against a test service"
+      ]
+    },
+    {
+      "id": "04-source-linked-report",
+      "title": "Export source-linked failures and correction proposals",
+      "summary": "exportResults(steps,receipts):{junit,html,corrections}; acceptedCorrections(receipts,value):{id,line,proposal}[]",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-api-tutorial-runner-4",
+      "concepts": [
+        "Export source-linked failures and correction proposals"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}
