@@ -1,6 +1,6 @@
 # `sbx skills add` and `skills: true`
 
-> One shared skills store serves every sandbox read-only by default, and the same `SKILL.md` directories are what `docker-agent` discovers with `skills: true`.
+> One shared skills store serves every sandbox of a supported agent read-only by default, and `docker-agent` reads its own skill directories, not the store, with `skills: true`.
 
 You keep a `pdf` skill under `~/.claude/skills` on your laptop. Inside a sandbox the agent has its own home directory and never sees it. The shared skills store is the one place you fill, and every sandbox for a supported agent reads it.
 
@@ -52,7 +52,7 @@ In a v3 kit the agent declares the path itself, with `agent-skills@1`, because "
 
 ## docker-agent and skills: true
 
-`docker-agent` discovers the same directories on its own. "Docker Agent scans standard directories for `SKILL.md` files" {{docs-agent How Skills Work}}, and "Skill metadata (name, description) is injected into the agent's system prompt" {{docs-agent How Skills Work}}:
+`docker-agent` does not read the store. It scans its own directories, and two of them, `~/.claude/skills/` and `~/.agents/skills/`, are also import sources. "Docker Agent scans standard directories for `SKILL.md` files" {{docs-agent How Skills Work}}, and "Skill metadata (name, description) is injected into the agent's system prompt" {{docs-agent How Skills Work}}:
 
 | Path | Search |
 |---|---|
@@ -73,6 +73,7 @@ With `docker-agent run --sandbox`, the host paths above are invisible from the V
 - Fill the store once with `sbx skills add` or `sbx skills import`, and recreate sandboxes that must see new entries.
 - Leave `readonly` as the default, and choose `readwrite` only for a sandbox that should edit shared skills.
 - Set `skills: true` and the `filesystem` toolset together in an agent file.
+- Put skills for host `docker-agent` runs in its own directories, because it does not read the store.
 - Use `--sandbox` without `--no-kit` so the agent file's skills reach the VM.
 ```
 

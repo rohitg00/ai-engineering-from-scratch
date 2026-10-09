@@ -138,7 +138,7 @@ Several `PATH` arguments deep-merge in order, "later files override earlier ones
 With `--cloud`, "workspace, additionalWorkspaces and clone name host directories, which a cloud sandbox cannot mount" {{help-sbx sbx env}}, and host port bindings, MCP definitions, and dynamic secret sources are rejected before any host command runs. [The cloud section](#s-sbx-cloud-run-move-and-ttl) shows what remains.
 
 ```takeaways
-- Keep `sbxenv.yaml` outside every mounted directory, and write `workspace: .` to mount its own.
+- Expect `sbxenv.yaml` to be read-only inside the sandbox, and set `writableEnvFiles` only when an agent must edit it.
 - Run `sbx env plan` before `create` or `run`, and read every `+`, `~`, `-`, `>`, and `!`.
 - Expect a prompt on every invocation while the file declares host commands.
 - Recreate the environment after a change to kits, ports, secrets, or `sandboxOptions`.

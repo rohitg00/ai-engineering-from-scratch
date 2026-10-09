@@ -2,7 +2,7 @@
 
 > `share push` stores an agent file as an OCI artifact with docker-agent annotations, and `share pull` or `run` with the same reference reads it back from any registry.
 
-A teammate asks for the agent you used yesterday. A YAML file in a chat message has no version and no record of who published it. A registry reference has both, and Docker Agent pushes agent files to OCI registries the way Docker pushes images.
+A teammate asks for the agent you used yesterday. A YAML file in a chat message has no version and no address to pull it from. A registry reference has both, but it does not prove who published the file. Docker Agent pushes agent files to OCI registries the way Docker pushes images.
 
 When you finish this section, you can push an agent file, read its manifest, pull it back, and run it by reference.
 

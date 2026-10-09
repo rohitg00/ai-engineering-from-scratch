@@ -87,7 +87,7 @@ note: The one blocked_hosts entry, cut after its reason.
 ```
 
 ```listing
-title: the same decision as an audit record
+title: a denied connection in the docs' sample audit record
 source: research/sources/docs-sandboxes.md
 lang: json
 note: The sample record from the Local audit logs page, cut to the fields the text names. The user, organization, and session fields are cut.

@@ -148,7 +148,7 @@ Persistent sandbox allowlist is empty.
 
 The template runs `docker-agent version main`, not v1.149.0, although the docs build `:latest` from "The most recent `v*` release" {{docs-agent Sandbox Mode}}. The provider keys read `proxy-managed`. The in-VM allowlist is empty, because the allowed hosts arrive as proxy rules from the host.
 
-The capture then runs the same agent file inside, with its state in `/tmp/m101`:
+The capture then starts the same agent file inside the VM by hand, with its state in `/tmp/m101`. This run shows the model path from the VM, not a working `--sandbox` launch:
 
 ```listing
 title: the model call from inside the VM
@@ -182,7 +182,7 @@ A later run from the same workspace reuses the VM, and creates a new one "only w
 
 ```takeaways
 - Allow each host service with `docker-agent sandbox allow localhost:PORT` before the first sandboxed run.
-- Keep `--data-dir`, `--cache-dir`, and `--config-dir` inside the workspace when you use them with `--sandbox`.
+- Expect `--sandbox` to refuse a `--data-dir` outside the workspace, and test that SQLite can write inside it first.
 - Read the launch summary for each mount mode, the image, and every allowed host.
 - Remove the sandbox with `sbx rm` when you no longer need it, because docker-agent leaves it running.
 ```

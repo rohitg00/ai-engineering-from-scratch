@@ -155,7 +155,7 @@ The notice names the product page, not the `docker sbx` of the 4.80.0 note. On t
 ```takeaways
 - Replace `docker sandbox` with `sbx` and `cagent` with `docker agent` before you follow any post from 2025 or early 2026.
 - Check the date of a post against the version column before you type its command.
-- Delete `~/.docker/sandboxes/` and `~/.sandboxd/` by hand after Desktop 4.80.0, because nothing migrates them.
+- Inspect `~/.docker/sandboxes/` after Desktop 4.80.0, and make a copy before you remove it, because nothing migrates it.
 - Keep `~/.cagent` and `~/.config/cagent` where they are, because the rename left them alone.
 ```
 

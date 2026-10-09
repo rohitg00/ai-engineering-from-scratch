@@ -2,7 +2,7 @@
 
 > A cloud sandbox is the same microVM on Docker's compute, billed by the second in five shapes, with a 24 hour TTL ceiling and its own secrets and policies.
 
-The agent in `m101-demo` is halfway through a long build, your laptop goes into a bag, and the sandbox stops with it. `sbx move m101-demo --to cloud` captures its filesystem and starts it again on Docker's compute, where a clock ends it and the lid does not. When you finish this section, you can start a sandbox in the cloud, move one in either direction, and set the clock that ends it.
+The agent in `m101-demo` is halfway through a long build, your laptop goes into a bag, and the sandbox stops with it. `sbx move m101-demo --to cloud` captures its filesystem and starts it again on Docker's compute, where a clock ends it and the lid does not. The build process does not move with it, so the agent runs the build again. When you finish this section, you can start a sandbox in the cloud, move one in either direction, and set the clock that ends it.
 
 This edition recorded no cloud run, because a cloud sandbox costs money and that run was not approved. Every fact below comes from the help text and the documentation.
 

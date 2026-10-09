@@ -39,7 +39,7 @@ note: The other backends are cut.
 | a process on the host, through the Docker socket | `http://localhost/exp/vDD4.40` | capture/out/25-model-status.json, `endpointHost` |
 | `docker-agent` inside a sandbox, through its proxy | `http://host.docker.internal:12434` | capture/out/27-inside-run.txt |
 
-After the base URL, the OpenAI paths sit under `/engines/v1/`, and `/engines/llama.cpp/v1/` names the engine {{docs-dmr DMR REST API}}. The Anthropic table lists `/anthropic/v1/messages`, while its examples call `/v1/messages` ([conflict C79](#s-ref-sources-and-the-conflicts-register)). No capture tested either path. Ollama clients use `/api/`. The capture also met the `/v1/` root, which `status` reports as `endpoint`.
+After the base URL come path prefixes and whole endpoints. The OpenAI paths sit under `/engines/v1/`, and `/engines/llama.cpp/v1/` names the engine {{docs-dmr DMR REST API}}. The Anthropic table lists `/anthropic/v1/messages`, while its examples call `/v1/messages` ([conflict C79](#s-ref-sources-and-the-conflicts-register)). No capture tested either path. Ollama clients use `/api/`. The capture also met the `/v1/` root, which `status` reports as `endpoint`.
 
 ```figure
 id: fig-6-5

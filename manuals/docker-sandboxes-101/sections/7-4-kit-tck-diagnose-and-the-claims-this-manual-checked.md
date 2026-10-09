@@ -24,7 +24,7 @@ Each row names the claim and its source, the verdict, and the capture file behin
 | a kit signature verifies with `sbx kit sign` and `verify` (docs, Build and distribute kits) | not checked | no sign or verify step was recorded, only `13-kit-builder-status.txt` |
 | a local model runs with no key (docs, Use local and hosted models) | confirmed | `25-doctor.txt`: every provider credential `not set`, Docker Model Runner reachable with `docker.io/ai/qwen3:4b`, and `25-run-dmr.txt` answers `Hello` live. `18-cassette-head.txt` shows the recorded requests going to `localhost:12434`, and `27-inside-run.txt` answers from inside the VM. The 8B `ai/qwen3:latest` failed to pull (`25-model-pull-latest.txt`) |
 | local use needs a Docker sign-in (docs, FAQ, disputed in HN 2026-08-10 and issue #321, C15) | confirmed in part | `02-diagnose.txt` lists Authentication as a check, the kit's prerequisites include `sbx login`, and `help-sbx-cloud.md` notes a TLS attempt to login.docker.com on every `--help` |
-| `sbx policy approval` is not a command (the v0.47.0 help tree, C16) | contradicted | `09-blocked.txt`: the 403 body says "Review and respond with: sbx policy approval ls" |
+| `sbx policy approval` is not a command (the v0.47.0 help tree, C16) | unverified | `09-blocked.txt`: the 403 body says "Review and respond with: sbx policy approval ls", and no capture ran that command |
 | the VMM is libkrun (talk 2026-01-14, HN 2026-08-10, C4) | unverified | `00-sbx-version.json` names no runtime, and `04-guest.txt` shows kernel `7.0.14` and nothing more |
 | a sandbox starts in tens of milliseconds (talk 2026-02-10, C29) | not checked | the timing runs planned as K35 were not recorded |
 | an allowed host can carry data out (HN 2026-08-10, talk 2026-04-07) | disputed | both sides are printed in [the proxy section](#s-sbx-policy-log-and-the-proxy), and no capture tested it |
@@ -37,8 +37,8 @@ Each row names the claim and its source, the verdict, and the capture file behin
 id: fig-7-4
 kind: comparison
 title: confirmed by a file, or only reported
-claim: Eight claims were confirmed by a recorded file, four are reported without a test, and the captures contradict or the community disputes two more.
-caption: Left, each confirmed claim with the capture file that shows it, coloured by the layer it belongs to. Right, dashed boxes are claims this manual reports without a test, and rose boxes are the two the captures contradict or the community disputes. From the files named in each box.
+claim: Eight claims were confirmed by a recorded file, five are reported without a test, and the community disputes one more.
+caption: Left, each confirmed claim with the capture file that shows it, coloured by the layer it belongs to. Right, dashed boxes are claims this manual reports without a test, and the rose box is the claim the community disputes. From the files named in each box.
 ```
 
 ## sbx diagnose, the only self-check

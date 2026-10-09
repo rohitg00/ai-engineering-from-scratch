@@ -32,7 +32,7 @@ SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 The address is `gateway.docker.internal:3128`, not the `host.docker.internal:3128` of the legacy plugin ([conflict C26](#s-ref-sources-and-the-conflicts-register)). The docs describe two paths: "Agents use a forward proxy for HTTP and HTTPS; other TCP traffic is forwarded transparently. Both paths enforce network access policies." {{docs-sbx Networking}}
 
-The first prototype was only an environment variable, and an agent bypassed it with `no_proxy`, as Kevin Wittek said on 2026-01-14 {{talk 2026-01-14 T01}}. The capture sent a request to `gateway.docker.internal:18080`, a name in `NO_PROXY`, so curl connected directly. The log recorded that connection as `transparent` and blocked (capture/out/10-policy-log.json).
+The first prototype was only an environment variable, and an agent bypassed it with `no_proxy`, as Kevin Wittek said on 2026-01-14 {{talk 2026-01-14 T01}}. The capture sent a request to `gateway.docker.internal:18080`, a name in `NO_PROXY`, so curl skipped the forward proxy and opened a plain TCP connection. The transparent path caught that connection, and the log recorded it as `transparent` and blocked (capture/out/10-policy-log.json).
 
 **TLS interception:** the proxy's own certificate authority, carried as `PROXY_CA_CERT_B64` and merged into `/etc/ssl/certs/ca-certificates.crt` {{rel-sbx v0.35.0}}. The capture shows where it is used:
 

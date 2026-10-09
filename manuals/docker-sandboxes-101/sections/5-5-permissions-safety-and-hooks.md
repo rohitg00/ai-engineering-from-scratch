@@ -2,7 +2,7 @@
 
 > Deny, allow, and ask patterns, then a safety mode, then hooks decide whether a tool call runs, and the docs say none of them is a security boundary.
 
-Your agent runs in CI with `--exec`, and nobody watches the terminal. You want `echo` to run, `rm` never to run, and every other call to fail closed. The agent file and one flag can say that, but only for calls that go through `docker-agent`.
+Your agent runs in CI with `--exec`, and nobody watches the terminal. You want `echo` to run, `rm` never to run, and every other call to fail closed unless its label is `safe`. The agent file and one flag can say that, but only for calls that go through `docker-agent`.
 
 When you finish this section, you can write `permissions` patterns, pick a `--safety` mode for an unattended run, and predict what a `pre_tool_use` hook changes.
 
