@@ -1,0 +1,110 @@
+{
+  "id": "workshop-materials-planner",
+  "title": "Workshop Materials Planner",
+  "level": 2,
+  "languages": [
+    "Python"
+  ],
+  "source": "core",
+  "tagline": "Scale a workshop plan and show exactly which supplies are missing.",
+  "summary": "Help a workshop host reconcile per-participant materials, reusable equipment and an inventory snapshot. Use explicit unit conversions and declared sharing rules to compute shortages, keep unconvertible quantities visible, and export a packing list with a participant-count comparison.",
+  "prerequisiteProjects": [
+    "csv-repair-workbench"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "prerequisites": [
+    "Python 3.10+; lists, dictionaries and functions"
+  ],
+  "skills": [
+    "Model participants, materials and inventory units",
+    "Scale consumables and shared equipment separately",
+    "Compute shortages and review uncertain conversions",
+    "Export packing lists and participant-count scenarios"
+  ],
+  "youWillBuild": "packing-list.csv, shortages.json and an HTML what-if planner",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "overviewFigure": "pj-workshop-materials-planner-1",
+  "figures": true,
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--output",
+      "demo-output"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-model",
+      "title": "Model participants, materials and inventory units",
+      "summary": "Validate quantities, units and explicit sharing rules.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "starter",
+      "concepts": [
+        "decimal arithmetic",
+        "unit conversion"
+      ],
+      "figure": "pj-workshop-materials-planner-1"
+    },
+    {
+      "id": "02-scale",
+      "title": "Scale consumables and shared equipment separately",
+      "summary": "Scale consumables and reusable tools with different equations.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "ceiling division",
+        "resource reuse"
+      ],
+      "figure": "pj-workshop-materials-planner-2"
+    },
+    {
+      "id": "03-shortages",
+      "title": "Compute shortages and review uncertain conversions",
+      "summary": "Reconcile inventory without guessing unknown conversions.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "inventory accounting",
+        "uncertainty"
+      ],
+      "figure": "pj-workshop-materials-planner-3"
+    },
+    {
+      "id": "04-scenarios",
+      "title": "Export packing lists and participant-count scenarios",
+      "summary": "Compare participant counts and export a packing receipt.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "what-if planning",
+        "CSV integration"
+      ],
+      "figure": "pj-workshop-materials-planner-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

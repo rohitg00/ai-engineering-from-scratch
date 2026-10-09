@@ -1,0 +1,55 @@
+{
+  "participants": 8,
+  "materials": [
+    {
+      "id": "paper",
+      "name": "Colored paper",
+      "kind": "consumable",
+      "quantity": 2,
+      "unit": "sheet"
+    },
+    {
+      "id": "scissors",
+      "name": "Scissors",
+      "kind": "shared",
+      "quantity": 1,
+      "unit": "pair",
+      "share": 3
+    },
+    {
+      "id": "glue",
+      "name": "Glue",
+      "kind": "consumable",
+      "quantity": 10,
+      "unit": "ml"
+    }
+  ],
+  "inventory": [
+    {
+      "id": "paper",
+      "quantity": 20,
+      "unit": "sheet"
+    },
+    {
+      "id": "scissors",
+      "quantity": 3,
+      "unit": "pair"
+    },
+    {
+      "id": "glue",
+      "quantity": 0.1,
+      "unit": "l"
+    }
+  ],
+  "conversions": [
+    {
+      "from": "l",
+      "to": "ml",
+      "factor": 1000
+    }
+  ],
+  "compare": [
+    8,
+    12
+  ]
+}
