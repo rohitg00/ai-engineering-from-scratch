@@ -409,6 +409,11 @@
     surface.appendChild(stateText);
 
     var lines = splitName(phase.name);
+    if (/…$/.test(lines[lines.length - 1])) {
+      var fullName = svgEl('title');
+      fullName.textContent = phase.name;
+      group.insertBefore(fullName, group.firstChild);
+    }
     for (var i = 0; i < lines.length; i++) {
       var title = svgEl('text', {
         class: 'roadmap-node-title',
@@ -478,7 +483,17 @@
     var split = value.lastIndexOf(' ', midpoint);
     if (split < 5) split = value.indexOf(' ', midpoint);
     if (split === -1) return [value.slice(0, 22) + '…'];
-    return [value.slice(0, split), value.slice(split + 1)];
+    var lines = [value.slice(0, split), value.slice(split + 1)];
+    if (lines[0].length <= 22 && lines[1].length <= 22) return lines;
+    var first = value.lastIndexOf(' ', 22);
+    if (first < 1) return [clipLine(value)];
+    return [value.slice(0, first), clipLine(value.slice(first + 1))];
+  }
+
+  function clipLine(line) {
+    if (line.length <= 22) return line;
+    var cut = line.lastIndexOf(' ', 21);
+    return (cut > 10 ? line.slice(0, cut) : line.slice(0, 21)).replace(/[\s,;:&·-]+$/, '') + '…';
   }
 
   function edgePath(fromId, toId) {
