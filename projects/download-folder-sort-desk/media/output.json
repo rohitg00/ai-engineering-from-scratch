@@ -1,0 +1,16 @@
+{
+  "title": "download-folder-sort-desk",
+  "url": "http://127.0.0.1:8879/projects/download-folder-sort-desk/solution/demo-output/review.html",
+  "actions": [
+    [
+      "fill",
+      "#filter",
+      "report"
+    ],
+    [
+      "js",
+      "document.querySelector('#filter').value='';document.querySelector('#filter').dispatchEvent(new Event('input'))"
+    ]
+  ],
+  "kind": "browser capture"
+}
