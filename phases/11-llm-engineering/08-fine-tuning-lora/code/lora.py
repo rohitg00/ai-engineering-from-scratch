@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import math
+import numpy as np
 
 
 class LoRALayer(nn.Module):
@@ -156,23 +157,49 @@ def save_lora_adapter(model, path):
     adapter_state = {}
     for name, module in model.named_modules():
         if isinstance(module, LoRALayer):
-            adapter_state[f"{name}.A"] = module.A.data.clone()
-            adapter_state[f"{name}.B"] = module.B.data.clone()
-            adapter_state[f"{name}.rank"] = module.rank
-            adapter_state[f"{name}.alpha"] = module.alpha
-    torch.save(adapter_state, path)
+            a = module.A.detach().cpu()
+            b = module.B.detach().cpu()
+            # numpy has no bfloat16 dtype; fp32 round-trips it losslessly since
+            # bf16 is a truncated fp32 mantissa.
+            if a.dtype == torch.bfloat16:
+                a = a.float()
+            if b.dtype == torch.bfloat16:
+                b = b.float()
+            adapter_state[f"{name}.A"] = a.numpy()
+            adapter_state[f"{name}.B"] = b.numpy()
+            adapter_state[f"{name}.rank"] = np.array([module.rank])
+            adapter_state[f"{name}.alpha"] = np.array([module.alpha])
+    # Write via a file object so np.savez doesn't force-append ".npz" to path.
+    with open(path, "wb") as f:
+        np.savez(f, **adapter_state)
     return len(adapter_state) // 4
 
 
 def load_lora_adapter(model, path):
-    adapter_state = torch.load(path, weights_only=False)
-    for name, module in model.named_modules():
-        if isinstance(module, LoRALayer):
-            a_key = f"{name}.A"
-            b_key = f"{name}.B"
-            if a_key in adapter_state:
-                module.A.data = adapter_state[a_key]
-                module.B.data = adapter_state[b_key]
+    with np.load(path, allow_pickle=False) as adapter_state:
+        pending = []
+        for name, module in model.named_modules():
+            if not isinstance(module, LoRALayer):
+                continue
+            a_key, b_key = f"{name}.A", f"{name}.B"
+            if a_key not in adapter_state or b_key not in adapter_state:
+                continue
+            a = np.asarray(adapter_state[a_key])
+            b = np.asarray(adapter_state[b_key])
+            if a.shape != tuple(module.A.shape):
+                raise ValueError(
+                    f"Shape mismatch for {a_key}: expected {tuple(module.A.shape)}, got {a.shape}"
+                )
+            if b.shape != tuple(module.B.shape):
+                raise ValueError(
+                    f"Shape mismatch for {b_key}: expected {tuple(module.B.shape)}, got {b.shape}"
+                )
+            pending.append((module, a, b))
+
+        with torch.no_grad():
+            for module, a, b in pending:
+                module.A.copy_(torch.as_tensor(a, device=module.A.device, dtype=module.A.dtype))
+                module.B.copy_(torch.as_tensor(b, device=module.B.device, dtype=module.B.dtype))
 
 
 def create_demo_model(d_model=256, hidden=512, n_classes=10):
@@ -310,7 +337,7 @@ if __name__ == "__main__":
     import tempfile
     import os
 
-    with tempfile.NamedTemporaryFile(suffix=".pt", delete=False) as f:
+    with tempfile.NamedTemporaryFile(suffix=".npz", delete=False) as f:
         adapter_path = f.name
 
     n_saved = save_lora_adapter(model_a, adapter_path)
