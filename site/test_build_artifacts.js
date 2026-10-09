@@ -1556,7 +1556,7 @@ test('homepage uses consistent responsive grids for controls, routes, and curric
   );
   assert.match(
     homepage,
-    /@media \(max-width: 600px\) \{[\s\S]*?\.course-route-actions\s*\{[\s\S]*?width: 100%;[\s\S]*?justify-self: stretch;[\s\S]*?\.toc-row\s*\{[\s\S]*?grid-template-columns: 36px minmax\(0, 1fr\) auto;[\s\S]*?\.toc-row \.toc-meta\s*\{[\s\S]*?grid-column: 3;[\s\S]*?grid-row: 1;/
+    /@media \(max-width: 600px\) \{[\s\S]*?\.course-route-actions\s*\{[\s\S]*?width: 100%;[\s\S]*?justify-self: stretch;[\s\S]*?\.toc-row\s*\{[\s\S]*?grid-template-columns: 3\.5rem minmax\(0, 1fr\) auto;[\s\S]*?\.toc-row \.toc-meta\s*\{[\s\S]*?grid-column: 3;[\s\S]*?grid-row: 1;/
   );
 });
 
