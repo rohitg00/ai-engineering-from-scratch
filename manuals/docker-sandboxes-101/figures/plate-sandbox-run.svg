@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-labelledby="plate-sandbox-run-title plate-sandbox-run-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="plate-sandbox-run-title">One agent, one microVM, one proxy</title>
+  <desc id="plate-sandbox-run-desc">The recorded docker-agent run --sandbox on the capture Mac. On the host, docker-agent v1.149.0 stages the kit sandbox-kits/&lt;hash&gt;, writes the allowlist with models.dev and localhost:12434 into the proxy rules, and asks sbx and sandboxd to create the sandbox, which becomes running. Below the Hypervisor.framework line, the microVM docker-agent-&lt;hash&gt; from docker/docker-agent-sbx-templates:latest holds docker-agent version main, its filesystem and shell tools, the workspace mounts, and an environment whose proxy is gateway.docker.internal:3128 and whose provider keys read proxy-managed. The model call goes up to host.docker.internal:12434, through the proxy, and on to Docker Model Runner on port 12434 with ai/qwen3:4b. The answer is: The working directory contains README.md with 1 line.</desc>
+  <defs><marker id="plate-sandbox-run-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="plate-sandbox-run-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="plate-sandbox-run-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="plate-sandbox-run-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">HOST · MACOS 26.2 ARM64</text>
+  <text x="620" y="18" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">docker-agent run --sandbox --exec files-sandbox.yaml</text>
+  <rect x="20" y="34" width="150" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="95" y="52.1" font-size="12" text-anchor="middle" font-weight="700">docker-agent</text>
+  <text x="95" y="69.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">v1.149.0, Homebrew</text>
+  <rect x="222" y="34" width="100" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="272" y="51.8" font-size="11" text-anchor="middle" font-weight="700">sbx, sandboxd</text>
+  <text x="272" y="68.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">v0.47.0</text>
+  <rect x="338" y="34" width="110" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="393" y="51.8" font-size="11" text-anchor="middle" font-weight="700">proxy :3128</text>
+  <text x="393" y="68.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on the host</text>
+  <rect x="520" y="34" width="100" height="46" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="570" y="51.8" font-size="11" text-anchor="middle" font-weight="700">Model Runner</text>
+  <text x="570" y="68.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ai/qwen3:4b</text>
+  <rect x="20" y="104" width="140" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="90" y="121.8" font-size="11" text-anchor="middle" font-weight="700">sandbox-kits/&lt;hash&gt;</text>
+  <text x="90" y="138.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the staged kit</text>
+  <rect x="176" y="104" width="124" height="56" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="238" y="119.3" font-size="11" text-anchor="middle" font-weight="700">allowlist</text>
+  <text x="238" y="136.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">models.dev</text>
+  <text x="238" y="151.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">localhost:12434</text>
+  <line x1="20" y1="172" x2="620" y2="172" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <line x1="90" y1="150" x2="90" y2="231" stroke="var(--m-green-ink, #336b40)" stroke-width="1" stroke-dasharray="5 4"/>
+  <line x1="312" y1="80" x2="312" y2="201" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#plate-sandbox-run-head-amber)"/>
+  <rect class="m-knock" x="192.6" y="186.03" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="306" y="197" font-size="11.5" text-anchor="end" fill="var(--m-amber-ink, #85590c)">created, running</text>
+  <line x1="170" y1="57" x2="221" y2="57" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#plate-sandbox-run-head-ink)"/>
+  <rect class="m-knock" x="171.8" y="40.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="195.5" y="51" font-size="11.5" text-anchor="middle">create</text>
+  <line x1="90" y1="80" x2="90" y2="103" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#plate-sandbox-run-head-teal)"/>
+  <rect class="m-knock" x="95" y="80.53" width="40.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="98" y="91.5" font-size="11.5" fill="var(--m-teal-ink, #18696a)">stage</text>
+  <line x1="160" y1="80" x2="230" y2="103" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#plate-sandbox-run-head-teal)"/>
+  <rect class="m-knock" x="165" y="80.53" width="40.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="168" y="91.5" font-size="11.5" fill="var(--m-teal-ink, #18696a)">allow</text>
+  <line x1="300" y1="116" x2="360" y2="81" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#plate-sandbox-run-head-teal)"/>
+  <rect class="m-knock" x="305" y="87.53" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="308" y="98.5" font-size="11.5" fill="var(--m-teal-ink, #18696a)">proxy rules</text>
+  <line x1="448" y1="57" x2="519" y2="57" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#plate-sandbox-run-head-plum)"/>
+  <rect class="m-knock" x="459.8" y="40.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="483.5" y="51" font-size="11.5" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">:12434</text>
+  <rect x="338" y="232" width="272" height="58" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="474" y="248.6" font-size="12" text-anchor="middle" font-weight="700">docker-agent version main</text>
+  <text x="474" y="265.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">commit 154b78f2</text>
+  <text x="474" y="280.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">runs files-sandbox.yaml</text>
+  <line x1="413" y1="231" x2="413" y2="81" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#plate-sandbox-run-head-plum)"/>
+  <rect class="m-knock" x="418" y="145.03" width="185.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="421" y="156" font-size="11.5" fill="var(--m-plum-ink, #8a3d72)">host.docker.internal:12434</text>
+  <rect class="m-knock" x="418" y="160.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="421" y="171" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">through HTTP_PROXY</text>
+  <rect class="m-knock" x="27" y="171.42" width="276.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="30" y="182" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">Hypervisor.framework · kern.hv_support: 1</text>
+  <rect x="20" y="202" width="600" height="226" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect class="m-knock" x="27" y="209.42" width="468" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="30" y="220" font-size="11">microVM docker-agent-&lt;hash&gt; · docker/docker-agent-sbx-templates:latest</text>
+  <rect x="30" y="232" width="290" height="58" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="175" y="248.6" font-size="12" text-anchor="middle" font-weight="700">workspace mounts</text>
+  <text x="175" y="265.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">repo-sandbox rw, agents ro</text>
+  <text x="175" y="280.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sandbox-kits ro, cfg ro</text>
+  <rect x="30" y="300" width="290" height="58" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="175" y="316.6" font-size="12" text-anchor="middle" font-weight="700">environment</text>
+  <text x="175" y="333.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HTTP_PROXY gateway.docker.internal:3128</text>
+  <text x="175" y="348.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ANTHROPIC_API_KEY=proxy-managed</text>
+  <rect x="338" y="300" width="272" height="58" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="474" y="316.6" font-size="12" text-anchor="middle" font-weight="700">filesystem, shell</text>
+  <text x="474" y="333.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">tools that act on the mounts</text>
+  <text x="474" y="348.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">inside the VM</text>
+  <rect x="30" y="372" width="580" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="320" y="395.6" font-size="12" text-anchor="middle" font-weight="400">The working directory contains README.md with 1 line.</text>
+</svg>

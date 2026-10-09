@@ -133,7 +133,7 @@
   "plate": {
     "figure": "plate-sandbox-run",
     "title": "One agent, one microVM, one proxy",
-    "caption": "The agent runs inside a microVM that sbx owns, its connections leave through the host proxy, and its secret never enters the VM. Read top to bottom. From capture/out/02-run-sandbox.log."
+    "caption": "The agent runs in a microVM that sbx creates, its model call leaves through the host proxy, and the provider keys inside are placeholders. Read top to bottom. From capture/out/27-sandbox-run.txt, 27-inside.txt, and 27-inside-run.txt."
   },
   "parts": [
     {
@@ -369,7 +369,7 @@
     "phases/13-tools-and-protocols/06-mcp-fundamentals",
     "phases/13-tools-and-protocols/19-a2a-protocol",
     "phases/14-agent-engineering/01-the-agent-loop",
-    "phases/14-agent-engineering/26-skill-permissions-sandboxes-and-trust",
+    "phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust",
     "phases/19-capstone-projects/01-terminal-native-coding-agent"
   ]
 }

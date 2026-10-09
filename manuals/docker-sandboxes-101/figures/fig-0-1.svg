@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 540" role="img" aria-labelledby="fig-0-1-title fig-0-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-0-1-title">Reading a sequence figure in this manual</title>
+  <desc id="fig-0-1-desc">Seven lifelines: the sbx CLI, the sandboxd daemon, the local policy store, a sandbox VM, the host proxy on port 3128, example.com, and Docker Model Runner on port 12434. Ten numbered rows use the eight arrow styles: a CONNECT to example.com:443 as a solid ink call, 403 Forbidden as a dashed rose failure, sbx policy allow network as a call, the rule example.com [tcp] as a solid teal durable write, Rule added as a dashed ink reply, the second CONNECT, the tunnel to example.com as a dashed olive outside effect, POST chat/completions as a solid plum model call, chat.completion.chunk as a dotted indigo stream, and running to stopped as a dashed amber state change.</desc>
+  <defs><marker id="fig-0-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-0-1-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-0-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-0-1-head-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-olive-ink, #515f26)"/></marker><marker id="fig-0-1-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker><marker id="fig-0-1-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker><marker id="fig-0-1-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <rect x="9" y="8" width="86" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="52" y="22.8" font-size="11" text-anchor="middle" font-weight="700">sbx</text>
+  <text x="52" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CLI</text>
+  <line x1="52" y1="48" x2="52" y2="532" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="98" y="8" width="86" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="141" y="22.8" font-size="11" text-anchor="middle" font-weight="700">sandboxd</text>
+  <text x="141" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">host daemon</text>
+  <line x1="141" y1="48" x2="141" y2="532" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="187" y="8" width="86" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="230" y="22.8" font-size="11" text-anchor="middle" font-weight="700">policy store</text>
+  <text x="230" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">local policy</text>
+  <line x1="230" y1="48" x2="230" y2="532" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="276" y="8" width="86" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="319" y="22.8" font-size="11" text-anchor="middle" font-weight="700">sandbox VM</text>
+  <text x="319" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the guest</text>
+  <line x1="319" y1="48" x2="319" y2="532" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="365" y="8" width="86" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="408" y="22.8" font-size="11" text-anchor="middle" font-weight="700">proxy :3128</text>
+  <text x="408" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on the host</text>
+  <line x1="408" y1="48" x2="408" y2="532" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="454" y="8" width="86" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="497" y="22.8" font-size="11" text-anchor="middle" font-weight="700">example.com</text>
+  <text x="497" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">outside</text>
+  <line x1="497" y1="48" x2="497" y2="532" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="543" y="8" width="86" height="40" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="586" y="22.8" font-size="11" text-anchor="middle" font-weight="700">Model Runner</text>
+  <text x="586" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">:12434</text>
+  <line x1="586" y1="48" x2="586" y2="532" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="84" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="88" font-size="11" text-anchor="middle">1</text>
+  <line x1="319" y1="84" x2="407" y2="84" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-0-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M319 84 L407 84" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="280.65" y="67.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="363" y="78" font-size="11.5" text-anchor="middle">CONNECT example.com:443</text>
+  <rect class="m-knock" x="306.54" y="88.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="363" y="99" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a call · solid ink</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="130" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="16" y="134" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">2</text>
+  <line x1="408" y1="130" x2="320" y2="130" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-0-1-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M408 130 L320 130" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="316.15" y="113.03" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="364" y="124" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">403 Forbidden</text>
+  <rect class="m-knock" x="292.69" y="134.42" width="142.62" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="364" y="145" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a failure · dashed rose</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="176" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="180" font-size="11" text-anchor="middle">3</text>
+  <line x1="52" y1="176" x2="140" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-0-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M52 176 L140 176" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="48.15" y="159.03" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="96" y="170" font-size="11.5" text-anchor="middle">allow network</text>
+  <rect class="m-knock" x="39.54" y="180.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="96" y="191" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a call · solid ink</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="222" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="226" font-size="11" text-anchor="middle">4</text>
+  <line x1="141" y1="222" x2="229" y2="222" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-0-1-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M141 222 L229 222" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="123.35" y="205.03" width="123.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="185" y="216" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">example.com [tcp]</text>
+  <rect class="m-knock" x="98.84" y="226.42" width="172.32" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="185" y="237" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a durable write · solid teal</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="268" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="272" font-size="11" text-anchor="middle">5</text>
+  <line x1="141" y1="268" x2="53" y2="268" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-0-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M141 268 L53 268" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="59.5" y="251.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="97" y="262" font-size="11.5" text-anchor="middle">Rule added</text>
+  <rect class="m-knock" x="34.6" y="272.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="97" y="283" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a reply · dashed ink</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="314" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="318" font-size="11" text-anchor="middle">6</text>
+  <line x1="319" y1="314" x2="407" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-0-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M319 314 L407 314" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="280.65" y="297.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="363" y="308" font-size="11.5" text-anchor="middle">CONNECT example.com:443</text>
+  <rect class="m-knock" x="282.78" y="318.42" width="160.44" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="363" y="329" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the same call, now allowed</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="360" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="364" font-size="11" text-anchor="middle">7</text>
+  <line x1="408" y1="360" x2="496" y2="360" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-0-1-head-olive)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-olive-ink, #515f26)" opacity="0"><animateMotion path="M408 360 L496 360" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="400.7" y="343.03" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="452" y="354" font-size="11.5" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">tunnel to :443</text>
+  <rect class="m-knock" x="353.96" y="364.42" width="196.08" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="452" y="375" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">an outside effect · dashed olive</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="406" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="410" font-size="11" text-anchor="middle">8</text>
+  <line x1="319" y1="406" x2="585" y2="406" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-0-1-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M319 406 L585 406" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="376.55" y="389.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="452" y="400" font-size="11.5" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">POST chat/completions</text>
+  <rect class="m-knock" x="374.75" y="410.42" width="154.5" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="452" y="421" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a model call · solid plum</text>
+  </g>
+  <g data-beat="9"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="452" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="456" font-size="11" text-anchor="middle">9</text>
+  <line x1="586" y1="452" x2="320" y2="452" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-0-1-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M586 452 L320 452" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="377.55" y="435.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="453" y="446" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">chat.completion.chunk</text>
+  <rect class="m-knock" x="378.72" y="456.42" width="148.56" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="453" y="467" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a stream · dotted indigo</text>
+  </g>
+  <g data-beat="10"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="498" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="502" font-size="11" text-anchor="middle">10</text>
+  <line x1="141" y1="498" x2="318" y2="498" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-0-1-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M141 498 L318 498" keyPoints="0;0;1;1" keyTimes="0;0.871;0.96;1" calcMode="linear" dur="6.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.871;0.884;0.96;1" dur="6.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="164.4" y="481.03" width="130.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="229.5" y="492" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">running to stopped</text>
+  <rect class="m-knock" x="140.37" y="502.42" width="178.26" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="229.5" y="513" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a state change · dashed amber</text>
+  </g>
+</svg>
