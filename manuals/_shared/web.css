@@ -102,7 +102,7 @@
 .m-index-gives .m-kicker { color: var(--m-accent); }
 .m-index-gives p { margin: 0.35em 0 0; font-size: 0.94em; line-height: 1.5; color: var(--m-ink-soft); }
 .m-index-card { border: 1px solid var(--m-ink); box-shadow: 3px 3px 0 var(--m-ink); background: var(--m-paper); padding: 28px 28px 8px; margin: 0 0 40px; }
-.m-index-pin { color: var(--m-ink-mute); }
+.m-index-pin { color: var(--m-ink-mute); overflow-wrap: anywhere; }
 .m-index .m-index-name { font-family: var(--m-font-display); font-weight: 400; font-size: 72px; line-height: 0.95; margin: 0.12em 0 0.08em; }
 .m-index .m-index-name a { text-decoration: none; }
 .m-index .m-index-name a:hover { color: var(--m-accent); }
