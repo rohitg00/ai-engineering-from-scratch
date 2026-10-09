@@ -22,7 +22,7 @@ Each row names the claim and its source, the verdict, and the capture file behin
 | 27 toolset types, and `transfer_task` is not one of them (schema, C56) | confirmed | `16-toolsets.txt`: 27 rows, neither implicit name |
 | the `sbx kit` commands are v1 and v2 tooling (C13) | confirmed | `13-kit-v3-validate.txt`: "is a v3 source kit and this load path has no kit builder configured", and `12-validate.txt`: `VALID` |
 | a kit signature verifies with `sbx kit sign` and `verify` (docs, Build and distribute kits) | not checked | no sign or verify step was recorded, only `13-kit-builder-status.txt` |
-| a local model runs with no key (docs, Use local and hosted models) | not checked | `16-doctor.txt`: Docker Model Runner unreachable, "no usable model", `auto -> dmr/ai/qwen3:latest` |
+| a local model runs with no key (docs, Use local and hosted models) | confirmed | `25-doctor.txt`: every provider credential `not set`, Docker Model Runner reachable with `docker.io/ai/qwen3:4b`, and `25-run-dmr.txt` answers `Hello` live. `18-cassette-head.txt` shows the recorded requests going to `localhost:12434`, and `27-inside-run.txt` answers from inside the VM. The 8B `ai/qwen3:latest` failed to pull (`25-model-pull-latest.txt`) |
 | local use needs a Docker sign-in (docs, FAQ, disputed in HN 2026-08-10 and issue #321, C15) | confirmed in part | `02-diagnose.txt` lists Authentication as a check, the kit's prerequisites include `sbx login`, and `help-sbx-cloud.md` notes a TLS attempt to login.docker.com on every `--help` |
 | `sbx policy approval` is not a command (the v0.47.0 help tree, C16) | contradicted | `09-blocked.txt`: the 403 body says "Review and respond with: sbx policy approval ls" |
 | the VMM is libkrun (talk 2026-01-14, HN 2026-08-10, C4) | unverified | `00-sbx-version.json` names no runtime, and `04-guest.txt` shows kernel `7.0.14` and nothing more |
@@ -37,7 +37,7 @@ Each row names the claim and its source, the verdict, and the capture file behin
 id: fig-7-4
 kind: comparison
 title: confirmed by a file, or only reported
-claim: Seven claims about the sandbox were confirmed by a recorded file, and seven others are reported with their source because no capture tested them.
+claim: Eight claims were confirmed by a recorded file, four are reported without a test, and the captures contradict or the community disputes two more.
 caption: Left, each confirmed claim with the capture file that shows it, coloured by the layer it belongs to. Right, dashed boxes are claims this manual reports without a test, and rose boxes are the two the captures contradict or the community disputes. From the files named in each box.
 ```
 
@@ -90,11 +90,11 @@ kit-tck validate docker.io/me/sbx-kit-gh:1.0.0 --format json
 
 Released `kit-tck` binaries are attached to each GitHub release of the specification for Linux, macOS, and Windows. `kit-tck inspect` reads a kit's descriptor and recipe without judging it. The suite places three known values in the adapter's environment, `KIT_TCK_HOST_SENTINEL`, `KIT_TCK_BOUND_SECRET`, and `KIT_TCK_SKILL_NAME`. A leak of host environment or of a bound secret is then visible.
 
-This edition did not run it. A validate needs a published v3 artifact, and the kit's v3 build step was not recorded because it needs the Docker daemon. `13-kit-v3-validate.txt` shows only that the v2 tooling refuses the descriptor.
+This edition did not run it. The capture kit built a v3 artifact and pushed it to a local registry (`28-buildx.txt`, `28-manifest.json`), but no `kit-tck` step ran against it.
 
 ## The agent regression check
 
-For agent runs, the planned check is `docker-agent sessions diff --fail-on-divergence`, which compares two recorded sessions "over the sequence of tool calls, not over the assistant's prose" and stops at the first divergence {{help-agent docker-agent sessions diff}}. No agent run with a model was recorded in this edition, so [the sessions section](#s-session-db-sessions-diff-and-eval) describes the command from its help and its documentation.
+For agent runs, the planned check is `docker-agent sessions diff --fail-on-divergence`, which compares two recorded sessions "over the sequence of tool calls, not over the assistant's prose" and stops at the first divergence {{help-agent docker-agent sessions diff}}. The capture kit ran it on recorded sessions (`21-sessions-diff.txt`). Two replays of one run are identical across five turns, and a run that called `shell` first diverges at turn 0 and exits 1. A relative reference such as `-1` needs `--` before it, or the parser reads it as a flag. [The sessions section](#s-session-db-sessions-diff-and-eval) explains the session store.
 
 ```takeaways
 - Treat a claim as confirmed only when a file under `capture/out/` shows the behaviour.
@@ -103,4 +103,4 @@ For agent runs, the planned check is `docker-agent sessions diff --fail-on-diver
 - Keep two recorded sessions per agent and compare them with `sessions diff --fail-on-divergence`.
 ```
 
-Sources: docs-sbx Security model, Default security posture, Architecture, FAQ, Use cloud sandboxes, Build and distribute kits, Use local and hosted models (research/sources/docs-sandboxes.md); help-sbx sbx diagnose, sbx create (research/sources/help-sbx.md); help-agent docker-agent sessions diff (research/sources/help-docker-agent.md); research/sources/kit-spec-extras.md (README Conformance, docs/spec/conformance.md); research/sources/help-sbx-cloud.md; research/conflicts-register.md rows C4, C13, C15, C16, C26, C29, C34, C45, C56, C105, C106 and the community rows of research/plan.md; capture/out/00-sbx-version.json, 02-diagnose.txt, 02-diagnose.json, 04-auto-stop.txt, 04-env.txt, 04-guest.txt, 08-clone-commit.txt, 08-clone-host.txt, 09-allowed.txt, 09-blocked.txt, 09-check-verbose.json, 10-env-sentinel.txt, 10-receiver.log, 10-swap-curl.txt, 11-gateway-tools-static.json, 11-static-inside.txt, 12-validate.txt, 13-kit-builder-status.txt, 13-kit-v3-validate.txt, 16-doctor.txt, 16-toolsets.txt, 99-final-state.txt
+Sources: docs-sbx Security model, Default security posture, Architecture, FAQ, Use cloud sandboxes, Build and distribute kits, Use local and hosted models (research/sources/docs-sandboxes.md); help-sbx sbx diagnose, sbx create (research/sources/help-sbx.md); help-agent docker-agent sessions diff (research/sources/help-docker-agent.md); research/sources/kit-spec-extras.md (README Conformance, docs/spec/conformance.md); research/sources/help-sbx-cloud.md; research/conflicts-register.md rows C4, C13, C15, C16, C26, C29, C34, C45, C56, C105, C106 and the community rows of research/plan.md; capture/out/00-sbx-version.json, 02-diagnose.txt, 02-diagnose.json, 04-auto-stop.txt, 04-env.txt, 04-guest.txt, 08-clone-commit.txt, 08-clone-host.txt, 09-allowed.txt, 09-blocked.txt, 09-check-verbose.json, 10-env-sentinel.txt, 10-receiver.log, 10-swap-curl.txt, 11-gateway-tools-static.json, 11-static-inside.txt, 12-validate.txt, 13-kit-builder-status.txt, 13-kit-v3-validate.txt, 16-toolsets.txt, 18-cassette-head.txt, 21-sessions-diff.txt, 25-doctor.txt, 25-model-pull-latest.txt, 25-run-dmr.txt, 27-inside-run.txt, 28-buildx.txt, 28-manifest.json, 99-final-state.txt

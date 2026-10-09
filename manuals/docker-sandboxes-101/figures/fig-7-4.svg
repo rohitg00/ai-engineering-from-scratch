@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 390" role="img" aria-labelledby="fig-7-4-title fig-7-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-labelledby="fig-7-4-title fig-7-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-7-4-title">Confirmed by a file, or only reported</title>
-  <desc id="fig-7-4-desc">Two columns. The left column lists seven claims a recorded capture file confirms: the sentinel inside and the real secret outside, default deny on example.com:443, a private Docker Engine 29.8.1 inside, commits fetched through the sandbox-m101-clone remote, the proxy at gateway.docker.internal:3128, MCP_GATEWAY_URL set inside the sandbox, and docker-agent toolsets printing 27 types. The right column lists seven claims the manual reports without a test: a MITM proxy that re-signs HTTPS, libkrun as the VMM, a start in tens of milliseconds, a verified kit signature, a local model with no key, and two rose boxes for the contradicted sbx policy approval command and the disputed exfiltration path.</desc>
+  <desc id="fig-7-4-desc">Two columns. The left column lists eight claims a recorded capture file confirms: the sentinel inside and the real secret outside, default deny on example.com:443, a private Docker Engine 29.8.1 inside, commits fetched through the sandbox-m101-clone remote, the proxy at gateway.docker.internal:3128, MCP_GATEWAY_URL set inside the sandbox, docker-agent toolsets printing 27 types, and ai/qwen3:4b answering on Docker Model Runner with no provider key set. The right column lists six claims. Four are reported without a test: a MITM proxy that re-signs HTTPS, libkrun as the VMM, a start in tens of milliseconds, and a verified kit signature. Two rose boxes mark the contradicted sbx policy approval command and the disputed exfiltration path.</desc>
   <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-teal-ink, #18696a)">CONFIRMED BY A CAPTURE FILE</text>
   <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-grey-ink, #5e5e59)">REPORTED, NOT TESTED HERE</text>
-  <line x1="320" y1="8" x2="320" y2="382" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <line x1="320" y1="8" x2="320" y2="432" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
   <rect x="20" y="30" width="284" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
   <text x="162" y="46.1" font-size="12" text-anchor="middle" font-weight="700">sentinel inside, real secret outside</text>
   <text x="162" y="63.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">10-env-sentinel.txt, 10-receiver.log</text>
@@ -25,6 +25,9 @@
   <rect x="20" y="330" width="284" height="42" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
   <text x="162" y="346.1" font-size="12" text-anchor="middle" font-weight="700">toolsets prints 27 types</text>
   <text x="162" y="363.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">16-toolsets.txt</text>
+  <rect x="20" y="380" width="284" height="42" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="162" y="396.1" font-size="12" text-anchor="middle" font-weight="700">ai/qwen3:4b on DMR, no key set</text>
+  <text x="162" y="413.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">25-doctor.txt, 27-inside-run.txt</text>
   <rect x="336" y="30" width="284" height="42" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
   <text x="478" y="46.1" font-size="12" text-anchor="middle" font-weight="700">HTTPS re-signed by a MITM proxy</text>
   <text x="478" y="63.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">issue #12, not checked</text>
@@ -37,13 +40,10 @@
   <rect x="336" y="180" width="284" height="42" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
   <text x="478" y="196.1" font-size="12" text-anchor="middle" font-weight="700">a kit signature verifies</text>
   <text x="478" y="213.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sbx kit sign, not recorded</text>
-  <rect x="336" y="230" width="284" height="42" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
-  <text x="478" y="246.1" font-size="12" text-anchor="middle" font-weight="700">a local model with no key</text>
-  <text x="478" y="263.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">16-doctor.txt: DMR unreachable</text>
+  <rect x="336" y="230" width="284" height="42" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="478" y="246.1" font-size="12" text-anchor="middle" font-weight="700">sbx policy approval is not a command</text>
+  <text x="478" y="263.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">09-blocked.txt names it</text>
   <rect x="336" y="280" width="284" height="42" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
-  <text x="478" y="296.1" font-size="12" text-anchor="middle" font-weight="700">sbx policy approval is not a command</text>
-  <text x="478" y="313.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">09-blocked.txt names it</text>
-  <rect x="336" y="330" width="284" height="42" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
-  <text x="478" y="346.1" font-size="12" text-anchor="middle" font-weight="700">allowed host as exfiltration path</text>
-  <text x="478" y="363.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HN 2026-08-10, both sides printed</text>
+  <text x="478" y="296.1" font-size="12" text-anchor="middle" font-weight="700">allowed host as exfiltration path</text>
+  <text x="478" y="313.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HN 2026-08-10, both sides printed</text>
 </svg>
