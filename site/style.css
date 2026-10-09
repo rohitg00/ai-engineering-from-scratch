@@ -1057,7 +1057,6 @@ body.js-anim .toc-row.in-view {
   .reveal,
   .ascii-rule,
   .toc-row,
-  .stat-row-bar::before,
   .manual-title {
     transition: none !important;
     animation: none !important;
@@ -1066,6 +1065,7 @@ body.js-anim .toc-row.in-view {
     clip-path: none !important;
   }
 
+  .stat-row-bar::before,
   .modal-overlay,
   .modal,
   .modal-progress-bar-fill {
