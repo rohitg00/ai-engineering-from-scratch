@@ -103,6 +103,24 @@ test('domain route totals match their canonical manifests', () => {
   assert.match(sectionSource('coding-agents'), /16-lesson path · 900 minutes/);
 });
 
+test('agent-assisted route teaches the declared workbench prerequisites first', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'learning-paths', 'using-coding-agents.json'), 'utf8'));
+  const indices = new Map(manifest.lessons.map((entry, index) => [Number(path.basename(entry.path).slice(0, 2)), index]));
+  for (const entry of manifest.lessons) {
+    const number = Number(path.basename(entry.path).slice(0, 2));
+    const docs = fs.readFileSync(path.join(root, entry.path, 'docs', 'en.md'), 'utf8');
+    const prerequisites = docs.split('\n').find(line => line.startsWith('**Prerequisites:**'));
+    assert.ok(prerequisites, `${entry.path} must declare prerequisites`);
+    const declared = Array.from(prerequisites.matchAll(/(?:·\s*|lessons?\s+|and\s+|to\s+)(\d{1,2})\b/g), match => Number(match[1]));
+    for (const prerequisite of declared) {
+      if (indices.has(prerequisite)) {
+        assert.ok(indices.get(prerequisite) < indices.get(number), `${number} appears before its declared prerequisite ${prerequisite}`);
+      }
+    }
+  }
+  assert.equal(manifest.lessons.reduce((sum, entry) => sum + entry.minutes, 0), manifest.estimatedMinutes);
+});
+
 test('every child node resolves to a real local lesson', () => {
   const hrefs = Array.from(learningPaths.matchAll(/<a class="skills-node" href="lesson\?path=([^&"]+)&amp;learningPath=([^"]+)"/g));
   assert.equal(hrefs.length, 27);
