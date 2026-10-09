@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 488" role="img" aria-labelledby="fig-6-4-title fig-6-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-4-title">The agent file as an OCI artifact</title>
+  <desc id="fig-6-4-desc">Top: docker-agent share push sends fixtures/agents/files.yaml to the local registry localhost:15000 as m101/agent:v1. share pull writes an identical copy named localhost:15000_m101_agent:v1.yaml into the current directory, and docker-agent run with the reference answers README.md has 1 line. Bottom: the manifest the registry serves. Its mediaType is the OCI image manifest, its artifactType is application/vnd.docker.agent.config.v1+json, and the config and the one layer keep Docker image media types. Four annotations: io.docker.agent.version and io.docker.cagent.version, both v1.149.0, and the OCI created and description keys. With --key, the proof is recorded as more annotations, which this capture did not do.</desc>
+  <defs><marker id="fig-6-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <rect x="20" y="30" width="140" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="90" y="45.75" font-size="12.5" text-anchor="middle" font-weight="700">files.yaml</text>
+  <text x="90" y="63.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">agent root</text>
+  <text x="90" y="78.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">filesystem, shell</text>
+  <rect x="240" y="30" width="150" height="120" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="315" y="70.25" font-size="12.5" text-anchor="middle" font-weight="700">localhost:15000</text>
+  <text x="315" y="87.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">m101/agent:v1</text>
+  <text x="315" y="102.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">plain HTTP</text>
+  <text x="315" y="117.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">registry:2</text>
+  <rect x="470" y="30" width="150" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="545" y="45.75" font-size="12.5" text-anchor="middle" font-weight="700">share pull</text>
+  <text x="545" y="63.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">identical YAML</text>
+  <text x="545" y="78.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in the current dir</text>
+  <rect x="470" y="100" width="150" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="545" y="119.95" font-size="11.5" text-anchor="middle" font-weight="700">run by reference</text>
+  <text x="545" y="137.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">README.md has 1 line.</text>
+  <line x1="160" y1="58" x2="239" y2="58" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-4-head-ink)"/>
+  <rect class="m-knock" x="163.5" y="41.42" width="72" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="199.5" y="52" font-size="11" text-anchor="middle">share push</text>
+  <line x1="390" y1="58" x2="469" y2="58" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-4-head-ink)"/>
+  <rect class="m-knock" x="393.5" y="41.42" width="72" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="429.5" y="52" font-size="11" text-anchor="middle">share pull</text>
+  <line x1="390" y1="125" x2="469" y2="125" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-4-head-ink)"/>
+  <rect class="m-knock" x="416.6" y="108.42" width="25.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="429.5" y="119" font-size="11" text-anchor="middle">run</text>
+  <rect x="20" y="170" width="600" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="32" y="186.6" font-size="12" font-weight="700">manifest of m101/agent:v1, as the registry serves it</text>
+  <rect x="20" y="196" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="212" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">mediaType</text>
+  <text x="280" y="212" font-size="11">application/vnd.oci.image.manifest.v1+json</text>
+  <rect x="20" y="220" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="236" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">artifactType</text>
+  <text x="280" y="236" font-size="11">application/vnd.docker.agent.config.v1+json</text>
+  <rect x="20" y="244" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="260" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">config</text>
+  <text x="280" y="260" font-size="11">application/vnd.docker.container.image.v1+json</text>
+  <rect x="20" y="268" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="284" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">layers[0]</text>
+  <text x="280" y="284" font-size="11">application/vnd.docker.image.rootfs.diff.tar.gzip</text>
+  <rect x="20" y="300" width="600" height="26" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="32" y="316.6" font-size="12" font-weight="700">annotations</text>
+  <rect x="20" y="326" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="342" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">io.docker.agent.version</text>
+  <text x="280" y="342" font-size="11">v1.149.0</text>
+  <rect x="20" y="350" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="366" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">io.docker.cagent.version</text>
+  <text x="280" y="366" font-size="11">v1.149.0, the legacy key</text>
+  <rect x="20" y="374" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="390" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">org.opencontainers.image.created</text>
+  <text x="280" y="390" font-size="11">&lt;ts&gt;</text>
+  <rect x="20" y="398" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="414" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">org.opencontainers.image.description</text>
+  <text x="280" y="414" font-size="11">OCI artifact containing files.yaml</text>
+  <rect x="20" y="434" width="600" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="320" y="457.45" font-size="11.5" text-anchor="middle" font-weight="400">with --key: a signature or MAC is added as annotations, not in this capture</text>
+</svg>
