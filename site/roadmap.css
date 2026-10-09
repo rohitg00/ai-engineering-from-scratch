@@ -329,6 +329,13 @@
   user-select: none;
 }
 
+.roadmap-graph-message {
+  max-width: 44ch;
+  padding: 24px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
 .roadmap-graph-container {
   position: relative;
   min-width: 100%;
