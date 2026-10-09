@@ -12,7 +12,7 @@
   }
 
   function attr(value) {
-    return esc(value).replace(/`/g, '&#96;');
+    return esc(value).replace(/"/g, '&quot;').replace(/`/g, '&#96;');
   }
 
   function formatCount(value) {

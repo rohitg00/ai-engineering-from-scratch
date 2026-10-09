@@ -1032,7 +1032,7 @@
         function escapeHtml(str) {
           var div = document.createElement('div');
           div.textContent = text(str);
-          return div.innerHTML;
+          return div.innerHTML.replace(/"/g, '&quot;');
         }
 
         function safeUrl(value) {
