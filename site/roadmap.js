@@ -45,6 +45,7 @@
   var SVG_W = PAD_X * 2 + MAX_COLUMNS * NODE_W + (MAX_COLUMNS - 1) * COLUMN_GAP;
   var SVG_H = PAD_Y * 2 + (TIER_ORDER.length - 1) * TIER_GAP + NODE_H;
   var MIN_ZOOM = 0.7;
+  var NAME_MAX = 22;
   var MAX_ZOOM = 1.3;
 
   var phaseMap = {};
@@ -409,7 +410,7 @@
     surface.appendChild(stateText);
 
     var lines = splitName(phase.name);
-    if (/…$/.test(lines[lines.length - 1])) {
+    if (lines.join(' ') !== String(phase.name || '').toUpperCase()) {
       var fullName = svgEl('title');
       fullName.textContent = phase.name;
       group.insertBefore(fullName, group.firstChild);
@@ -478,22 +479,19 @@
 
   function splitName(name) {
     var value = String(name || '').toUpperCase();
-    if (value.length <= 22) return [value];
+    if (value.length <= NAME_MAX) return [value];
     var midpoint = Math.ceil(value.length / 2);
     var split = value.lastIndexOf(' ', midpoint);
     if (split < 5) split = value.indexOf(' ', midpoint);
-    if (split === -1) return [value.slice(0, 22) + '…'];
-    var lines = [value.slice(0, split), value.slice(split + 1)];
-    if (lines[0].length <= 22 && lines[1].length <= 22) return lines;
-    var first = value.lastIndexOf(' ', 22);
-    if (first < 1) return [clipLine(value)];
-    return [value.slice(0, first), clipLine(value.slice(first + 1))];
+    if (split < 1 || split > NAME_MAX || value.length - split - 1 > NAME_MAX) split = value.lastIndexOf(' ', NAME_MAX);
+    if (split < 1) return [clipLine(value)];
+    return [value.slice(0, split), clipLine(value.slice(split + 1))];
   }
 
   function clipLine(line) {
-    if (line.length <= 22) return line;
-    var cut = line.lastIndexOf(' ', 21);
-    return (cut > 10 ? line.slice(0, cut) : line.slice(0, 21)).replace(/[\s,;:&·-]+$/, '') + '…';
+    if (line.length <= NAME_MAX) return line;
+    var cut = line.lastIndexOf(' ', NAME_MAX - 1);
+    return (cut > 10 ? line.slice(0, cut) : line.slice(0, NAME_MAX - 1)).replace(/[\s,;:&·-]+$/, '') + '…';
   }
 
   function edgePath(fromId, toId) {
@@ -1193,8 +1191,7 @@
   function formatPhase(id) { return String(id).padStart(2, '0'); }
 
   function formatCount(value) {
-    var n = Number(value) || 0;
-    try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+    return (Number(value) || 0).toLocaleString('en');
   }
 
   function countLabel(value, singular, plural) {

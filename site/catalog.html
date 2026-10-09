@@ -1054,12 +1054,11 @@
         function escapeHtml(str) {
           var div = document.createElement('div');
           div.textContent = str;
-          return div.innerHTML;
+          return div.innerHTML.replace(/"/g, '&quot;');
         }
 
         function formatCount(value) {
-          var n = Number(value) || 0;
-          try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+          return (Number(value) || 0).toLocaleString('en');
         }
 
         function countLabel(value, singular, plural) {
@@ -1140,7 +1139,8 @@
             }
             html += '<td>' + escapeHtml(r.type) + '</td>';
             html += '<td><span class="catalog-lang">' + escapeHtml(r.lang) + '</span></td>';
-            html += '<td class="catalog-status"><span class="catalog-status-dot ' + escapeHtml(r.status) + '" aria-hidden="true"></span>' + escapeHtml(r.status) + '</td>';
+            var status = escapeHtml(r.status);
+            html += '<td class="catalog-status"><span class="catalog-status-dot ' + status + '" aria-hidden="true"></span>' + status + '</td>';
             html += '</tr>';
           }
           bodyEl.innerHTML = html;

@@ -317,7 +317,7 @@
   function escHtml(str) {
     var d = document.createElement('div');
     d.textContent = (str == null) ? '' : String(str);
-    return d.innerHTML;
+    return d.innerHTML.replace(/"/g, '&quot;');
   }
 
   /**
@@ -352,8 +352,7 @@
   }
 
   function formatCount(value) {
-    var n = Number(value) || 0;
-    try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+    return (Number(value) || 0).toLocaleString('en');
   }
 
   function countLabel(value, singular, plural) {
@@ -616,7 +615,7 @@
         ' data-href="' + escHtml(dest) + '">' +
           '<div class="cp-item-body">' +
             '<span class="' + chipClass + '">' + escHtml(chip) + '</span>' +
-            '<span class="cp-item-name" dir="auto" title="' + escHtml(r.name).replace(/"/g, '&quot;') + '">' + highlight(r.name, query) + '</span>' +
+            '<span class="cp-item-name" dir="auto" title="' + escHtml(r.name) + '">' + highlight(r.name, query) + '</span>' +
             (snippet ? '<span class="cp-item-summary" dir="auto">' + highlight(snippet, query) + '</span>' : '') +
             (meta    ? '<span class="cp-item-meta">'    + escHtml(meta)             + '</span>' : '') +
           '</div>' +

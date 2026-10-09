@@ -16,12 +16,15 @@
   }
 
   function formatCount(value) {
-    var n = Number(value) || 0;
-    try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+    return (Number(value) || 0).toLocaleString('en');
   }
 
   function countLabel(value, singular, plural) {
     return formatCount(value) + ' ' + (Number(value) === 1 ? singular : plural);
+  }
+
+  function factText(fact) {
+    return fact.label === 'Validity' && typeof fact.value === 'number' ? countLabel(fact.value, 'month', 'months') : fact.value;
   }
 
   function data() {
@@ -252,9 +255,7 @@
 
   function renderCardFacts(track, limit) {
     return examFacts(track).filter(function (fact) { return !fact.unpublished; }).slice(0, limit || 3).map(function (fact) {
-      var value = fact.value;
-      if (fact.label === 'Validity' && typeof value === 'number') value = countLabel(value, 'month', 'months');
-      return '<div class="cert-card-fact"><strong>' + esc(value) + '</strong><span class="cert-fact-label">' + esc(fact.label) + '</span></div>';
+      return '<div class="cert-card-fact"><strong>' + esc(factText(fact)) + '</strong><span class="cert-fact-label">' + esc(fact.label) + '</span></div>';
     }).join('');
   }
 
@@ -486,9 +487,7 @@
       '<h1>' + esc(track.credential || track.title || track.shortName || track.id) + '</h1>' +
       '<p class="cert-track-summary">' + esc(track.summary || track.audience || '') + '</p>' +
       '<div class="cert-meta-row">' + examFacts(track).map(function (fact) {
-        var value = fact.value;
-        if (fact.label === 'Validity' && typeof value === 'number') value = countLabel(value, 'month', 'months');
-        return metaChip(fact.label + ': ' + value);
+        return metaChip(fact.label + ': ' + factText(fact));
       }).join('') + '</div>' +
       '<div class="cert-track-hero-actions">' +
         (firstPath ? '<a class="cert-action" href="lesson?path=' + encodeURIComponent(firstPath) + '&track=' + encodeURIComponent(track.id) + '">' + (complete ? 'Continue path' : 'Start learning') + '</a>' : '') +

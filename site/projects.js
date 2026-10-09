@@ -20,8 +20,7 @@
   }
 
   function formatCount(value) {
-    var n = Number(value) || 0;
-    try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+    return (Number(value) || 0).toLocaleString('en');
   }
 
   function countLabel(value, singular, plural) {

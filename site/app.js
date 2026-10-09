@@ -133,12 +133,12 @@
   function renderPhases() {
     var grid = document.getElementById('phasesGrid');
     if (!grid) return;
-    var hasProgress = !!window.AIFSProgress;
-    var html = '';
     if (!PHASES.length) {
       grid.innerHTML = '<p class="toc-empty">No phases are published yet.</p>';
       return;
     }
+    var hasProgress = !!window.AIFSProgress;
+    var html = '';
     for (var i = 0; i < PHASES.length; i++) {
       var p = PHASES[i];
       var total = p.lessons.length;
@@ -311,14 +311,16 @@
       var lessonLabel = escapeHtml(l.name);
       var lessonMeta = '<span class="modal-lesson-meta"><span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Combines: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span><span aria-hidden="true">·</span><span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span></span>';
 
+      var lessonCopy = '<span class="modal-lesson-copy"><span class="modal-lesson-name" dir="auto" title="' + lessonLabel + '">' + lessonLabel + '</span>' + lessonMeta + '</span>';
+
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
       if (canOpen) {
         html += '<a href="' + lessonUrl + '" class="modal-lesson-open" aria-label="Open lesson: ' + lessonLabel + '">';
-        html += '<span class="modal-lesson-copy"><span class="modal-lesson-name" dir="auto" title="' + lessonLabel + '">' + lessonLabel + '</span>' + lessonMeta + '</span>';
+        html += lessonCopy;
         html += '<span class="modal-lesson-cta">' + (userComplete ? 'Review' : 'Open lesson') + '<span aria-hidden="true">→</span></span></a>';
       } else {
         html += '<span class="modal-lesson-open is-unavailable" aria-disabled="true">';
-        html += '<span class="modal-lesson-copy"><span class="modal-lesson-name" dir="auto" title="' + lessonLabel + '">' + lessonLabel + '</span>' + lessonMeta + '</span>';
+        html += lessonCopy;
         html += '<span class="modal-lesson-cta">Coming soon</span></span>';
       }
 
@@ -330,11 +332,7 @@
       html += '</div>';
     }
 
-    if (!p.lessons.length) {
-      html = '<p class="modal-lessons-empty">No lessons are published in this phase yet.</p>';
-    }
-
-    container.innerHTML = html;
+    container.innerHTML = html || '<p class="modal-lessons-empty">No lessons are published in this phase yet.</p>';
 
     var toggles = container.querySelectorAll('.modal-lesson-toggle');
     for (var t = 0; t < toggles.length; t++) {
@@ -711,8 +709,7 @@
   }
 
   function formatCount(value) {
-    var n = Number(value) || 0;
-    try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+    return (Number(value) || 0).toLocaleString('en');
   }
 
   function countLabel(value, singular, plural) {
