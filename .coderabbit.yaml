@@ -4,3 +4,8 @@ reviews:
   changelog: false
   release_notes: false
   collapse_walkthrough: true
+  path_filters:
+    - "!manuals/*/capture/out/**"
+    - "!manuals/*/capture/cassettes/**"
+    - "!manuals/*/research/sources/**"
+    - "!manuals/*/figures/*.svg"
