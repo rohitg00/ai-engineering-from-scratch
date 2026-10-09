@@ -9,6 +9,7 @@ const { once } = require('node:events');
 const { createServer } = require('../scripts/serve-agent-site');
 
 const routeHandles = pathname => config.routes.some(rule => !rule.has && new RegExp('^' + rule.src + '$').test(pathname));
+const pageRule = (source, pathname) => source === pathname || (source.includes(':page(') && new RegExp('^' + source.replace(':page(', '(?:').replace(/\.html$/, '\\.html') + '$').test(pathname));
 
 test('every public HTML page has a clean route and an old-URL redirect', () => {
   const pages = fs.readdirSync(__dirname).filter(name => name.endsWith('.html') && name !== '404.html');
@@ -18,7 +19,7 @@ test('every public HTML page has a clean route and an old-URL redirect', () => {
       assert.ok(config.redirects.some(rule => rule.source === '/index' && rule.destination === '/'));
       continue;
     }
-    assert.ok(config.rewrites.some(rule => rule.source === route) || routeHandles(route), route);
+    assert.ok(config.rewrites.some(rule => pageRule(rule.source, route)) || routeHandles(route), route);
     const legacyHandler = routeHandles('/' + name);
     const redirect = config.redirects.some(rule => {
       const pattern = rule.source.replace(':page(', '(?:');

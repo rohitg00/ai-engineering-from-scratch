@@ -1,5 +1,5 @@
 {
-  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/build-agents.js && node site/clean-urls.js && node site/build-manuals.js && node site/version-assets.js",
+  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/build-agents.js && node site/build-manuals.js && node site/clean-urls.js && node site/version-assets.js",
   "outputDirectory": "site",
   "framework": null,
   "installCommand": "echo skip",
@@ -325,6 +325,10 @@
       "destination": "/openapi.json"
     },
     {
+      "source": "/:page(manuals|manual-[a-z0-9-]+)",
+      "destination": "/:page.html"
+    },
+    {
       "source": "/api/:missing*",
       "destination": "/api/not-found?api=1"
     }
@@ -402,7 +406,7 @@
       ]
     },
     {
-      "source": "/(blogs|glossary|catalog|certifications|certification|assessment|path|prereqs|roadmap|about|developer|docs|contact|privacy|sponsors|projects|project|learning-paths|developers|api)",
+      "source": "/(blogs|glossary|catalog|certifications|certification|assessment|path|prereqs|roadmap|about|developer|docs|contact|privacy|sponsors|projects|project|learning-paths|developers|api|manuals|manual-[a-z0-9-]+)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -512,6 +516,11 @@
     },
     {
       "source": "/:page(about|catalog|glossary|prereqs|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|assessment).html",
+      "destination": "/:page",
+      "permanent": true
+    },
+    {
+      "source": "/:page(manuals|manual-[a-z0-9-]+).html",
       "destination": "/:page",
       "permanent": true
     },
