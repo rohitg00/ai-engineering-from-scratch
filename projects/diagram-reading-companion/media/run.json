@@ -1,0 +1,52 @@
+{
+  "title": "Diagram Reading Companion | initialize and grade",
+  "recordedAt": "2026-10-09T14:27:03Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "diagram-reading-companion",
+        "--init",
+        "./.project-validation/diagram-reading-companion/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/diagram-reading-companion/recording-starter\n  kept     cli.ts\n  kept     main.ts\n  kept     sample.json\n  kept     STAGE-2.md\n  kept     STAGE-3.md\n  kept     STAGE-4.md\nnext: python3 scripts/project_test.py diagram-reading-companion --stage 1 --path ./.project-validation/diagram-reading-companion/recording-starter\n",
+      "durationMs": 39
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "diagram-reading-companion",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/diagram-reading-companion/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Diagram Reading Companion: grading learner\n  FAIL stage 1: Load an SVG and validate declared nodes and edges (7 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 291
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "diagram-reading-companion",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/diagram-reading-companion/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Diagram Reading Companion: grading solution\n  PASS stage 1: Load an SVG and validate declared nodes and edges (7 tests)\n  PASS stage 2: Compute branches, cycles and candidate reading order (6 tests)\n  PASS stage 3: Review explanations and reading order (6 tests)\n  PASS stage 4: Export the navigable walkthrough and graph data (6 tests)\nreport: ./.project-validation/diagram-reading-companion/solution-final.json\n",
+      "durationMs": 953
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}
