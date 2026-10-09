@@ -52,7 +52,7 @@ The sbx help text and release notes are proprietary program output of Docker Inc
 
 ## The conflicts register
 
-`research/conflicts-register.md` holds 112 conflicts, C1 to C112, in nine groups, and 30 pieces of stale advice, S1 to S30. The table below keeps every C row that a section entry of the plan cites or whose ruling names a section. That is 84 rows, each with the ruling the manual follows. The 28 rows that no section uses are cut to keep the table short, and the next table names them by group. Their substance appears in the S rows below or in the register itself. Kind is the register's own label.
+`research/conflicts-register.md` holds 122 conflicts, C1 to C122, in nine groups, and 30 pieces of stale advice, S1 to S30. The table below keeps every C row that a section entry of the plan cites or whose ruling names a section. That is 94 rows, each with the ruling the manual follows. The 28 rows that no section uses are cut to keep the table short, and the next table names them by group. Their substance appears in the S rows below or in the register itself. Kind is the register's own label.
 
 | Group | Rows cut |
 |---|---|
@@ -112,7 +112,7 @@ The sbx help text and release notes are proprietary program output of Docker Inc
 | C59 | renamed | `--yolo` as the way, against `--safety autonomous` | `--safety autonomous`, with `--yolo` as its alias |
 | C60 | docs vs CLI | `--sandbox` needs Desktop, against `--sbx` default true | `--sbx=false` has no working target on Desktop 4.80.0 or later |
 | C61 | docs vs docs | `docker/docker-agent-sbx-templates:latest`, against `docker/sandbox-templates:docker-agent` | Two images for two launch paths |
-| C62 | undocumented | `--yolo` inside `--sandbox`, against a cut default | The captured mode |
+| C62 | undocumented | `--yolo` inside `--sandbox`, against a cut default | The mode stays unknown in this edition. The run stopped at "attempt to write a readonly database (1032)" before it printed one (`27-sandbox-run.txt`) |
 | C63 | docs vs CLI | `<data-dir>/session.db`, against `session.db` in the current directory for `serve api` | Both defaults |
 | C64 | renamed | `serve a2a -a` defaults to `root`, against the team's first agent | The v1.149.0 text |
 | C65 | docs vs CLI | `eval -c` as the CPU count and an Anthropic judge, against 10 and `openai/gpt-5.6-terra` | 10 and `openai/gpt-5.6-terra` |
@@ -150,6 +150,16 @@ The sbx help text and release notes are proprietary program output of Docker Inc
 | C110 | removed | the legacy default allowed hosts, against three presets | The legacy list only in 7.3 |
 | C111 | removed | `cagent` in Desktop, against removal in 4.81.0 | Migration row S8 |
 | C112 | removed | keys from the daemon environment and state under `~/.docker/sandboxes/`, against the sbx store | One table in 7.3 |
+| C113 | docs vs CLI | index annotations that the frontend promotes (kitspec §9.3), against an index with an attestation manifest and no annotations | 4.1 prints both. The annotations sit on the platform manifest (`28-index.json`, `28-manifest.json`), which a consumer reads when the index has none |
+| C114 | docs vs CLI | a floating `docker/sandbox-kit:3` that never moves for a milestone, against a resolve to 3.0.0-m.8 | 4.1 prints both (`28-buildx.txt`). A build that needs the same frontend every time names the exact version tag |
+| C115 | docs vs CLI | `docker buildx build -f kit.yaml --push` as the publish command, against a schema 2 manifest with no annotations from the default `docker` driver | 4.1 says to build with a `docker-container` builder (`28-manifest-docker-driver.json`, `28-manifest.json`). An image without the annotation is not a kit |
+| C116 | docs vs CLI | a local source directory passed to `sbx` during development, against `sbx kit inspect` failing on Desktop 4.94.0 | 4.1 prints both (`13-kit-v3-inspect.txt`, `28-kit-inspect-source.txt`). No capture ran `sbx run` on a directory |
+| C117 | docs vs CLI | source builds in the `sbx-kit-builder` sandbox, against a build through the host Docker daemon and a builder "not created" | 4.1 and 4.3 print the help line and the status (`13-kit-builder-status.txt`). Where a successful source build runs stays unstated |
+| C118 | docs vs repo | agent file config version `15` as current, against a schema enum to `"16"` and captured files that load | `"16"` from the schema (5.2, R.4). The docs page still names `15` |
+| C119 | docs vs CLI | session titles made from the first message, against five sessions titled `Running agent` | 5.6 prints the five rows (`21-session-db.txt`) |
+| C120 | docs vs CLI | a skill name and mode lists that A2A 1.0.1 requires, against a card with an empty skill name and two empty mode lists | 6.3 prints the card against the rules (`23-agent-card.json`). A client accepts the empty values |
+| C121 | docs vs CLI | "A2A artifact support not yet integrated", against a task whose artifacts hold the answer | 6.3 says the capture contradicts the limitation (`23-a2a.http`) |
+| C122 | docs vs CLI | a release note that points to `docker sbx`, against a notice that points to the product page and a plugin list that still shows `sandbox v0.13.0` | 7.3 prints the notice (`29-docker-sandbox.txt`, `29-docker-plugins.txt`). The plugin entry stays, and the command only prints the notice |
 
 ## Stale advice
 
@@ -188,4 +198,4 @@ The migration section prints every row. The last column is what the register say
 | S29 | the Toolkit gateway at `host.docker.internal:8811` in five steps | v0.38.0, 2026-08-06 | `sbx mcp add` and `sbx mcp load`. The Toolkit gateway is separate |
 | S30 | a paid Anthropic judge model for `eval` | v1.147.0, 2026-10-05 | Default `openai/gpt-5.6-terra`, any `provider/model` works |
 
-Sources: manual.json (pin, sources, quoteSources); research/sources/README.md (origins, commits, tags, versions, and the trim of 2026-10-08); research/sources/LICENSES.md; research/conflicts-register.md (rows C1 to C112 and S1 to S30, with the plan's citations in research/plan.md used to pick the rows); research/sources/probes/ (the probe timestamps)
+Sources: manual.json (pin, sources, quoteSources); research/sources/README.md (origins, commits, tags, versions, and the trim of 2026-10-08); research/sources/LICENSES.md; research/conflicts-register.md (rows C1 to C122 and S1 to S30, with the plan's citations in research/plan.md used to pick the rows); research/sources/probes/ (the probe timestamps); capture/out/13-kit-builder-status.txt, 13-kit-v3-inspect.txt, 21-session-db.txt, 23-a2a.http, 23-agent-card.json, 27-sandbox-run.txt, 28-buildx.txt, 28-index.json, 28-kit-inspect-source.txt, 28-manifest.json, 28-manifest-docker-driver.json, 29-docker-plugins.txt, 29-docker-sandbox.txt (the files that rows C62 and C113 to C122 name)

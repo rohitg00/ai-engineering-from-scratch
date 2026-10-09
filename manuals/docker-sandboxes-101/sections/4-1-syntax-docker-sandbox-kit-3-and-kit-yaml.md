@@ -135,7 +135,7 @@ The capture kit never changes `sbx settings`, so no capture shows sbx running a 
 
 ## Where the run and the pages disagree
 
-Five results of the run contradict the specification or the documentation, and no row of the conflicts register covers them. The table prints both sides:
+Five results of the run contradict the specification or the documentation, and rows [C113 to C117](#s-ref-sources-and-the-conflicts-register) of the register cover them. The table prints both sides:
 
 | The page says | The capture shows | Files |
 |---|---|---|
@@ -156,4 +156,4 @@ The default size of a kit volume stays in dispute ([C12](#s-ref-sources-and-the-
 - Run a v3 workload by its reference, add v3 mixins with `--kit`, and never mix generations.
 ```
 
-Sources: kitspec §1, §1.1, §1.2, §3.2, §4, §7, §9.3, §9.6, §10 (research/sources/SPEC-v3-at-v3.0.0-m.8.md); kitcap network-policy@2 (research/sources/kit-capabilities.md); research/sources/kit-spec-extras.md (README and RELEASES.md of docker/sandbox-kit-spec, for the frontend tag and the milestone dates); docs-sbx Kits, Use kits, Build and distribute kits (research/sources/docs-sandboxes.md); help-sbx sbx kit builder (research/sources/help-sbx.md); rel-sbx v0.34.0, v0.39.0, v0.42.0 (research/sources/sbx-releases.md); research/conflicts-register.md rows C12, C13, and C40; capture/README.md (the findings of K28); capture/fixtures/kits/hello-kit/kit.yaml; capture/out/02-settings.txt, 13-kit-v3-validate.txt, 13-kit-v3-pack.txt, 13-kit-v3-inspect.txt, 13-kit-builder-status.txt, 28-builder.txt, 28-buildx.txt, 28-buildx-docker-driver.txt, 28-manifest.json, 28-manifest-docker-driver.json, 28-index.json, 28-kit-inspect-source.txt, 28-kit-inspect.txt, 28-run-kit.txt
+Sources: kitspec §1, §1.1, §1.2, §3.2, §4, §7, §9.3, §9.6, §10 (research/sources/SPEC-v3-at-v3.0.0-m.8.md); kitcap network-policy@2 (research/sources/kit-capabilities.md); research/sources/kit-spec-extras.md (README and RELEASES.md of docker/sandbox-kit-spec, for the frontend tag and the milestone dates); docs-sbx Kits, Use kits, Build and distribute kits (research/sources/docs-sandboxes.md); help-sbx sbx kit builder (research/sources/help-sbx.md); rel-sbx v0.34.0, v0.39.0, v0.42.0 (research/sources/sbx-releases.md); research/conflicts-register.md rows C12, C13, C40, and C113 to C117; capture/README.md (the findings of K28); capture/fixtures/kits/hello-kit/kit.yaml; capture/out/02-settings.txt, 13-kit-v3-validate.txt, 13-kit-v3-pack.txt, 13-kit-v3-inspect.txt, 13-kit-builder-status.txt, 28-builder.txt, 28-buildx.txt, 28-buildx-docker-driver.txt, 28-manifest.json, 28-manifest-docker-driver.json, 28-index.json, 28-kit-inspect-source.txt, 28-kit-inspect.txt, 28-run-kit.txt

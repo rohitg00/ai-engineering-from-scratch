@@ -42,7 +42,7 @@ The other event types of the file include `team_info`, `toolset_info`, `tool_cal
 
 ## The model in every recording
 
-The docs call `ai/qwen3` "the model Docker Agent reaches for by default" {{docs-agent Set Up a Model}}, and `doctor` resolves `auto` to the 8B tag `ai/qwen3:latest`. On the recording Mac, two pulls of that tag ended with a digest mismatch after the last 5.03 GB blob (`25-model-pull-latest.txt`). Every agent file of the kit therefore names `ai/qwen3:4b`, the 4B tag of the same repository. It is a thinking model, so it streams a few thousand reasoning tokens before each answer. `--exec` prints them, and the kit cuts them to one line such as `[... 299 lines of model reasoning cut by run.py ...]` (`18-run-exec.txt`).
+The docs call `ai/qwen3` "the model Docker Agent reaches for by default" {{docs-agent Set Up a Model}}. With no Model Runner, `doctor` resolves `auto` to the 8B tag `ai/qwen3:latest` (`16-doctor.txt`). On the recording Mac, two pulls of that tag ended with a digest mismatch after the last 5.03 GB blob (`25-model-pull-latest.txt`). Every agent file of the kit therefore names `ai/qwen3:4b`, the 4B tag of the same repository. It is a thinking model, so it streams a few thousand reasoning tokens before each answer. `--exec` prints them, and the kit cuts them to one line such as `[... 299 lines of model reasoning cut by run.py ...]` (`18-run-exec.txt`).
 
 ## doctor and models
 
