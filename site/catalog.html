@@ -201,6 +201,14 @@
       background: var(--planned);
     }
 
+    .catalog-status-dot.in-progress {
+      background: var(--status-in-progress);
+    }
+
+    .catalog-status {
+      white-space: nowrap;
+    }
+
     .catalog-lang {
       font-family: var(--font-mono);
       font-size: 0.8rem;
@@ -1132,7 +1140,7 @@
             }
             html += '<td>' + escapeHtml(r.type) + '</td>';
             html += '<td><span class="catalog-lang">' + escapeHtml(r.lang) + '</span></td>';
-            html += '<td><span class="catalog-status-dot ' + escapeHtml(r.status) + '" aria-hidden="true"></span>' + escapeHtml(r.status) + '</td>';
+            html += '<td class="catalog-status"><span class="catalog-status-dot ' + escapeHtml(r.status) + '" aria-hidden="true"></span>' + escapeHtml(r.status) + '</td>';
             html += '</tr>';
           }
           bodyEl.innerHTML = html;
