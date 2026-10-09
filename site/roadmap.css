@@ -819,7 +819,7 @@
   .roadmap-page { padding: 88px 0 64px; }
   .roadmap-container { width: min(100% - 32px, 1380px); }
   .roadmap-hero { padding: 30px 24px; box-shadow: 5px 5px 0 var(--rule-soft); }
-  .roadmap-hero h1 { font-size: clamp(min(3rem, 15vw), 15vw, 4.8rem); }
+  .roadmap-hero h1 { font-size: min(15vw, 4.8rem); }
   .roadmap-stage-index { grid-template-columns: 1fr; }
   .roadmap-stage-index-copy { border-right: 0; border-bottom: 1px solid var(--rule-soft); }
   .roadmap-stage-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }

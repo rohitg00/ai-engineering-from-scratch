@@ -1216,7 +1216,7 @@
 
   function showGraphMessage(message) {
     var wrap = document.getElementById('roadmapGraphWrap');
-    if (wrap) wrap.innerHTML = '<p class="roadmap-graph-message" dir="auto">' + message + '</p>';
+    if (wrap) wrap.innerHTML = '<p class="roadmap-graph-message" dir="auto">' + escapeHtml(message) + '</p>';
   }
 
   function showDataError() {
@@ -1224,9 +1224,7 @@
   }
 
   function showEmptyRoadmap() {
-    setText('roadmapPhaseCount', '0');
-    setText('roadmapLessonCount', '0');
-    setText('roadmapProgressCount', '0 / 0');
+    renderHeroStats();
     setText('roadmapNextPhase', 'None');
     showGraphMessage('No phases are published yet.');
   }

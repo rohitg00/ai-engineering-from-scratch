@@ -1004,42 +1004,38 @@
           return;
         }
 
+        var STATUS_LABELS = { complete: 'Complete', 'in-progress': 'In progress', planned: 'Planned' };
+        var presentStatuses = Object.create(null);
+
+        function addOption(select, value, label) {
+          var option = document.createElement('option');
+          option.value = value;
+          option.textContent = label;
+          select.appendChild(option);
+        }
+
         for (var i = 0; i < PHASES.length; i++) {
           var p = PHASES[i];
-          var opt = document.createElement('option');
-          opt.value = String(p.id);
-          opt.textContent = String(p.id).padStart(2, '0') + ' - ' + p.name;
-          phaseSelect.appendChild(opt);
+          addOption(phaseSelect, String(p.id), String(p.id).padStart(2, '0') + ' - ' + p.name);
 
           for (var j = 0; j < p.lessons.length; j++) {
             var l = p.lessons[j];
+            var lessonStatus = l.status || 'planned';
+            presentStatuses[lessonStatus] = true;
             allRows.push({
               phase: p.id,
               phaseName: p.name || '',
               name: l.name || '',
               type: l.type || '',
               lang: l.lang || '',
-              status: l.status || 'planned',
+              status: lessonStatus,
               url: l.url || ''
             });
           }
         }
 
-        var STATUS_ORDER = ['complete', 'in-progress', 'planned'];
-        var STATUS_LABELS = { complete: 'Complete', 'in-progress': 'In progress', planned: 'Planned' };
-        var presentStatuses = Object.create(null);
-        allRows.forEach(function (row) { presentStatuses[row.status] = true; });
-        function statusRank(status) {
-          var rank = STATUS_ORDER.indexOf(status);
-          return rank === -1 ? STATUS_ORDER.length : rank;
-        }
-        Object.keys(presentStatuses).sort(function (a, b) {
-          return statusRank(a) - statusRank(b) || a.localeCompare(b);
-        }).forEach(function (status) {
-          var option = document.createElement('option');
-          option.value = status;
-          option.textContent = STATUS_LABELS[status] || status;
-          statusSelect.appendChild(option);
+        Object.keys(presentStatuses).sort().forEach(function (status) {
+          addOption(statusSelect, status, STATUS_LABELS[status] || status);
         });
 
         var sortCol = 'phase';

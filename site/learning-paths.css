@@ -1010,7 +1010,7 @@
   }
 
   .learning-paths-hero h1 {
-    font-size: clamp(min(3rem, 15vw), 17vw, 4.7rem);
+    font-size: min(17vw, 4.7rem);
   }
 
   .learning-paths-entry-nav {

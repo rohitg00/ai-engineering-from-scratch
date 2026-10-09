@@ -724,6 +724,7 @@
 
 .cert-question {
   min-inline-size: 0;
+  overflow-wrap: break-word;
   margin: 0;
   padding: 24px;
   border: 1px solid var(--rule-soft);
@@ -733,7 +734,6 @@
 .cert-question legend {
   width: 100%;
   padding: 0;
-  overflow-wrap: break-word;
 }
 
 .cert-question-kicker {

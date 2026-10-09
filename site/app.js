@@ -311,7 +311,7 @@
       var lessonLabel = escapeHtml(l.name);
       var lessonMeta = '<span class="modal-lesson-meta"><span class="modal-lesson-type" data-type="' + escapeHtml(l.type) + '"' + (l.combines ? ' title="Combines: ' + escapeHtml(l.combines) + '"' : '') + '>' + escapeHtml(l.type) + '</span><span aria-hidden="true">·</span><span class="modal-lesson-lang">' + escapeHtml(l.lang) + '</span></span>';
 
-      var lessonCopy = '<span class="modal-lesson-copy"><span class="modal-lesson-name" lang="en" dir="ltr" title="' + lessonLabel + '">' + lessonLabel + '</span>' + lessonMeta + '</span>';
+      var lessonCopy = '<span class="modal-lesson-copy"><span class="modal-lesson-name" dir="auto" title="' + lessonLabel + '">' + lessonLabel + '</span>' + lessonMeta + '</span>';
 
       html += '<div class="modal-lesson' + (userComplete ? ' user-done' : '') + '">';
       if (canOpen) {

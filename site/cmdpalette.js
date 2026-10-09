@@ -615,8 +615,8 @@
         ' data-href="' + escHtml(dest) + '">' +
           '<div class="cp-item-body">' +
             '<span class="' + chipClass + '">' + escHtml(chip) + '</span>' +
-            '<span class="cp-item-name" lang="en" dir="ltr" title="' + escHtml(r.name) + '">' + highlight(r.name, query) + '</span>' +
-            (snippet ? '<span class="cp-item-summary" lang="en" dir="ltr">' + highlight(snippet, query) + '</span>' : '') +
+            '<span class="cp-item-name" dir="auto" title="' + escHtml(r.name) + '">' + highlight(r.name, query) + '</span>' +
+            (snippet ? '<span class="cp-item-summary" dir="auto">' + highlight(snippet, query) + '</span>' : '') +
             (meta    ? '<span class="cp-item-meta">'    + escHtml(meta)             + '</span>' : '') +
           '</div>' +
           '<svg class="cp-item-arrow" width="12" height="12" viewBox="0 0 24 24"' +

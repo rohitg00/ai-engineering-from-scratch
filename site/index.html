@@ -1340,7 +1340,7 @@
       }
 
       .certification-copy h2 {
-        font-size: clamp(min(1.75rem, 8.75vw), 9vw, 2.35rem);
+        font-size: min(9vw, 2.35rem);
       }
 
       .certification-intro {
@@ -1935,7 +1935,7 @@
       }
 
       .manual-title {
-        font-size: clamp(min(2.05rem, 10.25vw), 11vw, 2.75rem);
+        font-size: min(11vw, 2.75rem);
         line-height: 1;
       }
 
@@ -2508,8 +2508,8 @@
         <button class="modal-close" id="modalClose" type="button">×</button>
         <div class="modal-header">
           <span class="modal-phase-num" id="modalPhaseNum"></span>
-          <h2 class="modal-title" id="modalTitle" lang="en" dir="ltr"></h2>
-          <p class="modal-desc" id="modalDesc" lang="en" dir="ltr"></p>
+          <h2 class="modal-title" id="modalTitle" dir="auto"></h2>
+          <p class="modal-desc" id="modalDesc" dir="auto"></p>
           <div class="modal-progress" id="modalProgress" style="display:none;"></div>
           <div class="modal-progress-bar" id="modalProgressBar" style="display:none;"><div class="modal-progress-bar-fill" id="modalProgressBarFill"></div></div>
         </div>

@@ -52,14 +52,11 @@ test('overrides only pin keys from the list and only for registered languages', 
   assert.ok(SITE_LANGS.length > 0);
 });
 
-function keyPattern(key) {
-  return new RegExp(key.split('{n}').map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\d+(?:[.,]\\d+)*'));
-}
-
 test('every key still appears in the site pages or scripts', () => {
   const source = siteSource().replace(/\s+/g, ' ');
+  const templated = source.replace(i18n.NUMBER, '{n}');
   for (const key of KEYS) {
-    assert.ok(keyPattern(key).test(source), `orphaned ui-strings.json key: ${JSON.stringify(key)}`);
+    assert.ok(source.includes(key) || templated.includes(key), `orphaned ui-strings.json key: ${JSON.stringify(key)}`);
   }
 });
 

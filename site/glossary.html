@@ -738,7 +738,7 @@
       }
 
       .glossary-masthead h1 {
-        font-size: clamp(min(2.8rem, 14vw), 16vw, 4.4rem);
+        font-size: min(16vw, 4.4rem);
       }
 
       .glossary-stats {
@@ -1288,7 +1288,7 @@
           html += '<span class="glossary-entry-category">' + escapeHtml(entry.category) + '</span></div>';
           html += '<div class="glossary-entry-actions"><button class="glossary-read-aloud" type="button" data-tts-start aria-label="Read ' + escapeHtml(entry.term) + ' aloud">Read term</button>';
           html += '<button class="glossary-copy-link" type="button" data-copy-slug="' + escapeHtml(entry.slug) + '" aria-label="Copy link to ' + escapeHtml(entry.term) + '">Copy link</button></div></div>';
-          html += '<h4 class="glossary-term-heading" id="' + escapeHtml(entry.slug) + '-title" lang="en" dir="ltr">' + escapeHtml(entry.term) + '</h4>';
+          html += '<h4 class="glossary-term-heading" id="' + escapeHtml(entry.slug) + '-title" dir="auto">' + escapeHtml(entry.term) + '</h4>';
           if (entry.aliases.length) {
             html += '<p class="glossary-aliases">Also called · ' + escapeHtml(entry.aliases.join(' · ')) + '</p>';
           }
@@ -1364,9 +1364,7 @@
           var groupList = Object.keys(groups).map(function (letter) { return groups[letter]; });
           groupList.sort(function (a, b) {
             if (currentQuery && a.score !== b.score) return a.score - b.score;
-            if (a.letter === '#') return 1;
-            if (b.letter === '#') return -1;
-            return compareText(a.letter, b.letter);
+            return alphabet.indexOf(a.letter) - alphabet.indexOf(b.letter);
           });
 
           var html = '';

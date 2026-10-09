@@ -2499,18 +2499,17 @@ function syncReadme(lessons) {
 
 // ─── Keep marketing counts in sync (single source of truth = this build) ──
 function syncCounts(lessons, phaseCount, outputs) {
-  const targets = ['index.html', 'catalog.html', 'lesson.html', 'prereqs.html', 'learning-paths.html', 'about.html', 'cmdpalette.js', '../SPONSORS.md'];
-  for (const f of targets) {
-    const p = path.join(__dirname, f);
+  const counts = { lessons, phases: phaseCount, outputs };
+  const targets = ['index.html', 'catalog.html', 'lesson.html', 'prereqs.html', 'learning-paths.html', 'about.html', 'cmdpalette.js']
+    .map(f => path.join(__dirname, f))
+    .concat(SPONSORS_SOURCE_PATH);
+  for (const p of targets) {
     if (!fs.existsSync(p)) continue;
     const before = fs.readFileSync(p, 'utf8');
-    const after = before
-      .replace(/\b\d+(\s+(?:AI engineering\s+|free, open-source\s+)?lessons)\b/g, `${lessons}$1`)
-      .replace(/\b\d+(\s+phases)\b/g, `${phaseCount}$1`)
-      .replace(/\b\d+(\s+outputs)\b/g, `${outputs}$1`);
+    const after = before.replace(/\b\d+(?=\s+(?:(?:AI engineering|free, open-source)\s+)?(lessons|phases|outputs)\b)/g, (_, word) => counts[word]);
     if (after !== before) {
       fs.writeFileSync(p, after, 'utf8');
-      console.log(`   synced counts in ${f}`);
+      console.log(`   synced counts in ${path.basename(p)}`);
     }
   }
 }

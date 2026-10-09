@@ -58,11 +58,10 @@
 
   function lookup(dict, key) {
     if (Object.prototype.hasOwnProperty.call(dict, key)) return dict[key];
-    var numbers = key.match(NUMBER);
-    var template = numbers && key.replace(NUMBER, '{n}');
-    if (!template || !Object.prototype.hasOwnProperty.call(dict, template)) return null;
-    var index = 0;
-    return String(dict[template]).replace(/\{n\}/g, function () { return numbers[index++] || ''; });
+    var numbers = [];
+    var template = key.replace(NUMBER, function (number) { numbers.push(number); return '{n}'; });
+    if (!numbers.length || !Object.prototype.hasOwnProperty.call(dict, template)) return null;
+    return String(dict[template]).replace(/\{n\}/g, function () { return numbers.shift() || ''; });
   }
 
   function translateText(text, dict) {
@@ -110,32 +109,27 @@
     var out = dict ? translateText(rec.text.orig, dict) : rec.text.orig;
     if (out !== current) node.nodeValue = out;
     rec.text.out = out;
-    markDirection(node, out !== rec.text.orig);
+    markDirection(node.parentNode);
   }
 
-  function hasTranslatedText(el) {
-    for (var child = el.firstChild; child; child = child.nextSibling) {
-      var rec = child.nodeType === 3 && records.get(child);
-      if (rec && rec.text && rec.text.out !== rec.text.orig) return true;
-    }
-    return false;
-  }
-
-  function clearEnglish(el) {
-    el.removeAttribute('lang');
-    el.removeAttribute('dir');
-    el.removeAttribute(ENGLISH);
-  }
-
-  function markDirection(node, translated) {
-    var el = node.parentNode;
+  function markDirection(el) {
     if (!el || el.nodeType !== 1) return;
-    if (translated) {
-      if (el.hasAttribute(ENGLISH)) clearEnglish(el);
-      return;
+    if (el.hasAttribute(ENGLISH)) {
+      el.removeAttribute('lang');
+      el.removeAttribute('dir');
+      el.removeAttribute(ENGLISH);
     }
-    if (!RTL[active] || !LATIN.test(node.nodeValue) || el.hasAttribute('lang') || el.hasAttribute('dir')) return;
-    if (BOX.test(root.getComputedStyle(el).display) || hasTranslatedText(el)) return;
+    if (!RTL[active] || el.hasAttribute('dir')) return;
+    var island = el.closest('[lang]');
+    if (island && island !== root.document.documentElement) return;
+    var latin = false;
+    for (var child = el.firstChild; child; child = child.nextSibling) {
+      if (child.nodeType !== 3) continue;
+      var rec = records.get(child);
+      if (rec && rec.text.out !== rec.text.orig) return;
+      if (LATIN.test(child.nodeValue)) latin = true;
+    }
+    if (!latin || BOX.test(root.getComputedStyle(el).display)) return;
     el.setAttribute('lang', 'en');
     el.setAttribute('dir', 'ltr');
     el.setAttribute(ENGLISH, '');
@@ -192,7 +186,6 @@
       active = dict ? lang : 'en';
       if (!dict && !touched) return;
       touched = true;
-      Array.prototype.forEach.call(root.document.querySelectorAll('[' + ENGLISH + ']'), clearEnglish);
       applyTree(root.document.body, dict);
       applyDir(active);
       observe();
@@ -258,7 +251,8 @@
     TRANSLATIONS_BASE: TRANSLATIONS_BASE,
     ATTRS: ATTRS,
     SKIP_SELECTOR: SKIP_SELECTOR,
-    ARTICLE_ALLOW_SELECTOR: ARTICLE_ALLOW_SELECTOR
+    ARTICLE_ALLOW_SELECTOR: ARTICLE_ALLOW_SELECTOR,
+    NUMBER: NUMBER
   };
   if (typeof module === 'object' && module.exports) module.exports = api;
   root.AIFSUiI18n = api;
