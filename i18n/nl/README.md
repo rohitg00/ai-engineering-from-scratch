@@ -1,44 +1,19 @@
 <p align="center" lang="nl"><sub>Nederlandse vertaling van de volledige README. Het <a href="../../README.md">Engelse origineel</a> is leidend · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
-<p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch: banner van de naslaghandleiding" width="100%">
-</p>
 
 <p align="center">
-  <a href="../../README.md">🇬🇧 English</a> ·
-  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
-  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
-  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
-  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
-  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
-  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
-  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
-  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
-  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
-  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
-  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
-  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
-  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
-  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
-  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
-  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
-  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
-  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
-  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
-  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
-  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
-  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
-  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
-  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
-  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
-  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
-  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
-  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
-  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
-  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
-  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
-  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
-  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/header-dark.svg">
+    <img src="../../assets/readme/header-light.svg" alt="AI-engineering vanaf nul" width="840">
+  </picture>
 </p>
+
+Implementeer de interne werking van modellen, zoekpijplijnen en uitvoeringsomgevingen voor agents. Test ze, onderzoek fouten en bewaar de code en evaluatieresultaten.
+
+**[Begin met leren](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Kies een pad](#learning-routes)** · **[Probeer een lab](#interactive-lab)** · **[Bouw een project](#project-challenges)** · **[Bekijk het curriculum](#contents)**
+
+Gratis, open source, met MIT-licentie. Leer op de webpagina, met een programmeeragent of door lokaal code uit te voeren.
+
+> 523 lessen. 20 fasen. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-licentie"></a>
@@ -46,12 +21,16 @@
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 fasen"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Sterren op GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Webpagina"></a>
-  <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Positie in Star History" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="Populaire GitHub-repository van de dag" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
- </a>
 </p>
+
+<details>
+<summary>Lees in je eigen taal</summary>
+
+<p align="center">
+  <a href="../../README.md">🇬🇧 English</a> · <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> · <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> · <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> · <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> · <a href="../../i18n/pt/README.md">🇵🇹 Português</a> · <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> · <a href="../../i18n/es/README.md">🇪🇸 Español</a> · <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> · <a href="../../i18n/fr/README.md">🇫🇷 Français</a> · <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> · <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> · <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> · <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> · <a href="../../i18n/ro/README.md">🇷🇴 Română</a> · <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> · <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> · <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> · <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> · <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> · <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> · <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> · <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> · <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> · <a href="../../i18n/he/README.md">🇮🇱 עברית</a> · <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> · <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> · <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> · <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> · <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> · <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> · <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> · <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> · <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
+
+</details>
 
 ### Sponsoren
 
@@ -64,65 +43,134 @@
   <sub><span>Dankzij jouw steun blijft elke les gratis en open source.</span> <a href="#supporters">Bekijk alle supporters</a> · <a href="../../SPONSORS.md">Word sponsor</a></sub>
 </p>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+<a id="see-what-you-will-build-and-keep"></a>
+<a id="learning-routes"></a>
 
-> **84% van de studenten gebruikt al AI-tools. Slechts 18% voelt zich klaar om ze professioneel te gebruiken.** Dit leerprogramma overbrugt die kloof.
->
-> 523 lessen. 20 fasen. ~342 uur. Python, TypeScript, Rust, Julia. Elke les levert iets herbruikbaars op: een prompt, een skill, een agent of een MCP-server. Gratis, open source, MIT.
->
-> Je leert niet alleen over AI. Je bouwt het zelf. Van begin tot eind. Met eigen handen.
+## Leerroutes
 
-<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> lezers &nbsp;·&nbsp; <b>181,995</b> paginaweergaven in de afgelopen 30 dagen &nbsp;·&nbsp; stand op 2026-08-29</sub></p>
-<!-- STATS:END -->
+| Leerroute | Eerste les |
+|---|---|
+| Grondslagen van modellen | [Installatie en hulpmiddelen](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| LLM-systemen | [Promptengineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Agents en systeemoplevering | [De agentlus](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
 
-## Begin hier: kies wat je wilt bouwen
+[Vergelijk loopbaanpaden](https://aiengineeringfromscratch.com/learning-paths.html) · [Voorkennis en studietijd](#study-guide)
 
-Je hoeft niet alle 523 lessen door te nemen voordat je begint. Kies één doel. Elke link opent hetzelfde leerprogramma op GitHub of de website, en beide versies gebruiken dezelfde lescode.
+<a id="interactive-lab"></a>
 
-| Jouw doel | Leren op GitHub | Leren op de website |
-|---|---|---|
-| Ik ben een beginner en wil een volledige basis | [Fase 0: Installatie en gereedschap](../../phases/00-setup-and-tooling/) | [Ontwikkelomgeving](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Ik ken Python en wil een basis in wiskunde en ML | [Fase 1: Wiskundige grondslagen](../../phases/01-math-foundations/) | [Intuïtie voor lineaire algebra](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Ik wil LLM-toepassingen voor productie bouwen | [Fase 11: LLM-engineering](../../phases/11-llm-engineering/) | [Promptengineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Ik wil agents bouwen | [Fase 14: Agentengineering](../../phases/14-agent-engineering/) | [De agentlus](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Ik wil programmeeragents gebruiken in echte repositories | [Leerroute voor engineering met agents](../../learning-paths/using-coding-agents.json) | [Engineering met agents](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Ik wil vóór de implementatie bepalen wat ik moet bouwen | [Leerroute voor productkeuzes en oplevering](../../learning-paths/shaping-the-build.json) | [Productkeuzes en oplevering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| Ik wil bouwen met Model Context Protocol (MCP) | [Model Context Protocol (MCP)-route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP)-leerroute](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Ik wil Agent Skills schrijven en uitbrengen | [Gerichte Agent Skills-route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills-leerroute](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Ik wil me voorbereiden op een Claude-certificering | [Startgids voor certificering](../../certifications/claude/GETTING_STARTED.md) | [Certificeringsacademie](https://aiengineeringfromscratch.com/certifications.html) |
-| Ik wil me voorbereiden op MCP Associate (MCPA) | [Startgids voor MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA-leerroute](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+### Gradiëntafdaling
 
-Weet je niet waar je moet beginnen? Gebruik de [`start-learning`-tutor voor niveaubepaling](../../skills/start-learning/SKILL.md) of de [gids met voorkennis op de website](https://aiengineeringfromscratch.com/prereqs.html).
+Twintig beginpunten volgen gradiëntafdaling op een kwadratische verliesfunctie. De grafiek toont hun posities en het gemiddelde verlies na elke update.
 
-Vergelijk vier kerndomeinen en zes loopbaanroutes in de [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+<p align="center">
+  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+    <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
+      <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
+      <source media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-dark.png">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-light.png">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-mobile-dark.gif">
+      <source media="(max-width: 600px)" srcset="../../assets/readme/101-gradient-mobile-light.gif">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-dark.gif">
+      <img src="../../assets/readme/101-gradient-light.gif" alt="Gradiëntafdaling verplaatst verspreide beginpunten naar het minimum van de verliesfunctie. Het gemiddelde verlies neemt bij elke update af." width="840">
+    </picture>
+  </a>
+</p>
 
-### Pak elke les op dezelfde manier aan
+[Pas de leersnelheid aan in de les](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Vergelijk gradiëntafdaling, momentum en Adam in code](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
-1. **Lees** `docs/en.md` en leg het kernidee in je eigen woorden uit.
-2. **Typ en bouw** de belangrijke code zelf in plaats van het codeblok als versiering te behandelen.
-3. **Voer het lescommando uit** vanuit de hoofdmap van de repository, de map met `README.md` en `phases/`.
-4. **Bewaar bewijs**: het commando, de werkmap, de exitcode, betekenisvolle uitvoer en het resultaat dat je hebt aangepast of gemaakt.
-5. **Ga pas verder** wanneer je de uitvoer kunt uitleggen en zonder gokken een kleine wijziging kunt maken.
+<a id="project-challenges"></a>
 
-Paden in de commando's op lespagina's zijn relatief aan de hoofdmap van de repository, tenzij de les uitdrukkelijk zegt dat je van map moet wisselen. Biedt een les meerdere programmeertalen aan, voer dan de implementatie uit in de taal die je leert.
+### Projecten
 
-### Kloon de repository en lever je eerste bewijs
+Drie projecten met startcode per fase, referentie-implementaties en lokale beoordelaars. Voer opdrachten uit vanuit de hoofdmap van de repository na de [installatie](#local-setup). De startcode doorstaat de controles pas wanneer je de fasen hebt geïmplementeerd.
+
+<details>
+<summary><strong>01 · Lab voor retrievalevaluatie</strong> · Python · Rangschikkingsmetrieken en regressiecontroles</summary>
+
+Een kandidaat verbetert de gemiddelde NDCG terwijl bij één query het meest relevante bewijs lager komt te staan. Bouw een vergelijking per query die de regressie meldt en een releasecontrole kan laten mislukken.
+
+Gebruik Python 3.10+. Bekijk [RAG](../../phases/11-llm-engineering/06-rag/docs/en.md) en [modelevaluatie](../../phases/02-ml-fundamentals/09-model-evaluation/docs/en.md). Implementeer rangschikkingsvalidatie, precision en recall, positiegevoelige metrieken en daarna de systeemvergelijking.
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --init learning-artifacts/retrieval-evaluation-lab
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --stage 1 --path learning-artifacts/retrieval-evaluation-lab --strict
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --all --path learning-artifacts/retrieval-evaluation-lab --strict
 ```
 
-De voorafgaande controle maakt onderscheid tussen vereisten voor nu en gereedschap voor later. Bij elke mislukte verplichte controle krijg je de gevonden oorzaak en een commando om die te verhelpen. Het tweede commando voert een les zonder afhankelijkheden uit en laat aan het eind zien dat een matrix vermenigvuldigen met een vector de bewerking binnen een neurale netwerklaag is. Bewaar die terminaluitvoer als je eerste bewijs.
+**Bewaar:** een reproduceerbare vergelijking met verschillen per query en de relevantiebeoordelingen voor de scores. De metrieken beschrijven die beoordelingen; ze bewijzen niet dat antwoorden correct zijn.
 
-## Voeg de AI-tutor toe in 30 seconden
+[Start het project](https://aiengineeringfromscratch.com/project.html?id=retrieval-evaluation-lab) · [Bekijk de referentie](../../projects/retrieval-evaluation-lab/solution/) · [Voer uit met je eigen invoer](../../projects/retrieval-evaluation-lab/README.md#run-with-your-own-inputs)
 
-Als Node.js, `npx` en een programmeeragent die skills ondersteunt al zijn geïnstalleerd, kan je agent in twee commando’s je tutor worden. Je hoeft de repository niet te klonen om de tutor te installeren of te lezen. Voor de uitvoerbare practica van gerichte leerroutes heb je `python3` nodig. Voor Agent Skills-practica heb je ook een gekozen host nodig en een beschrijfbare skillmap voor de gebruiker of het project.
+</details>
+
+<details>
+<summary><strong>02 · Debugger voor agenttraces</strong> · TypeScript · Traces ontleden en tijd meten</summary>
+
+Een meegeleverde trace duurt nog steeds 100 ms, maar het totale tokengebruik stijgt met 200 en één span begint te falen. Scheid overlappend werk van onderliggende spans van de uitvoeringstijd van de bovenliggende span en maak een rapport dat de verandering toont.
+
+Gebruik Node.js 22.18+ en Python 3 voor de beoordelaar. Implementeer JSONL-parsing, validatie van bovenliggende spans, intervalrekenen en daarna een inspecteerbare tijdlijn.
+
+```bash
+python3 scripts/project_test.py agent-trace-debugger \
+  --init learning-artifacts/agent-trace-debugger
+python3 scripts/project_test.py agent-trace-debugger \
+  --stage 1 --path learning-artifacts/agent-trace-debugger --strict
+python3 scripts/project_test.py agent-trace-debugger \
+  --all --path learning-artifacts/agent-trace-debugger --strict
+```
+
+**Bewaar:** de invoertrace, een HTML-tijdlijn en een JSON-regressierapport. Behoud de eigen tokenaantallen per span, zonder onderliggende spans, zodat het gebruik van bovenliggende en onderliggende spans niet dubbel wordt geteld.
+
+[Start het project](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger) · [Bekijk de referentie](../../projects/agent-trace-debugger/solution/) · [Verken timing interactief](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger&stage=03-timing)
+
+</details>
+
+<details>
+<summary><strong>03 · Firewall voor toolaanroepen</strong> · Rust · Rolcontroles en goedkeuringsbewijzen</summary>
+
+Een schrijfbewerking verandert na controle, of een goedkeuring wordt hergebruikt. Valideer de aanroepenvelop, controleer de rol en het pad van de aanroeper en verbruik dan een goedkeuring die aan precies dat verzoek en die inhoud is gekoppeld.
+
+Gebruik Rust en Python 3.10+. Bekijk [ontwerp van toolschema’s](../../phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md) en [beveiligingsgrenzen](../../phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md). De aanroepende applicatie levert de identiteit; het model stelt een bewerking voor.
+
+```bash
+python3 scripts/project_test.py tool-call-firewall \
+  --init learning-artifacts/tool-call-firewall
+python3 scripts/project_test.py tool-call-firewall \
+  --stage 1 --path learning-artifacts/tool-call-firewall --strict
+python3 scripts/project_test.py tool-call-firewall \
+  --all --path learning-artifacts/tool-call-firewall --strict
+```
+
+**Bewaar:** een auditbewijs met de aangevraagde bewerking en de beleidsbeslissing. Goedkeuringen zijn binnen één aanroep eenmalig bruikbaar; dit project biedt geen blijvende autorisatie of sandbox op besturingssysteemniveau.
+
+[Start het project](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall) · [Bekijk de referentie](../../projects/tool-call-firewall/solution/) · [Verken goedkeuringsgrenzen](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall&stage=03-consume-a-request-bound-approval-once)
+
+</details>
+
+[Bekijk alle projecten](https://aiengineeringfromscratch.com/projects.html) · [Gids voor loopbaanpraktijk](../../learning-paths/CAREER-PRACTICE.md)
+
+## Kies hoe je wilt leren
+
+### Op de webpagina
+
+Open een afgeronde les op [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) of klap een fase onder [Inhoud](#contents) open. Geen installatie of kloon nodig.
+
+### Met een AI-begeleider
+
+Als Node.js, `npx` en een programmeeragent die skills ondersteunt al zijn geïnstalleerd, kan je agent je tutor worden. Je hoeft de repository niet te klonen om de tutor te installeren of te lezen. Voor de uitvoerbare practica van gerichte leerroutes heb je `python3` nodig. Voor Agent Skills-practica heb je ook een gekozen host nodig en een beschrijfbare skillmap voor de gebruiker of het project.
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+Kies de host en het bereik wanneer het installatieprogramma erom vraagt. Gebruik `start-learning` in Codex, `/start-learning` in Claude Code of vraag je host de skill bij naam te gebruiken.
+
+<details>
+<summary>Tutor instellen en hostcommando’s</summary>
 
 Controleer eerst de lokale vereisten:
 
@@ -132,11 +180,7 @@ npx --version
 python3 --version
 ```
 
-Installeer daarna de cursusvaardigheden en kies de host en de installatiereikwijdte wanneer het installatieprogramma daarom vraagt:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
+`skills` schrijft naar de tijdens de installatie gekozen host en reikwijdte, bijvoorbeeld `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` of een andere ondersteunde skillmap. Controleer of de gekozen host precies die doelmap ontdekt.
 
 De aanroepsyntaxis wordt door de host bepaald, niet door het overdraagbare `SKILL.md`-formaat:
 
@@ -154,17 +198,100 @@ Wil je alleen Agent Skills? Gebruik de Agent Skills-aanroep voor je host. Die ma
 
 Het installatieprogramma toont de hosts die het kan configureren en vraagt waar het moet installeren. Heb je nog geen Node.js, `npx`, `python3`, ondersteunde host of beschrijfbare installatiemap, gebruik dan de website of lees `docs/en.md` zelf. Daarmee leer je de concepten, maar bewijs van ontdekking, aanroep, scripts en verwijdering op een echte host blijft uitstaan totdat de voorafgaande controle mogelijk is. Lees de lessen op [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## Hoe dit werkt
+### De leerskills
 
-Veel AI-lesmateriaal bestaat uit losse stukken. Hier een paper, daar een bericht over fijnafstemming en elders een indrukwekkende agentdemo. Die stukken sluiten zelden op elkaar aan. Je levert een chatbot op, maar kunt zijn verliescurve niet verklaren. Je koppelt een functie aan een agent, maar kunt niet uitleggen wat aandacht doet in het model dat die functie aanroept.
+| Vaardigheid | Wat deze doet |
+|---|---|
+| [`start-learning`](../../skills/start-learning/SKILL.md) | Eenmalige start: je leerdoel, plaatsingstoets en een persoonlijk plan opgeslagen in `LEARNING.md`. |
+| [`learn`](../../skills/learn/SKILL.md) | De tutorcyclus: voorkennis ophalen, interactief de volgende les behandelen en daarna de quiz; bewaart voortgang en een herhaalwachtrij. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | Onderwerpwijzer. “Waar leer ik over aandacht?” of “mijn verlies is NaN” → de precieze lessen, met links. |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Gerichte tutor voor Model Context Protocol (MCP). Maakt `MCP-LEARNING.md`, volgt het manifest met 17 lessen en bewaart bewijs voor het wire-formaat, beveiliging, betrouwbaarheid en conformiteit. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Gerichte Agent Skills-tutor. Maakt `AGENT-SKILLS-LEARNING.md`, behandelt lessen 22, 24, 25, 26 en 27 en bewaart bewijs van uitvoering op een echte host. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Certificeringstutor. Kiest CCAO-F, CCDV-F, CCAR-F of CCAR-P; behandelt elke les, voert practica uit, beoordeelt resultaten, neemt diagnostische toetsen en oefenexamens af en bewaart voortgang. |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA-tutor. Volgt de route met 34 lessen `mcpa-f` voor het protocol van 2026-07-28; behandelt elke les, voert practica en de wire-controle uit, neemt de diagnostische toets en drie oefenexamens af en bewaart voortgang. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Plaatsingstoets met tien vragen. Koppelt je kennis aan een beginfase en maakt een persoonlijke route met tijdsinschattingen. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Quiz per fase met acht vragen, feedback en concrete lessen om te herhalen. Gebruik de vorm voor Codex, Claude Code of natuurlijke taal uit de bovenstaande aanroeptabel. |
 
-Dit leerprogramma vormt de ruggengraat: 20 fasen, 523 lessen en vier talen: Python, TypeScript, Rust en Julia. Van lineaire algebra aan het begin tot autonome zwermen aan het eind. Elk algoritme bouw je eerst rechtstreeks vanuit de wiskunde: backpropagatie, tokenisatie, aandacht en de agentlus. Tegen de tijd dat PyTorch verschijnt, weet je al wat er onder de motorkap gebeurt.
+</details>
 
-Elke les volgt dezelfde cyclus: lees het probleem, leid de wiskunde af, schrijf de code, voer de test uit en bewaar het resultaat. Geen video’s van vijf minuten, geen gekopieerde uitrolcommando’s en geen voortdurende begeleiding. Gratis, open source en gemaakt om op je eigen laptop te draaien.
+<a id="local-setup"></a>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+### Voer code lokaal uit
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+
+De voorafgaande controle maakt onderscheid tussen vereisten voor nu en gereedschap voor later. Bij elke mislukte verplichte controle krijg je de gevonden oorzaak en een commando om die te verhelpen. Het commando `vectors.py` voert een les zonder afhankelijkheden uit en laat aan het eind zien dat een matrix vermenigvuldigen met een vector de bewerking binnen een neurale netwerklaag is. Bewaar die terminaluitvoer als je eerste bewijs.
+
+<details>
+<summary>Pak elke les op dezelfde manier aan</summary>
+
+### Pak elke les op dezelfde manier aan
+
+1. **Lees** `docs/en.md` en leg het kernidee in je eigen woorden uit.
+2. **Typ en bouw** de belangrijke code zelf in plaats van het codeblok als versiering te behandelen.
+3. **Voer het lescommando uit** vanuit de hoofdmap van de repository, de map met `README.md` en `phases/`.
+4. **Bewaar bewijs**: het commando, de werkmap, de exitcode, betekenisvolle uitvoer en het resultaat dat je hebt aangepast of gemaakt.
+5. **Ga pas verder** wanneer je de uitvoer kunt uitleggen en zonder gokken een kleine wijziging kunt maken.
+
+Paden in de commando's op lespagina's zijn relatief aan de hoofdmap van de repository, tenzij de les uitdrukkelijk zegt dat je van map moet wisselen. Biedt een les meerdere programmeertalen aan, voer dan de implementatie uit in de taal die je leert.
+
+</details>
+
+<a id="study-guide"></a>
+
+## Kies een leerpad
+
+Je hoeft niet alle 523 lessen door te nemen voordat je begint. Kies één doel. Elke link opent hetzelfde leerprogramma op GitHub of de website, en beide versies gebruiken dezelfde lescode.
+
+| Jouw doel | Leren op GitHub | Leren op de website |
+|---|---|---|
+| Ik ben een beginner en wil een volledige basis | [Fase 0: Installatie en gereedschap](../../phases/00-setup-and-tooling/) | [Ontwikkelomgeving](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Ik ken Python en wil een basis in wiskunde en ML | [Fase 1: Wiskundige grondslagen](../../phases/01-math-foundations/) | [Intuïtie voor lineaire algebra](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| Ik wil LLM-toepassingen voor productie bouwen | [Fase 11: LLM-engineering](../../phases/11-llm-engineering/) | [Promptengineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Ik wil agents bouwen | [Fase 14: Agentengineering](../../phases/14-agent-engineering/) | [De agentlus](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Ik wil programmeeragents gebruiken in echte repositories | [Leerroute voor engineering met agents](../../learning-paths/using-coding-agents.json) | [Engineering met agents](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| Ik wil vóór de implementatie bepalen wat ik moet bouwen | [Leerroute voor productkeuzes en oplevering](../../learning-paths/shaping-the-build.json) | [Productkeuzes en oplevering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+
+Weet je niet waar je moet beginnen? Gebruik de [`start-learning`-tutor voor niveaubepaling](../../skills/start-learning/SKILL.md) of de [gids met voorkennis op de website](https://aiengineeringfromscratch.com/prereqs.html).
+
+Vergelijk vier kerndomeinen en zes loopbaanroutes in de [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+
+<details>
+<summary>Gerichte leerpaden voor MCP en Agent Skills</summary>
+
+| Jouw doel | Leren op GitHub | Leren op de website |
+|---|---|---|
+| Ik wil bouwen met Model Context Protocol (MCP) | [Model Context Protocol (MCP)-route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP)-leerroute](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Ik wil Agent Skills schrijven en uitbrengen | [Gerichte Agent Skills-route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills-leerroute](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+
+</details>
+
+<details>
+<summary>Voorkennis en studietijd</summary>
+
+### Vereiste voorkennis
+
+- Je kunt programmeren in een willekeurige taal; Python helpt.
+- Je wilt begrijpen hoe AI **werkelijk werkt**, niet alleen API’s aanroepen.
+
+## Waar te beginnen
+
+| Voorkennis | Begin bij | Geschatte tijd |
+|---|---|---|
+| Nieuw met programmeren en AI | Fase 0: Installatie en gereedschap | ~306 uur |
+| Je kent Python, maar ML is nieuw | Fase 1: Wiskundige grondslagen | ~270 uur |
+| Je kent ML, maar diep leren is nieuw | Fase 3: Kern van diep leren | ~200 uur |
+| Je kent diep leren en wilt LLM’s en agents leren | Fase 10: LLM’s vanaf nul | ~100 uur |
+| Ervaren engineer die alleen agentengineering wil | Fase 14: Agentengineering | ~60 uur |
+| Je wilt alleen MCP-systemen voor productie bouwen | [Model Context Protocol (MCP)-leerroute](../../learning-paths/model-context-protocol.json) | ~23 uur 15 min |
+| Je wilt alleen Agent Skills voor productie bouwen | [Leerroute voor Agent Skills-engineering](../../learning-paths/agent-skills.json) | ~9.5 uur |
+
+</details>
 
 ## De opbouw van het leerprogramma
 
@@ -194,196 +321,6 @@ flowchart TB
   P16 --> P19["Fase 19: Eindprojecten"]
   P17 --> P19
   P18 --> P19
-```
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## De opbouw van een les
-
-Elke les heeft een eigen map, met dezelfde structuur in het hele leerprogramma:
-
-```text
-phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      uitvoerbare implementaties (Python, TypeScript, Rust, Julia)
-├── docs/
-│   └── en.md  lesuitleg
-└── outputs/   prompts, vaardigheden, agents of MCP-servers die deze les oplevert
-```
-
-Elke les bestaat uit zes stappen. Het onderscheid *Bouw het / Gebruik het* vormt de kern: eerst implementeer je het algoritme vanaf nul, daarna voer je hetzelfde uit met een productiebibliotheek. Je begrijpt het framework omdat je zelf de kleinere versie hebt geschreven.
-
-```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
-flowchart LR
-  M["KERNIDEE<br/><sub>kernidee in één regel</sub>"] --> Pr["PROBLEEM<br/><sub>concreet knelpunt</sub>"]
-  Pr --> C["BEGRIP<br/><sub>diagrammen en intuïtie</sub>"]
-  C --> B["BOUW HET<br/><sub>zuivere wiskunde, zonder frameworks</sub>"]
-  B --> U["GEBRUIK HET<br/><sub>hetzelfde in PyTorch / sklearn</sub>"]
-  U --> S["LEVER HET OP<br/><sub>prompt · vaardigheid · agent · MCP</sub>"]
-```
-
-## Aan de slag
-
-Drie manieren om te beginnen. Kies er één.
-
-**Optie A: leer in je terminal *(aanbevolen)*.** Controleer zoals hierboven Node.js, `npx`, host en installatiereikwijdte. Installeer daarna de leerskills in een compatibele agent en laat de cursus je begeleiden:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
-
-Gebruik de bovenstaande aanroeptabel voor je host. De geïnstalleerde skills bieden `start-learning`, `learn`, `course-guide` en de gerichte routes `learn-mcp` en `learn-agent-skills`. Lesinhoud kan zonder lokale kloon rechtstreeks uit deze repository worden geladen. Voor gekopieerde repositorycommando’s en uitvoerbare MCP- of Agent Skills-practica is wel een lokale kloon nodig. De voortgang staat in `LEARNING.md`, `MCP-LEARNING.md` of `AGENT-SKILLS-LEARNING.md` in je project, zodat elke sessie kan verdergaan waar je gebleven was.
-
-**Optie B: lees.** Open een afgeronde les op [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) of klap een fase onder [Inhoud](#contents) open. Geen installatie of kloon nodig.
-
-**Optie C: kloon en voer uit.**
-
-```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
-```
-
-Klonen laadt de leerskills ook automatisch in Claude Code en geeft de `learn`-tutor toegang tot de code van elke les om die echt uit te voeren, in plaats van alleen mee te lezen.
-
-### Vereiste voorkennis
-
-- Je kunt programmeren in een willekeurige taal; Python helpt.
-- Je wilt begrijpen hoe AI **werkelijk werkt**, niet alleen API’s aanroepen.
-
-### Bereid je voor op Claude-certificeringen
-
-De [Claude-certificeringsacademie](../../certifications/claude/README.md) is een gratis, open voorbereidingsprogramma voor alle vier officiële Claude-certificeringstrajecten: Associate Foundations, Developer Foundations, Architect Foundations en Architect Professional. Elke route combineert lessen gekoppeld aan de exameneisen, uitvoerbare practica, een diagnostische toets, eindwerk en een volledig origineel oefenexamen.
-
-Gebruik de [AI-gerichte GitHub-startgids](../../certifications/claude/GETTING_STARTED.md) met Claude Code, Codex, ChatGPT, Cursor of een andere agent. Voer `claude-certification` uit in Codex, `/claude-certification` in Claude Code of vraag een andere host om `claude-certification` te gebruiken. De skill kiest een traject, maakt een blijvende route in `CLAUDE-CERTIFICATION.md`, onderwijst stap voor stap, voert de echte practica uit en geeft feedback op je resultaten. Hetzelfde leerprogramma staat op de [certificeringswebsite](https://aiengineeringfromscratch.com/certifications.html).
-
-De academie is onafhankelijk studiemateriaal op basis van openbare examendoelen. Zij is niet verbonden aan Anthropic, bevat geen echte examenvragen en kan geen voldoende garanderen.
-
-### Bereid je voor op de MCP Associate (MCPA)-certificering
-
-Het [MCPA-certificeringsprogramma](../../certifications/mcpa/README.md) is een gratis, open voorbereiding op het Model Context Protocol Associate-examen van de Agentic AI Foundation, aangeboden via Linux Foundation Training. De 34 lessen behandelen het toestandsloze protocol van 2026-07-28 in de vijf examendomeinen: `_meta` per verzoek en `server/discover` in plaats van de oude handshake, verzoeken met meerdere rondes, abonnementen, caching, de uitbreidingen voor taken en MCP Apps, OAuth-autorisatie en de register- en SDK-niveaus. Elke les bevat een uitvoerbaar practicum met alleen de standaardbibliotheek, waarvan het transcript op het actuele wire-formaat wordt gecontroleerd. Het traject bevat ook een diagnostische toets, een eindproject en drie volledige originele oefenexamens met de gepubliceerde verdeling van onderwerpen.
-
-Gebruik de [AI-gerichte GitHub-startgids](../../certifications/mcpa/GETTING_STARTED.md) met Claude Code, Codex, ChatGPT, Cursor of een andere agent. Voer `mcpa-certification` uit in Codex, `/mcpa-certification` in Claude Code of vraag een andere host om `mcpa-certification` te gebruiken. De skill maakt een blijvende route in `MCPA-CERTIFICATION.md`, onderwijst stap voor stap, voert de echte practica uit en geeft feedback op je resultaten. Hetzelfde leerprogramma staat op de [MCPA-trajectpagina](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
-
-Dit leerprogramma is onafhankelijk studiemateriaal op basis van openbare examendoelen. Het is niet verbonden aan de Agentic AI Foundation of de Linux Foundation, bevat geen echte examenvragen en kan geen voldoende garanderen.
-
-### De leerskills
-
-| Vaardigheid | Wat deze doet |
-|---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | Eenmalige start: je leerdoel, plaatsingstoets en een persoonlijk plan opgeslagen in `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | De tutorcyclus: voorkennis ophalen, interactief de volgende les behandelen en daarna de quiz; bewaart voortgang en een herhaalwachtrij. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Onderwerpwijzer. “Waar leer ik over aandacht?” of “mijn verlies is NaN” → de precieze lessen, met links. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Gerichte tutor voor Model Context Protocol (MCP). Maakt `MCP-LEARNING.md`, volgt het manifest met 17 lessen en bewaart bewijs voor het wire-formaat, beveiliging, betrouwbaarheid en conformiteit. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Gerichte Agent Skills-tutor. Maakt `AGENT-SKILLS-LEARNING.md`, behandelt lessen 22, 24, 25, 26 en 27 en bewaart bewijs van uitvoering op een echte host. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Certificeringstutor. Kiest CCAO-F, CCDV-F, CCAR-F of CCAR-P; behandelt elke les, voert practica uit, beoordeelt resultaten, neemt diagnostische toetsen en oefenexamens af en bewaart voortgang. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA-tutor. Volgt de route met 34 lessen `mcpa-f` voor het protocol van 2026-07-28; behandelt elke les, voert practica en de wire-controle uit, neemt de diagnostische toets en drie oefenexamens af en bewaart voortgang. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Plaatsingstoets met tien vragen. Koppelt je kennis aan een beginfase en maakt een persoonlijke route met tijdsinschattingen. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Quiz per fase met acht vragen, feedback en concrete lessen om te herhalen. Gebruik de vorm voor Codex, Claude Code of natuurlijke taal uit de bovenstaande aanroeptabel. |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Lees het kernleerprogramma als boek
-
-Het kernleerprogramma van 20 fasen onder `phases/` wordt samengesteld tot een reeks van zes boeken. CI bouwt EPUB- en PDF-versies uit dezelfde lesbronnen en voegt ze toe aan elke [GitHub-release](https://github.com/rohitg00/ai-engineering-from-scratch/releases); de onderstaande links verwijzen steeds naar de nieuwste release. Deelnummers geven de plaats in de reeks aan, niet de versie: elk exemplaar heeft een gedateerde editieaanduiding en oudere edities blijven via hun release beschikbaar.
-
-Certificeringsprogramma’s worden bewust niet in de boeken opgenomen. Hun AI-tutorstatus, uitvoerbare practica, interactieve figuren, diagnostische toetsen en getimede oefenexamens blijven volledig beschikbaar op GitHub en de website.
-
-| Deel | Titel | Fasen | Ophalen |
-|-----|-------|--------|----------|
-| 1 | Grondslagen · Wiskunde, gereedschap en klassiek machinaal leren | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Diep leren · Netwerken, visie en spraak | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Taal · NLP-grondslagen en de transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Grote taalmodellen · Generatie, bekrachtiging, voortraining en engineering | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Agents · Multimodaliteit, protocollen, autonomie en zwermen | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Productie · Infrastructuur, veiligheid en eindprojecten | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-Het boek is een momentopname; deze repository is de levende editie. Elk hoofdstuk eindigt met links naar de geanimeerde figuren, quiz en uitvoerbare code van de les. Bouw lokaal met `python3 scripts/build_book.py` (pandoc vereist); details van de pijplijn staan in [book/README.md](../../book/README.md).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Elke les levert iets op
-
-Andere cursussen eindigen met *“gefeliciteerd, je hebt X geleerd.”* Elke les hier eindigt met een **herbruikbaar hulpmiddel** dat je kunt installeren of in je dagelijkse werk kunt opnemen.
-
-<table>
-<tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A promptsjablonen"/><br/><sub>FIG_001 · A</sub><br/><b>PROMPTSJABLONEN</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B vaardigheden"/><br/><sub>FIG_001 · B</sub><br/><b>VAARDIGHEDEN</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C autonome agents"/><br/><sub>FIG_001 · C</sub><br/><b>AUTONOME AGENTS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP-servers"/><br/><sub>FIG_001 · D</sub><br/><b>MCP-SERVERS</b></th>
-</tr>
-<tr>
-<td valign="top">Plak in een AI-assistent voor deskundige hulp bij een afgebakende taak.</td>
-<td valign="top">Voeg toe aan Claude, Cursor, Codex, OpenClaw, Hermes of een andere agent die dit leest: <code>SKILL.md</code>.</td>
-<td valign="top">Zet in als autonome werkers: je schreef de lus zelf in fase 14.</td>
-<td valign="top">Sluit aan op elke MCP-compatibele client. Volledig gebouwd in fase 13.</td>
-</tr>
-</table>
-
-> Installeer alles met `python3 scripts/install_skills.py <target>`. Echte hulpmiddelen, geen huiswerk.
-> Aan het eind van het leerprogramma heb je een portfolio van 523 resultaten die je echt begrijpt, omdat je ze zelf hebt gebouwd.
-
-### FIG_002 · Een uitgewerkt voorbeeld
-
-Fase 14, les 1: de agentlus. ~120 regels zuivere Python, zonder afhankelijkheden.
-
-<table>
-<tr>
-<td valign="top" width="50%">
-
-**`code/agent_loop.py`** &nbsp; <sub><i>bouw het</i></sub>
-
-```python
-def run(query, tools):
-    history = [user(query)]
-    for step in range(MAX_STEPS):
-        msg = llm(history)
-        if msg.tool_calls:
-            for call in msg.tool_calls:
-                result = tools[call.name](**call.args)
-                history.append(tool_result(call.id, result))
-            continue
-        return msg.content
-    raise StepLimitExceeded
-```
-
-</td>
-<td valign="top" width="50%">
-
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>lever het op</i></sub>
-
-```markdown
----
-name: agent-loop
-description: ReAct-style loop for any tool list
-phase: 14
-lesson: 01
----
-
-Implement a minimal agent loop that...
-```
-
-**`outputs/prompt-debug-agent.md`**
-
-```markdown
-You are an agent debugger. Given the trace
-of an agent run, identify the step where
-the agent went wrong and explain why...
-```
-
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 <a id="contents"></a>
@@ -1118,33 +1055,104 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 
 </details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+## Boeken en certificeringen
+
+<details>
+<summary>Lees het kernleerprogramma als boek</summary>
+
+Het kernleerprogramma van 20 fasen onder `phases/` wordt samengesteld tot een reeks van zes boeken. CI bouwt EPUB- en PDF-versies uit dezelfde lesbronnen en voegt ze toe aan elke [GitHub-release](https://github.com/rohitg00/ai-engineering-from-scratch/releases); de onderstaande links verwijzen steeds naar de nieuwste release. Deelnummers geven de plaats in de reeks aan, niet de versie: elk exemplaar heeft een gedateerde editieaanduiding en oudere edities blijven via hun release beschikbaar.
+
+Certificeringsprogramma’s worden bewust niet in de boeken opgenomen. Hun AI-tutorstatus, uitvoerbare practica, interactieve figuren, diagnostische toetsen en getimede oefenexamens blijven volledig beschikbaar op GitHub en de website.
+
+| Deel | Titel | Fasen | Ophalen |
+|-----|-------|--------|----------|
+| 1 | Grondslagen · Wiskunde, gereedschap en klassiek machinaal leren | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Diep leren · Netwerken, visie en spraak | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Taal · NLP-grondslagen en de transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Grote taalmodellen · Generatie, bekrachtiging, voortraining en engineering | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Agents · Multimodaliteit, protocollen, autonomie en zwermen | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Productie · Infrastructuur, veiligheid en eindprojecten | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+Het boek is een momentopname; deze repository is de levende editie. Elk hoofdstuk eindigt met links naar de geanimeerde figuren, quiz en uitvoerbare code van de les. Bouw lokaal met `python3 scripts/build_book.py` (pandoc vereist); details van de pijplijn staan in [book/README.md](../../book/README.md).
+
+</details>
+
+<details>
+<summary>Bereid je voor op Claude-certificeringen</summary>
+
+De [Claude-certificeringsacademie](../../certifications/claude/README.md) is een gratis, open voorbereidingsprogramma voor alle vier officiële Claude-certificeringstrajecten: Associate Foundations, Developer Foundations, Architect Foundations en Architect Professional. Elke route combineert lessen gekoppeld aan de exameneisen, uitvoerbare practica, een diagnostische toets, eindwerk en een volledig origineel oefenexamen.
+
+Gebruik de [AI-gerichte GitHub-startgids](../../certifications/claude/GETTING_STARTED.md) met Claude Code, Codex, ChatGPT, Cursor of een andere agent. Voer `claude-certification` uit in Codex, `/claude-certification` in Claude Code of vraag een andere host om `claude-certification` te gebruiken. De skill kiest een traject, maakt een blijvende route in `CLAUDE-CERTIFICATION.md`, onderwijst stap voor stap, voert de echte practica uit en geeft feedback op je resultaten. Hetzelfde leerprogramma staat op de [certificeringswebsite](https://aiengineeringfromscratch.com/certifications.html).
+
+De academie is onafhankelijk studiemateriaal op basis van openbare examendoelen. Zij is niet verbonden aan Anthropic, bevat geen echte examenvragen en kan geen voldoende garanderen.
+
+</details>
+
+<details>
+<summary>Bereid je voor op de MCP Associate (MCPA)-certificering</summary>
+
+Het [MCPA-certificeringsprogramma](../../certifications/mcpa/README.md) is een gratis, open voorbereiding op het Model Context Protocol Associate-examen van de Agentic AI Foundation, aangeboden via Linux Foundation Training. De 34 lessen behandelen het toestandsloze protocol van 2026-07-28 in de vijf examendomeinen: `_meta` per verzoek en `server/discover` in plaats van de oude handshake, verzoeken met meerdere rondes, abonnementen, caching, de uitbreidingen voor taken en MCP Apps, OAuth-autorisatie en de register- en SDK-niveaus. Elke les bevat een uitvoerbaar practicum met alleen de standaardbibliotheek, waarvan het transcript op het actuele wire-formaat wordt gecontroleerd. Het traject bevat ook een diagnostische toets, een eindproject en drie volledige originele oefenexamens met de gepubliceerde verdeling van onderwerpen.
+
+Gebruik de [AI-gerichte GitHub-startgids](../../certifications/mcpa/GETTING_STARTED.md) met Claude Code, Codex, ChatGPT, Cursor of een andere agent. Voer `mcpa-certification` uit in Codex, `/mcpa-certification` in Claude Code of vraag een andere host om `mcpa-certification` te gebruiken. De skill maakt een blijvende route in `MCPA-CERTIFICATION.md`, onderwijst stap voor stap, voert de echte practica uit en geeft feedback op je resultaten. Hetzelfde leerprogramma staat op de [MCPA-trajectpagina](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
+
+Dit leerprogramma is onafhankelijk studiemateriaal op basis van openbare examendoelen. Het is niet verbonden aan de Agentic AI Foundation of de Linux Foundation, bevat geen echte examenvragen en kan geen voldoende garanderen.
+
+</details>
 
 ## De gereedschapskist
 
-Elke les levert een herbruikbaar resultaat op. Aan het eind heb je:
+Elke les levert een herbruikbaar resultaat op. Installeer het in je agent of gebruik de onderstaande scripts vanuit de hoofdmap van de repository.
+
+<details>
+<summary>Lesopbouw en herbruikbare resultaten</summary>
+
+## De opbouw van een les
+
+Elke les heeft een eigen map, met dezelfde structuur in het hele leerprogramma:
 
 ```text
-outputs/
-├── prompts/      promptsjablonen voor elke AI-taak
-└── skills/       SKILL.md-bestanden voor AI-programmeeragents
+phases/<NN>-<phase-name>/<NN>-<lesson-name>/
+├── code/      uitvoerbare implementaties (Python, TypeScript, Rust, Julia)
+├── docs/
+│   └── en.md  lesuitleg
+└── outputs/   prompts, vaardigheden, agents of MCP-servers die deze les oplevert
 ```
 
-Gebruik ze in Claude, Cursor, Codex, OpenClaw, Hermes of een andere agent die een SKILL.md- of AGENTS.md-map leest. Echte hulpmiddelen, geen huiswerk.
+Elke les bestaat uit zes stappen. Het onderscheid *Bouw het / Gebruik het* vormt de kern: eerst implementeer je het algoritme vanaf nul, daarna voer je hetzelfde uit met een productiebibliotheek. Je begrijpt het framework omdat je zelf de kleinere versie hebt geschreven.
 
-### Installeer cursusskills in je agent
-
-Twee verzamelingen skills, twee installatieprogramma’s:
-
-**De leerskills** (`start-learning`, `learn`, `course-guide`, `learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`, `find-your-level` en `check-understanding`) staan onder [`skills/`](../../skills/). Eén commando installeert ze in een ondersteunde host met skillondersteuning. De installatie vereist Node.js en `npx`, maar geen repositorykloon of Python:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["KERNIDEE<br/><sub>kernidee in één regel</sub>"] --> Pr["PROBLEEM<br/><sub>concreet knelpunt</sub>"]
+  Pr --> C["BEGRIP<br/><sub>diagrammen en intuïtie</sub>"]
+  C --> B["BOUW HET<br/><sub>zuivere wiskunde, zonder frameworks</sub>"]
+  B --> U["GEBRUIK HET<br/><sub>hetzelfde in PyTorch / sklearn</sub>"]
+  U --> S["LEVER HET OP<br/><sub>prompt · vaardigheid · agent · MCP</sub>"]
 ```
 
-`skills` schrijft naar de tijdens de installatie gekozen host en reikwijdte, bijvoorbeeld `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` of een andere ondersteunde skillmap. Controleer of de gekozen host precies die doelmap ontdekt.
+## Elke les levert iets op
+
+Andere cursussen eindigen met *“gefeliciteerd, je hebt X geleerd.”* Elke les hier eindigt met een **herbruikbaar hulpmiddel** dat je kunt installeren of in je dagelijkse werk kunt opnemen.
+
+<table>
+<tr>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A promptsjablonen"/><br/><sub>FIG_001 · A</sub><br/><b>PROMPTSJABLONEN</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B vaardigheden"/><br/><sub>FIG_001 · B</sub><br/><b>VAARDIGHEDEN</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C autonome agents"/><br/><sub>FIG_001 · C</sub><br/><b>AUTONOME AGENTS</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP-servers"/><br/><sub>FIG_001 · D</sub><br/><b>MCP-SERVERS</b></th>
+</tr>
+<tr>
+<td valign="top">Plak in een AI-assistent voor deskundige hulp bij een afgebakende taak.</td>
+<td valign="top">Voeg toe aan Claude, Cursor, Codex, OpenClaw, Hermes of een andere agent die dit leest: <code>SKILL.md</code>.</td>
+<td valign="top">Zet in als autonome werkers: je schreef de lus zelf in fase 14.</td>
+<td valign="top">Sluit aan op elke MCP-compatibele client. Volledig gebouwd in fase 13.</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>Lesresultaten installeren</summary>
 
 **De lesresultaten.** De repository bevat 396 skills en 99 prompts onder `phases/**/outputs/`; installeer ze via `scripts/install_skills.py`. Hiervoor moet je de repository klonen. Het script ondersteunt tagfilters, proefruns en indelingen per agent:
 
@@ -1169,7 +1177,10 @@ Standaard weigert het script bestaande doelen te overschrijven en sluit het af m
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Voeg de agentwerkbank toe aan je eigen repository
+</details>
+
+<details>
+<summary>Voeg de agentwerkbank toe aan je eigen repository</summary>
 
 Het eindproject van fase 14 levert een herbruikbaar agentwerkbankpakket op met AGENTS.md, schema’s en scripts voor initialisatie, verificatie en overdracht. Voeg het met dit commando toe aan een repository:
 
@@ -1182,7 +1193,10 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 
 Je krijgt de zeven samenwerkende onderdelen van de werkbank, een eerste `task_board.json` en een nieuw `agent_state.json` met `schema_version: 1`. Pas daarna de taak en `AGENTS.md` aan, voer `scripts/init_agent.py` uit en geef het contract aan je agent. De bron van het pakket staat in `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
 
-### Bekijk de volledige cursus als JSON
+</details>
+
+<details>
+<summary>Bekijk de volledige cursus als JSON</summary>
 
 `scripts/build_catalog.py` doorloopt elke fase, les en ieder resultaat op schijf en schrijft `catalog.json` in de hoofdmap. Eén bestand met alle cursusgegevens.
 
@@ -1194,9 +1208,12 @@ python3 scripts/build_catalog.py --out path/to/file.json
 
 De catalogus wordt afgeleid van het bestandssysteem, niet van de README. Aantallen komen daardoor overeen met wat werkelijk op schijf staat. Gebruik hem voor sitebouw, vervolgsoftware of om afwijkende README-aantallen te controleren. Het schema staat bovenaan het script.
 
-Een GitHub Action (`.github/workflows/curriculum.yml`) bouwt `catalog.json` bij elke PR opnieuw en laat de bouw mislukken als het vastgelegde bestand verouderd is. Voer na een leswijziging `python3 scripts/build_catalog.py` uit en commit het resultaat, anders wijst CI de PR af. Dezelfde werkstroom voert `audit_lessons.py` in waarschuwingsmodus uit, zodat bestaande afwijkingen bijdragers niet blokkeren.
+De curriculumworkflow bouwt `catalog.json` als tijdelijk, door Git genegeerd bestand. Commit het niet. Dezelfde workflow voert `audit_lessons.py` uit als blokkerende controle.
 
-### Controleer de Python-code van elke les op basisfouten
+</details>
+
+<details>
+<summary>Controleer de Python-code van elke les op basisfouten</summary>
 
 `scripts/lesson_run.py` compileert elk `.py`-bestand onder de `code/`-map van elke les naar bytecode. De standaardmodus controleert alleen syntaxis: zonder uitvoering, API-sleutels of zware ML-afhankelijkheden. Dit vangt veelvoorkomende regressies op, zoals verkeerde inspringing, kapotte f-strings en onbedoelde wijzigingen.
 
@@ -1208,48 +1225,14 @@ python3 scripts/lesson_run.py --strict         # exit 1 if any lesson fails
 python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per lesson
 ```
 
-`--execute` voert het `code/main.py`-bestand van elke les (of het eerste `.py`-bestand) uit met een tijdslimiet van 10 seconden. Lessen waarvan het startbestand begint met `# requires: pkg1,
-pkg2` en daarmee afhankelijkheden buiten de standaardbibliotheek aangeeft, worden overgeslagen met de reden `needs <deps>`. Het script is optioneel en maakt geen deel uit van CI.
+`--execute` voert het `code/main.py`-bestand van elke les (of het eerste `.py`-bestand) uit met een tijdslimiet van 10 seconden. Lessen waarvan het startbestand begint met `# requires: pkg1, pkg2` en daarmee afhankelijkheden buiten de standaardbibliotheek aangeeft, worden overgeslagen met de reden `needs <deps>`. Het script is optioneel en maakt geen deel uit van CI.
 
 Alleen de standaardbibliotheek, Python 3.10+. Stel `LINK_CHECK_SKIP=domain1,domain2` in om de standaardlijst over te slaan domeinen te vervangen (`twitter.com`, `x.com`, `linkedin.com`, `instagram.com`, `medium.com`: domeinen die geautomatiseerde HEAD/GET-verzoeken streng blokkeren).
 
-## Waar te beginnen
+</details>
 
-| Voorkennis | Begin bij | Geschatte tijd |
-|---|---|---|
-| Nieuw met programmeren en AI | Fase 0: Installatie en gereedschap | ~306 uur |
-| Je kent Python, maar ML is nieuw | Fase 1: Wiskundige grondslagen | ~270 uur |
-| Je kent ML, maar diep leren is nieuw | Fase 3: Kern van diep leren | ~200 uur |
-| Je kent diep leren en wilt LLM’s en agents leren | Fase 10: LLM’s vanaf nul | ~100 uur |
-| Ervaren engineer die alleen agentengineering wil | Fase 14: Agentengineering | ~60 uur |
-| Je wilt alleen MCP-systemen voor productie bouwen | [Model Context Protocol (MCP)-leerroute](../../learning-paths/model-context-protocol.json) | ~23 uur 15 min |
-| Je wilt alleen Agent Skills voor productie bouwen | [Leerroute voor Agent Skills-engineering](../../learning-paths/agent-skills.json) | ~9.5 uur |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Waarom dit nu belangrijk is
-
-<table>
-<tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>HET SIGNAAL UIT DE SECTOR</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>BEHANDELDE FUNDAMENTELE PAPERS</b></th>
-</tr>
-<tr>
-<td valign="top">
-
-> *“De populairste nieuwe programmeertaal is Engels.”*<br/>
-> — **Andrej Karpathy** ([tweet](https://x.com/karpathy/status/1617979122625712128))
->
-> *“Softwareontwikkeling verandert voor onze ogen.”*<br/>
-> — **Boris Cherny**, maker van Claude Code
->
-> *“Modellen blijven beter worden. De vaardigheid die steeds meer oplevert, is **weten wat je moet bouwen**.”*<br/>
-> — Overeenstemming in de sector, 2026
-
-</td>
-<td valign="top">
+<details>
+<summary>Basisartikelen en protocollen</summary>
 
 - *Attention Is All You Need* — Vaswani et al., 2017 → [Phase 7](#phase-7)
 - *Language Models are Few-Shot Learners* (GPT-3) → [Phase 10](#phase-10)
@@ -1260,13 +1243,7 @@ Alleen de standaardbibliotheek, Python 3.10+. Stel `LINK_CHECK_SKIP=domain1,doma
 - *ReAct: Reasoning + Acting in LLMs* → [Phase 14](#phase-14)
 - *Model Context Protocol* — Anthropic → [Phase 13](#phase-13)
 
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+</details>
 
 ## Bijdragen
 
@@ -1289,21 +1266,17 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 
 De exitcode is ongelijk aan nul als een regel faalt. Regels L001–L010 controleren de mapstructuur, de aanwezigheid van `docs/en.md` en een H1, een niet-lege `code/`-map, het schema van `quiz.json` (oude sleutels `q/choices/answer` die issue #102 veroorzaakten worden afgewezen) en relatieve links in lesdocumenten.
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
 <a id="supporters"></a>
 
 ## Steun het werk
 
+<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
+<p align="center"><sub><b>114,584</b> lezers &nbsp;·&nbsp; <b>181,995</b> paginaweergaven in de afgelopen 30 dagen &nbsp;·&nbsp; stand op 2026-08-29</sub></p>
+<!-- STATS:END -->
+
 Gratis, met MIT-licentie, 523 lessen. Dank aan de sponsors en supporters die dit werk mogelijk maken. [Bekijk alle sponsors en supporters](../../BACKERS.md).
 
 Wil je het werk steunen? Bekijk de [sponsormogelijkheden](../../SPONSORS.md), waaronder [hardwaresponsoring](../../SPONSORS.md#hardware-lab-partner), of [word sponsor op GitHub](https://github.com/sponsors/rohitg00).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 
 Heeft deze handleiding je geholpen? Geef de repository een ster. Zo blijft het project groeien.
 
@@ -1314,7 +1287,5 @@ MIT. Gebruik het zoals je wilt: fork het, geef er les mee, verkoop het of breng 
 Onderhouden door [Rohit Ghumare](https://github.com/rohitg00) en de community.
 
 <sub>
-  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
-  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Melden / Voorstellen</a>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp; <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp; <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Melden / Voorstellen</a>
 </sub>

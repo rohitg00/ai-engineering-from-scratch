@@ -1,55 +1,36 @@
 <p align="center"><sub>Traducción asistida por IA; se han revisado la estructura y la terminología. El <a href="../../README.md">inglés es la versión de referencia</a>.</sub></p>
+
 <p align="center">
-  <img src="../../assets/banner.svg" alt="Banner del manual de referencia de ingeniería de IA desde cero" width="100%">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/header-dark.svg">
+    <img src="../../assets/readme/header-light.svg" alt="Ingeniería de IA desde cero" width="840">
+  </picture>
 </p>
-<p align="center">
-  <a href="../../README.md">🇬🇧 English</a> ·
-  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
-  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
-  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
-  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
-  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
-  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
-  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
-  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
-  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
-  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
-  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
-  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
-  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
-  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
-  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
-  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
-  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
-  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
-  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
-  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
-  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
-  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
-  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
-  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
-  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
-  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
-  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
-  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
-  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
-  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
-  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
-  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
-  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
-</p>
+
+Implementa componentes internos de modelos, pipelines de recuperación y entornos de ejecución de agentes. Pruébalos, examina los fallos y conserva el código y los resultados de evaluación.
+
+**[Empieza a aprender](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Elige una ruta](#learning-routes)** · **[Prueba un laboratorio](#interactive-lab)** · **[Construye un proyecto](#project-challenges)** · **[Consulta el programa](#contents)**
+
+Gratis, de código abierto y con licencia MIT. Aprende en el sitio web, con un agente de programación o ejecutando código local.
+
+> 523 lecciones. 20 fases. Python, TypeScript, Rust, Julia.
+
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licencia del MIT"></a>
   <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lecciones"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 fases"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Estrellas de GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Sitio web"></a>
-  <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Clasificación de Star History" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="Repositorio destacado del día en GitHub" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
- </a>
 </p>
+
+<details>
+<summary>Lee en tu idioma</summary>
+
+<p align="center">
+  <a href="../../README.md">🇬🇧 English</a> · <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> · <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> · <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> · <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> · <a href="../../i18n/pt/README.md">🇵🇹 Português</a> · <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> · <a href="../../i18n/es/README.md">🇪🇸 Español</a> · <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> · <a href="../../i18n/fr/README.md">🇫🇷 Français</a> · <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> · <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> · <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> · <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> · <a href="../../i18n/ro/README.md">🇷🇴 Română</a> · <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> · <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> · <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> · <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> · <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> · <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> · <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> · <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> · <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> · <a href="../../i18n/he/README.md">🇮🇱 עברית</a> · <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> · <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> · <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> · <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> · <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> · <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> · <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> · <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> · <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
+
+</details>
 
 ### Patrocinadores
 
@@ -62,65 +43,134 @@
   <sub><span>Tu apoyo mantiene todas las lecciones gratuitas y de código abierto.</span> <a href="#supporters">Ver todos los colaboradores</a> · <a href="../../SPONSORS.md">Conviértete en patrocinador</a></sub>
 </p>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+<a id="see-what-you-will-build-and-keep"></a>
+<a id="learning-routes"></a>
 
-> **El 84 % del alumnado ya utiliza herramientas de IA. Solo el 18 % se siente preparado para usarlas profesionalmente.** Este plan de estudios cierra esa brecha.
->
-> 523 lecciones. 20 fases. ~342 horas. Python, TypeScript, Rust y Julia. Cada lección entrega un artefacto reutilizable: un prompt, una skill, un agente o un servidor MCP. Gratis, de código abierto y con licencia MIT.
->
-> No solo aprendes IA: la construyes de principio a fin y a mano.
+## Rutas de aprendizaje
 
-<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> lectores &nbsp;·&nbsp; <b>181,995</b> visitas a las páginas en los últimos 30 días &nbsp;·&nbsp; desde el 2026-08-29</sub></p>
-<!-- STATS:END -->
+| Ruta | Lección inicial |
+|---|---|
+| Fundamentos de los modelos | [Configuración y herramientas](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Sistemas LLM | [Ingeniería de prompts](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Agentes y entrega | [El bucle del agente](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
 
-## Empieza aquí: elige lo que quieres construir
+[Compara rutas profesionales](https://aiengineeringfromscratch.com/learning-paths.html) · [Requisitos previos y tiempo de estudio](#study-guide)
 
-No hace falta recorrer las 523 lecciones antes de empezar. Elige un objetivo. Cada enlace abre el mismo plan de estudios en GitHub o en el sitio web, y ambas versiones usan el mismo código de las lecciones.
+<a id="interactive-lab"></a>
 
-| Tu objetivo | Aprende en GitHub | Aprende en el sitio web |
-|---|---|---|
-| Estoy empezando y quiero una base completa | [Fase 0: Configuración y herramientas](../../phases/00-setup-and-tooling/) | [Entorno de desarrollo](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Sé Python y quiero fundamentos de matemáticas y ML | [Fase 1: Fundamentos matemáticos](../../phases/01-math-foundations/) | [Intuición de álgebra lineal](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Quiero crear aplicaciones de LLM para producción | [Fase 11: Ingeniería de LLM](../../phases/11-llm-engineering/) | [Ingeniería de prompts](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Quiero crear agentes | [Fase 14: Ingeniería de agentes](../../phases/14-agent-engineering/) | [El ciclo del agente](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Quiero usar agentes de programación en repositorios reales | [Ruta de ingeniería asistida por agentes](../../learning-paths/using-coding-agents.json) | [Ingeniería asistida por agentes](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Quiero definir la solución antes de implementarla | [Ruta de criterio de producto y entrega](../../learning-paths/shaping-the-build.json) | [Criterio de producto y entrega](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| Quiero crear soluciones con Model Context Protocol (MCP) | [Ruta de Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Ruta de Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Quiero crear y publicar Agent Skills | [Ruta enfocada de Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Ruta de Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Quiero prepararme para una certificación de Claude | [Guía de incorporación a la certificación](../../certifications/claude/GETTING_STARTED.md) | [Academia de certificación](https://aiengineeringfromscratch.com/certifications.html) |
-| Quiero prepararme para la certificación MCP Associate (MCPA) | [Guía de incorporación a MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [Ruta MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+### Descenso de gradiente
 
-¿No sabes por dónde empezar? Usa el [tutor de nivelación `start-learning`](../../skills/start-learning/SKILL.md) o la [guía de requisitos previos del sitio web](https://aiengineeringfromscratch.com/prereqs.html).
+Veinte puntos iniciales siguen el descenso de gradiente sobre una pérdida cuadrática. El gráfico muestra sus posiciones y la pérdida media tras cada actualización.
 
-Compara cuatro áreas fundamentales y seis trayectorias profesionales en las [rutas de aprendizaje de AI Engineering](https://aiengineeringfromscratch.com/learning-paths.html).
+<p align="center">
+  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+    <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
+      <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
+      <source media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-dark.png">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-light.png">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-mobile-dark.gif">
+      <source media="(max-width: 600px)" srcset="../../assets/readme/101-gradient-mobile-light.gif">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-dark.gif">
+      <img src="../../assets/readme/101-gradient-light.gif" alt="El descenso de gradiente mueve puntos iniciales dispersos hacia el mínimo de la pérdida. La pérdida media disminuye con cada actualización." width="840">
+    </picture>
+  </a>
+</p>
 
-### Sigue el mismo proceso en cada lección
+[Ajusta la tasa de aprendizaje en la lección](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Compara GD, momentum y Adam en el código](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
-1. **Lee** `docs/en.md` y explica la idea central con tus propias palabras.
-2. **Escribe y construye** el código importante; no trates el bloque de código como decoración.
-3. **Ejecuta** el comando de la lección desde la raíz del repositorio, el directorio que contiene `README.md` y `phases/`.
-4. **Guarda evidencias**: el comando, el directorio de trabajo, el código de salida, la salida relevante y el artefacto que modificaste o creaste.
-5. **Continúa** solo cuando puedas explicar la salida y hacer un pequeño cambio sin adivinar.
+<a id="project-challenges"></a>
 
-Los comandos de las lecciones usan rutas relativas a la raíz del repositorio, salvo que la lección indique expresamente que cambies de directorio. Si ofrece varias opciones de lenguaje, ejecuta la implementación del lenguaje que estás aprendiendo.
+### Proyectos
 
-### Clona el repositorio y guarda tu primera evidencia
+Tres proyectos con código inicial por etapas, implementaciones de referencia y evaluadores locales. Ejecuta los comandos desde la raíz del repositorio tras la [configuración](#local-setup). Las implementaciones iniciales fallan hasta que completes las etapas.
+
+<details>
+<summary><strong>01 · Laboratorio de evaluación de recuperación</strong> · Python · Métricas de clasificación y comprobaciones de regresión</summary>
+
+Un sistema candidato mejora el NDCG medio mientras una consulta sitúa más abajo su evidencia más relevante. Construye una comparación por consulta que informe de la regresión y pueda hacer fallar una comprobación de publicación.
+
+Usa Python 3.10+. Repasa [RAG](../../phases/11-llm-engineering/06-rag/docs/en.md) y [evaluación de modelos](../../phases/02-ml-fundamentals/09-model-evaluation/docs/en.md). Implementa la validación de clasificaciones, precisión y exhaustividad, métricas sensibles a la posición y, después, la comparación de sistemas.
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --init learning-artifacts/retrieval-evaluation-lab
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --stage 1 --path learning-artifacts/retrieval-evaluation-lab --strict
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --all --path learning-artifacts/retrieval-evaluation-lab --strict
 ```
 
-La comprobación previa distingue los requisitos que necesitas ahora de las herramientas que necesitarás más adelante. Cada requisito incumplido incluye el motivo detectado y un comando para corregirlo. El segundo comando ejecuta una lección sin dependencias y muestra que la multiplicación de una matriz por un vector es la operación que se realiza dentro de una capa de una red neuronal. Guarda esa salida del terminal como tu primera evidencia.
+**Conserva:** una comparación reproducible con diferencias por consulta y los juicios utilizados para puntuarlas. Las métricas describen esos juicios; no demuestran que las respuestas sean correctas.
 
-## Añade el tutor de IA en 30 segundos
+[Empieza el proyecto](https://aiengineeringfromscratch.com/project.html?id=retrieval-evaluation-lab) · [Inspecciona la referencia](../../projects/retrieval-evaluation-lab/solution/) · [Ejecuta con tus propios datos](../../projects/retrieval-evaluation-lab/README.md#run-with-your-own-inputs)
 
-Si ya tienes Node.js, `npx` y un agente de programación compatible con skills, puedes convertirlo en tu tutor con dos comandos. No hace falta clonar el repositorio para instalar o leer el tutor. Los laboratorios ejecutables de Agent Skills también requieren un host seleccionado y un ámbito de instalación de skills, personal o del proyecto, con permisos de escritura.
+</details>
+
+<details>
+<summary><strong>02 · Depurador de trazas de agentes</strong> · TypeScript · Análisis de trazas y tiempos</summary>
+
+Una traza proporcionada sigue tardando 100 ms, pero el uso total de tokens aumenta en 200 y un tramo empieza a fallar. Separa el trabajo solapado de los tramos hijos del tiempo de ejecución del padre y genera un informe que muestre el cambio.
+
+Usa Node.js 22.18+ y Python 3 para el evaluador. Implementa el análisis de JSONL, la validación de relaciones padre-hijo, la aritmética de intervalos y una cronología inspeccionable.
+
+```bash
+python3 scripts/project_test.py agent-trace-debugger \
+  --init learning-artifacts/agent-trace-debugger
+python3 scripts/project_test.py agent-trace-debugger \
+  --stage 1 --path learning-artifacts/agent-trace-debugger --strict
+python3 scripts/project_test.py agent-trace-debugger \
+  --all --path learning-artifacts/agent-trace-debugger --strict
+```
+
+**Conserva:** la traza de entrada, una cronología HTML y un informe de regresión JSON. Mantén recuentos exclusivos de tokens por tramo para no contar dos veces el uso del padre y de sus hijos.
+
+[Empieza el proyecto](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger) · [Inspecciona la referencia](../../projects/agent-trace-debugger/solution/) · [Explora los tiempos de forma interactiva](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger&stage=03-timing)
+
+</details>
+
+<details>
+<summary><strong>03 · Cortafuegos de llamadas a herramientas</strong> · Rust · Comprobaciones de roles y comprobantes de aprobación</summary>
+
+Una escritura cambia después de la revisión o se reutiliza una aprobación. Valida el sobre de la llamada, comprueba el rol y la ruta del solicitante y consume una aprobación vinculada a la solicitud y al contenido exactos.
+
+Usa Rust y Python 3.10+. Repasa [diseño de esquemas de herramientas](../../phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md) y [límites de seguridad](../../phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md). La aplicación solicitante proporciona la identidad; el modelo propone una operación.
+
+```bash
+python3 scripts/project_test.py tool-call-firewall \
+  --init learning-artifacts/tool-call-firewall
+python3 scripts/project_test.py tool-call-firewall \
+  --stage 1 --path learning-artifacts/tool-call-firewall --strict
+python3 scripts/project_test.py tool-call-firewall \
+  --all --path learning-artifacts/tool-call-firewall --strict
+```
+
+**Conserva:** un comprobante de auditoría que muestre la operación solicitada y la decisión de la política. Cada aprobación puede usarse una sola vez dentro de una invocación; este proyecto no proporciona autorización persistente ni un entorno aislado del sistema operativo.
+
+[Empieza el proyecto](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall) · [Inspecciona la referencia](../../projects/tool-call-firewall/solution/) · [Explora los límites de aprobación](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall&stage=03-consume-a-request-bound-approval-once)
+
+</details>
+
+[Explora todos los proyectos](https://aiengineeringfromscratch.com/projects.html) · [Guía de práctica profesional](../../learning-paths/CAREER-PRACTICE.md)
+
+## Elige cómo aprender
+
+### En el sitio web
+
+Abre cualquier lección terminada en [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) o despliega una fase en [Contenido](#contents). No necesitas instalar nada ni clonar el repositorio.
+
+### Con un tutor de IA
+
+Si ya tienes Node.js, `npx` y un agente de programación compatible con skills, puedes convertirlo en tu tutor. No hace falta clonar el repositorio para instalar o leer el tutor. Los laboratorios ejecutables de Agent Skills también requieren un host seleccionado y un ámbito de instalación de skills, personal o del proyecto, con permisos de escritura. Los laboratorios ejecutables de las rutas específicas requieren `python3`.
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+Elige el host y el ámbito cuando lo pida el instalador. Usa `start-learning` en Codex, `/start-learning` en Claude Code o pide a tu host que use la skill por su nombre.
+
+<details>
+<summary>Configuración del tutor y comandos del entorno</summary>
 
 Comprueba primero los requisitos locales:
 
@@ -130,11 +180,7 @@ npx --version
 python3 --version
 ```
 
-Después instala las skills del plan de estudios y, cuando el instalador lo solicite, elige el host y el ámbito donde quieras usarlas:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
+`skills` escribe en el host y el ámbito elegidos durante la instalación, por ejemplo `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` u otra carpeta de skills compatible. Comprueba que el host seleccionado detecte ese destino exacto.
 
 La sintaxis de invocación depende del host, no del formato portable `SKILL.md`:
 
@@ -152,17 +198,100 @@ Un cuestionario de nivelación de diez preguntas determina desde qué fase empez
 
 El instalador muestra los hosts que puede configurar y pregunta dónde quieres instalar las skills. Si todavía no tienes Node.js, `npx`, `python3`, un host compatible o un ámbito con permisos de escritura, usa el sitio web o lee `docs/en.md` manualmente. Así aprenderás los conceptos, pero la evidencia sobre el descubrimiento y la invocación en un host real, la ejecución de scripts y la desinstalación tendrá que esperar hasta que puedas hacer la comprobación previa. Lee las lecciones en [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## Cómo funciona
+### Skills de aprendizaje
 
-La mayoría de los materiales sobre IA presentan piezas aisladas: un artículo de investigación por aquí, una publicación sobre ajuste fino por allá y una llamativa demostración de un agente en otro sitio. Rara vez encajan entre sí. Puedes publicar un chatbot sin saber explicar su curva de pérdida, o conectar una función a un agente sin poder explicar qué hace la atención dentro del modelo que la invoca.
+| Habilidad | Qué hace |
+|---|---|
+| [`start-learning`](../../skills/start-learning/SKILL.md) | Incorporación inicial: define por qué aprendes, responde el cuestionario de nivelación y guarda un plan personalizado en `LEARNING.md`. |
+| [`learn`](../../skills/learn/SKILL.md) | Ciclo del tutor: repaso inicial, siguiente lección interactiva y su cuestionario; registra el progreso y una lista de repaso. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | Guía por temas: encuentra las lecciones exactas y sus enlaces para preguntas como «¿Dónde aprendo atención?» o «mi pérdida es NaN». |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Tutor especializado en Model Context Protocol (MCP). Crea `MCP-LEARNING.md`, sigue el manifiesto de 17 lecciones y registra evidencias sobre protocolo, seguridad, confiabilidad y conformidad. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Tutor especializado en Agent Skills. Crea `AGENT-SKILLS-LEARNING.md`, enseña las lecciones 22, 24, 25, 26 y 27, y registra evidencias en hosts reales. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Tutor de certificación. Elige CCAO-F, CCDV-F, CCAR-F o CCAR-P; enseña cada lección, ejecuta laboratorios, revisa artefactos, administra diagnósticos y simulacros y guarda el progreso. |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Tutor de MCPA. Sigue la ruta `mcpa-f` de 34 lecciones sobre el protocolo 2026-07-28; enseña cada lección, ejecuta los laboratorios y el verificador del protocolo, administra el diagnóstico y tres simulacros y guarda el progreso. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Cuestionario de nivelación de diez preguntas. Determina la fase inicial adecuada y propone una ruta personalizada con estimaciones de horas. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Cuestionario por fase de ocho preguntas, con comentarios y lecciones específicas para repasar. Usa la invocación de Codex, Claude Code o lenguaje natural de la tabla anterior. |
 
-Este plan de estudios conecta esas piezas: 20 fases, 523 lecciones y cuatro lenguajes —Python, TypeScript, Rust y Julia—, desde el álgebra lineal hasta los enjambres autónomos. Cada algoritmo se construye primero a partir de las matemáticas básicas: retropropagación, tokenizadores, atención y el ciclo del agente. Cuando llegues a PyTorch, ya sabrás qué hace por dentro.
+</details>
 
-Cada lección sigue el mismo ciclo: leer el problema, derivar las matemáticas, escribir el código, ejecutar la prueba y conservar el artefacto. No hay videos de cinco minutos, implementaciones para copiar y pegar ni explicaciones paternalistas. Es gratis, de código abierto y está pensado para ejecutarse en tu propio portátil.
+<a id="local-setup"></a>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+### Ejecuta código local
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+
+La comprobación previa distingue los requisitos que necesitas ahora de las herramientas que necesitarás más adelante. Cada requisito incumplido incluye el motivo detectado y un comando para corregirlo. El comando `vectors.py` ejecuta una lección sin dependencias y muestra que la multiplicación de una matriz por un vector es la operación que se realiza dentro de una capa de una red neuronal. Guarda esa salida del terminal como tu primera evidencia.
+
+<details>
+<summary>Sigue el mismo proceso en cada lección</summary>
+
+### Sigue el mismo proceso en cada lección
+
+1. **Lee** `docs/en.md` y explica la idea central con tus propias palabras.
+2. **Escribe y construye** el código importante; no trates el bloque de código como decoración.
+3. **Ejecuta** el comando de la lección desde la raíz del repositorio, el directorio que contiene `README.md` y `phases/`.
+4. **Guarda evidencias**: el comando, el directorio de trabajo, el código de salida, la salida relevante y el artefacto que modificaste o creaste.
+5. **Continúa** solo cuando puedas explicar la salida y hacer un pequeño cambio sin adivinar.
+
+Los comandos de las lecciones usan rutas relativas a la raíz del repositorio, salvo que la lección indique expresamente que cambies de directorio. Si ofrece varias opciones de lenguaje, ejecuta la implementación del lenguaje que estás aprendiendo.
+
+</details>
+
+<a id="study-guide"></a>
+
+## Elige una ruta de aprendizaje
+
+No hace falta recorrer las 523 lecciones antes de empezar. Elige un objetivo. Cada enlace abre el mismo plan de estudios en GitHub o en el sitio web, y ambas versiones usan el mismo código de las lecciones.
+
+| Tu objetivo | Aprende en GitHub | Aprende en el sitio web |
+|---|---|---|
+| Estoy empezando y quiero una base completa | [Fase 0: Configuración y herramientas](../../phases/00-setup-and-tooling/) | [Entorno de desarrollo](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Sé Python y quiero fundamentos de matemáticas y ML | [Fase 1: Fundamentos matemáticos](../../phases/01-math-foundations/) | [Intuición de álgebra lineal](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| Quiero crear aplicaciones de LLM para producción | [Fase 11: Ingeniería de LLM](../../phases/11-llm-engineering/) | [Ingeniería de prompts](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Quiero crear agentes | [Fase 14: Ingeniería de agentes](../../phases/14-agent-engineering/) | [El ciclo del agente](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Quiero usar agentes de programación en repositorios reales | [Ruta de ingeniería asistida por agentes](../../learning-paths/using-coding-agents.json) | [Ingeniería asistida por agentes](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| Quiero definir la solución antes de implementarla | [Ruta de criterio de producto y entrega](../../learning-paths/shaping-the-build.json) | [Criterio de producto y entrega](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+
+¿No sabes por dónde empezar? Usa el [tutor de nivelación `start-learning`](../../skills/start-learning/SKILL.md) o la [guía de requisitos previos del sitio web](https://aiengineeringfromscratch.com/prereqs.html).
+
+Compara cuatro áreas fundamentales y seis trayectorias profesionales en las [rutas de aprendizaje de AI Engineering](https://aiengineeringfromscratch.com/learning-paths.html).
+
+<details>
+<summary>Rutas específicas de MCP y Agent Skills</summary>
+
+| Tu objetivo | Aprende en GitHub | Aprende en el sitio web |
+|---|---|---|
+| Quiero crear soluciones con Model Context Protocol (MCP) | [Ruta de Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Ruta de Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Quiero crear y publicar Agent Skills | [Ruta enfocada de Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Ruta de Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+
+</details>
+
+<details>
+<summary>Requisitos previos y tiempo de estudio</summary>
+
+### Requisitos previos
+
+- Sabes programar en algún lenguaje; Python ayuda.
+- Quieres entender cómo funciona realmente la IA, no limitarte a llamar APIs.
+
+## Por dónde empezar
+
+| Experiencia previa | Empieza en | Tiempo estimado |
+|---|---|---|
+| Nuevo en programación e IA | Fase 0 — Configuración | ~306 horas |
+| Sabes Python, quieres empezar con ML | Fase 1 — Fundamentos matemáticos | ~270 horas |
+| Sabes ML, quieres empezar con aprendizaje profundo | Fase 3 — Fundamentos del aprendizaje profundo | ~200 horas |
+| Sabes aprendizaje profundo y quieres LLM y agentes | Fase 10 — LLM desde cero | ~100 horas |
+| Ingeniero sénior, solo te interesa la ingeniería de agentes | Fase 14 — Ingeniería de agentes | ~60 horas |
+| Solo quiero crear sistemas MCP para producción | [Ruta de Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 horas y 15 minutos |
+| Solo quiero crear Agent Skills para producción | [Ruta de ingeniería de Agent Skills](../../learning-paths/agent-skills.json) | ~9,5 horas |
+
+</details>
 
 ## Estructura del plan de estudios
 
@@ -192,195 +321,6 @@ flowchart TB
   P16 --> P19["Fase 19 : Proyectos finales"]
   P17 --> P19
   P18 --> P19
-```
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Estructura de una lección
-
-Cada lección está en su propia carpeta y sigue la misma estructura en todo el plan de estudios:
-
-```text
-phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      implementaciones ejecutables (Python, TypeScript, Rust, Julia)
-├── docs/
-│   └── en.md  explicación de la lección
-└── outputs/   prompts, skills, agentes o servidores MCP que produce esta lección
-```
-
-Cada lección tiene seis etapas. La secuencia *Constrúyelo / Úsalo* es la columna vertebral: primero implementas el algoritmo desde cero y después ejecutas lo mismo con la biblioteca de producción. Entiendes lo que hace el framework porque antes escribiste una versión más pequeña.
-
-```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
-flowchart LR
-  M["IDEA CENTRAL<br/><sub>la esencia en una línea</sub>"] --> Pr["PROBLEMA<br/><sub>una dificultad concreta</sub>"]
-  Pr --> C["CONCEPTO<br/><sub>diagramas e intuición</sub>"]
-  C --> B["CONSTRÚYELO<br/><sub>matemáticas desde cero, sin frameworks</sub>"]
-  B --> U["ÚSALO<br/><sub>lo mismo en PyTorch / sklearn</sub>"]
-  U --> S["PUBLÍCALO<br/><sub>instrucción · habilidad · agente · MCP</sub>"]
-```
-
-## Primeros pasos
-
-Hay tres formas de empezar. Elige una.
-
-**Opción A — aprender desde la terminal *(recomendada)*.** Después de comprobar Node.js, `npx`, el host y el ámbito de instalación, instala las skills de aprendizaje en un agente compatible y deja que el curso te guíe:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
-
-Usa la tabla de invocación específica de tu host. Las skills instaladas incluyen `start-learning`, `learn`, `course-guide` y las rutas específicas `learn-mcp` y `learn-agent-skills`. Las lecciones se pueden transmitir desde este repositorio sin clonarlo. Necesitas un clon local para ejecutar los comandos que copian código del repositorio y los laboratorios de MCP o Agent Skills. El progreso se guarda en `LEARNING.md`, `MCP-LEARNING.md` o `AGENT-SKILLS-LEARNING.md` dentro de tu proyecto, para que puedas continuar en otra sesión.
-
-**Opción B — leer.** Abre cualquier lección terminada en [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) o despliega una fase en [Contenido](#contents). No necesitas instalar nada ni clonar el repositorio.
-
-**Opción C — clonar y ejecutar.**
-
-```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
-```
-
-Al clonar, Claude Code también carga automáticamente las skills de aprendizaje y el tutor `learn` puede ejecutar el código real de cada lección, en lugar de limitarse a leerlo.
-
-### Requisitos previos
-
-- Sabes programar en algún lenguaje; Python ayuda.
-- Quieres entender cómo funciona realmente la IA, no limitarte a llamar APIs.
-
-### Prepárate para las certificaciones Claude
-
-La [Academia de certificación Claude](../../certifications/claude/README.md) es un programa de preparación gratuito y de código abierto para las cuatro certificaciones oficiales de Claude: Associate Foundations, Developer Foundations, Architect Foundations y Architect Professional. Cada ruta combina lecciones alineadas con el temario oficial, laboratorios ejecutables, una evaluación diagnóstica, un proyecto final y un examen de práctica original de extensión completa.
-
-Usa la [guía de incorporación a GitHub con tutoría de IA](../../certifications/claude/GETTING_STARTED.md) con Claude Code, Codex, ChatGPT, Cursor u otro agente. Ejecuta `claude-certification` en Codex, `/claude-certification` en Claude Code o pide a otro host que use `claude-certification`. La skill te ayuda a elegir una certificación, crea una ruta persistente en `CLAUDE-CERTIFICATION.md`, avanza paso a paso, ejecuta los laboratorios reales y ofrece comentarios basados en los artefactos. El mismo plan de estudios está disponible en el [sitio web de certificación](https://aiengineeringfromscratch.com/certifications.html).
-
-La academia ofrece material de estudio independiente basado en los objetivos públicos de los exámenes. No está afiliada a Anthropic, no reproduce preguntas de exámenes reales y no garantiza que apruebes.
-
-### Prepárate para la certificación MCP Associate (MCPA)
-
-El [plan de estudios de certificación MCPA](../../certifications/mcpa/README.md) es un programa de preparación gratuito y de código abierto para el examen Model Context Protocol Associate de la Agentic AI Foundation, impartido a través de Linux Foundation Training. Sus 34 lecciones enseñan el protocolo sin estado de 2026-07-28 y abarcan los cinco dominios del examen: `_meta` por solicitud y `server/discover` en lugar del antiguo handshake, solicitudes con varios intercambios, suscripciones, caché, las extensiones Tasks y MCP Apps, autorización OAuth y los niveles de registro y SDK. Cada lección incluye un laboratorio ejecutable con la biblioteca estándar; su transcripción se comprueba para verificar el formato actual del protocolo. La ruta también incluye una evaluación diagnóstica, un proyecto final y tres exámenes de práctica originales y completos, con una distribución de preguntas acorde con los pesos publicados del temario.
-
-Usa la [guía de incorporación a GitHub con tutoría de IA](../../certifications/mcpa/GETTING_STARTED.md) con Claude Code, Codex, ChatGPT, Cursor u otro agente. Ejecuta `mcpa-certification` en Codex, `/mcpa-certification` en Claude Code o pide a otro host que use `mcpa-certification`. La skill crea una ruta persistente en `MCPA-CERTIFICATION.md`, avanza paso a paso, ejecuta los laboratorios reales y ofrece comentarios basados en los artefactos. El mismo plan de estudios está disponible en la [página de la ruta MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
-
-Este plan de estudios es material de estudio independiente basado en los objetivos públicos de los exámenes. No está afiliado a la Agentic AI Foundation ni a Linux Foundation, no reproduce preguntas de exámenes reales y no garantiza que apruebes.
-
-### Skills de aprendizaje
-
-| Habilidad | Qué hace |
-|---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | Incorporación inicial: define por qué aprendes, responde el cuestionario de nivelación y guarda un plan personalizado en `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | Ciclo del tutor: repaso inicial, siguiente lección interactiva y su cuestionario; registra el progreso y una lista de repaso. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Guía por temas: encuentra las lecciones exactas y sus enlaces para preguntas como «¿Dónde aprendo atención?» o «mi pérdida es NaN». |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Tutor especializado en Model Context Protocol (MCP). Crea `MCP-LEARNING.md`, sigue el manifiesto de 17 lecciones y registra evidencias sobre protocolo, seguridad, confiabilidad y conformidad. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Tutor especializado en Agent Skills. Crea `AGENT-SKILLS-LEARNING.md`, enseña las lecciones 22, 24, 25, 26 y 27, y registra evidencias en hosts reales. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Tutor de certificación. Elige CCAO-F, CCDV-F, CCAR-F o CCAR-P; enseña cada lección, ejecuta laboratorios, revisa artefactos, administra diagnósticos y simulacros y guarda el progreso. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Tutor de MCPA. Sigue la ruta `mcpa-f` de 34 lecciones sobre el protocolo 2026-07-28; enseña cada lección, ejecuta los laboratorios y el verificador del protocolo, administra el diagnóstico y tres simulacros y guarda el progreso. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Cuestionario de nivelación de diez preguntas. Determina la fase inicial adecuada y propone una ruta personalizada con estimaciones de horas. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Cuestionario por fase de ocho preguntas, con comentarios y lecciones específicas para repasar. Usa la invocación de Codex, Claude Code o lenguaje natural de la tabla anterior. |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Lee el plan de estudios básico en formato de libro
-
-El plan de estudios básico de 20 fases de `phases/` se publica también como una serie de seis libros. CI genera los archivos EPUB y PDF a partir de las mismas lecciones básicas y los adjunta a cada [versión de GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases); los enlaces de abajo siempre apuntan a la versión más reciente. Los números indican el orden de los volúmenes, no versiones: cada copia lleva la fecha de su edición, y las ediciones anteriores siguen disponibles en sus respectivas publicaciones.
-
-Los planes de estudio de certificación no se incluyen en los libros. El estado del tutor de IA, los laboratorios ejecutables, las figuras interactivas, las evaluaciones diagnósticas y los exámenes cronometrados siguen estando disponibles en GitHub y en el sitio web.
-
-| Vol. | Título | Fases | Descargar |
-|-----|-------|--------|----------|
-| 1 | Fundamentos · Matemáticas, herramientas y aprendizaje automático clásico | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Aprendizaje profundo · Redes, visión y habla | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Lenguaje · Fundamentos de PLN y el Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Grandes modelos de lenguaje · Generación, refuerzo, preentrenamiento e ingeniería | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Agentes · Multimodalidad, protocolos, autonomía y enjambres | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Producción · Infraestructura, seguridad y proyectos finales | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-El libro es una instantánea; este repositorio es la edición viva. Cada capítulo termina con enlaces a las figuras animadas, el cuestionario y el código ejecutable de la lección. Para compilarlo localmente, ejecuta `python3 scripts/build_book.py` (necesitas pandoc); consulta los detalles del proceso en [book/README.md](../../book/README.md).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Cada lección produce algo
-
-Otros planes de estudio terminan con «¡Felicidades, aprendiste X!». Aquí, cada lección termina con una **herramienta reutilizable** que puedes instalar o incorporar a tu flujo de trabajo diario.
-
-<table>
-<tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A Instrucciones"/><br/><sub>FIG_001 · A</sub><br/><b>INSTRUCCIONES</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B Habilidades"/><br/><sub>FIG_001 · B</sub><br/><b>HABILIDADES</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C Agentes"/><br/><sub>FIG_001 · C</sub><br/><b>Agentes</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D Servidores MCP"/><br/><sub>FIG_001 · D</sub><br/><b>SERVIDORES MCP</b></th>
-</tr>
-<tr>
-<td valign="top">Pega el contenido en cualquier asistente de IA para recibir ayuda experta con una tarea concreta.</td>
-<td valign="top">Instálala en Claude, Cursor, Codex, OpenClaw, Hermes o cualquier agente que lea <code>SKILL.md</code>.</td>
-<td valign="top">Despliégalos como trabajadores autónomos: tú mismo escribiste el ciclo en la Fase 14.</td>
-<td valign="top">Conéctalo a cualquier cliente compatible con MCP. Se construye de principio a fin en la Fase 13.</td>
-</tr>
-</table>
-
-> Instala todas las skills con `python3 scripts/install_skills.py <target>`. Son herramientas reales, no deberes. Al terminar el plan de estudios, tendrás un portafolio de 523 artefactos que entiendes de verdad porque los construiste.
-
-### FIG_002 · Un ejemplo trabajado
-
-Fase 14, lección 1: el ciclo del agente. Unas 120 líneas de Python puro, sin dependencias.
-
-<table>
-<tr>
-<td valign="top" width="50%">
-
-**`code/agent_loop.py`** &nbsp; <sub><i>Construirlo</i></sub>
-
-```python
-def run(query, tools):
-    history = [user(query)]
-    for step in range(MAX_STEPS):
-        msg = llm(history)
-        if msg.tool_calls:
-            for call in msg.tool_calls:
-                result = tools[call.name](**call.args)
-                history.append(tool_result(call.id, result))
-            continue
-        return msg.content
-    raise StepLimitExceeded
-```
-
-</td>
-<td valign="top" width="50%">
-
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>Publícalo</i></sub>
-
-```markdown
----
-name: agent-loop
-description: ReAct-style loop for any tool list
-phase: 14
-lesson: 01
----
-
-Implement a minimal agent loop that...
-```
-
-**`outputs/prompt-debug-agent.md`**
-
-```markdown
-You are an agent debugger. Given the trace
-of an agent run, identify the step where
-the agent went wrong and explain why...
-```
-
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 <a id="contents"></a>
@@ -1087,33 +1027,104 @@ Las lecciones 31–46 forman la [ruta de ingeniería asistida por agentes](../..
 
 </details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+## Libros y certificaciones
+
+<details>
+<summary>Lee el plan de estudios básico en formato de libro</summary>
+
+El plan de estudios básico de 20 fases de `phases/` se publica también como una serie de seis libros. CI genera los archivos EPUB y PDF a partir de las mismas lecciones básicas y los adjunta a cada [versión de GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases); los enlaces de abajo siempre apuntan a la versión más reciente. Los números indican el orden de los volúmenes, no versiones: cada copia lleva la fecha de su edición, y las ediciones anteriores siguen disponibles en sus respectivas publicaciones.
+
+Los planes de estudio de certificación no se incluyen en los libros. El estado del tutor de IA, los laboratorios ejecutables, las figuras interactivas, las evaluaciones diagnósticas y los exámenes cronometrados siguen estando disponibles en GitHub y en el sitio web.
+
+| Vol. | Título | Fases | Descargar |
+|-----|-------|--------|----------|
+| 1 | Fundamentos · Matemáticas, herramientas y aprendizaje automático clásico | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Aprendizaje profundo · Redes, visión y habla | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Lenguaje · Fundamentos de PLN y el Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Grandes modelos de lenguaje · Generación, refuerzo, preentrenamiento e ingeniería | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Agentes · Multimodalidad, protocolos, autonomía y enjambres | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Producción · Infraestructura, seguridad y proyectos finales | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+El libro es una instantánea; este repositorio es la edición viva. Cada capítulo termina con enlaces a las figuras animadas, el cuestionario y el código ejecutable de la lección. Para compilarlo localmente, ejecuta `python3 scripts/build_book.py` (necesitas pandoc); consulta los detalles del proceso en [book/README.md](../../book/README.md).
+
+</details>
+
+<details>
+<summary>Prepárate para las certificaciones Claude</summary>
+
+La [Academia de certificación Claude](../../certifications/claude/README.md) es un programa de preparación gratuito y de código abierto para las cuatro certificaciones oficiales de Claude: Associate Foundations, Developer Foundations, Architect Foundations y Architect Professional. Cada ruta combina lecciones alineadas con el temario oficial, laboratorios ejecutables, una evaluación diagnóstica, un proyecto final y un examen de práctica original de extensión completa.
+
+Usa la [guía de incorporación a GitHub con tutoría de IA](../../certifications/claude/GETTING_STARTED.md) con Claude Code, Codex, ChatGPT, Cursor u otro agente. Ejecuta `claude-certification` en Codex, `/claude-certification` en Claude Code o pide a otro host que use `claude-certification`. La skill te ayuda a elegir una certificación, crea una ruta persistente en `CLAUDE-CERTIFICATION.md`, avanza paso a paso, ejecuta los laboratorios reales y ofrece comentarios basados en los artefactos. El mismo plan de estudios está disponible en el [sitio web de certificación](https://aiengineeringfromscratch.com/certifications.html).
+
+La academia ofrece material de estudio independiente basado en los objetivos públicos de los exámenes. No está afiliada a Anthropic, no reproduce preguntas de exámenes reales y no garantiza que apruebes.
+
+</details>
+
+<details>
+<summary>Prepárate para la certificación MCP Associate (MCPA)</summary>
+
+El [plan de estudios de certificación MCPA](../../certifications/mcpa/README.md) es un programa de preparación gratuito y de código abierto para el examen Model Context Protocol Associate de la Agentic AI Foundation, impartido a través de Linux Foundation Training. Sus 34 lecciones enseñan el protocolo sin estado de 2026-07-28 y abarcan los cinco dominios del examen: `_meta` por solicitud y `server/discover` en lugar del antiguo handshake, solicitudes con varios intercambios, suscripciones, caché, las extensiones Tasks y MCP Apps, autorización OAuth y los niveles de registro y SDK. Cada lección incluye un laboratorio ejecutable con la biblioteca estándar; su transcripción se comprueba para verificar el formato actual del protocolo. La ruta también incluye una evaluación diagnóstica, un proyecto final y tres exámenes de práctica originales y completos, con una distribución de preguntas acorde con los pesos publicados del temario.
+
+Usa la [guía de incorporación a GitHub con tutoría de IA](../../certifications/mcpa/GETTING_STARTED.md) con Claude Code, Codex, ChatGPT, Cursor u otro agente. Ejecuta `mcpa-certification` en Codex, `/mcpa-certification` en Claude Code o pide a otro host que use `mcpa-certification`. La skill crea una ruta persistente en `MCPA-CERTIFICATION.md`, avanza paso a paso, ejecuta los laboratorios reales y ofrece comentarios basados en los artefactos. El mismo plan de estudios está disponible en la [página de la ruta MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
+
+Este plan de estudios es material de estudio independiente basado en los objetivos públicos de los exámenes. No está afiliado a la Agentic AI Foundation ni a Linux Foundation, no reproduce preguntas de exámenes reales y no garantiza que apruebes.
+
+</details>
 
 ## Kit de herramientas
 
-Cada lección produce un artefacto reutilizable. Al final tendrás:
+Cada lección produce un artefacto reutilizable. Instálalo en tu agente o usa los scripts siguientes desde la raíz del repositorio.
+
+<details>
+<summary>Estructura de las lecciones y artefactos reutilizables</summary>
+
+## Estructura de una lección
+
+Cada lección está en su propia carpeta y sigue la misma estructura en todo el plan de estudios:
 
 ```text
-outputs/
-├── prompts/      plantillas de prompts para cada tarea de IA
-└── skills/       archivos SKILL.md para agentes de programación con IA
+phases/<NN>-<phase-name>/<NN>-<lesson-name>/
+├── code/      implementaciones ejecutables (Python, TypeScript, Rust, Julia)
+├── docs/
+│   └── en.md  explicación de la lección
+└── outputs/   prompts, skills, agentes o servidores MCP que produce esta lección
 ```
 
-Úsalas con Claude, Cursor, Codex, OpenClaw, Hermes o cualquier agente que lea archivos `SKILL.md` o `AGENTS.md`. Son herramientas reales, no deberes.
+Cada lección tiene seis etapas. La secuencia *Constrúyelo / Úsalo* es la columna vertebral: primero implementas el algoritmo desde cero y después ejecutas lo mismo con la biblioteca de producción. Entiendes lo que hace el framework porque antes escribiste una versión más pequeña.
 
-### Instala las skills del curso en tu agente
-
-Dos conjuntos de skills, dos instaladores:
-
-**Las skills de aprendizaje** (`start-learning`, `learn`, `course-guide`, `learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`, `find-your-level` y `check-understanding`) están en [`skills/`](../../skills/) y se instalan en un host compatible con skills mediante un solo comando. Necesitas Node.js y `npx`, pero no clonar el repositorio ni tener Python.
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["IDEA CENTRAL<br/><sub>la esencia en una línea</sub>"] --> Pr["PROBLEMA<br/><sub>una dificultad concreta</sub>"]
+  Pr --> C["CONCEPTO<br/><sub>diagramas e intuición</sub>"]
+  C --> B["CONSTRÚYELO<br/><sub>matemáticas desde cero, sin frameworks</sub>"]
+  B --> U["ÚSALO<br/><sub>lo mismo en PyTorch / sklearn</sub>"]
+  U --> S["PUBLÍCALO<br/><sub>instrucción · habilidad · agente · MCP</sub>"]
 ```
 
-`skills` escribe en el host y el ámbito elegidos durante la instalación, por ejemplo `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` u otra carpeta de skills compatible. Comprueba que el host seleccionado detecte ese destino exacto.
+## Cada lección produce algo
+
+Otros planes de estudio terminan con «¡Felicidades, aprendiste X!». Aquí, cada lección termina con una **herramienta reutilizable** que puedes instalar o incorporar a tu flujo de trabajo diario.
+
+<table>
+<tr>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A Instrucciones"/><br/><sub>FIG_001 · A</sub><br/><b>INSTRUCCIONES</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B Habilidades"/><br/><sub>FIG_001 · B</sub><br/><b>HABILIDADES</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C Agentes"/><br/><sub>FIG_001 · C</sub><br/><b>Agentes</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D Servidores MCP"/><br/><sub>FIG_001 · D</sub><br/><b>SERVIDORES MCP</b></th>
+</tr>
+<tr>
+<td valign="top">Pega el contenido en cualquier asistente de IA para recibir ayuda experta con una tarea concreta.</td>
+<td valign="top">Instálala en Claude, Cursor, Codex, OpenClaw, Hermes o cualquier agente que lea <code>SKILL.md</code>.</td>
+<td valign="top">Despliégalos como trabajadores autónomos: tú mismo escribiste el ciclo en la Fase 14.</td>
+<td valign="top">Conéctalo a cualquier cliente compatible con MCP. Se construye de principio a fin en la Fase 13.</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>Instalar artefactos de las lecciones</summary>
 
 **Los artefactos de las lecciones.** El repositorio incluye 396 skills y 99 prompts en `phases/**/outputs/`; instálalos con `scripts/install_skills.py`. Hace falta clonar el repositorio. La herramienta permite filtrar por etiquetas, hacer una ejecución de prueba y elegir una estructura para cada agente:
 
@@ -1138,7 +1149,10 @@ De forma predeterminada, el script se niega a sobrescribir un destino existente 
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Incorpora el banco de trabajo del agente en tu repositorio
+</details>
+
+<details>
+<summary>Incorpora el banco de trabajo del agente en tu repositorio</summary>
 
 El proyecto final de la Fase 14 incluye un paquete reutilizable de Agent Workbench (AGENTS.md, esquemas y scripts de inicialización, verificación y transferencia). Puedes generarlo en cualquier repositorio con:
 
@@ -1151,7 +1165,10 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 
 El paquete configura las siete partes del banco de trabajo, crea un `task_board.json` inicial y un `agent_state.json` nuevo con `schema_version: 1`. Después, edita la tarea y `AGENTS.md`, ejecuta `scripts/init_agent.py` y entrega el contrato a tu agente. El código fuente del paquete está en `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
 
-### Explora todo el curso en formato JSON
+</details>
+
+<details>
+<summary>Explora todo el curso en formato JSON</summary>
 
 `scripts/build_catalog.py` recorre cada fase, lección y artefacto del disco, y escribe `catalog.json` en la raíz del repositorio. Un archivo contiene toda la información del curso.
 
@@ -1163,9 +1180,12 @@ python3 scripts/build_catalog.py --out path/to/file.json
 
 El catálogo se genera a partir del sistema de archivos, no del README, así que las cantidades siempre coinciden con el contenido real del disco. Úsalo para compilar el sitio, crear herramientas derivadas o comprobar que las cantidades del README no hayan cambiado. El esquema se documenta al principio del script.
 
-Una acción de GitHub (`.github/workflows/curriculum.yml`) vuelve a generar `catalog.json` en cada PR y hace fallar la compilación si el archivo confirmado está desactualizado. Después de editar cualquier lección, ejecuta `python3 scripts/build_catalog.py` e incluye el resultado en el commit; de lo contrario, CI rechazará el PR. El mismo flujo ejecuta `audit_lessons.py` en modo de solo advertencias, de modo que las discrepancias existentes no impiden contribuir.
+El flujo del currículo genera `catalog.json` como artefacto temporal excluido por Git. No lo incluyas en un commit. El mismo flujo ejecuta `audit_lessons.py` como comprobación bloqueante.
 
-### Comprueba la sintaxis del código Python de cada lección
+</details>
+
+<details>
+<summary>Comprueba la sintaxis del código Python de cada lección</summary>
 
 `scripts/lesson_run.py` compila todos los archivos `.py` de los directorios `code/` de las lecciones. De forma predeterminada, solo comprueba la sintaxis: no ejecuta el código, no requiere claves de API ni dependencias pesadas de ML. Detecta los errores más comunes que introducen las contribuciones: sangría incorrecta, f-strings rotas y ediciones accidentales.
 
@@ -1181,43 +1201,10 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 
 Solo usa la biblioteca estándar; requiere Python 3.10 o posterior. Define `LINK_CHECK_SKIP=domain1,domain2` para reemplazar la lista predeterminada de dominios omitidos (`twitter.com`, `x.com`, `linkedin.com`, `instagram.com`, `medium.com`), que bloquean con frecuencia las solicitudes HEAD/GET automatizadas.
 
-## Por dónde empezar
+</details>
 
-| Experiencia previa | Empieza en | Tiempo estimado |
-|---|---|---|
-| Nuevo en programación e IA | Fase 0 — Configuración | ~306 horas |
-| Sabes Python, quieres empezar con ML | Fase 1 — Fundamentos matemáticos | ~270 horas |
-| Sabes ML, quieres empezar con aprendizaje profundo | Fase 3 — Fundamentos del aprendizaje profundo | ~200 horas |
-| Sabes aprendizaje profundo y quieres LLM y agentes | Fase 10 — LLM desde cero | ~100 horas |
-| Ingeniero sénior, solo te interesa la ingeniería de agentes | Fase 14 — Ingeniería de agentes | ~60 horas |
-| Solo quiero crear sistemas MCP para producción | [Ruta de Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 horas y 15 minutos |
-| Solo quiero crear Agent Skills para producción | [Ruta de ingeniería de Agent Skills](../../learning-paths/agent-skills.json) | ~9,5 horas |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Por qué esto importa ahora
-
-<table>
-<tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>LA SEÑAL DEL SECTOR</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>TRABAJOS FUNDAMENTALES INCLUIDOS</b></th>
-</tr>
-<tr>
-<td valign="top">
-
-> *«El lenguaje de programación más novedoso es el inglés».*<br/>
-> — **Andrej Karpathy** ([tweet](https://x.com/karpathy/status/1617979122625712128))
->
-> *«La ingeniería de software se está transformando ante nuestros ojos».*<br/>
-> — **Boris Cherny**, creador de Claude Code
->
-> *«Los modelos seguirán mejorando. La habilidad que se vuelve más valiosa con el tiempo es **saber qué construir**».*<br/>
-> — Consenso del sector, 2026
-
-</td>
-<td valign="top">
+<details>
+<summary>Artículos y protocolos fundamentales</summary>
 
 - *Attention Is All You Need* — Vaswani et al., 2017 → [Fase 7](#phase-7)
 - *Language Models are Few-Shot Learners* (GPT-3) → [Fase 10](#phase-10)
@@ -1228,13 +1215,7 @@ Solo usa la biblioteca estándar; requiere Python 3.10 o posterior. Define `LINK
 - *ReAct: Reasoning + Acting in LLMs* → [Fase 14](#phase-14)
 - *Model Context Protocol* — Anthropic → [Fase 13](#phase-13)
 
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+</details>
 
 ## Cómo contribuir
 
@@ -1257,21 +1238,17 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 
 El código de salida es distinto de cero si falla alguna regla. Las reglas L001–L010 validan la estructura de directorios, la presencia de `docs/en.md` y su encabezado H1, que `code/` no esté vacío, el esquema de `quiz.json` (y rechazan las claves antiguas `q/choices/answer`, que causaron el issue #102) y los enlaces relativos en la documentación de las lecciones.
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
 <a id="supporters"></a>
 
 ## Patrocina el proyecto
 
+<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
+<p align="center"><sub><b>114,584</b> lectores &nbsp;·&nbsp; <b>181,995</b> visitas a las páginas en los últimos 30 días &nbsp;·&nbsp; desde el 2026-08-29</sub></p>
+<!-- STATS:END -->
+
 Gratis, con licencia MIT y 523 lecciones. Gracias a los patrocinadores y colaboradores que hacen posible este trabajo. [Ver todos los patrocinadores y colaboradores](../../BACKERS.md).
 
 ¿Quieres apoyar el proyecto? Consulta las [opciones de patrocinio](../../SPONSORS.md), incluidos los [patrocinios de hardware](../../SPONSORS.md#hardware-lab-partner), o [patrocina en GitHub](https://github.com/sponsors/rohitg00).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 
 Si este manual te ayudó, dale una estrella al repositorio. Eso mantiene vivo el proyecto.
 
@@ -1282,7 +1259,5 @@ MIT. Úsalo como quieras: haz un fork, enséñalo, véndelo o publícalo. Se agr
 Mantenido por [Rohit Ghumare](https://github.com/rohitg00) y la comunidad.
 
 <sub>
-  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
-  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Informar / Sugerir</a>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp; <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp; <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Informar / Sugerir</a>
 </sub>

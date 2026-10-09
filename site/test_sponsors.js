@@ -30,7 +30,7 @@ function checkSponsorLink(text, file) {
 
 test('sponsor placements preserve copy, destinations, and local artwork without tier labels', () => {
   const placements = [
-    ['README.md', '### Sponsors\n', '### Use every lesson the same way'],
+    ['README.md', '### Sponsors\n', '## Learning paths'],
     ['SPONSORS.md', '## Sponsor\n', '## How to sponsor'],
     ['BACKERS.md', '## Sponsors\n', '## Infrastructure support'],
   ];
@@ -47,7 +47,7 @@ test('sponsor placements preserve copy, destinations, and local artwork without 
   assert.match(sponsors, /<img src="https:\/\/serpapi\.com\/assets\/media_kit\/logo-with-wordmark\.svg" alt="SerpApi" width="180">/);
   assert.ok(sponsors.includes(`<a href="${nitroUrl}"><img src="${nitroLogo}" alt="NitroStack" width="56"></a> **NitroStack** | ${nitroDescription}`));
   const readme = read('README.md');
-  const placement = between(readme, '### Sponsors\n', '### Use every lesson the same way', 'README.md');
+  const placement = between(readme, '### Sponsors\n', '## Learning paths', 'README.md');
   const banners = [...placement.matchAll(/<a href="([^"]+)">\s*<picture><source\b([^>]+)><img\b([^>]+)><\/picture>\s*<\/a>/g)];
   const expectedBanners = [
     {

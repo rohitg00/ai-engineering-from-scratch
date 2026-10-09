@@ -1,44 +1,19 @@
 <p align="center" lang="cs"><sub>Český překlad úplného README. Rozhodující je <a href="../../README.md">anglický originál</a>.</sub></p>
-<p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch: banner referenční příručky" width="100%">
-</p>
 
 <p align="center">
-  <a href="../../README.md">🇬🇧 English</a> ·
-  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
-  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
-  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
-  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
-  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
-  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
-  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
-  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
-  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
-  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
-  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
-  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
-  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
-  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
-  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
-  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
-  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
-  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
-  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
-  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
-  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
-  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
-  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
-  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
-  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
-  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
-  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
-  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
-  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
-  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
-  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
-  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
-  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/header-dark.svg">
+    <img src="../../assets/readme/header-light.svg" alt="Inženýrství AI od nuly" width="840">
+  </picture>
 </p>
+
+Implementujte vnitřní mechanismy modelů, vyhledávací pipeline a běhová prostředí agentů. Testujte je, zkoumejte chyby a uchovávejte kód i výsledky hodnocení.
+
+**[Začít se učit](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Vyberte si cestu](#learning-routes)** · **[Vyzkoušejte laboratoř](#interactive-lab)** · **[Vytvořte projekt](#project-challenges)** · **[Prohlédnout osnovy](#contents)**
+
+Zdarma, s otevřeným zdrojovým kódem, pod licencí MIT. Učte se na webu, s programovacím agentem nebo spouštěním místního kódu.
+
+> 523 lekcí. 20 fází. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licence MIT"></a>
@@ -46,12 +21,16 @@
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 fází"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Hvězdičky na GitHubu"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Webové stránky"></a>
-  <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Pořadí ve Star History" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="Populární repozitář dne na GitHubu" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
- </a>
 </p>
+
+<details>
+<summary>Číst ve svém jazyce</summary>
+
+<p align="center">
+  <a href="../../README.md">🇬🇧 English</a> · <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> · <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> · <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> · <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> · <a href="../../i18n/pt/README.md">🇵🇹 Português</a> · <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> · <a href="../../i18n/es/README.md">🇪🇸 Español</a> · <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> · <a href="../../i18n/fr/README.md">🇫🇷 Français</a> · <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> · <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> · <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> · <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> · <a href="../../i18n/ro/README.md">🇷🇴 Română</a> · <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> · <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> · <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> · <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> · <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> · <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> · <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> · <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> · <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> · <a href="../../i18n/he/README.md">🇮🇱 עברית</a> · <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> · <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> · <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> · <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> · <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> · <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> · <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> · <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> · <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
+
+</details>
 
 ### Sponzoři
 
@@ -64,65 +43,134 @@
   <sub><span>Díky vaší podpoře zůstává každá lekce zdarma a s otevřeným kódem.</span> <a href="#supporters">Zobrazit všechny podporovatele</a> · <a href="../../SPONSORS.md">Staňte se sponzorem</a></sub>
 </p>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+<a id="see-what-you-will-build-and-keep"></a>
+<a id="learning-routes"></a>
 
-> **84% studentů už používá nástroje AI. Jen 18% se cítí připraveno používat je profesionálně.** Tento vzdělávací program pomáhá tento rozdíl překonat.
->
-> 523 lekcí. 20 etap. ~342 hodin. Python, TypeScript, Rust, Julia. Každá lekce přináší opakovaně použitelný výstup: prompt, dovednost, agenta nebo server MCP. Zdarma, s otevřeným kódem, pod licencí MIT.
->
-> AI se jen neučíte. Sami ji vytváříte. Od začátku do konce. Vlastníma rukama.
+## Vzdělávací cesty
 
-<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> čtenářů &nbsp;·&nbsp; <b>181,995</b> zobrazení stránek za posledních 30 dní &nbsp;·&nbsp; stav k 2026-08-29</sub></p>
-<!-- STATS:END -->
+| Cesta | První lekce |
+|---|---|
+| Základy modelů | [Nastavení a nástroje](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Systémy LLM | [Návrh promptů](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Agenti a dodávání systémů | [Smyčka agenta](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
 
-## Začněte tady: vyberte si, co chcete vytvořit
+[Porovnat kariérní cesty](https://aiengineeringfromscratch.com/learning-paths.html) · [Předpoklady a doba studia](#study-guide)
 
-Než začnete, nemusíte procházet všech 523 lekcí. Vyberte si jeden cíl. Každý odkaz otevře stejný vzdělávací program na GitHub nebo na webu a obě verze používají stejný kód lekcí.
+<a id="interactive-lab"></a>
 
-| Váš cíl | Učení na GitHub | Učení na webu |
-|---|---|---|
-| Začínám a chci získat úplné základy | [Etapa 0: Nastavení a nástroje](../../phases/00-setup-and-tooling/) | [Vývojové prostředí](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Znám Python a chci základy matematiky a ML | [Etapa 1: Matematické základy](../../phases/01-math-foundations/) | [Intuitivní pochopení lineární algebry](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Chci vytvářet aplikace LLM pro produkční nasazení | [Etapa 11: Inženýrství LLM](../../phases/11-llm-engineering/) | [Návrh promptů](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Chci vytvářet agenty | [Etapa 14: Inženýrství agentů](../../phases/14-agent-engineering/) | [Smyčka agenta](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Chci používat programovací agenty ve skutečných repozitářích | [Studijní cesta vývoje s pomocí agentů](../../learning-paths/using-coding-agents.json) | [Vývoj s pomocí agentů](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Chci před implementací určit, co má smysl vytvořit | [Studijní cesta produktového rozhodování a dodání](../../learning-paths/shaping-the-build.json) | [Produktové rozhodování a dodání](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| Chci vyvíjet s Model Context Protocol (MCP) | [Trasa Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Studijní cesta Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Chci psát a vydávat Agent Skills | [Zaměřená trasa Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Studijní cesta Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Chci se připravit na certifikaci Claude | [Úvod do přípravy na certifikaci](../../certifications/claude/GETTING_STARTED.md) | [Certifikační akademie](https://aiengineeringfromscratch.com/certifications.html) |
-| Chci se připravit na MCP Associate (MCPA) | [Úvod do MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [Studijní cesta MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+### Gradientní sestup
 
-Nevíte, kde začít? Použijte [tutora `start-learning` pro určení úrovně](../../skills/start-learning/SKILL.md) nebo [průvodce vstupními znalostmi na webu](https://aiengineeringfromscratch.com/prereqs.html).
+Dvacet počátečních bodů postupuje gradientním sestupem po kvadratické ztrátové funkci. Graf ukazuje jejich polohy a průměrnou ztrátu po každé aktualizaci.
 
-Porovnejte čtyři hlavní oblasti a šest kariérních cest v [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+<p align="center">
+  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+    <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
+      <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
+      <source media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-dark.png">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-light.png">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-mobile-dark.gif">
+      <source media="(max-width: 600px)" srcset="../../assets/readme/101-gradient-mobile-light.gif">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-dark.gif">
+      <img src="../../assets/readme/101-gradient-light.gif" alt="Gradientní sestup posouvá rozptýlené počáteční body k minimu ztrátové funkce. Průměrná ztráta s každou aktualizací klesá." width="840">
+    </picture>
+  </a>
+</p>
 
-### Každou lekci procházejte stejným způsobem
+[Upravte rychlost učení v lekci](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Porovnejte v kódu gradientní sestup, hybnost a Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
-1. **Přečtěte si** `docs/en.md` a vysvětlete hlavní myšlenku vlastními slovy.
-2. **Napište a sestavte** důležitý kód, místo abyste blok kódu brali jako pouhou dekoraci.
-3. **Spusťte** příkaz lekce z kořenového adresáře repozitáře, tedy z adresáře obsahujícího `README.md` a `phases/`.
-4. **Uchovejte důkazy**: příkaz, pracovní adresář, návratový kód, smysluplný výstup a artefakt, který jste změnili nebo vytvořili.
-5. **Pokračujte**, až dokážete vysvětlit výstup a provést malou změnu bez hádání.
+<a id="project-challenges"></a>
 
-Cesty v příkazech na stránkách lekcí vycházejí z kořenového adresáře repozitáře, pokud lekce výslovně neříká, že máte změnit adresář. Pokud lekce nabízí více programovacích jazyků, spusťte implementaci v jazyce, který se učíte.
+### Projekty
 
-### Naklonujte repozitář a vytvořte první důkaz
+Tři projekty s výchozím kódem rozděleným do etap, referenčními implementacemi a lokálními hodnoticími nástroji. Po [nastavení](#local-setup) spouštějte příkazy z kořenového adresáře repozitáře. Výchozí kód neprojde kontrolami, dokud neimplementujete jednotlivé etapy.
+
+<details>
+<summary><strong>01 · Laboratoř hodnocení vyhledávání</strong> · Python · Metriky řazení a kontroly regresí</summary>
+
+Kandidát zlepší průměrné NDCG, zatímco u jednoho dotazu klesne pozice nejrelevantnějších podkladů. Vytvořte porovnání po jednotlivých dotazech, které hlásí regresi a může způsobit neúspěch kontroly před vydáním.
+
+Použijte Python 3.10+. Zopakujte si [RAG](../../phases/11-llm-engineering/06-rag/docs/en.md) a [hodnocení modelů](../../phases/02-ml-fundamentals/09-model-evaluation/docs/en.md). Implementujte validaci pořadí, precision a recall, metriky citlivé na pozici a poté porovnání systémů.
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --init learning-artifacts/retrieval-evaluation-lab
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --stage 1 --path learning-artifacts/retrieval-evaluation-lab --strict
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --all --path learning-artifacts/retrieval-evaluation-lab --strict
 ```
 
-Úvodní kontrola odděluje požadavky potřebné nyní od nástrojů, které budete potřebovat později. Každá neúspěšná povinná kontrola uvede zjištěnou příčinu a příkaz k nápravě. Druhý příkaz spustí lekci bez závislostí a na závěr ukáže, že násobení matice vektorem je operace uvnitř vrstvy neuronové sítě. Uložte si tento výstup terminálu jako první důkaz.
+**Uchovejte:** reprodukovatelné porovnání se změnami pro každý dotaz a hodnoceními relevance použitými ke skórování. Metriky popisují tato hodnocení; neprokazují správnost odpovědí.
 
-## Přidejte AI tutora za 30 sekund
+[Zahájit projekt](https://aiengineeringfromscratch.com/project.html?id=retrieval-evaluation-lab) · [Prozkoumat referenční řešení](../../projects/retrieval-evaluation-lab/solution/) · [Spustit s vlastními vstupy](../../projects/retrieval-evaluation-lab/README.md#run-with-your-own-inputs)
 
-Máte-li už Node.js, `npx` a programovacího agenta podporujícího dovednosti, dvěma příkazy z něj uděláte tutora. K instalaci ani čtení tutora nepotřebujete klon repozitáře. Spustitelná cvičení zaměřených cest vyžadují `python3`. Cvičení Agent Skills navíc potřebují vybraného hostitele a zapisovatelný uživatelský nebo projektový rozsah dovedností.
+</details>
+
+<details>
+<summary><strong>02 · Ladicí nástroj tras agentů</strong> · TypeScript · Parsování tras a měření času</summary>
+
+Dodaná trasa stále trvá 100 ms, ale celkové využití tokenů se zvýší o 200 a jeden span začne selhávat. Oddělte překrývající se práci podřízených spanů od času provádění nadřazeného spanu a vytvořte zprávu odhalující změnu.
+
+Použijte Node.js 22.18+ a Python 3 pro hodnoticí program. Implementujte parsování JSONL, validaci nadřazených spanů, intervalovou aritmetiku a poté prozkoumatelnou časovou osu.
+
+```bash
+python3 scripts/project_test.py agent-trace-debugger \
+  --init learning-artifacts/agent-trace-debugger
+python3 scripts/project_test.py agent-trace-debugger \
+  --stage 1 --path learning-artifacts/agent-trace-debugger --strict
+python3 scripts/project_test.py agent-trace-debugger \
+  --all --path learning-artifacts/agent-trace-debugger --strict
+```
+
+**Uchovejte:** vstupní trasu, časovou osu HTML a zprávu o regresi v JSON. Zachovejte vlastní počty tokenů každého spanu bez podřízených spanů, aby se využití rodiče a potomků nepočítalo dvakrát.
+
+[Zahájit projekt](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger) · [Prozkoumat referenční řešení](../../projects/agent-trace-debugger/solution/) · [Prozkoumat časování interaktivně](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger&stage=03-timing)
+
+</details>
+
+<details>
+<summary><strong>03 · Firewall volání nástrojů</strong> · Rust · Kontroly rolí a potvrzení schválení</summary>
+
+Zápis se po kontrole změní nebo je schválení použito znovu. Validujte obálku volání, zkontrolujte roli volajícího a cestu a poté spotřebujte schválení svázané s přesným požadavkem a obsahem.
+
+Použijte Rust a Python 3.10+. Zopakujte si [návrh schémat nástrojů](../../phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md) a [bezpečnostní hranice](../../phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md). Identitu dodává volající aplikace; model navrhuje operaci.
+
+```bash
+python3 scripts/project_test.py tool-call-firewall \
+  --init learning-artifacts/tool-call-firewall
+python3 scripts/project_test.py tool-call-firewall \
+  --stage 1 --path learning-artifacts/tool-call-firewall --strict
+python3 scripts/project_test.py tool-call-firewall \
+  --all --path learning-artifacts/tool-call-firewall --strict
+```
+
+**Uchovejte:** auditní potvrzení s požadovanou operací a rozhodnutím politiky. Schválení jsou jednorázová v rámci jednoho vyvolání; projekt neposkytuje trvalou autorizaci ani sandbox operačního systému.
+
+[Zahájit projekt](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall) · [Prozkoumat referenční řešení](../../projects/tool-call-firewall/solution/) · [Prozkoumat hranice schvalování](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall&stage=03-consume-a-request-bound-approval-once)
+
+</details>
+
+[Procházet všechny projekty](https://aiengineeringfromscratch.com/projects.html) · [Průvodce kariérní praxí](../../learning-paths/CAREER-PRACTICE.md)
+
+## Vyberte si způsob učení
+
+### Na webových stránkách
+
+Otevřete dokončenou lekci na [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) nebo rozbalte fázi v [obsahu](#contents). Bez nastavování a klonování.
+
+### S AI tutorem
+
+Máte-li už Node.js, `npx` a programovacího agenta podporujícího dovednosti, můžete ho použít jako tutora. K instalaci ani čtení tutora nepotřebujete klon repozitáře. Spustitelná cvičení zaměřených cest vyžadují `python3`. Cvičení Agent Skills navíc potřebují vybraného hostitele a zapisovatelný uživatelský nebo projektový rozsah dovedností.
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+Vyberte hostitele a rozsah, až se instalátor zeptá. Použijte `start-learning` v Codexu, `/start-learning` v Claude Code nebo požádejte hostitele o použití dovednosti podle názvu.
+
+<details>
+<summary>Nastavení tutora a příkazy hostitelského prostředí</summary>
 
 Nejdříve ověřte místní požadavky:
 
@@ -132,11 +180,7 @@ npx --version
 python3 --version
 ```
 
-Potom nainstalujte dovednosti kurzu a na výzvu instalátoru vyberte hostitele a rozsah, který chcete používat:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
+`skills` zapisuje do hostitele a rozsahu zvoleného při instalaci, například `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` nebo jiné podporované složky. Ověřte, že vybraný hostitel objeví právě toto umístění.
 
 Syntaxe vyvolání závisí na hostiteli, nikoli na přenositelném formátu `SKILL.md`:
 
@@ -154,17 +198,100 @@ Chcete pouze Agent Skills? Použijte vyvolání Agent Skills pro svého hostitel
 
 Instalátor uvede podporované hostitele a zeptá se na místo instalace. Pokud ještě nemáte Node.js, `npx`, `python3`, podporovaného hostitele nebo zapisovatelný rozsah, použijte web nebo čtěte `docs/en.md` ručně. Tak poznáte koncepty, ale důkazy objevování, vyvolání, skriptů a odinstalace na skutečném hostiteli zůstanou nevyřízené, dokud nebude dostupná vstupní kontrola. Lekce najdete na [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## Jak to funguje
+### Výukové dovednosti
 
-Většina materiálů o AI učí nesouvislé části. Tady vědecký článek, jinde příspěvek o dolaďování a ještě jinde působivá ukázka agenta. Tyto dílky do sebe málokdy zapadnou. Dodáte chatbota, ale nedokážete vysvětlit jeho křivku ztráty. Připojíte funkci k agentovi, ale neumíte říct, co dělá pozornost uvnitř modelu, který ji volá.
+| Dovednost | Co dělá |
+|---|---|
+| [`start-learning`](../../skills/start-learning/SKILL.md) | Jednorázový úvod: důvod učení, rozřazovací kvíz a osobní plán uložený do `LEARNING.md`. |
+| [`learn`](../../skills/learn/SKILL.md) | Cyklus tutora. Nejprve připomenutí znalostí, pak interaktivní výuka další lekce a její kvíz; ukládá postup a frontu opakování. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | Směrování témat. „Kde se naučím pozornost?“ nebo „moje ztráta je NaN“ → přesné lekce s odkazy. |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Tutor Model Context Protocol (MCP). Vytvoří `MCP-LEARNING.md`, sleduje manifest 17 lekcí a ukládá důkazy komunikace, bezpečnosti, spolehlivosti a shody. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Tutor Agent Skills. Vytvoří `AGENT-SKILLS-LEARNING.md`, vyučuje lekce 22, 24, 25, 26 a 27 a zaznamenává důkazy ze skutečného hostitele. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Certifikační tutor. Vybere CCAO-F, CCDV-F, CCAR-F nebo CCAR-P; učí lekce, spouští cvičení, hodnotí artefakty, zadává diagnostiku a cvičné zkoušky, ukládá postup. |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Tutor MCPA. Sleduje cestu `mcpa-f` s 34 lekcemi o protokolu 2026-07-28; učí lekce, spouští cvičení a kontrolu komunikace, zadává diagnostiku a tři cvičné zkoušky, ukládá postup. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Rozřazovací kvíz s deseti otázkami. Přiřadí znalosti k počáteční fázi a vytvoří osobní cestu s hodinovými odhady. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Kvíz fáze s osmi otázkami, zpětnou vazbou a konkrétními lekcemi k opakování. Použijte podobu pro Codex, Claude Code nebo přirozený jazyk z tabulky vyvolání výše. |
 
-Tento program je páteří: 20 fází, 523 lekcí a čtyři jazyky: Python, TypeScript, Rust a Julia. Na jednom konci lineární algebra, na druhém autonomní roje. Každý algoritmus nejdříve sestavíte ze samotné matematiky: zpětné šíření, tokenizér, pozornost a smyčku agenta. Když se objeví PyTorch, už víte, co se děje uvnitř.
+</details>
 
-Každá lekce opakuje stejný cyklus: přečtěte problém, odvoďte matematiku, napište kód, spusťte test a uchovejte výsledek. Žádná pětiminutová videa, nasazování kopírováním ani vodění za ruku. Zdarma, s otevřeným kódem a pro váš vlastní notebook.
+<a id="local-setup"></a>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+### Spustit kód místně
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+
+Úvodní kontrola odděluje požadavky potřebné nyní od nástrojů, které budete potřebovat později. Každá neúspěšná povinná kontrola uvede zjištěnou příčinu a příkaz k nápravě. Příkaz `vectors.py` spustí lekci bez závislostí a na závěr ukáže, že násobení matice vektorem je operace uvnitř vrstvy neuronové sítě. Uložte si tento výstup terminálu jako první důkaz.
+
+<details>
+<summary>Každou lekci procházejte stejným způsobem</summary>
+
+### Každou lekci procházejte stejným způsobem
+
+1. **Přečtěte si** `docs/en.md` a vysvětlete hlavní myšlenku vlastními slovy.
+2. **Napište a sestavte** důležitý kód, místo abyste blok kódu brali jako pouhou dekoraci.
+3. **Spusťte** příkaz lekce z kořenového adresáře repozitáře, tedy z adresáře obsahujícího `README.md` a `phases/`.
+4. **Uchovejte důkazy**: příkaz, pracovní adresář, návratový kód, smysluplný výstup a artefakt, který jste změnili nebo vytvořili.
+5. **Pokračujte**, až dokážete vysvětlit výstup a provést malou změnu bez hádání.
+
+Cesty v příkazech na stránkách lekcí vycházejí z kořenového adresáře repozitáře, pokud lekce výslovně neříká, že máte změnit adresář. Pokud lekce nabízí více programovacích jazyků, spusťte implementaci v jazyce, který se učíte.
+
+</details>
+
+<a id="study-guide"></a>
+
+## Vyberte si vzdělávací cestu
+
+Než začnete, nemusíte procházet všech 523 lekcí. Vyberte si jeden cíl. Každý odkaz otevře stejný vzdělávací program na GitHub nebo na webu a obě verze používají stejný kód lekcí.
+
+| Váš cíl | Učení na GitHub | Učení na webu |
+|---|---|---|
+| Začínám a chci získat úplné základy | [Etapa 0: Nastavení a nástroje](../../phases/00-setup-and-tooling/) | [Vývojové prostředí](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Znám Python a chci základy matematiky a ML | [Etapa 1: Matematické základy](../../phases/01-math-foundations/) | [Intuitivní pochopení lineární algebry](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| Chci vytvářet aplikace LLM pro produkční nasazení | [Etapa 11: Inženýrství LLM](../../phases/11-llm-engineering/) | [Návrh promptů](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Chci vytvářet agenty | [Etapa 14: Inženýrství agentů](../../phases/14-agent-engineering/) | [Smyčka agenta](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Chci používat programovací agenty ve skutečných repozitářích | [Studijní cesta vývoje s pomocí agentů](../../learning-paths/using-coding-agents.json) | [Vývoj s pomocí agentů](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| Chci před implementací určit, co má smysl vytvořit | [Studijní cesta produktového rozhodování a dodání](../../learning-paths/shaping-the-build.json) | [Produktové rozhodování a dodání](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+
+Nevíte, kde začít? Použijte [tutora `start-learning` pro určení úrovně](../../skills/start-learning/SKILL.md) nebo [průvodce vstupními znalostmi na webu](https://aiengineeringfromscratch.com/prereqs.html).
+
+Porovnejte čtyři hlavní oblasti a šest kariérních cest v [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+
+<details>
+<summary>Zaměřené cesty MCP a Agent Skills</summary>
+
+| Váš cíl | Učení na GitHub | Učení na webu |
+|---|---|---|
+| Chci vyvíjet s Model Context Protocol (MCP) | [Trasa Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Studijní cesta Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Chci psát a vydávat Agent Skills | [Zaměřená trasa Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Studijní cesta Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+
+</details>
+
+<details>
+<summary>Předpoklady a doba studia</summary>
+
+### Vstupní znalosti
+
+- Umíte psát kód v libovolném jazyce; Python pomůže.
+- Chcete pochopit, jak AI **skutečně funguje**, nejen volat API.
+
+## Kde začít
+
+| Zkušenosti | Začít u | Odhadovaný čas |
+|---|---|---|
+| Začátečník v programování a AI | Fáze 0: Nastavení | ~306 hodin |
+| Znáte Python, začínáte s ML | Fáze 1: Matematické základy | ~270 hodin |
+| Znáte ML, začínáte s hlubokým učením | Fáze 3: Jádro hlubokého učení | ~200 hodin |
+| Znáte hluboké učení a chcete LLM a agenty | Fáze 10: LLM od základů | ~100 hodin |
+| Zkušený inženýr, chcete pouze inženýrství agentů | Fáze 14: Inženýrství agentů | ~60 hodin |
+| Chcete pouze budovat produkční systémy MCP | [Cesta Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 hodin 15 minut |
+| Chcete pouze budovat produkční Agent Skills | [Cesta inženýrství Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 hodiny |
+
+</details>
 
 ## Struktura vzdělávacího programu
 
@@ -194,195 +321,6 @@ flowchart TB
   P16 --> P19["Fáze 19: Závěrečné projekty"]
   P17 --> P19
   P18 --> P19
-```
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Struktura lekce
-
-Každá lekce má vlastní složku se stejnou strukturou v celém programu:
-
-```text
-phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      spustitelné implementace (Python, TypeScript, Rust, Julia)
-├── docs/
-│   └── en.md  výklad lekce
-└── outputs/   zadání, dovednosti, agenti nebo servery MCP vytvořené v této lekci
-```
-
-Každá lekce má šest částí. Základem je rozdělení *Vytvořte / Použijte*: nejdříve implementujete algoritmus od nuly, pak totéž spustíte pomocí produkční knihovny. Chápete fungování frameworku, protože jste jeho menší verzi napsali sami.
-
-```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
-flowchart LR
-  M["HESLO<br/><sub>hlavní myšlenka v jednom řádku</sub>"] --> Pr["PROBLÉM<br/><sub>konkrétní potíž</sub>"]
-  Pr --> C["KONCEPT<br/><sub>diagramy a intuice</sub>"]
-  C --> B["VYTVOŘTE<br/><sub>čistá matematika bez frameworků</sub>"]
-  B --> U["POUŽIJTE<br/><sub>totéž v PyTorch / sklearn</sub>"]
-  U --> S["DODEJTE<br/><sub>zadání · dovednost · agent · MCP</sub>"]
-```
-
-## Začínáme
-
-Tři možnosti, jak začít. Vyberte si jednu.
-
-**Možnost A: učte se v terminálu *(doporučeno)*.** Po výše uvedené kontrole Node.js, `npx`, hostitele a rozsahu nainstalujte výukové dovednosti do kompatibilního agenta a nechte se kurzem vést:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
-
-Používejte výše uvedenou tabulku vyvolání pro svého hostitele. Nainstalované dovednosti nabízejí `start-learning`, `learn`, `course-guide` a zaměřené cesty `learn-mcp` a `learn-agent-skills`. Text lekcí lze načítat z repozitáře bez klonování. Místní klon je nutný pro zkopírované příkazy kódu a spustitelná cvičení MCP nebo Agent Skills. Postup se ukládá do `LEARNING.md`, `MCP-LEARNING.md` nebo `AGENT-SKILLS-LEARNING.md` ve vašem projektu, takže lze každé sezení obnovit.
-
-**Možnost B: čtěte.** Otevřete dokončenou lekci na [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) nebo rozbalte fázi v [obsahu](#contents). Bez nastavování a klonování.
-
-**Možnost C: naklonujte a spusťte.**
-
-```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
-```
-
-Klonování také automaticky načte výukové dovednosti v Claude Code a poskytne tutorovi `learn` kód každé lekce ke skutečnému spuštění místo pouhého čtení.
-
-### Vstupní znalosti
-
-- Umíte psát kód v libovolném jazyce; Python pomůže.
-- Chcete pochopit, jak AI **skutečně funguje**, nejen volat API.
-
-### Připravte se na certifikace Claude
-
-[Certifikační akademie Claude](../../certifications/claude/README.md) je bezplatný otevřený přípravný program pro všechny čtyři oficiální cesty: Associate Foundations, Developer Foundations, Architect Foundations a Architect Professional. Každá kombinuje lekce navázané na osnovu zkoušky, spustitelná cvičení, diagnostiku, závěrečný projekt a úplnou původní cvičnou zkoušku.
-
-Používejte [úvodního průvodce GitHubem s AI](../../certifications/claude/GETTING_STARTED.md) v Claude Code, Codexu, ChatGPT, Cursoru nebo jiném agentovi. Spusťte `claude-certification` v Codexu, `/claude-certification` v Claude Code nebo požádejte jiného hostitele o `claude-certification`. Dovednost vybere cestu, vytvoří trvalý plán v `CLAUDE-CERTIFICATION.md`, učí krok za krokem, spouští skutečná cvičení a poskytuje zpětnou vazbu podle artefaktů. Stejný program je na [certifikačním webu](https://aiengineeringfromscratch.com/certifications.html).
-
-Akademie je nezávislý studijní materiál založený na veřejných cílech zkoušek. Není spojena s Anthropic, nereprodukuje skutečné zkušební otázky a nemůže zaručit úspěšný výsledek.
-
-### Připravte se na certifikaci MCP Associate (MCPA)
-
-[Certifikační program MCPA](../../certifications/mcpa/README.md) je bezplatná otevřená příprava na zkoušku Model Context Protocol Associate od Agentic AI Foundation, poskytovanou přes Linux Foundation Training. Jeho 34 lekcí učí bezstavový protokol 2026-07-28 v pěti zkušebních oblastech: `_meta` pro každý požadavek a `server/discover` místo starého navazování spojení, vícerundové požadavky, odběry, cachování, rozšíření úloh a MCP Apps, autorizaci OAuth a úrovně registru a SDK. Každá lekce obsahuje spustitelné cvičení se standardní knihovnou, jehož přepis se kontroluje vůči aktuálnímu formátu komunikace. Cesta přidává diagnostiku, závěrečný projekt a tři úplné původní cvičné zkoušky s rozložením otázek podle zveřejněných vah osnovy.
-
-Používejte [úvodního průvodce GitHubem s AI](../../certifications/mcpa/GETTING_STARTED.md) v Claude Code, Codexu, ChatGPT, Cursoru nebo jiném agentovi. Spusťte `mcpa-certification` v Codexu, `/mcpa-certification` v Claude Code nebo požádejte jiného hostitele o `mcpa-certification`. Vytvoří trvalou cestu v `MCPA-CERTIFICATION.md`, učí krok za krokem, spouští skutečná cvičení a hodnotí vzniklé artefakty. Stejný program je na [stránce cesty MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
-
-Tento program je nezávislý studijní materiál založený na veřejných cílech zkoušek. Není spojen s Agentic AI Foundation ani Linux Foundation, nereprodukuje skutečné zkušební otázky a nemůže zaručit úspěch.
-
-### Výukové dovednosti
-
-| Dovednost | Co dělá |
-|---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | Jednorázový úvod: důvod učení, rozřazovací kvíz a osobní plán uložený do `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | Cyklus tutora. Nejprve připomenutí znalostí, pak interaktivní výuka další lekce a její kvíz; ukládá postup a frontu opakování. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Směrování témat. „Kde se naučím pozornost?“ nebo „moje ztráta je NaN“ → přesné lekce s odkazy. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Tutor Model Context Protocol (MCP). Vytvoří `MCP-LEARNING.md`, sleduje manifest 17 lekcí a ukládá důkazy komunikace, bezpečnosti, spolehlivosti a shody. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Tutor Agent Skills. Vytvoří `AGENT-SKILLS-LEARNING.md`, vyučuje lekce 22, 24, 25, 26 a 27 a zaznamenává důkazy ze skutečného hostitele. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Certifikační tutor. Vybere CCAO-F, CCDV-F, CCAR-F nebo CCAR-P; učí lekce, spouští cvičení, hodnotí artefakty, zadává diagnostiku a cvičné zkoušky, ukládá postup. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Tutor MCPA. Sleduje cestu `mcpa-f` s 34 lekcemi o protokolu 2026-07-28; učí lekce, spouští cvičení a kontrolu komunikace, zadává diagnostiku a tři cvičné zkoušky, ukládá postup. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Rozřazovací kvíz s deseti otázkami. Přiřadí znalosti k počáteční fázi a vytvoří osobní cestu s hodinovými odhady. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Kvíz fáze s osmi otázkami, zpětnou vazbou a konkrétními lekcemi k opakování. Použijte podobu pro Codex, Claude Code nebo přirozený jazyk z tabulky vyvolání výše. |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Čtěte základní program jako knihu
-
-Základní program s 20 fázemi pod `phases/` se sestavuje do šestidílné knižní řady. CI vytváří EPUB a PDF ze stejných zdrojů lekcí a přikládá je ke každému [vydání na GitHubu](https://github.com/rohitg00/ai-engineering-from-scratch/releases); odkazy níže vždy vedou k nejnovějšímu vydání. Čísla svazků označují pořadí v řadě, nikoli verze. Každý výtisk nese datum edice a starší edice zůstávají dostupné u svých vydání.
-
-Certifikační programy se záměrně nepřevádějí do knih. Stav AI tutora, spustitelná cvičení, interaktivní obrázky, diagnostika a časované zkoušky zůstávají plně dostupné na GitHubu a webu.
-
-| Svazek | Název | Fáze | Stáhnout |
-|-----|-------|--------|----------|
-| 1 | Základy · Matematika, nástroje a klasické strojové učení | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Hluboké učení · Sítě, vidění a řeč | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Jazyk · Základy NLP a transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Velké jazykové modely · Generování, posilování, předtrénování a inženýrství | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Agenti · Multimodalita, protokoly, autonomie a roje | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Produkce · Infrastruktura, bezpečnost a závěrečné projekty | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-Kniha je snímek, repozitář živá edice. Každá kapitola končí odkazy na animované obrázky, kvíz a spustitelný kód lekce. Místní sestavení spustíte pomocí `python3 scripts/build_book.py` (vyžaduje pandoc); podrobnosti pipeline jsou v [book/README.md](../../book/README.md).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Každá lekce přináší výstup
-
-Jiné kurzy končí slovy *„gratuluji, naučili jste se X“*. Zde každá lekce končí **opakovaně použitelným nástrojem**, který můžete nainstalovat nebo zapojit do každodenní práce.
-
-<table>
-<tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A zadání"/><br/><sub>FIG_001 · A</sub><br/><b>ZADÁNÍ</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B dovednosti"/><br/><sub>FIG_001 · B</sub><br/><b>DOVEDNOSTI</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C agenti"/><br/><sub>FIG_001 · C</sub><br/><b>AGENTI</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D servery MCP"/><br/><sub>FIG_001 · D</sub><br/><b>SERVERY MCP</b></th>
-</tr>
-<tr>
-<td valign="top">Vložte do libovolného AI asistenta a získejte odbornou pomoc s úzkou úlohou.</td>
-<td valign="top">Přidejte do Claude, Cursoru, Codexu, OpenClaw, Hermes nebo agenta, který čte <code>SKILL.md</code>.</td>
-<td valign="top">Nasaďte jako autonomní pracovníky: smyčku jste sami napsali ve fázi 14.</td>
-<td valign="top">Připojte k libovolnému klientovi kompatibilnímu s MCP. Celé vytvořeno ve fázi 13.</td>
-</tr>
-</table>
-
-> Vše nainstalujte pomocí `python3 scripts/install_skills.py <target>`. Skutečné nástroje, ne domácí úkoly. Na konci programu máte portfolio 523 artefaktů, kterým opravdu rozumíte, protože jste je sami vytvořili.
-
-### FIG_002 · Vypracovaný příklad
-
-Fáze 14, lekce 1: smyčka agenta. ~120 řádků čistého Pythonu, bez závislostí.
-
-<table>
-<tr>
-<td valign="top" width="50%">
-
-**`code/agent_loop.py`** &nbsp; <sub><i>vytvořte</i></sub>
-
-```python
-def run(query, tools):
-    history = [user(query)]
-    for step in range(MAX_STEPS):
-        msg = llm(history)
-        if msg.tool_calls:
-            for call in msg.tool_calls:
-                result = tools[call.name](**call.args)
-                history.append(tool_result(call.id, result))
-            continue
-        return msg.content
-    raise StepLimitExceeded
-```
-
-</td>
-<td valign="top" width="50%">
-
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>dodejte</i></sub>
-
-```markdown
----
-name: agent-loop
-description: ReAct-style loop for any tool list
-phase: 14
-lesson: 01
----
-
-Implement a minimal agent loop that...
-```
-
-**`outputs/prompt-debug-agent.md`**
-
-```markdown
-You are an agent debugger. Given the trace
-of an agent run, identify the step where
-the agent went wrong and explain why...
-```
-
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 <a id="contents"></a>
@@ -1105,33 +1043,104 @@ Lekce 31-46 tvoří [cestu inženýrství s podporou agentů](../../learning-pat
 
 </details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+## Knihy a certifikace
+
+<details>
+<summary>Čtěte základní program jako knihu</summary>
+
+Základní program s 20 fázemi pod `phases/` se sestavuje do šestidílné knižní řady. CI vytváří EPUB a PDF ze stejných zdrojů lekcí a přikládá je ke každému [vydání na GitHubu](https://github.com/rohitg00/ai-engineering-from-scratch/releases); odkazy níže vždy vedou k nejnovějšímu vydání. Čísla svazků označují pořadí v řadě, nikoli verze. Každý výtisk nese datum edice a starší edice zůstávají dostupné u svých vydání.
+
+Certifikační programy se záměrně nepřevádějí do knih. Stav AI tutora, spustitelná cvičení, interaktivní obrázky, diagnostika a časované zkoušky zůstávají plně dostupné na GitHubu a webu.
+
+| Svazek | Název | Fáze | Stáhnout |
+|-----|-------|--------|----------|
+| 1 | Základy · Matematika, nástroje a klasické strojové učení | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Hluboké učení · Sítě, vidění a řeč | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Jazyk · Základy NLP a transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Velké jazykové modely · Generování, posilování, předtrénování a inženýrství | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Agenti · Multimodalita, protokoly, autonomie a roje | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Produkce · Infrastruktura, bezpečnost a závěrečné projekty | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+Kniha je snímek, repozitář živá edice. Každá kapitola končí odkazy na animované obrázky, kvíz a spustitelný kód lekce. Místní sestavení spustíte pomocí `python3 scripts/build_book.py` (vyžaduje pandoc); podrobnosti pipeline jsou v [book/README.md](../../book/README.md).
+
+</details>
+
+<details>
+<summary>Připravte se na certifikace Claude</summary>
+
+[Certifikační akademie Claude](../../certifications/claude/README.md) je bezplatný otevřený přípravný program pro všechny čtyři oficiální cesty: Associate Foundations, Developer Foundations, Architect Foundations a Architect Professional. Každá kombinuje lekce navázané na osnovu zkoušky, spustitelná cvičení, diagnostiku, závěrečný projekt a úplnou původní cvičnou zkoušku.
+
+Používejte [úvodního průvodce GitHubem s AI](../../certifications/claude/GETTING_STARTED.md) v Claude Code, Codexu, ChatGPT, Cursoru nebo jiném agentovi. Spusťte `claude-certification` v Codexu, `/claude-certification` v Claude Code nebo požádejte jiného hostitele o `claude-certification`. Dovednost vybere cestu, vytvoří trvalý plán v `CLAUDE-CERTIFICATION.md`, učí krok za krokem, spouští skutečná cvičení a poskytuje zpětnou vazbu podle artefaktů. Stejný program je na [certifikačním webu](https://aiengineeringfromscratch.com/certifications.html).
+
+Akademie je nezávislý studijní materiál založený na veřejných cílech zkoušek. Není spojena s Anthropic, nereprodukuje skutečné zkušební otázky a nemůže zaručit úspěšný výsledek.
+
+</details>
+
+<details>
+<summary>Připravte se na certifikaci MCP Associate (MCPA)</summary>
+
+[Certifikační program MCPA](../../certifications/mcpa/README.md) je bezplatná otevřená příprava na zkoušku Model Context Protocol Associate od Agentic AI Foundation, poskytovanou přes Linux Foundation Training. Jeho 34 lekcí učí bezstavový protokol 2026-07-28 v pěti zkušebních oblastech: `_meta` pro každý požadavek a `server/discover` místo starého navazování spojení, vícerundové požadavky, odběry, cachování, rozšíření úloh a MCP Apps, autorizaci OAuth a úrovně registru a SDK. Každá lekce obsahuje spustitelné cvičení se standardní knihovnou, jehož přepis se kontroluje vůči aktuálnímu formátu komunikace. Cesta přidává diagnostiku, závěrečný projekt a tři úplné původní cvičné zkoušky s rozložením otázek podle zveřejněných vah osnovy.
+
+Používejte [úvodního průvodce GitHubem s AI](../../certifications/mcpa/GETTING_STARTED.md) v Claude Code, Codexu, ChatGPT, Cursoru nebo jiném agentovi. Spusťte `mcpa-certification` v Codexu, `/mcpa-certification` v Claude Code nebo požádejte jiného hostitele o `mcpa-certification`. Vytvoří trvalou cestu v `MCPA-CERTIFICATION.md`, učí krok za krokem, spouští skutečná cvičení a hodnotí vzniklé artefakty. Stejný program je na [stránce cesty MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
+
+Tento program je nezávislý studijní materiál založený na veřejných cílech zkoušek. Není spojen s Agentic AI Foundation ani Linux Foundation, nereprodukuje skutečné zkušební otázky a nemůže zaručit úspěch.
+
+</details>
 
 ## Sada nástrojů
 
-Každá lekce vytvoří opakovaně použitelný artefakt. Nakonec máte:
+Každá lekce vytváří opakovaně použitelný výstup. Nainstalujte ho do agenta nebo použijte níže uvedené skripty z kořene repozitáře.
+
+<details>
+<summary>Struktura lekce a opakovaně použitelné výstupy</summary>
+
+## Struktura lekce
+
+Každá lekce má vlastní složku se stejnou strukturou v celém programu:
 
 ```text
-outputs/
-├── prompts/      šablony zadání pro každou úlohu AI
-└── skills/       soubory SKILL.md pro programovací AI agenty
+phases/<NN>-<phase-name>/<NN>-<lesson-name>/
+├── code/      spustitelné implementace (Python, TypeScript, Rust, Julia)
+├── docs/
+│   └── en.md  výklad lekce
+└── outputs/   zadání, dovednosti, agenti nebo servery MCP vytvořené v této lekci
 ```
 
-Zapojte je do Claude, Cursoru, Codexu, OpenClaw, Hermes nebo jiného agenta čtoucího adresář SKILL.md / AGENTS.md. Skutečné nástroje, ne domácí úkoly.
+Každá lekce má šest částí. Základem je rozdělení *Vytvořte / Použijte*: nejdříve implementujete algoritmus od nuly, pak totéž spustíte pomocí produkční knihovny. Chápete fungování frameworku, protože jste jeho menší verzi napsali sami.
 
-### Nainstalujte dovednosti kurzu do svého agenta
-
-Dvě sady dovedností, dva instalátory:
-
-**Výukové dovednosti** (`start-learning`, `learn`, `course-guide`, `learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`, `find-your-level` a `check-understanding`) žijí pod [`skills/`](../../skills/) a jedním příkazem se instalují do podporovaného hostitele. Instalace potřebuje Node.js a `npx`, nikoli klon repozitáře nebo Python:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["HESLO<br/><sub>hlavní myšlenka v jednom řádku</sub>"] --> Pr["PROBLÉM<br/><sub>konkrétní potíž</sub>"]
+  Pr --> C["KONCEPT<br/><sub>diagramy a intuice</sub>"]
+  C --> B["VYTVOŘTE<br/><sub>čistá matematika bez frameworků</sub>"]
+  B --> U["POUŽIJTE<br/><sub>totéž v PyTorch / sklearn</sub>"]
+  U --> S["DODEJTE<br/><sub>zadání · dovednost · agent · MCP</sub>"]
 ```
 
-`skills` zapisuje do hostitele a rozsahu zvoleného při instalaci, například `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` nebo jiné podporované složky. Ověřte, že vybraný hostitel objeví právě toto umístění.
+## Každá lekce přináší výstup
+
+Jiné kurzy končí slovy *„gratuluji, naučili jste se X“*. Zde každá lekce končí **opakovaně použitelným nástrojem**, který můžete nainstalovat nebo zapojit do každodenní práce.
+
+<table>
+<tr>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A zadání"/><br/><sub>FIG_001 · A</sub><br/><b>ZADÁNÍ</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B dovednosti"/><br/><sub>FIG_001 · B</sub><br/><b>DOVEDNOSTI</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C agenti"/><br/><sub>FIG_001 · C</sub><br/><b>AGENTI</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D servery MCP"/><br/><sub>FIG_001 · D</sub><br/><b>SERVERY MCP</b></th>
+</tr>
+<tr>
+<td valign="top">Vložte do libovolného AI asistenta a získejte odbornou pomoc s úzkou úlohou.</td>
+<td valign="top">Přidejte do Claude, Cursoru, Codexu, OpenClaw, Hermes nebo agenta, který čte <code>SKILL.md</code>.</td>
+<td valign="top">Nasaďte jako autonomní pracovníky: smyčku jste sami napsali ve fázi 14.</td>
+<td valign="top">Připojte k libovolnému klientovi kompatibilnímu s MCP. Celé vytvořeno ve fázi 13.</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>Nainstalovat výstupy lekcí</summary>
 
 **Artefakty lekcí.** Repozitář obsahuje 396 dovedností a 99 promptů pod `phases/**/outputs/`; instalujte je pomocí `scripts/install_skills.py`. Vyžaduje to klonování repozitáře. Podporuje filtry značek, zkušební běhy a rozložení podle agenta:
 
@@ -1156,7 +1165,10 @@ Ve výchozím nastavení skript odmítá přepsat existující cíl a po výpisu
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Vložte pracoviště agenta do vlastního repozitáře
+</details>
+
+<details>
+<summary>Vložte pracoviště agenta do vlastního repozitáře</summary>
 
 Závěrečný projekt fáze 14 poskytuje opakovaně použitelný balíček pracoviště agenta: AGENTS.md, schémata a skripty inicializace, ověření a předání. Vytvořte jeho kostru v libovolném repozitáři:
 
@@ -1169,7 +1181,10 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 
 Získáte sedm propojených ploch pracoviště, počáteční `task_board.json` a nový `agent_state.json` se `schema_version: 1`. Potom upravte úlohu a `AGENTS.md`, spusťte `scripts/init_agent.py` a předejte kontrakt agentovi. Zdroj balíčku je v `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
 
-### Procházejte celý kurz jako JSON
+</details>
+
+<details>
+<summary>Procházejte celý kurz jako JSON</summary>
 
 `scripts/build_catalog.py` projde každou fázi, lekci a artefakt na disku a zapíše `catalog.json` do kořene repozitáře. Jeden soubor se všemi údaji o kurzu.
 
@@ -1181,9 +1196,12 @@ python3 scripts/build_catalog.py --out path/to/file.json
 
 Katalog vychází ze souborového systému, ne z README, takže počty odpovídají skutečným souborům. Použijte jej pro sestavení webu, navazující nástroje nebo ověření odchylek počtů v README. Schéma je popsáno na začátku skriptu.
 
-GitHub Action (`.github/workflows/curriculum.yml`) při každém PR znovu sestaví `catalog.json` a zastaví sestavení, pokud je uložený soubor zastaralý. Po úpravě lekce spusťte `python3 scripts/build_catalog.py` a commitněte výsledek, jinak CI PR odmítne. Stejný workflow spouští `audit_lessons.py` jen v režimu varování, aby existující odchylky neblokovaly přispěvatele.
+Pracovní postup osnov vytváří `catalog.json` jako dočasný artefakt ignorovaný Gitem. Necommitujte ho. Stejný postup spouští `audit_lessons.py` jako blokující kontrolu.
 
-### Základně ověřte pythonový kód všech lekcí
+</details>
+
+<details>
+<summary>Základně ověřte pythonový kód všech lekcí</summary>
 
 `scripts/lesson_run.py` přeloží každý soubor `.py` v adresáři `code/` každé lekce do bajtkódu. Výchozí režim kontroluje jen syntaxi: bez spouštění, API klíčů a těžkých ML závislostí. Zachytí časté regrese, například špatné odsazení, rozbité f-stringy a náhodné úpravy.
 
@@ -1199,40 +1217,10 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 
 Pouze standardní knihovna, Python 3.10+. Nastavte `LINK_CHECK_SKIP=domain1,domain2`, chcete-li nahradit výchozí seznam vynechaných domén (`twitter.com`, `x.com`, `linkedin.com`, `instagram.com`, `medium.com`: domény důrazně blokující automatizované HEAD/GET požadavky).
 
-## Kde začít
+</details>
 
-| Zkušenosti | Začít u | Odhadovaný čas |
-|---|---|---|
-| Začátečník v programování a AI | Fáze 0: Nastavení | ~306 hodin |
-| Znáte Python, začínáte s ML | Fáze 1: Matematické základy | ~270 hodin |
-| Znáte ML, začínáte s hlubokým učením | Fáze 3: Jádro hlubokého učení | ~200 hodin |
-| Znáte hluboké učení a chcete LLM a agenty | Fáze 10: LLM od základů | ~100 hodin |
-| Zkušený inženýr, chcete pouze inženýrství agentů | Fáze 14: Inženýrství agentů | ~60 hodin |
-| Chcete pouze budovat produkční systémy MCP | [Cesta Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 hodin 15 minut |
-| Chcete pouze budovat produkční Agent Skills | [Cesta inženýrství Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 hodiny |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Proč na tom záleží právě teď
-
-<table>
-<tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>SIGNÁL Z OBORU</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>POKRÝVANÉ ZÁKLADNÍ ČLÁNKY</b></th>
-</tr>
-<tr>
-<td valign="top">
-
-> *„Nejžhavějším novým programovacím jazykem je angličtina.“*<br/> — **Andrej Karpathy** ([příspěvek](https://x.com/karpathy/status/1617979122625712128))
->
-> *„Softwarové inženýrství se mění před našima očima.“*<br/> — **Boris Cherny**, tvůrce Claude Code
->
-> *„Modely se budou dál zlepšovat. Dovednost, jejíž hodnota roste, je **vědět, co vytvořit**.“*<br/> — Shoda v oboru, 2026
-
-</td>
-<td valign="top">
+<details>
+<summary>Základní články a protokoly</summary>
 
 - *Attention Is All You Need* — Vaswani et al., 2017 → [Fáze 7](#phase-7)
 - *Language Models are Few-Shot Learners* (GPT-3) → [Fáze 10](#phase-10)
@@ -1243,13 +1231,7 @@ Pouze standardní knihovna, Python 3.10+. Nastavte `LINK_CHECK_SKIP=domain1,doma
 - *ReAct: Reasoning + Acting in LLMs* → [Fáze 14](#phase-14)
 - *Model Context Protocol* — Anthropic → [Fáze 13](#phase-13)
 
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+</details>
 
 ## Přispívání
 
@@ -1272,21 +1254,17 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 
 Při porušení pravidla je návratový kód nenulový. Pravidla L001–L010 ověřují strukturu adresářů, přítomnost `docs/en.md` a H1, neprázdný `code/`, schéma `quiz.json` (odmítají staré klíče `q/choices/answer`, které způsobily issue #102) a relativní odkazy v dokumentaci lekcí.
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
 <a id="supporters"></a>
 
 ## Podpořte práci na projektu
 
+<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
+<p align="center"><sub><b>114,584</b> čtenářů &nbsp;·&nbsp; <b>181,995</b> zobrazení stránek za posledních 30 dní &nbsp;·&nbsp; stav k 2026-08-29</sub></p>
+<!-- STATS:END -->
+
 Zdarma, s licencí MIT, 523 lekcí. Děkujeme sponzorům a podporovatelům, kteří tuto práci umožňují. [Zobrazit všechny sponzory a podporovatele](../../BACKERS.md).
 
 Chcete práci podpořit? Podívejte se na [možnosti sponzorství](../../SPONSORS.md), včetně [hardwarového sponzorství](../../SPONSORS.md#hardware-lab-partner), nebo [přispějte přes GitHub](https://github.com/sponsors/rohitg00).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 
 Pokud vám příručka pomohla, dejte repozitáři hvězdičku. Pomáhá to udržovat projekt při životě.
 
@@ -1297,7 +1275,5 @@ MIT. Používejte podle libosti: vytvořte fork, vyučujte, prodávejte nebo vyd
 Spravují [Rohit Ghumare](https://github.com/rohitg00) a komunita.
 
 <sub>
-  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
-  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Nahlásit / Navrhnout</a>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp; <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp; <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Nahlásit / Navrhnout</a>
 </sub>

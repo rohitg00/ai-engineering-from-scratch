@@ -1,57 +1,36 @@
 <p align="center"><sub>AI 輔助中文譯文，以<a href="../../README.md">英文原文為準</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
-<p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch 課程手冊橫幅" width="100%">
-</p>
 
 <p align="center">
-  <a href="../../README.md">🇬🇧 English</a> ·
-  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
-  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
-  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
-  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
-  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
-  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
-  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
-  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
-  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
-  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
-  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
-  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
-  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
-  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
-  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
-  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
-  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
-  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
-  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
-  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
-  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
-  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
-  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
-  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
-  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
-  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
-  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
-  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
-  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
-  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
-  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
-  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
-  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/header-dark.svg">
+    <img src="../../assets/readme/header-light.svg" alt="從零開始的 AI 工程" width="840">
+  </picture>
 </p>
+
+實作模型內部機制、檢索管線和代理執行環境。測試它們，分析故障，並保留程式碼和評估結果。
+
+**[開始學習](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[選擇學習路徑](#learning-routes)** · **[試做實驗](#interactive-lab)** · **[建構專案](#project-challenges)** · **[瀏覽課程目錄](#contents)**
+
+免費、開放原始碼、MIT 授權。你可以在網站學習、使用程式設計代理輔助學習，或在本機執行程式碼。
+
+> 523 堂課. 20 個階段. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT 授權條款"></a>
   <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 堂課"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 個階段"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub 星標"></a>
-  <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="課程網站"></a>
-  <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Star History 排名" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="GitHub 今日熱門儲存庫" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
- </a>
+  <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="網站"></a>
 </p>
+
+<details>
+<summary>選擇閱讀語言</summary>
+
+<p align="center">
+  <a href="../../README.md">🇬🇧 English</a> · <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> · <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> · <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> · <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> · <a href="../../i18n/pt/README.md">🇵🇹 Português</a> · <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> · <a href="../../i18n/es/README.md">🇪🇸 Español</a> · <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> · <a href="../../i18n/fr/README.md">🇫🇷 Français</a> · <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> · <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> · <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> · <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> · <a href="../../i18n/ro/README.md">🇷🇴 Română</a> · <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> · <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> · <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> · <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> · <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> · <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> · <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> · <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> · <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> · <a href="../../i18n/he/README.md">🇮🇱 עברית</a> · <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> · <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> · <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> · <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> · <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> · <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> · <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> · <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> · <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
+
+</details>
 
 ### 贊助者
 
@@ -64,65 +43,134 @@
   <sub><span>你的支持讓每堂課都能保持免費和開源。</span> <a href="#supporters">查看所有支持者</a> · <a href="../../SPONSORS.md">成為贊助者</a></sub>
 </p>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+<a id="see-what-you-will-build-and-keep"></a>
+<a id="learning-routes"></a>
 
-> **84% 的學生已經在使用 AI 工具，卻只有 18% 覺得自己能專業地使用它們。** 這套課程正是為了填補這道鴻溝。
->
-> 523 堂課。20 個階段。約 342 小時。Python、TypeScript、Rust、Julia。每堂課都產出一個可重複使用的成果：一個提示詞、一個技能、一個代理程式、一個 MCP 伺服器。免費、開源、MIT 授權。
->
-> 你不只是學 AI，你親手把它造出來。從頭到尾，全部手寫。
+## 學習路線
 
-<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> 位讀者 &nbsp;·&nbsp; 近 30 天 <b>181,995</b> 次頁面瀏覽 &nbsp;·&nbsp; 資料截至 2026-08-29</sub></p>
-<!-- STATS:END -->
+| 路線 | 起始課程 |
+|---|---|
+| 模型基礎 | [環境設定與工具](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| LLM 系統 | [提示工程](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| 代理與交付 | [代理迴圈](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
 
-## 從這裡開始：選擇你想建置的東西
+[比較職涯路徑](https://aiengineeringfromscratch.com/learning-paths.html) · [先備知識與學習時間](#study-guide)
 
-開始前不必先瀏覽 523 堂課。選一個目標即可。每個連結都會打開同一套課程的 GitHub 或網站版本，兩邊使用相同的課程程式碼。
+<a id="interactive-lab"></a>
 
-| 你的目標 | 在 GitHub 學習 | 在網站學習 |
-|---|---|---|
-| 我剛入門，需要完整的基礎 | [階段 0：環境與工具](../../phases/00-setup-and-tooling/) | [開發環境](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| 我會 Python，想補齊數學與機器學習基礎 | [階段 1：數學基礎](../../phases/01-math-foundations/) | [線性代數的直觀理解](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| 我想建置可用於生產環境的 LLM 應用程式 | [階段 11：LLM 工程](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| 我想建置代理程式 | [階段 14：代理程式工程](../../phases/14-agent-engineering/) | [代理程式迴圈](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| 我想用程式開發代理程式處理真實儲存庫 | [代理程式輔助工程路徑](../../learning-paths/using-coding-agents.json) | [代理程式輔助工程](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| 我想在動手前確定真正該建置甚麼 | [產品判斷與交付路徑](../../learning-paths/shaping-the-build.json) | [產品判斷與交付](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| 我想用模型上下文協定（MCP）建置系統 | [MCP 學習路線](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) 學習路徑](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| 我想編寫並發布 Agent Skills | [Agent Skills 專項路線](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 學習路徑](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| 我想準備 Claude 認證 | [認證入門指南](../../certifications/claude/GETTING_STARTED.md) | [認證學院](https://aiengineeringfromscratch.com/certifications.html) |
-| 我想準備 MCP Associate（MCPA）認證 | [MCPA 入門指南](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA 學習路線](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+### 梯度下降
 
-不確定從哪裡開始？試試 [`start-learning` 入門測評導師](../../skills/start-learning/SKILL.md)，或查看[網站的先修知識指南](https://aiengineeringfromscratch.com/prereqs.html)。
+20 個起點在二次損失函數上執行梯度下降。圖中顯示每次更新後的位置和平均損失。
 
-在 [AI 工程學習路徑](https://aiengineeringfromscratch.com/learning-paths.html)中，對比四大核心領域和六條職業路線。
+<p align="center">
+  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+    <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
+      <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
+      <source media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-dark.png">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-light.png">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-mobile-dark.gif">
+      <source media="(max-width: 600px)" srcset="../../assets/readme/101-gradient-mobile-light.gif">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-dark.gif">
+      <img src="../../assets/readme/101-gradient-light.gif" alt="梯度下降將分散的起點移向損失最小值。每次更新後，平均損失都會降低。" width="840">
+    </picture>
+  </a>
+</p>
 
-### 每堂課都按同一方法學習
+[在課程中調整學習率](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [透過程式碼比較 GD、動量和 Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
-1. **閱讀** `docs/en.md`，並用自己的話解釋核心概念。
-2. **親手編寫和建置**關鍵程式碼，不要只瀏覽程式碼塊。
-3. **執行**課程指令。除非另有說明，應從包含 `README.md` 和 `phases/` 的儲存庫根目錄執行。
-4. **留下證據**：記錄指令、工作目錄、結束代碼、有意義的輸出，以及你修改或產出的檔案。
-5. **確認理解後再繼續**：你應能解釋輸出，並且不用猜測就能做出一個小改動。
+<a id="project-challenges"></a>
 
-除非課程明確要求切換目錄，否則課程頁面中的指令都應從儲存庫根目錄執行。如果一堂課提供多種程式設計語言，請執行你正在學習的那種實現。
+### 專案
 
-### 複製儲存庫，留下第一份學習證據
+三個專案均提供分階段的起始程式碼、參考實作和本機評分器。完成[環境設定](#local-setup)後，從儲存庫根目錄執行命令。實作各階段前，起始程式碼無法通過檢查。
+
+<details>
+<summary><strong>01 · 檢索評估實驗室</strong> · Python · 排名指標與退化檢查</summary>
+
+候選系統的平均 NDCG 提高，但某個查詢最相關的證據排名下降。建構逐查詢比較，報告這種退化，並能使發布檢查失敗。
+
+使用 Python 3.10+。複習[RAG](../../phases/11-llm-engineering/06-rag/docs/en.md)和[模型評估](../../phases/02-ml-fundamentals/09-model-evaluation/docs/en.md)。依序實作排名驗證、精確率與召回率、考量排名位置的指標，再比較系統。
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --init learning-artifacts/retrieval-evaluation-lab
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --stage 1 --path learning-artifacts/retrieval-evaluation-lab --strict
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --all --path learning-artifacts/retrieval-evaluation-lab --strict
 ```
 
-環境預檢會區分現在必需的工具和之後才需要的工具。每項必需檢查若失敗，都會說明檢測到的原因，並給出修復指令。第二條指令執行一節不相依性第三方包的課程，最後展示神經網路層的核心運算：矩陣乘向量。請保存終端機輸出，作為你的第一份學習證據。
+**保留：**可重現的比較結果，包括逐查詢差值和評分使用的相關性標註。指標反映的是這些標註，並不能證明答案正確。
 
-## 30 秒配置 AI 導師
+[開始專案](https://aiengineeringfromscratch.com/project.html?id=retrieval-evaluation-lab) · [查看參考實作](../../projects/retrieval-evaluation-lab/solution/) · [使用自己的輸入執行](../../projects/retrieval-evaluation-lab/README.md#run-with-your-own-inputs)
 
-如果已安裝 Node.js、`npx` 和支援 Agent Skills 的程式開發代理程式，只需執行兩組指令，就能讓代理程式充當你的課程導師。安裝和閱讀導師技能不要求先複製儲存庫；要執行專項路線的實驗，則需要 `python3`。Agent Skills 的主機實驗還需要選定主機，並有可寫入的使用者級或專案級技能目錄。
+</details>
+
+<details>
+<summary><strong>02 · 代理追蹤除錯器</strong> · TypeScript · 追蹤解析與耗時分析</summary>
+
+提供的追蹤仍耗時 100 ms，但總 token 用量增加了 200，且一個跨度開始失敗。將重疊的子跨度工作與父跨度自身的執行時間分開，再產生揭示變化的報告。
+
+使用 Node.js 22.18+，並用 Python 3 執行評分器。依序實作 JSONL 解析、父子關係驗證、區間計算和可檢查的時間軸。
+
+```bash
+python3 scripts/project_test.py agent-trace-debugger \
+  --init learning-artifacts/agent-trace-debugger
+python3 scripts/project_test.py agent-trace-debugger \
+  --stage 1 --path learning-artifacts/agent-trace-debugger --strict
+python3 scripts/project_test.py agent-trace-debugger \
+  --all --path learning-artifacts/agent-trace-debugger --strict
+```
+
+**保留：**輸入追蹤、HTML 時間軸和 JSON 退化報告。每個跨度只記錄自身獨占的 token 用量，避免重複計算父子跨度的用量。
+
+[開始專案](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger) · [查看參考實作](../../projects/agent-trace-debugger/solution/) · [互動探索耗時](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger&stage=03-timing)
+
+</details>
+
+<details>
+<summary><strong>03 · 工具呼叫防火牆</strong> · Rust · 角色檢查與核准憑據</summary>
+
+寫入內容在審查後發生變化，或者同一核准被重放。驗證呼叫封裝，檢查呼叫端角色和路徑，再消耗綁定到確切請求與內容的核准。
+
+使用 Rust 和 Python 3.10+。複習[工具結構描述設計](../../phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md)和[安全邊界](../../phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md)。呼叫端應用程式提供身分，模型只提出操作建議。
+
+```bash
+python3 scripts/project_test.py tool-call-firewall \
+  --init learning-artifacts/tool-call-firewall
+python3 scripts/project_test.py tool-call-firewall \
+  --stage 1 --path learning-artifacts/tool-call-firewall --strict
+python3 scripts/project_test.py tool-call-firewall \
+  --all --path learning-artifacts/tool-call-firewall --strict
+```
+
+**保留：**顯示請求操作和政策決策的稽核憑據。核准只能在一次呼叫中使用一次；本專案不提供持久授權或作業系統沙盒。
+
+[開始專案](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall) · [查看參考實作](../../projects/tool-call-firewall/solution/) · [探索核准邊界](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall&stage=03-consume-a-request-bound-approval-once)
+
+</details>
+
+[瀏覽全部專案](https://aiengineeringfromscratch.com/projects.html) · [職涯實作指南](../../learning-paths/CAREER-PRACTICE.md)
+
+## 選擇學習方式
+
+### 在網站上學習
+
+在 [課程網站](https://aiengineeringfromscratch.com)打開任意已完成課程，或從[課程目錄](#contents)展開一個階段。不需要安裝，也不需要複製。
+
+### 使用 AI 導師
+
+如果已安裝 Node.js、`npx` 和支援 Agent Skills 的程式開發代理程式，就能讓代理程式充當你的課程導師。安裝和閱讀導師技能不要求先複製儲存庫；要執行專項路線的實驗，則需要 `python3`。Agent Skills 的主機實驗還需要選定主機，並有可寫入的使用者級或專案級技能目錄。
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+安裝程式詢問時，選擇宿主與安裝範圍。在 Codex 中使用 `start-learning`，在 Claude Code 中使用 `/start-learning`，或讓宿主依名稱使用該技能。
+
+<details>
+<summary>導師設定與宿主命令</summary>
 
 先檢查本機工具：
 
@@ -132,11 +180,7 @@ npx --version
 python3 --version
 ```
 
-然後安裝課程技能，並在安裝程式提示時選定主機和安裝範圍：
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
+安裝程式會根據你選擇的主機和範圍，把技能寫入 `.claude/skills/`、`.cursor/skills/`、`.codex/skills/` 等目錄。安裝後，請確認所選主機能從該目錄發現技能。
 
 具體呼叫方式由主機決定，`SKILL.md` 本身並不規定統一的斜槓指令：
 
@@ -154,17 +198,100 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 安裝程式會列出它支援的主機，並詢問安裝位置。如果你暫時沒有 Node.js、`npx`、`python3`、受支援的主機或可寫入的安裝目錄，仍可在網站閱讀課程，或手動打開 `docs/en.md`。這能幫助你學習概念；主機發現、技能呼叫、腳本執行和卸載的真實證據，則要等環境就緒後再完成。[訪問課程網站](https://aiengineeringfromscratch.com)。
 
-## 課程如何運作
+### 學習技能
 
-很多 AI 學習資料是零散的：這裡一篇論文，那裡一篇微調文章，再來一個炫目的代理程式演示，知識點卻很少連成一條線。你也許能部署聊天機器人，卻說不清損失曲線為何如此；能給代理程式接上工具，卻解釋不了呼叫工具的模型內部如何運用注意力。
+| 技能 | 用途 |
+|---|---|
+| [`start-learning`](../../skills/start-learning/SKILL.md) | 一次性入門：明確學習目標，完成水平測評，並把個性化計劃保存到 `LEARNING.md`。 |
+| [`learn`](../../skills/learn/SKILL.md) | 逐課導師：先回顧，再互動學習下一堂課和完成測驗；記錄進度與復習佇列。 |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | 主題導航：根據“在哪裡學注意力機制”或“損失值為甚麼是 NaN”等問題，定位到具體課程。 |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | MCP 專項導師：創建 `MCP-LEARNING.md`，按 17 堂課的路線學習，並記錄協定、安全、可靠性和一致性證據。 |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Agent Skills 專項導師：創建 `AGENT-SKILLS-LEARNING.md`，學習第 22、24、25、26、27 堂課，並記錄真實主機中的執行證據。 |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Claude 認證導師：選擇四條認證路線之一，逐課教學、執行實驗、審閱成果，並組織診斷與模擬考試。 |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA 導師：按 2026-07-28 協定學習 34 堂課的 `mcpa-f` 路線，執行實驗與協定檢查，組織診斷和三套模擬考試。 |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | 十道題的水平測評：根據已有知識推薦起始階段，並生成帶時長估計的個性化路徑。 |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | 每階段八道理解測驗，提供反饋及建議復習的課程；呼叫方式見上方主機對照表。 |
 
-這套課程提供貫穿始終的主線：20 個階段、523 堂課，使用 Python、TypeScript、Rust 和 Julia。起點是線性代數，終點是自主系統與多代理程式協作。每種算法都先從數學推導和手寫實現開始：反向傳播、斷詞器、注意力機制、代理程式迴圈。等你用到 PyTorch 時，已經知道它在幫你做甚麼。
+</details>
 
-每堂課都按同一個迴圈推進：理解問題、推導數學、編寫程式碼、執行驗證、保存成果。這裡沒有五分鐘速成影片，也不靠複製粘貼完成部署；你會在自己的電腦上親手完成實踐。課程免費且開源。
+<a id="local-setup"></a>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+### 執行本機程式碼
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+
+環境預檢會區分現在必需的工具和之後才需要的工具。每項必需檢查若失敗，都會說明檢測到的原因，並給出修復指令。`vectors.py` 指令執行一節不相依性第三方包的課程，最後展示神經網路層的核心運算：矩陣乘向量。請保存終端機輸出，作為你的第一份學習證據。
+
+<details>
+<summary>每堂課都按同一方法學習</summary>
+
+### 每堂課都按同一方法學習
+
+1. **閱讀** `docs/en.md`，並用自己的話解釋核心概念。
+2. **親手編寫和建置**關鍵程式碼，不要只瀏覽程式碼塊。
+3. **執行**課程指令。除非另有說明，應從包含 `README.md` 和 `phases/` 的儲存庫根目錄執行。
+4. **留下證據**：記錄指令、工作目錄、結束代碼、有意義的輸出，以及你修改或產出的檔案。
+5. **確認理解後再繼續**：你應能解釋輸出，並且不用猜測就能做出一個小改動。
+
+除非課程明確要求切換目錄，否則課程頁面中的指令都應從儲存庫根目錄執行。如果一堂課提供多種程式設計語言，請執行你正在學習的那種實現。
+
+</details>
+
+<a id="study-guide"></a>
+
+## 選擇學習路徑
+
+開始前不必先瀏覽 523 堂課。選一個目標即可。每個連結都會打開同一套課程的 GitHub 或網站版本，兩邊使用相同的課程程式碼。
+
+| 你的目標 | 在 GitHub 學習 | 在網站學習 |
+|---|---|---|
+| 我剛入門，需要完整的基礎 | [階段 0：環境與工具](../../phases/00-setup-and-tooling/) | [開發環境](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| 我會 Python，想補齊數學與機器學習基礎 | [階段 1：數學基礎](../../phases/01-math-foundations/) | [線性代數的直觀理解](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| 我想建置可用於生產環境的 LLM 應用程式 | [階段 11：LLM 工程](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| 我想建置代理程式 | [階段 14：代理程式工程](../../phases/14-agent-engineering/) | [代理程式迴圈](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| 我想用程式開發代理程式處理真實儲存庫 | [代理程式輔助工程路徑](../../learning-paths/using-coding-agents.json) | [代理程式輔助工程](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| 我想在動手前確定真正該建置甚麼 | [產品判斷與交付路徑](../../learning-paths/shaping-the-build.json) | [產品判斷與交付](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+
+不確定從哪裡開始？試試 [`start-learning` 入門測評導師](../../skills/start-learning/SKILL.md)，或查看[網站的先修知識指南](https://aiengineeringfromscratch.com/prereqs.html)。
+
+在 [AI 工程學習路徑](https://aiengineeringfromscratch.com/learning-paths.html)中，對比四大核心領域和六條職業路線。
+
+<details>
+<summary>MCP 與 Agent Skills 專項路徑</summary>
+
+| 你的目標 | 在 GitHub 學習 | 在網站學習 |
+|---|---|---|
+| 我想用模型上下文協定（MCP）建置系統 | [MCP 學習路線](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) 學習路徑](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| 我想編寫並發布 Agent Skills | [Agent Skills 專項路線](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 學習路徑](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+
+</details>
+
+<details>
+<summary>先備知識與學習時間</summary>
+
+### 先決條件
+
+- 你能編寫程式碼；任何語言都可以，會 Python 更方便。
+- 你希望理解 AI **實際上如何工作**，而不只是呼叫 API。
+
+## 從哪裡開始
+
+| 你的背景 | 建議起點 | 預計時長 |
+|---|---|---|
+| 剛開始學習程式設計和 AI | 階段 0：環境與工具 | 約 306 小時 |
+| 會 Python，但剛接觸機器學習 | 階段 1：數學基礎 | 約 270 小時 |
+| 瞭解機器學習，但剛接觸深度學習 | 階段 3：深度學習核心 | 約 200 小時 |
+| 熟悉深度學習，想學 LLM 與代理程式 | 階段 10：從零建置大語言模型 | 約 100 小時 |
+| 資深工程師，只想學代理程式工程 | 階段 14：代理程式工程 | 約 60 小時 |
+| 只想建置生產級 MCP 系統 | [MCP 學習路徑](../../learning-paths/model-context-protocol.json) | 約 23 小時 15 分鐘 |
+| 只想建置生產級 Agent Skills | [Agent Skills 工程路徑](../../learning-paths/agent-skills.json) | 約 9.5 小時 |
+
+</details>
 
 ## 課程結構
 
@@ -194,195 +321,6 @@ flowchart TB
   P16 --> P19["階段 19：綜合專案"]
   P17 --> P19
   P18 --> P19
-```
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## 單堂課的結構
-
-每堂課都有獨立目錄，整套課程遵循同一結構：
-
-```text
-phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      可執行的實現（Python、TypeScript、Rust、Julia）
-├── docs/
-│   └── en.md  課程講解文件
-└── outputs/   本課產出的提示詞、技能、代理程式或 MCP 伺服器
-```
-
-每堂課都經過六個環節，其中最關鍵的是“親手建置 / 使用現成工具”的對照：先從零實現算法，再用生產級庫完成同一操作。因為你寫過較小的版本，框架內部做了甚麼就不再是黑箱。
-
-```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
-flowchart LR
-  M["一句話核心思想"] --> Pr["問題：具體痛點"]
-  Pr --> C["概念：圖解與直覺"]
-  C --> B["親手建置：從數學出發"]
-  B --> U["使用現成工具：PyTorch / sklearn"]
-  U --> S["交付成果：提示詞 · 技能 · 代理程式 · MCP"]
-```
-
-## 快速開始
-
-可以從三種方式中選擇一種。
-
-**方式 A：在終端機中學習（推薦）。** 完成前文的 Node.js、`npx`、主機和安裝範圍檢查後，把課程技能安裝到相容的代理程式，讓它按你的進度帶領學習：
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
-
-具體呼叫方式見上方的主機對照表。安裝後，你可以使用 `start-learning`、`learn`、`course-guide`，也可以選擇 `learn-mcp` 和 `learn-agent-skills` 專項路線。只閱讀課程正文時，導師可以直接從儲存庫獲取內容，無需複製；若要執行儲存庫中的程式碼指令、MCP 實驗或 Agent Skills 實驗，則需要本地複製。學習進度保存在專案中的 `LEARNING.md`、`MCP-LEARNING.md` 或 `AGENT-SKILLS-LEARNING.md`，下次可接著學。
-
-**方式 B：直接閱讀。** 在 [課程網站](https://aiengineeringfromscratch.com)打開任意已完成課程，或從[課程目錄](#contents)展開一個階段。不需要安裝，也不需要複製。
-
-**方式 C：複製並執行。**
-
-```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
-```
-
-複製後，Claude Code 會自動載入學習技能；`learn` 導師也能實際執行課程程式碼，而不只是陪你閱讀。
-
-### 先決條件
-
-- 你能編寫程式碼；任何語言都可以，會 Python 更方便。
-- 你希望理解 AI **實際上如何工作**，而不只是呼叫 API。
-
-### 準備 Claude 認證
-
-[Claude 認證學院](../../certifications/claude/README.md)是一套免費、開源的備考課程，覆蓋四條官方認證路線：Associate Foundations、Developer Foundations、Architect Foundations 和 Architect Professional。每條路線都結合考試藍圖對應的課程、可執行實驗、診斷測驗、綜合專案，以及一套原創的完整模擬試卷。
-
-可在 Claude Code、Codex、ChatGPT、Cursor 或其他代理程式中使用 [GitHub 入門指南](../../certifications/claude/GETTING_STARTED.md)。在 Codex 中輸入 `claude-certification`，在 Claude Code 中使用 `/claude-certification`，其他主機則可直接要求使用 `claude-certification` 技能。它會幫你選路線，在 `CLAUDE-CERTIFICATION.md` 中保存持續更新的學習計劃，逐步講解課程、執行真實實驗，並根據成果檔案給出反饋。你也可以在[認證課程網站](https://aiengineeringfromscratch.com/certifications.html)學習同一套內容。
-
-這是一套依據公開考試目標編寫的獨立學習資料，與 Anthropic 沒有關聯；它不復現真實考試題目，也不能保證通過考試。
-
-### 準備 MCP Associate（MCPA）認證
-
-[MCPA 認證課程](../../certifications/mcpa/README.md)是針對 Agentic AI Foundation 的 Model Context Protocol Associate 考試編寫的免費開源備考資料，該考試通過 Linux Foundation Training 提供。34 堂課覆蓋五個考試領域，並圍繞 2026-07-28 版無狀態協定展開：以每次請求的 `_meta` 和 `server/discover` 替代舊握手、多輪請求、訂閱、快取、tasks 與 MCP Apps 擴展、OAuth 授權，以及註冊表和 SDK 分層。每堂課都附有可執行的標準函式庫實驗，檢查執行記錄是否符合當前協定格式；整條路線還包含診斷測驗、綜合專案和三套按公開藍圖權重編排的原創完整模擬試卷。
-
-可在 Claude Code、Codex、ChatGPT、Cursor 或其他代理程式中使用 [GitHub 入門指南](../../certifications/mcpa/GETTING_STARTED.md)。在 Codex 中輸入 `mcpa-certification`，在 Claude Code 中使用 `/mcpa-certification`，其他主機則可直接要求使用 `mcpa-certification` 技能。它會在 `MCPA-CERTIFICATION.md` 中保存學習路線，逐步講解、執行實驗，並根據成果給出反饋。[MCPA 網站路線](https://aiengineeringfromscratch.com/certification?id=mcpa-f)也提供相同課程。
-
-這是一套依據公開考試目標編寫的獨立資料，與 Agentic AI Foundation 或 Linux Foundation 沒有關聯；它不復現真實考試題目，也不能保證通過考試。
-
-### 學習技能
-
-| 技能 | 用途 |
-|---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | 一次性入門：明確學習目標，完成水平測評，並把個性化計劃保存到 `LEARNING.md`。 |
-| [`learn`](../../skills/learn/SKILL.md) | 逐課導師：先回顧，再互動學習下一堂課和完成測驗；記錄進度與復習佇列。 |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | 主題導航：根據“在哪裡學注意力機制”或“損失值為甚麼是 NaN”等問題，定位到具體課程。 |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | MCP 專項導師：創建 `MCP-LEARNING.md`，按 17 堂課的路線學習，並記錄協定、安全、可靠性和一致性證據。 |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Agent Skills 專項導師：創建 `AGENT-SKILLS-LEARNING.md`，學習第 22、24、25、26、27 堂課，並記錄真實主機中的執行證據。 |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Claude 認證導師：選擇四條認證路線之一，逐課教學、執行實驗、審閱成果，並組織診斷與模擬考試。 |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA 導師：按 2026-07-28 協定學習 34 堂課的 `mcpa-f` 路線，執行實驗與協定檢查，組織診斷和三套模擬考試。 |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | 十道題的水平測評：根據已有知識推薦起始階段，並生成帶時長估計的個性化路徑。 |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | 每階段八道理解測驗，提供反饋及建議復習的課程；呼叫方式見上方主機對照表。 |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## 將核心課程當作一本書來讀
-
-`phases/` 下的 20 個階段可編成六卷電子書。CI 使用同一份課程源檔案建置 EPUB 和 PDF，並把它們附在每次 [GitHub 發佈](https://github.com/rohitg00/ai-engineering-from-scratch/releases)中；下錶連結始終指向最新版本。卷號表示系列順序，不是版本號；每份檔案都標注編制日期，舊版本仍可從歷史發佈頁下載。
-
-認證課程不會編入這套電子書。它們的 AI 導師進度、可執行實驗、交互圖示、診斷測驗和限時模擬考試仍保留在 GitHub 與課程網站上。
-
-| 卷 | 主題 | 階段 | 下載 |
-|---|---|---|---|
-| 1 | 基礎：數學、工具與經典機器學習 | 00–02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | 深度學習：神經網路、視覺與語音 | 03、04、06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | 語言：自然語言處理基礎與 Transformer | 05、07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | 大語言模型：生成、強化學習、預訓練與工程實踐 | 08–11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | 代理程式：多模態、協定、自主系統與群體協作 | 12–16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | 生產實踐：基礎設施、安全與綜合專案 | 17–19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-電子書是一份階段性快照，儲存庫則持續更新。每章末尾都有連結，可以回到對應課程的動畫圖示、測驗和可執行程式碼。要在本地建置，請安裝 pandoc 後執行 `python3 scripts/build_book.py`；建置流程見 [book/README.md](../../book/README.md)。
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## 每堂課都有實際產出
-
-許多課程以“恭喜，你學會了某個知識點”收尾；這裡的每堂課都要求你留下一個**可重複使用的工具**，可以安裝或放進日常工作流。
-
-<table>
-<tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="圖 001.A：提示詞"/><br/><sub>FIG_001 · A</sub><br/><b>提示詞</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="圖 001.B：技能"/><br/><sub>FIG_001 · B</sub><br/><b>技能</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="圖 001.C：代理程式"/><br/><sub>FIG_001 · C</sub><br/><b>代理程式</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="圖 001.D：MCP 伺服器"/><br/><sub>FIG_001 · D</sub><br/><b>MCP 伺服器</b></th>
-</tr>
-<tr>
-<td valign="top">複製到任意 AI 助手中，針對具體任務獲得專家級幫助。</td>
-<td valign="top">安裝到 Claude、Cursor、Codex、OpenClaw、Hermes 或任何能讀取 <code>SKILL.md</code> 的代理程式中。</td>
-<td valign="top">部署為自主工作的代理程式；你會在階段 14 親手編寫它的核心迴圈。</td>
-<td valign="top">接入任何相容 MCP 的用戶端；階段 13 會帶你從頭建置。</td>
-</tr>
-</table>
-
-> 用 `python3 scripts/install_skills.py <target>` 安裝這些成果。它們是真實工具，不只是作業。學完整套課程後，你會擁有 523 份親手建置、真正理解的作品。
-
-### FIG_002 · 一個完整範例
-
-階段 14 第 1 堂課：代理程式迴圈。約 120 行純 Python 程式碼，無第三方套件。
-
-<table>
-<tr>
-<td valign="top" width="50%">
-
-**`code/agent_loop.py`** &nbsp; <sub><i>親手建置</i></sub>
-
-```python
-def run(query, tools):
-    history = [user(query)]
-    for step in range(MAX_STEPS):
-        msg = llm(history)
-        if msg.tool_calls:
-            for call in msg.tool_calls:
-                result = tools[call.name](**call.args)
-                history.append(tool_result(call.id, result))
-            continue
-        return msg.content
-    raise StepLimitExceeded
-```
-
-</td>
-<td valign="top" width="50%">
-
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>交付成果</i></sub>
-
-```markdown
----
-name: agent-loop
-description: ReAct-style loop for any tool list
-phase: 14
-lesson: 01
----
-
-Implement a minimal agent loop that...
-```
-
-**`outputs/prompt-debug-agent.md`**
-
-```markdown
-You are an agent debugger. Given the trace
-of an agent run, identify the step where
-the agent went wrong and explain why...
-```
-
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 <a id="contents"></a>
@@ -1105,33 +1043,104 @@ the agent went wrong and explain why...
 
 </details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+## 書籍與認證
+
+<details>
+<summary>將核心課程當作一本書來讀</summary>
+
+`phases/` 下的 20 個階段可編成六卷電子書。CI 使用同一份課程源檔案建置 EPUB 和 PDF，並把它們附在每次 [GitHub 發佈](https://github.com/rohitg00/ai-engineering-from-scratch/releases)中；下錶連結始終指向最新版本。卷號表示系列順序，不是版本號；每份檔案都標注編制日期，舊版本仍可從歷史發佈頁下載。
+
+認證課程不會編入這套電子書。它們的 AI 導師進度、可執行實驗、交互圖示、診斷測驗和限時模擬考試仍保留在 GitHub 與課程網站上。
+
+| 卷 | 主題 | 階段 | 下載 |
+|---|---|---|---|
+| 1 | 基礎：數學、工具與經典機器學習 | 00–02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | 深度學習：神經網路、視覺與語音 | 03、04、06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | 語言：自然語言處理基礎與 Transformer | 05、07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | 大語言模型：生成、強化學習、預訓練與工程實踐 | 08–11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | 代理程式：多模態、協定、自主系統與群體協作 | 12–16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | 生產實踐：基礎設施、安全與綜合專案 | 17–19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+電子書是一份階段性快照，儲存庫則持續更新。每章末尾都有連結，可以回到對應課程的動畫圖示、測驗和可執行程式碼。要在本地建置，請安裝 pandoc 後執行 `python3 scripts/build_book.py`；建置流程見 [book/README.md](../../book/README.md)。
+
+</details>
+
+<details>
+<summary>準備 Claude 認證</summary>
+
+[Claude 認證學院](../../certifications/claude/README.md)是一套免費、開源的備考課程，覆蓋四條官方認證路線：Associate Foundations、Developer Foundations、Architect Foundations 和 Architect Professional。每條路線都結合考試藍圖對應的課程、可執行實驗、診斷測驗、綜合專案，以及一套原創的完整模擬試卷。
+
+可在 Claude Code、Codex、ChatGPT、Cursor 或其他代理程式中使用 [GitHub 入門指南](../../certifications/claude/GETTING_STARTED.md)。在 Codex 中輸入 `claude-certification`，在 Claude Code 中使用 `/claude-certification`，其他主機則可直接要求使用 `claude-certification` 技能。它會幫你選路線，在 `CLAUDE-CERTIFICATION.md` 中保存持續更新的學習計劃，逐步講解課程、執行真實實驗，並根據成果檔案給出反饋。你也可以在[認證課程網站](https://aiengineeringfromscratch.com/certifications.html)學習同一套內容。
+
+這是一套依據公開考試目標編寫的獨立學習資料，與 Anthropic 沒有關聯；它不復現真實考試題目，也不能保證通過考試。
+
+</details>
+
+<details>
+<summary>準備 MCP Associate（MCPA）認證</summary>
+
+[MCPA 認證課程](../../certifications/mcpa/README.md)是針對 Agentic AI Foundation 的 Model Context Protocol Associate 考試編寫的免費開源備考資料，該考試通過 Linux Foundation Training 提供。34 堂課覆蓋五個考試領域，並圍繞 2026-07-28 版無狀態協定展開：以每次請求的 `_meta` 和 `server/discover` 替代舊握手、多輪請求、訂閱、快取、tasks 與 MCP Apps 擴展、OAuth 授權，以及註冊表和 SDK 分層。每堂課都附有可執行的標準函式庫實驗，檢查執行記錄是否符合當前協定格式；整條路線還包含診斷測驗、綜合專案和三套按公開藍圖權重編排的原創完整模擬試卷。
+
+可在 Claude Code、Codex、ChatGPT、Cursor 或其他代理程式中使用 [GitHub 入門指南](../../certifications/mcpa/GETTING_STARTED.md)。在 Codex 中輸入 `mcpa-certification`，在 Claude Code 中使用 `/mcpa-certification`，其他主機則可直接要求使用 `mcpa-certification` 技能。它會在 `MCPA-CERTIFICATION.md` 中保存學習路線，逐步講解、執行實驗，並根據成果給出反饋。[MCPA 網站路線](https://aiengineeringfromscratch.com/certification?id=mcpa-f)也提供相同課程。
+
+這是一套依據公開考試目標編寫的獨立資料，與 Agentic AI Foundation 或 Linux Foundation 沒有關聯；它不復現真實考試題目，也不能保證通過考試。
+
+</details>
 
 ## 工具箱
 
-每堂課都會產出可以重複使用的成果。學完後，你將擁有：
+每節課都產出可重複使用的成果。你可以將其安裝到代理中，或從儲存庫根目錄執行下方腳本。
+
+<details>
+<summary>課程結構與可重複使用的成果</summary>
+
+## 單堂課的結構
+
+每堂課都有獨立目錄，整套課程遵循同一結構：
 
 ```text
-outputs/
-├── prompts/      各類 AI 任務的提示詞模板
-└── skills/       供 AI 程式開發代理程式使用的 SKILL.md 檔案
+phases/<NN>-<phase-name>/<NN>-<lesson-name>/
+├── code/      可執行的實現（Python、TypeScript、Rust、Julia）
+├── docs/
+│   └── en.md  課程講解文件
+└── outputs/   本課產出的提示詞、技能、代理程式或 MCP 伺服器
 ```
 
-這些成果可以接入 Claude、Cursor、Codex、OpenClaw、Hermes，或任何能夠讀取 `SKILL.md` / `AGENTS.md` 目錄的代理程式。它們是實際可用的工具，不只是作業。
+每堂課都經過六個環節，其中最關鍵的是“親手建置 / 使用現成工具”的對照：先從零實現算法，再用生產級庫完成同一操作。因為你寫過較小的版本，框架內部做了甚麼就不再是黑箱。
 
-### 為代理程式安裝課程技能
-
-課程提供兩組技能，也對應兩種安裝方式。
-
-**學習技能**包括 `start-learning`、`learn`、`course-guide`、`learn-mcp`、`learn-agent-skills`、`claude-certification`、`mcpa-certification`、`find-your-level` 和 `check-understanding`。它們位於 [`skills/`](../../skills/)，可用一條指令安裝到相容的代理程式主機。安裝需要 Node.js 和 `npx`，但不需要複製儲存庫或安裝 Python：
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["一句話核心思想"] --> Pr["問題：具體痛點"]
+  Pr --> C["概念：圖解與直覺"]
+  C --> B["親手建置：從數學出發"]
+  B --> U["使用現成工具：PyTorch / sklearn"]
+  U --> S["交付成果：提示詞 · 技能 · 代理程式 · MCP"]
 ```
 
-安裝程式會根據你選擇的主機和範圍，把技能寫入 `.claude/skills/`、`.cursor/skills/`、`.codex/skills/` 等目錄。安裝後，請確認所選主機能從該目錄發現技能。
+## 每堂課都有實際產出
+
+許多課程以“恭喜，你學會了某個知識點”收尾；這裡的每堂課都要求你留下一個**可重複使用的工具**，可以安裝或放進日常工作流。
+
+<table>
+<tr>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="圖 001.A：提示詞"/><br/><sub>FIG_001 · A</sub><br/><b>提示詞</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="圖 001.B：技能"/><br/><sub>FIG_001 · B</sub><br/><b>技能</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="圖 001.C：代理程式"/><br/><sub>FIG_001 · C</sub><br/><b>代理程式</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="圖 001.D：MCP 伺服器"/><br/><sub>FIG_001 · D</sub><br/><b>MCP 伺服器</b></th>
+</tr>
+<tr>
+<td valign="top">複製到任意 AI 助手中，針對具體任務獲得專家級幫助。</td>
+<td valign="top">安裝到 Claude、Cursor、Codex、OpenClaw、Hermes 或任何能讀取 <code>SKILL.md</code> 的代理程式中。</td>
+<td valign="top">部署為自主工作的代理程式；你會在階段 14 親手編寫它的核心迴圈。</td>
+<td valign="top">接入任何相容 MCP 的用戶端；階段 13 會帶你從頭建置。</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>安裝課程成果</summary>
 
 **課程成果檔案**位於 `phases/**/outputs/`，包含 396 個技能和 99 個提示詞。複製儲存庫後，可以用 `scripts/install_skills.py` 安裝；腳本支援按階段或標籤篩選、預演，以及針對不同主機的目錄佈局：
 
@@ -1156,7 +1165,10 @@ python3 scripts/install_skills.py <target> --force                         # ove
 | `by-phase` | `<target>/phase-NN/<name>.md`；按階段分組 |
 | `flat` | `<target>/<name>.md`；平鋪檔案 |
 
-### 將代理程式工作台接入自己的儲存庫
+</details>
+
+<details>
+<summary>將代理程式工作台接入自己的儲存庫</summary>
 
 階段 14 的綜合專案提供一套可重複使用的 Agent Workbench：`AGENTS.md`、Schema、初始化腳本、驗證腳本和交接腳本。可將它複製到任意儲存庫：
 
@@ -1169,7 +1181,10 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 
 你會得到七個相互配合的工作台部分、初始 `task_board.json`，以及符合 `schema_version: 1` 的 `agent_state.json`。之後編輯任務和 `AGENTS.md`，執行 `scripts/init_agent.py`，再把明確的工作契約交給代理程式。原始模板位於 `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`。
 
-### 以 JSON 瀏覽完整課程
+</details>
+
+<details>
+<summary>以 JSON 瀏覽完整課程</summary>
 
 `scripts/build_catalog.py` 掃描磁盤上的每個階段、課程和成果檔案，在儲存庫根目錄生成 `catalog.json`：一份檔案即可描述整個課程。
 
@@ -1181,9 +1196,12 @@ python3 scripts/build_catalog.py --out path/to/file.json
 
 目錄資料直接來自檔案系統，不相依性 README，因此能反映磁盤上的實際課程。它可供站點建置和下游工具使用，也可幫助核對 README 中的數量。Schema 說明寫在腳本開頭。
 
-GitHub Actions 工作流 `.github/workflows/curriculum.yml` 會在每個 PR 上重建 `catalog.json`；若儲存庫中提交的檔案已過期，CI 會使建置失敗。修改任何課程後，請執行 `python3 scripts/build_catalog.py` 並提交生成結果，否則 CI 會拒絕該 PR。同一工作流還會以僅告警模式執行 `audit_lessons.py`，因此現有偏差不會阻塞貢獻者。
+課程工作流程將 `catalog.json` 產生為暫存檔案，並由 Git 忽略。不要提交它。同一工作流程將 `audit_lessons.py` 作為阻擋式檢查執行。
 
-### 快速檢查每堂課的 Python 程式碼
+</details>
+
+<details>
+<summary>快速檢查每堂課的 Python 程式碼</summary>
 
 `scripts/lesson_run.py` 會對各課程 `code/` 目錄中的 `.py` 檔案進行位元組碼編譯。預設只檢查語法，不執行程式碼，不需要 API 金鑰或大型機器學習相依性。它能發現常見的縮進錯誤、損壞的 f-string 和誤編輯。
 
@@ -1199,43 +1217,10 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 
 腳本僅使用 Python 3.10+ 標準函式庫。設置 `LINK_CHECK_SKIP=domain1,domain2` 可覆蓋預設跳過的站點列表；`twitter.com`、`x.com`、`linkedin.com`、`instagram.com` 和 `medium.com` 通常會攔截自動化的 HEAD/GET 請求。
 
-## 從哪裡開始
+</details>
 
-| 你的背景 | 建議起點 | 預計時長 |
-|---|---|---|
-| 剛開始學習程式設計和 AI | 階段 0：環境與工具 | 約 306 小時 |
-| 會 Python，但剛接觸機器學習 | 階段 1：數學基礎 | 約 270 小時 |
-| 瞭解機器學習，但剛接觸深度學習 | 階段 3：深度學習核心 | 約 200 小時 |
-| 熟悉深度學習，想學 LLM 與代理程式 | 階段 10：從零建置大語言模型 | 約 100 小時 |
-| 資深工程師，只想學代理程式工程 | 階段 14：代理程式工程 | 約 60 小時 |
-| 只想建置生產級 MCP 系統 | [MCP 學習路徑](../../learning-paths/model-context-protocol.json) | 約 23 小時 15 分鐘 |
-| 只想建置生產級 Agent Skills | [Agent Skills 工程路徑](../../learning-paths/agent-skills.json) | 約 9.5 小時 |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## 為甚麼現在值得學
-
-<table>
-<tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>行業信號</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>課程涉及的基礎論文</b></th>
-</tr>
-<tr>
-<td valign="top">
-
-> *“最火的新程式設計語言是英文。”*<br/>
-> — **Andrej Karpathy**（[原文](https://x.com/karpathy/status/1617979122625712128)）
->
-> *“軟體工程正在我們眼前被重新塑造。”*<br/>
-> — **Boris Cherny**，Claude Code 創建者
->
-> *“模型會不斷變好；能持續積累的能力是**知道該建置甚麼**。”*<br/>
-> — 2026 年的行業共識
-
-</td>
-<td valign="top">
+<details>
+<summary>基礎論文與協定</summary>
 
 - *Attention Is All You Need*（注意力機制）— Vaswani 等，2017 → [階段 7](#phase-7)
 - *Language Models are Few-Shot Learners*（GPT-3）→ [階段 10](#phase-10)
@@ -1246,13 +1231,7 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 - *ReAct: Reasoning + Acting in LLMs*（推理與行動）→ [階段 14](#phase-14)
 - *Model Context Protocol*（MCP）— Anthropic → [階段 13](#phase-13)
 
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+</details>
 
 ## 參與貢獻
 
@@ -1275,21 +1254,17 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 
 任何規則失敗都會讓指令返回非零結束代碼。規則 L001–L010 檢查目錄結構、`docs/en.md` 是否存在且包含一級標題、`code/` 是否非空、`quiz.json` 是否符合當前 Schema（拒絕曾引發 #102 問題的舊 `q/choices/answer` 字段），以及課程文件中的相對連結。
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
 <a id="supporters"></a>
 
 ## 贊助本專案
 
+<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
+<p align="center"><sub><b>114,584</b> 位讀者 &nbsp;·&nbsp; 近 30 天 <b>181,995</b> 次頁面瀏覽 &nbsp;·&nbsp; 資料截至 2026-08-29</sub></p>
+<!-- STATS:END -->
+
 課程免費，採用 MIT 授權條款，共有 523 堂課。感謝所有讓它持續開放的贊助者和支持者。[查看贊助者與支持者](../../BACKERS.md)。
 
 想支持專案？可瞭解[贊助者式](../../SPONSORS.md)，包括[硬體贊助](../../SPONSORS.md#hardware-lab-partner)，或[通過 GitHub 贊助](https://github.com/sponsors/rohitg00)。
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 
 如果這份手冊幫助了你，歡迎為儲存庫加星，支持專案持續更新。
 
@@ -1300,7 +1275,5 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 由 [Rohit Ghumare](https://github.com/rohitg00) 與社群共同維護。
 
 <sub>
-  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
-  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">反饋與建議</a>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp; <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp; <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">反饋與建議</a>
 </sub>

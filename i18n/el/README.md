@@ -1,44 +1,19 @@
 <p align="center" lang="el"><sub>Πλήρης ελληνική μετάφραση του README. Το <a href="../../README.md">αγγλικό πρωτότυπο</a> αποτελεί την έκδοση αναφοράς · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
-<p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch — πανό εγχειριδίου αναφοράς" width="100%">
-</p>
 
 <p align="center">
-  <a href="../../README.md">🇬🇧 English</a> ·
-  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
-  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
-  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
-  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
-  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
-  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
-  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
-  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
-  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
-  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
-  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
-  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
-  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
-  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
-  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
-  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
-  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
-  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
-  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
-  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
-  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
-  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
-  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
-  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
-  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
-  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
-  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
-  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
-  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
-  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
-  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
-  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
-  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/header-dark.svg">
+    <img src="../../assets/readme/header-light.svg" alt="Μηχανική AI από το μηδέν" width="840">
+  </picture>
 </p>
+
+Υλοποίησε εσωτερικούς μηχανισμούς μοντέλων, ροές ανάκτησης και περιβάλλοντα εκτέλεσης πρακτόρων. Δοκίμασέ τα, εξέτασε αστοχίες και κράτησε τον κώδικα και τα αποτελέσματα αξιολόγησης.
+
+**[Ξεκινήστε τη μάθηση](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Επίλεξε διαδρομή](#learning-routes)** · **[Δοκίμασε ένα εργαστήριο](#interactive-lab)** · **[Υλοποίησε ένα έργο](#project-challenges)** · **[Περιηγηθείτε στο πρόγραμμα](#contents)**
+
+Δωρεάν, ανοικτού κώδικα, με άδεια MIT. Μάθετε στον ιστότοπο, με έναν πράκτορα προγραμματισμού ή εκτελώντας κώδικα τοπικά.
+
+> 523 μαθήματα. 20 φάσεις. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Άδεια MIT"></a>
@@ -46,12 +21,16 @@
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 φάσεις"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Αστέρια στο GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Ιστότοπος"></a>
-  <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Κατάταξη Star History" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="Αποθετήριο της ημέρας στο GitHub Trending" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
- </a>
 </p>
+
+<details>
+<summary>Διαβάστε στη γλώσσα σας</summary>
+
+<p align="center">
+  <a href="../../README.md">🇬🇧 English</a> · <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> · <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> · <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> · <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> · <a href="../../i18n/pt/README.md">🇵🇹 Português</a> · <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> · <a href="../../i18n/es/README.md">🇪🇸 Español</a> · <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> · <a href="../../i18n/fr/README.md">🇫🇷 Français</a> · <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> · <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> · <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> · <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> · <a href="../../i18n/ro/README.md">🇷🇴 Română</a> · <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> · <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> · <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> · <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> · <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> · <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> · <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> · <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> · <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> · <a href="../../i18n/he/README.md">🇮🇱 עברית</a> · <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> · <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> · <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> · <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> · <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> · <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> · <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> · <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> · <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
+
+</details>
 
 ### Χορηγοί
 
@@ -64,65 +43,134 @@
   <sub><span>Η υποστήριξή σου κρατά κάθε μάθημα δωρεάν και με ανοιχτό κώδικα.</span> <a href="#supporters">Δες όλους τους υποστηρικτές</a> · <a href="../../SPONSORS.md">Γίνε χορηγός</a></sub>
 </p>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+<a id="see-what-you-will-build-and-keep"></a>
+<a id="learning-routes"></a>
 
-> **Το 84% των φοιτητών χρησιμοποιεί ήδη εργαλεία ΤΝ. Μόνο το 18% νιώθει έτοιμο να τα χρησιμοποιήσει επαγγελματικά.** Αυτό το πρόγραμμα σπουδών καλύπτει αυτό το κενό.
->
-> 523 μαθήματα. 20 φάσεις. ~342 ώρες. Python, TypeScript, Rust, Julia. Κάθε μάθημα προσφέρει ένα επαναχρησιμοποιήσιμο αποτέλεσμα: μια προτροπή, μια δεξιότητα, έναν πράκτορα ή έναν διακομιστή MCP. Δωρεάν, με ανοιχτό κώδικα και άδεια MIT.
->
-> Δεν μαθαίνεις απλώς ΤΝ. Την κατασκευάζεις. Από την αρχή ως το τέλος. Με τα χέρια σου.
+## Διαδρομές μάθησης
 
-<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> αναγνώστες &nbsp;·&nbsp; <b>181,995</b> προβολές σελίδων τις τελευταίες 30 ημέρες &nbsp;·&nbsp; στις 2026-08-29</sub></p>
-<!-- STATS:END -->
+| Διαδρομή | Αρχικό μάθημα |
+|---|---|
+| Θεμέλια μοντέλων | [Ρύθμιση και εργαλεία](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Συστήματα LLM | [Σχεδίαση προτροπών](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Πράκτορες και παράδοση | [Ο βρόχος του πράκτορα](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
 
-## Ξεκίνα εδώ: διάλεξε τι θέλεις να φτιάξεις
+[Σύγκρινε επαγγελματικές διαδρομές](https://aiengineeringfromscratch.com/learning-paths.html) · [Προαπαιτούμενα και χρόνος μελέτης](#study-guide)
 
-Δεν χρειάζεται να εξετάσεις και τα 523 μαθήματα πριν ξεκινήσεις. Διάλεξε έναν στόχο. Κάθε σύνδεσμος ανοίγει το ίδιο πρόγραμμα στο GitHub ή στον ιστότοπο, και οι δύο εκδόσεις χρησιμοποιούν τον ίδιο κώδικα μαθημάτων.
+<a id="interactive-lab"></a>
 
-| Ο στόχος σου | Μάθηση στο GitHub | Μάθηση στον ιστότοπο |
-|---|---|---|
-| Ξεκινώ τώρα και θέλω πλήρεις βάσεις | [Στάδιο 0: Εγκατάσταση και εργαλεία](../../phases/00-setup-and-tooling/) | [Περιβάλλον ανάπτυξης](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Γνωρίζω Python και θέλω βάσεις στα μαθηματικά και στο ML | [Στάδιο 1: Μαθηματικά θεμέλια](../../phases/01-math-foundations/) | [Διαισθητική κατανόηση της γραμμικής άλγεβρας](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Θέλω να φτιάξω εφαρμογές LLM για παραγωγική χρήση | [Στάδιο 11: Μηχανική LLM](../../phases/11-llm-engineering/) | [Μηχανική προτροπών](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Θέλω να φτιάξω πράκτορες | [Στάδιο 14: Μηχανική πρακτόρων](../../phases/14-agent-engineering/) | [Ο βρόχος του πράκτορα](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Θέλω να χρησιμοποιώ πράκτορες προγραμματισμού σε πραγματικά αποθετήρια | [Διαδρομή μηχανικής με τη βοήθεια πρακτόρων](../../learning-paths/using-coding-agents.json) | [Μηχανική με τη βοήθεια πρακτόρων](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Θέλω να καθορίσω τι αξίζει να φτιαχτεί πριν από την υλοποίηση | [Διαδρομή αποφάσεων και παράδοσης προϊόντος](../../learning-paths/shaping-the-build.json) | [Αποφάσεις και παράδοση προϊόντος](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| Θέλω να αναπτύξω λύσεις με Model Context Protocol (MCP) | [Διαδρομή Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Μαθησιακή διαδρομή Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Θέλω να γράψω και να διαθέσω Agent Skills | [Εστιασμένη διαδρομή Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Μαθησιακή διαδρομή Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Θέλω να προετοιμαστώ για πιστοποίηση Claude | [Οδηγός εκκίνησης για πιστοποίηση](../../certifications/claude/GETTING_STARTED.md) | [Ακαδημία πιστοποίησης](https://aiengineeringfromscratch.com/certifications.html) |
-| Θέλω να προετοιμαστώ για το MCP Associate (MCPA) | [Οδηγός εκκίνησης MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [Διαδρομή MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+### Κάθοδος κλίσης
 
-Δεν ξέρεις από πού να ξεκινήσεις; Χρησιμοποίησε τον [εκπαιδευτή αξιολόγησης επιπέδου `start-learning`](../../skills/start-learning/SKILL.md) ή τον [οδηγό προαπαιτούμενων του ιστοτόπου](https://aiengineeringfromscratch.com/prereqs.html).
+Είκοσι αρχικά σημεία ακολουθούν κάθοδο κλίσης σε τετραγωνική συνάρτηση απώλειας. Το γράφημα δείχνει τις θέσεις τους και τη μέση απώλεια μετά από κάθε ενημέρωση.
 
-Σύγκρινε τέσσερις βασικούς τομείς και έξι επαγγελματικές διαδρομές στο [Διαδρομές μάθησης μηχανικής ΤΝ](https://aiengineeringfromscratch.com/learning-paths.html).
+<p align="center">
+  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+    <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
+      <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
+      <source media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-dark.png">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-light.png">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-mobile-dark.gif">
+      <source media="(max-width: 600px)" srcset="../../assets/readme/101-gradient-mobile-light.gif">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-dark.gif">
+      <img src="../../assets/readme/101-gradient-light.gif" alt="Η κάθοδος κλίσης μετακινεί διάσπαρτα αρχικά σημεία προς το ελάχιστο της απώλειας. Η μέση απώλεια μειώνεται σε κάθε ενημέρωση." width="840">
+    </picture>
+  </a>
+</p>
 
-### Δούλεψε κάθε μάθημα με τον ίδιο τρόπο
+[Ρύθμισε τον ρυθμό μάθησης στο μάθημα](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Σύγκρινε GD, momentum και Adam στον κώδικα](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
-1. **Διάβασε** το `docs/en.md` και εξήγησε τη βασική ιδέα με δικά σου λόγια.
-2. **Πληκτρολόγησε και υλοποίησε** τον σημαντικό κώδικα, αντί να αντιμετωπίζεις το μπλοκ κώδικα σαν διακοσμητικό στοιχείο.
-3. **Εκτέλεσε** την εντολή του μαθήματος από τον ριζικό κατάλογο του αποθετηρίου, εκείνον που περιέχει τα `README.md` και `phases/`.
-4. **Κράτησε τεκμήρια**: την εντολή, τον κατάλογο εργασίας, τον κωδικό εξόδου, τη χρήσιμη έξοδο και το παραδοτέο που άλλαξες ή δημιούργησες.
-5. **Συνέχισε** μόνο όταν μπορείς να εξηγήσεις την έξοδο και να κάνεις μια μικρή αλλαγή χωρίς να μαντεύεις.
+<a id="project-challenges"></a>
 
-Οι διαδρομές στις εντολές των μαθημάτων ξεκινούν από τον ριζικό κατάλογο του αποθετηρίου, εκτός αν το μάθημα ζητά ρητά αλλαγή καταλόγου. Αν ένα μάθημα προσφέρει πολλές γλώσσες προγραμματισμού, εκτέλεσε την υλοποίηση στη γλώσσα που μαθαίνεις.
+### Έργα
 
-### Κλωνοποίησε το αποθετήριο και δημιούργησε το πρώτο σου τεκμήριο
+Τρία έργα με αρχικό κώδικα ανά στάδιο, υλοποιήσεις αναφοράς και τοπικούς αξιολογητές. Εκτέλεσε τις εντολές από τη ρίζα του αποθετηρίου μετά τη [ρύθμιση](#local-setup). Ο αρχικός κώδικας αποτυγχάνει μέχρι να υλοποιήσεις τα στάδια.
+
+<details>
+<summary><strong>01 · Εργαστήριο αξιολόγησης ανάκτησης</strong> · Python · Μετρικές κατάταξης και έλεγχοι υποβάθμισης</summary>
+
+Ένα υποψήφιο σύστημα βελτιώνει το μέσο NDCG, ενώ ένα ερώτημα κατατάσσει χαμηλότερα το πιο σχετικό τεκμήριό του. Υλοποίησε σύγκριση ανά ερώτημα που αναφέρει την υποβάθμιση και μπορεί να αποτύχει έναν έλεγχο διάθεσης.
+
+Χρησιμοποίησε Python 3.10+. Επανεξέτασε [RAG](../../phases/11-llm-engineering/06-rag/docs/en.md) και [αξιολόγηση μοντέλων](../../phases/02-ml-fundamentals/09-model-evaluation/docs/en.md). Υλοποίησε επικύρωση κατάταξης, ακρίβεια και ανάκληση, μετρικές ευαίσθητες στη θέση και έπειτα σύγκριση συστημάτων.
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --init learning-artifacts/retrieval-evaluation-lab
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --stage 1 --path learning-artifacts/retrieval-evaluation-lab --strict
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --all --path learning-artifacts/retrieval-evaluation-lab --strict
 ```
 
-Ο αρχικός έλεγχος διαχωρίζει τις απαιτήσεις που χρειάζεσαι τώρα από τα εργαλεία που θα χρειαστείς αργότερα. Κάθε αποτυχία υποχρεωτικού ελέγχου περιλαμβάνει την αιτία που εντοπίστηκε και μια εντολή διόρθωσης. Η δεύτερη εντολή εκτελεί ένα μάθημα χωρίς εξαρτήσεις και στο τέλος δείχνει ότι ο πολλαπλασιασμός πίνακα με διάνυσμα είναι η πράξη μέσα σε ένα επίπεδο νευρωνικού δικτύου. Αποθήκευσε αυτή την έξοδο του τερματικού ως πρώτο τεκμήριο.
+**Διατήρησε:** αναπαραγώγιμη σύγκριση με διαφορές ανά ερώτημα και τις κρίσεις που χρησιμοποιήθηκαν στη βαθμολόγηση. Οι μετρικές περιγράφουν αυτές τις κρίσεις· δεν αποδεικνύουν την ορθότητα των απαντήσεων.
 
-## Πρόσθεσε τον εκπαιδευτή ΤΝ σε 30 δευτερόλεπτα
+[Ξεκίνα το έργο](https://aiengineeringfromscratch.com/project.html?id=retrieval-evaluation-lab) · [Εξέτασε την αναφορά](../../projects/retrieval-evaluation-lab/solution/) · [Εκτέλεσε με δικές σου εισόδους](../../projects/retrieval-evaluation-lab/README.md#run-with-your-own-inputs)
 
-Αν έχεις ήδη Node.js, `npx` και έναν πράκτορα προγραμματισμού που υποστηρίζει δεξιότητες, δύο εντολές αρκούν για να γίνει εκπαιδευτής. Δεν χρειάζεται κλωνοποίηση του αποθετηρίου για εγκατάσταση ή ανάγνωση του εκπαιδευτή. Τα εκτελέσιμα εργαστήρια των ειδικών διαδρομών απαιτούν `python3`. Τα εργαστήρια Agent Skills απαιτούν επίσης επιλεγμένη εφαρμογή φιλοξενίας και εγγράψιμο πεδίο δεξιοτήτων χρήστη ή έργου.
+</details>
+
+<details>
+<summary><strong>02 · Εργαλείο αποσφαλμάτωσης ιχνών πρακτόρων</strong> · TypeScript · Ανάλυση ιχνών και χρονισμός</summary>
+
+Ένα παρεχόμενο ίχνος εξακολουθεί να διαρκεί 100 ms, αλλά η συνολική χρήση token αυξάνεται κατά 200 και ένα span αρχίζει να αποτυγχάνει. Διαχώρισε την επικαλυπτόμενη εργασία των παιδιών από τον χρόνο εκτέλεσης του γονέα και δημιούργησε αναφορά που αποκαλύπτει την αλλαγή.
+
+Χρησιμοποίησε Node.js 22.18+ και Python 3 για τον αξιολογητή. Υλοποίησε ανάλυση JSONL, επικύρωση γονικών σχέσεων, αριθμητική διαστημάτων και έπειτα εξετάσιμη χρονική ακολουθία.
+
+```bash
+python3 scripts/project_test.py agent-trace-debugger \
+  --init learning-artifacts/agent-trace-debugger
+python3 scripts/project_test.py agent-trace-debugger \
+  --stage 1 --path learning-artifacts/agent-trace-debugger --strict
+python3 scripts/project_test.py agent-trace-debugger \
+  --all --path learning-artifacts/agent-trace-debugger --strict
+```
+
+**Διατήρησε:** το ίχνος εισόδου, μια χρονική ακολουθία HTML και μια αναφορά υποβάθμισης JSON. Διατήρησε αποκλειστικές μετρήσεις token ανά span, ώστε η χρήση γονέα και παιδιού να μη μετριέται δύο φορές.
+
+[Ξεκίνα το έργο](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger) · [Εξέτασε την αναφορά](../../projects/agent-trace-debugger/solution/) · [Εξερεύνησε τον χρονισμό διαδραστικά](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger&stage=03-timing)
+
+</details>
+
+<details>
+<summary><strong>03 · Τείχος προστασίας κλήσεων εργαλείων</strong> · Rust · Έλεγχοι ρόλων και αποδεικτικά έγκρισης</summary>
+
+Μια εγγραφή αλλάζει μετά τον έλεγχο ή μια έγκριση επαναχρησιμοποιείται. Επικύρωσε τον φάκελο της κλήσης, έλεγξε τον ρόλο και τη διαδρομή του καλούντος και κατανάλωσε έγκριση δεσμευμένη στο ακριβές αίτημα και περιεχόμενο.
+
+Χρησιμοποίησε Rust και Python 3.10+. Επανεξέτασε [σχεδίαση σχημάτων εργαλείων](../../phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md) και [όρια ασφαλείας](../../phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md). Η καλούσα εφαρμογή παρέχει την ταυτότητα· το μοντέλο προτείνει μια πράξη.
+
+```bash
+python3 scripts/project_test.py tool-call-firewall \
+  --init learning-artifacts/tool-call-firewall
+python3 scripts/project_test.py tool-call-firewall \
+  --stage 1 --path learning-artifacts/tool-call-firewall --strict
+python3 scripts/project_test.py tool-call-firewall \
+  --all --path learning-artifacts/tool-call-firewall --strict
+```
+
+**Διατήρησε:** αποδεικτικό ελέγχου με τη ζητούμενη πράξη και την απόφαση της πολιτικής. Οι εγκρίσεις χρησιμοποιούνται μία φορά μέσα σε μία κλήση· αυτό το έργο δεν παρέχει μόνιμη εξουσιοδότηση ή απομόνωση σε επίπεδο λειτουργικού συστήματος.
+
+[Ξεκίνα το έργο](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall) · [Εξέτασε την αναφορά](../../projects/tool-call-firewall/solution/) · [Εξερεύνησε τα όρια έγκρισης](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall&stage=03-consume-a-request-bound-approval-once)
+
+</details>
+
+[Περιηγήσου σε όλα τα έργα](https://aiengineeringfromscratch.com/projects.html) · [Οδηγός επαγγελματικής εξάσκησης](../../learning-paths/CAREER-PRACTICE.md)
+
+## Επιλέξτε πώς θα μάθετε
+
+### Στον ιστότοπο
+
+Άνοιξε ολοκληρωμένο μάθημα στο [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) ή ανάπτυξε μια φάση στα [περιεχόμενα](#contents). Χωρίς ρυθμίσεις ή κλωνοποίηση.
+
+### Με εκπαιδευτή AI
+
+Αν έχεις ήδη Node.js, `npx` και έναν πράκτορα προγραμματισμού που υποστηρίζει δεξιότητες, μπορεί να γίνει εκπαιδευτής. Δεν χρειάζεται κλωνοποίηση του αποθετηρίου για εγκατάσταση ή ανάγνωση του εκπαιδευτή. Τα εκτελέσιμα εργαστήρια των ειδικών διαδρομών απαιτούν `python3`. Τα εργαστήρια Agent Skills απαιτούν επίσης επιλεγμένη εφαρμογή φιλοξενίας και εγγράψιμο πεδίο δεξιοτήτων χρήστη ή έργου.
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+Επιλέξτε εφαρμογή φιλοξενίας και πεδίο όταν το ζητήσει ο εγκαταστάτης. Χρησιμοποιήστε `start-learning` στο Codex, `/start-learning` στο Claude Code ή ζητήστε από την εφαρμογή να χρησιμοποιήσει τη δεξιότητα με το όνομά της.
+
+<details>
+<summary>Ρύθμιση εκπαιδευτή και εντολές περιβάλλοντος</summary>
 
 Έλεγξε πρώτα τις τοπικές απαιτήσεις:
 
@@ -132,11 +180,7 @@ npx --version
 python3 --version
 ```
 
-Έπειτα εγκατέστησε τις δεξιότητες του προγράμματος και επίλεξε εφαρμογή φιλοξενίας και πεδίο εγκατάστασης όταν ρωτήσει το πρόγραμμα:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
+Το `skills` γράφει στην εφαρμογή και στο πεδίο που επιλέγεις κατά την εγκατάσταση, όπως `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` ή άλλον υποστηριζόμενο φάκελο. Έλεγξε ότι η εφαρμογή ανακαλύπτει ακριβώς αυτόν τον προορισμό.
 
 Η σύνταξη κλήσης καθορίζεται από την εφαρμογή φιλοξενίας, όχι από τη φορητή μορφή `SKILL.md`:
 
@@ -154,17 +198,100 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 Το πρόγραμμα εγκατάστασης εμφανίζει τις εφαρμογές που μπορεί να ρυθμίσει και ρωτά πού να εγκαταστήσει. Αν δεν έχεις Node.js, `npx`, `python3`, υποστηριζόμενη εφαρμογή ή εγγράψιμο πεδίο, χρησιμοποίησε τον ιστότοπο ή διάβασε το `docs/en.md` μόνος σου. Έτσι μαθαίνεις τις έννοιες, αλλά οι αποδείξεις ανακάλυψης, κλήσης, εκτέλεσης σεναρίων και απεγκατάστασης σε πραγματική εφαρμογή εκκρεμούν ώσπου να είναι διαθέσιμος ο αρχικός έλεγχος. Διάβασε τα μαθήματα στο [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## Πώς λειτουργεί
+### Οι εκπαιδευτικές δεξιότητες
 
-Το περισσότερο υλικό ΤΝ διδάσκει ασύνδετα κομμάτια. Μια επιστημονική δημοσίευση εδώ, ένα κείμενο για προσαρμογή εκεί, μια εντυπωσιακή επίδειξη πράκτορα αλλού. Σπάνια συνδέονται. Παραδίδεις ένα συνομιλιακό σύστημα αλλά δεν εξηγείς την καμπύλη απώλειάς του. Συνδέεις μια συνάρτηση σε πράκτορα αλλά δεν ξέρεις τι κάνει η προσοχή μέσα στο μοντέλο που την καλεί.
+| Δεξιότητα | Τι κάνει |
+|---|---|
+| [`start-learning`](../../skills/start-learning/SKILL.md) | Αρχική προσαρμογή, μία φορά: γιατί μαθαίνεις, κουίζ κατάταξης και εξατομικευμένο πλάνο που αποθηκεύεται στο `LEARNING.md`. |
+| [`learn`](../../skills/learn/SKILL.md) | Ο κύκλος διδασκαλίας. Ξεκινά με ανάκληση γνώσεων, διδάσκει διαδραστικά το επόμενο μάθημα και συνεχίζει με το κουίζ του· καταγράφει την πρόοδο και μια ουρά επανάληψης. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | Δρομολογητής θεμάτων. «Πού μαθαίνω για την προσοχή;» ή «η απώλειά μου είναι NaN» → τα κατάλληλα μαθήματα, με συνδέσμους. |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Εξειδικευμένος δάσκαλος για το Model Context Protocol (MCP). Δημιουργεί το `MCP-LEARNING.md`, ακολουθεί τη λίστα των 17 μαθημάτων και καταγράφει τεκμήρια επικοινωνίας πρωτοκόλλου, ασφάλειας, αξιοπιστίας και συμμόρφωσης. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Εξειδικευμένος δάσκαλος για τις δεξιότητες πρακτόρων. Δημιουργεί το `AGENT-SKILLS-LEARNING.md`, διδάσκει τα μαθήματα 22, 24, 25, 26 και 27 και καταγράφει τεκμήρια από πραγματικό περιβάλλον εκτέλεσης. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Δάσκαλος πιστοποίησης. Επιλέγει CCAO-F, CCDV-F, CCAR-F ή CCAR-P· διδάσκει κάθε μάθημα· εκτελεί εργαστήρια· ελέγχει παραδοτέα· διεξάγει διαγνωστικές και δοκιμαστικές εξετάσεις· αποθηκεύει την πρόοδο. |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Δάσκαλος MCPA. Ακολουθεί τη διαδρομή `mcpa-f` των 34 μαθημάτων για το πρωτόκολλο της 2026-07-28· διδάσκει κάθε μάθημα· εκτελεί εργαστήρια και τον ελεγκτή επικοινωνίας πρωτοκόλλου· διεξάγει τη διαγνωστική και τρεις δοκιμαστικές εξετάσεις· αποθηκεύει την πρόοδο. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Κουίζ κατάταξης δέκα ερωτήσεων. Αντιστοιχίζει τις γνώσεις σου σε μια αρχική φάση και παράγει εξατομικευμένη διαδρομή με εκτίμηση ωρών. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Κουίζ ανά φάση, με οκτώ ερωτήσεις, ανατροφοδότηση και συγκεκριμένα μαθήματα για επανάληψη. Χρησιμοποίησε τη μορφή για Codex, Claude Code ή φυσική γλώσσα στον παραπάνω πίνακα κλήσεων. |
 
-Αυτό το πρόγραμμα είναι ο κορμός: 20 φάσεις, 523 μαθήματα, τέσσερις γλώσσες: Python, TypeScript, Rust και Julia. Γραμμική άλγεβρα στη μία άκρη, αυτόνομα σμήνη στην άλλη. Κάθε αλγόριθμος κατασκευάζεται πρώτα από τα ίδια τα μαθηματικά: οπισθοδιάδοση, τοκενικοποιητής, προσοχή, βρόχος πράκτορα. Όταν εμφανίζεται το PyTorch, γνωρίζεις ήδη τι κάνει εσωτερικά.
+</details>
 
-Κάθε μάθημα ακολουθεί τον ίδιο κύκλο: διάβασε το πρόβλημα, εξήγαγε τα μαθηματικά, γράψε κώδικα, τρέξε τη δοκιμή, κράτησε το αποτέλεσμα. Χωρίς πεντάλεπτα βίντεο, ανάπτυξη με αντιγραφή ή καθοδήγηση σε κάθε κίνηση. Δωρεάν, ανοικτού κώδικα και φτιαγμένο για τον φορητό υπολογιστή σου.
+<a id="local-setup"></a>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+### Εκτελέστε κώδικα τοπικά
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+
+Ο αρχικός έλεγχος διαχωρίζει τις απαιτήσεις που χρειάζεσαι τώρα από τα εργαλεία που θα χρειαστείς αργότερα. Κάθε αποτυχία υποχρεωτικού ελέγχου περιλαμβάνει την αιτία που εντοπίστηκε και μια εντολή διόρθωσης. Η εντολή `vectors.py` εκτελεί ένα μάθημα χωρίς εξαρτήσεις και στο τέλος δείχνει ότι ο πολλαπλασιασμός πίνακα με διάνυσμα είναι η πράξη μέσα σε ένα επίπεδο νευρωνικού δικτύου. Αποθήκευσε αυτή την έξοδο του τερματικού ως πρώτο τεκμήριο.
+
+<details>
+<summary>Δούλεψε κάθε μάθημα με τον ίδιο τρόπο</summary>
+
+### Δούλεψε κάθε μάθημα με τον ίδιο τρόπο
+
+1. **Διάβασε** το `docs/en.md` και εξήγησε τη βασική ιδέα με δικά σου λόγια.
+2. **Πληκτρολόγησε και υλοποίησε** τον σημαντικό κώδικα, αντί να αντιμετωπίζεις το μπλοκ κώδικα σαν διακοσμητικό στοιχείο.
+3. **Εκτέλεσε** την εντολή του μαθήματος από τον ριζικό κατάλογο του αποθετηρίου, εκείνον που περιέχει τα `README.md` και `phases/`.
+4. **Κράτησε τεκμήρια**: την εντολή, τον κατάλογο εργασίας, τον κωδικό εξόδου, τη χρήσιμη έξοδο και το παραδοτέο που άλλαξες ή δημιούργησες.
+5. **Συνέχισε** μόνο όταν μπορείς να εξηγήσεις την έξοδο και να κάνεις μια μικρή αλλαγή χωρίς να μαντεύεις.
+
+Οι διαδρομές στις εντολές των μαθημάτων ξεκινούν από τον ριζικό κατάλογο του αποθετηρίου, εκτός αν το μάθημα ζητά ρητά αλλαγή καταλόγου. Αν ένα μάθημα προσφέρει πολλές γλώσσες προγραμματισμού, εκτέλεσε την υλοποίηση στη γλώσσα που μαθαίνεις.
+
+</details>
+
+<a id="study-guide"></a>
+
+## Επιλέξτε μαθησιακή διαδρομή
+
+Δεν χρειάζεται να εξετάσεις και τα 523 μαθήματα πριν ξεκινήσεις. Διάλεξε έναν στόχο. Κάθε σύνδεσμος ανοίγει το ίδιο πρόγραμμα στο GitHub ή στον ιστότοπο, και οι δύο εκδόσεις χρησιμοποιούν τον ίδιο κώδικα μαθημάτων.
+
+| Ο στόχος σου | Μάθηση στο GitHub | Μάθηση στον ιστότοπο |
+|---|---|---|
+| Ξεκινώ τώρα και θέλω πλήρεις βάσεις | [Στάδιο 0: Εγκατάσταση και εργαλεία](../../phases/00-setup-and-tooling/) | [Περιβάλλον ανάπτυξης](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Γνωρίζω Python και θέλω βάσεις στα μαθηματικά και στο ML | [Στάδιο 1: Μαθηματικά θεμέλια](../../phases/01-math-foundations/) | [Διαισθητική κατανόηση της γραμμικής άλγεβρας](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| Θέλω να φτιάξω εφαρμογές LLM για παραγωγική χρήση | [Στάδιο 11: Μηχανική LLM](../../phases/11-llm-engineering/) | [Μηχανική προτροπών](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Θέλω να φτιάξω πράκτορες | [Στάδιο 14: Μηχανική πρακτόρων](../../phases/14-agent-engineering/) | [Ο βρόχος του πράκτορα](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Θέλω να χρησιμοποιώ πράκτορες προγραμματισμού σε πραγματικά αποθετήρια | [Διαδρομή μηχανικής με τη βοήθεια πρακτόρων](../../learning-paths/using-coding-agents.json) | [Μηχανική με τη βοήθεια πρακτόρων](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| Θέλω να καθορίσω τι αξίζει να φτιαχτεί πριν από την υλοποίηση | [Διαδρομή αποφάσεων και παράδοσης προϊόντος](../../learning-paths/shaping-the-build.json) | [Αποφάσεις και παράδοση προϊόντος](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+
+Δεν ξέρεις από πού να ξεκινήσεις; Χρησιμοποίησε τον [εκπαιδευτή αξιολόγησης επιπέδου `start-learning`](../../skills/start-learning/SKILL.md) ή τον [οδηγό προαπαιτούμενων του ιστοτόπου](https://aiengineeringfromscratch.com/prereqs.html).
+
+Σύγκρινε τέσσερις βασικούς τομείς και έξι επαγγελματικές διαδρομές στο [Διαδρομές μάθησης μηχανικής ΤΝ](https://aiengineeringfromscratch.com/learning-paths.html).
+
+<details>
+<summary>Εστιασμένες διαδρομές MCP και Agent Skills</summary>
+
+| Ο στόχος σου | Μάθηση στο GitHub | Μάθηση στον ιστότοπο |
+|---|---|---|
+| Θέλω να αναπτύξω λύσεις με Model Context Protocol (MCP) | [Διαδρομή Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Μαθησιακή διαδρομή Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Θέλω να γράψω και να διαθέσω Agent Skills | [Εστιασμένη διαδρομή Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Μαθησιακή διαδρομή Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+
+</details>
+
+<details>
+<summary>Προαπαιτούμενα και χρόνος μελέτης</summary>
+
+### Προαπαιτούμενα
+
+- Μπορείς να γράψεις κώδικα (σε οποιαδήποτε γλώσσα· η Python βοηθά).
+- Θέλεις να καταλάβεις πώς **λειτουργεί πραγματικά** η ΤΝ, όχι απλώς να καλείς API.
+
+## Από πού να ξεκινήσεις
+
+| Υπόβαθρο | Ξεκίνα από | Εκτιμώμενος χρόνος |
+|---|---|---|
+| Νέος στον προγραμματισμό και την ΤΝ | Φάση 0: Εγκατάσταση | ~306 ώρες |
+| Γνωρίζεις Python, αλλά είσαι νέος στη μηχανική μάθηση | Φάση 1: Μαθηματικά θεμέλια | ~270 ώρες |
+| Γνωρίζεις μηχανική μάθηση, αλλά είσαι νέος στη βαθιά μάθηση | Φάση 3: Πυρήνας βαθιάς μάθησης | ~200 ώρες |
+| Γνωρίζεις βαθιά μάθηση και θέλεις LLM και πράκτορες | Φάση 10: LLM από το μηδέν | ~100 ώρες |
+| Έμπειρος μηχανικός, σε ενδιαφέρει μόνο η μηχανική πρακτόρων | Φάση 14: Μηχανική πρακτόρων | ~60 ώρες |
+| Θέλεις μόνο να κατασκευάζεις συστήματα MCP για παραγωγή | [Διαδρομή Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 ώρες 15 λεπτά |
+| Θέλεις μόνο να κατασκευάζεις δεξιότητες πρακτόρων για παραγωγή | [Διαδρομή μηχανικής δεξιοτήτων πρακτόρων](../../learning-paths/agent-skills.json) | ~9.5 ώρες |
+
+</details>
 
 ## Η δομή του προγράμματος σπουδών
 
@@ -194,195 +321,6 @@ flowchart TB
   P16 --> P19["Φάση 19: Ολοκληρωμένα έργα"]
   P17 --> P19
   P18 --> P19
-```
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Η δομή ενός μαθήματος
-
-Κάθε μάθημα βρίσκεται στον δικό του φάκελο, με την ίδια δομή σε όλο το πρόγραμμα:
-
-```text
-phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      εκτελέσιμες υλοποιήσεις (Python, TypeScript, Rust, Julia)
-├── docs/
-│   └── en.md  κείμενο του μαθήματος
-└── outputs/   προτροπές, δεξιότητες, πράκτορες ή διακομιστές MCP που παράγει αυτό το μάθημα
-```
-
-Κάθε μάθημα έχει έξι μέρη. Η διάκριση *Φτιάξε / Χρησιμοποίησε* είναι ο κορμός: υλοποιείς πρώτα τον αλγόριθμο από το μηδέν και μετά εκτελείς το ίδιο μέσω βιβλιοθήκης παραγωγής. Καταλαβαίνεις το πλαίσιο επειδή έγραψες τη μικρότερη έκδοση μόνος σου.
-
-```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
-flowchart LR
-  M["ΡΗΤΟ<br/><sub>κεντρική ιδέα σε μία γραμμή</sub>"] --> Pr["ΠΡΟΒΛΗΜΑ<br/><sub>συγκεκριμένη δυσκολία</sub>"]
-  Pr --> C["ΕΝΝΟΙΑ<br/><sub>διαγράμματα και διαίσθηση</sub>"]
-  C --> B["ΚΑΤΑΣΚΕΥΑΣΕ ΤΟ<br/><sub>καθαρά μαθηματικά, χωρίς πλαίσια</sub>"]
-  B --> U["ΧΡΗΣΙΜΟΠΟΙΗΣΕ ΤΟ<br/><sub>το ίδιο σε PyTorch / sklearn</sub>"]
-  U --> S["ΔΙΑΘΕΣΕ ΤΟ<br/><sub>προτροπή · δεξιότητα · πράκτορας · MCP</sub>"]
-```
-
-## Πρώτα βήματα
-
-Τρεις τρόποι να ξεκινήσεις. Διάλεξε έναν.
-
-**Επιλογή Α: μάθε στο τερματικό *(προτείνεται)*.** Μετά τον παραπάνω έλεγχο Node.js, `npx`, εφαρμογής και πεδίου εγκατάστασης, εγκατέστησε τις εκπαιδευτικές δεξιότητες σε συμβατό πράκτορα και άφησε το πρόγραμμα να σε καθοδηγήσει:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
-
-Χρησιμοποίησε τον παραπάνω πίνακα κλήσεων για την εφαρμογή σου. Οι εγκατεστημένες δεξιότητες παρέχουν `start-learning`, `learn`, `course-guide` και τις ειδικές διαδρομές `learn-mcp` και `learn-agent-skills`. Το κείμενο μαθημάτων φορτώνεται χωρίς κλωνοποίηση. Τοπικό αντίγραφο απαιτείται για αντιγραμμένες εντολές κώδικα και εκτελέσιμα εργαστήρια MCP ή Agent Skills. Η πρόοδος αποθηκεύεται στα `LEARNING.md`, `MCP-LEARNING.md` ή `AGENT-SKILLS-LEARNING.md` του έργου σου, ώστε κάθε συνεδρία να συνεχίζεται.
-
-**Επιλογή Β: διάβασε.** Άνοιξε ολοκληρωμένο μάθημα στο [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) ή ανάπτυξε μια φάση στα [περιεχόμενα](#contents). Χωρίς ρυθμίσεις ή κλωνοποίηση.
-
-**Επιλογή Γ: κλωνοποίησε και εκτέλεσε.**
-
-```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
-```
-
-Η κλωνοποίηση φορτώνει επίσης αυτόματα τις εκπαιδευτικές δεξιότητες στο Claude Code και δίνει στον εκπαιδευτή `learn` τον κώδικα κάθε μαθήματος για πραγματική εκτέλεση, όχι απλή ανάγνωση.
-
-### Προαπαιτούμενα
-
-- Μπορείς να γράψεις κώδικα (σε οποιαδήποτε γλώσσα· η Python βοηθά).
-- Θέλεις να καταλάβεις πώς **λειτουργεί πραγματικά** η ΤΝ, όχι απλώς να καλείς API.
-
-### Προετοιμάσου για πιστοποιήσεις Claude
-
-Η [Ακαδημία Πιστοποίησης Claude](../../certifications/claude/README.md) είναι δωρεάν πρόγραμμα ανοικτού κώδικα για τις τέσσερις επίσημες διαδρομές: Associate Foundations, Developer Foundations, Architect Foundations και Architect Professional. Κάθε διαδρομή συνδυάζει μαθήματα αντιστοιχισμένα στην εξεταστέα ύλη, εκτελέσιμα εργαστήρια, διαγνωστικό τεστ, τελικό έργο και πλήρη πρωτότυπη δοκιμαστική εξέταση.
-
-Χρησιμοποίησε τον [οδηγό εκκίνησης GitHub με ΤΝ](../../certifications/claude/GETTING_STARTED.md) με Claude Code, Codex, ChatGPT, Cursor ή άλλο πράκτορα. Εκτέλεσε `claude-certification` στο Codex, `/claude-certification` στο Claude Code ή ζήτησε από άλλη εφαρμογή να χρησιμοποιήσει `claude-certification`. Επιλέγει διαδρομή, δημιουργεί μόνιμο σχέδιο στο `CLAUDE-CERTIFICATION.md`, διδάσκει βήμα βήμα, τρέχει πραγματικά εργαστήρια και αξιολογεί τα παραδοτέα. Το ίδιο πρόγραμμα είναι διαθέσιμο στον [ιστότοπο πιστοποιήσεων](https://aiengineeringfromscratch.com/certifications.html).
-
-Η ακαδημία είναι ανεξάρτητο υλικό μελέτης βασισμένο σε δημόσιους εξεταστικούς στόχους. Δεν συνδέεται με την Anthropic, δεν αναπαράγει πραγματικές εξεταστικές ερωτήσεις και δεν εγγυάται επιτυχία.
-
-### Προετοιμάσου για την πιστοποίηση MCP Associate (MCPA)
-
-Το [Πρόγραμμα Πιστοποίησης MCPA](../../certifications/mcpa/README.md) είναι δωρεάν προετοιμασία ανοικτού κώδικα για την εξέταση Model Context Protocol Associate της Agentic AI Foundation, μέσω Linux Foundation Training. Τα 34 μαθήματα διδάσκουν το πρωτόκολλο χωρίς κατάσταση 2026-07-28 στους πέντε εξεταστικούς τομείς: `_meta` ανά αίτημα και `server/discover` αντί της παλιάς χειραψίας, αιτήματα πολλών γύρων, συνδρομές, προσωρινή αποθήκευση, επεκτάσεις εργασιών και MCP Apps, εξουσιοδότηση OAuth και επίπεδα μητρώου και SDK. Κάθε μάθημα δίνει εκτελέσιμο εργαστήριο τυπικής βιβλιοθήκης, του οποίου η καταγραφή ελέγχεται για την τρέχουσα μορφή επικοινωνίας. Η διαδρομή προσθέτει διαγνωστικό τεστ, τελικό έργο και τρεις πλήρεις πρωτότυπες δοκιμαστικές εξετάσεις με κατανομή ερωτήσεων σύμφωνα με τα δημοσιευμένα βάρη.
-
-Χρησιμοποίησε τον [οδηγό εκκίνησης GitHub με ΤΝ](../../certifications/mcpa/GETTING_STARTED.md) με Claude Code, Codex, ChatGPT, Cursor ή άλλο πράκτορα. Εκτέλεσε `mcpa-certification` στο Codex, `/mcpa-certification` στο Claude Code ή ζήτησε από άλλη εφαρμογή να χρησιμοποιήσει `mcpa-certification`. Δημιουργεί μόνιμη διαδρομή στο `MCPA-CERTIFICATION.md`, διδάσκει βήμα βήμα, τρέχει πραγματικά εργαστήρια και δίνει ανατροφοδότηση πάνω στα παραδοτέα. Το ίδιο πρόγραμμα βρίσκεται στη [σελίδα διαδρομής MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
-
-Αυτό είναι ανεξάρτητο υλικό μελέτης βασισμένο σε δημόσιους εξεταστικούς στόχους. Δεν συνδέεται με την Agentic AI Foundation ή το Linux Foundation, δεν αναπαράγει πραγματικές εξεταστικές ερωτήσεις και δεν εγγυάται επιτυχία.
-
-### Οι εκπαιδευτικές δεξιότητες
-
-| Δεξιότητα | Τι κάνει |
-|---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | Αρχική προσαρμογή, μία φορά: γιατί μαθαίνεις, κουίζ κατάταξης και εξατομικευμένο πλάνο που αποθηκεύεται στο `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | Ο κύκλος διδασκαλίας. Ξεκινά με ανάκληση γνώσεων, διδάσκει διαδραστικά το επόμενο μάθημα και συνεχίζει με το κουίζ του· καταγράφει την πρόοδο και μια ουρά επανάληψης. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Δρομολογητής θεμάτων. «Πού μαθαίνω για την προσοχή;» ή «η απώλειά μου είναι NaN» → τα κατάλληλα μαθήματα, με συνδέσμους. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Εξειδικευμένος δάσκαλος για το Model Context Protocol (MCP). Δημιουργεί το `MCP-LEARNING.md`, ακολουθεί τη λίστα των 17 μαθημάτων και καταγράφει τεκμήρια επικοινωνίας πρωτοκόλλου, ασφάλειας, αξιοπιστίας και συμμόρφωσης. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Εξειδικευμένος δάσκαλος για τις δεξιότητες πρακτόρων. Δημιουργεί το `AGENT-SKILLS-LEARNING.md`, διδάσκει τα μαθήματα 22, 24, 25, 26 και 27 και καταγράφει τεκμήρια από πραγματικό περιβάλλον εκτέλεσης. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Δάσκαλος πιστοποίησης. Επιλέγει CCAO-F, CCDV-F, CCAR-F ή CCAR-P· διδάσκει κάθε μάθημα· εκτελεί εργαστήρια· ελέγχει παραδοτέα· διεξάγει διαγνωστικές και δοκιμαστικές εξετάσεις· αποθηκεύει την πρόοδο. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Δάσκαλος MCPA. Ακολουθεί τη διαδρομή `mcpa-f` των 34 μαθημάτων για το πρωτόκολλο της 2026-07-28· διδάσκει κάθε μάθημα· εκτελεί εργαστήρια και τον ελεγκτή επικοινωνίας πρωτοκόλλου· διεξάγει τη διαγνωστική και τρεις δοκιμαστικές εξετάσεις· αποθηκεύει την πρόοδο. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Κουίζ κατάταξης δέκα ερωτήσεων. Αντιστοιχίζει τις γνώσεις σου σε μια αρχική φάση και παράγει εξατομικευμένη διαδρομή με εκτίμηση ωρών. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Κουίζ ανά φάση, με οκτώ ερωτήσεις, ανατροφοδότηση και συγκεκριμένα μαθήματα για επανάληψη. Χρησιμοποίησε τη μορφή για Codex, Claude Code ή φυσική γλώσσα στον παραπάνω πίνακα κλήσεων. |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Διάβασε τον βασικό κορμό ως βιβλίο
-
-Ο βασικός κορμός 20 φάσεων στο `phases/` μετατρέπεται σε σειρά έξι τόμων. Το CI παράγει EPUB και PDF από τις ίδιες πηγές μαθημάτων και τα επισυνάπτει σε κάθε [έκδοση GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases). Οι παρακάτω σύνδεσμοι οδηγούν πάντα στη νεότερη έκδοση. Οι αριθμοί τόμων δηλώνουν σειρά, όχι εκδόσεις: κάθε αντίτυπο φέρει ημερομηνία έκδοσης, ενώ παλαιότερες εκδόσεις παραμένουν διαθέσιμες από την αντίστοιχη κυκλοφορία.
-
-Τα προγράμματα πιστοποίησης σκόπιμα δεν μετατρέπονται σε βιβλία. Η κατάσταση του εκπαιδευτή ΤΝ, τα εκτελέσιμα εργαστήρια, τα διαδραστικά σχήματα, τα διαγνωστικά τεστ και οι χρονομετρημένες εξετάσεις παραμένουν πλήρως διαθέσιμα στο GitHub και στον ιστότοπο.
-
-| Τόμος | Τίτλος | Φάσεις | Λήψη |
-|-----|-------|--------|----------|
-| 1 | Θεμέλια · Μαθηματικά, εργαλεία και κλασική μηχανική μάθηση | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Βαθιά μάθηση · Δίκτυα, όραση και ομιλία | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Γλώσσα · Θεμέλια NLP και ο Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Μεγάλα γλωσσικά μοντέλα · Παραγωγή, ενίσχυση, προεκπαίδευση και μηχανική | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Πράκτορες · Πολυτροπικότητα, πρωτόκολλα, αυτονομία και σμήνη | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Παραγωγή · Υποδομή, ασφάλεια και ολοκληρωμένα έργα | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-Το βιβλίο είναι στιγμιότυπο, το αποθετήριο η ζωντανή έκδοση. Κάθε κεφάλαιο τελειώνει με συνδέσμους στα κινούμενα σχήματα, στο τεστ και στον εκτελέσιμο κώδικα του μαθήματος. Τοπική δημιουργία με `python3 scripts/build_book.py` (απαιτείται pandoc)· λεπτομέρειες ροής στο [book/README.md](../../book/README.md).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Κάθε μάθημα δίνει ένα αποτέλεσμα
-
-Άλλα προγράμματα τελειώνουν με *«συγχαρητήρια, έμαθες το Χ»*. Εδώ κάθε μάθημα τελειώνει με ένα **επαναχρησιμοποιήσιμο εργαλείο** που εγκαθιστάς ή εντάσσεις στην καθημερινή εργασία σου.
-
-<table>
-<tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A προτροπές"/><br/><sub>FIG_001 · A</sub><br/><b>ΠΡΟΤΡΟΠΕΣ</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B δεξιότητες"/><br/><sub>FIG_001 · B</sub><br/><b>ΔΕΞΙΟΤΗΤΕΣ</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C πράκτορες"/><br/><sub>FIG_001 · C</sub><br/><b>ΠΡΑΚΤΟΡΕΣ</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D διακομιστές MCP"/><br/><sub>FIG_001 · D</sub><br/><b>ΔΙΑΚΟΜΙΣΤΕΣ MCP</b></th>
-</tr>
-<tr>
-<td valign="top">Επικόλλησέ τα σε οποιονδήποτε βοηθό ΤΝ για εξειδικευμένη βοήθεια σε μια συγκεκριμένη εργασία.</td>
-<td valign="top">Πρόσθεσέ τα σε Claude, Cursor, Codex, OpenClaw, Hermes ή σε οποιονδήποτε πράκτορα διαβάζει <code>SKILL.md</code>.</td>
-<td valign="top">Ανάπτυξέ τους ως αυτόνομους εργάτες· έγραψες μόνος σου τον βρόχο στη Φάση 14.</td>
-<td valign="top">Σύνδεσέ τους σε οποιονδήποτε πελάτη συμβατό με MCP. Κατασκευάζονται από την αρχή ως το τέλος στη Φάση 13.</td>
-</tr>
-</table>
-
-> Εγκατέστησε τα πάντα με `python3 scripts/install_skills.py <target>`. Πραγματικά εργαλεία, όχι εργασίες για το σπίτι. Στο τέλος έχεις χαρτοφυλάκιο 523 παραδοτέων που καταλαβαίνεις πραγματικά επειδή τα έφτιαξες.
-
-### FIG_002 · Ένα λυμένο παράδειγμα
-
-Φάση 14, μάθημα 1: ο βρόχος πράκτορα. ~120 γραμμές καθαρής Python, χωρίς εξαρτήσεις.
-
-<table>
-<tr>
-<td valign="top" width="50%">
-
-**`code/agent_loop.py`** &nbsp; <sub><i>φτιάξε το</i></sub>
-
-```python
-def run(query, tools):
-    history = [user(query)]
-    for step in range(MAX_STEPS):
-        msg = llm(history)
-        if msg.tool_calls:
-            for call in msg.tool_calls:
-                result = tools[call.name](**call.args)
-                history.append(tool_result(call.id, result))
-            continue
-        return msg.content
-    raise StepLimitExceeded
-```
-
-</td>
-<td valign="top" width="50%">
-
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>παράδωσέ το</i></sub>
-
-```markdown
----
-name: agent-loop
-description: ReAct-style loop for any tool list
-phase: 14
-lesson: 01
----
-
-Implement a minimal agent loop that...
-```
-
-**`outputs/prompt-debug-agent.md`**
-
-```markdown
-You are an agent debugger. Given the trace
-of an agent run, identify the step where
-the agent went wrong and explain why...
-```
-
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 <a id="contents"></a>
@@ -1105,33 +1043,104 @@ the agent went wrong and explain why...
 
 </details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+## Βιβλία και πιστοποιήσεις
+
+<details>
+<summary>Διάβασε τον βασικό κορμό ως βιβλίο</summary>
+
+Ο βασικός κορμός 20 φάσεων στο `phases/` μετατρέπεται σε σειρά έξι τόμων. Το CI παράγει EPUB και PDF από τις ίδιες πηγές μαθημάτων και τα επισυνάπτει σε κάθε [έκδοση GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases). Οι παρακάτω σύνδεσμοι οδηγούν πάντα στη νεότερη έκδοση. Οι αριθμοί τόμων δηλώνουν σειρά, όχι εκδόσεις: κάθε αντίτυπο φέρει ημερομηνία έκδοσης, ενώ παλαιότερες εκδόσεις παραμένουν διαθέσιμες από την αντίστοιχη κυκλοφορία.
+
+Τα προγράμματα πιστοποίησης σκόπιμα δεν μετατρέπονται σε βιβλία. Η κατάσταση του εκπαιδευτή ΤΝ, τα εκτελέσιμα εργαστήρια, τα διαδραστικά σχήματα, τα διαγνωστικά τεστ και οι χρονομετρημένες εξετάσεις παραμένουν πλήρως διαθέσιμα στο GitHub και στον ιστότοπο.
+
+| Τόμος | Τίτλος | Φάσεις | Λήψη |
+|-----|-------|--------|----------|
+| 1 | Θεμέλια · Μαθηματικά, εργαλεία και κλασική μηχανική μάθηση | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Βαθιά μάθηση · Δίκτυα, όραση και ομιλία | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Γλώσσα · Θεμέλια NLP και ο Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Μεγάλα γλωσσικά μοντέλα · Παραγωγή, ενίσχυση, προεκπαίδευση και μηχανική | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Πράκτορες · Πολυτροπικότητα, πρωτόκολλα, αυτονομία και σμήνη | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Παραγωγή · Υποδομή, ασφάλεια και ολοκληρωμένα έργα | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+Το βιβλίο είναι στιγμιότυπο, το αποθετήριο η ζωντανή έκδοση. Κάθε κεφάλαιο τελειώνει με συνδέσμους στα κινούμενα σχήματα, στο τεστ και στον εκτελέσιμο κώδικα του μαθήματος. Τοπική δημιουργία με `python3 scripts/build_book.py` (απαιτείται pandoc)· λεπτομέρειες ροής στο [book/README.md](../../book/README.md).
+
+</details>
+
+<details>
+<summary>Προετοιμάσου για πιστοποιήσεις Claude</summary>
+
+Η [Ακαδημία Πιστοποίησης Claude](../../certifications/claude/README.md) είναι δωρεάν πρόγραμμα ανοικτού κώδικα για τις τέσσερις επίσημες διαδρομές: Associate Foundations, Developer Foundations, Architect Foundations και Architect Professional. Κάθε διαδρομή συνδυάζει μαθήματα αντιστοιχισμένα στην εξεταστέα ύλη, εκτελέσιμα εργαστήρια, διαγνωστικό τεστ, τελικό έργο και πλήρη πρωτότυπη δοκιμαστική εξέταση.
+
+Χρησιμοποίησε τον [οδηγό εκκίνησης GitHub με ΤΝ](../../certifications/claude/GETTING_STARTED.md) με Claude Code, Codex, ChatGPT, Cursor ή άλλο πράκτορα. Εκτέλεσε `claude-certification` στο Codex, `/claude-certification` στο Claude Code ή ζήτησε από άλλη εφαρμογή να χρησιμοποιήσει `claude-certification`. Επιλέγει διαδρομή, δημιουργεί μόνιμο σχέδιο στο `CLAUDE-CERTIFICATION.md`, διδάσκει βήμα βήμα, τρέχει πραγματικά εργαστήρια και αξιολογεί τα παραδοτέα. Το ίδιο πρόγραμμα είναι διαθέσιμο στον [ιστότοπο πιστοποιήσεων](https://aiengineeringfromscratch.com/certifications.html).
+
+Η ακαδημία είναι ανεξάρτητο υλικό μελέτης βασισμένο σε δημόσιους εξεταστικούς στόχους. Δεν συνδέεται με την Anthropic, δεν αναπαράγει πραγματικές εξεταστικές ερωτήσεις και δεν εγγυάται επιτυχία.
+
+</details>
+
+<details>
+<summary>Προετοιμάσου για την πιστοποίηση MCP Associate (MCPA)</summary>
+
+Το [Πρόγραμμα Πιστοποίησης MCPA](../../certifications/mcpa/README.md) είναι δωρεάν προετοιμασία ανοικτού κώδικα για την εξέταση Model Context Protocol Associate της Agentic AI Foundation, μέσω Linux Foundation Training. Τα 34 μαθήματα διδάσκουν το πρωτόκολλο χωρίς κατάσταση 2026-07-28 στους πέντε εξεταστικούς τομείς: `_meta` ανά αίτημα και `server/discover` αντί της παλιάς χειραψίας, αιτήματα πολλών γύρων, συνδρομές, προσωρινή αποθήκευση, επεκτάσεις εργασιών και MCP Apps, εξουσιοδότηση OAuth και επίπεδα μητρώου και SDK. Κάθε μάθημα δίνει εκτελέσιμο εργαστήριο τυπικής βιβλιοθήκης, του οποίου η καταγραφή ελέγχεται για την τρέχουσα μορφή επικοινωνίας. Η διαδρομή προσθέτει διαγνωστικό τεστ, τελικό έργο και τρεις πλήρεις πρωτότυπες δοκιμαστικές εξετάσεις με κατανομή ερωτήσεων σύμφωνα με τα δημοσιευμένα βάρη.
+
+Χρησιμοποίησε τον [οδηγό εκκίνησης GitHub με ΤΝ](../../certifications/mcpa/GETTING_STARTED.md) με Claude Code, Codex, ChatGPT, Cursor ή άλλο πράκτορα. Εκτέλεσε `mcpa-certification` στο Codex, `/mcpa-certification` στο Claude Code ή ζήτησε από άλλη εφαρμογή να χρησιμοποιήσει `mcpa-certification`. Δημιουργεί μόνιμη διαδρομή στο `MCPA-CERTIFICATION.md`, διδάσκει βήμα βήμα, τρέχει πραγματικά εργαστήρια και δίνει ανατροφοδότηση πάνω στα παραδοτέα. Το ίδιο πρόγραμμα βρίσκεται στη [σελίδα διαδρομής MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
+
+Αυτό είναι ανεξάρτητο υλικό μελέτης βασισμένο σε δημόσιους εξεταστικούς στόχους. Δεν συνδέεται με την Agentic AI Foundation ή το Linux Foundation, δεν αναπαράγει πραγματικές εξεταστικές ερωτήσεις και δεν εγγυάται επιτυχία.
+
+</details>
 
 ## Η εργαλειοθήκη
 
-Κάθε μάθημα παράγει επαναχρησιμοποιήσιμο παραδοτέο. Στο τέλος έχεις:
+Κάθε μάθημα παράγει ένα επαναχρησιμοποιήσιμο παραδοτέο. Εγκαταστήστε το στον πράκτορά σας ή χρησιμοποιήστε τα παρακάτω scripts από τη ρίζα του αποθετηρίου.
+
+<details>
+<summary>Δομή μαθημάτων και επαναχρησιμοποιήσιμα παραδοτέα</summary>
+
+## Η δομή ενός μαθήματος
+
+Κάθε μάθημα βρίσκεται στον δικό του φάκελο, με την ίδια δομή σε όλο το πρόγραμμα:
 
 ```text
-outputs/
-├── prompts/      πρότυπα προτροπών για κάθε εργασία ΤΝ
-└── skills/       αρχεία SKILL.md για πράκτορες προγραμματισμού ΤΝ
+phases/<NN>-<phase-name>/<NN>-<lesson-name>/
+├── code/      εκτελέσιμες υλοποιήσεις (Python, TypeScript, Rust, Julia)
+├── docs/
+│   └── en.md  κείμενο του μαθήματος
+└── outputs/   προτροπές, δεξιότητες, πράκτορες ή διακομιστές MCP που παράγει αυτό το μάθημα
 ```
 
-Σύνδεσέ τα σε Claude, Cursor, Codex, OpenClaw, Hermes ή οποιονδήποτε πράκτορα διαβάζει κατάλογο SKILL.md / AGENTS.md. Πραγματικά εργαλεία, όχι εργασίες για το σπίτι.
+Κάθε μάθημα έχει έξι μέρη. Η διάκριση *Φτιάξε / Χρησιμοποίησε* είναι ο κορμός: υλοποιείς πρώτα τον αλγόριθμο από το μηδέν και μετά εκτελείς το ίδιο μέσω βιβλιοθήκης παραγωγής. Καταλαβαίνεις το πλαίσιο επειδή έγραψες τη μικρότερη έκδοση μόνος σου.
 
-### Εγκατέστησε τις δεξιότητες του προγράμματος στον πράκτορά σου
-
-Δύο σύνολα δεξιοτήτων, δύο προγράμματα εγκατάστασης:
-
-**Οι εκπαιδευτικές δεξιότητες** (`start-learning`, `learn`, `course-guide`, `learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`, `find-your-level` και `check-understanding`) βρίσκονται στο [`skills/`](../../skills/) και εγκαθίστανται με μία εντολή σε υποστηριζόμενη εφαρμογή. Χρειάζονται Node.js και `npx`, όχι κλωνοποίηση αποθετηρίου ή Python:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["ΡΗΤΟ<br/><sub>κεντρική ιδέα σε μία γραμμή</sub>"] --> Pr["ΠΡΟΒΛΗΜΑ<br/><sub>συγκεκριμένη δυσκολία</sub>"]
+  Pr --> C["ΕΝΝΟΙΑ<br/><sub>διαγράμματα και διαίσθηση</sub>"]
+  C --> B["ΚΑΤΑΣΚΕΥΑΣΕ ΤΟ<br/><sub>καθαρά μαθηματικά, χωρίς πλαίσια</sub>"]
+  B --> U["ΧΡΗΣΙΜΟΠΟΙΗΣΕ ΤΟ<br/><sub>το ίδιο σε PyTorch / sklearn</sub>"]
+  U --> S["ΔΙΑΘΕΣΕ ΤΟ<br/><sub>προτροπή · δεξιότητα · πράκτορας · MCP</sub>"]
 ```
 
-Το `skills` γράφει στην εφαρμογή και στο πεδίο που επιλέγεις κατά την εγκατάσταση, όπως `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` ή άλλον υποστηριζόμενο φάκελο. Έλεγξε ότι η εφαρμογή ανακαλύπτει ακριβώς αυτόν τον προορισμό.
+## Κάθε μάθημα δίνει ένα αποτέλεσμα
+
+Άλλα προγράμματα τελειώνουν με *«συγχαρητήρια, έμαθες το Χ»*. Εδώ κάθε μάθημα τελειώνει με ένα **επαναχρησιμοποιήσιμο εργαλείο** που εγκαθιστάς ή εντάσσεις στην καθημερινή εργασία σου.
+
+<table>
+<tr>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A προτροπές"/><br/><sub>FIG_001 · A</sub><br/><b>ΠΡΟΤΡΟΠΕΣ</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B δεξιότητες"/><br/><sub>FIG_001 · B</sub><br/><b>ΔΕΞΙΟΤΗΤΕΣ</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C πράκτορες"/><br/><sub>FIG_001 · C</sub><br/><b>ΠΡΑΚΤΟΡΕΣ</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D διακομιστές MCP"/><br/><sub>FIG_001 · D</sub><br/><b>ΔΙΑΚΟΜΙΣΤΕΣ MCP</b></th>
+</tr>
+<tr>
+<td valign="top">Επικόλλησέ τα σε οποιονδήποτε βοηθό ΤΝ για εξειδικευμένη βοήθεια σε μια συγκεκριμένη εργασία.</td>
+<td valign="top">Πρόσθεσέ τα σε Claude, Cursor, Codex, OpenClaw, Hermes ή σε οποιονδήποτε πράκτορα διαβάζει <code>SKILL.md</code>.</td>
+<td valign="top">Ανάπτυξέ τους ως αυτόνομους εργάτες· έγραψες μόνος σου τον βρόχο στη Φάση 14.</td>
+<td valign="top">Σύνδεσέ τους σε οποιονδήποτε πελάτη συμβατό με MCP. Κατασκευάζονται από την αρχή ως το τέλος στη Φάση 13.</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>Εγκατάσταση παραδοτέων μαθημάτων</summary>
 
 **Τα παραδοτέα μαθημάτων.** Το αποθετήριο παρέχει 396 δεξιότητες και 99 προτροπές στο `phases/**/outputs/`· εγκατέστησέ τα μέσω `scripts/install_skills.py`. Απαιτείται κλωνοποίηση. Υποστηρίζονται φίλτρα ετικετών, δοκιμαστικές εκτελέσεις και διατάξεις ανά πράκτορα:
 
@@ -1156,7 +1165,10 @@ python3 scripts/install_skills.py <target> --force                         # ove
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Πρόσθεσε τον πάγκο εργασίας πράκτορα στο δικό σου αποθετήριο
+</details>
+
+<details>
+<summary>Πρόσθεσε τον πάγκο εργασίας πράκτορα στο δικό σου αποθετήριο</summary>
 
 Το τελικό έργο της φάσης 14 παρέχει επαναχρησιμοποιήσιμο πακέτο πάγκου εργασίας: AGENTS.md, σχήματα και σενάρια αρχικοποίησης, επαλήθευσης και μεταβίβασης. Δημιούργησε τη δομή του σε οποιοδήποτε αποθετήριο με:
 
@@ -1169,7 +1181,10 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 
 Παίρνεις επτά συνδεδεμένα μέρη του πάγκου εργασίας, αρχικό `task_board.json` και νέο `agent_state.json` με `schema_version: 1`. Έπειτα τροποποίησε την εργασία και το `AGENTS.md`, εκτέλεσε `scripts/init_agent.py` και δώσε το συμβόλαιο στον πράκτορα. Η πηγή του πακέτου είναι στο `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
 
-### Περιηγήσου σε όλο το πρόγραμμα ως JSON
+</details>
+
+<details>
+<summary>Περιηγήσου σε όλο το πρόγραμμα ως JSON</summary>
 
 Το `scripts/build_catalog.py` διατρέχει κάθε φάση, μάθημα και παραδοτέο στον δίσκο και γράφει `catalog.json` στη ρίζα του αποθετηρίου. Ένα αρχείο με όλα τα δεδομένα του προγράμματος.
 
@@ -1181,9 +1196,12 @@ python3 scripts/build_catalog.py --out path/to/file.json
 
 Ο κατάλογος παράγεται από το σύστημα αρχείων, όχι από το README, ώστε οι αριθμοί να αντιστοιχούν στον δίσκο. Χρησιμοποίησέ τον για δημιουργία ιστοτόπου, εξαρτώμενα εργαλεία ή έλεγχο αριθμών README. Το σχήμα περιγράφεται στην αρχή του σεναρίου.
 
-Μια GitHub Action (`.github/workflows/curriculum.yml`) ξαναδημιουργεί το `catalog.json` σε κάθε PR και αποτυγχάνει αν το αποθηκευμένο αρχείο είναι παλιό. Μετά από αλλαγή μαθήματος εκτέλεσε `python3 scripts/build_catalog.py` και αποθήκευσε το αποτέλεσμα σε commit, αλλιώς το CI απορρίπτει το PR. Η ίδια ροή εκτελεί `audit_lessons.py` μόνο με προειδοποιήσεις, ώστε υπάρχουσες αποκλίσεις να μη μπλοκάρουν συνεισφέροντες.
+Η ροή εργασίας του προγράμματος δημιουργεί το `catalog.json` ως προσωρινό παραδοτέο που αγνοείται από το Git. Μην το κάνετε commit. Η ίδια ροή εκτελεί το `audit_lessons.py` ως υποχρεωτικό έλεγχο.
 
-### Κάνε βασικό έλεγχο στον κώδικα Python όλων των μαθημάτων
+</details>
+
+<details>
+<summary>Κάνε βασικό έλεγχο στον κώδικα Python όλων των μαθημάτων</summary>
 
 Το `scripts/lesson_run.py` μεταγλωττίζει σε bytecode κάθε αρχείο `.py` στον κατάλογο `code/` κάθε μαθήματος. Από προεπιλογή ελέγχει μόνο σύνταξη, χωρίς εκτέλεση, κλειδιά API ή βαριές εξαρτήσεις ML. Εντοπίζει συχνές παλινδρομήσεις: λάθος εσοχές, χαλασμένα f-string και ακούσιες αλλαγές.
 
@@ -1199,40 +1217,10 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 
 Μόνο τυπική βιβλιοθήκη, Python 3.10+. Όρισε `LINK_CHECK_SKIP=domain1,domain2` για αντικατάσταση της λίστας παραλείψεων (`twitter.com`, `x.com`, `linkedin.com`, `instagram.com`, `medium.com`: τομείς που μπλοκάρουν έντονα αυτοματοποιημένα HEAD/GET).
 
-## Από πού να ξεκινήσεις
+</details>
 
-| Υπόβαθρο | Ξεκίνα από | Εκτιμώμενος χρόνος |
-|---|---|---|
-| Νέος στον προγραμματισμό και την ΤΝ | Φάση 0: Εγκατάσταση | ~306 ώρες |
-| Γνωρίζεις Python, αλλά είσαι νέος στη μηχανική μάθηση | Φάση 1: Μαθηματικά θεμέλια | ~270 ώρες |
-| Γνωρίζεις μηχανική μάθηση, αλλά είσαι νέος στη βαθιά μάθηση | Φάση 3: Πυρήνας βαθιάς μάθησης | ~200 ώρες |
-| Γνωρίζεις βαθιά μάθηση και θέλεις LLM και πράκτορες | Φάση 10: LLM από το μηδέν | ~100 ώρες |
-| Έμπειρος μηχανικός, σε ενδιαφέρει μόνο η μηχανική πρακτόρων | Φάση 14: Μηχανική πρακτόρων | ~60 ώρες |
-| Θέλεις μόνο να κατασκευάζεις συστήματα MCP για παραγωγή | [Διαδρομή Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 ώρες 15 λεπτά |
-| Θέλεις μόνο να κατασκευάζεις δεξιότητες πρακτόρων για παραγωγή | [Διαδρομή μηχανικής δεξιοτήτων πρακτόρων](../../learning-paths/agent-skills.json) | ~9.5 ώρες |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Γιατί έχει σημασία τώρα
-
-<table>
-<tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>ΤΟ ΣΗΜΑ ΑΠΟ ΤΟΝ ΚΛΑΔΟ</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>ΘΕΜΕΛΙΩΔΕΙΣ ΔΗΜΟΣΙΕΥΣΕΙΣ ΠΟΥ ΚΑΛΥΠΤΟΝΤΑΙ</b></th>
-</tr>
-<tr>
-<td valign="top">
-
-> *«Η πιο δημοφιλής νέα γλώσσα προγραμματισμού είναι τα αγγλικά.»*<br/> — **Andrej Karpathy** ([ανάρτηση](https://x.com/karpathy/status/1617979122625712128))
->
-> *«Η μηχανική λογισμικού αναδιαμορφώνεται μπροστά στα μάτια μας.»*<br/> — **Boris Cherny**, δημιουργός του Claude Code
->
-> *«Τα μοντέλα θα συνεχίσουν να βελτιώνονται. Η δεξιότητα που αποκτά ολοένα μεγαλύτερη αξία είναι **να ξέρεις τι να φτιάξεις**.»*<br/> — Συναίνεση του κλάδου, 2026
-
-</td>
-<td valign="top">
+<details>
+<summary>Θεμελιώδεις εργασίες και πρωτόκολλα</summary>
 
 - *Attention Is All You Need* — Vaswani et al., 2017 → [Φάση 7](#phase-7)
 - *Language Models are Few-Shot Learners* (GPT-3) → [Φάση 10](#phase-10)
@@ -1243,13 +1231,7 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 - *ReAct: Reasoning + Acting in LLMs* → [Φάση 14](#phase-14)
 - *Model Context Protocol* — Anthropic → [Φάση 13](#phase-13)
 
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+</details>
 
 ## Συνεισφορά
 
@@ -1272,21 +1254,17 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 
 Ο κωδικός εξόδου είναι μη μηδενικός όταν αποτύχει κανόνας. Οι κανόνες L001–L010 ελέγχουν δομή καταλόγων, παρουσία `docs/en.md` και H1, μη κενό `code/`, σχήμα `quiz.json` (απορρίπτουν τα παλιά κλειδιά `q/choices/answer` που προκάλεσαν το ζήτημα #102) και σχετικούς συνδέσμους στην τεκμηρίωση μαθημάτων.
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
 <a id="supporters"></a>
 
 ## Στήριξε τη δουλειά
 
+<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
+<p align="center"><sub><b>114,584</b> αναγνώστες &nbsp;·&nbsp; <b>181,995</b> προβολές σελίδων τις τελευταίες 30 ημέρες &nbsp;·&nbsp; στις 2026-08-29</sub></p>
+<!-- STATS:END -->
+
 Δωρεάν, με άδεια MIT, 523 μαθήματα. Ευχαριστούμε τους χορηγούς και υποστηρικτές που κάνουν αυτή τη δουλειά εφικτή. [Δες όλους τους χορηγούς και υποστηρικτές](../../BACKERS.md).
 
 Θέλεις να στηρίξεις τη δουλειά; Δες τις [επιλογές χορηγίας](../../SPONSORS.md), όπως τις [χορηγίες υλικού](../../SPONSORS.md#hardware-lab-partner), ή [γίνε χορηγός στο GitHub](https://github.com/sponsors/rohitg00).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 
 Αν σε βοήθησε αυτό το εγχειρίδιο, δώσε αστέρι στο αποθετήριο. Βοηθά το έργο να συνεχίσει.
 
@@ -1297,7 +1275,5 @@ MIT. Χρησιμοποίησέ το όπως θέλεις: κάνε fork, δί�
 Συντηρείται από τον [Rohit Ghumare](https://github.com/rohitg00) και την κοινότητα.
 
 <sub>
-  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
-  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Αναφορά / Πρόταση</a>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp; <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp; <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Αναφορά / Πρόταση</a>
 </sub>

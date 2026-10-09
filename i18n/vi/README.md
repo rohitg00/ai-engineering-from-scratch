@@ -1,44 +1,19 @@
 <p align="center" lang="vi"><sub>README này được dịch sang tiếng Việt. <a href="../../README.md">README tiếng Anh</a> vẫn là bản tham chiếu chuẩn.</sub></p>
-<p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch: ảnh bìa cẩm nang tham khảo" width="100%">
-</p>
 
 <p align="center">
-  <a href="../../README.md">🇬🇧 English</a> ·
-  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
-  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
-  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
-  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
-  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
-  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
-  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
-  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
-  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
-  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
-  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
-  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
-  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
-  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
-  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
-  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
-  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
-  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
-  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
-  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
-  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
-  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
-  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
-  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
-  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
-  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
-  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
-  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
-  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
-  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
-  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
-  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
-  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/header-dark.svg">
+    <img src="../../assets/readme/header-light.svg" alt="Kỹ thuật AI từ đầu" width="840">
+  </picture>
 </p>
+
+Triển khai cơ chế bên trong mô hình, quy trình truy xuất và môi trường thực thi tác tử. Kiểm thử, phân tích lỗi và lưu lại mã nguồn cùng kết quả đánh giá.
+
+**[Bắt đầu học](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Chọn lộ trình](#learning-routes)** · **[Thử bài thực hành](#interactive-lab)** · **[Xây dựng dự án](#project-challenges)** · **[Xem chương trình học](#contents)**
+
+Miễn phí, mã nguồn mở, giấy phép MIT. Học trên trang web, cùng tác tử lập trình hoặc bằng cách chạy mã cục bộ.
+
+> 523 bài học. 20 giai đoạn. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Giấy phép MIT"></a>
@@ -46,12 +21,16 @@
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 giai đoạn"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Sao GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Trang web"></a>
-  <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Xếp hạng Star History" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="Kho mã nổi bật trong ngày trên GitHub" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
- </a>
 </p>
+
+<details>
+<summary>Đọc bằng ngôn ngữ của bạn</summary>
+
+<p align="center">
+  <a href="../../README.md">🇬🇧 English</a> · <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> · <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> · <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> · <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> · <a href="../../i18n/pt/README.md">🇵🇹 Português</a> · <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> · <a href="../../i18n/es/README.md">🇪🇸 Español</a> · <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> · <a href="../../i18n/fr/README.md">🇫🇷 Français</a> · <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> · <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> · <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> · <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> · <a href="../../i18n/ro/README.md">🇷🇴 Română</a> · <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> · <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> · <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> · <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> · <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> · <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> · <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> · <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> · <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> · <a href="../../i18n/he/README.md">🇮🇱 עברית</a> · <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> · <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> · <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> · <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> · <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> · <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> · <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> · <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> · <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
+
+</details>
 
 ### Nhà tài trợ
 
@@ -64,65 +43,134 @@
   <sub><span>Sự hỗ trợ của bạn giúp mọi bài học luôn miễn phí và mã nguồn mở.</span> <a href="#supporters">Xem tất cả người ủng hộ</a> · <a href="../../SPONSORS.md">Trở thành nhà tài trợ</a></sub>
 </p>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+<a id="see-what-you-will-build-and-keep"></a>
+<a id="learning-routes"></a>
 
-> **84% sinh viên đã dùng công cụ AI, nhưng chỉ 18% cảm thấy sẵn sàng sử dụng chúng trong công việc chuyên môn.** Chương trình này giúp bạn thu hẹp khoảng cách đó.
->
-> 523 bài học. 20 giai đoạn. Khoảng 342 giờ. Python, TypeScript, Rust, Julia. Mỗi bài học tạo ra một sản phẩm có thể tái sử dụng: prompt, skill, agent hoặc máy chủ MCP. Miễn phí, mã nguồn mở, giấy phép MIT.
->
-> Bạn không chỉ học AI. Bạn tự tay xây dựng nó, từ đầu đến cuối.
+## Lộ trình học tập
 
-<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> độc giả &nbsp;·&nbsp; <b>181,995</b> lượt xem trang trong 30 ngày qua &nbsp;·&nbsp; tính đến 2026-08-29</sub></p>
-<!-- STATS:END -->
+| Lộ trình | Bài học bắt đầu |
+|---|---|
+| Nền tảng mô hình | [Thiết lập và công cụ](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Hệ thống LLM | [Kỹ thuật viết câu lệnh](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Tác tử và bàn giao hệ thống | [Vòng lặp tác tử](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
 
-## Bắt đầu tại đây: chọn thứ bạn muốn xây dựng
+[So sánh lộ trình nghề nghiệp](https://aiengineeringfromscratch.com/learning-paths.html) · [Kiến thức tiên quyết và thời gian học](#study-guide)
 
-Bạn không cần xem qua cả 523 bài học trước khi bắt đầu. Hãy chọn một mục tiêu. Mỗi liên kết mở cùng một chương trình trên GitHub hoặc trang web, và cả hai phiên bản đều dùng cùng mã nguồn bài học.
+<a id="interactive-lab"></a>
 
-| Mục tiêu của bạn | Học trên GitHub | Học trên trang web |
-|---|---|---|
-| Tôi mới bắt đầu và muốn có nền tảng đầy đủ | [Giai đoạn 0: Thiết lập và công cụ](../../phases/00-setup-and-tooling/) | [Môi trường phát triển](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Tôi biết Python và muốn học nền tảng toán cùng học máy | [Giai đoạn 1: Nền tảng toán học](../../phases/01-math-foundations/) | [Hiểu trực quan đại số tuyến tính](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Tôi muốn xây dựng ứng dụng LLM để triển khai thực tế | [Giai đoạn 11: Kỹ thuật LLM](../../phases/11-llm-engineering/) | [Kỹ thuật prompt](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Tôi muốn xây dựng agent | [Giai đoạn 14: Kỹ thuật agent](../../phases/14-agent-engineering/) | [Vòng lặp agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Tôi muốn dùng agent lập trình trên các kho mã thực tế | [Lộ trình kỹ thuật với sự hỗ trợ của agent](../../learning-paths/using-coding-agents.json) | [Kỹ thuật với sự hỗ trợ của agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Tôi muốn xác định đúng thứ cần xây dựng trước khi triển khai | [Lộ trình quyết định và bàn giao sản phẩm](../../learning-paths/shaping-the-build.json) | [Quyết định và bàn giao sản phẩm](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| Tôi muốn xây dựng với Model Context Protocol (MCP) | [Lộ trình Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Lộ trình học Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Tôi muốn viết và phát hành Agent Skills | [Lộ trình chuyên về Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Lộ trình học Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Tôi muốn ôn thi chứng chỉ Claude | [Hướng dẫn bắt đầu ôn thi](../../certifications/claude/GETTING_STARTED.md) | [Học viện chứng chỉ](https://aiengineeringfromscratch.com/certifications.html) |
-| Tôi muốn ôn thi MCP Associate (MCPA) | [Hướng dẫn bắt đầu MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [Lộ trình MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+### Hạ gradient
 
-Chưa biết nên bắt đầu ở đâu? Dùng [gia sư đánh giá trình độ `start-learning`](../../skills/start-learning/SKILL.md) hoặc [hướng dẫn kiến thức cần có trên trang web](https://aiengineeringfromscratch.com/prereqs.html).
+Hai mươi điểm khởi đầu thực hiện hạ gradient trên hàm mất mát bậc hai. Đồ thị hiển thị vị trí của chúng và giá trị mất mát trung bình sau mỗi lần cập nhật.
 
-So sánh bốn lĩnh vực cốt lõi và sáu lộ trình nghề nghiệp trong [Lộ trình học kỹ thuật AI](https://aiengineeringfromscratch.com/learning-paths.html).
+<p align="center">
+  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+    <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
+      <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
+      <source media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-dark.png">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-light.png">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-mobile-dark.gif">
+      <source media="(max-width: 600px)" srcset="../../assets/readme/101-gradient-mobile-light.gif">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-dark.gif">
+      <img src="../../assets/readme/101-gradient-light.gif" alt="Hạ gradient di chuyển các điểm khởi đầu phân tán về cực tiểu của hàm mất mát. Giá trị mất mát trung bình giảm sau mỗi lần cập nhật." width="840">
+    </picture>
+  </a>
+</p>
 
-### Học mỗi bài theo cùng một cách
+[Điều chỉnh tốc độ học trong bài học](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [So sánh hạ gradient, động lượng và Adam trong mã nguồn](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
-1. **Đọc** `docs/en.md` và giải thích ý tưởng chính bằng lời của bạn.
-2. **Tự gõ và xây dựng** phần mã quan trọng; đừng chỉ xem khối mã như hình minh họa.
-3. **Chạy** lệnh của bài học từ thư mục gốc của kho mã, nơi chứa `README.md` và `phases/`.
-4. **Lưu bằng chứng**: lệnh, thư mục làm việc, mã thoát, đầu ra có ý nghĩa và sản phẩm bạn đã thay đổi hoặc tạo ra.
-5. Chỉ **tiếp tục** khi bạn giải thích được đầu ra và thực hiện được một thay đổi nhỏ mà không cần đoán.
+<a id="project-challenges"></a>
 
-Các lệnh trong trang bài học dùng đường dẫn tính từ thư mục gốc của kho mã, trừ khi bài học yêu cầu rõ ràng việc chuyển thư mục. Nếu bài học có nhiều ngôn ngữ lập trình, hãy chạy bản triển khai bằng ngôn ngữ bạn đang học.
+### Dự án
 
-### Clone kho mã và tạo bằng chứng đầu tiên
+Ba dự án với mã khởi đầu theo từng giai đoạn, bản triển khai tham khảo và bộ chấm chạy cục bộ. Chạy các lệnh từ thư mục gốc của kho mã sau khi [thiết lập](#local-setup). Mã khởi đầu chưa vượt qua kiểm tra cho đến khi bạn triển khai các giai đoạn.
+
+<details>
+<summary><strong>01 · Phòng thực hành đánh giá truy xuất</strong> · Python · Chỉ số xếp hạng và kiểm tra hồi quy</summary>
+
+Một hệ thống ứng viên cải thiện NDCG trung bình nhưng một truy vấn lại xếp bằng chứng liên quan nhất ở vị trí thấp hơn. Xây dựng phép so sánh theo từng truy vấn để báo cáo suy giảm và có thể khiến kiểm tra phát hành không đạt.
+
+Dùng Python 3.10+. Ôn lại [RAG](../../phases/11-llm-engineering/06-rag/docs/en.md) và [đánh giá mô hình](../../phases/02-ml-fundamentals/09-model-evaluation/docs/en.md). Triển khai xác thực thứ hạng, precision và recall, các chỉ số nhạy với vị trí, rồi so sánh hệ thống.
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --init learning-artifacts/retrieval-evaluation-lab
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --stage 1 --path learning-artifacts/retrieval-evaluation-lab --strict
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --all --path learning-artifacts/retrieval-evaluation-lab --strict
 ```
 
-Bước kiểm tra ban đầu phân biệt yêu cầu cần có ngay với công cụ sẽ cần về sau. Mỗi yêu cầu bắt buộc chưa đạt đều đi kèm nguyên nhân được phát hiện và lệnh khắc phục. Lệnh thứ hai chạy một bài học không cần thư viện ngoài, rồi cho thấy phép nhân ma trận với vectơ chính là phép toán bên trong một lớp mạng nơ-ron. Hãy lưu đầu ra terminal đó làm bằng chứng đầu tiên.
+**Lưu lại:** phép so sánh có thể tái lập với chênh lệch theo từng truy vấn và các đánh giá độ liên quan dùng để chấm điểm. Chỉ số phản ánh các đánh giá đó; chúng không xác lập tính đúng đắn của câu trả lời.
 
-## Thêm gia sư AI trong 30 giây
+[Bắt đầu dự án](https://aiengineeringfromscratch.com/project.html?id=retrieval-evaluation-lab) · [Kiểm tra lời giải tham chiếu](../../projects/retrieval-evaluation-lab/solution/) · [Chạy với đầu vào của bạn](../../projects/retrieval-evaluation-lab/README.md#run-with-your-own-inputs)
 
-Nếu bạn đã cài Node.js, `npx` và một tác tử lập trình hỗ trợ skill, chỉ hai lệnh là đủ để biến tác tử đó thành gia sư. Bạn không cần clone kho mã để cài đặt hay đọc nội dung gia sư. Các bài thực hành có thể chạy trong lộ trình chuyên biệt cần `python3`. Bài thực hành Agent Skills trên host còn cần một host đã chọn và phạm vi skill cấp người dùng hoặc dự án có quyền ghi.
+</details>
+
+<details>
+<summary><strong>02 · Trình gỡ lỗi dấu vết tác tử</strong> · TypeScript · Phân tích dấu vết thực thi và đo thời gian</summary>
+
+Dấu vết được cung cấp vẫn mất 100 ms, nhưng tổng lượng token sử dụng tăng thêm 200 và một span bắt đầu lỗi. Tách phần công việc chồng lấp của các span con khỏi thời gian thực thi của span cha, rồi tạo báo cáo thể hiện thay đổi.
+
+Dùng Node.js 22.18+ và Python 3 cho bộ chấm. Triển khai phân tích JSONL, xác thực quan hệ cha, phép toán khoảng thời gian, rồi tạo dòng thời gian có thể kiểm tra.
+
+```bash
+python3 scripts/project_test.py agent-trace-debugger \
+  --init learning-artifacts/agent-trace-debugger
+python3 scripts/project_test.py agent-trace-debugger \
+  --stage 1 --path learning-artifacts/agent-trace-debugger --strict
+python3 scripts/project_test.py agent-trace-debugger \
+  --all --path learning-artifacts/agent-trace-debugger --strict
+```
+
+**Lưu lại:** dấu vết đầu vào, dòng thời gian HTML và báo cáo suy giảm JSON. Giữ số token riêng của từng span, không bao gồm span con, để không tính hai lần lượng sử dụng của cha và con.
+
+[Bắt đầu dự án](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger) · [Kiểm tra lời giải tham chiếu](../../projects/agent-trace-debugger/solution/) · [Khám phá thời gian thực thi tương tác](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger&stage=03-timing)
+
+</details>
+
+<details>
+<summary><strong>03 · Tường lửa lời gọi công cụ</strong> · Rust · Kiểm tra vai trò và biên nhận phê duyệt</summary>
+
+Một thao tác ghi thay đổi sau khi được xem xét, hoặc một phê duyệt bị dùng lại. Xác thực phong bì lời gọi, kiểm tra vai trò và đường dẫn của bên gọi, rồi dùng phê duyệt gắn với đúng yêu cầu và nội dung đó.
+
+Dùng Rust và Python 3.10+. Ôn lại [thiết kế lược đồ công cụ](../../phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md) và [ranh giới bảo mật](../../phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md). Ứng dụng gọi cung cấp danh tính; mô hình đề xuất thao tác.
+
+```bash
+python3 scripts/project_test.py tool-call-firewall \
+  --init learning-artifacts/tool-call-firewall
+python3 scripts/project_test.py tool-call-firewall \
+  --stage 1 --path learning-artifacts/tool-call-firewall --strict
+python3 scripts/project_test.py tool-call-firewall \
+  --all --path learning-artifacts/tool-call-firewall --strict
+```
+
+**Lưu lại:** biên nhận kiểm toán cho biết thao tác được yêu cầu và quyết định chính sách. Phê duyệt chỉ dùng một lần trong một lần gọi; dự án này không cung cấp ủy quyền bền vững hoặc sandbox ở cấp hệ điều hành.
+
+[Bắt đầu dự án](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall) · [Kiểm tra lời giải tham chiếu](../../projects/tool-call-firewall/solution/) · [Khám phá ranh giới phê duyệt](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall&stage=03-consume-a-request-bound-approval-once)
+
+</details>
+
+[Xem tất cả dự án](https://aiengineeringfromscratch.com/projects.html) · [Hướng dẫn thực hành nghề nghiệp](../../learning-paths/CAREER-PRACTICE.md)
+
+## Chọn cách học
+
+### Trên trang web
+
+Mở bất kỳ bài đã hoàn thành nào trên [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) hoặc mở một giai đoạn trong [Mục lục](#contents). Không cần thiết lập hay clone.
+
+### Cùng gia sư AI
+
+Nếu bạn đã cài Node.js, `npx` và một tác tử lập trình hỗ trợ skill, bạn có thể dùng tác tử đó làm gia sư. Bạn không cần clone kho mã để cài đặt hay đọc nội dung gia sư. Các bài thực hành có thể chạy trong lộ trình chuyên biệt cần `python3`. Bài thực hành Agent Skills trên host còn cần một host đã chọn và phạm vi skill cấp người dùng hoặc dự án có quyền ghi.
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+Chọn host và phạm vi khi trình cài đặt hỏi. Dùng `start-learning` trong Codex, `/start-learning` trong Claude Code hoặc yêu cầu host dùng skill theo tên.
+
+<details>
+<summary>Thiết lập gia sư và lệnh của môi trường chủ</summary>
 
 Trước tiên, kiểm tra các yêu cầu trên máy:
 
@@ -132,11 +180,7 @@ npx --version
 python3 --version
 ```
 
-Sau đó cài skill của chương trình và chọn host cùng phạm vi bạn định sử dụng khi trình cài đặt hỏi:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
+`skills` ghi vào host và phạm vi được chọn khi cài, chẳng hạn `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` hoặc thư mục skill được hỗ trợ khác. Kiểm tra rằng host đã chọn phát hiện đúng vị trí đó.
 
 Cú pháp gọi do host quyết định, không phải do định dạng `SKILL.md` có tính di động:
 
@@ -154,17 +198,100 @@ Chỉ muốn học Agent Skills? Dùng cách gọi Agent Skills dành cho host c
 
 Trình cài đặt liệt kê các host có thể cấu hình và hỏi nơi cài. Nếu chưa có Node.js, `npx`, `python3`, host được hỗ trợ hoặc phạm vi có quyền ghi, hãy dùng trang web hoặc tự đọc `docs/en.md`. Cách đó giúp học khái niệm, nhưng bằng chứng khám phá, gọi, chạy script và gỡ cài đặt trên host thực tế vẫn chưa hoàn tất cho đến khi có thể chạy kiểm tra ban đầu. Đọc bài học tại [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## Cách chương trình hoạt động
+### Các skill học tập
 
-Phần lớn tài liệu AI dạy từng mảnh rời rạc. Một bài báo ở đây, một bài viết về tinh chỉnh ở kia, một bản trình diễn tác tử bắt mắt ở chỗ khác. Những mảnh đó hiếm khi khớp nhau. Bạn phát hành chatbot nhưng không giải thích được đường cong mất mát của nó. Bạn gắn một hàm vào tác tử nhưng không nói được attention làm gì bên trong mô hình gọi hàm đó.
+| Skill học tập | Chức năng |
+|---|---|
+| [`start-learning`](../../skills/start-learning/SKILL.md) | Định hướng một lần: lý do học, kiểm tra trình độ, kế hoạch cá nhân được lưu vào `LEARNING.md`. |
+| [`learn`](../../skills/learn/SKILL.md) | Vòng gia sư. Ôn lại để khởi động, học tương tác bài tiếp theo, rồi làm câu hỏi kiểm tra; ghi tiến độ và hàng đợi ôn tập. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | Điều hướng chủ đề. "Tôi học attention ở đâu?" hoặc "loss của tôi là NaN" → đúng bài cần học, kèm liên kết. |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Gia sư chuyên về Model Context Protocol (MCP). Tạo `MCP-LEARNING.md`, theo bản kê 17 bài, ghi bằng chứng về giao tiếp, bảo mật, độ tin cậy và tuân thủ. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Gia sư chuyên về Agent Skills. Tạo `AGENT-SKILLS-LEARNING.md`, dạy các bài 22, 24, 25, 26, 27 và ghi bằng chứng trên host thực tế. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Gia sư chứng chỉ. Chọn CCAO-F, CCDV-F, CCAR-F hoặc CCAR-P; dạy từng bài; chạy thực hành; đánh giá sản phẩm; tổ chức bài chẩn đoán và thi thử; lưu tiến độ. |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Gia sư MCPA. Theo lộ trình `mcpa-f` gồm 34 bài về giao thức 2026-07-28; dạy từng bài; chạy thực hành và bộ kiểm tra giao tiếp; tổ chức bài chẩn đoán cùng ba đề thi thử; lưu tiến độ. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Bài kiểm tra trình độ mười câu. Đối chiếu kiến thức với giai đoạn bắt đầu và tạo lộ trình cá nhân kèm thời gian ước tính. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Kiểm tra từng giai đoạn với tám câu, phản hồi và các bài cụ thể cần ôn. Dùng dạng Codex, Claude Code hoặc ngôn ngữ tự nhiên trong bảng cách gọi ở trên. |
 
-Chương trình này là trục kết nối. 20 giai đoạn, 523 bài học, bốn ngôn ngữ: Python, TypeScript, Rust, Julia. Một đầu là đại số tuyến tính, đầu kia là bầy tác tử tự động. Mỗi thuật toán đều được xây dựng từ toán học cơ bản trước: lan truyền ngược, tokenizer, attention, vòng lặp tác tử. Khi PyTorch xuất hiện, bạn đã biết nó làm gì bên trong.
+</details>
 
-Mỗi bài theo cùng một vòng: đọc vấn đề, suy ra công thức, viết mã, chạy kiểm thử, giữ lại sản phẩm. Không có video năm phút, triển khai bằng sao chép-dán hay chỉ dẫn từng li từng tí. Miễn phí, mã nguồn mở và được thiết kế để chạy trên laptop của bạn.
+<a id="local-setup"></a>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+### Chạy mã cục bộ
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+
+Bước kiểm tra ban đầu phân biệt yêu cầu cần có ngay với công cụ sẽ cần về sau. Mỗi yêu cầu bắt buộc chưa đạt đều đi kèm nguyên nhân được phát hiện và lệnh khắc phục. Lệnh `vectors.py` chạy một bài học không cần thư viện ngoài, rồi cho thấy phép nhân ma trận với vectơ chính là phép toán bên trong một lớp mạng nơ-ron. Hãy lưu đầu ra terminal đó làm bằng chứng đầu tiên.
+
+<details>
+<summary>Học mỗi bài theo cùng một cách</summary>
+
+### Học mỗi bài theo cùng một cách
+
+1. **Đọc** `docs/en.md` và giải thích ý tưởng chính bằng lời của bạn.
+2. **Tự gõ và xây dựng** phần mã quan trọng; đừng chỉ xem khối mã như hình minh họa.
+3. **Chạy** lệnh của bài học từ thư mục gốc của kho mã, nơi chứa `README.md` và `phases/`.
+4. **Lưu bằng chứng**: lệnh, thư mục làm việc, mã thoát, đầu ra có ý nghĩa và sản phẩm bạn đã thay đổi hoặc tạo ra.
+5. Chỉ **tiếp tục** khi bạn giải thích được đầu ra và thực hiện được một thay đổi nhỏ mà không cần đoán.
+
+Các lệnh trong trang bài học dùng đường dẫn tính từ thư mục gốc của kho mã, trừ khi bài học yêu cầu rõ ràng việc chuyển thư mục. Nếu bài học có nhiều ngôn ngữ lập trình, hãy chạy bản triển khai bằng ngôn ngữ bạn đang học.
+
+</details>
+
+<a id="study-guide"></a>
+
+## Chọn lộ trình học
+
+Bạn không cần xem qua cả 523 bài học trước khi bắt đầu. Hãy chọn một mục tiêu. Mỗi liên kết mở cùng một chương trình trên GitHub hoặc trang web, và cả hai phiên bản đều dùng cùng mã nguồn bài học.
+
+| Mục tiêu của bạn | Học trên GitHub | Học trên trang web |
+|---|---|---|
+| Tôi mới bắt đầu và muốn có nền tảng đầy đủ | [Giai đoạn 0: Thiết lập và công cụ](../../phases/00-setup-and-tooling/) | [Môi trường phát triển](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Tôi biết Python và muốn học nền tảng toán cùng học máy | [Giai đoạn 1: Nền tảng toán học](../../phases/01-math-foundations/) | [Hiểu trực quan đại số tuyến tính](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| Tôi muốn xây dựng ứng dụng LLM để triển khai thực tế | [Giai đoạn 11: Kỹ thuật LLM](../../phases/11-llm-engineering/) | [Kỹ thuật prompt](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Tôi muốn xây dựng agent | [Giai đoạn 14: Kỹ thuật agent](../../phases/14-agent-engineering/) | [Vòng lặp agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Tôi muốn dùng agent lập trình trên các kho mã thực tế | [Lộ trình kỹ thuật với sự hỗ trợ của agent](../../learning-paths/using-coding-agents.json) | [Kỹ thuật với sự hỗ trợ của agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| Tôi muốn xác định đúng thứ cần xây dựng trước khi triển khai | [Lộ trình quyết định và bàn giao sản phẩm](../../learning-paths/shaping-the-build.json) | [Quyết định và bàn giao sản phẩm](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+
+Chưa biết nên bắt đầu ở đâu? Dùng [gia sư đánh giá trình độ `start-learning`](../../skills/start-learning/SKILL.md) hoặc [hướng dẫn kiến thức cần có trên trang web](https://aiengineeringfromscratch.com/prereqs.html).
+
+So sánh bốn lĩnh vực cốt lõi và sáu lộ trình nghề nghiệp trong [Lộ trình học kỹ thuật AI](https://aiengineeringfromscratch.com/learning-paths.html).
+
+<details>
+<summary>Lộ trình chuyên biệt về MCP và Agent Skills</summary>
+
+| Mục tiêu của bạn | Học trên GitHub | Học trên trang web |
+|---|---|---|
+| Tôi muốn xây dựng với Model Context Protocol (MCP) | [Lộ trình Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Lộ trình học Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Tôi muốn viết và phát hành Agent Skills | [Lộ trình chuyên về Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Lộ trình học Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+
+</details>
+
+<details>
+<summary>Kiến thức tiên quyết và thời gian học</summary>
+
+### Kiến thức cần có
+
+- Bạn biết viết mã (bất kỳ ngôn ngữ nào; biết Python sẽ hữu ích).
+- Bạn muốn hiểu AI **thực sự hoạt động ra sao**, không chỉ gọi API.
+
+## Nên bắt đầu từ đâu
+
+| Nền tảng hiện có | Bắt đầu từ | Thời gian ước tính |
+|---|---|---|
+| Mới học lập trình và AI | Giai đoạn 0: Thiết lập | ~306 giờ |
+| Biết Python, mới học ML | Giai đoạn 1: Nền tảng toán học | ~270 giờ |
+| Biết ML, mới học sâu | Giai đoạn 3: Cốt lõi học sâu | ~200 giờ |
+| Biết học sâu, muốn học LLM và tác tử | Giai đoạn 10: LLM từ đầu | ~100 giờ |
+| Kỹ sư cấp cao, chỉ muốn học kỹ thuật tác tử | Giai đoạn 14: Kỹ thuật tác tử | ~60 giờ |
+| Chỉ muốn xây hệ thống MCP vận hành thực tế | [Lộ trình Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 giờ 15 phút |
+| Chỉ muốn xây Agent Skills dùng trong thực tế | [Lộ trình Kỹ thuật Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 giờ |
+
+</details>
 
 ## Cấu trúc chương trình
 
@@ -194,195 +321,6 @@ flowchart TB
   P16 --> P19["Giai đoạn 19: Đồ án tổng hợp"]
   P17 --> P19
   P18 --> P19
-```
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Cấu trúc một bài học
-
-Mỗi bài nằm trong thư mục riêng, với cấu trúc thống nhất trên toàn chương trình:
-
-```text
-phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      các bản triển khai có thể chạy (Python, TypeScript, Rust, Julia)
-├── docs/
-│   └── en.md  nội dung bài học
-└── outputs/   prompt, skill, tác tử hoặc máy chủ MCP mà bài học tạo ra
-```
-
-Mỗi bài có sáu bước. Sự phân chia *Tự xây dựng / Sử dụng* là cốt lõi: trước tiên bạn triển khai thuật toán từ đầu, sau đó chạy cùng công việc bằng thư viện dùng trong thực tế. Bạn hiểu framework đang làm gì vì đã tự viết phiên bản nhỏ hơn.
-
-```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
-flowchart LR
-  M["PHƯƠNG CHÂM<br/><sub>ý chính trong một dòng</sub>"] --> Pr["VẤN ĐỀ<br/><sub>khó khăn cụ thể</sub>"]
-  Pr --> C["KHÁI NIỆM<br/><sub>sơ đồ và trực giác</sub>"]
-  C --> B["XÂY DỰNG<br/><sub>toán cơ bản, không framework</sub>"]
-  B --> U["SỬ DỤNG<br/><sub>cùng việc đó trong PyTorch / sklearn</sub>"]
-  U --> S["PHÁT HÀNH<br/><sub>prompt · skill · tác tử · MCP</sub>"]
-```
-
-## Bắt đầu học
-
-Ba cách bắt đầu. Chọn một cách.
-
-**Cách A: học trong terminal *(khuyến nghị)*.** Sau khi kiểm tra Node.js, `npx`, host và phạm vi ở trên, cài skill học tập vào tác tử tương thích và để chương trình dẫn dắt:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
-
-Dùng bảng cách gọi theo host ở trên. Các skill đã cài cung cấp `start-learning`, `learn`, `course-guide` và hai lộ trình chuyên biệt `learn-mcp`, `learn-agent-skills`. Có thể lấy trực tiếp nội dung bài học từ kho mã này mà không cần clone. Cần bản clone cục bộ khi chạy các lệnh mã nguồn đã sao chép từ kho hoặc thực hành MCP và Agent Skills có thể thực thi. Tiến độ nằm trong `LEARNING.md`, `MCP-LEARNING.md` hoặc `AGENT-SKILLS-LEARNING.md` của dự án, nên mỗi phiên đều có thể tiếp tục.
-
-**Cách B: đọc.** Mở bất kỳ bài đã hoàn thành nào trên [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) hoặc mở một giai đoạn trong [Mục lục](#contents). Không cần thiết lập hay clone.
-
-**Cách C: clone và chạy.**
-
-```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
-```
-
-Clone kho mã cũng tự động nạp skill học tập trong Claude Code và cung cấp mã của mọi bài cho gia sư `learn` để thực sự chạy thay vì chỉ đọc cùng.
-
-### Kiến thức cần có
-
-- Bạn biết viết mã (bất kỳ ngôn ngữ nào; biết Python sẽ hữu ích).
-- Bạn muốn hiểu AI **thực sự hoạt động ra sao**, không chỉ gọi API.
-
-### Ôn thi chứng chỉ Claude
-
-[Claude Certification Academy](../../certifications/claude/README.md) là chương trình ôn thi miễn phí, mã nguồn mở cho cả bốn lộ trình chứng chỉ chính thức của Claude: Associate Foundations, Developer Foundations, Architect Foundations và Architect Professional. Mỗi lộ trình kết hợp bài học bám sát khung đề thi, bài thực hành có thể chạy, bài chẩn đoán, đồ án và một đề luyện tập nguyên bản đầy đủ thời lượng.
-
-Dùng [hướng dẫn bắt đầu trên GitHub với AI](../../certifications/claude/GETTING_STARTED.md) cùng Claude Code, Codex, ChatGPT, Cursor hoặc tác tử khác. Chạy `claude-certification` trong Codex, `/claude-certification` trong Claude Code, hoặc yêu cầu host khác dùng `claude-certification`. Skill chọn lộ trình, tạo tuyến học được lưu bền vững trong `CLAUDE-CERTIFICATION.md`, dạy từng bước, chạy bài thực hành thật và phản hồi dựa trên sản phẩm. Cùng chương trình đó vẫn có trên [trang web chứng chỉ](https://aiengineeringfromscratch.com/certifications.html).
-
-Học viện cung cấp tài liệu tự học độc lập dựa trên mục tiêu thi công khai. Học viện không liên kết với Anthropic, không sao chép câu hỏi của kỳ thi đang tổ chức và không bảo đảm đỗ.
-
-### Ôn thi chứng chỉ MCP Associate (MCPA)
-
-[Chương trình Chứng chỉ MCPA](../../certifications/mcpa/README.md) là chương trình ôn thi miễn phí, mã nguồn mở cho kỳ thi Model Context Protocol Associate của Agentic AI Foundation, được triển khai qua Linux Foundation Training. 34 bài học giảng dạy giao thức không trạng thái 2026-07-28 trong năm lĩnh vực thi: `_meta` theo từng yêu cầu và `server/discover` thay cơ chế bắt tay cũ, yêu cầu nhiều lượt trao đổi, đăng ký theo dõi, lưu đệm, phần mở rộng tasks và MCP Apps, ủy quyền OAuth, cùng các cấp registry và SDK. Mỗi bài có thực hành chạy bằng thư viện chuẩn, với bản ghi được kiểm tra theo định dạng giao tiếp hiện hành. Lộ trình còn có bài chẩn đoán, đồ án và ba đề luyện tập nguyên bản đầy đủ thời lượng, với tỷ lệ câu hỏi theo trọng số khung đề đã công bố.
-
-Dùng [hướng dẫn bắt đầu trên GitHub với AI](../../certifications/mcpa/GETTING_STARTED.md) cùng Claude Code, Codex, ChatGPT, Cursor hoặc tác tử khác. Chạy `mcpa-certification` trong Codex, `/mcpa-certification` trong Claude Code, hoặc yêu cầu host khác dùng `mcpa-certification`. Skill tạo tuyến học lưu bền vững trong `MCPA-CERTIFICATION.md`, dạy từng bước, chạy bài thực hành thật và phản hồi dựa trên sản phẩm. Cùng chương trình đó có trên [trang lộ trình MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
-
-Đây là tài liệu tự học độc lập dựa trên mục tiêu thi công khai. Chương trình không liên kết với Agentic AI Foundation hoặc Linux Foundation, không sao chép câu hỏi của kỳ thi đang tổ chức và không bảo đảm đỗ.
-
-### Các skill học tập
-
-| Skill học tập | Chức năng |
-|---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | Định hướng một lần: lý do học, kiểm tra trình độ, kế hoạch cá nhân được lưu vào `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | Vòng gia sư. Ôn lại để khởi động, học tương tác bài tiếp theo, rồi làm câu hỏi kiểm tra; ghi tiến độ và hàng đợi ôn tập. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Điều hướng chủ đề. "Tôi học attention ở đâu?" hoặc "loss của tôi là NaN" → đúng bài cần học, kèm liên kết. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Gia sư chuyên về Model Context Protocol (MCP). Tạo `MCP-LEARNING.md`, theo bản kê 17 bài, ghi bằng chứng về giao tiếp, bảo mật, độ tin cậy và tuân thủ. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Gia sư chuyên về Agent Skills. Tạo `AGENT-SKILLS-LEARNING.md`, dạy các bài 22, 24, 25, 26, 27 và ghi bằng chứng trên host thực tế. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Gia sư chứng chỉ. Chọn CCAO-F, CCDV-F, CCAR-F hoặc CCAR-P; dạy từng bài; chạy thực hành; đánh giá sản phẩm; tổ chức bài chẩn đoán và thi thử; lưu tiến độ. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Gia sư MCPA. Theo lộ trình `mcpa-f` gồm 34 bài về giao thức 2026-07-28; dạy từng bài; chạy thực hành và bộ kiểm tra giao tiếp; tổ chức bài chẩn đoán cùng ba đề thi thử; lưu tiến độ. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Bài kiểm tra trình độ mười câu. Đối chiếu kiến thức với giai đoạn bắt đầu và tạo lộ trình cá nhân kèm thời gian ước tính. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Kiểm tra từng giai đoạn với tám câu, phản hồi và các bài cụ thể cần ôn. Dùng dạng Codex, Claude Code hoặc ngôn ngữ tự nhiên trong bảng cách gọi ở trên. |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Đọc chương trình cốt lõi dưới dạng sách
-
-Chương trình cốt lõi 20 giai đoạn trong `phases/` được biên soạn thành bộ sách sáu tập. CI xây EPUB và PDF từ cùng nguồn bài học cốt lõi và đính kèm vào mỗi [bản phát hành GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases); các liên kết dưới đây luôn trỏ đến bản mới nhất. Số tập chỉ thứ tự trong bộ sách, không phải phiên bản: mỗi bản có ngày xuất bản và các ấn bản cũ vẫn tải được từ lần phát hành tương ứng.
-
-Các chương trình chứng chỉ được chủ ý giữ ngoài bộ sách. Trạng thái gia sư AI, bài thực hành có thể chạy, hình tương tác, bài chẩn đoán và đề thi thử có giới hạn thời gian vẫn được hỗ trợ đầy đủ trên GitHub và trang web.
-
-| Tập | Tiêu đề | Giai đoạn | Tải xuống |
-|-----|-------|--------|----------|
-| 1 | Nền tảng · Toán học, công cụ và học máy cổ điển | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Học sâu · Mạng, thị giác và tiếng nói | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Ngôn ngữ · Nền tảng NLP và Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Mô hình ngôn ngữ lớn · Sinh, tăng cường, tiền huấn luyện và kỹ thuật | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Tác tử · Đa phương thức, giao thức, tự chủ và bầy đàn | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Triển khai thực tế · Hạ tầng, an toàn và đồ án | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-Sách là ảnh chụp tại một thời điểm; kho mã này là phiên bản liên tục phát triển. Mỗi chương kết thúc bằng liên kết đến hình động, câu hỏi kiểm tra và mã có thể chạy của bài học. Tạo sách cục bộ bằng `python3 scripts/build_book.py` (cần pandoc); xem chi tiết pipeline trong [book/README.md](../../book/README.md).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Mỗi bài học đều có sản phẩm
-
-Các chương trình khác kết thúc bằng *"chúc mừng, bạn đã học X."* Mỗi bài ở đây kết thúc bằng **công cụ tái sử dụng** mà bạn có thể cài hoặc dán vào quy trình làm việc hằng ngày.
-
-<table>
-<tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A câu lệnh gợi ý"/><br/><sub>FIG_001 · A</sub><br/><b>CÂU LỆNH GỢI Ý</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B kỹ năng"/><br/><sub>FIG_001 · B</sub><br/><b>KỸ NĂNG</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C tác tử"/><br/><sub>FIG_001 · C</sub><br/><b>TÁC TỬ</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D máy chủ MCP"/><br/><sub>FIG_001 · D</sub><br/><b>MÁY CHỦ MCP</b></th>
-</tr>
-<tr>
-<td valign="top">Dán vào bất kỳ trợ lý AI nào để nhận trợ giúp cấp chuyên gia cho một nhiệm vụ cụ thể.</td>
-<td valign="top">Đưa vào Claude, Cursor, Codex, OpenClaw, Hermes hoặc tác tử đọc <code>SKILL.md</code>.</td>
-<td valign="top">Triển khai thành các tác tử tự chủ: bạn đã tự viết vòng lặp ở Giai đoạn 14.</td>
-<td valign="top">Kết nối với mọi máy khách tương thích MCP. Được xây từ đầu đến cuối ở Giai đoạn 13.</td>
-</tr>
-</table>
-
-> Cài toàn bộ bằng `python3 scripts/install_skills.py <target>`. Đây là công cụ thật, không phải bài tập về nhà. Khi kết thúc chương trình, bạn có danh mục 523 sản phẩm mà bạn thực sự hiểu vì chính bạn đã xây dựng chúng.
-
-### FIG_002 · Một ví dụ hoàn chỉnh
-
-Giai đoạn 14, bài 1: vòng lặp tác tử. Khoảng 120 dòng Python thuần, không có thư viện phụ thuộc.
-
-<table>
-<tr>
-<td valign="top" width="50%">
-
-**`code/agent_loop.py`** &nbsp; <sub><i>xây dựng</i></sub>
-
-```python
-def run(query, tools):
-    history = [user(query)]
-    for step in range(MAX_STEPS):
-        msg = llm(history)
-        if msg.tool_calls:
-            for call in msg.tool_calls:
-                result = tools[call.name](**call.args)
-                history.append(tool_result(call.id, result))
-            continue
-        return msg.content
-    raise StepLimitExceeded
-```
-
-</td>
-<td valign="top" width="50%">
-
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>phát hành</i></sub>
-
-```markdown
----
-name: agent-loop
-description: ReAct-style loop for any tool list
-phase: 14
-lesson: 01
----
-
-Implement a minimal agent loop that...
-```
-
-**`outputs/prompt-debug-agent.md`**
-
-```markdown
-You are an agent debugger. Given the trace
-of an agent run, identify the step where
-the agent went wrong and explain why...
-```
-
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 <a id="contents"></a>
@@ -1105,33 +1043,104 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 
 </details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+## Sách và chứng chỉ
+
+<details>
+<summary>Đọc chương trình cốt lõi dưới dạng sách</summary>
+
+Chương trình cốt lõi 20 giai đoạn trong `phases/` được biên soạn thành bộ sách sáu tập. CI xây EPUB và PDF từ cùng nguồn bài học cốt lõi và đính kèm vào mỗi [bản phát hành GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases); các liên kết dưới đây luôn trỏ đến bản mới nhất. Số tập chỉ thứ tự trong bộ sách, không phải phiên bản: mỗi bản có ngày xuất bản và các ấn bản cũ vẫn tải được từ lần phát hành tương ứng.
+
+Các chương trình chứng chỉ được chủ ý giữ ngoài bộ sách. Trạng thái gia sư AI, bài thực hành có thể chạy, hình tương tác, bài chẩn đoán và đề thi thử có giới hạn thời gian vẫn được hỗ trợ đầy đủ trên GitHub và trang web.
+
+| Tập | Tiêu đề | Giai đoạn | Tải xuống |
+|-----|-------|--------|----------|
+| 1 | Nền tảng · Toán học, công cụ và học máy cổ điển | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Học sâu · Mạng, thị giác và tiếng nói | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Ngôn ngữ · Nền tảng NLP và Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Mô hình ngôn ngữ lớn · Sinh, tăng cường, tiền huấn luyện và kỹ thuật | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Tác tử · Đa phương thức, giao thức, tự chủ và bầy đàn | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Triển khai thực tế · Hạ tầng, an toàn và đồ án | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+Sách là ảnh chụp tại một thời điểm; kho mã này là phiên bản liên tục phát triển. Mỗi chương kết thúc bằng liên kết đến hình động, câu hỏi kiểm tra và mã có thể chạy của bài học. Tạo sách cục bộ bằng `python3 scripts/build_book.py` (cần pandoc); xem chi tiết pipeline trong [book/README.md](../../book/README.md).
+
+</details>
+
+<details>
+<summary>Ôn thi chứng chỉ Claude</summary>
+
+[Claude Certification Academy](../../certifications/claude/README.md) là chương trình ôn thi miễn phí, mã nguồn mở cho cả bốn lộ trình chứng chỉ chính thức của Claude: Associate Foundations, Developer Foundations, Architect Foundations và Architect Professional. Mỗi lộ trình kết hợp bài học bám sát khung đề thi, bài thực hành có thể chạy, bài chẩn đoán, đồ án và một đề luyện tập nguyên bản đầy đủ thời lượng.
+
+Dùng [hướng dẫn bắt đầu trên GitHub với AI](../../certifications/claude/GETTING_STARTED.md) cùng Claude Code, Codex, ChatGPT, Cursor hoặc tác tử khác. Chạy `claude-certification` trong Codex, `/claude-certification` trong Claude Code, hoặc yêu cầu host khác dùng `claude-certification`. Skill chọn lộ trình, tạo tuyến học được lưu bền vững trong `CLAUDE-CERTIFICATION.md`, dạy từng bước, chạy bài thực hành thật và phản hồi dựa trên sản phẩm. Cùng chương trình đó vẫn có trên [trang web chứng chỉ](https://aiengineeringfromscratch.com/certifications.html).
+
+Học viện cung cấp tài liệu tự học độc lập dựa trên mục tiêu thi công khai. Học viện không liên kết với Anthropic, không sao chép câu hỏi của kỳ thi đang tổ chức và không bảo đảm đỗ.
+
+</details>
+
+<details>
+<summary>Ôn thi chứng chỉ MCP Associate (MCPA)</summary>
+
+[Chương trình Chứng chỉ MCPA](../../certifications/mcpa/README.md) là chương trình ôn thi miễn phí, mã nguồn mở cho kỳ thi Model Context Protocol Associate của Agentic AI Foundation, được triển khai qua Linux Foundation Training. 34 bài học giảng dạy giao thức không trạng thái 2026-07-28 trong năm lĩnh vực thi: `_meta` theo từng yêu cầu và `server/discover` thay cơ chế bắt tay cũ, yêu cầu nhiều lượt trao đổi, đăng ký theo dõi, lưu đệm, phần mở rộng tasks và MCP Apps, ủy quyền OAuth, cùng các cấp registry và SDK. Mỗi bài có thực hành chạy bằng thư viện chuẩn, với bản ghi được kiểm tra theo định dạng giao tiếp hiện hành. Lộ trình còn có bài chẩn đoán, đồ án và ba đề luyện tập nguyên bản đầy đủ thời lượng, với tỷ lệ câu hỏi theo trọng số khung đề đã công bố.
+
+Dùng [hướng dẫn bắt đầu trên GitHub với AI](../../certifications/mcpa/GETTING_STARTED.md) cùng Claude Code, Codex, ChatGPT, Cursor hoặc tác tử khác. Chạy `mcpa-certification` trong Codex, `/mcpa-certification` trong Claude Code, hoặc yêu cầu host khác dùng `mcpa-certification`. Skill tạo tuyến học lưu bền vững trong `MCPA-CERTIFICATION.md`, dạy từng bước, chạy bài thực hành thật và phản hồi dựa trên sản phẩm. Cùng chương trình đó có trên [trang lộ trình MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
+
+Đây là tài liệu tự học độc lập dựa trên mục tiêu thi công khai. Chương trình không liên kết với Agentic AI Foundation hoặc Linux Foundation, không sao chép câu hỏi của kỳ thi đang tổ chức và không bảo đảm đỗ.
+
+</details>
 
 ## Bộ công cụ
 
-Mỗi bài tạo ra sản phẩm tái sử dụng. Cuối chương trình, bạn có:
+Mỗi bài học tạo ra một sản phẩm tái sử dụng được. Cài nó vào tác tử hoặc dùng các tập lệnh bên dưới từ thư mục gốc của kho mã.
+
+<details>
+<summary>Cấu trúc bài học và sản phẩm tái sử dụng</summary>
+
+## Cấu trúc một bài học
+
+Mỗi bài nằm trong thư mục riêng, với cấu trúc thống nhất trên toàn chương trình:
 
 ```text
-outputs/
-├── prompts/      mẫu prompt cho mọi tác vụ AI
-└── skills/       tệp SKILL.md cho tác tử lập trình AI
+phases/<NN>-<phase-name>/<NN>-<lesson-name>/
+├── code/      các bản triển khai có thể chạy (Python, TypeScript, Rust, Julia)
+├── docs/
+│   └── en.md  nội dung bài học
+└── outputs/   prompt, skill, tác tử hoặc máy chủ MCP mà bài học tạo ra
 ```
 
-Tích hợp chúng vào Claude, Cursor, Codex, OpenClaw, Hermes hoặc tác tử đọc thư mục SKILL.md / AGENTS.md. Công cụ thật, không phải bài tập về nhà.
+Mỗi bài có sáu bước. Sự phân chia *Tự xây dựng / Sử dụng* là cốt lõi: trước tiên bạn triển khai thuật toán từ đầu, sau đó chạy cùng công việc bằng thư viện dùng trong thực tế. Bạn hiểu framework đang làm gì vì đã tự viết phiên bản nhỏ hơn.
 
-### Cài skill khóa học vào tác tử của bạn
-
-Hai bộ skill, hai trình cài đặt:
-
-**Các skill học tập** (`start-learning`, `learn`, `course-guide`, `learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`, `find-your-level` và `check-understanding`) nằm trong [`skills/`](../../skills/) và được cài vào host hỗ trợ skill chỉ bằng một lệnh. Cài đặt cần Node.js và `npx`, nhưng không cần clone kho mã hay có Python:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["PHƯƠNG CHÂM<br/><sub>ý chính trong một dòng</sub>"] --> Pr["VẤN ĐỀ<br/><sub>khó khăn cụ thể</sub>"]
+  Pr --> C["KHÁI NIỆM<br/><sub>sơ đồ và trực giác</sub>"]
+  C --> B["XÂY DỰNG<br/><sub>toán cơ bản, không framework</sub>"]
+  B --> U["SỬ DỤNG<br/><sub>cùng việc đó trong PyTorch / sklearn</sub>"]
+  U --> S["PHÁT HÀNH<br/><sub>prompt · skill · tác tử · MCP</sub>"]
 ```
 
-`skills` ghi vào host và phạm vi được chọn khi cài, chẳng hạn `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` hoặc thư mục skill được hỗ trợ khác. Kiểm tra rằng host đã chọn phát hiện đúng vị trí đó.
+## Mỗi bài học đều có sản phẩm
+
+Các chương trình khác kết thúc bằng *"chúc mừng, bạn đã học X."* Mỗi bài ở đây kết thúc bằng **công cụ tái sử dụng** mà bạn có thể cài hoặc dán vào quy trình làm việc hằng ngày.
+
+<table>
+<tr>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A câu lệnh gợi ý"/><br/><sub>FIG_001 · A</sub><br/><b>CÂU LỆNH GỢI Ý</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B kỹ năng"/><br/><sub>FIG_001 · B</sub><br/><b>KỸ NĂNG</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C tác tử"/><br/><sub>FIG_001 · C</sub><br/><b>TÁC TỬ</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D máy chủ MCP"/><br/><sub>FIG_001 · D</sub><br/><b>MÁY CHỦ MCP</b></th>
+</tr>
+<tr>
+<td valign="top">Dán vào bất kỳ trợ lý AI nào để nhận trợ giúp cấp chuyên gia cho một nhiệm vụ cụ thể.</td>
+<td valign="top">Đưa vào Claude, Cursor, Codex, OpenClaw, Hermes hoặc tác tử đọc <code>SKILL.md</code>.</td>
+<td valign="top">Triển khai thành các tác tử tự chủ: bạn đã tự viết vòng lặp ở Giai đoạn 14.</td>
+<td valign="top">Kết nối với mọi máy khách tương thích MCP. Được xây từ đầu đến cuối ở Giai đoạn 13.</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>Cài đặt sản phẩm của bài học</summary>
 
 **Sản phẩm của bài học.** Kho mã có 396 skill và 99 prompt trong `phases/**/outputs/`; cài bằng `scripts/install_skills.py`. Cần clone kho mã. Hỗ trợ lọc theo nhãn, chạy thử không ghi và bố cục riêng cho từng tác tử:
 
@@ -1156,7 +1165,10 @@ Theo mặc định, script từ chối ghi đè đích đã tồn tại và tho�
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Đưa bàn làm việc tác tử vào kho mã của bạn
+</details>
+
+<details>
+<summary>Đưa bàn làm việc tác tử vào kho mã của bạn</summary>
 
 Đồ án Giai đoạn 14 cung cấp bộ Agent Workbench tái sử dụng (AGENTS.md, lược đồ, script init / verify / handoff). Tạo khung trong kho mã bất kỳ bằng:
 
@@ -1169,7 +1181,10 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 
 Bạn nhận được bảy thành phần bàn làm việc đã kết nối, `task_board.json` khởi đầu và `agent_state.json` mới ở `schema_version: 1`. Sau đó: sửa nhiệm vụ, sửa `AGENTS.md`, chạy `scripts/init_agent.py`, giao hợp đồng cho tác tử. Mã nguồn bộ công cụ nằm ở `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
 
-### Duyệt toàn bộ khóa học dưới dạng JSON
+</details>
+
+<details>
+<summary>Duyệt toàn bộ khóa học dưới dạng JSON</summary>
 
 `scripts/build_catalog.py` duyệt mọi giai đoạn, bài học và sản phẩm trên đĩa, rồi ghi `catalog.json` ở gốc kho mã. Một tệp chứa toàn bộ dữ kiện khóa học.
 
@@ -1181,9 +1196,12 @@ python3 scripts/build_catalog.py --out path/to/file.json
 
 Danh mục được tạo từ hệ thống tệp, không phải từ README, nên số lượng luôn khớp những gì thực sự có trên đĩa. Dùng nó khi xây trang web, làm công cụ phụ trợ hoặc kiểm tra số liệu README có bị lệch không. Lược đồ được mô tả ở đầu script.
 
-Một GitHub Action (`.github/workflows/curriculum.yml`) tạo lại `catalog.json` trên mỗi PR và làm bước build thất bại nếu tệp đã commit bị cũ. Sau khi sửa bài học, chạy `python3 scripts/build_catalog.py` và commit kết quả, nếu không CI sẽ từ chối PR. Cùng workflow đó chạy `audit_lessons.py` ở chế độ chỉ cảnh báo (để sai lệch có sẵn không chặn người đóng góp).
+Quy trình chương trình học tạo `catalog.json` thành sản phẩm tạm thời được Git bỏ qua. Không commit tệp này. Cùng quy trình đó chạy `audit_lessons.py` làm kiểm tra bắt buộc.
 
-### Kiểm tra nhanh mã Python của mọi bài học
+</details>
+
+<details>
+<summary>Kiểm tra nhanh mã Python của mọi bài học</summary>
 
 `scripts/lesson_run.py` biên dịch bytecode mọi tệp `.py` trong thư mục `code/` của từng bài. Chế độ mặc định chỉ kiểm tra cú pháp: không thực thi, không cần khóa API hay thư viện ML nặng. Nó phát hiện các lỗi hồi quy thường gặp nhất khi đóng góp (thụt lề sai, f-string hỏng, sửa nhầm).
 
@@ -1199,40 +1217,10 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 
 Chỉ thư viện chuẩn, Python 3.10+. Đặt `LINK_CHECK_SKIP=domain1,domain2` để thay danh sách bỏ qua mặc định (`twitter.com`, `x.com`, `linkedin.com`, `instagram.com`, `medium.com`, những miền chặn mạnh các yêu cầu HEAD/GET tự động).
 
-## Nên bắt đầu từ đâu
+</details>
 
-| Nền tảng hiện có | Bắt đầu từ | Thời gian ước tính |
-|---|---|---|
-| Mới học lập trình và AI | Giai đoạn 0: Thiết lập | ~306 giờ |
-| Biết Python, mới học ML | Giai đoạn 1: Nền tảng toán học | ~270 giờ |
-| Biết ML, mới học sâu | Giai đoạn 3: Cốt lõi học sâu | ~200 giờ |
-| Biết học sâu, muốn học LLM và tác tử | Giai đoạn 10: LLM từ đầu | ~100 giờ |
-| Kỹ sư cấp cao, chỉ muốn học kỹ thuật tác tử | Giai đoạn 14: Kỹ thuật tác tử | ~60 giờ |
-| Chỉ muốn xây hệ thống MCP vận hành thực tế | [Lộ trình Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 giờ 15 phút |
-| Chỉ muốn xây Agent Skills dùng trong thực tế | [Lộ trình Kỹ thuật Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 giờ |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Vì sao điều này quan trọng lúc này
-
-<table>
-<tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>TÍN HIỆU TỪ NGÀNH</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>CÁC BÀI BÁO NỀN TẢNG ĐƯỢC HỌC</b></th>
-</tr>
-<tr>
-<td valign="top">
-
-> *"Ngôn ngữ lập trình mới nóng nhất là tiếng Anh."*<br/> **Andrej Karpathy** ([bài đăng](https://x.com/karpathy/status/1617979122625712128))
->
-> *"Kỹ thuật phần mềm đang được làm lại ngay trước mắt chúng ta."*<br/> **Boris Cherny**, người tạo ra Claude Code
->
-> *"Các mô hình sẽ tiếp tục tốt hơn. Kỹ năng có giá trị tích lũy là **biết cần xây dựng thứ gì**."*<br/> Nhận định chung trong ngành, 2026
-
-</td>
-<td valign="top">
+<details>
+<summary>Các bài báo và giao thức nền tảng</summary>
 
 - *Attention Is All You Need* — Vaswani et al., 2017 → [Giai đoạn 7](#phase-7)
 - *Language Models are Few-Shot Learners* (GPT-3) → [Giai đoạn 10](#phase-10)
@@ -1243,13 +1231,7 @@ Chỉ thư viện chuẩn, Python 3.10+. Đặt `LINK_CHECK_SKIP=domain1,domain2
 - *ReAct: Reasoning + Acting in LLMs* → [Giai đoạn 14](#phase-14)
 - *Model Context Protocol* — Anthropic → [Giai đoạn 13](#phase-13)
 
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+</details>
 
 ## Đóng góp
 
@@ -1272,21 +1254,17 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 
 Mã thoát khác không nếu có quy tắc nào thất bại. Các quy tắc (L001–L010) kiểm tra cấu trúc thư mục, sự tồn tại của `docs/en.md` cùng H1, `code/` không rỗng, lược đồ `quiz.json` (từ chối các khóa cũ `q/choices/answer` từng gây issue #102), và liên kết tương đối trong tài liệu bài học.
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
 <a id="supporters"></a>
 
 ## Tài trợ cho dự án
 
+<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
+<p align="center"><sub><b>114,584</b> độc giả &nbsp;·&nbsp; <b>181,995</b> lượt xem trang trong 30 ngày qua &nbsp;·&nbsp; tính đến 2026-08-29</sub></p>
+<!-- STATS:END -->
+
 Miễn phí, giấy phép MIT, 523 bài học. Cảm ơn các nhà tài trợ và người ủng hộ đã giúp duy trì công việc này. [Xem tất cả nhà tài trợ và người ủng hộ](../../BACKERS.md).
 
 Bạn muốn hỗ trợ dự án? Xem [các hình thức tài trợ](../../SPONSORS.md), bao gồm [tài trợ phần cứng](../../SPONSORS.md#hardware-lab-partner), hoặc [tài trợ trên GitHub](https://github.com/sponsors/rohitg00).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 
 Nếu cẩm nang này giúp ích cho bạn, hãy gắn sao cho kho mã. Điều đó giúp dự án tiếp tục tồn tại.
 
@@ -1297,7 +1275,5 @@ Giấy phép MIT. Bạn có thể fork, giảng dạy, bán hoặc phát hành t
 Được duy trì bởi [Rohit Ghumare](https://github.com/rohitg00) và cộng đồng.
 
 <sub>
-  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
-  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Báo lỗi / Đề xuất</a>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp; <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp; <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Báo lỗi / Đề xuất</a>
 </sub>

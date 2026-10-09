@@ -1,44 +1,19 @@
 <p align="center"><sub>Den här README-filen är översatt till svenska. <a href="../../README.md">Den engelska README-filen</a> är den auktoritativa källan.</sub></p>
-<p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch: referenshandbokens banner" width="100%">
-</p>
 
 <p align="center">
-  <a href="../../README.md">🇬🇧 English</a> ·
-  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
-  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
-  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
-  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
-  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
-  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
-  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
-  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
-  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
-  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
-  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
-  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
-  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
-  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
-  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
-  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
-  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
-  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
-  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
-  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
-  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
-  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
-  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
-  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
-  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
-  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
-  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
-  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
-  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
-  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
-  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
-  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
-  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/header-dark.svg">
+    <img src="../../assets/readme/header-light.svg" alt="AI-teknik från grunden" width="840">
+  </picture>
 </p>
+
+Implementera modellers interna mekanismer, sökpipelines och körmiljöer för agenter. Testa dem, undersök fel och spara koden och utvärderingsresultaten.
+
+**[Börja lära dig](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Välj en väg](#learning-routes)** · **[Prova ett labb](#interactive-lab)** · **[Bygg ett projekt](#project-challenges)** · **[Bläddra i kursplanen](#contents)**
+
+Gratis, öppen källkod, MIT-licens. Lär dig på webbplatsen, med en kodningsagent eller genom att köra kod lokalt.
+
+> 523 lektioner. 20 faser. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-licens"></a>
@@ -46,12 +21,16 @@
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 faser"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub-stjärnor"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Webbplats"></a>
-  <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Placering i Star History" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="Dagens trendande GitHub-arkiv" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
- </a>
 </p>
+
+<details>
+<summary>Läs på ditt språk</summary>
+
+<p align="center">
+  <a href="../../README.md">🇬🇧 English</a> · <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> · <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> · <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> · <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> · <a href="../../i18n/pt/README.md">🇵🇹 Português</a> · <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> · <a href="../../i18n/es/README.md">🇪🇸 Español</a> · <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> · <a href="../../i18n/fr/README.md">🇫🇷 Français</a> · <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> · <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> · <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> · <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> · <a href="../../i18n/ro/README.md">🇷🇴 Română</a> · <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> · <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> · <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> · <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> · <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> · <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> · <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> · <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> · <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> · <a href="../../i18n/he/README.md">🇮🇱 עברית</a> · <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> · <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> · <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> · <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> · <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> · <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> · <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> · <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> · <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
+
+</details>
 
 ### Sponsorer
 
@@ -64,65 +43,134 @@
   <sub><span>Ditt stöd håller varje lektion gratis och med öppen källkod.</span> <a href="#supporters">Se alla som stöder projektet</a> · <a href="../../SPONSORS.md">Bli sponsor</a></sub>
 </p>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+<a id="see-what-you-will-build-and-keep"></a>
+<a id="learning-routes"></a>
 
-> **84% av studenterna använder redan AI-verktyg. Bara 18% känner sig redo att använda dem yrkesmässigt.** Den här läroplanen överbryggar det gapet.
->
-> 523 lektioner. 20 faser. ~342 timmar. Python, TypeScript, Rust, Julia. Varje lektion ger ett återanvändbart resultat: en prompt, en färdighet, en agent eller en MCP-server. Gratis, öppen källkod, MIT.
->
-> Du lär dig inte bara AI. Du bygger den. Från början till slut, för hand.
+## Lärvägar
 
-<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> läsare &nbsp;·&nbsp; <b>181,995</b> sidvisningar de senaste 30 dagarna &nbsp;·&nbsp; uppdaterat 2026-08-29</sub></p>
-<!-- STATS:END -->
+| Lärväg | Första lektionen |
+|---|---|
+| Modellernas grunder | [Installation och verktyg](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| LLM-system | [Promptteknik](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Agenter och systemleverans | [Agentloopen](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
 
-## Börja här: välj vad du vill bygga
+[Jämför karriärvägar](https://aiengineeringfromscratch.com/learning-paths.html) · [Förkunskaper och studietid](#study-guide)
 
-Du behöver inte gå igenom 523 lektioner innan du börjar. Välj ett mål. Varje länk öppnar samma läroplan på GitHub eller webbplatsen, och båda versionerna använder samma lektionskod.
+<a id="interactive-lab"></a>
 
-| Ditt mål | Lär dig på GitHub | Lär dig på webbplatsen |
-|---|---|---|
-| Jag är nybörjare och vill ha en komplett grund | [Fas 0: Installation och verktyg](../../phases/00-setup-and-tooling/) | [Utvecklingsmiljö](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Jag kan Python och vill lära mig grunderna i matematik och maskininlärning | [Fas 1: Matematiska grunder](../../phases/01-math-foundations/) | [Intuition för linjär algebra](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Jag vill bygga LLM-applikationer för produktion | [Fas 11: LLM-utveckling](../../phases/11-llm-engineering/) | [Promptutveckling](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Jag vill bygga agenter | [Fas 14: Agentutveckling](../../phases/14-agent-engineering/) | [Agentloopen](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Jag vill använda kodningsagenter i riktiga kodarkiv | [Studieväg för agentassisterad utveckling](../../learning-paths/using-coding-agents.json) | [Agentassisterad utveckling](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Jag vill avgöra vad som ska byggas före implementationen | [Studieväg för produktbedömning och leverans](../../learning-paths/shaping-the-build.json) | [Produktbedömning och leverans](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| Jag vill bygga med Model Context Protocol (MCP) | [Studieväg för Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Studieväg för Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Jag vill skriva och publicera Agent Skills | [Fokuserad studieväg för Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Studieväg för Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Jag vill förbereda mig för en Claude-certifiering | [Kom igång med certifieringsstudier](../../certifications/claude/GETTING_STARTED.md) | [Certifieringsakademin](https://aiengineeringfromscratch.com/certifications.html) |
-| Jag vill förbereda mig för MCP Associate (MCPA) | [Kom igång med MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA-studievägen](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+### Gradientnedstigning
 
-Osäker på var du ska börja? Använd [handledaren `start-learning` för nivåbedömning](../../skills/start-learning/SKILL.md) eller [webbplatsens guide till förkunskaper](https://aiengineeringfromscratch.com/prereqs.html).
+Tjugo startpunkter följer gradientnedstigning på en kvadratisk förlustfunktion. Grafen visar deras positioner och medelförlusten efter varje uppdatering.
 
-Jämför fyra kärnområden och sex karriärvägar i [studievägarna för AI-utveckling](https://aiengineeringfromscratch.com/learning-paths.html).
+<p align="center">
+  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+    <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
+      <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
+      <source media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-dark.png">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-light.png">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-mobile-dark.gif">
+      <source media="(max-width: 600px)" srcset="../../assets/readme/101-gradient-mobile-light.gif">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-dark.gif">
+      <img src="../../assets/readme/101-gradient-light.gif" alt="Gradientnedstigning flyttar utspridda startpunkter mot förlustfunktionens minimum. Medelförlusten minskar med varje uppdatering." width="840">
+    </picture>
+  </a>
+</p>
 
-### Arbeta med varje lektion på samma sätt
+[Justera inlärningshastigheten i lektionen](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Jämför gradientnedstigning, momentum och Adam i kod](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
-1. **Läs** `docs/en.md` och förklara huvudidén med egna ord.
-2. **Skriv och bygg** den viktiga koden i stället för att behandla kodblocket som dekoration.
-3. **Kör** lektionens kommando från kodarkivets rot, katalogen som innehåller `README.md` och `phases/`.
-4. **Spara belägg**: kommandot, arbetskatalogen, avslutningskoden, meningsfull utdata och det resultat du ändrade eller skapade.
-5. **Fortsätt** först när du kan förklara resultatet och göra en liten ändring utan att gissa.
+<a id="project-challenges"></a>
 
-Sökvägar i lektionssidornas kommandon utgår från kodarkivets rot om lektionen inte uttryckligen säger att du ska byta katalog. Om en lektion finns på flera programmeringsspråk kör du implementationen för språket du lär dig.
+### Projekt
 
-### Klona kodarkivet och skapa ditt första belägg
+Tre projekt med startkod för varje etapp, referensimplementationer och lokala bedömningsverktyg. Kör kommandona från repots rot efter [installationen](#local-setup). Startkoden klarar inte kontrollerna förrän du har implementerat etapperna.
+
+<details>
+<summary><strong>01 · Labb för sökutvärdering</strong> · Python · Rangordningsmått och regressionskontroller</summary>
+
+En kandidat förbättrar genomsnittlig NDCG medan en fråga rankar sina mest relevanta belägg lägre. Bygg en jämförelse fråga för fråga som rapporterar regressionen och kan underkänna en releasekontroll.
+
+Använd Python 3.10+. Repetera [RAG](../../phases/11-llm-engineering/06-rag/docs/en.md) och [modellutvärdering](../../phases/02-ml-fundamentals/09-model-evaluation/docs/en.md). Implementera validering av rankning, precision och recall, positionskänsliga mått och därefter systemjämförelse.
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --init learning-artifacts/retrieval-evaluation-lab
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --stage 1 --path learning-artifacts/retrieval-evaluation-lab --strict
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --all --path learning-artifacts/retrieval-evaluation-lab --strict
 ```
 
-Förkontrollen skiljer kraven som behövs nu från verktygen som behövs senare. Varje obligatoriskt krav som inte uppfylls visas med den upptäckta orsaken och ett kommando som åtgärdar problemet. Det andra kommandot kör en lektion utan externa beroenden och avslutar med att visa att en matris multiplicerad med en vektor är operationen inuti ett neuralt nätverkslager. Spara terminalutdata som ditt första belägg.
+**Spara:** en reproducerbar jämförelse med förändringar per fråga och relevansbedömningarna som används för poängen. Måtten beskriver dessa bedömningar; de fastställer inte att svaren är korrekta.
 
-## Lägg till AI-handledaren på 30 sekunder
+[Starta projektet](https://aiengineeringfromscratch.com/project.html?id=retrieval-evaluation-lab) · [Granska referensen](../../projects/retrieval-evaluation-lab/solution/) · [Kör med egna indata](../../projects/retrieval-evaluation-lab/README.md#run-with-your-own-inputs)
 
-Om Node.js, `npx` och en kodagent som stöder färdigheter redan är installerade kan kodagenten bli din handledare med två kommandon. Du behöver inte klona arkivet för att installera eller läsa handledaren. Körbara laborationer i de fokuserade studievägarna kräver `python3`. Agent Skills-laborationer kräver också en vald värdapplikation och en skrivbar färdighetskatalog för användaren eller projektet.
+</details>
+
+<details>
+<summary><strong>02 · Felsökare för agentspår</strong> · TypeScript · Tolkning av spår och tidsmätning</summary>
+
+Ett medföljande spår tar fortfarande 100 ms, men den totala tokenanvändningen ökar med 200 och ett span börjar misslyckas. Skilj överlappande arbete i underordnade span från det överordnade spannets körtid och skapa en rapport som visar förändringen.
+
+Använd Node.js 22.18+ och Python 3 för bedömaren. Implementera JSONL-tolkning, validering av överordnade span, intervallaritmetik och därefter en tidslinje som går att granska.
+
+```bash
+python3 scripts/project_test.py agent-trace-debugger \
+  --init learning-artifacts/agent-trace-debugger
+python3 scripts/project_test.py agent-trace-debugger \
+  --stage 1 --path learning-artifacts/agent-trace-debugger --strict
+python3 scripts/project_test.py agent-trace-debugger \
+  --all --path learning-artifacts/agent-trace-debugger --strict
+```
+
+**Spara:** indataspåret, en HTML-tidslinje och en regressionsrapport i JSON. Bevara varje spans egna tokenantal utan underordnade span, så att överordnad och underordnad användning inte räknas dubbelt.
+
+[Starta projektet](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger) · [Granska referensen](../../projects/agent-trace-debugger/solution/) · [Utforska tidsåtgång interaktivt](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger&stage=03-timing)
+
+</details>
+
+<details>
+<summary><strong>03 · Brandvägg för verktygsanrop</strong> · Rust · Rollkontroller och godkännandekvitton</summary>
+
+En skrivoperation ändras efter granskning, eller ett godkännande återanvänds. Validera anropets hölje, kontrollera anroparens roll och sökväg och förbruka sedan ett godkännande bundet till exakt begäran och innehåll.
+
+Använd Rust och Python 3.10+. Repetera [utformning av verktygsscheman](../../phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md) och [säkerhetsgränser](../../phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md). Den anropande applikationen tillhandahåller identiteten; modellen föreslår en operation.
+
+```bash
+python3 scripts/project_test.py tool-call-firewall \
+  --init learning-artifacts/tool-call-firewall
+python3 scripts/project_test.py tool-call-firewall \
+  --stage 1 --path learning-artifacts/tool-call-firewall --strict
+python3 scripts/project_test.py tool-call-firewall \
+  --all --path learning-artifacts/tool-call-firewall --strict
+```
+
+**Spara:** ett granskningskvitto som visar begärd operation och policybeslutet. Godkännanden får användas en gång inom ett anrop; projektet ger inte bestående auktorisering eller en sandlåda på operativsystemnivå.
+
+[Starta projektet](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall) · [Granska referensen](../../projects/tool-call-firewall/solution/) · [Utforska godkännandegränser](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall&stage=03-consume-a-request-bound-approval-once)
+
+</details>
+
+[Bläddra bland alla projekt](https://aiengineeringfromscratch.com/projects.html) · [Guide till karriärövningar](../../learning-paths/CAREER-PRACTICE.md)
+
+## Välj hur du vill lära dig
+
+### På webbplatsen
+
+Öppna en färdig lektion på [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) eller fäll ut en fas under [Innehåll](#contents). Ingen installation eller kloning behövs.
+
+### Med en AI-handledare
+
+Om Node.js, `npx` och en kodagent som stöder färdigheter redan är installerade kan kodagenten bli din handledare. Du behöver inte klona arkivet för att installera eller läsa handledaren. Körbara laborationer i de fokuserade studievägarna kräver `python3`. Agent Skills-laborationer kräver också en vald värdapplikation och en skrivbar färdighetskatalog för användaren eller projektet.
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+Välj värdmiljö och omfattning när installationsprogrammet frågar. Använd `start-learning` i Codex, `/start-learning` i Claude Code eller be värdmiljön använda färdigheten vid namn.
+
+<details>
+<summary>Konfigurera handledaren och värdmiljöns kommandon</summary>
 
 Kontrollera först de lokala kraven:
 
@@ -132,11 +180,7 @@ npx --version
 python3 --version
 ```
 
-Installera sedan kursens färdigheter och välj önskad värdapplikation och omfattning när installationsprogrammet frågar:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
+`skills` skriver till den värdapplikation och omfattning som väljs vid installationen, till exempel `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` eller en annan stödd färdighetskatalog. Kontrollera att den valda värdapplikationen hittar just den katalogen.
 
 Anropssyntaxen bestäms av värdapplikationen, inte av det portabla formatet `SKILL.md`:
 
@@ -154,17 +198,100 @@ Vill du bara lära dig Agent Skills? Använd Agent Skills-anropet för din värd
 
 Installationsprogrammet visar vilka värdapplikationer det kan konfigurera och frågar var färdigheterna ska installeras. Om du ännu saknar Node.js, `npx`, `python3`, en kompatibel värdapplikation eller en skrivbar katalog kan du använda webbplatsen eller läsa `docs/en.md` manuellt. Då lär du dig begreppen, men belägg för upptäckt, anrop, skriptkörning och avinstallation i en riktig värdapplikation får vänta tills förkontrollen kan genomföras. Läs lektionerna på [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## Så här fungerar det
+### Lärandefärdigheterna
 
-Det mesta AI-materialet lär ut lösryckta delar. En artikel här, ett inlägg om finjustering där, en imponerande agentdemo någon annanstans. Delarna bildar sällan en helhet. Du lanserar en chattbot men kan inte förklara dess förlustkurva. Du kopplar en funktion till en agent men kan inte säga vad attention gör i modellen som anropar den.
+| Färdighet | Vad den gör |
+|---|---|
+| [`start-learning`](../../skills/start-learning/SKILL.md) | Introduktion vid kursstart: varför du lär dig, nivåtest och en personlig plan sparad i `LEARNING.md`. |
+| [`learn`](../../skills/learn/SKILL.md) | Handledarens arbetsgång. Repetition som uppvärmning, sedan nästa lektion interaktivt och dess kunskapstest; framsteg och repetitionsbehov sparas. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | Ämnesvägvisare. ”Var lär jag mig attention?” eller ”min förlust är NaN” → rätt lektioner, med länkar. |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Fokuserad handledare för Model Context Protocol (MCP). Skapar `MCP-LEARNING.md`, följer manifestets 17 lektioner och sparar belägg för meddelandeutbyte, säkerhet, tillförlitlighet och protokollefterlevnad. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Fokuserad handledare för Agent Skills. Skapar `AGENT-SKILLS-LEARNING.md`, undervisar i lektionerna 22, 24, 25, 26 och 27 och sparar belägg från riktiga värdapplikationer. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Certifieringshandledare. Väljer CCAO-F, CCDV-F, CCAR-F eller CCAR-P, undervisar i varje lektion, kör laborationer, granskar arbetsresultat, genomför diagnostiska prov och övningsprov samt sparar framsteg. |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA-handledare. Följer `mcpa-f` med 34 lektioner om protokollet 2026-07-28, undervisar i varje lektion, kör laborationer och meddelandekontroll, genomför det diagnostiska provet och tre övningsprov samt sparar framsteg. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Nivåtest med tio frågor. Kopplar dina kunskaper till en lämplig startfas och skapar en personlig studieväg med uppskattad tidsåtgång. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Åtta frågor per fas med återkoppling och konkreta lektioner att repetera. Använd formen för Codex, Claude Code eller naturligt språk i anropstabellen ovan. |
 
-Den här kursplanen ger helheten. 20 faser, 523 lektioner, fyra språk: Python, TypeScript, Rust och Julia. Linjär algebra i ena änden, autonoma svärmar i den andra. Varje algoritm byggs först från den grundläggande matematiken. Bakåtpropagering. Tokenisering. Attention. Agentloopen. När PyTorch introduceras vet du redan vad som händer under ytan.
+</details>
 
-Varje lektion följer samma arbetsgång: läs problemet, härled matematiken, skriv koden, kör testet och behåll resultatet. Inga femminutersvideor, inga driftsättningar genom kopiering och inklistring, ingen detaljstyrning. Kostnadsfritt, öppen källkod och byggt för att köras på din egen bärbara dator.
+<a id="local-setup"></a>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+### Kör kod lokalt
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+
+Förkontrollen skiljer kraven som behövs nu från verktygen som behövs senare. Varje obligatoriskt krav som inte uppfylls visas med den upptäckta orsaken och ett kommando som åtgärdar problemet. Kommandot `vectors.py` kör en lektion utan externa beroenden och avslutar med att visa att en matris multiplicerad med en vektor är operationen inuti ett neuralt nätverkslager. Spara terminalutdata som ditt första belägg.
+
+<details>
+<summary>Arbeta med varje lektion på samma sätt</summary>
+
+### Arbeta med varje lektion på samma sätt
+
+1. **Läs** `docs/en.md` och förklara huvudidén med egna ord.
+2. **Skriv och bygg** den viktiga koden i stället för att behandla kodblocket som dekoration.
+3. **Kör** lektionens kommando från kodarkivets rot, katalogen som innehåller `README.md` och `phases/`.
+4. **Spara belägg**: kommandot, arbetskatalogen, avslutningskoden, meningsfull utdata och det resultat du ändrade eller skapade.
+5. **Fortsätt** först när du kan förklara resultatet och göra en liten ändring utan att gissa.
+
+Sökvägar i lektionssidornas kommandon utgår från kodarkivets rot om lektionen inte uttryckligen säger att du ska byta katalog. Om en lektion finns på flera programmeringsspråk kör du implementationen för språket du lär dig.
+
+</details>
+
+<a id="study-guide"></a>
+
+## Välj en lärväg
+
+Du behöver inte gå igenom 523 lektioner innan du börjar. Välj ett mål. Varje länk öppnar samma läroplan på GitHub eller webbplatsen, och båda versionerna använder samma lektionskod.
+
+| Ditt mål | Lär dig på GitHub | Lär dig på webbplatsen |
+|---|---|---|
+| Jag är nybörjare och vill ha en komplett grund | [Fas 0: Installation och verktyg](../../phases/00-setup-and-tooling/) | [Utvecklingsmiljö](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Jag kan Python och vill lära mig grunderna i matematik och maskininlärning | [Fas 1: Matematiska grunder](../../phases/01-math-foundations/) | [Intuition för linjär algebra](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| Jag vill bygga LLM-applikationer för produktion | [Fas 11: LLM-utveckling](../../phases/11-llm-engineering/) | [Promptutveckling](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Jag vill bygga agenter | [Fas 14: Agentutveckling](../../phases/14-agent-engineering/) | [Agentloopen](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Jag vill använda kodningsagenter i riktiga kodarkiv | [Studieväg för agentassisterad utveckling](../../learning-paths/using-coding-agents.json) | [Agentassisterad utveckling](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| Jag vill avgöra vad som ska byggas före implementationen | [Studieväg för produktbedömning och leverans](../../learning-paths/shaping-the-build.json) | [Produktbedömning och leverans](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+
+Osäker på var du ska börja? Använd [handledaren `start-learning` för nivåbedömning](../../skills/start-learning/SKILL.md) eller [webbplatsens guide till förkunskaper](https://aiengineeringfromscratch.com/prereqs.html).
+
+Jämför fyra kärnområden och sex karriärvägar i [studievägarna för AI-utveckling](https://aiengineeringfromscratch.com/learning-paths.html).
+
+<details>
+<summary>Fokuserade lärvägar för MCP och Agent Skills</summary>
+
+| Ditt mål | Lär dig på GitHub | Lär dig på webbplatsen |
+|---|---|---|
+| Jag vill bygga med Model Context Protocol (MCP) | [Studieväg för Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Studieväg för Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Jag vill skriva och publicera Agent Skills | [Fokuserad studieväg för Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Studieväg för Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+
+</details>
+
+<details>
+<summary>Förkunskaper och studietid</summary>
+
+### Förkunskaper
+
+- Du kan skriva kod i något språk; Python är en fördel.
+- Du vill förstå hur AI **faktiskt fungerar**, inte bara anropa API:er.
+
+## Var ska du börja?
+
+| Bakgrund | Börja vid | Uppskattad tid |
+|---|---|---|
+| Ny inom programmering och AI | Fas 0: Installation | ~306 timmar |
+| Kan Python, ny inom ML | Fas 1: Matematiska grunder | ~270 timmar |
+| Kan ML, ny inom djupinlärning | Fas 3: Djupinlärningens kärna | ~200 timmar |
+| Kan djupinlärning och vill lära sig språkmodeller och agenter | Fas 10: Stora språkmodeller från grunden | ~100 timmar |
+| Erfaren utvecklare som bara vill lära sig agentutveckling | Fas 14: Agentutveckling | ~60 timmar |
+| Vill bara bygga MCP-system för produktion | [Studievägen för Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 timmar 15 min |
+| Vill bara bygga Agent Skills för produktion | [Studievägen för utveckling av Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 timmar |
+
+</details>
 
 ## Läroplanens upplägg
 
@@ -194,195 +321,6 @@ flowchart TB
   P16 --> P19["Fas 19: Slutprojekt"]
   P17 --> P19
   P18 --> P19
-```
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Lektionernas upplägg
-
-Varje lektion finns i en egen katalog, med samma struktur genom hela kursplanen:
-
-```text
-phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      körbara implementationer (Python, TypeScript, Rust, Julia)
-├── docs/
-│   └── en.md  lektionstext
-└── outputs/   promptar, färdigheter, agenter eller MCP-servrar som lektionen ger
-```
-
-Varje lektion har sex moment. Uppdelningen *Bygg / Använd* är central: först implementerar du algoritmen från grunden, sedan kör du samma sak med produktionsbiblioteket. Du förstår vad ramverket gör eftersom du själv har skrivit den mindre versionen.
-
-```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
-flowchart LR
-  M["KÄRNIDÉ<br/><sub>huvudtanken på en rad</sub>"] --> Pr["PROBLEMSTÄLLNING<br/><sub>en konkret svårighet</sub>"]
-  Pr --> C["BEGREPP<br/><sub>diagram och intuition</sub>"]
-  C --> B["BYGG<br/><sub>grundläggande matematik, inga ramverk</sub>"]
-  B --> U["ANVÄND<br/><sub>samma sak i PyTorch / sklearn</sub>"]
-  U --> S["PUBLICERA<br/><sub>prompt · färdighet · agent · MCP</sub>"]
-```
-
-## Kom igång
-
-Tre sätt att börja. Välj ett.
-
-**Alternativ A: lär dig i terminalen *(rekommenderas)*.** Efter förkontrollen av Node.js, `npx`, värdapplikation och omfattning ovan installerar du lärandefärdigheterna i en kompatibel agent och låter kursen leda arbetet:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
-
-Använd tabellen ovan med anrop för respektive värdapplikation. De installerade färdigheterna ger dig `start-learning`, `learn`, `course-guide` och de fokuserade vägarna `learn-mcp` och `learn-agent-skills`. Lektionstexten kan hämtas direkt från arkivet utan kloning. En lokal klon krävs för kopierade kodkommandon från arkivet och körbara MCP- eller Agent Skills-laborationer. Framstegen sparas i `LEARNING.md`, `MCP-LEARNING.md` eller `AGENT-SKILLS-LEARNING.md` i ditt projekt, så att varje session kan fortsätta där du slutade.
-
-**Alternativ B: läs.** Öppna en färdig lektion på [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) eller fäll ut en fas under [Innehåll](#contents). Ingen installation eller kloning behövs.
-
-**Alternativ C: klona och kör.**
-
-```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
-```
-
-När du klonar arkivet läses lärandefärdigheterna också in automatiskt i Claude Code. Handledaren `learn` får tillgång till varje lektions kod och kan köra den på riktigt, i stället för att bara gå igenom texten.
-
-### Förkunskaper
-
-- Du kan skriva kod i något språk; Python är en fördel.
-- Du vill förstå hur AI **faktiskt fungerar**, inte bara anropa API:er.
-
-### Förbered dig för Claude-certifieringarna
-
-[Claude Certification Academy](../../certifications/claude/README.md) är ett kostnadsfritt förberedelseprogram med öppen källkod för alla fyra officiella Claude-certifieringsspår: Associate Foundations, Developer Foundations, Architect Foundations och Architect Professional. Varje väg kombinerar lektioner kopplade till examensplanen, körbara laborationer, ett diagnostiskt prov, ett slutprojekt och ett eget fullängdsövningsprov.
-
-Använd [GitHub-guiden för AI-stött kursstart](../../certifications/claude/GETTING_STARTED.md) med Claude Code, Codex, ChatGPT, Cursor eller en annan agent. Kör `claude-certification` i Codex, `/claude-certification` i Claude Code eller be en annan värdapplikation att använda `claude-certification`. Den väljer ett spår, skapar en beständig studieväg i `CLAUDE-CERTIFICATION.md`, lär ut ett steg i taget, kör de riktiga laborationerna och ger återkoppling på dina arbetsresultat. Samma kursplan finns på [certifieringswebbplatsen](https://aiengineeringfromscratch.com/certifications.html).
-
-Akademin är oberoende studiematerial baserat på offentliga examensmål. Den är inte knuten till Anthropic, återger inga riktiga examensfrågor och kan inte garantera ett godkänt resultat.
-
-### Förbered dig för certifieringen MCP Associate (MCPA)
-
-[MCPA:s certifieringskursplan](../../certifications/mcpa/README.md) är ett kostnadsfritt förberedelseprogram med öppen källkod för Agentic AI Foundations examen Model Context Protocol Associate, som erbjuds genom Linux Foundation Training. De 34 lektionerna lär ut det tillståndslösa protokollet 2026-07-28 inom examens fem områden: `_meta` per förfrågan och `server/discover` i stället för den gamla handskakningen, förfrågningar med flera turer, prenumerationer, cachelagring, tilläggen Tasks och MCP Apps, OAuth-auktorisering samt register- och SDK-nivåerna. Varje lektion innehåller en körbar laboration som bara använder standardbiblioteket och vars utskrift kontrolleras mot det aktuella meddelandeformatet. Spåret innehåller också ett diagnostiskt prov, ett slutprojekt och tre egna fullängdsövningsprov vars frågefördelning följer den publicerade examensplanens viktning.
-
-Använd [GitHub-guiden för AI-stött kursstart](../../certifications/mcpa/GETTING_STARTED.md) med Claude Code, Codex, ChatGPT, Cursor eller en annan agent. Kör `mcpa-certification` i Codex, `/mcpa-certification` i Claude Code eller be en annan värdapplikation att använda `mcpa-certification`. Den skapar en beständig studieväg i `MCPA-CERTIFICATION.md`, lär ut ett steg i taget, kör de riktiga laborationerna och ger återkoppling på dina arbetsresultat. Samma kursplan finns på [MCPA-spårets sida](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
-
-Kursplanen är oberoende studiematerial baserat på offentliga examensmål. Den är inte knuten till Agentic AI Foundation eller Linux Foundation, återger inga riktiga examensfrågor och kan inte garantera ett godkänt resultat.
-
-### Lärandefärdigheterna
-
-| Färdighet | Vad den gör |
-|---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | Introduktion vid kursstart: varför du lär dig, nivåtest och en personlig plan sparad i `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | Handledarens arbetsgång. Repetition som uppvärmning, sedan nästa lektion interaktivt och dess kunskapstest; framsteg och repetitionsbehov sparas. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Ämnesvägvisare. ”Var lär jag mig attention?” eller ”min förlust är NaN” → rätt lektioner, med länkar. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Fokuserad handledare för Model Context Protocol (MCP). Skapar `MCP-LEARNING.md`, följer manifestets 17 lektioner och sparar belägg för meddelandeutbyte, säkerhet, tillförlitlighet och protokollefterlevnad. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Fokuserad handledare för Agent Skills. Skapar `AGENT-SKILLS-LEARNING.md`, undervisar i lektionerna 22, 24, 25, 26 och 27 och sparar belägg från riktiga värdapplikationer. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Certifieringshandledare. Väljer CCAO-F, CCDV-F, CCAR-F eller CCAR-P, undervisar i varje lektion, kör laborationer, granskar arbetsresultat, genomför diagnostiska prov och övningsprov samt sparar framsteg. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA-handledare. Följer `mcpa-f` med 34 lektioner om protokollet 2026-07-28, undervisar i varje lektion, kör laborationer och meddelandekontroll, genomför det diagnostiska provet och tre övningsprov samt sparar framsteg. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Nivåtest med tio frågor. Kopplar dina kunskaper till en lämplig startfas och skapar en personlig studieväg med uppskattad tidsåtgång. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Åtta frågor per fas med återkoppling och konkreta lektioner att repetera. Använd formen för Codex, Claude Code eller naturligt språk i anropstabellen ovan. |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Läs grundkursen som bok
-
-Grundkursens 20 faser under `phases/` sammanställs till en bokserie i sex volymer. CI bygger EPUB och PDF från samma lektionskällor och bifogar dem till varje [GitHub-utgåva](https://github.com/rohitg00/ai-engineering-from-scratch/releases). Länkarna nedan pekar alltid på den senaste utgåvan. Volymnumren anger platsen i serien, inte versionsnummer: varje exemplar har en daterad utgåvestämpel, och äldre utgåvor kan fortfarande laddas ned från respektive release.
-
-Certifieringskurserna ingår avsiktligt inte i böckerna. Deras AI-handledartillstånd, körbara laborationer, interaktiva figurer, diagnostiska prov och tidsbegränsade övningsprov finns kvar på GitHub och webbplatsen.
-
-| Volym | Titel | Faser | Ladda ned |
-|-----|-------|--------|----------|
-| 1 | Grunder · Matematik, verktyg och klassisk maskininlärning | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Djupinlärning · Nätverk, bildanalys och tal | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Språk · NLP-grunder och Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Stora språkmodeller · Generering, förstärkning, förträning och utveckling | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Agenter · Multimodalitet, protokoll, autonomi och svärmar | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Produktion · Infrastruktur, säkerhet och slutprojekt | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-Boken är en ögonblicksbild; arkivet är den levande utgåvan. Varje kapitel slutar med länkar till lektionens animerade figurer, kunskapstest och körbara kod. Bygg lokalt med `python3 scripts/build_book.py` (pandoc krävs). Detaljer om byggflödet finns i [book/README.md](../../book/README.md).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Varje lektion ger ett resultat
-
-Andra kurser slutar med *”Grattis, du har lärt dig X.”* Varje lektion här slutar med ett **återanvändbart verktyg** som du kan installera eller klistra in i ditt dagliga arbetsflöde.
-
-<table>
-<tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A promptar"/><br/><sub>FIG_001 · A</sub><br/><b>PROMPTAR</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B färdigheter"/><br/><sub>FIG_001 · B</sub><br/><b>FÄRDIGHETER</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C agenter"/><br/><sub>FIG_001 · C</sub><br/><b>AGENTER</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP-servrar"/><br/><sub>FIG_001 · D</sub><br/><b>MCP-SERVRAR</b></th>
-</tr>
-<tr>
-<td valign="top">Klistra in i valfri AI-assistent för experthjälp med en avgränsad uppgift.</td>
-<td valign="top">Lägg till i Claude, Cursor, Codex, OpenClaw, Hermes eller en annan agent som läser <code>SKILL.md</code>.</td>
-<td valign="top">Driftsätt som autonoma arbetare. Du skrev själv agentloopen i fas 14.</td>
-<td valign="top">Anslut till valfri MCP-kompatibel klient. Byggt från början till slut i fas 13.</td>
-</tr>
-</table>
-
-> Installera allt med `python3 scripts/install_skills.py <target>`. Riktiga verktyg, inte läxor. När du är klar har du en portfölj med 523 arbetsresultat som du verkligen förstår eftersom du har byggt dem själv.
-
-### FIG_002 · Ett genomarbetat exempel
-
-Fas 14, lektion 1: agentloopen. ~120 rader ren Python, utan beroenden.
-
-<table>
-<tr>
-<td valign="top" width="50%">
-
-**`code/agent_loop.py`** &nbsp; <sub><i>bygg det</i></sub>
-
-```python
-def run(query, tools):
-    history = [user(query)]
-    for step in range(MAX_STEPS):
-        msg = llm(history)
-        if msg.tool_calls:
-            for call in msg.tool_calls:
-                result = tools[call.name](**call.args)
-                history.append(tool_result(call.id, result))
-            continue
-        return msg.content
-    raise StepLimitExceeded
-```
-
-</td>
-<td valign="top" width="50%">
-
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>publicera det</i></sub>
-
-```markdown
----
-name: agent-loop
-description: ReAct-style loop for any tool list
-phase: 14
-lesson: 01
----
-
-Implement a minimal agent loop that...
-```
-
-**`outputs/prompt-debug-agent.md`**
-
-```markdown
-You are an agent debugger. Given the trace
-of an agent run, identify the step where
-the agent went wrong and explain why...
-```
-
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 <a id="contents"></a>
@@ -1105,33 +1043,104 @@ Lektionerna 31-46 bildar [studievägen för agentstödd utveckling](../../learni
 
 </details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+## Böcker och certifieringar
+
+<details>
+<summary>Läs grundkursen som bok</summary>
+
+Grundkursens 20 faser under `phases/` sammanställs till en bokserie i sex volymer. CI bygger EPUB och PDF från samma lektionskällor och bifogar dem till varje [GitHub-utgåva](https://github.com/rohitg00/ai-engineering-from-scratch/releases). Länkarna nedan pekar alltid på den senaste utgåvan. Volymnumren anger platsen i serien, inte versionsnummer: varje exemplar har en daterad utgåvestämpel, och äldre utgåvor kan fortfarande laddas ned från respektive release.
+
+Certifieringskurserna ingår avsiktligt inte i böckerna. Deras AI-handledartillstånd, körbara laborationer, interaktiva figurer, diagnostiska prov och tidsbegränsade övningsprov finns kvar på GitHub och webbplatsen.
+
+| Volym | Titel | Faser | Ladda ned |
+|-----|-------|--------|----------|
+| 1 | Grunder · Matematik, verktyg och klassisk maskininlärning | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Djupinlärning · Nätverk, bildanalys och tal | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Språk · NLP-grunder och Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Stora språkmodeller · Generering, förstärkning, förträning och utveckling | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Agenter · Multimodalitet, protokoll, autonomi och svärmar | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Produktion · Infrastruktur, säkerhet och slutprojekt | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+Boken är en ögonblicksbild; arkivet är den levande utgåvan. Varje kapitel slutar med länkar till lektionens animerade figurer, kunskapstest och körbara kod. Bygg lokalt med `python3 scripts/build_book.py` (pandoc krävs). Detaljer om byggflödet finns i [book/README.md](../../book/README.md).
+
+</details>
+
+<details>
+<summary>Förbered dig för Claude-certifieringarna</summary>
+
+[Claude Certification Academy](../../certifications/claude/README.md) är ett kostnadsfritt förberedelseprogram med öppen källkod för alla fyra officiella Claude-certifieringsspår: Associate Foundations, Developer Foundations, Architect Foundations och Architect Professional. Varje väg kombinerar lektioner kopplade till examensplanen, körbara laborationer, ett diagnostiskt prov, ett slutprojekt och ett eget fullängdsövningsprov.
+
+Använd [GitHub-guiden för AI-stött kursstart](../../certifications/claude/GETTING_STARTED.md) med Claude Code, Codex, ChatGPT, Cursor eller en annan agent. Kör `claude-certification` i Codex, `/claude-certification` i Claude Code eller be en annan värdapplikation att använda `claude-certification`. Den väljer ett spår, skapar en beständig studieväg i `CLAUDE-CERTIFICATION.md`, lär ut ett steg i taget, kör de riktiga laborationerna och ger återkoppling på dina arbetsresultat. Samma kursplan finns på [certifieringswebbplatsen](https://aiengineeringfromscratch.com/certifications.html).
+
+Akademin är oberoende studiematerial baserat på offentliga examensmål. Den är inte knuten till Anthropic, återger inga riktiga examensfrågor och kan inte garantera ett godkänt resultat.
+
+</details>
+
+<details>
+<summary>Förbered dig för certifieringen MCP Associate (MCPA)</summary>
+
+[MCPA:s certifieringskursplan](../../certifications/mcpa/README.md) är ett kostnadsfritt förberedelseprogram med öppen källkod för Agentic AI Foundations examen Model Context Protocol Associate, som erbjuds genom Linux Foundation Training. De 34 lektionerna lär ut det tillståndslösa protokollet 2026-07-28 inom examens fem områden: `_meta` per förfrågan och `server/discover` i stället för den gamla handskakningen, förfrågningar med flera turer, prenumerationer, cachelagring, tilläggen Tasks och MCP Apps, OAuth-auktorisering samt register- och SDK-nivåerna. Varje lektion innehåller en körbar laboration som bara använder standardbiblioteket och vars utskrift kontrolleras mot det aktuella meddelandeformatet. Spåret innehåller också ett diagnostiskt prov, ett slutprojekt och tre egna fullängdsövningsprov vars frågefördelning följer den publicerade examensplanens viktning.
+
+Använd [GitHub-guiden för AI-stött kursstart](../../certifications/mcpa/GETTING_STARTED.md) med Claude Code, Codex, ChatGPT, Cursor eller en annan agent. Kör `mcpa-certification` i Codex, `/mcpa-certification` i Claude Code eller be en annan värdapplikation att använda `mcpa-certification`. Den skapar en beständig studieväg i `MCPA-CERTIFICATION.md`, lär ut ett steg i taget, kör de riktiga laborationerna och ger återkoppling på dina arbetsresultat. Samma kursplan finns på [MCPA-spårets sida](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
+
+Kursplanen är oberoende studiematerial baserat på offentliga examensmål. Den är inte knuten till Agentic AI Foundation eller Linux Foundation, återger inga riktiga examensfrågor och kan inte garantera ett godkänt resultat.
+
+</details>
 
 ## Verktygslådan
 
-Varje lektion ger ett återanvändbart resultat. När du är klar har du:
+Varje lektion ger ett återanvändbart resultat. Installera det i din agent eller använd skripten nedan från arkivets rotkatalog.
+
+<details>
+<summary>Lektionsstruktur och återanvändbara resultat</summary>
+
+## Lektionernas upplägg
+
+Varje lektion finns i en egen katalog, med samma struktur genom hela kursplanen:
 
 ```text
-outputs/
-├── prompts/      promptmallar för varje AI-uppgift
-└── skills/       SKILL.md-filer för AI-kodagenter
+phases/<NN>-<phase-name>/<NN>-<lesson-name>/
+├── code/      körbara implementationer (Python, TypeScript, Rust, Julia)
+├── docs/
+│   └── en.md  lektionstext
+└── outputs/   promptar, färdigheter, agenter eller MCP-servrar som lektionen ger
 ```
 
-Anslut dem till Claude, Cursor, Codex, OpenClaw, Hermes eller en annan agent som läser en SKILL.md / AGENTS.md-katalog. Riktiga verktyg, inte läxor.
+Varje lektion har sex moment. Uppdelningen *Bygg / Använd* är central: först implementerar du algoritmen från grunden, sedan kör du samma sak med produktionsbiblioteket. Du förstår vad ramverket gör eftersom du själv har skrivit den mindre versionen.
 
-### Installera kursens färdigheter i din agent
-
-Två uppsättningar färdigheter, två installationsprogram:
-
-**Lärandefärdigheterna** (`start-learning`, `learn`, `course-guide`, `learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`, `find-your-level` och `check-understanding`) finns under [`skills/`](../../skills/) och installeras i en kompatibel värdapplikation med ett enda kommando. Installationen kräver Node.js och `npx`, men varken en klon av arkivet eller Python:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["KÄRNIDÉ<br/><sub>huvudtanken på en rad</sub>"] --> Pr["PROBLEMSTÄLLNING<br/><sub>en konkret svårighet</sub>"]
+  Pr --> C["BEGREPP<br/><sub>diagram och intuition</sub>"]
+  C --> B["BYGG<br/><sub>grundläggande matematik, inga ramverk</sub>"]
+  B --> U["ANVÄND<br/><sub>samma sak i PyTorch / sklearn</sub>"]
+  U --> S["PUBLICERA<br/><sub>prompt · färdighet · agent · MCP</sub>"]
 ```
 
-`skills` skriver till den värdapplikation och omfattning som väljs vid installationen, till exempel `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` eller en annan stödd färdighetskatalog. Kontrollera att den valda värdapplikationen hittar just den katalogen.
+## Varje lektion ger ett resultat
+
+Andra kurser slutar med *”Grattis, du har lärt dig X.”* Varje lektion här slutar med ett **återanvändbart verktyg** som du kan installera eller klistra in i ditt dagliga arbetsflöde.
+
+<table>
+<tr>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A promptar"/><br/><sub>FIG_001 · A</sub><br/><b>PROMPTAR</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B färdigheter"/><br/><sub>FIG_001 · B</sub><br/><b>FÄRDIGHETER</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C agenter"/><br/><sub>FIG_001 · C</sub><br/><b>AGENTER</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP-servrar"/><br/><sub>FIG_001 · D</sub><br/><b>MCP-SERVRAR</b></th>
+</tr>
+<tr>
+<td valign="top">Klistra in i valfri AI-assistent för experthjälp med en avgränsad uppgift.</td>
+<td valign="top">Lägg till i Claude, Cursor, Codex, OpenClaw, Hermes eller en annan agent som läser <code>SKILL.md</code>.</td>
+<td valign="top">Driftsätt som autonoma arbetare. Du skrev själv agentloopen i fas 14.</td>
+<td valign="top">Anslut till valfri MCP-kompatibel klient. Byggt från början till slut i fas 13.</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>Installera lektionsresultat</summary>
 
 **Lektionernas arbetsresultat.** Arkivet innehåller 396 färdigheter och 99 promptar under `phases/**/outputs/`. Installera dem med `scripts/install_skills.py`. Arkivet måste klonas. Skriptet stöder taggfilter, förhandsgranskning utan skrivning och agentspecifika katalogstrukturer:
 
@@ -1156,7 +1165,10 @@ Som standard vägrar skriptet att skriva över ett befintligt mål och avslutas 
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Lägg till agentarbetsbänken i ditt eget arkiv
+</details>
+
+<details>
+<summary>Lägg till agentarbetsbänken i ditt eget arkiv</summary>
 
 Slutprojektet i fas 14 innehåller ett återanvändbart Agent Workbench-paket (AGENTS.md, scheman samt initierings-, verifierings- och överlämningsskript). Skapa grundstrukturen i valfritt arkiv med:
 
@@ -1169,7 +1181,10 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 
 Du får arbetsbänkens sju gränssnitt inkopplade, en första `task_board.json` och en ny `agent_state.json` med `schema_version: 1`. Sedan redigerar du uppgiften och `AGENTS.md`, kör `scripts/init_agent.py` och lämnar kontraktet till agenten. Paketets källa finns i `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
 
-### Utforska hela kursen som JSON
+</details>
+
+<details>
+<summary>Utforska hela kursen som JSON</summary>
 
 `scripts/build_catalog.py` går igenom varje fas, lektion och arbetsresultat på disken och skriver `catalog.json` i arkivets rot. En fil med hela kursens innehåll.
 
@@ -1181,9 +1196,12 @@ python3 scripts/build_catalog.py --out path/to/file.json
 
 Katalogen byggs från filsystemet, inte från README, så att antalen alltid motsvarar det som faktiskt finns på disken. Använd den när du bygger webbplatsen, utvecklar andra verktyg eller kontrollerar att README:s antal fortfarande stämmer. Schemat dokumenteras i början av skriptet.
 
-En GitHub Action (`.github/workflows/curriculum.yml`) bygger om `catalog.json` för varje PR och underkänner bygget om den incheckade filen är föråldrad. Efter en lektionsändring kör du `python3 scripts/build_catalog.py` och checkar in resultatet, annars avvisar CI ändringsförslaget. Samma arbetsflöde kör `audit_lessons.py` i varningsläge så att äldre avvikelser inte blockerar bidrag.
+Kursplanens arbetsflöde bygger `catalog.json` som en tillfällig artefakt som Git ignorerar. Lägg inte in den i en commit. Samma arbetsflöde kör `audit_lessons.py` som en blockerande kontroll.
 
-### Snabbkontrollera Python-koden i varje lektion
+</details>
+
+<details>
+<summary>Snabbkontrollera Python-koden i varje lektion</summary>
 
 `scripts/lesson_run.py` bytekompilerar varje `.py`-fil i lektionernas `code/`-kataloger. Standardläget kontrollerar bara syntaxen: ingen körning, inga API-nycklar och inga tunga ML-beroenden behövs. Det fångar vanliga fel i bidrag, som felaktig indragning, trasiga f-strängar och oavsiktliga ändringar.
 
@@ -1199,40 +1217,10 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 
 Endast standardbiblioteket, Python 3.10+. Sätt `LINK_CHECK_SKIP=domain1,domain2` för att ersätta standardlistan över undantagna domäner (`twitter.com`, `x.com`, `linkedin.com`, `instagram.com`, `medium.com`, som ofta blockerar automatiserade HEAD/GET-anrop).
 
-## Var ska du börja?
+</details>
 
-| Bakgrund | Börja vid | Uppskattad tid |
-|---|---|---|
-| Ny inom programmering och AI | Fas 0: Installation | ~306 timmar |
-| Kan Python, ny inom ML | Fas 1: Matematiska grunder | ~270 timmar |
-| Kan ML, ny inom djupinlärning | Fas 3: Djupinlärningens kärna | ~200 timmar |
-| Kan djupinlärning och vill lära sig språkmodeller och agenter | Fas 10: Stora språkmodeller från grunden | ~100 timmar |
-| Erfaren utvecklare som bara vill lära sig agentutveckling | Fas 14: Agentutveckling | ~60 timmar |
-| Vill bara bygga MCP-system för produktion | [Studievägen för Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 timmar 15 min |
-| Vill bara bygga Agent Skills för produktion | [Studievägen för utveckling av Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 timmar |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Varför det här är viktigt nu
-
-<table>
-<tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>SIGNALEN FRÅN BRANSCHEN</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>GRUNDLÄGGANDE FORSKNINGSARTIKLAR SOM INGÅR</b></th>
-</tr>
-<tr>
-<td valign="top">
-
-> *”Det hetaste nya programmeringsspråket är engelska.”*<br/> **Andrej Karpathy** ([inlägg](https://x.com/karpathy/status/1617979122625712128))
->
-> *”Programvaruutveckling görs om inför våra ögon.”*<br/> **Boris Cherny**, skaparen av Claude Code
->
-> *”Modellerna kommer att fortsätta bli bättre. Förmågan vars värde växer är att **veta vad man ska bygga**.”*<br/> Branschens gemensamma syn, 2026
-
-</td>
-<td valign="top">
+<details>
+<summary>Grundläggande artiklar och protokoll</summary>
 
 - *Attention Is All You Need* — Vaswani et al., 2017 → [Fas 7](#phase-7)
 - *Language Models are Few-Shot Learners* (GPT-3) → [Fas 10](#phase-10)
@@ -1243,13 +1231,7 @@ Endast standardbiblioteket, Python 3.10+. Sätt `LINK_CHECK_SKIP=domain1,domain2
 - *ReAct: Reasoning + Acting in LLMs* → [Fas 14](#phase-14)
 - *Model Context Protocol* — Anthropic → [Fas 13](#phase-13)
 
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+</details>
 
 ## Bidra
 
@@ -1272,21 +1254,17 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 
 Avslutningskoden är inte noll om någon regel misslyckas. Reglerna (L001–L010) kontrollerar katalogstrukturen, förekomsten av `docs/en.md` och H1, att `code/` inte är tom, schemat för `quiz.json` (äldre nycklar av typen `q/choices/answer`, som orsakade ärende #102, avvisas) samt relativa länkar i lektionsdokumentationen.
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
 <a id="supporters"></a>
 
 ## Sponsra arbetet
 
+<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
+<p align="center"><sub><b>114,584</b> läsare &nbsp;·&nbsp; <b>181,995</b> sidvisningar de senaste 30 dagarna &nbsp;·&nbsp; uppdaterat 2026-08-29</sub></p>
+<!-- STATS:END -->
+
 Gratis, MIT-licensierat, 523 lektioner. Tack till sponsorerna och stödjarna som gör arbetet möjligt. [Se alla sponsorer och stödjare](../../BACKERS.md).
 
 Vill du stödja arbetet? Se [sponsringsalternativen](../../SPONSORS.md), inklusive [hårdvarusponsring](../../SPONSORS.md#hardware-lab-partner), eller [sponsra på GitHub](https://github.com/sponsors/rohitg00).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 
 Om handboken hjälpte dig, ge arkivet en stjärna. Det håller projektet igång.
 
@@ -1297,7 +1275,5 @@ MIT. Använd materialet som du vill: förgrena det, undervisa med det, sälj det
 Underhålls av [Rohit Ghumare](https://github.com/rohitg00) och gemenskapen.
 
 <sub>
-  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
-  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Rapportera / föreslå</a>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp; <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp; <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Rapportera / föreslå</a>
 </sub>

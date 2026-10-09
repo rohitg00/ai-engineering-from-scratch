@@ -1,44 +1,19 @@
 <p align="center"><sub>AI의 도움을 받은 번역입니다. 기준 문서는 <a href="../../README.md">영어판</a>입니다.</sub></p>
-<p align="center">
-  <img src="../../assets/banner.svg" alt="처음부터 배우는 AI 엔지니어링 — 참고 매뉴얼 배너" width="100%">
-</p>
 
 <p align="center">
-  <a href="../../README.md">🇬🇧 English</a> ·
-  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
-  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
-  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
-  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
-  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
-  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
-  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
-  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
-  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
-  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
-  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
-  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
-  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
-  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
-  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
-  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
-  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
-  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
-  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
-  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
-  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
-  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
-  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
-  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
-  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
-  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
-  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
-  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
-  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
-  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
-  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
-  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
-  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/header-dark.svg">
+    <img src="../../assets/readme/header-light.svg" alt="처음부터 배우는 AI 엔지니어링" width="840">
+  </picture>
 </p>
+
+모델 내부 연산, 검색 파이프라인, 에이전트 런타임을 구현하세요. 테스트하고 실패를 분석하며 코드와 평가 결과를 보관하세요.
+
+**[학습 시작](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[학습 경로 선택](#learning-routes)** · **[실습 체험](#interactive-lab)** · **[프로젝트 만들기](#project-challenges)** · **[교육과정 둘러보기](#contents)**
+
+무료이며 오픈 소스이고 MIT 라이선스로 제공됩니다. 웹사이트에서, 코딩 에이전트와 함께, 또는 로컬 코드를 실행하며 배우세요.
+
+> 523 수업. 20단계. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT 라이선스"></a>
@@ -46,12 +21,16 @@
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20단계"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub 별"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="웹사이트"></a>
-  <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Star History 순위" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="오늘의 GitHub 인기 저장소" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
- </a>
 </p>
+
+<details>
+<summary>원하는 언어로 읽기</summary>
+
+<p align="center">
+  <a href="../../README.md">🇬🇧 English</a> · <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> · <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> · <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> · <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> · <a href="../../i18n/pt/README.md">🇵🇹 Português</a> · <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> · <a href="../../i18n/es/README.md">🇪🇸 Español</a> · <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> · <a href="../../i18n/fr/README.md">🇫🇷 Français</a> · <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> · <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> · <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> · <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> · <a href="../../i18n/ro/README.md">🇷🇴 Română</a> · <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> · <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> · <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> · <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> · <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> · <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> · <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> · <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> · <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> · <a href="../../i18n/he/README.md">🇮🇱 עברית</a> · <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> · <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> · <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> · <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> · <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> · <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> · <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> · <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> · <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
+
+</details>
 
 ### 후원사
 
@@ -64,63 +43,134 @@
   <sub><span>여러분의 후원으로 모든 레슨을 무료 오픈소스로 유지할 수 있습니다.</span> <a href="#supporters">모든 후원자 보기</a> · <a href="../../SPONSORS.md">후원자가 되세요</a></sub>
 </p>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-> **학생의 84%는 이미 AI 도구를 사용하지만, 이를 전문적으로 다룰 준비가 되었다고 느끼는 사람은 18%뿐입니다.** 이 커리큘럼이 그 간극을 메웁니다.
->
-> 523개 레슨. 20단계. 약 342시간. Python, TypeScript, Rust, Julia. 모든 레슨은 프롬프트, 스킬, 에이전트, MCP 서버와 같은 재사용 가능한 산출물을 제공합니다. 무료 오픈소스, MIT 라이선스.
->
-> AI를 배우기만 하는 것이 아닙니다. 직접 만듭니다. 처음부터 끝까지, 손으로.
+<a id="see-what-you-will-build-and-keep"></a>
+<a id="learning-routes"></a>
 
-<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b>명 독자 &nbsp;·&nbsp; <b>181,995</b> 지난 30일간 페이지 조회수 &nbsp;·&nbsp; 2026-08-29 기준</sub></p>
-<!-- STATS:END -->
+## 학습 경로
 
-## 여기서 시작하세요: 만들고 싶은 것을 선택하세요
+| 경로 | 첫 수업 |
+|---|---|
+| 모델의 토대 | [환경 설정과 도구](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| LLM 시스템 | [프롬프트 엔지니어링](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| 에이전트와 전달 | [에이전트 루프](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
 
-시작하기 전에 523개 레슨을 모두 훑어볼 필요는 없습니다. 목표 하나를 고르세요. 각 링크는 GitHub 또는 웹사이트에서 같은 교육과정을 엽니다. 두 버전 모두 같은 레슨 코드를 사용합니다.
+[커리어 경로 비교](https://aiengineeringfromscratch.com/learning-paths.html) · [선수 지식과 학습 시간](#study-guide)
 
-| 목표 | GitHub에서 학습 | 웹사이트에서 학습 |
-|---|---|---|
-| 입문자로서 기초를 모두 다지고 싶습니다 | [0단계: 설정 및 도구](../../phases/00-setup-and-tooling/) | [개발 환경](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Python을 알고 있으며 수학과 머신러닝 기초를 배우고 싶습니다 | [1단계: 수학 기초](../../phases/01-math-foundations/) | [선형대수 직관](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| 프로덕션용 LLM 애플리케이션을 만들고 싶습니다 | [11단계: LLM 엔지니어링](../../phases/11-llm-engineering/) | [프롬프트 엔지니어링](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| 에이전트를 만들고 싶습니다 | [14단계: 에이전트 엔지니어링](../../phases/14-agent-engineering/) | [에이전트 루프](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| 실제 저장소에서 코딩 에이전트를 사용하고 싶습니다 | [에이전트 지원 엔지니어링 학습 경로](../../learning-paths/using-coding-agents.json) | [에이전트 지원 엔지니어링](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| 구현 전에 무엇을 만들지 올바르게 판단하고 싶습니다 | [제품 판단 및 전달 학습 경로](../../learning-paths/shaping-the-build.json) | [제품 판단 및 전달](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| Model Context Protocol(MCP)로 구축하고 싶습니다 | [Model Context Protocol(MCP) 학습 경로](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol(MCP) 경로](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Agent Skills를 작성하고 배포하고 싶습니다 | [집중 Agent Skills 학습 경로](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 경로](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Claude 인증을 준비하고 싶습니다 | [인증 과정 시작하기](../../certifications/claude/GETTING_STARTED.md) | [인증 아카데미](https://aiengineeringfromscratch.com/certifications.html) |
-| MCP Associate(MCPA) 인증을 준비하고 싶습니다 | [MCPA 과정 시작하기](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA 트랙](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+<a id="interactive-lab"></a>
 
-어디서 시작해야 할지 모르겠다면 [`start-learning` 수준 진단 튜터](../../skills/start-learning/SKILL.md) 또는 [웹사이트 사전 요건 안내](https://aiengineeringfromscratch.com/prereqs.html)를 이용하세요.
+### 경사 하강법
 
-4개 핵심 분야와 6개 진로를 [AI 엔지니어링 학습 경로](https://aiengineeringfromscratch.com/learning-paths.html)에서 비교해 보세요.
+20개의 시작점이 이차 손실 함수 위에서 경사 하강법에 따라 이동합니다. 그래프는 각 업데이트 후의 위치와 평균 손실을 보여 줍니다.
 
-### 모든 레슨을 같은 방식으로 활용하세요
+<p align="center">
+  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+    <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
+      <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
+      <source media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-dark.png">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-light.png">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-mobile-dark.gif">
+      <source media="(max-width: 600px)" srcset="../../assets/readme/101-gradient-mobile-light.gif">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-dark.gif">
+      <img src="../../assets/readme/101-gradient-light.gif" alt="경사 하강법은 흩어진 시작점을 손실의 최솟값을 갖는 지점으로 이동시킵니다. 업데이트할 때마다 평균 손실이 줄어듭니다." width="840">
+    </picture>
+  </a>
+</p>
 
-1. **읽기**: `docs/en.md`를 읽고 핵심 개념을 자신의 말로 설명합니다.
-2. **직접 입력하고 만들기**: 코드 블록을 장식처럼 보는 데 그치지 말고 중요한 코드를 직접 입력해 구현합니다.
-3. **실행하기**: `README.md`와 `phases/`가 있는 저장소 루트에서 레슨 명령을 실행합니다.
-4. **근거 남기기**: 명령, 작업 디렉터리, 종료 코드, 의미 있는 출력, 변경하거나 만든 산출물을 기록합니다.
-5. **계속 진행하기**: 출력을 설명하고 추측 없이 작은 변경 하나를 할 수 있을 때 다음으로 넘어갑니다.
+[수업에서 학습률 조정](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [코드로 GD, 모멘텀, Adam 비교](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
-레슨 페이지의 명령은 디렉터리를 변경하라고 명시한 경우를 제외하면 저장소 루트를 기준으로 한 경로입니다. 레슨에 여러 언어 구현이 있으면 학습 중인 언어의 구현을 실행하세요.
+<a id="project-challenges"></a>
 
-### 저장소를 복제하고 첫 실행 근거를 만드세요
+### 프로젝트
+
+단계별 시작 코드, 참조 구현, 로컬 채점기가 있는 세 프로젝트입니다. [환경 설정](#local-setup) 후 저장소 루트에서 명령을 실행하세요. 각 단계를 구현할 때까지 시작 코드는 검사에 실패합니다.
+
+<details>
+<summary><strong>01 · 검색 평가 실습</strong> · Python · 순위 지표와 성능 저하 검사</summary>
+
+후보 시스템의 평균 NDCG는 높아지지만 한 질의에서 가장 관련성 높은 근거의 순위는 낮아집니다. 질의별 비교를 구현해 성능 저하를 보고하고 출시 검사를 실패시킬 수 있게 하세요.
+
+Python 3.10+를 사용하세요. [RAG](../../phases/11-llm-engineering/06-rag/docs/en.md)와 [모델 평가](../../phases/02-ml-fundamentals/09-model-evaluation/docs/en.md)을 복습하세요. 순위 검증, 정밀도와 재현율, 순위에 민감한 지표, 시스템 비교 순으로 구현하세요.
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --init learning-artifacts/retrieval-evaluation-lab
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --stage 1 --path learning-artifacts/retrieval-evaluation-lab --strict
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --all --path learning-artifacts/retrieval-evaluation-lab --strict
 ```
-사전 점검은 지금 필요한 요건과 나중에 필요한 도구를 구분합니다. 필수 점검에 실패하면 감지된 원인과 해결 명령을 표시합니다. 두 번째 명령은 의존성이 없는 레슨을 실행하며, 행렬과 벡터의 곱이 신경망 계층 내부에서 수행되는 연산임을 보여 줍니다. 터미널 출력을 첫 실행 근거로 저장하세요.
 
-## 30초 만에 AI 튜터 추가하기
+**보관할 것:** 질의별 차이와 점수에 사용한 관련성 판정을 포함한 재현 가능한 비교 결과. 지표는 해당 판정에 대한 결과를 나타내며 답변의 정확성을 입증하지는 않습니다.
 
-Node.js, `npx`, 스킬을 지원하는 코딩 에이전트가 이미 설치되어 있다면 두 명령으로 코딩 에이전트를 튜터로 사용할 수 있습니다. 튜터를 설치하거나 읽는 데 저장소 복제는 필요하지 않습니다. 특정 학습 경로의 실습을 실행하려면 `python3`가 필요합니다. Agent Skills 호스트 실습에는 사용할 호스트를 선택하고 쓰기 가능한 사용자 또는 프로젝트 스킬 범위를 지정해야 합니다.
+[프로젝트 시작](https://aiengineeringfromscratch.com/project.html?id=retrieval-evaluation-lab) · [참조 구현 살펴보기](../../projects/retrieval-evaluation-lab/solution/) · [자신의 입력으로 실행](../../projects/retrieval-evaluation-lab/README.md#run-with-your-own-inputs)
+
+</details>
+
+<details>
+<summary><strong>02 · 에이전트 추적 디버거</strong> · TypeScript · 추적 파싱과 시간 계산</summary>
+
+제공된 추적의 소요 시간은 여전히 100 ms이지만 총 토큰 사용량은 200 늘어나고 한 스팬이 실패하기 시작합니다. 겹치는 자식 스팬의 작업과 부모 스팬 자체의 실행 시간을 구분하고 변화를 드러내는 보고서를 만드세요.
+
+Node.js 22.18+와 채점기용 Python 3을 사용하세요. JSONL 파싱, 부모 관계 검증, 구간 연산, 살펴볼 수 있는 타임라인 순으로 구현하세요.
+
+```bash
+python3 scripts/project_test.py agent-trace-debugger \
+  --init learning-artifacts/agent-trace-debugger
+python3 scripts/project_test.py agent-trace-debugger \
+  --stage 1 --path learning-artifacts/agent-trace-debugger --strict
+python3 scripts/project_test.py agent-trace-debugger \
+  --all --path learning-artifacts/agent-trace-debugger --strict
+```
+
+**보관할 것:** 입력 추적, HTML 타임라인, JSON 성능 저하 보고서. 부모와 자식의 사용량을 중복 집계하지 않도록 각 스팬 자체가 사용한 토큰 수만 기록하세요.
+
+[프로젝트 시작](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger) · [참조 구현 살펴보기](../../projects/agent-trace-debugger/solution/) · [시간 계산을 대화형으로 탐색](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger&stage=03-timing)
+
+</details>
+
+<details>
+<summary><strong>03 · 도구 호출 방화벽</strong> · Rust · 역할 검사와 승인 기록</summary>
+
+검토 후 쓰기 내용이 바뀌거나 승인이 재사용되는 상황을 다룹니다. 호출 봉투를 검증하고 호출자의 역할과 경로를 확인한 다음, 정확한 요청과 내용에 연결된 승인을 소모하세요.
+
+Rust와 Python 3.10+를 사용하세요. [도구 스키마 설계](../../phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md)와 [보안 경계](../../phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md)를 복습하세요. 호출 애플리케이션이 신원을 제공하고 모델은 작업을 제안합니다.
+
+```bash
+python3 scripts/project_test.py tool-call-firewall \
+  --init learning-artifacts/tool-call-firewall
+python3 scripts/project_test.py tool-call-firewall \
+  --stage 1 --path learning-artifacts/tool-call-firewall --strict
+python3 scripts/project_test.py tool-call-firewall \
+  --all --path learning-artifacts/tool-call-firewall --strict
+```
+
+**보관할 것:** 요청된 작업과 정책 결정을 보여 주는 감사 기록. 승인은 한 번의 호출 안에서 한 번만 사용할 수 있습니다. 이 프로젝트는 영구적인 권한 부여나 운영체제 샌드박스를 제공하지 않습니다.
+
+[프로젝트 시작](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall) · [참조 구현 살펴보기](../../projects/tool-call-firewall/solution/) · [승인 경계 탐색](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall&stage=03-consume-a-request-bound-approval-once)
+
+</details>
+
+[모든 프로젝트 보기](https://aiengineeringfromscratch.com/projects.html) · [커리어 실무 안내](../../learning-paths/CAREER-PRACTICE.md)
+
+## 학습 방식 선택
+
+### 웹사이트에서 학습
+
+[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)에서 완료된 레슨을 열거나 [목차](#contents)에서 단계를 펼쳐 보세요. 설정이나 복제가 필요하지 않습니다.
+
+### AI 튜터와 학습
+
+Node.js, `npx`, 스킬을 지원하는 코딩 에이전트가 이미 설치되어 있다면 코딩 에이전트를 튜터로 사용할 수 있습니다. 튜터를 설치하거나 읽는 데 저장소 복제는 필요하지 않습니다. 특정 학습 경로의 실습을 실행하려면 `python3`가 필요합니다. Agent Skills 호스트 실습에는 사용할 호스트를 선택하고 쓰기 가능한 사용자 또는 프로젝트 스킬 범위를 지정해야 합니다.
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+설치 프로그램이 물으면 호스트와 범위를 선택하세요. Codex에서는 `start-learning`, Claude Code에서는 `/start-learning`을 사용하거나 호스트에 스킬 이름으로 사용을 요청하세요.
+
+<details>
+<summary>튜터 설정과 호스트 명령어</summary>
 
 먼저 로컬 요건을 확인하세요.
 
@@ -129,11 +179,9 @@ node --version
 npx --version
 python3 --version
 ```
-그런 다음 교육과정 스킬을 설치하세요. 설치 프로그램이 물으면 사용할 호스트와 범위를 선택합니다.
 
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
+`skills`는 설치 중 선택한 호스트와 범위에 파일을 씁니다. 예를 들어 `.claude/skills/`, `.cursor/skills/`, `.codex/skills/`에 기록합니다. 선택한 호스트가 해당 경로를 실제로 검색하는지 확인하세요.
+
 호출 문법은 호스트마다 다르며, 이식 가능한 `SKILL.md` 형식에 포함되지 않습니다.
 
 | 호스트 | 코스 시작 | Model Context Protocol(MCP) 시작 | Agent Skills 시작 | 단계 퀴즈 실행 |
@@ -150,17 +198,101 @@ Agent Skills만 배우려면 호스트에 맞는 Agent Skills 호출 방법을 �
 
 설치 프로그램은 설정할 수 있는 호스트를 나열하고 설치 위치를 묻습니다. Node.js, `npx`, `python3`, 지원되는 호스트 또는 쓰기 가능한 범위가 아직 없다면 웹사이트를 이용하거나 `docs/en.md`를 직접 읽으세요. 이 경로로 개념을 익힐 수 있지만, 실제 호스트 검색, 호출, 스크립트, 제거 근거는 사전 점검을 실행할 수 있을 때까지 보류됩니다. [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)에서 레슨을 읽을 수 있습니다.
 
-## 이 교육과정은 이렇게 진행됩니다
+### 학습 스킬
 
-AI 학습 자료는 논문, 파인튜닝 게시물, 화려한 에이전트 데모처럼 흩어진 조각으로 제공되는 경우가 많습니다. 이런 조각들이 서로 잘 맞물리는 일은 드뭅니다. 챗봇을 배포하고도 손실 곡선을 설명하지 못하거나, 에이전트에 함수를 연결하고도 그 에이전트를 호출하는 모델 안에서 어텐션이 무슨 역할을 하는지 설명하지 못할 수 있습니다.
+| 스킬 | 기능 |
+|---|---|
+| [`start-learning`](../../skills/start-learning/SKILL.md) | 최초 안내를 진행합니다. 학습 목적을 묻고 수준 진단 퀴즈를 내며 개인별 계획을 `LEARNING.md`에 저장합니다. |
+| [`learn`](../../skills/learn/SKILL.md) | 튜터 루프를 진행합니다. 워밍업 복습 후 다음 레슨을 대화형으로 가르치고 퀴즈를 내며, 진행 상황과 복습 대기열을 기록합니다. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | 주제를 찾아 줍니다. “어텐션은 어디서 배우나요?” 또는 “손실이 NaN입니다”와 같은 질문에 알맞은 레슨과 링크를 안내합니다. |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Model Context Protocol(MCP) 전용 튜터입니다. `MCP-LEARNING.md`를 만들고 17개 레슨 매니페스트를 따르며, 와이어 형식, 보안, 신뢰성, 적합성 근거를 기록합니다. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Agent Skills 전용 튜터입니다. `AGENT-SKILLS-LEARNING.md`를 만들고 레슨 22, 24, 25, 26, 27을 가르치며 실제 호스트 근거를 기록합니다. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | 인증 튜터입니다. CCAO-F, CCDV-F, CCAR-F, CCAR-P 중 트랙을 선택하고 각 레슨을 가르치며 실습을 실행하고 산출물을 검토합니다. 진단과 모의시험을 진행하고 진도를 저장합니다. |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA 튜터입니다. 2026-07-28 프로토콜의 34개 레슨 `mcpa-f` 경로를 따라가며 레슨과 실습, 와이어 검사기를 실행하고 진단 및 모의시험 3회를 진행한 뒤 진도를 저장합니다. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | 10문항 수준 진단 퀴즈로 지식을 시작 단계에 연결하고 예상 시간이 포함된 개인별 경로를 만듭니다. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | 단계별 8문항 퀴즈를 내고 피드백과 복습할 레슨을 제안합니다. 위 호출 표의 Codex, Claude Code 또는 자연어 형식을 사용하세요. |
 
-이 교육과정은 전체 내용을 연결하는 뼈대입니다. 20단계, 523개 레슨, 4개 언어(Python, TypeScript, Rust, Julia)로 한쪽 끝의 선형대수부터 다른 쪽 끝의 자율 스웜까지 다룹니다. 모든 알고리즘을 먼저 기초 수학에서부터 구현합니다. 역전파, 토크나이저, 어텐션, 에이전트 루프를 배우고 나면 PyTorch가 등장할 때 내부에서 무슨 일이 일어나는지 이미 이해하고 있습니다.
+</details>
 
-모든 레슨은 같은 순서로 진행됩니다. 문제를 읽고, 수학을 유도하고, 코드를 작성하고, 테스트를 실행하고, 산출물을 보관합니다. 5분짜리 동영상이나 복사-붙여넣기식 배포, 일일이 이끄는 방식에 의존하지 않습니다. 무료 오픈소스이며 자신의 노트북에서 실행할 수 있습니다.
+<a id="local-setup"></a>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+### 로컬 코드 실행
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+
+사전 점검은 지금 필요한 요건과 나중에 필요한 도구를 구분합니다. 필수 점검에 실패하면 감지된 원인과 해결 명령을 표시합니다. `vectors.py` 명령은 의존성이 없는 레슨을 실행하며, 행렬과 벡터의 곱이 신경망 계층 내부에서 수행되는 연산임을 보여 줍니다. 터미널 출력을 첫 실행 근거로 저장하세요.
+
+<details>
+<summary>모든 레슨을 같은 방식으로 활용하세요</summary>
+
+### 모든 레슨을 같은 방식으로 활용하세요
+
+1. **읽기**: `docs/en.md`를 읽고 핵심 개념을 자신의 말로 설명합니다.
+2. **직접 입력하고 만들기**: 코드 블록을 장식처럼 보는 데 그치지 말고 중요한 코드를 직접 입력해 구현합니다.
+3. **실행하기**: `README.md`와 `phases/`가 있는 저장소 루트에서 레슨 명령을 실행합니다.
+4. **근거 남기기**: 명령, 작업 디렉터리, 종료 코드, 의미 있는 출력, 변경하거나 만든 산출물을 기록합니다.
+5. **계속 진행하기**: 출력을 설명하고 추측 없이 작은 변경 하나를 할 수 있을 때 다음으로 넘어갑니다.
+
+레슨 페이지의 명령은 디렉터리를 변경하라고 명시한 경우를 제외하면 저장소 루트를 기준으로 한 경로입니다. 레슨에 여러 언어 구현이 있으면 학습 중인 언어의 구현을 실행하세요.
+
+</details>
+
+<a id="study-guide"></a>
+
+## 학습 경로 선택
+
+시작하기 전에 523개 레슨을 모두 훑어볼 필요는 없습니다. 목표 하나를 고르세요. 각 링크는 GitHub 또는 웹사이트에서 같은 교육과정을 엽니다. 두 버전 모두 같은 레슨 코드를 사용합니다.
+
+| 목표 | GitHub에서 학습 | 웹사이트에서 학습 |
+|---|---|---|
+| 입문자로서 기초를 모두 다지고 싶습니다 | [0단계: 설정 및 도구](../../phases/00-setup-and-tooling/) | [개발 환경](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Python을 알고 있으며 수학과 머신러닝 기초를 배우고 싶습니다 | [1단계: 수학 기초](../../phases/01-math-foundations/) | [선형대수 직관](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| 프로덕션용 LLM 애플리케이션을 만들고 싶습니다 | [11단계: LLM 엔지니어링](../../phases/11-llm-engineering/) | [프롬프트 엔지니어링](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| 에이전트를 만들고 싶습니다 | [14단계: 에이전트 엔지니어링](../../phases/14-agent-engineering/) | [에이전트 루프](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| 실제 저장소에서 코딩 에이전트를 사용하고 싶습니다 | [에이전트 지원 엔지니어링 학습 경로](../../learning-paths/using-coding-agents.json) | [에이전트 지원 엔지니어링](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| 구현 전에 무엇을 만들지 올바르게 판단하고 싶습니다 | [제품 판단 및 전달 학습 경로](../../learning-paths/shaping-the-build.json) | [제품 판단 및 전달](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+
+어디서 시작해야 할지 모르겠다면 [`start-learning` 수준 진단 튜터](../../skills/start-learning/SKILL.md) 또는 [웹사이트 사전 요건 안내](https://aiengineeringfromscratch.com/prereqs.html)를 이용하세요.
+
+4개 핵심 분야와 6개 진로를 [AI 엔지니어링 학습 경로](https://aiengineeringfromscratch.com/learning-paths.html)에서 비교해 보세요.
+
+<details>
+<summary>MCP와 Agent Skills 집중 경로</summary>
+
+| 목표 | GitHub에서 학습 | 웹사이트에서 학습 |
+|---|---|---|
+| Model Context Protocol(MCP)로 구축하고 싶습니다 | [Model Context Protocol(MCP) 학습 경로](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol(MCP) 경로](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Agent Skills를 작성하고 배포하고 싶습니다 | [집중 Agent Skills 학습 경로](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 경로](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+
+</details>
+
+<details>
+<summary>선수 지식과 학습 시간</summary>
+
+### 사전 요건
+
+- 어떤 언어로든 코드를 작성할 수 있어야 합니다(Python을 알면 도움이 됩니다).
+- API를 호출하는 데 그치지 않고 AI가 **실제로 어떻게 작동하는지** 이해하고 싶어야 합니다.
+
+## 어디서 시작할까요
+
+| 현재 배경 | 시작 단계 | 예상 시간 |
+|---|---|---|
+| 프로그래밍과 AI가 처음입니다 | 0단계 — 설정 | 약 306시간 |
+| Python을 알고 머신러닝은 처음입니다 | 1단계 — 수학 기초 | 약 270시간 |
+| 머신러닝을 알고 딥러닝은 처음입니다 | 3단계 — 딥러닝 핵심 | 약 200시간 |
+| 딥러닝을 알고 LLM과 에이전트를 배우고 싶습니다 | 10단계 — LLM 처음부터 구현 | 약 100시간 |
+| 시니어 엔지니어이며 에이전트 엔지니어링만 배우고 싶습니다 | 14단계 — 에이전트 엔지니어링 | 약 60시간 |
+| 프로덕션 MCP 시스템만 구축하고 싶습니다 | [Model Context Protocol(MCP) 경로](../../learning-paths/model-context-protocol.json) | 약 23시간 15분 |
+| 프로덕션 Agent Skills만 만들고 싶습니다 | [Agent Skills 엔지니어링 경로](../../learning-paths/agent-skills.json) | 약 9.5시간 |
+
+</details>
+
 ## 커리큘럼의 구조
 
 20개 단계가 차곡차곡 쌓입니다. 수학이 기초이고 에이전트와 프로덕션이 꼭대기입니다. 아래 단계를 이미 알고 있다면 앞부분을 건너뛰어도 됩니다. 다만 기초를 건너뛰고 나서 상위 단계가 왜 고장 나는지 고민하지는 마세요.
@@ -190,185 +322,7 @@ flowchart TB
   P17 --> P19
   P18 --> P19
 ```
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-## 레슨의 구조
 
-각 레슨은 전용 폴더에 있으며, 교육과정 전체에서 같은 구조를 사용합니다.
-
-```text
-phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      실행 가능한 구현(Python, TypeScript, Rust, Julia)
-├── docs/
-│   └── en.md  레슨 설명
-└── outputs/   레슨에서 만드는 프롬프트, 스킬, 에이전트 또는 MCP 서버
-```
-모든 레슨은 여섯 단계로 진행됩니다. 핵심은 *Build It / Use It*의 흐름입니다. 먼저 알고리즘을 처음부터 구현한 다음 프로덕션 라이브러리로 같은 작업을 실행합니다. 더 작은 버전을 직접 작성했기 때문에 프레임워크가 무엇을 하는지 이해할 수 있습니다.
-
-```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
-flowchart LR
-  M["핵심 문장<br/><sub>한 줄 핵심 아이디어</sub>"] --> Pr["문제<br/><sub>구체적인 어려움</sub>"]
-  Pr --> C["개념<br/><sub>도표와 직관</sub>"]
-  C --> B["직접 만들기<br/><sub>기초 수학, 프레임워크 없이</sub>"]
-  B --> U["사용하기<br/><sub>PyTorch / sklearn으로 같은 작업</sub>"]
-  U --> S["배포하기<br/><sub>프롬프트 · 스킬 · 에이전트 · MCP</sub>"]
-```
-## 시작하기
-
-시작 방법은 세 가지입니다. 하나를 선택하세요.
-
-**옵션 A — 터미널에서 학습하기(권장).** 위의 Node.js, `npx`, 호스트, 범위 사전 점검을 마친 뒤 학습 스킬을 호환되는 에이전트에 설치하고 코스를 따라 학습합니다.
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
-위의 호스트별 호출 표를 사용하세요. 설치된 스킬로 `start-learning`, `learn`, `course-guide`와 집중 학습 경로인 `learn-mcp`, `learn-agent-skills`를 사용할 수 있습니다. 레슨 설명은 저장소를 복제하지 않아도 이 저장소에서 바로 제공됩니다. 저장소 코드를 사용하는 명령과 실행 가능한 MCP 또는 Agent Skills 실습에는 로컬 복제가 필요합니다. 진행 상황은 프로젝트의 `LEARNING.md`, `MCP-LEARNING.md`, `AGENT-SKILLS-LEARNING.md`에 저장되므로 다음 세션에서 이어서 학습할 수 있습니다.
-
-**옵션 B — 읽기.** [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)에서 완료된 레슨을 열거나 [목차](#contents)에서 단계를 펼쳐 보세요. 설정이나 복제가 필요하지 않습니다.
-
-**옵션 C — 복제하고 실행하기.**
-
-```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
-```
-저장소를 복제하면 Claude Code에서 학습 스킬도 자동으로 불러옵니다. 또한 모든 레슨 코드를 `learn` 튜터로 실제 실행할 수 있어 읽기만 하는 데 그치지 않습니다.
-
-### 사전 요건
-
-- 어떤 언어로든 코드를 작성할 수 있어야 합니다(Python을 알면 도움이 됩니다).
-- API를 호출하는 데 그치지 않고 AI가 **실제로 어떻게 작동하는지** 이해하고 싶어야 합니다.
-
-### Claude 인증 준비
-
-[Claude 인증 아카데미](../../certifications/claude/README.md)는 공식 Claude 인증 트랙 4종(Associate Foundations, Developer Foundations, Architect Foundations, Architect Professional)을 위한 무료 오픈소스 준비 과정입니다. 각 경로에는 시험 청사진에 맞춘 레슨, 실행 가능한 실습, 진단 평가, 캡스톤 작업, 전체 길이의 독창적인 모의시험이 포함됩니다.
-
-[AI 네이티브 GitHub 시작 안내서](../../certifications/claude/GETTING_STARTED.md)는 Claude Code, Codex, ChatGPT, Cursor 및 다른 에이전트에서 사용할 수 있습니다. Codex에서는 `claude-certification`을, Claude Code에서는 `/claude-certification`을 실행하세요. 다른 호스트에서는 `claude-certification`을 사용하라고 요청하면 됩니다. 안내서는 트랙을 선택하고 `CLAUDE-CERTIFICATION.md`에 지속적인 학습 경로를 만들며, 한 단계씩 가르치고 실제 실습을 실행한 뒤 산출물에 기반한 피드백을 제공합니다. 같은 교육과정은 [인증 웹사이트](https://aiengineeringfromscratch.com/certifications.html)에서도 이용할 수 있습니다.
-
-이 아카데미는 공개된 시험 목표에 기반한 독립 학습 자료입니다. Anthropic과 제휴하지 않으며, 실제 시험 문제를 재현하지 않고, 합격을 보장하지도 않습니다.
-
-### MCP Associate(MCPA) 인증 준비
-
-[MCPA 인증 교육과정](../../certifications/mcpa/README.md)은 Linux Foundation Training을 통해 제공되는 Agentic AI Foundation의 Model Context Protocol Associate 시험을 위한 무료 오픈소스 준비 과정입니다. 34개 레슨에서 2026-07-28 무상태 프로토콜을 다섯 시험 영역에 따라 학습합니다. 이전 핸드셰이크를 대신하는 요청별 `_meta`와 `server/discover`, 여러 차례 왕복하는 요청, 구독, 캐싱, Tasks 및 MCP Apps 확장, OAuth 권한 부여, 레지스트리와 SDK 계층을 다룹니다. 모든 레슨에는 실행 가능한 표준 라이브러리 실습이 있으며, 실행 기록이 현재 와이어 형식에 맞는지 검사합니다. 트랙에는 진단 평가, 캡스톤, 공개된 청사진의 배점 비율을 따르는 전체 길이의 독창적인 모의시험 3회도 포함됩니다.
-
-[AI 네이티브 GitHub 시작 안내서](../../certifications/mcpa/GETTING_STARTED.md)는 Claude Code, Codex, ChatGPT, Cursor 및 다른 에이전트에서 사용할 수 있습니다. Codex에서는 `mcpa-certification`을, Claude Code에서는 `/mcpa-certification`을 실행하세요. 다른 호스트에서는 `mcpa-certification`을 사용하라고 요청하면 됩니다. 안내서는 `MCPA-CERTIFICATION.md`에 지속적인 학습 경로를 만들고, 한 단계씩 가르치고, 실제 실습을 실행한 뒤 산출물에 기반한 피드백을 제공합니다. 같은 교육과정은 [MCPA 트랙 페이지](https://aiengineeringfromscratch.com/certification?id=mcpa-f)에서도 이용할 수 있습니다.
-
-이 교육과정은 공개된 시험 목표에 기반한 독립 학습 자료입니다. Agentic AI Foundation 또는 Linux Foundation과 제휴하지 않으며, 실제 시험 문제를 재현하지 않고, 합격을 보장하지도 않습니다.
-
-### 학습 스킬
-
-| 스킬 | 기능 |
-|---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | 최초 안내를 진행합니다. 학습 목적을 묻고 수준 진단 퀴즈를 내며 개인별 계획을 `LEARNING.md`에 저장합니다. |
-| [`learn`](../../skills/learn/SKILL.md) | 튜터 루프를 진행합니다. 워밍업 복습 후 다음 레슨을 대화형으로 가르치고 퀴즈를 내며, 진행 상황과 복습 대기열을 기록합니다. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | 주제를 찾아 줍니다. “어텐션은 어디서 배우나요?” 또는 “손실이 NaN입니다”와 같은 질문에 알맞은 레슨과 링크를 안내합니다. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Model Context Protocol(MCP) 전용 튜터입니다. `MCP-LEARNING.md`를 만들고 17개 레슨 매니페스트를 따르며, 와이어 형식, 보안, 신뢰성, 적합성 근거를 기록합니다. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Agent Skills 전용 튜터입니다. `AGENT-SKILLS-LEARNING.md`를 만들고 레슨 22, 24, 25, 26, 27을 가르치며 실제 호스트 근거를 기록합니다. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | 인증 튜터입니다. CCAO-F, CCDV-F, CCAR-F, CCAR-P 중 트랙을 선택하고 각 레슨을 가르치며 실습을 실행하고 산출물을 검토합니다. 진단과 모의시험을 진행하고 진도를 저장합니다. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA 튜터입니다. 2026-07-28 프로토콜의 34개 레슨 `mcpa-f` 경로를 따라가며 레슨과 실습, 와이어 검사기를 실행하고 진단 및 모의시험 3회를 진행한 뒤 진도를 저장합니다. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | 10문항 수준 진단 퀴즈로 지식을 시작 단계에 연결하고 예상 시간이 포함된 개인별 경로를 만듭니다. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | 단계별 8문항 퀴즈를 내고 피드백과 복습할 레슨을 제안합니다. 위 호출 표의 Codex, Claude Code 또는 자연어 형식을 사용하세요. |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-## 코어 교육과정을 책으로 읽기
-
-`phases/`의 20단계 코어 교육과정은 6권짜리 시리즈로 만들어집니다. EPUB과 PDF는 같은 코어 레슨 소스에서 CI가 빌드해 [GitHub 릴리스](https://github.com/rohitg00/ai-engineering-from-scratch/releases)마다 첨부합니다. 아래 링크는 항상 최신 릴리스로 연결됩니다. 권 번호는 시리즈 순서이며 버전이 아닙니다. 각 책에는 날짜가 표시된 판 정보가 있고 이전 판도 해당 릴리스에서 계속 내려받을 수 있습니다.
-
-인증 교육과정은 책으로 만들지 않습니다. AI 튜터 상태, 실행 가능한 실습, 상호작용형 그림, 진단 평가, 시간 제한 모의시험은 GitHub와 웹사이트에서 계속 핵심 기능으로 제공됩니다.
-
-| 권 | 제목 | 단계 | 다운로드 |
-|---|---|---|---|
-| 1 | 기초 — 수학, 도구, 고전 머신러닝 | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | 딥러닝 — 신경망, 비전, 음성 | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | 언어 — NLP 기초와 트랜스포머 | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | 대규모 언어 모델 — 생성, 강화학습, 사전 학습, 엔지니어링 | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | 에이전트 — 멀티모달, 프로토콜, 자율성, 스웜 | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | 프로덕션 — 인프라, 안전성, 캡스톤 | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-책은 특정 시점의 스냅샷이고 이 저장소는 계속 갱신되는 판입니다. 각 장은 레슨의 애니메이션 그림, 퀴즈, 실행 가능한 코드로 연결됩니다. `python3 scripts/build_book.py`로 로컬에서 만들 수 있습니다(pandoc 필요). 파이프라인 세부 정보는 [book/README.md](../../book/README.md)를 참조하세요.
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## 모든 레슨은 산출물을 만듭니다
-
-다른 교육과정은 “X를 배웠습니다. 축하합니다.”로 끝납니다. 이 교육과정의 각 레슨은 일상적인 작업 흐름에 설치하거나 붙여 넣어 사용할 수 있는 **재사용 가능한 도구**로 마무리됩니다.
-
-<table>
-<tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A 프롬프트"/><br/><sub>FIG_001 · A</sub><br/><b>프롬프트</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B 스킬"/><br/><sub>FIG_001 · B</sub><br/><b>스킬</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C 에이전트"/><br/><sub>FIG_001 · C</sub><br/><b>에이전트</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP 서버"/><br/><sub>FIG_001 · D</sub><br/><b>MCP 서버</b></th>
-</tr>
-<tr>
-<td valign="top">특정 작업에 전문가 수준의 도움을 받으려면 어떤 AI 어시스턴트에든 붙여 넣어 사용합니다.</td>
-<td valign="top">`SKILL.md`를 읽는 Claude, Cursor, Codex, OpenClaw, Hermes 등의 에이전트에 추가할 수 있습니다.</td>
-<td valign="top">14단계에서 직접 작성한 루프를 자율 작업자로 배포합니다.</td>
-<td valign="top">MCP 호환 클라이언트에 연결해 사용합니다. 13단계에서 엔드투엔드로 구축합니다.</td>
-</tr>
-</table>
-
-> `python3 scripts/install_skills.py <target>`로 모두 설치할 수 있습니다. 숙제가 아니라 실제 도구입니다.
-> 교육과정을 마치면 직접 만들고 원리를 이해한 산출물 523개를 포트폴리오에 갖추게 됩니다.
-### FIG_002 · 구현 예시
-
-14단계 레슨 1: 에이전트 루프. 의존성이 없는 순수 Python 코드 약 120줄입니다.
-
-<table>
-<tr>
-<td valign="top" width="50%">
-
-**`code/agent_loop.py`** &nbsp; <sub><i>직접 만들기</i></sub>
-
-```python
-def run(query, tools):
-    history = [user(query)]
-    for step in range(MAX_STEPS):
-        msg = llm(history)
-        if msg.tool_calls:
-            for call in msg.tool_calls:
-                result = tools[call.name](**call.args)
-                history.append(tool_result(call.id, result))
-            continue
-        return msg.content
-    raise StepLimitExceeded
-```
-</td>
-<td valign="top" width="50%">
-
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>배포하기</i></sub>
-
-```markdown
----
-name: agent-loop
-description: ReAct-style loop for any tool list
-phase: 14
-lesson: 01
----
-
-Implement a minimal agent loop that...
-```
-**`outputs/prompt-debug-agent.md`**
-
-```markdown
-You are an agent debugger. Given the trace
-of an agent run, identify the step where
-the agent went wrong and explain why...
-```
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 <a id="contents"></a>
 
 ## 목차
@@ -1090,30 +1044,104 @@ the agent went wrong and explain why...
 
 </details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+## 도서와 자격 인증
+
+<details>
+<summary>코어 교육과정을 책으로 읽기</summary>
+
+`phases/`의 20단계 코어 교육과정은 6권짜리 시리즈로 만들어집니다. EPUB과 PDF는 같은 코어 레슨 소스에서 CI가 빌드해 [GitHub 릴리스](https://github.com/rohitg00/ai-engineering-from-scratch/releases)마다 첨부합니다. 아래 링크는 항상 최신 릴리스로 연결됩니다. 권 번호는 시리즈 순서이며 버전이 아닙니다. 각 책에는 날짜가 표시된 판 정보가 있고 이전 판도 해당 릴리스에서 계속 내려받을 수 있습니다.
+
+인증 교육과정은 책으로 만들지 않습니다. AI 튜터 상태, 실행 가능한 실습, 상호작용형 그림, 진단 평가, 시간 제한 모의시험은 GitHub와 웹사이트에서 계속 핵심 기능으로 제공됩니다.
+
+| 권 | 제목 | 단계 | 다운로드 |
+|---|---|---|---|
+| 1 | 기초 — 수학, 도구, 고전 머신러닝 | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | 딥러닝 — 신경망, 비전, 음성 | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | 언어 — NLP 기초와 트랜스포머 | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | 대규모 언어 모델 — 생성, 강화학습, 사전 학습, 엔지니어링 | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | 에이전트 — 멀티모달, 프로토콜, 자율성, 스웜 | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | 프로덕션 — 인프라, 안전성, 캡스톤 | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+책은 특정 시점의 스냅샷이고 이 저장소는 계속 갱신되는 판입니다. 각 장은 레슨의 애니메이션 그림, 퀴즈, 실행 가능한 코드로 연결됩니다. `python3 scripts/build_book.py`로 로컬에서 만들 수 있습니다(pandoc 필요). 파이프라인 세부 정보는 [book/README.md](../../book/README.md)를 참조하세요.
+
+</details>
+
+<details>
+<summary>Claude 인증 준비</summary>
+
+[Claude 인증 아카데미](../../certifications/claude/README.md)는 공식 Claude 인증 트랙 4종(Associate Foundations, Developer Foundations, Architect Foundations, Architect Professional)을 위한 무료 오픈소스 준비 과정입니다. 각 경로에는 시험 청사진에 맞춘 레슨, 실행 가능한 실습, 진단 평가, 캡스톤 작업, 전체 길이의 독창적인 모의시험이 포함됩니다.
+
+[AI 네이티브 GitHub 시작 안내서](../../certifications/claude/GETTING_STARTED.md)는 Claude Code, Codex, ChatGPT, Cursor 및 다른 에이전트에서 사용할 수 있습니다. Codex에서는 `claude-certification`을, Claude Code에서는 `/claude-certification`을 실행하세요. 다른 호스트에서는 `claude-certification`을 사용하라고 요청하면 됩니다. 안내서는 트랙을 선택하고 `CLAUDE-CERTIFICATION.md`에 지속적인 학습 경로를 만들며, 한 단계씩 가르치고 실제 실습을 실행한 뒤 산출물에 기반한 피드백을 제공합니다. 같은 교육과정은 [인증 웹사이트](https://aiengineeringfromscratch.com/certifications.html)에서도 이용할 수 있습니다.
+
+이 아카데미는 공개된 시험 목표에 기반한 독립 학습 자료입니다. Anthropic과 제휴하지 않으며, 실제 시험 문제를 재현하지 않고, 합격을 보장하지도 않습니다.
+
+</details>
+
+<details>
+<summary>MCP Associate(MCPA) 인증 준비</summary>
+
+[MCPA 인증 교육과정](../../certifications/mcpa/README.md)은 Linux Foundation Training을 통해 제공되는 Agentic AI Foundation의 Model Context Protocol Associate 시험을 위한 무료 오픈소스 준비 과정입니다. 34개 레슨에서 2026-07-28 무상태 프로토콜을 다섯 시험 영역에 따라 학습합니다. 이전 핸드셰이크를 대신하는 요청별 `_meta`와 `server/discover`, 여러 차례 왕복하는 요청, 구독, 캐싱, Tasks 및 MCP Apps 확장, OAuth 권한 부여, 레지스트리와 SDK 계층을 다룹니다. 모든 레슨에는 실행 가능한 표준 라이브러리 실습이 있으며, 실행 기록이 현재 와이어 형식에 맞는지 검사합니다. 트랙에는 진단 평가, 캡스톤, 공개된 청사진의 배점 비율을 따르는 전체 길이의 독창적인 모의시험 3회도 포함됩니다.
+
+[AI 네이티브 GitHub 시작 안내서](../../certifications/mcpa/GETTING_STARTED.md)는 Claude Code, Codex, ChatGPT, Cursor 및 다른 에이전트에서 사용할 수 있습니다. Codex에서는 `mcpa-certification`을, Claude Code에서는 `/mcpa-certification`을 실행하세요. 다른 호스트에서는 `mcpa-certification`을 사용하라고 요청하면 됩니다. 안내서는 `MCPA-CERTIFICATION.md`에 지속적인 학습 경로를 만들고, 한 단계씩 가르치고, 실제 실습을 실행한 뒤 산출물에 기반한 피드백을 제공합니다. 같은 교육과정은 [MCPA 트랙 페이지](https://aiengineeringfromscratch.com/certification?id=mcpa-f)에서도 이용할 수 있습니다.
+
+이 교육과정은 공개된 시험 목표에 기반한 독립 학습 자료입니다. Agentic AI Foundation 또는 Linux Foundation과 제휴하지 않으며, 실제 시험 문제를 재현하지 않고, 합격을 보장하지도 않습니다.
+
+</details>
+
 ## 툴킷
 
-모든 레슨은 재사용 가능한 산출물을 만듭니다. 교육과정을 마치면 다음과 같은 결과물이 남습니다.
+모든 수업은 재사용 가능한 산출물을 만듭니다. 에이전트에 설치하거나 저장소 루트에서 아래 스크립트를 사용하세요.
+
+<details>
+<summary>수업 구조와 재사용 가능한 산출물</summary>
+
+## 레슨의 구조
+
+각 레슨은 전용 폴더에 있으며, 교육과정 전체에서 같은 구조를 사용합니다.
 
 ```text
-outputs/
-├── prompts/      모든 AI 작업을 위한 프롬프트 템플릿
-└── skills/       AI 코딩 에이전트용 SKILL.md 파일
+phases/<NN>-<phase-name>/<NN>-<lesson-name>/
+├── code/      실행 가능한 구현(Python, TypeScript, Rust, Julia)
+├── docs/
+│   └── en.md  레슨 설명
+└── outputs/   레슨에서 만드는 프롬프트, 스킬, 에이전트 또는 MCP 서버
 ```
-Claude, Cursor, Codex, OpenClaw, Hermes 또는 `SKILL.md` / `AGENTS.md` 디렉터리를 읽는 다른 에이전트에서 사용할 수 있습니다. 숙제가 아니라 실제 도구입니다.
 
-### 에이전트에 코스 스킬 설치
+모든 레슨은 여섯 단계로 진행됩니다. 핵심은 *Build It / Use It*의 흐름입니다. 먼저 알고리즘을 처음부터 구현한 다음 프로덕션 라이브러리로 같은 작업을 실행합니다. 더 작은 버전을 직접 작성했기 때문에 프레임워크가 무엇을 하는지 이해할 수 있습니다.
 
-스킬 세트와 설치 프로그램은 각각 두 가지입니다.
-
-**학습 스킬**(`start-learning`, `learn`, `course-guide`, `learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`, `find-your-level`, `check-understanding`)은 [`skills/`](../../skills/)에 있으며, 지원되는 스킬 호스트에 명령 하나로 설치할 수 있습니다. Node.js와 `npx`가 필요하지만 저장소 복제나 Python은 필요하지 않습니다.
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["핵심 문장<br/><sub>한 줄 핵심 아이디어</sub>"] --> Pr["문제<br/><sub>구체적인 어려움</sub>"]
+  Pr --> C["개념<br/><sub>도표와 직관</sub>"]
+  C --> B["직접 만들기<br/><sub>기초 수학, 프레임워크 없이</sub>"]
+  B --> U["사용하기<br/><sub>PyTorch / sklearn으로 같은 작업</sub>"]
+  U --> S["배포하기<br/><sub>프롬프트 · 스킬 · 에이전트 · MCP</sub>"]
 ```
-`skills`는 설치 중 선택한 호스트와 범위에 파일을 씁니다. 예를 들어 `.claude/skills/`, `.cursor/skills/`, `.codex/skills/`에 기록합니다. 선택한 호스트가 해당 경로를 실제로 검색하는지 확인하세요.
+
+## 모든 레슨은 산출물을 만듭니다
+
+다른 교육과정은 “X를 배웠습니다. 축하합니다.”로 끝납니다. 이 교육과정의 각 레슨은 일상적인 작업 흐름에 설치하거나 붙여 넣어 사용할 수 있는 **재사용 가능한 도구**로 마무리됩니다.
+
+<table>
+<tr>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A 프롬프트"/><br/><sub>FIG_001 · A</sub><br/><b>프롬프트</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B 스킬"/><br/><sub>FIG_001 · B</sub><br/><b>스킬</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C 에이전트"/><br/><sub>FIG_001 · C</sub><br/><b>에이전트</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP 서버"/><br/><sub>FIG_001 · D</sub><br/><b>MCP 서버</b></th>
+</tr>
+<tr>
+<td valign="top">특정 작업에 전문가 수준의 도움을 받으려면 어떤 AI 어시스턴트에든 붙여 넣어 사용합니다.</td>
+<td valign="top">`SKILL.md`를 읽는 Claude, Cursor, Codex, OpenClaw, Hermes 등의 에이전트에 추가할 수 있습니다.</td>
+<td valign="top">14단계에서 직접 작성한 루프를 자율 작업자로 배포합니다.</td>
+<td valign="top">MCP 호환 클라이언트에 연결해 사용합니다. 13단계에서 엔드투엔드로 구축합니다.</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>수업 산출물 설치</summary>
 
 **레슨 산출물.** 저장소의 `phases/**/outputs/`에는 스킬 396개와 프롬프트 99개가 있습니다. `scripts/install_skills.py`로 설치할 수 있으며 저장소 복제가 필요합니다. 태그 필터, 드라이런, 에이전트별 레이아웃을 지원합니다.
 
@@ -1127,6 +1155,7 @@ python3 scripts/install_skills.py <target> --layout flat                   # fla
 python3 scripts/install_skills.py <target> --dry-run                       # preview without writing
 python3 scripts/install_skills.py <target> --force                         # overwrite existing files
 ```
+
 `<target>`는 에이전트의 스킬 디렉터리입니다. 예: `~/.claude/skills/`, `~/.cursor/skills/`, `~/.config/openclaw/skills/`, `.skills/` 또는 에이전트가 읽는 경로.
 
 기본적으로 스크립트는 기존 파일을 덮어쓰지 않습니다. 충돌하는 경로를 모두 나열하고 종료 코드 1을 반환합니다. `--dry-run`으로 충돌을 미리 볼 수 있고 `--force`로 덮어쓸 수 있습니다. 드라이런이 아닌 실행은 유형과 단계별 전체 목록을 `manifest.json`에 기록합니다. 에이전트가 읽는 레이아웃을 선택하세요.
@@ -1137,7 +1166,10 @@ python3 scripts/install_skills.py <target> --force                         # ove
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### 에이전트 워크벤치를 자체 저장소에 추가
+</details>
+
+<details>
+<summary>에이전트 워크벤치를 자체 저장소에 추가</summary>
 
 14단계 캡스톤은 재사용 가능한 Agent Workbench 팩(AGENTS.md, 스키마, 초기화·검증·핸드오프 스크립트)을 제공합니다. 어느 저장소에나 다음과 같이 구성할 수 있습니다.
 
@@ -1147,9 +1179,13 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --minimal  # skip docs/
 python3 scripts/scaffold_workbench.py path/to/your-repo --dry-run  # preview only
 python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 ```
+
 워크벤치의 일곱 구성 요소가 연결되고 기본 `task_board.json`과 새 `agent_state.json`(`schema_version: 1`)이 생성됩니다. 이후 작업과 `AGENTS.md`를 편집하고 `scripts/init_agent.py`를 실행한 뒤 계약을 에이전트에 전달하면 됩니다. 팩의 원본은 `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`에 있습니다.
 
-### 전체 코스를 JSON으로 살펴보기
+</details>
+
+<details>
+<summary>전체 코스를 JSON으로 살펴보기</summary>
 
 `scripts/build_catalog.py`는 모든 단계와 레슨, 디스크에 있는 산출물을 순회해 저장소 루트에 `catalog.json`을 만듭니다. 코스 정보를 한 파일에 담습니다.
 
@@ -1158,11 +1194,15 @@ python3 scripts/build_catalog.py               # writes <repo>/catalog.json
 python3 scripts/build_catalog.py --stdout      # to stdout, do not touch repo
 python3 scripts/build_catalog.py --out path/to/file.json
 ```
+
 카탈로그는 README가 아니라 파일 시스템을 기반으로 하므로 실제 디스크의 항목 수와 항상 일치합니다. 사이트 빌드나 후속 도구에서 사용하거나 README의 수치가 달라지지 않았는지 확인할 수 있습니다. 스키마는 스크립트 맨 위에 설명되어 있습니다.
 
-GitHub Actions(`.github/workflows/curriculum.yml`)는 모든 PR에서 `catalog.json`을 다시 만들고, 커밋된 파일이 오래되었으면 빌드를 실패시킵니다. 레슨을 수정한 뒤 `python3 scripts/build_catalog.py`를 실행해 결과를 커밋하세요. 그렇지 않으면 CI가 PR을 거부합니다. 같은 워크플로는 `audit_lessons.py`도 경고 전용 모드로 실행하므로 기존 불일치가 기여를 막지 않습니다.
+교육과정 워크플로는 `catalog.json`을 Git에서 무시하는 임시 산출물로 만듭니다. 커밋하지 마세요. 같은 워크플로는 `audit_lessons.py`를 필수 통과 검사로 실행합니다.
 
-### 모든 레슨의 Python 코드를 스모크 체크하기
+</details>
+
+<details>
+<summary>모든 레슨의 Python 코드를 스모크 체크하기</summary>
 
 `scripts/lesson_run.py`는 각 레슨 `code/` 디렉터리의 모든 `.py` 파일을 바이트 컴파일합니다. 기본 모드는 실행 없이 구문만 확인하므로 API 키나 무거운 머신러닝 의존성이 필요하지 않습니다. 잘못된 들여쓰기, 깨진 f문자열, 실수로 들어간 편집 등 기여자가 자주 만드는 회귀를 찾습니다.
 
@@ -1173,46 +1213,15 @@ python3 scripts/lesson_run.py --json           # JSON report on stdout
 python3 scripts/lesson_run.py --strict         # exit 1 if any lesson fails
 python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per lesson
 ```
+
 `--execute`는 각 레슨의 `code/main.py`(또는 첫 번째 `.py` 파일)를 실행하며 레슨당 10초 제한이 있습니다. 시작 파일의 첫 부분에 `# requires: pkg1, pkg2`처럼 표준 라이브러리가 아닌 의존성을 적은 주석이 있으면 해당 레슨은 `needs <deps>` 사유와 함께 건너뜁니다. 이 스크립트는 선택 기능이며 CI에는 연결되어 있지 않습니다.
 
 링크 검사는 표준 라이브러리만 사용하며 Python 3.10 이상이 필요합니다. `LINK_CHECK_SKIP=domain1,domain2`로 기본 제외 도메인(`twitter.com`, `x.com`, `linkedin.com`, `instagram.com`, `medium.com`)을 바꿀 수 있습니다. 이 도메인들은 자동화된 HEAD/GET 요청을 적극적으로 차단합니다.
 
-## 어디서 시작할까요
+</details>
 
-| 현재 배경 | 시작 단계 | 예상 시간 |
-|---|---|---|
-| 프로그래밍과 AI가 처음입니다 | 0단계 — 설정 | 약 306시간 |
-| Python을 알고 머신러닝은 처음입니다 | 1단계 — 수학 기초 | 약 270시간 |
-| 머신러닝을 알고 딥러닝은 처음입니다 | 3단계 — 딥러닝 핵심 | 약 200시간 |
-| 딥러닝을 알고 LLM과 에이전트를 배우고 싶습니다 | 10단계 — LLM 처음부터 구현 | 약 100시간 |
-| 시니어 엔지니어이며 에이전트 엔지니어링만 배우고 싶습니다 | 14단계 — 에이전트 엔지니어링 | 약 60시간 |
-| 프로덕션 MCP 시스템만 구축하고 싶습니다 | [Model Context Protocol(MCP) 경로](../../learning-paths/model-context-protocol.json) | 약 23시간 15분 |
-| 프로덕션 Agent Skills만 만들고 싶습니다 | [Agent Skills 엔지니어링 경로](../../learning-paths/agent-skills.json) | 약 9.5시간 |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-## 지금 중요한 이유
-
-<table>
-<tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>업계의 신호</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>다루는 기초 논문</b></th>
-</tr>
-<tr>
-<td valign="top">
-
-> *“가장 주목받는 새로운 프로그래밍 언어는 영어다.”*<br/>
-> — **Andrej Karpathy** ([게시물](https://x.com/karpathy/status/1617979122625712128))
->
-> *“소프트웨어 엔지니어링은 우리 눈앞에서 새롭게 만들어지고 있다.”*<br/>
-> — **Boris Cherny**, Claude Code 제작자
->
-> *“모델은 계속 더 좋아질 것이다. 축적되는 역량은 **무엇을 만들지 아는 것**이다.”*<br/>
-> — 업계의 공통된 견해, 2026년
-
-</td>
-<td valign="top">
+<details>
+<summary>기초 논문과 프로토콜</summary>
 
 - *Attention Is All You Need* — Vaswani et al., 2017 → [7단계](#phase-7)
 - *Language Models are Few-Shot Learners* (GPT-3) → [10단계](#phase-10)
@@ -1223,13 +1232,8 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 - *ReAct: Reasoning + Acting in LLMs* → [14단계](#phase-14)
 - *Model Context Protocol* — Anthropic → [13단계](#phase-13)
 
-</td>
-</tr>
-</table>
+</details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 ## 기여하기
 
 | 목표 | 읽으세요 |
@@ -1248,22 +1252,21 @@ python3 scripts/audit_lessons.py           # full curriculum
 python3 scripts/audit_lessons.py --phase 14  # single phase
 python3 scripts/audit_lessons.py --json    # CI-friendly output
 ```
+
 규칙 하나라도 통과하지 못하면 종료 코드가 0이 아닙니다. 규칙 L001–L010은 디렉터리 구조, `docs/en.md`와 H1 제목의 존재, 비어 있지 않은 `code/`, `quiz.json` 스키마, 레슨 문서의 상대 링크를 검사합니다. 문제 #102를 일으킨 이전 형식의 `q/choices/answer` 키는 허용하지 않습니다.
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 <a id="supporters"></a>
 
 ## 프로젝트 후원하기
+
+<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
+<p align="center"><sub><b>114,584</b>명 독자 &nbsp;·&nbsp; <b>181,995</b> 지난 30일간 페이지 조회수 &nbsp;·&nbsp; 2026-08-29 기준</sub></p>
+<!-- STATS:END -->
 
 무료, MIT 라이선스, 523개 레슨. 이 작업을 가능하게 해 주는 후원사와 후원자 여러분께 감사드립니다. [모든 후원사와 후원자 보기](../../BACKERS.md).
 
 이 작업을 지원하려면 [후원 옵션](../../SPONSORS.md)과 [하드웨어 후원](../../SPONSORS.md#hardware-lab-partner)을 확인하거나 [GitHub에서 후원](https://github.com/sponsors/rohitg00)하세요.
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 이 안내서가 도움이 되었다면 저장소에 별표를 눌러 주세요. 프로젝트를 지속하는 데 힘이 됩니다.
 
 ## 라이선스
@@ -1273,7 +1276,5 @@ MIT. 원하는 대로 쓰세요. 포크하고, 가르치고, 팔고, 배포하�
 [Rohit Ghumare](https://github.com/rohitg00) 와 커뮤니티가 관리합니다.
 
 <sub>
-  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
-  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">보고 / 제안</a>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp; <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp; <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">보고 / 제안</a>
 </sub>

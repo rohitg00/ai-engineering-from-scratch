@@ -1,44 +1,19 @@
 <p align="center" lang="ro"><sub>Traducerea integrală a README în română. <a href="../../README.md">Originalul în engleză</a> rămâne referința principală.</sub></p>
-<p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch: bannerul manualului de referință" width="100%">
-</p>
 
 <p align="center">
-  <a href="../../README.md">🇬🇧 English</a> ·
-  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
-  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
-  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
-  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
-  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
-  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
-  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
-  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
-  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
-  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
-  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
-  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
-  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
-  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
-  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
-  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
-  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
-  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
-  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
-  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
-  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
-  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
-  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
-  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
-  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
-  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
-  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
-  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
-  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
-  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
-  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
-  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
-  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/header-dark.svg">
+    <img src="../../assets/readme/header-light.svg" alt="Inginerie AI de la zero" width="840">
+  </picture>
 </p>
+
+Implementează mecanismele interne ale modelelor, fluxurile de regăsire a informațiilor și mediile de execuție pentru agenți. Testează-le, analizează erorile și păstrează codul și rezultatele evaluării.
+
+**[Începe să înveți](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Alege un parcurs](#learning-routes)** · **[Încearcă un laborator](#interactive-lab)** · **[Construiește un proiect](#project-challenges)** · **[Consultă programa](#contents)**
+
+Gratuit, cu sursă deschisă, licență MIT. Învață pe site, cu un agent de programare sau rulând cod local.
+
+> 523 de lecții. 20 de etape. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licență MIT"></a>
@@ -46,12 +21,16 @@
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 de etape"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Stele GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Site web"></a>
-  <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Poziția în Star History" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="Depozitul popular al zilei pe GitHub" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
- </a>
 </p>
+
+<details>
+<summary>Citește în limba ta</summary>
+
+<p align="center">
+  <a href="../../README.md">🇬🇧 English</a> · <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> · <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> · <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> · <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> · <a href="../../i18n/pt/README.md">🇵🇹 Português</a> · <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> · <a href="../../i18n/es/README.md">🇪🇸 Español</a> · <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> · <a href="../../i18n/fr/README.md">🇫🇷 Français</a> · <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> · <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> · <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> · <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> · <a href="../../i18n/ro/README.md">🇷🇴 Română</a> · <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> · <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> · <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> · <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> · <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> · <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> · <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> · <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> · <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> · <a href="../../i18n/he/README.md">🇮🇱 עברית</a> · <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> · <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> · <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> · <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> · <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> · <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> · <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> · <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> · <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
+
+</details>
 
 ### Sponsori
 
@@ -64,65 +43,134 @@
   <sub><span>Sprijinul tău păstrează fiecare lecție gratuită și cu sursă deschisă.</span> <a href="#supporters">Vezi toți susținătorii</a> · <a href="../../SPONSORS.md">Devino sponsor</a></sub>
 </p>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+<a id="see-what-you-will-build-and-keep"></a>
+<a id="learning-routes"></a>
 
-> **84% dintre studenți folosesc deja instrumente AI. Doar 18% se simt pregătiți să le folosească profesional.** Acest program de studiu reduce acest decalaj.
->
-> 523 de lecții. 20 de etape. ~342 de ore. Python, TypeScript, Rust, Julia. Fiecare lecție produce un rezultat reutilizabil: un prompt, o abilitate, un agent sau un server MCP. Gratuit, cu sursă deschisă, sub licență MIT.
->
-> Nu doar înveți AI. O construiești. De la un capăt la altul. Cu mâinile tale.
+## Trasee de învățare
 
-<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> cititori &nbsp;·&nbsp; <b>181,995</b> vizualizări de pagini în ultimele 30 de zile &nbsp;·&nbsp; la 2026-08-29</sub></p>
-<!-- STATS:END -->
+| Traseu | Prima lecție |
+|---|---|
+| Fundamentele modelelor | [Configurare și instrumente](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Sisteme LLM | [Ingineria prompturilor](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Agenți și livrarea sistemelor | [Bucla agentului](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
 
-## Începe aici: alege ce vrei să construiești
+[Compară traseele profesionale](https://aiengineeringfromscratch.com/learning-paths.html) · [Cerințe preliminare și timp de studiu](#study-guide)
 
-Nu trebuie să parcurgi toate cele 523 de lecții înainte să începi. Alege un obiectiv. Fiecare link deschide același program pe GitHub sau pe site, iar ambele versiuni folosesc același cod al lecțiilor.
+<a id="interactive-lab"></a>
 
-| Obiectivul tău | Învață pe GitHub | Învață pe site |
-|---|---|---|
-| Sunt la început și vreau o bază completă | [Etapa 0: Configurare și instrumente](../../phases/00-setup-and-tooling/) | [Mediul de dezvoltare](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Cunosc Python și vreau bazele matematicii și ale ML | [Etapa 1: Fundamente matematice](../../phases/01-math-foundations/) | [Înțelegerea intuitivă a algebrei liniare](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Vreau să construiesc aplicații LLM pentru producție | [Etapa 11: Ingineria LLM](../../phases/11-llm-engineering/) | [Ingineria prompturilor](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Vreau să construiesc agenți | [Etapa 14: Ingineria agenților](../../phases/14-agent-engineering/) | [Bucla agentului](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Vreau să folosesc agenți de programare în depozite de cod reale | [Traseul de inginerie asistată de agenți](../../learning-paths/using-coding-agents.json) | [Inginerie asistată de agenți](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Vreau să stabilesc ce merită construit înainte de implementare | [Traseul de decizie și livrare a produsului](../../learning-paths/shaping-the-build.json) | [Decizie și livrare a produsului](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| Vreau să construiesc folosind Model Context Protocol (MCP) | [Ruta Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Traseul Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Vreau să scriu și să public Agent Skills | [Ruta dedicată Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Traseul Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Vreau să mă pregătesc pentru o certificare Claude | [Ghid de început pentru certificare](../../certifications/claude/GETTING_STARTED.md) | [Academia de certificare](https://aiengineeringfromscratch.com/certifications.html) |
-| Vreau să mă pregătesc pentru MCP Associate (MCPA) | [Ghid de început pentru MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [Traseul MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+### Coborâre pe gradient
 
-Nu știi de unde să începi? Folosește [tutorele `start-learning` pentru evaluarea nivelului](../../skills/start-learning/SKILL.md) sau [ghidul de cunoștințe necesare de pe site](https://aiengineeringfromscratch.com/prereqs.html).
+Douăzeci de puncte de pornire urmează coborârea pe gradient pe o funcție de pierdere pătratică. Graficul arată pozițiile lor și pierderea medie după fiecare actualizare.
 
-Compară patru domenii de bază și șase trasee profesionale în [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+<p align="center">
+  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+    <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
+      <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
+      <source media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-dark.png">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-light.png">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-mobile-dark.gif">
+      <source media="(max-width: 600px)" srcset="../../assets/readme/101-gradient-mobile-light.gif">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-dark.gif">
+      <img src="../../assets/readme/101-gradient-light.gif" alt="Coborârea pe gradient deplasează punctele de pornire dispersate spre minimul funcției de pierdere. Pierderea medie scade cu fiecare actualizare." width="840">
+    </picture>
+  </a>
+</p>
 
-### Abordează fiecare lecție în același mod
+[Ajustează rata de învățare în lecție](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Compară în cod coborârea pe gradient, impulsul și Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
-1. **Citește** `docs/en.md` și explică ideea principală cu propriile cuvinte.
-2. **Tastează și construiește** codul important, în loc să tratezi blocul de cod ca pe un decor.
-3. **Rulează** comanda lecției din rădăcina depozitului, directorul care conține `README.md` și `phases/`.
-4. **Păstrează dovezile**: comanda, directorul de lucru, codul de ieșire, rezultatele relevante și artefactul pe care l-ai modificat sau creat.
-5. **Continuă** doar când poți explica rezultatul și poți face o mică modificare fără să ghicești.
+<a id="project-challenges"></a>
 
-Căile din comenzile paginilor de lecție pornesc de la rădăcina depozitului, dacă lecția nu cere explicit schimbarea directorului. Dacă o lecție oferă mai multe limbaje de programare, rulează implementarea în limbajul pe care îl înveți.
+### Proiecte
 
-### Clonează depozitul și obține prima dovadă
+Trei proiecte cu cod inițial pe etape, implementări de referință și evaluatoare locale. Rulează comenzile din rădăcina depozitului după [configurare](#local-setup). Codul inițial nu trece verificările până când implementezi etapele.
+
+<details>
+<summary><strong>01 · Laborator de evaluare a recuperării</strong> · Python · Metrici de clasare și verificări de regresie</summary>
+
+Un candidat îmbunătățește NDCG mediu, în timp ce o interogare plasează dovezile cele mai relevante mai jos în clasament. Construiește o comparație pentru fiecare interogare care raportează regresia și poate face verificarea de lansare să eșueze.
+
+Folosește Python 3.10+. Recapitulează [RAG](../../phases/11-llm-engineering/06-rag/docs/en.md) și [evaluarea modelelor](../../phases/02-ml-fundamentals/09-model-evaluation/docs/en.md). Implementează validarea clasamentului, precision și recall, metricile sensibile la poziție, apoi compararea sistemelor.
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --init learning-artifacts/retrieval-evaluation-lab
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --stage 1 --path learning-artifacts/retrieval-evaluation-lab --strict
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --all --path learning-artifacts/retrieval-evaluation-lab --strict
 ```
 
-Verificarea inițială separă cerințele necesare acum de instrumentele necesare mai târziu. Fiecare verificare obligatorie eșuată include cauza detectată și o comandă de remediere. A doua comandă rulează o lecție fără dependențe și arată la final că înmulțirea unei matrice cu un vector este operația din interiorul unui strat de rețea neuronală. Salvează acea ieșire din terminal ca primă dovadă.
+**Păstrează:** o comparație reproductibilă cu diferențele pentru fiecare interogare și evaluările de relevanță folosite la calcularea scorurilor. Metricile descriu acele evaluări; nu stabilesc corectitudinea răspunsurilor.
 
-## Adaugă tutorul AI în 30 de secunde
+[Începe proiectul](https://aiengineeringfromscratch.com/project.html?id=retrieval-evaluation-lab) · [Inspectează referința](../../projects/retrieval-evaluation-lab/solution/) · [Rulează cu propriile date de intrare](../../projects/retrieval-evaluation-lab/README.md#run-with-your-own-inputs)
 
-Dacă ai deja Node.js, `npx` și un agent de programare care acceptă abilități, două comenzi îl pot transforma în tutor. Nu trebuie să clonezi depozitul pentru a instala sau citi tutorul. Laboratoarele executabile ale traseelor specializate necesită `python3`. Laboratoarele Agent Skills necesită și o gazdă aleasă, plus un domeniu de abilități al utilizatorului sau proiectului în care se poate scrie.
+</details>
+
+<details>
+<summary><strong>02 · Depanator de urme ale agenților</strong> · TypeScript · Parsarea traselor și măsurarea timpului</summary>
+
+O urmă furnizată durează în continuare 100 ms, dar consumul total de tokenuri crește cu 200 și un span începe să eșueze. Separă activitatea suprapusă a spanurilor copil de timpul de execuție al părintelui, apoi creează un raport care arată schimbarea.
+
+Folosește Node.js 22.18+ și Python 3 pentru evaluator. Implementează parsarea JSONL, validarea părinților, aritmetica intervalelor, apoi o cronologie inspectabilă.
+
+```bash
+python3 scripts/project_test.py agent-trace-debugger \
+  --init learning-artifacts/agent-trace-debugger
+python3 scripts/project_test.py agent-trace-debugger \
+  --stage 1 --path learning-artifacts/agent-trace-debugger --strict
+python3 scripts/project_test.py agent-trace-debugger \
+  --all --path learning-artifacts/agent-trace-debugger --strict
+```
+
+**Păstrează:** urma de intrare, o cronologie HTML și un raport de regresie JSON. Păstrează numărul propriu de tokenuri al fiecărui span, fără spanurile copil, pentru a nu număra de două ori consumul părinților și al copiilor.
+
+[Începe proiectul](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger) · [Inspectează referința](../../projects/agent-trace-debugger/solution/) · [Explorează timpii interactiv](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger&stage=03-timing)
+
+</details>
+
+<details>
+<summary><strong>03 · Firewall pentru apeluri de instrumente</strong> · Rust · Verificări de roluri și confirmări de aprobare</summary>
+
+O operație de scriere se schimbă după revizuire sau o aprobare este reutilizată. Validează anvelopa apelului, verifică rolul apelantului și calea, apoi consumă o aprobare legată de cererea și conținutul exacte.
+
+Folosește Rust și Python 3.10+. Recapitulează [proiectarea schemelor instrumentelor](../../phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md) și [limite de securitate](../../phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md). Aplicația apelantă furnizează identitatea; modelul propune o operație.
+
+```bash
+python3 scripts/project_test.py tool-call-firewall \
+  --init learning-artifacts/tool-call-firewall
+python3 scripts/project_test.py tool-call-firewall \
+  --stage 1 --path learning-artifacts/tool-call-firewall --strict
+python3 scripts/project_test.py tool-call-firewall \
+  --all --path learning-artifacts/tool-call-firewall --strict
+```
+
+**Păstrează:** o înregistrare de audit cu operația solicitată și decizia politicii. Aprobările sunt de unică folosință în cadrul unei invocări; proiectul nu oferă autorizare persistentă sau un sandbox al sistemului de operare.
+
+[Începe proiectul](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall) · [Inspectează referința](../../projects/tool-call-firewall/solution/) · [Explorează limitele aprobării](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall&stage=03-consume-a-request-bound-approval-once)
+
+</details>
+
+[Răsfoiește toate proiectele](https://aiengineeringfromscratch.com/projects.html) · [Ghid de practică profesională](../../learning-paths/CAREER-PRACTICE.md)
+
+## Alege cum să înveți
+
+### Pe site
+
+Deschide o lecție finalizată pe [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) sau extinde o etapă din [cuprins](#contents). Fără configurare sau clonare.
+
+### Cu un îndrumător AI
+
+Dacă ai deja Node.js, `npx` și un agent de programare care acceptă abilități, îl poți folosi ca tutor. Nu trebuie să clonezi depozitul pentru a instala sau citi tutorul. Laboratoarele executabile ale traseelor specializate necesită `python3`. Laboratoarele Agent Skills necesită și o gazdă aleasă, plus un domeniu de abilități al utilizatorului sau proiectului în care se poate scrie.
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+Alege gazda și domeniul când instalatorul solicită acest lucru. Folosește `start-learning` în Codex, `/start-learning` în Claude Code sau cere gazdei să folosească abilitatea după nume.
+
+<details>
+<summary>Configurarea îndrumătorului și comenzile mediului gazdă</summary>
 
 Verifică mai întâi cerințele locale:
 
@@ -132,11 +180,7 @@ npx --version
 python3 --version
 ```
 
-Instalează apoi abilitățile cursului și alege gazda și domeniul când instalatorul îți cere acest lucru:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
+`skills` scrie în gazda și domeniul alese la instalare, precum `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` sau alt director acceptat. Verifică dacă gazda descoperă exact destinația aleasă.
 
 Sintaxa invocării aparține gazdei, nu formatului portabil `SKILL.md`:
 
@@ -154,17 +198,100 @@ Vrei doar Agent Skills? Folosește invocarea Agent Skills pentru gazda ta. Creea
 
 Instalatorul enumeră gazdele pe care le poate configura și întreabă unde să instaleze. Dacă nu ai încă Node.js, `npx`, `python3`, o gazdă acceptată sau un domeniu în care poți scrie, folosește site-ul ori citește manual `docs/en.md`. Înveți astfel conceptele, dar dovezile de descoperire, invocare, scripturi și dezinstalare pe o gazdă reală rămân de strâns până când poți trece verificarea inițială. Citește lecțiile pe [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## Cum funcționează
+### Abilitățile de învățare
 
-Majoritatea materialelor AI predau fragmente împrăștiate. Un articol aici, o postare despre ajustare fină acolo, o demonstrație spectaculoasă de agent în altă parte. Fragmentele rareori se leagă. Livrezi un chatbot, dar nu-i poți explica curba pierderii. Conectezi o funcție la un agent, dar nu poți spune ce face atenția în modelul care o apelează.
+| Abilitate | Ce face |
+|---|---|
+| [`start-learning`](../../skills/start-learning/SKILL.md) | Introducere unică: motivul învățării, testul de plasare și planul personalizat salvat în `LEARNING.md`. |
+| [`learn`](../../skills/learn/SKILL.md) | Ciclul tutorului. Recapitulare inițială, apoi predarea interactivă a lecției următoare și testul ei; înregistrează progresul și lista de recapitulare. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | Ghid de subiecte. „Unde învăț atenția?” sau „pierderea mea este NaN” → lecțiile exacte, cu linkuri. |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Tutor Model Context Protocol (MCP). Creează `MCP-LEARNING.md`, urmează manifestul cu 17 lecții și înregistrează dovezi de comunicație, securitate, fiabilitate și conformitate. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Tutor Agent Skills. Creează `AGENT-SKILLS-LEARNING.md`, predă lecțiile 22, 24, 25, 26 și 27 și înregistrează dovezi de pe gazde reale. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Tutor de certificare. Alege CCAO-F, CCDV-F, CCAR-F sau CCAR-P; predă lecțiile, rulează laboratoare, evaluează rezultate, administrează diagnostice și simulări, salvează progresul. |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Tutor MCPA. Urmează traseul `mcpa-f` cu 34 de lecții despre protocolul 2026-07-28; predă lecțiile, rulează laboratoare și verificatorul comunicației, administrează diagnosticul și trei simulări, salvează progresul. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Test de plasare cu zece întrebări. Mapează cunoștințele la etapa inițială și produce un traseu personalizat cu estimări de timp. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Test per etapă cu opt întrebări, feedback și lecții concrete de revăzut. Folosește forma Codex, Claude Code sau în limbaj natural din tabelul de invocare de mai sus. |
 
-Acest program este coloana vertebrală: 20 de etape, 523 de lecții și patru limbaje: Python, TypeScript, Rust și Julia. Algebră liniară la un capăt, roiuri autonome la celălalt. Fiecare algoritm este construit întâi direct din matematică: propagare înapoi, tokenizator, atenție și bucla agentului. Când apare PyTorch, știi deja ce se întâmplă în interior.
+</details>
 
-Fiecare lecție repetă același ciclu: citește problema, dedu matematica, scrie codul, rulează testul și păstrează rezultatul. Fără videouri de cinci minute, implementări prin copiere sau îndrumare la fiecare pas. Gratuit, cu sursă deschisă și conceput să ruleze pe laptopul tău.
+<a id="local-setup"></a>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+### Rulează cod local
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+
+Verificarea inițială separă cerințele necesare acum de instrumentele necesare mai târziu. Fiecare verificare obligatorie eșuată include cauza detectată și o comandă de remediere. Comanda `vectors.py` rulează o lecție fără dependențe și arată la final că înmulțirea unei matrice cu un vector este operația din interiorul unui strat de rețea neuronală. Salvează acea ieșire din terminal ca primă dovadă.
+
+<details>
+<summary>Abordează fiecare lecție în același mod</summary>
+
+### Abordează fiecare lecție în același mod
+
+1. **Citește** `docs/en.md` și explică ideea principală cu propriile cuvinte.
+2. **Tastează și construiește** codul important, în loc să tratezi blocul de cod ca pe un decor.
+3. **Rulează** comanda lecției din rădăcina depozitului, directorul care conține `README.md` și `phases/`.
+4. **Păstrează dovezile**: comanda, directorul de lucru, codul de ieșire, rezultatele relevante și artefactul pe care l-ai modificat sau creat.
+5. **Continuă** doar când poți explica rezultatul și poți face o mică modificare fără să ghicești.
+
+Căile din comenzile paginilor de lecție pornesc de la rădăcina depozitului, dacă lecția nu cere explicit schimbarea directorului. Dacă o lecție oferă mai multe limbaje de programare, rulează implementarea în limbajul pe care îl înveți.
+
+</details>
+
+<a id="study-guide"></a>
+
+## Alege un traseu de învățare
+
+Nu trebuie să parcurgi toate cele 523 de lecții înainte să începi. Alege un obiectiv. Fiecare link deschide același program pe GitHub sau pe site, iar ambele versiuni folosesc același cod al lecțiilor.
+
+| Obiectivul tău | Învață pe GitHub | Învață pe site |
+|---|---|---|
+| Sunt la început și vreau o bază completă | [Etapa 0: Configurare și instrumente](../../phases/00-setup-and-tooling/) | [Mediul de dezvoltare](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Cunosc Python și vreau bazele matematicii și ale ML | [Etapa 1: Fundamente matematice](../../phases/01-math-foundations/) | [Înțelegerea intuitivă a algebrei liniare](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| Vreau să construiesc aplicații LLM pentru producție | [Etapa 11: Ingineria LLM](../../phases/11-llm-engineering/) | [Ingineria prompturilor](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Vreau să construiesc agenți | [Etapa 14: Ingineria agenților](../../phases/14-agent-engineering/) | [Bucla agentului](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Vreau să folosesc agenți de programare în depozite de cod reale | [Traseul de inginerie asistată de agenți](../../learning-paths/using-coding-agents.json) | [Inginerie asistată de agenți](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| Vreau să stabilesc ce merită construit înainte de implementare | [Traseul de decizie și livrare a produsului](../../learning-paths/shaping-the-build.json) | [Decizie și livrare a produsului](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+
+Nu știi de unde să începi? Folosește [tutorele `start-learning` pentru evaluarea nivelului](../../skills/start-learning/SKILL.md) sau [ghidul de cunoștințe necesare de pe site](https://aiengineeringfromscratch.com/prereqs.html).
+
+Compară patru domenii de bază și șase trasee profesionale în [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+
+<details>
+<summary>Trasee specializate MCP și Agent Skills</summary>
+
+| Obiectivul tău | Învață pe GitHub | Învață pe site |
+|---|---|---|
+| Vreau să construiesc folosind Model Context Protocol (MCP) | [Ruta Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Traseul Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Vreau să scriu și să public Agent Skills | [Ruta dedicată Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Traseul Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+
+</details>
+
+<details>
+<summary>Cerințe preliminare și timp de studiu</summary>
+
+### Cunoștințe necesare
+
+- Poți scrie cod în orice limbaj; Python ajută.
+- Vrei să înțelegi cum **funcționează cu adevărat** AI, nu doar să apelezi API-uri.
+
+## De unde să începi
+
+| Experiență | Începe la | Timp estimat |
+|---|---|---|
+| Începător în programare și AI | Etapa 0: Configurare | ~306 ore |
+| Cunoști Python, ești nou în ML | Etapa 1: Fundamente matematice | ~270 ore |
+| Cunoști ML, ești nou în învățarea profundă | Etapa 3: Nucleul învățării profunde | ~200 ore |
+| Cunoști învățarea profundă, vrei LLM și agenți | Etapa 10: LLM de la zero | ~100 ore |
+| Inginer senior, vrei doar ingineria agenților | Etapa 14: Ingineria agenților | ~60 ore |
+| Vrei doar să construiești sisteme MCP de producție | [Traseul Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 de ore și 15 minute |
+| Vrei doar să construiești Agent Skills de producție | [Traseul de inginerie Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 ore |
+
+</details>
 
 ## Structura programului de studiu
 
@@ -194,195 +321,6 @@ flowchart TB
   P16 --> P19["Etapa 19: Proiecte finale"]
   P17 --> P19
   P18 --> P19
-```
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Structura unei lecții
-
-Fiecare lecție are propriul director, cu aceeași structură în întregul program:
-
-```text
-phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      implementări executabile (Python, TypeScript, Rust, Julia)
-├── docs/
-│   └── en.md  explicația lecției
-└── outputs/   prompturi, abilități, agenți sau servere MCP produse de această lecție
-```
-
-Fiecare lecție are șase părți. Separarea *Construiește / Folosește* este esențială: implementezi întâi algoritmul de la zero, apoi rulezi același lucru prin biblioteca de producție. Înțelegi frameworkul fiindcă ai scris singur versiunea mai mică.
-
-```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
-flowchart LR
-  M["IDEEA-CHEIE<br/><sub>ideea centrală într-un rând</sub>"] --> Pr["PROBLEMĂ<br/><sub>dificultate concretă</sub>"]
-  Pr --> C["CONCEPT<br/><sub>diagrame și intuiție</sub>"]
-  C --> B["CONSTRUIEȘTE<br/><sub>matematică pură, fără frameworkuri</sub>"]
-  B --> U["FOLOSEȘTE<br/><sub>același lucru în PyTorch / sklearn</sub>"]
-  U --> S["LIVREAZĂ<br/><sub>prompt · abilitate · agent · MCP</sub>"]
-```
-
-## Primii pași
-
-Trei moduri de a începe. Alege unul.
-
-**Opțiunea A: învață în terminal *(recomandată)*.** După verificarea Node.js, `npx`, a gazdei și domeniului de mai sus, instalează abilitățile de învățare într-un agent compatibil și lasă cursul să te ghideze:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
-
-Folosește tabelul de invocare specific gazdei de mai sus. Abilitățile instalate oferă `start-learning`, `learn`, `course-guide` și traseele specializate `learn-mcp` și `learn-agent-skills`. Textul lecțiilor poate fi preluat din depozit fără clonare. O clonă locală este necesară pentru comenzile copiate ale codului și laboratoarele MCP sau Agent Skills executabile. Progresul este în `LEARNING.md`, `MCP-LEARNING.md` sau `AGENT-SKILLS-LEARNING.md` din proiect, astfel încât fiecare sesiune poate fi reluată.
-
-**Opțiunea B: citește.** Deschide o lecție finalizată pe [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) sau extinde o etapă din [cuprins](#contents). Fără configurare sau clonare.
-
-**Opțiunea C: clonează și rulează.**
-
-```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
-```
-
-Clonarea încarcă automat și abilitățile de învățare în Claude Code și oferă tutorului `learn` codul fiecărei lecții pentru execuție reală, nu doar pentru citire.
-
-### Cunoștințe necesare
-
-- Poți scrie cod în orice limbaj; Python ajută.
-- Vrei să înțelegi cum **funcționează cu adevărat** AI, nu doar să apelezi API-uri.
-
-### Pregătește-te pentru certificările Claude
-
-[Academia de certificare Claude](../../certifications/claude/README.md) este un program gratuit, cu sursă deschisă, pentru toate cele patru trasee oficiale: Associate Foundations, Developer Foundations, Architect Foundations și Architect Professional. Fiecare combină lecții aliniate programei examenului, laboratoare executabile, un diagnostic, un proiect final și un examen de practică original, complet.
-
-Folosește [ghidul de pornire GitHub cu AI](../../certifications/claude/GETTING_STARTED.md) în Claude Code, Codex, ChatGPT, Cursor sau alt agent. Rulează `claude-certification` în Codex, `/claude-certification` în Claude Code sau cere altei gazde să folosească `claude-certification`. Alege un traseu, creează un plan persistent în `CLAUDE-CERTIFICATION.md`, predă pas cu pas, rulează laboratoarele reale și oferă feedback bazat pe rezultate. Același program este disponibil pe [site-ul de certificare](https://aiengineeringfromscratch.com/certifications.html).
-
-Academia este material de studiu independent bazat pe obiective publice de examen. Nu este afiliată cu Anthropic, nu reproduce întrebări din examene reale și nu poate garanta promovarea.
-
-### Pregătește-te pentru certificarea MCP Associate (MCPA)
-
-[Programul de certificare MCPA](../../certifications/mcpa/README.md) este o pregătire gratuită, cu sursă deschisă, pentru examenul Model Context Protocol Associate al Agentic AI Foundation, oferit prin Linux Foundation Training. Cele 34 de lecții predau protocolul fără stare 2026-07-28 în cele cinci domenii de examen: `_meta` per cerere și `server/discover` în locul vechii negocieri, cereri cu mai multe runde, abonamente, cache, extensiile de sarcini și MCP Apps, autorizare OAuth și nivelurile de registru și SDK. Fiecare lecție livrează un laborator executabil numai cu biblioteca standard, al cărui transcript este verificat pentru formatul actual al comunicației. Traseul adaugă un diagnostic, un proiect final și trei examene originale complete, cu distribuția întrebărilor conform ponderilor publicate.
-
-Folosește [ghidul de pornire GitHub cu AI](../../certifications/mcpa/GETTING_STARTED.md) în Claude Code, Codex, ChatGPT, Cursor sau alt agent. Rulează `mcpa-certification` în Codex, `/mcpa-certification` în Claude Code sau cere altei gazde să folosească `mcpa-certification`. Creează un traseu persistent în `MCPA-CERTIFICATION.md`, predă pas cu pas, rulează laboratoarele reale și oferă feedback pe baza rezultatelor. Același program este pe [pagina traseului MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
-
-Acest program este material de studiu independent bazat pe obiective publice de examen. Nu este afiliat cu Agentic AI Foundation sau Linux Foundation, nu reproduce întrebări din examene reale și nu poate garanta promovarea.
-
-### Abilitățile de învățare
-
-| Abilitate | Ce face |
-|---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | Introducere unică: motivul învățării, testul de plasare și planul personalizat salvat în `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | Ciclul tutorului. Recapitulare inițială, apoi predarea interactivă a lecției următoare și testul ei; înregistrează progresul și lista de recapitulare. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Ghid de subiecte. „Unde învăț atenția?” sau „pierderea mea este NaN” → lecțiile exacte, cu linkuri. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Tutor Model Context Protocol (MCP). Creează `MCP-LEARNING.md`, urmează manifestul cu 17 lecții și înregistrează dovezi de comunicație, securitate, fiabilitate și conformitate. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Tutor Agent Skills. Creează `AGENT-SKILLS-LEARNING.md`, predă lecțiile 22, 24, 25, 26 și 27 și înregistrează dovezi de pe gazde reale. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Tutor de certificare. Alege CCAO-F, CCDV-F, CCAR-F sau CCAR-P; predă lecțiile, rulează laboratoare, evaluează rezultate, administrează diagnostice și simulări, salvează progresul. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Tutor MCPA. Urmează traseul `mcpa-f` cu 34 de lecții despre protocolul 2026-07-28; predă lecțiile, rulează laboratoare și verificatorul comunicației, administrează diagnosticul și trei simulări, salvează progresul. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Test de plasare cu zece întrebări. Mapează cunoștințele la etapa inițială și produce un traseu personalizat cu estimări de timp. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Test per etapă cu opt întrebări, feedback și lecții concrete de revăzut. Folosește forma Codex, Claude Code sau în limbaj natural din tabelul de invocare de mai sus. |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Citește programul de bază sub formă de carte
-
-Programul de bază cu 20 de etape din `phases/` se compilează într-o serie de șase volume. CI generează EPUB și PDF din aceleași surse ale lecțiilor și le atașează fiecărei [lansări GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases); linkurile de mai jos duc mereu la cea mai recentă lansare. Numerele volumelor indică poziția în serie, nu versiunea: fiecare exemplar are data ediției, iar edițiile vechi rămân descărcabile din lansarea lor.
-
-Programele de certificare nu sunt convertite intenționat în cărți. Starea tutorului AI, laboratoarele executabile, figurile interactive, diagnosticele și simulările cronometrate rămân complet disponibile pe GitHub și pe site.
-
-| Volum | Titlu | Etape | Descarcă |
-|-----|-------|--------|----------|
-| 1 | Fundamente · Matematică, instrumente și învățare automată clasică | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Învățare profundă · Rețele, viziune și vorbire | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Limbaj · Bazele NLP și transformatorul | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Modele lingvistice mari · Generare, întărire, preantrenare și inginerie | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Agenți · Multimodalitate, protocoale, autonomie și roiuri | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Producție · Infrastructură, siguranță și proiecte finale | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-Cartea este o fotografie de moment; depozitul este ediția vie. Fiecare capitol se încheie cu linkuri către figurile animate, testul și codul executabil al lecției. Construiește local cu `python3 scripts/build_book.py` (necesită pandoc); detaliile fluxului sunt în [book/README.md](../../book/README.md).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Fiecare lecție produce ceva
-
-Alte cursuri se încheie cu *„felicitări, ai învățat X”*. Aici, fiecare lecție se termină cu un **instrument reutilizabil** pe care îl poți instala sau integra în munca de zi cu zi.
-
-<table>
-<tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A prompturi"/><br/><sub>FIG_001 · A</sub><br/><b>PROMPTURI</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B abilități"/><br/><sub>FIG_001 · B</sub><br/><b>ABILITĂȚI</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C agenți"/><br/><sub>FIG_001 · C</sub><br/><b>AGENȚI</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D servere MCP"/><br/><sub>FIG_001 · D</sub><br/><b>SERVERE MCP</b></th>
-</tr>
-<tr>
-<td valign="top">Inserează în orice asistent AI pentru ajutor de nivel expert la o sarcină restrânsă.</td>
-<td valign="top">Adaugă în Claude, Cursor, Codex, OpenClaw, Hermes sau orice agent care citește <code>SKILL.md</code>.</td>
-<td valign="top">Implementează ca lucrători autonomi: ai scris bucla singur în etapa 14.</td>
-<td valign="top">Conectează la orice client compatibil cu MCP. Construit complet în etapa 13.</td>
-</tr>
-</table>
-
-> Instalează totul cu `python3 scripts/install_skills.py <target>`. Instrumente reale, nu teme. La sfârșitul programului ai un portofoliu de 523 de rezultate pe care le înțelegi fiindcă le-ai construit.
-
-### FIG_002 · Un exemplu rezolvat
-
-Etapa 14, lecția 1: bucla agentului. ~120 de linii de Python pur, fără dependențe.
-
-<table>
-<tr>
-<td valign="top" width="50%">
-
-**`code/agent_loop.py`** &nbsp; <sub><i>construiește</i></sub>
-
-```python
-def run(query, tools):
-    history = [user(query)]
-    for step in range(MAX_STEPS):
-        msg = llm(history)
-        if msg.tool_calls:
-            for call in msg.tool_calls:
-                result = tools[call.name](**call.args)
-                history.append(tool_result(call.id, result))
-            continue
-        return msg.content
-    raise StepLimitExceeded
-```
-
-</td>
-<td valign="top" width="50%">
-
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>livrează</i></sub>
-
-```markdown
----
-name: agent-loop
-description: ReAct-style loop for any tool list
-phase: 14
-lesson: 01
----
-
-Implement a minimal agent loop that...
-```
-
-**`outputs/prompt-debug-agent.md`**
-
-```markdown
-You are an agent debugger. Given the trace
-of an agent run, identify the step where
-the agent went wrong and explain why...
-```
-
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 <a id="contents"></a>
@@ -1105,33 +1043,104 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 
 </details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+## Cărți și certificări
+
+<details>
+<summary>Citește programul de bază sub formă de carte</summary>
+
+Programul de bază cu 20 de etape din `phases/` se compilează într-o serie de șase volume. CI generează EPUB și PDF din aceleași surse ale lecțiilor și le atașează fiecărei [lansări GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases); linkurile de mai jos duc mereu la cea mai recentă lansare. Numerele volumelor indică poziția în serie, nu versiunea: fiecare exemplar are data ediției, iar edițiile vechi rămân descărcabile din lansarea lor.
+
+Programele de certificare nu sunt convertite intenționat în cărți. Starea tutorului AI, laboratoarele executabile, figurile interactive, diagnosticele și simulările cronometrate rămân complet disponibile pe GitHub și pe site.
+
+| Volum | Titlu | Etape | Descarcă |
+|-----|-------|--------|----------|
+| 1 | Fundamente · Matematică, instrumente și învățare automată clasică | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Învățare profundă · Rețele, viziune și vorbire | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Limbaj · Bazele NLP și transformatorul | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Modele lingvistice mari · Generare, întărire, preantrenare și inginerie | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Agenți · Multimodalitate, protocoale, autonomie și roiuri | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Producție · Infrastructură, siguranță și proiecte finale | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+Cartea este o fotografie de moment; depozitul este ediția vie. Fiecare capitol se încheie cu linkuri către figurile animate, testul și codul executabil al lecției. Construiește local cu `python3 scripts/build_book.py` (necesită pandoc); detaliile fluxului sunt în [book/README.md](../../book/README.md).
+
+</details>
+
+<details>
+<summary>Pregătește-te pentru certificările Claude</summary>
+
+[Academia de certificare Claude](../../certifications/claude/README.md) este un program gratuit, cu sursă deschisă, pentru toate cele patru trasee oficiale: Associate Foundations, Developer Foundations, Architect Foundations și Architect Professional. Fiecare combină lecții aliniate programei examenului, laboratoare executabile, un diagnostic, un proiect final și un examen de practică original, complet.
+
+Folosește [ghidul de pornire GitHub cu AI](../../certifications/claude/GETTING_STARTED.md) în Claude Code, Codex, ChatGPT, Cursor sau alt agent. Rulează `claude-certification` în Codex, `/claude-certification` în Claude Code sau cere altei gazde să folosească `claude-certification`. Alege un traseu, creează un plan persistent în `CLAUDE-CERTIFICATION.md`, predă pas cu pas, rulează laboratoarele reale și oferă feedback bazat pe rezultate. Același program este disponibil pe [site-ul de certificare](https://aiengineeringfromscratch.com/certifications.html).
+
+Academia este material de studiu independent bazat pe obiective publice de examen. Nu este afiliată cu Anthropic, nu reproduce întrebări din examene reale și nu poate garanta promovarea.
+
+</details>
+
+<details>
+<summary>Pregătește-te pentru certificarea MCP Associate (MCPA)</summary>
+
+[Programul de certificare MCPA](../../certifications/mcpa/README.md) este o pregătire gratuită, cu sursă deschisă, pentru examenul Model Context Protocol Associate al Agentic AI Foundation, oferit prin Linux Foundation Training. Cele 34 de lecții predau protocolul fără stare 2026-07-28 în cele cinci domenii de examen: `_meta` per cerere și `server/discover` în locul vechii negocieri, cereri cu mai multe runde, abonamente, cache, extensiile de sarcini și MCP Apps, autorizare OAuth și nivelurile de registru și SDK. Fiecare lecție livrează un laborator executabil numai cu biblioteca standard, al cărui transcript este verificat pentru formatul actual al comunicației. Traseul adaugă un diagnostic, un proiect final și trei examene originale complete, cu distribuția întrebărilor conform ponderilor publicate.
+
+Folosește [ghidul de pornire GitHub cu AI](../../certifications/mcpa/GETTING_STARTED.md) în Claude Code, Codex, ChatGPT, Cursor sau alt agent. Rulează `mcpa-certification` în Codex, `/mcpa-certification` în Claude Code sau cere altei gazde să folosească `mcpa-certification`. Creează un traseu persistent în `MCPA-CERTIFICATION.md`, predă pas cu pas, rulează laboratoarele reale și oferă feedback pe baza rezultatelor. Același program este pe [pagina traseului MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
+
+Acest program este material de studiu independent bazat pe obiective publice de examen. Nu este afiliat cu Agentic AI Foundation sau Linux Foundation, nu reproduce întrebări din examene reale și nu poate garanta promovarea.
+
+</details>
 
 ## Trusa de instrumente
 
-Fiecare lecție produce un rezultat reutilizabil. La final ai:
+Fiecare lecție produce un artefact reutilizabil. Instalează-l în agent sau folosește scripturile de mai jos din rădăcina depozitului.
+
+<details>
+<summary>Structura lecțiilor și artefacte reutilizabile</summary>
+
+## Structura unei lecții
+
+Fiecare lecție are propriul director, cu aceeași structură în întregul program:
 
 ```text
-outputs/
-├── prompts/      șabloane de prompturi pentru fiecare sarcină AI
-└── skills/       fișiere SKILL.md pentru agenți AI de programare
+phases/<NN>-<phase-name>/<NN>-<lesson-name>/
+├── code/      implementări executabile (Python, TypeScript, Rust, Julia)
+├── docs/
+│   └── en.md  explicația lecției
+└── outputs/   prompturi, abilități, agenți sau servere MCP produse de această lecție
 ```
 
-Conectează-le la Claude, Cursor, Codex, OpenClaw, Hermes sau orice agent care citește un director SKILL.md / AGENTS.md. Instrumente reale, nu teme.
+Fiecare lecție are șase părți. Separarea *Construiește / Folosește* este esențială: implementezi întâi algoritmul de la zero, apoi rulezi același lucru prin biblioteca de producție. Înțelegi frameworkul fiindcă ai scris singur versiunea mai mică.
 
-### Instalează abilitățile cursului în agentul tău
-
-Două seturi de abilități, două instalatoare:
-
-**Abilitățile de învățare** (`start-learning`, `learn`, `course-guide`, `learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`, `find-your-level` și `check-understanding`) sunt în [`skills/`](../../skills/) și se instalează într-o gazdă acceptată cu o singură comandă. Instalarea necesită Node.js și `npx`, nu clonarea depozitului sau Python:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["IDEEA-CHEIE<br/><sub>ideea centrală într-un rând</sub>"] --> Pr["PROBLEMĂ<br/><sub>dificultate concretă</sub>"]
+  Pr --> C["CONCEPT<br/><sub>diagrame și intuiție</sub>"]
+  C --> B["CONSTRUIEȘTE<br/><sub>matematică pură, fără frameworkuri</sub>"]
+  B --> U["FOLOSEȘTE<br/><sub>același lucru în PyTorch / sklearn</sub>"]
+  U --> S["LIVREAZĂ<br/><sub>prompt · abilitate · agent · MCP</sub>"]
 ```
 
-`skills` scrie în gazda și domeniul alese la instalare, precum `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` sau alt director acceptat. Verifică dacă gazda descoperă exact destinația aleasă.
+## Fiecare lecție produce ceva
+
+Alte cursuri se încheie cu *„felicitări, ai învățat X”*. Aici, fiecare lecție se termină cu un **instrument reutilizabil** pe care îl poți instala sau integra în munca de zi cu zi.
+
+<table>
+<tr>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A prompturi"/><br/><sub>FIG_001 · A</sub><br/><b>PROMPTURI</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B abilități"/><br/><sub>FIG_001 · B</sub><br/><b>ABILITĂȚI</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C agenți"/><br/><sub>FIG_001 · C</sub><br/><b>AGENȚI</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D servere MCP"/><br/><sub>FIG_001 · D</sub><br/><b>SERVERE MCP</b></th>
+</tr>
+<tr>
+<td valign="top">Inserează în orice asistent AI pentru ajutor de nivel expert la o sarcină restrânsă.</td>
+<td valign="top">Adaugă în Claude, Cursor, Codex, OpenClaw, Hermes sau orice agent care citește <code>SKILL.md</code>.</td>
+<td valign="top">Implementează ca lucrători autonomi: ai scris bucla singur în etapa 14.</td>
+<td valign="top">Conectează la orice client compatibil cu MCP. Construit complet în etapa 13.</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>Instalează artefactele lecțiilor</summary>
 
 **Rezultatele lecțiilor.** Depozitul livrează 396 de abilități și 99 de prompturi în `phases/**/outputs/`; instalează-le prin `scripts/install_skills.py`. Necesită clonarea depozitului. Acceptă filtre de etichete, rulări de probă și organizări per agent:
 
@@ -1156,7 +1165,10 @@ Implicit, scriptul refuză să suprascrie o destinație existentă și se înche
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Adaugă bancul de lucru al agentului în propriul depozit
+</details>
+
+<details>
+<summary>Adaugă bancul de lucru al agentului în propriul depozit</summary>
 
 Proiectul final al etapei 14 livrează un pachet reutilizabil de banc de lucru: AGENTS.md, scheme și scripturi de inițializare, verificare și transfer. Creează-i structura în orice depozit cu:
 
@@ -1169,7 +1181,10 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 
 Primești cele șapte suprafețe conectate ale bancului de lucru, un `task_board.json` inițial și un `agent_state.json` nou cu `schema_version: 1`. Apoi modifică sarcina și `AGENTS.md`, rulează `scripts/init_agent.py` și predă contractul agentului. Sursa pachetului este în `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
 
-### Răsfoiește întregul curs ca JSON
+</details>
+
+<details>
+<summary>Răsfoiește întregul curs ca JSON</summary>
 
 `scripts/build_catalog.py` parcurge fiecare etapă, lecție și rezultat de pe disc și scrie `catalog.json` în rădăcina depozitului. Un singur fișier cu toate datele cursului.
 
@@ -1181,9 +1196,12 @@ python3 scripts/build_catalog.py --out path/to/file.json
 
 Catalogul este derivat din sistemul de fișiere, nu din README, deci numărătorile corespund cu ceea ce există pe disc. Folosește-l pentru construirea site-ului, instrumente derivate sau verificarea numărătorilor README. Schema este documentată la începutul scriptului.
 
-O acțiune GitHub (`.github/workflows/curriculum.yml`) reconstruiește `catalog.json` pentru fiecare PR și oprește construirea dacă fișierul salvat este vechi. După modificarea unei lecții, rulează `python3 scripts/build_catalog.py` și comite rezultatul, altfel CI respinge PR-ul. Același flux rulează `audit_lessons.py` doar cu avertizări, pentru ca abaterile existente să nu blocheze contribuitorii.
+Fluxul programei generează `catalog.json` ca artefact temporar ignorat de Git. Nu îl include într-un commit. Același flux rulează `audit_lessons.py` ca verificare blocantă.
 
-### Verifică rapid codul Python al fiecărei lecții
+</details>
+
+<details>
+<summary>Verifică rapid codul Python al fiecărei lecții</summary>
 
 `scripts/lesson_run.py` compilează în bytecode fiecare fișier `.py` din directorul `code/` al fiecărei lecții. Implicit verifică doar sintaxa: fără execuție, chei API sau dependențe ML grele. Prinde regresii frecvente precum indentarea greșită, f-stringuri defecte și modificări accidentale.
 
@@ -1199,40 +1217,10 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 
 Numai biblioteca standard, Python 3.10+. Setează `LINK_CHECK_SKIP=domain1,domain2` pentru a înlocui lista implicită de domenii omise (`twitter.com`, `x.com`, `linkedin.com`, `instagram.com`, `medium.com`: domenii care blochează agresiv cererile automate HEAD/GET).
 
-## De unde să începi
+</details>
 
-| Experiență | Începe la | Timp estimat |
-|---|---|---|
-| Începător în programare și AI | Etapa 0: Configurare | ~306 ore |
-| Cunoști Python, ești nou în ML | Etapa 1: Fundamente matematice | ~270 ore |
-| Cunoști ML, ești nou în învățarea profundă | Etapa 3: Nucleul învățării profunde | ~200 ore |
-| Cunoști învățarea profundă, vrei LLM și agenți | Etapa 10: LLM de la zero | ~100 ore |
-| Inginer senior, vrei doar ingineria agenților | Etapa 14: Ingineria agenților | ~60 ore |
-| Vrei doar să construiești sisteme MCP de producție | [Traseul Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 de ore și 15 minute |
-| Vrei doar să construiești Agent Skills de producție | [Traseul de inginerie Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 ore |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## De ce contează acum
-
-<table>
-<tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>SEMNALUL INDUSTRIEI</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>ARTICOLE FUNDAMENTALE INCLUSE</b></th>
-</tr>
-<tr>
-<td valign="top">
-
-> *„Cel mai popular limbaj nou de programare este engleza.”*<br/> — **Andrej Karpathy** ([postare](https://x.com/karpathy/status/1617979122625712128))
->
-> *„Ingineria software se reinventează în fața ochilor noștri.”*<br/> — **Boris Cherny**, creatorul Claude Code
->
-> *„Modelele vor continua să se îmbunătățească. Abilitatea a cărei valoare crește este **să știi ce să construiești**.”*<br/> — Consensul industriei, 2026
-
-</td>
-<td valign="top">
+<details>
+<summary>Lucrări și protocoale fundamentale</summary>
 
 - *Attention Is All You Need* — Vaswani et al., 2017 → [Etapa 7](#phase-7)
 - *Language Models are Few-Shot Learners* (GPT-3) → [Etapa 10](#phase-10)
@@ -1243,13 +1231,7 @@ Numai biblioteca standard, Python 3.10+. Setează `LINK_CHECK_SKIP=domain1,domai
 - *ReAct: Reasoning + Acting in LLMs* → [Etapa 14](#phase-14)
 - *Model Context Protocol* — Anthropic → [Etapa 13](#phase-13)
 
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+</details>
 
 ## Contribuții
 
@@ -1272,21 +1254,17 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 
 Codul de ieșire este diferit de zero când o regulă eșuează. Regulile L001–L010 validează structura directoarelor, prezența `docs/en.md` și H1, un `code/` nevid, schema `quiz.json` (resping cheile vechi `q/choices/answer` care au cauzat problema #102) și linkurile relative din documentația lecțiilor.
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
 <a id="supporters"></a>
 
 ## Susține munca la proiect
 
+<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
+<p align="center"><sub><b>114,584</b> cititori &nbsp;·&nbsp; <b>181,995</b> vizualizări de pagini în ultimele 30 de zile &nbsp;·&nbsp; la 2026-08-29</sub></p>
+<!-- STATS:END -->
+
 Gratuit, cu licență MIT, 523 de lecții. Mulțumim sponsorilor și susținătorilor care fac posibilă această muncă. [Vezi toți sponsorii și susținătorii](../../BACKERS.md).
 
 Vrei să susții proiectul? Vezi [opțiunile de sponsorizare](../../SPONSORS.md), inclusiv [sponsorizarea cu hardware](../../SPONSORS.md#hardware-lab-partner), sau [devino sponsor pe GitHub](https://github.com/sponsors/rohitg00).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 
 Dacă acest manual te-a ajutat, acordă o stea depozitului. Ajută proiectul să continue.
 
@@ -1297,7 +1275,5 @@ MIT. Folosește materialul cum dorești: creează un fork, predă-l, vinde-l sau
 Întreținut de [Rohit Ghumare](https://github.com/rohitg00) și de comunitate.
 
 <sub>
-  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
-  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Raportează / Sugerează</a>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp; <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp; <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Raportează / Sugerează</a>
 </sub>

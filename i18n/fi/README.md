@@ -1,44 +1,19 @@
 <p align="center"><sub>Tämä README on käännetty suomeksi. <a href="../../README.md">Englanninkielinen README</a> on ensisijainen lähde.</sub></p>
-<p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch: käsikirjan banneri" width="100%">
-</p>
 
 <p align="center">
-  <a href="../../README.md">🇬🇧 English</a> ·
-  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
-  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
-  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
-  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
-  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
-  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
-  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
-  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
-  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
-  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
-  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
-  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
-  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
-  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
-  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
-  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
-  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
-  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
-  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
-  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
-  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
-  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
-  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
-  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
-  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
-  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
-  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
-  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
-  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
-  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
-  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
-  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
-  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/header-dark.svg">
+    <img src="../../assets/readme/header-light.svg" alt="Tekoälytekniikkaa alusta alkaen" width="840">
+  </picture>
 </p>
+
+Toteuta mallien sisäiset mekanismit, hakuprosessit ja agenttien suoritusympäristöt. Testaa niitä, tutki virheitä ja säilytä koodi sekä arviointitulokset.
+
+**[Aloita oppiminen](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Valitse polku](#learning-routes)** · **[Kokeile harjoitusta](#interactive-lab)** · **[Rakenna projekti](#project-challenges)** · **[Selaa opetussuunnitelmaa](#contents)**
+
+Maksuton, avoin lähdekoodi, MIT-lisenssi. Opi verkkosivustolla, koodausagentin kanssa tai suorittamalla koodia paikallisesti.
+
+> 523 oppituntia. 20 vaihetta. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-lisenssi"></a>
@@ -46,12 +21,16 @@
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 vaihetta"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub-tähdet"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Verkkosivusto"></a>
-  <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Sijoitus Star Historyssa" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="Päivän suosittu GitHub-tietovarasto" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
- </a>
 </p>
+
+<details>
+<summary>Lue omalla kielelläsi</summary>
+
+<p align="center">
+  <a href="../../README.md">🇬🇧 English</a> · <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> · <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> · <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> · <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> · <a href="../../i18n/pt/README.md">🇵🇹 Português</a> · <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> · <a href="../../i18n/es/README.md">🇪🇸 Español</a> · <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> · <a href="../../i18n/fr/README.md">🇫🇷 Français</a> · <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> · <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> · <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> · <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> · <a href="../../i18n/ro/README.md">🇷🇴 Română</a> · <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> · <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> · <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> · <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> · <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> · <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> · <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> · <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> · <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> · <a href="../../i18n/he/README.md">🇮🇱 עברית</a> · <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> · <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> · <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> · <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> · <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> · <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> · <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> · <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> · <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
+
+</details>
 
 ### Sponsorit
 
@@ -64,65 +43,134 @@
   <sub><span>Tukesi pitää jokaisen oppitunnin maksuttomana ja avoimena lähdekoodina.</span> <a href="#supporters">Katso kaikki tukijat</a> · <a href="../../SPONSORS.md">Ryhdy sponsoriksi</a></sub>
 </p>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+<a id="see-what-you-will-build-and-keep"></a>
+<a id="learning-routes"></a>
 
-> **84% opiskelijoista käyttää jo tekoälytyökaluja. Vain 18% kokee olevansa valmis käyttämään niitä työelämässä.** Tämä opetussuunnitelma kuroo eron umpeen.
->
-> 523 oppituntia. 20 vaihetta. ~342 tuntia. Python, TypeScript, Rust, Julia. Jokaiselta oppitunnilta syntyy uudelleenkäytettävä tuotos: kehote, taito, agentti tai MCP-palvelin. Maksuton, avoin lähdekoodi, MIT.
->
-> Et vain opiskele tekoälyä. Rakennat sitä itse, alusta loppuun.
+## Oppimispolut
 
-<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> lukijaa &nbsp;·&nbsp; <b>181,995</b> sivukatselua viimeisten 30 päivän aikana &nbsp;·&nbsp; tilanne 2026-08-29</sub></p>
-<!-- STATS:END -->
+| Polku | Ensimmäinen oppitunti |
+|---|---|
+| Mallien perusteet | [Asennus ja työkalut](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| LLM-järjestelmät | [Kehotteiden suunnittelu](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Agentit ja järjestelmien toimitus | [Agenttisilmukka](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
 
-## Aloita tästä: valitse, mitä haluat rakentaa
+[Vertaa urapolkuja](https://aiengineeringfromscratch.com/learning-paths.html) · [Esitiedot ja opiskeluaika](#study-guide)
 
-Sinun ei tarvitse käydä läpi 523 oppituntia ennen aloittamista. Valitse yksi tavoite. Jokainen linkki avaa saman opetussuunnitelman GitHubissa tai verkkosivustolla, ja molemmissa versioissa käytetään samaa oppituntien koodia.
+<a id="interactive-lab"></a>
 
-| Tavoitteesi | Opi GitHubissa | Opi verkkosivustolla |
-|---|---|---|
-| Olen aloittelija ja haluan kattavan perustan | [Vaihe 0: Asennus ja työkalut](../../phases/00-setup-and-tooling/) | [Kehitysympäristö](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Osaan Pythonia ja haluan oppia matematiikan ja koneoppimisen perusteet | [Vaihe 1: Matematiikan perusteet](../../phases/01-math-foundations/) | [Lineaarialgebran intuitio](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Haluan rakentaa LLM-sovelluksia tuotantokäyttöön | [Vaihe 11: LLM-kehitys](../../phases/11-llm-engineering/) | [Kehotteiden suunnittelu](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Haluan rakentaa agentteja | [Vaihe 14: Agenttikehitys](../../phases/14-agent-engineering/) | [Agentin toimintasilmukka](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Haluan käyttää ohjelmointiagentteja oikeissa koodivarastoissa | [Agenttiavusteisen kehityksen oppimispolku](../../learning-paths/using-coding-agents.json) | [Agenttiavusteinen kehitys](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Haluan määritellä oikean toteutuskohteen ennen ohjelmointia | [Tuotepäätösten ja toimituksen oppimispolku](../../learning-paths/shaping-the-build.json) | [Tuotepäätökset ja toimitus](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| Haluan rakentaa Model Context Protocol (MCP) -protokollalla | [Model Context Protocol (MCP) -polku](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) -oppimispolku](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Haluan kirjoittaa ja julkaista Agent Skills -taitoja | [Agent Skills -täsmäpolku](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills -oppimispolku](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Haluan valmistautua Claude-sertifiointiin | [Sertifiointiopintojen aloitusopas](../../certifications/claude/GETTING_STARTED.md) | [Sertifiointiakatemia](https://aiengineeringfromscratch.com/certifications.html) |
-| Haluan valmistautua MCP Associate (MCPA) -sertifiointiin | [MCPA-aloitusopas](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA-opintopolku](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+### Gradienttilaskeutuminen
 
-Etkö tiedä, mistä aloittaa? Käytä [`start-learning`-tasokartoitustuutoria](../../skills/start-learning/SKILL.md) tai [verkkosivuston esitieto-opasta](https://aiengineeringfromscratch.com/prereqs.html).
+Kaksikymmentä aloituspistettä etenee gradienttilaskeutumisella neliöllisellä häviöfunktiolla. Kuvaaja näyttää niiden sijainnit ja keskimääräisen häviön jokaisen päivityksen jälkeen.
 
-Vertaa neljää ydinaluetta ja kuutta urapolkua [tekoälykehityksen oppimispoluissa](https://aiengineeringfromscratch.com/learning-paths.html).
+<p align="center">
+  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+    <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
+      <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
+      <source media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-dark.png">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-light.png">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-mobile-dark.gif">
+      <source media="(max-width: 600px)" srcset="../../assets/readme/101-gradient-mobile-light.gif">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-dark.gif">
+      <img src="../../assets/readme/101-gradient-light.gif" alt="Gradienttilaskeutuminen siirtää hajallaan olevia aloituspisteitä kohti häviöfunktion minimiä. Keskimääräinen häviö pienenee jokaisella päivityksellä." width="840">
+    </picture>
+  </a>
+</p>
 
-### Työskentele jokaisella oppitunnilla samalla tavalla
+[Säädä oppimisnopeutta oppitunnilla](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Vertaa gradienttilaskeutumista, momenttia ja Adamia koodissa](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
-1. **Lue** `docs/en.md` ja selitä ydinajatus omin sanoin.
-2. **Kirjoita ja rakenna** keskeinen koodi sen sijaan, että pitäisit koodilohkoa koristeena.
-3. **Suorita** oppitunnin komento koodivaraston juuresta eli hakemistosta, jossa ovat `README.md` ja `phases/`.
-4. **Tallenna näyttö**: komento, työhakemisto, poistumiskoodi, olennainen tuloste sekä muuttamasi tai luomasi tuotos.
-5. **Jatka** vasta, kun pystyt selittämään tulosteen ja tekemään pienen muutoksen arvaamatta.
+<a id="project-challenges"></a>
 
-Oppituntisivujen komentojen polut ovat suhteessa koodivaraston juureen, ellei oppitunnilla nimenomaisesti kehoteta vaihtamaan hakemistoa. Jos oppitunti tarjoaa useita ohjelmointikieliä, suorita opiskelemasi kielen toteutus.
+### Projektit
 
-### Kloonaa koodivarasto ja tuota ensimmäinen näyttösi
+Kolme projektia, joissa on vaiheittaiset aloituskoodit, vertailutoteutukset ja paikalliset arviointityökalut. Suorita komennot tietovaraston juuresta [asennuksen](#local-setup) jälkeen. Aloituskoodit eivät läpäise tarkistuksia ennen kuin toteutat vaiheet.
+
+<details>
+<summary><strong>01 · Tiedonhaun arviointilaboratorio</strong> · Python · Järjestysmittarit ja regressiotarkistukset</summary>
+
+Ehdokas parantaa keskimääräistä NDCG:tä, mutta yksi kysely sijoittaa olennaisimmat lähteensä alemmas. Rakenna kyselykohtainen vertailu, joka raportoi regression ja voi estää julkaisutarkistuksen läpäisyn.
+
+Käytä Python 3.10+:aa. Kertaa [RAG](../../phases/11-llm-engineering/06-rag/docs/en.md) ja [mallien arviointi](../../phases/02-ml-fundamentals/09-model-evaluation/docs/en.md). Toteuta järjestysten validointi, precision ja recall, sijoitusherkät mittarit ja lopuksi järjestelmävertailu.
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --init learning-artifacts/retrieval-evaluation-lab
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --stage 1 --path learning-artifacts/retrieval-evaluation-lab --strict
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --all --path learning-artifacts/retrieval-evaluation-lab --strict
 ```
 
-Ennakkotarkistus erottaa heti tarvittavat vaatimukset myöhemmin tarvittavista työkaluista. Jokaisen täyttymättä jääneen pakollisen vaatimuksen yhteydessä näytetään havaittu syy ja korjaava komento. Toinen komento suorittaa oppitunnin ilman ulkoisia riippuvuuksia ja näyttää lopuksi, että matriisin kertominen vektorilla on neuroverkon kerroksen sisällä tehtävä laskutoimitus. Tallenna päätteen tuloste ensimmäiseksi todisteeksesi.
+**Säilytä:** toistettava vertailu, kyselykohtaiset erot ja pisteytykseen käytetyt relevanssiarviot. Mittarit kuvaavat näitä arvioita; ne eivät osoita vastausten oikeellisuutta.
 
-## Ota AI-opettaja käyttöön 30 sekunnissa
+[Aloita projekti](https://aiengineeringfromscratch.com/project.html?id=retrieval-evaluation-lab) · [Tutki viiteratkaisua](../../projects/retrieval-evaluation-lab/solution/) · [Suorita omilla syötteilläsi](../../projects/retrieval-evaluation-lab/README.md#run-with-your-own-inputs)
 
-Jos Node.js, `npx` ja taitoja tukeva koodausagentti on jo asennettu, agentistasi tulee opettajasi kahdella komennolla. Opettajan asentaminen tai lukeminen ei vaadi tietovaraston kloonaamista. Rajattujen opintopolkujen suoritettavat harjoitukset tarvitsevat `python3`-komennon. Agent Skills -harjoitukset tarvitsevat lisäksi valitun isäntäsovelluksen sekä käyttäjän tai projektin taitohakemiston, johon voi kirjoittaa.
+</details>
+
+<details>
+<summary><strong>02 · Agenttijälkien virheenjäljitin</strong> · TypeScript · Jälkien jäsentäminen ja ajan mittaus</summary>
+
+Mukana toimitettu jälki kestää edelleen 100 ms, mutta tokenien kokonaiskäyttö kasvaa 200:lla ja yksi span alkaa epäonnistua. Erota alispanien päällekkäinen työ ylispanin suoritusajasta ja tuota muutoksen paljastava raportti.
+
+Käytä Node.js 22.18+:aa ja arvioijaa varten Python 3:a. Toteuta JSONL-jäsennys, ylispanisuhteiden validointi, intervallilaskenta ja lopuksi tutkittava aikajana.
+
+```bash
+python3 scripts/project_test.py agent-trace-debugger \
+  --init learning-artifacts/agent-trace-debugger
+python3 scripts/project_test.py agent-trace-debugger \
+  --stage 1 --path learning-artifacts/agent-trace-debugger --strict
+python3 scripts/project_test.py agent-trace-debugger \
+  --all --path learning-artifacts/agent-trace-debugger --strict
+```
+
+**Säilytä:** syötejälki, HTML-aikajana ja JSON-regressioraportti. Säilytä kunkin spanin omat tokenimäärät ilman alispaneja, jotta ylä- ja alispanien käyttöä ei lasketa kahdesti.
+
+[Aloita projekti](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger) · [Tutki viiteratkaisua](../../projects/agent-trace-debugger/solution/) · [Tutki ajankäyttöä vuorovaikutteisesti](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger&stage=03-timing)
+
+</details>
+
+<details>
+<summary><strong>03 · Työkalukutsujen palomuuri</strong> · Rust · Roolitarkistukset ja hyväksyntäkuitit</summary>
+
+Kirjoitusoperaatio muuttuu tarkastuksen jälkeen tai hyväksyntää käytetään uudelleen. Validoi kutsun kuori, tarkista kutsujan rooli ja polku ja kuluta sitten täsmälleen kyseiseen pyyntöön ja sisältöön sidottu hyväksyntä.
+
+Käytä Rustia ja Python 3.10+:aa. Kertaa [työkaluskeemojen suunnittelu](../../phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md) ja [tietoturvarajat](../../phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md). Kutsuva sovellus toimittaa identiteetin; malli ehdottaa operaatiota.
+
+```bash
+python3 scripts/project_test.py tool-call-firewall \
+  --init learning-artifacts/tool-call-firewall
+python3 scripts/project_test.py tool-call-firewall \
+  --stage 1 --path learning-artifacts/tool-call-firewall --strict
+python3 scripts/project_test.py tool-call-firewall \
+  --all --path learning-artifacts/tool-call-firewall --strict
+```
+
+**Säilytä:** auditointitosite, joka näyttää pyydetyn operaation ja käytäntöpäätöksen. Hyväksynnät ovat kertakäyttöisiä yhden kutsun sisällä; tämä projekti ei tarjoa pysyvää valtuutusta eikä käyttöjärjestelmätason hiekkalaatikkoa.
+
+[Aloita projekti](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall) · [Tutki viiteratkaisua](../../projects/tool-call-firewall/solution/) · [Tutki hyväksynnän rajoja](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall&stage=03-consume-a-request-bound-approval-once)
+
+</details>
+
+[Selaa kaikkia projekteja](https://aiengineeringfromscratch.com/projects.html) · [Uraharjoittelun opas](../../learning-paths/CAREER-PRACTICE.md)
+
+## Valitse oppimistapa
+
+### Verkkosivustolla
+
+Avaa valmis oppitunti sivustolla [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) tai laajenna vaihe kohdasta [Sisältö](#contents). Ei asennusta eikä kloonausta.
+
+### Tekoälytutorin kanssa
+
+Jos Node.js, `npx` ja taitoja tukeva koodausagentti on jo asennettu, agentistasi tulee opettajasi. Opettajan asentaminen tai lukeminen ei vaadi tietovaraston kloonaamista. Rajattujen opintopolkujen suoritettavat harjoitukset tarvitsevat `python3`-komennon. Agent Skills -harjoitukset tarvitsevat lisäksi valitun isäntäsovelluksen sekä käyttäjän tai projektin taitohakemiston, johon voi kirjoittaa.
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+Valitse isäntäympäristö ja laajuus asennusohjelman kysyessä. Käytä Codexissa `start-learning`-komentoa, Claude Codessa `/start-learning`-komentoa tai pyydä ympäristöä käyttämään taitoa nimeltä.
+
+<details>
+<summary>Tutorin käyttöönotto ja isäntäympäristön komennot</summary>
 
 Tarkista ensin paikalliset vaatimukset:
 
@@ -132,11 +180,7 @@ npx --version
 python3 --version
 ```
 
-Asenna sitten kurssin taidot ja valitse haluamasi isäntäsovellus ja asennuslaajuus asennusohjelman kysyessä:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
+`skills` kirjoittaa asennuksessa valitun isäntäsovelluksen ja laajuuden mukaiseen hakemistoon, kuten `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` tai muuhun tuettuun taitohakemistoon. Varmista, että valittu isäntäsovellus löytää juuri kyseisen sijainnin.
 
 Kutsusyntaksi riippuu isäntäsovelluksesta, ei siirrettävästä `SKILL.md`-muodosta:
 
@@ -154,17 +198,100 @@ Haluatko opiskella vain Agent Skillsiä? Käytä isäntäsovelluksesi Agent Skil
 
 Asennusohjelma näyttää tukemansa isäntäsovellukset ja kysyy asennuspaikkaa. Jos Node.js, `npx`, `python3`, tuettu isäntäsovellus tai kirjoitettava hakemisto vielä puuttuu, käytä verkkosivustoa tai lue `docs/en.md` itse. Näin opit käsitteet, mutta todellisen isäntäsovelluksen löytämis-, kutsumis-, skripti- ja poistotestien näyttö odottaa, kunnes esitarkistus on mahdollista tehdä. Lue oppitunnit osoitteessa [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## Näin tämä toimii
+### Oppimistaidot
 
-Useimmat AI-materiaalit opettavat irrallisia palasia. Yksi tutkimusartikkeli siellä, hienosäätöä käsittelevä kirjoitus täällä ja näyttävä agenttidemo toisaalla. Palaset sopivat harvoin yhteen. Julkaiset chatbotin, mutta et osaa selittää sen häviökäyrää. Liität agenttiin funktion, mutta et tiedä, mitä attention tekee sitä kutsuvan mallin sisällä.
+| Taito | Mitä se tekee |
+|---|---|
+| [`start-learning`](../../skills/start-learning/SKILL.md) | Kertaluonteinen aloitus: opiskelun tavoite, tasotesti ja henkilökohtainen suunnitelma tiedostoon `LEARNING.md`. |
+| [`learn`](../../skills/learn/SKILL.md) | Opettajan työkierto. Kertaus lämmittelyksi, seuraava oppitunti vuorovaikutteisesti ja sen testi; edistyminen ja kertaustarpeet tallennetaan. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | Aiheopas. ”Missä opin attention-mekanismista?” tai ”häviöni on NaN” → oikeat oppitunnit linkkeineen. |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Model Context Protocoliin (MCP) keskittyvä opettaja. Luo tiedoston `MCP-LEARNING.md`, seuraa 17 oppitunnin manifestia ja tallentaa näyttöä viestiliikenteestä, turvallisuudesta, luotettavuudesta ja vaatimustenmukaisuudesta. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Agent Skillsiin keskittyvä opettaja. Luo tiedoston `AGENT-SKILLS-LEARNING.md`, opettaa oppitunnit 22, 24, 25, 26 ja 27 sekä tallentaa näyttöä oikeista isäntäsovelluksista. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Sertifiointiopettaja. Valitsee polun CCAO-F, CCDV-F, CCAR-F tai CCAR-P, opettaa oppitunnit, suorittaa harjoitukset, arvioi tuotokset, järjestää lähtötaso- ja harjoituskokeet sekä tallentaa edistymisen. |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA-opettaja. Seuraa protokollan 2026-07-28 mukaista 34 oppitunnin `mcpa-f`-polkua, opettaa oppitunnit, suorittaa harjoitukset ja viestitarkistukset, järjestää lähtötasotestin ja kolme harjoituskoetta sekä tallentaa edistymisen. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Kymmenen kysymyksen tasotesti. Yhdistää osaamisesi sopivaan lähtövaiheeseen ja tuottaa henkilökohtaisen polun tuntiarvioineen. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Kahdeksan kysymystä vaihetta kohti, palaute ja täsmälliset kerrattavat oppitunnit. Käytä yllä olevan kutsutaulukon Codex-, Claude Code- tai luonnollisen kielen muotoa. |
 
-Tämä opetussuunnitelma antaa kokonaisuudelle rungon. 20 vaihetta, 523 oppituntia, neljä kieltä: Python, TypeScript, Rust ja Julia. Toisessa päässä lineaarialgebra, toisessa autonomiset parvet. Jokainen algoritmi rakennetaan ensin suoraan matematiikasta. Vastavirta-algoritmi, tokenisointi, attention ja agenttisilmukka. Kun PyTorch tulee mukaan, tiedät jo, mitä se tekee pinnan alla.
+</details>
 
-Jokainen oppitunti etenee samoin: lue ongelma, johda matematiikka, kirjoita koodi, aja testi ja säilytä tuotos. Ei viiden minuutin videoita, kopioimalla tehtyjä käyttöönottoja eikä kädestä pitämistä. Maksuton, avointa lähdekoodia ja tarkoitettu ajettavaksi omalla kannettavallasi.
+<a id="local-setup"></a>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+### Suorita koodia paikallisesti
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+
+Ennakkotarkistus erottaa heti tarvittavat vaatimukset myöhemmin tarvittavista työkaluista. Jokaisen täyttymättä jääneen pakollisen vaatimuksen yhteydessä näytetään havaittu syy ja korjaava komento. Komento `vectors.py` suorittaa oppitunnin ilman ulkoisia riippuvuuksia ja näyttää lopuksi, että matriisin kertominen vektorilla on neuroverkon kerroksen sisällä tehtävä laskutoimitus. Tallenna päätteen tuloste ensimmäiseksi todisteeksesi.
+
+<details>
+<summary>Työskentele jokaisella oppitunnilla samalla tavalla</summary>
+
+### Työskentele jokaisella oppitunnilla samalla tavalla
+
+1. **Lue** `docs/en.md` ja selitä ydinajatus omin sanoin.
+2. **Kirjoita ja rakenna** keskeinen koodi sen sijaan, että pitäisit koodilohkoa koristeena.
+3. **Suorita** oppitunnin komento koodivaraston juuresta eli hakemistosta, jossa ovat `README.md` ja `phases/`.
+4. **Tallenna näyttö**: komento, työhakemisto, poistumiskoodi, olennainen tuloste sekä muuttamasi tai luomasi tuotos.
+5. **Jatka** vasta, kun pystyt selittämään tulosteen ja tekemään pienen muutoksen arvaamatta.
+
+Oppituntisivujen komentojen polut ovat suhteessa koodivaraston juureen, ellei oppitunnilla nimenomaisesti kehoteta vaihtamaan hakemistoa. Jos oppitunti tarjoaa useita ohjelmointikieliä, suorita opiskelemasi kielen toteutus.
+
+</details>
+
+<a id="study-guide"></a>
+
+## Valitse oppimispolku
+
+Sinun ei tarvitse käydä läpi 523 oppituntia ennen aloittamista. Valitse yksi tavoite. Jokainen linkki avaa saman opetussuunnitelman GitHubissa tai verkkosivustolla, ja molemmissa versioissa käytetään samaa oppituntien koodia.
+
+| Tavoitteesi | Opi GitHubissa | Opi verkkosivustolla |
+|---|---|---|
+| Olen aloittelija ja haluan kattavan perustan | [Vaihe 0: Asennus ja työkalut](../../phases/00-setup-and-tooling/) | [Kehitysympäristö](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Osaan Pythonia ja haluan oppia matematiikan ja koneoppimisen perusteet | [Vaihe 1: Matematiikan perusteet](../../phases/01-math-foundations/) | [Lineaarialgebran intuitio](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| Haluan rakentaa LLM-sovelluksia tuotantokäyttöön | [Vaihe 11: LLM-kehitys](../../phases/11-llm-engineering/) | [Kehotteiden suunnittelu](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Haluan rakentaa agentteja | [Vaihe 14: Agenttikehitys](../../phases/14-agent-engineering/) | [Agentin toimintasilmukka](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Haluan käyttää ohjelmointiagentteja oikeissa koodivarastoissa | [Agenttiavusteisen kehityksen oppimispolku](../../learning-paths/using-coding-agents.json) | [Agenttiavusteinen kehitys](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| Haluan määritellä oikean toteutuskohteen ennen ohjelmointia | [Tuotepäätösten ja toimituksen oppimispolku](../../learning-paths/shaping-the-build.json) | [Tuotepäätökset ja toimitus](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+
+Etkö tiedä, mistä aloittaa? Käytä [`start-learning`-tasokartoitustuutoria](../../skills/start-learning/SKILL.md) tai [verkkosivuston esitieto-opasta](https://aiengineeringfromscratch.com/prereqs.html).
+
+Vertaa neljää ydinaluetta ja kuutta urapolkua [tekoälykehityksen oppimispoluissa](https://aiengineeringfromscratch.com/learning-paths.html).
+
+<details>
+<summary>Kohdennetut MCP- ja Agent Skills -polut</summary>
+
+| Tavoitteesi | Opi GitHubissa | Opi verkkosivustolla |
+|---|---|---|
+| Haluan rakentaa Model Context Protocol (MCP) -protokollalla | [Model Context Protocol (MCP) -polku](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) -oppimispolku](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Haluan kirjoittaa ja julkaista Agent Skills -taitoja | [Agent Skills -täsmäpolku](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills -oppimispolku](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+
+</details>
+
+<details>
+<summary>Esitiedot ja opiskeluaika</summary>
+
+### Esitiedot
+
+- Osaat kirjoittaa koodia jollakin kielellä; Pythonista on hyötyä.
+- Haluat ymmärtää, miten AI **todella toimii**, et vain kutsua API-rajapintoja.
+
+## Mistä aloittaa
+
+| Tausta | Aloita tästä | Arvioitu aika |
+|---|---|---|
+| Uusi ohjelmoinnissa ja AI:ssa | Vaihe 0: Asennus | ~306 tuntia |
+| Osaat Pythonia, ML on uutta | Vaihe 1: Matematiikan perusteet | ~270 tuntia |
+| Osaat ML:ää, syväoppiminen on uutta | Vaihe 3: Syväoppimisen ydin | ~200 tuntia |
+| Osaat syväoppimista ja haluat oppia kielimalleista ja agenteista | Vaihe 10: Suuret kielimallit alusta asti | ~100 tuntia |
+| Kokenut kehittäjä, joka haluaa vain agenttikehitystä | Vaihe 14: Agenttikehitys | ~60 tuntia |
+| Haluat rakentaa vain tuotannon MCP-järjestelmiä | [Model Context Protocol (MCP) -polku](../../learning-paths/model-context-protocol.json) | ~23 tuntia 15 min |
+| Haluat rakentaa vain tuotannon Agent Skills -taitoja | [Agent Skills -kehityspolku](../../learning-paths/agent-skills.json) | ~9.5 tuntia |
+
+</details>
 
 ## Opetussuunnitelman rakenne
 
@@ -194,195 +321,6 @@ flowchart TB
   P16 --> P19["Vaihe 19: Lopputyöt"]
   P17 --> P19
   P18 --> P19
-```
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Oppitunnin rakenne
-
-Jokaisella oppitunnilla on oma hakemisto, ja rakenne on sama koko kurssilla:
-
-```text
-phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      suoritettavat toteutukset (Python, TypeScript, Rust, Julia)
-├── docs/
-│   └── en.md  oppituntiteksti
-└── outputs/   oppitunnin tuottamat kehotteet, taidot, agentit tai MCP-palvelimet
-```
-
-Jokaisessa oppitunnissa on kuusi osaa. *Rakenna / Käytä* -jako on keskeinen: ensin toteutat algoritmin alusta asti, sitten ajat saman asian tuotantokirjastolla. Ymmärrät ohjelmistokehyksen toiminnan, koska olet kirjoittanut itse sen pienemmän version.
-
-```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
-flowchart LR
-  M["YDINIDEA<br/><sub>pääajatus yhdellä rivillä</sub>"] --> Pr["ONGELMA<br/><sub>konkreettinen vaikeus</sub>"]
-  Pr --> C["KÄSITE<br/><sub>kaaviot ja intuitio</sub>"]
-  C --> B["RAKENNA<br/><sub>puhdasta matematiikkaa ilman kehyksiä</sub>"]
-  B --> U["KÄYTÄ<br/><sub>sama asia PyTorchilla / sklearnilla</sub>"]
-  U --> S["JULKAISE<br/><sub>kehote · taito · agentti · MCP</sub>"]
-```
-
-## Aloittaminen
-
-Kolme tapaa aloittaa. Valitse yksi.
-
-**Vaihtoehto A: opiskele päätteessä *(suositus)*.** Kun Node.js:n, `npx`:n, isäntäsovelluksen ja asennuslaajuuden esitarkistus on tehty, asenna oppimistaidot yhteensopivaan agenttiin ja anna kurssin ohjata opiskelua:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
-
-Käytä yllä olevaa isäntäsovelluskohtaista kutsutaulukkoa. Asennetut taidot tarjoavat `start-learning`-, `learn`- ja `course-guide`-toiminnot sekä rajatut `learn-mcp`- ja `learn-agent-skills`-polut. Oppituntitekstit voidaan hakea tästä tietovarastosta ilman kloonia. Paikallinen klooni tarvitaan kopioituihin koodikomentoihin sekä suoritettaviin MCP- ja Agent Skills -harjoituksiin. Edistyminen tallentuu projektisi tiedostoon `LEARNING.md`, `MCP-LEARNING.md` tai `AGENT-SKILLS-LEARNING.md`, joten voit jatkaa seuraavassa istunnossa siitä, mihin jäit.
-
-**Vaihtoehto B: lue.** Avaa valmis oppitunti sivustolla [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) tai laajenna vaihe kohdasta [Sisältö](#contents). Ei asennusta eikä kloonausta.
-
-**Vaihtoehto C: kloonaa ja suorita.**
-
-```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
-```
-
-Kloonaaminen lataa oppimistaidot automaattisesti myös Claude Codeen ja antaa `learn`-opettajalle kunkin oppitunnin koodin oikeaa suorittamista varten pelkän läpilukemisen sijaan.
-
-### Esitiedot
-
-- Osaat kirjoittaa koodia jollakin kielellä; Pythonista on hyötyä.
-- Haluat ymmärtää, miten AI **todella toimii**, et vain kutsua API-rajapintoja.
-
-### Valmistaudu Claude-sertifiointeihin
-
-[Claude Certification Academy](../../certifications/claude/README.md) on maksuton, avoimen lähdekoodin valmistautumisohjelma kaikille neljälle viralliselle Claude-sertifiointipolulle: Associate Foundations, Developer Foundations, Architect Foundations ja Architect Professional. Jokainen polku yhdistää koesuunnitelmaan sidotut oppitunnit, suoritettavat harjoitukset, lähtötasotestin, lopputyön ja täyspitkän itse laaditun harjoituskokeen.
-
-Käytä [AI-avusteista GitHub-aloitusopasta](../../certifications/claude/GETTING_STARTED.md) Claude Coden, Codexin, ChatGPT:n, Cursorin tai muun agentin kanssa. Suorita `claude-certification` Codexissa, `/claude-certification` Claude Codessa tai pyydä muuta isäntäsovellusta käyttämään `claude-certification`-taitoa. Se valitsee polun, luo pysyvän opiskelureitin tiedostoon `CLAUDE-CERTIFICATION.md`, opettaa yhden vaiheen kerrallaan, suorittaa oikeat harjoitukset ja antaa palautetta tuotoksista. Sama opetussuunnitelma on saatavilla [sertifiointisivustolla](https://aiengineeringfromscratch.com/certifications.html).
-
-Akatemia on riippumatonta opiskelumateriaalia, joka perustuu julkisiin koetavoitteisiin. Se ei ole sidoksissa Anthropiciin, ei toista oikeita koekysymyksiä eikä voi taata kokeen läpäisyä.
-
-### Valmistaudu MCP Associate (MCPA) -sertifiointiin
-
-[MCPA-sertifioinnin opetussuunnitelma](../../certifications/mcpa/README.md) on maksuton, avoimen lähdekoodin valmistautumisohjelma Agentic AI Foundationin Model Context Protocol Associate -kokeeseen, jota tarjoaa Linux Foundation Training. Sen 34 oppituntia käsittelevät tilatonta 2026-07-28-protokollaa kokeen viidellä osa-alueella: pyyntökohtainen `_meta` ja `server/discover` vanhan kättelyn sijaan, usean kierroksen pyynnöt, tilaukset, välimuisti, Tasks- ja MCP Apps -laajennukset, OAuth-valtuutus sekä rekisteri- ja SDK-tasot. Jokaisessa oppitunnissa on pelkällä standardikirjastolla toimiva harjoitus, jonka tuloste tarkistetaan nykyistä viestimuotoa vasten. Polku sisältää lisäksi lähtötasotestin, lopputyön ja kolme täyspitkää itse laadittua harjoituskoetta, joiden kysymysjakauma noudattaa julkaistun koesuunnitelman painotuksia.
-
-Käytä [AI-avusteista GitHub-aloitusopasta](../../certifications/mcpa/GETTING_STARTED.md) Claude Coden, Codexin, ChatGPT:n, Cursorin tai muun agentin kanssa. Suorita `mcpa-certification` Codexissa, `/mcpa-certification` Claude Codessa tai pyydä muuta isäntäsovellusta käyttämään `mcpa-certification`-taitoa. Se luo pysyvän opiskelureitin tiedostoon `MCPA-CERTIFICATION.md`, opettaa yhden vaiheen kerrallaan, suorittaa oikeat harjoitukset ja antaa palautetta tuotoksista. Sama opetussuunnitelma on [MCPA-polun sivulla](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
-
-Opetussuunnitelma on riippumatonta opiskelumateriaalia, joka perustuu julkisiin koetavoitteisiin. Se ei ole sidoksissa Agentic AI Foundationiin eikä Linux Foundationiin, ei toista oikeita koekysymyksiä eikä voi taata kokeen läpäisyä.
-
-### Oppimistaidot
-
-| Taito | Mitä se tekee |
-|---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | Kertaluonteinen aloitus: opiskelun tavoite, tasotesti ja henkilökohtainen suunnitelma tiedostoon `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | Opettajan työkierto. Kertaus lämmittelyksi, seuraava oppitunti vuorovaikutteisesti ja sen testi; edistyminen ja kertaustarpeet tallennetaan. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Aiheopas. ”Missä opin attention-mekanismista?” tai ”häviöni on NaN” → oikeat oppitunnit linkkeineen. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Model Context Protocoliin (MCP) keskittyvä opettaja. Luo tiedoston `MCP-LEARNING.md`, seuraa 17 oppitunnin manifestia ja tallentaa näyttöä viestiliikenteestä, turvallisuudesta, luotettavuudesta ja vaatimustenmukaisuudesta. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Agent Skillsiin keskittyvä opettaja. Luo tiedoston `AGENT-SKILLS-LEARNING.md`, opettaa oppitunnit 22, 24, 25, 26 ja 27 sekä tallentaa näyttöä oikeista isäntäsovelluksista. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Sertifiointiopettaja. Valitsee polun CCAO-F, CCDV-F, CCAR-F tai CCAR-P, opettaa oppitunnit, suorittaa harjoitukset, arvioi tuotokset, järjestää lähtötaso- ja harjoituskokeet sekä tallentaa edistymisen. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA-opettaja. Seuraa protokollan 2026-07-28 mukaista 34 oppitunnin `mcpa-f`-polkua, opettaa oppitunnit, suorittaa harjoitukset ja viestitarkistukset, järjestää lähtötasotestin ja kolme harjoituskoetta sekä tallentaa edistymisen. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Kymmenen kysymyksen tasotesti. Yhdistää osaamisesi sopivaan lähtövaiheeseen ja tuottaa henkilökohtaisen polun tuntiarvioineen. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Kahdeksan kysymystä vaihetta kohti, palaute ja täsmälliset kerrattavat oppitunnit. Käytä yllä olevan kutsutaulukon Codex-, Claude Code- tai luonnollisen kielen muotoa. |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Lue peruskurssi kirjana
-
-Hakemiston `phases/` 20-vaiheinen peruskurssi kootaan kuusiosaiseksi kirjasarjaksi. CI tuottaa EPUB- ja PDF-tiedostot samoista oppituntien lähteistä ja liittää ne jokaiseen [GitHub-julkaisuun](https://github.com/rohitg00/ai-engineering-from-scratch/releases). Alla olevat linkit osoittavat aina uusimpaan julkaisuun. Osanumerot kertovat paikan sarjassa, eivät versiota: jokaisessa kappaleessa on päivätty painosmerkintä, ja vanhat painokset ovat edelleen ladattavissa omista julkaisuistaan.
-
-Sertifiointikursseja ei tarkoituksella muuteta kirjoiksi. Niiden AI-opettajan tila, suoritettavat harjoitukset, vuorovaikutteiset kuvat, lähtötasotestit ja ajastetut harjoituskokeet säilyvät GitHubissa ja verkkosivustolla.
-
-| Osa | Nimi | Vaiheet | Lataa |
-|-----|-------|--------|----------|
-| 1 | Perusteet · Matematiikka, työkalut ja klassinen koneoppiminen | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Syväoppiminen · Verkot, konenäkö ja puhe | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Kieli · NLP:n perusteet ja Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Suuret kielimallit · Generointi, vahvistusoppiminen, esikoulutus ja kehitys | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Agentit · Multimodaalisuus, protokollat, autonomia ja parvet | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Tuotanto · Infrastruktuuri, turvallisuus ja lopputyöt | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-Kirja on tilannekuva; tämä tietovarasto on elävä painos. Jokainen luku päättyy linkkeihin oppitunnin animoituihin kuviin, testiin ja suoritettavaan koodiin. Kokoa kirja paikallisesti komennolla `python3 scripts/build_book.py` (pandoc vaaditaan). Kokoamisputken tiedot ovat tiedostossa [book/README.md](../../book/README.md).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Jokainen oppitunti tuottaa jotain
-
-Muut kurssit päättyvät toteamukseen *”Onnittelut, opit X:n.”* Täällä jokainen oppitunti tuottaa **uudelleenkäytettävän työkalun**, jonka voit asentaa tai liittää päivittäiseen työnkulkuusi.
-
-<table>
-<tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A kehotteet"/><br/><sub>FIG_001 · A</sub><br/><b>KEHOTTEET</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B taidot"/><br/><sub>FIG_001 · B</sub><br/><b>TAIDOT</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C agentit"/><br/><sub>FIG_001 · C</sub><br/><b>AGENTIT</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP-palvelimet"/><br/><sub>FIG_001 · D</sub><br/><b>MCP-PALVELIMET</b></th>
-</tr>
-<tr>
-<td valign="top">Liitä mihin tahansa AI-avustajaan saadaksesi asiantuntijatason apua rajattuun tehtävään.</td>
-<td valign="top">Lisää Claudeen, Cursoriin, Codexiin, OpenClawiin, Hermesiin tai muuhun agenttiin, joka lukee tiedostoa <code>SKILL.md</code>.</td>
-<td valign="top">Ota käyttöön autonomisina työntekijöinä. Kirjoitit silmukan itse vaiheessa 14.</td>
-<td valign="top">Liitä mihin tahansa MCP-yhteensopivaan asiakkaaseen. Rakennettu alusta loppuun vaiheessa 13.</td>
-</tr>
-</table>
-
-> Asenna kaikki komennolla `python3 scripts/install_skills.py <target>`. Oikeita työkaluja, ei kotitehtäviä. Kurssin lopussa sinulla on 523 tuotoksen portfolio, jonka sisällön todella ymmärrät, koska rakensit sen itse.
-
-### FIG_002 · Läpikäyty esimerkki
-
-Vaihe 14, oppitunti 1: agenttisilmukka. ~120 riviä puhdasta Pythonia ilman riippuvuuksia.
-
-<table>
-<tr>
-<td valign="top" width="50%">
-
-**`code/agent_loop.py`** &nbsp; <sub><i>rakenna</i></sub>
-
-```python
-def run(query, tools):
-    history = [user(query)]
-    for step in range(MAX_STEPS):
-        msg = llm(history)
-        if msg.tool_calls:
-            for call in msg.tool_calls:
-                result = tools[call.name](**call.args)
-                history.append(tool_result(call.id, result))
-            continue
-        return msg.content
-    raise StepLimitExceeded
-```
-
-</td>
-<td valign="top" width="50%">
-
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>julkaise</i></sub>
-
-```markdown
----
-name: agent-loop
-description: ReAct-style loop for any tool list
-phase: 14
-lesson: 01
----
-
-Implement a minimal agent loop that...
-```
-
-**`outputs/prompt-debug-agent.md`**
-
-```markdown
-You are an agent debugger. Given the trace
-of an agent run, identify the step where
-the agent went wrong and explain why...
-```
-
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 <a id="contents"></a>
@@ -1105,33 +1043,104 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 
 </details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+## Kirjat ja sertifioinnit
+
+<details>
+<summary>Lue peruskurssi kirjana</summary>
+
+Hakemiston `phases/` 20-vaiheinen peruskurssi kootaan kuusiosaiseksi kirjasarjaksi. CI tuottaa EPUB- ja PDF-tiedostot samoista oppituntien lähteistä ja liittää ne jokaiseen [GitHub-julkaisuun](https://github.com/rohitg00/ai-engineering-from-scratch/releases). Alla olevat linkit osoittavat aina uusimpaan julkaisuun. Osanumerot kertovat paikan sarjassa, eivät versiota: jokaisessa kappaleessa on päivätty painosmerkintä, ja vanhat painokset ovat edelleen ladattavissa omista julkaisuistaan.
+
+Sertifiointikursseja ei tarkoituksella muuteta kirjoiksi. Niiden AI-opettajan tila, suoritettavat harjoitukset, vuorovaikutteiset kuvat, lähtötasotestit ja ajastetut harjoituskokeet säilyvät GitHubissa ja verkkosivustolla.
+
+| Osa | Nimi | Vaiheet | Lataa |
+|-----|-------|--------|----------|
+| 1 | Perusteet · Matematiikka, työkalut ja klassinen koneoppiminen | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Syväoppiminen · Verkot, konenäkö ja puhe | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Kieli · NLP:n perusteet ja Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Suuret kielimallit · Generointi, vahvistusoppiminen, esikoulutus ja kehitys | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Agentit · Multimodaalisuus, protokollat, autonomia ja parvet | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Tuotanto · Infrastruktuuri, turvallisuus ja lopputyöt | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+Kirja on tilannekuva; tämä tietovarasto on elävä painos. Jokainen luku päättyy linkkeihin oppitunnin animoituihin kuviin, testiin ja suoritettavaan koodiin. Kokoa kirja paikallisesti komennolla `python3 scripts/build_book.py` (pandoc vaaditaan). Kokoamisputken tiedot ovat tiedostossa [book/README.md](../../book/README.md).
+
+</details>
+
+<details>
+<summary>Valmistaudu Claude-sertifiointeihin</summary>
+
+[Claude Certification Academy](../../certifications/claude/README.md) on maksuton, avoimen lähdekoodin valmistautumisohjelma kaikille neljälle viralliselle Claude-sertifiointipolulle: Associate Foundations, Developer Foundations, Architect Foundations ja Architect Professional. Jokainen polku yhdistää koesuunnitelmaan sidotut oppitunnit, suoritettavat harjoitukset, lähtötasotestin, lopputyön ja täyspitkän itse laaditun harjoituskokeen.
+
+Käytä [AI-avusteista GitHub-aloitusopasta](../../certifications/claude/GETTING_STARTED.md) Claude Coden, Codexin, ChatGPT:n, Cursorin tai muun agentin kanssa. Suorita `claude-certification` Codexissa, `/claude-certification` Claude Codessa tai pyydä muuta isäntäsovellusta käyttämään `claude-certification`-taitoa. Se valitsee polun, luo pysyvän opiskelureitin tiedostoon `CLAUDE-CERTIFICATION.md`, opettaa yhden vaiheen kerrallaan, suorittaa oikeat harjoitukset ja antaa palautetta tuotoksista. Sama opetussuunnitelma on saatavilla [sertifiointisivustolla](https://aiengineeringfromscratch.com/certifications.html).
+
+Akatemia on riippumatonta opiskelumateriaalia, joka perustuu julkisiin koetavoitteisiin. Se ei ole sidoksissa Anthropiciin, ei toista oikeita koekysymyksiä eikä voi taata kokeen läpäisyä.
+
+</details>
+
+<details>
+<summary>Valmistaudu MCP Associate (MCPA) -sertifiointiin</summary>
+
+[MCPA-sertifioinnin opetussuunnitelma](../../certifications/mcpa/README.md) on maksuton, avoimen lähdekoodin valmistautumisohjelma Agentic AI Foundationin Model Context Protocol Associate -kokeeseen, jota tarjoaa Linux Foundation Training. Sen 34 oppituntia käsittelevät tilatonta 2026-07-28-protokollaa kokeen viidellä osa-alueella: pyyntökohtainen `_meta` ja `server/discover` vanhan kättelyn sijaan, usean kierroksen pyynnöt, tilaukset, välimuisti, Tasks- ja MCP Apps -laajennukset, OAuth-valtuutus sekä rekisteri- ja SDK-tasot. Jokaisessa oppitunnissa on pelkällä standardikirjastolla toimiva harjoitus, jonka tuloste tarkistetaan nykyistä viestimuotoa vasten. Polku sisältää lisäksi lähtötasotestin, lopputyön ja kolme täyspitkää itse laadittua harjoituskoetta, joiden kysymysjakauma noudattaa julkaistun koesuunnitelman painotuksia.
+
+Käytä [AI-avusteista GitHub-aloitusopasta](../../certifications/mcpa/GETTING_STARTED.md) Claude Coden, Codexin, ChatGPT:n, Cursorin tai muun agentin kanssa. Suorita `mcpa-certification` Codexissa, `/mcpa-certification` Claude Codessa tai pyydä muuta isäntäsovellusta käyttämään `mcpa-certification`-taitoa. Se luo pysyvän opiskelureitin tiedostoon `MCPA-CERTIFICATION.md`, opettaa yhden vaiheen kerrallaan, suorittaa oikeat harjoitukset ja antaa palautetta tuotoksista. Sama opetussuunnitelma on [MCPA-polun sivulla](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
+
+Opetussuunnitelma on riippumatonta opiskelumateriaalia, joka perustuu julkisiin koetavoitteisiin. Se ei ole sidoksissa Agentic AI Foundationiin eikä Linux Foundationiin, ei toista oikeita koekysymyksiä eikä voi taata kokeen läpäisyä.
+
+</details>
 
 ## Työkalupakki
 
-Jokainen oppitunti tuottaa uudelleenkäytettävän tuotoksen. Lopuksi sinulla on:
+Jokainen oppitunti tuottaa uudelleenkäytettävän tuloksen. Asenna se agenttiisi tai käytä alla olevia skriptejä tietovaraston juuresta.
+
+<details>
+<summary>Oppitunnin rakenne ja uudelleenkäytettävät tuotokset</summary>
+
+## Oppitunnin rakenne
+
+Jokaisella oppitunnilla on oma hakemisto, ja rakenne on sama koko kurssilla:
 
 ```text
-outputs/
-├── prompts/      kehote-pohjat jokaiseen AI-tehtävään
-└── skills/       SKILL.md-tiedostot AI-koodausagenteille
+phases/<NN>-<phase-name>/<NN>-<lesson-name>/
+├── code/      suoritettavat toteutukset (Python, TypeScript, Rust, Julia)
+├── docs/
+│   └── en.md  oppituntiteksti
+└── outputs/   oppitunnin tuottamat kehotteet, taidot, agentit tai MCP-palvelimet
 ```
 
-Liitä ne Claudeen, Cursoriin, Codexiin, OpenClawiin, Hermesiin tai muuhun agenttiin, joka lukee SKILL.md / AGENTS.md -hakemistoa. Oikeita työkaluja, ei kotitehtäviä.
+Jokaisessa oppitunnissa on kuusi osaa. *Rakenna / Käytä* -jako on keskeinen: ensin toteutat algoritmin alusta asti, sitten ajat saman asian tuotantokirjastolla. Ymmärrät ohjelmistokehyksen toiminnan, koska olet kirjoittanut itse sen pienemmän version.
 
-### Asenna kurssin taidot agenttiisi
-
-Kaksi taitojoukkoa, kaksi asennusohjelmaa:
-
-**Oppimistaidot** (`start-learning`, `learn`, `course-guide`, `learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`, `find-your-level` ja `check-understanding`) sijaitsevat hakemistossa [`skills/`](../../skills/) ja asentuvat tuettuun taitoja käyttävään isäntäsovellukseen yhdellä komennolla. Asennus tarvitsee Node.js:n ja `npx`:n, mutta ei tietovaraston kloonia eikä Pythonia:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["YDINIDEA<br/><sub>pääajatus yhdellä rivillä</sub>"] --> Pr["ONGELMA<br/><sub>konkreettinen vaikeus</sub>"]
+  Pr --> C["KÄSITE<br/><sub>kaaviot ja intuitio</sub>"]
+  C --> B["RAKENNA<br/><sub>puhdasta matematiikkaa ilman kehyksiä</sub>"]
+  B --> U["KÄYTÄ<br/><sub>sama asia PyTorchilla / sklearnilla</sub>"]
+  U --> S["JULKAISE<br/><sub>kehote · taito · agentti · MCP</sub>"]
 ```
 
-`skills` kirjoittaa asennuksessa valitun isäntäsovelluksen ja laajuuden mukaiseen hakemistoon, kuten `.claude/skills/`, `.cursor/skills/`, `.codex/skills/` tai muuhun tuettuun taitohakemistoon. Varmista, että valittu isäntäsovellus löytää juuri kyseisen sijainnin.
+## Jokainen oppitunti tuottaa jotain
+
+Muut kurssit päättyvät toteamukseen *”Onnittelut, opit X:n.”* Täällä jokainen oppitunti tuottaa **uudelleenkäytettävän työkalun**, jonka voit asentaa tai liittää päivittäiseen työnkulkuusi.
+
+<table>
+<tr>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A kehotteet"/><br/><sub>FIG_001 · A</sub><br/><b>KEHOTTEET</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B taidot"/><br/><sub>FIG_001 · B</sub><br/><b>TAIDOT</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C agentit"/><br/><sub>FIG_001 · C</sub><br/><b>AGENTIT</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP-palvelimet"/><br/><sub>FIG_001 · D</sub><br/><b>MCP-PALVELIMET</b></th>
+</tr>
+<tr>
+<td valign="top">Liitä mihin tahansa AI-avustajaan saadaksesi asiantuntijatason apua rajattuun tehtävään.</td>
+<td valign="top">Lisää Claudeen, Cursoriin, Codexiin, OpenClawiin, Hermesiin tai muuhun agenttiin, joka lukee tiedostoa <code>SKILL.md</code>.</td>
+<td valign="top">Ota käyttöön autonomisina työntekijöinä. Kirjoitit silmukan itse vaiheessa 14.</td>
+<td valign="top">Liitä mihin tahansa MCP-yhteensopivaan asiakkaaseen. Rakennettu alusta loppuun vaiheessa 13.</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>Asenna oppituntien tuotokset</summary>
 
 **Oppituntien tuotokset.** Tietovarastossa on 396 taitoa ja 99 kehotetta hakemiston `phases/**/outputs/` alla. Asenna ne komennolla `scripts/install_skills.py`. Tämä vaatii tietovaraston kloonaamisen. Työkalu tukee tunnistesuodatusta, kirjoittamatonta esikatselua ja agenttikohtaisia hakemistorakenteita:
 
@@ -1156,7 +1165,10 @@ Oletuksena skripti ei korvaa olemassa olevaa kohdetta, vaan listaa ristiriitaise
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Lisää agenttityöpaja omaan tietovarastoosi
+</details>
+
+<details>
+<summary>Lisää agenttityöpaja omaan tietovarastoosi</summary>
 
 Vaiheen 14 lopputyö sisältää uudelleenkäytettävän Agent Workbench -paketin (AGENTS.md, skeemat sekä alustus-, tarkistus- ja siirtoskriptit). Luo perusrakenne mihin tahansa tietovarastoon näin:
 
@@ -1169,7 +1181,10 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 
 Saat käyttöön työpajan seitsemän rajapintaa, alustavan `task_board.json`-tiedoston ja uuden `agent_state.json`-tiedoston, jossa on `schema_version: 1`. Muokkaa sen jälkeen tehtävää ja tiedostoa `AGENTS.md`, aja `scripts/init_agent.py` ja anna sopimus agentillesi. Paketin lähde on hakemistossa `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
 
-### Selaa koko kurssia JSON-muodossa
+</details>
+
+<details>
+<summary>Selaa koko kurssia JSON-muodossa</summary>
 
 `scripts/build_catalog.py` käy läpi jokaisen vaiheen, oppitunnin ja tuotoksen levyltä ja kirjoittaa `catalog.json`-tiedoston tietovaraston juureen. Yksi tiedosto kuvaa koko kurssin sisällön.
 
@@ -1181,9 +1196,12 @@ python3 scripts/build_catalog.py --out path/to/file.json
 
 Luettelo perustuu tiedostojärjestelmään eikä README-tiedostoon, joten lukumäärät vastaavat aina levyllä olevaa sisältöä. Käytä sitä sivuston kokoamiseen, muihin työkaluihin tai README:n lukumäärien tarkistamiseen. Skeema on dokumentoitu skriptin alussa.
 
-GitHub Action (`.github/workflows/curriculum.yml`) rakentaa `catalog.json`-tiedoston uudelleen jokaisessa PR:ssä ja hylkää koonnin, jos tallennettu tiedosto on vanhentunut. Oppitunnin muokkaamisen jälkeen aja `python3 scripts/build_catalog.py` ja tallenna tulos versionhallintaan, tai CI hylkää muutospyynnön. Sama työnkulku ajaa `audit_lessons.py`-tarkistuksen vain varoittavassa tilassa, jotta vanhat poikkeamat eivät estä uusia osallistujia.
+Opetussuunnitelman työnkulku luo `catalog.json`-tiedoston tilapäiseksi Gitin ohittamaksi tuotokseksi. Älä sisällytä sitä committiin. Sama työnkulku suorittaa `audit_lessons.py`-tarkistuksen, jonka on läpäistävä.
 
-### Tarkista nopeasti jokaisen oppitunnin Python-koodi
+</details>
+
+<details>
+<summary>Tarkista nopeasti jokaisen oppitunnin Python-koodi</summary>
 
 `scripts/lesson_run.py` kääntää jokaisen oppitunnin `code/`-hakemiston `.py`-tiedostot tavukoodiksi. Oletustila tarkistaa vain syntaksin: ei suoritusta, API-avaimia eikä raskaita ML-riippuvuuksia. Se havaitsee yleisimmät vahingossa syntyvät virheet, kuten väärän sisennyksen, rikkinäiset f-merkkijonot ja tahattomat muokkaukset.
 
@@ -1199,40 +1217,10 @@ python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per l
 
 Vain standardikirjasto, Python 3.10+. Aseta `LINK_CHECK_SKIP=domain1,domain2`, jos haluat korvata ohitettavien verkkotunnusten oletuslistan (`twitter.com`, `x.com`, `linkedin.com`, `instagram.com`, `medium.com`, jotka estävät usein automaattiset HEAD/GET-pyynnöt).
 
-## Mistä aloittaa
+</details>
 
-| Tausta | Aloita tästä | Arvioitu aika |
-|---|---|---|
-| Uusi ohjelmoinnissa ja AI:ssa | Vaihe 0: Asennus | ~306 tuntia |
-| Osaat Pythonia, ML on uutta | Vaihe 1: Matematiikan perusteet | ~270 tuntia |
-| Osaat ML:ää, syväoppiminen on uutta | Vaihe 3: Syväoppimisen ydin | ~200 tuntia |
-| Osaat syväoppimista ja haluat oppia kielimalleista ja agenteista | Vaihe 10: Suuret kielimallit alusta asti | ~100 tuntia |
-| Kokenut kehittäjä, joka haluaa vain agenttikehitystä | Vaihe 14: Agenttikehitys | ~60 tuntia |
-| Haluat rakentaa vain tuotannon MCP-järjestelmiä | [Model Context Protocol (MCP) -polku](../../learning-paths/model-context-protocol.json) | ~23 tuntia 15 min |
-| Haluat rakentaa vain tuotannon Agent Skills -taitoja | [Agent Skills -kehityspolku](../../learning-paths/agent-skills.json) | ~9.5 tuntia |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Miksi tämä on tärkeää juuri nyt
-
-<table>
-<tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>ALAN ANTAMA SIGNAALI</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>KÄSITELLYT PERUSTAVAT TUTKIMUSARTIKKELIT</b></th>
-</tr>
-<tr>
-<td valign="top">
-
-> *”Kuumin uusi ohjelmointikieli on englanti.”*<br/> **Andrej Karpathy** ([julkaisu](https://x.com/karpathy/status/1617979122625712128))
->
-> *”Ohjelmistokehitys muotoutuu uudelleen silmiemme edessä.”*<br/> **Boris Cherny**, Claude Coden luoja
->
-> *”Mallit paranevat jatkuvasti. Kertyvää hyötyä tuottava taito on **tietää, mitä kannattaa rakentaa**.”*<br/> Alan yhteinen näkemys, 2026
-
-</td>
-<td valign="top">
+<details>
+<summary>Perustavat tutkimusartikkelit ja protokollat</summary>
 
 - *Attention Is All You Need* — Vaswani et al., 2017 → [Vaihe 7](#phase-7)
 - *Language Models are Few-Shot Learners* (GPT-3) → [Vaihe 10](#phase-10)
@@ -1243,13 +1231,7 @@ Vain standardikirjasto, Python 3.10+. Aseta `LINK_CHECK_SKIP=domain1,domain2`, j
 - *ReAct: Reasoning + Acting in LLMs* → [Vaihe 14](#phase-14)
 - *Model Context Protocol* — Anthropic → [Vaihe 13](#phase-13)
 
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+</details>
 
 ## Osallistuminen
 
@@ -1272,21 +1254,17 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 
 Paluuarvo on nollasta poikkeava, jos yksikin sääntö epäonnistuu. Säännöt (L001–L010) tarkistavat hakemistorakenteen, tiedoston `docs/en.md` ja H1-otsikon olemassaolon, ettei `code/` ole tyhjä, tiedoston `quiz.json` skeeman (vanhat `q/choices/answer`-avaimet, jotka aiheuttivat ongelman #102, hylätään) sekä suhteelliset linkit oppituntien dokumentaatiossa.
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
 <a id="supporters"></a>
 
 ## Tue työtä
 
+<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
+<p align="center"><sub><b>114,584</b> lukijaa &nbsp;·&nbsp; <b>181,995</b> sivukatselua viimeisten 30 päivän aikana &nbsp;·&nbsp; tilanne 2026-08-29</sub></p>
+<!-- STATS:END -->
+
 Maksuton, MIT-lisensoitu, 523 oppituntia. Kiitos sponsoreille ja tukijoille, jotka mahdollistavat tämän työn. [Katso kaikki sponsorit ja tukijat](../../BACKERS.md).
 
 Haluatko tukea työtä? Tutustu [sponsorointivaihtoehtoihin](../../SPONSORS.md), kuten [laitteistosponsorointiin](../../SPONSORS.md#hardware-lab-partner), tai [sponsoroi GitHubissa](https://github.com/sponsors/rohitg00).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 
 Jos käsikirjasta oli apua, anna tietovarastolle tähti. Se pitää projektin elossa.
 
@@ -1297,7 +1275,5 @@ MIT. Käytä materiaalia miten haluat: haarauta, opeta, myy tai julkaise. Lähte
 Ylläpidosta vastaavat [Rohit Ghumare](https://github.com/rohitg00) ja yhteisö.
 
 <sub>
-  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
-  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Ilmoita / ehdota</a>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp; <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp; <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Ilmoita / ehdota</a>
 </sub>

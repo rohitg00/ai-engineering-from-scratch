@@ -53,7 +53,9 @@ class ReadmeLocaleAuditTest(unittest.TestCase):
         self.assertEqual(body(text), self.chinese)
 
     def test_missing_relative_prefix(self):
-        changed = self.chinese.replace('src="../../assets/banner.svg"', 'src="assets/banner.svg"', 1)
+        target = re.search(r'src="(\.\./\.\./assets/[^"]+)"', self.chinese).group(1)
+        changed = self.chinese.replace(f'src="{target}"', f'src="{target[6:]}"', 1)
+        self.assertNotEqual(changed, self.chinese)
         self.assert_reports(changed, "lacks ../../ prefix")
 
     def test_missing_translated_heading(self):
@@ -204,7 +206,9 @@ class ReadmeLocaleAuditTest(unittest.TestCase):
 
     def test_reflowed_english_paragraph_is_rejected(self):
         paragraph = next(span["key"] for span in build_readme_i18n.spans(self.source)
-                         if span["key"].startswith("Most AI material teaches"))
+                         if span["kind"] == "prose" and span["end"] - span["start"] > 1
+                         and len(span["key"].split()) > 20
+                         and not any(mark in span["key"] for mark in ("`", "[", "<")))
         self.assertIn(paragraph, untranslated_fragments(self.source, paragraph, "hi"))
 
     def test_untranslated_image_description(self):

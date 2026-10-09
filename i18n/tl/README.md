@@ -1,57 +1,36 @@
 <p align="center" lang="tl"><sub>Isinalin sa Tagalog ang README na ito. Nananatiling pangunahing sanggunian ang <a href="../../README.md">README sa Ingles</a>.</sub></p>
-<p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch: banner ng manwal na sanggunian" width="100%">
-</p>
 
 <p align="center">
-  <a href="../../README.md">🇬🇧 English</a> ·
-  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
-  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
-  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
-  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
-  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
-  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
-  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
-  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
-  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
-  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
-  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
-  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
-  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
-  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
-  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
-  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
-  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
-  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
-  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
-  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
-  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
-  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
-  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
-  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
-  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
-  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
-  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
-  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
-  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
-  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
-  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
-  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
-  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/header-dark.svg">
+    <img src="../../assets/readme/header-light.svg" alt="AI Engineering mula sa simula" width="840">
+  </picture>
 </p>
+
+Ipatupad ang mga panloob na bahagi ng modelo, retrieval pipeline, at runtime ng agent. Subukan ang mga ito, suriin ang mga pagkabigo, at panatilihin ang code at resulta ng pagsusuri.
+
+**[Magsimulang matuto](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Pumili ng landas](#learning-routes)** · **[Subukan ang isang lab](#interactive-lab)** · **[Bumuo ng proyekto](#project-challenges)** · **[Tingnan ang kurikulum](#contents)**
+
+Libre, open source, lisensiyang MIT. Matuto sa websayt, kasama ang isang coding agent, o sa pagpapatakbo ng lokal na code.
+
+> 523 aralin. 20 yugto. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Lisensiyang MIT"></a>
   <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 aralin"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 yugto"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Mga star sa GitHub"></a>
-  <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Pook sa web"></a>
-  <p align="center">
- <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Ranggo sa Star History" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="Trending na repository ng araw sa GitHub" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
- </a>
+  <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Websayt"></a>
 </p>
+
+<details>
+<summary>Magbasa sa iyong wika</summary>
+
+<p align="center">
+  <a href="../../README.md">🇬🇧 English</a> · <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> · <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> · <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> · <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> · <a href="../../i18n/pt/README.md">🇵🇹 Português</a> · <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> · <a href="../../i18n/es/README.md">🇪🇸 Español</a> · <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> · <a href="../../i18n/fr/README.md">🇫🇷 Français</a> · <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> · <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> · <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> · <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> · <a href="../../i18n/ro/README.md">🇷🇴 Română</a> · <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> · <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> · <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> · <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> · <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> · <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> · <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> · <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> · <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> · <a href="../../i18n/he/README.md">🇮🇱 עברית</a> · <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> · <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> · <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> · <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> · <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> · <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> · <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> · <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> · <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
+
+</details>
 
 ### Mga sponsor
 
@@ -64,65 +43,134 @@
   <sub><span>Dahil sa suporta mo, nananatiling libre at open source ang bawat aralin.</span> <a href="#supporters">Tingnan ang lahat ng sumusuporta</a> · <a href="../../SPONSORS.md">Maging sponsor</a></sub>
 </p>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+<a id="see-what-you-will-build-and-keep"></a>
+<a id="learning-routes"></a>
 
-> **84% ng mga estudyante ay gumagamit na ng mga AI tool. 18% lamang ang nakakaramdam na handa silang gamitin ang mga ito sa propesyonal na trabaho.** Tinutugunan ng kurikulum na ito ang agwat na iyon.
->
-> 523 aralin. 20 yugto. ~342 oras. Python, TypeScript, Rust, Julia. Bawat aralin ay may nagagawang magagamit muli: isang prompt, skill, agent, o MCP server. Libre, open source, MIT.
->
-> Hindi ka lang natututo ng AI. Ikaw mismo ang bubuo nito, mula simula hanggang dulo.
+## Mga landas sa pag-aaral
 
-<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> mambabasa &nbsp;·&nbsp; <b>181,995</b> pagtingin sa pahina sa nakalipas na 30 araw &nbsp;·&nbsp; noong 2026-08-29</sub></p>
-<!-- STATS:END -->
+| Landas | Unang aralin |
+|---|---|
+| Mga pundasyon ng modelo | [Paghahanda at mga tool](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Mga sistemang LLM | [Pagdidisenyo ng prompt](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Mga agent at paghahatid | [Ang loop ng agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
 
-## Magsimula rito: piliin kung ano ang gusto mong buuin
+[Ihambing ang mga landas sa karera](https://aiengineeringfromscratch.com/learning-paths.html) · [Mga kinakailangan at oras ng pag-aaral](#study-guide)
 
-Hindi mo kailangang tingnan ang lahat ng 523 aralin bago magsimula. Pumili ng isang layunin. Binubuksan ng bawat link ang parehong kurikulum sa GitHub o sa website, at pareho ang code ng aralin sa dalawang bersiyon.
+<a id="interactive-lab"></a>
 
-| Layunin mo | Matuto sa GitHub | Matuto sa website |
-|---|---|---|
-| Baguhan ako at gusto ko ng kumpletong pundasyon | [Yugto 0: Pag-setup at mga tool](../../phases/00-setup-and-tooling/) | [Development environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Marunong ako ng Python at gusto ko ng pundasyon sa matematika at ML | [Yugto 1: Pundasyon sa matematika](../../phases/01-math-foundations/) | [Pag-unawa sa linear algebra](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Gusto kong bumuo ng mga LLM application para sa aktuwal na paggamit | [Yugto 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Gusto kong bumuo ng mga agent | [Yugto 14: Agent Engineering](../../phases/14-agent-engineering/) | [Ang agent loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Gusto kong gumamit ng mga coding agent sa mga tunay na repository | [Landas sa engineering na may tulong ng agent](../../learning-paths/using-coding-agents.json) | [Engineering na may tulong ng agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Gusto kong matukoy ang tamang bubuuin bago magpatupad | [Landas sa pagpapasya at paghahatid ng produkto](../../learning-paths/shaping-the-build.json) | [Pagpapasya at paghahatid ng produkto](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| Gusto kong bumuo gamit ang Model Context Protocol (MCP) | [Ruta ng Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Landas ng Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Gusto kong magsulat at maglabas ng Agent Skills | [Nakatuong ruta ng Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Landas ng Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Gusto kong maghanda para sa sertipikasyon ng Claude | [Panimulang gabay sa sertipikasyon](../../certifications/claude/GETTING_STARTED.md) | [Akademya ng sertipikasyon](https://aiengineeringfromscratch.com/certifications.html) |
-| Gusto kong maghanda para sa MCP Associate (MCPA) | [Panimulang gabay sa MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [Landas ng MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+### Pagbaba ayon sa gradient
 
-Hindi sigurado kung saan ka magsisimula? Gamitin ang [`start-learning` tutor para matukoy ang antas mo](../../skills/start-learning/SKILL.md) o ang [gabay sa mga kinakailangan sa website](https://aiengineeringfromscratch.com/prereqs.html).
+Dalawampung panimulang punto ang sumusunod sa gradient descent sa isang quadratic loss. Ipinapakita ng graph ang kanilang mga posisyon at mean loss pagkatapos ng bawat update.
 
-Ihambing ang apat na pangunahing larangan at anim na ruta ng karera sa [Mga Landas sa Pag-aaral ng AI Engineering](https://aiengineeringfromscratch.com/learning-paths.html).
+<p align="center">
+  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+    <picture>
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
+      <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
+      <source media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-dark.png">
+      <source media="(prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-light.png">
+      <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-mobile-dark.gif">
+      <source media="(max-width: 600px)" srcset="../../assets/readme/101-gradient-mobile-light.gif">
+      <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/101-gradient-dark.gif">
+      <img src="../../assets/readme/101-gradient-light.gif" alt="Inililipat ng gradient descent ang magkakahiwalay na panimulang punto patungo sa minimum ng loss. Bumababa ang mean loss sa bawat update." width="840">
+    </picture>
+  </a>
+</p>
 
-### Gamitin ang parehong paraan sa bawat aralin
+[Ayusin ang learning rate sa aralin](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Ihambing ang GD, momentum, at Adam sa code](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
-1. **Basahin** ang `docs/en.md` at ipaliwanag ang pangunahing ideya sa sarili mong mga salita.
-2. **I-type at buuin** ang mahalagang code sa halip na ituring na dekorasyon ang code block.
-3. **Patakbuhin** ang command ng aralin mula sa root directory ng repository, ang directory na may `README.md` at `phases/`.
-4. **Magtabi ng ebidensiya**: ang command, working directory, exit code, makabuluhang output, at artifact na binago o ginawa mo.
-5. **Magpatuloy** lamang kapag kaya mong ipaliwanag ang output at gumawa ng isang maliit na pagbabago nang hindi nanghuhula.
+<a id="project-challenges"></a>
 
-Ang mga path sa mga command ng aralin ay mula sa root directory ng repository maliban kung malinaw na sinasabi ng aralin na lumipat ng directory. Kung may ilang programming language ang aralin, patakbuhin ang implementasyon sa wikang pinag-aaralan mo.
+### Mga proyekto
 
-### I-clone ito at gawin ang unang ebidensiya mo
+Tatlong proyekto na may panimulang code ayon sa yugto, sangguniang implementasyon, at lokal na tagamarka. Patakbuhin ang mga command mula sa ugat ng repository matapos ang [paghahanda](#local-setup). Babagsak ang panimulang code hanggang maipatupad mo ang mga yugto.
+
+<details>
+<summary><strong>01 · Laboratoryo ng Pagsusuri sa Retrieval</strong> · Python · Mga metrika ng ranggo at pagsusuri ng regression</summary>
+
+Pinapahusay ng kandidatong sistema ang mean NDCG habang ibinababa ng isang query ang ranggo ng pinakamahalagang ebidensiya nito. Bumuo ng paghahambing bawat query na nag-uulat ng regression at maaaring magpabagsak sa pagsusuri bago ang release.
+
+Gamitin ang Python 3.10+. Balikan ang [RAG](../../phases/11-llm-engineering/06-rag/docs/en.md) at [pagsusuri ng modelo](../../phases/02-ml-fundamentals/09-model-evaluation/docs/en.md). Ipatupad ang pag-validate ng ranggo, precision at recall, mga metrikang sensitibo sa ranggo, at pagkatapos ang paghahambing ng mga sistema.
 
 ```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --init learning-artifacts/retrieval-evaluation-lab
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --stage 1 --path learning-artifacts/retrieval-evaluation-lab --strict
+python3 scripts/project_test.py retrieval-evaluation-lab \
+  --all --path learning-artifacts/retrieval-evaluation-lab --strict
 ```
 
-Inihihiwalay ng paunang pagsusuri ang mga kinakailangan ngayon sa mga tool na kakailanganin sa susunod. Bawat hindi pumasa na kinakailangang pagsusuri ay may natukoy na dahilan at command para ayusin ito. Ang ikalawang command ay nagpapatakbo ng araling walang dagdag na dependency at nagtatapos sa pagpapakitang ang pag-multiply ng matrix at vector ang operasyon sa loob ng isang layer ng neural network. Itabi ang output na iyon sa terminal bilang una mong ebidensiya.
+**Panatilihin:** isang nauulit na paghahambing na may pagbabago bawat query at mga hatol na ginamit sa pagmamarka. Inilalarawan ng mga metrika ang mga hatol na iyon; hindi nila pinatutunayan ang kawastuhan ng sagot.
 
-## Idagdag ang AI tutor sa loob ng 30 segundo
+[Simulan ang proyekto](https://aiengineeringfromscratch.com/project.html?id=retrieval-evaluation-lab) · [Suriin ang sanggunian](../../projects/retrieval-evaluation-lab/solution/) · [Patakbuhin gamit ang sarili mong mga input](../../projects/retrieval-evaluation-lab/README.md#run-with-your-own-inputs)
 
-Kung naka-install na ang Node.js, `npx`, at isang coding agent na sumusuporta sa skill, maaari nang maging tutor ang coding agent mo sa dalawang command. Hindi kailangan ng clone ng repository upang i-install o basahin ang tutor. Kailangan ng `python3` ang mga napapatakbong lab sa mga nakatuong landas. Kailangan din ng mga lab ng Agent Skills ang napiling host at saklaw ng skill sa user o proyekto na maaaring sulatan.
+</details>
+
+<details>
+<summary><strong>02 · Debugger ng Trace ng Agent</strong> · TypeScript · Pag-parse ng trace at timing</summary>
+
+Tumatagal pa rin nang 100 ms ang ibinigay na trace, ngunit tumataas nang 200 ang kabuuang paggamit ng token at nagsisimulang mabigo ang isang span. Ihiwalay ang nagsasabay na gawain ng mga child span sa oras ng pagpapatakbo ng parent, saka gumawa ng ulat na nagpapakita ng pagbabago.
+
+Gamitin ang Node.js 22.18+ at Python 3 para sa tagamarka. Ipatupad ang JSONL parsing, pag-validate ng parent, aritmetika ng interval, at pagkatapos ang masusuring timeline.
+
+```bash
+python3 scripts/project_test.py agent-trace-debugger \
+  --init learning-artifacts/agent-trace-debugger
+python3 scripts/project_test.py agent-trace-debugger \
+  --stage 1 --path learning-artifacts/agent-trace-debugger --strict
+python3 scripts/project_test.py agent-trace-debugger \
+  --all --path learning-artifacts/agent-trace-debugger --strict
+```
+
+**Panatilihin:** ang input trace, HTML timeline, at JSON regression report. Panatilihin ang eksklusibong bilang ng token bawat span upang hindi mabilang nang dalawang beses ang paggamit ng parent at child.
+
+[Simulan ang proyekto](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger) · [Suriin ang sanggunian](../../projects/agent-trace-debugger/solution/) · [Suriin ang timing nang interaktibo](https://aiengineeringfromscratch.com/project.html?id=agent-trace-debugger&stage=03-timing)
+
+</details>
+
+<details>
+<summary><strong>03 · Firewall ng Pagtawag sa Tool</strong> · Rust · Pagsusuri ng papel at mga resibo ng pag-apruba</summary>
+
+Nagbabago ang isang pagsulat pagkatapos suriin, o muling ginagamit ang isang pag-apruba. I-validate ang envelope ng tawag, suriin ang papel at path ng tumatawag, saka gamitin ang isang pag-aprubang nakatali sa eksaktong request at nilalaman.
+
+Gamitin ang Rust at Python 3.10+. Balikan ang [disenyo ng schema ng tool](../../phases/13-tools-and-protocols/05-tool-schema-design/docs/en.md) at [mga hangganan ng seguridad](../../phases/17-infrastructure-and-production/25-security-secrets-audit/docs/en.md). Ang tumatawag na application ang nagbibigay ng pagkakakilanlan; nagmumungkahi lamang ng operasyon ang modelo.
+
+```bash
+python3 scripts/project_test.py tool-call-firewall \
+  --init learning-artifacts/tool-call-firewall
+python3 scripts/project_test.py tool-call-firewall \
+  --stage 1 --path learning-artifacts/tool-call-firewall --strict
+python3 scripts/project_test.py tool-call-firewall \
+  --all --path learning-artifacts/tool-call-firewall --strict
+```
+
+**Panatilihin:** isang audit receipt na nagpapakita ng hiniling na operasyon at pasya ng patakaran. Isang beses lang magagamit ang bawat pag-apruba sa loob ng isang invocation; hindi nagbibigay ang proyektong ito ng persistent authorization o sandbox ng operating system.
+
+[Simulan ang proyekto](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall) · [Suriin ang sanggunian](../../projects/tool-call-firewall/solution/) · [Suriin ang mga hangganan ng pag-apruba](https://aiengineeringfromscratch.com/project.html?id=tool-call-firewall&stage=03-consume-a-request-bound-approval-once)
+
+</details>
+
+[Tingnan ang lahat ng proyekto](https://aiengineeringfromscratch.com/projects.html) · [Gabay sa pagsasanay para sa karera](../../learning-paths/CAREER-PRACTICE.md)
+
+## Piliin kung paano matututo
+
+### Sa websayt
+
+Buksan ang anumang kumpletong aralin sa [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) o buksan ang isang yugto sa [Mga nilalaman](#contents). Walang setup o pag-clone.
+
+### Kasama ang gabay na AI
+
+Kung naka-install na ang Node.js, `npx`, at isang coding agent na sumusuporta sa skill, maaari nang maging tutor ang coding agent mo. Hindi kailangan ng clone ng repository upang i-install o basahin ang tutor. Kailangan ng `python3` ang mga napapatakbong lab sa mga nakatuong landas. Kailangan din ng mga lab ng Agent Skills ang napiling host at saklaw ng skill sa user o proyekto na maaaring sulatan.
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
+
+Piliin ang host at saklaw kapag tinanong ng installer. Gamitin ang `start-learning` sa Codex, `/start-learning` sa Claude Code, o hilingin sa host na gamitin ang skill ayon sa pangalan.
+
+<details>
+<summary>Pag-setup ng gabay at mga utos ng host</summary>
 
 Suriin muna ang mga lokal na kinakailangan:
 
@@ -132,11 +180,7 @@ npx --version
 python3 --version
 ```
 
-Pagkatapos, i-install ang mga skill ng kurikulum at piliin ang host at saklaw na balak mong gamitin kapag nagtanong ang installer:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
+Nagsusulat ang `skills` sa host at saklaw na pinili sa pag-install, gaya ng `.claude/skills/`, `.cursor/skills/`, `.codex/skills/`, o ibang suportadong folder ng skill. Tiyaking natutuklasan ng napiling host ang eksaktong destinasyong iyon.
 
 Ang host ang nagtatakda ng sintaks ng pagtawag, hindi ang portable na format na `SKILL.md`:
 
@@ -154,17 +198,100 @@ Agent Skills lang ang gusto mo? Gamitin ang pagtawag sa Agent Skills para sa hos
 
 Inililista ng installer ang mga host na kaya nitong i-configure at nagtatanong kung saan mag-i-install. Kung wala ka pang Node.js, `npx`, `python3`, suportadong host, o saklaw na maaaring sulatan, gamitin ang website o manu-manong basahin ang `docs/en.md`. Itinuturo ng paraang iyon ang mga konsepto, ngunit nakabinbin pa ang ebidensiya ng pagtuklas, pagtawag, script, at pag-uninstall sa tunay na host hanggang magawa ang paunang pagsusuri. Basahin ang mga aralin sa [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## Paano ito gumagana
+### Ang mga skill sa pag-aaral
 
-Karamihan ng materyal sa AI ay nagtuturo ng magkakahiwalay na piraso. Isang papel dito, isang post sa fine-tuning doon, isang kahanga-hangang demo ng agent sa iba pang lugar. Bihirang mag-ugnay ang mga piraso. Nakapaglalabas ka ng chatbot pero hindi mo maipaliwanag ang loss curve nito. Naikakabit mo ang isang function sa agent pero hindi mo masabi kung ano ang ginagawa ng attention sa loob ng modelong tumatawag dito.
+| Skill sa pag-aaral | Ginagawa nito |
+|---|---|
+| [`start-learning`](../../skills/start-learning/SKILL.md) | Isang beses na paghahanda: dahilan mo sa pag-aaral, pagsusulit ng antas, personal na planong naka-save sa `LEARNING.md`. |
+| [`learn`](../../skills/learn/SKILL.md) | Siklo ng tutor. Paunang pagbalik-tanaw, interaktibong pagtuturo ng susunod na aralin, at pagsusulit nito; itinatala ang progreso at pila ng babalikan. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | Tagapagturo ng lokasyon ng paksa. "Saan ko pag-aaralan ang attention?" o "NaN ang loss ko" → eksaktong mga aralin, na may link. |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Tutor na nakatuon sa Model Context Protocol (MCP). Gumagawa ng `MCP-LEARNING.md`, sumusunod sa manifest na may 17 aralin, at nagtatala ng ebidensiya sa komunikasyon, seguridad, pagiging maaasahan at pagsunod. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Tutor na nakatuon sa Agent Skills. Gumagawa ng `AGENT-SKILLS-LEARNING.md`, nagtuturo ng mga aralin 22, 24, 25, 26 at 27, at nagtatala ng ebidensiya sa tunay na host. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Tutor ng sertipikasyon. Pumipili ng CCAO-F, CCDV-F, CCAR-F o CCAR-P; nagtuturo ng bawat aralin; nagpapatakbo ng lab; sumusuri ng nagawa; nagbibigay ng panimulang pagsusuri at mock exam; nagsa-save ng progreso. |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Tutor ng MCPA. Sumusunod sa rutang `mcpa-f` na may 34 aralin tungkol sa protocol na 2026-07-28; nagtuturo ng bawat aralin; nagpapatakbo ng lab at tagasuri ng komunikasyon; nagbibigay ng panimulang pagsusuri at tatlong mock exam; nagsa-save ng progreso. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Sampung-tanong na pagsusulit ng antas. Itinutugma ang kaalaman mo sa panimulang yugto at gumagawa ng personal na landas na may tantiyang oras. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Pagsusulit bawat yugto, walong tanong, na may feedback at tiyak na araling babalikan. Gamitin ang anyong Codex, Claude Code o natural na wika sa talahanayan ng pagtawag sa itaas. |
 
-Ang kurikulum na ito ang nag-uugnay sa lahat. 20 yugto, 523 aralin, apat na wika: Python, TypeScript, Rust, Julia. Nagsisimula sa linear algebra at umaabot sa mga autonomous swarm. Bawat algorithm ay binubuo muna mula sa mismong matematika: backpropagation, tokenizer, attention, siklo ng agent. Pagdating sa PyTorch, alam mo na ang ginagawa nito sa loob.
+</details>
 
-Pareho ang siklo ng bawat aralin: basahin ang problema, hanguin ang matematika, isulat ang code, patakbuhin ang pagsubok, itabi ang nagawa. Walang limang-minutong video, deployment na basta kinopya at idinikit, o pag-alalay sa bawat hakbang. Libre, open source, at idinisenyong tumakbo sa sarili mong laptop.
+<a id="local-setup"></a>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+### Magpatakbo ng lokal na code
+
+```bash
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+
+Inihihiwalay ng paunang pagsusuri ang mga kinakailangan ngayon sa mga tool na kakailanganin sa susunod. Bawat hindi pumasa na kinakailangang pagsusuri ay may natukoy na dahilan at command para ayusin ito. Ang command na `vectors.py` ay nagpapatakbo ng araling walang dagdag na dependency at nagtatapos sa pagpapakitang ang pag-multiply ng matrix at vector ang operasyon sa loob ng isang layer ng neural network. Itabi ang output na iyon sa terminal bilang una mong ebidensiya.
+
+<details>
+<summary>Gamitin ang parehong paraan sa bawat aralin</summary>
+
+### Gamitin ang parehong paraan sa bawat aralin
+
+1. **Basahin** ang `docs/en.md` at ipaliwanag ang pangunahing ideya sa sarili mong mga salita.
+2. **I-type at buuin** ang mahalagang code sa halip na ituring na dekorasyon ang code block.
+3. **Patakbuhin** ang command ng aralin mula sa root directory ng repository, ang directory na may `README.md` at `phases/`.
+4. **Magtabi ng ebidensiya**: ang command, working directory, exit code, makabuluhang output, at artifact na binago o ginawa mo.
+5. **Magpatuloy** lamang kapag kaya mong ipaliwanag ang output at gumawa ng isang maliit na pagbabago nang hindi nanghuhula.
+
+Ang mga path sa mga command ng aralin ay mula sa root directory ng repository maliban kung malinaw na sinasabi ng aralin na lumipat ng directory. Kung may ilang programming language ang aralin, patakbuhin ang implementasyon sa wikang pinag-aaralan mo.
+
+</details>
+
+<a id="study-guide"></a>
+
+## Pumili ng landas ng pag-aaral
+
+Hindi mo kailangang tingnan ang lahat ng 523 aralin bago magsimula. Pumili ng isang layunin. Binubuksan ng bawat link ang parehong kurikulum sa GitHub o sa website, at pareho ang code ng aralin sa dalawang bersiyon.
+
+| Layunin mo | Matuto sa GitHub | Matuto sa website |
+|---|---|---|
+| Baguhan ako at gusto ko ng kumpletong pundasyon | [Yugto 0: Pag-setup at mga tool](../../phases/00-setup-and-tooling/) | [Development environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Marunong ako ng Python at gusto ko ng pundasyon sa matematika at ML | [Yugto 1: Pundasyon sa matematika](../../phases/01-math-foundations/) | [Pag-unawa sa linear algebra](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| Gusto kong bumuo ng mga LLM application para sa aktuwal na paggamit | [Yugto 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| Gusto kong bumuo ng mga agent | [Yugto 14: Agent Engineering](../../phases/14-agent-engineering/) | [Ang agent loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Gusto kong gumamit ng mga coding agent sa mga tunay na repository | [Landas sa engineering na may tulong ng agent](../../learning-paths/using-coding-agents.json) | [Engineering na may tulong ng agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| Gusto kong matukoy ang tamang bubuuin bago magpatupad | [Landas sa pagpapasya at paghahatid ng produkto](../../learning-paths/shaping-the-build.json) | [Pagpapasya at paghahatid ng produkto](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+
+Hindi sigurado kung saan ka magsisimula? Gamitin ang [`start-learning` tutor para matukoy ang antas mo](../../skills/start-learning/SKILL.md) o ang [gabay sa mga kinakailangan sa website](https://aiengineeringfromscratch.com/prereqs.html).
+
+Ihambing ang apat na pangunahing larangan at anim na ruta ng karera sa [Mga Landas sa Pag-aaral ng AI Engineering](https://aiengineeringfromscratch.com/learning-paths.html).
+
+<details>
+<summary>Mga nakatuong landas para sa MCP at Agent Skills</summary>
+
+| Layunin mo | Matuto sa GitHub | Matuto sa website |
+|---|---|---|
+| Gusto kong bumuo gamit ang Model Context Protocol (MCP) | [Ruta ng Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Landas ng Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Gusto kong magsulat at maglabas ng Agent Skills | [Nakatuong ruta ng Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Landas ng Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+
+</details>
+
+<details>
+<summary>Mga kinakailangan at oras ng pag-aaral</summary>
+
+### Mga kinakailangan
+
+- Marunong kang magsulat ng code (anumang wika; makatutulong ang Python).
+- Gusto mong maunawaan kung paano **talagang gumagana** ang AI, hindi lang tumawag ng API.
+
+## Saan magsisimula
+
+| Dating kaalaman | Magsimula sa | Tantiyang oras |
+|---|---|---|
+| Baguhan sa programming at AI | Yugto 0: Paghahanda | ~306 oras |
+| Marunong ng Python, baguhan sa ML | Yugto 1: Mga pundasyon sa matematika | ~270 oras |
+| Alam ang ML, baguhan sa deep learning | Yugto 3: Ubod ng deep learning | ~200 oras |
+| Alam ang deep learning, gustong matuto ng LLM at agent | Yugto 10: Mga LLM mula sa simula | ~100 oras |
+| Senior engineer, engineering ng agent lamang ang kailangan | Yugto 14: Engineering ng agent | ~60 oras |
+| Gustong bumuo lamang ng MCP system para sa aktuwal na paggamit | [Landas ng Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 oras 15 minuto |
+| Gustong bumuo lamang ng Agent Skills para sa aktuwal na paggamit | [Landas sa Engineering ng Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 oras |
+
+</details>
 
 ## Estruktura ng kurikulum
 
@@ -194,195 +321,6 @@ flowchart TB
   P16 --> P19["Yugto 19: Pangwakas na proyekto"]
   P17 --> P19
   P18 --> P19
-```
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Estruktura ng isang aralin
-
-May sariling folder ang bawat aralin, na pare-pareho ang estruktura sa buong kurikulum:
-
-```text
-phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      mga implementasyong napapatakbo (Python, TypeScript, Rust, Julia)
-├── docs/
-│   └── en.md  paliwanag ng aralin
-└── outputs/   mga prompt, skill, agent o MCP server na ginagawa ng araling ito
-```
-
-May anim na hakbang ang bawat aralin. Ang paghahating *Buuin / Gamitin* ang sentro: ipinatutupad mo muna ang algorithm mula sa simula, pagkatapos ay pinapatakbo ang parehong bagay gamit ang library para sa aktuwal na trabaho. Naiintindihan mo ang ginagawa ng framework dahil isinulat mo mismo ang mas maliit na bersiyon.
-
-```mermaid
-%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
-flowchart LR
-  M["PRINSIPYO<br/><sub>pangunahing ideya sa isang linya</sub>"] --> Pr["PROBLEMA<br/><sub>tiyak na suliranin</sub>"]
-  Pr --> C["KONSEPTO<br/><sub>mga diagram at pag-unawa</sub>"]
-  C --> B["BUUIN<br/><sub>mismong matematika, walang framework</sub>"]
-  B --> U["GAMITIN<br/><sub>pareho sa PyTorch / sklearn</sub>"]
-  U --> S["ILABAS<br/><sub>mga prompt · skill · agent · MCP</sub>"]
-```
-
-## Pagsisimula
-
-Tatlong paraan para magsimula. Pumili ng isa.
-
-**Opsiyon A: matuto sa terminal *(inirerekomenda)*.** Pagkatapos ng paunang pagsusuri sa Node.js, `npx`, host, at saklaw sa itaas, i-install ang mga skill sa pag-aaral sa katugmang agent at hayaan ang kurso na gumabay:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
-```
-
-Gamitin ang talahanayan ng pagtawag ayon sa host sa itaas. Ibinibigay ng mga naka-install na skill ang `start-learning`, `learn`, `course-guide`, at ang mga nakatuong rutang `learn-mcp` at `learn-agent-skills`. Maaaring kunin ang teksto ng aralin mula sa repository na ito nang walang clone. Kailangan ng lokal na clone para sa mga kinopyang command ng code at napapatakbong lab ng MCP o Agent Skills. Nasa `LEARNING.md`, `MCP-LEARNING.md`, o `AGENT-SKILLS-LEARNING.md` ng proyekto ang progreso, kaya maaaring magpatuloy ang bawat session.
-
-**Opsiyon B: magbasa.** Buksan ang anumang kumpletong aralin sa [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) o buksan ang isang yugto sa [Mga nilalaman](#contents). Walang setup o pag-clone.
-
-**Opsiyon C: i-clone at patakbuhin.**
-
-```bash
-git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
-cd ai-engineering-from-scratch
-python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
-```
-
-Awtomatikong nilo-load din ng pag-clone ang mga skill sa pag-aaral sa Claude Code, at ibinibigay ang code ng bawat aralin sa tutor na `learn` upang tunay na patakbuhin sa halip na sabayang basahin lang.
-
-### Mga kinakailangan
-
-- Marunong kang magsulat ng code (anumang wika; makatutulong ang Python).
-- Gusto mong maunawaan kung paano **talagang gumagana** ang AI, hindi lang tumawag ng API.
-
-### Maghanda para sa mga sertipikasyon ng Claude
-
-Ang [Claude Certification Academy](../../certifications/claude/README.md) ay libre at open source na programa sa paghahanda para sa lahat ng apat na opisyal na landas ng sertipikasyon ng Claude: Associate Foundations, Developer Foundations, Architect Foundations, at Architect Professional. Pinagsasama ng bawat ruta ang mga araling nakaayon sa balangkas ng pagsusulit, mga lab na napapatakbo, panimulang pagsusuri, pangwakas na proyekto, at isang orihinal na pagsasanay na pagsusulit na buong haba.
-
-Gamitin ang [gabay sa pagsisimula sa GitHub gamit ang AI](../../certifications/claude/GETTING_STARTED.md) kasama ng Claude Code, Codex, ChatGPT, Cursor, o ibang agent. Patakbuhin ang `claude-certification` sa Codex, `/claude-certification` sa Claude Code, o hilingin sa ibang host na gamitin ang `claude-certification`. Pumipili ito ng landas, gumagawa ng patuloy na ruta sa `CLAUDE-CERTIFICATION.md`, nagtuturo nang paisa-isang hakbang, nagpapatakbo ng tunay na lab, at nagbibigay ng feedback batay sa mga nagawa. Nasa [website ng sertipikasyon](https://aiengineeringfromscratch.com/certifications.html) din ang parehong kurikulum.
-
-Ang akademya ay independiyenteng materyal sa pag-aaral batay sa mga pampublikong layunin ng pagsusulit. Hindi ito kaanib ng Anthropic, hindi nito kinokopya ang mga tanong sa aktuwal na pagsusulit, at hindi nito magagarantiya ang pagpasa.
-
-### Maghanda para sa sertipikasyong MCP Associate (MCPA)
-
-Ang [Kurikulum ng Sertipikasyong MCPA](../../certifications/mcpa/README.md) ay libre at open source na programa sa paghahanda para sa pagsusulit na Model Context Protocol Associate ng Agentic AI Foundation, na inihahatid sa pamamagitan ng Linux Foundation Training. Itinuturo ng 34 aralin nito ang stateless na protocol na 2026-07-28 sa limang larangan ng pagsusulit: `_meta` sa bawat request at `server/discover` kapalit ng lumang handshake, mga request na maraming balikan, subscription, caching, mga extension na tasks at MCP Apps, awtorisasyong OAuth, at mga antas ng registry at SDK. May napapatakbong lab gamit ang standard library ang bawat aralin, at sinusuri ang transcript nito laban sa kasalukuyang format ng komunikasyon. Dagdag sa landas ang panimulang pagsusuri, pangwakas na proyekto, at tatlong orihinal na pagsasanay na pagsusulit na buong haba, na sumusunod ang halo ng tanong sa inilathalang timbang ng balangkas.
-
-Gamitin ang [gabay sa pagsisimula sa GitHub gamit ang AI](../../certifications/mcpa/GETTING_STARTED.md) kasama ng Claude Code, Codex, ChatGPT, Cursor, o ibang agent. Patakbuhin ang `mcpa-certification` sa Codex, `/mcpa-certification` sa Claude Code, o hilingin sa ibang host na gamitin ang `mcpa-certification`. Gumagawa ito ng patuloy na ruta sa `MCPA-CERTIFICATION.md`, nagtuturo nang paisa-isang hakbang, nagpapatakbo ng tunay na lab, at nagbibigay ng feedback batay sa mga nagawa. Nasa [pahina ng landas ng MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) din ang parehong kurikulum.
-
-Ang kurikulum na ito ay independiyenteng materyal sa pag-aaral batay sa mga pampublikong layunin ng pagsusulit. Hindi ito kaanib ng Agentic AI Foundation o Linux Foundation, hindi nito kinokopya ang mga tanong sa aktuwal na pagsusulit, at hindi nito magagarantiya ang pagpasa.
-
-### Ang mga skill sa pag-aaral
-
-| Skill sa pag-aaral | Ginagawa nito |
-|---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | Isang beses na paghahanda: dahilan mo sa pag-aaral, pagsusulit ng antas, personal na planong naka-save sa `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | Siklo ng tutor. Paunang pagbalik-tanaw, interaktibong pagtuturo ng susunod na aralin, at pagsusulit nito; itinatala ang progreso at pila ng babalikan. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Tagapagturo ng lokasyon ng paksa. "Saan ko pag-aaralan ang attention?" o "NaN ang loss ko" → eksaktong mga aralin, na may link. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Tutor na nakatuon sa Model Context Protocol (MCP). Gumagawa ng `MCP-LEARNING.md`, sumusunod sa manifest na may 17 aralin, at nagtatala ng ebidensiya sa komunikasyon, seguridad, pagiging maaasahan at pagsunod. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Tutor na nakatuon sa Agent Skills. Gumagawa ng `AGENT-SKILLS-LEARNING.md`, nagtuturo ng mga aralin 22, 24, 25, 26 at 27, at nagtatala ng ebidensiya sa tunay na host. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Tutor ng sertipikasyon. Pumipili ng CCAO-F, CCDV-F, CCAR-F o CCAR-P; nagtuturo ng bawat aralin; nagpapatakbo ng lab; sumusuri ng nagawa; nagbibigay ng panimulang pagsusuri at mock exam; nagsa-save ng progreso. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | Tutor ng MCPA. Sumusunod sa rutang `mcpa-f` na may 34 aralin tungkol sa protocol na 2026-07-28; nagtuturo ng bawat aralin; nagpapatakbo ng lab at tagasuri ng komunikasyon; nagbibigay ng panimulang pagsusuri at tatlong mock exam; nagsa-save ng progreso. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Sampung-tanong na pagsusulit ng antas. Itinutugma ang kaalaman mo sa panimulang yugto at gumagawa ng personal na landas na may tantiyang oras. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Pagsusulit bawat yugto, walong tanong, na may feedback at tiyak na araling babalikan. Gamitin ang anyong Codex, Claude Code o natural na wika sa talahanayan ng pagtawag sa itaas. |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Basahin ang pangunahing kurikulum bilang aklat
-
-Ang pangunahing kurikulum na may 20 yugto sa `phases/` ay binubuo bilang serye ng anim na tomo. Ginagawa ng CI ang EPUB at PDF mula sa parehong pinagmulang aralin at ikinakabit sa bawat [release sa GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases); palaging tumuturo sa pinakabagong release ang mga link sa ibaba. Ang numero ng tomo ay pagkakasunod sa serye, hindi bersiyon: may petsa ng edisyon ang bawat kopya, at maaari pa ring i-download ang mga lumang edisyon mula sa kani-kanilang release.
-
-Sadyang hindi ginagawang aklat ang mga kurikulum ng sertipikasyon. Nananatiling ganap na suportado sa GitHub at website ang state ng AI tutor, mga lab na napapatakbo, interaktibong larawan, panimulang pagsusuri, at mga mock exam na may takdang oras.
-
-| Tomo | Pamagat | Mga yugto | I-download |
-|-----|-------|--------|----------|
-| 1 | Pundasyon · Matematika, mga kasangkapan at klasikal na machine learning | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Deep Learning · Mga network, vision at pagsasalita | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Wika · Mga pundasyon ng NLP at Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Malalaking Language Model · Paglikha, reinforcement, pre-training at engineering | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Mga Agent · Multimodality, protocol, awtonomiya at swarm | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Aktuwal na Paggamit · Imprastruktura, kaligtasan at pangwakas na proyekto | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-Ang aklat ay larawan sa isang sandali; ang repository na ito ang patuloy na umuunlad na edisyon. Nagtatapos ang bawat kabanata sa mga link pabalik sa mga animated na larawan, pagsusulit, at napapatakbong code ng aralin. Buuin nang lokal gamit ang `python3 scripts/build_book.py` (kailangan ang pandoc); nasa [book/README.md](../../book/README.md) ang detalye ng pipeline.
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Bawat aralin ay may nagagawang bagay
-
-Nagtatapos ang ibang kurikulum sa *"binabati kita, natutuhan mo ang X."* Nagtatapos ang bawat aralin dito sa **kasangkapang magagamit muli** na maaari mong i-install o idikit sa araw-araw mong trabaho.
-
-<table>
-<tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A mga prompt"/><br/><sub>FIG_001 · A</sub><br/><b>MGA PROMPT</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B mga skill"/><br/><sub>FIG_001 · B</sub><br/><b>MGA SKILL</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C mga agent"/><br/><sub>FIG_001 · C</sub><br/><b>MGA AGENT</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D mga MCP server"/><br/><sub>FIG_001 · D</sub><br/><b>MGA MCP SERVER</b></th>
-</tr>
-<tr>
-<td valign="top">Idikit sa anumang AI assistant para sa tulong na antas ng eksperto sa isang tiyak na gawain.</td>
-<td valign="top">Ilagay sa Claude, Cursor, Codex, OpenClaw, Hermes o anumang agent na nagbabasa ng <code>SKILL.md</code>.</td>
-<td valign="top">I-deploy bilang mga nagsasariling worker: ikaw mismo ang sumulat ng siklo sa Yugto 14.</td>
-<td valign="top">Ikabit sa anumang katugmang MCP client. Binuo mula simula hanggang dulo sa Yugto 13.</td>
-</tr>
-</table>
-
-> I-install lahat gamit ang `python3 scripts/install_skills.py <target>`. Mga tunay na kasangkapan, hindi takdang-aralin. Sa dulo ng kurikulum, mayroon kang portfolio ng 523 nagawa na talagang naiintindihan mo dahil ikaw ang bumuo sa mga ito.
-
-### FIG_002 · Isang buong halimbawa
-
-Yugto 14, aralin 1: ang siklo ng agent. Humigit-kumulang 120 linya ng purong Python, walang dependency.
-
-<table>
-<tr>
-<td valign="top" width="50%">
-
-**`code/agent_loop.py`** &nbsp; <sub><i>buuin</i></sub>
-
-```python
-def run(query, tools):
-    history = [user(query)]
-    for step in range(MAX_STEPS):
-        msg = llm(history)
-        if msg.tool_calls:
-            for call in msg.tool_calls:
-                result = tools[call.name](**call.args)
-                history.append(tool_result(call.id, result))
-            continue
-        return msg.content
-    raise StepLimitExceeded
-```
-
-</td>
-<td valign="top" width="50%">
-
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>ilabas</i></sub>
-
-```markdown
----
-name: agent-loop
-description: ReAct-style loop for any tool list
-phase: 14
-lesson: 01
----
-
-Implement a minimal agent loop that...
-```
-
-**`outputs/prompt-debug-agent.md`**
-
-```markdown
-You are an agent debugger. Given the trace
-of an agent run, identify the step where
-the agent went wrong and explain why...
-```
-
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
 <a id="contents"></a>
@@ -1105,33 +1043,104 @@ Binubuo ng mga aralin 31-46 ang [landas ng Engineering na may Tulong ng Agent](.
 
 </details>
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+## Mga aklat at sertipikasyon
+
+<details>
+<summary>Basahin ang pangunahing kurikulum bilang aklat</summary>
+
+Ang pangunahing kurikulum na may 20 yugto sa `phases/` ay binubuo bilang serye ng anim na tomo. Ginagawa ng CI ang EPUB at PDF mula sa parehong pinagmulang aralin at ikinakabit sa bawat [release sa GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases); palaging tumuturo sa pinakabagong release ang mga link sa ibaba. Ang numero ng tomo ay pagkakasunod sa serye, hindi bersiyon: may petsa ng edisyon ang bawat kopya, at maaari pa ring i-download ang mga lumang edisyon mula sa kani-kanilang release.
+
+Sadyang hindi ginagawang aklat ang mga kurikulum ng sertipikasyon. Nananatiling ganap na suportado sa GitHub at website ang state ng AI tutor, mga lab na napapatakbo, interaktibong larawan, panimulang pagsusuri, at mga mock exam na may takdang oras.
+
+| Tomo | Pamagat | Mga yugto | I-download |
+|-----|-------|--------|----------|
+| 1 | Pundasyon · Matematika, mga kasangkapan at klasikal na machine learning | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | Deep Learning · Mga network, vision at pagsasalita | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | Wika · Mga pundasyon ng NLP at Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | Malalaking Language Model · Paglikha, reinforcement, pre-training at engineering | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | Mga Agent · Multimodality, protocol, awtonomiya at swarm | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | Aktuwal na Paggamit · Imprastruktura, kaligtasan at pangwakas na proyekto | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+Ang aklat ay larawan sa isang sandali; ang repository na ito ang patuloy na umuunlad na edisyon. Nagtatapos ang bawat kabanata sa mga link pabalik sa mga animated na larawan, pagsusulit, at napapatakbong code ng aralin. Buuin nang lokal gamit ang `python3 scripts/build_book.py` (kailangan ang pandoc); nasa [book/README.md](../../book/README.md) ang detalye ng pipeline.
+
+</details>
+
+<details>
+<summary>Maghanda para sa mga sertipikasyon ng Claude</summary>
+
+Ang [Claude Certification Academy](../../certifications/claude/README.md) ay libre at open source na programa sa paghahanda para sa lahat ng apat na opisyal na landas ng sertipikasyon ng Claude: Associate Foundations, Developer Foundations, Architect Foundations, at Architect Professional. Pinagsasama ng bawat ruta ang mga araling nakaayon sa balangkas ng pagsusulit, mga lab na napapatakbo, panimulang pagsusuri, pangwakas na proyekto, at isang orihinal na pagsasanay na pagsusulit na buong haba.
+
+Gamitin ang [gabay sa pagsisimula sa GitHub gamit ang AI](../../certifications/claude/GETTING_STARTED.md) kasama ng Claude Code, Codex, ChatGPT, Cursor, o ibang agent. Patakbuhin ang `claude-certification` sa Codex, `/claude-certification` sa Claude Code, o hilingin sa ibang host na gamitin ang `claude-certification`. Pumipili ito ng landas, gumagawa ng patuloy na ruta sa `CLAUDE-CERTIFICATION.md`, nagtuturo nang paisa-isang hakbang, nagpapatakbo ng tunay na lab, at nagbibigay ng feedback batay sa mga nagawa. Nasa [website ng sertipikasyon](https://aiengineeringfromscratch.com/certifications.html) din ang parehong kurikulum.
+
+Ang akademya ay independiyenteng materyal sa pag-aaral batay sa mga pampublikong layunin ng pagsusulit. Hindi ito kaanib ng Anthropic, hindi nito kinokopya ang mga tanong sa aktuwal na pagsusulit, at hindi nito magagarantiya ang pagpasa.
+
+</details>
+
+<details>
+<summary>Maghanda para sa sertipikasyong MCP Associate (MCPA)</summary>
+
+Ang [Kurikulum ng Sertipikasyong MCPA](../../certifications/mcpa/README.md) ay libre at open source na programa sa paghahanda para sa pagsusulit na Model Context Protocol Associate ng Agentic AI Foundation, na inihahatid sa pamamagitan ng Linux Foundation Training. Itinuturo ng 34 aralin nito ang stateless na protocol na 2026-07-28 sa limang larangan ng pagsusulit: `_meta` sa bawat request at `server/discover` kapalit ng lumang handshake, mga request na maraming balikan, subscription, caching, mga extension na tasks at MCP Apps, awtorisasyong OAuth, at mga antas ng registry at SDK. May napapatakbong lab gamit ang standard library ang bawat aralin, at sinusuri ang transcript nito laban sa kasalukuyang format ng komunikasyon. Dagdag sa landas ang panimulang pagsusuri, pangwakas na proyekto, at tatlong orihinal na pagsasanay na pagsusulit na buong haba, na sumusunod ang halo ng tanong sa inilathalang timbang ng balangkas.
+
+Gamitin ang [gabay sa pagsisimula sa GitHub gamit ang AI](../../certifications/mcpa/GETTING_STARTED.md) kasama ng Claude Code, Codex, ChatGPT, Cursor, o ibang agent. Patakbuhin ang `mcpa-certification` sa Codex, `/mcpa-certification` sa Claude Code, o hilingin sa ibang host na gamitin ang `mcpa-certification`. Gumagawa ito ng patuloy na ruta sa `MCPA-CERTIFICATION.md`, nagtuturo nang paisa-isang hakbang, nagpapatakbo ng tunay na lab, at nagbibigay ng feedback batay sa mga nagawa. Nasa [pahina ng landas ng MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) din ang parehong kurikulum.
+
+Ang kurikulum na ito ay independiyenteng materyal sa pag-aaral batay sa mga pampublikong layunin ng pagsusulit. Hindi ito kaanib ng Agentic AI Foundation o Linux Foundation, hindi nito kinokopya ang mga tanong sa aktuwal na pagsusulit, at hindi nito magagarantiya ang pagpasa.
+
+</details>
 
 ## Mga kasangkapan
 
-Bawat aralin ay gumagawa ng magagamit muli. Sa huli ay mayroon kang:
+Bawat aralin ay gumagawa ng artifact na magagamit muli. I-install ito sa iyong agent o gamitin ang mga script sa ibaba mula sa ugat ng repository.
+
+<details>
+<summary>Estruktura ng aralin at magagamit-muling artifact</summary>
+
+## Estruktura ng isang aralin
+
+May sariling folder ang bawat aralin, na pare-pareho ang estruktura sa buong kurikulum:
 
 ```text
-outputs/
-├── prompts/      mga template ng prompt para sa bawat gawain ng AI
-└── skills/       mga file na SKILL.md para sa AI coding agent
+phases/<NN>-<phase-name>/<NN>-<lesson-name>/
+├── code/      mga implementasyong napapatakbo (Python, TypeScript, Rust, Julia)
+├── docs/
+│   └── en.md  paliwanag ng aralin
+└── outputs/   mga prompt, skill, agent o MCP server na ginagawa ng araling ito
 ```
 
-Ikabit ang mga ito sa Claude, Cursor, Codex, OpenClaw, Hermes, o anumang agent na nagbabasa ng directory na SKILL.md / AGENTS.md. Mga tunay na kasangkapan, hindi takdang-aralin.
+May anim na hakbang ang bawat aralin. Ang paghahating *Buuin / Gamitin* ang sentro: ipinatutupad mo muna ang algorithm mula sa simula, pagkatapos ay pinapatakbo ang parehong bagay gamit ang library para sa aktuwal na trabaho. Naiintindihan mo ang ginagawa ng framework dahil isinulat mo mismo ang mas maliit na bersiyon.
 
-### I-install ang mga skill ng kurso sa agent mo
-
-Dalawang pangkat ng skill, dalawang installer:
-
-Nasa [`skills/`](../../skills/) ang **mga skill sa pag-aaral** (`start-learning`, `learn`, `course-guide`, `learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`, `find-your-level`, at `check-understanding`) at nai-install sa suportadong host na may skill sa isang command. Kailangan ng Node.js at `npx` sa pag-install, pero hindi kailangan ng clone ng repository o Python:
-
-```bash
-npx skills add rohitg00/ai-engineering-from-scratch
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
+flowchart LR
+  M["PRINSIPYO<br/><sub>pangunahing ideya sa isang linya</sub>"] --> Pr["PROBLEMA<br/><sub>tiyak na suliranin</sub>"]
+  Pr --> C["KONSEPTO<br/><sub>mga diagram at pag-unawa</sub>"]
+  C --> B["BUUIN<br/><sub>mismong matematika, walang framework</sub>"]
+  B --> U["GAMITIN<br/><sub>pareho sa PyTorch / sklearn</sub>"]
+  U --> S["ILABAS<br/><sub>mga prompt · skill · agent · MCP</sub>"]
 ```
 
-Nagsusulat ang `skills` sa host at saklaw na pinili sa pag-install, gaya ng `.claude/skills/`, `.cursor/skills/`, `.codex/skills/`, o ibang suportadong folder ng skill. Tiyaking natutuklasan ng napiling host ang eksaktong destinasyong iyon.
+## Bawat aralin ay may nagagawang bagay
+
+Nagtatapos ang ibang kurikulum sa *"binabati kita, natutuhan mo ang X."* Nagtatapos ang bawat aralin dito sa **kasangkapang magagamit muli** na maaari mong i-install o idikit sa araw-araw mong trabaho.
+
+<table>
+<tr>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A mga prompt"/><br/><sub>FIG_001 · A</sub><br/><b>MGA PROMPT</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B mga skill"/><br/><sub>FIG_001 · B</sub><br/><b>MGA SKILL</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C mga agent"/><br/><sub>FIG_001 · C</sub><br/><b>MGA AGENT</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D mga MCP server"/><br/><sub>FIG_001 · D</sub><br/><b>MGA MCP SERVER</b></th>
+</tr>
+<tr>
+<td valign="top">Idikit sa anumang AI assistant para sa tulong na antas ng eksperto sa isang tiyak na gawain.</td>
+<td valign="top">Ilagay sa Claude, Cursor, Codex, OpenClaw, Hermes o anumang agent na nagbabasa ng <code>SKILL.md</code>.</td>
+<td valign="top">I-deploy bilang mga nagsasariling worker: ikaw mismo ang sumulat ng siklo sa Yugto 14.</td>
+<td valign="top">Ikabit sa anumang katugmang MCP client. Binuo mula simula hanggang dulo sa Yugto 13.</td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary>I-install ang mga artifact ng aralin</summary>
 
 **Mga nagawa sa aralin.** May 396 skill at 99 prompt ang repository sa `phases/**/outputs/`; i-install ang mga ito gamit ang `scripts/install_skills.py`. Kailangang i-clone ang repository. Sinusuportahan ang filter ayon sa tag, dry-run, at magkakaibang layout para sa agent:
 
@@ -1156,7 +1165,10 @@ Bilang default, tumatanggi ang script na palitan ang kasalukuyang destinasyon at
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Ilagay ang workbench ng agent sa sarili mong repository
+</details>
+
+<details>
+<summary>Ilagay ang workbench ng agent sa sarili mong repository</summary>
 
 May reusable na Agent Workbench pack ang pangwakas na proyekto sa Yugto 14 (AGENTS.md, mga schema, script para sa init / verify / handoff). Gumawa ng balangkas nito sa anumang repository gamit ang:
 
@@ -1169,7 +1181,10 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 
 Makukuha mo ang pitong magkakaugnay na bahagi ng workbench, panimulang `task_board.json`, at bagong `agent_state.json` na nasa `schema_version: 1`. Mula roon: i-edit ang gawain, i-edit ang `AGENTS.md`, patakbuhin ang `scripts/init_agent.py`, at ibigay ang kontrata sa agent. Nasa `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/` ang pinagmulan ng pack.
 
-### Tingnan ang buong kurso bilang JSON
+</details>
+
+<details>
+<summary>Tingnan ang buong kurso bilang JSON</summary>
 
 Sinusuyod ng `scripts/build_catalog.py` ang bawat yugto, aralin, at nagawa sa disk at nagsusulat ng `catalog.json` sa root ng repository. Isang file para sa lahat ng katotohanan tungkol sa kurso.
 
@@ -1181,9 +1196,12 @@ python3 scripts/build_catalog.py --out path/to/file.json
 
 Mula sa filesystem ang catalog, hindi mula sa README, kaya laging tumutugma ang mga bilang sa aktuwal na nasa disk. Gamitin ito sa pagbuo ng site, iba pang tool, o pagtiyak na hindi lumihis ang mga bilang sa README. Nakadokumento ang schema sa itaas ng script.
 
-Muling binubuo ng isang GitHub Action (`.github/workflows/curriculum.yml`) ang `catalog.json` sa bawat PR at pinapabagsak ang build kung luma na ang naka-commit na file. Pagkatapos mag-edit ng aralin, patakbuhin ang `python3 scripts/build_catalog.py` at i-commit ang resulta, kung hindi ay tatanggihan ng CI ang PR. Pinapatakbo rin ng parehong workflow ang `audit_lessons.py` sa mode na babala lamang (upang hindi hadlangan ng kasalukuyang paglihis ang mga contributor).
+Ginagawa ng workflow ng kurikulum ang `catalog.json` bilang pansamantalang artifact na hindi sinusubaybayan ng Git. Huwag itong i-commit. Pinapatakbo rin ng workflow ang `audit_lessons.py` bilang kinakailangang pagsusuri.
 
-### Mabilis na suriin ang Python code ng bawat aralin
+</details>
+
+<details>
+<summary>Mabilis na suriin ang Python code ng bawat aralin</summary>
 
 Bina-byte-compile ng `scripts/lesson_run.py` ang bawat `.py` file sa directory na `code/` ng bawat aralin. Pagsusuri lamang ng sintaks ang default: walang pagpapatakbo, API key, o mabibigat na ML dependency. Nahuhuli nito ang mga karaniwang regression mula sa ambag (maling indentation, sirang f-string, at ligaw na edit).
 
@@ -1199,40 +1217,10 @@ Pinapatakbo ng `--execute` ang `code/main.py` ng bawat aralin (o unang `.py` fil
 
 Standard library lamang, Python 3.10+. Itakda ang `LINK_CHECK_SKIP=domain1,domain2` upang palitan ang default na listahan ng nilalaktawan (`twitter.com`, `x.com`, `linkedin.com`, `instagram.com`, `medium.com`, mga domain na mahigpit na humaharang sa awtomatikong HEAD/GET).
 
-## Saan magsisimula
+</details>
 
-| Dating kaalaman | Magsimula sa | Tantiyang oras |
-|---|---|---|
-| Baguhan sa programming at AI | Yugto 0: Paghahanda | ~306 oras |
-| Marunong ng Python, baguhan sa ML | Yugto 1: Mga pundasyon sa matematika | ~270 oras |
-| Alam ang ML, baguhan sa deep learning | Yugto 3: Ubod ng deep learning | ~200 oras |
-| Alam ang deep learning, gustong matuto ng LLM at agent | Yugto 10: Mga LLM mula sa simula | ~100 oras |
-| Senior engineer, engineering ng agent lamang ang kailangan | Yugto 14: Engineering ng agent | ~60 oras |
-| Gustong bumuo lamang ng MCP system para sa aktuwal na paggamit | [Landas ng Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 oras 15 minuto |
-| Gustong bumuo lamang ng Agent Skills para sa aktuwal na paggamit | [Landas sa Engineering ng Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 oras |
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## Bakit ito mahalaga ngayon
-
-<table>
-<tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>SENYALES MULA SA INDUSTRIYA</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>MGA PUNDASYONG PAPEL NA TINATALAKAY</b></th>
-</tr>
-<tr>
-<td valign="top">
-
-> *"Ingles ang pinakasikat na bagong programming language."*<br/> **Andrej Karpathy** ([post](https://x.com/karpathy/status/1617979122625712128))
->
-> *"Binabago ang software engineering sa harap mismo ng ating mga mata."*<br/> **Boris Cherny**, lumikha ng Claude Code
->
-> *"Patuloy na huhusay ang mga modelo. Ang kasanayang lumalago ang halaga ay **pag-alam kung ano ang dapat buuin**."*<br/> Pananaw na pinagkakasunduan sa industriya, 2026
-
-</td>
-<td valign="top">
+<details>
+<summary>Mga pundasyong papel at protokol</summary>
 
 - *Attention Is All You Need* — Vaswani et al., 2017 → [Yugto 7](#phase-7)
 - *Language Models are Few-Shot Learners* (GPT-3) → [Yugto 10](#phase-10)
@@ -1243,13 +1231,7 @@ Standard library lamang, Python 3.10+. Itakda ang `LINK_CHECK_SKIP=domain1,domai
 - *ReAct: Reasoning + Acting in LLMs* → [Yugto 14](#phase-14)
 - *Model Context Protocol* — Anthropic → [Yugto 13](#phase-13)
 
-</td>
-</tr>
-</table>
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
+</details>
 
 ## Pag-aambag
 
@@ -1272,21 +1254,17 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 
 Hindi zero ang exit code kapag may tuntuning hindi pumasa. Sinusuri ng mga tuntunin (L001–L010) ang anyo ng directory, pagkakaroon ng `docs/en.md` at H1, hindi pagiging walang laman ng `code/`, schema ng `quiz.json` (tinatanggihan ang lumang mga key na `q/choices/answer` na naging sanhi ng issue #102), at mga relative link sa dokumento ng aralin.
 
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
 <a id="supporters"></a>
 
 ## Suportahan ang gawaing ito
 
+<!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
+<p align="center"><sub><b>114,584</b> mambabasa &nbsp;·&nbsp; <b>181,995</b> pagtingin sa pahina sa nakalipas na 30 araw &nbsp;·&nbsp; noong 2026-08-29</sub></p>
+<!-- STATS:END -->
+
 Libre, may lisensiyang MIT, 523 aralin. Salamat sa mga sponsor at tagasuportang ginagawang posible ang gawaing ito. [Tingnan ang lahat ng sponsor at tagasuporta](../../BACKERS.md).
 
 Gustong suportahan ang gawaing ito? Tingnan ang [mga opsiyon sa sponsorship](../../SPONSORS.md), kasama ang [sponsorship ng hardware](../../SPONSORS.md#hardware-lab-partner), o [maging sponsor sa GitHub](https://github.com/sponsors/rohitg00).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
 
 Kung nakatulong sa iyo ang manwal na ito, bigyan ng star ang repository. Nakatutulong itong mapanatiling buhay ang proyekto.
 
@@ -1297,7 +1275,5 @@ MIT. Gamitin ayon sa gusto mo: i-fork, ituro, ibenta, o ilabas. Pinahahalagahan 
 Pinananatili ni [Rohit Ghumare](https://github.com/rohitg00) at ng komunidad.
 
 <sub>
-  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
-  <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Mag-ulat / Magmungkahi</a>
+  <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp; <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp; <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Mag-ulat / Magmungkahi</a>
 </sub>

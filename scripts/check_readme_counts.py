@@ -73,16 +73,6 @@ PATTERNS: tuple[CountPattern, ...] = (
         description="hero blockquote phase count",
     ),
     CountPattern(
-        regex=re.compile(r"This curriculum is the spine\. (\d+) phases,"),
-        field="phases",
-        description="'spine' prose phase count",
-    ),
-    CountPattern(
-        regex=re.compile(r"This curriculum is the spine\. \d+ phases, (\d+) lessons,"),
-        field="lessons",
-        description="'spine' prose lesson count",
-    ),
-    CountPattern(
         regex=re.compile(r"phases-(\d+)-3553ff"),
         field="phases",
         description="phase-count badge URL",
@@ -91,11 +81,6 @@ PATTERNS: tuple[CountPattern, ...] = (
         regex=re.compile(r'alt="(\d+) phases"'),
         field="phases",
         description="phase-count badge alt text",
-    ),
-    CountPattern(
-        regex=re.compile(r"portfolio of (\d+) artifacts"),
-        field="lessons",
-        description="'portfolio of N artifacts' (one artifact per lesson)",
     ),
     CountPattern(
         regex=re.compile(r"The repo ships (\d+) skills"),
