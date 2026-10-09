@@ -32,7 +32,7 @@
     }
 
     .catalog-header h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
+      font-size: clamp(min(2rem, 10vw), 5vw, 3rem);
       margin-bottom: 8px;
     }
 
@@ -52,6 +52,7 @@
     .catalog-search {
       flex: 1;
       min-width: 200px;
+      max-width: 100%;
       font-family: var(--font-body);
       font-size: 1rem;
       padding: 12px 16px;
@@ -78,6 +79,7 @@
     }
 
     .catalog-filter {
+      max-width: 100%;
       font-family: var(--font-body);
       font-size: 1rem;
       padding: 12px 16px;

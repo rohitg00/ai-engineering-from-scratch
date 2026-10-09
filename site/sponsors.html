@@ -37,7 +37,7 @@
     .sponsors-eyebrow a { color: inherit; }
     .sponsors-content h1 {
       font-family: var(--font-display);
-      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-size: clamp(min(2.4rem, 12vw), 6vw, 3.6rem);
       line-height: 1;
       letter-spacing: 0.02em;
       text-transform: uppercase;
@@ -64,8 +64,9 @@
     .sponsors-content ul,
     .sponsors-content ol { margin: 0 0 16px; padding-left: 1.2em; }
     .sponsors-content li { margin-bottom: 6px; }
-    .sponsors-content a { color: var(--blueprint); }
+    .sponsors-content a { color: var(--blueprint); overflow-wrap: break-word; }
     .sponsors-content code {
+      overflow-wrap: break-word;
       font-family: var(--font-mono);
       font-size: 0.9em;
       background: var(--bg-surface);

@@ -31,7 +31,7 @@
 
 .writing-hero h1 {
   max-width: 9ch;
-  font-size: clamp(3.4rem, 7vw, 5.4rem);
+  font-size: clamp(min(3.4rem, 17vw), 7vw, 5.4rem);
 }
 
 .writing-intro p {

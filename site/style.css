@@ -159,14 +159,15 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 400;
   line-height: 1;
+  overflow-wrap: break-word;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--blueprint);
 }
 
-h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); }
-h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
-h3 { font-size: clamp(1.2rem, 2.6vw, 1.6rem); }
+h1 { font-size: clamp(min(2.4rem, 12vw), 6vw, 4.4rem); }
+h2 { font-size: clamp(min(1.8rem, 9vw), 4vw, 2.6rem); }
+h3 { font-size: clamp(min(1.2rem, 6vw), 2.6vw, 1.6rem); }
 h4 { font-size: 1.1rem; }
 
 p {
@@ -535,7 +536,7 @@ p.dropcap::first-letter {
 
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-size: clamp(min(1.8rem, 9vw), 4vw, 2.6rem);
   text-align: left;
   text-transform: uppercase;
   color: var(--blueprint);
@@ -659,7 +660,7 @@ p.dropcap::first-letter {
 
 .modal-title {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 4vw, 2.15rem);
+  font-size: clamp(min(1.75rem, 8.75vw), 4vw, 2.15rem);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   color: var(--ink);
@@ -971,7 +972,8 @@ p.dropcap::first-letter {
 
 .footer-links {
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 10px 24px;
 }
 
 .footer-links a {
