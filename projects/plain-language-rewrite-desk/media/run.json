@@ -1,0 +1,52 @@
+{
+  "title": "Plain Language Rewrite Desk | initialize and grade",
+  "recordedAt": "2026-10-09T14:18:34Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "plain-language-rewrite-desk",
+        "--init",
+        "./.project-validation/plain-language-rewrite-desk/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/plain-language-rewrite-desk/recording-starter\n  created  cli.ts\n  created  main.ts\n  created  sample.json\n  created  STAGE-2.md\n  created  STAGE-3.md\n  created  STAGE-4.md\nnext: python3 scripts/project_test.py plain-language-rewrite-desk --stage 1 --path ./.project-validation/plain-language-rewrite-desk/recording-starter\n",
+      "durationMs": 41
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "plain-language-rewrite-desk",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/plain-language-rewrite-desk/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Plain Language Rewrite Desk: grading learner\n  FAIL stage 1: Segment prose and record protected terms and facts (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 290
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "plain-language-rewrite-desk",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/plain-language-rewrite-desk/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Plain Language Rewrite Desk: grading solution\n  PASS stage 1: Segment prose and record protected terms and facts (6 tests)\n  PASS stage 2: Produce simpler candidate paragraphs (6 tests)\n  PASS stage 3: Compare omissions, numbers and readability measures (6 tests)\n  PASS stage 4: Export accepted revisions and a change record (6 tests)\nreport: ./.project-validation/plain-language-rewrite-desk/solution-final.json\n",
+      "durationMs": 1035
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}
