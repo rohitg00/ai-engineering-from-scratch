@@ -1,0 +1,32 @@
+{
+  "locale": "es",
+  "messages": {
+    "borrow.title": {
+      "text": "Borrow a tool",
+      "context": "Page heading above the community lending form"
+    },
+    "borrow.count": {
+      "text": "You selected {count} tools",
+      "context": "Summary beside the selected-item list"
+    },
+    "borrow.return": {
+      "text": "Return",
+      "context": "Button that returns a borrowed item, not browser navigation",
+      "ambiguous": true
+    },
+    "borrow.hello": {
+      "text": "Hello, {name}",
+      "context": "Greeting for the signed-in member"
+    }
+  },
+  "proposals": {
+    "borrow.title": "Pedir prestada una herramienta",
+    "borrow.count": "Has seleccionado herramientas",
+    "borrow.return": "Devolver",
+    "borrow.hello": "Hola, {name}"
+  },
+  "values": {
+    "count": 3,
+    "name": "Lina"
+  }
+}

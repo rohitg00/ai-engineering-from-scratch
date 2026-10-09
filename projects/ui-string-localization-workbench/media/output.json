@@ -1,0 +1,22 @@
+{
+  "title": "ui-string-localization-workbench",
+  "url": "http://127.0.0.1:8879/projects/ui-string-localization-workbench/solution/output/report.html",
+  "actions": [
+    [
+      "fill",
+      "#variables",
+      "{\"count\":7,\"name\":\"Maya\"}"
+    ],
+    [
+      "select",
+      "section:nth-of-type(1) select",
+      "approve"
+    ],
+    [
+      "select",
+      "section:nth-of-type(2) select",
+      "reject"
+    ]
+  ],
+  "kind": "browser capture"
+}
