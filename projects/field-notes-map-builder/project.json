@@ -1,0 +1,103 @@
+{
+  "id": "field-notes-map-builder",
+  "title": "Field Notes Map Builder",
+  "tagline": "Turn location-tagged observations into a map another tool can use.",
+  "summary": "Help a community mapping group explore observations supplied as coordinates, notes and optional photos. Validate locations, group nearby records using an explicit distance rule, preserve original observations during review, and export GeoJSON with a standalone map and observation table.",
+  "level": 2,
+  "languages": [
+    "TypeScript"
+  ],
+  "source": "core",
+  "prerequisiteProjects": [
+    "csv-repair-workbench"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "youWillBuild": "A GeoJSON FeatureCollection, a standalone HTML map and reviewed observation groups",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "languageWhy": {
+    "TypeScript": "Typed local transformations and portable browser interfaces run with Node standard libraries."
+  },
+  "figures": true,
+  "overviewFigure": "pj-field-notes-map-builder-1",
+  "demo": {
+    "command": [
+      "node",
+      "cli.ts",
+      "sample.json",
+      "output"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-import-observations",
+      "title": "Import coordinates, timestamps and evidence",
+      "summary": "importObservations(value: unknown): Observation[]",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-field-notes-map-builder-1",
+      "concepts": [
+        "Import coordinates, timestamps and evidence"
+      ]
+    },
+    {
+      "id": "02-distance-groups",
+      "title": "Compute distances and explain nearby groups",
+      "summary": "distanceMeters(a,b): number; groupNearby(items:Observation[],radiusMeters:number):Groups",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-field-notes-map-builder-2",
+      "concepts": [
+        "Compute distances and explain nearby groups"
+      ]
+    },
+    {
+      "id": "03-review-groups",
+      "title": "Review groups without merging observations",
+      "summary": "reviewGroups(groups:Groups,value?:unknown):{schemaVersion:1;groups;decisions}",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-field-notes-map-builder-3",
+      "concepts": [
+        "Review groups without merging observations"
+      ]
+    },
+    {
+      "id": "04-export-geojson",
+      "title": "Export GeoJSON and a portable map report",
+      "summary": "exportGeoJSON(items:Observation[],review):{type:string;features:any[]}; renderMap(items,groups,review):string",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-field-notes-map-builder-4",
+      "concepts": [
+        "Export GeoJSON and a portable map report"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

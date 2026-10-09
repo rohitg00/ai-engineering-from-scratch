@@ -1,0 +1,33 @@
+{
+  "radiusMeters": 35,
+  "observations": [
+    {
+      "id": "bench-a",
+      "longitude": 77.59,
+      "latitude": 12.97,
+      "timestamp": "2026-10-01T08:00:00Z",
+      "note": "Fictional bench beside the east path; morning shade."
+    },
+    {
+      "id": "shade-a",
+      "longitude": 77.59015,
+      "latitude": 12.9701,
+      "timestamp": "2026-10-01T08:05:00Z",
+      "note": "Fictional tree canopy above the same path."
+    },
+    {
+      "id": "water",
+      "longitude": 77.592,
+      "latitude": 12.971,
+      "timestamp": "2026-10-01T08:15:00Z",
+      "note": "Fictional drinking point, tap marked closed."
+    },
+    {
+      "id": "bench-b",
+      "longitude": 77.588,
+      "latitude": 12.9715,
+      "timestamp": "2026-10-01T08:22:00Z",
+      "note": "Fictional exposed bench, no nearby shade."
+    }
+  ]
+}
