@@ -52,11 +52,24 @@ test('overrides only pin keys from the list and only for registered languages', 
   assert.ok(SITE_LANGS.length > 0);
 });
 
+function keyPattern(key) {
+  return new RegExp(key.split('{n}').map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\d+(?:[.,]\\d+)*'));
+}
+
 test('every key still appears in the site pages or scripts', () => {
   const source = siteSource().replace(/\s+/g, ' ');
   for (const key of KEYS) {
-    assert.ok(source.includes(key), `orphaned ui-strings.json key: ${JSON.stringify(key)}`);
+    assert.ok(keyPattern(key).test(source), `orphaned ui-strings.json key: ${JSON.stringify(key)}`);
   }
+});
+
+test('a {n} key translates the same text with any count and keeps the count', () => {
+  const dict = { 'Every lesson across all {n} phases.': 'Las {n} fases.', 'All 20 phases': 'Las veinte fases' };
+  assert.equal(i18n.translateText('Every lesson across all 21 phases.', dict), 'Las 21 fases.');
+  assert.equal(i18n.translateText(' Every lesson across all 1,284 phases. ', dict), ' Las 1,284 fases. ');
+  assert.equal(i18n.translateText('All 20 phases', dict), 'Las veinte fases');
+  assert.equal(i18n.translateText('All 21 phases', dict), 'All 21 phases');
+  assert.ok(KEYS.includes('Every lesson across all {n} phases. Search, filter, sort.'));
 });
 
 test('translateText swaps only the trimmed core and keeps surrounding whitespace', () => {

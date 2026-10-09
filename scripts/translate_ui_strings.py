@@ -36,7 +36,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "site" / "ui-strings.json"
 OUT_ROOT = ROOT / "i18n"
 
-FIXED = re.compile(r"\.[A-Za-z]|[/@⌘]")
+FIXED = re.compile(r"\.[A-Za-z]|[/@⌘]|\{n\}")
 COMMAND = re.compile(r"[a-z]+(?:-[a-z]+)+")
 TRAIL = ".,:;!?"
 

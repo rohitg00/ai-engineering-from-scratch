@@ -8,6 +8,7 @@
   var ARTICLE_SELECTOR = '.lesson-article';
   var ARTICLE_ALLOW_SELECTOR = '.lesson-action-panel, .lesson-action-path, .ai-panels, .quiz-section, .lesson-nav-bottom, .continue-callout, .cert-notice';
   var RTL = { ar: 1, he: 1, fa: 1, ur: 1 };
+  var NUMBER = /\d+(?:[.,]\d+)*/g;
 
   var records = typeof WeakMap === 'function' ? new WeakMap() : null;
   var dictionaries = {};
@@ -52,6 +53,15 @@
       });
   }
 
+  function lookup(dict, key) {
+    if (Object.prototype.hasOwnProperty.call(dict, key)) return dict[key];
+    var numbers = key.match(NUMBER);
+    var template = numbers && key.replace(NUMBER, '{n}');
+    if (!template || !Object.prototype.hasOwnProperty.call(dict, template)) return null;
+    var index = 0;
+    return String(dict[template]).replace(/\{n\}/g, function () { return numbers[index++] || ''; });
+  }
+
   function translateText(text, dict) {
     if (!dict) return text;
     var source = String(text);
@@ -60,9 +70,8 @@
     var trail = core.match(/\s*$/)[0];
     core = core.slice(0, core.length - trail.length);
     if (!core) return source;
-    var key = core.replace(/\s+/g, ' ');
-    if (!Object.prototype.hasOwnProperty.call(dict, key)) return source;
-    return lead + dict[key] + trail;
+    var value = lookup(dict, core.replace(/\s+/g, ' '));
+    return value === null ? source : lead + value + trail;
   }
 
   function matches(el, selector) {
