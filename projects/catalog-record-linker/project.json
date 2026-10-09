@@ -1,0 +1,110 @@
+{
+  "id": "catalog-record-linker",
+  "title": "Catalog Record Linker",
+  "level": 2,
+  "languages": [
+    "Python"
+  ],
+  "source": "core",
+  "tagline": "Reconcile two catalogs without silently merging different things.",
+  "summary": "Help a librarian or organizer reconcile inconsistent item records from two CSV exports. Generate candidate pairs using normalized fields and token similarity, collect explicit match decisions, and export a source-preserving crosswalk and reviewed merged catalog.",
+  "prerequisiteProjects": [
+    "csv-repair-workbench"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "prerequisites": [
+    "Python 3.10+; lists, dictionaries and functions"
+  ],
+  "skills": [
+    "Import two catalogs with stable source identifiers",
+    "Generate candidate pairs and explain similarity",
+    "Review matches and resolve conflicting fields",
+    "Export the crosswalk and merged catalog"
+  ],
+  "youWillBuild": "An HTML pair-review queue, crosswalk.csv and merged-catalog.json",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "overviewFigure": "pj-catalog-record-linker-1",
+  "figures": true,
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--output",
+      "demo-output"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-import",
+      "title": "Import two catalogs with stable source identifiers",
+      "summary": "Retain stable IDs and original catalog fields.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "starter",
+      "concepts": [
+        "CSV",
+        "source identity"
+      ],
+      "figure": "pj-catalog-record-linker-1"
+    },
+    {
+      "id": "02-candidates",
+      "title": "Generate candidate pairs and explain similarity",
+      "summary": "Rank explainable pairs with weighted token overlap.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "Jaccard similarity",
+        "blocking threshold"
+      ],
+      "figure": "pj-catalog-record-linker-2"
+    },
+    {
+      "id": "03-decisions",
+      "title": "Review matches and resolve conflicting fields",
+      "summary": "Require explicit one-to-one links and field resolutions.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "entity reconciliation",
+        "review"
+      ],
+      "figure": "pj-catalog-record-linker-3"
+    },
+    {
+      "id": "04-export",
+      "title": "Export the crosswalk and merged catalog",
+      "summary": "Export a source-preserving crosswalk and reviewed entities.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "integration contract",
+        "fingerprints"
+      ],
+      "figure": "pj-catalog-record-linker-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}
