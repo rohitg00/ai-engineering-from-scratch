@@ -1,0 +1,51 @@
+$ docker-agent --help
+Docker AI Agent Runner.
+
+New to docker agent? Take the hands-on tour: docker agent getting-started
+
+Usage:
+  docker-agent [flags]
+  docker-agent [command]
+
+Examples:
+  docker-agent run
+  docker-agent run ./agent.yaml
+
+Core Commands:
+  getting-started Learn docker agent with a hands-on interactive tour
+  run             Run an agent
+  setup           Interactively set up a model (built-in provider, local, custom endpoint, or Claude Code)
+  share           Share agents
+
+Diagnose Commands:
+  doctor          Diagnose model and credential setup
+  models          List available models
+  toolsets        List built-in toolset types
+
+Advanced Commands:
+  alias           Manage aliases
+  board           Orchestrate agents on a Kanban board
+  debug           Debug tools
+  eval            Run evaluations for an agent
+  new             Create a new agent configuration
+  plans           Manage shared plans
+  sandbox         Manage docker-agent sandbox settings
+  serve           Start an agent as a server
+  sessions        Inspect recorded sessions
+
+Additional Commands:
+  completion      Generate the autocompletion script for the specified shell
+  help            Help about any command
+  version         Print the version information
+
+Flags:
+      --cache-dir string    Override the cache directory (default: ~/Library/Caches/cagent on macOS)
+      --config-dir string   Override the config directory (default: ~/.config/cagent)
+      --data-dir string     Override the data directory (default: ~/.cagent; env: DOCKER_AGENT_DATA_DIR)
+  -d, --debug               Enable debug logging
+  -h, --help                help for docker-agent
+      --log-file string     Path to debug log file (default: ~/.cagent/cagent.debug.log; only used with --debug)
+  -o, --otel                Enable OpenTelemetry tracing
+
+Use "docker-agent [command] --help" for more information about a command.
+[exit 0]

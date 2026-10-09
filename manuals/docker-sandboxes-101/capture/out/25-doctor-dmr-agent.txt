@@ -1,0 +1,39 @@
+$ docker-agent doctor fixtures/agents/dmr.yaml
+User configuration
+  $CAPTURE/work/cfg/config.yaml: ok
+
+Model provider credentials
+  PROVIDER         STATUS    CREDENTIAL                           SOURCE
+  anthropic        not set   ANTHROPIC_API_KEY                    -
+  openai           not set   OPENAI_API_KEY                       -
+  chatgpt          not set   CHATGPT_OAUTH_TOKEN                  -
+  github-copilot   not set   GITHUB_TOKEN (+1 more)               -
+  google           not set   GOOGLE_API_KEY (+2 more)             -
+  mistral          not set   MISTRAL_API_KEY                      -
+  openrouter       not set   OPENROUTER_API_KEY                   -
+  baseten          not set   BASETEN_API_KEY                      -
+  ovhcloud         not set   OVH_AI_ENDPOINTS_ACCESS_TOKEN        -
+  groq             not set   GROQ_API_KEY                         -
+  fireworks-ai     not set   FIREWORKS_API_KEY                    -
+  deepseek         not set   DEEPSEEK_API_KEY                     -
+  cerebras         not set   CEREBRAS_API_KEY                     -
+  togetherai       not set   TOGETHER_API_KEY                     -
+  huggingface      not set   HF_TOKEN                             -
+  moonshotai       not set   MOONSHOT_API_KEY                     -
+  vercel           not set   AI_GATEWAY_API_KEY                   -
+  amazon-bedrock   not set   AWS_BEARER_TOKEN_BEDROCK (+3 more)   -
+  opencode         not set   OPENCODE_API_KEY                     -
+  opencode-go      not set   OPENCODE_API_KEY                     -
+
+Docker Model Runner
+  Status: reachable, 1 model(s) pulled:
+    - docker.io/ai/qwen3:4b
+
+Model auto-selection
+  auto -> dmr/docker.io/ai/qwen3:4b
+
+Agent requirements: $CAPTURE/fixtures/agents/dmr.yaml
+  No environment variables required.
+
+No issues found.
+[exit 0]

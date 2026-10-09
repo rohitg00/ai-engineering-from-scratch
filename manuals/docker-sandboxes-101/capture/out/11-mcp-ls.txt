@@ -1,0 +1,4 @@
+$ sbx mcp ls
+NAME            TRANSPORT     STATUS   GATEWAY                 DETAIL
+m101-deepwiki   remote http   ready    LOCAL, managed by you   
+[exit 0]

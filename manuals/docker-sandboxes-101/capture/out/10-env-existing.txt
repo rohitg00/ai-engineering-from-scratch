@@ -1,0 +1,4 @@
+$ sbx exec m101-demo sh -c 'env | grep -c M101_RECV_KEY; echo exit=$?'
+0
+exit=1
+[exit 0]

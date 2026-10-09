@@ -1,100 +1,115 @@
-<p align="center" dir="rtl"><sub>ترجمة مجتمعية. النسخة <a href="../../README.md">الإنجليزية هي المرجعية</a> · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
+<p align="center" dir="rtl"><sub>ترجمة README بمساعدة الذكاء الاصطناعي؛ النسخة <a href="../../README.md">الإنجليزية هي المرجع المعتمد</a>.</sub></p>
 <p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch — reference manual banner" width="100%">
+  <img src="../../assets/banner.svg" alt="هندسة الذكاء الاصطناعي من الصفر  إشارة دليل إشارة راية" width="100%">
 </p>
 
 <p align="center">
-  <b>Read in your language:</b>
-  <a href="../../i18n/es/README.md">Español</a> ·
-  <a href="../../i18n/fr/README.md">Français</a> ·
-  <a href="../../i18n/pt/README.md">Português</a> ·
-  <a href="../../i18n/de/README.md">Deutsch</a> ·
-  <a href="../../i18n/it/README.md">Italiano</a> ·
-  <a href="../../i18n/zh/README.md">简体中文</a> ·
-  <a href="../../i18n/ja/README.md">日本語</a> ·
-  <a href="../../i18n/ko/README.md">한국어</a> ·
-  <a href="../../i18n/hi/README.md">हिन्दी</a> ·
-  <a href="../../i18n/ar/README.md">العربية</a> ·
-  <a href="../../i18n/ru/README.md">Русский</a> ·
-  <a href="../../i18n/tr/README.md">Türkçe</a>
-  <br><sub>Translated landing pages, committed to the repo. English is canonical; lesson pages are machine-translated on the <code>translations</code> branch. See <a href="../../docs/i18n.md">docs/i18n.md</a>.</sub>
+  <a href="../../README.md">🇬🇧 English</a> ·
+  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
+  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
+  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
+  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
+  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
+  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
+  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
+  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
+  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
+  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
+  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
+  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
+  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
+  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
+  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
+  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
+  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
+  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
+  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
+  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
+  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
+  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
+  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
+  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
+  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
+  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
+  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
+  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
+  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
+  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
+  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
+  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
+  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
 
 <p align="center">
-  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lessons"></a>
-  <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a>
-  <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Website"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="رخصة MIT"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 درساً"></a>
+  <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 مرحلة"></a>
+  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="نجوم GitHub"></a>
+  <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="الموقع"></a>
+  <p align="center">
+ <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="ترتيب Star History" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="مستودع GitHub الرائج اليوم" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
+ </a>
+</p>
 </p>
 
-## From the creator of [Agent Memory - #1 Persistent memory ⭐](https://github.com/rohitg00/agentmemory) <a href="https://github.com/rohitg00/agentmemory/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/agentmemory?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a> which naturally works with any agents or chat assistants.
+### الرعاة
+
+<p align="center">
+  <a href="https://serpapi.com/ai-engineering-from-scratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/serpapi-banner-compact.png" width="48%"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi. واجهة API للبحث على الويب لتطبيقات الذكاء الاصطناعي، متاحة بصيغتي Markdown وJSON لأي تكامل." width="440"></picture></a>
+  <a href="https://nitrostack.ai/referral/aiengineeringfromscratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/nitrostack-banner-equal.png" width="48%"><img src="../../assets/sponsors/nitrostack-banner-equal.png" alt="NitroStack. أنشئ تطبيق MCP وانشره خلال 10 دقائق. أدرج منتجك في سوقَي ChatGPT وClaude مع نشر سحابي مجاني." width="440"></picture></a>
+</p>
+
+<p align="center">
+  <sub><span>دعمكم يُبقي كل درس مجانيًا ومفتوح المصدر.</span> <a href="#supporters">عرض جميع الداعمين</a> · <a href="../../SPONSORS.md">اصبح راعي</a></sub>
+</p>
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-> **‏84% من الطلاب يستخدمون أدوات الذكاء الاصطناعي بالفعل، لكن 18% فقط يشعرون بأنهم مستعدون لاستخدامها باحتراف.** هذا المنهج يسدّ هذه الفجوة.
+> **يستخدم 84% من الطلاب أدوات الذكاء الاصطناعي بالفعل، لكن 18% فقط يشعرون بأنهم مستعدون لاستخدامها مهنيًا.** يسدّ هذا المنهج هذه الفجوة.
 >
-> ‏523 دروس. 20 مرحلة. نحو 342 ساعة. Python وTypeScript وRust وJulia. كل درس ينتج مخرجًا قابلًا لإعادة الاستخدام: موجّهًا، أو مهارة، أو وكيلًا، أو خادم MCP. مجاني، مفتوح المصدر، برخصة MIT.
+> 523 درسًا. 20 مرحلة. نحو 342 ساعة. Python وTypeScript وRust وJulia. يقدّم كل درس مخرجًا قابلًا لإعادة الاستخدام: موجّهًا، أو مهارة، أو وكيلًا، أو خادم MCP. مجاني ومفتوح المصدر بترخيص MIT.
 >
-> أنت لا تتعلّم الذكاء الاصطناعي فحسب، بل تبنيه بنفسك. من البداية إلى النهاية. يدويًا.
+> لا تكتفِ بتعلّم الذكاء الاصطناعي؛ ابنِه بنفسك من البداية إلى النهاية.
 
 <!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> readers &nbsp;·&nbsp; <b>181,995</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-08-29</sub></p>
+<p align="center"><sub><b>114,584</b> القراء &nbsp;·&nbsp; <b>181,995</b> مشاهدات الصفحة في الـ 30 يومًا الأخير &nbsp;·&nbsp; حتى 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-## Start here: choose what you want to build
+## ابدأ من هنا: اختر ما تريد بناءه
 
-You do not need to scan 523 lessons before beginning. Pick one goal. Each link
-opens the same curriculum on GitHub or the website, and both versions use the
-same lesson code.
+لا حاجة إلى استعراض 523 درسًا قبل أن تبدأ. اختر هدفًا واحدًا. يفتح كل رابط المنهج نفسه على GitHub أو الموقع، ويستخدم الإصداران شيفرة الدروس نفسها.
 
-| Your goal | Learn on GitHub | Learn on the website |
+| هدفك | تعلّم على GitHub | تعلّم على الموقع |
 |---|---|---|
-| I am new and want the complete foundation | [Phase 0: Setup and Tooling](../../phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](../../phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| I want to build production LLM applications | [Phase 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| I want to build agents | [Phase 14: Agent Engineering](../../phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| I want to use coding agents on real repositories | [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json) | [Agent-Assisted Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| I want to shape the right build before implementation | [Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json) | [Product Judgment and Delivery](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| I want to prepare for a Claude certification | [Certification onboarding](../../certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |
-| I want to prepare for the MCP Associate (MCPA) | [MCPA onboarding](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA track](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+| أنا مبتدئ وأريد الأساس كاملًا | [المرحلة 0: الإعداد والأدوات](../../phases/00-setup-and-tooling/) | [بيئة التطوير](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| أعرف Python وأريد أساسيات الرياضيات وML | [المرحلة 1: أسس الرياضيات](../../phases/01-math-foundations/) | [حدس الجبر الخطي](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| أريد بناء تطبيقات LLM جاهزة للإنتاج | [المرحلة 11: هندسة LLM](../../phases/11-llm-engineering/) | [هندسة الموجّهات](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| أريد بناء وكلاء | [المرحلة 14: هندسة الوكلاء](../../phases/14-agent-engineering/) | [حلقة الوكيل](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| أريد استخدام وكلاء البرمجة على مستودعات حقيقية | [مسار الهندسة بمساعدة الوكلاء](../../learning-paths/using-coding-agents.json) | [الهندسة بمساعدة الوكلاء](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| أريد تحديد ما ينبغي بناؤه قبل التنفيذ | [مسار تقدير المنتج وتسليمه](../../learning-paths/shaping-the-build.json) | [تقدير المنتج وتسليمه](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| أريد البناء باستخدام Model Context Protocol (MCP) | [مسار Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [مسار Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| أريد كتابة Agent Skills وإصدارها | [مسار Agent Skills المركّز](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [مسار Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| أريد الاستعداد لشهادة Claude | [البدء بالتأهيل للشهادة](../../certifications/claude/GETTING_STARTED.md) | [أكاديمية الشهادات](https://aiengineeringfromscratch.com/certifications.html) |
+| أريد الاستعداد لشهادة MCP Associate (MCPA) | [البدء بمسار MCPA](../../certifications/mcpa/GETTING_STARTED.md) | [مسار MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
 
-Not sure where you fit? Use the [`start-learning` placement tutor](../../skills/start-learning/SKILL.md)
-or the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).
+لست متأكدًا من نقطة البداية المناسبة؟ استخدم [مدرّب تحديد المستوى `start-learning`](../../skills/start-learning/SKILL.md) أو [دليل المتطلبات السابقة على الموقع](https://aiengineeringfromscratch.com/prereqs.html).
 
-Compare four core domains and six career routes in the [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+قارن بين أربعة مجالات أساسية وستة مسارات مهنية في [مسارات تعلّم هندسة الذكاء الاصطناعي](https://aiengineeringfromscratch.com/learning-paths.html).
 
-### الرعاة
+### اتبع الطريقة نفسها في كل درس
 
-<a href="https://serpapi.com/ai-engineering-from-scratch">
-  <img align="left" src="../../assets/sponsors/serpapi-banner.png" alt="SerpApi. واجهة API للبحث على الويب لتطبيقات الذكاء الاصطناعي، متاحة بصيغتي Markdown وJSON لأي تكامل." width="600">
-</a>
+1. **اقرأ** `docs/en.md` واشرح الفكرة الأساسية بكلماتك.
+2. **اكتب وابنِ** الشيفرة المهمة بنفسك؛ لا تتعامل مع كتلة الشيفرة كزينة.
+3. **شغّل** أمر الدرس من جذر المستودع، أي المجلد الذي يحتوي `README.md` و`phases/`.
+4. **احتفظ بالدليل**: الأمر، ومجلد العمل، ورمز الخروج، والمخرجات المهمة، والملف الذي عدّلته أو أنشأته.
+5. **تابع** فقط عندما تستطيع شرح المخرجات وإجراء تعديل صغير دون تخمين.
 
-<p><br><b>شكرًا لرعاتنا.</b></p>
-<p>دعمكم يُبقي كل درس مجانيًا ومفتوح المصدر.</p>
-<p>
-  <a href="#supporters">عرض جميع الداعمين</a><br>
-  <a href="../../SPONSORS.md">Become a sponsor</a>
-  <br clear="all">
-</p>
+تستخدم الأوامر في صفحات الدروس مسارات تبدأ من جذر المستودع، ما لم يطلب الدرس صراحة الانتقال إلى مجلد آخر. وإذا أتاح الدرس عدة لغات، شغّل التنفيذ باللغة التي تتعلمها.
 
-### Use every lesson the same way
-
-1. **Read** `docs/en.md` and explain the core idea in your own words.
-2. **Type and build** the important code instead of treating the code block as decoration.
-3. **Run** the lesson command from the repository root, the directory containing `README.md` and `phases/`.
-4. **Keep evidence**: the command, working directory, exit code, meaningful output, and the artifact you changed or produced.
-5. **Continue** only when you can explain the output and make one small change without guessing.
-
-Commands in lesson pages are paths from the repository root unless the lesson
-explicitly says to change directories. If a lesson offers several languages,
-run the implementation for the language you are learning.
-
-### Clone it and produce your first evidence
+### استنسخ المستودع واجمع أول دليل على عملك
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
@@ -103,21 +118,13 @@ python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route be
 python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-The preflight separates requirements needed now from tools needed later. Every
-required failure includes the detected reason and a corrective command. The
-second command is a dependency-free lesson and ends by showing that a matrix
-times a vector is the operation inside a neural network layer. Save that
-terminal output as your first evidence.
+يفصل الفحص الأولي بين المتطلبات اللازمة الآن والأدوات التي ستحتاجها لاحقًا. يشرح كل إخفاق في متطلب إلزامي سببه المكتشف ويعرض أمرًا لتصحيحه. الأمر الثاني يشغّل درسًا بلا اعتماديات وينتهي بإظهار أن ضرب مصفوفة في متجه هو العملية الموجودة داخل طبقة الشبكة العصبية. احتفظ بمخرجات الطرفية هذه بوصفها أول دليل لك.
 
-## Add the AI tutor in 30 seconds
+## أضف المعلّم الذكي في 30 ثانية
 
-If Node.js, `npx`, and a skill-capable coding agent are already installed,
-your coding agent can become your tutor in two commands. A repository clone is
-not needed to install or read the tutor. Runnable focused-path labs need
-`python3`. Agent Skills host labs also need a selected host and a writable
-user or project skill scope.
+إذا كان Node.js و`npx` ووكيل برمجي يدعم المهارات مثبتة لديك، فيمكن لوكيلك أن يصبح معلّمك بأمرين. لا تحتاج إلى استنساخ المستودع لتثبيت المعلّم أو قراءته. تتطلب مختبرات المسارات المركّزة `python3`؛ وتتطلب مختبرات Agent Skills أيضًا مضيفًا محددًا ونطاق مهارات للمستخدم أو المشروع قابلًا للكتابة.
 
-Check the local requirements first:
+تحقّق أولًا من المتطلبات المحلية:
 
 ```bash
 node --version
@@ -125,63 +132,35 @@ npx --version
 python3 --version
 ```
 
-Then install the curriculum skills and choose the host and scope you intend to
-use when the installer asks:
+بعد ذلك ثبّت مهارات المنهج واختر المضيف والنطاق اللذين تريد استخدامهما عندما يسألك المثبّت:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-Invocation syntax belongs to the host, not to the portable `SKILL.md` format:
+تختلف صيغة الاستدعاء باختلاف المضيف؛ ولا يحددها تنسيق `SKILL.md` المحمول:
 
-| Host | Start the course | Start Model Context Protocol (MCP) | Start Agent Skills | Run a phase quiz |
+| المضيف | ابدأ الدورة | ابدأ Model Context Protocol (MCP) | ابدأ Agent Skills | اختبر مرحلة |
 |---|---|---|---|---|
-| Codex | `start-learning`, or choose it from `/skills` | `learn-mcp`, or choose it from `/skills` | `learn-agent-skills`, or choose it from `/skills` | `check-understanding 13`, or choose it from `/skills` |
+| Codex | `start-learning`، أو اختره من `/skills` | `learn-mcp`، أو اختره من `/skills` | `learn-agent-skills`، أو اختره من `/skills` | `check-understanding 13`، أو اختره من `/skills` |
 | Claude Code | `/start-learning` | `/learn-mcp` | `/learn-agent-skills` | `/check-understanding 13` |
-| Other compatible hosts | `Use start-learning to begin the course.` | `Use learn-mcp to start the Model Context Protocol (MCP) path.` | `Use learn-agent-skills to start the Agent Skills Engineering path.` | `Use check-understanding to quiz me on Phase 13.` |
+| مضيفون متوافقون آخرون | `Use start-learning to begin the course.` | `Use learn-mcp to start the Model Context Protocol (MCP) path.` | `Use learn-agent-skills to start the Agent Skills Engineering path.` | `Use check-understanding to quiz me on Phase 13.` |
 
-A ten-question placement quiz maps what you already know to a starting phase and
-saves a personalized study plan to `LEARNING.md`. From there, the `learn` skill
-teaches one lesson per session: concept, math, code, quiz. It streams lessons
-straight from this repo, and the `course-guide` skill jumps you to the exact
-lesson that covers anything you are stuck on. In Codex, invoke these skills with
-`learn` and `course-guide`; in Claude Code, use `/learn` and `/course-guide`;
-in other compatible hosts, ask to use the skill by name.
+يربط اختبار تحديد المستوى المكوّن من عشرة أسئلة ما تعرفه بالفعل بمرحلة مناسبة للبدء، ويحفظ خطة دراسة مخصصة في `LEARNING.md`. بعد ذلك يعلّمك skill `learn` درسًا واحدًا في كل جلسة: المفهوم والرياضيات والشيفرة والاختبار القصير. وينقلك `course-guide` إلى الدرس المحدد الذي يشرح ما توقفت عنده. في Codex استخدم `learn` و`course-guide`؛ وفي Claude Code استخدم `/learn` و`/course-guide`؛ أما في المضيفين المتوافقين الآخرين فاطلب استخدام المهارة باسمها.
 
-Only want Model Context Protocol (MCP)? Use the MCP invocation for your host. It creates
-`MCP-LEARNING.md` and follows one 17-lesson route through stateless
-requests, transports, bidirectional work, security, reliability, registry
-governance, and conformance evidence. The exact order and checkpoints live in
-the [Model Context Protocol (MCP) manifest](../../learning-paths/model-context-protocol.json).
+إذا كنت تريد Model Context Protocol (MCP) فقط، فاستخدم استدعاء MCP الخاص بمضيفك. ينشئ الملف `MCP-LEARNING.md` ويتبع مسارًا من 17 درسًا يغطي الطلبات عديمة الحالة ووسائل النقل والعمل ثنائي الاتجاه والأمن والموثوقية وحوكمة السجل وأدلة المطابقة. يوضح [ملف Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) ترتيب الدروس ونقاط التحقق.
 
-Only want Agent Skills? Use the Agent Skills invocation for your host. It
-creates `AGENT-SKILLS-LEARNING.md` and follows one coherent five-lesson route:
-contract, discovery, invocation, sandbox boundaries, then release evals and
-real-host portability. Start on the web with the
-[Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+إذا كنت تريد Agent Skills فقط، فاستخدم الاستدعاء المخصص لها في مضيفك. ينشئ الملف `AGENT-SKILLS-LEARNING.md` ويتبع مسارًا مترابطًا من خمسة دروس: العقد والاكتشاف والاستدعاء وحدود العزل، ثم اختبارات التقييم قبل الإصدار وقابلية التشغيل على مضيف حقيقي. ابدأ عبر [مسار Agent Skills على الموقع](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
 
-The installer lists the hosts it can configure and asks where to install. If
-you do not have Node.js, `npx`, `python3`, a supported host, or a writable
-scope yet, use the website or read `docs/en.md` manually. That path teaches the
-concepts, but real-host discovery, invocation, script, and uninstall evidence
-remains pending until the preflight is available. Read the lessons at
-[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
+يعرض المثبّت المضيفين الذين يستطيع إعدادهم ويسألك عن موضع التثبيت. إذا لم يتوفر لديك Node.js أو `npx` أو `python3` أو مضيف مدعوم أو نطاق قابل للكتابة، فاستخدم الموقع أو اقرأ `docs/en.md` يدويًا. يشرح هذا المسار المفاهيم، لكن أدلة الاكتشاف والاستدعاء والبرامج النصية وإلغاء التثبيت على مضيف حقيقي تظل معلّقة إلى أن يصبح الفحص الأولي متاحًا. اقرأ الدروس على [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
-## كيف يعمل هذا
+## كيف يعمل المنهج
 
-Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a
-flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't
-explain its loss curve. You hook a function to an agent but can't say what attention does
-inside the model that's calling it.
+تُقدّم معظم مواد الذكاء الاصطناعي أجزاءً متفرقة: ورقة بحثية هنا، ومقال عن الضبط الدقيق هناك، وعرض مبهر لوكيل في مكان آخر. نادرًا ما تترابط هذه الأجزاء. قد تبني روبوت محادثة لكنك لا تستطيع تفسير منحنى الخسارة، أو تصل وظيفة بوكيل من دون أن تشرح ما يفعله الانتباه داخل النموذج الذي يستدعيها.
 
-This curriculum is the spine. 20 phases, 523 lessons, four languages: Python, TypeScript,
-Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm
-gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time
-PyTorch shows up, you already know what it's doing under the hood.
+يجمع هذا المنهج الأجزاء في مسار واحد: 20 مرحلة و523 درسًا وأربع لغات هي Python وTypeScript وRust وJulia. يبدأ من الجبر الخطي وينتهي بالأسراب المستقلة. يُبنى كل خوارزم أولًا انطلاقًا من الرياضيات الأساسية: الانتشار العكسي والمُرمّز والانتباه وحلقة الوكيل. وعندما تصل إلى PyTorch، تكون قد فهمت ما يجري في داخله.
 
-Each lesson runs the same loop: read the problem, derive the math, write the code, run
-the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding.
-Free, open source, and built to run on your own laptop.
+يسير كل درس وفق الخطوات نفسها: اقرأ المشكلة، واستنتج الرياضيات، واكتب الشيفرة، وشغّل الاختبار، واحتفظ بما أنجزته. لا فيديوهات من خمس دقائق، ولا نشر بالنسخ واللصق، ولا تلقين خطوة بخطوة. المنهج مجاني ومفتوح المصدر ومصمم ليعمل على حاسوبك المحمول.
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -189,32 +168,30 @@ Free, open source, and built to run on your own laptop.
 
 ## بنية المنهج
 
-Twenty phases stack on top of each other. Math is the floor. Agents and production are the roof.
-Skip ahead if you already know the lower layers, but don't skip and then wonder why something at
-the top is breaking.
+تتراكم المراحل العشرون فوق بعضها. الرياضيات هي الأساس، والوكلاء وأنظمة الإنتاج في القمة. يمكنك تجاوز الطبقات الأولى إن كنت تعرفها، لكن لا تتجاوزها ثم تتساءل عن سبب تعطل ما في الأعلى.
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
-  P0["Phase 0 — Setup &amp; Tooling"] --> P1["Phase 1 — Math Foundations"]
-  P1 --> P2["Phase 2 — ML Fundamentals"]
-  P2 --> P3["Phase 3 — Deep Learning Core"]
-  P3 --> P4["Phase 4 — Vision"]
-  P3 --> P5["Phase 5 — NLP"]
-  P3 --> P6["Phase 6 — Speech &amp; Audio"]
-  P3 --> P9["Phase 9 — RL"]
-  P5 --> P7["Phase 7 — Transformers"]
-  P7 --> P8["Phase 8 — GenAI"]
-  P7 --> P10["Phase 10 — LLMs from Scratch"]
-  P10 --> P11["Phase 11 — LLM Engineering"]
-  P10 --> P12["Phase 12 — Multimodal"]
-  P11 --> P13["Phase 13 — Tools &amp; Protocols"]
-  P13 --> P14["Phase 14 — Agent Engineering"]
-  P14 --> P15["Phase 15 — Autonomous Systems"]
-  P15 --> P16["Phase 16 — Multi-Agent &amp; Swarms"]
-  P14 --> P17["Phase 17 — Infrastructure &amp; Production"]
-  P15 --> P18["Phase 18 — Ethics &amp; Alignment"]
-  P16 --> P19["Phase 19 — Capstone Projects"]
+  P0["المرحلة 0: الإعداد والأدوات"] --> P1["المرحلة 1 : أسس الرياضيات"]
+  P1 --> P2["المرحلة 2 : أساسيات ML"]
+  P2 --> P3["المرحلة 3 : أساسيات التعلّم العميق"]
+  P3 --> P4["المرحلة 4 : الرؤية الحاسوبية"]
+  P3 --> P5["المرحلة 5 : NLP: من الأساسيات إلى المتقدم"]
+  P3 --> P6["المرحلة 6 : الكلام والصوت"]
+  P3 --> P9["المرحلة 9 : التعلّم المعزّز"]
+  P5 --> P7["المرحلة 7 : التعمق في Transformers"]
+  P7 --> P8["المرحلة 8 : الذكاء الاصطناعي التوليدي"]
+  P7 --> P10["المرحلة 10 : بناء LLM من الصفر"]
+  P10 --> P11["المرحلة 11 : هندسة LLM"]
+  P10 --> P12["المرحلة 12 : الذكاء الاصطناعي متعدد الوسائط"]
+  P11 --> P13["المرحلة 13 : الأدوات والبروتوكولات"]
+  P13 --> P14["المرحلة 14 : هندسة الوكلاء"]
+  P14 --> P15["المرحلة 15 : الأنظمة المستقلة"]
+  P15 --> P16["المرحلة 16 : الوكلاء المتعددون والأسراب"]
+  P14 --> P17["المرحلة 17 : البنية التحتية والإنتاج"]
+  P15 --> P18["المرحلة 18 : الأخلاقيات والسلامة والمواءمة"]
+  P16 --> P19["المرحلة 19 : المشاريع الختامية"]
   P17 --> P19
   P18 --> P19
 ```
@@ -225,55 +202,43 @@ flowchart TB
 
 ## بنية الدرس
 
-Each lesson lives in its own folder, with the same structure across the entire curriculum:
+يقع كل درس في مجلد مستقل، ويتبع الهيكل نفسه في المنهج كله:
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      runnable implementations (Python, TypeScript, Rust, Julia)
+├── code/      تطبيقات قابلة للتشغيل (Python وTypeScript وRust وJulia)
 ├── docs/
-│   └── en.md  lesson narrative
-└── outputs/   prompts, skills, agents, or MCP servers this lesson produces
+│   └── en.md  شرح الدرس
+└── outputs/   الموجّهات والمهارات والوكلاء وخوادم MCP التي ينتجها الدرس
 ```
 
-Every lesson follows six beats. The *Build It / Use It* split is the spine — you implement the
-algorithm from scratch first, then run the same thing through the production library. You
-understand what the framework is doing because you wrote the smaller version yourself.
+يتبع كل درس ست خطوات. ويشكّل تقسيم *Build It / Use It* جوهر المنهج: تنفّذ الخوارزمية أولًا من الصفر، ثم تشغّل العملية نفسها باستخدام مكتبة إنتاجية. وهكذا تفهم ما يفعله الإطار لأنك كتبت بنفسك نسخة أصغر منه.
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
 flowchart LR
-  M["MOTTO<br/><sub>one-line core idea</sub>"] --> Pr["PROBLEM<br/><sub>concrete pain</sub>"]
-  Pr --> C["CONCEPT<br/><sub>diagrams &amp; intuition</sub>"]
-  C --> B["BUILD IT<br/><sub>raw math, no frameworks</sub>"]
-  B --> U["USE IT<br/><sub>same thing in PyTorch / sklearn</sub>"]
-  U --> S["SHIP IT<br/><sub>prompt · skill · agent · MCP</sub>"]
+  M["الفكرة الأساسية<br/><sub>خلاصة في سطر واحد</sub>"] --> Pr["المشكلة<br/><sub>صعوبة محددة</sub>"]
+  Pr --> C["المفهوم<br/><sub>مخططات وفهم حدسي</sub>"]
+  C --> B["ابنِه بنفسك<br/><sub>رياضيات مباشرة بلا أطر عمل</sub>"]
+  B --> U["استخدمه<br/><sub>التطبيق نفسه في PyTorch / sklearn</sub>"]
+  U --> S["انشره<br/><sub>موجّه · مهارة · وكيل · MCP</sub>"]
 ```
 
-## البدء
+## كيف تبدأ
 
-ثلاث طرق للبدء. اختر واحدة.
+هناك ثلاث طرق للبدء. اختر واحدة.
 
-**Option A — learn in your terminal *(recommended)*.** After the Node.js,
-`npx`, host, and scope preflight above, install the learning skills into a
-compatible agent and let the course drive itself:
+**الخيار A — تعلّم في الطرفية *(موصى به)*.** بعد فحص Node.js و`npx` والمضيف والنطاق أعلاه، ثبّت مهارات التعلّم في وكيل متوافق ودع المنهج يرشدك:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-Use the host-specific invocation table above. The installed skills provide
-`start-learning`, `learn`, `course-guide`, and the focused
-`learn-mcp` and `learn-agent-skills` routes. Lesson prose can
-stream from this repository without a clone. A local clone is required for
-copied repository code commands and executable MCP or Agent Skills labs.
-Progress lives in `LEARNING.md`, `MCP-LEARNING.md`, or
-`AGENT-SKILLS-LEARNING.md` in your project, so every session can resume.
+استخدم جدول الاستدعاء الخاص بالمضيف أعلاه. توفر المهارات المثبتة `start-learning` و`learn` و`course-guide` ومساري `learn-mcp` و`learn-agent-skills` المركّزين. يمكن قراءة شرح الدروس مباشرة من هذا المستودع من دون استنساخه. يلزم استنساخ محلي لتشغيل أوامر الشيفرة المنسوخة من المستودع ومختبرات MCP أو Agent Skills القابلة للتنفيذ. تُحفظ تقدماتك في `LEARNING.md` أو `MCP-LEARNING.md` أو `AGENT-SKILLS-LEARNING.md` داخل مشروعك كي تتابعها في كل جلسة.
 
-**Option B — read.** Open any completed lesson on
-[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) or expand a phase under
-[Contents](#contents). No setup, no cloning.
+**الخيار B — اقرأ.** افتح أي درس مكتمل على [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)، أو وسّع إحدى المراحل في [المحتويات](#contents). لا إعداد ولا استنساخ.
 
-**Option C — clone and run.**
+**الخيار C — استنسخ وشغّل.**
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
@@ -281,131 +246,98 @@ cd ai-engineering-from-scratch
 python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
 
-Cloning also auto-loads the learning skills in Claude Code, and gives every
-lesson's code to the `learn` tutor for real execution instead of read-along.
+يحمّل الاستنساخ مهارات التعلّم تلقائيًا في Claude Code، كما يتيح لمعلّم `learn` تشغيل شيفرة كل درس فعليًا بدل الاكتفاء بقراءتها معًا.
 
-### المتطلبات المسبقة
+### المتطلبات السابقة
 
-- You can write code (any language; Python helps).
-- You want to understand how AI **actually works**, not just call APIs.
+- تستطيع كتابة الشيفرة بأي لغة؛ ومعرفة Python مفيدة.
+- تريد أن تفهم كيف يعمل الذكاء الاصطناعي **فعليًا**، لا أن تكتفي باستدعاء واجهات API.
 
-### Prepare for Claude certifications
+### استعد لشهادات Claude
 
-The [Claude Certification Academy](../../certifications/claude/README.md) is a free,
-open-source preparation program for all four official Claude certification tracks:
-Associate Foundations, Developer Foundations, Architect Foundations, and Architect
-Professional. Each route combines blueprint-mapped lessons, runnable labs, a
-diagnostic, capstone work, and a full-length original practice exam.
+[أكاديمية شهادات Claude](../../certifications/claude/README.md) برنامج مجاني ومفتوح المصدر للاستعداد لمسارات Claude الرسمية الأربعة: Associate Foundations وDeveloper Foundations وArchitect Foundations وArchitect Professional. يجمع كل مسار بين دروس مرتبطة بمخطط الاختبار، ومختبرات قابلة للتشغيل، واختبار تشخيصي، ومشروع ختامي، واختبار تدريبي أصلي كامل.
 
-Use the [AI-native GitHub onboarding guide](../../certifications/claude/GETTING_STARTED.md)
-with Claude Code, Codex, ChatGPT, Cursor, or another agent. Run
-`claude-certification` in Codex, `/claude-certification` in Claude Code, or ask
-another host to use `claude-certification`. It chooses a track, creates a
-persistent route in `CLAUDE-CERTIFICATION.md`, teaches one step at a time, runs
-the real labs, and gives artifact-based feedback. The same curriculum remains
-available on the [certification website](https://aiengineeringfromscratch.com/certifications.html).
+استخدم [دليل التهيئة على GitHub المدعوم بالذكاء الاصطناعي](../../certifications/claude/GETTING_STARTED.md) مع Claude Code أو Codex أو ChatGPT أو Cursor أو وكيل آخر. في Codex شغّل `claude-certification`؛ وفي Claude Code شغّل `/claude-certification`؛ أو اطلب من مضيف آخر استخدام المهارة `claude-certification`. يختار الدليل مسارًا، وينشئ رحلة مستمرة في `CLAUDE-CERTIFICATION.md`، ويعلّمك خطوةً كل مرة، ويشغّل المختبرات الفعلية، ويقدّم ملاحظات تستند إلى ما أنجزته. المنهج نفسه متاح على [موقع الشهادات](https://aiengineeringfromscratch.com/certifications.html).
 
-The academy is independent study material based on public exam objectives. It is not
-affiliated with Anthropic, does not reproduce live exam questions, and cannot guarantee
-a passing score.
+الأكاديمية مادة دراسية مستقلة مبنية على أهداف الاختبارات المنشورة. لا تتبع Anthropic، ولا تعيد نشر أسئلة الاختبارات الفعلية، ولا تضمن اجتياز الاختبار.
 
-### Prepare for the MCP Associate (MCPA) certification
+### استعد لشهادة MCP Associate (MCPA)
 
-The [MCPA Certification Curriculum](../../certifications/mcpa/README.md) is a free,
-open-source preparation program for the Model Context Protocol Associate exam from the
-Agentic AI Foundation, delivered through Linux Foundation Training. Its 34 lessons teach
-the stateless 2026-07-28 protocol across the five exam domains: per-request `_meta` and
-`server/discover` in place of the old handshake, multi round-trip requests, subscriptions,
-caching, the tasks and MCP Apps extensions, OAuth authorization, and the registry and SDK
-tiers. Every lesson ships a runnable standard-library lab whose transcript is checked for
-the current wire shape, and the track adds a diagnostic, a capstone, and three full-length
-original practice exams whose question mix follows the published blueprint weights.
+[منهج شهادة MCPA](../../certifications/mcpa/README.md) برنامج مجاني ومفتوح المصدر للاستعداد لاختبار Model Context Protocol Associate من Agentic AI Foundation، ويُقدَّم عبر Linux Foundation Training. تعلّم دروسه الـ34 بروتوكول 2026-07-28 عديم الحالة ضمن مجالات الاختبار الخمسة: `_meta` لكل طلب و`server/discover` بدل المصافحة القديمة؛ والطلبات متعددة الجولات؛ والاشتراكات؛ والتخزين المؤقت؛ وامتدادا Tasks وMCP Apps؛ وتفويض OAuth؛ ومستويي السجل وSDK. يوفّر كل درس مختبرًا قابلًا للتشغيل بمكتبات Python القياسية ويُفحص سجله للتأكد من مطابقته لتنسيق الاتصال الحالي. ويضم المسار اختبارًا تشخيصيًا ومشروعًا ختاميًا وثلاثة اختبارات تدريبية أصلية كاملة تتبع أوزان مخطط الاختبار المنشور.
 
-Use the [AI-native GitHub onboarding guide](../../certifications/mcpa/GETTING_STARTED.md) with
-Claude Code, Codex, ChatGPT, Cursor, or another agent. Run `mcpa-certification` in Codex,
-`/mcpa-certification` in Claude Code, or ask another host to use `mcpa-certification`. It
-creates a persistent route in `MCPA-CERTIFICATION.md`, teaches one step at a time, runs
-the real labs, and gives artifact-based feedback. The same curriculum is available on the
-[MCPA track page](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
+استخدم [دليل التهيئة على GitHub المدعوم بالذكاء الاصطناعي](../../certifications/mcpa/GETTING_STARTED.md) مع Claude Code أو Codex أو ChatGPT أو Cursor أو وكيل آخر. في Codex شغّل `mcpa-certification`؛ وفي Claude Code شغّل `/mcpa-certification`؛ أو اطلب من مضيف آخر استخدام المهارة `mcpa-certification`. ينشئ الدليل مسارًا مستمرًا في `MCPA-CERTIFICATION.md`، ويعلّم خطوةً كل مرة، ويشغّل المختبرات الفعلية، ويقدّم ملاحظات تستند إلى المخرجات. المنهج متاح أيضًا في [صفحة مسار MCPA](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
 
-This curriculum is independent study material based on public exam objectives. It is not
-affiliated with the Agentic AI Foundation or the Linux Foundation, does not reproduce
-live exam questions, and cannot guarantee a passing score.
+هذا المنهج مادة دراسية مستقلة تستند إلى أهداف الاختبار المنشورة. لا يتبع Agentic AI Foundation أو Linux Foundation، ولا يعيد نشر أسئلة الاختبار الفعلية، ولا يضمن اجتياز الاختبار.
 
-### The learning skills
+### مهارات التعلّم
 
-| Skill | What it does |
+| المهارة | وظيفتها |
 |---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | One-time onboarding: why you're learning, placement quiz, personalized plan saved to `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | The tutor loop. Warm-up recall, then the next lesson taught interactively, then its quiz; records progress and a review queue. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Topic router. "Where do I learn attention?" or "my loss is NaN" → the exact lessons, with links. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Focused Model Context Protocol (MCP) tutor. Creates `MCP-LEARNING.md`, follows the 17-lesson manifest, and records wire, security, reliability, and conformance evidence. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Focused Agent Skills tutor. Creates `AGENT-SKILLS-LEARNING.md`, teaches lessons 22, 24, 25, 26, and 27, and records real-host evidence. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Certification tutor. Chooses CCAO-F, CCDV-F, CCAR-F, or CCAR-P; teaches each lesson; runs labs; reviews artifacts; administers diagnostics and mocks; saves progress. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA tutor. Follows the 34-lesson `mcpa-f` route on the 2026-07-28 protocol; teaches each lesson; runs labs and the wire checker; administers the diagnostic and three mocks; saves progress. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. Use the Codex, Claude Code, or natural-language form in the invocation table above. |
+| [`start-learning`](../../skills/start-learning/SKILL.md) | تهيئة أولية واحدة: سبب تعلّمك، واختبار تحديد المستوى، وخطة مخصصة تُحفظ في `LEARNING.md`. |
+| [`learn`](../../skills/learn/SKILL.md) | دورة المعلّم: مراجعة تمهيدية، ثم تدريس الدرس التالي تفاعليًا، ثم اختباره؛ ويسجل التقدم وقائمة المراجعة. |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | دليل للموضوعات: اسأل «أين أتعلم الانتباه؟» أو «لماذا أصبحت قيمة loss هي NaN؟» ليعرض لك الدروس الدقيقة وروابطها. |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | معلّم مركّز لبروتوكول MCP. ينشئ `MCP-LEARNING.md`، ويتبع بيان الدروس الـ17، ويسجل أدلة الاتصال والأمن والموثوقية والمطابقة. |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | معلّم مركّز لمهارات الوكلاء. ينشئ `AGENT-SKILLS-LEARNING.md`، ويعلّم الدروس 22 و24 و25 و26 و27، ويسجل أدلة من مضيف فعلي. |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | معلّم الشهادات. يختار CCAO-F أو CCDV-F أو CCAR-F أو CCAR-P، ويعلّم الدروس، ويشغّل المختبرات، ويراجع المخرجات، ويجري التشخيص والاختبارات التجريبية، ويحفظ التقدم. |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | معلّم MCPA. يتبع مسار `mcpa-f` ذي الدروس الـ34 وفق بروتوكول 2026-07-28، ويشغّل المختبرات ومدقق الاتصال، ويجري الاختبار التشخيصي وثلاثة اختبارات تجريبية، ويحفظ التقدم. |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | اختبار تحديد مستوى من عشرة أسئلة يربط معرفتك بمرحلة بداية ويقترح مسارًا مخصصًا مع تقديرات زمنية. |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | اختبار لكل مرحلة من ثمانية أسئلة، مع ملاحظات ودروس محددة للمراجعة. استخدم صيغة Codex أو Claude Code أو اللغة الطبيعية في جدول الاستدعاء أعلاه. |
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Read the core curriculum as a book
+## اقرأ المنهج الأساسي كسلسلة كتب
 
-The 20-phase core curriculum under `phases/` compiles into a six-volume book series. EPUB and PDF are built by CI from the same core lesson sources and attached to every [GitHub release](https://github.com/rohitg00/ai-engineering-from-scratch/releases); the links below always resolve to the newest release. Volume numbers index the series, not versions: each copy carries a dated edition stamp, and older editions stay downloadable from their release.
+يتحوّل المنهج الأساسي ذو المراحل العشرين في `phases/` إلى سلسلة من ستة مجلدات. تنشئ CI نسختي EPUB وPDF من مصادر الدروس الأساسية نفسها وتضيفهما إلى كل [إصدار على GitHub](https://github.com/rohitg00/ai-engineering-from-scratch/releases)؛ وتشير الروابط أدناه دائمًا إلى أحدث إصدار. أرقام المجلدات تحدد ترتيب السلسلة، لا الإصدارات: تحمل كل نسخة تاريخ إصدار، ويمكن تنزيل النسخ الأقدم من إصداراتها.
 
-Certification curricula are intentionally not converted into the books. Their
-AI tutor state, runnable labs, interactive figures, diagnostics, and timed mocks
-remain first-class on GitHub and the website.
+لا تُحوّل مناهج الشهادات عمدًا إلى كتب. وتظل حالة معلّم الذكاء الاصطناعي والمختبرات القابلة للتشغيل والرسوم التفاعلية والتشخيص والاختبارات التدريبية المحددة بزمن متاحة على GitHub والموقع.
 
-| Vol | Title | Phases | Download |
+| المجلد | العنوان | المراحل | التنزيل |
 |-----|-------|--------|----------|
-| 1 | Foundations · Math, Tooling, and Classical Machine Learning | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Deep Learning · Networks, Vision, and Speech | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Language · NLP Foundations and the Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Large Language Models · Generation, Reinforcement, Pretraining, and Engineering | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Agents · Multimodality, Protocols, Autonomy, and Swarms | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Production · Infrastructure, Safety, and Capstones | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+| 1 | الأسس · الرياضيات والأدوات وتعلّم الآلة التقليدي | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | التعلّم العميق · الشبكات والرؤية والكلام | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | اللغة · أسس NLP وTransformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | النماذج اللغوية الكبيرة · التوليد والتعلّم المعزّز والتدريب المسبق والهندسة | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | الوكلاء · تعدد الوسائط والبروتوكولات والاستقلالية والأسراب | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | الإنتاج · البنية التحتية والسلامة والمشاريع الختامية | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
 
-The book is the snapshot; this repository is the living edition. Every chapter ends with links back to the lesson's animated figures, quiz, and runnable code. Build locally with `python3 scripts/build_book.py` (pandoc required); pipeline details in [book/README.md](../../book/README.md).
+الكتاب لقطة ثابتة، أما هذا المستودع فهو الإصدار المتجدد. ينتهي كل فصل بروابط إلى الرسوم المتحركة والاختبار والشيفرة القابلة للتشغيل الخاصة بالدرس. أنشئ الكتاب محليًا بتشغيل `python3 scripts/build_book.py` (يتطلب pandoc)؛ والتفاصيل في [book/README.md](../../book/README.md).
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## كل درس ينتج شيئًا
+## يقدّم كل درس شيئًا قابلًا للاستخدام
 
-Other curricula end with *"congratulations, you learned X."* Each lesson here ends with a
-**reusable tool** you can install or paste into your daily workflow.
+تنتهي مناهج أخرى بعبارة *«تهانينا، لقد تعلمت X»*. أما هنا فينتهي كل درس بـ **أداة قابلة لإعادة الاستخدام** يمكنك تثبيتها أو لصقها ضمن سير عملك اليومي.
 
-<table>
+<table dir="rtl">
 <tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A prompts"/><br/><sub>FIG_001 · A</sub><br/><b>PROMPTS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B skills"/><br/><sub>FIG_001 · B</sub><br/><b>SKILLS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C agents"/><br/><sub>FIG_001 · C</sub><br/><b>AGENTS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP servers"/><br/><sub>FIG_001 · D</sub><br/><b>MCP SERVERS</b></th>
+<th align="right" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A موجّهات"/><br/><sub>FIG_001 · A</sub><br/><b>الموجّهات</b></th>
+<th align="right" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B مهارات"/><br/><sub>FIG_001 · B</sub><br/><b>المهارات</b></th>
+<th align="right" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C وكلاء"/><br/><sub>FIG_001 · C</sub><br/><b>الوكلاء</b></th>
+<th align="right" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D خوادم MCP"/><br/><sub>FIG_001 · D</sub><br/><b>خوادم MCP</b></th>
 </tr>
 <tr>
-<td valign="top">Paste into any AI assistant for expert-level help on a narrow task.</td>
-<td valign="top">Drop into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads <code>SKILL.md</code>.</td>
-<td valign="top">Deploy as autonomous workers — you wrote the loop yourself in Phase 14.</td>
-<td valign="top">Plug into any MCP-compatible client. Built end-to-end in Phase 13.</td>
+<td valign="top">ألصقها في أي مساعد ذكاء اصطناعي لتحصل على مساعدة بمستوى الخبراء في مهمة محددة.</td>
+<td valign="top">أضفها إلى Claude أو Cursor أو Codex أو OpenClaw أو Hermes أو أي وكيل يقرأ <code>SKILL.md</code>.</td>
+<td valign="top">انشرها كعمّال مستقلين؛ فقد كتبت بنفسك حلقة الوكيل في المرحلة 14.</td>
+<td valign="top">استخدمها مع أي عميل متوافق مع MCP. يُبنى المسار كاملًا في المرحلة 13.</td>
 </tr>
 </table>
 
-> Install the lot with `python3 scripts/install_skills.py <target>`. Real tools, not homework.
-> By the end of the curriculum, you have a portfolio of 523 artifacts you actually
-> understand because you built them.
+> ثبّت المجموعة كلها باستخدام `python3 scripts/install_skills.py <target>`. أدوات حقيقية وليست واجبات منزلية. عند إكمال المنهج سيكون لديك معرض يضم 523 مخرجًا تفهمها فعلًا لأنك بنيتها بنفسك.
 
-### FIG_002 · A worked sample
+### FIG_002 · مثال تطبيقي
 
-Phase 14, lesson 1: the agent loop. ~120 lines of pure Python, no dependencies.
+المرحلة 14، الدرس 1: حلقة الوكيل. نحو 120 سطرًا من Python الخالص، بلا اعتماديات.
 
 <table>
 <tr>
 <td valign="top" width="50%">
 
-**`code/agent_loop.py`** &nbsp; <sub><i>build it</i></sub>
+**`code/agent_loop.py`** &nbsp; <sub><i>ابنها</i></sub>
 
 ```python
 def run(query, tools):
@@ -424,7 +356,7 @@ def run(query, tools):
 </td>
 <td valign="top" width="50%">
 
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>ship it</i></sub>
+**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>أصدرها</i></sub>
 
 ```markdown
 ---
@@ -457,731 +389,719 @@ the agent went wrong and explain why...
 
 ## المحتويات
 
-Twenty phases. Click any phase to expand its lesson list.
+عشرون مرحلة. انقر على أي مرحلة لفتح قائمة دروسها.
 
 <a id="phase-0"></a>
-### Phase 0: Setup & Tooling `12 lessons`
-> Get your environment ready for everything that follows.
+### المرحلة 0: الإعداد والأدوات `12 lessons`
+> جهّز بيئتك لكل ما ستتعلمه لاحقًا.
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Dev Environment](../../phases/00-setup-and-tooling/01-dev-environment/) | Build | Python |
-| 02 | [Git & Collaboration](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | Learn | — |
-| 03 | [GPU Setup & Cloud](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | Build | Python |
-| 04 | [APIs & Keys](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Build | Python |
-| 05 | [Jupyter Notebooks](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | Build | Python |
-| 06 | [Python Environments](../../phases/00-setup-and-tooling/06-python-environments/) | Build | Shell |
-| 07 | [Docker for AI](../../phases/00-setup-and-tooling/07-docker-for-ai/) | Build | Docker |
-| 08 | [Editor Setup](../../phases/00-setup-and-tooling/08-editor-setup/) | Build | — |
-| 09 | [Data Management](../../phases/00-setup-and-tooling/09-data-management/) | Build | Python |
-| 10 | [Terminal & Shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Learn | — |
-| 11 | [Linux for AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Learn | — |
-| 12 | [Debugging & Profiling](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Build | Python |
+| 01 | [بيئة التطوير](../../phases/00-setup-and-tooling/01-dev-environment/) | بناء | Python |
+| 02 | [Git والتعاون](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | تعلم | — |
+| 03 | [إعداد GPU والسحابة](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | بناء | Python |
+| 04 | [واجهات API والمفاتيح](../../phases/00-setup-and-tooling/04-apis-and-keys/) | بناء | Python |
+| 05 | [دفاتر Jupyter](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | بناء | Python |
+| 06 | [بيئات Python](../../phases/00-setup-and-tooling/06-python-environments/) | بناء | Shell |
+| 07 | [Docker للذكاء الاصطناعي](../../phases/00-setup-and-tooling/07-docker-for-ai/) | بناء | Docker |
+| 08 | [إعداد المحرر](../../phases/00-setup-and-tooling/08-editor-setup/) | بناء | — |
+| 09 | [إدارة البيانات](../../phases/00-setup-and-tooling/09-data-management/) | بناء | Python |
+| 10 | [الطرفية وshell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | تعلم | — |
+| 11 | [Linux للذكاء الاصطناعي](../../phases/00-setup-and-tooling/11-linux-for-ai/) | تعلم | — |
+| 12 | [تصحيح الأخطاء وقياس الأداء](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | بناء | Python |
 
 <details id="phase-1">
-<summary><b>Phase 1 — Math Foundations</b> &nbsp;<code>22 lessons</code>&nbsp; <em>The intuition behind every AI algorithm, through code.</em></summary>
+<summary><b>المرحلة 1 — أسس الرياضيات</b> &nbsp;<code>22 lessons</code>&nbsp; <em>افهم حدس كل خوارزمية ذكاء اصطناعي من خلال الشيفرة.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Linear Algebra Intuition](../../phases/01-math-foundations/01-linear-algebra-intuition/) | Learn | Python, Julia |
-| 02 | [Vectors, Matrices & Operations](../../phases/01-math-foundations/02-vectors-matrices-operations/) | Build | Python, Julia |
-| 03 | [Matrix Transformations & Eigenvalues](../../phases/01-math-foundations/03-matrix-transformations/) | Build | Python, Julia |
-| 04 | [Calculus for ML: Derivatives & Gradients](../../phases/01-math-foundations/04-calculus-for-ml/) | Learn | Python |
-| 05 | [Chain Rule & Automatic Differentiation](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Build | Python |
-| 06 | [Probability & Distributions](../../phases/01-math-foundations/06-probability-and-distributions/) | Learn | Python |
-| 07 | [Bayes' Theorem & Statistical Thinking](../../phases/01-math-foundations/07-bayes-theorem/) | Build | Python |
-| 08 | [Optimization: Gradient Descent Family](../../phases/01-math-foundations/08-optimization/) | Build | Python |
-| 09 | [Information Theory: Entropy, KL Divergence](../../phases/01-math-foundations/09-information-theory/) | Learn | Python |
-| 10 | [Dimensionality Reduction: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Build | Python |
-| 11 | [Singular Value Decomposition](../../phases/01-math-foundations/11-singular-value-decomposition/) | Build | Python, Julia |
-| 12 | [Tensor Operations](../../phases/01-math-foundations/12-tensor-operations/) | Build | Python |
-| 13 | [Numerical Stability](../../phases/01-math-foundations/13-numerical-stability/) | Build | Python |
-| 14 | [Norms & Distances](../../phases/01-math-foundations/14-norms-and-distances/) | Build | Python |
-| 15 | [Statistics for ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Build | Python |
-| 16 | [Sampling Methods](../../phases/01-math-foundations/16-sampling-methods/) | Build | Python |
-| 17 | [Linear Systems](../../phases/01-math-foundations/17-linear-systems/) | Build | Python |
-| 18 | [Convex Optimization](../../phases/01-math-foundations/18-convex-optimization/) | Build | Python |
-| 19 | [Complex Numbers for AI](../../phases/01-math-foundations/19-complex-numbers/) | Learn | Python |
-| 20 | [The Fourier Transform](../../phases/01-math-foundations/20-fourier-transform/) | Build | Python |
-| 21 | [Graph Theory for ML](../../phases/01-math-foundations/21-graph-theory/) | Build | Python |
-| 22 | [Stochastic Processes](../../phases/01-math-foundations/22-stochastic-processes/) | Learn | Python |
+| 01 | [الحدس في الجبر الخطي](../../phases/01-math-foundations/01-linear-algebra-intuition/) | تعلم | Python, Julia |
+| 02 | [المتجهات والمصفوفات والعمليات](../../phases/01-math-foundations/02-vectors-matrices-operations/) | بناء | Python, Julia |
+| 03 | [تحويلات المصفوفات والقيم الذاتية](../../phases/01-math-foundations/03-matrix-transformations/) | بناء | Python, Julia |
+| 04 | [التفاضل والتكامل لـML: المشتقات والتدرجات](../../phases/01-math-foundations/04-calculus-for-ml/) | تعلم | Python |
+| 05 | [قاعدة السلسلة والاشتقاق التلقائي](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | بناء | Python |
+| 06 | [الاحتمالات والتوزيعات](../../phases/01-math-foundations/06-probability-and-distributions/) | تعلم | Python |
+| 07 | [مبرهنة بايز والتفكير الإحصائي](../../phases/01-math-foundations/07-bayes-theorem/) | بناء | Python |
+| 08 | [التحسين: أساليب الانحدار المتدرج](../../phases/01-math-foundations/08-optimization/) | بناء | Python |
+| 09 | [نظرية المعلومات: الإنتروبيا وتباعد KL](../../phases/01-math-foundations/09-information-theory/) | تعلم | Python |
+| 10 | [تقليل الأبعاد: PCA وt-SNE وUMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | بناء | Python |
+| 11 | [تحليل القيم المفردة](../../phases/01-math-foundations/11-singular-value-decomposition/) | بناء | Python, Julia |
+| 12 | [عمليات الموترات](../../phases/01-math-foundations/12-tensor-operations/) | بناء | Python |
+| 13 | [الاستقرار العددي](../../phases/01-math-foundations/13-numerical-stability/) | بناء | Python |
+| 14 | [معايير المتجهات (Norms) والمسافات](../../phases/01-math-foundations/14-norms-and-distances/) | بناء | Python |
+| 15 | [الإحصاء لـML](../../phases/01-math-foundations/15-statistics-for-ml/) | بناء | Python |
+| 16 | [أساليب أخذ العينات](../../phases/01-math-foundations/16-sampling-methods/) | بناء | Python |
+| 17 | [أنظمة المعادلات الخطية](../../phases/01-math-foundations/17-linear-systems/) | بناء | Python |
+| 18 | [التحسين المحدّب](../../phases/01-math-foundations/18-convex-optimization/) | بناء | Python |
+| 19 | [الأعداد المركبة للذكاء الاصطناعي](../../phases/01-math-foundations/19-complex-numbers/) | تعلم | Python |
+| 20 | [تحويل فورييه](../../phases/01-math-foundations/20-fourier-transform/) | بناء | Python |
+| 21 | [نظرية الرسوم البيانية لـML](../../phases/01-math-foundations/21-graph-theory/) | بناء | Python |
+| 22 | [العمليات العشوائية](../../phases/01-math-foundations/22-stochastic-processes/) | تعلم | Python |
 
 </details>
 
 <details id="phase-2">
-<summary><b>Phase 2 — ML Fundamentals</b> &nbsp;<code>18 lessons</code>&nbsp; <em>Classical ML — still the backbone of most production AI.</em></summary>
+<summary><b>المرحلة 2 — أساسيات ML</b> &nbsp;<code>18 lessons</code>&nbsp; <em>ما يزال تعلّم الآلة التقليدي عماد معظم أنظمة الذكاء الاصطناعي الإنتاجية.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [What Is Machine Learning](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Learn | Python |
-| 02 | [Linear Regression from Scratch](../../phases/02-ml-fundamentals/02-linear-regression/) | Build | Python |
-| 03 | [Logistic Regression & Classification](../../phases/02-ml-fundamentals/03-logistic-regression/) | Build | Python |
-| 04 | [Decision Trees & Random Forests](../../phases/02-ml-fundamentals/04-decision-trees/) | Build | Python |
-| 05 | [Support Vector Machines](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Build | Python |
-| 06 | [KNN & Distance Metrics](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Build | Python |
-| 07 | [Unsupervised Learning: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Build | Python |
-| 08 | [Feature Engineering & Selection](../../phases/02-ml-fundamentals/08-feature-engineering/) | Build | Python |
-| 09 | [Model Evaluation: Metrics, Cross-Validation](../../phases/02-ml-fundamentals/09-model-evaluation/) | Build | Python |
-| 10 | [Bias, Variance & the Learning Curve](../../phases/02-ml-fundamentals/10-bias-variance/) | Learn | Python |
-| 11 | [Ensemble Methods: Boosting, Bagging, Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Build | Python |
-| 12 | [Hyperparameter Tuning](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | Build | Python |
-| 13 | [ML Pipelines & Experiment Tracking](../../phases/02-ml-fundamentals/13-ml-pipelines/) | Build | Python |
-| 14 | [Naive Bayes](../../phases/02-ml-fundamentals/14-naive-bayes/) | Build | Python |
-| 15 | [Time Series Fundamentals](../../phases/02-ml-fundamentals/15-time-series/) | Build | Python |
-| 16 | [Anomaly Detection](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Build | Python |
-| 17 | [Handling Imbalanced Data](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Build | Python |
-| 18 | [Feature Selection](../../phases/02-ml-fundamentals/18-feature-selection/) | Build | Python |
+| 01 | [ما هو تعلّم الآلة؟](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | تعلم | Python |
+| 02 | [الانحدار الخطي من الصفر](../../phases/02-ml-fundamentals/02-linear-regression/) | بناء | Python |
+| 03 | [الانحدار اللوجستي والتصنيف](../../phases/02-ml-fundamentals/03-logistic-regression/) | بناء | Python |
+| 04 | [أشجار القرار والغابات العشوائية](../../phases/02-ml-fundamentals/04-decision-trees/) | بناء | Python |
+| 05 | [آلات المتجهات الداعمة](../../phases/02-ml-fundamentals/05-support-vector-machines/) | بناء | Python |
+| 06 | [KNN ومقاييس المسافة](../../phases/02-ml-fundamentals/06-knn-and-distances/) | بناء | Python |
+| 07 | [التعلّم غير الخاضع للإشراف: K-Means وDBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | بناء | Python |
+| 08 | [هندسة السمات واختيارها](../../phases/02-ml-fundamentals/08-feature-engineering/) | بناء | Python |
+| 09 | [تقييم النماذج: المقاييس والتحقق المتقاطع](../../phases/02-ml-fundamentals/09-model-evaluation/) | بناء | Python |
+| 10 | [التحيز والتباين ومنحنى التعلّم](../../phases/02-ml-fundamentals/10-bias-variance/) | تعلم | Python |
+| 11 | [أساليب التجميع: boosting وbagging وstacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | بناء | Python |
+| 12 | [ضبط المعلمات الفائقة](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | بناء | Python |
+| 13 | [مسارات ML وتتبع التجارب](../../phases/02-ml-fundamentals/13-ml-pipelines/) | بناء | Python |
+| 14 | [Naive Bayes](../../phases/02-ml-fundamentals/14-naive-bayes/) | بناء | Python |
+| 15 | [أساسيات السلاسل الزمنية](../../phases/02-ml-fundamentals/15-time-series/) | بناء | Python |
+| 16 | [كشف الحالات الشاذة](../../phases/02-ml-fundamentals/16-anomaly-detection/) | بناء | Python |
+| 17 | [التعامل مع البيانات غير المتوازنة](../../phases/02-ml-fundamentals/17-imbalanced-data/) | بناء | Python |
+| 18 | [اختيار السمات](../../phases/02-ml-fundamentals/18-feature-selection/) | بناء | Python |
 
 </details>
 
 <details id="phase-3">
-<summary><b>Phase 3 — Deep Learning Core</b> &nbsp;<code>13 lessons</code>&nbsp; <em>Neural networks from first principles. No frameworks until you build one.</em></summary>
+<summary><b>المرحلة 3 — أساسيات التعلّم العميق</b> &nbsp;<code>13 lessons</code>&nbsp; <em>الشبكات العصبية من المبادئ الأولى؛ لا أطر عمل حتى تبني واحدًا بنفسك.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [The Perceptron: Where It All Started](../../phases/03-deep-learning-core/01-the-perceptron/) | Build | Python |
-| 02 | [Multi-Layer Networks & Forward Pass](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Build | Python |
-| 03 | [Backpropagation from Scratch](../../phases/03-deep-learning-core/03-backpropagation/) | Build | Python |
-| 04 | [Activation Functions: ReLU, Sigmoid, GELU & Why](../../phases/03-deep-learning-core/04-activation-functions/) | Build | Python |
-| 05 | [Loss Functions: MSE, Cross-Entropy, Contrastive](../../phases/03-deep-learning-core/05-loss-functions/) | Build | Python |
-| 06 | [Optimizers: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Build | Python |
-| 07 | [Regularization: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Build | Python |
-| 08 | [Weight Initialization & Training Stability](../../phases/03-deep-learning-core/08-weight-initialization/) | Build | Python |
-| 09 | [Learning Rate Schedules & Warmup](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Build | Python |
-| 10 | [Build Your Own Mini Framework](../../phases/03-deep-learning-core/10-mini-framework/) | Build | Python |
-| 11 | [Introduction to PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Build | Python |
-| 12 | [Introduction to JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Build | Python |
-| 13 | [Debugging Neural Networks](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Build | Python |
+| 01 | [Perceptron: من أين بدأت الحكاية](../../phases/03-deep-learning-core/01-the-perceptron/) | بناء | Python |
+| 02 | [الشبكات متعددة الطبقات والتمرير الأمامي](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بناء | Python |
+| 03 | [الانتشار العكسي من الصفر](../../phases/03-deep-learning-core/03-backpropagation/) | بناء | Python |
+| 04 | [دوال التنشيط: ReLU وSigmoid وGELU ولماذا](../../phases/03-deep-learning-core/04-activation-functions/) | بناء | Python |
+| 05 | [دوال الخسارة: MSE وcross-entropy والخسارة التقابلية](../../phases/03-deep-learning-core/05-loss-functions/) | بناء | Python |
+| 06 | [المحسّنات: SGD وMomentum وAdam وAdamW](../../phases/03-deep-learning-core/06-optimizers/) | بناء | Python |
+| 07 | [التنظيم: Dropout وWeight Decay وBatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بناء | Python |
+| 08 | [تهيئة الأوزان واستقرار التدريب](../../phases/03-deep-learning-core/08-weight-initialization/) | بناء | Python |
+| 09 | [جداول معدل التعلّم والإحماء](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بناء | Python |
+| 10 | [ابنِ إطار عمل مصغرًا خاصًا بك](../../phases/03-deep-learning-core/10-mini-framework/) | بناء | Python |
+| 11 | [مقدمة إلى PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | بناء | Python |
+| 12 | [مقدمة إلى JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | بناء | Python |
+| 13 | [تصحيح أخطاء الشبكات العصبية](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | بناء | Python |
 
 </details>
 
 <details id="phase-4">
-<summary><b>Phase 4 — Computer Vision</b> &nbsp;<code>28 lessons</code>&nbsp; <em>From pixels to understanding — image, video, 3D, VLMs, and world models.</em></summary>
+<summary><b>المرحلة 4 — الرؤية الحاسوبية</b> &nbsp;<code>28 lessons</code>&nbsp; <em>من البكسلات إلى الفهم: الصور والفيديو وثلاثي الأبعاد وVLM ونماذج العالم.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Image Fundamentals: Pixels, Channels, Color Spaces](../../phases/04-computer-vision/01-image-fundamentals/) | Learn | Python |
-| 02 | [Convolutions from Scratch](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Build | Python |
-| 03 | [CNNs: LeNet to ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | Build | Python |
-| 04 | [Image Classification](../../phases/04-computer-vision/04-image-classification/) | Build | Python |
-| 05 | [Transfer Learning & Fine-Tuning](../../phases/04-computer-vision/05-transfer-learning/) | Build | Python |
-| 06 | [Object Detection — YOLO from Scratch](../../phases/04-computer-vision/06-object-detection-yolo/) | Build | Python |
-| 07 | [Semantic Segmentation — U-Net](../../phases/04-computer-vision/07-semantic-segmentation-unet/) | Build | Python |
-| 08 | [Instance Segmentation — Mask R-CNN](../../phases/04-computer-vision/08-instance-segmentation-mask-rcnn/) | Build | Python |
-| 09 | [Image Generation — GANs](../../phases/04-computer-vision/09-image-generation-gans/) | Build | Python |
-| 10 | [Image Generation — Diffusion Models](../../phases/04-computer-vision/10-image-generation-diffusion/) | Build | Python |
-| 11 | [Stable Diffusion — Architecture & Fine-Tuning](../../phases/04-computer-vision/11-stable-diffusion/) | Build | Python |
-| 12 | [Video Understanding — Temporal Modeling](../../phases/04-computer-vision/12-video-understanding/) | Build | Python |
-| 13 | [3D Vision: Point Clouds, NeRFs](../../phases/04-computer-vision/13-3d-vision-nerf/) | Build | Python |
-| 14 | [Vision Transformers (ViT)](../../phases/04-computer-vision/14-vision-transformers/) | Build | Python |
-| 15 | [Real-Time Vision: Edge Deployment](../../phases/04-computer-vision/15-real-time-edge/) | Build | Python |
-| 16 | [Build a Complete Vision Pipeline](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | Build | Python |
-| 17 | [Self-Supervised Vision — SimCLR, DINO, MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | Build | Python |
-| 18 | [Open-Vocabulary Vision — CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | Build | Python |
-| 19 | [OCR & Document Understanding](../../phases/04-computer-vision/19-ocr-document-understanding/) | Build | Python |
-| 20 | [Image Retrieval & Metric Learning](../../phases/04-computer-vision/20-image-retrieval-metric/) | Build | Python |
-| 21 | [Keypoint Detection & Pose Estimation](../../phases/04-computer-vision/21-keypoint-pose/) | Build | Python |
-| 22 | [3D Gaussian Splatting from Scratch](../../phases/04-computer-vision/22-3d-gaussian-splatting/) | Build | Python |
-| 23 | [Diffusion Transformers & Rectified Flow](../../phases/04-computer-vision/23-diffusion-transformers-rectified-flow/) | Build | Python |
-| 24 | [SAM 3 & Open-Vocabulary Segmentation](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | Build | Python |
-| 25 | [Vision-Language Models (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | Build | Python |
-| 26 | [Monocular Depth & Geometry Estimation](../../phases/04-computer-vision/26-monocular-depth/) | Build | Python |
-| 27 | [Multi-Object Tracking & Video Memory](../../phases/04-computer-vision/27-multi-object-tracking/) | Build | Python |
-| 28 | [World Models & Video Diffusion](../../phases/04-computer-vision/28-world-models-video-diffusion/) | Build | Python |
+| 01 | [أساسيات الصور: البكسلات والقنوات ومساحات الألوان](../../phases/04-computer-vision/01-image-fundamentals/) | تعلم | Python |
+| 02 | [عمليات الالتفاف من الصفر](../../phases/04-computer-vision/02-convolutions-from-scratch/) | بناء | Python |
+| 03 | [شبكات CNN: من LeNet إلى ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | بناء | Python |
+| 04 | [تصنيف الصور](../../phases/04-computer-vision/04-image-classification/) | بناء | Python |
+| 05 | [التعلّم بالنقل والضبط الدقيق](../../phases/04-computer-vision/05-transfer-learning/) | بناء | Python |
+| 06 | [اكتشاف الأجسام: YOLO من الصفر](../../phases/04-computer-vision/06-object-detection-yolo/) | بناء | Python |
+| 07 | [التقسيم الدلالي: U-Net](../../phases/04-computer-vision/07-semantic-segmentation-unet/) | بناء | Python |
+| 08 | [تقسيم الكائنات: Mask R-CNN](../../phases/04-computer-vision/08-instance-segmentation-mask-rcnn/) | بناء | Python |
+| 09 | [توليد الصور: GANs](../../phases/04-computer-vision/09-image-generation-gans/) | بناء | Python |
+| 10 | [توليد الصور: نماذج الانتشار](../../phases/04-computer-vision/10-image-generation-diffusion/) | بناء | Python |
+| 11 | [Stable Diffusion: المعمارية والضبط الدقيق](../../phases/04-computer-vision/11-stable-diffusion/) | بناء | Python |
+| 12 | [فهم الفيديو: النمذجة الزمنية](../../phases/04-computer-vision/12-video-understanding/) | بناء | Python |
+| 13 | [الرؤية ثلاثية الأبعاد: سحب النقاط وNeRFs](../../phases/04-computer-vision/13-3d-vision-nerf/) | بناء | Python |
+| 14 | [محولات الرؤية (ViT)](../../phases/04-computer-vision/14-vision-transformers/) | بناء | Python |
+| 15 | [الرؤية الآنية: النشر على الأجهزة الطرفية](../../phases/04-computer-vision/15-real-time-edge/) | بناء | Python |
+| 16 | [ابنِ خط معالجة كاملًا للرؤية](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | بناء | Python |
+| 17 | [الرؤية بالتعلّم الذاتي: SimCLR وDINO وMAE](../../phases/04-computer-vision/17-self-supervised-vision/) | بناء | Python |
+| 18 | [الرؤية ذات المفردات المفتوحة: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | بناء | Python |
+| 19 | [OCR وفهم المستندات](../../phases/04-computer-vision/19-ocr-document-understanding/) | بناء | Python |
+| 20 | [استرجاع الصور والتعلّم بالمقاييس](../../phases/04-computer-vision/20-image-retrieval-metric/) | بناء | Python |
+| 21 | [اكتشاف النقاط المفتاحية وتقدير الوضعية](../../phases/04-computer-vision/21-keypoint-pose/) | بناء | Python |
+| 22 | [توليد Gaussian Splatting ثلاثي الأبعاد من الصفر](../../phases/04-computer-vision/22-3d-gaussian-splatting/) | بناء | Python |
+| 23 | [محولات الانتشار والتدفق المصحح](../../phases/04-computer-vision/23-diffusion-transformers-rectified-flow/) | بناء | Python |
+| 24 | [SAM 3 والتقسيم بالمفردات المفتوحة](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | بناء | Python |
+| 25 | [نماذج الرؤية واللغة (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | بناء | Python |
+| 26 | [تقدير العمق والهندسة من صورة أحادية](../../phases/04-computer-vision/26-monocular-depth/) | بناء | Python |
+| 27 | [تتبّع أجسام متعددة وذاكرة الفيديو](../../phases/04-computer-vision/27-multi-object-tracking/) | بناء | Python |
+| 28 | [نماذج العالم وانتشار الفيديو](../../phases/04-computer-vision/28-world-models-video-diffusion/) | بناء | Python |
 
 </details>
 
 <details id="phase-5">
-<summary><b>Phase 5 — NLP: Foundations to Advanced</b> &nbsp;<code>29 lessons</code>&nbsp; <em>Language is the interface to intelligence.</em></summary>
+<summary><b>المرحلة 5 — NLP: من الأساسيات إلى المتقدم</b> &nbsp;<code>29 lessons</code>&nbsp; <em>اللغة هي الواجهة التي تصل إلى الذكاء.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Text Processing: Tokenization, Stemming, Lemmatization](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Build | Python |
-| 02 | [Bag of Words, TF-IDF & Text Representation](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Build | Python |
-| 03 | [Word Embeddings: Word2Vec from Scratch](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Build | Python |
-| 04 | [GloVe, FastText & Subword Embeddings](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Build | Python |
-| 05 | [Sentiment Analysis](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Build | Python |
-| 06 | [Named Entity Recognition (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Build | Python |
-| 07 | [POS Tagging & Syntactic Parsing](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Build | Python |
-| 08 | [Text Classification — CNNs & RNNs for Text](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Build | Python |
-| 09 | [Sequence-to-Sequence Models](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Build | Python |
-| 10 | [Attention Mechanism — The Breakthrough](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Build | Python |
-| 11 | [Machine Translation](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Build | Python |
-| 12 | [Text Summarization](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Build | Python |
-| 13 | [Question Answering Systems](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Build | Python |
-| 14 | [Information Retrieval & Search](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Build | Python |
-| 15 | [Topic Modeling: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Build | Python |
-| 16 | [Text Generation](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Build | Python |
-| 17 | [Chatbots: Rule-Based to Neural](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Build | Python |
-| 18 | [Multilingual NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Build | Python |
-| 19 | [Subword Tokenization: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Learn | Python |
-| 20 | [Structured Outputs & Constrained Decoding](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Build | Python |
-| 21 | [NLI & Textual Entailment](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Learn | Python |
-| 22 | [Embedding Models Deep Dive](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Learn | Python |
-| 23 | [Chunking Strategies for RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Build | Python |
-| 24 | [Coreference Resolution](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Learn | Python |
-| 25 | [Entity Linking & Disambiguation](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Build | Python |
-| 26 | [Relation Extraction & Knowledge Graph Construction](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Build | Python |
-| 27 | [LLM Evaluation: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Build | Python |
-| 28 | [Long-Context Evaluation: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Learn | Python |
-| 29 | [Dialogue State Tracking](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Build | Python |
+| 01 | [معالجة النصوص: الترميز إلى رموز والتجذير والاشتقاق الصرفي](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | بناء | Python |
+| 02 | [حقيبة الكلمات وTF-IDF وتمثيل النص](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | بناء | Python |
+| 03 | [تضمينات الكلمات: بناء Word2Vec من الصفر](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | بناء | Python |
+| 04 | [تضمينات GloVe وFastText والوحدات الفرعية](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | بناء | Python |
+| 05 | [تحليل المشاعر](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | بناء | Python |
+| 06 | [التعرّف على الكيانات المسماة (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | بناء | Python |
+| 07 | [وسم أجزاء الكلام والتحليل النحوي](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | بناء | Python |
+| 08 | [تصنيف النص: شبكات CNN وRNN للنصوص](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | بناء | Python |
+| 09 | [نماذج التسلسل إلى التسلسل](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | بناء | Python |
+| 10 | [آلية الانتباه: الاكتشاف المفصلي](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | بناء | Python |
+| 11 | [الترجمة الآلية](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | بناء | Python |
+| 12 | [تلخيص النص](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | بناء | Python |
+| 13 | [أنظمة الإجابة عن الأسئلة](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | بناء | Python |
+| 14 | [استرجاع المعلومات والبحث](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | بناء | Python |
+| 15 | [نمذجة الموضوعات: LDA وBERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | بناء | Python |
+| 16 | [توليد النص](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | بناء | Python |
+| 17 | [روبوتات المحادثة: من القواعد إلى الشبكات العصبية](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | بناء | Python |
+| 18 | [معالجة اللغة الطبيعية متعددة اللغات](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | بناء | Python |
+| 19 | [ترميز الوحدات الفرعية: BPE وWordPiece وUnigram وSentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | تعلم | Python |
+| 20 | [المخرجات المنظّمة وفك الترميز المقيّد](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | بناء | Python |
+| 21 | [الاستدلال اللغوي (NLI والتضمين النصي)](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | تعلم | Python |
+| 22 | [التعمق في نماذج التضمين](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | تعلم | Python |
+| 23 | [استراتيجيات تقسيم النص إلى مقاطع لـRAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | بناء | Python |
+| 24 | [حل الإحالة المشتركة](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | تعلم | Python |
+| 25 | [ربط الكيانات وإزالة الالتباس](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | بناء | Python |
+| 26 | [استخراج العلاقات وبناء الرسوم البيانية المعرفية](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | بناء | Python |
+| 27 | [تقييم LLM: RAGAS وDeepEval وG-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | بناء | Python |
+| 28 | [تقييم السياقات الطويلة: NIAH وRULER وLongBench وMRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | تعلم | Python |
+| 29 | [تتبّع حالة الحوار](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | بناء | Python |
 
 </details>
 
 <details id="phase-6">
-<summary><b>Phase 6 — Speech & Audio</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Hear, understand, speak.</em></summary>
+<summary><b>المرحلة 6 — الكلام والصوت</b> &nbsp;<code>17 lessons</code>&nbsp; <em>استمع وافهم وتحدث.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Audio Fundamentals: Waveforms, Sampling, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Learn | Python |
-| 02 | [Spectrograms, Mel Scale & Audio Features](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Build | Python |
-| 03 | [Audio Classification](../../phases/06-speech-and-audio/03-audio-classification) | Build | Python |
-| 04 | [Speech Recognition (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Build | Python |
-| 05 | [Whisper: Architecture & Fine-Tuning](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Build | Python |
-| 06 | [Speaker Recognition & Verification](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Build | Python |
-| 07 | [Text-to-Speech (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Build | Python |
-| 08 | [Voice Cloning & Voice Conversion](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Build | Python |
-| 09 | [Music Generation](../../phases/06-speech-and-audio/09-music-generation) | Build | Python |
-| 10 | [Audio-Language Models](../../phases/06-speech-and-audio/10-audio-language-models) | Build | Python |
-| 11 | [Real-Time Audio Processing](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Build | Python |
-| 12 | [Build a Voice Assistant Pipeline](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Build | Python |
-| 13 | [Neural Audio Codecs — EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Learn | Python |
-| 14 | [Voice Activity Detection & Turn-Taking](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Build | Python |
-| 15 | [Streaming Speech-to-Speech — Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Learn | Python |
-| 16 | [Voice Anti-Spoofing & Audio Watermarking](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Build | Python |
-| 17 | [Audio Evaluation — WER, MOS, MMAU, Leaderboards](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Learn | Python |
+| 01 | [أساسيات الصوت: الموجات وأخذ العينات وFFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | تعلم | Python |
+| 02 | [المخططات الطيفية ومقياس Mel وميزات الصوت](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | بناء | Python |
+| 03 | [تصنيف الصوت](../../phases/06-speech-and-audio/03-audio-classification) | بناء | Python |
+| 04 | [التعرّف على الكلام (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | بناء | Python |
+| 05 | [Whisper: المعمارية والضبط الدقيق](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | بناء | Python |
+| 06 | [التعرّف على المتحدث والتحقق منه](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | بناء | Python |
+| 07 | [تحويل النص إلى كلام (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | بناء | Python |
+| 08 | [استنساخ الصوت وتحويله](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | بناء | Python |
+| 09 | [توليد الموسيقى](../../phases/06-speech-and-audio/09-music-generation) | بناء | Python |
+| 10 | [نماذج الصوت واللغة](../../phases/06-speech-and-audio/10-audio-language-models) | بناء | Python |
+| 11 | [معالجة الصوت في الزمن الحقيقي](../../phases/06-speech-and-audio/11-real-time-audio-processing) | بناء | Python |
+| 12 | [ابنِ مسار مساعد صوتي](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | بناء | Python |
+| 13 | [مرمّزات الصوت العصبية: EnCodec وSNAC وMimi وDAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | تعلم | Python |
+| 14 | [كشف النشاط الصوتي وتناوب الأدوار](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | بناء | Python |
+| 15 | [تحويل الكلام إلى كلام بالتدفق: Moshi وHibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | تعلم | Python |
+| 16 | [مكافحة انتحال الصوت ووضع العلامات المائية الصوتية](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | بناء | Python |
+| 17 | [تقييم الصوت: WER وMOS وMMAU ولوحات الصدارة](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | تعلم | Python |
 
 </details>
 
 <details id="phase-7">
-<summary><b>Phase 7 — Transformers Deep Dive</b> &nbsp;<code>16 lessons</code>&nbsp; <em>The architecture that changed everything.</em></summary>
+<summary><b>المرحلة 7 — التعمق في Transformers</b> &nbsp;<code>16 lessons</code>&nbsp; <em>المعمارية التي غيّرت كل شيء.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Why Transformers: The Problems with RNNs](../../phases/07-transformers-deep-dive/01-why-transformers/) | Learn | Python |
-| 02 | [Self-Attention from Scratch](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Build | Python |
-| 03 | [Multi-Head Attention](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Build | Python |
-| 04 | [Positional Encoding: Sinusoidal, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Build | Python |
-| 05 | [The Full Transformer: Encoder + Decoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Build | Python |
-| 06 | [BERT — Masked Language Modeling](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Build | Python |
-| 07 | [GPT — Causal Language Modeling](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Build | Python |
-| 08 | [T5, BART — Encoder-Decoder Models](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Learn | Python |
-| 09 | [Vision Transformers (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Build | Python |
-| 10 | [Audio Transformers — Whisper Architecture](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Learn | Python |
-| 11 | [Mixture of Experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Build | Python |
-| 12 | [KV Cache, Flash Attention & Inference Optimization](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Build | Python |
-| 13 | [Scaling Laws](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Learn | Python |
-| 14 | [Build a Transformer from Scratch](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Build | Python |
-| 15 | [Attention Variants — Sliding Window, Sparse, Differential](../../phases/07-transformers-deep-dive/15-attention-variants/) | Build | Python |
-| 16 | [Speculative Decoding — Draft, Verify, Repeat](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Build | Python |
+| 01 | [لماذا Transformers: مشكلات RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | تعلم | Python |
+| 02 | [الانتباه الذاتي من الصفر](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | بناء | Python |
+| 03 | [الانتباه متعدد الرؤوس](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | بناء | Python |
+| 04 | [ترميز الموضع: Sinusoidal وRoPE وALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | بناء | Python |
+| 05 | [Transformer كامل: المرمّز وفاكّ الترميز](../../phases/07-transformers-deep-dive/05-full-transformer/) | بناء | Python |
+| 06 | [BERT: نمذجة اللغة المقنّعة](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | بناء | Python |
+| 07 | [GPT: نمذجة اللغة السببية](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | بناء | Python |
+| 08 | [T5 وBART: نماذج المرمّز وفاكّ الترميز](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | تعلم | Python |
+| 09 | [محولات الرؤية (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | بناء | Python |
+| 10 | [محولات الصوت: معمارية Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | تعلم | Python |
+| 11 | [مزيج الخبراء (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | بناء | Python |
+| 12 | [ذاكرة KV وانتباه Flash وتحسين الاستدلال](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | بناء | Python |
+| 13 | [قوانين التوسّع](../../phases/07-transformers-deep-dive/13-scaling-laws/) | تعلم | Python |
+| 14 | [ابنِ Transformer من الصفر](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | بناء | Python |
+| 15 | [أنماط الانتباه: النافذة المنزلقة والمتناثر والتفاضلي](../../phases/07-transformers-deep-dive/15-attention-variants/) | بناء | Python |
+| 16 | [فك الترميز التخميني: صياغة المسودة والتحقق والتكرار](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | بناء | Python |
 
 </details>
 
 <details id="phase-8">
-<summary><b>Phase 8 — Generative AI</b> &nbsp;<code>15 lessons</code>&nbsp; <em>Create images, video, audio, 3D, and more.</em></summary>
+<summary><b>المرحلة 8 — الذكاء الاصطناعي التوليدي</b> &nbsp;<code>15 lessons</code>&nbsp; <em>أنشئ الصور والفيديو والصوت ومحتوى ثلاثي الأبعاد وغير ذلك.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Generative Models: Taxonomy & History](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Learn | Python |
-| 02 | [Autoencoders & VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Build | Python |
-| 03 | [GANs: Generator vs Discriminator](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Build | Python |
-| 04 | [Conditional GANs & Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Build | Python |
-| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | Build | Python |
-| 06 | [Diffusion Models — DDPM from Scratch](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Build | Python |
-| 07 | [Latent Diffusion & Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Build | Python |
-| 08 | [ControlNet, LoRA & Conditioning](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Build | Python |
-| 09 | [Inpainting, Outpainting & Editing](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Build | Python |
-| 10 | [Video Generation](../../phases/08-generative-ai/10-video-generation/) | Build | Python |
-| 11 | [Audio Generation](../../phases/08-generative-ai/11-audio-generation/) | Build | Python |
-| 12 | [3D Generation](../../phases/08-generative-ai/12-3d-generation/) | Build | Python |
-| 13 | [Flow Matching & Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Build | Python |
-| 14 | [Evaluation: FID, CLIP Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Build | Python |
-| 19 | [Visual Autoregressive Modeling (VAR): Next-Scale Prediction](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Build | Python |
+| 01 | [النماذج التوليدية: التصنيف والتاريخ](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | تعلم | Python |
+| 02 | [المشفّرات التلقائية وVAE](../../phases/08-generative-ai/02-autoencoders-vae/) | بناء | Python |
+| 03 | [GANs: المولّد مقابل المُميّز](../../phases/08-generative-ai/03-gans-generator-discriminator/) | بناء | Python |
+| 04 | [GANs الشرطية وPix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | بناء | Python |
+| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | بناء | Python |
+| 06 | [نماذج الانتشار: DDPM من الصفر](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | بناء | Python |
+| 07 | [الانتشار الكامن وStable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | بناء | Python |
+| 08 | [ControlNet وLoRA والتهيئة](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | بناء | Python |
+| 09 | [الإكمال داخل الصورة وتوسيعها وتحريرها](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | بناء | Python |
+| 10 | [توليد الفيديو](../../phases/08-generative-ai/10-video-generation/) | بناء | Python |
+| 11 | [توليد الصوت](../../phases/08-generative-ai/11-audio-generation/) | بناء | Python |
+| 12 | [توليد محتوى ثلاثي الأبعاد](../../phases/08-generative-ai/12-3d-generation/) | بناء | Python |
+| 13 | [مطابقة التدفق والتدفقات المصحّحة](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | بناء | Python |
+| 14 | [التقييم: FID وCLIP Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | بناء | Python |
+| 19 | [النمذجة البصرية autoregressive (VAR): التنبؤ بالمقياس التالي](../../phases/08-generative-ai/19-visual-autoregressive-var/) | بناء | Python |
 
 </details>
 
 <details id="phase-9">
-<summary><b>Phase 9 — Reinforcement Learning</b> &nbsp;<code>12 lessons</code>&nbsp; <em>The foundation of RLHF and game-playing AI.</em></summary>
+<summary><b>المرحلة 9 — التعلّم المعزّز</b> &nbsp;<code>12 lessons</code>&nbsp; <em>أساس RLHF والذكاء الاصطناعي الذي يلعب الألعاب.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [MDPs, States, Actions & Rewards](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Learn | Python |
-| 02 | [Dynamic Programming](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Build | Python |
-| 03 | [Monte Carlo Methods](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Build | Python |
-| 04 | [Q-Learning, SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Build | Python |
-| 05 | [Deep Q-Networks (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Build | Python |
-| 06 | [Policy Gradients — REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Build | Python |
-| 07 | [Actor-Critic — A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Build | Python |
-| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | Build | Python |
-| 09 | [Reward Modeling & RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Build | Python |
-| 10 | [Multi-Agent RL](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Build | Python |
-| 11 | [Sim-to-Real Transfer](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Build | Python |
-| 12 | [RL for Games](../../phases/09-reinforcement-learning/12-rl-for-games/) | Build | Python |
+| 01 | [عمليات القرار ماركوفية (MDP) والحالات والأفعال والمكافآت](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | تعلم | Python |
+| 02 | [البرمجة الديناميكية](../../phases/09-reinforcement-learning/02-dynamic-programming/) | بناء | Python |
+| 03 | [أساليب Monte Carlo](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | بناء | Python |
+| 04 | [Q-Learning وSARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | بناء | Python |
+| 05 | [شبكات Q العميقة (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | بناء | Python |
+| 06 | [تدرجات السياسة: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | بناء | Python |
+| 07 | [الفاعل والناقد: A2C وA3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | بناء | Python |
+| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | بناء | Python |
+| 09 | [نمذجة المكافآت وRLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | بناء | Python |
+| 10 | [التعلّم المعزّز متعدد الوكلاء](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | بناء | Python |
+| 11 | [النقل من المحاكاة إلى الواقع](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | بناء | Python |
+| 12 | [التعلّم المعزّز للألعاب](../../phases/09-reinforcement-learning/12-rl-for-games/) | بناء | Python |
 
 </details>
 
 <details id="phase-10">
-<summary><b>Phase 10 — LLMs from Scratch</b> &nbsp;<code>24 lessons</code>&nbsp; <em>Build, train, and understand large language models.</em></summary>
+<summary><b>المرحلة 10 — بناء LLM من الصفر</b> &nbsp;<code>24 lessons</code>&nbsp; <em>ابنِ النماذج اللغوية الكبيرة ودرّبها وافهمها.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Tokenizers: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Build | Python, Rust |
-| 02 | [Building a Tokenizer from Scratch](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Build | Python |
-| 03 | [Data Pipelines for Pre-Training](../../phases/10-llms-from-scratch/03-data-pipelines/) | Build | Python |
-| 04 | [Pre-Training a Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Build | Python |
-| 05 | [Distributed Training, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Build | Python |
-| 06 | [Instruction Tuning — SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Build | Python |
-| 07 | [RLHF — Reward Model + PPO](../../phases/10-llms-from-scratch/07-rlhf/) | Build | Python |
-| 08 | [DPO — Direct Preference Optimization](../../phases/10-llms-from-scratch/08-dpo/) | Build | Python |
-| 09 | [Constitutional AI & Self-Improvement](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | Build | Python |
-| 10 | [Evaluation — Benchmarks, Evals](../../phases/10-llms-from-scratch/10-evaluation/) | Build | Python |
-| 11 | [Quantization: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Build | Python |
-| 12 | [Inference Optimization](../../phases/10-llms-from-scratch/12-inference-optimization/) | Build | Python |
-| 13 | [Building a Complete LLM Pipeline](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Build | Python |
-| 14 | [Open Models: Architecture Walkthroughs](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Learn | Python |
-| 15 | [Speculative Decoding and EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Build | Python |
-| 16 | [Differential Attention (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Build | Python |
-| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Build | Python |
-| 18 | [Multi-Token Prediction (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Build | Python |
-| 19 | [DualPipe Parallelism](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Learn | Python |
-| 20 | [DeepSeek-V3 Architecture Walkthrough](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Learn | Python |
-| 21 | [Jamba — Hybrid SSM-Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Learn | Python |
-| 22 | [Async and Hogwild! Inference](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Build | Python |
-| 25 | [Speculative Decoding and EAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | Build | Python |
-| 34 | [Gradient Checkpointing and Activation Recomputation](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | Build | Python |
+| 01 | [مُرمّزات الرموز: BPE وWordPiece وSentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | بناء | Python, Rust |
+| 02 | [ابنِ مُرمّزًا من الصفر](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | بناء | Python |
+| 03 | [مسارات البيانات للتدريب المسبق](../../phases/10-llms-from-scratch/03-data-pipelines/) | بناء | Python |
+| 04 | [التدريب المسبق لـMini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | بناء | Python |
+| 05 | [التدريب الموزع: FSDP وDeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | بناء | Python |
+| 06 | [مواءمة التعليمات — SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | بناء | Python |
+| 07 | [RLHF: نموذج المكافآت وPPO](../../phases/10-llms-from-scratch/07-rlhf/) | بناء | Python |
+| 08 | [DPO: تحسين التفضيلات المباشر](../../phases/10-llms-from-scratch/08-dpo/) | بناء | Python |
+| 09 | [الذكاء الاصطناعي الدستوري والتحسين الذاتي](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | بناء | Python |
+| 10 | [التقييم: المعايير والاختبارات](../../phases/10-llms-from-scratch/10-evaluation/) | بناء | Python |
+| 11 | [التكميم: INT8 وGPTQ وAWQ وGGUF](../../phases/10-llms-from-scratch/11-quantization/) | بناء | Python |
+| 12 | [تحسين الاستدلال](../../phases/10-llms-from-scratch/12-inference-optimization/) | بناء | Python |
+| 13 | [ابنِ مسار LLM متكاملًا](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | بناء | Python |
+| 14 | [النماذج المفتوحة: جولات في المعمارية](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | تعلم | Python |
+| 15 | [فك الترميز التخميني وEAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | بناء | Python |
+| 16 | [الانتباه التفاضلي (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | بناء | Python |
+| 17 | [الانتباه المتناثر الأصلي (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | بناء | Python |
+| 18 | [التنبؤ بعدة رموز (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | بناء | Python |
+| 19 | [التوازي باستخدام DualPipe](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | تعلم | Python |
+| 20 | [جولة في معمارية DeepSeek-V3](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | تعلم | Python |
+| 21 | [Jamba: محوّل هجين مع SSM](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | تعلم | Python |
+| 22 | [الاستدلال غير المتزامن بأسلوب Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | بناء | Python |
+| 25 | [فك الترميز التخميني وEAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | بناء | Python |
+| 34 | [تثبيت التدرجات وإعادة حساب التنشيطات](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | بناء | Python |
 
 </details>
 
 <details id="phase-11">
-<summary><b>Phase 11 — LLM Engineering</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Put LLMs to work in production.</em></summary>
+<summary><b>المرحلة 11 — هندسة LLM</b> &nbsp;<code>17 lessons</code>&nbsp; <em>استخدم LLM في بيئة الإنتاج.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Prompt Engineering: Techniques & Patterns](../../phases/11-llm-engineering/01-prompt-engineering/) | Build | Python |
-| 02 | [Few-Shot, CoT, Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | Build | Python |
-| 03 | [Structured Outputs](../../phases/11-llm-engineering/03-structured-outputs/) | Build | Python |
-| 04 | [Embeddings & Vector Representations](../../phases/11-llm-engineering/04-embeddings/) | Build | Python |
-| 05 | [Context Engineering](../../phases/11-llm-engineering/05-context-engineering/) | Build | Python |
-| 06 | [RAG: Retrieval-Augmented Generation](../../phases/11-llm-engineering/06-rag/) | Build | Python |
-| 07 | [Advanced RAG: Chunking, Reranking](../../phases/11-llm-engineering/07-advanced-rag/) | Build | Python |
-| 08 | [Fine-Tuning with LoRA & QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Build | Python |
-| 09 | [Function Calling & Tool Use](../../phases/11-llm-engineering/09-function-calling/) | Build | Python |
-| 10 | [Evaluation & Testing](../../phases/11-llm-engineering/10-evaluation/) | Build | Python |
-| 11 | [Caching, Rate Limiting & Cost](../../phases/11-llm-engineering/11-caching-cost/) | Build | Python |
-| 12 | [Guardrails & Safety](../../phases/11-llm-engineering/12-guardrails/) | Build | Python |
-| 13 | [Building a Production LLM App](../../phases/11-llm-engineering/13-production-app/) | Build | Python |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Build | Python |
-| 15 | [Prompt Caching & Context Caching](../../phases/11-llm-engineering/15-prompt-caching/) | Build | Python |
-| 16 | [Agent State Machines — Graphs, Nodes, Checkpoints](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Build | Python |
-| 17 | [Agent Framework Tradeoffs](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Learn | Python |
+| 01 | [هندسة الموجّهات: التقنيات والأنماط](../../phases/11-llm-engineering/01-prompt-engineering/) | بناء | Python |
+| 02 | [التعلّم بأمثلة قليلة وسلسلة الأفكار وشجرة الأفكار](../../phases/11-llm-engineering/02-few-shot-cot/) | بناء | Python |
+| 03 | [المخرجات المنظّمة](../../phases/11-llm-engineering/03-structured-outputs/) | بناء | Python |
+| 04 | [التضمينات وتمثيلات المتجهات](../../phases/11-llm-engineering/04-embeddings/) | بناء | Python |
+| 05 | [هندسة السياق](../../phases/11-llm-engineering/05-context-engineering/) | بناء | Python |
+| 06 | [RAG: التوليد المعزز بالاسترجاع](../../phases/11-llm-engineering/06-rag/) | بناء | Python |
+| 07 | [RAG متقدم: تقسيم النص وإعادة الترتيب](../../phases/11-llm-engineering/07-advanced-rag/) | بناء | Python |
+| 08 | [الضبط الدقيق باستخدام LoRA وQLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | بناء | Python |
+| 09 | [استدعاء الدوال واستخدام الأدوات](../../phases/11-llm-engineering/09-function-calling/) | بناء | Python |
+| 10 | [التقييم والاختبار](../../phases/11-llm-engineering/10-evaluation/) | بناء | Python |
+| 11 | [التخزين المؤقت وتحديد المعدل والتكلفة](../../phases/11-llm-engineering/11-caching-cost/) | بناء | Python |
+| 12 | [ضوابط الحماية والسلامة](../../phases/11-llm-engineering/12-guardrails/) | بناء | Python |
+| 13 | [ابنِ تطبيق LLM للإنتاج](../../phases/11-llm-engineering/13-production-app/) | بناء | Python |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | بناء | Python |
+| 15 | [التخزين المؤقت للموجّهات والسياق](../../phases/11-llm-engineering/15-prompt-caching/) | بناء | Python |
+| 16 | [آلات حالات الوكلاء: الرسوم والعقد ونقاط التحقق](../../phases/11-llm-engineering/16-langgraph-state-machines/) | بناء | Python |
+| 17 | [المفاضلة بين أطر عمل الوكلاء](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | تعلم | Python |
 
 </details>
 
 <details id="phase-12">
-<summary><b>Phase 12 — Multimodal AI</b> &nbsp;<code>25 lessons</code>&nbsp; <em>See, hear, read, and reason across modalities — from ViT patches to computer-use agents.</em></summary>
+<summary><b>المرحلة 12 — الذكاء الاصطناعي متعدد الوسائط</b> &nbsp;<code>25 lessons</code>&nbsp; <em>أبصر واسمع واقرأ واستدل عبر الوسائط، من رقع ViT إلى وكلاء استخدام الحاسوب.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Vision Transformers and the Patch-Token Primitive](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Learn | Python |
-| 02 | [CLIP and Contrastive Vision-Language Pretraining](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Build | Python |
-| 03 | [BLIP-2 Q-Former as Modality Bridge](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Build | Python |
-| 04 | [Flamingo and Gated Cross-Attention](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Learn | Python |
-| 05 | [LLaVA and Visual Instruction Tuning](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Build | Python |
-| 06 | [Any-Resolution Vision — Patch-n'-Pack and NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Build | Python |
-| 07 | [Open-Weight VLM Recipes: What Actually Matters](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Learn | Python |
-| 08 | [LLaVA-OneVision: Single, Multi, Video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Build | Python |
-| 09 | [Qwen-VL Family and Dynamic-FPS Video](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Learn | Python |
-| 10 | [InternVL3 Native Multimodal Pretraining](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Learn | Python |
-| 11 | [Chameleon Early-Fusion Token-Only](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Build | Python |
-| 12 | [Emu3 Next-Token Prediction for Generation](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Learn | Python |
-| 13 | [Transfusion Autoregressive + Diffusion](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Build | Python |
-| 14 | [Show-o Discrete-Diffusion Unified](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Learn | Python |
-| 15 | [Janus-Pro Decoupled Encoders](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Build | Python |
-| 16 | [MIO Any-to-Any Streaming](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Learn | Python |
-| 17 | [Video-Language Temporal Grounding](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Build | Python |
-| 18 | [Long-Video at Million-Token Context](../../phases/12-multimodal-ai/18-long-video-million-token/) | Build | Python |
-| 19 | [Audio-Language Models: Whisper to AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Build | Python |
-| 20 | [Omni Models: Thinker-Talker Streaming](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Build | Python |
-| 21 | [Embodied VLAs: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Learn | Python |
-| 22 | [Document and Diagram Understanding](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Build | Python |
-| 23 | [ColPali Vision-Native Document RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Build | Python |
-| 24 | [Multimodal RAG and Cross-Modal Retrieval](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Build | Python |
-| 25 | [Multimodal Agents and Computer-Use (Capstone)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Build | Python |
+| 01 | [محولات الرؤية والوحدة الأساسية لرمز الرقعة](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | تعلم | Python |
+| 02 | [CLIP والتدريب المسبق التقابلي للرؤية واللغة](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | بناء | Python |
+| 03 | [BLIP-2 Q-Former بوصفه جسرًا بين الوسائط](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | بناء | Python |
+| 04 | [Flamingo والانتباه المتقاطع المحكوم](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | تعلم | Python |
+| 05 | [LLaVA وضبط التعليمات البصرية](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | بناء | Python |
+| 06 | [رؤية بدقات متعددة: Patch-n'-Pack وNaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | بناء | Python |
+| 07 | [وصفات VLM بأوزان مفتوحة: ما المهم فعلًا](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | تعلم | Python |
+| 08 | [LLaVA-OneVision: صورة واحدة وصور متعددة وفيديو](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | بناء | Python |
+| 09 | [عائلة Qwen-VL وفيديو بمعدل إطارات متغير](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | تعلم | Python |
+| 10 | [التدريب المسبق متعدد الوسائط الأصلي في InternVL3](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | تعلم | Python |
+| 11 | [Chameleon: دمج مبكر قائم على الرموز فقط](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | بناء | Python |
+| 12 | [Emu3: التنبؤ بالرمز التالي للتوليد](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | تعلم | Python |
+| 13 | [Transfusion: توليدي ذاتي الانتكاس وانتشار](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | بناء | Python |
+| 14 | [Show-o: انتشار منفصل موحّد](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | تعلم | Python |
+| 15 | [Janus-Pro: مفكّكات ترميز منفصلة](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | بناء | Python |
+| 16 | [MIO: تدفق مباشر من أي وسيط إلى أي وسيط](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | تعلم | Python |
+| 17 | [الإرساء الزمني بين الفيديو واللغة](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | بناء | Python |
+| 18 | [فيديو طويل ضمن سياق مليون رمز](../../phases/12-multimodal-ai/18-long-video-million-token/) | بناء | Python |
+| 19 | [نماذج الصوت واللغة: من Whisper إلى AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | بناء | Python |
+| 20 | [نماذج Omni: تدفق Thinker-Talker](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | بناء | Python |
+| 21 | [وكلاء رؤية ولغة مجسّدة: RT-2 وOpenVLA وπ0 وGR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | تعلم | Python |
+| 22 | [فهم المستندات والمخططات](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | بناء | Python |
+| 23 | [ColPali: RAG للمستندات أصيل للرؤية](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | بناء | Python |
+| 24 | [RAG متعدد الوسائط والاسترجاع بين الوسائط](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | بناء | Python |
+| 25 | [وكلاء متعدد الوسائط واستخدام الحاسوب (مشروع ختامي)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | بناء | Python |
 
 </details>
 
 <details id="phase-13">
-<summary><b>Phase 13 — Tools & Protocols</b> &nbsp;<code>31 lessons</code>&nbsp; <em>The interfaces between AI and the real world.</em></summary>
+<summary><b>المرحلة 13 — الأدوات والبروتوكولات</b> &nbsp;<code>31 lessons</code>&nbsp; <em>الواجهات التي تصل الذكاء الاصطناعي بالعالم الحقيقي.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [The Tool Interface](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Learn | Python |
-| 02 | [Function Calling Deep Dive](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Build | Python |
-| 03 | [Parallel and Streaming Tool Calls](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Build | Python |
-| 04 | [Structured Output](../../phases/13-tools-and-protocols/04-structured-output/) | Build | Python |
-| 05 | [Tool Schema Design](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Learn | Python |
-| 06 | [MCP Fundamentals: Stateless Requests and JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Learn | Python |
-| 07 | [Building an MCP Server: Stateless Python and TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Build | Python, TypeScript |
-| 08 | [Building an MCP Client: Discovery, Routing, and Dual-Era Fallback](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Build | Python |
-| 09 | [MCP Transports: stdio and Stateless Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Learn | Python |
-| 10 | [MCP Resources and Prompts: Addressable Context for Stateless Servers](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Build | Python |
-| 11 | [MCP Model Input: Sampling Migration and Stateless MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Build | Python |
-| 12 | [Explicit Scope and Stateless Elicitation](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Build | Python |
-| 13 | [MCP Tasks Extension: Durable Work on a Stateless Core](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Build | Python |
-| 14 | [MCP Apps on the Stateless Protocol](../../phases/13-tools-and-protocols/14-mcp-apps/) | Build | Python |
-| 15 | [MCP Security: Poisoned Metadata, Routing, and MRTR State](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Learn | Python |
-| 16 | [MCP Authorization: CIMD, Issuer Binding, PKCE, and Step-Up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Build | Python |
-| 17 | [Stateless MCP Gateways and Registry Admission](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Learn | Python |
-| 18 | [MCP Auth in Production: Issuer-Bound Enrollment and Tokens](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Build | Python |
-| 19 | [A2A Protocol](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Build | Python |
-| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Build | Python |
-| 21 | [LLM Routing Layer](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Learn | Python |
-| 22 | [Agent Skills: Portable Contract and Runtime Boundary](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Build | Python |
-| 23 | [Capstone: Stateless Tool Ecosystem](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Build | Python |
-| 24 | [Skill Discovery and Progressive Disclosure](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Build | Python |
-| 25 | [Skill Invocation and Routing](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Build | Python |
-| 26 | [Skill Permissions, Sandboxes, and Trust](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Build | Python |
-| 27 | [Skill Evals, Packaging, and Portability](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Build | Python |
-| 28 | [MCP Tool Contracts and Content](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Build | Python |
-| 29 | [MCP Reliability, Cancellation, and Flow Control](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Build | Python |
-| 30 | [MCP Registry Supply Chain: Admission, Drift, and Rollback](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Build | Python |
-| 31 | [MCP Conformance Engineering: Versioning, Evidence, and Operations](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Build | Python |
+| 01 | [واجهة الأداة](../../phases/13-tools-and-protocols/01-the-tool-interface/) | تعلم | Python |
+| 02 | [التعمق في استدعاء الدوال](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | بناء | Python |
+| 03 | [استدعاءات الأدوات المتوازية والمتدفقة](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | بناء | Python |
+| 04 | [مخرجات منظّمة](../../phases/13-tools-and-protocols/04-structured-output/) | بناء | Python |
+| 05 | [تصميم مخطط الأداة](../../phases/13-tools-and-protocols/05-tool-schema-design/) | تعلم | Python |
+| 06 | [أساسيات MCP: الطلبات عديمة الحالة وJSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | تعلم | Python |
+| 07 | [ابنِ خادم MCP: Python وTypeScript عديمي الحالة](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | بناء | Python, TypeScript |
+| 08 | [ابنِ عميل MCP: الاكتشاف والتوجيه والانتقال الاحتياطي بين جيلين](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | بناء | Python |
+| 09 | [وسائل نقل MCP: stdio وHTTP القابل للبث عديم الحالة](../../phases/13-tools-and-protocols/09-mcp-transports/) | تعلم | Python |
+| 10 | [موارد MCP وموجّهاته: سياق قابل للعنونة للخوادم عديمة الحالة](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | بناء | Python |
+| 11 | [مدخل النموذج في MCP: ترحيل أخذ العينات وMRTR عديم الحالة](../../phases/13-tools-and-protocols/11-mcp-sampling/) | بناء | Python |
+| 12 | [تحديد النطاق صراحةً وطلب الإيضاح عديم الحالة](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | بناء | Python |
+| 13 | [امتداد مهام MCP: عمل مستمر فوق نواة عديمة الحالة](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | بناء | Python |
+| 14 | [تطبيقات MCP على بروتوكول عديم الحالة](../../phases/13-tools-and-protocols/14-mcp-apps/) | بناء | Python |
+| 15 | [أمن MCP: بيانات وصفية مسمومة، والتوجيه، وحالة MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | تعلم | Python |
+| 16 | [تفويض MCP: CIMD وربط الجهة المُصدرة وPKCE والتصعيد التدريجي للصلاحيات](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | بناء | Python |
+| 17 | [بوابات MCP عديمة الحالة وقبول الإدخالات في السجل](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | تعلم | Python |
+| 18 | [مصادقة MCP في الإنتاج: التسجيل المرتبط بالجهة المُصدرة والرموز](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | بناء | Python |
+| 19 | [بروتوكول A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | بناء | Python |
+| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | بناء | Python |
+| 21 | [طبقة توجيه LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | تعلم | Python |
+| 22 | [Agent Skills: العقد المحمول وحدود بيئة التشغيل](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | بناء | Python |
+| 23 | [مشروع ختامي: منظومة أدوات عديمة الحالة](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | بناء | Python |
+| 24 | [اكتشاف المهارات والإفصاح التدريجي](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | بناء | Python |
+| 25 | [استدعاء المهارة وتوجيهها](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | بناء | Python |
+| 26 | [أذونات المهارات والعزل والثقة](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | بناء | Python |
+| 27 | [تقييم المهارات وتغليفها وقابلية نقلها](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | بناء | Python |
+| 28 | [عقود أدوات MCP ومحتواها](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | بناء | Python |
+| 29 | [موثوقية MCP والإلغاء والتحكم في التدفق](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | بناء | Python |
+| 30 | [سلسلة توريد سجل MCP: القبول والانحراف والاسترجاع](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | بناء | Python |
+| 31 | [هندسة مطابقة MCP: الإصدارات والأدلة والعمليات](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | بناء | Python |
 
-Lessons 06-18 and 28-31 form the focused
-[Model Context Protocol (MCP) path](../../learning-paths/model-context-protocol.json). Its manifest order
-is 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Start
-it with the host-specific `learn-mcp` invocation above. Lesson 23
-is its only optional capstone and also requires Lessons 19 and 20.
 
-Lessons 22 and 24-27 form the focused
-[Agent Skills learning path](../../learning-paths/agent-skills.json), from package
-contract through real-host release gates. Start it with the host-specific
-`learn-agent-skills` invocation shown above; do not follow numeric next
-navigation from 22 to 23.
+تشكل الدروس <code>06–18</code> و<code>28–31</code> مسار [Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) المركّز. وترتيب البيان هو: 06، 07، 08، 09، 10، 11، 12، 13، 14، 15، 16، 18، 17، 28، 29، 30، 31. ابدأ باستدعاء `learn-mcp` المخصص لمضيفك أعلاه. الدرس 23 هو المشروع الختامي الاختياري الوحيد للمسار، ويتطلب أيضًا الدرسين 19 و20.
 
+تشكل الدروس 22 و24–27 [مسار تعلّم Agent Skills](../../learning-paths/agent-skills.json) المركّز، من عقد الحزمة إلى بوابات الإصدار على مضيف حقيقي. ابدأ باستدعاء `learn-agent-skills` الخاص بمضيفك أعلاه؛ ولا تتبع الترتيب العددي للانتقال من 22 إلى 23.
 </details>
 
 <details id="phase-14">
-<summary><b>Phase 14 — Agent Engineering</b> &nbsp;<code>54 lessons</code>&nbsp; <em>Build agents from first principles, use coding agents reliably, and shape the work before implementation.</em></summary>
+<summary><b>المرحلة 14 — هندسة الوكلاء</b> &nbsp;<code>54 lessons</code>&nbsp; <em>ابنِ الوكلاء من المبادئ الأولى، واستخدم وكلاء البرمجة بموثوقية، وحدد نطاق العمل قبل التنفيذ.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [The Agent Loop](../../phases/14-agent-engineering/01-the-agent-loop/) | Build | Python |
-| 02 | [ReWOO and Plan-and-Execute](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Build | Python |
-| 03 | [Reflexion and Verbal Reinforcement Learning](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Build | Python |
-| 04 | [Tree of Thoughts and LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Build | Python |
-| 05 | [Self-Refine and CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Build | Python |
-| 06 | [Tool Use and Function Calling](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Build | Python |
-| 07 | [Agent Memory — Virtual Context and Memory Paging](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Build | Python |
-| 08 | [Memory Blocks and Sleep-Time Compute](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Build | Python |
-| 09 | [Hybrid Memory — Vector + Graph + KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Build | Python |
-| 10 | [Skill Libraries and Lifelong Learning (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Build | Python |
-| 11 | [Planning with HTN and Evolutionary Search](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Build | Python |
-| 12 | [Anthropic's Workflow Patterns](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Build | Python |
-| 13 | [Stateful Graph Orchestration — Durable Execution and Checkpoints](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Build | Python |
-| 14 | [The Actor Model for Agents](../../phases/14-agent-engineering/14-autogen-actor-model/) | Build | Python |
-| 15 | [Role-Based Agent Teams — Roles, Tasks, Processes](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Build | Python |
-| 16 | [OpenAI Agents SDK — Handoffs, Guardrails, Tracing](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Build | Python |
-| 17 | [The Harness as a Library — Subagents and Session Store](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Build | Python |
-| 18 | [Production Agent Runtimes](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Learn | Python |
-| 19 | [Benchmarks — SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Learn | Python |
-| 20 | [Benchmarks — WebArena and OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Learn | Python |
-| 21 | [Computer Use — Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Build | Python |
-| 22 | [Voice Agents — Pipecat and LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Build | Python |
-| 23 | [OpenTelemetry GenAI Semantic Conventions](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Build | Python |
-| 24 | [Agent Observability — Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Learn | Python |
-| 25 | [Multi-Agent Debate and Collaboration](../../phases/14-agent-engineering/25-multi-agent-debate/) | Build | Python |
-| 26 | [Failure Modes — Why Agents Break](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Build | Python |
-| 27 | [Prompt Injection and the PVE Defense](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Build | Python |
-| 28 | [Orchestration Patterns — Supervisor, Swarm, Hierarchical](../../phases/14-agent-engineering/28-orchestration-patterns/) | Build | Python |
-| 29 | [Production Runtimes — Queue, Event, Cron](../../phases/14-agent-engineering/29-production-runtimes/) | Learn | Python |
-| 30 | [Eval-Driven Agent Development](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Build | Python |
-| 31 | [Agent Workbench: Why Capable Models Still Fail](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Learn | Python |
-| 32 | [The Minimal Agent Workbench](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Build | Python |
-| 33 | [Agent Instructions as Executable Constraints](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Build | Python |
-| 34 | [Repo Memory and Durable State](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Build | Python |
-| 35 | [Initialization Scripts for Agents](../../phases/14-agent-engineering/35-initialization-scripts/) | Build | Python |
-| 36 | [Scope Contracts and Task Boundaries](../../phases/14-agent-engineering/36-scope-contracts/) | Build | Python |
-| 37 | [Runtime Feedback Loops](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Build | Python |
-| 38 | [Verification Gates](../../phases/14-agent-engineering/38-verification-gates/) | Build | Python |
-| 39 | [Reviewer Agent: Separate Builder from Marker](../../phases/14-agent-engineering/39-reviewer-agent/) | Build | Python |
-| 40 | [Multi-Session Handoff](../../phases/14-agent-engineering/40-multi-session-handoff/) | Build | Python |
-| 41 | [The Workbench on a Real Repo](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Build | Python |
-| 42 | [Capstone: Ship a Reusable Agent Workbench Pack](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Build | Python |
-| 43 | [Frame the Task Before the Agent Writes Code](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Build | Python |
-| 44 | [Build an Evidence-Backed Execution Plan](../../phases/14-agent-engineering/44-plan-from-evidence/) | Build | Python |
-| 45 | [Delegate Agent Work with Isolation and Merge Contracts](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Build | Python |
-| 46 | [Turn Every Agent Correction into a System Improvement](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Build | Python |
-| 47 | [Define the Outcome Before You Choose the Output](../../phases/14-agent-engineering/47-outcomes-before-output/) | Build | Python |
-| 48 | [Discover the Workflow People Actually Perform](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Build | Python |
-| 49 | [Map Assumptions and Resolve the Riskiest One First](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Build | Python |
-| 50 | [Choose the Smallest Slice That Can Change the Decision](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Build | Python |
-| 51 | [Write Specifications That Preserve Judgment](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Build | Python |
-| 52 | [Design Success Metrics Before the Result Exists](../../phases/14-agent-engineering/52-design-success-metrics/) | Build | Python |
-| 53 | [Choose Prototype, Pilot, or Production Deliberately](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Build | Python |
-| 54 | [Build a Feedback Ratchet with Ownership and Retirement](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Build | Python |
+| 01 | [حلقة الوكيل](../../phases/14-agent-engineering/01-the-agent-loop/) | بناء | Python |
+| 02 | [ReWOO والتخطيط ثم التنفيذ](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | بناء | Python |
+| 03 | [Reflexion والتعلّم المعزّز اللفظي](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | بناء | Python |
+| 04 | [شجرة الأفكار وLATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | بناء | Python |
+| 05 | [Self-Refine وCRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | بناء | Python |
+| 06 | [استخدام الأدوات واستدعاء الدوال](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | بناء | Python |
+| 07 | [ذاكرة الوكيل: السياق الافتراضي وتقسيم الذاكرة إلى صفحات](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | بناء | Python |
+| 08 | [كتل الذاكرة والحوسبة أثناء الخمول](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | بناء | Python |
+| 09 | [ذاكرة هجينة: المتجهات والرسوم البيانية وKV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | بناء | Python |
+| 10 | [مكتبات المهارات والتعلّم مدى الحياة (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | بناء | Python |
+| 11 | [التخطيط باستخدام HTN والبحث التطوري](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | بناء | Python |
+| 12 | [أنماط سير العمل لدى Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | بناء | Python |
+| 13 | [تنسيق الرسوم البيانية ذات الحالة: التنفيذ المستدام ونقاط التحقق](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | بناء | Python |
+| 14 | [نموذج Actor للوكلاء](../../phases/14-agent-engineering/14-autogen-actor-model/) | بناء | Python |
+| 15 | [فرق وكلاء قائمة على الأدوار: الأدوار والمهام والعمليات](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | بناء | Python |
+| 16 | [حزمة OpenAI Agents SDK: تسليم المهام وضوابط الحماية والتتبّع](../../phases/14-agent-engineering/16-openai-agents-sdk/) | بناء | Python |
+| 17 | [بيئة الوكيل كمكتبة: الوكلاء الفرعيون ومخزن الجلسات](../../phases/14-agent-engineering/17-claude-agent-sdk/) | بناء | Python |
+| 18 | [بيئات تشغيل الوكلاء للإنتاج](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | تعلم | Python |
+| 19 | [معايير الأداء: SWE-bench وGAIA وAgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | تعلم | Python |
+| 20 | [معايير الأداء: WebArena وOSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | تعلم | Python |
+| 21 | [استخدام الحاسوب: Claude وOpenAI CUA وGemini](../../phases/14-agent-engineering/21-computer-use-agents/) | بناء | Python |
+| 22 | [وكلاء الصوت: Pipecat وLiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | بناء | Python |
+| 23 | [المعايير الدلالية لـOpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | بناء | Python |
+| 24 | [قابلية ملاحظة الوكلاء: Langfuse وPhoenix وOpik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | تعلم | Python |
+| 25 | [مناظرة الوكلاء المتعددين وتعاونهم](../../phases/14-agent-engineering/25-multi-agent-debate/) | بناء | Python |
+| 26 | [أنماط الإخفاق: لماذا تتعطل الوكلاء](../../phases/14-agent-engineering/26-failure-modes-agentic/) | بناء | Python |
+| 27 | [حقن الموجّهات ودفاع PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | بناء | Python |
+| 28 | [أنماط التنسيق: المشرف والسرب والتسلسل الهرمي](../../phases/14-agent-engineering/28-orchestration-patterns/) | بناء | Python |
+| 29 | [بيئات تشغيل الإنتاج: الطوابير والأحداث والمهام المجدولة](../../phases/14-agent-engineering/29-production-runtimes/) | تعلم | Python |
+| 30 | [تطوير الوكلاء المدفوع بالتقييم](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | بناء | Python |
+| 31 | [بيئة عمل الوكلاء: لماذا تفشل حتى النماذج القديرة](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | تعلم | Python |
+| 32 | [بيئة العمل الدنيا للوكيل](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | بناء | Python |
+| 33 | [تعليمات الوكيل كقيود قابلة للتنفيذ](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | بناء | Python |
+| 34 | [ذاكرة المستودع والحالة المستدامة](../../phases/14-agent-engineering/34-repo-memory-and-state/) | بناء | Python |
+| 35 | [برامج تهيئة الوكلاء](../../phases/14-agent-engineering/35-initialization-scripts/) | بناء | Python |
+| 36 | [اتفاقات النطاق وحدود المهام](../../phases/14-agent-engineering/36-scope-contracts/) | بناء | Python |
+| 37 | [حلقات التغذية الراجعة أثناء التشغيل](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | بناء | Python |
+| 38 | [بوابات التحقق](../../phases/14-agent-engineering/38-verification-gates/) | بناء | Python |
+| 39 | [وكيل المراجعة: فصل البنّاء عن المُقيّم](../../phases/14-agent-engineering/39-reviewer-agent/) | بناء | Python |
+| 40 | [تسليم المهام بين الجلسات](../../phases/14-agent-engineering/40-multi-session-handoff/) | بناء | Python |
+| 41 | [بيئة العمل في مستودع حقيقي](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | بناء | Python |
+| 42 | [المشروع الختامي: إصدار حزمة Agent Workbench قابلة لإعادة الاستخدام](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | بناء | Python |
+| 43 | [حدّد المهمة قبل أن يكتب الوكيل الشيفرة](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | بناء | Python |
+| 44 | [ابنِ خطة تنفيذ مدعومة بالأدلة](../../phases/14-agent-engineering/44-plan-from-evidence/) | بناء | Python |
+| 45 | [فوّض العمل إلى وكيل مع عزله واتفاقات الدمج](../../phases/14-agent-engineering/45-delegate-with-isolation/) | بناء | Python |
+| 46 | [حوّل كل تصحيح للوكيل إلى تحسين للنظام](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | بناء | Python |
+| 47 | [حدّد النتيجة قبل اختيار المخرج](../../phases/14-agent-engineering/47-outcomes-before-output/) | بناء | Python |
+| 48 | [اكتشف سير العمل الذي ينفذه الناس فعلًا](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | بناء | Python |
+| 49 | [ارسم الافتراضات وعالج الافتراض الأخطر أولًا](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | بناء | Python |
+| 50 | [اختر أصغر جزء يمكنه تغيير القرار](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | بناء | Python |
+| 51 | [اكتب مواصفات تتيح ممارسة التقدير](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | بناء | Python |
+| 52 | [صمّم مقاييس النجاح قبل ظهور النتيجة](../../phases/14-agent-engineering/52-design-success-metrics/) | بناء | Python |
+| 53 | [اختر عن قصد بين نموذج أولي وتجربة محدودة وبيئة إنتاج](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | بناء | Python |
+| 54 | [أنشئ آلية تصاعدية للتغذية الراجعة مع تحديد المسؤول وخطة إنهائها](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | بناء | Python |
 
-Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent before it opens the full lesson docs.
 
-Lessons 31-46 form the [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json).
-Its manifest order combines the workbench foundation with task framing, planning,
-delegation, and durable feedback. Lessons 47-54 form the
-[Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json), from outcome framing
-through evidence, risk, scope, measurement, staged release, and feedback ownership.
+يقدّم كل درس من دروس Agent Workbench في المرحلة 14 (31–42) ملف `mission.md` يشرح المهمة للوكيل قبل فتح وثائق الدرس كاملة.
 
+تشكل الدروس <code>31–46</code> [مسار الهندسة بمساعدة الوكلاء](../../learning-paths/using-coding-agents.json). ويجمع ترتيب البيان بين أساسيات بيئة العمل وصياغة المهام والتخطيط والتفويض والتغذية الراجعة المستدامة. أما الدروس <code>47–54</code> فتشكّل [مسار تقدير المنتج وتسليمه](../../learning-paths/shaping-the-build.json)، من تحديد النتائج إلى الأدلة والمخاطر والنطاق والقياس والإصدار المرحلي ومسؤولية متابعة الملاحظات.
 </details>
 
 <details id="phase-15">
-<summary><b>Phase 15 — Autonomous Systems</b> &nbsp;<code>22 lessons</code>&nbsp; <em>Long-horizon agents, self-improvement, and the 2026 safety stack.</em></summary>
+<summary><b>المرحلة 15 — الأنظمة المستقلة</b> &nbsp;<code>22 lessons</code>&nbsp; <em>وكلاء يعملون على مدى طويل، وتحسين الذات، ومجموعة أدوات السلامة لعام 2026.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [From Chatbots to Long-Horizon Agents (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Learn | Python |
-| 02 | [STaR, V-STaR, Quiet-STaR: Self-Taught Reasoning](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Learn | Python |
-| 03 | [AlphaEvolve: Evolutionary Coding Agents](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Learn | Python |
-| 04 | [Darwin Gödel Machine: Self-Modifying Agents](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Learn | Python |
-| 05 | [AI Scientist v2: Workshop-Level Research](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Learn | Python |
-| 06 | [Automated Alignment Research (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Learn | Python |
-| 07 | [Recursive Self-Improvement: Capability vs Alignment](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Learn | Python |
-| 08 | [Bounded Self-Improvement Designs](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Learn | Python |
-| 09 | [Autonomous Coding Agent Landscape (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Learn | Python |
-| 10 | [Permission Modes for Autonomous Agents](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Learn | Python |
-| 11 | [Browser Agents and Indirect Prompt Injection](../../phases/15-autonomous-systems/11-browser-agents/) | Learn | Python |
-| 12 | [Durable Execution for Long-Running Agents](../../phases/15-autonomous-systems/12-durable-execution/) | Learn | Python |
-| 13 | [Action Budgets, Iteration Caps, Cost Governors](../../phases/15-autonomous-systems/13-cost-governors/) | Learn | Python |
-| 14 | [Kill Switches, Circuit Breakers, Canary Tokens](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Learn | Python |
-| 15 | [HITL: Propose-Then-Commit](../../phases/15-autonomous-systems/15-propose-then-commit/) | Learn | Python |
-| 16 | [Checkpoints and Rollback](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Learn | Python |
-| 17 | [Constitutional AI and Rule Overrides](../../phases/15-autonomous-systems/17-constitutional-ai/) | Learn | Python |
-| 18 | [Llama Guard and Input/Output Classification](../../phases/15-autonomous-systems/18-llama-guard/) | Learn | Python |
-| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Learn | Python |
-| 20 | [OpenAI Preparedness Framework and DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Learn | Python |
-| 21 | [METR Time Horizons and External Evaluation](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Learn | Python |
-| 22 | [CAIS, CAISI, and Societal-Scale Risk](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Learn | Python |
+| 01 | [من روبوتات المحادثة إلى وكلاء يعملون على مدى طويل (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | تعلم | Python |
+| 02 | [STaR وV-STaR وQuiet-STaR: الاستدلال بالتعلّم الذاتي](../../phases/15-autonomous-systems/02-star-family-reasoning/) | تعلم | Python |
+| 03 | [AlphaEvolve: وكلاء برمجة تطوريون](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | تعلم | Python |
+| 04 | [آلة داروين غودل: وكلاء يغيّرون شيفرتهم](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | تعلم | Python |
+| 05 | [AI Scientist v2: أبحاث بمستوى ورشة عمل](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | تعلم | Python |
+| 06 | [أتمتة أبحاث المواءمة (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | تعلم | Python |
+| 07 | [التحسين الذاتي المتكرر: القدرة مقابل المواءمة](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | تعلم | Python |
+| 08 | [تصاميم التحسين الذاتي المحدود](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | تعلم | Python |
+| 09 | [مشهد وكلاء البرمجة المستقلين (SWE-bench وCodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | تعلم | Python |
+| 10 | [أنماط الأذونات للوكلاء المستقلين](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | تعلم | Python |
+| 11 | [وكلاء المتصفح وحقن الموجّهات غير المباشر](../../phases/15-autonomous-systems/11-browser-agents/) | تعلم | Python |
+| 12 | [التنفيذ المستدام للوكلاء طويلي التشغيل](../../phases/15-autonomous-systems/12-durable-execution/) | تعلم | Python |
+| 13 | [ميزانيات الأفعال وحدود التكرار وضوابط التكلفة](../../phases/15-autonomous-systems/13-cost-governors/) | تعلم | Python |
+| 14 | [مفاتيح الإيقاف وقواطع الدائرة ورموز Canary](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | تعلم | Python |
+| 15 | [HITL: اقترح أولًا ثم ثبّت التغيير](../../phases/15-autonomous-systems/15-propose-then-commit/) | تعلم | Python |
+| 16 | [نقاط التحقق والاسترجاع إلى نسخة سابقة](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | تعلم | Python |
+| 17 | [الذكاء الاصطناعي الدستوري وتجاوز القواعد](../../phases/15-autonomous-systems/17-constitutional-ai/) | تعلم | Python |
+| 18 | [Llama Guard وتصنيف المدخلات والمخرجات](../../phases/15-autonomous-systems/18-llama-guard/) | تعلم | Python |
+| 19 | [سياسة Anthropic للتوسّع المسؤول v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | تعلم | Python |
+| 20 | [إطار الاستعداد لدى OpenAI وإطار FSF من DeepMind](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | تعلم | Python |
+| 21 | [آفاق الزمن لدى METR والتقييم الخارجي](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | تعلم | Python |
+| 22 | [CAIS وCAISI والمخاطر على مستوى المجتمع](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | تعلم | Python |
 
 </details>
 
 <details id="phase-16">
-<summary><b>Phase 16 — Multi-Agent & Swarms</b> &nbsp;<code>25 lessons</code>&nbsp; <em>Coordination, emergence, and collective intelligence.</em></summary>
+<summary><b>المرحلة 16 — الوكلاء المتعددون والأسراب</b> &nbsp;<code>25 lessons</code>&nbsp; <em>التنسيق والسلوك الناشئ والذكاء الجماعي.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Why Multi-Agent](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | Learn | TypeScript |
-| 02 | [FIPA-ACL Heritage and Speech Acts](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Learn | Python |
-| 03 | [Communication Protocols](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | Build | TypeScript |
-| 04 | [The Multi-Agent Primitive Model](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Learn | Python |
-| 05 | [Supervisor / Orchestrator-Worker Pattern](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Build | Python |
-| 06 | [Hierarchical Architecture and Decomposition Drift](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Learn | Python |
-| 07 | [Society of Mind and Multi-Agent Debate](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Build | Python |
-| 08 | [Role Specialization — Planner / Critic / Executor / Verifier](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Build | Python |
-| 09 | [Parallel Swarm and Networked Architectures](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Build | Python |
-| 10 | [Group Chat and Speaker Selection](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Build | Python |
-| 11 | [Handoffs and Routines (Stateless Orchestration)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Build | Python |
-| 12 | [A2A — The Agent-to-Agent Protocol](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Build | Python |
-| 13 | [Shared Memory and Blackboard Patterns](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Build | Python |
-| 14 | [Consensus and Byzantine Fault Tolerance](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Build | Python |
-| 15 | [Voting, Self-Consistency, and Debate Topology](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Build | Python |
-| 16 | [Negotiation and Bargaining](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Build | Python |
-| 17 | [Generative Agents and Emergent Simulation](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Build | Python |
-| 18 | [Theory of Mind and Emergent Coordination](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Build | Python |
-| 19 | [Swarm Optimization (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Build | Python |
-| 20 | [MARL — MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Learn | Python |
-| 21 | [Agent Economies, Token Incentives, Reputation](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Learn | Python |
-| 22 | [Production Scaling — Queues, Checkpoints, Durability](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Build | Python |
-| 23 | [Failure Modes — MAST, Groupthink, Monoculture](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Learn | Python |
-| 24 | [Evaluation and Coordination Benchmarks](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Learn | Python |
-| 25 | [Case Studies and 2026 State of the Art](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Learn | Python |
+| 01 | [لماذا الوكلاء المتعددون؟](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | تعلم | TypeScript |
+| 02 | [إرث FIPA-ACL وأفعال الكلام](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | تعلم | Python |
+| 03 | [بروتوكولات الاتصال](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | بناء | TypeScript |
+| 04 | [النموذج الأساسي للوكلاء المتعددين](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | تعلم | Python |
+| 05 | [نمط المشرف / المنسّق والعامل](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | بناء | Python |
+| 06 | [معمارية هرمية وانحراف التفكيك](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | تعلم | Python |
+| 07 | [مجتمع العقل ومناظرة الوكلاء المتعددين](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | بناء | Python |
+| 08 | [تخصص الأدوار: المخطط والناقد والمنفّذ والمدقّق](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | بناء | Python |
+| 09 | [الأسراب المتوازية والمعماريات الشبكية](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | بناء | Python |
+| 10 | [المحادثة الجماعية واختيار المتحدث](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | بناء | Python |
+| 11 | [تسليم المهام والروتينات (تنسيق عديم الحالة)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | بناء | Python |
+| 12 | [A2A: بروتوكول الوكيل إلى الوكيل](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | بناء | Python |
+| 13 | [الذاكرة المشتركة وأنماط السبورة](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | بناء | Python |
+| 14 | [الإجماع وتحمل الأعطال البيزنطية](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | بناء | Python |
+| 15 | [التصويت والاتساق الذاتي وبنية المناظرة](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | بناء | Python |
+| 16 | [التفاوض والمساومة](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | بناء | Python |
+| 17 | [الوكلاء التوليديون ومحاكاة السلوك الناشئ](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | بناء | Python |
+| 18 | [نظرية العقل والتنسيق الناشئ](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | بناء | Python |
+| 19 | [تحسين الأسراب (PSO وACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | بناء | Python |
+| 20 | [التعلّم المعزّز متعدد الوكلاء: MADDPG وQMIX وMAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | تعلم | Python |
+| 21 | [اقتصادات الوكلاء وحوافز الرموز والسمعة](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | تعلم | Python |
+| 22 | [التوسّع في الإنتاج: الطوابير ونقاط التحقق والاستدامة](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | بناء | Python |
+| 23 | [أنماط الإخفاق: MAST والتفكير الجمعي وأحادية الثقافة](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | تعلم | Python |
+| 24 | [معايير التقييم والتنسيق](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | تعلم | Python |
+| 25 | [دراسات حالة وأحدث ما وصل إليه المجال في 2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | تعلم | Python |
 
 </details>
 
 <details id="phase-17">
-<summary><b>Phase 17 — Infrastructure & Production</b> &nbsp;<code>28 lessons</code>&nbsp; <em>Ship AI to the real world.</em></summary>
+<summary><b>المرحلة 17 — البنية التحتية والإنتاج</b> &nbsp;<code>28 lessons</code>&nbsp; <em>أوصل الذكاء الاصطناعي إلى العالم الحقيقي.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Managed LLM Platforms — Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Learn | Python |
-| 02 | [Inference Platform Economics — Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Learn | Python |
-| 03 | [GPU Autoscaling on Kubernetes — Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Learn | Python |
-| 04 | [Serving Engine Internals — PagedAttention, Continuous Batching, Chunked Prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Learn | Python |
-| 05 | [EAGLE-3 Speculative Decoding in Production](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Learn | Python |
-| 06 | [Prefix-Cache Serving — RadixAttention and KV Reuse](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Learn | Python |
-| 07 | [Hardware-Specialized Inference Compilation — FP8 and NVFP4 on Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Learn | Python |
-| 08 | [Inference Metrics — TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Learn | Python |
-| 09 | [Production Quantization — AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Learn | Python |
-| 10 | [Cold Start Mitigation for Serverless LLMs](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Learn | Python |
-| 11 | [Multi-Region LLM Serving and KV Cache Locality](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Learn | Python |
-| 12 | [Edge Inference — ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Learn | Python |
-| 13 | [LLM Observability Stack Selection](../../phases/17-infrastructure-and-production/13-llm-observability/) | Learn | Python |
-| 14 | [Prompt Caching and Semantic Caching Economics](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Learn | Python |
-| 15 | [Batch APIs — the 50% Discount as Industry Standard](../../phases/17-infrastructure-and-production/15-batch-apis/) | Learn | Python |
-| 16 | [Model Routing as a Cost-Reduction Primitive](../../phases/17-infrastructure-and-production/16-model-routing/) | Learn | Python |
-| 17 | [Disaggregated Prefill/Decode — NVIDIA Dynamo and llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Learn | Python |
-| 18 | [Production Serving Stack — KV Offloading and Cache-Aware Routing](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Learn | Python |
-| 19 | [AI Gateways — LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Learn | Python |
-| 20 | [Shadow, Canary, and Progressive Deployment](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Learn | Python |
-| 21 | [A/B Testing LLM Features — GrowthBook and Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Learn | Python |
-| 22 | [Load Testing LLM APIs — k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Build | Python |
-| 23 | [SRE for AI — Multi-Agent Incident Response](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Learn | Python |
-| 24 | [Chaos Engineering for LLM Production](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Learn | Python |
-| 25 | [Security — Secrets, PII Scrubbing, Audit Logs](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Learn | Python |
-| 26 | [Compliance — SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Learn | Python |
-| 27 | [FinOps for LLMs — Unit Economics and Multi-Tenant Attribution](../../phases/17-infrastructure-and-production/27-finops-llms/) | Learn | Python |
-| 28 | [Self-Hosted Serving Selection — Matching Engine to Hardware and Scale](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Learn | Python |
+| 01 | [منصات LLM المُدارة: Bedrock وAzure OpenAI وVertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | تعلم | Python |
+| 02 | [اقتصاديات منصات الاستدلال: Fireworks وTogether وBaseten وModal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | تعلم | Python |
+| 03 | [التوسّع التلقائي لوحدات GPU على Kubernetes: Karpenter وKAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | تعلم | Python |
+| 04 | [تفاصيل محرك الخدمة: PagedAttention والتجميع المستمر والتهيئة المسبقة المجزأة](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | تعلم | Python |
+| 05 | [فك الترميز التخميني EAGLE-3 في الإنتاج](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | تعلم | Python |
+| 06 | [تقديم الخدمة بذاكرة بادئة مخبأة: RadixAttention وإعادة استخدام KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | تعلم | Python |
+| 07 | [ترجمة الاستدلال المتخصصة للأجهزة: FP8 وNVFP4 على Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | تعلم | Python |
+| 08 | [مقاييس الاستدلال: TTFT وTPOT وITL وGoodput وP99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | تعلم | Python |
+| 09 | [تكميم الإنتاج: AWQ وGPTQ وGGUF وFP8 وNVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | تعلم | Python |
+| 10 | [تقليل زمن البدء البارد لـLLM عديم الخادم](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | تعلم | Python |
+| 11 | [تقديم LLM متعدد المناطق ومحلية ذاكرة KV](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | تعلم | Python |
+| 12 | [الاستدلال الطرفي: ANE وHexagon وWebGPU وJetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | تعلم | Python |
+| 13 | [اختيار منظومة قابلية ملاحظة LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | تعلم | Python |
+| 14 | [اقتصاديات التخزين المؤقت للموجّهات والتخزين الدلالي](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | تعلم | Python |
+| 15 | [واجهات Batch API: خصم 50% كمعيار صناعي](../../phases/17-infrastructure-and-production/15-batch-apis/) | تعلم | Python |
+| 16 | [توجيه النماذج لتقليل التكلفة](../../phases/17-infrastructure-and-production/16-model-routing/) | تعلم | Python |
+| 17 | [فصل التهيئة المسبقة عن فك الترميز: NVIDIA Dynamo وllm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | تعلم | Python |
+| 18 | [منظومة تقديم الإنتاج: تفريغ KV والتوجيه الواعي بالذاكرة المؤقتة](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | تعلم | Python |
+| 19 | [بوابات الذكاء الاصطناعي: LiteLLM وPortkey وKong وBifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | تعلم | Python |
+| 20 | [Shadow وCanary والنشر التدريجي](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | تعلم | Python |
+| 21 | [اختبار A/B لميزات LLM: GrowthBook وStatsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | تعلم | Python |
+| 22 | [اختبار حمل واجهات LLM: k6 وLLMPerf وGenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | بناء | Python |
+| 23 | [هندسة موثوقية المواقع للذكاء الاصطناعي: الاستجابة للحوادث متعددة الوكلاء](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | تعلم | Python |
+| 24 | [هندسة الفوضى لأنظمة LLM الإنتاجية](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | تعلم | Python |
+| 25 | [الأمن: الأسرار وتنقية PII وسجلات التدقيق](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | تعلم | Python |
+| 26 | [الامتثال: SOC 2 وHIPAA وGDPR وقانون EU AI وISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | تعلم | Python |
+| 27 | [FinOps لـLLM: اقتصاديات الوحدة وإسناد الاستخدام متعدد المستأجرين](../../phases/17-infrastructure-and-production/27-finops-llms/) | تعلم | Python |
+| 28 | [اختيار استضافة الخدمة ذاتيًا: مواءمة المحرك مع العتاد والحجم](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | تعلم | Python |
 
 </details>
 
 <details id="phase-18">
-<summary><b>Phase 18 — Ethics, Safety & Alignment</b> &nbsp;<code>30 lessons</code>&nbsp; <em>Build AI that helps humanity. Not optional.</em></summary>
+<summary><b>المرحلة 18 — الأخلاقيات والسلامة والمواءمة</b> &nbsp;<code>30 lessons</code>&nbsp; <em>ابنِ ذكاءً اصطناعيًا يفيد البشرية. هذا شرط أساسي.</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Instruction-Following as Alignment Signal](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Learn | Python |
-| 02 | [Reward Hacking & Goodhart's Law](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Learn | Python |
-| 03 | [Direct Preference Optimization Family](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Learn | Python |
-| 04 | [Sycophancy as RLHF Amplification](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Learn | Python |
-| 05 | [Constitutional AI & RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Learn | Python |
-| 06 | [Mesa-Optimization & Deceptive Alignment](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Learn | Python |
-| 07 | [Sleeper Agents — Persistent Deception](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Learn | Python |
-| 08 | [In-Context Scheming in Frontier Models](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Learn | Python |
-| 09 | [Alignment Faking](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Learn | Python |
-| 10 | [AI Control — Safety Despite Subversion](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Learn | Python |
-| 11 | [Scalable Oversight & Weak-to-Strong](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Learn | Python |
-| 12 | [Red-Teaming: PAIR & Automated Attacks](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Build | Python |
-| 13 | [Many-Shot Jailbreaking](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Learn | Python |
-| 14 | [ASCII Art & Visual Jailbreaks](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Build | Python |
-| 15 | [Indirect Prompt Injection](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Build | Python |
-| 16 | [Red-Team Tooling: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Build | Python |
-| 17 | [WMDP & Dual-Use Capability Evaluation](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Learn | Python |
-| 18 | [Frontier Safety Frameworks — RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Learn | Python |
-| 19 | [Model Welfare Research](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Learn | Python |
-| 20 | [Bias & Representational Harm](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Build | Python |
-| 21 | [Fairness Criteria: Group, Individual, Counterfactual](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Learn | Python |
-| 22 | [Differential Privacy for LLMs](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Build | Python |
-| 23 | [Watermarking: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Build | Python |
-| 24 | [Regulatory Frameworks: EU, US, UK, Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Learn | Python |
-| 25 | [EchoLeak & CVEs for AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Learn | Python |
-| 26 | [Model, System & Dataset Cards](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Build | Python |
-| 27 | [Data Provenance & Training-Data Governance](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Learn | Python |
-| 28 | [Alignment Research Ecosystem: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Learn | Python |
-| 29 | [Moderation Systems: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Build | Python |
-| 30 | [Dual-Use Risk: Cyber, Bio, Chem, Nuclear](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Learn | Python |
+| 01 | [اتباع التعليمات بوصفه إشارة للمواءمة](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | تعلم | Python |
+| 02 | [التحايل على المكافأة وقانون Goodhart](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | تعلم | Python |
+| 03 | [عائلة تحسين التفضيلات المباشر](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | تعلم | Python |
+| 04 | [تضخيم RLHF للتملّق](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | تعلم | Python |
+| 05 | [الذكاء الاصطناعي الدستوري وRLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | تعلم | Python |
+| 06 | [تحسين ميتا والمواءمة المخادعة](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | تعلم | Python |
+| 07 | [وكلاء نائمون: خداع مستمر](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | تعلم | Python |
+| 08 | [التخطيط داخل السياق في النماذج الرائدة](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | تعلم | Python |
+| 09 | [تزييف المواءمة](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | تعلم | Python |
+| 10 | [التحكم في الذكاء الاصطناعي: السلامة رغم التخريب](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | تعلم | Python |
+| 11 | [الإشراف القابل للتوسّع: من الضعيف إلى القوي](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | تعلم | Python |
+| 12 | [اختبار الفريق الأحمر: PAIR والهجمات الآلية](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | بناء | Python |
+| 13 | [كسر الحماية بالعديد من الأمثلة](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | تعلم | Python |
+| 14 | [فن ASCII وكسر الحماية البصري](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | بناء | Python |
+| 15 | [حقن الموجّهات غير المباشر](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | بناء | Python |
+| 16 | [أدوات الفريق الأحمر: Garak وLlama Guard وPyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | بناء | Python |
+| 17 | [WMDP وتقييم قدرات الاستخدام المزدوج](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | تعلم | Python |
+| 18 | [أطر سلامة النماذج الرائدة: RSP وPF وFSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | تعلم | Python |
+| 19 | [أبحاث رفاه النماذج](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | تعلم | Python |
+| 20 | [التحيز والضرر التمثيلي](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | بناء | Python |
+| 21 | [معايير الإنصاف: الجماعة والفرد والحالة المضادة للواقع](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | تعلم | Python |
+| 22 | [الخصوصية التفاضلية لـLLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | بناء | Python |
+| 23 | [العلامات المائية: SynthID وStable Signature وC2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | بناء | Python |
+| 24 | [الأطر التنظيمية: EU وUS وUK وKorea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | تعلم | Python |
+| 25 | [EchoLeak وثغرات CVE في الذكاء الاصطناعي](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | تعلم | Python |
+| 26 | [بطاقات النماذج والأنظمة ومجموعات البيانات](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | بناء | Python |
+| 27 | [مصدر البيانات وحوكمة بيانات التدريب](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | تعلم | Python |
+| 28 | [منظومة أبحاث المواءمة: MATS وRedwood وApollo وMETR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | تعلم | Python |
+| 29 | [أنظمة الإشراف على المحتوى: OpenAI وPerspective وLlama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | بناء | Python |
+| 30 | [مخاطر الاستخدام المزدوج: الأمن السيبراني والأحياء والكيمياء والنووي](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | تعلم | Python |
 
 </details>
 
 <details id="phase-19">
-<summary><b>Phase 19 — Capstone Projects</b> &nbsp;<code>85 lessons</code>&nbsp; <em>17 end-to-end products + 9 deep-build tracks. 20-40 hours per project; 4-12 lessons per track.</em></summary>
+<summary><b>المرحلة 19 — المشاريع الختامية</b> &nbsp;<code>85 lessons</code>&nbsp; <em>17 منتجًا متكاملًا و9 مسارات بناء معمّق. تستغرق كل مهمة 20–40 ساعة، ويضم كل مسار 4–12 درسًا.</em></summary>
 <br/>
 
-| # | Project | Combines | Lang |
+| # | المشروع | المجموعات | اللغة |
 |:---:|---------|----------|------|
-| 01 | [Terminal-Native Coding Agent](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG over Codebase (Cross-Repo Semantic Search)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Real-Time Voice Assistant (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Multimodal Document QA (Vision-First)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Autonomous Research Agent (AI-Scientist Class)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [DevOps Troubleshooting Agent for Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [End-to-End Fine-Tuning Pipeline](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Production RAG Chatbot (Regulated Vertical)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Code Migration Agent (Repo-Level Upgrade)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Multi-Agent Software Engineering Team](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM Observability & Eval Dashboard](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Video Understanding Pipeline (Scene → QA)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Stateless MCP Server with Registry and Governance](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Speculative-Decoding Inference Server](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Constitutional Safety Harness + Red-Team Range](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [GitHub Issue-to-PR Autonomous Agent](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Personal AI Tutor (Adaptive, Multimodal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [وكيل برمجة يعمل من الطرفية](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
+| 02 | [RAG على قاعدة الشيفرة (بحث دلالي بين المستودعات)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
+| 03 | [مساعد صوتي آني (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
+| 04 | [أسئلة وأجوبة عن مستندات متعددة الوسائط (الرؤية أولًا)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
+| 05 | [وكيل بحث مستقل (بمستوى AI Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
+| 06 | [وكيل استكشاف أعطال DevOps على Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
+| 07 | [مسار ضبط دقيق متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
+| 08 | [روبوت محادثة RAG للإنتاج في قطاع خاضع للتنظيم](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
+| 09 | [وكيل لترحيل الشيفرة وترقية المستودع](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
+| 10 | [فريق هندسة برمجيات متعدد الوكلاء](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
+| 11 | [لوحة متابعة قابلية ملاحظة LLM وتقييمه](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
+| 12 | [مسار فهم الفيديو (من المشهد إلى الأسئلة والأجوبة)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
+| 13 | [خادم MCP عديم الحالة مع سجلّ وحوكمة](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
+| 14 | [خادم استدلال بفك ترميز تخميني](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
+| 15 | [إطار سلامة دستوري ومنطقة اختبار للفريق الأحمر](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
+| 16 | [وكيل مستقل يحوّل GitHub Issue إلى PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
+| 17 | [معلّم ذكاء اصطناعي شخصي (متكيّف ومتعدد الوسائط)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
 
-**Deep-build tracks** — multi-lesson series that build a complete subsystem from scratch.
+**مسارات عميقة** سلسلة متعددة الدروس التي تبني نظام فرعي كامل من الصفر.
 
-| # | Project | Combines | Lang |
+| # | المشروع | المجموعات | اللغة |
 |:---:|---------|----------|------|
-| 20 | [Agent Harness Loop Contract](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agent harness | Python |
-| 21 | [Tool Registry with Schema Validation](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agent harness | Python |
-| 22 | [JSON-RPC 2.0 Over Newline-Delimited Stdio](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agent harness | Python |
-| 23 | [Function Call Dispatcher](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agent harness | Python |
-| 24 | [Plan-Execute Control Flow](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agent harness | Python |
-| 25 | [Verification Gates and Observation Budget](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agent harness | Python |
-| 26 | [Sandbox Runner with Denylist and Path Jail](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agent harness | Python |
-| 27 | [Eval Harness with Fixture Tasks](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agent harness | Python |
-| 28 | [Observability with OTel GenAI Spans and Prometheus Metrics](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agent harness | Python |
-| 29 | [End-to-End Coding Agent on the Harness](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agent harness | Python |
-| 30 | [BPE Tokenizer From Scratch](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
-| 31 | [Tokenized Dataset with Sliding Window](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
-| 32 | [Token and Positional Embeddings](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
-| 33 | [Multi-Head Self-Attention](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
-| 34 | [Transformer Block from Scratch](../../phases/19-capstone-projects/34-transformer-block/) | B. NLP LLM | Python |
-| 35 | [GPT Model Assembly](../../phases/19-capstone-projects/35-gpt-model-assembly/) | B. NLP LLM | Python |
-| 36 | [Training Loop and Evaluation](../../phases/19-capstone-projects/36-training-loop-eval/) | B. NLP LLM | Python |
-| 37 | [Loading Pretrained Weights](../../phases/19-capstone-projects/37-loading-pretrained-weights/) | B. NLP LLM | Python |
-| 38 | [Classifier Fine-Tuning by Head Swap](../../phases/19-capstone-projects/38-classifier-finetuning/) | B. NLP LLM | Python |
-| 39 | [Instruction Tuning by Supervised Fine-Tuning](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP LLM | Python |
-| 40 | [Direct Preference Optimization from Scratch](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP LLM | Python |
-| 41 | [Full Evaluation Pipeline](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP LLM | Python |
-| 42 | [Large Corpus Downloader](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Train end-to-end | Python |
-| 43 | [HDF5 Tokenized Corpus](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. Train end-to-end | Python |
-| 44 | [Cosine LR with Linear Warmup](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. Train end-to-end | Python |
-| 45 | [Gradient Clipping and Mixed Precision](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. Train end-to-end | Python |
-| 46 | [Gradient Accumulation](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Train end-to-end | Python |
-| 47 | [Checkpoint Save and Resume](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Train end-to-end | Python |
-| 48 | [Distributed Data Parallel and FSDP from Scratch](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Train end-to-end | Python |
-| 49 | [Language Model Evaluation Harness](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Train end-to-end | Python |
-| 50 | [Hypothesis Generator](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Auto research | Python |
-| 51 | [Literature Retrieval](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Auto research | Python |
-| 52 | [Experiment Runner](../../phases/19-capstone-projects/52-experiment-runner/) | D. Auto research | Python |
-| 53 | [Result Evaluator](../../phases/19-capstone-projects/53-result-evaluator/) | D. Auto research | Python |
-| 54 | [Paper Writer](../../phases/19-capstone-projects/54-paper-writer/) | D. Auto research | Python |
-| 55 | [Critic Loop](../../phases/19-capstone-projects/55-critic-loop/) | D. Auto research | Python |
-| 56 | [Iteration Scheduler](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Auto research | Python |
-| 57 | [End-to-End Research Demo](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Auto research | Python |
-| 58 | [Vision Encoder Patches](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Multimodal VLM | Python |
-| 59 | [Vision Transformer Encoder](../../phases/19-capstone-projects/59-vit-transformer/) | E. Multimodal VLM | Python |
-| 60 | [Projection Layer for Modality Alignment](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. Multimodal VLM | Python |
-| 61 | [Cross-Attention Fusion](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. Multimodal VLM | Python |
-| 62 | [Vision-Language Pretraining](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. Multimodal VLM | Python |
-| 63 | [Multimodal Evaluation](../../phases/19-capstone-projects/63-multimodal-eval/) | E. Multimodal VLM | Python |
-| 64 | [Chunking Strategies, Compared](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Advanced RAG | Python |
-| 65 | [Hybrid Retrieval with BM25 and Dense Embeddings](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Advanced RAG | Python |
-| 66 | [Cross-Encoder Reranker](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. Advanced RAG | Python |
-| 67 | [Query Rewriting: HyDE, Multi-Query, and Decomposition](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Advanced RAG | Python |
-| 68 | [RAG Evaluation: Precision, Recall, MRR, nDCG, Faithfulness, Answer Relevance](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Advanced RAG | Python |
-| 69 | [End-to-End RAG System](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Advanced RAG | Python |
-| 70 | [Task Spec Format](../../phases/19-capstone-projects/70-task-spec-format/) | G. Eval framework | Python |
-| 71 | [Classical Metrics](../../phases/19-capstone-projects/71-classical-metrics/) | G. Eval framework | Python |
-| 72 | [Code Exec Metric](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Eval framework | Python |
-| 73 | [Perplexity and Calibration](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Eval framework | Python |
-| 74 | [Leaderboard Aggregation](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Eval framework | Python |
-| 75 | [End-to-End Eval Runner](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Eval framework | Python |
-| 76 | [Collective Ops From Scratch](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. Distributed train | Python |
-| 77 | [Data Parallel DDP From Scratch](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. Distributed train | Python |
-| 78 | [ZeRO Optimizer State Sharding](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. Distributed train | Python |
-| 79 | [Pipeline Parallel and Bubble Analysis](../../phases/19-capstone-projects/79-pipeline-parallel/) | H. Distributed train | Python |
-| 80 | [Sharded Checkpoint and Atomic Resume](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Distributed train | Python |
-| 81 | [End-to-End Distributed Training](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Distributed train | Python |
-| 82 | [Jailbreak Taxonomy](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Safety harness | Python |
-| 83 | [Prompt Injection Detector](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Safety harness | Python |
-| 84 | [Refusal Evaluation](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Safety harness | Python |
-| 85 | [Content Classifier Integration](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Safety harness | Python |
-| 86 | [Constitutional Rules Engine](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Safety harness | Python, YAML |
-| 87 | [End-to-End Safety Gate](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Safety harness | Python |
+| 20 | [عقد حلقة بيئة الوكيل](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. إطار عمل الوكلاء| Python |
+| 21 | [سجلّ أدوات مع التحقق من المخطط](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. إطار عمل الوكلاء| Python |
+| 22 | [JSON-RPC 2.0 عبر stdio محدد بأسطر جديدة](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. إطار عمل الوكلاء| Python |
+| 23 | [موزّع استدعاءات الدوال](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. إطار عمل الوكلاء| Python |
+| 24 | [تدفق التحكم بالتخطيط ثم التنفيذ](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. إطار عمل الوكلاء| Python |
+| 25 | [بوابات التحقق وميزانية الرصد](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. إطار عمل الوكلاء| Python |
+| 26 | [مشغّل عزل بقائمة حظر وسجن للمسارات](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. إطار عمل الوكلاء| Python |
+| 27 | [منصة تقييم بمهام اختبارية ثابتة](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. إطار عمل الوكلاء| Python |
+| 28 | [قابلية الملاحظة عبر OTel GenAI spans ومقاييس Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. إطار عمل الوكلاء| Python |
+| 29 | [وكيل برمجة متكامل فوق بيئة الوكيل](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. إطار عمل الوكلاء| Python |
+| 30 | [مُرمّز BPE من الصفر](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP وLLM| Python |
+| 31 | [مجموعة بيانات مرمّزة بنافذة منزلقة](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP وLLM| Python |
+| 32 | [تضمينات الرموز والمواضع](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP وLLM| Python |
+| 33 | [الانتباه الذاتي متعدد الرؤوس](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP وLLM| Python |
+| 34 | [كتلة Transformer من الصفر](../../phases/19-capstone-projects/34-transformer-block/) | B. NLP وLLM| Python |
+| 35 | [تجميع نموذج GPT](../../phases/19-capstone-projects/35-gpt-model-assembly/) | B. NLP وLLM| Python |
+| 36 | [حلقة التدريب والتقييم](../../phases/19-capstone-projects/36-training-loop-eval/) | B. NLP وLLM| Python |
+| 37 | [تحميل الأوزان المدرّبة مسبقًا](../../phases/19-capstone-projects/37-loading-pretrained-weights/) | B. NLP وLLM| Python |
+| 38 | [ضبط المصنّف الدقيق بتبديل الرأس](../../phases/19-capstone-projects/38-classifier-finetuning/) | B. NLP وLLM| Python |
+| 39 | [مواءمة التعليمات عبر الضبط الدقيق الخاضع للإشراف](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP وLLM| Python |
+| 40 | [تحسين التفضيلات المباشر من الصفر](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP وLLM| Python |
+| 41 | [مسار تقييم كامل](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP وLLM| Python |
+| 42 | [أداة تنزيل مدونة نصية كبيرة](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. التدريب من البداية إلى النهاية| Python |
+| 43 | [مدونة نصية مرمّزة بتنسيق HDF5](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. التدريب من البداية إلى النهاية| Python |
+| 44 | [معدل تعلّم جيبي مع إحماء خطي](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. التدريب من البداية إلى النهاية| Python |
+| 45 | [قصّ التدرجات والدقة المختلطة](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. التدريب من البداية إلى النهاية| Python |
+| 46 | [تجميع التدرجات](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. التدريب من البداية إلى النهاية| Python |
+| 47 | [حفظ نقطة التحقق والاستئناف منها](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. التدريب من البداية إلى النهاية| Python |
+| 48 | [التوازي الموزع للبيانات وFSDP من الصفر](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. التدريب من البداية إلى النهاية| Python |
+| 49 | [منصة تقييم النماذج اللغوية](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. التدريب من البداية إلى النهاية| Python |
+| 50 | [مولّد الفرضيات](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. البحث الآلي| Python |
+| 51 | [استرجاع الأدبيات](../../phases/19-capstone-projects/51-literature-retrieval/) | D. البحث الآلي| Python |
+| 52 | [مشغّل التجارب](../../phases/19-capstone-projects/52-experiment-runner/) | D. البحث الآلي| Python |
+| 53 | [مقيّم النتائج](../../phases/19-capstone-projects/53-result-evaluator/) | D. البحث الآلي| Python |
+| 54 | [كاتب الأبحاث](../../phases/19-capstone-projects/54-paper-writer/) | D. البحث الآلي| Python |
+| 55 | [حلقة الناقد](../../phases/19-capstone-projects/55-critic-loop/) | D. البحث الآلي| Python |
+| 56 | [مجدول التكرارات](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. البحث الآلي| Python |
+| 57 | [عرض بحثي متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. البحث الآلي| Python |
+| 58 | [رقع مُرمّز الرؤية](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. VLM متعدد الوسائط| Python |
+| 59 | [مُرمّز Vision Transformer](../../phases/19-capstone-projects/59-vit-transformer/) | E. VLM متعدد الوسائط| Python |
+| 60 | [طبقة إسقاط لمواءمة الوسائط](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. VLM متعدد الوسائط| Python |
+| 61 | [دمج الانتباه المتقاطع](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. VLM متعدد الوسائط| Python |
+| 62 | [التدريب المسبق للرؤية واللغة](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. VLM متعدد الوسائط| Python |
+| 63 | [التقييم متعدد الوسائط](../../phases/19-capstone-projects/63-multimodal-eval/) | E. VLM متعدد الوسائط| Python |
+| 64 | [مقارنة استراتيجيات تقسيم النص إلى مقاطع](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG متقدم| Python |
+| 65 | [استرجاع هجين باستخدام BM25 وتضمينات كثيفة](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG متقدم| Python |
+| 66 | [إعادة ترتيب باستخدام cross-encoder](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. RAG متقدم| Python |
+| 67 | [إعادة صياغة الاستعلام: HyDE واستعلامات متعددة وتفكيك](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG متقدم| Python |
+| 68 | [تقييم RAG: الدقة والاسترجاع وMRR وnDCG والأمانة وملاءمة الإجابة](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG متقدم| Python |
+| 69 | [نظام RAG متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG متقدم| Python |
+| 70 | [تنسيق مواصفات المهمة](../../phases/19-capstone-projects/70-task-spec-format/) | G. إطار التقييم| Python |
+| 71 | [المقاييس التقليدية](../../phases/19-capstone-projects/71-classical-metrics/) | G. إطار التقييم| Python |
+| 72 | [مقياس تنفيذ الشيفرة](../../phases/19-capstone-projects/72-code-exec-metric/) | G. إطار التقييم| Python |
+| 73 | [الحيرة والمعايرة](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. إطار التقييم| Python |
+| 74 | [تجميع لوحة الصدارة](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. إطار التقييم| Python |
+| 75 | [مشغّل تقييم متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. إطار التقييم| Python |
+| 76 | [العمليات الجماعية من الصفر](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. التدريب الموزّع| Python |
+| 77 | [توازي البيانات باستخدام DDP من الصفر](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. التدريب الموزّع| Python |
+| 78 | [تقسيم حالة محسّن ZeRO إلى أجزاء](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. التدريب الموزّع| Python |
+| 79 | [توازي خطوط الأنابيب وتحليل الفقاعات](../../phases/19-capstone-projects/79-pipeline-parallel/) | H. التدريب الموزّع| Python |
+| 80 | [نقطة تحقق مجزأة واستئناف ذري](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. التدريب الموزّع| Python |
+| 81 | [تدريب موزع متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. التدريب الموزّع| Python |
+| 82 | [تصنيف أساليب كسر الحماية](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. إطار السلامة| Python |
+| 83 | [كاشف حقن الموجّهات](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. إطار السلامة| Python |
+| 84 | [تقييم الرفض](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. إطار السلامة| Python |
+| 85 | [تكامل مصنّف المحتوى](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. إطار السلامة| Python |
+| 86 | [محرك القواعد الدستورية](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. إطار السلامة| Python, YAML |
+| 87 | [بوابة سلامة متكاملة من البداية إلى النهاية](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. إطار السلامة| Python |
 
 </details>
 
@@ -1191,38 +1111,29 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 
 ## مجموعة الأدوات
 
-Every lesson produces a reusable artifact. By the end you have:
+ينتج عن كل درس مخرج قابل لإعادة الاستخدام. وعند نهاية المنهج سيكون لديك:
 
 ```text
 outputs/
-├── prompts/      prompt templates for every AI task
-└── skills/       SKILL.md files for AI coding agents
+├── prompts/      قوالب موجّهات لمهام الذكاء الاصطناعي
+└── skills/       ملفات SKILL.md لوكلاء البرمجة
 ```
 
-Plug them into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that
-reads a SKILL.md / AGENTS.md directory. Real tools, not homework.
+أضف هذه المخرجات إلى Claude أو Cursor أو Codex أو OpenClaw أو Hermes أو أي وكيل يقرأ ملفات `SKILL.md` أو `AGENTS.md`. إنها أدوات حقيقية وليست واجبات منزلية.
 
-### Install course skills into your agent
+### ثبّت مهارات المنهج في وكيلك
 
-Two skill sets, two installers:
+مجموعتان من المهارات، وأداتا تثبيت:
 
-**The learning skills** (`start-learning`, `learn`, `course-guide`,
-`learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`,
-`find-your-level`, and `check-understanding`) live under [`skills/`](../../skills/) and
-install into a supported skill-capable host with one command. Installation needs
-Node.js and `npx`, but not a repository clone or Python:
+**مهارات التعلّم** (`start-learning` و`learn` و`course-guide` و`learn-mcp` و`learn-agent-skills` و`claude-certification` و`mcpa-certification` و`find-your-level` و`check-understanding`) موجودة في [`skills/`](../../skills/). ثبّتها في مضيف يدعم المهارات باستخدام أمر واحد. يتطلب التثبيت Node.js و`npx`، ولا يتطلب استنساخ المستودع أو Python:
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
 
-`skills` writes to the host and scope selected during installation, such as
-`.claude/skills/`, `.cursor/skills/`, `.codex/skills/`, or another supported
-skills folder. Verify that the selected host discovers that exact destination.
+تكتب أداة `skills` في المضيف والنطاق اللذين تختارهما أثناء التثبيت، مثل `.claude/skills/` أو `.cursor/skills/` أو `.codex/skills/` أو مجلد مهارات مدعوم آخر. تحقّق من أن المضيف المختار يكتشف ذلك الموضع تحديدًا.
 
-**The lesson artifacts.** The repo ships 396 skills and 99 prompts under
-`phases/**/outputs/`; install them via `scripts/install_skills.py`. Requires
-cloning the repo. Supports tag filters, dry-runs, and per-agent layouts:
+**مخرجات الدروس.** يضم المستودع 396 مهارة و99 موجّهًا تحت `phases/**/outputs/`؛ ثبّتها عبر `scripts/install_skills.py`. يلزم استنساخ المستودع. تدعم الأداة عوامل تصفية الوسوم والتشغيل التجريبي والتخطيطات الخاصة بكل وكيل:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1235,26 +1146,19 @@ python3 scripts/install_skills.py <target> --dry-run                       # pre
 python3 scripts/install_skills.py <target> --force                         # overwrite existing files
 ```
 
-`<target>` is the skills directory for your agent (examples:
-`~/.claude/skills/`, `~/.cursor/skills/`, `~/.config/openclaw/skills/`,
-`.skills/`, or any path your agent reads).
+`<target>` هو مجلد المهارات الخاص بوكيلك (مثل `~/.claude/skills/` أو `~/.cursor/skills/` أو `~/.config/openclaw/skills/` أو `.skills/`، أو أي مسار يقرأه وكيلك).
 
-By default the script refuses to overwrite an existing destination and exits
-with code 1 after listing every colliding path. Use `--dry-run` to preview
-collisions or `--force` to overwrite. Every non-dry-run run writes a
-`manifest.json` in the target with the full inventory grouped by type and
-phase. Pick the layout your agent reads:
+ترفض الأداة افتراضيًا الكتابة فوق وجهة موجودة مسبقًا، وتتوقف برمز خروج 1 بعد سرد كل المسارات المتعارضة. استخدم `--dry-run` لمعاينة التعارضات أو `--force` للكتابة فوق الملفات. وفي كل تشغيل فعلي تكتب `manifest.json` في الوجهة، وفيه جرد كامل مجمّع حسب النوع والمرحلة. اختر التخطيط الذي يقرأه وكيلك:
 
-| `--layout`  | Path written |
+| `--layout` | المسار الذي سيُكتب |
 |---|---|
-| `skills`    | `<target>/<name>/SKILL.md` (nested convention, supported by Claude / Cursor / Codex / OpenClaw / Hermes) |
-| `by-phase`  | `<target>/phase-NN/<name>.md` |
-| `flat`      | `<target>/<name>.md` |
+| `skills` | `<target>/<name>/SKILL.md` (تنسيق متداخل تدعمه Claude وCursor وCodex وOpenClaw وHermes) |
+| `by-phase` | `<target>/phase-NN/<name>.md` |
+| `flat` | `<target>/<name>.md` |
 
-### Drop the agent workbench into your own repo
+### أضف Agent Workbench إلى مستودعك
 
-The Phase 14 capstone ships a reusable Agent Workbench pack (AGENTS.md, schemas,
-init / verify / handoff scripts). Scaffold it into any repo with:
+يضم المشروع الختامي في المرحلة 14 حزمة Agent Workbench قابلة لإعادة الاستخدام (AGENTS.md والمخططات والبرامج النصية init / verify / handoff). أعد إنشاء هيكلها في أي مستودع:
 
 ```bash
 python3 scripts/scaffold_workbench.py path/to/your-repo            # full pack + seeds
@@ -1263,16 +1167,11 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --dry-run  # preview onl
 python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 ```
 
-You get the seven workbench surfaces wired up, a starter `task_board.json`,
-and a fresh `agent_state.json` at `schema_version: 1`. From there: edit the
-task, edit `AGENTS.md`, run `scripts/init_agent.py`, hand the contract to
-your agent. The pack source lives at
-`phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
+ستُوصَل لك واجهات workbench السبع، ويُنشأ `task_board.json` ابتدائي وملف `agent_state.json` جديد بقيمة `schema_version: 1`. بعد ذلك عدّل المهمة و`AGENTS.md`، وشغّل `scripts/init_agent.py`، ثم سلّم الوكيل مواصفات المهمة. مصدر الحزمة: `phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
 
-### Browse the entire course as JSON
+### استعرض المنهج كاملًا بصيغة JSON
 
-`scripts/build_catalog.py` walks every phase, every lesson, every artifact on
-disk and writes `catalog.json` at the repo root. One file, every course truth.
+يفحص `scripts/build_catalog.py` كل مرحلة ودرس ومخرج على القرص، ثم يكتب `catalog.json` في جذر المستودع. ملف واحد يضم بيانات المنهج كلها.
 
 ```bash
 python3 scripts/build_catalog.py               # writes <repo>/catalog.json
@@ -1280,23 +1179,13 @@ python3 scripts/build_catalog.py --stdout      # to stdout, do not touch repo
 python3 scripts/build_catalog.py --out path/to/file.json
 ```
 
-The catalog is filesystem-derived, not README-derived, so counts always match
-what is actually on disk. Use it for site builds, downstream tooling, or to
-verify the README counts have not drifted. Schema is documented at the top of
-the script.
+يُشتق هذا الفهرس من ملفات المستودع، لا من README؛ لذلك تطابق أعداده المحتوى الموجود فعلًا على القرص. استخدمه لبناء الموقع أو للأدوات اللاحقة أو للتحقق من عدم انحراف الأعداد في README. يوثّق رأس البرنامج النصي المخطط.
 
-A GitHub Action (`.github/workflows/curriculum.yml`) rebuilds `catalog.json`
-on every PR and fails the build if the committed file is stale. After editing
-any lesson, run `python3 scripts/build_catalog.py` and commit the result, or
-CI will reject the PR. The same workflow runs `audit_lessons.py` in
-warn-only mode (so existing drift does not block contributors).
+يعيد GitHub Action (`.github/workflows/curriculum.yml`) إنشاء `catalog.json` عند كل طلب دمج، ويفشل البناء إذا كانت النسخة الملتزم بها قديمة. بعد تعديل أي درس، شغّل `python3 scripts/build_catalog.py` وأدرج الناتج في الالتزام، وإلا سيرفض CI الطلب. يشغّل سير العمل نفسه `audit_lessons.py` في وضع التحذير فقط، لذلك لا يمنع الانحراف الموجود أصلًا المساهمين.
 
-### Smoke-check every lesson's Python code
+### تحقّق سريعًا من شيفرة Python في كل درس
 
-`scripts/lesson_run.py` byte-compiles every `.py` file under each lesson's
-`code/` directory. Default mode is syntax-check only — no execution, no API
-keys, no heavy ML deps required. Catches the regressions contributors
-introduce most often (bad indentation, broken f-strings, stray edits).
+يترجم `scripts/lesson_run.py` كل ملف `.py` في مجلد `code/` لكل درس إلى bytecode. الوضع الافتراضي يفحص الصياغة فقط: لا يشغّل الشيفرة، ولا يحتاج إلى مفاتيح API أو اعتماديات ML كبيرة. ويكشف أكثر الأخطاء شيوعًا، مثل المسافات البادئة الخاطئة وf-strings المكسورة والتعديلات غير المقصودة.
 
 ```bash
 python3 scripts/lesson_run.py                  # syntax-check the whole curriculum
@@ -1306,27 +1195,21 @@ python3 scripts/lesson_run.py --strict         # exit 1 if any lesson fails
 python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per lesson
 ```
 
-`--execute` runs each lesson's `code/main.py` (or the first `.py` file) with a
-10-second timeout. Lessons whose entry file starts with a `# requires: pkg1,
-pkg2` comment listing non-stdlib deps are skipped with reason `needs <deps>`.
-The script is opt-in and not wired into CI.
+يشغّل `--execute` ملف `code/main.py` لكل درس (أو أول ملف `.py`) مع مهلة 10 ثوانٍ. تُتخطى الدروس التي يذكر ملف التشغيل لديها اعتماديات غير قياسية في تعليق `# requires: pkg1, pkg2`، مع توضيح السبب `needs <deps>`. هذا الخيار اختياري ولا يُستخدم في CI.
 
-Stdlib only, Python 3.10+. Set `LINK_CHECK_SKIP=domain1,domain2` to override
-the default skip-list (`twitter.com`, `x.com`, `linkedin.com`,
-`instagram.com`, `medium.com` — domains that aggressively block automated
-HEAD/GET).
+المكتبة القياسية فقط، وPython 3.10 أو أحدث. اضبط `LINK_CHECK_SKIP=domain1,domain2` لتغيير قائمة الاستثناءات الافتراضية (`twitter.com` و`x.com` و`linkedin.com` و`instagram.com` و`medium.com`؛ إذ تحظر هذه النطاقات غالبًا طلبات HEAD/GET الآلية).
 
 ## من أين تبدأ
 
-| Background | Start at | Estimated time |
+| خلفيتك | ابدأ من | الوقت التقديري |
 |---|---|---|
-| New to programming and AI | Phase 0 — Setup | ~306 hours |
-| Know Python, new to ML | Phase 1 — Math Foundations | ~270 hours |
-| Know ML, new to deep learning | Phase 3 — Deep Learning Core | ~200 hours |
-| Know deep learning, want LLMs and agents | Phase 10 — LLMs from Scratch | ~100 hours |
-| Senior engineer, only want agent engineering | Phase 14 — Agent Engineering | ~60 hours |
-| Only want to build production MCP systems | [Model Context Protocol (MCP) path](../../learning-paths/model-context-protocol.json) | ~23 hours 15 min |
-| Only want to build production Agent Skills | [Agent Skills Engineering path](../../learning-paths/agent-skills.json) | ~9.5 hours |
+| جديد في البرمجة والذكاء الاصطناعي | المرحلة 0 — الإعداد | ~306 ساعات |
+| تعرف Python ومبتدئ في ML | المرحلة 1 — أسس الرياضيات | ~270 ساعة |
+| تعرف ML ومبتدئ في التعلّم العميق | المرحلة 3 — أساسيات التعلّم العميق | ~200 ساعة |
+| تعرف التعلّم العميق وتريد LLM والوكلاء | المرحلة 10 — بناء LLM من الصفر | ~100 ساعة |
+| مهندس خبير يريد هندسة الوكلاء فقط | المرحلة 14 — هندسة الوكلاء | ~60 ساعة |
+| تريد بناء أنظمة MCP إنتاجية فقط | [مسار Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) | ~23 ساعة و15 دقيقة |
+| تريد بناء Agent Skills للإنتاج فقط | [مسار هندسة Agent Skills](../../learning-paths/agent-skills.json) | ~9.5 ساعات |
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -1334,34 +1217,31 @@ HEAD/GET).
 
 ## لماذا يهمّ هذا الآن
 
-<table>
+<table dir="rtl">
 <tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>THE INDUSTRY SIGNAL</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>FOUNDATIONAL PAPERS COVERED</b></th>
+<th align="right" width="50%"><sub>FIG_003 · A</sub><br/><b>إشارة القطاع</b></th>
+<th align="right" width="50%"><sub>FIG_003 · B</sub><br/><b>الأبحاث الأساسية التي يغطيها المنهج</b></th>
 </tr>
 <tr>
 <td valign="top">
 
-> *"The hottest new programming language is English."*<br/>
-> — **Andrej Karpathy** ([tweet](https://x.com/karpathy/status/1617979122625712128))
+> «أكثر لغات البرمجة الجديدة رواجًا هي الإنجليزية.»<br/> — **Andrej Karpathy** ([منشور](https://x.com/karpathy/status/1617979122625712128))
 >
-> *"Software engineering is being remade in front of our eyes."*<br/>
-> — **Boris Cherny**, creator of Claude Code
+> «تُعاد صياغة هندسة البرمجيات أمام أعيننا.»<br/> — **Boris Cherny**، مبتكر Claude Code
 >
-> *"Models will keep getting better. The skill that compounds is **knowing what to build**."*<br/>
-> — Industry consensus, 2026
+> «ستواصل النماذج التحسن. والمهارة التي تتراكم قيمتها هي **معرفة ما ينبغي بناؤه**.»<br/> — إجماع القطاع، 2026
 
 </td>
 <td valign="top">
 
-- *Attention Is All You Need* — Vaswani et al., 2017 → [Phase 7](#phase-7)
-- *Language Models are Few-Shot Learners* (GPT-3) → [Phase 10](#phase-10)
-- *Denoising Diffusion Probabilistic Models* → [Phase 8](#phase-8)
-- *InstructGPT / RLHF* → [Phase 10](#phase-10)
-- *Direct Preference Optimization* → [Phase 10](#phase-10)
-- *Chain-of-Thought Prompting* → [Phase 11](#phase-11)
-- *ReAct: Reasoning + Acting in LLMs* → [Phase 14](#phase-14)
-- *Model Context Protocol* — Anthropic → [Phase 13](#phase-13)
+- *Attention Is All You Need* — Vaswani et al., 2017 → [المرحلة 7](#phase-7)
+- *Language Models are Few-Shot Learners* (GPT-3) → [المرحلة 10](#phase-10)
+- *Denoising Diffusion Probabilistic Models* → [المرحلة 8](#phase-8)
+- *InstructGPT / RLHF* → [المرحلة 10](#phase-10)
+- *Direct Preference Optimization* → [المرحلة 10](#phase-10)
+- *Chain-of-Thought Prompting* → [المرحلة 11](#phase-11)
+- *ReAct: Reasoning + Acting in LLMs* → [المرحلة 14](#phase-14)
+- *Model Context Protocol* — Anthropic → [المرحلة 13](#phase-13)
 
 </td>
 </tr>
@@ -1373,16 +1253,16 @@ HEAD/GET).
 
 ## المساهمة
 
-| Goal | Read |
+| هدفك | اقرأ |
 |---|---|
-| Contribute a lesson or fix | [CONTRIBUTING.md](../../CONTRIBUTING.md) |
-| Fork for your team or school | [FORKING.md](../../FORKING.md) |
-| Lesson template | [LESSON_TEMPLATE.md](../../LESSON_TEMPLATE.md) |
-| Track progress | [ROADMAP.md](../../ROADMAP.md) |
-| Glossary | [glossary/terms.md](../../glossary/terms.md) |
-| Code of conduct | [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md) |
+| ساهم بدرس أو إصلاح | [CONTRIBUTING.md](../../CONTRIBUTING.md) |
+| أنشئ fork لفريقك أو مدرستك | [FORKING.md](../../FORKING.md) |
+| قالب الدرس | [LESSON_TEMPLATE.md](../../LESSON_TEMPLATE.md) |
+| تابع التقدم | [ROADMAP.md](../../ROADMAP.md) |
+| المسرد | [glossary/terms.md](../../glossary/terms.md) |
+| مدونة السلوك | [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md) |
 
-Before submitting a lesson, run the invariant check:
+قبل إرسال درس، شغّل فحص الثوابت:
 
 ```bash
 python3 scripts/audit_lessons.py           # full curriculum
@@ -1390,10 +1270,7 @@ python3 scripts/audit_lessons.py --phase 14  # single phase
 python3 scripts/audit_lessons.py --json    # CI-friendly output
 ```
 
-Exit code is non-zero when any rule fails. Rules (L001–L010) validate directory
-shape, `docs/en.md` presence + H1, `code/` non-emptiness, `quiz.json` schema
-(rejects the legacy `q/choices/answer` keys that caused issue #102), and
-relative links inside lesson docs.
+يعيد الفحص رمز خروج غير صفري عند فشل أي قاعدة. تتحقق القواعد L001–L010 من بنية المجلدات، ووجود `docs/en.md` والعنوان H1، وعدم فراغ `code/`، ومخطط `quiz.json` (وترفض المفاتيح القديمة `q/choices/answer` التي تسببت في المشكلة #102)، والروابط النسبية في وثائق الدروس.
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
@@ -1401,26 +1278,26 @@ relative links inside lesson docs.
 
 <a id="supporters"></a>
 
-## ادعم العمل
+## ادعم هذا العمل
 
-مجاني، بترخيص MIT، ويضم 523 درسًا. شكرًا للرعاة والداعمين الذين يجعلون هذا العمل ممكنًا. [عرض جميع الرعاة والداعمين](../../BACKERS.md).
+منهج مجاني بترخيص MIT يضم 523 درسًا. شكرًا للرعاة والداعمين الذين يجعلون هذا العمل ممكنًا. [عرض جميع الرعاة والداعمين](../../BACKERS.md).
 
-هل ترغب في دعم العمل؟ اطّلع على [خيارات الرعاية](../../SPONSORS.md)، بما فيها [رعاية الأجهزة](../../SPONSORS.md#hardware-lab-partner)، أو [قدّم رعايتك عبر GitHub](https://github.com/sponsors/rohitg00).
+هل تريد دعم العمل؟ اطّلع على [خيارات الرعاية](../../SPONSORS.md)، بما فيها [رعاية الأجهزة](../../SPONSORS.md#hardware-lab-partner)، أو [ارعى المشروع على GitHub](https://github.com/sponsors/rohitg00).
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-If this manual helped you, star the repo. It keeps the project alive.
+إذا أفادك هذا الدليل، امنح المستودع نجمة؛ فهذا يساعد المشروع على الاستمرار.
 
 ## الترخيص
 
-رخصة MIT. استخدمه كما تشاء: انسخه، وعلّمه، وبِعه، وانشره. ذكر المصدر محلّ تقدير، لكنه غير مطلوب.
+MIT. استخدمه كيفما تشاء: أنشئ fork أو درّسه أو بِعه أو أطلقه. يُستحسن ذكر المصدر، لكنه غير إلزامي.
 
-يتولّى صيانته [Rohit Ghumare](https://github.com/rohitg00) والمجتمع.
+يتولى [Rohit Ghumare](https://github.com/rohitg00) والمجتمع صيانة المشروع.
 
 <sub>
   <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
   <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Report / Suggest</a>
+  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">تقرير / اقتراح</a>
 </sub>

@@ -1,0 +1,4 @@
+$ sbx template inspect m101-tpl:v1
+error: 'template inspect' requires --cloud in v1; local templates are docker images; inspect them with Docker
+  try: docker image inspect -- m101-tpl:v1
+[exit 1]

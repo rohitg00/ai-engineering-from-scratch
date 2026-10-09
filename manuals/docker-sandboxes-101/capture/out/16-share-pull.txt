@@ -1,0 +1,4 @@
+$ docker-agent share pull agentcatalog/pirate --force
+Pulling agent agentcatalog/pirate
+Agent saved to agentcatalog_pirate.yaml
+[exit 0]

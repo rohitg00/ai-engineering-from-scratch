@@ -1,0 +1,18 @@
+{
+  "sandboxes": [
+    {
+      "name": "docker-agent-<hash>",
+      "id": "<uuid>",
+      "agent": "docker-agent",
+      "status": "running",
+      "last_used_at": "<ts>",
+      "workspaces": [
+        "$CAPTURE/fixtures/repo-sandbox",
+        "$CAPTURE/fixtures/agents:ro",
+        "$CAPTURE/fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>:ro",
+        "$CAPTURE/fixtures/repo-sandbox/.m101/cfg:ro"
+      ],
+      "created_at": "<ts>"
+    }
+  ]
+}

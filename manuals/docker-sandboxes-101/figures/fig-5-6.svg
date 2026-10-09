@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 418" role="img" aria-labelledby="fig-5-6-title fig-5-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-6-title">Two runs on one axis of turns, and two eval scores</title>
+  <desc id="fig-5-6-desc">Top: three sessions on an axis of turns 0 to 4, one cell per model reply. Sessions -1 and -2 are two replays of files.yaml and match on every turn: list_directory, an answer naming one file, a shell call with wc -l that was rejected, read_file of README.md, and an answer of one line. Session -3 is the restricted run of guarded.yaml and calls shell with echo m101-ok at turn 0, the first divergence; its later turns are not compared. sessions diff reports identical behaviour for -1 against -2 and exits 1 with fail-on-divergence for -1 against -3. Bottom: the eval of files.yaml. Count the lines of README.md expected and got one shell call, F1 1.0, relevance 1/1, size S. List the files in the working directory expected list_directory and got list_directory and shell, F1 0.67, relevance 1/1, size S.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SESSIONS DIFF, 21-SESSIONS-DIFF.TXT</text>
+  <text x="166" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">turn 0</text>
+  <text x="266.8" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">turn 1</text>
+  <text x="367.6" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">turn 2</text>
+  <text x="468.4" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">turn 3</text>
+  <text x="569.2" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">turn 4</text>
+  <text x="20" y="75" font-size="11" font-weight="700">-1 files.yaml</text>
+  <rect x="117" y="50" width="98" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="166" y="67" font-size="11" text-anchor="middle" font-weight="700">list_directory</text>
+  <text x="166" y="82" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">path .</text>
+  <rect x="217.8" y="50" width="98" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="266.8" y="67" font-size="11" text-anchor="middle" font-weight="700">answer</text>
+  <text x="266.8" y="82" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 file</text>
+  <rect x="318.6" y="50" width="98" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="367.6" y="67" font-size="11" text-anchor="middle" font-weight="700">shell</text>
+  <text x="367.6" y="82" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">wc -l rejected</text>
+  <rect x="419.4" y="50" width="98" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="468.4" y="67" font-size="11" text-anchor="middle" font-weight="700">read_file</text>
+  <text x="468.4" y="82" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">README.md</text>
+  <rect x="520.2" y="50" width="98" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="569.2" y="67" font-size="11" text-anchor="middle" font-weight="700">answer</text>
+  <text x="569.2" y="82" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 line</text>
+  <text x="20" y="121" font-size="11" font-weight="700">-2 files.yaml</text>
+  <rect x="117" y="96" width="98" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="166" y="113" font-size="11" text-anchor="middle" font-weight="700">list_directory</text>
+  <text x="166" y="128" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">path .</text>
+  <rect x="217.8" y="96" width="98" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="266.8" y="113" font-size="11" text-anchor="middle" font-weight="700">answer</text>
+  <text x="266.8" y="128" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 file</text>
+  <rect x="318.6" y="96" width="98" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="367.6" y="113" font-size="11" text-anchor="middle" font-weight="700">shell</text>
+  <text x="367.6" y="128" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">wc -l rejected</text>
+  <rect x="419.4" y="96" width="98" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="468.4" y="113" font-size="11" text-anchor="middle" font-weight="700">read_file</text>
+  <text x="468.4" y="128" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">README.md</text>
+  <rect x="520.2" y="96" width="98" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="569.2" y="113" font-size="11" text-anchor="middle" font-weight="700">answer</text>
+  <text x="569.2" y="128" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 line</text>
+  <text x="20" y="167" font-size="11" font-weight="700">-3 guarded</text>
+  <rect x="117" y="142" width="98" height="40" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="166" y="159" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">shell</text>
+  <text x="166" y="174" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">echo m101-ok</text>
+  <rect x="217.8" y="142" width="401.2" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="418.4" y="159" font-size="11" text-anchor="middle" font-weight="700">turns 1 to 5 are not compared</text>
+  <text x="418.4" y="174" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">downstream of the divergence</text>
+  <rect x="114" y="46" width="102.8" height="140" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="116" y="204" font-size="11" fill="var(--m-rose-ink, #b0344d)">first divergence at turn 0: list_directory against shell</text>
+  <text x="20" y="226" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">-1 against -2: Identical behaviour across all 5 turns, exit 0</text>
+  <text x="20" y="242" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">-1 against -3: sessions diverged, exit 1 with --fail-on-divergence</text>
+  <text x="20" y="274" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">EVAL OF FILES.YAML, 22-EVAL-CONTAINER-ENV.TXT</text>
+  <text x="26" y="294" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">eval session</text>
+  <text x="228" y="294" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">tool calls</text>
+  <text x="420" y="294" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">F1</text>
+  <text x="492" y="294" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">relevance</text>
+  <text x="564" y="294" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">size</text>
+  <rect x="20" y="300" width="200" height="40" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="222" y="300" width="190" height="40" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="414" y="300" width="70" height="40" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="486" y="300" width="70" height="40" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="558" y="300" width="62" height="40" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="316" font-size="11">Count the lines of README.md</text>
+  <text x="228" y="316" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">expected: shell</text>
+  <text x="228" y="331" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">actual: shell</text>
+  <text x="449" y="324" font-size="11" text-anchor="middle" font-weight="700">1.0</text>
+  <text x="521" y="324" font-size="11" text-anchor="middle">1/1</text>
+  <text x="589" y="324" font-size="11" text-anchor="middle">S</text>
+  <rect x="20" y="342" width="200" height="40" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="222" y="342" width="190" height="40" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="414" y="342" width="70" height="40" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="486" y="342" width="70" height="40" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <rect x="558" y="342" width="62" height="40" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="358" font-size="11">List the files in the</text>
+  <text x="26" y="373" font-size="11">working directory</text>
+  <text x="228" y="358" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">expected: list_directory</text>
+  <text x="228" y="373" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">actual: list_directory, shell</text>
+  <text x="449" y="366" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">0.67</text>
+  <text x="521" y="366" font-size="11" text-anchor="middle">1/1</text>
+  <text x="589" y="366" font-size="11" text-anchor="middle">S</text>
+  <text x="20" y="406" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Tool Calls: 83.3% avg F1 (2 evals). Sizes 2/2 and relevance 2/2 passed.</text>
+</svg>

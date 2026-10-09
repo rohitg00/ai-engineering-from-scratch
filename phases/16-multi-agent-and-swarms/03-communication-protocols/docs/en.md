@@ -72,7 +72,7 @@ MCP is **agent-to-tool** communication. It doesn't help agents talk to each othe
 ### A2A (Agent2Agent Protocol)
 
 **Created by:** Google (now under Linux Foundation as `lf.a2a.v1`)
-**Spec version:** 1.0.0
+**Spec version:** 1.0.1
 **Problem:** How do autonomous agents collaborate, negotiate, and delegate tasks to each other?
 
 A2A is the protocol for **peer-to-peer agent collaboration**. Where MCP connects an agent to tools, A2A connects an agent to other agents. Each agent publishes an **Agent Card** at a well-known URL, and other agents discover, negotiate with, and delegate tasks to it.
@@ -87,8 +87,8 @@ sequenceDiagram
     Client->>Remote: GET /.well-known/agent-card.json
     Remote-->>Client: Agent Card (skills, modes, security)
 
-    Client->>Remote: POST /message:send
-    Remote-->>Client: Task (submitted/working)
+    Client->>Remote: POST /message:send (returnImmediately)
+    Remote-->>Client: Task (TASK_STATE_SUBMITTED or TASK_STATE_WORKING)
 
     alt Polling
         Client->>Remote: GET /tasks/{id}
@@ -97,7 +97,7 @@ sequenceDiagram
         Client->>Remote: POST /message:stream
         Remote-->>Client: SSE: statusUpdate
         Remote-->>Client: SSE: artifactUpdate
-        Remote-->>Client: SSE: completed
+        Remote-->>Client: SSE: statusUpdate TASK_STATE_COMPLETED, stream closes
     end
 ```
 
@@ -157,36 +157,36 @@ This is what an A2A Agent Card actually looks like in the wild. Served at `GET /
       }
     }
   },
-  "security": [{ "bearer": [] }]
+  "securityRequirements": [{ "schemes": { "bearer": { "list": [] } } }]
 }
 ```
 
 Key things to notice:
 - **Skills** are what an agent can do. Each has an ID, tags, and supported input/output MIME types. This is how a client agent decides whether this remote agent can handle its request.
 - **supportedInterfaces** lists multiple protocol bindings. A single agent can speak JSON-RPC, REST, and gRPC simultaneously.
-- **Security** is built into the card. The client knows what auth it needs before making a single request.
+- **Security** is built into the card: `securitySchemes` names each scheme and `securityRequirements` says which ones apply. The client knows what auth it needs before making a single request.
 
 #### Task Lifecycle
 
-Tasks are the core unit of work in A2A. They move through defined states:
+Tasks are the core unit of work in A2A. They move through defined states (the diagram drops the `TASK_STATE_` prefix that every state carries on the wire):
 
 ```mermaid
 stateDiagram-v2
-    [*] --> submitted
-    submitted --> working
-    working --> input_required: needs more info
-    input_required --> working: client sends data
-    working --> completed: success
-    working --> failed: error
-    working --> canceled: client cancels
-    submitted --> rejected: agent declines
+    [*] --> SUBMITTED
+    SUBMITTED --> WORKING
+    WORKING --> INPUT_REQUIRED: needs more info
+    INPUT_REQUIRED --> WORKING: client sends data
+    WORKING --> COMPLETED: success
+    WORKING --> FAILED: error
+    WORKING --> CANCELED: client cancels
+    SUBMITTED --> REJECTED: agent declines
 
-    completed --> [*]
-    failed --> [*]
-    canceled --> [*]
-    rejected --> [*]
+    COMPLETED --> [*]
+    FAILED --> [*]
+    CANCELED --> [*]
+    REJECTED --> [*]
 
-    note right of completed
+    note right of COMPLETED
         Terminal states are immutable.
         Follow-ups create new tasks
         within the same contextId.
@@ -212,7 +212,7 @@ Once a task reaches a terminal state, it's immutable. No further messages. Follo
 
 A2A uses JSON-RPC 2.0. Here's what a real message exchange looks like:
 
-**Client sends a task:**
+**Client sends a message:**
 ```json
 {
   "jsonrpc": "2.0",
@@ -269,16 +269,16 @@ A2A uses JSON-RPC 2.0. Here's what a real message exchange looks like:
 **Streaming via SSE:**
 ```text
 POST /message:stream HTTP/1.1
-Content-Type: application/json
+Content-Type: application/a2a+json
 A2A-Version: 1.0
 
-data: {"task":{"id":"task-123","status":{"state":"TASK_STATE_WORKING"}}}
+data: {"task":{"id":"task-123","contextId":"ctx-123","status":{"state":"TASK_STATE_WORKING"}}}
 
-data: {"statusUpdate":{"taskId":"task-123","status":{"state":"TASK_STATE_WORKING","message":{"role":"ROLE_AGENT","parts":[{"text":"Searching documentation..."}]}}}}
+data: {"statusUpdate":{"taskId":"task-123","contextId":"ctx-123","status":{"state":"TASK_STATE_WORKING","message":{"messageId":"msg-002","role":"ROLE_AGENT","parts":[{"text":"Searching documentation..."}]}}}}
 
-data: {"artifactUpdate":{"taskId":"task-123","artifact":{"artifactId":"art-1","parts":[{"text":"partial findings..."}]},"append":true,"lastChunk":false}}
+data: {"artifactUpdate":{"taskId":"task-123","contextId":"ctx-123","artifact":{"artifactId":"art-1","parts":[{"text":"partial findings..."}]},"append":true,"lastChunk":false}}
 
-data: {"statusUpdate":{"taskId":"task-123","status":{"state":"TASK_STATE_COMPLETED"}}}
+data: {"statusUpdate":{"taskId":"task-123","contextId":"ctx-123","status":{"state":"TASK_STATE_COMPLETED"}}}
 ```
 
 ### ACP (Agent Communication Protocol)
@@ -612,12 +612,12 @@ Every multi-agent system starts with a message format. We define types that map 
 ```typescript
 import crypto from "node:crypto";
 
-type MessageRole = "user" | "agent";
+type MessageRole = "ROLE_USER" | "ROLE_AGENT";
 
 type MessagePart =
-  | { kind: "text"; text: string }
-  | { kind: "data"; data: unknown; mediaType: string }
-  | { kind: "file"; name: string; url: string; mediaType: string };
+  | { text: string }
+  | { data: unknown; mediaType: string }
+  | { url: string; filename: string; mediaType: string };
 
 type TrajectoryEntry = {
   reasoning: string;
@@ -651,11 +651,11 @@ function createMessage(
 }
 
 function textMessage(role: MessageRole, text: string): AgentMessage {
-  return createMessage(role, [{ kind: "text", text }]);
+  return createMessage(role, [{ text }]);
 }
 ```
 
-Notice: `MessagePart` is multimodal (text, structured data, files) just like the real A2A and ACP specs. `TrajectoryEntry` captures the reasoning chain, matching ACP's TrajectoryMetadata.
+Notice: `MessagePart` is multimodal (text, structured data, files) just like the real A2A and ACP specs. As in A2A 1.0, the field that is present (`text`, `data`, or `url`) says what the part is; there is no `kind` tag. `TrajectoryEntry` captures the reasoning chain, matching ACP's TrajectoryMetadata.
 
 ### Step 2: A2A Agent Card and Registry
 
@@ -671,11 +671,17 @@ type Skill = {
   outputModes: string[];
 };
 
+type AgentInterface = {
+  url: string;
+  protocolBinding: string;
+  protocolVersion: string;
+};
+
 type AgentCard = {
   name: string;
   description: string;
   version: string;
-  url: string;
+  supportedInterfaces: AgentInterface[];
   capabilities: {
     streaming: boolean;
     pushNotifications: boolean;
@@ -724,20 +730,20 @@ Build the full task state machine:
 
 ```typescript
 type TaskState =
-  | "submitted"
-  | "working"
-  | "input-required"
-  | "auth-required"
-  | "completed"
-  | "failed"
-  | "canceled"
-  | "rejected";
+  | "TASK_STATE_SUBMITTED"
+  | "TASK_STATE_WORKING"
+  | "TASK_STATE_INPUT_REQUIRED"
+  | "TASK_STATE_AUTH_REQUIRED"
+  | "TASK_STATE_COMPLETED"
+  | "TASK_STATE_FAILED"
+  | "TASK_STATE_CANCELED"
+  | "TASK_STATE_REJECTED";
 
 const TERMINAL_STATES: TaskState[] = [
-  "completed",
-  "failed",
-  "canceled",
-  "rejected",
+  "TASK_STATE_COMPLETED",
+  "TASK_STATE_FAILED",
+  "TASK_STATE_CANCELED",
+  "TASK_STATE_REJECTED",
 ];
 
 type TaskStatus = {
@@ -761,13 +767,14 @@ type Task = {
 };
 
 type TaskEvent =
-  | { kind: "statusUpdate"; taskId: string; status: TaskStatus }
+  | { statusUpdate: { taskId: string; status: TaskStatus } }
   | {
-      kind: "artifactUpdate";
-      taskId: string;
-      artifact: Artifact;
-      append: boolean;
-      lastChunk: boolean;
+      artifactUpdate: {
+        taskId: string;
+        artifact: Artifact;
+        append: boolean;
+        lastChunk: boolean;
+      };
     };
 
 type TaskHandler = (
@@ -799,22 +806,22 @@ class TaskManager {
     if (!handler) {
       const task = this.createTask(contextId);
       task.status = {
-        state: "rejected",
+        state: "TASK_STATE_REJECTED",
         timestamp: Date.now(),
-        message: textMessage("agent", `No handler for ${agentName}`),
+        message: textMessage("ROLE_AGENT", `No handler for ${agentName}`),
       };
       return task;
     }
 
     const task = this.createTask(contextId);
     task.history.push(message);
-    task.status = { state: "submitted", timestamp: Date.now() };
+    task.status = { state: "TASK_STATE_SUBMITTED", timestamp: Date.now() };
 
     this.processTask(task, handler, message).catch((err) => {
       task.status = {
-        state: "failed",
+        state: "TASK_STATE_FAILED",
         timestamp: Date.now(),
-        message: textMessage("agent", String(err)),
+        message: textMessage("ROLE_AGENT", String(err)),
       };
     });
     return task;
@@ -827,11 +834,9 @@ class TaskManager {
   cancelTask(taskId: string): boolean {
     const task = this.tasks.get(taskId);
     if (!task || TERMINAL_STATES.includes(task.status.state)) return false;
-    task.status = { state: "canceled", timestamp: Date.now() };
+    task.status = { state: "TASK_STATE_CANCELED", timestamp: Date.now() };
     this.emit(taskId, {
-      kind: "statusUpdate",
-      taskId,
-      status: task.status,
+      statusUpdate: { taskId, status: task.status },
     });
     return true;
   }
@@ -840,7 +845,7 @@ class TaskManager {
     const task: Task = {
       id: crypto.randomUUID(),
       contextId: contextId ?? crypto.randomUUID(),
-      status: { state: "submitted", timestamp: Date.now() },
+      status: { state: "TASK_STATE_SUBMITTED", timestamp: Date.now() },
       artifacts: [],
       history: [],
     };
@@ -853,42 +858,39 @@ class TaskManager {
     handler: TaskHandler,
     message: AgentMessage
   ) {
-    task.status = { state: "working", timestamp: Date.now() };
+    task.status = { state: "TASK_STATE_WORKING", timestamp: Date.now() };
     this.emit(task.id, {
-      kind: "statusUpdate",
-      taskId: task.id,
-      status: task.status,
+      statusUpdate: { taskId: task.id, status: task.status },
     });
 
     try {
       for await (const event of handler(task, message)) {
         if (TERMINAL_STATES.includes(task.status.state)) break;
 
-        if (event.kind === "statusUpdate") {
-          task.status = event.status;
+        if ("statusUpdate" in event) {
+          task.status = event.statusUpdate.status;
         }
-        if (event.kind === "artifactUpdate") {
+        if ("artifactUpdate" in event) {
+          const update = event.artifactUpdate;
           const existing = task.artifacts.find(
-            (a) => a.id === event.artifact.id
+            (a) => a.id === update.artifact.id
           );
-          if (existing && event.append) {
-            existing.parts.push(...event.artifact.parts);
+          if (existing && update.append) {
+            existing.parts.push(...update.artifact.parts);
           } else {
-            task.artifacts.push(event.artifact);
+            task.artifacts.push(update.artifact);
           }
         }
         this.emit(task.id, event);
       }
     } catch (err) {
       task.status = {
-        state: "failed",
+        state: "TASK_STATE_FAILED",
         timestamp: Date.now(),
-        message: textMessage("agent", String(err)),
+        message: textMessage("ROLE_AGENT", String(err)),
       };
       this.emit(task.id, {
-        kind: "statusUpdate",
-        taskId: task.id,
-        status: task.status,
+        statusUpdate: { taskId: task.id, status: task.status },
       });
     }
   }
@@ -901,7 +903,7 @@ class TaskManager {
 }
 ```
 
-This implements the real A2A task lifecycle: submitted, working, input-required, terminal states. Handlers are async generators that yield events (status updates and artifact chunks) matching the SSE streaming model.
+This implements the real A2A task lifecycle: `TASK_STATE_SUBMITTED`, `TASK_STATE_WORKING`, `TASK_STATE_INPUT_REQUIRED`, then a terminal state. Handlers are async generators that yield `statusUpdate` and `artifactUpdate` events, the same wrappers the SSE stream carries.
 
 ### Step 4: ACP-Style Audit Trail
 
@@ -1231,7 +1233,13 @@ async function protocolDemo() {
     name: "researcher",
     description: "Searches and summarizes findings",
     version: "1.0.0",
-    url: "https://researcher.local/a2a/v1",
+    supportedInterfaces: [
+      {
+        url: "https://researcher.local/a2a/v1",
+        protocolBinding: "JSONRPC",
+        protocolVersion: "1.0",
+      },
+    ],
     capabilities: { streaming: true, pushNotifications: false },
     defaultInputModes: ["text/plain"],
     defaultOutputModes: ["text/plain", "application/json"],
@@ -1250,7 +1258,13 @@ async function protocolDemo() {
     name: "coder",
     description: "Writes code from specs",
     version: "1.0.0",
-    url: "https://coder.local/a2a/v1",
+    supportedInterfaces: [
+      {
+        url: "https://coder.local/a2a/v1",
+        protocolBinding: "JSONRPC",
+        protocolVersion: "1.0",
+      },
+    ],
     capabilities: { streaming: false, pushNotifications: false },
     defaultInputModes: ["text/plain", "application/json"],
     defaultOutputModes: ["text/plain"],
@@ -1275,9 +1289,13 @@ async function protocolDemo() {
     "researcher",
     async function* (task, message) {
       yield {
-        kind: "statusUpdate" as const,
-        taskId: task.id,
-        status: { state: "working" as const, timestamp: Date.now() },
+        statusUpdate: {
+          taskId: task.id,
+          status: {
+            state: "TASK_STATE_WORKING" as const,
+            timestamp: Date.now(),
+          },
+        },
       };
 
       researchTrajectory.push({
@@ -1302,41 +1320,45 @@ async function protocolDemo() {
       });
 
       yield {
-        kind: "artifactUpdate" as const,
-        taskId: task.id,
-        artifact: {
-          id: crypto.randomUUID(),
-          name: "research-results",
-          parts: [
-            {
-              kind: "data" as const,
-              data: {
-                findings: [
-                  "React 19 compiler auto-memoizes components",
-                  "No more manual useMemo/useCallback needed",
-                  "Compiler runs at build time, not runtime",
-                ],
-                sources: ["react.dev/blog/react-19"],
+        artifactUpdate: {
+          taskId: task.id,
+          artifact: {
+            id: crypto.randomUUID(),
+            name: "research-results",
+            parts: [
+              {
+                data: {
+                  findings: [
+                    "React 19 compiler auto-memoizes components",
+                    "No more manual useMemo/useCallback needed",
+                    "Compiler runs at build time, not runtime",
+                  ],
+                  sources: ["react.dev/blog/react-19"],
+                },
+                mediaType: "application/json",
               },
-              mediaType: "application/json",
-            },
-          ],
+            ],
+          },
+          append: false,
+          lastChunk: true,
         },
-        append: false,
-        lastChunk: true,
       };
 
       yield {
-        kind: "statusUpdate" as const,
-        taskId: task.id,
-        status: { state: "completed" as const, timestamp: Date.now() },
+        statusUpdate: {
+          taskId: task.id,
+          status: {
+            state: "TASK_STATE_COMPLETED" as const,
+            timestamp: Date.now(),
+          },
+        },
       };
     }
   );
 
   auditRunner.registerAgent("researcher", async () => ({
     output: [
-      textMessage("agent", "React 19 compiler auto-memoizes components"),
+      textMessage("ROLE_AGENT", "React 19 compiler auto-memoizes components"),
     ],
     trajectory: researchTrajectory,
   }));
@@ -1366,7 +1388,7 @@ async function protocolDemo() {
   );
 
   console.log("\n2. Identity Verification (ANP)");
-  const message = textMessage("user", "Research React 19 compiler features");
+  const message = textMessage("ROLE_USER", "Research React 19 compiler features");
   const signature = signPayload(coderIdentity, message.id);
   const verified = identityRegistry.verify(
     coderIdentity.did,
@@ -1428,7 +1450,7 @@ Protocols solve the happy path. Here's what breaks in production:
 
 **Schema drift.** Agent A publishes an Agent Card advertising `application/json` output. But the JSON schema changes between versions. Agent B parses the old format and gets garbage. Fix: version your skills and output schemas. The A2A spec supports `version` on Agent Cards for this reason.
 
-**State machine violations.** An agent handler yields a `completed` event, then tries to yield more artifacts. The task is immutable. Your code silently drops the updates or throws. Fix: check terminal state before yielding. The `TaskManager` above enforces this with the `break` after terminal states.
+**State machine violations.** An agent handler yields a `TASK_STATE_COMPLETED` status update, then tries to yield more artifacts. The task is immutable. Your code silently drops the updates or throws. Fix: check terminal state before yielding. The `TaskManager` above enforces this with the `break` after terminal states.
 
 **Trust resolution failures.** Agent A tries to verify Agent B's DID, but Agent B's domain is down. The DID document can't be fetched. Do you fail open (accept unverified agents) or fail closed (reject everything)? ANP recommends fail closed with the principle of least trust.
 
@@ -1505,7 +1527,7 @@ This lesson produces:
 
 ## Further Reading
 
-- [Google A2A specification](https://github.com/google/A2A) -- official spec and SDKs (v1.0.0, Linux Foundation)
+- [Google A2A specification](https://github.com/google/A2A) -- official spec and SDKs (v1.0.1, Linux Foundation)
 - [IBM/BeeAI ACP specification](https://github.com/i-am-bee/acp) -- OpenAPI 3.1 spec for agent runs and trajectory metadata
 - [Agent Network Protocol](https://github.com/agent-network-protocol/AgentNetworkProtocol) -- DID-based identity, E2EE, meta-protocol negotiation
 - [Model Context Protocol docs](https://modelcontextprotocol.io/) -- Anthropic's MCP specification (covered in Phase 13)

@@ -64,11 +64,15 @@
     svg.appendChild(txt(mx, my + 4, 'mgr', '10', BP));
     var labels = ['$9', '$7', '$4'];
     for (i = 0; i < 3; i++) {
-      var c = svgEl('circle', { cx: bx, cy: bys[i], r: '16', stroke: (i === win ? WARN : MUTE), 'stroke-width': '2', fill: SURF });
-      if (i === win) c.appendChild(anim('fill', SURF + ';' + SURF + ';' + WARN + ';' + WARN + ';' + SURF, '0;0.6;0.66;0.9;1', period));
-      svg.appendChild(c);
+      svg.appendChild(svgEl('circle', { cx: bx, cy: bys[i], r: '16', stroke: (i === win ? WARN : MUTE), 'stroke-width': '2', fill: SURF }));
       svg.appendChild(txt(bx, bys[i] + 4, labels[i], '10', (i === win ? WARN : MUTE)));
     }
+    var award = svgEl('g', { opacity: '0' }, [
+      svgEl('circle', { cx: bx, cy: bys[win], r: '16', stroke: WARN, 'stroke-width': '2', fill: WARN }),
+      txt(bx, bys[win] + 4, labels[win], '10', BG)
+    ]);
+    award.appendChild(anim('opacity', '0;0;1;1;0', '0;0.6;0.66;0.9;1', period));
+    svg.appendChild(award);
     svg.appendChild(txt(W / 2, H - 14, 'announce  ->  bids return  ->  cheapest bid wins the contract', '10', MUTE));
     shell(host, 'CONTRACT NET', 'announce, bid, award', svg,
       'The FIPA contract-net protocol turns task allocation into a sealed auction. A manager broadcasts a call for proposals, idle agents reply with bids, and the manager awards the contract to the best bid. MCP tools/call and modern task markets are JSON-native restatements of this 1980 mechanism.');
@@ -121,16 +125,17 @@
     var tok = svgEl('circle', { r: '7', fill: WARN });
     var mpath = 'M' + ax[0] + ',' + ay[0] + ' L' + ax[1] + ',' + ay[1] + ' L' + ax[2] + ',' + ay[2] + ' L' + ax[0] + ',' + ay[0];
     tok.appendChild(motion(mpath, '0;0.33;0.66;1', '0;0.249;0.519;1', period));
+    var kts = ['0;0.05;0.28;0.33;1', '0;0.33;0.38;0.61;0.66;1', '0;0.66;0.71;0.94;1'];
+    var lights = ['0;1;1;0;0', '0;0;1;1;0;0', '0;0;1;1;0'];
     for (i = 0; i < 3; i++) {
-      var lit = i === 0 ? '0;0.05;0.28;0.33' : (i === 1 ? '0.33;0.38;0.61;0.66' : '0.66;0.71;0.94;1');
-      var kt = i === 0 ? '0;0.05;0.28;0.33;1' : (i === 1 ? '0;0.33;0.38;0.61;0.66;1' : '0;0.66;0.71;0.94;1');
-      var vals = i === 0 ? (SURF + ';' + BP + ';' + BP + ';' + SURF + ';' + SURF)
-        : i === 1 ? (SURF + ';' + SURF + ';' + BP + ';' + BP + ';' + SURF + ';' + SURF)
-          : (SURF + ';' + SURF + ';' + BP + ';' + BP + ';' + SURF);
-      var c = svgEl('circle', { cx: ax[i], cy: ay[i], r: '24', stroke: BP, 'stroke-width': '2', fill: SURF });
-      c.appendChild(anim('fill', vals, kt, period));
-      svg.appendChild(c);
+      svg.appendChild(svgEl('circle', { cx: ax[i], cy: ay[i], r: '24', stroke: BP, 'stroke-width': '2', fill: SURF }));
       svg.appendChild(txt(ax[i], ay[i] + 4, names[i], '9', BP));
+      var c = svgEl('g', { opacity: '0' }, [
+        svgEl('circle', { cx: ax[i], cy: ay[i], r: '24', stroke: BP, 'stroke-width': '2', fill: BP }),
+        txt(ax[i], ay[i] + 4, names[i], '9', BG)
+      ]);
+      c.appendChild(anim('opacity', lights[i], kts[i], period));
+      svg.appendChild(c);
     }
     svg.appendChild(tok);
     svg.appendChild(txt(W / 2, H - 14, 'handoff = a tool call returning the next agent  ·  whoever holds the token is the orchestrator', '10', MUTE));
@@ -142,39 +147,62 @@
   //    through its lifecycle states (A2A) ──────────────────────────────────────
   function agentCard(host) {
     var W = 520, H = 250, period = 8;
+    var INK = 'var(--ink-soft,#555)';
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
-    var cx = 80, cy = 120;
-    svg.appendChild(svgEl('rect', { x: cx - 36, y: cy - 26, width: 72, height: 52, fill: SURF, stroke: BP, 'stroke-width': '2', rx: '4' }));
-    svg.appendChild(txt(cx, cy - 4, 'client', '10', BP));
-    svg.appendChild(txt(cx, cy + 12, 'reads card', '7', MUTE));
-    // remote agent with a card
-    var rx = 250, ry = 60;
-    svg.appendChild(svgEl('rect', { x: rx - 40, y: ry - 22, width: 80, height: 44, fill: SURF, stroke: MUTE, 'stroke-width': '2', rx: '4' }));
-    svg.appendChild(txt(rx, ry - 2, 'agent card', '9', MUTE));
-    svg.appendChild(txt(rx, ry + 12, '/.well-known', '7', MUTE));
-    // discovery packet client -> card
-    var disc = svgEl('circle', { r: '4', fill: BP });
-    disc.appendChild(anim('opacity', '0;1;1;0;0', '0;0.04;0.16;0.2;1', period));
-    disc.appendChild(motion('M' + cx + ',' + (cy - 20) + ' L' + rx + ',' + (ry + 14), '0;0.18;1', '0;1;1', period));
-    svg.appendChild(disc);
-    // task lifecycle: submitted -> working -> completed
-    var states = ['submitted', 'working', 'completed'];
-    var sx = [330, 410, 480], sy = 175;
-    for (var i = 0; i < 3; i++) {
-      var on = i === 0 ? '0;0.2;0.45;0.5' : i === 1 ? '0.5;0.55;0.78;0.8' : '0.8;0.85;0.98;1';
-      var kt = i === 0 ? '0;0.2;0.45;0.5;1' : i === 1 ? '0;0.5;0.55;0.78;0.8;1' : '0;0.8;0.85;0.98;1';
-      var vals = i === 0 ? (SURF + ';' + WARN + ';' + WARN + ';' + SURF + ';' + SURF)
-        : i === 1 ? (SURF + ';' + SURF + ';' + WARN + ';' + WARN + ';' + SURF + ';' + SURF)
-          : (SURF + ';' + SURF + ';' + WARN + ';' + WARN + ';' + WARN);
-      if (i < 2) svg.appendChild(svgEl('line', { x1: sx[i] + 14, y1: sy, x2: sx[i + 1] - 14, y2: sy, stroke: SOFT, 'stroke-width': '1.2' }));
-      var c = svgEl('circle', { cx: sx[i], cy: sy, r: '13', stroke: WARN, 'stroke-width': '1.8', fill: SURF });
-      c.appendChild(anim('fill', vals, kt, period));
-      svg.appendChild(c);
-      svg.appendChild(txt(sx[i], sy + 27, states[i], '7', MUTE));
+    host.setAttribute('data-static-time', '6.2');
+    function box(x, y, w, h, stroke, title, titleFill, sub) {
+      svg.appendChild(svgEl('rect', { x: x, y: y, width: w, height: h, fill: SURF, stroke: stroke, 'stroke-width': '2', rx: '4' }));
+      svg.appendChild(txt(x + w / 2, y + h / 2 - 3, title, '10', titleFill));
+      svg.appendChild(txt(x + w / 2, y + h / 2 + 11, sub, '7', MUTE));
     }
-    svg.appendChild(txt(W / 2, H - 12, 'discover via Agent Card  ->  submit task  ->  opaque lifecycle returns artifacts', '9', MUTE));
+    function edge(d, dashed) {
+      var attrs = { d: d, fill: 'none', stroke: SOFT, 'stroke-width': '1.2' };
+      if (dashed) attrs['stroke-dasharray'] = '4 3';
+      svg.appendChild(svgEl('path', attrs));
+    }
+    function packet(d, color, from, to) {
+      var a = from.toFixed(2), b = (from + 0.01).toFixed(2), c = (to - 0.01).toFixed(2), e = to.toFixed(2);
+      var dot = svgEl('circle', { r: '4', fill: color, opacity: '0' });
+      dot.appendChild(anim('opacity', '0;0;1;1;0;0', '0;' + a + ';' + b + ';' + c + ';' + e + ';1', period));
+      dot.appendChild(motion(d, '0;' + a + ';' + e + ';1', '0;0;1;1', period));
+      svg.appendChild(dot);
+    }
+    var toCard = 'M72 92 L72 37 L300 37', fromCard = 'M300 37 L72 37 L72 92';
+    var send = 'M124 112 L300 112', reply = 'M300 130 L124 130';
+    edge(toCard, true);
+    edge(send, false);
+    edge(reply, true);
+    edge('M400 148 L400 170', false);
+    box(20, 92, 104, 56, BP, 'client agent', BP, 'reads the card first');
+    box(300, 14, 200, 46, MUTE, 'Agent Card', INK, 'skills, interfaces, auth');
+    box(300, 92, 200, 56, WARN, 'remote agent', WARN, 'internals stay opaque');
+    svg.appendChild(txt(186, 31, 'GET /.well-known/agent-card.json', '7', MUTE));
+    svg.appendChild(txt(212, 106, 'SendMessage (POST /message:send)', '7', MUTE));
+    svg.appendChild(txt(212, 143, 'task status + artifact', '7', MUTE));
+    svg.appendChild(txt(296, 188, 'status.state', '7', MUTE, 'end'));
+    var states = ['SUBMITTED', 'WORKING', 'COMPLETED'];
+    var spans = [[0.35, 0.47], [0.47, 0.66], [0.66, 0.97]];
+    for (var i = 0; i < 3; i++) {
+      var x = 306 + i * 64, from = spans[i][0], to = spans[i][1];
+      var on = (from + 0.02).toFixed(2);
+      svg.appendChild(svgEl('rect', { x: x, y: 170, width: 60, height: 28, rx: '4', fill: SURF, stroke: SOFT, 'stroke-width': '1.2' }));
+      var lit = svgEl('rect', { x: x, y: 170, width: 60, height: 28, rx: '4', fill: WARN, 'fill-opacity': '0.35', stroke: WARN, 'stroke-width': '1.8', opacity: '0' });
+      if (i < 2) {
+        lit.appendChild(anim('opacity', '0;0;1;1;0.35;0.35;0', '0;' + from.toFixed(2) + ';' + on + ';' + to.toFixed(2) + ';' + (to + 0.02).toFixed(2) + ';0.97;1', period));
+      } else {
+        lit.appendChild(anim('opacity', '0;0;1;1;0', '0;' + from.toFixed(2) + ';' + on + ';0.97;1', period));
+      }
+      svg.appendChild(lit);
+      svg.appendChild(txt(x + 30, 181, 'TASK_STATE_', '6', MUTE));
+      svg.appendChild(txt(x + 30, 192, states[i], '7.5', INK));
+    }
+    packet(toCard, BP, 0.02, 0.12);
+    packet(fromCard, MUTE, 0.13, 0.23);
+    packet(send, BP, 0.25, 0.35);
+    packet(reply, WARN, 0.70, 0.86);
+    svg.appendChild(txt(W / 2, H - 12, 'discover via Agent Card  ->  SendMessage  ->  opaque lifecycle returns artifacts', '9', MUTE));
     shell(host, 'A2A DISCOVERY', 'card then task', svg,
-      'A2A is the horizontal wire protocol between agents. A client first fetches an Agent Card from a well-known URL to learn what a remote agent can do, then submits a task that moves through an opaque lifecycle (submitted, working, completed) and returns artifacts. It is HTTP plus REST, reframed with agents as first-class peers.');
+      'A2A is the horizontal wire protocol between agents. A client first fetches an Agent Card from a well-known URL to learn what a remote agent can do, then sends a message that the remote agent turns into a task. The task moves through an opaque lifecycle (TASK_STATE_SUBMITTED, TASK_STATE_WORKING, TASK_STATE_COMPLETED) and returns artifacts. It is HTTP plus REST, reframed with agents as first-class peers.');
   }
 
   // ── sw-debate-topology: the same five agents rewire through star, chain,
@@ -308,9 +336,9 @@
     svg.appendChild(svgEl('line', { x1: 80, y1: sty, x2: 440, y2: sty, stroke: SOFT, 'stroke-width': '1.4' }));
     for (i = 0; i < 4; i++) {
       var lit = i === 0 ? '0;0.05;1' : i === 1 ? '0;0.2;0.25;1' : i === 2 ? '0;0.35;0.4;1' : '0;0.78;0.83;1';
-      var vals = i === 0 ? (SURF + ';' + BP + ';' + BP) : i === 1 ? (SURF + ';' + SURF + ';' + BP + ';' + BP) : i === 2 ? (SURF + ';' + SURF + ';' + BP + ';' + BP) : (SURF + ';' + SURF + ';' + BP + ';' + BP);
-      var c = svgEl('rect', { x: stx[i] - 11, y: sty - 11, width: 22, height: 22, rx: '3', stroke: BP, 'stroke-width': '1.8', fill: SURF });
-      c.appendChild(anim('fill', vals, lit, period));
+      svg.appendChild(svgEl('rect', { x: stx[i] - 11, y: sty - 11, width: 22, height: 22, rx: '3', stroke: BP, 'stroke-width': '1.8', fill: SURF }));
+      var c = svgEl('rect', { x: stx[i] - 11, y: sty - 11, width: 22, height: 22, rx: '3', stroke: BP, 'stroke-width': '1.8', fill: BP, opacity: '0' });
+      c.appendChild(anim('opacity', i === 0 ? '0;1;1' : '0;0;1;1', lit, period));
       svg.appendChild(c);
       svg.appendChild(txt(stx[i], sty + 26, 'ckpt ' + i, '7', MUTE));
     }

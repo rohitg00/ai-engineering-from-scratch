@@ -1,0 +1,22 @@
+$ docker-agent eval fixtures/agents/files.yaml fixtures/evals --judge-model dmr/ai/qwen3:4b -c 1 --output work/eval-results
+Evaluation run: <run>
+Loading evaluation sessions...
+Validating judge model...
+Pre-building 1 container image(s)...
+Running 2 evaluations with concurrency 1
+
+✗ Count the lines of README.md ($0.000000)
+  ✗ running docker agent in container: container failed: exit status 1 (stderr: Error: failed to get models: docker --config=/root/.docker --context=default model status --json: : exec: "docker": executable file not found in $PATH)
+✗ List the files in the working directory ($0.000000)
+  ✗ running docker agent in container: container failed: exit status 1 (stderr: Error: failed to get models: docker --config=/root/.docker --context=default model status --json: : exec: "docker": executable file not found in $PATH)
+[██████████] 100% (2/2) ✓0 ✗2
+
+❌         Errors: 2/2 evaluations failed
+
+Total Cost: $0.000000
+Total Time: <dur>
+
+Sessions DB: $CAPTURE/work/eval-results/<run>.db
+Sessions JSON: $CAPTURE/work/eval-results/<run>.json
+Log: $CAPTURE/work/eval-results/<run>.log
+[exit 0]

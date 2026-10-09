@@ -1,0 +1,3 @@
+$ sbx secret import --dry-run
+No credential env vars detected on the host. Set e.g. OPENAI_API_KEY in your shell and re-run, or use `sbx secret set` to enter a value directly.
+[exit 0]

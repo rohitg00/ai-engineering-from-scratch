@@ -1,0 +1,5 @@
+$ sbx exec m101-mcp-dyn sh -c 'sh /tmp/mcp-probe.sh'
+session=<session>
+initialized 202
+ask_wiki_question code-mode mcp-add mcp-config-set mcp-exec mcp-find read_wiki_contents read_wiki_structure
+[exit 0]

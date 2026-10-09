@@ -1,0 +1,6 @@
+$ sbx exec m101-mcp sh -c 'env | grep -i mcp | sort'
+MCP_GATEWAY_URL=http://mcp-gateway.docker.internal/mcp
+MCP_SENTINEL_TOKEN_NAME=proxy-managed
+SANDBOX_NAME=m101-mcp
+SANDBOX_VM_ID=m101-mcp
+[exit 0]

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 372" role="img" aria-labelledby="fig-5-1-title fig-5-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-1-title">One docker-agent run from the agent file to its outputs</title>
+  <desc id="fig-5-1-desc">Top row: capture/fixtures/agents/files.yaml with one agent root, the model local, and two toolsets is loaded by docker-agent run with the exec flag and two messages; without exec the same run draws the TUI. Middle row: the agent loop of root sends model calls to dmr/ai/qwen3:4b on Model Runner at localhost:12434 and tool calls to the ten tools of filesystem and shell. Bottom row: the loop writes the final answer to stdout, 67 NDJSON events with the json flag, and one session to session.db. The record flag writes the model exchanges to the cassette 18-files.yaml, and the fake flag replays them in place of Model Runner.</desc>
+  <defs><marker id="fig-5-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-5-1-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker><marker id="fig-5-1-head-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-olive-ink, #515f26)"/></marker><marker id="fig-5-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-5-1-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE RUN OF CAPTURE/FIXTURES/AGENTS/FILES.YAML</text>
+  <rect x="20" y="34" width="165" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="102.5" y="49.75" font-size="12.5" text-anchor="middle" font-weight="700">files.yaml</text>
+  <text x="102.5" y="67.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one agent, root</text>
+  <text x="102.5" y="82.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model local, 2 toolsets</text>
+  <rect x="237" y="34" width="165" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="319.5" y="57.25" font-size="12.5" text-anchor="middle" font-weight="700">docker-agent run</text>
+  <text x="319.5" y="74.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--exec, two messages</text>
+  <rect x="455" y="34" width="165" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="537.5" y="57.25" font-size="12.5" text-anchor="middle" font-weight="700">TUI</text>
+  <text x="537.5" y="74.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">without --exec</text>
+  <line x1="185" y1="62" x2="236" y2="62" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-1-head-ink)"/>
+  <rect class="m-knock" x="190.25" y="45.03" width="40.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="210.5" y="56" font-size="11.5" text-anchor="middle">loads</text>
+  <line x1="402" y1="62" x2="454" y2="62" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-1-head-ink)"/>
+  <rect x="20" y="150" width="165" height="60" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="102.5" y="167.75" font-size="12.5" text-anchor="middle" font-weight="700">dmr/ai/qwen3:4b</text>
+  <text x="102.5" y="185.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Model Runner</text>
+  <text x="102.5" y="200.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">localhost:12434</text>
+  <rect x="237" y="150" width="165" height="60" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="319.5" y="175.25" font-size="12.5" text-anchor="middle" font-weight="700">agent loop: root</text>
+  <text x="319.5" y="192.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one turn per model call</text>
+  <rect x="455" y="150" width="165" height="60" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="537.5" y="167.75" font-size="12.5" text-anchor="middle" font-weight="700">filesystem, shell</text>
+  <text x="537.5" y="185.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">10 tools, such as</text>
+  <text x="537.5" y="200.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">list_directory, shell</text>
+  <line x1="319.5" y1="90" x2="319.5" y2="149" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-1-head-ink)"/>
+  <rect class="m-knock" x="324.5" y="108.53" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="327.5" y="119.5" font-size="11.5">turn 1, turn 2</text>
+  <line x1="237" y1="170" x2="186" y2="170" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-5-1-head-plum)"/>
+  <line x1="185" y1="190" x2="236" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-1-head-ink)"/>
+  <line x1="402" y1="170" x2="454" y2="170" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-1-head-olive)"/>
+  <line x1="455" y1="190" x2="403" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-1-head-ink)"/>
+  <rect x="20" y="276" width="140" height="56" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="90" y="299.25" font-size="12.5" text-anchor="middle" font-weight="700">18-files.yaml</text>
+  <text x="90" y="316.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the cassette</text>
+  <rect x="175" y="276" width="140" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="245" y="291.75" font-size="12.5" text-anchor="middle" font-weight="700">stdout</text>
+  <text x="245" y="309.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">final answer only</text>
+  <text x="245" y="324.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">with --last</text>
+  <rect x="330" y="276" width="140" height="56" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="400" y="299.25" font-size="12.5" text-anchor="middle" font-weight="700">--json</text>
+  <text x="400" y="316.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">NDJSON, 67 events</text>
+  <rect x="485" y="276" width="135" height="56" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="552.5" y="299.25" font-size="12.5" text-anchor="middle" font-weight="700">session.db</text>
+  <text x="552.5" y="316.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a session per run</text>
+  <line x1="60" y1="210" x2="60" y2="275" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-1-head-teal)"/>
+  <rect class="m-knock" x="65" y="231.53" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="68" y="242.5" font-size="11.5" fill="var(--m-teal-ink, #18696a)">--record</text>
+  <line x1="140" y1="275" x2="140" y2="211" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-1-head-ink)"/>
+  <rect class="m-knock" x="145" y="232.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="148" y="243" font-size="11.5">--fake</text>
+  <line x1="270" y1="210" x2="245" y2="275" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-1-head-ink)"/>
+  <line x1="370" y1="210" x2="400" y2="275" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-5-1-head-indigo)"/>
+  <line x1="402" y1="204" x2="552.5" y2="275" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-1-head-teal)"/>
+  <text x="20" y="360" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Dashed box: not run in the capture. Every solid box is in capture/out/18-*.</text>
+</svg>

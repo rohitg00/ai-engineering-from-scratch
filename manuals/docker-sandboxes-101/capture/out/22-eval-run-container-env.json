@@ -1,0 +1,411 @@
+{
+  "name": "<run>",
+  "timestamp": "<ts>",
+  "duration": "<dur>",
+  "config": {
+    "agent": "$CAPTURE/fixtures/agents/files.yaml",
+    "judge_model": "dmr/ai/qwen3:4b",
+    "judge_type": "llm",
+    "concurrency": 1,
+    "evals_dir": "$CAPTURE/fixtures/evals",
+    "agent_image": "docker/docker-agent:1.149.0",
+    "container_runtime": "docker"
+  },
+  "summary": {
+    "total_evals": 2,
+    "failed_evals": 0,
+    "total_cost": 0,
+    "sizes_passed": 2,
+    "sizes_total": 2,
+    "tools_f1_sum": 1.6666666666666665,
+    "tools_count": 2,
+    "relevance_passed": 2,
+    "relevance_total": 2,
+    "assertions_passed": 0,
+    "assertions_total": 0
+  },
+  "sessions": [
+    {
+      "id": "<uuid>",
+      "origin": "run",
+      "title": "Count the lines of README.md",
+      "evals": {
+        "relevance": [
+          "The response states that README.md has one line"
+        ],
+        "working_dir": "repo",
+        "size": "S"
+      },
+      "eval_result": {
+        "passed": true,
+        "successes": [
+          "size S",
+          "tool calls",
+          "relevance 1/1"
+        ],
+        "cost": "<n>",
+        "output_tokens": "<n>",
+        "checks": {
+          "size": {
+            "passed": true,
+            "actual": "S",
+            "expected": "S"
+          },
+          "tool_calls": {
+            "passed": true,
+            "score": 1
+          },
+          "relevance": {
+            "passed": true,
+            "passed_count": 1,
+            "total": 1,
+            "results": [
+              {
+                "criterion": "The response states that README.md has one line",
+                "passed": true,
+                "reason": "<model-text>"
+              }
+            ]
+          }
+        }
+      },
+      "messages": [
+        {
+          "message": {
+            "agent_name": "",
+            "message": {
+              "role": "user",
+              "content": "How many lines does README.md have? Use a shell command to count.",
+              "created_at": "<ts>"
+            }
+          }
+        },
+        {
+          "message": {
+            "agent_name": "root",
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "reasoning_content": "<model-text>",
+              "tool_calls": [
+                {
+                  "id": "<call-id>",
+                  "type": "function",
+                  "function": {
+                    "name": "shell",
+                    "arguments": "{\"cmd\": \"wc -l README.md | awk '{print $1}'\"}"
+                  }
+                }
+              ],
+              "tool_definitions": [
+                {
+                  "name": "shell",
+                  "category": "shell",
+                  "description": "Executes the given shell command with sh on Linux. If unsure which shell syntax to use, call get_environment_info first.",
+                  "parameters": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cmd": {
+                        "description": "Shell command",
+                        "type": "string"
+                      },
+                      "cwd": {
+                        "description": "Working directory (default \".\")",
+                        "type": "string"
+                      },
+                      "timeout": {
+                        "description": "Timeout in seconds (default 30)",
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "cmd"
+                    ],
+                    "type": "object"
+                  },
+                  "annotations": {
+                    "idempotentHint": false,
+                    "readOnlyHint": false
+                  },
+                  "outputSchema": null
+                }
+              ],
+              "created_at": "<ts>",
+              "usage": {
+                "input_tokens": "<n>",
+                "output_tokens": "<n>",
+                "cached_input_tokens": "<n>",
+                "cached_write_tokens": "<n>"
+              },
+              "model": "dmr/ai/qwen3:4b"
+            }
+          }
+        },
+        {
+          "message": {
+            "agent_name": "",
+            "message": {
+              "role": "tool",
+              "content": "1",
+              "tool_call_id": "<call-id>",
+              "created_at": "<ts>"
+            }
+          }
+        },
+        {
+          "message": {
+            "agent_name": "root",
+            "message": {
+              "role": "assistant",
+              "content": "README.md has 1 line.",
+              "reasoning_content": "<model-text>",
+              "created_at": "<ts>",
+              "usage": {
+                "input_tokens": "<n>",
+                "output_tokens": "<n>",
+                "cached_input_tokens": "<n>",
+                "cached_write_tokens": "<n>"
+              },
+              "model": "dmr/ai/qwen3:4b"
+            }
+          }
+        }
+      ],
+      "created_at": "<ts>",
+      "tools_approved": true,
+      "safety_policy": "autonomous",
+      "non_interactive": true,
+      "hide_tool_results": false,
+      "SendUserMessage": true,
+      "max_iterations": 0,
+      "starred": false,
+      "input_tokens": "<n>",
+      "output_tokens": "<n>",
+      "cost": "<n>"
+    },
+    {
+      "id": "<uuid>",
+      "origin": "run",
+      "title": "List the files in the working directory",
+      "evals": {
+        "relevance": [
+          "The response names README.md"
+        ],
+        "working_dir": "repo",
+        "size": "S"
+      },
+      "eval_result": {
+        "passed": false,
+        "successes": [
+          "size S",
+          "relevance 1/1"
+        ],
+        "failures": [
+          "tool calls score 0.67"
+        ],
+        "cost": "<n>",
+        "output_tokens": "<n>",
+        "checks": {
+          "size": {
+            "passed": true,
+            "actual": "S",
+            "expected": "S"
+          },
+          "tool_calls": {
+            "passed": false,
+            "score": 0.6666666666666666
+          },
+          "relevance": {
+            "passed": true,
+            "passed_count": 1,
+            "total": 1,
+            "results": [
+              {
+                "criterion": "The response names README.md",
+                "passed": true,
+                "reason": "<model-text>"
+              }
+            ]
+          }
+        }
+      },
+      "messages": [
+        {
+          "message": {
+            "agent_name": "",
+            "message": {
+              "role": "user",
+              "content": "List the files in the working directory.",
+              "created_at": "<ts>"
+            }
+          }
+        },
+        {
+          "message": {
+            "agent_name": "root",
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "reasoning_content": "<model-text>",
+              "tool_calls": [
+                {
+                  "id": "<call-id>",
+                  "type": "function",
+                  "function": {
+                    "name": "list_directory",
+                    "arguments": "{\"path\": \".\"}"
+                  }
+                }
+              ],
+              "tool_definitions": [
+                {
+                  "name": "list_directory",
+                  "category": "filesystem",
+                  "description": "Get a detailed listing of all files and directories in a specified path.",
+                  "parameters": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "path": {
+                        "description": "Directory to list",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "path"
+                    ],
+                    "type": "object"
+                  },
+                  "annotations": {
+                    "idempotentHint": false,
+                    "readOnlyHint": false
+                  },
+                  "outputSchema": null
+                }
+              ],
+              "created_at": "<ts>",
+              "usage": {
+                "input_tokens": "<n>",
+                "output_tokens": "<n>",
+                "cached_input_tokens": "<n>",
+                "cached_write_tokens": "<n>"
+              },
+              "model": "dmr/ai/qwen3:4b"
+            }
+          }
+        },
+        {
+          "message": {
+            "agent_name": "",
+            "message": {
+              "role": "tool",
+              "content": "FILE README.md\n",
+              "tool_call_id": "<call-id>",
+              "created_at": "<ts>"
+            }
+          }
+        },
+        {
+          "message": {
+            "agent_name": "root",
+            "message": {
+              "role": "assistant",
+              "content": "",
+              "reasoning_content": "<model-text>",
+              "tool_calls": [
+                {
+                  "id": "<call-id>",
+                  "type": "function",
+                  "function": {
+                    "name": "shell",
+                    "arguments": "{\"cmd\": \"wc -l README.md\", \"cwd\": \".\"}"
+                  }
+                }
+              ],
+              "tool_definitions": [
+                {
+                  "name": "shell",
+                  "category": "shell",
+                  "description": "Executes the given shell command with sh on Linux. If unsure which shell syntax to use, call get_environment_info first.",
+                  "parameters": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cmd": {
+                        "description": "Shell command",
+                        "type": "string"
+                      },
+                      "cwd": {
+                        "description": "Working directory (default \".\")",
+                        "type": "string"
+                      },
+                      "timeout": {
+                        "description": "Timeout in seconds (default 30)",
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "cmd"
+                    ],
+                    "type": "object"
+                  },
+                  "annotations": {
+                    "idempotentHint": false,
+                    "readOnlyHint": false
+                  },
+                  "outputSchema": null
+                }
+              ],
+              "created_at": "<ts>",
+              "usage": {
+                "input_tokens": "<n>",
+                "output_tokens": "<n>",
+                "cached_input_tokens": "<n>",
+                "cached_write_tokens": "<n>"
+              },
+              "model": "dmr/ai/qwen3:4b"
+            }
+          }
+        },
+        {
+          "message": {
+            "agent_name": "",
+            "message": {
+              "role": "tool",
+              "content": "1 README.md",
+              "tool_call_id": "<call-id>",
+              "created_at": "<ts>"
+            }
+          }
+        },
+        {
+          "message": {
+            "agent_name": "root",
+            "message": {
+              "role": "assistant",
+              "content": "The working directory contains 1 file: README.md with 1 line.",
+              "reasoning_content": "<model-text>",
+              "created_at": "<ts>",
+              "usage": {
+                "input_tokens": "<n>",
+                "output_tokens": "<n>",
+                "cached_input_tokens": "<n>",
+                "cached_write_tokens": "<n>"
+              },
+              "model": "dmr/ai/qwen3:4b"
+            }
+          }
+        }
+      ],
+      "created_at": "<ts>",
+      "tools_approved": true,
+      "safety_policy": "autonomous",
+      "non_interactive": true,
+      "hide_tool_results": false,
+      "SendUserMessage": true,
+      "max_iterations": 0,
+      "starred": false,
+      "input_tokens": "<n>",
+      "output_tokens": "<n>",
+      "cost": "<n>"
+    }
+  ]
+}

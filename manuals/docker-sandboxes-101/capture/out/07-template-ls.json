@@ -1,0 +1,36 @@
+{
+  "images": [
+    {
+      "id": "<id>",
+      "repository": "docker.io/docker/docker-agent-sbx-templates",
+      "tag": "latest",
+      "flavor": "docker-agent-docker",
+      "created_at": "<ts>",
+      "size": "<n>"
+    },
+    {
+      "id": "<id>",
+      "repository": "docker.io/docker/sandbox-templates",
+      "tag": "shell-docker",
+      "flavor": "shell-docker",
+      "created_at": "<ts>",
+      "size": "<n>"
+    },
+    {
+      "id": "<id>",
+      "repository": "docker.io/library/m101-tpl",
+      "tag": "v1",
+      "flavor": "shell",
+      "created_at": "<ts>",
+      "size": "<n>"
+    },
+    {
+      "id": "<id>",
+      "repository": "docker.io/sandboxes-swap/m101-demo",
+      "tag": "<id>",
+      "flavor": "shell",
+      "created_at": "<ts>",
+      "size": "<n>"
+    }
+  ]
+}

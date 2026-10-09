@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 686" role="img" aria-labelledby="fig-stream-resubscribe-title fig-stream-resubscribe-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-stream-resubscribe-title">A dropped stream and its subscription</title>
+  <desc id="fig-stream-resubscribe-desc">Three lifelines: planner, test-runner and its task store. The planner opens SendStreamingMessage and receives four frames: the task in TASK_STATE_SUBMITTED, the working status, and two artifactUpdate chunks of test-log.txt. The planner then closes the connection. test-runner appends chunks 03 and 04 to the stored task while no stream is open, so no client sees them. The planner calls SubscribeToTask, test-runner reads the stored task, and the first frame is a Task snapshot whose test-log.txt already holds four parts. Frames 2 to 5 carry chunks 05 to 08, frame 6 the completed status, and the stream closes. A second SubscribeToTask on the finished task fails with -32004 UnsupportedOperationError.</desc>
+  <defs><marker id="fig-stream-resubscribe-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-stream-resubscribe-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker><marker id="fig-stream-resubscribe-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-stream-resubscribe-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <rect x="28" y="10" width="136" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="96" y="25.1" font-size="12" text-anchor="middle" font-weight="700">planner</text>
+  <text x="96" y="42.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">client agent</text>
+  <line x1="96" y1="50" x2="96" y2="678" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="270" y="10" width="136" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="338" y="25.1" font-size="12" text-anchor="middle" font-weight="700">test-runner</text>
+  <text x="338" y="42.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">localhost:41241</text>
+  <line x1="338" y1="50" x2="338" y2="678" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="488" y="10" width="136" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="556" y="25.1" font-size="12" text-anchor="middle" font-weight="700">task store</text>
+  <text x="556" y="42.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">inside test-runner</text>
+  <line x1="556" y1="50" x2="556" y2="678" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="82" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="86" font-size="11" text-anchor="middle">1</text>
+  <line x1="96" y1="82" x2="337" y2="82" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-stream-resubscribe-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M96 82 L337 82" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="145" y="65.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="76" font-size="11.5" text-anchor="middle">SendStreamingMessage</text>
+  <rect class="m-knock" x="127.87" y="86.42" width="178.26" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="97" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">run the full suite at 9f3c2e1</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="122" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="126" font-size="11" text-anchor="middle">2</text>
+  <line x1="338" y1="122" x2="97" y2="122" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-stream-resubscribe-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M338 122 L97 122" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="131.2" y="105.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="116" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">frame 1 · task SUBMITTED</text>
+  <rect class="m-knock" x="175.39" y="126.42" width="83.22" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="137" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">task 25239d4c</text>
+  <circle cx="24" cy="162" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="166" font-size="11" text-anchor="middle">3</text>
+  <line x1="338" y1="162" x2="97" y2="162" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-stream-resubscribe-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M338 162 L97 162" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="110.5" y="145.03" width="213" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="156" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">frame 2 · statusUpdate WORKING</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="202" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="206" font-size="11" text-anchor="middle">4</text>
+  <line x1="338" y1="202" x2="97" y2="202" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-stream-resubscribe-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M338 202 L97 202" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="131.2" y="185.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="196" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">frame 3 · artifactUpdate</text>
+  <rect class="m-knock" x="115.99" y="206.42" width="202.02" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="217" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">test_suite_01, names test-log.txt</text>
+  <circle cx="24" cy="242" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="246" font-size="11" text-anchor="middle">5</text>
+  <line x1="338" y1="242" x2="97" y2="242" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-stream-resubscribe-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M338 242 L97 242" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="131.2" y="225.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="236" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">frame 4 · artifactUpdate</text>
+  <rect class="m-knock" x="133.81" y="246.42" width="166.38" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="257" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">test_suite_02, append: true</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <line x1="66" y1="282" x2="126" y2="282" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2"/>
+  <text x="134" y="286" font-size="11" font-weight="700" class="m-serif" fill="var(--m-rose-ink, #b0344d)">client closes the connection</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="322" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="326" font-size="11" text-anchor="middle">6</text>
+  <line x1="338" y1="322" x2="555" y2="322" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-stream-resubscribe-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M338 322 L555 322" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="375" y="305.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="447" y="316" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">append test_suite_03</text>
+  <rect class="m-knock" x="393.51" y="326.42" width="106.98" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="447" y="337" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no stream is open</text>
+  <circle cx="24" cy="362" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="366" font-size="11" text-anchor="middle">7</text>
+  <line x1="338" y1="362" x2="555" y2="362" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-stream-resubscribe-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M338 362 L555 362" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="375" y="345.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="447" y="356" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">append test_suite_04</text>
+  <rect class="m-knock" x="375.69" y="366.42" width="142.62" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="447" y="377" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">nobody receives a frame</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="402" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="406" font-size="11" text-anchor="middle">8</text>
+  <line x1="96" y1="402" x2="337" y2="402" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-stream-resubscribe-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M96 402 L337 402" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="131.2" y="385.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="396" font-size="11.5" text-anchor="middle">SubscribeToTask 25239d4c</text>
+  <circle cx="24" cy="442" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="446" font-size="11" text-anchor="middle">9</text>
+  <line x1="556" y1="442" x2="339" y2="442" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-stream-resubscribe-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M556 442 L339 442" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="406.05" y="425.03" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="447" y="436" font-size="11.5" text-anchor="middle">stored task</text>
+  <rect class="m-knock" x="369.75" y="446.42" width="154.5" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="447" y="457" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">log parts 01 to 04 so far</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="482" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="486" font-size="11" text-anchor="middle">10</text>
+  <line x1="338" y1="482" x2="97" y2="482" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-stream-resubscribe-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M338 482 L97 482" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="138.1" y="465.03" width="157.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="476" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">frame 1 · task WORKING</text>
+  <rect class="m-knock" x="121.93" y="486.42" width="190.14" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="497" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">snapshot: test-log.txt, 4 parts</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="522" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="526" font-size="11" text-anchor="middle">11</text>
+  <line x1="338" y1="522" x2="97" y2="522" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-stream-resubscribe-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M338 522 L97 522" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="110.5" y="505.03" width="213" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="516" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">frames 2 to 5 · artifactUpdate</text>
+  <rect class="m-knock" x="107.08" y="526.42" width="219.84" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="537" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">test_suite_05 to 08, lastChunk on 08</text>
+  <circle cx="24" cy="562" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="566" font-size="11" text-anchor="middle">12</text>
+  <line x1="338" y1="562" x2="97" y2="562" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-stream-resubscribe-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M338 562 L97 562" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="103.6" y="545.03" width="226.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="556" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">frame 6 · statusUpdate COMPLETED</text>
+  <rect class="m-knock" x="115.99" y="566.42" width="202.02" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="577" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">96 passed, then the stream closes</text>
+  </g>
+  <g data-beat="9"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="602" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="606" font-size="11" text-anchor="middle">13</text>
+  <line x1="96" y1="602" x2="337" y2="602" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-stream-resubscribe-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M96 602 L337 602" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="131.2" y="585.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="596" font-size="11.5" text-anchor="middle">SubscribeToTask 25239d4c</text>
+  <rect class="m-knock" x="154.6" y="606.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="617" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">again, after the end</text>
+  <circle cx="24" cy="642" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="646" font-size="11" text-anchor="middle">14</text>
+  <line x1="338" y1="642" x2="97" y2="642" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-stream-resubscribe-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M338 642 L97 642" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="103.6" y="625.03" width="226.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="636" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">-32004 UnsupportedOperationError</text>
+  <rect class="m-knock" x="118.96" y="646.42" width="196.08" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217" y="657" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the task is TASK_STATE_COMPLETED</text>
+  </g>
+</svg>

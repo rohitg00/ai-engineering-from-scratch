@@ -1,0 +1,31 @@
+$ sbx exec docker-agent-<hash> sh -c 'docker-agent version; echo; env | grep -iE '"'"'proxy|gateway|models|safety|yolo'"'"' | sort; echo; docker-agent sandbox list'
+docker-agent version main
+Commit: 154b78f2d517dae1397866dfb7586c4a302a3151
+
+ANTHROPIC_API_KEY=proxy-managed
+GH_TOKEN=gho_sbxproxymanaged000000000000000000000
+GOOGLE_API_KEY=proxy-managed
+http_proxy=http://gateway.docker.internal:3128
+HTTP_PROXY=http://gateway.docker.internal:3128
+https_proxy=http://gateway.docker.internal:3128
+HTTPS_PROXY=http://gateway.docker.internal:3128
+JAVA_TOOL_OPTIONS=-Dhttp.proxyHost=gateway.docker.internal -Dhttp.proxyPort=3128 -Dhttps.proxyHost=gateway.docker.internal -Dhttps.proxyPort=3128 -Dhttp.nonProxyHosts=localhost|127.*|[::1]|gateway.docker.internal
+MCP_GATEWAY_URL=http://mcp-gateway.docker.internal/mcp
+MCP_SENTINEL_TOKEN_NAME=proxy-managed
+MISTRAL_API_KEY=proxy-managed
+NEBIUS_API_KEY=proxy-managed
+NODE_USE_ENV_PROXY=1
+no_proxy=localhost,127.0.0.1,::1,gateway.docker.internal
+NO_PROXY=localhost,127.0.0.1,::1,gateway.docker.internal
+OPENAI_API_KEY=proxy-managed
+OPENROUTER_API_KEY=proxy-managed
+PROXY_CA_CERT_B64=<base64>
+SSH_AUTH_SOCK_GATEWAY=gateway.docker.internal:3129
+XAI_API_KEY=proxy-managed
+
+<ts> WARN Self-update skipped; continuing with current binary error="current version \"main\" is not a release version: invalid semantic version"
+docker-agent: self-update failed (current version "main" is not a release version: invalid semantic version); continuing with current version
+Persistent sandbox allowlist is empty.
+
+Add a host with: docker agent sandbox allow <host>
+[exit 0]

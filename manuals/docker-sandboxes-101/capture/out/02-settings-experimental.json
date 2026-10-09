@@ -1,0 +1,9 @@
+{
+  "default": true,
+  "description": "Allow experimental features.",
+  "env_var": "DOCKER_SANDBOXES_ALLOW_EXPERIMENTAL_FEATURES",
+  "key": "platform.allowExperimentalFeatures",
+  "source": "default",
+  "type": "bool",
+  "value": true
+}

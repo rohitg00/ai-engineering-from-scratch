@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 612" role="img" aria-labelledby="fig-4-1-title fig-4-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-1-title">A v3 descriptor and the image manifest that carries it</title>
+  <desc id="fig-4-1-desc">Left: the nine top-level entries of capture/fixtures/kits/hello-kit/kit.yaml, from the syntax line to the capabilities list, each with a note on what it becomes. Right: what the local registry returned for m101/hello-kit:v1, an OCI image index with no annotations and the linux/arm64 image manifest. The manifest carries four vnd.docker.sandbox.kit annotations, the descriptor as JSON with 402 derived deb provides, schema-version 3, the network-policy@2 capability, and built-by sandbox-kit 3.0.0-m.8, plus four org.opencontainers.image keys, the OCI config, and 16 layers with the sources staged at /usr/share/sandbox/kit/kit. Teal lines connect each descriptor row to the annotation or layer it becomes.</desc>
+  <defs><marker id="fig-4-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">KIT.YAML OF HELLO-KIT, AS WRITTEN</text>
+  <text x="356" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT THE REGISTRY RETURNED</text>
+  <rect x="20" y="28" width="306" height="26" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="28" y="44.45" font-size="11.5" font-weight="700">capture/fixtures/kits/hello-kit/kit.yaml</text>
+  <rect x="20" y="54" width="306" height="39" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="69" font-size="11"># syntax=docker/sandbox-kit:3</text>
+  <text x="26" y="86" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dispatches the frontend, sandbox-kit 3.0.0-m.8</text>
+  <rect x="20" y="93" width="306" height="39" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="108" font-size="11">schemaVersion: &quot;3&quot;</text>
+  <text x="26" y="125" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">REQUIRED, exactly the string &quot;3&quot; (kitspec 4)</text>
+  <rect x="20" y="132" width="306" height="39" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="147" font-size="11">kind: workload</text>
+  <text x="26" y="164" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">workload, mixin, or set (kitspec 4)</text>
+  <rect x="20" y="171" width="306" height="39" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="186" font-size="11">displayName: hello-kit</text>
+  <text x="26" y="203" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">becomes org.opencontainers.image.title</text>
+  <rect x="20" y="210" width="306" height="54" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="225" font-size="11">description: A shell workload with one</text>
+  <text x="39.2" y="240" font-size="11">network grant, in the v3 descriptor form.</text>
+  <text x="26" y="257" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">becomes org.opencontainers.image.description</text>
+  <rect x="20" y="264" width="306" height="39" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="279" font-size="11">version: &quot;1.0.0&quot;</text>
+  <text x="26" y="296" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">becomes org.opencontainers.image.version</text>
+  <rect x="20" y="303" width="306" height="39" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="318" font-size="11">licenses: [Apache-2.0]</text>
+  <text x="26" y="335" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">becomes org.opencontainers.image.licenses</text>
+  <rect x="20" y="342" width="306" height="69" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="357" font-size="11">build: |</text>
+  <text x="39.2" y="372" font-size="11">FROM docker/sandbox-templates:shell</text>
+  <text x="39.2" y="387" font-size="11">COPY HELLO.md /home/agent/HELLO.md</text>
+  <text x="26" y="404" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the recipe of the layers (kitspec 3.2)</text>
+  <rect x="20" y="411" width="306" height="114" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="426" font-size="11">capabilities:</text>
+  <text x="39.2" y="441" font-size="11">- type: com.docker.sandbox/network-policy@2</text>
+  <text x="52.4" y="456" font-size="11">config:</text>
+  <text x="65.6" y="471" font-size="11">runtime:</text>
+  <text x="78.8" y="486" font-size="11">allow:</text>
+  <text x="92" y="501" font-size="11">- example.com</text>
+  <text x="26" y="518" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a list of type and config (kitspec 7)</text>
+  <rect x="356" y="28" width="264" height="72" fill="var(--m-panel, #f3f1e8)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="364" y="45" font-size="12" font-weight="700">OCI image index, tag v1</text>
+  <text x="364" y="61" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">application/vnd.oci.image.index.v1+json</text>
+  <text x="364" y="76" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">linux/arm64 and an attestation manifest</text>
+  <text x="364" y="91" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">annotations: none</text>
+  <rect x="356" y="108" width="264" height="414" fill="var(--m-panel, #f3f1e8)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="364" y="125" font-size="12" font-weight="700">platform manifest, linux/arm64</text>
+  <text x="364" y="141" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">application/vnd.oci.image.manifest.v1+json</text>
+  <text x="364" y="162" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">annotations</text>
+  <rect x="364" y="168" width="252" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="366" y="184" font-size="11" fill="var(--m-teal-ink, #18696a)">vnd.docker.sandbox.kit.descriptor</text>
+  <text x="366" y="201" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kit.yaml as JSON, plus 402 deb/ provides</text>
+  <rect x="364" y="214" width="252" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="366" y="230" font-size="11" fill="var(--m-teal-ink, #18696a)">vnd.docker.sandbox.kit.schema-version</text>
+  <text x="366" y="247" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&quot;3&quot;</text>
+  <rect x="364" y="260" width="252" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="366" y="276" font-size="11" fill="var(--m-teal-ink, #18696a)">vnd.docker.sandbox.kit.capabilities</text>
+  <text x="366" y="293" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">com.docker.sandbox/network-policy@2</text>
+  <rect x="364" y="306" width="252" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="366" y="322" font-size="11" fill="var(--m-teal-ink, #18696a)">vnd.docker.sandbox.kit.built-by</text>
+  <text x="366" y="339" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">docker/sandbox-kit 3.0.0-m.8, 129be2ff</text>
+  <rect x="364" y="352" width="252" height="58" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="366" y="368" font-size="11" fill="var(--m-teal-ink, #18696a)">org.opencontainers.image.*</text>
+  <text x="366" y="384" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">title hello-kit, version 1.0.0,</text>
+  <text x="366" y="399" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">licenses Apache-2.0, description</text>
+  <rect x="364" y="416" width="252" height="40" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="368" y="432" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">config</text>
+  <text x="368" y="448" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">application/vnd.oci.image.config.v1+json</text>
+  <rect x="364" y="462" width="252" height="54" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="368" y="478" font-size="11" fill="var(--m-green-ink, #336b40)">16 layers</text>
+  <text x="368" y="494" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">shell template, HELLO.md, and sources</text>
+  <text x="368" y="509" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">staged at /usr/share/sandbox/kit/kit</text>
+  <path d="M326 360 H331 V489 H363" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-teal)"/>
+  <path d="M326 205 H335 V381 H363" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-teal)"/>
+  <path d="M326 66 H339 V327 H363" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-teal)"/>
+  <path d="M326 112 H343 V235 H363" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-teal)"/>
+  <path d="M326 41 H347 V189 H363" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-teal)"/>
+  <path d="M326 461 H351 V281 H363" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-teal)"/>
+  <text x="20" y="548" font-size="11">docker buildx build -f fixtures/kits/hello-kit/kit.yaml --builder m101-builder</text>
+  <text x="33.2" y="564" font-size="11">-t m101-registry:5000/m101/hello-kit:v1 --push fixtures/kits/hello-kit</text>
+  <text x="20" y="584" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">With the default docker driver, the same push kept no annotation (28-manifest-docker-driver.json).</text>
+  <text x="20" y="600" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The index carries none of the eight, although kitspec 9.3 promotes them there (28-index.json).</text>
+</svg>

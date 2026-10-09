@@ -1,0 +1,4 @@
+$ sbx ls
+SANDBOX     AGENT   STATUS    PORTS   WORKSPACE
+m101-demo   shell   running           $CAPTURE/fixtures/repo
+[exit 0]

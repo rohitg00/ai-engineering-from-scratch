@@ -1,0 +1,360 @@
+### 1 · SendMessage: with a webhook
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "85750621-02fb-4d4f-b57f-bc5af71a1bfc",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Run the unit tests for payments-api at commit 9f3c2e1"
+        }
+      ]
+    },
+    "configuration": {
+      "returnImmediately": true,
+      "taskPushNotificationConfig": {
+        "url": "http://localhost:41250/a2a-events",
+        "token": "planner-run-0006",
+        "authentication": {
+          "scheme": "Bearer",
+          "credentials": "hook_secret_91d2"
+        }
+      }
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "task": {
+      "id": "d7d3dceb-7333-4676-90ce-36542116a45c",
+      "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+      "status": {
+        "state": "TASK_STATE_SUBMITTED",
+        "timestamp": "2026-10-06T09:00:04.750Z"
+      },
+      "history": [
+        {
+          "messageId": "85750621-02fb-4d4f-b57f-bc5af71a1bfc",
+          "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+          "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+          "role": "ROLE_USER",
+          "parts": [
+            {
+              "text": "Run the unit tests for payments-api at commit 9f3c2e1"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+### 2 · ListTaskPushNotificationConfigs
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "ListTaskPushNotificationConfigs",
+  "params": {
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "configs": [
+      {
+        "id": "92c697ef-4abc-4e86-82ba-dc6bce4077af",
+        "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+        "url": "http://localhost:41250/a2a-events",
+        "token": "planner-run-0006",
+        "authentication": {
+          "scheme": "Bearer",
+          "credentials": "hook_secret_91d2"
+        }
+      }
+    ]
+  }
+}
+
+### 3 · GetTaskPushNotificationConfig
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "GetTaskPushNotificationConfig",
+  "params": {
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+    "id": "92c697ef-4abc-4e86-82ba-dc6bce4077af"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "result": {
+    "id": "92c697ef-4abc-4e86-82ba-dc6bce4077af",
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+    "url": "http://localhost:41250/a2a-events",
+    "token": "planner-run-0006",
+    "authentication": {
+      "scheme": "Bearer",
+      "credentials": "hook_secret_91d2"
+    }
+  }
+}
+
+### 4 · DeleteTaskPushNotificationConfig
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "method": "DeleteTaskPushNotificationConfig",
+  "params": {
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+    "id": "92c697ef-4abc-4e86-82ba-dc6bce4077af"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "result": {}
+}
+
+### webhook 1 · received by the client
+POST /a2a-events HTTP/1.1
+Content-Type: application/a2a+json
+Authorization: Bearer hook_secret_91d2
+X-A2A-Notification-Token: planner-run-0006
+
+{
+  "statusUpdate": {
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+    "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+    "status": {
+      "state": "TASK_STATE_WORKING",
+      "message": {
+        "messageId": "4cbb7a5a-31f5-43f9-aa4d-f72c4fddb8cc",
+        "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+        "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+        "role": "ROLE_AGENT",
+        "parts": [
+          {
+            "text": "Checking out 9f3c2e1 and starting the suite"
+          }
+        ]
+      },
+      "timestamp": "2026-10-06T09:00:05.000Z"
+    }
+  }
+}
+
+### webhook 2 · received by the client
+POST /a2a-events HTTP/1.1
+Content-Type: application/a2a+json
+Authorization: Bearer hook_secret_91d2
+X-A2A-Notification-Token: planner-run-0006
+
+{
+  "artifactUpdate": {
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+    "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+    "artifact": {
+      "artifactId": "test-log",
+      "name": "test-log.txt",
+      "parts": [
+        {
+          "text": "collected 12 items\n"
+        }
+      ]
+    }
+  }
+}
+
+### webhook 3 · received by the client
+POST /a2a-events HTTP/1.1
+Content-Type: application/a2a+json
+Authorization: Bearer hook_secret_91d2
+X-A2A-Notification-Token: planner-run-0006
+
+{
+  "artifactUpdate": {
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+    "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+    "artifact": {
+      "artifactId": "test-log",
+      "parts": [
+        {
+          "text": "tests/test_charges.py ........  [ 66%]\n"
+        }
+      ]
+    },
+    "append": true
+  }
+}
+
+### webhook 4 · received by the client
+POST /a2a-events HTTP/1.1
+Content-Type: application/a2a+json
+Authorization: Bearer hook_secret_91d2
+X-A2A-Notification-Token: planner-run-0006
+
+{
+  "artifactUpdate": {
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+    "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+    "artifact": {
+      "artifactId": "test-log",
+      "parts": [
+        {
+          "text": "tests/test_refunds.py ..F.  [100%]\n"
+        }
+      ]
+    },
+    "append": true
+  }
+}
+
+### webhook 5 · received by the client
+POST /a2a-events HTTP/1.1
+Content-Type: application/a2a+json
+Authorization: Bearer hook_secret_91d2
+X-A2A-Notification-Token: planner-run-0006
+
+{
+  "artifactUpdate": {
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+    "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+    "artifact": {
+      "artifactId": "test-log",
+      "parts": [
+        {
+          "text": "FAILED tests/test_refunds.py::test_partial_refund - AssertionError: 450 != 500\n"
+        }
+      ]
+    },
+    "append": true
+  }
+}
+
+### webhook 6 · received by the client
+POST /a2a-events HTTP/1.1
+Content-Type: application/a2a+json
+Authorization: Bearer hook_secret_91d2
+X-A2A-Notification-Token: planner-run-0006
+
+{
+  "artifactUpdate": {
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+    "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+    "artifact": {
+      "artifactId": "test-log",
+      "parts": [
+        {
+          "text": "1 failed, 11 passed in 4.21s\n"
+        }
+      ]
+    },
+    "append": true,
+    "lastChunk": true
+  }
+}
+
+### webhook 7 · received by the client
+POST /a2a-events HTTP/1.1
+Content-Type: application/a2a+json
+Authorization: Bearer hook_secret_91d2
+X-A2A-Notification-Token: planner-run-0006
+
+{
+  "artifactUpdate": {
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+    "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+    "artifact": {
+      "artifactId": "summary",
+      "name": "summary.json",
+      "parts": [
+        {
+          "data": {
+            "passed": 11,
+            "failed": 1,
+            "failures": [
+              {
+                "test": "tests/test_refunds.py::test_partial_refund",
+                "error": "AssertionError: 450 != 500"
+              }
+            ]
+          },
+          "mediaType": "application/json"
+        }
+      ]
+    },
+    "lastChunk": true
+  }
+}
+
+### webhook 8 · received by the client
+POST /a2a-events HTTP/1.1
+Content-Type: application/a2a+json
+Authorization: Bearer hook_secret_91d2
+X-A2A-Notification-Token: planner-run-0006
+
+{
+  "statusUpdate": {
+    "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+    "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+    "status": {
+      "state": "TASK_STATE_COMPLETED",
+      "message": {
+        "messageId": "ab4d6137-5d85-4787-90f3-859895bc0210",
+        "contextId": "e051d022-3c39-4f5c-bd9c-7a902ae474cd",
+        "taskId": "d7d3dceb-7333-4676-90ce-36542116a45c",
+        "role": "ROLE_AGENT",
+        "parts": [
+          {
+            "text": "1 failed, 11 passed"
+          }
+        ]
+      },
+      "timestamp": "2026-10-06T09:00:05.250Z"
+    }
+  }
+}

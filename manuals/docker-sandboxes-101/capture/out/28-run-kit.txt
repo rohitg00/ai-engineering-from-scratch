@@ -1,0 +1,5 @@
+$ sbx create localhost:15000/m101/hello-kit:v1 fixtures/repo-kit --name m101-v3
+error: resolve kits: kit "localhost:15000/m101/hello-kit:v1": kit "localhost:15000/m101/hello-kit:v1" cannot be installed — its source is not in your allowlist; current kit.allowedSources: docker.io/; if administrator policy permits, allow this kit's publisher and re-run your original command; otherwise ask your administrator to update the policy; allowing any remote source is not recommended
+  try: sbx settings set kit.allowedSources '["docker.io/","localhost:15000/m101/"]'
+   or: sbx settings set kit.allowedSources '["*"]'
+[exit 1]

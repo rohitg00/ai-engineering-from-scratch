@@ -1,0 +1,89 @@
+### 1 · models
+GET /v1/models HTTP/1.1
+Host: 127.0.0.1:8083
+Authorization: Bearer m101-chat-key
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: <http-date>
+
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "root",
+      "created": "<n>",
+      "object": "model",
+      "owned_by": "docker-agent",
+      "shutdown_date": "<ts>"
+    }
+  ]
+}
+
+### 2 · chat completion
+POST /v1/chat/completions HTTP/1.1
+Host: 127.0.0.1:8083
+Authorization: Bearer m101-chat-key
+Content-Type: application/json
+
+{
+  "model": "root",
+  "messages": [
+    {
+      "role": "user",
+      "content": "ping"
+    }
+  ]
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: <http-date>
+
+{
+  "id": "chatcmpl-<uuid>",
+  "object": "chat.completion",
+  "created": "<n>",
+  "model": "root",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "pong"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": "<n>",
+    "completion_tokens": "<n>",
+    "total_tokens": "<n>"
+  }
+}
+
+### 3 · the same without the token
+POST /v1/chat/completions HTTP/1.1
+Host: 127.0.0.1:8083
+Content-Type: application/json
+
+{
+  "model": "root",
+  "messages": [
+    {
+      "role": "user",
+      "content": "ping"
+    }
+  ]
+}
+
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+Date: <http-date>
+
+{
+  "error": {
+    "message": "missing or invalid bearer token",
+    "type": "invalid_request_error"
+  }
+}

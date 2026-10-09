@@ -1,0 +1,34 @@
+version: "16"
+
+agents:
+  root:
+    model: local
+    description: Runs shell commands under a permission list and a hook.
+    instruction: |
+      Run exactly the shell commands the user lists, one tool call per
+      command, in the given order. Then report each command and its
+      result or refusal in one line each.
+    max_iterations: 8
+    toolsets:
+      - type: shell
+    hooks:
+      pre_tool_use:
+        - matcher: shell
+          preempt_yolo: true
+          hooks:
+            - type: command
+              command: ./fixtures/hooks/log-hook.sh
+              env:
+                M101_HOOK_LOG: ./work/hook-stdin.jsonl
+
+permissions:
+  allow:
+    - "shell:cmd=echo*"
+  deny:
+    - "shell:cmd=rm*"
+
+models:
+  local:
+    provider: dmr
+    model: ai/qwen3:4b
+    temperature: 0

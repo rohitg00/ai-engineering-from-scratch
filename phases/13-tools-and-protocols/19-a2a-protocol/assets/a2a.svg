@@ -24,16 +24,16 @@
   <text x="60" y="108" class="small">MCP tools for source</text>
   <text x="60" y="124" class="small">retrieval + reasoning</text>
   <text x="60" y="156" class="step">discovers writer via</text>
-  <text x="60" y="174" class="step">/.well-known/agent.json</text>
-  <text x="60" y="206" class="step">submits Task with</text>
+  <text x="60" y="174" class="step">/.well-known/agent-card.json</text>
+  <text x="60" y="206" class="step">sends SendMessage with</text>
   <text x="60" y="222" class="step">Message.parts = [</text>
-  <text x="60" y="238" class="small">  text: "summarize",</text>
-  <text x="60" y="254" class="small">  file: paper.pdf,</text>
-  <text x="60" y="270" class="small">  data: {len: "3 par"}</text>
+  <text x="60" y="238" class="small">  {text: "summarize"},</text>
+  <text x="60" y="254" class="small">  {raw, filename: paper.pdf},</text>
+  <text x="60" y="270" class="small">  {data: {targetLength}}</text>
   <text x="60" y="286" class="step">]</text>
 
   <path d="M290,280 L460,280" class="edge" marker-end="url(#arrow)"/>
-  <text x="375" y="272" text-anchor="middle" class="small">tasks/send</text>
+  <text x="375" y="272" text-anchor="middle" class="small">SendMessage</text>
 
   <path d="M460,350 L290,350" class="edge" marker-end="url(#arrow)"/>
   <text x="375" y="342" text-anchor="middle" class="small">state transitions + artifact</text>
@@ -41,23 +41,23 @@
   <rect x="460" y="60" width="460" height="440" class="cold"/>
   <text x="690" y="82" text-anchor="middle" class="head">writer agent (callee, opaque inner state)</text>
   <text x="476" y="108" class="step">publishes Agent Card</text>
-  <text x="476" y="126" class="small">{name, url, skills, capabilities}</text>
-  <text x="476" y="148" class="step">signed via AP2 (optional)</text>
+  <text x="476" y="126" class="small">{name, supportedInterfaces, skills, capabilities}</text>
+  <text x="476" y="148" class="step">signed via JWS signatures (optional)</text>
 
   <rect x="476" y="160" width="430" height="32" class="box"/>
-  <text x="490" y="180" class="step">submitted</text>
+  <text x="490" y="180" class="step">TASK_STATE_SUBMITTED</text>
   <rect x="476" y="196" width="430" height="32" class="box"/>
-  <text x="490" y="216" class="step">working</text>
+  <text x="490" y="216" class="step">TASK_STATE_WORKING</text>
   <rect x="476" y="232" width="430" height="32" class="hot"/>
-  <text x="490" y="252" class="step">input_required</text>
+  <text x="490" y="252" class="step">TASK_STATE_INPUT_REQUIRED</text>
   <rect x="476" y="268" width="430" height="32" class="box"/>
-  <text x="490" y="288" class="step">working (resumed)</text>
+  <text x="490" y="288" class="step">TASK_STATE_WORKING (resumed)</text>
   <rect x="476" y="304" width="430" height="32" class="cool"/>
-  <text x="490" y="324" class="step">completed</text>
+  <text x="490" y="324" class="step">TASK_STATE_COMPLETED</text>
 
   <text x="476" y="360" class="step">returns Artifact:</text>
-  <text x="476" y="378" class="small">{name: "summary", mimeType: "text/markdown",</text>
-  <text x="476" y="394" class="small">  parts: [{type: "text", text: "..."}]}</text>
+  <text x="476" y="378" class="small">{artifactId, name: "summary",</text>
+  <text x="476" y="394" class="small">  parts: [{text: "...", mediaType: "text/markdown"}]}</text>
 
   <text x="476" y="426" class="step">opacity</text>
   <text x="476" y="444" class="small">caller sees state + artifact;</text>

@@ -1,0 +1,26 @@
+$ sbx exec m101-clone sh -c 'pwd; echo; git remote -v; echo; git log --oneline; echo; ls -la /run/sandbox/source; git -C /run/sandbox/source log --oneline -1; touch /run/sandbox/source/x 2>&1; echo; mount | grep -E '"'"'virtiofs|/run/sandbox|repo-clone'"'"'; echo; git config --list --show-origin | grep -E '"'"'remote|branch'"'"''
+$CAPTURE/fixtures/repo-clone
+
+origin	/run/sandbox/source (fetch)
+origin	/run/sandbox/source (push)
+
+c7dfd56 second
+086df68 first
+
+total 4
+drwxr-xr-x+1 agent agent 128 <date> .
+drwxr-xr-x 3 root  root   60 <date> ..
+drwxr-xr-x+1 agent agent 416 <date> .git
+-rw-r--r--+1 agent agent   6 <date> README.md
+c7dfd56 second
+touch: cannot touch '/run/sandbox/source/x': Read-only file system
+
+/dev/vde on $CAPTURE/fixtures/repo-clone type ext4 (rw,relatime)
+bind-<id> on /etc/resolv.conf type virtiofs (ro,relatime)
+host on /run/sandbox/source type virtiofs (ro,nosuid,nodev,relatime)
+
+file:.git/config	remote.origin.url=/run/sandbox/source
+file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+file:.git/config	branch.main.remote=origin
+file:.git/config	branch.main.merge=refs/heads/main
+[exit 0]

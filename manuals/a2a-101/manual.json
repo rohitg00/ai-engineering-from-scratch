@@ -1,0 +1,333 @@
+{
+  "id": "a2a-101",
+  "title": "A2A 101",
+  "subtitle": "The Agent2Agent protocol, from its purpose to each request and response",
+  "summary": "How one agent gives work to another agent that it cannot see inside. Each request, response, and stream event in this manual comes from a recorded run.",
+  "audience": "You are an engineer who has built an agent that calls tools or a model API. You know HTTP and JSON. You have not read the A2A specification.",
+  "edition": "2026.10",
+  "status": "ready",
+  "pin": {
+    "subject": "A2A protocol",
+    "version": "1.0.1",
+    "source": "https://github.com/a2aproject/A2A",
+    "commit": "3303592",
+    "date": "2026-05-28",
+    "verified": "2026-10-06"
+  },
+  "outcomes": [
+    "Read an agent card and say what the agent offers, how to reach it, and what it requires before you send anything.",
+    "Predict which state a task is in at any point of a run, and what a client is allowed to do next.",
+    "Choose between a blocking call, polling, streaming, and push notifications for a given job.",
+    "Read any A2A request, response, or stream frame line by line, in either JSON binding.",
+    "Name the errors a client must handle and the rules a server can break without noticing."
+  ],
+  "palette": [
+    {
+      "hue": "violet",
+      "meaning": "the client agent and what it sends"
+    },
+    {
+      "hue": "blue",
+      "meaning": "remote agents, their cards, and the messages they send back"
+    },
+    {
+      "hue": "green",
+      "meaning": "parts and artifacts: the content a task produces"
+    },
+    {
+      "hue": "amber",
+      "meaning": "tasks, task states, and transitions"
+    },
+    {
+      "hue": "teal",
+      "meaning": "the server's stored task records"
+    },
+    {
+      "hue": "indigo",
+      "meaning": "streams, subscriptions, and push notifications"
+    },
+    {
+      "hue": "plum",
+      "meaning": "the model or logic inside an agent, which A2A never shows"
+    },
+    {
+      "hue": "olive",
+      "meaning": "tools and systems an agent calls on its own: CI, Git, MCP servers"
+    },
+    {
+      "hue": "rose",
+      "meaning": "errors, failure, rejection, and cancellation"
+    },
+    {
+      "hue": "grey",
+      "meaning": "the operator, the host, and anything outside the protocol"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Protocol definition",
+      "path": "specification/a2a.proto at v1.0.1",
+      "usedFor": "every object, field, enum value, and method; cited as proto"
+    },
+    {
+      "name": "Specification",
+      "path": "docs/specification.md at v1.0.1",
+      "usedFor": "every rule, quoted exactly; cited as spec §N"
+    },
+    {
+      "name": "Specification on main",
+      "path": "docs/specification.md at main 679ab3a (2026-10-05)",
+      "usedFor": "rules added after v1.0.1, quoted exactly and labelled as unreleased; cited as spec-main §N"
+    },
+    {
+      "name": "Project documentation (vendored)",
+      "path": "research/sources/docs.md",
+      "usedFor": "quotes from the project's own pages, checked word for word"
+    },
+    {
+      "name": "Reference SDK",
+      "path": "a2a-python v1.2.2",
+      "usedFor": "how a production implementation behaves where the spec is silent; cited as sdk"
+    },
+    {
+      "name": "Capture kit",
+      "path": "manuals/a2a-101/capture/",
+      "usedFor": "every request, response, and stream frame shown; cited by file"
+    }
+  ],
+  "quoteSources": {
+    "spec": "research/sources/specification.md",
+    "proto": "research/sources/a2a.proto",
+    "docs": "research/sources/docs.md",
+    "sdk": null,
+    "spec-main": "research/sources/specification-main.md"
+  },
+  "capture": {
+    "run": [
+      "python3",
+      "capture/run.py"
+    ],
+    "check": [
+      "python3",
+      "capture/run.py",
+      "--check"
+    ]
+  },
+  "front": "front.md",
+  "plate": {
+    "figure": "plate-planner-run",
+    "title": "One planner, three remote agents",
+    "caption": "The planner reads three cards and delegates three tasks: one completes at once, one after a question, and one after an operator approves. Lanes run top to bottom in the order of capture/out/19-planner.log, and ids are shortened to 8 characters."
+  },
+  "parts": [
+    {
+      "number": 1,
+      "title": "The Protocol on One Page",
+      "thesis": "A2A standardizes how one agent finds another agent, gives it work, and follows that work, and it leaves the agent itself out of scope.",
+      "accent": "blue",
+      "sections": [
+        {
+          "id": "1.1",
+          "file": "sections/1-1-what-a2a-standardizes.md"
+        },
+        {
+          "id": "1.2",
+          "file": "sections/1-2-one-task-request-by-request.md"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "AgentCard",
+      "thesis": "Before a client sends a message, the AgentCard tells it what the agent offers, where to reach it, and what it requires.",
+      "accent": "violet",
+      "sections": [
+        {
+          "id": "2.1",
+          "file": "sections/2-1-agentcard-fields.md"
+        },
+        {
+          "id": "2.2",
+          "file": "sections/2-2-discovery-and-supported-interfaces.md"
+        },
+        {
+          "id": "2.3",
+          "file": "sections/2-3-extended-cards-and-signatures.md"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Data Model",
+      "thesis": "Every A2A exchange is built from five objects: Message, Part, Artifact, Task, and the contextId that groups tasks.",
+      "accent": "green",
+      "sections": [
+        {
+          "id": "3.1",
+          "file": "sections/3-1-message.md"
+        },
+        {
+          "id": "3.2",
+          "file": "sections/3-2-part.md"
+        },
+        {
+          "id": "3.3",
+          "file": "sections/3-3-artifact-and-chunks.md"
+        },
+        {
+          "id": "3.4",
+          "file": "sections/3-4-task-and-task-state.md"
+        },
+        {
+          "id": "3.5",
+          "file": "sections/3-5-context-id.md"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Operations",
+      "thesis": "Eleven operations create, read, cancel, and follow tasks, and each one has rules that a client must know before it calls.",
+      "accent": "amber",
+      "sections": [
+        {
+          "id": "4.1",
+          "file": "sections/4-1-send-message.md"
+        },
+        {
+          "id": "4.2",
+          "file": "sections/4-2-input-required-and-auth-required.md"
+        },
+        {
+          "id": "4.3",
+          "file": "sections/4-3-get-task-and-list-tasks.md"
+        },
+        {
+          "id": "4.4",
+          "file": "sections/4-4-cancel-task-and-terminal-states.md"
+        },
+        {
+          "id": "4.5",
+          "file": "sections/4-5-streaming-and-subscribe-to-task.md"
+        },
+        {
+          "id": "4.6",
+          "file": "sections/4-6-push-notification-configs.md"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Bindings",
+      "thesis": "The same operations travel over JSON-RPC, HTTP+JSON, and gRPC, with two headers and one error model shared by all three.",
+      "accent": "indigo",
+      "sections": [
+        {
+          "id": "5.1",
+          "file": "sections/5-1-json-rpc.md"
+        },
+        {
+          "id": "5.2",
+          "file": "sections/5-2-http-json.md"
+        },
+        {
+          "id": "5.3",
+          "file": "sections/5-3-grpc.md"
+        },
+        {
+          "id": "5.4",
+          "file": "sections/5-4-version-and-extension-headers.md"
+        },
+        {
+          "id": "5.5",
+          "file": "sections/5-5-errors.md"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Security and Extensions",
+      "thesis": "The card declares how to authenticate and which extensions apply, and the specification lists what each side must check.",
+      "accent": "plum",
+      "sections": [
+        {
+          "id": "6.1",
+          "file": "sections/6-1-security-schemes-and-in-task-authorization.md"
+        },
+        {
+          "id": "6.2",
+          "file": "sections/6-2-extensions.md"
+        },
+        {
+          "id": "6.3",
+          "file": "sections/6-3-security-requirements.md"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Implementing A2A",
+      "thesis": "A client and a server follow the rules of the earlier parts, and the official test kit checks the server against them.",
+      "accent": "teal",
+      "sections": [
+        {
+          "id": "7.1",
+          "file": "sections/7-1-a-client.md"
+        },
+        {
+          "id": "7.2",
+          "file": "sections/7-2-a-server.md"
+        },
+        {
+          "id": "7.3",
+          "file": "sections/7-3-conformance-testing.md"
+        },
+        {
+          "id": "7.4",
+          "file": "sections/7-4-from-0-3-to-1-0.md"
+        }
+      ]
+    }
+  ],
+  "reference": {
+    "title": "Reference",
+    "accent": "grey",
+    "thesis": "Lookup tables for every name in the manual.",
+    "summary": "Operations by binding, objects and fields, task states, errors, a glossary, the sources, and the index of figures.",
+    "sections": [
+      {
+        "id": "R.1",
+        "file": "sections/r-1-operations-by-binding.md"
+      },
+      {
+        "id": "R.2",
+        "file": "sections/r-2-objects-and-fields.md"
+      },
+      {
+        "id": "R.3",
+        "file": "sections/r-3-task-states.md"
+      },
+      {
+        "id": "R.4",
+        "file": "sections/r-4-errors.md"
+      },
+      {
+        "id": "R.5",
+        "file": "sections/r-5-glossary.md"
+      },
+      {
+        "id": "R.6",
+        "file": "sections/r-6-sources.md"
+      },
+      {
+        "id": "R.7",
+        "file": "sections/r-7-index-of-figures.md"
+      }
+    ]
+  },
+  "related": [
+    "phases/13-tools-and-protocols/19-a2a-protocol",
+    "phases/16-multi-agent-and-swarms/12-a2a-protocol",
+    "phases/13-tools-and-protocols/06-mcp-fundamentals"
+  ]
+}

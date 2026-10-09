@@ -80,9 +80,10 @@
     }
     for (i = 0; i < n; i++) {
       var cx = 30 + gap * i;
-      var box = svgEl('rect', { x: cx - 30, y: 70, width: 60, height: 40, rx: '4', fill: 'var(--bg-surface,#eee)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.5' });
-      box.appendChild(anim('fill', 'var(--bg-surface,#eee);var(--blueprint,#3553ff);var(--bg-surface,#eee)', '2.5s', { begin: (i * 0.5) + 's' }));
-      svg.appendChild(box);
+      svg.appendChild(svgEl('rect', { x: cx - 30, y: 70, width: 60, height: 40, rx: '4', fill: 'var(--bg-surface,#eee)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.5' }));
+      var lit = svgEl('rect', { x: cx - 30, y: 70, width: 60, height: 40, rx: '4', fill: 'var(--blueprint,#3553ff)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.5', opacity: '0' });
+      lit.appendChild(anim('opacity', '0;1;0', '2.5s', { begin: (i * 0.5) + 's' }));
+      svg.appendChild(lit);
       svg.appendChild(txt(cx, 94, labels[i], '9', 'var(--ink,#1a1a1a)'));
     }
     var pulse = svgEl('circle', { cx: '0', cy: '90', r: '5', fill: 'var(--warn,#b8870f)' });
@@ -170,8 +171,10 @@
     svg.appendChild(field);
     svg.appendChild(txt(70, 88, 'search...', '11', 'var(--ink-mute,#777)', 'start'));
     var btn = svgEl('rect', { x: 60, y: 130, width: 90, height: 30, rx: '4', fill: 'var(--bg-surface,#eee)', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '1.5' });
-    btn.appendChild(anim('fill', 'var(--bg-surface,#eee);var(--bg-surface,#eee);var(--blueprint,#3553ff);var(--bg-surface,#eee)', '5s', {}));
     svg.appendChild(btn);
+    var press = svgEl('rect', { x: 60, y: 130, width: 90, height: 30, rx: '4', fill: 'var(--blueprint,#3553ff)', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '1.5', opacity: '0' });
+    press.appendChild(anim('opacity', '0;0;1;0', '5s', {}));
+    svg.appendChild(press);
     svg.appendChild(txt(105, 150, 'submit', '11', 'var(--ink,#1a1a1a)'));
     var path = 'M400 50 L180 83 L180 83 L105 145 L105 145 L400 50';
     var cur = svgEl('path', { d: 'M0 0 L0 16 L4 12 L8 18 L11 16 L7 11 L13 11 Z', fill: 'var(--ink,#1a1a1a)', stroke: 'var(--bg,#fafaf5)', 'stroke-width': '0.8' });
@@ -192,8 +195,10 @@
     for (i = 0; i < stages.length; i++) {
       var x = 60 + i * 110;
       var b = svgEl('rect', { x: x, y: 150, width: 80, height: 30, rx: '4', fill: 'var(--bg-surface,#eee)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.5' });
-      b.appendChild(anim('fill', 'var(--bg-surface,#eee);var(--blueprint,#3553ff);var(--bg-surface,#eee)', '3.2s', { begin: (i * 0.6) + 's' }));
       svg.appendChild(b);
+      var lit = svgEl('rect', { x: x, y: 150, width: 80, height: 30, rx: '4', fill: 'var(--blueprint,#3553ff)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.5', opacity: '0' });
+      lit.appendChild(anim('opacity', '0;1;0', '3.2s', { begin: (i * 0.6) + 's' }));
+      svg.appendChild(lit);
       svg.appendChild(txt(x + 40, 169, stages[i], '10', 'var(--ink,#1a1a1a)'));
       if (i < stages.length - 1) {
         var ar = svgEl('line', { x1: x + 80, y1: 165, x2: x + 110, y2: 165, stroke: 'var(--ink-soft,#555)', 'stroke-width': '1.4', 'stroke-dasharray': '4 3' });
@@ -225,8 +230,9 @@
     svg.appendChild(svgEl('rect', { x: 30, y: 40, width: 150, height: 100, rx: '5', fill: 'var(--bg-surface,#eee)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.5' }));
     svg.appendChild(txt(105, 34, 'retrieved doc', '10', 'var(--ink-mute,#777)'));
     svg.appendChild(txt(105, 70, 'normal text...', '10', 'var(--ink-soft,#555)'));
-    var bad = svgEl('rect', { x: 42, y: 88, width: 126, height: 24, rx: '3', fill: 'var(--bg,#fafaf5)', stroke: 'var(--warn,#b8870f)', 'stroke-width': '1.5' });
-    bad.appendChild(anim('stroke', 'var(--rule-soft,#ddd);var(--warn,#b8870f);var(--rule-soft,#ddd)', '2.6s', {}));
+    svg.appendChild(svgEl('rect', { x: 42, y: 88, width: 126, height: 24, rx: '3', fill: 'var(--bg,#fafaf5)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.5' }));
+    var bad = svgEl('rect', { x: 42, y: 88, width: 126, height: 24, rx: '3', fill: 'none', stroke: 'var(--warn,#b8870f)', 'stroke-width': '1.5', opacity: '0' });
+    bad.appendChild(anim('opacity', '0;1;0', '2.6s', {}));
     svg.appendChild(bad);
     var badt = txt(105, 104, '<send funds>', '9', 'var(--warn,#b8870f)');
     badt.appendChild(anim('opacity', '0.4;1;0.4', '2.6s', {}));
@@ -262,9 +268,11 @@
     for (i = 0; i < labels.length; i++) {
       var x = 50 + i * 120;
       var b = svgEl('rect', { x: x, y: 90, width: 90, height: 44, rx: '5', fill: 'var(--bg-surface,#eee)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.5' });
-      b.appendChild(anim('stroke', 'var(--rule-soft,#ddd);var(--warn,#b8870f)', '3s', { begin: (i * 0.7) + 's', fill: 'freeze' }));
-      b.appendChild(anim('fill', 'var(--bg-surface,#eee);var(--bg-surface,#eee);var(--warn,#b8870f)', '3s', { begin: (i * 0.7) + 's', fill: 'freeze' }));
       svg.appendChild(b);
+      var hit = svgEl('rect', { x: x, y: 90, width: 90, height: 44, rx: '5', fill: 'var(--warn,#b8870f)', 'fill-opacity': '0', stroke: 'var(--warn,#b8870f)', 'stroke-opacity': '0', 'stroke-width': '1.5' });
+      hit.appendChild(anim('stroke-opacity', '0;1', '3s', { begin: (i * 0.7) + 's', fill: 'freeze' }));
+      hit.appendChild(anim('fill-opacity', '0;0;1', '3s', { begin: (i * 0.7) + 's', fill: 'freeze' }));
+      svg.appendChild(hit);
       svg.appendChild(txt(x + 45, 117, labels[i], '11', 'var(--ink,#1a1a1a)'));
       if (i < labels.length - 1) {
         var ln = svgEl('line', { x1: x + 90, y1: 112, x2: x + 120, y2: 112, stroke: 'var(--ink-soft,#555)', 'stroke-width': '1.4', 'stroke-dasharray': '4 3' });

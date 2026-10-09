@@ -1,0 +1,5 @@
+{
+  "status": "running",
+  "socket": "$HOME/Library/Application Support/com.docker.sandboxes/sandboxes/sandboxd/sandboxd.sock",
+  "logs": "$HOME/Library/Application Support/com.docker.sandboxes/sandboxes/sandboxd/daemon.log"
+}

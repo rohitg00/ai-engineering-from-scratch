@@ -1,0 +1,28 @@
+name: m101
+
+models:
+  llm:
+    model: ai/qwen3:4b
+
+services:
+  mcp-gateway:
+    image: docker/mcp-gateway
+    use_api_socket: true
+    command: ["--transport=streaming", "--port=8811"]
+
+  printer:
+    image: alpine:3.22
+    depends_on: [mcp-gateway]
+    models:
+      llm:
+        endpoint_var: LLM_URL
+        model_var: LLM_MODEL
+    command:
+      - sh
+      - -c
+      - |
+        env | grep -E '^LLM_' | sort
+        wget -qO- -T 5 "$${LLM_URL}models"
+        echo
+        wget -qO- -T 5 http://mcp-gateway:8811/ 2>&1 | head -c 200
+        echo

@@ -259,10 +259,13 @@
     }
     // rising spend bar
     var bar = svgEl('rect', { x: gx + 40, y: 220, width: 40, height: 0, rx: '2', fill: BP });
-    bar.appendChild(anim('y', { values: '220;110;110', dur: '4s', keyTimes: '0;0.7;1', fill: 'freeze' }));
-    bar.appendChild(anim('height', { values: '0;110;110', dur: '4s', keyTimes: '0;0.7;1', fill: 'freeze' }));
-    bar.appendChild(anim('fill', { values: BP + ';' + BP + ';' + WARN + ';' + WARN, dur: '4s', keyTimes: '0;0.68;0.72;1', fill: 'freeze' }));
-    svg.appendChild(bar);
+    var tripped = svgEl('rect', { x: gx + 40, y: 220, width: 40, height: 0, rx: '2', fill: WARN, opacity: '0' });
+    [bar, tripped].forEach(function (r) {
+      r.appendChild(anim('y', { values: '220;110;110', dur: '4s', keyTimes: '0;0.7;1', fill: 'freeze' }));
+      r.appendChild(anim('height', { values: '0;110;110', dur: '4s', keyTimes: '0;0.7;1', fill: 'freeze' }));
+      svg.appendChild(r);
+    });
+    tripped.appendChild(anim('opacity', { values: '0;0;1;1', dur: '4s', keyTimes: '0;0.68;0.72;1', fill: 'freeze' }));
     svg.appendChild(txt(gx + 60, 234, '$ spend', { mono: true, size: '9', fill: MUTE }));
     // "CUT" flash when velocity cap trips
     var cut = svgEl('text', { x: gx + 160, y: 100, 'text-anchor': 'middle', 'font-family': 'var(--font-mono,monospace)', 'font-size': '14', fill: WARN, opacity: '0' });
@@ -297,10 +300,13 @@
     svg.appendChild(svgEl('line', { x1: bx, y1: by - 50, x2: bx, y2: by - 44, stroke: SOFT, 'stroke-width': '2' }));
     svg.appendChild(svgEl('line', { x1: bx, y1: by + 50, x2: bx, y2: by + 44, stroke: SOFT, 'stroke-width': '2' }));
     // the lever: starts closed (connecting), then snaps open
-    var lever = svgEl('line', { x1: bx, y1: by - 44, x2: bx, y2: by + 44, stroke: BP, 'stroke-width': '3' });
+    var lever = svgEl('g', {});
     var lt = svgEl('animateTransform', { attributeName: 'transform', type: 'rotate', dur: '4.5s', repeatCount: 'indefinite', values: '0 ' + bx + ' ' + (by - 44) + ';0 ' + bx + ' ' + (by - 44) + ';48 ' + bx + ' ' + (by - 44) + ';48 ' + bx + ' ' + (by - 44), keyTimes: '0;0.62;0.72;1' });
     lever.appendChild(lt);
-    lever.appendChild(anim('stroke', { values: BP + ';' + BP + ';' + WARN + ';' + WARN, dur: '4.5s', keyTimes: '0;0.62;0.72;1' }));
+    lever.appendChild(svgEl('line', { x1: bx, y1: by - 44, x2: bx, y2: by + 44, stroke: BP, 'stroke-width': '3' }));
+    var open = svgEl('line', { x1: bx, y1: by - 44, x2: bx, y2: by + 44, stroke: WARN, 'stroke-width': '3', opacity: '0' });
+    open.appendChild(anim('opacity', { values: '0;0;1;1', dur: '4.5s', keyTimes: '0;0.62;0.72;1' }));
+    lever.appendChild(open);
     svg.appendChild(lever);
     var st = svgEl('text', { x: bx + 4, y: by + 78, 'text-anchor': 'middle', 'font-family': 'var(--font-mono,monospace)', 'font-size': '11', fill: WARN, opacity: '0' });
     st.appendChild(document.createTextNode('OPEN — paused'));
@@ -336,13 +342,17 @@
     crash.appendChild(anim('opacity', { values: '0;0;1;1;0;0', dur: '6s', keyTimes: '0;0.42;0.46;0.62;0.66;1' }));
     svg.appendChild(crash);
     // worker playhead: advances to crash, jumps back to ckpt B, replays forward
-    var head = svgEl('circle', { cx: x0, cy: y, r: '6', fill: WARN });
-    head.appendChild(anim('cx', {
+    var headMove = {
       values: x0 + ';' + crashX + ';' + ckBX + ';' + (x0 + dx * 5),
       dur: '6s', keyTimes: '0;0.45;0.55;1', calcMode: 'linear'
-    }));
-    head.appendChild(anim('fill', { values: WARN + ';' + WARN + ';' + BP + ';' + BP, dur: '6s', keyTimes: '0;0.5;0.55;1' }));
+    };
+    var head = svgEl('circle', { cx: x0, cy: y, r: '6', fill: WARN });
+    head.appendChild(anim('cx', headMove));
     svg.appendChild(head);
+    var resumed = svgEl('circle', { cx: x0, cy: y, r: '6', fill: BP, opacity: '0' });
+    resumed.appendChild(anim('cx', headMove));
+    resumed.appendChild(anim('opacity', { values: '0;0;1;1', dur: '6s', keyTimes: '0;0.5;0.55;1' }));
+    svg.appendChild(resumed);
     // resume arc from crash back to ckpt B
     var arc = svgEl('path', { d: 'M ' + crashX + ' ' + (y - 12) + ' Q ' + ((crashX + ckBX) / 2) + ' ' + (y - 52) + ' ' + ckBX + ' ' + (y - 12), fill: 'none', stroke: BP, 'stroke-width': '1.5', 'stroke-dasharray': '4 3', 'marker-end': '', opacity: '0' });
     arc.appendChild(anim('opacity', { values: '0;0;1;1;0;0', dur: '6s', keyTimes: '0;0.46;0.5;0.7;0.8;1' }));

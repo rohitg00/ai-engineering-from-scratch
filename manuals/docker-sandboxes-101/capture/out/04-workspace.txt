@@ -1,0 +1,14 @@
+$ sbx exec m101-demo sh -c 'pwd; echo; ls -la; echo; cat README.md; echo; git log --oneline'
+$CAPTURE/fixtures/repo
+
+total 8
+drwxr-xr-x+   1 agent agent  128 <date> .
+drwxr-xr-x    3 root  root  4096 <date> ..
+drwxr-xr-x+   1 agent agent    0 <date> .git
+-rw-r--r--+   1 agent agent    6 <date> README.md
+
+hello
+
+c7dfd56 second
+086df68 first
+[exit 0]

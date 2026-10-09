@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-3-5-title fig-3-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-5-title">A host allow and a kit HTTP rule on api.github.com</title>
+  <desc id="fig-3-5-desc">Two columns. On the left, the default-code-and-containers group of the balanced preset allows github.com:443 and every subdomain, so a POST to api.github.com /repos/o/r/issues carrying data in its body is allowed, because a host rule reads host and port only. On the right, a network-policy@2 deny entry with hosts api.github.com and methods DELETE blocks DELETE /repos/o/r while the same POST still passes, because deny wins only where the method matches.</desc>
+  <defs><marker id="fig-3-5-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-5-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-3-5-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · HOST ALLOW, BALANCED PRESET</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · KIT HTTP RULE, NETWORK-POLICY@2</text>
+  <line x1="320" y1="8" x2="320" y2="292" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="30" width="284" height="60" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="162" y="47.75" font-size="12.5" text-anchor="middle" font-weight="700">default-code-and-containers</text>
+  <text x="162" y="65.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">github.com:443 · **.github.com:443</text>
+  <text x="162" y="80.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">allow · net:connect:tcp</text>
+  <line x1="162" y1="90" x2="162" y2="119" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-5-head-ink)"/>
+  <rect x="20" y="120" width="284" height="60" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="162" y="144.95" font-size="11.5" text-anchor="middle" font-weight="700">POST api.github.com /repos/o/r/issues</text>
+  <text x="162" y="162.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">body: your data</text>
+  <line x1="162" y1="180" x2="162" y2="209" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-5-head-amber)"/>
+  <rect x="20" y="210" width="284" height="60" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="162" y="235.25" font-size="12.5" text-anchor="middle" font-weight="700">allowed: any method, path, body</text>
+  <text x="162" y="252.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a host rule reads host and port only</text>
+  <rect x="336" y="30" width="284" height="60" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="478" y="47.75" font-size="12.5" text-anchor="middle" font-weight="700">runtime.deny entry</text>
+  <text x="478" y="65.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">hosts: [api.github.com]</text>
+  <text x="478" y="80.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">methods: [DELETE]</text>
+  <line x1="478" y1="90" x2="478" y2="119" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-5-head-ink)"/>
+  <rect x="336" y="120" width="284" height="60" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="478" y="144.95" font-size="11.5" text-anchor="middle" font-weight="700">DELETE api.github.com /repos/o/r</text>
+  <text x="478" y="162.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">blocked by the HTTP rule</text>
+  <line x1="478" y1="180" x2="478" y2="209" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-5-head-rose)"/>
+  <rect x="336" y="210" width="284" height="60" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="478" y="234.95" font-size="11.5" text-anchor="middle" font-weight="700">POST /repos/o/r/issues still passes</text>
+  <text x="478" y="252.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">deny wins only where it matches</text>
+</svg>

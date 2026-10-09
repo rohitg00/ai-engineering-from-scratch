@@ -61,7 +61,7 @@
   <text x="60" y="362" class="step">Anthropic      : tools / tool_use / tool_result</text>
   <text x="60" y="382" class="step">Gemini         : functionDeclarations / functionCall</text>
   <text x="60" y="402" class="step">MCP            : tools/list / tools/call / content</text>
-  <text x="60" y="422" class="step">A2A            : skills / tasks/send / Artifact parts</text>
+  <text x="60" y="422" class="step">A2A            : skills / SendMessage / Artifact parts</text>
   <text x="60" y="442" class="step">WebMCP (2026)  : browser tool manifest / dispatch</text>
   <text x="60" y="472" class="small">every row is the same four steps with different column labels.</text>
 

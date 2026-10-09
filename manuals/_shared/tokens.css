@@ -1,0 +1,71 @@
+:root {
+  --m-paper: #fafaf5;
+  --m-panel: #f3f1e8;
+  --m-panel-edge: #e4e1d4;
+  --m-ink: #1a1a1a;
+  --m-ink-soft: #4a4a4a;
+  --m-ink-mute: #6f6f6a;
+  --m-rule: rgba(26, 26, 26, 0.16);
+  --m-rule-strong: rgba(26, 26, 26, 0.42);
+  --m-accent: #3553ff;
+  --m-code-bg: #efece0;
+
+  --m-grey-ink: #5e5e59;
+  --m-grey-fill: #ecebe3;
+  --m-blue-ink: #2f5d9a;
+  --m-blue-fill: #e6edf6;
+  --m-teal-ink: #18696a;
+  --m-teal-fill: #e1efee;
+  --m-violet-ink: #5b4fa3;
+  --m-violet-fill: #ebe8f5;
+  --m-green-ink: #336b40;
+  --m-green-fill: #e5f0e4;
+  --m-amber-ink: #85590c;
+  --m-amber-fill: #f5ecd9;
+  --m-plum-ink: #8a3d72;
+  --m-plum-fill: #f4e6ef;
+  --m-olive-ink: #515f26;
+  --m-olive-fill: #eef0dc;
+  --m-indigo-ink: #4b4f9e;
+  --m-indigo-fill: #e9e9f6;
+  --m-rose-ink: #b0344d;
+  --m-rose-fill: #f7e4e7;
+
+  --m-font-display: 'VT323', ui-monospace, 'JetBrains Mono', monospace;
+  --m-font-body: 'Source Serif 4', 'Source Serif Pro', 'Iowan Old Style', Georgia, serif;
+  --m-font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+}
+
+[data-theme="dark"] {
+  --m-paper: #0a0d1a;
+  --m-panel: #121729;
+  --m-panel-edge: #232a45;
+  --m-ink: #e8e6dc;
+  --m-ink-soft: #b4b2aa;
+  --m-ink-mute: #8a8882;
+  --m-rule: rgba(232, 230, 220, 0.18);
+  --m-rule-strong: rgba(232, 230, 220, 0.45);
+  --m-accent: #6b8eff;
+  --m-code-bg: #131830;
+
+  --m-grey-ink: #b9b7ae;
+  --m-grey-fill: rgba(232, 230, 220, 0.08);
+  --m-blue-ink: #8fb3e8;
+  --m-blue-fill: rgba(110, 150, 220, 0.16);
+  --m-teal-ink: #6cc4c2;
+  --m-teal-fill: rgba(80, 180, 175, 0.15);
+  --m-violet-ink: #b3a8ec;
+  --m-violet-fill: rgba(150, 135, 230, 0.16);
+  --m-green-ink: #8fcf98;
+  --m-green-fill: rgba(110, 190, 120, 0.15);
+  --m-amber-ink: #e0b45c;
+  --m-amber-fill: rgba(220, 170, 70, 0.15);
+  --m-plum-ink: #e29ccb;
+  --m-plum-fill: rgba(220, 130, 190, 0.15);
+  --m-olive-ink: #c3cf7e;
+  --m-olive-fill: rgba(180, 190, 100, 0.15);
+  --m-indigo-ink: #a9adf0;
+  --m-indigo-fill: rgba(140, 145, 235, 0.16);
+  --m-rose-ink: #f08aa0;
+  --m-rose-fill: rgba(235, 110, 135, 0.16);
+}

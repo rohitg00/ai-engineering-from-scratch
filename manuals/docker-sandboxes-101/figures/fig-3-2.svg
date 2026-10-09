@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 356" role="img" aria-labelledby="fig-3-2-title fig-3-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-2-title">One commit from the clone to the host</title>
+  <desc id="fig-3-2-desc">On the left, the host repository at $CAPTURE/fixtures/repo-clone with main at c7dfd56. A read-only virtiofs mount carries it into the sandbox m101-clone at /run/sandbox/source. The agent works in a private clone on an ext4 volume whose origin is that mount, and commits 81e11df. A git push to origin is refused by the read-only mount. git-daemon serves the clone on port 9418, published on a loopback port, and the host remote sandbox-m101-clone fetches it into refs/remotes/sandbox-m101-clone/main and refs/sandboxes/m101-clone/main. After sbx rm, the remote is gone and the refs/sandboxes entry survives.</desc>
+  <defs><marker id="fig-3-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-2-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-3-2-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-3-2-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">HOST · $CAPTURE/FIXTURES/REPO-CLONE</text>
+  <text x="350" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SANDBOX M101-CLONE</text>
+  <rect x="20" y="26" width="270" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="155" y="46.25" font-size="12.5" text-anchor="middle" font-weight="700">.git and working tree</text>
+  <text x="155" y="63.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">main at c7dfd56 second</text>
+  <rect x="350" y="26" width="270" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <text x="485" y="46.25" font-size="12.5" text-anchor="middle" font-weight="700">/run/sandbox/source</text>
+  <text x="485" y="63.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">virtiofs ro · Read-only file system</text>
+  <line x1="290" y1="51" x2="349" y2="51" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-2-head-ink)"/>
+  <rect class="m-knock" x="268.2" y="34.03" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="319.5" y="45" font-size="11.5" text-anchor="middle">bind mount, ro</text>
+  <rect x="350" y="110" width="270" height="70" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="485" y="132.75" font-size="12.5" text-anchor="middle" font-weight="700">private clone, same path</text>
+  <text x="485" y="150.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/dev/vde ext4 rw · origin = the mount</text>
+  <text x="485" y="165.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">81e11df from sandbox</text>
+  <line x1="560" y1="76" x2="560" y2="109" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-2-head-ink)"/>
+  <rect class="m-knock" x="565" y="81.53" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="568" y="92.5" font-size="11.5">git clone</text>
+  <line x1="370" y1="110" x2="370" y2="77" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-2-head-rose)"/>
+  <rect class="m-knock" x="375" y="82.53" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="378" y="93.5" font-size="11.5" fill="var(--m-rose-ink, #b0344d)">git push: unpacker error</text>
+  <rect x="350" y="214" width="270" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="485" y="234.25" font-size="12.5" text-anchor="middle" font-weight="700">git-daemon :9418</text>
+  <text x="485" y="251.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">published as 127.0.0.1:&lt;port&gt;-&gt;9418/tcp4</text>
+  <line x1="485" y1="180" x2="485" y2="213" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-2-head-ink)"/>
+  <rect class="m-knock" x="490" y="185.53" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="493" y="196.5" font-size="11.5">serves the clone</text>
+  <rect x="20" y="110" width="270" height="70" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="155" y="132.75" font-size="12.5" text-anchor="middle" font-weight="700">remote sandbox-m101-clone</text>
+  <text x="155" y="150.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">git://127.0.0.1:&lt;port&gt;/repo-clone</text>
+  <text x="155" y="165.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">two fetch refspecs in .git/config</text>
+  <path d="M349 239 H320 V145 H291" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-3-2-head-teal)"/>
+  <rect class="m-knock" x="297" y="189.42" width="190.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="300" y="200" font-size="11" fill="var(--m-teal-ink, #18696a)">git fetch sandbox-m101-clone</text>
+  <rect x="20" y="214" width="270" height="70" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="155" y="236.75" font-size="12.5" text-anchor="middle" font-weight="700">after the fetch</text>
+  <text x="155" y="254.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sandbox-m101-clone/main 81e11df</text>
+  <text x="155" y="269.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refs/sandboxes/m101-clone/main 81e11df</text>
+  <line x1="155" y1="180" x2="155" y2="213" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-3-2-head-teal)"/>
+  <rect x="20" y="308" width="600" height="36" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="320" y="329.45" font-size="11.5" text-anchor="middle" font-weight="400">sbx rm: remote and daemon removed, refs/sandboxes/m101-clone/main survives</text>
+  <line x1="155" y1="284" x2="155" y2="307" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-2-head-amber)"/>
+</svg>

@@ -1,0 +1,106 @@
+### 1 · SendStreamingMessage: the full suite
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+Accept: text/event-stream
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "SendStreamingMessage",
+  "params": {
+    "message": {
+      "messageId": "c15521b1-b3dc-450a-9daa-37e51b591d75",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Run the full suite for payments-api at commit 9f3c2e1"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: text/event-stream
+
+data: {"jsonrpc": "2.0", "id": 1, "result": {"task": {"id": "25239d4c-798b-4754-be06-d1f94d0645b1", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "status": {"state": "TASK_STATE_SUBMITTED", "timestamp": "2026-10-06T09:00:04.000Z"}, "history": [{"messageId": "c15521b1-b3dc-450a-9daa-37e51b591d75", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "role": "ROLE_USER", "parts": [{"text": "Run the full suite for payments-api at commit 9f3c2e1"}]}]}}}
+
+data: {"jsonrpc": "2.0", "id": 1, "result": {"statusUpdate": {"taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "status": {"state": "TASK_STATE_WORKING", "message": {"messageId": "47206245-9085-4c5c-9899-3f2b41a7a980", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "role": "ROLE_AGENT", "parts": [{"text": "Checking out 9f3c2e1 and starting the suite"}]}, "timestamp": "2026-10-06T09:00:04.250Z"}}}}
+
+data: {"jsonrpc": "2.0", "id": 1, "result": {"artifactUpdate": {"taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "artifact": {"artifactId": "test-log", "name": "test-log.txt", "parts": [{"text": "tests/test_suite_01.py ........\n"}]}}}}
+
+data: {"jsonrpc": "2.0", "id": 1, "result": {"artifactUpdate": {"taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "artifact": {"artifactId": "test-log", "parts": [{"text": "tests/test_suite_02.py ........\n"}]}, "append": true}}}
+
+# the client closes the connection after 4 events
+
+### 2 · SubscribeToTask: pick the stream back up
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+Accept: text/event-stream
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "SubscribeToTask",
+  "params": {
+    "id": "25239d4c-798b-4754-be06-d1f94d0645b1"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: text/event-stream
+
+data: {"jsonrpc": "2.0", "id": 2, "result": {"task": {"id": "25239d4c-798b-4754-be06-d1f94d0645b1", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "status": {"state": "TASK_STATE_WORKING", "message": {"messageId": "47206245-9085-4c5c-9899-3f2b41a7a980", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "role": "ROLE_AGENT", "parts": [{"text": "Checking out 9f3c2e1 and starting the suite"}]}, "timestamp": "2026-10-06T09:00:04.250Z"}, "history": [{"messageId": "c15521b1-b3dc-450a-9daa-37e51b591d75", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "role": "ROLE_USER", "parts": [{"text": "Run the full suite for payments-api at commit 9f3c2e1"}]}], "artifacts": [{"artifactId": "test-log", "name": "test-log.txt", "parts": [{"text": "tests/test_suite_01.py ........\n"}, {"text": "tests/test_suite_02.py ........\n"}, {"text": "tests/test_suite_03.py ........\n"}, {"text": "tests/test_suite_04.py ........\n"}]}]}}}
+
+data: {"jsonrpc": "2.0", "id": 2, "result": {"artifactUpdate": {"taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "artifact": {"artifactId": "test-log", "parts": [{"text": "tests/test_suite_05.py ........\n"}]}, "append": true}}}
+
+data: {"jsonrpc": "2.0", "id": 2, "result": {"artifactUpdate": {"taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "artifact": {"artifactId": "test-log", "parts": [{"text": "tests/test_suite_06.py ........\n"}]}, "append": true}}}
+
+data: {"jsonrpc": "2.0", "id": 2, "result": {"artifactUpdate": {"taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "artifact": {"artifactId": "test-log", "parts": [{"text": "tests/test_suite_07.py ........\n"}]}, "append": true}}}
+
+data: {"jsonrpc": "2.0", "id": 2, "result": {"artifactUpdate": {"taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "artifact": {"artifactId": "test-log", "parts": [{"text": "tests/test_suite_08.py ........\n"}]}, "append": true, "lastChunk": true}}}
+
+data: {"jsonrpc": "2.0", "id": 2, "result": {"statusUpdate": {"taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "status": {"state": "TASK_STATE_COMPLETED", "message": {"messageId": "b9264586-875b-4914-992a-7a26235a16ba", "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da", "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1", "role": "ROLE_AGENT", "parts": [{"text": "96 passed"}]}, "timestamp": "2026-10-06T09:00:04.500Z"}}}}
+
+### 3 · SubscribeToTask: a finished task
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+Accept: text/event-stream
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "SubscribeToTask",
+  "params": {
+    "id": "25239d4c-798b-4754-be06-d1f94d0645b1"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "error": {
+    "code": -32004,
+    "message": "This operation is not supported",
+    "data": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "UNSUPPORTED_OPERATION",
+        "domain": "a2a-protocol.org",
+        "metadata": {
+          "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+          "state": "TASK_STATE_COMPLETED"
+        }
+      }
+    ]
+  }
+}

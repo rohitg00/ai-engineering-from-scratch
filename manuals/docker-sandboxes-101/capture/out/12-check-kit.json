@@ -1,0 +1,12 @@
+{
+  "action": "net:connect:tcp",
+  "allowed": true,
+  "context": "sandbox:m101-kit",
+  "governance": {
+    "active": false
+  },
+  "resource_type": "net:domain",
+  "resource_value": "example.com:443",
+  "target": "example.com:443",
+  "type": "network"
+}

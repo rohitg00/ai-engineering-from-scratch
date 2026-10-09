@@ -1,0 +1,155 @@
+@page {
+  size: letter;
+  margin: 0.64in 0.62in 0.62in;
+  background: #fafaf5;
+  @top-left {
+    content: string(msection);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 8.5pt;
+    color: #4a4a4a;
+    vertical-align: bottom;
+    padding-bottom: 10pt;
+  }
+  @top-right {
+    content: string(mtitle);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 8.5pt;
+    color: #4a4a4a;
+    vertical-align: bottom;
+    padding-bottom: 10pt;
+  }
+  @bottom-left {
+    content: "aiengineeringfromscratch.com";
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.8pt;
+    letter-spacing: 0.16em;
+    color: #3553ff;
+    vertical-align: top;
+    padding-top: 12pt;
+  }
+  @bottom-center {
+    content: string(mcopy);
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 6.8pt;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    color: #6f6f6a;
+    vertical-align: top;
+    padding-top: 12pt;
+  }
+  @bottom-right {
+    content: counter(page);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 9pt;
+    color: #1a1a1a;
+    vertical-align: top;
+    padding-top: 10pt;
+  }
+}
+
+@page cover {
+  margin: 0.55in 0.6in;
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-left { content: none; }
+  @bottom-center { content: none; }
+  @bottom-right { content: none; }
+}
+
+@page front {
+  @top-left { content: none; }
+  @top-right { content: none; }
+  @bottom-right { content: counter(page, lower-roman); }
+}
+
+@page part {
+  @top-left { content: none; }
+  @top-right { content: none; }
+}
+
+html { background: #fafaf5; }
+body { margin: 0; }
+
+.manual {
+  font-size: 9.2pt;
+  line-height: 1.4;
+  orphans: 3;
+  widows: 3;
+}
+
+.m-cover { page: cover; break-after: page; }
+.m-front-section,
+.m-toc { page: front; }
+.m-toc { break-after: page; }
+.m-part { page: part; break-before: page; break-after: page; padding-top: 1.6in; }
+.m-section { margin-top: 22pt; padding-top: 10pt; border-top: 1.5pt solid var(--m-part); }
+.m-part + .m-section { margin-top: 0; padding-top: 0; border-top: 0; }
+
+.m-section-title { font-size: 36pt; string-set: msection content(text); }
+.m-thesis { font-size: 11.5pt; }
+.m-part-title { font-size: 56pt; }
+.m-cover-title { font-size: 66pt; string-set: mtitle content(text); }
+.m-cover-stamp .m-copy { string-set: mcopy content(text); }
+.m-cover-edition { margin-top: 26pt; padding-top: 8pt; border-top: 0.8pt solid #3553ff; }
+.m-cover-links { display: flex; justify-content: space-between; margin-top: 6pt; font-family: 'JetBrains Mono', monospace; font-size: 9pt; }
+.m-cover-links a { color: #3553ff; text-decoration: none; }
+.m-colophon { break-before: page; page: part; margin-top: 0; padding-top: 1.6in; border-top: 0; font-size: 9pt; max-width: 34em; }
+.m-colophon p { margin: 0.6em 0; }
+.m-section-head { margin-bottom: 10pt; padding-bottom: 7pt; }
+
+.manual h2 { font-size: 12.5pt; margin: 12pt 0 4pt; break-after: avoid; }
+.manual h3 { font-size: 7.4pt; margin: 12pt 0 4pt; break-after: avoid; }
+.manual code { font-size: 0.86em; }
+
+.m-kicker,
+.m-section-num,
+.m-box-label,
+.m-fig-head,
+.m-listing-head,
+.m-table th,
+.m-sources-label { font-size: 7pt; }
+
+.m-fig,
+.m-takeaways,
+.m-rule { break-inside: avoid; }
+.m-fig { margin: 9pt 0 10pt; }
+.m-fig-box { padding: 7pt 8pt 8pt; }
+.m-fig-head { margin-bottom: 6pt; }
+.m-fig-art { overflow: visible; }
+.m-fig-art svg { min-width: 0; }
+.m-fig-cap { font-size: 8pt; }
+
+.m-listing { break-inside: avoid; margin: 8pt 0 9pt; }
+.m-listing-head { padding: 4pt 8pt; }
+.m-listing pre,
+.m-code { font-size: 7.6pt; line-height: 1.45; padding: 6pt 8pt; white-space: pre-wrap; overflow: visible; }
+.m-listing-note { font-size: 7.6pt; }
+
+.m-table-wrap { overflow: visible; }
+.m-table { font-size: 8.4pt; }
+.m-table tr { break-inside: avoid; }
+.m-palette { font-size: 8.6pt; }
+
+.m-takeaways,
+.m-rule { padding: 7pt 10pt 2pt; margin: 9pt 0 10pt; }
+.m-sources { font-size: 7.2pt; margin-top: 10pt; }
+
+.m-toc a::after {
+  content: target-counter(attr(href), page);
+  margin-left: auto;
+  font-family: 'Source Serif 4', Georgia, serif;
+}
+.m-toc a { border-bottom: 1px dotted rgba(26, 26, 26, 0.16); padding: 1.5pt 0; }
+.m-toc-part { break-inside: avoid; }
+.m-part-list a::after { content: target-counter(attr(href), page); margin-left: auto; }
+.m-part-list a { display: flex; flex: 1; text-decoration: none; }
+
+a.m-xref::after {
+  content: " (p. " target-counter(attr(href), page) ")";
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72em;
+  color: #6f6f6a;
+}
+

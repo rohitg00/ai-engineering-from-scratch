@@ -1,0 +1,42 @@
+### 1 · SendMessage: a question
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41242
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "d95bafc8-f2a4-427b-9cf4-bb99f4bea973",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "What languages can you review?"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "message": {
+      "messageId": "3b4b1206-4b6f-467f-b735-2d7e4f7f4bcd",
+      "contextId": "dc423c62-d5f4-48e5-82c0-4963b9bc4334",
+      "role": "ROLE_AGENT",
+      "parts": [
+        {
+          "text": "I review unified diffs in Python, TypeScript and Go. Send the diff as a text/x-diff part and name the base branch."
+        }
+      ]
+    }
+  }
+}

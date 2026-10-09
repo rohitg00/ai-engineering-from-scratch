@@ -1,0 +1,11 @@
+$ sbx exec m101-clone sh -c 'printf hi > from-sandbox.txt && git add from-sandbox.txt && printf '"'"'from sandbox\n'"'"' > /tmp/msg && GIT_AUTHOR_DATE=<ts> GIT_COMMITTER_DATE=<ts> git -c user.name=agent -c user.email=agent@example.test commit -q -F /tmp/msg; git log --oneline; echo; git push 2>&1; echo push-exit=$?'
+81e11df from sandbox
+c7dfd56 second
+086df68 first
+
+error: remote unpack failed: unable to create temporary object directory
+To /run/sandbox/source
+ ! [remote rejected] main -> main (unpacker error)
+error: failed to push some refs to '/run/sandbox/source'
+push-exit=1
+[exit 0]

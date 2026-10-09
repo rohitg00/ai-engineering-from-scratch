@@ -1,0 +1,17 @@
+$ sbx create shell $CAPTURE/fixtures/repo --name m101-demo-2
+
+sandbox    m101-demo-2
+agent      shell
+workspace  $CAPTURE/fixtures/repo (rw)
+image      docker/sandbox-templates:shell-docker
+cpu        10
+memory     32 GiB
+
+Pulling image
+  <layers>
+✓ Image ready
+✓ Created sandbox m101-demo-2
+
+To connect to this sandbox, run:
+  sbx run --name m101-demo-2
+[exit 0]

@@ -1,100 +1,114 @@
-<p align="center"><sub>コミュニティによる翻訳です。正文は<a href="../../README.md">英語版</a>です · <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a></sub></p>
+<p align="center"><sub>AIの支援を受けた翻訳です。内容の基準は<a href="../../README.md">英語版</a>です。</sub></p>
 <p align="center">
-  <img src="../../assets/banner.svg" alt="AI Engineering from Scratch — reference manual banner" width="100%">
+  <img src="../../assets/banner.svg" alt="ゼロから学ぶAIエンジニアリング — リファレンスマニュアルのバナー" width="100%">
 </p>
 
 <p align="center">
-  <b>Read in your language:</b>
-  <a href="../../i18n/es/README.md">Español</a> ·
-  <a href="../../i18n/fr/README.md">Français</a> ·
-  <a href="../../i18n/pt/README.md">Português</a> ·
-  <a href="../../i18n/de/README.md">Deutsch</a> ·
-  <a href="../../i18n/it/README.md">Italiano</a> ·
-  <a href="../../i18n/zh/README.md">简体中文</a> ·
-  <a href="../../i18n/ja/README.md">日本語</a> ·
-  <a href="../../i18n/ko/README.md">한국어</a> ·
-  <a href="../../i18n/hi/README.md">हिन्दी</a> ·
-  <a href="../../i18n/ar/README.md">العربية</a> ·
-  <a href="../../i18n/ru/README.md">Русский</a> ·
-  <a href="../../i18n/tr/README.md">Türkçe</a>
-  <br><sub>Translated landing pages, committed to the repo. English is canonical; lesson pages are machine-translated on the <code>translations</code> branch. See <a href="../../docs/i18n.md">docs/i18n.md</a>.</sub>
+  <a href="../../README.md">🇬🇧 English</a> ·
+  <a href="../../i18n/zh/README.md">🇨🇳 简体中文</a> ·
+  <a href="../../i18n/zh-TW/README.md">🇹🇼 繁體中文（台灣）</a> ·
+  <a href="../../i18n/ja/README.md">🇯🇵 日本語</a> ·
+  <a href="../../i18n/ko/README.md">🇰🇷 한국어</a> ·
+  <a href="../../i18n/pt/README.md">🇵🇹 Português</a> ·
+  <a href="../../i18n/pt-BR/README.md">🇧🇷 Português (Brasil)</a> ·
+  <a href="../../i18n/es/README.md">🇪🇸 Español</a> ·
+  <a href="../../i18n/de/README.md">🇩🇪 Deutsch</a> ·
+  <a href="../../i18n/fr/README.md">🇫🇷 Français</a> ·
+  <a href="../../i18n/it/README.md">🇮🇹 Italiano</a> ·
+  <a href="../../i18n/nl/README.md">🇳🇱 Nederlands</a> ·
+  <a href="../../i18n/pl/README.md">🇵🇱 Polski</a> ·
+  <a href="../../i18n/cs/README.md">🇨🇿 Čeština</a> ·
+  <a href="../../i18n/ro/README.md">🇷🇴 Română</a> ·
+  <a href="../../i18n/hu/README.md">🇭🇺 Magyar</a> ·
+  <a href="../../i18n/el/README.md">🇬🇷 Ελληνικά</a> ·
+  <a href="../../i18n/sv/README.md">🇸🇪 Svenska</a> ·
+  <a href="../../i18n/da/README.md">🇩🇰 Dansk</a> ·
+  <a href="../../i18n/no/README.md">🇳🇴 Norsk</a> ·
+  <a href="../../i18n/fi/README.md">🇫🇮 Suomi</a> ·
+  <a href="../../i18n/ru/README.md">🇷🇺 Русский</a> ·
+  <a href="../../i18n/uk/README.md">🇺🇦 Українська</a> ·
+  <a href="../../i18n/tr/README.md">🇹🇷 Türkçe</a> ·
+  <a href="../../i18n/he/README.md">🇮🇱 עברית</a> ·
+  <a href="../../i18n/ar/README.md">🇸🇦 العربية</a> ·
+  <a href="../../i18n/fa/README.md">🇮🇷 فارسی</a> ·
+  <a href="../../i18n/hi/README.md">🇮🇳 हिन्दी</a> ·
+  <a href="../../i18n/bn/README.md">🇧🇩 বাংলা</a> ·
+  <a href="../../i18n/ur/README.md">🇵🇰 اردو</a> ·
+  <a href="../../i18n/th/README.md">🇹🇭 ไทย</a> ·
+  <a href="../../i18n/vi/README.md">🇻🇳 Tiếng Việt</a> ·
+  <a href="../../i18n/id/README.md">🇮🇩 Bahasa Indonesia</a> ·
+  <a href="../../i18n/tl/README.md">🇵🇭 Tagalog</a>
 </p>
 
 <p align="center">
-  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lessons"></a>
-  <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a>
-  <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Website"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MITライセンス"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 授業"></a>
+  <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20段階"></a>
+  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHubのスター"></a>
+  <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="ウェブサイト"></a>
+  <p align="center">
+ <a href="https://www.star-history.com/rohitg00/ai-engineering-from-scratch">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /><img alt="Star History のランキング" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=rank" /></picture> <picture><source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending&theme=dark" /><source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /><img alt="GitHub の今日のトレンドリポジトリ" src="https://api.star-history.com/badge?repo=rohitg00/ai-engineering-from-scratch&type=trending" /></picture>
+ </a>
+</p>
 </p>
 
-## From the creator of [Agent Memory - #1 Persistent memory ⭐](https://github.com/rohitg00/agentmemory) <a href="https://github.com/rohitg00/agentmemory/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/agentmemory?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a> which naturally works with any agents or chat assistants.
+### スポンサー
+
+<p align="center">
+  <a href="https://serpapi.com/ai-engineering-from-scratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/serpapi-banner-compact.png" width="48%"><img src="../../assets/sponsors/serpapi-banner-compact.png" alt="SerpApi。AIアプリ向けのWeb検索API。あらゆる連携に使えるMarkdown形式とJSON形式に対応しています。" width="440"></picture></a>
+  <a href="https://nitrostack.ai/referral/aiengineeringfromscratch"><picture><source media="(min-width: 768px)" srcset="../../assets/sponsors/nitrostack-banner-equal.png" width="48%"><img src="../../assets/sponsors/nitrostack-banner-equal.png" alt="NitroStack。MCPアプリを10分で構築・デプロイ。無料のクラウドデプロイで、プロダクトをChatGPTとClaudeのマーケットプレイスに掲載できます。" width="440"></picture></a>
+</p>
+
+<p align="center">
+  <sub><span>皆さまの支援により、すべてのレッスンを無料かつオープンソースで提供できます。</span> <a href="#supporters">すべての支援者を見る</a> · <a href="../../SPONSORS.md">支援者になる</a></sub>
+</p>
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
-
 > **学生の84%はすでにAIツールを使っていますが、それを専門的に使いこなせると感じているのはわずか18%です。** このカリキュラムはそのギャップを埋めます。
 >
-> 523のレッスン。20のフェーズ。約342時間。Python、TypeScript、Rust、Julia。各レッスンは再利用できる成果物を残します。プロンプト、スキル、エージェント、MCPサーバー。無料、オープンソース、MIT。
+> 523レッスン。20フェーズ。約342時間。Python、TypeScript、Rust、Julia。各レッスンで再利用可能な成果物（プロンプト、スキル、エージェント、MCPサーバー）が生まれます。無料、オープンソース、MITライセンス。
 >
 > AIをただ学ぶのではありません。自分の手で作ります。最初から最後まで、手作業で。
 
 <!-- STATS:START (generated from site/stats.json by build.js — do not edit by hand) -->
-<p align="center"><sub><b>114,584</b> readers &nbsp;·&nbsp; <b>181,995</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-08-29</sub></p>
+<p align="center"><sub><b>114,584</b> 人の読者 &nbsp;·&nbsp; <b>181,995</b> 過去30日間のページビュー &nbsp;·&nbsp; 2026-08-29時点</sub></p>
 <!-- STATS:END -->
 
-## Start here: choose what you want to build
+## ここから始める：作りたいものを選ぶ
 
-You do not need to scan 523 lessons before beginning. Pick one goal. Each link
-opens the same curriculum on GitHub or the website, and both versions use the
-same lesson code.
+始める前に523レッスンすべてに目を通す必要はありません。目標を1つ選んでください。どのリンクからもGitHubまたはウェブサイトで同じカリキュラムを開けます。どちらも同じレッスンコードを使っています。
 
-| Your goal | Learn on GitHub | Learn on the website |
+| 目標 | GitHubで学ぶ | ウェブサイトで学ぶ |
 |---|---|---|
-| I am new and want the complete foundation | [Phase 0: Setup and Tooling](../../phases/00-setup-and-tooling/) | [Dev Environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| I know Python and want math plus ML foundations | [Phase 1: Math Foundations](../../phases/01-math-foundations/) | [Linear Algebra Intuition](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| I want to build production LLM applications | [Phase 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| I want to build agents | [Phase 14: Agent Engineering](../../phases/14-agent-engineering/) | [The Agent Loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| I want to use coding agents on real repositories | [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json) | [Agent-Assisted Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| I want to shape the right build before implementation | [Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json) | [Product Judgment and Delivery](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
-| I want to build with Model Context Protocol (MCP) | [Model Context Protocol (MCP) route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| I want to write and ship Agent Skills | [Focused Agent Skills route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| I want to prepare for a Claude certification | [Certification onboarding](../../certifications/claude/GETTING_STARTED.md) | [Certification Academy](https://aiengineeringfromscratch.com/certifications.html) |
-| I want to prepare for the MCP Associate (MCPA) | [MCPA onboarding](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA track](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
+| 初心者として、基礎を一通り学びたい | [フェーズ0：セットアップとツール](../../phases/00-setup-and-tooling/) | [開発環境](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
+| Pythonは知っていて、数学と機械学習の基礎を学びたい | [フェーズ1：数学の基礎](../../phases/01-math-foundations/) | [線形代数の直観](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
+| 本番向けのLLMアプリケーションを構築したい | [フェーズ11：LLMエンジニアリング](../../phases/11-llm-engineering/) | [プロンプトエンジニアリング](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
+| エージェントを構築したい | [フェーズ14：エージェントエンジニアリング](../../phases/14-agent-engineering/) | [エージェントループ](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| 実際のリポジトリでコーディングエージェントを使いたい | [エージェント支援エンジニアリングの学習パス](../../learning-paths/using-coding-agents.json) | [エージェント支援エンジニアリング](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
+| 実装に着手する前に、適切なものを作る判断をしたい | [プロダクト判断とデリバリーの学習パス](../../learning-paths/shaping-the-build.json) | [プロダクト判断とデリバリー](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Model Context Protocol（MCP）を使って構築したい | [Model Context Protocol（MCP）の学習パス](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol（MCP）のパス](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
+| Agent Skillsを書いて公開したい | [Agent Skills集中学習パス](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skillsのパス](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
+| Claude認定資格の取得を目指したい | [認定資格の受講案内](../../certifications/claude/GETTING_STARTED.md) | [認定アカデミー](https://aiengineeringfromscratch.com/certifications.html) |
+| MCP Associate（MCPA）の取得を目指したい | [MCPA受講案内](../../certifications/mcpa/GETTING_STARTED.md) | [MCPA学習トラック](https://aiengineeringfromscratch.com/certification?id=mcpa-f) |
 
-Not sure where you fit? Use the [`start-learning` placement tutor](../../skills/start-learning/SKILL.md)
-or the [website prerequisites guide](https://aiengineeringfromscratch.com/prereqs.html).
+自分に合う内容がわからない場合は、[`start-learning`レベル判定チューター](../../skills/start-learning/SKILL.md)または[ウェブサイトの前提条件ガイド](https://aiengineeringfromscratch.com/prereqs.html)を使ってください。
 
-Compare four core domains and six career routes in the [AI Engineering Learning Paths](https://aiengineeringfromscratch.com/learning-paths.html).
+4つの主要分野と6つのキャリアパスを[AIエンジニアリング学習パス](https://aiengineeringfromscratch.com/learning-paths.html)で比較できます。
 
-### スポンサー
+### どのレッスンも同じ方法で進める
 
-<a href="https://serpapi.com/ai-engineering-from-scratch">
-  <img align="left" src="../../assets/sponsors/serpapi-banner.png" alt="SerpApi。AIアプリ向けのWeb検索API。あらゆる連携に使えるMarkdown形式とJSON形式に対応しています。" width="600">
-</a>
+1. **読む**：`docs/en.md`を読み、中心となる考えを自分の言葉で説明する。
+2. **入力して作る**：コードブロックを飾りとして眺めるのではなく、重要なコードを自分で入力して実装する。
+3. **実行する**：`README.md`と`phases/`があるリポジトリのルートからレッスンのコマンドを実行する。
+4. **証拠を残す**：実行したコマンド、作業ディレクトリ、終了コード、意味のある出力、変更または作成した成果物を記録する。
+5. **先へ進む**：出力を説明でき、推測に頼らず小さな変更を1つ加えられるようになってから次へ進む。
 
-<p><br><b>スポンサーの皆さまに感謝します。</b></p>
-<p>皆さまの支援により、すべてのレッスンを無料かつオープンソースで提供できます。</p>
-<p>
-  <a href="#supporters">すべての支援者を見る</a><br>
-  <a href="../../SPONSORS.md">Become a sponsor</a>
-  <br clear="all">
-</p>
+レッスンに記載されたコマンドは、ディレクトリを変更するよう明記されていない限り、リポジトリのルートからのパスです。複数の言語で実装例がある場合は、学習中の言語の実装を実行してください。
 
-### Use every lesson the same way
-
-1. **Read** `docs/en.md` and explain the core idea in your own words.
-2. **Type and build** the important code instead of treating the code block as decoration.
-3. **Run** the lesson command from the repository root, the directory containing `README.md` and `phases/`.
-4. **Keep evidence**: the command, working directory, exit code, meaningful output, and the artifact you changed or produced.
-5. **Continue** only when you can explain the output and make one small change without guessing.
-
-Commands in lesson pages are paths from the repository root unless the lesson
-explicitly says to change directories. If a lesson offers several languages,
-run the implementation for the language you are learning.
-
-### Clone it and produce your first evidence
+### クローンして最初の実行証拠を残す
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
@@ -102,310 +116,216 @@ cd ai-engineering-from-scratch
 python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
 python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+事前チェックでは、今必要な要件と後で必要になるツールを分けて確認します。必須項目の確認に失敗すると、検出した理由と修正コマンドが表示されます。2つ目のコマンドは依存関係のないレッスンを実行し、行列とベクトルの積がニューラルネットワーク層の内部で行われる演算であることを示します。ターミナルの出力を最初の実行証拠として保存してください。
 
-The preflight separates requirements needed now from tools needed later. Every
-required failure includes the detected reason and a corrective command. The
-second command is a dependency-free lesson and ends by showing that a matrix
-times a vector is the operation inside a neural network layer. Save that
-terminal output as your first evidence.
+## AIチューターを30秒で追加する
 
-## Add the AI tutor in 30 seconds
+Node.js、`npx`、スキルに対応したコーディングエージェントがすでにインストールされていれば、2つのコマンドでエージェントをチューターとして使えます。チューターをインストールしたり読んだりするだけなら、リポジトリのクローンは不要です。学習パスを絞った実行可能なラボには`python3`が必要です。Agent Skillsのホストラボには、利用するホストの選択と、書き込み可能なユーザーまたはプロジェクトのスキル領域も必要です。
 
-If Node.js, `npx`, and a skill-capable coding agent are already installed,
-your coding agent can become your tutor in two commands. A repository clone is
-not needed to install or read the tutor. Runnable focused-path labs need
-`python3`. Agent Skills host labs also need a selected host and a writable
-user or project skill scope.
-
-Check the local requirements first:
+まず、ローカルの要件を確認します。
 
 ```bash
 node --version
 npx --version
 python3 --version
 ```
-
-Then install the curriculum skills and choose the host and scope you intend to
-use when the installer asks:
+次に、カリキュラムのスキルをインストールします。インストーラーに尋ねられたら、利用するホストとインストール先のスコープを選んでください。
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
+呼び出し構文はホストごとに異なります。ポータブルな`SKILL.md`形式に含まれるものではありません。
 
-Invocation syntax belongs to the host, not to the portable `SKILL.md` format:
-
-| Host | Start the course | Start Model Context Protocol (MCP) | Start Agent Skills | Run a phase quiz |
+| ホスト | コースを始める | Model Context Protocol（MCP）を始める | Agent Skillsを始める | フェーズのクイズを実行する |
 |---|---|---|---|---|
-| Codex | `start-learning`, or choose it from `/skills` | `learn-mcp`, or choose it from `/skills` | `learn-agent-skills`, or choose it from `/skills` | `check-understanding 13`, or choose it from `/skills` |
+| Codex | `start-learning`、または`/skills`から選択 | `learn-mcp`、または`/skills`から選択 | `learn-agent-skills`、または`/skills`から選択 | `check-understanding 13`、または`/skills`から選択 |
 | Claude Code | `/start-learning` | `/learn-mcp` | `/learn-agent-skills` | `/check-understanding 13` |
-| Other compatible hosts | `Use start-learning to begin the course.` | `Use learn-mcp to start the Model Context Protocol (MCP) path.` | `Use learn-agent-skills to start the Agent Skills Engineering path.` | `Use check-understanding to quiz me on Phase 13.` |
+| その他の対応ホスト | `Use start-learning to begin the course.` | `Use learn-mcp to start the Model Context Protocol (MCP) path.` | `Use learn-agent-skills to start the Agent Skills Engineering path.` | `Use check-understanding to quiz me on Phase 13.` |
 
-A ten-question placement quiz maps what you already know to a starting phase and
-saves a personalized study plan to `LEARNING.md`. From there, the `learn` skill
-teaches one lesson per session: concept, math, code, quiz. It streams lessons
-straight from this repo, and the `course-guide` skill jumps you to the exact
-lesson that covers anything you are stuck on. In Codex, invoke these skills with
-`learn` and `course-guide`; in Claude Code, use `/learn` and `/course-guide`;
-in other compatible hosts, ask to use the skill by name.
+10問のレベル判定クイズで既習内容を確認し、開始フェーズを決めて、個別の学習計画を`LEARNING.md`に保存します。その後、`learn`スキルが1セッションにつき1レッスンを、概念、数学、コード、クイズの順に教えます。レッスンはこのリポジトリから直接読み込まれます。`course-guide`スキルを使うと、つまずいている内容を扱うレッスンに移動できます。Codexでは`learn`と`course-guide`を呼び出し、Claude Codeでは`/learn`と`/course-guide`を使います。その他の対応ホストでは、スキル名を指定して使用を依頼してください。
 
-Only want Model Context Protocol (MCP)? Use the MCP invocation for your host. It creates
-`MCP-LEARNING.md` and follows one 17-lesson route through stateless
-requests, transports, bidirectional work, security, reliability, registry
-governance, and conformance evidence. The exact order and checkpoints live in
-the [Model Context Protocol (MCP) manifest](../../learning-paths/model-context-protocol.json).
+Model Context Protocol（MCP）だけを学ぶ場合は、ホストに対応したMCPの呼び出し方法を使ってください。`MCP-LEARNING.md`を作成し、ステートレスなリクエスト、トランスポート、双方向処理、セキュリティ、信頼性、レジストリガバナンス、適合性の証跡を扱う17レッスンのパスを進みます。正確な順序とチェックポイントは[Model Context Protocol（MCP）マニフェスト](../../learning-paths/model-context-protocol.json)に記載されています。
 
-Only want Agent Skills? Use the Agent Skills invocation for your host. It
-creates `AGENT-SKILLS-LEARNING.md` and follows one coherent five-lesson route:
-contract, discovery, invocation, sandbox boundaries, then release evals and
-real-host portability. Start on the web with the
-[Agent Skills path](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Agent Skillsだけを学ぶ場合は、ホストに対応したAgent Skillsの呼び出し方法を使ってください。`AGENT-SKILLS-LEARNING.md`を作成し、契約、発見、呼び出し、サンドボックス境界、評価によるリリースと実ホストでの移植性を扱う、一貫した5レッスンのパスを進みます。ウェブでは[Agent Skillsのパス](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills)から始められます。
 
-The installer lists the hosts it can configure and asks where to install. If
-you do not have Node.js, `npx`, `python3`, a supported host, or a writable
-scope yet, use the website or read `docs/en.md` manually. That path teaches the
-concepts, but real-host discovery, invocation, script, and uninstall evidence
-remains pending until the preflight is available. Read the lessons at
-[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
+インストーラーは設定可能なホストを一覧表示し、インストール先を尋ねます。Node.js、`npx`、`python3`、対応ホスト、書き込み可能なスコープのいずれかをまだ利用できない場合は、ウェブサイトを使うか、`docs/en.md`を手動で読んでください。そこで概念は学べますが、実ホストでの検出、呼び出し、スクリプト実行、アンインストールの証跡は、事前チェックを実行できるようになるまで取得できません。[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)でレッスンを読むこともできます。
 
-## 仕組み
+## このカリキュラムの進め方
 
-Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a
-flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't
-explain its loss curve. You hook a function to an agent but can't say what attention does
-inside the model that's calling it.
+AIに関する教材は、論文、ファインチューニングの記事、派手なエージェントのデモなど、ばらばらに教えるものが多くあります。それらの内容が体系的につながることはほとんどありません。チャットボットを公開しても損失曲線を説明できなかったり、関数をエージェントにつないでも、それを呼び出すモデルの中でアテンションが何をしているか説明できなかったりします。
 
-This curriculum is the spine. 20 phases, 523 lessons, four languages: Python, TypeScript,
-Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm
-gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time
-PyTorch shows up, you already know what it's doing under the hood.
+このカリキュラムが全体をつなぐ骨格になります。20フェーズ、523レッスン、4つの言語（Python、TypeScript、Rust、Julia）で、片端の線形代数からもう片端の自律型スウォームまでを学びます。すべてのアルゴリズムをまず基礎数学から組み立てます。誤差逆伝播法、トークナイザー、アテンション、エージェントループを学び、PyTorchが登場するころには内部で何が起きているか理解できます。
 
-Each lesson runs the same loop: read the problem, derive the math, write the code, run
-the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding.
-Free, open source, and built to run on your own laptop.
+どのレッスンも同じ流れで進めます。課題を読み、数学を導き、コードを書き、テストを実行し、成果物を残します。5分動画やコピーペーストだけのデプロイ、手取り足取りの案内に頼りません。無料のオープンソースで、自分のノートPC上で実行できます。
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
-
 ## カリキュラムの全体像
 
-Twenty phases stack on top of each other. Math is the floor. Agents and production are the roof.
-Skip ahead if you already know the lower layers, but don't skip and then wonder why something at
-the top is breaking.
+20のフェーズを積み重ねて学びます。土台は数学、最上部はエージェントと本番運用です。下の層をすでに知っていれば先へ進んでもかまいません。ただし、基礎を飛ばしたあとで上の層がうまく動かない理由に悩まないようにしてください。
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
-  P0["Phase 0 — Setup &amp; Tooling"] --> P1["Phase 1 — Math Foundations"]
-  P1 --> P2["Phase 2 — ML Fundamentals"]
-  P2 --> P3["Phase 3 — Deep Learning Core"]
-  P3 --> P4["Phase 4 — Vision"]
-  P3 --> P5["Phase 5 — NLP"]
-  P3 --> P6["Phase 6 — Speech &amp; Audio"]
-  P3 --> P9["Phase 9 — RL"]
-  P5 --> P7["Phase 7 — Transformers"]
-  P7 --> P8["Phase 8 — GenAI"]
-  P7 --> P10["Phase 10 — LLMs from Scratch"]
-  P10 --> P11["Phase 11 — LLM Engineering"]
-  P10 --> P12["Phase 12 — Multimodal"]
-  P11 --> P13["Phase 13 — Tools &amp; Protocols"]
-  P13 --> P14["Phase 14 — Agent Engineering"]
-  P14 --> P15["Phase 15 — Autonomous Systems"]
-  P15 --> P16["Phase 16 — Multi-Agent &amp; Swarms"]
-  P14 --> P17["Phase 17 — Infrastructure &amp; Production"]
-  P15 --> P18["Phase 18 — Ethics &amp; Alignment"]
-  P16 --> P19["Phase 19 — Capstone Projects"]
+  P0["フェーズ0 — セットアップとツール"] --> P1["フェーズ1 — 数学の基礎"]
+  P1 --> P2["フェーズ2 — 機械学習の基礎"]
+  P2 --> P3["フェーズ3 — ディープラーニングの中核"]
+  P3 --> P4["フェーズ4 — コンピュータービジョン"]
+  P3 --> P5["フェーズ5 — 自然言語処理"]
+  P3 --> P6["フェーズ6 — 音声とオーディオ"]
+  P3 --> P9["フェーズ9 — 強化学習"]
+  P5 --> P7["フェーズ7 — Transformer"]
+  P7 --> P8["フェーズ8 — 生成AI"]
+  P7 --> P10["フェーズ10 — LLMをゼロから構築"]
+  P10 --> P11["フェーズ11 — LLMエンジニアリング"]
+  P10 --> P12["フェーズ12 — マルチモーダルAI"]
+  P11 --> P13["フェーズ13 — ツールとプロトコル"]
+  P13 --> P14["フェーズ14 — エージェントエンジニアリング"]
+  P14 --> P15["フェーズ15 — 自律システム"]
+  P15 --> P16["フェーズ16 — マルチエージェントとスウォーム"]
+  P14 --> P17["フェーズ17 — インフラと本番運用"]
+  P15 --> P18["フェーズ18 — 倫理とアラインメント"]
+  P16 --> P19["フェーズ19 — 総合プロジェクト"]
   P17 --> P19
   P18 --> P19
 ```
-
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
-
 ## レッスンの構成
 
-Each lesson lives in its own folder, with the same structure across the entire curriculum:
+各レッスンは専用のフォルダーにあり、カリキュラム全体で同じ構成を使います。
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      runnable implementations (Python, TypeScript, Rust, Julia)
+├── code/      実行可能な実装（Python、TypeScript、Rust、Julia）
 ├── docs/
-│   └── en.md  lesson narrative
-└── outputs/   prompts, skills, agents, or MCP servers this lesson produces
+│   └── en.md  レッスンの解説
+└── outputs/   レッスンで作成するプロンプト、スキル、エージェント、MCPサーバー
 ```
-
-Every lesson follows six beats. The *Build It / Use It* split is the spine — you implement the
-algorithm from scratch first, then run the same thing through the production library. You
-understand what the framework is doing because you wrote the smaller version yourself.
+各レッスンは6つの段階で進みます。中核となるのは*自分で実装する / ライブラリで使う*の流れです。まずアルゴリズムをゼロから実装し、その後、本番用ライブラリで同じ処理を実行します。小さな実装を自分で書いているので、フレームワークの動作を理解できます。
 
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'13px'}}}%%
 flowchart LR
-  M["MOTTO<br/><sub>one-line core idea</sub>"] --> Pr["PROBLEM<br/><sub>concrete pain</sub>"]
-  Pr --> C["CONCEPT<br/><sub>diagrams &amp; intuition</sub>"]
-  C --> B["BUILD IT<br/><sub>raw math, no frameworks</sub>"]
-  B --> U["USE IT<br/><sub>same thing in PyTorch / sklearn</sub>"]
-  U --> S["SHIP IT<br/><sub>prompt · skill · agent · MCP</sub>"]
+  M["合言葉<br/><sub>核心を一行で</sub>"] --> Pr["課題<br/><sub>具体的な困りごと</sub>"]
+  Pr --> C["概念<br/><sub>図解と直観</sub>"]
+  C --> B["作る<br/><sub>生の数学、フレームワークなし</sub>"]
+  B --> U["使う<br/><sub>PyTorch / sklearnで同じ処理</sub>"]
+  U --> S["公開する<br/><sub>プロンプト · スキル · エージェント · MCP</sub>"]
 ```
-
 ## はじめに
 
-入り方は3つ。ひとつ選んでください。
+始め方は3つあります。いずれかを選んでください。
 
-**Option A — learn in your terminal *(recommended)*.** After the Node.js,
-`npx`, host, and scope preflight above, install the learning skills into a
-compatible agent and let the course drive itself:
+**A：ターミナルで学ぶ（推奨）。** 上記のNode.js、`npx`、ホスト、スコープの事前確認を済ませたら、学習スキルを対応エージェントにインストールし、コースに沿って学習を進めます。
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
+上記のホスト別呼び出し表に従ってください。インストールしたスキルから、`start-learning`、`learn`、`course-guide`と、集中学習パスの`learn-mcp`、`learn-agent-skills`を利用できます。レッスンの解説はクローンなしでこのリポジトリから読み込めます。リポジトリのコードを使うコマンドや、実行可能なMCP・Agent Skillsラボにはローカルクローンが必要です。進捗はプロジェクト内の`LEARNING.md`、`MCP-LEARNING.md`、`AGENT-SKILLS-LEARNING.md`に保存されるため、次のセッションで続きから再開できます。
 
-Use the host-specific invocation table above. The installed skills provide
-`start-learning`, `learn`, `course-guide`, and the focused
-`learn-mcp` and `learn-agent-skills` routes. Lesson prose can
-stream from this repository without a clone. A local clone is required for
-copied repository code commands and executable MCP or Agent Skills labs.
-Progress lives in `LEARNING.md`, `MCP-LEARNING.md`, or
-`AGENT-SKILLS-LEARNING.md` in your project, so every session can resume.
+**B：読む。** [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)で完了したレッスンを開くか、[目次](#contents)からフェーズを展開してください。セットアップもクローンも不要です。
 
-**Option B — read.** Open any completed lesson on
-[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) or expand a phase under
-[Contents](#contents). No setup, no cloning.
-
-**Option C — clone and run.**
+**C：クローンして実行する。**
 
 ```bash
 git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
 cd ai-engineering-from-scratch
 python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 ```
+クローンすると、Claude Codeでは学習スキルも自動で読み込まれます。また、すべてのレッスンのコードを`learn`チューターで実際に実行でき、説明を読むだけにとどまりません。
 
-Cloning also auto-loads the learning skills in Claude Code, and gives every
-lesson's code to the `learn` tutor for real execution instead of read-along.
+### 前提条件
 
-### 前提知識
+- 何らかの言語でコードを書けること（Pythonを知っていると役立ちます）。
+- APIを呼び出すだけでなく、AIが**実際にどう動くのか**を理解したいこと。
 
-- You can write code (any language; Python helps).
-- You want to understand how AI **actually works**, not just call APIs.
+### Claude認定資格の準備
 
-### Prepare for Claude certifications
+[Claude認定アカデミー](../../certifications/claude/README.md)は、公式のClaude認定資格4種類（Associate Foundations、Developer Foundations、Architect Foundations、Architect Professional）に向けた無料のオープンソース教材です。各学習パスには、試験要項に対応したレッスン、実行可能なラボ、診断テスト、総合課題、オリジナルの模擬試験が含まれます。
 
-The [Claude Certification Academy](../../certifications/claude/README.md) is a free,
-open-source preparation program for all four official Claude certification tracks:
-Associate Foundations, Developer Foundations, Architect Foundations, and Architect
-Professional. Each route combines blueprint-mapped lessons, runnable labs, a
-diagnostic, capstone work, and a full-length original practice exam.
+[AIネイティブなGitHub受講ガイド](../../certifications/claude/GETTING_STARTED.md)は、Claude Code、Codex、ChatGPT、Cursorなどのエージェントで利用できます。Codexでは`claude-certification`を、Claude Codeでは`/claude-certification`を実行します。その他のホストでは`claude-certification`を使うよう依頼してください。ガイドが認定トラックを選び、`CLAUDE-CERTIFICATION.md`に継続的な学習ルートを作成し、各段階を教え、実際のラボを実行して、成果物に基づくフィードバックを返します。同じカリキュラムは[認定資格ウェブサイト](https://aiengineeringfromscratch.com/certifications.html)でも利用できます。
 
-Use the [AI-native GitHub onboarding guide](../../certifications/claude/GETTING_STARTED.md)
-with Claude Code, Codex, ChatGPT, Cursor, or another agent. Run
-`claude-certification` in Codex, `/claude-certification` in Claude Code, or ask
-another host to use `claude-certification`. It chooses a track, creates a
-persistent route in `CLAUDE-CERTIFICATION.md`, teaches one step at a time, runs
-the real labs, and gives artifact-based feedback. The same curriculum remains
-available on the [certification website](https://aiengineeringfromscratch.com/certifications.html).
+アカデミーは公開されている試験要項に基づく自主学習教材です。Anthropicとは提携していません。実際の試験問題を転載せず、合格を保証するものでもありません。
 
-The academy is independent study material based on public exam objectives. It is not
-affiliated with Anthropic, does not reproduce live exam questions, and cannot guarantee
-a passing score.
+### MCP Associate（MCPA）認定資格の準備
 
-### Prepare for the MCP Associate (MCPA) certification
+[MCPA認定カリキュラム](../../certifications/mcpa/README.md)は、Linux Foundation Trainingを通じて提供されるAgentic AI FoundationのModel Context Protocol Associate試験に向けた、無料のオープンソース教材です。34レッスンで、2026-07-28版のステートレスプロトコルを5つの試験分野に沿って学びます。内容には、従来のハンドシェイクに代わるリクエストごとの`_meta`と`server/discover`、複数回の往復を行うリクエスト、サブスクリプション、キャッシュ、TasksとMCP Appsの拡張、OAuth認可、レジストリとSDKの各層が含まれます。すべてのレッスンに実行可能な標準ライブラリのラボがあり、実行記録が現在のワイヤ形式に照らして検証されます。さらに、診断テスト、総合課題、公開済みの試験要項に沿った出題比率のオリジナル模擬試験3回分も用意しています。
 
-The [MCPA Certification Curriculum](../../certifications/mcpa/README.md) is a free,
-open-source preparation program for the Model Context Protocol Associate exam from the
-Agentic AI Foundation, delivered through Linux Foundation Training. Its 34 lessons teach
-the stateless 2026-07-28 protocol across the five exam domains: per-request `_meta` and
-`server/discover` in place of the old handshake, multi round-trip requests, subscriptions,
-caching, the tasks and MCP Apps extensions, OAuth authorization, and the registry and SDK
-tiers. Every lesson ships a runnable standard-library lab whose transcript is checked for
-the current wire shape, and the track adds a diagnostic, a capstone, and three full-length
-original practice exams whose question mix follows the published blueprint weights.
+[AIネイティブなGitHub受講ガイド](../../certifications/mcpa/GETTING_STARTED.md)は、Claude Code、Codex、ChatGPT、Cursorなどのエージェントで利用できます。Codexでは`mcpa-certification`を、Claude Codeでは`/mcpa-certification`を実行します。その他のホストでは`mcpa-certification`を使うよう依頼してください。ガイドが`MCPA-CERTIFICATION.md`に継続的な学習ルートを作成し、各段階を教え、実際のラボを実行して、成果物に基づくフィードバックを返します。同じカリキュラムは[MCPAトラックページ](https://aiengineeringfromscratch.com/certification?id=mcpa-f)でも利用できます。
 
-Use the [AI-native GitHub onboarding guide](../../certifications/mcpa/GETTING_STARTED.md) with
-Claude Code, Codex, ChatGPT, Cursor, or another agent. Run `mcpa-certification` in Codex,
-`/mcpa-certification` in Claude Code, or ask another host to use `mcpa-certification`. It
-creates a persistent route in `MCPA-CERTIFICATION.md`, teaches one step at a time, runs
-the real labs, and gives artifact-based feedback. The same curriculum is available on the
-[MCPA track page](https://aiengineeringfromscratch.com/certification?id=mcpa-f).
+このカリキュラムは公開されている試験要項に基づく自主学習教材です。Agentic AI FoundationまたはLinux Foundationとは提携していません。実際の試験問題を転載せず、合格を保証するものでもありません。
 
-This curriculum is independent study material based on public exam objectives. It is not
-affiliated with the Agentic AI Foundation or the Linux Foundation, does not reproduce
-live exam questions, and cannot guarantee a passing score.
+### 学習スキル
 
-### The learning skills
-
-| Skill | What it does |
+| スキル | できること |
 |---|---|
-| [`start-learning`](../../skills/start-learning/SKILL.md) | One-time onboarding: why you're learning, placement quiz, personalized plan saved to `LEARNING.md`. |
-| [`learn`](../../skills/learn/SKILL.md) | The tutor loop. Warm-up recall, then the next lesson taught interactively, then its quiz; records progress and a review queue. |
-| [`course-guide`](../../skills/course-guide/SKILL.md) | Topic router. "Where do I learn attention?" or "my loss is NaN" → the exact lessons, with links. |
-| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Focused Model Context Protocol (MCP) tutor. Creates `MCP-LEARNING.md`, follows the 17-lesson manifest, and records wire, security, reliability, and conformance evidence. |
-| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Focused Agent Skills tutor. Creates `AGENT-SKILLS-LEARNING.md`, teaches lessons 22, 24, 25, 26, and 27, and records real-host evidence. |
-| [`claude-certification`](../../skills/claude-certification/SKILL.md) | Certification tutor. Chooses CCAO-F, CCDV-F, CCAR-F, or CCAR-P; teaches each lesson; runs labs; reviews artifacts; administers diagnostics and mocks; saves progress. |
-| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPA tutor. Follows the 34-lesson `mcpa-f` route on the 2026-07-28 protocol; teaches each lesson; runs labs and the wire checker; administers the diagnostic and three mocks; saves progress. |
-| [`find-your-level`](../../skills/find-your-level/SKILL.md) | Ten-question placement quiz. Maps your knowledge to a starting phase and produces a personalized path with hour estimates. |
-| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | Per-phase quiz, eight questions, with feedback and specific lessons to review. Use the Codex, Claude Code, or natural-language form in the invocation table above. |
+| [`start-learning`](../../skills/start-learning/SKILL.md) | 初回の受講案内。学習目的を確認し、レベル判定クイズを行い、個別計画を`LEARNING.md`に保存します。 |
+| [`learn`](../../skills/learn/SKILL.md) | チューターとして学習を進行します。復習から始め、次のレッスンを対話形式で教え、そのクイズを出し、進捗と復習キューを記録します。 |
+| [`course-guide`](../../skills/course-guide/SKILL.md) | トピック案内。「アテンションはどこで学べる？」「損失がNaNになる」などの質問から、関連レッスンとリンクを案内します。 |
+| [`learn-mcp`](../../skills/learn-mcp/SKILL.md) | Model Context Protocol（MCP）に特化したチューターです。`MCP-LEARNING.md`を作成して17レッスンのマニフェストに沿って進み、ワイヤ形式、セキュリティ、信頼性、適合性の証跡を記録します。 |
+| [`learn-agent-skills`](../../skills/learn-agent-skills/SKILL.md) | Agent Skillsに特化したチューターです。`AGENT-SKILLS-LEARNING.md`を作成し、レッスン22、24、25、26、27を教えて、実ホストでの証跡を記録します。 |
+| [`claude-certification`](../../skills/claude-certification/SKILL.md) | 認定資格チューターです。CCAO-F、CCDV-F、CCAR-F、CCAR-Pからトラックを選び、各レッスンを教え、ラボを実行し、成果物をレビューし、診断と模擬試験を実施して、進捗を保存します。 |
+| [`mcpa-certification`](../../skills/mcpa-certification/SKILL.md) | MCPAチューターです。2026-07-28プロトコルに対応する34レッスンの`mcpa-f`パスに沿って教え、ラボとワイヤ形式チェッカーを実行し、診断と模擬試験3回分を実施して、進捗を保存します。 |
+| [`find-your-level`](../../skills/find-your-level/SKILL.md) | 10問のレベル判定クイズで知識を確認し、開始フェーズと所要時間の目安を含む個別パスを作成します。 |
+| [`check-understanding <phase>`](../../skills/check-understanding/SKILL.md) | 各フェーズの8問クイズを出し、フィードバックと復習する具体的なレッスンを示します。上記の呼び出し表にあるCodex、Claude Code、自然言語での形式を使えます。 |
+
+```text
+░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
+```
+## コアカリキュラムを本として読む
+
+`phases/`にある20フェーズのコアカリキュラムは、全6巻の書籍シリーズになります。EPUBとPDFは同じコアレッスンのソースからCIで生成され、[GitHubの各リリース](https://github.com/rohitg00/ai-engineering-from-scratch/releases)に添付されます。以下のリンクは常に最新リリースを指します。巻番号はシリーズ内の番号であり、版番号ではありません。各巻には日付入りの版表示があり、以前の版も各リリースから引き続きダウンロードできます。
+
+認定カリキュラムは意図的に書籍化していません。AIチューターの状態、実行可能なラボ、対話型図表、診断、時間制限付き模擬試験は、GitHubとウェブサイトでそのまま利用できます。
+
+| 巻 | タイトル | フェーズ | ダウンロード |
+|---|---|---|---|
+| 1 | 基礎 — 数学、ツール、古典的機械学習 | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
+| 2 | ディープラーニング — ネットワーク、ビジョン、音声 | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
+| 3 | 言語 — NLPの基礎とTransformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
+| 4 | 大規模言語モデル — 生成、強化学習、事前学習、エンジニアリング | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
+| 5 | エージェント — マルチモーダル、プロトコル、自律性、スウォーム | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
+| 6 | 本番運用 — インフラ、安全性、総合プロジェクト | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
+
+書籍はある時点のスナップショットで、このリポジトリは更新が続く版です。各章の末尾には、レッスンのアニメーション図、クイズ、実行可能なコードへのリンクがあります。`python3 scripts/build_book.py`でローカル生成できます（pandocが必要です）。パイプラインの詳細は[book/README.md](../../book/README.md)をご覧ください。
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
 
-## Read the core curriculum as a book
+## どのレッスンも成果物を生み出す
 
-The 20-phase core curriculum under `phases/` compiles into a six-volume book series. EPUB and PDF are built by CI from the same core lesson sources and attached to every [GitHub release](https://github.com/rohitg00/ai-engineering-from-scratch/releases); the links below always resolve to the newest release. Volume numbers index the series, not versions: each copy carries a dated edition stamp, and older editions stay downloadable from their release.
-
-Certification curricula are intentionally not converted into the books. Their
-AI tutor state, runnable labs, interactive figures, diagnostics, and timed mocks
-remain first-class on GitHub and the website.
-
-| Vol | Title | Phases | Download |
-|-----|-------|--------|----------|
-| 1 | Foundations · Math, Tooling, and Classical Machine Learning | 00-02 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol1-foundations.pdf) |
-| 2 | Deep Learning · Networks, Vision, and Speech | 03, 04, 06 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol2-deep-learning.pdf) |
-| 3 | Language · NLP Foundations and the Transformer | 05, 07 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol3-language.pdf) |
-| 4 | Large Language Models · Generation, Reinforcement, Pretraining, and Engineering | 08-11 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol4-llms.pdf) |
-| 5 | Agents · Multimodality, Protocols, Autonomy, and Swarms | 12-16 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol5-agents.pdf) |
-| 6 | Production · Infrastructure, Safety, and Capstones | 17-19 | [EPUB](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.epub) · [PDF](https://github.com/rohitg00/ai-engineering-from-scratch/releases/latest/download/aiefs-vol6-production.pdf) |
-
-The book is the snapshot; this repository is the living edition. Every chapter ends with links back to the lesson's animated figures, quiz, and runnable code. Build locally with `python3 scripts/build_book.py` (pandoc required); pipeline details in [book/README.md](../../book/README.md).
-
-```text
-░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
-```
-
-## どのレッスンにも成果物がある
-
-Other curricula end with *"congratulations, you learned X."* Each lesson here ends with a
-**reusable tool** you can install or paste into your daily workflow.
+ほかのカリキュラムは「Xを学びました。おめでとう」で終わります。このカリキュラムでは、各レッスンが日々のワークフローにインストールしたり貼り付けたりできる**再利用可能なツール**で締めくくられます。
 
 <table>
 <tr>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A prompts"/><br/><sub>FIG_001 · A</sub><br/><b>PROMPTS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B skills"/><br/><sub>FIG_001 · B</sub><br/><b>SKILLS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C agents"/><br/><sub>FIG_001 · C</sub><br/><b>AGENTS</b></th>
-<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCP servers"/><br/><sub>FIG_001 · D</sub><br/><b>MCP SERVERS</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-a-prompts.svg" width="120" height="120" alt="FIG_001.A プロンプト"/><br/><sub>FIG_001 · A</sub><br/><b>プロンプト</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-b-skills.svg" width="120" height="120" alt="FIG_001.B スキル"/><br/><sub>FIG_001 · B</sub><br/><b>スキル</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-c-agents.svg" width="120" height="120" alt="FIG_001.C エージェント"/><br/><sub>FIG_001 · C</sub><br/><b>エージェント</b></th>
+<th align="left" width="25%"><img src="../../site/assets/figures/001-d-mcp-servers.svg" width="120" height="120" alt="FIG_001.D MCPサーバー"/><br/><sub>FIG_001 · D</sub><br/><b>MCPサーバー</b></th>
 </tr>
 <tr>
-<td valign="top">Paste into any AI assistant for expert-level help on a narrow task.</td>
-<td valign="top">Drop into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads <code>SKILL.md</code>.</td>
-<td valign="top">Deploy as autonomous workers — you wrote the loop yourself in Phase 14.</td>
-<td valign="top">Plug into any MCP-compatible client. Built end-to-end in Phase 13.</td>
+<td valign="top">狭いタスクについて専門的な助言を得るため、任意のAIアシスタントに貼り付けて使えます。</td>
+<td valign="top">`SKILL.md`を読み込めるClaude、Cursor、Codex、OpenClaw、Hermesなどのエージェントに追加できます。</td>
+<td valign="top">フェーズ14で自分でループを実装した自律ワーカーとしてデプロイできます。</td>
+<td valign="top">MCP互換クライアントに接続して使えます。フェーズ13でエンドツーエンドに構築します。</td>
 </tr>
 </table>
 
-> Install the lot with `python3 scripts/install_skills.py <target>`. Real tools, not homework.
-> By the end of the curriculum, you have a portfolio of 523 artifacts you actually
-> understand because you built them.
+> `python3 scripts/install_skills.py <target>`でまとめてインストールできます。宿題ではなく、実際に使えるツールです。
+> カリキュラムを終えるころには、自分で作って理解した成果物523点をポートフォリオとして持てます。
+### FIG_002 · 実装例
 
-### FIG_002 · A worked sample
-
-Phase 14, lesson 1: the agent loop. ~120 lines of pure Python, no dependencies.
+フェーズ14、レッスン1：エージェントループ。依存関係のない純粋なPythonコード約120行です。
 
 <table>
 <tr>
 <td valign="top" width="50%">
 
-**`code/agent_loop.py`** &nbsp; <sub><i>build it</i></sub>
+**`code/agent_loop.py`** &nbsp; <sub><i>作る</i></sub>
 
 ```python
 def run(query, tools):
@@ -420,11 +340,10 @@ def run(query, tools):
         return msg.content
     raise StepLimitExceeded
 ```
-
 </td>
 <td valign="top" width="50%">
 
-**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>ship it</i></sub>
+**`outputs/skill-agent-loop.md`** &nbsp; <sub><i>公開する</i></sub>
 
 ```markdown
 ---
@@ -436,7 +355,6 @@ lesson: 01
 
 Implement a minimal agent loop that...
 ```
-
 **`outputs/prompt-debug-agent.md`**
 
 ```markdown
@@ -444,7 +362,6 @@ You are an agent debugger. Given the trace
 of an agent run, identify the step where
 the agent went wrong and explain why...
 ```
-
 </td>
 </tr>
 </table>
@@ -452,777 +369,753 @@ the agent went wrong and explain why...
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
-
 <a id="contents"></a>
 
 ## 目次
 
-Twenty phases. Click any phase to expand its lesson list.
+全20フェーズです。各フェーズをクリックすると、レッスン一覧が開きます。
 
 <a id="phase-0"></a>
-### Phase 0: Setup & Tooling `12 lessons`
-> Get your environment ready for everything that follows.
+### フェーズ0：セットアップとツール `12 レッスン`
 
-| # | Lesson | Type | Lang |
+> これから学ぶ内容に備えて、開発環境を整えましょう。
+
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Dev Environment](../../phases/00-setup-and-tooling/01-dev-environment/) | Build | Python |
-| 02 | [Git & Collaboration](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | Learn | — |
-| 03 | [GPU Setup & Cloud](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | Build | Python |
-| 04 | [APIs & Keys](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Build | Python |
-| 05 | [Jupyter Notebooks](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | Build | Python |
-| 06 | [Python Environments](../../phases/00-setup-and-tooling/06-python-environments/) | Build | Shell |
-| 07 | [Docker for AI](../../phases/00-setup-and-tooling/07-docker-for-ai/) | Build | Docker |
-| 08 | [Editor Setup](../../phases/00-setup-and-tooling/08-editor-setup/) | Build | — |
-| 09 | [Data Management](../../phases/00-setup-and-tooling/09-data-management/) | Build | Python |
-| 10 | [Terminal & Shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Learn | — |
-| 11 | [Linux for AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Learn | — |
-| 12 | [Debugging & Profiling](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Build | Python |
+| 01 | [開発環境](../../phases/00-setup-and-tooling/01-dev-environment/) | 制作 | Python |
+| 02 | [Gitとコラボレーション](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | 学習 | — |
+| 03 | [GPUのセットアップとクラウド](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | 制作 | Python |
+| 04 | [APIとキー](../../phases/00-setup-and-tooling/04-apis-and-keys/) | 制作 | Python |
+| 05 | [Jupyter Notebook](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | 制作 | Python |
+| 06 | [Python環境](../../phases/00-setup-and-tooling/06-python-environments/) | 制作 | Shell |
+| 07 | [AIのためのDocker](../../phases/00-setup-and-tooling/07-docker-for-ai/) | 制作 | Docker |
+| 08 | [エディターのセットアップ](../../phases/00-setup-and-tooling/08-editor-setup/) | 制作 | — |
+| 09 | [データ管理](../../phases/00-setup-and-tooling/09-data-management/) | 制作 | Python |
+| 10 | [ターミナルとシェル](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | 学習 | — |
+| 11 | [AIのためのLinux](../../phases/00-setup-and-tooling/11-linux-for-ai/) | 学習 | — |
+| 12 | [デバッグとプロファイリング](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | 制作 | Python |
 
 <details id="phase-1">
-<summary><b>Phase 1 — Math Foundations</b> &nbsp;<code>22 lessons</code>&nbsp; <em>The intuition behind every AI algorithm, through code.</em></summary>
+<summary><b>フェーズ1 — 数学の基礎</b> &nbsp;<code>22 レッスン</code>&nbsp; <em>コードを通じて、あらゆるAIアルゴリズムの背景にある直観を学びます。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Linear Algebra Intuition](../../phases/01-math-foundations/01-linear-algebra-intuition/) | Learn | Python, Julia |
-| 02 | [Vectors, Matrices & Operations](../../phases/01-math-foundations/02-vectors-matrices-operations/) | Build | Python, Julia |
-| 03 | [Matrix Transformations & Eigenvalues](../../phases/01-math-foundations/03-matrix-transformations/) | Build | Python, Julia |
-| 04 | [Calculus for ML: Derivatives & Gradients](../../phases/01-math-foundations/04-calculus-for-ml/) | Learn | Python |
-| 05 | [Chain Rule & Automatic Differentiation](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Build | Python |
-| 06 | [Probability & Distributions](../../phases/01-math-foundations/06-probability-and-distributions/) | Learn | Python |
-| 07 | [Bayes' Theorem & Statistical Thinking](../../phases/01-math-foundations/07-bayes-theorem/) | Build | Python |
-| 08 | [Optimization: Gradient Descent Family](../../phases/01-math-foundations/08-optimization/) | Build | Python |
-| 09 | [Information Theory: Entropy, KL Divergence](../../phases/01-math-foundations/09-information-theory/) | Learn | Python |
-| 10 | [Dimensionality Reduction: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Build | Python |
-| 11 | [Singular Value Decomposition](../../phases/01-math-foundations/11-singular-value-decomposition/) | Build | Python, Julia |
-| 12 | [Tensor Operations](../../phases/01-math-foundations/12-tensor-operations/) | Build | Python |
-| 13 | [Numerical Stability](../../phases/01-math-foundations/13-numerical-stability/) | Build | Python |
-| 14 | [Norms & Distances](../../phases/01-math-foundations/14-norms-and-distances/) | Build | Python |
-| 15 | [Statistics for ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Build | Python |
-| 16 | [Sampling Methods](../../phases/01-math-foundations/16-sampling-methods/) | Build | Python |
-| 17 | [Linear Systems](../../phases/01-math-foundations/17-linear-systems/) | Build | Python |
-| 18 | [Convex Optimization](../../phases/01-math-foundations/18-convex-optimization/) | Build | Python |
-| 19 | [Complex Numbers for AI](../../phases/01-math-foundations/19-complex-numbers/) | Learn | Python |
-| 20 | [The Fourier Transform](../../phases/01-math-foundations/20-fourier-transform/) | Build | Python |
-| 21 | [Graph Theory for ML](../../phases/01-math-foundations/21-graph-theory/) | Build | Python |
-| 22 | [Stochastic Processes](../../phases/01-math-foundations/22-stochastic-processes/) | Learn | Python |
+| 01 | [線形代数の直観](../../phases/01-math-foundations/01-linear-algebra-intuition/) | 学習 | Python, Julia |
+| 02 | [ベクトル、行列と演算](../../phases/01-math-foundations/02-vectors-matrices-operations/) | 制作 | Python, Julia |
+| 03 | [行列変換と固有値](../../phases/01-math-foundations/03-matrix-transformations/) | 制作 | Python, Julia |
+| 04 | [機械学習のための微積分：導関数と勾配](../../phases/01-math-foundations/04-calculus-for-ml/) | 学習 | Python |
+| 05 | [連鎖律と自動微分](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | 制作 | Python |
+| 06 | [確率と分布](../../phases/01-math-foundations/06-probability-and-distributions/) | 学習 | Python |
+| 07 | [ベイズの定理と統計的思考](../../phases/01-math-foundations/07-bayes-theorem/) | 制作 | Python |
+| 08 | [最適化：勾配降下法の各種手法](../../phases/01-math-foundations/08-optimization/) | 制作 | Python |
+| 09 | [情報理論：エントロピーとKLダイバージェンス](../../phases/01-math-foundations/09-information-theory/) | 学習 | Python |
+| 10 | [次元削減：PCA、t-SNE、UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | 制作 | Python |
+| 11 | [特異値分解](../../phases/01-math-foundations/11-singular-value-decomposition/) | 制作 | Python, Julia |
+| 12 | [テンソル演算](../../phases/01-math-foundations/12-tensor-operations/) | 制作 | Python |
+| 13 | [数値安定性](../../phases/01-math-foundations/13-numerical-stability/) | 制作 | Python |
+| 14 | [ノルムと距離](../../phases/01-math-foundations/14-norms-and-distances/) | 制作 | Python |
+| 15 | [機械学習のための統計](../../phases/01-math-foundations/15-statistics-for-ml/) | 制作 | Python |
+| 16 | [サンプリング手法](../../phases/01-math-foundations/16-sampling-methods/) | 制作 | Python |
+| 17 | [線形システム](../../phases/01-math-foundations/17-linear-systems/) | 制作 | Python |
+| 18 | [凸最適化](../../phases/01-math-foundations/18-convex-optimization/) | 制作 | Python |
+| 19 | [AIのための複素数](../../phases/01-math-foundations/19-complex-numbers/) | 学習 | Python |
+| 20 | [フーリエ変換](../../phases/01-math-foundations/20-fourier-transform/) | 制作 | Python |
+| 21 | [機械学習のためのグラフ理論](../../phases/01-math-foundations/21-graph-theory/) | 制作 | Python |
+| 22 | [確率過程](../../phases/01-math-foundations/22-stochastic-processes/) | 学習 | Python |
 
 </details>
 
 <details id="phase-2">
-<summary><b>Phase 2 — ML Fundamentals</b> &nbsp;<code>18 lessons</code>&nbsp; <em>Classical ML — still the backbone of most production AI.</em></summary>
+<summary><b>フェーズ2 — 機械学習の基礎</b> &nbsp;<code>18 レッスン</code>&nbsp; <em>古典的な機械学習は、今も多くの本番AIシステムを支えています。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [What Is Machine Learning](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Learn | Python |
-| 02 | [Linear Regression from Scratch](../../phases/02-ml-fundamentals/02-linear-regression/) | Build | Python |
-| 03 | [Logistic Regression & Classification](../../phases/02-ml-fundamentals/03-logistic-regression/) | Build | Python |
-| 04 | [Decision Trees & Random Forests](../../phases/02-ml-fundamentals/04-decision-trees/) | Build | Python |
-| 05 | [Support Vector Machines](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Build | Python |
-| 06 | [KNN & Distance Metrics](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Build | Python |
-| 07 | [Unsupervised Learning: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Build | Python |
-| 08 | [Feature Engineering & Selection](../../phases/02-ml-fundamentals/08-feature-engineering/) | Build | Python |
-| 09 | [Model Evaluation: Metrics, Cross-Validation](../../phases/02-ml-fundamentals/09-model-evaluation/) | Build | Python |
-| 10 | [Bias, Variance & the Learning Curve](../../phases/02-ml-fundamentals/10-bias-variance/) | Learn | Python |
-| 11 | [Ensemble Methods: Boosting, Bagging, Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Build | Python |
-| 12 | [Hyperparameter Tuning](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | Build | Python |
-| 13 | [ML Pipelines & Experiment Tracking](../../phases/02-ml-fundamentals/13-ml-pipelines/) | Build | Python |
-| 14 | [Naive Bayes](../../phases/02-ml-fundamentals/14-naive-bayes/) | Build | Python |
-| 15 | [Time Series Fundamentals](../../phases/02-ml-fundamentals/15-time-series/) | Build | Python |
-| 16 | [Anomaly Detection](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Build | Python |
-| 17 | [Handling Imbalanced Data](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Build | Python |
-| 18 | [Feature Selection](../../phases/02-ml-fundamentals/18-feature-selection/) | Build | Python |
+| 01 | [機械学習とは](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | 学習 | Python |
+| 02 | [ゼロから実装する線形回帰](../../phases/02-ml-fundamentals/02-linear-regression/) | 制作 | Python |
+| 03 | [ロジスティック回帰と分類](../../phases/02-ml-fundamentals/03-logistic-regression/) | 制作 | Python |
+| 04 | [決定木とランダムフォレスト](../../phases/02-ml-fundamentals/04-decision-trees/) | 制作 | Python |
+| 05 | [サポートベクターマシン](../../phases/02-ml-fundamentals/05-support-vector-machines/) | 制作 | Python |
+| 06 | [k近傍法（KNN）と距離尺度](../../phases/02-ml-fundamentals/06-knn-and-distances/) | 制作 | Python |
+| 07 | [教師なし学習：K-Means、DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | 制作 | Python |
+| 08 | [特徴量エンジニアリングと選択](../../phases/02-ml-fundamentals/08-feature-engineering/) | 制作 | Python |
+| 09 | [モデル評価：指標と交差検証](../../phases/02-ml-fundamentals/09-model-evaluation/) | 制作 | Python |
+| 10 | [バイアス、分散と学習曲線](../../phases/02-ml-fundamentals/10-bias-variance/) | 学習 | Python |
+| 11 | [アンサンブル手法：ブースティング、バギング、スタッキング](../../phases/02-ml-fundamentals/11-ensemble-methods/) | 制作 | Python |
+| 12 | [ハイパーパラメーターの調整](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | 制作 | Python |
+| 13 | [機械学習パイプラインと実験追跡](../../phases/02-ml-fundamentals/13-ml-pipelines/) | 制作 | Python |
+| 14 | [ナイーブベイズ](../../phases/02-ml-fundamentals/14-naive-bayes/) | 制作 | Python |
+| 15 | [時系列の基礎](../../phases/02-ml-fundamentals/15-time-series/) | 制作 | Python |
+| 16 | [異常検知](../../phases/02-ml-fundamentals/16-anomaly-detection/) | 制作 | Python |
+| 17 | [不均衡データへの対処](../../phases/02-ml-fundamentals/17-imbalanced-data/) | 制作 | Python |
+| 18 | [特徴量選択](../../phases/02-ml-fundamentals/18-feature-selection/) | 制作 | Python |
 
 </details>
 
 <details id="phase-3">
-<summary><b>Phase 3 — Deep Learning Core</b> &nbsp;<code>13 lessons</code>&nbsp; <em>Neural networks from first principles. No frameworks until you build one.</em></summary>
+<summary><b>フェーズ3 — ディープラーニングの中核</b> &nbsp;<code>13 レッスン</code>&nbsp; <em>第一原理からニューラルネットワークを構築します。自分で実装するまではフレームワークを使いません。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [The Perceptron: Where It All Started](../../phases/03-deep-learning-core/01-the-perceptron/) | Build | Python |
-| 02 | [Multi-Layer Networks & Forward Pass](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Build | Python |
-| 03 | [Backpropagation from Scratch](../../phases/03-deep-learning-core/03-backpropagation/) | Build | Python |
-| 04 | [Activation Functions: ReLU, Sigmoid, GELU & Why](../../phases/03-deep-learning-core/04-activation-functions/) | Build | Python |
-| 05 | [Loss Functions: MSE, Cross-Entropy, Contrastive](../../phases/03-deep-learning-core/05-loss-functions/) | Build | Python |
-| 06 | [Optimizers: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Build | Python |
-| 07 | [Regularization: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Build | Python |
-| 08 | [Weight Initialization & Training Stability](../../phases/03-deep-learning-core/08-weight-initialization/) | Build | Python |
-| 09 | [Learning Rate Schedules & Warmup](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Build | Python |
-| 10 | [Build Your Own Mini Framework](../../phases/03-deep-learning-core/10-mini-framework/) | Build | Python |
-| 11 | [Introduction to PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Build | Python |
-| 12 | [Introduction to JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Build | Python |
-| 13 | [Debugging Neural Networks](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Build | Python |
+| 01 | [パーセプトロン：すべての始まり](../../phases/03-deep-learning-core/01-the-perceptron/) | 制作 | Python |
+| 02 | [多層ネットワークと順伝播](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 制作 | Python |
+| 03 | [ゼロから実装する誤差逆伝播法](../../phases/03-deep-learning-core/03-backpropagation/) | 制作 | Python |
+| 04 | [活性化関数：ReLU、Sigmoid、GELUとその役割](../../phases/03-deep-learning-core/04-activation-functions/) | 制作 | Python |
+| 05 | [損失関数：MSE、交差エントロピー、対照損失](../../phases/03-deep-learning-core/05-loss-functions/) | 制作 | Python |
+| 06 | [最適化手法：SGD、Momentum、Adam、AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 制作 | Python |
+| 07 | [正則化：Dropout、Weight Decay、BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 制作 | Python |
+| 08 | [重みの初期化と学習の安定性](../../phases/03-deep-learning-core/08-weight-initialization/) | 制作 | Python |
+| 09 | [学習率スケジュールとウォームアップ](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 制作 | Python |
+| 10 | [ミニフレームワークを自作する](../../phases/03-deep-learning-core/10-mini-framework/) | 制作 | Python |
+| 11 | [PyTorch入門](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | 制作 | Python |
+| 12 | [JAX入門](../../phases/03-deep-learning-core/12-intro-to-jax/) | 制作 | Python |
+| 13 | [ニューラルネットワークのデバッグ](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | 制作 | Python |
 
 </details>
 
 <details id="phase-4">
-<summary><b>Phase 4 — Computer Vision</b> &nbsp;<code>28 lessons</code>&nbsp; <em>From pixels to understanding — image, video, 3D, VLMs, and world models.</em></summary>
+<summary><b>フェーズ4 — コンピュータービジョン</b> &nbsp;<code>28 レッスン</code>&nbsp; <em>ピクセルから理解へ：画像、動画、3D、VLM、世界モデルを扱います。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Image Fundamentals: Pixels, Channels, Color Spaces](../../phases/04-computer-vision/01-image-fundamentals/) | Learn | Python |
-| 02 | [Convolutions from Scratch](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Build | Python |
-| 03 | [CNNs: LeNet to ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | Build | Python |
-| 04 | [Image Classification](../../phases/04-computer-vision/04-image-classification/) | Build | Python |
-| 05 | [Transfer Learning & Fine-Tuning](../../phases/04-computer-vision/05-transfer-learning/) | Build | Python |
-| 06 | [Object Detection — YOLO from Scratch](../../phases/04-computer-vision/06-object-detection-yolo/) | Build | Python |
-| 07 | [Semantic Segmentation — U-Net](../../phases/04-computer-vision/07-semantic-segmentation-unet/) | Build | Python |
-| 08 | [Instance Segmentation — Mask R-CNN](../../phases/04-computer-vision/08-instance-segmentation-mask-rcnn/) | Build | Python |
-| 09 | [Image Generation — GANs](../../phases/04-computer-vision/09-image-generation-gans/) | Build | Python |
-| 10 | [Image Generation — Diffusion Models](../../phases/04-computer-vision/10-image-generation-diffusion/) | Build | Python |
-| 11 | [Stable Diffusion — Architecture & Fine-Tuning](../../phases/04-computer-vision/11-stable-diffusion/) | Build | Python |
-| 12 | [Video Understanding — Temporal Modeling](../../phases/04-computer-vision/12-video-understanding/) | Build | Python |
-| 13 | [3D Vision: Point Clouds, NeRFs](../../phases/04-computer-vision/13-3d-vision-nerf/) | Build | Python |
-| 14 | [Vision Transformers (ViT)](../../phases/04-computer-vision/14-vision-transformers/) | Build | Python |
-| 15 | [Real-Time Vision: Edge Deployment](../../phases/04-computer-vision/15-real-time-edge/) | Build | Python |
-| 16 | [Build a Complete Vision Pipeline](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | Build | Python |
-| 17 | [Self-Supervised Vision — SimCLR, DINO, MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | Build | Python |
-| 18 | [Open-Vocabulary Vision — CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | Build | Python |
-| 19 | [OCR & Document Understanding](../../phases/04-computer-vision/19-ocr-document-understanding/) | Build | Python |
-| 20 | [Image Retrieval & Metric Learning](../../phases/04-computer-vision/20-image-retrieval-metric/) | Build | Python |
-| 21 | [Keypoint Detection & Pose Estimation](../../phases/04-computer-vision/21-keypoint-pose/) | Build | Python |
-| 22 | [3D Gaussian Splatting from Scratch](../../phases/04-computer-vision/22-3d-gaussian-splatting/) | Build | Python |
-| 23 | [Diffusion Transformers & Rectified Flow](../../phases/04-computer-vision/23-diffusion-transformers-rectified-flow/) | Build | Python |
-| 24 | [SAM 3 & Open-Vocabulary Segmentation](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | Build | Python |
-| 25 | [Vision-Language Models (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | Build | Python |
-| 26 | [Monocular Depth & Geometry Estimation](../../phases/04-computer-vision/26-monocular-depth/) | Build | Python |
-| 27 | [Multi-Object Tracking & Video Memory](../../phases/04-computer-vision/27-multi-object-tracking/) | Build | Python |
-| 28 | [World Models & Video Diffusion](../../phases/04-computer-vision/28-world-models-video-diffusion/) | Build | Python |
+| 01 | [画像の基礎：ピクセル、チャンネル、色空間](../../phases/04-computer-vision/01-image-fundamentals/) | 学習 | Python |
+| 02 | [ゼロから実装する畳み込み](../../phases/04-computer-vision/02-convolutions-from-scratch/) | 制作 | Python |
+| 03 | [CNN：LeNetからResNetまで](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | 制作 | Python |
+| 04 | [画像分類](../../phases/04-computer-vision/04-image-classification/) | 制作 | Python |
+| 05 | [転移学習とファインチューニング](../../phases/04-computer-vision/05-transfer-learning/) | 制作 | Python |
+| 06 | [物体検出：YOLOをゼロから実装](../../phases/04-computer-vision/06-object-detection-yolo/) | 制作 | Python |
+| 07 | [セマンティックセグメンテーション：U-Net](../../phases/04-computer-vision/07-semantic-segmentation-unet/) | 制作 | Python |
+| 08 | [インスタンスセグメンテーション：Mask R-CNN](../../phases/04-computer-vision/08-instance-segmentation-mask-rcnn/) | 制作 | Python |
+| 09 | [画像生成：GAN](../../phases/04-computer-vision/09-image-generation-gans/) | 制作 | Python |
+| 10 | [画像生成：拡散モデル](../../phases/04-computer-vision/10-image-generation-diffusion/) | 制作 | Python |
+| 11 | [Stable Diffusion：アーキテクチャとファインチューニング](../../phases/04-computer-vision/11-stable-diffusion/) | 制作 | Python |
+| 12 | [動画理解：時間モデリング](../../phases/04-computer-vision/12-video-understanding/) | 制作 | Python |
+| 13 | [3Dビジョン：点群とNeRF](../../phases/04-computer-vision/13-3d-vision-nerf/) | 制作 | Python |
+| 14 | [Vision Transformer（ViT）](../../phases/04-computer-vision/14-vision-transformers/) | 制作 | Python |
+| 15 | [リアルタイムビジョン：エッジデプロイ](../../phases/04-computer-vision/15-real-time-edge/) | 制作 | Python |
+| 16 | [完全なビジョンパイプラインを構築する](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | 制作 | Python |
+| 17 | [自己教師ありビジョン：SimCLR、DINO、MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | 制作 | Python |
+| 18 | [オープンボキャブラリービジョン：CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | 制作 | Python |
+| 19 | [OCRと文書理解](../../phases/04-computer-vision/19-ocr-document-understanding/) | 制作 | Python |
+| 20 | [画像検索と距離学習](../../phases/04-computer-vision/20-image-retrieval-metric/) | 制作 | Python |
+| 21 | [キーポイント検出と姿勢推定](../../phases/04-computer-vision/21-keypoint-pose/) | 制作 | Python |
+| 22 | [ゼロから実装する3D Gaussian Splatting](../../phases/04-computer-vision/22-3d-gaussian-splatting/) | 制作 | Python |
+| 23 | [Diffusion TransformerとRectified Flow](../../phases/04-computer-vision/23-diffusion-transformers-rectified-flow/) | 制作 | Python |
+| 24 | [SAM 3とオープンボキャブラリーセグメンテーション](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | 制作 | Python |
+| 25 | [視覚言語モデル（ViT-MLP-LLM）](../../phases/04-computer-vision/25-vision-language-models/) | 制作 | Python |
+| 26 | [単眼深度推定と幾何推定](../../phases/04-computer-vision/26-monocular-depth/) | 制作 | Python |
+| 27 | [複数物体追跡と動画メモリ](../../phases/04-computer-vision/27-multi-object-tracking/) | 制作 | Python |
+| 28 | [世界モデルと動画拡散](../../phases/04-computer-vision/28-world-models-video-diffusion/) | 制作 | Python |
 
 </details>
 
 <details id="phase-5">
-<summary><b>Phase 5 — NLP: Foundations to Advanced</b> &nbsp;<code>29 lessons</code>&nbsp; <em>Language is the interface to intelligence.</em></summary>
+<summary><b>フェーズ5 — NLP：基礎から応用まで</b> &nbsp;<code>29 レッスン</code>&nbsp; <em>言語は知能とやり取りするためのインターフェースです。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Text Processing: Tokenization, Stemming, Lemmatization](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Build | Python |
-| 02 | [Bag of Words, TF-IDF & Text Representation](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Build | Python |
-| 03 | [Word Embeddings: Word2Vec from Scratch](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Build | Python |
-| 04 | [GloVe, FastText & Subword Embeddings](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Build | Python |
-| 05 | [Sentiment Analysis](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Build | Python |
-| 06 | [Named Entity Recognition (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Build | Python |
-| 07 | [POS Tagging & Syntactic Parsing](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Build | Python |
-| 08 | [Text Classification — CNNs & RNNs for Text](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Build | Python |
-| 09 | [Sequence-to-Sequence Models](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Build | Python |
-| 10 | [Attention Mechanism — The Breakthrough](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Build | Python |
-| 11 | [Machine Translation](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Build | Python |
-| 12 | [Text Summarization](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Build | Python |
-| 13 | [Question Answering Systems](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Build | Python |
-| 14 | [Information Retrieval & Search](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Build | Python |
-| 15 | [Topic Modeling: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Build | Python |
-| 16 | [Text Generation](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Build | Python |
-| 17 | [Chatbots: Rule-Based to Neural](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Build | Python |
-| 18 | [Multilingual NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Build | Python |
-| 19 | [Subword Tokenization: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Learn | Python |
-| 20 | [Structured Outputs & Constrained Decoding](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Build | Python |
-| 21 | [NLI & Textual Entailment](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Learn | Python |
-| 22 | [Embedding Models Deep Dive](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Learn | Python |
-| 23 | [Chunking Strategies for RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Build | Python |
-| 24 | [Coreference Resolution](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Learn | Python |
-| 25 | [Entity Linking & Disambiguation](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Build | Python |
-| 26 | [Relation Extraction & Knowledge Graph Construction](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Build | Python |
-| 27 | [LLM Evaluation: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Build | Python |
-| 28 | [Long-Context Evaluation: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Learn | Python |
-| 29 | [Dialogue State Tracking](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Build | Python |
+| 01 | [テキスト処理：トークン化、語幹抽出、見出し語化](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | 制作 | Python |
+| 02 | [Bag of Words、TF-IDFとテキスト表現](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | 制作 | Python |
+| 03 | [単語埋め込み：Word2Vecをゼロから実装](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | 制作 | Python |
+| 04 | [GloVe、FastTextとサブワード埋め込み](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | 制作 | Python |
+| 05 | [感情分析](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | 制作 | Python |
+| 06 | [固有表現認識（NER）](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | 制作 | Python |
+| 07 | [品詞タグ付けと構文解析](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | 制作 | Python |
+| 08 | [テキスト分類：テキスト向けCNNとRNN](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | 制作 | Python |
+| 09 | [系列変換モデル](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | 制作 | Python |
+| 10 | [アテンション機構：ブレークスルー](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | 制作 | Python |
+| 11 | [機械翻訳](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | 制作 | Python |
+| 12 | [テキスト要約](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | 制作 | Python |
+| 13 | [質問応答システム](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | 制作 | Python |
+| 14 | [情報検索](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | 制作 | Python |
+| 15 | [トピックモデリング：LDA、BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | 制作 | Python |
+| 16 | [テキスト生成](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | 制作 | Python |
+| 17 | [チャットボット：ルールベースからニューラルへ](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | 制作 | Python |
+| 18 | [多言語NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | 制作 | Python |
+| 19 | [サブワードトークン化：BPE、WordPiece、Unigram、SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | 学習 | Python |
+| 20 | [構造化出力と制約付きデコーディング](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | 制作 | Python |
+| 21 | [自然言語推論（NLI）とテキスト含意](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | 学習 | Python |
+| 22 | [埋め込みモデルを深掘りする](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | 学習 | Python |
+| 23 | [RAGのチャンク分割戦略](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | 制作 | Python |
+| 24 | [照応解析](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | 学習 | Python |
+| 25 | [エンティティリンキングと曖昧性解消](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | 制作 | Python |
+| 26 | [関係抽出と知識グラフ構築](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | 制作 | Python |
+| 27 | [LLM評価：RAGAS、DeepEval、G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | 制作 | Python |
+| 28 | [長文脈評価：NIAH、RULER、LongBench、MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | 学習 | Python |
+| 29 | [対話状態追跡](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | 制作 | Python |
 
 </details>
 
 <details id="phase-6">
-<summary><b>Phase 6 — Speech & Audio</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Hear, understand, speak.</em></summary>
+<summary><b>フェーズ6 — 音声とオーディオ</b> &nbsp;<code>17 レッスン</code>&nbsp; <em>聞き、理解し、話す。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Audio Fundamentals: Waveforms, Sampling, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Learn | Python |
-| 02 | [Spectrograms, Mel Scale & Audio Features](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Build | Python |
-| 03 | [Audio Classification](../../phases/06-speech-and-audio/03-audio-classification) | Build | Python |
-| 04 | [Speech Recognition (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Build | Python |
-| 05 | [Whisper: Architecture & Fine-Tuning](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Build | Python |
-| 06 | [Speaker Recognition & Verification](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Build | Python |
-| 07 | [Text-to-Speech (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Build | Python |
-| 08 | [Voice Cloning & Voice Conversion](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Build | Python |
-| 09 | [Music Generation](../../phases/06-speech-and-audio/09-music-generation) | Build | Python |
-| 10 | [Audio-Language Models](../../phases/06-speech-and-audio/10-audio-language-models) | Build | Python |
-| 11 | [Real-Time Audio Processing](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Build | Python |
-| 12 | [Build a Voice Assistant Pipeline](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Build | Python |
-| 13 | [Neural Audio Codecs — EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Learn | Python |
-| 14 | [Voice Activity Detection & Turn-Taking](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Build | Python |
-| 15 | [Streaming Speech-to-Speech — Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Learn | Python |
-| 16 | [Voice Anti-Spoofing & Audio Watermarking](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Build | Python |
-| 17 | [Audio Evaluation — WER, MOS, MMAU, Leaderboards](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Learn | Python |
+| 01 | [音声の基礎：波形、サンプリング、FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | 学習 | Python |
+| 02 | [スペクトログラム、メル尺度と音声特徴量](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | 制作 | Python |
+| 03 | [音声分類](../../phases/06-speech-and-audio/03-audio-classification) | 制作 | Python |
+| 04 | [音声認識（ASR）](../../phases/06-speech-and-audio/04-speech-recognition-asr) | 制作 | Python |
+| 05 | [Whisper：アーキテクチャとファインチューニング](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | 制作 | Python |
+| 06 | [話者認識と話者照合](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | 制作 | Python |
+| 07 | [テキスト読み上げ（TTS）](../../phases/06-speech-and-audio/07-text-to-speech) | 制作 | Python |
+| 08 | [音声クローニングと音声変換](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | 制作 | Python |
+| 09 | [音楽生成](../../phases/06-speech-and-audio/09-music-generation) | 制作 | Python |
+| 10 | [音声言語モデル](../../phases/06-speech-and-audio/10-audio-language-models) | 制作 | Python |
+| 11 | [リアルタイム音声処理](../../phases/06-speech-and-audio/11-real-time-audio-processing) | 制作 | Python |
+| 12 | [音声アシスタントのパイプラインを構築する](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | 制作 | Python |
+| 13 | [ニューラル音声コーデック：EnCodec、SNAC、Mimi、DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | 学習 | Python |
+| 14 | [音声区間検出とターン交替](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | 制作 | Python |
+| 15 | [音声間ストリーミング：Moshi、Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | 学習 | Python |
+| 16 | [音声なりすまし検出と音声電子透かし](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | 制作 | Python |
+| 17 | [音声評価：WER、MOS、MMAU、リーダーボード](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | 学習 | Python |
 
 </details>
 
 <details id="phase-7">
-<summary><b>Phase 7 — Transformers Deep Dive</b> &nbsp;<code>16 lessons</code>&nbsp; <em>The architecture that changed everything.</em></summary>
+<summary><b>フェーズ7 — Transformerを深掘りする</b> &nbsp;<code>16 レッスン</code>&nbsp; <em>すべてを変えたアーキテクチャを学びます。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Why Transformers: The Problems with RNNs](../../phases/07-transformers-deep-dive/01-why-transformers/) | Learn | Python |
-| 02 | [Self-Attention from Scratch](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Build | Python |
-| 03 | [Multi-Head Attention](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Build | Python |
-| 04 | [Positional Encoding: Sinusoidal, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Build | Python |
-| 05 | [The Full Transformer: Encoder + Decoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Build | Python |
-| 06 | [BERT — Masked Language Modeling](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Build | Python |
-| 07 | [GPT — Causal Language Modeling](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Build | Python |
-| 08 | [T5, BART — Encoder-Decoder Models](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Learn | Python |
-| 09 | [Vision Transformers (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Build | Python |
-| 10 | [Audio Transformers — Whisper Architecture](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Learn | Python |
-| 11 | [Mixture of Experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Build | Python |
-| 12 | [KV Cache, Flash Attention & Inference Optimization](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Build | Python |
-| 13 | [Scaling Laws](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Learn | Python |
-| 14 | [Build a Transformer from Scratch](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Build | Python |
-| 15 | [Attention Variants — Sliding Window, Sparse, Differential](../../phases/07-transformers-deep-dive/15-attention-variants/) | Build | Python |
-| 16 | [Speculative Decoding — Draft, Verify, Repeat](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Build | Python |
+| 01 | [Transformerが必要な理由：RNNの課題](../../phases/07-transformers-deep-dive/01-why-transformers/) | 学習 | Python |
+| 02 | [ゼロから実装する自己注意機構](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | 制作 | Python |
+| 03 | [マルチヘッドアテンション](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | 制作 | Python |
+| 04 | [位置エンコーディング：正弦波、RoPE、ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | 制作 | Python |
+| 05 | [Transformer全体：エンコーダーとデコーダー](../../phases/07-transformers-deep-dive/05-full-transformer/) | 制作 | Python |
+| 06 | [BERT：マスク言語モデル](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | 制作 | Python |
+| 07 | [GPT：因果言語モデル](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | 制作 | Python |
+| 08 | [T5、BART：エンコーダー・デコーダーモデル](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | 学習 | Python |
+| 09 | [Vision Transformer（ViT）](../../phases/07-transformers-deep-dive/09-vision-transformers/) | 制作 | Python |
+| 10 | [音声Transformer：Whisperのアーキテクチャ](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | 学習 | Python |
+| 11 | [専門家混合（MoE）](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | 制作 | Python |
+| 12 | [KVキャッシュ、FlashAttentionと推論最適化](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | 制作 | Python |
+| 13 | [スケーリング則](../../phases/07-transformers-deep-dive/13-scaling-laws/) | 学習 | Python |
+| 14 | [Transformerをゼロから構築する](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | 制作 | Python |
+| 15 | [アテンションの各種手法：スライディングウィンドウ、スパース、微分型](../../phases/07-transformers-deep-dive/15-attention-variants/) | 制作 | Python |
+| 16 | [投機的デコーディング：草案、検証、反復](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | 制作 | Python |
 
 </details>
 
 <details id="phase-8">
-<summary><b>Phase 8 — Generative AI</b> &nbsp;<code>15 lessons</code>&nbsp; <em>Create images, video, audio, 3D, and more.</em></summary>
+<summary><b>フェーズ8 — 生成AI</b> &nbsp;<code>15 レッスン</code>&nbsp; <em>画像、動画、音声、3Dなどを生成します。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Generative Models: Taxonomy & History](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Learn | Python |
-| 02 | [Autoencoders & VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Build | Python |
-| 03 | [GANs: Generator vs Discriminator](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Build | Python |
-| 04 | [Conditional GANs & Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Build | Python |
-| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | Build | Python |
-| 06 | [Diffusion Models — DDPM from Scratch](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Build | Python |
-| 07 | [Latent Diffusion & Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Build | Python |
-| 08 | [ControlNet, LoRA & Conditioning](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Build | Python |
-| 09 | [Inpainting, Outpainting & Editing](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Build | Python |
-| 10 | [Video Generation](../../phases/08-generative-ai/10-video-generation/) | Build | Python |
-| 11 | [Audio Generation](../../phases/08-generative-ai/11-audio-generation/) | Build | Python |
-| 12 | [3D Generation](../../phases/08-generative-ai/12-3d-generation/) | Build | Python |
-| 13 | [Flow Matching & Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Build | Python |
-| 14 | [Evaluation: FID, CLIP Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Build | Python |
-| 19 | [Visual Autoregressive Modeling (VAR): Next-Scale Prediction](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Build | Python |
+| 01 | [生成モデル：分類と歴史](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | 学習 | Python |
+| 02 | [オートエンコーダーとVAE](../../phases/08-generative-ai/02-autoencoders-vae/) | 制作 | Python |
+| 03 | [GAN：生成器と識別器](../../phases/08-generative-ai/03-gans-generator-discriminator/) | 制作 | Python |
+| 04 | [条件付きGANとPix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | 制作 | Python |
+| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | 制作 | Python |
+| 06 | [拡散モデル：DDPMをゼロから実装](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | 制作 | Python |
+| 07 | [潜在拡散とStable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | 制作 | Python |
+| 08 | [ControlNet、LoRAと条件付け](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | 制作 | Python |
+| 09 | [インペインティング、アウトペインティングと編集](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | 制作 | Python |
+| 10 | [動画生成](../../phases/08-generative-ai/10-video-generation/) | 制作 | Python |
+| 11 | [音声生成](../../phases/08-generative-ai/11-audio-generation/) | 制作 | Python |
+| 12 | [3D生成](../../phases/08-generative-ai/12-3d-generation/) | 制作 | Python |
+| 13 | [フローマッチングとRectified Flow](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | 制作 | Python |
+| 14 | [評価：FID、CLIPスコア](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | 制作 | Python |
+| 19 | [視覚的自己回帰モデリング（VAR）：次スケール予測](../../phases/08-generative-ai/19-visual-autoregressive-var/) | 制作 | Python |
 
 </details>
 
 <details id="phase-9">
-<summary><b>Phase 9 — Reinforcement Learning</b> &nbsp;<code>12 lessons</code>&nbsp; <em>The foundation of RLHF and game-playing AI.</em></summary>
+<summary><b>フェーズ9 — 強化学習</b> &nbsp;<code>12 レッスン</code>&nbsp; <em>RLHFとゲームAIを支える基礎を学びます。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [MDPs, States, Actions & Rewards](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Learn | Python |
-| 02 | [Dynamic Programming](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Build | Python |
-| 03 | [Monte Carlo Methods](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Build | Python |
-| 04 | [Q-Learning, SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Build | Python |
-| 05 | [Deep Q-Networks (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Build | Python |
-| 06 | [Policy Gradients — REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Build | Python |
-| 07 | [Actor-Critic — A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Build | Python |
-| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | Build | Python |
-| 09 | [Reward Modeling & RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Build | Python |
-| 10 | [Multi-Agent RL](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Build | Python |
-| 11 | [Sim-to-Real Transfer](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Build | Python |
-| 12 | [RL for Games](../../phases/09-reinforcement-learning/12-rl-for-games/) | Build | Python |
+| 01 | [MDP、状態、行動と報酬](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | 学習 | Python |
+| 02 | [動的計画法](../../phases/09-reinforcement-learning/02-dynamic-programming/) | 制作 | Python |
+| 03 | [モンテカルロ法](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | 制作 | Python |
+| 04 | [Q学習とSARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | 制作 | Python |
+| 05 | [深層Qネットワーク（DQN）](../../phases/09-reinforcement-learning/05-dqn/) | 制作 | Python |
+| 06 | [方策勾配法：REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | 制作 | Python |
+| 07 | [Actor-Critic：A2C、A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | 制作 | Python |
+| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | 制作 | Python |
+| 09 | [報酬モデリングとRLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | 制作 | Python |
+| 10 | [マルチエージェント強化学習](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | 制作 | Python |
+| 11 | [シミュレーションから実環境への転移](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | 制作 | Python |
+| 12 | [ゲームのための強化学習](../../phases/09-reinforcement-learning/12-rl-for-games/) | 制作 | Python |
 
 </details>
 
 <details id="phase-10">
-<summary><b>Phase 10 — LLMs from Scratch</b> &nbsp;<code>24 lessons</code>&nbsp; <em>Build, train, and understand large language models.</em></summary>
+<summary><b>フェーズ10 — LLMをゼロから構築する</b> &nbsp;<code>24 レッスン</code>&nbsp; <em>大規模言語モデルを構築し、学習させ、その仕組みを理解します。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Tokenizers: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Build | Python, Rust |
-| 02 | [Building a Tokenizer from Scratch](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Build | Python |
-| 03 | [Data Pipelines for Pre-Training](../../phases/10-llms-from-scratch/03-data-pipelines/) | Build | Python |
-| 04 | [Pre-Training a Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Build | Python |
-| 05 | [Distributed Training, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Build | Python |
-| 06 | [Instruction Tuning — SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Build | Python |
-| 07 | [RLHF — Reward Model + PPO](../../phases/10-llms-from-scratch/07-rlhf/) | Build | Python |
-| 08 | [DPO — Direct Preference Optimization](../../phases/10-llms-from-scratch/08-dpo/) | Build | Python |
-| 09 | [Constitutional AI & Self-Improvement](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | Build | Python |
-| 10 | [Evaluation — Benchmarks, Evals](../../phases/10-llms-from-scratch/10-evaluation/) | Build | Python |
-| 11 | [Quantization: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Build | Python |
-| 12 | [Inference Optimization](../../phases/10-llms-from-scratch/12-inference-optimization/) | Build | Python |
-| 13 | [Building a Complete LLM Pipeline](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Build | Python |
-| 14 | [Open Models: Architecture Walkthroughs](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Learn | Python |
-| 15 | [Speculative Decoding and EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Build | Python |
-| 16 | [Differential Attention (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Build | Python |
-| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Build | Python |
-| 18 | [Multi-Token Prediction (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Build | Python |
-| 19 | [DualPipe Parallelism](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Learn | Python |
-| 20 | [DeepSeek-V3 Architecture Walkthrough](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Learn | Python |
-| 21 | [Jamba — Hybrid SSM-Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Learn | Python |
-| 22 | [Async and Hogwild! Inference](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Build | Python |
-| 25 | [Speculative Decoding and EAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | Build | Python |
-| 34 | [Gradient Checkpointing and Activation Recomputation](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | Build | Python |
+| 01 | [トークナイザー：BPE、WordPiece、SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | 制作 | Python, Rust |
+| 02 | [トークナイザーをゼロから構築する](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | 制作 | Python |
+| 03 | [事前学習のためのデータパイプライン](../../phases/10-llms-from-scratch/03-data-pipelines/) | 制作 | Python |
+| 04 | [小型GPT（1億2,400万パラメーター）の事前学習](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | 制作 | Python |
+| 05 | [分散学習、FSDP、DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | 制作 | Python |
+| 06 | [指示チューニング：SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | 制作 | Python |
+| 07 | [RLHF：報酬モデルとPPO](../../phases/10-llms-from-scratch/07-rlhf/) | 制作 | Python |
+| 08 | [DPO：直接選好最適化](../../phases/10-llms-from-scratch/08-dpo/) | 制作 | Python |
+| 09 | [Constitutional AIと自己改善](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | 制作 | Python |
+| 10 | [評価：ベンチマークと評価テスト](../../phases/10-llms-from-scratch/10-evaluation/) | 制作 | Python |
+| 11 | [量子化：INT8、GPTQ、AWQ、GGUF](../../phases/10-llms-from-scratch/11-quantization/) | 制作 | Python |
+| 12 | [推論最適化](../../phases/10-llms-from-scratch/12-inference-optimization/) | 制作 | Python |
+| 13 | [完全なLLMパイプラインを構築する](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | 制作 | Python |
+| 14 | [オープンモデル：アーキテクチャ解説](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | 学習 | Python |
+| 15 | [投機的デコーディングとEAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | 制作 | Python |
+| 16 | [差分アテンション（V2）](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | 制作 | Python |
+| 17 | [ネイティブスパースアテンション（DeepSeek NSA）](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | 制作 | Python |
+| 18 | [マルチトークン予測（MTP）](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | 制作 | Python |
+| 19 | [DualPipe並列化](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | 学習 | Python |
+| 20 | [DeepSeek-V3のアーキテクチャ解説](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | 学習 | Python |
+| 21 | [Jamba：SSMとTransformerのハイブリッド](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | 学習 | Python |
+| 22 | [非同期推論とHogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | 制作 | Python |
+| 25 | [投機的デコーディングとEAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | 制作 | Python |
+| 34 | [勾配チェックポイントと活性化再計算](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | 制作 | Python |
 
 </details>
 
 <details id="phase-11">
-<summary><b>Phase 11 — LLM Engineering</b> &nbsp;<code>17 lessons</code>&nbsp; <em>Put LLMs to work in production.</em></summary>
+<summary><b>フェーズ11 — LLMエンジニアリング</b> &nbsp;<code>17 レッスン</code>&nbsp; <em>LLMを本番環境で活用します。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Prompt Engineering: Techniques & Patterns](../../phases/11-llm-engineering/01-prompt-engineering/) | Build | Python |
-| 02 | [Few-Shot, CoT, Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | Build | Python |
-| 03 | [Structured Outputs](../../phases/11-llm-engineering/03-structured-outputs/) | Build | Python |
-| 04 | [Embeddings & Vector Representations](../../phases/11-llm-engineering/04-embeddings/) | Build | Python |
-| 05 | [Context Engineering](../../phases/11-llm-engineering/05-context-engineering/) | Build | Python |
-| 06 | [RAG: Retrieval-Augmented Generation](../../phases/11-llm-engineering/06-rag/) | Build | Python |
-| 07 | [Advanced RAG: Chunking, Reranking](../../phases/11-llm-engineering/07-advanced-rag/) | Build | Python |
-| 08 | [Fine-Tuning with LoRA & QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Build | Python |
-| 09 | [Function Calling & Tool Use](../../phases/11-llm-engineering/09-function-calling/) | Build | Python |
-| 10 | [Evaluation & Testing](../../phases/11-llm-engineering/10-evaluation/) | Build | Python |
-| 11 | [Caching, Rate Limiting & Cost](../../phases/11-llm-engineering/11-caching-cost/) | Build | Python |
-| 12 | [Guardrails & Safety](../../phases/11-llm-engineering/12-guardrails/) | Build | Python |
-| 13 | [Building a Production LLM App](../../phases/11-llm-engineering/13-production-app/) | Build | Python |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Build | Python |
-| 15 | [Prompt Caching & Context Caching](../../phases/11-llm-engineering/15-prompt-caching/) | Build | Python |
-| 16 | [Agent State Machines — Graphs, Nodes, Checkpoints](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Build | Python |
-| 17 | [Agent Framework Tradeoffs](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Learn | Python |
+| 01 | [プロンプトエンジニアリング：手法とパターン](../../phases/11-llm-engineering/01-prompt-engineering/) | 制作 | Python |
+| 02 | [Few-shot、CoT、Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | 制作 | Python |
+| 03 | [構造化出力](../../phases/11-llm-engineering/03-structured-outputs/) | 制作 | Python |
+| 04 | [埋め込みとベクトル表現](../../phases/11-llm-engineering/04-embeddings/) | 制作 | Python |
+| 05 | [コンテキストエンジニアリング](../../phases/11-llm-engineering/05-context-engineering/) | 制作 | Python |
+| 06 | [RAG：検索拡張生成](../../phases/11-llm-engineering/06-rag/) | 制作 | Python |
+| 07 | [高度なRAG：チャンク分割と再ランキング](../../phases/11-llm-engineering/07-advanced-rag/) | 制作 | Python |
+| 08 | [LoRAとQLoRAによるファインチューニング](../../phases/11-llm-engineering/08-fine-tuning-lora/) | 制作 | Python |
+| 09 | [関数呼び出しとツール利用](../../phases/11-llm-engineering/09-function-calling/) | 制作 | Python |
+| 10 | [評価とテスト](../../phases/11-llm-engineering/10-evaluation/) | 制作 | Python |
+| 11 | [キャッシュ、レート制限とコスト](../../phases/11-llm-engineering/11-caching-cost/) | 制作 | Python |
+| 12 | [ガードレールと安全性](../../phases/11-llm-engineering/12-guardrails/) | 制作 | Python |
+| 13 | [本番環境向けLLMアプリを構築する](../../phases/11-llm-engineering/13-production-app/) | 制作 | Python |
+| 14 | [Model Context Protocol（MCP）](../../phases/11-llm-engineering/14-model-context-protocol/) | 制作 | Python |
+| 15 | [プロンプトキャッシュとコンテキストキャッシュ](../../phases/11-llm-engineering/15-prompt-caching/) | 制作 | Python |
+| 16 | [エージェントの状態機械：グラフ、ノード、チェックポイント](../../phases/11-llm-engineering/16-langgraph-state-machines/) | 制作 | Python |
+| 17 | [エージェントフレームワークのトレードオフ](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | 学習 | Python |
 
 </details>
 
 <details id="phase-12">
-<summary><b>Phase 12 — Multimodal AI</b> &nbsp;<code>25 lessons</code>&nbsp; <em>See, hear, read, and reason across modalities — from ViT patches to computer-use agents.</em></summary>
+<summary><b>フェーズ12 — マルチモーダルAI</b> &nbsp;<code>25 レッスン</code>&nbsp; <em>ViTのパッチからコンピューター操作エージェントまで、複数のモダリティを横断して見て、聞き、読み、推論します。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Vision Transformers and the Patch-Token Primitive](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Learn | Python |
-| 02 | [CLIP and Contrastive Vision-Language Pretraining](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Build | Python |
-| 03 | [BLIP-2 Q-Former as Modality Bridge](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Build | Python |
-| 04 | [Flamingo and Gated Cross-Attention](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Learn | Python |
-| 05 | [LLaVA and Visual Instruction Tuning](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Build | Python |
-| 06 | [Any-Resolution Vision — Patch-n'-Pack and NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Build | Python |
-| 07 | [Open-Weight VLM Recipes: What Actually Matters](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Learn | Python |
-| 08 | [LLaVA-OneVision: Single, Multi, Video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Build | Python |
-| 09 | [Qwen-VL Family and Dynamic-FPS Video](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Learn | Python |
-| 10 | [InternVL3 Native Multimodal Pretraining](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Learn | Python |
-| 11 | [Chameleon Early-Fusion Token-Only](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Build | Python |
-| 12 | [Emu3 Next-Token Prediction for Generation](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Learn | Python |
-| 13 | [Transfusion Autoregressive + Diffusion](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Build | Python |
-| 14 | [Show-o Discrete-Diffusion Unified](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Learn | Python |
-| 15 | [Janus-Pro Decoupled Encoders](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Build | Python |
-| 16 | [MIO Any-to-Any Streaming](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Learn | Python |
-| 17 | [Video-Language Temporal Grounding](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Build | Python |
-| 18 | [Long-Video at Million-Token Context](../../phases/12-multimodal-ai/18-long-video-million-token/) | Build | Python |
-| 19 | [Audio-Language Models: Whisper to AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Build | Python |
-| 20 | [Omni Models: Thinker-Talker Streaming](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Build | Python |
-| 21 | [Embodied VLAs: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Learn | Python |
-| 22 | [Document and Diagram Understanding](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Build | Python |
-| 23 | [ColPali Vision-Native Document RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Build | Python |
-| 24 | [Multimodal RAG and Cross-Modal Retrieval](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Build | Python |
-| 25 | [Multimodal Agents and Computer-Use (Capstone)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Build | Python |
+| 01 | [Vision Transformerとパッチトークンの基本要素](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | 学習 | Python |
+| 02 | [CLIPと対照学習による視覚言語事前学習](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | 制作 | Python |
+| 03 | [モダリティ間をつなぐBLIP-2 Q-Former](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | 制作 | Python |
+| 04 | [Flamingoとゲート付きクロスアテンション](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | 学習 | Python |
+| 05 | [LLaVAと視覚指示チューニング](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | 制作 | Python |
+| 06 | [任意解像度ビジョン：Patch-n'-PackとNaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | 制作 | Python |
+| 07 | [オープンウェイトVLMの実践法：本当に重要なこと](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | 学習 | Python |
+| 08 | [LLaVA-OneVision：単一画像、複数画像、動画](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | 制作 | Python |
+| 09 | [Qwen-VLシリーズと動的FPS動画](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | 学習 | Python |
+| 10 | [InternVL3のネイティブなマルチモーダル事前学習](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | 学習 | Python |
+| 11 | [Chameleon：トークンのみの早期融合](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | 制作 | Python |
+| 12 | [Emu3：生成のための次トークン予測](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | 学習 | Python |
+| 13 | [Transfusion：自己回帰と拡散](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | 制作 | Python |
+| 14 | [Show-o：離散拡散の統合](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | 学習 | Python |
+| 15 | [Janus-Pro：分離型エンコーダー](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | 制作 | Python |
+| 16 | [MIO：任意入出力間のストリーミング](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | 学習 | Python |
+| 17 | [動画言語の時間的位置合わせ](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | 制作 | Python |
+| 18 | [100万トークンのコンテキストで扱う長尺動画](../../phases/12-multimodal-ai/18-long-video-million-token/) | 制作 | Python |
+| 19 | [音声言語モデル：WhisperからAF3まで](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | 制作 | Python |
+| 20 | [Omniモデル：Thinker-Talkerストリーミング](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | 制作 | Python |
+| 21 | [身体性を備えたVLA：RT-2、OpenVLA、π0、GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | 学習 | Python |
+| 22 | [文書と図の理解](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | 制作 | Python |
+| 23 | [視覚ネイティブな文書RAG：ColPali](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | 制作 | Python |
+| 24 | [マルチモーダルRAGとクロスモーダル検索](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | 制作 | Python |
+| 25 | [マルチモーダルエージェントとコンピューター操作（総合課題）](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | 制作 | Python |
 
 </details>
 
 <details id="phase-13">
-<summary><b>Phase 13 — Tools & Protocols</b> &nbsp;<code>31 lessons</code>&nbsp; <em>The interfaces between AI and the real world.</em></summary>
+<summary><b>フェーズ13 — ツールとプロトコル</b> &nbsp;<code>31 レッスン</code>&nbsp; <em>AIと現実世界をつなぐインターフェースを学びます。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [The Tool Interface](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Learn | Python |
-| 02 | [Function Calling Deep Dive](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Build | Python |
-| 03 | [Parallel and Streaming Tool Calls](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Build | Python |
-| 04 | [Structured Output](../../phases/13-tools-and-protocols/04-structured-output/) | Build | Python |
-| 05 | [Tool Schema Design](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Learn | Python |
-| 06 | [MCP Fundamentals: Stateless Requests and JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Learn | Python |
-| 07 | [Building an MCP Server: Stateless Python and TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Build | Python, TypeScript |
-| 08 | [Building an MCP Client: Discovery, Routing, and Dual-Era Fallback](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Build | Python |
-| 09 | [MCP Transports: stdio and Stateless Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Learn | Python |
-| 10 | [MCP Resources and Prompts: Addressable Context for Stateless Servers](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Build | Python |
-| 11 | [MCP Model Input: Sampling Migration and Stateless MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Build | Python |
-| 12 | [Explicit Scope and Stateless Elicitation](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Build | Python |
-| 13 | [MCP Tasks Extension: Durable Work on a Stateless Core](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Build | Python |
-| 14 | [MCP Apps on the Stateless Protocol](../../phases/13-tools-and-protocols/14-mcp-apps/) | Build | Python |
-| 15 | [MCP Security: Poisoned Metadata, Routing, and MRTR State](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Learn | Python |
-| 16 | [MCP Authorization: CIMD, Issuer Binding, PKCE, and Step-Up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Build | Python |
-| 17 | [Stateless MCP Gateways and Registry Admission](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Learn | Python |
-| 18 | [MCP Auth in Production: Issuer-Bound Enrollment and Tokens](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Build | Python |
-| 19 | [A2A Protocol](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Build | Python |
-| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Build | Python |
-| 21 | [LLM Routing Layer](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Learn | Python |
-| 22 | [Agent Skills: Portable Contract and Runtime Boundary](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Build | Python |
-| 23 | [Capstone: Stateless Tool Ecosystem](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Build | Python |
-| 24 | [Skill Discovery and Progressive Disclosure](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Build | Python |
-| 25 | [Skill Invocation and Routing](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Build | Python |
-| 26 | [Skill Permissions, Sandboxes, and Trust](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Build | Python |
-| 27 | [Skill Evals, Packaging, and Portability](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Build | Python |
-| 28 | [MCP Tool Contracts and Content](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Build | Python |
-| 29 | [MCP Reliability, Cancellation, and Flow Control](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Build | Python |
-| 30 | [MCP Registry Supply Chain: Admission, Drift, and Rollback](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Build | Python |
-| 31 | [MCP Conformance Engineering: Versioning, Evidence, and Operations](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Build | Python |
+| 01 | [ツールインターフェース](../../phases/13-tools-and-protocols/01-the-tool-interface/) | 学習 | Python |
+| 02 | [関数呼び出しを深掘りする](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | 制作 | Python |
+| 03 | [ツール呼び出しの並列化とストリーミング](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | 制作 | Python |
+| 04 | [構造化出力](../../phases/13-tools-and-protocols/04-structured-output/) | 制作 | Python |
+| 05 | [ツールスキーマの設計](../../phases/13-tools-and-protocols/05-tool-schema-design/) | 学習 | Python |
+| 06 | [MCPの基礎：ステートレスリクエストとJSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | 学習 | Python |
+| 07 | [MCPサーバーを構築する：PythonとTypeScriptによるステートレス実装](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | 制作 | Python, TypeScript |
+| 08 | [MCPクライアントを構築する：探索、ルーティング、2世代対応のフォールバック](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | 制作 | Python |
+| 09 | [MCPトランスポート：stdioとステートレスなStreamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | 学習 | Python |
+| 10 | [MCPのリソースとプロンプト：ステートレスサーバー向けの参照可能なコンテキスト](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | 制作 | Python |
+| 11 | [MCPモデル入力：サンプリング移行とステートレスMRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | 制作 | Python |
+| 12 | [明示的なスコープとステートレスな情報要求](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | 制作 | Python |
+| 13 | [MCP Tasks拡張：ステートレスなコア上での永続的な処理](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | 制作 | Python |
+| 14 | [ステートレスプロトコル上のMCP Apps](../../phases/13-tools-and-protocols/14-mcp-apps/) | 制作 | Python |
+| 15 | [MCPのセキュリティ：汚染されたメタデータ、ルーティング、MRTRの状態](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | 学習 | Python |
+| 16 | [MCPの認可：CIMD、発行者バインディング、PKCE、ステップアップ認証](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | 制作 | Python |
+| 17 | [ステートレスMCPゲートウェイとレジストリへの登録審査](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | 学習 | Python |
+| 18 | [本番環境のMCP認証：発行者に紐づく登録とトークン](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | 制作 | Python |
+| 19 | [A2Aプロトコル](../../phases/13-tools-and-protocols/19-a2a-protocol/) | 制作 | Python |
+| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | 制作 | Python |
+| 21 | [LLMルーティングレイヤー](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | 学習 | Python |
+| 22 | [Agent Skills：移植可能な契約とランタイム境界](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | 制作 | Python |
+| 23 | [総合課題：ステートレスなツールエコシステム](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | 制作 | Python |
+| 24 | [スキルの発見と段階的な情報開示](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | 制作 | Python |
+| 25 | [スキルの呼び出しとルーティング](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | 制作 | Python |
+| 26 | [スキルの権限、サンドボックス、信頼性](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | 制作 | Python |
+| 27 | [スキルの評価、パッケージ化、移植性](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | 制作 | Python |
+| 28 | [MCPツールの契約とコンテンツ](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | 制作 | Python |
+| 29 | [MCPの信頼性、キャンセル、フロー制御](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | 制作 | Python |
+| 30 | [MCPレジストリのサプライチェーン：登録審査、ドリフト、ロールバック](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | 制作 | Python |
+| 31 | [MCP適合性エンジニアリング：バージョン管理、証跡、運用](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | 制作 | Python |
 
-Lessons 06-18 and 28-31 form the focused
-[Model Context Protocol (MCP) path](../../learning-paths/model-context-protocol.json). Its manifest order
-is 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Start
-it with the host-specific `learn-mcp` invocation above. Lesson 23
-is its only optional capstone and also requires Lessons 19 and 20.
+レッスン06–18および28–31が[Model Context Protocol（MCP）集中学習パス](../../learning-paths/model-context-protocol.json)を構成します。マニフェストの順序は06、07、08、09、10、11、12、13、14、15、16、18、17、28、29、30、31です。上のホスト別呼び出し方法で`learn-mcp`を開始してください。レッスン23は唯一の任意の総合課題で、レッスン19と20も必要です。
 
-Lessons 22 and 24-27 form the focused
-[Agent Skills learning path](../../learning-paths/agent-skills.json), from package
-contract through real-host release gates. Start it with the host-specific
-`learn-agent-skills` invocation shown above; do not follow numeric next
-navigation from 22 to 23.
+レッスン22および24–27が[Agent Skillsの集中学習パス](../../learning-paths/agent-skills.json)を構成します。パッケージ契約から実ホストでのリリースゲートまでを扱います。上に示したホスト別の呼び出し方法で`learn-agent-skills`を開始してください。レッスン22から23へ番号順に進まないでください。
 
 </details>
 
 <details id="phase-14">
-<summary><b>Phase 14 — Agent Engineering</b> &nbsp;<code>54 lessons</code>&nbsp; <em>Build agents from first principles, use coding agents reliably, and shape the work before implementation.</em></summary>
+<summary><b>フェーズ14 — エージェントエンジニアリング</b> &nbsp;<code>54 レッスン</code>&nbsp; <em>エージェントを第一原理から構築し、コーディングエージェントを確実に使い、実装前に作業を適切に定義します。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [The Agent Loop](../../phases/14-agent-engineering/01-the-agent-loop/) | Build | Python |
-| 02 | [ReWOO and Plan-and-Execute](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Build | Python |
-| 03 | [Reflexion and Verbal Reinforcement Learning](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Build | Python |
-| 04 | [Tree of Thoughts and LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Build | Python |
-| 05 | [Self-Refine and CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Build | Python |
-| 06 | [Tool Use and Function Calling](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Build | Python |
-| 07 | [Agent Memory — Virtual Context and Memory Paging](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Build | Python |
-| 08 | [Memory Blocks and Sleep-Time Compute](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Build | Python |
-| 09 | [Hybrid Memory — Vector + Graph + KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Build | Python |
-| 10 | [Skill Libraries and Lifelong Learning (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Build | Python |
-| 11 | [Planning with HTN and Evolutionary Search](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Build | Python |
-| 12 | [Anthropic's Workflow Patterns](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Build | Python |
-| 13 | [Stateful Graph Orchestration — Durable Execution and Checkpoints](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Build | Python |
-| 14 | [The Actor Model for Agents](../../phases/14-agent-engineering/14-autogen-actor-model/) | Build | Python |
-| 15 | [Role-Based Agent Teams — Roles, Tasks, Processes](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Build | Python |
-| 16 | [OpenAI Agents SDK — Handoffs, Guardrails, Tracing](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Build | Python |
-| 17 | [The Harness as a Library — Subagents and Session Store](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Build | Python |
-| 18 | [Production Agent Runtimes](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Learn | Python |
-| 19 | [Benchmarks — SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Learn | Python |
-| 20 | [Benchmarks — WebArena and OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Learn | Python |
-| 21 | [Computer Use — Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Build | Python |
-| 22 | [Voice Agents — Pipecat and LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Build | Python |
-| 23 | [OpenTelemetry GenAI Semantic Conventions](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Build | Python |
-| 24 | [Agent Observability — Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Learn | Python |
-| 25 | [Multi-Agent Debate and Collaboration](../../phases/14-agent-engineering/25-multi-agent-debate/) | Build | Python |
-| 26 | [Failure Modes — Why Agents Break](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Build | Python |
-| 27 | [Prompt Injection and the PVE Defense](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Build | Python |
-| 28 | [Orchestration Patterns — Supervisor, Swarm, Hierarchical](../../phases/14-agent-engineering/28-orchestration-patterns/) | Build | Python |
-| 29 | [Production Runtimes — Queue, Event, Cron](../../phases/14-agent-engineering/29-production-runtimes/) | Learn | Python |
-| 30 | [Eval-Driven Agent Development](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Build | Python |
-| 31 | [Agent Workbench: Why Capable Models Still Fail](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Learn | Python |
-| 32 | [The Minimal Agent Workbench](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Build | Python |
-| 33 | [Agent Instructions as Executable Constraints](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Build | Python |
-| 34 | [Repo Memory and Durable State](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Build | Python |
-| 35 | [Initialization Scripts for Agents](../../phases/14-agent-engineering/35-initialization-scripts/) | Build | Python |
-| 36 | [Scope Contracts and Task Boundaries](../../phases/14-agent-engineering/36-scope-contracts/) | Build | Python |
-| 37 | [Runtime Feedback Loops](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Build | Python |
-| 38 | [Verification Gates](../../phases/14-agent-engineering/38-verification-gates/) | Build | Python |
-| 39 | [Reviewer Agent: Separate Builder from Marker](../../phases/14-agent-engineering/39-reviewer-agent/) | Build | Python |
-| 40 | [Multi-Session Handoff](../../phases/14-agent-engineering/40-multi-session-handoff/) | Build | Python |
-| 41 | [The Workbench on a Real Repo](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Build | Python |
-| 42 | [Capstone: Ship a Reusable Agent Workbench Pack](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Build | Python |
-| 43 | [Frame the Task Before the Agent Writes Code](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Build | Python |
-| 44 | [Build an Evidence-Backed Execution Plan](../../phases/14-agent-engineering/44-plan-from-evidence/) | Build | Python |
-| 45 | [Delegate Agent Work with Isolation and Merge Contracts](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Build | Python |
-| 46 | [Turn Every Agent Correction into a System Improvement](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Build | Python |
-| 47 | [Define the Outcome Before You Choose the Output](../../phases/14-agent-engineering/47-outcomes-before-output/) | Build | Python |
-| 48 | [Discover the Workflow People Actually Perform](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Build | Python |
-| 49 | [Map Assumptions and Resolve the Riskiest One First](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Build | Python |
-| 50 | [Choose the Smallest Slice That Can Change the Decision](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Build | Python |
-| 51 | [Write Specifications That Preserve Judgment](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Build | Python |
-| 52 | [Design Success Metrics Before the Result Exists](../../phases/14-agent-engineering/52-design-success-metrics/) | Build | Python |
-| 53 | [Choose Prototype, Pilot, or Production Deliberately](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Build | Python |
-| 54 | [Build a Feedback Ratchet with Ownership and Retirement](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Build | Python |
+| 01 | [エージェントループ](../../phases/14-agent-engineering/01-the-agent-loop/) | 制作 | Python |
+| 02 | [ReWOOと計画・実行方式](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | 制作 | Python |
+| 03 | [Reflexionと自然言語による強化学習](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | 制作 | Python |
+| 04 | [Tree of ThoughtsとLATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | 制作 | Python |
+| 05 | [Self-RefineとCRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | 制作 | Python |
+| 06 | [ツール利用と関数呼び出し](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | 制作 | Python |
+| 07 | [エージェントメモリ：仮想コンテキストとメモリページング](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | 制作 | Python |
+| 08 | [メモリブロックとスリープタイム計算](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | 制作 | Python |
+| 09 | [ハイブリッドメモリ：ベクトル＋グラフ＋KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | 制作 | Python |
+| 10 | [スキルライブラリと生涯学習（Voyager）](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | 制作 | Python |
+| 11 | [HTNと進化的探索による計画](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | 制作 | Python |
+| 12 | [Anthropicのワークフローパターン](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | 制作 | Python |
+| 13 | [ステートフルなグラフオーケストレーション：永続実行とチェックポイント](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | 制作 | Python |
+| 14 | [エージェントのためのアクターモデル](../../phases/14-agent-engineering/14-autogen-actor-model/) | 制作 | Python |
+| 15 | [役割ベースのエージェントチーム：役割、タスク、プロセス](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | 制作 | Python |
+| 16 | [OpenAI Agents SDK：ハンドオフ、ガードレール、トレーシング](../../phases/14-agent-engineering/16-openai-agents-sdk/) | 制作 | Python |
+| 17 | [ライブラリとしてのハーネス：サブエージェントとセッションストア](../../phases/14-agent-engineering/17-claude-agent-sdk/) | 制作 | Python |
+| 18 | [本番環境向けエージェントランタイム](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | 学習 | Python |
+| 19 | [ベンチマーク：SWE-bench、GAIA、AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | 学習 | Python |
+| 20 | [ベンチマーク：WebArenaとOSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | 学習 | Python |
+| 21 | [コンピューター操作：Claude、OpenAI CUA、Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | 制作 | Python |
+| 22 | [音声エージェント：PipecatとLiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | 制作 | Python |
+| 23 | [OpenTelemetry GenAIの意味規約](../../phases/14-agent-engineering/23-otel-genai-conventions/) | 制作 | Python |
+| 24 | [エージェントの可観測性：Langfuse、Phoenix、Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | 学習 | Python |
+| 25 | [マルチエージェントの議論と協調](../../phases/14-agent-engineering/25-multi-agent-debate/) | 制作 | Python |
+| 26 | [失敗モード：エージェントが破綻する理由](../../phases/14-agent-engineering/26-failure-modes-agentic/) | 制作 | Python |
+| 27 | [プロンプトインジェクションとPVE防御](../../phases/14-agent-engineering/27-prompt-injection-defense/) | 制作 | Python |
+| 28 | [オーケストレーションパターン：スーパーバイザー、スウォーム、階層型](../../phases/14-agent-engineering/28-orchestration-patterns/) | 制作 | Python |
+| 29 | [本番環境向けランタイム：キュー、イベント、Cron](../../phases/14-agent-engineering/29-production-runtimes/) | 学習 | Python |
+| 30 | [評価主導のエージェント開発](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | 制作 | Python |
+| 31 | [エージェントワークベンチ：高性能モデルが失敗する理由](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | 学習 | Python |
+| 32 | [最小構成のエージェントワークベンチ](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | 制作 | Python |
+| 33 | [実行可能な制約としてのエージェント指示](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | 制作 | Python |
+| 34 | [リポジトリメモリと永続状態](../../phases/14-agent-engineering/34-repo-memory-and-state/) | 制作 | Python |
+| 35 | [エージェント用初期化スクリプト](../../phases/14-agent-engineering/35-initialization-scripts/) | 制作 | Python |
+| 36 | [スコープ契約とタスク境界](../../phases/14-agent-engineering/36-scope-contracts/) | 制作 | Python |
+| 37 | [ランタイムのフィードバックループ](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | 制作 | Python |
+| 38 | [検証ゲート](../../phases/14-agent-engineering/38-verification-gates/) | 制作 | Python |
+| 39 | [レビュアーエージェント：実装者と採点者を分離する](../../phases/14-agent-engineering/39-reviewer-agent/) | 制作 | Python |
+| 40 | [複数セッション間のハンドオフ](../../phases/14-agent-engineering/40-multi-session-handoff/) | 制作 | Python |
+| 41 | [実際のリポジトリで使うワークベンチ](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | 制作 | Python |
+| 42 | [総合課題：再利用可能なエージェントワークベンチ一式を公開する](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | 制作 | Python |
+| 43 | [エージェントがコードを書く前にタスクを定義する](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | 制作 | Python |
+| 44 | [証拠に基づく実行計画を立てる](../../phases/14-agent-engineering/44-plan-from-evidence/) | 制作 | Python |
+| 45 | [分離とマージの契約を定めてエージェント作業を委任する](../../phases/14-agent-engineering/45-delegate-with-isolation/) | 制作 | Python |
+| 46 | [エージェントへの修正指示をすべてシステム改善につなげる](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | 制作 | Python |
+| 47 | [成果物を決める前に目標を定義する](../../phases/14-agent-engineering/47-outcomes-before-output/) | 制作 | Python |
+| 48 | [人々が実際に行うワークフローを見つける](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | 制作 | Python |
+| 49 | [前提を洗い出し、最もリスクの高いものから検証する](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | 制作 | Python |
+| 50 | [判断を変えられる最小単位を選ぶ](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | 制作 | Python |
+| 51 | [判断の余地を保つ仕様を書く](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | 制作 | Python |
+| 52 | [結果が出る前に成功指標を設計する](../../phases/14-agent-engineering/52-design-success-metrics/) | 制作 | Python |
+| 53 | [プロトタイプ、パイロット、本番のいずれかを意図的に選ぶ](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | 制作 | Python |
+| 54 | [責任者と廃止条件を定め、フィードバックを継続的な改善につなげる](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | 制作 | Python |
 
-Each Phase 14 workbench lesson (31-42) ships a `mission.md` briefing the agent before it opens the full lesson docs.
+フェーズ14の各ワークベンチレッスン（31–42）は`mission.md`でエージェントに事前ブリーフィングを与えます。エージェントはレッスンの全文資料を開く前にこれを確認します。
 
-Lessons 31-46 form the [Agent-Assisted Engineering path](../../learning-paths/using-coding-agents.json).
-Its manifest order combines the workbench foundation with task framing, planning,
-delegation, and durable feedback. Lessons 47-54 form the
-[Product Judgment and Delivery path](../../learning-paths/shaping-the-build.json), from outcome framing
-through evidence, risk, scope, measurement, staged release, and feedback ownership.
+レッスン31–46が[エージェント支援エンジニアリングのパス](../../learning-paths/using-coding-agents.json)を構成します。マニフェストの順序では、ワークベンチの基礎に、タスクの定義、計画、委任、継続的なフィードバックを組み合わせます。 レッスン47–54が[プロダクト判断とデリバリーのパス](../../learning-paths/shaping-the-build.json)を構成します。成果の定義から、証拠、リスク、スコープ、測定、段階的なリリース、フィードバックの責任までを扱います。
 
 </details>
 
 <details id="phase-15">
-<summary><b>Phase 15 — Autonomous Systems</b> &nbsp;<code>22 lessons</code>&nbsp; <em>Long-horizon agents, self-improvement, and the 2026 safety stack.</em></summary>
+<summary><b>フェーズ15 — 自律システム</b> &nbsp;<code>22 レッスン</code>&nbsp; <em>長期タスクに取り組むエージェント、自己改善、2026年の安全性スタックを学びます。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [From Chatbots to Long-Horizon Agents (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Learn | Python |
-| 02 | [STaR, V-STaR, Quiet-STaR: Self-Taught Reasoning](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Learn | Python |
-| 03 | [AlphaEvolve: Evolutionary Coding Agents](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Learn | Python |
-| 04 | [Darwin Gödel Machine: Self-Modifying Agents](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Learn | Python |
-| 05 | [AI Scientist v2: Workshop-Level Research](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Learn | Python |
-| 06 | [Automated Alignment Research (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Learn | Python |
-| 07 | [Recursive Self-Improvement: Capability vs Alignment](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Learn | Python |
-| 08 | [Bounded Self-Improvement Designs](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Learn | Python |
-| 09 | [Autonomous Coding Agent Landscape (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Learn | Python |
-| 10 | [Permission Modes for Autonomous Agents](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Learn | Python |
-| 11 | [Browser Agents and Indirect Prompt Injection](../../phases/15-autonomous-systems/11-browser-agents/) | Learn | Python |
-| 12 | [Durable Execution for Long-Running Agents](../../phases/15-autonomous-systems/12-durable-execution/) | Learn | Python |
-| 13 | [Action Budgets, Iteration Caps, Cost Governors](../../phases/15-autonomous-systems/13-cost-governors/) | Learn | Python |
-| 14 | [Kill Switches, Circuit Breakers, Canary Tokens](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Learn | Python |
-| 15 | [HITL: Propose-Then-Commit](../../phases/15-autonomous-systems/15-propose-then-commit/) | Learn | Python |
-| 16 | [Checkpoints and Rollback](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Learn | Python |
-| 17 | [Constitutional AI and Rule Overrides](../../phases/15-autonomous-systems/17-constitutional-ai/) | Learn | Python |
-| 18 | [Llama Guard and Input/Output Classification](../../phases/15-autonomous-systems/18-llama-guard/) | Learn | Python |
-| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Learn | Python |
-| 20 | [OpenAI Preparedness Framework and DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Learn | Python |
-| 21 | [METR Time Horizons and External Evaluation](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Learn | Python |
-| 22 | [CAIS, CAISI, and Societal-Scale Risk](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Learn | Python |
+| 01 | [チャットボットから長期計画エージェントへ（METR）](../../phases/15-autonomous-systems/01-long-horizon-agents/) | 学習 | Python |
+| 02 | [STaR、V-STaR、Quiet-STaR：自己学習型推論](../../phases/15-autonomous-systems/02-star-family-reasoning/) | 学習 | Python |
+| 03 | [AlphaEvolve：進化的コーディングエージェント](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | 学習 | Python |
+| 04 | [Darwin Gödel Machine：自己改変型エージェント](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | 学習 | Python |
+| 05 | [AI Scientist v2：ワークショップ水準の研究](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | 学習 | Python |
+| 06 | [自動化されたアラインメント研究（Anthropic AAR）](../../phases/15-autonomous-systems/06-automated-alignment-research/) | 学習 | Python |
+| 07 | [再帰的自己改善：能力とアラインメントの両立](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | 学習 | Python |
+| 08 | [範囲を限定した自己改善の設計](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | 学習 | Python |
+| 09 | [自律型コーディングエージェントの全体像（SWE-bench、CodeAct）](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | 学習 | Python |
+| 10 | [自律エージェントの権限モード](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | 学習 | Python |
+| 11 | [ブラウザーエージェントと間接プロンプトインジェクション](../../phases/15-autonomous-systems/11-browser-agents/) | 学習 | Python |
+| 12 | [長時間稼働するエージェントの永続実行](../../phases/15-autonomous-systems/12-durable-execution/) | 学習 | Python |
+| 13 | [アクション予算、反復上限、コスト制御](../../phases/15-autonomous-systems/13-cost-governors/) | 学習 | Python |
+| 14 | [キルスイッチ、サーキットブレーカー、カナリアトークン](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | 学習 | Python |
+| 15 | [HITL：提案してから確定する](../../phases/15-autonomous-systems/15-propose-then-commit/) | 学習 | Python |
+| 16 | [チェックポイントとロールバック](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | 学習 | Python |
+| 17 | [Constitutional AIとルールの上書き](../../phases/15-autonomous-systems/17-constitutional-ai/) | 学習 | Python |
+| 18 | [Llama Guardと入出力分類](../../phases/15-autonomous-systems/18-llama-guard/) | 学習 | Python |
+| 19 | [AnthropicのResponsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | 学習 | Python |
+| 20 | [OpenAI Preparedness FrameworkとDeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | 学習 | Python |
+| 21 | [METRの時間軸と外部評価](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | 学習 | Python |
+| 22 | [CAIS、CAISIと社会規模のリスク](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | 学習 | Python |
 
 </details>
 
 <details id="phase-16">
-<summary><b>Phase 16 — Multi-Agent & Swarms</b> &nbsp;<code>25 lessons</code>&nbsp; <em>Coordination, emergence, and collective intelligence.</em></summary>
+<summary><b>フェーズ16 — マルチエージェントとスウォーム</b> &nbsp;<code>25 レッスン</code>&nbsp; <em>協調、創発、集合知を学びます。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Why Multi-Agent](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | Learn | TypeScript |
-| 02 | [FIPA-ACL Heritage and Speech Acts](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Learn | Python |
-| 03 | [Communication Protocols](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | Build | TypeScript |
-| 04 | [The Multi-Agent Primitive Model](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Learn | Python |
-| 05 | [Supervisor / Orchestrator-Worker Pattern](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Build | Python |
-| 06 | [Hierarchical Architecture and Decomposition Drift](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Learn | Python |
-| 07 | [Society of Mind and Multi-Agent Debate](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Build | Python |
-| 08 | [Role Specialization — Planner / Critic / Executor / Verifier](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Build | Python |
-| 09 | [Parallel Swarm and Networked Architectures](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Build | Python |
-| 10 | [Group Chat and Speaker Selection](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Build | Python |
-| 11 | [Handoffs and Routines (Stateless Orchestration)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Build | Python |
-| 12 | [A2A — The Agent-to-Agent Protocol](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Build | Python |
-| 13 | [Shared Memory and Blackboard Patterns](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Build | Python |
-| 14 | [Consensus and Byzantine Fault Tolerance](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Build | Python |
-| 15 | [Voting, Self-Consistency, and Debate Topology](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Build | Python |
-| 16 | [Negotiation and Bargaining](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Build | Python |
-| 17 | [Generative Agents and Emergent Simulation](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Build | Python |
-| 18 | [Theory of Mind and Emergent Coordination](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Build | Python |
-| 19 | [Swarm Optimization (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Build | Python |
-| 20 | [MARL — MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Learn | Python |
-| 21 | [Agent Economies, Token Incentives, Reputation](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Learn | Python |
-| 22 | [Production Scaling — Queues, Checkpoints, Durability](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Build | Python |
-| 23 | [Failure Modes — MAST, Groupthink, Monoculture](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Learn | Python |
-| 24 | [Evaluation and Coordination Benchmarks](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Learn | Python |
-| 25 | [Case Studies and 2026 State of the Art](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Learn | Python |
+| 01 | [マルチエージェントが必要な理由](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | 学習 | TypeScript |
+| 02 | [FIPA-ACLの系譜と発話行為](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | 学習 | Python |
+| 03 | [通信プロトコル](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | 制作 | TypeScript |
+| 04 | [マルチエージェントの基本モデル](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | 学習 | Python |
+| 05 | [スーパーバイザー／オーケストレーター・ワーカーパターン](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | 制作 | Python |
+| 06 | [階層型アーキテクチャと分解ドリフト](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | 学習 | Python |
+| 07 | [心の社会とマルチエージェント議論](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | 制作 | Python |
+| 08 | [役割の専門化：プランナー／批評役／実行役／検証役](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | 制作 | Python |
+| 09 | [並列スウォームとネットワーク型アーキテクチャ](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | 制作 | Python |
+| 10 | [グループチャットと発言者の選択](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | 制作 | Python |
+| 11 | [ハンドオフとルーティン（ステートレスなオーケストレーション）](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | 制作 | Python |
+| 12 | [A2A：エージェント間プロトコル](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | 制作 | Python |
+| 13 | [共有メモリとブラックボードパターン](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | 制作 | Python |
+| 14 | [合意形成とビザンチン障害耐性](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | 制作 | Python |
+| 15 | [投票、自己一貫性、議論のトポロジー](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | 制作 | Python |
+| 16 | [交渉と取引](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | 制作 | Python |
+| 17 | [生成エージェントと創発的シミュレーション](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | 制作 | Python |
+| 18 | [心の理論と創発的な協調](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | 制作 | Python |
+| 19 | [スウォーム最適化（PSO、ACO）](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | 制作 | Python |
+| 20 | [マルチエージェント強化学習：MADDPG、QMIX、MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | 学習 | Python |
+| 21 | [エージェント経済、トークンによるインセンティブ、評判](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | 学習 | Python |
+| 22 | [本番環境でのスケーリング：キュー、チェックポイント、永続性](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | 制作 | Python |
+| 23 | [失敗モード：MAST、集団浅慮、単一文化](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | 学習 | Python |
+| 24 | [評価と協調のベンチマーク](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | 学習 | Python |
+| 25 | [事例研究と2026年の最新動向](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | 学習 | Python |
 
 </details>
 
 <details id="phase-17">
-<summary><b>Phase 17 — Infrastructure & Production</b> &nbsp;<code>28 lessons</code>&nbsp; <em>Ship AI to the real world.</em></summary>
+<summary><b>フェーズ17 — インフラと本番運用</b> &nbsp;<code>28 レッスン</code>&nbsp; <em>AIを現実の世界に届けます。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Managed LLM Platforms — Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Learn | Python |
-| 02 | [Inference Platform Economics — Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Learn | Python |
-| 03 | [GPU Autoscaling on Kubernetes — Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Learn | Python |
-| 04 | [Serving Engine Internals — PagedAttention, Continuous Batching, Chunked Prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Learn | Python |
-| 05 | [EAGLE-3 Speculative Decoding in Production](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Learn | Python |
-| 06 | [Prefix-Cache Serving — RadixAttention and KV Reuse](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Learn | Python |
-| 07 | [Hardware-Specialized Inference Compilation — FP8 and NVFP4 on Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Learn | Python |
-| 08 | [Inference Metrics — TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Learn | Python |
-| 09 | [Production Quantization — AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Learn | Python |
-| 10 | [Cold Start Mitigation for Serverless LLMs](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Learn | Python |
-| 11 | [Multi-Region LLM Serving and KV Cache Locality](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Learn | Python |
-| 12 | [Edge Inference — ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Learn | Python |
-| 13 | [LLM Observability Stack Selection](../../phases/17-infrastructure-and-production/13-llm-observability/) | Learn | Python |
-| 14 | [Prompt Caching and Semantic Caching Economics](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Learn | Python |
-| 15 | [Batch APIs — the 50% Discount as Industry Standard](../../phases/17-infrastructure-and-production/15-batch-apis/) | Learn | Python |
-| 16 | [Model Routing as a Cost-Reduction Primitive](../../phases/17-infrastructure-and-production/16-model-routing/) | Learn | Python |
-| 17 | [Disaggregated Prefill/Decode — NVIDIA Dynamo and llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Learn | Python |
-| 18 | [Production Serving Stack — KV Offloading and Cache-Aware Routing](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Learn | Python |
-| 19 | [AI Gateways — LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Learn | Python |
-| 20 | [Shadow, Canary, and Progressive Deployment](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Learn | Python |
-| 21 | [A/B Testing LLM Features — GrowthBook and Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Learn | Python |
-| 22 | [Load Testing LLM APIs — k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Build | Python |
-| 23 | [SRE for AI — Multi-Agent Incident Response](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Learn | Python |
-| 24 | [Chaos Engineering for LLM Production](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Learn | Python |
-| 25 | [Security — Secrets, PII Scrubbing, Audit Logs](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Learn | Python |
-| 26 | [Compliance — SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Learn | Python |
-| 27 | [FinOps for LLMs — Unit Economics and Multi-Tenant Attribution](../../phases/17-infrastructure-and-production/27-finops-llms/) | Learn | Python |
-| 28 | [Self-Hosted Serving Selection — Matching Engine to Hardware and Scale](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Learn | Python |
+| 01 | [マネージドLLMプラットフォーム：Bedrock、Azure OpenAI、Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | 学習 | Python |
+| 02 | [推論プラットフォームのコスト構造：Fireworks、Together、Baseten、Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | 学習 | Python |
+| 03 | [KubernetesでのGPU自動スケーリング：Karpenter、KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | 学習 | Python |
+| 04 | [サービングエンジンの内部：PagedAttention、連続バッチ処理、チャンク化プリフィル](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | 学習 | Python |
+| 05 | [本番環境でのEAGLE-3投機的デコーディング](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | 学習 | Python |
+| 06 | [Prefix Cacheサービング：RadixAttentionとKV再利用](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | 学習 | Python |
+| 07 | [ハードウェア特化の推論コンパイル：Blackwell上のFP8とNVFP4](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | 学習 | Python |
+| 08 | [推論指標：TTFT、TPOT、ITL、Goodput、P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | 学習 | Python |
+| 09 | [本番環境向け量子化：AWQ、GPTQ、GGUF、FP8、NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | 学習 | Python |
+| 10 | [サーバーレスLLMのコールドスタート対策](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | 学習 | Python |
+| 11 | [マルチリージョンLLMサービングとKVキャッシュ局所性](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | 学習 | Python |
+| 12 | [エッジ推論：ANE、Hexagon、WebGPU、Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | 学習 | Python |
+| 13 | [LLM可観測性スタックの選定](../../phases/17-infrastructure-and-production/13-llm-observability/) | 学習 | Python |
+| 14 | [プロンプトキャッシュとセマンティックキャッシュのコスト構造](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | 学習 | Python |
+| 15 | [バッチAPI：50%割引が業界標準に](../../phases/17-infrastructure-and-production/15-batch-apis/) | 学習 | Python |
+| 16 | [コスト削減の手段としてのモデルルーティング](../../phases/17-infrastructure-and-production/16-model-routing/) | 学習 | Python |
+| 17 | [プリフィルとデコードの分離：NVIDIA Dynamoとllm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | 学習 | Python |
+| 18 | [本番サービングスタック：KVオフロードとキャッシュ対応ルーティング](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | 学習 | Python |
+| 19 | [AIゲートウェイ：LiteLLM、Portkey、Kong、Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | 学習 | Python |
+| 20 | [シャドー、カナリア、段階的デプロイ](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | 学習 | Python |
+| 21 | [LLM機能のA/Bテスト：GrowthBookとStatsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | 学習 | Python |
+| 22 | [LLM APIの負荷テスト：k6、LLMPerf、GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | 制作 | Python |
+| 23 | [AIのためのSRE：マルチエージェントによるインシデント対応](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | 学習 | Python |
+| 24 | [本番LLMのためのカオスエンジニアリング](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | 学習 | Python |
+| 25 | [セキュリティ：シークレット、個人情報の除去、監査ログ](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | 学習 | Python |
+| 26 | [コンプライアンス：SOC 2、HIPAA、GDPR、EU AI Act、ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | 学習 | Python |
+| 27 | [LLMのFinOps：単位経済性とマルチテナントのコスト帰属](../../phases/17-infrastructure-and-production/27-finops-llms/) | 学習 | Python |
+| 28 | [セルフホスト型サービングの選定：エンジンとハードウェア、規模の適合](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | 学習 | Python |
 
 </details>
 
 <details id="phase-18">
-<summary><b>Phase 18 — Ethics, Safety & Alignment</b> &nbsp;<code>30 lessons</code>&nbsp; <em>Build AI that helps humanity. Not optional.</em></summary>
+<summary><b>フェーズ18 — 倫理、安全性、アラインメント</b> &nbsp;<code>30 レッスン</code>&nbsp; <em>人類に役立つAIを構築します。安全性は必須です。</em></summary>
 <br/>
 
-| # | Lesson | Type | Lang |
+| # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Instruction-Following as Alignment Signal](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Learn | Python |
-| 02 | [Reward Hacking & Goodhart's Law](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Learn | Python |
-| 03 | [Direct Preference Optimization Family](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Learn | Python |
-| 04 | [Sycophancy as RLHF Amplification](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Learn | Python |
-| 05 | [Constitutional AI & RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Learn | Python |
-| 06 | [Mesa-Optimization & Deceptive Alignment](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Learn | Python |
-| 07 | [Sleeper Agents — Persistent Deception](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Learn | Python |
-| 08 | [In-Context Scheming in Frontier Models](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Learn | Python |
-| 09 | [Alignment Faking](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Learn | Python |
-| 10 | [AI Control — Safety Despite Subversion](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Learn | Python |
-| 11 | [Scalable Oversight & Weak-to-Strong](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Learn | Python |
-| 12 | [Red-Teaming: PAIR & Automated Attacks](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Build | Python |
-| 13 | [Many-Shot Jailbreaking](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Learn | Python |
-| 14 | [ASCII Art & Visual Jailbreaks](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Build | Python |
-| 15 | [Indirect Prompt Injection](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Build | Python |
-| 16 | [Red-Team Tooling: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Build | Python |
-| 17 | [WMDP & Dual-Use Capability Evaluation](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Learn | Python |
-| 18 | [Frontier Safety Frameworks — RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Learn | Python |
-| 19 | [Model Welfare Research](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Learn | Python |
-| 20 | [Bias & Representational Harm](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Build | Python |
-| 21 | [Fairness Criteria: Group, Individual, Counterfactual](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Learn | Python |
-| 22 | [Differential Privacy for LLMs](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Build | Python |
-| 23 | [Watermarking: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Build | Python |
-| 24 | [Regulatory Frameworks: EU, US, UK, Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Learn | Python |
-| 25 | [EchoLeak & CVEs for AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Learn | Python |
-| 26 | [Model, System & Dataset Cards](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Build | Python |
-| 27 | [Data Provenance & Training-Data Governance](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Learn | Python |
-| 28 | [Alignment Research Ecosystem: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Learn | Python |
-| 29 | [Moderation Systems: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Build | Python |
-| 30 | [Dual-Use Risk: Cyber, Bio, Chem, Nuclear](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Learn | Python |
+| 01 | [アラインメントのシグナルとしての指示追従](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | 学習 | Python |
+| 02 | [報酬ハッキングとグッドハートの法則](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | 学習 | Python |
+| 03 | [直接選好最適化の手法群](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | 学習 | Python |
+| 04 | [RLHFによって増幅される迎合](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | 学習 | Python |
+| 05 | [Constitutional AIとRLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | 学習 | Python |
+| 06 | [メサ最適化と欺瞞的アラインメント](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | 学習 | Python |
+| 07 | [スリーパーエージェント：持続的な欺瞞](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | 学習 | Python |
+| 08 | [最先端モデルにおけるコンテキスト内の策略](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | 学習 | Python |
+| 09 | [アラインメントの偽装](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | 学習 | Python |
+| 10 | [AI制御：妨害下でも保つ安全性](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | 学習 | Python |
+| 11 | [スケーラブルな監督と弱から強への一般化](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | 学習 | Python |
+| 12 | [レッドチーミング：PAIRと自動攻撃](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | 制作 | Python |
+| 13 | [多ショット脱獄](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | 学習 | Python |
+| 14 | [ASCIIアートと視覚的な脱獄](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | 制作 | Python |
+| 15 | [間接プロンプトインジェクション](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | 制作 | Python |
+| 16 | [レッドチームツール：Garak、Llama Guard、PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | 制作 | Python |
+| 17 | [WMDPとデュアルユース能力の評価](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | 学習 | Python |
+| 18 | [最先端AIの安全性フレームワーク：RSP、PF、FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | 学習 | Python |
+| 19 | [モデルのウェルフェア研究](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | 学習 | Python |
+| 20 | [バイアスと表象による害](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | 制作 | Python |
+| 21 | [公平性の基準：集団、個人、反実仮想](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | 学習 | Python |
+| 22 | [LLMのための差分プライバシー](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | 制作 | Python |
+| 23 | [電子透かし：SynthID、Stable Signature、C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | 制作 | Python |
+| 24 | [規制の枠組み：EU、米国、英国、韓国](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | 学習 | Python |
+| 25 | [EchoLeakとAI関連CVE](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | 学習 | Python |
+| 26 | [モデルカード、システムカード、データセットカード](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | 制作 | Python |
+| 27 | [データの来歴と学習データのガバナンス](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | 学習 | Python |
+| 28 | [アラインメント研究のエコシステム：MATS、Redwood、Apollo、METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | 学習 | Python |
+| 29 | [モデレーションシステム：OpenAI、Perspective、Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | 制作 | Python |
+| 30 | [デュアルユースのリスク：サイバー、生物、化学、核](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | 学習 | Python |
 
 </details>
 
 <details id="phase-19">
-<summary><b>Phase 19 — Capstone Projects</b> &nbsp;<code>85 lessons</code>&nbsp; <em>17 end-to-end products + 9 deep-build tracks. 20-40 hours per project; 4-12 lessons per track.</em></summary>
+<summary><b>フェーズ19 — 総合プロジェクト</b> &nbsp;<code>85 レッスン</code>&nbsp; <em>エンドツーエンドのプロダクト17件と、深く実装するトラック9件。1プロジェクトあたり20～40時間、各トラック4～12レッスン。</em></summary>
 <br/>
 
-| # | Project | Combines | Lang |
+| # | プロジェクト | 組み合わせるフェーズ | 言語 |
 |:---:|---------|----------|------|
-| 01 | [Terminal-Native Coding Agent](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG over Codebase (Cross-Repo Semantic Search)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Real-Time Voice Assistant (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Multimodal Document QA (Vision-First)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Autonomous Research Agent (AI-Scientist Class)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [DevOps Troubleshooting Agent for Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [End-to-End Fine-Tuning Pipeline](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Production RAG Chatbot (Regulated Vertical)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Code Migration Agent (Repo-Level Upgrade)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Multi-Agent Software Engineering Team](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM Observability & Eval Dashboard](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Video Understanding Pipeline (Scene → QA)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Stateless MCP Server with Registry and Governance](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Speculative-Decoding Inference Server](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Constitutional Safety Harness + Red-Team Range](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [GitHub Issue-to-PR Autonomous Agent](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Personal AI Tutor (Adaptive, Multimodal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [ターミナルネイティブなコーディングエージェント](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
+| 02 | [コードベースを対象にしたRAG（リポジトリ横断セマンティック検索）](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
+| 03 | [リアルタイム音声アシスタント（ASR → LLM → TTS）](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
+| 04 | [マルチモーダル文書QA（視覚優先）](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
+| 05 | [自律型研究エージェント（AI Scientist級）](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
+| 06 | [Kubernetes向けDevOpsトラブルシューティングエージェント](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
+| 07 | [エンドツーエンドのファインチューニングパイプライン](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
+| 08 | [規制業界向け本番RAGチャットボット](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
+| 09 | [コード移行エージェント（リポジトリ単位のアップグレード）](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
+| 10 | [マルチエージェントのソフトウェア開発チーム](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
+| 11 | [LLMの可観測性・評価ダッシュボード](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
+| 12 | [動画理解パイプライン（シーン → QA）](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
+| 13 | [レジストリとガバナンスを備えたステートレスMCPサーバー](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
+| 14 | [投機的デコーディング推論サーバー](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
+| 15 | [Constitutional AI安全性ハーネスとレッドチーム環境](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
+| 16 | [GitHubのIssueからPRを作成する自律エージェント](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
+| 17 | [個人向けAIチューター（適応型、マルチモーダル）](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
 
-**Deep-build tracks** — multi-lesson series that build a complete subsystem from scratch.
+**本格的な実装トラック**：複数のレッスンを通じて、サブシステム全体をゼロから構築します。
 
-| # | Project | Combines | Lang |
+| # | プロジェクト | 組み合わせるフェーズ | 言語 |
 |:---:|---------|----------|------|
-| 20 | [Agent Harness Loop Contract](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agent harness | Python |
-| 21 | [Tool Registry with Schema Validation](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agent harness | Python |
-| 22 | [JSON-RPC 2.0 Over Newline-Delimited Stdio](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agent harness | Python |
-| 23 | [Function Call Dispatcher](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agent harness | Python |
-| 24 | [Plan-Execute Control Flow](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agent harness | Python |
-| 25 | [Verification Gates and Observation Budget](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agent harness | Python |
-| 26 | [Sandbox Runner with Denylist and Path Jail](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agent harness | Python |
-| 27 | [Eval Harness with Fixture Tasks](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agent harness | Python |
-| 28 | [Observability with OTel GenAI Spans and Prometheus Metrics](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agent harness | Python |
-| 29 | [End-to-End Coding Agent on the Harness](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agent harness | Python |
-| 30 | [BPE Tokenizer From Scratch](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
-| 31 | [Tokenized Dataset with Sliding Window](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
-| 32 | [Token and Positional Embeddings](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
-| 33 | [Multi-Head Self-Attention](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
-| 34 | [Transformer Block from Scratch](../../phases/19-capstone-projects/34-transformer-block/) | B. NLP LLM | Python |
-| 35 | [GPT Model Assembly](../../phases/19-capstone-projects/35-gpt-model-assembly/) | B. NLP LLM | Python |
-| 36 | [Training Loop and Evaluation](../../phases/19-capstone-projects/36-training-loop-eval/) | B. NLP LLM | Python |
-| 37 | [Loading Pretrained Weights](../../phases/19-capstone-projects/37-loading-pretrained-weights/) | B. NLP LLM | Python |
-| 38 | [Classifier Fine-Tuning by Head Swap](../../phases/19-capstone-projects/38-classifier-finetuning/) | B. NLP LLM | Python |
-| 39 | [Instruction Tuning by Supervised Fine-Tuning](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP LLM | Python |
-| 40 | [Direct Preference Optimization from Scratch](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP LLM | Python |
-| 41 | [Full Evaluation Pipeline](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP LLM | Python |
-| 42 | [Large Corpus Downloader](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Train end-to-end | Python |
-| 43 | [HDF5 Tokenized Corpus](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. Train end-to-end | Python |
-| 44 | [Cosine LR with Linear Warmup](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. Train end-to-end | Python |
-| 45 | [Gradient Clipping and Mixed Precision](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. Train end-to-end | Python |
-| 46 | [Gradient Accumulation](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Train end-to-end | Python |
-| 47 | [Checkpoint Save and Resume](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Train end-to-end | Python |
-| 48 | [Distributed Data Parallel and FSDP from Scratch](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Train end-to-end | Python |
-| 49 | [Language Model Evaluation Harness](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Train end-to-end | Python |
-| 50 | [Hypothesis Generator](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Auto research | Python |
-| 51 | [Literature Retrieval](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Auto research | Python |
-| 52 | [Experiment Runner](../../phases/19-capstone-projects/52-experiment-runner/) | D. Auto research | Python |
-| 53 | [Result Evaluator](../../phases/19-capstone-projects/53-result-evaluator/) | D. Auto research | Python |
-| 54 | [Paper Writer](../../phases/19-capstone-projects/54-paper-writer/) | D. Auto research | Python |
-| 55 | [Critic Loop](../../phases/19-capstone-projects/55-critic-loop/) | D. Auto research | Python |
-| 56 | [Iteration Scheduler](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Auto research | Python |
-| 57 | [End-to-End Research Demo](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Auto research | Python |
-| 58 | [Vision Encoder Patches](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Multimodal VLM | Python |
-| 59 | [Vision Transformer Encoder](../../phases/19-capstone-projects/59-vit-transformer/) | E. Multimodal VLM | Python |
-| 60 | [Projection Layer for Modality Alignment](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. Multimodal VLM | Python |
-| 61 | [Cross-Attention Fusion](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. Multimodal VLM | Python |
-| 62 | [Vision-Language Pretraining](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. Multimodal VLM | Python |
-| 63 | [Multimodal Evaluation](../../phases/19-capstone-projects/63-multimodal-eval/) | E. Multimodal VLM | Python |
-| 64 | [Chunking Strategies, Compared](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Advanced RAG | Python |
-| 65 | [Hybrid Retrieval with BM25 and Dense Embeddings](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Advanced RAG | Python |
-| 66 | [Cross-Encoder Reranker](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. Advanced RAG | Python |
-| 67 | [Query Rewriting: HyDE, Multi-Query, and Decomposition](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Advanced RAG | Python |
-| 68 | [RAG Evaluation: Precision, Recall, MRR, nDCG, Faithfulness, Answer Relevance](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Advanced RAG | Python |
-| 69 | [End-to-End RAG System](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Advanced RAG | Python |
-| 70 | [Task Spec Format](../../phases/19-capstone-projects/70-task-spec-format/) | G. Eval framework | Python |
-| 71 | [Classical Metrics](../../phases/19-capstone-projects/71-classical-metrics/) | G. Eval framework | Python |
-| 72 | [Code Exec Metric](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Eval framework | Python |
-| 73 | [Perplexity and Calibration](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Eval framework | Python |
-| 74 | [Leaderboard Aggregation](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Eval framework | Python |
-| 75 | [End-to-End Eval Runner](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Eval framework | Python |
-| 76 | [Collective Ops From Scratch](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. Distributed train | Python |
-| 77 | [Data Parallel DDP From Scratch](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. Distributed train | Python |
-| 78 | [ZeRO Optimizer State Sharding](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. Distributed train | Python |
-| 79 | [Pipeline Parallel and Bubble Analysis](../../phases/19-capstone-projects/79-pipeline-parallel/) | H. Distributed train | Python |
-| 80 | [Sharded Checkpoint and Atomic Resume](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Distributed train | Python |
-| 81 | [End-to-End Distributed Training](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Distributed train | Python |
-| 82 | [Jailbreak Taxonomy](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Safety harness | Python |
-| 83 | [Prompt Injection Detector](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Safety harness | Python |
-| 84 | [Refusal Evaluation](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Safety harness | Python |
-| 85 | [Content Classifier Integration](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Safety harness | Python |
-| 86 | [Constitutional Rules Engine](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Safety harness | Python, YAML |
-| 87 | [End-to-End Safety Gate](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Safety harness | Python |
+| 20 | [エージェントハーネスのループ契約](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. エージェントハーネス | Python |
+| 21 | [スキーマ検証付きツールレジストリ](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. エージェントハーネス | Python |
+| 22 | [改行区切りstdio上のJSON-RPC 2.0](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. エージェントハーネス | Python |
+| 23 | [関数呼び出しディスパッチャー](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. エージェントハーネス | Python |
+| 24 | [計画・実行の制御フロー](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. エージェントハーネス | Python |
+| 25 | [検証ゲートと観測予算](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. エージェントハーネス | Python |
+| 26 | [拒否リストとパス隔離を備えたサンドボックスランナー](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. エージェントハーネス | Python |
+| 27 | [フィクスチャータスクを使う評価ハーネス](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. エージェントハーネス | Python |
+| 28 | [OTel GenAIスパンとPrometheus指標による可観測性](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. エージェントハーネス | Python |
+| 29 | [ハーネス上で動くエンドツーエンドのコーディングエージェント](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. エージェントハーネス | Python |
+| 30 | [BPEトークナイザーをゼロから実装する](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP・LLM | Python |
+| 31 | [スライディングウィンドウを使ったトークン化データセット](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP・LLM | Python |
+| 32 | [トークン埋め込みと位置埋め込み](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP・LLM | Python |
+| 33 | [マルチヘッド自己注意機構](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP・LLM | Python |
+| 34 | [Transformerブロックをゼロから実装する](../../phases/19-capstone-projects/34-transformer-block/) | B. NLP・LLM | Python |
+| 35 | [GPTモデルの組み立て](../../phases/19-capstone-projects/35-gpt-model-assembly/) | B. NLP・LLM | Python |
+| 36 | [学習ループと評価](../../phases/19-capstone-projects/36-training-loop-eval/) | B. NLP・LLM | Python |
+| 37 | [事前学習済み重みの読み込み](../../phases/19-capstone-projects/37-loading-pretrained-weights/) | B. NLP・LLM | Python |
+| 38 | [ヘッド交換による分類器のファインチューニング](../../phases/19-capstone-projects/38-classifier-finetuning/) | B. NLP・LLM | Python |
+| 39 | [教師ありファインチューニングによる指示チューニング](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP・LLM | Python |
+| 40 | [直接選好最適化をゼロから実装する](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP・LLM | Python |
+| 41 | [完全な評価パイプライン](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP・LLM | Python |
+| 42 | [大規模コーパスのダウンローダー](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. エンドツーエンド学習 | Python |
+| 43 | [HDF5形式のトークン化コーパス](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. エンドツーエンド学習 | Python |
+| 44 | [線形ウォームアップ付きコサイン学習率スケジュール](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. エンドツーエンド学習 | Python |
+| 45 | [勾配クリッピングと混合精度](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. エンドツーエンド学習 | Python |
+| 46 | [勾配累積](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. エンドツーエンド学習 | Python |
+| 47 | [チェックポイントの保存と再開](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. エンドツーエンド学習 | Python |
+| 48 | [分散データ並列（DDP）とFSDPをゼロから実装する](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. エンドツーエンド学習 | Python |
+| 49 | [言語モデル評価ハーネス](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. エンドツーエンド学習 | Python |
+| 50 | [仮説生成器](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. 自動化研究 | Python |
+| 51 | [文献検索](../../phases/19-capstone-projects/51-literature-retrieval/) | D. 自動化研究 | Python |
+| 52 | [実験実行ツール](../../phases/19-capstone-projects/52-experiment-runner/) | D. 自動化研究 | Python |
+| 53 | [結果評価器](../../phases/19-capstone-projects/53-result-evaluator/) | D. 自動化研究 | Python |
+| 54 | [論文執筆ツール](../../phases/19-capstone-projects/54-paper-writer/) | D. 自動化研究 | Python |
+| 55 | [批評ループ](../../phases/19-capstone-projects/55-critic-loop/) | D. 自動化研究 | Python |
+| 56 | [反復スケジューラー](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. 自動化研究 | Python |
+| 57 | [エンドツーエンドの研究デモ](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. 自動化研究 | Python |
+| 58 | [視覚エンコーダーのパッチ](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. マルチモーダルVLM | Python |
+| 59 | [Vision Transformerエンコーダー](../../phases/19-capstone-projects/59-vit-transformer/) | E. マルチモーダルVLM | Python |
+| 60 | [モダリティ整合のための射影層](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. マルチモーダルVLM | Python |
+| 61 | [クロスアテンション融合](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. マルチモーダルVLM | Python |
+| 62 | [視覚言語事前学習](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. マルチモーダルVLM | Python |
+| 63 | [マルチモーダル評価](../../phases/19-capstone-projects/63-multimodal-eval/) | E. マルチモーダルVLM | Python |
+| 64 | [チャンク分割戦略の比較](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. 高度なRAG | Python |
+| 65 | [BM25と密ベクトル埋め込みによるハイブリッド検索](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. 高度なRAG | Python |
+| 66 | [クロスエンコーダー再ランキングモデル](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. 高度なRAG | Python |
+| 67 | [クエリ書き換え：HyDE、複数クエリ、分解](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. 高度なRAG | Python |
+| 68 | [RAG評価：適合率、再現率、MRR、nDCG、忠実性、回答関連性](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 高度なRAG | Python |
+| 69 | [エンドツーエンドのRAGシステム](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. 高度なRAG | Python |
+| 70 | [タスク仕様の形式](../../phases/19-capstone-projects/70-task-spec-format/) | G. 評価フレームワーク | Python |
+| 71 | [古典的な評価指標](../../phases/19-capstone-projects/71-classical-metrics/) | G. 評価フレームワーク | Python |
+| 72 | [コード実行指標](../../phases/19-capstone-projects/72-code-exec-metric/) | G. 評価フレームワーク | Python |
+| 73 | [パープレキシティとキャリブレーション](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. 評価フレームワーク | Python |
+| 74 | [リーダーボードの集計](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. 評価フレームワーク | Python |
+| 75 | [エンドツーエンドの評価ランナー](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. 評価フレームワーク | Python |
+| 76 | [Collective Opsをゼロから実装する](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. 分散学習 | Python |
+| 77 | [データ並列DDPをゼロから実装する](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. 分散学習 | Python |
+| 78 | [ZeROによるオプティマイザー状態のシャーディング](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. 分散学習 | Python |
+| 79 | [パイプライン並列化とバブル分析](../../phases/19-capstone-projects/79-pipeline-parallel/) | H. 分散学習 | Python |
+| 80 | [シャーディングしたチェックポイントとアトミックな再開](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. 分散学習 | Python |
+| 81 | [エンドツーエンドの分散学習](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. 分散学習 | Python |
+| 82 | [脱獄の分類体系](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. 安全性ハーネス | Python |
+| 83 | [プロンプトインジェクション検出器](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. 安全性ハーネス | Python |
+| 84 | [拒否応答の評価](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. 安全性ハーネス | Python |
+| 85 | [コンテンツ分類器の統合](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. 安全性ハーネス | Python |
+| 86 | [Constitutional AIのルールエンジン](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. 安全性ハーネス | Python, YAML |
+| 87 | [エンドツーエンドの安全性ゲート](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. 安全性ハーネス | Python |
 
 </details>
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
-
 ## ツールキット
 
-Every lesson produces a reusable artifact. By the end you have:
+各レッスンは再利用可能な成果物を生み出します。カリキュラムを終えると、次のものが手に入ります。
 
 ```text
 outputs/
-├── prompts/      prompt templates for every AI task
-└── skills/       SKILL.md files for AI coding agents
+├── prompts/      あらゆるAIタスク向けのプロンプトテンプレート
+└── skills/       AIコーディングエージェント向けのSKILL.mdファイル
 ```
+Claude、Cursor、Codex、OpenClaw、Hermes、または`SKILL.md` / `AGENTS.md`形式のディレクトリを読み込めるエージェントで使えます。宿題ではなく、実際に使えるツールです。
 
-Plug them into Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that
-reads a SKILL.md / AGENTS.md directory. Real tools, not homework.
+### コースのスキルをエージェントにインストールする
 
-### Install course skills into your agent
+スキルセットとインストーラーはそれぞれ2種類あります。
 
-Two skill sets, two installers:
-
-**The learning skills** (`start-learning`, `learn`, `course-guide`,
-`learn-mcp`, `learn-agent-skills`, `claude-certification`, `mcpa-certification`,
-`find-your-level`, and `check-understanding`) live under [`skills/`](../../skills/) and
-install into a supported skill-capable host with one command. Installation needs
-Node.js and `npx`, but not a repository clone or Python:
+**学習スキル**（`start-learning`、`learn`、`course-guide`、`learn-mcp`、`learn-agent-skills`、`claude-certification`、`mcpa-certification`、`find-your-level`、`check-understanding`）は[`skills/`](../../skills/)にあり、対応するスキルホストに1つのコマンドでインストールできます。必要なのはNode.jsと`npx`で、リポジトリのクローンやPythonは不要です。
 
 ```bash
 npx skills add rohitg00/ai-engineering-from-scratch
 ```
+`skills`はインストール時に選んだホストとスコープに書き込みます。保存先は`.claude/skills/`、`.cursor/skills/`、`.codex/skills/`などです。選択したホストがその保存先を検出できることを確認してください。
 
-`skills` writes to the host and scope selected during installation, such as
-`.claude/skills/`, `.cursor/skills/`, `.codex/skills/`, or another supported
-skills folder. Verify that the selected host discovers that exact destination.
-
-**The lesson artifacts.** The repo ships 396 skills and 99 prompts under
-`phases/**/outputs/`; install them via `scripts/install_skills.py`. Requires
-cloning the repo. Supports tag filters, dry-runs, and per-agent layouts:
+**レッスン成果物。** リポジトリには`phases/**/outputs/`に396個のスキルと99個のプロンプトが含まれます。`scripts/install_skills.py`でインストールできます。こちらはリポジトリのクローンが必要です。タグによる絞り込み、ドライラン、エージェント別レイアウトをサポートします。
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1234,27 +1127,19 @@ python3 scripts/install_skills.py <target> --layout flat                   # fla
 python3 scripts/install_skills.py <target> --dry-run                       # preview without writing
 python3 scripts/install_skills.py <target> --force                         # overwrite existing files
 ```
+`<target>`はエージェントのスキルディレクトリです。例：`~/.claude/skills/`、`~/.cursor/skills/`、`~/.config/openclaw/skills/`、`.skills/`、またはエージェントが読み込む任意のパス。
 
-`<target>` is the skills directory for your agent (examples:
-`~/.claude/skills/`, `~/.cursor/skills/`, `~/.config/openclaw/skills/`,
-`.skills/`, or any path your agent reads).
+既定では、スクリプトは保存先にあるファイルを上書きせず、衝突したパスをすべて表示して終了コード1を返します。`--dry-run`で衝突を事前確認でき、`--force`で上書きできます。ドライランでない実行では、種類とフェーズごとに全項目を分類した`manifest.json`が保存先に書き込まれます。エージェントが読み込むレイアウトを選んでください。
 
-By default the script refuses to overwrite an existing destination and exits
-with code 1 after listing every colliding path. Use `--dry-run` to preview
-collisions or `--force` to overwrite. Every non-dry-run run writes a
-`manifest.json` in the target with the full inventory grouped by type and
-phase. Pick the layout your agent reads:
-
-| `--layout`  | Path written |
+| `--layout` | 書き込まれるパス |
 |---|---|
-| `skills`    | `<target>/<name>/SKILL.md` (nested convention, supported by Claude / Cursor / Codex / OpenClaw / Hermes) |
+| `skills` | `<target>/<name>/SKILL.md`（Claude / Cursor / Codex / OpenClaw / Hermes対応のネスト形式） |
 | `by-phase`  | `<target>/phase-NN/<name>.md` |
 | `flat`      | `<target>/<name>.md` |
 
-### Drop the agent workbench into your own repo
+### エージェントワークベンチを自分のリポジトリに追加する
 
-The Phase 14 capstone ships a reusable Agent Workbench pack (AGENTS.md, schemas,
-init / verify / handoff scripts). Scaffold it into any repo with:
+フェーズ14の総合課題では、再利用可能なAgent Workbenchパック（AGENTS.md、スキーマ、初期化・検証・引き継ぎスクリプト）を作ります。任意のリポジトリに配置するには、次を実行します。
 
 ```bash
 python3 scripts/scaffold_workbench.py path/to/your-repo            # full pack + seeds
@@ -1262,41 +1147,24 @@ python3 scripts/scaffold_workbench.py path/to/your-repo --minimal  # skip docs/
 python3 scripts/scaffold_workbench.py path/to/your-repo --dry-run  # preview only
 python3 scripts/scaffold_workbench.py path/to/your-repo --force    # overwrite
 ```
+ワークベンチを構成する7つの要素が接続され、初期状態の`task_board.json`と新規の`agent_state.json`（`schema_version: 1`）が用意されます。タスクと`AGENTS.md`を編集し、`scripts/init_agent.py`を実行して、契約をエージェントに渡します。パックのソースは`phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`にあります。
 
-You get the seven workbench surfaces wired up, a starter `task_board.json`,
-and a fresh `agent_state.json` at `schema_version: 1`. From there: edit the
-task, edit `AGENTS.md`, run `scripts/init_agent.py`, hand the contract to
-your agent. The pack source lives at
-`phases/14-agent-engineering/42-agent-workbench-capstone/outputs/agent-workbench-pack/`.
+### コース全体をJSONで参照する
 
-### Browse the entire course as JSON
-
-`scripts/build_catalog.py` walks every phase, every lesson, every artifact on
-disk and writes `catalog.json` at the repo root. One file, every course truth.
+`scripts/build_catalog.py`は全フェーズ、全レッスン、ディスク上の全成果物を走査し、リポジトリのルートに`catalog.json`を作成します。1つのファイルにコースの情報をまとめます。
 
 ```bash
 python3 scripts/build_catalog.py               # writes <repo>/catalog.json
 python3 scripts/build_catalog.py --stdout      # to stdout, do not touch repo
 python3 scripts/build_catalog.py --out path/to/file.json
 ```
+カタログはREADMEではなくファイルシステムから作られるため、件数は常にディスク上の実データと一致します。サイトのビルドや下流ツールで使ったり、READMEの件数がずれていないか確認したりできます。スキーマはスクリプトの先頭に記載されています。
 
-The catalog is filesystem-derived, not README-derived, so counts always match
-what is actually on disk. Use it for site builds, downstream tooling, or to
-verify the README counts have not drifted. Schema is documented at the top of
-the script.
+GitHub Actions（`.github/workflows/curriculum.yml`）はプルリクエストごとに`catalog.json`を再生成し、コミット済みのファイルが古ければビルドを失敗させます。レッスンを編集したら`python3 scripts/build_catalog.py`を実行して結果をコミットしてください。実行しないとCIがプルリクエストを拒否します。同じワークフローは`audit_lessons.py`も警告のみのモードで実行するため、既存のずれによってコントリビューターが作業を止められることはありません。
 
-A GitHub Action (`.github/workflows/curriculum.yml`) rebuilds `catalog.json`
-on every PR and fails the build if the committed file is stale. After editing
-any lesson, run `python3 scripts/build_catalog.py` and commit the result, or
-CI will reject the PR. The same workflow runs `audit_lessons.py` in
-warn-only mode (so existing drift does not block contributors).
+### すべてのレッスンのPythonコードをスモークチェックする
 
-### Smoke-check every lesson's Python code
-
-`scripts/lesson_run.py` byte-compiles every `.py` file under each lesson's
-`code/` directory. Default mode is syntax-check only — no execution, no API
-keys, no heavy ML deps required. Catches the regressions contributors
-introduce most often (bad indentation, broken f-strings, stray edits).
+`scripts/lesson_run.py`は各レッスンの`code/`ディレクトリにあるすべての`.py`ファイルをバイトコンパイルします。既定では実行せずに構文だけを確認するため、APIキーや重い機械学習用依存関係は不要です。インデントの誤り、壊れたf文字列、意図しない編集など、コントリビューターが起こしやすい不具合を検出します。
 
 ```bash
 python3 scripts/lesson_run.py                  # syntax-check the whole curriculum
@@ -1305,63 +1173,55 @@ python3 scripts/lesson_run.py --json           # JSON report on stdout
 python3 scripts/lesson_run.py --strict         # exit 1 if any lesson fails
 python3 scripts/lesson_run.py --execute        # actually run, 10s timeout per lesson
 ```
+`--execute`は各レッスンの`code/main.py`（または最初の`.py`ファイル）を実行し、レッスンごとに10秒でタイムアウトします。エントリーファイルの冒頭に`# requires: pkg1, pkg2`のように標準ライブラリ以外の依存関係を列挙したコメントがある場合、そのレッスンは`needs <deps>`を理由にスキップします。このスクリプトは任意実行で、CIには組み込まれていません。
 
-`--execute` runs each lesson's `code/main.py` (or the first `.py` file) with a
-10-second timeout. Lessons whose entry file starts with a `# requires: pkg1,
-pkg2` comment listing non-stdlib deps are skipped with reason `needs <deps>`.
-The script is opt-in and not wired into CI.
-
-Stdlib only, Python 3.10+. Set `LINK_CHECK_SKIP=domain1,domain2` to override
-the default skip-list (`twitter.com`, `x.com`, `linkedin.com`,
-`instagram.com`, `medium.com` — domains that aggressively block automated
-HEAD/GET).
+リンクチェックは標準ライブラリのみで動作し、Python 3.10以降が必要です。`LINK_CHECK_SKIP=domain1,domain2`で既定のスキップ対象（`twitter.com`、`x.com`、`linkedin.com`、`instagram.com`、`medium.com`）を変更できます。これらのドメインは自動化されたHEAD/GETリクエストを強く制限します。
 
 ## どこから始めるか
 
-| Background | Start at | Estimated time |
+| 現在の経験 | 開始フェーズ | 推定時間 |
 |---|---|---|
-| New to programming and AI | Phase 0 — Setup | ~306 hours |
-| Know Python, new to ML | Phase 1 — Math Foundations | ~270 hours |
-| Know ML, new to deep learning | Phase 3 — Deep Learning Core | ~200 hours |
-| Know deep learning, want LLMs and agents | Phase 10 — LLMs from Scratch | ~100 hours |
-| Senior engineer, only want agent engineering | Phase 14 — Agent Engineering | ~60 hours |
-| Only want to build production MCP systems | [Model Context Protocol (MCP) path](../../learning-paths/model-context-protocol.json) | ~23 hours 15 min |
-| Only want to build production Agent Skills | [Agent Skills Engineering path](../../learning-paths/agent-skills.json) | ~9.5 hours |
+| プログラミングとAIは初めて | フェーズ0 — セットアップ | 約306時間 |
+| Pythonは知っていて、機械学習は初めて | フェーズ1 — 数学の基礎 | 約270時間 |
+| 機械学習は知っていて、ディープラーニングは初めて | フェーズ3 — ディープラーニングの中核 | 約200時間 |
+| ディープラーニングは知っていて、LLMとエージェントを学びたい | フェーズ10 — LLMをゼロから構築 | 約100時間 |
+| シニアエンジニアで、エージェントエンジニアリングだけを学びたい | フェーズ14 — エージェントエンジニアリング | 約60時間 |
+| 本番向けMCPシステムだけを構築したい | [Model Context Protocol（MCP）のパス](../../learning-paths/model-context-protocol.json) | 約23時間15分 |
+| 本番向けAgent Skillsだけを作りたい | [Agent Skillsエンジニアリングのパス](../../learning-paths/agent-skills.json) | 約9.5時間 |
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
-
-## なぜ今これが重要なのか
+## 今これが重要な理由
 
 <table>
 <tr>
-<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>THE INDUSTRY SIGNAL</b></th>
-<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>FOUNDATIONAL PAPERS COVERED</b></th>
+<th align="left" width="50%"><sub>FIG_003 · A</sub><br/><b>業界のシグナル</b></th>
+<th align="left" width="50%"><sub>FIG_003 · B</sub><br/><b>取り上げる基礎論文</b></th>
 </tr>
 <tr>
 <td valign="top">
 
-> *"The hottest new programming language is English."*<br/>
-> — **Andrej Karpathy** ([tweet](https://x.com/karpathy/status/1617979122625712128))
+> *「最も注目される新しいプログラミング言語は英語だ。」*<br/>
+> — **Andrej Karpathy** ([投稿](https://x.com/karpathy/status/1617979122625712128))
 >
-> *"Software engineering is being remade in front of our eyes."*<br/>
-> — **Boris Cherny**, creator of Claude Code
+> *「ソフトウェアエンジニアリングは、私たちの目の前で作り変えられている。」*<br/>
+> — **Boris Cherny**、Claude Codeの開発者
 >
-> *"Models will keep getting better. The skill that compounds is **knowing what to build**."*<br/>
-> — Industry consensus, 2026
+> *「モデルはこれからも進化する。積み重なっていくスキルは、**何を作るべきかを知ること**だ。」*<br/>
+> — 業界の共通認識、2026年
 
 </td>
 <td valign="top">
 
-- *Attention Is All You Need* — Vaswani et al., 2017 → [Phase 7](#phase-7)
-- *Language Models are Few-Shot Learners* (GPT-3) → [Phase 10](#phase-10)
-- *Denoising Diffusion Probabilistic Models* → [Phase 8](#phase-8)
-- *InstructGPT / RLHF* → [Phase 10](#phase-10)
-- *Direct Preference Optimization* → [Phase 10](#phase-10)
-- *Chain-of-Thought Prompting* → [Phase 11](#phase-11)
-- *ReAct: Reasoning + Acting in LLMs* → [Phase 14](#phase-14)
-- *Model Context Protocol* — Anthropic → [Phase 13](#phase-13)
+- *Attention Is All You Need* — Vaswani et al., 2017 → [フェーズ7](#phase-7)
+- *Language Models are Few-Shot Learners* (GPT-3) → [フェーズ10](#phase-10)
+- *Denoising Diffusion Probabilistic Models* → [フェーズ8](#phase-8)
+- *InstructGPT / RLHF* → [フェーズ10](#phase-10)
+- *Direct Preference Optimization* → [フェーズ10](#phase-10)
+- *Chain-of-Thought Prompting* → [フェーズ11](#phase-11)
+- *ReAct: Reasoning + Acting in LLMs* → [フェーズ14](#phase-14)
+- *Model Context Protocol* — Anthropic → [フェーズ13](#phase-13)
 
 </td>
 </tr>
@@ -1370,35 +1230,29 @@ HEAD/GET).
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
-
 ## コントリビュート
 
-| Goal | Read |
+| 目標 | 読み |
 |---|---|
-| Contribute a lesson or fix | [CONTRIBUTING.md](../../CONTRIBUTING.md) |
-| Fork for your team or school | [FORKING.md](../../FORKING.md) |
-| Lesson template | [LESSON_TEMPLATE.md](../../LESSON_TEMPLATE.md) |
-| Track progress | [ROADMAP.md](../../ROADMAP.md) |
-| Glossary | [glossary/terms.md](../../glossary/terms.md) |
-| Code of conduct | [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md) |
+| レッスンの追加・修正に貢献する | [CONTRIBUTING.md](../../CONTRIBUTING.md) |
+| チームや学校のためのフォーク | [FORKING.md](../../FORKING.md) |
+| レッスンのテンプレート | [LESSON_TEMPLATE.md](../../LESSON_TEMPLATE.md) |
+| 進捗を確認する | [ROADMAP.md](../../ROADMAP.md) |
+| 用語集 | [glossary/terms.md](../../glossary/terms.md) |
+| 行動規範 | [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md) |
 
-Before submitting a lesson, run the invariant check:
+レッスンを提出する前に、必須条件のチェックを実行してください。
 
 ```bash
 python3 scripts/audit_lessons.py           # full curriculum
 python3 scripts/audit_lessons.py --phase 14  # single phase
 python3 scripts/audit_lessons.py --json    # CI-friendly output
 ```
-
-Exit code is non-zero when any rule fails. Rules (L001–L010) validate directory
-shape, `docs/en.md` presence + H1, `code/` non-emptiness, `quiz.json` schema
-(rejects the legacy `q/choices/answer` keys that caused issue #102), and
-relative links inside lesson docs.
+いずれかのルールに違反すると、終了コードは0以外になります。ルール（L001–L010）は、ディレクトリ構成、`docs/en.md`とH1見出しの存在、`code/`が空でないこと、`quiz.json`のスキーマ、レッスン文書内の相対リンクを検証します。問題#102の原因となった旧形式の`q/choices/answer`キーは受け付けません。
 
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
-
 <a id="supporters"></a>
 
 ## プロジェクトを支援する
@@ -1410,8 +1264,7 @@ relative links inside lesson docs.
 ```text
 ░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒░░░▒▒▒
 ```
-
-If this manual helped you, star the repo. It keeps the project alive.
+このマニュアルが役に立ったら、リポジトリにスターを付けてください。プロジェクトを続ける支えになります。
 
 ## ライセンス
 
@@ -1422,5 +1275,5 @@ MIT。好きなように使ってください。フォークする、教える�
 <sub>
   <a href="https://x.com/ghumare64">@ghumare64</a> &nbsp;·&nbsp;
   <a href="https://aiengineeringfromscratch.com">aiengineeringfromscratch.com</a> &nbsp;·&nbsp;
-  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">Report / Suggest</a>
+  <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose">報告/提案</a>
 </sub>

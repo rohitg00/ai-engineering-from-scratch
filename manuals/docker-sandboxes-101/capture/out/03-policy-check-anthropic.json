@@ -1,0 +1,12 @@
+{
+  "action": "net:connect:tcp",
+  "allowed": true,
+  "context": "global",
+  "governance": {
+    "active": false
+  },
+  "resource_type": "net:domain",
+  "resource_value": "api.anthropic.com:443",
+  "target": "api.anthropic.com:443",
+  "type": "network"
+}

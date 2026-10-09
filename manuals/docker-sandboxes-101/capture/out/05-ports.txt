@@ -1,0 +1,8 @@
+$ sbx ports m101-demo --publish 18081:8080
+Published 127.0.0.1:18081 -> 8080/tcp4
+[exit 0]
+
+$ sbx ports m101-demo
+HOST IP     HOST PORT   SANDBOX PORT   PROTOCOL
+127.0.0.1   18081       8080           tcp4
+[exit 0]

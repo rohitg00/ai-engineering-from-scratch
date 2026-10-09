@@ -1,0 +1,35 @@
+$ sbx diagnose   # 2026-10-08T06:58Z
+
+sbx diagnose
+─────────────────────────────────────────
+
+  Installation
+  ✓ CLI binary — found
+      /opt/homebrew/Caskroom/sbx/0.47.0/Sbx.app/Contents/MacOS/sbx
+  ✓ Binary version — v0.47.0
+  ✓ Daemon — healthy
+      version v0.47.0
+  ✓ Daemon diagnostics — collected (47051 bytes)
+
+  Platform
+  ✓ Virtualization — supported
+      kern.hv_support is 1
+  ✓ mkfs.erofs — found
+      /opt/homebrew/Caskroom/sbx/0.47.0/Sbx.app/Contents/libexec/mkfs.erofs, default block size 4096 bytes, guest kernel page size 16384 bytes
+
+  Storage
+  ✓ Storage directories — all 1 paths present
+  ✓ Directory permissions — all writable
+  ✓ Disk space — 51.73GiB free
+      51.73GiB free of 926.4GiB on the state directory's volume
+
+  Connection
+  ✓ Version match — v0.47.0
+  ✓ Socket — responsive
+  ✓ SSH client config — not configured
+  ✓ Authentication — authenticated
+
+─────────────────────────────────────────
+  13 passed
+
+[exit 0]

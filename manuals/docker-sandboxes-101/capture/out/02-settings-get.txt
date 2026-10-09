@@ -1,0 +1,19 @@
+$ sbx settings get skills.defaultMode
+readonly
+[exit 0]
+
+$ sbx settings get --json kit.allowedSources
+{
+  "default": [
+    "docker.io/"
+  ],
+  "description": "JSON array of allowed kit source prefixes (e.g. [\"docker.io/\", \"ghcr.io/docker/\"]). Use [\"*\"] to allow any remote source.",
+  "env_var": "DOCKER_SANDBOXES_KIT_ALLOWED_SOURCES",
+  "key": "kit.allowedSources",
+  "source": "default",
+  "type": "json",
+  "value": [
+    "docker.io/"
+  ]
+}
+[exit 0]

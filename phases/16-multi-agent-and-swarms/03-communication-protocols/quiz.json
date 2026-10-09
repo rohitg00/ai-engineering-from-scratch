@@ -19,7 +19,7 @@
       "question": "In A2A, what is an 'agent card' and why is it important?",
       "options": ["A security credential that authenticates an agent's identity", "A configuration file that sets the agent's system prompt", "A visual dashboard showing agent performance metrics", "A JSON document at a well-known URL that describes an agent's capabilities, skills, and endpoint, enabling other agents to discover and delegate tasks to it"],
       "correct": 3,
-      "explanation": "The agent card (hosted at /.well-known/agent.json) is how agents advertise themselves. It lists skills, supported input/output formats, and the task endpoint. Other agents read this card to decide whether and how to delegate work."
+      "explanation": "The agent card (hosted at /.well-known/agent-card.json) is how agents advertise themselves. It lists skills, supported input/output formats, and the task endpoint. Other agents read this card to decide whether and how to delegate work."
     },
     {
       "stage": "post",

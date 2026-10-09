@@ -1,0 +1,18 @@
+schemaVersion: "1"
+name: m101-env
+agent: shell
+workspace: .
+args:
+  greeting:
+    default: hello
+    description: Greeting word
+kits:
+  - source: ../kits/hello-mixin
+env:
+  GREETING: ${{ env.args.greeting }}
+lifecycle:
+  initialize:
+    - command: echo init
+ports:
+  - sandbox: 8080
+    host: 18083

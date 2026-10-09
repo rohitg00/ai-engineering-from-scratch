@@ -1,0 +1,262 @@
+### 1 · GetTask: an id that does not exist
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "GetTask",
+  "params": {
+    "id": "00000000-0000-4000-8000-000000000000"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "error": {
+    "code": -32001,
+    "message": "Task not found",
+    "data": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "TASK_NOT_FOUND",
+        "domain": "a2a-protocol.org",
+        "metadata": {
+          "taskId": "00000000-0000-4000-8000-000000000000"
+        }
+      }
+    ]
+  }
+}
+
+### 2 · SendMessage: no A2A-Version header
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "db5b5fab-8f4d-4e27-9da1-494c73cf256d",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Run the unit tests"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "error": {
+    "code": -32009,
+    "message": "Protocol version not supported",
+    "data": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "VERSION_NOT_SUPPORTED",
+        "domain": "a2a-protocol.org",
+        "metadata": {
+          "requested": "0.3 (no header)",
+          "supported": "1.0"
+        }
+      }
+    ]
+  }
+}
+
+### 3 · SendMessage: a v0.3 method name
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "message/send",
+  "params": {
+    "message": {
+      "messageId": "73ab4876-7734-47c1-87fd-e805ec99108d",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Run the unit tests"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "error": {
+    "code": -32601,
+    "message": "Method not found"
+  }
+}
+
+### 4 · SendMessage: no messageId
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Run the unit tests"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "error": {
+    "code": -32602,
+    "message": "Invalid parameters",
+    "data": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "field": "message.messageId",
+            "description": "messageId is required"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+### 5 · SendMessage: an image part
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41242
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 5,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "309d6b79-965e-4a32-9ae4-45508201e2bd",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "url": "https://example.com/screenshot.png",
+          "mediaType": "image/png"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 5,
+  "error": {
+    "code": -32005,
+    "message": "Content type not supported",
+    "data": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "CONTENT_TYPE_NOT_SUPPORTED",
+        "domain": "a2a-protocol.org",
+        "metadata": {
+          "mediaType": "image/png"
+        }
+      }
+    ]
+  }
+}
+
+### 6 · CreateTaskPushNotificationConfig: not supported
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41242
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 6,
+  "method": "CreateTaskPushNotificationConfig",
+  "params": {
+    "taskId": "00000000-0000-4000-8000-000000000000",
+    "url": "http://localhost:41250/a2a-events"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 6,
+  "error": {
+    "code": -32003,
+    "message": "Push notifications are not supported",
+    "data": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "PUSH_NOTIFICATION_NOT_SUPPORTED",
+        "domain": "a2a-protocol.org"
+      }
+    ]
+  }
+}
+
+### 7 · a malformed body
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{"jsonrpc": "2.0", "method": 
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": null,
+  "error": {
+    "code": -32700,
+    "message": "Invalid JSON payload"
+  }
+}

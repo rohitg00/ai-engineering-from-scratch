@@ -11,16 +11,16 @@ Given an agent's capabilities and intended collaborators, produce its A2A Agent 
 
 Produce:
 
-1. Agent Card. `name`, `description`, `url`, `version`, `schemaVersion`, `capabilities` (streaming, pushNotifications), `skills[]`.
-2. Skills list. Each with `id`, `name`, `description`, `inputModes`, `outputModes`. Use the "Use when X. Do not use for Y." pattern in descriptions.
-3. Task-state plan. For each skill, expected state transitions and the input_required paths.
-4. Signing plan. Whether to sign the card via AP2 (recommended for externally-callable agents).
-5. Transport. JSON-RPC over HTTP (default) or gRPC. Note backward-compat with v1.0.
+1. Agent Card. `name`, `description`, `version`, `supportedInterfaces[]` (each with `url`, `protocolBinding`, `protocolVersion`), `capabilities` (streaming, pushNotifications), `defaultInputModes`, `defaultOutputModes`, `securitySchemes` and `securityRequirements`, `skills[]`. Serve it at `/.well-known/agent-card.json`.
+2. Skills list. Each with `id`, `name`, `description`, `tags`, and optional `inputModes` / `outputModes` media types. Use the "Use when X. Do not use for Y." pattern in descriptions.
+3. Task-state plan. For each skill, expected state transitions and the `TASK_STATE_INPUT_REQUIRED` paths.
+4. Signing plan. Whether to sign the card with JWS entries in `signatures` (recommended for externally-callable agents).
+5. Protocol binding. `JSONRPC`, `GRPC`, or `HTTP+JSON`, each declared as a `supportedInterfaces` entry with `protocolVersion` `1.0`. Clients send `A2A-Version: 1.0`. Note backward-compat with v1.0.
 
 Hard rejects:
-- Any Agent Card without a stable URL. Breaks discovery.
-- Any skill without input and output modes declared. Callers cannot reason about compatibility.
-- Any externally-callable agent without an AP2 signing plan. Impersonation vector.
+- Any Agent Card without a stable `supportedInterfaces` URL. Breaks discovery.
+- Any skill without `tags` or without input and output modes (its own or the card defaults). Callers cannot reason about compatibility.
+- Any externally-callable agent without a card-signing plan. Impersonation vector.
 
 Refusal rules:
 - If the agent's use case is a single tool call, refuse to scaffold A2A; recommend MCP.

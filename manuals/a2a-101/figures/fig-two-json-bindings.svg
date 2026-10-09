@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 436" role="img" aria-labelledby="fig-two-json-bindings-title fig-two-json-bindings-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-two-json-bindings-title">One operation in two JSON bindings</title>
+  <desc id="fig-two-json-bindings-desc">Two rows, SendMessage and GetTask, each headed by its gRPC rpc line from a2a.proto. In each row the left column shows the JSON-RPC request, a POST to /a2a/jsonrpc whose body names the method and carries the request message in params, and a reply whose result holds the response message. The right column shows HTTP+JSON, where the verb and path name the operation, the body or the path and query carry the request, and the reply body is the response message itself. The steps appear in capture order: each request, then its reply.</desc>
+  <defs><marker id="fig-two-json-bindings-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · JSON-RPC</text>
+  <text x="334" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · HTTP+JSON</text>
+  <text x="20" y="42" font-size="11" font-weight="700" fill="var(--m-ink-mute, #6f6f6a)">gRPC</text>
+  <text x="62" y="42" font-size="11">rpc SendMessage(SendMessageRequest) returns (SendMessageResponse)</text>
+  <line x1="320" y1="52" x2="320" y2="222" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="250" font-size="11" font-weight="700" fill="var(--m-ink-mute, #6f6f6a)">gRPC</text>
+  <text x="62" y="250" font-size="11">rpc GetTask(GetTaskRequest) returns (Task)</text>
+  <line x1="320" y1="260" x2="320" y2="430" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="52" width="286" height="89" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="32" y="70" font-size="11">POST /a2a/jsonrpc</text>
+  <text x="32" y="85" font-size="11">Content-Type: application/json</text>
+  <text x="32" y="100" font-size="11">&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;id&quot;: 1,</text>
+  <text x="32" y="115" font-size="11" font-weight="700">&quot;method&quot;: &quot;SendMessage&quot;,</text>
+  <text x="32" y="130" font-size="11">&quot;params&quot;: </text>
+  <text x="98" y="130" font-size="11" font-style="italic" fill="var(--m-ink-soft, #4a4a4a)">SendMessageRequest</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <line x1="163" y1="141" x2="163" y2="162" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-two-json-bindings-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M163 141 L163 162" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="20" y="163" width="286" height="59" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="181" font-size="11">HTTP/1.1 200 OK</text>
+  <text x="32" y="196" font-size="11">&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;id&quot;: 1,</text>
+  <text x="32" y="211" font-size="11">&quot;result&quot;: </text>
+  <text x="98" y="211" font-size="11" font-style="italic" fill="var(--m-ink-soft, #4a4a4a)">SendMessageResponse</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="334" y="52" width="286" height="89" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="346" y="70" font-size="11" font-weight="700">POST /a2a/rest/message:send</text>
+  <text x="346" y="85" font-size="11">Content-Type: application/a2a+json</text>
+  <text x="346" y="100" font-size="11">body: </text>
+  <text x="385.6" y="100" font-size="11" font-style="italic" fill="var(--m-ink-soft, #4a4a4a)">SendMessageRequest</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <line x1="477" y1="141" x2="477" y2="162" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-two-json-bindings-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M477 141 L477 162" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="334" y="163" width="286" height="59" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="346" y="181" font-size="11">HTTP/1.1 200 OK</text>
+  <text x="346" y="196" font-size="11">Content-Type: application/a2a+json</text>
+  <text x="346" y="211" font-size="11">body: </text>
+  <text x="385.6" y="211" font-size="11" font-style="italic" fill="var(--m-ink-soft, #4a4a4a)">SendMessageResponse</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="260" width="286" height="89" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="32" y="278" font-size="11">POST /a2a/jsonrpc</text>
+  <text x="32" y="293" font-size="11">&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;id&quot;: 3,</text>
+  <text x="32" y="308" font-size="11" font-weight="700">&quot;method&quot;: &quot;GetTask&quot;,</text>
+  <text x="32" y="323" font-size="11">&quot;params&quot;: {&quot;id&quot;: &quot;d0c28826&quot;,</text>
+  <text x="104.6" y="338" font-size="11">&quot;historyLength&quot;: 0}</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <line x1="163" y1="349" x2="163" y2="370" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-two-json-bindings-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M163 349 L163 370" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="20" y="371" width="286" height="59" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="389" font-size="11">HTTP/1.1 200 OK</text>
+  <text x="32" y="404" font-size="11">&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;id&quot;: 3,</text>
+  <text x="32" y="419" font-size="11">&quot;result&quot;: </text>
+  <text x="98" y="419" font-size="11" font-style="italic" fill="var(--m-ink-soft, #4a4a4a)">Task</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <rect x="334" y="260" width="286" height="89" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="346" y="278" font-size="11" font-weight="700">GET /a2a/rest/tasks/bbfb9ea5</text>
+  <text x="372.4" y="293" font-size="11">?historyLength=0</text>
+  <text x="346" y="308" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no body: the path and query carry the request</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <line x1="477" y1="349" x2="477" y2="370" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-two-json-bindings-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M477 349 L477 370" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="334" y="371" width="286" height="59" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="346" y="389" font-size="11">HTTP/1.1 200 OK</text>
+  <text x="346" y="404" font-size="11">Content-Type: application/a2a+json</text>
+  <text x="346" y="419" font-size="11">body: </text>
+  <text x="385.6" y="419" font-size="11" font-style="italic" fill="var(--m-ink-soft, #4a4a4a)">Task</text>
+  </g>
+</svg>

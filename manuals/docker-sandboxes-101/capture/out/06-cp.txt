@@ -1,0 +1,18 @@
+$ sbx cp $CAPTURE/work/in.txt m101-demo:/tmp/in.txt
+[exit 0]
+
+$ sbx exec m101-demo sh -c 'cat /tmp/in.txt; printf out > /tmp/out.txt'
+in
+[exit 0]
+
+$ sbx cp m101-demo:/tmp/out.txt $CAPTURE/work/out.txt
+[exit 0]
+
+$ cat $CAPTURE/work/out.txt
+out
+[exit 0]
+
+$ sbx cp m101-demo:/tmp/out.txt m101-demo-2:/tmp/x
+error: copying between sandboxes is not supported
+  try: sbx cp --help
+[exit 1]

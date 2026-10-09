@@ -1,0 +1,40 @@
+{
+  "sandboxes": [
+    {
+      "name": "m101-demo",
+      "id": "<uuid>",
+      "agent": "shell",
+      "status": "running",
+      "last_used_at": "<ts>",
+      "ports": [
+        {
+          "host_ip": "127.0.0.1",
+          "host_port": "<port>",
+          "sandbox_port": 8080,
+          "protocol": "tcp"
+        },
+        {
+          "host_ip": "::1",
+          "host_port": "<port>",
+          "sandbox_port": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "workspaces": [
+        "$CAPTURE/fixtures/repo"
+      ],
+      "created_at": "<ts>"
+    },
+    {
+      "name": "m101-demo-2",
+      "id": "<uuid>",
+      "agent": "shell",
+      "status": "running",
+      "last_used_at": "<ts>",
+      "workspaces": [
+        "$CAPTURE/fixtures/repo"
+      ],
+      "created_at": "<ts>"
+    }
+  ]
+}

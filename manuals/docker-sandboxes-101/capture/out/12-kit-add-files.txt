@@ -1,0 +1,3 @@
+$ sbx kit add m101-demo ./fixtures/kits/hello-mixin
+error: kit "hello-mixin" declares files, which the kit-add recreate flow does not yet apply; recreate the sandbox from scratch via `sbx rm` + `sbx create --kit` to use this kit
+[exit 1]

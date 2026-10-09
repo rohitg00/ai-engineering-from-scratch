@@ -8,6 +8,8 @@ const config = require('../vercel.json');
 const { once } = require('node:events');
 const { createServer } = require('../scripts/serve-agent-site');
 
+const routeHandles = pathname => config.routes.some(rule => !rule.has && new RegExp('^' + rule.src + '$').test(pathname));
+
 test('every public HTML page has a clean route and an old-URL redirect', () => {
   const pages = fs.readdirSync(__dirname).filter(name => name.endsWith('.html') && name !== '404.html');
   for (const name of pages) {
@@ -16,8 +18,8 @@ test('every public HTML page has a clean route and an old-URL redirect', () => {
       assert.ok(config.redirects.some(rule => rule.source === '/index' && rule.destination === '/'));
       continue;
     }
-    assert.ok(config.rewrites.some(rule => rule.source === route), route);
-    const legacyHandler = config.routes.some(rule => rule.src === '/' + name.replace('.', '\\.'));
+    assert.ok(config.rewrites.some(rule => rule.source === route) || routeHandles(route), route);
+    const legacyHandler = routeHandles('/' + name);
     const redirect = config.redirects.some(rule => {
       const pattern = rule.source.replace(':page(', '(?:');
       return new RegExp('^' + pattern + '$').test('/' + name) && rule.permanent;
@@ -105,7 +107,7 @@ test('HTTP redirects preserve selected projects, query encoding and clean-page c
   await once(server, 'listening');
   t.after(() => server.close());
   const base = `http://127.0.0.1:${server.address().port}`;
-  const pages = fs.readdirSync(__dirname).filter(name => name.endsWith('.html') && !['404.html', 'lesson.html', 'certification.html'].includes(name));
+  const pages = fs.readdirSync(__dirname).filter(name => name.endsWith('.html') && name !== '404.html' && !routeHandles('/' + name));
   for (const name of pages) {
     const query = '?id=dataset-split-auditor&stage=03-split-groups&q=a%26b';
     const response = await fetch(base + '/' + name + query, { redirect: 'manual' });

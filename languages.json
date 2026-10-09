@@ -1,5 +1,5 @@
 {
-  "_comment": "Canonical language registry. English is the source. Adding a language here wires it into the translation script (scripts/translate_lessons.py) and the site switcher (via site/build.js -> site/langs.js). code = BCP-47-ish tag used in filenames and URLs; name = English name for the translation prompt; native = label shown in the switcher; ci = true means the auto push-triggered workflow builds this language (workflow_dispatch can still request any).",
+  "_comment": "Canonical language registry. English is the source. code = BCP-47-ish tag used in filenames and URLs; name = English name for the translation prompt; native = label shown in the switcher; ci = true enables automatic lesson and UI translation plus the site switcher; site = true enables the switcher and UI translation without automatically translating contributor-managed lessons. workflow_dispatch can explicitly request any non-source language.",
   "languages": [
     {
       "code": "en",
@@ -19,7 +19,8 @@
       "code": "zh-TW",
       "name": "Traditional Chinese",
       "native": "繁體中文",
-      "nllb": "zho_Hant"
+      "nllb": "zho_Hant",
+      "site": true
     },
     {
       "code": "hi",
@@ -53,6 +54,13 @@
       "code": "pt",
       "name": "Portuguese",
       "native": "Português",
+      "nllb": "por_Latn",
+      "ci": true
+    },
+    {
+      "code": "pt-BR",
+      "name": "Brazilian Portuguese",
+      "native": "Português (Brasil)",
       "nllb": "por_Latn",
       "ci": true
     },
@@ -140,7 +148,8 @@
       "code": "fa",
       "name": "Persian",
       "native": "فارسی",
-      "nllb": "pes_Arab"
+      "nllb": "pes_Arab",
+      "ci": true
     },
     {
       "code": "ms",

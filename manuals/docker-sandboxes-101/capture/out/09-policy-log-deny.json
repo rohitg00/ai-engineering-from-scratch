@@ -1,0 +1,53 @@
+{
+  "blocked_hosts": [
+    {
+      "host": "example.com:443",
+      "vm_name": "m101-policy",
+      "proxy_type": "forward",
+      "rule": "denied: rule \"local:<uuid>\" matched op(action=net:connect:tcp, resource=net:domain:example.com:443)",
+      "last_seen": "<ts>",
+      "since": "<ts>",
+      "count_since": "<n>",
+      "reason": "Denied by local rule"
+    },
+    {
+      "host": "example.com:443",
+      "vm_name": "m101-policy",
+      "proxy_type": "forward",
+      "rule": "no applicable policies for op(action=net:connect:tcp, resource=net:domain:example.com:443)",
+      "last_seen": "<ts>",
+      "since": "<ts>",
+      "count_since": "<n>",
+      "reason": "No matching allow rule (default deny)"
+    }
+  ],
+  "allowed_hosts": [
+    {
+      "host": "download.docker.com:443",
+      "vm_name": "m101-policy",
+      "proxy_type": "forward-bypass",
+      "rule": "",
+      "last_seen": "<ts>",
+      "since": "<ts>",
+      "count_since": "<n>"
+    },
+    {
+      "host": "example.com:443",
+      "vm_name": "m101-policy",
+      "proxy_type": "forward-bypass",
+      "rule": "",
+      "last_seen": "<ts>",
+      "since": "<ts>",
+      "count_since": "<n>"
+    },
+    {
+      "host": "ports.ubuntu.com:80",
+      "vm_name": "m101-policy",
+      "proxy_type": "forward",
+      "rule": "",
+      "last_seen": "<ts>",
+      "since": "<ts>",
+      "count_since": "<n>"
+    }
+  ]
+}

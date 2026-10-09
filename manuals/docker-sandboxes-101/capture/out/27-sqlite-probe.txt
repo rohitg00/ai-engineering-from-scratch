@@ -1,0 +1,6 @@
+$ sbx exec docker-agent-<hash> sh -c 'cd "$PWD" && mkdir -p .m101/probe && python3 -c '"'"'import sqlite3; c = sqlite3.connect(".m101/probe/x.db"); c.execute("create table t(a)"); c.execute("insert into t values (1)"); c.commit(); print("sqlite write ok")'"'"' 2>&1 | tail -1; mount | grep repo-sandbox'
+sqlite3.OperationalError: attempt to write a readonly database
+host on $CAPTURE/fixtures/repo-sandbox type virtiofs (rw,nosuid,nodev,relatime)
+host on $CAPTURE/fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash> type virtiofs (ro,nosuid,nodev,relatime)
+host on $CAPTURE/fixtures/repo-sandbox/.m101/cfg type virtiofs (ro,nosuid,nodev,relatime)
+[exit 0]

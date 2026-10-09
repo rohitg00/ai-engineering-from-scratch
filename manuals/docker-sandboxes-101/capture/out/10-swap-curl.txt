@@ -1,0 +1,17 @@
+$ sbx exec m101-secret sh -c 'curl -sS --max-time 10 -H "Authorization: Bearer $M101_RECV_KEY" -H "X-Demo: $M101_RECV_KEY" -o /dev/null -w '"'"'%{http_code}\n'"'"' http://host.docker.internal:18080/from-variable'
+204
+[exit 0]
+
+$ sbx exec m101-secret sh -c 'curl -sS --max-time 10 -H '"'"'Authorization: Bearer sbx-cs-<rand>'"'"' -H '"'"'X-Demo: sbx-cs-<rand>'"'"' -o /dev/null -w '"'"'%{http_code}\n'"'"' http://host.docker.internal:18080/from-literal'
+204
+[exit 0]
+
+$ sbx exec m101-secret sh -c 'curl -sS --max-time 10 -H '"'"'Authorization: sbx-cs-<rand>'"'"' -o /dev/null -w '"'"'%{http_code}\n'"'"' http://host.docker.internal:18080/no-scheme'
+204
+[exit 0]
+
+$ sbx exec m101-secret sh -c 'curl -sS --max-time 10 -H "Authorization: Bearer $M101_RECV_KEY" -o /dev/null -w '"'"'%{http_code}\n'"'"' http://gateway.docker.internal:18080/other-host; echo exit=$?'
+curl: (52) Empty reply from server
+000
+exit=52
+[exit 0]

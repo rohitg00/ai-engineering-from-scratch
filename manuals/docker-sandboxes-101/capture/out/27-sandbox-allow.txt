@@ -1,0 +1,18 @@
+$ docker-agent sandbox allow localhost:12434  (--config-dir, --data-dir, --cache-dir under fixtures/repo-sandbox/.m101, inside the workspace)
+
+Welcome to docker agent! 🚀
+
+For any feedback, please visit: https://docker.qualtrics.com/jfe/form/SV_cNsCIg92nQemlfw
+
+We collect anonymous usage data to help improve docker agent. To disable:
+  - Set environment variable: TELEMETRY_ENABLED=false
+
+Added 1 host(s) to the persistent sandbox allowlist:
+  + localhost:12434
+[exit 0]
+
+$ docker-agent sandbox list  (--config-dir, --data-dir, --cache-dir under fixtures/repo-sandbox/.m101, inside the workspace)
+Persistent sandbox allowlist (1):
+
+  localhost:12434
+[exit 0]

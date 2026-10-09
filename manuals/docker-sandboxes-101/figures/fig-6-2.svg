@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 396" role="img" aria-labelledby="fig-6-2-title fig-6-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-2-title">One agent file served over ACP and over MCP</title>
+  <desc id="fig-6-2-desc">Top band: an editor spawns docker-agent serve acp pong.yaml and writes JSON-RPC lines to its stdin. initialize returns agentCapabilities and agentInfo docker agent v1.149.0 at protocolVersion 1. session/new first sends a session/update notification with the slash commands compact and usage, then the result with configOptions and the mode default. Bottom band: curl posts to serve mcp --http at 127.0.0.1:8081/mcp. initialize asks for 2026-07-28 and gets 2025-11-25, notifications/initialized gets 202 Accepted, tools/list returns one tool named pong with one message argument, and tools/call returns structuredContent.response pong. Both servers run the agent root of pong.yaml on dmr/ai/qwen3:4b.</desc>
+  <defs><marker id="fig-6-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ACP OVER STDIO</text>
+  <rect x="20" y="30" width="130" height="48" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="85" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">editor</text>
+  <text x="85" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ACP client</text>
+  <rect x="250" y="30" width="170" height="48" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="335" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">serve acp</text>
+  <text x="335" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">stdin and stdout</text>
+  <line x1="150" y1="54" x2="249" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-2-head-ink)"/>
+  <rect class="m-knock" x="179.25" y="37.03" width="40.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="199.5" y="48" font-size="11.5" text-anchor="middle">stdio</text>
+  <rect x="20" y="90" width="400" height="102" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="110" font-size="11">&gt;&gt; initialize, protocolVersion 1</text>
+  <text x="32" y="128" font-size="11">&lt;&lt; agentCapabilities, agentInfo docker agent</text>
+  <text x="32" y="146" font-size="11">&gt;&gt; session/new, cwd, mcpServers []</text>
+  <text x="32" y="164" font-size="11">&lt;&lt; session/update: commands compact, usage</text>
+  <text x="32" y="182" font-size="11">&lt;&lt; result: configOptions, currentModeId default</text>
+  <text x="20" y="214" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">MCP OVER STREAMING HTTP</text>
+  <rect x="20" y="224" width="130" height="48" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="85" y="243.25" font-size="12.5" text-anchor="middle" font-weight="700">curl</text>
+  <text x="85" y="260.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">MCP client</text>
+  <rect x="250" y="224" width="170" height="48" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="335" y="243.25" font-size="12.5" text-anchor="middle" font-weight="700">serve mcp --http</text>
+  <text x="335" y="260.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">127.0.0.1:8081/mcp</text>
+  <line x1="150" y1="248" x2="249" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-2-head-ink)"/>
+  <rect class="m-knock" x="165.45" y="231.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="199.5" y="242" font-size="11.5" text-anchor="middle">HTTP POST</text>
+  <rect x="20" y="284" width="400" height="102" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="304" font-size="11">&gt;&gt; initialize, asks 2026-07-28</text>
+  <text x="32" y="322" font-size="11">&lt;&lt; protocolVersion 2025-11-25</text>
+  <text x="32" y="340" font-size="11">&gt;&gt; notifications/initialized, 202 Accepted</text>
+  <text x="32" y="358" font-size="11">&gt;&gt; tools/list &lt;&lt; one tool pong(message)</text>
+  <text x="32" y="376" font-size="11">&gt;&gt; tools/call &lt;&lt; structuredContent.response</text>
+  <rect x="470" y="30" width="150" height="354" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="545" y="187.25" font-size="12.5" text-anchor="middle" font-weight="700">pong.yaml</text>
+  <text x="545" y="204.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">agent root</text>
+  <text x="545" y="219.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dmr/ai/qwen3:4b</text>
+  <text x="545" y="234.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">temperature 0</text>
+  <line x1="420" y1="54" x2="469" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-2-head-ink)"/>
+  <line x1="420" y1="248" x2="469" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-2-head-ink)"/>
+</svg>

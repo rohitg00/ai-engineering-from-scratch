@@ -1,11 +1,11 @@
 import crypto from "node:crypto";
 
-type MessageRole = "user" | "agent";
+type MessageRole = "ROLE_USER" | "ROLE_AGENT";
 
 type MessagePart =
-  | { kind: "text"; text: string }
-  | { kind: "data"; data: unknown; mediaType: string }
-  | { kind: "file"; name: string; url: string; mediaType: string };
+  | { text: string }
+  | { data: unknown; mediaType: string }
+  | { url: string; filename: string; mediaType: string };
 
 type TrajectoryEntry = {
   reasoning: string;
@@ -39,7 +39,7 @@ function createMessage(
 }
 
 function textMessage(role: MessageRole, text: string): AgentMessage {
-  return createMessage(role, [{ kind: "text", text }]);
+  return createMessage(role, [{ text }]);
 }
 
 type Skill = {
@@ -51,11 +51,17 @@ type Skill = {
   outputModes: string[];
 };
 
+type AgentInterface = {
+  url: string;
+  protocolBinding: string;
+  protocolVersion: string;
+};
+
 type AgentCard = {
   name: string;
   description: string;
   version: string;
-  url: string;
+  supportedInterfaces: AgentInterface[];
   capabilities: {
     streaming: boolean;
     pushNotifications: boolean;
@@ -96,20 +102,20 @@ class AgentRegistry {
 }
 
 type TaskState =
-  | "submitted"
-  | "working"
-  | "input-required"
-  | "auth-required"
-  | "completed"
-  | "failed"
-  | "canceled"
-  | "rejected";
+  | "TASK_STATE_SUBMITTED"
+  | "TASK_STATE_WORKING"
+  | "TASK_STATE_INPUT_REQUIRED"
+  | "TASK_STATE_AUTH_REQUIRED"
+  | "TASK_STATE_COMPLETED"
+  | "TASK_STATE_FAILED"
+  | "TASK_STATE_CANCELED"
+  | "TASK_STATE_REJECTED";
 
 const TERMINAL_STATES: TaskState[] = [
-  "completed",
-  "failed",
-  "canceled",
-  "rejected",
+  "TASK_STATE_COMPLETED",
+  "TASK_STATE_FAILED",
+  "TASK_STATE_CANCELED",
+  "TASK_STATE_REJECTED",
 ];
 
 type TaskStatus = {
@@ -133,13 +139,14 @@ type Task = {
 };
 
 type TaskEvent =
-  | { kind: "statusUpdate"; taskId: string; status: TaskStatus }
+  | { statusUpdate: { taskId: string; status: TaskStatus } }
   | {
-      kind: "artifactUpdate";
-      taskId: string;
-      artifact: Artifact;
-      append: boolean;
-      lastChunk: boolean;
+      artifactUpdate: {
+        taskId: string;
+        artifact: Artifact;
+        append: boolean;
+        lastChunk: boolean;
+      };
     };
 
 type TaskHandler = (
@@ -171,22 +178,22 @@ class TaskManager {
     if (!handler) {
       const task = this.createTask(contextId);
       task.status = {
-        state: "rejected",
+        state: "TASK_STATE_REJECTED",
         timestamp: Date.now(),
-        message: textMessage("agent", `No handler for ${agentName}`),
+        message: textMessage("ROLE_AGENT", `No handler for ${agentName}`),
       };
       return task;
     }
 
     const task = this.createTask(contextId);
     task.history.push(message);
-    task.status = { state: "submitted", timestamp: Date.now() };
+    task.status = { state: "TASK_STATE_SUBMITTED", timestamp: Date.now() };
 
     await this.processTask(task, handler, message).catch((err) => {
       task.status = {
-        state: "failed",
+        state: "TASK_STATE_FAILED",
         timestamp: Date.now(),
-        message: textMessage("agent", String(err)),
+        message: textMessage("ROLE_AGENT", String(err)),
       };
     });
     return task;
@@ -199,11 +206,9 @@ class TaskManager {
   cancelTask(taskId: string): boolean {
     const task = this.tasks.get(taskId);
     if (!task || TERMINAL_STATES.includes(task.status.state)) return false;
-    task.status = { state: "canceled", timestamp: Date.now() };
+    task.status = { state: "TASK_STATE_CANCELED", timestamp: Date.now() };
     this.emit(taskId, {
-      kind: "statusUpdate",
-      taskId,
-      status: task.status,
+      statusUpdate: { taskId, status: task.status },
     });
     return true;
   }
@@ -212,7 +217,7 @@ class TaskManager {
     const task: Task = {
       id: crypto.randomUUID(),
       contextId: contextId ?? crypto.randomUUID(),
-      status: { state: "submitted", timestamp: Date.now() },
+      status: { state: "TASK_STATE_SUBMITTED", timestamp: Date.now() },
       artifacts: [],
       history: [],
     };
@@ -225,42 +230,39 @@ class TaskManager {
     handler: TaskHandler,
     message: AgentMessage
   ) {
-    task.status = { state: "working", timestamp: Date.now() };
+    task.status = { state: "TASK_STATE_WORKING", timestamp: Date.now() };
     this.emit(task.id, {
-      kind: "statusUpdate",
-      taskId: task.id,
-      status: task.status,
+      statusUpdate: { taskId: task.id, status: task.status },
     });
 
     try {
       for await (const event of handler(task, message)) {
         if (TERMINAL_STATES.includes(task.status.state)) break;
 
-        if (event.kind === "statusUpdate") {
-          task.status = event.status;
+        if ("statusUpdate" in event) {
+          task.status = event.statusUpdate.status;
         }
-        if (event.kind === "artifactUpdate") {
+        if ("artifactUpdate" in event) {
+          const update = event.artifactUpdate;
           const existing = task.artifacts.find(
-            (a) => a.id === event.artifact.id
+            (a) => a.id === update.artifact.id
           );
-          if (existing && event.append) {
-            existing.parts.push(...event.artifact.parts);
+          if (existing && update.append) {
+            existing.parts.push(...update.artifact.parts);
           } else {
-            task.artifacts.push(event.artifact);
+            task.artifacts.push(update.artifact);
           }
         }
         this.emit(task.id, event);
       }
     } catch (err) {
       task.status = {
-        state: "failed",
+        state: "TASK_STATE_FAILED",
         timestamp: Date.now(),
-        message: textMessage("agent", String(err)),
+        message: textMessage("ROLE_AGENT", String(err)),
       };
       this.emit(task.id, {
-        kind: "statusUpdate",
-        taskId: task.id,
-        status: task.status,
+        statusUpdate: { taskId: task.id, status: task.status },
       });
     }
   }
@@ -553,7 +555,13 @@ async function protocolDemo() {
     name: "researcher",
     description: "Searches and summarizes findings",
     version: "1.0.0",
-    url: "https://researcher.local/a2a/v1",
+    supportedInterfaces: [
+      {
+        url: "https://researcher.local/a2a/v1",
+        protocolBinding: "JSONRPC",
+        protocolVersion: "1.0",
+      },
+    ],
     capabilities: { streaming: true, pushNotifications: false },
     defaultInputModes: ["text/plain"],
     defaultOutputModes: ["text/plain", "application/json"],
@@ -572,7 +580,13 @@ async function protocolDemo() {
     name: "coder",
     description: "Writes code from specs",
     version: "1.0.0",
-    url: "https://coder.local/a2a/v1",
+    supportedInterfaces: [
+      {
+        url: "https://coder.local/a2a/v1",
+        protocolBinding: "JSONRPC",
+        protocolVersion: "1.0",
+      },
+    ],
     capabilities: { streaming: false, pushNotifications: false },
     defaultInputModes: ["text/plain", "application/json"],
     defaultOutputModes: ["text/plain"],
@@ -597,9 +611,13 @@ async function protocolDemo() {
     "researcher",
     async function* (task, message) {
       yield {
-        kind: "statusUpdate" as const,
-        taskId: task.id,
-        status: { state: "working" as const, timestamp: Date.now() },
+        statusUpdate: {
+          taskId: task.id,
+          status: {
+            state: "TASK_STATE_WORKING" as const,
+            timestamp: Date.now(),
+          },
+        },
       };
 
       researchTrajectory.push({
@@ -624,41 +642,45 @@ async function protocolDemo() {
       });
 
       yield {
-        kind: "artifactUpdate" as const,
-        taskId: task.id,
-        artifact: {
-          id: crypto.randomUUID(),
-          name: "research-results",
-          parts: [
-            {
-              kind: "data" as const,
-              data: {
-                findings: [
-                  "React 19 compiler auto-memoizes components",
-                  "No more manual useMemo/useCallback needed",
-                  "Compiler runs at build time, not runtime",
-                ],
-                sources: ["react.dev/blog/react-19"],
+        artifactUpdate: {
+          taskId: task.id,
+          artifact: {
+            id: crypto.randomUUID(),
+            name: "research-results",
+            parts: [
+              {
+                data: {
+                  findings: [
+                    "React 19 compiler auto-memoizes components",
+                    "No more manual useMemo/useCallback needed",
+                    "Compiler runs at build time, not runtime",
+                  ],
+                  sources: ["react.dev/blog/react-19"],
+                },
+                mediaType: "application/json",
               },
-              mediaType: "application/json",
-            },
-          ],
+            ],
+          },
+          append: false,
+          lastChunk: true,
         },
-        append: false,
-        lastChunk: true,
       };
 
       yield {
-        kind: "statusUpdate" as const,
-        taskId: task.id,
-        status: { state: "completed" as const, timestamp: Date.now() },
+        statusUpdate: {
+          taskId: task.id,
+          status: {
+            state: "TASK_STATE_COMPLETED" as const,
+            timestamp: Date.now(),
+          },
+        },
       };
     }
   );
 
   auditRunner.registerAgent("researcher", async () => ({
     output: [
-      textMessage("agent", "React 19 compiler auto-memoizes components"),
+      textMessage("ROLE_AGENT", "React 19 compiler auto-memoizes components"),
     ],
     trajectory: researchTrajectory,
   }));
@@ -688,7 +710,7 @@ async function protocolDemo() {
   );
 
   console.log("\n2. Identity Verification (ANP)");
-  const message = textMessage("user", "Research React 19 compiler features");
+  const message = textMessage("ROLE_USER", "Research React 19 compiler features");
   const signature = signPayload(coderIdentity, message.id);
   const verified = identityRegistry.verify(
     coderIdentity.did,

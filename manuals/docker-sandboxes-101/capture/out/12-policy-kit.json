@@ -1,0 +1,28 @@
+{
+  "rules": [
+    {
+      "id": "<uuid>",
+      "name": "kit:m101-kit",
+      "policy_id": "<uuid>",
+      "scope": "sandbox:m101-kit",
+      "applies_to": "sandbox:m101-kit",
+      "resource_type": "network",
+      "decision": "allow",
+      "resources": [
+        "example.com"
+      ],
+      "origin": "scoped",
+      "layer": "local",
+      "status": "active",
+      "editable": false,
+      "sandbox_id": "m101-kit",
+      "provenance": {
+        "created_via": "provisioned",
+        "source": "sandboxes"
+      },
+      "actions": [
+        "net:connect:tcp"
+      ]
+    }
+  ]
+}

@@ -1,9 +1,32 @@
 {
-  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/build-agents.js && node site/clean-urls.js && node site/version-assets.js",
+  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/build-agents.js && node site/clean-urls.js && node site/build-manuals.js && node site/version-assets.js",
   "outputDirectory": "site",
   "framework": null,
   "installCommand": "echo skip",
   "routes": [
+    {
+      "src": "/blogs(?:\\.html)?/",
+      "status": 308,
+      "headers": {
+        "Location": "/blogs"
+      }
+    },
+    {
+      "src": "/blogs(?:\\.html)?",
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "dest": "/api/blogs"
+    },
+    {
+      "src": "/(blog|guides)/([a-z0-9][a-z0-9-]*)/?",
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "dest": "/api/writing?path=/$1/$2/"
+    },
     {
       "src": "/lesson\\.html",
       "methods": [
@@ -379,7 +402,7 @@
       ]
     },
     {
-      "source": "/(glossary|catalog|certifications|certification|assessment|path|prereqs|roadmap|about|developer|docs|contact|privacy|sponsors|projects|project|learning-paths|developers|api)",
+      "source": "/(blogs|glossary|catalog|certifications|certification|assessment|path|prereqs|roadmap|about|developer|docs|contact|privacy|sponsors|projects|project|learning-paths|developers|api)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -446,11 +469,13 @@
     },
     "api/markdown.js": {
       "maxDuration": 10,
-      "includeFiles": "{site/*.html,site/agent-pages/*.md}"
+      "includeFiles": "{site/*.html,site/agent-pages/*.md}",
+      "excludeFiles": "site/**/*.js"
     },
     "api/v1/markdown.js": {
       "maxDuration": 10,
-      "includeFiles": "{site/*.html,site/agent-pages/*.md}"
+      "includeFiles": "{site/*.html,site/agent-pages/*.md}",
+      "excludeFiles": "site/**/*.js"
     },
     "api/not-found.js": {
       "maxDuration": 10,
@@ -467,6 +492,10 @@
     "api/v1/resource.js": {
       "maxDuration": 10,
       "includeFiles": "generated/agent-content.json"
+    },
+    "api/blogs.js": {
+      "maxDuration": 10,
+      "includeFiles": "site/blogs.html"
     }
   },
   "trailingSlash": false,

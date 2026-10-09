@@ -1,0 +1,211 @@
+[
+  {
+    "exchange": 1,
+    "title": "SendStreamingMessage: run the tests",
+    "events": [
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "task": {
+            "id": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+            "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+            "status": {
+              "state": "TASK_STATE_SUBMITTED",
+              "timestamp": "2026-10-06T09:00:01.750Z"
+            },
+            "history": [
+              {
+                "messageId": "5bc8fbbc-bde5-4099-8164-d8399f767c45",
+                "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+                "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+                "role": "ROLE_USER",
+                "parts": [
+                  {
+                    "text": "Run the unit tests for payments-api at commit 9f3c2e1"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "statusUpdate": {
+            "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+            "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+            "status": {
+              "state": "TASK_STATE_WORKING",
+              "message": {
+                "messageId": "c7174e70-2f83-4cef-8cc1-390c2b07a5eb",
+                "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+                "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "Checking out 9f3c2e1 and starting the suite"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:02.000Z"
+            }
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+            "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+            "artifact": {
+              "artifactId": "test-log",
+              "name": "test-log.txt",
+              "parts": [
+                {
+                  "text": "collected 12 items\n"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+            "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+            "artifact": {
+              "artifactId": "test-log",
+              "parts": [
+                {
+                  "text": "tests/test_charges.py ........  [ 66%]\n"
+                }
+              ]
+            },
+            "append": true
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+            "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+            "artifact": {
+              "artifactId": "test-log",
+              "parts": [
+                {
+                  "text": "tests/test_refunds.py ..F.  [100%]\n"
+                }
+              ]
+            },
+            "append": true
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+            "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+            "artifact": {
+              "artifactId": "test-log",
+              "parts": [
+                {
+                  "text": "FAILED tests/test_refunds.py::test_partial_refund - AssertionError: 450 != 500\n"
+                }
+              ]
+            },
+            "append": true
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+            "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+            "artifact": {
+              "artifactId": "test-log",
+              "parts": [
+                {
+                  "text": "1 failed, 11 passed in 4.21s\n"
+                }
+              ]
+            },
+            "append": true,
+            "lastChunk": true
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+            "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+            "artifact": {
+              "artifactId": "summary",
+              "name": "summary.json",
+              "parts": [
+                {
+                  "data": {
+                    "passed": 11,
+                    "failed": 1,
+                    "failures": [
+                      {
+                        "test": "tests/test_refunds.py::test_partial_refund",
+                        "error": "AssertionError: 450 != 500"
+                      }
+                    ]
+                  },
+                  "mediaType": "application/json"
+                }
+              ]
+            },
+            "lastChunk": true
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "statusUpdate": {
+            "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+            "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+            "status": {
+              "state": "TASK_STATE_COMPLETED",
+              "message": {
+                "messageId": "eebf738b-ebf0-4246-b7cc-52fbeb0181c5",
+                "contextId": "c026046c-6890-4830-9618-8fffa35cb080",
+                "taskId": "728ba084-97eb-422b-b94b-b0fe9153ce2c",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "1 failed, 11 passed"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:02.250Z"
+            }
+          }
+        }
+      }
+    ]
+  }
+]

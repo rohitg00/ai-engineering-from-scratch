@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-2-1-title fig-2-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-1-title">The four states of a local sandbox</title>
+  <desc id="fig-2-1-desc">Four states: absent, running, stopped, and removed. sbx create and sbx run move a sandbox from absent to running. sbx stop and the auto-stop of the daemon move it to stopped, and sbx run --name, sbx exec, and sbx ports move it back to running. sbx rm and sbx prune move a stopped sandbox to removed, and sbx rm --force or sbx run --rm move a running one there. The sandboxes named are m101-demo and m101-demo-2 from the capture.</desc>
+  <defs><marker id="fig-2-1-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <rect x="20" y="70" width="120" height="64" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="80" y="97.25" font-size="12.5" text-anchor="middle" font-weight="700">absent</text>
+  <text x="80" y="114.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no row in sbx ls</text>
+  <rect x="240" y="70" width="140" height="64" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="310" y="89.75" font-size="12.5" text-anchor="middle" font-weight="700">running</text>
+  <text x="310" y="107.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">m101-demo</text>
+  <text x="310" y="122.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">m101-demo-2</text>
+  <rect x="500" y="70" width="120" height="64" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect x="503" y="73" width="114" height="58" fill="none" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="560" y="97.25" font-size="12.5" text-anchor="middle" font-weight="700">removed</text>
+  <text x="560" y="114.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">gone from sbx ls</text>
+  <rect x="240" y="210" width="140" height="64" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="310" y="237.25" font-size="12.5" text-anchor="middle" font-weight="700">stopped</text>
+  <text x="310" y="254.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">state preserved</text>
+  <line x1="140" y1="102" x2="239" y2="102" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1-head-amber)"/>
+  <rect class="m-knock" x="152" y="85.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="189.5" y="96" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">sbx create</text>
+  <rect class="m-knock" x="165.71" y="106.42" width="47.58" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="189.5" y="117" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sbx run</text>
+  <line x1="380" y1="102" x2="499" y2="102" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1-head-amber)"/>
+  <rect class="m-knock" x="388.2" y="85.03" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="439.5" y="96" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">sbx rm --force</text>
+  <rect class="m-knock" x="400.86" y="106.42" width="77.28" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="439.5" y="117" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sbx run --rm</text>
+  <line x1="262" y1="134" x2="262" y2="209" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1-head-amber)"/>
+  <rect class="m-knock" x="267" y="160.53" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="270" y="171.5" font-size="11.5" fill="var(--m-amber-ink, #85590c)">sbx stop</text>
+  <rect class="m-knock" x="267" y="175.92" width="77.28" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="270" y="186.5" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">or auto-stop</text>
+  <line x1="358" y1="210" x2="358" y2="135" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1-head-amber)"/>
+  <rect class="m-knock" x="363" y="161.53" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="366" y="172.5" font-size="11.5" fill="var(--m-amber-ink, #85590c)">sbx run --name</text>
+  <rect class="m-knock" x="363" y="176.92" width="118.86" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="366" y="187.5" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sbx exec, sbx ports</text>
+  <path d="M380 242 H560 V135" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-2-1-head-amber)"/>
+  <rect class="m-knock" x="446.3" y="225.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="470" y="236" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">sbx rm</text>
+  <rect class="m-knock" x="398.69" y="246.42" width="142.62" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="470" y="257" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sbx prune, stopped only</text>
+  <text x="20" y="292" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dashed border: no microVM running · double border: no record remains</text>
+</svg>

@@ -1,0 +1,7 @@
+{
+  "name": "m101-deepwiki",
+  "type": "remote",
+  "url": "https://mcp.deepwiki.com/mcp",
+  "remote_transport": "streamable-http",
+  "requires_oauth": false
+}

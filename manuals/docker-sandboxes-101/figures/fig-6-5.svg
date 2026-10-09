@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 372" role="img" aria-labelledby="fig-6-5-title fig-6-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-5-title">Five base URLs for one Docker Model Runner</title>
+  <desc id="fig-6-5-desc">Left: five callers of Docker Model Runner. docker-agent on the host uses http://localhost:12434 once host TCP is enabled. The Compose service printer gets http://model-runner.docker.internal, injected as LLM_URL with the /v1/ path. A container on Docker Engine uses http://172.17.0.1:12434, from the docs and not captured. A host process that talks to the Docker socket reaches http://localhost/exp/vDD4.40, the endpointHost of docker model status. docker-agent inside a sandbox uses http://host.docker.internal:12434 through the sandbox proxy. Right: the runner with llama.cpp b9879-metal and ai/qwen3:4b, and what follows the base URL: the path prefixes /engines/v1/ for OpenAI, /engines/llama.cpp/v1/ with the engine name, and /v1/, the whole endpoints /anthropic/v1/messages and /v1/messages for Anthropic, and the prefix /api/ for Ollama. No path checks credentials.</desc>
+  <defs><marker id="fig-6-5-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <rect x="430" y="30" width="190" height="280" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="442" y="105.25" font-size="12.5" font-weight="700">Docker Model Runner</text>
+  <text x="442" y="122.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">llama.cpp b9879-metal</text>
+  <text x="442" y="137.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model ai/qwen3:4b</text>
+  <text x="442" y="152.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">paths after the base URL:</text>
+  <text x="442" y="167.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/engines/v1/ OpenAI</text>
+  <text x="442" y="182.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/engines/llama.cpp/v1/</text>
+  <text x="442" y="197.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/v1/ status endpoint</text>
+  <text x="442" y="212.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/anthropic/v1/messages</text>
+  <text x="442" y="227.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/v1/messages, examples</text>
+  <text x="442" y="242.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/api/ Ollama</text>
+  <rect x="20" y="30" width="150" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="95" y="47.25" font-size="12.5" text-anchor="middle" font-weight="700">docker-agent</text>
+  <text x="95" y="64.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">host process</text>
+  <line x1="170" y1="52" x2="429" y2="52" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-5-head-ink)"/>
+  <rect class="m-knock" x="223.9" y="35.42" width="151.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="299.5" y="46" font-size="11" text-anchor="middle">http://localhost:12434</text>
+  <rect class="m-knock" x="222.25" y="56.42" width="154.5" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="299.5" y="67" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">TCP enabled on port 12434</text>
+  <rect x="20" y="88" width="150" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="95" y="105.25" font-size="12.5" text-anchor="middle" font-weight="700">printer</text>
+  <text x="95" y="122.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Compose service</text>
+  <line x1="170" y1="110" x2="429" y2="110" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-5-head-ink)"/>
+  <rect class="m-knock" x="181" y="93.42" width="237" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="299.5" y="104" font-size="11" text-anchor="middle">http://model-runner.docker.internal</text>
+  <rect class="m-knock" x="210.37" y="114.42" width="178.26" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="299.5" y="125" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">injected as LLM_URL with /v1/</text>
+  <rect x="20" y="146" width="150" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="95" y="163.25" font-size="12.5" text-anchor="middle" font-weight="700">container</text>
+  <text x="95" y="180.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Docker Engine</text>
+  <line x1="170" y1="168" x2="429" y2="168" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-5-head-ink)"/>
+  <rect class="m-knock" x="220.6" y="151.42" width="157.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="299.5" y="162" font-size="11" text-anchor="middle">http://172.17.0.1:12434</text>
+  <rect class="m-knock" x="216.31" y="172.42" width="166.38" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="299.5" y="183" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">from the docs, not captured</text>
+  <rect x="20" y="204" width="150" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="95" y="221.25" font-size="12.5" text-anchor="middle" font-weight="700">socket client</text>
+  <text x="95" y="238.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">host, Docker socket</text>
+  <line x1="170" y1="226" x2="429" y2="226" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-5-head-ink)"/>
+  <rect class="m-knock" x="204.1" y="209.42" width="190.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="299.5" y="220" font-size="11" text-anchor="middle">http://localhost/exp/vDD4.40</text>
+  <rect class="m-knock" x="213.34" y="230.42" width="172.32" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="299.5" y="241" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">endpointHost in model status</text>
+  <rect x="20" y="262" width="150" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="95" y="279.25" font-size="12.5" text-anchor="middle" font-weight="700">docker-agent</text>
+  <text x="95" y="296.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">inside a sandbox</text>
+  <line x1="170" y1="284" x2="429" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-5-head-ink)"/>
+  <rect class="m-knock" x="187.6" y="267.42" width="223.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="299.5" y="278" font-size="11" text-anchor="middle">http://host.docker.internal:12434</text>
+  <rect class="m-knock" x="222.25" y="288.42" width="154.5" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="299.5" y="299" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">through the sandbox proxy</text>
+  <rect x="20" y="324" width="600" height="34" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="320" y="344.45" font-size="11.5" text-anchor="middle" font-weight="400">no path checks credentials: any client that reaches the port can run models</text>
+</svg>

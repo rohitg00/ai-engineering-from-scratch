@@ -1,0 +1,34 @@
+{
+  "selected": "rule",
+  "policy": {
+    "name": "<uuid>",
+    "id": "<uuid>"
+  },
+  "rules": [
+    {
+      "id": "<uuid>",
+      "name": "<uuid>",
+      "policy_id": "<uuid>",
+      "scope": "sandbox:m101-policy",
+      "applies_to": "sandbox:m101-policy",
+      "resource_type": "network",
+      "decision": "deny",
+      "resources": [
+        "example.com"
+      ],
+      "origin": "scoped",
+      "layer": "local",
+      "status": "active",
+      "editable": true,
+      "sandbox_id": "m101-policy",
+      "provenance": {
+        "created_via": "added"
+      },
+      "actions": [
+        "net:connect:tcp",
+        "net:connect:udp"
+      ],
+      "remove_command": "sbx policy rm network --id <uuid> --sandbox m101-policy"
+    }
+  ]
+}

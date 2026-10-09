@@ -18,6 +18,8 @@ on:
       - "scripts/debias_quizzes.py"
       - "scripts/check_quiz_bias.py"
       - "scripts/build_readme_i18n.py"
+      - "scripts/audit_readme_locales.py"
+      - "scripts/test_audit_readme_locales.py"
       - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
@@ -32,6 +34,9 @@ on:
       - "site/test_learning_paths.js"
       - "languages.json"
       - "README.md"
+      - "i18n/*/README.md"
+      - "i18n/readme-source.sha256"
+      - "docs/i18n.md"
       - "CONTRIBUTING.md"
       - "SPONSORS.md"
       - "BACKERS.md"
@@ -66,6 +71,8 @@ on:
       - "scripts/debias_quizzes.py"
       - "scripts/check_quiz_bias.py"
       - "scripts/build_readme_i18n.py"
+      - "scripts/audit_readme_locales.py"
+      - "scripts/test_audit_readme_locales.py"
       - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
@@ -80,6 +87,9 @@ on:
       - "site/test_learning_paths.js"
       - "languages.json"
       - "README.md"
+      - "i18n/*/README.md"
+      - "i18n/readme-source.sha256"
+      - "docs/i18n.md"
       - "CONTRIBUTING.md"
       - "SPONSORS.md"
       - "BACKERS.md"
@@ -134,6 +144,8 @@ jobs:
         run: node --test site/test_asset_cache.js
       - name: command copying preserves keyboard focus
         run: node --test site/test_project_copy.js
+      - name: homepage curiosity supports pointer and keyboard input
+        run: node --test site/test_intelligence_check.js
       - name: build the static site
         run: node site/build.js && node site/build-projects.js --strict && node site/build-agents.js
       - name: public API, MCP, and CLI contracts
@@ -148,6 +160,8 @@ jobs:
         run: node --test site/test_static_preview_routes.js
       - name: clean page URLs and published discovery links stay consistent
         run: node --test site/test_clean_urls.js
+      - name: synced writing keeps full articles and canonical metadata
+        run: node --test site/test_portfolio_sync.js site/test_writing_mirror.js site/test_portfolio_cache.js site/test_writing_seo.js
       - name: learning paths links and routes stay valid
         run: node --test site/test_learning_paths.js
       - name: sponsor placement preserves approved artwork and ownership
@@ -162,6 +176,8 @@ jobs:
         run: python3 scripts/debias_certification_questions.py --check
       - name: README translations are in sync with English
         run: python3 scripts/build_readme_i18n.py --check
+      - name: README locale audit detects untranslated text and structural drift
+        run: python3 scripts/test_audit_readme_locales.py
       - name: translation workflow publisher retries safely
         run: python3 scripts/test_translate_workflow.py
       - name: interface-string translator pins, reuses, and protects correctly
@@ -207,7 +223,7 @@ jobs:
         run: python3 scripts/build_catalog.py
       - name: sync README counts
         run: python3 scripts/check_readme_counts.py --fix
-      - name: regenerate README translations from the synced English
+      - name: sync README stats and validate complete translations
         run: python3 scripts/build_readme_i18n.py
       - name: commit + push if README changed
         env:

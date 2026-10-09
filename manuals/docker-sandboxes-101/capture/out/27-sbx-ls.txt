@@ -1,0 +1,4 @@
+$ sbx ls
+SANDBOX                                 AGENT          STATUS    PORTS   WORKSPACE
+docker-agent-<hash>   docker-agent   running           $CAPTURE/fixtures/repo-sandbox, $CAPTURE/fixtures/agents:ro, $CAPTURE/fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>:ro, $CAPTURE/fixtures/repo-sandbox/.m101/cfg:ro
+[exit 0]

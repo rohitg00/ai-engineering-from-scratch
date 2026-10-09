@@ -1,0 +1,3 @@
+$ sbx policy --help | grep -i bypass
+(no line of `sbx policy --help` contains the word bypass)
+[exit 1]

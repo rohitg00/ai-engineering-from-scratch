@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 458" role="img" aria-labelledby="fig-4-3-title fig-4-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-3-title">From spec.yaml to a signed artifact and into a sandbox</title>
+  <desc id="fig-4-3-desc">Row one, captured: the hello-mixin directory with spec.yaml and files, validated by sbx kit validate and packed by sbx kit pack into hello-mixin.zip. Row two, from the help text and not run: sbx kit sign with a key writes kit.sig.bundle beside spec.yaml, and sbx kit push with the sign flag pushes the manifest to an HTTPS registry with a signature referrer and a provenance referrer. Row three, not run: sbx kit verify and sbx kit provenance read those referrers back, beside the four settings that admit a kit. Row four, captured: sbx create with the kit flag builds m101-kit with tree installed and HELLO.md copied, sbx kit add appends env-mixin to m101-demo in a swap container, and sbx kit add refuses hello-mixin because it declares files.</desc>
+  <defs><marker id="fig-4-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-4-3-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AUTHOR AND PACKAGE (12-VALIDATE.TXT, 12-PACK.TXT)</text>
+  <rect x="20" y="28" width="140" height="52" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="90" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">hello-mixin/</text>
+  <text x="90" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">spec.yaml, files/</text>
+  <rect x="180" y="28" width="130" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="245" y="49.1" font-size="12" text-anchor="middle" font-weight="700">sbx kit validate</text>
+  <text x="245" y="66.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">VALID (directory)</text>
+  <rect x="330" y="28" width="130" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="395" y="49.1" font-size="12" text-anchor="middle" font-weight="700">sbx kit pack -o</text>
+  <text x="395" y="66.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Packed artifact to</text>
+  <rect x="480" y="28" width="140" height="52" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="550" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">hello-mixin.zip</text>
+  <text x="550" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">spec.yaml and files/</text>
+  <line x1="160" y1="54" x2="179" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-3-head-ink)"/>
+  <line x1="310" y1="54" x2="329" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-3-head-ink)"/>
+  <line x1="460" y1="54" x2="479" y2="54" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-4-3-head-teal)"/>
+  <text x="110" y="118" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SIGN AND PUBLISH (HELP-SBX, NOT RUN)</text>
+  <rect x="20" y="128" width="160" height="66" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-dasharray="5 4"/>
+  <text x="100" y="148.6" font-size="12" text-anchor="middle" font-weight="700">sbx kit sign --key</text>
+  <text x="100" y="165.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">writes kit.sig.bundle</text>
+  <text x="100" y="180.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">beside spec.yaml</text>
+  <rect x="200" y="128" width="180" height="66" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-dasharray="5 4"/>
+  <text x="290" y="148.6" font-size="12" text-anchor="middle" font-weight="700">sbx kit push --sign</text>
+  <text x="290" y="165.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">DIR REF, form chosen by</text>
+  <text x="290" y="180.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">schemaVersion 1 or 2</text>
+  <rect x="400" y="128" width="220" height="66" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="510" y="148.6" font-size="12" text-anchor="middle" font-weight="700">HTTPS registry</text>
+  <text x="510" y="165.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">manifest, config, one layer</text>
+  <text x="510" y="180.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">signature + provenance referrers</text>
+  <line x1="90" y1="80" x2="90" y2="127" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-3-head-ink)"/>
+  <line x1="180" y1="161" x2="199" y2="161" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-3-head-ink)"/>
+  <line x1="380" y1="161" x2="399" y2="161" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-4-3-head-teal)"/>
+  <rect class="m-knock" x="372.7" y="144.03" width="33.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="389.5" y="155" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">push</text>
+  <text x="20" y="232" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">READ BACK (NOT RUN)</text>
+  <rect x="300" y="242" width="140" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-dasharray="5 4"/>
+  <text x="370" y="263.1" font-size="12" text-anchor="middle" font-weight="700">sbx kit verify</text>
+  <text x="370" y="280.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--key cosign.pub</text>
+  <rect x="460" y="242" width="160" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-dasharray="5 4"/>
+  <text x="540" y="263.1" font-size="12" text-anchor="middle" font-weight="700">sbx kit provenance</text>
+  <text x="540" y="280.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">UNSIGNED or VERIFIED</text>
+  <line x1="460" y1="194" x2="370" y2="241" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-3-head-ink)"/>
+  <line x1="560" y1="194" x2="540" y2="241" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-3-head-ink)"/>
+  <rect x="20" y="242" width="276" height="52" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="158" y="255.6" font-size="12" text-anchor="middle" font-weight="700">settings that admit a kit</text>
+  <text x="158" y="272.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kit.allowedSources, kit.requireSignature,</text>
+  <text x="158" y="287.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kit.trustedSigners, kit.allowLocalKits</text>
+  <text x="20" y="332" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CONSUME (12-RUN-KIT.TXT, 12-KIT-ADD.TXT, 12-KIT-ADD-FILES.TXT)</text>
+  <rect x="20" y="342" width="200" height="70" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="120" y="364.6" font-size="12" text-anchor="middle" font-weight="700">sbx create shell --kit</text>
+  <text x="120" y="381.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">m101-kit: tree installed,</text>
+  <text x="120" y="396.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HELLO.md, allow example.com</text>
+  <rect x="236" y="342" width="190" height="70" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="331" y="364.6" font-size="12" text-anchor="middle" font-weight="700">sbx kit add env-mixin</text>
+  <text x="331" y="381.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">m101-demo recreated in a</text>
+  <text x="331" y="396.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">swap container, variable set</text>
+  <rect x="442" y="342" width="178" height="70" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="531" y="364.45" font-size="11.5" text-anchor="middle" font-weight="700">sbx kit add hello-mixin</text>
+  <text x="531" y="381.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refused: the kit</text>
+  <text x="531" y="396.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">declares files</text>
+  <text x="20" y="440" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Dashed boxes come from the help text and were not run. Every solid box is in capture/out/12-*.</text>
+</svg>

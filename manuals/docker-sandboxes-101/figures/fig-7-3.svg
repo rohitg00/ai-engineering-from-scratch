@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 516" role="img" aria-labelledby="fig-7-3-title fig-7-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-3-title">Two product tracks from 2025-09 to 2026-10</title>
+  <desc id="fig-7-3-desc">Two tracks over one date axis from 2025-09 to 2026-10. The sandboxes track shows the docker sandbox plugin as a grey bar from 2025-11-06 to its removal in Desktop 4.80.0 on 2026-06-29, and sbx as a blue bar from v0.21.0 on 2026-03-31 to v0.47.0 on 2026-10-05. The agent track shows cagent as a grey bar from the 2025-09-18 launch blog to its removal in Desktop 4.81.0 on 2026-07-06, and docker-agent as a violet bar from the v1.23.3 plugin on 2026-02-16 to v1.149.0 on 2026-10-07. Rose lines mark three removals: the socket mount with Desktop 4.58.0, the plugin with 4.80.0, and the cagent binary with 4.81.0. A numbered key lists all twelve events.</desc>
+  <text x="20" y="44" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SANDBOXES</text>
+  <rect x="147" y="62" width="309" height="16" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect x="337" y="96" width="250" height="16" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="159" y="55" font-size="11" fill="var(--m-grey-ink, #5e5e59)">docker sandbox plugin</text>
+  <text x="349" y="89" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">sbx</text>
+  <text x="20" y="142" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENT</text>
+  <rect x="82" y="160" width="383" height="16" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect x="281" y="194" width="306" height="16" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="94" y="153" font-size="11" fill="var(--m-grey-ink, #5e5e59)">cagent</text>
+  <text x="293" y="187" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">docker-agent</text>
+  <line x1="253" y1="82" x2="253" y2="226" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="456" y1="82" x2="456" y2="226" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="465" y1="30" x2="465" y2="156" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="465" y1="180" x2="465" y2="226" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <line x1="60" y1="236" x2="620" y2="236" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="232" x2="60" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2025-09</text>
+  <line x1="180" y1="232" x2="180" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="180" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2025-12</text>
+  <line x1="298" y1="232" x2="298" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="298" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2026-03</text>
+  <line x1="419" y1="232" x2="419" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="419" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2026-06</text>
+  <line x1="540" y1="232" x2="540" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="540" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2026-09</text>
+  <circle cx="82" cy="168" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="82" y="172" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">1</text>
+  <circle cx="128" cy="168" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="128" y="172" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">2</text>
+  <circle cx="147" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1"/>
+  <text x="147" y="74" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">3</text>
+  <circle cx="253" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="253" y="74" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">4</text>
+  <circle cx="281" cy="202" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="281" y="206" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">5</text>
+  <circle cx="283" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1"/>
+  <text x="283" y="74" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">6</text>
+  <circle cx="308" cy="202" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="308" y="206" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">7</text>
+  <circle cx="337" cy="104" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1"/>
+  <text x="337" y="108" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">8</text>
+  <circle cx="456" cy="70" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="456" y="74" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">9</text>
+  <circle cx="465" cy="168" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="465" y="172" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">10</text>
+  <circle cx="566" cy="104" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1"/>
+  <text x="566" y="108" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">11</text>
+  <circle cx="587" cy="104" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1"/>
+  <text x="587" y="108" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">12</text>
+  <text x="20" y="282" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">KEY</text>
+  <circle cx="30" cy="298" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="302" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">1</text>
+  <text x="48" y="302" font-size="11" class="m-serif">2025-09-18: cagent launch blog, the public repo dates from 2025-09-01</text>
+  <circle cx="30" cy="316" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="320" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">2</text>
+  <text x="48" y="320" font-size="11" class="m-serif">2025-10-23: Desktop 4.49.0 bundles the agent, later renamed in the notes</text>
+  <circle cx="30" cy="334" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1"/>
+  <text x="30" y="338" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">3</text>
+  <text x="48" y="338" font-size="11" class="m-serif">2025-11-06: Desktop 4.50.0, container-based docker sandbox run (plan timeline)</text>
+  <circle cx="30" cy="352" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="30" y="356" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">4</text>
+  <text x="48" y="356" font-size="11" class="m-serif">2026-01-26: Desktop 4.58.0, microVM sandboxes, --mount-docker-socket gone</text>
+  <circle cx="30" cy="370" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="374" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">5</text>
+  <text x="48" y="374" font-size="11" class="m-serif">2026-02-16 and 02-19: v1.23.3 docker agent plugin, v1.23.4 restructure</text>
+  <circle cx="30" cy="388" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1"/>
+  <text x="30" y="392" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">6</text>
+  <text x="48" y="392" font-size="11" class="m-serif">2026-02-18: Desktop 4.61.0 bundles plugin v0.12.0, the legacy help quoted here</text>
+  <circle cx="30" cy="406" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="410" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">7</text>
+  <text x="48" y="410" font-size="11" class="m-serif">2026-03-09: v1.30.0 completes the rename to docker-agent, CAGENT_* still read</text>
+  <circle cx="30" cy="424" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1"/>
+  <text x="30" y="428" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">8</text>
+  <text x="48" y="428" font-size="11" class="m-serif">2026-03-31: v0.21.0, the first public standalone sbx tag</text>
+  <circle cx="30" cy="442" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="30" y="446" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">9</text>
+  <text x="48" y="446" font-size="11" class="m-serif">2026-06-29: Desktop 4.80.0 removes the docker sandbox plugin</text>
+  <circle cx="30" cy="460" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="30" y="464" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">10</text>
+  <text x="48" y="464" font-size="11" class="m-serif">2026-07-06: Desktop 4.81.0 removes the cagent binary</text>
+  <circle cx="30" cy="478" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1"/>
+  <text x="30" y="482" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">11</text>
+  <text x="48" y="482" font-size="11" class="m-serif">2026-09-21: v0.45.0 adds sbx --cloud and v3 kits</text>
+  <circle cx="30" cy="496" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1"/>
+  <text x="30" y="500" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">12</text>
+  <text x="48" y="500" font-size="11" class="m-serif">2026-10-05 and 10-07: v0.47.0 and v1.149.0, the pin of this manual</text>
+</svg>

@@ -1,0 +1,5 @@
+$ sbx exec docker-agent-<hash> sh -c 'docker-agent --config-dir /tmp/m101 --data-dir /tmp/m101 --cache-dir /tmp/m101 run --exec --last --working-dir $CAPTURE/fixtures/repo-sandbox $CAPTURE/fixtures/agents/files-sandbox.yaml '"'"'List the files in the working directory and count the lines of README.md.'"'"''
+<ts> WARN Self-update skipped; continuing with current binary error="current version \"main\" is not a release version: invalid semantic version"
+docker-agent: self-update failed (current version "main" is not a release version: invalid semantic version); continuing with current version
+The working directory contains README.md with 1 line.
+[exit 0]

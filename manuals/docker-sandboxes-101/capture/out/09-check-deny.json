@@ -1,0 +1,16 @@
+{
+  "action": "net:connect:tcp",
+  "allowed": false,
+  "context": "sandbox:m101-policy",
+  "deny_kind": "explicit",
+  "governance": {
+    "active": false
+  },
+  "origin": "local",
+  "reason": "Denied by local rule",
+  "resource_type": "net:domain",
+  "resource_value": "example.com:443",
+  "rule": "local:<uuid>",
+  "target": "example.com:443",
+  "type": "network"
+}

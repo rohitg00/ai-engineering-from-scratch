@@ -1,0 +1,13 @@
+{
+  "would_remove": [
+    {
+      "name": "m101-demo-2",
+      "agent": "shell",
+      "stopped_at": "<ts>",
+      "workspaces": [
+        "$CAPTURE/fixtures/repo"
+      ]
+    }
+  ],
+  "skipped_unknown_stop": []
+}

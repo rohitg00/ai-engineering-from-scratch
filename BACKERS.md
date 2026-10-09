@@ -7,6 +7,7 @@ Thank you to the sponsors and infrastructure partners supporting AI Engineering 
 | Sponsor | Support |
 |---|---|
 | [SerpApi](https://serpapi.com/ai-engineering-from-scratch) | Web Search API for your AI apps. Available in Markdown and JSON for any integration. |
+| [NitroStack](https://nitrostack.ai/referral/aiengineeringfromscratch) | An end-to-end development platform for building, testing, debugging, and deploying production-ready MCP servers and applications. |
 | [CodeRabbit](https://coderabbit.link/rohit-ghumare) | Curriculum maintenance and open-source development. |
 | [iii](https://iii.dev?utm_source=ai-engineering-from-scratch&utm_medium=readme&utm_campaign=sponsor) | Curriculum maintenance and open-source development. |
 

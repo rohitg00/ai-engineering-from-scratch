@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 376" role="img" aria-labelledby="fig-6-6-title fig-6-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-6-title">The capture compose.yaml with a model and a gateway</title>
+  <desc id="fig-6-6-desc">The top-level models element declares llm with model ai/qwen3:4b, and Compose asks Docker Model Runner to pull and configure it. Inside the Compose project m101, the service printer on alpine:3.22 binds llm with endpoint_var LLM_URL and model_var LLM_MODEL and receives LLM_MODEL=ai/qwen3:4b and LLM_URL=http://model-runner.docker.internal/v1/. Its GET of LLM_URL followed by models answers 200 with the model list. The service mcp-gateway runs docker/mcp-gateway with --transport=streaming --port=8811 and use_api_socket true, starts no server, prints a bearer token, and answers the printer request without that token with 401 Unauthorized.</desc>
+  <defs><marker id="fig-6-6-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-6-6-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <rect x="20" y="30" width="250" height="50" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="145" y="50.25" font-size="12.5" text-anchor="middle" font-weight="700">models: llm</text>
+  <text x="145" y="67.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model: ai/qwen3:4b</text>
+  <rect x="400" y="30" width="220" height="50" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="510" y="50.25" font-size="12.5" text-anchor="middle" font-weight="700">Docker Model Runner</text>
+  <text x="510" y="67.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model-runner.docker.internal</text>
+  <line x1="270" y1="55" x2="399" y2="55" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-6-head-ink)"/>
+  <rect class="m-knock" x="282" y="38.42" width="105" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="334.5" y="49" font-size="11" text-anchor="middle">pull, configure</text>
+  <rect x="10" y="118" width="360" height="246" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="20" y="110" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">COMPOSE PROJECT M101</text>
+  <rect x="20" y="130" width="340" height="74" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="190" y="154.75" font-size="12.5" text-anchor="middle" font-weight="700">printer, alpine:3.22</text>
+  <text x="190" y="172.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">LLM_MODEL=ai/qwen3:4b</text>
+  <text x="190" y="187.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">LLM_URL=http://model-runner.docker.internal/v1/</text>
+  <line x1="250" y1="80" x2="250" y2="129" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-6-head-ink)"/>
+  <rect class="m-knock" x="255" y="93.92" width="157.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="258" y="104.5" font-size="11">endpoint_var, model_var</text>
+  <path d="M360 150 H560 V81" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-6-head-ink)"/>
+  <rect class="m-knock" x="376.1" y="133.42" width="157.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="455" y="144" font-size="11" text-anchor="middle">GET LLM_URL models: 200</text>
+  <rect x="20" y="264" width="340" height="86" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="190" y="287.25" font-size="12.5" text-anchor="middle" font-weight="700">mcp-gateway, docker/mcp-gateway</text>
+  <text x="190" y="304.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--transport=streaming --port=8811</text>
+  <text x="190" y="319.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">use_api_socket: true, no server</text>
+  <text x="190" y="334.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">prints a bearer token, 0 tools</text>
+  <line x1="190" y1="204" x2="190" y2="263" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-6-head-rose)"/>
+  <rect class="m-knock" x="195" y="222.92" width="111.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="198" y="233.5" font-size="11" fill="var(--m-rose-ink, #b0344d)">401 Unauthorized</text>
+  <rect x="450" y="264" width="170" height="86" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="535" y="294.75" font-size="12.5" text-anchor="middle" font-weight="700">Docker Engine API</text>
+  <text x="535" y="312.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the host socket</text>
+  <text x="535" y="327.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no server started</text>
+  <line x1="360" y1="307" x2="449" y2="307" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-6-head-ink)"/>
+  <rect class="m-knock" x="368.5" y="290.42" width="72" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="404.5" y="301" font-size="11" text-anchor="middle">API socket</text>
+</svg>

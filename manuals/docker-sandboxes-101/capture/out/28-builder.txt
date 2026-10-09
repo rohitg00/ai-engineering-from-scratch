@@ -1,0 +1,11 @@
+$ cat work/buildkitd.toml
+[registry."docker.io"]
+  mirrors = ["m101-registry:5000"]
+[registry."m101-registry:5000"]
+  http = true
+  insecure = true
+[exit 0]
+
+$ docker buildx create --name m101-builder --driver docker-container --driver-opt network=m101-net --buildkitd-config work/buildkitd.toml
+m101-builder
+[exit 0]
