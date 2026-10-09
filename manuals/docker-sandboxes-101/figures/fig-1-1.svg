@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 452" role="img" aria-labelledby="fig-1-1-title fig-1-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-1-title">What sbx owns and what docker-agent owns</title>
+  <desc id="fig-1-1-desc">Two columns over two bands. In the host band, sbx owns the sbx v0.47.0 CLI, the sandboxd daemon on its socket, the macOS Keychain that holds secrets, and the proxy on gateway.docker.internal:3128. docker-agent owns the docker-agent v1.149.0 binary, the agent file, the staged kit under sandbox-kits, and the persistent allowlist with localhost:12434. A dashed line marks the hypervisor. In the guest band, sbx owns the Linux 7.0.14 kernel, the private Docker Engine 29.8.1, the virtiofs workspace mount at the same path, and the environment with proxy variables and proxy-managed keys. docker-agent owns only the loop inside: the docker-agent process, its filesystem and shell tools, and its model call.</desc>
+  <text x="20" y="18" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">owned by sbx</text>
+  <text x="336" y="18" font-size="12" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">owned by docker-agent</text>
+  <line x1="320" y1="8" x2="320" y2="444" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="42" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">HOST · MACOS 26.2 ARM64</text>
+  <rect x="20" y="50" width="140" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="90" y="68.1" font-size="12" text-anchor="middle" font-weight="700">sbx v0.47.0</text>
+  <text x="90" y="85.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the CLI you type</text>
+  <rect x="164" y="50" width="140" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="234" y="68.1" font-size="12" text-anchor="middle" font-weight="700">sandboxd</text>
+  <text x="234" y="85.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sandboxd.sock</text>
+  <rect x="20" y="110" width="140" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="90" y="128.1" font-size="12" text-anchor="middle" font-weight="700">Keychain</text>
+  <text x="90" y="145.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sbx secret set</text>
+  <rect x="164" y="110" width="140" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="234" y="128.1" font-size="12" text-anchor="middle" font-weight="700">proxy :3128</text>
+  <text x="234" y="145.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">policy, key swap</text>
+  <rect x="336" y="50" width="138" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="405" y="67.8" font-size="11" text-anchor="middle" font-weight="700">docker-agent</text>
+  <text x="405" y="84.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">v1.149.0, Homebrew</text>
+  <rect x="482" y="50" width="138" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="551" y="67.8" font-size="11" text-anchor="middle" font-weight="700">agent file</text>
+  <text x="551" y="84.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">files-sandbox.yaml</text>
+  <rect x="336" y="110" width="138" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="405" y="127.8" font-size="11" text-anchor="middle" font-weight="700">sandbox-kits/&lt;hash&gt;</text>
+  <text x="405" y="144.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the staged kit</text>
+  <rect x="482" y="110" width="138" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="551" y="127.8" font-size="11" text-anchor="middle" font-weight="700">allowlist</text>
+  <text x="551" y="144.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">localhost:12434</text>
+  <line x1="20" y1="178" x2="620" y2="178" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect class="m-knock" x="27" y="171.42" width="276.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="30" y="182" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">Hypervisor.framework · kern.hv_support: 1</text>
+  <text x="20" y="208" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">GUEST · ONE MICROVM PER SANDBOX</text>
+  <rect x="20" y="216" width="290" height="228" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="30" y="226" width="270" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="165" y="244.1" font-size="12" text-anchor="middle" font-weight="700">Linux 7.0.14 aarch64</text>
+  <text x="165" y="261.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">its own kernel, Ubuntu 26.04.1</text>
+  <rect x="30" y="280" width="270" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="165" y="298.1" font-size="12" text-anchor="middle" font-weight="700">Docker Engine 29.8.1</text>
+  <text x="165" y="315.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">its containers stay out of docker ps</text>
+  <rect x="30" y="334" width="270" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="165" y="352.1" font-size="12" text-anchor="middle" font-weight="700">workspace mount</text>
+  <text x="165" y="369.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">virtiofs rw, same absolute path</text>
+  <rect x="30" y="388" width="270" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="165" y="406.1" font-size="12" text-anchor="middle" font-weight="700">environment</text>
+  <text x="165" y="423.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HTTPS_PROXY, keys proxy-managed</text>
+  <rect x="336" y="216" width="284" height="228" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="346" y="226" width="264" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="244.1" font-size="12" text-anchor="middle" font-weight="700">docker-agent process</text>
+  <text x="478" y="261.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the loop: model, tools, sub-agents</text>
+  <rect x="346" y="280" width="264" height="46" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="478" y="298.1" font-size="12" text-anchor="middle" font-weight="700">filesystem, shell</text>
+  <text x="478" y="315.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">tools that run in the VM</text>
+  <rect x="346" y="334" width="264" height="46" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="478" y="352.1" font-size="12" text-anchor="middle" font-weight="700">model call</text>
+  <text x="478" y="369.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">host.docker.internal:12434</text>
+  <text x="478" y="414" font-size="11" text-anchor="middle" font-style="italic" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">nothing else in the guest</text>
+</svg>
