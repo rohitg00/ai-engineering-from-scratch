@@ -37,13 +37,16 @@ The table held 12 sessions: ten runs, and the two `Transferred task` sub-session
 title: the flags the kit records and replays with
 source: capture/run.py
 lang: python
-note: Two methods of the Kit class. DMR_URL is http://localhost:12434.
+note: A method of the Kit class and a module function, cut between them. DMR_URL is http://localhost:12434.
 ---
-    def record_flags(self, name):
+    def start_recording(self, name):
+        if not self.record_cassettes and os.path.exists(cassette_path(name)):
+            return None
+        self.recorded.append(name)
         return ["--models-gateway", f"{DMR_URL}/engines", f"--record={CASSETTE_WORK}/{name}"]
 …
-    def replay(self, name):
-        return ["--fake", f"{CASSETTE_WORK}/{name}"]
+def replay(name):
+    return ["--fake", f"{CASSETTE_WORK}/{name}"]
 ```
 
 The recording found four rules that the help does not state (`capture/README.md`). `--record` takes its value only as `--record=PATH`, and a separate word is read as the agent reference. The path is relative to `--working-dir`, and `.yaml` is appended. With the `dmr` provider the recording proxy answers 400 unless the run also has `--models-gateway http://localhost:12434/engines`.
