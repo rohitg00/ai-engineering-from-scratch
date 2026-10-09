@@ -4,7 +4,9 @@
   "framework": null,
   "installCommand": "echo skip",
   "functions": {
-    "api/blogs.js": { "includeFiles": "site/blogs.html" }
+    "api/blogs.js": { "includeFiles": "site/blogs.html" },
+    "api/markdown.js": { "excludeFiles": "site/**/*.js" },
+    "api/v1/markdown.js": { "excludeFiles": "site/**/*.js" }
   },
   "routes": [
     { "src": "/blogs(?:\\.html)?/", "status": 308, "headers": { "Location": "/blogs" } },
