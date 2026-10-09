@@ -1431,6 +1431,7 @@ body.js-anim .toc-row.in-view {
   .modal-lesson-name {
     white-space: normal;
     overflow: visible;
+    overflow-wrap: anywhere;
     text-overflow: clip;
     font-size: 0.96rem;
   }

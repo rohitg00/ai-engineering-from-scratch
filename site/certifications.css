@@ -961,6 +961,11 @@
     max-width: none;
   }
 
+  .cert-source-links a {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
   .cert-track-grid,
   .cert-method-grid,
   .cert-plan-grid,

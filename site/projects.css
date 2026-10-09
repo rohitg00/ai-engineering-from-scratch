@@ -596,12 +596,14 @@
 }
 
 .pj-skill {
+  min-width: 0;
   padding: 3px 9px;
   border: 1px solid var(--rule-soft);
   background: var(--bg);
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--ink-soft);
+  overflow-wrap: anywhere;
 }
 
 .pj-hero-side {
