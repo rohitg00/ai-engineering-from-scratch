@@ -1,0 +1,52 @@
+{
+  "title": "Service Ownership Navigator | initialize and grade",
+  "recordedAt": "2026-10-09T14:24:28Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "service-ownership-navigator",
+        "--init",
+        "./.project-validation/service-ownership-navigator/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/service-ownership-navigator/recording-starter\n  created  cli.ts\n  created  main.ts\n  created  sample.json\n  created  STAGE-2.md\n  created  STAGE-3.md\n  created  STAGE-4.md\nnext: python3 scripts/project_test.py service-ownership-navigator --stage 1 --path ./.project-validation/service-ownership-navigator/recording-starter\n",
+      "durationMs": 39
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "service-ownership-navigator",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/service-ownership-navigator/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Service Ownership Navigator: grading learner\n  FAIL stage 1: Load service metadata and ownership rules (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 271
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "service-ownership-navigator",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/service-ownership-navigator/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Service Ownership Navigator: grading solution\n  PASS stage 1: Load service metadata and ownership rules (6 tests)\n  PASS stage 2: Resolve paths and conflicting ownership evidence (6 tests)\n  PASS stage 3: Check local runbook references (6 tests)\n  PASS stage 4: Export a searchable directory and cited handoff packet (6 tests)\nreport: ./.project-validation/service-ownership-navigator/solution-final.json\n",
+      "durationMs": 1004
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}
