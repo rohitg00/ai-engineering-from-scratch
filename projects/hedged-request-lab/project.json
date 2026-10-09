@@ -1,0 +1,106 @@
+{
+  "id": "hedged-request-lab",
+  "title": "Hedged Request Lab",
+  "tagline": "Measure the extra work required to escape a slow read request.",
+  "summary": "Help client developers evaluate delayed duplicate requests for safe reads. Send a second attempt only after a configurable delay, accept the first valid response, and record cancellation, late completion and duplicate service work separately. Export a bounded HTTP client and a latency-versus-work report from controlled local endpoints.",
+  "level": 4,
+  "source": "core",
+  "status": "ready",
+  "hours": 8,
+  "languages": [
+    "Go"
+  ],
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "Hedged-read client, controllable endpoint fixtures and latency/work comparison receipt",
+  "prerequisiteProjects": [
+    "llm-gateway-with-fallbacks",
+    "agent-trace-debugger"
+  ],
+  "demo": {
+    "command": [
+      "go",
+      "run",
+      "."
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-measure-safe-reads",
+      "title": "Measure safe-read latency",
+      "summary": "Summarize observed samples without inventing a performance guarantee.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "starter",
+      "concepts": [
+        "percentiles",
+        "safe reads",
+        "measurement"
+      ],
+      "timeout": 120,
+      "figure": "pj-hedged-request-lab-1"
+    },
+    {
+      "id": "02-schedule-duplicate",
+      "title": "Schedule delayed duplicate attempts",
+      "summary": "Launch a second safe read only when the delay expires before a winner.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "timers",
+        "overlap",
+        "deadline"
+      ],
+      "timeout": 120,
+      "figure": "pj-hedged-request-lab-2"
+    },
+    {
+      "id": "03-validate-and-account",
+      "title": "Validate winners and account for late work",
+      "summary": "A fast error cannot win, and cancellation is an observation rather than a billing guarantee.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "valid winner",
+        "late results",
+        "cancellation"
+      ],
+      "timeout": 120,
+      "figure": "pj-hedged-request-lab-3"
+    },
+    {
+      "id": "04-export-tradeoffs",
+      "title": "Export latency and duplicate-work tradeoffs",
+      "summary": "Report both faster responses and the extra requests that produced them.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "comparison receipt",
+        "service work",
+        "consumer"
+      ],
+      "timeout": 120,
+      "figure": "pj-hedged-request-lab-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded local command output. See the README for input and scope."
+    }
+  ]
+}
