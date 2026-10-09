@@ -1,6 +1,7 @@
 import argparse
 import difflib
 import gzip
+import itertools
 import json
 import os
 import re
@@ -35,13 +36,11 @@ RECEIVER_PORT = 18080
 REGISTRY_URL = "https://registry.modelcontextprotocol.io/v0/servers/fetch-mcp/versions/latest"
 DEEPWIKI_URL = "https://mcp.deepwiki.com/mcp"
 ONE_TIME_FILES = {"03-policy-init.txt", "25-model-pull-latest.txt"}
-MODEL_TEXT_FILES = set()
 AUTO_STOP_WAIT = 45
 COMMAND_TIMEOUT = 900
 MODEL = "dmr/ai/qwen3:4b"
 MODEL_NAME = "ai/qwen3:4b"
 DMR_URL = "http://localhost:12434"
-AGENT_DIRS = ["--config-dir", os.path.join(WORK, "cfg"), "--data-dir", os.path.join(WORK, "data"), "--cache-dir", os.path.join(WORK, "cache")]
 AGENT_DIR_FLAGS = {"--config-dir", "--data-dir", "--cache-dir"}
 NO_DAEMON_ENV = {"DOCKER_CONTEXT": "m101-no-daemon"}
 LOCAL_REGISTRY = "m101-registry"
@@ -59,6 +58,11 @@ TEAM_TURNS = ["Ask the writer for one sentence about microVMs.", "Now hand the c
 BACKGROUND_TASK = "Run the writer as a background agent on the topic microVMs, wait for it, and repeat its sentence."
 GUARDED_TURNS = ["Run the shell command: echo m101-ok", "Run the shell command: pwd", "Run the shell command: rm -rf work/m101-nothing"]
 OCI_ACCEPT = "Accept: application/vnd.oci.image.manifest.v1+json, application/vnd.oci.image.index.v1+json, application/vnd.docker.distribution.manifest.v2+json"
+A2A_V1 = "A2A-Version: 1.0"
+PARALLEL_TYPES = ("tool_call", "tool_call_confirmation", "hook_started", "hook_finished", "tool_call_output", "tool_call_response", "message_added")
+ROUTING_TYPES = ("agent_route", "agent_switching", "sub_session_completed", "background_agent_started", "background_agent_completed")
+BUILD_NOISE = (" / ", "pushing layer", "transferring", "extracting", "resolve docker.io")
+NDJSON_NOTE = "  (agent_choice_reasoning and partial_tool_call events dropped, agent_choice tokens joined)"
 SCRUB_KEYS = {"input_tokens", "output_tokens", "total_tokens", "prompt_tokens", "completion_tokens", "cached_input_tokens", "cached_write_tokens", "reasoning_tokens", "cost", "created", "created_at", "updated_at", "timestamp", "started_at", "finished_at", "duration", "duration_ms", "elapsed", "context_limit", "tokens", "seq", "sequence", "last_event_seq", "context_length"}
 HOST_GIT_ENV = {"GIT_CONFIG_GLOBAL": "/dev/null", "GIT_CONFIG_SYSTEM": "/dev/null"}
 GIT_ENV = {
@@ -128,6 +132,7 @@ LS_LINE = re.compile(r"^[-dl][rwxsStT-]{9}")
 LS_DATE = re.compile(r"[A-Z][a-z]{2}\s{1,2}\d{1,2}\s(?:\d{2}:\d{2}|\d{4})")
 DF_LINE = re.compile(r"^(host|overlay|/dev/\S+)\s+\d")
 DF_COLS = re.compile(r"\s+\d+(?:\.\d+)?[KMGTP]?i?\s+\d+(?:\.\d+)?[KMGTP]?i?\s+\d+(?:\.\d+)?[KMGTP]?i?\s+\d+%")
+COMPOSE_SERVICE = re.compile(r"^([a-z0-9-]+-\d+)\s+\| ")
 
 
 def mask_text(text, docker_user):
@@ -209,6 +214,11 @@ def remove_tree(path):
         shutil.rmtree(path)
 
 
+def remove_file(path):
+    if os.path.exists(path):
+        os.remove(path)
+
+
 class RecordingHandler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
@@ -252,98 +262,125 @@ def as_text(value):
     return value or ""
 
 
+def agent_dirs(root):
+    return ["--config-dir", os.path.join(root, "cfg"), "--data-dir", os.path.join(root, "data"), "--cache-dir", os.path.join(root, "cache")]
+
+
 def agent(*args):
-    return ["docker-agent", *AGENT_DIRS, *(os.path.join(HERE, item) if item.startswith(("fixtures/", "work/")) else item for item in args)]
+    return ["docker-agent", *agent_dirs(WORK), *(os.path.join(HERE, item) if item.startswith(("fixtures/", "work/")) else item for item in args)]
+
+
+def agent_in_work(*args):
+    return ["docker-agent", *agent_dirs(""), *args]
+
+
+def capture_relative(text):
+    return text.replace(HERE + "/", "")
 
 
 def shown_command(args):
     parts = []
-    skip = False
-    for part in args:
-        if skip:
-            skip = False
-            continue
+    words = iter(args)
+    for part in words:
         if part in AGENT_DIR_FLAGS:
-            skip = True
-            continue
-        parts.append(part)
-    return shlex.join(parts).replace(HERE + "/", "")
+            next(words, None)
+        else:
+            parts.append(part)
+    return capture_relative(shlex.join(parts))
+
+
+def with_exit(label, code):
+    if code:
+        return f"{label}  [exit {code}]"
+    return label
+
+
+def stderr_lines(text):
+    return "[stderr] " + text.replace("\n", "\n[stderr] ")
+
+
+def is_call_id(value):
+    return isinstance(value, str) and bool(CALL_ID.fullmatch(value)) and not UUID_RE.fullmatch(value) and not value.startswith("chatcmpl-")
+
+
+def scrub_field(key, item):
+    if key in SCRUB_KEYS and isinstance(item, (int, float)) and not isinstance(item, bool):
+        return "<n>"
+    if key in ("duration", "elapsed") and isinstance(item, str):
+        return "<dur>"
+    if key in ("tool_call_id", "tool_use_id", "id") and is_call_id(item):
+        return "<call-id>"
+    return scrub(item)
 
 
 def scrub(value):
     if isinstance(value, dict):
-        out = {}
-        for key, item in value.items():
-            if key in SCRUB_KEYS and isinstance(item, (int, float)) and not isinstance(item, bool):
-                out[key] = "<n>"
-            elif key in ("duration", "elapsed") and isinstance(item, str):
-                out[key] = "<dur>"
-            elif key in ("tool_call_id", "tool_use_id", "id") and isinstance(item, str) and CALL_ID.fullmatch(item) and not UUID_RE.fullmatch(item) and not item.startswith("chatcmpl-"):
-                out[key] = "<call-id>"
-            else:
-                out[key] = scrub(item)
-        return out
+        return {key: scrub_field(key, item) for key, item in value.items()}
     if isinstance(value, list):
         return [scrub(item) for item in value]
     return value
 
 
-PARALLEL_TYPES = ("tool_call", "tool_call_confirmation", "hook_started", "hook_finished", "tool_call_output", "tool_call_response", "message_added")
+def without(event, *keys):
+    return {key: item for key, item in event.items() if key not in keys}
+
+
+def is_parallel(event):
+    return event.get("type") in PARALLEL_TYPES
 
 
 def parallel_key(event):
-    return PARALLEL_TYPES.index(event.get("type")), json.dumps(scrub({key: item for key, item in event.items() if key != "timestamp"}), sort_keys=True)
+    return PARALLEL_TYPES.index(event.get("type")), json.dumps(scrub(without(event, "timestamp")), sort_keys=True)
 
 
 def compact_events(events):
-    out = []
+    joined = []
     for event in events:
         kind = event.get("type")
         if kind in ("agent_choice_reasoning", "partial_tool_call"):
             continue
-        if kind == "agent_choice" and out and out[-1].get("type") == "agent_choice" and out[-1].get("agent_name") == event.get("agent_name"):
-            out[-1]["content"] = out[-1].get("content", "") + event.get("content", "")
+        previous = joined[-1] if joined else {}
+        if kind == "agent_choice" and previous.get("type") == "agent_choice" and previous.get("agent_name") == event.get("agent_name"):
+            previous["content"] = previous.get("content", "") + event.get("content", "")
             continue
-        out.append(dict(event))
+        joined.append(dict(event))
     ordered = []
-    index = 0
-    while index < len(out):
-        if out[index].get("type") not in PARALLEL_TYPES:
-            ordered.append(out[index])
-            index += 1
-            continue
-        end = index
-        while end < len(out) and out[end].get("type") in PARALLEL_TYPES:
-            end += 1
-        ordered.extend(sorted(out[index:end], key=parallel_key))
-        index = end
+    for parallel, run in itertools.groupby(joined, key=is_parallel):
+        if parallel:
+            ordered.extend(sorted(run, key=parallel_key))
+        else:
+            ordered.extend(run)
     return ordered
 
 
+def transcript_line(event):
+    kind = event.get("type")
+    agent_name = event.get("agent_name", "")
+    if kind == "user_message":
+        return f"user: {event.get('message', '')}"
+    if kind == "agent_choice":
+        return f"{agent_name}: {event.get('content', '').strip()}"
+    if kind == "tool_call":
+        call = event.get("tool_call", {}).get("function", {})
+        return f"{agent_name} -> tool_call {call.get('name')} {call.get('arguments', '')}"
+    if kind == "tool_call_response":
+        title = event.get("tool_definition", {}).get("annotations", {}).get("title", "")
+        response = str(event.get("response", "")).strip().replace("\n", "\n    ")
+        return f"{agent_name} <- tool_call_response {title}: {response}"
+    if kind in ROUTING_TYPES:
+        return f"{kind}: {json.dumps(without(event, 'timestamp', 'type'), ensure_ascii=False)}"
+    if kind == "stream_stopped":
+        return f"stream_stopped ({event.get('finish_reason', '')}, {event.get('reason', '')})"
+    if kind == "tool_call_confirmation":
+        return f"tool_call_confirmation: {json.dumps(scrub(without(event, 'timestamp', 'type', 'tool_definition')), ensure_ascii=False)}"
+    if kind in ("error", "notification", "stderr"):
+        return f"{kind}: {event.get('message', event.get('error', ''))}"
+    return None
+
+
 def transcript_text(events):
-    lines = []
-    for event in compact_events(events):
-        kind = event.get("type")
-        agent_name = event.get("agent_name", "")
-        if kind == "user_message":
-            lines.append(f"user: {event.get('message', '')}")
-        elif kind == "agent_choice":
-            lines.append(f"{agent_name}: {event.get('content', '').strip()}")
-        elif kind == "tool_call":
-            call = event.get("tool_call", {}).get("function", {})
-            lines.append(f"{agent_name} -> tool_call {call.get('name')} {call.get('arguments', '')}")
-        elif kind == "tool_call_response":
-            response = str(event.get("response", "")).strip().replace("\n", "\n    ")
-            lines.append(f"{agent_name} <- tool_call_response {event.get('tool_definition', {}).get('annotations', {}).get('title', '')}: {response}")
-        elif kind in ("agent_route", "agent_switching", "sub_session_completed", "background_agent_started", "background_agent_completed"):
-            lines.append(f"{kind}: {json.dumps({key: item for key, item in event.items() if key not in ('timestamp', 'type')}, ensure_ascii=False)}")
-        elif kind == "stream_stopped":
-            lines.append(f"stream_stopped ({event.get('finish_reason', '')}, {event.get('reason', '')})")
-        elif kind == "tool_call_confirmation":
-            lines.append(f"tool_call_confirmation: {json.dumps(scrub({key: item for key, item in event.items() if key not in ('timestamp', 'type', 'tool_definition')}), ensure_ascii=False)}")
-        elif kind in ("error", "notification", "stderr"):
-            lines.append(f"{kind}: {event.get('message', event.get('error', ''))}")
-    return "\n".join(lines) + "\n"
+    lines = [transcript_line(event) for event in compact_events(events)]
+    return "\n".join(line for line in lines if line is not None) + "\n"
 
 
 def cut_reasoning(text):
@@ -351,9 +388,8 @@ def cut_reasoning(text):
     if len(paragraphs) <= 2:
         return text
     kept = [paragraphs[0]] if paragraphs[0].startswith("Recording mode") else []
-    cut = paragraphs[len(kept):-1]
-    kept.append(f"[... {sum(part.count(chr(10)) + 1 for part in cut)} lines of model reasoning cut by run.py ...]")
-    kept.append(paragraphs[-1])
+    cut_lines = sum(part.count("\n") + 1 for part in paragraphs[len(kept):-1])
+    kept += [f"[... {cut_lines} lines of model reasoning cut by run.py ...]", paragraphs[-1]]
     return "\n\n".join(kept) + "\n"
 
 
@@ -374,16 +410,15 @@ def pretty_body(text):
 
 
 class Transcript:
-    def __init__(self):
+    def __init__(self, kit):
+        self.kit = kit
         self.lines = []
         self.labels = []
-        self.count = 0
         self.last_head = ""
 
-    def exchange(self, kit, title, method, url, body=None, headers=(), stream=False, timeout=180):
-        self.count += 1
+    def exchange(self, title, method, url, body=None, headers=(), stream=False):
         host, _, path = url.partition("://")[2].partition("/")
-        cmd = ["curl", "-sS", "-i", "--max-time", str(timeout), "-X", method]
+        cmd = ["curl", "-sS", "-i", "--max-time", "180", "-X", method]
         if stream:
             cmd.append("-N")
         for header in headers:
@@ -391,17 +426,11 @@ class Transcript:
         if body is not None:
             cmd += ["-H", "Content-Type: application/json", "-d", body]
         cmd.append(url)
-        code, out, err = kit.run(cmd, merged=False)
+        code, out, err = self.kit.run(cmd, merged=False)
         self.labels.append(shlex.join(cmd))
-        self.lines.append(f"### {self.count} · {title}")
-        self.lines.append(f"{method} /{path} HTTP/1.1")
-        self.lines.append(f"Host: {host}")
-        for header in headers:
-            self.lines.append(header)
+        self.lines += [f"### {len(self.labels)} · {title}", f"{method} /{path} HTTP/1.1", f"Host: {host}", *headers]
         if body is not None:
-            self.lines.append("Content-Type: application/json")
-            self.lines.append("")
-            self.lines.extend(pretty_body(body).split("\n"))
+            self.lines += ["Content-Type: application/json", "", *pretty_body(body).split("\n")]
         self.lines.append("")
         head, _, response_body = out.replace("\r\n", "\n").partition("\n\n")
         self.last_head = head
@@ -410,12 +439,39 @@ class Transcript:
         else:
             self.lines.extend(line for line in head.split("\n") if not line.lower().startswith("content-length:"))
             self.lines.append("")
-            self.lines.extend((sse_scrub(response_body).rstrip("\n") if stream else pretty_body(response_body)).split("\n"))
+            if stream:
+                self.lines.extend(sse_scrub(response_body).rstrip("\n").split("\n"))
+            else:
+                self.lines.extend(pretty_body(response_body).split("\n"))
         self.lines.append("")
         return response_body
 
-    def text(self):
-        return "\n".join(self.lines).rstrip("\n") + "\n"
+    def write(self, name, server):
+        self.kit.write(name, "\n".join(self.lines).rstrip("\n") + "\n", [server, *self.labels])
+
+
+def start_server(args, port, log_name):
+    command = agent(*args)
+    with open(os.path.join(WORK, log_name), "w", encoding="utf-8") as log:
+        proc = subprocess.Popen(command, cwd=HERE, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL, start_new_session=True)
+    deadline = time.time() + 120
+    while time.time() < deadline and proc.poll() is None and not port_open(port):
+        time.sleep(0.5)
+    return proc, shown_command(command)
+
+
+def wait_or_kill(proc, timeout, grace):
+    try:
+        proc.wait(timeout)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        proc.wait(grace)
+
+
+def stop_server(proc):
+    if proc.poll() is None:
+        proc.send_signal(signal.SIGINT)
+        wait_or_kill(proc, 20, 10)
 
 
 class Kit:
@@ -502,23 +558,22 @@ class Kit:
             text = pretty_json(data)
         except ValueError:
             text = out + err
-        label = shown or shlex.join(args)
-        if code:
-            label += f"  [exit {code}]"
-        self.write(name, text, [label])
+        self.write(name, text, [with_exit(shown or shlex.join(args), code)])
 
-    def agent_entry(self, args, cwd=None, env=None, output_filter=None, label=None):
-        return self.entry(agent(*args), label=label, cwd=cwd or HERE, env=env, output_filter=output_filter, shown=shown_command(agent(*args)))
+    def agent_entry(self, args, output_filter=None):
+        command = agent(*args)
+        return self.entry(command, cwd=HERE, output_filter=output_filter, shown=shown_command(command))
 
-    def agent_file(self, name, *commands, cwd=None, env=None, output_filter=None):
-        self.write_blocks(name, [self.agent_entry(args, cwd=cwd, env=env, output_filter=output_filter) for args in commands])
+    def agent_file(self, name, *commands, output_filter=None):
+        self.write_blocks(name, [self.agent_entry(args, output_filter=output_filter) for args in commands])
 
-    def agent_json(self, name, args, transform=None, env=None):
-        self.json_file(name, agent(*args), cwd=HERE, transform=transform, env=env, shown=shown_command(agent(*args)))
+    def agent_json(self, name, args, transform=None):
+        command = agent(*args)
+        self.json_file(name, command, cwd=HERE, transform=transform, shown=shown_command(command))
 
-    def ndjson_file(self, name, args, cwd=None):
-        full = agent(*args)
-        code, out, err = self.run(full, cwd or HERE, merged=False)
+    def ndjson_file(self, name, args):
+        command = agent(*args)
+        code, out, err = self.run(command, HERE, merged=False)
         events = []
         extra = []
         for line in out.split("\n"):
@@ -531,53 +586,28 @@ class Kit:
         compacted = [scrub(event) for event in compact_events(events)]
         lines = [json.dumps(event, ensure_ascii=False, sort_keys=True) for event in compacted] + extra
         if err.strip():
-            lines.append("[stderr] " + err.strip().replace("\n", "\n[stderr] "))
+            lines.append(stderr_lines(err.strip()))
             compacted.append({"type": "stderr", "message": err.strip()})
-        label = shown_command(full) + "  (agent_choice_reasoning and partial_tool_call events dropped, agent_choice tokens joined)"
-        if code:
-            label += f"  [exit {code}]"
-        self.write(name, "\n".join(lines) + "\n", [label])
+        self.write(name, "\n".join(lines) + "\n", [with_exit(shown_command(command) + NDJSON_NOTE, code)])
         return compacted
 
-    def record_flags(self, name):
+    def start_recording(self, name):
+        if not self.record_cassettes and os.path.exists(cassette_path(name)):
+            return None
+        self.recorded.append(name)
         return ["--models-gateway", f"{DMR_URL}/engines", f"--record={CASSETTE_WORK}/{name}"]
 
-    def needs_recording(self, name):
-        return self.record_cassettes or not os.path.exists(cassette_path(name))
-
     def ensure_cassette(self, name, args):
-        if not self.needs_recording(name):
-            return
-        self.recorded.append(name)
-        position = 2 if args[0] == "serve" else 1
-        self.run(agent(*args[:position], *self.record_flags(name), *args[position:]), cwd=HERE)
-
-    def replay(self, name):
-        return ["--fake", f"{CASSETTE_WORK}/{name}"]
-
-    def start_server(self, args, port, log_name, timeout=120):
-        log = open(os.path.join(WORK, log_name), "w", encoding="utf-8")
-        proc = subprocess.Popen(agent(*args), cwd=HERE, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL, start_new_session=True)
-        deadline = time.time() + timeout
-        while time.time() < deadline and proc.poll() is None:
-            if port_open(port):
-                break
-            time.sleep(0.5)
-        return proc, shown_command(agent(*args))
-
-    def stop_server(self, proc):
-        if proc.poll() is None:
-            proc.send_signal(signal.SIGINT)
-            try:
-                proc.wait(20)
-            except subprocess.TimeoutExpired:
-                proc.kill()
-                proc.wait(10)
-        return proc.returncode
+        flags = self.start_recording(name)
+        if flags:
+            self.run(agent(args[0], *flags, *args[1:]), cwd=HERE)
 
     def server_log(self, name, log_name, label):
         path = os.path.join(WORK, log_name)
         self.write(name, read_file(path) if os.path.exists(path) else "(no log)\n", [label])
+
+    def sandboxes(self):
+        return self.json_list(["sbx", "ls", "--json"], "sandboxes")
 
     def custom_secrets(self):
         return self.json_list(["sbx", "secret", "ls", "--json"], "custom_secrets")
@@ -616,7 +646,7 @@ def host_git(path, *args):
 
 
 def remove_kit_sandboxes(kit):
-    for sandbox in kit.json_list(["sbx", "ls", "--json"], "sandboxes"):
+    for sandbox in kit.sandboxes():
         if sandbox["name"].startswith("m101-"):
             kit.run(["sbx", "rm", "--force", sandbox["name"]])
 
@@ -636,8 +666,6 @@ def sweep(kit):
             kit.run(["sbx", "mcp", "rm", server["name"], "--force"])
     for args in kit_secret_removals(kit):
         kit.run(args)
-    remove_tree(WORK)
-    os.makedirs(WORK)
 
 
 def strip_agent_version_prefix(line):
@@ -1051,8 +1079,12 @@ def model_tier_reason():
     return None
 
 
+def registry_url(path=""):
+    return f"http://{LOCAL_REGISTRY_HOST}/v2/{path}"
+
+
 def registry_ready(kit):
-    return port_open(LOCAL_REGISTRY_PORT) and kit.run(curl_status(f"http://{LOCAL_REGISTRY_HOST}/v2/"))[1].strip() == "200"
+    return port_open(LOCAL_REGISTRY_PORT) and kit.run(curl_status(registry_url()))[1].strip() == "200"
 
 
 def ensure_registry(kit):
@@ -1079,7 +1111,7 @@ def remove_model_tier_leftovers(kit):
     images = kit.output(["docker", "images", f"{LOCAL_REGISTRY_HOST}/m101/*", "--format", "{{.Repository}}:{{.Tag}}"]).split()
     for image in (*images, KIT_REF_IN_NET, f"{LOCAL_REGISTRY_HOST}/docker/sandbox-templates:shell"):
         kit.run(["docker", "image", "rm", image])
-    for sandbox in kit.json_list(["sbx", "ls", "--json"], "sandboxes"):
+    for sandbox in kit.sandboxes():
         if HERE in json.dumps(sandbox):
             kit.run(["sbx", "rm", "--force", sandbox["name"]])
 
@@ -1088,8 +1120,8 @@ def cassette_path(name):
     return os.path.join(CASSETTE_WORK, f"{name}.yaml")
 
 
-def cassette_tokens():
-    return ((os.path.realpath(HERE), "$CAPTURE"), (HERE, "$CAPTURE"), (os.path.realpath(HOME), "$HOME"), (HOME, "$HOME"))
+def replay(name):
+    return ["--fake", f"{CASSETTE_WORK}/{name}"]
 
 
 def unpack_cassettes():
@@ -1104,12 +1136,13 @@ def unpack_cassettes():
 
 
 def pack_cassettes(names):
+    tokens = ((os.path.realpath(HERE), "$CAPTURE"), (HERE, "$CAPTURE"), (os.path.realpath(HOME), "$HOME"), (HOME, "$HOME"))
     for name in names:
         path = cassette_path(name)
         if not os.path.exists(path):
             continue
         text = read_file(path)
-        for value, token in cassette_tokens():
+        for value, token in tokens:
             text = text.replace(value, token)
         with open(os.path.join(CASSETTES, f"{name}.yaml.gz"), "wb") as handle:
             handle.write(gzip.compress(text.encode("utf-8"), mtime=0))
@@ -1154,16 +1187,14 @@ def session_db_text(path):
     for table in tables:
         columns = [row[1] for row in con.execute(f"pragma table_info({table})")]
         count = con.execute(f"select count(*) from {table}").fetchone()[0]
-        lines.append("")
-        lines.append(f"$ sqlite3 work/data/session.db 'pragma table_info({table})'  ({count} rows)")
-        lines.append(" ".join(columns))
-        if table == "sessions":
-            wanted = [column for column in ("id", "title", "agent_filename", "agent_name") if column in columns]
-            if wanted:
-                lines.append("")
-                lines.append(f"$ sqlite3 work/data/session.db 'select {', '.join(wanted)} from sessions order by created_at desc limit 5'")
-                for row in con.execute(f"select {', '.join(wanted)} from sessions order by created_at desc limit 5"):
-                    lines.append(" | ".join(str(item) for item in row))
+        lines += ["", f"$ sqlite3 work/data/session.db 'pragma table_info({table})'  ({count} rows)", " ".join(columns)]
+        if table != "sessions":
+            continue
+        wanted = [column for column in ("id", "title", "agent_filename", "agent_name") if column in columns]
+        if wanted:
+            query = f"select {', '.join(wanted)} from sessions order by created_at desc limit 5"
+            lines += ["", f"$ sqlite3 work/data/session.db '{query}'"]
+            lines.extend(" | ".join(str(item) for item in row) for row in con.execute(query))
     con.close()
     return "\n".join(lines) + "\n"
 
@@ -1216,7 +1247,7 @@ def rpc_result(body):
 def build_log(text):
     kept = []
     for line in text.split("\n"):
-        if not line.strip() or " / " in line or "pushing layer" in line or "transferring" in line or "extracting" in line or "resolve docker.io" in line:
+        if not line.strip() or any(noise in line for noise in BUILD_NOISE):
             continue
         line = re.sub(r"(FROM \S+?)@sha256:[0-9a-f]{64}", r"\1", line)
         kept.append(re.sub(r" \d+(?:\.\d+)?s done$", " done", line))
@@ -1225,8 +1256,8 @@ def build_log(text):
     return "\n".join(line for line in masked if line + " done" not in final) + "\n"
 
 
-def manifest_curl(reference):
-    return ["curl", "-sS", "-H", OCI_ACCEPT, f"http://{LOCAL_REGISTRY_HOST}/v2/m101/hello-kit/manifests/{reference}"]
+def manifest_curl(repository, reference):
+    return ["curl", "-sS", "-H", OCI_ACCEPT, registry_url(f"m101/{repository}/manifests/{reference}")]
 
 
 def manifest_view(data):
@@ -1246,9 +1277,8 @@ def manifest_view(data):
 def step_docker_agent_new(kit):
     description = "an agent that greets the user and names one fact about Docker sandboxes"
     before = set(os.listdir(WORK))
-    args = ["docker-agent", "--config-dir", "cfg", "--data-dir", "data", "--cache-dir", "cache", "new", "--model", MODEL, description]
     shown = f"docker-agent new --model {MODEL} {shlex.quote(description)}  (in work/, without a controlling terminal)"
-    kit.write_blocks("17-new.txt", [kit.entry(args, cwd=WORK, shown=shown, new_session=True)])
+    kit.write_blocks("17-new.txt", [kit.entry(agent_in_work("new", "--model", MODEL, description), cwd=WORK, shown=shown, new_session=True)])
     written = sorted(name for name in set(os.listdir(WORK)) - before if name.endswith((".yaml", ".yml")))
     if written:
         kit.write("17-new-agent.yaml", read_file(os.path.join(WORK, written[0])), [f"cat work/{written[0]} (written by docker-agent new)"])
@@ -1260,26 +1290,28 @@ def step_single_agent(kit):
     ensure_repo()
     files = "fixtures/agents/files.yaml"
     run = ["run", "--exec", "--working-dir", "fixtures/repo"]
+    fake = replay("18-files")
     kit.ensure_cassette("18-files", [*run, files, *FILES_TURNS])
-    kit.agent_file("18-run-exec.txt", [*run, *kit.replay("18-files"), files, *FILES_TURNS], output_filter=cut_reasoning)
-    events = kit.ndjson_file("18-run-json.ndjson", [*run, "--json", *kit.replay("18-files"), files, *FILES_TURNS])
+    kit.agent_file("18-run-exec.txt", [*run, *fake, files, *FILES_TURNS], output_filter=cut_reasoning)
+    events = kit.ndjson_file("18-run-json.ndjson", [*run, "--json", *fake, files, *FILES_TURNS])
     kit.write("18-transcript.txt", transcript_text(events), ["the user message, tool calls, tool results, and answer, cut from 18-run-json.ndjson"])
-    kit.agent_file("18-run-last.txt", [*run, "--last", *kit.replay("18-files"), files, *FILES_TURNS])
+    kit.agent_file("18-run-last.txt", [*run, "--last", *fake, files, *FILES_TURNS])
     kit.write("18-cassette-head.txt", cassette_head("18-files"), ["head of cassettes/18-files.yaml (written by --record cassettes/18-files, replayed by --fake cassettes/18-files)"])
 
 
 def step_team(kit):
     team = "fixtures/agents/team.yaml"
+    fake = replay("19-team")
     kit.ensure_cassette("19-team", ["run", "--exec", team, *TEAM_TURNS])
-    kit.agent_file("19-team.txt", ["run", "--exec", *kit.replay("19-team"), team, *TEAM_TURNS], output_filter=cut_reasoning)
-    events = kit.ndjson_file("19-team.ndjson", ["run", "--exec", "--json", *kit.replay("19-team"), team, *TEAM_TURNS])
+    kit.agent_file("19-team.txt", ["run", "--exec", *fake, team, *TEAM_TURNS], output_filter=cut_reasoning)
+    events = kit.ndjson_file("19-team.ndjson", ["run", "--exec", "--json", *fake, team, *TEAM_TURNS])
     kit.write("19-transcript.txt", transcript_text(events), ["the delegation as events: user message, transfer_task, handoff, tool results, answers, cut from 19-team.ndjson"])
     for tool, name in (("transfer_task", "19-transfer-task.json"), ("handoff", "19-handoff.json")):
         picked = [event for event in events if f'"{tool}"' in json.dumps(event) and "tool_call" in str(event.get("type", ""))]
         text = pretty_json(picked) if picked else f"(no tool_call event names {tool} in 19-team.ndjson)\n"
         kit.write(name, text, [f"the tool_call events for {tool}, cut from 19-team.ndjson"])
     kit.ensure_cassette("19-background", ["run", "--exec", team, BACKGROUND_TASK])
-    background = kit.ndjson_file("19-background.ndjson", ["run", "--exec", "--json", *kit.replay("19-background"), team, BACKGROUND_TASK])
+    background = kit.ndjson_file("19-background.ndjson", ["run", "--exec", "--json", *replay("19-background"), team, BACKGROUND_TASK])
     kit.write("19-background.txt", transcript_text(background), ["the background agent run as events, cut from 19-background.ndjson"])
 
 
@@ -1287,12 +1319,11 @@ def step_permissions(kit):
     guarded = "fixtures/agents/guarded.yaml"
     hook_log = os.path.join(WORK, "hook-stdin.jsonl")
     kit.ensure_cassette("20-strict", ["run", "--exec", "--safety", "strict", guarded, *GUARDED_TURNS])
-    strict = kit.ndjson_file("20-strict.ndjson", ["run", "--exec", "--json", "--safety", "strict", *kit.replay("20-strict"), guarded, *GUARDED_TURNS])
+    strict = kit.ndjson_file("20-strict.ndjson", ["run", "--exec", "--json", "--safety", "strict", *replay("20-strict"), guarded, *GUARDED_TURNS])
     kit.write("20-strict.txt", transcript_text(strict), ["the --safety strict run as events, cut from 20-strict.ndjson"])
     kit.ensure_cassette("20-restricted", ["run", "--exec", "--safety", "restricted", guarded, *GUARDED_TURNS])
-    if os.path.exists(hook_log):
-        os.remove(hook_log)
-    restricted = kit.ndjson_file("20-restricted.ndjson", ["run", "--exec", "--json", "--safety", "restricted", *kit.replay("20-restricted"), guarded, *GUARDED_TURNS])
+    remove_file(hook_log)
+    restricted = kit.ndjson_file("20-restricted.ndjson", ["run", "--exec", "--json", "--safety", "restricted", *replay("20-restricted"), guarded, *GUARDED_TURNS])
     kit.write("20-restricted.txt", transcript_text(restricted), ["the --safety restricted run as events, cut from 20-restricted.ndjson"])
     kit.write("20-hook-stdin.jsonl", hook_log_text(hook_log), ["stdin of fixtures/hooks/log-hook.sh for each shell call of the --safety restricted replay (work/hook-stdin.jsonl)"])
     kit.agent_json("20-debug-toolsets.json", ["debug", "toolsets", guarded, "--json"])
@@ -1301,7 +1332,7 @@ def step_permissions(kit):
 
 def step_sessions(kit):
     ensure_repo()
-    run = ["run", "--exec", "--last", "--working-dir", "fixtures/repo", *kit.replay("18-files"), "fixtures/agents/files.yaml", *FILES_TURNS]
+    run = ["run", "--exec", "--last", "--working-dir", "fixtures/repo", *replay("18-files"), "fixtures/agents/files.yaml", *FILES_TURNS]
     kit.agent_file("21-two-runs.txt", run, run)
     kit.agent_file("21-sessions.txt", ["sessions"])
     kit.agent_file("21-sessions-diff.txt", ["sessions", "diff", "-1", "-2"], ["sessions", "diff", "--", "-1", "-2"], ["sessions", "diff", "--fail-on-divergence", "--", "-1", "-3"])
@@ -1309,13 +1340,20 @@ def step_sessions(kit):
     kit.write("21-session-db.txt", session_db_text(os.path.join(WORK, "data", "session.db")), ["the tables and session rows of work/data/session.db (python sqlite3)"])
 
 
+def model_text(value):
+    if isinstance(value, dict):
+        return {key: ("<model-text>" if key in ("reasoning_content", "reason") and isinstance(item, str) and item else model_text(item)) for key, item in value.items()}
+    if isinstance(value, list):
+        return [model_text(item) for item in value]
+    return value
+
+
 def eval_run(kit, suffix, extra):
     out_dir = os.path.join(WORK, f"eval-results{suffix}")
     remove_tree(out_dir)
     text, label = kit.agent_entry(["eval", "fixtures/agents/files.yaml", "fixtures/evals", "--judge-model", MODEL, "-c", "1", *extra, "--output", f"work/eval-results{suffix}"])
     names = sorted(os.listdir(out_dir)) if os.path.isdir(out_dir) else []
-    runs = [name[:-5] for name in names if name.endswith(".json") and not name.endswith("-sessions.json")]
-    run_name = runs[0] if runs else None
+    run_name = next((name[:-5] for name in names if name.endswith(".json") and not name.endswith("-sessions.json")), None)
 
     def unname(value):
         return value.replace(run_name, "<run>") if run_name else value
@@ -1328,91 +1366,93 @@ def eval_run(kit, suffix, extra):
         kit.write(f"22-eval-run{suffix}.json", unname(pretty_json(scrub(model_text(data)))), [f"cat work/eval-results{suffix}/<run>.json (the run file docker-agent eval wrote; reasoning_content and the judge's reason replaced by <model-text>)"])
 
 
-def model_text(value):
-    if isinstance(value, dict):
-        return {key: ("<model-text>" if key in ("reasoning_content", "reason") and isinstance(item, str) and item else model_text(item)) for key, item in value.items()}
-    if isinstance(value, list):
-        return [model_text(item) for item in value]
-    return value
-
-
 def step_eval(kit):
     eval_run(kit, "", [])
     eval_run(kit, "-gateway", ["--models-gateway", "http://model-runner.docker.internal/engines"])
     eval_run(kit, "-container-env", ["-e", "DOCKER_AGENT_MODELS_GATEWAY=http://model-runner.docker.internal/engines"])
 
 
-def api_exchanges(kit, transcript):
+def api_exchanges(transcript):
     base = f"http://127.0.0.1:{API_PORT}"
-    transcript.exchange(kit, "ping", "GET", f"{base}/api/ping")
-    transcript.exchange(kit, "agents", "GET", f"{base}/api/agents")
-    created = rpc_result(transcript.exchange(kit, "create a session", "POST", f"{base}/api/sessions", body="{}"))
+    transcript.exchange("ping", "GET", f"{base}/api/ping")
+    transcript.exchange("agents", "GET", f"{base}/api/agents")
+    created = rpc_result(transcript.exchange("create a session", "POST", f"{base}/api/sessions", body="{}"))
     session_id = created.get("id", "missing")
-    stream = transcript.exchange(kit, "run the agent (SSE)", "POST", f"{base}/api/sessions/{session_id}/agent/pong", body='{"messages":[{"role":"user","content":"ping"}]}', headers=["Accept: text/event-stream"], stream=True)
-    transcript.exchange(kit, "read the session back", "GET", f"{base}/api/sessions/{session_id}")
+    stream = transcript.exchange("run the agent (SSE)", "POST", f"{base}/api/sessions/{session_id}/agent/pong", body='{"messages":[{"role":"user","content":"ping"}]}', headers=["Accept: text/event-stream"], stream=True)
+    transcript.exchange("read the session back", "GET", f"{base}/api/sessions/{session_id}")
     return stream
 
 
 def serve_api(kit, pong):
     serve = ["serve", "api", pong, "--listen", f"127.0.0.1:{API_PORT}", "-s", "work/api-session.db"]
-    db = os.path.join(WORK, "api-session.db")
-    if kit.needs_recording("23-api"):
-        kit.recorded.append("23-api")
-        proc, _ = kit.start_server([*serve, *kit.record_flags("23-api")], API_PORT, "serve-api-record.log")
-        api_exchanges(kit, Transcript())
-        kit.stop_server(proc)
-    if os.path.exists(db):
-        os.remove(db)
-    proc, shown = kit.start_server([*serve, *kit.replay("23-api")], API_PORT, "serve-api.log")
-    transcript = Transcript()
-    stream = api_exchanges(kit, transcript)
-    kit.stop_server(proc)
-    kit.write("23-api.http", transcript.text(), [shown, *transcript.labels])
+    flags = kit.start_recording("23-api")
+    if flags:
+        proc, _ = start_server([*serve, *flags], API_PORT, "serve-api-record.log")
+        api_exchanges(Transcript(kit))
+        stop_server(proc)
+    remove_file(os.path.join(WORK, "api-session.db"))
+    proc, shown = start_server([*serve, *replay("23-api")], API_PORT, "serve-api.log")
+    transcript = Transcript(kit)
+    stream = api_exchanges(transcript)
+    stop_server(proc)
+    transcript.write("23-api.http", shown)
     kit.write("23-api-run.sse", sse_scrub(stream.replace("\r\n", "\n")), ["the body of the SSE answer to POST /api/sessions/<id>/agent/pong (reasoning events dropped, agent_choice tokens joined)"])
     kit.server_log("23-serve-api.log", "serve-api.log", f"stdout and stderr of {shown}")
 
 
 def serve_chat(kit, pong):
-    proc, shown = kit.start_server(["serve", "chat", pong, "--listen", f"127.0.0.1:{CHAT_PORT}", "--api-key", "m101-chat-key"], CHAT_PORT, "serve-chat.log")
+    proc, shown = start_server(["serve", "chat", pong, "--listen", f"127.0.0.1:{CHAT_PORT}", "--api-key", "m101-chat-key"], CHAT_PORT, "serve-chat.log")
     base = f"http://127.0.0.1:{CHAT_PORT}"
     auth = "Authorization: Bearer m101-chat-key"
-    transcript = Transcript()
-    models = rpc_result(transcript.exchange(kit, "models", "GET", f"{base}/v1/models", headers=[auth]))
+    transcript = Transcript(kit)
+    models = rpc_result(transcript.exchange("models", "GET", f"{base}/v1/models", headers=[auth]))
     model_id = (models.get("data") or [{}])[0].get("id", "pong")
     body = json.dumps({"model": model_id, "messages": [{"role": "user", "content": "ping"}]})
-    transcript.exchange(kit, "chat completion", "POST", f"{base}/v1/chat/completions", body=body, headers=[auth])
-    transcript.exchange(kit, "the same without the token", "POST", f"{base}/v1/chat/completions", body=body)
-    kit.stop_server(proc)
-    kit.write("23-chat.http", transcript.text(), [shown, *transcript.labels])
+    transcript.exchange("chat completion", "POST", f"{base}/v1/chat/completions", body=body, headers=[auth])
+    transcript.exchange("the same without the token", "POST", f"{base}/v1/chat/completions", body=body)
+    stop_server(proc)
+    transcript.write("23-chat.http", shown)
 
 
-def mcp_call(kit, transcript, title, base, payload, session_id=None):
+def mcp_call(transcript, title, base, payload, session_id=None):
     headers = ["Accept: application/json, text/event-stream"]
     if session_id:
         headers.append(f"Mcp-Session-Id: {session_id}")
-    return transcript.exchange(kit, title, "POST", base, body=json.dumps(payload), headers=headers)
+    return transcript.exchange(title, "POST", base, body=json.dumps(payload), headers=headers)
+
+
+def mcp_session_id(head):
+    session_id = None
+    for line in head.split("\n"):
+        if line.lower().startswith("mcp-session-id:"):
+            session_id = line.split(":", 1)[1].strip()
+    return session_id
 
 
 def serve_mcp(kit, pong):
-    proc, shown = kit.start_server(["serve", "mcp", pong, "--http", "--listen", f"127.0.0.1:{MCP_PORT}", "--tool-name", "pong"], MCP_PORT, "serve-mcp.log")
+    proc, shown = start_server(["serve", "mcp", pong, "--http", "--listen", f"127.0.0.1:{MCP_PORT}", "--tool-name", "pong"], MCP_PORT, "serve-mcp.log")
     base = f"http://127.0.0.1:{MCP_PORT}/mcp"
-    transcript = Transcript()
+    transcript = Transcript(kit)
     init = {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2026-07-28", "capabilities": {}, "clientInfo": {"name": "m101", "version": "0"}}}
-    mcp_call(kit, transcript, "initialize", base, init)
-    session_id = None
-    for line in transcript.last_head.split("\n"):
-        if line.lower().startswith("mcp-session-id:"):
-            session_id = line.split(":", 1)[1].strip()
-    mcp_call(kit, transcript, "notifications/initialized", base, {"jsonrpc": "2.0", "method": "notifications/initialized"}, session_id)
-    tools = rpc_result(mcp_call(kit, transcript, "tools/list", base, {"jsonrpc": "2.0", "id": 2, "method": "tools/list"}, session_id))
+    mcp_call(transcript, "initialize", base, init)
+    session_id = mcp_session_id(transcript.last_head)
+    mcp_call(transcript, "notifications/initialized", base, {"jsonrpc": "2.0", "method": "notifications/initialized"}, session_id)
+    tools = rpc_result(mcp_call(transcript, "tools/list", base, {"jsonrpc": "2.0", "id": 2, "method": "tools/list"}, session_id))
     listed = (tools.get("result") or {}).get("tools") or []
     tool = listed[0] if listed else {"name": "pong", "inputSchema": {}}
     schema = tool.get("inputSchema") or {}
     argument = (schema.get("required") or list((schema.get("properties") or {}).keys()) or ["message"])[0]
     call = {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": tool.get("name", "pong"), "arguments": {argument: "ping"}}}
-    mcp_call(kit, transcript, "tools/call", base, call, session_id)
-    kit.stop_server(proc)
-    kit.write("23-mcp.http", transcript.text(), [shown, *transcript.labels])
+    mcp_call(transcript, "tools/call", base, call, session_id)
+    stop_server(proc)
+    transcript.write("23-mcp.http", shown)
+
+
+def acp_received_line(line):
+    try:
+        return "<< " + json.dumps(scrub(json.loads(line)), ensure_ascii=False, sort_keys=True)
+    except ValueError:
+        return "<< " + line
 
 
 def serve_acp(kit, pong):
@@ -1438,51 +1478,49 @@ def serve_acp(kit, pong):
         deadline = time.time() + 60
         while len(received) < wanted and time.time() < deadline and proc.poll() is None:
             time.sleep(0.2)
-        for line in received[wanted - 1:]:
-            try:
-                lines.append("<< " + json.dumps(scrub(json.loads(line)), ensure_ascii=False, sort_keys=True))
-            except ValueError:
-                lines.append("<< " + line)
+        lines.extend(acp_received_line(line) for line in received[wanted - 1:])
         if len(received) < wanted:
             lines.append("<< (no answer within 60 s)")
     proc.stdin.close()
-    try:
-        proc.wait(15)
-    except subprocess.TimeoutExpired:
-        proc.kill()
-        proc.wait(5)
+    wait_or_kill(proc, 15, 5)
     stderr = proc.stderr.read().strip()
     if stderr:
-        lines.append("[stderr] " + stderr.replace("\n", "\n[stderr] "))
+        lines.append(stderr_lines(stderr))
     lines.append(f"[exit {proc.returncode}]")
     kit.write("23-acp.jsonl", "\n".join(lines) + "\n", [f"{shown_command(args)}  (JSON-RPC lines on stdin, >> sent, << received)"])
 
 
+def a2a_task(result):
+    if isinstance(result.get("task"), dict):
+        return result["task"]
+    if result.get("kind") == "task":
+        return result
+    return {}
+
+
 def serve_a2a(kit, pong):
-    proc, shown = kit.start_server(["serve", "a2a", pong, "--listen", f"127.0.0.1:{A2A_PORT}"], A2A_PORT, "serve-a2a.log")
+    proc, shown = start_server(["serve", "a2a", pong, "--listen", f"127.0.0.1:{A2A_PORT}"], A2A_PORT, "serve-a2a.log")
     base = f"http://127.0.0.1:{A2A_PORT}"
-    transcript = Transcript()
-    raw = transcript.exchange(kit, "agent card", "GET", f"{base}/.well-known/agent-card.json")
-    card = rpc_result(raw)
+    transcript = Transcript(kit)
+    card = rpc_result(transcript.exchange("agent card", "GET", f"{base}/.well-known/agent-card.json"))
     if not card:
-        card = rpc_result(transcript.exchange(kit, "agent card, legacy path", "GET", f"{base}/.well-known/agent.json"))
+        card = rpc_result(transcript.exchange("agent card, legacy path", "GET", f"{base}/.well-known/agent.json"))
     kit.write("23-agent-card.json", pretty_json(scrub(card)) if card else "(no agent card answered)\n", ["the agent card served by docker-agent serve a2a"])
     interfaces = card.get("supportedInterfaces") or []
     endpoint = (interfaces[0].get("url") if interfaces else None) or card.get("url") or f"{base}/"
     send = {"jsonrpc": "2.0", "id": 1, "method": "SendMessage", "params": {"message": {"messageId": "m101-0001", "role": "ROLE_USER", "parts": [{"text": "ping"}]}}}
-    answer = rpc_result(transcript.exchange(kit, "SendMessage (A2A 1.0 names)", "POST", endpoint, body=json.dumps(send), headers=["A2A-Version: 1.0"]))
+    answer = rpc_result(transcript.exchange("SendMessage (A2A 1.0 names)", "POST", endpoint, body=json.dumps(send), headers=[A2A_V1]))
     legacy = "error" in answer or not answer
     if legacy:
         send = {"jsonrpc": "2.0", "id": 2, "method": "message/send", "params": {"message": {"messageId": "m101-0002", "role": "user", "kind": "message", "parts": [{"kind": "text", "text": "ping"}]}}}
-        answer = rpc_result(transcript.exchange(kit, "message/send (A2A 0.3 names)", "POST", endpoint, body=json.dumps(send)))
-    result = answer.get("result") or {}
-    task = result.get("task") if isinstance(result.get("task"), dict) else (result if result.get("kind") == "task" else {})
-    task_id = task.get("id")
+        answer = rpc_result(transcript.exchange("message/send (A2A 0.3 names)", "POST", endpoint, body=json.dumps(send)))
+    task_id = a2a_task(answer.get("result") or {}).get("id")
     if task_id:
         method = "tasks/get" if legacy else "GetTask"
-        transcript.exchange(kit, method, "POST", endpoint, body=json.dumps({"jsonrpc": "2.0", "id": 3, "method": method, "params": {"id": task_id}}), headers=[] if legacy else ["A2A-Version: 1.0"])
-    kit.stop_server(proc)
-    kit.write("23-a2a.http", transcript.text(), [shown, *transcript.labels])
+        headers = [] if legacy else [A2A_V1]
+        transcript.exchange(method, "POST", endpoint, body=json.dumps({"jsonrpc": "2.0", "id": 3, "method": method, "params": {"id": task_id}}), headers=headers)
+    stop_server(proc)
+    transcript.write("23-a2a.http", shown)
 
 
 def step_serve(kit):
@@ -1497,15 +1535,15 @@ def step_serve(kit):
 def step_share(kit):
     ensure_registry(kit)
     kit.agent_file("24-share-push.txt", ["share", "push", "fixtures/agents/files.yaml", AGENT_REF])
-    pull = ["docker-agent", "--config-dir", "cfg", "--data-dir", "data", "--cache-dir", "cache", "share", "pull", AGENT_REF, "--force"]
+    pull = agent_in_work("share", "pull", AGENT_REF, "--force")
     kit.write_blocks("24-share-pull.txt", [kit.entry(pull, cwd=WORK, shown=f"docker-agent share pull {AGENT_REF} --force  (in work/)")])
     pulled = sorted(name for name in os.listdir(WORK) if "m101_agent" in name and name.endswith(".yaml"))
     if pulled:
         kit.write("24-share-pull-agent.yaml", read_file(os.path.join(WORK, pulled[0])), [f"cat work/{pulled[0]} (written by share pull)"])
-    kit.json_file("24-manifest.json", ["curl", "-sS", "-H", OCI_ACCEPT, f"http://{LOCAL_REGISTRY_HOST}/v2/m101/agent/manifests/v1"])
-    kit.capture("24-registry.txt", ["curl", "-sS", f"http://{LOCAL_REGISTRY_HOST}/v2/_catalog"], ["curl", "-sS", f"http://{LOCAL_REGISTRY_HOST}/v2/m101/agent/tags/list"], ["curl", "-sS", "-I", "-H", OCI_ACCEPT, f"http://{LOCAL_REGISTRY_HOST}/v2/m101/agent/manifests/v1"])
+    kit.json_file("24-manifest.json", manifest_curl("agent", "v1"))
+    kit.capture("24-registry.txt", ["curl", "-sS", registry_url("_catalog")], ["curl", "-sS", registry_url("m101/agent/tags/list")], ["curl", "-sS", "-I", "-H", OCI_ACCEPT, registry_url("m101/agent/manifests/v1")])
     ensure_repo()
-    kit.agent_file("24-run-ref.txt", ["run", "--exec", "--last", "--working-dir", "fixtures/repo", *kit.replay("18-files"), AGENT_REF, *FILES_TURNS])
+    kit.agent_file("24-run-ref.txt", ["run", "--exec", "--last", "--working-dir", "fixtures/repo", *replay("18-files"), AGENT_REF, *FILES_TURNS])
 
 
 def step_dmr(kit):
@@ -1522,18 +1560,17 @@ def compose_log(text):
     text = ANSI.sub("", text)
     text = re.sub(r"Bearer [A-Za-z0-9]{32,}", "Bearer <token>", text)
     text = re.sub(r"\b(in|after) \d+(?:\.\d+)?(?:µs|ms|s)\b", r"\1 <dur>", text)
-    lines = [line.rstrip() for line in text.split("\n")]
-    kept = [line for index, line in enumerate(lines) if index == 0 or line != lines[index - 1]]
-    groups = {}
+    lines = [line for line, _ in itertools.groupby(row.rstrip() for row in text.split("\n"))]
+    services = {}
     rest = []
-    for line in kept:
-        match = re.match(r"^([a-z0-9-]+-\d+)\s+\| ", line)
+    for line in lines:
+        match = COMPOSE_SERVICE.match(line)
         if match:
-            groups.setdefault(match.group(1), []).append(re.sub(r"^([a-z0-9-]+-\d+)\s+\| ?", r"\1 | ", line).rstrip())
+            services.setdefault(match.group(1), []).append(f"{match.group(1)} | {line[match.end():]}")
         else:
             rest.append(line)
-    for service in sorted(groups):
-        rest.extend(groups[service])
+    for service in sorted(services):
+        rest.extend(services[service])
     return "\n".join(rest)
 
 
@@ -1547,70 +1584,73 @@ def step_compose(kit):
 
 def kit_cache_text(cache_dir):
     root = os.path.join(cache_dir, "sandbox-kits")
-    shown_root = root.replace(HERE + "/", "")
     if not os.path.isdir(root):
-        return f"(no {shown_root} directory)\n"
-    lines = [f"$ find {shown_root} -maxdepth 3 | sort"]
-    for base, dirs, files in sorted(os.walk(root)):
-        depth = base[len(root):].count(os.sep)
-        if depth > 2:
+        return f"(no {capture_relative(root)} directory)\n"
+    lines = [f"$ find {capture_relative(root)} -maxdepth 3 | sort"]
+    walk = sorted(os.walk(root))
+    for base, _, files in walk:
+        if base[len(root):].count(os.sep) > 2:
             continue
-        lines.append(base.replace(HERE + "/", ""))
-        for name in sorted(files):
-            lines.append(os.path.join(base, name).replace(HERE + "/", ""))
-    manifests = [os.path.join(base, "manifest.json") for base, _, files in os.walk(root) if "manifest.json" in files]
+        lines.append(capture_relative(base))
+        lines.extend(capture_relative(os.path.join(base, name)) for name in sorted(files))
+    manifests = [os.path.join(base, "manifest.json") for base, _, files in walk if "manifest.json" in files]
     if manifests:
-        lines.append("")
-        lines.append("$ cat " + manifests[0].replace(HERE + "/", ""))
+        lines += ["", "$ cat " + capture_relative(manifests[0])]
+        text = read_file(manifests[0])
         try:
-            lines.append(pretty_json(scrub(json.loads(read_file(manifests[0])))).rstrip("\n"))
+            lines.append(pretty_json(scrub(json.loads(text))).rstrip("\n"))
         except ValueError:
-            lines.append(read_file(manifests[0]).rstrip("\n"))
+            lines.append(text.rstrip("\n"))
     return "\n".join(lines) + "\n"
 
 
-def step_sandbox_run(kit):
-    workspace = os.path.join(FIXTURES, "repo-sandbox")
-    copy_repo(ensure_repo(), workspace)
-    state = os.path.join(workspace, ".m101")
-    dirs = ["--config-dir", os.path.join(state, "cfg"), "--data-dir", os.path.join(state, "data"), "--cache-dir", os.path.join(state, "cache")]
-    note = "  (--config-dir, --data-dir, --cache-dir under fixtures/repo-sandbox/.m101, inside the workspace)"
-    kit.write_blocks("27-data-dir-outside.txt", [kit.agent_entry(["run", "--sandbox", "--exec", "--working-dir", "fixtures/repo-sandbox", "fixtures/agents/files-sandbox.yaml", FILES_TASK])])
-    allow = ["docker-agent", *dirs, "sandbox", "allow", "localhost:12434"]
-    listing = ["docker-agent", *dirs, "sandbox", "list"]
-    kit.write_blocks("27-sandbox-allow.txt", [kit.entry(allow, cwd=HERE, shown=shown_command(allow) + note), kit.entry(listing, cwd=HERE, shown=shown_command(listing) + note)])
-    before = {sandbox["name"] for sandbox in kit.json_list(["sbx", "ls", "--json"], "sandboxes")}
-    args = ["docker-agent", *dirs, "run", "--sandbox", "--exec", "--working-dir", workspace, os.path.join(FIXTURES, "agents", "files-sandbox.yaml"), FILES_TASK]
-    log_path = os.path.join(WORK, "sandbox-run.log")
+def watch_sandbox_run(kit, args, log_path, before):
+    during = None
     with open(log_path, "w", encoding="utf-8") as log:
         proc = subprocess.Popen(args, cwd=HERE, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
-        during = None
         deadline = time.time() + COMMAND_TIMEOUT
         while proc.poll() is None and time.time() < deadline:
-            names = {sandbox["name"] for sandbox in kit.json_list(["sbx", "ls", "--json"], "sandboxes")} - before
-            if names and during is None:
+            appeared = {sandbox["name"] for sandbox in kit.sandboxes()} - before
+            if appeared and during is None:
                 time.sleep(3)
                 during = kit.entry(["sbx", "ls"], "sbx ls  (while docker-agent run --sandbox is running)")
             time.sleep(2)
         if proc.poll() is None:
             proc.kill()
         proc.wait()
+    return during, proc.returncode
+
+
+def step_sandbox_run(kit):
+    workspace = os.path.join(FIXTURES, "repo-sandbox")
+    copy_repo(ensure_repo(), workspace)
+    state = os.path.join(workspace, ".m101")
+    dirs = agent_dirs(state)
+    agent_file = os.path.join(FIXTURES, "agents", "files-sandbox.yaml")
+    note = "  (--config-dir, --data-dir, --cache-dir under fixtures/repo-sandbox/.m101, inside the workspace)"
+    kit.write_blocks("27-data-dir-outside.txt", [kit.agent_entry(["run", "--sandbox", "--exec", "--working-dir", "fixtures/repo-sandbox", "fixtures/agents/files-sandbox.yaml", FILES_TASK])])
+    allow = ["docker-agent", *dirs, "sandbox", "allow", "localhost:12434"]
+    listing = ["docker-agent", *dirs, "sandbox", "list"]
+    kit.write_blocks("27-sandbox-allow.txt", [kit.entry(command, cwd=HERE, shown=shown_command(command) + note) for command in (allow, listing)])
+    before = {sandbox["name"] for sandbox in kit.sandboxes()}
+    args = ["docker-agent", *dirs, "run", "--sandbox", "--exec", "--working-dir", workspace, agent_file, FILES_TASK]
+    log_path = os.path.join(WORK, "sandbox-run.log")
+    during, code = watch_sandbox_run(kit, args, log_path, before)
     shown = shown_command(args) + note
     body = read_file(log_path).rstrip("\n")
-    kit.write("27-sandbox-run.txt", f"$ {shown}\n{body}\n[exit {proc.returncode}]\n", [shown])
+    kit.write("27-sandbox-run.txt", f"$ {shown}\n{body}\n[exit {code}]\n", [shown])
     kit.write_blocks("27-sbx-ls.txt", [during or ("$ sbx ls\n(no new sandbox appeared while the run was active)\n", "sbx ls during the run")])
-    new_names = [sandbox["name"] for sandbox in kit.json_list(["sbx", "ls", "--json"], "sandboxes") if sandbox["name"] not in before]
+    new_names = [sandbox["name"] for sandbox in kit.sandboxes() if sandbox["name"] not in before]
     kit.json_file("27-sbx-ls.json", ["sbx", "ls", "--json"])
     kit.write("27-kit-cache.txt", kit_cache_text(os.path.join(state, "cache")), ["the staged kit under fixtures/repo-sandbox/.m101/cache/sandbox-kits and its manifest.json"])
     if new_names:
-        name = new_names[0]
         inside = "docker-agent version; echo; env | grep -iE 'proxy|gateway|models|safety|yolo' | sort; echo; docker-agent sandbox list"
-        kit.exec_file("27-inside.txt", name, inside, label=f"sbx exec <sandbox> sh -c {shlex.quote(inside)}")
         probe = "cd \"$PWD\" && mkdir -p .m101/probe && python3 -c 'import sqlite3; c = sqlite3.connect(\".m101/probe/x.db\"); c.execute(\"create table t(a)\"); c.execute(\"insert into t values (1)\"); c.commit(); print(\"sqlite write ok\")' 2>&1 | tail -1; mount | grep repo-sandbox"
-        kit.exec_file("27-sqlite-probe.txt", name, probe, label=f"sbx exec <sandbox> sh -c {shlex.quote(probe)}")
-        inner = f"docker-agent --config-dir /tmp/m101 --data-dir /tmp/m101 --cache-dir /tmp/m101 run --exec --last --working-dir {workspace} {os.path.join(FIXTURES, 'agents', 'files-sandbox.yaml')} {shlex.quote(FILES_TASK)}"
-        kit.exec_file("27-inside-run.txt", name, inner, label=f"sbx exec <sandbox> sh -c {shlex.quote(inner)}")
-    kit.capture("27-sbx-rm.txt", *[["sbx", "rm", "--force", name] for name in new_names] or [["sbx", "ls"]])
+        inner = f"docker-agent --config-dir /tmp/m101 --data-dir /tmp/m101 --cache-dir /tmp/m101 run --exec --last --working-dir {workspace} {agent_file} {shlex.quote(FILES_TASK)}"
+        for name, script in (("27-inside.txt", inside), ("27-sqlite-probe.txt", probe), ("27-inside-run.txt", inner)):
+            kit.exec_file(name, new_names[0], script, label=f"sbx exec <sandbox> sh -c {shlex.quote(script)}")
+    removals = [["sbx", "rm", "--force", name] for name in new_names] or [["sbx", "ls"]]
+    kit.capture("27-sbx-rm.txt", *removals)
 
 
 def step_kit_v3(kit):
@@ -1619,7 +1659,7 @@ def step_kit_v3(kit):
     build = ["docker", "buildx", "build", "--progress=plain", "-f", f"{kit_dir}/kit.yaml"]
     lossy = f"{LOCAL_REGISTRY_HOST}/m101/hello-kit:docker-driver"
     kit.capture("28-buildx-docker-driver.txt", [*build, "-t", lossy, "--push", kit_dir], cwd=HERE, output_filter=build_log)
-    kit.json_file("28-manifest-docker-driver.json", manifest_curl("docker-driver"), transform=manifest_view)
+    kit.json_file("28-manifest-docker-driver.json", manifest_curl("hello-kit", "docker-driver"), transform=manifest_view)
     kit.capture("28-kit-inspect-source.txt", ["sbx", "kit", "inspect", f"./{kit_dir}", "--json"], cwd=HERE)
     write_file(os.path.join(WORK, "buildkitd.toml"), f'[registry."docker.io"]\n  mirrors = ["{LOCAL_REGISTRY}:5000"]\n[registry."{LOCAL_REGISTRY}:5000"]\n  http = true\n  insecure = true\n')
     base = "docker/sandbox-templates:shell"
@@ -1630,10 +1670,10 @@ def step_kit_v3(kit):
     kit.run(["docker", "buildx", "rm", "--force", BUILDER])
     kit.capture("28-builder.txt", ["cat", "work/buildkitd.toml"], ["docker", "buildx", "create", "--name", BUILDER, "--driver", "docker-container", "--driver-opt", f"network={LOCAL_NET}", "--buildkitd-config", "work/buildkitd.toml"], cwd=HERE)
     kit.capture("28-buildx.txt", [*build, "--builder", BUILDER, "-t", KIT_REF_IN_NET, "--push", kit_dir], cwd=HERE, output_filter=build_log)
-    index = kit.json_result(manifest_curl("v1"))
-    kit.json_file("28-index.json", manifest_curl("v1"))
+    index = kit.json_result(manifest_curl("hello-kit", "v1"))
+    kit.json_file("28-index.json", manifest_curl("hello-kit", "v1"))
     platform = next((item["digest"] for item in index.get("manifests", []) if item.get("platform", {}).get("os") == "linux"), "v1")
-    kit.json_file("28-manifest.json", manifest_curl(platform), transform=manifest_view, shown=shlex.join(manifest_curl("<platform manifest digest from 28-index.json>")))
+    kit.json_file("28-manifest.json", manifest_curl("hello-kit", platform), transform=manifest_view, shown=shlex.join(manifest_curl("hello-kit", "<platform manifest digest from 28-index.json>")))
     kit.capture("28-kit-inspect.txt", ["sbx", "kit", "inspect", KIT_REF, "--json"])
     copy_repo(os.path.join(FIXTURES, "repo"), os.path.join(FIXTURES, "repo-kit"))
     kit.capture("28-run-kit.txt", ["sbx", "create", KIT_REF, "fixtures/repo-kit", "--name", "m101-v3"], cwd=HERE)
@@ -1757,9 +1797,8 @@ def capture(out_dir, tiers, only, record=False):
     if ("b" in tiers or "m" in tiers) and not only:
         if "b" in tiers:
             sweep(kit)
-        else:
-            remove_tree(WORK)
-            os.makedirs(WORK)
+        remove_tree(WORK)
+        os.makedirs(WORK)
         if "m" in tiers:
             remove_model_tier_leftovers(kit)
     else:
@@ -1809,7 +1848,7 @@ def check(tiers, only):
     with tempfile.TemporaryDirectory() as fresh:
         capture(fresh, tiers, only)
         fresh_names = sorted(name for name in os.listdir(fresh) if not name.startswith(".") and (full or name != "README.md"))
-        drift = [(name, diff) for name, diff in find_drift(fresh, fresh_names, full) if name not in MODEL_TEXT_FILES or "missing" in diff]
+        drift = find_drift(fresh, fresh_names, full)
     if not drift:
         print(f"capture check: {len(fresh_names)} files match")
         return 0
