@@ -298,6 +298,7 @@ p.dropcap::first-letter {
 
 .logo-icon {
   display: inline-block;
+  flex: 0 0 auto;
   width: 12px;
   height: 12px;
   background: var(--blueprint);
@@ -1510,6 +1511,15 @@ body.js-anim .toc-row.in-view {
     color: var(--blueprint);
     font-size: 0.68rem;
     line-height: 1;
+  }
+
+  .header-inner > .header-github > span:not(.star-count) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .header-github .star-count {
