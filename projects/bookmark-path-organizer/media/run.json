@@ -1,0 +1,52 @@
+{
+  "title": "Bookmark Path Organizer | initialize and grade",
+  "recordedAt": "2026-10-09T14:11:22Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "bookmark-path-organizer",
+        "--init",
+        "./.project-validation/bookmark-path-organizer/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/bookmark-path-organizer/recording-starter\n  created  cli.ts\n  created  main.ts\n  created  sample.json\n  created  STAGE-2.md\n  created  STAGE-3.md\n  created  STAGE-4.md\nnext: python3 scripts/project_test.py bookmark-path-organizer --stage 1 --path ./.project-validation/bookmark-path-organizer/recording-starter\n",
+      "durationMs": 36
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "bookmark-path-organizer",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/bookmark-path-organizer/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Bookmark Path Organizer: grading learner\n  FAIL stage 1: Import bookmarks with their original hierarchy (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 255
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "bookmark-path-organizer",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/bookmark-path-organizer/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Bookmark Path Organizer: grading solution\n  PASS stage 1: Import bookmarks with their original hierarchy (6 tests)\n  PASS stage 2: Normalize links and explain duplicate groups (6 tests)\n  PASS stage 3: Rank topics and assemble a reading path (6 tests)\n  PASS stage 4: Export an editable collection and progress file (6 tests)\nreport: ./.project-validation/bookmark-path-organizer/solution-final.json\n",
+      "durationMs": 929
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}
