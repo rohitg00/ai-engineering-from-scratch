@@ -72,15 +72,17 @@ uv pip install numpy matplotlib jupyter
 
 Verify:
 
-```python
-import sys
+```bash
+python3 -c 'import sys
 print(f"Python {sys.version}")
 
 import numpy as np
 print(f"NumPy {np.__version__}")
 a = np.array([1, 2, 3])
-print(f"Vector: {a}, dot product with itself: {np.dot(a, a)}")
+print(f"Vector: {a}, dot product with itself: {np.dot(a, a)}")'
 ```
+
+It should print the Python version, the NumPy version, the vector `[1 2 3]`, and a dot product of `14`.
 
 ### Step 3: Node.js with pnpm
 
