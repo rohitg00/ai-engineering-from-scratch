@@ -1288,7 +1288,7 @@
           html += '<span class="glossary-entry-category">' + escapeHtml(entry.category) + '</span></div>';
           html += '<div class="glossary-entry-actions"><button class="glossary-read-aloud" type="button" data-tts-start aria-label="Read ' + escapeHtml(entry.term) + ' aloud">Read term</button>';
           html += '<button class="glossary-copy-link" type="button" data-copy-slug="' + escapeHtml(entry.slug) + '" aria-label="Copy link to ' + escapeHtml(entry.term) + '">Copy link</button></div></div>';
-          html += '<h4 class="glossary-term-heading" id="' + escapeHtml(entry.slug) + '-title" dir="auto">' + escapeHtml(entry.term) + '</h4>';
+          html += '<h4 class="glossary-term-heading" id="' + escapeHtml(entry.slug) + '-title" lang="en" dir="ltr">' + escapeHtml(entry.term) + '</h4>';
           if (entry.aliases.length) {
             html += '<p class="glossary-aliases">Also called · ' + escapeHtml(entry.aliases.join(' · ')) + '</p>';
           }

@@ -9,6 +9,9 @@
   var ARTICLE_ALLOW_SELECTOR = '.lesson-action-panel, .lesson-action-path, .ai-panels, .quiz-section, .lesson-nav-bottom, .continue-callout, .cert-notice';
   var RTL = { ar: 1, he: 1, fa: 1, ur: 1 };
   var NUMBER = /\d+(?:[.,]\d+)*/g;
+  var LATIN = /[A-Za-z]/;
+  var BOX = /flex|grid/;
+  var ENGLISH = 'data-i18n-en';
 
   var records = typeof WeakMap === 'function' ? new WeakMap() : null;
   var dictionaries = {};
@@ -107,6 +110,35 @@
     var out = dict ? translateText(rec.text.orig, dict) : rec.text.orig;
     if (out !== current) node.nodeValue = out;
     rec.text.out = out;
+    markDirection(node, out !== rec.text.orig);
+  }
+
+  function hasTranslatedText(el) {
+    for (var child = el.firstChild; child; child = child.nextSibling) {
+      var rec = child.nodeType === 3 && records.get(child);
+      if (rec && rec.text && rec.text.out !== rec.text.orig) return true;
+    }
+    return false;
+  }
+
+  function clearEnglish(el) {
+    el.removeAttribute('lang');
+    el.removeAttribute('dir');
+    el.removeAttribute(ENGLISH);
+  }
+
+  function markDirection(node, translated) {
+    var el = node.parentNode;
+    if (!el || el.nodeType !== 1) return;
+    if (translated) {
+      if (el.hasAttribute(ENGLISH)) clearEnglish(el);
+      return;
+    }
+    if (!RTL[active] || !LATIN.test(node.nodeValue) || el.hasAttribute('lang') || el.hasAttribute('dir')) return;
+    if (BOX.test(root.getComputedStyle(el).display) || hasTranslatedText(el)) return;
+    el.setAttribute('lang', 'en');
+    el.setAttribute('dir', 'ltr');
+    el.setAttribute(ENGLISH, '');
   }
 
   function applyAttr(el, name, dict) {
@@ -160,6 +192,7 @@
       active = dict ? lang : 'en';
       if (!dict && !touched) return;
       touched = true;
+      Array.prototype.forEach.call(root.document.querySelectorAll('[' + ENGLISH + ']'), clearEnglish);
       applyTree(root.document.body, dict);
       applyDir(active);
       observe();
