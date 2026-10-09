@@ -1,0 +1,108 @@
+{
+  "id": "subtitle-localization-desk",
+  "title": "Subtitle Localization Desk",
+  "level": 2,
+  "languages": [
+    "Python"
+  ],
+  "source": "core",
+  "tagline": "Translate captions while keeping the timing and terminology visible.",
+  "summary": "Help a course creator localize supplied WebVTT captions through a glossary, an optional real translation provider and an explicit review step. Preserve cue identities and timestamps, flag text that exceeds the chosen reading budget, and export reviewed captions with a side-by-side HTML desk.",
+  "prerequisiteProjects": [],
+  "status": "ready",
+  "hours": 8,
+  "prerequisites": [
+    "Python 3.10+; lists, dictionaries and functions"
+  ],
+  "skills": [
+    "Parse subtitle cues and preserve their timing",
+    "Apply a glossary to translation proposals",
+    "Review cue length, terminology and meaning",
+    "Export localized captions and their review decisions"
+  ],
+  "youWillBuild": "Reviewed WebVTT files, translation-decisions.json and a bilingual HTML review page",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "overviewFigure": "pj-subtitle-localization-desk-1",
+  "figures": true,
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--output",
+      "demo-output"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-cues",
+      "title": "Parse subtitle cues and preserve their timing",
+      "summary": "Parse cue identities and preserve exact timing strings.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "starter",
+      "concepts": [
+        "WebVTT",
+        "timed text"
+      ],
+      "figure": "pj-subtitle-localization-desk-1"
+    },
+    {
+      "id": "02-glossary",
+      "title": "Apply a glossary to translation proposals",
+      "summary": "Apply a reviewed glossary to supplied translation proposals.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "terminology",
+        "human translation"
+      ],
+      "figure": "pj-subtitle-localization-desk-2"
+    },
+    {
+      "id": "03-reading-budget",
+      "title": "Review cue length, terminology and meaning",
+      "summary": "Calculate reading pressure without shifting timestamps.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "characters per second",
+        "quality flags"
+      ],
+      "figure": "pj-subtitle-localization-desk-3"
+    },
+    {
+      "id": "04-review-export",
+      "title": "Export localized captions and their review decisions",
+      "summary": "Require explicit review before emitting localized WebVTT.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "review decisions",
+        "roundtrip parsing"
+      ],
+      "figure": "pj-subtitle-localization-desk-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

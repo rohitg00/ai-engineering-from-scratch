@@ -1,0 +1,16 @@
+{
+  "vtt": "WEBVTT\n\nmap\n00:00.000 --> 00:03.000\nOpen the map.\n\nroute\n00:03.000 --> 00:06.000\nChoose a route.\n\nzoom\n00:06.000 --> 00:09.000\nZoom to your street.\n\nmarker\n00:09.000 --> 00:12.000\nAdd a marker.\n\nlabel\n00:12.000 --> 00:14.000\nName the marker.\n\nsave\n00:14.000 --> 00:17.000\nSave the map.\n",
+  "translations": {
+    "map": "Abre el map.",
+    "route": "Elige una ruta.",
+    "zoom": "Amplía tu calle.",
+    "marker": "Añade un marcador.",
+    "label": "Escribe un nombre descriptivo y completo para el marcador de tu calle.",
+    "save": "Guarda el mapa."
+  },
+  "glossary": {
+    "map": "mapa",
+    "marker": "marcador"
+  },
+  "cps": 12
+}
