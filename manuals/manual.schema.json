@@ -59,7 +59,7 @@
       "type": "object",
       "required": ["run", "check"],
       "additionalProperties": false,
-      "properties": { "run": { "$ref": "#/$defs/argv" }, "check": { "$ref": "#/$defs/argv" } }
+      "properties": { "run": { "$ref": "#/$defs/argv" }, "check": { "$ref": "#/$defs/argv" }, "timeoutSeconds": { "type": "integer", "minimum": 1, "description": "How long the audit lets capture.check run. Default 300." } }
     },
     "front": { "$ref": "#/$defs/doc" },
     "plate": {

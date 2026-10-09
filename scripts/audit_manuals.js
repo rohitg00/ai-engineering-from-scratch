@@ -347,7 +347,7 @@ function auditManual(manual, add) {
 function checkCapture(manual, add) {
   if (!manual.capture) return;
   const [command, ...args] = manual.capture.check;
-  const result = spawnSync(command, args, { cwd: manual.dir, encoding: 'utf8', timeout: 300000 });
+  const result = spawnSync(command, args, { cwd: manual.dir, encoding: 'utf8', timeout: (manual.capture.timeoutSeconds || 300) * 1000 });
   if (result.status !== 0) {
     const tail = `${result.stdout || ''}${result.stderr || ''}`.trim().split('\n').slice(-6).join(' | ');
     add(rel(manual.dir), 'capture-drift', `capture check failed (${result.error ? result.error.message : `exit ${result.status}`}): ${tail}`);

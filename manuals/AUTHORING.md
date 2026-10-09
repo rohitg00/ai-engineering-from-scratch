@@ -45,7 +45,7 @@ The `<id>` is lowercase and hyphenated, such as `a2a-101`. It matches the direct
 | `palette` | the colour table: each `hue` and the one `meaning` it has in this manual |
 | `sources` | the ranked source list: `name`, `path`, `usedFor` |
 | `quoteSources` | map from a citation key such as `spec` to a vendored file, for quote checks; `null` declares a key whose quotes cannot be checked |
-| `capture` | `run` and `check` argv arrays, run from the manual directory |
+| `capture` | `run` and `check` argv arrays, run from the manual directory, and an optional `timeoutSeconds` for the check (default 300) |
 | `front` | the front matter file |
 | `plate` | the cover figure: `figure`, `title`, `caption` |
 | `parts` | ordered parts: `number`, `title`, `thesis`, `summary`, `accent`, `sections` |
