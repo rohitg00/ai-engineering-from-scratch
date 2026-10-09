@@ -15,6 +15,15 @@
     return esc(value).replace(/`/g, '&#96;');
   }
 
+  function formatCount(value) {
+    var n = Number(value) || 0;
+    try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+  }
+
+  function countLabel(value, singular, plural) {
+    return formatCount(value) + ' ' + (Number(value) === 1 ? singular : plural);
+  }
+
   function data() {
     return typeof CERTIFICATIONS !== 'undefined' && CERTIFICATIONS
       ? CERTIFICATIONS
@@ -193,7 +202,7 @@
 
   function price(track) {
     var value = examValue(track, ['price', 'fee', 'priceUsd', 'feeUsd'], 'See official provider');
-    if (typeof value === 'number') return '$' + value;
+    if (typeof value === 'number') return '$' + formatCount(value);
     return value;
   }
 
@@ -244,7 +253,7 @@
   function renderCardFacts(track, limit) {
     return examFacts(track).filter(function (fact) { return !fact.unpublished; }).slice(0, limit || 3).map(function (fact) {
       var value = fact.value;
-      if (fact.label === 'Validity' && typeof value === 'number') value += ' months';
+      if (fact.label === 'Validity' && typeof value === 'number') value = countLabel(value, 'month', 'months');
       return '<div class="cert-card-fact"><strong>' + esc(value) + '</strong><span class="cert-fact-label">' + esc(fact.label) + '</span></div>';
     }).join('');
   }
@@ -327,7 +336,7 @@
       '<div class="cert-card-identity' + (badge ? ' has-badge' : '') + '"><h3>' + esc(track.credential || track.title || track.shortName || track.id) + '</h3>' + badge + '</div>' +
       '<p>' + esc(track.summary || track.audience || 'A practical route through this certification blueprint.') + '</p>' +
       '<div class="cert-card-facts">' + renderCardFacts(track, 3) + '</div>' +
-      '<div class="cert-card-footer"><span>' + lessonCount + ' lessons · ' + domains + ' domains</span><span>Open path →</span></div>' +
+      '<div class="cert-card-footer"><span>' + countLabel(lessonCount, 'lesson', 'lessons') + ' · ' + countLabel(domains, 'domain', 'domains') + '</span><span>Open path →</span></div>' +
     '</a>';
   }
 
@@ -352,8 +361,8 @@
     if (meta) {
       var verified = latestVerified(available);
       meta.innerHTML = metaChip(labels + ' available now') +
-        metaChip(tracks().length + ' role-based tracks') +
-        metaChip(Object.keys(certs.lessonsByPath || {}).length + ' certification lessons') +
+        metaChip(countLabel(tracks().length, 'role-based track', 'role-based tracks')) +
+        metaChip(countLabel(Object.keys(certs.lessonsByPath || {}).length, 'certification lesson', 'certification lessons')) +
         metaChip(verified ? 'Verified ' + formatDate(verified) : 'Versioned source material');
     }
     var notice = document.getElementById('certProgramNotice');
@@ -478,7 +487,7 @@
       '<p class="cert-track-summary">' + esc(track.summary || track.audience || '') + '</p>' +
       '<div class="cert-meta-row">' + examFacts(track).map(function (fact) {
         var value = fact.value;
-        if (fact.label === 'Validity' && typeof value === 'number') value += ' months';
+        if (fact.label === 'Validity' && typeof value === 'number') value = countLabel(value, 'month', 'months');
         return metaChip(fact.label + ': ' + value);
       }).join('') + '</div>' +
       '<div class="cert-track-hero-actions">' +
@@ -518,7 +527,7 @@
     var attempted = assessments.filter(function (meta) { return assessmentBest(meta.id); }).length;
     mount.innerHTML = '<div class="cert-progress-head"><div><div class="cert-eyebrow">LOCAL PROGRESS</div><h2 id="progressTitle">Your progress</h2></div><div class="cert-progress-number">' + percent + '%</div></div>' +
       '<div class="cert-progress-bar" role="progressbar" aria-labelledby="progressTitle" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + percent + '"><div class="cert-progress-fill" style="--cert-progress:' + (percent / 100) + '"></div></div>' +
-      '<div class="cert-progress-detail"><span>' + complete + ' of ' + total + ' lessons complete</span><span>' + attempted + ' of ' + assessments.length + ' assessments attempted</span><span>' + (progressIsPersistent() ? 'Stored only in this browser' : 'Browser storage unavailable; progress is temporary') + '</span></div>';
+      '<div class="cert-progress-detail"><span>' + formatCount(complete) + ' of ' + countLabel(total, 'lesson', 'lessons') + ' complete</span><span>' + formatCount(attempted) + ' of ' + countLabel(assessments.length, 'assessment', 'assessments') + ' attempted</span><span>' + (progressIsPersistent() ? 'Stored only in this browser' : 'Browser storage unavailable; progress is temporary') + '</span></div>';
   }
 
   function renderDomains(track) {
@@ -588,7 +597,7 @@
       var latest = attempts[0] || null;
       var count = assessment.questionCount || meta.questionCount || (Array.isArray(assessment.questions) ? assessment.questions.length : 0);
       var limit = assessment.timeLimitMinutes || meta.timeLimitMinutes || 0;
-      return '<article class="cert-assessment-card"><div class="cert-assessment-head"><span class="cert-assessment-kind">' + esc(assessment.kind || 'Practice') + '</span><span class="cert-card-code">' + count + ' questions' + (limit ? ' · ' + limit + ' min' : '') + '</span></div><h3>' + esc(assessment.title || meta.title || 'Practice assessment') + '</h3><p>' + esc(assessment.summary || assessment.description || 'Original scenario practice with feedback after submission.') + '</p><div class="cert-assessment-best">' + (best ? 'Best practice score: ' + best.percent + '%' : 'Not attempted on this device') + '</div><div class="cert-track-hero-actions"><a class="cert-action" href="assessment.html?id=' + encodeURIComponent(meta.id) + '">' + (latest ? 'Try again' : 'Start practice') + '</a>' + (latest ? '<a class="cert-action secondary" href="assessment.html?id=' + encodeURIComponent(meta.id) + '&result=latest">Review latest result</a>' : '') + '</div></article>';
+      return '<article class="cert-assessment-card"><div class="cert-assessment-head"><span class="cert-assessment-kind">' + esc(assessment.kind || 'Practice') + '</span><span class="cert-card-code">' + countLabel(count, 'question', 'questions') + (limit ? ' · ' + limit + ' min' : '') + '</span></div><h3>' + esc(assessment.title || meta.title || 'Practice assessment') + '</h3><p>' + esc(assessment.summary || assessment.description || 'Original scenario practice with feedback after submission.') + '</p><div class="cert-assessment-best">' + (best ? 'Best practice score: ' + best.percent + '%' : 'Not attempted on this device') + '</div><div class="cert-track-hero-actions"><a class="cert-action" href="assessment.html?id=' + encodeURIComponent(meta.id) + '">' + (latest ? 'Try again' : 'Start practice') + '</a>' + (latest ? '<a class="cert-action secondary" href="assessment.html?id=' + encodeURIComponent(meta.id) + '&result=latest">Review latest result</a>' : '') + '</div></article>';
     }).join('') : '<div class="cert-empty">Practice assessments are being prepared for this track.</div>';
   }
 
@@ -759,7 +768,7 @@
       if (window.AIFSCertProgress) window.AIFSCertProgress.saveDraft(assessment.id, version, draft);
     }
 
-    mount.innerHTML = '<div class="assessment-shell"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Practice</span></div><section class="assessment-hero"><div class="cert-eyebrow">' + esc(assessment.kind || 'PRACTICE') + '</div><h1>' + esc(title) + '</h1><p>' + esc(assessment.summary || assessment.description || 'Work through the original scenarios, then submit to reveal explanations and domain feedback.') + '</p><p class="assessment-scoring-note">Submit whenever you are ready. Unanswered questions count as incorrect.</p><div class="cert-meta-row">' + metaChip(questions.length + ' original questions') + metaChip(limit ? limit + ' minute limit' : 'Untimed') + metaChip(progressIsPersistent() ? 'Saved locally' : 'Progress lasts for this page only') + '</div></section>' +
+    mount.innerHTML = '<div class="assessment-shell"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Practice</span></div><section class="assessment-hero"><div class="cert-eyebrow">' + esc(assessment.kind || 'PRACTICE') + '</div><h1>' + esc(title) + '</h1><p>' + esc(assessment.summary || assessment.description || 'Work through the original scenarios, then submit to reveal explanations and domain feedback.') + '</p><p class="assessment-scoring-note">Submit whenever you are ready. Unanswered questions count as incorrect.</p><div class="cert-meta-row">' + metaChip(countLabel(questions.length, 'original question', 'original questions')) + metaChip(limit ? limit + ' minute limit' : 'Untimed') + metaChip(progressIsPersistent() ? 'Saved locally' : 'Progress lasts for this page only') + '</div></section>' +
       '<div class="cert-notice"><strong>Practice score only</strong><p>Your result is a percentage created by this open-source course. It is not an official scaled exam score, credential decision, or guarantee of passing.</p></div>' +
       (limit ? '<div class="cert-timer" id="assessmentTimer" role="timer" aria-live="off" aria-label="Time remaining"><span>Time remaining</span><strong id="assessmentTimerValue">' + formatRemaining(draft.deadlineAt - Date.now()) + '</strong></div>' : '') +
       '<form class="assessment-form" id="assessmentForm" tabindex="-1" aria-label="Assessment questions">' + questions.map(function (question, index) { return renderQuestion(question, index, draft.answers[question.id] || []); }).join('') + '<div class="cert-submit-row"><p>You can submit a partial attempt. Unanswered questions count as incorrect, and explanations appear after submission.</p><button class="cert-action" type="submit">Submit practice</button></div></form></div>';

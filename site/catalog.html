@@ -1045,6 +1045,15 @@
           return div.innerHTML;
         }
 
+        function formatCount(value) {
+          var n = Number(value) || 0;
+          try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+        }
+
+        function countLabel(value, singular, plural) {
+          return formatCount(value) + ' ' + (Number(value) === 1 ? singular : plural);
+        }
+
         function render() {
           var query = (searchInput.value || '').toLowerCase().trim();
           var phaseFilter = phaseSelect.value;
@@ -1086,7 +1095,7 @@
           });
 
           var visibleRows = rows.slice(0, visibleLimit);
-          countEl.textContent = 'Showing ' + visibleRows.length + ' of ' + rows.length + ' matching lessons. ' + allRows.length + ' total.';
+          countEl.textContent = 'Showing ' + formatCount(visibleRows.length) + ' of ' + countLabel(rows.length, 'matching lesson', 'matching lessons') + '. ' + formatCount(allRows.length) + ' total.';
           tableWrap.setAttribute('aria-busy', 'false');
 
           if (rows.length === 0) {
@@ -1105,7 +1114,7 @@
           for (var i = 0; i < visibleRows.length; i++) {
             var r = visibleRows[i];
             if (sortCol === 'phase' && r.phase !== previousPhase) {
-              html += '<tr class="catalog-group-row"><th colspan="5" scope="rowgroup">Phase ' + String(r.phase).padStart(2, '0') + ': ' + escapeHtml(r.phaseName) + '<span class="catalog-group-count">' + phaseCounts[r.phase] + ' lessons</span></th></tr>';
+              html += '<tr class="catalog-group-row"><th colspan="5" scope="rowgroup">Phase ' + String(r.phase).padStart(2, '0') + ': ' + escapeHtml(r.phaseName) + '<span class="catalog-group-count">' + countLabel(phaseCounts[r.phase], 'lesson', 'lessons') + '</span></th></tr>';
               previousPhase = r.phase;
             }
             html += '<tr>';
@@ -1126,8 +1135,8 @@
 
           var remaining = rows.length - visibleRows.length;
           progressiveActions.hidden = remaining <= 0;
-          progressiveNote.textContent = remaining > 0 ? remaining + ' matching lessons remain.' : '';
-          showMoreButton.textContent = 'Show next ' + Math.min(PAGE_SIZE, remaining);
+          progressiveNote.textContent = remaining > 0 ? countLabel(remaining, 'matching lesson remains.', 'matching lessons remain.') : '';
+          showMoreButton.textContent = 'Show next ' + formatCount(Math.min(PAGE_SIZE, remaining));
           showMoreButton.hidden = remaining <= 0;
           showAllButton.hidden = remaining <= 0;
         }

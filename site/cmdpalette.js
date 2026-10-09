@@ -351,6 +351,15 @@
     );
   }
 
+  function formatCount(value) {
+    var n = Number(value) || 0;
+    try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+  }
+
+  function countLabel(value, singular, plural) {
+    return formatCount(value) + ' ' + (Number(value) === 1 ? singular : plural);
+  }
+
   function truncate(str, max) {
     if (!str || str.length <= max) return str || '';
     var cut = str.slice(0, max).replace(/\s+\S*$/, '');
@@ -508,15 +517,15 @@
       var learningPathCount = inventory.filter(function (item) { return item.kind === 'learning-path'; }).length;
       var artifactCount = inventory.filter(function (item) { return item.kind === 'artifact'; }).length;
       var glossaryCount = inventory.filter(function (item) { return item.kind === 'glossary'; }).length;
-      var inventoryParts = [lessonCount + ' lessons'];
+      var inventoryParts = [countLabel(lessonCount, 'lesson', 'lessons')];
       if (learningPathCount) {
-        inventoryParts.push(learningPathCount + ' focused learning ' + (learningPathCount === 1 ? 'path' : 'paths'));
+        inventoryParts.push(countLabel(learningPathCount, 'focused learning path', 'focused learning paths'));
       }
       if (certificationLessonCount) {
-        inventoryParts.push(certificationLessonCount + ' certification lessons');
+        inventoryParts.push(countLabel(certificationLessonCount, 'certification lesson', 'certification lessons'));
       }
-      inventoryParts.push(artifactCount + ' outputs');
-      inventoryParts.push(glossaryCount + ' glossary terms');
+      inventoryParts.push(countLabel(artifactCount, 'output', 'outputs'));
+      inventoryParts.push(countLabel(glossaryCount, 'glossary term', 'glossary terms'));
       list.innerHTML =
         '<li class="cp-empty" role="option" aria-disabled="true">' +
         'Search ' + inventoryParts.slice(0, -1).join(', ') + ', and ' +
@@ -583,7 +592,7 @@
       var snippet = r.summary ? truncate(r.summary, 110) : '';
       var metaParts = [];
       if (r.kind === 'learning-path') {
-        if (r.lessonCount) metaParts.push(r.lessonCount + ' lessons');
+        if (r.lessonCount) metaParts.push(countLabel(r.lessonCount, 'lesson', 'lessons'));
         if (r.minutes) {
           var hours = Math.floor(r.minutes / 60);
           var minutes = r.minutes % 60;

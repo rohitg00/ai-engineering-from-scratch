@@ -19,6 +19,15 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
+  function formatCount(value) {
+    var n = Number(value) || 0;
+    try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+  }
+
+  function countLabel(value, singular, plural) {
+    return formatCount(value) + ' ' + (Number(value) === 1 ? singular : plural);
+  }
+
   function readStore(key, fallback) {
     try {
       var raw = localStorage.getItem(key);
@@ -309,7 +318,7 @@
     var total = project.stages.length;
     var pct = total ? Math.round((done / total) * 100) : 0;
     return '<a class="pj-card is-ready" href="' + projectHref(project.id) + '">' +
-      '<div class="pj-card-top">' + sourceBadge(project) + '<span class="pj-card-meta">' + total + ' stages · ~' + totalHours(project) + 'h</span></div>' +
+      '<div class="pj-card-top">' + sourceBadge(project) + '<span class="pj-card-meta">' + countLabel(total, 'stage', 'stages') + ' · ~' + formatCount(totalHours(project)) + 'h</span></div>' +
       '<h3>' + esc(project.title) + '</h3>' +
       '<p>' + esc(project.tagline || project.summary || '') + '</p>' +
       languageChips(project.languages) +
@@ -370,7 +379,7 @@
       [DATA.planned.length, 'on the roadmap'],
       [DATA.levels.length, 'levels'],
       [community, 'from the community'],
-    ].map(function (s) { return '<div><strong>' + s[0] + '</strong><span>' + s[1] + '</span></div>'; }).join('');
+    ].map(function (s) { return '<div><strong>' + formatCount(s[0]) + '</strong><span>' + s[1] + '</span></div>'; }).join('');
 
     var first = DATA.projects[0];
     var start = document.getElementById('pjStartLink');
@@ -457,7 +466,7 @@
         '<div class="pj-eyebrow">LEVEL ' + project.level + ' · ' + esc(level.name.toUpperCase()) + '</div>' +
         '<h1>' + esc(project.title) + '</h1>' +
         '<p class="pj-lede">' + esc(project.summary || project.tagline || '') + '</p>' +
-        '<div class="pj-meta-row"><span>' + project.stages.length + ' stages</span><span>~' + totalHours(project) + ' hours</span><span>' + esc((project.languages || []).join(', ')) + '</span>' + sourceBadge(project) + '</div>' +
+        '<div class="pj-meta-row"><span>' + countLabel(project.stages.length, 'stage', 'stages') + '</span><span>~' + countLabel(totalHours(project), 'hour', 'hours') + '</span><span>' + esc((project.languages || []).join(', ')) + '</span>' + sourceBadge(project) + '</div>' +
         (skills ? '<div class="pj-skills">' + skills + '</div>' : '') +
       '</div><div class="pj-hero-side">' +
         (project.youWillBuild ? '<div class="pj-side-block"><div class="pj-eyebrow">YOU END UP WITH</div><p>' + esc(project.youWillBuild) + '</p></div>' : '') +

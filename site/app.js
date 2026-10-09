@@ -28,11 +28,15 @@
     var lessonTotal = PHASES.reduce(function (total, phase) {
       return total + (Array.isArray(phase.lessons) ? phase.lessons.length : 0);
     }, 0);
+    var lessonLabel = countLabel(lessonTotal, 'lesson', 'lessons');
+    var phaseLabel = countLabel(PHASES.length, 'phase', 'phases');
     var values = {
-      mastheadLessonCount: lessonTotal + ' lessons',
-      mastheadPhaseCount: PHASES.length + ' phases',
-      prefaceLessonCount: lessonTotal + ' lessons',
-      prefacePhaseCount: PHASES.length + ' phases'
+      mastheadLessonCount: lessonLabel,
+      mastheadPhaseCount: phaseLabel,
+      prefaceLessonCount: lessonLabel,
+      prefacePhaseCount: phaseLabel,
+      tocLessonCount: lessonLabel,
+      tocPhaseCount: phaseLabel
     };
     Object.keys(values).forEach(function (id) {
       var target = document.getElementById(id);
@@ -112,9 +116,9 @@
     var phasePct = stats.phases > 0 ? (stats.completePhases / stats.phases) * 100 : 0;
     var glossaryCount = (typeof GLOSSARY !== 'undefined') ? GLOSSARY.length : 0;
 
-    setText('[data-stat="complete-frac"]', stats.complete + ' / ' + stats.lessons);
-    setText('[data-stat="phases-frac"]', stats.completePhases + ' / ' + stats.phases);
-    setText('[data-stat="glossary-count"]', String(glossaryCount));
+    setText('[data-stat="complete-frac"]', formatCount(stats.complete) + ' / ' + formatCount(stats.lessons));
+    setText('[data-stat="phases-frac"]', formatCount(stats.completePhases) + ' / ' + formatCount(stats.phases));
+    setText('[data-stat="glossary-count"]', formatCount(glossaryCount));
     setBar('[data-bar="complete"]', pct);
     setBar('[data-bar="phases"]', phasePct);
     setBar('[data-bar="languages"]', 100);
@@ -346,7 +350,7 @@
       var pct = Math.round((userDone / p.lessons.length) * 100);
       if (progEl) {
         progEl.style.display = '';
-        progEl.innerHTML = '<span><strong class="modal-progress-count">' + userDone + '</strong> of ' + p.lessons.length + ' lessons complete</span><span class="modal-progress-pct">' + pct + '%</span>';
+        progEl.innerHTML = '<span><strong class="modal-progress-count">' + formatCount(userDone) + '</strong> of ' + countLabel(p.lessons.length, 'lesson', 'lessons') + ' complete</span><span class="modal-progress-pct">' + pct + '%</span>';
       }
       if (barEl && barFill) {
         barEl.style.display = '';
@@ -696,6 +700,15 @@
     for (var i = 0; i < rows.length; i++) {
       rows[i].style.setProperty('--stagger-delay', (i * 30) + 'ms');
     }
+  }
+
+  function formatCount(value) {
+    var n = Number(value) || 0;
+    try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+  }
+
+  function countLabel(value, singular, plural) {
+    return formatCount(value) + ' ' + (Number(value) === 1 ? singular : plural);
   }
 
   function escapeHtml(str) {

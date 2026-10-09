@@ -233,9 +233,9 @@
       totalLessons += stats.total;
       completedLessons += stats.done;
     }
-    setText('roadmapPhaseCount', String(PHASES.length));
-    setText('roadmapLessonCount', String(totalLessons));
-    setText('roadmapProgressCount', completedLessons + ' / ' + totalLessons);
+    setText('roadmapPhaseCount', formatCount(PHASES.length));
+    setText('roadmapLessonCount', formatCount(totalLessons));
+    setText('roadmapProgressCount', formatCount(completedLessons) + ' / ' + formatCount(totalLessons));
     var recommendation = recommendedPhase();
     setText('roadmapNextPhase', recommendation ? 'Phase ' + formatPhase(recommendation.id) : 'Complete');
   }
@@ -465,7 +465,7 @@
       return phaseMap[id] ? phaseMap[id].name : 'Phase ' + formatPhase(id);
     });
     var text = 'Phase ' + formatPhase(phase.id) + ': ' + phase.name + '. ' + state.label + '. ' +
-      progress.done + ' of ' + progress.total + ' lessons completed.';
+      formatCount(progress.done) + ' of ' + countLabel(progress.total, 'lesson', 'lessons') + ' completed.';
     text += requirements.length ? ' Direct prerequisites: ' + requirements.join(', ') + '.' : ' This is the starting phase.';
     text += unlocks.length ? ' Immediately unlocks: ' + unlocks.join(', ') + '.' : ' This is a final destination.';
     return text;
@@ -1061,7 +1061,7 @@
   function announceSelection(id) {
     var ancestors = Object.keys(getAncestors(id)).length;
     var descendants = Object.keys(getDescendants(id)).length;
-    setText('roadmapGraphStatus', 'Phase ' + formatPhase(id) + ' selected. ' + ancestors + ' prerequisite phases and ' + descendants + ' downstream phases highlighted.');
+    setText('roadmapGraphStatus', 'Phase ' + formatPhase(id) + ' selected. ' + countLabel(ancestors, 'prerequisite phase', 'prerequisite phases') + ' and ' + countLabel(descendants, 'downstream phase', 'downstream phases') + ' highlighted.');
   }
 
   function phaseState(id) {
@@ -1176,6 +1176,15 @@
   }
 
   function formatPhase(id) { return String(id).padStart(2, '0'); }
+
+  function formatCount(value) {
+    var n = Number(value) || 0;
+    try { return n.toLocaleString('en'); } catch (_) { return String(n); }
+  }
+
+  function countLabel(value, singular, plural) {
+    return formatCount(value) + ' ' + (Number(value) === 1 ? singular : plural);
+  }
 
   function setText(id, value) {
     var element = document.getElementById(id);
