@@ -3,7 +3,7 @@
 Canonical documentation: https://aiengineeringfromscratch.com/developer.html
 
 Search the public curriculum and read its original Markdown from your own tools.
-The API, MCP server, and CLI are read-only. They do not run lesson code, grade
+The API and MCP server are read-only. They do not run lesson code, grade
 learners, store progress, or access accounts.
 
 ## Authentication and access
@@ -145,23 +145,6 @@ official MCP Registry server schema. `/.well-known/mcp.json` is a discovery alia
 it does not imply publication in the MCP Registry or a universal discovery standard.
 The [transport specification](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports)
 defines the supported wire behavior.
-
-## CLI
-
-The official CLI source lives in
-[packages/cli](https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/packages/cli).
-With Node.js 20 or newer, run it from a clone:
-
-```bash
-node packages/cli/bin/aiefs.js search attention --limit 3
-node packages/cli/bin/aiefs.js read phases/00-setup-and-tooling/01-dev-environment
-node packages/cli/bin/aiefs.js schema
-```
-
-Search and schema print JSON; read prints Markdown (`--json` includes metadata).
-Errors go to stderr with a nonzero exit code. Use `--base-url` to test a preview
-deployment. The npm package is prepared for a maintainer-controlled release;
-this documentation does not claim it has been published.
 
 ## Identity and indexing
 

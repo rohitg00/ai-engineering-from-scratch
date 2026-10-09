@@ -48,7 +48,7 @@ function build() {
   }
   const llmsPath = path.join(__dirname, 'llms.txt');
   const llms = fs.readFileSync(llmsPath, 'utf8');
-  const discovery = `## API, MCP, and CLI\n\n- [AI Engineering from Scratch API docs](${ORIGIN}/docs): public read-only API, authentication policy, errors, quotas, and versioning.\n- [OpenAPI 3.1](${ORIGIN}/openapi.json): typed REST operations.\n- [MCP manifest](${ORIGIN}/server.json): connect using Streamable HTTP at ${ORIGIN}/mcp.\n- [CLI source and release instructions](${REPO}/tree/main/packages/cli): Node.js command-line client.\n\n`;
+  const discovery = `## API and MCP\n\n- [AI Engineering from Scratch API docs](${ORIGIN}/docs): public read-only API, authentication policy, errors, quotas, and versioning.\n- [OpenAPI 3.1](${ORIGIN}/openapi.json): typed REST operations.\n- [MCP manifest](${ORIGIN}/server.json): connect using Streamable HTTP at ${ORIGIN}/mcp.\n\n`;
   if (!llms.includes('## API, MCP, and CLI')) fs.writeFileSync(llmsPath, llms.replace(/\n\n/, '\n\n' + discovery));
   console.log(`Built ${entries.length} agent resources and ${new Set(Object.values(PAGES)).size} Markdown pages.`);
 }

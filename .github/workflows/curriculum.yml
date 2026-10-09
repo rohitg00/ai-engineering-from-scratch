@@ -47,7 +47,6 @@ on:
       - "site/**"
       - "api/**"
       - "lib/**"
-      - "packages/cli/**"
       - "scripts/test_agent_api.js"
       - "scripts/test_agent_wire.js"
       - "scripts/serve-agent-site.js"
@@ -100,7 +99,6 @@ on:
       - "site/**"
       - "api/**"
       - "lib/**"
-      - "packages/cli/**"
       - "scripts/test_agent_api.js"
       - "scripts/test_agent_wire.js"
       - "scripts/serve-agent-site.js"
@@ -148,8 +146,8 @@ jobs:
         run: node --test site/test_intelligence_check.js
       - name: build the static site
         run: node site/build.js && node site/build-projects.js --strict && node site/build-agents.js
-      - name: public API, MCP, and CLI contracts
-        run: node --test scripts/test_agent_api.js scripts/test_agent_wire.js packages/cli/test/*.js
+      - name: public API and MCP contracts
+        run: node --test scripts/test_agent_api.js scripts/test_agent_wire.js
       - name: dynamic lesson and certification routes preserve their public contracts
         run: node --test scripts/test_seo_routes.js
       - name: agent-facing discovery surfaces stay complete

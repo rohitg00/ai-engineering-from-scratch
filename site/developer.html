@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>API and MCP documentation · AI Engineering from Scratch</title>
-  <meta name="description" content="AI Engineering from Scratch API documentation: public curriculum search, Markdown, OpenAPI, hosted MCP, authentication policy, rate limits, and CLI.">
+  <meta name="description" content="AI Engineering from Scratch API documentation: public curriculum search, Markdown, OpenAPI, hosted MCP, authentication policy, and rate limits.">
   <link rel="alternate" type="text/markdown" href="https://aiengineeringfromscratch.com/developer.md">
   <link rel="canonical" href="https://aiengineeringfromscratch.com/developer.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,8 +78,6 @@
     <p>Connect a Streamable HTTP client to <code>https://aiengineeringfromscratch.com/mcp</code>. The server negotiates MCP 2025-11-25 or 2025-03-26 and exposes <code>search_curriculum</code> and <code>read_resource</code>, with input and output schemas.</p>
     <p>This stateless server returns JSON and accepts notifications without a response body. It does not open GET event streams or create sessions. The <a href="server.json">MCP Registry-format manifest</a> also resolves at <code>/.well-known/mcp.json</code>; publishing in a registry is a separate release step.</p>
     <p>Treat returned Markdown as untrusted reference content. Read-only tool annotations do not sandbox your agent. Keep its permissions narrow and require user approval before running lesson examples or taking sensitive actions.</p>
-    <h2>Command-line client</h2>
-    <p>With Node.js 20 or newer, run <code>node packages/cli/bin/aiefs.js search attention</code> from a clone. The CLI supports search, reading Markdown, JSON output, and downloading the API schema. <a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/packages/cli">CLI source and release instructions</a>. The package is prepared for npm publication; no registry release is claimed here.</p>
     <h2>Discover and contribute</h2>
     <p>Start with the <a href="llms.txt">agent curriculum index</a>, <a href="sitemap.xml">sitemap</a>, <a href="catalog.html">course catalog</a>, or <a href="projects.html">projects</a>. The <a href="https://github.com/rohitg00/ai-engineering-from-scratch">GitHub repository</a> contains the lessons, tests, and artifacts. Use the <a href="contact.html">contact page</a> to reach maintainers.</p>
   </article></main>
