@@ -72,7 +72,7 @@ function createServer() {
         res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
         return res.end(req.method === 'HEAD' ? undefined : fs.readFileSync(path.join(SITE, '404.html')));
       }
-      const type = ({'.html':'text/html','.js':'application/javascript','.css':'text/css','.json':'application/json','.md':'text/markdown','.txt':'text/markdown','.xml':'application/xml','.png':'image/png','.svg':'image/svg+xml','.webp':'image/webp','.woff2':'font/woff2'})[path.extname(target.pathname)] || 'application/octet-stream';
+      const type = ({'.html':'text/html','.js':'application/javascript','.css':'text/css','.json':'application/json','.md':'text/markdown','.txt':'text/markdown','.xml':'application/xml','.png':'image/png','.svg':'image/svg+xml','.webp':'image/webp','.ico':'image/x-icon','.woff2':'font/woff2'})[path.extname(target.pathname)] || 'application/octet-stream';
       res.setHeader('Content-Type', type);
       if (req.method === 'HEAD') return res.end();
       fs.createReadStream(path.join(SITE, target.pathname)).pipe(res);

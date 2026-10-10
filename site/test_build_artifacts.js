@@ -2476,3 +2476,30 @@ test('worst-case card text stays inside the frame and the title keeps three line
   assert.match(layout(cases[2]).header.left, /^LESSON 03\.01 · DISTRIBUTED .*…$/);
   assert.match(layout(cases[1]).header.right, /^TRANSLATION · PT-BR$/);
 });
+
+test('every page links a crawlable favicon that matches the generator', () => {
+  const root = path.resolve(__dirname, '..');
+  const favicons = require('../scripts/build-favicons.js');
+  const site = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-favicons-'));
+  try {
+    favicons.build(site);
+    for (const name of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png']) {
+      assert.ok(fs.readFileSync(path.join(__dirname, name)).equals(fs.readFileSync(path.join(site, name))), `${name} is out of date; run node scripts/build-favicons.js`);
+    }
+  } finally {
+    fs.rmSync(site, { recursive: true, force: true });
+  }
+  const icon = fs.readFileSync(path.join(__dirname, 'favicon.ico'));
+  assert.equal(icon.readUInt16LE(2), 1);
+  const sizes = Array.from({ length: icon.readUInt16LE(4) }, (_, index) => icon.readUInt8(6 + index * 16));
+  assert.deepEqual(sizes, [16, 32, 48]);
+  assert.equal(fs.readFileSync(path.join(__dirname, 'apple-touch-icon.png')).readUInt32BE(16), 180);
+  const sources = fs.readdirSync(__dirname).filter(name => name.endsWith('.html')).map(name => path.join(__dirname, name))
+    .concat(['build-hubs.js', 'build-manuals.js'].map(name => path.join(__dirname, name)));
+  for (const filename of sources) {
+    const source = fs.readFileSync(filename, 'utf8');
+    assert.match(source, /<link rel="icon" href="\/favicon\.ico" sizes="48x48">/, `${path.relative(root, filename)} must link /favicon.ico`);
+    assert.match(source, /<link rel="apple-touch-icon" href="\/apple-touch-icon\.png">/, `${path.relative(root, filename)} must link the touch icon`);
+    assert.doesNotMatch(source, /rel="icon" href="data:/, `${path.relative(root, filename)} must not inline its favicon`);
+  }
+});
