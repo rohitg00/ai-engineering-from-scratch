@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const { parseMd } = require('../site/lesson-markdown');
+const { representation } = require('../lib/agent-http');
+const { lessonDocumentSeo, seoTitleFor } = require('../lib/lesson-document');
+const { readTranslation: readTranslationFromSource, TRANSLATION_LANGUAGES, translationsOf, lessonUrl, NATIVE_NAMES, RTL_LANGUAGES, OG_LOCALES } = require('../lib/lesson-translations');
 
 const REPO_ROOT = path.join(__dirname, '..');
 const ORIGIN = 'https://aiengineeringfromscratch.com';
@@ -12,12 +15,14 @@ const LESSON_QUERY_NAMES = new Set(['path', 'track', 'fromTrack', 'learningPath'
 const LEARNING_PATH_ALIASES = Object.freeze({
   'mcp-engineering': 'model-context-protocol',
 });
+const PAGE_CACHE = 'public, max-age=0, s-maxage=86400, must-revalidate';
+const TRANSLATED_CACHE = 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800';
+const RETRY_CACHE = 'public, max-age=0, s-maxage=300, must-revalidate';
 
 let productionAssets;
 
 function loadProductionAssets() {
   if (!productionAssets) {
-    const languageRegistry = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'languages.json'), 'utf8'));
     const manifest = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'site', 'lesson-seo.json'), 'utf8'));
     productionAssets = {
       template: fs.readFileSync(path.join(REPO_ROOT, 'site', 'lesson.html'), 'utf8'),
@@ -25,11 +30,7 @@ function loadProductionAssets() {
       readMarkdown: function (lessonPath) {
         return fs.readFileSync(path.join(REPO_ROOT, lessonPath, 'docs', 'en.md'), 'utf8');
       },
-      languageCodes: Array.isArray(languageRegistry.languages)
-        ? languageRegistry.languages
-          .filter(function (language) { return language.source || language.ci; })
-          .map(function (language) { return String(language.code || ''); }).filter(Boolean)
-        : [],
+      languageCodes: ['en'].concat(TRANSLATION_LANGUAGES),
     };
   }
   return productionAssets;
@@ -116,10 +117,6 @@ function listedValue(values, value) {
   return Array.isArray(values) && values.includes(value);
 }
 
-function canonicalForLesson(lessonPath) {
-  return `${ORIGIN}/lesson?path=${encodeURIComponent(lessonPath)}`;
-}
-
 function replaceMarkedRegion(template, start, end, content) {
   const startIndex = template.indexOf(start);
   const endIndex = template.indexOf(end);
@@ -173,10 +170,40 @@ function lessonReference(ref) {
   };
 }
 
-function lessonHead(entry, lessonPath, heading) {
-  const canonical = canonicalForLesson(lessonPath);
-  const title = entry.seoTitle || `${entry.title} - AI Engineering from Scratch`;
-  const description = entry.description || entry.excerpt || 'A lesson from the AI Engineering from Scratch curriculum.';
+function lessonAlternates(entry, lessonPath) {
+  if (!entry.context || entry.context.kind !== 'course') return [];
+  const english = lessonUrl(lessonPath);
+  return [{ lang: 'en', href: english }, { lang: 'x-default', href: english }]
+    .concat(translationsOf(entry).map(lang => ({ lang, href: lessonUrl(lessonPath, lang) })));
+}
+
+function pageInfo(entry, lessonPath, heading, lang, markdown) {
+  const alternates = lessonAlternates(entry, lessonPath);
+  if (lang === 'en') {
+    return {
+      lang,
+      heading,
+      title: entry.seoTitle || `${entry.title} - AI Engineering from Scratch`,
+      description: entry.description || entry.excerpt || 'A lesson from the AI Engineering from Scratch curriculum.',
+      canonical: lessonUrl(lessonPath),
+      alternates,
+    };
+  }
+  const document = lessonDocumentSeo(markdown, entry.title);
+  const translatedHeading = document.title + (heading.startsWith(entry.title) ? heading.slice(entry.title.length) : '');
+  return {
+    lang,
+    heading: translatedHeading,
+    title: seoTitleFor(translatedHeading),
+    description: document.description,
+    canonical: lessonUrl(lessonPath, lang),
+    original: lessonUrl(lessonPath),
+    alternates,
+  };
+}
+
+function lessonHead(entry, page) {
+  const { canonical, title, description, heading } = page;
   const courseName = contextLabel(entry.context);
   const breadcrumbParent = entry.context && entry.context.kind === 'certification'
     ? { name: 'Certifications', url: `${ORIGIN}/certifications.html` }
@@ -191,7 +218,8 @@ function lessonHead(entry, lessonPath, heading) {
         description,
         url: canonical,
         mainEntityOfPage: canonical,
-        inLanguage: 'en',
+        inLanguage: page.lang,
+        ...(page.original ? { translationOfWork: { '@type': 'LearningResource', url: page.original } } : {}),
         isAccessibleForFree: true,
         isPartOf: {
           '@type': 'Course',
@@ -220,13 +248,14 @@ function lessonHead(entry, lessonPath, heading) {
     `  <meta property="og:description" content="${escapeHtml(description)}">`,
     `  <meta property="og:image" content="${ORIGIN}/og-image.png?v=4">`,
     `  <meta property="og:url" content="${escapeHtml(canonical)}">`,
+    OG_LOCALES[page.lang] ? `  <meta property="og:locale" content="${escapeHtml(OG_LOCALES[page.lang])}">` : '',
     '  <meta property="og:type" content="article">',
     '  <meta name="twitter:card" content="summary_large_image">',
     `  <meta name="twitter:title" content="${escapeHtml(title)}">`,
     `  <meta name="twitter:description" content="${escapeHtml(description)}">`,
     `  <meta name="twitter:image" content="${ORIGIN}/og-image.png?v=4">`,
     `  <script type="application/ld+json" id="lessonJsonLd">${jsonForHtml(jsonLd)}</script>`,
-  ].join('\n');
+  ].concat(page.alternates.map(alternate => `  <link rel="alternate" hreflang="${escapeHtml(alternate.lang)}" href="${escapeHtml(alternate.href)}">`)).filter(Boolean).join('\n');
 }
 
 function lessonHref(ref, contextParams) {
@@ -238,19 +267,33 @@ function lessonHref(ref, contextParams) {
   return `/lesson?${params.toString().replace(/&/g, '&amp;')}`;
 }
 
-function lessonBody(assets, lessonPath, heading) {
+function readEnglishMarkdown(assets, lessonPath) {
   if (typeof assets.readMarkdown !== 'function') return null;
   try {
     const markdown = assets.readMarkdown(lessonPath);
-    if (!markdown.trim()) return null;
-    const html = `<h1>${escapeHtml(heading)}</h1>` + parseMd(markdown).replace(/<h1 id="[^"]*">[\s\S]*?<\/h1>/, '');
-    return { markdown, html };
+    return markdown.trim() ? markdown : null;
   } catch (_) {
     return null;
   }
 }
 
-function lessonFallback(entry, lessonPath, contextParams, heading, body) {
+function renderBody(markdown, heading) {
+  if (!markdown) return null;
+  return { markdown, html: `<h1>${escapeHtml(heading)}</h1>` + parseMd(markdown).replace(/<h1 id="[^"]*">[\s\S]*?<\/h1>/, '') };
+}
+
+function languageLinks(page, lessonPath, contextParams) {
+  const languages = page.alternates.map(alternate => alternate.lang).filter(lang => lang !== 'x-default');
+  if (languages.length < 2) return '';
+  return `          <nav class="lesson-languages" aria-label="Read this lesson in another language">${languages.map(lang => {
+    const href = lessonHref({ path: lessonPath }, Object.assign({}, contextParams, { lang: lang === 'en' ? '' : lang }));
+    const current = lang === page.lang ? ' aria-current="page"' : '';
+    return `<a href="${href}" hreflang="${escapeHtml(lang)}" lang="${escapeHtml(lang)}"${current}>${escapeHtml(NATIVE_NAMES[lang] || lang)}</a>`;
+  }).join(' ')}</nav>`;
+}
+
+function lessonFallback(entry, lessonPath, contextParams, page, body) {
+  const heading = page.heading;
   const trackId = contextParams && contextParams.track;
   const trackNavigation = trackId && entry.navigationByTrack && entry.navigationByTrack[trackId];
   const navigation = trackNavigation || entry;
@@ -272,7 +315,7 @@ function lessonFallback(entry, lessonPath, contextParams, heading, body) {
     entry.description && entry.description !== excerpt ? `          <p>${escapeHtml(entry.description)}</p>` : '',
   ];
   const embedded = body && !certification
-    ? `        <script type="application/json" id="lessonMarkdown">${jsonForHtml({ path: lessonPath, markdown: body.markdown })}</script>`
+    ? `        <script type="application/json" id="lessonMarkdown">${jsonForHtml({ path: lessonPath, lang: page.lang, markdown: body.markdown })}</script>`
     : '';
 
   return [
@@ -282,6 +325,7 @@ function lessonFallback(entry, lessonPath, contextParams, heading, body) {
     ...summary,
     `          <p>This free lesson is part of the AI Engineering from Scratch curriculum. Read the full explanation, run the lesson code, and verify the result in the interactive reader or from the repository source.</p>`,
     '          <p><a href="catalog.html">Browse the complete course catalog</a>' + (sourceUrl ? ` or <a href="${escapeHtml(sourceUrl)}">open this lesson on GitHub</a>` : '') + '.</p>',
+    languageLinks(page, lessonPath, contextParams),
     links.length ? `          <nav class="lesson-nav-bottom" aria-label="Lesson navigation">${links.join('')}</nav>` : '',
     '        </article>',
     embedded,
@@ -292,10 +336,10 @@ function errorPage(title, message) {
   return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="robots" content="noindex"><title>${escapeHtml(title)} - AI Engineering from Scratch</title></head><body><main><h1>${escapeHtml(title)}</h1><p>${escapeHtml(message)}</p><nav aria-label="Recovery links"><ul><li><a href="/catalog.html">Course catalog</a></li><li><a href="/sitemap.xml">Sitemap</a></li><li><a href="/llms.txt">Agent curriculum index</a></li></ul></nav></main></body></html>`;
 }
 
-function send(res, method, status, body, cacheControl) {
+function send(res, method, status, body, cacheControl, type = 'text/html') {
   const payload = String(body || '');
   res.statusCode = status;
-  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('Content-Type', `${type}; charset=utf-8`);
   res.setHeader('Cache-Control', cacheControl);
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Content-Length', String(Buffer.byteLength(payload)));
@@ -382,13 +426,26 @@ function normalizedLessonLocation(req, lessonPath, entry, assets) {
 
 function sendRedirect(res, method, location) {
   res.setHeader('Location', location);
-  send(res, method, 308, '', 'public, max-age=0, s-maxage=86400, must-revalidate');
+  send(res, method, 308, '', PAGE_CACHE);
+}
+
+function localizedTemplate(template, lang) {
+  if (lang === 'en') return template;
+  if ((template.match(/<html lang="en"/g) || []).length !== 1) throw new Error('template-html-lang');
+  return template.replace('<html lang="en"', `<html lang="${escapeHtml(lang)}" dir="${RTL_LANGUAGES.has(lang) ? 'rtl' : 'ltr'}"`);
+}
+
+function sendUnavailable(res, method) {
+  send(res, method, 500, errorPage('Lesson page unavailable', 'The lesson page could not be assembled. Continue from the course catalog while this page is restored.'), 'no-store');
 }
 
 function createHandler(options) {
   const loadAssets = options && typeof options.loadAssets === 'function'
     ? options.loadAssets
     : loadProductionAssets;
+  const readTranslation = options && typeof options.readTranslation === 'function'
+    ? options.readTranslation
+    : readTranslationFromSource;
   return function lessonHandler(req, res) {
     const method = String(req.method || 'GET').toUpperCase();
     if (method !== 'GET' && method !== 'HEAD') {
@@ -418,7 +475,7 @@ function createHandler(options) {
       const normalized = normalizedLessonLocation(req, lessonPath, entry, assets);
       if (normalized.needsRedirect) {
         res.setHeader('Location', normalized.location);
-        send(res, method, 308, '', 'public, max-age=0, s-maxage=86400, must-revalidate');
+        send(res, method, 308, '', PAGE_CACHE);
         return;
       }
       const contextParams = {};
@@ -426,13 +483,35 @@ function createHandler(options) {
         if (normalized.params.has(name)) contextParams[name] = normalized.params.get(name);
       }
       const heading = lessonHeading(entry, manifest);
-      const translated = contextParams.lang && contextParams.lang !== 'en';
-      const body = translated ? null : lessonBody(assets, lessonPath, heading);
-      let html = replaceMarkedRegion(template, SEO_START, SEO_END, lessonHead(entry, lessonPath, heading));
-      html = replaceMarkedRegion(html, FALLBACK_START, FALLBACK_END, lessonFallback(entry, lessonPath, contextParams, heading, body));
-      send(res, method, 200, html, 'public, max-age=0, s-maxage=86400, must-revalidate');
+      const english = readEnglishMarkdown(assets, lessonPath);
+      const markdownRequested = representation(req.headers && req.headers.accept) === 'text/markdown';
+      const respond = function (markdown, servedLang, cacheControl) {
+        res.setHeader('Vary', 'Accept, Accept-Encoding');
+        res.setHeader('Content-Language', servedLang);
+        if (markdownRequested && markdown) {
+          send(res, method, 200, markdown, cacheControl, 'text/markdown');
+          return;
+        }
+        const page = pageInfo(entry, lessonPath, heading, servedLang, markdown);
+        const body = renderBody(markdown, page.heading);
+        const html = replaceMarkedRegion(localizedTemplate(template, servedLang), SEO_START, SEO_END, lessonHead(entry, page));
+        send(res, method, 200, replaceMarkedRegion(html, FALLBACK_START, FALLBACK_END, lessonFallback(entry, lessonPath, contextParams, page, body)), cacheControl);
+      };
+      const lang = contextParams.lang;
+      if (!translationsOf(entry).includes(lang)) {
+        respond(english, 'en', PAGE_CACHE);
+        return;
+      }
+      return Promise.resolve()
+        .then(function () { return readTranslation(lang, lessonPath); })
+        .catch(function () { return null; })
+        .then(function (markdown) {
+          if (typeof markdown === 'string' && markdown.trim() && markdown !== english) respond(markdown, lang, TRANSLATED_CACHE);
+          else respond(english, 'en', RETRY_CACHE);
+        })
+        .catch(function () { sendUnavailable(res, method); });
     } catch (_) {
-      send(res, method, 500, errorPage('Lesson page unavailable', 'The lesson page could not be assembled. Continue from the course catalog while this page is restored.'), 'no-store');
+      sendUnavailable(res, method);
     }
   };
 }

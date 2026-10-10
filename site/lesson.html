@@ -2649,7 +2649,7 @@
 
   <script src="build-meta.js"></script>
   <script src="langs.js?v=20260802a"></script>
-  <script src="lang-picker.js?v=20260925a"></script>
+  <script src="lang-picker.js?v=20261010a"></script>
   <script src="data.js?v=20260821c"></script>
   <script>
     (function () {
@@ -3598,8 +3598,9 @@
         }
       }
 
-      function embeddedLessonMarkdown(path) {
-        if (!embeddedLesson || embeddedLesson.path !== path || ACTIVE_REF !== 'main') return null;
+      function embeddedLessonMarkdown(path, lang) {
+        if (!embeddedLesson || embeddedLesson.path !== path || (embeddedLesson.lang || 'en') !== lang) return null;
+        if (lang === 'en' && ACTIVE_REF !== 'main') return null;
         return embeddedLesson.markdown;
       }
 
@@ -3659,9 +3660,9 @@
             .catch(function () { return null; });
         }
         var quizPromiseForRequest = lessonQuizPromise;
-        var embeddedMarkdown = lang === 'en' ? embeddedLessonMarkdown(path) : null;
+        var embeddedMarkdown = embeddedLessonMarkdown(path, lang);
         var lessonDocument = embeddedMarkdown !== null
-          ? Promise.resolve({ markdown: embeddedMarkdown, lang: 'en' })
+          ? Promise.resolve({ markdown: embeddedMarkdown, lang: lang })
           : fetchLessonDocument(lang, enPath, translatedUrl);
 
         lessonDocument
@@ -3728,7 +3729,8 @@
       function updateLessonSeo(title, md) {
         var ORIGIN = 'https://aiengineeringfromscratch.com';
         var path = new URLSearchParams(location.search).get('path') || '';
-        var url = ORIGIN + '/lesson?path=' + encodeURIComponent(path);
+        var alternate = document.querySelector('link[rel="alternate"][hreflang="' + (document.documentElement.lang || 'en') + '"]');
+        var url = alternate ? alternate.href : ORIGIN + '/lesson?path=' + encodeURIComponent(path);
         var contextTrack = certificationContextTrack();
         var desc = lessonDescription(md);
         var courseName = certificationLesson

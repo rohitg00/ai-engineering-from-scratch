@@ -1,3 +1,5 @@
+const { readBounded } = require('../lib/read-bounded');
+
 const SOURCE = 'https://rohitghumare.com';
 const ARTICLE_PATH = /^\/(blog|guides)\/[a-z0-9][a-z0-9-]*\/$/;
 const TTL = 5 * 60 * 1000;
@@ -28,25 +30,6 @@ function validateFeed(feed) {
     return entry;
   });
   return items.sort((a, b) => (b.datePublished || '').localeCompare(a.datePublished || '') || a.title.localeCompare(b.title));
-}
-
-async function readBounded(response, maxBytes) {
-  if (Number(response.headers.get('content-length')) > maxBytes) throw new Error('Writing response too large');
-  const reader = response.body.getReader();
-  const chunks = [];
-  let size = 0;
-  try {
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      size += value.byteLength;
-      if (size > maxBytes) throw new Error('Writing response too large');
-      chunks.push(Buffer.from(value));
-    }
-    return Buffer.concat(chunks).toString('utf8');
-  } finally {
-    await reader.cancel();
-  }
 }
 
 function createPortfolioSource({ fetchImpl = fetch, now = Date.now, ttl = TTL, staleTtl = 24 * 60 * 60 * 1000 } = {}) {
@@ -95,7 +78,7 @@ function createPortfolioSource({ fetchImpl = fetch, now = Date.now, ttl = TTL, s
     if (!response.ok || !response.headers.get('content-type')?.includes(type)) {
       throw new Error('Writing source unavailable');
     }
-    return readBounded(response, maxBytes);
+    return readBounded(response, maxBytes, 'Writing response too large');
   }
 
   return {
