@@ -1,0 +1,78 @@
+{
+  "lesson": "03-multi-head-attention",
+  "title": "Multi-Head Attention",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "With d_model = 512 and 8 equal heads, what is d_head?",
+      "options": [
+        "8 dimensions per head",
+        "128 dimensions per head",
+        "512 dimensions per head",
+        "64 dimensions per head"
+      ],
+      "correct": 3,
+      "explanation": "Equal heads divide the model width: d_head = 512 ÷ 8 = 64 dimensions. A 128-dimensional head would use 8 × 128 = 1,024 dimensions, twice the stated model width."
+    },
+    {
+      "stage": "check",
+      "question": "What shape does each attention head produce before the heads are concatenated?",
+      "options": [
+        "(N, d_head)",
+        "(d_model, n_heads)",
+        "(N, N, d_model)",
+        "(n_heads, N, d_model)"
+      ],
+      "correct": 0,
+      "explanation": "Each head attends over N token positions and returns one d_head-wide vector per position, so its output is (N, d_head). The N × N attention matrix contains weights; summing weighted values removes that middle position axis."
+    },
+    {
+      "stage": "check",
+      "question": "After head outputs are concatenated, what does the learned W_o projection do?",
+      "options": [
+        "Adds positional embeddings before attention begins",
+        "Splits each head into separate key and value streams",
+        "Applies a different softmax to every token label",
+        "Mixes information across the concatenated heads"
+      ],
+      "correct": 3,
+      "explanation": "After concatenating head outputs, W_o applies a learned projection across the full d_model width, allowing information from different heads to mix. Positional embeddings enter before attention; W_o is not where they are added."
+    },
+    {
+      "stage": "check",
+      "question": "At the same sequence length and per-head width, a model uses 64 query heads and 8 KV heads. By what factor can GQA shrink KV-cache storage versus MHA?",
+      "options": [
+        "56 times smaller",
+        "8 times smaller",
+        "16 times smaller",
+        "4 times smaller"
+      ],
+      "correct": 1,
+      "explanation": "KV-cache storage is proportional to the number of stored key/value heads, so the ratio is 64 ÷ 8 = 8×. The value 56 is the difference in head counts, not the storage factor."
+    },
+    {
+      "stage": "post",
+      "question": "Inference memory is dominated by stored key/value states. Which attention variant is the direct fit in the lesson?",
+      "options": [
+        "A wider feed-forward layer with more parameters",
+        "Multi-head attention with one KV pair per query",
+        "Grouped-query attention with fewer KV heads",
+        "A larger output projection after concatenation"
+      ],
+      "correct": 2,
+      "explanation": "GQA shares fewer key/value heads across query heads, directly reducing the states that inference must store. Multi-head attention with one KV pair per query stores a KV pair for every query head, so it does not address cache-dominated memory."
+    },
+    {
+      "stage": "post",
+      "question": "A head-splitting implementation receives d_model = 510 and n_heads = 8. What should happen?",
+      "options": [
+        "Reject the configuration because the width does not divide evenly",
+        "Pad each head to 64 dimensions without changing the input",
+        "Run one attention head with a larger output projection",
+        "Treat the remaining six dimensions as an extra head"
+      ],
+      "correct": 0,
+      "explanation": "Equal-width splitting requires d_model/n_heads to be an integer, but 510 ÷ 8 = 63.75. The implementation asserts divisibility; padding to 64 changes the input width and is not an implicit split operation."
+    }
+  ]
+}
