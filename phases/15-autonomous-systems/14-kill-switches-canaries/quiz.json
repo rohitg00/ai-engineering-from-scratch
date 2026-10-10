@@ -1,0 +1,78 @@
+{
+  "lesson": "14-kill-switches-canaries",
+  "title": "Kill Switches, Circuit Breakers, and Canary Tokens",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An agent can spend safely within budget but still publish the wrong post. Which control family addresses actions rather than cost?",
+      "options": [
+        "Kill switches, circuit breakers, and canary tokens",
+        "Provider aliases and semantic caches",
+        "Prompt templates and model-version labels",
+        "Per-request token caps and monthly spend limits"
+      ],
+      "correct": 0,
+      "explanation": "Cost caps limit what the agent spends, while kill switches, breakers, and canaries stop or expose unsafe behavior inside that budget. A token limit cannot tell whether a cheap action publishes the wrong content."
+    },
+    {
+      "stage": "check",
+      "question": "Where should a kill switch live so the agent cannot disable it itself?",
+      "options": [
+        "In a file the agent edits during each run",
+        "In a mutable variable in the agent's own prompt",
+        "In the last message of the shared conversation",
+        "In a system outside the agent's write permissions"
+      ],
+      "correct": 3,
+      "explanation": "Keep the kill switch in a system outside the agent’s write permissions and check it before consequential actions. If the agent can edit the file or prompt containing the switch, it can re-enable itself."
+    },
+    {
+      "stage": "check",
+      "question": "A circuit breaker reaches the open state after repeated failures. What is the usual next state after a cool-down?",
+      "options": [
+        "Half-open, allowing a small number of probe attempts",
+        "Open forever, with no recovery path",
+        "Deleted, requiring a new workflow to start",
+        "Closed, allowing unlimited retries immediately"
+      ],
+      "correct": 0,
+      "explanation": "After a cool-down, half-open permits a small probe to test whether the path recovered; success can close the breaker and failure reopens it. Returning immediately to unlimited closed operation can restart a failing path."
+    },
+    {
+      "stage": "check",
+      "question": "What makes an effective canary token for an agent workflow?",
+      "options": [
+        "A common file required for every normal task",
+        "A real production key that grants broad access to the agent",
+        "A fake credential or record the agent has no legitimate reason to touch",
+        "A benchmark label hidden from the evaluator"
+      ],
+      "correct": 2,
+      "explanation": "A canary is a fake credential or record the agent has no legitimate reason to touch, so access itself raises suspicion. A real production key creates actual privilege and exposure instead of harmless detection."
+    },
+    {
+      "stage": "post",
+      "question": "An EWMA detector adapts to gradually changing tool-call rates. What failure can that adaptation create?",
+      "options": [
+        "Slow adversarial drift may become the accepted baseline",
+        "It necessarily catches every gradual distribution shift",
+        "It guarantees a fixed limit never changes",
+        "It prevents an agent from editing detector state"
+      ],
+      "correct": 0,
+      "explanation": "An EWMA adapts to recent rates, so a patient attacker can shift behavior slowly until the detector treats it as normal. A hard limit stays fixed and catches a different class of drift."
+    },
+    {
+      "stage": "post",
+      "question": "A sequence reads a secret, writes it to a file, then pushes it publicly; each action passes a local detector. What gap does this show?",
+      "options": [
+        "A canary token always detects every data transfer",
+        "A kill switch only works before an agent starts",
+        "A circuit breaker validates the meaning of each file",
+        "A semantic attack can compose from individually allowed actions"
+      ],
+      "correct": 3,
+      "explanation": "A semantic attack can combine allowed reads and writes into an unsafe outcome although each local action passes. A canary detects access to its planted bait, but cannot guarantee detection of every ordinary-looking transfer."
+    }
+  ]
+}
