@@ -13,11 +13,11 @@
 
 무료이며 오픈 소스이고 MIT 라이선스로 제공됩니다. 웹사이트에서, 코딩 에이전트와 함께, 또는 로컬 코드를 실행하며 배우세요.
 
-> 523 수업. 20단계. Python, TypeScript, Rust, Julia.
+> 528 수업. 20단계. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT 라이선스"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 수업"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 수업"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20단계"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub 별"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="웹사이트"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## 학습 경로 선택
 
-시작하기 전에 523개 레슨을 모두 훑어볼 필요는 없습니다. 목표 하나를 고르세요. 각 링크는 GitHub 또는 웹사이트에서 같은 교육과정을 엽니다. 두 버전 모두 같은 레슨 코드를 사용합니다.
+시작하기 전에 528개 레슨을 모두 훑어볼 필요는 없습니다. 목표 하나를 고르세요. 각 링크는 GitHub 또는 웹사이트에서 같은 교육과정을 엽니다. 두 버전 모두 같은 레슨 코드를 사용합니다.
 
 | 목표 | GitHub에서 학습 | 웹사이트에서 학습 |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 총 20단계입니다. 각 단계를 클릭하면 레슨 목록이 펼쳐집니다.
 
 <a id="phase-0"></a>
-### 0단계: 설정 및 도구 `12개 레슨`
+### 0단계: 설정 및 도구 `13개 레슨`
 
 > 앞으로 진행할 모든 내용을 위해 개발 환경을 준비하세요.
 
@@ -348,6 +348,7 @@ flowchart TB
 | 10 | [터미널과 셸](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | 학습 | — |
 | 11 | [AI를 위한 Linux](../../phases/00-setup-and-tooling/11-linux-for-ai/) | 학습 | — |
 | 12 | [디버깅과 프로파일링](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | 구현 | Python |
+| 13 | [AI 엔지니어링을 위한 Python](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | 구현 | Python |
 
 <details id="phase-1">
 <summary><b>1단계 — 수학 기초</b> &nbsp;<code>22 개 레슨</code>&nbsp; <em>코드를 통해 모든 AI 알고리즘의 바탕이 되는 직관을 익힙니다.</em></summary>
@@ -381,7 +382,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>2단계 — 머신러닝 기초</b> &nbsp;<code>18 개 레슨</code>&nbsp; <em>고전 머신러닝은 오늘날에도 대부분의 프로덕션 AI를 뒷받침합니다.</em></summary>
+<summary><b>2단계 — 머신러닝 기초</b> &nbsp;<code>21 개 레슨</code>&nbsp; <em>고전 머신러닝은 오늘날에도 대부분의 프로덕션 AI를 뒷받침합니다.</em></summary>
 <br/>
 
 | # | 레슨 | 유형 | 언어 |
@@ -404,6 +405,9 @@ flowchart TB
 | 16 | [이상 탐지](../../phases/02-ml-fundamentals/16-anomaly-detection/) | 구현 | Python |
 | 17 | [불균형 데이터 처리](../../phases/02-ml-fundamentals/17-imbalanced-data/) | 구현 | Python |
 | 18 | [특성 선택](../../phases/02-ml-fundamentals/18-feature-selection/) | 구현 | Python |
+| 19 | [머신러닝 시스템 설계: 문제 정의부터 배포된 모델까지](../../phases/02-ml-fundamentals/19-ml-system-design/) | 구현 | Python |
+| 20 | [프로덕션 모델 모니터링: 데이터 드리프트와 개념 드리프트](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | 구현 | Python |
+| 21 | [특성 저장소와 학습-서빙 불일치](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | 구현 | Python |
 
 </details>
 
@@ -870,7 +874,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>17단계 — 인프라 및 프로덕션</b> &nbsp;<code>28 개 레슨</code>&nbsp; <em>AI를 실제 환경에 배포합니다.</em></summary>
+<summary><b>17단계 — 인프라 및 프로덕션</b> &nbsp;<code>29 개 레슨</code>&nbsp; <em>AI를 실제 환경에 배포합니다.</em></summary>
 <br/>
 
 | # | 레슨 | 유형 | 언어 |
@@ -903,6 +907,7 @@ flowchart TB
 | 26 | [컴플라이언스: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | 학습 | Python |
 | 27 | [LLM FinOps: 단위 경제성과 멀티 테넌트 비용 귀속](../../phases/17-infrastructure-and-production/27-finops-llms/) | 학습 | Python |
 | 28 | [셀프 호스팅 서빙 선택: 엔진을 하드웨어와 규모에 맞추기](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | 학습 | Python |
+| 29 | [모델 데모 인터페이스: 함수에서 공유 가능한 앱까지](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | 구현 | Python |
 
 </details>
 
@@ -1143,7 +1148,7 @@ flowchart LR
 <details>
 <summary>수업 산출물 설치</summary>
 
-**레슨 산출물.** 저장소의 `phases/**/outputs/`에는 스킬 396개와 프롬프트 99개가 있습니다. `scripts/install_skills.py`로 설치할 수 있으며 저장소 복제가 필요합니다. 태그 필터, 드라이런, 에이전트별 레이아웃을 지원합니다.
+**레슨 산출물.** 저장소의 `phases/**/outputs/`에는 스킬 400개와 프롬프트 100개가 있습니다. `scripts/install_skills.py`로 설치할 수 있으며 저장소 복제가 필요합니다. 태그 필터, 드라이런, 에이전트별 레이아웃을 지원합니다.
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1263,7 +1268,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b>명 독자 &nbsp;·&nbsp; <b>181,995</b> 지난 30일간 페이지 조회수 &nbsp;·&nbsp; 2026-08-29 기준</sub></p>
 <!-- STATS:END -->
 
-무료, MIT 라이선스, 523개 레슨. 이 작업을 가능하게 해 주는 후원사와 후원자 여러분께 감사드립니다. [모든 후원사와 후원자 보기](../../BACKERS.md).
+무료, MIT 라이선스, 528개 레슨. 이 작업을 가능하게 해 주는 후원사와 후원자 여러분께 감사드립니다. [모든 후원사와 후원자 보기](../../BACKERS.md).
 
 이 작업을 지원하려면 [후원 옵션](../../SPONSORS.md)과 [하드웨어 후원](../../SPONSORS.md#hardware-lab-partner)을 확인하거나 [GitHub에서 후원](https://github.com/sponsors/rohitg00)하세요.
 

@@ -7,7 +7,7 @@
 //
 // References:
 //   OpenAI function-calling   https://platform.openai.com/docs/guides/function-calling
-//   Anthropic tool-use        https://docs.anthropic.com/en/docs/build-with-claude/tool-use
+//   Anthropic tool-use        https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
 //   JSON Schema 2020-12       https://json-schema.org/draft/2020-12
 //
 // Run: npx tsx code/main.ts

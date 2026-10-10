@@ -13,11 +13,11 @@ Implementează mecanismele interne ale modelelor, fluxurile de regăsire a infor
 
 Gratuit, cu sursă deschisă, licență MIT. Învață pe site, cu un agent de programare sau rulând cod local.
 
-> 523 de lecții. 20 de etape. Python, TypeScript, Rust, Julia.
+> 528 de lecții. 20 de etape. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licență MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 de lecții"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 de lecții"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 de etape"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Stele GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Site web"></a>
@@ -246,7 +246,7 @@ Căile din comenzile paginilor de lecție pornesc de la rădăcina depozitului, 
 
 ## Alege un traseu de învățare
 
-Nu trebuie să parcurgi toate cele 523 de lecții înainte să începi. Alege un obiectiv. Fiecare link deschide același program pe GitHub sau pe site, iar ambele versiuni folosesc același cod al lecțiilor.
+Nu trebuie să parcurgi toate cele 528 de lecții înainte să începi. Alege un obiectiv. Fiecare link deschide același program pe GitHub sau pe site, iar ambele versiuni folosesc același cod al lecțiilor.
 
 | Obiectivul tău | Învață pe GitHub | Învață pe site |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 
 <a id="phase-0"></a>
-### Etapa 0: Configurare și instrumente `12 lecții`
+### Etapa 0: Configurare și instrumente `13 lecții`
 > Pregătește-ți mediul pentru tot ce urmează.
 
 | # | Lecție | Tip | Limbaj |
@@ -347,6 +347,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 10 | [Terminalul și interpretorul de comenzi](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Învață | — |
 | 11 | [Linux pentru AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Învață | — |
 | 12 | [Depanarea și profilarea](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Construiește | Python |
+| 13 | [Python pentru ingineria AI](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Construiește | Python |
 
 <details id="phase-1">
 <summary><b>Etapa 1: Fundamente matematice</b> &nbsp;<code>22 lecții</code>&nbsp; <em>Intuiția din spatele fiecărui algoritm AI, prin cod.</em></summary>
@@ -380,7 +381,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 </details>
 
 <details id="phase-2">
-<summary><b>Etapa 2: Bazele ML</b> &nbsp;<code>18 lecții</code>&nbsp; <em>ML clasic: încă baza majorității AI din producție.</em></summary>
+<summary><b>Etapa 2: Bazele ML</b> &nbsp;<code>21 lecții</code>&nbsp; <em>ML clasic: încă baza majorității AI din producție.</em></summary>
 <br/>
 
 | # | Lecție | Tip | Limbaj |
@@ -403,6 +404,9 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 16 | [Detectarea anomaliilor](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Construiește | Python |
 | 17 | [Gestionarea datelor dezechilibrate](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Construiește | Python |
 | 18 | [Selectarea caracteristicilor](../../phases/02-ml-fundamentals/18-feature-selection/) | Construiește | Python |
+| 19 | [Proiectarea sistemelor ML: de la problemă la modelul în producție](../../phases/02-ml-fundamentals/19-ml-system-design/) | Construiește | Python |
+| 20 | [Monitorizarea modelelor în producție: deriva datelor și deriva conceptului](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Construiește | Python |
+| 21 | [Depozite de caracteristici și decalajul dintre antrenare și servire](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Construiește | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 </details>
 
 <details id="phase-17">
-<summary><b>Etapa 17: Infrastructură și producție</b> &nbsp;<code>28 lecții</code>&nbsp; <em>Livrează AI în lumea reală.</em></summary>
+<summary><b>Etapa 17: Infrastructură și producție</b> &nbsp;<code>29 lecții</code>&nbsp; <em>Livrează AI în lumea reală.</em></summary>
 <br/>
 
 | # | Lecție | Tip | Limbaj |
@@ -902,6 +906,7 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 26 | [Conformitate: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Învață | Python |
 | 27 | [FinOps pentru LLM: economie unitară și atribuirea costurilor per client](../../phases/17-infrastructure-and-production/27-finops-llms/) | Învață | Python |
 | 28 | [Alegerea inferenței autogăzduite: potrivirea motorului cu hardware-ul și scara](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Învață | Python |
+| 29 | [Interfețe demo pentru modele: de la o funcție la o aplicație care poate fi partajată](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Construiește | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ Alte cursuri se încheie cu *„felicitări, ai învățat X”*. Aici, fiecare 
 <details>
 <summary>Instalează artefactele lecțiilor</summary>
 
-**Rezultatele lecțiilor.** Depozitul livrează 396 de abilități și 99 de prompturi în `phases/**/outputs/`; instalează-le prin `scripts/install_skills.py`. Necesită clonarea depozitului. Acceptă filtre de etichete, rulări de probă și organizări per agent:
+**Rezultatele lecțiilor.** Depozitul livrează 400 de abilități și 100 de prompturi în `phases/**/outputs/`; instalează-le prin `scripts/install_skills.py`. Necesită clonarea depozitului. Acceptă filtre de etichete, rulări de probă și organizări per agent:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ Codul de ieșire este diferit de zero când o regulă eșuează. Regulile L001�
 <p align="center"><sub><b>114,584</b> cititori &nbsp;·&nbsp; <b>181,995</b> vizualizări de pagini în ultimele 30 de zile &nbsp;·&nbsp; la 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Gratuit, cu licență MIT, 523 de lecții. Mulțumim sponsorilor și susținătorilor care fac posibilă această muncă. [Vezi toți sponsorii și susținătorii](../../BACKERS.md).
+Gratuit, cu licență MIT, 528 de lecții. Mulțumim sponsorilor și susținătorilor care fac posibilă această muncă. [Vezi toți sponsorii și susținătorii](../../BACKERS.md).
 
 Vrei să susții proiectul? Vezi [opțiunile de sponsorizare](../../SPONSORS.md), inclusiv [sponsorizarea cu hardware](../../SPONSORS.md#hardware-lab-partner), sau [devino sponsor pe GitHub](https://github.com/sponsors/rohitg00).
 

@@ -13,11 +13,11 @@ Ipatupad ang mga panloob na bahagi ng modelo, retrieval pipeline, at runtime ng 
 
 Libre, open source, lisensiyang MIT. Matuto sa websayt, kasama ang isang coding agent, o sa pagpapatakbo ng lokal na code.
 
-> 523 aralin. 20 yugto. Python, TypeScript, Rust, Julia.
+> 528 aralin. 20 yugto. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Lisensiyang MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 aralin"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 aralin"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 yugto"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Mga star sa GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Websayt"></a>
@@ -246,7 +246,7 @@ Ang mga path sa mga command ng aralin ay mula sa root directory ng repository ma
 
 ## Pumili ng landas ng pag-aaral
 
-Hindi mo kailangang tingnan ang lahat ng 523 aralin bago magsimula. Pumili ng isang layunin. Binubuksan ng bawat link ang parehong kurikulum sa GitHub o sa website, at pareho ang code ng aralin sa dalawang bersiyon.
+Hindi mo kailangang tingnan ang lahat ng 528 aralin bago magsimula. Pumili ng isang layunin. Binubuksan ng bawat link ang parehong kurikulum sa GitHub o sa website, at pareho ang code ng aralin sa dalawang bersiyon.
 
 | Layunin mo | Matuto sa GitHub | Matuto sa website |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga aralin.
 
 <a id="phase-0"></a>
-### Yugto 0: Pag-setup at mga kasangkapan `12 aralin`
+### Yugto 0: Pag-setup at mga kasangkapan `13 aralin`
 > Ihanda ang kapaligiran mo para sa lahat ng kasunod.
 
 | # | Aralin | Uri | Wika |
@@ -347,6 +347,7 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | 10 | [Terminal at shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Pag-aralan | — |
 | 11 | [Linux para sa AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Pag-aralan | — |
 | 12 | [Pag-debug at pagsukat ng pagganap](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Buuin | Python |
+| 13 | [Python para sa AI engineering](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Buuin | Python |
 
 <details id="phase-1">
 <summary><b>Yugto 1: Mga pundasyon sa matematika</b> &nbsp;<code>22 aralin</code>&nbsp; <em>Unawain ang nasa likod ng bawat algorithm ng AI sa pamamagitan ng code.</em></summary>
@@ -380,7 +381,7 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 </details>
 
 <details id="phase-2">
-<summary><b>Yugto 2: Mga pundasyon ng ML</b> &nbsp;<code>18 aralin</code>&nbsp; <em>Klasikal na ML: pundasyon pa rin ng karamihan sa AI na aktuwal na ginagamit.</em></summary>
+<summary><b>Yugto 2: Mga pundasyon ng ML</b> &nbsp;<code>21 aralin</code>&nbsp; <em>Klasikal na ML: pundasyon pa rin ng karamihan sa AI na aktuwal na ginagamit.</em></summary>
 <br/>
 
 | # | Aralin | Uri | Wika |
@@ -403,6 +404,9 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | 16 | [Pagtukoy ng anomalya](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Buuin | Python |
 | 17 | [Paghawak sa datos na hindi balanse](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Buuin | Python |
 | 18 | [Pagpili ng feature](../../phases/02-ml-fundamentals/18-feature-selection/) | Buuin | Python |
+| 19 | [Disenyo ng mga ML system: mula sa problema hanggang sa naka-deploy na modelo](../../phases/02-ml-fundamentals/19-ml-system-design/) | Buuin | Python |
+| 20 | [Pagsubaybay sa mga modelo sa aktuwal na paggamit: data drift at concept drift](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Buuin | Python |
+| 21 | [Mga feature store at ang agwat sa pagitan ng training at serving](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Buuin | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ Binubuo ng mga aralin 31-46 ang [landas ng Engineering na may Tulong ng Agent](.
 </details>
 
 <details id="phase-17">
-<summary><b>Yugto 17: Imprastruktura at aktuwal na paggamit</b> &nbsp;<code>28 aralin</code>&nbsp; <em>Dalhin ang AI sa tunay na mundo.</em></summary>
+<summary><b>Yugto 17: Imprastruktura at aktuwal na paggamit</b> &nbsp;<code>29 aralin</code>&nbsp; <em>Dalhin ang AI sa tunay na mundo.</em></summary>
 <br/>
 
 | # | Aralin | Uri | Wika |
@@ -902,6 +906,7 @@ Binubuo ng mga aralin 31-46 ang [landas ng Engineering na may Tulong ng Agent](.
 | 26 | [Pagsunod: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Pag-aralan | Python |
 | 27 | [FinOps para sa LLM: ekonomiya bawat yunit at paglalaan sa maraming tenant](../../phases/17-infrastructure-and-production/27-finops-llms/) | Pag-aralan | Python |
 | 28 | [Pagpili ng sariling hosting: pagtutugma ng engine sa hardware at scale](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Pag-aralan | Python |
+| 29 | [Mga demo interface ng modelo: mula sa isang function hanggang sa app na maibabahagi](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Buuin | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ Nagtatapos ang ibang kurikulum sa *"binabati kita, natutuhan mo ang X."* Nagtata
 <details>
 <summary>I-install ang mga artifact ng aralin</summary>
 
-**Mga nagawa sa aralin.** May 396 skill at 99 prompt ang repository sa `phases/**/outputs/`; i-install ang mga ito gamit ang `scripts/install_skills.py`. Kailangang i-clone ang repository. Sinusuportahan ang filter ayon sa tag, dry-run, at magkakaibang layout para sa agent:
+**Mga nagawa sa aralin.** May 400 skill at 100 prompt ang repository sa `phases/**/outputs/`; i-install ang mga ito gamit ang `scripts/install_skills.py`. Kailangang i-clone ang repository. Sinusuportahan ang filter ayon sa tag, dry-run, at magkakaibang layout para sa agent:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ Hindi zero ang exit code kapag may tuntuning hindi pumasa. Sinusuri ng mga tuntu
 <p align="center"><sub><b>114,584</b> mambabasa &nbsp;·&nbsp; <b>181,995</b> pagtingin sa pahina sa nakalipas na 30 araw &nbsp;·&nbsp; noong 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Libre, may lisensiyang MIT, 523 aralin. Salamat sa mga sponsor at tagasuportang ginagawang posible ang gawaing ito. [Tingnan ang lahat ng sponsor at tagasuporta](../../BACKERS.md).
+Libre, may lisensiyang MIT, 528 aralin. Salamat sa mga sponsor at tagasuportang ginagawang posible ang gawaing ito. [Tingnan ang lahat ng sponsor at tagasuporta](../../BACKERS.md).
 
 Gustong suportahan ang gawaing ito? Tingnan ang [mga opsiyon sa sponsorship](../../SPONSORS.md), kasama ang [sponsorship ng hardware](../../SPONSORS.md#hardware-lab-partner), o [maging sponsor sa GitHub](https://github.com/sponsors/rohitg00).
 

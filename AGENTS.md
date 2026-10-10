@@ -2,13 +2,13 @@
 
 Operating manual for contributors and AI agents touching this repo. Read it before opening a PR.
 
-The repo is a curriculum, not a SaaS app. The lessons are the product. Every rule below keeps 523 lessons coherent over time.
+The repo is a curriculum, not a SaaS app. The lessons are the product. Every rule below keeps 528 lessons coherent over time.
 
 ---
 
 ## Philosophy
 
-523 lessons. 20 phases. Every algorithm built from raw math before a single framework gets imported. You write backprop, the tokenizer, the attention mechanism, and the agent loop by hand in Python, TypeScript, Rust, or Julia. Then you run the same operation through the production library so the framework stops being a black box. The "Build It / Use It" split is the spine. Each lesson ships a reusable artifact you can plug into your daily workflow.
+528 lessons. 20 phases. Every algorithm built from raw math before a single framework gets imported. You write backprop, the tokenizer, the attention mechanism, and the agent loop by hand in Python, TypeScript, Rust, or Julia. Then you run the same operation through the production library so the framework stops being a black box. The "Build It / Use It" split is the spine. Each lesson ships a reusable artifact you can plug into your daily workflow.
 
 ---
 

@@ -1,0 +1,78 @@
+{
+  "lesson": "29-model-demo-interfaces",
+  "title": "Model Demo Interfaces — From a Function to a Shareable App",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "The page already limits the text area with maxlength. Why does the server check the length again?",
+      "options": [
+        "Browsers ignore maxlength on a text area unless JavaScript is turned off",
+        "Any client can send a request without the page",
+        "The browser applies maxlength only after the model call ends",
+        "The maxlength attribute counts bytes, so it allows too many characters"
+      ],
+      "correct": 1,
+      "explanation": "A browser check helps honest users only. A script or curl can send any body, so the server repeats every check."
+    },
+    {
+      "stage": "check",
+      "question": "What are the three parts of the demo contract in this lesson?",
+      "options": [
+        "The prompt, the model weights, and the GPU server",
+        "The input, the model call, and the output",
+        "The frontend, the backend, and the database layer",
+        "The sign-in page, the payment page, and the result page"
+      ],
+      "correct": 1,
+      "explanation": "The contract has an input, a model call, and an output. The demo puts a limit on each part, and errors are part of the output."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the demo page send a POST request and read the stream with fetch() instead of using EventSource?",
+      "options": [
+        "EventSource cannot parse the text/event-stream format that the server returns",
+        "fetch() lowers the time to first token because it skips the response headers",
+        "A Python http.server handler can send a stream only in reply to a POST request",
+        "EventSource sends only GET requests, so the input goes into the URL"
+      ],
+      "correct": 3,
+      "explanation": "EventSource only sends GET. A GET request carries the input in the URL, and servers and proxies write URLs to their access logs."
+    },
+    {
+      "stage": "check",
+      "question": "What does the demo write to its request log?",
+      "options": [
+        "The full request line with its query string and the raw client IP address",
+        "The route, status, latency, input length, and a keyed hash of the client",
+        "The stack trace of each failed request, with the file paths and the line numbers",
+        "The input text and the model reply, so that a reviewer can replay each request"
+      ],
+      "correct": 1,
+      "explanation": "The log keeps no input text and no client address. The keyed hash counts requests per client without storing the address."
+    },
+    {
+      "stage": "post",
+      "question": "The model fails after the server sent status 200 and three token events. What does the demo do?",
+      "options": [
+        "It changes the status line to 500 and sends the response headers again",
+        "It runs the model again in the background and sends new tokens with no notice",
+        "It sends an error event in the stream, and the page shows it",
+        "It closes the connection with no message and lets the browser time out later"
+      ],
+      "correct": 2,
+      "explanation": "The status line is already sent, so the server cannot change it. The stream carries an error event with a code, a message, and a hint."
+    },
+    {
+      "stage": "post",
+      "question": "A hundred clients each stay under the per-client rate limit. Which control stops them from using the full model budget?",
+      "options": [
+        "A smaller maxlength value on the text area of the HTML form on the page",
+        "A token bucket with a larger capacity and a faster refill for each client",
+        "A Content-Security-Policy header that allows only one hashed inline script",
+        "A daily usage cap that counts calls from all clients"
+      ],
+      "correct": 3,
+      "explanation": "A rate limit controls each client but not the total. The usage cap counts every model call in a day and refuses calls after a fixed number."
+    }
+  ]
+}

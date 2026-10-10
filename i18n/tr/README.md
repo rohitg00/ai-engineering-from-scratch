@@ -13,11 +13,11 @@ Modellerin iç mekanizmalarını, bilgi erişim işlem hatlarını ve ajan çal�
 
 Ücretsiz, açık kaynaklı, MIT lisanslı. Web sitesinde, bir kodlama ajanıyla veya yerel kod çalıştırarak öğrenin.
 
-> 523 ders. 20 aşama. Python, TypeScript, Rust, Julia.
+> 528 ders. 20 aşama. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT Lisansı"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 ders"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 ders"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 aşama"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub yıldızları"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Web sitesi"></a>
@@ -246,7 +246,7 @@ Ders sayfalarındaki komutlar, ders açıkça başka bir dizine geçmenizi söyl
 
 ## Bir öğrenme yolu seçin
 
-Başlamadan önce 523 dersin hepsine göz atmanız gerekmez. Bir hedef seçin. Her bağlantı aynı müfredatı GitHub'da ya da web sitesinde açar; iki sürüm de aynı ders kodunu kullanır.
+Başlamadan önce 528 dersin hepsine göz atmanız gerekmez. Bir hedef seçin. Her bağlantı aynı müfredatı GitHub'da ya da web sitesinde açar; iki sürüm de aynı ders kodunu kullanır.
 
 | Hedefiniz | GitHub'da öğrenin | Web sitesinde öğrenin |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 20 aşama. Ders listesini açıp incelemek için bir aşamaya tıklayın.
 
 <a id="phase-0"></a>
-### Aşama 0: Kurulum ve Araçlar <code>12 ders</code>
+### Aşama 0: Kurulum ve Araçlar <code>13 ders</code>
 > Sonraki tüm çalışmalar için geliştirme ortamınızı hazırlayın.
 
 | No. | Ders | Tür | Dil |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [Terminal ve Kabuk](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Öğrenme | — |
 | 11 | [Yapay Zekâ için Linux](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Öğrenme | — |
 | 12 | [Hata Ayıklama ve Profil Oluşturma](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Uygulama | Python |
+| 13 | [Yapay Zekâ Mühendisliği için Python](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Uygulama | Python |
 
 <details id="phase-1">
 <summary><b>Aşama 1 — Matematik Temelleri</b> &nbsp;<code>22 ders</code>&nbsp; <em>Kod yazarak her yapay zekâ algoritmasının ardındaki sezgiyi kavrayın.</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>Aşama 2 — Makine Öğrenimi Temelleri</b> &nbsp;<code>18 ders</code>&nbsp; <em>Klasik makine öğrenimi, üretimdeki yapay zekâ sistemlerinin hâlâ bel kemiğidir.</em></summary>
+<summary><b>Aşama 2 — Makine Öğrenimi Temelleri</b> &nbsp;<code>21 ders</code>&nbsp; <em>Klasik makine öğrenimi, üretimdeki yapay zekâ sistemlerinin hâlâ bel kemiğidir.</em></summary>
 <br/>
 
 | No. | Ders | Tür | Dil |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [Anomali Tespiti](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Uygulama | Python |
 | 17 | [Dengesiz Verilerle Çalışma](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Uygulama | Python |
 | 18 | [Özellik Seçimi](../../phases/02-ml-fundamentals/18-feature-selection/) | Uygulama | Python |
+| 19 | [Makine Öğrenimi Sistem Tasarımı: Problemden Canlıdaki Modele](../../phases/02-ml-fundamentals/19-ml-system-design/) | Uygulama | Python |
+| 20 | [Üretimde Model İzleme: Veri Kayması ve Kavram Kayması](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Uygulama | Python |
+| 21 | [Özellik Depoları ve Eğitim ile Sunum Arasındaki Fark](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Uygulama | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 </details>
 
 <details id="phase-17">
-<summary><b>Aşama 17 — Altyapı ve Üretim Ortamı</b> &nbsp;<code>28 ders</code>&nbsp; <em>Yapay zekâyı gerçek dünyaya taşıyın.</em></summary>
+<summary><b>Aşama 17 — Altyapı ve Üretim Ortamı</b> &nbsp;<code>29 ders</code>&nbsp; <em>Yapay zekâyı gerçek dünyaya taşıyın.</em></summary>
 <br/>
 
 | No. | Ders | Tür | Dil |
@@ -902,6 +906,7 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 26 | [Uyumluluk Çerçeveleri: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Öğrenme | Python |
 | 27 | [LLM’ler için FinOps: Birim Ekonomisi ve Çok Kiracılı Maliyet Atfı](../../phases/17-infrastructure-and-production/27-finops-llms/) | Öğrenme | Python |
 | 28 | [Kendi Altyapınızda Model Sunumu: Motoru Donanım ve Ölçeğe Göre Seçme](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Öğrenme | Python |
+| 29 | [Model Demo Arayüzleri: Bir Fonksiyondan Paylaşılabilir Uygulamaya](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Uygulama | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ Başka müfredatlar genellikle “X’i öğrendiniz” diyerek biter. Burada he
 <details>
 <summary>Ders çıktılarını yükleyin</summary>
 
-**Ders çıktıları.** Depodaki `phases/**/outputs/` dizinlerinde 396 beceri ve 99 istem bulunur; bunları `scripts/install_skills.py` ile yükleyin. Depoyu klonlamanız gerekir. Etiket filtrelerini, deneme çalıştırmasını ve ajan başına yerleşim düzenlerini destekler:
+**Ders çıktıları.** Depodaki `phases/**/outputs/` dizinlerinde 400 beceri ve 100 istem bulunur; bunları `scripts/install_skills.py` ile yükleyin. Depoyu klonlamanız gerekir. Etiket filtrelerini, deneme çalıştırmasını ve ajan başına yerleşim düzenlerini destekler:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ Herhangi bir kural başarısız olduğunda komut sıfırdan farklı bir çıkı�
 <p align="center"><sub><b>114,584</b> okuyucu &nbsp;·&nbsp; Son 30 günde <b>181,995</b> sayfa görüntüleme &nbsp;·&nbsp; 2026-08-29 itibarıyla</sub></p>
 <!-- STATS:END -->
 
-Ücretsiz, MIT lisanslı, 523 ders. Bu çalışmayı mümkün kılan sponsorlara ve destekçilere teşekkür ederiz. [Tüm sponsorları ve destekçileri görün](../../BACKERS.md).
+Ücretsiz, MIT lisanslı, 528 ders. Bu çalışmayı mümkün kılan sponsorlara ve destekçilere teşekkür ederiz. [Tüm sponsorları ve destekçileri görün](../../BACKERS.md).
 
 Çalışmaları desteklemek ister misiniz? [Sponsorluk seçeneklerini](../../SPONSORS.md), [donanım sponsorluğunu](../../SPONSORS.md#hardware-lab-partner) inceleyin veya [GitHub üzerinden sponsor olun](https://github.com/sponsors/rohitg00).
 

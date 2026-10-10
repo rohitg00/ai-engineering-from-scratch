@@ -13,11 +13,11 @@ Implementeer de interne werking van modellen, zoekpijplijnen en uitvoeringsomgev
 
 Gratis, open source, met MIT-licentie. Leer op de webpagina, met een programmeeragent of door lokaal code uit te voeren.
 
-> 523 lessen. 20 fasen. Python, TypeScript, Rust, Julia.
+> 528 lessen. 20 fasen. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-licentie"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lessen"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 lessen"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 fasen"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Sterren op GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Webpagina"></a>
@@ -246,7 +246,7 @@ Paden in de commando's op lespagina's zijn relatief aan de hoofdmap van de repos
 
 ## Kies een leerpad
 
-Je hoeft niet alle 523 lessen door te nemen voordat je begint. Kies één doel. Elke link opent hetzelfde leerprogramma op GitHub of de website, en beide versies gebruiken dezelfde lescode.
+Je hoeft niet alle 528 lessen door te nemen voordat je begint. Kies één doel. Elke link opent hetzelfde leerprogramma op GitHub of de website, en beide versies gebruiken dezelfde lescode.
 
 | Jouw doel | Leren op GitHub | Leren op de website |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 
 <a id="phase-0"></a>
-### Fase 0: Installatie en gereedschap `12 lessen`
+### Fase 0: Installatie en gereedschap `13 lessen`
 > Maak je omgeving klaar voor alles wat hierna komt.
 
 | # | Les | Soort | Taal |
@@ -347,6 +347,7 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 10 | [Terminal en shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Leren | — |
 | 11 | [Linux voor AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Leren | — |
 | 12 | [Fouten opsporen en profileren](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Bouwen | Python |
+| 13 | [Python voor AI-engineering](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Bouwen | Python |
 
 <details id="phase-1">
 <summary><b>Fase 1: Wiskundige grondslagen</b> &nbsp;<code>22 lessen</code>&nbsp; <em>De intuïtie achter elk AI-algoritme, aan de hand van code.</em></summary>
@@ -380,7 +381,7 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 </details>
 
 <details id="phase-2">
-<summary><b>Fase 2: ML-grondslagen</b> &nbsp;<code>18 lessen</code>&nbsp; <em>Klassiek machinaal leren: nog steeds de basis van de meeste AI in productie.</em></summary>
+<summary><b>Fase 2: ML-grondslagen</b> &nbsp;<code>21 lessen</code>&nbsp; <em>Klassiek machinaal leren: nog steeds de basis van de meeste AI in productie.</em></summary>
 <br/>
 
 | # | Les | Soort | Taal |
@@ -403,6 +404,9 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 16 | [Afwijkingen detecteren](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Bouwen | Python |
 | 17 | [Omgaan met onevenwichtige gegevens](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Bouwen | Python |
 | 18 | [Kenmerkselectie](../../phases/02-ml-fundamentals/18-feature-selection/) | Bouwen | Python |
+| 19 | [Ontwerp van ML-systemen: van probleem tot uitgerold model](../../phases/02-ml-fundamentals/19-ml-system-design/) | Bouwen | Python |
+| 20 | [Modellen in productie bewaken: datadrift en conceptdrift](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Bouwen | Python |
+| 21 | [Kenmerkopslagen en verschillen tussen training en productie](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Bouwen | Python |
 
 </details>
 
@@ -881,7 +885,7 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 </details>
 
 <details id="phase-17">
-<summary><b>Fase 17: Infrastructuur en productie</b> &nbsp;<code>28 lessen</code>&nbsp; <em>Breng AI naar de echte wereld.</em></summary>
+<summary><b>Fase 17: Infrastructuur en productie</b> &nbsp;<code>29 lessen</code>&nbsp; <em>Breng AI naar de echte wereld.</em></summary>
 <br/>
 
 | # | Les | Soort | Taal |
@@ -914,6 +918,7 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 | 26 | [Naleving: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Leren | Python |
 | 27 | [FinOps voor LLM's: eenheidskosten en toerekening per huurder](../../phases/17-infrastructure-and-production/27-finops-llms/) | Leren | Python |
 | 28 | [Zelfgehoste inferentie kiezen: engine afstemmen op hardware en schaal](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Leren | Python |
+| 29 | [Demo-interfaces voor modellen: van een functie naar een deelbare app](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Bouwen | Python |
 
 </details>
 
@@ -1154,7 +1159,7 @@ Andere cursussen eindigen met *“gefeliciteerd, je hebt X geleerd.”* Elke les
 <details>
 <summary>Lesresultaten installeren</summary>
 
-**De lesresultaten.** De repository bevat 396 skills en 99 prompts onder `phases/**/outputs/`; installeer ze via `scripts/install_skills.py`. Hiervoor moet je de repository klonen. Het script ondersteunt tagfilters, proefruns en indelingen per agent:
+**De lesresultaten.** De repository bevat 400 skills en 100 prompts onder `phases/**/outputs/`; installeer ze via `scripts/install_skills.py`. Hiervoor moet je de repository klonen. Het script ondersteunt tagfilters, proefruns en indelingen per agent:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1274,7 +1279,7 @@ De exitcode is ongelijk aan nul als een regel faalt. Regels L001–L010 controle
 <p align="center"><sub><b>114,584</b> lezers &nbsp;·&nbsp; <b>181,995</b> paginaweergaven in de afgelopen 30 dagen &nbsp;·&nbsp; stand op 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Gratis, met MIT-licentie, 523 lessen. Dank aan de sponsors en supporters die dit werk mogelijk maken. [Bekijk alle sponsors en supporters](../../BACKERS.md).
+Gratis, met MIT-licentie, 528 lessen. Dank aan de sponsors en supporters die dit werk mogelijk maken. [Bekijk alle sponsors en supporters](../../BACKERS.md).
 
 Wil je het werk steunen? Bekijk de [sponsormogelijkheden](../../SPONSORS.md), waaronder [hardwaresponsoring](../../SPONSORS.md#hardware-lab-partner), of [word sponsor op GitHub](https://github.com/sponsors/rohitg00).
 

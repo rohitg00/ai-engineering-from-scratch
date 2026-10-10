@@ -4,11 +4,11 @@ Status tracker for every phase and lesson. The status glyphs in this file feed
 the website (`site/build.js` parses them into `site/data.js`); do not change
 their shape.
 
-Total estimated time: ~323 hours, at your own pace.
+Total estimated time: ~332 hours, at your own pace.
 
 **Legend:** ✅ Complete &nbsp;·&nbsp; 🚧 In Progress &nbsp;·&nbsp; ⬚ Planned
 
-## Phase 0: Setup & Tooling — ✅ (~14 hours)
+## Phase 0: Setup & Tooling — ✅ (~16 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
@@ -24,6 +24,7 @@ Total estimated time: ~323 hours, at your own pace.
 | 10 | Terminal & Shell | ✅ | ~45 min |
 | 11 | Linux for AI | ✅ | ~45 min |
 | 12 | Debugging & Profiling | ✅ | ~75 min |
+| 13 | Python for AI Engineering | ✅ | ~120 min |
 
 ## Phase 1: Math Foundations — ✅ (~23 hours)
 
@@ -52,7 +53,7 @@ Total estimated time: ~323 hours, at your own pace.
 | 21 | Graph Theory for ML | ✅ | ~45 min |
 | 22 | Stochastic Processes | ✅ | ~45 min |
 
-## Phase 2: ML Fundamentals — ✅ (~21 hours)
+## Phase 2: ML Fundamentals — ✅ (~26 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
@@ -74,6 +75,9 @@ Total estimated time: ~323 hours, at your own pace.
 | 16 | Anomaly Detection | ✅ | ~75 min |
 | 17 | Handling Imbalanced Data | ✅ | ~75 min |
 | 18 | Feature Selection | ✅ | ~75 min |
+| 19 | ML System Design — From Problem to Deployed Model | ✅ | ~110 min |
+| 20 | Monitoring Models in Production — Data Drift and Concept Drift | ✅ | ~110 min |
+| 21 | Feature Stores and Training-Serving Skew | ✅ | ~100 min |
 
 ## Phase 3: Deep Learning Core — ✅ (~15 hours)
 
@@ -473,7 +477,7 @@ Total estimated time: ~323 hours, at your own pace.
 | 24 | [Evaluation and Coordination Benchmarks](phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | ✅ | ~75 min |
 | 25 | [Case Studies and 2026 State of the Art](phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | ✅ | ~90 min |
 
-## Phase 17: Infrastructure & Production — ✅ (~32 hours)
+## Phase 17: Infrastructure & Production — ✅ (~34 hours)
 
 | # | Lesson | Status | Est. |
 |---|--------|--------|------|
@@ -505,6 +509,7 @@ Total estimated time: ~323 hours, at your own pace.
 | 26 | Compliance — SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001 | ✅ | ~60 min |
 | 27 | FinOps for LLMs — Unit Economics and Multi-Tenant Attribution | ✅ | ~60 min |
 | 28 | Self-Hosted Serving Selection — Matching Engine to Hardware and Scale | ✅ | ~45 min |
+| 29 | Model Demo Interfaces — From a Function to a Shareable App | ✅ | ~90 min |
 
 ## Phase 18: Ethics, Safety & Alignment — ✅ (~31 hours)
 

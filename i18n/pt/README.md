@@ -13,11 +13,11 @@ Implemente os componentes internos dos modelos, os pipelines de recuperação e 
 
 Gratuito, de código aberto, com licença MIT. Aprenda no sítio web, com um agente de programação ou executando código local.
 
-> 523 lições. 20 fases. Python, TypeScript, Rust, Julia.
+> 528 lições. 20 fases. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licença MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lições"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 lições"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 fases"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Estrelas do GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Sítio web"></a>
@@ -246,7 +246,7 @@ Os comandos nas páginas das lições usam caminhos relativos à raiz do reposit
 
 ## Escolha um percurso de aprendizagem
 
-Você não precisa percorrer as 523 lições antes de começar. Escolha um objetivo. Cada link abre o mesmo currículo no GitHub ou no site, e as duas versões usam o mesmo código das lições.
+Você não precisa percorrer as 528 lições antes de começar. Escolha um objetivo. Cada link abre o mesmo currículo no GitHub ou no site, e as duas versões usam o mesmo código das lições.
 
 | Seu objetivo | Estude no GitHub | Estude no site |
 |---|---|---|
@@ -331,7 +331,7 @@ flowchart TB
 
 <a id="phase-0"></a>
 
-### Fase 0: Configuração e ferramentas `12 lições`
+### Fase 0: Configuração e ferramentas `13 lições`
 
 > Prepare o ambiente para tudo o que vem a seguir.
 
@@ -349,6 +349,7 @@ flowchart TB
 | 10 | [Terminal e shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Aprender | — |
 | 11 | [Linux para IA](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Aprender | — |
 | 12 | [Depuração e perfilamento](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Construir | Python |
+| 13 | [Python para engenharia de IA](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Construir | Python |
 
 <details id="phase-1">
 <summary><b>Fase 1 — Fundamentos matemáticos</b> &nbsp;<code>22 lições</code>&nbsp; <em>A intuição por trás de cada algoritmo de IA, com código.</em></summary>
@@ -381,7 +382,7 @@ flowchart TB
 
 </details>
 <details id="phase-2">
-<summary><b>Fase 2 — Fundamentos de ML</b> &nbsp;<code>18 lições</code>&nbsp; <em>O ML clássico continua sendo a espinha dorsal da maioria dos sistemas de IA em produção.</em></summary>
+<summary><b>Fase 2 — Fundamentos de ML</b> &nbsp;<code>21 lições</code>&nbsp; <em>O ML clássico continua sendo a espinha dorsal da maioria dos sistemas de IA em produção.</em></summary>
 <br/>
 
 | # | Lição | Tipo | Idioma |
@@ -404,6 +405,9 @@ flowchart TB
 | 16 | [Detecção de anomalias](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Construir | Python |
 | 17 | [Tratamento de dados desequilibrados](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Construir | Python |
 | 18 | [Seleção de atributos](../../phases/02-ml-fundamentals/18-feature-selection/) | Construir | Python |
+| 19 | [Design de sistemas de ML: do problema ao modelo em produção](../../phases/02-ml-fundamentals/19-ml-system-design/) | Construir | Python |
+| 20 | [Monitoramento de modelos em produção: deriva de dados e deriva de conceito](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Construir | Python |
+| 21 | [Repositórios de atributos e divergência entre treinamento e serviço](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Construir | Python |
 
 </details>
 <details id="phase-3">
@@ -855,7 +859,7 @@ As lições 31–46 formam a [trilha de engenharia assistida por agentes](../../
 
 </details>
 <details id="phase-17">
-<summary><b>Fase 17 — Infraestrutura e produção</b> &nbsp;<code>28 lições</code>&nbsp; <em>Leve a IA para o mundo real.</em></summary>
+<summary><b>Fase 17 — Infraestrutura e produção</b> &nbsp;<code>29 lições</code>&nbsp; <em>Leve a IA para o mundo real.</em></summary>
 <br/>
 
 | # | Lição | Tipo | Idioma |
@@ -888,6 +892,7 @@ As lições 31–46 formam a [trilha de engenharia assistida por agentes](../../
 | 26 | [Conformidade — SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Aprender | Python |
 | 27 | [FinOps para LLMs — economia unitária e atribuição multi-inquilino](../../phases/17-infrastructure-and-production/27-finops-llms/) | Aprender | Python |
 | 28 | [Seleção de serving autohospedado — adequação do mecanismo ao hardware e à escala](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Aprender | Python |
+| 29 | [Interfaces de demonstração para modelos: de uma função a uma aplicação compartilhável](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Construir | Python |
 
 </details>
 <details id="phase-18">
@@ -1126,7 +1131,7 @@ Outros currículos terminam com “Parabéns, você aprendeu X”. Aqui, cada li
 <details>
 <summary>Instalar artefactos das lições</summary>
 
-**Os artefatos das lições.** O repositório inclui 396 skills e 99 prompts em `phases/**/outputs/`; instale-os com `scripts/install_skills.py`. É preciso clonar o repositório. A ferramenta oferece filtros por tag, execução de teste e layouts específicos para cada agente:
+**Os artefatos das lições.** O repositório inclui 400 skills e 100 prompts em `phases/**/outputs/`; instale-os com `scripts/install_skills.py`. É preciso clonar o repositório. A ferramenta oferece filtros por tag, execução de teste e layouts específicos para cada agente:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1246,7 +1251,7 @@ O código de saída é diferente de zero se alguma regra falhar. As regras L001�
 <p align="center"><sub><b>114,584</b> leitores &nbsp;·&nbsp; <b>181,995</b> visualizações de páginas nos últimos 30 dias &nbsp;·&nbsp; a partir de 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Grátis, com licença MIT e 523 lições. Agradecemos aos patrocinadores e apoiadores que tornam este trabalho possível. [Ver todos os patrocinadores e apoiadores](../../BACKERS.md).
+Grátis, com licença MIT e 528 lições. Agradecemos aos patrocinadores e apoiadores que tornam este trabalho possível. [Ver todos os patrocinadores e apoiadores](../../BACKERS.md).
 
 Quer apoiar o projeto? Veja as [opções de patrocínio](../../SPONSORS.md), incluindo [patrocínios de hardware](../../SPONSORS.md#hardware-lab-partner), ou [patrocine pelo GitHub](https://github.com/sponsors/rohitg00).
 

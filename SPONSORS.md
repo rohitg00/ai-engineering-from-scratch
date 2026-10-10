@@ -1,6 +1,6 @@
 # Sponsorship
 
-`ai-engineering-from-scratch` is a free, MIT-licensed curriculum. 523 lessons across 20
+`ai-engineering-from-scratch` is a free, MIT-licensed curriculum. 528 lessons across 20
 phases. The work is built and maintained by [Rohit Ghumare](https://github.com/rohitg00).
 
 Cash sponsorships fund the time it takes to ship lessons, keep the site running, and reply

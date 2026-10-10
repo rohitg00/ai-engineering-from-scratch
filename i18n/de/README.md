@@ -13,11 +13,11 @@ Implementiere Modellinterna, Retrieval-Pipelines und Agenten-Laufzeitumgebungen.
 
 Kostenlos, quelloffen, MIT-lizenziert. Lerne auf der Webseite, mit einem Programmieragenten oder durch lokal ausgeführten Code.
 
-> 523 Lektionen. 20 Phasen. Python, TypeScript, Rust, Julia.
+> 528 Lektionen. 20 Phasen. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-Lizenz"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 Lektionen"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 Lektionen"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 Phasen"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub-Sterne"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Webseite"></a>
@@ -246,7 +246,7 @@ Befehle auf den Lektionsseiten verwenden Pfade relativ zum Repository-Stammverze
 
 ## Wähle einen Lernpfad
 
-Du musst nicht erst alle 523 Lektionen durchsehen. Wähle ein Ziel. Jeder Link führt zum selben Lehrplan auf GitHub oder auf der Website; beide Fassungen verwenden denselben Lektionencode.
+Du musst nicht erst alle 528 Lektionen durchsehen. Wähle ein Ziel. Jeder Link führt zum selben Lehrplan auf GitHub oder auf der Website; beide Fassungen verwenden denselben Lektionencode.
 
 | Dein Ziel | Auf GitHub lernen | Auf der Website lernen |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 20 Phasen. Klappe eine Phase auf, um die zugehörigen Lektionen zu sehen.
 
 <a id="phase-0"></a>
-### Phase 0: Einrichtung und Werkzeuge `12 Lektionen`
+### Phase 0: Einrichtung und Werkzeuge `13 Lektionen`
 > Mach deine Arbeitsumgebung startklar für alles, was folgt.
 
 | # | Lektion | Typ | Sprachen |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [Terminal und Shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Lernen | — |
 | 11 | [Linux für KI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Lernen | — |
 | 12 | [Debugging und Profiling](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Umsetzen | Python |
+| 13 | [Python für AI Engineering](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Umsetzen | Python |
 
 <details id="phase-1">
 <summary><b>Phase 1 — Mathematische Grundlagen</b> &nbsp;<code>22 Lektionen</code>&nbsp; <em>Verstehe die Grundlagen hinter KI-Algorithmen durch Programmieren.</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>Phase 2 — ML-Grundlagen</b> &nbsp;<code>18 Lektionen</code>&nbsp; <em>Klassisches ML bildet noch immer das Rückgrat der meisten KI-Systeme in Produktion.</em></summary>
+<summary><b>Phase 2 — ML-Grundlagen</b> &nbsp;<code>21 Lektionen</code>&nbsp; <em>Klassisches ML bildet noch immer das Rückgrat der meisten KI-Systeme in Produktion.</em></summary>
 <br/>
 
 | # | Lektion | Typ | Sprachen |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [Anomalieerkennung](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Umsetzen | Python |
 | 17 | [Umgang mit unausgewogenen Daten](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Umsetzen | Python |
 | 18 | [Merkmalsauswahl](../../phases/02-ml-fundamentals/18-feature-selection/) | Umsetzen | Python |
+| 19 | [ML-Systemdesign: vom Problem zum produktiven Modell](../../phases/02-ml-fundamentals/19-ml-system-design/) | Umsetzen | Python |
+| 20 | [Modelle in der Produktion überwachen: Data Drift und Concept Drift](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Umsetzen | Python |
+| 21 | [Feature Stores und Training-Serving-Skew](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Umsetzen | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ Die Lektionen 31–46 bilden den [Pfad für agentengestütztes Engineering](../.
 </details>
 
 <details id="phase-17">
-<summary><b>Phase 17 — Infrastruktur und Produktion</b> &nbsp;<code>28 Lektionen</code>&nbsp; <em>Bringe KI in die echte Welt.</em></summary>
+<summary><b>Phase 17 — Infrastruktur und Produktion</b> &nbsp;<code>29 Lektionen</code>&nbsp; <em>Bringe KI in die echte Welt.</em></summary>
 <br/>
 
 | # | Lektion | Typ | Sprachen |
@@ -902,6 +906,7 @@ Die Lektionen 31–46 bilden den [Pfad für agentengestütztes Engineering](../.
 | 26 | [Compliance: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Lernen | Python |
 | 27 | [FinOps für LLMs: Stückkosten und mandantenübergreifende Zuordnung](../../phases/17-infrastructure-and-production/27-finops-llms/) | Lernen | Python |
 | 28 | [Self-Hosted-Serving auswählen: Engine, Hardware und Skalierung aufeinander abstimmen](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Lernen | Python |
+| 29 | [Demo-Oberflächen für Modelle: von der Funktion zur teilbaren App](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Umsetzen | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ Andere Lehrpläne enden mit *„Glückwunsch, du hast X gelernt.“* Jede Lektio
 <details>
 <summary>Lektionsergebnisse installieren</summary>
 
-**Die Lektionsartefakte.** Das Repository enthält 396 Skills und 99 Prompts unter `phases/**/outputs/`. Installiere sie mit `scripts/install_skills.py`. Dafür musst du das Repository klonen. Das Skript unterstützt Tag-Filter, Probeläufe und agentenspezifische Layouts:
+**Die Lektionsartefakte.** Das Repository enthält 400 Skills und 100 Prompts unter `phases/**/outputs/`. Installiere sie mit `scripts/install_skills.py`. Dafür musst du das Repository klonen. Das Skript unterstützt Tag-Filter, Probeläufe und agentenspezifische Layouts:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ Der Exit-Code ist ungleich null, wenn eine Regel fehlschlägt. Die Regeln L001�
 <p align="center"><sub><b>114,584</b> Leser &nbsp;·&nbsp; <b>181,995</b> Seitenaufrufe in den letzten 30 Tagen &nbsp;·&nbsp; Stand: 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Kostenlos, MIT-lizenziert, 523 Lektionen. Vielen Dank an die Sponsoren und Unterstützer, die diese Arbeit ermöglichen. [Alle Sponsoren und Unterstützer ansehen](../../BACKERS.md).
+Kostenlos, MIT-lizenziert, 528 Lektionen. Vielen Dank an die Sponsoren und Unterstützer, die diese Arbeit ermöglichen. [Alle Sponsoren und Unterstützer ansehen](../../BACKERS.md).
 
 Möchtest du die Arbeit unterstützen? Sieh dir die [Sponsoring-Optionen](../../SPONSORS.md) einschließlich [Hardware-Sponsoring](../../SPONSORS.md#hardware-lab-partner) an oder [unterstütze das Projekt auf GitHub](https://github.com/sponsors/rohitg00).
 

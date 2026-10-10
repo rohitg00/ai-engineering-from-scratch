@@ -105,6 +105,6 @@ The capstone's end-to-end exchange asks you to justify a design under review, an
 - [MCP security best practices](https://modelcontextprotocol.io/specification/2026-07-28/basic/security_best_practices), especially Local MCP Server Compromise and stdio Transport Security
 - [MCP specification 2026-07-28, base protocol](https://modelcontextprotocol.io/specification/2026-07-28/basic), for the `_meta` self-reported identity rules and icon security requirements
 - [MCP specification 2026-07-28, Tools](https://modelcontextprotocol.io/specification/2026-07-28/server/tools), for the untrusted-annotations warning and the human-in-the-loop guidance
-- [SEP-1024: MCP Client Security Requirements for Local Server Installation](https://modelcontextprotocol.io/community/seps/1024-mcp-client-security-requirements-for-local-server-installation)
+- [SEP-1024: MCP Client Security Requirements for Local Server Installation](https://modelcontextprotocol.io/seps/1024-mcp-client-security-requirements-for-local-server-)
 - `certifications/mcpa/research/mcp-2026-07-28-brief.md`, sections 3, 12, and 13
 - `phases/13-tools-and-protocols/15-mcp-security-tool-poisoning`, which builds a deeper threat model over the same wire shapes

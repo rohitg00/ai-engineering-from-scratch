@@ -13,11 +13,11 @@ Implémentez les composants internes des modèles, les pipelines de recherche do
 
 Gratuit, open source, sous licence MIT. Apprenez sur le site, avec un agent de programmation ou en exécutant du code localement.
 
-> 523 leçons. 20 phases. Python, TypeScript, Rust, Julia.
+> 528 leçons. 20 phases. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licence MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 leçons"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 leçons"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Étoiles GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Site web"></a>
@@ -246,7 +246,7 @@ Les commandes indiquées dans les leçons utilisent des chemins relatifs à la r
 
 ## Choisissez un parcours
 
-Vous n’avez pas besoin de parcourir les 523 leçons avant de commencer. Choisissez un objectif. Chaque lien ouvre le même programme sur GitHub ou sur le site Web, et les deux versions utilisent le même code de leçon.
+Vous n’avez pas besoin de parcourir les 528 leçons avant de commencer. Choisissez un objectif. Chaque lien ouvre le même programme sur GitHub ou sur le site Web, et les deux versions utilisent le même code de leçon.
 
 | Votre objectif | Sur GitHub | Sur le site Web |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Cliquez sur une phase pour développer la liste de ses leçons.
 
 <a id="phase-0"></a>
-### Phase 0 : Installation et outils `12 leçons`
+### Phase 0 : Installation et outils `13 leçons`
 > Préparez votre environnement pour la suite.
 
 | # | Leçon | Type | Langage |
@@ -347,6 +347,7 @@ Cliquez sur une phase pour développer la liste de ses leçons.
 | 10 | [Terminal et shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Apprendre | — |
 | 11 | [Linux pour l’IA](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Apprendre | — |
 | 12 | [Débogage et profilage](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Construire | Python |
+| 13 | [Python pour l’ingénierie de l’IA](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Construire | Python |
 
 <details id="phase-1">
 <summary><b>Phase 1 — Fondements mathématiques</b> &nbsp;<code>22 leçons</code>&nbsp; <em>Comprendre l’intuition derrière les algorithmes d’IA grâce au code.</em></summary>
@@ -380,7 +381,7 @@ Cliquez sur une phase pour développer la liste de ses leçons.
 </details>
 
 <details id="phase-2">
-<summary><b>Phase 2 — Fondements de l’apprentissage automatique</b> &nbsp;<code>18 leçons</code>&nbsp; <em>L’apprentissage automatique classique reste au cœur de la plupart des systèmes d’IA en production.</em></summary>
+<summary><b>Phase 2 — Fondements de l’apprentissage automatique</b> &nbsp;<code>21 leçons</code>&nbsp; <em>L’apprentissage automatique classique reste au cœur de la plupart des systèmes d’IA en production.</em></summary>
 <br/>
 
 | # | Leçon | Type | Langage |
@@ -403,6 +404,9 @@ Cliquez sur une phase pour développer la liste de ses leçons.
 | 16 | [Détection des anomalies](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Construire | Python |
 | 17 | [Gestion des données déséquilibrées](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Construire | Python |
 | 18 | [Sélection des caractéristiques](../../phases/02-ml-fundamentals/18-feature-selection/) | Construire | Python |
+| 19 | [Conception de systèmes de ML : du problème au modèle déployé](../../phases/02-ml-fundamentals/19-ml-system-design/) | Construire | Python |
+| 20 | [Surveillance des modèles en production : dérive des données et dérive conceptuelle](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Construire | Python |
+| 21 | [Magasins de caractéristiques et écart entre entraînement et service](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Construire | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ Les leçons 31 à 46 constituent le [parcours d’ingénierie assistée par des 
 </details>
 
 <details id="phase-17">
-<summary><b>Phase 17 — Infrastructure et mise en production</b> &nbsp;<code>28 leçons</code>&nbsp; <em>Mettre l’IA en service dans le monde réel.</em></summary>
+<summary><b>Phase 17 — Infrastructure et mise en production</b> &nbsp;<code>29 leçons</code>&nbsp; <em>Mettre l’IA en service dans le monde réel.</em></summary>
 <br/>
 
 | # | Leçon | Type | Langage |
@@ -902,6 +906,7 @@ Les leçons 31 à 46 constituent le [parcours d’ingénierie assistée par des 
 | 26 | [Conformité : SOC 2, HIPAA, RGPD, loi européenne sur l’IA et ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Apprendre | Python |
 | 27 | [FinOps pour les LLM : économie unitaire et attribution multi-tenant](../../phases/17-infrastructure-and-production/27-finops-llms/) | Apprendre | Python |
 | 28 | [Choisir une solution de service auto-hébergée selon le moteur, le matériel et l’échelle](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Apprendre | Python |
+| 29 | [Interfaces de démonstration pour les modèles : d’une fonction à une application partageable](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Construire | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ Les autres cursus se terminent par : *« Félicitations, vous avez appris X. »*
 <details>
 <summary>Installer les livrables des leçons</summary>
 
-**Artefacts des leçons.** Le dépôt contient 396 skills et 99 prompts dans `phases/**/outputs/`. Installez-les avec `scripts/install_skills.py` ; le script nécessite un clone du dépôt et prend en charge les filtres par tag, les simulations sans écriture et plusieurs dispositions adaptées aux agents :
+**Artefacts des leçons.** Le dépôt contient 400 skills et 100 prompts dans `phases/**/outputs/`. Installez-les avec `scripts/install_skills.py` ; le script nécessite un clone du dépôt et prend en charge les filtres par tag, les simulations sans écriture et plusieurs dispositions adaptées aux agents :
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ Le code de sortie est différent de zéro lorsqu’une règle échoue. Les règl
 <p align="center"><sub><b>114,584</b> lecteurs &nbsp;·&nbsp; <b>181,995</b> pages vues au cours des 30 derniers jours &nbsp;·&nbsp; à compter de 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Gratuit, sous licence MIT, 523 leçons. Merci aux sponsors et aux soutiens qui rendent ce travail possible. [Voir tous les sponsors et soutiens](../../BACKERS.md).
+Gratuit, sous licence MIT, 528 leçons. Merci aux sponsors et aux soutiens qui rendent ce travail possible. [Voir tous les sponsors et soutiens](../../BACKERS.md).
 
 Vous souhaitez soutenir le projet ? Consultez les [options de sponsoring](../../SPONSORS.md), notamment le [sponsoring matériel](../../SPONSORS.md#hardware-lab-partner), ou [soutenez le projet sur GitHub](https://github.com/sponsors/rohitg00).
 

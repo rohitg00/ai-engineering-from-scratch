@@ -66,7 +66,7 @@ def get_weather(city, units="celsius"):
 SEARCH_DB = {
     "python function calling": [
         {"title": "OpenAI Function Calling Guide", "url": "https://platform.openai.com/docs/guides/function-calling", "snippet": "Learn how to connect LLMs to external tools."},
-        {"title": "Anthropic Tool Use", "url": "https://docs.anthropic.com/en/docs/tool-use", "snippet": "Claude can interact with external tools and APIs."},
+        {"title": "Anthropic Tool Use", "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview", "snippet": "Claude can interact with external tools and APIs."},
     ],
     "MCP protocol": [
         {"title": "Model Context Protocol", "url": "https://modelcontextprotocol.io", "snippet": "An open standard for connecting AI models to data sources."},

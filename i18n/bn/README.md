@@ -13,11 +13,11 @@
 
 বিনামূল্যে, ওপেন সোর্স, MIT লাইসেন্স। ওয়েবসাইটে, কোডিং এজেন্টের সঙ্গে বা স্থানীয় কোড চালিয়ে শিখুন।
 
-> 523 পাঠ. 20 ধাপ. Python, TypeScript, Rust, Julia.
+> 528 পাঠ. 20 ধাপ. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT লাইসেন্স"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 পাঠ"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 পাঠ"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 ধাপ"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub তারকা"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="ওয়েবসাইট"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## শেখার পথ বেছে নিন
 
-শুরু করার আগে 523টি পাঠ ঘেঁটে দেখার দরকার নেই। একটি লক্ষ্য বেছে নিন। প্রতিটি লিঙ্ক GitHub বা ওয়েবসাইটে একই পাঠক্রম খোলে, আর দুই সংস্করণেই পাঠের একই কোড ব্যবহার করা হয়।
+শুরু করার আগে 528টি পাঠ ঘেঁটে দেখার দরকার নেই। একটি লক্ষ্য বেছে নিন। প্রতিটি লিঙ্ক GitHub বা ওয়েবসাইটে একই পাঠক্রম খোলে, আর দুই সংস্করণেই পাঠের একই কোড ব্যবহার করা হয়।
 
 | আপনার লক্ষ্য | GitHub-এ শিখুন | ওয়েবসাইটে শিখুন |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 বিশটি ধাপ। যেকোনো ধাপে ক্লিক করে পাঠের তালিকা খুলুন।
 
 <a id="phase-0"></a>
-### ধাপ 0: সেটআপ ও টুল `12 পাঠ`
+### ধাপ 0: সেটআপ ও টুল `13 পাঠ`
 > পরের সবকিছুর জন্য পরিবেশ প্রস্তুত করুন।
 
 | # | পাঠ | ধরন | ভাষা |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [টার্মিনাল ও শেল](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | শিখুন | — |
 | 11 | [AI-এর জন্য Linux](../../phases/00-setup-and-tooling/11-linux-for-ai/) | শিখুন | — |
 | 12 | [ডিবাগিং ও কর্মক্ষমতা বিশ্লেষণ](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | তৈরি | Python |
+| 13 | [এআই ইঞ্জিনিয়ারিংয়ের জন্য Python](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | তৈরি | Python |
 
 <details id="phase-1">
 <summary><b>ধাপ 1: গণিতের ভিত্তি</b> &nbsp;<code>22 পাঠ</code>&nbsp; <em>কোড দিয়ে প্রতিটি AI অ্যালগরিদমের পেছনের ধারণা।</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>ধাপ 2: ML-এর ভিত্তি</b> &nbsp;<code>18 পাঠ</code>&nbsp; <em>প্রচলিত ML এখনো বাস্তবে ব্যবহৃত অধিকাংশ AI-এর ভিত্তি।</em></summary>
+<summary><b>ধাপ 2: ML-এর ভিত্তি</b> &nbsp;<code>21 পাঠ</code>&nbsp; <em>প্রচলিত ML এখনো বাস্তবে ব্যবহৃত অধিকাংশ AI-এর ভিত্তি।</em></summary>
 <br/>
 
 | # | পাঠ | ধরন | ভাষা |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [অস্বাভাবিকতা শনাক্তকরণ](../../phases/02-ml-fundamentals/16-anomaly-detection/) | তৈরি | Python |
 | 17 | [অসম ডেটা সামলানো](../../phases/02-ml-fundamentals/17-imbalanced-data/) | তৈরি | Python |
 | 18 | [ফিচার নির্বাচন](../../phases/02-ml-fundamentals/18-feature-selection/) | তৈরি | Python |
+| 19 | [ML সিস্টেম ডিজাইন: সমস্যা থেকে চালু মডেল পর্যন্ত](../../phases/02-ml-fundamentals/19-ml-system-design/) | তৈরি | Python |
+| 20 | [বাস্তব ব্যবহারে মডেল পর্যবেক্ষণ: ডেটা ড্রিফট ও ধারণা ড্রিফট](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | তৈরি | Python |
+| 21 | [ফিচার স্টোর এবং ট্রেনিং ও সার্ভিংয়ের অমিল](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | তৈরি | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>ধাপ 17: অবকাঠামো ও বাস্তব ব্যবহার</b> &nbsp;<code>28 পাঠ</code>&nbsp; <em>AI-কে বাস্তব জগতে আনুন।</em></summary>
+<summary><b>ধাপ 17: অবকাঠামো ও বাস্তব ব্যবহার</b> &nbsp;<code>29 পাঠ</code>&nbsp; <em>AI-কে বাস্তব জগতে আনুন।</em></summary>
 <br/>
 
 | # | পাঠ | ধরন | ভাষা |
@@ -902,6 +906,7 @@ flowchart TB
 | 26 | [সম্মতি: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | শিখুন | Python |
 | 27 | [LLM-এর FinOps: এককপ্রতি অর্থনীতি ও বহু গ্রাহকে খরচ বণ্টন](../../phases/17-infrastructure-and-production/27-finops-llms/) | শিখুন | Python |
 | 28 | [নিজস্ব হোস্টিং বাছাই: হার্ডওয়্যার ও মাপ অনুযায়ী ইঞ্জিন](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | শিখুন | Python |
+| 29 | [মডেল ডেমো ইন্টারফেস: ফাংশন থেকে শেয়ারযোগ্য অ্যাপ](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | তৈরি | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ flowchart LR
 <details>
 <summary>পাঠের কাজের ফল ইনস্টল করুন</summary>
 
-**পাঠের তৈরি ফল।** রিপোজিটরিতে `phases/**/outputs/`-এ 396 স্কিল ও 99 প্রম্পট আছে; `scripts/install_skills.py` দিয়ে ইনস্টল করুন। রিপোজিটরি ক্লোন করতে হবে। ট্যাগ ফিল্টার, পরিবর্তন ছাড়া পরীক্ষামূলক চালনা ও এজেন্টভিত্তিক বিন্যাস সমর্থিত:
+**পাঠের তৈরি ফল।** রিপোজিটরিতে `phases/**/outputs/`-এ 400 স্কিল ও 100 প্রম্পট আছে; `scripts/install_skills.py` দিয়ে ইনস্টল করুন। রিপোজিটরি ক্লোন করতে হবে। ট্যাগ ফিল্টার, পরিবর্তন ছাড়া পরীক্ষামূলক চালনা ও এজেন্টভিত্তিক বিন্যাস সমর্থিত:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> পাঠক &nbsp;·&nbsp; <b>181,995</b> পৃষ্ঠা দর্শন গত 30 দিনে &nbsp;·&nbsp; 2026-08-29 পর্যন্ত</sub></p>
 <!-- STATS:END -->
 
-বিনামূল্যে, MIT লাইসেন্সে, 523টি পাঠ। যেসব পৃষ্ঠপোষক ও সমর্থক এই কাজ সম্ভব করেন, তাঁদের ধন্যবাদ। [সব পৃষ্ঠপোষক ও সমর্থককে দেখুন](../../BACKERS.md)।
+বিনামূল্যে, MIT লাইসেন্সে, 528টি পাঠ। যেসব পৃষ্ঠপোষক ও সমর্থক এই কাজ সম্ভব করেন, তাঁদের ধন্যবাদ। [সব পৃষ্ঠপোষক ও সমর্থককে দেখুন](../../BACKERS.md)।
 
 এই কাজে সহায়তা করতে চান? [হার্ডওয়্যার পৃষ্ঠপোষকতা](../../SPONSORS.md#hardware-lab-partner)-সহ [পৃষ্ঠপোষকতার বিকল্পগুলো](../../SPONSORS.md) দেখুন, অথবা [GitHub-এ পৃষ্ঠপোষক হোন](https://github.com/sponsors/rohitg00)।
 

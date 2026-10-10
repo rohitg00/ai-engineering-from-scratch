@@ -13,11 +13,11 @@
 
 免费、开源、MIT 许可。你可以在网站学习、使用编程代理辅助学习，或在本地运行代码。
 
-> 523 节课. 20 个阶段. Python, TypeScript, Rust, Julia.
+> 528 节课. 20 个阶段. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT 许可证"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 节课"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 节课"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 个阶段"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub 星标"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="网站"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## 选择学习路径
 
-开始前不必先浏览 523 节课。选一个目标即可。每个链接都会打开同一套课程的 GitHub 或网站版本，两边使用相同的课程代码。
+开始前不必先浏览 528 节课。选一个目标即可。每个链接都会打开同一套课程的 GitHub 或网站版本，两边使用相同的课程代码。
 
 | 你的目标 | 在 GitHub 学习 | 在网站学习 |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 课程共分 20 个阶段；点击任一阶段即可展开其课程列表。
 
 <a id="phase-0"></a>
-### 阶段 0：环境与工具 `12 节课`
+### 阶段 0：环境与工具 `13 节课`
 > 配好学习后续所有内容所需的环境与工具。
 
 | # | 课程 | 类型 | 语言 |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [终端与 Shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | 学习 | — |
 | 11 | [用于 AI 的 Linux](../../phases/00-setup-and-tooling/11-linux-for-ai/) | 学习 | — |
 | 12 | [调试与性能分析](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | 构建 | Python |
+| 13 | [面向 AI 工程的 Python](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | 构建 | Python |
 
 <details id="phase-1">
 <summary><b>阶段 1 — 数学基础</b> &nbsp;<code>22 节课</code>&nbsp; <em>用代码建立理解 AI 算法所需的数学直觉。</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>阶段 2 — 机器学习基础</b> &nbsp;<code>18 节课</code>&nbsp; <em>经典机器学习仍是许多生产系统的支柱。</em></summary>
+<summary><b>阶段 2 — 机器学习基础</b> &nbsp;<code>21 节课</code>&nbsp; <em>经典机器学习仍是许多生产系统的支柱。</em></summary>
 <br/>
 
 | # | 课程 | 类型 | 语言 |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [异常检测](../../phases/02-ml-fundamentals/16-anomaly-detection/) | 构建 | Python |
 | 17 | [处理类别不平衡数据](../../phases/02-ml-fundamentals/17-imbalanced-data/) | 构建 | Python |
 | 18 | [特征选择](../../phases/02-ml-fundamentals/18-feature-selection/) | 构建 | Python |
+| 19 | [机器学习系统设计：从问题到已部署模型](../../phases/02-ml-fundamentals/19-ml-system-design/) | 构建 | Python |
+| 20 | [生产环境中的模型监控：数据漂移与概念漂移](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | 构建 | Python |
+| 21 | [特征存储与训练-服务偏差](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | 构建 | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>阶段 17 — 基础设施与生产部署</b> &nbsp;<code>28 节课</code>&nbsp; <em>把 AI 系统真正交付到现实场景。</em></summary>
+<summary><b>阶段 17 — 基础设施与生产部署</b> &nbsp;<code>29 节课</code>&nbsp; <em>把 AI 系统真正交付到现实场景。</em></summary>
 <br/>
 
 | # | 课程 | 类型 | 语言 |
@@ -902,6 +906,7 @@ flowchart TB
 | 26 | [合规：SOC 2、HIPAA、GDPR、欧盟 AI 法案与 ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | 学习 | Python |
 | 27 | [面向 LLM 的 FinOps：单位经济性与多租户成本归因](../../phases/17-infrastructure-and-production/27-finops-llms/) | 学习 | Python |
 | 28 | [自托管推理服务选型：按硬件与规模匹配引擎](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | 学习 | Python |
+| 29 | [模型演示界面：从函数到可分享的应用](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | 构建 | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ flowchart LR
 <details>
 <summary>安装课程成果</summary>
 
-**课程成果文件**位于 `phases/**/outputs/`，包含 396 个技能和 99 个提示词。克隆仓库后，可以用 `scripts/install_skills.py` 安装；脚本支持按阶段或标签筛选、预演，以及针对不同宿主的目录布局：
+**课程成果文件**位于 `phases/**/outputs/`，包含 400 个技能和 100 个提示词。克隆仓库后，可以用 `scripts/install_skills.py` 安装；脚本支持按阶段或标签筛选、预演，以及针对不同宿主的目录布局：
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> 位读者 &nbsp;·&nbsp; 近 30 天 <b>181,995</b> 次页面浏览 &nbsp;·&nbsp; 数据截至 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-课程免费，采用 MIT 许可证，共有 523 节课。感谢所有让它持续开放的赞助方和支持者。[查看赞助方与支持者](../../BACKERS.md)。
+课程免费，采用 MIT 许可证，共有 528 节课。感谢所有让它持续开放的赞助方和支持者。[查看赞助方与支持者](../../BACKERS.md)。
 
 想支持项目？可了解[赞助方式](../../SPONSORS.md)，包括[硬件赞助](../../SPONSORS.md#hardware-lab-partner)，或[通过 GitHub 赞助](https://github.com/sponsors/rohitg00)。
 

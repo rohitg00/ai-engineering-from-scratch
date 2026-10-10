@@ -13,11 +13,11 @@
 
 בחינם, בקוד פתוח וברישיון MIT. למדו באתר, עם סוכן תכנות או באמצעות הרצת קוד מקומי.
 
-> <span dir="rtl">523 שיעורים. 20 שלבים.</span> <span dir="ltr">Python, TypeScript, Rust, Julia.</span>
+> <span dir="rtl">528 שיעורים. 20 שלבים.</span> <span dir="ltr">Python, TypeScript, Rust, Julia.</span>
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="רישיון MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 שיעורים"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 שיעורים"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 שלבים"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="כוכבים ב-GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="אתר האינטרנט"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## בחרו מסלול לימוד
 
-אין צורך לעבור על 523 שיעורים לפני שמתחילים. בחרו מטרה אחת. כל קישור פותח את אותה תוכנית לימודים ב-GitHub או באתר, ובשתי הגרסאות משתמשים באותו קוד של השיעורים.
+אין צורך לעבור על 528 שיעורים לפני שמתחילים. בחרו מטרה אחת. כל קישור פותח את אותה תוכנית לימודים ב-GitHub או באתר, ובשתי הגרסאות משתמשים באותו קוד של השיעורים.
 
 | המטרה שלכם | למדו ב-GitHub | למדו באתר |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 עשרים שלבים. לחצו על שלב כדי להרחיב את רשימת השיעורים שלו.
 
 <a id="phase-0"></a>
-### שלב 0: התקנה וכלים `12 שיעורים`
+### שלב 0: התקנה וכלים `13 שיעורים`
 > הכינו את סביבת העבודה לכל מה שיבוא בהמשך.
 
 | # | שיעור | סוג | שפה |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [מסוף ומעטפת פקודות](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | למדו | — |
 | 11 | [Linux לפיתוח AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | למדו | — |
 | 12 | [ניפוי שגיאות וניתוח ביצועים](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | בנו | Python |
+| 13 | [Python להנדסת בינה מלאכותית](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | בנו | Python |
 
 <details id="phase-1">
 <summary><b>שלב 1: יסודות מתמטיים</b> &nbsp;<code>22 שיעורים</code>&nbsp; <em>האינטואיציה שמאחורי כל אלגוריתם AI, דרך קוד.</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>שלב 2: יסודות למידת מכונה</b> &nbsp;<code>18 שיעורים</code>&nbsp; <em>למידת מכונה קלאסית עדיין מהווה בסיס לרוב מערכות ה-AI בייצור.</em></summary>
+<summary><b>שלב 2: יסודות למידת מכונה</b> &nbsp;<code>21 שיעורים</code>&nbsp; <em>למידת מכונה קלאסית עדיין מהווה בסיס לרוב מערכות ה-AI בייצור.</em></summary>
 <br/>
 
 | # | שיעור | סוג | שפה |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [זיהוי חריגות](../../phases/02-ml-fundamentals/16-anomaly-detection/) | בנו | Python |
 | 17 | [טיפול בנתונים לא מאוזנים](../../phases/02-ml-fundamentals/17-imbalanced-data/) | בנו | Python |
 | 18 | [בחירת תכונות](../../phases/02-ml-fundamentals/18-feature-selection/) | בנו | Python |
+| 19 | [תכנון מערכות ML: מהבעיה למודל פרוס](../../phases/02-ml-fundamentals/19-ml-system-design/) | בנו | Python |
+| 20 | [ניטור מודלים בייצור: סחיפת נתונים וסחיפת מושגים](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | בנו | Python |
+| 21 | [מאגרי תכונות ופער בין אימון להגשה](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | בנו | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>שלב 17: תשתית וייצור</b> &nbsp;<code>28 שיעורים</code>&nbsp; <em>הביאו AI לעולם האמיתי.</em></summary>
+<summary><b>שלב 17: תשתית וייצור</b> &nbsp;<code>29 שיעורים</code>&nbsp; <em>הביאו AI לעולם האמיתי.</em></summary>
 <br/>
 
 | # | שיעור | סוג | שפה |
@@ -902,6 +906,7 @@ flowchart TB
 | 26 | [תאימות: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | למדו | Python |
 | 27 | [FinOps ל-LLM: כלכלת יחידה ושיוך עלויות בין דיירים](../../phases/17-infrastructure-and-production/27-finops-llms/) | למדו | Python |
 | 28 | [בחירת הגשה באירוח עצמי: התאמת המנוע לחומרה ולקנה המידה](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | למדו | Python |
+| 29 | [ממשקי הדגמה למודלים: מפונקציה ליישום שאפשר לשתף](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | בנו | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ flowchart LR
 <details>
 <summary>התקנת תוצרי שיעורים</summary>
 
-**תוצרי השיעורים.** המאגר כולל 396 מיומנויות ו-99 הנחיות תחת `phases/**/outputs/`; התקינו אותן באמצעות `scripts/install_skills.py`. נדרש שכפול של המאגר. הסקריפט תומך בסינון לפי תגיות, בהרצות תצוגה מקדימה ובמבנה תיקיות המותאם לכל סוכן:
+**תוצרי השיעורים.** המאגר כולל 400 מיומנויות ו-100 הנחיות תחת `phases/**/outputs/`; התקינו אותן באמצעות `scripts/install_skills.py`. נדרש שכפול של המאגר. הסקריפט תומך בסינון לפי תגיות, בהרצות תצוגה מקדימה ובמבנה תיקיות המותאם לכל סוכן:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> קוראים &nbsp;·&nbsp; <b>181,995</b> צפיות בדפים ב-30 הימים האחרונים &nbsp;·&nbsp; נכון ל-2026-08-29</sub></p>
 <!-- STATS:END -->
 
-בחינם, ברישיון MIT, 523 שיעורים. תודה לנותני החסות ולתומכים שמאפשרים את העבודה. [הצגת כל נותני החסות והתומכים](../../BACKERS.md).
+בחינם, ברישיון MIT, 528 שיעורים. תודה לנותני החסות ולתומכים שמאפשרים את העבודה. [הצגת כל נותני החסות והתומכים](../../BACKERS.md).
 
 רוצים לתמוך בעבודה? עיינו ב[אפשרויות החסות](../../SPONSORS.md), כולל [חסויות חומרה](../../SPONSORS.md#hardware-lab-partner), או [תמכו דרך GitHub](https://github.com/sponsors/rohitg00).
 

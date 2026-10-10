@@ -1,7 +1,7 @@
 // Phase 0 · Lesson 04 — APIs and keys (TypeScript port).
 // Reads ANTHROPIC_API_KEY from env, parses a minimal .env file, then makes one
 // /v1/messages call with global fetch. Set MOCK=1 to skip the network entirely.
-// Refs: https://docs.anthropic.com/en/api/messages
+// Refs: https://platform.claude.com/docs/en/api/messages
 //       https://nodejs.org/api/process.html#processenv
 //       https://nodejs.org/api/globals.html#fetch (Node 18+ ships fetch)
 

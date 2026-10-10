@@ -13,11 +13,11 @@
 
 無料、オープンソース、MIT ライセンスです。ウェブサイト、コーディングエージェント、ローカルでのコード実行から学び方を選べます。
 
-> 523 授業. 20段階. Python, TypeScript, Rust, Julia.
+> 528 授業. 20段階. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MITライセンス"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 授業"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 授業"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20段階"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHubのスター"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="ウェブサイト"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## 学習パスを選ぶ
 
-始める前に523レッスンすべてに目を通す必要はありません。目標を1つ選んでください。どのリンクからもGitHubまたはウェブサイトで同じカリキュラムを開けます。どちらも同じレッスンコードを使っています。
+始める前に528レッスンすべてに目を通す必要はありません。目標を1つ選んでください。どのリンクからもGitHubまたはウェブサイトで同じカリキュラムを開けます。どちらも同じレッスンコードを使っています。
 
 | 目標 | GitHubで学ぶ | ウェブサイトで学ぶ |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 全20フェーズです。各フェーズをクリックすると、レッスン一覧が開きます。
 
 <a id="phase-0"></a>
-### フェーズ0：セットアップとツール `12 レッスン`
+### フェーズ0：セットアップとツール `13 レッスン`
 
 > これから学ぶ内容に備えて、開発環境を整えましょう。
 
@@ -348,6 +348,7 @@ flowchart TB
 | 10 | [ターミナルとシェル](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | 学習 | — |
 | 11 | [AIのためのLinux](../../phases/00-setup-and-tooling/11-linux-for-ai/) | 学習 | — |
 | 12 | [デバッグとプロファイリング](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | 制作 | Python |
+| 13 | [AIエンジニアリングのためのPython](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | 制作 | Python |
 
 <details id="phase-1">
 <summary><b>フェーズ1 — 数学の基礎</b> &nbsp;<code>22 レッスン</code>&nbsp; <em>コードを通じて、あらゆるAIアルゴリズムの背景にある直観を学びます。</em></summary>
@@ -381,7 +382,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>フェーズ2 — 機械学習の基礎</b> &nbsp;<code>18 レッスン</code>&nbsp; <em>古典的な機械学習は、今も多くの本番AIシステムを支えています。</em></summary>
+<summary><b>フェーズ2 — 機械学習の基礎</b> &nbsp;<code>21 レッスン</code>&nbsp; <em>古典的な機械学習は、今も多くの本番AIシステムを支えています。</em></summary>
 <br/>
 
 | # | レッスン | 種別 | 言語 |
@@ -404,6 +405,9 @@ flowchart TB
 | 16 | [異常検知](../../phases/02-ml-fundamentals/16-anomaly-detection/) | 制作 | Python |
 | 17 | [不均衡データへの対処](../../phases/02-ml-fundamentals/17-imbalanced-data/) | 制作 | Python |
 | 18 | [特徴量選択](../../phases/02-ml-fundamentals/18-feature-selection/) | 制作 | Python |
+| 19 | [機械学習システム設計：課題からデプロイ済みモデルまで](../../phases/02-ml-fundamentals/19-ml-system-design/) | 制作 | Python |
+| 20 | [本番環境でのモデル監視：データドリフトとコンセプトドリフト](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | 制作 | Python |
+| 21 | [特徴量ストアと学習・推論間のずれ](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | 制作 | Python |
 
 </details>
 
@@ -870,7 +874,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>フェーズ17 — インフラと本番運用</b> &nbsp;<code>28 レッスン</code>&nbsp; <em>AIを現実の世界に届けます。</em></summary>
+<summary><b>フェーズ17 — インフラと本番運用</b> &nbsp;<code>29 レッスン</code>&nbsp; <em>AIを現実の世界に届けます。</em></summary>
 <br/>
 
 | # | レッスン | 種別 | 言語 |
@@ -903,6 +907,7 @@ flowchart TB
 | 26 | [コンプライアンス：SOC 2、HIPAA、GDPR、EU AI Act、ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | 学習 | Python |
 | 27 | [LLMのFinOps：単位経済性とマルチテナントのコスト帰属](../../phases/17-infrastructure-and-production/27-finops-llms/) | 学習 | Python |
 | 28 | [セルフホスト型サービングの選定：エンジンとハードウェア、規模の適合](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | 学習 | Python |
+| 29 | [モデルのデモインターフェース：関数から共有できるアプリへ](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | 制作 | Python |
 
 </details>
 
@@ -1143,7 +1148,7 @@ flowchart LR
 <details>
 <summary>レッスンの成果物をインストールする</summary>
 
-**レッスン成果物。** リポジトリには`phases/**/outputs/`に396個のスキルと99個のプロンプトが含まれます。`scripts/install_skills.py`でインストールできます。こちらはリポジトリのクローンが必要です。タグによる絞り込み、ドライラン、エージェント別レイアウトをサポートします。
+**レッスン成果物。** リポジトリには`phases/**/outputs/`に400個のスキルと100個のプロンプトが含まれます。`scripts/install_skills.py`でインストールできます。こちらはリポジトリのクローンが必要です。タグによる絞り込み、ドライラン、エージェント別レイアウトをサポートします。
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1263,7 +1268,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> 人の読者 &nbsp;·&nbsp; <b>181,995</b> 過去30日間のページビュー &nbsp;·&nbsp; 2026-08-29時点</sub></p>
 <!-- STATS:END -->
 
-無料、MITライセンス、523レッスン。この取り組みを支えるスポンサーと支援者の皆さまに感謝します。[すべてのスポンサーと支援者を見る](../../BACKERS.md)。
+無料、MITライセンス、528レッスン。この取り組みを支えるスポンサーと支援者の皆さまに感謝します。[すべてのスポンサーと支援者を見る](../../BACKERS.md)。
 
 この取り組みを支援するには、[スポンサーシップの選択肢](../../SPONSORS.md)と[ハードウェアスポンサーシップ](../../SPONSORS.md#hardware-lab-partner)をご覧になるか、[GitHubでスポンサーになる](https://github.com/sponsors/rohitg00)ことができます。
 
