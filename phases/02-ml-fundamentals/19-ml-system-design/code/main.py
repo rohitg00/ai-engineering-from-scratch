@@ -93,6 +93,8 @@ def choose_serving(workload: Workload, costs: CostModel = CostModel()) -> tuple[
 def check_lengths(y_true: list, y_pred: list) -> None:
     if len(y_true) != len(y_pred):
         raise ValueError(f"y_true has {len(y_true)} values and y_pred has {len(y_pred)}")
+    if not y_true:
+        raise ValueError("a metric needs at least one value")
 
 
 def f1_score(y_true: list[int], y_pred: list[int]) -> float:
@@ -256,7 +258,7 @@ def _items(doc: dict, path: str) -> bool:
 
 def _positive(doc: dict, path: str) -> bool:
     value = get_path(doc, path)
-    return isinstance(value, (int, float)) and not isinstance(value, bool) and value > 0
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and value > 0
 
 
 def _choice(doc: dict, path: str, allowed: set[str]) -> bool:
@@ -304,7 +306,7 @@ def check_serving_fit(doc: dict, costs: CostModel = CostModel()) -> bool:
     workload = workload_from_doc(doc)
     mode = get_path(doc, "serving.mode")
     budget = get_path(doc, "budgets.max_dollars_per_day")
-    if workload is None or not isinstance(mode, str) or not isinstance(budget, (int, float)):
+    if workload is None or not isinstance(mode, str) or not _positive(doc, "budgets.max_dollars_per_day"):
         return False
     _, plans = choose_serving(workload, costs)
     chosen = {plan.mode: plan for plan in plans}.get(mode)

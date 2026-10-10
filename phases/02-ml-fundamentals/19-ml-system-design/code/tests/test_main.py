@@ -84,6 +84,8 @@ class BaselineTests(unittest.TestCase):
             f1_score([1, 0, 1], [1, 0])
         with self.assertRaises(ValueError):
             mean_absolute_error([1.0], [1.0, 2.0])
+        with self.assertRaises(ValueError):
+            mean_absolute_error([], [])
 
     def test_fit_rule_separates_close_values(self) -> None:
         rows = [{"x": v} for v in (1.04, 1.06)]
@@ -169,6 +171,14 @@ class DesignDocTests(unittest.TestCase):
         doc["rollout"]["stages"] = [{"name": "shadow"}]
         failed = {key for key, _, _ in review_design_doc(doc).failed}
         self.assertTrue({"ml_task", "baselines", "serving_fit", "rollout"} <= failed)
+
+    def test_infinite_or_boolean_budget_fails(self) -> None:
+        for budget in (float("inf"), True):
+            doc = copy.deepcopy(STRONG_DOC)
+            doc["budgets"]["max_dollars_per_day"] = budget
+            with self.subTest(budget=budget):
+                failed = {key for key, _, _ in review_design_doc(doc).failed}
+                self.assertTrue({"budgets", "serving_fit"} <= failed)
 
     def test_hybrid_mode_fails_without_a_hybrid_plan(self) -> None:
         doc = copy.deepcopy(STRONG_DOC)
