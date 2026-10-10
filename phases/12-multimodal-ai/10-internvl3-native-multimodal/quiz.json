@@ -28,15 +28,15 @@
     },
     {
       "stage": "check",
-      "question": "How does InternVL3's V2PE position allocation differ from Qwen2-VL's M-RoPE in the lesson?",
+      "question": "Which distinction correctly describes InternVL3’s V2PE versus Qwen2-VL’s M-RoPE?",
       "options": [
-        "Learned position-band allocation per modality.",
-        "Resolution-selected position allocation per modality.",
-        "Temporal-only position allocation per modality.",
-        "Fixed position-band allocation per modality."
+        "V2PE gives visual tokens identical positions; M-RoPE uses only the text position axis.",
+        "V2PE uses smaller variable visual increments; M-RoPE separates time, height, and width.",
+        "V2PE uses unit visual increments; M-RoPE removes image and video position coordinates.",
+        "V2PE separates time, height, and width; M-RoPE uses smaller variable visual increments."
       ],
-      "correct": 0,
-      "explanation": "V2PE learns how hidden dimensions are allocated among text, image, and video position bands, while the lesson describes Qwen2-VL M-RoPE as a fixed axis split. Learning allocation lets the model trade spatial and temporal frequency resolution."
+      "correct": 1,
+      "explanation": "V2PE uses smaller, variable position increments for visual tokens, allowing longer multimodal sequences within the position window. M-RoPE decomposes rotary embeddings into temporal, height, and width components. Reversing those mechanisms confuses position-step size with coordinate-axis encoding; neither is learned allocation of hidden-dimension bands."
     },
     {
       "stage": "check",
