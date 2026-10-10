@@ -1,0 +1,78 @@
+{
+  "lesson": "12-3d-generation",
+  "title": "3D Generation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A 3D asset pipeline first generates consistent views, then fits a 3D representation. What is this overall strategy?",
+      "options": [
+        "A GAN discriminator converts images into camera poses",
+        "Single-view pixel classification followed by upscaling",
+        "A text encoder directly emits every mesh vertex",
+        "Multi-view generation followed by 3D reconstruction"
+      ],
+      "correct": 3,
+      "explanation": "The pipeline first generates multiple views of one object, then fits a 3D representation such as Gaussian splats to those views. A text encoder can condition generation but is not the reconstruction stage that emits mesh vertices."
+    },
+    {
+      "stage": "check",
+      "question": "How does 3D Gaussian Splatting render a scene in the lesson?",
+      "options": [
+        "Project Gaussians and alpha-composite them",
+        "March rays through an MLP at every sample",
+        "Apply a mesh classifier to each camera ray",
+        "Decode a voxel grid with a transformer"
+      ],
+      "correct": 0,
+      "explanation": "3D Gaussian Splatting projects Gaussian primitives into the image plane and composites them in depth order to render a view. NeRF instead evaluates an MLP along rays to obtain color and density."
+    },
+    {
+      "stage": "check",
+      "question": "What does a NeRF MLP predict from position and view direction?",
+      "options": [
+        "A mesh face and texture coordinate",
+        "Color and density for ray integration",
+        "A Gaussian position and covariance",
+        "A camera pose and frame timestamp"
+      ],
+      "correct": 1,
+      "explanation": "A NeRF MLP takes 3D position and view direction and predicts color plus density; rendering integrates those quantities along camera rays. Gaussian splatting directly represents and projects Gaussian primitives instead."
+    },
+    {
+      "stage": "check",
+      "question": "Why can independently generated object views produce a blurry 3D reconstruction?",
+      "options": [
+        "The VAE decoder cannot output RGB images",
+        "The Gaussian splat renderer requires a text prompt",
+        "Their geometry may disagree across views",
+        "The mesh topology is fixed before view generation"
+      ],
+      "correct": 2,
+      "explanation": "If separate views imply different geometry, the reconstruction cannot fit one coherent object and becomes blurry or inconsistent. Shared multi-view conditioning makes the generated views agree before the 3D fitting stage."
+    },
+    {
+      "stage": "post",
+      "question": "A product must reconstruct a scene from a set of captured photos and support real-time viewing. Which representation is the lesson’s fit?",
+      "options": [
+        "A dense voxel grid for the full scene",
+        "A CLIP embedding across the captured views",
+        "A NeRF with per-ray MLP evaluation",
+        "A 3D Gaussian splatting scene representation"
+      ],
+      "correct": 3,
+      "explanation": "The lesson recommends 3D Gaussian Splatting for reconstructing scenes from photos and notes its fast rendering. NeRF requires many per-ray MLP evaluations, while a CLIP embedding is not itself a renderable scene."
+    },
+    {
+      "stage": "post",
+      "question": "A single photo is used to create a full 3D object. Which uncertainty should the pipeline account for?",
+      "options": [
+        "The visible image has no camera information",
+        "The reconstruction has no dependence on training data",
+        "The model cannot represent surface color",
+        "The unseen side must be hallucinated"
+      ],
+      "correct": 3,
+      "explanation": "A single photo shows only one side of an object, leaving the unseen geometry underdetermined. The pipeline must infer or hallucinate that back side, so its quality can vary."
+    }
+  ]
+}
