@@ -1,0 +1,78 @@
+{
+  "lesson": "19-anthropic-rsp",
+  "title": "Anthropic Responsible Scaling Policy v3.0",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A company publishes a scaling policy describing its own safety actions and separate recommendations for the industry. What distinction should a reader track?",
+      "options": [
+        "Which models appear in the examples and which do not",
+        "Which pages describe testing and which describe training",
+        "Which items are commitments and which are recommendations",
+        "Which items use short names and which use long names"
+      ],
+      "correct": 2,
+      "explanation": "Separate Anthropic commitments from industry recommendations because only the former state what Anthropic itself will do; a recommendation to other labs is not automatically a binding promise by its publisher."
+    },
+    {
+      "stage": "check",
+      "question": "What capability does the lesson associate with the AI R&D-4 threshold?",
+      "options": [
+        "Generating a single correct code patch on a benchmark",
+        "Passing every current cybersecurity evaluation",
+        "Running a model without a human reading its output",
+        "Automating substantial AI research at competitive cost"
+      ],
+      "correct": 3,
+      "explanation": "AI R&D-4 concerns automating a substantial portion of AI research at competitive cost relative to human-plus-AI work. A single benchmark patch or cybersecurity pass is narrower than that pipeline-level capability."
+    },
+    {
+      "stage": "check",
+      "question": "What replaces the 2023 explicit pause commitment in the lesson's description of RSP v3.0?",
+      "options": [
+        "A public vote on each model release",
+        "An unconditional promise to stop training at every threshold",
+        "Publish risks and mitigation case before scaling continues",
+        "A ban on publishing any new capability evaluation"
+      ],
+      "correct": 2,
+      "explanation": "RSP v3.0 calls for publishing an affirmative risk-and-mitigation case before continued scaling, replacing the earlier explicit pause commitment. A promise to stop training at every threshold is stronger than the described process."
+    },
+    {
+      "stage": "check",
+      "question": "Which document is forward-looking in the RSP v3.0 artifact pair?",
+      "options": [
+        "Frontier Safety Roadmap",
+        "Risk Report",
+        "Safeguards Report",
+        "Capabilities Report"
+      ],
+      "correct": 0,
+      "explanation": "The Frontier Safety Roadmap looks forward to planned safety work and expected capability; the Risk Report looks back at observed capability and residual risk. Confusing the pair reverses their temporal roles."
+    },
+    {
+      "stage": "post",
+      "question": "A model meets a capability threshold under a scaling policy. What should the affirmative case cover according to the lesson?",
+      "options": [
+        "A guarantee that no future deployment can fail",
+        "Only the model's training cost and runtime latency",
+        "The names of the teams that built the evaluation suite",
+        "Measurements, risk analysis, mitigations, and residual risk"
+      ],
+      "correct": 3,
+      "explanation": "An affirmative case documents measurements, risks, mitigations, and residual uncertainty; it cannot guarantee zero future failures. The guarantee option promises more than the policy’s safety argument can establish."
+    },
+    {
+      "stage": "post",
+      "question": "A reader sees numeric cutoffs in the lesson's toy evaluator and qualitative wording in the policy summary. What should they conclude?",
+      "options": [
+        "Treat the code numbers as illustrative rather than policy thresholds",
+        "Use the code values to replace the source policy text",
+        "Treat qualitative wording as a typo without checking context",
+        "Assume the example's values are binding regulatory limits"
+      ],
+      "correct": 0,
+      "explanation": "The toy code’s numerical cutoffs are illustrative, while the policy uses qualitative threshold language. Treating example values as binding regulatory limits confuses a teaching model with the source policy."
+    }
+  ]
+}
