@@ -11,6 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { buildData: buildProjectData } = require('./build-projects.js');
 
 const REPO_ROOT = path.resolve(__dirname, '..');
 const README_PATH = path.join(REPO_ROOT, 'README.md');
@@ -2358,6 +2359,21 @@ const ARTIFACTS = ${JSON.stringify(artifacts, null, 2)};
   writeLlms(phases, glossaryTerms.length, artifacts.length, certifications);
 }
 
+function readyManualIds() {
+  const root = path.join(REPO_ROOT, 'manuals');
+  if (!fs.existsSync(root)) return [];
+  return fs.readdirSync(root, { withFileTypes: true })
+    .filter(entry => entry.isDirectory() && !/^[_.]/.test(entry.name))
+    .filter(entry => {
+      const file = path.join(root, entry.name, 'manual.json');
+      if (!fs.existsSync(file)) return false;
+      const manual = JSON.parse(fs.readFileSync(file, 'utf8'));
+      return manual.id === entry.name && manual.status === 'ready';
+    })
+    .map(entry => entry.name)
+    .sort();
+}
+
 // ─── sitemap.xml from the same SEO manifest the lesson route renders ─────
 function writeSitemap(lessonManifest, glossaryCount, certifications) {
   const urls = [
@@ -2386,6 +2402,14 @@ function writeSitemap(lessonManifest, glossaryCount, certifications) {
     if (lesson.context && lesson.context.kind === 'course') {
       urls.push({ loc: '/lesson?path=' + encodeURIComponent(lesson.path), priority: '0.6', freq: 'monthly' });
     }
+  }
+  const manualIds = readyManualIds();
+  if (manualIds.length) {
+    urls.push({ loc: '/manuals.html', priority: '0.7', freq: 'monthly' });
+    for (const id of manualIds) urls.push({ loc: `/manual-${id}.html`, priority: '0.7', freq: 'monthly' });
+  }
+  for (const project of buildProjectData().projects) {
+    urls.push({ loc: '/project?id=' + encodeURIComponent(project.id), priority: '0.6', freq: 'monthly' });
   }
   const body = urls.map(u =>
     `  <url>\n    <loc>${SITE_ORIGIN}${u.loc.replace(/&/g, '&amp;')}</loc>\n` +
