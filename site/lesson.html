@@ -4527,13 +4527,75 @@
         text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
         text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
         text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
-        text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function (m, label, href) {
-          if (/^https?:\/\/|^mailto:/i.test(href)) {
-            return '<a href="' + href + '" target="_blank" rel="noopener">' + label + '</a>';
+        // Parse inline links by balancing parentheses in the destination.
+        // URLs such as DOI links may contain their own parentheses.
+        var out = '';
+        for (var i = 0; i < text.length;) {
+          if (text.charAt(i) !== '[') {
+            out += text.charAt(i++);
+            continue;
           }
-          return label;
-        });
-        return text;
+
+          var labelEnd = -1;
+          for (var labelCursor = i + 1; labelCursor < text.length; labelCursor++) {
+            if (text.charAt(labelCursor) === '\\') {
+              labelCursor++;
+              continue;
+            }
+            if (text.charAt(labelCursor) === ']') {
+              labelEnd = labelCursor;
+              break;
+            }
+          }
+          if (labelEnd === -1 || text.charAt(labelEnd + 1) !== '(') {
+            out += text.charAt(i++);
+            continue;
+          }
+
+          var hrefStart = labelEnd + 2;
+          var depth = 1;
+          var hrefEnd = hrefStart;
+          while (hrefEnd < text.length && depth > 0) {
+            var hrefChar = text.charAt(hrefEnd);
+            if (hrefChar === '\\') {
+              hrefEnd += 2;
+              continue;
+            }
+            if (hrefChar === '(') depth++;
+            if (hrefChar === ')') depth--;
+            hrefEnd++;
+          }
+
+          if (depth !== 0) {
+            out += text.charAt(i++);
+            continue;
+          }
+
+          var label = unescapeMarkdownPunctuation(text.slice(i + 1, labelEnd));
+          var href = unescapeMarkdownPunctuation(text.slice(hrefStart, hrefEnd - 1));
+          if (/^https?:\/\/|^mailto:/i.test(href)) {
+            out += '<a href="' + href + '" target="_blank" rel="noopener">' + label + '</a>';
+          } else {
+            out += label;
+          }
+          i = hrefEnd;
+        }
+        return out;
+      }
+
+      function unescapeMarkdownPunctuation(value) {
+        var unescaped = '';
+        for (var i = 0; i < value.length; i++) {
+          var current = value.charAt(i);
+          var next = value.charAt(i + 1);
+          if (current === '\\' && (next === '[' || next === ']' || next === '(' || next === ')' || next === '\\')) {
+            unescaped += next;
+            i++;
+          } else {
+            unescaped += current;
+          }
+        }
+        return unescaped;
       }
 
       function slugify(text) {
