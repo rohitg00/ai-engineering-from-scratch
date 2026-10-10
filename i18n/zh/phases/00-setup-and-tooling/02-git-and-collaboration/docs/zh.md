@@ -1,26 +1,26 @@
-# 关键字和协作
+# Git 与协作
 
-> 每个实验,每一个模型,每一个课程都会被追踪.
+> 版本控制必不可少。你在这里开展的每一次实验、构建的每一个模型、完成的每一节课，都要纳入版本管理。
 
 **Type:** Learn
 **Languages:** --
 **Prerequisites:** Phase 0, Lesson 01
-**Time:** ~30 minutes
+**Time:** ~30 分钟
 
 ## 学习目标
 
-- 配置 git 身份,并使用每天的加,提交和推工作流程
-- 建立和合并分支,进行孤立的实验,而不会打破主体
-- 写一个`.gitignore`排除模型检查点和大型二元文件
-- 通过 导航提交历史`git log`了解项目发展
+- 配置 git 身份信息，掌握 add、commit、push 的日常工作流程
+- 创建并合并分支，通过分支隔离实验，避免破坏 main 分支
+- 编写一个 `.gitignore`，排除模型检查点和大体积二进制文件
+- 使用 `git log` 浏览提交历史，理解项目的演进过程
 
-## 问题
+## 问题所在
 
-你即将在20个阶段写成数百个代码文件. 如果没有版本控制,你会失去工作,打破无法撤销的东西,
+你将在 20 个阶段中编写数百个代码文件。没有版本控制，你就会丢失工作成果、引入无法撤销的改动，也无法与他人协作。
 
-这一课涵盖了你需要什么,而不是更多.
+Git 是版本控制工具，GitHub 是托管代码的地方。本课只介绍学习本课程所需的内容。
 
-## 概念
+## 核心概念
 
 ```mermaid
 sequenceDiagram
@@ -35,25 +35,25 @@ sequenceDiagram
     LR->>WD: git pull
 ```
 
-记住三个事情:
-1. 经常保存 (`git commit`)
-2. 按到远程 (`git push`)
-3. 实验部门 (`git checkout -b experiment`)
+记住三件事：
+1. 经常保存（`git commit`）
+2. 推送到远程仓库（`git push`）
+3. 用分支做实验（`git checkout -b experiment`）
 
 ```figure
 s0-commit-dag
 ```
 
-## 建立它
+## 动手构建
 
-### 步骤1:配置 git
+### 第 1 步：配置 git
 
 ```bash
 git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 ```
 
-### 步骤2:日常工作流程
+### 第 2 步：日常工作流程
 
 ```bash
 git status
@@ -62,7 +62,7 @@ git commit -m "Add perceptron implementation"
 git push origin main
 ```
 
-### 步骤3:为实验分支
+### 第 3 步：用分支做实验
 
 ```bash
 git checkout -b experiment/new-optimizer
@@ -73,9 +73,9 @@ git checkout main
 git merge experiment/new-optimizer
 ```
 
-### 步骤4:与本课程合作
+### 第 4 步：使用本课程仓库
 
-只有维护者才能访问写作. 首先在 GitHub 上 (叉按,右上)`origin`您的本文:
+你不能直接向课程仓库推送——只有维护者才有写权限。请先在 GitHub 上创建分叉（fork），点击右上角的 Fork 按钮，这样 `origin` 就会指向你自己的仓库副本：
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/ai-engineering-from-scratch.git
@@ -86,31 +86,31 @@ git checkout -b my-progress
 git push origin my-progress
 ```
 
-## 用它
+## 实际使用
 
-为了完成这个课程,你需要这些命令:
+对于这门课，你只需要这几个命令：
 
-| Command | When |
+| 命令 | 用途 |
 |---------|------|
-| `git clone` | Get the course repo |
-| `git add` + `git commit` | Save your work |
-| `git push` | Back it up to GitHub |
-| `git checkout -b` | Try something without breaking main |
-| `git log --oneline` | See what you've done |
+| `git clone` | 获取课程仓库 |
+| `git add` + `git commit` | 保存你的工作 |
+| `git push` | 备份到 GitHub |
+| `git checkout -b` | 在不破坏 main 的情况下尝试新东西 |
+| `git log --oneline` | 查看你做过什么 |
 
-这就是,你不需要反,桃选,或子模块.
+就这样。本课程不需要用到变基（rebase）、拣选（cherry-pick）或子模块（submodule）。
 
-## 运动
+## 练习
 
-1. 叉这个 repo,克隆你的叉子,创建一个叫做`my-progress`写一个文件,提交它,推它
-2. 创建一个`.gitignore`没有模拟检查站文件 (`.pt`现在`.pth`现在`.safetensors`)
-3. 查看这个回复的提交历史`git log --oneline`阅读如何增加教训
+1. 为本仓库创建分叉，克隆你的分叉仓库，创建名为 `my-progress` 的分支，新建一个文件，将它提交并推送
+2. 创建一个 `.gitignore`，排除模型检查点文件（`.pt`、`.pth`、`.safetensors`）
+3. 用 `git log --oneline` 查看这个仓库的提交历史，了解各课是如何添加的
 
-## 关键词
+## 关键术语
 
-| Term | What people say | What it actually means |
+| 术语 | 人们怎么说 | 实际含义 |
 |------|----------------|----------------------|
-| Commit | "Saving" | A snapshot of your entire project at a point in time |
-| Branch | "A copy" | A pointer to a commit that moves forward as you work |
-| Merge | "Combining code" | Taking changes from one branch and applying them to another |
-| Remote | "The cloud" | A copy of your repo hosted somewhere else (GitHub, GitLab) |
+| 提交（Commit） | “保存” | 整个项目在某一时刻的快照 |
+| 分支（Branch） | “一个副本” | 指向某次提交的指针，会随着新提交向前移动 |
+| 合并（Merge） | “把代码合在一起” | 将一个分支的改动应用到另一个分支 |
+| 远程仓库（Remote） | “云端” | 托管在其他位置（GitHub、GitLab）的仓库副本 |
