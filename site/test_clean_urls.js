@@ -63,12 +63,19 @@ test('build output keeps sitemap, discovery links and HTML identities consistent
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   fs.writeFileSync(path.join(root, 'index.html'), '<a href="projects.html">Projects</a>');
   fs.writeFileSync(path.join(root, 'projects.html'), '<link rel="canonical" href="https://aiengineeringfromscratch.com/projects.html">');
-  fs.writeFileSync(path.join(root, 'sitemap.xml'), '<urlset><url><loc>https://aiengineeringfromscratch.com/index.html</loc></url></urlset>');
+  fs.writeFileSync(path.join(root, 'manuals.html'), '<link rel="canonical" href="https://aiengineeringfromscratch.com/manuals.html">');
+  fs.writeFileSync(path.join(root, 'manual-demo-101.html'), '<link rel="canonical" href="https://aiengineeringfromscratch.com/manual-demo-101.html">');
+  fs.writeFileSync(path.join(root, 'sitemap.xml'), '<urlset><url><loc>https://aiengineeringfromscratch.com/index.html</loc></url>'
+    + '<url><loc>https://aiengineeringfromscratch.com/manuals.html</loc></url>'
+    + '<url><loc>https://aiengineeringfromscratch.com/manual-demo-101.html</loc></url></urlset>');
   fs.writeFileSync(path.join(root, 'llms.txt'), '[Projects](https://aiengineeringfromscratch.com/projects.html)');
   cleanSite(root);
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
   assert.match(sitemap, /<loc>https:\/\/aiengineeringfromscratch.com\/<\/loc>/);
   assert.match(sitemap, /<loc>https:\/\/aiengineeringfromscratch.com\/projects<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/aiengineeringfromscratch.com\/manuals<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/aiengineeringfromscratch.com\/manual-demo-101<\/loc>/);
+  assert.match(fs.readFileSync(path.join(root, 'manual-demo-101.html'), 'utf8'), /href="https:\/\/aiengineeringfromscratch.com\/manual-demo-101"/);
   assert.doesNotMatch(fs.readFileSync(path.join(root, 'llms.txt'), 'utf8'), /\.html/);
   cleanSite(root);
   assert.equal(fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8'), sitemap);

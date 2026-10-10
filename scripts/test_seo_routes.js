@@ -1,10 +1,17 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 
 const lessonApi = require('../api/lesson');
 const certificationApi = require('../api/certification');
+const { parseMd } = require('../site/lesson-markdown');
+const manuals = require('../site/build-manuals.js');
+const { buildData: buildProjectData } = require('../site/build-projects.js');
+
+const ROOT = path.join(__dirname, '..');
+const PERCEPTRON = 'phases/03-deep-learning-core/01-the-perceptron';
 
 function makeAssets() {
   return {
@@ -436,6 +443,204 @@ test('lesson route returns recoverable 404s and reloads injected fixture assets'
   assert.equal(broken.statusCode, 500);
   assert.equal(broken.headers['cache-control'], 'no-store');
   assert.equal(loadCount, 3);
+});
+
+function fallbackRegion(html) {
+  const match = html.match(/<!-- AIFS:LESSON-FALLBACK:START -->([\s\S]*?)<!-- AIFS:LESSON-FALLBACK:END -->/);
+  assert.ok(match, 'fallback region');
+  return match[1];
+}
+
+function visibleWords(html) {
+  return html
+    .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .split(/\s+/)
+    .filter(function (token) { return /[A-Za-z0-9]/.test(token); }).length;
+}
+
+function embeddedMarkdown(html) {
+  const match = html.match(/<script type="application\/json" id="lessonMarkdown">([\s\S]*?)<\/script>/);
+  return match ? match[1] : null;
+}
+
+function productionAssets(readMarkdown) {
+  return Object.assign({}, lessonApi.loadProductionAssets(), { readMarkdown });
+}
+
+test('lesson route serves the full lesson body, headings, and code to crawlers', function () {
+  const lessonUrl = '/lesson?path=' + encodeURIComponent(PERCEPTRON);
+  const full = invoke(lessonApi, { method: 'GET', url: lessonUrl, headers: { host: 'aiengineeringfromscratch.com' } });
+  const summary = invoke(lessonApi.createHandler({ loadAssets: function () { return productionAssets(); } }), { method: 'GET', url: lessonUrl });
+  assert.equal(full.statusCode, 200);
+  assert.equal(summary.statusCode, 200);
+
+  const region = fallbackRegion(full.body);
+  const markdown = fs.readFileSync(path.join(ROOT, PERCEPTRON, 'docs', 'en.md'), 'utf8');
+  const body = parseMd(markdown).replace(/<h1 id="[^"]*">[\s\S]*?<\/h1>/, '<h1>The Perceptron</h1>');
+  assert.ok(region.includes(body), 'the server HTML holds the whole rendered lesson');
+  assert.equal((region.match(/<h1(?:\s|>)/g) || []).length, 1);
+  assert.match(region, /<h1>The Perceptron<\/h1>/);
+  assert.match(region, /<h2 id="the-concept" class="">The Concept<\/h2>/);
+  assert.match(region, /<h3 id="the-xor-problem">The XOR Problem<\/h3>/);
+  assert.match(region, /<pre><span class="code-lang">python<\/span>[\s\S]*?<span class="syn-keyword">class<\/span> Perceptron:/);
+  assert.match(region, /XOR was unsolvable by single-layer networks/);
+  assert.match(region, /class="lesson-nav-btn next"/);
+  assert.ok(visibleWords(region) > 1500, 'full lesson text');
+  assert.ok(visibleWords(region) > 5 * visibleWords(fallbackRegion(summary.body)), 'much longer than the summary fallback');
+  assert.deepEqual(JSON.parse(embeddedMarkdown(full.body)), { path: PERCEPTRON, markdown });
+  assert.match(full.body, /<link rel="canonical" href="https:\/\/aiengineeringfromscratch\.com\/lesson\?path=phases%2F03-deep-learning-core%2F01-the-perceptron">/);
+  assert.match(full.body, /"@type":"LearningResource"/);
+});
+
+test('lesson route keeps the summary fallback when Markdown is unreadable or a translation is requested', function () {
+  const reads = [];
+  const unreadable = invoke(lessonApi.createHandler({ loadAssets: function () {
+    return productionAssets(function (lessonPath) {
+      reads.push(lessonPath);
+      throw new Error('ENOENT');
+    });
+  } }), { method: 'GET', url: '/lesson?path=' + encodeURIComponent(PERCEPTRON) });
+  const summary = invoke(lessonApi.createHandler({ loadAssets: function () { return productionAssets(); } }), {
+    method: 'GET',
+    url: '/lesson?path=' + encodeURIComponent(PERCEPTRON),
+  });
+  assert.deepEqual(reads, [PERCEPTRON]);
+  assert.equal(unreadable.statusCode, 200);
+  assert.equal(unreadable.body, summary.body);
+  assert.equal(embeddedMarkdown(unreadable.body), null);
+  assert.match(fallbackRegion(unreadable.body), /<p class="motto">/);
+
+  const translatedReads = [];
+  const translated = invoke(lessonApi.createHandler({ loadAssets: function () {
+    return productionAssets(function (lessonPath) {
+      translatedReads.push(lessonPath);
+      return '# Never rendered\n';
+    });
+  } }), { method: 'GET', url: '/lesson?path=' + encodeURIComponent(PERCEPTRON) + '&lang=hi' });
+  assert.equal(translated.statusCode, 200);
+  assert.deepEqual(translatedReads, []);
+  assert.equal(embeddedMarkdown(translated.body), null);
+
+  const english = invoke(lessonApi, { method: 'GET', url: '/lesson?path=' + encodeURIComponent(PERCEPTRON) + '&lang=en' });
+  assert.equal(english.statusCode, 200);
+  assert.ok(embeddedMarkdown(english.body));
+});
+
+test('lesson route never reads Markdown for paths outside the manifest', function () {
+  const assets = makeAssets();
+  const reads = [];
+  assets.lesson.readMarkdown = function (lessonPath) {
+    reads.push(lessonPath);
+    return '# Vectors\n';
+  };
+  const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
+  for (const lessonPath of ['phases/01-math/99-missing', '../site/lesson', 'phases/01-math/01-vectors/../../02-x', 'certifications/claude/lessons/99-missing']) {
+    const response = invoke(handler, { method: 'GET', query: { path: lessonPath } });
+    assert.equal(response.statusCode, 404, lessonPath);
+    assert.equal(response.headers['cache-control'], 'no-store');
+    assert.match(response.body, /<meta name="robots" content="noindex">/);
+    assert.match(response.body, /href="\/sitemap\.xml"/);
+  }
+  assert.deepEqual(reads, []);
+
+  const production = invoke(lessonApi, { method: 'GET', url: '/lesson?path=phases%2F03-deep-learning-core%2F99-not-a-lesson' });
+  assert.equal(production.statusCode, 404);
+  assert.equal(production.headers['cache-control'], 'no-store');
+  assert.doesNotMatch(production.body, /lessonMarkdown/);
+});
+
+test('embedded lesson Markdown cannot close its script tag', function () {
+  const assets = makeAssets();
+  const markdown = [
+    '# Vectors',
+    '',
+    '> A </script><script>alert(1)</script> motto with <!-- a comment --> and ]]> and \u2028 inside.',
+    '',
+    '## Build It',
+    '',
+    '```html',
+    '</script><img src=x onerror=alert(2)>',
+    '```',
+    '',
+  ].join('\n');
+  assets.lesson.readMarkdown = function () { return markdown; };
+  const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
+  const response = invoke(handler, { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors' });
+  assert.equal(response.statusCode, 200);
+
+  const embedded = embeddedMarkdown(response.body);
+  assert.ok(embedded);
+  assert.doesNotMatch(embedded, /[<>]/);
+  assert.deepEqual(JSON.parse(embedded), { path: 'phases/01-math/01-vectors', markdown });
+  assert.equal((response.body.match(/<script\b/g) || []).length, 2);
+  assert.doesNotMatch(fallbackRegion(response.body), /<script>alert|<img src=x/);
+  assert.match(fallbackRegion(response.body), /&lt;\/script&gt;&lt;img src=x onerror=alert\(2\)&gt;/);
+  assert.match(fallbackRegion(response.body), /<h1>Vectors &amp; &lt;Matrices&gt; - Math Foundations<\/h1>/);
+});
+
+test('certification lessons render the body and disclaimer without a duplicate Markdown payload', function () {
+  const assets = makeAssets();
+  const lessonPath = 'certifications/claude/lessons/01-models';
+  assets.lesson.manifest.lessons[lessonPath].context.disclaimer = 'Independent preparation that is not affiliated with the exam provider.';
+  assets.lesson.readMarkdown = function (requested) {
+    assert.equal(requested, lessonPath);
+    return '# Model Decisions\n\n> Choose models from evidence.\n\n## Practice Lab\n\nScore three options.\n';
+  };
+  const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
+  const response = invoke(handler, { method: 'GET', query: { path: lessonPath, track: 'claude-example' } });
+  const region = fallbackRegion(response.body);
+  assert.equal(response.statusCode, 200);
+  assert.match(region, /<aside class="cert-notice lesson-cert-notice"[^>]*><strong>Independent preparation<\/strong><p>Independent preparation that is not affiliated with the exam provider\.<\/p><\/aside>/);
+  assert.match(region, /<h2 id="practice-lab" class="">Practice Lab<\/h2>/);
+  assert.match(region, /path=certifications%2Fclaude%2Flessons%2F02-tools&amp;track=claude-example/);
+  assert.equal(embeddedMarkdown(response.body), null);
+});
+
+test('lesson template renders through the shared Markdown module', function () {
+  const template = fs.readFileSync(path.join(ROOT, 'site', 'lesson.html'), 'utf8');
+  const moduleTag = template.indexOf('<script src="lesson-markdown.js?v=');
+  assert.ok(moduleTag > 0);
+  assert.ok(moduleTag < template.indexOf('window.AIFSLessonMarkdown.parseMd(md)'));
+  assert.doesNotMatch(template, /function (?:parseMd|inlineFormat|highlightSyntax|renderCodeBlock|splitTableRow)\(/);
+  const config = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+  const included = config.functions['api/lesson.js'].includeFiles;
+  for (const pattern of ['site/lesson-markdown.js', 'phases/*/*/docs/en.md', 'certifications/*/lessons/*/docs/en.md']) {
+    assert.ok(included.includes(pattern), pattern);
+  }
+});
+
+test('shared Markdown renderer escapes text exactly like the DOM serializer', function () {
+  const html = parseMd('```mermaid\nA["x & y"] --> B[\'<b>\u00a0\']\n```\n');
+  assert.equal(html, '<div class="mermaid-container"><div class="mermaid-block" data-mermaid-index="1"><div class="mermaid-toolbar">'
+    + '<button type="button" class="mermaid-btn mermaid-expand" data-mermaid-index="1">Expand</button></div>'
+    + '<pre class="mermaid mermaid-source" id="mermaid-1">A["x &amp; y"] --&gt; B[\'&lt;b&gt;&nbsp;\']</pre>'
+    + '<div class="mermaid-render" id="mermaid-render-1"></div></div></div>');
+});
+
+test('sitemap lists ready manuals at their canonical URLs and every ready project', function (t) {
+  const sitemap = fs.readFileSync(path.join(ROOT, 'site', 'sitemap.xml'), 'utf8');
+  const locs = new Set(Array.from(sitemap.matchAll(/<loc>([^<]+)<\/loc>/g), function (match) { return match[1].replace(/&amp;/g, '&'); }));
+
+  const ready = manuals.loadAll().filter(function (manual) { return manual.status === 'ready'; });
+  assert.ok(ready.length > 0);
+  const site = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-sitemap-manuals-'));
+  t.after(function () { fs.rmSync(site, { recursive: true, force: true }); });
+  manuals.writeWeb(ready, site);
+  for (const page of ['manuals.html'].concat(ready.map(function (manual) { return `manual-${manual.id}.html`; }))) {
+    const canonical = fs.readFileSync(path.join(site, page), 'utf8').match(/<link rel="canonical" href="([^"]+)">/)[1];
+    assert.ok(locs.has(canonical), canonical);
+  }
+
+  const projectIds = buildProjectData().projects.map(function (project) { return project.id; }).sort();
+  const sitemapProjects = Array.from(locs)
+    .filter(function (loc) { return loc.startsWith('https://aiengineeringfromscratch.com/project?id='); })
+    .map(function (loc) { return decodeURIComponent(loc.split('=')[1]); })
+    .sort();
+  assert.ok(projectIds.length > 0);
+  assert.deepEqual(sitemapProjects, projectIds);
+  assert.doesNotMatch(sitemap, /<lastmod>/);
+  assert.doesNotMatch(sitemap, /project\.html\?id=/);
 });
 
 test('certification route renders a crawlable track with an id-only canonical', function () {
