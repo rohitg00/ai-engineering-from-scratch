@@ -1,6 +1,5 @@
 """
 Python for AI engineering: the standard-library toolkit that later lessons reuse.
-
 See: phases/00-setup-and-tooling/13-python-for-ai-engineering/docs/en.md
 Builds a CSV and JSON loader, a seeded train and test split, a mini-batch
 generator, pure-Python vector math, and speed and memory comparisons.
@@ -49,11 +48,12 @@ def record_to_row(record: Record) -> dict[str, float | int]:
     return row
 
 
-def row_to_record(row: dict, label_field: str = LABEL_FIELD) -> Record:
+def row_to_record(row: dict, names: Sequence[str], label_field: str = LABEL_FIELD) -> Record:
     if label_field not in row:
         raise ValueError(f"row has no {label_field!r} field: {row}")
-    features = tuple(float(value) for key, value in row.items() if key != label_field)
-    return Record(features, int(row[label_field]))
+    if set(row) != {*names, label_field}:
+        raise ValueError(f"row fields {list(row)} do not match {[*names, label_field]}")
+    return Record(tuple(float(row[name]) for name in names), int(row[label_field]))
 
 
 def save_records(records: Sequence[Record], path: str | Path) -> Path:
@@ -82,15 +82,20 @@ def load_records(path: str | Path, label_field: str = LABEL_FIELD) -> list[Recor
             rows = list(csv.DictReader(fh))
     else:
         raise ValueError(f"unsupported file type: {path.suffix!r}")
-    return [row_to_record(row, label_field) for row in rows]
+    if not rows:
+        return []
+    names = [key for key in rows[0] if key != label_field]
+    return [row_to_record(row, names, label_field) for row in rows]
 
 
 def train_test_split(items: Sequence, test_fraction: float = 0.2, seed: int = 0) -> tuple[list, list]:
     if not 0.0 < test_fraction < 1.0:
         raise ValueError(f"test_fraction must be between 0 and 1, got {test_fraction}")
+    if len(items) < 2:
+        raise ValueError(f"need at least 2 items to split, got {len(items)}")
     order = list(range(len(items)))
     random.Random(seed).shuffle(order)
-    n_test = round(len(items) * test_fraction)
+    n_test = min(max(1, round(len(items) * test_fraction)), len(items) - 1)
     test = [items[i] for i in order[:n_test]]
     train = [items[i] for i in order[n_test:]]
     return train, test

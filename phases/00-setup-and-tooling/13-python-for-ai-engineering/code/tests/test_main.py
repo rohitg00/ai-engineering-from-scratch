@@ -72,6 +72,20 @@ class LoaderTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             load_records(path)
 
+    def test_json_rows_are_read_in_the_first_row_order(self) -> None:
+        path = self.dir / "rows.json"
+        path.write_text('[{"a": 1, "b": 2, "label": 0}, {"b": 4, "label": 1, "a": 3}]', encoding="utf-8")
+        self.assertEqual(load_records(path), [Record((1.0, 2.0), 0), Record((3.0, 4.0), 1)])
+
+    def test_missing_or_extra_feature_raises(self) -> None:
+        for rows in ('[{"a": 1, "b": 2, "label": 0}, {"a": 3, "label": 1}]',
+                     '[{"a": 1, "label": 0}, {"a": 3, "c": 5, "label": 1}]'):
+            with self.subTest(rows=rows):
+                path = self.dir / "rows.json"
+                path.write_text(rows, encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    load_records(path)
+
     def test_unknown_suffix_raises(self) -> None:
         with self.assertRaises(ValueError):
             load_records(self.dir / "data.parquet")
@@ -86,6 +100,12 @@ class SplitTests(unittest.TestCase):
         self.assertEqual((len(train), len(test)), (75, 25))
         self.assertEqual(set(train) & set(test), set())
         self.assertEqual(sorted(train + test), items)
+
+    def test_both_sides_keep_at_least_one_item(self) -> None:
+        self.assertEqual([len(part) for part in train_test_split([1, 2], test_fraction=0.2)], [1, 1])
+        self.assertEqual([len(part) for part in train_test_split([1, 2, 3], test_fraction=0.9)], [1, 2])
+        with self.assertRaises(ValueError):
+            train_test_split([1])
 
     def test_same_seed_gives_same_split(self) -> None:
         items = list(range(50))

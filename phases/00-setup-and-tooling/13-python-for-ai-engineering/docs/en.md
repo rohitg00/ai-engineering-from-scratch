@@ -640,11 +640,12 @@ class Record:
     label: int
 
 
-def row_to_record(row, label_field="label"):
+def row_to_record(row, names, label_field="label"):
     if label_field not in row:
         raise ValueError(f"row has no {label_field!r} field: {row}")
-    features = tuple(float(v) for k, v in row.items() if k != label_field)
-    return Record(features, int(row[label_field]))
+    if set(row) != {*names, label_field}:
+        raise ValueError(f"row fields {list(row)} do not match {[*names, label_field]}")
+    return Record(tuple(float(row[name]) for name in names), int(row[label_field]))
 
 
 def load_records(path, label_field="label"):
@@ -656,7 +657,10 @@ def load_records(path, label_field="label"):
             rows = list(csv.DictReader(fh))
     else:
         raise ValueError(f"unsupported file type: {path.suffix!r}")
-    return [row_to_record(row, label_field) for row in rows]
+    if not rows:
+        return []
+    names = [key for key in rows[0] if key != label_field]
+    return [row_to_record(row, names, label_field) for row in rows]
 
 
 with tempfile.TemporaryDirectory() as tmp:
@@ -673,7 +677,7 @@ with tempfile.TemporaryDirectory() as tmp:
 [Record(features=(1.5, 60.0), label=1)]
 ```
 
-The feature order is the column order of the file. `DictReader` and `json.loads` keep the keys in file order, and a dict keeps the order in which keys were added. A missing label or an unknown file type raises `ValueError` with a message, so a bad file stops the run at the start. `main.py` also has `save_records`, which writes the same two formats.
+The first row sets the feature names and their order. `DictReader` and `json.loads` keep the keys in file order, and a dict keeps the order in which keys were added. The JSON standard does not define an order for the keys in an object, so `row_to_record` reads each row by name, in the order of the first row. A missing label, a missing or extra feature, or an unknown file type raises `ValueError` with a message, so a bad file stops the run at the start. `main.py` also has `save_records`, which writes the same two formats.
 
 ### Step 2: A seeded train and test split
 
@@ -684,9 +688,11 @@ import random
 def train_test_split(items, test_fraction=0.2, seed=0):
     if not 0.0 < test_fraction < 1.0:
         raise ValueError(f"test_fraction must be between 0 and 1, got {test_fraction}")
+    if len(items) < 2:
+        raise ValueError(f"need at least 2 items to split, got {len(items)}")
     order = list(range(len(items)))
     random.Random(seed).shuffle(order)
-    n_test = round(len(items) * test_fraction)
+    n_test = min(max(1, round(len(items) * test_fraction)), len(items) - 1)
     test = [items[i] for i in order[:n_test]]
     train = [items[i] for i in order[n_test:]]
     return train, test
@@ -708,7 +714,7 @@ True
 
 `random.Random(seed)` creates a private random number generator. `random.seed(seed)` resets the one global generator that all modules share, so a call in another library can change your sequence. In the course, 100 lesson files call `random.seed` and 96 create `random.Random`. Use the private generator in new code.
 
-The function shuffles a list of indexes, so the input list stays unchanged. The same seed always gives the same split. Split the data before any step that learns from it, such as standardization. In the debugging and profiling lesson, we saw that overlap between train and test data gives test scores that are too high.
+The function shuffles a list of indexes, so the input list stays unchanged. The same seed always gives the same split. Each side keeps at least one item, so a list with fewer than 2 items raises `ValueError`. Split the data before any step that learns from it, such as standardization. In the debugging and profiling lesson, we saw that overlap between train and test data gives test scores that are too high.
 
 ### Step 3: A mini-batch generator
 
