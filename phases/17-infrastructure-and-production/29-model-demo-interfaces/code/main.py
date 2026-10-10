@@ -642,7 +642,12 @@ class DemoHandler(BaseHTTPRequestHandler):
             except DemoError:
                 self.drain(int(declared) if declared and declared.isdigit() else 0)
                 raise
-            body = self.rfile.read(size)
+            try:
+                body = self.rfile.read(size)
+            except TimeoutError:
+                self.close_connection = True
+                raise DemoError(408, "request_timeout", "The request body did not arrive in time.",
+                                "Send the request again with the full body.") from None
             app.admit(client_id, self.headers.get("Authorization"))
             text = app.read_text(self.headers.get("Content-Type"), body)
             chars = len(text)

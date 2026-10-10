@@ -77,6 +77,7 @@ Put the server checks in order of cost:
 | Failed check | HTTP status | Error code |
 |--------------|-------------|------------|
 | Body over 4,096 bytes | 413 Content Too Large | `body_too_large` |
+| Body stops before `Content-Length` bytes arrive | 408 Request Timeout | `request_timeout` |
 | Content type is not JSON | 415 Unsupported Media Type | `unsupported_media_type` |
 | Body is not a JSON object | 400 Bad Request | `bad_json` |
 | Text is missing, empty, too long, or has control characters | 422 Unprocessable Content | `missing_text`, `empty_text`, `text_too_long`, `control_characters` |
@@ -362,7 +363,12 @@ def do_POST(self):
         except DemoError:
             self.drain(int(declared) if declared and declared.isdigit() else 0)
             raise
-        body = self.rfile.read(size)
+        try:
+            body = self.rfile.read(size)
+        except TimeoutError:
+            self.close_connection = True
+            raise DemoError(408, "request_timeout", "The request body did not arrive in time.",
+                            "Send the request again with the full body.") from None
         app.admit(client_id, self.headers.get("Authorization"))
         text = app.read_text(self.headers.get("Content-Type"), body)
         chars = len(text)
@@ -390,7 +396,7 @@ def do_POST(self):
 
 Four details prevent failures that are easy to miss:
 
-- `timeout = 10` on the handler class closes a connection when the client stops sending. Without it, a client that declares 100 bytes and sends 10 holds a server thread forever. The handler logs a 408 and closes the connection.
+- `timeout = 10` on the handler class closes a connection when the client stops sending. Without it, a client that declares 100 bytes and sends 10 holds a server thread forever. The handler sends a 408 JSON error with the request id and closes the connection. A timeout after the stream starts only closes the connection, because the status line is already sent.
 - `log_message` returns without output. This removes the default log line with the client address and the request line.
 - `drain` reads and discards up to 64 KiB of a refused body. RFC 1122 says that TCP sends a reset when a host closes a connection with unread data. The client can then lose the 413 reply.
 - `send_stream` catches `BrokenPipeError` and closes the generator. When the user closes the tab, the model stops, and the request costs nothing more.

@@ -319,12 +319,17 @@ class HttpTests(unittest.TestCase):
         self.assertGreaterEqual(int(headers["Retry-After"]), 1)
         self.assertEqual(json.loads(body)["error"]["code"], "rate_limited")
 
-    def test_stalled_body_closes_the_connection(self) -> None:
+    def test_stalled_body_gets_a_408_error(self) -> None:
         with mock.patch.object(DemoHandler, "timeout", 0.2):
             with socket.create_connection(self.server.server_address, timeout=5) as conn:
                 conn.sendall(b"POST /api/predict HTTP/1.0\r\nContent-Type: application/json\r\n"
                              b"Content-Length: 100\r\n\r\n{\"text\"")
-                self.assertEqual(conn.recv(1024), b"")
+                reply = b""
+                while chunk := conn.recv(4096):
+                    reply += chunk
+        head, _, body = reply.partition(b"\r\n\r\n")
+        self.assertTrue(head.startswith(b"HTTP/1.0 408 "))
+        self.assertEqual(json.loads(body)["error"]["code"], "request_timeout")
         self.assertEqual([r["code"] for r in self.app.log.records], ["request_timeout"])
 
     def test_unknown_path_and_log_privacy(self) -> None:
