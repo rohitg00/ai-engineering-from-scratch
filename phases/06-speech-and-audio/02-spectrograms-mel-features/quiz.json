@@ -1,0 +1,78 @@
+{
+  "lesson": "02-spectrograms-mel-features",
+  "title": "Spectrograms, Mel Scale & Audio Features",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A 10-second recording sampled at 16 kHz contains how many waveform samples?",
+      "options": [
+        "160,000 frames",
+        "16,000 samples",
+        "1,600,000 samples",
+        "160,000 samples"
+      ],
+      "correct": 3,
+      "explanation": "A waveform stores one value per sample, so 16,000 samples/second × 10 seconds = 160,000 samples. The 16,000-sample option counts only one second; “160,000 frames” names later analysis windows, not raw waveform values."
+    },
+    {
+      "stage": "check",
+      "question": "Using frame_len = 400 and hop = 160, how many complete frames come from 160,000 samples?",
+      "options": [
+        "998 frames",
+        "999 frames",
+        "1,000 frames",
+        "997 frames"
+      ],
+      "correct": 0,
+      "explanation": "The code counts one starting frame plus complete hops: 1 + floor((160,000 − 400)/160) = 998 frames. Rounding 997.5 hops up adds a partial final window; 1,000 also ignores the 400-sample frame length."
+    },
+    {
+      "stage": "check",
+      "question": "Why take a logarithm of spectrogram magnitudes before feeding common audio models?",
+      "options": [
+        "It changes the waveform sampling rate automatically",
+        "It removes every quiet frequency from the signal",
+        "It converts frequency bins into time frames",
+        "It compresses a very wide range of magnitudes"
+      ],
+      "correct": 3,
+      "explanation": "Log magnitude compresses the several-orders-of-magnitude range so weak and strong spectral components fit a more manageable scale. The “removes every quiet frequency” option confuses compression with filtering: log scaling changes magnitudes but keeps the frequency bins."
+    },
+    {
+      "stage": "check",
+      "question": "With n_fft = 400, how many one-sided DFT bins feed the mel filterbank?",
+      "options": [
+        "400 frequency bins",
+        "80 frequency bins",
+        "200 frequency bins",
+        "201 frequency bins"
+      ],
+      "correct": 3,
+      "explanation": "A real-valued FFT keeps n_fft/2 + 1 bins on one side, so 400/2 + 1 = 201, including DC and Nyquist. The 200-bin option omits one endpoint; 80 is the mel-output count, not the FFT input size."
+    },
+    {
+      "stage": "post",
+      "question": "Training used 80 mel bins, while inference produces 128. What is the likely diagnosis?",
+      "options": [
+        "The model will ignore the extra bins safely",
+        "The waveform must be converted into MFCCs first",
+        "The mel scale will automatically merge the bins",
+        "A feature-shape mismatch must be resolved"
+      ],
+      "correct": 3,
+      "explanation": "The model was trained for 80 mel features per frame, so producing 128 changes the input shape and feature contract. The mel scale defines filter spacing; it does not reconcile a model trained on a different number of output bins."
+    },
+    {
+      "stage": "post",
+      "question": "A classifier must resolve brief drum hits. Which framing choice best matches the lesson’s trade-off?",
+      "options": [
+        "Use a shorter window and hop for transient detail",
+        "Use a longer window and hop for transient detail",
+        "Use a longer window and shorter hop for transient detail",
+        "Use a shorter window and longer hop for transient detail"
+      ],
+      "correct": 0,
+      "explanation": "Brief drum attacks need high time resolution, so the lesson favors a short window and a short hop; its transient example is 5 ms/2 ms. The “longer window and shorter hop” choice samples often but still smears a brief attack inside each long frame."
+    }
+  ]
+}
