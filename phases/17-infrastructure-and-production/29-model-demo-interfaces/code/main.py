@@ -2,8 +2,7 @@
 
 See: phases/17-infrastructure-and-production/29-model-demo-interfaces/docs/en.md
 Specs: WHATWG HTML server-sent events, RFC 9110 (HTTP semantics), RFC 6585 (429).
-`python3 code/main.py` runs a short self-test and exits.
-`python3 code/main.py --serve` starts the server on 127.0.0.1:8000 until Ctrl+C.
+`python3 code/main.py` runs a self-test. Add `--serve` to serve on 127.0.0.1:8000.
 """
 
 from __future__ import annotations
@@ -581,6 +580,7 @@ class DemoServer(ThreadingHTTPServer):
 class DemoHandler(BaseHTTPRequestHandler):
     server_version = "ModelDemo/1.0"
     routes = ("/api/predict", "/api/stream")
+    timeout = 10
 
     def log_message(self, format: str, *args) -> None:
         return
@@ -654,6 +654,9 @@ class DemoHandler(BaseHTTPRequestHandler):
         except DemoError as err:
             status, code = err.status, err.code
             self.send_error_json(err, request_id)
+        except TimeoutError:
+            status, code = 408, "request_timeout"
+            self.close_connection = True
         except Exception:
             status, code = 500, "internal_error"
             self.send_error_json(DemoError(500, "internal_error", "The server failed on this request.",

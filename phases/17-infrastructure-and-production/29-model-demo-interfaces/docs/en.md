@@ -374,6 +374,9 @@ def do_POST(self):
     except DemoError as err:
         status, code = err.status, err.code
         self.send_error_json(err, request_id)
+    except TimeoutError:
+        status, code = 408, "request_timeout"
+        self.close_connection = True
     except Exception:
         status, code = 500, "internal_error"
         self.send_error_json(DemoError(500, "internal_error", "The server failed on this request.",
@@ -385,8 +388,9 @@ def do_POST(self):
 
 `admit` checks the access token and the token bucket. `charge` checks the daily cap. It runs last, so only valid requests count against the cap. Every request writes one log record in the `finally` block, and that includes rejected requests. The record keeps `route`, never the raw path, because a path can carry a query string with user text.
 
-Three details prevent failures that are easy to miss:
+Four details prevent failures that are easy to miss:
 
+- `timeout = 10` on the handler class closes a connection when the client stops sending. Without it, a client that declares 100 bytes and sends 10 holds a server thread forever. The handler logs a 408 and closes the connection.
 - `log_message` returns without output. This removes the default log line with the client address and the request line.
 - `drain` reads and discards up to 64 KiB of a refused body. RFC 1122 says that TCP sends a reset when a host closes a connection with unread data. The client can then lose the 413 reply.
 - `send_stream` catches `BrokenPipeError` and closes the generator. When the user closes the tab, the model stops, and the request costs nothing more.

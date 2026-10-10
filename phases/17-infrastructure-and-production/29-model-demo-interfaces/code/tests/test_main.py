@@ -6,8 +6,10 @@ import contextlib
 import io
 import json
 import os
+import socket
 import sys
 import unittest
+from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
@@ -20,6 +22,7 @@ from main import (  # noqa: E402
     DemoApp,
     DemoConfig,
     DemoError,
+    DemoHandler,
     FakeClock,
     PrivacyLog,
     RateLimiter,
@@ -315,6 +318,14 @@ class HttpTests(unittest.TestCase):
         self.assertEqual(status, 429)
         self.assertGreaterEqual(int(headers["Retry-After"]), 1)
         self.assertEqual(json.loads(body)["error"]["code"], "rate_limited")
+
+    def test_stalled_body_closes_the_connection(self) -> None:
+        with mock.patch.object(DemoHandler, "timeout", 0.2):
+            with socket.create_connection(self.server.server_address, timeout=5) as conn:
+                conn.sendall(b"POST /api/predict HTTP/1.0\r\nContent-Type: application/json\r\n"
+                             b"Content-Length: 100\r\n\r\n{\"text\"")
+                self.assertEqual(conn.recv(1024), b"")
+        self.assertEqual([r["code"] for r in self.app.log.records], ["request_timeout"])
 
     def test_unknown_path_and_log_privacy(self) -> None:
         status, _, body = http_request(self.base + "/api/other?text=private", "POST", {"text": "private words"})
