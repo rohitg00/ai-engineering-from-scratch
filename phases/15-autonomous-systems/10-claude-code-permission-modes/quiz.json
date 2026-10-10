@@ -16,15 +16,15 @@
     },
     {
       "stage": "check",
-      "question": "What does acceptEdits allow without a prompt while retaining confirmation for other risky operations?",
+      "question": "Which actions does acceptEdits auto-approve within the project workspace, subject to applicable permission rules?",
       "options": [
-        "Read-only browsing and inspections",
-        "Shell commands and network requests",
-        "File writes to the workspace",
-        "All actions plus permission changes"
+        "Read-only inspections without any workspace file modifications",
+        "Every shell command and network request in the workspace",
+        "Workspace file edits and selected filesystem shell commands",
+        "All requested actions plus edits to the permission policy"
       ],
       "correct": 2,
-      "explanation": "`acceptEdits` auto-approves workspace file writes but still prompts for shell execution and network requests. Automatically allowing those operations describes broader permission modes, not this edit-focused setting."
+      "explanation": "`acceptEdits` auto-approves file edits and certain workspace filesystem commands, including eligible `rm` and `mv` operations. Deny rules, ask rules, and safety restrictions still apply. Other shell commands and network requests follow normal permission checks; choosing this mode does not automatically approve every operation."
     },
     {
       "stage": "check",
