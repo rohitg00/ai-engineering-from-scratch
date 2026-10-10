@@ -144,6 +144,10 @@ function rewriteBreadcrumbs(body, item) {
   return changed ? JSON.stringify(data).replace(/</g, '\\u003c') : body;
 }
 
+/**
+ * Adapt a catalog article for the course reader while preserving its source canonical URL.
+ * Validate the source HTML and catalog entry before rewriting navigation, assets, and metadata.
+ */
 function mirrorArticle(html, item, items) {
   const sourceUrl = canonicalUrl(item);
   if (typeof html !== 'string' || !html.trim()) throw new Error('Article HTML is missing');

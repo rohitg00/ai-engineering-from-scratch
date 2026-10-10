@@ -203,6 +203,7 @@ function pageInfo(entry, lessonPath, heading, lang, markdown) {
   };
 }
 
+/** Build lesson SEO, language alternates, social card tags, and structured-data head markup. */
 function lessonHead(entry, page) {
   const { canonical, title, description, heading } = page;
   const courseName = contextLabel(entry.context);

@@ -115,6 +115,7 @@ function trackLessons(entry) {
   });
 }
 
+/** Build escaped SEO, social card, and structured-data head markup for a certification track. */
 function certificationHead(entry, trackId) {
   const canonical = canonicalForTrack(trackId);
   const title = entry.seoTitle || `${entry.title} - AI Engineering from Scratch`;

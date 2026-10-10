@@ -34,6 +34,7 @@ function versionHtml(html, siteRoot, versions = new Map()) {
     });
 }
 
+/** Compute asset and card versions for all top-level HTML pages, then write changed pages. */
 function versionSite(siteRoot = __dirname) {
   const versions = new Map();
   const cardsFile = path.join(siteRoot, 'og-cards.json');
