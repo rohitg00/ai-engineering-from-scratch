@@ -164,6 +164,8 @@ class FeatureDefinition:
 
 `FeatureRegistry.register` accepts the same definition twice, but it rejects a different definition with the same name and version. `fill_defaults` gives both paths the same default for a missing value.
 
+A model pins a definition with a reference such as `spend_30d@1`. `compute` and `fill_defaults` resolve the reference, and a name without `@` reads the latest version. The reference is also the key in each stored row, so the backfill, the online store, and the serving read all use the pinned definition.
+
 ### Step 2: Backfill the offline store
 
 ```python
@@ -244,7 +246,7 @@ With a TTL of 10 days, a read on day 145 returns the day 140 row. A read on day 
 
 ### Step 6: The skew check
 
-`detect_skew` compares two views keyed by `(entity, day)`. It reports the mismatch rate and the mean absolute difference per feature and flags a feature when more than 1 percent of values differ.
+`detect_skew` compares two views keyed by `(entity, day)`. It reports the mismatch rate and the mean absolute difference per feature and flags a feature when more than 1 percent of values differ. It raises `ValueError` when the two views have different keys or no keys. A missing request can hide skew, and a check with no requests shows nothing.
 
 ```python
 def detect_skew(
@@ -254,13 +256,17 @@ def detect_skew(
     tolerance: float = 1e-6,
     max_mismatch_rate: float = 0.01,
 ) -> list[SkewReport]:
-    keys = sorted(set(training) & set(serving))
+    if set(training) != set(serving):
+        raise ValueError(f"{len(set(training) ^ set(serving))} keys are in only one view: log and compare the same requests")
+    if not training:
+        raise ValueError("no requests to compare")
+    keys = sorted(training)
     reports = []
     for feature in features:
         diffs = [abs(training[k][feature] - serving[k][feature]) for k in keys]
         mismatches = sum(1 for d in diffs if d > tolerance)
-        rate = mismatches / len(keys) if keys else 0.0
-        mean_diff = sum(diffs) / len(keys) if keys else 0.0
+        rate = mismatches / len(keys)
+        mean_diff = sum(diffs) / len(keys)
         reports.append(SkewReport(feature, len(keys), rate, mean_diff, rate > max_mismatch_rate))
     return reports
 ```
@@ -346,6 +352,7 @@ store = FeatureStore(repo_path=".")
 training_df = store.get_historical_features(
     entity_df=labels_df,
     features=["user_activity:purchases_30d", "user_activity:days_since_last_purchase"],
+    filter_by_created_timestamp=True,
 ).to_df()
 
 online = store.get_online_features(
@@ -354,7 +361,7 @@ online = store.get_online_features(
 ).to_dict()
 ```
 
-`labels_df` holds one row per label with `user_id`, `event_timestamp`, and the label. The Feast documentation states that the TTL is relative to each timestamp in the entity dataframe, not to the time of the query. That matches the TTL check in `point_in_time_join`. The same page describes `filter_by_created_timestamp=True`, which keeps backfilled values from leaking into training data.
+`labels_df` holds one row per label with `user_id`, `event_timestamp`, and the label. The Feast documentation states that the TTL is relative to each timestamp in the entity dataframe, not to the time of the query. That matches the TTL check in `point_in_time_join`. The same page describes `filter_by_created_timestamp=True`, which keeps backfilled values from leaking into training data. Not every offline store supports this option. A store without support raises an error instead of ignoring the option.
 
 Tecton, Hopsworks, and the feature stores in the large cloud ML platforms use the same split between offline and online stores. For the skew check, TensorFlow Data Validation can compare training data with serving data to detect skew. Breck et al. describe the data validation system in TFX, Google's end-to-end ML platform, including training-serving skew.
 

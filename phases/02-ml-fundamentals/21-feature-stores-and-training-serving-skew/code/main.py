@@ -61,15 +61,19 @@ class FeatureRegistry:
             raise KeyError(name)
         return self._definitions[(name, version if version is not None else max(versions))]
 
+    def resolve(self, ref: str) -> FeatureDefinition:
+        name, _, version = ref.partition("@")
+        return self.get(name, int(version) if version else None)
+
     def names(self) -> list[str]:
         return sorted({n for (n, _) in self._definitions})
 
     def compute(self, names: list[str], events: list[Event], as_of: int) -> dict[str, float]:
-        return {name: self.get(name).compute(events, as_of) for name in names}
+        return {name: self.resolve(name).compute(events, as_of) for name in names}
 
     def fill_defaults(self, names: list[str], values: dict[str, float] | None) -> dict[str, float]:
         values = values or {}
-        return {name: values.get(name, self.get(name).default) for name in names}
+        return {name: values.get(name, self.resolve(name).default) for name in names}
 
 
 @dataclass(frozen=True)
@@ -226,13 +230,17 @@ def detect_skew(
     tolerance: float = 1e-6,
     max_mismatch_rate: float = 0.01,
 ) -> list[SkewReport]:
-    keys = sorted(set(training) & set(serving))
+    if set(training) != set(serving):
+        raise ValueError(f"{len(set(training) ^ set(serving))} keys are in only one view: log and compare the same requests")
+    if not training:
+        raise ValueError("no requests to compare")
+    keys = sorted(training)
     reports = []
     for feature in features:
         diffs = [abs(training[k][feature] - serving[k][feature]) for k in keys]
         mismatches = sum(1 for d in diffs if d > tolerance)
-        rate = mismatches / len(keys) if keys else 0.0
-        mean_diff = sum(diffs) / len(keys) if keys else 0.0
+        rate = mismatches / len(keys)
+        mean_diff = sum(diffs) / len(keys)
         reports.append(SkewReport(feature, len(keys), rate, mean_diff, rate > max_mismatch_rate))
     return reports
 

@@ -62,6 +62,16 @@ class DefinitionTests(unittest.TestCase):
         self.assertEqual(registry.get("f").window_days, 14)
         self.assertEqual(registry.get("f", version=1).window_days, 7)
 
+    def test_pinned_reference_keeps_the_old_definition(self) -> None:
+        registry = FeatureRegistry()
+        registry.register(FeatureDefinition("f", "user", "count", 7, 0.0))
+        registry.register(FeatureDefinition("f", "user", "count", 30, -1.0, version=2))
+        events = [Event("u", 1, 1.0), Event("u", 20, 1.0)]
+        self.assertEqual(registry.compute(["f@1", "f"], events, 21), {"f@1": 1.0, "f": 2.0})
+        rows = backfill(registry, ["f@1"], events, [21])
+        self.assertEqual(rows[0].values, {"f@1": 1.0})
+        self.assertEqual(registry.fill_defaults(["f@1", "f"], None), {"f@1": 0.0, "f": -1.0})
+
     def test_backfill_writes_one_row_per_entity_and_day(self) -> None:
         rows = backfill(self.registry, FEATURES, self.events + [Event("v", 3, 1.0)], [7, 14])
         self.assertEqual(len(rows), 4)
@@ -140,6 +150,17 @@ class SkewTests(unittest.TestCase):
         self.assertAlmostEqual(report.mismatch_rate, 0.5)
         self.assertAlmostEqual(report.mean_abs_diff, 1.5)
         self.assertTrue(report.flagged)
+
+    def test_views_with_different_keys_are_rejected(self) -> None:
+        training = {("u", 1): {"x": 1.0}, ("v", 1): {"x": 2.0}}
+        with self.assertRaises(ValueError):
+            detect_skew(training, {("u", 1): {"x": 1.0}}, ["x"])
+        with self.assertRaises(ValueError):
+            detect_skew(training, {("w", 1): {"x": 1.0}, ("z", 1): {"x": 2.0}}, ["x"])
+
+    def test_empty_views_are_rejected(self) -> None:
+        with self.assertRaises(ValueError):
+            detect_skew({}, {}, ["x"])
 
     def test_legacy_path_differs_on_window_edge_and_default(self) -> None:
         registry = build_registry()
