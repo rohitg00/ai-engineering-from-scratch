@@ -1,0 +1,78 @@
+{
+  "lesson": "25-case-studies-2026-sota",
+  "title": "Case Studies and the 2026 State of the Art",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A research task has independent questions, needs fresh worker contexts, and requires one lead to synthesize the findings. Which case study is the closest reference?",
+      "options": [
+        "Anthropic Research's supervisor-worker pattern",
+        "A flat queue with no coordinating agent",
+        "MetaGPT's SOP-encoded engineering roles",
+        "OpenClaw's population-scale social substrate"
+      ],
+      "correct": 0,
+      "explanation": "Anthropic Research is the supervisor-worker reference: a lead decomposes independent questions, subagents work in focused contexts, and the lead synthesizes results. MetaGPT’s SOP roles target a structured engineering process rather than broad parallel research."
+    },
+    {
+      "stage": "check",
+      "question": "A software project encodes its process in distinct product, architecture, engineering, and QA roles with structured handoffs. Which case study fits?",
+      "options": [
+        "OpenClaw and Moltbook",
+        "Anthropic Research",
+        "MetaGPT and ChatDev",
+        "A consensus-only voting ensemble"
+      ],
+      "correct": 2,
+      "explanation": "MetaGPT and ChatDev encode software SOPs in distinct roles and pass structured artifacts between them. OpenClaw/Moltbook illustrates a population-scale social substrate, not the product-architect-engineer-QA workflow in the scenario."
+    },
+    {
+      "stage": "check",
+      "question": "A network lets many independently operated agents publish profiles and exchange messages. Which security assumption from the case studies should apply?",
+      "options": [
+        "Assume population-scale traffic removes prompt injection",
+        "Trust every profile because it was written by an agent",
+        "Allow all agents to share production credentials",
+        "Treat agent profiles and cross-agent messages as untrusted input"
+      ],
+      "correct": 3,
+      "explanation": "Profiles and cross-agent messages are untrusted input because a malicious instruction can propagate through many agent interactions. Trusting every profile simply because an agent authored it removes the boundary that the case study says to enforce."
+    },
+    {
+      "stage": "check",
+      "question": "A research agent may run for hours while a new runtime version is deployed. Which case-study practice supports this workload?",
+      "options": [
+        "Sending every task through a single synchronous call",
+        "Rainbow deployment that lets older runs drain",
+        "Removing checkpoints before deploying new code",
+        "Restarting every agent on the newest version immediately"
+      ],
+      "correct": 1,
+      "explanation": "Rainbow deployment keeps old runtime versions alive until long-running agents finish, while new work can move to a new version. Restarting every agent immediately can interrupt in-flight stateful work during the deploy."
+    },
+    {
+      "stage": "post",
+      "question": "Across the three case studies, which production pattern appears as a common requirement?",
+      "options": [
+        "Structured handoffs and independent verification",
+        "One universal topology for every task type",
+        "More agents without role or task boundaries",
+        "A single final transcript without intermediate traces"
+      ],
+      "correct": 0,
+      "explanation": "The cases converge on structured handoff contracts and independent verification, while their topologies vary with the task. One universal topology would ignore those differences rather than transfer a common engineering practice."
+    },
+    {
+      "stage": "post",
+      "question": "A team is adapting a multi-agent case study for a public service where agents can message one another. Which review should happen before launch?",
+      "options": [
+        "Copy the published agent count and keep every default unchanged",
+        "Check trust boundaries, verification, cost, and population-scale security",
+        "Optimize only raw benchmark accuracy and omit cost reports",
+        "Remove handoff logs so profiles cannot be audited"
+      ],
+      "correct": 1,
+      "explanation": "For a public cross-agent service, review trust boundaries, independent verification, cost, and population-scale security before launch. Copying a case study’s agent count and defaults does not test whether its assumptions fit this service."
+    }
+  ]
+}
