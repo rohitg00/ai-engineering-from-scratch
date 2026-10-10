@@ -1,0 +1,78 @@
+{
+  "lesson": "04-flamingo-gated-cross-attention",
+  "title": "Flamingo and Gated Cross-Attention for Few-Shot VLMs",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How does Flamingo add visual information to a frozen LLM while preserving the original text path at initialization?",
+      "options": [
+        "Insert cross-attention with a residual gate initialized so tanh(alpha)=0.",
+        "Replace every text self-attention layer with image self-attention.",
+        "Append all visual patches to the vocabulary embedding table.",
+        "Unfreeze the LLM and let it relearn text behavior from image-caption pairs."
+      ],
+      "correct": 0,
+      "explanation": "Flamingo inserts cross-attention between frozen LLM blocks and adds it through y=tanh(α)·cross+x. At initialization α=0, so tanh(0)=0 and the pretrained text path is unchanged; replacing or unfreezing text layers would not preserve that behavior."
+    },
+    {
+      "stage": "check",
+      "question": "For the residual y=tanh(alpha)*cross+x, what is y at initialization when alpha=0?",
+      "options": [
+        "x+cross, because the residual adds both branches equally.",
+        "Exactly cross, because tanh(0)=1.",
+        "Exactly x, because tanh(0)=0.",
+        "Zero, because the gate suppresses the entire residual."
+      ],
+      "correct": 2,
+      "explanation": "Substituting α=0 gives y=tanh(0)·cross+x=0·cross+x=x. The gate suppresses only the new visual branch, not the residual text state; the cross output is not selected by itself."
+    },
+    {
+      "stage": "check",
+      "question": "A Perceiver resampler uses K=64 learnable latents for images with either 196 or 900 patch tokens. What is the output length in both cases?",
+      "options": [
+        "196 visual tokens for either input patch count.",
+        "64 visual tokens for either input patch count.",
+        "900 visual tokens for either input patch count.",
+        "64 tokens only for the 196-patch image."
+      ],
+      "correct": 1,
+      "explanation": "The resampler uses K learnable latent queries to cross-attend over a variable number of image patches, so output length is K. With K=64, both 196- and 900-patch images produce 64 visual latents."
+    },
+    {
+      "stage": "check",
+      "question": "In an interleaved sequence IMG0, text0, IMG1, text1, which image can a text1 token attend to under Flamingo's stated mask?",
+      "options": [
+        "Only IMG1, the most recent preceding image.",
+        "Neither image, because text tokens use only causal self-attention.",
+        "Both IMG0 and IMG1, because all earlier images are visible.",
+        "Only IMG0, the first image in the whole prompt."
+      ],
+      "correct": 0,
+      "explanation": "The mask lets a text token attend to only the most recent image before it in the interleaved sequence. IMG1 is the latest image before text1; IMG0 is earlier and is not exposed to that token under this policy."
+    },
+    {
+      "stage": "post",
+      "question": "A prompt contains several image-caption examples followed by a new image, and the model should use examples without a gradient step. Which architecture is designed for this?",
+      "options": [
+        "A single-image Q-Former bridge with no interleaved sequence support.",
+        "Flamingo-style interleaved inputs with gated cross-attention.",
+        "A supervised image classifier trained on the prompt examples.",
+        "A zero-shot CLIP classifier that returns only a class similarity."
+      ],
+      "correct": 1,
+      "explanation": "Flamingo’s gated cross-attention lets a frozen language model condition on images interleaved with example text, preserving in-context learning without a gradient update at inference. A CLIP classifier returns similarity scores rather than a generated response."
+    },
+    {
+      "stage": "post",
+      "question": "Images in a prompt have different resolutions and therefore different patch counts. What does the Perceiver resampler contribute?",
+      "options": [
+        "It forces every image to have the same number of input patches before encoding.",
+        "It removes the image tokens and sends only the most recent caption.",
+        "It changes the frozen LLM's token embedding dimension per image.",
+        "It returns the same fixed number of visual latents for each image."
+      ],
+      "correct": 3,
+      "explanation": "Each image’s variable patch sequence is resampled into the same fixed K latent count before downstream use, giving a consistent visual-token shape. Resizing patches or changing the LLM embedding dimension is a different operation."
+    }
+  ]
+}
