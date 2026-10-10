@@ -3592,7 +3592,7 @@
         if (!node) return null;
         try {
           var data = JSON.parse(node.textContent);
-          return data && typeof data.path === 'string' && typeof data.markdown === 'string' ? data : null;
+          return data && typeof data.markdown === 'string' ? data : null;
         } catch (_) {
           return null;
         }
@@ -3601,6 +3601,27 @@
       function embeddedLessonMarkdown(path) {
         if (!embeddedLesson || embeddedLesson.path !== path || ACTIVE_REF !== 'main') return null;
         return embeddedLesson.markdown;
+      }
+
+      function fetchLessonDocument(lang, enPath, translatedUrl) {
+        var lessonDocument = lang === 'en'
+          ? fetchRepositoryFile(enPath).then(function (response) {
+              return { response: response, lang: 'en' };
+            })
+          : fetch(translatedUrl).then(function (response) {
+              if (!response.ok) throw new Error('fetch-failed');
+              return { response: response, lang: lang };
+            }).catch(function () {
+              return fetchRepositoryFile(enPath).then(function (response) {
+                return { response: response, lang: 'en' };
+              });
+            });
+
+        return lessonDocument.then(function (documentResult) {
+          return documentResult.response.text().then(function (markdown) {
+            return { markdown: markdown, lang: documentResult.lang };
+          });
+        });
       }
 
       var lessonFetchSequence = 0;
@@ -3639,29 +3660,9 @@
         }
         var quizPromiseForRequest = lessonQuizPromise;
         var embeddedMarkdown = lang === 'en' ? embeddedLessonMarkdown(path) : null;
-        var lessonDocument;
-
-        if (embeddedMarkdown !== null) {
-          lessonDocument = Promise.resolve({ markdown: embeddedMarkdown, lang: 'en' });
-        } else {
-          lessonDocument = (lang === 'en'
-            ? fetchRepositoryFile(enPath).then(function (response) {
-                return { response: response, lang: 'en' };
-              })
-            : fetch(translatedUrl).then(function (response) {
-                if (!response.ok) throw new Error('fetch-failed');
-                return { response: response, lang: lang };
-              }).catch(function () {
-                return fetchRepositoryFile(enPath).then(function (response) {
-                  return { response: response, lang: 'en' };
-                });
-              })
-          ).then(function (documentResult) {
-            return documentResult.response.text().then(function (markdown) {
-              return { markdown: markdown, lang: documentResult.lang };
-            });
-          });
-        }
+        var lessonDocument = embeddedMarkdown !== null
+          ? Promise.resolve({ markdown: embeddedMarkdown, lang: 'en' })
+          : fetchLessonDocument(lang, enPath, translatedUrl);
 
         lessonDocument
           .then(function (documentResult) {
@@ -4246,7 +4247,7 @@
       }
 
       function slugify(text) {
-        return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        return window.AIFSLessonMarkdown.slugify(text);
       }
 
       function initCodeCopy() {
@@ -5836,7 +5837,7 @@
       }
 
       function escapeAttr(str) {
-        return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return window.AIFSLessonMarkdown.escapeAttr(str);
       }
 
       // Start only after every module-level cache and promise has been

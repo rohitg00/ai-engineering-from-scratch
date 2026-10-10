@@ -381,6 +381,7 @@
 
   return {
     parseMd: parseMd,
-    slugify: slugify
+    slugify: slugify,
+    escapeAttr: escapeAttr
   };
 }));

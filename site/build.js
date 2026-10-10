@@ -2367,7 +2367,7 @@ function readyManualIds() {
     .filter(entry => {
       const file = path.join(root, entry.name, 'manual.json');
       if (!fs.existsSync(file)) return false;
-      const manual = JSON.parse(fs.readFileSync(file, 'utf8'));
+      const manual = readJson(file);
       return manual.id === entry.name && manual.status === 'ready';
     })
     .map(entry => entry.name)

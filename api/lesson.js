@@ -8,7 +8,6 @@ const SEO_START = '<!-- AIFS:LESSON-SEO:START -->';
 const SEO_END = '<!-- AIFS:LESSON-SEO:END -->';
 const FALLBACK_START = '<!-- AIFS:LESSON-FALLBACK:START -->';
 const FALLBACK_END = '<!-- AIFS:LESSON-FALLBACK:END -->';
-const CERTIFICATION_LESSON = /^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//;
 const LESSON_QUERY_NAMES = new Set(['path', 'track', 'fromTrack', 'learningPath', 'lang', 'ttsTest', 'legacy']);
 const LEARNING_PATH_ALIASES = Object.freeze({
   'mcp-engineering': 'model-context-protocol',
@@ -243,13 +242,8 @@ function lessonBody(assets, lessonPath, heading) {
   if (typeof assets.readMarkdown !== 'function') return null;
   try {
     const markdown = assets.readMarkdown(lessonPath);
-    if (typeof markdown !== 'string' || !markdown.trim()) return null;
-    const title = `<h1>${escapeHtml(heading)}</h1>`;
-    const rendered = parseMd(markdown);
-    const firstHeading = /<h1 id="[^"]*">[\s\S]*?<\/h1>/;
-    const html = firstHeading.test(rendered)
-      ? rendered.replace(firstHeading, function () { return title; })
-      : title + rendered;
+    if (!markdown.trim()) return null;
+    const html = `<h1>${escapeHtml(heading)}</h1>` + parseMd(markdown).replace(/<h1 id="[^"]*">[\s\S]*?<\/h1>/, '');
     return { markdown, html };
   } catch (_) {
     return null;
@@ -270,13 +264,14 @@ function lessonFallback(entry, lessonPath, contextParams, heading, body) {
   if (previous) links.push(`<a class="lesson-nav-btn prev" href="${lessonHref(previous, contextParams)}"><span class="nav-label">&larr; Previous</span><span class="nav-title">${escapeHtml(previous.title)}</span></a>`);
   if (next) links.push(`<a class="lesson-nav-btn next" href="${lessonHref(next, contextParams)}"><span class="nav-label">Next &rarr;</span><span class="nav-title">${escapeHtml(next.title)}</span></a>`);
   const excerpt = entry.excerpt || entry.description;
-  const disclaimer = entry.context && entry.context.kind === 'certification' ? entry.context.disclaimer : '';
-  const summary = body ? [`          ${body.html}`] : [
+  const certification = entry.context && entry.context.kind === 'certification';
+  const disclaimer = certification ? entry.context.disclaimer : '';
+  const summary = body ? [body.html] : [
     `          <h1>${escapeHtml(heading)}</h1>`,
     excerpt ? `          <p class="motto">${escapeHtml(excerpt)}</p>` : '',
     entry.description && entry.description !== excerpt ? `          <p>${escapeHtml(entry.description)}</p>` : '',
   ];
-  const embedded = body && !CERTIFICATION_LESSON.test(lessonPath)
+  const embedded = body && !certification
     ? `        <script type="application/json" id="lessonMarkdown">${jsonForHtml({ path: lessonPath, markdown: body.markdown })}</script>`
     : '';
 
@@ -309,7 +304,7 @@ function send(res, method, status, body, cacheControl) {
 
 function normalizedLessonLocation(req, lessonPath, entry, assets) {
   const params = new URLSearchParams();
-  const certificationLesson = CERTIFICATION_LESSON.test(lessonPath);
+  const certificationLesson = /^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//.test(lessonPath);
   const navigationByTrack = entry.navigationByTrack && typeof entry.navigationByTrack === 'object'
     ? entry.navigationByTrack
     : {};
@@ -431,7 +426,8 @@ function createHandler(options) {
         if (normalized.params.has(name)) contextParams[name] = normalized.params.get(name);
       }
       const heading = lessonHeading(entry, manifest);
-      const body = contextParams.lang ? null : lessonBody(assets, lessonPath, heading);
+      const translated = contextParams.lang && contextParams.lang !== 'en';
+      const body = translated ? null : lessonBody(assets, lessonPath, heading);
       let html = replaceMarkedRegion(template, SEO_START, SEO_END, lessonHead(entry, lessonPath, heading));
       html = replaceMarkedRegion(html, FALLBACK_START, FALLBACK_END, lessonFallback(entry, lessonPath, contextParams, heading, body));
       send(res, method, 200, html, 'public, max-age=0, s-maxage=86400, must-revalidate');
@@ -446,3 +442,4 @@ module.exports.createHandler = createHandler;
 module.exports.validLessonPath = validLessonPath;
 module.exports.validTrackId = validTrackId;
 module.exports.lessonHeading = lessonHeading;
+module.exports.loadProductionAssets = loadProductionAssets;
