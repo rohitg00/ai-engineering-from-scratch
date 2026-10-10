@@ -1,0 +1,78 @@
+{
+  "lesson": "05-whisper-architecture-finetuning",
+  "title": "Whisper — Architecture & Fine-Tuning",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A 30-second audio clip becomes an input representation before a decoder emits tokens. What broad model shape is described?",
+      "options": [
+        "A nearest-neighbor classifier",
+        "A transformer encoder-decoder",
+        "A single recurrent predictor",
+        "A convolutional generator only"
+      ],
+      "correct": 1,
+      "explanation": "Whisper encodes log-mel audio, then an autoregressive transformer decoder generates text while cross-attending to encoder states. The “single recurrent predictor” option misses this encoder-decoder split and the decoder’s attention over encoded audio."
+    },
+    {
+      "stage": "check",
+      "question": "Whisper uses a fixed 30-second input window. How does the lesson handle clips of different lengths?",
+      "options": [
+        "Zero-pad clips shorter than 30 s and chunk longer clips",
+        "Drop all content after the first 30 s for every clip",
+        "Combine all clips into one 30 s spectrogram",
+        "Stretch every clip to 30 s by changing the sample rate"
+      ],
+      "correct": 0,
+      "explanation": "The model has a 30-second window: shorter clips are padded to it, while longer recordings are split into windows. Truncation loses later speech; chunking lets the system process the full long recording."
+    },
+    {
+      "stage": "check",
+      "question": "Which decoder prompt task token requests English translation from non-English speech?",
+      "options": [
+        "The no-timestamps token",
+        "The translate task token",
+        "The transcribe task token",
+        "The end-of-text token"
+      ],
+      "correct": 1,
+      "explanation": "The translate task token requests English output from non-English audio; the language tag identifies the language and transcribe asks for verbatim text. Transcribe preserves the spoken language rather than requesting translation into English."
+    },
+    {
+      "stage": "check",
+      "question": "What architectural change makes Large-v3-turbo faster than Large-v3 in this lesson?",
+      "options": [
+        "It uses a 4-layer decoder instead of 32 layers",
+        "It replaces all token outputs with frame labels",
+        "It doubles the decoder depth and narrows attention",
+        "It removes the audio encoder and log-mel input"
+      ],
+      "correct": 0,
+      "explanation": "Turbo reduces decoder depth from 32 layers to four, cutting autoregressive work while retaining the encoder and log-mel input. The lesson attributes the speed change to a shallower decoder; the audio encoder remains part of the model."
+    },
+    {
+      "stage": "post",
+      "question": "A two-second clip is padded to Whisper’s fixed input window and produces text during trailing silence. What response fits the lesson?",
+      "options": [
+        "Increase the decoder vocabulary to include silence",
+        "Convert the padded mel values to raw samples",
+        "Carry previous text into every silent window",
+        "VAD-gate the clip or avoid padding that silence"
+      ],
+      "correct": 3,
+      "explanation": "Padding a short clip to the fixed window can expose the decoder to trailing silence; VAD gating or avoiding the extra padding addresses that risk. A larger vocabulary does not remove silent frames that can prompt hallucinated text."
+    },
+    {
+      "stage": "post",
+      "question": "A 10-minute recording uses 30-second chunks with 5 seconds of overlap. How many chunks does the lesson’s schedule produce?",
+      "options": [
+        "24 chunks",
+        "120 chunks",
+        "30 chunks",
+        "20 chunks"
+      ],
+      "correct": 0,
+      "explanation": "The schedule advances by 30 − 5 = 25 seconds; starts at 0, 25, …, 575 give 24 chunks for 600 seconds. Twenty is 600/30 with no overlap; the five-second overlap shortens the step and adds four starts."
+    }
+  ]
+}
