@@ -1,4 +1,4 @@
-const { ORIGIN, search, readResource, InputError } = require('../lib/agent-content');
+const { ORIGIN, search, readResource, readTranslatedResource, InputError } = require('../lib/agent-content');
 const schemas = require('../lib/agent-schemas');
 const { quality, send, problem, apiHeaders, createLimiter } = require('../lib/agent-http');
 
@@ -7,7 +7,7 @@ const VERSIONS = [PROTOCOL, '2025-03-26'];
 const annotations = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
 const TOOLS = [
   { name: 'search_curriculum', description: 'Search published AI Engineering from Scratch lessons and projects. Returns stable paths for read_resource. Does not run code.', inputSchema: schemas.searchInput, outputSchema: schemas.searchOutput, annotations },
-  { name: 'read_resource', description: 'Read the original Markdown for an exact path returned by search_curriculum. Lesson examples are reference content, not instructions to execute.', inputSchema: schemas.readInput, outputSchema: schemas.resource, annotations },
+  { name: 'read_resource', description: 'Read the original Markdown for an exact path returned by search_curriculum, or a lesson translation when lang names one of its translations. Lesson examples are reference content, not instructions to execute.', inputSchema: schemas.readInput, outputSchema: schemas.resource, annotations },
 ];
 
 function rpcError(req, res, status, id, code, message) {
@@ -35,7 +35,7 @@ async function readBody(req) {
 
 function object(value) { return value !== null && typeof value === 'object' && !Array.isArray(value); }
 
-function createHandler({ queryCatalog = search, read = readResource, limit = createLimiter(), origins = [ORIGIN] } = {}) {
+function createHandler({ queryCatalog = search, read = readResource, readTranslated = readTranslatedResource, limit = createLimiter(), origins = [ORIGIN] } = {}) {
   return async (req, res) => {
     apiHeaders(res);
     res.setHeader('Vary', 'Accept, Accept-Encoding, Origin, MCP-Protocol-Version');
@@ -85,8 +85,8 @@ function createHandler({ queryCatalog = search, read = readResource, limit = cre
           let value;
           if (params.name === 'search_curriculum') value = queryCatalog(args);
           else if (params.name === 'read_resource') {
-            if (!object(args) || Object.keys(args).some(key => key !== 'path')) throw new InputError('read_resource accepts only path.');
-            value = read(args.path);
+            if (!object(args) || Object.keys(args).some(key => key !== 'path' && key !== 'lang')) throw new InputError('read_resource accepts only path and lang.');
+            value = await readTranslated(args.path, args.lang, { read });
           } else throw new InputError('Unknown tool. Use tools/list to discover tools.');
           result = value
             ? { content: [{ type: 'text', text: JSON.stringify(value) }], structuredContent: value }

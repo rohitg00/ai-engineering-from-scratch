@@ -18,6 +18,7 @@ Do not send credentials or learner data. Contact the maintainers through the
 - [OpenAPI 3.1](https://aiengineeringfromscratch.com/openapi.json)
 - `GET /api/v1/catalog?q=attention&kind=lesson&limit=10&offset=0`
 - `GET /api/v1/resource?path=phases%2F00-setup-and-tooling%2F01-dev-environment`
+- `GET /api/v1/resource?path=phases%2F00-setup-and-tooling%2F01-dev-environment&lang=hi`
 - `GET /api/v1/markdown?path=/about`
 
 Catalog search matches every query word against titles, descriptions, and paths.
@@ -93,13 +94,37 @@ names `text/markdown`, including their `.html` URLs. HTML remains the default fo
 browsers and wildcard Accept. Both representations are static files served from
 the CDN, and responses send `Vary: Accept, Accept-Encoding`. For full quality-value
 negotiation, including 406 for rejected types, use `/api/v1/markdown?path=/docs`.
-Lesson source is available through `/api/v1/resource`; the lesson reader and
-certification routes retain their HTML rendering and canonical redirects.
+Lesson pages at `/lesson?path=...` also return the lesson Markdown when `Accept`
+prefers `text/markdown`, and send `Vary: Accept, Accept-Encoding`. Lesson source is
+also available through `/api/v1/resource`. Certification routes keep their HTML
+rendering and canonical redirects.
 
 ```bash
 curl -H 'Accept: text/markdown' https://aiengineeringfromscratch.com/docs
 curl -i -H 'Accept: text/markdown' https://aiengineeringfromscratch.com/api/v1/markdown?path=/missing-page
 ```
+
+## Lesson translations
+
+Course lessons are published in ten languages besides English: zh, hi, es, ar,
+fr, pt, pt-BR, tr, vi, and fa. The translations live on the public `translations`
+branch, never on main. The exact list per lesson comes from that branch's
+translation records and appears as `translations` in catalog and resource results.
+
+- Reader page: `/lesson?path=<lesson path>&lang=<code>`. It renders the translation,
+  sets `lang` and `dir` on the page, uses its own canonical URL, and lists hreflang
+  alternates for English, `x-default`, and every translation of that lesson.
+- Markdown: request the reader page with `Accept: text/markdown`, or call
+  `/api/v1/resource?path=<lesson path>&lang=<code>`. The MCP `read_resource` tool
+  accepts the same optional `lang`.
+- Raw source: `https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/translations/i18n/<code>/<lesson path>/docs/<code>.md`.
+- Sitemaps: `/sitemap-index.xml` lists one sitemap per language.
+
+`lang` must be `en` or one of the codes above. Any other value returns 400. A lesson
+without that translation returns 404 from the API and the English page from the
+reader. If the translations branch does not answer, the API returns 503 and the
+reader serves the English lesson with the English canonical URL. Certification
+lessons, projects, and site pages are English only.
 
 Missing pages return a real 404: the HTML recovery page for browsers, and short
 Markdown recovery links from `/api/v1/markdown`. Start at the

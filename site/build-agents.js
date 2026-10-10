@@ -24,6 +24,7 @@ function build() {
   const entries = Object.values(manifest.lessons).map(entry => ({
     path: entry.path, kind: 'lesson', title: entry.title, description: entry.description,
     url: entry.canonicalUrl, sourceUrl: `${REPO}/blob/main/${entry.path}/docs/en.md`,
+    ...(Array.isArray(entry.translations) ? { translations: entry.translations } : {}),
     markdown: fs.readFileSync(path.join(ROOT, entry.path, 'docs/en.md'), 'utf8'),
   }));
   for (const directory of fs.readdirSync(path.join(ROOT, 'projects')).sort()) {
