@@ -24,7 +24,7 @@
         "The model judges sampled response pairs, and those preferences train a reward model."
       ],
       "correct": 3,
-      "explanation": "RLAIF samples response pairs and has a model judge which follows the constitution better; those preferences train a reward model used by PPO or DPO. Revising one response is SL-CAI, while arithmetic grading is a separate verifiable-reward route."
+      "explanation": "A model compares sampled responses against the constitution to produce preference pairs. Those pairs can fit a reward model for PPO, or directly optimize the policy with DPO without separately training a reward model. Revising one response belongs to the supervised critique-and-revision stage."
     },
     {
       "stage": "check",
