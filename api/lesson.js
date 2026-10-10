@@ -3,6 +3,7 @@ const path = require('path');
 const { parseMd } = require('../site/lesson-markdown');
 const { representation } = require('../lib/agent-http');
 const { lessonDocumentSeo, seoTitleFor } = require('../lib/lesson-document');
+const { cardTags, cardUrl, lessonCard } = require('../lib/og-cards');
 const { readTranslation: readTranslationFromSource, TRANSLATION_LANGUAGES, isIndexedLanguage, translationsOf, lessonUrl, NATIVE_NAMES, RTL_LANGUAGES, OG_LOCALES } = require('../lib/lesson-translations');
 
 const REPO_ROOT = path.join(__dirname, '..');
@@ -240,6 +241,7 @@ function lessonHead(entry, page) {
     ],
   };
 
+  const card = lessonCard(entry, page.lang);
   return [
     `  <title>${escapeHtml(title)}</title>`,
     `  <meta name="description" content="${escapeHtml(description)}">`,
@@ -247,14 +249,12 @@ function lessonHead(entry, page) {
     page.lang !== 'en' && !isIndexedLanguage(page.lang) ? '  <meta name="robots" content="noindex">' : '',
     `  <meta property="og:title" content="${escapeHtml(title)}">`,
     `  <meta property="og:description" content="${escapeHtml(description)}">`,
-    `  <meta property="og:image" content="${ORIGIN}/og-image.png?v=4">`,
+    ...cardTags(cardUrl('lesson', entry.path, card, page.lang), card).map(tag => `  ${tag}`),
     `  <meta property="og:url" content="${escapeHtml(canonical)}">`,
     OG_LOCALES[page.lang] ? `  <meta property="og:locale" content="${escapeHtml(OG_LOCALES[page.lang])}">` : '',
     '  <meta property="og:type" content="article">',
-    '  <meta name="twitter:card" content="summary_large_image">',
     `  <meta name="twitter:title" content="${escapeHtml(title)}">`,
     `  <meta name="twitter:description" content="${escapeHtml(description)}">`,
-    `  <meta name="twitter:image" content="${ORIGIN}/og-image.png?v=4">`,
     `  <script type="application/ld+json" id="lessonJsonLd">${jsonForHtml(jsonLd)}</script>`,
   ].concat(page.alternates.map(alternate => `  <link rel="alternate" hreflang="${escapeHtml(alternate.lang)}" href="${escapeHtml(alternate.href)}">`)).filter(Boolean).join('\n');
 }

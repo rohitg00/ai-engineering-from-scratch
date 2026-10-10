@@ -84,6 +84,7 @@ site/certification-data.js
 site/figure-manifest.js
 site/lesson-seo.json
 site/certification-seo.json
+site/og-cards.json
 book/_build/
 
 # Lesson translations are generated to a separate `translations` branch, never

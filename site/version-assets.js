@@ -1,6 +1,7 @@
 const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
+const { stampCards } = require('../lib/og-cards');
 
 function versionHtml(html, siteRoot, versions = new Map()) {
   function versionTag(tag, attribute) {
@@ -35,11 +36,13 @@ function versionHtml(html, siteRoot, versions = new Map()) {
 
 function versionSite(siteRoot = __dirname) {
   const versions = new Map();
+  const cardsFile = path.join(siteRoot, 'og-cards.json');
+  const cards = fs.existsSync(cardsFile) ? JSON.parse(fs.readFileSync(cardsFile, 'utf8')).cards : null;
   const pages = fs.readdirSync(siteRoot).filter(name => name.endsWith('.html'));
   const outputs = pages.map(name => {
     const filename = path.join(siteRoot, name);
     const source = fs.readFileSync(filename, 'utf8');
-    return { filename, source, output: versionHtml(source, siteRoot, versions) };
+    return { filename, source, output: stampCards(versionHtml(source, siteRoot, versions), cards) };
   });
   for (const { filename, source, output } of outputs) {
     if (source !== output) fs.writeFileSync(filename, output, 'utf8');

@@ -605,7 +605,7 @@ function manualArticle(manual, mode) {
 
 const SITE_HEADER = '<header class="site-header"><div class="header-inner"><a href="index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH</a><nav class="header-nav"><a href="index.html#contents">Contents</a><a href="catalog.html">Catalog</a><a href="projects.html">Projects</a><a href="manuals.html">Manuals</a><a href="prereqs.html">Roadmap</a><a href="glossary.html">Glossary</a><a href="about.html">About</a><a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github"><span>GitHub</span><span class="star-count" data-loading="true">…</span></a></nav><button class="search-toggle" type="button" data-cmd-palette aria-label="Search"><span aria-hidden="true">⌕</span></button><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button"><span class="theme-icon" id="themeIcon">N</span></button></div></header>';
 
-function pageShell({ title, ogTitle, description, canonical, noindex, main }) {
+function pageShell({ title, ogTitle, description, canonical, noindex, card, main }) {
   const css = shared('tokens.css') + shared('manual.css') + shared('web.css');
   return `<!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -617,7 +617,7 @@ function pageShell({ title, ogTitle, description, canonical, noindex, main }) {
 ${noindex ? '<meta name="robots" content="noindex">\n' : ''}<link rel="canonical" href="${canonical}">
 <meta property="og:title" content="${escapeHtml(ogTitle)}">
 <meta property="og:description" content="${escapeHtml(description)}">
-<meta property="og:image" content="${SITE_ORIGIN}/og-image.png?v=4">
+<meta property="og:image" content="${SITE_ORIGIN}/og/${card}.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="${FONT_LINK}" rel="stylesheet">
@@ -648,6 +648,7 @@ function webPage(manual) {
     description: manual.summary,
     canonical: `${SITE_ORIGIN}/${pageName(manual.id)}`,
     noindex: manual.status === 'draft',
+    card: manual.status === 'ready' ? `manual/${manual.id}` : 'page/manuals',
     main: `<main id="main" class="m-web"><div class="m-layout"><aside class="m-sidebar">${tocHtml(manual, 'web')}</aside>${manualArticle(manual, 'web')}</div></main>`,
   });
 }
@@ -676,6 +677,7 @@ function indexPage(listed) {
     description: 'Long technical manuals that explain one subject at one exact version, from its purpose to each request and response.',
     canonical: `${SITE_ORIGIN}/manuals.html`,
     noindex: !listed.some(manual => manual.status === 'ready'),
+    card: 'page/manuals',
     main: `<main id="main" class="m-web"><div class="manual m-index"><section class="m-index-hero">${ditherHtml('manuals', 'Manuals', false)}<div class="m-kicker m-cover-kicker">AI Engineering from Scratch</div><h1 class="m-index-title">Manuals</h1><p class="m-index-lede">${INDEX_LEDE}</p><ul class="m-index-gives">${gives}</ul></section>${body}</div></main>`,
   });
 }

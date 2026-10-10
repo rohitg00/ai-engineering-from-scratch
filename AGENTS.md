@@ -260,6 +260,14 @@ CI gates (`.github/workflows/curriculum.yml`):
 
 **Common bug**: if `grep -c 'tree/main/phases/NN-' site/data.js` is 0 after merge, the Phase NN README rows are plain text and missing the `[Title](phases/NN-...)` markdown link. `site/build.js` derives the URL from that link.
 
+### Social cards
+
+Every page shares its own 1200x630 card from `/og/<type>/<id>.png`, rendered by `api/og.js` with `lib/og-render.js`. The card text comes from the data that builds the page: `lesson-seo.json`, `certification-seo.json`, and `site/og-cards.json`, which `site/build.js` writes. Each card URL carries a content hash (`?v=`), so a changed title or count gets a new URL.
+
+- A new static page needs an entry in `PAGES` in `lib/og-cards.js` and an `og:image` tag for `/og/page/<id>.png`. The deploy step in `site/version-assets.js` writes the other image tags and the version.
+- The version also hashes `lib/og-render.js` and `lib/og-fonts/`, so a new layout or atlas gets new URLs without a manual bump.
+- `node scripts/build-og-fonts.js` rebuilds the glyph atlases with Chrome. Run it on a developer machine only, never in CI or the Vercel build.
+
 ---
 
 ## Conflict resolution

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { cardTags, cardUrl, trackCard } = require('../lib/og-cards');
 
 const ORIGIN = 'https://aiengineeringfromscratch.com';
 const SEO_START = '<!-- AIFS:CERTIFICATION-SEO:START -->';
@@ -118,6 +119,7 @@ function certificationHead(entry, trackId) {
   const canonical = canonicalForTrack(trackId);
   const title = entry.seoTitle || `${entry.title} - AI Engineering from Scratch`;
   const description = entry.description || entry.excerpt || 'Free, independent certification preparation with ordered lessons and original practice.';
+  const card = trackCard(entry);
   const course = {
     '@type': 'Course',
     name: entry.title,
@@ -154,13 +156,11 @@ function certificationHead(entry, trackId) {
     `  <link rel="canonical" href="${escapeHtml(canonical)}">`,
     `  <meta property="og:title" content="${escapeHtml(title)}">`,
     `  <meta property="og:description" content="${escapeHtml(description)}">`,
-    `  <meta property="og:image" content="${ORIGIN}/og-image.png?v=4">`,
+    ...cardTags(cardUrl('track', trackId, card), card).map(tag => `  ${tag}`),
     `  <meta property="og:url" content="${escapeHtml(canonical)}">`,
     '  <meta property="og:type" content="website">',
-    '  <meta name="twitter:card" content="summary_large_image">',
     `  <meta name="twitter:title" content="${escapeHtml(title)}">`,
     `  <meta name="twitter:description" content="${escapeHtml(description)}">`,
-    `  <meta name="twitter:image" content="${ORIGIN}/og-image.png?v=4">`,
     `  <script type="application/ld+json" id="certificationJsonLd">${jsonForHtml(jsonLd)}</script>`,
   ].join('\n');
 }
