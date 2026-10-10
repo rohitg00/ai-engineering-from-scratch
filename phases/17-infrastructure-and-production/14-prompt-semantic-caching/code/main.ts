@@ -14,7 +14,7 @@
  * via docs/en.md. Verify rate cards before quoting.
  *
  * Citations:
- *   - Anthropic prompt-caching: docs.anthropic.com/en/docs/build-with-claude/prompt-caching
+ *   - Anthropic prompt-caching: platform.claude.com/docs/en/build-with-claude/prompt-caching
  *   - OpenAI prompt-caching: platform.openai.com/docs/guides/prompt-caching
  *   - ProjectDiscovery 7%→74% by moving dynamic content out of prefix
  *     https://projectdiscovery.io/blog/how-we-cut-llm-cost-with-prompt-caching
