@@ -642,6 +642,8 @@ test('build-time SEO manifests cover every readable lesson and expose canonical 
   const catalogDiscovery = renderCatalogDiscovery(phases, lessonManifest);
   const certificationDiscovery = renderCertificationDiscovery(certifications, certificationManifest);
   assert.equal((catalogDiscovery.match(/href="lesson\?path=/g) || []).length, expectedCoursePaths.length);
+  const phaseHubs = new Set(expectedCoursePaths.map(lessonPath => '/phase/' + lessonPath.split('/')[1].replace(/^\d+-/, '')));
+  assert.deepEqual(new Set(Array.from(catalogDiscovery.matchAll(/data-generated-discovery="phase"><th[^>]*><a href="([^"]+)"/g), match => match[1])), phaseHubs);
   assert.equal((certificationDiscovery.match(/href="certification\?id=/g) || []).length, certifications.tracks.length);
   assert.equal(
     (certificationDiscovery.match(/data-generated-discovery="certification-program"/g) || []).length,

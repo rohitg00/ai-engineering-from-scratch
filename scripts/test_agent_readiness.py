@@ -74,7 +74,12 @@ def main() -> None:
     for rule in markdown_pages:
         assert rule["has"] == [{"type": "header", "key": "accept", "value": "(?i).*text/markdown.*"}], rule["source"]
         assert html_pages[rule["source"]].endswith(".html"), f"{rule['source']} must default to HTML"
-        assert (SITE / rule["destination"].lstrip("/")).is_file(), f"build did not publish {rule['destination']}"
+        for published in (rule["destination"], html_pages[rule["source"]]):
+            target = published.lstrip("/")
+            if ":page" in target:
+                assert list(SITE.glob(target.replace(":page", "*"))), f"build did not publish {published}"
+            else:
+                assert (SITE / target).is_file(), f"build did not publish {published}"
     functions = config["functions"]
     assert all(value["maxDuration"] <= 10 for value in functions.values())
     assert "api/**/*.js" not in functions, "functions bundle only the files they read"

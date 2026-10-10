@@ -108,7 +108,7 @@ function invoke(handler, query, accept = 'text/html') {
 test('server-rendered pages revalidate in browsers while keeping CDN reuse and errors uncached', () => {
   const lessonPath = 'phases/01-math/01-vectors';
   const lesson = require('../api/lesson').createHandler({ loadAssets: () => ({
-    template: '<!-- AIFS:LESSON-SEO:START --><!-- AIFS:LESSON-SEO:END --><!-- AIFS:LESSON-FALLBACK:START --><!-- AIFS:LESSON-FALLBACK:END -->',
+    template: '<!-- AIFS:LESSON-SEO:START --><!-- AIFS:LESSON-SEO:END --><!-- AIFS:LESSON-FALLBACK:START --><!-- AIFS:LESSON-FALLBACK:END --><!-- AIFS:LESSON-HUBS:START --><!-- AIFS:LESSON-HUBS:END -->',
     manifest: { lessons: { [lessonPath]: { path: lessonPath, title: 'Vectors' } } },
   }) });
   const certification = require('../api/certification').createHandler({ loadAssets: () => ({
