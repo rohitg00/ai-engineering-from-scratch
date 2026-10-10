@@ -1,0 +1,78 @@
+{
+  "lesson": "06-bert-masked-language-modeling",
+  "title": "BERT — Masked Language Modeling",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A model must fill a missing word using words both before and after the gap. Which training setup matches BERT?",
+      "options": [
+        "Speaker identity classification",
+        "Causal next-token prediction",
+        "Bidirectional masked language modeling",
+        "Audio-to-text sequence transduction"
+      ],
+      "correct": 2,
+      "explanation": "BERT trains an encoder to recover selected missing tokens from context on both the left and right, so it fits a gap whose answer depends on following words. Causal next-token prediction hides that future context by design."
+    },
+    {
+      "stage": "check",
+      "question": "Of 100 tokens selected for BERT’s masking objective, how many are replaced with [MASK] under the 80/10/10 rule?",
+      "options": [
+        "10 tokens",
+        "15 tokens",
+        "90 tokens",
+        "80 tokens"
+      ],
+      "correct": 3,
+      "explanation": "The 80/10/10 rule is conditioned on the 100 selected positions: 0.80 × 100 = 80 become [MASK]. The separate 15% figure is how many tokens are selected from the full sequence, not the replacement fraction within that subset."
+    },
+    {
+      "stage": "check",
+      "question": "Why are some selected tokens replaced with random words or left unchanged?",
+      "options": [
+        "To reduce the train-inference mismatch around [MASK]",
+        "To make the encoder attend only to left context",
+        "To let the decoder predict the following sentence",
+        "To reserve [MASK] for the classification head"
+      ],
+      "correct": 0,
+      "explanation": "Only using [MASK] would expose the model to a marker absent at inference, creating a train-inference distribution shift. Random replacements and unchanged selected tokens vary the input; they do not make the encoder left-context-only."
+    },
+    {
+      "stage": "check",
+      "question": "A selected token is left unchanged by the 10% rule. Which label should the MLM objective use there?",
+      "options": [
+        "The unchanged input is relabeled as [MASK]",
+        "The next token becomes the prediction target",
+        "Its original token ID remains the prediction target",
+        "The ignore index replaces the original target"
+      ],
+      "correct": 2,
+      "explanation": "Even when the input is left unchanged, the selected position still has a training target: its original token ID. The ignore index is assigned to unselected positions, so using it here would remove a required prediction loss."
+    },
+    {
+      "stage": "post",
+      "question": "A product needs sentiment classification and semantic retrieval embeddings. Which model direction does the lesson recommend?",
+      "options": [
+        "A waveform tokenizer with a causal audio decoder",
+        "An encoder-decoder model for every query",
+        "A decoder-only model that generates full answers",
+        "An encoder-only model such as BERT"
+      ],
+      "correct": 3,
+      "explanation": "Encoder-only models provide bidirectional representations efficiently for classification and retrieval, the two needs named here. A decoder generating full answers adds an autoregressive objective and is unnecessary for these embedding and label tasks."
+    },
+    {
+      "stage": "post",
+      "question": "A downstream task labels each token in a sentence, such as named-entity recognition. What encoder property is useful?",
+      "options": [
+        "Causal masking with one final output state",
+        "A whole-sequence label with no token states",
+        "Bidirectional context with per-position outputs",
+        "A decoder cross-attending to a separate source"
+      ],
+      "correct": 2,
+      "explanation": "NER needs a contextual representation at every token so each position can receive its own label. A whole-sequence label discards token locations, while the encoder’s bidirectional per-position states preserve them."
+    }
+  ]
+}
