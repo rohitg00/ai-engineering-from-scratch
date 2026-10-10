@@ -3,7 +3,7 @@ const path = require('path');
 const { parseMd } = require('../site/lesson-markdown');
 const { representation } = require('../lib/agent-http');
 const { lessonDocumentSeo, seoTitleFor } = require('../lib/lesson-document');
-const { readTranslation: readTranslationFromSource, TRANSLATION_LANGUAGES, translationsOf, lessonUrl, NATIVE_NAMES, RTL_LANGUAGES, OG_LOCALES } = require('../lib/lesson-translations');
+const { readTranslation: readTranslationFromSource, TRANSLATION_LANGUAGES, isIndexedLanguage, translationsOf, lessonUrl, NATIVE_NAMES, RTL_LANGUAGES, OG_LOCALES } = require('../lib/lesson-translations');
 
 const REPO_ROOT = path.join(__dirname, '..');
 const ORIGIN = 'https://aiengineeringfromscratch.com';
@@ -174,7 +174,7 @@ function lessonAlternates(entry, lessonPath) {
   if (!entry.context || entry.context.kind !== 'course') return [];
   const english = lessonUrl(lessonPath);
   return [{ lang: 'en', href: english }, { lang: 'x-default', href: english }]
-    .concat(translationsOf(entry).map(lang => ({ lang, href: lessonUrl(lessonPath, lang) })));
+    .concat(translationsOf(entry).filter(isIndexedLanguage).map(lang => ({ lang, href: lessonUrl(lessonPath, lang) })));
 }
 
 function pageInfo(entry, lessonPath, heading, lang, markdown) {
@@ -244,6 +244,7 @@ function lessonHead(entry, page) {
     `  <title>${escapeHtml(title)}</title>`,
     `  <meta name="description" content="${escapeHtml(description)}">`,
     `  <link rel="canonical" href="${escapeHtml(canonical)}">`,
+    page.lang !== 'en' && !isIndexedLanguage(page.lang) ? '  <meta name="robots" content="noindex">' : '',
     `  <meta property="og:title" content="${escapeHtml(title)}">`,
     `  <meta property="og:description" content="${escapeHtml(description)}">`,
     `  <meta property="og:image" content="${ORIGIN}/og-image.png?v=4">`,

@@ -1159,3 +1159,36 @@ test('llms.txt and the API docs state the translation languages and URL pattern'
   const robots = fs.readFileSync(path.join(ROOT, 'site', 'robots.txt'), 'utf8');
   assert.match(robots, /^Sitemap: https:\/\/aiengineeringfromscratch\.com\/sitemap-index\.xml$/m);
 });
+
+test('a language with index false stays out of hreflang and the lesson sitemaps, and its pages are noindex', async function (t) {
+  const registry = require('../languages.json');
+  const arabic = registry.languages.find(function (language) { return language.code === 'ar'; });
+  const fresh = ['../lib/lesson-translations', '../api/lesson', '../site/build.js'].map(function (name) { return require.resolve(name); });
+  const reload = function () { for (const file of fresh) delete require.cache[file]; };
+  arabic.index = false;
+  reload();
+  t.after(function () { delete arabic.index; reload(); });
+  assert.equal(require('../lib/lesson-translations').isIndexedLanguage('ar'), false);
+  assert.equal(require('../lib/lesson-translations').isIndexedLanguage('hi'), true);
+
+  const handler = require('../api/lesson').createHandler({
+    loadAssets: function () { return withTranslations(['hi', 'ar']); },
+    readTranslation: function (lang) { return Promise.resolve(lang === 'ar' ? ARABIC : HINDI); },
+  });
+  const hindi = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` });
+  assert.deepEqual(alternateLinks(hindi.body).map(function (link) { return link[0]; }), ['en', 'x-default', 'hi']);
+  assert.doesNotMatch(hindi.body, /<meta name="robots"/);
+  const arabicPage = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=ar` });
+  assert.equal(arabicPage.statusCode, 200);
+  assert.match(arabicPage.body, /<html lang="ar" dir="rtl"/);
+  assert.match(arabicPage.body, /<meta name="robots" content="noindex">/);
+  assert.match(fallbackRegion(arabicPage.body), /<h1>البيرسبترون<\/h1>/);
+
+  const site = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-unindexed-'));
+  t.after(function () { fs.rmSync(site, { recursive: true, force: true }); });
+  const isolatedBuild = require('../site/build.js');
+  const manifest = { lessons: { 'phases/01-a/01-x': { path: 'phases/01-a/01-x', context: { kind: 'course' } } } };
+  isolatedBuild.annotateTranslations(manifest, { hi: ['phases/01-a/01-x'], ar: ['phases/01-a/01-x'] });
+  assert.deepEqual(manifest.lessons['phases/01-a/01-x'].translations, ['hi', 'ar']);
+  assert.deepEqual(isolatedBuild.writeLanguageSitemaps(manifest, site), ['sitemap-lessons-hi.xml']);
+});
