@@ -64,15 +64,15 @@
     },
     {
       "stage": "post",
-      "question": "The same Emu3 weights must answer image questions and generate images. What does the lesson say enables the different roles?",
+      "question": "Emu3 publishes separate post-trained Gen and Chat checkpoints. What do their image-generation and image-understanding pipelines share?",
       "options": [
-        "The text tokenizer is replaced with a VQ tokenizer during inference.",
-        "A separate task-specific output head is trained for each API role.",
-        "The model switches to diffusion weights whenever an image is requested.",
-        "One model uses prompts for image, video, or text tasks."
+        "One identical weight set selected solely by changing the prompt template.",
+        "A requirement to emit image tokens and text tokens jointly at every step.",
+        "The next-token prediction framework over discretely tokenized modalities.",
+        "A diffusion-denoising objective shared across all published task checkpoints."
       ],
-      "correct": 3,
-      "explanation": "Emu3-Gen, Chat, and Stage2 use different prompts to elicit generation, perception, or video behavior from one shared weight set. The model predicts whichever modality tokens follow the prompt instead of loading separate task-specific heads."
+      "correct": 2,
+      "explanation": "Emu3-Gen and Emu3-Chat are separately post-trained checkpoints, so different prompts alone do not make their weights identical. They share the autoregressive next-token prediction framework over tokenized modalities, while generation predicts visual tokens and understanding produces text from visual context."
     }
   ]
 }
