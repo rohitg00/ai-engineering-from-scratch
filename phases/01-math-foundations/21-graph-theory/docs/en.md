@@ -500,6 +500,7 @@ where A_hat = A + I (adjacency plus self-loops) and D_hat is the degree matrix o
 ## Further Reading
 
 - **Kipf & Welling (2017)** -- "Semi-Supervised Classification with Graph Convolutional Networks." The paper that launched modern GNNs. Shows that spectral graph convolutions simplify to message passing.
+- [Gilmer et al. (2017). Neural Message Passing for Quantum Chemistry](https://proceedings.mlr.press/v70/gilmer17a.html) -- formalizes the message, update, and readout steps. Compare them with Exercise 4's two-layer toy graph; the exercise does not reproduce the molecular experiments.
 - **Spielman (2012)** -- "Spectral Graph Theory" lecture notes. The definitive introduction to Laplacians, spectral gaps, and graph partitioning.
 - **Hamilton (2020)** -- "Graph Representation Learning." Book covering GNNs from fundamentals to applications.
 - **Bronstein et al. (2021)** -- "Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges." The unifying framework paper.
