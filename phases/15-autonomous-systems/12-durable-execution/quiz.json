@@ -1,0 +1,78 @@
+{
+  "lesson": "12-durable-execution",
+  "title": "Long-Running Background Agents: Durable Execution",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A worker crashes after completing two recorded activities in a long agent workflow. What should durable replay do?",
+      "options": [
+        "Reuse logged results for completed activities and run the missing work",
+        "Ask the user to repeat every approval before resuming",
+        "Restart every activity so the sequence is repeated from scratch",
+        "Discard the workflow because model calls are nondeterministic"
+      ],
+      "correct": 0,
+      "explanation": "Replay reruns deterministic workflow code but returns event-log outputs for completed activities, executing only unfinished work. Restarting all activities from scratch can repeat side effects and rebill completed LLM calls."
+    },
+    {
+      "stage": "check",
+      "question": "Which part of durable execution must be deterministic so it can be replayed against the event log?",
+      "options": [
+        "The result of a payment processor",
+        "The external LLM response",
+        "The orchestration workflow",
+        "The wall-clock latency of a tool"
+      ],
+      "correct": 2,
+      "explanation": "The workflow defines branches and sequencing, so it must replay deterministically against the event log. The external LLM response is nondeterministic and belongs in a logged activity whose prior output is reused."
+    },
+    {
+      "stage": "check",
+      "question": "What is an activity in the lesson's durable-execution model?",
+      "options": [
+        "A human-readable summary of every model token",
+        "A non-deterministic operation whose inputs and outputs are logged",
+        "A permanent lock that prevents another worker from resuming",
+        "The deterministic code that chooses all workflow branches"
+      ],
+      "correct": 1,
+      "explanation": "An activity is a potentially failing unit—such as an LLM call, file write, or API request—whose inputs and outputs are logged. The workflow is deterministic orchestration that sequences those activities."
+    },
+    {
+      "stage": "check",
+      "question": "An approval arrives two days after the agent requested it. What feature lets the workflow resume at the waiting point?",
+      "options": [
+        "A longer model context containing the old terminal log",
+        "An LLM retry that guesses whether the user approved",
+        "A fresh process that reconstructs the approval from memory",
+        "A durable human-input state stored with the checkpoint"
+      ],
+      "correct": 3,
+      "explanation": "Persist the waiting-for-human state so an approval arriving later resumes from the same checkpoint after a restart. A longer prompt does not preserve process state, and guessing approval bypasses the user."
+    },
+    {
+      "stage": "post",
+      "question": "A team has a short, read-only lookup that finishes in seconds and never waits for a person. What does the lesson say about durable execution?",
+      "options": [
+        "It may be unnecessary for short read-only runs",
+        "It eliminates the need to bound tool calls",
+        "It is mandatory for every read-only request",
+        "It improves correctness by replaying model outputs deterministically"
+      ],
+      "correct": 0,
+      "explanation": "For a seconds-long read-only lookup with no human wait or side effect, recovery benefits may not justify durable-execution overhead. The lesson lists such cases as poor fits, not mandatory use."
+    },
+    {
+      "stage": "post",
+      "question": "A workflow places a wall-clock timestamp directly in an orchestration branch. Why can this break replay?",
+      "options": [
+        "The event log automatically converts timestamps into model outputs",
+        "A timestamp makes every external activity idempotent",
+        "Replay skips deterministic workflow code and only runs tools",
+        "The same workflow state may take a different branch when replayed later"
+      ],
+      "correct": 3,
+      "explanation": "A wall-clock timestamp can differ between the original run and replay, sending deterministic orchestration down a different branch. Idempotency prevents duplicate side effects but does not stabilize time; record nondeterministic effects or use a replay-stable clock API."
+    }
+  ]
+}
