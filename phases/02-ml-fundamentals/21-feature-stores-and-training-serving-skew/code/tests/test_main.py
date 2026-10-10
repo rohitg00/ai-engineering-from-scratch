@@ -71,6 +71,9 @@ class DefinitionTests(unittest.TestCase):
         rows = backfill(registry, ["f@1"], events, [21])
         self.assertEqual(rows[0].values, {"f@1": 1.0})
         self.assertEqual(registry.fill_defaults(["f@1", "f"], None), {"f@1": 0.0, "f": -1.0})
+        for ref in ("f@", "f@v1", "f@1.0"):
+            with self.subTest(ref=ref), self.assertRaises(ValueError):
+                registry.resolve(ref)
 
     def test_backfill_writes_one_row_per_entity_and_day(self) -> None:
         rows = backfill(self.registry, FEATURES, self.events + [Event("v", 3, 1.0)], [7, 14])

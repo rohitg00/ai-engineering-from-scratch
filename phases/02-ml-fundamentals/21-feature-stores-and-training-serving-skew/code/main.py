@@ -62,8 +62,12 @@ class FeatureRegistry:
         return self._definitions[(name, version if version is not None else max(versions))]
 
     def resolve(self, ref: str) -> FeatureDefinition:
+        if "@" not in ref:
+            return self.get(ref)
         name, _, version = ref.partition("@")
-        return self.get(name, int(version) if version else None)
+        if not version.isdigit():
+            raise ValueError(f"bad feature reference {ref!r}: use name@version, such as spend_30d@1")
+        return self.get(name, int(version))
 
     def names(self) -> list[str]:
         return sorted({n for (n, _) in self._definitions})

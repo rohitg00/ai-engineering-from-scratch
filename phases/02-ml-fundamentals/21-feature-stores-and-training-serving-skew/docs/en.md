@@ -164,7 +164,7 @@ class FeatureDefinition:
 
 `FeatureRegistry.register` accepts the same definition twice, but it rejects a different definition with the same name and version. `fill_defaults` gives both paths the same default for a missing value.
 
-A model pins a definition with a reference such as `spend_30d@1`. `compute` and `fill_defaults` resolve the reference, and a name without `@` reads the latest version. The reference is also the key in each stored row, so the backfill, the online store, and the serving read all use the pinned definition.
+A model pins a definition with a reference such as `spend_30d@1`. `compute` and `fill_defaults` resolve the reference, and a name without `@` reads the latest version. A reference with `@` and no version number raises `ValueError`, so a typo cannot read the latest version without a warning. The reference is also the key in each stored row, so the backfill, the online store, and the serving read all use the pinned definition.
 
 ### Step 2: Backfill the offline store
 
