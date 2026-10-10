@@ -1,0 +1,78 @@
+{
+  "lesson": "20-deepseek-v3-walkthrough",
+  "title": "DeepSeek-V3 Architecture Walkthrough",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In a later MoE layer, the router selects 8 experts from 256 and the block has 1 always-on shared expert. How many expert MLPs contribute to one token?",
+      "options": [
+        "256, because every expert runs on every token.",
+        "9, from 8 routed experts plus the 1 shared expert.",
+        "1, because the shared expert replaces routed experts.",
+        "8, because the router count includes the shared expert."
+      ],
+      "correct": 1,
+      "explanation": "Top-8 routing selects eight experts per token, and the always-on shared expert adds one more, so nine expert MLPs contribute. The 256 figure is the pool of available routed experts, not the count executed for each token."
+    },
+    {
+      "stage": "check",
+      "question": "In auxiliary-loss-free load balancing, what training adjustment is made when an expert is overloaded?",
+      "options": [
+        "Add an auxiliary loss that forces every expert to process each token.",
+        "Decrease that expert's router bias; increase bias for underloaded experts.",
+        "Disable routing and run the same expert for every token.",
+        "Increase that expert's router bias; decrease bias for underloaded experts."
+      ],
+      "correct": 1,
+      "explanation": "The auxiliary-loss-free scheme adjusts router biases directly: decreasing an overloaded expert’s bias makes it less likely to be selected, while increasing underloaded experts’ biases redistributes tokens. It balances load without adding an auxiliary loss term."
+    },
+    {
+      "stage": "check",
+      "question": "Assume 61 layers, MLA rank 512, context 131072 tokens, and 2 bytes per cached latent element. Using one latent per token per layer, what is the KV cache size in GiB?",
+      "options": [
+        "About 30.5 GiB, from using eight GQA key/value heads instead.",
+        "About 15.3 GiB, from storing two separate latents per layer.",
+        "About 7.6 GiB, from 61*512*131072*2 bytes divided by 2^30.",
+        "About 3.8 GiB, from storing one byte per latent element."
+      ],
+      "correct": 2,
+      "explanation": "The stated MLA cache is 61 layers×512 latent values×131072 positions×2 bytes=8,187,281,408 bytes. Dividing by 2^30 gives 7.625 GiB; the 15.3 GiB distractor incorrectly stores two latents instead of the specified shared K/V latent."
+    },
+    {
+      "stage": "check",
+      "question": "Keeping layers, context, and 2-byte storage fixed, what cache size follows if kv_lora_rank drops from 512 to 256?",
+      "options": [
+        "About 1.9 GiB, because both rank and storage bytes are halved.",
+        "About 15.3 GiB, because halving rank doubles stored values.",
+        "About 3.8 GiB, half the 512-rank cache.",
+        "About 7.6 GiB, because context length is unchanged."
+      ],
+      "correct": 2,
+      "explanation": "Cache size is linear in kv_lora_rank: halving the rank from 512 to 256 halves 7.625 GiB to 3.8125 GiB, about 3.8 GiB. The 1.9 GiB option also halves the 2-byte storage assumption, which remains fixed."
+    },
+    {
+      "stage": "post",
+      "question": "A variant increases experts from 256 to 512 but keeps top-8 routing and one shared expert. What changes for each token and for total capacity?",
+      "options": [
+        "Every token activates all 512 experts, while shared routing disappears.",
+        "The active expert count halves, while KV cache grows with expert count.",
+        "The routed count doubles to sixteen, while total expert capacity stays fixed.",
+        "The routed count stays eight plus one shared, while total expert capacity grows."
+      ],
+      "correct": 3,
+      "explanation": "Top-8 plus one shared expert still gives nine active expert MLPs per token when the pool grows from 256 to 512; total routed capacity doubles. The KV cache depends on attention and context, not the number of MoE experts."
+    },
+    {
+      "stage": "post",
+      "question": "What does MLA store in the KV cache to reduce long-context memory use?",
+      "options": [
+        "A separate full K tensor and full V tensor for every query head.",
+        "The router's top-k expert indices instead of attention keys and values.",
+        "Only the attention output after the value projection has completed.",
+        "A shared low-rank K/V latent that is decompressed per head during attention."
+      ],
+      "correct": 3,
+      "explanation": "MLA stores a shared low-rank latent for K/V per token and layer, then decompresses it into per-head representations during attention. Keeping full K and V for every query head would restore the cache footprint the latent is designed to reduce."
+    }
+  ]
+}
