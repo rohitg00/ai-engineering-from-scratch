@@ -129,6 +129,36 @@
       "destination": "/glossary.html"
     },
     {
+      "source": "/glossary/:page([a-z0-9-]+)",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/glossary/:page.md"
+    },
+    {
+      "source": "/glossary/:page([a-z0-9-]+)",
+      "destination": "/hubs/glossary/:page.html"
+    },
+    {
+      "source": "/phase/:page([a-z0-9-]+)",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": "(?i).*text/markdown.*"
+        }
+      ],
+      "destination": "/agent-pages/phase/:page.md"
+    },
+    {
+      "source": "/phase/:page([a-z0-9-]+)",
+      "destination": "/hubs/phase/:page.html"
+    },
+    {
       "source": "/path",
       "has": [
         {
@@ -419,6 +449,19 @@
       ]
     },
     {
+      "source": "/(glossary|phase)/([a-z0-9-]+)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Vary",
+          "value": "Accept, Accept-Encoding"
+        }
+      ]
+    },
+    {
       "source": "/llms.txt",
       "headers": [
         {
@@ -465,7 +508,7 @@
   "functions": {
     "api/lesson.js": {
       "maxDuration": 10,
-      "includeFiles": "{site/lesson.html,site/lesson-seo.json,site/lesson-markdown.js,languages.json,phases/*/*/docs/en.md,certifications/*/lessons/*/docs/en.md}"
+      "includeFiles": "{site/lesson.html,site/lesson-seo.json,site/lesson-terms.json,site/lesson-markdown.js,languages.json,phases/*/*/docs/en.md,certifications/*/lessons/*/docs/en.md}"
     },
     "api/certification.js": {
       "maxDuration": 10,
@@ -522,6 +565,16 @@
     {
       "source": "/:page(manuals|manual-[a-z0-9-]+).html",
       "destination": "/:page",
+      "permanent": true
+    },
+    {
+      "source": "/hubs/glossary/:page([a-z0-9-]+).html",
+      "destination": "/glossary/:page",
+      "permanent": true
+    },
+    {
+      "source": "/hubs/phase/:page([a-z0-9-]+).html",
+      "destination": "/phase/:page",
       "permanent": true
     },
     {

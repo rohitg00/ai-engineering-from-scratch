@@ -276,6 +276,14 @@
     document.getElementById('modalPhaseNum').textContent = 'PHASE ' + String(p.id).padStart(2, '0');
     document.getElementById('modalTitle').textContent = p.name;
     document.getElementById('modalDesc').textContent = p.desc;
+    var hubLink = document.getElementById('modalPhaseLink');
+    if (hubLink) {
+      hubLink.hidden = !p.hub;
+      if (p.hub) {
+        hubLink.setAttribute('href', p.hub);
+        hubLink.textContent = 'Open the ' + p.name + ' overview';
+      }
+    }
 
     renderModalLessons(p);
 
