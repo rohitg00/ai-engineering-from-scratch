@@ -1,0 +1,78 @@
+{
+  "lesson": "02-fipa-acl-heritage",
+  "title": "Heritage of FIPA-ACL and Speech Acts",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A request message asks another agent to perform an action. What idea from speech-act theory does that illustrate?",
+      "options": [
+        "A message body always follows a shared ontology",
+        "Some utterances perform actions rather than merely describe facts",
+        "Every sentence has a machine-checkable truth value in this protocol",
+        "An agent can only communicate through a tool call"
+      ],
+      "correct": 1,
+      "explanation": "A request is not merely a sentence reporting a fact; its communicative force asks the receiver to act. The option that every sentence has a machine-checkable truth value treats requests as truth-apt descriptions and misses the action performed by a speech act."
+    },
+    {
+      "stage": "check",
+      "question": "In a FIPA-ACL message, what does the performative specify?",
+      "options": [
+        "The communicative intent such as request or inform",
+        "The software framework that runs the receiver",
+        "The transport encryption used by the sender",
+        "The maximum size of the content payload"
+      ],
+      "correct": 0,
+      "explanation": "The performative labels the message act—such as requesting or informing—while the content supplies its subject matter. Calling it the receiver’s software framework confuses the meaning of the envelope with the implementation that processes it."
+    },
+    {
+      "stage": "check",
+      "question": "A manager broadcasts a task call, collects bids, and awards one bidder. Which interaction protocol is this?",
+      "options": [
+        "Contract Net Protocol",
+        "Request-When",
+        "A simple Query-If exchange",
+        "Subscribe and Notify"
+      ],
+      "correct": 0,
+      "explanation": "Contract Net follows a task-market sequence: a manager issues a call for proposals, receives bids, then accepts one and rejects the others. A Query-If can ask whether a proposition holds, but it does not provide the bid-and-award interaction."
+    },
+    {
+      "stage": "check",
+      "question": "What does the lesson say modern JSON protocols gain while dropping some FIPA formalism?",
+      "options": [
+        "A complete shared ontology without implementation cost",
+        "Formal truth guarantees for every natural-language content field",
+        "Web-native JSON payloads with looser intent semantics",
+        "A requirement that all agents use the same Java runtime"
+      ],
+      "correct": 2,
+      "explanation": "Modern JSON protocols gain web-friendly payloads and tooling, but often leave intent semantics looser than FIPA performatives and ontologies. The “complete shared ontology” option overclaims: JSON shape alone cannot make every participant assign the same meaning to a domain term."
+    },
+    {
+      "stage": "post",
+      "question": "Two agents use the word customer for different entities, and the receiver takes the wrong action. What failure does the lesson name?",
+      "options": [
+        "A failure to correlate parallel tool results",
+        "A failed retry after a transport timeout",
+        "A database write conflict between subscribers",
+        "Semantic drift caused by missing shared definitions"
+      ],
+      "correct": 3,
+      "explanation": "The receiver and sender attach different meanings to “customer,” so a syntactically valid message triggers the wrong domain action. Correlation IDs solve which response belongs to which request; they cannot reconcile two definitions of the same word."
+    },
+    {
+      "stage": "post",
+      "question": "A new protocol uses JSON but does not state whether a message is a request, notification, or cancellation. Which design question from the FIPA checklist should be raised?",
+      "options": [
+        "How many messages appear in the example trace?",
+        "What model generated the message tokens?",
+        "What is the intent primitive of each message?",
+        "Which agent has the shortest system prompt?"
+      ],
+      "correct": 2,
+      "explanation": "A protocol should make each message’s intent explicit so a receiver can distinguish requesting work from notifying or canceling it. The example-trace count says nothing about that contract; JSON syntax can carry a message without defining its action."
+    }
+  ]
+}
