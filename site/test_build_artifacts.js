@@ -7,6 +7,7 @@ const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 const vm = require('node:vm');
+const zlib = require('node:zlib');
 
 const {
   FIGURE_PROVIDER_ORDER,
@@ -30,6 +31,8 @@ const {
   resultIndexForEnter,
   search,
 } = require('./cmdpalette.js');
+const { layout, renderCard, renderPixels } = require('../lib/og-render');
+const { PAGES, lessonCard, pageCard, trackCard } = require('../lib/og-cards');
 
 function loadContentSource(options = {}) {
   const context = {
@@ -1369,7 +1372,6 @@ test('public curriculum counts match the canonical lesson and artifact inventory
   const banner = fs.readFileSync(path.join(root, 'assets', 'banner.svg'), 'utf8');
   const homepage = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   const lessonPage = fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8');
-  const ogImage = fs.readFileSync(path.join(__dirname, 'og-image.png'));
 
   assert.equal(lessonDirectories, lessons, 'README lesson inventory must match numbered lesson directories');
   assert.match(readme, new RegExp(`> ${lessons} lessons\\. ${phaseCount} phases\\.`));
@@ -1381,26 +1383,11 @@ test('public curriculum counts match the canonical lesson and artifact inventory
   );
   assert.match(homepage, new RegExp(`${lessons} lessons\\. ${phaseCount} phases\\.`));
   assert.match(lessonPage, new RegExp(`${lessons} lessons across ${phaseCount} phases`));
-  assert.equal(
-    ogImage.includes(Buffer.from(`AIFS_COUNTS: lessons=${lessons} phases=${phaseCount} skills=${skills} prompts=${prompts}`)),
-    true,
-    'social preview metadata must identify the counts rendered into the image'
-  );
-
-  const socialImageVersions = new Set();
-  for (const filename of fs.readdirSync(__dirname).filter(filename => filename.endsWith('.html'))) {
-    const source = fs.readFileSync(path.join(__dirname, filename), 'utf8');
-    for (const match of source.matchAll(/og-image\.png\?v=(\d+)/g)) {
-      socialImageVersions.add(match[1]);
-    }
+  const socialSources = fs.readdirSync(__dirname).filter(filename => filename.endsWith('.html')).map(filename => path.join(__dirname, filename))
+    .concat(['lesson.js', 'certification.js'].map(filename => path.join(root, 'api', filename)), path.join(__dirname, 'build-manuals.js'));
+  for (const filename of socialSources) {
+    assert.doesNotMatch(fs.readFileSync(filename, 'utf8'), /og-image\.png/, `${path.basename(filename)} must point at its generated social card`);
   }
-  for (const filename of ['lesson.js', 'certification.js']) {
-    const source = fs.readFileSync(path.join(root, 'api', filename), 'utf8');
-    for (const match of source.matchAll(/og-image\.png\?v=(\d+)/g)) {
-      socialImageVersions.add(match[1]);
-    }
-  }
-  assert.deepEqual([...socialImageVersions], ['4']);
 });
 
 test('repository exposes the canonical Model Context Protocol learning path only', () => {
@@ -2404,4 +2391,86 @@ test('lesson page includes completion panel and button contract', () => {
   runtime.api.unmarkLessonComplete(lesson);
   assert.equal(runtime.api.isLessonComplete(lesson), false);
   assert.equal(runtime.api.getLessonProgress(lesson).completedAt, null);
+});
+
+const CARD_LESSON = {
+  path: 'phases/03-deep-learning-core/01-the-perceptron',
+  title: 'The Perceptron',
+  description: 'The Perceptron: The simplest neural network. One neuron, one decision boundary, and the rule that learns it.',
+  context: { kind: 'course', phaseId: 3, phaseName: 'Deep Learning Core', type: 'Build', languages: 'Python' },
+};
+const CARD_STATS = { lessons: 99999, phases: 999, skills: 99999, prompts: 99999, terms: 99999, tracks: 999, projects: 9999, manuals: 999 };
+function cardChunks(png) {
+  const chunks = {};
+  for (let offset = 8; offset < png.length;) {
+    const length = png.readUInt32BE(offset);
+    const type = png.toString('ascii', offset + 4, offset + 8);
+    chunks[type] = Buffer.concat([chunks[type] || Buffer.alloc(0), png.subarray(offset + 8, offset + 8 + length)]);
+    offset += length + 12;
+  }
+  return chunks;
+}
+
+test('social cards render a deterministic 1200x630 palette PNG', () => {
+  const spec = lessonCard(CARD_LESSON);
+  const png = renderCard(spec);
+  assert.deepEqual(renderCard(spec), png);
+  assert.equal(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+  const chunks = cardChunks(png);
+  assert.equal(chunks.IHDR.readUInt32BE(0), 1200);
+  assert.equal(chunks.IHDR.readUInt32BE(4), 630);
+  assert.deepEqual([...chunks.IHDR.subarray(8)], [8, 3, 0, 0, 0]);
+  const colors = chunks.PLTE.length / 3;
+  const rows = zlib.inflateSync(chunks.IDAT);
+  assert.equal(rows.length, 1201 * 630);
+  for (let row = 0; row < 630; row++) assert.equal(rows[row * 1201], 0);
+  assert.ok(rows.every((value, index) => index % 1201 === 0 || value < colors));
+  assert.ok(png.length < 40 * 1024, `card is ${png.length} bytes`);
+});
+
+test('every page card shows its label, title, and description without truncation', () => {
+  for (const id of ['home'].concat(Object.keys(PAGES))) {
+    const spec = pageCard(id, CARD_STATS);
+    const card = layout(spec);
+    assert.equal(card.header.left, spec.label.toUpperCase(), id);
+    assert.equal(card.header.right, spec.meta.toUpperCase(), id);
+    assert.equal(card.title.lines.join(' '), spec.title.toUpperCase(), id);
+    if (spec.kind === 'home') {
+      assert.equal(card.body.join(' '), spec.description);
+      assert.equal(card.stats, spec.stats.join(' · ').toUpperCase());
+    } else {
+      assert.equal(card.description, spec.description, id);
+      assert.equal(card.path, spec.path, id);
+    }
+  }
+});
+
+test('worst-case card text stays inside the frame and the title keeps three lines', () => {
+  const long = 'Distributed Reinforcement Learning from Human Feedback for Multi-Agent Retrieval-Augmented Generation Systems at Planetary Scale';
+  const cases = [
+    lessonCard({ ...CARD_LESSON, title: long, description: `${long}: ${long}. ${long}.` }),
+    lessonCard({ ...CARD_LESSON, title: 'Supercalifragilisticexpialidocious'.repeat(4) }, 'pt-BR'),
+    lessonCard({ ...CARD_LESSON, context: { ...CARD_LESSON.context, phaseName: long, languages: 'Python, TypeScript, Rust, Julia, Go' } }),
+    lessonCard({ ...CARD_LESSON, path: `phases/03-${'very-long-phase-name-'.repeat(4)}core/01-${'deep-'.repeat(12)}lesson`, title: 'पर्सेप्ट्रोन 感知机 🤖 Perceptron', description: 'परसेप्ट्रॉन 神经网络 🚀 basics' }),
+    lessonCard({ ...CARD_LESSON, title: 'Attention with π and θ → ∞', description: '' }),
+    trackCard({ id: 'x', title: '', description: '', lessons: [] }),
+    pageCard('home', { lessons: 9999999, phases: 99999, skills: 9999999, prompts: 9999999 }),
+  ];
+  for (const spec of cases) {
+    const card = layout(spec);
+    assert.ok(card.title.lines.length <= (spec.kind === 'home' ? 2 : 3), JSON.stringify(card.title.lines));
+    const pixels = renderPixels(spec);
+    let stray = null;
+    for (let at = 0; at < pixels.length && !stray; at += 3) {
+      const x = (at / 3) % 1200;
+      const y = Math.floor(at / 3600);
+      const inside = (x >= 60 && x <= 1140 && y >= 48 && y <= 596) || x === 28 || x === 1171 || y === 28 || y === 601;
+      if (!inside && (pixels[at] !== 250 || pixels[at + 1] !== 250 || pixels[at + 2] !== 245)) stray = `${x},${y}`;
+    }
+    assert.equal(stray, null, `${spec.title} paints outside the frame`);
+  }
+  assert.equal(layout(cases[4]).title.lines.join(' '), 'ATTENTION WITH PI AND THETA → INFINITY');
+  assert.equal(layout(cases[3]).description, 'basics');
+  assert.match(layout(cases[2]).header.left, /^LESSON 03\.01 · DISTRIBUTED .*…$/);
+  assert.match(layout(cases[1]).header.right, /^TRANSLATION · PT-BR$/);
 });

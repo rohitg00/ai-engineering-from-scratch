@@ -6,6 +6,8 @@ const test = require('node:test');
 
 const lessonApi = require('../api/lesson');
 const certificationApi = require('../api/certification');
+const ogApi = require('../api/og');
+const ogCards = require('../lib/og-cards');
 const { parseMd } = require('../site/lesson-markdown');
 const manuals = require('../site/build-manuals.js');
 const { buildData: buildProjectData } = require('../site/build-projects.js');
@@ -1191,4 +1193,201 @@ test('a language with index false stays out of hreflang and the lesson sitemaps,
   isolatedBuild.annotateTranslations(manifest, { hi: ['phases/01-a/01-x'], ar: ['phases/01-a/01-x'] });
   assert.deepEqual(manifest.lessons['phases/01-a/01-x'].translations, ['hi', 'ar']);
   assert.deepEqual(isolatedBuild.writeLanguageSitemaps(manifest, site), ['sitemap-lessons-hi.xml']);
+});
+
+function metaTags(html) {
+  const tags = {};
+  for (const match of html.matchAll(/<meta (?:property|name)="([^"]+)" content="([^"]*)"\s*\/?>/g)) {
+    if (!(match[1] in tags)) tags[match[1]] = match[2].replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+  }
+  return tags;
+}
+
+function cardRequest(handler, url, method = 'GET', query) {
+  const response = { statusCode: 200, headers: {}, body: undefined };
+  const res = {
+    setHeader(name, value) { response.headers[String(name).toLowerCase()] = String(value); },
+    end(body) { response.body = body; },
+  };
+  Object.defineProperty(res, 'statusCode', {
+    get() { return response.statusCode; },
+    set(value) { response.statusCode = value; },
+  });
+  handler({ method, url, query }, res);
+  return response;
+}
+
+function cardFixture() {
+  const assets = makeAssets();
+  const vectors = Object.assign({}, assets.lesson.manifest.lessons['phases/01-math/01-vectors'], { translations: ['hi'] });
+  return {
+    'lesson-seo.json': { lessons: Object.assign({}, assets.lesson.manifest.lessons, { 'phases/01-math/01-vectors': vectors }) },
+    'certification-seo.json': assets.certification.manifest,
+    'og-cards.json': { version: 1, cards: { 'page/about': ogCards.pageCard('about', {}) } },
+  };
+}
+
+function withoutOrigin(url) {
+  return url.slice(ogCards.ORIGIN.length);
+}
+
+test('social card route renders known cards only at their versioned URL', function () {
+  const manifests = cardFixture();
+  const rendered = [];
+  const handler = ogApi.createHandler({
+    manifest: function (name) { return manifests[name]; },
+    render: function (spec) { rendered.push(spec.title); return Buffer.from(`png:${spec.title}`); },
+  });
+  const vectors = manifests['lesson-seo.json'].lessons['phases/01-math/01-vectors'];
+  const lesson = ogCards.cardPath('lesson', vectors.path, ogCards.lessonCard(vectors));
+  assert.match(lesson, /^\/og\/lesson\/phases\/01-math\/01-vectors\.png\?v=[0-9a-f]{12}$/);
+  const response = cardRequest(handler, lesson);
+  assert.equal(response.statusCode, 200);
+  assert.equal(response.headers['content-type'], 'image/png');
+  assert.equal(response.headers['cache-control'], 'public, max-age=31536000, s-maxage=31536000, immutable');
+  assert.equal(String(response.body), 'png:Vectors & <Matrices>');
+  const head = cardRequest(handler, lesson, 'HEAD');
+  assert.equal(head.statusCode, 200);
+  assert.equal(head.body, undefined);
+  assert.equal(head.headers['content-length'], response.headers['content-length']);
+
+  const hindi = ogCards.cardPath('lesson', vectors.path, ogCards.lessonCard(vectors, 'hi'), 'hi');
+  assert.match(hindi, /\?lang=hi&v=[0-9a-f]{12}$/);
+  assert.notEqual(hindi.split('v=')[1], lesson.split('v=')[1]);
+  assert.equal(cardRequest(handler, hindi).statusCode, 200);
+
+  const track = manifests['certification-seo.json'].tracks['claude-example'];
+  const trackUrl = ogCards.cardPath('track', 'claude-example', ogCards.trackCard(track));
+  assert.equal(cardRequest(handler, trackUrl).statusCode, 200);
+  const about = ogCards.cardPath('page', 'about', manifests['og-cards.json'].cards['page/about']);
+  const routed = cardRequest(handler, `/api/og?type=page&id=about&v=${about.split('v=')[1]}`, 'GET', { type: 'page', id: 'about', v: about.split('v=')[1] });
+  assert.equal(routed.statusCode, 200);
+  assert.deepEqual(rendered, ['Vectors & <Matrices>', 'Vectors & <Matrices>', 'Example Architecture Track', 'About this curriculum']);
+
+  const config = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+  const route = config.routes.find(function (rule) { return rule.dest === '/api/og?type=$1&id=$2'; });
+  const pattern = new RegExp(`^${route.src}$`);
+  assert.deepEqual(pattern.exec('/og/lesson/phases/01-math/01-vectors.png').slice(1), ['lesson', 'phases/01-math/01-vectors']);
+  assert.equal(pattern.test('/og/lesson/../secret.png'), false);
+  assert.deepEqual(route.methods, ['GET', 'HEAD']);
+  for (const name of ['api/og.js', 'api/lesson.js', 'api/certification.js']) {
+    assert.match(config.functions[name].includeFiles, /lib\/og-render\.js,lib\/og-fonts\/\*\.json/, name);
+  }
+  assert.match(config.functions['api/og.js'].includeFiles, /site\/og-cards\.json/);
+});
+
+test('social card route redirects stale URLs and refuses unknown or forged input', function () {
+  const manifests = cardFixture();
+  const rendered = [];
+  const handler = ogApi.createHandler({
+    manifest: function (name) { return manifests[name]; },
+    render: function (spec) { rendered.push(spec.title); return Buffer.from('png'); },
+  });
+  const about = ogCards.cardPath('page', 'about', manifests['og-cards.json'].cards['page/about']);
+  for (const stale of ['/og/page/about.png', '/og/page/about.png?v=0123456789ab', `${about}&title=Forged`, `${about.replace('?', '?lang=en&')}`]) {
+    const response = cardRequest(handler, stale);
+    assert.equal(response.statusCode, 307, stale);
+    assert.equal(response.headers.location, about, stale);
+    assert.equal(response.headers['cache-control'], 'public, max-age=0, s-maxage=300, must-revalidate');
+  }
+  for (const unknown of [
+    '/og/page/missing.png', '/og/page/__proto__.png', '/og/page/constructor.png', '/og/evil/about.png',
+    '/og/lesson/phases/01-math/99-missing.png', '/og/lesson/../../etc/passwd.png', '/og/track/missing.png',
+    '/og/lesson/phases/01-math/01-vectors.png?lang=fr', '/og/lesson/phases/01-math/01-vectors.png?lang=%3Cscript%3E',
+    '/og/page/about.png?lang=hi', '/og/project/about.png', '/og/page/ABOUT.png',
+  ]) {
+    const response = cardRequest(handler, unknown);
+    assert.equal(response.statusCode, 404, unknown);
+    assert.equal(response.headers['cache-control'], 'no-store', unknown);
+    assert.equal(String(response.body), 'Card not found\n');
+  }
+  const post = cardRequest(handler, about, 'POST');
+  assert.equal(post.statusCode, 405);
+  assert.equal(post.headers.allow, 'GET, HEAD');
+  assert.deepEqual(rendered, []);
+
+  const broken = ogApi.createHandler({ manifest: function () { throw new Error('missing'); } });
+  assert.equal(cardRequest(broken, about).statusCode, 500);
+  const failing = ogApi.createHandler({ manifest: function (name) { return manifests[name]; }, render: function () { throw new Error('atlas'); } });
+  assert.equal(cardRequest(failing, about).headers['cache-control'], 'no-store');
+});
+
+test('lesson and certification heads point at their own versioned cards', async function () {
+  const assets = makeAssets();
+  const lessons = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
+  const english = metaTags(invoke(lessons, { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors', query: { path: 'phases/01-math/01-vectors' } }).body);
+  assert.match(english['og:image'], /^https:\/\/aiengineeringfromscratch\.com\/og\/lesson\/phases\/01-math\/01-vectors\.png\?v=[0-9a-f]{12}$/);
+  assert.equal(english['twitter:image'], english['og:image']);
+  assert.equal(english['og:image:width'], '1200');
+  assert.equal(english['og:image:height'], '630');
+  assert.equal(english['og:image:alt'], 'Vectors & <Matrices> - AI Engineering from Scratch');
+  assert.equal(english['twitter:card'], 'summary_large_image');
+
+  const translated = lessonApi.createHandler({
+    loadAssets: function () { return withTranslations(['hi']); },
+    readTranslation: function () { return Promise.resolve(HINDI); },
+  });
+  const hindi = metaTags((await invokeAsync(translated, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` })).body);
+  assert.match(hindi['og:image'], /\/og\/lesson\/phases\/03-deep-learning-core\/01-the-perceptron\.png\?lang=hi&v=[0-9a-f]{12}$/);
+  assert.equal(hindi['twitter:image'], hindi['og:image']);
+
+  const tracks = certificationApi.createHandler({ loadAssets: function () { return assets.certification; } });
+  const track = metaTags(invoke(tracks, { method: 'GET', url: '/certification?id=claude-example', query: { id: 'claude-example' } }).body);
+  assert.match(track['og:image'], /^https:\/\/aiengineeringfromscratch\.com\/og\/track\/claude-example\.png\?v=[0-9a-f]{12}$/);
+  assert.equal(track['twitter:image'], track['og:image']);
+});
+
+test('every page type in the sitemap carries full social card tags that resolve to its own card', function (t) {
+  const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'site', 'og-cards.json'), 'utf8')).cards;
+  const og = ogApi.createHandler({ render: function () { return Buffer.from('png'); } });
+  const lessons = lessonApi.createHandler();
+  const tracks = certificationApi.createHandler();
+  const site = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-social-cards-'));
+  t.after(function () { fs.rmSync(site, { recursive: true, force: true }); });
+  manuals.writeWeb(manuals.loadAll().filter(function (manual) { return manual.status === 'ready'; }), site);
+  const sitemap = fs.readFileSync(path.join(ROOT, 'site', 'sitemap.xml'), 'utf8');
+  const seen = {};
+  for (const match of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    const url = new URL(match[1].replace(/&amp;/g, '&'));
+    const name = url.pathname.slice(1).replace(/\.html$/, '') || 'index';
+    let html;
+    let card;
+    if (name === 'lesson') {
+      html = invoke(lessons, { method: 'GET', url: url.pathname + url.search }).body;
+      card = `lesson/${url.searchParams.get('path')}`;
+    } else if (name === 'certification') {
+      html = invoke(tracks, { method: 'GET', url: url.pathname + url.search, query: { id: url.searchParams.get('id') } }).body;
+      card = `track/${url.searchParams.get('id')}`;
+    } else if (name.startsWith('manual')) {
+      html = fs.readFileSync(path.join(site, `${name}.html`), 'utf8');
+      card = name === 'manuals' ? 'page/manuals' : `manual/${name.slice('manual-'.length)}`;
+    } else {
+      html = fs.readFileSync(path.join(ROOT, 'site', `${name}.html`), 'utf8');
+      card = `page/${name === 'index' ? 'home' : name}`;
+    }
+    const tags = metaTags(ogCards.stampCards(html, cards));
+    assert.equal(tags['og:image'], tags['twitter:image'], url.href);
+    assert.ok(tags['og:image'].startsWith(`${ogCards.ORIGIN}/og/${card}.png?`), `${url.href} uses ${tags['og:image']}`);
+    assert.equal(tags['og:image:width'], '1200', url.href);
+    assert.equal(tags['og:image:height'], '630', url.href);
+    assert.ok(tags['og:image:alt'], url.href);
+    assert.equal(tags['twitter:card'], 'summary_large_image', url.href);
+    assert.equal(cardRequest(og, withoutOrigin(tags['og:image'])).statusCode, 200, tags['og:image']);
+    const type = card.split('/')[0];
+    seen[type] = (seen[type] || 0) + 1;
+  }
+  assert.deepEqual(Object.keys(seen).sort(), ['lesson', 'manual', 'page', 'track']);
+});
+
+test('the home card counts and page labels come from the build inventory', function () {
+  const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'site', 'og-cards.json'), 'utf8')).cards;
+  const phases = build.parseReadme(fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8'), build.parseRoadmap(fs.readFileSync(path.join(ROOT, 'ROADMAP.md'), 'utf8')));
+  const artifacts = build.discoverArtifacts();
+  const lessons = phases.reduce(function (total, phase) { return total + phase.lessons.length; }, 0);
+  const count = function (kind) { return artifacts.filter(function (artifact) { return artifact.kind === kind; }).length; };
+  assert.deepEqual(cards['page/home'].stats, [`${lessons} lessons`, `${phases.length} phases`, `${count('skill')} skills`, `${count('prompt')} prompts`]);
+  assert.equal(cards['page/catalog'].label, `Catalog · ${lessons} lessons`);
+  const projects = buildProjectData().projects;
+  assert.equal(cards['page/projects'].label, `Projects · ${projects.length} ready`);
+  assert.deepEqual(Object.keys(cards).filter(function (key) { return key.startsWith('project/'); }).sort(), projects.map(function (project) { return `project/${project.id}`; }).sort());
 });
