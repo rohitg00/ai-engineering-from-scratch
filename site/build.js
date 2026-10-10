@@ -13,7 +13,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { buildData: buildProjectData } = require('./build-projects.js');
 const { normalizeWhitespace, wordCount, truncateWords, seoTitleFor, descriptionFromParts, lessonDocumentSeo } = require('../lib/lesson-document');
-const { TRANSLATION_LANGUAGES, TRANSLATION_SOURCE, NATIVE_NAMES } = require('../lib/lesson-translations');
+const { TRANSLATION_LANGUAGES, TRANSLATION_SOURCE, NATIVE_NAMES, isIndexedLanguage } = require('../lib/lesson-translations');
 const { phaseHubPath, phaseLabel, glossaryLookupKey } = require('../lib/hub-routes');
 const { writeHubs } = require('./build-hubs.js');
 
@@ -2358,6 +2358,7 @@ function urlsetXml(urls) {
 function translatedLessons(lessonManifest) {
   const lessons = Object.values(lessonManifest.lessons || {});
   return TRANSLATION_LANGUAGES
+    .filter(isIndexedLanguage)
     .map(lang => [lang, lessons.filter(entry => (entry.translations || []).includes(lang))])
     .filter(([, entries]) => entries.length > 0);
 }

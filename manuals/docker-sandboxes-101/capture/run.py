@@ -1,4 +1,5 @@
 import argparse
+import contextlib
 import difflib
 import gzip
 import itertools
@@ -20,12 +21,13 @@ import uuid
 import zipfile
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+HERE = os.path.dirname(os.path.realpath(__file__))
 OUT = os.path.join(HERE, "out")
 FIXTURES = os.path.join(HERE, "fixtures")
 WORK = os.path.join(HERE, "work")
 CASSETTES = os.path.join(HERE, "cassettes")
 CASSETTE_WORK = os.path.join(WORK, "cassettes")
+RECORD_DATA = os.path.join(WORK, "record-data")
 HOME = os.path.expanduser("~")
 USER = os.path.basename(HOME)
 DEMO = "m101-demo"
@@ -134,16 +136,20 @@ LS_DATE = re.compile(r"[A-Z][a-z]{2}\s{1,2}\d{1,2}\s(?:\d{2}:\d{2}|\d{4})")
 DF_LINE = re.compile(r"^(host|overlay|/dev/\S+)\s+\d")
 DF_COLS = re.compile(r"\s+\d+(?:\.\d+)?[KMGTP]?i?\s+\d+(?:\.\d+)?[KMGTP]?i?\s+\d+(?:\.\d+)?[KMGTP]?i?\s+\d+%")
 COMPOSE_SERVICE = re.compile(r"^([a-z0-9-]+-\d+)\s+\| ")
+HOST_FACTS = {
+    "00-versions.txt": re.compile(r"^\$ (?:sw_vers|uname -m|sysctl kern\.hv_support|python3 --version)\n.*?^\[exit \d+\]\n", re.M | re.S),
+    "README.md": re.compile(r"^- (?:docker|host): .*\n", re.M),
+}
 
 
 def mask_text(text, docker_user):
     text = TRANSIENT_LINES.sub("", text)
     for path, token in ((HERE, "$CAPTURE"), (HOME, "$HOME")):
         for variant in sorted({path, os.path.realpath(path)}, key=len, reverse=True):
-            text = text.replace(variant, token)
+            text = re.sub(re.escape(variant) + r"(?![\w.-])", token, text)
+    text = re.sub(r"(?<=/)" + re.escape(USER) + r"(?![\w.-])", "$USER", text)
     if docker_user:
-        text = text.replace(docker_user, "<docker-user>")
-    text = re.sub(r"\b" + re.escape(USER) + r"\b", "$USER", text)
+        text = re.sub(r"(?i)(signed[_ ]in[_ ]as\W{0,4})" + re.escape(docker_user) + r"(?![\w.-])", r"\1<docker-user>", text)
     text = PULL_BLOCK.sub(r"\1  <layers>\n", text)
     for pattern, replacement in MASKS:
         text = re.sub(pattern, replacement, text, flags=re.M)
@@ -263,12 +269,12 @@ def as_text(value):
     return value or ""
 
 
-def agent_dirs(root):
-    return ["--config-dir", os.path.join(root, "cfg"), "--data-dir", os.path.join(root, "data"), "--cache-dir", os.path.join(root, "cache")]
+def agent_dirs(root, data_dir=None):
+    return ["--config-dir", os.path.join(root, "cfg"), "--data-dir", data_dir or os.path.join(root, "data"), "--cache-dir", os.path.join(root, "cache")]
 
 
-def agent(*args):
-    return ["docker-agent", *agent_dirs(WORK), *(os.path.join(HERE, item) if item.startswith(("fixtures/", "work/")) else item for item in args)]
+def agent(*args, data_dir=None):
+    return ["docker-agent", *agent_dirs(WORK, data_dir), *(os.path.join(HERE, item) if item.startswith(("fixtures/", "work/")) else item for item in args)]
 
 
 def agent_in_work(*args):
@@ -451,14 +457,20 @@ class Transcript:
         self.kit.write(name, "\n".join(self.lines).rstrip("\n") + "\n", [server, *self.labels])
 
 
+@contextlib.contextmanager
 def start_server(args, port, log_name):
+    if port_open(port):
+        raise RuntimeError(f"127.0.0.1:{port} is already in use, so the step would talk to a stale server")
     command = agent(*args)
     with open(os.path.join(WORK, log_name), "w", encoding="utf-8") as log:
         proc = subprocess.Popen(command, cwd=HERE, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL, start_new_session=True)
-    deadline = time.time() + 120
-    while time.time() < deadline and proc.poll() is None and not port_open(port):
-        time.sleep(0.5)
-    return proc, shown_command(command)
+    try:
+        deadline = time.time() + 120
+        while time.time() < deadline and proc.poll() is None and not port_open(port):
+            time.sleep(0.5)
+        yield shown_command(command)
+    finally:
+        stop_server(proc)
 
 
 def wait_or_kill(proc, timeout, grace):
@@ -482,7 +494,9 @@ class Kit:
         self.docker_user = None
         self.versions = {}
         self.record_cassettes = False
+        self.checking = False
         self.recorded = []
+        self.missing = []
         os.makedirs(out_dir, exist_ok=True)
 
     def run(self, args, cwd=None, env=None, merged=True, new_session=False):
@@ -598,10 +612,20 @@ class Kit:
         self.recorded.append(name)
         return ["--models-gateway", f"{DMR_URL}/engines", f"--record={CASSETTE_WORK}/{name}"]
 
-    def ensure_cassette(self, name, args):
+    def recording_flags(self, name):
+        if self.checking:
+            if not os.path.exists(committed_cassette(name)):
+                self.missing.append(name)
+            return None
         flags = self.start_recording(name)
         if flags:
-            self.run(agent(args[0], *flags, *args[1:]), cwd=HERE)
+            remove_file(cassette_path(name))
+        return flags
+
+    def ensure_cassette(self, name, args):
+        flags = self.recording_flags(name)
+        if flags:
+            self.run(agent(args[0], *flags, *args[1:], data_dir=RECORD_DATA), cwd=HERE)
 
     def server_log(self, name, log_name, label):
         path = os.path.join(WORK, log_name)
@@ -871,22 +895,24 @@ def swap_curls(placeholder):
 
 def step_secrets(kit):
     receiver = Receiver(RECEIVER_PORT)
-    kit.capture("10-set-custom.txt", ["sbx", "secret", "set-custom", "--host", "host.docker.internal", "--host", "localhost", "--env", "M101_RECV_KEY", "--value", "m101-dummy-receiver-0000"])
-    kit.capture("10-secret-ls.txt", ["sbx", "secret", "ls"])
-    kit.json_file("10-secret-ls.json", ["sbx", "secret", "ls", "--json"])
-    placeholder = next((secret["placeholder"] for secret in kit.custom_secrets() if secret.get("env") == "M101_RECV_KEY"), "<missing>")
-    kit.exec_file("10-env-existing.txt", DEMO, "env | grep -c M101_RECV_KEY; echo exit=$?")
-    kit.capture("10-secret-create.txt", ["sbx", "create", "shell", "--name", SECRET], ["sbx", "policy", "allow", "network", "--sandbox", SECRET, f"localhost:{RECEIVER_PORT}"])
-    sentinel = "env | grep -E '^M101_|^SBX_CRED|proxy-managed' | sort"
-    kit.exec_file("10-env-sentinel.txt", SECRET, sentinel, label=f"sbx exec m101-secret sh -c \"{sentinel}\"")
-    swaps = [kit.exec_entry(SECRET, script, label=f"sbx exec m101-secret sh -c {shlex.quote(script)}") for script in swap_curls(placeholder)]
-    kit.write_blocks("10-swap-curl.txt", swaps)
-    kit.write("10-receiver.log", receiver.text(), ["requests received by the host receiver on 127.0.0.1:18080 (run.py, class Receiver)"])
-    kit.json_file("10-policy-log.json", ["sbx", "policy", "log", SECRET, "--json"], transform=policy_log_json(SECRET_HOSTS))
-    kit.capture("10-placeholder.txt", ["sbx", "secret", "set-custom", "--host", "api.example.test", "--env", "M101_NAMED", "--placeholder", "sk-{rand}", "--value", "m101-dummy-1111"], ["sbx", "secret", "ls", "--json"])
-    kit.capture("10-import-dry-run.txt", ["sbx", "secret", "import", "--dry-run"])
-    kit.capture("10-secret-rm.txt", ["sbx", "rm", "--force", SECRET], *kit_secret_removals(kit), ["sbx", "secret", "ls"])
-    receiver.stop()
+    try:
+        kit.capture("10-set-custom.txt", ["sbx", "secret", "set-custom", "--host", "host.docker.internal", "--host", "localhost", "--env", "M101_RECV_KEY", "--value", "m101-dummy-receiver-0000"])
+        kit.capture("10-secret-ls.txt", ["sbx", "secret", "ls"])
+        kit.json_file("10-secret-ls.json", ["sbx", "secret", "ls", "--json"])
+        placeholder = next((secret["placeholder"] for secret in kit.custom_secrets() if secret.get("env") == "M101_RECV_KEY"), "<missing>")
+        kit.exec_file("10-env-existing.txt", DEMO, "env | grep -c M101_RECV_KEY; echo exit=$?")
+        kit.capture("10-secret-create.txt", ["sbx", "create", "shell", "--name", SECRET], ["sbx", "policy", "allow", "network", "--sandbox", SECRET, f"localhost:{RECEIVER_PORT}"])
+        sentinel = "env | grep -E '^M101_|^SBX_CRED|proxy-managed' | sort"
+        kit.exec_file("10-env-sentinel.txt", SECRET, sentinel, label=f"sbx exec m101-secret sh -c \"{sentinel}\"")
+        swaps = [kit.exec_entry(SECRET, script, label=f"sbx exec m101-secret sh -c {shlex.quote(script)}") for script in swap_curls(placeholder)]
+        kit.write_blocks("10-swap-curl.txt", swaps)
+        kit.write("10-receiver.log", receiver.text(), ["requests received by the host receiver on 127.0.0.1:18080 (run.py, class Receiver)"])
+        kit.json_file("10-policy-log.json", ["sbx", "policy", "log", SECRET, "--json"], transform=policy_log_json(SECRET_HOSTS))
+        kit.capture("10-placeholder.txt", ["sbx", "secret", "set-custom", "--host", "api.example.test", "--env", "M101_NAMED", "--placeholder", "sk-{rand}", "--value", "m101-dummy-1111"], ["sbx", "secret", "ls", "--json"])
+        kit.capture("10-import-dry-run.txt", ["sbx", "secret", "import", "--dry-run"])
+        kit.capture("10-secret-rm.txt", ["sbx", "rm", "--force", SECRET], *kit_secret_removals(kit), ["sbx", "secret", "ls"])
+    finally:
+        receiver.stop()
 
 
 def last_sse_data(raw):
@@ -1133,6 +1159,10 @@ def cassette_path(name):
     return os.path.join(CASSETTE_WORK, f"{name}.yaml")
 
 
+def committed_cassette(name):
+    return os.path.join(CASSETTES, f"{name}.yaml.gz")
+
+
 def replay(name):
     return ["--fake", f"{CASSETTE_WORK}/{name}"]
 
@@ -1144,12 +1174,12 @@ def unpack_cassettes():
             continue
         with gzip.open(os.path.join(CASSETTES, name), "rt", encoding="utf-8") as handle:
             text = handle.read()
-        text = text.replace("$CAPTURE", os.path.realpath(HERE)).replace("$HOME", HOME)
+        text = text.replace("$CAPTURE", HERE).replace("$HOME", HOME)
         write_file(os.path.join(CASSETTE_WORK, name[:-3]), text)
 
 
 def pack_cassettes(names):
-    tokens = ((os.path.realpath(HERE), "$CAPTURE"), (HERE, "$CAPTURE"), (os.path.realpath(HOME), "$HOME"), (HOME, "$HOME"))
+    tokens = ((HERE, "$CAPTURE"), (os.path.realpath(HOME), "$HOME"), (HOME, "$HOME"))
     for name in names:
         path = cassette_path(name)
         if not os.path.exists(path):
@@ -1157,7 +1187,7 @@ def pack_cassettes(names):
         text = read_file(path)
         for value, token in tokens:
             text = text.replace(value, token)
-        with open(os.path.join(CASSETTES, f"{name}.yaml.gz"), "wb") as handle:
+        with open(committed_cassette(name), "wb") as handle:
             handle.write(gzip.compress(text.encode("utf-8"), mtime=0))
 
 
@@ -1320,7 +1350,7 @@ def step_team(kit):
     events = kit.ndjson_file("19-team.ndjson", ["run", "--exec", "--json", *fake, team, *TEAM_TURNS])
     kit.write("19-transcript.txt", transcript_text(events), ["the delegation as events: user message, transfer_task, handoff, tool results, answers, cut from 19-team.ndjson"])
     for tool, name in (("transfer_task", "19-transfer-task.json"), ("handoff", "19-handoff.json")):
-        picked = [event for event in events if f'"{tool}"' in json.dumps(event) and "tool_call" in str(event.get("type", ""))]
+        picked = [event for event in events if event.get("type") == "tool_call" and event.get("tool_call", {}).get("function", {}).get("name") == tool]
         text = pretty_json(picked) if picked else f"(no tool_call event names {tool} in 19-team.ndjson)\n"
         kit.write(name, text, [f"the tool_call events for {tool}, cut from 19-team.ndjson"])
     kit.ensure_cassette("19-background", ["run", "--exec", team, BACKGROUND_TASK])
@@ -1398,32 +1428,29 @@ def api_exchanges(transcript):
 
 def serve_api(kit, pong):
     serve = ["serve", "api", pong, "--listen", f"127.0.0.1:{API_PORT}", "-s", "work/api-session.db"]
-    flags = kit.start_recording("23-api")
+    flags = kit.recording_flags("23-api")
     if flags:
-        proc, _ = start_server([*serve, *flags], API_PORT, "serve-api-record.log")
-        api_exchanges(Transcript(kit))
-        stop_server(proc)
+        with start_server([*serve, *flags], API_PORT, "serve-api-record.log"):
+            api_exchanges(Transcript(kit))
     remove_file(os.path.join(WORK, "api-session.db"))
-    proc, shown = start_server([*serve, *replay("23-api")], API_PORT, "serve-api.log")
     transcript = Transcript(kit)
-    stream = api_exchanges(transcript)
-    stop_server(proc)
+    with start_server([*serve, *replay("23-api")], API_PORT, "serve-api.log") as shown:
+        stream = api_exchanges(transcript)
     transcript.write("23-api.http", shown)
     kit.write("23-api-run.sse", sse_scrub(stream.replace("\r\n", "\n")), ["the body of the SSE answer to POST /api/sessions/<id>/agent/pong (reasoning events dropped, agent_choice tokens joined)"])
     kit.server_log("23-serve-api.log", "serve-api.log", f"stdout and stderr of {shown}")
 
 
 def serve_chat(kit, pong):
-    proc, shown = start_server(["serve", "chat", pong, "--listen", f"127.0.0.1:{CHAT_PORT}", "--api-key", "m101-chat-key"], CHAT_PORT, "serve-chat.log")
     base = f"http://127.0.0.1:{CHAT_PORT}"
     auth = "Authorization: Bearer m101-chat-key"
     transcript = Transcript(kit)
-    models = rpc_result(transcript.exchange("models", "GET", f"{base}/v1/models", headers=[auth]))
-    model_id = (models.get("data") or [{}])[0].get("id", "pong")
-    body = json.dumps({"model": model_id, "messages": [{"role": "user", "content": "ping"}]})
-    transcript.exchange("chat completion", "POST", f"{base}/v1/chat/completions", body=body, headers=[auth])
-    transcript.exchange("the same without the token", "POST", f"{base}/v1/chat/completions", body=body)
-    stop_server(proc)
+    with start_server(["serve", "chat", pong, "--listen", f"127.0.0.1:{CHAT_PORT}", "--api-key", "m101-chat-key"], CHAT_PORT, "serve-chat.log") as shown:
+        models = rpc_result(transcript.exchange("models", "GET", f"{base}/v1/models", headers=[auth]))
+        model_id = (models.get("data") or [{}])[0].get("id", "pong")
+        body = json.dumps({"model": model_id, "messages": [{"role": "user", "content": "ping"}]})
+        transcript.exchange("chat completion", "POST", f"{base}/v1/chat/completions", body=body, headers=[auth])
+        transcript.exchange("the same without the token", "POST", f"{base}/v1/chat/completions", body=body)
     transcript.write("23-chat.http", shown)
 
 
@@ -1443,21 +1470,20 @@ def mcp_session_id(head):
 
 
 def serve_mcp(kit, pong):
-    proc, shown = start_server(["serve", "mcp", pong, "--http", "--listen", f"127.0.0.1:{MCP_PORT}", "--tool-name", "pong"], MCP_PORT, "serve-mcp.log")
     base = f"http://127.0.0.1:{MCP_PORT}/mcp"
     transcript = Transcript(kit)
-    init = {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2026-07-28", "capabilities": {}, "clientInfo": {"name": "m101", "version": "0"}}}
-    mcp_call(transcript, "initialize", base, init)
-    session_id = mcp_session_id(transcript.last_head)
-    mcp_call(transcript, "notifications/initialized", base, {"jsonrpc": "2.0", "method": "notifications/initialized"}, session_id)
-    tools = rpc_result(mcp_call(transcript, "tools/list", base, {"jsonrpc": "2.0", "id": 2, "method": "tools/list"}, session_id))
-    listed = (tools.get("result") or {}).get("tools") or []
-    tool = listed[0] if listed else {"name": "pong", "inputSchema": {}}
-    schema = tool.get("inputSchema") or {}
-    argument = (schema.get("required") or list((schema.get("properties") or {}).keys()) or ["message"])[0]
-    call = {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": tool.get("name", "pong"), "arguments": {argument: "ping"}}}
-    mcp_call(transcript, "tools/call", base, call, session_id)
-    stop_server(proc)
+    with start_server(["serve", "mcp", pong, "--http", "--listen", f"127.0.0.1:{MCP_PORT}", "--tool-name", "pong"], MCP_PORT, "serve-mcp.log") as shown:
+        init = {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2026-07-28", "capabilities": {}, "clientInfo": {"name": "m101", "version": "0"}}}
+        mcp_call(transcript, "initialize", base, init)
+        session_id = mcp_session_id(transcript.last_head)
+        mcp_call(transcript, "notifications/initialized", base, {"jsonrpc": "2.0", "method": "notifications/initialized"}, session_id)
+        tools = rpc_result(mcp_call(transcript, "tools/list", base, {"jsonrpc": "2.0", "id": 2, "method": "tools/list"}, session_id))
+        listed = (tools.get("result") or {}).get("tools") or []
+        tool = listed[0] if listed else {"name": "pong", "inputSchema": {}}
+        schema = tool.get("inputSchema") or {}
+        argument = (schema.get("required") or list((schema.get("properties") or {}).keys()) or ["message"])[0]
+        call = {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": tool.get("name", "pong"), "arguments": {argument: "ping"}}}
+        mcp_call(transcript, "tools/call", base, call, session_id)
     transcript.write("23-mcp.http", shown)
 
 
@@ -1512,27 +1538,26 @@ def a2a_task(result):
 
 
 def serve_a2a(kit, pong):
-    proc, shown = start_server(["serve", "a2a", pong, "--listen", f"127.0.0.1:{A2A_PORT}"], A2A_PORT, "serve-a2a.log")
     base = f"http://127.0.0.1:{A2A_PORT}"
     transcript = Transcript(kit)
-    card = rpc_result(transcript.exchange("agent card", "GET", f"{base}/.well-known/agent-card.json"))
-    if not card:
-        card = rpc_result(transcript.exchange("agent card, legacy path", "GET", f"{base}/.well-known/agent.json"))
-    kit.write("23-agent-card.json", pretty_json(scrub(card)) if card else "(no agent card answered)\n", ["the agent card served by docker-agent serve a2a"])
-    interfaces = card.get("supportedInterfaces") or []
-    endpoint = (interfaces[0].get("url") if interfaces else None) or card.get("url") or f"{base}/"
-    send = {"jsonrpc": "2.0", "id": 1, "method": "SendMessage", "params": {"message": {"messageId": "m101-0001", "role": "ROLE_USER", "parts": [{"text": "ping"}]}}}
-    answer = rpc_result(transcript.exchange("SendMessage (A2A 1.0 names)", "POST", endpoint, body=json.dumps(send), headers=[A2A_V1]))
-    legacy = "error" in answer or not answer
-    if legacy:
-        send = {"jsonrpc": "2.0", "id": 2, "method": "message/send", "params": {"message": {"messageId": "m101-0002", "role": "user", "kind": "message", "parts": [{"kind": "text", "text": "ping"}]}}}
-        answer = rpc_result(transcript.exchange("message/send (A2A 0.3 names)", "POST", endpoint, body=json.dumps(send)))
-    task_id = a2a_task(answer.get("result") or {}).get("id")
-    if task_id:
-        method = "tasks/get" if legacy else "GetTask"
-        headers = [] if legacy else [A2A_V1]
-        transcript.exchange(method, "POST", endpoint, body=json.dumps({"jsonrpc": "2.0", "id": 3, "method": method, "params": {"id": task_id}}), headers=headers)
-    stop_server(proc)
+    with start_server(["serve", "a2a", pong, "--listen", f"127.0.0.1:{A2A_PORT}"], A2A_PORT, "serve-a2a.log") as shown:
+        card = rpc_result(transcript.exchange("agent card", "GET", f"{base}/.well-known/agent-card.json"))
+        if not card:
+            card = rpc_result(transcript.exchange("agent card, legacy path", "GET", f"{base}/.well-known/agent.json"))
+        kit.write("23-agent-card.json", pretty_json(scrub(card)) if card else "(no agent card answered)\n", ["the agent card served by docker-agent serve a2a"])
+        interfaces = card.get("supportedInterfaces") or []
+        endpoint = (interfaces[0].get("url") if interfaces else None) or card.get("url") or f"{base}/"
+        send = {"jsonrpc": "2.0", "id": 1, "method": "SendMessage", "params": {"message": {"messageId": "m101-0001", "role": "ROLE_USER", "parts": [{"text": "ping"}]}}}
+        answer = rpc_result(transcript.exchange("SendMessage (A2A 1.0 names)", "POST", endpoint, body=json.dumps(send), headers=[A2A_V1]))
+        legacy = "error" in answer or not answer
+        if legacy:
+            send = {"jsonrpc": "2.0", "id": 2, "method": "message/send", "params": {"message": {"messageId": "m101-0002", "role": "user", "kind": "message", "parts": [{"kind": "text", "text": "ping"}]}}}
+            answer = rpc_result(transcript.exchange("message/send (A2A 0.3 names)", "POST", endpoint, body=json.dumps(send)))
+        task_id = a2a_task(answer.get("result") or {}).get("id")
+        if task_id:
+            method = "tasks/get" if legacy else "GetTask"
+            headers = [] if legacy else [A2A_V1]
+            transcript.exchange(method, "POST", endpoint, body=json.dumps({"jsonrpc": "2.0", "id": 3, "method": method, "params": {"id": task_id}}), headers=headers)
     transcript.write("23-a2a.http", shown)
 
 
@@ -1703,7 +1728,7 @@ def step_legacy(kit):
 
 def step_model_cleanup(kit):
     remove_model_tier_leftovers(kit)
-    kit.run(["docker", "model", "unload", "--all"])
+    kit.run(["docker", "model", "unload", MODEL_NAME])
     kit.capture("98-model-final-state.txt", ["docker", "ps", "-a", "--filter", "name=m101-", "--format", "{{.Names}} {{.Status}}"], ["docker", "images", f"{LOCAL_REGISTRY_HOST}/m101/*", "--format", "{{.Repository}}:{{.Tag}}"], ["docker", "buildx", "ls", "--format", "{{.Name}}"], ["docker", "network", "ls", "--filter", "name=m101", "--format", "{{.Name}}"])
 
 
@@ -1802,10 +1827,19 @@ def skip_reason(tiers):
     return preflight(tiers)
 
 
-def capture(out_dir, tiers, only, record=False):
+def full_run(tiers, only):
+    return {"a", "b", "m"} <= tiers and not only
+
+
+def selected_steps(tiers, only):
+    return [step for step in STEPS if step[1] in tiers and (not only or step[0] in only)]
+
+
+def capture(out_dir, tiers, only, record=False, checking=False):
     kit = Kit(out_dir)
     kit.docker_user = kit.signed_in_user()
     kit.record_cassettes = record
+    kit.checking = checking
     os.makedirs(CASSETTES, exist_ok=True)
     if ("b" in tiers or "m" in tiers) and not only:
         if "b" in tiers:
@@ -1817,23 +1851,24 @@ def capture(out_dir, tiers, only, record=False):
     else:
         os.makedirs(WORK, exist_ok=True)
     unpack_cassettes()
-    for step_id, tier, title, func in STEPS:
-        if tier not in tiers or (only and step_id not in only):
-            continue
+    for step_id, tier, title, func in selected_steps(tiers, only):
         print(f"{step_id} ({tier}) {title}", flush=True)
         try:
             func(kit)
         except Exception as exc:
             kit.write(f"{step_id}-error.txt", f"{step_id} failed inside run.py: {exc!r}\n", [f"{step_id} raised an exception in run.py"])
             print(f"  {step_id} failed: {exc!r}", flush=True)
-    pack_cassettes(kit.recorded)
-    write_readme(kit, tiers)
     return kit
 
 
+def comparable(name, text):
+    pattern = HOST_FACTS.get(name)
+    return pattern.sub("", text) if pattern else text
+
+
 def file_diff(name, fresh):
-    expected = read_file(os.path.join(OUT, name)).splitlines(keepends=True)
-    actual = read_file(os.path.join(fresh, name)).splitlines(keepends=True)
+    expected = comparable(name, read_file(os.path.join(OUT, name))).splitlines(keepends=True)
+    actual = comparable(name, read_file(os.path.join(fresh, name))).splitlines(keepends=True)
     if expected == actual:
         return None
     return "".join(difflib.unified_diff(expected, actual, fromfile=f"out/{name}", tofile=f"fresh/{name}"))
@@ -1857,11 +1892,13 @@ def find_drift(fresh, fresh_names, full):
 
 
 def check(tiers, only):
-    full = {"a", "b", "m"} <= tiers and not only
+    full = full_run(tiers, only)
     with tempfile.TemporaryDirectory() as fresh:
-        capture(fresh, tiers, only)
+        kit = capture(fresh, tiers, only, checking=True)
+        write_readme(kit, tiers)
         fresh_names = sorted(name for name in os.listdir(fresh) if not name.startswith(".") and (full or name != "README.md"))
         drift = find_drift(fresh, fresh_names, full)
+    drift += [(f"cassettes/{name}.yaml.gz", f"cassettes/{name}.yaml.gz: missing, and --check never records a cassette") for name in kit.missing]
     if not drift:
         print(f"capture check: {len(fresh_names)} files match")
         return 0
@@ -1878,6 +1915,7 @@ def main():
     parser.add_argument("--only", default="", help="comma-separated step ids to run, for example K09,K10")
     parser.add_argument("--re-record", action="store_true", help="record the model cassettes anew with Docker Model Runner instead of replaying cassettes/")
     args = parser.parse_args()
+    os.environ.pop("PWD", None)
     tiers = set(args.tier.lower())
     if "c" in tiers:
         print("Tier C (cloud, tokens, ssh setup) is not part of this kit version; running the other tiers")
@@ -1897,19 +1935,28 @@ def main():
     if reason:
         print(reason)
         return 1
+    full = full_run(tiers, only)
     kept = {}
-    if not only:
+    if full:
         for name in ONE_TIME_FILES:
             path = os.path.join(OUT, name)
             if os.path.exists(path):
                 kept[name] = read_file(path)
         shutil.rmtree(OUT, ignore_errors=True)
+    else:
+        for step_id, _, _, _ in selected_steps(tiers, only):
+            remove_file(os.path.join(OUT, f"{step_id}-error.txt"))
     kit = capture(OUT, tiers, only, args.re_record)
+    pack_cassettes(kit.recorded)
+    if full:
+        write_readme(kit, tiers)
     for name, text in kept.items():
         path = os.path.join(OUT, name)
         if not os.path.exists(path):
             write_file(path, text)
     print(f"wrote {len(kit.manifest)} files to {OUT}")
+    if not full:
+        print("not a run of all three tiers: the other files in out/ and out/README.md were left as they were")
     return 0
 
 

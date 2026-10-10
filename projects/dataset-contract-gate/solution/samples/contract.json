@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "fields": {
+    "id": {"type": "string", "required": true},
+    "tokens": {"type": "integer", "required": true, "min": 0, "max": 8192},
+    "split": {"type": "string", "required": true, "enum": ["train", "test"]}
+  },
+  "unique": ["id"],
+  "min_rows": 1,
+  "allow_extra": false
+}

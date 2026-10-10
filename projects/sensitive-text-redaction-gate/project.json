@@ -1,0 +1,111 @@
+{
+  "title": "Sensitive Text Redaction Gate",
+  "tagline": "Remove bounded sensitive-text patterns before records enter a model pipeline.",
+  "level": 2,
+  "summary": "Detect ASCII email patterns, valid IPv4 addresses and explicit literal identifiers. Merge overlapping spans, replace their union without exposing original values in receipts, and export redacted JSONL plus an inspectable HTML ledger.",
+  "languageWhy": {
+    "Python": "Regular expressions, Unicode string offsets, IP address parsing and JSONL processing remain visible with standard-library code."
+  },
+  "prerequisiteProjects": [
+    "dataset-split-auditor"
+  ],
+  "id": "sensitive-text-redaction-gate",
+  "languages": [
+    "Python"
+  ],
+  "source": "core",
+  "status": "ready",
+  "hours": 8,
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "prerequisites": [
+    "Python 3.12+; dictionaries, lists and command-line IO"
+  ],
+  "youWillBuild": "redacted.jsonl, receipt.json and review.html",
+  "skills": [
+    "Detect bounded sensitive spans",
+    "Merge complete overlap unions",
+    "Replace spans without leaking source values",
+    "Export redacted records and bounded evidence"
+  ],
+  "figures": true,
+  "overviewFigure": "pj-sensitive-text-redaction-gate-1",
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.jsonl",
+      "--literals",
+      "samples/literals.json",
+      "--output",
+      "demo-output"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-detect-spans",
+      "title": "Detect bounded sensitive spans",
+      "summary": "Return start/end Python character offsets and kind EMAIL, IPV4 or LITERAL.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "starter",
+      "concepts": [
+        "detect bounded sensitive spans"
+      ],
+      "figure": "pj-sensitive-text-redaction-gate-1"
+    },
+    {
+      "id": "02-merge-overlaps",
+      "title": "Merge complete overlap unions",
+      "summary": "Validate each span and sort a copy.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "merge complete overlap unions"
+      ],
+      "figure": "pj-sensitive-text-redaction-gate-2"
+    },
+    {
+      "id": "03-redact-text",
+      "title": "Replace spans without leaking source values",
+      "summary": "Compose detect and merge_spans.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "replace spans without leaking source values"
+      ],
+      "figure": "pj-sensitive-text-redaction-gate-3"
+    },
+    {
+      "id": "04-export-safe-records",
+      "title": "Export redacted records and bounded evidence",
+      "summary": "Accept up to ten thousand records with exactly id and text.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "export redacted records and bounded evidence"
+      ],
+      "figure": "pj-sensitive-text-redaction-gate-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

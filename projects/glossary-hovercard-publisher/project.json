@@ -1,0 +1,101 @@
+{
+  "id": "glossary-hovercard-publisher",
+  "title": "Glossary Hovercard Publisher",
+  "tagline": "Explain unfamiliar terms inside the page people are reading.",
+  "summary": "Help an educator add contextual definitions to existing lesson HTML using a reviewed glossary and longest-phrase matching. Preserve code and links, support keyboard-accessible definitions, and export a standalone annotated lesson with a reusable glossary file.",
+  "level": 1,
+  "languages": [
+    "TypeScript"
+  ],
+  "source": "core",
+  "prerequisiteProjects": [],
+  "status": "ready",
+  "hours": 8,
+  "youWillBuild": "An annotated HTML lesson, glossary.json and a term-coverage report",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "languageWhy": {
+    "TypeScript": "Typed local transformations and portable browser interfaces run with Node standard libraries."
+  },
+  "figures": true,
+  "overviewFigure": "pj-glossary-hovercard-publisher-1",
+  "demo": {
+    "command": [
+      "node",
+      "cli.ts",
+      "sample.json",
+      "output"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-validate-glossary",
+      "title": "Validate terms, aliases and original definitions",
+      "summary": "validateGlossary(value: unknown): Term[]",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-glossary-hovercard-publisher-1",
+      "concepts": [
+        "Validate terms, aliases and original definitions"
+      ]
+    },
+    {
+      "id": "02-match-text",
+      "title": "Match phrases inside eligible text nodes",
+      "summary": "matchTerms(text: string, terms: Term[]): Match[]",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-glossary-hovercard-publisher-2",
+      "concepts": [
+        "Match phrases inside eligible text nodes"
+      ]
+    },
+    {
+      "id": "03-accessible-definitions",
+      "title": "Render accessible definitions in context",
+      "summary": "annotateLesson(html: string, terms: Term[]): {html: string; coverage: Coverage[]}",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-glossary-hovercard-publisher-3",
+      "concepts": [
+        "Render accessible definitions in context"
+      ]
+    },
+    {
+      "id": "04-publish-bundle",
+      "title": "Export the lesson and reusable glossary bundle",
+      "summary": "publishGlossary(lesson: string, terms: Term[]): {html: string; glossary: Term[]; coverage: Coverage[]}",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-glossary-hovercard-publisher-4",
+      "concepts": [
+        "Export the lesson and reusable glossary bundle"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

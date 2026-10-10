@@ -1,0 +1,11 @@
+{
+  "title": "database-migration-rehearsal",
+  "url": "http://127.0.0.1:8879/projects/database-migration-rehearsal/solution/demo-output/review.html",
+  "actions": [
+    [
+      "js",
+      "window.scrollTo(0,400)"
+    ]
+  ],
+  "kind": "browser capture"
+}

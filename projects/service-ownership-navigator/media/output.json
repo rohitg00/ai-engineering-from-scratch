@@ -1,0 +1,12 @@
+{
+  "title": "service-ownership-navigator",
+  "url": "http://127.0.0.1:8879/projects/service-ownership-navigator/solution/output/report.html",
+  "actions": [
+    [
+      "fill",
+      "#search",
+      "images"
+    ]
+  ],
+  "kind": "browser capture"
+}

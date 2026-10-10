@@ -111,3 +111,7 @@ site/manuals-data.js
 site/manuals.html
 
 !manuals/*/capture/out/*.log
+
+.project-validation/
+projects/*/solution/output/
+projects/*/solution/demo-output/

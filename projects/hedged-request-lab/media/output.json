@@ -1,0 +1,18 @@
+{
+  "title": "Hedged Request Lab | actual local output",
+  "recordedAt": "2026-10-09T14:24:23Z",
+  "records": [
+    {
+      "command": [
+        "go",
+        "run",
+        "."
+      ],
+      "cwd": "./projects/hedged-request-lab/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": 1,\n  \"scope\": \"local fixture; server deliberately continues work after client cancellation\",\n  \"baseline\": {\n    \"samples\": 3,\n    \"p50Ms\": 81.802167,\n    \"p95Ms\": 82.966292,\n    \"maxMs\": 82.966292\n  },\n  \"hedged\": {\n    \"samples\": 3,\n    \"p50Ms\": 18.802,\n    \"p95Ms\": 24.156583,\n    \"maxMs\": 24.156583\n  },\n  \"baselineCalls\": 3,\n  \"hedgedCalls\": 6,\n  \"fixtureWork\": {\n    \"started\": 9,\n    \"completed\": 9,\n    \"cancellationObserved\": 3\n  },\n  \"receipts\": [\n    {\n      \"schemaVersion\": 1,\n      \"winner\": 1,\n      \"value\": \"same versioned read\",\n      \"latencyMs\": 17.340208,\n      \"launched\": 2,\n      \"cancelRequested\": 1,\n      \"unobserved\": 0,\n      \"attempts\": [\n        {\n          \"index\": 1,\n          \"status\": 200,\n          \"valid\": true,\n          \"cancelled\": false,\n          \"late\": false,\n          \"elapsedMs\": 6.394583,\n          \"value\": \"same versioned read\"\n        },\n        {\n          \"index\": 0,\n          \"status\": 0,\n          \"valid\": false,\n          \"cancelled\": true,\n          \"late\": true,\n          \"elapsedMs\": 17.774291,\n          \"error\": \"Get \\\"http://127.0.0.1:50071/slow\\\": context canceled\"\n        }\n      ]\n    },\n    {\n      \"schemaVersion\": 1,\n      \"winner\": 1,\n      \"value\": \"same versioned read\",\n      \"latencyMs\": 18.802,\n      \"launched\": 2,\n      \"cancelRequested\": 1,\n      \"unobserved\": 0,\n      \"attempts\": [\n        {\n          \"index\": 1,\n          \"status\": 200,\n          \"valid\": true,\n          \"cancelled\": false,\n          \"late\": false,\n          \"elapsedMs\": 7.228584,\n          \"value\": \"same versioned read\"\n        },\n        {\n          \"index\": 0,\n          \"status\": 0,\n          \"valid\": false,\n          \"cancelled\": true,\n          \"late\": true,\n          \"elapsedMs\": 18.932166,\n          \"error\": \"Get \\\"http://127.0.0.1:50071/slow\\\": context canceled\"\n        }\n      ]\n    },\n    {\n      \"schemaVersion\": 1,\n      \"winner\": 1,\n      \"value\": \"same versioned read\",\n      \"latencyMs\": 24.156583,\n      \"launched\": 2,\n      \"cancelRequested\": 1,\n      \"unobserved\": 0,\n      \"attempts\": [\n        {\n          \"index\": 1,\n          \"status\": 200,\n          \"valid\": true,\n          \"cancelled\": false,\n          \"late\": false,\n          \"elapsedMs\": 11.992375,\n          \"value\": \"same versioned read\"\n        },\n        {\n          \"index\": 0,\n          \"status\": 0,\n          \"valid\": false,\n          \"cancelled\": true,\n          \"late\": true,\n          \"elapsedMs\": 24.335625,\n          \"error\": \"Get \\\"http://127.0.0.1:50071/slow\\\": context canceled\"\n        }\n      ]\n    }\n  ]\n}\n",
+      "durationMs": 760
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

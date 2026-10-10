@@ -1,5 +1,5 @@
 {
-  "_comment": "Canonical language registry. English is the source. code = BCP-47-ish tag used in filenames and URLs; name = English name for the translation prompt; native = label shown in the switcher; ci = true enables automatic lesson and UI translation plus the site switcher; site = true enables the switcher and UI translation without automatically translating contributor-managed lessons. dir = rtl marks right-to-left scripts; locale is the Open Graph locale for languages whose lessons the site serves. workflow_dispatch can explicitly request any non-source language.",
+  "_comment": "Canonical language registry. English is the source. code = BCP-47-ish tag used in filenames and URLs; name = English name for the translation prompt; native = label shown in the switcher; ci = true enables automatic lesson and UI translation plus the site switcher; site = true enables the switcher and UI translation without automatically translating contributor-managed lessons. dir = rtl marks right-to-left scripts; locale is the Open Graph locale for languages whose lessons the site serves. index = false keeps a translated language out of hreflang and the lesson sitemaps and marks its lesson pages noindex; readers and agents can still open them. workflow_dispatch can explicitly request any non-source language.",
   "languages": [
     {
       "code": "en",

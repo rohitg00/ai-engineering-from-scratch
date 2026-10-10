@@ -1,0 +1,101 @@
+{
+  "id": "vocabulary-autocomplete-pad",
+  "title": "Vocabulary Autocomplete Pad",
+  "tagline": "Build suggestions that explain which words they learned from.",
+  "summary": "Help a writer reuse their own terminology with a small local autocomplete model built from token counts, prefixes and short word histories. Show the evidence behind each suggestion and export an interactive writing pad plus a portable vocabulary model for another editor.",
+  "level": 1,
+  "languages": [
+    "TypeScript"
+  ],
+  "source": "core",
+  "prerequisiteProjects": [],
+  "status": "ready",
+  "hours": 8,
+  "youWillBuild": "A local autocomplete writing page and vocabulary-model.json",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "languageWhy": {
+    "TypeScript": "Typed local transformations and portable browser interfaces run with Node standard libraries."
+  },
+  "figures": true,
+  "overviewFigure": "pj-vocabulary-autocomplete-pad-1",
+  "demo": {
+    "command": [
+      "node",
+      "cli.ts",
+      "sample.json",
+      "output"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-count-histories",
+      "title": "Tokenize a corpus and count word histories",
+      "summary": "tokenize(text: string): string[]; train(corpus: unknown): Model",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-vocabulary-autocomplete-pad-1",
+      "concepts": [
+        "Tokenize a corpus and count word histories"
+      ]
+    },
+    {
+      "id": "02-rank-candidates",
+      "title": "Rank prefix and next-word candidates",
+      "summary": "suggest(model: Model, prefix: string, history?: string[], limit?: number): Suggestion[]",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-vocabulary-autocomplete-pad-2",
+      "concepts": [
+        "Rank prefix and next-word candidates"
+      ]
+    },
+    {
+      "id": "03-accept-suggestions",
+      "title": "Accept suggestions in a writing pad",
+      "summary": "completeText(model: Model, text: string, limit?: number): {prefix:string;history:string[];suggestions:Suggestion[]}; acceptSuggestion(text:string,prefix:string,word:string):string",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-vocabulary-autocomplete-pad-3",
+      "concepts": [
+        "Accept suggestions in a writing pad"
+      ]
+    },
+    {
+      "id": "04-portable-model",
+      "title": "Export the learned model and editor function",
+      "summary": "importModel(value: unknown): Model; renderPad(model: Model, initial?: string): string",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-vocabulary-autocomplete-pad-4",
+      "concepts": [
+        "Export the learned model and editor function"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

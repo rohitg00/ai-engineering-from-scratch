@@ -1,0 +1,13 @@
+{
+  "text": "In order to compare map distances, utilize the map scale prior to measuring the path. A 2 cm line represents approximately 100 m on the ground.\n\nA projection, a method for representing a curved surface on a flat map, introduces distortion. At this point in time, our example uses a 15% area difference.",
+  "protectedTerms": [
+    "map scale",
+    "projection"
+  ],
+  "definitions": {
+    "projection": "a method for representing a curved surface on a flat map"
+  },
+  "proposals": {
+    "p2": "A projection shows a curved surface on a flat map. This example uses a 10% area difference."
+  }
+}

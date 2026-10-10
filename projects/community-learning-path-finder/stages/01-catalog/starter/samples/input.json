@@ -1,0 +1,61 @@
+{
+  "resources": [
+    {
+      "id": "basics",
+      "title": "Coordinate basics",
+      "minutes": 15,
+      "goals": [],
+      "prerequisites": []
+    },
+    {
+      "id": "collect",
+      "title": "Collect neighborhood points",
+      "minutes": 25,
+      "goals": [
+        "collect"
+      ],
+      "prerequisites": [
+        "basics"
+      ]
+    },
+    {
+      "id": "publish",
+      "title": "Publish a community map",
+      "minutes": 30,
+      "goals": [
+        "map"
+      ],
+      "prerequisites": [
+        "collect"
+      ]
+    },
+    {
+      "id": "quick-map",
+      "title": "Build a paper map",
+      "minutes": 45,
+      "goals": [
+        "map"
+      ],
+      "prerequisites": []
+    },
+    {
+      "id": "advanced",
+      "title": "Analyze coverage",
+      "minutes": 40,
+      "goals": [
+        "analysis"
+      ],
+      "prerequisites": [
+        "statistics",
+        "collect"
+      ]
+    }
+  ],
+  "goals": [
+    "map",
+    "collect",
+    "analysis"
+  ],
+  "budget": 75,
+  "completed": []
+}

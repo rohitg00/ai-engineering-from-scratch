@@ -1,0 +1,52 @@
+{
+  "title": "Streaming Answer Recovery | initialize and grade",
+  "recordedAt": "2026-10-09T14:32:02Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "streaming-answer-recovery",
+        "--init",
+        "./.project-validation/streaming-answer-recovery/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/streaming-answer-recovery/recording-starter\n  kept     build-browser.ts\n  kept     cli.ts\n  kept     demo.py\n  kept     go.mod\n  kept     main.go\n  kept     main.ts\n  kept     STAGE-2.md\n  kept     STAGE-3.md\n  kept     STAGE-4.md\nnext: python3 scripts/project_test.py streaming-answer-recovery --stage 1 --path ./.project-validation/streaming-answer-recovery/recording-starter\n",
+      "durationMs": 66
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "streaming-answer-recovery",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/streaming-answer-recovery/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Streaming Answer Recovery: grading learner\n  FAIL stage 1: Decode chunked bytes into complete events (7 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 294
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "streaming-answer-recovery",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/streaming-answer-recovery/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Streaming Answer Recovery: grading solution\n  PASS stage 1: Decode chunked bytes into complete events (7 tests)\n  PASS stage 2: Render text and citations by stable identity (7 tests)\n  PASS stage 3: Handle reconnect and cancellation (12 tests)\n  PASS stage 4: Export and replay an interrupted-answer trace (6 tests)\nreport: ./.project-validation/streaming-answer-recovery/solution-final.json\n",
+      "durationMs": 2171
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

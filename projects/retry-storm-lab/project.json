@@ -1,0 +1,114 @@
+{
+  "id": "retry-storm-lab",
+  "title": "Retry Storm Lab",
+  "tagline": "Watch many reasonable retries combine into an overloaded service.",
+  "summary": "Help SDK authors choose retry behavior when many clients fail together. Replay concurrent clients against a deterministic service model, compare bounded backoff and jitter with a shared retry budget, then run the same policy against a local HTTP fixture. Export amplification and recovery timelines with a reusable client policy.",
+  "level": 3,
+  "source": "core",
+  "status": "ready",
+  "hours": 8,
+  "languages": [
+    "Go",
+    "TypeScript"
+  ],
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "Retry policy library, deterministic workload replay and amplification timeline",
+  "prerequisiteProjects": [
+    "llm-gateway-with-fallbacks",
+    "agent-budget-planner"
+  ],
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-deterministic-service",
+      "title": "Model concurrent failures with a deterministic clock",
+      "summary": "Make aggregate retry load visible in a discrete event replay.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "starter",
+      "concepts": [
+        "discrete clock",
+        "capacity",
+        "amplification"
+      ],
+      "timeout": 120,
+      "figure": "pj-retry-storm-lab-1"
+    },
+    {
+      "id": "02-bounded-jitter",
+      "title": "Compare bounded backoff and jitter",
+      "summary": "Spread scheduled retries with a reproducible client-specific sequence.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "exponential backoff",
+        "full jitter",
+        "seed"
+      ],
+      "timeout": 120,
+      "figure": "pj-retry-storm-lab-2"
+    },
+    {
+      "id": "03-shared-budget",
+      "title": "Enforce shared retry budgets and server delays",
+      "summary": "Bound aggregate attempts across clients, not just each individual request.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "shared budget",
+        "Retry-After",
+        "mutex"
+      ],
+      "timeout": 120,
+      "figure": "pj-retry-storm-lab-3"
+    },
+    {
+      "id": "04-local-http-replay",
+      "title": "Replay against a local HTTP service",
+      "summary": "Exercise actual HTTP requests and verify the exported counters independently.",
+      "hours": 2,
+      "language": "go+typescript",
+      "difficulty": "core",
+      "concepts": [
+        "context cancellation",
+        "loopback fixture",
+        "receipt validation"
+      ],
+      "timeout": 120,
+      "figure": "pj-retry-storm-lab-4",
+      "runners": [
+        {
+          "language": "go"
+        },
+        {
+          "language": "typescript"
+        }
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded local command output. See the README for input and scope."
+    }
+  ]
+}

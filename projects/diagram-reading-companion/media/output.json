@@ -1,0 +1,20 @@
+{
+  "title": "diagram-reading-companion",
+  "url": "http://127.0.0.1:8879/projects/diagram-reading-companion/solution/output/report.html",
+  "actions": [
+    [
+      "click",
+      "#dc-next"
+    ],
+    [
+      "fill",
+      "textarea[data-ui=\"explanation\"]",
+      "Read the seed packet label before sharing."
+    ],
+    [
+      "click",
+      "#dc-reviewed"
+    ]
+  ],
+  "kind": "browser capture"
+}

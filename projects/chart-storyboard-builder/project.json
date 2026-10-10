@@ -1,0 +1,110 @@
+{
+  "id": "chart-storyboard-builder",
+  "title": "Chart Storyboard Builder",
+  "level": 2,
+  "languages": [
+    "Python"
+  ],
+  "source": "core",
+  "tagline": "Turn a table into a visual explanation people can inspect.",
+  "summary": "Help a community organizer explain a small dataset by selecting explicit aggregations and chart forms from column roles. Tie each annotation to the plotted values, expose missing data and axis choices, and export an SVG chart sequence with HTML and machine-readable chart specifications.",
+  "prerequisiteProjects": [
+    "csv-sql-question-workbench"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "prerequisites": [
+    "Python 3.10+; lists, dictionaries and functions"
+  ],
+  "skills": [
+    "Profile columns and declare their roles and units",
+    "Compute aggregates and choose a chart grammar",
+    "Attach annotations to the actual plotted values",
+    "Export an accessible visual storyboard and data receipt"
+  ],
+  "youWillBuild": "SVG charts, a standalone HTML storyboard and chart-specs.json",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "overviewFigure": "pj-chart-storyboard-builder-1",
+  "figures": true,
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--output",
+      "demo-output"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-roles",
+      "title": "Profile columns and declare their roles and units",
+      "summary": "Declare column meanings and keep blanks separate from zero.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "starter",
+      "concepts": [
+        "column roles",
+        "finite numbers"
+      ],
+      "figure": "pj-chart-storyboard-builder-1"
+    },
+    {
+      "id": "02-aggregate",
+      "title": "Compute aggregates and choose a chart grammar",
+      "summary": "Compute the plotted data and expose missing periods.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "aggregation",
+        "chart grammar"
+      ],
+      "figure": "pj-chart-storyboard-builder-2"
+    },
+    {
+      "id": "03-annotations",
+      "title": "Attach annotations to the actual plotted values",
+      "summary": "Anchor every annotation to a computed point.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "grounded annotations",
+        "provenance"
+      ],
+      "figure": "pj-chart-storyboard-builder-3"
+    },
+    {
+      "id": "04-publish",
+      "title": "Export an accessible visual storyboard and data receipt",
+      "summary": "Produce portable SVG charts and machine-readable receipts.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "SVG",
+        "accessible charts"
+      ],
+      "figure": "pj-chart-storyboard-builder-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

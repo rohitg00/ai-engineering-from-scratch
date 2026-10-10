@@ -284,7 +284,7 @@ node site/build-manuals.js --print dist/manuals
 npx --yes pagedjs-cli@0.4.3 dist/manuals/<id>/print.html -o dist/manuals/aiefs-manual-<id>.pdf
 ```
 
-`site/build-manuals.js` writes `site/manual-<id>.html`, the index `site/manuals.html`, and `site/manuals-data.js`. All three are generated on deploy and never committed. The index lists `ready` manuals only. Add `--drafts` to list drafts too when you preview locally. The PDF is built in CI and attached to each release as `aiefs-manual-<id>.pdf`.
+`site/build-manuals.js` writes `site/manual-<id>.html`, the index `site/manuals.html`, and `site/manuals-data.js`. All three are generated on deploy and never committed. The index lists `ready` manuals only. Add `--drafts` to list drafts too when you preview locally. The PDF is built in CI and attached to each release as `aiefs-manual-<id>.pdf`. To attach the PDFs to an existing release again, start the Manuals workflow by hand and give the release tag.
 
 ## Status and commits
 

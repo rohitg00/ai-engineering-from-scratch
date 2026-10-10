@@ -1,0 +1,18 @@
+{
+  "title": "Configuration Drift Explainer | actual local output",
+  "recordedAt": "2026-10-09T14:11:33Z",
+  "records": [
+    {
+      "command": [
+        "go",
+        "run",
+        "."
+      ],
+      "cwd": "./projects/configuration-drift-explainer/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schemaVersion\": 1,\n  \"drift\": true,\n  \"changes\": [\n    {\n      \"key\": \"api_token\",\n      \"kind\": \"changed\",\n      \"expected\": \"[REDACTED]\",\n      \"observed\": \"[REDACTED]\",\n      \"history\": [\n        {\n          \"layer\": \"defaults.json\",\n          \"value\": \"[REDACTED]\"\n        }\n      ],\n      \"redacted\": true\n    },\n    {\n      \"key\": \"region\",\n      \"kind\": \"equal\",\n      \"expected\": \"local\",\n      \"observed\": \"local\",\n      \"history\": [\n        {\n          \"layer\": \"defaults.json\",\n          \"value\": \"local\"\n        }\n      ],\n      \"redacted\": false\n    },\n    {\n      \"key\": \"timeout\",\n      \"kind\": \"changed\",\n      \"expected\": 5,\n      \"observed\": 30,\n      \"history\": [\n        {\n          \"layer\": \"defaults.json\",\n          \"value\": 30\n        },\n        {\n          \"layer\": \"env:TIMEOUT\",\n          \"value\": 5\n        }\n      ],\n      \"redacted\": false\n    }\n  ]\n}\n",
+      "durationMs": 263
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

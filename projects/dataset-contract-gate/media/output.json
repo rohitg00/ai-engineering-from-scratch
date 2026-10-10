@@ -1,0 +1,22 @@
+{
+  "title": "Dataset Contract Gate | actual local output",
+  "recordedAt": "2026-10-09T14:18:11Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "cli.py",
+        "samples/input.jsonl",
+        "--contract",
+        "samples/contract.json",
+        "--output",
+        "demo-output"
+      ],
+      "cwd": "./projects/dataset-contract-gate/solution",
+      "exitCode": 0,
+      "output": "{\"counts\": {\"accepted\": 1, \"input\": 4, \"quarantined\": 3}, \"dataset_issues\": [], \"duplicates\": [{\"field\": \"id\", \"rows\": [3, 4]}], \"passed\": false, \"schema_version\": 1}\n",
+      "durationMs": 32
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

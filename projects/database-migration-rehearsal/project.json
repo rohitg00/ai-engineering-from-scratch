@@ -1,0 +1,111 @@
+{
+  "id": "database-migration-rehearsal",
+  "title": "Database Migration Rehearsal",
+  "level": 3,
+  "languages": [
+    "Python"
+  ],
+  "source": "core",
+  "tagline": "Rehearse a proposed migration on a copy and show exactly what changes.",
+  "summary": "Let a developer or coding agent propose SQLite migrations against a disposable database copy. Record schema and row-count invariants before and after, test declared rollback steps, and expose irreversible changes. Export a machine-readable rehearsal receipt and review page without touching the source database.",
+  "prerequisiteProjects": [
+    "csv-sql-question-workbench",
+    "json-schema-output-guard"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "prerequisites": [
+    "Python 3.10+; lists, dictionaries and functions"
+  ],
+  "skills": [
+    "Snapshot a local database and define invariants",
+    "Apply migrations only to the disposable copy",
+    "Exercise rollback and detect data loss",
+    "Export evidence for an explicit release decision"
+  ],
+  "youWillBuild": "Schema diff, invariant results and reversible-migration receipt",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "overviewFigure": "pj-database-migration-rehearsal-1",
+  "figures": true,
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--output",
+      "demo-output"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-snapshot",
+      "title": "Snapshot a local database and define invariants",
+      "summary": "Capture schema, row counts and content identities from a read-only source.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "starter",
+      "concepts": [
+        "SQLite backup",
+        "row fingerprints"
+      ],
+      "figure": "pj-database-migration-rehearsal-1"
+    },
+    {
+      "id": "02-migration",
+      "title": "Apply migrations only to the disposable copy",
+      "summary": "Run the supplied SQL on a disposable in-memory copy.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "SQLite authorizer",
+        "migration evidence"
+      ],
+      "figure": "pj-database-migration-rehearsal-2"
+    },
+    {
+      "id": "03-rollback",
+      "title": "Exercise rollback and detect data loss",
+      "summary": "Exercise the declared reverse operation and compare all captured state.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "rollback verification",
+        "data loss"
+      ],
+      "figure": "pj-database-migration-rehearsal-3"
+    },
+    {
+      "id": "04-receipt",
+      "title": "Export evidence for an explicit release decision",
+      "summary": "Combine schema diffs, invariants and rollback into release evidence.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "invariants",
+        "release review"
+      ],
+      "figure": "pj-database-migration-rehearsal-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

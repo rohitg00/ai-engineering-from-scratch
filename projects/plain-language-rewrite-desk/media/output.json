@@ -1,0 +1,17 @@
+{
+  "title": "plain-language-rewrite-desk",
+  "url": "http://127.0.0.1:8879/projects/plain-language-rewrite-desk/solution/output/report.html",
+  "actions": [
+    [
+      "select",
+      "section:nth-of-type(1) select",
+      "accept"
+    ],
+    [
+      "select",
+      "section:nth-of-type(2) select",
+      "reject"
+    ]
+  ],
+  "kind": "browser capture"
+}

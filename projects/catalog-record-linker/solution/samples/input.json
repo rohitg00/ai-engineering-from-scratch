@@ -1,0 +1,4 @@
+{
+  "left_csv": "id,title,creator,year\nmap-1,River Atlas,Ada,2024\nmap-2,Garden Tools,Mira,2020\n",
+  "right_csv": "id,title,creator,year\nr-7,Atlas River,Ada,2025\nr-8,River Atlas Junior,Ada,2024\n"
+}

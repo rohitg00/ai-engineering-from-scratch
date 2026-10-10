@@ -1,0 +1,16 @@
+{
+  "title": "vocabulary-autocomplete-pad",
+  "url": "http://127.0.0.1:8879/projects/vocabulary-autocomplete-pad/solution/output/report.html",
+  "actions": [
+    [
+      "fill",
+      "#pad",
+      "Garden club sh"
+    ],
+    [
+      "click",
+      "#suggestions button:first-child"
+    ]
+  ],
+  "kind": "browser capture"
+}

@@ -1,0 +1,114 @@
+{
+  "id": "kubernetes-event-storyboard",
+  "title": "Kubernetes Event Storyboard",
+  "tagline": "Turn workload events into a timeline with the exact objects behind each clue.",
+  "summary": "Help an on-call engineer inspect exported Kubernetes events and workload snapshots. Group repeated events, distinguish observation time from occurrence time, and link each suggested investigation to object identity and rollout revision. Export an HTML timeline and a redacted JSON context pack for an assistant.",
+  "level": 3,
+  "source": "core",
+  "status": "ready",
+  "hours": 8,
+  "languages": [
+    "Go",
+    "TypeScript"
+  ],
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "HTML workload timeline and versioned JSON context pack",
+  "prerequisiteProjects": [
+    "agent-trace-debugger",
+    "postmortem-writer"
+  ],
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-parse-snapshots",
+      "title": "Parse event and workload snapshots",
+      "summary": "Separate occurrence time from the time you captured the export.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "starter",
+      "concepts": [
+        "Kubernetes Event",
+        "object UID",
+        "timestamp validation"
+      ],
+      "timeout": 120,
+      "figure": "pj-kubernetes-event-storyboard-1"
+    },
+    {
+      "id": "02-group-occurrences",
+      "title": "Group repetitions without losing timestamps",
+      "summary": "Deduplicate event snapshots before summing distinct series.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "series counts",
+        "identity collision",
+        "time ranges"
+      ],
+      "timeout": 120,
+      "figure": "pj-kubernetes-event-storyboard-2"
+    },
+    {
+      "id": "03-connect-revisions",
+      "title": "Connect evidence to workload revisions",
+      "summary": "Follow owner UIDs without guessing from names.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "owner graph",
+        "revision",
+        "ambiguous evidence"
+      ],
+      "timeout": 120,
+      "figure": "pj-kubernetes-event-storyboard-3"
+    },
+    {
+      "id": "04-export-storyboard",
+      "title": "Export a redacted assistant context pack",
+      "summary": "Consume the Go pack in a TypeScript timeline.",
+      "hours": 2,
+      "language": "go+typescript",
+      "difficulty": "core",
+      "concepts": [
+        "cross-language JSON",
+        "redaction",
+        "HTML timeline"
+      ],
+      "timeout": 120,
+      "figure": "pj-kubernetes-event-storyboard-4",
+      "runners": [
+        {
+          "language": "go"
+        },
+        {
+          "language": "typescript"
+        }
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

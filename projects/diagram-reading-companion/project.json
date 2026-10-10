@@ -1,0 +1,103 @@
+{
+  "id": "diagram-reading-companion",
+  "title": "Diagram Reading Companion",
+  "tagline": "Give a diagram an inspectable reading order and explanation.",
+  "summary": "Help an educator turn an authored SVG diagram and an explicit node-edge manifest into a keyboard-navigable explanation. Check that referenced nodes exist, expose branches and cycles, let the author review the reading order, and export an accessible HTML walkthrough plus graph JSON.",
+  "level": 2,
+  "languages": [
+    "TypeScript"
+  ],
+  "source": "core",
+  "prerequisiteProjects": [
+    "glossary-hovercard-publisher"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "youWillBuild": "A navigable HTML diagram walkthrough and a reviewed graph manifest",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "languageWhy": {
+    "TypeScript": "Typed local transformations and portable browser interfaces run with Node standard libraries."
+  },
+  "figures": true,
+  "overviewFigure": "pj-diagram-reading-companion-1",
+  "demo": {
+    "command": [
+      "node",
+      "cli.ts",
+      "sample.json",
+      "output"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-load-diagram",
+      "title": "Load an SVG and validate declared nodes and edges",
+      "summary": "loadDiagram(svg: string, value: unknown): {svg:string;graph:Graph}",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-diagram-reading-companion-1",
+      "concepts": [
+        "Load an SVG and validate declared nodes and edges"
+      ]
+    },
+    {
+      "id": "02-analyze-graph",
+      "title": "Compute branches, cycles and candidate reading order",
+      "summary": "analyzeGraph(graph: Graph): Analysis",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-diagram-reading-companion-2",
+      "concepts": [
+        "Compute branches, cycles and candidate reading order"
+      ]
+    },
+    {
+      "id": "03-review-explanations",
+      "title": "Review explanations and reading order",
+      "summary": "reviewGraph(graph: Graph, value?: unknown): {schemaVersion:1;graph:Graph;order:string[];reviewed:boolean}",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-diagram-reading-companion-3",
+      "concepts": [
+        "Review explanations and reading order"
+      ]
+    },
+    {
+      "id": "04-export-walkthrough",
+      "title": "Export the navigable walkthrough and graph data",
+      "summary": "renderWalkthrough(svg:string, review:ReturnType<typeof reviewGraph>):string",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-diagram-reading-companion-4",
+      "concepts": [
+        "Export the navigable walkthrough and graph data"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

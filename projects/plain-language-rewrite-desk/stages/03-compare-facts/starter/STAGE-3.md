@@ -1,0 +1,3 @@
+# Compare omissions, numbers and readability measures
+
+Keep the main.ts implementation from the previous stage. Add the functions documented in ../stages/03-compare-facts/docs/en.md from the repository. The initial workspace already declares every public signature.
