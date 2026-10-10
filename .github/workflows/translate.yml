@@ -14,6 +14,11 @@ name: translate
 # file, published when the job finishes. A completed run re-translates only
 # lessons whose English changed, and disjoint phase slices merge cleanly.
 #
+# A push runs only the legs its commit range can change: the phases whose
+# English changed, languages newly made automatic, and interface strings when
+# their source changed. scripts/translate_matrix.py makes the choice and
+# docs/i18n.md lists the rules. Manual runs keep their requested scope.
+#
 # The repo README is hand-authored per language and committed to main (see
 # scripts/build_readme_i18n.py and docs/i18n.md); it is not part of this matrix.
 
@@ -25,6 +30,7 @@ on:
       - "languages.json"
       - "site/ui-strings.json"
       - "scripts/translate_ui_strings.py"
+      - "scripts/translate_matrix.py"
       # Publisher fixes must be able to bootstrap a missing translations branch
       # even when no English lesson changed in the same merge.
       - ".github/workflows/translate.yml"
@@ -47,55 +53,29 @@ jobs:
     permissions:
       contents: read
     outputs:
-      langs: ${{ steps.set.outputs.langs }}
+      lessons: ${{ steps.set.outputs.lessons }}
       ui_langs: ${{ steps.set.outputs.ui_langs }}
-      phases: ${{ steps.set.outputs.phases }}
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - id: set
         env:
+          EVENT: ${{ github.event_name }}
           REQUESTED: ${{ github.event.inputs.langs }}
           REQUESTED_PHASE: ${{ github.event.inputs.phase }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          FORCED: ${{ github.event.forced }}
         run: |
-          # Only registered non-source codes may reach a matrix. Explicit
-          # manual requests can translate languages outside the automatic set.
-          if [ -n "$REQUESTED" ]; then
-            JSON=$(jq -c --arg req "$REQUESTED" \
-              '($req | split(" ") | map(select(length > 0))) as $want
-               | [.languages[] | select(.source != true) | .code] as $known
-               | [$want[] | select(. as $c | $known | index($c))] | unique' languages.json)
-            UI_JSON="$JSON"
-          else
-            JSON=$(jq -c '[.languages[] | select(.ci == true and .source != true) | .code]' languages.json)
-            UI_JSON=$(jq -c '[.languages[] | select((.ci == true or .site == true) and .source != true) | .code]' languages.json)
-          fi
-          if [ "$JSON" = '[]' ]; then
-            echo "no registered non-source languages selected" >&2
-            exit 1
-          fi
-          echo "langs=$JSON" >> "$GITHUB_OUTPUT"
-          echo "ui_langs=$UI_JSON" >> "$GITHUB_OUTPUT"
-          # Manual runs can select one phase for a cheap end-to-end smoke test.
-          # Push runs and blank manual inputs retain the full phase matrix.
-          if [ -n "$REQUESTED_PHASE" ]; then
-            PHASE_LIST=$(find phases -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
-              | grep -E '^[0-9]{2}-[a-z0-9-]+$' | sort)
-            if ! printf '%s\n' "$PHASE_LIST" | grep -Fqx -- "$REQUESTED_PHASE"; then
-              echo "unknown phase: $REQUESTED_PHASE" >&2
-              exit 1
-            fi
-            PHASES=$(jq -cn --arg phase "$REQUESTED_PHASE" '[$phase]')
-          else
-            # one shard per phase dir (NN-name); the README is handled off-matrix
-            PHASES=$(find phases -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
-              | grep -E '^[0-9]{2}-[a-z0-9-]+$' | sort | jq -R . | jq -cs .)
-          fi
-          echo "phases=$PHASES" >> "$GITHUB_OUTPUT"
+          # Only registered non-source codes and existing phase directories may
+          # reach a matrix. The checkout holds only the pushed commit, so the
+          # script fetches the previous one at depth 1 to diff the pushed range.
+          python3 scripts/translate_matrix.py >> "$GITHUB_OUTPUT"
 
   translate:
     needs: prepare
+    if: ${{ needs.prepare.outputs.lessons != '[]' }}
     runs-on: ubuntu-latest
     timeout-minutes: 330
     permissions:
@@ -106,8 +86,7 @@ jobs:
       fail-fast: false
       max-parallel: 20
       matrix:
-        lang: ${{ fromJSON(needs.prepare.outputs.langs) }}
-        phase: ${{ fromJSON(needs.prepare.outputs.phases) }}
+        include: ${{ fromJSON(needs.prepare.outputs.lessons) }}
     steps:
       - name: Checkout main (English source)
         uses: actions/checkout@v4
@@ -265,6 +244,7 @@ jobs:
     # Keys with a hand-pinned override or a previously published translation
     # are reused, so most runs load no model at all.
     needs: prepare
+    if: ${{ needs.prepare.outputs.ui_langs != '[]' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
