@@ -134,3 +134,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://aiengineeringfromscratch.com/sitemap.xml
+Sitemap: https://aiengineeringfromscratch.com/sitemap-index.xml

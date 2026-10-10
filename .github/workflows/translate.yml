@@ -242,6 +242,21 @@ jobs:
           done
           echo "could not publish after retries" >&2; exit 1
 
+  coverage:
+    needs: translate
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Translation records match the published lessons
+        run: |
+          git fetch origin "+refs/heads/translations:refs/remotes/origin/translations"
+          node scripts/check_translation_coverage.js --ref origin/translations
+
   ui-strings:
     # The site's interface strings (navigation, sidebar, checkpoints, panels)
     # are translated the same way, from site/ui-strings.json, into one small

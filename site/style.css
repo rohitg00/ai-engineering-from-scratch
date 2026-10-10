@@ -1973,6 +1973,7 @@ body[data-palette-open] {
   font-family: var(--font-body, Georgia, serif); font-size: 0.9rem; text-align: start;
   color: var(--ink); background: transparent; border: none; cursor: pointer;
   padding: 8px 12px; transition: background 0.12s ease, color 0.12s ease;
+  box-sizing: border-box; text-decoration: none;
 }
 .lang-item:hover { background: var(--blueprint-tint); color: var(--blueprint); }
 .lang-item:focus-visible { outline: 2px solid var(--blueprint); outline-offset: -2px; }

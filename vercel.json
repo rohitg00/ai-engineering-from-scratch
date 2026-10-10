@@ -1,5 +1,5 @@
 {
-  "buildCommand": "node site/build.js && node site/build-projects.js --strict && node site/build-agents.js && node site/build-manuals.js && node site/clean-urls.js && node site/version-assets.js",
+  "buildCommand": "node site/fetch-translation-coverage.js && node site/build.js && node site/build-projects.js --strict && node site/build-agents.js && node site/build-manuals.js && node site/clean-urls.js && node site/version-assets.js",
   "outputDirectory": "site",
   "framework": null,
   "installCommand": "echo skip",
