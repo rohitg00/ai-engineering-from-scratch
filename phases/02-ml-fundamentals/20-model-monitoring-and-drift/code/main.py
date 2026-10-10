@@ -1,9 +1,8 @@
 """Drift monitoring from scratch: PSI, two-sample KS, chi-square, windows, and alerts.
 
 Lesson: phases/02-ml-fundamentals/20-model-monitoring-and-drift/docs/en.md
-KS p-values use the large-sample Kolmogorov distribution.
-Chi-square p-values use the regularized upper incomplete gamma function.
-The demo streams 9000 synthetic events with covariate drift and later concept drift.
+KS p-values use the large-sample Kolmogorov distribution. Chi-square p-values
+use the regularized upper incomplete gamma function.
 """
 
 from __future__ import annotations
@@ -149,6 +148,8 @@ def count_categories(values: list[str]) -> dict[str, int]:
 
 class SlidingWindow:
     def __init__(self, size: int):
+        if size < 1:
+            raise ValueError(f"window size must be at least 1, got {size}")
         self.items: deque = deque(maxlen=size)
 
     def add(self, item: dict) -> None:

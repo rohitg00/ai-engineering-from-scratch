@@ -98,6 +98,10 @@ class WindowAndPolicyTests(unittest.TestCase):
         self.assertTrue(window.full())
         self.assertEqual(window.column("x"), [2, 3, 4])
 
+    def test_window_size_must_be_positive(self) -> None:
+        with self.assertRaises(ValueError):
+            SlidingWindow(0)
+
     def test_alert_needs_consecutive_drift_windows(self) -> None:
         policy = AlertPolicy(n_tests=1, patience=2)
         self.assertIsNone(policy.update("f", "drift"))
