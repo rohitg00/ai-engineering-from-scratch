@@ -154,6 +154,7 @@ Here is the table that makes all of this concrete.
 | Qwen 2.5 72B | 2024 | 72B | 72B | RMSNorm | SwiGLU | RoPE (YaRN) | GQA (64/8) | no | 128k |
 | DeepSeek V2 236B | 2024 | 236B | 21B | RMSNorm | SwiGLU | RoPE | MLA | yes (160 experts, top-6) | 128k |
 | DeepSeek V3 | 2024 | 671B | 37B | RMSNorm | SwiGLU | RoPE | MLA | yes (256 experts, top-8) | 128k |
+| Spark-X2.5 4B | 2026 | 4.1B | 4.1B | RMSNorm | GeGLU | RoPE + sliding (3:1) | GQA (16/4), gated output | no | 1M |
 
 Scan the columns. RMSNorm is universal. SwiGLU or its GeGLU cousin is universal. RoPE is universal. GQA is universal above 7B except when replaced by MLA. MoE is the differentiator at the top end.
 
@@ -176,6 +177,12 @@ Llama 3 8B config:
 ```
 
 Every field corresponds to something you have already implemented.
+Newer configs add a few fields that change the arithmetic, so the calculator
+reads them when they are present:
+
+- `head_dim`: set explicitly when it is not `hidden_size / num_attention_heads`. Gemma 2 9B has hidden 3584 and 16 heads but `head_dim` 256, so its Q projection is 3584 x 4096, not square.
+- `tie_word_embeddings`: whether the LM head reuses the embedding matrix. Llama 3 8B does not tie, which is 525M parameters you miss if you only count the embedding once.
+- `layer_types` and `sliding_window`: which layers attend to the full context and which only to the last W tokens.
 
 - `hidden_size`: embedding dimension.
 - `intermediate_size`: MLP hidden size (3.5x hidden -- SwiGLU math).
@@ -212,6 +219,15 @@ Llama 3 8B at 128k context, BF16, head_dim = hidden / num_heads = 128:
 
 The 8B weights are 16 GB in BF16. The KV cache for a single 128k sequence is larger than the weights. This is the memory pressure driving GQA, MLA, and KV cache quantization research.
 
+The formula assumes every layer caches the whole sequence. A sliding-window layer only ever needs the last W tokens, so for hybrid models the sum runs per layer:
+
+```
+kv_cache = 2 * num_kv_heads * head_dim * bytes_per_element
+           * (full_layers * max_seq_len + sliding_layers * min(W, max_seq_len))
+```
+
+Spark-X2.5 4B runs three sliding-window layers (W = 512) for every full-attention layer: 9 full and 27 sliding out of 36. At its 1M-token context that is about 38.7 GB (36 GiB) per sequence in BF16. If all 36 layers cached the full context it would be 154.6 GB (144 GiB). The full layers carry nearly the whole cost, which is why the ratio of full to sliding layers is the number to read first on a long-context model.
+
 ### When Each Model Wins
 
 - **Single 80GB GPU, no MoE**: Llama 3 8B, Mistral 7B, Gemma 2 9B. Easy to serve, wide tooling.
@@ -219,6 +235,7 @@ The 8B weights are 16 GB in BF16. The KV cache for a single 128k sequence is lar
 - **Biggest open capability, accept MoE complexity**: DeepSeek V3, Mixtral 8x22B. Best capability per active FLOP.
 - **Long-context needs**: Llama 3 (128k with RoPE scaling), DeepSeek (MLA advantage).
 - **Low-latency serving**: Gemma 2 9B (sliding window cuts long-context compute).
+- **Long context on a small memory budget**: hybrid sliding-window models such as Spark-X2.5 4B, where only a quarter of the layers pay for the full context.
 
 ```figure
 rmsnorm-vs-layernorm
@@ -237,13 +254,17 @@ config = {
 }
 ```
 
-The script walks the architecture field by field, computes param counts for embedding, attention (with GQA reduction), MLP (with SwiGLU expansion), layernorms, and the head. It then computes the KV cache at the stated context length and prints a summary.
+The script walks the architecture field by field, computes param counts for embedding, attention (with GQA reduction and an explicit `head_dim` when the config sets one), MLP (with SwiGLU or GeGLU expansion), layernorms, and the LM head when it is not tied to the embedding. It then computes the KV cache at the stated context length, layer by layer so sliding-window layers are capped at their window, and prints a summary.
+
+For the dense models the totals match the published parameter counts exactly: Llama 3 8B comes out at 8,030,261,248, Gemma 2 9B at 9,241,705,984, and Spark-X2.5 4B at 4,112,079,360. Qwen 2.5 72B is off by 819,200, which is Exercise 1.
 
 See `code/main.py` for the implementation.
 
 ## Use It
 
 Run the calculator on Llama 3 8B, Mistral 7B, Mixtral 8x7B, and DeepSeek V3 configs bundled in the script. Compare the parameter breakdowns. Notice that the MoE models have a total param count that dwarfs the dense models but an active param count that is often smaller. Notice that DeepSeek V3's KV cache is smaller than Llama 3 405B's despite having more total parameters -- that is MLA in action.
+
+Then compare Gemma 2 9B and Spark-X2.5 4B. For both, the script prints the KV cache it actually needs and the KV cache it would need if every layer were full attention. Gemma 2 alternates 1:1 at an 8k context, so the saving is modest. Spark-X2.5 goes 3:1 with a 512-token window at 1M, so the saving is 4x.
 
 Then plug in a config for any model you have locally, read the summary, and decide whether it fits your GPU.
 
