@@ -1,0 +1,78 @@
+{
+  "lesson": "05-llava-visual-instruction-tuning",
+  "title": "LLaVA and Visual Instruction Tuning",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What is the central LLaVA projector choice for connecting a ViT to an LLM?",
+      "options": [
+        "Insert gated cross-attention layers between every few frozen LLM blocks.",
+        "Project each ViT patch through a two-layer MLP into the LLM embedding space.",
+        "Compress all image patches into a fixed set of learned Q-Former queries.",
+        "Replace the ViT output with one supervised class label."
+      ],
+      "correct": 1,
+      "explanation": "LLaVA flattens each ViT patch and applies a two-layer MLP to map it into the LLM’s embedding dimension, then passes the projected patch tokens as visual context. Q-Former compresses them into learned queries; Flamingo inserts gated cross-attention instead."
+    },
+    {
+      "stage": "check",
+      "question": "In LLaVA stage 1, which weights are trained on image-caption pairs with language-model loss?",
+      "options": [
+        "The LLM only, while the ViT and projector remain frozen.",
+        "The ViT and LLM, while the projector remains frozen.",
+        "All three components, using image-classification labels.",
+        "Only the projector, while the ViT and LLM remain frozen."
+      ],
+      "correct": 3,
+      "explanation": "Stage 1 freezes the ViT and LLM and trains only the MLP projector using caption-conditioned language-model loss. Updating the LLM is part of stage 2 instruction tuning, not the initial alignment step."
+    },
+    {
+      "stage": "check",
+      "question": "What data and objective define LLaVA's visual instruction tuning stage?",
+      "options": [
+        "1.2M class labels train the ViT with supervised classification loss.",
+        "158k GPT-4-generated visual-instruction turns train the projector and LLM.",
+        "558k image-caption pairs train only the projector with caption LM loss.",
+        "400M image-text pairs train both towers with contrastive loss."
+      ],
+      "correct": 1,
+      "explanation": "LLaVA stage 2 uses 158k GPT-4-generated visual-instruction turns and trains the projector with the LLM. The 558k image-caption pairs are stage 1 alignment data and train the projector while the backbones remain frozen."
+    },
+    {
+      "stage": "check",
+      "question": "Before tokenization, what happens to the LLaVA <image> placeholder for a base image with 576 patches?",
+      "options": [
+        "It is replaced by the 576 projected visual tokens.",
+        "It remains one literal text token and the patches are discarded.",
+        "It is replaced by one CLS token from the vision encoder.",
+        "It expands into 2880 tokens for every image resolution."
+      ],
+      "correct": 0,
+      "explanation": "The <image> marker is a placeholder that preprocessing replaces with the projected visual-token block before the LLM reads the prompt. With 576 base patches, the block contains 576 tokens; leaving the literal marker would discard image features."
+    },
+    {
+      "stage": "post",
+      "question": "An AnyRes image uses a 2x4 grid of 336x336 crops plus one 336x336 thumbnail. If each crop yields 576 tokens, how many visual tokens are inserted?",
+      "options": [
+        "5,184 tokens, from (8 crops + 1 thumbnail)*576.",
+        "2,880 tokens, from 4 crops plus a thumbnail.",
+        "576 tokens, because the image has one global placeholder.",
+        "4,608 tokens, from 8 crops*576 without a thumbnail."
+      ],
+      "correct": 0,
+      "explanation": "Each of the eight AnyRes crops and the global thumbnail contributes 576 tokens, so (8+1)×576=5,184 visual tokens. The 4,608 option counts only the crops and omits the thumbnail; AnyRes includes that global overview alongside local tiles."
+    },
+    {
+      "stage": "post",
+      "question": "A task values raw patch detail and has ample LLM context. Which bridge tradeoff favors LLaVA's projector over Q-Former?",
+      "options": [
+        "The Q-Former sends all 576 patches and therefore preserves more raw tokens.",
+        "The MLP removes image tokens and relies on class labels instead.",
+        "The MLP sends every patch token to the LLM, preserving direct patch-level access.",
+        "The MLP compresses every image into 32 queries to save context."
+      ],
+      "correct": 2,
+      "explanation": "The MLP passes every projected patch token to the LLM, preserving spatial detail when context is available. Q-Former compresses the image to 32 queries, reducing context use but limiting direct access to each patch."
+    }
+  ]
+}
