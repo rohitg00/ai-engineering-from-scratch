@@ -1,0 +1,78 @@
+{
+  "lesson": "03-blip2-qformer-bridge",
+  "title": "From CLIP to BLIP-2 — Q-Former as Modality Bridge",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A frozen ViT emits image features and a frozen LLM expects a different embedding dimension. What is the Q-Former's role?",
+      "options": [
+        "Use learnable queries to cross-attend to image patches and compress them for the LLM.",
+        "Replace the image encoder with a text tokenizer that labels every patch.",
+        "Copy all image patch tokens into the LLM without any visual bridge.",
+        "Unfreeze both backbones and train every vision and language parameter together."
+      ],
+      "correct": 0,
+      "explanation": "The Q-Former provides a trainable bottleneck between frozen backbones: learnable queries cross-attend to ViT patch features, then project the compact summaries to the LLM dimension. Unfreezing both backbones discards the parameter-efficiency goal of the bridge."
+    },
+    {
+      "stage": "check",
+      "question": "In the Q-Former's cross-attention, where do queries, keys, and values come from?",
+      "options": [
+        "Queries come from learnable query vectors; keys and values come from ViT patch features.",
+        "Queries come from captions; keys and values come from class labels.",
+        "Queries come from ViT patches; keys and values come from the LLM output tokens.",
+        "All three come from the frozen LLM's text embedding table."
+      ],
+      "correct": 0,
+      "explanation": "Cross-attention uses learned query vectors as Q and the frozen ViT patch features as K and V, so each query can retrieve visual evidence. Reversing those sources changes which items ask questions of which, rather than forming the intended visual summary."
+    },
+    {
+      "stage": "check",
+      "question": "Which training sequence matches BLIP-2's two-stage pretraining?",
+      "options": [
+        "Stage 1 trains the LLM alone; stage 2 freezes Q-Former and trains the vision encoder.",
+        "Stage 1 trains only the output projector with LM loss; stage 2 adds class labels.",
+        "Stage 1 trains Q-Former with image labels; stage 2 unfreezes both backbones.",
+        "Stage 1 uses ITC/ITM/ITG; stage 2 uses LM loss with the frozen LLM."
+      ],
+      "correct": 3,
+      "explanation": "BLIP-2 first trains the Q-Former on ITC, ITM, and ITG without involving an LLM. In stage two it attaches a frozen LLM and trains the Q-Former plus projection on LM loss; training the LLM alone is not the described sequence."
+    },
+    {
+      "stage": "check",
+      "question": "For a 60-frame video, how many visual tokens are produced by 32 Q-Former queries per frame?",
+      "options": [
+        "34,560 tokens, from 60*576.",
+        "1,920 tokens, from 60*32.",
+        "32 tokens, reusing one query set for the whole clip.",
+        "60 tokens, from one summary per frame."
+      ],
+      "correct": 1,
+      "explanation": "Each sampled frame contributes 32 query tokens, so 60×32=1,920 visual tokens. The 34,560 option uses 576 patches per frame instead, while 32 counts one query set for the whole video rather than one per frame."
+    },
+    {
+      "stage": "post",
+      "question": "A long-video prompt has a tight LLM token budget, but still needs a visual summary from each sampled frame. Which bridge is the stronger fit?",
+      "options": [
+        "Q-Former, because it compresses many patches into a fixed small set of query tokens.",
+        "Frozen CLIP alone, because it generates answers without an LLM.",
+        "ITM classifier, because its binary score is the visual token sequence.",
+        "MLP projector, because it keeps every patch and uses fewer tokens than Q-Former."
+      ],
+      "correct": 0,
+      "explanation": "A Q-Former compresses each frame’s patches into 32 query outputs, conserving LLM context when many frames must be represented. An MLP projector preserves the patch tokens and therefore spends more context on raw visual detail."
+    },
+    {
+      "stage": "post",
+      "question": "A task prioritizes raw patch detail for high-quality image reasoning and has ample context. Which tradeoff favors the LLaVA-style bridge?",
+      "options": [
+        "A simple MLP projector keeps all patch tokens for the LLM to attend over.",
+        "A CLS-only output discards all local patch features before the LLM.",
+        "A register-only output sends scaffolding tokens instead of image content.",
+        "A Q-Former compresses patches to 32 tokens regardless of their detail."
+      ],
+      "correct": 0,
+      "explanation": "A LLaVA-style MLP maps each patch into LLM space and passes all patch tokens through, preserving fine spatial evidence when context is available. Q-Former reduces the sequence to a small fixed query set, trading detail capacity for a lower token budget."
+    }
+  ]
+}
