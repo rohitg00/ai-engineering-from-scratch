@@ -1,0 +1,78 @@
+{
+  "lesson": "03-alphaevolve-evolutionary-coding",
+  "title": "AlphaEvolve — Evolutionary Coding Agents",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A coding model proposes a faster algorithm but cannot reliably tell whether its own claim is true. What closes that loop?",
+      "options": [
+        "Select the newest candidate without comparing its behavior",
+        "Ask the same model to describe its code more confidently",
+        "Keep only candidates with the shortest source files",
+        "Run a machine-checkable evaluator on each candidate"
+      ],
+      "correct": 3,
+      "explanation": "Each proposed variant needs an external, machine-checkable test or benchmark that evaluates behavior rather than the model’s description of it. Confident self-report or short source code is not evidence that the program works."
+    },
+    {
+      "stage": "check",
+      "question": "In the AlphaEvolve loop, what happens after a candidate is produced?",
+      "options": [
+        "Compile, run, score, then archive it if useful",
+        "Publish it immediately and ask users for feedback",
+        "Train the evaluator to accept its reported score",
+        "Replace every parent before checking the candidate"
+      ],
+      "correct": 0,
+      "explanation": "Compile and run a candidate, score its behavior, then add it to the archive only if it is useful. Publishing before evaluation can promote broken code; the model-reported score is not a substitute for the evaluator."
+    },
+    {
+      "stage": "check",
+      "question": "What is the purpose of a MAP-elites-style archive in the lesson?",
+      "options": [
+        "Replace the evaluator with a diversity score",
+        "Store only the single highest-scoring program",
+        "Remove every candidate that differs from the current leader",
+        "Keep strong candidates across different feature-vector cells"
+      ],
+      "correct": 3,
+      "explanation": "MAP-elites stores strong candidates by feature-vector cell, preserving alternatives across search regions. Keeping only one global winner can collapse exploration, and a diversity score alone cannot replace correctness evaluation."
+    },
+    {
+      "stage": "check",
+      "question": "An optimizer removes comments and passes the measured code-quality proxy without changing behavior. What failure does this illustrate?",
+      "options": [
+        "A reduction in search diversity caused by MAP-elites",
+        "Reward hacking against an imperfect evaluator",
+        "A failure of parallel call correlation",
+        "A correct held-out improvement in task performance"
+      ],
+      "correct": 1,
+      "explanation": "Reward hacking is improving the measured proxy without improving intended behavior. Removing comments to score a code-quality proxy exploits its definition; it is not a task-performance gain validated on held-out behavior."
+    },
+    {
+      "stage": "post",
+      "question": "A candidate looks strong on training inputs. What evaluator design best checks whether it memorized those inputs?",
+      "options": [
+        "Use held-out inputs the candidate generator has not seen",
+        "Let the candidate report its own accuracy estimate",
+        "Remove correctness checks and compare code length",
+        "Score only on the same examples used to propose edits"
+      ],
+      "correct": 0,
+      "explanation": "Held-out inputs test generalization beyond examples that guided search; scoring on the same inputs can be memorized or overfit. A candidate’s self-estimated accuracy is not independent evaluation."
+    },
+    {
+      "stage": "post",
+      "question": "A domain has no fast, deterministic way to score proposed improvements, and every candidate needs expert review. What does the lesson imply?",
+      "options": [
+        "The evaluator can be skipped once the archive is diverse",
+        "The AlphaEvolve loop is a poor fit because evaluation is costly",
+        "The LLM should replace the missing correctness criterion",
+        "The loop is ideal because human judgment is always deterministic"
+      ],
+      "correct": 1,
+      "explanation": "The loop depends on a rigorous evaluator; if every proposal needs expert review, human judgment becomes the search bottleneck and may be ambiguous. The LLM cannot replace the correctness criterion the domain lacks."
+    }
+  ]
+}
