@@ -1202,6 +1202,7 @@ function hubsFromSource() {
   if (sourceHubs) return sourceHubs;
   const readme = fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8');
   const phases = build.parseReadme(readme, build.parseRoadmap(fs.readFileSync(path.join(ROOT, 'ROADMAP.md'), 'utf8')));
+  const { lessonMinutes } = build.annotateLessonMeta(phases);
   const { lessonManifest } = build.buildSeoManifests(phases, build.parseCertifications(), build.parseLearningPaths(ROOT, phases));
   const glossary = build.parseGlossary(fs.readFileSync(path.join(ROOT, 'glossary', 'terms.md'), 'utf8'));
   const hubs = hubBuilder.buildHubs({
@@ -1210,6 +1211,7 @@ function hubsFromSource() {
     glossary,
     categories: build.GLOSSARY_CATEGORY_ORDER,
     lessonManifest,
+    minutes: lessonMinutes,
   });
   sourceHubs = { glossary, lessonManifest, hubs };
   return sourceHubs;
@@ -1295,6 +1297,19 @@ test('glossary term pages lead with the question, mirror visible FAQ text, and l
   assert.match(adamw.html, /href="\/glossary\/adam-optimizer">Adam \(Optimizer\)<\/a>/);
   const adam = hubs.termModels.find(function (model) { return model.slug === 'adam-optimizer'; });
   assert.ok(adam.related.some(function (model) { return model.slug === 'adamw'; }), 'related terms link both ways');
+
+  const model = function (slug) { return hubs.termModels.find(function (item) { return item.slug === slug; }); };
+  const covered = function (slug) { return model(slug).titled.concat(model(slug).mentioned).map(function (lesson) { return lesson.path; }); };
+  assert.ok(covered('adamw').includes('phases/03-deep-learning-core/06-optimizers'), 'section headings count as matches');
+  assert.match(adamw.html, /<p>Covered in <a href="\/phase\/deep-learning-core">Phase 03: Deep Learning Core<\/a>/);
+  assert.doesNotMatch(adamw.html, /Taught in/);
+  assert.match(hubs.termPages.find(function (page) { return page.name === 'agent'; }).html, /<p>Taught in <a href="\/phase\/agent-engineering">/);
+  assert.ok(covered('weight').length > 0);
+  assert.ok(!model('weight').titled.some(function (lesson) { return /Open-Weight/.test(lesson.title); }), 'hyphenated words do not match');
+  assert.ok(!covered('exact-match-em').includes('phases/02-ml-fundamentals/07-unsupervised-learning'), 'names of two characters are skipped');
+  assert.ok(!model('adam-optimizer').titled.some(function (lesson) { return /ZeRO Optimizer/.test(lesson.title); }), 'a qualifier that names another term is not a match');
+  const unlinked = hubs.termModels.filter(function (item) { return item.page && !item.learn.length && !covered(item.slug).length; });
+  assert.ok(unlinked.length < 61, unlinked.length + ' term pages link to no lesson');
 });
 
 test('phase hubs state real lesson counts, link every lesson, and answer a visible FAQ from data', function () {
@@ -1329,6 +1344,8 @@ test('phase hubs state real lesson counts, link every lesson, and answer a visib
   const deepLearning = hubs.phasePages.find(function (page) { return page.name === 'deep-learning-core'; });
   assert.match(deepLearning.html, /<h1>Learn Deep Learning from Scratch: \d+ Free Lessons<\/h1>/);
   assert.match(deepLearning.html, /builds on <a href="\/phase\/ml-fundamentals">Phase 02: ML Fundamentals<\/a>/);
+  assert.match(deepLearning.html, /<h3>What should I know before I start Phase 03\?<\/h3><p>The phase guide gives these prerequisites: /);
+  assert.match(deepLearning.html, /The time estimates of all \d+ lessons add up to about \d+ hours\./);
 });
 
 test('lessons, the glossary page, and sitemaps link the new hubs without changing other pages', function (t) {
@@ -1361,6 +1378,19 @@ test('lessons, the glossary page, and sitemaps link the new hubs without changin
   assert.doesNotMatch(index, /lastmod/);
 });
 
+test('translated lesson pages keep the hub breadcrumb but leave out the English link block', async function () {
+  const handler = lessonApi.createHandler({
+    loadAssets: function () { return withTranslations(['hi']); },
+    readTranslation: function () { return Promise.resolve(HINDI); },
+  });
+  const english = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}` });
+  const hindi = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` });
+  assert.match(english.body, /<nav class="lesson-hub-links"/);
+  assert.match(hindi.body, /<html lang="hi"/);
+  assert.doesNotMatch(hindi.body, /<nav class="lesson-hub-links"/);
+  assert.match(hindi.body, /"item":"https:\/\/aiengineeringfromscratch\.com\/phase\/deep-learning-core"/);
+});
+
 test('lesson route breadcrumbs point to the phase hub and list the terms the lesson teaches', function () {
   const assets = makeAssets();
   assets.lesson.lessonTerms = {
@@ -1389,7 +1419,7 @@ test('lesson route breadcrumbs point to the phase hub and list the terms the les
   });
   assert.equal(certification.statusCode, 200);
   assert.equal(breadcrumbs(certification.body)[1].name, 'Certifications');
-  assert.doesNotMatch(certification.body, /lesson-hub-links/);
+  assert.doesNotMatch(certification.body, /<nav class="lesson-hub-links"/);
 
   const withoutTerms = invoke(lessonApi.createHandler({ loadAssets: function () { return makeAssets().lesson; } }), { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors', query: { path: 'phases/01-math/01-vectors' } });
   assert.equal(withoutTerms.statusCode, 200);

@@ -764,6 +764,23 @@ function extractLessonMeta(relPath) {
   return result;
 }
 
+function annotateLessonMeta(phases) {
+  let summarized = 0, withKeywords = 0;
+  const lessonMinutes = {};
+  for (const phase of phases) {
+    for (const lesson of phase.lessons) {
+      if (lesson.url) {
+        const relPath = lesson.url.replace(GITHUB_BASE, '').replace(/\/+$/, '');
+        const meta = extractLessonMeta(relPath);
+        if (meta.summary)  { lesson.summary  = meta.summary;  summarized++;   }
+        if (meta.keywords) { lesson.keywords = meta.keywords; withKeywords++; }
+        if (meta.minutes) lessonMinutes[relPath] = meta.minutes;
+      }
+    }
+  }
+  return { summarized, withKeywords, lessonMinutes };
+}
+
 function canonicalLessonUrl(lessonPathValue) {
   return `${SITE_ORIGIN}/lesson?path=${encodeURIComponent(lessonPathValue)}`;
 }
@@ -2198,19 +2215,7 @@ function build() {
   writeCertificationData(certifications);
 
   console.log('📚 Extracting lesson summaries + keywords from docs/en.md...');
-  let summarized = 0, withKeywords = 0;
-  const lessonMinutes = {};
-  for (const phase of phases) {
-    for (const lesson of phase.lessons) {
-      if (lesson.url) {
-        const relPath = lesson.url.replace(GITHUB_BASE, '').replace(/\/+$/, '');
-        const meta = extractLessonMeta(relPath);
-        if (meta.summary)  { lesson.summary  = meta.summary;  summarized++;   }
-        if (meta.keywords) { lesson.keywords = meta.keywords; withKeywords++; }
-        if (meta.minutes) lessonMinutes[relPath] = meta.minutes;
-      }
-    }
-  }
+  const { summarized, withKeywords, lessonMinutes } = annotateLessonMeta(phases);
 
   console.log('🔎 Generating lesson and certification SEO manifests...');
   const seoManifests = writeSeoArtifacts(phases, certifications, learningPaths);
@@ -2543,6 +2548,7 @@ module.exports = {
   githubSourceUrl,
   lessonDocumentSeo,
   GLOSSARY_CATEGORY_ORDER,
+  annotateLessonMeta,
   parseCurriculumPrereqs,
   parseGlossary,
   parseReadme,

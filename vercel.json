@@ -578,6 +578,11 @@
       "permanent": true
     },
     {
+      "source": "/phase",
+      "destination": "/catalog",
+      "permanent": false
+    },
+    {
       "source": "/project",
       "missing": [
         {

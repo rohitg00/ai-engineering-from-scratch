@@ -344,7 +344,7 @@ function lessonFallback(entry, lessonPath, contextParams, page, body) {
 }
 
 function lessonHubLinks(entry, page, lessonTerms) {
-  if (!page.hub) return '';
+  if (!page.hub || page.lang !== 'en') return '';
   const terms = lessonTerms && Object.prototype.hasOwnProperty.call(lessonTerms, entry.path) && Array.isArray(lessonTerms[entry.path])
     ? lessonTerms[entry.path]
     : [];

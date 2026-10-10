@@ -10,7 +10,7 @@ const ORIGIN = 'https://aiengineeringfromscratch.com';
 const REPO_ROOT = path.resolve(__dirname, '..');
 const GLOSSARY_SOURCE = 'https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/glossary/terms.md';
 const MIN_TERM_WORDS = 35;
-const MAX_TITLE_LESSONS = 8;
+const MAX_COVERED_LESSONS = 8;
 const CORE_TERMS = 20;
 const FONT_LINK = 'https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap';
 const FAVICON = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>";
@@ -195,6 +195,7 @@ function buildPhaseModels(phases, prerequisites, lessonManifest, minutes, root) 
         number: (/^(\d+)-/.exec(match[3]) || [])[1] || String(lessons.length + 1).padStart(2, '0'),
         title: entry.title,
         summary: clipSentences(entry.excerpt || lesson.summary || entry.description, 200),
+        headings: lesson.keywords || '',
         type: lesson.type || '',
         languages: String(lesson.lang || '').split(',').map(value => value.trim()).filter(value => value && value !== '—'),
         minutes: minutes[match[1]] || 0,
@@ -239,16 +240,16 @@ function isAcronym(name) {
   return /^[A-Z][A-Za-z0-9]*$/.test(name) && (name.match(/[A-Z]/g) || []).length >= 2;
 }
 
-function titlePatterns(term) {
+function namePatterns(term, isOtherTerm) {
   const names = new Set();
   const inner = (/\(([^)]+)\)/.exec(term.term) || [])[1];
-  for (const name of [shortName(term.term), inner, ...term.aliases]) {
+  for (const name of [shortName(term.term), isOtherTerm(inner) ? '' : inner, ...term.aliases]) {
     const value = String(name || '').trim();
-    if (value && (isAcronym(value) || /\s/.test(value))) names.add(value);
+    if (value.length > 2) names.add(value);
   }
   return [...names].map(name => {
     const source = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+');
-    return new RegExp(`(?:^|[^A-Za-z0-9])${source}(?:e?s)?(?![A-Za-z0-9])`, isAcronym(name) ? '' : 'i');
+    return new RegExp(`(?:^|[^A-Za-z0-9-])${source}(?:e?s)?(?![A-Za-z0-9-])`, isAcronym(name) ? '' : 'i');
   });
 }
 
@@ -275,8 +276,11 @@ function buildTermModels(glossary, phaseModels) {
       blurb: clipSentences(term.means, 140),
       learn: [],
       titled: [],
+      mentioned: [],
       related: [],
       phases: [],
+      taughtIn: [],
+      coveredIn: [],
     };
   });
   const byKey = new Map();
@@ -290,17 +294,19 @@ function buildTermModels(glossary, phaseModels) {
       const lesson = match && lessonByPath.get(match[0]);
       if (lesson && !model.learn.includes(lesson)) model.learn.push(lesson);
     }
-    const patterns = titlePatterns(model.term);
-    model.titled = patterns.length
-      ? lessons.filter(lesson => !model.learn.includes(lesson) && patterns.some(pattern => pattern.test(lesson.title)))
-      : [];
+    const patterns = namePatterns(model.term, name => byKey.has(glossaryLookupKey(name)) && byKey.get(glossaryLookupKey(name)) !== model);
+    const names = field => lessons.filter(lesson => !model.learn.includes(lesson) && patterns.some(pattern => pattern.test(lesson[field])));
+    model.titled = names('title');
+    model.mentioned = names('headings').filter(lesson => !model.titled.includes(lesson));
     for (const name of model.term.related) {
       const related = byKey.get(glossaryLookupKey(name));
       if (!related) throw new Error(`Glossary term "${model.term.term}" has an unresolved related term "${name}"`);
       if (related !== model && !model.related.includes(related)) model.related.push(related);
     }
-    const phaseIds = [...new Set(model.learn.concat(model.titled).map(lesson => lesson.phaseId))];
-    model.phases = phaseIds.map(id => phaseById.get(id)).sort((a, b) => a.id - b.id);
+    const phasesOf = list => [...new Set(list.map(lesson => lesson.phaseId))].map(id => phaseById.get(id)).sort((a, b) => a.id - b.id);
+    model.taughtIn = phasesOf(model.learn);
+    model.coveredIn = phasesOf(model.titled.concat(model.mentioned)).filter(phase => !model.taughtIn.includes(phase));
+    model.phases = model.taughtIn.concat(model.coveredIn).sort((a, b) => a.id - b.id);
     for (const phase of model.phases) phase.terms.push(model);
   }
   for (const model of models) {
@@ -369,7 +375,7 @@ function breadcrumbHtml(items) {
 }
 
 function coreTerms(termModels) {
-  const degree = model => model.related.length * 2 + model.learn.length + model.titled.length;
+  const degree = model => model.related.length * 2 + model.learn.length + model.titled.length + model.mentioned.length;
   return termModels.filter(model => model.page)
     .sort((a, b) => degree(b) - degree(a) || a.term.term.localeCompare(b.term.term, 'en'))
     .slice(0, CORE_TERMS)
@@ -469,12 +475,13 @@ function termPage(model, context) {
 
   const learn = [];
   if (model.learn.length) learn.push(`<p class="hub-label">Start with</p><ul class="hub-lessons">${model.learn.map(lesson => lessonItemHtml(lesson, true)).join('')}</ul>`);
-  if (model.titled.length) {
-    learn.push(`<p class="hub-label">Lessons with ${escapeHtml(term.term)} in the title</p><ul class="hub-lessons">${model.titled.slice(0, MAX_TITLE_LESSONS).map(lesson => lessonItemHtml(lesson, true)).join('')}</ul>`);
+  const covered = model.titled.concat(model.mentioned);
+  if (covered.length) {
+    learn.push(`<p class="hub-label">Lessons that name ${escapeHtml(term.term)} in a title or section</p><ul class="hub-lessons">${covered.slice(0, MAX_COVERED_LESSONS).map(lesson => lessonItemHtml(lesson, true)).join('')}</ul>`);
   }
-  if (model.phases.length) {
-    learn.push(`<p>Taught in ${phaseLinks(model.phases).html}.</p>`);
-  } else {
+  if (model.taughtIn.length) learn.push(`<p>Taught in ${phaseLinks(model.taughtIn).html}.</p>`);
+  if (model.coveredIn.length) learn.push(`<p>${model.taughtIn.length ? 'Also covered' : 'Covered'} in ${phaseLinks(model.coveredIn).html}.</p>`);
+  if (!model.phases.length) {
     learn.push(`<p>No lesson links to this term yet. Search the <a href="/catalog?q=${encodeURIComponent(shortName(term.term))}">course catalog</a> for it.</p>`);
   }
   section('learn', `Learn ${term.term} in the course`, learn.join(''));
@@ -540,9 +547,10 @@ function phaseQuestions(phase, facts) {
   const languageText = facts.languages.length ? ` The lesson code uses ${listText(facts.languages.slice(0, 4))}.` : '';
   const plain = text => ({ answer: text, html: escapeHtml(text) });
   const questions = [{ question: `How many lessons are in ${phase.label}?`, ...plain(`${phase.number} has ${count(total, 'lesson')}${typeText}.${languageText}`) }];
-  let prerequisites = plain(phase.guide.prerequisites || 'No earlier phase is required. Start with the first lesson.');
+  const guide = phase.guide.prerequisites ? `The phase guide gives these prerequisites: ${phase.guide.prerequisites}` : '';
+  let prerequisites = plain(guide || 'No earlier phase is required. Start with the first lesson.');
   if (phase.before.length) {
-    const lead = phase.guide.prerequisites ? `${phase.guide.prerequisites} ` : '';
+    const lead = guide ? `${guide} ` : '';
     const before = phaseLinks(phase.before);
     prerequisites = {
       answer: `${lead}In the course roadmap, this phase builds on ${before.text}.`,
@@ -638,7 +646,7 @@ function termMarkdown(model) {
   for (const item of questions.slice(1)) lines.push('', `## ${item.question}`, '', item.answer);
   if (term.example) lines.push('', `## ${term.term} in practice`, '', term.example);
   if (term.whyCalled) lines.push('', `## Why is it called ${term.term}?`, '', term.whyCalled);
-  const lessons = model.learn.concat(model.titled.slice(0, MAX_TITLE_LESSONS));
+  const lessons = model.learn.concat(model.titled.concat(model.mentioned).slice(0, MAX_COVERED_LESSONS));
   if (lessons.length) {
     lines.push('', '## Lessons', '');
     for (const lesson of lessons) lines.push(`- [${lesson.title}](${lesson.url}) (${lesson.phaseLabel})`);

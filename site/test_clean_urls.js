@@ -134,6 +134,9 @@ test('glossary term pages and phase hubs route beside /glossary without collidin
   assert.equal(glossary.status, 200);
   assert.equal(await glossary.text(), fs.readFileSync(path.join(__dirname, 'glossary.html'), 'utf8'));
   assert.equal((await fetch(base + '/glossary.html', { redirect: 'manual' })).headers.get('location'), '/glossary');
+  const phaseIndex = await fetch(base + '/phase', { redirect: 'manual' });
+  assert.equal(phaseIndex.status, 307);
+  assert.equal(phaseIndex.headers.get('location'), '/catalog');
   for (const kind of ['glossary', 'phase']) {
     const slug = fs.readdirSync(path.join(hubs, kind)).find(name => name.endsWith('.html')).slice(0, -5);
     const page = await fetch(`${base}/${kind}/${slug}`);
