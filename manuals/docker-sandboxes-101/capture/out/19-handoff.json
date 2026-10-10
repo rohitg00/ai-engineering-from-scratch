@@ -35,39 +35,5 @@
       },
       "outputSchema": null
     }
-  },
-  {
-    "agent_name": "root",
-    "timestamp": "<ts>",
-    "type": "tool_call_response",
-    "tool_call_id": "<call-id>",
-    "tool_definition": {
-      "name": "handoff",
-      "category": "handoff",
-      "description": "Use this function to hand off the conversation to the selected agent.",
-      "parameters": {
-        "additionalProperties": false,
-        "properties": {
-          "agent": {
-            "description": "The name of the agent to hand off the conversation to.",
-            "type": "string"
-          }
-        },
-        "required": [
-          "agent"
-        ],
-        "type": "object"
-      },
-      "annotations": {
-        "idempotentHint": false,
-        "readOnlyHint": true,
-        "title": "Handoff Conversation"
-      },
-      "outputSchema": null
-    },
-    "response": "The agent root handed off the conversation to you. Your available handoff agents and tools are specified in the system messages that follow. Only use those capabilities - do not attempt to use tools or hand off to agents that you see in the conversation history from previous agents, as those were available to different agents with different capabilities. Look at the conversation history for context, but only use the handoff agents and tools that are listed in your system messages below. Complete your part of the task and hand off to the next appropriate agent in your workflow (if any are available to you), or respond directly to the user if you are the final agent.",
-    "result": {
-      "output": "The agent root handed off the conversation to you. Your available handoff agents and tools are specified in the system messages that follow. Only use those capabilities - do not attempt to use tools or hand off to agents that you see in the conversation history from previous agents, as those were available to different agents with different capabilities. Look at the conversation history for context, but only use the handoff agents and tools that are listed in your system messages below. Complete your part of the task and hand off to the next appropriate agent in your workflow (if any are available to you), or respond directly to the user if you are the final agent."
-    }
   }
 ]
