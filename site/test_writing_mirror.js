@@ -34,7 +34,7 @@ test('the complete article keeps executable figures, anchors, source metadata, a
   assert.match(result, /href="#figure"/);
   assert.match(result, /marker-end="url\(#head\)"/);
   assert.match(result, /<link rel="canonical" href="https:\/\/rohitghumare.com\/blog\/example\/">/);
-  assert.match(result, /<meta property="og:url" content="https:\/\/aiengineeringfromscratch.com\/blog\/example\/">/);
+  assert.match(result, /<meta property="og:url" content="https:\/\/rohitghumare.com\/blog\/example\/">/);
   assert.match(result, /<meta property="og:site_name" content="AI Engineering from Scratch">/);
   assert.match(result, /class="byline">Rohit Ghumare/);
   assert.match(result, /class="n">Rohit Ghumare/);
@@ -124,10 +124,10 @@ test('absolute or versioned portfolio search is removed without removing unrelat
   assert.match(result, /src="https:\/\/example.org\/search.js"/);
 });
 
-test('social sharing uses the course URL and site name while the search canonical stays original', () => {
-  const result = mirrorArticle(fixture({ head: '<meta name="twitter:url" content="' + item.url + '"><meta property="og:site_name" content="Rohit Ghumare">' }), item, catalog);
-  assert.match(result, /name="twitter:url" content="https:\/\/aiengineeringfromscratch.com\/blog\/example\/"/);
-  assert.match(result, /property="og:url" content="https:\/\/aiengineeringfromscratch.com\/blog\/example\/"/);
+test('social sharing points at the canonical URL and names the course site', () => {
+  const result = mirrorArticle(fixture({ head: '<meta name="twitter:url" content="https://aiengineeringfromscratch.com/blog/example/"><meta property="og:site_name" content="Rohit Ghumare">' }), item, catalog);
+  assert.match(result, /name="twitter:url" content="https:\/\/rohitghumare.com\/blog\/example\/"/);
+  assert.match(result, /property="og:url" content="https:\/\/rohitghumare.com\/blog\/example\/"/);
   assert.match(result, /rel="canonical" href="https:\/\/rohitghumare.com\/blog\/example\/"/);
   assert.equal((result.match(/og:site_name/g) || []).length, 1);
   assert.match(result, /property="og:site_name" content="AI Engineering from Scratch"/);

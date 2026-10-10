@@ -246,7 +246,7 @@ function mirrorArticle(html, item, items) {
     output.push(rewriteAttributes(token, (name, value) => {
       if (token.name === 'meta' && name === 'content') {
         const property = (token.attrs.get('property') || token.attrs.get('name') || '').toLowerCase();
-        if (property === 'og:url' || property === 'twitter:url') return COURSE_ORIGIN + item.id;
+        if (property === 'og:url' || property === 'twitter:url') return sourceUrl;
         if (property === 'og:site_name') return COURSE_NAME;
       }
       if (name === 'href') {
