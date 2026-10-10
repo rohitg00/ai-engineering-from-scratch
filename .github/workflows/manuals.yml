@@ -21,6 +21,11 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to attach the PDFs to, for example v2026.10.2. Leave empty to upload an artifact only.'
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -62,24 +67,29 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Cache Paged.js and its browser
+      - name: Cache Paged.js
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.npm/_npx
-            ~/.cache/puppeteer
-          key: pagedjs-cli-0.4.3-${{ runner.os }}
+          path: ~/.npm/_npx
+          key: pagedjs-cli-0.4.3-system-chrome-${{ runner.os }}
       - name: Write print editions
         env:
-          SCOPE: ${{ github.event_name == 'release' && '--ready' || '' }}
+          SCOPE: ${{ (github.event_name == 'release' || inputs.tag != '') && '--ready' || '' }}
         run: node site/build-manuals.js --print dist/manuals $SCOPE
       - name: Paginate with Paged.js
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: '1'
         run: |
           set -euo pipefail
           shopt -s nullglob
+          chrome="$(command -v google-chrome || command -v google-chrome-stable)"
+          "$chrome" --version
           for page in dist/manuals/*/print.html; do
             id="$(basename "$(dirname "$page")")"
-            npx --yes pagedjs-cli@0.4.3 "$page" -o "dist/manuals/aiefs-manual-${id}.pdf"
+            PUPPETEER_EXECUTABLE_PATH="$chrome" timeout 600 \
+              npx --yes pagedjs-cli@0.4.3 "$page" -o "dist/manuals/aiefs-manual-${id}.pdf" \
+              --browserArgs=--no-sandbox -t 300000
+            test -s "dist/manuals/aiefs-manual-${id}.pdf"
           done
       - name: Upload PDFs
         if: github.event_name == 'workflow_dispatch'
@@ -89,8 +99,10 @@ jobs:
           path: dist/manuals/*.pdf
           if-no-files-found: ignore
       - name: Attach to release
-        if: github.event_name == 'release' && hashFiles('dist/manuals/*.pdf') != ''
+        if: (github.event_name == 'release' || inputs.tag != '') && hashFiles('dist/manuals/*.pdf') != ''
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
-        run: gh release upload "$RELEASE_TAG" dist/manuals/*.pdf --clobber
+          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          [[ "$RELEASE_TAG" =~ ^v[0-9]{4}\.[0-9]{2}\.[0-9]+$ ]] || { echo "invalid tag: $RELEASE_TAG"; exit 1; }
+          gh release upload "$RELEASE_TAG" dist/manuals/*.pdf --clobber
