@@ -13,11 +13,11 @@
 
 Безкоштовно, з відкритим кодом, за ліцензією MIT. Навчайтеся на вебсайті, з агентом програмування або запускаючи код локально.
 
-> 528 уроки. 20 етапів. Python, TypeScript, Rust, Julia.
+> 528 уроків. 20 етапів. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Ліцензія MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 уроки"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 уроків"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 етапів"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Зірки GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Вебсайт"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## Оберіть навчальний маршрут
 
-Вам не потрібно переглядати всі 528 уроки перед початком. Виберіть одну мету. Кожне посилання відкриває ту саму навчальну програму на GitHub або на сайті, а обидві версії використовують той самий код уроків.
+Вам не потрібно переглядати всі 528 уроків перед початком. Виберіть одну мету. Кожне посилання відкриває ту саму навчальну програму на GitHub або на сайті, а обидві версії використовують той самий код уроків.
 
 | Ваша мета | Навчайтеся на GitHub | Навчайтеся на сайті |
 |---|---|---|
@@ -381,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>Етап 2: Основи машинного навчання</b> &nbsp;<code>21 уроків</code>&nbsp; <em>Класичне ML досі є основою більшості промислових AI-систем.</em></summary>
+<summary><b>Етап 2: Основи машинного навчання</b> &nbsp;<code>21 урок</code>&nbsp; <em>Класичне ML досі є основою більшості промислових AI-систем.</em></summary>
 <br/>
 
 | # | Урок | Тип | Мова |
@@ -1267,7 +1267,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> читачів &nbsp;·&nbsp; <b>181,995</b> переглядів сторінок за останні 30 днів &nbsp;·&nbsp; станом на 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Безкоштовно, за ліцензією MIT, 528 уроки. Дякуємо спонсорам і доброчинцям, завдяки яким ця робота можлива. [Переглянути всіх спонсорів і доброчинців](../../BACKERS.md).
+Безкоштовно, за ліцензією MIT, 528 уроків. Дякуємо спонсорам і доброчинцям, завдяки яким ця робота можлива. [Переглянути всіх спонсорів і доброчинців](../../BACKERS.md).
 
 Хочете підтримати роботу? Перегляньте [варіанти спонсорства](../../SPONSORS.md), зокрема [спонсорство обладнання](../../SPONSORS.md#hardware-lab-partner), або [станьте спонсором на GitHub](https://github.com/sponsors/rohitg00).
 

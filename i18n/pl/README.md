@@ -13,11 +13,11 @@ Zaimplementuj wewnętrzne mechanizmy modeli, potoki wyszukiwania i środowiska w
 
 Bezpłatny, otwartoźródłowy, na licencji MIT. Ucz się na stronie, z agentem programistycznym lub uruchamiając kod lokalnie.
 
-> 528 lekcje. 20 etapów. Python, TypeScript, Rust, Julia.
+> 528 lekcji. 20 etapów. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licencja MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 lekcje"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 lekcji"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 etapów"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Gwiazdki GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Strona internetowa"></a>
@@ -1267,7 +1267,7 @@ Kod zakończenia jest niezerowy, gdy dowolna reguła zawiedzie. Reguły L001–L
 <p align="center"><sub><b>114,584</b> czytelników &nbsp;·&nbsp; <b>181,995</b> odsłon w ciągu ostatnich 30 dni &nbsp;·&nbsp; stan na 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Bezpłatnie, na licencji MIT, 528 lekcje. Dziękujemy sponsorom i osobom wspierającym, dzięki którym ta praca jest możliwa. [Zobacz wszystkich sponsorów i wspierających](../../BACKERS.md).
+Bezpłatnie, na licencji MIT, 528 lekcji. Dziękujemy sponsorom i osobom wspierającym, dzięki którym ta praca jest możliwa. [Zobacz wszystkich sponsorów i wspierających](../../BACKERS.md).
 
 Chcesz wesprzeć projekt? Sprawdź [możliwości sponsoringu](../../SPONSORS.md), w tym [wsparcie sprzętowe](../../SPONSORS.md#hardware-lab-partner), lub [zostań sponsorem na GitHub](https://github.com/sponsors/rohitg00).
 
