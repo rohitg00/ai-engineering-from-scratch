@@ -1,0 +1,78 @@
+{
+  "lesson": "21-metr-external-evaluation",
+  "title": "METR Time Horizons and External Capability Evaluation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A model succeeds more often on short expert tasks and less often as task duration increases. How can a single time-horizon number summarize that curve?",
+      "options": [
+        "Use the average prompt length in the evaluation set",
+        "Use the expert task duration where fitted success is 50 percent",
+        "Use the longest task with one successful run",
+        "Use the task duration where success first reaches 100 percent"
+      ],
+      "correct": 1,
+      "explanation": "The horizon is the expert task duration where a fitted success-versus-log-time curve reaches 50%. The longest task with one successful run ignores repeated reliability and the rest of the fitted curve."
+    },
+    {
+      "stage": "check",
+      "question": "What is the fitting target in the METR time-horizon method described here?",
+      "options": [
+        "Number of tokens as a function of model release date",
+        "Task cost as a function of agent count",
+        "Human preference as a function of output length",
+        "Success probability as a function of log expert completion time"
+      ],
+      "correct": 3,
+      "explanation": "METR fits task-success probability as a function of log expert completion time, then finds its 50% crossing. Release date, task cost, and human preference are different variables, not the fit target."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the lesson call benchmark horizons upper bounds on deployment capability?",
+      "options": [
+        "Benchmarks always include harder tasks than any production workflow",
+        "The fit intentionally reports the lowest possible success rate",
+        "Benchmarks use idealized tools and omit real consequences and user variation",
+        "Deployment tasks are all shorter than benchmark tasks"
+      ],
+      "correct": 2,
+      "explanation": "Benchmarks use cleaner tools and prompts, omit real consequences, and do not reproduce user variation or deployment context. Those differences can lower real reliability; benchmarks do not necessarily use harder tasks or report a minimum."
+    },
+    {
+      "stage": "check",
+      "question": "A model appears unusually successful when it can infer it is in an evaluation. What can this do to the observed horizon?",
+      "options": [
+        "Inflate success observations and shift the fitted horizon upward",
+        "Force the fitted curve to be independent of task duration",
+        "Make the expert-time axis equal to wall-clock deployment time",
+        "Lower all observed success rates by the gaming rate"
+      ],
+      "correct": 0,
+      "explanation": "The simulator flips some failures into observed successes; that lifts the fitted success curve and can move the horizon upward. Gaming does not make success independent of task duration."
+    },
+    {
+      "stage": "post",
+      "question": "A vendor claims a long time horizon, but your proposed task uses unfamiliar tools and has real consequences. What is the sound next step?",
+      "options": [
+        "Skip evaluation because the horizon is already expressed in hours",
+        "Treat the vendor horizon as an autonomous deployment guarantee",
+        "Use only the benchmark's easiest tasks to confirm the claim",
+        "Run an evaluation on your own representative task distribution"
+      ],
+      "correct": 3,
+      "explanation": "Run a representative evaluation with your own tools, consequences, and task mix because vendor benchmark conditions do not automatically match deployment. A number expressed in hours is not a production guarantee."
+    },
+    {
+      "stage": "post",
+      "question": "A proposed task requires substantially longer expert work than the model's measured horizon. What does the lesson recommend?",
+      "options": [
+        "Assume the model will succeed because one benchmark task ran long",
+        "Replace external measurement with the agent's self-assessment",
+        "Extend the task until the fitted horizon catches up",
+        "Do not ship it autonomously without enough margin and task-specific evaluation"
+      ],
+      "correct": 3,
+      "explanation": "If the task is much longer than the measured horizon, do not deploy it autonomously without margin and task-specific evidence. One exceptional long success does not erase the fitted reliability gap."
+    }
+  ]
+}
