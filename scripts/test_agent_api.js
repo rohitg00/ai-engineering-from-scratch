@@ -1,7 +1,8 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { createLimiter, quality } = require('../lib/agent-http');
-const { search, readResource, InputError } = require('../lib/agent-content');
+const { search, readResource, readTranslatedResource, InputError } = require('../lib/agent-content');
+const { TRANSLATION_LANGUAGES } = require('../lib/lesson-translations');
 const catalog = require('../api/v1/catalog');
 const resource = require('../api/v1/resource');
 const mcp = require('../api/mcp');
@@ -145,6 +146,42 @@ test('MCP rejects malformed requests, unsafe origins, unsupported transport and 
   const missing = await rpc(handler, { jsonrpc: '2.0', id: 1, method: 'unknown' }); assert.equal(missing.json.error.code, -32601);
   for (const params of [{ name: 'unknown' }, { name: 'search_curriculum', arguments: null }, { name: 'search_curriculum', arguments: { limit: '1' } }, { name: 'read_resource', arguments: {} }, { name: 'read_resource', arguments: { path: 'x', extra: true } }]) assert.equal((await rpc(handler, { jsonrpc: '2.0', id: 2, method: 'tools/call', params })).json.error.code, -32602);
   const absent = await rpc(handler, { jsonrpc: '2.0', id: 3, method: 'tools/call', params: { name: 'read_resource', arguments: { path: 'missing' } } }); assert.equal(absent.json.result.isError, true);
+});
+
+
+test('resource and MCP read lesson translations only for allowlisted languages', async () => {
+  const entry = { path: 'phases/01-a/01-x', kind: 'lesson', title: 'X', description: 'X lesson', url: 'https://aiengineeringfromscratch.com/lesson?path=phases%2F01-a%2F01-x', sourceUrl: 'https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/phases/01-a/01-x/docs/en.md', translations: ['hi'], markdown: '# X\n' };
+  const read = path => (path === entry.path ? entry : null);
+  const fetched = [];
+  const readTranslation = (lang, lessonPath) => { fetched.push(`${lang}:${lessonPath}`); return Promise.resolve(lang === 'hi' ? '# एक्स\n' : null); };
+  const translated = await readTranslatedResource(entry.path, 'hi', { read, readTranslation });
+  assert.deepEqual(translated, { ...entry, lang: 'hi', url: entry.url + '&lang=hi', sourceUrl: 'https://github.com/rohitg00/ai-engineering-from-scratch/blob/translations/i18n/hi/phases/01-a/01-x/docs/hi.md', markdown: '# एक्स\n' });
+  assert.equal(await readTranslatedResource(entry.path, 'en', { read, readTranslation }), entry);
+  assert.equal(await readTranslatedResource(entry.path, 'ar', { read, readTranslation }), null);
+  assert.equal(await readTranslatedResource('missing', 'hi', { read, readTranslation }), null);
+  for (const lang of ['de', '../hi', 'hi/../ar', 'https://example.com/', '', 'HI', ['hi']]) {
+    await assert.rejects(readTranslatedResource(entry.path, lang, { read, readTranslation }), InputError);
+  }
+  assert.deepEqual(fetched, [`hi:${entry.path}`]);
+  await assert.rejects(readTranslatedResource(entry.path, 'hi', { read, readTranslation: () => Promise.resolve(null) }), /translation-unavailable/);
+
+  const withReader = reader => (path, lang, options) => readTranslatedResource(path, lang, { ...options, readTranslation: reader });
+  const handler = resource.createHandler({ read, readTranslated: withReader(readTranslation) });
+  const ok = await invoke(handler, { query: { path: entry.path, lang: 'hi' } });
+  assert.equal(ok.status, 200); assert.equal(ok.json.lang, 'hi'); assert.equal(ok.json.markdown, '# एक्स\n');
+  for (const query of [{ path: entry.path, lang: 'xx' }, { path: entry.path, lang: ['hi', 'ar'] }, { path: entry.path, lang: 'hi', extra: '1' }]) assert.equal((await invoke(handler, { query })).status, 400);
+  const absent = await invoke(handler, { query: { path: entry.path, lang: 'ar' } }); assert.equal(absent.status, 404); assert.match(absent.json.hint, /translations/);
+  const down = resource.createHandler({ read, readTranslated: withReader(() => Promise.resolve(null)) });
+  assert.equal((await invoke(down, { query: { path: entry.path, lang: 'hi' } })).status, 503);
+
+  const server = mcp.createHandler({ read, readTranslated: withReader(readTranslation) });
+  const call = args => rpc(server, { jsonrpc: '2.0', id: 9, method: 'tools/call', params: { name: 'read_resource', arguments: args } });
+  assert.equal((await call({ path: entry.path, lang: 'hi' })).json.result.structuredContent.lang, 'hi');
+  assert.equal((await call({ path: entry.path, lang: 'xx' })).json.error.code, -32602);
+  assert.equal((await call({ path: entry.path, lang: 'ar' })).json.result.isError, true);
+  const tools = await rpc(server, { jsonrpc: '2.0', id: 10, method: 'tools/list' });
+  const readTool = tools.json.result.tools.find(tool => tool.name === 'read_resource');
+  assert.deepEqual(readTool.inputSchema.properties.lang.enum, ['en', ...TRANSLATION_LANGUAGES]);
 });
 
 module.exports = { invoke };

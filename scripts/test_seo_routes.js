@@ -9,6 +9,10 @@ const certificationApi = require('../api/certification');
 const { parseMd } = require('../site/lesson-markdown');
 const manuals = require('../site/build-manuals.js');
 const { buildData: buildProjectData } = require('../site/build-projects.js');
+const translations = require('../lib/lesson-translations');
+const build = require('../site/build.js');
+const { collectCoverage } = require('../site/fetch-translation-coverage.js');
+const { compareCoverage, compareBuildCoverage } = require('../scripts/check_translation_coverage.js');
 
 const ROOT = path.join(__dirname, '..');
 const PERCEPTRON = 'phases/03-deep-learning-core/01-the-perceptron';
@@ -156,7 +160,7 @@ function withSecondProgram(assets) {
   return assets;
 }
 
-function invoke(handler, req) {
+function recorder() {
   const response = { statusCode: 200, headers: {}, body: undefined };
   const res = {
     setHeader(name, value) {
@@ -170,7 +174,18 @@ function invoke(handler, req) {
     get() { return response.statusCode; },
     set(value) { response.statusCode = value; },
   });
+  return { response, res };
+}
+
+function invoke(handler, req) {
+  const { response, res } = recorder();
   handler(req, res);
+  return response;
+}
+
+async function invokeAsync(handler, req) {
+  const { response, res } = recorder();
+  await handler(req, res);
   return response;
 }
 
@@ -488,12 +503,12 @@ test('lesson route serves the full lesson body, headings, and code to crawlers',
   assert.match(region, /class="lesson-nav-btn next"/);
   assert.ok(visibleWords(region) > 1500, 'full lesson text');
   assert.ok(visibleWords(region) > 5 * visibleWords(fallbackRegion(summary.body)), 'much longer than the summary fallback');
-  assert.deepEqual(JSON.parse(embeddedMarkdown(full.body)), { path: PERCEPTRON, markdown });
+  assert.deepEqual(JSON.parse(embeddedMarkdown(full.body)), { path: PERCEPTRON, lang: 'en', markdown });
   assert.match(full.body, /<link rel="canonical" href="https:\/\/aiengineeringfromscratch\.com\/lesson\?path=phases%2F03-deep-learning-core%2F01-the-perceptron">/);
   assert.match(full.body, /"@type":"LearningResource"/);
 });
 
-test('lesson route keeps the summary fallback when Markdown is unreadable or a translation is requested', function () {
+test('lesson route keeps the summary fallback when Markdown is unreadable', function () {
   const reads = [];
   const unreadable = invoke(lessonApi.createHandler({ loadAssets: function () {
     return productionAssets(function (lessonPath) {
@@ -510,17 +525,6 @@ test('lesson route keeps the summary fallback when Markdown is unreadable or a t
   assert.equal(unreadable.body, summary.body);
   assert.equal(embeddedMarkdown(unreadable.body), null);
   assert.match(fallbackRegion(unreadable.body), /<p class="motto">/);
-
-  const translatedReads = [];
-  const translated = invoke(lessonApi.createHandler({ loadAssets: function () {
-    return productionAssets(function (lessonPath) {
-      translatedReads.push(lessonPath);
-      return '# Never rendered\n';
-    });
-  } }), { method: 'GET', url: '/lesson?path=' + encodeURIComponent(PERCEPTRON) + '&lang=hi' });
-  assert.equal(translated.statusCode, 200);
-  assert.deepEqual(translatedReads, []);
-  assert.equal(embeddedMarkdown(translated.body), null);
 
   const english = invoke(lessonApi, { method: 'GET', url: '/lesson?path=' + encodeURIComponent(PERCEPTRON) + '&lang=en' });
   assert.equal(english.statusCode, 200);
@@ -572,7 +576,7 @@ test('embedded lesson Markdown cannot close its script tag', function () {
   const embedded = embeddedMarkdown(response.body);
   assert.ok(embedded);
   assert.doesNotMatch(embedded, /[<>]/);
-  assert.deepEqual(JSON.parse(embedded), { path: 'phases/01-math/01-vectors', markdown });
+  assert.deepEqual(JSON.parse(embedded), { path: 'phases/01-math/01-vectors', lang: 'en', markdown });
   assert.equal((response.body.match(/<script\b/g) || []).length, 2);
   assert.doesNotMatch(fallbackRegion(response.body), /<script>alert|<img src=x/);
   assert.match(fallbackRegion(response.body), /&lt;\/script&gt;&lt;img src=x onerror=alert\(2\)&gt;/);
@@ -863,4 +867,295 @@ test('server and browser source links honor generated repository identity', func
   assert.match(contentSource, /__AIFS_SOURCE/);
   assert.match(lessonTemplate, /SOURCE_OWNER/);
   assert.doesNotMatch(lessonTemplate, /api\.github\.com\/repos\/rohitg00\/ai-engineering-from-scratch\/contents/);
+});
+
+const HINDI = [
+  '# पर्सेप्ट्रोन',
+  '',
+  '> पर्सेप्ट्रॉन तंत्रिका नेटवर्क का परमाणु है। इसे खोलें और आपको भार, एक पूर्वाग्रह और एक निर्णय मिलता है।',
+  '',
+  '## अवधारणा',
+  '',
+  'एक न्यूरॉन एक निर्णय लेता है। भार और पूर्वाग्रह मिलकर एक रेखा बनाते हैं जो इनपुट को दो भागों में बांटती है।',
+  '',
+  '```python',
+  'class Perceptron:',
+  '    pass',
+  '```',
+  '',
+].join('\n');
+const ARABIC = '# البيرسبترون\n\n> البيرسبترون هو ذرة الشبكات العصبية.\n\n## المفهوم\n\nخلية عصبية واحدة تتخذ قرارا واحدا.\n';
+
+function withTranslations(list) {
+  const assets = lessonApi.loadProductionAssets();
+  const entry = Object.assign({}, assets.manifest.lessons[PERCEPTRON], { translations: list });
+  const lessons = Object.assign({}, assets.manifest.lessons, { [PERCEPTRON]: entry });
+  return Object.assign({}, assets, { manifest: Object.assign({}, assets.manifest, { lessons }) });
+}
+
+function alternateLinks(html) {
+  return Array.from(html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)">/g), function (match) {
+    return [match[1], match[2].replace(/&amp;/g, '&')];
+  });
+}
+
+const PERCEPTRON_URL = 'https://aiengineeringfromscratch.com/lesson?path=phases%2F03-deep-learning-core%2F01-the-perceptron';
+
+test('translated lesson pages render the translation with a self canonical, hreflang, lang, and dir', async function () {
+  const reads = [];
+  const handler = lessonApi.createHandler({
+    loadAssets: function () { return withTranslations(['hi', 'ar']); },
+    readTranslation: function (lang, lessonPath) {
+      reads.push(`${lang}:${lessonPath}`);
+      return Promise.resolve(lang === 'ar' ? ARABIC : HINDI);
+    },
+  });
+  const hindi = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` });
+  assert.equal(hindi.statusCode, 200);
+  assert.match(hindi.body, /<html lang="hi" dir="ltr" data-theme="light">/);
+  assert.match(hindi.body, /<link rel="canonical" href="https:\/\/aiengineeringfromscratch\.com\/lesson\?path=phases%2F03-deep-learning-core%2F01-the-perceptron&amp;lang=hi">/);
+  assert.match(hindi.body, /<meta property="og:url" content="[^"]+&amp;lang=hi">/);
+  assert.match(hindi.body, /<meta property="og:locale" content="hi_IN">/);
+  assert.match(hindi.body, /<title>पर्सेप्ट्रोन \| AI Engineering from Scratch<\/title>/);
+  assert.match(hindi.body, /<meta name="description" content="पर्सेप्ट्रोन: पर्सेप्ट्रॉन तंत्रिका नेटवर्क का परमाणु है।/);
+  assert.deepEqual(alternateLinks(hindi.body), [
+    ['en', PERCEPTRON_URL],
+    ['x-default', PERCEPTRON_URL],
+    ['hi', PERCEPTRON_URL + '&lang=hi'],
+    ['ar', PERCEPTRON_URL + '&lang=ar'],
+  ]);
+  const jsonLd = JSON.parse(hindi.body.match(/<script type="application\/ld\+json" id="lessonJsonLd">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(jsonLd['@graph'][0].inLanguage, 'hi');
+  assert.equal(jsonLd['@graph'][0].translationOfWork.url, PERCEPTRON_URL);
+  const region = fallbackRegion(hindi.body);
+  assert.equal((region.match(/<h1(?:\s|>)/g) || []).length, 1);
+  assert.match(region, /<h1>पर्सेप्ट्रोन<\/h1>/);
+  assert.match(region, /<h2 id="[^"]*" class="">अवधारणा<\/h2>/);
+  assert.match(region, /<a href="\/lesson\?path=phases%2F03-deep-learning-core%2F01-the-perceptron&amp;lang=hi" hreflang="hi" lang="hi" aria-current="page">हिन्दी<\/a>/);
+  assert.match(region, /<a href="\/lesson\?path=phases%2F03-deep-learning-core%2F01-the-perceptron" hreflang="en" lang="en">English<\/a>/);
+  assert.doesNotMatch(region, /XOR was unsolvable/);
+  assert.deepEqual(JSON.parse(embeddedMarkdown(hindi.body)), { path: PERCEPTRON, lang: 'hi', markdown: HINDI });
+  assert.equal(hindi.headers['cache-control'], 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800');
+  assert.equal(hindi.headers['content-language'], 'hi');
+  assert.equal(hindi.headers.vary, 'Accept, Accept-Encoding');
+
+  const arabic = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=ar` });
+  assert.match(arabic.body, /<html lang="ar" dir="rtl" data-theme="light">/);
+  assert.match(arabic.body, /<meta property="og:locale" content="ar_AR">/);
+  assert.match(fallbackRegion(arabic.body), /<h1>البيرسبترون<\/h1>/);
+  assert.deepEqual(reads, [`hi:${PERCEPTRON}`, `ar:${PERCEPTRON}`]);
+});
+
+test('translated lesson URLs fall back to the English page and canonical', async function () {
+  const english = lessonApi.loadProductionAssets().readMarkdown(PERCEPTRON);
+  for (const reader of [
+    function () { return Promise.resolve(null); },
+    function () { return Promise.resolve(english); },
+    function () { return Promise.reject(new Error('network')); },
+  ]) {
+    const handler = lessonApi.createHandler({ loadAssets: function () { return withTranslations(['hi']); }, readTranslation: reader });
+    const response = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` });
+    assert.equal(response.statusCode, 200);
+    assert.match(response.body, /<html lang="en" data-theme="light">/);
+    assert.ok(response.body.includes(`<link rel="canonical" href="${PERCEPTRON_URL}">`));
+    assert.equal(response.headers['cache-control'], 'public, max-age=0, s-maxage=300, must-revalidate');
+    assert.equal(response.headers['content-language'], 'en');
+    assert.equal(JSON.parse(embeddedMarkdown(response.body)).lang, 'en');
+    assert.match(fallbackRegion(response.body), /XOR was unsolvable/);
+  }
+
+  const reads = [];
+  const uncovered = lessonApi.createHandler({
+    loadAssets: function () { return withTranslations(['hi']); },
+    readTranslation: function (lang) { reads.push(lang); return Promise.resolve(HINDI); },
+  });
+  const french = await invokeAsync(uncovered, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=fr` });
+  assert.equal(french.statusCode, 200);
+  assert.deepEqual(reads, []);
+  assert.match(french.body, /<html lang="en" data-theme="light">/);
+  assert.equal(french.headers['cache-control'], 'public, max-age=0, s-maxage=86400, must-revalidate');
+});
+
+test('lesson URLs return Markdown when Accept prefers text/markdown', async function () {
+  const english = lessonApi.loadProductionAssets().readMarkdown(PERCEPTRON);
+  const handler = lessonApi.createHandler({
+    loadAssets: function () { return withTranslations(['hi']); },
+    readTranslation: function () { return Promise.resolve(HINDI); },
+  });
+  const url = `/lesson?path=${encodeURIComponent(PERCEPTRON)}`;
+  const markdown = invoke(handler, { method: 'GET', url, headers: { accept: 'text/markdown, text/html;q=0.8' } });
+  assert.equal(markdown.statusCode, 200);
+  assert.equal(markdown.headers['content-type'], 'text/markdown; charset=utf-8');
+  assert.equal(markdown.headers.vary, 'Accept, Accept-Encoding');
+  assert.equal(markdown.body, english);
+
+  const translated = await invokeAsync(handler, { method: 'GET', url: url + '&lang=hi', headers: { accept: 'text/markdown' } });
+  assert.equal(translated.headers['content-type'], 'text/markdown; charset=utf-8');
+  assert.equal(translated.headers['content-language'], 'hi');
+  assert.equal(translated.body, HINDI);
+
+  const html = invoke(handler, { method: 'GET', url, headers: { accept: 'text/html,application/xhtml+xml,*/*;q=0.8' } });
+  assert.match(html.headers['content-type'], /^text\/html/);
+});
+
+test('hreflang alternates appear only on course lessons, never on English-only pages', function () {
+  const assets = makeAssets();
+  const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
+  const course = invoke(handler, { method: 'GET', query: { path: 'phases/01-math/01-vectors' } });
+  assert.deepEqual(alternateLinks(course.body).map(function (link) { return link[0]; }), ['en', 'x-default']);
+  assert.doesNotMatch(course.body, /class="lesson-languages"/);
+  const certification = invoke(handler, { method: 'GET', query: { path: 'certifications/claude/lessons/01-models' } });
+  assert.deepEqual(alternateLinks(certification.body), []);
+  assert.match(certification.body, /<meta property="og:locale" content="en_US">/);
+  for (const name of fs.readdirSync(path.join(ROOT, 'site')).filter(function (file) { return file.endsWith('.html'); })) {
+    assert.doesNotMatch(fs.readFileSync(path.join(ROOT, 'site', name), 'utf8'), /<link[^>]+hreflang=/, name);
+  }
+});
+
+test('translation reader builds allowlisted URLs, caps size, and caches results', async function () {
+  assert.equal(translations.translationUrl('hi', PERCEPTRON), `${translations.TRANSLATION_SOURCE}/hi/${PERCEPTRON}/docs/hi.md`);
+  for (const [lang, lessonPath] of [['de', PERCEPTRON], ['../hi', PERCEPTRON], ['hi', `${PERCEPTRON}/../../x`], ['hi', 'certifications/claude/lessons/01-models'], ['hi', 'phases/03-a/b?x=1'], ['hi', 'https://example.com/x'], [['hi'], PERCEPTRON]]) {
+    assert.throws(function () { translations.translationUrl(lang, lessonPath); }, /invalid-translation-request/);
+  }
+
+  let time = 0;
+  const calls = [];
+  function reader(body, options) {
+    return translations.createTranslationReader(Object.assign({
+      now: function () { return time; },
+      fetchImpl: function (url, init) {
+        calls.push({ url, init });
+        return Promise.resolve(typeof body === 'function' ? body() : new Response(body, { status: 200 }));
+      },
+    }, options));
+  }
+  const read = reader(HINDI);
+  assert.equal(await read('hi', PERCEPTRON), HINDI);
+  assert.equal(await read('hi', PERCEPTRON), HINDI);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url, translations.translationUrl('hi', PERCEPTRON));
+  assert.equal(calls[0].init.redirect, 'error');
+  assert.ok(calls[0].init.signal instanceof AbortSignal);
+
+  assert.equal(await reader('# ' + 'x'.repeat(100), { maxBytes: 20 })('hi', PERCEPTRON), null);
+  assert.equal(await reader(function () { return new Response(HINDI, { headers: { 'content-length': '999999' } }); }, { maxBytes: 1000 })('hi', PERCEPTRON), null);
+  assert.equal(await reader('no heading here')('hi', PERCEPTRON), null);
+  calls.length = 0;
+  const missing = reader(function () { return new Response('', { status: 404 }); });
+  assert.equal(await missing('ar', PERCEPTRON), null);
+  assert.equal(await missing('ar', PERCEPTRON), null);
+  assert.equal(calls.length, 1);
+  time += 61 * 1000;
+  assert.equal(await missing('ar', PERCEPTRON), null);
+  assert.equal(calls.length, 2);
+  const failing = translations.createTranslationReader({ fetchImpl: function () { return Promise.reject(new Error('timeout')); } });
+  assert.equal(await failing('hi', PERCEPTRON), null);
+
+  let healthy = true;
+  const flaky = translations.createTranslationReader({
+    now: function () { return time; },
+    fetchImpl: function () { return Promise.resolve(healthy ? new Response(HINDI) : new Response('', { status: 502 })); },
+  });
+  assert.equal(await flaky('hi', PERCEPTRON), HINDI);
+  healthy = false;
+  time += 11 * 60 * 1000;
+  assert.equal(await flaky('hi', PERCEPTRON), HINDI, 'keeps the last good translation when a refresh fails');
+  assert.equal(translations.translationSourceUrl('hi', PERCEPTRON), `https://github.com/rohitg00/ai-engineering-from-scratch/blob/translations/i18n/hi/${PERCEPTRON}/docs/hi.md`);
+  assert.equal(translations.lessonUrl(PERCEPTRON, 'pt-BR'), PERCEPTRON_URL + '&lang=pt-BR');
+  assert.equal(translations.lessonUrl(PERCEPTRON, 'en'), PERCEPTRON_URL);
+});
+
+test('translation coverage comes from translation records and never fails the build', async function (t) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-coverage-'));
+  t.after(function () { fs.rmSync(root, { recursive: true, force: true }); });
+  const attempts = {};
+  const coverage = await collectCoverage({
+    languages: ['hi', 'ar', 'es'],
+    phases: ['01-a', '02-b'],
+    fetchImpl: function (url) {
+      attempts[url] = (attempts[url] || 0) + 1;
+      if (url.endsWith('/ar/.cache/02-b.json')) return Promise.reject(new Error('fetch failed'));
+      if (url.endsWith('/hi/.cache/02-b.json') && attempts[url] === 1) return Promise.resolve(new Response('', { status: 503 }));
+      if (url.includes('/es/')) return Promise.resolve(new Response('', { status: 404 }));
+      if (url.endsWith('/.cache/01-a.json')) {
+        return Promise.resolve(Response.json({
+          'phases/01-a/01-x/docs/en.md': 'hash',
+          'phases/01-a/02-y/docs/en.md': 'hash',
+          'phases/02-b/09-z/docs/en.md': 'listed in the wrong phase file',
+          '../escape/docs/en.md': 'hash',
+        }));
+      }
+      return Promise.resolve(Response.json({ 'phases/02-b/01-w/docs/en.md': 'hash' }));
+    },
+  });
+  assert.deepEqual(coverage.languages, {
+    hi: ['phases/01-a/01-x', 'phases/01-a/02-y', 'phases/02-b/01-w'],
+    ar: ['phases/01-a/01-x', 'phases/01-a/02-y'],
+  });
+  assert.deepEqual(Object.keys(coverage.unavailable), ['ar']);
+  assert.match(coverage.unavailable.ar, /fetch failed/);
+  assert.equal(attempts[`${translations.TRANSLATION_SOURCE}/hi/.cache/02-b.json`], 2);
+  assert.equal(attempts[`${translations.TRANSLATION_SOURCE}/ar/.cache/02-b.json`], 2);
+
+  const manifest = { lessons: {
+    'phases/01-a/01-x': { path: 'phases/01-a/01-x', context: { kind: 'course' } },
+    'phases/01-a/02-y': { path: 'phases/01-a/02-y', context: { kind: 'course' } },
+    'certifications/c/lessons/01-z': { path: 'certifications/c/lessons/01-z', context: { kind: 'certification' } },
+  } };
+  build.annotateTranslations(manifest, { hi: ['phases/01-a/01-x'], ar: ['phases/01-a/01-x'], de: ['phases/01-a/01-x'], fr: 'not a list' });
+  assert.deepEqual(manifest.lessons['phases/01-a/01-x'].translations, ['hi', 'ar']);
+  assert.deepEqual(manifest.lessons['phases/01-a/02-y'].translations, []);
+  assert.equal(manifest.lessons['certifications/c/lessons/01-z'].translations, undefined);
+
+  const site = path.join(root, 'site');
+  fs.mkdirSync(site);
+  fs.writeFileSync(path.join(site, 'sitemap-lessons-fa.xml'), 'stale');
+  assert.deepEqual(build.writeLanguageSitemaps(manifest, site), ['sitemap-lessons-hi.xml', 'sitemap-lessons-ar.xml']);
+  assert.equal(fs.existsSync(path.join(site, 'sitemap-lessons-fa.xml')), false);
+  assert.match(fs.readFileSync(path.join(site, 'sitemap-lessons-hi.xml'), 'utf8'), /<loc>https:\/\/aiengineeringfromscratch\.com\/lesson\?path=phases%2F01-a%2F01-x&amp;lang=hi<\/loc>/);
+  const index = fs.readFileSync(path.join(site, 'sitemap-index.xml'), 'utf8');
+  assert.deepEqual(Array.from(index.matchAll(/<loc>([^<]+)<\/loc>/g), function (match) { return match[1]; }), [
+    'https://aiengineeringfromscratch.com/sitemap.xml',
+    'https://aiengineeringfromscratch.com/sitemap-lessons-hi.xml',
+    'https://aiengineeringfromscratch.com/sitemap-lessons-ar.xml',
+  ]);
+
+  build.annotateTranslations(manifest, {});
+  assert.deepEqual(build.writeLanguageSitemaps(manifest, site), []);
+  assert.deepEqual(fs.readdirSync(site).sort(), ['sitemap-index.xml']);
+  assert.match(fs.readFileSync(path.join(site, 'sitemap-index.xml'), 'utf8'), /sitemap\.xml<\/loc>\n  <\/sitemap>\n<\/sitemapindex>/);
+  assert.equal(build.translationLlms(manifest), '');
+});
+
+test('translation coverage check fails when records, published files, or the build disagree', function () {
+  const set = function (list) { return new Set(list); };
+  assert.deepEqual(compareCoverage({ hi: set(['phases/01-a/01-x']) }, { hi: set(['phases/01-a/01-x']) }), []);
+  const problems = compareCoverage({ hi: set(['phases/01-a/01-x']) }, { hi: set(['phases/01-a/02-y']) });
+  assert.equal(problems.length, 2);
+  assert.match(problems[0], /recorded as translated but its docs\/hi\.md is missing/);
+  assert.match(problems[1], /no translation record/);
+  assert.deepEqual(compareBuildCoverage({ hi: set(['phases/01-a/01-x']) }, { languages: { hi: ['phases/01-a/01-x'] } }), []);
+  assert.match(compareBuildCoverage({ hi: set(['phases/01-a/01-x']) }, { languages: {} })[0], /hi: build coverage lists 0 lessons/);
+});
+
+test('llms.txt and the API docs state the translation languages and URL pattern', function () {
+  const manifest = { lessons: { [PERCEPTRON]: { path: PERCEPTRON, context: { kind: 'course' }, translations: ['hi', 'ar'] } } };
+  const section = build.translationLlms(manifest);
+  assert.match(section, /in 2 languages: hi \(हिन्दी, 1 lessons\), ar \(العربية, 1 lessons\)/);
+  assert.match(section, /\/lesson\?path=<lesson path>&lang=<code>/);
+  assert.match(section, /\/api\/v1\/resource\?path=<lesson path>&lang=<code>/);
+  assert.match(section, /translations\/i18n\/<code>\/<lesson path>\/docs\/<code>\.md/);
+  const docs = fs.readFileSync(path.join(ROOT, 'site', 'developer.md'), 'utf8');
+  const listed = docs.match(/besides English: ([^.]+)\./)[1].replace(/\s+/g, ' ').replace(', and ', ', ').split(', ');
+  assert.deepEqual(listed, translations.TRANSLATION_LANGUAGES);
+  const html = fs.readFileSync(path.join(ROOT, 'site', 'developer.html'), 'utf8');
+  assert.deepEqual(html.match(/also published in ([^.]+) at/)[1].replace(', and ', ', ').split(', '), translations.TRANSLATION_LANGUAGES);
+  const spec = JSON.parse(fs.readFileSync(path.join(ROOT, 'site', 'openapi.json'), 'utf8'));
+  for (const route of ['/lesson', '/api/v1/resource']) {
+    const lang = spec.paths[route].parameters.find(function (parameter) { return parameter.name === 'lang'; });
+    assert.deepEqual(lang.schema.enum, ['en'].concat(translations.TRANSLATION_LANGUAGES), route);
+  }
+  assert.match(docs, /`\/lesson\?path=<lesson path>&lang=<code>`/);
+  const robots = fs.readFileSync(path.join(ROOT, 'site', 'robots.txt'), 'utf8');
+  assert.match(robots, /^Sitemap: https:\/\/aiengineeringfromscratch\.com\/sitemap-index\.xml$/m);
 });
