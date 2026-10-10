@@ -1,0 +1,78 @@
+{
+  "lesson": "11-real-time-audio-processing",
+  "title": "Real-Time Audio Processing",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "At 16 kHz, how many samples arrive in one 20 ms audio frame?",
+      "options": [
+        "3,200 samples",
+        "160 samples",
+        "320 samples",
+        "20 samples"
+      ],
+      "correct": 2,
+      "explanation": "A 20 ms frame is 0.020 seconds, so 16,000 samples/second × 0.020 seconds = 320 samples. The 160-sample option is the count for 10 ms at 16 kHz, not a 20 ms frame."
+    },
+    {
+      "stage": "check",
+      "question": "A 16 kHz ring buffer holds 32,000 samples. What maximum buffering duration does that represent?",
+      "options": [
+        "2 seconds",
+        "32 seconds",
+        "0.5 seconds",
+        "20 seconds"
+      ],
+      "correct": 0,
+      "explanation": "Buffer duration is samples divided by sample rate: 32,000 samples ÷ 16,000 samples/second = 2 seconds. The 32-second option mistakes a sample count for seconds; the buffer capacity is a maximum and need not be filled."
+    },
+    {
+      "stage": "check",
+      "question": "A user begins speaking while TTS is playing. Which response handles barge-in?",
+      "options": [
+        "Detect speech, cancel TTS, and discard pending LLM output",
+        "Lower the microphone rate and resume the same TTS chunk",
+        "Wait for playback to finish before starting speech recognition",
+        "Keep generating audio while buffering a new assistant turn"
+      ],
+      "correct": 0,
+      "explanation": "Barge-in must detect the user, stop current TTS playback, cancel the old response, and route the new speech to recognition. Waiting leaves the assistant talking over the person and defeats the interruption path."
+    },
+    {
+      "stage": "check",
+      "question": "What trade-off governs the jitter buffer size?",
+      "options": [
+        "Too little adds latency; too much causes gaps",
+        "Larger buffers reduce both jitter and latency",
+        "Smaller buffers eliminate packet reordering delays",
+        "Too little risks gaps; too much adds latency"
+      ],
+      "correct": 3,
+      "explanation": "A small jitter buffer may not absorb late or reordered packets, causing gaps; a larger buffer smooths delivery but adds waiting time. Buffering can smooth arrival variation, but it increases the time before audio is played."
+    },
+    {
+      "stage": "post",
+      "question": "The audio callback glitches when Python’s model work runs. What change follows the lesson’s hot-path guidance?",
+      "options": [
+        "Increase every audio chunk to half a second",
+        "Keep Python off the callback and use a C-callback audio library",
+        "Add more Python model work inside the audio callback",
+        "Wait to resample until after the speech model completes"
+      ],
+      "correct": 1,
+      "explanation": "The GIL and heavy model work can starve a time-sensitive audio callback, so keep Python off the hot path and use a C-callback I/O library. More blocking work makes the callback miss its frame deadline more often, producing glitches."
+    },
+    {
+      "stage": "post",
+      "question": "A VAD marks the current 20 ms frame as silence. What should a latency-conscious pipeline do next?",
+      "options": [
+        "Start TTS to fill the quiet interval with speech",
+        "Increase the jitter buffer until it stores silence",
+        "Gate downstream ASR work while nobody is speaking",
+        "Resample the silent frame to a higher rate"
+      ],
+      "correct": 2,
+      "explanation": "VAD gates downstream recognition and reasoning when no one is speaking, avoiding wasted work on silence. Resampling changes sample representation; it does not decide whether speech is present."
+    }
+  ]
+}
