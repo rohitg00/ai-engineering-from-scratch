@@ -28,27 +28,27 @@
     },
     {
       "stage": "check",
-      "question": "Assume 61 layers, MLA rank 512, context 131072 tokens, and 2 bytes per cached latent element. Using one latent per token per layer, what is the KV cache size in GiB?",
+      "question": "For one sequence (batch size 1), assume 61 layers, rank 512, context 131072 tokens, and 2 bytes per element. Excluding the separate RoPE-key cache, what MLA latent storage is required in GiB?",
       "options": [
-        "About 30.5 GiB, from using eight GQA key/value heads instead.",
         "About 15.3 GiB, from storing two separate latents per layer.",
         "About 7.6 GiB, from 61*512*131072*2 bytes divided by 2^30.",
+        "About 30.5 GiB, from using eight GQA key/value heads instead.",
         "About 3.8 GiB, from storing one byte per latent element."
       ],
-      "correct": 2,
-      "explanation": "The stated MLA cache is 61 layers×512 latent values×131072 positions×2 bytes=8,187,281,408 bytes. Dividing by 2^30 gives 7.625 GiB; the 15.3 GiB distractor incorrectly stores two latents instead of the specified shared K/V latent."
+      "correct": 1,
+      "explanation": "The latent component uses 61*512*131072*2 = 8,187,281,408 bytes, or 7.625 GiB. This excludes the separately cached RoPE key and is not a full KV-cache estimate. Storing two separate latents would incorrectly double the stated shared-latent storage."
     },
     {
       "stage": "check",
-      "question": "Keeping layers, context, and 2-byte storage fixed, what cache size follows if kv_lora_rank drops from 512 to 256?",
+      "question": "For one sequence (batch size 1) of 131072 tokens across 61 layers, using 2-byte latent elements, what latent-only storage follows when kv_lora_rank drops from 512 to 256? Exclude the separate RoPE-key cache.",
       "options": [
+        "About 3.8 GiB, half the 512-rank latent storage.",
+        "About 7.6 GiB, because context length is unchanged.",
         "About 1.9 GiB, because both rank and storage bytes are halved.",
-        "About 15.3 GiB, because halving rank doubles stored values.",
-        "About 3.8 GiB, half the 512-rank cache.",
-        "About 7.6 GiB, because context length is unchanged."
+        "About 15.3 GiB, because halving rank doubles stored values."
       ],
-      "correct": 2,
-      "explanation": "Cache size is linear in kv_lora_rank: halving the rank from 512 to 256 halves 7.625 GiB to 3.8125 GiB, about 3.8 GiB. The 1.9 GiB option also halves the 2-byte storage assumption, which remains fixed."
+      "correct": 0,
+      "explanation": "Halving rank halves the latent component: 61*256*131072*2 / 2^30 = 3.8125 GiB. The separate RoPE-key cache is not halved by this change. The 1.9 GiB option also halves the two-byte element size, which the question holds fixed."
     },
     {
       "stage": "post",
@@ -72,7 +72,7 @@
         "A shared low-rank K/V latent that is decompressed per head during attention."
       ],
       "correct": 3,
-      "explanation": "MLA stores a shared low-rank latent for K/V per token and layer, then decompresses it into per-head representations during attention. Keeping full K and V for every query head would restore the cache footprint the latent is designed to reduce."
+      "explanation": "In compressed MLA, a shared low-rank K/V latent replaces full per-head K/V tensors; a separate RoPE key is still cached for positional encoding. The numerical questions count only the latent portion. Expert routing indices cannot replace attention state."
     }
   ]
 }
