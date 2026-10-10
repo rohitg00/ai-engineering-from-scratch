@@ -2,7 +2,6 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const ORIGIN = 'https://aiengineeringfromscratch.com';
-const UNROUTED_PAGES = /^(?:404|manuals|manual-[a-z0-9-]+)\.html$/;
 
 function cleanHref(value, pages) {
   const match = value.match(/^(https:\/\/aiengineeringfromscratch\.com\/|\/|\.\/)?([a-z0-9-]+)\.html([?#].*)?$/);
@@ -27,7 +26,7 @@ function cleanHtml(html, pages) {
 
 function cleanSite(siteRoot = __dirname) {
   const files = fs.readdirSync(siteRoot);
-  const pages = new Set(files.filter(name => name.endsWith('.html') && !UNROUTED_PAGES.test(name))
+  const pages = new Set(files.filter(name => name.endsWith('.html') && name !== '404.html')
     .map(name => name.slice(0, -5)));
   for (const name of files.filter(name => /\.(html|xml|txt|json|md)$/.test(name))) {
     const filename = path.join(siteRoot, name);
