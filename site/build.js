@@ -1005,6 +1005,7 @@ function buildSeoManifests(phases, certifications, learningPaths = []) {
         kind: 'certification',
         programId: program.id || '',
         programName: program.name || '',
+        disclaimer: program.disclaimer || '',
         trackIds: Array.isArray(lesson.trackIds) ? lesson.trackIds.slice() : [],
         type: lesson.type || '',
         languages: lesson.languages || '',

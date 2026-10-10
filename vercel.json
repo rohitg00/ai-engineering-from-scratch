@@ -461,7 +461,7 @@
   "functions": {
     "api/lesson.js": {
       "maxDuration": 10,
-      "includeFiles": "{site/lesson.html,site/lesson-seo.json,languages.json}"
+      "includeFiles": "{site/lesson.html,site/lesson-seo.json,site/lesson-markdown.js,languages.json,phases/*/*/docs/en.md,certifications/*/lessons/*/docs/en.md}"
     },
     "api/certification.js": {
       "maxDuration": 10,

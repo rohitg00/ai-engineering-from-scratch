@@ -2857,6 +2857,7 @@
       var SOURCE_OWNER = /^[A-Za-z0-9-]+$/.test(SOURCE_CONFIG.owner || '') ? SOURCE_CONFIG.owner : 'rohitg00';
       var SOURCE_REPO = /^[A-Za-z0-9_.-]+$/.test(SOURCE_CONFIG.repo || '') ? SOURCE_CONFIG.repo : 'ai-engineering-from-scratch';
       var REPO_TREE = 'https://github.com/' + SOURCE_OWNER + '/' + SOURCE_REPO + '/tree/' + encodeURIComponent(ACTIVE_REF) + '/';
+      var embeddedLesson = readEmbeddedLesson();
       var certificationTrack = null;
       var certificationOriginTrack = null;
       var certificationLesson = null;
@@ -3586,6 +3587,22 @@
         });
       }
 
+      function readEmbeddedLesson() {
+        var node = document.getElementById('lessonMarkdown');
+        if (!node) return null;
+        try {
+          var data = JSON.parse(node.textContent);
+          return data && typeof data.path === 'string' && typeof data.markdown === 'string' ? data : null;
+        } catch (_) {
+          return null;
+        }
+      }
+
+      function embeddedLessonMarkdown(path) {
+        if (!embeddedLesson || embeddedLesson.path !== path || ACTIVE_REF !== 'main') return null;
+        return embeddedLesson.markdown;
+      }
+
       var lessonFetchSequence = 0;
 
       function fetchLesson(path, retried, requestSequence) {
@@ -3621,26 +3638,32 @@
             .catch(function () { return null; });
         }
         var quizPromiseForRequest = lessonQuizPromise;
+        var embeddedMarkdown = lang === 'en' ? embeddedLessonMarkdown(path) : null;
+        var lessonDocument;
 
-        var lessonDocument = lang === 'en'
-          ? fetchRepositoryFile(enPath).then(function (response) {
-              return { response: response, lang: 'en' };
-            })
-          : fetch(translatedUrl).then(function (response) {
-              if (!response.ok) throw new Error('fetch-failed');
-              return { response: response, lang: lang };
-            }).catch(function () {
-              return fetchRepositoryFile(enPath).then(function (response) {
+        if (embeddedMarkdown !== null) {
+          lessonDocument = Promise.resolve({ markdown: embeddedMarkdown, lang: 'en' });
+        } else {
+          lessonDocument = (lang === 'en'
+            ? fetchRepositoryFile(enPath).then(function (response) {
                 return { response: response, lang: 'en' };
-              });
-            });
-
-        lessonDocument
-          .then(function (documentResult) {
+              })
+            : fetch(translatedUrl).then(function (response) {
+                if (!response.ok) throw new Error('fetch-failed');
+                return { response: response, lang: lang };
+              }).catch(function () {
+                return fetchRepositoryFile(enPath).then(function (response) {
+                  return { response: response, lang: 'en' };
+                });
+              })
+          ).then(function (documentResult) {
             return documentResult.response.text().then(function (markdown) {
               return { markdown: markdown, lang: documentResult.lang };
             });
-          })
+          });
+        }
+
+        lessonDocument
           .then(function (documentResult) {
             if (requestSequence !== lessonFetchSequence) return;
             applyRenderedLanguage(documentResult.lang);

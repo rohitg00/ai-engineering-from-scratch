@@ -1,11 +1,14 @@
 const fs = require('fs');
 const path = require('path');
+const { parseMd } = require('../site/lesson-markdown');
 
+const REPO_ROOT = path.join(__dirname, '..');
 const ORIGIN = 'https://aiengineeringfromscratch.com';
 const SEO_START = '<!-- AIFS:LESSON-SEO:START -->';
 const SEO_END = '<!-- AIFS:LESSON-SEO:END -->';
 const FALLBACK_START = '<!-- AIFS:LESSON-FALLBACK:START -->';
 const FALLBACK_END = '<!-- AIFS:LESSON-FALLBACK:END -->';
+const CERTIFICATION_LESSON = /^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//;
 const LESSON_QUERY_NAMES = new Set(['path', 'track', 'fromTrack', 'learningPath', 'lang', 'ttsTest', 'legacy']);
 const LEARNING_PATH_ALIASES = Object.freeze({
   'mcp-engineering': 'model-context-protocol',
@@ -15,11 +18,14 @@ let productionAssets;
 
 function loadProductionAssets() {
   if (!productionAssets) {
-    const languageRegistry = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'languages.json'), 'utf8'));
-    const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'site', 'lesson-seo.json'), 'utf8'));
+    const languageRegistry = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'languages.json'), 'utf8'));
+    const manifest = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'site', 'lesson-seo.json'), 'utf8'));
     productionAssets = {
-      template: fs.readFileSync(path.join(__dirname, '..', 'site', 'lesson.html'), 'utf8'),
+      template: fs.readFileSync(path.join(REPO_ROOT, 'site', 'lesson.html'), 'utf8'),
       manifest,
+      readMarkdown: function (lessonPath) {
+        return fs.readFileSync(path.join(REPO_ROOT, lessonPath, 'docs', 'en.md'), 'utf8');
+      },
       languageCodes: Array.isArray(languageRegistry.languages)
         ? languageRegistry.languages
           .filter(function (language) { return language.source || language.ci; })
@@ -233,7 +239,24 @@ function lessonHref(ref, contextParams) {
   return `/lesson?${params.toString().replace(/&/g, '&amp;')}`;
 }
 
-function lessonFallback(entry, lessonPath, contextParams, heading) {
+function lessonBody(assets, lessonPath, heading) {
+  if (typeof assets.readMarkdown !== 'function') return null;
+  try {
+    const markdown = assets.readMarkdown(lessonPath);
+    if (typeof markdown !== 'string' || !markdown.trim()) return null;
+    const title = `<h1>${escapeHtml(heading)}</h1>`;
+    const rendered = parseMd(markdown);
+    const firstHeading = /<h1 id="[^"]*">[\s\S]*?<\/h1>/;
+    const html = firstHeading.test(rendered)
+      ? rendered.replace(firstHeading, function () { return title; })
+      : title + rendered;
+    return { markdown, html };
+  } catch (_) {
+    return null;
+  }
+}
+
+function lessonFallback(entry, lessonPath, contextParams, heading, body) {
   const trackId = contextParams && contextParams.track;
   const trackNavigation = trackId && entry.navigationByTrack && entry.navigationByTrack[trackId];
   const navigation = trackNavigation || entry;
@@ -247,17 +270,26 @@ function lessonFallback(entry, lessonPath, contextParams, heading) {
   if (previous) links.push(`<a class="lesson-nav-btn prev" href="${lessonHref(previous, contextParams)}"><span class="nav-label">&larr; Previous</span><span class="nav-title">${escapeHtml(previous.title)}</span></a>`);
   if (next) links.push(`<a class="lesson-nav-btn next" href="${lessonHref(next, contextParams)}"><span class="nav-label">Next &rarr;</span><span class="nav-title">${escapeHtml(next.title)}</span></a>`);
   const excerpt = entry.excerpt || entry.description;
+  const disclaimer = entry.context && entry.context.kind === 'certification' ? entry.context.disclaimer : '';
+  const summary = body ? [`          ${body.html}`] : [
+    `          <h1>${escapeHtml(heading)}</h1>`,
+    excerpt ? `          <p class="motto">${escapeHtml(excerpt)}</p>` : '',
+    entry.description && entry.description !== excerpt ? `          <p>${escapeHtml(entry.description)}</p>` : '',
+  ];
+  const embedded = body && !CERTIFICATION_LESSON.test(lessonPath)
+    ? `        <script type="application/json" id="lessonMarkdown">${jsonForHtml({ path: lessonPath, markdown: body.markdown })}</script>`
+    : '';
 
   return [
     '        <article class="lesson-article lesson-seo-fallback" data-server-rendered="true">',
     `          <p class="lesson-meta-tag">${escapeHtml(context)}</p>`,
-    `          <h1>${escapeHtml(heading)}</h1>`,
-    excerpt ? `          <p class="motto">${escapeHtml(excerpt)}</p>` : '',
-    entry.description && entry.description !== excerpt ? `          <p>${escapeHtml(entry.description)}</p>` : '',
+    disclaimer ? `          <aside class="cert-notice lesson-cert-notice" aria-label="Independent certification preparation"><strong>Independent preparation</strong><p>${escapeHtml(disclaimer)}</p></aside>` : '',
+    ...summary,
     `          <p>This free lesson is part of the AI Engineering from Scratch curriculum. Read the full explanation, run the lesson code, and verify the result in the interactive reader or from the repository source.</p>`,
     '          <p><a href="catalog.html">Browse the complete course catalog</a>' + (sourceUrl ? ` or <a href="${escapeHtml(sourceUrl)}">open this lesson on GitHub</a>` : '') + '.</p>',
     links.length ? `          <nav class="lesson-nav-bottom" aria-label="Lesson navigation">${links.join('')}</nav>` : '',
     '        </article>',
+    embedded,
   ].filter(Boolean).join('\n');
 }
 
@@ -277,7 +309,7 @@ function send(res, method, status, body, cacheControl) {
 
 function normalizedLessonLocation(req, lessonPath, entry, assets) {
   const params = new URLSearchParams();
-  const certificationLesson = /^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//.test(lessonPath);
+  const certificationLesson = CERTIFICATION_LESSON.test(lessonPath);
   const navigationByTrack = entry.navigationByTrack && typeof entry.navigationByTrack === 'object'
     ? entry.navigationByTrack
     : {};
@@ -399,8 +431,9 @@ function createHandler(options) {
         if (normalized.params.has(name)) contextParams[name] = normalized.params.get(name);
       }
       const heading = lessonHeading(entry, manifest);
+      const body = contextParams.lang ? null : lessonBody(assets, lessonPath, heading);
       let html = replaceMarkedRegion(template, SEO_START, SEO_END, lessonHead(entry, lessonPath, heading));
-      html = replaceMarkedRegion(html, FALLBACK_START, FALLBACK_END, lessonFallback(entry, lessonPath, contextParams, heading));
+      html = replaceMarkedRegion(html, FALLBACK_START, FALLBACK_END, lessonFallback(entry, lessonPath, contextParams, heading, body));
       send(res, method, 200, html, 'public, max-age=0, s-maxage=86400, must-revalidate');
     } catch (_) {
       send(res, method, 500, errorPage('Lesson page unavailable', 'The lesson page could not be assembled. Continue from the course catalog while this page is restored.'), 'no-store');
