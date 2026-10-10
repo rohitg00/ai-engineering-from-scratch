@@ -5,6 +5,7 @@ const { representation } = require('../lib/agent-http');
 const { lessonDocumentSeo, seoTitleFor } = require('../lib/lesson-document');
 const { cardTags, cardUrl, lessonCard } = require('../lib/og-cards');
 const { readTranslation: readTranslationFromSource, TRANSLATION_LANGUAGES, isIndexedLanguage, translationsOf, lessonUrl, NATIVE_NAMES, RTL_LANGUAGES, OG_LOCALES } = require('../lib/lesson-translations');
+const { phaseHubPath, phaseLabel } = require('../lib/hub-routes');
 
 const REPO_ROOT = path.join(__dirname, '..');
 const ORIGIN = 'https://aiengineeringfromscratch.com';
@@ -12,6 +13,8 @@ const SEO_START = '<!-- AIFS:LESSON-SEO:START -->';
 const SEO_END = '<!-- AIFS:LESSON-SEO:END -->';
 const FALLBACK_START = '<!-- AIFS:LESSON-FALLBACK:START -->';
 const FALLBACK_END = '<!-- AIFS:LESSON-FALLBACK:END -->';
+const HUBS_START = '<!-- AIFS:LESSON-HUBS:START -->';
+const HUBS_END = '<!-- AIFS:LESSON-HUBS:END -->';
 const LESSON_QUERY_NAMES = new Set(['path', 'track', 'fromTrack', 'learningPath', 'lang', 'ttsTest', 'legacy']);
 const LEARNING_PATH_ALIASES = Object.freeze({
   'mcp-engineering': 'model-context-protocol',
@@ -25,9 +28,14 @@ let productionAssets;
 function loadProductionAssets() {
   if (!productionAssets) {
     const manifest = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'site', 'lesson-seo.json'), 'utf8'));
+    let lessonTerms = {};
+    try {
+      lessonTerms = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'site', 'lesson-terms.json'), 'utf8')).lessons || {};
+    } catch (_) {}
     productionAssets = {
       template: fs.readFileSync(path.join(REPO_ROOT, 'site', 'lesson.html'), 'utf8'),
       manifest,
+      lessonTerms,
       readMarkdown: function (lessonPath) {
         return fs.readFileSync(path.join(REPO_ROOT, lessonPath, 'docs', 'en.md'), 'utf8');
       },
@@ -136,8 +144,7 @@ function replaceMarkedRegion(template, start, end, content) {
 function contextLabel(context) {
   if (!context || typeof context !== 'object') return 'AI Engineering from Scratch';
   if (context.kind === 'course' && context.phaseName) {
-    const phase = context.phaseId == null ? '' : `Phase ${String(context.phaseId).padStart(2, '0')}: `;
-    return `${phase}${context.phaseName}`;
+    return context.phaseId == null ? context.phaseName : phaseLabel(context.phaseId, context.phaseName);
   }
   if (context.kind === 'certification') return context.programName || 'Independent certification preparation';
   return 'AI Engineering from Scratch';
@@ -180,6 +187,7 @@ function lessonAlternates(entry, lessonPath) {
 
 function pageInfo(entry, lessonPath, heading, lang, markdown) {
   const alternates = lessonAlternates(entry, lessonPath);
+  const hub = phaseHubPath(lessonPath);
   if (lang === 'en') {
     return {
       lang,
@@ -188,6 +196,7 @@ function pageInfo(entry, lessonPath, heading, lang, markdown) {
       description: entry.description || entry.excerpt || 'A lesson from the AI Engineering from Scratch curriculum.',
       canonical: lessonUrl(lessonPath),
       alternates,
+      hub,
     };
   }
   const document = lessonDocumentSeo(markdown, entry.title);
@@ -200,15 +209,16 @@ function pageInfo(entry, lessonPath, heading, lang, markdown) {
     canonical: lessonUrl(lessonPath, lang),
     original: lessonUrl(lessonPath),
     alternates,
+    hub,
   };
 }
 
 function lessonHead(entry, page) {
   const { canonical, title, description, heading } = page;
   const courseName = contextLabel(entry.context);
-  const breadcrumbParent = entry.context && entry.context.kind === 'certification'
-    ? { name: 'Certifications', url: `${ORIGIN}/certifications.html` }
-    : { name: 'Course catalog', url: `${ORIGIN}/catalog.html` };
+  let breadcrumbParent = { name: 'Course catalog', url: `${ORIGIN}/catalog.html` };
+  if (entry.context && entry.context.kind === 'certification') breadcrumbParent = { name: 'Certifications', url: `${ORIGIN}/certifications.html` };
+  else if (page.hub) breadcrumbParent = { name: courseName, url: ORIGIN + page.hub };
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -330,6 +340,22 @@ function lessonFallback(entry, lessonPath, contextParams, page, body) {
     links.length ? `          <nav class="lesson-nav-bottom" aria-label="Lesson navigation">${links.join('')}</nav>` : '',
     '        </article>',
     embedded,
+  ].filter(Boolean).join('\n');
+}
+
+function lessonHubLinks(entry, page, lessonTerms) {
+  if (!page.hub || page.lang !== 'en') return '';
+  const terms = lessonTerms && Object.prototype.hasOwnProperty.call(lessonTerms, entry.path) && Array.isArray(lessonTerms[entry.path])
+    ? lessonTerms[entry.path]
+    : [];
+  const links = terms
+    .filter(item => item && typeof item.term === 'string' && /^\/glossary[/#][a-z0-9-]+$/.test(item.href || ''))
+    .map(item => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.term)}</a>`);
+  return [
+    '      <nav class="lesson-hub-links" aria-label="Phase and glossary links">',
+    `        <ol class="lesson-hub-trail"><li><a href="/">Home</a></li><li><a href="${escapeHtml(page.hub)}">${escapeHtml(contextLabel(entry.context))}</a></li><li aria-current="page">${escapeHtml(page.heading)}</li></ol>`,
+    links.length ? `        <p class="lesson-hub-terms"><span>Terms in this lesson:</span> ${links.join(', ')}</p>` : '',
+    '      </nav>',
   ].filter(Boolean).join('\n');
 }
 
@@ -495,8 +521,10 @@ function createHandler(options) {
         }
         const page = pageInfo(entry, lessonPath, heading, servedLang, markdown);
         const body = renderBody(markdown, page.heading);
-        const html = replaceMarkedRegion(localizedTemplate(template, servedLang), SEO_START, SEO_END, lessonHead(entry, page));
-        send(res, method, 200, replaceMarkedRegion(html, FALLBACK_START, FALLBACK_END, lessonFallback(entry, lessonPath, contextParams, page, body)), cacheControl);
+        let html = replaceMarkedRegion(localizedTemplate(template, servedLang), SEO_START, SEO_END, lessonHead(entry, page));
+        html = replaceMarkedRegion(html, FALLBACK_START, FALLBACK_END, lessonFallback(entry, lessonPath, contextParams, page, body));
+        html = replaceMarkedRegion(html, HUBS_START, HUBS_END, lessonHubLinks(entry, page, assets.lessonTerms));
+        send(res, method, 200, html, cacheControl);
       };
       const lang = contextParams.lang;
       if (!translationsOf(entry).includes(lang)) {

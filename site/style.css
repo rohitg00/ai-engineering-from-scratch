@@ -673,6 +673,19 @@ p.dropcap::first-letter {
   line-height: 1.5;
 }
 
+.modal-phase-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.modal-phase-link[hidden] {
+  display: none;
+}
+
 .modal-progress {
   width: 100%;
   margin-top: 16px;

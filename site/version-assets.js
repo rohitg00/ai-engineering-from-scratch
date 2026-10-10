@@ -3,6 +3,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { stampCards } = require('../lib/og-cards');
 
+const HUB_DIRS = ['hubs/glossary', 'hubs/phase'];
+
 function versionHtml(html, siteRoot, versions = new Map()) {
   function versionTag(tag, attribute) {
     const pattern = new RegExp(`(\\s${attribute}\\s*=\\s*)(["'])(.*?)\\2`, 'i');
@@ -44,6 +46,15 @@ function versionSite(siteRoot = __dirname) {
     const source = fs.readFileSync(filename, 'utf8');
     return { filename, source, output: stampCards(versionHtml(source, siteRoot, versions), cards) };
   });
+  for (const dir of HUB_DIRS) {
+    const folder = path.join(siteRoot, dir);
+    if (!fs.existsSync(folder)) continue;
+    for (const name of fs.readdirSync(folder).filter(file => file.endsWith('.html'))) {
+      const filename = path.join(folder, name);
+      const source = fs.readFileSync(filename, 'utf8');
+      outputs.push({ filename, source, output: stampCards(source, cards) });
+    }
+  }
   for (const { filename, source, output } of outputs) {
     if (source !== output) fs.writeFileSync(filename, output, 'utf8');
   }

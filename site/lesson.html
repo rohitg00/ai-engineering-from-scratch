@@ -184,8 +184,49 @@
       min-width: 0;
       margin-left: 240px;
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       padding: 56px 32px 96px;
+    }
+
+    .lesson-hub-links {
+      flex: 0 0 100%;
+      max-width: 720px;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--rule-soft);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      overflow-wrap: anywhere;
+    }
+
+    .lesson-hub-trail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px 8px;
+      list-style: none;
+      text-transform: uppercase;
+    }
+
+    .lesson-hub-trail li + li::before {
+      content: "/";
+      margin-right: 8px;
+      color: var(--ink-mute);
+    }
+
+    .lesson-hub-terms {
+      margin-top: 10px;
+      font-family: var(--font-mono);
+      font-size: inherit;
+      color: inherit;
+    }
+
+    .lesson-hub-terms span {
+      color: var(--ink-mute);
+      text-transform: uppercase;
     }
 
     .lesson-content {
@@ -2389,7 +2430,8 @@
         justify-content: stretch;
         padding: 44px 20px 80px;
       }
-      .lesson-content { max-width: none; }
+      .lesson-content,
+      .lesson-hub-links { max-width: none; }
     }
 
     @media (max-width: 768px) {
@@ -2647,6 +2689,8 @@
         </div>
         <!-- AIFS:LESSON-FALLBACK:END -->
       </div>
+      <!-- AIFS:LESSON-HUBS:START -->
+      <!-- AIFS:LESSON-HUBS:END -->
     </main>
     <aside class="toc-sidebar" id="tocSidebar" aria-hidden="true"></aside>
   </div>
@@ -3767,9 +3811,13 @@
           }
           breadcrumbs.push({ '@type': 'ListItem', position: breadcrumbs.length + 1, name: title, item: url });
         } else {
+          var hubLesson = phaseLessonForPath(path);
+          var hubPhase = hubLesson && hubLesson.phase.hub ? hubLesson.phase : null;
           breadcrumbs = [
             { '@type': 'ListItem', position: 1, name: 'Home', item: ORIGIN },
-            { '@type': 'ListItem', position: 2, name: 'Catalog', item: ORIGIN + '/catalog.html' },
+            hubPhase
+              ? { '@type': 'ListItem', position: 2, name: 'Phase ' + String(hubPhase.id).padStart(2, '0') + ': ' + hubPhase.name, item: ORIGIN + hubPhase.hub }
+              : { '@type': 'ListItem', position: 2, name: 'Catalog', item: ORIGIN + '/catalog.html' },
             { '@type': 'ListItem', position: 3, name: title, item: url }
           ];
         }

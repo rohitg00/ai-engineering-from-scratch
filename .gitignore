@@ -103,6 +103,10 @@ site/project-content/
 
 generated/agent-content.json
 site/agent-pages/
+site/hubs/
+site/lesson-terms.json
+site/sitemap-glossary.xml
+site/sitemap-phases.xml
 site/manual-*.html
 site/manuals-data.js
 site/manuals.html

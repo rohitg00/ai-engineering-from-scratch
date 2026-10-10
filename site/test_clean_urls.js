@@ -110,6 +110,52 @@ test('agent discovery uses clean URLs without changing lesson or project source 
     url: 'https://aiengineeringfromscratch.com/project?id=demo' }]);
 });
 
+test('glossary term pages and phase hubs route beside /glossary without colliding with it', async t => {
+  const hubs = path.join(__dirname, 'hubs');
+  assert.ok(fs.existsSync(path.join(hubs, 'glossary')) && fs.existsSync(path.join(hubs, 'phase')), 'run node site/build.js first');
+  assert.equal(fs.existsSync(path.join(__dirname, 'glossary')), false, 'a site/glossary directory would sit beside glossary.html');
+  for (const kind of ['glossary', 'phase']) {
+    const source = `/${kind}/:page([a-z0-9-]+)`;
+    const markdown = config.rewrites.findIndex(rule => rule.source === source && rule.has);
+    const html = config.rewrites.findIndex(rule => rule.source === source && !rule.has);
+    assert.ok(markdown >= 0 && markdown < html, source);
+    assert.equal(config.rewrites[markdown].destination, `/agent-pages/${kind}/:page.md`);
+    assert.equal(config.rewrites[html].destination, `/hubs/${kind}/:page.html`);
+    assert.ok(config.redirects.some(rule => rule.source === `/hubs/${kind}/:page([a-z0-9-]+).html` && rule.destination === `/${kind}/:page` && rule.permanent));
+  }
+  const pages = new Set(fs.readdirSync(__dirname).filter(name => name.endsWith('.html')).map(name => name.slice(0, -5)));
+  for (const href of ['glossary/adamw', '/glossary/adamw', 'phase/deep-learning-core', '/glossary#relu']) assert.equal(cleanHref(href, pages), href);
+
+  const server = createServer().listen(0, '127.0.0.1');
+  await once(server, 'listening');
+  t.after(() => server.close());
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const glossary = await fetch(base + '/glossary');
+  assert.equal(glossary.status, 200);
+  assert.equal(await glossary.text(), fs.readFileSync(path.join(__dirname, 'glossary.html'), 'utf8'));
+  assert.equal((await fetch(base + '/glossary.html', { redirect: 'manual' })).headers.get('location'), '/glossary');
+  const phaseIndex = await fetch(base + '/phase', { redirect: 'manual' });
+  assert.equal(phaseIndex.status, 307);
+  assert.equal(phaseIndex.headers.get('location'), '/catalog');
+  for (const kind of ['glossary', 'phase']) {
+    const slug = fs.readdirSync(path.join(hubs, kind)).find(name => name.endsWith('.html')).slice(0, -5);
+    const page = await fetch(`${base}/${kind}/${slug}`);
+    assert.equal(page.status, 200);
+    assert.match(page.headers.get('content-type'), /text\/html/);
+    assert.match(page.headers.get('vary'), /Accept/);
+    assert.equal(await page.text(), fs.readFileSync(path.join(hubs, kind, slug + '.html'), 'utf8'));
+    const markdown = await fetch(`${base}/${kind}/${slug}`, { headers: { Accept: 'text/markdown' } });
+    assert.equal(markdown.status, 200);
+    assert.match(markdown.headers.get('content-type'), /text\/markdown/);
+    assert.match(await markdown.text(), new RegExp(`^# [\\s\\S]+Canonical page: https://aiengineeringfromscratch\\.com/${kind}/${slug}\\n`));
+    const legacy = await fetch(`${base}/hubs/${kind}/${slug}.html`, { redirect: 'manual' });
+    assert.equal(legacy.status, 308);
+    assert.equal(legacy.headers.get('location'), `/${kind}/${slug}`);
+    assert.equal((await fetch(`${base}/${kind}/no-such-${kind}`)).status, 404);
+    assert.equal((await fetch(`${base}/${kind}/no-such-${kind}`, { headers: { Accept: 'text/markdown' } })).status, 404);
+  }
+});
+
 test('HTTP redirects preserve selected projects, query encoding and clean-page content', async t => {
   const server = createServer().listen(0, '127.0.0.1');
   await once(server, 'listening');

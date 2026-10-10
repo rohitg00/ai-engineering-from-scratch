@@ -1,0 +1,359 @@
+.hub-page {
+  padding-block: 104px 80px;
+  min-height: 100vh;
+}
+
+.hub-wrap {
+  max-width: 920px;
+}
+
+.hub-breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.hub-breadcrumb li {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.hub-breadcrumb li + li::before {
+  content: "/";
+  margin-inline-end: 10px;
+}
+
+.hub-breadcrumb a {
+  color: var(--ink-soft);
+}
+
+.hub-hero {
+  padding-block: 28px 32px;
+  border-block-end: 1px solid var(--rule);
+}
+
+.hub-kicker,
+.hub-label,
+.hub-says figcaption,
+.hub-stats {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hub-kicker {
+  margin-block-end: 14px;
+  color: var(--blueprint);
+  font-weight: 700;
+}
+
+.hub-hero h1 {
+  max-width: 820px;
+  font-size: clamp(min(2.4rem, 11vw), 6vw, 4.2rem);
+  line-height: 0.95;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.hub-lede {
+  max-width: 720px;
+  margin-block-start: 20px;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.55;
+}
+
+.hub-hero > p:not(.hub-kicker):not(.hub-lede) {
+  max-width: 720px;
+  margin-block-start: 14px;
+  color: var(--ink-soft);
+}
+
+.hub-says {
+  max-width: 720px;
+  margin-block-start: 22px;
+  padding: 14px 18px;
+  border-inline-start: 3px solid var(--blueprint);
+  background: var(--bg-surface);
+}
+
+.hub-says figcaption {
+  margin-block-end: 6px;
+  color: var(--ink-mute);
+}
+
+.hub-says blockquote p {
+  font-style: italic;
+}
+
+.hub-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block-start: 22px;
+  list-style: none;
+  color: var(--ink-soft);
+}
+
+.hub-stats li {
+  padding: 6px 10px;
+  border: 1px solid var(--rule-soft);
+  background: var(--bg-surface);
+}
+
+.hub-stats strong {
+  color: var(--blueprint);
+}
+
+.hub-section {
+  padding-block: 32px;
+  border-block-end: 1px solid var(--rule-soft);
+}
+
+.hub-section h2 {
+  margin-block-end: 16px;
+  font-size: clamp(min(1.6rem, 8vw), 3.4vw, 2.2rem);
+  line-height: 1;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.hub-section > p {
+  max-width: 760px;
+}
+
+.hub-section > p + p,
+.hub-section > ul + p,
+.hub-section > pre + p {
+  margin-block-start: 12px;
+}
+
+.hub-label {
+  display: inline-block;
+  margin-block: 14px 8px;
+  color: var(--ink-mute);
+  font-weight: 700;
+}
+
+.hub-section > p > .hub-label {
+  margin-block: 0;
+  margin-inline-end: 8px;
+}
+
+.hub-code {
+  max-width: 100%;
+  margin-block: 10px 14px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  background: var(--code-bg);
+  border: 1px solid var(--rule-soft);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.hub-lessons {
+  list-style: none;
+}
+
+.hub-lessons li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  padding-block: 12px;
+  border-block-start: 1px solid var(--rule-soft);
+}
+
+.hub-lessons li:first-child {
+  border-block-start: none;
+}
+
+.hub-lessons li > div {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.hub-lessons li > div:only-child {
+  grid-column: 1 / -1;
+}
+
+.hub-num {
+  color: var(--blueprint);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.hub-lessons a {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.hub-lessons p {
+  margin-block-start: 4px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.hub-lessons .hub-meta {
+  color: var(--ink-mute);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hub-terms {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 14px 28px;
+  list-style: none;
+}
+
+.hub-terms li {
+  min-width: 0;
+}
+
+.hub-terms a {
+  display: inline-block;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.hub-terms span {
+  display: block;
+  margin-block-start: 2px;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.hub-columns {
+  columns: 15rem auto;
+  column-gap: 32px;
+  list-style: none;
+}
+
+.hub-columns li {
+  break-inside: avoid;
+  padding-block: 3px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.hub-sources {
+  padding-inline-start: 1.2em;
+}
+
+.hub-sources li + li {
+  margin-block-start: 6px;
+}
+
+.hub-sources a {
+  overflow-wrap: anywhere;
+}
+
+.hub-faq h3 {
+  margin-block: 22px 8px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.hub-faq h3:first-of-type {
+  margin-block-start: 0;
+}
+
+.hub-faq p {
+  max-width: 760px;
+}
+
+.hub-pager {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 24px;
+  border-block-end: 1px solid var(--rule-soft);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.hub-pager a {
+  overflow-wrap: anywhere;
+}
+
+.hub-source {
+  margin-block-start: 28px;
+  color: var(--ink-mute);
+  font-size: 0.9rem;
+}
+
+.hub-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr));
+  gap: 28px 40px;
+  padding-block-end: 28px;
+  margin-block-end: 24px;
+  border-block-end: 1px solid var(--rule-soft);
+}
+
+.hub-footer-column ul {
+  list-style: none;
+}
+
+.hub-footer-column li {
+  padding-block: 2px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.hub-footer-column a {
+  color: var(--ink-soft);
+}
+
+.hub-footer-column a:hover {
+  color: var(--blueprint);
+}
+
+.hub-footer-column .hub-label {
+  margin-block-start: 0;
+}
+
+@media (max-width: 900px) {
+  .hub-footer-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .hub-page {
+    padding-block: 88px 56px;
+  }
+
+  .container.hub-wrap {
+    padding-inline: 16px;
+  }
+
+  .hub-section {
+    padding-block: 26px;
+  }
+}
+
+@media (max-width: 560px) {
+  .hub-footer-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

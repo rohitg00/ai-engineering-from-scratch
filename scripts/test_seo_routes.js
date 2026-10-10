@@ -27,7 +27,7 @@ function makeAssets() {
         '<!-- AIFS:LESSON-SEO:START --><title>Fallback</title><!-- AIFS:LESSON-SEO:END -->',
         '</head><body><main><div id="lessonContent">',
         '<!-- AIFS:LESSON-FALLBACK:START --><p>Loading</p><!-- AIFS:LESSON-FALLBACK:END -->',
-        '</div></main></body></html>',
+        '</div><!-- AIFS:LESSON-HUBS:START --><!-- AIFS:LESSON-HUBS:END --></main></body></html>',
       ].join('\n'),
       manifest: {
         version: 1,
@@ -769,6 +769,7 @@ test('deployment routes extensionless pages through handlers and redirects legac
   const certificationsScript = fs.readFileSync(path.join(repoRoot, 'site', 'certifications.js'), 'utf8');
   assert.equal((lessonTemplate.match(/AIFS:LESSON-SEO:START/g) || []).length, 1);
   assert.equal((lessonTemplate.match(/AIFS:LESSON-FALLBACK:START/g) || []).length, 1);
+  assert.equal((lessonTemplate.match(/AIFS:LESSON-HUBS:START/g) || []).length, 1);
   assert.equal((certificationTemplate.match(/AIFS:CERTIFICATION-SEO:START/g) || []).length, 1);
   assert.equal((certificationTemplate.match(/AIFS:CERTIFICATION-FALLBACK:START/g) || []).length, 1);
   assert.doesNotMatch(lessonTemplate, /lesson\.html\?path=/);
@@ -1376,7 +1377,18 @@ test('every page type in the sitemap carries full social card tags that resolve 
     const type = card.split('/')[0];
     seen[type] = (seen[type] || 0) + 1;
   }
-  assert.deepEqual(Object.keys(seen).sort(), ['lesson', 'manual', 'page', 'track']);
+  for (const [file, type, dir] of [['sitemap-glossary.xml', 'term', 'glossary'], ['sitemap-phases.xml', 'phase', 'phase']]) {
+    for (const match of fs.readFileSync(path.join(ROOT, 'site', file), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)) {
+      const slug = new URL(match[1]).pathname.split('/').pop();
+      const tags = metaTags(ogCards.stampCards(fs.readFileSync(path.join(ROOT, 'site', 'hubs', dir, `${slug}.html`), 'utf8'), cards));
+      assert.ok(tags['og:image'].startsWith(`${ogCards.ORIGIN}/og/${type}/${slug}.png?`), `${match[1]} uses ${tags['og:image']}`);
+      assert.equal(tags['twitter:image'], tags['og:image'], match[1]);
+      assert.equal(tags['twitter:card'], 'summary_large_image', match[1]);
+      assert.equal(cardRequest(og, withoutOrigin(tags['og:image'])).statusCode, 200, tags['og:image']);
+      seen[type] = (seen[type] || 0) + 1;
+    }
+  }
+  assert.deepEqual(Object.keys(seen).sort(), ['lesson', 'manual', 'page', 'phase', 'term', 'track']);
 });
 
 test('the home card counts and page labels come from the build inventory', function () {
@@ -1390,4 +1402,243 @@ test('the home card counts and page labels come from the build inventory', funct
   const projects = buildProjectData().projects;
   assert.equal(cards['page/projects'].label, `Projects · ${projects.length} ready`);
   assert.deepEqual(Object.keys(cards).filter(function (key) { return key.startsWith('project/'); }).sort(), projects.map(function (project) { return `project/${project.id}`; }).sort());
+});
+
+const hubBuilder = require('../site/build-hubs.js');
+const { phaseHubPath } = require('../lib/hub-routes');
+
+let sourceHubs;
+function hubsFromSource() {
+  if (sourceHubs) return sourceHubs;
+  const readme = fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8');
+  const phases = build.parseReadme(readme, build.parseRoadmap(fs.readFileSync(path.join(ROOT, 'ROADMAP.md'), 'utf8')));
+  const { lessonMinutes } = build.annotateLessonMeta(phases);
+  const { lessonManifest } = build.buildSeoManifests(phases, build.parseCertifications(), build.parseLearningPaths(ROOT, phases));
+  const glossary = build.parseGlossary(fs.readFileSync(path.join(ROOT, 'glossary', 'terms.md'), 'utf8'));
+  const hubs = hubBuilder.buildHubs({
+    phases,
+    prerequisites: build.parseCurriculumPrereqs(readme, phases),
+    glossary,
+    categories: build.GLOSSARY_CATEGORY_ORDER,
+    lessonManifest,
+    minutes: lessonMinutes,
+  });
+  sourceHubs = { glossary, lessonManifest, hubs };
+  return sourceHubs;
+}
+
+function decodeHtml(value) {
+  return value.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+}
+
+function textOf(html) {
+  return decodeHtml(html.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
+}
+
+function hubGraph(html) {
+  const blocks = Array.from(html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g), function (match) { return JSON.parse(match[1]); });
+  assert.equal(blocks.length, 1);
+  return blocks[0]['@graph'];
+}
+
+function assertVisibleFaq(html, faq) {
+  const headings = Array.from(html.matchAll(/<h([1-3])[^>]*>([\s\S]*?)<\/h\1>/g), function (match) { return textOf(match[2]); });
+  const paragraphs = Array.from(html.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/g), function (match) { return textOf(match[1]); });
+  assert.ok(faq.mainEntity.length >= 1);
+  for (const question of faq.mainEntity) {
+    assert.ok(headings.includes(question.name), 'FAQ question is not a visible heading: ' + question.name);
+    assert.ok(paragraphs.includes(question.acceptedAnswer.text), 'FAQ answer is not visible text: ' + question.name);
+  }
+}
+
+function assertHubLinksResolve(html, hubs, lessonManifest) {
+  const termPages = new Set(hubs.termPages.map(function (page) { return page.name; }));
+  const anchors = new Set(hubs.termModels.filter(function (model) { return !model.page; }).map(function (model) { return model.slug; }));
+  const phases = new Set(hubs.phasePages.map(function (page) { return page.name; }));
+  for (const match of html.matchAll(/href="(\/(?:glossary|phase|lesson)[^"#]*(?:#[^"]*)?)"/g)) {
+    const href = decodeHtml(match[1]);
+    if (/#main$/.test(href)) continue;
+    let found;
+    if ((found = /^\/glossary\/([a-z0-9-]+)$/.exec(href))) assert.ok(termPages.has(found[1]), href);
+    else if ((found = /^\/glossary#([a-z0-9-]+)$/.exec(href))) assert.ok(anchors.has(found[1]), href);
+    else if ((found = /^\/phase\/([a-z0-9-]+)$/.exec(href))) assert.ok(phases.has(found[1]), href);
+    else if ((found = /^\/lesson\?path=([^&]+)$/.exec(href))) assert.ok(lessonManifest.lessons[decodeURIComponent(found[1])], href);
+    else assert.match(href, /^\/glossary(?:\?category=[a-z0-9-]+)?$/, href);
+  }
+}
+
+test('glossary term pages lead with the question, mirror visible FAQ text, and link only to real pages', function () {
+  const { glossary, lessonManifest, hubs } = hubsFromSource();
+  assert.equal(hubs.termPages.length + hubs.skipped.length, glossary.length);
+  assert.ok(hubs.termPages.length >= 200, 'most glossary entries stand alone');
+  for (const skipped of hubs.skipped) assert.ok(skipped.reason, skipped.term);
+  const names = hubs.termPages.map(function (page) { return page.name; });
+  assert.equal(new Set(names).size, names.length);
+  assert.ok(names.includes('adam-optimizer') && names.includes('rag-retrieval-augmented-generation'));
+  const titles = new Set();
+  for (const page of hubs.termPages) {
+    const canonical = 'https://aiengineeringfromscratch.com/glossary/' + page.name;
+    const title = decodeHtml(page.html.match(/<title>([^<]+)<\/title>/)[1]);
+    assert.ok(title.length <= 60 && !titles.has(title), title);
+    titles.add(title);
+    assert.equal(page.html.match(/<link rel="canonical" href="([^"]+)">/)[1], canonical);
+    const description = decodeHtml(page.html.match(/<meta name="description" content="([^"]+)">/)[1]);
+    assert.ok(description.length >= 40 && description.length <= 160, page.name + ': ' + description);
+    assert.equal((page.html.match(/<h1[\s>]/g) || []).length, 1);
+    const heading = textOf(page.html.match(/<h1>([\s\S]*?)<\/h1>/)[1]);
+    assert.match(heading, /^What (?:is|are) .+\?$/);
+    assert.ok(title.startsWith(heading.replace(/^What (?:is|are) /, '').replace(/\?$/, '').replace(/\s*\([^)]*\)$/, '')), title);
+    const graph = hubGraph(page.html);
+    assert.deepEqual(graph.map(function (node) { return node['@type']; }), ['DefinedTerm', 'BreadcrumbList', 'FAQPage']);
+    assert.equal(graph[0].url, canonical);
+    assert.equal(graph[0].inDefinedTermSet.url, 'https://aiengineeringfromscratch.com/glossary');
+    assert.deepEqual(graph[1].itemListElement.map(function (item) { return item.item; }), ['https://aiengineeringfromscratch.com/', 'https://aiengineeringfromscratch.com/glossary', canonical]);
+    assert.equal(graph[2].mainEntity[0].name, heading);
+    assertVisibleFaq(page.html, graph[2]);
+    assertHubLinksResolve(page.html, hubs, lessonManifest);
+    assert.match(page.html, /<base href="\/">/);
+    assert.match(page.html, /<link rel="stylesheet" href="\/hubs\.css\?v=[0-9a-f]{16}">/);
+    assert.match(page.html, /<script src="\/header\.js\?v=[0-9a-f]{16}" defer><\/script>/);
+    assert.match(page.markdown, /^# What (?:is|are) .+\?\n\nCanonical page: https:\/\/aiengineeringfromscratch\.com\/glossary\//);
+    assert.doesNotMatch(page.markdown, /<script|<!DOCTYPE/i);
+  }
+  const adamw = hubs.termPages.find(function (page) { return page.name === 'adamw'; });
+  assert.match(adamw.html, /<title>AdamW: Definition and Common Confusion<\/title>/);
+  assert.match(adamw.html, /href="\/glossary\/adam-optimizer">Adam \(Optimizer\)<\/a>/);
+  const adam = hubs.termModels.find(function (model) { return model.slug === 'adam-optimizer'; });
+  assert.ok(adam.related.some(function (model) { return model.slug === 'adamw'; }), 'related terms link both ways');
+
+  const model = function (slug) { return hubs.termModels.find(function (item) { return item.slug === slug; }); };
+  const covered = function (slug) { return model(slug).titled.concat(model(slug).mentioned).map(function (lesson) { return lesson.path; }); };
+  assert.ok(covered('adamw').includes('phases/03-deep-learning-core/06-optimizers'), 'section headings count as matches');
+  assert.match(adamw.html, /<p>Covered in <a href="\/phase\/deep-learning-core">Phase 03: Deep Learning Core<\/a>/);
+  assert.doesNotMatch(adamw.html, /Taught in/);
+  assert.match(hubs.termPages.find(function (page) { return page.name === 'agent'; }).html, /<p>Taught in <a href="\/phase\/agent-engineering">/);
+  assert.ok(covered('weight').length > 0);
+  assert.ok(!model('weight').titled.some(function (lesson) { return /Open-Weight/.test(lesson.title); }), 'hyphenated words do not match');
+  assert.ok(!covered('exact-match-em').includes('phases/02-ml-fundamentals/07-unsupervised-learning'), 'names of two characters are skipped');
+  assert.ok(!model('adam-optimizer').titled.some(function (lesson) { return /ZeRO Optimizer/.test(lesson.title); }), 'a qualifier that names another term is not a match');
+  const unlinked = hubs.termModels.filter(function (item) { return item.page && !item.learn.length && !covered(item.slug).length; });
+  assert.ok(unlinked.length < 61, unlinked.length + ' term pages link to no lesson');
+});
+
+test('phase hubs state real lesson counts, link every lesson, and answer a visible FAQ from data', function () {
+  const { lessonManifest, hubs } = hubsFromSource();
+  const coursePaths = Object.values(lessonManifest.lessons)
+    .filter(function (entry) { return entry.context.kind === 'course'; })
+    .map(function (entry) { return entry.path; });
+  assert.equal(hubs.phasePages.length, new Set(coursePaths.map(phaseHubPath)).size);
+  const titles = new Set();
+  for (const page of hubs.phasePages) {
+    const canonical = 'https://aiengineeringfromscratch.com/phase/' + page.name;
+    const lessons = coursePaths.filter(function (lessonPath) { return phaseHubPath(lessonPath) === '/phase/' + page.name; });
+    const title = decodeHtml(page.html.match(/<title>([^<]+)<\/title>/)[1]);
+    assert.ok(title.endsWith(': ' + lessons.length + ' Free Lessons'), title);
+    assert.ok(title.length <= 60 && !titles.has(title), title);
+    titles.add(title);
+    assert.equal(textOf(page.html.match(/<h1>([\s\S]*?)<\/h1>/)[1]), title);
+    assert.equal(page.html.match(/<link rel="canonical" href="([^"]+)">/)[1], canonical);
+    for (const lessonPath of lessons) assert.ok(page.html.includes('href="/lesson?path=' + encodeURIComponent(lessonPath) + '"'), lessonPath);
+    const graph = hubGraph(page.html);
+    assert.deepEqual(graph.map(function (node) { return node['@type']; }), ['Course', 'BreadcrumbList', 'FAQPage']);
+    assert.equal(graph[0].hasPart.length, lessons.length);
+    assert.equal(graph[0].isAccessibleForFree, true);
+    assert.equal(graph[1].itemListElement[1].item, 'https://aiengineeringfromscratch.com/catalog');
+    assert.equal(graph[1].itemListElement[2].item, canonical);
+    assertVisibleFaq(page.html, graph[2]);
+    assert.ok(graph[2].mainEntity.some(function (question) { return /^Is Phase \d+ free\?$/.test(question.name) && /free to read/.test(question.acceptedAnswer.text); }));
+    assert.ok(graph[2].mainEntity.some(function (question) { return question.acceptedAnswer.text.includes(lessons.length + ' lessons'); }));
+    assertHubLinksResolve(page.html, hubs, lessonManifest);
+    assert.match(page.markdown, /^# .+: \d+ Free Lessons\n\nCanonical page: /);
+  }
+  const deepLearning = hubs.phasePages.find(function (page) { return page.name === 'deep-learning-core'; });
+  assert.match(deepLearning.html, /<h1>Learn Deep Learning from Scratch: \d+ Free Lessons<\/h1>/);
+  assert.match(deepLearning.html, /builds on <a href="\/phase\/ml-fundamentals">Phase 02: ML Fundamentals<\/a>/);
+  assert.match(deepLearning.html, /<h3>What should I know before I start Phase 03\?<\/h3><p>The phase guide gives these prerequisites: /);
+  assert.match(deepLearning.html, /The time estimates of all \d+ lessons add up to about \d+ hours\./);
+});
+
+test('lessons, the glossary page, and sitemaps link the new hubs without changing other pages', function (t) {
+  const { glossary, lessonManifest, hubs } = hubsFromSource();
+  for (const [lessonPath, terms] of Object.entries(hubs.lessonTerms)) {
+    assert.ok(lessonManifest.lessons[lessonPath], lessonPath);
+    for (const term of terms) assert.match(term.href, /^\/glossary[/#][a-z0-9-]+$/);
+  }
+  assert.ok(hubs.lessonTerms['phases/14-agent-engineering/01-the-agent-loop'].some(function (term) { return term.href === '/glossary/agent'; }), 'Learn it links reach the lesson');
+  assert.ok(hubs.lessonTerms['phases/07-transformers-deep-dive/09-vision-transformers'].some(function (term) { return term.href === '/glossary/vision-transformer-vit'; }), 'title matches reach the lesson');
+  for (const model of hubs.termModels) {
+    assert.ok(hubs.glossaryIndex.includes(model.page ? 'href="glossary/' + model.slug + '"' : 'href="#' + model.slug + '"'), model.slug);
+  }
+  const set = JSON.parse(hubs.glossaryJsonLd.match(/<script type="application\/ld\+json">([\s\S]*)<\/script>/)[1]);
+  assert.equal(set['@type'], 'DefinedTermSet');
+  assert.equal(set.hasDefinedTerm.length, glossary.length);
+  const page = fs.readFileSync(path.join(ROOT, 'site', 'glossary.html'), 'utf8');
+  for (const marker of ['GLOSSARY-JSONLD:START', 'GLOSSARY-JSONLD:END', 'GLOSSARY-INDEX:START', 'GLOSSARY-INDEX:END']) assert.ok(page.includes('<!-- GENERATED:' + marker + ' -->'), marker);
+  assert.match(page, /termPages\[entry\.slug\]/);
+
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-hub-sitemaps-'));
+  t.after(function () { fs.rmSync(root, { recursive: true, force: true }); });
+  build.writeLanguageSitemaps({ lessons: {} }, root, ['sitemap-phases.xml', 'sitemap-glossary.xml']);
+  const index = fs.readFileSync(path.join(root, 'sitemap-index.xml'), 'utf8');
+  assert.deepEqual(Array.from(index.matchAll(/<loc>([^<]+)<\/loc>/g), function (match) { return match[1]; }), [
+    'https://aiengineeringfromscratch.com/sitemap.xml',
+    'https://aiengineeringfromscratch.com/sitemap-phases.xml',
+    'https://aiengineeringfromscratch.com/sitemap-glossary.xml',
+  ]);
+  assert.doesNotMatch(index, /lastmod/);
+});
+
+test('translated lesson pages keep the hub breadcrumb but leave out the English link block', async function () {
+  const handler = lessonApi.createHandler({
+    loadAssets: function () { return withTranslations(['hi']); },
+    readTranslation: function () { return Promise.resolve(HINDI); },
+  });
+  const english = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}` });
+  const hindi = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` });
+  assert.match(english.body, /<nav class="lesson-hub-links"/);
+  assert.match(hindi.body, /<html lang="hi"/);
+  assert.doesNotMatch(hindi.body, /<nav class="lesson-hub-links"/);
+  assert.match(hindi.body, /"item":"https:\/\/aiengineeringfromscratch\.com\/phase\/deep-learning-core"/);
+});
+
+test('lesson route breadcrumbs point to the phase hub and list the terms the lesson teaches', function () {
+  const assets = makeAssets();
+  assets.lesson.lessonTerms = {
+    'phases/01-math/01-vectors': [
+      { term: 'Vector <Space>', href: '/glossary/vector-space' },
+      { term: 'Unsafe', href: 'javascript:alert(1)' },
+    ],
+  };
+  const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
+  const breadcrumbs = function (body) {
+    const graph = JSON.parse(body.match(/<script type="application\/ld\+json" id="lessonJsonLd">([\s\S]*?)<\/script>/)[1])['@graph'];
+    return graph.find(function (node) { return node['@type'] === 'BreadcrumbList'; }).itemListElement;
+  };
+  const course = invoke(handler, { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors', query: { path: 'phases/01-math/01-vectors' } });
+  assert.equal(course.statusCode, 200);
+  assert.deepEqual(breadcrumbs(course.body)[1], { '@type': 'ListItem', position: 2, name: 'Phase 01: Math Foundations', item: 'https://aiengineeringfromscratch.com/phase/math' });
+  assert.match(course.body, /<nav class="lesson-hub-links"[^>]*>[\s\S]*<a href="\/phase\/math">Phase 01: Math Foundations<\/a>/);
+  assert.match(course.body, /Terms in this lesson:<\/span> <a href="\/glossary\/vector-space">Vector &lt;Space&gt;<\/a>/);
+  assert.doesNotMatch(course.body, /javascript:alert/);
+  assert.ok(course.body.indexOf('lesson-hub-links') > course.body.indexOf('<!-- AIFS:LESSON-FALLBACK:END -->'), 'the hub block sits outside the client-rendered region');
+
+  const certification = invoke(handler, {
+    method: 'GET',
+    url: '/lesson?path=certifications%2Fclaude%2Flessons%2F01-models&track=claude-example',
+    query: { path: 'certifications/claude/lessons/01-models', track: 'claude-example' },
+  });
+  assert.equal(certification.statusCode, 200);
+  assert.equal(breadcrumbs(certification.body)[1].name, 'Certifications');
+  assert.doesNotMatch(certification.body, /<nav class="lesson-hub-links"/);
+
+  const withoutTerms = invoke(lessonApi.createHandler({ loadAssets: function () { return makeAssets().lesson; } }), { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors', query: { path: 'phases/01-math/01-vectors' } });
+  assert.equal(withoutTerms.statusCode, 200);
+  assert.match(withoutTerms.body, /<a href="\/phase\/math">/);
+  assert.doesNotMatch(withoutTerms.body, /Terms in this lesson/);
+
+  const template = fs.readFileSync(path.join(ROOT, 'site', 'lesson.html'), 'utf8');
+  assert.ok(template.indexOf('<!-- AIFS:LESSON-HUBS:START -->') > template.indexOf('<!-- AIFS:LESSON-FALLBACK:END -->'));
+  assert.match(template, /item: ORIGIN \+ hubPhase\.hub/);
+  const functions = require('../vercel.json').functions['api/lesson.js'].includeFiles;
+  assert.ok(functions.includes('site/lesson-terms.json'));
 });
