@@ -287,7 +287,7 @@ CheckItem("serving_fit", 1, False, "pick a serving mode that meets the staleness
           check_serving_fit),
 ```
 
-`check_serving_fit` reuses the cost model. It reads the workload numbers from the document and prices the chosen mode. The check fails when that mode misses the staleness limit, the latency budget, or the daily cost budget. A document that says "batch" with a three-minute staleness limit fails this check.
+`check_serving_fit` reuses the cost model. It reads the workload numbers from the document and prices the chosen mode. The check fails when that mode misses the staleness limit, the latency budget, or the daily cost budget. A document that says "batch" with a three-minute staleness limit fails this check. The cost model has no hybrid plan, so a document that says "hybrid" fails this check until you add that plan in Exercise 1.
 
 `review_design_doc` adds the weights of the passed items and divides by the total. The verdict is "ready for review" only when the score reaches 0.85 and no blocking item fails.
 
@@ -310,13 +310,13 @@ feed ranking, 2-hour freshness
 
 === Model versus baselines (churn, metric F1) ===
   model                    0.564
-  days_idle > 18.2         0.458
+  days_idle > 12.8688      0.500
   random at base rate      0.232
   majority class           0.000
-  model beats the strongest baseline (days_idle > 18.2) by +0.107
+  model beats the strongest baseline (days_idle > 12.8688) by +0.064
 ```
 
-The majority baseline scores 0 on F1, because it never predicts churn. The fitted rule is the real competitor. The model beats it by 0.107, so the model earns its place. With weaker features the rule can win, and then the rule is the right system to deploy.
+The majority baseline scores 0 on F1, because it never predicts churn. The fitted rule is the real competitor. The model beats it by 0.064, so the model earns its place. With weaker features the rule can win, and then the rule is the right system to deploy.
 
 The design-document review prints the weak document with six blocking items and the complete document with a score of 1.00. Pass a path to review your own document:
 

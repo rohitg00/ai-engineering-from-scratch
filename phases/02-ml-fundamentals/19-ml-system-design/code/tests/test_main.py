@@ -79,6 +79,17 @@ class BaselineTests(unittest.TestCase):
         preds = base_rate_baseline([1, 0, 0, 0], 4000, seed=3)
         self.assertAlmostEqual(sum(preds) / len(preds), 0.25, delta=0.03)
 
+    def test_metrics_reject_length_mismatch(self) -> None:
+        with self.assertRaises(ValueError):
+            f1_score([1, 0, 1], [1, 0])
+        with self.assertRaises(ValueError):
+            mean_absolute_error([1.0], [1.0, 2.0])
+
+    def test_fit_rule_separates_close_values(self) -> None:
+        rows = [{"x": v} for v in (1.04, 1.06)]
+        threshold = fit_rule(rows, [0, 1], "x")
+        self.assertEqual(apply_rule(rows, "x", threshold), [0, 1])
+
     def test_fit_rule_finds_separating_threshold(self) -> None:
         rows = [{"x": v} for v in (1.0, 2.0, 3.0, 8.0, 9.0)]
         threshold = fit_rule(rows, [0, 0, 0, 1, 1], "x")
@@ -140,6 +151,28 @@ class DesignDocTests(unittest.TestCase):
     def test_serving_fit_rejects_batch_for_minutes_of_staleness(self) -> None:
         doc = copy.deepcopy(STRONG_DOC)
         doc["serving"]["max_staleness_hours"] = 0.1
+        failed = {key for key, _, _ in review_design_doc(doc).failed}
+        self.assertIn("serving_fit", failed)
+
+    def test_workload_rejects_negative_and_non_finite_numbers(self) -> None:
+        for key, value in (("entities", -1), ("requests_per_day", float("nan")), ("max_staleness_hours", float("inf"))):
+            doc = copy.deepcopy(STRONG_DOC)
+            doc["serving"][key] = value
+            with self.subTest(key=key):
+                self.assertIsNone(workload_from_doc(doc))
+
+    def test_malformed_fields_fail_checks_without_errors(self) -> None:
+        doc = copy.deepcopy(STRONG_DOC)
+        doc["problem"]["ml_task"] = ["regression"]
+        doc["baselines"] = [{"kind": ["heuristic"]}]
+        doc["serving"]["mode"] = {"batch": True}
+        doc["rollout"]["stages"] = [{"name": "shadow"}]
+        failed = {key for key, _, _ in review_design_doc(doc).failed}
+        self.assertTrue({"ml_task", "baselines", "serving_fit", "rollout"} <= failed)
+
+    def test_hybrid_mode_fails_without_a_hybrid_plan(self) -> None:
+        doc = copy.deepcopy(STRONG_DOC)
+        doc["serving"]["mode"] = "hybrid"
         failed = {key for key, _, _ in review_design_doc(doc).failed}
         self.assertIn("serving_fit", failed)
 

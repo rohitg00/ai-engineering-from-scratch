@@ -90,7 +90,13 @@ def choose_serving(workload: Workload, costs: CostModel = CostModel()) -> tuple[
     return best, plans
 
 
+def check_lengths(y_true: list, y_pred: list) -> None:
+    if len(y_true) != len(y_pred):
+        raise ValueError(f"y_true has {len(y_true)} values and y_pred has {len(y_pred)}")
+
+
 def f1_score(y_true: list[int], y_pred: list[int]) -> float:
+    check_lengths(y_true, y_pred)
     tp = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 1)
     fp = sum(1 for t, p in zip(y_true, y_pred) if t == 0 and p == 1)
     fn = sum(1 for t, p in zip(y_true, y_pred) if t == 1 and p == 0)
@@ -98,6 +104,7 @@ def f1_score(y_true: list[int], y_pred: list[int]) -> float:
 
 
 def mean_absolute_error(y_true: list[float], y_pred: list[float]) -> float:
+    check_lengths(y_true, y_pred)
     return sum(abs(t - p) for t, p in zip(y_true, y_pred)) / len(y_true)
 
 
@@ -117,7 +124,7 @@ def base_rate_baseline(y_train: list[int], n: int, seed: int = 0) -> list[int]:
 
 
 def fit_rule(rows: list[dict], labels: list[int], feature: str) -> float:
-    candidates = sorted(set(round(row[feature], 1) for row in rows))
+    candidates = sorted(set(row[feature] for row in rows))
     best_threshold, best_score = candidates[0], -1.0
     for threshold in candidates:
         score = f1_score(labels, apply_rule(rows, feature, threshold))
@@ -252,15 +259,22 @@ def _positive(doc: dict, path: str) -> bool:
     return isinstance(value, (int, float)) and not isinstance(value, bool) and value > 0
 
 
+def _choice(doc: dict, path: str, allowed: set[str]) -> bool:
+    value = get_path(doc, path)
+    return isinstance(value, str) and value in allowed
+
+
 def check_baselines(doc: dict) -> bool:
     baselines = get_path(doc, "baselines")
     if not isinstance(baselines, list):
         return False
-    return any(isinstance(b, dict) and b.get("kind") in STRONG_BASELINE_KINDS for b in baselines)
+    return any(isinstance(b, dict) and isinstance(b.get("kind"), str) and b["kind"] in STRONG_BASELINE_KINDS for b in baselines)
 
 
 def check_rollout(doc: dict) -> bool:
-    stages = get_path(doc, "rollout.stages") or []
+    stages = get_path(doc, "rollout.stages")
+    if not isinstance(stages, list) or not all(isinstance(stage, str) for stage in stages):
+        return False
     return bool({"shadow", "canary"} & set(stages)) and _text(doc, "rollout.rollback")
 
 
@@ -280,8 +294,9 @@ def workload_from_doc(doc: dict) -> Workload | None:
         "latency_budget_ms": "budgets.latency_ms_p99",
     }
     values = {key: get_path(doc, path) for key, path in needed.items()}
-    if any(not isinstance(v, (int, float)) or isinstance(v, bool) for v in values.values()):
-        return None
+    for value in values.values():
+        if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value) or value < 0:
+            return None
     return Workload(name=str(get_path(doc, "title") or "design doc"), **values)
 
 
@@ -289,15 +304,11 @@ def check_serving_fit(doc: dict, costs: CostModel = CostModel()) -> bool:
     workload = workload_from_doc(doc)
     mode = get_path(doc, "serving.mode")
     budget = get_path(doc, "budgets.max_dollars_per_day")
-    if workload is None or mode not in {"batch", "online", "hybrid"}:
+    if workload is None or not isinstance(mode, str) or not isinstance(budget, (int, float)):
         return False
     _, plans = choose_serving(workload, costs)
-    by_mode = {plan.mode: plan for plan in plans}
-    if mode == "hybrid":
-        return any(plan.feasible for plan in plans)
-    chosen = by_mode[mode]
-    under_budget = isinstance(budget, (int, float)) and chosen.dollars_per_day <= budget
-    return chosen.feasible and under_budget
+    chosen = {plan.mode: plan for plan in plans}.get(mode)
+    return chosen is not None and chosen.feasible and chosen.dollars_per_day <= budget
 
 
 @dataclass(frozen=True)
@@ -311,7 +322,7 @@ class CheckItem:
 
 CHECKLIST = [
     CheckItem("business_goal", 1, False, "state the business goal in one sentence", lambda d: _text(d, "problem.business_goal")),
-    CheckItem("ml_task", 1, False, "name the ML task type", lambda d: get_path(d, "problem.ml_task") in ML_TASKS),
+    CheckItem("ml_task", 1, False, "name the ML task type", lambda d: _choice(d, "problem.ml_task", ML_TASKS)),
     CheckItem("decision", 2, True, "name the action that uses each prediction", lambda d: _text(d, "problem.decision")),
     CheckItem("why_not_rules", 1, False, "explain why a rule or lookup is not enough", lambda d: _text(d, "problem.why_not_rules")),
     CheckItem("offline_metric", 1, False, "list the offline metrics", lambda d: _items(d, "metrics.offline")),
@@ -370,7 +381,7 @@ STRONG_DOC = {
         "business_goal": "Cut monthly subscriber churn from 4.0 to 3.5 percent",
         "ml_task": "binary_classification",
         "decision": "Send a save offer to the 5 percent of users with the highest churn score each night",
-        "why_not_rules": "The idle-days rule reaches F1 0.46 and misses churners who still log in",
+        "why_not_rules": "The idle-days rule reaches F1 0.50 and misses churners who still log in",
     },
     "metrics": {
         "offline": ["F1 at the offer threshold", "precision at top 5 percent"],
