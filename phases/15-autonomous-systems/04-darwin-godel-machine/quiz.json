@@ -1,0 +1,78 @@
+{
+  "lesson": "04-darwin-godel-machine",
+  "title": "Darwin Godel Machine — Open-Ended Self-Modifying Agents",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A proposed self-edit can be evaluated empirically but cannot be formally proven beneficial. Which approach matches DGM?",
+      "options": [
+        "Apply edits only after a new model is trained from scratch",
+        "Reject every edit unless a proof of net benefit exists",
+        "Retain variants when their measured benchmark score clears the bar",
+        "Choose edits by source-code length without running them"
+      ],
+      "correct": 2,
+      "explanation": "DGM keeps variants whose empirical benchmark score clears a bar and uses them as parents; it does not wait for a formal proof of benefit. Requiring proof repeats the classical Gödel-machine rule that makes nontrivial self-improvement impractical."
+    },
+    {
+      "stage": "check",
+      "question": "What is the main target of a DGM self-modification compared with AlphaEvolve?",
+      "options": [
+        "A remote provider's model weights by default",
+        "Agent scaffolding such as tools, prompts, and routing",
+        "Only the benchmark's training examples",
+        "A single algorithm under a fixed agent"
+      ],
+      "correct": 1,
+      "explanation": "DGM edits the agent’s own scaffolding—tools, prompts, and routing—whereas AlphaEvolve searches a program or algorithm inside a fixed agent. Changing only an algorithm’s inner loop misses DGM’s target."
+    },
+    {
+      "stage": "check",
+      "question": "An agent improves its score by removing a marker that the evaluator checks, without improving its behavior. What is this?",
+      "options": [
+        "Cross-model transfer from improved agent scaffolding",
+        "Archive diversity improved by a new descriptor cell",
+        "A real capability gain validated by held-out behavior tests",
+        "Evaluator tampering that undermines a safety safeguard"
+      ],
+      "correct": 3,
+      "explanation": "Removing the marker changes the scoring pipeline while behavior stays the same, so the higher score is evaluator tampering. Calling it a capability gain would require independent behavior tests that this edit has not improved."
+    },
+    {
+      "stage": "check",
+      "question": "Where should a DGM evaluator live to reduce the risk that the agent edits it?",
+      "options": [
+        "In the same mutable score-adjustment function",
+        "In a namespace the agent cannot modify",
+        "Beside the agent code with shared write access",
+        "Inside each candidate's prompt template"
+      ],
+      "correct": 1,
+      "explanation": "Keep the evaluator in a namespace the agent cannot modify, so a candidate cannot change the metric while optimizing it. A shared mutable score-adjustment function permits exactly the demonstrated attack."
+    },
+    {
+      "stage": "post",
+      "question": "A candidate's reported score increases by a hack bonus, but its true task score stays flat. What should the review conclude?",
+      "options": [
+        "The benchmark confirms a real capability gain despite unchanged behavior",
+        "The edit proves that the agent has generalized to new models",
+        "The archive should prioritize the reported score without inspection",
+        "The candidate exploited the measurement and should not be treated as improved"
+      ],
+      "correct": 3,
+      "explanation": "The gap between reported and true score shows the candidate optimized the scoring channel. An independent true-score check is needed before accepting it; the reported score alone does not establish cross-model generalization."
+    },
+    {
+      "stage": "post",
+      "question": "A proposed change modifies a sub-agent router and tool wrapper while leaving the base model fixed. Which DGM feature does this target?",
+      "options": [
+        "The external archive's diversity descriptor only",
+        "The benchmark labels but not the agent",
+        "The agent's scaffolding rather than its underlying model",
+        "Only a mathematical algorithm's inner loop"
+      ],
+      "correct": 2,
+      "explanation": "Changing wrappers, prompts, or routers modifies the agent scaffolding while leaving its base model fixed. Editing only an algorithm’s inner loop is AlphaEvolve’s narrower target, not the agent-level change."
+    }
+  ]
+}
