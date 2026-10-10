@@ -1,0 +1,78 @@
+{
+  "lesson": "05-supervisor-orchestrator-pattern",
+  "title": "Supervisor / Orchestrator-Worker Pattern",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A research task has independent questions and one final report. What team structure lets work happen concurrently and then be combined?",
+      "options": [
+        "One agent reads every source sequentially in a single context",
+        "A lead plans, delegates to workers, and synthesizes their results",
+        "Workers choose unrelated tasks without a shared plan",
+        "A fixed pipeline sends every question to the same worker"
+      ],
+      "correct": 1,
+      "explanation": "Independent questions can fan out to focused workers at the same time, then a lead combines their results into one report. A single serial reader loses that overlap and keeps all source material in one growing context."
+    },
+    {
+      "stage": "check",
+      "question": "Why does a subagent's fresh context help in the supervisor pattern?",
+      "options": [
+        "It gives the worker access to every other worker's raw transcript",
+        "It removes the need for a focused sub-question",
+        "It makes the worker's answer deterministic across model versions",
+        "It avoids carrying the lead's long planning and history context"
+      ],
+      "correct": 3,
+      "explanation": "A fresh worker context contains its scoped sub-question without the lead’s accumulated planning and conversation history. Giving it every peer’s raw transcript would reintroduce context pollution rather than preserve a clean work area."
+    },
+    {
+      "stage": "check",
+      "question": "Three independent workers take 0.3 seconds each. Ignoring plan and synthesis time, what does the lesson predict for concurrent wall time?",
+      "options": [
+        "Roughly 0.6 seconds, because two workers are required",
+        "Roughly 1.2 seconds, because the lead waits twice",
+        "Roughly 0.3 seconds, near the slowest worker",
+        "Roughly 0.9 seconds, because durations add in parallel"
+      ],
+      "correct": 2,
+      "explanation": "When three independent workers run concurrently for 0.3 seconds each, the worker portion finishes near the maximum duration: max(0.3, 0.3, 0.3)=0.3 seconds. The 0.9-second choice adds their times as if they ran sequentially; planning and synthesis are excluded by the prompt."
+    },
+    {
+      "stage": "check",
+      "question": "The lead decomposes a research question into sub-questions that omit the user's main concern. Which failure mode is this?",
+      "options": [
+        "A worker's fresh context is too large",
+        "The lead hallucinates an incomplete plan",
+        "An activity replays a cached result",
+        "A reviewer silently changes the benchmark"
+      ],
+      "correct": 1,
+      "explanation": "If the lead omits the user’s central concern, the decomposition plan is incomplete before workers start. A worker can still have a clean context and execute its assigned sub-question accurately, yet the system will miss the requested goal."
+    },
+    {
+      "stage": "post",
+      "question": "Two workers return contradictory facts. What should the lead do in its synthesis?",
+      "options": [
+        "Average the two claims into one unsupported conclusion",
+        "Surface the disagreement or request a targeted follow-up",
+        "Choose whichever answer was returned last without noting it",
+        "Delete both results and report that no workers ran"
+      ],
+      "correct": 1,
+      "explanation": "The lead should preserve the contradiction or ask a targeted follow-up, because selecting the last result uses arrival order rather than evidence. Averaging incompatible factual claims can also manufacture a conclusion neither worker supported."
+    },
+    {
+      "stage": "post",
+      "question": "A task's second step cannot begin until the first step returns its output. Which topology is the better fit?",
+      "options": [
+        "An LLM selector that chooses a worker at random",
+        "A full shared pool that lets all workers speak at once",
+        "A larger supervisor team with more simultaneous workers",
+        "A sequential pipeline rather than parallel supervisor fan-out"
+      ],
+      "correct": 3,
+      "explanation": "A strict dependency means step two cannot be formed until step one returns its output, so work should flow sequentially. More simultaneous workers do not remove the dependency; they simply wait or receive missing inputs."
+    }
+  ]
+}
