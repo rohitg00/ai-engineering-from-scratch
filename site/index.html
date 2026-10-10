@@ -113,7 +113,7 @@
       .manual-title {
         grid-area: title;
         min-width: 0;
-        font-size: clamp(5rem, 6.5vw, 6.5rem);
+        font-size: clamp(min(5rem, 25vw), 6.5vw, 6.5rem);
       }
       .manual-tagline { grid-area: tagline; }
       .manual-attribution { grid-area: attribution; }
@@ -418,7 +418,7 @@
     .manual-title {
       display: block;
       font-family: var(--font-display);
-      font-size: clamp(3.2rem, 11vw, 8rem);
+      font-size: clamp(min(3.2rem, 16vw), 11vw, 8rem);
       line-height: 0.86;
       letter-spacing: 0.02em;
       text-transform: uppercase;
@@ -463,7 +463,8 @@
       font-family: var(--font-mono);
       font-size: 0.82rem;
       letter-spacing: 0.02em;
-      white-space: nowrap;
+      text-align: center;
+      overflow-wrap: anywhere;
       transition:
         transform var(--motion-press) var(--ease-out),
         background-color var(--motion-feedback) ease,
@@ -506,7 +507,7 @@
 
     @media (min-width: 761px) {
       .masthead-cta {
-        height: 44px;
+        min-height: 44px;
       }
     }
 
@@ -798,7 +799,7 @@
     .course-paths-header h2 {
       margin: 0;
       color: var(--ink);
-      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-size: clamp(min(2rem, 10vw), 4vw, 3.2rem);
     }
 
     .course-paths-header p {
@@ -984,7 +985,6 @@
       gap: 8px;
       width: 248px;
       justify-self: end;
-      white-space: nowrap;
     }
 
     .course-route-link {
@@ -1196,7 +1196,7 @@
     .certification-copy h2 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      font-size: clamp(min(1.9rem, 9.5vw), 3vw, 2.8rem);
       font-weight: 400;
       line-height: 1;
       letter-spacing: 0.02em;
@@ -1348,7 +1348,7 @@
       }
 
       .certification-copy h2 {
-        font-size: clamp(1.75rem, 9vw, 2.35rem);
+        font-size: min(9vw, 2.35rem);
       }
 
       .certification-intro {
@@ -1822,7 +1822,7 @@
       }
 
       .manual-title {
-        font-size: clamp(2.45rem, 12vw, 3.7rem);
+        font-size: clamp(min(2.45rem, 12.25vw), 12vw, 3.7rem);
         line-height: 0.98;
         letter-spacing: 0;
       }
@@ -1943,7 +1943,7 @@
       }
 
       .manual-title {
-        font-size: clamp(2.05rem, 11vw, 2.75rem);
+        font-size: min(11vw, 2.75rem);
         line-height: 1;
       }
 
@@ -2005,18 +2005,22 @@
       }
 
       .toc-row {
-        grid-template-columns: 3rem minmax(0, 1fr) auto;
+        grid-template-columns: min(3rem, 15vw) minmax(0, 1fr) auto;
         gap: 10px;
         padding: 12px 10px;
       }
 
       .toc-name {
-        font-size: 0.96rem;
+        font-size: min(0.96rem, 4.8vw);
         white-space: normal;
       }
 
       .toc-num {
-        font-size: 0.7rem;
+        font-size: min(0.7rem, 3.5vw);
+      }
+
+      .toc-meta {
+        font-size: min(0.74rem, 3.7vw);
       }
 
       .colophon-cmd {

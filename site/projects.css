@@ -58,7 +58,7 @@
   right: -0.02em;
   bottom: -0.22em;
   font-family: var(--font-display);
-  font-size: clamp(7rem, 22vw, 17rem);
+  font-size: clamp(min(7rem, 35vw), 22vw, 17rem);
   line-height: 1;
   color: var(--blueprint);
   opacity: 0.05;
@@ -343,6 +343,7 @@
 
 .pj-filter-group {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
 }
 
@@ -542,6 +543,7 @@
   justify-content: center;
   gap: 14px;
   min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .pj-checklist {
@@ -564,6 +566,7 @@
 
 .pj-breadcrumb {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 16px;
   font-family: var(--font-mono);
@@ -756,7 +759,7 @@
 
 .pj-doc h2 {
   margin: 36px 0 12px;
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-size: clamp(min(1.6rem, 8vw), 3vw, 2.1rem);
 }
 
 .pj-doc h3,

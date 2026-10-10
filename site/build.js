@@ -2309,7 +2309,6 @@ function build() {
 
   console.log('🔎 Generating lesson and certification SEO manifests...');
   const seoManifests = writeSeoArtifacts(phases, certifications, learningPaths);
-  writeSponsorsPage();
 
   // Stats
   let totalLessons = 0;
@@ -2353,6 +2352,7 @@ const ARTIFACTS = ${JSON.stringify(artifacts, null, 2)};
   console.log(`\n✅ Generated ${OUTPUT_PATH}`);
 
   syncCounts(totalLessons, phases.length, artifacts.length);
+  writeSponsorsPage();
   syncCertificationStats(certifications);
   syncReadme(totalLessons);
   writeSitemap(seoManifests.lessonManifest, glossaryTerms.length, certifications);
@@ -2524,18 +2524,17 @@ function syncReadme(lessons) {
 
 // ─── Keep marketing counts in sync (single source of truth = this build) ──
 function syncCounts(lessons, phaseCount, outputs) {
-  const targets = ['index.html', 'catalog.html', 'lesson.html', 'prereqs.html', 'learning-paths.html', 'cmdpalette.js'];
-  for (const f of targets) {
-    const p = path.join(__dirname, f);
+  const counts = { lessons, phases: phaseCount, outputs };
+  const targets = ['index.html', 'catalog.html', 'lesson.html', 'prereqs.html', 'learning-paths.html', 'about.html', 'cmdpalette.js']
+    .map(f => path.join(__dirname, f))
+    .concat(SPONSORS_SOURCE_PATH);
+  for (const p of targets) {
     if (!fs.existsSync(p)) continue;
     const before = fs.readFileSync(p, 'utf8');
-    const after = before
-      .replace(/\b\d+( AI engineering)? lessons\b/g, `${lessons}$1 lessons`)
-      .replace(/\b\d+ phases\b/g, `${phaseCount} phases`)
-      .replace(/\b\d+ outputs\b/g, `${outputs} outputs`);
+    const after = before.replace(/\b\d+(?=\s+(?:(?:AI engineering|free, open-source)\s+)?(lessons|phases|outputs)\b)/g, (_, word) => counts[word]);
     if (after !== before) {
       fs.writeFileSync(p, after, 'utf8');
-      console.log(`   synced counts in ${f}`);
+      console.log(`   synced counts in ${path.basename(p)}`);
     }
   }
 }

@@ -58,9 +58,10 @@ function createServer() {
       };
       if (!routed && destination === '/') destination = '/index.html';
       if (!routed && !handlers[destination] && !isFile(destination)) {
-        const rule = config.rewrites.find(rule => (rule.source === url.pathname && matches(rule, req))
+        const pageMatch = rule => rule.source.includes(':page(') && url.pathname.match(new RegExp('^' + rule.source.replace(/:page\(([^)]+)\)/, '($1)') + '$'));
+        const rule = config.rewrites.find(rule => ((rule.source === url.pathname || pageMatch(rule)) && matches(rule, req))
           || (rule.source === '/api/:missing*' && url.pathname.startsWith('/api/')));
-        if (rule) destination = rule.destination;
+        if (rule) destination = rule.destination.replace(':page', (pageMatch(rule) || [])[1] || '');
       }
       const target = new URL(destination, 'http://127.0.0.1');
       for (const [key, value] of target.searchParams) url.searchParams.append(key, value);

@@ -7,6 +7,7 @@
   line-height: 1.62;
   font-kerning: normal;
   hyphens: manual;
+  overflow-wrap: break-word;
 }
 
 .manual [data-accent="grey"] { --m-part: var(--m-grey-ink); --m-part-fill: var(--m-grey-fill); }

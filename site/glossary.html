@@ -61,7 +61,7 @@
 
     .glossary-masthead h1 {
       max-width: 780px;
-      font-size: clamp(3rem, 7vw, 5.6rem);
+      font-size: clamp(min(3rem, 15vw), 7vw, 5.6rem);
       line-height: 0.88;
       text-wrap: balance;
     }
@@ -308,7 +308,7 @@
     }
 
     .glossary-ledger-header h2 {
-      font-size: clamp(1.7rem, 4vw, 2.5rem);
+      font-size: clamp(min(1.7rem, 8.5vw), 4vw, 2.5rem);
     }
 
     .glossary-result-count {
@@ -407,7 +407,7 @@
     .glossary-term-heading {
       color: var(--blueprint);
       font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(min(2rem, 10vw), 4vw, 3rem);
       font-weight: 400;
       line-height: 0.95;
       text-transform: uppercase;
@@ -738,7 +738,7 @@
       }
 
       .glossary-masthead h1 {
-        font-size: clamp(2.8rem, 16vw, 4.4rem);
+        font-size: min(16vw, 4.4rem);
       }
 
       .glossary-stats {
@@ -1110,6 +1110,12 @@
         var currentQuery = '';
         var currentCategory = 'all';
         var currentLetterFocus = '';
+        var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        if (entries.some(function (entry) { return entry.letter === '#'; })) alphabet.push('#');
+
+        function letterSectionId(letter) {
+          return 'letter-' + (letter === '#' ? 'other' : letter);
+        }
 
         function termSearchText(entry) {
           var relatedText = entry.related.map(function (related) {
@@ -1176,22 +1182,15 @@
 
         function renderAlphabet(activeLetters) {
           if (!activeLetters[currentLetterFocus]) {
-            currentLetterFocus = '';
-            for (var firstCode = 65; firstCode <= 90; firstCode++) {
-              var firstLetter = String.fromCharCode(firstCode);
-              if (activeLetters[firstLetter]) {
-                currentLetterFocus = firstLetter;
-                break;
-              }
-            }
+            currentLetterFocus = alphabet.find(function (letter) { return activeLetters[letter]; }) || '';
           }
           var html = '';
-          for (var code = 65; code <= 90; code++) {
-            var letter = String.fromCharCode(code);
+          alphabet.forEach(function (letter) {
             var enabled = !!activeLetters[letter];
             var tabIndex = enabled && letter === currentLetterFocus ? '0' : '-1';
-            html += '<button class="glossary-letter" type="button" data-letter="' + letter + '" aria-label="Jump to letter ' + letter + '" tabindex="' + tabIndex + '"' + (enabled ? '' : ' disabled') + '>' + letter + '</button>';
-          }
+            var label = letter === '#' ? 'Jump to other terms' : 'Jump to letter ' + letter;
+            html += '<button class="glossary-letter" type="button" data-letter="' + letter + '" aria-label="' + label + '" tabindex="' + tabIndex + '"' + (enabled ? '' : ' disabled') + '>' + letter + '</button>';
+          });
           alphabetEl.innerHTML = html;
         }
 
@@ -1365,14 +1364,12 @@
           var groupList = Object.keys(groups).map(function (letter) { return groups[letter]; });
           groupList.sort(function (a, b) {
             if (currentQuery && a.score !== b.score) return a.score - b.score;
-            if (a.letter === '#') return 1;
-            if (b.letter === '#') return -1;
-            return compareText(a.letter, b.letter);
+            return alphabet.indexOf(a.letter) - alphabet.indexOf(b.letter);
           });
 
           var html = '';
           groupList.forEach(function (group) {
-            var headingId = 'letter-' + (group.letter === '#' ? 'other' : group.letter);
+            var headingId = letterSectionId(group.letter);
             html += '<section class="glossary-letter-group" id="' + headingId + '" tabindex="-1" aria-labelledby="' + headingId + '-title">';
             html += '<header class="glossary-letter-heading"><h3 id="' + headingId + '-title">' + escapeHtml(group.letter) + '</h3><span class="glossary-letter-line" aria-hidden="true"></span><span class="glossary-letter-total">' + countLabel(group.entries.length, 'entry', 'entries') + '</span></header>';
             group.entries.forEach(function (entry) { html += entryHtml(entry); });
@@ -1558,7 +1555,7 @@
           if (letterIndex >= 0) visibleLimit = Math.max(visibleLimit, letterIndex + 1);
           renderGlossary();
           window.requestAnimationFrame(function () {
-            var section = document.getElementById('letter-' + targetLetter);
+            var section = document.getElementById(letterSectionId(targetLetter));
             if (!section) return;
             section.focus({ preventScroll: true });
             section.scrollIntoView({ block: 'start', behavior: 'auto' });

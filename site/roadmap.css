@@ -41,7 +41,7 @@
   right: -0.03em;
   bottom: -0.24em;
   font-family: var(--font-display);
-  font-size: clamp(9rem, 24vw, 20rem);
+  font-size: clamp(min(9rem, 45vw), 24vw, 20rem);
   line-height: 1;
   color: var(--blueprint);
   opacity: 0.045;
@@ -76,7 +76,7 @@
 .roadmap-hero h1 {
   max-width: 850px;
   margin: 14px 0 22px;
-  font-size: clamp(3.25rem, 7vw, 6.25rem);
+  font-size: clamp(min(3.25rem, 16.25vw), 7vw, 6.25rem);
   text-wrap: balance;
 }
 
@@ -106,7 +106,7 @@
 .roadmap-hero-stat-value {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(min(2rem, 10vw), 4vw, 3rem);
   line-height: 0.95;
   color: var(--blueprint);
   font-variant-numeric: tabular-nums;
@@ -327,6 +327,13 @@
 .roadmap-graph-wrap.is-dragging {
   cursor: grabbing;
   user-select: none;
+}
+
+.roadmap-graph-message {
+  max-width: 44ch;
+  padding: 24px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
 }
 
 .roadmap-graph-container {
@@ -568,7 +575,7 @@
 .roadmap-inspector h2 {
   margin-top: 10px;
   color: var(--blueprint);
-  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-size: clamp(min(2rem, 10vw), 4vw, 2.8rem);
   text-wrap: balance;
 }
 
@@ -812,7 +819,7 @@
   .roadmap-page { padding: 88px 0 64px; }
   .roadmap-container { width: min(100% - 32px, 1380px); }
   .roadmap-hero { padding: 30px 24px; box-shadow: 5px 5px 0 var(--rule-soft); }
-  .roadmap-hero h1 { font-size: clamp(3rem, 15vw, 4.8rem); }
+  .roadmap-hero h1 { font-size: min(15vw, 4.8rem); }
   .roadmap-stage-index { grid-template-columns: 1fr; }
   .roadmap-stage-index-copy { border-right: 0; border-bottom: 1px solid var(--rule-soft); }
   .roadmap-stage-nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }

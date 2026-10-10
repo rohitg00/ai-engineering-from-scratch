@@ -70,7 +70,12 @@
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
-    if (typeof PHASES === 'undefined' || !Array.isArray(PHASES) || !PREREQS || !validateRoadmapData()) {
+    var phasesLoaded = typeof PHASES !== 'undefined' && Array.isArray(PHASES);
+    if (phasesLoaded && PHASES.length === 0) {
+      showEmptyRoadmap();
+      return;
+    }
+    if (!phasesLoaded || !PREREQS || !validateRoadmapData()) {
       showDataError();
       return;
     }
@@ -1209,9 +1214,19 @@
     return element;
   }
 
-  function showDataError() {
+  function showGraphMessage(message) {
     var wrap = document.getElementById('roadmapGraphWrap');
-    if (wrap) wrap.innerHTML = '<p>Roadmap data could not be loaded. Rebuild the site and refresh this page.</p>';
+    if (wrap) wrap.innerHTML = '<p class="roadmap-graph-message" dir="auto">' + escapeHtml(message) + '</p>';
+  }
+
+  function showDataError() {
+    showGraphMessage('Roadmap data could not be loaded. Rebuild the site and refresh this page.');
+  }
+
+  function showEmptyRoadmap() {
+    renderHeroStats();
+    setText('roadmapNextPhase', 'None');
+    showGraphMessage('No phases are published yet.');
   }
 
   function escapeHtml(value) {

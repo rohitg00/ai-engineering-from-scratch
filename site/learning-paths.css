@@ -35,7 +35,7 @@
   max-width: 18ch;
   margin: 12px 0 0;
   font-family: var(--font-display);
-  font-size: clamp(3.2rem, 6.2vw, 6.3rem);
+  font-size: clamp(min(3.2rem, 16vw), 6.2vw, 6.3rem);
   font-weight: 400;
   line-height: 0.9;
   letter-spacing: 0.01em;
@@ -130,7 +130,7 @@
 }
 
 .learning-paths-overview-head h2 {
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-size: clamp(min(2rem, 10vw), 4vw, 3.4rem);
 }
 
 .learning-paths-overview-head p {
@@ -296,7 +296,7 @@
 .career-routes-header h2 {
   max-width: 19ch;
   margin-top: 8px;
-  font-size: clamp(2.4rem, 4.5vw, 4.4rem);
+  font-size: clamp(min(2.4rem, 12vw), 4.5vw, 4.4rem);
 }
 
 .career-routes-header p {
@@ -393,7 +393,7 @@
 .career-chooser h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  font-size: clamp(min(1.7rem, 8.5vw), 3vw, 2.5rem);
   font-weight: 400;
   line-height: 1;
   text-transform: uppercase;
@@ -502,7 +502,7 @@
 
 .career-guide-heading strong {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.4vw, 2.05rem);
+  font-size: clamp(min(1.5rem, 7.5vw), 2.4vw, 2.05rem);
   font-weight: 400;
   line-height: 1;
   text-transform: uppercase;
@@ -725,7 +725,7 @@
 
 .skills-domain-header h2 {
   margin-top: 8px;
-  font-size: clamp(2.4rem, 4.5vw, 4.4rem);
+  font-size: clamp(min(2.4rem, 12vw), 4.5vw, 4.4rem);
 }
 
 .skills-domain-header p {
@@ -1010,7 +1010,7 @@
   }
 
   .learning-paths-hero h1 {
-    font-size: clamp(3rem, 17vw, 4.7rem);
+    font-size: min(17vw, 4.7rem);
   }
 
   .learning-paths-entry-nav {

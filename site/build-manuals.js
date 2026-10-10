@@ -554,7 +554,7 @@ function sourceAction(manual) { return action(escapeHtml(githubSourceUrl(`manual
 
 function pinLine(manual) {
   const pin = manual.pin;
-  return `${escapeHtml(pin.subject)} ${escapeHtml(pin.version)} · ${escapeHtml(pin.commit)} · ${escapeHtml(pin.date)} · Edition ${escapeHtml(manual.edition)}`;
+  return `${escapeHtml(pin.subject)} ${escapeHtml(pin.version)} · ${escapeHtml(pin.commit.slice(0, 7))} · ${escapeHtml(pin.date)} · Edition ${escapeHtml(manual.edition)}`;
 }
 
 function plateHtml(manual, attrs) {

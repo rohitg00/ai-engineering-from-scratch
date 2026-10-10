@@ -32,7 +32,7 @@
     }
 
     .catalog-header h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
+      font-size: clamp(min(2rem, 10vw), 5vw, 3rem);
       margin-bottom: 8px;
     }
 
@@ -52,6 +52,7 @@
     .catalog-search {
       flex: 1;
       min-width: 200px;
+      max-width: 100%;
       font-family: var(--font-body);
       font-size: 1rem;
       padding: 12px 16px;
@@ -78,6 +79,7 @@
     }
 
     .catalog-filter {
+      max-width: 100%;
       font-family: var(--font-body);
       font-size: 1rem;
       padding: 12px 16px;
@@ -374,8 +376,6 @@
         </select>
         <select class="catalog-filter" id="catalogStatus" aria-label="Filter by lesson status">
           <option value="">All Status</option>
-          <option value="complete">Complete</option>
-          <option value="planned">Planned</option>
         </select>
       </div>
       <div class="catalog-count" id="catalogCount" role="status" aria-live="polite" tabindex="-1">Loading lesson index...</div>
@@ -1004,26 +1004,39 @@
           return;
         }
 
+        var STATUS_LABELS = { complete: 'Complete', 'in-progress': 'In progress', planned: 'Planned' };
+        var presentStatuses = Object.create(null);
+
+        function addOption(select, value, label) {
+          var option = document.createElement('option');
+          option.value = value;
+          option.textContent = label;
+          select.appendChild(option);
+        }
+
         for (var i = 0; i < PHASES.length; i++) {
           var p = PHASES[i];
-          var opt = document.createElement('option');
-          opt.value = String(p.id);
-          opt.textContent = String(p.id).padStart(2, '0') + ' - ' + p.name;
-          phaseSelect.appendChild(opt);
+          addOption(phaseSelect, String(p.id), String(p.id).padStart(2, '0') + ' - ' + p.name);
 
           for (var j = 0; j < p.lessons.length; j++) {
             var l = p.lessons[j];
+            var lessonStatus = l.status || 'planned';
+            presentStatuses[lessonStatus] = true;
             allRows.push({
               phase: p.id,
               phaseName: p.name || '',
               name: l.name || '',
               type: l.type || '',
               lang: l.lang || '',
-              status: l.status || 'planned',
+              status: lessonStatus,
               url: l.url || ''
             });
           }
         }
+
+        Object.keys(presentStatuses).sort().forEach(function (status) {
+          addOption(statusSelect, status, STATUS_LABELS[status] || status);
+        });
 
         var sortCol = 'phase';
         var sortDir = 1;

@@ -37,7 +37,7 @@
     .sponsors-eyebrow a { color: inherit; }
     .sponsors-content h1 {
       font-family: var(--font-display);
-      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-size: clamp(min(2.4rem, 12vw), 6vw, 3.6rem);
       line-height: 1;
       letter-spacing: 0.02em;
       text-transform: uppercase;
@@ -55,6 +55,7 @@
     }
     .sponsors-content p,
     .sponsors-content li {
+      overflow-wrap: break-word;
       font-family: var(--font-body);
       font-size: 1.05rem;
       line-height: 1.7;

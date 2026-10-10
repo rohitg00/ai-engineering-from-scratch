@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import translate_ui_strings as ui  # noqa: E402
 
 
-FIXED_TOKENS = ("SKILL.md", "README.md", "phases/", "start-learning", "@rohitg00", "(⌘K)")
+FIXED_TOKENS = ("SKILL.md", "README.md", "phases/", "start-learning", "@rohitg00", "(⌘K)", "{n}")
 
 
 class SourceFileTest(unittest.TestCase):
@@ -88,6 +88,7 @@ class BuildLanguageTest(unittest.TestCase):
             "Use start-learning to begin the course.",
             "Follow @rohitg00",
             "Search (⌘K)",
+            "Every lesson across all {n} phases.",
             "Requires a local clone. Run copied commands from the repository root, the directory containing README.md and phases/.",
         ]
         seen = []
