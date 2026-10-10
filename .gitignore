@@ -104,3 +104,15 @@ site/manuals-data.js
 site/manuals.html
 
 !manuals/*/capture/out/*.log
+
+# AI/ML Model Checkpoints and Large Artifacts
+*.pt
+*.pth
+*.bin
+*.onnx
+*.safetensors
+*.ckpt
+*.h5
+checkpoints/
+runs/
+wandb/
