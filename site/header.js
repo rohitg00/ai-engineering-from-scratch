@@ -10,7 +10,7 @@
   var CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
   var NARROW_HEADER_QUERY = '(max-width: 820px)';
   var NARRATION_VERSION = '20260829a';
-  var UI_I18N_VERSION = '20261009a';
+  var UI_I18N_VERSION = '20261010a';
   var navId = 0;
 
   function isStaticPreview(locationValue) {

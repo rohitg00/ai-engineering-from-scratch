@@ -10,6 +10,7 @@
   var RTL = { ar: 1, he: 1, fa: 1, ur: 1 };
   var NUMBER = /\d+(?:[.,]\d+)*/g;
   var LATIN = /[A-Za-z]/;
+  var RTL_TEXT = /[\u0590-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]/;
   var BOX = /flex|grid/;
   var ENGLISH = 'data-i18n-en';
 
@@ -109,30 +110,69 @@
     var out = dict ? translateText(rec.text.orig, dict) : rec.text.orig;
     if (out !== current) node.nodeValue = out;
     rec.text.out = out;
-    markDirection(node.parentNode);
+    markDirection(node);
   }
 
-  function markDirection(el) {
-    if (!el || el.nodeType !== 1) return;
-    if (el.hasAttribute(ENGLISH)) {
+  function translated(node) {
+    var rec = records && records.get(node);
+    return (rec && rec.text && rec.text.out !== rec.text.orig) || RTL_TEXT.test(node.nodeValue);
+  }
+
+  function setEnglish(el, on) {
+    if (on) {
+      el.setAttribute('lang', 'en');
+      el.setAttribute('dir', 'ltr');
+      el.setAttribute(ENGLISH, '');
+    } else {
       el.removeAttribute('lang');
       el.removeAttribute('dir');
       el.removeAttribute(ENGLISH);
     }
-    if (!RTL[active] || el.hasAttribute('dir')) return;
-    var island = el.closest('[lang]');
-    if (island && island !== root.document.documentElement) return;
-    var latin = false;
-    for (var child = el.firstChild; child; child = child.nextSibling) {
-      if (child.nodeType !== 3) continue;
-      var rec = records.get(child);
-      if (rec && rec.text.out !== rec.text.orig) return;
-      if (LATIN.test(child.nodeValue)) latin = true;
+  }
+
+  function wholeEnglish(el) {
+    var walker = root.document.createTreeWalker(el, 5, null, false);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeType === 1 ? node.hasAttribute('lang') : translated(node)) return false;
     }
-    if (!latin || BOX.test(root.getComputedStyle(el).display)) return;
-    el.setAttribute('lang', 'en');
-    el.setAttribute('dir', 'ltr');
-    el.setAttribute(ENGLISH, '');
+    return true;
+  }
+
+  function dissolve(island) {
+    if (island.nodeName === 'BDI') {
+      while (island.firstChild) island.parentNode.insertBefore(island.firstChild, island);
+      island.parentNode.removeChild(island);
+      return;
+    }
+    setEnglish(island, false);
+    var walker = root.document.createTreeWalker(island, 4, null, false);
+    var texts = [];
+    var node;
+    while ((node = walker.nextNode())) texts.push(node);
+    for (var i = 0; i < texts.length; i++) markDirection(texts[i]);
+  }
+
+  function markDirection(node) {
+    var parent = node.parentNode;
+    if (!parent || parent.nodeType !== 1) return;
+    var island = parent.closest('[' + ENGLISH + ']');
+    if (!RTL[active] || translated(node)) {
+      if (island) dissolve(island);
+      return;
+    }
+    if (!LATIN.test(node.nodeValue) || island || parent.hasAttribute('dir')) return;
+    var scope = parent.closest('[lang]');
+    if (scope && scope !== root.document.documentElement) return;
+    if (BOX.test(root.getComputedStyle(parent).display)) return;
+    if (wholeEnglish(parent)) {
+      setEnglish(parent, true);
+      return;
+    }
+    var wrapper = root.document.createElement('bdi');
+    setEnglish(wrapper, true);
+    parent.insertBefore(wrapper, node);
+    wrapper.appendChild(node);
   }
 
   function applyAttr(el, name, dict) {
