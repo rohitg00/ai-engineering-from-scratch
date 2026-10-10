@@ -1,0 +1,78 @@
+{
+  "lesson": "13-neural-audio-codecs",
+  "title": "Neural Audio Codecs — EnCodec, SNAC, Mimi, DAC and the Semantic-Acoustic Split",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does an audio language model need a codec before an LLM can predict speech?",
+      "options": [
+        "The codec converts each word directly into a speaker label",
+        "The codec removes language structure from the audio signal",
+        "The codec expands every sample into a mel frequency bin",
+        "The codec turns a continuous waveform into discrete tokens"
+      ],
+      "correct": 3,
+      "explanation": "A waveform is continuous-valued, but an LLM predicts discrete symbols; a neural codec encodes audio into discrete tokens and can decode them back. A speaker label omits the time-varying audio content and is not the codec token sequence."
+    },
+    {
+      "stage": "check",
+      "question": "In residual vector quantization, what does each codebook after the first quantize?",
+      "options": [
+        "The speaker label paired with the current frame",
+        "The full output waveform after decoder synthesis",
+        "The residual error left by earlier codebooks",
+        "A duplicate copy of the original waveform"
+      ],
+      "correct": 2,
+      "explanation": "The first codebook approximates the encoder output; each later codebook quantizes what remains after the earlier code vectors are subtracted. Repeating the original does not refine the current residual; the decoder instead sums successive residual approximations."
+    },
+    {
+      "stage": "check",
+      "question": "At 12.5 frames per second with 8 codebooks, how many tokens represent 10 seconds?",
+      "options": [
+        "10,000 tokens",
+        "1,000 tokens",
+        "800 tokens",
+        "125 tokens"
+      ],
+      "correct": 1,
+      "explanation": "Ten seconds × 12.5 frames/second = 125 frames; with 8 codebooks per frame, 125 × 8 = 1,000 tokens. The 125-token option counts one token per frame and omits the eight codebook tokens emitted at each frame."
+    },
+    {
+      "stage": "check",
+      "question": "In the lesson’s Mimi split, what does codebook 0 primarily represent?",
+      "options": [
+        "Semantic content such as phonemes and words",
+        "Acoustic details such as timbre and background noise",
+        "The exact speaker enrollment threshold for verification",
+        "The waveform sampling rate and channel count"
+      ],
+      "correct": 0,
+      "explanation": "Mimi codebook 0 is WavLM-distilled to represent phonetic and linguistic content; codebooks 1–7 encode acoustic residual details. Those details belong to the residual codebooks, not the semantic first codebook."
+    },
+    {
+      "stage": "post",
+      "question": "A team is building a streaming speech generator and wants short token sequences with semantic content. Which codec fits the lesson?",
+      "options": [
+        "A 50 Hz EnCodec stream with every codebook removed",
+        "Opus as a discrete text-generation tokenizer",
+        "Mimi with its low-rate semantic-acoustic split",
+        "DAC at 44.1 kHz for maximum reconstruction fidelity"
+      ],
+      "correct": 2,
+      "explanation": "Mimi combines a low 12.5 Hz frame rate with a semantic-acoustic split, keeping streaming speech token sequences short while retaining content and detail. DAC prioritizes high-fidelity reconstruction at a higher frame rate, producing longer sequences than the streaming-oriented Mimi."
+    },
+    {
+      "stage": "post",
+      "question": "A codec has excellent waveform reconstruction but weak linguistic structure for an LM. What lesson should guide the evaluation?",
+      "options": [
+        "Replace the tokenizer with a speaker verification embedding",
+        "Check semantic structure as well as reconstruction quality",
+        "Choose it because waveform similarity guarantees easy generation",
+        "Add more acoustic codebooks without checking sequence length"
+      ],
+      "correct": 1,
+      "explanation": "An LM needs token structure that separates linguistic content from acoustic detail; waveform reconstruction quality alone does not guarantee that structure. A close reconstruction can still entangle content and acoustics, leaving the language model a harder prediction problem."
+    }
+  ]
+}

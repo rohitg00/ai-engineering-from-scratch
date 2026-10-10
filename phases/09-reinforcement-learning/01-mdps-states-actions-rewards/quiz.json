@@ -1,0 +1,78 @@
+{
+  "lesson": "01-mdps-states-actions-rewards",
+  "title": "MDPs, States, Actions & Rewards",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In a grid-navigation task, what should describe the cell the agent currently occupies?",
+      "options": [
+        "The reward records the current cell used to choose the next move.",
+        "The state records the current cell used to choose the next move.",
+        "The action records the current cell used to choose the next move.",
+        "The transition records the current cell used to choose the next move."
+      ],
+      "correct": 1,
+      "explanation": "The state is the current decision-relevant information, which this lesson illustrates with the agent’s grid cell. A reward is feedback after a transition, while an action is the chosen move; neither describes where the agent currently is."
+    },
+    {
+      "stage": "check",
+      "question": "A nonterminal action gives reward -1, then reaches a state valued at -4. With gamma = 0.5, what is its one-step Bellman backup?",
+      "options": [
+        "-5.0, from -1 plus -4 without discounting.",
+        "-3.0, from -1 plus half of -4.",
+        "-2.5, from discounting both reward and successor value.",
+        "-1.0, from omitting the successor value."
+      ],
+      "correct": 1,
+      "explanation": "The Bellman backup adds the immediate reward to the discounted successor value: −1 + 0.5(−4) = −3. Omitting the discount gives −5, while discounting the immediate reward too gives −2.5, so neither matches the one-step return."
+    },
+    {
+      "stage": "check",
+      "question": "An inventory state omits a delivery already scheduled for tomorrow, although that delivery changes tomorrow's stock. What repair best restores the Markov property?",
+      "options": [
+        "Add a delivery action to the next policy decision.",
+        "Add the scheduled delivery to the current state.",
+        "Add the delivery’s expected value only to the reward.",
+        "Change the discount so tomorrow’s stock matters less."
+      ],
+      "correct": 1,
+      "explanation": "The Markov property requires the current state and action to contain enough information to predict the next-state distribution. A scheduled delivery changes tomorrow’s stock, so hiding it from the state leaves the transition history-dependent; changing the reward or discount cannot restore that missing information."
+    },
+    {
+      "stage": "check",
+      "question": "Using the lesson's rough horizon estimate 1/(1-gamma), what horizon does gamma = 0.9 represent?",
+      "options": [
+        "About 1,000 steps of effective planning.",
+        "About 1 step of effective planning.",
+        "About 10 steps of effective planning.",
+        "About 100 steps of effective planning."
+      ],
+      "correct": 2,
+      "explanation": "The lesson estimates horizon as 1/(1−γ). With γ=0.9, that is 1/0.1=10 steps; a value of 100 corresponds to γ=0.99, which discounts future rewards more slowly."
+    },
+    {
+      "stage": "post",
+      "question": "A game agent earns proxy points by looping in one area instead of finishing the race. Which MDP change addresses the reward-hacking failure?",
+      "options": [
+        "Change the state encoding while keeping the proxy reward unchanged.",
+        "Increase the discount while keeping the proxy reward unchanged.",
+        "Add more actions while keeping the proxy reward unchanged.",
+        "Define reward from the target outcome the task is meant to achieve."
+      ],
+      "correct": 3,
+      "explanation": "The agent is exploiting a proxy because its reward pays for collecting points rather than finishing the race. Defining reward from the intended outcome changes the incentive; adjusting γ, state encoding, or available actions leaves the point-collecting objective intact."
+    },
+    {
+      "stage": "post",
+      "question": "A continuing task has bounded per-step rewards and no terminal state. Under the lesson's nonnegative-discount convention, which choice guarantees a finite discounted return?",
+      "options": [
+        "Choose gamma below 1 for the unbounded horizon.",
+        "Choose gamma equal to 1 with no episode cap.",
+        "Choose gamma above 1 so distant rewards dominate.",
+        "Choose gamma below 0 so future rewards alternate."
+      ],
+      "correct": 0,
+      "explanation": "With bounded per-step rewards and the lesson’s 0 ≤ γ < 1 convention, the discounted weights form a convergent geometric series. At γ=1 with no terminal state, the weights do not shrink. A negative γ can converge mathematically when |γ|<1, but it is outside the stated nonnegative MDP range."
+    }
+  ]
+}

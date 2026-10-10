@@ -1,0 +1,78 @@
+{
+  "lesson": "09-constitutional-ai-self-improvement",
+  "title": "Constitutional AI and Self-Improvement",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A model gives a harmful answer, and a written principle says to avoid harmful advice. What is the first-stage CAI loop?",
+      "options": [
+        "Critique and revise the answer, then fine-tune on the revised response.",
+        "Score candidates with a rule and update the policy by GRPO.",
+        "Ask labelers to rank two responses and train a reward model.",
+        "Fit a value critic to the answer before any revision."
+      ],
+      "correct": 0,
+      "explanation": "SL-CAI prompts a model to critique its answer against a written principle, revise the answer, and fine-tune on the prompt/revision pair. Pairwise human labels and reward-model training belong to other stages, not this first critique-and-revision loop."
+    },
+    {
+      "stage": "check",
+      "question": "In RLAIF, how are constitutional principles used to create the preference signal?",
+      "options": [
+        "A value network scores each token without comparing responses.",
+        "The model revises one response, and the revised text is a numeric reward.",
+        "A deterministic arithmetic checker ranks responses without model judgments.",
+        "The model judges sampled response pairs, and those preferences train a reward model."
+      ],
+      "correct": 3,
+      "explanation": "A model compares sampled responses against the constitution to produce preference pairs. Those pairs can fit a reward model for PPO, or directly optimize the policy with DPO without separately training a reward model. Revising one response belongs to the supervised critique-and-revision stage."
+    },
+    {
+      "stage": "check",
+      "question": "For one prompt, four responses have rewards [0, 0, 1, 1]. Using population standard deviation, what group-relative advantages result?",
+      "options": [
+        "[-1, -1, 1, 1]",
+        "[0, 0, 1, 1]",
+        "[1, 1, -1, -1]",
+        "[-0.5, -0.5, 0.5, 0.5]"
+      ],
+      "correct": 0,
+      "explanation": "The population mean is (0+0+1+1)/4=0.5 and population standard deviation is sqrt((0.25+0.25+0.25+0.25)/4)=0.5. Thus (r−0.5)/0.5 gives −1 for each zero and +1 for each one; the half-sized option skips division by the standard deviation."
+    },
+    {
+      "stage": "check",
+      "question": "All responses in a GRPO group receive exactly the same reward. What advantage signal does the lesson's implementation produce?",
+      "options": [
+        "[0, 0, 0, 0]",
+        "[1, 1, 1, 1]",
+        "[0, 0, 1, 1]",
+        "[0, 1, 2, 3]"
+      ],
+      "correct": 0,
+      "explanation": "The implementation returns a zero vector when reward standard deviation is below 1e−8. With identical rewards, each centered reward is zero, so the group contains no relative preference signal; assigning equal positive advantages would not distinguish any response."
+    },
+    {
+      "stage": "post",
+      "question": "A team wants to tune refusal style, has a clear written constitution, and lacks a clean automatic correctness checker. Which recipe best fits?",
+      "options": [
+        "Pure outcome-reward training with no external or constitutional signal.",
+        "Constitutional AI for subjective behavior guided by the written principles.",
+        "GRPO with an outcome reward model for verifiable answer correctness.",
+        "Parallel MTP because it adds supervision to the next token."
+      ],
+      "correct": 1,
+      "explanation": "Refusal style is subjective here and the team has a clear constitution but no deterministic checker, matching the lesson’s pure-CAI use case. GRPO’s outcome-reward route is suited to verifiable answers, where a rule can reliably grade correctness."
+    },
+    {
+      "stage": "post",
+      "question": "After repeated self-distillation rounds, a model loses creative diversity and repeats formulaic phrasing. What safeguard follows from the lesson?",
+      "options": [
+        "Keep only top-scoring synthetic responses each round.",
+        "Remove human data and continue self-distilling.",
+        "Add fresh human data in later rounds.",
+        "Increase the number of synthetic samples each round."
+      ],
+      "correct": 2,
+      "explanation": "Repeatedly training only on the model’s own narrow outputs can shrink response diversity and produce formulaic phrasing. Fresh human data restores examples beyond that self-generated distribution; keeping only top synthetic samples or making more of them can intensify collapse."
+    }
+  ]
+}

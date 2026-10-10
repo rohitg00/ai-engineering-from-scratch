@@ -1,0 +1,78 @@
+{
+  "lesson": "09-inpainting-outpainting-editing",
+  "title": "Inpainting, Outpainting & Image Editing",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A product photo should keep its original pixels except for a distracting sign inside a mask. Which task is this?",
+      "options": [
+        "Inpainting within the masked region",
+        "Unconditional text-to-image generation",
+        "Image classification over the whole photo",
+        "Outpainting beyond the original canvas"
+      ],
+      "correct": 0,
+      "explanation": "Inpainting regenerates pixels inside the selected mask while keeping the rest of the source image, matching a localized sign removal. Outpainting instead extends beyond the original canvas, so it would change the wrong region for this task."
+    },
+    {
+      "stage": "check",
+      "question": "What extra inputs does a proper 9-channel inpainting U-Net receive alongside the noisy latent?",
+      "options": [
+        "Encoded source image and a one-channel mask",
+        "Text tokens and speaker embeddings",
+        "Two copies of the noisy latent only",
+        "A discriminator score and timestep label"
+      ],
+      "correct": 0,
+      "explanation": "A proper inpainting U-Net concatenates the noisy four-channel latent with a four-channel encoded source and a one-channel mask, giving 9 channels total. The source and mask reveal what is around the hole and where generation is needed."
+    },
+    {
+      "stage": "check",
+      "question": "How does SDEdit’s starting noise level affect fidelity to the source image?",
+      "options": [
+        "Lower t/T preserves more of the source",
+        "The starting t/T changes only image resolution",
+        "Higher t/T preserves more of the source",
+        "The starting t/T has no effect on source identity"
+      ],
+      "correct": 0,
+      "explanation": "SDEdit adds noise up to the chosen t and then denoises; lower t injects less corruption, preserving more source structure. Higher t starts closer to noise, leaving more room for a new prompt to change the image."
+    },
+    {
+      "stage": "check",
+      "question": "What is RePaint’s training requirement in the lesson?",
+      "options": [
+        "It requires a U-Net retrained on nine-channel masked inputs",
+        "It replaces the denoiser with a cycle-consistency GAN",
+        "It uses a standard diffusion model and resamples during reverse steps",
+        "It needs paired source and target images for each edit"
+      ],
+      "correct": 2,
+      "explanation": "RePaint uses a standard unconditional diffusion denoiser and periodically jumps back to a noisier state to resample during reverse generation. The specially trained nine-channel U-Net is the proper inpainting model, not a RePaint requirement."
+    },
+    {
+      "stage": "post",
+      "question": "A small masked edit looks oversaturated under classifier-free guidance. What should be adjusted?",
+      "options": [
+        "Lower CFG for the small mask",
+        "Increase the mask until it covers the full image",
+        "Raise CFG to the maximum setting",
+        "Replace the source image with pure noise"
+      ],
+      "correct": 0,
+      "explanation": "High CFG on a small masked region can overemphasize the prompt and saturate that patch. Lowering guidance addresses this; increasing CFG would amplify the same oversaturation."
+    },
+    {
+      "stage": "post",
+      "question": "To extend an image canvas while keeping the original content, how should the mask be used?",
+      "options": [
+        "Mask both regions and ask the VAE to reconstruct them",
+        "Mask the new canvas area and keep the original unmasked",
+        "Mask the original content and freeze the new canvas",
+        "Remove the mask and regenerate the full image"
+      ],
+      "correct": 1,
+      "explanation": "Outpainting flips which area is masked: regenerate the new canvas while leaving original content unmasked as context. Masking the original would invite changes to the image the task says to keep."
+    }
+  ]
+}

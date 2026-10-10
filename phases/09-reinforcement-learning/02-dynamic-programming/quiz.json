@@ -1,0 +1,78 @@
+{
+  "lesson": "02-dynamic-programming",
+  "title": "Dynamic Programming — Policy Iteration & Value Iteration",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "You can query an environment’s transition and reward model for every state-action pair. Which method directly uses that model?",
+      "options": [
+        "Dynamic programming applies Bellman backups using the known model.",
+        "Monte Carlo enumerates outcomes instead of sampling episodes.",
+        "Temporal difference waits for complete episodes before updating.",
+        "Policy gradients require transition tables for every action."
+      ],
+      "correct": 0,
+      "explanation": "Because P(s′|s,a) and R(s,a,s′) are available for each state-action pair, dynamic programming can calculate the expected Bellman backup directly. Monte Carlo must estimate returns from sampled episodes, so it does not use the full known model in the same way."
+    },
+    {
+      "stage": "check",
+      "question": "In policy iteration, what sequence is repeated after choosing a current policy?",
+      "options": [
+        "Maximize the policy value in one sweep, then remove the terminal state.",
+        "Evaluate its value, then improve the policy greedily from that value.",
+        "Sample a new policy, then average returns until actions stop changing.",
+        "Improve its value, then sample rewards until the model becomes known."
+      ],
+      "correct": 1,
+      "explanation": "Policy iteration first evaluates the current policy to estimate Vπ, then improves it by choosing actions greedy with respect to that value. The sampled-policy option is not policy iteration; value iteration combines evaluation and improvement in one optimality backup."
+    },
+    {
+      "stage": "check",
+      "question": "For one value-iteration update at state s, which operation selects the optimal action under the known model?",
+      "options": [
+        "Take the average over actions of expected reward plus discounted next value.",
+        "Take the minimum over actions of expected reward plus discounted next value.",
+        "Take the maximum over actions of expected reward plus discounted next value.",
+        "Take the sampled reward from one action without using next-state values."
+      ],
+      "correct": 2,
+      "explanation": "For each action, the model supplies an expectation over possible next states and rewards; the Bellman optimality equation then takes the maximum across actions. Averaging over actions instead evaluates a policy distribution, while a sampled reward omits the successor value."
+    },
+    {
+      "stage": "check",
+      "question": "When measuring value-iteration convergence, which change statistic matches the lesson's stopping rule?",
+      "options": [
+        "The largest absolute value change across states, below epsilon.",
+        "The average signed value change across states, equal to zero.",
+        "The smallest absolute value change across actions, below epsilon.",
+        "The policy's episode return, unchanged for one rollout."
+      ],
+      "correct": 0,
+      "explanation": "The stopping rule uses the sup norm: compute |Vnew(s)−V(s)| for every state and stop only when the maximum is below ε. Averaging signed changes can cancel a large increase with a large decrease, falsely suggesting convergence."
+    },
+    {
+      "stage": "post",
+      "question": "A planner uses gamma = 1 on an unbounded continuing MDP and reports guaranteed convergence from contraction. What correction follows from the lesson?",
+      "options": [
+        "Use gamma < 1, or provide a finite horizon or absorbing terminal condition.",
+        "Keep gamma = 1 and increase epsilon until the updates stop changing.",
+        "Use gamma above 1 so the Bellman operator becomes a contraction.",
+        "Remove value iteration and claim policy iteration always contracts."
+      ],
+      "correct": 0,
+      "explanation": "The contraction argument requires γ<1, giving ||TV−TV′||∞≤γ||V−V′||∞. With γ=1 on an unbounded task that guarantee no longer follows; loosening ε changes the stopping test, not the operator’s contraction property."
+    },
+    {
+      "stage": "post",
+      "question": "Two actions have equal estimated value, and a policy-stability check alternates between them across iterations. What implementation choice addresses this tie issue?",
+      "options": [
+        "Use a fixed, stable tie-break order when choosing among equal actions.",
+        "Stop evaluating values whenever the first equal pair appears.",
+        "Add random noise to every value until one action remains largest.",
+        "Change the reward sign each iteration to force policy movement."
+      ],
+      "correct": 0,
+      "explanation": "Equal action values make argmax tie-breaking implementation-dependent, so the selected policy can flip even though the estimates did not change. A fixed action order makes the choice repeatable; adding noise changes the values instead of fixing the tie rule."
+    }
+  ]
+}

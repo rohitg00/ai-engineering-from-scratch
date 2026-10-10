@@ -1,0 +1,78 @@
+{
+  "lesson": "01-audio-fundamentals",
+  "title": "Audio Fundamentals — Waveforms, Sampling, Fourier Transform",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A mono recorder samples at 48,000 samples per second for 2 seconds. How many waveform values does it store?",
+      "options": [
+        "96,000 samples",
+        "24,000 samples",
+        "48,000 samples",
+        "96 samples"
+      ],
+      "correct": 0,
+      "explanation": "At 48,000 samples per second × 2 seconds, a mono waveform stores 96,000 samples; mono has one stream, so there is no channel multiplier. The 24,000-sample option divides rate by duration, while the 48,000-sample option counts only one second."
+    },
+    {
+      "stage": "check",
+      "question": "A signal is sampled at 10 kHz. What is its Nyquist frequency?",
+      "options": [
+        "5 kHz",
+        "2.5 kHz",
+        "20 kHz",
+        "10 kHz"
+      ],
+      "correct": 0,
+      "explanation": "Nyquist is half the sampling rate, so 10 kHz ÷ 2 = 5 kHz; frequencies above that boundary can alias into lower ones. The 10 kHz option repeats the sampling rate, while 20 kHz doubles it instead of taking half."
+    },
+    {
+      "stage": "check",
+      "question": "For N = 256 samples at sr = 8,000 Hz, what frequency does DFT bin k = 14 represent?",
+      "options": [
+        "448.0 Hz",
+        "875.0 Hz",
+        "437.5 Hz",
+        "31.25 Hz"
+      ],
+      "correct": 2,
+      "explanation": "The bin spacing is sr/N = 8,000/256 = 31.25 Hz, so bin 14 represents 14 × 31.25 = 437.5 Hz. The 31.25 Hz option is adjacent-bin spacing, not bin 14; 875 Hz uses N = 128 rather than 256."
+    },
+    {
+      "stage": "check",
+      "question": "Before decimating audio to a lower sample rate, what operation protects it from aliasing?",
+      "options": [
+        "Convert the waveform from floats into signed integers",
+        "Apply a Fourier transform to the complete recording once",
+        "Low-pass filter frequencies beyond the new Nyquist limit",
+        "Normalize the waveform to unit peak amplitude"
+      ],
+      "correct": 2,
+      "explanation": "Downsampling lowers the new Nyquist limit, so low-pass filtering must remove frequencies the target rate cannot represent before decimation. An FFT only analyzes the signal; it does not remove out-of-band energy, which otherwise folds into lower frequencies."
+    },
+    {
+      "stage": "post",
+      "question": "A model expects 16 kHz mono audio, but a WAV is 44.1 kHz stereo. What should the loader do first?",
+      "options": [
+        "Drop one channel and leave the samples at 44.1 kHz",
+        "Convert to 16-bit PCM and preserve both channels",
+        "Resample to 16 kHz and provide a mono waveform",
+        "Keep 44.1 kHz and relabel the header as 16 kHz"
+      ],
+      "correct": 2,
+      "explanation": "A 16 kHz mono model expects samples on that clock and one channel, so resample and downmix the waveform before feature extraction. Changing metadata leaves sample spacing unchanged, while dropping a channel alone still leaves the sample-rate mismatch."
+    },
+    {
+      "stage": "post",
+      "question": "For speech sampled at 16 kHz, which frame sizes implement a 25 ms window and a 10 ms hop?",
+      "options": [
+        "400-sample window and 160-sample hop",
+        "800-sample window and 80-sample hop",
+        "256-sample window and 256-sample hop",
+        "160-sample window and 400-sample hop"
+      ],
+      "correct": 0,
+      "explanation": "At 16 kHz, a 25 ms window is 0.025 × 16,000 = 400 samples, and a 10 ms hop is 0.010 × 16,000 = 160 samples. The 160-sample-window/400-sample-hop option reverses the two values; 800/80 instead means 50 ms and 5 ms."
+    }
+  ]
+}

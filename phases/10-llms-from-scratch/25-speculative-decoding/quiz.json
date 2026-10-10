@@ -1,0 +1,78 @@
+{
+  "lesson": "25-speculative-decoding",
+  "title": "Speculative Decoding and EAGLE",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A small draft model proposes K tokens and a large target verifies them in one forward pass. What is the central benefit?",
+      "options": [
+        "The target skips verification whenever the draft is smaller.",
+        "A correct prefix yields several target-distributed tokens per target pass.",
+        "The accepted tokens become independent of the target distribution.",
+        "The draft replaces the target, so no quality comparison is needed."
+      ],
+      "correct": 1,
+      "explanation": "A cheap draft proposes a prefix, and the target verifies several positions in one forward pass. The rejection rule corrects mismatches so emitted samples still follow the target distribution; the draft speeds sampling but does not replace the target’s quality check."
+    },
+    {
+      "stage": "check",
+      "question": "For a proposed token, the target probability is p=0.3 and the draft probability is q=0.6. Under the lesson's acceptance rule, what probability accepts it?",
+      "options": [
+        "1.0, because p is smaller than q.",
+        "0.3, because acceptance equals target probability.",
+        "2.0, from q/p before clipping.",
+        "0.5, from min(1,p/q)."
+      ],
+      "correct": 3,
+      "explanation": "The acceptance probability is min(1,p/q)=min(1,0.3/0.6)=0.5. Reversing the ratio gives q/p=2, which clips to 1 and would accept every proposal, so the numerator must be the target probability. The ratio measures target support for the draft token."
+    },
+    {
+      "stage": "check",
+      "question": "At a rejected position, target distribution p=[0.6,0.4] and draft distribution q=[0.8,0.2]. What replacement distribution comes from the positive residual?",
+      "options": [
+        "[1, 0], because q-p is [0.2,0] before normalization.",
+        "[0.6, 0.4], because the residual is always the target distribution.",
+        "[0.8, 0.2], because the residual is always the draft distribution.",
+        "[0, 1], because max(p-q,0) is [0,0.2] before normalization."
+      ],
+      "correct": 3,
+      "explanation": "On rejection, take the positive part of p−q: [max(0,0.6−0.8), max(0,0.4−0.2)]=[0,0.2]. Its sum is 0.2, so normalization gives [0,1], restoring target mass the draft underrepresented; only where p exceeds q is residual mass available."
+    },
+    {
+      "stage": "check",
+      "question": "With acceptance rate alpha=0.8 and draft length K=4, what is the expected number of tokens emitted per target verification pass?",
+      "options": [
+        "About 4.00 tokens, because four drafts are proposed.",
+        "About 5.00 tokens, because K+1 is always emitted.",
+        "About 2.56 tokens, from alpha times K.",
+        "About 3.36 tokens, from (1-0.8^5)/(1-0.8)."
+      ],
+      "correct": 3,
+      "explanation": "Expected output is (1−α^(K+1))/(1−α), the sum 1+α+…+α^K for accepted-prefix lengths. With α=0.8 and K=4, (1−0.8^5)/0.2=3.3616 tokens per pass; the terms count probabilities of accepting zero through four drafts, five possible prefix lengths."
+    },
+    {
+      "stage": "post",
+      "question": "An EAGLE draft produces a candidate tree instead of a single chain. What attention mask should the target use to verify it?",
+      "options": [
+        "A fully bidirectional mask where every candidate sees every other candidate.",
+        "A padding mask that removes every candidate after the root.",
+        "A tree-causal mask where each candidate attends only to its ancestors.",
+        "A sliding-window mask that lets each candidate see only the last token."
+      ],
+      "correct": 2,
+      "explanation": "A tree-causal mask lets each candidate attend along its own ancestor path, preserving causal context while preventing sibling branches from leaking into one another. A fully bidirectional mask would mix competing candidates during verification."
+    },
+    {
+      "stage": "post",
+      "question": "A service runs high-temperature creative sampling, where draft-target agreement is low. What deployment effect should it monitor?",
+      "options": [
+        "Draft overhead may outweigh the low accepted-token count and reduce speed.",
+        "The target will always accept more tokens as temperature rises.",
+        "The tree mask will convert low acceptance into guaranteed speedup.",
+        "The rejection rule becomes approximate and changes the target distribution."
+      ],
+      "correct": 0,
+      "explanation": "High temperature makes draft and target distributions less aligned, reducing acceptance; measure accepted tokens per verify and actual wall time because draft cost may exceed the savings. Rejection sampling remains exact even when it is not faster."
+    }
+  ]
+}

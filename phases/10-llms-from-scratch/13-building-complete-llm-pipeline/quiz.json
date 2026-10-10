@@ -1,0 +1,78 @@
+{
+  "lesson": "13-building-complete-llm-pipeline",
+  "title": "Building a Complete LLM Pipeline",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A training run must be replayed by a teammate, and stage outputs must be checked before downstream use. What should the manifest record?",
+      "options": [
+        "Only the final model filename and the latest training loss.",
+        "The evaluation scores without stage inputs or configuration.",
+        "The seed, code revision, stage configuration, and input/output artifact hashes.",
+        "Only the cloud bucket path and the name of the current operator."
+      ],
+      "correct": 2,
+      "explanation": "A replayable manifest records the seed, code revision, stage recipes, and each artifact’s input/output hash, so a teammate can reconstruct the run and verify stage contracts. A filename or score alone cannot identify immutable content or reproduce the inputs."
+    },
+    {
+      "stage": "check",
+      "question": "Stages 07 and 08 both consume stage 06, and stage 09 consumes both 07 and 08. Which execution plan respects the pipeline dependencies?",
+      "options": [
+        "Run 09 first, then execute 07 and 08 to fill its missing inputs.",
+        "Run every stage independently because manifests contain hashes.",
+        "Run 07, then 09, and omit 08 from the combined policy.",
+        "Run 07 and 08 in parallel, then wait for both before stage 09."
+      ],
+      "correct": 3,
+      "explanation": "The DAG makes stages 07 and 08 sibling branches from stage 06, while stage 09 lists both as dependencies. Run the branches in parallel, then start 09 only after both hashes exist; starting it early violates its input contract."
+    },
+    {
+      "stage": "check",
+      "question": "A tokenizer change is made at stage 02. According to the dependency graph, what must be invalidated?",
+      "options": [
+        "Only stage 02, because its output hash is stored in the manifest.",
+        "Every downstream artifact, because each later stage depends on that tokenizer.",
+        "Only the stage 10 ship decision, because evaluation consumes the tokenizer directly.",
+        "Stages 11 and 12, because only quantization depends on tokenization."
+      ],
+      "correct": 1,
+      "explanation": "Stage 02 produces the tokenizer consumed by stage 03, which feeds pretraining and every downstream model stage. A changed tokenizer therefore makes descendant artifacts stale even if their stored hashes still match the old chain."
+    },
+    {
+      "stage": "check",
+      "question": "A model finishes training, but its safety-refusal rate is 0.08 while the pre-run gate requires at most 0.05. What should the pipeline report?",
+      "options": [
+        "HOLD, because one numeric gate failed.",
+        "HOLD only if the cost gate also fails.",
+        "SHIP, because the refusal rate is close to the requested maximum.",
+        "SHIP, because finishing training overrides evaluation thresholds."
+      ],
+      "correct": 0,
+      "explanation": "The gate requires safety_refusal_rate ≤0.05, but 0.08 is greater than that ceiling, so the result is HOLD even if other metrics pass. The “close enough” option ignores a numeric threshold that was fixed before training."
+    },
+    {
+      "stage": "post",
+      "question": "Stage 11 quantization fails, while stage 10 evaluation completed from stage 09. Which artifacts need to be rerun under the stated DAG?",
+      "options": [
+        "Stage 11 and its descendant stage 12 only.",
+        "Stage 09 and every stage after it, including stage 10.",
+        "Stage 10 and stage 12, because both consume evaluation metrics.",
+        "Stages 01 through 11 because the manifest hash chain resets."
+      ],
+      "correct": 0,
+      "explanation": "Stage 11 quantization consumes stage 09 and feeds stage 12, while stage 10 evaluation is a separate child of stage 09. A failure at 11 invalidates 11 and 12 only; rerunning stage 10 would redo unrelated completed work."
+    },
+    {
+      "stage": "post",
+      "question": "Two runs use the same manifest, code, and infrastructure and produce equivalent evaluation metrics, but their weights differ slightly at the bit level. How does the lesson classify this?",
+      "options": [
+        "Neither reproducible nor deterministic.",
+        "Both deterministic and bit-identical.",
+        "Deterministic but not reproducible.",
+        "Reproducible but not deterministic."
+      ],
+      "correct": 3,
+      "explanation": "Equivalent metrics under the same manifest, code, and infrastructure meet the lesson’s definition of reproducible. Different weight bits mean the run is not deterministic; distributed reduction order and floating-point rounding can cause that difference."
+    }
+  ]
+}

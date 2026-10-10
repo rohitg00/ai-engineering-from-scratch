@@ -1,0 +1,78 @@
+{
+  "lesson": "07-latent-diffusion-stable-diffusion",
+  "title": "Latent Diffusion & Stable Diffusion",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does Stable Diffusion move image denoising into a VAE latent space?",
+      "options": [
+        "It replaces the text encoder with a pixel classifier",
+        "It compresses away detail the denoiser need not process",
+        "It avoids decoding the final latent back to an image",
+        "It makes the VAE evaluate the exact image likelihood"
+      ],
+      "correct": 1,
+      "explanation": "Latent diffusion encodes an image into a smaller VAE representation so the denoiser processes fewer spatial values and can focus compute on semantic structure. The decoder is still needed to turn the final sampled latent back into pixels."
+    },
+    {
+      "stage": "check",
+      "question": "What is the training order in the two-stage latent-diffusion recipe?",
+      "options": [
+        "Train a VAE, freeze it, then train diffusion on its latents",
+        "Train the text encoder, then replace the U-Net with a GAN",
+        "Train the VAE and diffusion jointly from random weights",
+        "Train diffusion on pixels, then add a VAE after sampling"
+      ],
+      "correct": 0,
+      "explanation": "The recipe trains a VAE first, freezes that encoder-decoder, then trains diffusion using encoded latents as its data. Jointly training both stages is not the described two-stage pipeline."
+    },
+    {
+      "stage": "check",
+      "question": "In text-conditioned latent diffusion, what do cross-attention keys and values represent?",
+      "options": [
+        "The noise schedule coefficients",
+        "Image latent queries",
+        "Text encoder tokens",
+        "The VAE decoder’s output pixels"
+      ],
+      "correct": 2,
+      "explanation": "In cross-attention, image features provide queries and text-encoder tokens provide keys and values; this is how prompt content enters each denoising block. Noise schedule coefficients control corruption strength but are not token representations."
+    },
+    {
+      "stage": "check",
+      "question": "A conditional and unconditional noise estimate are combined using classifier-free guidance. What is the formula?",
+      "options": [
+        "ε_cfg = (1+w)ε_uncond − wε_cond",
+        "ε_cfg = wε_cond + (1−w)ε_uncond",
+        "ε_cfg = (1+w)ε_cond − wε_uncond",
+        "ε_cfg = ε_cond − wε_uncond only"
+      ],
+      "correct": 2,
+      "explanation": "The guidance formula extrapolates from the unconditional prediction toward the conditional one: ε_cfg=(1+w)ε_cond−wε_uncond. If terms are reversed, higher w emphasizes the unconditional term instead, pointing away from rather than strengthening the prompt conditioning."
+    },
+    {
+      "stage": "post",
+      "question": "A LoRA trained on SDXL fails to load correctly on SD3. What issue does the lesson identify?",
+      "options": [
+        "A LoRA only works with unconditioned generators",
+        "SD3 requires pixel-space diffusion for every edit",
+        "The latent spaces and attention dimensions differ",
+        "The LoRA needs a larger CFG scale"
+      ],
+      "correct": 2,
+      "explanation": "An SDXL LoRA is tied to the base model’s attention shapes and latent representation; SD3 uses a different latent channel count and MMDiT structure. A larger CFG scale cannot repair incompatible parameter or tensor dimensions."
+    },
+    {
+      "stage": "post",
+      "question": "A diffusion model gets oversaturated and loses diversity under strong guidance. What adjustment fits the lesson?",
+      "options": [
+        "Reduce the guidance scale toward 3–7",
+        "Raise guidance above 10 to preserve colors",
+        "Remove the unconditional estimate from training",
+        "Swap the VAE decoder for a text encoder"
+      ],
+      "correct": 0,
+      "explanation": "Very high CFG overweights prompt conditioning and can produce saturated images with less diversity. The lesson gives about 3–7 as a useful range, so reducing an excessive scale addresses the failure."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "09-reward-modeling-rlhf",
+  "title": "Reward Modeling & RLHF",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "People can compare two assistant responses but cannot write a reliable scalar formula for helpfulness. What training signal does RLHF use?",
+      "options": [
+        "Pairwise human preferences train a model to score responses.",
+        "A game simulator supplies a win or loss for each response.",
+        "A hand-written token rule directly defines the reward.",
+        "A language model's next-token loss ranks the responses."
+      ],
+      "correct": 0,
+      "explanation": "Human preference comparisons provide labels for a reward model to learn which response is better, avoiding the need to hand-code a scalar formula for helpfulness. A next-token objective rewards text prediction, not the pairwise judgment this alignment task needs."
+    },
+    {
+      "stage": "check",
+      "question": "Which ordering matches the three stages of the RLHF pipeline described in the lesson?",
+      "options": [
+        "Reward-model training, PPO optimization, then supervised fine-tuning.",
+        "Supervised fine-tuning, PPO optimization, then pairwise data collection.",
+        "PPO optimization, supervised fine-tuning, then reward-model training.",
+        "Supervised fine-tuning, reward-model training, then PPO optimization."
+      ],
+      "correct": 3,
+      "explanation": "The policy first learns demonstrations through SFT, then the reward model learns from preferred/rejected pairs, and PPO optimizes the policy against that reward. Reversing the stages would make PPO run before the learned preference signal exists."
+    },
+    {
+      "stage": "check",
+      "question": "In Bradley-Terry training, what preference should the reward model assign to a human-preferred response y+ over y-?",
+      "options": [
+        "A higher score for y- so the reward difference remains positive.",
+        "A lower score for y+ so the reward difference favors the rejected response.",
+        "A higher score for y+ so the reward difference favors the preferred response.",
+        "Equal scores for both responses so the prompt controls preference."
+      ],
+      "correct": 2,
+      "explanation": "Bradley–Terry assigns preference probability σ(R(x,y+)−R(x,y−)); training raises that difference for the preferred response. Giving y− the higher score reverses the sign and increases the loss instead of fitting the human label."
+    },
+    {
+      "stage": "check",
+      "question": "Why does PPO-RLHF subtract a KL penalty to a frozen SFT reference policy?",
+      "options": [
+        "It replaces human preference labels with an exact transition model.",
+        "It rewards responses that have low likelihood under the SFT policy.",
+        "It keeps the policy near the SFT reference and its training support.",
+        "It guarantees the optimized policy cannot change any response token."
+      ],
+      "correct": 2,
+      "explanation": "The KL penalty subtracts β·KL(πθ||πref), discouraging the trainable policy from drifting far from its frozen SFT reference where the reward model has support. It regularizes change; it does not freeze every token or supply a transition model."
+    },
+    {
+      "stage": "post",
+      "question": "RM reward keeps rising while blind human evaluations plateau or decline. Which response addresses likely reward-model over-optimization?",
+      "options": [
+        "Stop early, raise the KL coefficient, and broaden reward-model training data.",
+        "Lower the KL coefficient and remove held-out human evaluation.",
+        "Keep training because increasing RM reward proves better human outcomes.",
+        "Increase response length so the reward model sees more tokens."
+      ],
+      "correct": 0,
+      "explanation": "A rising proxy score with plateauing or falling human ratings signals that the policy may be exploiting reward-model gaps. Stopping early, raising β, and broadening RM data address that mismatch; lowering β would permit more drift from the reference."
+    },
+    {
+      "stage": "post",
+      "question": "In the described RLHF pipeline, where is the reward-model score applied relative to PPO's token-level trajectory?",
+      "options": [
+        "The reward model scores only the prompt, while PPO scores the terminal state.",
+        "The reward model scores the completed response, while PPO computes token-level advantages.",
+        "The reward model scores the reference policy, while PPO scores human labels directly.",
+        "The reward model scores each sampled token, while PPO ignores the response outcome."
+      ],
+      "correct": 1,
+      "explanation": "The reward model evaluates the completed response, while PPO uses token-level advantages to update decisions along the generated sequence. Scoring only the prompt cannot distinguish candidate responses, and a per-token RM is a different process-reward setup."
+    }
+  ]
+}

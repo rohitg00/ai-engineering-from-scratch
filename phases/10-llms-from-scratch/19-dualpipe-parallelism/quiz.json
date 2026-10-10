@@ -1,0 +1,78 @@
+{
+  "lesson": "19-dualpipe-parallelism",
+  "title": "DualPipe Parallelism",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In pipeline-parallel training, why does a GPU stage experience a pipeline bubble?",
+      "options": [
+        "It has too many expert weights to fit in its parameter shard.",
+        "It computes two attention heads for every key/value head.",
+        "It waits for prior output or downstream gradient before continuing.",
+        "It stores evaluation metrics in the run manifest."
+      ],
+      "correct": 2,
+      "explanation": "A pipeline stage cannot run its forward chunk until it receives the previous stage’s activation, or its backward chunk until it receives the downstream gradient. Those dependency waits leave the GPU idle and are the pipeline bubble."
+    },
+    {
+      "stage": "check",
+      "question": "Which four components make up a DualPipe forward chunk in the lesson?",
+      "options": [
+        "Embedding, reward model, optimizer update, and evaluation gate.",
+        "Attention, all-to-all dispatch, expert MLP, and all-to-all combine.",
+        "Forward pass, tokenizer, value loss, and KV-cache rollback.",
+        "Query projection, rotary encoding, critic baseline, and residual sampling."
+      ],
+      "correct": 1,
+      "explanation": "A DualPipe forward chunk separates attention, all-to-all dispatch, expert MLP computation, and all-to-all combine. The tokenizer, reward model, or optimizer belong elsewhere in the training pipeline, not in this MoE chunk."
+    },
+    {
+      "stage": "check",
+      "question": "Why does DualPipe keep two copies of needed model layers on each device?",
+      "options": [
+        "Each rank holds early and late layers for opposite directions.",
+        "One copy trains in FP8 while the other copy evaluates in BF16.",
+        "One copy stores optimizer state and the other stores activations.",
+        "The two copies let every rank run two independent tokenizers."
+      ],
+      "correct": 0,
+      "explanation": "Bidirectional injection sends work from both pipeline ends, so each rank needs its early layer i and the paired late layer P−1−i. Those copies serve opposite directions; they are not precision variants or optimizer/activation stores."
+    },
+    {
+      "stage": "check",
+      "question": "When Expert Parallelism is not the main bottleneck, what tradeoff does DualPipeV make?",
+      "options": [
+        "It uses two parameter copies and removes all communication overlap.",
+        "It removes pipeline parallelism and requires a single GPU.",
+        "It uses one parameter copy and accepts a slightly larger bubble than DualPipe.",
+        "It uses one parameter copy and guarantees a smaller bubble than DualPipe."
+      ],
+      "correct": 2,
+      "explanation": "DualPipeV folds bidirectional scheduling into a V-shaped schedule with one parameter copy, reducing memory replication. The tradeoff is a slightly larger bubble than DualPipe, not guaranteed improvement on both memory and bubble size."
+    },
+    {
+      "stage": "post",
+      "question": "For P=4 pipeline ranks and M=8 micro-batches, the count is divisible by 2P. What applies to DualPipe's stable phase?",
+      "options": [
+        "The stable phase has zero bubble, though warmup and cooldown still have some.",
+        "The schedule requires two times as many micro-batches to start.",
+        "The stable phase has the same growing bubble as 1F1B.",
+        "The whole schedule has no warmup or cooldown slots at all."
+      ],
+      "correct": 0,
+      "explanation": "Here 2P=2×4=8 and M=8, so the count meets the divisibility condition for a zero-bubble stable phase. Warmup and cooldown still contain fixed idle slots, so the entire schedule is not literally bubble-free."
+    },
+    {
+      "stage": "post",
+      "question": "Which overlap hides MoE communication inside useful compute in the DualPipe schedule?",
+      "options": [
+        "Dispatch waits for a full pipeline drain, while combine begins after evaluation.",
+        "Dispatch overlaps optimizer updates, while combine overlaps tokenizer training.",
+        "Dispatch overlaps the reward model, while combine overlaps the KL penalty.",
+        "Dispatch overlaps attention of the next chunk, while combine overlaps later MLP compute."
+      ],
+      "correct": 3,
+      "explanation": "DualPipe overlaps dispatch communication with attention of the next chunk, then hides combine communication alongside later MLP compute. Waiting for a full drain exposes communication instead of covering it with useful work."
+    }
+  ]
+}

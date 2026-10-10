@@ -1,0 +1,78 @@
+{
+  "lesson": "05-full-transformer",
+  "title": "The Full Transformer — Encoder + Decoder",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does a transformer need more than one attention layer to build a capable language model?",
+      "options": [
+        "A decoder cannot accept any token embeddings",
+        "Attention must run once for every vocabulary item",
+        "Stacked depth gives the model more processing capacity",
+        "A single layer cannot produce positional embeddings"
+      ],
+      "correct": 2,
+      "explanation": "One attention layer extracts features, but a stack composes attention, residual, normalization, and feed-forward transformations to build richer representations. A single layer’s limitation is capacity, not an inability to create positional embeddings."
+    },
+    {
+      "stage": "check",
+      "question": "In decoder cross-attention, where do queries, keys, and values come from?",
+      "options": [
+        "All three projections from encoder states",
+        "Queries from encoder; keys and values from decoder",
+        "All three projections from decoder states",
+        "Queries from decoder; keys and values from encoder"
+      ],
+      "correct": 3,
+      "explanation": "Cross-attention routes source information into the decoder: its queries come from decoder states, while keys and values are projected from encoder output. Reversing those roles would make encoder positions query the decoder rather than condition decoder positions on the source."
+    },
+    {
+      "stage": "check",
+      "question": "Which attention mask belongs in a bidirectional encoder block?",
+      "options": [
+        "A mask that attends only to the current token",
+        "A mask that hides every later position",
+        "A triangular mask that hides all future positions",
+        "No causal mask; positions see all positions"
+      ],
+      "correct": 3,
+      "explanation": "An encoder is bidirectional, so each position can use both earlier and later context; it therefore has no causal mask. A triangular future mask is for autoregressive decoder self-attention and would remove valid encoder context."
+    },
+    {
+      "stage": "check",
+      "question": "What does a residual connection add around a sublayer?",
+      "options": [
+        "The sublayer output added to its input",
+        "The encoder output appended to every token",
+        "The attention weights multiplied by the loss",
+        "The sublayer input divided by its mean"
+      ],
+      "correct": 0,
+      "explanation": "The residual path computes x + sublayer(x), retaining the input while adding the transformation. Dividing by the mean describes a normalization-like operation, not the skip addition that supports information and gradient flow."
+    },
+    {
+      "stage": "post",
+      "question": "A decoder-only GPT block should generate the next token from previous context. Which sublayers should it contain?",
+      "options": [
+        "Cross-attention and a second encoder stack",
+        "Unmasked self-attention and image patch pooling",
+        "Masked self-attention and an FFN",
+        "Bidirectional self-attention and cross-attention"
+      ],
+      "correct": 2,
+      "explanation": "A GPT-style decoder-only block uses causal masked self-attention and an FFN; it has no encoder output for cross-attention. Unmasked attention would expose future target tokens during next-token prediction."
+    },
+    {
+      "stage": "post",
+      "question": "A deep decoder is unstable with normalization after each residual addition. Which layout matches the lesson’s modern default?",
+      "options": [
+        "Post-norm: normalize after each residual addition",
+        "Normalize only the final vocabulary logits",
+        "Remove normalization from every transformer block",
+        "Pre-norm: normalize before each sublayer"
+      ],
+      "correct": 3,
+      "explanation": "Pre-norm computes x + sublayer(LN(x)), normalizing before each sublayer; the lesson cites it as the modern default for deep stacks. Post-norm puts normalization after the residual sum and is described as harder to train deeply."
+    }
+  ]
+}

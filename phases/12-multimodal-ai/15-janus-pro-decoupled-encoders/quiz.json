@@ -1,0 +1,78 @@
+{
+  "lesson": "15-janus-pro-decoupled-encoders",
+  "title": "Janus-Pro: Decoupled Encoders for Unified Multimodal Models",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A unified model must understand images semantically and also generate crisp images. What Janus-Pro design addresses the conflict between those goals?",
+      "options": [
+        "Use separate transformer bodies and discard all pretrained language weights.",
+        "Use one encoder optimized only for image reconstruction in both directions.",
+        "Use separate semantic and reconstruction encoders with a shared transformer body.",
+        "Use a single VQ tokenizer for understanding and generation."
+      ],
+      "correct": 2,
+      "explanation": "Janus-Pro keeps one transformer body but routes understanding through semantic SigLIP features and generation through reconstruction-friendly VQ codes. A single encoder tends to compromise one objective because semantic similarity and pixel reconstruction need different representations."
+    },
+    {
+      "stage": "check",
+      "question": "For an image-question-answering prompt, which Janus-Pro input route does the lesson specify?",
+      "options": [
+        "Both encoders run and their outputs are averaged before decoding.",
+        "SigLIP features pass through an MLP into the shared body, which emits text.",
+        "Text tokens pass through the SigLIP encoder, which emits image codes.",
+        "VQ image IDs pass through the shared body, which emits pixels directly."
+      ],
+      "correct": 1,
+      "explanation": "For image QA, the image passes through SigLIP and an MLP into the shared transformer body, which produces text. The VQ tokenizer/decoder path is for image generation, not for encoding the semantic input to an answer."
+    },
+    {
+      "stage": "check",
+      "question": "Why does Janus-Pro use different image encoders for understanding and generation?",
+      "options": [
+        "The two encoders reduce the model's training data requirements to zero.",
+        "One encoder is required for each transformer layer in the shared body.",
+        "SigLIP codes reconstruct crisp pixels, while VQ features encode semantic similarity.",
+        "SigLIP features support semantic understanding, while VQ codes decode back to pixels."
+      ],
+      "correct": 3,
+      "explanation": "SigLIP’s contrastive features organize images by semantic similarity, while VQ codes are designed to reconstruct visual detail. Separate encoders let each pathway preserve the property its task needs rather than forcing one representation to do both."
+    },
+    {
+      "stage": "check",
+      "question": "What data-scaling change is listed for Janus-Pro's unified training stage compared with original Janus?",
+      "options": [
+        "It grows from 26M pairs to 72M pairs.",
+        "It grows from 72M pairs to 90M pairs.",
+        "It shrinks from 72M pairs to 26M pairs.",
+        "It keeps 26M pairs and only changes image resolution."
+      ],
+      "correct": 0,
+      "explanation": "The unified stage grows from 26M pairs in Janus to 72M in Janus-Pro. The 72M-to-90M values belong to stage 1 alignment, so using those numbers for stage 2 confuses training stages."
+    },
+    {
+      "stage": "post",
+      "question": "A product needs image understanding only and has no image-generation requirement. Which architecture guidance follows from the lesson?",
+      "options": [
+        "Use Janus-Pro to maintain both encoder paths and the VQ decoder.",
+        "Use two separate transformer bodies so no weights are shared.",
+        "Use a simpler understanding VLM such as a LLaVA-family model.",
+        "Use JanusFlow because every understanding task needs flow generation."
+      ],
+      "correct": 2,
+      "explanation": "When image generation is out of scope, the VQ encoder/decoder path adds complexity without serving a product need. The lesson recommends a simpler LLaVA-family understanding model rather than retaining both Janus-Pro pathways."
+    },
+    {
+      "stage": "post",
+      "question": "A prompt asks the system to describe an image and then sketch a new version. What does the toy router do when understanding and generation scores tie?",
+      "options": [
+        "Always route to VQ because image output has priority.",
+        "Reject the request because one prompt cannot contain two tasks.",
+        "Always route to SigLIP because understanding has priority.",
+        "Mark the request ambiguous and run both paths before merging outputs."
+      ],
+      "correct": 3,
+      "explanation": "The prompt contains one understanding cue (“describe”) and one generation cue (“sketch”), so the toy router’s keyword scores tie. It marks the request ambiguous and runs both routes; forcing either route would omit one requested output."
+    }
+  ]
+}

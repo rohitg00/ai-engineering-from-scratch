@@ -1,0 +1,78 @@
+{
+  "lesson": "17-native-sparse-attention",
+  "title": "Native Sparse Attention (DeepSeek NSA)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "At very long sequence lengths, full attention is expensive because its per-query key count grows with context. What does NSA combine to reduce that cost?",
+      "options": [
+        "A reward model, a top-k policy, and a latent state recurrence.",
+        "A single fixed window, a learned value head, and a replay buffer.",
+        "Three dense attention passes over the entire uncompressed sequence.",
+        "Compressed global summaries, selected fine blocks, and a recent-token window."
+      ],
+      "correct": 3,
+      "explanation": "NSA avoids scanning every uncompressed key for every query by combining coarse summaries over the sequence, fine tokens from selected blocks, and a recent-token window. Each branch covers a different need: global context, routed detail, or local patterns."
+    },
+    {
+      "stage": "check",
+      "question": "For a synthetic sequence with N=1024, block size l=32, top-k k=4, and window W=128, how many keys does the lesson's NSA count use per query?",
+      "options": [
+        "1024 keys: full attention uses the entire sequence.",
+        "288 keys: 32 compressed + 128 selected + 128 window.",
+        "164 keys: 32 compressed + 4 selected + 128 window.",
+        "160 keys: 32 compressed + 128 selected; the window is omitted."
+      ],
+      "correct": 1,
+      "explanation": "The toy count is N/l=1024/32=32 compressed keys, k·l=4×32=128 selected keys, plus W=128 recent keys, totaling 288. The 164 option counts four blocks as four tokens and omits their 32-token contents."
+    },
+    {
+      "stage": "check",
+      "question": "What remains differentiable when NSA uses discrete top-k selection to choose fine-grained blocks?",
+      "options": [
+        "Compressed attention stays differentiable; top-k indices remain discrete.",
+        "The gate turns top-k into a dense attention map.",
+        "Both branch outputs are detached to keep selection stable.",
+        "A straight-through estimator sends gradients through selected indices."
+      ],
+      "correct": 0,
+      "explanation": "The compressed branch uses softmax attention, so its scores and output remain differentiable; selected-block attention also contributes gradients. The discrete top-k indices only choose memory blocks, so no straight-through gradient is sent through the index selection itself."
+    },
+    {
+      "stage": "check",
+      "question": "Which branch is designed to preserve short-range syntax and local coreference?",
+      "options": [
+        "The compressed branch over block summary tokens.",
+        "The selected branch over top-k distant blocks only.",
+        "The gate MLP over the query representation.",
+        "The sliding-window branch over the most recent W tokens."
+      ],
+      "correct": 3,
+      "explanation": "The sliding-window branch attends to the most recent W tokens, retaining nearby patterns such as syntax and local coreference. Compressed summaries cover the broader sequence, while selected blocks recover fine detail from relevant distant regions."
+    },
+    {
+      "stage": "post",
+      "question": "The three branch-gate outputs use independent sigmoid activations. What should an implementation allow?",
+      "options": [
+        "The gate weights must sum to one because they form a softmax distribution.",
+        "The gate weights are fixed and cannot depend on the query.",
+        "The gate must assign zero weight to two branches at every position.",
+        "The gate weights need not sum to one before combining branch outputs."
+      ],
+      "correct": 3,
+      "explanation": "Independent sigmoid outputs gate each branch separately, so they need not sum to one as softmax probabilities would. The query-dependent gate can weight several useful branches together rather than forcing a normalized allocation."
+    },
+    {
+      "stage": "post",
+      "question": "A team wants to serve an existing dense-attention checkpoint at 8k context and avoid continued training. Which conclusion fits the lesson's deployment guidance?",
+      "options": [
+        "NSA is a poor fit because short contexts add branch overhead and dense weights were not trained for it.",
+        "NSA is a direct inference-only switch that guarantees long-range recall without retraining.",
+        "NSA is required because dense attention cannot process sequences under 16k.",
+        "NSA should replace the MLP because attention is not needed at short context."
+      ],
+      "correct": 0,
+      "explanation": "At 8k, the lesson says three-branch overhead may outweigh savings, and a dense checkpoint was not trained for the sparse pattern. NSA is meant for long-context training or an NSA-native checkpoint, not an inference-only retrofit."
+    }
+  ]
+}

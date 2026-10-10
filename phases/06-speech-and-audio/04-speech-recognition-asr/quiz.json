@@ -1,0 +1,78 @@
+{
+  "lesson": "04-speech-recognition-asr",
+  "title": "Speech Recognition (ASR) — CTC, RNN-T, Attention",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do speech recognizers need a sequence method in addition to classifying audio frames?",
+      "options": [
+        "Audio frames do not align one-to-one with output tokens",
+        "The transcript length is fixed before recording begins",
+        "Each audio frame already contains exactly one output word",
+        "Silence always marks a word boundary reliably"
+      ],
+      "correct": 0,
+      "explanation": "Acoustic frames do not map one-to-one to words or characters, and speech durations vary, so the transcript length is not known before decoding. A sequence method must align variable-duration audio evidence with a variable-length token sequence."
+    },
+    {
+      "stage": "check",
+      "question": "Greedy CTC sees the best path `t t blank t`. What transcript does collapse-repeats-then-remove-blanks produce?",
+      "options": [
+        "blank t",
+        "t",
+        "t_t",
+        "tt"
+      ],
+      "correct": 3,
+      "explanation": "Greedy CTC first collapses adjacent repeats: t t blank t becomes t blank t, then blank removal leaves tt. The “t” option would result from deleting blank first, which makes the two remaining t symbols adjacent before collapsing."
+    },
+    {
+      "stage": "check",
+      "question": "Which RNN-T component combines encoder-frame information with the token-history predictor state?",
+      "options": [
+        "The blank-removal decoder",
+        "The autoregressive cross-attention decoder",
+        "The joiner network",
+        "The mel filterbank projection"
+      ],
+      "correct": 2,
+      "explanation": "RNN-T’s joiner combines the encoder’s current audio-frame representation with the predictor’s token-history state to score the next output. Cross-attention belongs to the attention encoder-decoder formulation; RNN-T uses its joiner for the joint distribution."
+    },
+    {
+      "stage": "check",
+      "question": "Reference has 5 words; hypothesis has one substitution and one insertion. What is WER?",
+      "options": [
+        "0.50",
+        "0.33",
+        "0.20",
+        "0.40"
+      ],
+      "correct": 3,
+      "explanation": "WER counts word substitutions, deletions, and insertions over the reference length: (1 + 0 + 1)/5 = 0.40. The 0.33 distractor divides two edits by the six-word hypothesis; WER uses the five reference words."
+    },
+    {
+      "stage": "post",
+      "question": "A CTC recognizer is streamable but often misses contextual word choices. What documented addition can help?",
+      "options": [
+        "Use independent argmax decoding with a larger vocabulary",
+        "Delay decoding until every frame is converted to mel",
+        "Replace its blank token with a punctuation token",
+        "Fuse an external language model during beam search"
+      ],
+      "correct": 3,
+      "explanation": "CTC predicts each frame independently, so an external language model can add sequence-level word context during beam search or shallow fusion. A bigger vocabulary does not change conditional independence, so greedy per-frame choices still lack language context."
+    },
+    {
+      "stage": "post",
+      "question": "A 4-minute recording is sent to Whisper. Which handling addresses its documented input-window limit?",
+      "options": [
+        "Use VAD-based chunks with 30-second windows and overlap",
+        "Split it into non-overlapping one-second windows",
+        "Convert it into a single transcript before inference",
+        "Send the complete recording as one unchunked window"
+      ],
+      "correct": 0,
+      "explanation": "Whisper processes a fixed 30-second window, so a four-minute clip must be divided into bounded chunks, often around speech regions. A single four-minute input exceeds the documented window instead of preserving the full recording through chunking."
+    }
+  ]
+}

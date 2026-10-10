@@ -1,0 +1,78 @@
+{
+  "lesson": "09-parallel-swarm-networks",
+  "title": "Parallel / Swarm / Networked Architectures",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A large job has independent tasks with unpredictable durations. Which swarm feature distributes work without a central dispatcher?",
+      "options": [
+        "A single supervisor assigns every task after each worker finishes",
+        "One agent holds all state and runs every executor serially",
+        "Each task waits for all earlier task results",
+        "Workers pull the next available task from a shared queue"
+      ],
+      "correct": 3,
+      "explanation": "Each idle worker pulls the next available item from a shared queue, so variable durations are balanced without a central dispatcher assigning every completion. A supervisor could rebalance tasks too, but it would violate the stated no-central-dispatcher condition."
+    },
+    {
+      "stage": "check",
+      "question": "Which task is a good fit for a decentralized worker swarm?",
+      "options": [
+        "Many independent items with throughput more important than strict order",
+        "A research task that needs one coherent global plan",
+        "A pipeline where each step needs the immediately prior result",
+        "A workflow where every decision needs a single audit owner"
+      ],
+      "correct": 0,
+      "explanation": "A decentralized swarm suits many independent items when throughput matters more than a single global plan. A multi-step pipeline has ordering dependencies, so independent pulls can start work before required inputs exist."
+    },
+    {
+      "stage": "check",
+      "question": "A swarm processes a step before the task that produces its input. Which task property makes the architecture a poor fit?",
+      "options": [
+        "There are several independent classifications",
+        "The work items vary in duration",
+        "Workers can subscribe to task types",
+        "The workflow has ordering dependencies"
+      ],
+      "correct": 3,
+      "explanation": "If a step needs an earlier result, task order is a dependency constraint; queue availability alone does not guarantee its producer has finished. Variable duration and task-type subscriptions do not fix that prerequisite relation."
+    },
+    {
+      "stage": "check",
+      "question": "What queue policy can reduce starvation of long-running tasks?",
+      "options": [
+        "Always pick the task with the shortest estimated runtime",
+        "Allow fast-task producers to enqueue without back-pressure",
+        "Priority aging that raises a task's priority as it waits",
+        "Drop any task that remains in the queue too long"
+      ],
+      "correct": 2,
+      "explanation": "Priority aging raises the effective priority of work as its wait grows, preventing fast short tasks from indefinitely passing a long one. Always choosing the shortest estimate can repeatedly defer the slow job."
+    },
+    {
+      "stage": "post",
+      "question": "The swarm demo uses an in-memory queue. What production property is missing if workers may crash?",
+      "options": [
+        "A random ordering of task ids",
+        "Durable storage so queued tasks survive worker failure",
+        "A global model shared by all executors",
+        "A longer system prompt shared by every worker"
+      ],
+      "correct": 1,
+      "explanation": "A process-local queue disappears when its worker process exits, so recovery needs a durable queue or store that preserves pending tasks. A shared model changes what workers compute, not whether queued work survives a crash."
+    },
+    {
+      "stage": "post",
+      "question": "A fixed assignment gives one worker all the slow jobs while other workers finish early. Why can shared-queue pulling improve wall time?",
+      "options": [
+        "A queue sorts all tasks by their final result",
+        "The queue makes every slow task finish faster",
+        "The coordinator forces every worker to handle the same job",
+        "Available workers take remaining work instead of waiting idle"
+      ],
+      "correct": 3,
+      "explanation": "Dynamic queue pulling lets a worker that finishes early claim remaining work rather than sit idle behind a worker’s fixed batch of slow jobs. The queue balances assignments; it does not accelerate the execution of any one slow task."
+    }
+  ]
+}
