@@ -8,6 +8,7 @@ const handlers = {
   '/api/v1/catalog': require('../api/v1/catalog'), '/api/v1/resource': require('../api/v1/resource'),
   '/api/mcp': require('../api/mcp'), '/api/not-found': require('../api/not-found'),
   '/api/lesson': require('../api/lesson'), '/api/certification': require('../api/certification'),
+  '/api/og': require('../api/og'),
 };
 
 function queryObject(params) {

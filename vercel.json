@@ -44,6 +44,14 @@
       "dest": "/api/certification?legacy=1"
     },
     {
+      "src": "/og/([a-z]+)/([a-z0-9][a-z0-9/-]*)\\.png",
+      "methods": [
+        "GET",
+        "HEAD"
+      ],
+      "dest": "/api/og?type=$1&id=$2"
+    },
+    {
       "src": "/",
       "has": [
         {
@@ -465,11 +473,15 @@
   "functions": {
     "api/lesson.js": {
       "maxDuration": 10,
-      "includeFiles": "{site/lesson.html,site/lesson-seo.json,site/lesson-markdown.js,languages.json,phases/*/*/docs/en.md,certifications/*/lessons/*/docs/en.md}"
+      "includeFiles": "{site/lesson.html,site/lesson-seo.json,site/lesson-markdown.js,languages.json,phases/*/*/docs/en.md,certifications/*/lessons/*/docs/en.md,lib/og-render.js,lib/og-fonts/*.json}"
     },
     "api/certification.js": {
       "maxDuration": 10,
-      "includeFiles": "{site/certification.html,site/certification-seo.json}"
+      "includeFiles": "{site/certification.html,site/certification-seo.json,lib/og-render.js,lib/og-fonts/*.json}"
+    },
+    "api/og.js": {
+      "maxDuration": 10,
+      "includeFiles": "{site/lesson-seo.json,site/certification-seo.json,site/og-cards.json,lib/og-render.js,lib/og-fonts/*.json}"
     },
     "api/markdown.js": {
       "maxDuration": 10,
