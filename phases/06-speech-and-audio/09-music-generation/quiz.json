@@ -1,0 +1,78 @@
+{
+  "lesson": "09-music-generation",
+  "title": "Music Generation — MusicGen, Stable Audio, Suno, and the Licensing Earthquake",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A prompt asks for a 30-second instrumental loop. Which model family in the lesson predicts discrete audio-codec tokens?",
+      "options": [
+        "A diarization and clustering pipeline",
+        "A mel-only classification network",
+        "An autoregressive token language model",
+        "A speaker verification embedding model"
+      ],
+      "correct": 2,
+      "explanation": "MusicGen represents audio as discrete EnCodec codebook tokens and predicts those tokens autoregressively before decoding them to a waveform. A classifier assigns labels to audio; it does not generate a time-ordered sequence of codec tokens."
+    },
+    {
+      "stage": "check",
+      "question": "A user hums a tune and wants a jazz-piano cover that preserves the melody but changes timbre. Which input path does the lesson describe?",
+      "options": [
+        "MusicGen melody with a chromagram from the hummed audio",
+        "FAD reference folders passed to a codec decoder",
+        "Stable Audio Open with only a class label",
+        "Whisper timestamps attached to speaker embeddings"
+      ],
+      "correct": 0,
+      "explanation": "MusicGen melody conditioning derives a chromagram from the hummed input and conditions generation on it, preserving the tune while changing timbre. FAD compares generated and reference audio distributions for evaluation; it is not a melody-conditioning input."
+    },
+    {
+      "stage": "check",
+      "question": "How is FAD interpreted when comparing generated music with a reference set?",
+      "options": [
+        "Lower embedding-distribution distance is better",
+        "Higher text-audio similarity distance is better",
+        "Lower transcription error means better FAD",
+        "Higher speaker similarity means better FAD"
+      ],
+      "correct": 0,
+      "explanation": "FAD measures distance between generated and reference audio embedding distributions, so smaller distance indicates closer distributions. CLAP measures prompt-to-audio alignment as a separate score; FAD is a distribution distance where lower is better."
+    },
+    {
+      "stage": "check",
+      "question": "When extending autoregressive MusicGen beyond roughly 30 seconds, what structural failure should you watch for?",
+      "options": [
+        "Repetition or loss of musical structure over time",
+        "A codec format that cannot represent repeated notes",
+        "A loss of prompt text because FAD truncates the audio",
+        "A hard limit that prevents any output beyond 10 seconds"
+      ],
+      "correct": 0,
+      "explanation": "Autoregressive MusicGen predicts codec tokens step by step and can repeat or lose structure as generation extends beyond about 30 seconds. The documented problem is repetition and structural drift, not a universal 10-second output cutoff."
+    },
+    {
+      "stage": "post",
+      "question": "A sound-design task needs ambient textures and loops, with no full-song lyrics. Which stack is recommended?",
+      "options": [
+        "Suno v5 for commercial full songs with vocals",
+        "ACE-Step XL for multilingual speech recognition",
+        "MusicGen melody mode for vocal separation",
+        "Stable Audio Open for instrumental sound design"
+      ],
+      "correct": 3,
+      "explanation": "Stable Audio Open is the lesson’s choice for instrumental sound design, including loops and ambient textures without full-song lyrics. “Suno v5 for commercial full songs with vocals” targets a different task: generating complete vocal songs."
+    },
+    {
+      "stage": "post",
+      "question": "A generated track scores well on FAD but seems off-prompt. What complementary evaluation should you use?",
+      "options": [
+        "Report EER and speaker identity as the main music score",
+        "Add genre adjectives to prompts and compare FAD only",
+        "Measure CLAP alignment and review paired listener judgments",
+        "Repeat FAD with a smaller fixed reference collection"
+      ],
+      "correct": 2,
+      "explanation": "FAD compares overall audio distributions, while CLAP checks alignment between a text prompt and its generated audio; listener judgments add a direct preference signal. EER measures speaker verification and cannot reveal whether the music matches its prompt."
+    }
+  ]
+}
