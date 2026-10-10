@@ -1,0 +1,78 @@
+{
+  "lesson": "13-flow-matching-rectified-flows",
+  "title": "Flow Matching & Rectified Flows",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In flow matching, what path is learned between a data sample and a noise sample?",
+      "options": [
+        "A straight-line interpolation from noise to data",
+        "A curved Markov chain of pixel masks",
+        "A discrete sequence of class labels",
+        "A latent Gaussian posterior conditioned on an image"
+      ],
+      "correct": 0,
+      "explanation": "Flow matching defines x_t=t·x_1+(1−t)·x_0, interpolating from noise x_1 at t=1 to data x_0 at t=0, and trains a vector field along that straight path. A curved Markov chain is the DDPM-style framing."
+    },
+    {
+      "stage": "check",
+      "question": "Let x₀=2, x₁=6, and t=0.25 in x_t=t·x₁+(1−t)·x₀. What is x_t?",
+      "options": [
+        "2",
+        "4",
+        "5",
+        "3"
+      ],
+      "correct": 3,
+      "explanation": "Substitute the values: 0.25×6 + 0.75×2 = 1.5 + 1.5 = 3. Swapping the endpoint weights gives 0.25×2 + 0.75×6 = 5, the presented distractor."
+    },
+    {
+      "stage": "check",
+      "question": "What constant velocity is the target for the straight-line interpolant x_t=t·x₁+(1−t)·x₀?",
+      "options": [
+        "x₀ + x₁",
+        "x_t × t",
+        "x₁ − x₀",
+        "x₀ − x_t"
+      ],
+      "correct": 2,
+      "explanation": "With fixed endpoints, differentiating x_t=t·x_1+(1−t)·x_0 with respect to t gives x_1−x_0, independent of t. The residual x_0−x_t varies along the path and is not its velocity."
+    },
+    {
+      "stage": "check",
+      "question": "What does the flow-matching network vθ learn to predict during training?",
+      "options": [
+        "The final image’s likelihood under a Gaussian",
+        "The interpolant’s target velocity",
+        "The clean sample’s class label",
+        "The timestep’s cumulative noise variance"
+      ],
+      "correct": 1,
+      "explanation": "The vector field v_θ is trained by squared error against the interpolant’s derivative, x_1−x_0. It predicts the direction of motion at (x_t,t), not the clean sample’s class or likelihood."
+    },
+    {
+      "stage": "post",
+      "question": "At inference, where does Euler sampling begin and in which direction does it step?",
+      "options": [
+        "Start at the midpoint and step toward both endpoints",
+        "Start from a class token and sample the latent prior",
+        "Start at noise t=1 and step backward to data t=0",
+        "Start at data t=0 and step forward to noise t=1"
+      ],
+      "correct": 2,
+      "explanation": "Sampling draws x_1 from the noise prior at t=1 and Euler-steps backward to t=0, reaching the data endpoint. Starting from data and moving toward noise follows the training interpolation in the opposite direction."
+    },
+    {
+      "stage": "post",
+      "question": "A team wants a very low-step sampler but its learned flow paths still curve. What procedure can straighten them?",
+      "options": [
+        "Use an unconditional GAN discriminator at each timestep",
+        "Increase DDPM’s number of stochastic forward steps",
+        "Rectified-flow reflow on generated endpoint pairs",
+        "Replace the vector field with an image classifier"
+      ],
+      "correct": 2,
+      "explanation": "Rectified-flow reflow integrates a first model to obtain ODE-matched endpoint pairs, then trains a new vector field on those flatter interpolants. Adding DDPM forward steps changes a different process and does not straighten the learned flow."
+    }
+  ]
+}
