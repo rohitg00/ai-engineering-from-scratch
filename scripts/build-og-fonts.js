@@ -23,7 +23,6 @@ const FONTS = [
   { name: 'serif', family: 'Source Serif 4', weight: 400, sizes: [30], phases: 3, chars: LATIN, kern: true },
 ];
 
-/** Build the browser page that loads web fonts and reports rasterized glyph atlases. */
 function pageSource() {
   return `<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="${FONT_CSS}"></head><body><script>
 const FONTS = ${JSON.stringify(FONTS)};
@@ -106,11 +105,6 @@ run().then(r => JSON.stringify(r), e => 'ERROR ' + e.message).then(body => fetch
 </script></body></html>`;
 }
 
-/**
- * Run headless Chrome against a temporary local font-rasterization page.
- * @returns {Promise<Array>} Font atlas records; rejects on browser errors or timeout.
- * The browser, HTTP server, and temporary profile are cleaned up when it settles.
- */
 function rasterize() {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-og-fonts-'));
   let chrome;
@@ -154,7 +148,6 @@ function rasterize() {
   });
 }
 
-/** Rasterize configured fonts, compress their bitmaps, and write the committed JSON atlases. */
 async function main() {
   fs.mkdirSync(OUT, { recursive: true });
   for (const font of await rasterize()) {

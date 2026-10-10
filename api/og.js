@@ -11,17 +11,14 @@ const IMMUTABLE = 'public, max-age=31536000, s-maxage=31536000, immutable';
 const MOVED = 'public, max-age=0, s-maxage=300, must-revalidate';
 const RENDERED_LIMIT = 64;
 
-/** Return an own property value, or null when the object or key is absent. */
 function own(object, key) {
   return object && typeof object === 'object' && Object.prototype.hasOwnProperty.call(object, key) ? object[key] : null;
 }
 
-/** Read and parse a generated JSON manifest from the site directory. */
 function readSite(name) {
   return JSON.parse(fs.readFileSync(path.join(SITE, name), 'utf8'));
 }
 
-/** Resolve a manifest-backed card, or null for an unknown card or translation. */
 function findCard(type, id, lang, manifest) {
   if (type === 'lesson') {
     const entry = own(manifest('lesson-seo.json').lessons, id);
@@ -36,10 +33,8 @@ function findCard(type, id, lang, manifest) {
   return STATIC_TYPES.includes(type) ? own(manifest('og-cards.json').cards, `${type}/${id}`) : null;
 }
 
-/** Extract card identity and version from route/query fields and flag extra parameters. */
 function cardRequest(req) {
   const url = new URL(req.url || '/', 'http://localhost');
-  /** Read one query value, returning null for arrays or repeated URL parameters. */
   const query = name => {
     const direct = req.query && req.query[name];
     if (Array.isArray(direct) || url.searchParams.getAll(name).length > 1) return null;
@@ -56,7 +51,6 @@ function cardRequest(req) {
   };
 }
 
-/** Send a buffered response with cache headers, omitting the body for HEAD requests. */
 function send(res, method, status, cacheControl, body, type = 'text/plain; charset=utf-8') {
   const payload = Buffer.isBuffer(body) ? body : Buffer.from(`${body}\n`);
   res.statusCode = status;
@@ -67,20 +61,13 @@ function send(res, method, status, cacheControl, body, type = 'text/plain; chars
   res.end(method === 'HEAD' ? undefined : payload);
 }
 
-/**
- * Create a card handler with injectable manifest loading and PNG rendering.
- * Cache manifests and up to 64 rendered cards for this handler instance.
- * @returns {Function} A synchronous GET/HEAD handler for versioned card URLs.
- */
 function createHandler({ manifest = readSite, render = renderCard } = {}) {
   const manifests = new Map();
   const rendered = new Map();
-  /** Load each named manifest once per handler instance. */
   const load = name => {
     if (!manifests.has(name)) manifests.set(name, manifest(name));
     return manifests.get(name);
   };
-  /** Validate a card request, redirect stale versions, and serve a cached PNG or error. */
   return function ogHandler(req, res) {
     const method = String(req.method || 'GET').toUpperCase();
     if (method !== 'GET' && method !== 'HEAD') {

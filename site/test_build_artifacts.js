@@ -2400,7 +2400,6 @@ const CARD_LESSON = {
   context: { kind: 'course', phaseId: 3, phaseName: 'Deep Learning Core', type: 'Build', languages: 'Python' },
 };
 const CARD_STATS = { lessons: 99999, phases: 999, skills: 99999, prompts: 99999, terms: 99999, tracks: 999, projects: 9999, manuals: 999 };
-/** Collect PNG chunk payloads by type, concatenating repeated chunks for renderer assertions. */
 function cardChunks(png) {
   const chunks = {};
   for (let offset = 8; offset < png.length;) {

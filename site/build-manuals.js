@@ -605,7 +605,6 @@ function manualArticle(manual, mode) {
 
 const SITE_HEADER = '<header class="site-header"><div class="header-inner"><a href="index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH</a><nav class="header-nav"><a href="index.html#contents">Contents</a><a href="catalog.html">Catalog</a><a href="projects.html">Projects</a><a href="manuals.html">Manuals</a><a href="prereqs.html">Roadmap</a><a href="glossary.html">Glossary</a><a href="about.html">About</a><a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github"><span>GitHub</span><span class="star-count" data-loading="true">…</span></a></nav><button class="search-toggle" type="button" data-cmd-palette aria-label="Search"><span aria-hidden="true">⌕</span></button><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button"><span class="theme-icon" id="themeIcon">N</span></button></div></header>';
 
-/** Wrap manual page content in the shared HTML shell with SEO and card metadata. */
 function pageShell({ title, ogTitle, description, canonical, noindex, card, main }) {
   const css = shared('tokens.css') + shared('manual.css') + shared('web.css');
   return `<!DOCTYPE html>
@@ -642,7 +641,6 @@ ${main}
 `;
 }
 
-/** Render a manual page, using a dedicated card for ready manuals and the index card for drafts. */
 function webPage(manual) {
   return pageShell({
     title: `${manual.title}: ${manual.subtitle} - AI Engineering from Scratch`,
@@ -670,7 +668,6 @@ function manualCard(manual) {
   return `<article class="m-index-card">${draft}<div class="m-kicker m-index-pin">${pinLine(manual)}</div><h2 class="m-index-name"><a href="${pageName(manual.id)}">${escapeHtml(manual.title)}</a></h2><p class="m-index-subtitle">${escapeHtml(manual.subtitle)}</p><p class="m-index-summary">${escapeHtml(manual.summary)}</p>${partDots(manual)}<div class="m-kicker m-index-stats">${manual.parts.length} parts · ${sectionCount(manual)} sections · ${manual.figures.size} figures</div><div class="m-index-actions">${actions.join('')}</div>${plateHtml(manual, 'class="m-fig m-plate"')}</article>`;
 }
 
-/** Render the manuals index and mark it noindex when no listed manual is ready. */
 function indexPage(listed) {
   const gives = INDEX_GIVES.map(([label, text]) => `<li><span class="m-kicker">${label}</span><p>${text}</p></li>`).join('');
   const body = listed.length ? listed.map(manualCard).join('') : '<p class="m-index-empty">No manual is published yet.</p>';

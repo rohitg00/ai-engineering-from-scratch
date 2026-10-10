@@ -2161,7 +2161,6 @@ function writeLangs() {
   console.log('   wrote langs.js (' + langs.length + ' languages)');
 }
 
-/** Build site data and discovery assets from curriculum sources, including SEO and card manifests. */
 function build() {
   console.log('📖 Reading source files...');
   writeBuildMeta();
@@ -2267,7 +2266,6 @@ const ARTIFACTS = ${JSON.stringify(artifacts, null, 2)};
   }, projects, manuals);
 }
 
-/** Write the versioned static card manifest from current counts, projects, and ready manuals. */
 function writeSocialCards(stats, projects, manuals) {
   const cards = socialCards({ stats, projects, manuals });
   fs.writeFileSync(SOCIAL_CARDS_OUTPUT_PATH, JSON.stringify({ version: 1, cards }) + '\n', 'utf8');
@@ -2290,7 +2288,6 @@ function readyManualIds() {
 }
 
 // ─── sitemap.xml from the same SEO manifest the lesson route renders ─────
-/** Write the sitemap for public pages, lessons, tracks, ready manuals, and supplied projects. */
 function writeSitemap(lessonManifest, glossaryCount, certifications, projects) {
   const urls = [
     { loc: '/', priority: '1.0', freq: 'weekly' },

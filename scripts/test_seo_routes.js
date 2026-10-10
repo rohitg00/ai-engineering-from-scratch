@@ -1195,7 +1195,6 @@ test('a language with index false stays out of hreflang and the lesson sitemaps,
   assert.deepEqual(isolatedBuild.writeLanguageSitemaps(manifest, site), ['sitemap-lessons-hi.xml']);
 });
 
-/** Extract the first value of each named/property meta tag and decode HTML attribute entities. */
 function metaTags(html) {
   const tags = {};
   for (const match of html.matchAll(/<meta (?:property|name)="([^"]+)" content="([^"]*)"\s*\/?>/g)) {
@@ -1204,7 +1203,6 @@ function metaTags(html) {
   return tags;
 }
 
-/** Invoke a synchronous card handler and capture its status, headers, and response body. */
 function cardRequest(handler, url, method = 'GET', query) {
   const response = { statusCode: 200, headers: {}, body: undefined };
   const res = {
@@ -1219,7 +1217,6 @@ function cardRequest(handler, url, method = 'GET', query) {
   return response;
 }
 
-/** Create lesson, track, and static-card manifests with a Hindi translation for route tests. */
 function cardFixture() {
   const assets = makeAssets();
   const vectors = Object.assign({}, assets.lesson.manifest.lessons['phases/01-math/01-vectors'], { translations: ['hi'] });
@@ -1230,7 +1227,6 @@ function cardFixture() {
   };
 }
 
-/** Strip the known production origin from a card URL for local handler requests. */
 function withoutOrigin(url) {
   return url.slice(ogCards.ORIGIN.length);
 }
@@ -1388,7 +1384,6 @@ test('the home card counts and page labels come from the build inventory', funct
   const phases = build.parseReadme(fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8'), build.parseRoadmap(fs.readFileSync(path.join(ROOT, 'ROADMAP.md'), 'utf8')));
   const artifacts = build.discoverArtifacts();
   const lessons = phases.reduce(function (total, phase) { return total + phase.lessons.length; }, 0);
-  /** Count discovered build artifacts of a given kind for home-card inventory assertions. */
   const count = function (kind) { return artifacts.filter(function (artifact) { return artifact.kind === kind; }).length; };
   assert.deepEqual(cards['page/home'].stats, [`${lessons} lessons`, `${phases.length} phases`, `${count('skill')} skills`, `${count('prompt')} prompts`]);
   assert.equal(cards['page/catalog'].label, `Catalog · ${lessons} lessons`);
