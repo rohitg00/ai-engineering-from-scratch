@@ -244,7 +244,7 @@ jobs:
 
   coverage:
     needs: translate
-    if: ${{ always() }}
+    if: ${{ !cancelled() && needs.translate.result != 'skipped' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -254,7 +254,7 @@ jobs:
           persist-credentials: false
       - name: Translation records match the published lessons
         run: |
-          git fetch origin "+refs/heads/translations:refs/remotes/origin/translations"
+          git fetch --depth=1 origin "+refs/heads/translations:refs/remotes/origin/translations"
           node scripts/check_translation_coverage.js --ref origin/translations
 
   ui-strings:
