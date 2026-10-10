@@ -1,0 +1,78 @@
+{
+  "lesson": "16-speculative-decoding",
+  "title": "Speculative Decoding — Draft, Verify, Repeat",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is ordinary autoregressive generation slow for a long response?",
+      "options": [
+        "The tokenizer must rebuild its vocabulary at every step",
+        "Each generated token waits for the previous one",
+        "The verifier cannot read multiple tokens in one pass",
+        "The model discards every hidden state after each token"
+      ],
+      "correct": 1,
+      "explanation": "Autoregressive decoding feeds each sampled token back as the next step’s context, so token t+1 cannot be generated until token t is known. A verifier can evaluate a batch of draft candidates together, but ordinary generation lacks those candidates."
+    },
+    {
+      "stage": "check",
+      "question": "A draft proposes token d with probability p(d), and the verifier assigns q(d). What is its acceptance probability?",
+      "options": [
+        "q(d) − p(d), without normalization",
+        "p(d) + q(d), capped at one",
+        "min(1, p(d) / q(d))",
+        "min(1, q(d) / p(d))"
+      ],
+      "correct": 3,
+      "explanation": "The algorithm accepts a draft with probability min(1, q(d)/p(d)): if the verifier assigns at least as much probability as the draft, it accepts surely; otherwise it accepts in proportion to q/p. Reversing the ratio favors tokens the verifier considers less likely."
+    },
+    {
+      "stage": "check",
+      "question": "When the verifier rejects a draft token, what distribution supplies the replacement token?",
+      "options": [
+        "The draft distribution p without modification",
+        "The verifier distribution q minus its maximum",
+        "The normalized positive part of q minus p",
+        "A uniform distribution across the vocabulary"
+      ],
+      "correct": 2,
+      "explanation": "On rejection, clamp each q−p entry below zero to zero, then normalize the remaining mass. This residual corrects for the draft probability already accounted for; sampling directly from p would leave the verifier’s desired distribution uncorrected."
+    },
+    {
+      "stage": "check",
+      "question": "If every one of N draft tokens is accepted, what does the algorithm sample next?",
+      "options": [
+        "The residual distribution supplies one extra bonus token",
+        "A bonus token sampled from the draft model distribution",
+        "The last draft token is repeated after full acceptance",
+        "One bonus token from the verifier’s next-step distribution"
+      ],
+      "correct": 3,
+      "explanation": "Once all N proposals pass, sample the next-position bonus token from the verifier’s distribution q. Using the draft model for that token would introduce its distribution instead of continuing from the verifier."
+    },
+    {
+      "stage": "post",
+      "question": "A creative high-temperature workload has a draft model with poor agreement with the verifier. What should the team expect?",
+      "options": [
+        "Identical acceptance regardless of draft quality",
+        "Lower acceptance and a smaller speedup",
+        "No change because the verifier runs once",
+        "Higher acceptance because sampling is diverse"
+      ],
+      "correct": 1,
+      "explanation": "Speculative speedup depends on how many draft tokens the verifier accepts. High-temperature sampling and a poor draft-verifier match reduce acceptance, so fewer tokens are produced per verifier call; diverse sampling does not improve agreement."
+    },
+    {
+      "stage": "post",
+      "question": "The verifier tentatively appended five draft tokens. After accepting tokens 1–2 and rejecting token 3, what should production code do?",
+      "options": [
+        "Clear the entire cache and restart the whole request",
+        "Commit the rejected token and regenerate only its logits",
+        "Roll back to the accepted prefix and discard later drafts",
+        "Keep all five entries and continue with the sixth draft"
+      ],
+      "correct": 2,
+      "explanation": "After draft tokens 1–2 are accepted and token 3 fails, keep the prefix through token 2 and discard tentative cache entries for token 3 and later drafts. Then append the residual replacement; retaining rejected entries would corrupt the next prefix."
+    }
+  ]
+}
