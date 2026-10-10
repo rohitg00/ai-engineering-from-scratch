@@ -13,11 +13,11 @@ Toteuta mallien sisäiset mekanismit, hakuprosessit ja agenttien suoritusympäri
 
 Maksuton, avoin lähdekoodi, MIT-lisenssi. Opi verkkosivustolla, koodausagentin kanssa tai suorittamalla koodia paikallisesti.
 
-> 523 oppituntia. 20 vaihetta. Python, TypeScript, Rust, Julia.
+> 528 oppituntia. 20 vaihetta. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-lisenssi"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 oppituntia"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 oppituntia"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 vaihetta"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub-tähdet"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Verkkosivusto"></a>
@@ -246,7 +246,7 @@ Oppituntisivujen komentojen polut ovat suhteessa koodivaraston juureen, ellei op
 
 ## Valitse oppimispolku
 
-Sinun ei tarvitse käydä läpi 523 oppituntia ennen aloittamista. Valitse yksi tavoite. Jokainen linkki avaa saman opetussuunnitelman GitHubissa tai verkkosivustolla, ja molemmissa versioissa käytetään samaa oppituntien koodia.
+Sinun ei tarvitse käydä läpi 528 oppituntia ennen aloittamista. Valitse yksi tavoite. Jokainen linkki avaa saman opetussuunnitelman GitHubissa tai verkkosivustolla, ja molemmissa versioissa käytetään samaa oppituntien koodia.
 
 | Tavoitteesi | Opi GitHubissa | Opi verkkosivustolla |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 
 <a id="phase-0"></a>
-### Vaihe 0: Asennus ja työkalut `12 oppituntia`
+### Vaihe 0: Asennus ja työkalut `13 oppituntia`
 > Valmistele ympäristö kaikkea seuraavaa varten.
 
 | # | Oppitunti | Tyyppi | Kieli |
@@ -347,6 +347,7 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 10 | [Pääte ja komentotulkki](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Opi | — |
 | 11 | [Linux AI-kehityksessä](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Opi | — |
 | 12 | [Virheenjäljitys ja profilointi](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Rakenna | Python |
+| 13 | [Python tekoälytekniikkaan](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Rakenna | Python |
 
 <details id="phase-1">
 <summary><b>Vaihe 1: Matematiikan perusteet</b> &nbsp;<code>22 oppituntia</code>&nbsp; <em>Jokaisen AI-algoritmin taustalla oleva intuitio koodin kautta.</em></summary>
@@ -380,7 +381,7 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 </details>
 
 <details id="phase-2">
-<summary><b>Vaihe 2: Koneoppimisen perusteet</b> &nbsp;<code>18 oppituntia</code>&nbsp; <em>Klassinen ML on yhä useimpien tuotannon AI-järjestelmien perusta.</em></summary>
+<summary><b>Vaihe 2: Koneoppimisen perusteet</b> &nbsp;<code>21 oppituntia</code>&nbsp; <em>Klassinen ML on yhä useimpien tuotannon AI-järjestelmien perusta.</em></summary>
 <br/>
 
 | # | Oppitunti | Tyyppi | Kieli |
@@ -403,6 +404,9 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 16 | [Poikkeamien tunnistaminen](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Rakenna | Python |
 | 17 | [Epätasapainoisen datan käsittely](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Rakenna | Python |
 | 18 | [Piirteiden valinta](../../phases/02-ml-fundamentals/18-feature-selection/) | Rakenna | Python |
+| 19 | [ML-järjestelmien suunnittelu: ongelmasta käyttöön otettuun malliin](../../phases/02-ml-fundamentals/19-ml-system-design/) | Rakenna | Python |
+| 20 | [Mallien valvonta tuotannossa: datan ajautuminen ja käsitteen ajautuminen](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Rakenna | Python |
+| 21 | [Piirrevarastot ja koulutuksen ja tuotannon välinen ero](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Rakenna | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 </details>
 
 <details id="phase-17">
-<summary><b>Vaihe 17: Infrastruktuuri ja tuotanto</b> &nbsp;<code>28 oppituntia</code>&nbsp; <em>Vie AI todelliseen maailmaan.</em></summary>
+<summary><b>Vaihe 17: Infrastruktuuri ja tuotanto</b> &nbsp;<code>29 oppituntia</code>&nbsp; <em>Vie AI todelliseen maailmaan.</em></summary>
 <br/>
 
 | # | Oppitunti | Tyyppi | Kieli |
@@ -902,6 +906,7 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 | 26 | [Vaatimustenmukaisuus: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Opi | Python |
 | 27 | [FinOps LLM-malleille: yksikkötalous ja asiakaskohtainen kustannuskohdistus](../../phases/17-infrastructure-and-production/27-finops-llms/) | Opi | Python |
 | 28 | [Oman päättelypalvelun valinta: moottori, laitteisto ja mittakaava](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Opi | Python |
+| 29 | [Mallien demokäyttöliittymät: funktiosta jaettavaan sovellukseen](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Rakenna | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ Muut kurssit päättyvät toteamukseen *”Onnittelut, opit X:n.”* Täällä j
 <details>
 <summary>Asenna oppituntien tuotokset</summary>
 
-**Oppituntien tuotokset.** Tietovarastossa on 396 taitoa ja 99 kehotetta hakemiston `phases/**/outputs/` alla. Asenna ne komennolla `scripts/install_skills.py`. Tämä vaatii tietovaraston kloonaamisen. Työkalu tukee tunnistesuodatusta, kirjoittamatonta esikatselua ja agenttikohtaisia hakemistorakenteita:
+**Oppituntien tuotokset.** Tietovarastossa on 400 taitoa ja 100 kehotetta hakemiston `phases/**/outputs/` alla. Asenna ne komennolla `scripts/install_skills.py`. Tämä vaatii tietovaraston kloonaamisen. Työkalu tukee tunnistesuodatusta, kirjoittamatonta esikatselua ja agenttikohtaisia hakemistorakenteita:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ Paluuarvo on nollasta poikkeava, jos yksikin sääntö epäonnistuu. Säännöt 
 <p align="center"><sub><b>114,584</b> lukijaa &nbsp;·&nbsp; <b>181,995</b> sivukatselua viimeisten 30 päivän aikana &nbsp;·&nbsp; tilanne 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Maksuton, MIT-lisensoitu, 523 oppituntia. Kiitos sponsoreille ja tukijoille, jotka mahdollistavat tämän työn. [Katso kaikki sponsorit ja tukijat](../../BACKERS.md).
+Maksuton, MIT-lisensoitu, 528 oppituntia. Kiitos sponsoreille ja tukijoille, jotka mahdollistavat tämän työn. [Katso kaikki sponsorit ja tukijat](../../BACKERS.md).
 
 Haluatko tukea työtä? Tutustu [sponsorointivaihtoehtoihin](../../SPONSORS.md), kuten [laitteistosponsorointiin](../../SPONSORS.md#hardware-lab-partner), tai [sponsoroi GitHubissa](https://github.com/sponsors/rohitg00).
 

@@ -13,11 +13,11 @@ Triển khai cơ chế bên trong mô hình, quy trình truy xuất và môi tr�
 
 Miễn phí, mã nguồn mở, giấy phép MIT. Học trên trang web, cùng tác tử lập trình hoặc bằng cách chạy mã cục bộ.
 
-> 523 bài học. 20 giai đoạn. Python, TypeScript, Rust, Julia.
+> 528 bài học. 20 giai đoạn. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Giấy phép MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 bài học"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 bài học"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 giai đoạn"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Sao GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Trang web"></a>
@@ -246,7 +246,7 @@ Các lệnh trong trang bài học dùng đường dẫn tính từ thư mục g
 
 ## Chọn lộ trình học
 
-Bạn không cần xem qua cả 523 bài học trước khi bắt đầu. Hãy chọn một mục tiêu. Mỗi liên kết mở cùng một chương trình trên GitHub hoặc trang web, và cả hai phiên bản đều dùng cùng mã nguồn bài học.
+Bạn không cần xem qua cả 528 bài học trước khi bắt đầu. Hãy chọn một mục tiêu. Mỗi liên kết mở cùng một chương trình trên GitHub hoặc trang web, và cả hai phiên bản đều dùng cùng mã nguồn bài học.
 
 | Mục tiêu của bạn | Học trên GitHub | Học trên trang web |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sách bài học.
 
 <a id="phase-0"></a>
-### Giai đoạn 0: Thiết lập và công cụ `12 bài học`
+### Giai đoạn 0: Thiết lập và công cụ `13 bài học`
 > Chuẩn bị môi trường cho mọi nội dung tiếp theo.
 
 | # | Bài học | Loại | Ngôn ngữ |
@@ -347,6 +347,7 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 10 | [Terminal và shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Tìm hiểu | — |
 | 11 | [Linux cho AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Tìm hiểu | — |
 | 12 | [Gỡ lỗi và phân tích hiệu năng](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Xây dựng | Python |
+| 13 | [Python cho kỹ thuật AI](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Xây dựng | Python |
 
 <details id="phase-1">
 <summary><b>Giai đoạn 1: Nền tảng toán học</b> &nbsp;<code>22 bài học</code>&nbsp; <em>Hiểu trực quan nền tảng của mọi thuật toán AI qua mã.</em></summary>
@@ -380,7 +381,7 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 </details>
 
 <details id="phase-2">
-<summary><b>Giai đoạn 2: Nền tảng ML</b> &nbsp;<code>18 bài học</code>&nbsp; <em>ML cổ điển: vẫn là nền tảng của phần lớn AI đang vận hành thực tế.</em></summary>
+<summary><b>Giai đoạn 2: Nền tảng ML</b> &nbsp;<code>21 bài học</code>&nbsp; <em>ML cổ điển: vẫn là nền tảng của phần lớn AI đang vận hành thực tế.</em></summary>
 <br/>
 
 | # | Bài học | Loại | Ngôn ngữ |
@@ -403,6 +404,9 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 16 | [Phát hiện bất thường](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Xây dựng | Python |
 | 17 | [Xử lý dữ liệu mất cân bằng](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Xây dựng | Python |
 | 18 | [Lựa chọn đặc trưng](../../phases/02-ml-fundamentals/18-feature-selection/) | Xây dựng | Python |
+| 19 | [Thiết kế hệ thống ML: từ bài toán đến mô hình được triển khai](../../phases/02-ml-fundamentals/19-ml-system-design/) | Xây dựng | Python |
+| 20 | [Giám sát mô hình trong môi trường thực tế: trôi dữ liệu và trôi khái niệm](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Xây dựng | Python |
+| 21 | [Kho đặc trưng và độ lệch giữa huấn luyện và phục vụ](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Xây dựng | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 </details>
 
 <details id="phase-17">
-<summary><b>Giai đoạn 17: Hạ tầng và triển khai thực tế</b> &nbsp;<code>28 bài học</code>&nbsp; <em>Đưa AI vào thế giới thực.</em></summary>
+<summary><b>Giai đoạn 17: Hạ tầng và triển khai thực tế</b> &nbsp;<code>29 bài học</code>&nbsp; <em>Đưa AI vào thế giới thực.</em></summary>
 <br/>
 
 | # | Bài học | Loại | Ngôn ngữ |
@@ -902,6 +906,7 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 26 | [Tuân thủ: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Tìm hiểu | Python |
 | 27 | [FinOps cho LLM: kinh tế đơn vị và phân bổ nhiều bên thuê](../../phases/17-infrastructure-and-production/27-finops-llms/) | Tìm hiểu | Python |
 | 28 | [Chọn hệ thống tự lưu trữ để phục vụ mô hình: khớp engine với phần cứng và quy mô](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Tìm hiểu | Python |
+| 29 | [Giao diện demo cho mô hình: từ một hàm đến ứng dụng có thể chia sẻ](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Xây dựng | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ Các chương trình khác kết thúc bằng *"chúc mừng, bạn đã học X
 <details>
 <summary>Cài đặt sản phẩm của bài học</summary>
 
-**Sản phẩm của bài học.** Kho mã có 396 skill và 99 prompt trong `phases/**/outputs/`; cài bằng `scripts/install_skills.py`. Cần clone kho mã. Hỗ trợ lọc theo nhãn, chạy thử không ghi và bố cục riêng cho từng tác tử:
+**Sản phẩm của bài học.** Kho mã có 400 skill và 100 prompt trong `phases/**/outputs/`; cài bằng `scripts/install_skills.py`. Cần clone kho mã. Hỗ trợ lọc theo nhãn, chạy thử không ghi và bố cục riêng cho từng tác tử:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ Mã thoát khác không nếu có quy tắc nào thất bại. Các quy tắc (L
 <p align="center"><sub><b>114,584</b> độc giả &nbsp;·&nbsp; <b>181,995</b> lượt xem trang trong 30 ngày qua &nbsp;·&nbsp; tính đến 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Miễn phí, giấy phép MIT, 523 bài học. Cảm ơn các nhà tài trợ và người ủng hộ đã giúp duy trì công việc này. [Xem tất cả nhà tài trợ và người ủng hộ](../../BACKERS.md).
+Miễn phí, giấy phép MIT, 528 bài học. Cảm ơn các nhà tài trợ và người ủng hộ đã giúp duy trì công việc này. [Xem tất cả nhà tài trợ và người ủng hộ](../../BACKERS.md).
 
 Bạn muốn hỗ trợ dự án? Xem [các hình thức tài trợ](../../SPONSORS.md), bao gồm [tài trợ phần cứng](../../SPONSORS.md#hardware-lab-partner), hoặc [tài trợ trên GitHub](https://github.com/sponsors/rohitg00).
 

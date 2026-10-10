@@ -13,11 +13,11 @@ Implementujte vnitřní mechanismy modelů, vyhledávací pipeline a běhová pr
 
 Zdarma, s otevřeným zdrojovým kódem, pod licencí MIT. Učte se na webu, s programovacím agentem nebo spouštěním místního kódu.
 
-> 523 lekcí. 20 fází. Python, TypeScript, Rust, Julia.
+> 528 lekcí. 20 fází. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licence MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lekcí"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 lekcí"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 fází"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Hvězdičky na GitHubu"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Webové stránky"></a>
@@ -246,7 +246,7 @@ Cesty v příkazech na stránkách lekcí vycházejí z kořenového adresáře 
 
 ## Vyberte si vzdělávací cestu
 
-Než začnete, nemusíte procházet všech 523 lekcí. Vyberte si jeden cíl. Každý odkaz otevře stejný vzdělávací program na GitHub nebo na webu a obě verze používají stejný kód lekcí.
+Než začnete, nemusíte procházet všech 528 lekcí. Vyberte si jeden cíl. Každý odkaz otevře stejný vzdělávací program na GitHub nebo na webu a obě verze používají stejný kód lekcí.
 
 | Váš cíl | Učení na GitHub | Učení na webu |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 
 <a id="phase-0"></a>
-### Fáze 0: Nastavení a nástroje `12 lekcí`
+### Fáze 0: Nastavení a nástroje `13 lekcí`
 > Připravte své prostředí na vše, co následuje.
 
 | # | Lekce | Druh | Jazyk |
@@ -347,6 +347,7 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | 10 | [Terminál a shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Poznat | — |
 | 11 | [Linux pro AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Poznat | — |
 | 12 | [Ladění a profilování](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Vytvořit | Python |
+| 13 | [Python pro AI inženýrství](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Vytvořit | Python |
 
 <details id="phase-1">
 <summary><b>Fáze 1: Matematické základy</b> &nbsp;<code>22 lekcí</code>&nbsp; <em>Intuice za každým algoritmem AI prostřednictvím kódu.</em></summary>
@@ -380,7 +381,7 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 </details>
 
 <details id="phase-2">
-<summary><b>Fáze 2: Základy ML</b> &nbsp;<code>18 lekcí</code>&nbsp; <em>Klasické ML: stále páteř většiny produkční AI.</em></summary>
+<summary><b>Fáze 2: Základy ML</b> &nbsp;<code>21 lekcí</code>&nbsp; <em>Klasické ML: stále páteř většiny produkční AI.</em></summary>
 <br/>
 
 | # | Lekce | Druh | Jazyk |
@@ -403,6 +404,9 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | 16 | [Detekce anomálií](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Vytvořit | Python |
 | 17 | [Práce s nevyváženými daty](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Vytvořit | Python |
 | 18 | [Výběr příznaků](../../phases/02-ml-fundamentals/18-feature-selection/) | Vytvořit | Python |
+| 19 | [Návrh ML systémů: od problému k nasazenému modelu](../../phases/02-ml-fundamentals/19-ml-system-design/) | Vytvořit | Python |
+| 20 | [Monitorování modelů v produkci: drift dat a drift konceptu](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Vytvořit | Python |
+| 21 | [Úložiště příznaků a nesoulad mezi trénováním a provozem](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Vytvořit | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ Lekce 31-46 tvoří [cestu inženýrství s podporou agentů](../../learning-pat
 </details>
 
 <details id="phase-17">
-<summary><b>Fáze 17: Infrastruktura a produkce</b> &nbsp;<code>28 lekcí</code>&nbsp; <em>Dodejte AI do skutečného světa.</em></summary>
+<summary><b>Fáze 17: Infrastruktura a produkce</b> &nbsp;<code>29 lekcí</code>&nbsp; <em>Dodejte AI do skutečného světa.</em></summary>
 <br/>
 
 | # | Lekce | Druh | Jazyk |
@@ -902,6 +906,7 @@ Lekce 31-46 tvoří [cestu inženýrství s podporou agentů](../../learning-pat
 | 26 | [Soulad s předpisy: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Poznat | Python |
 | 27 | [FinOps pro LLM: jednotková ekonomika a účtování více nájemců](../../phases/17-infrastructure-and-production/27-finops-llms/) | Poznat | Python |
 | 28 | [Výběr vlastního inferenčního provozu: engine podle hardwaru a měřítka](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Poznat | Python |
+| 29 | [Ukázková rozhraní modelů: od funkce ke sdílitelné aplikaci](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Vytvořit | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ Jiné kurzy končí slovy *„gratuluji, naučili jste se X“*. Zde každá lek
 <details>
 <summary>Nainstalovat výstupy lekcí</summary>
 
-**Artefakty lekcí.** Repozitář obsahuje 396 dovedností a 99 promptů pod `phases/**/outputs/`; instalujte je pomocí `scripts/install_skills.py`. Vyžaduje to klonování repozitáře. Podporuje filtry značek, zkušební běhy a rozložení podle agenta:
+**Artefakty lekcí.** Repozitář obsahuje 400 dovedností a 100 promptů pod `phases/**/outputs/`; instalujte je pomocí `scripts/install_skills.py`. Vyžaduje to klonování repozitáře. Podporuje filtry značek, zkušební běhy a rozložení podle agenta:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ Při porušení pravidla je návratový kód nenulový. Pravidla L001–L010 ov�
 <p align="center"><sub><b>114,584</b> čtenářů &nbsp;·&nbsp; <b>181,995</b> zobrazení stránek za posledních 30 dní &nbsp;·&nbsp; stav k 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Zdarma, s licencí MIT, 523 lekcí. Děkujeme sponzorům a podporovatelům, kteří tuto práci umožňují. [Zobrazit všechny sponzory a podporovatele](../../BACKERS.md).
+Zdarma, s licencí MIT, 528 lekcí. Děkujeme sponzorům a podporovatelům, kteří tuto práci umožňují. [Zobrazit všechny sponzory a podporovatele](../../BACKERS.md).
 
 Chcete práci podpořit? Podívejte se na [možnosti sponzorství](../../SPONSORS.md), včetně [hardwarového sponzorství](../../SPONSORS.md#hardware-lab-partner), nebo [přispějte přes GitHub](https://github.com/sponsors/rohitg00).
 

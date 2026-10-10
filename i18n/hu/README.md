@@ -13,11 +13,11 @@ Valósítsd meg a modellek belső működését, a visszakeresési folyamatokat 
 
 Ingyenes, nyílt forráskódú, MIT-licenccel. Tanulj a weboldalon, egy kódoló ügynökkel vagy helyben futtatott kóddal.
 
-> 523 lecke. 20 szakasz. Python, TypeScript, Rust, Julia.
+> 528 lecke. 20 szakasz. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-licenc"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lecke"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 lecke"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 szakasz"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub-csillagok"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Weboldal"></a>
@@ -246,7 +246,7 @@ A leckék parancsaiban szereplő útvonalak a kódtár gyökérkönyvtárához k
 
 ## Válassz tanulási útvonalat
 
-Nem kell végignézned mind az 523 leckét, mielőtt elkezded. Válassz egy célt. Minden hivatkozás ugyanazt a tananyagot nyitja meg a GitHub felületén vagy a weboldalon, és mindkét változat ugyanazt a leckekódot használja.
+Nem kell végignézned mind az 528 leckét, mielőtt elkezded. Válassz egy célt. Minden hivatkozás ugyanazt a tananyagot nyitja meg a GitHub felületén vagy a weboldalon, és mindkét változat ugyanazt a leckekódot használja.
 
 | A célod | Tanulás a GitHub felületén | Tanulás a weboldalon |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 
 <a id="phase-0"></a>
-### 0. szakasz: Beállítás és eszközök `12 lecke`
+### 0. szakasz: Beállítás és eszközök `13 lecke`
 > Készítsd fel a környezetedet mindarra, ami következik.
 
 | # | Lecke | Típus | Nyelv |
@@ -347,6 +347,7 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | 10 | [Terminál és parancsértelmező](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Tanulás | — |
 | 11 | [Linux az AI-hoz](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Tanulás | — |
 | 12 | [Hibakeresés és profilozás](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Építés | Python |
+| 13 | [Python a mesterségesintelligencia-fejlesztéshez](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Építés | Python |
 
 <details id="phase-1">
 <summary><b>1. szakasz: Matematikai alapok</b> &nbsp;<code>22 lecke</code>&nbsp; <em>Az AI-algoritmusok mögötti szemlélet, kódon keresztül.</em></summary>
@@ -380,7 +381,7 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 </details>
 
 <details id="phase-2">
-<summary><b>2. szakasz: ML-alapok</b> &nbsp;<code>18 lecke</code>&nbsp; <em>Klasszikus ML: még mindig a legtöbb üzemi AI gerince.</em></summary>
+<summary><b>2. szakasz: ML-alapok</b> &nbsp;<code>21 lecke</code>&nbsp; <em>Klasszikus ML: még mindig a legtöbb üzemi AI gerince.</em></summary>
 <br/>
 
 | # | Lecke | Típus | Nyelv |
@@ -403,6 +404,9 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | 16 | [Anomáliák felismerése](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Építés | Python |
 | 17 | [Kiegyensúlyozatlan adatok kezelése](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Építés | Python |
 | 18 | [Jellemzők kiválasztása](../../phases/02-ml-fundamentals/18-feature-selection/) | Építés | Python |
+| 19 | [ML-rendszerek tervezése: a problémától az üzembe helyezett modellig](../../phases/02-ml-fundamentals/19-ml-system-design/) | Építés | Python |
+| 20 | [Modellek felügyelete éles üzemben: adatsodródás és fogalomsodródás](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Építés | Python |
+| 21 | [Jellemzőtárak és a tanítás és kiszolgálás közötti eltérés](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Építés | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 </details>
 
 <details id="phase-17">
-<summary><b>17. szakasz: Infrastruktúra és üzemi működés</b> &nbsp;<code>28 lecke</code>&nbsp; <em>Vidd az AI-t a valódi világba.</em></summary>
+<summary><b>17. szakasz: Infrastruktúra és üzemi működés</b> &nbsp;<code>29 lecke</code>&nbsp; <em>Vidd az AI-t a valódi világba.</em></summary>
 <br/>
 
 | # | Lecke | Típus | Nyelv |
@@ -902,6 +906,7 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 26 | [Megfelelőség: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Tanulás | Python |
 | 27 | [FinOps az LLM-ekhez: egységgazdaságtan és többügyfeles költségfelosztás](../../phases/17-infrastructure-and-production/27-finops-llms/) | Tanulás | Python |
 | 28 | [Saját kiszolgálás kiválasztása: motor, hardver és méret összehangolása](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Tanulás | Python |
+| 29 | [Modellbemutató felületek: egy függvénytől a megosztható alkalmazásig](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Építés | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ Más tanfolyamok azzal zárulnak, hogy *„gratulálunk, megtanultad X-et”*. I
 <details>
 <summary>Leckeeredmények telepítése</summary>
 
-**A leckék eredményei.** A tároló 396 képességet és 99 promptot tartalmaz a `phases/**/outputs/` alatt; a `scripts/install_skills.py` segítségével telepítsd őket. Ehhez klónozás kell. Támogat címkeszűrést, próbafuttatást és ágensenkénti elrendezést:
+**A leckék eredményei.** A tároló 400 képességet és 100 promptot tartalmaz a `phases/**/outputs/` alatt; a `scripts/install_skills.py` segítségével telepítsd őket. Ehhez klónozás kell. Támogat címkeszűrést, próbafuttatást és ágensenkénti elrendezést:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ A kilépési kód nem nulla, ha bármely szabály sérül. Az L001–L010 szabá
 <p align="center"><sub><b>114,584</b> olvasó &nbsp;·&nbsp; <b>181,995</b> oldalmegtekintés az elmúlt 30 napban &nbsp;·&nbsp; állapot: 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Ingyenes, MIT-licencű, 523 lecke. Köszönjük a szponzoroknak és támogatóknak, akik lehetővé teszik ezt a munkát. [Összes szponzor és támogató megtekintése](../../BACKERS.md).
+Ingyenes, MIT-licencű, 528 lecke. Köszönjük a szponzoroknak és támogatóknak, akik lehetővé teszik ezt a munkát. [Összes szponzor és támogató megtekintése](../../BACKERS.md).
 
 Szeretnéd támogatni a munkát? Nézd meg a [támogatási lehetőségeket](../../SPONSORS.md), köztük a [hardvertámogatást](../../SPONSORS.md#hardware-lab-partner), vagy [támogass a GitHub felületén](https://github.com/sponsors/rohitg00).
 

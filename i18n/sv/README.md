@@ -13,11 +13,11 @@ Implementera modellers interna mekanismer, sökpipelines och körmiljöer för a
 
 Gratis, öppen källkod, MIT-licens. Lär dig på webbplatsen, med en kodningsagent eller genom att köra kod lokalt.
 
-> 523 lektioner. 20 faser. Python, TypeScript, Rust, Julia.
+> 528 lektioner. 20 faser. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-licens"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lektioner"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 lektioner"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 faser"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub-stjärnor"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Webbplats"></a>
@@ -246,7 +246,7 @@ Sökvägar i lektionssidornas kommandon utgår från kodarkivets rot om lektione
 
 ## Välj en lärväg
 
-Du behöver inte gå igenom 523 lektioner innan du börjar. Välj ett mål. Varje länk öppnar samma läroplan på GitHub eller webbplatsen, och båda versionerna använder samma lektionskod.
+Du behöver inte gå igenom 528 lektioner innan du börjar. Välj ett mål. Varje länk öppnar samma läroplan på GitHub eller webbplatsen, och båda versionerna använder samma lektionskod.
 
 | Ditt mål | Lär dig på GitHub | Lär dig på webbplatsen |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 
 <a id="phase-0"></a>
-### Fas 0: Installation och verktyg `12 lektioner`
+### Fas 0: Installation och verktyg `13 lektioner`
 > Gör miljön redo för allt som följer.
 
 | # | Lektion | Typ | Språk |
@@ -347,6 +347,7 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 10 | [Terminal och skal](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Lär dig | — |
 | 11 | [Linux för AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Lär dig | — |
 | 12 | [Felsökning och profilering](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Bygg | Python |
+| 13 | [Python för AI-utveckling](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Bygg | Python |
 
 <details id="phase-1">
 <summary><b>Fas 1: Matematiska grunder</b> &nbsp;<code>22 lektioner</code>&nbsp; <em>Intuitionen bakom varje AI-algoritm, genom kod.</em></summary>
@@ -380,7 +381,7 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 </details>
 
 <details id="phase-2">
-<summary><b>Fas 2: Grunderna i maskininlärning</b> &nbsp;<code>18 lektioner</code>&nbsp; <em>Klassisk ML är fortfarande grunden för de flesta AI-system i produktion.</em></summary>
+<summary><b>Fas 2: Grunderna i maskininlärning</b> &nbsp;<code>21 lektioner</code>&nbsp; <em>Klassisk ML är fortfarande grunden för de flesta AI-system i produktion.</em></summary>
 <br/>
 
 | # | Lektion | Typ | Språk |
@@ -403,6 +404,9 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 16 | [Avvikelsedetektering](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Bygg | Python |
 | 17 | [Hantera obalanserade data](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Bygg | Python |
 | 18 | [Egenskapsurval](../../phases/02-ml-fundamentals/18-feature-selection/) | Bygg | Python |
+| 19 | [Design av ML-system: från problem till driftsatt modell](../../phases/02-ml-fundamentals/19-ml-system-design/) | Bygg | Python |
+| 20 | [Övervakning av modeller i produktion: datadrift och konceptdrift](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Bygg | Python |
+| 21 | [Egenskapslager och skillnader mellan träning och drift](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Bygg | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ Lektionerna 31-46 bildar [studievägen för agentstödd utveckling](../../learni
 </details>
 
 <details id="phase-17">
-<summary><b>Fas 17: Infrastruktur och produktion</b> &nbsp;<code>28 lektioner</code>&nbsp; <em>Ta AI ut i verkligheten.</em></summary>
+<summary><b>Fas 17: Infrastruktur och produktion</b> &nbsp;<code>29 lektioner</code>&nbsp; <em>Ta AI ut i verkligheten.</em></summary>
 <br/>
 
 | # | Lektion | Typ | Språk |
@@ -902,6 +906,7 @@ Lektionerna 31-46 bildar [studievägen för agentstödd utveckling](../../learni
 | 26 | [Regelefterlevnad: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Lär dig | Python |
 | 27 | [FinOps för LLM: enhetsekonomi och kostnadsfördelning mellan kunder](../../phases/17-infrastructure-and-production/27-finops-llms/) | Lär dig | Python |
 | 28 | [Välja egenhostad inferens: matcha motor, hårdvara och skala](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Lär dig | Python |
+| 29 | [Demogränssnitt för modeller: från en funktion till en delbar app](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Bygg | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ Andra kurser slutar med *”Grattis, du har lärt dig X.”* Varje lektion här 
 <details>
 <summary>Installera lektionsresultat</summary>
 
-**Lektionernas arbetsresultat.** Arkivet innehåller 396 färdigheter och 99 promptar under `phases/**/outputs/`. Installera dem med `scripts/install_skills.py`. Arkivet måste klonas. Skriptet stöder taggfilter, förhandsgranskning utan skrivning och agentspecifika katalogstrukturer:
+**Lektionernas arbetsresultat.** Arkivet innehåller 400 färdigheter och 100 promptar under `phases/**/outputs/`. Installera dem med `scripts/install_skills.py`. Arkivet måste klonas. Skriptet stöder taggfilter, förhandsgranskning utan skrivning och agentspecifika katalogstrukturer:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ Avslutningskoden är inte noll om någon regel misslyckas. Reglerna (L001–L010
 <p align="center"><sub><b>114,584</b> läsare &nbsp;·&nbsp; <b>181,995</b> sidvisningar de senaste 30 dagarna &nbsp;·&nbsp; uppdaterat 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Gratis, MIT-licensierat, 523 lektioner. Tack till sponsorerna och stödjarna som gör arbetet möjligt. [Se alla sponsorer och stödjare](../../BACKERS.md).
+Gratis, MIT-licensierat, 528 lektioner. Tack till sponsorerna och stödjarna som gör arbetet möjligt. [Se alla sponsorer och stödjare](../../BACKERS.md).
 
 Vill du stödja arbetet? Se [sponsringsalternativen](../../SPONSORS.md), inklusive [hårdvarusponsring](../../SPONSORS.md#hardware-lab-partner), eller [sponsra på GitHub](https://github.com/sponsors/rohitg00).
 

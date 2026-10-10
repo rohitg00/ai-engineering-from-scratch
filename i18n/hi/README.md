@@ -13,11 +13,11 @@
 
 निःशुल्क, ओपन सोर्स, MIT लाइसेंस। वेबसाइट पर, कोडिंग एजेंट के साथ या स्थानीय कोड चलाकर सीखें।
 
-> 523 पाठ. 20 चरण. Python, TypeScript, Rust, Julia.
+> 528 पाठ. 20 चरण. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="एमआईटी लाइसेंस"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 पाठ"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 पाठ"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 चरण"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub सितारे"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="वेबसाइट"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## सीखने का मार्ग चुनें
 
-शुरुआत से पहले 523 पाठों की सूची देखने की ज़रूरत नहीं। अपना एक लक्ष्य चुनें। हर लिंक GitHub या वेबसाइट पर उसी पाठ्यक्रम को खोलता है और दोनों जगह पाठों का कोड एक ही है।
+शुरुआत से पहले 528 पाठों की सूची देखने की ज़रूरत नहीं। अपना एक लक्ष्य चुनें। हर लिंक GitHub या वेबसाइट पर उसी पाठ्यक्रम को खोलता है और दोनों जगह पाठों का कोड एक ही है।
 
 | आपका लक्ष्य | GitHub पर सीखें | वेबसाइट पर सीखें |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 बीस चरण। किसी चरण पर क्लिक करें और उसके पाठों की सूची खोलें।
 
 <a id="phase-0"></a>
-### चरण 0: सेटअप और टूलिंग `12 पाठ`
+### चरण 0: सेटअप और टूलिंग `13 पाठ`
 > आगे के सभी कामों के लिए अपना विकास वातावरण तैयार करें।
 
 | # | पाठ | प्रकार | भाषा |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [टर्मिनल और शेल](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | सीखें | — |
 | 11 | [AI के लिए Linux](../../phases/00-setup-and-tooling/11-linux-for-ai/) | सीखें | — |
 | 12 | [डिबगिंग और प्रोफाइलिंग](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | बनाएँ | Python |
+| 13 | [AI इंजीनियरिंग के लिए Python](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | बनाएँ | Python |
 
 <details id="phase-1">
 <summary><b>चरण 1 — गणित की बुनियाद</b> &nbsp;<code>22 पाठ</code>&nbsp; <em>हर AI एल्गोरिदम के पीछे की सहज समझ, कोड के ज़रिये।</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>चरण 2 — ML की बुनियाद</b> &nbsp;<code>18 पाठ</code>&nbsp; <em>पारंपरिक ML आज भी अधिकांश उत्पादन AI की रीढ़ है।</em></summary>
+<summary><b>चरण 2 — ML की बुनियाद</b> &nbsp;<code>21 पाठ</code>&nbsp; <em>पारंपरिक ML आज भी अधिकांश उत्पादन AI की रीढ़ है।</em></summary>
 <br/>
 
 | # | पाठ | प्रकार | भाषा |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [असामान्यता पहचान](../../phases/02-ml-fundamentals/16-anomaly-detection/) | बनाएँ | Python |
 | 17 | [असंतुलित डेटा को संभालना](../../phases/02-ml-fundamentals/17-imbalanced-data/) | बनाएँ | Python |
 | 18 | [विशेषता चयन](../../phases/02-ml-fundamentals/18-feature-selection/) | बनाएँ | Python |
+| 19 | [ML सिस्टम डिज़ाइन: समस्या से तैनात मॉडल तक](../../phases/02-ml-fundamentals/19-ml-system-design/) | बनाएँ | Python |
+| 20 | [उत्पादन में मॉडलों की निगरानी: डेटा ड्रिफ्ट और अवधारणा ड्रिफ्ट](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | बनाएँ | Python |
+| 21 | [विशेषता भंडार और प्रशिक्षण तथा सर्विंग का अंतर](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | बनाएँ | Python |
 
 </details>
 
@@ -867,7 +871,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>चरण 17 — इन्फ्रास्ट्रक्चर और उत्पादन</b> &nbsp;<code>28 पाठ</code>&nbsp; <em>AI को वास्तविक दुनिया में पहुँचाएँ।</em></summary>
+<summary><b>चरण 17 — इन्फ्रास्ट्रक्चर और उत्पादन</b> &nbsp;<code>29 पाठ</code>&nbsp; <em>AI को वास्तविक दुनिया में पहुँचाएँ।</em></summary>
 <br/>
 
 | # | पाठ | प्रकार | भाषा |
@@ -900,6 +904,7 @@ flowchart TB
 | 26 | [अनुपालन: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | सीखें | Python |
 | 27 | [LLM के लिए FinOps: प्रति-इकाई लागत और अलग-अलग ग्राहकों के खर्च का हिसाब](../../phases/17-infrastructure-and-production/27-finops-llms/) | सीखें | Python |
 | 28 | [स्वयं होस्ट करने की व्यवस्था: हार्डवेयर और पैमाने के अनुसार इंजन चुनें](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | सीखें | Python |
+| 29 | [मॉडल डेमो इंटरफ़ेस: फ़ंक्शन से साझा करने योग्य ऐप तक](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | बनाएँ | Python |
 
 </details>
 
@@ -1140,7 +1145,7 @@ flowchart LR
 <details>
 <summary>पाठ के आर्टिफैक्ट स्थापित करें</summary>
 
-**पाठों से मिलने वाली सामग्री।** `phases/**/outputs/` में 396 कौशल और 99 प्रॉम्प्ट हैं। उन्हें `scripts/install_skills.py` से स्थापित करें। इसके लिए रिपॉज़िटरी की स्थानीय प्रतिलिपि चाहिए। स्क्रिप्ट टैग के अनुसार छाँटने, बदलाव किए बिना पूर्वावलोकन करने और हर एजेंट के लिए अलग फ़ाइल-संरचना बनाने देती है:
+**पाठों से मिलने वाली सामग्री।** `phases/**/outputs/` में 400 कौशल और 100 प्रॉम्प्ट हैं। उन्हें `scripts/install_skills.py` से स्थापित करें। इसके लिए रिपॉज़िटरी की स्थानीय प्रतिलिपि चाहिए। स्क्रिप्ट टैग के अनुसार छाँटने, बदलाव किए बिना पूर्वावलोकन करने और हर एजेंट के लिए अलग फ़ाइल-संरचना बनाने देती है:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1260,7 +1265,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> पाठक &nbsp;·&nbsp; <b>181,995</b> पिछले 30 दिनों में पृष्ठ दृश्य &nbsp;·&nbsp; आँकड़े 2026-08-29 तक</sub></p>
 <!-- STATS:END -->
 
-मुफ़्त, MIT लाइसेंस, 523 पाठ। इसे संभव बनाने वाले प्रायोजकों और सहयोगियों का धन्यवाद। [सभी प्रायोजकों और सहयोगियों को देखें](../../BACKERS.md)।
+मुफ़्त, MIT लाइसेंस, 528 पाठ। इसे संभव बनाने वाले प्रायोजकों और सहयोगियों का धन्यवाद। [सभी प्रायोजकों और सहयोगियों को देखें](../../BACKERS.md)।
 
 इस काम में मदद करना चाहते हैं? [प्रायोजन विकल्प](../../SPONSORS.md) देखें। इनमें [हार्डवेयर प्रायोजन](../../SPONSORS.md#hardware-lab-partner) भी शामिल है, या [GitHub पर प्रायोजित करें](https://github.com/sponsors/rohitg00)।
 

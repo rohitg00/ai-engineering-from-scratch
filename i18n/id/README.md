@@ -13,11 +13,11 @@ Implementasikan mekanisme internal model, pipeline penelusuran, dan runtime agen
 
 Gratis, sumber terbuka, berlisensi MIT. Belajar melalui situs web, bersama agen pemrograman, atau dengan menjalankan kode lokal.
 
-> 523 pelajaran. 20 tahap. Python, TypeScript, Rust, Julia.
+> 528 pelajaran. 20 tahap. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Lisensi MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 pelajaran"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 pelajaran"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 tahap"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Bintang GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Situs web"></a>
@@ -246,7 +246,7 @@ Perintah pada halaman pelajaran menggunakan jalur dari akar repositori, kecuali 
 
 ## Pilih jalur pembelajaran
 
-Anda tidak perlu menelusuri 523 pelajaran sebelum mulai. Pilih satu tujuan. Setiap tautan membuka kurikulum yang sama di GitHub atau situs web, dan kedua versi menggunakan kode pelajaran yang sama.
+Anda tidak perlu menelusuri 528 pelajaran sebelum mulai. Pilih satu tujuan. Setiap tautan membuka kurikulum yang sama di GitHub atau situs web, dan kedua versi menggunakan kode pelajaran yang sama.
 
 | Tujuan Anda | Belajar di GitHub | Belajar di situs web |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 
 <a id="phase-0"></a>
-### Tahap 0: Penyiapan & Perkakas `12 pelajaran`
+### Tahap 0: Penyiapan & Perkakas `13 pelajaran`
 > Siapkan lingkungan Anda untuk semua yang akan menyusul.
 
 | # | Pelajaran | Jenis | Bahasa |
@@ -347,6 +347,7 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 10 | [Terminal dan shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Pelajari | — |
 | 11 | [Linux untuk AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Pelajari | — |
 | 12 | [Debugging dan profiling](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Bangun | Python |
+| 13 | [Python untuk rekayasa AI](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Bangun | Python |
 
 <details id="phase-1">
 <summary><b>Tahap 1: Dasar matematika</b> &nbsp;<code>22 pelajaran</code>&nbsp; <em>Intuisi di balik setiap algoritma AI, melalui kode.</em></summary>
@@ -380,7 +381,7 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 </details>
 
 <details id="phase-2">
-<summary><b>Tahap 2: Dasar ML</b> &nbsp;<code>18 pelajaran</code>&nbsp; <em>ML klasik: masih menjadi fondasi sebagian besar AI produksi.</em></summary>
+<summary><b>Tahap 2: Dasar ML</b> &nbsp;<code>21 pelajaran</code>&nbsp; <em>ML klasik: masih menjadi fondasi sebagian besar AI produksi.</em></summary>
 <br/>
 
 | # | Pelajaran | Jenis | Bahasa |
@@ -403,6 +404,9 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 16 | [Deteksi anomali](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Bangun | Python |
 | 17 | [Menangani data tidak seimbang](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Bangun | Python |
 | 18 | [Seleksi fitur](../../phases/02-ml-fundamentals/18-feature-selection/) | Bangun | Python |
+| 19 | [Desain sistem ML: dari masalah hingga model yang berjalan](../../phases/02-ml-fundamentals/19-ml-system-design/) | Bangun | Python |
+| 20 | [Pemantauan model di produksi: pergeseran data dan pergeseran konsep](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Bangun | Python |
+| 21 | [Penyimpanan fitur dan ketidaksesuaian pelatihan dan penyajian](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Bangun | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 </details>
 
 <details id="phase-17">
-<summary><b>Tahap 17: Infrastruktur & produksi</b> &nbsp;<code>28 pelajaran</code>&nbsp; <em>Hadirkan AI di dunia nyata.</em></summary>
+<summary><b>Tahap 17: Infrastruktur & produksi</b> &nbsp;<code>29 pelajaran</code>&nbsp; <em>Hadirkan AI di dunia nyata.</em></summary>
 <br/>
 
 | # | Pelajaran | Jenis | Bahasa |
@@ -902,6 +906,7 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 26 | [Kepatuhan: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Pelajari | Python |
 | 27 | [FinOps untuk LLM: ekonomi per unit dan atribusi multitenan](../../phases/17-infrastructure-and-production/27-finops-llms/) | Pelajari | Python |
 | 28 | [Memilih penyajian mandiri: menyesuaikan mesin dengan perangkat keras dan skala](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Pelajari | Python |
+| 29 | [Antarmuka demo model: dari fungsi menjadi aplikasi yang dapat dibagikan](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Bangun | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ Kurikulum lain berakhir dengan *"selamat, Anda telah mempelajari X."* Setiap pel
 <details>
 <summary>Pasang artefak pelajaran</summary>
 
-**Artefak pelajaran.** Repositori menyediakan 396 skill dan 99 prompt di bawah `phases/**/outputs/`; pasang melalui `scripts/install_skills.py`. Repositori harus diklon terlebih dahulu. Mendukung filter tag, simulasi tanpa perubahan, dan susunan khusus tiap agen:
+**Artefak pelajaran.** Repositori menyediakan 400 skill dan 100 prompt di bawah `phases/**/outputs/`; pasang melalui `scripts/install_skills.py`. Repositori harus diklon terlebih dahulu. Mendukung filter tag, simulasi tanpa perubahan, dan susunan khusus tiap agen:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ Kode keluar bukan nol jika ada aturan yang gagal. Aturan (L001–L010) memvalida
 <p align="center"><sub><b>114,584</b> pembaca &nbsp;·&nbsp; <b>181,995</b> tayangan halaman dalam 30 hari terakhir &nbsp;·&nbsp; per 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Gratis, berlisensi MIT, 523 pelajaran. Terima kasih kepada sponsor dan pendukung yang memungkinkan pekerjaan ini. [Lihat seluruh sponsor dan pendukung](../../BACKERS.md).
+Gratis, berlisensi MIT, 528 pelajaran. Terima kasih kepada sponsor dan pendukung yang memungkinkan pekerjaan ini. [Lihat seluruh sponsor dan pendukung](../../BACKERS.md).
 
 Ingin mendukung pekerjaan ini? Lihat [pilihan sponsorship](../../SPONSORS.md), termasuk [sponsorship perangkat keras](../../SPONSORS.md#hardware-lab-partner), atau [dukung melalui GitHub](https://github.com/sponsors/rohitg00).
 

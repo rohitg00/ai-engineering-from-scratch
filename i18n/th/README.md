@@ -13,11 +13,11 @@
 
 ฟรี เปิดเผยซอร์สโค้ด และใช้สัญญาอนุญาต MIT เรียนผ่านเว็บไซต์ กับเอเจนต์เขียนโค้ด หรือด้วยการรันโค้ดบนเครื่องของคุณ
 
-> 523 บทเรียน. 20 ระยะ. Python, TypeScript, Rust, Julia.
+> 528 บทเรียน. 20 ระยะ. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="สัญญาอนุญาต MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 บทเรียน"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 บทเรียน"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 ระยะ"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="ดาวบน GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="เว็บไซต์"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## เลือกเส้นทางการเรียนรู้
 
-คุณไม่จำเป็นต้องไล่ดูทั้ง 523 บทเรียนก่อนเริ่ม เลือกเป้าหมายหนึ่งอย่าง แต่ละลิงก์เปิดหลักสูตรเดียวกันบน GitHub หรือเว็บไซต์ และทั้งสองแบบใช้โค้ดบทเรียนเดียวกัน
+คุณไม่จำเป็นต้องไล่ดูทั้ง 528 บทเรียนก่อนเริ่ม เลือกเป้าหมายหนึ่งอย่าง แต่ละลิงก์เปิดหลักสูตรเดียวกันบน GitHub หรือเว็บไซต์ และทั้งสองแบบใช้โค้ดบทเรียนเดียวกัน
 
 | เป้าหมายของคุณ | เรียนบน GitHub | เรียนบนเว็บไซต์ |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 ยี่สิบระยะ คลิกที่ระยะเพื่อขยายรายชื่อบทเรียน
 
 <a id="phase-0"></a>
-### ระยะ 0: การตั้งค่าและเครื่องมือ `12 บทเรียน`
+### ระยะ 0: การตั้งค่าและเครื่องมือ `13 บทเรียน`
 > เตรียมสภาพแวดล้อมให้พร้อมสำหรับสิ่งที่จะตามมา
 
 | # | บทเรียน | ประเภท | ภาษา |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [เทอร์มินัลและเชลล์](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | เรียนรู้ | — |
 | 11 | [Linux สำหรับ AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | เรียนรู้ | — |
 | 12 | [การดีบักและวิเคราะห์ประสิทธิภาพ](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | สร้าง | Python |
+| 13 | [Python สำหรับวิศวกรรม AI](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | สร้าง | Python |
 
 <details id="phase-1">
 <summary><b>ระยะ 1: พื้นฐานคณิตศาสตร์</b> &nbsp;<code>22 บทเรียน</code>&nbsp; <em>เข้าใจแนวคิดเบื้องหลังทุกอัลกอริทึม AI ผ่านโค้ด</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>ระยะ 2: พื้นฐาน ML</b> &nbsp;<code>18 บทเรียน</code>&nbsp; <em>ML แบบดั้งเดิมยังเป็นแกนหลักของ AI ส่วนใหญ่ที่ใช้งานจริง</em></summary>
+<summary><b>ระยะ 2: พื้นฐาน ML</b> &nbsp;<code>21 บทเรียน</code>&nbsp; <em>ML แบบดั้งเดิมยังเป็นแกนหลักของ AI ส่วนใหญ่ที่ใช้งานจริง</em></summary>
 <br/>
 
 | # | บทเรียน | ประเภท | ภาษา |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [การตรวจจับความผิดปกติ](../../phases/02-ml-fundamentals/16-anomaly-detection/) | สร้าง | Python |
 | 17 | [การจัดการข้อมูลไม่สมดุล](../../phases/02-ml-fundamentals/17-imbalanced-data/) | สร้าง | Python |
 | 18 | [การเลือกคุณลักษณะ](../../phases/02-ml-fundamentals/18-feature-selection/) | สร้าง | Python |
+| 19 | [การออกแบบระบบ ML: จากโจทย์สู่โมเดลที่ใช้งานจริง](../../phases/02-ml-fundamentals/19-ml-system-design/) | สร้าง | Python |
+| 20 | [การเฝ้าติดตามโมเดลในการใช้งานจริง: การเลื่อนของข้อมูลและการเลื่อนของแนวคิด](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | สร้าง | Python |
+| 21 | [คลังคุณลักษณะและความไม่ตรงกันระหว่างการฝึกและการให้บริการ](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | สร้าง | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>ระยะ 17: โครงสร้างพื้นฐานและงานจริง</b> &nbsp;<code>28 บทเรียน</code>&nbsp; <em>นำ AI ออกสู่โลกจริง</em></summary>
+<summary><b>ระยะ 17: โครงสร้างพื้นฐานและงานจริง</b> &nbsp;<code>29 บทเรียน</code>&nbsp; <em>นำ AI ออกสู่โลกจริง</em></summary>
 <br/>
 
 | # | บทเรียน | ประเภท | ภาษา |
@@ -902,6 +906,7 @@ flowchart TB
 | 26 | [การปฏิบัติตามข้อกำหนด: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | เรียนรู้ | Python |
 | 27 | [FinOps สำหรับ LLM: ต้นทุนต่อหน่วยและการแบ่งต้นทุนผู้เช่า](../../phases/17-infrastructure-and-production/27-finops-llms/) | เรียนรู้ | Python |
 | 28 | [เลือกเอนจินให้บริการเองให้เหมาะกับฮาร์ดแวร์และขนาดงาน](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | เรียนรู้ | Python |
+| 29 | [อินเทอร์เฟซสาธิตโมเดล: จากฟังก์ชันสู่แอปที่แชร์ได้](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | สร้าง | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ flowchart LR
 <details>
 <summary>ติดตั้งผลงานจากบทเรียน</summary>
 
-**ชิ้นงานจากบทเรียน.** ที่เก็บมี 396 สกิลและ 99 พรอมป์ต์ภายใต้ `phases/**/outputs/` ติดตั้งด้วย `scripts/install_skills.py` โดยต้องโคลนที่เก็บก่อน รองรับการกรองแท็ก ทดลองโดยไม่เขียนไฟล์ และรูปแบบโฟลเดอร์ตามแต่ละเอเจนต์:
+**ชิ้นงานจากบทเรียน.** ที่เก็บมี 400 สกิลและ 100 พรอมป์ต์ภายใต้ `phases/**/outputs/` ติดตั้งด้วย `scripts/install_skills.py` โดยต้องโคลนที่เก็บก่อน รองรับการกรองแท็ก ทดลองโดยไม่เขียนไฟล์ และรูปแบบโฟลเดอร์ตามแต่ละเอเจนต์:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> ผู้อ่าน &nbsp;·&nbsp; <b>181,995</b> การดูหน้าใน 30 วันที่ผ่านมา &nbsp;·&nbsp; ข้อมูล ณ 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-ฟรี ภายใต้สัญญาอนุญาต MIT จำนวน 523 บทเรียน ขอบคุณผู้สนับสนุนและผู้ให้ทุนที่ทำให้งานนี้เป็นไปได้ [ดูผู้สนับสนุนและผู้ให้ทุนทั้งหมด](../../BACKERS.md)
+ฟรี ภายใต้สัญญาอนุญาต MIT จำนวน 528 บทเรียน ขอบคุณผู้สนับสนุนและผู้ให้ทุนที่ทำให้งานนี้เป็นไปได้ [ดูผู้สนับสนุนและผู้ให้ทุนทั้งหมด](../../BACKERS.md)
 
 ต้องการสนับสนุนงานนี้? ดู[ตัวเลือกการสนับสนุน](../../SPONSORS.md) รวมถึง[การสนับสนุนฮาร์ดแวร์](../../SPONSORS.md#hardware-lab-partner) หรือ[สนับสนุนผ่าน GitHub](https://github.com/sponsors/rohitg00)
 

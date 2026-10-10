@@ -13,11 +13,11 @@
 
 رایگان، متن‌باز و با مجوز MIT. در وب‌سایت، همراه یک عامل کدنویسی یا با اجرای کد محلی یاد بگیرید.
 
-> <span dir="rtl">523 درس. 20 مرحله.</span> <span dir="ltr">Python, TypeScript, Rust, Julia.</span>
+> <span dir="rtl">528 درس. 20 مرحله.</span> <span dir="ltr">Python, TypeScript, Rust, Julia.</span>
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="مجوز MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 درس"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 درس"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 مرحله"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="ستاره‌های GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="وب‌سایت"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## یک مسیر یادگیری انتخاب کنید
 
-برای شروع لازم نیست همهٔ 523 درس را مرور کنید. یک هدف انتخاب کنید. هر پیوند همان برنامهٔ آموزشی را در GitHub یا وب‌سایت باز می‌کند و هر دو نسخه از کد یکسانی برای درس‌ها استفاده می‌کنند.
+برای شروع لازم نیست همهٔ 528 درس را مرور کنید. یک هدف انتخاب کنید. هر پیوند همان برنامهٔ آموزشی را در GitHub یا وب‌سایت باز می‌کند و هر دو نسخه از کد یکسانی برای درس‌ها استفاده می‌کنند.
 
 | هدف شما | یادگیری در GitHub | یادگیری در وب‌سایت |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 بیست مرحله. برای دیدن فهرست درس‌ها روی هر مرحله کلیک کنید.
 
 <a id="phase-0"></a>
-### مرحلهٔ 0: راه‌اندازی و ابزارها `12 درس`
+### مرحلهٔ 0: راه‌اندازی و ابزارها `13 درس`
 > محیط خود را برای همهٔ مطالب بعدی آماده کنید.
 
 | # | درس | نوع | زبان |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [ترمینال و پوسته](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | بیاموزید | — |
 | 11 | [Linux برای هوش مصنوعی](../../phases/00-setup-and-tooling/11-linux-for-ai/) | بیاموزید | — |
 | 12 | [اشکال‌زدایی و تحلیل کارایی](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | بسازید | Python |
+| 13 | [Python برای مهندسی هوش مصنوعی](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | بسازید | Python |
 
 <details id="phase-1">
 <summary><b>مرحلهٔ 1: مبانی ریاضی</b> &nbsp;<code>22 درس</code>&nbsp; <em>درک شهودی پشت هر الگوریتم هوش مصنوعی، از طریق کد.</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>مرحلهٔ 2: مبانی یادگیری ماشین</b> &nbsp;<code>18 درس</code>&nbsp; <em>یادگیری ماشین کلاسیک؛ همچنان پایهٔ بیشتر سامانه‌های عملیاتی AI.</em></summary>
+<summary><b>مرحلهٔ 2: مبانی یادگیری ماشین</b> &nbsp;<code>21 درس</code>&nbsp; <em>یادگیری ماشین کلاسیک؛ همچنان پایهٔ بیشتر سامانه‌های عملیاتی AI.</em></summary>
 <br/>
 
 | # | درس | نوع | زبان |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [تشخیص ناهنجاری](../../phases/02-ml-fundamentals/16-anomaly-detection/) | بسازید | Python |
 | 17 | [کار با داده‌های نامتوازن](../../phases/02-ml-fundamentals/17-imbalanced-data/) | بسازید | Python |
 | 18 | [انتخاب ویژگی](../../phases/02-ml-fundamentals/18-feature-selection/) | بسازید | Python |
+| 19 | [طراحی سامانه‌های ML: از مسئله تا مدل مستقر](../../phases/02-ml-fundamentals/19-ml-system-design/) | بسازید | Python |
+| 20 | [پایش مدل‌ها در محیط عملیاتی: رانش داده و رانش مفهوم](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | بسازید | Python |
+| 21 | [مخزن‌های ویژگی و ناهمخوانی آموزش و ارائه](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | بسازید | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>مرحلهٔ 17: زیرساخت و محیط عملیاتی</b> &nbsp;<code>28 درس</code>&nbsp; <em>هوش مصنوعی را به جهان واقعی ببرید.</em></summary>
+<summary><b>مرحلهٔ 17: زیرساخت و محیط عملیاتی</b> &nbsp;<code>29 درس</code>&nbsp; <em>هوش مصنوعی را به جهان واقعی ببرید.</em></summary>
 <br/>
 
 | # | درس | نوع | زبان |
@@ -902,6 +906,7 @@ flowchart TB
 | 26 | [انطباق: SOC 2، HIPAA، GDPR، EU AI Act، ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | بیاموزید | Python |
 | 27 | [FinOps برای LLM: اقتصاد واحد و انتساب هزینهٔ چندمستاجری](../../phases/17-infrastructure-and-production/27-finops-llms/) | بیاموزید | Python |
 | 28 | [انتخاب سرویس‌دهی خودمیزبان: تطبیق موتور با سخت‌افزار و مقیاس](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | بیاموزید | Python |
+| 29 | [رابط‌های نمایشی مدل: از یک تابع تا برنامه‌ای قابل اشتراک](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | بسازید | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ flowchart LR
 <details>
 <summary>نصب خروجی‌های درس‌ها</summary>
 
-**خروجی درس‌ها.** مخزن 396 مهارت و 99 پرامپت زیر `phases/**/outputs/` دارد؛ آن‌ها را با `scripts/install_skills.py` نصب کنید. کلون مخزن لازم است. فیلتر برچسب، اجرای آزمایشی و چیدمان مخصوص هر عامل پشتیبانی می‌شوند:
+**خروجی درس‌ها.** مخزن 400 مهارت و 100 پرامپت زیر `phases/**/outputs/` دارد؛ آن‌ها را با `scripts/install_skills.py` نصب کنید. کلون مخزن لازم است. فیلتر برچسب، اجرای آزمایشی و چیدمان مخصوص هر عامل پشتیبانی می‌شوند:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> خواننده &nbsp;·&nbsp; <b>181,995</b> بازدید صفحه در 30 روز گذشته &nbsp;·&nbsp; تا تاریخ 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-رایگان، با مجوز MIT و شامل 523 درس. از حامیان مالی و پشتیبانانی که این کار را ممکن می‌کنند سپاسگزاریم. [دیدن همهٔ حامیان و پشتیبانان](../../BACKERS.md).
+رایگان، با مجوز MIT و شامل 528 درس. از حامیان مالی و پشتیبانانی که این کار را ممکن می‌کنند سپاسگزاریم. [دیدن همهٔ حامیان و پشتیبانان](../../BACKERS.md).
 
 می‌خواهید حمایت کنید؟ [گزینه‌های حمایت مالی](../../SPONSORS.md)، از جمله [حمایت سخت‌افزاری](../../SPONSORS.md#hardware-lab-partner) را ببینید یا [در GitHub حامی شوید](https://github.com/sponsors/rohitg00).
 

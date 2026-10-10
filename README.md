@@ -11,11 +11,11 @@ Implement model internals, retrieval pipelines, and agent runtimes. Test them, i
 
 Free, open source, MIT. Learn on the website, with a coding agent, or by running local code.
 
-> 523 lessons. 20 phases. Python, TypeScript, Rust, Julia.
+> 528 lessons. 20 phases. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT License"></a>
-  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 lessons"></a>
+  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 lessons"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 phases"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub stars"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Website"></a>
@@ -304,7 +304,7 @@ run the implementation for the language you are learning.
 
 ## Choose a learning path
 
-You do not need to scan 523 lessons before beginning. Pick one goal. Each link
+You do not need to scan 528 lessons before beginning. Pick one goal. Each link
 opens the same curriculum on GitHub or the website, and both versions use the
 same lesson code.
 
@@ -393,7 +393,7 @@ flowchart TB
 Twenty phases. Click any phase to expand its lesson list.
 
 <a id="phase-0"></a>
-### Phase 0: Setup & Tooling `12 lessons`
+### Phase 0: Setup & Tooling `13 lessons`
 > Get your environment ready for everything that follows.
 
 | # | Lesson | Type | Lang |
@@ -410,6 +410,7 @@ Twenty phases. Click any phase to expand its lesson list.
 | 10 | [Terminal & Shell](phases/00-setup-and-tooling/10-terminal-and-shell/) | Learn | — |
 | 11 | [Linux for AI](phases/00-setup-and-tooling/11-linux-for-ai/) | Learn | — |
 | 12 | [Debugging & Profiling](phases/00-setup-and-tooling/12-debugging-and-profiling/) | Build | Python |
+| 13 | [Python for AI Engineering](phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Build | Python |
 
 <details id="phase-1">
 <summary><b>Phase 1 — Math Foundations</b> &nbsp;<code>22 lessons</code>&nbsp; <em>The intuition behind every AI algorithm, through code.</em></summary>
@@ -443,7 +444,7 @@ Twenty phases. Click any phase to expand its lesson list.
 </details>
 
 <details id="phase-2">
-<summary><b>Phase 2 — ML Fundamentals</b> &nbsp;<code>18 lessons</code>&nbsp; <em>Classical ML — still the backbone of most production AI.</em></summary>
+<summary><b>Phase 2 — ML Fundamentals</b> &nbsp;<code>21 lessons</code>&nbsp; <em>Classical ML — still the backbone of most production AI.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -466,6 +467,9 @@ Twenty phases. Click any phase to expand its lesson list.
 | 16 | [Anomaly Detection](phases/02-ml-fundamentals/16-anomaly-detection/) | Build | Python |
 | 17 | [Handling Imbalanced Data](phases/02-ml-fundamentals/17-imbalanced-data/) | Build | Python |
 | 18 | [Feature Selection](phases/02-ml-fundamentals/18-feature-selection/) | Build | Python |
+| 19 | [ML System Design — From Problem to Deployed Model](phases/02-ml-fundamentals/19-ml-system-design/) | Build | Python |
+| 20 | [Monitoring Models in Production — Data Drift and Concept Drift](phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Build | Python |
+| 21 | [Feature Stores and Training-Serving Skew](phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Build | Python |
 
 </details>
 
@@ -944,7 +948,7 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 </details>
 
 <details id="phase-17">
-<summary><b>Phase 17 — Infrastructure & Production</b> &nbsp;<code>28 lessons</code>&nbsp; <em>Ship AI to the real world.</em></summary>
+<summary><b>Phase 17 — Infrastructure & Production</b> &nbsp;<code>29 lessons</code>&nbsp; <em>Ship AI to the real world.</em></summary>
 <br/>
 
 | # | Lesson | Type | Lang |
@@ -977,6 +981,7 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 | 26 | [Compliance — SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](phases/17-infrastructure-and-production/26-compliance-frameworks/) | Learn | Python |
 | 27 | [FinOps for LLMs — Unit Economics and Multi-Tenant Attribution](phases/17-infrastructure-and-production/27-finops-llms/) | Learn | Python |
 | 28 | [Self-Hosted Serving Selection — Matching Engine to Hardware and Scale](phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Learn | Python |
+| 29 | [Model Demo Interfaces — From a Function to a Shareable App](phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Build | Python |
 
 </details>
 
@@ -1249,7 +1254,7 @@ Other curricula end with *"congratulations, you learned X."* Each lesson here en
 <details>
 <summary>Install lesson artifacts</summary>
 
-**The lesson artifacts.** The repo ships 396 skills and 99 prompts under
+**The lesson artifacts.** The repo ships 400 skills and 100 prompts under
 `phases/**/outputs/`; install them via `scripts/install_skills.py`. Requires
 cloning the repo. Supports tag filters, dry-runs, and per-agent layouts:
 
@@ -1400,7 +1405,7 @@ relative links inside lesson docs.
 <p align="center"><sub><b>114,584</b> readers &nbsp;·&nbsp; <b>181,995</b> page views in the last 30 days &nbsp;·&nbsp; as of 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Free, MIT-licensed, 523 lessons. Thank you to the sponsors and backers who make the work possible.
+Free, MIT-licensed, 528 lessons. Thank you to the sponsors and backers who make the work possible.
 [See all sponsors and backers](BACKERS.md).
 
 Want to support the work? See [sponsorship options](SPONSORS.md), including

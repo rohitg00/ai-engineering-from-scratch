@@ -13,11 +13,11 @@
 
 免費、開放原始碼、MIT 授權。你可以在網站學習、使用程式設計代理輔助學習，或在本機執行程式碼。
 
-> 523 堂課. 20 個階段. Python, TypeScript, Rust, Julia.
+> 528 堂課. 20 個階段. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT 授權條款"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 堂課"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 堂課"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 個階段"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="GitHub 星標"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="網站"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## 選擇學習路徑
 
-開始前不必先瀏覽 523 堂課。選一個目標即可。每個連結都會打開同一套課程的 GitHub 或網站版本，兩邊使用相同的課程程式碼。
+開始前不必先瀏覽 528 堂課。選一個目標即可。每個連結都會打開同一套課程的 GitHub 或網站版本，兩邊使用相同的課程程式碼。
 
 | 你的目標 | 在 GitHub 學習 | 在網站學習 |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 課程共分 20 個階段；點擊任一階段即可展開其課程列表。
 
 <a id="phase-0"></a>
-### 階段 0：環境與工具 `12 堂課`
+### 階段 0：環境與工具 `13 堂課`
 > 配好學習後續所有內容所需的環境與工具。
 
 | # | 課程 | 類型 | 語言 |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [終端機與 Shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | 學習 | — |
 | 11 | [用於 AI 的 Linux](../../phases/00-setup-and-tooling/11-linux-for-ai/) | 學習 | — |
 | 12 | [除錯與效能分析](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | 建置 | Python |
+| 13 | [面向 AI 工程的 Python](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | 建置 | Python |
 
 <details id="phase-1">
 <summary><b>階段 1 — 數學基礎</b> &nbsp;<code>22 堂課</code>&nbsp; <em>用程式碼建立理解 AI 算法所需的數學直覺。</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>階段 2 — 機器學習基礎</b> &nbsp;<code>18 堂課</code>&nbsp; <em>經典機器學習仍是許多生產系統的支柱。</em></summary>
+<summary><b>階段 2 — 機器學習基礎</b> &nbsp;<code>21 堂課</code>&nbsp; <em>經典機器學習仍是許多生產系統的支柱。</em></summary>
 <br/>
 
 | # | 課程 | 類型 | 語言 |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [異常檢測](../../phases/02-ml-fundamentals/16-anomaly-detection/) | 建置 | Python |
 | 17 | [處理類別不平衡資料](../../phases/02-ml-fundamentals/17-imbalanced-data/) | 建置 | Python |
 | 18 | [特徵選擇](../../phases/02-ml-fundamentals/18-feature-selection/) | 建置 | Python |
+| 19 | [機器學習系統設計：從問題到已部署模型](../../phases/02-ml-fundamentals/19-ml-system-design/) | 建置 | Python |
+| 20 | [生產環境中的模型監控：資料漂移與概念漂移](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | 建置 | Python |
+| 21 | [特徵儲存與訓練-服務偏差](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | 建置 | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>階段 17 — 基礎設施與生產部署</b> &nbsp;<code>28 堂課</code>&nbsp; <em>把 AI 系統真正交付到現實場景。</em></summary>
+<summary><b>階段 17 — 基礎設施與生產部署</b> &nbsp;<code>29 堂課</code>&nbsp; <em>把 AI 系統真正交付到現實場景。</em></summary>
 <br/>
 
 | # | 課程 | 類型 | 語言 |
@@ -902,6 +906,7 @@ flowchart TB
 | 26 | [合規：SOC 2、HIPAA、GDPR、歐盟 AI 法案與 ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | 學習 | Python |
 | 27 | [面向 LLM 的 FinOps：單位經濟性與多租戶成本歸因](../../phases/17-infrastructure-and-production/27-finops-llms/) | 學習 | Python |
 | 28 | [自托管推理服務選型：按硬體與規模匹配引擎](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | 學習 | Python |
+| 29 | [模型展示介面：從函式到可分享的應用程式](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | 建置 | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ flowchart LR
 <details>
 <summary>安裝課程成果</summary>
 
-**課程成果檔案**位於 `phases/**/outputs/`，包含 396 個技能和 99 個提示詞。複製儲存庫後，可以用 `scripts/install_skills.py` 安裝；腳本支援按階段或標籤篩選、預演，以及針對不同主機的目錄佈局：
+**課程成果檔案**位於 `phases/**/outputs/`，包含 400 個技能和 100 個提示詞。複製儲存庫後，可以用 `scripts/install_skills.py` 安裝；腳本支援按階段或標籤篩選、預演，以及針對不同主機的目錄佈局：
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> 位讀者 &nbsp;·&nbsp; 近 30 天 <b>181,995</b> 次頁面瀏覽 &nbsp;·&nbsp; 資料截至 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-課程免費，採用 MIT 授權條款，共有 523 堂課。感謝所有讓它持續開放的贊助者和支持者。[查看贊助者與支持者](../../BACKERS.md)。
+課程免費，採用 MIT 授權條款，共有 528 堂課。感謝所有讓它持續開放的贊助者和支持者。[查看贊助者與支持者](../../BACKERS.md)。
 
 想支持專案？可瞭解[贊助者式](../../SPONSORS.md)，包括[硬體贊助](../../SPONSORS.md#hardware-lab-partner)，或[通過 GitHub 贊助](https://github.com/sponsors/rohitg00)。
 

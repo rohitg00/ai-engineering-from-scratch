@@ -13,11 +13,11 @@
 
 Δωρεάν, ανοικτού κώδικα, με άδεια MIT. Μάθετε στον ιστότοπο, με έναν πράκτορα προγραμματισμού ή εκτελώντας κώδικα τοπικά.
 
-> 523 μαθήματα. 20 φάσεις. Python, TypeScript, Rust, Julia.
+> 528 μαθήματα. 20 φάσεις. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Άδεια MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 μαθήματα"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 μαθήματα"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 φάσεις"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Αστέρια στο GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Ιστότοπος"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## Επιλέξτε μαθησιακή διαδρομή
 
-Δεν χρειάζεται να εξετάσεις και τα 523 μαθήματα πριν ξεκινήσεις. Διάλεξε έναν στόχο. Κάθε σύνδεσμος ανοίγει το ίδιο πρόγραμμα στο GitHub ή στον ιστότοπο, και οι δύο εκδόσεις χρησιμοποιούν τον ίδιο κώδικα μαθημάτων.
+Δεν χρειάζεται να εξετάσεις και τα 528 μαθήματα πριν ξεκινήσεις. Διάλεξε έναν στόχο. Κάθε σύνδεσμος ανοίγει το ίδιο πρόγραμμα στο GitHub ή στον ιστότοπο, και οι δύο εκδόσεις χρησιμοποιούν τον ίδιο κώδικα μαθημάτων.
 
 | Ο στόχος σου | Μάθηση στο GitHub | Μάθηση στον ιστότοπο |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Είκοσι φάσεις. Πάτησε μια φάση για να εμφανιστεί η λίστα μαθημάτων της.
 
 <a id="phase-0"></a>
-### Φάση 0: Ρύθμιση και εργαλεία `12 μαθήματα`
+### Φάση 0: Ρύθμιση και εργαλεία `13 μαθήματα`
 > Προετοίμασε το περιβάλλον σου για όσα ακολουθούν.
 
 | # | Μάθημα | Τύπος | Γλώσσα |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [Τερματικό και κέλυφος](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Μάθηση | — |
 | 11 | [Linux για ΤΝ](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Μάθηση | — |
 | 12 | [Αποσφαλμάτωση και ανάλυση επιδόσεων](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Κατασκευή | Python |
+| 13 | [Python για μηχανική τεχνητής νοημοσύνης](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Κατασκευή | Python |
 
 <details id="phase-1">
 <summary><b>Φάση 1: Μαθηματικά θεμέλια</b> &nbsp;<code>22 μαθήματα</code>&nbsp; <em>Η διαίσθηση πίσω από κάθε αλγόριθμο ΤΝ, μέσα από κώδικα.</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>Φάση 2: Βασικές αρχές μηχανικής μάθησης</b> &nbsp;<code>18 μαθήματα</code>&nbsp; <em>Κλασική μηχανική μάθηση· εξακολουθεί να αποτελεί τη βάση των περισσότερων συστημάτων ΤΝ στην παραγωγή.</em></summary>
+<summary><b>Φάση 2: Βασικές αρχές μηχανικής μάθησης</b> &nbsp;<code>21 μαθήματα</code>&nbsp; <em>Κλασική μηχανική μάθηση· εξακολουθεί να αποτελεί τη βάση των περισσότερων συστημάτων ΤΝ στην παραγωγή.</em></summary>
 <br/>
 
 | # | Μάθημα | Τύπος | Γλώσσα |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [Ανίχνευση ανωμαλιών](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Κατασκευή | Python |
 | 17 | [Διαχείριση μη ισορροπημένων δεδομένων](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Κατασκευή | Python |
 | 18 | [Επιλογή χαρακτηριστικών](../../phases/02-ml-fundamentals/18-feature-selection/) | Κατασκευή | Python |
+| 19 | [Σχεδίαση συστημάτων ML: από το πρόβλημα στο μοντέλο σε λειτουργία](../../phases/02-ml-fundamentals/19-ml-system-design/) | Κατασκευή | Python |
+| 20 | [Παρακολούθηση μοντέλων στην παραγωγή: μετατόπιση δεδομένων και μετατόπιση εννοιών](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Κατασκευή | Python |
+| 21 | [Αποθήκες χαρακτηριστικών και απόκλιση εκπαίδευσης και εξυπηρέτησης](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Κατασκευή | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>Φάση 17: Υποδομή και παραγωγή</b> &nbsp;<code>28 μαθήματα</code>&nbsp; <em>Βάλε την ΤΝ στον πραγματικό κόσμο.</em></summary>
+<summary><b>Φάση 17: Υποδομή και παραγωγή</b> &nbsp;<code>29 μαθήματα</code>&nbsp; <em>Βάλε την ΤΝ στον πραγματικό κόσμο.</em></summary>
 <br/>
 
 | # | Μάθημα | Τύπος | Γλώσσα |
@@ -902,6 +906,7 @@ flowchart TB
 | 26 | [Συμμόρφωση: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Μάθηση | Python |
 | 27 | [FinOps για LLM: οικονομία μονάδας και κατανομή κόστους πολλών πελατών](../../phases/17-infrastructure-and-production/27-finops-llms/) | Μάθηση | Python |
 | 28 | [Επιλογή αυτοφιλοξενούμενης εξυπηρέτησης: αντιστοίχιση μηχανής, υλικού και κλίμακας](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Μάθηση | Python |
+| 29 | [Διεπαφές επίδειξης μοντέλων: από μια συνάρτηση σε μια εφαρμογή για κοινή χρήση](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Κατασκευή | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ flowchart LR
 <details>
 <summary>Εγκατάσταση παραδοτέων μαθημάτων</summary>
 
-**Τα παραδοτέα μαθημάτων.** Το αποθετήριο παρέχει 396 δεξιότητες και 99 προτροπές στο `phases/**/outputs/`· εγκατέστησέ τα μέσω `scripts/install_skills.py`. Απαιτείται κλωνοποίηση. Υποστηρίζονται φίλτρα ετικετών, δοκιμαστικές εκτελέσεις και διατάξεις ανά πράκτορα:
+**Τα παραδοτέα μαθημάτων.** Το αποθετήριο παρέχει 400 δεξιότητες και 100 προτροπές στο `phases/**/outputs/`· εγκατέστησέ τα μέσω `scripts/install_skills.py`. Απαιτείται κλωνοποίηση. Υποστηρίζονται φίλτρα ετικετών, δοκιμαστικές εκτελέσεις και διατάξεις ανά πράκτορα:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> αναγνώστες &nbsp;·&nbsp; <b>181,995</b> προβολές σελίδων τις τελευταίες 30 ημέρες &nbsp;·&nbsp; στις 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Δωρεάν, με άδεια MIT, 523 μαθήματα. Ευχαριστούμε τους χορηγούς και υποστηρικτές που κάνουν αυτή τη δουλειά εφικτή. [Δες όλους τους χορηγούς και υποστηρικτές](../../BACKERS.md).
+Δωρεάν, με άδεια MIT, 528 μαθήματα. Ευχαριστούμε τους χορηγούς και υποστηρικτές που κάνουν αυτή τη δουλειά εφικτή. [Δες όλους τους χορηγούς και υποστηρικτές](../../BACKERS.md).
 
 Θέλεις να στηρίξεις τη δουλειά; Δες τις [επιλογές χορηγίας](../../SPONSORS.md), όπως τις [χορηγίες υλικού](../../SPONSORS.md#hardware-lab-partner), ή [γίνε χορηγός στο GitHub](https://github.com/sponsors/rohitg00).
 

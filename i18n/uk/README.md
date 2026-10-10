@@ -13,11 +13,11 @@
 
 Безкоштовно, з відкритим кодом, за ліцензією MIT. Навчайтеся на вебсайті, з агентом програмування або запускаючи код локально.
 
-> 523 уроки. 20 етапів. Python, TypeScript, Rust, Julia.
+> 528 уроки. 20 етапів. Python, TypeScript, Rust, Julia.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Ліцензія MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 уроки"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 уроки"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 етапів"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="Зірки GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Вебсайт"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## Оберіть навчальний маршрут
 
-Вам не потрібно переглядати всі 523 уроки перед початком. Виберіть одну мету. Кожне посилання відкриває ту саму навчальну програму на GitHub або на сайті, а обидві версії використовують той самий код уроків.
+Вам не потрібно переглядати всі 528 уроки перед початком. Виберіть одну мету. Кожне посилання відкриває ту саму навчальну програму на GitHub або на сайті, а обидві версії використовують той самий код уроків.
 
 | Ваша мета | Навчайтеся на GitHub | Навчайтеся на сайті |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 Двадцять етапів. Натисніть на етап, щоб розгорнути список уроків.
 
 <a id="phase-0"></a>
-### Етап 0: Налаштування та інструменти `12 уроків`
+### Етап 0: Налаштування та інструменти `13 уроків`
 > Підготуйте середовище до всього, що буде далі.
 
 | # | Урок | Тип | Мова |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [Термінал і командна оболонка](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Вивчіть | — |
 | 11 | [Linux для AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Вивчіть | — |
 | 12 | [Налагодження та профілювання](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Створіть | Python |
+| 13 | [Python для інженерії ШІ](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Створіть | Python |
 
 <details id="phase-1">
 <summary><b>Етап 1: Математичні основи</b> &nbsp;<code>22 уроки</code>&nbsp; <em>Інтуїція за кожним AI-алгоритмом через код.</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>Етап 2: Основи машинного навчання</b> &nbsp;<code>18 уроків</code>&nbsp; <em>Класичне ML досі є основою більшості промислових AI-систем.</em></summary>
+<summary><b>Етап 2: Основи машинного навчання</b> &nbsp;<code>21 уроків</code>&nbsp; <em>Класичне ML досі є основою більшості промислових AI-систем.</em></summary>
 <br/>
 
 | # | Урок | Тип | Мова |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [Виявлення аномалій](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Створіть | Python |
 | 17 | [Робота з незбалансованими даними](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Створіть | Python |
 | 18 | [Відбір ознак](../../phases/02-ml-fundamentals/18-feature-selection/) | Створіть | Python |
+| 19 | [Проєктування ML-систем: від задачі до розгорнутої моделі](../../phases/02-ml-fundamentals/19-ml-system-design/) | Створіть | Python |
+| 20 | [Моніторинг моделей у промисловій експлуатації: дрейф даних і дрейф концепції](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Створіть | Python |
+| 21 | [Сховища ознак і розбіжність між навчанням та обслуговуванням](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Створіть | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>Етап 17: Інфраструктура й експлуатація</b> &nbsp;<code>28 уроків</code>&nbsp; <em>Виводьте AI в реальний світ.</em></summary>
+<summary><b>Етап 17: Інфраструктура й експлуатація</b> &nbsp;<code>29 уроків</code>&nbsp; <em>Виводьте AI в реальний світ.</em></summary>
 <br/>
 
 | # | Урок | Тип | Мова |
@@ -902,6 +906,7 @@ flowchart TB
 | 26 | [Відповідність вимогам: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Вивчіть | Python |
 | 27 | [FinOps для LLM: юніт-економіка й розподіл витрат між орендарями](../../phases/17-infrastructure-and-production/27-finops-llms/) | Вивчіть | Python |
 | 28 | [Вибір власного інференсу: узгодження рушія, обладнання й масштабу](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Вивчіть | Python |
+| 29 | [Демо-інтерфейси для моделей: від функції до застосунку, яким можна поділитися](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Створіть | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ flowchart LR
 <details>
 <summary>Встановити результати уроків</summary>
 
-**Результати уроків.** Репозиторій містить 396 навичок і 99 промптів у `phases/**/outputs/`. Установлюйте їх через `scripts/install_skills.py`. Потрібно клонувати репозиторій. Підтримуються фільтри за тегами, попередній перегляд без запису та структури каталогів для різних агентів:
+**Результати уроків.** Репозиторій містить 400 навичок і 100 промптів у `phases/**/outputs/`. Установлюйте їх через `scripts/install_skills.py`. Потрібно клонувати репозиторій. Підтримуються фільтри за тегами, попередній перегляд без запису та структури каталогів для різних агентів:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> читачів &nbsp;·&nbsp; <b>181,995</b> переглядів сторінок за останні 30 днів &nbsp;·&nbsp; станом на 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-Безкоштовно, за ліцензією MIT, 523 уроки. Дякуємо спонсорам і доброчинцям, завдяки яким ця робота можлива. [Переглянути всіх спонсорів і доброчинців](../../BACKERS.md).
+Безкоштовно, за ліцензією MIT, 528 уроки. Дякуємо спонсорам і доброчинцям, завдяки яким ця робота можлива. [Переглянути всіх спонсорів і доброчинців](../../BACKERS.md).
 
 Хочете підтримати роботу? Перегляньте [варіанти спонсорства](../../SPONSORS.md), зокрема [спонсорство обладнання](../../SPONSORS.md#hardware-lab-partner), або [станьте спонсором на GitHub](https://github.com/sponsors/rohitg00).
 

@@ -13,11 +13,11 @@
 
 مجاني ومفتوح المصدر بترخيص MIT. تعلّم عبر الموقع أو مع وكيل برمجة أو بتشغيل الشيفرة محليًا.
 
-> <span dir="rtl">523 درساً. 20 مرحلة.</span> <span dir="ltr">Python, TypeScript, Rust, Julia.</span>
+> <span dir="rtl">528 درساً. 20 مرحلة.</span> <span dir="ltr">Python, TypeScript, Rust, Julia.</span>
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="رخصة MIT"></a>
-  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-523-3553ff?style=flat-square&labelColor=fafaf5" alt="523 درساً"></a>
+  <a href="../../ROADMAP.md"><img src="https://img.shields.io/badge/lessons-528-3553ff?style=flat-square&labelColor=fafaf5" alt="528 درساً"></a>
   <a href="#contents"><img src="https://img.shields.io/badge/phases-20-3553ff?style=flat-square&labelColor=fafaf5" alt="20 مرحلة"></a>
   <a href="https://github.com/rohitg00/ai-engineering-from-scratch/stargazers"><img src="https://img.shields.io/github/stars/rohitg00/ai-engineering-from-scratch?style=flat-square&labelColor=fafaf5&color=3553ff" alt="نجوم GitHub"></a>
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="الموقع الإلكتروني"></a>
@@ -246,7 +246,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ## اختر مسارًا للتعلّم
 
-لا حاجة إلى استعراض 523 درسًا قبل أن تبدأ. اختر هدفًا واحدًا. يفتح كل رابط المنهج نفسه على GitHub أو الموقع، ويستخدم الإصداران شيفرة الدروس نفسها.
+لا حاجة إلى استعراض 528 درسًا قبل أن تبدأ. اختر هدفًا واحدًا. يفتح كل رابط المنهج نفسه على GitHub أو الموقع، ويستخدم الإصداران شيفرة الدروس نفسها.
 
 | هدفك | تعلّم على GitHub | تعلّم على الموقع |
 |---|---|---|
@@ -330,7 +330,7 @@ flowchart TB
 عشرون مرحلة. انقر على أي مرحلة لفتح قائمة دروسها.
 
 <a id="phase-0"></a>
-### المرحلة 0: الإعداد والأدوات `12 lessons`
+### المرحلة 0: الإعداد والأدوات `13 lessons`
 > جهّز بيئتك لكل ما ستتعلمه لاحقًا.
 
 | # | الدرس | النوع | اللغة |
@@ -347,6 +347,7 @@ flowchart TB
 | 10 | [الطرفية وshell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | تعلم | — |
 | 11 | [Linux للذكاء الاصطناعي](../../phases/00-setup-and-tooling/11-linux-for-ai/) | تعلم | — |
 | 12 | [تصحيح الأخطاء وقياس الأداء](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | بناء | Python |
+| 13 | [Python لهندسة الذكاء الاصطناعي](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | بناء | Python |
 
 <details id="phase-1">
 <summary><b>المرحلة 1 — أسس الرياضيات</b> &nbsp;<code>22 lessons</code>&nbsp; <em>افهم حدس كل خوارزمية ذكاء اصطناعي من خلال الشيفرة.</em></summary>
@@ -380,7 +381,7 @@ flowchart TB
 </details>
 
 <details id="phase-2">
-<summary><b>المرحلة 2 — أساسيات ML</b> &nbsp;<code>18 lessons</code>&nbsp; <em>ما يزال تعلّم الآلة التقليدي عماد معظم أنظمة الذكاء الاصطناعي الإنتاجية.</em></summary>
+<summary><b>المرحلة 2 — أساسيات ML</b> &nbsp;<code>21 lessons</code>&nbsp; <em>ما يزال تعلّم الآلة التقليدي عماد معظم أنظمة الذكاء الاصطناعي الإنتاجية.</em></summary>
 <br/>
 
 | # | الدرس | النوع | اللغة |
@@ -403,6 +404,9 @@ flowchart TB
 | 16 | [كشف الحالات الشاذة](../../phases/02-ml-fundamentals/16-anomaly-detection/) | بناء | Python |
 | 17 | [التعامل مع البيانات غير المتوازنة](../../phases/02-ml-fundamentals/17-imbalanced-data/) | بناء | Python |
 | 18 | [اختيار السمات](../../phases/02-ml-fundamentals/18-feature-selection/) | بناء | Python |
+| 19 | [تصميم أنظمة ML: من المشكلة إلى النموذج المنشور](../../phases/02-ml-fundamentals/19-ml-system-design/) | بناء | Python |
+| 20 | [مراقبة النماذج في الإنتاج: انجراف البيانات وانجراف المفهوم](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | بناء | Python |
+| 21 | [مخازن السمات والفجوة بين التدريب والخدمة](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | بناء | Python |
 
 </details>
 
@@ -869,7 +873,7 @@ flowchart TB
 </details>
 
 <details id="phase-17">
-<summary><b>المرحلة 17 — البنية التحتية والإنتاج</b> &nbsp;<code>28 lessons</code>&nbsp; <em>أوصل الذكاء الاصطناعي إلى العالم الحقيقي.</em></summary>
+<summary><b>المرحلة 17 — البنية التحتية والإنتاج</b> &nbsp;<code>29 lessons</code>&nbsp; <em>أوصل الذكاء الاصطناعي إلى العالم الحقيقي.</em></summary>
 <br/>
 
 | # | الدرس | النوع | اللغة |
@@ -902,6 +906,7 @@ flowchart TB
 | 26 | [الامتثال: SOC 2 وHIPAA وGDPR وقانون EU AI وISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | تعلم | Python |
 | 27 | [FinOps لـLLM: اقتصاديات الوحدة وإسناد الاستخدام متعدد المستأجرين](../../phases/17-infrastructure-and-production/27-finops-llms/) | تعلم | Python |
 | 28 | [اختيار استضافة الخدمة ذاتيًا: مواءمة المحرك مع العتاد والحجم](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | تعلم | Python |
+| 29 | [واجهات عرض النماذج: من دالة إلى تطبيق قابل للمشاركة](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | بناء | Python |
 
 </details>
 
@@ -1142,7 +1147,7 @@ flowchart LR
 <details>
 <summary>تثبيت مخرجات الدروس</summary>
 
-**مخرجات الدروس.** يضم المستودع 396 مهارة و99 موجّهًا تحت `phases/**/outputs/`؛ ثبّتها عبر `scripts/install_skills.py`. يلزم استنساخ المستودع. تدعم الأداة عوامل تصفية الوسوم والتشغيل التجريبي والتخطيطات الخاصة بكل وكيل:
+**مخرجات الدروس.** يضم المستودع 400 مهارة و100 موجّهًا تحت `phases/**/outputs/`؛ ثبّتها عبر `scripts/install_skills.py`. يلزم استنساخ المستودع. تدعم الأداة عوامل تصفية الوسوم والتشغيل التجريبي والتخطيطات الخاصة بكل وكيل:
 
 ```bash
 python3 scripts/install_skills.py <target>                                 # every skill, default --layout skills (nested)
@@ -1262,7 +1267,7 @@ python3 scripts/audit_lessons.py --json    # CI-friendly output
 <p align="center"><sub><b>114,584</b> القراء &nbsp;·&nbsp; <b>181,995</b> مشاهدات الصفحة في الـ 30 يومًا الأخير &nbsp;·&nbsp; حتى 2026-08-29</sub></p>
 <!-- STATS:END -->
 
-منهج مجاني بترخيص MIT يضم 523 درسًا. شكرًا للرعاة والداعمين الذين يجعلون هذا العمل ممكنًا. [عرض جميع الرعاة والداعمين](../../BACKERS.md).
+منهج مجاني بترخيص MIT يضم 528 درسًا. شكرًا للرعاة والداعمين الذين يجعلون هذا العمل ممكنًا. [عرض جميع الرعاة والداعمين](../../BACKERS.md).
 
 هل تريد دعم العمل؟ اطّلع على [خيارات الرعاية](../../SPONSORS.md)، بما فيها [رعاية الأجهزة](../../SPONSORS.md#hardware-lab-partner)، أو [ارعى المشروع على GitHub](https://github.com/sponsors/rohitg00).
 
