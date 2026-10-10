@@ -52,15 +52,15 @@
     },
     {
       "stage": "post",
-      "question": "A two-second clip is padded to Whisper’s fixed input window and produces text during trailing silence. What response fits the lesson?",
+      "question": "A two-second speech clip is padded to Whisper’s fixed input window and produces text during trailing silence. Which handling reduces unsupported transcript text?",
       "options": [
-        "Increase the decoder vocabulary to include silence",
-        "Convert the padded mel values to raw samples",
-        "Carry previous text into every silent window",
-        "VAD-gate the clip or avoid padding that silence"
+        "Keep required padding, then check transcript segments against detected speech.",
+        "Remove all fixed-window padding and decode the short mel tensor directly.",
+        "Increase decoder temperature until silent frames produce different text.",
+        "Carry previous text into the padding so every silent frame has a prompt."
       ],
-      "correct": 3,
-      "explanation": "Padding a short clip to the fixed window can expose the decoder to trailing silence; VAD gating or avoiding the extra padding addresses that risk. A larger vocabulary does not remove silent frames that can prompt hallucinated text."
+      "correct": 0,
+      "explanation": "Whisper still pads short speech-containing clips to its fixed decoding window. Compare transcript segment timestamps with detected speech regions, using confidence or no-speech evidence as appropriate, to reject text unsupported by speech. Removing mandatory padding breaks the input contract; carrying previous text into silence can encourage continuation."
     },
     {
       "stage": "post",
