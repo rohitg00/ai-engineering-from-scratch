@@ -1,0 +1,78 @@
+{
+  "lesson": "08-llava-onevision-single-multi-video",
+  "title": "LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What problem does LLaVA-OneVision's shared visual-token budget solve across images, multi-image inputs, and video?",
+      "options": [
+        "It keeps total visual-token cost roughly constant across input types.",
+        "It forces every image and video frame to use the same resolution.",
+        "It removes the need to pool any visual tokens before the LLM.",
+        "It lets separate specialist models ignore one another's training data."
+      ],
+      "correct": 0,
+      "explanation": "OneVision allocates a shared approximate token budget differently for single images, image sets, and video, preventing a scenario from unexpectedly filling the LLM context. It still varies resolution and pooling; it does not force identical input shapes."
+    },
+    {
+      "stage": "check",
+      "question": "Which curriculum order does the lesson prescribe for one unified image, multi-image, and video model?",
+      "options": [
+        "Video SFT, then task transfer, then single-image SFT.",
+        "Single-image SFT, then mixed OneVision SFT, then task-transfer fine-tuning.",
+        "Task-transfer fine-tuning, then single-image data, then video only.",
+        "Mixed OneVision SFT, then reset weights, then single-image SFT."
+      ],
+      "correct": 1,
+      "explanation": "The curriculum starts with single-image SFT to build visual perception, continues with mixed OneVision SFT, then optionally fine-tunes for the target task. The paper reports worse image performance when video or multi-image training comes first."
+    },
+    {
+      "stage": "check",
+      "question": "Assume 32 video frames are each pooled to 81 visual tokens. How many visual tokens enter the LLM for the clip?",
+      "options": [
+        "2,592 tokens, from 32*81.",
+        "81 tokens, because pooling is applied after all frames are joined.",
+        "1,024 tokens, from 32*32.",
+        "2,511 tokens, if one of the 32 frames is dropped."
+      ],
+      "correct": 0,
+      "explanation": "Pooling leaves 81 tokens per frame, so 32 frames produce 32×81=2,592 visual tokens. The 81-token option counts one frame; dropping a frame would yield 31×81=2,511, not the stated all-frame total."
+    },
+    {
+      "stage": "check",
+      "question": "A 24x24 patch grid is pooled 2x2 in each spatial dimension. What output grid and token count result?",
+      "options": [
+        "6x6, or 36 tokens, a sixteenfold token reduction.",
+        "12x12, or 144 tokens, a fourfold token reduction.",
+        "24x24, or 576 tokens, with no token reduction.",
+        "24x12, or 288 tokens, a twofold token reduction."
+      ],
+      "correct": 1,
+      "explanation": "Pooling 2×2 in both grid dimensions halves width and height: 24/2=12, so output has 12×12=144 tokens. The original 24×24 grid had 576; 144 is one quarter, a fourfold reduction."
+    },
+    {
+      "stage": "post",
+      "question": "A team trains on video first and single-image data afterward, using the same total data. What failure does the lesson predict?",
+      "options": [
+        "No change, because training order has no effect at fixed data volume.",
+        "Only a larger visual-token count, with no benchmark change.",
+        "Better image performance because temporal frames always replace image examples.",
+        "Weaker image performance because the curriculum lacks a strong single-image perception base first."
+      ],
+      "correct": 3,
+      "explanation": "Single-image-first training builds the perceptual features used later by mixed multi-image/video training. Reversing the order weakens image performance in the ablation; equal total data does not remove the curriculum-order effect."
+    },
+    {
+      "stage": "post",
+      "question": "How does OneVision's fixed-budget strategy differ from Qwen2.5-VL's dynamic-resolution approach described here?",
+      "options": [
+        "Qwen uses a fixed number of tokens, while OneVision removes pooling.",
+        "OneVision scales tokens with video duration; Qwen fixes one budget for all inputs.",
+        "OneVision pools to keep a roughly fixed budget; Qwen's budget can scale with the input.",
+        "Both require every image to use a square 336-pixel crop."
+      ],
+      "correct": 2,
+      "explanation": "OneVision changes pooling and frame/image allocation to keep total tokens roughly stable, while Qwen’s dynamic-resolution approach lets token count scale with input size. The tradeoff is predictable context cost versus more flexible input resolution."
+    }
+  ]
+}

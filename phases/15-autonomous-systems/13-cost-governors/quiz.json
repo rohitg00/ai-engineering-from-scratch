@@ -1,0 +1,78 @@
+{
+  "lesson": "13-cost-governors",
+  "title": "Action Budgets, Iteration Caps, and Cost Governors",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An autonomous agent enters a repeated polling loop. Which type of limit can stop rapid spending before a monthly cap is reached?",
+      "options": [
+        "A schema enum for the polling tool input",
+        "A weekly report that summarizes costs afterward",
+        "A model alias that hides the provider name",
+        "A financial velocity limit over a short time window"
+      ],
+      "correct": 3,
+      "explanation": "A velocity limit measures spend over a short rolling window, so it can stop a rapid polling loop before monthly cost accumulates. A weekly report observes the bill after the burst rather than cutting it off."
+    },
+    {
+      "stage": "check",
+      "question": "Which pair limits one completion's size and the total number of loop iterations?",
+      "options": [
+        "velocity limit and monthly cap",
+        "prompt caching and context windowing",
+        "max_tokens and max_turns",
+        "max_budget_usd and allowed_tools"
+      ],
+      "correct": 2,
+      "explanation": "`max_tokens` caps one completion; `max_turns` limits the number of loop iterations. A velocity limit and monthly cap constrain spend over time, not response size and iteration count."
+    },
+    {
+      "stage": "check",
+      "question": "An agent has a per-task dollar cap, but it can call one expensive tool hundreds of times. Which layer addresses this risk most directly?",
+      "options": [
+        "A context window",
+        "A read-only tracing span",
+        "A model alias",
+        "A per-tool call cap"
+      ],
+      "correct": 3,
+      "explanation": "A per-tool cap limits repetition of one expensive action, such as hundreds of status polls, before the overall task budget fires. A model alias changes routing, not how many calls a tool can make."
+    },
+    {
+      "stage": "check",
+      "question": "What does the lesson say happens when any configured budget cap fires?",
+      "options": [
+        "Silently raise the cap to match the observed spend from the prior run",
+        "Keep the run active but switch to a longer context",
+        "Delete the cost history and retry from the beginning",
+        "Abort the session, record the cap, and use a separate re-enable path"
+      ],
+      "correct": 3,
+      "explanation": "When a configured cap fires, abort the session, record the trigger, and require a separate re-enable action. Automatically raising the cap lets the same run bypass the control designed to stop it."
+    },
+    {
+      "stage": "post",
+      "question": "A team has a monthly cap but sees a five-second retry loop burn money rapidly. Which missing control would catch it earlier?",
+      "options": [
+        "A short-window velocity threshold",
+        "A per-month usage summary",
+        "A context compaction rule",
+        "A model alias for the primary route"
+      ],
+      "correct": 0,
+      "explanation": "A five-second retry loop can exceed a short-window spend-rate threshold within minutes; a monthly cap may wait until substantial cost has accrued. A monthly report is too slow for rapid runaway spending."
+    },
+    {
+      "stage": "post",
+      "question": "An expensive download is legitimate in some runs but can unexpectedly consume a large budget. What control adds a human decision at the right point?",
+      "options": [
+        "A daily report after the download finishes",
+        "A larger iteration cap for all sessions",
+        "A HITL checkpoint before the expensive action",
+        "A cache of the agent's system prompt"
+      ],
+      "correct": 2,
+      "explanation": "A human checkpoint before the expensive download decides whether its cost is justified before it is incurred. A report afterward records spending but cannot prevent the charge already made."
+    }
+  ]
+}

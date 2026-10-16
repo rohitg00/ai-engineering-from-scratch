@@ -1,0 +1,78 @@
+{
+  "lesson": "18-multi-token-prediction",
+  "title": "Multi-Token Prediction (MTP)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Standard language-model training supervises each hidden state on the next token. What does multi-token prediction add?",
+      "options": [
+        "A new embedding table for every future token position.",
+        "Additional losses for tokens farther ahead in the same sequence.",
+        "A separate reward model for ranking complete responses.",
+        "An attention mask that removes all causal dependencies."
+      ],
+      "correct": 1,
+      "explanation": "Next-token training gives each position one target; MTP adds losses for tokens at farther offsets, increasing supervision per hidden state. A reward model ranks completed responses for preference optimization, which is a different training signal."
+    },
+    {
+      "stage": "check",
+      "question": "What preserves a causal chain in DeepSeek-V3's sequential MTP design?",
+      "options": [
+        "The shared output head sends predictions backward into earlier hidden states.",
+        "Each depth reads future tokens directly from the evaluation set at inference.",
+        "Each depth uses the prior hidden state and the next token embedding to build a new state.",
+        "Every depth predicts from the same backbone state with an independent output head."
+      ],
+      "correct": 2,
+      "explanation": "Sequential MTP creates h(k) from the preceding hidden state and the embedding of the next ground-truth token. That lets depth k+1 condition on what came before; independent parallel heads all start from h(0) and cannot chain predictions."
+    },
+    {
+      "stage": "check",
+      "question": "Why can MTP modules add little embedding and output-head parameter cost?",
+      "options": [
+        "They remove the main model's embedding table during prediction.",
+        "They store only the top-1 token and discard output projections.",
+        "They reuse the main model's embedding table and output head.",
+        "They share one transformer's attention weights across all depths."
+      ],
+      "correct": 2,
+      "explanation": "All MTP depths call the main model’s shared embedding and output head, avoiding a duplicate vocab-by-hidden matrix at every depth. The depth-specific projection and transformer block still add parameters, so sharing does not make the modules free."
+    },
+    {
+      "stage": "check",
+      "question": "Two depth losses have mean cross-entropies L1=2 and L2=4. With D=2 and lambda=0.3, what is the joint MTP loss?",
+      "options": [
+        "0.9, from (0.3/2) times (2+4).",
+        "1.8, from 0.3 times (2+4).",
+        "6.3, from adding lambda to both depth losses.",
+        "3.0, from the arithmetic mean of 2 and 4."
+      ],
+      "correct": 0,
+      "explanation": "The joint loss is (λ/D)ΣLk. With λ=0.3, D=2, and losses summing to 6, it is 0.15×6=0.9; 1.8 omits division by D, while 3.0 is only the unweighted mean. Averaging keeps the extra-loss scale from growing with depth count."
+    },
+    {
+      "stage": "post",
+      "question": "A model was fully pretrained without MTP modules, and a team wants MTP drafts for speculative decoding. What limitation should they expect?",
+      "options": [
+        "MTP works only after converting the model to a parallel-head design.",
+        "The shared output head prevents the main model from generating any tokens.",
+        "MTP is not trained in those weights, so it cannot be enabled as a ready-made draft.",
+        "The model must remove its next-token loss before using speculative decoding."
+      ],
+      "correct": 2,
+      "explanation": "MTP needs trained extra modules; a dense checkpoint pretrained without them has no ready-made MTP draft, even though its shared output head still generates ordinary next tokens. A separately trained EAGLE draft is possible, but converting to parallel heads is not the MTP requirement."
+    },
+    {
+      "stage": "post",
+      "question": "At inference, why can sequential MTP modules serve as a speculative draft more directly than parallel heads?",
+      "options": [
+        "Each later module conditions on the preceding draft token through its embedding.",
+        "All parallel heads share the same prediction and therefore form a token chain.",
+        "The verifier does not need to check MTP predictions against its distribution.",
+        "MTP predicts only the final answer and skips intermediate tokens."
+      ],
+      "correct": 0,
+      "explanation": "At inference, module k receives the prior hidden state plus the preceding drafted token’s embedding, producing the next prediction in sequence. Parallel heads predict offsets independently from the same backbone state, so one head’s token is not input to the next."
+    }
+  ]
+}

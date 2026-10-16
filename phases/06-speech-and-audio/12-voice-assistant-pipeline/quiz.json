@@ -1,0 +1,78 @@
+{
+  "lesson": "12-voice-assistant-pipeline",
+  "title": "Build a Voice Assistant Pipeline — The Phase 6 Capstone",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which sequence describes one full voice-assistant turn at a high level?",
+      "options": [
+        "Synthesize, diarize, tokenize, then capture",
+        "Capture, detect speech, transcribe, reason, speak",
+        "Play audio, filter mel, classify text, then capture",
+        "Transcribe, verify speaker, encode codec, classify"
+      ],
+      "correct": 1,
+      "explanation": "A turn captures microphone audio, detects speech, transcribes it, sends text through reasoning and tools, then synthesizes and plays a reply. The “synthesize, diarize, tokenize, then capture” option starts with output and omits the user-input path."
+    },
+    {
+      "stage": "check",
+      "question": "The first word is clipped because speech onset is detected too late. What adjustment does this lesson suggest?",
+      "options": [
+        "Start the VAD threshold near 0.3 instead of 0.5",
+        "Raise the VAD threshold above 0.8 for clarity",
+        "Remove pre-roll and wait for a longer phrase",
+        "Delay STT until the assistant begins speaking"
+      ],
+      "correct": 0,
+      "explanation": "Lowering the onset threshold from 0.5 toward 0.3 makes VAD more sensitive, helping it catch a quiet first word earlier. A higher threshold demands stronger energy and makes a soft onset even easier to clip, though a lower threshold can raise false triggers."
+    },
+    {
+      "stage": "check",
+      "question": "Why does a voice assistant keep a pre-roll buffer before VAD fires?",
+      "options": [
+        "To delay TTS until the transcript is finalized",
+        "To estimate speaker identity from playback audio",
+        "To store a second copy of the final assistant answer",
+        "To retain audio from before detected speech onset"
+      ],
+      "correct": 3,
+      "explanation": "A 300 ms pre-roll keeps recent chunks before VAD fires, so the beginning of a word is still available when onset detection is late. Pre-roll preserves incoming audio; it does not delay synthesis or store the assistant’s response."
+    },
+    {
+      "stage": "check",
+      "question": "A streamed LLM emits a tool-call event for `set_timer`. What should the runtime do next?",
+      "options": [
+        "Speak the tool name directly as the final assistant response",
+        "Send the tool arguments to the TTS as audio frames",
+        "Restart the microphone capture before executing the tool",
+        "Dispatch the named tool and feed its result back into the loop"
+      ],
+      "correct": 3,
+      "explanation": "The runtime dispatches the named tool with its arguments and feeds the result back into generation so the assistant can complete the response. TTS speaks natural-language output; tool arguments must reach the tool implementation to perform the requested action."
+    },
+    {
+      "stage": "post",
+      "question": "VAD detects a new user utterance while the assistant is speaking. Which coordinated actions fit the capstone?",
+      "options": [
+        "Finish the reply, then transcribe the new utterance",
+        "Pause the microphone and complete the current tool call",
+        "Cancel LLM and TTS, stop playback, and restart STT",
+        "Keep TTS running and enqueue the new turn"
+      ],
+      "correct": 2,
+      "explanation": "On barge-in, cancel both the active LLM generation and TTS, stop playback, and feed the new user audio to STT. Otherwise, old tokens could enter the next turn or continue speaking over the user."
+    },
+    {
+      "stage": "post",
+      "question": "Synchronous TTS stalls the event loop in a streaming assistant. What implementation change addresses it?",
+      "options": [
+        "Run every tool call before transcribing audio",
+        "Use asynchronous TTS or move it to a separate thread",
+        "Increase the VAD minimum-speech duration",
+        "Convert the transcript into a larger JSON schema"
+      ],
+      "correct": 1,
+      "explanation": "Synchronous synthesis blocks the event loop while it waits, delaying other streaming work; use async TTS or move synthesis to another thread. VAD tuning changes endpointing, but it does not release a blocked event loop."
+    }
+  ]
+}

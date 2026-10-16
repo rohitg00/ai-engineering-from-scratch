@@ -1,0 +1,78 @@
+{
+  "lesson": "18-theory-of-mind-coordination",
+  "title": "Theory of Mind and Emergent Coordination",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "When teammates cannot communicate directly, what can observing one another's actions help them infer?",
+      "options": [
+        "That the final result needs no verification",
+        "Which tasks peers may already be pursuing",
+        "Every peer's private prompt exactly",
+        "The environment's state with certainty"
+      ],
+      "correct": 1,
+      "explanation": "An observed move can reveal a likely target, helping a teammate avoid duplicating work, but it is only evidence about intent. It cannot expose the peer’s private prompt exactly or guarantee the observer’s full picture of the environment."
+    },
+    {
+      "stage": "check",
+      "question": "What belief does first-order Theory of Mind represent?",
+      "options": [
+        "What one agent believes another agent believes",
+        "What every agent jointly agrees to do",
+        "What the environment currently contains without any agent model",
+        "What another agent believes about a fact"
+      ],
+      "correct": 3,
+      "explanation": "First-order ToM represents one agent’s belief about a fact, such as “Alice believes X.” “Alice believes Bob believes X” adds a recursive level and is second-order, not first-order."
+    },
+    {
+      "stage": "check",
+      "question": "In the Sally-Anne false-belief example, where will Sally look after Anne moves the marble while Sally is away?",
+      "options": [
+        "In basket A, where Sally last believed it was",
+        "In both baskets because the story is ambiguous",
+        "In basket B, where the marble is now",
+        "In neither basket until another agent tells her"
+      ],
+      "correct": 0,
+      "explanation": "Sally was away when Anne moved the marble, so Sally still believes it is in basket A and will search there. Basket B is the marble’s actual location; substituting reality for Sally’s belief misses the false-belief distinction."
+    },
+    {
+      "stage": "check",
+      "question": "Which coordination metric asks whether agents perform complementary subtasks rather than duplicate one another?",
+      "options": [
+        "Identity-linked differentiation",
+        "Higher-order synergy",
+        "Goal-directed complementarity",
+        "Raw task completion"
+      ],
+      "correct": 2,
+      "explanation": "Goal-directed complementarity measures whether agents take different, mutually useful subtasks instead of duplicating effort. Identity-linked differentiation tracks stable roles, while synergy compares group performance against subsets."
+    },
+    {
+      "stage": "post",
+      "question": "A multi-agent demo appears coordinated only when prompts say work together, and there is no control condition. What should a team measure?",
+      "options": [
+        "Assume any successful run proves emergent coordination",
+        "Compare against a version without the coordination prompt",
+        "Count only how many agents were included",
+        "Increase the prompt's coordination language until results improve"
+      ],
+      "correct": 1,
+      "explanation": "A no-coordination-prompt control tests whether measured coordination persists without instructions that directly request it. Assuming a successful run proves emergence leaves the prompt-dressing explanation untested."
+    },
+    {
+      "stage": "post",
+      "question": "Long-horizon agents forget which belief belongs to which peer. Which design helps preserve that identity-belief binding?",
+      "options": [
+        "Store other-agent beliefs in a structured external ToM state",
+        "Add more recursive belief levels to every prompt",
+        "Keep all beliefs in an unlabelled free-form transcript",
+        "Remove action history so the context is shorter"
+      ],
+      "correct": 0,
+      "explanation": "An external ToM store keyed by agent identity keeps each attributed belief attached to the peer it concerns across long runs. An unlabelled transcript allows facts and owners to blur as context grows."
+    }
+  ]
+}

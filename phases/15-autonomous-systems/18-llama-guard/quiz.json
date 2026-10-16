@@ -1,0 +1,78 @@
+{
+  "lesson": "18-llama-guard",
+  "title": "Llama Guard and Input/Output Classification",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why add an input classifier before an agent rather than rely on its final answer alone?",
+      "options": [
+        "It guarantees that every later action is harmless",
+        "It replaces the model's output checks and tool policy",
+        "It can route or block risky requests before downstream actions",
+        "It proves that the user's intent matches the request"
+      ],
+      "correct": 2,
+      "explanation": "An input classifier can reject or route a risky request before it reaches downstream reasoning, but it cannot guarantee all later actions are harmless. Tool permissions and output checks cover risks the input rail cannot see."
+    },
+    {
+      "stage": "check",
+      "question": "What capability does Llama Guard 4 add relative to Guard 3 in the lesson?",
+      "options": [
+        "Multimodal image-and-text input with categories expanded to S1–S14",
+        "Colang-defined conversation-flow rails that persist across turns",
+        "A guarantee that adversarial bypasses have zero success",
+        "An eight-language input/output classifier with a 13-hazard taxonomy"
+      ],
+      "correct": 0,
+      "explanation": "Guard 4 adds image-and-text input and extends the taxonomy to S14; Guard 3 is the 13-hazard, eight-language model. Neither version guarantees zero bypasses, so the absolute-guarantee option overstates a classifier."
+    },
+    {
+      "stage": "check",
+      "question": "Which behavior separates a NeMo dialog rail from input and output rails?",
+      "options": [
+        "It enforces a conversation flow constraint across turns.",
+        "It classifies one model response after generation.",
+        "It normalizes Unicode before input classification.",
+        "It classifies one user request before generation."
+      ],
+      "correct": 0,
+      "explanation": "Dialog rails preserve a rule across turns, while input and output rails classify one user or model turn. Unicode normalization is preprocessing, not the conversation-flow behavior that distinguishes Colang rails."
+    },
+    {
+      "stage": "check",
+      "question": "The raw classifier misses a forbidden phrase split by zero-width characters. Which normalization strategy does the code demonstrate?",
+      "options": [
+        "Apply NFKC, map selected homoglyphs, then remove selected invisible code points.",
+        "Map selected homoglyphs but preserve zero-width characters in the text.",
+        "Delete every non-ASCII character before classification, including legitimate text.",
+        "Apply NFKC but retain invisible characters and homoglyphs before classifying."
+      ],
+      "correct": 0,
+      "explanation": "NFKC, selected homoglyph mapping, and removal of selected invisible code points expose this split phrase to the classifier. Deleting every non-ASCII character would also destroy legitimate multilingual content."
+    },
+    {
+      "stage": "post",
+      "question": "An input classifier accepts a request, but the generated response contains a secret-shaped token. Which rail can inspect it?",
+      "options": [
+        "An output rail that classifies the generated response for sensitive patterns.",
+        "A second input rail that repeats classification of the original request.",
+        "A Unicode normalizer applied before the model reads the request.",
+        "A dialog rail that checks the user turn but skips model output."
+      ],
+      "correct": 0,
+      "explanation": "An output rail scans generated text for secret-key or API-token patterns after generation. Repeating only the input check cannot catch sensitive content that first appears in the model response."
+    },
+    {
+      "stage": "post",
+      "question": "A classifier catches obvious misuse but misses a paraphrase or multi-turn attack. What architecture follows the lesson?",
+      "options": [
+        "Treat the classifier as a complete security boundary",
+        "Allow the model to change the classifier taxonomy",
+        "Combine it with constitutional and runtime controls",
+        "Remove action budgets because the request was classified"
+      ],
+      "correct": 2,
+      "explanation": "Classifiers catch some obvious misuse but can miss paraphrases and multi-turn compositions, so combine them with constitutional behavior, runtime permissions/budgets, and human review. A taxonomy alone is not a complete security boundary."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "03-monte-carlo-methods",
+  "title": "Monte Carlo Methods — Learning from Complete Episodes",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An environment offers reset() and step() but no transition probabilities. Which evaluation approach can still estimate a policy's value?",
+      "options": [
+        "Choose a greedy action from a value table without collecting outcomes.",
+        "Solve a Bellman linear system using transitions that were never supplied.",
+        "Collect trajectories and average observed returns from visited states.",
+        "Enumerate every next state and average model probabilities exactly."
+      ],
+      "correct": 2,
+      "explanation": "With reset() and step(), the evaluator can run the policy, observe rewards, and average complete-episode returns for states it visits. Dynamic programming’s exact backup needs transition probabilities, so it cannot enumerate this environment from the interface alone."
+    },
+    {
+      "stage": "check",
+      "question": "A two-step episode gives rewards r1 = 1 and r2 = 2, with gamma = 0.5. What is the return G0?",
+      "options": [
+        "2.0, from 1 plus one half of 2.",
+        "4.0, from 1 plus twice 2.",
+        "3.0, from 1 plus 2 without discounting.",
+        "1.5, from one half of 1 plus 2."
+      ],
+      "correct": 0,
+      "explanation": "The return is G0 = r1 + γr2 = 1 + 0.5×2 = 2. Only the later reward is discounted. The 3.0 choice drops γ, while 1.5 incorrectly discounts the immediate reward instead."
+    },
+    {
+      "stage": "check",
+      "question": "An episode visits the same state twice. Under first-visit Monte Carlo, which return updates that state's value for this episode?",
+      "options": [
+        "The return following its first occurrence in the episode.",
+        "The return following its final occurrence in the episode.",
+        "The mean of both returns, counted as two samples.",
+        "The return from the same state in the previous episode."
+      ],
+      "correct": 0,
+      "explanation": "First-visit MC records the return from the earliest occurrence of a state and ignores later occurrences from that same episode. Averaging both visits as two samples is the every-visit variant, not first-visit evaluation."
+    },
+    {
+      "stage": "check",
+      "question": "A greedy policy always chooses one tied action, leaving other state-action pairs unvisited. What behavior policy change encourages coverage?",
+      "options": [
+        "Set epsilon to zero after initializing all action values to the same number.",
+        "Use epsilon-greedy action selection so random actions occur with probability epsilon.",
+        "Average only states already reached by the deterministic trajectory.",
+        "Use a deterministic greedy choice so the same trajectory repeats."
+      ],
+      "correct": 1,
+      "explanation": "A greedy policy can repeatedly choose the same tied action, so other actions receive no samples and their Q estimates stay unsupported. Epsilon-greedy sometimes samples an action at random; setting ε=0 or replaying the same path does not create coverage."
+    },
+    {
+      "stage": "post",
+      "question": "A policy may loop forever, so some rollouts never produce a complete episode. What should an MC evaluator do?",
+      "options": [
+        "Switch to exact dynamic programming without learning the transition model.",
+        "Keep waiting for completion so every sampled return has infinite length.",
+        "Set a maximum-step cap and count capped trajectories as timeouts consistently.",
+        "Discard all capped trajectories without recording that they timed out."
+      ],
+      "correct": 2,
+      "explanation": "Monte Carlo needs episode returns, so a potentially endless rollout needs a finite step cap. Treat capped trajectories as timeouts in the evaluation; silently dropping them, as one option suggests, would hide the policy’s non-termination failure."
+    },
+    {
+      "stage": "post",
+      "question": "You collected episodes with behavior policy mu but want the value of a different target policy pi. What correction does off-policy MC use?",
+      "options": [
+        "Discard actions where the two policies choose different probabilities.",
+        "Reweight sampled returns by target-to-behavior action-probability ratios.",
+        "Replace each return with the largest reward seen in the episode.",
+        "Average the behavior-policy returns unchanged as target-policy values."
+      ],
+      "correct": 1,
+      "explanation": "Off-policy MC corrects behavior-policy data with products of π(a|s)/μ(a|s) ratios, so the weighted returns estimate the target policy rather than μ. Averaging raw μ returns unchanged estimates the behavior policy’s value, and long products can have high variance."
+    }
+  ]
+}

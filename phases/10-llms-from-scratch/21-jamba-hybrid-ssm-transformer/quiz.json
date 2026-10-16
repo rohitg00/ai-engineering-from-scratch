@@ -1,0 +1,78 @@
+{
+  "lesson": "21-jamba-hybrid-ssm-transformer",
+  "title": "Jamba — Hybrid SSM-Transformer",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why can an SSM layer process a long sequence with fixed memory per layer during inference?",
+      "options": [
+        "Each output reruns the entire sequence from the first input token.",
+        "Each output reads a new learned position embedding for every token.",
+        "Each output attends to every earlier token and stores all keys and values.",
+        "Each output uses the previous recurrent state and current input, not the full token history."
+      ],
+      "correct": 3,
+      "explanation": "The SSM recurrence h_t=A h_(t−1)+B x_t carries the relevant history forward in a fixed-size state, and y_t uses that state with the current input. Full attention instead retains growing key/value history."
+    },
+    {
+      "stage": "check",
+      "question": "A Jamba-style model has 32 layers grouped as seven Mamba layers followed by one attention layer. How many attention and Mamba layers does it contain?",
+      "options": [
+        "16 attention and 16 Mamba layers.",
+        "8 attention and 24 Mamba layers.",
+        "1 attention and 31 Mamba layers.",
+        "4 attention and 28 Mamba layers."
+      ],
+      "correct": 3,
+      "explanation": "A Jamba group contains eight layers: seven Mamba plus one attention. Thirty-two layers form four groups, so 4 are attention and 4×7=28 are Mamba; a 16/16 split would use a different ratio."
+    },
+    {
+      "stage": "check",
+      "question": "What is the main quality reason Jamba interleaves Transformer attention with Mamba layers?",
+      "options": [
+        "Both layer types are included only to double the model's parameter count.",
+        "SSM layers provide exact full-history recall while attention compresses the state.",
+        "Attention removes all recurrence, while Mamba supplies the vocabulary projection.",
+        "Attention handles exact recall while SSM layers process the cheaper bulk of tokens."
+      ],
+      "correct": 3,
+      "explanation": "Attention layers preserve exact long-range recall and state tracking, while recurrent SSM layers process the cheaper bulk with fixed-size state. The reverse-role option attributes the full-history cache to the SSM and compression to attention."
+    },
+    {
+      "stage": "check",
+      "question": "Which Mamba-3 change restores state-tracking capability that earlier real-valued simplifications had lost?",
+      "options": [
+        "A scalar reward head attached to the final recurrent state.",
+        "A learned absolute-position table with a separate vector per token position.",
+        "A wider attention window that stores every key and value in the sequence.",
+        "A complex-valued state update, equivalent to a data-dependent rotary embedding."
+      ],
+      "correct": 3,
+      "explanation": "Mamba-3 restores complex-valued state updates, which the lesson relates to data-dependent rotary behavior in the recurrence. A learned absolute-position table or attention cache would add a different mechanism rather than restore SSM state tracking."
+    },
+    {
+      "stage": "post",
+      "question": "A deployment needs 256k context on a single GPU and mixes local structure with long-range recall. Which architecture choice matches the lesson's tradeoff?",
+      "options": [
+        "A Jamba-style hybrid with a small attention fraction and mostly SSM layers.",
+        "A short-context model with no recurrence and no attention layers.",
+        "A pure SSM model for every task, including exact cross-document recall.",
+        "A pure full-attention model with every layer caching the whole sequence."
+      ],
+      "correct": 0,
+      "explanation": "A hybrid keeps some attention for exact retrieval and many SSM layers for long-sequence efficiency, matching the workload’s mix of local structure and long-range recall. Pure full attention retains the biggest KV history; pure SSM may lose detail needed for retrieval."
+    },
+    {
+      "stage": "post",
+      "question": "What does Mamba-3's MIMO projection change compared with per-feature scalar projections?",
+      "options": [
+        "It stores a separate key/value cache for each recurrent state dimension.",
+        "It changes the training objective from next-token loss to reward modeling.",
+        "It uses matrix-valued projections to improve modeling power and hardware utilization.",
+        "It replaces every attention layer with a mixture-of-experts router."
+      ],
+      "correct": 2,
+      "explanation": "MIMO replaces scalar per-feature projections with matrix-valued projections, giving the recurrence richer input/output mixing and better hardware utilization. It does not create per-state KV caches, change the language-model objective, or insert an MoE router."
+    }
+  ]
+}

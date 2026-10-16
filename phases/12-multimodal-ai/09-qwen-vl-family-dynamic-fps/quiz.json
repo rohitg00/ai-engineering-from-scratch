@@ -1,0 +1,78 @@
+{
+  "lesson": "09-qwen-vl-family-dynamic-fps",
+  "title": "Qwen-VL Family and Dynamic-FPS Video",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which Qwen-VL generation introduced M-RoPE and native dynamic image resolution in the lesson's lineage?",
+      "options": [
+        "Qwen2-VL, which replaced fixed resolution and Q-Former with dynamic inputs.",
+        "Qwen2.5-VL, which first introduced the Qwen family.",
+        "Qwen3-VL, which replaced the ViT with a recurrent state model.",
+        "Qwen-VL, which introduced 448-pixel grounding and coordinate tokens."
+      ],
+      "correct": 0,
+      "explanation": "Qwen2-VL replaces Qwen-VL’s fixed-resolution/Q-Former stack with native dynamic resolution and M-RoPE. The original Qwen-VL introduced 448-pixel inputs and grounding; Qwen2.5 later added the dynamic-FPS and absolute-time video recipe."
+    },
+    {
+      "stage": "check",
+      "question": "How does M-RoPE encode a video patch's location?",
+      "options": [
+        "With separate temporal, height, and width rotary position bands.",
+        "With a class label and a text-token embedding only.",
+        "With a single frame number and no spatial coordinates.",
+        "With one learned absolute index shared by all modalities."
+      ],
+      "correct": 0,
+      "explanation": "M-RoPE splits position into temporal, height, and width axes and rotates the corresponding hidden-dimension bands. Using only frame index loses the row/column location needed to distinguish patches within a frame."
+    },
+    {
+      "stage": "check",
+      "question": "A 60-second high-motion clip has a 19,440-token budget and 81 tokens per frame. The allowed FPS choices are 1, 2, 4, and 8. What highest FPS fits?",
+      "options": [
+        "1 FPS, 4,860 tokens; fits but is not highest.",
+        "2 FPS, 9,720 tokens; fits but is not highest.",
+        "4 FPS, because 19,440/(60*81)=4 frames per second.",
+        "8 FPS, 38,880 tokens; above the 19,440-token budget."
+      ],
+      "correct": 2,
+      "explanation": "The budget allows fps_max=19,440/(60×81)=4 FPS. Each second uses 4×81=324 tokens, so 60 seconds uses 19,440; among 1, 2, 4, and 8, four is the highest rate that fits exactly."
+    },
+    {
+      "stage": "check",
+      "question": "A VLM response contains prose around a valid JSON object. What does the lesson's parser try after direct JSON parsing fails?",
+      "options": [
+        "Delete all punctuation and infer a tool name from the remaining words.",
+        "Treat the full response as valid JSON without checking its structure.",
+        "Extract the brace-delimited substring and try JSON parsing.",
+        "Return the first coordinate pair and ignore the tool field."
+      ],
+      "correct": 2,
+      "explanation": "After json.loads fails on surrounding prose, the toy parser slices from the first opening brace to the last closing brace and tries parsing that substring. It does not infer tool fields from ordinary prose."
+    },
+    {
+      "stage": "post",
+      "question": "A video product has a strict token budget and high-motion clips where event timing matters. Which sampling choice follows the lesson?",
+      "options": [
+        "Use a higher FPS that fits the token budget and retain absolute timestamps.",
+        "Use one fixed low FPS for every clip and omit frame timestamps.",
+        "Use only the final frame because the model has spatial position bands.",
+        "Sample every frame regardless of budget because M-RoPE compresses tokens."
+      ],
+      "correct": 0,
+      "explanation": "Dynamic FPS chooses more frames for high motion when the token budget permits, while absolute timestamp tokens preserve event timing. Sampling every frame regardless of budget can exceed context; M-RoPE encodes position but does not compress tokens."
+    },
+    {
+      "stage": "post",
+      "question": "The Qwen2.5-VL-style tool parser receives malformed JSON with an unclosed object. What fallback result does the toy implementation return?",
+      "options": [
+        "Return a PARSE_ERROR record with the raw text.",
+        "A guessed mouse_click call with default coordinates.",
+        "A valid JSON array containing the unparsed string.",
+        "An empty object, treating missing braces as optional."
+      ],
+      "correct": 0,
+      "explanation": "The parser first tries json.loads on the full string, then retries the brace-delimited substring; if both fail it returns PARSE_ERROR with the original raw text. It does not guess a tool call from incomplete JSON."
+    }
+  ]
+}

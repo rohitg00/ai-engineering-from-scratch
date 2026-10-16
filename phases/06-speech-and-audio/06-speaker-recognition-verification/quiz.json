@@ -1,0 +1,78 @@
+{
+  "lesson": "06-speaker-recognition-verification",
+  "title": "Speaker Recognition & Verification",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An enrolled user claims to be Alice, and one test utterance is checked against her reference. Which task is this?",
+      "options": [
+        "Voice conversion, rewriting another speaker",
+        "Speaker verification, a one-to-one decision",
+        "Diarization, assigning turns in a meeting",
+        "Speaker identification, a one-to-many search"
+      ],
+      "correct": 1,
+      "explanation": "Verification is a one-to-one test of a claimed identity against one enrolled speaker; identification searches a bank, while diarization labels who spoke when. Identification chooses among candidate identities instead of checking one specific claim."
+    },
+    {
+      "stage": "check",
+      "question": "What does a cosine-threshold verifier compare at inference?",
+      "options": [
+        "Energy in the highest mel-frequency band",
+        "Word overlap between the reference and transcript",
+        "Similarity between enrollment and test embeddings",
+        "Duration of the test utterance against a limit"
+      ],
+      "correct": 2,
+      "explanation": "The verifier embeds the enrollment and test utterances, computes their cosine similarity, and compares that score with a decision threshold. Duration may affect quality, but it is not the similarity score used for the identity decision."
+    },
+    {
+      "stage": "check",
+      "question": "At what operating threshold is Equal Error Rate defined?",
+      "options": [
+        "The point where every impostor trial is rejected",
+        "The point where cosine similarity equals zero",
+        "The point where false accepts equal false rejects",
+        "The point where all same-speaker trials pass"
+      ],
+      "correct": 2,
+      "explanation": "EER is the operating threshold at the crossover where False Accept Rate equals False Reject Rate. The “every impostor trial is rejected” option describes a zero-FAR goal, not equal false-accept and false-reject rates."
+    },
+    {
+      "stage": "check",
+      "question": "How should enrollment embeddings be formed for a robust ECAPA setup in the lesson?",
+      "options": [
+        "Concatenate raw waveforms before cosine scoring",
+        "Average embeddings from several clean samples",
+        "Choose the highest-scoring test utterance as reference",
+        "Use one noisy sample as the sole reference"
+      ],
+      "correct": 1,
+      "explanation": "Averaging three to five clean enrollment embeddings stabilizes the reference voice representation across samples. A noisy sample can distort the anchor, while a selected test utterance would leak evaluation data into enrollment."
+    },
+    {
+      "stage": "post",
+      "question": "A verifier was tuned on web-video speech but now receives phone calls. What should be changed before launch?",
+      "options": [
+        "Keep the threshold because cosine is channel independent",
+        "Report only the model’s published benchmark EER",
+        "Evaluate and tune the threshold on target-channel data",
+        "Replace the embedding with a transcript similarity score"
+      ],
+      "correct": 2,
+      "explanation": "Phone audio differs from web-video training audio, so evaluate and tune the threshold on held-out phone recordings before launch. Cosine scoring does not remove channel shift; a published VoxCeleb EER does not calibrate phone-call errors."
+    },
+    {
+      "stage": "post",
+      "question": "A meeting system must label which speaker talked during each interval. Which sequence matches the lesson’s diarization pipeline?",
+      "options": [
+        "Transcribe, synthesize, watermark, then compare speakers",
+        "Enroll, verify, translate, then compute word error",
+        "VAD, segment, embed, cluster, then smooth boundaries",
+        "Classify, pool MFCCs, then decode mel frames"
+      ],
+      "correct": 2,
+      "explanation": "Diarization finds speech regions, segments them, embeds each segment, clusters embeddings by speaker, and smooths boundaries over time. Enrollment verification checks a single identity claim, not speaker turns and clusters throughout a meeting."
+    }
+  ]
+}

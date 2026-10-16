@@ -1,0 +1,78 @@
+{
+  "lesson": "04-structured-output",
+  "title": "Structured Output — JSON Schema, Pydantic, Zod, Constrained Decoding",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does asking a model to reply in JSON still need safeguards?",
+      "options": [
+        "A model response is automatically rejected by every host",
+        "JSON text cannot represent nested arrays or numbers",
+        "Prompt wording makes the output schema unnecessary",
+        "Free-form generation can contain invalid syntax or the wrong fields"
+      ],
+      "correct": 3,
+      "explanation": "JSON is a serialization syntax, not a promise that free-form generation matches a schema. A model can omit a brace, use the wrong type, or add fields; saying “reply in JSON” alone does not remove those failure modes."
+    },
+    {
+      "stage": "check",
+      "question": "What guarantee does constrained decoding add compared with validation after generation?",
+      "options": [
+        "Invalid next tokens are masked while the output is generated",
+        "The generated answer is factually correct for the source",
+        "The model must answer every request rather than refuse",
+        "The host no longer needs a typed refusal branch"
+      ],
+      "correct": 0,
+      "explanation": "Constrained decoding masks next tokens that would violate the declared schema, so the generated structure can parse and validate. It does not make extracted facts true; the factual-correctness option confuses structural validity with truth."
+    },
+    {
+      "stage": "check",
+      "question": "Which pairing correctly distinguishes a parse error from a schema violation?",
+      "options": [
+        "Parse error: the model declines extraction; schema violation: parsed fields fail the schema",
+        "Parse error: JSON cannot be read; schema violation: the model declines extraction",
+        "Parse error: parsed fields fail the schema; schema violation: JSON cannot be read",
+        "Parse error: JSON cannot be read; schema violation: parsed fields fail the schema"
+      ],
+      "correct": 3,
+      "explanation": "Parsing is the first gate: malformed JSON stops before schema validation; valid JSON can then fail required fields, types, or other constraints. A refusal is a separate typed outcome, not malformed syntax or a parsed object that violates the schema."
+    },
+    {
+      "stage": "check",
+      "question": "A strict OpenAI schema has optional properties and allows extra fields. What change matches the lesson's strict-mode requirements?",
+      "options": [
+        "Keep optional fields out of required and allow extra fields",
+        "Replace the schema with a prose description only",
+        "Remove all properties and accept an arbitrary object",
+        "List every property as required and forbid additional properties"
+      ],
+      "correct": 3,
+      "explanation": "Strict mode requires every declared property in required and forbids additional properties; an optional value can be represented as nullable. Leaving a property outside required or allowing extras violates that strict contract."
+    },
+    {
+      "stage": "post",
+      "question": "A strict extraction model declines because the input is a poem, not an invoice. What should the pipeline do?",
+      "options": [
+        "Treat the refusal text as a schema-valid invoice object",
+        "Ignore the refusal and reuse the prior invoice result",
+        "Repair the poem into an invoice and retry until it passes",
+        "Return a typed refusal outcome without retrying it as malformed data"
+      ],
+      "correct": 3,
+      "explanation": "A refusal means the source does not fit the extraction task, so return the typed refusal instead of coercing the poem into an invoice. Retrying it as malformed JSON cannot fix the semantic mismatch and may fabricate fields."
+    },
+    {
+      "stage": "post",
+      "question": "A non-strict provider returns output that fails schema validation. What bounded recovery pattern does the lesson recommend?",
+      "options": [
+        "Skip validation and send the unchecked result downstream",
+        "Change the required fields after every failed attempt",
+        "Inject the validation error and retry, with a small retry limit",
+        "Retry forever until the model eventually matches the schema"
+      ],
+      "correct": 2,
+      "explanation": "Outside strict mode, parse and validate, feed a specific validation error back, and retry within a small cap such as three attempts. Retrying forever spends more without fixing an input-schema mismatch or a schema the source cannot satisfy."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "19-audio-language-whisper-to-af3",
+  "title": "Audio-Language Models: the Whisper to Audio Flamingo 3 Arc",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why can a transcript-only Whisper-to-LLM cascade fail on questions about a song's mood or an explosion's timing?",
+      "options": [
+        "The text model lacks a vocabulary entry for the word 'music'.",
+        "Transcripts lose acoustic cues and precise event timing.",
+        "The transcript contains too many visual patch tokens for the LLM.",
+        "The cascade cannot process any spoken words after transcription."
+      ],
+      "correct": 1,
+      "explanation": "A transcript preserves recognized words but generally omits acoustic properties such as musical timbre, vocal emotion, speaker identity, and precise sound-event timing. The vocabulary distractor blames missing word recognition, but the limitation remains even when the transcript is accurate because those cues are not words."
+    },
+    {
+      "stage": "check",
+      "question": "A 30-second clip is represented at 100 log-Mel frames per second with 80 Mel bins. What feature-array shape results?",
+      "options": [
+        "3000 by 80, from 30*100 time frames and 80 bins.",
+        "300 by 80, from 30*10 frames and 80 bins.",
+        "30 by 100, from seconds and sample rate.",
+        "80 by 3000, from 80 time frames and 3000 bins."
+      ],
+      "correct": 0,
+      "explanation": "The feature array has time frames on its first axis and Mel-bin values on its second: 30 seconds × 100 frames/second = 3,000 frames, each with 80 bins. The 300-frame option uses 10 rather than the stated 100 frames per second."
+    },
+    {
+      "stage": "check",
+      "question": "Which audio encoder does the lesson favor for music and environmental sound features that Whisper handles less well?",
+      "options": [
+        "A CLIP image tower, trained on image-caption pairs.",
+        "Whisper's text decoder, trained only on vocabulary logits.",
+        "A VQ image tokenizer, trained on pixel reconstruction.",
+        "BEATs, trained self-supervised on AudioSet."
+      ],
+      "correct": 3,
+      "explanation": "BEATs is a self-supervised encoder trained on AudioSet, and the lesson contrasts its music and environmental-sound strength with Whisper's speech-dominant training. Whisper's text decoder generates recognized words; it is not an AudioSet-trained acoustic encoder."
+    },
+    {
+      "stage": "check",
+      "question": "What does an audio Q-Former do between encoder frames and an LLM?",
+      "options": [
+        "Learnable queries attend over encoder frames to summarize audio.",
+        "It expands each frame into a separate LLM layer with no compression.",
+        "It transcribes every frame into text and removes acoustic features.",
+        "It converts the LLM's output text into waveform samples."
+      ],
+      "correct": 0,
+      "explanation": "A fixed set of learnable queries cross-attends over the encoder's time frames and outputs a compact, fixed-length set of audio tokens for the LLM. The transcription distractor incorrectly turns the bridge into an ASR step and discards the acoustic representation it is meant to summarize."
+    },
+    {
+      "stage": "post",
+      "question": "A product needs to identify instruments and speaker emotion, not just summarize spoken words. Which pipeline is better suited?",
+      "options": [
+        "End-to-end audio-LLM, which preserves acoustic information for reasoning.",
+        "A text-only LLM that receives no audio or transcript.",
+        "Whisper transcription followed by a text-only summarizer.",
+        "A transcript cascade, because emotion is always explicit in words."
+      ],
+      "correct": 0,
+      "explanation": "Instrument identity and emotion are carried by acoustic properties that may not be spoken aloud, so end-to-end audio features give the model evidence a transcript omits. The option claiming emotion is always explicit in words confuses spoken content with vocal and musical cues."
+    },
+    {
+      "stage": "post",
+      "question": "A podcast product only needs a text summary and has no music, emotion, or speaker-overlap requirements. Which choice follows the lesson's cost tradeoff?",
+      "options": [
+        "Use a Whisper transcription followed by an LLM summary.",
+        "Use a full audio-LLM even though only words matter.",
+        "Use a Q-Former without a language model or transcript.",
+        "Use BEATs alone because it generates a text summary."
+      ],
+      "correct": 0,
+      "explanation": "When the requested output is only a summary of spoken content, Whisper can supply a transcript for a text LLM at lower cost and complexity than a full audio-LLM. The full audio-LLM option adds capability for acoustic-only reasoning the product explicitly does not need."
+    }
+  ]
+}

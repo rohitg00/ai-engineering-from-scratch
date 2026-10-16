@@ -1,0 +1,78 @@
+{
+  "lesson": "05-tool-schema-design",
+  "title": "Tool Schema Design — Naming, Descriptions, Parameter Constraints",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A model often chooses the wrong tool when several registry descriptions say look up information. What should the designer improve first?",
+      "options": [
+        "Hide the entire registry until after the model answers",
+        "Make each name and description distinguish its intended use",
+        "Remove all usage guidance and keep short labels",
+        "Add more general tools with overlapping names"
+      ],
+      "correct": 1,
+      "explanation": "When descriptions overlap, tool selection becomes ambiguous because the model cannot tell which boundary matches the request. Give each tool a stable name and distinct use condition; adding more overlapping names makes the same classification problem worse."
+    },
+    {
+      "stage": "check",
+      "question": "Which description follows the lesson's recommended pattern?",
+      "options": [
+        "Use whenever it seems useful and return some weather information.",
+        "This tool gets things, including weather, places, and other data.",
+        "Use when the user asks for current weather. Do not use for forecasts.",
+        "Weather data is available through this convenient helper."
+      ],
+      "correct": 2,
+      "explanation": "A useful description names a positive trigger and a close exclusion: current weather is in scope, forecasts are not. “Use whenever it seems useful” leaves the model no boundary between this tool and a forecast or general-information tool."
+    },
+    {
+      "stage": "check",
+      "question": "Which tool name best follows the lesson's naming rules for retrieving weather?",
+      "options": [
+        "get_weather_in_tokyo",
+        "get_weather",
+        "weather_get",
+        "get_weather_later"
+      ],
+      "correct": 1,
+      "explanation": "`get_weather` is a stable snake_case verb-noun name and leaves the city in the arguments, so it works across locations. `get_weather_in_tokyo` hard-codes one parameter value, while `weather_get` reverses the preferred verb-noun order."
+    },
+    {
+      "stage": "check",
+      "question": "A parameter accepts only Celsius or Fahrenheit. Which schema design best communicates that closed set?",
+      "options": [
+        "A number field with a minimum and maximum",
+        "A string field with an enum listing the two values",
+        "An untyped object that accepts any nested value",
+        "A free-form string without a description"
+      ],
+      "correct": 1,
+      "explanation": "An enum closes the string field to exactly Celsius or Fahrenheit, so generation and validation share the same allowed values. A free-form string permits unsupported labels such as “kelvin”; a numeric range cannot encode these names."
+    },
+    {
+      "stage": "post",
+      "question": "A single tool has an action field with five possible operations. What rule of thumb applies?",
+      "options": [
+        "Use a different generic tool name for every user",
+        "Rename the action field to command and remove its type",
+        "Split it into atomic tools with one clear action each",
+        "Keep one tool and pass the operation in a free-text field"
+      ],
+      "correct": 2,
+      "explanation": "With five actions, a monolithic string forces the model to infer both the operation and its parameter shape. Split it into atomic typed tools; passing a free-text command preserves the ambiguity the schema is meant to remove."
+    },
+    {
+      "stage": "post",
+      "question": "A tool executor rejects a missing city field. Which error message best helps the model recover?",
+      "options": [
+        "TypeError: object of type NoneType has no attribute lower",
+        "Please try again with another prompt and see what happens",
+        "Invalid input: city is required. Example: {\"city\":\"Bengaluru\"}.",
+        "The request has failed due to an unknown exception"
+      ],
+      "correct": 2,
+      "explanation": "A useful error names the missing city and shows a valid object, teaching the model how to repair the call. A raw TypeError exposes the executor’s implementation failure but neither identifies the required field nor supplies the expected shape."
+    }
+  ]
+}

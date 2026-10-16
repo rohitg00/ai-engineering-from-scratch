@@ -1,0 +1,78 @@
+{
+  "lesson": "18-long-video-million-token",
+  "title": "Long-Video Understanding at Million-Token Context",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A 30-minute video is sampled at 1 FPS and each frame contributes 81 tokens. What total visual-token count does that produce?",
+      "options": [
+        "2,430 tokens, treating 30 minutes as 30 sampled frames.",
+        "81 tokens, counting only one frame.",
+        "1,800 tokens, counting frames but not tokens per frame.",
+        "145,800 tokens, from 1,800 frames*81 tokens."
+      ],
+      "correct": 3,
+      "explanation": "Thirty minutes is 30×60=1,800 seconds; at 1 FPS that yields 1,800 frames, and 1,800×81=145,800 tokens. The 2,430 option treats minutes as frames, while 1,800 forgets the per-frame patch tokens."
+    },
+    {
+      "stage": "check",
+      "question": "How does ring attention process a long sequence across multiple devices?",
+      "options": [
+        "Each device stores the full sequence and computes an independent local summary.",
+        "Devices hold chunks and rotate them to compute full-sequence attention.",
+        "Each device drops its chunk after local attention and never receives another.",
+        "Each device assigns one frame to a separate model and votes on the result."
+      ],
+      "correct": 1,
+      "explanation": "Ring attention splits a long sequence into chunks held on different devices. Devices circulate chunks and accumulate their attention contributions, allowing each query to attend across the full sequence without storing the entire sequence on every device."
+    },
+    {
+      "stage": "check",
+      "question": "What is the main tradeoff when Video-XL compresses many frames into one visual summary token per clip?",
+      "options": [
+        "Compression saves tokens but may lose exact-timestamp recall.",
+        "The model no longer needs a video encoder or retrieval index.",
+        "The LLM sees more tokens and gains exact frame-level recall.",
+        "The summary token preserves every patch without any compression."
+      ],
+      "correct": 0,
+      "explanation": "Video-XL compresses many frames into a summary token, reducing LLM context cost. That compression can discard fine-grained event timing, so a question about exactly where something happened may be harder than with retrieved frames."
+    },
+    {
+      "stage": "check",
+      "question": "Which sequence matches the VideoAgent-style retrieval loop?",
+      "options": [
+        "Question, tool retrieves relevant clips, VLM reads them, LLM composes an answer.",
+        "Video, diffusion model generates a summary, tokenizer produces captions.",
+        "Question, LLM reads every frame in context, tool returns a final answer.",
+        "Question, image encoder votes on a class, LLM skips clip inspection."
+      ],
+      "correct": 0,
+      "explanation": "VideoAgent treats the recording as a searchable database: the LLM asks a retrieval tool for relevant timestamps, a VLM inspects returned clips, and the LLM composes an answer. It avoids encoding every frame for a localized query."
+    },
+    {
+      "stage": "post",
+      "question": "A user asks where a specific cat jumps in a two-hour recording. Which path is designed for long-video, localized questions?",
+      "options": [
+        "Brute-context encoding of every frame at high resolution in one prompt.",
+        "Uniform sampling at one frame per hour with no timestamp index.",
+        "Retrieve relevant clips, then send them to a VLM.",
+        "A single pooled summary token for the entire two-hour video."
+      ],
+      "correct": 2,
+      "explanation": "A two-hour query about one event fits the agentic-retrieval path: search for relevant clips and inspect only those segments. Brute-context encodes the full video, while one summary may not retain the event’s exact timestamp."
+    },
+    {
+      "stage": "post",
+      "question": "What does a needle-in-a-haystack evaluation measure for a long-video model?",
+      "options": [
+        "Average image quality after generating frames from a caption.",
+        "Recall a unique marker's position across the video.",
+        "The model's text fluency on a transcript without visual markers.",
+        "How many patch tokens the encoder emits for a fixed resolution."
+      ],
+      "correct": 1,
+      "explanation": "Needle-in-a-haystack inserts a unique visual or textual marker at a random point and asks for it later, measuring recall by marker position and video length. Image generation quality or transcript fluency does not measure long-context retrieval."
+    }
+  ]
+}

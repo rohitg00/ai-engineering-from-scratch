@@ -1,0 +1,78 @@
+{
+  "lesson": "16-checkpoints-rollback",
+  "title": "Checkpoints and Rollback",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A long workflow may crash between state transitions. What should a production checkpoint policy persist?",
+      "options": [
+        "Every graph-state transition to a durable store",
+        "Only the final answer after the entire run",
+        "Only model prompts, not workflow decisions",
+        "A timestamp in the process memory after each tool"
+      ],
+      "correct": 0,
+      "explanation": "Persist every graph-state transition so a recovered worker has a precise latest checkpoint, including decisions and completed activities. A final-only save loses the intermediate state needed after a crash."
+    },
+    {
+      "stage": "check",
+      "question": "A worker crashes while holding a workflow lease. What lets another worker take over?",
+      "options": [
+        "The lease expires and the new worker resumes from the latest checkpoint",
+        "The failed worker keeps its in-memory state until reboot",
+        "The approval service automatically repeats every side effect",
+        "The workflow starts from the original request with no event log"
+      ],
+      "correct": 0,
+      "explanation": "A lease is a short-lived worker claim; after a crash it expires, allowing another worker to load the durable checkpoint and continue. In-memory state disappears with the failed process."
+    },
+    {
+      "stage": "check",
+      "question": "An approved transfer required balance above $1,000, but the balance falls to $500 before resume. Which check should stop the transfer?",
+      "options": [
+        "A model refusal handler for invalid JSON",
+        "A circuit breaker on repeated tool names",
+        "A task-count quota for the agent",
+        "A precondition check against the current balance"
+      ],
+      "correct": 3,
+      "explanation": "Check the account’s current balance against the approved minimum before commit; it may have changed while the workflow was paused. A circuit breaker catches repeated calls, not stale account state; idempotency prevents duplicates but does not replace this precondition."
+    },
+    {
+      "stage": "check",
+      "question": "A tool call returns HTTP 200 after a database update. What does post-action verification require?",
+      "options": [
+        "Read the target state again and compare it with the intended change",
+        "Retry the update until the response includes a longer message",
+        "Record the call as successful without inspecting the resource",
+        "Assume the response code proves the database value persisted"
+      ],
+      "correct": 0,
+      "explanation": "An HTTP 200 reports success at the request/API level, but it does not prove the destination persisted the intended value. Re-read the target state and compare it with the approved change before marking the workflow verified."
+    },
+    {
+      "stage": "post",
+      "question": "The approved preconditions still hold, and the destination honors idempotency keys. A checkpoint says committed, but the action may not have reached the destination before a crash. What should recovery do?",
+      "options": [
+        "Issue a new transfer with a new idempotency key immediately.",
+        "Delete the checkpoint and ask the model to recreate the plan.",
+        "Skip the destination check because the checkpoint says committed.",
+        "Read the destination; if absent, reissue with the same idempotency key."
+      ],
+      "correct": 3,
+      "explanation": "The recovery path should read the destination and compare its state with the transaction id; if absent, reissue only through an endpoint that honors the same idempotency key. Skipping the check can claim success when no transfer occurred."
+    },
+    {
+      "stage": "post",
+      "question": "A consequential action verifies incorrectly and leaves a known-bad state. Which response closes the workflow's safety path?",
+      "options": [
+        "Run its rehearsed rollback or compensation and record the outcome",
+        "Erase the checkpoint so the failure cannot replay",
+        "Retry the same action until the state looks different",
+        "Mark it complete because the original call returned"
+      ],
+      "correct": 0,
+      "explanation": "Verification failed, so execute the rollback or compensation and record or alert the result, restoring a known state. Marking the action complete because it returned skips the failed check and leaves the bad state in place."
+    }
+  ]
+}

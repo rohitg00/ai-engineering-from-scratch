@@ -1,0 +1,78 @@
+{
+  "lesson": "01-vision-transformer-patch-tokens",
+  "title": "Vision Transformers and the Patch-Token Primitive",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A transformer expects a sequence, but an image is a grid. What is the ViT patch-token step?",
+      "options": [
+        "Split the image into patches, flatten each, then project each patch to a vector.",
+        "Run a CNN feature extractor first, then feed only its final class score.",
+        "Flatten every pixel into a separate token and attend over the full image.",
+        "Turn each color channel into a separate text sequence of pixel values."
+      ],
+      "correct": 0,
+      "explanation": "ViT converts the 2D grid into a sequence by splitting it into fixed-size patches, flattening each patch’s pixel channels, and applying the same learned projection to each. A CNN class score or one-token-per-pixel sequence is a different representation and misses this patch-token design."
+    },
+    {
+      "stage": "check",
+      "question": "Assume a 224x224 image, patch size 16, one CLS token, and no register tokens. What is the ViT input sequence length?",
+      "options": [
+        "14 tokens: one token for each patch row.",
+        "224 tokens: one token for each image row.",
+        "197 tokens: 14*14 patches plus one CLS token.",
+        "196 tokens: 14*14 patches with CLS excluded."
+      ],
+      "correct": 2,
+      "explanation": "Each side has 224/16=14 patches, so the grid contributes 14×14=196 tokens. The stated CLS token adds one, for 197 total; the 196 choice counts patches but omits CLS."
+    },
+    {
+      "stage": "check",
+      "question": "For a 16x16 RGB patch, how many scalar pixel values enter the shared patch projection?",
+      "options": [
+        "768 values, from 16*16*3.",
+        "48 values, from 16*3 without patch height.",
+        "3 values, one average per color channel.",
+        "256 values, from 16*16 without color channels."
+      ],
+      "correct": 0,
+      "explanation": "A 16×16 patch has 256 pixel locations and three RGB values at each, so the projection receives 16×16×3=768 scalars. The 256 option counts spatial pixels but omits the color dimension."
+    },
+    {
+      "stage": "check",
+      "question": "Why can 2D-RoPE support variable patch grids more naturally than a learned absolute-position table?",
+      "options": [
+        "It maps each patch to a text token with an absolute word index.",
+        "It removes all positional information before attention is computed.",
+        "It rotates query and key vectors using each patch's row and column position.",
+        "It assigns a separate learned table entry to every possible image size."
+      ],
+      "correct": 2,
+      "explanation": "2D-RoPE derives rotations from patch row and column, so it does not require one learned vector for each position in a fixed grid. An absolute table needs interpolation or resizing when the grid changes."
+    },
+    {
+      "stage": "post",
+      "question": "A ViT develops high-norm artifact patches that hijack attention and hurt dense prediction. What addition does the lesson describe?",
+      "options": [
+        "Add register tokens to absorb attention artifacts, then discard them at handoff.",
+        "Add more CLS tokens and retain them as the only visual content.",
+        "Add a larger learned position table and remove the patch projection.",
+        "Add one extra caption token for every high-norm patch."
+      ],
+      "correct": 0,
+      "explanation": "Register tokens act as attention sinks for high-norm artifact patches that otherwise hijack attention; they improve dense prediction and are discarded before patch tokens are handed to the LLM. Retaining only more CLS vectors would not preserve that patch-level content."
+    },
+    {
+      "stage": "post",
+      "question": "A VLM needs visual detail from an image rather than one image-level class embedding. What should its vision tower pass to the LLM?",
+      "options": [
+        "Only the CLS vector, dropping the patch-token outputs.",
+        "The register tokens, because they contain the image's full content.",
+        "The mean of all patch tokens, replacing their spatial details.",
+        "All patch-token outputs, skipping image-level pooling."
+      ],
+      "correct": 3,
+      "explanation": "When the LLM needs local visual detail, passing every patch token preserves spatially distinct evidence. Mean pooling or a CLS-only vector compresses the image to one representation, and registers are scaffolding rather than visual content."
+    }
+  ]
+}

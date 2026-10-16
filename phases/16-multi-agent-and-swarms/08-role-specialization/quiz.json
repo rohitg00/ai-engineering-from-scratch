@@ -1,0 +1,78 @@
+{
+  "lesson": "08-role-specialization",
+  "title": "Role Specialization — Planner, Critic, Executor, Verifier",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team needs one agent to design a plan and another to check whether the resulting artifact passes a test. Which separation helps?",
+      "options": [
+        "Assign distinct roles with explicit outputs and checks",
+        "Let the executor approve its own output without testing",
+        "Replace the plan with a longer shared conversation",
+        "Give every agent the same prompt and ask for agreement"
+      ],
+      "correct": 0,
+      "explanation": "Distinct roles define who plans, who executes, and who checks a concrete result; a verifier can test the artifact independently. Asking identical prompts for agreement leaves both agents exposed to the same mistaken assumptions."
+    },
+    {
+      "stage": "check",
+      "question": "What is the key distinction between a critic and a verifier?",
+      "options": [
+        "A verifier writes the plan; a critic executes code",
+        "A critic runs tests; a verifier judges style",
+        "A critic is subjective; a verifier runs deterministic checks",
+        "Both are identical LLM roles with different names"
+      ],
+      "correct": 2,
+      "explanation": "A critic evaluates intent, quality, and plausibility; a verifier runs a deterministic test or schema check. Assigning test execution to the critic confuses subjective review with an objective pass/fail signal."
+    },
+    {
+      "stage": "check",
+      "question": "An executor needs a detail that was omitted from the plan. What does ChatDev's communicative dehallucination pattern ask it to do?",
+      "options": [
+        "Invent a likely value and keep the pipeline moving",
+        "Ask the verifier to change the user's specification",
+        "Ask the relevant role for the missing detail before continuing",
+        "Wait until the final paper is reviewed"
+      ],
+      "correct": 2,
+      "explanation": "When required detail is missing, the executor should ask the role that owns the specification instead of inventing a value. A guessed detail can make downstream code internally consistent but still wrong for the user’s intent."
+    },
+    {
+      "stage": "check",
+      "question": "The generated add function has the expected name, a def statement, and a return, but multiplies its inputs. Its critic checks only those surface features. Which role catches the behavior mismatch?",
+      "options": [
+        "A deterministic verifier that runs the specified tests",
+        "A role router that chooses the next speaker",
+        "A critic that checks only for a def statement",
+        "A planner that only writes the function signature"
+      ],
+      "correct": 0,
+      "explanation": "For the actual test (1, 2), the specified sum is 3; the buggy multiply returns 2 and fails the expected-value check. A critic that only looks for a definition, return, and matching name can miss this behavior mismatch."
+    },
+    {
+      "stage": "post",
+      "question": "A pipeline has planner, executor, and critic roles, but every approval is based on an LLM saying the work looks good. What is missing?",
+      "options": [
+        "More rounds of subjective approval",
+        "A second planner with the same prompt",
+        "A larger shared chat history for all roles over time",
+        "A code-based verifier with objective pass/fail checks"
+      ],
+      "correct": 3,
+      "explanation": "A code-based verifier checks observable behavior—tests, types, or schema—rather than asking another LLM to approve similar prose. More rounds of subjective approval do not create an independent measurement."
+    },
+    {
+      "stage": "post",
+      "question": "A critic requests a revision, but the executor cycles indefinitely between plausible changes. What limit does the lesson recommend?",
+      "options": [
+        "Remove the verifier so revisions proceed faster",
+        "Cap revision rounds and escalate when the budget is exhausted",
+        "Let the critic run the executor's tools directly",
+        "Continue until the critic stops finding stylistic issues"
+      ],
+      "correct": 1,
+      "explanation": "A small revision budget stops the critic-executor loop from consuming calls indefinitely; once it is exhausted, escalate or accept a defined fallback. Waiting for all stylistic concerns to disappear has no finite stopping condition."
+    }
+  ]
+}

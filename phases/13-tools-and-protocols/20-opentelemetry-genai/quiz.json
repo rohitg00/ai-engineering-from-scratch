@@ -1,0 +1,78 @@
+{
+  "lesson": "20-opentelemetry-genai",
+  "title": "OpenTelemetry GenAI — Tracing Tool Calls End-to-End",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An agent is intermittently slow, and logs show only the LLM request. What observability structure helps locate a slow tool-server round-trip?",
+      "options": [
+        "One unstructured final-answer log with no timing fields",
+        "One trace with parent-linked spans for agent, model, and tools",
+        "Separate unrelated trace ids for each step in a run",
+        "A prompt transcript that omits server-side operations"
+      ],
+      "correct": 1,
+      "explanation": "One trace id groups the agent, LLM, tool, and MCP spans; parentSpanId records their nested path, so each duration can be followed through the run. Separate trace ids would hide how a slow server call relates to the reported agent delay."
+    },
+    {
+      "stage": "check",
+      "question": "Which span kind fits an agent's own loop step rather than a call crossing a process boundary?",
+      "options": [
+        "SERVER",
+        "INTERNAL",
+        "PRODUCER",
+        "CLIENT"
+      ],
+      "correct": 1,
+      "explanation": "Use INTERNAL for work performed inside the agent process, such as its loop step. CLIENT marks an outbound call crossing a process boundary, such as a request to an LLM provider or MCP server; SERVER is the receiving side."
+    },
+    {
+      "stage": "check",
+      "question": "Which pair of attributes identifies a specific tool call in a GenAI tool span?",
+      "options": [
+        "gen_ai.usage.input_tokens and gen_ai.response.model",
+        "gen_ai.agent.name and gen_ai.agent.description",
+        "gen_ai.tool.name and gen_ai.tool.call.id",
+        "gen_ai.provider.name and gen_ai.request.model"
+      ],
+      "correct": 2,
+      "explanation": "`gen_ai.tool.name` identifies the executor and `gen_ai.tool.call.id` identifies this particular invocation. Provider and model attributes identify the LLM backend, not which tool call ran or which same-tool request it represents."
+    },
+    {
+      "stage": "check",
+      "question": "How can a parent and child span remain part of the same distributed trace?",
+      "options": [
+        "Copy the prompt into each span name",
+        "Use the tool call id as the trace id for every run",
+        "Share the trace id and set the child's parentSpanId",
+        "Generate a new trace id for every child operation"
+      ],
+      "correct": 2,
+      "explanation": "Spans share the trace id, and each child sets parentSpanId to its parent span id; that preserves both run membership and ancestry. Generating a new trace for a child splits it from the parent run and breaks end-to-end timing."
+    },
+    {
+      "stage": "post",
+      "question": "Prompts and completions may contain sensitive content. What is the lesson's default capture policy?",
+      "options": [
+        "Keep content capture off unless deliberately enabled",
+        "Store prompts only when the trace has no tool calls",
+        "Record every prompt in every span by default",
+        "Replace span attributes with full conversation text"
+      ],
+      "correct": 0,
+      "explanation": "Keep prompt and completion content capture off by default because it can contain PII and large payloads; enable it only after review. Recording every prompt by default creates the privacy exposure the opt-in policy is designed to avoid."
+    },
+    {
+      "stage": "post",
+      "question": "An MCP server uses stdio, which does not carry HTTP headers natively. How can the lesson propagate trace context?",
+      "options": [
+        "Create a new trace at the server and discard the parent",
+        "Include traceparent manually in each request's _meta",
+        "Put the trace id only into the tool's display name",
+        "Wait for stdio to add an HTTP header automatically"
+      ],
+      "correct": 1,
+      "explanation": "Stdio has no HTTP header channel, so put the W3C traceparent value into each request’s `_meta` for the server to log. Starting a new server trace discards the parent context, while waiting for an HTTP header on stdio cannot work."
+    }
+  ]
+}

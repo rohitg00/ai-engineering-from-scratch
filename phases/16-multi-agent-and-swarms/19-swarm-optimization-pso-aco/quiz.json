@@ -1,0 +1,78 @@
+{
+  "lesson": "19-swarm-optimization-pso-aco",
+  "title": "Swarm Optimization for LLMs (PSO, ACO)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team can score candidate numeric parameter settings but cannot calculate gradients. Which search family can still improve those settings?",
+      "options": [
+        "Round-robin routing across worker agents",
+        "Supervised learning from fixed class labels",
+        "Backpropagation through a discrete string",
+        "PSO over a population of candidate points"
+      ],
+      "correct": 3,
+      "explanation": "PSO moves a population of continuous candidate points using fitness comparisons, so gradients are not required. Backpropagation through a discrete string is not the available signal in the scenario; an evaluator score is enough to guide the swarm."
+    },
+    {
+      "stage": "check",
+      "question": "In the PSO update, what are p_best and g_best?",
+      "options": [
+        "The particle's own best and the swarm's best positions",
+        "The two worst candidates in the current population",
+        "The particle's first position and the last tested position",
+        "The prompt length and the evaluator's final score"
+      ],
+      "correct": 0,
+      "explanation": "Each particle stores p_best, its own best-scoring position so far, and g_best, the best position found by the whole swarm. The first and most recent positions are not necessarily best and would not preserve the two search signals."
+    },
+    {
+      "stage": "check",
+      "question": "In LMPSO, what does the particle's velocity represent?",
+      "options": [
+        "A work queue priority for a routing agent",
+        "A confidence score attached to a model vote",
+        "A deterministic test that validates the final output",
+        "A prompt that describes how to modify its current candidate"
+      ],
+      "correct": 3,
+      "explanation": "LMPSO treats velocity as a prompt describing how to modify the current candidate toward personal and global bests; the LLM generates the next candidate. A deterministic test may score that output, but it is not the velocity representation."
+    },
+    {
+      "stage": "check",
+      "question": "What causes an ACO route to become more attractive over time?",
+      "options": [
+        "Agents with the lowest reputation remove pheromone from others",
+        "The router chooses the alphabetically first agent each time",
+        "Every selected route becomes permanent after its first use",
+        "Successful high-quality routes receive pheromone and trails decay"
+      ],
+      "correct": 3,
+      "explanation": "ACO increases a route’s pheromone after a sufficiently good result and decays trails over time, balancing reuse with exploration. Making the first chosen route permanent would eliminate decay and prevent the router from rediscovering better options."
+    },
+    {
+      "stage": "post",
+      "question": "A fast agent often returns low-quality answers. What prevents an ACO router from reinforcing those choices?",
+      "options": [
+        "Remove the task-type labels from the routing table",
+        "Increase the initial pheromone for every agent equally",
+        "Gate pheromone deposits on a quality check",
+        "Stop decaying pheromones after a correct answer"
+      ],
+      "correct": 2,
+      "explanation": "A quality gate deposits pheromone only when the output clears the defined threshold, so fast but low-quality runs do not earn reinforcement. Equal initial pheromone spreads the prior but does not stop a poor result from being reinforced later."
+    },
+    {
+      "stage": "post",
+      "question": "A candidate-search task requires expensive human review for every fitness score. What limitation does the lesson identify?",
+      "options": [
+        "Pheromone decay automatically removes the review cost",
+        "The iteration cost can make PSO or ACO impractical",
+        "Human review makes every fitness value differentiable",
+        "The optimizer can no longer maintain a population"
+      ],
+      "correct": 1,
+      "explanation": "PSO and ACO repeatedly evaluate candidates or routes; if every score requires expensive human review, population-by-iteration cost can dominate. Pheromone decay changes route preference, not the labor required to judge each result."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "23-failure-modes-mast-groupthink",
+  "title": "Failure Modes — MAST, Groupthink, Monoculture, Cascading Errors",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Two reviewers are both assigned a task, and neither knows who owns final acceptance. What should be clarified before work starts?",
+      "options": [
+        "Retry limits for dependent service calls",
+        "Message acknowledgments and state synchronization",
+        "Role contracts and completion ownership",
+        "Independent checks on the finished output"
+      ],
+      "correct": 2,
+      "explanation": "Unclear responsibility and acceptance ownership mean the task contract is underspecified before execution, a MAST specification problem. Retry limits address downstream failure handling; they do not tell reviewers who owns the final decision."
+    },
+    {
+      "stage": "check",
+      "question": "A message is lost between agents and the workflow states become inconsistent. Which MAST category covers this?",
+      "options": [
+        "Monoculture collapse",
+        "Coordination failures",
+        "Verification gaps",
+        "Specification problems"
+      ],
+      "correct": 1,
+      "explanation": "A dropped message leaves agents with inconsistent workflow state, which is a coordination failure: communication or synchronization broke after assignment. A specification problem would concern an unclear task or role, not state drift caused by loss."
+    },
+    {
+      "stage": "check",
+      "question": "An agent claims success, but no independent check runs before its output ships. Which MAST category is this?",
+      "options": [
+        "Coordination failure",
+        "Specification problem",
+        "Mixed-motive dynamics",
+        "Verification gap"
+      ],
+      "correct": 3,
+      "explanation": "The agent’s result ships without an independent check, matching a verification gap. Coordination failure describes lost or unsynchronized communication; here the missing control is validation of the output."
+    },
+    {
+      "stage": "check",
+      "question": "A payment error causes order retries, which cause inventory retries and overload the service. Which classical control does the lesson recommend?",
+      "options": [
+        "An extra debate round between agents",
+        "A larger shared memory pool",
+        "A circuit breaker with capped retry budgets",
+        "A higher confidence weight for the payment agent"
+      ],
+      "correct": 2,
+      "explanation": "A circuit breaker opens when downstream failures cross its threshold and short-circuits calls; capped retries stop each request from multiplying load. Extra debate rounds add agent traffic and do nothing to protect the overloaded inventory service."
+    },
+    {
+      "stage": "post",
+      "question": "Three agents share the same base model and repeat the same wrong claim. Which Groupthink pattern best describes this?",
+      "options": [
+        "Poor theory of mind about peers' beliefs",
+        "Conformity when agents defer to a confident peer",
+        "Mixed motives causing unhelpful compromise",
+        "Correlated errors from agents sharing a base model"
+      ],
+      "correct": 3,
+      "explanation": "When agents share a base model and repeat one wrong claim, their errors are correlated even if nobody copied a peer. Conformity instead describes changing a stance in response to another agent’s influence."
+    },
+    {
+      "stage": "post",
+      "question": "A system's accuracy drifts gradually without crashes, and memory poisoning is suspected. What audit approach fits the lesson?",
+      "options": [
+        "Sample traces, categorize failures, and rank fixes",
+        "Delete shared-memory provenance to reduce context",
+        "Add agents until the average answer stabilizes",
+        "Review only exception logs after a production outage"
+      ],
+      "correct": 0,
+      "explanation": "A failure-mode audit samples execution traces, assigns categories, measures their rates, and ranks mitigations. Reviewing only exceptions misses silent plausible-but-wrong outputs, which can drift without producing a crash log."
+    }
+  ]
+}

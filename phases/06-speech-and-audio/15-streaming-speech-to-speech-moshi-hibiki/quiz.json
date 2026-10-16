@@ -1,0 +1,78 @@
+{
+  "lesson": "15-streaming-speech-to-speech-moshi-hibiki",
+  "title": "Streaming Speech-to-Speech — Moshi, Hibiki, and Full-Duplex Dialogue",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A system listens while it speaks and can react to interruptions. Which interaction mode describes this?",
+      "options": [
+        "One-way text-to-speech",
+        "Turn-by-turn waveform conversion",
+        "Full-duplex speech-to-speech",
+        "Offline speech recognition"
+      ],
+      "correct": 2,
+      "explanation": "Full-duplex speech-to-speech keeps incoming and outgoing audio active at the same time, so the system can listen while responding. One-way TTS waits for text and emits speech; it does not continuously listen for an interruption."
+    },
+    {
+      "stage": "check",
+      "question": "What are the three parallel streams in the lesson’s Moshi architecture?",
+      "options": [
+        "Source audio, translated words, and a mel filterbank",
+        "Mimi audio, VAD events, and transcript timestamps",
+        "User audio, Moshi audio, and Moshi text",
+        "User text, target waveform, and speaker embeddings"
+      ],
+      "correct": 2,
+      "explanation": "Moshi processes user Mimi audio, its own generated Mimi audio, and a text inner-monologue stream in parallel. VAD and timestamps are not the three streams in the model’s joint audio-text architecture."
+    },
+    {
+      "stage": "check",
+      "question": "What does the depth transformer predict within each 80 ms frame?",
+      "options": [
+        "The dependent codec codebooks in sequence",
+        "Only the user transcript and its timestamps",
+        "The next turn boundary from silence duration",
+        "All eight codebooks independently at once"
+      ],
+      "correct": 0,
+      "explanation": "Within each 80 ms frame, codebooks depend on earlier codebooks, so a small depth transformer predicts them sequentially. Parallel independent prediction ignores the inter-codebook dependencies the depth transformer is designed to model."
+    },
+    {
+      "stage": "check",
+      "question": "Why emit inner-monologue text alongside Moshi audio?",
+      "options": [
+        "It prevents the user from speaking during assistant output",
+        "It supports semantic coherence and provides transcripts",
+        "It converts every user utterance into an external LM prompt",
+        "It removes the need for an audio codec entirely"
+      ],
+      "correct": 1,
+      "explanation": "Text tokens make the model’s intended utterance explicit, improving semantic coherence and providing a transcript alongside generated audio. The text stream does not replace Mimi: the model still consumes and generates codec audio streams."
+    },
+    {
+      "stage": "post",
+      "question": "A voice companion must respond naturally at very low latency and handle interruptions without tool calls. Which option best fits?",
+      "options": [
+        "Moshi’s full-duplex dialogue architecture",
+        "Sesame CSM’s context-conditioned TTS",
+        "Hibiki’s speech-translation model",
+        "A cascaded ASR, LLM, and TTS pipeline"
+      ],
+      "correct": 0,
+      "explanation": "Moshi’s parallel input-output streams support low-latency dialogue and interruption handling, which fits a voice companion without tool use. A pipeline supports tools, but its serial stages add latency and are not the lesson’s lowest-latency full-duplex design."
+    },
+    {
+      "stage": "post",
+      "question": "A deployment needs an assistant to call a weather tool while speaking. What architecture guidance does the lesson give?",
+      "options": [
+        "Use a tool-capable pipeline or add a separate LLM path",
+        "Assume Moshi’s dialogue model already supports tool calls",
+        "Use Hibiki because translation enables function execution",
+        "Replace all Mimi tokens with tool-call JSON"
+      ],
+      "correct": 0,
+      "explanation": "The lesson says Moshi is a dialogue model rather than an agent framework; tool use needs a pipeline or a separate LLM path. The source explicitly says tool calling is not trained into Moshi, so a tool-capable path must be added."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "20-openai-preparedness-deepmind-fsf",
+  "title": "OpenAI Preparedness Framework and DeepMind Frontier Safety Framework",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Two labs track the same model capability but assign it different policy categories. What should a policy reader compare?",
+      "options": [
+        "The classification and what action that category triggers",
+        "The number of pages in each framework",
+        "The order in which each lab announced its framework",
+        "The model names used in the policy examples"
+      ],
+      "correct": 0,
+      "explanation": "Compare the category with its consequence—whether it triggers reports and mitigation or monitoring only. Page count, announcement order, and model examples do not tell you what action the category requires."
+    },
+    {
+      "stage": "check",
+      "question": "Under OpenAI Preparedness Framework v2 as described here, what is the key consequence of a Research Category?",
+      "options": [
+        "It is monitored but does not automatically trigger mitigations",
+        "It automatically requires a public safeguards report",
+        "It is excluded from future capability evaluations",
+        "It requires an immediate training pause in every case"
+      ],
+      "correct": 0,
+      "explanation": "Research Categories are monitored but do not automatically trigger mitigations; Tracked Categories trigger reports and review. An immediate pause would overstate the consequence assigned to a Research Category."
+    },
+    {
+      "stage": "check",
+      "question": "How does DeepMind FSF v3 represent autonomy in the lesson's summary?",
+      "options": [
+        "It is a separate top-level domain in every table",
+        "It is folded into ML R&D and Cyber domains",
+        "It is treated only as a user-content safety category",
+        "It is excluded from capability tracking"
+      ],
+      "correct": 1,
+      "explanation": "DeepMind folds autonomy into ML R&D and Cyber rather than naming it as a standalone top-level domain. Calling it separate in every table reverses that structural choice."
+    },
+    {
+      "stage": "check",
+      "question": "A model strategically underperforms during evaluations. Which risk term from the lesson names this behavior?",
+      "options": [
+        "Sandbagging",
+        "Long-range autonomy",
+        "Undermining safeguards",
+        "Alignment faking"
+      ],
+      "correct": 0,
+      "explanation": "Sandbagging is strategic underperformance during evaluation; alignment faking concerns behavior that changes when a model believes it is observed. The latter is related but names a different pattern."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson recommend independent or adversarial measurement alongside lab policy thresholds?",
+      "options": [
+        "Policy documents cannot mention deceptive behavior",
+        "External evaluations automatically enforce each lab's policy",
+        "Adversarial testing removes every deployment failure mode",
+        "Sandbagging can make self-reported capability measurements too low"
+      ],
+      "correct": 3,
+      "explanation": "Sandbagging can make internally measured capability too low, so independent tests help check whether the estimate is reliable. Adversarial testing improves measurement but cannot remove every deployment failure."
+    },
+    {
+      "stage": "post",
+      "question": "A policy claim says a capability is safe to deploy but gives no evaluation evidence, update cadence, or external-review status. Which reading steps should be checked?",
+      "options": [
+        "Count the capabilities and categories named in the policy text.",
+        "Check evaluation evidence, declared update cadence, and review independence.",
+        "Inspect model naming and announcement language for stronger claims.",
+        "Compare the policy’s version date and length against the prior release."
+      ],
+      "correct": 1,
+      "explanation": "Check the evidence behind a claim, the declared update cadence, and review independence. Counting categories or comparing document length cannot show whether a policy is evaluated or externally scrutinized."
+    }
+  ]
+}
