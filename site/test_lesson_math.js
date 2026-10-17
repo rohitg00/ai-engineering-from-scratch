@@ -147,3 +147,7 @@ test('lesson math stays portable to GitHub, the book and the translation pipelin
   }
   assert.deepEqual(problems, []);
 });
+test('## Summary headings get a section-summary class for the cheat-sheet section', () => {
+  assert.match(parseMd('## Summary\n\nRecall the key formulas here.'), /<h2 id="summary" class=" section-summary">Summary<\/h2>/);
+  assert.doesNotMatch(parseMd('## The Concept\n\nText.'), /section-summary/);
+});
