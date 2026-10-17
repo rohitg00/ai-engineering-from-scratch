@@ -1,0 +1,1 @@
+This is a practice file to complete the Git & Collaboration lesson exercises.
