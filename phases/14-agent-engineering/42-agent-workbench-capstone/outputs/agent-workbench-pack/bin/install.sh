@@ -4,9 +4,13 @@ set -euo pipefail
 # Install the agent workbench pack into the current repo.
 # Usage: bin/install.sh [--force]
 
+if [[ $# -gt 1 || ( $# -eq 1 && "$1" != "--force" ) ]]; then
+    echo "Usage: bin/install.sh [--force]" >&2
+    exit 2
+fi
 FORCE="${1:-}"
-TARGET="$(pwd)"
-PACK_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+TARGET="$(pwd -P)"
+PACK_ROOT="$(cd "$(dirname "$0")/.." && pwd -P)"
 
 required=("AGENTS.md" "VERSION" "docs" "schemas" "scripts")
 for path in "${required[@]}"; do
@@ -16,17 +20,68 @@ for path in "${required[@]}"; do
     fi
 done
 
-if [[ -e "$TARGET/AGENTS.md" && "$FORCE" != "--force" ]]; then
-    echo "AGENTS.md already exists. Pass --force to overwrite." >&2
+sources=("$PACK_ROOT/AGENTS.md" "$PACK_ROOT/VERSION")
+while IFS= read -r -d '' source; do
+    sources+=("$source")
+done < <(find "$PACK_ROOT/docs" "$PACK_ROOT/schemas" "$PACK_ROOT/scripts" -type f -print0)
+
+conflicts=()
+for source in "${sources[@]}"; do
+    if [[ "$source" == "$PACK_ROOT/VERSION" ]]; then
+        relative=".workbench-version"
+    else
+        relative="${source#"$PACK_ROOT"/}"
+    fi
+    destination="$TARGET/$relative"
+    current="$TARGET"
+    IFS='/' read -r -a components <<< "$relative"
+    unsafe=false
+    for ((index = 0; index < ${#components[@]}; index++)); do
+        current="$current/${components[index]}"
+        if [[ -L "$current" ]]; then
+            conflicts+=("$relative (symlinked path)")
+            unsafe=true
+            break
+        fi
+        if (( index < ${#components[@]} - 1 )) && [[ -e "$current" && ! -d "$current" ]]; then
+            conflicts+=("$relative (non-directory parent)")
+            unsafe=true
+            break
+        fi
+    done
+    if [[ "$unsafe" == true ]]; then
+        continue
+    fi
+    if [[ -e "$destination" ]]; then
+        if [[ ! -f "$destination" ]]; then
+            conflicts+=("$relative (not a regular file)")
+        elif [[ "$FORCE" != "--force" ]] && ! cmp -s "$source" "$destination"; then
+            conflicts+=("$relative (different existing file)")
+        fi
+    fi
+done
+
+if (( ${#conflicts[@]} )); then
+    echo "target conflicts; no files were installed:" >&2
+    printf '  %s\n' "${conflicts[@]}" >&2
+    echo "Use --force to replace conflicting regular files; resolve symlinked paths separately." >&2
     exit 1
 fi
 
-cp "$PACK_ROOT/AGENTS.md" "$TARGET/AGENTS.md"
 mkdir -p "$TARGET/docs" "$TARGET/schemas" "$TARGET/scripts"
-cp -r "$PACK_ROOT/docs/." "$TARGET/docs/"
-cp -r "$PACK_ROOT/schemas/." "$TARGET/schemas/"
-cp -r "$PACK_ROOT/scripts/." "$TARGET/scripts/"
-cat "$PACK_ROOT/VERSION" > "$TARGET/.workbench-version"
+for source in "${sources[@]}"; do
+    if [[ "$source" == "$PACK_ROOT/VERSION" ]]; then
+        relative=".workbench-version"
+    else
+        relative="${source#"$PACK_ROOT"/}"
+    fi
+    destination="$TARGET/$relative"
+    if [[ -e "$destination" && "$FORCE" != "--force" ]]; then
+        continue
+    fi
+    mkdir -p "$(dirname "$destination")"
+    cp -p "$source" "$destination"
+done
 
 echo "pack installed at version $(cat "$PACK_ROOT/VERSION")"
 echo "next: edit task_board.json, set acceptance commands, run scripts/init_agent.py"
