@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-7-2c-title fig-7-2c-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-2c-title">One GRPO step on a GB10, by phase</title>
+  <desc id="fig-7-2c-desc">Median seconds per phase over 12 plain GRPO steps of Miles with Qwen3-0.6B on one NVIDIA GB10, with SGLang and FSDP colocated. SGLang rollout takes 57.2 s, the trainer recomputes log probabilities in 25.2 s and trains in 80.3 s, the weight update takes 0.65 s, and sleep and wake take 1.7 s.</desc>
+  <line x1="66" y1="270" x2="606" y2="270" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="274" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="66" y1="212.5" x2="606" y2="212.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="216.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">25</text>
+  <line x1="66" y1="155" x2="606" y2="155" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="159" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="66" y1="97.5" x2="606" y2="97.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="101.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">75</text>
+  <line x1="66" y1="40" x2="606" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="66" y1="270" x2="606" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="40" x2="66" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="66" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median seconds per step</text>
+  <rect x="90.3" y="138.47" width="59.4" height="131.53" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="120" y="132.47" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">57.2 s</text>
+  <text x="120" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">rollout</text>
+  <rect x="198.3" y="212.16" width="59.4" height="57.85" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="228" y="206.16" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">25.1 s</text>
+  <text x="228" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">log probs</text>
+  <rect x="306.3" y="85.43" width="59.4" height="184.58" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="336" y="79.43" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">80.3 s</text>
+  <text x="336" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">train</text>
+  <rect x="414.3" y="268.51" width="59.4" height="1.5" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="444" y="262.51" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">0.65 s</text>
+  <text x="444" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">weights</text>
+  <rect x="522.3" y="266.09" width="59.4" height="3.91" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="552" y="260.09" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">1.70 s</text>
+  <text x="552" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">sleep, wake</text>
+</svg>

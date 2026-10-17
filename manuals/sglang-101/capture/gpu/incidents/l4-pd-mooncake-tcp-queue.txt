@@ -1,0 +1,14 @@
+[2026-10-17 10:50:46] disaggregation transfer backend 'mooncake_tcp' -> mooncake with MC_FORCE_TCP=1 (TCP transport, no RDMA)
+[2026-10-17 10:51:06] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 24094, K size: 1.65 GB, V size: 1.65 GB
+[2026-10-17 10:51:05] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 2925, K size: 0.20 GB, V size: 0.20 GB
+[2026-10-17 10:54:07] Decode batch, #running-req: 2, #token: 1206, token usage: 0.41, pre-allocated usage: 0.00, #prealloc-req: 19, #transfer-req: 0, #retracted-req: 0, cuda graph: True, gen throughput (token/s): 18.98, #queue-req: 0
+W1017 10:54:14.179170 883755 tcp_transport_lane_impl.h:1330] TCP lane queue-full rejection count: 4096
+[2026-10-17 10:54:14] Session 151.242.195.41:15367 failed.
+[2026-10-17 10:54:14] Prefill transfer failed for request rank=0 req.rid='3d27bab753fa45338a40b508fda1077f' req.bootstrap_room=540297584272915152 with exception KVTransferError(bootstrap_room=540297584272915152): Failed to send kv chunk of 540297584272915152 to 151.242.195.41:34809
+[2026-10-17 10:54:14] Prefill transfer failed for request rank=0 req.rid='75bbdaa9279948399010049259adb752' req.bootstrap_room=5255199250850718981 with exception KVTransferError(bootstrap_room=5255199250850718981): Decode instance could be dead, remote mooncake session 151.242.195.41:15367 is not alive
+[2026-10-17 10:54:14] Decode transfer failed for request rank=0 decode_req.req.rid='df321d30a3ca4921857c744d12207682' decode_req.req.bootstrap_room=540297584272915152 with exception KVTransferError(bootstrap_room=540297584272915152): Failed to get kvcache from prefill instance, it might be dead
+Prefill transfer failed lines: 2902
+Successful requests:                     240       
+Total generated tokens:                  30720     
+Total generated tokens (retokenized):    0         
+Mean TTFT (ms):                          0.00      

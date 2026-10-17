@@ -1,0 +1,17 @@
+2026-10-16T12:53:16+00:00 2026/10/16 12:53:16 guardian level: Critical: 34.2 GiB left before the freeze zone.
+2026-10-16T12:53:16+00:00 2026/10/16 12:53:16 guardian pause: Paused sglang::schedul (pid 2983880, rohit): it grew 36.7 GiB in 5s with 34.2 GiB left. Resume or stop it from the app.
+2026-10-16T12:53:24+00:00 2026/10/16 12:53:24 guardian level: Back to normal: 28.9 GiB available.
+2026-10-16T12:53:28+00:00 2026/10/16 12:53:28 guardian level: Critical: 30.2 GiB left before the freeze zone.
+2026-10-16T12:53:48+00:00 2026/10/16 12:53:48 guardian level: Back to normal: 31.9 GiB available.
+2026-10-16T13:22:18+00:00 2026/10/16 13:22:18 guardian level: Critical: 46.8 GiB left before the freeze zone.
+2026-10-16T13:22:18+00:00 2026/10/16 13:22:18 guardian pause: Paused sglang::schedul (pid 3034142, rohit): it grew 9.4 GiB in 5s with 46.8 GiB left. Resume or stop it from the app.
+2026-10-16T13:22:27+00:00 2026/10/16 13:22:27 guardian level: Back to normal: 43.1 GiB available.
+2026-10-16T13:52:10+00:00 2026/10/16 13:52:10 guardian level: Critical: 50.1 GiB left before the freeze zone.
+2026-10-16T13:52:10+00:00 2026/10/16 13:52:10 guardian pause: Paused sglang::schedul (pid 3094220, rohit): it grew 28.1 GiB in 5s with 50.1 GiB left. Resume or stop it from the app.
+2026-10-16T13:52:30+00:00 2026/10/16 13:52:30 guardian level: Back to normal: 44.6 GiB available.
+2026-10-16T13:52:38+00:00 2026/10/16 13:52:38 guardian level: Critical: 44.8 GiB left before the freeze zone.
+2026-10-16T13:52:44+00:00 2026/10/16 13:52:44 guardian level: Back to normal: 44.2 GiB available.
+2026-10-16T13:52:54+00:00 2026/10/16 13:52:54 guardian level: Critical: 31.2 GiB left before the freeze zone.
+2026-10-16T13:53:02+00:00 2026/10/16 13:53:02 guardian level: Back to normal: 28.5 GiB available.
+2026-10-16T13:53:45+00:00 2026/10/16 13:53:45 guardian level: Getting tight: 23.7 GiB available.
+2026-10-16T13:54:02+00:00 2026/10/16 13:54:02 guardian level: Back to normal: 31.0 GiB available.

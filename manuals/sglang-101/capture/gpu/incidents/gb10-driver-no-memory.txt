@@ -1,0 +1,11 @@
+count  minute (UTC)  kernel message, NVIDIA driver on the GB10
+      3 2026-10-16T13:52
+      9 2026-10-16T14:36
+     13 2026-10-16T14:55
+     10 2026-10-16T15:04
+      7 2026-10-16T15:30
+      7 2026-10-16T15:47
+     12 2026-10-16T15:58
+      9 2026-10-16T16:11
+      7 2026-10-16T16:46
+NVRM: nvCheckOkFailedNoLog: Check failed: Out of memory [NV_ERR_NO_MEMORY] (0x00000051) returned from _memdescAllocInternal(pMemDesc) @ mem_desc.c:1359

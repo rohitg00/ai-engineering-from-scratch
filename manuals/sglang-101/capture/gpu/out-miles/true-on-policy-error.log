@@ -1,0 +1,3 @@
+[2026-10-17 16:28:41.340 launcher] common.py:290 - EXEC: mkdir -p /root/lab/mode
+ValueError: Specified `attn_implementation="triton"` is not supported. The only possible arguments are `attn_implementation="eager"`, `"paged|eager"`, `"attn_implementation=flash_attention_2"`, `"attn_implementation=paged|flash_attention_2"`, `"attn_implementation=flash_attention_3"`, `"attn_implementation=paged|flash_attention_3"`, `"attn_implementation=flash_attention_4"`, `"attn_implementation=paged|flash_attention_4"`, `"attn_implementation=sdpa"`, `"attn_implementation=paged|sdpa"`, `"attn_implementation=flex_attention"`.
+[2026-10-17 16:29:42.606 trainer_controller_actor] cell.py:251 - ft op=execute phase=fail cell=trainer-engine-actor-00000 fn=init elapsed_s=0.7

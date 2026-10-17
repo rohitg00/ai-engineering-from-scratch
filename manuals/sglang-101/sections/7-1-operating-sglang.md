@@ -23,6 +23,43 @@ docker run -it --gpus all \
 
 **Our position:** never deploy `latest`. SGLang tagged v0.5.20, v0.5.21, and v0.5.22 within four weeks, from 2026-09-18 to 2026-10-13, and each release changed defaults that this manual measures. A pinned tag such as `v0.5.22` makes a regression a choice that you made. The tag `latest` makes it something that happened to you on a restart.
 
+## What pip install leaves out
+
+The image exists for a reason that a pip install hides. **We measured** this on a host with two NVIDIA L4 GPUs, Ubuntu 24.04, a driver, and no CUDA toolkit. `pip install sglang==0.5.22` finished with no error. The first `sglang serve` then failed, and so did the next three, each for a new reason:
+
+```listing
+title: four starts, four missing pieces
+source: capture/gpu/incidents/l4-toolchain-failures.txt
+lang: text
+note: The first error line of each attempt. Repeated lines and progress bars are cut.
+---
+=== attempt: out-l4-nopyheaders/server-default.log
+<site-packages>/triton/backends/nvidia/driver.c:9:10: fatal error: Python.h: No such file or directory
+…
+=== attempt: out-l4-nonvcc/server-default.log
+[2026-10-16 14:21:19] RuntimeError: Could not find nvcc and default cuda_home='/usr/local/cuda' doesn't exist
+…
+=== attempt: out-l4-jitmismatch/server-default.log
+…
+<site-packages>/flashinfer/data/cccl/libcudacxx/include/cuda/std/__cccl/cuda_toolkit.h:41:8: error: #error "CUDA compiler and CUDA toolkit headers are incompatible, please check your include paths"
+…
+=== attempt: out-l4-nolibcudart/server-default.log
+/usr/bin/ld: cannot find -lcudart: No such file or directory
+```
+
+All four failures come from one fact. SGLang, Triton, and FlashInfer compile kernels on the target machine at startup, and a compiler needs a complete toolchain.
+
+1. Triton compiles a small C helper against the Python headers. The system Python of Ubuntu has no `Python.h`. We changed to a Python build that includes its headers, from `uv`.
+2. SGLang looks for `nvcc` under `/usr/local/cuda`. The pip wheels include `nvcc` 13.4 under `nvidia/cu13` in site-packages, but nothing points to it. We set `CUDA_HOME` to that directory.
+3. FlashInfer then compiled its attention kernels with that `nvcc` against its own bundled headers, and the versions did not match. We installed `flashinfer-jit-cache`, which holds kernels compiled in advance for SM 8.9.
+4. The JIT kernels of SGLang link with `-lcudart` from `$CUDA_HOME/lib64`. The wheel has only `lib/libcudart.so.13`. We made a `CUDA_HOME` with a `lib64` directory that holds `libcudart.so`.
+
+The fifth start served requests. Our GB10 never had this problem, because its DGX operating system has a full toolkit in `/usr/local/cuda`.
+
+The benchmark client has one more dependency that a firewall exposes. Its `random` dataset takes its text from ShareGPT and downloads that file from the Hugging Face Hub {{code}}. With `HF_HUB_OFFLINE=1` our first GPU benchmark failed although every model was on disk. Use `--dataset-name random-ids` on a machine without network access, or pass a local ShareGPT file with `--dataset-path`.
+
+**Our position:** run SGLang from the pinned image or on a host with a full CUDA toolkit. A pip install on a host with only a driver works after our four repairs. Each SGLang upgrade can need them again.
+
 ## Cold start is weights plus compilers
 
 A new SGLang process loads the weights, compiles or loads kernels, sizes the KV pool, and captures graphs. Our capture logs each phase on one line. This run used a model that was already on disk:
@@ -159,6 +196,7 @@ Batch tokenization took P99 latency from 4,583 ms to 464 ms. A scoring path that
 
 ```takeaways
 - Pin an image tag such as `lmsysorg/sglang:v0.5.22` and upgrade on purpose.
+- Run outside the image only on a host with a full CUDA toolkit.
 - Mount `~/.cache/sglang` and the Hugging Face cache on persistent volumes.
 - Probe readiness with `/ready`, and liveness with `/health` with generation turned off.
 - Send SIGTERM to the main process only, and check the log for the drain lines.
@@ -167,4 +205,4 @@ Batch tokenization took P99 latency from 4,583 ms to 464 ms. A scoring path that
 - Change settings in the order of figure 7.1b, one change per measured run.
 ```
 
-Sources: python/sglang/srt/entrypoints/http_server.py (ready, health_generate, HEALTH_CHECK_TIMEOUT), python/sglang/srt/managers/tokenizer_manager.py (sigterm_watchdog, _SCHEDULER_EXIT_TIMEOUT_SECS), python/sglang/srt/environ.py (SGLANG_FORCE_SHUTDOWN, SGLANG_ENABLE_HEALTH_ENDPOINT_GENERATION, SGLANG_CACHE_DIR, redirect_third_party_caches, _handle_deprecated_envs) and python/sglang/__init__.py at v0.5.22; docs/docs/get-started/install.mdx at v0.5.22; capture/out/server-default.log, capture/out/server-default.command.txt, capture/out/shutdown-exploratory.log, capture/out/shutdown-exploratory.txt, capture/shutdown_probe.py; issues #22511 and #35884; field reports: Doubleword, fergusfinn.com/blog/fast-sglang-starts (2026-04-06), LinkedIn Engineering, linkedin.com/blog/engineering/ai/scaling-llm-based-ranking-systems-with-sglang-at-linkedin (2026-02-20), CERIT-SC, blog.cerit.io/blog/run-llm2 (2025-10-19) and blog-dev.cerit.io/blog/llm3 (2026-04-27), Ant Group on the LMSYS blog, lmsys.org/blog/2025-09-26-sglang-ant-group (2025-09-26).
+Sources: python/sglang/srt/entrypoints/http_server.py (ready, health_generate, HEALTH_CHECK_TIMEOUT), python/sglang/srt/managers/tokenizer_manager.py (sigterm_watchdog, _SCHEDULER_EXIT_TIMEOUT_SECS), python/sglang/srt/environ.py (SGLANG_FORCE_SHUTDOWN, SGLANG_ENABLE_HEALTH_ENDPOINT_GENERATION, SGLANG_CACHE_DIR, redirect_third_party_caches, _handle_deprecated_envs) and python/sglang/__init__.py at v0.5.22; docs/docs/get-started/install.mdx at v0.5.22; capture/out/server-default.log, capture/out/server-default.command.txt, capture/out/shutdown-exploratory.log, capture/out/shutdown-exploratory.txt, capture/shutdown_probe.py, capture/gpu/incidents/l4-toolchain-failures.txt; python/sglang/benchmark/datasets/random.py at v0.5.22; issues #22511 and #35884; field reports: Doubleword, fergusfinn.com/blog/fast-sglang-starts (2026-04-06), LinkedIn Engineering, linkedin.com/blog/engineering/ai/scaling-llm-based-ranking-systems-with-sglang-at-linkedin (2026-02-20), CERIT-SC, blog.cerit.io/blog/run-llm2 (2025-10-19) and blog-dev.cerit.io/blog/llm3 (2026-04-27), Ant Group on the LMSYS blog, lmsys.org/blog/2025-09-26-sglang-ant-group (2025-09-26).

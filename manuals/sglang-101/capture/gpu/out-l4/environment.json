@@ -1,0 +1,21 @@
+{
+  "sglang": "0.5.22",
+  "sglang_kernel": "0.4.9",
+  "flashinfer": "0.7.1",
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "driver": "615.71.09\n615.71.09",
+  "gpu": "NVIDIA L4",
+  "compute_capability": "8.9",
+  "gpu_memory_total_gib": 22.1,
+  "gpu_memory_free_gib_at_start": 21.9,
+  "python": "3.12.15",
+  "machine": "x86_64",
+  "profile": "l4",
+  "models": [
+    "Qwen/Qwen3-8B",
+    "Qwen/Qwen3-8B-FP8",
+    "Tengyunw/qwen3_8b_eagle3"
+  ],
+  "hf_hub_offline": true
+}

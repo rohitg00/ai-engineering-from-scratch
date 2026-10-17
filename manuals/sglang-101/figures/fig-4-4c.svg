@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-4-4c-title fig-4-4c-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-4c-title">On a 24 GB card each token got faster, but the server did not</title>
+  <desc id="fig-4-4c-desc">Two ratios for Qwen3-8B with EAGLE-3 against the BF16 default on one NVIDIA L4, three seeds per point. Time per output token stays about two times shorter at every concurrency. Output throughput is 2.37 times higher at concurrency 1 and falls to 1.00 at 32 and 0.98 at 64, because the KV pool shrank from 24,094 to 9,951 tokens.</desc>
+  <line x1="66" y1="286" x2="606" y2="286" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="290" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">x0</text>
+  <line x1="66" y1="212" x2="606" y2="212" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="216" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">x1</text>
+  <line x1="66" y1="138" x2="606" y2="138" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="142" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">x2</text>
+  <line x1="66" y1="64" x2="606" y2="64" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="68" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">x3</text>
+  <line x1="66" y1="286" x2="606" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="64" x2="66" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="286" x2="66" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="66" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="156" y1="286" x2="156" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="156" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="246" y1="286" x2="246" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="246" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="336" y1="286" x2="336" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="336" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="426" y1="286" x2="426" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="426" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16</text>
+  <line x1="516" y1="286" x2="516" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="516" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">32</text>
+  <line x1="606" y1="286" x2="606" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">64</text>
+  <text x="336" y="320" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">max concurrency</text>
+  <text x="66" y="52" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ratio</text>
+  <line x1="66" y1="212" x2="606" y2="212" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="602" y="228" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-rose-ink, #b0344d)">no gain</text>
+  <path d="M66.0 112.2 L156.0 118.5 L246.0 128.5 L336.0 148.7 L426.0 167.0 L516.0 123.6 L606.0 131.6" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="66" cy="112.17" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="156" cy="118.47" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="246" cy="128.45" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="336" cy="148.71" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="426" cy="166.98" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="516" cy="123.58" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="606" cy="131.65" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <path d="M66.0 110.6 L156.0 158.2 L246.0 172.8 L336.0 166.7 L426.0 191.8 L516.0 212.2 L606.0 213.6" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="66" cy="110.59" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="158.18" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="246" cy="172.75" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="336" cy="166.71" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="426" cy="191.82" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="516" cy="212.19" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="606" cy="213.63" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="72" y="102.59" font-size="11" class="m-serif" fill="var(--m-teal-ink, #18696a)">x2.37</text>
+  <text x="512" y="202.19" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-teal-ink, #18696a)">x1.00</text>
+  <text x="602" y="203.63" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-teal-ink, #18696a)">x0.98</text>
+  <path d="M66 18 H84" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="90" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">time per token, default over EAGLE-3</text>
+  <path d="M345.6 18 H363.6" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="369.6" y="22" font-size="11" fill="var(--m-teal-ink, #18696a)">output tok/s, EAGLE-3 over default</text>
+</svg>

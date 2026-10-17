@@ -1,0 +1,10 @@
+[2026-10-17 05:26:45 DP0] Load weight end. elapsed=3.61 s, type=Qwen3ForCausalLM, avail mem=6.59 GB, mem usage=15.28 GB.
+[2026-10-17 05:26:45 DP1] Load weight end. elapsed=3.73 s, type=Qwen3ForCausalLM, avail mem=3.17 GB, mem usage=15.28 GB.
+[2026-10-17 05:26:46 DP0] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 24094, K size: 1.65 GB, V size: 1.65 GB
+[2026-10-17 05:26:46 DP1] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 2925, K size: 0.20 GB, V size: 0.20 GB
+[2026-10-17 05:27:19 DP0] max_total_num_tokens=24094, chunked_prefill_size=4096, max_prefill_tokens=16384, max_running_requests=2048, context_len=40960, available_gpu_mem=1.36 GB
+[2026-10-17 05:28:30 DP1] max_total_num_tokens=2925, chunked_prefill_size=4096, max_prefill_tokens=16384, max_running_requests=1462, context_len=40960, available_gpu_mem=0.94 GB
+[2026-10-17 07:26:50 DP1] Decode batch, #running-req: 4, #token: 2385, token usage: 0.82, cuda graph: True, gen throughput (token/s): 25.48, #queue-req: 59
+[2026-10-17 07:26:53 DP0] Decode batch, #running-req: 1, #token: 590, token usage: 0.02, cuda graph: True, gen throughput (token/s): 9.67, #queue-req: 0
+[2026-10-17 07:26:56 DP1] Decode batch, #running-req: 4, #token: 2545, token usage: 0.87, cuda graph: True, gen throughput (token/s): 25.79, #queue-req: 59
+[2026-10-17 07:26:59 DP0] Decode batch, #running-req: 3, #token: 1665, token usage: 0.07, cuda graph: True, gen throughput (token/s): 9.49, #queue-req: 0

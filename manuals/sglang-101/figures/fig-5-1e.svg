@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-5-1e-title fig-5-1e-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-1e-title">TTFT quantiles of three runs at a cap of 16</title>
+  <desc id="fig-5-1e-desc">Quantile curve of time to first token for the pooled requests of three seeds at a cap of 16 on a GB10, drawn from 51 quantiles between 0 and 100 percent. BF16 and FP8 rise steeply near 140 to 240 milliseconds, then flatten and finish near 1.2 and 1.7 seconds. EAGLE-3 starts later, near 580 milliseconds at the median, and has the shortest tail.</desc>
+  <line x1="66" y1="286" x2="606" y2="286" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="290" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0%</text>
+  <line x1="66" y1="228.5" x2="606" y2="228.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="232.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">25%</text>
+  <line x1="66" y1="171" x2="606" y2="171" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="175" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">50%</text>
+  <line x1="66" y1="113.5" x2="606" y2="113.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="117.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">75%</text>
+  <line x1="66" y1="56" x2="606" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="60" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100%</text>
+  <line x1="66" y1="286" x2="606" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="56" x2="66" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="286" x2="66" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="66" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">30</text>
+  <line x1="207.18" y1="286" x2="207.18" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="207.18" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="336" y1="286" x2="336" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="336" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="477.18" y1="286" x2="477.18" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="477.18" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="606" y1="286" x2="606" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3k</text>
+  <text x="336" y="320" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">time to first token, ms (log scale)</text>
+  <text x="66" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">share of requests</text>
+  <line x1="66" y1="79" x2="606" y2="79" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="602" y="73" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-rose-ink, #b0344d)">P90</text>
+  <path d="M134.3 286.0 L139.8 281.4 L231.2 276.8 L232.0 272.2 L232.3 267.6 L232.6 263.0 L232.7 258.4 L233.1 253.8 L233.4 249.2 L233.8 244.6 L237.9 240.0 L238.7 235.4 L239.6 230.8 L240.6 226.2 L240.7 221.6 L240.9 217.0 L241.1 212.4 L241.1 207.8 L245.5 203.2 L245.5 198.6 L245.6 194.0 L245.7 189.4 L245.8 184.8 L245.9 180.2 L246.2 175.6 L246.8 171.0 L258.0 166.4 L371.6 161.8 L383.3 157.2 L415.2 152.6 L415.3 148.0 L420.7 143.4 L420.8 138.8 L427.4 134.2 L427.5 129.6 L456.6 125.0 L456.6 120.4 L486.9 115.8 L486.9 111.2 L487.0 106.6 L487.0 102.0 L489.0 97.4 L489.0 92.8 L491.4 88.2 L491.5 83.6 L491.7 79.0 L491.8 74.4 L491.9 69.8 L492.2 65.2 L494.8 60.6 L494.8 56.0" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M124.0 286.0 L131.4 281.4 L280.1 276.8 L280.7 272.2 L281.5 267.6 L281.8 263.0 L281.8 258.4 L281.9 253.8 L282.0 249.2 L289.2 244.6 L289.3 240.0 L289.4 235.4 L289.6 230.8 L290.3 226.2 L292.1 221.6 L292.3 217.0 L292.3 212.4 L292.3 207.8 L294.1 203.2 L294.2 198.6 L294.2 194.0 L294.3 189.4 L294.6 184.8 L294.8 180.2 L295.2 175.6 L308.7 171.0 L326.9 166.4 L420.9 161.8 L429.7 157.2 L453.7 152.6 L453.7 148.0 L458.8 143.4 L461.3 138.8 L535.2 134.2 L535.2 129.6 L535.2 125.0 L537.2 120.4 L537.2 115.8 L537.8 111.2 L537.8 106.6 L537.9 102.0 L537.9 97.4 L539.1 92.8 L539.2 88.2 L539.3 83.6 L540.9 79.0 L540.9 74.4 L540.9 69.8 L542.3 65.2 L542.3 60.6 L542.4 56.0" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M256.7 286.0 L322.9 281.4 L325.1 276.8 L325.1 272.2 L325.1 267.6 L327.1 263.0 L327.1 258.4 L327.2 253.8 L327.2 249.2 L349.1 244.6 L355.3 240.0 L361.8 235.4 L377.3 230.8 L390.8 226.2 L392.9 221.6 L395.2 217.0 L396.5 212.4 L398.2 207.8 L400.5 203.2 L400.5 198.6 L400.5 194.0 L400.6 189.4 L401.2 184.8 L403.2 180.2 L410.0 175.6 L413.2 171.0 L415.5 166.4 L425.7 161.8 L431.5 157.2 L434.2 152.6 L434.9 148.0 L436.3 143.4 L438.1 138.8 L440.0 134.2 L441.9 129.6 L442.7 125.0 L445.1 120.4 L448.0 115.8 L455.4 111.2 L457.7 106.6 L460.2 102.0 L462.4 97.4 L467.6 92.8 L473.7 88.2 L475.7 83.6 L478.0 79.0 L478.8 74.4 L481.8 69.8 L485.5 65.2 L490.0 60.6 L497.9 56.0" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M66 18 H84" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="90" y="22" font-size="11" fill="var(--m-green-ink, #336b40)">FP8</text>
+  <path d="M127.8 18 H145.8" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="151.8" y="22" font-size="11" fill="var(--m-plum-ink, #8a3d72)">BF16</text>
+  <path d="M196.20000000000002 18 H214.20000000000002" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="220.2" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">EAGLE-3</text>
+</svg>

@@ -153,7 +153,7 @@ Generated blocks take no body: `parts`, `palette`, `figure-index`, and `contents
 
 ## Figures
 
-### Nine kinds
+### Ten kinds
 
 | Kind | Use it for |
 |---|---|
@@ -166,8 +166,9 @@ Generated blocks take no body: `parts`, `palette`, `figure-index`, and `contents
 | `state` | a state machine with its transitions |
 | `decision` | where something fails and what each outcome means |
 | `layers` | a stack of layers with the parts each one owns |
+| `chart` | measured runs plotted on axes: sweeps, distributions, and the spread over repeated runs |
 
-The templates in [_shared/templates](_shared/templates) show one of each, drawn with the figure kit.
+The templates in [_shared/templates](_shared/templates) show one of each, drawn with the figure kit. A `chart` uses [_shared/chart.js](_shared/chart.js) on top of the figure kit and reads its numbers from a summary file that the capture kit writes, so the figure and the data cannot drift apart.
 
 ### Colour
 

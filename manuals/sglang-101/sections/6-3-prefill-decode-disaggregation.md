@@ -79,6 +79,31 @@ The ratio depends on your traffic. dstack tested gpt-oss-120b on eight H200 GPUs
 
 At the largest scale, the SGLang team ran DeepSeek on 12 nodes of eight H100 GPUs, with 4 prefill nodes and 9 decode nodes {{team 2025-05}}. They reported 52.3k input and 22.3k output tokens per second per node for 2000-token inputs. The Mooncake team reported Kimi K2 on 128 H200 GPUs with 4 prefill and 12 decode nodes {{team 2025-07}}. They gave decode more nodes so that the KV pool could hold a batch of 480. Both are reports from the teams that built the system.
 
+## What happened on two L4s
+
+We split Qwen3-8B into one prefill server on the first L4 and one decode server on the second. Our two cards have no RDMA, so we used `--disaggregation-transfer-backend mooncake_tcp`. The second card also ran another team's pods, so the decode pool held 2,925 tokens against 24,094 on prefill. We then ran the open-loop sweep of [section 5.1](#s-sglang-benchmark-serving) through the router.
+
+```listing
+title: the KV transfer queue fills and the session dies
+source: capture/gpu/incidents/l4-pd-mooncake-tcp-queue.txt
+lang: text
+note: Lines from the prefill and decode logs and from the benchmark result at 8 requests per second. Timestamps are cut.
+---
+… Decode batch, #running-req: 2, #token: 1206, token usage: 0.41, pre-allocated usage: 0.00, #prealloc-req: 19, #transfer-req: 0, #retracted-req: 0
+… TCP lane queue-full rejection count: 4096
+… Session 151.242.195.41:15367 failed.
+Prefill transfer failed lines: 2902
+Successful requests:                     240
+Total generated tokens (retokenized):    0
+Mean TTFT (ms):                          0.00
+```
+
+Decode could run only two requests at a time, and 19 more waited for decode memory. Prefill kept producing KV caches for them, and the TCP transfer queue to decode filled. Three minutes into the sweep, the transfer session failed, and it did not come back. Every later request failed its transfer.
+
+The dangerous part came next. Each failed request still returned HTTP 200 through the router, with no text. The benchmark counted 240 successful requests out of 240 and printed a throughput higher than the FP8 server's. Only two numbers gave it away: zero retokenized output tokens and a mean TTFT of 0.00 ms.
+
+We did not publish those throughput numbers. Our kit now refuses a run in which every request has a TTFT of 0. We are measuring the split again with decode on the larger pool. Check `Total generated tokens (retokenized)` in every disaggregated benchmark before you read its throughput.
+
 ## What to measure
 
 Measure TTFT and inter-token latency on one server first, with the benchmark in [section 5.1](#s-sglang-benchmark-serving). If inter-token latency rises when long prompts arrive, disaggregation can help. After the split, watch these metrics {{code}}:
@@ -93,7 +118,8 @@ Measure TTFT and inter-token latency on one server first, with the benchmark in 
 - Send every request through the gateway, never to a role server directly.
 - Check router and client timeouts first when prefill logs Aborted by AbortReq.
 - Upgrade the transfer library before you tune queue sizes.
+- Check retokenized output tokens before you trust a disaggregated benchmark.
 - Choose the prefill to decode ratio from your own concurrency, then watch transfer failures.
 ```
 
-Sources: python/sglang/srt/arg_groups/fields/disagg.py, python/sglang/srt/arg_groups/choices.py, python/sglang/srt/environ.py, python/sglang/srt/disaggregation/prefill.py, python/sglang/srt/disaggregation/decode.py, python/sglang/srt/disaggregation/base/conn.py (KVPoll), python/sglang/srt/disaggregation/common/conn.py, python/sglang/srt/disaggregation/mooncake/conn.py, python/sglang/srt/managers/data_parallel_controller.py, python/sglang/srt/observability/metrics_collector.py, sgl-model-gateway/src/routers/http/pd_router.rs and pd_types.rs, and docs/docs/advanced_features/pd_disaggregation.mdx, all at v0.5.22. Issues #12591, #9266, #9926, pull request #9803. Novita AI on Hugging Face, 2026-01-22. dstack, "Benchmarking Prefill-Decode ratios", 2025-09-25. LMSYS, 96 H100 deployment, 2025-05-05. The Mooncake team on the LMSYS blog, 2025-07-20.
+Sources: python/sglang/srt/arg_groups/fields/disagg.py, python/sglang/srt/arg_groups/choices.py, python/sglang/srt/environ.py, python/sglang/srt/disaggregation/prefill.py, python/sglang/srt/disaggregation/decode.py, python/sglang/srt/disaggregation/base/conn.py (KVPoll), python/sglang/srt/disaggregation/common/conn.py, python/sglang/srt/disaggregation/mooncake/conn.py, python/sglang/srt/managers/data_parallel_controller.py, python/sglang/srt/observability/metrics_collector.py, sgl-model-gateway/src/routers/http/pd_router.rs and pd_types.rs, and docs/docs/advanced_features/pd_disaggregation.mdx, all at v0.5.22. capture/gpu/incidents/l4-pd-mooncake-tcp-queue.txt. Issues #12591, #9266, #9926, pull request #9803. Novita AI on Hugging Face, 2026-01-22. dstack, "Benchmarking Prefill-Decode ratios", 2025-09-25. LMSYS, 96 H100 deployment, 2025-05-05. The Mooncake team on the LMSYS blog, 2025-07-20.

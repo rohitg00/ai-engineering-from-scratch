@@ -12,17 +12,24 @@ module.exports = figure('plate-sglang-request', {
   const tok = f.box({ x: 140, y: 34, w: 160, h: 56, hue: 'blue', title: 'TokenizerManager', sub: ['text to ids'] });
   const sched = f.box({ x: 320, y: 34, w: 140, h: 56, hue: 'blue', title: 'Scheduler', sub: ['match_prefix'] });
   const detok = f.box({ x: 480, y: 34, w: 140, h: 56, hue: 'blue', title: 'Detokenizer', sub: ['ids to text'] });
+  f.beat(1);
   f.arrow([client.x + 100, 62], [tok.x - 1, 62], { style: 'call' });
+  f.beat(2);
   f.arrow([tok.x + 160, 62], [sched.x - 1, 62], { style: 'event' });
+  f.beat(3);
   f.arrow([sched.x + 140, 62], [detok.x - 1, 62], { style: 'event' });
+
+  f.beat(4);
 
   f.kicker(20, 124, 'the prompt as the radix cache saw it');
   f.rect(20, 134, 590, 30, { hue: 'green' });
   f.text(30, 154, '2,998 cached tokens · system prompt and chat template', { size: 12, weight: 700, hue: 'green' });
+  f.beat(5);
   f.rect(610, 134, 10, 30, { hue: 'plum' });
   f.text(620, 184, '1 new token', { size: 11, anchor: 'end', hue: 'plum' });
   f.text(20, 184, 'first token after 34.0 ms', { size: 12, weight: 700, hue: 'plum' });
 
+  f.beat(0);
   f.kicker(20, 226, 'the same system prompt three ways · median of rounds 2 to 5 or 1 to 5');
   const rows = [
     { hue: 'green', title: 'unchanged', cached: '2,998 of 2,999 cached', ttft: '45.1 ms' },
@@ -31,9 +38,11 @@ module.exports = figure('plate-sglang-request', {
   ];
   rows.forEach((row, index) => {
     const y = 238 + index * 56;
+    f.beat(6 + index);
     f.box({ x: 20, y, w: 260, h: 44, hue: row.hue, title: row.title, align: 'left' });
     f.text(300, y + 27, row.cached, { size: 12, serif: true, hue: 'ink-soft' });
     f.text(620, y + 27, row.ttft, { size: 13, weight: 700, anchor: 'end', hue: row.hue === 'rose' ? 'rose' : 'plum' });
   });
+  f.beat(0);
   f.text(20, 412, 'From capture/out/cache-experiment.txt · SGLang 0.5.22 on MLX · Qwen3-0.6B-4bit', { size: 11, serif: true, hue: 'ink-mute' });
 });

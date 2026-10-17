@@ -7,8 +7,9 @@ SGLang 0.5.22, from one request on a laptop to a fleet of GPUs, with the judgmen
 - 28 sections in 7 parts, then six reference sections. Part 1 puts SGLang on one page. Part 2 follows one request through the three processes and the scheduler. Part 3 is the KV cache. Part 4 makes each forward pass fast, and Part 5 measures a server. Part 6 spreads one model over many GPUs, and Part 7 operates SGLang and closes with SGLang as the rollout engine of Miles.
 - Every section tells one story: the cost, the obvious fix and why it fails, what SGLang does, what to measure, our position on the default, and a real incident with its link.
 - Every number carries one of four labels: we measured, the code, a field report from engineers outside the SGLang team, or a team or vendor claim.
-- A cover plate and 43 figures drawn with the figure kit from the captures and the code.
+- A cover plate, 43 figures drawn with the figure kit from the captures and the code, and charts plotted from the GPU runs.
 - A capture kit in `capture/` that starts the real server on Apple silicon through MLX, sends requests, runs the official benchmark, and writes what it sees to `capture/out/`.
+- A GPU kit in `capture/gpu/` that runs eight server configurations and three-seed benchmark sweeps on one NVIDIA GPU, with the GPU clock and temperature of every run.
 
 ## Files
 
@@ -18,6 +19,7 @@ SGLang 0.5.22, from one request on a laptop to a fleet of GPUs, with the judgmen
 | `front.md`, `sections/` | the text, one file per section |
 | `figures/src/` | the figure sources, built to `figures/*.svg` |
 | `capture/` | the kit and its recorded output in `capture/out/` |
+| `capture/gpu/` | the GPU kit, its output in `capture/gpu/out-gb10/`, and the chart data in `capture/gpu/summary/` |
 
 ## The pin
 
@@ -35,6 +37,8 @@ SGLang 0.5.22, from one request on a laptop to a fleet of GPUs, with the judgmen
 | SGLang | 0.5.22 from the tag with the `srt_mps` extra |
 | Frameworks | PyTorch 2.13.0, MLX 0.32.4, Python 3.12.12 |
 | Model | `mlx-community/Qwen3-0.6B-4bit` |
+
+The GPU runs were recorded on an NVIDIA DGX Spark with one GB10 (compute capability 12.1, aarch64), SGLang 0.5.22 from PyPI, PyTorch 2.14.1+cu130, and CUDA 13.0, with `Qwen/Qwen3-30B-A3B-Instruct-2507` and its FP8 checkpoint. `capture/README.md` describes how to run the GPU kit.
 
 ## Run the kit
 

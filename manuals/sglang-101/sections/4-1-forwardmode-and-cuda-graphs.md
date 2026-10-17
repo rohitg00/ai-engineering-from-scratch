@@ -88,9 +88,29 @@ A field report from Jarvislabs {{field Jarvislabs 2026-05}} ran Qwen2.5-7B on on
 
 Our reading is a hypothesis, labeled as one. The default decode `max_bs` on that GPU is 256, and the latency break sits just above it. The maintainers saw the same shape on smaller cards. The code comment on the 20 to 35 GB tier says the old cap "forced eager decode at bs>=32 and collapsed high-concurrency throughput vs vLLM" {{code}}. PR #37898 raised that cap from 24 to 48 on 2026-09-04.
 
+## What we measured on a GB10
+
+The cost above assumes a fast GPU and a small model. We tested a different case: `Qwen/Qwen3-30B-A3B-Instruct-2507`, a mixture-of-experts model, on one NVIDIA GB10. The GB10 has one memory for the CPU and the GPU, with less bandwidth than the HBM of a data-center GPU.
+
+**We measured** two servers with three seeds at each concurrency from 1 to 64. The default server replayed a decode graph on every decode batch, and its log says `cuda graph: True`. The server with both graph backends set to `disabled` logged `cuda graph: False`. The results were almost the same:
+
+| Concurrency | Median TPOT with graphs | Median TPOT without | Output tok/s with graphs | Output tok/s without |
+|---|---|---|---|---|
+| 1 | 32.52 ms | 33.09 ms | 29.14 | 28.72 |
+| 8 | 102.21 ms | 104.77 ms | 74.11 | 73.46 |
+| 64 | 254.06 ms | 253.77 ms | 235.38 | 235.79 |
+
+The two lines lie on top of each other in [figure 5.1c](#fig-5-1c). The graphs still cost startup time and memory. The decode capture took 4.61 s and 1.73 GB, and the prefill capture took 35.06 s and 2.14 GB.
+
+Our reading of this result: one decode step of this model takes about 32 ms at batch 1. The launch time that a graph removes is small next to that step. Each step reads the weights of the experts that its tokens chose, and memory bandwidth sets the time.
+
+Our first sweep on an L4 showed the same small difference for a dense 8B model, and that result was wrong. The card ran at 87 C with a thermal slowdown, at an SM clock of 360 MHz out of 2,040. A throttled GPU is slow on every step, so the launch saving disappears in the noise. We removed those numbers. Record GPU clocks and temperature with every benchmark, as [section 5.1](#s-sglang-benchmark-serving) shows.
+
 ## Our position
 
 Keep CUDA graphs on, and size them to your traffic. The default `max_bs` suits moderate concurrency. If your benchmark or your production peak runs more requests than that, set `--cuda-graph-max-bs-decode` and `--max-running-requests` to your target before you measure. SemiAnalysis InferenceX recipes {{field InferenceX 2026-05}} derive both values from the concurrency they test.
+
+Do not expect graphs to make a slow decode fast on every machine. On the GB10, one decode step of a mixture-of-experts model takes tens of milliseconds, and graphs changed it by 3 percent or less. Measure with and without graphs before you blame the launch path.
 
 Do not turn graphs off to fix memory. If capture runs out of memory, lower `--cuda-graph-max-bs-decode` or `--mem-fraction-static`. A server without decode graphs pays launch time on every token for every user.
 
@@ -119,7 +139,8 @@ note: Two lines from the deprecated flags at the end of the help text.
 - Read the scheduler log field cuda graph for every decode batch you care about.
 - Set --cuda-graph-max-bs-decode and --max-running-requests to your peak concurrency before benchmarking.
 - Fix capture memory with a smaller graph batch size, and keep graphs on.
+- Measure decode with and without graphs on your GPU and model before you tune them.
 - Replace --cuda-graph-max-bs and --disable-cuda-graph in old recipes with the v0.5.22 per-phase flags.
 ```
 
-Sources: capture/out/server-default.log, capture/out/serve-help.txt, python/sglang/srt/model_executor/forward_batch_info.py (ForwardMode), model_executor/model_runner.py (_forward_raw), model_executor/cuda_graph_config.py (default_prefill_backend), model_executor/runner/decode_cuda_graph_runner.py (can_run_graph), arg_groups/memory_hook.py (_handle_gpu_memory_settings), arg_groups/cuda_graph_hook.py (generate_decode_cuda_graph_batch_sizes), and server_args.py (deprecated flags) at v0.5.22; the argument parser of the installed v0.5.22 package; PRs #23906, #29458, #37898, #42285; issues #23769 and #36478; field reports by Hazy Research (2025-09-28), Jarvislabs (2026-05-18), joshua8.ai (2026-01-10), and SemiAnalysis InferenceX (2026-05-26).
+Sources: capture/out/server-default.log, capture/out/serve-help.txt, capture/gpu/out-gb10/server-default.log, capture/gpu/out-gb10/server-no-cuda-graph.log, capture/gpu/summary/gb10.json, capture/gpu/incidents/l4-thermal-throttle.txt, python/sglang/srt/model_executor/forward_batch_info.py (ForwardMode), model_executor/model_runner.py (_forward_raw), model_executor/cuda_graph_config.py (default_prefill_backend), model_executor/runner/decode_cuda_graph_runner.py (can_run_graph), arg_groups/memory_hook.py (_handle_gpu_memory_settings), arg_groups/cuda_graph_hook.py (generate_decode_cuda_graph_batch_sizes), and server_args.py (deprecated flags) at v0.5.22; the argument parser of the installed v0.5.22 package; PRs #23906, #29458, #37898, #42285; issues #23769 and #36478; field reports by Hazy Research (2025-09-28), Jarvislabs (2026-05-18), joshua8.ai (2026-01-10), and SemiAnalysis InferenceX (2026-05-26).

@@ -10,10 +10,6 @@ module.exports = figure('fig-3-5', {
   const l1 = f.box({ x: 20, y: 40, w: 150, h: 70, hue: 'green', title: 'L1 · GPU pool', sub: ['device memory', 'requests and cache'] });
   const l2 = f.box({ x: 245, y: 40, w: 150, h: 70, hue: 'teal', title: 'L2 · host', sub: ['pinned memory', 'one instance only'] });
   const l3 = f.box({ x: 470, y: 40, w: 150, h: 70, hue: 'teal', title: 'L3 · storage', sub: ['shared by servers', 'file, mooncake'] });
-  f.arrow([l1.x + l1.w, 60], [l2.x - 1, 60], { style: 'write', label: 'copy' });
-  f.arrow([l2.x + l2.w, 60], [l3.x - 1, 60], { style: 'write', label: 'back up' });
-  f.arrow([l2.x - 1, 96], [l1.x + l1.w + 1, 96], { style: 'reply', label: 'load' });
-  f.arrow([l3.x - 1, 96], [l2.x + l2.w + 1, 96], { style: 'reply', label: 'fetch' });
   f.kicker(20, 150, 'when a prefix gets a host copy');
   const rows = [
     ['write_through (default)', 'on its first hit · threshold 1'],
@@ -27,4 +23,12 @@ module.exports = figure('fig-3-5', {
   });
   f.kicker(20, 282, 'storage prefetch at v0.5.22');
   f.text(20, 304, 'skipped under 256 matching tokens · stops after 1.0 s + 0.25 s per 1,024 tokens', { size: 11.5, serif: true, hue: 'ink-soft' });
+  f.beat(1);
+  f.arrow([l1.x + l1.w, 60], [l2.x - 1, 60], { style: 'write', label: 'copy' });
+  f.beat(2);
+  f.arrow([l2.x + l2.w, 60], [l3.x - 1, 60], { style: 'write', label: 'back up' });
+  f.beat(3);
+  f.arrow([l3.x - 1, 96], [l2.x + l2.w + 1, 96], { style: 'reply', label: 'fetch' });
+  f.beat(4);
+  f.arrow([l2.x - 1, 96], [l1.x + l1.w + 1, 96], { style: 'reply', label: 'load' });
 });

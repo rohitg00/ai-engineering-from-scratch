@@ -1,0 +1,4 @@
+[2026-10-17 11:19:19] Load weight end. elapsed=3.80 s, type=Qwen3ForCausalLM, avail mem=6.59 GB, mem usage=15.28 GB.
+[2026-10-17 11:19:21] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 9951, K size: 0.68 GB, V size: 0.68 GB
+[2026-10-17 11:19:21] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 9951, K size: 0.02 GB, V size: 0.02 GB
+[2026-10-17 11:20:05] max_total_num_tokens=9951, chunked_prefill_size=4096, max_prefill_tokens=16384, max_running_requests=48, context_len=40960, available_gpu_mem=1.23 GB

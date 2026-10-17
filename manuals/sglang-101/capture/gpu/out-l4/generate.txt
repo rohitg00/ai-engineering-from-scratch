@@ -1,0 +1,94 @@
+POST /generate
+{
+  "text": " Paris. The capital of Italy is Rome. The capital of",
+  "output_ids": [
+    12095,
+    13,
+    576,
+    6722,
+    315,
+    15344,
+    374,
+    21718,
+    13,
+    576,
+    6722,
+    315
+  ],
+  "meta_info": {
+    "id": "7ee1a61435254ded9127bec85c6315c5",
+    "finish_reason": {
+      "type": "length",
+      "length": 12
+    },
+    "prompt_tokens": 5,
+    "weight_version": "default",
+    "num_retractions": 0,
+    "storage_prefetch_wait": 0.0,
+    "storage_staging_wait": 0.0,
+    "forward_entry_time": 1792248220.9999006,
+    "prefill_finished_time": 1792248221.0666718,
+    "queue_time": 0.0003224560059607029,
+    "reasoning_tokens": 0,
+    "completion_tokens": 12,
+    "cached_tokens": 2,
+    "weight_versions": [
+      {
+        "version": "default",
+        "start": 0,
+        "end": 12
+      }
+    ],
+    "cached_tokens_details": {
+      "device": 2,
+      "host": 0
+    },
+    "dp_rank": null,
+    "e2e_latency": 0.7252887019421905,
+    "request_received_ts": 1792248220.998412,
+    "first_token_latency": 0.06825997028499842,
+    "api_server_dispatch_finish_ts": 1792248220.9990823,
+    "request_finished_ts": 1792248221.7237005,
+    "decode_throughput": 16.74203801142033,
+    "response_sent_to_client_ts": 1792248221.7244456
+  }
+}
+POST /v1/chat/completions
+{
+  "id": "7414849fad46466b8a84dba45ef4f770",
+  "object": "chat.completion",
+  "created": 1792248221,
+  "model": "default",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Earth",
+        "reasoning_content": null
+      },
+      "logprobs": null,
+      "finish_reason": "stop",
+      "matched_stop": 151645
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 21,
+    "total_tokens": 23,
+    "completion_tokens": 2,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "reasoning_tokens": 0
+  },
+  "metadata": {
+    "weight_version": "default",
+    "weight_versions": [
+      {
+        "version": "default",
+        "start": 0,
+        "end": 2
+      }
+    ]
+  }
+}

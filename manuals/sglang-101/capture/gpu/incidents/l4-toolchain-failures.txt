@@ -1,0 +1,18 @@
+=== attempt: out-l4-nopyheaders/server-default.log
+<site-packages>/triton/backends/nvidia/driver.c:9:10: fatal error: Python.h: No such file or directory
+<site-packages>/triton/backends/nvidia/driver.c:9:10: fatal error: Python.h: No such file or directory
+  0%|          | 0/50 [00:00<?, ?it/s]Capturing prefill shape (num_tokens=4096 avail_mem=2.28 GB):   0%|          | 0/50 [00:00<?, ?it/s]<site-packages>/triton/backends/nvidia/driver.c:9:10: fatal error: Python.h: No such file or directory
+=== attempt: out-l4-nonvcc/server-default.log
+[2026-10-16 14:21:19] RuntimeError: Could not find nvcc and default cuda_home='/usr/local/cuda' doesn't exist
+    raise RuntimeError(
+RuntimeError: Could not find nvcc and default cuda_home='/usr/local/cuda' doesn't exist
+=== attempt: out-l4-jitmismatch/server-default.log
+[2026-10-16 14:23:40] RuntimeError: Ninja build failed. Ninja output:
+<site-packages>/flashinfer/data/cccl/libcudacxx/include/cuda/std/__cccl/cuda_toolkit.h:41:8: error: #error "CUDA compiler and CUDA toolkit headers are incompatible, please check your include paths"
+   41 | #      error "CUDA compiler and CUDA toolkit headers are incompatible, please check your include paths"
+<site-packages>/flashinfer/data/cccl/libcudacxx/include/cuda/std/__cccl/cuda_toolkit.h:41:8: error: #error "CUDA compiler and CUDA toolkit headers are incompatible, please check your include paths"
+=== attempt: out-l4-nolibcudart/server-default.log
+/usr/bin/ld: cannot find -lcudart: No such file or directory
+collect2: error: ld returned 1 exit status
+[2026-10-16 14:26:33] RuntimeError: Failed to build JIT module sgl_kernel_jit_fused_rope_true_128_false_bf16_t_bf16_t in /root/.cache/sglang/jit/sm89/sgl_kernel_jit_fused_rope_true_128_false_bf16_t_bf16_t/build-d129ad15216edb50/.staging-45436f7697ff4fd58892a3e6760bd970
+/usr/bin/ld: cannot find -lcudart: No such file or directory

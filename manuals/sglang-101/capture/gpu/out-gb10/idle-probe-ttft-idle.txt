@@ -1,0 +1,4 @@
+{"case": "back-to-back", "gap_s": 0.0, "background_decode": false, "ttft_ms": [380.3, 375.4, 382.6, 379.4, 380.0, 375.2, 375.3, 373.9, 373.7, 374.2], "median_ttft_ms": 375.35}
+{"case": "two-second-gap", "gap_s": 2.0, "background_decode": false, "ttft_ms": [55.1, 44.6, 44.3, 43.1, 43.6, 42.9, 42.6, 42.4, 43.9, 41.9], "median_ttft_ms": 43.35}
+{"case": "ten-second-gap", "gap_s": 10.0, "background_decode": false, "ttft_ms": [42.2, 42.3, 42.3, 43.3, 42.3], "median_ttft_ms": 42.3}
+{"case": "while-another-request-decodes", "gap_s": 0.5, "background_decode": true, "ttft_ms": [101.5, 83.3, 77.0, 80.3, 77.3, 81.4, 78.6, 78.3, 77.8, 79.2], "median_ttft_ms": 78.9}

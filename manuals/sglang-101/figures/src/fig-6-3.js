@@ -29,6 +29,7 @@ module.exports = figure('fig-6-3', {
   }
   rows.forEach(([from, to, style, label, note], index) => {
     const y = 92 + index * 48;
+    f.beat(index + 1);
     f.step(16, y, index + 1);
     const x1 = lanes[from].x;
     const x2 = lanes[to].x;

@@ -25,6 +25,7 @@ module.exports = figure('fig-7-2', {
   f.lifeline(server, 40, 390);
   rows.forEach(([style, label, note], index) => {
     const y = 78 + index * 44;
+    f.beat(index + 1);
     f.step(24, y, index + 1, { hue: style === 'event' ? 'indigo' : 'ink' });
     f.arrow([trainer, y], [server - 1, y], { style, label, note, labelX: (trainer + server) / 2 });
   });

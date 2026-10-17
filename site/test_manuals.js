@@ -145,7 +145,7 @@ test('rejects constructs outside the subset', () => {
   assert.throws(() => manuals.parseDocument('# T\n\n- a\n  - b\n', 'x'), /nested lists/);
   assert.throws(() => manuals.parseDocument('# T\n\n<div>x</div>\n', 'x'), /raw HTML/);
   assert.throws(() => manuals.parseDocument('# T\n\n---\n', 'x'), /horizontal rules/);
-  assert.throws(() => manuals.parseDocument('# T\n\n```figure\nid: f-1\nkind: chart\ntitle: t\nclaim: c.\ncaption: c\n```\n', 'x'), /kind must be one of/);
+  assert.throws(() => manuals.parseDocument('# T\n\n```figure\nid: f-1\nkind: plot\ntitle: t\nclaim: c.\ncaption: c\n```\n', 'x'), /kind must be one of/);
 });
 
 test('inline markup escapes HTML and records cross references with their location', () => {

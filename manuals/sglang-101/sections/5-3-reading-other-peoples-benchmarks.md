@@ -64,9 +64,80 @@ caption: Read each row left to right, from the workload to the reported result t
 
 The same reports show one more pattern. A Blackwell workstation card ran SGLang only with `--disable-cuda-graph`, according to [joshua8.ai](https://joshua8.ai/llm-inference-benchmark/) {{field joshua8 2026-01}}. A mixed cluster crashed when an older card joined, because the FP4 path required compute capability 10.0. [Pivot News](https://pivotnews.ai/build/benchmarking-vllm-vs-sglang-vs-llama-cpp-on-a-mixed-blackwel) summarized that community post {{field Pivot-News 2026-05}}. The fast paths are written per GPU generation, and the paths for other GPUs are fewer. On new hardware, expect the first SGLang release to be slow or broken, and measure again every week.
 
+## What our own machines showed
+
+Field reports tell you which mechanism to test. We tested them on a DGX Spark with a GB10 and on a machine with two 24 GB L4s. Each row below links to the section with the listings, the seeds, and the chart.
+
+| Where | What we ran | Result | Mechanism |
+|---|---|---|---|
+| L4 | 4,096-token shared prompt, cache on and off | median TTFT 479 ms against 14,706 ms, 4.3 times the throughput, [section 3.3](#s-radixcache) | the radix cache |
+| L4 | FP8 weights and KV against BF16 at 64 users | 736 against 251 tok/s, a pool of 142,369 tokens against 24,094, [section 4.3](#s-quantization) | more KV per GB |
+| GB10 | EAGLE-3 on Qwen3-30B-A3B | time per token 1.60 to 1.89 times shorter, and the gain grew with the batch, [section 4.4](#s-speculative-decoding) | MoE verify reuses the expert weights it read |
+| L4 | EAGLE-3 on dense Qwen3-8B | 2.37 times the throughput at one user, 1.00 at 32, [section 4.4](#s-speculative-decoding) | the draft took 59 percent of the pool |
+| L4 pair | `--dp-size 2` with one shared card | 42 against 251 tok/s at 64 users, [section 6.1](#s-tp-size-dp-size-and-attn-dp-size) | round robin fed a copy with an eighth of the pool |
+| L4 | SGLang 0.5.22 against vLLM 0.31.0, same pool, 64 users | 257 against 241 tok/s, P99 ITL 114 against 1,363 ms, median TTFT 18,356 against 10,953 ms, [below](#s-reading-other-peoples-benchmarks) | two different admission choices at a full pool |
+| L4 pair | `--tp-size 2` with one shared card | refused at startup, [section 6.1](#s-tp-size-dp-size-and-attn-dp-size) | the memory balance check |
+| L4 pair | prefill and decode split over TCP | every request after minute three came back empty with HTTP 200, [section 6.3](#s-prefill-decode-disaggregation) | the transfer session failed and did not recover |
+
+The pattern is the same in every row. SGLang wins by a large factor when a mechanism removes repeated work. Examples are the prefill of a shared prompt and the bytes of each cached token. It loses when a feature spends memory that the batch needs, or when two parts of a deployment are not the same size. None of the losses printed an error that a dashboard would show. Two of them looked like success in the benchmark summary.
+
+## SGLang against vLLM on the same L4
+
+Every field report above compares two engines that someone else configured. We ran our own pair on one L4 with `Qwen/Qwen3-8B` and the closed-loop sweep of [section 5.1](#s-sglang-benchmark-serving). We made three choices so that only the engine differed.
+
+- **The same KV pool.** The vLLM server got `--num-gpu-blocks-override 1506`, which is 1,506 blocks of 16 tokens. SGLang sized 24,094 tokens for itself on the same card.
+- **The same card state.** Both engines ran in one session on one GPU, and every run started at 72 C or below. A run with a median SM clock under 1,000 MHz was set aside and repeated, up to three times.
+- **No accidental handicap.** The vLLM server got `--max-model-len 8192`, which every request fits, and `VLLM_USE_FLASHINFER_SAMPLER=0`, because its FlashInfer sampler did not compile in our install. The benchmark is greedy, so the sampler does not change the output.
+
+```listing
+title: two pools of the same size
+source: capture/gpu/out-l4/server-h2h-sglang.log
+lang: text
+note: The SGLang pool at startup, and one decode line at a cap of 64.
+---
+[2026-10-17 18:27:40] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 24094, K size: 1.65 GB, V size: 1.65 GB
+[2026-10-17 20:12:04] Decode batch, #running-req: 37, #token: 22162, token usage: 0.92, cuda graph: True, gen throughput (token/s): 432.55, #queue-req: 27
+```
+
+```listing
+title: the vLLM pool, and vLLM at a cap of 64
+source: capture/gpu/out-l4/server-h2h-vllm.log
+lang: text
+note: The vLLM pool at startup, and one stats line at a cap of 64.
+---
+INFO 10-17 20:13:17 [kv_cache_utils.py:2464] GPU KV cache size: 24,096 tokens, Maximum concurrency for 8,192 tokens per request: 2.94x
+INFO 10-17 22:35:43 [loggers.py:320] Engine 000: Avg prompt throughput: 460.3 tokens/s, Avg generation throughput: 323.6 tokens/s, Running: 40 reqs, Waiting: 11 reqs, GPU KV cache usage: 99.5%, Prefix cache hit rate: 8.7%
+```
+
+| Concurrency | Output tok/s, SGLang / vLLM | Median TTFT, SGLang / vLLM | P99 ITL, SGLang / vLLM | Median SM clock, SGLang / vLLM |
+|---|---|---|---|---|
+| 1 | 13.84 / 13.51 | 185 / 192 ms | 104 / 105 ms | 1,290 / 1,290 MHz |
+| 8 | 112.46 / 112.79 | 170 / 253 ms | 71 / 68 ms | 1,485 / 1,470 MHz |
+| 16 | 201.13 / 200.90 | 212 / 289 ms | 81 / 80 ms | 1,470 / 1,425 MHz |
+| 32 | 271.28 / 273.93 | 2,871 / 1,813 ms | 102 / 619 ms | 1,320 / 1,275 MHz |
+| 64 | 256.62 / 241.39 | 18,356 / 10,953 ms | 114 / 1,363 ms | 1,215 / 1,013 MHz |
+
+```figure
+id: fig-5-3c
+kind: chart
+title: Same throughput, two different choices at a full pool
+claim: At 64 users on the L4, vLLM gave the first token 1.7 times sooner and SGLang kept the P99 inter-token latency 12 times lower.
+caption: Solid lines are median TTFT and dashed lines are P99 inter-token latency, three seeds per point, on a log scale. Blue is SGLang and amber is vLLM. From capture/gpu/summary/l4.json.
+```
+
+**We measured** a tie in throughput. Up to 32 users, the two engines were within 3 percent of each other, and time per token was within 6 percent. At 64 users the median time per token was 106 ms on SGLang and 129 ms on vLLM. Below the point where the pool fills, SGLang gave the first token sooner, 170 against 253 ms at 8 users.
+
+Above that point, the engines made different choices, and the stats lines show both. SGLang ran 37 requests and kept 27 waiting, with the pool 92 percent full. The vLLM server ran 40 requests and kept 11 waiting. It filled 99.5 percent of its pool while it prefilled new prompts at 460 tokens per second.
+
+The vLLM server started more requests, so their first token came sooner. Each new prefill then shared the step with the running decodes, so the streams stalled. At 64 users the worst inter-token gap was 1,363 ms on vLLM and 114 ms on SGLang.
+
+The clock caveat belongs with the last row. Even after three tries, the vLLM runs at 64 users had a median clock of 1,013 MHz against 1,215 MHz for SGLang. So part of the throughput gap at 64 can be the card. The 12-times gap in inter-token latency is too large for a 17 percent clock difference.
+
+This is one model, one GPU, and one workload with unique prompts. It agrees with the field reports on the main point: on a dense model with unique prompts, the engines tie on throughput. It adds the part that a throughput chart hides. When the pool is full, you choose between a fast first token and a smooth stream, and the two engines chose differently by default.
+
 ## Our position
 
-For a dense model with unique prompts, the choice of engine is not a performance decision. Decide on model support, startup time, and the hardware you have. For repeated prefixes, SGLang has a real advantage that is smaller than the stories about it. For DeepSeek-class MoE models on many GPUs, start from SGLang, because that is where the field runs them.
+For a dense model with unique prompts, the choice of engine is not a throughput decision. It is a latency decision at a full pool: SGLang protected the stream, and vLLM the first token. Decide on model support, startup time, and the hardware you have. For repeated prefixes, SGLang has a real advantage that is smaller than the stories about it. For DeepSeek-class MoE models on many GPUs, start from SGLang, because that is where the field runs them.
 
 Above all, do not import a result. Run the sweep from [section 5.1](#s-sglang-benchmark-serving) on your own workload. A published number tells you which mechanism to test, and nothing more.
 
@@ -79,6 +150,8 @@ Above all, do not import a result. Run the sweep from [section 5.1](#s-sglang-be
 **The recycled number.** The 29 percent pair from the start of this section was criticized by DeepInfra on 2026-08-04 for its version gap {{field DeepInfra 2026-08}}. The author answered on 2026-10-14 that the result "should not be extrapolated" to long context {{field AIMultiple 2026-10}}. The SGLang team made a larger claim in 2024: "up to 3.1x higher throughput on Llama-70B" {{team 2024-07}}. No independent report found in this research reproduced a gap of that size on a dense model with unique prompts.
 
 ```takeaways
+- Compare engines at matched KV pools and matched GPU clocks, or not at all.
+- Read P99 ITL next to TTFT, because a full pool trades one for the other.
 - Find the SGLang version and date before you read any number.
 - Match the workload shape to yours, including the share of repeated prefix.
 - Check that both engines ran with matched memory budgets and context flags.
@@ -87,4 +160,4 @@ Above all, do not import a result. Run the sweep from [section 5.1](#s-sglang-be
 - Use `--cuda-graph-max-bs-decode` at v0.5.22, because the old flag is ambiguous.
 ```
 
-Sources: python/sglang/srt/arg_groups/memory_hook.py (GPU memory tiers), python/sglang/srt/arg_groups/fields/exec_.py (cuda_graph_max_bs_decode), python/sglang/srt/arg_groups/fields/schedule.py, all at v0.5.22 (baa9befa); the field reports linked in the text, fetched 2026-10-16; aimultiple.com/inference-engines; deepinfra.com/blog/vllm-vs-sglang; lmsys.org/blog/2024-07-25-sglang-llama3; inferencex.semianalysis.com/blog/mi355x-deepseek-v4-pro-sglang-110x-in-26-days.
+Sources: python/sglang/srt/arg_groups/memory_hook.py (GPU memory tiers), python/sglang/srt/arg_groups/fields/exec_.py (cuda_graph_max_bs_decode), python/sglang/srt/arg_groups/fields/schedule.py, all at v0.5.22 (baa9befa); the field reports linked in the text, fetched 2026-10-16; aimultiple.com/inference-engines; deepinfra.com/blog/vllm-vs-sglang; lmsys.org/blog/2024-07-25-sglang-llama3; inferencex.semianalysis.com/blog/mi355x-deepseek-v4-pro-sglang-110x-in-26-days. capture/gpu/out-l4/server-h2h-sglang.log, capture/gpu/out-l4/server-h2h-vllm.log, capture/gpu/summary/l4.json, capture/gpu/sweep.py (vllm and sglang-h2h configs), capture/gpu/incidents/l4-vllm-flashinfer-jit.txt.

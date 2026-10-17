@@ -82,9 +82,32 @@ python3 -m sglang.test.test_deterministic --n-start 1 --n-trials 50 --test-mode 
 
 Run it against your model, your attention backend, and your parallel layout. One distinct output per prompt is the pass condition. Then measure throughput with the flag on and off, because batch-invariant kernels give up some speed.
 
+## What we measured on a GB10
+
+Our probe sends one prompt at temperature 0 with 128 new tokens. It sends the prompt five times alone, then five times inside a batch of 16 with 15 other prompts. We ran it against `Qwen/Qwen3-30B-A3B-Instruct-2507` on one NVIDIA GB10, first on the default server and then with `--enable-deterministic-inference`.
+
+**We measured** two different answers from the default server. The first request alone and all five batched requests wrote one text. The next four requests alone wrote another text, which left the first after 238 characters. Nothing in the request changed between those runs.
+
+Our reading is that the first request computed its prompt from nothing. The four later ones found that prompt in the radix cache and ran a different prefill path. The `radix_cache` mode of the test above checks that case. On an L4 with `Qwen/Qwen3-8B`, the four later requests alone also matched each other and not the first. The batched requests there wrote two more texts, so the default server gave four different answers to one prompt. With the flag on, all ten matched on the L4 too.
+
+With the flag on, all ten requests wrote the same text. The startup log shows the switches from the list above:
+
+```listing
+title: what deterministic mode switched on the GB10
+source: capture/gpu/out-gb10/server-deterministic.log
+lang: text
+note: Three lines from the startup log. Timestamps and the end of the second line are cut.
+---
+… Sampling backend is set to pytorch for deterministic inference.
+… Attention backend not specified. Falling back to 'flashinfer' for deterministic inference. You can explicitly set --attention-backend to one of ['ascend', 'fa3', 'fa4', 'flashinfer', 'intel_xpu', 'tri…
+… Currently radix cache is not compatible with flashinfer attention backend for deterministic inference. It will be supported in the future.
+```
+
+The price at concurrency 8 was 18 percent of the throughput. Output fell from 78.92 to 64.83 tok/s, and the median time per token rose from 97.30 to 117.43 ms. The radix cache was off, so a workload with shared prefixes pays more than this test shows.
+
 ## Our position
 
-Treat `--enable-deterministic-inference` as a promise for one model on one backend, and test that promise. Turn it on for reinforcement learning rollouts and for evaluations you want to reproduce. Leave it off for production traffic, where prefix caching and faster kernels are worth more than identical bits.
+Treat `--enable-deterministic-inference` as a promise for one model on one backend, and test that promise. Turn it on for reinforcement learning rollouts and for evaluations you want to reproduce. Leave it off for production traffic, where prefix caching and faster kernels are worth more than identical bits. Do not assume that temperature 0 alone gives identical text. On the GB10 it did not.
 
 Set `sampling_seed` on each request that must reproduce. Seed 42 for everyone makes every sampled request draw the same random numbers.
 
@@ -99,8 +122,9 @@ Set `sampling_seed` on each request that must reproduce. Seed 42 for everyone ma
 ```takeaways
 - Run sglang.test.test_deterministic on your model and backend before you rely on reproducible output.
 - Expect deterministic mode to turn off prefix caching on flashinfer, and pick fa3 or triton.
+- Send one prompt alone and in a batch, and count distinct outputs, before you trust temperature 0.
 - Set SGLANG_RETURN_ORIGINAL_LOGPROB when a trainer compares logprobs at temperature 1.
 - Pass --mlx-enable-sampling on Apple silicon when requests need temperature or logprobs.
 ```
 
-Sources: python/sglang/srt/batch_invariant_ops/batch_invariant_ops.py (enable_batch_invariant_mode), arg_groups/attention_hook.py (handle_deterministic_inference), arg_groups/choices.py (DETERMINISTIC_ATTENTION_BACKEND_CHOICES, RADIX_SUPPORTED_DETERMINISTIC_ATTENTION_BACKEND), sampling/sampling_batch_info.py, layers/sampler.py, and python/sglang/test/test_deterministic.py at v0.5.22; capture/out/serve-help.txt; issues #43055, #43413, #36174, #31261, and #39597; Thinking Machines, Defeating Nondeterminism in LLM Inference (2025-09).
+Sources: capture/gpu/out-gb10/determinism.txt, deterministic-determinism.txt, server-deterministic.log, bench-random-c8.txt, deterministic-bench-random-c8.txt, capture/gpu/out-l4/determinism.txt, deterministic-determinism.txt, capture/gpu/determinism_probe.py, python/sglang/srt/batch_invariant_ops/batch_invariant_ops.py (enable_batch_invariant_mode), arg_groups/attention_hook.py (handle_deterministic_inference), arg_groups/choices.py (DETERMINISTIC_ATTENTION_BACKEND_CHOICES, RADIX_SUPPORTED_DETERMINISTIC_ATTENTION_BACKEND), sampling/sampling_batch_info.py, layers/sampler.py, and python/sglang/test/test_deterministic.py at v0.5.22; capture/out/serve-help.txt; issues #43055, #43413, #36174, #31261, and #39597; Thinking Machines, Defeating Nondeterminism in LLM Inference (2025-09).

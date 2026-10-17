@@ -1,0 +1,12 @@
+# sglang serve --tp-size 2 on two L4s while two other pods held 3.5 GB of GPU1
+# nvidia-smi --query-gpu=index,memory.used,utilization.gpu, 2026-10-17, read minutes before the start
+0, 0 MiB, 0 %
+1, 3506 MiB, 55 %
+# GPU1 compute apps: two pods running python3 "CUDA vGPU Slice Diagnostics", 1746 MiB each
+
+# runs/l4/load/tp2/server.log, lines after the NCCL version
+[2026-10-17 05:22:01 TP0] sglang is using nccl==2.30.7
+[2026-10-17 05:22:03 TP0] Scheduler hit an exception: Traceback (most recent call last):
+    raise RuntimeError(msg)
+RuntimeError: The memory capacity is unbalanced. Some GPUs may be occupied by other processes. pre_model_load_memory=18.28375244140625, local_gpu_memory=21.70391845703125, local_gpu_memory * 0.9=19.533526611328124
+[2026-10-17 05:22:03] Received sigquit from a child process. It usually means the child failed.

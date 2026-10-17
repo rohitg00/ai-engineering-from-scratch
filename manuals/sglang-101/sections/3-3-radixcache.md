@@ -49,6 +49,52 @@ claim: The radix cache cut the shared-prefix benchmark from 129.7 to 48.8 second
 caption: Read each pair of bars left to right. Both runs used the same 64 prompts on the same Mac. From capture/out/bench-shared-prefix.txt and capture/out/no-radix-cache-bench-shared-prefix.txt.
 ```
 
+## The same test on a 24 GB L4
+
+A Mac makes every prefill slow, so we repeated the test on an NVIDIA L4 with `Qwen/Qwen3-8B`. This time we changed the length of the shared system prompt from 0 to 4,096 tokens. Each run had four groups of 16 prompts, a 128-token question, 64 output tokens, and a cap of eight concurrent requests. We ran three seeds per length.
+
+```listing
+title: prefill on the L4 with the radix cache
+source: capture/gpu/out-l4/server-prefix-default.log
+lang: text
+note: Two lines from the run with a 2,048-token shared prompt. Timestamps are cut.
+---
+… Prefill batch, #new-seq: 3, #new-token: 405, #cached-token: 12952, token usage: 0.58, #running-req: 1, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 1452.28
+… Prefill batch, #new-seq: 4, #new-token: 546, #cached-token: 17269, token usage: 0.58, #running-req: 4, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 2532.09
+```
+
+```listing
+title: prefill on the L4 without the radix cache
+source: capture/gpu/out-l4/server-prefix-no-radix-cache.log
+lang: text
+note: Two lines from the run with a 4,096-token shared prompt. Timestamps are cut.
+---
+… Prefill batch, #new-seq: 2, #new-token: 4096, #cached-token: 0, token usage: 0.68, #running-req: 1, #queue-req: 0, #pending-token: 5527, cuda graph: True, input throughput (token/s): 1632.42
+… Prefill batch, #new-seq: 2, #new-token: 4096, #cached-token: 0, token usage: 0.74, #running-req: 2, #queue-req: 0, #pending-token: 1431, cuda graph: True, input throughput (token/s): 1634.70
+```
+
+The L4 prefills about 1,600 tokens per second. Each 4,096-token batch costs about 2.5 seconds, and without the tree every request pays for its full prompt.
+
+```figure
+id: fig-3-3c
+kind: chart
+title: The longer the shared prompt, the more the tree saves
+claim: With a 4,096-token shared prompt on the L4, the radix cache cut the median TTFT from 14,706 to 479 ms.
+caption: Median TTFT against the shared prompt length, three seeds per point, on a log scale. Green is the default and rose is --disable-radix-cache. From capture/gpu/summary/l4.json.
+```
+
+| Shared prompt | Median TTFT, cache on | Median TTFT, cache off | Output tok/s, cache on | Output tok/s, cache off |
+|---|---|---|---|---|
+| 0 | 349 ms | 379 ms | 113.56 | 113.33 |
+| 1,024 | 462 ms | 2,202 ms | 105.76 | 70.15 |
+| 4,096 | 479 ms | 14,706 ms | 88.87 | 20.80 |
+
+**We measured** a 30.7 times shorter median wait and 4.3 times the throughput at 4,096 shared tokens. With no shared prompt, the median TTFT differed by 9 percent and the throughput was the same, so the tree cost almost nothing. The card was hot during the longest run without the cache, with a thermal throttle flag in 62 percent of its samples. That run would be a little faster on a cool card, but not 30 times faster.
+
+The same sweep on the GB10 with `Qwen/Qwen3-30B-A3B-Instruct-2507` gave a smaller factor. At 4,096 shared tokens, the median TTFT was 589 ms with the tree and 5,208 ms without it, 8.8 times. The output rate was 120.66 against 49.73 tok/s. The server without the tree ran a day after the other one.
+
+Our reading is that prefill was cheaper on the GB10. That model activates about 3 billion parameters per token, so each repeated prompt cost less to compute again. The tree saves the prefill that the workload repeats, and a model with cheap prefill has less of it to save.
+
 ## The tree
 
 **RadixCache:** a radix tree over token sequences, whose nodes hold the KV slot indices of the tokens on their edges. The design comes from the SGLang paper, which calls the mechanism RadixAttention {{paper}}. A radix tree stores runs of tokens on its edges, so one node can hold a whole system prompt.
@@ -105,10 +151,11 @@ Field reports put the folklore in proportion. vLLM also reuses prefixes, so engi
 
 ```takeaways
 - Leave the radix cache on, and turn it off only to isolate a KV bug.
+- Expect the gain to grow with the length of the shared prompt.
 - Read #cached-token and #new-token in prefill lines to prove a hit.
 - Expect the last prompt token to prefill, even on a full hit.
 - Choose lpm only for offline batches with shared prefixes and short queues.
 - Measure the hit rate again after you add speculative decoding.
 ```
 
-Sources: python/sglang/srt/mem_cache/radix_cache.py (TreeNode, match_prefix, insert, evict, inc_lock_ref), python/sglang/srt/mem_cache/unified_radix_cache.py, python/sglang/srt/mem_cache/unified_cache/tree_core_registry.py, python/sglang/srt/mem_cache/registry.py, python/sglang/srt/managers/schedule_batch.py (_compute_max_prefix_len), python/sglang/srt/managers/schedule_policy.py, python/sglang/srt/arg_groups/fields/schedule.py at v0.5.22, capture/out/bench-shared-prefix.txt, capture/out/no-radix-cache-bench-shared-prefix.txt, capture/out/server-default.log, capture/out/server-no-radix-cache.log, capture/out/cache-experiment.txt, the SGLang paper (arXiv 2312.07104), issues #32459 and #43201, the RunPod report of 2025-06-15, the Varad More benchmark of 2026-04-22.
+Sources: python/sglang/srt/mem_cache/radix_cache.py (TreeNode, match_prefix, insert, evict, inc_lock_ref), python/sglang/srt/mem_cache/unified_radix_cache.py, python/sglang/srt/mem_cache/unified_cache/tree_core_registry.py, python/sglang/srt/mem_cache/registry.py, python/sglang/srt/managers/schedule_batch.py (_compute_max_prefix_len), python/sglang/srt/managers/schedule_policy.py, python/sglang/srt/arg_groups/fields/schedule.py at v0.5.22, capture/out/bench-shared-prefix.txt, capture/out/no-radix-cache-bench-shared-prefix.txt, capture/out/server-default.log, capture/out/server-no-radix-cache.log, capture/out/cache-experiment.txt, the SGLang paper (arXiv 2312.07104), issues #32459 and #43201, the RunPod report of 2025-06-15, the Varad More benchmark of 2026-04-22. capture/gpu/out-l4/server-prefix-default.log, capture/gpu/out-l4/server-prefix-no-radix-cache.log, capture/gpu/summary/l4.json. capture/gpu/summary/gb10.json.

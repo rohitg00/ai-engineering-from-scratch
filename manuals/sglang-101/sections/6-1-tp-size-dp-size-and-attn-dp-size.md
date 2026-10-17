@@ -97,13 +97,69 @@ Before you add GPUs, measure one copy with the benchmark in [section 5.1](#s-sgl
 
 For attention data parallelism, watch `sglang:dp_attention_token_imbalance_ratio`. It reports the busiest group's tokens over the average, and 1.0 means balanced. Our `/metrics` capture lists it even on a single Mac, so your dashboards can include it before you need it.
 
+## What happened on two L4s
+
+We had two NVIDIA L4 cards in one machine, and the second card also ran two small pods for another team. Each pod held 1,746 MiB. We started `Qwen/Qwen3-8B` with `--tp-size 2`, and the server stopped two seconds after NCCL started.
+
+```listing
+title: tensor parallelism refuses an unevenly loaded pair
+source: capture/gpu/incidents/l4-tp-unbalanced-memory.txt
+lang: text
+note: The scheduler exception from the server log, with the other lines cut.
+---
+RuntimeError: The memory capacity is unbalanced. Some GPUs may be occupied by other processes. pre_model_load_memory=18.28375244140625, local_gpu_memory=21.70391845703125, local_gpu_memory * 0.9=19.533526611328124
+```
+
+Before it loads weights, each rank measures its free memory, and the group keeps the smallest value. If that value is less than 90 percent of the local free memory, the server stops {{code}}. The second card had 18.28 GB free against the 19.53 GB that the check required. No flag turns the check off at v0.5.22.
+
+The check is right to stop. Each rank of a TP group holds the same share of weights and the same pool. The smallest card sets the size for all of them. On a shared machine, give a TP group whole GPUs. `--dp-size 2` does not have this check, because each copy sizes its own pool, so it started on the same pair.
+
+## Data parallelism on the same pair lost
+
+We expected two copies to serve about twice as much as one. They served less than one. We ran the closed-loop sweep of [section 4.3](#s-quantization) with three seeds per point. Each request had 512 input tokens and 128 output tokens. The first run used one L4, and the second used `--dp-size 2` on both.
+
+```listing
+title: two copies, two very different pools
+source: capture/gpu/out-l4/server-dp2.log
+lang: text
+note: Startup lines and four decode lines from the c64 run of seed 1. Timestamps are cut.
+---
+… DP0] Load weight end. elapsed=3.61 s, type=Qwen3ForCausalLM, avail mem=6.59 GB, mem usage=15.28 GB.
+… DP1] Load weight end. elapsed=3.73 s, type=Qwen3ForCausalLM, avail mem=3.17 GB, mem usage=15.28 GB.
+… DP0] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 24094, K size: 1.65 GB, V size: 1.65 GB
+… DP1] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 2925, K size: 0.20 GB, V size: 0.20 GB
+… DP1] Decode batch, #running-req: 4, #token: 2385, token usage: 0.82, cuda graph: True, gen throughput (token/s): 25.48, #queue-req: 59
+… DP0] Decode batch, #running-req: 1, #token: 590, token usage: 0.02, cuda graph: True, gen throughput (token/s): 9.67, #queue-req: 0
+… DP1] Decode batch, #running-req: 4, #token: 2545, token usage: 0.87, cuda graph: True, gen throughput (token/s): 25.79, #queue-req: 59
+… DP0] Decode batch, #running-req: 3, #token: 1665, token usage: 0.07, cuda graph: True, gen throughput (token/s): 9.49, #queue-req: 0
+```
+
+The second card had 3.17 GB free after the weights, against 6.59 GB on the first, because the two pods held the rest. **We measured** a pool of 2,925 tokens on that copy, an eighth of the first. Four requests of 640 tokens fill it.
+
+The controller still sent every second request to that copy, because `round_robin` does not look at pools or queues. The benchmark keeps 64 requests open at a time. At concurrency 64, 63 of them sat on the small copy, 4 running and 59 waiting. The large copy had one to three requests and used 2 to 7 percent of its pool. The client could not send it more work until the small copy gave a slot back.
+
+```figure
+id: fig-6-1c
+kind: chart
+title: Two copies of the model served less than one
+claim: One L4 reached 270 tokens per second, and the shared pair with --dp-size 2 peaked at 64 and fell to 42.
+caption: Output throughput against max concurrency, three seeds per point. Plum is one L4 and rose is --dp-size 2 on two L4s with the shared second card. From capture/gpu/summary/l4.json.
+```
+
+**We measured** the cost at the tail too. At concurrency 64, the median p99 TTFT of three seeds was 33.4 seconds on one L4 and 391 seconds with two copies. Up to concurrency 4, the two copies were 16 to 41 percent slower, because neither pool was full yet. The loss starts when the small pool fills.
+
+The open-loop sweep of [section 5.1](#s-sglang-benchmark-serving) agreed. With requests arriving at a fixed rate, two copies completed at most 0.21 requests per second inside our latency target. One L4 alone completed 0.96.
+
+Two settings would help here, and we have not measured them yet. `--load-balance-method total_tokens` sends each request to the copy that holds the fewest tokens. Two separate servers behind the gateway in [section 6.4](#s-sgl-model-gateway) can each get a weight. The plain lesson is simpler. Data parallelism adds capacity only when every copy has about the same pool. Check the `#tokens` line of each `DP` rank before you trust the sum.
+
 ```takeaways
 - Set --tp-size to the smallest number of GPUs that fits the model and its KV cache.
 - Add capacity with --dp-size copies or with separate servers behind the gateway.
 - Use --attn-dp-size equal to --tp-size for MLA mixture-of-experts models only.
+- Check the #tokens line of every DP rank before you count on --dp-size.
 - Rewrite old recipes from --dp-size N --enable-dp-attention to --attn-dp-size N.
 - Recheck your chunked prefill size after you enable attention data parallelism.
 - Send requests to node 0 and keep each TP group inside one machine.
 ```
 
-Sources: python/sglang/srt/distributed/parallel_state.py (initialize_model_parallel), python/sglang/srt/arg_groups/fields/parallel.py, python/sglang/srt/arg_groups/parallel_hook.py (handle_deprecated_dp_attention, handle_data_parallelism), python/sglang/srt/server_args.py, python/sglang/srt/entrypoints/engine.py, and python/sglang/srt/managers/data_parallel_controller.py, all at v0.5.22. capture/out/metrics.txt. Pull request #41818, issue #19953. LMSYS, "SGLang v0.4", 2024-12-04. Luca Lowndes, "SGLang optimisations", 2025-11-07. Ant Group on the LMSYS blog, 2025-09-26.
+Sources: python/sglang/srt/distributed/parallel_state.py (initialize_model_parallel), python/sglang/srt/distributed/bootstrap.py (_check_tp_memory_balance), capture/gpu/incidents/l4-tp-unbalanced-memory.txt, capture/gpu/out-l4/server-dp2.log, capture/gpu/summary/l4.json, python/sglang/srt/arg_groups/fields/parallel.py, python/sglang/srt/arg_groups/parallel_hook.py (handle_deprecated_dp_attention, handle_data_parallelism), python/sglang/srt/server_args.py, python/sglang/srt/entrypoints/engine.py, and python/sglang/srt/managers/data_parallel_controller.py, all at v0.5.22. capture/out/metrics.txt. Pull request #41818, issue #19953. LMSYS, "SGLang v0.4", 2024-12-04. Luca Lowndes, "SGLang optimisations", 2025-11-07. Ant Group on the LMSYS blog, 2025-09-26.

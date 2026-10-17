@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-5-1f-title fig-5-1f-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-1f-title">The same server on the same L4, measured hot and measured with a cool-down</title>
+  <desc id="fig-5-1f-desc">Output throughput of Qwen3-8B on one NVIDIA L4 against concurrency, in two sweeps with the same command. The first sweep ran with the card near 87 C and no telemetry. The second waited for 72 C before each run and recorded the clock. The cooled sweep is higher at every point, by up to 39 percent at concurrency 32, and it falls at 64 when the KV pool is full.</desc>
+  <line x1="66" y1="286" x2="606" y2="286" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="290" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="66" y1="209.33" x2="606" y2="209.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="213.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="66" y1="132.67" x2="606" y2="132.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="136.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="66" y1="56" x2="606" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="60" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="66" y1="286" x2="606" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="56" x2="66" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="286" x2="66" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="66" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="156" y1="286" x2="156" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="156" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="246" y1="286" x2="246" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="246" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="336" y1="286" x2="336" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="336" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="426" y1="286" x2="426" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="426" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16</text>
+  <line x1="516" y1="286" x2="516" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="516" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">32</text>
+  <line x1="606" y1="286" x2="606" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">64</text>
+  <text x="336" y="320" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">max concurrency (benchmark client)</text>
+  <text x="66" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">output tokens per second</text>
+  <path d="M66.0 275.6 L156.0 262.1 L246.0 238.8 L336.0 199.6 L426.0 131.4 L516.0 77.2 L606.0 92.1 L606.0 93.7 L516.0 79.1 L426.0 131.9 L336.0 199.8 L246.0 241.3 L156.0 262.1 L66.0 275.7 Z" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.14" stroke="none"/>
+  <path d="M66.0 275.7 L156.0 262.1 L246.0 238.8 L336.0 199.7 L426.0 131.8 L516.0 78.9 L606.0 93.7" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="66" cy="275.71" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="156" cy="262.08" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="246" cy="238.82" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="336" cy="199.66" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="426" cy="131.83" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="516" cy="78.92" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="606" cy="93.68" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <path d="M66.0 274.6 L156.0 265.5 L246.0 240.5 L336.0 213.6 L426.0 161.1 L516.0 136.0 L606.0 132.4 L606.0 133.5 L516.0 137.8 L426.0 165.3 L336.0 215.2 L246.0 243.2 L156.0 267.1 L66.0 278.3 Z" fill="var(--m-rose-ink, #b0344d)" fill-opacity="0.14" stroke="none"/>
+  <path d="M66.0 278.2 L156.0 266.7 L246.0 242.0 L336.0 214.3 L426.0 164.0 L516.0 137.1 L606.0 133.0" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="66" cy="278.25" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="156" cy="266.74" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="246" cy="241.97" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="336" cy="214.26" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="426" cy="164" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="516" cy="137.14" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="606" cy="133.03" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="516" y="66.92" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-blue-ink, #2f5d9a)">270</text>
+  <text x="516" y="157.14" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-rose-ink, #b0344d)">194</text>
+  <path d="M66 18 H84" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="90" y="22" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">cool-down to 72 C, clock recorded</text>
+  <path d="M325.79999999999995 18 H343.79999999999995" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="349.8" y="22" font-size="11" fill="var(--m-rose-ink, #b0344d)">hot, no telemetry</text>
+</svg>

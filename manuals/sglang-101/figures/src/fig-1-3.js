@@ -30,6 +30,7 @@ module.exports = figure('fig-1-3', {
   ];
   rows.forEach(([from, to, style, label, note], index) => {
     const y = 74 + index * 48;
+    f.beat(index + 1);
     f.step(16, y, index + 1);
     const x1 = lanes[from].x;
     if (from === to) {

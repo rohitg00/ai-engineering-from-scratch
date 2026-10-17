@@ -44,13 +44,31 @@ Measure three things on your own schemas. First, the time to first token for the
 
 A field report by Varad More {{field Varad More 2026-04}} measured structured generation on one A10G across 16 models from 2B to 9B. On 14 of the 16, vLLM was faster. The report does not separate compile time from per-token cost, so read it as a reason to measure, not as a verdict.
 
+## What we measured on a GB10
+
+We ran a small probe against `Qwen/Qwen3-30B-A3B-Instruct-2507` on one NVIDIA GB10, with the default `xgrammar` backend. The probe asks "Describe one GPU for a model server as a JSON object." five times, one request at a time. The schema has four required fields, an integer `memory_gb` from 1 to 1024, an `enum` for the vendor, and no extra properties.
+
+| Request | Constraint | Latency | Completion tokens | Valid |
+|---|---|---|---|---|
+| 1 | none | 3,943.9 ms | 128 | no schema |
+| 2 | a new schema | 1,636.6 ms | 41 | yes |
+| 3 | the same schema | 1,309.2 ms | 41 | yes |
+| 4 | the same schema | 1,310.9 ms | 41 | yes |
+| 5 | a second new schema | 1,291.1 ms | 41 | yes |
+
+**We measured** one run, so read the table as a direction. Every constrained reply was valid JSON with exactly the four fields. The unconstrained reply ran to the 128-token limit and invented its own keys, such as `gpu_id` and `power_consumption`.
+
+The first constrained request cost about 330 ms more than the repeats. The second new schema showed no such cost. Our reading is that the first cost belongs to the first grammar after startup. The compile of one small schema was too short to see next to a decode of 41 tokens.
+
+The schema fixed the shape and not the facts. The constrained replies named an "NVIDIA A100" with 40 GB, and the unconstrained one gave it "80 GB GDDR6". A grammar checks syntax, and your validator still checks meaning.
+
 ## Our position
 
 Constrain every response that a program parses. A mask is cheaper than a retry.
 
 Do not trust the grammar backend to enforce every JSON Schema keyword. Test each keyword your consumer depends on, such as `minLength`, `pattern`, `minimum`, and `enum`, with a request that tries to break it. Keep a cheap validator behind the server for the fields that matter.
 
-Send a few requests with each common schema after every deploy, so the first user request does not pay the compile time.
+Send a few requests with each common schema after every deploy, so the first user request does not pay the compile time. On the GB10 that first request paid about 330 ms.
 
 ## Incidents
 
@@ -65,4 +83,4 @@ Send a few requests with each common schema after every deploy, so the first use
 - Watch sglang:num_grammar_queue_reqs when you add new schemas under load.
 ```
 
-Sources: capture/out/serve-help.txt, python/sglang/srt/constrained/grammar_manager.py (process_req_with_grammar, get_ready_grammar_requests), constrained/base_grammar_backend.py, constrained/xgrammar_backend.py, model_executor/model_runner.py (_preprocess_logits), sampling/sampling_params.py, arg_groups/serving_hook.py (handle_grammar_backend), arg_groups/choices.py (GRAMMAR_BACKEND_CHOICES), and observability/metrics_collector.py at v0.5.22; SGLang paper (arXiv 2312.07104); issues #37707 and #38863; field report by Varad More (2026-04-22).
+Sources: capture/out/serve-help.txt, capture/gpu/out-gb10/structured.txt, capture/gpu/structured_probe.py, python/sglang/srt/constrained/grammar_manager.py (process_req_with_grammar, get_ready_grammar_requests), constrained/base_grammar_backend.py, constrained/xgrammar_backend.py, model_executor/model_runner.py (_preprocess_logits), sampling/sampling_params.py, arg_groups/serving_hook.py (handle_grammar_backend), arg_groups/choices.py (GRAMMAR_BACKEND_CHOICES), and observability/metrics_collector.py at v0.5.22; SGLang paper (arXiv 2312.07104); issues #37707 and #38863; field report by Varad More (2026-04-22).

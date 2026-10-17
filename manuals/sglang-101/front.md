@@ -34,11 +34,11 @@ Facts come from seven sources, ranked by authority. When two of them disagree, t
 | Rank | Source | What the manual takes from it | Cited as |
 |---|---|---|---|
 | 1 | the SGLang source at the tag, `baa9befa` | every default and every mechanism | the file list in the Sources line of each section |
-| 2 | the captured runs in `capture/out/` | every listing and every number marked as measured | the capture file name |
+| 2 | the captured runs in `capture/out/` and `capture/gpu/` | every listing and every number marked as measured | the capture file name |
 | 3 | SGLang issues and pull requests | incidents and the design history of each feature | `issue` and its number |
 | 4 | papers | the original design of RadixAttention and the methods SGLang implements | `paper` and a title |
 | 5 | the SGLang documentation at the tag | documented behaviour, checked against the code | `docs` and a heading |
-| 6 | independent field reports | GPU behaviour that this manual could not run | `field`, the author, and the month |
+| 6 | independent field reports | GPU setups that we could not run, such as many GPUs in one server | `field`, the author, and the month |
 | 7 | SGLang team and vendor reports | claims, always labeled as the claim of the author | `team` or the vendor, and the month |
 
 The documentation ranks below the code on purpose. At 0.5.22 the documentation still lists two attention backends that the code removed. It also gives other HiCache prefetch timeouts than the code uses. When we say the default, we mean the value the code sets.
@@ -47,7 +47,7 @@ The documentation ranks below the code on purpose. At 0.5.22 the documentation s
 
 Every number in this manual carries one of four labels in the text.
 
-**We measured:** the number comes from `capture/out/`, recorded on the machine in the next table. You can run the kit and get the same facts.
+**We measured:** the number comes from `capture/out/` or `capture/gpu/`, recorded on the machines in the tables below. You can run the kit and get the same facts.
 
 **The code:** the default or the mechanism comes from the SGLang source at the tag. The Sources line names the files.
 
@@ -55,7 +55,7 @@ Every number in this manual carries one of four labels in the text.
 
 **The team reports** or **the vendor reports:** the SGLang team, RadixArk, or a hardware vendor published the number. We repeat it as their claim and set it against independent results where they exist.
 
-GPU features such as CUDA graphs at scale, DeepEP, and prefill-decode disaggregation need hardware that the capture machine does not have. For those sections, the code and the field reports carry the argument, and the label says so.
+The GPU kit ran on one NVIDIA GB10. CUDA graphs, FP8, EAGLE-3, deterministic inference, and the cost of MoE decode on one GPU now carry the label we measured. DeepEP and prefill-decode disaggregation need many GPUs. For those sections, the code and the field reports carry the argument, and the label says so.
 
 ## The capture kit
 
@@ -75,6 +75,24 @@ The kit needs SGLang 0.5.22 with its MLX extra on Apple silicon, so it cannot ru
 | Recorded on | 2026-10-16 |
 
 The kit starts four servers. They are the default configuration, one without the radix cache, one without the overlap scheduler, and one with a 4,096-token pool. The server without the overlap scheduler crashed on its first real batch at 0.5.22, and the kit records that crash on purpose. [Section 2.4](#s-the-overlap-scheduler) reads it.
+
+## The GPU kit
+
+The GPU kit in `capture/gpu/` runs the same idea on an NVIDIA GPU. `capture/gpu/run.py` starts eight server configurations and writes `capture/gpu/out-gb10/`. `capture/gpu/sweep.py` repeats each benchmark point with three seeds and records the GPU clock and temperature of every run. `capture/gpu/summarize.py` writes `capture/gpu/summary/gb10.json`, and every chart in this manual reads that file.
+
+Every file in `capture/gpu/out-gb10/` and `capture/gpu/summary/gb10.json` was recorded on one machine:
+
+| Item | Value |
+|---|---|
+| Host | an NVIDIA DGX Spark, Ubuntu 24.04, aarch64 |
+| GPU | NVIDIA GB10, compute capability 12.1, 121.7 GiB of memory shared with the CPU |
+| SGLang | 0.5.22 from PyPI, sglang-kernel 0.4.9, flashinfer 0.7.1 |
+| Frameworks | PyTorch 2.14.1+cu130, CUDA 13.0, driver 580.159.03, Python 3.12.3 |
+| Models | `Qwen/Qwen3-30B-A3B-Instruct-2507`, its FP8 checkpoint, and the EAGLE-3 draft `lmsys/SGLang-EAGLE3-Qwen3-30B-A3B-Instruct-2507-SpecForge-Nex` |
+| Server flags | `--enable-cache-report`, `--enable-metrics`, `--mem-fraction-static 0.7` |
+| Recorded on | 2026-10-16 |
+
+The kit also has an `l4` profile for Qwen3-8B on an NVIDIA L4. Our first L4 sweep ran hot and throttled, and [section 5.1](#s-sglang-benchmark-serving) tells it as an incident. We then ran the L4 again with a cool-down to 72°C before each run. [Section 4.3](#s-quantization), [section 4.4](#s-speculative-decoding), and section 5.1 use those runs, and section 5.1 shows that the cooled card still lowered its clock under long load.
 
 ## Conventions
 
@@ -158,4 +176,4 @@ claim: Each arrow style marks one kind of exchange, and every label is a real na
 caption: Read each numbered row from the tail of the arrow to its head, and the note under each label names the style. From capture/out/cache-experiment.txt, server-default.log, and the out-of-memory run in section 3.2.
 ```
 
-Sources: manual.json; capture/README.md; capture/run.py; capture/out/environment.json, generate.txt, cache-experiment.txt, server-default.log, server-no-overlap.log; docs/docs/hardware-platforms/apple_metal.mdx and python/pyproject_other.toml at v0.5.22; python/sglang/srt/managers/io_struct.py at v0.5.22.
+Sources: manual.json; capture/README.md; capture/run.py; capture/gpu/run.py, capture/gpu/sweep.py, capture/gpu/summarize.py, capture/gpu/out-gb10/environment.json; capture/out/environment.json, generate.txt, cache-experiment.txt, server-default.log, server-no-overlap.log; docs/docs/hardware-platforms/apple_metal.mdx and python/pyproject_other.toml at v0.5.22; python/sglang/srt/managers/io_struct.py at v0.5.22.

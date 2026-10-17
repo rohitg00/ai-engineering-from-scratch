@@ -65,6 +65,32 @@ The SGLang docs say that TBO can "unlock up to 2x throughput" {{docs}}. The blog
 
 Ant Group turned TBO down on H20 {{field Ant-Group 2025-09}}. It helped only at batch sizes of 64 or 128, and at those sizes their time per output token missed its target. They used single-batch overlap instead, `--enable-single-batch-overlap`, which overlaps shared experts with the combine step. They measured 8 to 10 percent at batches of 20 to 56.
 
+## One GPU, one MoE model: the batch reads more experts
+
+On one GPU there is no dispatch across GPUs, so MoE looks cheap. We served Qwen3-30B-A3B on one NVIDIA GB10 and swept concurrency from 1 to 64. Its config has 48 layers, 128 experts in each MoE layer, and 8 active experts per token.
+
+| Concurrency | BF16 median TPOT | FP8 median TPOT |
+|---|---|---|
+| 1 | 32.52 ms | 18.41 ms |
+| 8 | 102.21 ms | 54.96 ms |
+| 64 | 254.06 ms | 131.78 ms |
+
+**We measured** this with three seeds per point. From 1 to 64 concurrent requests, the time per output token grows 7.8 times with BF16 and 7.2 times with FP8. In a dense model, one decode step reads each weight once for the whole batch. In an MoE model, the set of weights grows with the batch.
+
+```figure
+id: fig-6-2c
+kind: chart
+title: time per output token against concurrency for an MoE model on a GB10
+claim: The time per output token grows almost in step with the batch, because each extra request reads other experts.
+caption: Read each line from left to right. Plum is BF16, green is FP8, and the band is the lowest and highest of three seeds. Qwen3-30B-A3B, 512 tokens in, 128 out. From capture/gpu/summary/gb10.json.
+```
+
+The cause is the union of experts. At concurrency 1, each layer reads the weights of 8 experts in a decode step. At 64, 64 tokens each choose 8 of 128 experts. If routing were uniform, one step would read about 126 of the 128 experts in each layer.
+
+That is arithmetic, not a measurement, and real routing is less even. The name says the model activates about 3B parameters per token. A batch of 64 reads close to all 30B.
+
+**Our position:** on one box, plan an MoE model by the bytes a full batch reads, not by its active parameters. Quantize the experts first. FP8 cut the time per token to between 0.52 and 0.57 of BF16 at every concurrency we measured.
+
 ## Our position
 
 Leave `--deepep-mode` at `auto` in a server that does both prefill and decode. Choose `--ep-size` from the batch size that meets your latency target, not from the largest published run. Turn on EPLB only after `sglang:eplb_balancedness` shows imbalance. Treat TBO as a throughput feature for large decode batches, and measure it against your time per output token before you keep it.
@@ -93,6 +119,7 @@ caption: Read each column top to bottom. Numbers are decode tokens per second fo
 - Enable EPLB only after sglang:eplb_balancedness shows imbalance.
 - Measure two-batch overlap against time per output token before you keep it.
 - Lower chunked prefill per attention group when one MoE rank runs out of memory.
+- Size a one-box MoE server by the expert bytes a full batch reads.
 ```
 
-Sources: python/sglang/srt/arg_groups/fields/exec_.py, python/sglang/srt/arg_groups/overrides.py (_a2a_ep_size), python/sglang/srt/arg_groups/moe_hook.py, python/sglang/srt/eplb/eplb_manager.py, python/sglang/srt/batch_overlap/two_batch_overlap.py, python/sglang/srt/observability/metrics_collector.py, and docs/docs/advanced_features/expert_parallelism.mdx, all at v0.5.22. LMSYS, "Deploying DeepSeek with PD Disaggregation and Large-Scale Expert Parallelism on 96 H100 GPUs", 2025-05-05. Ant Group on the LMSYS blog, 2025-09-26. Crusoe, MLPerf Inference v6.1 results, 2026-09-16. Issue #9787.
+Sources: python/sglang/srt/arg_groups/fields/exec_.py, python/sglang/srt/arg_groups/overrides.py (_a2a_ep_size), python/sglang/srt/arg_groups/moe_hook.py, python/sglang/srt/eplb/eplb_manager.py, python/sglang/srt/batch_overlap/two_batch_overlap.py, python/sglang/srt/observability/metrics_collector.py, and docs/docs/advanced_features/expert_parallelism.mdx, all at v0.5.22. LMSYS, "Deploying DeepSeek with PD Disaggregation and Large-Scale Expert Parallelism on 96 H100 GPUs", 2025-05-05. Ant Group on the LMSYS blog, 2025-09-26. Crusoe, MLPerf Inference v6.1 results, 2026-09-16. Issue #9787. capture/gpu/summary/gb10.json, capture/gpu/sweep.py, and the config.json of Qwen/Qwen3-30B-A3B-Instruct-2507.
