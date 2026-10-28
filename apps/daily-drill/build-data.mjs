@@ -1,7 +1,9 @@
 // Builds data.js for the Daily Drill app from this repo's lessons.
 // Usage: node apps/daily-drill/build-data.mjs [--standalone] [repo-root]
 // Reads phases/*/*/docs/en.md, quiz.json and code/, plus learning-paths/*.json.
-// --standalone also writes dist/daily-drill.html: one file with the data inlined, for hosting as a gist.
+// --standalone also writes dist/daily-drill.html: one file with the data inlined.
+// --data-url=URL also writes dist/gist/{index.html,drill-data.json}: a small page that fetches the
+//   JSON from URL. Gist previewers truncate files over 1 MB, so gists need this split.
 import { readFileSync, readdirSync, existsSync, writeFileSync, statSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -12,6 +14,10 @@ const STANDALONE = ARGS.includes('--standalone');
 const REPO = ARGS.find((a) => !a.startsWith('--')) || join(HERE, '..', '..');
 const OUT = join(HERE, 'data.js');
 const STANDALONE_OUT = join(HERE, 'dist', 'daily-drill.html');
+const DATA_URL = (ARGS.find((a) => a.startsWith('--data-url=')) || '').slice('--data-url='.length);
+const GIST_DIR = join(HERE, 'dist', 'gist');
+const DATA_TAG = '<script src="data.js"></script>';
+const DOC_HEAD = '<!doctype html>\n<html lang="en">\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n';
 
 const WEB = 'https://aiengineeringfromscratch.com/lesson?path=';
 const GITHUB = 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/';
@@ -236,16 +242,28 @@ function main() {
   const quizzes = lessons.filter((l) => l.quiz.length).length;
   console.log(`${lessons.length} lessons, ${quizzes} with quizzes, ${phases.length} phases, ${paths.length} paths -> ${OUT}`);
   if (STANDALONE) writeStandalone(script);
+  if (DATA_URL) writeGist(data);
+}
+
+function readPage() {
+  const page = readFileSync(join(HERE, 'index.html'), 'utf8');
+  if (!page.includes(DATA_TAG)) throw new Error(`index.html no longer contains ${DATA_TAG}`);
+  return page;
 }
 
 function writeStandalone(script) {
-  const page = readFileSync(join(HERE, 'index.html'), 'utf8');
-  const tag = '<script src="data.js"></script>';
-  if (!page.includes(tag)) throw new Error(`index.html no longer contains ${tag}`);
-  const head = '<!doctype html>\n<html lang="en">\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n';
   mkdirSync(dirname(STANDALONE_OUT), { recursive: true });
-  writeFileSync(STANDALONE_OUT, head + page.replace(tag, () => `<script>${script}</script>`));
+  writeFileSync(STANDALONE_OUT, DOC_HEAD + readPage().replace(DATA_TAG, () => `<script>${script}</script>`));
   console.log(`standalone -> ${STANDALONE_OUT}`);
+}
+
+function writeGist(data) {
+  if (!/^https:\/\//.test(DATA_URL)) throw new Error('--data-url must be an https:// URL');
+  const meta = `<meta name="drill-data" content="${DATA_URL.replace(/"/g, '&quot;')}">`;
+  mkdirSync(GIST_DIR, { recursive: true });
+  writeFileSync(join(GIST_DIR, 'index.html'), DOC_HEAD + readPage().replace(DATA_TAG, () => meta));
+  writeFileSync(join(GIST_DIR, 'drill-data.json'), JSON.stringify(data));
+  console.log(`gist page + data -> ${GIST_DIR}`);
 }
 
 main();

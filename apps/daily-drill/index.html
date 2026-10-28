@@ -218,11 +218,26 @@ a.res:hover { border-color: var(--pencil); }
 
 <script src="data.js"></script>
 <script>
-(function () {
+(async function () {
   'use strict';
 
-  const D = window.DRILL_DATA;
   const sheetEl = document.getElementById('sheet');
+  // data.js sets DRILL_DATA; hosted builds instead name a JSON URL in <meta name="drill-data">.
+  async function loadData() {
+    if (window.DRILL_DATA) return window.DRILL_DATA;
+    const meta = document.querySelector('meta[name="drill-data"]');
+    if (!meta) return null;
+    sheetEl.textContent = 'Loading 542 lessons…';
+    try {
+      const res = await fetch(meta.content);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      sheetEl.textContent = `Could not load lesson data from ${meta.content} (${err.message}). Reload to try again.`;
+      throw err;
+    }
+  }
+  const D = await loadData();
   if (!D) {
     sheetEl.textContent = 'data.js did not load. Run "node build-data.mjs" in this folder, then reload.';
     return;

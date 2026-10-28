@@ -25,7 +25,22 @@ Then open `apps/daily-drill/index.html` in a browser. It has no dependencies and
 node apps/daily-drill/build-data.mjs --standalone  # also writes apps/daily-drill/dist/daily-drill.html
 ```
 
-`dist/daily-drill.html` has the data inlined (about 2.5 MB), so you can host it anywhere that serves one file, including a GitHub gist viewed through a gist HTML previewer.
+`dist/daily-drill.html` has the data inlined (about 2.5 MB), so you can host it anywhere that serves one file.
+
+## Hosting on gists
+
+gistpreview.github.io reads files through the gist API, which truncates every file in a gist once the total passes 1 MB. So the page and the data go in two gists:
+
+```bash
+gh gist create --public dist/gist/drill-data.json         # 1. data gist; note its id
+node apps/daily-drill/build-data.mjs \
+  --data-url=https://gist.githubusercontent.com/<user>/<data-id>/raw/drill-data.json
+gh gist create --public apps/daily-drill/dist/gist/index.html   # 2. page gist (index.html only)
+```
+
+Open `https://gistpreview.github.io/?<page-id>`. When the lessons change, rebuild and run `gh gist edit <data-id> -a dist/gist/drill-data.json`. The raw URL always serves the latest revision, so the page gist only needs updating when `index.html` changes.
+
+Live: https://gistpreview.github.io/?792f17bd621d46b41fe26fa7af4004e4
 
 ## Notes
 
