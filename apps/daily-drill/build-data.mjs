@@ -1,10 +1,9 @@
 // Builds data.js for the Daily Drill app from this repo's lessons.
-// Usage: node apps/daily-drill/build-data.mjs [--standalone] [repo-root]
+// Usage: node apps/daily-drill/build-data.mjs [--standalone] [--pages] [--data-url=URL] [repo-root]
 // Reads phases/*/*/docs/en.md, quiz.json and code/, plus learning-paths/*.json.
 // --standalone also writes dist/daily-drill.html: one file with the data inlined.
 // --pages also writes dist/pages/{index.html,data.js,.nojekyll} for a GitHub Pages branch.
-// --data-url=URL also writes dist/gist/{index.html,drill-data.json}: a small page that fetches the
-//   JSON from URL. Gist previewers truncate files over 1 MB, so gists need this split.
+// --data-url=URL also writes dist/gist/{index.html,drill-data.json}, a page that fetches its JSON from URL.
 import { readFileSync, readdirSync, existsSync, writeFileSync, statSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -28,7 +27,6 @@ const MAX_TERMS = 6;
 const MAX_READING = 5;
 const MAX_BRIEF = 360;
 
-// Phase number -> book volume, from "About This Volume" in each PDF.
 const VOLUMES = [
   { n: 1, file: 'aiefs-vol1-foundations.pdf', title: 'Foundations', phases: [0, 1, 2] },
   { n: 2, file: 'aiefs-vol2-deep-learning.pdf', title: 'Deep Learning', phases: [3, 4, 6] },
@@ -56,7 +54,6 @@ function slugTitle(slug) {
     .join(' ');
 }
 
-// Strip inline markdown so text renders as plain prose.
 function plain(s) {
   return s
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
@@ -86,7 +83,6 @@ function field(md, name) {
   return m ? plain(m[1]) : '';
 }
 
-// Split a Markdown table row on its delimiters. "\|" and pipes inside `code spans` stay in the cell.
 function splitRow(line) {
   const cells = [];
   let cell = '';
@@ -141,7 +137,6 @@ function readQuiz(dir) {
   const file = join(dir, 'quiz.json');
   if (!existsSync(file)) return [];
   try {
-    // Most files are {questions: [...]}; older ones are a bare array.
     const raw = JSON.parse(readFileSync(file, 'utf8'));
     const qs = Array.isArray(raw) ? raw : raw.questions || [];
     return qs.filter(validQuiz).map((q) => ({
@@ -157,7 +152,6 @@ function readQuiz(dir) {
   }
 }
 
-// First prose paragraph of "The Problem", trimmed to a sentence boundary.
 function problemBrief(md) {
   const para = section(md, 'The Problem')
     .split(/\n\s*\n/)
@@ -259,7 +253,6 @@ function main() {
     paths,
     lessons,
   };
-  // Escape "<" so lesson text containing "</script>" cannot end an inline script early.
   const script = `window.DRILL_DATA = ${JSON.stringify(data).replace(/</g, '\\u003c')};\n`;
   writeFileSync(OUT, script);
   const quizzes = lessons.filter((l) => l.quiz.length).length;

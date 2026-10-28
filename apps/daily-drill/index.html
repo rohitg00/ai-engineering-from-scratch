@@ -61,7 +61,6 @@ button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--pencil); outline-offset: 2px; }
 a { color: var(--pencil); text-underline-offset: 3px; }
 
-/* Title block */
 .titleblock { display: grid; grid-template-columns: 2.2fr repeat(4, minmax(0, 1fr)); border: 2px solid var(--ink); background: var(--sheet); }
 .titleblock > div { padding: 8px 12px; border-left: 1px solid var(--rule); min-width: 0; display: grid; gap: 2px; }
 .titleblock > div:first-child { border-left: 0; }
@@ -73,7 +72,6 @@ a { color: var(--pencil); text-underline-offset: 3px; }
 
 .layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
 
-/* The sheet */
 .sheet { background: var(--sheet); border: 1px solid var(--rule); box-shadow: 4px 4px 0 var(--grid); min-width: 0; }
 .sheet-head { padding: 22px 26px 18px; border-bottom: 1px solid var(--rule); display: grid; gap: 8px; }
 .meta { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
@@ -105,7 +103,6 @@ a { color: var(--pencil); text-underline-offset: 3px; }
 .term .means { font-size: 0.92rem; line-height: 1.4; }
 .term.is-open { border-style: solid; border-color: var(--pencil); background: var(--pencil-wash); }
 
-/* Buttons */
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--ink); background: var(--ink); color: var(--sheet); font: 700 var(--step-0)/1 var(--f-display); text-transform: uppercase; letter-spacing: 0.08em; transition: transform 0.08s; }
 .btn:hover { transform: translate(-1px, -1px); box-shadow: 2px 2px 0 var(--pencil); }
 .btn:active { transform: translate(1px, 1px); box-shadow: none; }
@@ -114,7 +111,6 @@ a { color: var(--pencil); text-underline-offset: 3px; }
 .btn kbd { font: 600 0.7rem/1 var(--f-mono); padding: 2px 4px; border: 1px solid currentColor; opacity: 0.7; }
 .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
-/* Drill */
 .q-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .timer { height: 6px; background: var(--grid); overflow: hidden; }
 .timer span { display: block; height: 100%; background: var(--pencil); transform-origin: left; animation: drain var(--secs, 20s) linear forwards; }
@@ -140,7 +136,6 @@ a { color: var(--pencil); text-underline-offset: 3px; }
 .tally i.bad { background: var(--bad); }
 .tally i.now { background: var(--pencil); }
 
-/* Resources */
 .res-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
 .res { display: grid; gap: 4px; padding: 14px; border: 1px solid var(--rule); background: var(--paper); text-decoration: none; color: var(--ink); align-content: start; }
 a.res:hover { border-color: var(--pencil); }
@@ -159,7 +154,6 @@ a.res:hover { border-color: var(--pencil); }
 .stats { display: flex; gap: 28px; flex-wrap: wrap; }
 .stats div { display: grid; gap: 2px; }
 
-/* Margin notes */
 .aside { display: grid; gap: 16px; }
 .note { background: var(--sheet); border: 1px solid var(--rule); padding: 14px 16px; display: grid; gap: 10px; }
 .note h3 { margin: 0; font: 700 var(--step-1)/1 var(--f-display); text-transform: uppercase; letter-spacing: 0.05em; }
@@ -222,7 +216,6 @@ a.res:hover { border-color: var(--pencil); }
   'use strict';
 
   const sheetEl = document.getElementById('sheet');
-  // data.js sets DRILL_DATA; hosted builds instead name a JSON URL in <meta name="drill-data">.
   async function loadData() {
     if (window.DRILL_DATA) return window.DRILL_DATA;
     const meta = document.querySelector('meta[name="drill-data"]');
@@ -244,7 +237,7 @@ a.res:hover { border-color: var(--pencil); }
   }
 
   const STORE_KEY = 'daily-drill-v1';
-  const REVIEW_INTERVALS = [1, 3, 7, 16];  // days until a missed question comes back, per box
+  const REVIEW_INTERVALS = [1, 3, 7, 16];
   const MAX_REVIEW = 5;
   const MAX_TERM_QUESTIONS = 4;
   const UPCOMING = 4;
@@ -265,7 +258,6 @@ a.res:hover { border-color: var(--pencil); }
   ];
   const TERM_POOL = D.lessons.flatMap((l) => l.terms.map((t) => t.means));
 
-  // ---------- utilities ----------
   function h(tag, attrs, ...kids) {
     const el = document.createElement(tag);
     for (const [k, v] of Object.entries(attrs || {})) {
@@ -305,7 +297,6 @@ a.res:hover { border-color: var(--pencil); }
     return out;
   }
 
-  // ---------- persistent state (this browser only) ----------
   const DEFAULTS = { track: 'course', done: {}, days: [], review: [], secs: 20, current: {} };
   function loadState() {
     try {
@@ -317,10 +308,9 @@ a.res:hover { border-color: var(--pencil); }
   let state = loadState();
   function setState(patch) {
     state = { ...state, ...patch };
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (err) { /* storage blocked: progress lasts this visit only */ }
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (err) {}
   }
 
-  // Read the date on every use so a tab left open past midnight records the new day.
   const today = () => dayKey();
   const track = () => TRACKS.find((t) => t.id === state.track) || TRACKS[0];
   function currentLesson() {
@@ -339,8 +329,6 @@ a.res:hover { border-color: var(--pencil); }
     return n;
   }
 
-  // ---------- questions ----------
-  // Lessons without a quiz.json get questions generated from their Key Terms table.
   function termQuestions(lesson) {
     const rand = rng(lesson.id);
     return lesson.terms.slice(0, MAX_TERM_QUESTIONS).map((term) => {
@@ -378,7 +366,6 @@ a.res:hover { border-color: var(--pencil); }
     }
   }
 
-  // ---------- session (this visit) ----------
   let session = null;
   let timerId = 0;
   function startSession(lesson) {
@@ -394,7 +381,6 @@ a.res:hover { border-color: var(--pencil); }
       finished: false,
     };
   }
-  // Due reviews stay reachable after a track is complete, when there is no lesson to attach them to.
   function startReviewOnly() {
     session = {
       lessonId: null,
@@ -407,7 +393,6 @@ a.res:hover { border-color: var(--pencil); }
     };
   }
 
-  // ---------- rendering ----------
   function render() {
     clearTimeout(timerId);
     renderTitleBlock();
@@ -644,7 +629,6 @@ a.res:hover { border-color: var(--pencil); }
         h('button', { class: 'btn', onclick: () => { startReviewOnly(); render(); } }, `Review ${due} due question${due === 1 ? '' : 's'}`, h('kbd', null, 'Enter'))))];
   }
 
-  // ---------- margin notes ----------
   function renderAside() {
     const aside = document.getElementById('aside');
     const t = track();
@@ -688,7 +672,6 @@ a.res:hover { border-color: var(--pencil); }
       renderSettings());
   }
 
-  // Skips the lesson on screen, never one the learner has not opened.
   function skip() {
     if (!session || !session.lessonId || session.finished) return;
     setState({ done: { ...state.done, [session.lessonId]: 'skipped' } });
@@ -718,7 +701,6 @@ a.res:hover { border-color: var(--pencil); }
       h('span', { class: 'foot' }, `Progress is saved in this browser only. Content built ${D.built} from the course repo.`));
   }
 
-  // ---------- keyboard ----------
   document.addEventListener('keydown', (e) => {
     if (e.target.closest('input, select, textarea') || e.metaKey || e.ctrlKey || e.altKey || !session) return;
     const mode = session.step === 'drill' || session.step === 'review' ? session.step : null;
