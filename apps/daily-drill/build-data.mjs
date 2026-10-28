@@ -122,7 +122,6 @@ function parseReading(md) {
       const link = raw.match(/\[([^\]]+)\]\((https?:[^)\s]+)\)/);
       const bare = raw.match(/\(?(https?:\/\/[^\s)]+)\)?/);
       const url = link ? link[2] : bare ? bare[1] : '';
-      // Turn [title](url) into its title before dropping bare URLs, or the brackets survive.
       const text = raw.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/\(?https?:\/\/[^\s)]+\)?/, '');
       const [what, why = ''] = plain(text).split(/\s+(?:--|—|–)\s+/);
       return { what: what.replace(/[\s,:]+$/, ''), why, url };
