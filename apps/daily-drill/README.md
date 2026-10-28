@@ -27,6 +27,16 @@ node apps/daily-drill/build-data.mjs --standalone  # also writes apps/daily-dril
 
 `dist/daily-drill.html` has the data inlined (about 2.5 MB), so you can host it anywhere that serves one file.
 
+## Hosting on GitHub Pages
+
+```bash
+node apps/daily-drill/build-data.mjs --pages      # writes dist/pages/{index.html,data.js,.nojekyll}
+```
+
+Commit the contents of `dist/pages/` as the only files on an orphan `gh-pages` branch and push it. Pushing a `gh-pages` branch turns Pages on with that branch as the source.
+
+Live: https://saintbr.github.io/ai-engineering-from-scratch/
+
 ## Hosting on gists
 
 gistpreview.github.io reads files through the gist API, which truncates every file in a gist once the total passes 1 MB. So the page and the data go in two gists:

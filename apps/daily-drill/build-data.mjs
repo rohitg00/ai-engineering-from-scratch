@@ -2,6 +2,7 @@
 // Usage: node apps/daily-drill/build-data.mjs [--standalone] [repo-root]
 // Reads phases/*/*/docs/en.md, quiz.json and code/, plus learning-paths/*.json.
 // --standalone also writes dist/daily-drill.html: one file with the data inlined.
+// --pages also writes dist/pages/{index.html,data.js,.nojekyll} for a GitHub Pages branch.
 // --data-url=URL also writes dist/gist/{index.html,drill-data.json}: a small page that fetches the
 //   JSON from URL. Gist previewers truncate files over 1 MB, so gists need this split.
 import { readFileSync, readdirSync, existsSync, writeFileSync, statSync, mkdirSync } from 'node:fs';
@@ -16,6 +17,8 @@ const OUT = join(HERE, 'data.js');
 const STANDALONE_OUT = join(HERE, 'dist', 'daily-drill.html');
 const DATA_URL = (ARGS.find((a) => a.startsWith('--data-url=')) || '').slice('--data-url='.length);
 const GIST_DIR = join(HERE, 'dist', 'gist');
+const PAGES = ARGS.includes('--pages');
+const PAGES_DIR = join(HERE, 'dist', 'pages');
 const DATA_TAG = '<script src="data.js"></script>';
 const DOC_HEAD = '<!doctype html>\n<html lang="en">\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n';
 
@@ -243,6 +246,15 @@ function main() {
   console.log(`${lessons.length} lessons, ${quizzes} with quizzes, ${phases.length} phases, ${paths.length} paths -> ${OUT}`);
   if (STANDALONE) writeStandalone(script);
   if (DATA_URL) writeGist(data);
+  if (PAGES) writePages(script);
+}
+
+function writePages(script) {
+  mkdirSync(PAGES_DIR, { recursive: true });
+  writeFileSync(join(PAGES_DIR, 'index.html'), DOC_HEAD + readPage());
+  writeFileSync(join(PAGES_DIR, 'data.js'), script);
+  writeFileSync(join(PAGES_DIR, '.nojekyll'), '');
+  console.log(`pages site -> ${PAGES_DIR}`);
 }
 
 function readPage() {
