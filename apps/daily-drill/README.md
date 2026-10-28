@@ -33,7 +33,7 @@ node apps/daily-drill/build-data.mjs --standalone  # also writes apps/daily-dril
 node apps/daily-drill/build-data.mjs --pages      # writes apps/daily-drill/dist/pages/{index.html,data.js,.nojekyll}
 ```
 
-Commit the contents of `apps/daily-drill/dist/pages/` as the only files on an orphan `gh-pages` branch and push it. Pushing a `gh-pages` branch turns Pages on with that branch as the source.
+Commit the contents of `apps/daily-drill/dist/pages/` as the only files on an orphan `gh-pages` branch and push it. Pushing a `gh-pages` branch usually turns Pages on with that branch as the source. If it doesn't, open Settings → Pages, choose **Deploy from a branch**, then select `gh-pages` and `/ (root)`.
 
 Live: https://saintbr.github.io/ai-engineering-from-scratch/
 

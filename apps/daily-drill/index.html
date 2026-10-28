@@ -698,6 +698,7 @@ a.res:hover { border-color: var(--pencil); }
 
   let resetArmed = false;
   function renderSettings() {
+    resetArmed = false;  // a fresh button always needs its own confirming second click
     const secs = h('select', { id: 'secs' }, [10, 20, 30, 0].map((n) => h('option', { value: String(n) }, n ? `${n} sec` : 'No timer')));
     secs.value = String(state.secs);
     secs.addEventListener('change', () => setState({ secs: Number(secs.value) }));
