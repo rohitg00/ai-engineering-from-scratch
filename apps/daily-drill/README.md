@@ -30,25 +30,28 @@ node apps/daily-drill/build-data.mjs --standalone  # also writes apps/daily-dril
 ## Hosting on GitHub Pages
 
 ```bash
-node apps/daily-drill/build-data.mjs --pages      # writes dist/pages/{index.html,data.js,.nojekyll}
+node apps/daily-drill/build-data.mjs --pages      # writes apps/daily-drill/dist/pages/{index.html,data.js,.nojekyll}
 ```
 
-Commit the contents of `dist/pages/` as the only files on an orphan `gh-pages` branch and push it. Pushing a `gh-pages` branch turns Pages on with that branch as the source.
+Commit the contents of `apps/daily-drill/dist/pages/` as the only files on an orphan `gh-pages` branch and push it. Pushing a `gh-pages` branch turns Pages on with that branch as the source.
 
 Live: https://saintbr.github.io/ai-engineering-from-scratch/
 
 ## Hosting on gists
 
-gistpreview.github.io reads files through the gist API, which truncates every file in a gist once the total passes 1 MB. So the page and the data go in two gists:
+gistpreview.github.io reads files through the gist API, which truncates every file in a gist once the total passes 1 MB. So the page and the data go in two gists. Run these from the repository root:
 
 ```bash
-gh gist create --public dist/gist/drill-data.json         # 1. data gist; note its id
+# 1. Build the JSON, then create the data gist and note its id.
+node apps/daily-drill/build-data.mjs --data-url=https://example.invalid/drill-data.json
+gh gist create --public apps/daily-drill/dist/gist/drill-data.json
+# 2. Rebuild the page against the data gist's raw URL, then create the page gist (index.html only).
 node apps/daily-drill/build-data.mjs \
   --data-url=https://gist.githubusercontent.com/<user>/<data-id>/raw/drill-data.json
-gh gist create --public apps/daily-drill/dist/gist/index.html   # 2. page gist (index.html only)
+gh gist create --public apps/daily-drill/dist/gist/index.html
 ```
 
-Open `https://gistpreview.github.io/?<page-id>`. When the lessons change, rebuild and run `gh gist edit <data-id> -a dist/gist/drill-data.json`. The raw URL always serves the latest revision, so the page gist only needs updating when `index.html` changes.
+Open `https://gistpreview.github.io/?<page-id>`. When the lessons change, rebuild with the same `--data-url` and run `gh gist edit <data-id> -a apps/daily-drill/dist/gist/drill-data.json`. The raw URL always serves the latest revision, so the page gist only needs updating when `index.html` changes.
 
 Live: https://gistpreview.github.io/?792f17bd621d46b41fe26fa7af4004e4
 

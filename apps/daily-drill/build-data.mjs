@@ -86,14 +86,33 @@ function field(md, name) {
   return m ? plain(m[1]) : '';
 }
 
+// Split a Markdown table row on its delimiters. "\|" and pipes inside `code spans` stay in the cell.
+function splitRow(line) {
+  const cells = [];
+  let cell = '';
+  let inCode = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '\\' && line[i + 1] === '|') { cell += '|'; i++; continue; }
+    if (ch === '`') inCode = !inCode;
+    if (ch === '|' && !inCode) { cells.push(cell); cell = ''; continue; }
+    cell += ch;
+  }
+  cells.push(cell);
+  return cells.slice(1, -1).map((c) => plain(c));
+}
+
 function parseTerms(md) {
-  return section(md, 'Key Terms')
+  const rows = section(md, 'Key Terms')
     .split('\n')
-    .filter((l) => l.startsWith('|') && !/^\|\s*-/.test(l))
+    .filter((l) => l.trim().startsWith('|') && !/^\s*\|\s*:?-/.test(l))
+    .map((l) => splitRow(l.trim()));
+  if (rows.length < 2) return [];
+  const width = rows[0].length;
+  return rows
     .slice(1)
-    .map((l) => l.split('|').slice(1, -1).map((c) => plain(c)))
-    .filter((cells) => cells.length >= 2 && cells[0])
-    .map((cells) => ({ term: cells[0], says: cells.length > 2 ? cells[1].replace(/^"|"$/g, '') : '', means: cells[cells.length - 1] }))
+    .filter((cells) => cells.length === width && width >= 2 && cells[0])
+    .map((cells) => ({ term: cells[0], says: width > 2 ? cells[1].replace(/^"|"$/g, '') : '', means: cells[width - 1] }))
     .slice(0, MAX_TERMS);
 }
 

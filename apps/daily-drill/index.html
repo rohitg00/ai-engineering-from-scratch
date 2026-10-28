@@ -320,7 +320,8 @@ a.res:hover { border-color: var(--pencil); }
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (err) { /* storage blocked: progress lasts this visit only */ }
   }
 
-  const today = dayKey();
+  // Read the date on every use so a tab left open past midnight records the new day.
+  const today = () => dayKey();
   const track = () => TRACKS.find((t) => t.id === state.track) || TRACKS[0];
   function currentLesson() {
     const t = track();
@@ -331,7 +332,8 @@ a.res:hover { border-color: var(--pencil); }
   }
   function streak() {
     const set = new Set(state.days);
-    let d = set.has(today) ? today : addDays(today, -1);
+    const now = today();
+    let d = set.has(now) ? now : addDays(now, -1);
     let n = 0;
     while (set.has(d)) { n++; d = addDays(d, -1); }
     return n;
@@ -358,19 +360,21 @@ a.res:hover { border-color: var(--pencil); }
   const questionsFor = (lesson) => (lesson.quiz.length ? lesson.quiz : termQuestions(lesson));
 
   function dueReviews(exceptId) {
+    const now = today();
     return state.review
-      .filter((r) => r.due <= today && r.id !== exceptId && byId.has(r.id) && questionsFor(byId.get(r.id))[r.qi])
+      .filter((r) => r.due <= now && r.id !== exceptId && byId.has(r.id) && questionsFor(byId.get(r.id))[r.qi])
       .slice(0, MAX_REVIEW)
       .map((r) => ({ lesson: byId.get(r.id), qi: r.qi, q: questionsFor(byId.get(r.id))[r.qi] }));
   }
   function recordAnswer(mode, item, correct) {
     const rest = state.review.filter((r) => !(r.id === item.lesson.id && r.qi === item.qi));
     const existing = state.review.find((r) => r.id === item.lesson.id && r.qi === item.qi);
+    const now = today();
     if (!correct) {
-      setState({ review: [...rest, { id: item.lesson.id, qi: item.qi, box: 0, due: addDays(today, REVIEW_INTERVALS[0]) }] });
+      setState({ review: [...rest, { id: item.lesson.id, qi: item.qi, box: 0, due: addDays(now, REVIEW_INTERVALS[0]) }] });
     } else if (mode === 'review' && existing) {
       const box = existing.box + 1;
-      setState({ review: box >= REVIEW_INTERVALS.length ? rest : [...rest, { ...existing, box, due: addDays(today, REVIEW_INTERVALS[box]) }] });
+      setState({ review: box >= REVIEW_INTERVALS.length ? rest : [...rest, { ...existing, box, due: addDays(now, REVIEW_INTERVALS[box]) }] });
     }
   }
 
@@ -390,12 +394,28 @@ a.res:hover { border-color: var(--pencil); }
       finished: false,
     };
   }
+  // Due reviews stay reachable after a track is complete, when there is no lesson to attach them to.
+  function startReviewOnly() {
+    session = {
+      lessonId: null,
+      reviewOnly: true,
+      step: 'review',
+      seen: new Set(['review']),
+      open: new Set(),
+      quizzes: { review: { items: dueReviews(null), i: 0, picks: [] } },
+      finished: false,
+    };
+  }
 
   // ---------- rendering ----------
   function render() {
     clearTimeout(timerId);
     renderTitleBlock();
     renderAside();
+    if (session && session.reviewOnly) {
+      sheetEl.replaceChildren(h('div', { class: 'stage' }, renderQuiz('review')));
+      return;
+    }
     const lesson = session && byId.get(session.lessonId);
     sheetEl.replaceChildren(...(lesson ? renderSheet(lesson) : renderTrackComplete()));
   }
@@ -404,7 +424,7 @@ a.res:hover { border-color: var(--pencil); }
     const t = track();
     const lesson = currentLesson();
     const pos = lesson ? t.lessons.indexOf(lesson.id) + 1 : t.lessons.length;
-    document.getElementById('tb-date').textContent = today;
+    document.getElementById('tb-date').textContent = today();
     document.getElementById('tb-sheet').textContent = `${String(pos).padStart(3, '0')} / ${t.lessons.length}`;
     const s = streak();
     document.getElementById('tb-streak').textContent = `${s} day${s === 1 ? '' : 's'}`;
@@ -445,7 +465,14 @@ a.res:hover { border-color: var(--pencil); }
     render();
     sheetEl.scrollIntoView({ block: 'start', behavior: 'smooth' });
   }
-  const nextStep = () => go(STEPS[STEPS.findIndex((s) => s.id === session.step) + 1].id);
+  function nextStep() {
+    if (session.reviewOnly) {
+      session = null;
+      render();
+      return;
+    }
+    go(STEPS[STEPS.findIndex((s) => s.id === session.step) + 1].id);
+  }
 
   function renderBrief(lesson) {
     const out = [];
@@ -584,9 +611,10 @@ a.res:hover { border-color: var(--pencil); }
   }
 
   function finish() {
+    const now = today();
     setState({
-      done: { ...state.done, [session.lessonId]: today },
-      days: state.days.includes(today) ? state.days : [...state.days, today],
+      done: { ...state.done, [session.lessonId]: now },
+      days: state.days.includes(now) ? state.days : [...state.days, now],
     });
     session.finished = true;
     render();
@@ -609,8 +637,11 @@ a.res:hover { border-color: var(--pencil); }
   }
 
   function renderTrackComplete() {
+    const due = dueReviews(null).length;
     return [h('div', { class: 'stage' }, h('h2', null, 'Track complete'),
-      h('p', { class: 'prose' }, `You finished every lesson in ${track().t}. Pick another track in the title block, or reset progress in Settings.`))];
+      h('p', { class: 'prose' }, `You finished every lesson in ${track().t}. Pick another track in the title block, or reset progress in Settings.`),
+      due > 0 && h('div', { class: 'row' },
+        h('button', { class: 'btn', onclick: () => { startReviewOnly(); render(); } }, `Review ${due} due question${due === 1 ? '' : 's'}`, h('kbd', null, 'Enter'))))];
   }
 
   // ---------- margin notes ----------
@@ -619,8 +650,9 @@ a.res:hover { border-color: var(--pencil); }
     const t = track();
     const lesson = currentLesson();
     const daySet = new Set(state.days);
-    const week = Array.from({ length: 14 }, (_, i) => addDays(today, i - 13));
-    const dueCount = state.review.filter((r) => r.due <= today).length;
+    const now = today();
+    const week = Array.from({ length: 14 }, (_, i) => addDays(now, i - 13));
+    const dueCount = state.review.filter((r) => r.due <= now).length;
 
     const phases = [...new Set(t.lessons.map((id) => byId.get(id).p))];
     const phaseMap = h('div', { class: 'phase-map' }, phases.map((p) => {
@@ -645,21 +677,21 @@ a.res:hover { border-color: var(--pencil); }
 
     aside.replaceChildren(
       h('section', { class: 'note' }, h('h3', null, 'Last 14 days'),
-        h('div', { class: 'week' }, week.map((d) => h('span', { class: `${daySet.has(d) ? 'on' : ''}${d === today ? ' today' : ''}`, title: d }, d.slice(8)))),
+        h('div', { class: 'week' }, week.map((d) => h('span', { class: `${daySet.has(d) ? 'on' : ''}${d === now ? ' today' : ''}`, title: d }, d.slice(8)))),
         h('span', { class: 'foot' }, `${dueCount} question${dueCount === 1 ? '' : 's'} due for review`)),
       h('section', { class: 'note' }, h('h3', null, 'Up next'),
         upcoming.length ? h('ol', { class: 'upnext' }, upcoming.map((l) => h('li', null, h('small', null, `P${String(l.p).padStart(2, '0')} · ${l.min ? `~${l.min} min` : l.ty}`), l.t))) : h('span', { class: 'foot' }, 'Nothing left after this one.'),
         h('label', { class: 'label', for: 'jump' }, 'Jump to a lesson'), jump,
         h('datalist', { id: listId }, t.lessons.map((id) => h('option', { value: byId.get(id).t }))),
-        lesson && h('button', { class: 'btn quiet', onclick: skip }, 'Skip this lesson')),
+        session && session.lessonId && !session.finished && h('button', { class: 'btn quiet', onclick: skip }, 'Skip this lesson')),
       h('section', { class: 'note' }, h('h3', null, 'Progress by phase'), phaseMap),
       renderSettings());
   }
 
+  // Skips the lesson on screen, never one the learner has not opened.
   function skip() {
-    const lesson = currentLesson();
-    if (!lesson) return;
-    setState({ done: { ...state.done, [lesson.id]: 'skipped' } });
+    if (!session || !session.lessonId || session.finished) return;
+    setState({ done: { ...state.done, [session.lessonId]: 'skipped' } });
     startSession(currentLesson());
     render();
   }
