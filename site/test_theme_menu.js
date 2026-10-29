@@ -69,3 +69,10 @@ test('the menu strings are listed for translation', () => {
   const keys = JSON.parse(read('ui-strings.json')).keys;
   for (const key of ['Change theme', 'Theme', 'System', 'Light', 'Dark']) assert.ok(keys.includes(key), key);
 });
+
+test('a page theme in the URL and a blocked storage both keep the visible choice', () => {
+  const source = read('theme-menu.js');
+  assert.doesNotMatch(source, /\n    apply\(stored\(\)\);\n    sync\(\);\n  \}/, 'load keeps the theme the page already chose');
+  assert.match(source, /catch \(e\) \{\s*session = mode;/);
+  assert.match(source, /var inside = panel\.contains\(doc\.activeElement\) \|\| doc\.activeElement === button;/);
+});

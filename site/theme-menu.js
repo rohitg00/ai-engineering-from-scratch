@@ -52,16 +52,23 @@
     '@media (prefers-reduced-motion:reduce){.theme-menu,.theme-menu-item{transition:none}@starting-style{.theme-menu,.theme-menu[data-side="top"]{opacity:0;transform:none}}}'
   ].join('\n');
 
+  var session = null;
+
   function stored() {
+    if (session) return session;
     try { return modeFrom(root.localStorage.getItem(KEY)); } catch (e) { return 'system'; }
   }
 
   function save(mode) {
+    session = null;
     try {
       var value = storageValue(mode);
       if (value) root.localStorage.setItem(KEY, value);
       else root.localStorage.removeItem(KEY);
-    } catch (e) {}
+      if (modeFrom(root.localStorage.getItem(KEY)) !== modeFrom(mode)) session = mode;
+    } catch (e) {
+      session = mode;
+    }
   }
 
   function announce(mode, theme) {
@@ -203,10 +210,13 @@
         return;
       }
       var index = items.indexOf(doc.activeElement);
+      var inside = panel.contains(doc.activeElement) || doc.activeElement === button;
       if (event.key === 'Escape') {
         event.preventDefault();
         event.stopPropagation();
         setOpen(false, true);
+      } else if (!inside) {
+        return;
       } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
         event.preventDefault();
         var delta = event.key === 'ArrowDown' ? 1 : -1;
@@ -230,11 +240,11 @@
 
     root.addEventListener('storage', function (event) {
       if (event.key !== KEY && event.key !== null) return;
+      session = null;
       apply(stored());
       sync();
     });
 
-    apply(stored());
     sync();
   }
 
