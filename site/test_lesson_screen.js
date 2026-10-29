@@ -414,7 +414,9 @@ test('the practice command writes a self-graded page from a clone', (t) => {
   const cwd = tmpdir(t);
   const lesson = 'phases/99-test-phase/01-tiny-lesson';
   fs.mkdirSync(path.join(cwd, lesson, 'docs'), { recursive: true });
-  fs.writeFileSync(path.join(cwd, lesson, 'docs', 'en.md'), LESSON_MD.replace('Tiny Lesson', 'Tiny </script> Lesson'));
+  fs.writeFileSync(path.join(cwd, lesson, 'docs', 'en.md'), LESSON_MD.replace('Tiny Lesson', 'Tiny </script> Lesson').replace('**Languages:** Python', '**Languages:** Python (stdlib)'));
+  fs.mkdirSync(path.join(cwd, lesson, 'code'), { recursive: true });
+  fs.writeFileSync(path.join(cwd, lesson, 'code', 'main.py'), 'print(1)\n');
   const run = (...args) => JSON.parse(execFileSync(process.execPath, [script, 'practice', ...args], { cwd, encoding: 'utf8' }));
   const fromTerms = run(lesson);
   assert.equal(fromTerms.source, 'terms');
@@ -430,7 +432,9 @@ test('the practice command writes a self-graded page from a clone', (t) => {
   const block = /<script id="practice-data" type="application\/json">([\s\S]*?)<\/script>/.exec(html)[1];
   assert.ok(!block.includes('</script>'));
   const data = JSON.parse(block);
-  assert.equal(data.run, `cd ${lesson}/code && python3 main.py`);
+  assert.equal(data.run, `cd "${path.join(fs.realpathSync(cwd), lesson, 'code')}" && python3 main.py`);
+  assert.equal(data.runFrom, 'clone');
+  assert.ok(data.questions.every((q) => q.id.startsWith(lesson + '#')));
   assert.equal(data.web, `https://aiengineeringfromscratch.com/lesson?path=${lesson}`);
   let threw = null;
   try {
@@ -451,4 +455,14 @@ test('the practice page reads a real lesson and never reports answers to the tut
   assert.ok(!template.includes('lessonScreen'), 'practice answers stay in the browser');
   assert.ok(!template.includes('/event'));
   assert.equal(template.split('__PRACTICE_DATA__').length - 1, 1);
+});
+
+test('practice text keeps math relations, distinct options, and masks the term', async () => {
+  const { parseLesson, quizQuestions, termQuestions } = await import(script);
+  const info = parseLesson('# T\n\n## Learning Objectives\n- Compare $a \\le b$ with $a \\ge b$ and $x \\neq y$ using $\\text{softmax}$ and $\\foo$\n');
+  assert.deepEqual(info.objectives, ['Compare a ≤ b with a ≥ b and x ≠ y using softmax and foo']);
+  assert.deepEqual(quizQuestions([{ question: 'q', options: ['**MCP**', 'MCP'], correct: 0 }])[0].options, ['**MCP**', 'MCP']);
+  const terms = [{ term: 'KV cache', means: 'The KV cache stores keys' }, { term: 'B', means: 'b' }, { term: 'C', means: 'c' }, { term: 'D', means: 'd' }];
+  const kv = termQuestions(terms, 'phases/99-x/01-y').find((q) => q.id === 'phases/99-x/01-y#term:KV cache');
+  assert.equal(kv.q, 'The ____ stores keys');
 });

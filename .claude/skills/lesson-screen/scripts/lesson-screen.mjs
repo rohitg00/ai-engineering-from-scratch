@@ -431,11 +431,11 @@ export async function takeShot({ url, out, width = 1440, height = 900, theme = '
 const RAW_BASE = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/';
 const LESSON_RE = /^phases\/\d{2}-[a-z0-9-]+\/\d{2}-[a-z0-9-]+$/;
 const RUNNERS = {
-  python: (d) => `cd ${d}/code && python3 main.py`,
-  typescript: (d) => `cd ${d}/code && npx tsx main.ts`,
-  javascript: (d) => `cd ${d}/code && node main.js`,
-  rust: (d) => `cd ${d}/code && rustc --edition 2021 main.rs -o main && ./main`,
-  julia: (d) => `cd ${d}/code && julia main.jl`,
+  python: { ext: 'py', cmd: 'python3 main.py' },
+  typescript: { ext: 'ts', cmd: 'npx tsx main.ts' },
+  javascript: { ext: 'js', cmd: 'node main.js' },
+  rust: { ext: 'rs', cmd: 'rustc --edition 2021 main.rs -o main && ./main' },
+  julia: { ext: 'jl', cmd: 'julia main.jl' },
 };
 
 function mdPlain(text) {
@@ -449,16 +449,19 @@ function mdPlain(text) {
     .trim();
 }
 
+const TEX_SYMBOLS = { le: '≤', leq: '≤', ge: '≥', geq: '≥', ne: '≠', neq: '≠', approx: '≈', infty: '∞', in: '∈', to: '→', rightarrow: '→', leftarrow: '←', sum: 'Σ', prod: 'Π', partial: '∂', nabla: '∇', pm: '±', propto: '∝', ldots: '…', cdots: '⋯' };
 const GREEK = { alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', epsilon: 'ε', theta: 'θ', lambda: 'λ', mu: 'μ', sigma: 'σ', pi: 'π', tau: 'τ', phi: 'φ', omega: 'ω' };
 function texPlain(tex) {
   return tex
     .replace(/\\sqrt\{([^}]*)\}/g, 'sqrt($1)')
     .replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, '($1)/($2)')
     .replace(/\\(alpha|beta|gamma|delta|epsilon|theta|lambda|mu|sigma|pi|tau|phi|omega)\b/g, (m, g) => GREEK[g])
+    .replace(/\\([a-zA-Z]+)/g, (m, name) => (TEX_SYMBOLS[name] ? TEX_SYMBOLS[name] : m))
     .replace(/\\times/g, '×')
     .replace(/\\cdot/g, '·')
     .replace(/\\(left|right)/g, '')
-    .replace(/\\[a-zA-Z]+/g, '')
+    .replace(/\\(text|mathrm|mathbf|mathit|operatorname)\b/g, '')
+    .replace(/\\([a-zA-Z]+)/g, '$1')
     .replace(/[{}]/g, '');
 }
 
@@ -502,7 +505,7 @@ function mdRow(line) {
 export function parseLesson(md) {
   const title = (/^# (.+)$/m.exec(md) || [])[1] || '';
   const hook = (/^> (.+)$/m.exec(md) || [])[1] || '';
-  const languages = ((/^\*\*Languages:\*\*\s*(.+)$/m.exec(md) || [])[1] || '').split(',').map((x) => mdPlain(x).toLowerCase()).filter(Boolean);
+  const languages = ((/^\*\*Languages:\*\*\s*(.+)$/m.exec(md) || [])[1] || '').split(',').map((x) => mdPlain(x).toLowerCase().replace(/\s*\(.*?\)\s*/g, ' ').trim()).filter(Boolean);
   const objectives = mdItems(mdSection(md, 'Learning Objectives')).map(mdPlain).filter(Boolean).slice(0, 6);
   const rows = mdSection(md, 'Key Terms').split('\n').filter((l) => l.trim().startsWith('|') && !/^\s*\|\s*:?-{2,}/.test(l)).map(mdRow);
   const width = rows.length ? rows[0].length : 0;
@@ -520,7 +523,11 @@ export function quizQuestions(quiz) {
   const list = Array.isArray(quiz) ? quiz : quiz && Array.isArray(quiz.questions) ? quiz.questions : [];
   return list.filter((q) => q && typeof q.question === 'string' && Array.isArray(q.options) && q.options.length >= 2
     && q.options.every((o) => typeof o === 'string') && Number.isInteger(q.correct) && q.correct >= 0 && q.correct < q.options.length)
-    .map((q) => ({ ask: '', q: mdPlain(q.question), options: q.options.map(mdPlain), correct: q.correct, explain: mdPlain(q.explanation || ''), stage: q.stage || '' }));
+    .map((q) => {
+      const plain = q.options.map(mdPlain);
+      const options = new Set(plain).size === plain.length ? plain : q.options.map((o) => o.trim());
+      return { id: typeof q.id === 'string' ? q.id : '', ask: '', q: mdPlain(q.question), options, correct: q.correct, explain: mdPlain(q.explanation || ''), stage: q.stage || '' };
+    });
 }
 
 function seeded(text) {
@@ -549,7 +556,9 @@ export function termQuestions(terms, seed) {
   return terms.slice(0, 4).map((t) => {
     const others = shuffled(terms.filter((o) => o.term !== t.term).map((o) => o.term), rand).slice(0, 3);
     const options = shuffled([t.term, ...others], rand);
-    return { ask: 'Which term matches this meaning?', q: t.means, options, correct: options.indexOf(t.term), explain: `${t.term}: ${t.means}`, stage: 'terms' };
+    const escaped = t.term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const masked = t.means.replace(new RegExp(`(^|[^\\w])${escaped}(?=$|[^\\w])`, 'gi'), '$1____');
+    return { id: `${seed}#term:${t.term}`, ask: 'Which term matches this meaning?', q: masked, options, correct: options.indexOf(t.term), explain: `${t.term}: ${t.means}`, stage: 'terms' };
   });
 }
 
@@ -591,16 +600,23 @@ export async function loadPractice(lesson, { repo } = {}) {
       quiz = JSON.parse(raw);
     } catch {}
   }
-  const fromQuiz = quizQuestions(quiz);
+  const fromQuiz = quizQuestions(quiz).map((q, i) => ({ ...q, id: q.id ? `${clean}#${q.id}` : `${clean}#q${i}` }));
   const questions = fromQuiz.length ? fromQuiz : termQuestions(info.terms, clean);
   const runner = RUNNERS[info.languages[0]];
+  let run = '';
+  if (runner) {
+    const entry = `code/main.${runner.ext}`;
+    const exists = repo ? fs.existsSync(path.join(repo, clean, entry)) : await fetch(RAW_BASE + clean + '/' + entry, { method: 'HEAD' }).then((r) => r.ok, () => false);
+    if (exists) run = `cd "${repo ? path.join(repo, clean, 'code') : `${clean}/code`}" && ${runner.cmd}`;
+  }
   const [phase, slug] = clean.split('/').slice(1);
   return {
     lesson: clean,
     phase: phase.slice(0, 2),
     number: slug.slice(0, 2),
     ...info,
-    run: runner ? runner(clean) : '',
+    run,
+    runFrom: repo ? 'clone' : 'github',
     questions,
     source: fromQuiz.length ? 'quiz' : questions.length ? 'terms' : 'none',
     web: `https://aiengineeringfromscratch.com/lesson?path=${clean}`,

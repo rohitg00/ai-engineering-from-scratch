@@ -244,19 +244,47 @@ button { font: inherit; color: inherit; }
     var label = new Date(p[0], p[1] - 1, p[2]).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
     return key === addDays(today(), 1) ? 'tomorrow, ' + label : label;
   }
+  function validEntry(r) {
+    return r && typeof r === 'object' && typeof r.id === 'string' && typeof r.q === 'string' && Array.isArray(r.options) && r.options.length >= 2
+      && r.options.every(function (o) { return typeof o === 'string'; }) && Number.isInteger(r.correct) && r.correct >= 0 && r.correct < r.options.length
+      && Number.isInteger(r.box) && r.box >= 0 && typeof r.due === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(r.due);
+  }
+  var CURRENT = {};
+  D.questions.forEach(function (q) { CURRENT[q.id] = q; });
+  function reconcile(review) {
+    return review.filter(function (r) {
+      if (r.lesson !== D.lesson) return true;
+      var q = CURRENT[r.id];
+      if (!q) return false;
+      r.ask = q.ask || ''; r.q = q.q; r.options = q.options; r.correct = q.correct; r.explain = q.explain; r.title = D.title;
+      return true;
+    });
+  }
   function load() {
     try {
       var s = JSON.parse(localStorage.getItem(STORE) || '{}');
-      return { review: Array.isArray(s.review) ? s.review : [], secs: TIMERS.indexOf(s.secs) >= 0 ? s.secs : 0 };
+      return { review: reconcile((Array.isArray(s.review) ? s.review : []).filter(validEntry)), secs: TIMERS.indexOf(s.secs) >= 0 ? s.secs : 0 };
     } catch (e) {
       return { review: [], secs: 0 };
     }
   }
   var state = load();
   function save() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} }
+  function update(change) {
+    var secs = state.secs;
+    state = load();
+    state.secs = secs;
+    change(state);
+    save();
+  }
+  window.addEventListener('storage', function (e) {
+    if (e.key !== STORE && e.key !== null) return;
+    state = load();
+    meta();
+  });
   function due() { var now = today(); return state.review.filter(function (r) { return r.due <= now; }); }
   function upcoming() { var now = today(); return state.review.filter(function (r) { return r.due > now; }).sort(function (a, b) { return a.due < b.due ? -1 : 1; }); }
-  function itemId(q, i) { return D.lesson + '#' + i + '#' + q.q.slice(0, 40); }
+  function itemId(q, i) { return q.id || D.lesson + '#q' + i; }
   function say(text) { $('[data-live]').textContent = text; }
   function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
 
@@ -285,7 +313,7 @@ button { font: inherit; color: inherit; }
     $('[data-meta="drill"]').textContent = drillProgress || plural(D.questions.length, 'question', 'questions');
     var n = due().length;
     $('[data-meta="review"]').textContent = n ? plural(n, 'question due', 'questions due') : 'nothing due';
-    $('[data-meta="deeper"]').textContent = plural(2 + D.reading.length + (D.run ? 1 : 0), 'link', 'links');
+    $('[data-meta="deeper"]').textContent = plural(2 + D.reading.length, 'link', 'links');
   }
   function select(tab, fromKey) {
     current = tab;
@@ -295,8 +323,13 @@ button { font: inherit; color: inherit; }
       b.tabIndex = on ? 0 : -1;
       if (on && fromKey) b.focus();
     });
-    document.querySelectorAll('[data-panel]').forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== tab; });
+    document.querySelectorAll('[data-panel]').forEach(function (p) {
+      p.hidden = p.getAttribute('data-panel') !== tab;
+      if (p.hidden && p._stop) p._stop();
+    });
     if (tab === 'review') startReview();
+    var shown = $('[data-panel="' + tab + '"]');
+    if (shown && shown._arm) shown._arm();
   }
   document.querySelectorAll('[data-tab]').forEach(function (b) {
     b.addEventListener('click', function () { select(b.getAttribute('data-tab')); });
@@ -330,19 +363,24 @@ button { font: inherit; color: inherit; }
       panel.appendChild(el('div', { class: 'terms' }, D.terms.map(function (t) {
         var card = el('button', { type: 'button', class: 'term', 'aria-expanded': 'false' }, [
           el('span', { class: 'term-name', text: t.term }),
-          el('span', { class: 'term-body' }, [el('span', { class: 'term-hint', text: 'Say it, then press' }), el('span', { class: 'term-means', text: t.means })]),
+          el('span', { class: 'term-body' }, [el('span', { class: 'term-hint', text: 'Say it, then press' }), el('span', { class: 'term-means', text: t.means, 'aria-hidden': 'true' })]),
         ]);
-        card.addEventListener('click', function () { card.setAttribute('aria-expanded', String(card.getAttribute('aria-expanded') !== 'true')); });
+        card.addEventListener('click', function () {
+          var open = card.getAttribute('aria-expanded') !== 'true';
+          card.setAttribute('aria-expanded', String(open));
+          $('.term-means', card).setAttribute('aria-hidden', String(!open));
+          $('.term-hint', card).setAttribute('aria-hidden', String(open));
+        });
         return card;
       })));
     }
-    panel.appendChild(el('div', { class: 'actions' }, [el('button', { type: 'button', class: 'btn primary', text: 'Start the drill', on: { click: function () { select('drill'); } } })]));
+    panel.appendChild(el('div', { class: 'actions' }, [el('button', { type: 'button', class: 'btn primary', text: 'Start the drill', on: { click: function () { select('drill', true); } } })]));
   }
 
   function timerControl(onChange) {
     var group = el('div', { class: 'seg', role: 'group', 'aria-label': 'Time per question' }, [el('span', { text: 'Timer' })]);
     TIMERS.forEach(function (secs) {
-      group.appendChild(el('button', { type: 'button', 'aria-pressed': String(state.secs === secs), text: secs ? secs + ' s' : 'Off', on: { click: function () { state.secs = secs; save(); onChange(); } } }));
+      group.appendChild(el('button', { type: 'button', 'data-timer': '', 'aria-pressed': String(state.secs === secs), text: secs ? secs + ' s' : 'Off', on: { click: function () { if (onChange()) { state.secs = secs; save(); onChange(true); } } } }));
     });
     return group;
   }
@@ -353,7 +391,20 @@ button { font: inherit; color: inherit; }
     var results = [];
     var answered = false;
     var timer = 0;
+    var bar = null;
     function stop() { clearInterval(timer); timer = 0; }
+    function arm() {
+      stop();
+      if (answered || !state.secs || panel.hidden || i >= items.length || !bar) return;
+      var started = Date.now();
+      timer = setInterval(function () {
+        var rest = Math.max(0, state.secs - (Date.now() - started) / 1000);
+        bar.style.transform = 'scaleX(' + (rest / state.secs).toFixed(3) + ')';
+        if (rest <= 0 && panel._pick) panel._pick(-1);
+      }, 50);
+    }
+    panel._stop = stop;
+    panel._arm = arm;
     function show() {
       stop();
       panel.textContent = '';
@@ -364,11 +415,11 @@ button { font: inherit; color: inherit; }
       answered = false;
       var item = items[i];
       head(panel, title, sub);
-      panel.appendChild(el('div', { class: 'drill-head' }, [el('span', { class: 'count', text: 'Question ' + (i + 1) + ' of ' + items.length }), timerControl(show)]));
+      panel.appendChild(el('div', { class: 'drill-head' }, [el('span', { class: 'count', text: 'Question ' + (i + 1) + ' of ' + items.length }), timerControl(function (apply) { if (answered) return false; if (apply) show(); return true; })]));
       panel.appendChild(el('div', { class: 'track', 'aria-hidden': 'true' }, items.map(function (_, n) {
         return el('i', { class: n < results.length ? (results[n].ok ? 'is-right' : 'is-wrong') : n === i ? 'is-now' : '' });
       })));
-      var bar = el('i', {});
+      bar = el('i', {});
       if (state.secs) panel.appendChild(el('div', { class: 'clock', 'aria-hidden': 'true' }, [bar]));
       if (item.ask) panel.appendChild(el('p', { class: 'ask', text: item.ask }));
       panel.appendChild(el('p', { class: 'prompt' + (item.ask ? ' is-quote' : ''), text: item.q }));
@@ -377,18 +428,13 @@ button { font: inherit; color: inherit; }
         return el('button', { type: 'button', class: 'opt', 'data-k': String(k), on: { click: function () { pick(k); } } }, [el('span', { class: 'key', text: String(k + 1) }), el('span', { text: o })]);
       });
       panel.appendChild(el('div', { class: 'options', role: 'group', 'aria-label': 'Options. Press 1 to ' + buttons.length }, buttons));
-      if (state.secs) {
-        var started = Date.now();
-        timer = setInterval(function () {
-          var rest = Math.max(0, state.secs - (Date.now() - started) / 1000);
-          bar.style.transform = 'scaleX(' + (rest / state.secs).toFixed(3) + ')';
-          if (rest <= 0) pick(-1);
-        }, 50);
-      }
+      panel._pick = pick;
+      arm();
       function pick(k) {
         if (answered) return;
         answered = true;
         stop();
+        panel.querySelectorAll('[data-timer]').forEach(function (b) { b.disabled = true; });
         var ok = k === item.correct;
         results.push({ ok: ok, q: item.q });
         buttons.forEach(function (b, n) {
@@ -424,13 +470,24 @@ button { font: inherit; color: inherit; }
   }
 
   function scheduleMiss(item) {
-    state.review = state.review.filter(function (r) { return r.id !== item.id; });
-    state.review.push({ id: item.id, lesson: D.lesson, title: D.title, ask: item.ask || '', q: item.q, options: item.options, correct: item.correct, explain: item.explain, box: 0, due: addDays(today(), INTERVALS[0]) });
-    save();
+    update(function (st) {
+      st.review = st.review.filter(function (r) { return r.id !== item.id; });
+      st.review.push({ id: item.id, lesson: D.lesson, title: D.title, ask: item.ask || '', q: item.q, options: item.options, correct: item.correct, explain: item.explain, box: 0, due: addDays(today(), INTERVALS[0]) });
+    });
+  }
+  function promote(item) {
+    update(function (st) {
+      var r = st.review.find(function (x) { return x.id === item.id; });
+      if (!r) return;
+      r.box += 1;
+      if (r.box >= INTERVALS.length) st.review = st.review.filter(function (x) { return x !== r; });
+      else r.due = addDays(today(), INTERVALS[r.box]);
+    });
   }
 
   function startDrill() {
     drillProgress = '';
+    meta();
     var items = D.questions.map(function (q, n) { return { id: itemId(q, n), lesson: D.lesson, ask: q.ask || '', q: q.q, options: q.options, correct: q.correct, explain: q.explain }; });
     var panel = $('[data-panel="drill"]');
     if (!items.length) {
@@ -440,7 +497,7 @@ button { font: inherit; color: inherit; }
       return;
     }
     var sub = D.source === 'terms' ? 'This lesson has no quiz yet, so the drill asks about its key terms.' : 'Questions from the lesson quiz. Press 1 to 4 to answer.';
-    quiz('drill', 'Drill', sub, items, function (item, ok) { if (!ok) scheduleMiss(item); }, function (panelNode, results) {
+    quiz('drill', 'Drill', sub, items, function (item, ok) { if (ok) promote(item); else scheduleMiss(item); }, function (panelNode, results) {
       var right = results.filter(function (r) { return r.ok; }).length;
       var missed = results.length - right;
       panelNode.appendChild(el('div', { class: 'score' }, [el('b', { text: right + '/' + results.length }), el('span', { text: 'right' })]));
@@ -469,17 +526,11 @@ button { font: inherit; color: inherit; }
       return;
     }
     quiz('review', 'Review', 'Right answers move to a longer gap. Missed ones return tomorrow.', items, function (item, ok) {
-      var r = state.review.find(function (x) { return x.id === item.id; });
-      if (!r) return;
-      if (ok) {
-        r.box += 1;
-        if (r.box >= INTERVALS.length) state.review = state.review.filter(function (x) { return x !== r; });
-        else r.due = addDays(today(), INTERVALS[r.box]);
-      } else {
-        r.box = 0;
-        r.due = addDays(today(), INTERVALS[0]);
-      }
-      save();
+      if (ok) promote(item);
+      else update(function (st) {
+        var r = st.review.find(function (x) { return x.id === item.id; });
+        if (r) { r.box = 0; r.due = addDays(today(), INTERVALS[0]); }
+      });
     }, function (panelNode, results) {
       var right = results.filter(function (r) { return r.ok; }).length;
       panelNode.appendChild(el('div', { class: 'score' }, [el('b', { text: right + '/' + results.length }), el('span', { text: 'right' })]));
@@ -506,7 +557,7 @@ button { font: inherit; color: inherit; }
         var done = function (text) { copy.textContent = text; clearTimeout(resetAt); resetAt = setTimeout(function () { copy.textContent = 'Copy'; }, 1600); };
         (navigator.clipboard ? navigator.clipboard.writeText(D.run) : Promise.reject()).then(function () { done('Copied'); say('Command copied.'); }, function () { done('Select it'); });
       });
-      panel.appendChild(el('p', { class: 'label', text: 'Run the code' }));
+      panel.appendChild(el('p', { class: 'label', text: D.runFrom === 'clone' ? 'Run the code' : 'Run the code from a clone of the course' }));
       panel.appendChild(el('div', { class: 'cmd' }, [el('code', { text: D.run }), copy]));
     }
     if (D.exercise) {
@@ -531,6 +582,24 @@ button { font: inherit; color: inherit; }
       e.preventDefault();
     }
   });
+
+  var narrow = window.matchMedia ? window.matchMedia('(max-width: 980px)') : null;
+  function orient() { $('[role="tablist"]').setAttribute('aria-orientation', narrow && narrow.matches ? 'horizontal' : 'vertical'); }
+  if (narrow) {
+    if (narrow.addEventListener) narrow.addEventListener('change', orient);
+    else if (narrow.addListener) narrow.addListener(orient);
+  }
+  orient();
+  var day = today();
+  function dayCheck() {
+    if (today() === day) return;
+    day = today();
+    state = load();
+    meta();
+    if (current === 'review') startReview();
+  }
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) dayCheck(); });
+  setInterval(dayCheck, 60000);
 
   renderBrief();
   startDrill();
