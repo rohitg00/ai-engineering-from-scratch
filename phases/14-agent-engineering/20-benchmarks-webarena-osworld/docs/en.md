@@ -13,6 +13,7 @@
 - Explain why OSWorld uses real OS screenshots instead of accessibility APIs.
 - Name the two primary OSWorld failure modes: GUI grounding and operational knowledge.
 - Summarize what OSWorld-G and OSWorld-Human add on top of the base benchmark.
+- Compare controlled benchmark reproducibility with live-site evaluation and temporal drift.
 
 ## The Problem
 
@@ -33,6 +34,13 @@ The self-hosted framing matters — the benchmark is not flaky because the targe
 
 - **VisualWebArena** — visually grounded tasks where success depends on interpreting images (screenshots as first-class observations).
 - **TheAgentCompany** (Dec 2024) — adds terminal + coding; more like a real remote-work environment.
+
+### ClawBench (2026)
+
+- A live-site complement to self-hosted WebArena: the V1+V2 corpus has 283 tasks (V1 153 + V2 130) across 163 live websites and everyday online workflows.
+- Each run uses an isolated browser container and records five evidence layers: session replay, screenshots, HTTP traffic, browser actions, and agent messages.
+- A terminal-request interceptor checks the final service payload before irreversible writes, while the live sites expose agents to temporal drift that pinned apps avoid.
+- The trade-off is useful when designing an evaluation suite: controlled tasks improve repeatability; live tasks measure external validity but require drift monitoring and careful replay evidence.
 
 ### OSWorld (Xie et al., NeurIPS 2024)
 
@@ -60,6 +68,7 @@ Claude computer use, OpenAI CUA, Gemini 2.5 Computer Use (Lesson 21) all train o
 - **Screenshot-only evals.** OSWorld is screenshot-driven; evaluating an agent that uses DOM or accessibility APIs on OSWorld misses the grounding challenge.
 - **Ignoring trajectory length.** Scoring only success-rate misses the 1.4-2.7x step inefficiency OSWorld-Human surfaces.
 - **Stale self-hosted apps.** WebArena's apps pin specific versions; update without re-curation breaks comparability.
+- **Ignoring live-site drift.** A live benchmark can gain external validity while pages, policies, and APIs change; record the environment and inspect the final request so failures remain diagnosable.
 
 ```figure
 ae-agent-human-gap
@@ -113,10 +122,12 @@ Output: per-task success rate and trajectory efficiency, mirroring OSWorld-Human
 | OSWorld-G | "Grounding suite" | 564 grounding-only samples + training set |
 | OSWorld-Human | "Gold trajectories" | Manual expert action sequences to measure efficiency |
 | Trajectory efficiency | "Steps over gold" | Agent step count divided by human minimum |
+| ClawBench | "Live web benchmark" | 283 tasks across 163 live websites (V1 153 + V2 130), with isolated runs and five evidence layers |
 
 ## Further Reading
 
 - [Zhou et al., WebArena (arXiv:2307.13854)](https://arxiv.org/abs/2307.13854) — four-app web benchmark
 - [Xie et al., OSWorld (arXiv:2404.07972)](https://arxiv.org/abs/2404.07972) — cross-OS desktop benchmark
+- [ClawBench (arXiv:2604.08523)](https://arxiv.org/abs/2604.08523) — live-site web-agent evaluation with isolated runs and layered replay evidence; [code](https://github.com/TIGER-AI-Lab/ClawBench), [project](https://claw-bench.com/)
 - [Anthropic, Introducing computer use](https://www.anthropic.com/news/3-5-models-and-computer-use) — Claude's benchmark-shaped capability
 - [OpenAI, Computer-Using Agent](https://openai.com/index/computer-using-agent/) — OSWorld and WebArena numbers
