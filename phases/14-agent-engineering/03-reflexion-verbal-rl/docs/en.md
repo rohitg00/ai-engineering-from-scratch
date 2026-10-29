@@ -98,6 +98,20 @@ python3 code/main.py
 
 The trace shows three trials. Trial 1 fails, a reflection is stored, trial 2 sees the reflection and improves but still fails, trial 3 succeeds. Compare with a baseline run (no reflection) — it stays stuck at trial 1's answer.
 
+### Adversarial Actor (Exercise 4)
+
+`main.py` also runs an `AdversarialActor` that sees only a prompt string and ignores reflections by default. Four prompt levels add one feature each: reflections first, reflections last, loud framing, and a `FORBIDDEN (already tried)` list. Trials to converge, capped at 200:
+
+```text
+prompt level                 binary note   scalar note
+reflections first                  never         never
+reflections last                   never         never
+last + loud framing                never         never
+last + FORBIDDEN list                162             2
+```
+
+Placement and tone change nothing. A hard constraint is the minimum that forces the Actor to act on memory, and a scalar note then cuts the search from blind enumeration to two trials. The Actor is a scripted stand-in, so the result shows the mechanism, not how a specific model behaves.
+
 ## Use It
 
 LangGraph ships reflection as a node pattern. Claude Code's `/memory` command and pro-workflow's `/learn-rule` externalize the episodic buffer as a markdown file. Letta's sleep-time compute runs the Self-Reflector on downtime so the primary agent stays latency-bound. OpenAI Agents SDK does not ship Reflexion directly; you build it with a custom Guardrail that rejects trajectories by score and a memory `Session` that survives across runs.
