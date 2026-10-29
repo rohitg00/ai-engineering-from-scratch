@@ -20,6 +20,7 @@ import collections
 import glob
 import json
 import sys
+from pathlib import Path
 
 QUIZ_GLOB = "phases/*/*/quiz.json"
 MIN_RATIO = 1.25
@@ -60,7 +61,10 @@ def scan():
     offenders = []
     errors = []
     for path in sorted(glob.glob(QUIZ_GLOB)):
-        phase = path.split("/")[1]
+        # glob returns OS-native separators (backslashes on Windows), so split
+        # on pathlib parts instead of a hardcoded "/".
+        parts = Path(path).parts
+        phase = parts[1] if len(parts) > 1 else path
         try:
             data = json.load(open(path, encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
