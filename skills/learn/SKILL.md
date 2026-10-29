@@ -113,13 +113,16 @@ Lesson 32.
 
 The portable skill `lesson-screen` opens a browser screen next to the
 terminal. It shows the lesson's registered figures, code traces with real
-values, clickable predictions, and a 3D machine with a 2D blueprint view of
-the system the lesson builds.
+values, and clickable predictions. It also builds a figure for the lesson on
+the fly: a blueprint, a mechanism, an isometric machine, or a 3D model.
 
 - Offer it once per session, before Step 2, when the host can run `node` 20
   or later and open a browser on the learner's machine. Render the skill name
   with the host invocation contract. If the learner accepts, follow
   `lesson-screen` and keep teaching here.
+- Right after the learner accepts, offer one figure built for this lesson,
+  with its time from `lesson-screen`. Build it while you teach, so that it is
+  ready at See it.
 - If the learner declines, or no local browser is available, give the lesson
   page once:
   `https://aiengineeringfromscratch.com/lesson?path=<phase-dir>/<lesson-dir>`.
@@ -183,9 +186,9 @@ artifact. Teach it in that order, interactively:
    with the real values from the run.
 4. **Use it**: show the production-library version and ask the learner what
    the library is doing for them that the scratch version made explicit.
-5. **See it**: when the lesson screen is open, offer a 3D machine with a 2D
-   blueprint view of the system this lesson builds. Build it from the lesson
-   text and the real run, then walk its steps with the learner.
+5. **See it**: when the lesson screen is open, show the figure you built for
+   this lesson and walk its steps with the learner. If no build is ready,
+   offer one now or for the end of the session.
 6. Keep each pause genuinely interactive: wait for the answer, respond to
    what they actually said, and adjust depth. A learner saying "I know this,
    speed up" outranks the script.

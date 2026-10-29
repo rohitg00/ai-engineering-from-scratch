@@ -120,8 +120,8 @@ Never drop or mark a prerequisite complete by assumption.
 
 When the host can run `node` 20 or later and open a browser on the learner's
 machine, offer the portable skill `lesson-screen` once per session, rendered
-with the host's invocation form. It shows the lesson's figures, code traces
-with real values, and a 3D machine with a 2D blueprint view of the system. If
+with the host's invocation form. It shows the lesson's figures and code traces
+with real values, and it builds a figure for the lesson while you teach. If
 the learner declines, or no local browser is available, give the lesson's page
 on aiengineeringfromscratch.com once. Read screen clicks with its `events`
 command before each reply. Screen clicks are hints for you. They never count
