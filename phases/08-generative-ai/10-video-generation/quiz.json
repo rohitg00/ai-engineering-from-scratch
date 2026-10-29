@@ -1,0 +1,78 @@
+{
+  "lesson": "10-video-generation",
+  "title": "Video Generation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does a video generator need to model more than a set of unrelated images?",
+      "options": [
+        "Frames must remain coherent over time",
+        "Each frame must use a different image vocabulary",
+        "A video contains no spatial image structure",
+        "The output must be compressed into text tokens only"
+      ],
+      "correct": 0,
+      "explanation": "Video has temporal structure: objects, lighting, and identity should evolve consistently as motion unfolds. Independent image sampling ignores that relationship and can flicker, even though each frame still has spatial image structure."
+    },
+    {
+      "stage": "check",
+      "question": "What representation does the lesson feed into a spatiotemporal DiT?",
+      "options": [
+        "A list of frame captions only",
+        "Patches from a compressed video latent",
+        "A single pooled vector for the whole clip",
+        "A flat sequence of raw RGB pixels"
+      ],
+      "correct": 1,
+      "explanation": "A 3D VAE encodes video into a latent grid over time, height, and width; the DiT receives patches from that compressed representation. A pooled clip vector would discard the locations and timing needed for generation."
+    },
+    {
+      "stage": "check",
+      "question": "Why is video attention often factorized into spatial and temporal passes?",
+      "options": [
+        "Factorization turns the diffusion model into a GAN",
+        "Full 3D attention costs much more compute",
+        "Spatial attention removes the need for a video VAE",
+        "Temporal attention cannot process positional embeddings"
+      ],
+      "correct": 1,
+      "explanation": "Full 3D attention compares patches across all space and time and is 16–100 times more expensive in the lesson’s comparison. Factorized spatial and temporal passes preserve those relationships with lower compute."
+    },
+    {
+      "stage": "check",
+      "question": "What visual artifact results from sampling each video frame independently?",
+      "options": [
+        "A color shift confined to one isolated frame",
+        "A stable camera path maintained across the clip",
+        "A fixed starting frame that anchors the generated video",
+        "Temporal flicker between adjacent generated frames"
+      ],
+      "correct": 3,
+      "explanation": "Independent per-frame sampling uses unrelated noise and does not couple adjacent frames, so details can jump from one frame to the next as temporal flicker. Shared attention or noise links the frames."
+    },
+    {
+      "stage": "post",
+      "question": "An image-to-video task must begin from a supplied still image. What conditioning path does the lesson describe?",
+      "options": [
+        "Use the image as the first-frame condition",
+        "Convert the image to a class label and discard it",
+        "Use the image only after video sampling completes",
+        "Train a separate text-only model for each frame"
+      ],
+      "correct": 0,
+      "explanation": "Image-to-video conditioning supplies the still image as the first-frame condition, anchoring the generated clip’s starting content. Applying it only after sampling would not condition the video model."
+    },
+    {
+      "stage": "post",
+      "question": "A long generated clip slowly changes object identity and scene details. Which remedy matches the lesson?",
+      "options": [
+        "Sample each frame independently for more diversity",
+        "Remove temporal attention from the transformer",
+        "Increase full 3D attention at every resolution",
+        "Generate with sliding windows and keyframe anchors"
+      ],
+      "correct": 3,
+      "explanation": "Long clips can accumulate identity and scene drift; the lesson suggests sliding-window generation with keyframe anchoring to reinforce consistency. Sampling frames independently would remove temporal coupling and make drift worse."
+    }
+  ]
+}

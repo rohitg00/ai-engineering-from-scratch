@@ -1,0 +1,78 @@
+{
+  "lesson": "24-evaluation-coordination-benchmarks",
+  "title": "Evaluation and Coordination Benchmarks",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A paper says a multi-agent design is better. What does the lesson say to ask before accepting the claim?",
+      "options": [
+        "Which benchmark, split, baseline, and cost were measured",
+        "How many agents appear in the architecture diagram",
+        "Whether the paper uses a recent model name",
+        "Whether the conclusion uses the word coordination"
+      ],
+      "correct": 0,
+      "explanation": "A result is interpretable only with its benchmark and split, a relevant baseline, and the cost; trial count and task diversity also shape confidence. Counting agents in a diagram does not show whether performance improves or generalizes."
+    },
+    {
+      "stage": "check",
+      "question": "What does MultiAgentBench/MARBLE use to track partial progress during a task?",
+      "options": [
+        "A model's self-reported confidence",
+        "Only a final binary success label",
+        "Milestone-based key performance indicators",
+        "The number of tools in each agent"
+      ],
+      "correct": 2,
+      "explanation": "MARBLE tracks partial progress with milestone-based KPIs, so a task can earn credit for completed intermediate goals before full success. A final binary label loses that trajectory information."
+    },
+    {
+      "stage": "check",
+      "question": "A multimodal coordination system performs no better than a random policy on COMMA. What does the lesson recommend?",
+      "options": [
+        "Treat it as a warning and measure before claiming coordination gains",
+        "Increase the number of model parameters without retesting",
+        "Assume any multimodal model is better than random",
+        "Remove the random baseline from future comparisons"
+      ],
+      "correct": 0,
+      "explanation": "If a multimodal system only matches random on COMMA, the result warns that its coordination ability has not been demonstrated. Removing the random baseline would hide the comparison needed to support a gain claim."
+    },
+    {
+      "stage": "check",
+      "question": "What lesson does MedAgentBoard contribute to multi-agent design?",
+      "options": [
+        "More agents dominate single-model systems in every medical task",
+        "Multi-agent may not beat one model without useful decomposition",
+        "Coordination overhead disappears when roles are named",
+        "A benchmark should exclude single-model baselines"
+      ],
+      "correct": 1,
+      "explanation": "MedAgentBoard finds that multi-agent systems do not automatically beat a single model; task decomposition helps when subtasks are separable, while coordination overhead can outweigh specialization. Merely naming roles does not remove that overhead."
+    },
+    {
+      "stage": "post",
+      "question": "A public benchmark is close to saturated and may appear in training data. What evaluation step can reveal overfitting?",
+      "options": [
+        "Compare performance on seen and held-out task splits",
+        "Remove task identifiers from the results table",
+        "Report only the best seen-task score",
+        "Use more agents on the same seen examples"
+      ],
+      "correct": 0,
+      "explanation": "Compare performance on seen and held-out tasks; a large gap can signal memorization or contamination rather than generalization. Reporting only the best seen split selects the conditions most favorable to the model."
+    },
+    {
+      "stage": "post",
+      "question": "A new coordination benchmark has high raw accuracy but a large cost per task. What should the report include?",
+      "options": [
+        "The highest-scoring run without trial count",
+        "Cost alongside accuracy and wall-clock time",
+        "The model family but not the task split",
+        "Only the final answer and agent count"
+      ],
+      "correct": 1,
+      "explanation": "Accuracy needs cost per task and wall-clock time alongside it, since a quality gain may require much more compute or time. Reporting only the final answer omits whether the approach is viable for its intended use."
+    }
+  ]
+}

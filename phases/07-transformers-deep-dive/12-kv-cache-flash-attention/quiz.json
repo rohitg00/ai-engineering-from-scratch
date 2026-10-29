@@ -1,0 +1,78 @@
+{
+  "lesson": "12-kv-cache-flash-attention",
+  "title": "KV Cache, Flash Attention & Inference Optimization",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "During autoregressive generation, what makes recomputing the entire prefix wasteful?",
+      "options": [
+        "Earlier tokens change whenever the next token is sampled",
+        "Earlier token hidden states are deterministic once computed",
+        "The attention score matrix is already stored in the tokenizer",
+        "The model cannot reuse any key or value vectors"
+      ],
+      "correct": 1,
+      "explanation": "Once computed, a prefix token’s hidden state and its projected K/V vectors are fixed, so a later step can reuse them. Recomputing the entire prefix repeats those projections and attention work instead of processing only the new token."
+    },
+    {
+      "stage": "check",
+      "question": "What does a decoder’s KV cache store for each prefix token?",
+      "options": [
+        "Its attention weights and final sampled token",
+        "Its token ID and cross-entropy target",
+        "Its query vector and output logits only",
+        "Its key and value vectors at each layer"
+      ],
+      "correct": 3,
+      "explanation": "The cache stores each prefix token’s key and value vectors at every decoder layer, which new queries use to attend over the prefix. The query belongs to the newly processed token and its logits are outputs, not the cached prefix state."
+    },
+    {
+      "stage": "check",
+      "question": "For one KV head at a decoder layer, with d_head=128 and fp16 values of 2 bytes each, how many KV bytes are stored per token?",
+      "options": [
+        "1,024 bytes",
+        "128 bytes",
+        "256 bytes",
+        "512 bytes"
+      ],
+      "correct": 3,
+      "explanation": "One KV head stores one K and one V vector, so bytes per token are 2 × 128 values × 2 bytes/value = 512 bytes. The 1,024-byte option would double-count the result, as if each fp16 value used four bytes."
+    },
+    {
+      "stage": "check",
+      "question": "Which Flash Attention design choice avoids materializing the full N×N score matrix in HBM?",
+      "options": [
+        "Keep full scores in HBM but skip the final output projection",
+        "Store each complete attention score matrix in HBM",
+        "Increase head width so the score matrix has fewer rows",
+        "Tile Q, K, and V in SRAM with running softmax statistics"
+      ],
+      "correct": 3,
+      "explanation": "Flash Attention computes query, key, and value tiles on chip and carries running softmax normalization statistics forward, avoiding the full N×N score matrix in HBM. Storing that complete matrix in HBM retains the traffic it is designed to remove."
+    },
+    {
+      "stage": "post",
+      "question": "Many requests reuse the same long system prompt. Which optimization can reuse its computed prefix states?",
+      "options": [
+        "Continuous batching after every token",
+        "A larger attention head dimension",
+        "Prefix caching across requests",
+        "A full KV-cache reset between requests"
+      ],
+      "correct": 2,
+      "explanation": "Prefix caching keeps the key/value states for a shared prompt so subsequent requests can reuse the prefill computation. Resetting the full KV cache would discard those prefix states and force the prompt to be processed again."
+    },
+    {
+      "stage": "post",
+      "question": "A serving batch has finished short responses while other requests continue. What does continuous batching do?",
+      "options": [
+        "Stores completed responses inside the KV cache",
+        "Admits new requests as completed sequences leave",
+        "Splits each request into separate attention heads",
+        "Waits for every sequence to finish before refilling"
+      ],
+      "correct": 1,
+      "explanation": "Continuous batching admits new requests as finished sequences leave the active batch, keeping available GPU work filled. Waiting for every response in the batch to finish before refilling leaves idle capacity when response lengths vary."
+    }
+  ]
+}

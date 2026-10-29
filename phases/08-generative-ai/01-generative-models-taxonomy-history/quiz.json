@@ -1,0 +1,78 @@
+{
+  "lesson": "01-generative-models-taxonomy-history",
+  "title": "Generative Models — Taxonomy & History",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A generative model is trained on samples from an unknown distribution. What should it learn to do?",
+      "options": [
+        "Assign each training sample to a fixed class",
+        "Recover the exact source label for every sample",
+        "Compress every sample without learning a sampler",
+        "Produce new samples resembling the training distribution"
+      ],
+      "correct": 3,
+      "explanation": "A generative model learns a sampler whose new outputs resemble draws from the unknown data distribution. Assigning fixed labels classifies existing examples, but does not provide a process for producing new samples."
+    },
+    {
+      "stage": "check",
+      "question": "What can an explicit-density model do that an implicit GAN-style sampler cannot?",
+      "options": [
+        "Map noise into a realistic output",
+        "Evaluate how likely a particular point is",
+        "Generate a sample in one forward pass",
+        "Condition a sample on a class label"
+      ],
+      "correct": 1,
+      "explanation": "An explicit-density model exposes a tractable value such as log p(x), allowing a query about a point’s likelihood. An implicit GAN-style generator can sample, but has no density evaluation to return."
+    },
+    {
+      "stage": "check",
+      "question": "Which family optimizes a lower bound on log p(x) rather than an exact likelihood?",
+      "options": [
+        "Autoregressive models with exact factorization",
+        "Normalizing flows using invertible transforms",
+        "GANs using an implicit discriminator",
+        "VAEs using an ELBO objective"
+      ],
+      "correct": 3,
+      "explanation": "VAEs optimize an ELBO, a lower bound on log p(x), rather than an exact likelihood. Autoregressive factorization and invertible normalizing flows are the lesson’s tractable explicit-density families."
+    },
+    {
+      "stage": "check",
+      "question": "What happens before a token-based autoregressive model generates high-dimensional data?",
+      "options": [
+        "A discriminator assigns every pixel a realness score",
+        "A score model predicts a continuous density gradient",
+        "A tokenizer compresses it into discrete codes",
+        "A flow maps each sample to a Gaussian exactly"
+      ],
+      "correct": 2,
+      "explanation": "Token-based autoregressive generation first compresses high-dimensional data into a shorter sequence of discrete codes, then models that sequence. A score model predicts a continuous log-density gradient rather than discrete tokens."
+    },
+    {
+      "stage": "post",
+      "question": "A service needs exact log-likelihood values for density estimation and does not need samples. Which family does the lesson recommend?",
+      "options": [
+        "StyleGAN with a fixed-domain generator",
+        "GANs with a fast implicit sampler",
+        "Diffusion with iterative denoising",
+        "Normalizing flows with tractable likelihood"
+      ],
+      "correct": 3,
+      "explanation": "For density estimation without sampling, the use table recommends normalizing flows because their invertible transformations provide exact log p(x). A GAN’s fast implicit sampler cannot answer the likelihood query."
+    },
+    {
+      "stage": "post",
+      "question": "A narrow face-generation product values a single fast forward pass. Which model family fits the lesson’s inference comparison?",
+      "options": [
+        "A flow model with an autoregressive decoder",
+        "A GAN with one generator forward pass",
+        "A diffusion model with many denoising steps",
+        "A VAE with repeated latent refinement"
+      ],
+      "correct": 1,
+      "explanation": "A GAN generates by one forward pass through its generator, which suits a narrow face domain needing low latency. Diffusion instead runs an iterative denoising schedule, adding repeated inference steps."
+    }
+  ]
+}

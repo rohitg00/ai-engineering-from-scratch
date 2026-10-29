@@ -1,0 +1,78 @@
+{
+  "lesson": "12-rl-for-games",
+  "title": "RL for Games — AlphaZero, MuZero, and the LLM-Reasoning Era",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A math-solving policy emits several candidate answers for a prompt, and a trusted checker can verify each result. What signal makes this task resemble a game for RL?",
+      "options": [
+        "A verifier reward that marks a correct answer as a win.",
+        "A human-written transition table for every answer token.",
+        "A language-model score that ignores whether the answer is correct.",
+        "A search tree that assumes every candidate is equally successful."
+      ],
+      "correct": 0,
+      "explanation": "A verifier turns the outcome into a reward, such as 1 for a correct answer and 0 otherwise, so sampled token sequences have a checkable win signal. A language-model score that ignores correctness would reward fluency without establishing the game objective."
+    },
+    {
+      "stage": "check",
+      "question": "In AlphaZero self-play, what search output becomes the policy target at a move?",
+      "options": [
+        "The learned transition model's next-state prediction only.",
+        "The replay-buffer frequency of each reward sign.",
+        "The Monte Carlo tree-search visit distribution over legal moves.",
+        "The raw policy prior before tree search considers continuations."
+      ],
+      "correct": 2,
+      "explanation": "AlphaZero expands continuations with MCTS and uses its visit distribution π_t as the policy target for that move; the game result trains the value prediction. The raw prior helps guide search but is not the improved target produced by search."
+    },
+    {
+      "stage": "check",
+      "question": "What lets MuZero apply search when the environment's rules are not supplied?",
+      "options": [
+        "It queries the exact transition function and enumerates all future states.",
+        "It replaces search with a fixed table of human-selected moves.",
+        "It relies on a critic trained only from the current policy's raw scores.",
+        "It learns a latent dynamics model and searches in that latent space."
+      ],
+      "correct": 3,
+      "explanation": "MuZero learns an encoder h, latent dynamics g, and prediction function f, then searches over predicted latent states. The exact-transition-function option describes a known-rules planner, which MuZero was designed to avoid requiring."
+    },
+    {
+      "stage": "check",
+      "question": "For one prompt, GRPO samples several completions with rewards. How does it form the policy-gradient signal described in the lesson?",
+      "options": [
+        "Subtract a learned value critic from each reward and ignore other completions.",
+        "Use the human preference model score without any group comparison.",
+        "Normalize each reward by subtracting the group mean and dividing by group standard deviation.",
+        "Select the highest-reward completion and discard all remaining samples."
+      ],
+      "correct": 2,
+      "explanation": "For rewards r_i sampled for one prompt, GRPO computes A_i=(r_i−mean(r))/std(r), giving each completion a group-relative, normalized signal. Selecting only the winner throws away comparisons; the group baseline replaces a learned critic."
+    },
+    {
+      "stage": "post",
+      "question": "A perfect-information board game has known rules and long search horizons. Which recipe matches the lesson's search-based recommendation?",
+      "options": [
+        "A reward model over image captions with no tree expansion.",
+        "AlphaZero-style self-play with MCTS and a policy-value network.",
+        "GRPO over answer completions with no game search.",
+        "DPO over response preferences without online game outcomes."
+      ],
+      "correct": 1,
+      "explanation": "With known rules and long-horizon perfect-information search, AlphaZero combines a policy-value network, MCTS, and self-play to improve move targets. GRPO’s verifier-based completion updates are search-free rollouts and do not expand a game tree."
+    },
+    {
+      "stage": "post",
+      "question": "A coding verifier accepts a buggy solution because tests miss an edge case. What should improve before using its reward for GRPO?",
+      "options": [
+        "Increase group size while keeping the incomplete tests unchanged.",
+        "Add a larger KL penalty while keeping the incomplete tests unchanged.",
+        "Remove the verifier and reward every sampled completion equally.",
+        "Expand verifier coverage with edge cases or formal checks."
+      ],
+      "correct": 3,
+      "explanation": "A verifier that misses an edge case assigns reward 1 to a buggy output, so GRPO reinforces the wrong behavior. More samples or a larger KL penalty cannot fix a mislabeled reward; add tests or formal checks that expose the missing case."
+    }
+  ]
+}

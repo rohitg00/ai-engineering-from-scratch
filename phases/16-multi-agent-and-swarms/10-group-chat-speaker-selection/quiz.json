@@ -1,0 +1,78 @@
+{
+  "lesson": "10-group-chat-speaker-selection",
+  "title": "Group Chat and Speaker Selection",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Several peer agents share a conversation, and one mechanism decides who speaks next. What architecture is this?",
+      "options": [
+        "A queue-driven swarm with no conversation history",
+        "A single agent whose tools return other agents",
+        "A static pipeline with one fixed edge per task",
+        "Group chat with speaker selection over a shared pool"
+      ],
+      "correct": 3,
+      "explanation": "GroupChat gives participating agents a shared conversation pool and runs a selector to choose the next speaker. A tool-return handoff instead lets the current agent select a successor directly, so it is a different routing primitive."
+    },
+    {
+      "stage": "check",
+      "question": "What is the main tradeoff of round-robin speaker selection?",
+      "options": [
+        "It permits only one agent to speak in the entire conversation",
+        "It is deterministic but ignores which role best fits the context",
+        "It keeps messages private from every other participant",
+        "It is context-aware but requires an LLM call every turn"
+      ],
+      "correct": 1,
+      "explanation": "Round-robin is deterministic because it follows a fixed cycle, but it ignores whether the next role fits the current message. Context-aware selection can be more relevant, at the cost of an additional decision."
+    },
+    {
+      "stage": "check",
+      "question": "Why can LLM-selected speaker routing increase latency and cost?",
+      "options": [
+        "The message pool must be copied to durable storage every second",
+        "The selector may require an additional model call on each turn",
+        "Every agent must rerun all earlier tool calls",
+        "A speaker choice automatically starts a second workflow"
+      ],
+      "correct": 1,
+      "explanation": "An LLM selector reads the conversation and makes a routing decision, often with an extra model call each turn. That adds latency and tokens; it does not require rerunning all prior tools."
+    },
+    {
+      "stage": "check",
+      "question": "Which stopping rule ends a GroupChat when an agent emits a designated sentinel message?",
+      "options": [
+        "A thread-id checkpoint",
+        "A context projection update",
+        "A max-budget dollar check",
+        "A TERMINATE token check"
+      ],
+      "correct": 3,
+      "explanation": "When the designated sentinel appears, the manager can stop the conversation by checking for TERMINATE. A checkpoint records state and a budget check limits resource use; neither is the message-based sentinel condition."
+    },
+    {
+      "stage": "post",
+      "question": "Every agent reads the full pool, and the conversation grows beyond ten turns. What risk does the lesson identify?",
+      "options": [
+        "Automatic loss of the message correlation ids",
+        "A reduction in the number of selector options",
+        "Context bloat as each agent receives more prior messages",
+        "A guarantee that the first speaker dominates"
+      ],
+      "correct": 2,
+      "explanation": "A full pool grows with each turn, and each agent may receive more prior messages as context, raising token use and risking context pressure. The transcript does not guarantee that the first speaker dominates."
+    },
+    {
+      "stage": "post",
+      "question": "A team uses LLM-selected speakers and wants to debug an unexpected handoff. What should it log?",
+      "options": [
+        "The tool registry without any selection record",
+        "A count of agents without the recent message pool",
+        "The selector's input context and its chosen speaker",
+        "Only the final assistant answer after termination"
+      ],
+      "correct": 2,
+      "explanation": "To reproduce an unexpected routing decision, log the messages available to the selector and the speaker it returned. Recording only the final answer hides the input that caused the handoff."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "11-chameleon-early-fusion-tokens",
+  "title": "Chameleon and Early-Fusion Token-Only Multimodal Models",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does early fusion change about how a transformer represents images and text?",
+      "options": [
+        "Images are supplied only as labels for a text-only next-token model.",
+        "Images stay in a separate continuous tower until the final output layer.",
+        "Images become discrete tokens in a vocabulary shared with text.",
+        "Text is converted into image patches before entering the decoder."
+      ],
+      "correct": 2,
+      "explanation": "Early fusion quantizes image features into discrete IDs in the same vocabulary as text and modality markers, so one autoregressive decoder can read or emit both. A separate continuous vision tower joined late is the adapter design this approach contrasts with."
+    },
+    {
+      "stage": "check",
+      "question": "A Chameleon VQ tokenizer maps an image feature map of 32x32 locations to one codebook index per location. How many image tokens result?",
+      "options": [
+        "1,024 tokens, from 32*32 locations.",
+        "32 tokens, from one token per row.",
+        "64 tokens, from 32 locations per axis added together.",
+        "8,192 tokens, one for each possible codebook entry."
+      ],
+      "correct": 0,
+      "explanation": "One codebook index is emitted for each spatial feature, so 32×32=1,024 positions produce 1,024 image tokens. The 8,192 value is the number of possible codebook IDs, not the number of spatial locations."
+    },
+    {
+      "stage": "check",
+      "question": "How does the VQ-VAE choose a discrete image token for a continuous spatial feature?",
+      "options": [
+        "Choose the codebook entry whose index matches the pixel row.",
+        "Take the mean of all codebook vectors and emit its coordinate.",
+        "Sample a random codebook vector and train a separate text label.",
+        "Select the nearest codebook vector by L2 distance and emit its index."
+      ],
+      "correct": 3,
+      "explanation": "For each continuous feature, vector quantization computes distance to learned codebook vectors and emits the closest entry’s integer index. Choosing a random entry would discard the feature information needed for reconstruction or prediction."
+    },
+    {
+      "stage": "check",
+      "question": "What is a major training-stability role of QK-Norm in Chameleon's recipe?",
+      "options": [
+        "Normalize image pixels after the VQ decoder has generated them.",
+        "Normalize query and key projections before their attention dot product.",
+        "Normalize the codebook index so all image tokens have the same ID.",
+        "Normalize the final text response after the decoder stops."
+      ],
+      "correct": 1,
+      "explanation": "QK-Norm applies LayerNorm to query and key projections before their dot product, controlling attention-logit scale and preventing magnitude explosion at depth. Normalizing image pixels or codebook IDs does not stabilize the attention calculation."
+    },
+    {
+      "stage": "post",
+      "question": "A product must generate an image and then continue with text in one autoregressive response. Which design supports this directly?",
+      "options": [
+        "A CLIP dual encoder that returns image-text similarity scores.",
+        "Late-fusion LLaVA with projected visual inputs and text-only output.",
+        "Early fusion with shared text and image tokens in one decoder vocabulary.",
+        "A Q-Former bridge whose only output is a text embedding."
+      ],
+      "correct": 2,
+      "explanation": "Because image and text tokens share one output vocabulary, Chameleon can emit an image-code sequence and then continue with text in the same autoregressive response. A text-only-output adapter VLM cannot generate image tokens this way."
+    },
+    {
+      "stage": "post",
+      "question": "A deployment only needs image understanding and wants to reuse a strong pretrained LLM without an image-tokenizer quality ceiling. Which approach is the simpler fit?",
+      "options": [
+        "An early-fusion Chameleon model that generates discrete image codes.",
+        "A shared vocabulary that requires generating an image for every prompt.",
+        "A late-fusion adapter VLM such as LLaVA or BLIP-2.",
+        "A VQ-VAE decoder trained to render images without an LLM."
+      ],
+      "correct": 2,
+      "explanation": "For understanding-only use, a late-fusion adapter can reuse a strong pretrained LLM and avoid making image generation depend on a discrete VQ reconstruction ceiling. Chameleon’s shared-token design is valuable when mixed-modality generation is required."
+    }
+  ]
+}

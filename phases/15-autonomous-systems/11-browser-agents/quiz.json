@@ -1,0 +1,78 @@
+{
+  "lesson": "11-browser-agents",
+  "title": "Browser Agents and Long-Horizon Web Tasks",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A browser agent reads a page written by an unknown site and then submits a form. What makes this workflow especially risky?",
+      "options": [
+        "The agent cannot access authenticated sessions",
+        "A form submission is always a read-only action",
+        "Browser pages contain no instructions that models can read",
+        "Untrusted content can influence a consequential write"
+      ],
+      "correct": 3,
+      "explanation": "A browser agent reads untrusted page content but can submit forms using the user’s authority, so page text can influence a consequential write. Authenticated access is part of the risk, not something browser agents lack."
+    },
+    {
+      "stage": "check",
+      "question": "A fetched page contains the phrase ignore previous instructions and requests an exfiltration post. Which defense in the demo strips this visible-text pattern?",
+      "options": [
+        "The URL fragment parser",
+        "The permission-mode budget cap",
+        "The content sanitizer",
+        "The benchmark task verifier"
+      ],
+      "correct": 2,
+      "explanation": "The sanitizer scans visible HTML for known phrases and strips matches; it does not parse URL fragments. A fragment parser would be a different component, not the defense that catches this visible-text pattern."
+    },
+    {
+      "stage": "check",
+      "question": "A malicious command is hidden in a URL fragment, which the sanitizer does not inspect. What defense can still block the resulting write?",
+      "options": [
+        "A retry that submits the write a second time",
+        "A longer agent context that preserves the page details",
+        "A read/write boundary that rejects page-originated writes",
+        "A benchmark score that counts the URL as a task"
+      ],
+      "correct": 2,
+      "explanation": "The read/write boundary checks the origin of a consequential action and blocks a write initiated by page content even when the URL fragment escaped sanitization. Retrying the same write would repeat the risk."
+    },
+    {
+      "stage": "check",
+      "question": "Which benchmark is intended to measure an agent operating a full desktop with mouse, keyboard, and shell?",
+      "options": [
+        "SWE-bench Pro",
+        "OSWorld",
+        "BrowseComp",
+        "WebArena-Verified"
+      ],
+      "correct": 1,
+      "explanation": "OSWorld measures full desktop operation with mouse, keyboard, and shell. BrowseComp tests web fact-finding, while WebArena-Verified measures transactional web workflows."
+    },
+    {
+      "stage": "post",
+      "question": "A browser agent follows a URL-fragment instruction to post a session token. The sanitizer only sees HTML, while the write boundary rejects page-originated actions. What result should occur?",
+      "options": [
+        "Both defenses approve because the fragment is not visible",
+        "The sanitizer can miss it, but the write boundary blocks the post",
+        "The write boundary blocks every read before the page loads",
+        "The sanitizer removes the fragment and approves the post"
+      ],
+      "correct": 1,
+      "explanation": "The URL fragment enters model context even though the HTML sanitizer misses it; the page-originated post is then blocked by the read/write boundary. The two controls cover different parts of the attack path."
+    },
+    {
+      "stage": "post",
+      "question": "A task requires browsing authenticated pages and making external changes. Which deployment control set best follows the lesson?",
+      "options": [
+        "One broad permission grant reused across every browser task",
+        "Scoped credentials, write approval, request logs, and session isolation",
+        "HTML sanitization alone with no distinction between reads and writes",
+        "Production credentials, unrestricted egress, and no action records"
+      ],
+      "correct": 1,
+      "explanation": "Scoped credentials, session isolation, retained request logs, and approval for consequential writes limit exposure across the workflow. Sanitization alone cannot stop every injection or multi-step exfiltration path."
+    }
+  ]
+}

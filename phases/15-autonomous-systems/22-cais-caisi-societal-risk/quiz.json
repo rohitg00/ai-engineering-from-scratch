@@ -1,0 +1,78 @@
+{
+  "lesson": "22-cais-caisi-societal-risk",
+  "title": "CAIS, CAISI, and Societal-Scale Risk",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Two organizations have similar acronyms: one nonprofit publishes a four-risk framework, while one NIST center runs agreements and evaluations. Which identification is correct?",
+      "options": [
+        "CAIS is a private lab evaluator; CAISI is an industry standards body.",
+        "CAIS is the nonprofit risk group; CAISI operates within NIST.",
+        "Both names refer to one nonprofit with separate evaluation programs.",
+        "CAIS is the NIST center; CAISI is the nonprofit risk-framework group."
+      ],
+      "correct": 1,
+      "explanation": "CAIS is the nonprofit that publishes the four-risk framework; CAISI is the NIST center for government-facing agreements and unclassified evaluations. Calling CAIS a private lab evaluator and CAISI an industry standards body misassigns both organizations."
+    },
+    {
+      "stage": "check",
+      "question": "Two labs rush deployment because each fears competitors will launch first. Which CAIS risk category best captures this pressure?",
+      "options": [
+        "Rogue AIs",
+        "AI races",
+        "Organizational risks",
+        "Malicious use"
+      ],
+      "correct": 1,
+      "explanation": "AI races describe competitive pressure among labs, firms, or nations that can push deployment past safety. Malicious use instead describes a bad actor using AI to cause harm."
+    },
+    {
+      "stage": "check",
+      "question": "A team lacks independent audits and information-security controls. Which category in the lesson directly covers those internal conditions?",
+      "options": [
+        "Organizational risks from weak audits, culture, and security",
+        "Malicious use by an actor seeking harmful capabilities",
+        "Rogue AIs pursuing goals that conflict with human welfare",
+        "AI races from pressure to launch ahead of rivals"
+      ],
+      "correct": 0,
+      "explanation": "Weak audits and information security are internal organizational conditions, so they fit organizational risk. Competitive pressure may contribute, but AI races names a different source of pressure."
+    },
+    {
+      "stage": "check",
+      "question": "What role does the NIST Center for AI Standards and Innovation play in this lesson?",
+      "options": [
+        "A private benchmark suite available only to labs under NDA",
+        "A nonprofit taxonomy of four societal risk categories",
+        "Government-facing voluntary agreements and unclassified evaluations",
+        "A runtime permission mode for browser agents"
+      ],
+      "correct": 2,
+      "explanation": "CAISI operates within NIST and runs voluntary agreements plus unclassified capability evaluations. The four-risk nonprofit taxonomy belongs to CAIS, not the government-facing center."
+    },
+    {
+      "stage": "post",
+      "question": "A public-facing deployment can enable harmful capabilities and faces pressure to launch ahead of rivals. Which two risk tags fit the lesson's inventory logic?",
+      "options": [
+        "Organizational risks and rogue AIs",
+        "AI races and organizational risks",
+        "Rogue AIs and malicious use",
+        "Malicious use and AI races"
+      ],
+      "correct": 3,
+      "explanation": "The scenario’s public harmful capability maps to malicious-use exposure, and pressure to launch ahead of rivals maps to AI races. Rogue-AI or organizational tags would need additional facts not stated."
+    },
+    {
+      "stage": "post",
+      "question": "A lab publishes a scaling policy but has no independent evaluation or public/government-facing scrutiny. What conclusion follows from the lesson’s societal-risk synthesis?",
+      "options": [
+        "Government oversight should replace practitioner-level controls altogether.",
+        "The response needs policy, independent evaluation, civil society, and government layers.",
+        "A single lab framework can replace external evaluation and public oversight.",
+        "Only the risk taxonomy needs expansion before deployment can be assessed."
+      ],
+      "correct": 1,
+      "explanation": "The synthesis combines lab policies, external measurements, civil-society scrutiny, government programs, and practitioner controls because no single layer closes catastrophic risk. A lab policy alone cannot replace independent and public oversight."
+    }
+  ]
+}

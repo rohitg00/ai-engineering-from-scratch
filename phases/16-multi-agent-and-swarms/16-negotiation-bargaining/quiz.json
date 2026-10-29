@@ -1,0 +1,78 @@
+{
+  "lesson": "16-negotiation-bargaining",
+  "title": "Negotiation and Bargaining",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A buyer's maximum is $100 and a seller's minimum is $60. Which prices are within their zone of possible agreement?",
+      "options": [
+        "Prices from $60 through $100 inclusive",
+        "Prices below $60 only",
+        "Prices above $100 only",
+        "Prices from $100 through $160 inclusive"
+      ],
+      "correct": 0,
+      "explanation": "The buyer accepts prices no higher than $100, while the seller accepts prices no lower than $60, so their overlap is [$60,$100], including both limits. The $100–$160 option includes prices above the buyer’s maximum and cannot satisfy both reservations."
+    },
+    {
+      "stage": "check",
+      "question": "In Contract Net, what does the manager send before bidders return offers?",
+      "options": [
+        "An accept-proposal message",
+        "A final artifact",
+        "A second-price payment",
+        "A call for proposals"
+      ],
+      "correct": 3,
+      "explanation": "The manager first sends a call for proposals (CFP), inviting bidders to submit offers; it accepts a proposal only after comparing them. Sending accept-proposal first skips the bidding and selection steps."
+    },
+    {
+      "stage": "check",
+      "question": "What job does the deterministic offer generator perform in the OG-Narrator design?",
+      "options": [
+        "Write a persuasive explanation of the offer",
+        "Compute the numeric offer from the negotiation state",
+        "Select a new model provider for each round",
+        "Expose private reservation values to the counterpart"
+      ],
+      "correct": 1,
+      "explanation": "The offer generator computes a numeric price from the current bargaining state and strategy, while the LLM narrates that offer. Asking the model to write the persuasive explanation belongs to narration, not the deterministic mechanism."
+    },
+    {
+      "stage": "check",
+      "question": "Why should a negotiator keep its reservation price out of the public message channel?",
+      "options": [
+        "Public messages cannot carry numeric offers",
+        "The counterpart could use it to improve its own bargaining position",
+        "The price becomes invalid if stored in a private scratchpad",
+        "The manager cannot accept a proposal with a reservation value"
+      ],
+      "correct": 1,
+      "explanation": "A reservation price reveals the negotiator’s private limit, allowing the counterpart to anchor or concede only enough to capture more surplus. Public messages can carry offers; the issue is exposing the hidden fallback threshold, not numeric content itself."
+    },
+    {
+      "stage": "post",
+      "question": "A worker bids above the task budget or misses the deadline. What should the Contract Net manager do before award?",
+      "options": [
+        "Raise the deadline after the winner is chosen",
+        "Average its price with the task budget",
+        "Exclude the infeasible proposal from the award set",
+        "Accept it because it has the highest confidence"
+      ],
+      "correct": 2,
+      "explanation": "The manager first filters bids by both constraints—price ≤ budget and ETA ≤ deadline—then scores the feasible set. High confidence cannot make an over-budget or late proposal fulfill the task contract."
+    },
+    {
+      "stage": "post",
+      "question": "A bargaining prompt asks the model to pick prices and explain them. Which structural change follows the lesson's engineering rule?",
+      "options": [
+        "Let the model invent prices and validate only the prose",
+        "Generate prices deterministically and let the model narrate",
+        "Expose each agent's private reasoning to the other side",
+        "Use one unconstrained message as both offer and verification"
+      ],
+      "correct": 1,
+      "explanation": "Separate deterministic price generation from LLM narration so a defined policy enforces the offer constraints while the model explains it. Letting the model invent prices and checking only prose leaves the numeric decision unvalidated."
+    }
+  ]
+}

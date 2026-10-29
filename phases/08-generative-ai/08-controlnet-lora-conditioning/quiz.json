@@ -1,0 +1,78 @@
+{
+  "lesson": "08-controlnet-lora-conditioning",
+  "title": "ControlNet, LoRA & Conditioning",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A prompt describes a subject but does not specify where it should appear. What kind of control signal would help?",
+      "options": [
+        "A lower-rank style adapter for the text encoder",
+        "A later diffusion timestep embedding for denoising",
+        "A larger vocabulary for describing subject locations",
+        "A spatial condition such as pose, depth, or edges"
+      ],
+      "correct": 3,
+      "explanation": "A spatial condition such as a pose skeleton, depth map, or edge image supplies layout information that prose does not specify efficiently. Adding vocabulary gives more words for locations but still does not anchor exact geometry."
+    },
+    {
+      "stage": "check",
+      "question": "How does ControlNet connect conditioning to a pretrained diffusion U-Net?",
+      "options": [
+        "A text encoder projects conditions into the VAE prior",
+        "A new discriminator replaces the original U-Net decoder",
+        "A cloned encoder feeds zero-convolution skips into the frozen model",
+        "A full-model copy replaces every attention projection"
+      ],
+      "correct": 2,
+      "explanation": "ControlNet freezes the pretrained base and trains a cloned encoder to read the condition; zero-convolution skip connections inject its features into the original model. Replacing the whole U-Net would discard the pretrained decoder path."
+    },
+    {
+      "stage": "check",
+      "question": "What does zero initialization accomplish for a ControlNet side path?",
+      "options": [
+        "It starts as a no-op before learning a conditioning delta",
+        "It forces the generator output to remain exactly zero",
+        "It initializes all LoRA matrices to full rank",
+        "It deletes the original U-Net weights before training"
+      ],
+      "correct": 0,
+      "explanation": "Zero-initialized convolutions make the side contribution zero at the start, so the output initially matches the frozen base; training can then learn a conditioning delta. This does not zero the base model’s own output."
+    },
+    {
+      "stage": "check",
+      "question": "For a frozen d×d weight matrix, how many trainable parameters does a rank-r LoRA delta use?",
+      "options": [
+        "2d²r parameters",
+        "dr² parameters",
+        "d² parameters",
+        "2dr parameters"
+      ],
+      "correct": 3,
+      "explanation": "A rank-r adapter stores A with r×d entries and B with d×r entries, totaling rd+dr=2dr trainable parameters. A dense d² update is the full-matrix alternative rather than the low-rank delta."
+    },
+    {
+      "stage": "post",
+      "question": "An artist needs an exact pose and canvas layout while keeping the prompt style. Which tool fits the spatial requirement?",
+      "options": [
+        "A style LoRA alone at high runtime weight",
+        "IP-Adapter with a reference image only",
+        "ControlNet-Openpose plus a text-conditioned base",
+        "Textual inversion of the pose description"
+      ],
+      "correct": 2,
+      "explanation": "ControlNet-Openpose supplies the pose and layout constraint, while the text-conditioned base retains the prompt’s style and content. A LoRA mainly adjusts semantic style or subject and does not by itself enforce an exact spatial pose."
+    },
+    {
+      "stage": "post",
+      "question": "Two ControlNets at weight 1.0 each overshoot the desired conditioning. What adjustment follows the lesson’s safe default?",
+      "options": [
+        "Set both side-network gates permanently to zero",
+        "Merge both control maps into the text tokens",
+        "Raise each weight to preserve the frozen base",
+        "Reduce their combined weight toward about 1.0"
+      ],
+      "correct": 3,
+      "explanation": "Two controls each at weight 1.0 sum to about 2.0 and can overshoot. The lesson suggests a combined weight around 1.0 as a safe starting point, so reducing their joint strength addresses the interaction."
+    }
+  ]
+}

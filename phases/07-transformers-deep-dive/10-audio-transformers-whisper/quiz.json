@@ -1,0 +1,78 @@
+{
+  "lesson": "10-audio-transformers-whisper",
+  "title": "Audio Transformers — Whisper Architecture",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A model receives audio and produces written words. Which modality path describes Whisper?",
+      "options": [
+        "Text tokens through encoder to a waveform vocoder",
+        "Audio waveform through a speaker classifier",
+        "A transcript through a patch embedding layer",
+        "Log-mel audio through encoder to text decoder"
+      ],
+      "correct": 3,
+      "explanation": "Whisper converts audio into log-mel frames, encodes those frames, and autoregressively decodes text tokens. A vocoder would synthesize speech from text, which is the reverse direction of this recognition path."
+    },
+    {
+      "stage": "check",
+      "question": "At 16 kHz, what sample counts correspond to Whisper’s 25 ms frame and 10 ms hop?",
+      "options": [
+        "25-sample frame and 10-sample hop",
+        "400-sample frame and 160-sample hop",
+        "160-sample frame and 400-sample hop",
+        "800-sample frame and 320-sample hop"
+      ],
+      "correct": 1,
+      "explanation": "At 16,000 samples per second, 25 ms is 0.025 × 16,000 = 400 samples and 10 ms is 0.010 × 16,000 = 160 samples. The 160/400 option reverses frame duration and hop stride."
+    },
+    {
+      "stage": "check",
+      "question": "What role does Whisper’s convolutional stem play before the transformer encoder?",
+      "options": [
+        "It replaces the log-mel input with codec tokens",
+        "It assigns speaker labels to each transcript word",
+        "It converts encoder states back into a waveform",
+        "It down-samples the log-mel frame sequence"
+      ],
+      "correct": 3,
+      "explanation": "The convolutional stem reduces the log-mel time-frame sequence before self-attention, shortening the sequence the encoder processes. Speaker labels and waveform generation are separate tasks and are not the stem’s function."
+    },
+    {
+      "stage": "check",
+      "question": "Which prompt prefix requests French input speech to be translated into English?",
+      "options": [
+        "French language tag with the translate task token",
+        "English language tag with the no-timestamps token",
+        "French language tag with the transcribe task token",
+        "English language tag with the transcribe task token"
+      ],
+      "correct": 0,
+      "explanation": "The prompt’s French language tag identifies the source language, and the translate token requests translation into English. The transcribe token instead asks for the words in the identified language."
+    },
+    {
+      "stage": "post",
+      "question": "A meeting transcript must include speaker identities and turns. Which limitation should the system address separately?",
+      "options": [
+        "Whisper converts each transcript token into an embedding label",
+        "Whisper’s 30-second window automatically clusters speakers",
+        "Whisper assigns speaker labels through its translation token",
+        "Whisper has no diarization, so add a speaker diarization tool"
+      ],
+      "correct": 3,
+      "explanation": "Whisper performs transcription but does not determine who spoke each segment; diarization requires a separate component such as pyannote. A 30-second input window sets chunk length and does not automatically cluster speakers."
+    },
+    {
+      "stage": "post",
+      "question": "A deployment needs low-latency live transcription on an edge device. Which choice fits the lesson’s model-selection guidance?",
+      "options": [
+        "Use a dedicated streaming or edge ASR model",
+        "Send each turn to Whisper as a 30-second batch",
+        "Use a waveform vocoder to predict text tokens",
+        "Use a BERT encoder with a sentiment head"
+      ],
+      "correct": 0,
+      "explanation": "The lesson distinguishes Whisper’s fixed 30-second chunks from native live streaming, and recommends dedicated streaming or edge ASR for low latency. Submitting each turn as a 30-second Whisper batch preserves the limitation."
+    }
+  ]
+}

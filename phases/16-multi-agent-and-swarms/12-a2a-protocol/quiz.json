@@ -1,0 +1,78 @@
+{
+  "lesson": "12-a2a-protocol",
+  "title": "A2A — The Agent-to-Agent Protocol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An agent needs to delegate a long-running task to a peer built with another framework. What does A2A provide?",
+      "options": [
+        "A queue that forces both agents to share one runtime",
+        "A local function call that exposes the peer's private reasoning",
+        "A schema validator for a single tool's arguments",
+        "A common task protocol with discovery, lifecycle, and typed outputs"
+      ],
+      "correct": 3,
+      "explanation": "A2A standardizes discovery, task submission and lifecycle, and typed artifacts across peer agents, while leaving each server’s implementation opaque. Requiring a shared runtime would defeat the point of connecting independently built agents."
+    },
+    {
+      "stage": "check",
+      "question": "Which metadata belongs in an A2A Agent Card for client discovery?",
+      "options": [
+        "The complete code and private prompts used by the remote agent",
+        "Skills plus supported interface URL, binding, and protocol version",
+        "Only the final artifact produced by the most recent task",
+        "The caller's task history and its local thread checkpoint"
+      ],
+      "correct": 1,
+      "explanation": "An Agent Card advertises skills and the supported interface URL, binding, and version so a client can discover how to connect. The client needs the peer’s capabilities, not its private prompt or full source code."
+    },
+    {
+      "stage": "check",
+      "question": "A new A2A request is accepted and then the remote agent works asynchronously. Which state sequence is expected?",
+      "options": [
+        "FAILED, WORKING, then SUBMITTED",
+        "COMPLETED, SUBMITTED, then INPUT_REQUIRED",
+        "SUBMITTED, WORKING, then a terminal state",
+        "CANCELED, COMPLETED, then WORKING"
+      ],
+      "correct": 2,
+      "explanation": "A task moves from SUBMITTED to WORKING and then to a terminal result such as COMPLETED, FAILED, CANCELED, or REJECTED. Starting at FAILED reverses the lifecycle; input-required is an interruption, not a terminal result."
+    },
+    {
+      "stage": "check",
+      "question": "An A2A streaming response carries progress and output updates. Which event types does the lesson describe?",
+      "options": [
+        "checkpointStart and retryBudget",
+        "statusUpdate and artifactUpdate",
+        "tool_call_delta and functionResponse",
+        "speakerSelected and handoffReturned"
+      ],
+      "correct": 1,
+      "explanation": "The A2A stream reports task progress with statusUpdate and artifactUpdate events, then closes at a terminal state. Tool-call deltas and function responses belong to tool-calling streams, not the A2A task event vocabulary."
+    },
+    {
+      "stage": "post",
+      "question": "A task input contains plain instructions and structured JSON parameters. How can A2A represent these as separate Parts?",
+      "options": [
+        "Put both values in the role field of one Part",
+        "Use text for the instruction and data for the structured payload",
+        "Store the JSON payload only in the Agent Card",
+        "Use a kind field to label one combined content object"
+      ],
+      "correct": 1,
+      "explanation": "A Part carries one content form, so the instruction can be a text Part and parameters a separate data Part. A kind field would combine or relabel content rather than use the distinct typed payload fields described in the lesson."
+    },
+    {
+      "stage": "post",
+      "question": "A polling client wants the task returned immediately, before work reaches a terminal state. What configuration does the lesson name?",
+      "options": [
+        "Send an artifactUpdate event before creating the task",
+        "Set the task status directly to completed",
+        "Set configuration.returnImmediately to true",
+        "Remove A2A-Version from the request"
+      ],
+      "correct": 2,
+      "explanation": "`configuration.returnImmediately` asks SendMessage to return the task before it finishes, after which the client polls for later status. Setting status to completed would falsely report work finished rather than request an early acknowledgement."
+    }
+  ]
+}

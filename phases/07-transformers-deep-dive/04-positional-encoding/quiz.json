@@ -1,0 +1,78 @@
+{
+  "lesson": "04-positional-encoding",
+  "title": "Positional Encoding — Sinusoidal, RoPE, ALiBi",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A sequence model must distinguish the same words in a different order. What does attention need?",
+      "options": [
+        "A second value projection for every head",
+        "A lower learning rate during training",
+        "A signal that carries position information",
+        "A larger token vocabulary for each word"
+      ],
+      "correct": 2,
+      "explanation": "Self-attention without positional signal is permutation-equivariant: reordering inputs only reorders outputs, so it cannot tell which word came first. A larger vocabulary identifies token types but says nothing about their sequence positions."
+    },
+    {
+      "stage": "check",
+      "question": "Where does sinusoidal absolute position encoding enter the original transformer input?",
+      "options": [
+        "It is added to the token embeddings",
+        "It is multiplied into the output projection",
+        "It is subtracted from attention values",
+        "It is used as a bias only after softmax"
+      ],
+      "correct": 0,
+      "explanation": "The original sinusoidal scheme forms X′ = X + PE before the attention layers, giving each token embedding a position-dependent signal. Adding it to the output projection would occur too late to inform attention scores."
+    },
+    {
+      "stage": "check",
+      "question": "What positional relationship is directly encoded by the dot product after RoPE rotates Q and K?",
+      "options": [
+        "The absolute location of the query alone",
+        "The relative distance between their positions",
+        "The sum of the embedding coordinates",
+        "The number of tokens in the vocabulary"
+      ],
+      "correct": 1,
+      "explanation": "Applying RoPE rotations to Q and K makes their dot product depend on m−n; shifting both positions together leaves that relative gap unchanged. The score therefore encodes distance, not the query absolute location alone."
+    },
+    {
+      "stage": "check",
+      "question": "How does ALiBi alter an attention score for a distant position?",
+      "options": [
+        "Rotates the value vector by its absolute position",
+        "Subtracts a head-specific penalty proportional to distance",
+        "Deletes every token outside a fixed window",
+        "Adds a sinusoidal vector to the token embedding"
+      ],
+      "correct": 1,
+      "explanation": "ALiBi subtracts m_h·|i−j| from each head’s score, increasing the penalty as distance grows. A sliding window would remove positions entirely, which is a different operation from the additive distance bias."
+    },
+    {
+      "stage": "post",
+      "question": "A model must extend context length using a RoPE-based approach. What lesson-supported adjustment can help?",
+      "options": [
+        "Increase the training mask’s causal window only",
+        "Replace queries and keys with value vectors",
+        "Scale RoPE frequencies with YaRN or a larger base",
+        "Add absolute sinusoidal embeddings only after decoding"
+      ],
+      "correct": 2,
+      "explanation": "Scaling RoPE base or using YaRN changes the rotations’ frequency schedule so positions can be extended beyond the trained range. Widening the causal mask changes which tokens are visible but leaves that position-frequency mapping untouched."
+    },
+    {
+      "stage": "post",
+      "question": "A model should add no positional embedding table and should favor nearby tokens through a score penalty. Which method fits?",
+      "options": [
+        "RoPE rotations applied to the query and key",
+        "Absolute sinusoidal embeddings added to tokens",
+        "ALiBi with per-head distance slopes",
+        "Learned absolute embeddings indexed by position"
+      ],
+      "correct": 2,
+      "explanation": "ALiBi leaves embeddings alone and adds per-head distance slopes directly to attention scores, favoring nearer positions. RoPE instead rotates queries and keys, so it does not match the requested score-penalty mechanism."
+    }
+  ]
+}

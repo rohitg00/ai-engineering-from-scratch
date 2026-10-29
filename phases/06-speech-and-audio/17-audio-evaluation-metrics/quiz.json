@@ -1,0 +1,78 @@
+{
+  "lesson": "17-audio-evaluation-metrics",
+  "title": "Audio Evaluation — WER, MOS, UTMOS, MMAU, FAD, and the Open Leaderboards",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team reports one metric for every audio task. Why is that insufficient?",
+      "options": [
+        "Audio tasks all share a single error definition",
+        "Different metrics measure different task axes",
+        "Human ratings replace all objective audio scores",
+        "Averaging always removes every evaluation bias"
+      ],
+      "correct": 1,
+      "explanation": "Metrics measure different outcomes: transcript error, perceived quality, speaker similarity, distribution distance, and latency are not interchangeable. An ASR error score cannot show TTS naturalness or streaming delay, so the metric must match the task axis."
+    },
+    {
+      "stage": "check",
+      "question": "Reference has 4 words; a hypothesis has one substitution and one deletion. What is WER?",
+      "options": [
+        "0.50",
+        "0.25",
+        "1.00",
+        "0.75"
+      ],
+      "correct": 0,
+      "explanation": "WER = (S + D + I)/N = (1 + 1 + 0)/4 = 0.50, with the four reference words as the denominator. The 0.25 distractor counts only one of the two word edits; both the substitution and deletion contribute."
+    },
+    {
+      "stage": "check",
+      "question": "Which metric is the primary choice for multi-label audio classification?",
+      "options": [
+        "Word error rate after text normalization",
+        "Top-one accuracy for a single class",
+        "Mean average precision across classes",
+        "Equal error rate across speaker trials"
+      ],
+      "correct": 2,
+      "explanation": "Multi-label classification can assign several classes to one clip, so mAP evaluates class-wise precision-recall ranking across those labels. Top-one accuracy assumes one exclusive label; EER and WER instead evaluate speaker trials and transcripts."
+    },
+    {
+      "stage": "check",
+      "question": "What is the key distinction between MOS and UTMOS in this lesson?",
+      "options": [
+        "MOS uses audio embeddings; UTMOS uses paired preferences",
+        "MOS is reference-free; UTMOS requires exact transcripts",
+        "MOS measures speaker identity; UTMOS measures word error",
+        "MOS is a human rating; UTMOS is a learned predictor"
+      ],
+      "correct": 3,
+      "explanation": "MOS is a 1–5 rating collected from human listeners, while UTMOS is a learned model that predicts MOS from audio. Speaker identity is measured by SECS, and word intelligibility can be checked with ASR round-trip WER/CER."
+    },
+    {
+      "stage": "post",
+      "question": "A team compares FAD after changing its reference audio collection. What should it do for a fair model comparison?",
+      "options": [
+        "Use the same reference distribution across models",
+        "Choose each model’s easiest reference collection",
+        "Prefer the model with the largest FAD value",
+        "Convert FAD into an ASR word error score"
+      ],
+      "correct": 0,
+      "explanation": "FAD depends on the reference audio distribution, so compare models against the same collection and preprocessing. Changing the reference set changes the measured distance, confounding model quality with dataset composition."
+    },
+    {
+      "stage": "post",
+      "question": "A streaming system has acceptable average latency but occasional slow responses. Which report best exposes this tail?",
+      "options": [
+        "Report P50, P95, and P99 latency",
+        "Report the best single response time",
+        "Report aggregate WER for the transcript set",
+        "Report only the mean across all turns"
+      ],
+      "correct": 0,
+      "explanation": "P50, P95, and P99 show median and slow-tail response latency, revealing occasional stalls that the mean can hide. A mean collapses fast and slow turns into one value and can conceal the tail users experience."
+    }
+  ]
+}

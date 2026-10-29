@@ -1,0 +1,78 @@
+{
+  "lesson": "04-q-learning-sarsa",
+  "title": "Temporal Difference — Q-Learning & SARSA",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A learner should update after each transition without waiting for the episode to end. Which estimate can supply its one-step target?",
+      "options": [
+        "The complete transition model must be enumerated before each update.",
+        "The next state's current value estimate can be used for bootstrapping.",
+        "The target action must be removed before computing any value.",
+        "The final episode return must be collected before any update occurs."
+      ],
+      "correct": 1,
+      "explanation": "TD updates from one observed transition by combining its reward with a discounted estimate of the next state, then correcting the current value toward that target. This bootstrapping lets learning begin before an episode ends; waiting for the complete return is Monte Carlo."
+    },
+    {
+      "stage": "check",
+      "question": "For Q-learning, r = -2, gamma = 0.5, and max_a' Q(s',a') = 4. What is the nonterminal one-step target?",
+      "options": [
+        "1, from one half of (-2 plus 4).",
+        "-1, from one half of -2 with no successor term.",
+        "0, from -2 plus one half of 4.",
+        "-4, from -2 minus one half of 4."
+      ],
+      "correct": 2,
+      "explanation": "The nonterminal Q-learning target is r+γ max_a′Q(s′,a′)=−2+0.5×4=0. The “one” option discounts the whole sum, 0.5(−2+4)=1, and “minus one” drops the successor term before discounting. Subtracting the bootstrapped value would give −4; the target adds it."
+    },
+    {
+      "stage": "check",
+      "question": "Which next-action value appears in SARSA's update target?",
+      "options": [
+        "Q(s', a') for the next action the behavior policy actually selects.",
+        "The complete episode return after the current episode terminates.",
+        "The average Q value across every state in the environment.",
+        "The maximum Q value at s' even when that action was not selected."
+      ],
+      "correct": 0,
+      "explanation": "SARSA uses the next action a′ that the behavior policy actually samples at s′, so its target reflects the policy currently exploring. Using the largest Q value even when that action was not chosen is Q-learning’s off-policy target."
+    },
+    {
+      "stage": "check",
+      "question": "A Q-learning transition reaches a terminal state with reward r. What target should the update use?",
+      "options": [
+        "r alone, with no bootstrap term after termination.",
+        "r plus gamma times the largest terminal-state action value.",
+        "gamma times r, with no terminal-state value added.",
+        "The average return from every earlier episode."
+      ],
+      "correct": 0,
+      "explanation": "At termination there is no next decision whose value should be added, so the target is just the observed reward r. The extra max-Q term would count value beyond the terminal state; discounting r alone also changes the specified target."
+    },
+    {
+      "stage": "post",
+      "question": "During deployment, exploration remains active near a cliff where a random move can cost -100. Which method better reflects that risk in its learned values?",
+      "options": [
+        "Monte Carlo, because it removes all random actions from collected episodes.",
+        "Q-learning, because its target assumes the greedy next action during exploration.",
+        "Value iteration, because its target averages over every next action equally.",
+        "SARSA, because its target includes the next action actually chosen during exploration."
+      ],
+      "correct": 3,
+      "explanation": "With exploration still active near the cliff, SARSA’s sampled next action can include the risky move, lowering the learned value of routes close to it. Q-learning’s max target assumes a greedy continuation, so it can favor the edge despite exploratory behavior."
+    },
+    {
+      "stage": "post",
+      "question": "Noisy action-value estimates make max_a Q(s,a) systematically optimistic. Which method named in the lesson addresses this maximization bias?",
+      "options": [
+        "Double Q-learning, which uses two Q tables to reduce the upward bias.",
+        "Monte Carlo control, which always removes variance from full returns.",
+        "Expected SARSA averages next-action values under the current policy.",
+        "Policy iteration, which chooses the largest noisy Q estimate twice."
+      ],
+      "correct": 0,
+      "explanation": "The lesson identifies Double Q-learning as the fix for upward bias from maximizing noisy estimates and describes its use of two Q tables. Expected SARSA averages over the policy’s next actions to reduce sampling variance; it is not the named max-bias correction."
+    }
+  ]
+}

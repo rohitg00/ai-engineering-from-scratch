@@ -1,0 +1,78 @@
+{
+  "lesson": "22-production-scaling-queues-checkpoints",
+  "title": "Production Scaling — Queues, Checkpoints, Durability",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A worker may crash during a multi-hour agent run. What infrastructure lets another worker resume the run's saved progress?",
+      "options": [
+        "A round-robin selector over every registered agent",
+        "A longer system prompt copied into each worker",
+        "An in-memory queue that disappears with the process",
+        "Durable checkpoints keyed by the run identifier"
+      ],
+      "correct": 3,
+      "explanation": "A durable checkpoint keyed by run identifier stores serializable progress so another worker can resume after a crash. An in-memory queue disappears with its process and cannot reconstruct the workflow state."
+    },
+    {
+      "stage": "check",
+      "question": "What three-state lifecycle does the lesson's per-agent queue use?",
+      "options": [
+        "Submitted, Working, Completed",
+        "Open, Closed, Half-Open",
+        "Idle, Processing, Response",
+        "Propose, Accept, Verify"
+      ],
+      "correct": 2,
+      "explanation": "The per-agent queue cycles through Idle, Processing, and Response as it accepts, handles, and emits a message. Open, Closed, and Half-Open describe a circuit breaker, not this producer-consumer lifecycle."
+    },
+    {
+      "stage": "check",
+      "question": "Why is async I/O useful for many concurrent LLM calls?",
+      "options": [
+        "Waiting calls can yield instead of occupying one thread each",
+        "It removes the need to store workflow state",
+        "It guarantees the remote provider returns tokens faster",
+        "It makes CPU-bound parsing execute without any processor time"
+      ],
+      "correct": 0,
+      "explanation": "Async tasks yield while network calls wait for tokens, allowing the event loop to advance other waiting calls. This improves concurrency for I/O-bound work, but it does not make the remote provider generate tokens faster."
+    },
+    {
+      "stage": "check",
+      "question": "What is Bedi's pragmatic counterpoint to adopting a durable workflow engine too early?",
+      "options": [
+        "Start with FastAPI and Postgres until measured load requires more",
+        "Avoid databases and store every run in process memory",
+        "Adopt every queue and checkpoint system before launch",
+        "Use a distributed actor framework for every prototype"
+      ],
+      "correct": 0,
+      "explanation": "Bedi’s counterpoint is to begin with FastAPI plus Postgres and adopt a heavier workflow engine when measured load or state needs justify it. Installing every queue and checkpoint system before a demonstrated need adds ceremony without evidence of benefit."
+    },
+    {
+      "stage": "post",
+      "question": "A queue may deliver a payment task more than once. What makes the effect effectively once?",
+      "options": [
+        "At-least-once delivery paired with a deduplication key",
+        "A retry that creates a fresh payment key each time",
+        "An async worker that suppresses every second request",
+        "Exactly-once delivery assumed without recording identifiers"
+      ],
+      "correct": 0,
+      "explanation": "At-least-once delivery may repeat a message, so use the same stable deduplication key and an idempotent consumer that honors it; retries then create one effective side effect. Creating a fresh key for every retry defeats deduplication."
+    },
+    {
+      "stage": "post",
+      "question": "Long-running agents may remain active during a software deploy. What rollout pattern reduces disruption?",
+      "options": [
+        "Terminate every active run and restart from the first task",
+        "Route every checkpoint to the newest code immediately",
+        "Keep multiple runtime versions live while older runs drain",
+        "Disable checkpoints until the deployment finishes"
+      ],
+      "correct": 2,
+      "explanation": "Rainbow deployment keeps older runtime versions available until their in-flight stateful runs drain, while new runs can move gradually to the new version. Immediate restart risks interrupting saved work or changing the code that resumes it."
+    }
+  ]
+}

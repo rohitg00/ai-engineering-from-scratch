@@ -1,0 +1,78 @@
+{
+  "lesson": "06-policy-gradients-reinforce",
+  "title": "Policy Gradient — REINFORCE from Scratch",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A control task needs a stochastic policy over continuous torques, where taking argmax over actions is unsuitable. Which approach matches this need?",
+      "options": [
+        "Enumerate the Bellman equation for every continuous action.",
+        "Use a tabular Q table and take the largest action value.",
+        "Parameterize the policy directly and sample actions from its distribution.",
+        "Use a deterministic argmax policy over every possible torque."
+      ],
+      "correct": 2,
+      "explanation": "A policy-gradient model parameterizes πθ(a|s) as a distribution and samples an action, rather than choosing argmax Q. A Gaussian policy can represent continuous torques; a tabular Q table or discrete softmax list does not cover that continuous action space."
+    },
+    {
+      "stage": "check",
+      "question": "A softmax policy has probabilities [0.2, 0.5, 0.3], and the second action (index 1) was selected. What is the score gradient with respect to the three logits?",
+      "options": [
+        "[0.2, 0.5, 0.3], the probability vector without adjustment.",
+        "[-0.5, -0.2, 0.3], probabilities reordered by action value.",
+        "[0.2, -0.5, 0.3], probabilities minus selected-action one-hot.",
+        "[-0.2, 0.5, -0.3], selected-action one-hot minus probabilities."
+      ],
+      "correct": 3,
+      "explanation": "For softmax logits, ∇logπ(a) = onehot(a) − π. The selected action is index 1, so [0,1,0]−[0.2,0.5,0.3]=[−0.2,0.5,−0.3]. The presented probabilities-minus-onehot option reverses every sign, while the raw probability vector omits the selected-action signal."
+    },
+    {
+      "stage": "check",
+      "question": "A learned baseline uses only the state and not the sampled action. What effect does subtracting it from return have in REINFORCE?",
+      "options": [
+        "It changes the expected gradient and increases variance.",
+        "It preserves the expected gradient while reducing variance.",
+        "It removes the policy distribution from the gradient update.",
+        "It converts the sampled return into a Bellman target."
+      ],
+      "correct": 1,
+      "explanation": "Subtracting b(s) leaves the expected policy gradient unchanged when the baseline does not depend on the sampled action, because Eπ[∇logπ(a|s)]=0. A learned value baseline can reduce return variance; an action-dependent baseline would not inherit this cancellation automatically."
+    },
+    {
+      "stage": "check",
+      "question": "For the gradient at time t, why use reward-to-go rather than rewards received before time t?",
+      "options": [
+        "Reward-to-go makes the update independent of the sampled action.",
+        "Past rewards determine the future policy, so they must receive larger discounts.",
+        "Past rewards add zero-mean noise because the current action cannot cause them.",
+        "Past rewards are always negative and would reverse the gradient."
+      ],
+      "correct": 2,
+      "explanation": "The action at time t cannot cause rewards that occurred before t, so those past rewards add zero-mean noise to its score-function estimate. Reward-to-go retains the future rewards that can depend on the action while lowering variance."
+    },
+    {
+      "stage": "post",
+      "question": "A robot policy must output continuous joint torques. Which policy head named in the lesson fits this action space?",
+      "options": [
+        "A one-hot policy that always picks the highest logit.",
+        "A value table that stores one entry per possible torque.",
+        "A softmax distribution over a fixed list of discrete moves.",
+        "A Gaussian policy whose mean and scale depend on the state."
+      ],
+      "correct": 3,
+      "explanation": "A Gaussian policy represents continuous actions by a state-dependent mean and scale, so it can sample torques from a continuous distribution. A softmax head assigns probabilities to a fixed discrete action list instead."
+    },
+    {
+      "stage": "post",
+      "question": "Training drives the policy entropy near zero before it has explored useful actions. Which objective adjustment directly addresses this collapse?",
+      "options": [
+        "Replace reward-to-go with the full episode return at every step.",
+        "Add a positive entropy bonus to encourage continued exploration.",
+        "Remove the baseline so returns have larger variance.",
+        "Increase the action count without changing the policy objective."
+      ],
+      "correct": 1,
+      "explanation": "Policy entropy measures how spread the action distribution remains; adding a positive βH term rewards preserving that spread during training. Removing the baseline may increase gradient variance, but it does not directly oppose premature concentration on one action."
+    }
+  ]
+}
