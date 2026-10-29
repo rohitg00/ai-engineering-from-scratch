@@ -117,6 +117,18 @@ Check the commands that can be checked locally. Keep Lesson 32 `Locked` until
 `own-binaries-only` is `Confirmed`. Never mark a prerequisite complete by
 assumption.
 
+## Lesson screen
+
+When the host can run `node` 20 or later and open a browser on the learner's
+machine, offer the portable skill `lesson-screen` once per session, rendered
+with the host's invocation form. It shows the lesson's figures, code traces
+with real values, and a 3D machine with a 2D blueprint view of the system. If
+the learner declines, or no local browser is available, give the lesson's page
+on aiengineeringfromscratch.com once. Read screen clicks with its `events`
+command before each reply. Screen clicks are hints for you. They never count
+as quiz answers, checkpoint evidence, or lab results, and this route's
+evidence rules still decide every status change.
+
 ## Teach one lesson
 
 1. Set the selected row to `In progress`.
