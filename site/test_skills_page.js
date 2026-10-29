@@ -8,7 +8,7 @@ const test = require('node:test');
 const root = path.resolve(__dirname, '..');
 const skillsDir = path.join(root, 'skills');
 const { GROUPS, LOADER, build, loadSkills, loaderData } = require('./build-skills.js');
-const CRAFT = ['course-style', 'blueprint-figure', 'motion-figure', 'isometric-explainer', 'write-manual'];
+const CRAFT = ['course-style', 'blueprint-figure', 'motion-figure', 'isometric-explainer', 'write-manual', 'lesson-screen'];
 
 function files(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {

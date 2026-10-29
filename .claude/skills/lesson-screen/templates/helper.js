@@ -1,0 +1,60 @@
+(function () {
+  var screen = location.pathname.split('/').filter(Boolean).pop() || 'screen';
+
+  function send(evt) {
+    try {
+      fetch('/event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.assign({ screen: screen }, evt)),
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
+  window.lessonScreen = { screen: screen, send: send };
+
+  document.addEventListener('click', function (e) {
+    var choice = e.target && e.target.closest ? e.target.closest('[data-question] [data-choice]') : null;
+    if (choice) {
+      var q = choice.closest('[data-question]');
+      var siblings = q.querySelectorAll('.ls-choice.is-picked, [data-choice].is-picked');
+      Array.prototype.forEach.call(siblings, function (el) {
+        el.classList.remove('is-picked');
+      });
+      choice.classList.add('is-picked');
+      var sent = q.querySelector('.ls-sent');
+      if (!sent) {
+        sent = document.createElement('p');
+        sent.className = 'ls-sent';
+        sent.setAttribute('role', 'status');
+        sent.setAttribute('aria-live', 'polite');
+        q.appendChild(sent);
+      }
+      sent.textContent = 'Sent to your tutor. You can also answer in the terminal.';
+      send({
+        type: 'choice',
+        question: q.getAttribute('data-question') || '',
+        choice: choice.getAttribute('data-choice') || '',
+        text: (choice.textContent || '').trim().slice(0, 500),
+      });
+      return;
+    }
+    var part = e.target && e.target.closest ? e.target.closest('[data-part]') : null;
+    if (part) {
+      send({
+        type: 'part',
+        part: part.getAttribute('data-part') || '',
+        label: part.getAttribute('data-label') || (part.textContent || '').trim().slice(0, 500),
+      });
+    }
+  });
+
+  window.addEventListener('storage', function (e) {
+    if (e.key !== 'theme' && e.key !== null) return;
+    var t = localStorage.getItem('theme');
+    if (t !== 'light' && t !== 'dark') {
+      t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', t);
+  });
+})();

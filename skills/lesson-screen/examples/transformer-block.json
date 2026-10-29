@@ -1,0 +1,319 @@
+{
+  "title": "One transformer block",
+  "fig": "07.05",
+  "lesson": "phases/07-transformers-deep-dive/05-full-transformer",
+  "question": "How does one block turn token vectors into better token vectors? Press the steps in order.",
+  "bigIdea": "Attention mixes information between tokens. The MLP changes each token alone. The residual path keeps the input.",
+  "note": "Part sizes are not to scale. Numbers are from a real run of code/main.py in this lesson.",
+  "parts": [
+    {
+      "id": "tok-1",
+      "label": "Token 1",
+      "explain": "The first of six source tokens in the run. Each becomes a vector of 8 numbers.",
+      "shape": "sphere",
+      "size": [0.42],
+      "at": [-8.5, 1.2, -1.2],
+      "material": "plastic",
+      "explode": [-0.6, 0, -0.4],
+      "group": "input"
+    },
+    {
+      "id": "tok-2",
+      "label": "Token 2",
+      "explain": "Source token two of six.",
+      "shape": "sphere",
+      "size": [0.42],
+      "at": [-8.5, 1.2, -0.72],
+      "material": "plastic",
+      "explode": [-0.6, 0, -0.3],
+      "group": "input"
+    },
+    {
+      "id": "tok-3",
+      "label": "Token 3",
+      "explain": "Source token three of six.",
+      "shape": "sphere",
+      "size": [0.42],
+      "at": [-8.5, 1.2, -0.24],
+      "material": "plastic",
+      "explode": [-0.6, 0, -0.15],
+      "group": "input"
+    },
+    {
+      "id": "tok-4",
+      "label": "Token 4",
+      "explain": "Source token four of six.",
+      "shape": "sphere",
+      "size": [0.42],
+      "at": [-8.5, 1.2, 0.24],
+      "material": "plastic",
+      "explode": [-0.6, 0, 0.15],
+      "group": "input"
+    },
+    {
+      "id": "tok-5",
+      "label": "Token 5",
+      "explain": "Source token five of six.",
+      "shape": "sphere",
+      "size": [0.42],
+      "at": [-8.5, 1.2, 0.72],
+      "material": "plastic",
+      "explode": [-0.6, 0, 0.3],
+      "group": "input"
+    },
+    {
+      "id": "tok-6",
+      "label": "Token 6",
+      "explain": "Source token six of six. The run reads a six-token source.",
+      "shape": "sphere",
+      "size": [0.42],
+      "at": [-8.5, 1.2, 1.2],
+      "material": "plastic",
+      "explode": [-0.6, 0, 0.4],
+      "group": "input"
+    },
+    {
+      "id": "embed",
+      "label": "Embeddings",
+      "explain": "The embedding table turns each token id into a row of d_model numbers. The run uses d_model = 8.",
+      "shape": "slab",
+      "size": [0.9, 2.6, 2.4],
+      "at": [-6.4, 1.5, 0],
+      "material": "metal",
+      "explode": [-0.4, 0.5, 0],
+      "group": "input"
+    },
+    {
+      "id": "norm1",
+      "label": "RMSNorm 1",
+      "explain": "Pre-norm: the block normalises h before the sublayer, not after. The run uses rms_norm with eps 1e-6.",
+      "shape": "slab",
+      "size": [0.55, 2.4, 2],
+      "at": [-4.4, 1.4, 0],
+      "material": "ceramic",
+      "explode": [-0.2, 0.4, 0],
+      "group": "attention"
+    },
+    {
+      "id": "attn",
+      "label": "Attention housing",
+      "explain": "Multi-head attention scores pairs of positions and mixes their values. Masked in the decoder.",
+      "shape": "box",
+      "size": [2.1, 1.9, 2.1],
+      "at": [-1.9, 1.4, 0],
+      "material": "glass",
+      "tone": "accent",
+      "explode": [0, 0, 0],
+      "group": "attention"
+    },
+    {
+      "id": "head-1",
+      "label": "Head 1",
+      "explain": "The first of 2 heads in the run. Each head works on 4 of the 8 channels.",
+      "shape": "slab",
+      "size": [1.5, 0.7, 0.7],
+      "at": [-1.9, 1.4, -0.5],
+      "material": "metal",
+      "tone": "accent",
+      "explode": [0, 0.9, -1.6],
+      "group": "attention"
+    },
+    {
+      "id": "head-2",
+      "label": "Head 2",
+      "explain": "The second head. Its scores cover a different slice of each token.",
+      "shape": "slab",
+      "size": [1.5, 0.7, 0.7],
+      "at": [-1.9, 1.4, 0.5],
+      "material": "metal",
+      "tone": "accent",
+      "explode": [0, 0.9, 1.6],
+      "group": "attention"
+    },
+    {
+      "id": "res-x",
+      "label": "Residual rail (x)",
+      "explain": "The residual path carries x around attention, so the block adds information instead of replacing it.",
+      "shape": "cylinder",
+      "size": [0.15, 5.4],
+      "at": [-2.8, 1.1, -2.6],
+      "rotate": [0, 0, 90],
+      "material": "brushed",
+      "explode": [0, 0, -1.2],
+      "group": "residual path"
+    },
+    {
+      "id": "add-a",
+      "label": "Add x + a",
+      "explain": "x plus attention of x. The first junction where the residual rail rejoins the main path.",
+      "shape": "disc",
+      "size": [0.55, 0.35],
+      "at": [0.4, 1.4, 0],
+      "material": "metal",
+      "explode": [0.3, 0.5, 0],
+      "group": "residual path"
+    },
+    {
+      "id": "norm2",
+      "label": "RMSNorm 2",
+      "explain": "A second normalisation before the MLP. Same function, new input.",
+      "shape": "slab",
+      "size": [0.55, 2.4, 2],
+      "at": [2.1, 1.4, 0],
+      "material": "ceramic",
+      "explode": [0.2, 0.4, 0],
+      "group": "mlp"
+    },
+    {
+      "id": "w1",
+      "label": "W1 gate",
+      "explain": "One of the two up-projections of SwiGLU. The run widens 8 channels to a hidden size of 16.",
+      "shape": "slab",
+      "size": [0.9, 2.2, 0.9],
+      "at": [3.9, 1.4, -0.7],
+      "material": "plastic",
+      "explode": [0, 0.4, -1.7],
+      "group": "mlp"
+    },
+    {
+      "id": "w3",
+      "label": "W3 gate",
+      "explain": "The second up-projection. SwiGLU multiplies silu(W1 x) by W3 x elementwise.",
+      "shape": "slab",
+      "size": [0.9, 2.2, 0.9],
+      "at": [3.9, 1.4, 0.7],
+      "material": "plastic",
+      "explode": [0, 0.4, 1.7],
+      "group": "mlp"
+    },
+    {
+      "id": "mul",
+      "label": "Gate multiply",
+      "explain": "silu(W1 x) times W3 x, elementwise. This product is the SwiGLU activation the 2026 stacks use.",
+      "shape": "sphere",
+      "size": [0.55],
+      "at": [5.2, 1.4, 0],
+      "material": "glow",
+      "explode": [0, 1.2, 0],
+      "group": "mlp"
+    },
+    {
+      "id": "w2",
+      "label": "W2 down",
+      "explain": "The down-projection shrinks the hidden 16 back to d_model 8, so the result can rejoin the residual stream.",
+      "shape": "slab",
+      "size": [0.9, 2.4, 1.4],
+      "at": [6.4, 1.4, 0],
+      "material": "plastic",
+      "explode": [0.3, 0.6, 0],
+      "group": "mlp"
+    },
+    {
+      "id": "res-h",
+      "label": "Residual rail (h)",
+      "explain": "The second residual path, carrying x + a around the MLP.",
+      "shape": "cylinder",
+      "size": [0.15, 6.2],
+      "at": [3.7, 1.1, -2.6],
+      "rotate": [0, 0, 90],
+      "material": "brushed",
+      "explode": [0, 0, -1.2],
+      "group": "residual path"
+    },
+    {
+      "id": "add-m",
+      "label": "Add h + m",
+      "explain": "h plus MLP of h. After this junction the block is done.",
+      "shape": "disc",
+      "size": [0.55, 0.35],
+      "at": [7.7, 1.4, 0],
+      "material": "metal",
+        "explode": [0.4, 0.5, 0],
+      "group": "residual path"
+    },
+    {
+      "id": "out",
+      "label": "Block output",
+      "explain": "The run prints encoder output shape (6, 8): six tokens, eight channels each, ready for the next block.",
+      "shape": "slab",
+      "size": [0.9, 2.6, 2.4],
+      "at": [9.4, 1.5, 0],
+      "material": "ceramic",
+      "explode": [0.6, 0.5, 0],
+      "group": "output"
+    }
+  ],
+  "flows": [
+    { "id": "tok-embed", "from": "tok-1", "to": "embed", "label": "6 ids" },
+    { "id": "embed-norm1", "from": "embed", "to": "norm1", "label": "x [6x8]" },
+    { "id": "norm1-attn", "from": "norm1", "to": "attn", "label": "h [6x8]" },
+    { "id": "attn-adda", "from": "attn", "to": "add-a", "label": "a [6x8]" },
+    { "id": "embed-resx", "from": "embed", "to": "res-x", "label": "x" },
+    { "id": "resx-adda", "from": "res-x", "to": "add-a", "label": "x" },
+    { "id": "adda-norm2", "from": "add-a", "to": "norm2", "label": "x+a" },
+    { "id": "norm2-w1", "from": "norm2", "to": "w1", "label": "h" },
+    { "id": "norm2-w3", "from": "norm2", "to": "w3", "label": "h" },
+    { "id": "w1-mul", "from": "w1", "to": "mul", "label": "16" },
+    { "id": "w3-mul", "from": "w3", "to": "mul", "label": "16" },
+    { "id": "mul-w2", "from": "mul", "to": "w2", "label": "16" },
+    { "id": "w2-addm", "from": "w2", "to": "add-m", "label": "m [6x8]" },
+    { "id": "adda-resh", "from": "add-a", "to": "res-h", "label": "h" },
+    { "id": "resh-addm", "from": "res-h", "to": "add-m", "label": "h" },
+    { "id": "addm-out", "from": "add-m", "to": "out", "label": "h [6x8]" }
+  ],
+  "readouts": [
+    { "id": "tokens", "label": "tokens", "value": "6" },
+    { "id": "dmodel", "label": "d_model", "value": "8" },
+    { "id": "heads", "label": "heads", "value": "2" },
+    { "id": "hidden", "label": "ffn hidden", "value": "16" },
+    { "id": "shape", "label": "output", "value": "(6, 8)" }
+  ],
+  "steps": [
+    {
+      "title": "Tokens in",
+      "say": "The run feeds 6 source tokens, one sphere each. The embedding turns each id into a vector of 8 numbers, so x has shape (6, 8).",
+      "focus": ["tok-1", "tok-2", "tok-3", "tok-4", "tok-5", "tok-6", "embed"],
+      "flows": ["tok-embed"],
+      "view": "iso"
+    },
+    {
+      "title": "Normalise first",
+      "say": "Pre-norm blocks normalise the input before each sublayer. The run calls rms_norm, which divides by RMS without subtracting the mean.",
+      "focus": ["embed", "norm1", "attn"],
+      "flows": ["embed-norm1", "norm1-attn"],
+      "view": "iso"
+    },
+    {
+      "title": "Attention mixes",
+      "say": "Two heads run in parallel inside the housing, each on 4 of the 8 channels. In the decoder this step is masked, so a token only sees earlier tokens.",
+      "focus": ["attn", "head-1", "head-2"],
+      "flows": ["norm1-attn", "attn-adda"],
+      "explode": 0.5,
+      "view": "front"
+    },
+    {
+      "title": "Add the residual",
+      "say": "The rail behind carries x around attention. The junction computes x + a, which keeps the input alive for the next sublayer.",
+      "focus": ["embed", "res-x", "attn", "add-a"],
+      "flows": ["embed-resx", "resx-adda", "attn-adda"],
+      "explode": 0.4,
+      "view": "iso"
+    },
+    {
+      "title": "The MLP widens",
+      "say": "RMSNorm again, then SwiGLU: two gates of hidden size 16 multiplied elementwise, then W2 shrinks back to 8. The run uses expansion 2.0.",
+      "focus": ["norm2", "w1", "w3", "mul", "w2"],
+      "flows": ["adda-norm2", "norm2-w1", "norm2-w3", "w1-mul", "w3-mul", "mul-w2", "w2-addm"],
+      "explode": 0.5,
+      "view": "iso"
+    },
+    {
+      "title": "Out comes h",
+      "say": "The second residual junction adds the MLP result, and the run prints encoder output shape (6, 8). Stack this block and the stream repeats.",
+      "focus": ["res-h", "add-m", "out"],
+      "flows": ["adda-resh", "resh-addm", "addm-out"],
+      "explode": 0.45,
+      "view": "iso"
+    }
+  ]
+}

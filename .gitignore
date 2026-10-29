@@ -55,6 +55,7 @@ mlruns/
 *.bin
 *.h5
 .gstack/
+.lesson-screen/
 
 .link-cache.json
 .claude/
@@ -80,6 +81,8 @@ mlruns/
 !.claude/skills/isometric-explainer/**
 !.claude/skills/motion-figure/
 !.claude/skills/motion-figure/**
+!.claude/skills/lesson-screen/
+!.claude/skills/lesson-screen/**
 !.claude/skills/write-manual/
 !.claude/skills/write-manual/**
 catalog.json

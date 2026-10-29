@@ -1,0 +1,927 @@
+#!/usr/bin/env node
+import http from 'node:http';
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { spawn } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { checkMachine } from './machine-spec.mjs';
+
+const SCRIPT = fileURLToPath(import.meta.url);
+const TEMPLATES = path.join(path.dirname(SCRIPT), '..', 'templates');
+const SITE_ORIGIN = 'https://aiengineeringfromscratch.com';
+const EVENT_TYPES = new Set(['choice', 'part', 'step', 'note']);
+const EVENT_KEYS = ['type', 'screen', 'question', 'choice', 'text', 'part', 'label'];
+const SCREEN_NAME_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,80}\.html$/;
+const ASSET_RE = /^\/(?:s\/)?(lesson-figures|figure-manifest|figures(?:-[a-z0-9-]+)?)\.js$/;
+const CSP = "default-src 'self'; script-src 'self' 'unsafe-inline' https://aiengineeringfromscratch.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://aiengineeringfromscratch.com; connect-src 'self'; frame-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'; object-src 'none'";
+
+function sessionPaths(dir) {
+  const state = path.join(dir, 'state');
+  return {
+    dir,
+    screens: path.join(dir, 'screens'),
+    state,
+    serverFile: path.join(state, 'server.json'),
+    eventsFile: path.join(state, 'events.jsonl'),
+    cursorFile: path.join(state, 'events.cursor'),
+    lastPortFile: path.join(state, 'last-port'),
+    stoppedFile: path.join(state, 'stopped'),
+    logFile: path.join(state, 'server.log'),
+  };
+}
+
+function ensureDirs(dir) {
+  const p = sessionPaths(dir);
+  fs.mkdirSync(p.screens, { recursive: true });
+  fs.mkdirSync(p.state, { recursive: true, mode: 0o700 });
+  try { fs.chmodSync(p.state, 0o700); } catch {}
+}
+
+function pad2(n) {
+  return String(n).padStart(2, '0');
+}
+
+export function nextIndex(dir) {
+  const p = sessionPaths(dir);
+  let max = 0;
+  try {
+    for (const name of fs.readdirSync(p.screens)) {
+      const m = /^(\d+)/.exec(name);
+      if (m && name.endsWith('.html')) max = Math.max(max, parseInt(m[1], 10));
+    }
+  } catch {}
+  return max + 1;
+}
+
+function kebab(s) {
+  return String(s || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 40)
+    .replace(/-+$/g, '');
+}
+
+function screenTitle(file, name) {
+  let body;
+  try {
+    body = fs.readFileSync(file, 'utf8');
+  } catch {
+    return name;
+  }
+  const clean = (raw) => raw.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().slice(0, 80);
+  const head = /<h[12][^>]*>([\s\S]*?)<\/h[12]>/i.exec(body);
+  let text = head ? clean(head[1]) : '';
+  if (!text) {
+    const titleTag = /<title[^>]*>([\s\S]*?)<\/title>/i.exec(body);
+    text = titleTag ? clean(titleTag[1]) : '';
+  }
+  return text || name;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function listScreens(dir) {
+  const p = sessionPaths(dir);
+  let names = [];
+  try {
+    names = fs.readdirSync(p.screens).filter((n) => n.endsWith('.html'));
+  } catch {}
+  const rows = names.map((name) => {
+    const full = path.join(p.screens, name);
+    let mtime = 0;
+    try {
+      mtime = fs.statSync(full).mtimeMs;
+    } catch {}
+    return { name, title: screenTitle(full, name), mtime };
+  });
+  rows.sort((a, b) => a.mtime - b.mtime || a.name.localeCompare(b.name));
+  return rows;
+}
+
+export function readEvents(dir, { all = false } = {}) {
+  const p = sessionPaths(dir);
+  let size = 0;
+  try {
+    size = fs.statSync(p.eventsFile).size;
+  } catch {}
+  let offset = 0;
+  if (!all) {
+    try {
+      offset = parseInt(fs.readFileSync(p.cursorFile, 'utf8'), 10) || 0;
+    } catch {}
+    if (offset > size) offset = 0;
+  }
+  const events = [];
+  if (size > offset) {
+    const fd = fs.openSync(p.eventsFile, 'r');
+    const buf = Buffer.alloc(size - offset);
+    fs.readSync(fd, buf, 0, size - offset, offset);
+    fs.closeSync(fd);
+    for (const line of buf.toString('utf8').split('\n')) {
+      if (!line.trim()) continue;
+      try {
+        events.push(JSON.parse(line));
+      } catch {}
+    }
+  }
+  if (!all) {
+    try {
+      fs.writeFileSync(p.cursorFile, String(size));
+    } catch {}
+  }
+  return events;
+}
+
+function countUnread(dir) {
+  const p = sessionPaths(dir);
+  let size = 0;
+  try {
+    size = fs.statSync(p.eventsFile).size;
+  } catch {}
+  let offset = 0;
+  try {
+    offset = parseInt(fs.readFileSync(p.cursorFile, 'utf8'), 10) || 0;
+  } catch {}
+  if (offset > size) offset = 0;
+  const buf = Buffer.alloc(Math.max(0, size - offset));
+  if (!buf.length) return 0;
+  const fd = fs.openSync(p.eventsFile, 'r');
+  fs.readSync(fd, buf, 0, buf.length, offset);
+  fs.closeSync(fd);
+  return buf.toString('utf8').split('\n').filter((l) => l.trim()).length;
+}
+
+export function writeMachineScreen(dir, spec, name) {
+  const { ok, errors, spec: normalized } = checkMachine(spec);
+  if (!ok) {
+    const err = new Error('invalid machine spec');
+    err.errors = errors;
+    throw err;
+  }
+  const p = sessionPaths(dir);
+  ensureDirs(dir);
+  const slug = kebab(name || normalized.title) || 'machine';
+  const filename = `${pad2(nextIndex(dir))}-${slug}.html`;
+  const tpl = fs.readFileSync(path.join(TEMPLATES, 'machine.html'), 'utf8');
+  const json = JSON.stringify(normalized)
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+  const html = tpl.replace('__MACHINE_SPEC__', () => json)
+    .replace('<title>Machine</title>', () => `<title>${escapeHtml(normalized.title)}</title>`);
+  const file = path.join(p.screens, filename);
+  fs.writeFileSync(file, html);
+  return { name: filename, file };
+}
+
+function keyMatches(candidate, key) {
+  if (typeof candidate !== 'string' || !candidate) return false;
+  const a = crypto.createHash('sha256').update(candidate).digest();
+  const b = crypto.createHash('sha256').update(key).digest();
+  return crypto.timingSafeEqual(a, b);
+}
+
+function readBody(req, limit) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    let size = 0;
+    let tooLarge = false;
+    req.on('data', (c) => {
+      size += c.length;
+      if (size > limit) tooLarge = true;
+      if (!tooLarge) chunks.push(c);
+    });
+    req.on('end', () => {
+      if (tooLarge) reject(Object.assign(new Error('too large'), { code: 413 }));
+      else resolve(Buffer.concat(chunks));
+    });
+    req.on('error', reject);
+  });
+}
+
+export function createServer(opts = {}) {
+  const dir = path.resolve(opts.dir || path.join(process.cwd(), '.lesson-screen'));
+  const host = opts.host || '127.0.0.1';
+  const assets = opts.assets || 'live';
+  const repo = opts.repo ? path.resolve(opts.repo) : undefined;
+  const idleMs = opts.idleMs ?? 120 * 60 * 1000;
+  const urlHost = opts.urlHost;
+  const key = crypto.randomBytes(24).toString('hex');
+  const p = sessionPaths(dir);
+  ensureDirs(dir);
+
+  const sockets = new Set();
+  const sseClients = new Set();
+  let closed = false;
+  let boundPort = 0;
+  let signature = '';
+  let cachedList = [];
+
+  function rescan() {
+    let rows;
+    try {
+      rows = fs.readdirSync(p.screens)
+        .filter((n) => n.endsWith('.html'))
+        .map((name) => {
+          const full = path.join(p.screens, name);
+          const st = fs.statSync(full);
+          return { name, mtime: st.mtimeMs, size: st.size };
+        })
+        .sort((a, b) => a.mtime - b.mtime || a.name.localeCompare(b.name));
+    } catch {
+      rows = [];
+    }
+    const sig = rows.map((r) => `${r.name}:${r.mtime}:${r.size}`).join('|');
+    if (sig === signature) return false;
+    signature = sig;
+    cachedList = rows.map((r) => ({
+      name: r.name,
+      title: screenTitle(path.join(p.screens, r.name), r.name),
+      mtime: r.mtime,
+    }));
+    return true;
+  }
+
+  rescan();
+  const scanTimer = setInterval(() => {
+    if (closed) return;
+    if (rescan()) {
+      poke();
+      const data = `event: screens\ndata: ${JSON.stringify({ screens: cachedList })}\n\n`;
+      for (const res of sseClients) {
+        try {
+          res.write(data);
+        } catch {}
+      }
+    }
+  }, 400);
+  scanTimer.unref();
+
+  let idleTimer = null;
+  function poke() {
+    if (closed) return;
+    if (idleTimer) clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => finish('idle'), idleMs);
+    idleTimer.unref();
+  }
+  poke();
+
+  function finish(reason) {
+    if (closed) return;
+    try {
+      fs.writeFileSync(p.stoppedFile, JSON.stringify({ reason, at: new Date().toISOString() }));
+    } catch {}
+    try {
+      fs.rmSync(p.serverFile, { force: true });
+    } catch {}
+    close();
+  }
+
+  function close() {
+    if (closed) return;
+    closed = true;
+    offSignal();
+    clearInterval(scanTimer);
+    if (idleTimer) clearTimeout(idleTimer);
+    for (const res of sseClients) {
+      try {
+        res.end();
+      } catch {}
+    }
+    sseClients.clear();
+    for (const s of sockets) {
+      try {
+        s.destroy();
+      } catch {}
+    }
+    server.close();
+  }
+
+  function send(res, status, body, headers = {}) {
+    const out = {
+      'Cache-Control': 'no-store',
+      'X-Content-Type-Options': 'nosniff',
+      'Referrer-Policy': 'no-referrer',
+      ...headers,
+    };
+    res.writeHead(status, out);
+    res.end(body);
+  }
+
+  function sendJson(res, status, obj, headers = {}) {
+    send(res, status, JSON.stringify(obj), { 'Content-Type': 'application/json; charset=utf-8', ...headers });
+  }
+
+  function authorized(req, u) {
+    if (keyMatches(u.searchParams.get('key'), key)) return 'query';
+    const cookie = req.headers.cookie || '';
+    const m = new RegExp(`(?:^|;\\s*)lesson_screen_${boundPort}=([^;\\s]+)`).exec(cookie);
+    if (m && keyMatches(decodeURIComponent(m[1]), key)) return 'cookie';
+    if (keyMatches(req.headers['x-lesson-screen-key'], key)) return 'header';
+    return null;
+  }
+
+  async function serveScreen(name, res, extra = {}) {
+    const p2 = sessionPaths(dir);
+    let screensReal;
+    let real;
+    try {
+      screensReal = fs.realpathSync(p2.screens);
+      real = fs.realpathSync(path.join(screensReal, name));
+    } catch {
+      return send(res, 404, 'not found', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+    }
+    if (!real.startsWith(screensReal + path.sep)) {
+      return send(res, 404, 'not found', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+    }
+    let body;
+    try {
+      body = fs.readFileSync(real, 'utf8');
+    } catch {
+      return send(res, 404, 'not found', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+    }
+    const probe = body.trimStart().slice(0, 64).toLowerCase();
+    let html;
+    if (probe.startsWith('<!doctype') || probe.startsWith('<html')) {
+      const marker = '<script src="/helper.js"></script>';
+      const idx = body.toLowerCase().lastIndexOf('</body>');
+      html = idx >= 0 ? body.slice(0, idx) + marker + body.slice(idx) : body + marker;
+    } else {
+      const frame = fs.readFileSync(path.join(TEMPLATES, 'frame.html'), 'utf8');
+      const title = escapeHtml(screenTitle(real, name));
+      html = frame.replace('{{TITLE}}', () => title).replace('{{CONTENT}}', () => body);
+    }
+    send(res, 200, html, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Security-Policy': CSP, ...extra });
+  }
+
+  async function handle(req, res) {
+    const u = new URL(req.url, 'http://local');
+    const pathname = u.pathname;
+
+    if (req.method === 'GET' && pathname === '/health') {
+      return sendJson(res, 200, { ok: true, name: 'lesson-screen' });
+    }
+
+    const via = authorized(req, u);
+    if (!via) {
+      return send(res, 403, 'Open the full URL that the start command printed.', { 'Content-Type': 'text/plain; charset=utf-8' });
+    }
+    const extra = {};
+    if (via === 'query') {
+      extra['Set-Cookie'] = `lesson_screen_${boundPort}=${key}; HttpOnly; SameSite=Strict; Path=/`;
+    }
+
+    poke();
+
+    if (req.method === 'GET' && pathname === '/') {
+      const html = fs.readFileSync(path.join(TEMPLATES, 'shell.html'), 'utf8');
+      return send(res, 200, html, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Content-Security-Policy': CSP,
+        ...extra,
+      });
+    }
+
+    if (req.method === 'GET' && pathname === '/screens') {
+      rescan();
+      return sendJson(res, 200, { screens: cachedList }, extra);
+    }
+
+    if (req.method === 'GET' && pathname === '/helper.js') {
+      const js = fs.readFileSync(path.join(TEMPLATES, 'helper.js'), 'utf8');
+      return send(res, 200, js, { 'Content-Type': 'text/javascript; charset=utf-8', ...extra });
+    }
+
+    if (req.method === 'GET' && pathname === '/live') {
+      res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-store',
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'no-referrer',
+        ...extra,
+      });
+      res.write(`event: screens\ndata: ${JSON.stringify({ screens: cachedList })}\n\n`);
+      sseClients.add(res);
+      const ping = setInterval(() => {
+        try {
+          res.write(': ping\n\n');
+        } catch {}
+      }, 15000);
+      ping.unref();
+      req.on('close', () => {
+        clearInterval(ping);
+        sseClients.delete(res);
+      });
+      return;
+    }
+
+    if (req.method === 'POST' && pathname === '/event') {
+      if (req.headers.origin && req.headers.origin !== `http://${req.headers.host}`) {
+        return send(res, 403, 'forbidden', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+      }
+      if (req.headers['sec-fetch-site'] && req.headers['sec-fetch-site'] !== 'same-origin') {
+        return send(res, 403, 'forbidden', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+      }
+      const ct = (req.headers['content-type'] || '').split(';')[0].trim().toLowerCase();
+      if (ct !== 'application/json') {
+        return send(res, 400, 'expected application/json', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+      }
+      let body;
+      try {
+        body = await readBody(req, 8192);
+      } catch (e) {
+        return send(res, e.code === 413 ? 413 : 400, e.code === 413 ? 'too large' : 'bad body', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+      }
+      let obj;
+      try {
+        obj = JSON.parse(body.toString('utf8'));
+      } catch {
+        return send(res, 400, 'bad json', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+      }
+      if (!obj || typeof obj !== 'object' || Array.isArray(obj) || typeof obj.type !== 'string' || !EVENT_TYPES.has(obj.type)) {
+        return send(res, 400, 'bad event', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+      }
+      const evt = {};
+      for (const k of EVENT_KEYS) {
+        if (typeof obj[k] === 'string') evt[k] = obj[k].slice(0, 500);
+      }
+      if (typeof obj.step === 'number' && Number.isFinite(obj.step)) evt.step = obj.step;
+      else if (typeof obj.step === 'string') evt.step = obj.step.slice(0, 500);
+      evt.at = new Date().toISOString();
+      fs.appendFileSync(p.eventsFile, JSON.stringify(evt) + '\n');
+      return send(res, 204, null, extra);
+    }
+
+    if (req.method === 'POST' && pathname === '/shutdown') {
+      send(res, 204, null, extra);
+      setImmediate(() => finish('stop'));
+      return;
+    }
+
+    if (req.method === 'GET') {
+      const sm = /^\/s\/(.+)$/.exec(pathname);
+      if (sm && SCREEN_NAME_RE.test(sm[1])) {
+        return serveScreen(sm[1], res, extra);
+      }
+      const am = ASSET_RE.exec(pathname);
+      if (am) {
+        const file = `${am[1]}.js`;
+        if (assets === 'live') {
+          return send(res, 302, 'redirect', {
+            'Content-Type': 'text/plain; charset=utf-8',
+            Location: `${SITE_ORIGIN}/${file}`,
+            ...extra,
+          });
+        }
+        const local = repo ? path.join(repo, 'site', file) : null;
+        if (local && fs.existsSync(local) && fs.statSync(local).isFile()) {
+          return send(res, 200, fs.readFileSync(local), { 'Content-Type': 'text/javascript; charset=utf-8', ...extra });
+        }
+        const hint = file === 'figure-manifest.js'
+          ? 'figure-manifest.js is generated by site/build.js. Run "node site/build.js" in the clone first.'
+          : 'not found';
+        return send(res, 404, hint, { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+      }
+    }
+
+    send(res, 404, 'not found', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+  }
+
+  const server = http.createServer((req, res) => {
+    handle(req, res).catch(() => {
+      try {
+        send(res, 500, 'server error', { 'Content-Type': 'text/plain; charset=utf-8' });
+      } catch {}
+    });
+  });
+  server.on('connection', (s) => {
+    sockets.add(s);
+    s.on('close', () => sockets.delete(s));
+  });
+
+  const onSignal = () => finish('signal');
+  const offSignal = () => {
+    process.removeListener('SIGINT', onSignal);
+    process.removeListener('SIGTERM', onSignal);
+  };
+  process.once('SIGINT', onSignal);
+  process.once('SIGTERM', onSignal);
+
+  return new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(opts.port || 0, host, () => {
+      boundPort = server.address().port;
+      const display = urlHost || (host === '0.0.0.0' || host === '::' ? 'localhost' : host);
+      const origin = `http://${display}:${boundPort}`;
+      resolve({
+        url: `${origin}/?key=${key}`,
+        port: boundPort,
+        key,
+        origin,
+        close,
+      });
+    });
+  });
+}
+
+function httpRequest(method, urlString, { headers = {}, body = null, timeout = 2000 } = {}) {
+  return new Promise((resolve) => {
+    let req;
+    try {
+      req = http.request(urlString, { method, headers, timeout }, (res) => {
+        const chunks = [];
+        res.on('data', (c) => chunks.push(c));
+        res.on('end', () => resolve({ status: res.statusCode, headers: res.headers, body: Buffer.concat(chunks) }));
+      });
+    } catch {
+      return resolve(null);
+    }
+    req.on('timeout', () => {
+      req.destroy();
+      resolve(null);
+    });
+    req.on('error', () => resolve(null));
+    if (body) req.write(body);
+    req.end();
+  });
+}
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+function probeHost(host) {
+  return host === '0.0.0.0' || host === '::' ? '127.0.0.1' : host || '127.0.0.1';
+}
+
+function pidAlive(pid) {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (e) {
+    return e.code === 'EPERM';
+  }
+}
+
+function readServerInfo(dir) {
+  const p = sessionPaths(dir);
+  try {
+    const info = JSON.parse(fs.readFileSync(p.serverFile, 'utf8'));
+    if (info && typeof info === 'object') return info;
+  } catch {}
+  return null;
+}
+
+function writeServerInfo(dir, srv, { host, assets }) {
+  const p = sessionPaths(dir);
+  const info = {
+    pid: process.pid,
+    host,
+    port: srv.port,
+    url: srv.url,
+    key: srv.key,
+    dir,
+    screens: p.screens,
+    state: p.state,
+    assets,
+    startedAt: new Date().toISOString(),
+  };
+  fs.writeFileSync(p.serverFile, JSON.stringify(info, null, 2), { mode: 0o600 });
+  fs.writeFileSync(p.lastPortFile, String(srv.port));
+  try {
+    fs.rmSync(p.stoppedFile, { force: true });
+  } catch {}
+  return info;
+}
+
+async function healthOk(base) {
+  const res = await httpRequest('GET', `${base}/health`, { timeout: 1200 });
+  if (!res || res.status !== 200) return false;
+  try {
+    const j = JSON.parse(res.body.toString('utf8'));
+    return j && j.ok === true && j.name === 'lesson-screen';
+  } catch {
+    return false;
+  }
+}
+
+function portFree(port, host) {
+  return new Promise((resolve) => {
+    const s = http.createServer();
+    s.once('error', () => resolve(false));
+    s.listen(port, host, () => {
+      s.close(() => resolve(true));
+    });
+  });
+}
+
+function isRepo(dir) {
+  try {
+    return fs.statSync(path.join(dir, 'site', 'lesson-figures.js')).isFile()
+      && fs.statSync(path.join(dir, 'phases')).isDirectory();
+  } catch {
+    return false;
+  }
+}
+
+function findRepo(cwd) {
+  let d = path.resolve(cwd);
+  for (;;) {
+    if (isRepo(d)) return d;
+    const parent = path.dirname(d);
+    if (parent === d) return null;
+    d = parent;
+  }
+}
+
+function resolveAssets(flags) {
+  const assets = flags.assets || 'live';
+  if (assets !== 'live' && assets !== 'local') {
+    throw new Error('--assets must be live or local');
+  }
+  if (assets === 'local') {
+    const repo = flags.repo ? path.resolve(flags.repo) : findRepo(process.cwd());
+    if (!repo) {
+      throw new Error('--assets local needs a clone of the repository; pass --repo PATH or run inside a clone');
+    }
+    if (!isRepo(repo)) {
+      throw new Error(`--repo ${repo} is not a clone of the course repository`);
+    }
+    return { assets, repo };
+  }
+  return { assets, repo: undefined };
+}
+
+function openBrowser(url) {
+  try {
+    if (process.platform === 'darwin') {
+      const c = spawn('open', [url], { detached: true, stdio: 'ignore' });
+      c.on('error', () => {});
+      c.unref();
+    } else if (process.platform === 'win32') {
+      const c = spawn('cmd', ['/c', 'start', '""', url], { detached: true, stdio: 'ignore' });
+      c.on('error', () => {});
+      c.unref();
+    } else {
+      const c = spawn('xdg-open', [url], { detached: true, stdio: 'ignore' });
+      c.on('error', () => {});
+      c.unref();
+    }
+  } catch {}
+}
+
+function parseArgs(argv) {
+  const flags = {};
+  const positional = [];
+  let command = null;
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (a.startsWith('--')) {
+      const name = a.slice(2);
+      const next = argv[i + 1];
+      if (next !== undefined && !next.startsWith('--') && ['port', 'host', 'url-host', 'assets', 'repo', 'idle-minutes', 'dir', 'name'].includes(name)) {
+        flags[name] = next;
+        i++;
+      } else {
+        flags[name] = true;
+      }
+    } else if (command === null) {
+      command = a;
+    } else {
+      positional.push(a);
+    }
+  }
+  return { command, flags, positional };
+}
+
+function out(obj) {
+  process.stdout.write(JSON.stringify(obj) + '\n');
+}
+
+function fail(obj) {
+  process.stderr.write(JSON.stringify(obj) + '\n');
+  process.exit(1);
+}
+
+function resolveDir(flags) {
+  return path.resolve(typeof flags.dir === 'string' ? flags.dir : '.lesson-screen');
+}
+
+async function cmdServe(flags) {
+  const dir = resolveDir(flags);
+  ensureDirs(dir);
+  const { assets, repo } = resolveAssets(flags);
+  const host = flags.host || '127.0.0.1';
+  const port = flags.port !== undefined && flags.port !== true ? parseInt(flags.port, 10) : 0;
+  const idleMinutes = flags['idle-minutes'] !== undefined && flags['idle-minutes'] !== true ? parseFloat(flags['idle-minutes']) : 120;
+  const srv = await createServer({
+    dir,
+    host,
+    port: Number.isFinite(port) ? port : 0,
+    urlHost: flags['url-host'] || undefined,
+    assets,
+    repo,
+    idleMs: idleMinutes * 60000,
+  });
+  return { srv, info: writeServerInfo(dir, srv, { host, assets }) };
+}
+
+function startJson(info, dir) {
+  const p = sessionPaths(dir);
+  return {
+    type: 'started',
+    url: info.url,
+    port: info.port,
+    screens: p.screens,
+    state: p.state,
+    next: pad2(nextIndex(dir)),
+    pid: info.pid,
+    assets: info.assets,
+  };
+}
+
+async function cmdStart(flags) {
+  const dir = resolveDir(flags);
+  ensureDirs(dir);
+  const p = sessionPaths(dir);
+  const existing = readServerInfo(dir);
+  if (existing && pidAlive(existing.pid)) {
+    const base = `http://${probeHost(existing.host)}:${existing.port}`;
+    if (await healthOk(base)) {
+      if (flags.open) openBrowser(existing.url);
+      out({ ...startJson(existing, dir), type: 'running' });
+      return;
+    }
+  }
+  const { assets, repo } = resolveAssets(flags);
+  const host = flags.host || '127.0.0.1';
+  let port;
+  if (flags.port !== undefined && flags.port !== true) {
+    port = parseInt(flags.port, 10);
+  } else {
+    let last = 0;
+    try {
+      last = parseInt(fs.readFileSync(p.lastPortFile, 'utf8'), 10) || 0;
+    } catch {}
+    port = last && (await portFree(last, host)) ? last : 0;
+  }
+  if (!Number.isFinite(port)) port = 0;
+
+  if (flags.foreground) {
+    const { info } = await cmdServe({ ...flags, port: String(port), assets, repo: repo || flags.repo });
+    out(startJson(info, dir));
+    if (flags.open) openBrowser(info.url);
+    return;
+  }
+
+  fs.rmSync(p.serverFile, { force: true });
+  const outFd = fs.openSync(p.logFile, 'a');
+  const args = [SCRIPT, 'serve', '--dir', dir, '--host', host, '--port', String(port),
+    '--assets', assets, '--idle-minutes', String(flags['idle-minutes'] !== undefined && flags['idle-minutes'] !== true ? flags['idle-minutes'] : 120)];
+  if (repo) args.push('--repo', repo);
+  if (flags['url-host']) args.push('--url-host', flags['url-host']);
+  const child = spawn(process.execPath, args, { detached: true, stdio: ['ignore', outFd, outFd] });
+  child.on('error', () => {});
+  child.unref();
+  fs.closeSync(outFd);
+
+  const deadline = Date.now() + 8000;
+  while (Date.now() < deadline) {
+    const info = readServerInfo(dir);
+    if (info && info.pid === child.pid && pidAlive(info.pid)) {
+      const base = `http://${probeHost(info.host)}:${info.port}`;
+      if (await healthOk(base)) {
+        out(startJson(info, dir));
+        if (flags.open) openBrowser(info.url);
+        return;
+      }
+    }
+    await sleep(120);
+  }
+  let tail = '';
+  try {
+    tail = fs.readFileSync(p.logFile, 'utf8').trim().split('\n').slice(-3).join(' ');
+  } catch {}
+  fail({ type: 'error', error: `the lesson screen did not start${tail ? `: ${tail}` : ''}` });
+}
+
+async function cmdStop(flags) {
+  const dir = resolveDir(flags);
+  const p = sessionPaths(dir);
+  const info = readServerInfo(dir);
+  const running = !!(info && pidAlive(info.pid));
+  if (running) {
+    const base = `http://${probeHost(info.host)}:${info.port}`;
+    await httpRequest('POST', `${base}/shutdown`, { headers: { 'x-lesson-screen-key': info.key }, timeout: 1500 });
+    const deadline = Date.now() + 3000;
+    let down = false;
+    while (Date.now() < deadline) {
+      if (!(await healthOk(base))) {
+        down = true;
+        break;
+      }
+      await sleep(150);
+    }
+    if (!down) {
+      try {
+        process.kill(info.pid, 'SIGTERM');
+      } catch {}
+      await sleep(300);
+    }
+  }
+  if (info && !pidAlive(info.pid)) {
+    fs.rmSync(p.serverFile, { force: true });
+  }
+  out({ type: 'stopped', running });
+}
+
+async function cmdStatus(flags) {
+  const dir = resolveDir(flags);
+  const info = readServerInfo(dir);
+  let running = false;
+  if (info && pidAlive(info.pid)) {
+    running = await healthOk(`http://${probeHost(info.host)}:${info.port}`);
+  }
+  const list = listScreens(dir);
+  out({
+    type: 'status',
+    running,
+    url: running ? info.url : null,
+    screens: list.map((s) => s.name),
+    latest: list.length ? list[list.length - 1].name : null,
+    next: pad2(nextIndex(dir)),
+    unread: countUnread(dir),
+  });
+}
+
+function cmdEvents(flags) {
+  const dir = resolveDir(flags);
+  out({ type: 'events', events: readEvents(dir, { all: !!flags.all }) });
+}
+
+function readSpecFile(file) {
+  let text;
+  try {
+    text = fs.readFileSync(file, 'utf8');
+  } catch {
+    fail({ type: 'error', error: `cannot read ${file}` });
+  }
+  try {
+    return JSON.parse(text);
+  } catch {
+    fail({ type: 'invalid', errors: [`${file}: not valid JSON`] });
+  }
+}
+
+function cmdCheck(flags, positional) {
+  const file = positional[0];
+  if (!file) fail({ type: 'error', error: 'check needs a spec file' });
+  const spec = readSpecFile(file);
+  const result = checkMachine(spec);
+  if (!result.ok) fail({ type: 'invalid', errors: result.errors });
+  out({ type: 'valid' });
+}
+
+function cmdMachine(flags, positional) {
+  const file = positional[0];
+  if (!file) fail({ type: 'error', error: 'machine needs a spec file' });
+  const spec = readSpecFile(file);
+  const result = checkMachine(spec);
+  if (!result.ok) fail({ type: 'invalid', errors: result.errors });
+  const dir = resolveDir(flags);
+  const name = typeof flags.name === 'string' ? flags.name : undefined;
+  const { name: screenName, file: screenFile } = writeMachineScreen(dir, result.spec, name);
+  out({ type: 'screen', name: screenName, file: screenFile });
+}
+
+async function main(argv) {
+  const { command, flags, positional } = parseArgs(argv);
+  switch (command) {
+    case 'start':
+      return cmdStart(flags);
+    case 'serve':
+      return cmdServe(flags);
+    case 'stop':
+      return cmdStop(flags);
+    case 'status':
+      return cmdStatus(flags);
+    case 'events':
+      return cmdEvents(flags);
+    case 'check':
+      return cmdCheck(flags, positional);
+    case 'machine':
+      return cmdMachine(flags, positional);
+    default:
+      fail({ type: 'error', error: `unknown command "${command || ''}"` });
+  }
+}
+
+if (process.argv[1] && fs.realpathSync(process.argv[1]) === fs.realpathSync(SCRIPT)) {
+  main(process.argv.slice(2)).catch((e) => {
+    fail({ type: 'error', error: e && e.message ? e.message : String(e) });
+  });
+}
