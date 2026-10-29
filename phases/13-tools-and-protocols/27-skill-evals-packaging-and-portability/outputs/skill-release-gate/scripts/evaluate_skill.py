@@ -23,6 +23,21 @@ CORE_FIELDS = {
 MAX_SKILL_BODY_CHARS = 10_000
 MAX_COMPANION_FILE_BYTES = 1_000_000
 RESERVED_MANIFEST_PATH = "assets/manifest.json"
+TEXT_MANIFEST_SUFFIXES = frozenset({
+    ".csv",
+    ".js",
+    ".json",
+    ".md",
+    ".mjs",
+    ".py",
+    ".sh",
+    ".svg",
+    ".toml",
+    ".ts",
+    ".txt",
+    ".yaml",
+    ".yml",
+})
 SUPPORTED_ARTIFACT_MODES = frozenset({"fixture", "captured-artifacts"})
 SUPPORTED_EVIDENCE_MODES = frozenset(
     {"deterministic-fixture", "captured-results"}
@@ -494,7 +509,10 @@ def verify_manifest(bundle: Path, config: dict[str, object]) -> dict[str, object
             if not path.is_file():
                 issues.append("reserved manifest path must be a regular file")
         elif path.is_file():
-            actual[relative] = f"sha256:{hashlib.sha256(path.read_bytes()).hexdigest()}"
+            payload = path.read_bytes()
+            if path.suffix.lower() in TEXT_MANIFEST_SUFFIXES:
+                payload = payload.replace(b"\r\n", b"\n")
+            actual[relative] = f"sha256:{hashlib.sha256(payload).hexdigest()}"
         elif not path.is_dir():
             issues.append(f"manifest tree contains a special file: {relative}")
     missing = sorted(set(expected) - set(actual))

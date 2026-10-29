@@ -23,6 +23,21 @@ CORE_FIELDS = {
 MAX_SKILL_BODY_CHARS = 10_000
 MAX_COMPANION_FILE_BYTES = 1_000_000
 RESERVED_MANIFEST_PATH = "assets/manifest.json"
+TEXT_MANIFEST_SUFFIXES = frozenset({
+    ".csv",
+    ".js",
+    ".json",
+    ".md",
+    ".mjs",
+    ".py",
+    ".sh",
+    ".svg",
+    ".toml",
+    ".ts",
+    ".txt",
+    ".yaml",
+    ".yml",
+})
 ALLOWED_SUFFIXES = {
     "references": frozenset({".md", ".txt", ".json", ".yaml", ".yml"}),
     "scripts": frozenset({".py", ".sh", ".js", ".mjs", ".ts"}),
@@ -521,7 +536,10 @@ def build_manifest(root: Path) -> dict[str, str]:
                 raise ValueError("reserved manifest path must be a regular file")
             continue
         if path.is_file():
-            digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            payload = path.read_bytes()
+            if path.suffix.lower() in TEXT_MANIFEST_SUFFIXES:
+                payload = payload.replace(b"\r\n", b"\n")
+            digest = hashlib.sha256(payload).hexdigest()
             manifest[relative] = f"sha256:{digest}"
         elif not path.is_dir():
             raise ValueError(f"manifest tree contains a special file: {relative}")
