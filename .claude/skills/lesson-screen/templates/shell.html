@@ -56,8 +56,8 @@ body {
 .topbar {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 6px 12px;
+  gap: 12px;
+  padding: 8px 16px;
   border-bottom: 1px solid var(--rule-soft);
   background: var(--bg-surface);
   flex-wrap: wrap;
@@ -67,17 +67,20 @@ body {
   font-size: 0.68rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink-mute);
+  color: var(--blueprint);
+  padding-right: 12px;
+  border-right: 1px solid var(--rule-soft);
   white-space: nowrap;
 }
 .screen-title {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 600;
   color: var(--ink);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 34ch;
+  max-width: 48ch;
 }
 .status {
   display: inline-flex;
@@ -123,8 +126,12 @@ button, select {
   padding: 0 12px;
   cursor: pointer;
 }
-select { max-width: 30ch; }
-button:hover, select:hover { border-color: var(--blueprint); }
+select { max-width: 40ch; }
+button, select { transition: border-color 180ms cubic-bezier(0.23, 1, 0.32, 1), transform 160ms cubic-bezier(0.23, 1, 0.32, 1); }
+button:active:not(:disabled) { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  button:hover:not(:disabled), select:hover { border-color: var(--blueprint); }
+}
 button:disabled { opacity: 0.4; cursor: default; border-color: var(--rule-soft); }
 :focus-visible { outline: 2px solid var(--blueprint); outline-offset: 2px; }
 .stage { position: relative; flex: 1; min-height: 0; }
@@ -175,8 +182,8 @@ iframe {
   <span class="stopped-note" id="stoppedNote">Ask your tutor to start the lesson screen again.</span>
   <span class="spacer"></span>
   <button type="button" class="pill-latest" id="latestPill">Latest</button>
-  <button type="button" id="prevBtn" aria-label="Previous screen">Prev</button>
-  <button type="button" id="nextBtn" aria-label="Next screen">Next</button>
+  <button type="button" id="prevBtn" aria-label="Previous screen">&larr; Prev</button>
+  <button type="button" id="nextBtn" aria-label="Next screen">Next &rarr;</button>
   <select id="history" aria-label="Screen history"></select>
   <button type="button" id="themeBtn" aria-label="Switch theme">Theme</button>
 </header>

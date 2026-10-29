@@ -520,7 +520,7 @@ export function quizQuestions(quiz) {
   const list = Array.isArray(quiz) ? quiz : quiz && Array.isArray(quiz.questions) ? quiz.questions : [];
   return list.filter((q) => q && typeof q.question === 'string' && Array.isArray(q.options) && q.options.length >= 2
     && q.options.every((o) => typeof o === 'string') && Number.isInteger(q.correct) && q.correct >= 0 && q.correct < q.options.length)
-    .map((q) => ({ q: mdPlain(q.question), options: q.options.map(mdPlain), correct: q.correct, explain: mdPlain(q.explanation || ''), stage: q.stage || '' }));
+    .map((q) => ({ ask: '', q: mdPlain(q.question), options: q.options.map(mdPlain), correct: q.correct, explain: mdPlain(q.explanation || ''), stage: q.stage || '' }));
 }
 
 function seeded(text) {
@@ -549,7 +549,7 @@ export function termQuestions(terms, seed) {
   return terms.slice(0, 4).map((t) => {
     const others = shuffled(terms.filter((o) => o.term !== t.term).map((o) => o.term), rand).slice(0, 3);
     const options = shuffled([t.term, ...others], rand);
-    return { q: `Which term matches this meaning? ${t.means}`, options, correct: options.indexOf(t.term), explain: `${t.term}: ${t.means}`, stage: 'terms' };
+    return { ask: 'Which term matches this meaning?', q: t.means, options, correct: options.indexOf(t.term), explain: `${t.term}: ${t.means}`, stage: 'terms' };
   });
 }
 
