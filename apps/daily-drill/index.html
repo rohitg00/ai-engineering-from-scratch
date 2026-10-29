@@ -1,0 +1,723 @@
+<meta charset="utf-8">
+<title>Daily Drill</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Layout: an engineer's computation pad. Title block across the top, one sheet per day, margin notes on the right. */
+:root {
+  --paper: #e8eee3;
+  --sheet: #f4f7f1;
+  --grid: #d3dfcc;
+  --ink: #1d2721;
+  --ink-soft: #55635a;
+  --rule: #9fb19a;
+  --pencil: #2447c2;
+  --pencil-wash: #dde4fb;
+  --ok: #1f7a46;
+  --ok-wash: #d9efdf;
+  --bad: #b3261e;
+  --bad-wash: #f6dcd9;
+  --f-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --f-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.6rem;
+  --step-3: clamp(2rem, 1.4rem + 2.6vw, 3.1rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #111915; --sheet: #17211c; --grid: #1f2c25; --ink: #dce6da; --ink-soft: #93a597;
+    --rule: #3a4d41; --pencil: #93a9ff; --pencil-wash: #222d52; --ok: #6fcf97; --ok-wash: #183526;
+    --bad: #ff8a80; --bad-wash: #3d1d1b; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #111915; --sheet: #17211c; --grid: #1f2c25; --ink: #dce6da; --ink-soft: #93a597;
+  --rule: #3a4d41; --pencil: #93a9ff; --pencil-wash: #222d52; --ok: #6fcf97; --ok-wash: #183526;
+  --bad: #ff8a80; --bad-wash: #3d1d1b; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: var(--ink);
+  font: 400 var(--step-0)/1.55 var(--f-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 48px;
+}
+.wrap { max-width: 1120px; margin: 0 auto; display: grid; gap: 20px; }
+.label { font: 600 0.72rem/1.2 var(--f-display); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+button, select, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--pencil); outline-offset: 2px; }
+a { color: var(--pencil); text-underline-offset: 3px; }
+
+.titleblock { display: grid; grid-template-columns: 2.2fr repeat(4, minmax(0, 1fr)); border: 2px solid var(--ink); background: var(--sheet); }
+.titleblock > div { padding: 8px 12px; border-left: 1px solid var(--rule); min-width: 0; display: grid; gap: 2px; }
+.titleblock > div:first-child { border-left: 0; }
+.tb-name { font: 700 1.55rem/1 var(--f-display); letter-spacing: 0.02em; text-transform: uppercase; }
+.tb-val { font: 600 var(--step-1)/1.2 var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tb-val.small { font-size: var(--step-0); }
+.track-select { width: 100%; background: transparent; border: 0; border-bottom: 1px dashed var(--rule); padding: 2px 0; font: 600 var(--step-0)/1.3 var(--f-display); letter-spacing: 0.02em; }
+.track-select option { background: var(--sheet); color: var(--ink); }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+
+.sheet { background: var(--sheet); border: 1px solid var(--rule); box-shadow: 4px 4px 0 var(--grid); min-width: 0; }
+.sheet-head { padding: 22px 26px 18px; border-bottom: 1px solid var(--rule); display: grid; gap: 8px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.chip { font: 600 0.75rem/1 var(--f-mono); padding: 4px 7px; border: 1px solid var(--rule); color: var(--ink-soft); }
+.chip.type { border-color: var(--pencil); color: var(--pencil); }
+.lesson-title { font: 700 var(--step-3)/1.02 var(--f-display); margin: 0; text-wrap: balance; letter-spacing: -0.005em; }
+.hook { margin: 0; font-style: italic; color: var(--ink-soft); max-width: 62ch; font-size: var(--step-1); line-height: 1.45; }
+.head-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--rule); }
+.step-tab { background: none; border: 0; border-left: 1px solid var(--rule); padding: 10px 12px; text-align: left; display: grid; gap: 1px; color: var(--ink-soft); }
+.step-tab:first-child { border-left: 0; }
+.step-tab b { font: 700 var(--step-1)/1 var(--f-display); text-transform: uppercase; letter-spacing: 0.04em; }
+.step-tab small { font: 400 0.72rem/1.2 var(--f-mono); }
+.step-tab[aria-current="step"] { color: var(--ink); background: var(--pencil-wash); box-shadow: inset 0 -3px 0 var(--pencil); }
+.step-tab.is-done b::after { content: " ✓"; color: var(--ok); }
+
+.stage { padding: 24px 26px 28px; display: grid; gap: 22px; min-width: 0; }
+.stage h2 { font: 700 var(--step-2)/1.1 var(--f-display); text-transform: uppercase; letter-spacing: 0.03em; margin: 0; }
+.prose { max-width: 66ch; margin: 0; }
+.obj { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; max-width: 66ch; }
+.obj li::marker { color: var(--pencil); font-family: var(--f-mono); }
+
+.terms { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.term { text-align: left; background: var(--paper); border: 1px dashed var(--rule); padding: 12px 14px; display: grid; gap: 4px; align-content: start; min-height: 96px; transition: border-color 0.15s, background 0.15s; }
+.term:hover { border-color: var(--pencil); }
+.term strong { font: 700 var(--step-1)/1.15 var(--f-display); letter-spacing: 0.01em; }
+.term .says { font-size: var(--step--1); color: var(--ink-soft); font-style: italic; }
+.term .means { font-size: 0.92rem; line-height: 1.4; }
+.term.is-open { border-style: solid; border-color: var(--pencil); background: var(--pencil-wash); }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--ink); background: var(--ink); color: var(--sheet); font: 700 var(--step-0)/1 var(--f-display); text-transform: uppercase; letter-spacing: 0.08em; transition: transform 0.08s; }
+.btn:hover { transform: translate(-1px, -1px); box-shadow: 2px 2px 0 var(--pencil); }
+.btn:active { transform: translate(1px, 1px); box-shadow: none; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.quiet { background: transparent; color: var(--ink-soft); border-color: var(--rule); }
+.btn kbd { font: 600 0.7rem/1 var(--f-mono); padding: 2px 4px; border: 1px solid currentColor; opacity: 0.7; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.q-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.timer { height: 6px; background: var(--grid); overflow: hidden; }
+.timer span { display: block; height: 100%; background: var(--pencil); transform-origin: left; animation: drain var(--secs, 20s) linear forwards; }
+.timer.is-paused span { animation-play-state: paused; }
+.timer.is-off span { animation: none; }
+@keyframes drain { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+.question { font: 600 var(--step-1)/1.4 var(--f-body); margin: 0; max-width: 62ch; }
+.options { display: grid; gap: 8px; }
+.opt { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; text-align: left; padding: 12px 14px; background: var(--paper); border: 1px solid var(--rule); line-height: 1.4; transition: border-color 0.12s, background 0.12s; }
+.opt:hover:not(:disabled) { border-color: var(--pencil); }
+.opt .k { font: 600 0.78rem/1.6 var(--f-mono); color: var(--pencil); }
+.opt:disabled { cursor: default; }
+.opt.is-correct { background: var(--ok-wash); border-color: var(--ok); }
+.opt.is-wrong { background: var(--bad-wash); border-color: var(--bad); }
+.opt.is-dim { opacity: 0.55; }
+.verdict { padding: 12px 14px; border-left: 4px solid var(--ok); background: var(--ok-wash); display: grid; gap: 4px; max-width: 70ch; }
+.verdict.bad { border-color: var(--bad); background: var(--bad-wash); }
+.verdict b { font: 700 var(--step-0)/1.2 var(--f-display); text-transform: uppercase; letter-spacing: 0.08em; }
+.from { font-size: var(--step--1); color: var(--ink-soft); }
+.tally { display: flex; gap: 4px; }
+.tally i { width: 18px; height: 6px; background: var(--grid); }
+.tally i.ok { background: var(--ok); }
+.tally i.bad { background: var(--bad); }
+.tally i.now { background: var(--pencil); }
+
+.res-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+.res { display: grid; gap: 4px; padding: 14px; border: 1px solid var(--rule); background: var(--paper); text-decoration: none; color: var(--ink); align-content: start; }
+a.res:hover { border-color: var(--pencil); }
+.res strong { font: 700 var(--step-1)/1.1 var(--f-display); text-transform: uppercase; letter-spacing: 0.03em; }
+.res span { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.4; }
+.cmd { display: flex; gap: 0; border: 1px solid var(--ink); min-width: 0; }
+.cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; padding: 10px 12px; font: 400 0.85rem/1.4 var(--f-mono); background: var(--paper); }
+.cmd button { border: 0; border-left: 1px solid var(--ink); background: var(--ink); color: var(--sheet); padding: 0 14px; font: 700 0.8rem/1 var(--f-display); text-transform: uppercase; letter-spacing: 0.08em; }
+.reading { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 70ch; }
+.reading li { padding-left: 14px; border-left: 2px solid var(--rule); }
+.reading .why { display: block; font-size: var(--step--1); color: var(--ink-soft); }
+.exercise { padding: 14px 16px; border: 2px dashed var(--pencil); max-width: 70ch; display: grid; gap: 6px; }
+
+.done-card { display: grid; gap: 14px; justify-items: start; }
+.big-num { font: 700 4rem/0.9 var(--f-display); font-variant-numeric: tabular-nums; }
+.stats { display: flex; gap: 28px; flex-wrap: wrap; }
+.stats div { display: grid; gap: 2px; }
+
+.aside { display: grid; gap: 16px; }
+.note { background: var(--sheet); border: 1px solid var(--rule); padding: 14px 16px; display: grid; gap: 10px; }
+.note h3 { margin: 0; font: 700 var(--step-1)/1 var(--f-display); text-transform: uppercase; letter-spacing: 0.05em; }
+.week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.week span { aspect-ratio: 1; max-width: 100%; border: 1px solid var(--rule); display: grid; place-items: center; font: 600 0.68rem/1 var(--f-mono); color: var(--ink-soft); }
+.week span.on { background: var(--pencil); border-color: var(--pencil); color: var(--sheet); }
+.week span.today { outline: 2px solid var(--ink); outline-offset: 1px; }
+.phase-map { display: grid; gap: 5px; }
+.pm-row { display: grid; grid-template-columns: 26px minmax(0, 1fr) 46px; gap: 8px; align-items: center; font-size: var(--step--1); }
+.pm-bar { height: 8px; background: var(--grid); position: relative; overflow: hidden; }
+.pm-bar span { position: absolute; inset: 0; background: var(--ok); transform-origin: left; }
+.pm-row.is-current .mono:first-child { color: var(--pencil); font-weight: 600; }
+.upnext { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; counter-reset: up; }
+.upnext li { display: grid; gap: 1px; font-size: 0.92rem; line-height: 1.3; }
+.upnext small { font: 400 0.72rem/1.2 var(--f-mono); color: var(--ink-soft); }
+.jump { width: 100%; padding: 8px 10px; border: 1px solid var(--rule); background: var(--paper); }
+.settings { display: grid; gap: 8px; font-size: 0.9rem; }
+.settings label { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+.settings select { background: var(--paper); border: 1px solid var(--rule); padding: 4px 6px; }
+.foot { font-size: var(--step--1); color: var(--ink-soft); }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .titleblock { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .titleblock > div:first-child { grid-column: 1 / -1; }
+  .titleblock > div { border-top: 1px solid var(--rule); }
+  .titleblock > div:first-child { border-top: 0; }
+  .titleblock > div:nth-child(2n) { border-left: 0; }
+}
+@media (max-width: 560px) {
+  .sheet-head, .stage { padding-inline: 16px; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .step-tab:nth-child(3) { border-left: 0; }
+  .step-tab:nth-child(n+3) { border-top: 1px solid var(--rule); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn, .term, .opt { transition: none; }
+  .btn:hover { transform: none; }
+}
+</style>
+
+<div class="wrap">
+  <header class="titleblock" aria-label="Daily Drill title block">
+    <div><span class="label">Project · AI Engineering from Scratch</span><span class="tb-name">Daily Drill</span></div>
+    <div><label class="label" for="track">Track</label><select id="track" class="track-select"></select></div>
+    <div><span class="label">Date</span><span class="tb-val small mono" id="tb-date">—</span></div>
+    <div><span class="label">Sheet</span><span class="tb-val mono" id="tb-sheet">—</span></div>
+    <div><span class="label">Streak</span><span class="tb-val mono" id="tb-streak">—</span></div>
+  </header>
+
+  <div class="layout">
+    <main class="sheet" id="sheet" aria-live="polite"></main>
+    <aside class="aside" id="aside"></aside>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+(async function () {
+  'use strict';
+
+  const sheetEl = document.getElementById('sheet');
+  async function loadData() {
+    if (window.DRILL_DATA) return window.DRILL_DATA;
+    const meta = document.querySelector('meta[name="drill-data"]');
+    if (!meta) return null;
+    sheetEl.textContent = 'Loading 542 lessons…';
+    try {
+      const res = await fetch(meta.content);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      sheetEl.textContent = `Could not load lesson data from ${meta.content} (${err.message}). Reload to try again.`;
+      throw err;
+    }
+  }
+  const D = await loadData();
+  if (!D) {
+    sheetEl.textContent = 'data.js did not load. Run "node build-data.mjs" in this folder, then reload.';
+    return;
+  }
+
+  const STORE_KEY = 'daily-drill-v1';
+  const REVIEW_INTERVALS = [1, 3, 7, 16];
+  const MAX_REVIEW = 5;
+  const MAX_TERM_QUESTIONS = 4;
+  const UPCOMING = 4;
+  const RELEASES = 'https://github.com/rohitg00/ai-engineering-from-scratch/releases';
+  const STEPS = [
+    { id: 'brief', t: 'Brief', s: '~60 sec read' },
+    { id: 'drill', t: 'Drill', s: 'timed quiz' },
+    { id: 'review', t: 'Review', s: 'missed before' },
+    { id: 'go', t: 'Go deeper', s: 'resources' },
+  ];
+
+  const byId = new Map(D.lessons.map((l) => [l.id, l]));
+  const phaseByNum = new Map(D.phases.map((p) => [p.p, p]));
+  const volByNum = new Map(D.volumes.map((v) => [v.n, v]));
+  const TRACKS = [
+    { id: 'course', t: `Full course · ${D.lessons.length} lessons`, lessons: D.lessons.map((l) => l.id) },
+    ...D.paths.map((p) => ({ id: p.id, t: `${p.t} · ${p.lessons.length}`, lessons: p.lessons })),
+  ];
+  const TERM_POOL = D.lessons.flatMap((l) => l.terms.map((t) => t.means));
+
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (v == null || v === false) continue;
+      if (k === 'class') el.className = v;
+      else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? '' : v);
+    }
+    for (const kid of kids.flat()) {
+      if (kid == null || kid === false) continue;
+      el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+    }
+    return el;
+  }
+  const dayKey = (d = new Date()) => d.toLocaleDateString('en-CA');
+  function addDays(key, n) {
+    const d = new Date(`${key}T12:00:00`);
+    d.setDate(d.getDate() + n);
+    return dayKey(d);
+  }
+  function rng(seedText) {
+    let a = 0;
+    for (const ch of seedText) a = (Math.imul(a ^ ch.charCodeAt(0), 2654435761) + 1) >>> 0;
+    return () => {
+      a = (a + 0x6d2b79f5) >>> 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function shuffle(rand, list) {
+    const out = list.slice();
+    for (let i = out.length - 1; i > 0; i--) {
+      const j = Math.floor(rand() * (i + 1));
+      [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+  }
+
+  const DEFAULTS = { track: 'course', done: {}, days: [], review: [], secs: 20, current: {} };
+  function loadState() {
+    try {
+      return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(STORE_KEY) || '{}') };
+    } catch (err) {
+      return { ...DEFAULTS };
+    }
+  }
+  let state = loadState();
+  function setState(patch) {
+    state = { ...state, ...patch };
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (err) {}
+  }
+
+  const today = () => dayKey();
+  const track = () => TRACKS.find((t) => t.id === state.track) || TRACKS[0];
+  function currentLesson() {
+    const t = track();
+    const picked = state.current[t.id];
+    if (picked && byId.has(picked) && !state.done[picked]) return byId.get(picked);
+    const next = t.lessons.find((id) => !state.done[id]);
+    return next ? byId.get(next) : null;
+  }
+  function streak() {
+    const set = new Set(state.days);
+    const now = today();
+    let d = set.has(now) ? now : addDays(now, -1);
+    let n = 0;
+    while (set.has(d)) { n++; d = addDays(d, -1); }
+    return n;
+  }
+
+  function termQuestions(lesson) {
+    const rand = rng(lesson.id);
+    return lesson.terms.slice(0, MAX_TERM_QUESTIONS).map((term) => {
+      const own = lesson.terms.filter((t) => t !== term).map((t) => t.means);
+      const pool = shuffle(rand, TERM_POOL).slice(0, 8);
+      const distractors = [...new Set([...own, ...pool])].filter((m) => m !== term.means).slice(0, 3);
+      const options = shuffle(rand, [term.means, ...distractors]);
+      return {
+        s: 'term',
+        q: `What does "${term.term}" actually mean?`,
+        o: options,
+        c: options.indexOf(term.means),
+        e: term.says ? `People say "${term.says}". Precisely: ${term.means}` : term.means,
+      };
+    }).filter((q) => q.o.length === 4);
+  }
+  const questionsFor = (lesson) => (lesson.quiz.length ? lesson.quiz : termQuestions(lesson));
+
+  function dueReviews(exceptId) {
+    const now = today();
+    return state.review
+      .filter((r) => r.due <= now && r.id !== exceptId && byId.has(r.id) && questionsFor(byId.get(r.id))[r.qi])
+      .slice(0, MAX_REVIEW)
+      .map((r) => ({ lesson: byId.get(r.id), qi: r.qi, q: questionsFor(byId.get(r.id))[r.qi] }));
+  }
+  function recordAnswer(mode, item, correct) {
+    const rest = state.review.filter((r) => !(r.id === item.lesson.id && r.qi === item.qi));
+    const existing = state.review.find((r) => r.id === item.lesson.id && r.qi === item.qi);
+    const now = today();
+    if (!correct) {
+      setState({ review: [...rest, { id: item.lesson.id, qi: item.qi, box: 0, due: addDays(now, REVIEW_INTERVALS[0]) }] });
+    } else if (mode === 'review' && existing) {
+      const box = existing.box + 1;
+      setState({ review: box >= REVIEW_INTERVALS.length ? rest : [...rest, { ...existing, box, due: addDays(now, REVIEW_INTERVALS[box]) }] });
+    }
+  }
+
+  let session = null;
+  let timerId = 0;
+  function startSession(lesson) {
+    session = lesson && {
+      lessonId: lesson.id,
+      step: 'brief',
+      seen: new Set(['brief']),
+      open: new Set(),
+      quizzes: {
+        drill: { items: questionsFor(lesson).map((q, qi) => ({ lesson, qi, q })), i: 0, picks: [] },
+        review: { items: dueReviews(lesson.id), i: 0, picks: [] },
+      },
+      finished: false,
+    };
+  }
+  function startReviewOnly() {
+    session = {
+      lessonId: null,
+      reviewOnly: true,
+      step: 'review',
+      seen: new Set(['review']),
+      open: new Set(),
+      quizzes: { review: { items: dueReviews(null), i: 0, picks: [] } },
+      finished: false,
+    };
+  }
+
+  function render() {
+    clearTimeout(timerId);
+    renderTitleBlock();
+    renderAside();
+    if (session && session.reviewOnly) {
+      sheetEl.replaceChildren(h('div', { class: 'stage' }, renderQuiz('review')));
+      return;
+    }
+    const lesson = session && byId.get(session.lessonId);
+    sheetEl.replaceChildren(...(lesson ? renderSheet(lesson) : renderTrackComplete()));
+  }
+
+  function renderTitleBlock() {
+    const t = track();
+    const lesson = currentLesson();
+    const pos = lesson ? t.lessons.indexOf(lesson.id) + 1 : t.lessons.length;
+    document.getElementById('tb-date').textContent = today();
+    document.getElementById('tb-sheet').textContent = `${String(pos).padStart(3, '0')} / ${t.lessons.length}`;
+    const s = streak();
+    document.getElementById('tb-streak').textContent = `${s} day${s === 1 ? '' : 's'}`;
+    const sel = document.getElementById('track');
+    if (!sel.options.length) {
+      sel.append(...TRACKS.map((tr) => h('option', { value: tr.id }, tr.t)));
+      sel.addEventListener('change', () => { setState({ track: sel.value }); startSession(currentLesson()); render(); });
+    }
+    sel.value = t.id;
+  }
+
+  function renderSheet(lesson) {
+    const phase = phaseByNum.get(lesson.p);
+    const vol = volByNum.get(phase ? phase.vol : 0);
+    const head = h('div', { class: 'sheet-head' },
+      h('div', { class: 'meta' },
+        h('span', { class: 'label' }, `Phase ${String(lesson.p).padStart(2, '0')} · ${phase ? phase.t : ''} · Lesson ${String(lesson.n).padStart(2, '0')}`),
+        lesson.ty && h('span', { class: 'chip type' }, lesson.ty),
+        lesson.min > 0 && h('span', { class: 'chip' }, `~${lesson.min} min full lesson`),
+        lesson.lang && h('span', { class: 'chip' }, lesson.lang),
+        vol && h('span', { class: 'chip' }, `Book vol ${vol.n}`)),
+      h('h1', { class: 'lesson-title' }, lesson.t),
+      lesson.h && h('p', { class: 'hook' }, lesson.h));
+    if (session.finished) return [head, h('div', { class: 'stage' }, renderFinished(lesson))];
+    const tabs = h('nav', { class: 'steps', 'aria-label': 'Today\'s steps' }, STEPS.map((s, i) =>
+      h('button', {
+        class: `step-tab${session.seen.has(s.id) && s.id !== session.step ? ' is-done' : ''}`,
+        'aria-current': s.id === session.step ? 'step' : null,
+        onclick: () => go(s.id),
+      }, h('small', null, `${i + 1} · ${s.s}`), h('b', null, s.t))));
+    const body = { brief: renderBrief, drill: () => renderQuiz('drill'), review: () => renderQuiz('review'), go: renderGo }[session.step](lesson);
+    return [head, tabs, h('div', { class: 'stage' }, body)];
+  }
+
+  function go(step) {
+    session.step = step;
+    session.seen.add(step);
+    render();
+    sheetEl.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
+  function nextStep() {
+    if (session.reviewOnly) {
+      session = null;
+      render();
+      return;
+    }
+    go(STEPS[STEPS.findIndex((s) => s.id === session.step) + 1].id);
+  }
+
+  function renderBrief(lesson) {
+    const out = [];
+    if (lesson.why) out.push(h('div', null, h('span', { class: 'label' }, 'The problem'), h('p', { class: 'prose' }, lesson.why)));
+    if (lesson.obj.length) out.push(h('div', null, h('span', { class: 'label' }, 'By the end you can'), h('ol', { class: 'obj' }, lesson.obj.map((o) => h('li', null, o)))));
+    if (lesson.pre && lesson.pre !== 'None') out.push(h('p', { class: 'from' }, `Prerequisites: ${lesson.pre}`));
+    if (lesson.terms.length) {
+      out.push(h('div', { class: 'row' }, h('h2', null, 'Key terms'), h('span', { class: 'label' }, 'Guess the precise meaning, then tap')));
+      out.push(h('div', { class: 'terms' }, lesson.terms.map((t, i) => {
+        const isOpen = session.open.has(i);
+        return h('button', {
+          class: `term${isOpen ? ' is-open' : ''}`, 'aria-expanded': String(isOpen),
+          onclick: () => { isOpen ? session.open.delete(i) : session.open.add(i); render(); },
+        }, h('strong', null, t.term), t.says && h('span', { class: 'says' }, `People say "${t.says}"`), isOpen && h('span', { class: 'means' }, t.means));
+      })));
+    }
+    const count = session.quizzes.drill.items.length;
+    out.push(h('div', { class: 'row' },
+      h('button', { class: 'btn', onclick: nextStep }, count ? `Start drill · ${count} questions` : 'Continue', h('kbd', null, 'Enter'))));
+    return out;
+  }
+
+  function renderQuiz(mode) {
+    const quiz = session.quizzes[mode];
+    const title = mode === 'drill' ? 'Drill' : 'Review';
+    if (!quiz.items.length) {
+      const msg = mode === 'drill'
+        ? 'This lesson has no quiz and no key terms to drill. Read the brief and go deeper.'
+        : 'Nothing to review today. Questions you miss come back after 1, 3, 7 and 16 days.';
+      return [h('h2', null, title), h('p', { class: 'prose' }, msg), h('div', { class: 'row' }, h('button', { class: 'btn', onclick: nextStep }, 'Continue', h('kbd', null, 'Enter')))];
+    }
+    if (quiz.i >= quiz.items.length) return renderQuizSummary(mode, quiz);
+    const item = quiz.items[quiz.i];
+    const pick = quiz.picks[quiz.i];
+    const answered = pick !== undefined;
+    const secs = state.secs;
+    const tally = h('div', { class: 'tally', 'aria-hidden': 'true' }, quiz.items.map((it, i) =>
+      h('i', { class: i === quiz.i ? 'now' : quiz.picks[i] === undefined ? '' : quiz.picks[i] === it.q.c ? 'ok' : 'bad' })));
+    const timer = h('div', { class: `timer${answered ? ' is-paused' : ''}${secs ? '' : ' is-off'}`, style: `--secs:${secs}s`, 'aria-hidden': 'true' }, h('span'));
+    const options = h('div', { class: 'options', role: 'group', 'aria-label': 'Answers' }, item.q.o.map((o, i) => {
+      let cls = 'opt';
+      if (answered) cls += i === item.q.c ? ' is-correct' : i === pick ? ' is-wrong' : ' is-dim';
+      return h('button', { class: cls, disabled: answered, onclick: () => answer(mode, i) }, h('span', { class: 'k' }, `[${i + 1}]`), h('span', null, o));
+    }));
+    const out = [
+      h('div', { class: 'q-top' }, h('h2', null, `${title} ${quiz.i + 1} / ${quiz.items.length}`), tally),
+      timer,
+      mode === 'review' && h('p', { class: 'from' }, `From ${item.lesson.t} (phase ${item.lesson.p})`),
+      h('p', { class: 'question' }, item.q.q),
+      options,
+    ];
+    if (answered) {
+      const ok = pick === item.q.c;
+      out.push(h('div', { class: `verdict${ok ? '' : ' bad'}` },
+        h('b', null, ok ? 'Correct' : pick === -1 ? 'Time is up' : 'Not quite'),
+        item.q.e && h('span', null, item.q.e),
+        !ok && h('span', { class: 'from' }, 'This one comes back in review tomorrow.')));
+      out.push(h('div', { class: 'row' }, h('button', { class: 'btn', id: 'next-q', onclick: () => { quiz.i++; render(); } }, 'Next', h('kbd', null, 'Enter'))));
+    } else if (secs) {
+      timerId = setTimeout(() => answer(mode, -1), secs * 1000);
+    }
+    return out;
+  }
+
+  function answer(mode, pickIndex) {
+    const quiz = session.quizzes[mode];
+    if (quiz.picks[quiz.i] !== undefined) return;
+    const item = quiz.items[quiz.i];
+    quiz.picks[quiz.i] = pickIndex;
+    recordAnswer(mode, item, pickIndex === item.q.c);
+    render();
+    const next = document.getElementById('next-q');
+    if (next) next.focus({ preventScroll: true });
+  }
+
+  function score(quiz) {
+    return quiz.items.reduce((n, it, i) => n + (quiz.picks[i] === it.q.c ? 1 : 0), 0);
+  }
+
+  function renderQuizSummary(mode, quiz) {
+    const right = score(quiz);
+    const missed = quiz.items.length - right;
+    return [
+      h('h2', null, mode === 'drill' ? 'Drill done' : 'Review done'),
+      h('div', { class: 'stats' },
+        h('div', null, h('span', { class: 'label' }, 'Correct'), h('span', { class: 'big-num' }, `${right}/${quiz.items.length}`)),
+        h('div', null, h('span', { class: 'label' }, 'Queued for review'), h('span', { class: 'big-num' }, String(missed)))),
+      h('div', { class: 'row' }, h('button', { class: 'btn', onclick: nextStep }, 'Continue', h('kbd', null, 'Enter'))),
+    ];
+  }
+
+  function copyButton(text) {
+    return h('button', {
+      type: 'button',
+      onclick: (e) => {
+        const btn = e.currentTarget;
+        const done = (label) => { btn.textContent = label; setTimeout(() => { btn.textContent = 'Copy'; }, 1500); };
+        navigator.clipboard.writeText(text).then(() => done('Copied'), () => {
+          const range = document.createRange();
+          range.selectNodeContents(btn.previousElementSibling);
+          getSelection().removeAllRanges();
+          getSelection().addRange(range);
+          done('Press Ctrl+C');
+        });
+      },
+    }, 'Copy');
+  }
+
+  function renderGo(lesson) {
+    const phase = phaseByNum.get(lesson.p);
+    const vol = volByNum.get(phase ? phase.vol : 0);
+    const bookBody = vol && [h('strong', null, `Book · Vol ${vol.n} ↗`), h('span', null, `${vol.t}. Find "${lesson.t}" in the contents of ${vol.file}.`)];
+    const out = [
+      h('h2', null, 'Go deeper'),
+      h('div', { class: 'res-grid' },
+        h('a', { class: 'res', href: D.links.web + lesson.id, target: '_blank', rel: 'noopener' },
+          h('strong', null, 'Web lesson ↗'), h('span', null, 'Full text, animated figures and the self-grading quiz.')),
+        h('a', { class: 'res', href: D.links.github + lesson.id, target: '_blank', rel: 'noopener' },
+          h('strong', null, 'Source ↗'), h('span', null, 'docs/en.md, code/ with tests, and the outputs/ artifact on GitHub.')),
+        vol && h('a', { class: 'res', href: RELEASES, target: '_blank', rel: 'noopener' }, ...bookBody)),
+    ];
+    if (lesson.run) {
+      out.push(h('div', null, h('span', { class: 'label' }, 'Run it · from the repo root'),
+        h('div', { class: 'cmd' }, h('code', null, lesson.run), copyButton(lesson.run))));
+    }
+    if (lesson.ex) {
+      out.push(h('div', { class: 'exercise' }, h('span', { class: 'label' }, 'Exercise · do it in 15 minutes'), h('span', null, lesson.ex)));
+    }
+    if (lesson.read.length) {
+      out.push(h('div', null, h('span', { class: 'label' }, 'Further reading'), h('ul', { class: 'reading' }, lesson.read.map((r) =>
+        h('li', null, r.url ? h('a', { href: r.url, target: '_blank', rel: 'noopener' }, r.what) : r.what, r.why && h('span', { class: 'why' }, r.why))))));
+    }
+    out.push(h('div', { class: 'row' },
+      h('button', { class: 'btn', onclick: finish }, 'Finish sheet', h('kbd', null, 'Enter'))));
+    return out;
+  }
+
+  function finish() {
+    const now = today();
+    setState({
+      done: { ...state.done, [session.lessonId]: now },
+      days: state.days.includes(now) ? state.days : [...state.days, now],
+    });
+    session.finished = true;
+    render();
+  }
+
+  function renderFinished(lesson) {
+    const next = currentLesson();
+    const drill = session.quizzes.drill;
+    const s = streak();
+    return [h('div', { class: 'done-card' },
+      h('h2', null, 'Sheet complete'),
+      h('div', { class: 'stats' },
+        h('div', null, h('span', { class: 'label' }, 'Drill'), h('span', { class: 'big-num' }, drill.items.length ? `${score(drill)}/${drill.items.length}` : '—')),
+        h('div', null, h('span', { class: 'label' }, 'Streak'), h('span', { class: 'big-num' }, `${s}d`)),
+        h('div', null, h('span', { class: 'label' }, 'Track done'), h('span', { class: 'big-num' }, `${track().lessons.filter((id) => state.done[id]).length}`))),
+      next && h('p', { class: 'prose' }, `Next up: ${next.t}. Come back tomorrow to keep the streak, or keep the pace now.`),
+      h('div', { class: 'row' },
+        next && h('button', { class: 'btn', onclick: () => { startSession(next); render(); } }, 'Next sheet now', h('kbd', null, 'Enter')),
+        h('a', { class: 'btn ghost', href: D.links.web + lesson.id, target: '_blank', rel: 'noopener' }, 'Open full lesson ↗')))];
+  }
+
+  function renderTrackComplete() {
+    const due = dueReviews(null).length;
+    return [h('div', { class: 'stage' }, h('h2', null, 'Track complete'),
+      h('p', { class: 'prose' }, `You finished every lesson in ${track().t}. Pick another track in the title block, or reset progress in Settings.`),
+      due > 0 && h('div', { class: 'row' },
+        h('button', { class: 'btn', onclick: () => { startReviewOnly(); render(); } }, `Review ${due} due question${due === 1 ? '' : 's'}`, h('kbd', null, 'Enter'))))];
+  }
+
+  function renderAside() {
+    const aside = document.getElementById('aside');
+    const t = track();
+    const lesson = currentLesson();
+    const daySet = new Set(state.days);
+    const now = today();
+    const week = Array.from({ length: 14 }, (_, i) => addDays(now, i - 13));
+    const dueCount = state.review.filter((r) => r.due <= now).length;
+
+    const phases = [...new Set(t.lessons.map((id) => byId.get(id).p))];
+    const phaseMap = h('div', { class: 'phase-map' }, phases.map((p) => {
+      const ids = t.lessons.filter((id) => byId.get(id).p === p);
+      const done = ids.filter((id) => state.done[id]).length;
+      return h('div', { class: `pm-row${lesson && lesson.p === p ? ' is-current' : ''}`, title: phaseByNum.get(p).t },
+        h('span', { class: 'mono' }, String(p).padStart(2, '0')),
+        h('div', { class: 'pm-bar' }, h('span', { style: `transform:scaleX(${ids.length ? done / ids.length : 0})` })),
+        h('span', { class: 'mono' }, `${done}/${ids.length}`));
+    }));
+
+    const upcoming = t.lessons.filter((id) => !state.done[id] && (!lesson || id !== lesson.id)).slice(0, UPCOMING).map((id) => byId.get(id));
+    const listId = 'jump-list';
+    const jump = h('input', { class: 'jump', id: 'jump', list: listId, placeholder: 'Type a lesson title…', autocomplete: 'off' });
+    jump.addEventListener('change', () => {
+      const target = t.lessons.map((id) => byId.get(id)).find((l) => l.t === jump.value);
+      if (!target) return;
+      setState({ current: { ...state.current, [t.id]: target.id }, done: Object.fromEntries(Object.entries(state.done).filter(([id]) => id !== target.id)) });
+      startSession(target);
+      render();
+    });
+
+    aside.replaceChildren(
+      h('section', { class: 'note' }, h('h3', null, 'Last 14 days'),
+        h('div', { class: 'week' }, week.map((d) => h('span', { class: `${daySet.has(d) ? 'on' : ''}${d === now ? ' today' : ''}`, title: d }, d.slice(8)))),
+        h('span', { class: 'foot' }, `${dueCount} question${dueCount === 1 ? '' : 's'} due for review`)),
+      h('section', { class: 'note' }, h('h3', null, 'Up next'),
+        upcoming.length ? h('ol', { class: 'upnext' }, upcoming.map((l) => h('li', null, h('small', null, `P${String(l.p).padStart(2, '0')} · ${l.min ? `~${l.min} min` : l.ty}`), l.t))) : h('span', { class: 'foot' }, 'Nothing left after this one.'),
+        h('label', { class: 'label', for: 'jump' }, 'Jump to a lesson'), jump,
+        h('datalist', { id: listId }, t.lessons.map((id) => h('option', { value: byId.get(id).t }))),
+        session && session.lessonId && !session.finished && h('button', { class: 'btn quiet', onclick: skip }, 'Skip this lesson')),
+      h('section', { class: 'note' }, h('h3', null, 'Progress by phase'), phaseMap),
+      renderSettings());
+  }
+
+  function skip() {
+    if (!session || !session.lessonId || session.finished) return;
+    setState({ done: { ...state.done, [session.lessonId]: 'skipped' } });
+    startSession(currentLesson());
+    render();
+  }
+
+  let resetArmed = false;
+  function renderSettings() {
+    resetArmed = false;
+    const secs = h('select', { id: 'secs' }, [10, 20, 30, 0].map((n) => h('option', { value: String(n) }, n ? `${n} sec` : 'No timer')));
+    secs.value = String(state.secs);
+    secs.addEventListener('change', () => setState({ secs: Number(secs.value) }));
+    const reset = h('button', {
+      class: 'btn quiet',
+      onclick: () => {
+        if (!resetArmed) { resetArmed = true; reset.textContent = 'Click again to erase all progress'; return; }
+        resetArmed = false;
+        setState({ ...DEFAULTS, track: state.track, secs: state.secs });
+        startSession(currentLesson());
+        render();
+      },
+    }, 'Reset progress');
+    return h('section', { class: 'note settings' }, h('h3', null, 'Settings'),
+      h('label', { for: 'secs' }, 'Time per question', secs),
+      reset,
+      h('span', { class: 'foot' }, `Progress is saved in this browser only. Content built ${D.built} from the course repo.`));
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.closest('input, select, textarea') || e.metaKey || e.ctrlKey || e.altKey || !session) return;
+    const mode = session.step === 'drill' || session.step === 'review' ? session.step : null;
+    const quiz = mode && session.quizzes[mode];
+    const live = quiz && quiz.i < quiz.items.length && quiz.picks[quiz.i] === undefined;
+    if (live && /^[1-9]$/.test(e.key)) {
+      const i = Number(e.key) - 1;
+      if (i < quiz.items[quiz.i].q.o.length) { e.preventDefault(); answer(mode, i); }
+      return;
+    }
+    if (e.key === 'Enter' && !live && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') {
+      const primary = sheetEl.querySelector('.stage .btn');
+      if (primary) { e.preventDefault(); primary.click(); }
+    }
+  });
+
+  startSession(currentLesson());
+  render();
+})();
+</script>
