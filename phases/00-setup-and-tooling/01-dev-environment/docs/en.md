@@ -123,6 +123,7 @@ For math-heavy lessons where Julia shines.
 
 ```bash
 curl -fsSL https://install.julialang.org | sh
+export PATH="$HOME/.juliaup/bin:$PATH"
 
 julia -e 'println("Julia ", VERSION)'
 ```
