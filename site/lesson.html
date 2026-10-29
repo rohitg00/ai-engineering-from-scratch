@@ -2947,6 +2947,9 @@
           updateMermaidThemeAndRerender();
         });
       }
+      document.addEventListener('aifs:themechange', function () {
+        updateMermaidThemeAndRerender();
+      });
 
       // lang-picker.js renders the switcher into #langPicker; when the reader
       // chooses a language, re-fetch the current lesson in it (quiz stays English).

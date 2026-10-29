@@ -195,7 +195,12 @@
     "Define “intelligence”.",
     "A good place to start.",
     "Still worth learning backprop.",
-    "Some questions are best answered by building."
+    "Some questions are best answered by building.",
+    "Change theme",
+    "Theme",
+    "System",
+    "Light",
+    "Dark"
   ],
   "overrides": {
     "zh": {

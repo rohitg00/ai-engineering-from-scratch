@@ -170,6 +170,8 @@ jobs:
         run: node --test site/test_skills_page.js
       - name: the star note asks engaged readers at most twice
         run: node --test site/test_star_nudge.js
+      - name: the theme menu offers system, light, and dark on every page
+        run: node --test site/test_theme_menu.js
       - name: lesson walkthrough syncs steps and schedules revisits
         run: node --test site/test_lesson_walkthrough.js
       - name: lesson quizzes are placed once, before the footer, in every language
