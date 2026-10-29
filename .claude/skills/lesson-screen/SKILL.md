@@ -29,7 +29,7 @@ Use this skill with Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that r
 ## When not to use
 
 - The learner declined the screen. Do not offer it again this session.
-- The host has no local browser: a remote agent, a chat app, or a server without a display. Give the lesson page on aiengineeringfromscratch.com. `references/hosts.md` lists the cases.
+- The learner cannot reach a browser page from the host: a chat app, or a remote machine without port forwarding. Give the lesson page on aiengineeringfromscratch.com. `references/hosts.md` lists the cases.
 - The step is words only: a clarifying question, a tradeoff, or a definition. Keep it in the terminal and show the waiting screen.
 - You need a permanent figure for a lesson file. Use the figure skills directly. This skill makes screens for one learner.
 
@@ -112,21 +112,27 @@ The course figure skills are blueprint-figure, motion-figure, isometric-explaine
 
 The host can have more figure skills installed, such as an isometric illustration skill with a 3D mode or WebGL effects. Check the host's skill list before you pick a form. Use such a skill when it fits the form, and keep the truth rules and the page contract of this skill.
 
-## Daily practice
+## Practice after the lesson
 
-The Daily Drill is a separate study page in the course repository. It gives one lesson a day: a brief, a timed drill, spaced review of missed questions, and links to read further.
+`CLI practice <lesson-path>` writes a practice page for one lesson as the next screen. It has four parts:
 
-- Offer it at the end of a session, as practice.
-- If the clone has `apps/daily-drill/`, run `node apps/daily-drill/build-data.mjs`. Then open `apps/daily-drill/index.html` in the learner's browser.
-- If there is no clone or no `apps/daily-drill/` folder, skip the offer.
-- The drill grades itself in the browser and keeps its own progress. Record nothing from it. It never changes a score, a review queue, or any evidence.
-- Do not put the drill on the lesson screen, and do not change its files.
+- **Brief**: the hook, the learning objectives, and a card for each key term that shows its meaning on a press.
+- **Drill**: the questions from `quiz.json`, with keys 1 to 4, Enter for the next question, and an optional timer.
+- **Review**: missed questions return after 1, 3, 7, and 16 days.
+- **Go deeper**: the lesson page, the lesson folder, the command that runs its code, one exercise, and further reading.
+
+Follow these rules:
+
+- Offer practice only after the tutor's own quiz for the lesson is complete. The page holds the answer key.
+- The page grades itself and keeps its progress in the browser. Record nothing from it. It never changes a score, a review queue, or any evidence.
+- It reads the lesson from the clone, or from GitHub when there is no clone.
+- A lesson without `quiz.json` gets questions made from its Key Terms table.
 
 ## Truth rules
 
 - Never invent a number. Readouts, labels, and step text come from the lesson text or a real run.
 - A built figure with motion uses a small tested state model. The model moves the parts and writes the readouts.
-- Never put a correct answer, an answer index, or an explanation on a screen before the learner answers. The learner can read the page source.
+- Never put a correct answer, an answer index, or an explanation on a screen before the learner answers. The learner can read the page source. The practice page is the one exception, and it appears only after the tutor's quiz.
 - A click is a hint. It never counts as a quiz answer, checkpoint evidence, or a lab result.
 - The tutor's own rules decide progress, scores, and evidence.
 - Every built figure shows a line that says your tutor built it for this lesson and the course authors did not review it.
@@ -160,6 +166,7 @@ The Daily Drill is a separate study page in the course repository. It gives one 
 | `status` | Prints `running`, `url`, `screens`, `latest`, `next`, and the unread event count |
 | `events [--all]` | Prints new events |
 | `publish FILE [--name SLUG]` | Copies a built page into the screens folder as the next screen |
+| `practice LESSON [--repo PATH] [--name SLUG]` | Writes a practice page for a lesson path as the next screen |
 | `shot TARGET [--width N] [--height N] [--theme light\|dark] [--wait MS] [--out FILE] [--chrome PATH]` | Takes a screenshot of a screen name or a page file with a local Chrome, Chromium, or Edge |
 | `stop` | Stops the server |
 

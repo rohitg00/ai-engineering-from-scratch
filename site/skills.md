@@ -50,7 +50,7 @@ Teaches your next lesson section by section in the terminal, asks questions, and
 
 ### lesson-screen (v1.0.0)
 
-Opens a screen in your browser next to the terminal. It shows the lesson figure for each step and traces the code with real values. It also builds a figure for your lesson while you learn, from a blueprint to a 3D model.
+Opens a screen in your browser next to the terminal. It shows the lesson figure for each step and traces the code with real values. It also builds a figure for your lesson while you learn, from a blueprint to a 3D model. After the quiz, it writes a practice page with a timed drill and spaced review. Without a local browser, it gives you the lesson page instead.
 
 - Say: "open the lesson screen", "build a figure for this lesson"
 - Writes: A .lesson-screen folder with each screen it showed

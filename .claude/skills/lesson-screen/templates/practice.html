@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__PRACTICE_TITLE__</title>
+<script>
+(function () {
+  function apply() {
+    var t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (t !== 'light' && t !== 'dark') t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  }
+  apply();
+  window.addEventListener('storage', function (e) { if (e.key === 'theme' || e.key === null) apply(); });
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafaf5;
+  --bg-surface: #f3f1e8;
+  --ink: #1a1a1a;
+  --ink-soft: #4a4a4a;
+  --ink-mute: #7a7a78;
+  --rule-soft: rgba(26, 26, 26, 0.16);
+  --blueprint: #3553ff;
+  --blueprint-tint: rgba(53, 83, 255, 0.08);
+  --blueprint-tint-strong: rgba(53, 83, 255, 0.18);
+  --warn: #b8870f;
+  --ok: #1f7a4d;
+  --ok-tint: rgba(31, 122, 77, 0.1);
+  --bad: #b3261e;
+  --bad-tint: rgba(179, 38, 30, 0.08);
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Consolas', monospace;
+  --font-body: 'Source Serif 4', 'Source Serif Pro', 'Iowan Old Style', Georgia, serif;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+[data-theme="dark"] {
+  --bg: #0a0d1a;
+  --bg-surface: #131830;
+  --ink: #e8e6dc;
+  --ink-soft: #a8a6a0;
+  --ink-mute: #7a7878;
+  --rule-soft: rgba(232, 230, 220, 0.18);
+  --blueprint: #6b8eff;
+  --blueprint-tint: rgba(107, 142, 255, 0.12);
+  --blueprint-tint-strong: rgba(107, 142, 255, 0.22);
+  --warn: #d4a83d;
+  --ok: #5cc48f;
+  --ok-tint: rgba(92, 196, 143, 0.14);
+  --bad: #ff8a80;
+  --bad-tint: rgba(255, 138, 128, 0.12);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 1rem/1.55 var(--font-body); }
+.pr { max-width: 920px; margin: 0 auto; padding: 26px 24px 48px; }
+.pr-eyebrow { margin: 0 0 10px; font: 500 0.68rem/1.3 var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--blueprint); }
+.pr h1 { margin: 0 0 8px; font: 600 1.7rem/1.2 var(--font-body); }
+.pr-hook { margin: 0 0 6px; font-size: 1.15rem; color: var(--ink-soft); max-width: 60ch; }
+.pr-note { margin: 0 0 22px; font: 0.72rem/1.5 var(--font-mono); color: var(--ink-mute); }
+.pr-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--rule-soft); margin-bottom: 22px; overflow-x: auto; }
+.pr-tab { min-height: 44px; padding: 10px 16px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--ink-soft); font: 500 0.78rem var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; white-space: nowrap; transition: color 180ms var(--ease-out), border-color 180ms var(--ease-out); }
+.pr-tab[aria-selected="true"] { color: var(--blueprint); border-bottom-color: var(--blueprint); }
+.pr-tab b { font-weight: 500; margin-left: 6px; padding: 1px 6px; background: var(--blueprint-tint); color: var(--blueprint); }
+:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 2px; }
+.pr-panel[hidden] { display: none; }
+.pr-label { margin: 22px 0 10px; font: 500 0.7rem var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); }
+.pr-objectives { margin: 0; padding-left: 20px; }
+.pr-objectives li { margin: 4px 0; }
+.pr-terms { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.pr-term { min-height: 96px; padding: 14px; border: 1px solid var(--rule-soft); background: var(--bg-surface); color: var(--ink); text-align: left; cursor: pointer; font: inherit; transition: border-color 180ms var(--ease-out), background-color 180ms var(--ease-out); }
+.pr-term:hover { border-color: var(--blueprint); }
+.pr-term strong { display: block; font: 600 0.84rem var(--font-mono); color: var(--blueprint); }
+.pr-term span { display: block; margin-top: 8px; font-size: 0.92rem; color: var(--ink-soft); }
+.pr-term[aria-expanded="false"] span { color: var(--ink-mute); font: 0.7rem var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+.pr-term[aria-expanded="true"] { background: var(--blueprint-tint); border-color: var(--blueprint); }
+.pr-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; font: 0.76rem var(--font-mono); color: var(--ink-mute); }
+.pr-bar select { min-height: 36px; padding: 4px 8px; background: var(--bg); color: var(--ink); border: 1px solid var(--rule-soft); font: inherit; }
+.pr-clock { height: 3px; background: var(--rule-soft); overflow: hidden; margin-bottom: 16px; }
+.pr-clock i { display: block; height: 100%; background: var(--blueprint); transform-origin: left center; transform: scaleX(1); }
+.pr-q { margin: 0 0 14px; font-size: 1.18rem; line-height: 1.45; }
+.pr-from { margin: -8px 0 12px; font: 0.7rem var(--font-mono); color: var(--ink-mute); }
+.pr-options { display: grid; gap: 8px; }
+.pr-opt { display: flex; align-items: flex-start; gap: 12px; min-height: 48px; padding: 12px 14px; border: 1px solid var(--rule-soft); background: var(--bg); color: var(--ink); text-align: left; font: inherit; cursor: pointer; transition: border-color 180ms var(--ease-out), background-color 180ms var(--ease-out); }
+.pr-opt:hover:not(:disabled) { border-color: var(--blueprint); }
+.pr-opt:active:not(:disabled) { transform: scale(0.99); }
+.pr-opt kbd { flex: none; min-width: 22px; padding: 1px 6px; border: 1px solid var(--rule-soft); font: 0.72rem var(--font-mono); color: var(--ink-mute); text-align: center; }
+.pr-opt:disabled { cursor: default; }
+.pr-opt.is-right { border-color: var(--ok); background: var(--ok-tint); }
+.pr-opt.is-wrong { border-color: var(--bad); background: var(--bad-tint); }
+.pr-opt.is-dim { opacity: 0.55; }
+.pr-verdict { margin: 14px 0 0; padding: 12px 14px; border-left: 2px solid var(--blueprint); background: var(--bg-surface); }
+.pr-verdict b { font: 600 0.78rem var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+.pr-verdict.ok b { color: var(--ok); }
+.pr-verdict.bad b { color: var(--bad); }
+.pr-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.pr-btn { min-height: 44px; padding: 10px 16px; border: 1px solid var(--rule-soft); background: transparent; color: var(--ink); font: 500 0.78rem var(--font-mono); cursor: pointer; }
+.pr-btn.primary { background: var(--blueprint); border-color: var(--blueprint); color: #fff; }
+.pr-btn:active { transform: scale(0.97); }
+.pr-empty { padding: 22px; border: 1px dashed var(--rule-soft); color: var(--ink-soft); }
+.pr-score { font: 400 2.6rem/1 'VT323', var(--font-mono); color: var(--blueprint); }
+.pr-links { list-style: none; padding: 0; margin: 0; }
+.pr-links li { padding: 10px 0; border-bottom: 1px solid var(--rule-soft); }
+.pr-links a { color: var(--blueprint); }
+.pr-code { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pr-code code { padding: 6px 10px; background: var(--bg-surface); border: 1px solid var(--rule-soft); font: 0.8rem var(--font-mono); word-break: break-all; }
+@media (max-width: 640px) { .pr { padding: 18px 14px 40px; } .pr h1 { font-size: 1.4rem; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } .pr-clock i { transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="pr">
+  <p class="pr-eyebrow" data-pr-eyebrow></p>
+  <h1 data-pr-title></h1>
+  <p class="pr-hook" data-pr-hook></p>
+  <p class="pr-note">Practice. Your tutor does not see these answers. Progress stays in this browser.</p>
+  <div class="pr-tabs" role="tablist" aria-label="Practice steps">
+    <button type="button" class="pr-tab" role="tab" id="tab-brief" aria-controls="panel-brief" data-tab="brief">Brief</button>
+    <button type="button" class="pr-tab" role="tab" id="tab-drill" aria-controls="panel-drill" data-tab="drill">Drill<b data-pr-drill-count></b></button>
+    <button type="button" class="pr-tab" role="tab" id="tab-review" aria-controls="panel-review" data-tab="review">Review<b data-pr-review-count></b></button>
+    <button type="button" class="pr-tab" role="tab" id="tab-deeper" aria-controls="panel-deeper" data-tab="deeper">Go deeper</button>
+  </div>
+  <section class="pr-panel" role="tabpanel" id="panel-brief" aria-labelledby="tab-brief" data-panel="brief"></section>
+  <section class="pr-panel" role="tabpanel" id="panel-drill" aria-labelledby="tab-drill" data-panel="drill"></section>
+  <section class="pr-panel" role="tabpanel" id="panel-review" aria-labelledby="tab-review" data-panel="review"></section>
+  <section class="pr-panel" role="tabpanel" id="panel-deeper" aria-labelledby="tab-deeper" data-panel="deeper"></section>
+  <p class="pr-note" aria-live="polite" data-pr-live></p>
+</main>
+<script id="practice-data" type="application/json">__PRACTICE_DATA__</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById('practice-data').textContent);
+  var STORE = 'aiefs-practice-v1';
+  var INTERVALS = [1, 3, 7, 16];
+  var $ = function (sel) { return document.querySelector(sel); };
+  function el(tag, attrs, kids) {
+    var node = document.createElement(tag);
+    Object.keys(attrs || {}).forEach(function (k) {
+      if (k === 'text') node.textContent = attrs[k];
+      else if (k === 'on') Object.keys(attrs.on).forEach(function (ev) { node.addEventListener(ev, attrs.on[ev]); });
+      else node.setAttribute(k, attrs[k]);
+    });
+    (kids || []).forEach(function (kid) { if (kid) node.appendChild(kid); });
+    return node;
+  }
+  function today() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function addDays(key, n) {
+    var p = key.split('-').map(Number);
+    var d = new Date(p[0], p[1] - 1, p[2] + n);
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function load() {
+    try {
+      var s = JSON.parse(localStorage.getItem(STORE) || '{}');
+      return { review: Array.isArray(s.review) ? s.review : [], secs: typeof s.secs === 'number' ? s.secs : 0 };
+    } catch (e) {
+      return { review: [], secs: 0 };
+    }
+  }
+  var state = load();
+  function save() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} }
+  function due() { var now = today(); return state.review.filter(function (r) { return r.due <= now; }); }
+  function itemId(q, i) { return D.lesson + '#' + i + '#' + q.q.slice(0, 40); }
+
+  $('[data-pr-eyebrow]').textContent = 'Practice · Phase ' + D.phase + ' · Lesson ' + D.number;
+  $('[data-pr-title]').textContent = D.title || D.lesson;
+  $('[data-pr-hook]').textContent = D.hook || '';
+
+  var current = 'brief';
+  function select(tab) {
+    current = tab;
+    document.querySelectorAll('[data-tab]').forEach(function (b) {
+      var on = b.getAttribute('data-tab') === tab;
+      b.setAttribute('aria-selected', String(on));
+      b.tabIndex = on ? 0 : -1;
+    });
+    document.querySelectorAll('[data-panel]').forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== tab; });
+    if (tab === 'review') startReview();
+  }
+  document.querySelectorAll('[data-tab]').forEach(function (b) {
+    b.addEventListener('click', function () { select(b.getAttribute('data-tab')); });
+  });
+  document.querySelector('[role="tablist"]').addEventListener('keydown', function (e) {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-tab]'));
+    var i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      var next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      next.focus();
+      select(next.getAttribute('data-tab'));
+      e.preventDefault();
+    }
+  });
+  function counts() {
+    $('[data-pr-drill-count]').textContent = String(D.questions.length);
+    var n = due().length;
+    $('[data-pr-review-count]').textContent = String(n);
+    $('[data-pr-review-count]').hidden = !n;
+  }
+
+  function renderBrief() {
+    var panel = $('[data-panel="brief"]');
+    if (D.objectives.length) {
+      panel.appendChild(el('p', { class: 'pr-label', text: 'You will be able to' }));
+      panel.appendChild(el('ul', { class: 'pr-objectives' }, D.objectives.map(function (o) { return el('li', { text: o }); })));
+    }
+    if (D.terms.length) {
+      panel.appendChild(el('p', { class: 'pr-label', text: 'Key terms. Press a card to see its meaning' }));
+      panel.appendChild(el('div', { class: 'pr-terms' }, D.terms.map(function (t) {
+        var meaning = el('span', { text: 'Show meaning' });
+        var card = el('button', { type: 'button', class: 'pr-term', 'aria-expanded': 'false' }, [el('strong', { text: t.term }), meaning]);
+        card.addEventListener('click', function () {
+          var open = card.getAttribute('aria-expanded') !== 'true';
+          card.setAttribute('aria-expanded', String(open));
+          meaning.textContent = open ? t.means : 'Show meaning';
+        });
+        return card;
+      })));
+    }
+    panel.appendChild(el('div', { class: 'pr-actions' }, [el('button', { type: 'button', class: 'pr-btn primary', text: 'Start the drill', on: { click: function () { select('drill'); } } })]));
+  }
+
+  function quiz(panelName, items, onAnswer, onDone) {
+    var panel = $('[data-panel="' + panelName + '"]');
+    var i = 0;
+    var right = 0;
+    var answered = false;
+    var timer = 0;
+    var started = 0;
+    function stop() { clearInterval(timer); timer = 0; }
+    function show() {
+      stop();
+      panel.textContent = '';
+      if (i >= items.length) return onDone(panel, right, items.length);
+      answered = false;
+      var item = items[i];
+      var secsSel = el('select', { 'aria-label': 'Time per question' }, [['0', 'No timer'], ['10', '10 s'], ['20', '20 s'], ['30', '30 s']].map(function (o) {
+        var opt = el('option', { value: o[0], text: o[1] });
+        if (Number(o[0]) === state.secs) opt.selected = true;
+        return opt;
+      }));
+      secsSel.addEventListener('change', function () { state.secs = Number(secsSel.value); save(); show(); });
+      var left = el('span', { text: '' });
+      panel.appendChild(el('div', { class: 'pr-bar' }, [el('span', { text: 'Question ' + (i + 1) + ' of ' + items.length }), left, secsSel]));
+      var bar = el('i', {});
+      if (state.secs) panel.appendChild(el('div', { class: 'pr-clock' }, [bar]));
+      panel.appendChild(el('p', { class: 'pr-q', text: item.q }));
+      if (item.title) panel.appendChild(el('p', { class: 'pr-from', text: 'From ' + item.title }));
+      var buttons = item.options.map(function (o, k) {
+        return el('button', { type: 'button', class: 'pr-opt', 'data-k': String(k), on: { click: function () { pick(k); } } }, [el('kbd', { text: String(k + 1) }), el('span', { text: o })]);
+      });
+      panel.appendChild(el('div', { class: 'pr-options', role: 'group', 'aria-label': 'Options' }, buttons));
+      if (state.secs) {
+        started = Date.now();
+        timer = setInterval(function () {
+          var rest = Math.max(0, state.secs - (Date.now() - started) / 1000);
+          left.textContent = Math.ceil(rest) + ' s left';
+          bar.style.transform = 'scaleX(' + (rest / state.secs) + ')';
+          if (rest <= 0) pick(-1);
+        }, 100);
+      }
+      buttons[0] && buttons[0].focus({ preventScroll: true });
+      function pick(k) {
+        if (answered) return;
+        answered = true;
+        stop();
+        var ok = k === item.correct;
+        if (ok) right++;
+        buttons.forEach(function (b, n) {
+          b.disabled = true;
+          b.classList.add(n === item.correct ? 'is-right' : n === k ? 'is-wrong' : 'is-dim');
+        });
+        onAnswer(item, ok);
+        var verdict = el('div', { class: 'pr-verdict ' + (ok ? 'ok' : 'bad') }, [
+          el('b', { text: ok ? 'Right' : k < 0 ? 'Time is up' : 'Not this one' }),
+          item.explain ? el('p', { text: item.explain, style: 'margin:6px 0 0' }) : null,
+        ]);
+        panel.appendChild(verdict);
+        var next = el('button', { type: 'button', class: 'pr-btn primary', text: i + 1 < items.length ? 'Next question' : 'See the result', on: { click: function () { i++; show(); } } });
+        panel.appendChild(el('div', { class: 'pr-actions' }, [next]));
+        next.focus({ preventScroll: true });
+        $('[data-pr-live]').textContent = ok ? 'Right.' : 'Not right. The right option is marked.';
+        counts();
+      }
+      panel._pick = pick;
+    }
+    panel._next = function () { if (answered) { i++; show(); } };
+    panel._isAnswered = function () { return answered; };
+    show();
+  }
+
+  function scheduleMiss(item) {
+    var id = item.id;
+    state.review = state.review.filter(function (r) { return r.id !== id; });
+    state.review.push({ id: id, lesson: D.lesson, title: D.title, q: item.q, options: item.options, correct: item.correct, explain: item.explain, box: 0, due: addDays(today(), INTERVALS[0]) });
+    save();
+  }
+
+  function startDrill() {
+    var items = D.questions.map(function (q, n) { return { id: itemId(q, n), q: q.q, options: q.options, correct: q.correct, explain: q.explain }; });
+    if (!items.length) {
+      $('[data-panel="drill"]').appendChild(el('p', { class: 'pr-empty', text: 'This lesson has no quiz and too few key terms for a drill. Read it on the lesson page.' }));
+      return;
+    }
+    quiz('drill', items, function (item, ok) { if (!ok) scheduleMiss(item); }, function (panel, right, total) {
+      var missed = total - right;
+      panel.appendChild(el('p', { class: 'pr-score', text: right + ' / ' + total }));
+      panel.appendChild(el('p', { text: missed ? missed + (missed === 1 ? ' question comes' : ' questions come') + ' back tomorrow, then after 3, 7, and 16 days.' : 'Every answer was right. Nothing goes to review.' }));
+      if (D.source === 'terms') panel.appendChild(el('p', { class: 'pr-note', text: 'This lesson has no quiz yet, so the drill asks about its key terms.' }));
+      panel.appendChild(el('div', { class: 'pr-actions' }, [
+        el('button', { type: 'button', class: 'pr-btn primary', text: 'Go deeper', on: { click: function () { select('deeper'); } } }),
+        el('button', { type: 'button', class: 'pr-btn', text: 'Drill again', on: { click: startDrill } }),
+      ]));
+    });
+  }
+
+  function startReview() {
+    var items = due().slice(0, 8);
+    var panel = $('[data-panel="review"]');
+    if (!items.length) {
+      panel.textContent = '';
+      panel.appendChild(el('p', { class: 'pr-empty', text: 'Nothing to review today. Missed questions come back after 1, 3, 7, and 16 days.' }));
+      return;
+    }
+    quiz('review', items, function (item, ok) {
+      var r = state.review.find(function (x) { return x.id === item.id; });
+      if (!r) return;
+      if (ok) {
+        r.box += 1;
+        if (r.box >= INTERVALS.length) state.review = state.review.filter(function (x) { return x !== r; });
+        else r.due = addDays(today(), INTERVALS[r.box]);
+      } else {
+        r.box = 0;
+        r.due = addDays(today(), INTERVALS[0]);
+      }
+      save();
+    }, function (panelNode, right, total) {
+      panelNode.appendChild(el('p', { class: 'pr-score', text: right + ' / ' + total }));
+      panelNode.appendChild(el('p', { text: 'Right answers move to a longer gap. Missed ones come back tomorrow.' }));
+    });
+  }
+
+  function renderDeeper() {
+    var panel = $('[data-panel="deeper"]');
+    var list = el('ul', { class: 'pr-links' }, [
+      el('li', {}, [el('a', { href: D.web, target: '_blank', rel: 'noopener', text: 'Read the lesson on aiengineeringfromscratch.com' })]),
+      el('li', {}, [el('a', { href: D.github, target: '_blank', rel: 'noopener', text: 'Open the lesson folder on GitHub' })]),
+    ]);
+    panel.appendChild(list);
+    if (D.run) {
+      var copy = el('button', { type: 'button', class: 'pr-btn', text: 'Copy' });
+      copy.addEventListener('click', function () {
+        (navigator.clipboard ? navigator.clipboard.writeText(D.run) : Promise.reject()).then(function () { copy.textContent = 'Copied'; }, function () { copy.textContent = 'Select and copy'; });
+      });
+      panel.appendChild(el('p', { class: 'pr-label', text: 'Run the code' }));
+      panel.appendChild(el('div', { class: 'pr-code' }, [el('code', { text: D.run }), copy]));
+    }
+    if (D.exercise) {
+      panel.appendChild(el('p', { class: 'pr-label', text: 'One exercise' }));
+      panel.appendChild(el('p', { text: D.exercise }));
+    }
+    if (D.reading.length) {
+      panel.appendChild(el('p', { class: 'pr-label', text: 'Further reading' }));
+      panel.appendChild(el('ul', { class: 'pr-links' }, D.reading.map(function (r) {
+        return el('li', {}, [el('a', { href: r.url, target: '_blank', rel: 'noopener', text: r.text })]);
+      })));
+    }
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.target && /^(SELECT|INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+    var panel = $('[data-panel="' + current + '"]');
+    if (!panel || !panel._pick) return;
+    if (/^[1-9]$/.test(e.key) && !panel._isAnswered()) {
+      var b = panel.querySelector('[data-k="' + (Number(e.key) - 1) + '"]');
+      if (b) { panel._pick(Number(e.key) - 1); e.preventDefault(); }
+    } else if (e.key === 'Enter' && panel._isAnswered() && !(e.target && e.target.tagName === 'BUTTON')) {
+      panel._next();
+      e.preventDefault();
+    }
+  });
+
+  renderBrief();
+  startDrill();
+  renderDeeper();
+  counts();
+  var start = new URLSearchParams(location.search).get('step');
+  select(['brief', 'drill', 'review', 'deeper'].indexOf(start) >= 0 ? start : 'brief');
+})();
+</script>
+</body>
+</html>

@@ -352,6 +352,13 @@ iframe {
     themeBtn.textContent = 'Theme: ' + next;
   });
 
+  window.addEventListener('storage', function (e) {
+    if (e.key !== 'theme' && e.key !== null) return;
+    var t = localStorage.getItem('theme');
+    if (t !== 'light' && t !== 'dark') t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    themeBtn.textContent = 'Theme: ' + t;
+  });
   var initial = document.documentElement.getAttribute('data-theme') || 'light';
   themeBtn.textContent = 'Theme: ' + initial;
   renderEmpty();

@@ -13,6 +13,9 @@ const SITE_ORIGIN = 'https://aiengineeringfromscratch.com';
 const EVENT_TYPES = new Set(['choice', 'part', 'step', 'note']);
 const EVENT_KEYS = ['type', 'screen', 'question', 'choice', 'text', 'part', 'label'];
 const SCREEN_NAME_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,80}\.html$/;
+const isScreenName = (n) => SCREEN_NAME_RE.test(n);
+export const redact = (text) => String(text).replace(/key=[0-9a-f]{16,}/gi, 'key=...');
+export const urlHost = (h) => (h && h.includes(':') && !h.startsWith('[') ? `[${h}]` : h);
 const ASSET_RE = /^\/(?:s\/)?(lesson-figures|figure-manifest|figures(?:-[a-z0-9-]+)?)\.js$/;
 const CSP = "default-src 'self'; script-src 'self' 'unsafe-inline' https://aiengineeringfromscratch.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://aiengineeringfromscratch.com; connect-src 'self'; frame-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'; object-src 'none'";
 
@@ -88,7 +91,7 @@ function listScreens(dir) {
   const p = sessionPaths(dir);
   let names = [];
   try {
-    names = fs.readdirSync(p.screens).filter((n) => n.endsWith('.html'));
+    names = fs.readdirSync(p.screens).filter(isScreenName);
   } catch {}
   const rows = names.map((name) => {
     const full = path.join(p.screens, name);
@@ -288,11 +291,16 @@ function wsConnect(wsUrl) {
         buf = Buffer.concat([buf, d]);
         drain();
       });
+      const closers = new Set();
       socket.on('error', () => {});
+      socket.on('close', () => {
+        for (const fn of closers) fn();
+      });
       drain();
       resolve({
         send: (text) => frame(1, Buffer.from(text, 'utf8')),
         onMessage: (fn) => listeners.add(fn),
+        onClose: (fn) => closers.add(fn),
         close: () => socket.destroy(),
       });
     });
@@ -319,6 +327,10 @@ function cdpClient(ws) {
     } else if (msg.method) {
       for (const fn of handlers) fn(msg);
     }
+  });
+  ws.onClose(() => {
+    for (const { reject } of pending.values()) reject(new Error('the browser closed the connection'));
+    pending.clear();
   });
   return {
     send(method, params = {}, sessionId) {
@@ -402,10 +414,10 @@ export async function takeShot({ url, out, width = 1440, height = 900, theme = '
     if (nav.errorText) throw new Error(`could not open the page: ${nav.errorText}`);
     await withTimeout(loadedPromise, 30000, 'page load');
     await new Promise((r) => setTimeout(r, wait));
-    const shot = await s('Page.captureScreenshot', { format: 'png' });
+    const shot = await withTimeout(s('Page.captureScreenshot', { format: 'png' }), 30000, 'screenshot');
     fs.mkdirSync(path.dirname(out), { recursive: true });
     fs.writeFileSync(out, Buffer.from(shot.data, 'base64'));
-    return { file: out, url, width, height, theme, errors };
+    return { file: out, url, width, height, theme, errors: errors.map(redact) };
   } finally {
     if (ws) ws.close();
     try {
@@ -414,6 +426,200 @@ export async function takeShot({ url, out, width = 1440, height = 900, theme = '
     await new Promise((r) => setTimeout(r, 200));
     fs.rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   }
+}
+
+const RAW_BASE = 'https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/';
+const LESSON_RE = /^phases\/\d{2}-[a-z0-9-]+\/\d{2}-[a-z0-9-]+$/;
+const RUNNERS = {
+  python: (d) => `cd ${d}/code && python3 main.py`,
+  typescript: (d) => `cd ${d}/code && npx tsx main.ts`,
+  javascript: (d) => `cd ${d}/code && node main.js`,
+  rust: (d) => `cd ${d}/code && rustc --edition 2021 main.rs -o main && ./main`,
+  julia: (d) => `cd ${d}/code && julia main.jl`,
+};
+
+function mdPlain(text) {
+  return String(text)
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/`([^`]*)`/g, '$1')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/(^|[\s(])\*([^*\s][^*]*)\*/g, '$1$2')
+    .replace(/\$([^$]+)\$/g, (m, tex) => texPlain(tex))
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const GREEK = { alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', epsilon: 'ε', theta: 'θ', lambda: 'λ', mu: 'μ', sigma: 'σ', pi: 'π', tau: 'τ', phi: 'φ', omega: 'ω' };
+function texPlain(tex) {
+  return tex
+    .replace(/\\sqrt\{([^}]*)\}/g, 'sqrt($1)')
+    .replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, '($1)/($2)')
+    .replace(/\\(alpha|beta|gamma|delta|epsilon|theta|lambda|mu|sigma|pi|tau|phi|omega)\b/g, (m, g) => GREEK[g])
+    .replace(/\\times/g, '×')
+    .replace(/\\cdot/g, '·')
+    .replace(/\\(left|right)/g, '')
+    .replace(/\\[a-zA-Z]+/g, '')
+    .replace(/[{}]/g, '');
+}
+
+function mdSection(md, heading) {
+  const lines = md.split('\n');
+  const start = lines.findIndex((l) => l.trim().toLowerCase() === `## ${heading}`.toLowerCase());
+  if (start < 0) return '';
+  const rest = lines.slice(start + 1);
+  const end = rest.findIndex((l) => /^## /.test(l));
+  return (end < 0 ? rest : rest.slice(0, end)).join('\n');
+}
+
+function mdItems(text) {
+  return text.split('\n').filter((l) => /^\s*(?:[-*]|\d+\.)\s+/.test(l)).map((l) => l.replace(/^\s*(?:[-*]|\d+\.)\s+/, ''));
+}
+
+function mdRow(line) {
+  const cells = [];
+  let cell = '';
+  let code = false;
+  const body = line.trim().replace(/^\|/, '').replace(/\|$/, '');
+  for (let i = 0; i < body.length; i++) {
+    const ch = body[i];
+    if (ch === '\\' && body[i + 1] === '|') {
+      cell += '|';
+      i++;
+    } else if (ch === '`') {
+      code = !code;
+      cell += ch;
+    } else if (ch === '|' && !code) {
+      cells.push(cell);
+      cell = '';
+    } else {
+      cell += ch;
+    }
+  }
+  cells.push(cell);
+  return cells.map(mdPlain);
+}
+
+export function parseLesson(md) {
+  const title = (/^# (.+)$/m.exec(md) || [])[1] || '';
+  const hook = (/^> (.+)$/m.exec(md) || [])[1] || '';
+  const languages = ((/^\*\*Languages:\*\*\s*(.+)$/m.exec(md) || [])[1] || '').split(',').map((x) => mdPlain(x).toLowerCase()).filter(Boolean);
+  const objectives = mdItems(mdSection(md, 'Learning Objectives')).map(mdPlain).filter(Boolean).slice(0, 6);
+  const rows = mdSection(md, 'Key Terms').split('\n').filter((l) => l.trim().startsWith('|') && !/^\s*\|\s*:?-{2,}/.test(l)).map(mdRow);
+  const width = rows.length ? rows[0].length : 0;
+  const terms = rows.slice(1).filter((r) => r.length === width && width >= 2 && r[0] && r[width - 1]).map((r) => ({ term: r[0], means: r[width - 1] })).slice(0, 8);
+  const exercise = mdPlain((mdItems(mdSection(md, 'Exercises'))[0] || '').replace(/^\*\*[^*]+\*\*\s*/, ''));
+  const reading = mdItems(mdSection(md, 'Further Reading')).map((item) => {
+    const link = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/.exec(item);
+    const bare = /(https?:\/\/[^\s)]+)/.exec(item);
+    return { text: mdPlain(link ? link[1] : item).slice(0, 160), url: link ? link[2] : bare ? bare[1] : '' };
+  }).filter((r) => r.url).slice(0, 5);
+  return { title: mdPlain(title), hook: mdPlain(hook), languages, objectives, terms, exercise, reading };
+}
+
+export function quizQuestions(quiz) {
+  const list = Array.isArray(quiz) ? quiz : quiz && Array.isArray(quiz.questions) ? quiz.questions : [];
+  return list.filter((q) => q && typeof q.question === 'string' && Array.isArray(q.options) && q.options.length >= 2
+    && q.options.every((o) => typeof o === 'string') && Number.isInteger(q.correct) && q.correct >= 0 && q.correct < q.options.length)
+    .map((q) => ({ q: mdPlain(q.question), options: q.options.map(mdPlain), correct: q.correct, explain: mdPlain(q.explanation || ''), stage: q.stage || '' }));
+}
+
+function seeded(text) {
+  let h = 2166136261;
+  for (let i = 0; i < text.length; i++) h = Math.imul(h ^ text.charCodeAt(i), 16777619);
+  return () => {
+    h = (h + 0x6d2b79f5) | 0;
+    let t = Math.imul(h ^ (h >>> 15), 1 | h);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function shuffled(list, rand) {
+  const out = list.slice();
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+export function termQuestions(terms, seed) {
+  if (terms.length < 4) return [];
+  const rand = seeded(seed);
+  return terms.slice(0, 4).map((t) => {
+    const others = shuffled(terms.filter((o) => o.term !== t.term).map((o) => o.term), rand).slice(0, 3);
+    const options = shuffled([t.term, ...others], rand);
+    return { q: `Which term matches this meaning? ${t.means}`, options, correct: options.indexOf(t.term), explain: `${t.term}: ${t.means}`, stage: 'terms' };
+  });
+}
+
+function lessonOnDisk(repo, lesson) {
+  return repo && fs.existsSync(path.join(repo, lesson, 'docs', 'en.md'));
+}
+
+function findLessonRepo(cwd, lesson) {
+  let d = path.resolve(cwd);
+  for (;;) {
+    if (lessonOnDisk(d, lesson)) return d;
+    const parent = path.dirname(d);
+    if (parent === d) return null;
+    d = parent;
+  }
+}
+
+async function readLessonFile(repo, lesson, rel) {
+  if (repo) {
+    const file = path.join(repo, lesson, rel);
+    return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
+  }
+  const res = await fetch(RAW_BASE + lesson + '/' + rel);
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`could not fetch ${lesson}/${rel}: ${res.status}`);
+  return res.text();
+}
+
+export async function loadPractice(lesson, { repo } = {}) {
+  const clean = String(lesson || '').replace(/\/+$/, '');
+  if (!LESSON_RE.test(clean)) throw new Error('practice needs a lesson path such as phases/07-transformers-deep-dive/16-speculative-decoding');
+  const md = await readLessonFile(repo, clean, 'docs/en.md');
+  if (!md) throw new Error(`no lesson at ${clean}`);
+  const info = parseLesson(md);
+  let quiz = null;
+  const raw = await readLessonFile(repo, clean, 'quiz.json');
+  if (raw) {
+    try {
+      quiz = JSON.parse(raw);
+    } catch {}
+  }
+  const fromQuiz = quizQuestions(quiz);
+  const questions = fromQuiz.length ? fromQuiz : termQuestions(info.terms, clean);
+  const runner = RUNNERS[info.languages[0]];
+  const [phase, slug] = clean.split('/').slice(1);
+  return {
+    lesson: clean,
+    phase: phase.slice(0, 2),
+    number: slug.slice(0, 2),
+    ...info,
+    run: runner ? runner(clean) : '',
+    questions,
+    source: fromQuiz.length ? 'quiz' : questions.length ? 'terms' : 'none',
+    web: `https://aiengineeringfromscratch.com/lesson?path=${clean}`,
+    github: `https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/${clean}`,
+  };
+}
+
+export function writePracticeScreen(dir, data, name) {
+  const p = sessionPaths(dir);
+  ensureDirs(dir);
+  const slug = kebab(name) || `practice-${kebab(data.lesson.split('/').pop().replace(/^\d+-/, ''))}`.slice(0, 40);
+  const filename = `${pad2(nextIndex(dir))}-${slug}.html`;
+  const json = JSON.stringify(data).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
+  const html = fs.readFileSync(path.join(TEMPLATES, 'practice.html'), 'utf8')
+    .replace('__PRACTICE_TITLE__', () => escapeHtml(`Practice: ${data.title || data.lesson}`))
+    .replace('__PRACTICE_DATA__', () => json);
+  const file = path.join(p.screens, filename);
+  fs.writeFileSync(file, html);
+  return { name: filename, file };
 }
 
 function keyMatches(candidate, key) {
@@ -447,7 +653,7 @@ export function createServer(opts = {}) {
   const assets = opts.assets || 'live';
   const repo = opts.repo ? path.resolve(opts.repo) : undefined;
   const idleMs = opts.idleMs ?? 120 * 60 * 1000;
-  const urlHost = opts.urlHost;
+  const urlHostOpt = opts.urlHost;
   const key = crypto.randomBytes(24).toString('hex');
   const p = sessionPaths(dir);
   ensureDirs(dir);
@@ -463,7 +669,7 @@ export function createServer(opts = {}) {
     let rows;
     try {
       rows = fs.readdirSync(p.screens)
-        .filter((n) => n.endsWith('.html'))
+        .filter(isScreenName)
         .map((name) => {
           const full = path.join(p.screens, name);
           const st = fs.statSync(full);
@@ -596,6 +802,12 @@ export function createServer(opts = {}) {
     send(res, 200, html, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Security-Policy': CSP, ...extra });
   }
 
+  function sameOrigin(req) {
+    if (req.headers.origin && req.headers.origin !== `http://${req.headers.host}`) return false;
+    if (req.headers['sec-fetch-site'] && req.headers['sec-fetch-site'] !== 'same-origin') return false;
+    return true;
+  }
+
   async function handle(req, res) {
     const u = new URL(req.url, 'http://local');
     const pathname = u.pathname;
@@ -661,13 +873,11 @@ export function createServer(opts = {}) {
       return;
     }
 
+    if (req.method === 'POST' && !sameOrigin(req)) {
+      return send(res, 403, 'forbidden', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
+    }
+
     if (req.method === 'POST' && pathname === '/event') {
-      if (req.headers.origin && req.headers.origin !== `http://${req.headers.host}`) {
-        return send(res, 403, 'forbidden', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
-      }
-      if (req.headers['sec-fetch-site'] && req.headers['sec-fetch-site'] !== 'same-origin') {
-        return send(res, 403, 'forbidden', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
-      }
       const ct = (req.headers['content-type'] || '').split(';')[0].trim().toLowerCase();
       if (ct !== 'application/json') {
         return send(res, 400, 'expected application/json', { 'Content-Type': 'text/plain; charset=utf-8', ...extra });
@@ -757,7 +967,7 @@ export function createServer(opts = {}) {
     server.once('error', reject);
     server.listen(opts.port || 0, host, () => {
       boundPort = server.address().port;
-      const display = urlHost || (host === '0.0.0.0' || host === '::' ? 'localhost' : host);
+      const display = urlHostOpt || (host === '0.0.0.0' || host === '::' ? 'localhost' : urlHost(host));
       const origin = `http://${display}:${boundPort}`;
       resolve({
         url: `${origin}/?key=${key}`,
@@ -797,7 +1007,7 @@ function sleep(ms) {
 }
 
 function probeHost(host) {
-  return host === '0.0.0.0' || host === '::' ? '127.0.0.1' : host || '127.0.0.1';
+  return host === '0.0.0.0' || host === '::' ? '127.0.0.1' : urlHost(host || '127.0.0.1');
 }
 
 function pidAlive(pid) {
@@ -945,7 +1155,7 @@ function out(obj) {
 }
 
 function fail(obj) {
-  process.stderr.write(JSON.stringify(obj) + '\n');
+  process.stderr.write(redact(JSON.stringify(obj)) + '\n');
   process.exit(1);
 }
 
@@ -1058,7 +1268,8 @@ async function cmdStop(flags) {
   const running = !!(info && pidAlive(info.pid));
   if (running) {
     const base = `http://${probeHost(info.host)}:${info.port}`;
-    await httpRequest('POST', `${base}/shutdown`, { headers: { 'x-lesson-screen-key': info.key }, timeout: 1500 });
+    const res = await httpRequest('POST', `${base}/shutdown`, { headers: { 'x-lesson-screen-key': info.key }, timeout: 1500 });
+    if (res && res.status !== 204) fail({ type: 'error', error: `the server refused the stop request with ${res.status}. The session file can point at another server` });
     const deadline = Date.now() + 3000;
     let down = false;
     while (Date.now() < deadline) {
@@ -1068,7 +1279,7 @@ async function cmdStop(flags) {
       }
       await sleep(150);
     }
-    if (!down) {
+    if (!down && res) {
       try {
         process.kill(info.pid, 'SIGTERM');
       } catch {}
@@ -1133,7 +1344,7 @@ async function cmdShot(flags, positional) {
   const info = readServerInfo(dir);
   let running = false;
   if (info && pidAlive(info.pid)) running = await healthOk(`http://${probeHost(info.host)}:${info.port}`);
-  const inScreens = path.dirname(fs.realpathSync(file)) === fs.realpathSync(p.screens);
+  const inScreens = fs.existsSync(p.screens) && path.dirname(fs.realpathSync(file)) === fs.realpathSync(p.screens);
   const full = /^\s*<(!doctype|html)/i.test(fs.readFileSync(file, 'utf8').slice(0, 200));
   let url;
   if (inScreens && running) {
@@ -1149,6 +1360,17 @@ async function cmdShot(flags, positional) {
     : path.join(dir, 'shots', `${base}-${theme}-${width}x${height}.png`);
   const result = await takeShot({ url, out: outFile, width, height, theme, wait, chrome: flags.chrome });
   out({ type: 'shot', ...result, url: result.url.replace(/key=[0-9a-f]+/, 'key=...') });
+}
+
+async function cmdPractice(flags, positional) {
+  const lesson = String(positional[0] || '').replace(/\/+$/, '');
+  if (!lesson) fail({ type: 'error', error: 'practice needs a lesson path' });
+  const repo = typeof flags.repo === 'string' ? path.resolve(flags.repo) : findLessonRepo(process.cwd(), lesson);
+  if (typeof flags.repo === 'string' && !lessonOnDisk(repo, lesson)) fail({ type: 'error', error: `no lesson at ${lesson} in ${repo}` });
+  const data = await loadPractice(lesson, { repo: repo || undefined });
+  const name = typeof flags.name === 'string' ? flags.name : undefined;
+  const { name: screenName, file } = writePracticeScreen(resolveDir(flags), data, name);
+  out({ type: 'screen', name: screenName, file, questions: data.questions.length, source: data.source, from: repo ? 'clone' : 'github' });
 }
 
 async function main(argv) {
@@ -1168,6 +1390,8 @@ async function main(argv) {
       return cmdPublish(flags, positional);
     case 'shot':
       return cmdShot(flags, positional);
+    case 'practice':
+      return cmdPractice(flags, positional);
     default:
       fail({ type: 'error', error: `unknown command "${command || ''}"` });
   }

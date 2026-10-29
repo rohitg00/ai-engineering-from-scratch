@@ -183,7 +183,8 @@ artifact. Teach it in that order, interactively:
    repo is cloned and the language runtime is available, run the code and
    show real output; otherwise trace through it on a tiny concrete input by
    hand. When the lesson screen is open, show each chunk as a code trace
-   with the real values from the run.
+   with the real values from the run. A hand trace shows its values with
+   the note "hand trace, not a run".
 4. **Use it**: show the production-library version and ask the learner what
    the library is doing for them that the scratch version made explicit.
 5. **See it**: when the lesson screen is open, show the figure you built for
@@ -226,5 +227,5 @@ Two lines only: what they can now build or explain that they could not an
 hour ago, and the next lesson's title as a hook ("Next: attention — why
 'the cat sat on the mat' needs 36 dot products").
 
-If the clone has `apps/daily-drill/`, add one more line that offers the Daily
-Drill for practice, as `lesson-screen` describes. Record nothing from it.
+When the lesson screen is open, add one more line that offers practice with
+its `practice` command, as `lesson-screen` describes. Record nothing from it.

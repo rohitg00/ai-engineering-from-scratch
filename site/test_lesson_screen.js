@@ -90,6 +90,7 @@ test('the server gates, serves, records events and shuts down', async (t) => {
   ];
   for (const res of noKey) assert.equal(res.status, 403);
   assert.equal((await get(`${origin}/health`)).status, 200);
+  assert.equal((await get(`${origin}/live`)).status, 403);
 
   const home = await get(`${origin}/?key=${key}`);
   assert.equal(home.status, 200);
@@ -138,6 +139,9 @@ test('the server gates, serves, records events and shuts down', async (t) => {
   assert.equal(events.length, 1);
   assert.equal(events[0].type, 'choice');
   assert.equal(events[0].screen, '01-frag.html');
+  assert.equal(events[0].question, 'q');
+  assert.equal(events[0].choice, 'A');
+  assert.equal(events[0].text, 'A option');
   assert.ok(events[0].at);
   assert.ok(!('extra' in events[0]));
   assert.equal(readEvents(dir, {}).length, 0);
@@ -172,9 +176,14 @@ test('the server gates, serves, records events and shuts down', async (t) => {
   }
   assert.equal((await get(`${origin}/figures-../x.js`, { Cookie: cookie })).status, 404);
   assert.equal((await get(`${origin}/favicon.ico`)).status, 204);
+  const crossStop = await post(`${origin}/shutdown`, { headers: { Origin: 'http://127.0.0.1:1', Cookie: cookie } });
+  assert.equal(crossStop.status, 403);
+  assert.equal((await get(`${origin}/health`)).status, 200);
+  fs.writeFileSync(path.join(screensDir, '05-résumé.html'), '<h2>Bad name</h2>');
   fs.writeFileSync(path.join(screensDir, '04-built.html'), '<!doctype html><html><head><title>Built page</title></head><body><h1></h1></body></html>');
   const list = JSON.parse((await get(`${origin}/screens`, { Cookie: cookie })).body);
   assert.equal(list.screens.find((r) => r.name === '04-built.html').title, 'Built page');
+  assert.ok(!list.screens.some((r) => r.name.startsWith('05-')), 'names the server cannot serve are not listed');
 });
 
 test('the server lists screens over SSE and honours local assets', async (t) => {
@@ -292,4 +301,154 @@ test('the tutor skills point at the lesson screen', () => {
     assert.ok(text.includes('lesson-screen'), name);
     assert.ok(text.includes('never count as quiz answers'), name);
   }
+});
+
+test('redact hides session keys and IPv6 hosts get brackets', async () => {
+  const { redact, urlHost } = await import(script);
+  assert.equal(redact('http://127.0.0.1:4777/s/a.html?key=d90f3dccaed5eca0a89d47d69d2a384655e5ce3bd1b23b15'), 'http://127.0.0.1:4777/s/a.html?key=...');
+  assert.equal(urlHost('::1'), '[::1]');
+  assert.equal(urlHost('[::1]'), '[::1]');
+  assert.equal(urlHost('127.0.0.1'), '127.0.0.1');
+});
+
+test('the CLI starts, reports, and stops a background server', (t) => {
+  const cwd = tmpdir(t);
+  const run = (...args) => JSON.parse(execFileSync(process.execPath, [script, ...args], { cwd, encoding: 'utf8' }));
+  t.after(() => {
+    try {
+      execFileSync(process.execPath, [script, 'stop'], { cwd, encoding: 'utf8' });
+    } catch {}
+  });
+  const started = run('start');
+  assert.equal(started.type, 'started');
+  assert.match(started.url, /^http:\/\/127\.0\.0\.1:\d+\/\?key=[0-9a-f]{48}$/);
+  assert.equal(run('start').type, 'running');
+  const status = run('status');
+  assert.equal(status.running, true);
+  assert.equal(status.next, '01');
+  assert.deepEqual(run('stop'), { type: 'stopped', running: true });
+  assert.equal(run('status').running, false);
+});
+
+test('shot captures a full page in a folder that has no session yet', async (t) => {
+  const { findChrome } = await import(script);
+  try {
+    findChrome({});
+  } catch {
+    t.skip('no Chrome, Chromium, or Edge on this machine');
+    return;
+  }
+  const cwd = tmpdir(t);
+  fs.writeFileSync(path.join(cwd, 'page.html'), '<!doctype html><html><head><title>p</title></head><body><p>alone</p></body></html>');
+  const result = JSON.parse(execFileSync(process.execPath, [script, 'shot', 'page.html?step=2', '--width', '320', '--height', '240', '--wait', '50'], { cwd, encoding: 'utf8' }));
+  assert.equal(result.type, 'shot');
+  assert.ok(result.url.endsWith('page.html?step=2'));
+  assert.ok(fs.existsSync(result.file));
+});
+
+const LESSON_MD = [
+  '# Tiny Lesson',
+  '',
+  '> A hook with $\\alpha$ and `code`.',
+  '',
+  '**Type:** Build',
+  '**Languages:** Python',
+  '',
+  '## Learning Objectives',
+  '- Explain why scaling by $\\sqrt{d_k}$ helps',
+  '- Build the thing',
+  '',
+  '## Exercises',
+  '',
+  '1. **Easy.** Run `code/main.py` and read the output.',
+  '',
+  '## Key Terms',
+  '',
+  '| Term | What people say | What it actually means |',
+  '|------|-----------------|------------------------|',
+  '| Alpha | "the rate" | Chance that a draft is kept |',
+  '| Beta | "the other" | A pipe `a|b` inside code |',
+  '| Gamma | "third" | The third meaning |',
+  '| Delta | "fourth" | The fourth meaning |',
+  '| Epsilon | "fifth" | The fifth meaning |',
+  '',
+  '## Further Reading',
+  '',
+  '- [A paper](https://arxiv.org/abs/1) and notes',
+  '- No link here',
+  '',
+].join('\n');
+
+test('parseLesson reads the parts a practice page needs', async () => {
+  const { parseLesson } = await import(script);
+  const info = parseLesson(LESSON_MD);
+  assert.equal(info.title, 'Tiny Lesson');
+  assert.equal(info.hook, 'A hook with α and code.');
+  assert.deepEqual(info.languages, ['python']);
+  assert.deepEqual(info.objectives, ['Explain why scaling by sqrt(d_k) helps', 'Build the thing']);
+  assert.equal(info.terms.length, 5);
+  assert.deepEqual(info.terms[1], { term: 'Beta', means: 'A pipe a|b inside code' });
+  assert.equal(info.exercise, 'Run code/main.py and read the output.');
+  assert.deepEqual(info.reading, [{ text: 'A paper', url: 'https://arxiv.org/abs/1' }]);
+});
+
+test('quiz questions accept the course schema and term questions are stable', async () => {
+  const { quizQuestions, termQuestions, parseLesson } = await import(script);
+  const one = { stage: 'post', question: 'Q?', options: ['a', 'b', 'c', 'd'], correct: 2, explanation: 'because' };
+  assert.equal(quizQuestions({ questions: [one] }).length, 1);
+  assert.equal(quizQuestions([one]).length, 1);
+  assert.equal(quizQuestions({ questions: [{ q: 'old', choices: ['a'], answer: 0 }] }).length, 0);
+  assert.equal(quizQuestions({ questions: [{ ...one, correct: 9 }] }).length, 0);
+  const terms = parseLesson(LESSON_MD).terms;
+  const a = termQuestions(terms, 'phases/99-x/01-y');
+  assert.deepEqual(a, termQuestions(terms, 'phases/99-x/01-y'));
+  assert.equal(a.length, 4);
+  for (const q of a) {
+    assert.equal(q.options.length, 4);
+    assert.ok(q.q.includes(terms.find((t) => t.term === q.options[q.correct]).means));
+  }
+  assert.deepEqual(termQuestions(terms.slice(0, 3), 'x'), []);
+});
+
+test('the practice command writes a self-graded page from a clone', (t) => {
+  const cwd = tmpdir(t);
+  const lesson = 'phases/99-test-phase/01-tiny-lesson';
+  fs.mkdirSync(path.join(cwd, lesson, 'docs'), { recursive: true });
+  fs.writeFileSync(path.join(cwd, lesson, 'docs', 'en.md'), LESSON_MD.replace('Tiny Lesson', 'Tiny </script> Lesson'));
+  const run = (...args) => JSON.parse(execFileSync(process.execPath, [script, 'practice', ...args], { cwd, encoding: 'utf8' }));
+  const fromTerms = run(lesson);
+  assert.equal(fromTerms.source, 'terms');
+  assert.equal(fromTerms.from, 'clone');
+  assert.equal(fromTerms.name, '01-practice-tiny-lesson.html');
+  fs.writeFileSync(path.join(cwd, lesson, 'quiz.json'), JSON.stringify({ lesson: '01-tiny-lesson', title: 'Tiny', questions: [{ stage: 'pre', question: 'Q1?', options: ['a', 'b', 'c', 'd'], correct: 1, explanation: 'e' }] }));
+  const fromQuiz = run(lesson + '/', '--name', 'Practice Tiny');
+  assert.equal(fromQuiz.source, 'quiz');
+  assert.equal(fromQuiz.questions, 1);
+  assert.equal(fromQuiz.name, '02-practice-tiny.html');
+  const html = fs.readFileSync(fromQuiz.file, 'utf8');
+  assert.ok(html.includes('<title>Practice: Tiny &lt;/script&gt; Lesson</title>'));
+  const block = /<script id="practice-data" type="application\/json">([\s\S]*?)<\/script>/.exec(html)[1];
+  assert.ok(!block.includes('</script>'));
+  const data = JSON.parse(block);
+  assert.equal(data.run, `cd ${lesson}/code && python3 main.py`);
+  assert.equal(data.web, `https://aiengineeringfromscratch.com/lesson?path=${lesson}`);
+  let threw = null;
+  try {
+    execFileSync(process.execPath, [script, 'practice', 'not/a/lesson'], { cwd, encoding: 'utf8' });
+  } catch (e) {
+    threw = e;
+  }
+  assert.ok(threw);
+  assert.equal(JSON.parse(threw.stderr).type, 'error');
+});
+
+test('the practice page reads a real lesson and never reports answers to the tutor', (t) => {
+  const cwd = tmpdir(t);
+  const out = JSON.parse(execFileSync(process.execPath, [script, 'practice', 'phases/07-transformers-deep-dive/02-self-attention-from-scratch', '--repo', root], { cwd, encoding: 'utf8' }));
+  assert.equal(out.source, 'quiz');
+  assert.ok(out.questions >= 4);
+  const template = fs.readFileSync(path.join(skillDir, 'templates', 'practice.html'), 'utf8');
+  assert.ok(!template.includes('lessonScreen'), 'practice answers stay in the browser');
+  assert.ok(!template.includes('/event'));
+  assert.equal(template.split('__PRACTICE_DATA__').length - 1, 1);
 });

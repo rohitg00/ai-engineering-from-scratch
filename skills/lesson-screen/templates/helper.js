@@ -3,12 +3,14 @@
 
   function send(evt) {
     try {
-      fetch('/event', {
+      return fetch('/event', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(Object.assign({ screen: screen }, evt)),
-      }).catch(function () {});
-    } catch (e) {}
+      }).then(function (res) { return res.ok; }, function () { return false; });
+    } catch (e) {
+      return Promise.resolve(false);
+    }
   }
 
   window.lessonScreen = { screen: screen, send: send };
@@ -30,12 +32,17 @@
         sent.setAttribute('aria-live', 'polite');
         q.appendChild(sent);
       }
-      sent.textContent = 'Sent to your tutor. You can also answer in the terminal.';
+      var ticket = (q._lsTicket || 0) + 1;
+      q._lsTicket = ticket;
+      sent.textContent = 'Sending to your tutor.';
       send({
         type: 'choice',
         question: q.getAttribute('data-question') || '',
         choice: choice.getAttribute('data-choice') || '',
         text: (choice.textContent || '').trim().slice(0, 500),
+      }).then(function (ok) {
+        if (q._lsTicket !== ticket) return;
+        sent.textContent = ok ? 'Sent to your tutor. You can also answer in the terminal.' : 'Not sent. Give your answer in the terminal.';
       });
       return;
     }

@@ -29,7 +29,7 @@ const GROUPS = [
     when: 'Use these every session. They read and update your plan.',
     skills: {
       learn: { line: 'Teaches your next lesson section by section in the terminal, asks questions, and records what you finished.', say: ['/learn', 'teach me the next lesson'], writes: 'LEARNING.md' },
-      'lesson-screen': { line: 'Opens a screen in your browser next to the terminal. It shows the lesson figure for each step and traces the code with real values. It also builds a figure for your lesson while you learn, from a blueprint to a 3D model.', say: ['open the lesson screen', 'build a figure for this lesson'], writes: 'A .lesson-screen folder with each screen it showed' },
+      'lesson-screen': { line: 'Opens a screen in your browser next to the terminal. It shows the lesson figure for each step and traces the code with real values. It also builds a figure for your lesson while you learn, from a blueprint to a 3D model. After the quiz, it writes a practice page with a timed drill and spaced review. Without a local browser, it gives you the lesson page instead.', say: ['open the lesson screen', 'build a figure for this lesson'], writes: 'A .lesson-screen folder with each screen it showed' },
       'check-understanding': { line: 'Quizzes you on a phase and tells you which lessons to read again before you move on.', say: ['quiz me on phase 3', 'check my understanding'], writes: 'Nothing. It prints your score and what to review.' },
       'build-project': { line: 'Guides one stage of a course project per session. It gives hints only. You write the code and run the stage grader.', say: ['build a project', 'continue my project'], writes: 'PROJECTS-LEARNING.md' },
     },

@@ -147,6 +147,9 @@ confirmation before doing so.
 
 ## Lesson screen
 
+Use this only in Lesson mode. Never offer or update the screen in Assessment
+mode, because it can show hints and references before submission.
+
 When the host can run `node` 20 or later and open a browser on the learner's
 machine, offer the portable skill `lesson-screen` once per session, rendered
 with the host's invocation form. It shows the lesson's figures and code traces
