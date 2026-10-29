@@ -427,7 +427,7 @@ This lesson produces:
 
 ## Further Reading
 
-- Lewis et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (2020) -- the original RAG paper from Facebook AI Research that formalized the retrieve-then-generate pattern
+- [Lewis et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401) -- the original RAG paper from Facebook AI Research that formalized the retrieve-then-generate pattern
 - Anthropic's RAG documentation (docs.anthropic.com) -- practical guidelines for chunk sizes, prompt construction, and evaluation
 - Pinecone Learning Center, "What is RAG?" -- clear visual explanations of the RAG pipeline with production considerations
 - Sentence-BERT: Reimers & Gurevych (2019) -- the paper behind the all-MiniLM embedding models, showing how to train bi-encoders for semantic similarity
