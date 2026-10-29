@@ -225,3 +225,6 @@ nag about it after Step 0.
 Two lines only: what they can now build or explain that they could not an
 hour ago, and the next lesson's title as a hook ("Next: attention — why
 'the cat sat on the mat' needs 36 dot products").
+
+If the clone has `apps/daily-drill/`, add one more line that offers the Daily
+Drill for practice, as `lesson-screen` describes. Record nothing from it.

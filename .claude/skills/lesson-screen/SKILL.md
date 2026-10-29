@@ -112,6 +112,16 @@ The course figure skills are blueprint-figure, motion-figure, isometric-explaine
 
 The host can have more figure skills installed, such as an isometric illustration skill with a 3D mode or WebGL effects. Check the host's skill list before you pick a form. Use such a skill when it fits the form, and keep the truth rules and the page contract of this skill.
 
+## Daily practice
+
+The Daily Drill is a separate study page in the course repository. It gives one lesson a day: a brief, a timed drill, spaced review of missed questions, and links to read further.
+
+- Offer it at the end of a session, as practice.
+- If the clone has `apps/daily-drill/`, run `node apps/daily-drill/build-data.mjs`. Then open `apps/daily-drill/index.html` in the learner's browser.
+- If there is no clone or no `apps/daily-drill/` folder, skip the offer.
+- The drill grades itself in the browser and keeps its own progress. Record nothing from it. It never changes a score, a review queue, or any evidence.
+- Do not put the drill on the lesson screen, and do not change its files.
+
 ## Truth rules
 
 - Never invent a number. Readouts, labels, and step text come from the lesson text or a real run.
