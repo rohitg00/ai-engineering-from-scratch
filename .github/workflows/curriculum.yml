@@ -198,6 +198,8 @@ jobs:
         run: node --test scripts/test_seo_routes.js
       - name: agent-facing discovery surfaces stay complete
         run: python3 scripts/test_agent_readiness.py
+      - name: llms.txt discovery follows the introduction
+        run: node --test site/test_llms_discovery.js
       - name: Markdown negotiation stays cache-safe
         run: node --test scripts/test_agent_negotiation.js
       - name: static preview routes stay navigable
