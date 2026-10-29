@@ -4,17 +4,19 @@ version: 1.0.0
 description: >
   Opens a lesson screen in the browser next to the terminal while a course
   tutor teaches. It shows the lesson's registered figures, code traces with
-  real values, clickable predictions, and a stepped 3D machine with a 2D
-  blueprint view of the system the lesson builds. Clicks return to the tutor
-  as events. Trigger phrases: "open the lesson screen", "show me this
-  visually", "show this in 3D", "draw the architecture", "visualize this
-  lesson", "2D blueprint of this", "lesson screen".
+  real values, and clickable predictions. It also builds a figure for the
+  lesson on the fly with the course figure skills and any figure skill the
+  host has installed: a blueprint, a mechanism, an isometric machine, or a 3D
+  model. Clicks return to the tutor as events. Trigger phrases: "open the
+  lesson screen", "show me this visually", "show this in 3D", "draw the
+  architecture", "visualize this lesson", "build a figure for this lesson",
+  "lesson screen".
 tags: [tutor, visual, figures, 3d, blueprint, interactive-learning]
 ---
 
 # Lesson screen
 
-The lesson screen is a small local web server and one browser tab. The tutor keeps teaching in the terminal. At each step it writes one screen into a folder, and the browser shows the newest screen. The learner can press options and click machine parts. Those clicks go to an event log that the tutor reads before its next reply.
+The lesson screen is a small local web server and one browser tab. The tutor keeps teaching in the terminal. At each step it writes one screen into a folder, and the browser shows the newest screen. The learner can press options and click parts. Those clicks go to an event log that the tutor reads before its next reply.
 
 Use this skill with Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads SKILL.md. It needs Node.js 20 or later and a browser on the same machine. It installs no packages.
 
@@ -29,13 +31,13 @@ Use this skill with Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that r
 - The learner declined the screen. Do not offer it again this session.
 - The host has no local browser: a remote agent, a chat app, or a server without a display. Give the lesson page on aiengineeringfromscratch.com. `references/hosts.md` lists the cases.
 - The step is words only: a clarifying question, a tradeoff, or a definition. Keep it in the terminal and show the waiting screen.
-- You need a permanent figure for a lesson file. Use blueprint-figure, motion-figure, or isometric-explainer. This skill makes screens for one learner.
+- You need a permanent figure for a lesson file. Use the figure skills directly. This skill makes screens for one learner.
 
 ## Paths
 
 `SKILL_ROOT` is the folder that holds this SKILL.md. In this file, `CLI` means `node "$SKILL_ROOT/scripts/lesson-screen.mjs"`.
 
-Run every command from the learner's working folder. The screens go to `.lesson-screen/` in that folder. If the folder is a git repository, ask the learner to add `.lesson-screen/` to `.gitignore`.
+Run every command from the learner's working folder. Screens go to `.lesson-screen/screens/`, and builds go to `.lesson-screen/builds/`. If the folder is a git repository, ask the learner to add `.lesson-screen/` to `.gitignore`.
 
 ## Start
 
@@ -64,14 +66,14 @@ Write screens with your file tool. Do not print them to the terminal with `cat` 
 | Core concept | the lesson's registered figure, set to the example you discuss | the `figure` fences in `docs/en.md` |
 | Build it | a code trace: the chunk, the active line, the variables | a real run of the lesson code |
 | Use it | the library call beside the scratch call, with the same output | the lesson code and its output |
-| See it | a stepped 3D machine with a 2D blueprint view | the lesson text and the real run |
+| See it | the figure that you built for this lesson | the figure skills, the lesson text, and the real run |
 | Prediction or quiz | the question and its options as buttons | `quiz.json`, without the answer |
 
 `references/screens.md` lists every class, with a full example of each screen.
 
 ## Registered figures first
 
-Most lessons already have interactive figures. Look for them before you draw anything new.
+Most lessons already have interactive figures. Look for them before you build anything new.
 
 1. Search the lesson's `docs/en.md` for fenced blocks with the language `figure`.
 2. Put the first line of the fence in a host element: `<div class="lesson-figure" data-figure="kv-cache-sizer"></div>`.
@@ -80,48 +82,45 @@ Most lessons already have interactive figures. Look for them before you draw any
 
 The screen loads the course figure runtime and mounts the figure. The figure looks and works as it does on the lesson page.
 
-## New figures when none fits
+## Build a figure on the fly
 
-Pick the smallest form that shows the idea. Every number on a new figure comes from the lesson text or from a real run.
+The best figure for a lesson is one made for that lesson. Build it while you teach, so that it is ready at the See it step.
 
-| The idea | Make | Read |
-|---|---|---|
-| Named parts, and data that moves between them | a machine spec, then `CLI machine` | `references/machines.md` |
-| A fixed structure with no time and no input | an inline SVG in a screen | the blueprint-figure skill |
-| One number that changes an output | a slider figure in a screen | tier 1 of the motion-figure skill |
-| A process with stations and failure modes | an isometric machine page | the isometric-explainer skill |
+1. When the lesson starts, read `docs/en.md` and run the lesson code.
+2. Name the lesson's system in one sentence: "X moves through Y, and that motion means Z."
+3. Pick one form from the table below. Offer it with its time, and build only after the learner accepts.
+4. Write a building screen and keep its stage list current.
+5. Give the build to a second agent when the host can run one. Keep teaching in the terminal.
+6. Without a second agent, build during the lab or the quiz, or offer the figure for the end of the session.
+7. Check the build with `CLI shot`. Look at every image and fix what looks wrong.
+8. Run `CLI publish <page.html>`. The page becomes the next screen.
 
-If a sibling skill is not installed, read its files from `https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/skills/<name>/`.
+| Form | Build it with | Time | Pick it when |
+|---|---|---|---|
+| Blueprint | the blueprint-figure skill | 5 to 10 minutes | the idea is a structure with named parts |
+| Mechanism | tier 2 of the motion-figure skill | 15 to 25 minutes | one control changes a computed result |
+| Isometric machine | the isometric-explainer skill | 40 to 90 minutes | the idea is a process with stations, order, and failures |
+| 3D model | an installed figure skill with a 3D mode, or three.js | 60 to 120 minutes | depth or rotation is the idea, or the learner asks for 3D |
 
-## Machines in 3D and 2D blueprint
+Offer the smallest form that shows the idea. Offer a larger form when the learner has time and asks for more.
 
-A machine is one JSON spec. The viewer draws the same parts in two views:
+`references/build.md` holds the build stages, the page contract, the craft rules, and the 3D rules. Read it before every build.
 
-- **3D**: solid parts with real materials on a desk mat, lit by a studio light, with soft shadows. The learner turns it, pulls it apart, and clicks a part to ask about it.
-- **Blueprint**: the same parts as line art in the course blueprint look, from a fixed isometric angle, with labels.
+### Figure skills
 
-The learner presses numbered steps in order, as in a guided tour. Each step marks the parts in focus, runs the flows between them, sets how far apart the parts sit, and updates the readouts.
+The course figure skills are blueprint-figure, motion-figure, isometric-explainer, and course-style. If one is not installed, read its files from `https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/skills/<name>/`.
 
-1. Read the lesson. Name its system in one sentence: "X moves through Y, and that motion means Z."
-2. Map each concept to one part. Use the lesson's own names. Add no part that the lesson does not teach.
-3. Run the lesson code. Put its real numbers in the readouts and in the step text.
-4. Write the spec to a file. Run `CLI check spec.json` and fix every error that it prints.
-5. Run `CLI machine spec.json`. It writes the next screen and prints its path.
-6. Walk the steps with the learner. Ask one prediction question before each step.
-7. Read `part` events. Explain the clicked part in the terminal, from the lesson text.
-
-Offer the machine after Use it, and again when the learner asks how the parts fit together. Never build it without the offer, because it takes time.
-
-`examples/transformer-block.json` and `examples/agent-loop.json` pass the check. Start from the closer one.
+The host can have more figure skills installed, such as an isometric illustration skill with a 3D mode or WebGL effects. Check the host's skill list before you pick a form. Use such a skill when it fits the form, and keep the truth rules and the page contract of this skill.
 
 ## Truth rules
 
-- Never invent a number. Readouts and labels come from the lesson text or a real run.
+- Never invent a number. Readouts, labels, and step text come from the lesson text or a real run.
+- A built figure with motion uses a small tested state model. The model moves the parts and writes the readouts.
 - Never put a correct answer, an answer index, or an explanation on a screen before the learner answers. The learner can read the page source.
 - A click is a hint. It never counts as a quiz answer, checkpoint evidence, or a lab result.
 - The tutor's own rules decide progress, scores, and evidence.
-- Every machine shows a line that says your tutor built it and the course authors did not review it. The viewer adds the line. Keep it.
-- Put every simulated or scaled value in the spec's `note`.
+- Every built figure shows a line that says your tutor built it for this lesson and the course authors did not review it.
+- Every simulated or scaled value says so on the page.
 
 ## Events
 
@@ -130,8 +129,8 @@ Offer the machine after Use it, and again when the learner asks how the parts fi
 | type | Fields | Meaning |
 |---|---|---|
 | `choice` | `question`, `choice`, `text` | The learner pressed an option |
-| `part` | `part`, `label` | The learner asked about a machine part |
-| `step` | `step`, `label` | The learner moved to a machine step |
+| `part` | `part`, `label` | The learner asked about a part of a built figure |
+| `step` | `step`, `label` | The learner moved to a step of a built figure |
 | `note` | `text` | A free note from a custom screen |
 
 `CLI events --all` prints every event and keeps the read position.
@@ -140,8 +139,8 @@ Offer the machine after Use it, and again when the learner asks how the parts fi
 
 - Run `CLI stop` when the lesson ends, unless the next lesson starts now.
 - The server stops by itself after two idle hours.
-- Machine screens are standalone HTML files that open from disk. Questions to the tutor work only through the server.
-- Copy the screens that the learner wants to keep to `learning-artifacts/<phase>-<lesson>/`.
+- Built pages open from disk. Questions to the tutor work only through the server.
+- Copy the builds that the learner wants to keep to `learning-artifacts/<phase>-<lesson>/`, with their source.
 
 ## Commands
 
@@ -150,11 +149,11 @@ Offer the machine after Use it, and again when the learner asks how the parts fi
 | `start [--open] [--foreground] [--port N] [--host H] [--url-host H] [--assets live\|local] [--repo PATH] [--idle-minutes N]` | Starts the server, or reuses a running one |
 | `status` | Prints `running`, `url`, `screens`, `latest`, `next`, and the unread event count |
 | `events [--all]` | Prints new events |
-| `check FILE` | Checks a machine spec |
-| `machine FILE [--name SLUG]` | Checks a spec and writes it as the next screen |
+| `publish FILE [--name SLUG]` | Copies a built page into the screens folder as the next screen |
+| `shot TARGET [--width N] [--height N] [--theme light\|dark] [--wait MS] [--out FILE] [--chrome PATH]` | Takes a screenshot of a screen name or a page file with a local Chrome, Chromium, or Edge |
 | `stop` | Stops the server |
 
-Every command takes `--dir PATH` for another screen folder. Every command prints one JSON line. Errors go to stderr as JSON, with exit code 1.
+Every command takes `--dir PATH` for another session folder. Every command prints one JSON line. Errors go to stderr as JSON, with exit code 1.
 
 By default the screen loads the figure runtime from aiengineeringfromscratch.com. `--assets local` loads it from the `site/` folder of a clone. Run `node site/build.js` in that clone first.
 
@@ -164,6 +163,6 @@ By default the screen loads the figure runtime from aiengineeringfromscratch.com
 - [ ] You read events before each reply.
 - [ ] Each screen matches the step that you teach in the terminal.
 - [ ] No screen holds an answer before the learner answers.
-- [ ] Every number on a new figure or machine comes from the lesson or a real run.
-- [ ] `CLI check` passed before `CLI machine`.
+- [ ] Every number on a built figure comes from the lesson or a real run.
+- [ ] You looked at `CLI shot` images of each build in both themes before you published it.
 - [ ] You stopped the server, or told the learner that it stays up.

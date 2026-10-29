@@ -6,7 +6,7 @@ A screen is one HTML file in the screens folder. The browser shows the newest fi
 
 Write a fragment by default. A fragment is the content only, with no `<html>`, no `<head>`, and no stylesheet. The server puts it inside the course frame. The frame adds the fonts, the light and dark colour tokens, every class on this page, the figure runtime, and the click helper.
 
-A file that starts with `<!doctype html>` or `<html>` is a full page. The server sends it as written and adds only the click helper. Machine screens from `CLI machine` are full pages. Write a full page only when a fragment cannot hold the idea.
+A file that starts with `<!doctype html>` or `<html>` is a full page. The server sends it as written and adds only the click helper. Built figures are full pages, and `CLI publish` puts them on the screen. Write a full page only when a fragment cannot hold the idea.
 
 ## Rules for every screen
 
@@ -36,6 +36,7 @@ A file that starts with `<!doctype html>` or `<html>` is a full page. The server
 | `ls-choice` | An option button with `data-choice`. A press sends a `choice` event |
 | `ls-note` | A small line for sources, scale notes, and simulation notes |
 | `ls-wait` | The waiting screen |
+| `ls-building` | An ordered list of build stages. Mark items `is-done` and `is-now`. `references/build.md` has the example |
 | `lesson-figure` | A registered course figure, named in `data-figure` |
 | `mermaid` | A `pre` block with Mermaid source. The frame draws it |
 

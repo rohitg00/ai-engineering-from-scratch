@@ -3,9 +3,9 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import os from 'node:os';
 import { spawn } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
-import { checkMachine } from './machine-spec.mjs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const SCRIPT = fileURLToPath(import.meta.url);
 const TEMPLATES = path.join(path.dirname(SCRIPT), '..', 'templates');
@@ -155,27 +155,265 @@ function countUnread(dir) {
   return buf.toString('utf8').split('\n').filter((l) => l.trim()).length;
 }
 
-export function writeMachineScreen(dir, spec, name) {
-  const { ok, errors, spec: normalized } = checkMachine(spec);
-  if (!ok) {
-    const err = new Error('invalid machine spec');
-    err.errors = errors;
-    throw err;
-  }
+export function publishScreen(dir, source, name) {
+  const body = fs.readFileSync(source, 'utf8');
   const p = sessionPaths(dir);
   ensureDirs(dir);
-  const slug = kebab(name || normalized.title) || 'machine';
+  const fromTitle = screenTitle(source, '');
+  const base = path.basename(source).replace(/\.html?$/i, '').replace(/^\d+-/, '');
+  const slug = kebab(name) || kebab(fromTitle) || kebab(base) || 'screen';
   const filename = `${pad2(nextIndex(dir))}-${slug}.html`;
-  const tpl = fs.readFileSync(path.join(TEMPLATES, 'machine.html'), 'utf8');
-  const json = JSON.stringify(normalized)
-    .replace(/</g, '\\u003c')
-    .replace(/\u2028/g, '\\u2028')
-    .replace(/\u2029/g, '\\u2029');
-  const html = tpl.replace('__MACHINE_SPEC__', () => json)
-    .replace('<title>Machine</title>', () => `<title>${escapeHtml(normalized.title)}</title>`);
   const file = path.join(p.screens, filename);
-  fs.writeFileSync(file, html);
+  fs.writeFileSync(file, body);
   return { name: filename, file };
+}
+
+const CHROME_CANDIDATES = {
+  darwin: [
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
+    path.join(os.homedir(), 'Applications/Google Chrome.app/Contents/MacOS/Google Chrome'),
+  ],
+  win32: [
+    path.join(process.env.PROGRAMFILES || 'C:\\Program Files', 'Google', 'Chrome', 'Application', 'chrome.exe'),
+    path.join(process.env['PROGRAMFILES(X86)'] || 'C:\\Program Files (x86)', 'Google', 'Chrome', 'Application', 'chrome.exe'),
+    path.join(process.env.LOCALAPPDATA || '', 'Google', 'Chrome', 'Application', 'chrome.exe'),
+    path.join(process.env['PROGRAMFILES(X86)'] || 'C:\\Program Files (x86)', 'Microsoft', 'Edge', 'Application', 'msedge.exe'),
+  ],
+  linux: ['google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser', 'microsoft-edge'],
+};
+
+function onPath(name, env) {
+  for (const d of (env.PATH || '').split(path.delimiter)) {
+    if (!d) continue;
+    const full = path.join(d, name);
+    try {
+      if (fs.statSync(full).isFile()) return full;
+    } catch {}
+  }
+  return null;
+}
+
+export function findChrome({ chrome, env = process.env, platform = process.platform } = {}) {
+  const explicit = typeof chrome === 'string' ? chrome : env.CHROME_PATH;
+  if (explicit) {
+    if (fs.existsSync(explicit)) return explicit;
+    throw new Error(`no browser at ${explicit}`);
+  }
+  for (const c of CHROME_CANDIDATES[platform] || CHROME_CANDIDATES.linux) {
+    if (path.isAbsolute(c)) {
+      if (fs.existsSync(c)) return c;
+    } else {
+      const hit = onPath(c, env);
+      if (hit) return hit;
+    }
+  }
+  throw new Error('no Chrome, Chromium, or Edge found. Pass --chrome PATH or set CHROME_PATH');
+}
+
+function wsConnect(wsUrl) {
+  return new Promise((resolve, reject) => {
+    const u = new URL(wsUrl);
+    const key = crypto.randomBytes(16).toString('base64');
+    const req = http.request({
+      host: u.hostname,
+      port: u.port,
+      path: u.pathname + u.search,
+      headers: {
+        Connection: 'Upgrade',
+        Upgrade: 'websocket',
+        'Sec-WebSocket-Version': '13',
+        'Sec-WebSocket-Key': key,
+      },
+    });
+    req.on('error', reject);
+    req.on('response', (res) => reject(new Error(`websocket upgrade failed with ${res.statusCode}`)));
+    req.on('upgrade', (res, socket, head) => {
+      const listeners = new Set();
+      let buf = head && head.length ? Buffer.from(head) : Buffer.alloc(0);
+      let parts = [];
+      function frame(opcode, payload) {
+        const len = payload.length;
+        let header;
+        if (len < 126) header = Buffer.from([0x80 | opcode, 0x80 | len]);
+        else if (len < 65536) {
+          header = Buffer.alloc(4);
+          header[0] = 0x80 | opcode;
+          header[1] = 0x80 | 126;
+          header.writeUInt16BE(len, 2);
+        } else {
+          header = Buffer.alloc(10);
+          header[0] = 0x80 | opcode;
+          header[1] = 0x80 | 127;
+          header.writeBigUInt64BE(BigInt(len), 2);
+        }
+        const mask = crypto.randomBytes(4);
+        const masked = Buffer.alloc(len);
+        for (let i = 0; i < len; i++) masked[i] = payload[i] ^ mask[i & 3];
+        socket.write(Buffer.concat([header, mask, masked]));
+      }
+      function drain() {
+        for (;;) {
+          if (buf.length < 2) return;
+          const fin = (buf[0] & 0x80) !== 0;
+          const opcode = buf[0] & 0x0f;
+          let len = buf[1] & 0x7f;
+          let off = 2;
+          if (len === 126) {
+            if (buf.length < 4) return;
+            len = buf.readUInt16BE(2);
+            off = 4;
+          } else if (len === 127) {
+            if (buf.length < 10) return;
+            len = Number(buf.readBigUInt64BE(2));
+            off = 10;
+          }
+          if (buf.length < off + len) return;
+          const payload = buf.subarray(off, off + len);
+          buf = buf.subarray(off + len);
+          if (opcode === 9) frame(10, payload);
+          else if (opcode === 8) socket.end();
+          else if (opcode === 1 || opcode === 0) {
+            parts.push(Buffer.from(payload));
+            if (fin) {
+              const text = Buffer.concat(parts).toString('utf8');
+              parts = [];
+              for (const fn of listeners) fn(text);
+            }
+          }
+        }
+      }
+      socket.on('data', (d) => {
+        buf = Buffer.concat([buf, d]);
+        drain();
+      });
+      socket.on('error', () => {});
+      drain();
+      resolve({
+        send: (text) => frame(1, Buffer.from(text, 'utf8')),
+        onMessage: (fn) => listeners.add(fn),
+        close: () => socket.destroy(),
+      });
+    });
+    req.end();
+  });
+}
+
+function cdpClient(ws) {
+  let nextId = 1;
+  const pending = new Map();
+  const handlers = new Set();
+  ws.onMessage((text) => {
+    let msg;
+    try {
+      msg = JSON.parse(text);
+    } catch {
+      return;
+    }
+    if (msg.id && pending.has(msg.id)) {
+      const { resolve, reject } = pending.get(msg.id);
+      pending.delete(msg.id);
+      if (msg.error) reject(new Error(msg.error.message || 'browser protocol error'));
+      else resolve(msg.result || {});
+    } else if (msg.method) {
+      for (const fn of handlers) fn(msg);
+    }
+  });
+  return {
+    send(method, params = {}, sessionId) {
+      const id = nextId++;
+      const msg = { id, method, params };
+      if (sessionId) msg.sessionId = sessionId;
+      ws.send(JSON.stringify(msg));
+      return new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
+    },
+    on: (fn) => handlers.add(fn),
+  };
+}
+
+function withTimeout(promise, ms, what) {
+  let timer;
+  return Promise.race([
+    promise.finally(() => clearTimeout(timer)),
+    new Promise((_, reject) => {
+      timer = setTimeout(() => reject(new Error(`${what} timed out`)), ms);
+    }),
+  ]);
+}
+
+export async function takeShot({ url, out, width = 1440, height = 900, theme = 'light', wait = 1500, chrome }) {
+  const bin = findChrome({ chrome });
+  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'lesson-screen-shot-'));
+  const child = spawn(bin, [
+    '--headless=new',
+    '--remote-debugging-port=0',
+    `--user-data-dir=${profile}`,
+    '--no-first-run',
+    '--no-default-browser-check',
+    '--hide-scrollbars',
+    '--mute-audio',
+    '--use-angle=swiftshader',
+    '--enable-unsafe-swiftshader',
+    `--window-size=${width},${height}`,
+    'about:blank',
+  ], { stdio: ['ignore', 'ignore', 'pipe'] });
+  let ws;
+  try {
+    const browserWs = await withTimeout(new Promise((resolve, reject) => {
+      let errText = '';
+      child.stderr.on('data', (d) => {
+        errText += d.toString('utf8');
+        const m = /DevTools listening on (ws:\/\/\S+)/.exec(errText);
+        if (m) resolve(m[1]);
+      });
+      child.on('error', reject);
+      child.on('exit', (code) => reject(new Error(`the browser exited with code ${code}`)));
+    }), 20000, 'browser start');
+    ws = await wsConnect(browserWs);
+    const cdp = cdpClient(ws);
+    const errors = [];
+    let loaded;
+    const loadedPromise = new Promise((r) => {
+      loaded = r;
+    });
+    cdp.on((msg) => {
+      const prm = msg.params || {};
+      if (msg.method === 'Page.loadEventFired') loaded();
+      else if (msg.method === 'Runtime.exceptionThrown') {
+        const d = prm.exceptionDetails || {};
+        errors.push(((d.exception && d.exception.description) || d.text || 'exception').split('\n')[0].slice(0, 300));
+      } else if (msg.method === 'Runtime.consoleAPICalled' && (prm.type === 'error' || prm.type === 'assert')) {
+        errors.push((prm.args || []).map((a) => (a.value !== undefined ? String(a.value) : a.description || '')).join(' ').slice(0, 300));
+      } else if (msg.method === 'Log.entryAdded' && prm.entry && prm.entry.level === 'error') {
+        errors.push(String(prm.entry.text || '').slice(0, 300));
+      }
+    });
+    const { targetId } = await cdp.send('Target.createTarget', { url: 'about:blank' });
+    const { sessionId } = await cdp.send('Target.attachToTarget', { targetId, flatten: true });
+    const s = (method, params) => cdp.send(method, params, sessionId);
+    await s('Page.enable');
+    await s('Runtime.enable');
+    await s('Log.enable');
+    await s('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 600 });
+    await s('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: theme }] });
+    await s('Page.addScriptToEvaluateOnNewDocument', { source: `try{localStorage.setItem('theme',${JSON.stringify(theme)})}catch(e){}` });
+    const nav = await s('Page.navigate', { url });
+    if (nav.errorText) throw new Error(`could not open the page: ${nav.errorText}`);
+    await withTimeout(loadedPromise, 30000, 'page load');
+    await new Promise((r) => setTimeout(r, wait));
+    const shot = await s('Page.captureScreenshot', { format: 'png' });
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+    fs.writeFileSync(out, Buffer.from(shot.data, 'base64'));
+    return { file: out, url, width, height, theme, errors };
+  } finally {
+    if (ws) ws.close();
+    try {
+      child.kill('SIGKILL');
+    } catch {}
+    await new Promise((r) => setTimeout(r, 200));
+    fs.rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+  }
 }
 
 function keyMatches(candidate, key) {
@@ -361,6 +599,10 @@ export function createServer(opts = {}) {
   async function handle(req, res) {
     const u = new URL(req.url, 'http://local');
     const pathname = u.pathname;
+
+    if (req.method === 'GET' && pathname === '/favicon.ico') {
+      return send(res, 204, null);
+    }
 
     if (req.method === 'GET' && pathname === '/health') {
       return sendJson(res, 200, { ok: true, name: 'lesson-screen' });
@@ -683,7 +925,7 @@ function parseArgs(argv) {
     if (a.startsWith('--')) {
       const name = a.slice(2);
       const next = argv[i + 1];
-      if (next !== undefined && !next.startsWith('--') && ['port', 'host', 'url-host', 'assets', 'repo', 'idle-minutes', 'dir', 'name'].includes(name)) {
+      if (next !== undefined && !next.startsWith('--') && ['port', 'host', 'url-host', 'assets', 'repo', 'idle-minutes', 'dir', 'name', 'width', 'height', 'theme', 'wait', 'out', 'chrome'].includes(name)) {
         flags[name] = next;
         i++;
       } else {
@@ -863,39 +1105,50 @@ function cmdEvents(flags) {
   out({ type: 'events', events: readEvents(dir, { all: !!flags.all }) });
 }
 
-function readSpecFile(file) {
-  let text;
-  try {
-    text = fs.readFileSync(file, 'utf8');
-  } catch {
-    fail({ type: 'error', error: `cannot read ${file}` });
-  }
-  try {
-    return JSON.parse(text);
-  } catch {
-    fail({ type: 'invalid', errors: [`${file}: not valid JSON`] });
-  }
-}
-
-function cmdCheck(flags, positional) {
-  const file = positional[0];
-  if (!file) fail({ type: 'error', error: 'check needs a spec file' });
-  const spec = readSpecFile(file);
-  const result = checkMachine(spec);
-  if (!result.ok) fail({ type: 'invalid', errors: result.errors });
-  out({ type: 'valid' });
-}
-
-function cmdMachine(flags, positional) {
-  const file = positional[0];
-  if (!file) fail({ type: 'error', error: 'machine needs a spec file' });
-  const spec = readSpecFile(file);
-  const result = checkMachine(spec);
-  if (!result.ok) fail({ type: 'invalid', errors: result.errors });
+function cmdPublish(flags, positional) {
+  const source = positional[0];
+  if (!source) fail({ type: 'error', error: 'publish needs a page file' });
+  if (!fs.existsSync(source) || !fs.statSync(source).isFile()) fail({ type: 'error', error: `cannot read ${source}` });
   const dir = resolveDir(flags);
   const name = typeof flags.name === 'string' ? flags.name : undefined;
-  const { name: screenName, file: screenFile } = writeMachineScreen(dir, result.spec, name);
-  out({ type: 'screen', name: screenName, file: screenFile });
+  const { name: screenName, file } = publishScreen(dir, path.resolve(source), name);
+  out({ type: 'screen', name: screenName, file });
+}
+
+async function cmdShot(flags, positional) {
+  const raw = positional[0];
+  if (!raw) fail({ type: 'error', error: 'shot needs a screen name or a page file' });
+  const qi = raw.indexOf('?');
+  const target = qi >= 0 ? raw.slice(0, qi) : raw;
+  const query = qi >= 0 ? raw.slice(qi + 1) : '';
+  const dir = resolveDir(flags);
+  const p = sessionPaths(dir);
+  const theme = flags.theme === 'dark' ? 'dark' : 'light';
+  const width = parseInt(flags.width, 10) || 1440;
+  const height = parseInt(flags.height, 10) || 900;
+  const wait = Number.isFinite(parseInt(flags.wait, 10)) ? parseInt(flags.wait, 10) : 1500;
+  let file = path.resolve(target);
+  if (!fs.existsSync(file)) file = path.join(p.screens, target);
+  if (!fs.existsSync(file) || !fs.statSync(file).isFile()) fail({ type: 'error', error: `no screen or file named ${target}` });
+  const info = readServerInfo(dir);
+  let running = false;
+  if (info && pidAlive(info.pid)) running = await healthOk(`http://${probeHost(info.host)}:${info.port}`);
+  const inScreens = path.dirname(fs.realpathSync(file)) === fs.realpathSync(p.screens);
+  const full = /^\s*<(!doctype|html)/i.test(fs.readFileSync(file, 'utf8').slice(0, 200));
+  let url;
+  if (inScreens && running) {
+    url = `http://${probeHost(info.host)}:${info.port}/s/${encodeURIComponent(path.basename(file))}?${query ? `${query}&` : ''}key=${info.key}`;
+  } else if (full) {
+    url = pathToFileURL(file).href + (query ? `?${query}` : '');
+  } else {
+    fail({ type: 'error', error: 'a fragment screen needs the server. Run start first' });
+  }
+  const base = path.basename(file).replace(/\.html?$/i, '') + (query ? '-' + query.replace(/[^a-z0-9]+/gi, '-').toLowerCase() : '');
+  const outFile = typeof flags.out === 'string'
+    ? path.resolve(flags.out)
+    : path.join(dir, 'shots', `${base}-${theme}-${width}x${height}.png`);
+  const result = await takeShot({ url, out: outFile, width, height, theme, wait, chrome: flags.chrome });
+  out({ type: 'shot', ...result, url: result.url.replace(/key=[0-9a-f]+/, 'key=...') });
 }
 
 async function main(argv) {
@@ -911,10 +1164,10 @@ async function main(argv) {
       return cmdStatus(flags);
     case 'events':
       return cmdEvents(flags);
-    case 'check':
-      return cmdCheck(flags, positional);
-    case 'machine':
-      return cmdMachine(flags, positional);
+    case 'publish':
+      return cmdPublish(flags, positional);
+    case 'shot':
+      return cmdShot(flags, positional);
     default:
       fail({ type: 'error', error: `unknown command "${command || ''}"` });
   }

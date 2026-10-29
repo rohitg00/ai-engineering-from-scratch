@@ -127,6 +127,49 @@ pre {
 }
 .ls-rail li.is-now::before { color: var(--blueprint); }
 .ls-rail li.is-done { opacity: 0.55; }
+.ls-building {
+  list-style: none;
+  counter-reset: stage;
+  padding: 0;
+  margin: 18px 0;
+  max-width: 640px;
+  font-family: var(--font-mono);
+  border-left: 1px solid var(--rule-soft);
+}
+.ls-building li {
+  counter-increment: stage;
+  position: relative;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-mute);
+  padding: 10px 0 10px 40px;
+  min-height: 44px;
+}
+.ls-building li::before {
+  content: counter(stage, decimal-leading-zero);
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  font-size: 0.68rem;
+  color: var(--ink-mute);
+}
+.ls-building li.is-done { color: var(--ink-soft); }
+.ls-building li.is-done::before { content: "\2713"; color: var(--blueprint); }
+.ls-building li.is-now { color: var(--blueprint); background: var(--blueprint-tint); }
+.ls-building li.is-now::before { color: var(--blueprint); }
+.ls-building li.is-now::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--blueprint);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ls-building li.is-now { animation: ls-pulse 1.6s cubic-bezier(0.77, 0, 0.175, 1) infinite alternate; }
+}
+@keyframes ls-pulse { from { background: var(--blueprint-tint); } to { background: transparent; } }
 .ls-card {
   border: 1px solid var(--rule-soft);
   background: var(--bg-surface);

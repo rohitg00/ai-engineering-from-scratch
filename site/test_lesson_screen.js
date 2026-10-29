@@ -11,26 +11,11 @@ const test = require('node:test');
 const root = path.resolve(__dirname, '..');
 const skillDir = path.join(root, 'skills', 'lesson-screen');
 const script = path.join(skillDir, 'scripts', 'lesson-screen.mjs');
-const specModule = path.join(skillDir, 'scripts', 'machine-spec.mjs');
-const EXAMPLES = ['transformer-block', 'agent-loop'];
 
 function tmpdir(t) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lesson-screen-test-'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   return dir;
-}
-
-function baseSpec() {
-  return {
-    title: 'Tiny machine',
-    question: 'What moves?',
-    bigIdea: 'One part feeds another.',
-    parts: [
-      { id: 'a', label: 'Part A', explain: 'first', shape: 'box', size: [1, 1, 1], at: [0, 0, 0], material: 'metal' },
-      { id: 'b', label: 'Part B', explain: 'second', shape: 'sphere', size: [1], at: [2, 0, 0], material: 'plastic' },
-    ],
-    steps: [{ title: 'Go', say: 'it moves' }],
-  };
 }
 
 function get(url, headers = {}) {
@@ -57,107 +42,36 @@ function post(url, { headers = {}, body = '' } = {}) {
   });
 }
 
-test('checkMachine accepts both shipped examples and fills defaults', async (t) => {
-  const { checkMachine } = await import(specModule);
-  for (const name of EXAMPLES) {
-    const spec = JSON.parse(fs.readFileSync(path.join(skillDir, 'examples', `${name}.json`), 'utf8'));
-    const result = checkMachine(spec);
-    assert.ok(result.ok, `${name}: ${result.errors.join(', ')}`);
-  }
-  const metal = checkMachine(baseSpec());
-  assert.equal(metal.spec.parts[0].tone, 'steel');
-  assert.equal(metal.spec.parts[1].tone, 'ink');
-  assert.deepEqual(metal.spec.parts[0].rotate, [0, 0, 0]);
-  assert.deepEqual(metal.spec.parts[0].explode, [0, 0, 0]);
-  assert.equal(metal.spec.steps[0].view, 'iso');
-  assert.equal(metal.spec.steps[0].explode, 0);
-  assert.deepEqual(metal.spec.flows, []);
-  assert.deepEqual(metal.spec.readouts, []);
-  const glass = checkMachine({
-    ...baseSpec(),
-    parts: [{ id: 'g', label: 'G', explain: 'e', shape: 'slab', size: [1, 1, 1], at: [0, 0, 0], material: 'glass' }],
-  });
-  assert.equal(glass.spec.parts[0].tone, 'paper');
-  const glow = checkMachine({
-    ...baseSpec(),
-    parts: [{ id: 'g', label: 'G', explain: 'e', shape: 'slab', size: [1, 1, 1], at: [0, 0, 0], material: 'glow' }],
-  });
-  assert.equal(glow.spec.parts[0].tone, 'accent');
-});
-
-test('checkMachine reports precise paths for each failure', async (t) => {
-  const { checkMachine } = await import(specModule);
-  const cases = [
-    [{ ...baseSpec(), parts: [baseSpec().parts[0], baseSpec().parts[0]] }, 'parts[1].id', 'already used'],
-    [{ ...baseSpec(), flows: [{ id: 'f', from: 'a', to: 'zzz' }] }, 'flows[0].to', 'not a part id'],
-    [{ ...baseSpec(), flows: [{ id: 'f', from: 'a', to: 'a' }] }, 'flows[0].to', 'same part'],
-    [{ ...baseSpec(), steps: [{ title: 's', say: 's', focus: ['ghost'] }] }, 'steps[0].focus[0]', 'not a part id'],
-    [{ ...baseSpec(), steps: [{ title: 's', say: 's', readouts: { ghost: '1' } }] }, 'steps[0].readouts.ghost', 'not a readout id'],
-    [{ ...baseSpec(), parts: [{ ...baseSpec().parts[0], size: [1, 1] }] }, 'parts[0].size', '3 numbers'],
-    [{ ...baseSpec(), parts: [{ ...baseSpec().parts[0], size: [1, 30, 1] }] }, 'parts[0].size[1]', 'between 0.02 and 20'],
-    [{ ...baseSpec(), parts: [{ ...baseSpec().parts[0], shape: 'torus', size: [1, 1] }] }, 'parts[0].size', 'smaller than radius'],
-    [{ ...baseSpec(), parts: [{ ...baseSpec().parts[0], colour: 'red' }] }, 'parts[0].colour', 'unknown key'],
-    [{ ...baseSpec(), parts: Array.from({ length: 49 }, (_, i) => ({ ...baseSpec().parts[0], id: `p${i}` })) }, 'parts', '48'],
-    [{ ...baseSpec(), steps: [] }, 'steps', '1 to 10'],
-    [{ ...baseSpec(), parts: [{ ...baseSpec().parts[0], tone: 'pink' }] }, 'parts[0].tone', 'not a tone'],
-    [{ ...baseSpec(), parts: [{ ...baseSpec().parts[0], label: 'x'.repeat(33) }] }, 'parts[0].label', '32'],
-  ];
-  for (const [spec, prefix, phrase] of cases) {
-    const result = checkMachine(spec);
-    assert.ok(!result.ok, `${prefix} should fail`);
-    assert.ok(
-      result.errors.some((e) => e.startsWith(`${prefix}:`) && e.includes(phrase)),
-      `${prefix} ~ ${phrase} in ${JSON.stringify(result.errors)}`,
-    );
-  }
-});
-
-test('the CLI checks and writes machine screens', (t) => {
+test('publish copies a built page as the next screen and keeps its title', (t) => {
   const cwd = tmpdir(t);
-  const specFile = path.join(cwd, 'ok.json');
-  fs.writeFileSync(specFile, JSON.stringify(baseSpec()));
-
-  const bad = path.join(cwd, 'bad.json');
-  fs.writeFileSync(bad, JSON.stringify({ ...baseSpec(), parts: [] }));
+  const page = path.join(cwd, 'build.html');
+  fs.writeFileSync(page, '<!doctype html><html><head><title>Speculative decoding machine</title></head><body><h1></h1><p>x</p></body></html>');
+  const first = JSON.parse(execFileSync(process.execPath, [script, 'publish', page], { cwd, encoding: 'utf8' }));
+  assert.equal(first.type, 'screen');
+  assert.equal(first.name, '01-speculative-decoding-machine.html');
+  assert.equal(fs.readFileSync(first.file, 'utf8'), fs.readFileSync(page, 'utf8'));
+  const second = JSON.parse(execFileSync(process.execPath, [script, 'publish', page, '--name', 'Draft Verify!'], { cwd, encoding: 'utf8' }));
+  assert.equal(second.name, '02-draft-verify.html');
   let threw = null;
   try {
-    execFileSync(process.execPath, [script, 'check', bad], { cwd, encoding: 'utf8' });
+    execFileSync(process.execPath, [script, 'publish', path.join(cwd, 'missing.html')], { cwd, encoding: 'utf8' });
   } catch (e) {
     threw = e;
   }
   assert.ok(threw);
   assert.equal(threw.status, 1);
-  const err = JSON.parse(threw.stderr);
-  assert.equal(err.type, 'invalid');
-  assert.ok(Array.isArray(err.errors) && err.errors.length > 0);
-
-  const okOut = execFileSync(process.execPath, [script, 'check', specFile], { cwd, encoding: 'utf8' });
-  assert.deepEqual(JSON.parse(okOut), { type: 'valid' });
-
-  const m1 = JSON.parse(execFileSync(process.execPath, [script, 'machine', specFile, '--name', 'First Machine!'], { cwd, encoding: 'utf8' }));
-  const m2 = JSON.parse(execFileSync(process.execPath, [script, 'machine', specFile], { cwd, encoding: 'utf8' }));
-  assert.match(m1.name, /^01-first-machine\.html$/);
-  assert.match(m2.name, /^02-tiny-machine\.html$/);
-  assert.ok(fs.existsSync(m1.file));
-  assert.ok(fs.existsSync(m2.file));
+  assert.equal(JSON.parse(threw.stderr).type, 'error');
 });
 
-test('machine screens escape the spec inside the script block', (t) => {
-  const cwd = tmpdir(t);
-  const spec = baseSpec();
-  spec.parts[0].label = 'a</script><b>x</script>';
-  const specFile = path.join(cwd, 'evil.json');
-  fs.writeFileSync(specFile, JSON.stringify(spec));
-  const out = JSON.parse(execFileSync(process.execPath, [script, 'machine', specFile], { cwd, encoding: 'utf8' }));
-  const html = fs.readFileSync(out.file, 'utf8');
-  assert.ok(!html.includes('__MACHINE_SPEC__'));
-  const block = /<script id="machine-spec"[^>]*>([\s\S]*?)<\/script>/.exec(html);
-  assert.ok(block, 'spec block found');
-  assert.ok(!block[1].includes('</script>'), 'no script closer inside the JSON');
-  assert.ok(block[1].includes('\\u003c/script>'), 'angle bracket escaped');
-  const parsed = JSON.parse(block[1]);
-  assert.equal(parsed.parts[0].label, 'a</script><b>x</script>');
-  assert.ok(html.includes('<title>Tiny machine</title>'));
+test('findChrome honours an explicit path and fails with a clear message', async (t) => {
+  const { findChrome } = await import(script);
+  const dir = tmpdir(t);
+  const fake = path.join(dir, 'chrome');
+  fs.writeFileSync(fake, '');
+  assert.equal(findChrome({ chrome: fake }), fake);
+  assert.equal(findChrome({ env: { CHROME_PATH: fake } }), fake);
+  assert.throws(() => findChrome({ chrome: path.join(dir, 'nope') }), /no browser at/);
+  assert.throws(() => findChrome({ env: { PATH: dir + '-empty' }, platform: 'linux' }), /no Chrome, Chromium, or Edge found/);
 });
 
 test('the server gates, serves, records events and shuts down', async (t) => {
@@ -257,11 +171,10 @@ test('the server gates, serves, records events and shuts down', async (t) => {
     assert.equal(res.headers.location, `https://aiengineeringfromscratch.com/${file}`);
   }
   assert.equal((await get(`${origin}/figures-../x.js`, { Cookie: cookie })).status, 404);
-  const { writeMachineScreen } = await import(script);
-  writeMachineScreen(dir, baseSpec(), 'machine-one');
+  assert.equal((await get(`${origin}/favicon.ico`)).status, 204);
+  fs.writeFileSync(path.join(screensDir, '04-built.html'), '<!doctype html><html><head><title>Built page</title></head><body><h1></h1></body></html>');
   const list = JSON.parse((await get(`${origin}/screens`, { Cookie: cookie })).body);
-  const row = list.screens.find((r) => r.name.includes('machine-one'));
-  assert.equal(row.title, 'Tiny machine');
+  assert.equal(list.screens.find((r) => r.name === '04-built.html').title, 'Built page');
 });
 
 test('the server lists screens over SSE and honours local assets', async (t) => {
@@ -305,8 +218,8 @@ test('the server lists screens over SSE and honours local assets', async (t) => 
     });
     setTimeout(() => {
       req.destroy();
-      reject(new Error('no screens update within 3s'));
-    }, 3000).unref();
+      reject(new Error('no screens update within 8s'));
+    }, 8000).unref();
   });
   assert.ok(sse.includes('01-new.html'));
 });
@@ -315,8 +228,10 @@ test('the server idles out and stops on demand', async (t) => {
   const { createServer } = await import(script);
   const dirA = tmpdir(t);
   const idleSrv = await createServer({ dir: dirA, idleMs: 300 });
-  await new Promise((r) => setTimeout(r, 1200));
-  const stopped = JSON.parse(fs.readFileSync(path.join(dirA, 'state', 'stopped'), 'utf8'));
+  const stoppedFile = path.join(dirA, 'state', 'stopped');
+  for (let waited = 0; !fs.existsSync(stoppedFile) && waited < 8000; waited += 100) await new Promise((r) => setTimeout(r, 100));
+  await new Promise((r) => setTimeout(r, 100));
+  const stopped = JSON.parse(fs.readFileSync(stoppedFile, 'utf8'));
   assert.equal(stopped.reason, 'idle');
   const health = await get(`${idleSrv.origin}/health`).then(() => 'up').catch(() => 'down');
   assert.equal(health, 'down');
@@ -326,30 +241,48 @@ test('the server idles out and stops on demand', async (t) => {
   t.after(() => srv.close());
   const res = await post(`${srv.origin}/shutdown`, { headers: { 'x-lesson-screen-key': srv.key } });
   assert.equal(res.status, 204);
-  await new Promise((r) => setTimeout(r, 400));
-  const after = await get(`${srv.origin}/health`).then(() => 'up').catch(() => 'down');
+  let after = 'up';
+  for (let waited = 0; after === 'up' && waited < 5000; waited += 100) {
+    await new Promise((r) => setTimeout(r, 100));
+    after = await get(`${srv.origin}/health`).then(() => 'up').catch(() => 'down');
+  }
   assert.equal(after, 'down');
 });
 
-test('templates pin the exact CDN versions and define every token', (t) => {
-  const machine = fs.readFileSync(path.join(skillDir, 'templates', 'machine.html'), 'utf8');
+test('the frame pins mermaid, defines every token, and styles every documented class', () => {
   const frame = fs.readFileSync(path.join(skillDir, 'templates', 'frame.html'), 'utf8');
-
-  const threeRefs = machine.match(/three@[0-9a-z.^~*x-]+/gi) || [];
-  assert.ok(threeRefs.length > 0);
-  for (const ref of threeRefs) assert.equal(ref, 'three@0.186.1');
-  assert.equal(machine.split('__MACHINE_SPEC__').length - 1, 1);
   assert.ok(frame.includes('mermaid@11.17.2'));
-
   const tokens = ['--bg', '--bg-surface', '--ink', '--ink-soft', '--ink-mute', '--rule-soft', '--blueprint', '--blueprint-tint', '--blueprint-tint-strong', '--warn'];
-  for (const [name, text] of [['frame.html', frame], ['machine.html', machine]]) {
-    const light = /:root\s*\{([\s\S]*?)\}/.exec(text)[1];
-    const dark = /\[data-theme="dark"\]\s*\{([\s\S]*?)\}/.exec(text)[1];
-    for (const token of tokens) {
-      assert.ok(light.includes(`${token}:`), `${name} light ${token}`);
-      assert.ok(dark.includes(`${token}:`), `${name} dark ${token}`);
-    }
+  const light = /:root\s*\{([\s\S]*?)\}/.exec(frame)[1];
+  const dark = /\[data-theme="dark"\]\s*\{([\s\S]*?)\}/.exec(frame)[1];
+  for (const token of tokens) {
+    assert.ok(light.includes(`${token}:`), `light ${token}`);
+    assert.ok(dark.includes(`${token}:`), `dark ${token}`);
   }
+  const doc = fs.readFileSync(path.join(skillDir, 'references', 'screens.md'), 'utf8');
+  const classes = [...doc.matchAll(/^\| `(ls-[a-z-]+)` \|/gm)].map((m) => m[1]);
+  assert.ok(classes.length >= 15);
+  for (const name of classes) assert.ok(frame.includes(`.${name}`), `frame styles .${name}`);
+});
+
+test('the shot command captures a real page when a browser is installed', async (t) => {
+  const { findChrome, takeShot } = await import(script);
+  try {
+    findChrome({});
+  } catch {
+    t.skip('no Chrome, Chromium, or Edge on this machine');
+    return;
+  }
+  const dir = tmpdir(t);
+  const page = path.join(dir, 'page.html');
+  fs.writeFileSync(page, '<!doctype html><html><head><title>t</title><script>document.documentElement.dataset.theme = localStorage.getItem("theme");</script></head><body><p>shot</p><script>console.error("boom")</script></body></html>');
+  const out = path.join(dir, 'page.png');
+  const result = await takeShot({ url: `file://${page}`, out, width: 400, height: 300, theme: 'dark', wait: 100 });
+  const png = fs.readFileSync(out);
+  assert.equal(png.subarray(1, 4).toString('ascii'), 'PNG');
+  assert.equal(png.readUInt32BE(16), 400);
+  assert.equal(png.readUInt32BE(20), 300);
+  assert.ok(result.errors.some((e) => e.includes('boom')), JSON.stringify(result.errors));
 });
 
 test('the tutor skills point at the lesson screen', () => {

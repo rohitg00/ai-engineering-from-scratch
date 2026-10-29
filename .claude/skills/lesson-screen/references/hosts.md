@@ -41,7 +41,11 @@ A chat app without a shell cannot run the server. Give the lesson page instead:
 https://aiengineeringfromscratch.com/lesson?path=<phase-dir>/<lesson-dir>
 ```
 
-The lesson page shows the same registered figures. Machines need the server, so describe the parts and flows in the terminal.
+The lesson page shows the same registered figures. A built figure needs a shell to build and check, so describe the parts and flows in the terminal.
+
+## Screenshots
+
+`CLI shot` needs Chrome, Chromium, or Edge on the same machine. It looks in the usual install paths and reads `CHROME_PATH`, and `--chrome PATH` overrides both. Without a browser it fails with a clear error. Then tell the learner that the build was not checked by eye.
 
 ## Windows
 
@@ -49,4 +53,4 @@ The commands work the same in PowerShell and in Command Prompt. Quote paths that
 
 ## Offline learners
 
-The figure runtime and the 3D library load from the network. Offline, the frame shows the text parts of each screen and a note in place of each figure. In a clone with a built site, `--assets local` loads the figure runtime from disk. The 3D view still needs cdn.jsdelivr.net, and the machine viewer shows its steps and parts as text without it.
+The figure runtime and the 3D library load from the network. Offline, the frame shows the text parts of each screen and a note in place of each figure. In a clone with a built site, `--assets local` loads the figure runtime from disk. A built page that uses three.js still needs cdn.jsdelivr.net, and it shows its steps and parts as text without it.

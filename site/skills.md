@@ -50,9 +50,9 @@ Teaches your next lesson section by section in the terminal, asks questions, and
 
 ### lesson-screen (v1.0.0)
 
-Opens a screen in your browser next to the terminal. It shows the lesson figure for each step, traces the code with real values, and builds a 3D machine and a 2D blueprint of the system you are learning.
+Opens a screen in your browser next to the terminal. It shows the lesson figure for each step and traces the code with real values. It also builds a figure for your lesson while you learn, from a blueprint to a 3D model.
 
-- Say: "open the lesson screen", "show me this lesson in 3D"
+- Say: "open the lesson screen", "build a figure for this lesson"
 - Writes: A .lesson-screen folder with each screen it showed
 - Install: `npx skills add rohitg00/ai-engineering-from-scratch --skill lesson-screen`
 - Source: https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/lesson-screen/SKILL.md
