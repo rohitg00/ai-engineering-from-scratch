@@ -36,6 +36,15 @@
     var inLabChallenge = false;
     var inMathBlock = false;
     var mathLines = [];
+    var usedHeadingIds = Object.create(null);
+
+    function uniqueHeadingId(base) {
+      if (!usedHeadingIds[base]) { usedHeadingIds[base] = 1; return base; }
+      var n = 2;
+      while (usedHeadingIds[base + '-' + n]) n++;
+      usedHeadingIds[base + '-' + n] = 1;
+      return base + '-' + n;
+    }
 
     function flushLabChallenge() {
       if (!inLabChallenge) return '';
@@ -197,7 +206,7 @@
       if (h1) {
         out += flushList();
         out += flushLabChallenge();
-        var slug = slugify(h1[1]);
+        var slug = uniqueHeadingId(slugify(h1[1]));
         out += '<h1 id="' + slug + '">' + inlineFormat(h1[1]) + '</h1>';
         continue;
       }
@@ -236,11 +245,11 @@
           out += flushLabChallenge();
           inLabChallenge = true;
           out += '<div class="lab-challenge">';
-          out += '<h2 id="' + slug2 + '">&#128171; Lab Challenge</h2>';
+          out += '<h2 id="' + uniqueHeadingId(slug2) + '">&#128171; Lab Challenge</h2>';
           continue;
         }
         out += flushLabChallenge();
-        out += '<h2 id="' + slug2 + '" class="' + sectionClass + '">' + inlineFormat(h2[1]) + '</h2>';
+        out += '<h2 id="' + uniqueHeadingId(slug2) + '" class="' + sectionClass + '">' + inlineFormat(h2[1]) + '</h2>';
         continue;
       }
 
@@ -248,7 +257,7 @@
       if (h3) {
         out += flushList();
         var slug3 = slugify(h3[1]);
-        out += '<h3 id="' + slug3 + '">' + inlineFormat(h3[1]) + '</h3>';
+        out += '<h3 id="' + uniqueHeadingId(slug3) + '">' + inlineFormat(h3[1]) + '</h3>';
         continue;
       }
 
@@ -256,7 +265,7 @@
       if (h4) {
         out += flushList();
         var slug4 = slugify(h4[1]);
-        out += '<h4 id="' + slug4 + '">' + inlineFormat(h4[1]) + '</h4>';
+        out += '<h4 id="' + uniqueHeadingId(slug4) + '">' + inlineFormat(h4[1]) + '</h4>';
         continue;
       }
 

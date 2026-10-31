@@ -15,6 +15,21 @@ test('level-4 headings are not confused with levels 1-3', () => {
   assert.match(parseMd('#### Four'), /<h4 id="four">Four<\/h4>/);
 });
 
+test('duplicate heading slugs are suffixed in document order across levels', () => {
+  const html = parseMd('### Setup\n\n## Setup\n\n#### Setup\n\n### Setup\n');
+  assert.match(html, /<h3 id="setup">Setup<\/h3>/);
+  assert.match(html, /<h2 id="setup-2"[^>]*>Setup<\/h2>/);
+  assert.match(html, /<h4 id="setup-3">Setup<\/h4>/);
+  assert.match(html, /<h3 id="setup-4">Setup<\/h3>/);
+});
+
+test('a repeated heading keeps the bare slug only on its first occurrence', () => {
+  const html = parseMd('#### Review\n\n#### Review\n\n#### Review\n');
+  assert.match(html, /<h4 id="review">Review<\/h4>/);
+  assert.match(html, /<h4 id="review-2">Review<\/h4>/);
+  assert.match(html, /<h4 id="review-3">Review<\/h4>/);
+});
+
 test('level-4 headings honor inline formatting and code fences', () => {
   assert.match(parseMd('#### NaN **Loss**'), /<h4 id="nan-loss">NaN <strong>Loss<\/strong><\/h4>/);
   const fenced = parseMd('```\n#### Not a heading\n```');
