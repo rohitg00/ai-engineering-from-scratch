@@ -339,9 +339,20 @@
       margin-bottom: 12px;
     }
 
+    .lesson-article h4 {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      margin-top: 28px;
+      margin-bottom: 10px;
+    }
+
     .lesson-article h1,
     .lesson-article h2,
-    .lesson-article h3 {
+    .lesson-article h3,
+    .lesson-article h4 {
       scroll-margin-top: var(--header-offset, 92px);
     }
 
@@ -2259,6 +2270,7 @@
     .continue-links {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
       gap: 6px;
     }
 
@@ -2429,6 +2441,11 @@
       font-size: 0.78rem;
     }
 
+    .toc-h4 .toc-link {
+      padding-left: 40px;
+      font-size: 0.74rem;
+    }
+
     .toc-link:hover {
       color: var(--ink);
       background: var(--blueprint-tint);
@@ -2531,6 +2548,11 @@
       .lesson-article h3 {
         margin-top: 28px;
         font-size: 0.84rem;
+        line-height: 1.35;
+      }
+      .lesson-article h4 {
+        margin-top: 22px;
+        font-size: 0.8rem;
         line-height: 1.35;
       }
       .lesson-article p,
@@ -4226,7 +4248,7 @@
           return;
         }
 
-        var headings = article.querySelectorAll('h2, h3');
+        var headings = article.querySelectorAll('h2, h3, h4');
         if (!headings.length) {
           sidebar.innerHTML = '';
           sidebar.removeAttribute('aria-hidden');
@@ -6063,9 +6085,7 @@
 
         html += '<div class="continue-links">';
 
-        var phaseSlug = extractPhaseSlug(phase, phaseIdx);
-        var firstLesson = phase.lessons[0] ? extractLessonSlug(phase.lessons[0], 0) : '';
-        html += '<a class="continue-link" href="lesson?path=phases/' + phaseSlug + '/' + firstLesson + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
+        html += '<a class="continue-link" href="catalog.html?phase=' + encodeURIComponent(phase.id) + '">Browse all Phase ' + String(phase.id).padStart(2, '0') + ' lessons</a>';
         html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
         html += '</div>';
 
