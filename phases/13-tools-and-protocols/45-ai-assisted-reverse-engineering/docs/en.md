@@ -220,7 +220,7 @@ cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
 ```
 
-With clang on the path the demo compiles every candidate with the fixture flags, builds eight differential programs, runs 92 cells and 256 corpus inputs through each, reads the DWARF, checks every citation, and prints the card. Without clang the `grid` and `fuzz` fields read `unknown`, and so does every verdict.
+With clang on the path the demo compiles every candidate with the fixture flags, builds eight differential programs, runs 92 cells and 256 corpus inputs through each, reads the DWARF, checks every citation, and prints the card. Without clang the `grid` and `fuzz` fields read `unknown`, and so does every verdict. A clang other than the fixture compiler recorded in `code/fixtures/README.md` leaves the committed candidates in place instead of recompiling them: the byte comparison needs the same compiler and flags to mean anything.
 
 Expected shape:
 

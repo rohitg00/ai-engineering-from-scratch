@@ -39,4 +39,4 @@ Candidates by target and kind:
 | `f2_case10_wrong` | `f2` | wrong constant | one table entry wrong |
 | `f2_clamp` | `f2` | invented helper | a clamp helper and a message that do not exist |
 
-The tests read the committed objects, listings, and the recorded run, so they pass on a host without clang. With clang present they also rebuild every candidate and rerun the grid and the corpus.
+The tests read the committed objects, listings, and the recorded run, so they pass on a host without clang. With clang present they also rebuild every candidate and rerun the grid and the corpus. The rebuild comparison runs only when the installed clang reports the identity recorded above: the byte-comparison contract is the same compiler and flags, so any other clang is treated like no clang and the committed objects stand in.

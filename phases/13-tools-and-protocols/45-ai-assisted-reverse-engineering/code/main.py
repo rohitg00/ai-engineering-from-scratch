@@ -717,8 +717,15 @@ TABLE_CLAIMS = {"f2": {"entries": 5, "width": 4}}
 
 
 def compile_candidate_object(candidate: Candidate, workdir: Path | None) -> Path | None:
+    """Rebuild with the fixture flags only under the fixture compiler.
+
+    The byte-comparison contract is "same compiler and flags" (see code/fixtures/README.md),
+    so a rebuild counts as fresh evidence only when the installed clang reports the fixture
+    compiler identity. Any other clang generates different code and would turn byte diffs
+    into bogus fails, so it falls back to the committed object like a host without clang.
+    """
     clang = shutil.which("clang")
-    if clang and workdir is not None:
+    if clang and workdir is not None and compiler_version() == fixture_compiler():
         out = workdir / (candidate.source.stem + ".o")
         subprocess.run([clang, *FIXTURE_FLAGS, str(candidate.source), "-o", str(out)], check=True)
         return out
@@ -1056,6 +1063,15 @@ def compiler_version() -> str | None:
         return None
     completed = subprocess.run([compiler, "--version"], capture_output=True, text=True)
     return completed.stdout.splitlines()[0] if completed.stdout else compiler
+
+
+def fixture_compiler() -> str | None:
+    """The compiler identity the committed fixture objects were captured with.
+
+    ``code/fixtures/README.md`` records it, and ``save_scorecards`` writes the same
+    ``compiler_version()`` line into the recorded run, which is the machine-readable copy.
+    """
+    return recorded_scorecards().get("compiler")
 
 
 def compact_scorecard(card: dict[str, Any]) -> dict[str, Any]:

@@ -204,6 +204,11 @@ class CandidateTests(unittest.TestCase):
 
     @unittest.skipUnless(shutil.which("clang"), "clang is needed to rebuild the candidates")
     def test_committed_candidate_objects_match_a_fresh_build(self) -> None:
+        if main.compiler_version() != main.fixture_compiler():
+            self.skipTest(
+                f"the committed objects were captured with {main.fixture_compiler()}, "
+                f"found {main.compiler_version()}; the byte comparison needs the fixture compiler"
+            )
         with tempfile.TemporaryDirectory() as tmp:
             for candidate in main.load_candidates():
                 fresh = main.compile_candidate_object(candidate, Path(tmp))
