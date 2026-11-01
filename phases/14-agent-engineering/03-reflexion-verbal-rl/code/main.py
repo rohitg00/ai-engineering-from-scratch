@@ -80,7 +80,10 @@ def adjust(prev: list[int], delta: int) -> list[int]:
 
 
 def step_one(prev: list[int]) -> list[int]:
-    return [min(9, prev[0] + 1)] + prev[1:]
+    for i, value in enumerate(prev):
+        if value < 9:
+            return prev[:i] + [value + 1] + prev[i + 1:]
+    return prev
 
 
 def step_other(prev: list[int]) -> list[int]:
