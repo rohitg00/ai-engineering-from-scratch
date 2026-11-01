@@ -288,7 +288,7 @@ def main() -> None:
     print("The Actor reads only the newest reflection, so a TTL >= 2 changes buffer size")
     print("but not behavior; ttl=1 expires every reflection and matches the no-memory run.")
 
-    print("\nHeuristic experiment (max 12 trials, episodic memory on)")
+    print("\nHeuristic experiment (max 25 trials, episodic memory on)")
     print("-" * 60)
     heuristic_trials_mem = run_reflexion(max_trials=25, use_memory=True, evaluator="heuristic")
     summarize(heuristic_trials_mem, "Heuristic (episodic memory on)")
