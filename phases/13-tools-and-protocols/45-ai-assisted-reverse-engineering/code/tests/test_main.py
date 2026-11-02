@@ -286,6 +286,15 @@ class ByteFieldTests(unittest.TestCase):
         )
         self.assertEqual(repaired["detail"], {})
 
+    def test_a_swapped_committed_object_scores_unknown(self) -> None:
+        candidate = main.load_candidate("f1_base_64")
+        with tempfile.TemporaryDirectory() as tmp:
+            swapped = Path(tmp) / "f1_base_64.o"
+            swapped.write_bytes(main.load_candidate("f1_mul_first").committed_object.read_bytes())
+            candidate.committed_object = swapped
+            result = main.field_bytes(candidate)
+        self.assertEqual(result["status"], "unknown")
+
     def test_invented_helper_can_compile_to_the_original_bytes(self) -> None:
         safe = main.field_bytes(main.load_candidate("f1_safe_div"))
         self.assertEqual(safe["status"], "pass")
