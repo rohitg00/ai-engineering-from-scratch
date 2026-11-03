@@ -230,3 +230,12 @@ The first command writes the generated READMEs and then checks the bank. The sec
 - that each evidence listing matches its source;
 - that the prompt does not show a span of an answer;
 - that each generated README is current.
+
+## Site check rules
+
+`node site/build-interviews.js --check` reads the bank as the site shows it. It fails on these rules:
+
+1. The title and the prompt of a question go into the search index. They must not share a 24-character span with any answer in the bank, on any card.
+2. The "Taught in" lines are visible text, so the same rule applies to them. Write the lesson name as the link text, in the form "the lesson" then a link such as `[advanced RAG](...)`, and do not copy words from the answer.
+3. The Short answer and the prompt start with plain words, not with a code span. The search index drops some characters from code, so a code span at the start breaks the match between the record and the prompt.
+4. On a branch that has no pull request yet, run `node scripts/interviews/validate.js --write`, then `node site/build-interviews.js --check`, and then revert the generated READMEs before you commit.
