@@ -6,16 +6,19 @@ Batching, the KV cache, prefix caching, schedulers and how to measure a serving 
 
 | Question | Kind | Level | Minutes |
 |---|---|---|---|
+| [Why 255 tokens per second is a slogan](goodput-not-a-slogan.md) | Concept | 1 Screen | 6 |
 | [The two phases of one request](prefill-and-decode.md) | Concept | 1 Screen | 6 |
 | [The knee that the prefix cache hid](flush-before-you-compare.md) | Debug | 2 Working | 8 |
 | [What an FP8 KV cache buys and costs](fp8-kv-cache.md) | Trade-off | 2 Working | 10 |
 | [How speculative decoding keeps the output the same](how-speculation-keeps-the-output.md) | Concept | 2 Working | 8 |
 | [How many users fit in a 24,096-token pool](kv-pool-users-on-a-24-gb-card.md) | Estimate | 2 Working | 8 |
 | [Cached tokens at zero with a stable template](low-hit-rate-with-a-stable-template.md) | Debug | 2 Working | 8 |
+| [What many LoRA adapters cost one server](multi-lora-serving-cost.md) | Design | 2 Working | 8 |
 | [One token budget instead of two phases](one-token-budget-per-step.md) | Concept | 2 Working | 8 |
 | [Why the KV cache is a pool of 16-token blocks](paged-blocks-and-the-hash-chain.md) | Concept | 2 Working | 8 |
 | [Why the shared part of the prompt goes first](prefix-cache-order.md) | Concept | 2 Working | 8 |
 | [Read the GPU clock before the throughput](read-the-clock-first.md) | Debug | 2 Working | 8 |
+| [Read three scheduler log lines](read-three-scheduler-lines.md) | Code reading | 2 Working | 8 |
 | [Sleep, wake and weight updates for an RL loop](sleep-mode-for-rl-rollouts.md) | Concept | 2 Working | 8 |
 | [Temperature zero gave two different answers](temperature-zero-two-answers.md) | Concept | 2 Working | 8 |
 | [Choose tensor, pipeline or data parallelism](tensor-pipeline-or-data-parallel.md) | Design | 2 Working | 10 |
@@ -31,5 +34,7 @@ Batching, the KV cache, prefix caching, schedulers and how to measure a serving 
 | [Two data-parallel copies served less than one card](two-copies-served-less-than-one.md) | Debug | 3 Senior | 10 |
 | [When prefill-decode disaggregation pays](when-to-split-prefill-and-decode.md) | Design | 3 Senior | 12 |
 | [A disaggregated benchmark that counted empty answers](a-benchmark-that-counted-empty-answers.md) | Code reading | 4 Staff | 10 |
+| [Design a chat service on a fleet of L4 cards](design-a-chat-service-on-l4s.md) | Design | 4 Staff | 15 |
+| [Same throughput, two choices at a full pool](same-throughput-two-choices.md) | Trade-off | 4 Staff | 12 |
 
 [All cards](../../README.md)
