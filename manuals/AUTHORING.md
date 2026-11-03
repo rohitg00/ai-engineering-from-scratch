@@ -151,6 +151,8 @@ Takeaways, two or more actions:
 
 Generated blocks take no body: `parts`, `palette`, `figure-index`, and `contents`.
 
+A code block or a listing is highlighted at build time. The `lang` of a listing and the tag of a code block follow the convention in [CONTRIBUTING.md](../CONTRIBUTING.md#code-blocks): `bash` for commands, `console` for a session with `$ ` prompts, `text` for output and logs, and `ansi` for coloured logs. A `text` or `ansi` listing gets no Copy button. A `console` block copies its commands only.
+
 ## Figures
 
 ### Ten kinds
