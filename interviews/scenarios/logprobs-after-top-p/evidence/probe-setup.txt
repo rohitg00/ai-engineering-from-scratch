@@ -1,0 +1,12 @@
+title: the probe: two engines, one model, one float32 reference
+source: manuals/miles-101/capture/gpu/out-l4/logprobs-top-p.txt
+lines: 1-6
+lang: text
+note: Read the sampler settings and what the reference computes.
+---
+Returned logprobs under top-p (backlog B-10)
+Date: 2026-10-23
+Machine: NVIDIA L4, the second GPU of the node (GPU1), shared with its owner, no clock lock. Speed does not change these values.
+Engines: SGLang 0.5.22 and vLLM 0.31.0. Model: Qwen/Qwen3-0.6B in BF16.
+Requests: 16 prompts, 48 sampled tokens each, temperature 1, top-p 0.9.
+Reference: a Transformers float32 forward pass over the same tokens, full-vocabulary log_softmax.

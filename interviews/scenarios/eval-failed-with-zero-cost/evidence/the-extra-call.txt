@@ -1,0 +1,15 @@
+title: the second tool call the agent made in the list-files eval
+source: manuals/docker-sandboxes-101/capture/out/22-eval-run-container-env.json
+lines: 314-322
+lang: json
+note: The eval expected no call after list_directory.
+---
+              "tool_calls": [
+                {
+                  "id": "<call-id>",
+                  "type": "function",
+                  "function": {
+                    "name": "shell",
+                    "arguments": "{\"cmd\": \"wc -l README.md\", \"cwd\": \".\"}"
+                  }
+                }

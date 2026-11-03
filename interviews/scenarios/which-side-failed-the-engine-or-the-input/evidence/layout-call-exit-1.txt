@@ -1,0 +1,8 @@
+title: the CLI call that exited 1
+source: manuals/reverse-engineering-101/capture/out/00-commands.txt
+lines: 10-11
+lang: console
+note: The command, its exit code, its time, and the file it wrote.
+---
+$ rea inspect-binary-layout fixtures/ledger-x86_64-O1.o --format json
+[exit 1] (0.6 s) -> 04-inspect-binary-layout.json

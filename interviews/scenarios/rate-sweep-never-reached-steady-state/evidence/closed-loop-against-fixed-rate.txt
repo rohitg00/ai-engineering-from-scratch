@@ -1,0 +1,11 @@
+title: what a fixed request rate does that a closed loop cannot
+source: manuals/vllm-101/sections/5-1-benchmark-your-server-in-15-minutes.md
+lines: 115-119
+lang: text
+note: Read the second paragraph: past the rate the server can serve, the queue grows with every request.
+---
+## Choose a closed loop or a fixed rate
+
+`--max-concurrency` keeps a fixed number of users busy. When the server slows down, the users send their next request later, so the load drops by itself. This closed loop never falls behind.
+
+`--request-rate` sends requests at a fixed rate, whether the server keeps up or not. Past the rate the server can serve, the queue grows, and the first token takes longer with every request. Real traffic behaves more like a fixed rate. Run both before you set a capacity limit.

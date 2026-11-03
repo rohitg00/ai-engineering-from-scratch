@@ -1,0 +1,7 @@
+title: how the manual reads the crash
+source: manuals/sglang-101/sections/3-2-mem-fraction-static-and-startup-sizing.md
+lines: 43-43
+lang: text
+note: Start with token usage.
+---
+Read `token usage: 0.05` first. Thirty-two requests held 16,095 tokens, which is 5 percent of a 312,581-token pool. The pool reserved 33 GB and used under 2 GB of it. The activations of the next forward pass needed memory outside the pool, and the operating system had none left. One failed command buffer took down the scheduler, and the server killed its whole process tree.

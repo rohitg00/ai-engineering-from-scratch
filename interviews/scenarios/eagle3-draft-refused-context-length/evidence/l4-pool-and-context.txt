@@ -1,0 +1,7 @@
+title: the settings line of the L4 start
+source: manuals/sglang-101/capture/gpu/out-l4/server-eagle3-no-env.log
+lines: 47-47
+lang: text
+note: Read context_len and max_running_requests.
+---
+[2026-10-17 03:41:40] max_total_num_tokens=8827, chunked_prefill_size=4096, max_prefill_tokens=16384, max_running_requests=48, context_len=40960, available_gpu_mem=1.19 GB

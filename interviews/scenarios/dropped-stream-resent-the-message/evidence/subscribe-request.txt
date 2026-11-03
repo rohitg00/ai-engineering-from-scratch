@@ -1,0 +1,21 @@
+title: the request that picks the stream back up
+source: manuals/a2a-101/capture/out/14-resubscribe.http
+lines: 38-52
+lang: text
+note: Compare the method and the params with the first request. There is no message here.
+---
+### 2 · SubscribeToTask: pick the stream back up
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+Accept: text/event-stream
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "SubscribeToTask",
+  "params": {
+    "id": "25239d4c-798b-4754-be06-d1f94d0645b1"
+  }
+}

@@ -1,0 +1,11 @@
+title: the troubleshooting entry for the engine memory fraction
+source: manuals/miles-101/sections/7-1-troubleshoot-by-symptom.md
+lines: 59-63
+lang: text
+note: Read the Check line for the case of a fraction that is too low.
+---
+## The engine runs out of memory at start
+
+- **Cause:** `--sglang-mem-fraction-static` does not fit the GPU. With `--colocate`, the trainer can already hold GPU memory when the engine starts. A fraction that is too high leaves no room for activations and CUDA graphs. A fraction that is too low leaves no room for the KV cache.
+- **Check:** a CUDA out-of-memory error in the engine lines during startup or on the first batch, and no `Ray OutOfMemoryError`. A fraction that is too low does not always stop the engine. Read `#tokens` in the `KV Cache is allocated` line. In our check at 0.02, the engine started with 3,082 tokens, and the first rollout took 386 s against 61 s at 0.25.
+- **Fix:** lower the fraction for the first case, or raise it for the second, by 0.05 or 0.1 at a time. The Miles documentation asks for 0.8 or lower with `--colocate`. Our runs used 0.4. [SGLang 101, section 3.2](https://aiengineeringfromscratch.com/manual-sglang-101.html#s-mem-fraction-static-and-startup-sizing) explains how the engine divides its memory.

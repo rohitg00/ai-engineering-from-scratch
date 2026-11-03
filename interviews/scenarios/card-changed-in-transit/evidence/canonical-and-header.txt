@@ -1,0 +1,11 @@
+title: the canonical payload and the decoded protected header
+source: manuals/a2a-101/capture/out/17-signed-card.txt
+lines: 1-5
+lang: text
+note: Line 2 is the whole card without its signatures, keys sorted, no spaces. Read the description inside it and the alg in the header.
+---
+# 1. canonical payload (RFC 8785): the card without signatures, keys sorted, no spaces
+{"capabilities":{"extendedAgentCard":true,"streaming":true},"defaultInputModes":["text/plain"],"defaultOutputModes":["text/plain","application/json"],"description":"Deploys a tagged build to staging after an operator approves it.","name":"deployer","provider":{"organization":"Platform Team","url":"https://deploy.example.com"},"securityRequirements":[{"schemes":{"bearer":{"list":[]}}}],"securitySchemes":{"bearer":{"httpAuthSecurityScheme":{"description":"A token issued by the platform team.","scheme":"Bearer"}}},"skills":[{"description":"Deploy one tagged build to staging, with operator approval.","examples":["Deploy build 2026.10.06-1 to staging"],"id":"deploy","name":"Deploy a build","tags":["deploy","staging"]}],"supportedInterfaces":[{"protocolBinding":"JSONRPC","protocolVersion":"1.0","url":"http://localhost:41243/a2a/jsonrpc"},{"protocolBinding":"HTTP+JSON","protocolVersion":"1.0","url":"http://localhost:41243/a2a/rest"}],"version":"1.4.1"}
+
+# 2. protected header, decoded
+{"alg": "HS256", "typ": "JOSE", "kid": "deployer-key-1"}

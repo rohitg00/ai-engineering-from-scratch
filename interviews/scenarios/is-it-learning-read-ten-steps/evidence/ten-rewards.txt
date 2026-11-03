@@ -1,0 +1,17 @@
+title: the reward of the first ten steps
+source: manuals/miles-101/capture/gpu/out-gb10/read-steps.txt
+lines: 1-11
+lang: text
+note: One line is one step. Read the spread before you read a trend.
+---
+$ grep -o "'rollout/raw_reward': [0-9.]*" plain.log | head -10
+'rollout/raw_reward': 0.62890625
+'rollout/raw_reward': 0.59375
+'rollout/raw_reward': 0.7578125
+'rollout/raw_reward': 0.69140625
+'rollout/raw_reward': 0.58984375
+'rollout/raw_reward': 0.5859375
+'rollout/raw_reward': 0.6875
+'rollout/raw_reward': 0.67578125
+'rollout/raw_reward': 0.74609375
+'rollout/raw_reward': 0.6484375

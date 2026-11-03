@@ -1,0 +1,24 @@
+title: the same kit run at one user with graphs off
+source: manuals/sglang-101/capture/gpu/out-gb10/no-cuda-graph-bench-random-c1.txt
+lines: 34-51
+lang: text
+note: Compare the median TPOT and the P99 ITL with the run before.
+---
+---------------Time to First Token----------------
+Mean TTFT (ms):                          263.80    
+Median TTFT (ms):                        291.11    
+P90 TTFT (ms):                           354.70    
+P95 TTFT (ms):                           373.75    
+P99 TTFT (ms):                           413.63    
+-----Time per Output Token (excl. 1st token)------
+Mean TPOT (ms):                          31.29     
+Median TPOT (ms):                        31.29     
+P90 TPOT (ms):                           31.37     
+P95 TPOT (ms):                           31.46     
+P99 TPOT (ms):                           31.60     
+---------------Inter-Token Latency----------------
+Mean ITL (ms):                           31.29     
+Median ITL (ms):                         31.40     
+P90 ITL (ms):                            32.73     
+P95 ITL (ms):                            33.31     
+P99 ITL (ms):                            41.72     

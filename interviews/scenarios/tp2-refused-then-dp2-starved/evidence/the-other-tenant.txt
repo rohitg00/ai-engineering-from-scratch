@@ -1,0 +1,11 @@
+title: what the second GPU held minutes before the start
+source: manuals/sglang-101/capture/gpu/incidents/l4-tp-unbalanced-memory.txt
+lines: 1-5
+lang: text
+note: Read the memory used on each GPU and the two processes that held it.
+---
+# sglang serve --tp-size 2 on two L4s while two other pods held 3.5 GB of GPU1
+# nvidia-smi --query-gpu=index,memory.used,utilization.gpu, 2026-10-17, read minutes before the start
+0, 0 MiB, 0 %
+1, 3506 MiB, 55 %
+# GPU1 compute apps: two pods running python3 "CUDA vGPU Slice Diagnostics", 1746 MiB each

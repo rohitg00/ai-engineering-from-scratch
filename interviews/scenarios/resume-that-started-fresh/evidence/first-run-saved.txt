@@ -1,0 +1,9 @@
+title: the first run: its save line, and its silence about the empty folder
+source: manuals/miles-101/capture/gpu/out-gb10/resume-check.txt
+lines: 2-4
+lang: text
+note: Read the count of lines that mention a missing tracker or folder.
+---
+## ckpt-a
+[FSDP] Saved checkpoint to /ckpt/run-a/iter_0000002
+lines mentioning a missing tracker or folder: 0

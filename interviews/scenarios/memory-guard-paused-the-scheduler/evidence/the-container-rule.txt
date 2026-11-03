@@ -1,0 +1,7 @@
+title: how to start on a shared machine with unified memory
+source: manuals/sglang-101/sections/3-2-mem-fraction-static-and-startup-sizing.md
+lines: 146-146
+lang: text
+note: Four steps in one paragraph.
+---
+On a GB10 that other programs share, start SGLang in a container with a memory limit. Start below the fraction of 0.7 that our kit used. Log the free memory of the machine once a second during startup. Raise the fraction only after you saw the peak.

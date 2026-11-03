@@ -1,0 +1,13 @@
+title: the second run: what a real resume prints
+source: manuals/miles-101/capture/gpu/out-gb10/resume-check.txt
+lines: 5-11
+lang: text
+note: Three Loaded lines, then the first step line of the run.
+---
+## ckpt-a-resume
+[FSDP] Loaded model from /ckpt/run-a/iter_0000002/model
+[FSDP] Loaded optimizer from /ckpt/run-a/iter_0000002/optimizer
+[FSDP] Loaded LR scheduler from /ckpt/run-a/iter_0000002/lr_scheduler
+[FSDP] Saved checkpoint to /ckpt/run-a/iter_0000004
+step 2:
+step 3:

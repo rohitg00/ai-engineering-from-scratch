@@ -1,0 +1,15 @@
+title: the detail inside that error
+source: manuals/a2a-101/capture/out/14-resubscribe.http
+lines: 97-105
+lang: text
+note: The reason and the state in the metadata.
+---
+        "reason": "UNSUPPORTED_OPERATION",
+        "domain": "a2a-protocol.org",
+        "metadata": {
+          "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+          "state": "TASK_STATE_COMPLETED"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,11 @@
+title: the guard four days later
+source: manuals/miles-101/capture/gpu/out-gb10/thermostat.log
+lines: 2010-2014
+lang: text
+note: Pause at 84 or 85 C, resume at 72 or 73 C after 45 s, over and over.
+---
+2026-10-22T15:49:33Z resume at 72C after 45 s
+2026-10-22T15:50:14Z pause at 85C
+2026-10-22T15:50:59Z resume at 73C after 45 s
+2026-10-22T15:51:24Z pause at 84C
+2026-10-22T15:52:10Z resume at 72C after 46 s

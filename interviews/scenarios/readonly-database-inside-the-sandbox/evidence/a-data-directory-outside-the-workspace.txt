@@ -1,0 +1,8 @@
+title: the same run with the state directories at their defaults
+source: manuals/docker-sandboxes-101/capture/out/27-data-dir-outside.txt
+lang: console
+note: One line names the rule for the data directory.
+---
+$ docker-agent run --sandbox --exec --working-dir fixtures/repo-sandbox fixtures/agents/files-sandbox.yaml 'List the files in the working directory and count the lines of README.md.'
+Error: --data-dir must be inside the sandbox's writable workspace $CAPTURE/fixtures/repo-sandbox
+[exit 1]

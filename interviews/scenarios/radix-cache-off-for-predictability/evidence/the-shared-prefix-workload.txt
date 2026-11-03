@@ -1,0 +1,9 @@
+title: the shared-prefix benchmark: four groups of 16 prompts with one system prompt each
+source: manuals/sglang-101/sections/3-3-radixcache.md
+lines: 9-11
+lang: text
+note: Read the second paragraph.
+---
+## The same workload with and without the tree
+
+The capture kit runs SGLang's own shared-prefix benchmark twice. Four groups of 16 prompts share a 2,048-token system prompt per group, and each prompt adds a 128-token question. The second server starts with `--disable-radix-cache`.
