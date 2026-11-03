@@ -50,7 +50,7 @@ The assembly adds a position vector to each token vector before the first block.
 
 ### The parameter count
 
-The learned table is one tensor of shape 1024 by 768. Removing it from the parameter list drops the unique parameter count by 786,432. The parameter counter must count unique tensors, so that the tied language model head is not counted twice, and it must not count buffers.
+The learned table holds 1024 rows of 768 values each. Removing it from the parameter list drops the unique parameter count by 786,432. The parameter counter must count unique tensors, so that the tied language model head is not counted twice, and it must not count buffers.
 
 ### Two mistakes to avoid
 

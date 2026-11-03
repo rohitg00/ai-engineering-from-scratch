@@ -53,7 +53,7 @@ The update subtracts the gradient. Adding it climbs the loss, which is visible o
 
 ### The held-out check
 
-The training loop lesson's rule is that evaluation runs on a fixed held-out slice with no gradient, and the number must be comparable across runs. For this task that means three things. The split is fixed before training and never touched by the loop. The unigram baseline, which assigns each character its frequency in the training text regardless of context, is scored on the same held-out characters with the same loss definition. The bigram passes only when its held-out value is strictly lower. A model that beats the baseline on training text and not on held-out text has memorized the training text.
+The training loop lesson's rule is that evaluation runs on a fixed held-out slice with no gradient, and the number must be comparable across runs. For this task that means three things. The split is fixed before training and never touched by the loop. The unigram baseline, which assigns each character its frequency in the training text regardless of context, is scored on the same held-out characters with the same loss definition. The bigram passes only when its held-out value is strictly lower. A model that wins on the training text and not on the held-out text has memorized the training text.
 
 ### The budget
 
