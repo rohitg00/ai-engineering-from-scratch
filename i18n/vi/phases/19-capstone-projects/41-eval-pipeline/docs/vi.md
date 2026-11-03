@@ -47,7 +47,7 @@ Sự bối rối là `exp(mean negative log-likelihood per token)`Việc thực 
 - Tỷ lệ trung bình phải nằm trên các vị trí biểu tượng thực tế, chứ không phải trên chuỗi hàng loạt.
 - Mô hình dự đoán token tiếp theo, vì vậy logits ở vị trí `i`dự đoán token ở vị trí `i+1`Những sai lầm thường xuyên ở đây là im lặng: sự mất mát vẫn tiếp tục, nhưng số liệu trở nên vô nghĩa.
 
-Thử nghiệm đánh giá tính toán số tiền mỗi lô của `-log p(token)`trên các vị trí không pad và một con số token mỗi lô, sau đó chia ở cuối. Điều này là an toàn hơn về mặt số so với trung bình các phức tạp mỗi lô (được dưới trọng lượng các chuỗi ngắn) và phù hợp với định nghĩa sách giáo khoa.
+Thử nghiệm đánh giá tính toán số tiền mỗi lô của `-log p(token)`trên các vị trí không pad và một con số token mỗi lô, sau đó chia ở cuối. Điều này là an toàn hơn về mặt số so với trung bình các phức tạp mỗi lô (để cho mỗi lô trọng lượng bằng nhau, vì vậy mỗi token trong một lô ngắn đếm nhiều hơn một token trong một lô dài) và phù hợp với định nghĩa sách giáo khoa.
 
 ## Sự phù hợp chính xác, với việc chuẩn hóa
 

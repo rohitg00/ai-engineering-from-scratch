@@ -68,7 +68,7 @@ emb[p, 2k]     = sin(angle)
 emb[p, 2k + 1] = cos(angle)
 ```
 
-Các hàm không có tham số. Mỗi vị trí có một vector độc đáo. Độ dài sóng thay đổi theo hình học giữa các chiều kích đặc tính, do đó các chiều kích thấp hơn mã hóa vị trí thô và các chiều kích cao hơn mã hóa vị trí tốt.
+Các chức năng không có tham số. Mỗi vị trí có một vector độc đáo. Độ dài sóng thay đổi theo hình học trên các chiều kích đặc trưng. Các chiều kích thấp hơn có độ dài sóng ngắn nhất và mã hóa vị trí tinh tế. Các chiều kích cao hơn có độ dài sóng dài nhất và mã hóa vị trí thô.
 
 Tài sản phát sinh từ sự lựa chọn của `sin`và `cos`cùng là vector ở vị trí `p + k`là một hàm tuyến tính của vector ở vị trí `p`. Điều đó cho lớp chú ý một con đường dễ dàng để học các sự bù đắp vị trí tương đối. mô hình không cần một tham số riêng biệt để thể hiện "xem lại năm token".
 

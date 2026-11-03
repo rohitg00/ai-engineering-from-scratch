@@ -53,7 +53,7 @@ ECE bị thiên vị bởi số lượng thùng và kích thước mẫu. Với 
 
 ## Điểm Brier nào mà ECE không
 
-ECE chỉ quan tâm đến khoảng cách trung bình. Một mô hình tự tin quá nhiều về một nửa thùng rác và không tự tin về một nửa khác có thể có ECE thấp trong khi được chuẩn bị kém tại địa phương. Điểm Brier đo lường lỗi vuông so với kết quả thực cho mỗi dự đoán, vì vậy nó phạt lây lan trực tiếp.
+ECE chỉ quan tâm đến khoảng cách trung bình trong mỗi thùng rác. Nó mất khoảng trống tuyệt đối cho mỗi thùng, vì vậy khoảng trống trong các thùng khác nhau không hủy bỏ. Bên trong một thùng chứa có thể: nếu một số dự đoán trong một thùng chứa quá tự tin và những dự đoán khác không tự tin, các trung bình thùng chứa có thể phù hợp và thùng chứa không thêm hầu như bất cứ điều gì vào ECE, trong khi mỗi dự đoán được chuẩn bị kém. Điểm Brier đo lường lỗi vuông so với kết quả thực cho mỗi dự đoán, vì vậy nó phạt sự lan truyền trực tiếp.
 
 Đối với kết quả nhị phân, Brier là `mean((p_i - y_i)^2)`Nó phân hủy thành độ tin cậy, độ phân giải và sự không chắc chắn. Chúng tôi tính toán điểm số và phân hủy. Người chạy báo cáo về scalar nhưng ghi lại phân hủy cho bảng điều khiển.
 
