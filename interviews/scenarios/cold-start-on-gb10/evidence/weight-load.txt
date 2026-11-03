@@ -1,0 +1,10 @@
+title: the end of the weight load
+source: manuals/vllm-101/capture/gpu/out-gb10/server-load-vllm.log
+lines: 41-44
+lang: text
+note: Read the seconds in the first and the last line, and the memory that the weights took.
+---
+(EngineCore pid=143) INFO 10-21 10:58:44 [default_loader.py:484] Loading weights took 325.26 seconds
+(EngineCore pid=143) INFO 10-21 10:58:44 [unquantized.py:504] Using MoEPrepareAndFinalizeNoDPEPModular
+(EngineCore pid=143) INFO 10-21 10:58:44 [unquantized.py:505] Using FlashInferExperts MoE backend
+(EngineCore pid=143) INFO 10-21 10:58:45 [model_runner.py:407] Model loading took 56.93 GiB memory and 330.542793 seconds

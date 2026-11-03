@@ -1,0 +1,14 @@
+title: the hit rate over the whole trace and per turn, by pool size and policy
+source: manuals/sglang-101/capture/gpu/out-l4/eviction-multiturn.txt
+lines: 9-16
+lang: text
+note: Follow the per-turn column of the first row from turn 4 to turn 6, then compare the rows below it.
+---
+pool, policy                 whole trace   hit rate per turn 1 to 6                        median SM clock
+8,192 tokens, lru            0.19, 0.19    0.11, 0.31, 0.58, 0.39, 0.016, 0.013            615 MHz
+8,192 tokens, lru, no graph  0.19          the same shape                                  1,905 MHz
+8,192 tokens, lfu            0.375         0.11, 0.31, 0.58, 0.53, 0.34, 0.25              1,140 MHz
+8,192 tokens, slru           0.367         0.11, 0.31, 0.58, 0.53, 0.31, 0.26              960 MHz
+16,384 tokens, lru           0.685         rises to 0.83 at turn 6                         810 MHz
+16,384 tokens, lfu           0.687         rises to 0.84 at turn 6                         945 MHz
+default pool, lru            0.687         rises to 0.835 at turn 6                        960 MHz

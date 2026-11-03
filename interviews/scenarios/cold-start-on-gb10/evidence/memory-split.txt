@@ -1,0 +1,7 @@
+title: the memory accounting line at the end of startup
+source: manuals/vllm-101/capture/gpu/out-gb10/server-load-vllm.log
+lines: 94-94
+lang: text
+note: Add the three actual numbers and compare the sum with the desired share.
+---
+(EngineCore pid=143) INFO 10-21 11:00:51 [gpu_worker.py:955] Free memory on device (114.94/121.69 GiB) on startup. Desired GPU memory utilization is (0.75, 91.27 GiB). Actual usage is 58.16 GiB for consumed memory (weights + non-torch), 1.78 GiB for peak activation, and 0.31 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=33136484864` (30.86 GiB) to fit into requested memory, or `--kv-cache-memory=58555694592` (54.53 GiB) to fully utilize gpu memory. Current kv cache memory in use is 31.32 GiB.

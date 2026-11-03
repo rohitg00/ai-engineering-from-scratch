@@ -1,0 +1,10 @@
+title: the engine failure and the first and last error from the trainer side
+source: manuals/miles-101/capture/gpu/out-gb10/engine-died-503.log
+lang: text
+note: Read the three engine lines first, then compare the timestamps of the last two lines.
+---
+[2026-10-17 21:03:03] Enable deterministic inference because of legacy rl_on_policy_target.
+AssertionError: FlashAttention v3 Backend requires SM>=80 and SM<=90. Please use `--attention-backend flashinfer`.
+[2026-10-17 21:03:24] Received sigquit from a child process. It usually means the child failed.
+[2026-10-17 21:03:30.637 rollout_executor] http_utils.py:241 - Error: Server error '503 Service Unavailable' for url 'http://172.17.0.3:20035/generate'
+[2026-10-17 22:06:46.137 rollout_executor] http_utils.py:241 - Error: Server error '503 Service Unavailable' for url 'http://172.17.0.3:20035/generate'

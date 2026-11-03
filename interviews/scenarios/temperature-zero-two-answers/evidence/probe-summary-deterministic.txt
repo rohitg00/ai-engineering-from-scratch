@@ -1,0 +1,7 @@
+title: the summary of the probe with the deterministic flag on the GB10
+source: manuals/sglang-101/capture/gpu/out-gb10/deterministic-determinism.txt
+lines: 11-11
+lang: text
+note: Compare the three counts with the default summary.
+---
+{"summary": true, "distinct_alone": 1, "distinct_in_batch": 1, "in_batch_matching_alone": 5, "rounds": 5}
