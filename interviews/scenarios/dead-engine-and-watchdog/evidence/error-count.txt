@@ -1,0 +1,8 @@
+title: how many error lines the run wrote
+source: manuals/miles-101/capture/gpu/out-gb10/engine-died-count.txt
+lines: 1-2
+lang: console
+note: One grep over the full log of the failed run.
+---
+$ grep -c "503 Service Unavailable" true-on-policy-fa3.log
+200533

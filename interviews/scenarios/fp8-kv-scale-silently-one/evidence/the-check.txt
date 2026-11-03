@@ -1,0 +1,11 @@
+title: the manual's check for scales in the checkpoint and in the startup log
+source: manuals/vllm-101/sections/2-4-fit-more-users-with-an-fp8-kv-cache.md
+lines: 110-114
+lang: text
+note: The last line names the warning to search for in the log.
+---
+No output means that the checkpoint has no scales.
+
+A checkpoint with one weight file has no index. For it, list the tensor names with the `safetensors` Python package.
+
+Then read the startup log. The warning `Using KV cache scaling factor 1.0` means that vLLM uses a scale of 1.0. If the checkpoint has scales and the log still shows the warning, the loader dropped them.

@@ -1,0 +1,11 @@
+title: the quietest and the busiest minutes of the dead run
+source: manuals/miles-101/capture/gpu/out-gb10/503-bursts.txt
+lines: 36-40
+lang: console
+note: The first two rows are the partial first and last minutes, the last two are full minutes.
+---
+$ grep "503 Service Unavailable" true-on-policy-fa3.log | grep -o "20[0-9][0-9]-[0-9-]* [0-9][0-9]:[0-9][0-9]" | sort | uniq -c | sort -n | sed -n "1,3p;\$p"
+   1838 2026-10-17 21:03
+   2281 2026-10-17 22:06
+   2669 2026-10-17 21:58
+   3719 2026-10-17 21:11
