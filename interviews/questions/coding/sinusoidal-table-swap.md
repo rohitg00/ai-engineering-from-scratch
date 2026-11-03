@@ -38,12 +38,17 @@ def sinusoidal_pe(max_len, d_model, base):
     return pe
 
 
-def add_positional_encoding(x, pe):
-    T = x.shape[1]
-    return x + pe[:T]
+class SinusoidalPositions(nn.Module):
+    def __init__(self, max_len, d_model, base):
+        super().__init__()
+        table = torch.as_tensor(sinusoidal_pe(max_len, d_model, base)).float()
+        self.register_buffer("pe", table)
+
+    def forward(self, x):
+        return x + self.pe[: x.shape[1]]
 ```
 
-The exponent is `2i` over the width, so the frequencies fall from one down to one over the base across the columns. The columns alternate between sine and cosine; putting all sines in the first half and all cosines in the second is a different layout and does not match the reference. Positions start at zero. An odd width has no pair for its last column, so that column stays zero.
+The exponent is `2i` over the width, so the frequencies fall from one down to one over the base across the columns. The columns alternate between sine and cosine; putting all sines in the first half and all cosines in the second is a different layout and does not match the reference. Positions start at zero. An odd width has no pair for its last column, so that column stays zero. The table is built once with numpy and stored as a torch buffer, so it moves to the device of the model and the add sees two tensors on the same device.
 
 ### Why the forward pass is unchanged
 

@@ -20,7 +20,7 @@ A twelve-stage training pipeline runs from tokenizer to inference server, and th
 
 ## Short answer
 
-Sort the stages by the cost to rerun them: tokenizer, evaluation, quantization and the server are cheap and rerun in hours, supervised tuning and alignment take days, so the base checkpoint is kept and only those stages rerun, and pre-training takes weeks and a budget in the millions, so the plan is the last good checkpoint plus revised downstream stages. The rerun set falls out of the typed, hashed dependency graph: invalidate the failed stage and every descendant. A replay promises the same manifest and data hashes and the same headline metrics, not bit-identical weights.
+Sort the stages by the cost to rerun them: tokenizer, evaluation, quantization and the server are cheap and rerun in hours, supervised tuning and alignment take days, so the base checkpoint is kept and only those stages rerun, and pre-training takes weeks and a budget in the millions, so the plan is the last good checkpoint plus revised downstream stages. The rerun set falls out of the typed, hashed dependency graph: invalidate the failed stage and every descendant. A replay promises the same code, recipe and source data hashes and the same headline metrics, not bit-identical weights or the same output hashes.
 
 ## Full answer
 
@@ -44,7 +44,7 @@ Artifacts live in an immutable store addressed by content hash, never by a name 
 
 ### What reproduce means
 
-Reproducible: the same manifest, code and infrastructure give a checkpoint with equivalent downstream metrics. Deterministic: bit-identical output. Distributed reduce order, kernel nondeterminism and mixed precision rounding make modern training reproducible but not deterministic; weights differ at a level around 1e-5 between runs while the metrics do not move. The cure is to log the input hash, the output hash and the headline metrics per stage. If the manifest and data hashes and the headline metrics match, the run is reproduced even when a weight artifact gets a new hash, and a bit-level diff is the wrong debugging tool.
+Reproducible: the same manifest, code and infrastructure give a checkpoint with equivalent downstream metrics. Deterministic: bit-identical output. Distributed reduce order, kernel nondeterminism and mixed precision rounding make modern training reproducible but not deterministic; weights differ at a level around 1e-5 between runs while the metrics do not move. The cure is to log the input hash, the output hash and the headline metrics per stage. If the code, recipe and source data hashes and the headline metrics match, the run is reproduced even when a weight artifact and the input hashes after it get new values, and a bit-level diff is the wrong debugging tool.
 
 ### Budget as part of the plan
 
@@ -55,13 +55,13 @@ The pre-run cost estimate uses six times parameters times tokens for the trainin
 - **Level 3:** Why not name artifacts by version string? Expected: two artifacts can share a name and differ in content; the hash is the identity, and a name like latest is a trap.
 - **Level 4:** The reward model and the DPO policy both depend on the SFT checkpoint. What can run in parallel and what must wait? Expected: the two can run together after SFT; the refined policy waits for both, and its input hash must be a deterministic combination of both outputs.
 - **Level 4:** A corrupted checkpoint is discovered after alignment finished. Which plan applies? Expected: the expensive class; take the last good pre-training checkpoint and rerun the medium and cheap stages, never the full pre-training.
-- **Level 4:** A teammate reports that their replay has different weights. Is the run broken? Expected: not by itself; compare the manifest and data hashes and the headline metrics, and only a mismatch there means the run is not reproduced.
+- **Level 4:** A teammate reports that their replay has different weights. Is the run broken? Expected: not by itself; compare the code, recipe and source data hashes and the headline metrics, and only a mismatch there means the run is not reproduced.
 
 ## Wrong answers
 
 - "Rerun from the start to be safe." The expensive stage costs weeks; the typed graph tells you exactly which stages are invalid.
 - "Keep the latest checkpoint file and overwrite it each step." A mutable name cannot be verified or replayed; content addressing is what makes the rollback set trustworthy.
-- "If the weights are not bit-identical, the pipeline is not reproducible." Distributed training is not deterministic; reproducibility is defined on the manifest and data hashes and the metrics.
+- "If the weights are not bit-identical, the pipeline is not reproducible." Distributed training is not deterministic; reproducibility is defined on the code, recipe and source data hashes and the metrics.
 
 ## Taught in
 
