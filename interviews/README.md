@@ -64,10 +64,10 @@ Whole interview rounds: system design, incidents, coding and behavioral question
 
 | Card | Items | Planned |
 |---|---|---|
-| [System design](questions/system-design/README.md) | 22 | 15 |
+| System design | 0 | 15 |
 | [Incidents and scenarios](scenarios/README.md) | 60 | 30 |
-| [Coding](questions/coding/README.md) | 22 | 15 |
-| [Behavioral](questions/behavioral/README.md) | 16 | 15 |
+| Coding | 0 | 15 |
+| Behavioral | 0 | 15 |
 
 ## Roles
 
