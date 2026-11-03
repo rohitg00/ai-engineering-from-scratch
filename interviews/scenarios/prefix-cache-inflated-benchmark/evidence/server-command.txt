@@ -1,0 +1,6 @@
+title: the server under test
+source: manuals/sglang-101/capture/gpu/out-gb10/server-default.command.txt
+lang: text
+note: The command that the benchmark kit used to start the server. Note what is on and what is not.
+---
+sglang serve --model-path Qwen/Qwen3-30B-A3B-Instruct-2507 --host 127.0.0.1 --port 30000 --enable-cache-report --enable-metrics --mem-fraction-static 0.7

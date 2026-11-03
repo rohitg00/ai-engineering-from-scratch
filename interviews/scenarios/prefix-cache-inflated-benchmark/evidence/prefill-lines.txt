@@ -1,0 +1,8 @@
+title: two prefill lines from the run at a cap of 32
+source: manuals/sglang-101/capture/gpu/out-gb10/server-default.log
+lines: 341-342
+lang: text
+note: Compare the new tokens with the cached tokens in each batch.
+---
+[2026-10-17 14:23:00] Prefill batch, #new-seq: 14, #new-token: 14, #cached-token: 6879, token usage: 0.07, #running-req: 1, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 108.68
+[2026-10-17 14:23:00] Prefill batch, #new-seq: 15, #new-token: 15, #cached-token: 7634, token usage: 0.07, #running-req: 15, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 113.27
