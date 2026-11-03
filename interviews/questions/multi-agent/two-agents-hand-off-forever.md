@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-A support system uses handoff-driven orchestration: each agent is a system prompt plus tools, and one of the tools returns another agent. The trace shows the triage agent handing a user to billing, billing handing the user back to triage, and the two repeating until the round cap ends the run. The user never got an answer. Why does this happen, and what is the cheap fix?
+A support system uses handoff-driven orchestration: each agent is a prompt plus a set of tools, and one of the tools returns another agent. The trace shows the triage agent handing a user to billing, billing handing the user back to triage, and the two repeating until the round cap ends the run. The user never got an answer. Why does this happen, and what is the cheap fix?
 
 ## Short answer
 

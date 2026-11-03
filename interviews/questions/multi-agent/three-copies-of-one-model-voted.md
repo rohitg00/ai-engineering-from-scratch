@@ -20,7 +20,7 @@ Five agents answer the same factual question and vote. Three of them run the sam
 
 ## Short answer
 
-Classical consensus tolerates fewer than a third of nodes behaving arbitrarily, and it assumes that faults are independent, that honest nodes are correct, and that a ground truth exists. Three copies of one model share their faults, an honest model still hallucinates, and on some questions the agents define the truth. The agent-specific variants weigh each vote by a confidence probe, aggregate leaderless proposals by a geometric median, or split agents into a core and an edge with learned trust weights. None of them makes agreement equal correctness, so the consensus output still goes to an independent verifier.
+Classical consensus tolerates fewer than a third of nodes behaving arbitrarily, and it assumes that faults are independent, that honest nodes are correct, and that a ground truth exists. Three agents on a shared base model share their faults, an honest model still hallucinates, and on some questions the agents define the truth. The agent-specific variants weigh each vote by a confidence probe, aggregate leaderless proposals by a geometric median, or split agents into a core and an edge with learned trust weights. None of them makes agreement equal correctness, so the consensus output still goes to an independent verifier.
 
 ## Full answer
 

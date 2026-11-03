@@ -16,7 +16,7 @@ related: [agents/router-or-manual, agents/rules-the-workbench-can-check]
 updated: 2026-11-03
 ---
 
-A rule says that no migration file may change without an approval. It lives in `docs/database.md`, which `docs/architecture.md` links, which the root instructions file links. The root file also says to always use the ORM, while the database document says to write raw SQL in migrations. The agent changed a migration twice this week without asking. Find the causes and fix them in order.
+A rule says that no migration file may change without an approval. It lives in `docs/database.md`, which `docs/architecture.md` links, which the top-level instructions file links. The root file also says to always use the ORM, while the database document says to write raw SQL in migrations. The agent changed a migration twice this week without asking. Find the causes and fix them in order.
 
 ## Short answer
 

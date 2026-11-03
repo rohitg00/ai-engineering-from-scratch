@@ -59,7 +59,7 @@ A breaker protects the callee. A retry budget per request protects the system fr
 
 ### Detect it earlier
 
-Retry rate is one of the slow-failure proxies the lesson lists, with agreement rate, output-length distribution and the edit distance between agent versions. A detection agent that watches for a retry spike names the pattern before the inventory service does.
+Retry rate is one of the slow-failure proxies the lesson lists, with agreement rate, output-length distribution and the edit distance between agent versions. A detection agent that watches for a retry spike names the pattern before inventory falls over.
 
 ## Follow-ups
 

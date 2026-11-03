@@ -45,7 +45,7 @@ The schema is data and the handler is code. Keep them apart so that validation n
 
 ### The exposure policy
 
-A catalog of two hundred tools and a context that fits forty is a routing problem. Surface a subset per turn based on the task, and load the rest just in time. The workbench lesson describes the pattern as skills with progressive disclosure: a function registry whose metadata enters context only when needed. The same lesson reports a team that deleted 80 percent of its agent's tools and saw the success rate go from 80 percent to 100 percent. More tools in view means more wrong choices, longer prompts and more schema to misread.
+A catalog of two hundred tools and a context that fits forty is a routing problem. Surface a subset per turn based on the task, and load the rest just in time. The workbench lesson describes the pattern as skills that are revealed step by step: a function registry whose metadata enters context only when needed. The same lesson reports a team that deleted 80 percent of its agent's tools and saw the success rate go from 80 percent to 100 percent. More tools in view means more wrong choices, longer prompts and more schema to misread.
 
 Practical selection signals: the active scope contract, the task type on the board, the tools used in the last few turns, and an explicit request from the model for a named family. Log the exposed set per turn so that a failure can be traced to a missing tool rather than a wrong call.
 

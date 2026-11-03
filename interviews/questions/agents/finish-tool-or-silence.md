@@ -1,6 +1,6 @@
 ---
 id: finish-tool-or-silence
-title: Stop on an explicit finish, or stop when no tool is called
+title: Explicit finish tool or no-tool-call stop
 card: agents
 kind: tradeoff
 level: 2

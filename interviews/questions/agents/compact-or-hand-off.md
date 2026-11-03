@@ -1,6 +1,6 @@
 ---
 id: compact-or-hand-off
-title: Compact the context or end the session with a handoff
+title: Compact the context, or end the session and hand off
 card: agents
 kind: tradeoff
 level: 3

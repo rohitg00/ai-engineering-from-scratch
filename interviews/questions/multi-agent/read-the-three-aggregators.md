@@ -16,7 +16,7 @@ related: [multi-agent/three-copies-of-one-model-voted]
 updated: 2026-11-03
 ---
 
-Read the clustering and the plurality aggregator from the consensus lesson. Five agents vote on a percentage from a study. Three agents on one base model answer `42%` with moderate confidence, and two agents answer `4.2%` with higher confidence. Say what the plurality returns, what the aggregator that weighs each vote by its confidence returns, and what the canonicalization does with the answer `4.2 percent`.
+Read the clustering and the plurality aggregator from the consensus lesson. Five agents vote on a percentage from a study. Three agents that share a base model answer `42%` with moderate confidence, and two agents answer `4.2%` with higher confidence. Say what the plurality returns, what the aggregator that weighs each vote by its confidence returns, and what the canonicalization does with the answer `4.2 percent`.
 
 ```python
 @dataclass
