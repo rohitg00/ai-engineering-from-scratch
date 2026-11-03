@@ -1,0 +1,7 @@
+title: what the code claims and what two incidents showed
+source: manuals/sglang-101/sections/7-1-operating-sglang.md
+lines: 92-92
+lang: text
+note: Separate the claim about the work from the claim about the timing.
+---
+The docstring says that the probe request costs nothing when the server is busy, because any output from the scheduler counts as proof of life. That is true for the work, and false for the timing. **A real incident:** issue #22511 reports "health check failed. server could not get a response from detokenizer for last 20 seconds" on GLM-5 with 2 H800 GPUs under high load, on v0.5.10 {{issue #22511}}. A related issue, #35884, found that a timed-out probe left its request in the scheduler, so failed probes accumulated {{issue #35884}}.

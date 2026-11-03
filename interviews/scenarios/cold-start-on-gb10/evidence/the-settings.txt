@@ -1,0 +1,7 @@
+title: the settings of the server that started
+source: manuals/vllm-101/capture/gpu/out-gb10/server-load-vllm.log
+lines: 7-7
+lang: text
+note: Read the memory fraction and the block override.
+---
+(APIServer pid=1) INFO 10-21 10:53:02 [api_utils.py:286] non-default args: {'model_tag': 'Qwen/Qwen3-30B-A3B-Instruct-2507', 'host': '127.0.0.1', 'port': 30000, 'model': 'Qwen/Qwen3-30B-A3B-Instruct-2507', 'max_model_len': 8192, 'gpu_memory_utilization': 0.75, 'num_gpu_blocks_override': 14685}

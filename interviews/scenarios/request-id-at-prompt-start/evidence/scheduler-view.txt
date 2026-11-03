@@ -1,0 +1,24 @@
+title: the scheduler log while the three forms went through
+source: manuals/sglang-101/capture/gpu/out-l4/server-default.log
+lines: 62-79
+lang: text
+note: Follow the cached-token field through the stable prompt, the id at the start, and the id at the end.
+---
+[2026-10-17 14:43:50] Prefill batch, #new-seq: 1, #new-token: 1, #cached-token: 2998, token usage: 0.13, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: False, input throughput (token/s): 0.99
+[2026-10-17 14:43:50] INFO:     127.0.0.1:59136 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+[2026-10-17 14:43:51] Decode batch, #running-req: 1, #token: 3010, token usage: 0.13, cuda graph: True, gen throughput (token/s): 14.48, #queue-req: 0
+[2026-10-17 14:43:53] Prefill batch, #new-seq: 1, #new-token: 3029, #cached-token: 3, token usage: 0.13, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 972.29
+[2026-10-17 14:43:53] INFO:     127.0.0.1:59142 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+[2026-10-17 14:43:57] Prefill batch, #new-seq: 1, #new-token: 3028, #cached-token: 6, token usage: 0.13, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 966.95
+[2026-10-17 14:43:57] INFO:     127.0.0.1:51474 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+[2026-10-17 14:44:00] Prefill batch, #new-seq: 1, #new-token: 3025, #cached-token: 6, token usage: 0.13, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 966.73
+[2026-10-17 14:44:00] INFO:     127.0.0.1:51480 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+[2026-10-17 14:44:00] Decode batch, #running-req: 1, #token: 3037, token usage: 0.13, cuda graph: True, gen throughput (token/s): 4.41, #queue-req: 0
+[2026-10-17 14:44:03] Prefill batch, #new-seq: 1, #new-token: 3025, #cached-token: 6, token usage: 0.13, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 965.89
+[2026-10-17 14:44:03] INFO:     127.0.0.1:51494 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+[2026-10-17 14:44:06] Prefill batch, #new-seq: 1, #new-token: 3027, #cached-token: 6, token usage: 0.13, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 966.89
+[2026-10-17 14:44:06] INFO:     127.0.0.1:51506 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+[2026-10-17 14:44:07] Decode batch, #running-req: 1, #token: 0, token usage: 0.00, cuda graph: True, gen throughput (token/s): 5.79, #queue-req: 0
+[2026-10-17 14:44:07] Prefill batch, #new-seq: 1, #new-token: 50, #cached-token: 2983, token usage: 0.13, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 46.77
+[2026-10-17 14:44:07] INFO:     127.0.0.1:41460 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+[2026-10-17 14:44:08] Prefill batch, #new-seq: 1, #new-token: 45, #cached-token: 2987, token usage: 0.13, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 42.41

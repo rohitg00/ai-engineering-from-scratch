@@ -1,0 +1,9 @@
+title: three startup lines of the GB10 server with the deterministic flag
+source: manuals/sglang-101/capture/gpu/out-gb10/server-deterministic.log
+lines: 4-6
+lang: text
+note: Each line names one thing that the flag changed.
+---
+[2026-10-17 15:40:03] Sampling backend is set to pytorch for deterministic inference.
+[2026-10-17 15:40:03] Attention backend not specified. Falling back to 'flashinfer' for deterministic inference. You can explicitly set --attention-backend to one of ['ascend', 'fa3', 'fa4', 'flashinfer', 'intel_xpu', 'triton'].
+[2026-10-17 15:40:03] Currently radix cache is not compatible with flashinfer attention backend for deterministic inference. It will be supported in the future.

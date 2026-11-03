@@ -1,0 +1,12 @@
+title: the watchdog rule replayed on the real error times of the healthy run
+source: manuals/miles-101/capture/gpu/out-gb10/503-bursts.txt
+lines: 96-101
+lang: console
+note: Read the second column for each number of checks, then the last column.
+---
+$ python3 watchdog_replay.py out-gb10/e2-n16-503-per-second.txt
+healthy run: 22357 errors from 2026-10-22 07:16:29, checks every 30 s over the last 60 s, limit 100
+checks  healthy offsets stopped  most checks in a row  dead engine stopped after
+     6  17 of 30                    6                     153 to 182 s
+     8   0 of 30                    6                     213 to 242 s
+    10   0 of 30                    6                     273 to 302 s
