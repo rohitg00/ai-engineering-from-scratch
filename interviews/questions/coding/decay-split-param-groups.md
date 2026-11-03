@@ -57,7 +57,7 @@ Decaying a bias is mathematically harmless but spends update cycles on a paramet
 
 ### How to test the split
 
-A unit test can walk the named parameters and assert that each scale and bias landed in the no-decay group and each linear and embedding weight landed in the decay group. The training loop lesson lists exactly this test as its first exercise.
+A unit test can walk the named parameters and assert that each scale and bias landed in the no-decay group and each linear and embedding weight landed in the decay group. The loop lesson lists exactly this test as its first exercise.
 
 ## Follow-ups
 

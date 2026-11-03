@@ -37,7 +37,7 @@ def mean_pool_kv_heads(w, n_heads, n_kv_heads):
     return grouped.mean(axis=2).reshape(D, n_kv_heads * d_head)
 ```
 
-The reshape puts the groups first and the heads inside a group next, because the heads of one group are consecutive blocks of columns. Reshaping as `(D, r, G, d_head)` pools heads that are `G` apart, which produces the right shape and the wrong groups. The mean, not the sum, keeps the scale of the projected keys close to the original, so the attention scores stay in range.
+The reshape puts the groups first and the heads inside a group next, because the heads of one group are consecutive blocks of columns. Reshaping as `(D, r, G, d_head)` pools heads that are `G` apart, which gives a correct shape with the wrong groups. The mean, not the sum, keeps the scale of the projected keys close to the original, so the attention scores stay in range.
 
 ### The memory factor
 

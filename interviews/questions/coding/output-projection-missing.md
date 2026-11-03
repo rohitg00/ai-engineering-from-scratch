@@ -78,4 +78,4 @@ The division uses the head size, not the full width. That part of the submission
 
 ## Taught in
 
-The [multi-head attention lesson](../../../phases/07-transformers-deep-dive/03-multi-head-attention/) explains that the output matrix is where heads mix, and the [split and merge practice](../../../practice/multi-head-split-merge/problem.md) checks the softmax axis and the projection.
+The [multi-head attention lesson](../../../phases/07-transformers-deep-dive/03-multi-head-attention/) explains that heads only mix through the output projection, and the [split and merge practice](../../../practice/multi-head-split-merge/problem.md) checks the softmax axis and the projection.

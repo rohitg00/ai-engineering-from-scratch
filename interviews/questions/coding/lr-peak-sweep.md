@@ -26,7 +26,7 @@ Run the same seeded training loop once per candidate rate and record the final l
 
 ### Why the peak first
 
-The schedule lesson says to sweep the peak before anything else, because the peak is the most sensitive knob and its optimum scales weakly with model size. A sweep on a small model is a strong prior for the large run. The warmup fraction and the floor matter less and come after.
+The schedule lesson's advice is to sweep the peak before anything else, because the peak is the most sensitive knob and its optimum scales weakly with model size. A sweep on a small model is a strong prior for the large run. The warmup fraction and the floor matter less and come after.
 
 ### The sweep
 
@@ -78,4 +78,4 @@ The schedule reaches the peak at the end of warmup and decays toward the floor. 
 
 ## Taught in
 
-The [cosine schedule lesson](../../../phases/19-capstone-projects/44-cosine-lr-warmup/) says to sweep the peak first and to log the gradient norm next to the rate, and the [learning rate sweep lab](../../../practice/lab-learning-rate-sweep/problem.md) implements the sweep with its divergence rule.
+The [cosine schedule lesson](../../../phases/19-capstone-projects/44-cosine-lr-warmup/) says to sweep the peak first and to record the gradient norm beside the rate, and the [learning rate sweep lab](../../../practice/lab-learning-rate-sweep/problem.md) implements the sweep with its divergence rule.

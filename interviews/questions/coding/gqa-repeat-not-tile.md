@@ -53,7 +53,7 @@ The projection weights of a trained checkpoint were learned under one mapping. T
 
 ### Why it exists
 
-Only `G` key and value heads live in the cache instead of `H`, so the cache shrinks by the factor `H / G` while quality stays close to full multi-head attention. The lesson gives a large open model with 64 query heads and 8 key and value heads as the example.
+Only `G` key and value heads live in the cache instead of `H`, so the cache shrinks by the factor `H / G` while quality stays close to full multi-head attention. The lesson's example is a large open model that pairs 64 query heads against only 8 shared groups.
 
 ## Follow-ups
 

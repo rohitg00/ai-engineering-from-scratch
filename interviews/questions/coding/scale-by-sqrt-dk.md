@@ -48,7 +48,7 @@ When the entries of a query and a key have unit variance, their dot product has 
 ### Two neighbors of this bug
 
 - No scale at all: at a head size of 64 the raw scores reach the tens and the softmax saturates to one hot rows.
-- `K.T` on a batched tensor: `.T` reverses every axis, so a shape of batch, tokens, features becomes features, tokens, batch and the matmul mixes batches. Swap only the last two axes.
+- `K.T` on a batched tensor: `.T` reverses every axis, so a shape of batch by tokens by features becomes features by tokens by batch and the matmul mixes batches. Swap only the last two axes.
 
 ### How the practice checks it
 
@@ -68,4 +68,4 @@ The practice task compares the weights, not only the output shape. A wrong scale
 
 ## Taught in
 
-The [self-attention lesson](../../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) explains why the scores are divided by the square root of the key dimension, and the [attention practice](../../../practice/scaled-dot-product-attention/problem.md) checks the weights against a reference.
+The [self-attention lesson](../../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) explains the square-root scale factor, and the [attention practice](../../../practice/scaled-dot-product-attention/problem.md) checks the weights against a reference.

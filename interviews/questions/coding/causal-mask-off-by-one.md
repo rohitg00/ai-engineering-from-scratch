@@ -73,4 +73,4 @@ Neither bug changes a shape. Only a check of the weights, or a NaN check on the 
 
 ## Taught in
 
-The [self-attention lesson](../../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) asks for the mask as its first exercise, and the [attention practice](../../../practice/scaled-dot-product-attention/problem.md) checks the causal weights including the first row.
+The [self-attention lesson](../../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) asks for the mask as its first exercise, and the [attention practice](../../../practice/scaled-dot-product-attention/problem.md) tests the first row of the masked weights.

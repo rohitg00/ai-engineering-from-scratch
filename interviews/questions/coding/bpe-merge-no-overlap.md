@@ -50,7 +50,7 @@ With a step of one after a match, the scan sees the pair at positions zero and o
             i += 2
 ```
 
-Scan from left to right and continue after the second symbol of the match. The tokenizers lesson writes exactly this loop, and the practice task has a mutant for the single step that fails on `[a, a, a]`.
+Scan from left to right and continue after the second symbol of the match. The merge loop in the tokenizers chapter is exactly this, and the practice task has a mutant for the single step that fails on `[a, a, a]`.
 
 ### Why the left-to-right rule matters
 

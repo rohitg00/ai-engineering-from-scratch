@@ -99,4 +99,4 @@ The assembly lesson's generator keeps the active window inside the context lengt
 
 ## Taught in
 
-The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) keeps generation inside the context length with a sliding window, and the [KV cache practice](../../../practice/kv-cache-append/problem.md) pins the capacity rule and the filled-prefix views.
+The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) bounds generation to the context length with a sliding window, and the [KV cache practice](../../../practice/kv-cache-append/problem.md) pins the capacity rule and the filled-prefix views.

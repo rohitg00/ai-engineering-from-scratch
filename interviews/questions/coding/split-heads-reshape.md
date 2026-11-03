@@ -76,4 +76,4 @@ A second wrong version gives head `h` the columns `h`, `h + H`, `h + 2H` and so 
 
 ## Taught in
 
-The [multi-head attention lesson](../../../phases/07-transformers-deep-dive/03-multi-head-attention/) gives the split and combine pair as one reshape and one transpose, and the [split and merge practice](../../../practice/multi-head-split-merge/problem.md) checks each element of the split.
+The [multi-head attention lesson](../../../phases/07-transformers-deep-dive/03-multi-head-attention/) gives the split and combine pair as a reshape followed by a transpose, and the [split and merge practice](../../../practice/multi-head-split-merge/problem.md) checks each element of the split.

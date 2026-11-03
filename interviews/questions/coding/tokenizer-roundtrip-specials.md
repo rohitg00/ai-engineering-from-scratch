@@ -71,4 +71,4 @@ The number of ids for a held-out sentence falls as the merge budget grows. Train
 
 ## Taught in
 
-The [BPE from scratch lesson](../../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) gives the byte floor, the reserved specials and the round-trip tests, the [production tokenizer lesson](../../../phases/10-llms-from-scratch/02-building-a-tokenizer/) adds normalization, pre-tokenization and the special-token matcher, and the [BPE practice](../../../practice/bpe-merge-step/problem.md) is the merge step inside it.
+The [BPE from scratch lesson](../../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) gives the byte floor, the reserved specials and the round-trip tests, the [production tokenizer lesson](../../../phases/10-llms-from-scratch/02-building-a-tokenizer/) adds normalization, pre-tokenization and exact matching of special strings, and the [BPE practice](../../../practice/bpe-merge-step/problem.md) is the merge step inside it.

@@ -52,7 +52,7 @@ The decay term is added to the update, not to the gradient. It never passes thro
 
 ### Why the difference matters
 
-Adam normalizes every coordinate by its running gradient magnitude. A penalty that enters as part of the gradient is normalized too, so a weight with a large, noisy gradient is barely decayed while a weight with a tiny gradient is decayed hard. Decoupled decay shrinks every weight by the same fraction per step, which is what the regularizer was meant to do. Language model recipes use the decoupled form, and the training loop lesson builds its parameter groups around it.
+Adam normalizes every coordinate by its running gradient magnitude. A penalty that enters as part of the gradient is normalized too, so a weight with a large, noisy gradient is barely decayed while a weight with a tiny gradient is decayed hard. Decoupled decay shrinks every weight by the same fraction per step, which is what the regularizer was meant to do. Language model recipes use the decoupled form, and the loop in the training lesson builds its parameter groups around it.
 
 ### Three more details the practice pins
 

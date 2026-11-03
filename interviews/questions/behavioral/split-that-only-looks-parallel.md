@@ -68,4 +68,4 @@ The time this mattered most, the two halves looked independent but both needed t
 
 ## Taught in
 
-The [delegation lesson](../../../phases/14-agent-engineering/45-delegate-with-isolation/) gives the parallelism test, the unit contract and the three layers of isolation.
+The [delegation lesson](../../../phases/14-agent-engineering/45-delegate-with-isolation/) gives the parallelism test, the unit contract and the isolation layers.

@@ -63,4 +63,4 @@ Proof must match the claim. A unit test does not prove a public interface path, 
 
 ## Taught in
 
-The [delegation lesson](../../../phases/14-agent-engineering/45-delegate-with-isolation/) defines calibrated autonomy and the [specification lesson](../../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) gives the locked, bounded and delegated modes.
+The [delegation lesson](../../../phases/14-agent-engineering/45-delegate-with-isolation/) defines calibrated autonomy and the [specification lesson](../../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) gives the three decision modes.

@@ -34,7 +34,7 @@ The document needs nine sections, and six items block a review because each one 
 | Data | Label source, delay, feature availability at prediction time | No leakage |
 | Budgets and serving | Latency, peak QPS, cost, staleness, and the mode that fits | None |
 | Rollout | Shadow, canary, A/B and the rollback | Shadow or canary plus rollback |
-| Feedback loops | How the model changes its own future data | None |
+| Feedback loops | How the model's decisions alter its later training data | None |
 | Failure modes | The default action for each failure | A default for every failure |
 | Monitoring | What is watched after launch | None |
 

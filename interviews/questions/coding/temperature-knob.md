@@ -30,7 +30,7 @@ Divide the logits by the temperature before the softmax. Near zero the division 
 probs = softmax(logits / temperature)
 ```
 
-The order matters in a full sampler: the generation loop takes the logits of the last position, divides by the temperature, applies any top-k or top-p filter, takes the softmax, and draws one token.
+The order matters in a full sampler: the generation loop reads the final position's logits, divides by the temperature, applies any top-k or top-p filter, takes the softmax, and draws one token.
 
 ### Three regimes
 

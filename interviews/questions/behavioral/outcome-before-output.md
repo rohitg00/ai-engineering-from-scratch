@@ -60,4 +60,4 @@ Constraints are part of the goal. No production writes during diagnosis, a respo
 
 ## Taught in
 
-The [outcome frame lesson](../../../phases/14-agent-engineering/47-outcomes-before-output/) gives the six parts of the frame and the leakage check.
+The [outcome frame lesson](../../../phases/14-agent-engineering/47-outcomes-before-output/) gives the six-part frame and the leakage check.
