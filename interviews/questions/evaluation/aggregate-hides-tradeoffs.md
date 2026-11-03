@@ -26,7 +26,7 @@ The aggregate is a weighted mean, so a model can win overall and lose in one cat
 
 ### Where the aggregate comes from
 
-The eval pipeline normalizes each eval into the unit range and takes a weighted mean; the default mix there is 0.2 for perplexity, 0.3 for exact match, 0.3 for token F1 and 0.2 for the judge. The leaderboard aggregator takes the plain mean over tasks. In both cases the headline is one weighting of several numbers, and a different weighting is a different winner.
+The eval pipeline normalizes each eval into the unit range and takes a weighted mean; the default mix there is 0.2 for perplexity, 0.3 for exact match, 0.3 for token F1 and 0.2 for the judge. The aggregator in the leaderboard lesson takes the plain mean over tasks. In both cases the headline is one weighting of several numbers, and a different weighting is a different winner.
 
 ### What it hides
 
@@ -55,4 +55,4 @@ Three layers on one page. The aggregate at the top with its weights printed. Bel
 
 ## Taught in
 
-The [eval pipeline capstone](../../../phases/19-capstone-projects/41-eval-pipeline/) shows the three layers of a report and the weighted aggregate, the [leaderboard aggregation capstone](../../../phases/19-capstone-projects/74-leaderboard-aggregation/) adds categories and intervals, and the [long context evaluation lesson](../../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) warns that aggregates hide task level differences.
+The [eval pipeline capstone](../../../phases/19-capstone-projects/41-eval-pipeline/) shows the three layers of a report and the weighted aggregate, the [leaderboard aggregation capstone](../../../phases/19-capstone-projects/74-leaderboard-aggregation/) adds categories and intervals, and the [long context evaluation lesson](../../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) warns that an aggregate hides what each task type does.

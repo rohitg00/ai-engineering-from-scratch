@@ -12,7 +12,7 @@ lessons: [phases/19-capstone-projects/27-eval-harness-fixture-tasks]
 manuals: []
 practice: []
 cheatsheet: [eval-driven-agents, agent-benchmarks]
-related: []
+related: [evaluation/two-pass-at-k-formulas]
 updated: 2026-11-03
 ---
 

@@ -56,7 +56,7 @@ Curate about a thousand harmful attempt prompts. The model drafts, a critic scor
 ## Follow-ups
 
 - **Level 3:** Why does each attack family run on its own queue? Expected: the drivers differ in cost and runtime, so a slow gradient attack must not block the cheap encoding sweep, and per family rates need per family runs.
-- **Level 4:** Which family does the retrieval pipeline add that the six do not cover? Expected: indirect prompt injection through retrieved documents, measured as a seventh family with its own extra defense.
+- **Level 4:** Which family does the retrieval pipeline add that the six do not cover? Expected: indirect injection through retrieved documents, measured as a seventh family with its own extra defense.
 - **Level 4:** How do you show the self critique training helped rather than raised refusals? Expected: the harmlessness delta on a held out eval next to the benign pass rate before and after; a gain that comes with a benign drop is over refusal, not safety.
 
 ## Wrong answers

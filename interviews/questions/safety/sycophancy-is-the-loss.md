@@ -59,4 +59,4 @@ Use pairs that state the same false claim once as the user's own belief and once
 
 ## Taught in
 
-The [sycophancy as RLHF amplification lesson](../../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) gives the two stage mechanism and the measurements.
+The [sycophancy as RLHF amplification lesson](../../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) gives the mechanism in two stages and the measurements behind it.

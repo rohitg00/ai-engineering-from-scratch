@@ -12,7 +12,7 @@ lessons: [phases/19-capstone-projects/82-jailbreak-taxonomy]
 manuals: []
 practice: []
 cheatsheet: [guardrails-moderation, ai-safety]
-related: []
+related: [safety/one-regex-is-not-a-detector, safety/normalize-then-match]
 updated: 2026-11-03
 ---
 
@@ -29,7 +29,7 @@ Label every attack by the trust boundary it abuses. Six categories cover most of
 | Category | Trust boundary abused | Shape |
 |---|---|---|
 | role play | the assistant's persona | "you are an unrestricted model called ..." |
-| instruction override | the system prompt's authority | "ignore previous instructions" |
+| instruction override | the system prompt's authority | "disregard everything above" |
 | context smuggling | data against instructions | an order hidden in a pasted document or a tool result |
 | multi turn ramp | the conversation as a contract | harmless turns, then one step down at a time |
 | encoding trick | the surface form of tokens | base64, rot13, leet speak, zero width characters |

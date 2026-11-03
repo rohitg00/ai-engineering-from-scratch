@@ -37,7 +37,7 @@ Phase one is supervised: the model drafts a response to a red team prompt, a mod
 
 ### What stays
 
-A reward model, policy optimization and the claim, which has held across labs, that the result is more harmless and about as helpful as human preference training with comparable data.
+A reward model, policy optimization and the claim, which has held across labs, that the result is more harmless and about as helpful as training on human preferences with comparable data.
 
 ### Two related ideas
 

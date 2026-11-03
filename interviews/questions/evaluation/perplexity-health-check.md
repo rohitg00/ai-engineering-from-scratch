@@ -12,7 +12,7 @@ lessons: [phases/10-llms-from-scratch/10-evaluation, phases/19-capstone-projects
 manuals: []
 practice: []
 cheatsheet: [llm-evaluation]
-related: []
+related: [evaluation/perplexity-padding-and-shift]
 updated: 2026-11-03
 ---
 

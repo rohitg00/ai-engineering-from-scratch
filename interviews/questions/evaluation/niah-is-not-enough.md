@@ -12,7 +12,7 @@ lessons: [phases/05-nlp-foundations-to-advanced/28-long-context-evaluation]
 manuals: []
 practice: []
 cheatsheet: [llm-evaluation]
-related: []
+related: [evaluation/effective-context-spec-sheet]
 updated: 2026-11-03
 ---
 

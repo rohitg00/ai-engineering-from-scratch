@@ -12,7 +12,7 @@ lessons: [phases/19-capstone-projects/84-refusal-evaluation]
 manuals: []
 practice: []
 cheatsheet: [guardrails-moderation]
-related: []
+related: [safety/stated-confidence-ece, safety/safety-eval-missing-pieces]
 updated: 2026-11-03
 ---
 
@@ -58,4 +58,4 @@ A model that refuses everything has a perfect under refusal rate and a terrible 
 
 ## Taught in
 
-The [refusal evaluation capstone](../../../phases/19-capstone-projects/84-refusal-evaluation/) defines under refusal, over refusal, accuracy, calibration and the per category breakdown.
+The [refusal evaluation capstone](../../../phases/19-capstone-projects/84-refusal-evaluation/) defines under refusal, over refusal, accuracy, calibration and the breakdown by attack category.

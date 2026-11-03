@@ -1,6 +1,6 @@
 ---
 id: ece-or-brier
-title: An ECE of 0.02 on a hundred predictions
+title: An ECE of 0.02 on too few predictions
 card: evaluation
 kind: concept
 level: 3

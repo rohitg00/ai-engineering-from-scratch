@@ -26,7 +26,7 @@ The judge is part of the measurement, so a new judge version changes every metri
 
 ### Why everything moved
 
-A judge score is a function of the output and of the judge. Change the judge and every stored score is in a different unit. The lesson lists drift over judge versions as one of the three silent failures and asks you to flag any pipeline where a judge upgrade lands without a parallel baseline eval.
+A judge score is a function of the output and of the judge. Change the judge and every stored score is in a different unit. The lesson lists judge version drift as one of the three silent failures and asks you to flag any pipeline where a judge upgrade lands without a parallel baseline eval.
 
 ### The upgrade protocol
 
@@ -55,4 +55,4 @@ An edit to the eval set without a version tag. A change in how missing scores ar
 
 ## Taught in
 
-The [LLM evaluation frameworks lesson](../../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) names drift over judge versions and requires a parallel baseline eval for every judge upgrade.
+The [LLM evaluation frameworks lesson](../../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) names drift over judge versions and requires a side by side run on a frozen baseline before any upgrade lands.

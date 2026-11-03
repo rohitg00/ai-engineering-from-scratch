@@ -50,7 +50,7 @@ The score stays a fraction: two of three assertions is 0.667. The exit reason is
 
 ### What the smaller harness does
 
-The language model evaluation harness runs the prediction in a namespace with stripped builtins, and its test asserts that an import of the operating system module fails. It also caps the batch size for rate limits and pins the task files with a hash so a moved score can be traced to a moved task.
+The smaller harness in the leaderboard lesson runs the prediction in a namespace with stripped builtins, and its test asserts that an import of the operating system module fails. It also caps the batch size for rate limits and pins the task files with a hash so a moved score can be traced to a moved task.
 
 ### What this is not
 

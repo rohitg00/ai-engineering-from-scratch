@@ -12,7 +12,7 @@ lessons: [phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks, ph
 manuals: []
 practice: []
 cheatsheet: [llm-evaluation]
-related: []
+related: [evaluation/tokenizer-is-the-benchmark]
 updated: 2026-11-03
 ---
 
@@ -26,7 +26,7 @@ Both metrics are right for different answer shapes. Exact match compares the who
 
 ### What each metric compares
 
-Exact match normalizes both sides and then asks for equality. The eval pipeline capstone lowercases, strips the ends, collapses runs of whitespace and drops trailing terminal punctuation when the two sides differ only by it. After that step "Paris", "Paris." and "  paris  " all count as the same answer. The suffix in "29th" is not punctuation, so this pair still fails.
+Exact match normalizes both sides and then asks for equality. The capstone's exact match eval lowercases, strips the ends, collapses runs of whitespace and drops trailing terminal punctuation when the two sides differ only by it. After that step "Paris", "Paris." and "  paris  " all count as the same answer. The suffix in "29th" is not punctuation, so this pair still fails.
 
 Token F1 splits both sides into tokens, counts the multiset intersection, and takes the harmonic mean of precision and recall. It forgives word order and paraphrase. It is fooled by lexical overlap: a prediction that shares most tokens with the reference but changes one fact still scores high.
 

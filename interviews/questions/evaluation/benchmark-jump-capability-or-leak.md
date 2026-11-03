@@ -33,7 +33,7 @@ Training corpora scrape the web and the benchmark questions live on the web. Nob
 1. **Contamination search.** Check what share of the eval questions, or close paraphrases of them, appear in the new corpus. Report exact matches and near matches separately with the method.
 2. **Model diff.** Compare the two model versions case by case: which items improved, which regressed, which stayed. If the improvements cluster on the items the search found, the diff names the leak.
 3. **Custom eval.** Run both models on your own versioned suite of at least 200 cases with edge cases, kept separate from every training and prompt example. A real gain shows there with an interval; a leak does not.
-4. **Separation check.** Confirm that no eval case overlaps with the prompt examples or the fine tuning data, because testing on training examples measures memorization.
+4. **Separation check.** Confirm that no eval case overlaps with the prompt examples or the fine tuning data, because a test case that was also a training example measures memorization.
 
 ### What to publish
 

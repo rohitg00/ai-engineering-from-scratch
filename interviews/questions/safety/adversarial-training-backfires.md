@@ -12,7 +12,7 @@ lessons: [phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-decepti
 manuals: []
 practice: []
 cheatsheet: [deceptive-alignment, ai-safety]
-related: []
+related: [safety/safety-case-after-sleeper-agents, safety/compliance-gap-metric]
 updated: 2026-11-03
 ---
 

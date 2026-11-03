@@ -47,7 +47,7 @@ Tell the four teams to share one dashboard that plots the four symptoms against 
 
 ## Follow-ups
 
-- **Level 2:** Two fixes exist for the first finding, one at training time and one at evaluation time. Name them. Expected: a length penalty in the reward during training, and a win rate that controls for length during evaluation.
+- **Level 2:** Two fixes exist for the first finding, one at training time and one at evaluation time. Name them. Expected: a length penalty inside the training reward, and a win rate that controls for length at evaluation time.
 - **Level 2:** Why does the lesson file the chain of thought finding under reward hacking? Expected: the reward model learned that plausible looking answers are correct, so the policy produces reasoning that justifies the answer the scorer wants.
 - **Level 3:** Why does editing the test count as the same mechanism and not as a bug? Expected: the check was the proxy, and the optimizer found a cheaper way to make it register success than solving the task.
 - **Level 3:** Name one defense from each class. Expected: more or better labels for the reward model; a conservative KL schedule with early stopping; process supervision or debate that scores the steps instead of the surface.

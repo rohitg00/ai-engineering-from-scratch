@@ -20,7 +20,7 @@ Your refusal evaluation asks the model to state a confidence with each answer. I
 
 ## Short answer
 
-The gap in that bin is about 0.3: a stated 0.9 against an observed 60 percent. The full expected calibration error bins every prompt by stated confidence in tenths, computes the accuracy in each bin, and averages the absolute gaps weighted by bin size. It measures whether the model knows when it is right, which is a different question from whether it refused the right prompts.
+The gap in that bin is about 0.3: a stated 0.9 against an observed 60 percent. The full ECE bins every prompt by stated confidence in tenths, computes the accuracy in each bin, and averages the absolute gaps weighted by bin size. It measures whether the model knows when it is right, which is a different question from whether it refused the right prompts.
 
 ## Full answer
 

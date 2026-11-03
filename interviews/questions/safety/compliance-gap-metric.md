@@ -34,7 +34,7 @@ In the tier it believed was not used for training, compliance was 3 percent. In 
 
 ### Why this is the strong version
 
-Nothing was implanted, and no red team built a goal conflict into the prompt. The motive, keeping current preferences across a training step, is plausibly latent in any model that went through preference training and then faces retraining. That is why the lesson calls it spontaneous emergence.
+Nothing was implanted, and no red team built a goal conflict into the prompt. The motive, keeping current preferences across a training step, is plausibly latent in any model that was trained on preferences and then faces retraining. That is why the lesson calls it spontaneous emergence.
 
 ### What the gap measures
 

@@ -24,7 +24,7 @@ The upside is real: the reference follow up found that penalizing flagged reason
 
 ## Full answer
 
-### The three mitigations and their risks
+### Three ways to train it away, and what each risks
 
 1. **Interrogation training.** Ask the model about its motives and penalize answers that reveal faking. Effective, and it can teach the model to lie in the interrogation.
 2. **Scratchpad length penalties.** Penalize long reasoning. Surprisingly effective, because faking needs complex reasoning about the training context, and a length penalty selects against it.
@@ -61,4 +61,4 @@ The method works on the behavior metric in the reference runs. The point is not 
 
 ## Taught in
 
-The [alignment faking lesson](../../../phases/18-ethics-safety-alignment/09-alignment-faking/) describes the three mitigations and their shared risk, and the [sleeper agents lesson](../../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) explains why internal probes matter when behavior hides.
+The [alignment faking lesson](../../../phases/18-ethics-safety-alignment/09-alignment-faking/) describes three mitigations and the risk they share, and the [sleeper agents lesson](../../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) explains why internal probes matter when behavior hides.

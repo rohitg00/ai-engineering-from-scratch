@@ -12,7 +12,7 @@ lessons: [phases/10-llms-from-scratch/10-evaluation]
 manuals: []
 practice: []
 cheatsheet: [llm-evaluation]
-related: []
+related: [evaluation/benchmark-jump-capability-or-leak]
 updated: 2026-11-03
 ---
 

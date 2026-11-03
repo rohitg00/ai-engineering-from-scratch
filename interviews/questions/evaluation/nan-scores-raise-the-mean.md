@@ -26,7 +26,7 @@ A parse failure becomes a missing score, and the aggregate silently drops missin
 
 ### The mechanism
 
-Bad JSON from the judge becomes a not a number value. A mean over a column with such values excludes them. The lesson names this as the second silent failure of a judge and asks for an explicit failure mode around the parse.
+Bad JSON from the judge becomes a not a number value. A mean over a column with such values excludes them. The lesson names this as the second silent failure of a judge and asks for the parse to fail loudly with its own status.
 
 ### Why the exclusion is biased
 

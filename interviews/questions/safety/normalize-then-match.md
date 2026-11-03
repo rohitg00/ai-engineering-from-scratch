@@ -43,7 +43,7 @@ The raw prompt stays next to the copy, and rules may read either. Zero width cha
 
 ### What to measure
 
-Recall on the encoding trick category, which the detector should lean toward, and the false positive cost on the benign corpus, where developers paste real base64 and ask for help. The metrics runner reports both per category on every change.
+Recall on the encoding category, which the detector should lean toward, and the false positive cost on the benign corpus, where developers paste real base64 and ask for help. The metrics runner reports both per category on every change.
 
 ## Follow-ups
 

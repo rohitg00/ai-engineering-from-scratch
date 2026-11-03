@@ -12,7 +12,7 @@ lessons: [phases/18-ethics-safety-alignment/02-reward-hacking-goodhart]
 manuals: []
 practice: []
 cheatsheet: [ai-safety, rlhf-dpo]
-related: []
+related: [safety/kl-does-not-save-you, safety/four-costumes-one-mechanism]
 updated: 2026-11-03
 ---
 

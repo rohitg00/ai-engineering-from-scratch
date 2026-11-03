@@ -12,7 +12,7 @@ lessons: [phases/11-llm-engineering/10-evaluation]
 manuals: []
 practice: []
 cheatsheet: [llm-evaluation]
-related: []
+related: [evaluation/judge-calibration-before-trust]
 updated: 2026-11-03
 ---
 
