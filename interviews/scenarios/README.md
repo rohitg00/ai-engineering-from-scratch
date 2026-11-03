@@ -8,6 +8,8 @@ Measured incidents from our manuals. Read the evidence one listing at a time and
 |---|---|---|---|
 | [The prefix cache inflated a benchmark](prefix-cache-inflated-benchmark/README.md) | 2 Working | vLLM 0.31.0 and SGLang 0.5.22, one L4 with 24 GB of memory, SM clock locked at 900 MHz | 20 |
 | [A request ID at the top of the prompt](request-id-at-prompt-start/README.md) | 2 Working | SGLang 0.5.22, one L4 with 24 GB of memory, and a GB10 as the second machine | 15 |
+| [Startup out of memory on a shared GPU](startup-oom-shared-gpu/README.md) | 2 Working | vLLM 0.31.0, the shared second L4 of a two-GPU node, with another team's processes on it | 15 |
+| [A thermal throttle that voided an A/B test](thermal-throttle-voided-ab-test/README.md) | 2 Working | SGLang 0.5.22, one L4 with 24 GB of memory, in a node whose second L4 ran other tenants | 20 |
 | [A dead rollout engine and a watchdog that kills](dead-engine-and-watchdog/README.md) | 3 Senior | Miles main 08752a12 with its own SGLang 0.5.22 build, one GB10 with 128 GB of unified memory | 25 |
 | [A split benchmark that counted failures as wins](disaggregated-benchmark-false-success/README.md) | 3 Senior | SGLang 0.5.22 with the mooncake_tcp transfer backend, two L4s in one node, the second shared with another team | 20 |
 | [FP8 KV scales silently at 1.0](fp8-kv-scale-silently-one/README.md) | 3 Senior | vLLM 0.31.0, one L4 with 24 GB of memory | 20 |
