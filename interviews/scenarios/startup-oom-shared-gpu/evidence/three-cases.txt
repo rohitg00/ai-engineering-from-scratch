@@ -1,0 +1,11 @@
+title: the three startup failures and the flag for each
+source: manuals/vllm-101/sections/2-2-fix-out-of-memory-at-startup.md
+lines: 22-26
+lang: text
+note: Match the error text of each failed start with a row.
+---
+| What the log says | Cause | Fix |
+|---|---|---|
+| The KV cache needed for one request at the maximum length is larger than the available KV cache memory | The weights and the profile leave too little for one full-length request | Lower `--max-model-len`. The error gives the largest length that fits. |
+| The free memory on the device is less than the desired GPU memory utilization | Another process holds GPU memory | Lower `--gpu-memory-utilization` below the free share, or stop the other process |
+| CUDA out of memory during the profile run or the graph capture | The batch in the profile pass or the graphs need more memory than is left | Lower `--max-num-seqs` or `--max-num-batched-tokens`, or lower `--max-cudagraph-capture-size` |

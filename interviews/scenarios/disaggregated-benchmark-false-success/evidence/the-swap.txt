@@ -1,0 +1,12 @@
+title: the same sweep with the roles swapped
+source: manuals/sglang-101/capture/gpu/incidents/l4-pd-summary-lines.txt
+lines: 9-14
+lang: text
+note: Find the user count where the retokenized tokens stop matching the generated tokens.
+---
+load/pd-swap/c1-s1: Successful requests: 16 |Total generated tokens: 2048 |Total generated tokens (retokenized): 2048 |Output token throughput (tok/s): 15.09 |
+load/pd-swap/c2-s1: Successful requests: 16 |Total generated tokens: 2048 |Total generated tokens (retokenized): 2048 |Output token throughput (tok/s): 28.86 |
+load/pd-swap/c4-s1: Successful requests: 16 |Total generated tokens: 2048 |Total generated tokens (retokenized): 2048 |Output token throughput (tok/s): 54.99 |
+load/pd-swap/c8-s1: Successful requests: 32 |Total generated tokens: 4096 |Total generated tokens (retokenized): 4096 |Output token throughput (tok/s): 102.03 |
+load/pd-swap/c16-s1: Successful requests: 64 |Total generated tokens: 8192 |Total generated tokens (retokenized): 2048 |Output token throughput (tok/s): 338.44 |
+load/pd-swap/c32-s1: Successful requests: 128 |Total generated tokens: 16384 |Total generated tokens (retokenized): 0 |Output token throughput (tok/s): 333.41 |

@@ -1,0 +1,10 @@
+title: the median time to first token at turns 5 and 6
+source: manuals/sglang-101/capture/gpu/out-l4/eviction-multiturn.txt
+lines: 18-21
+lang: text
+note: Compare the three lines, which come from one GPU with no clock lock.
+---
+Median TTFT at turns 5 and 6:
+8,192 lru: run 1 gave 699 and 449 ms, run 2 gave 716 and 355 ms
+8,192 lfu or slru: 143 to 214 ms
+16,384 or default pool: 56 to 160 ms

@@ -1,0 +1,10 @@
+title: the same-day pair that changed only the engine offload
+source: manuals/miles-101/sections/2-2-choose-what-to-offload.md
+lines: 30-33
+lang: text
+note: The two medians cover different clean steps.
+---
+| Setting | Clean rollout steps | Clean rollout median | Trainer offload, all steps | Trainer onload, all steps | Weight update, all steps |
+|---|---|---|---|---|---|
+| default offload | 4 of 12 | 60.7 s | 0.73 s | 0.76 s | 0.62 s |
+| engine kept loaded | 3 of 12 | 56.7 s | 0.75 s | 0.82 s | 0.64 s |
