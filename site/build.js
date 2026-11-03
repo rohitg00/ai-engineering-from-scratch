@@ -19,6 +19,7 @@ const { phaseHubPath, phaseLabel, glossaryLookupKey } = require('../lib/hub-rout
 const { writeHubs } = require('./build-hubs.js');
 const { writeCheatsheets, loadTopics, coverage } = require('./build-cheatsheets.js');
 const { writePractice } = require('./build-practice.js');
+const { writeInterviews } = require('./build-interviews.js');
 const { lessonNumber } = require('./catalog.js');
 
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -2250,6 +2251,11 @@ function build() {
   hubs.practicePages = practice.pages;
   hubs.practice = practice;
   console.log(`   wrote ${practice.problems.length} practice problems in ${practice.tracks.length} tracks`);
+  console.log('Writing interview pages...');
+  const interviews = writeInterviews({ siteDir: __dirname });
+  hubs.interviewPages = interviews.pages;
+  hubs.interviews = interviews;
+  console.log(`   wrote ${interviews.questions.length} interview questions and ${interviews.scenarios.length} scenarios`);
   const glossaryPage = path.join(__dirname, 'glossary.html');
   replaceGeneratedDiscovery(glossaryPage, GLOSSARY_JSONLD_START, GLOSSARY_JSONLD_END, hubs.glossaryJsonLd);
   replaceGeneratedDiscovery(glossaryPage, GLOSSARY_INDEX_START, GLOSSARY_INDEX_END, hubs.glossaryIndex);
@@ -2343,6 +2349,7 @@ function writeHubSitemaps(hubs, siteDir = __dirname) {
     ['sitemap-glossary.xml', hubs.termPages.map(page => ({ loc: page.href, priority: '0.5', freq: 'monthly' }))],
     ['sitemap-cheatsheets.xml', (hubs.cheatsheetPages || []).map(page => ({ loc: page.href, priority: '0.5', freq: 'monthly' }))],
     ['sitemap-practice.xml', (hubs.practicePages || []).map(page => ({ loc: page.href, priority: '0.6', freq: 'monthly' }))],
+    ['sitemap-interviews.xml', (hubs.interviewPages || []).map(page => ({ loc: page.href, priority: '0.6', freq: 'monthly' }))],
   ].filter(([, urls]) => urls.length).map(([name, urls]) => {
     fs.writeFileSync(path.join(siteDir, name), urlsetXml(urls), 'utf8');
     return name;
@@ -2460,6 +2467,18 @@ function hubLlms(hubs) {
       if (!list.length) continue;
       out += `### ${labels[kind]}\n\n`;
       for (const problem of list) out += `- [${problem.meta.title}](${SITE_ORIGIN}${problem.href}) (${problem.meta.difficulty}): ${problem.meta.summary} From [${problem.lessonTitle}](${SITE_ORIGIN}/lesson?path=${encodeURIComponent(problem.meta.lesson)})\n`;
+      out += `\n`;
+    }
+  }
+  if (hubs.interviews && hubs.interviews.items.length) {
+    const built = hubs.interviews;
+    out += `## Interview questions and scenarios\n`;
+    out += `${built.questions.length} interview questions and ${built.scenarios.length} incident scenarios in ${built.cards.length} cards. Each question page holds the prompt, then the short answer, the full answer, the follow-ups and the common wrong answers in folded sections. Each scenario page shows its evidence listings in order. Every number in an answer comes from a lesson, a manual section or a capture file in the repository. Each item page returns Markdown with Accept: text/markdown. [Interviews index in Markdown](${SITE_ORIGIN}/agent-pages/interviews/index.md) [Interviews JSON](${SITE_ORIGIN}/api/interviews.json) [Interviews sitemap](${SITE_ORIGIN}/sitemap-interviews.xml)\n\n`;
+    for (const card of built.cards) {
+      const items = built.byCard.get(card.id);
+      if (!items.length) continue;
+      out += `### ${card.title}\n\n`;
+      for (const item of items) out += `- [${item.data.title}](${SITE_ORIGIN}/interviews/${item.card}/${item.id}) (level ${item.data.level}, ${item.kind === 'scenario' ? 'scenario' : item.data.kind})\n`;
       out += `\n`;
     }
   }
@@ -2619,4 +2638,6 @@ module.exports = {
   renderSponsorsMarkdown,
   serializeFigureProviderManifest,
   writeFigureManifest,
+  writeHubSitemaps,
+  hubLlms,
 };

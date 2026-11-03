@@ -8,7 +8,6 @@ Measured incidents from our manuals. Read the evidence one listing at a time and
 |---|---|---|---|
 | [A five-minute cold start on the GB10](cold-start-on-gb10/README.md) | 2 Working | vLLM 0.31.0 in its release container, one GB10 with 128 GB of unified memory | 15 |
 | [Health probes that add load](health-probes-add-load/README.md) | 2 Working | SGLang 0.5.22 against vLLM 0.31.0, one L4 with 24 GB of memory | 15 |
-| [The prefix cache inflated a benchmark](prefix-cache-inflated-benchmark/README.md) | 2 Working | vLLM 0.31.0 and SGLang 0.5.22, one L4 with 24 GB of memory, SM clock locked at 900 MHz | 20 |
 | [A request ID at the top of the prompt](request-id-at-prompt-start/README.md) | 2 Working | SGLang 0.5.22, one L4 with 24 GB of memory, and a GB10 as the second machine | 15 |
 | [Startup out of memory on a shared GPU](startup-oom-shared-gpu/README.md) | 2 Working | vLLM 0.31.0, the shared second L4 of a two-GPU node, with another team's processes on it | 15 |
 | [A thermal throttle that voided an A/B test](thermal-throttle-voided-ab-test/README.md) | 2 Working | SGLang 0.5.22, one L4 with 24 GB of memory, in a node whose second L4 ran other tenants | 20 |
@@ -16,6 +15,7 @@ Measured incidents from our manuals. Read the evidence one listing at a time and
 | [A split benchmark that counted failures as wins](disaggregated-benchmark-false-success/README.md) | 3 Senior | SGLang 0.5.22 with the mooncake_tcp transfer backend, two L4s in one node, the second shared with another team | 20 |
 | [FP8 KV scales silently at 1.0](fp8-kv-scale-silently-one/README.md) | 3 Senior | vLLM 0.31.0, one L4 with 24 GB of memory | 20 |
 | [The load knee and the cap that made it worse](load-knee-and-admission-cap/README.md) | 3 Senior | vLLM 0.31.0 against SGLang 0.5.22, one L4 with 24 GB of memory, SM clock locked at 900 MHz | 25 |
+| [More load gave a faster first token](prefix-cache-inflated-benchmark/README.md) | 3 Senior | SGLang 0.5.22, one GB10 (DGX Spark) | 25 |
 | [Ray stops the trainer on unified memory](ray-oom-unified-memory/README.md) | 3 Senior | Miles main 08752a12 with its own SGLang 0.5.22 build, one GB10 with 128 GB of unified memory | 20 |
 | [An RL speedup that was not an effect](rl-experiment-hygiene/README.md) | 3 Senior | Miles main 08752a12 with its own SGLang 0.5.22 build, one GB10 with 128 GB of unified memory, with a heat guard that pauses the run at 84 C | 25 |
 | [LRU thrash in a small pool, then a crash](small-pool-lru-thrash/README.md) | 3 Senior | SGLang 0.5.22, the shared second L4 of a two-GPU node, with no clock lock | 25 |

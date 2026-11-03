@@ -1,79 +1,88 @@
 ---
 id: prefix-cache-inflated-benchmark
-title: The prefix cache inflated a benchmark
+title: More load gave a faster first token
 card: scenarios
 kind: incident
-level: 2
-roles: [inference-engineer, applied-ai-engineer, ai-evaluation-reliability-engineer]
+level: 3
+roles: [inference-engineer, ai-evaluation-reliability-engineer]
 rounds: [debugging, ml-depth]
-tags: [prefix-cache, benchmark, ttft, knee, methodology]
-minutes: 20
+tags: [benchmark, prefix-cache, ttft, experiment-hygiene]
+minutes: 25
 lessons: [phases/17-infrastructure-and-production/22-load-testing-llm-apis]
-manuals: [vllm-101#s-benchmark-your-server-in-15-minutes, vllm-101#s-tune-chat-for-many-users, vllm-101#s-ref-lab-notes, sglang-101#s-sglang-benchmark-serving]
+manuals: [sglang-101#s-sglang-benchmark-serving, vllm-101#s-benchmark-your-server-in-15-minutes]
 practice: []
-cheatsheet: []
-related: []
+cheatsheet: [inference-load-testing, sglang-serving]
+related: [inference-serving/prefix-cache-order, inference-serving/goodput-sets-the-cap]
 updated: 2026-11-03
 system:
-  version: vLLM 0.31.0 and SGLang 0.5.22
-  model: Qwen/Qwen3-8B
-  hardware: one L4 with 24 GB of memory, SM clock locked at 900 MHz
+  version: SGLang 0.5.22
+  model: Qwen/Qwen3-30B-A3B-Instruct-2507
+  hardware: one GB10 (DGX Spark)
 source:
-  - manuals/vllm-101/sections/5-1-benchmark-your-server-in-15-minutes.md
-  - manuals/vllm-101/capture/gpu/out-l4/prefix-cache-flush.txt
-  - manuals/vllm-101/capture/gpu/out-l4/load-flushed-vs-unflushed.txt
+  - manuals/sglang-101/sections/5-1-sglang-benchmark-serving.md
+  - manuals/sglang-101/capture/gpu/out-gb10/server-default.command.txt
+  - manuals/sglang-101/capture/gpu/out-gb10/bench-random-c8.txt
+  - manuals/sglang-101/capture/gpu/out-gb10/bench-random-c32.txt
+  - manuals/sglang-101/capture/gpu/out-gb10/server-default.log
+  - manuals/sglang-101/capture/gpu/out-l4/prefix-cache-flush.txt
 ---
 
 ## Situation
 
-A team sizes a chat service. They run a concurrency sweep from 1 to 64 users against one server with `Qwen/Qwen3-8B` on an L4. Each request sends 512 prompt tokens and asks for 128 tokens back. They keep one server up for the whole sweep and repeat it with three seeds. The published table shows 191 to 288 ms to the first token up to 16 users, then a jump to 1,800 ms at 32. They call the knee "between 16 and 32" and plan one replica for every 16 users.
+A benchmark kit starts one SGLang server with `Qwen/Qwen3-30B-A3B-Instruct-2507` and runs a load sweep against it. Each run sends random prompts of 512 tokens and asks for 128 tokens back. The kit runs each concurrency cap once, one after the other, on the same server.
 
-In production, replicas at 12 users each show first tokens above one second for a quarter of the requests. The dashboards show no queue, no preemption and no memory pressure. The benchmark client, the model, the GPU and the engine version are the same as in the sweep.
+The report says that a cap of 8 gave a median first token of 677.61 ms, and a cap of 32 gave 390.38 ms. Four times the load gave a faster first token. A teammate wants to publish the result as "the scheduler gets more efficient under load". You review the run before it goes out.
 
 ## Evidence
 
-- [the first sweep, as the team published it](evidence/sweep-as-published.txt)
-- [one load sent four times to one server](evidence/same-load-four-times.txt)
-- [median TTFT with a cache reset before each run, against the old method](evidence/flushed-against-unflushed.txt)
-- [the share of requests that met the target, and the P99 ITL, with and without the reset](evidence/share-and-tail.txt)
+- [The server command](evidence/server-command.txt)
+- [The first-token block at a cap of 8](evidence/ttft-cap-8.txt)
+- [The first-token block at a cap of 32](evidence/ttft-cap-32.txt)
+- [The client arguments](evidence/client-arguments.txt)
+- [Two prefill lines from the run at a cap of 32](evidence/prefill-lines.txt)
+- [The same caps with three seeds](evidence/three-seed-rerun.txt)
+- [One load four times in a row](evidence/flush-test.txt)
 
 ## Questions
 
-1. The sweep used a fixed seed for the random dataset. What does a fixed seed send at every user count, and what in the server can notice it?
-2. Which of the four benchmark numbers can a warm cache change, and which does it leave alone? Why?
-3. You have the server up and ten minutes. How do you show the effect without a new sweep?
-4. Read the reset rows. Where is the knee on this card, and how many users per replica does that give for a target of one second to the first token?
-5. Write the protocol for two runs that you want to compare.
+1. Which explanations fit a median first token that falls when the load rises? Name at least two before you read the logs.
+2. The mean and the P99 at a cap of 32 are much higher than the median. What does that shape tell you?
+3. What in the client arguments makes two runs send the same prompts?
+4. What do the prefill lines prove, and what do they not prove?
+5. How do you run the sweep again so that the result is trustworthy?
 
 ## Walkthrough
 
-Start with the published table. Up to 16 users the first token sits at 191 to 288 ms while the output grows from 13.5 to 201.3 tokens per second. At 32 users the first token takes 1,800 ms and the P99 ITL goes from 85 to 613 ms. The table looks like a clean knee. A strong candidate asks what the server kept between the user counts, because the same server served all of them.
-
-The second listing answers that. One load of 64 prompts at 16 users ran four times on one server with the same seed. The first run had a median first token of 925 ms. The repeat without a reset read 148 ms. A reset of the prefix cache brought the next run back to 1,163 ms, and a repeat after that read 184 ms again. Nothing changed in the server between the runs except the cache state. A fixed seed makes the random dataset send the same prompts each time, and the prefix cache keeps the KV blocks of the prompts that it saw. The same file notes that the time per output token moved by less than 15 percent, because a cache hit removes prefill work and leaves the decode work the same.
-
-The third listing applies this to the sweep. With a reset before each run, the median first token at 4 users was 650 ms against 145 ms without it, a ratio of 4.5. At 8 users it was 951 to 978 ms against 264 to 274 ms, and at 16 users 1,550 to 1,587 ms against 294 to 295 ms. From 32 users the two methods agree, because the queue dominates and the cache cannot hide it. The old sweep did not reset the cache between the user counts, and each seed sent the same first prompts at every count, so the low counts read the first token too fast.
-
-The last listing gives the knee. The share of requests that met a first token within 1 s and a mean ITL of 100 ms or less was 100 percent at 4 users in both methods. At 8 users it was 50 percent with the reset against 75 to 81 percent without. At 16 users it was 25 percent against 64 to 66 percent. The P99 ITL with the reset was 69 to 72 ms at 8 users and 522 to 523 ms at 16, while the run without a reset read 82 to 84 ms at 16. So the stream breaks between 8 and 16 users on this card, not between 16 and 32.
+1. **Doubt one sample.** No queue model makes the first token faster under more load. Each cap ran once, so the first suspect is the method, not the scheduler. Write down the candidate causes: a warm cache, a different GPU clock, a different pool, or noise in one run.
+2. **Read the whole distribution.** At a cap of 32 the median was 390.38 ms, but the mean was 1166.51 ms and P99 was 2910.22 ms. A median far below the mean says the requests split into a fast group and a slow group. Something made part of the requests cheap.
+3. **Read the client arguments.** The run used the random dataset with `seed=7` and `flush_cache=False`. The same seed sends the same first prompts in every run. Nothing cleared the cache between runs on the same server.
+4. **Read the server log.** Two prefill batches admitted 14 and 15 requests that needed one new token each, with 6879 and 7634 cached tokens. Those prompts were already in the cache from the run before. A cached prompt skips its prefill, so its first token comes fast.
+5. **Count, then test.** The manual counted the prefill lines of each run. At a cap of 32, 64 of the 128 prompts were in the cache before the run started. At a cap of 8, 16 of the 64 were. Half of the requests had the advantage at 32, and a quarter at 8. Then change the variable that the reading blames: run each cap with three seeds, and the 677.61 ms result does not come back.
 
 ## Resolution
 
-The cause was the method, not the server. The sweep kept one server and one seed, so every user count after the first found its prompts in the prefix cache. The cache moved the first token and left the decode alone, which is why the table looked plausible.
+The prefix cache made the result. The kit reused one seed and one server and never flushed the cache, so each run found the prompts of the run before it. The sweep with seeds 1, 2 and 3 gave a median of 209.98 ms at a cap of 8 and 416.37 ms at a cap of 32. With clean runs, the first token gets slower as the cap grows, as the queue predicts.
 
-The fix has three parts. Start each run with an empty cache: restart the server, or call `POST /reset_prefix_cache`, which exists only with `VLLM_SERVER_DEV_MODE=1`, or `POST /flush_cache` on SGLang. Use a new seed for each run, so the dataset sends new prompts. Record the cached tokens from `vllm:prefix_cache_hits_total` and `vllm:prefix_cache_queries_total` before and after each run, and write them next to the result.
+The fix is a protocol, not a server flag:
 
-With the reset in place, the measured knee on this L4 sits between 8 and 16 users. The median first token was about 0.65 s at 4 users, 1.0 s at 8 and 1.6 s at 16, and the P99 ITL jumped from about 70 ms at 8 users to 522 ms at 16. One replica for every 8 users meets the target. The old plan of 16 users per replica put every replica past the knee, which is what production showed.
+1. Start each run with an empty cache. Pass `--flush-cache` to the benchmark client, call `POST /flush_cache`, or restart the server.
+2. Check that the flush ran. The server flushes only when no request runs or waits.
+3. Use a new seed for each run, so that the client sends new prompts.
+4. Record `sglang:cached_tokens_total` before and after each run, and write the cached tokens next to the result.
+
+A separate test on an L4 measured the size of the effect. A repeat without a flush read a median first token about 4.8 times lower than the fresh run. After a flush, it went back near the fresh run.
 
 ## Wrong turns
 
-- "Turn the prefix cache off for the sweep." Production runs with the cache on, so the test must reset the cache between runs, not remove it. The reset keeps the hits that real traffic gets inside one run.
-- "The knee is where throughput stops rising." Output peaked at 275.1 tokens per second at 32 users in the old table, but the latency broke well before that. The throughput peak and the latency knee are two different points.
-- "Three seeds make the result safe." Each seed sent the same first prompts at every user count, so the second and third seeds hit the same warm blocks. More seeds repeat the error, they do not cancel it.
-- "Restart the server once at the start of the sweep." Every user count after the first still inherits the blocks of the counts before it. The reset has to happen before each run.
+- "The scheduler batches better at a high cap." A queue can only add wait time. The median fell because the cache removed prefill work.
+- "Turn the prefix cache off for the benchmark." Production runs with the cache on. Reset it between runs and record the hits, so that the test measures the real server.
+- "Run more requests at each cap with the same seed." More requests with the same seed repeat the same prompts and keep the cache warm.
+- "Blame the GPU clock." A clock change can move a result, but the prefill lines show cached tokens, which a clock change cannot make.
 
 ## Generalize
 
-Any cache between the client and the work under test turns a repeated benchmark into a cache test. That holds for a prefix cache, a compile cache, a page cache or a result cache in front of a model API. Before you compare two runs, decide the cache state on purpose, set it the same way for both runs, and record the hit count next to the numbers. When a result looks too good below some load and normal above it, look for a cache that the load defeats.
+A benchmark that repeats its inputs measures its own cache. Before you trust a result that runs against the expected direction, read the full distribution, check which state carries over between runs, and change the one variable that your explanation blames. Run three seeds per point and report the range. The time per token is less exposed to this error than the first token, because a cache hit removes prefill work and leaves the decode work the same.
 
 ## Taught in
 
-The vLLM manual covers the protocol in [the benchmark page](../../../manuals/vllm-101/sections/5-1-benchmark-your-server-in-15-minutes.md) and the corrected knee in [the chat tuning page](../../../manuals/vllm-101/sections/3-1-tune-chat-for-many-users.md), [the lab notes](../../../manuals/vllm-101/sections/r-7-lab-notes.md) record the sessions, the SGLang manual gives the same protocol in [its benchmark page](../../../manuals/sglang-101/sections/5-1-sglang-benchmark-serving.md), and [the load testing lesson](../../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/docs/en.md) covers the client side.
+The [benchmark section of SGLang 101](../../../manuals/sglang-101/sections/5-1-sglang-benchmark-serving.md#reset-the-prefix-cache-between-runs) finds this result and its cause, and the [load testing lesson](../../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) explains why identical prompts in a loop test only one point.

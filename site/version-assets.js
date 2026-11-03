@@ -5,6 +5,16 @@ const { stampCards } = require('../lib/og-cards');
 const { nestedPages } = require('./clean-urls');
 
 const HUB_DIRS = ['hubs/glossary', 'hubs/phase'];
+const CARD_DIRS = ['interviews'];
+
+function htmlFiles(dir) {
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) return htmlFiles(full);
+    return entry.name.endsWith('.html') ? [full] : [];
+  }).sort();
+}
 
 function versionHtml(html, siteRoot, versions = new Map()) {
   function versionTag(tag, attribute) {
@@ -59,6 +69,10 @@ function versionSite(siteRoot = __dirname) {
       const source = fs.readFileSync(filename, 'utf8');
       outputs.push({ filename, source, output: stampCards(source, cards) });
     }
+  }
+  for (const filename of CARD_DIRS.flatMap(dir => htmlFiles(path.join(siteRoot, dir)))) {
+    const source = fs.readFileSync(filename, 'utf8');
+    outputs.push({ filename, source, output: stampCards(source, cards) });
   }
   for (const { filename, source, output } of outputs) {
     if (source !== output) fs.writeFileSync(filename, output, 'utf8');
