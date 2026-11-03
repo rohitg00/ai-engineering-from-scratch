@@ -1,0 +1,11 @@
+title: how the kit's planner handled the same question
+source: manuals/a2a-101/capture/out/19-planner.log
+lines: 7-11
+lang: text
+note: Five lines, from the delegation to the review result.
+---
+delegate review-diff to code-reviewer
+  task 80bc7784 is TASK_STATE_INPUT_REQUIRED
+  it asks: Which base branch should I compare this diff against? The planner answers from its own context: main
+  task 80bc7784 is TASK_STATE_COMPLETED
+review: 1 finding, 0 blocking

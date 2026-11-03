@@ -1,0 +1,11 @@
+title: the one defect the run found in the server, and its fix
+source: manuals/a2a-101/research/tck-run.md
+lines: 183-187
+lang: text
+note: Read which binding lacked which routes, which rule of the specification that breaks, and how the repeat run verified the fix.
+---
+None remaining at MUST level.
+
+One was found in the pre-fix run 2 and is recorded here because run 1 still shows it. **The HTTP+JSON binding did not serve the four push-notification-config operations.** The pre-fix `Handler.rest()` routed `message:send`, `message:stream`, `tasks`, `tasks/{id}`, `tasks/{id}:subscribe`, `tasks/{id}:cancel` and `extendedAgentCard`, and nothing under `tasks/{id}/pushNotificationConfigs`; the README said so. The card declares both `JSONRPC` and `HTTP+JSON` with `capabilities.pushNotifications: true`, and 5.1 says "When an agent supports multiple protocols, all supported protocols MUST: Identical Functionality: Provide the same set of operations and capabilities" (`spec:1145-1149`); 5.3 and 11.3.3 give the REST forms (`spec:1163-1166`, `spec:2797-2800`). Observed as `PUSH-CREATE-001` http_json FAIL (`[404] Method not found`) and five dependent skips.
+
+Fixed in the kit on 2026-10-06: `a2a_ref.py` gained `rest_push()` (`:626-648`) with `POST /tasks/{id}/pushNotificationConfigs` (body is the config; `find` then `add_push`), `GET /tasks/{id}/pushNotificationConfigs/{configId}`, `GET /tasks/{id}/pushNotificationConfigs` (`prune({"configs": ...})`) and `DELETE /tasks/{id}/pushNotificationConfigs/{configId}`, behind the `pushNotifications` capability guard (`:630-631`) and answering `application/a2a+json`; `rest()` dispatches to it at `:681-682`; the README sentence was removed. Verified by the repeat of run 2 (PUSH-CREATE-001, PUSH-CREATE-002, PUSH-GET-001, PUSH-LIST-001, PUSH-DEL-001 and PUSH-DEL-002 PASS on http_json; pytest 119 passed, up from 113) and by hand check 7 (create, get, list, missing id 404, delete, get-after-delete 404, delete-again 200, unknown task 404).
