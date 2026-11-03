@@ -1,0 +1,10 @@
+title: the gap with and without sampling replay, 12 steps, one seed
+source: manuals/miles-101/sections/4-4-lower-the-logprob-gap.md
+lines: 64-67
+lang: text
+note: The second run scored each token over the kept set in the trainer too.
+---
+| Run, 12 steps, seed 1 | Median gap | Lowest and highest step | Median reward |
+|---|---|---|---|
+| No top-p or top-k | 0.0153 | 0.0150 to 0.0159 | 0.66 |
+| Top-p 0.95, top-k 64 | 0.0135 | 0.0128 to 0.0141 | 0.68 |

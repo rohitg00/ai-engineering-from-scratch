@@ -1,0 +1,9 @@
+title: what the router is and what a 503 from it means
+source: manuals/miles-101/sections/1-2-add-a-watchdog.md
+lines: 40-42
+lang: text
+note: Two definitions from the watchdog page.
+---
+**Router:** the small service that forwards each rollout request to an engine. [Section 8.6](#s-which-router-to-use) explains it.
+
+**503 Service Unavailable:** the HTTP status that the router returns when no rollout engine can take the request.
