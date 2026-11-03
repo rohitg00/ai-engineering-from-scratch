@@ -1,6 +1,6 @@
 ---
 id: request-id-at-prompt-start
-title: A request ID at the top of the prompt
+title: A request ID that opens the prompt
 card: scenarios
 kind: incident
 level: 2
@@ -27,7 +27,7 @@ source:
 
 ## Situation
 
-An agent product sends every request through a relay. The relay adds a line to the top of the system prompt for tracing, in the form `Request id <hex>.`, with a new value on each call. The system prompt itself is 2,999 tokens long and never changes. The team serves `Qwen/Qwen3-8B` with SGLang on an L4, with `--enable-cache-report` on.
+An agent product sends every request through a relay. For tracing, the relay puts a new first line in the system prompt, in the form `Request id <hex>.`, with a new value on each call. The system prompt itself is 2,999 tokens long and never changes. The team serves `Qwen/Qwen3-8B` with SGLang on an L4, with `--enable-cache-report` on.
 
 Users report that the first token takes about two seconds on every turn, even when they repeat a question. The team doubles the memory fraction, tries a different eviction policy and turns on hierarchical caching. The wait does not move. The metrics endpoint reports a cache hit rate near zero.
 

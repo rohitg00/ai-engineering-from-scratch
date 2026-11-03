@@ -31,7 +31,7 @@ source:
 
 A teammate posts a result in the team channel: keeping the rollout engine loaded between phases makes the rollout 12 percent faster. The post shows two runs on the GB10, a baseline with a median rollout of 59.1 s and the new setting at 52.0 s, and proposes to make the new setting the default. The same post reports a reward gain of 0.01 from a second change, on one seed, with a loss curve that "looks better".
 
-A reviewer asks for the run manifest. The two runs were four days apart. The second run also changed the engine memory fraction. The medians cover different steps, because the heat guard paused the container whenever the GPU reached 84 C, and it did so 1,005 times that week. A third teammate, who wants to lower the gap between the trainer and the engine, has switched the engine to FP16 and left the trainer in BF16.
+A reviewer asks for the run manifest. The two runs were four days apart. The memory fraction for the engine was not the same in the second run either. The medians cover different steps, because the heat guard put the container on hold whenever the GPU reached 84 C, 1,005 times that week. A third teammate, who wants the trainer and engine log probabilities to agree more closely, has switched the engine to FP16 and left the trainer in BF16.
 
 ## Evidence
 

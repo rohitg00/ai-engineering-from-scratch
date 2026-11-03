@@ -29,9 +29,9 @@ source:
 
 ## Situation
 
-A team runs GRPO on one GB10 and leaves a run alone for an hour. When they come back, the GPU is idle, the container is still running, and the log has grown to 147 MB. The run never reported a failure. The rollout engine had been started with an attention setting that this GPU cannot run, and it stopped during startup. The trainer kept sending requests to it.
+A team runs GRPO on one GB10 and leaves a run alone for an hour. When they come back, the GPU is idle, the container is still running, and the log has grown to 147 MB. No failure appeared in the output of the run. The rollout engine had been started with an attention setting that this GPU cannot run, and it stopped during startup. The trainer did not stop: it went on sending requests to the dead engine.
 
-The team writes a watchdog. Every 30 seconds it counts the `503 Service Unavailable` lines of the last 60 seconds and stops the container when the count is above 100 in six checks in a row. The next day the watchdog stops a healthy run that generated 16 answers per prompt, in the middle of its steps. The team now distrusts both the run and the watchdog.
+The team writes a watchdog. Every 30 seconds it counts the `503 Service Unavailable` lines of the last 60 seconds and, when it finds more than 100 such lines in six checks in a row, it stops the container. The next day the watchdog stops a healthy run that generated 16 answers per prompt, in the middle of its steps. The team now distrusts both the run and the watchdog.
 
 ## Evidence
 

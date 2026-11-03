@@ -8,7 +8,7 @@ Measured incidents from our manuals. Read the evidence one listing at a time and
 |---|---|---|---|
 | [A five-minute cold start on the GB10](cold-start-on-gb10/README.md) | 2 Working | vLLM 0.31.0 in its release container, one GB10 with 128 GB of unified memory | 15 |
 | [Health probes that add load](health-probes-add-load/README.md) | 2 Working | SGLang 0.5.22 against vLLM 0.31.0, one L4 with 24 GB of memory | 15 |
-| [A request ID at the top of the prompt](request-id-at-prompt-start/README.md) | 2 Working | SGLang 0.5.22, one L4 with 24 GB of memory, and a GB10 as the second machine | 15 |
+| [A request ID that opens the prompt](request-id-at-prompt-start/README.md) | 2 Working | SGLang 0.5.22, one L4 with 24 GB of memory, and a GB10 as the second machine | 15 |
 | [Startup out of memory on a shared GPU](startup-oom-shared-gpu/README.md) | 2 Working | vLLM 0.31.0, the shared second L4 of a two-GPU node, with another team's processes on it | 15 |
 | [A thermal throttle that voided an A/B test](thermal-throttle-voided-ab-test/README.md) | 2 Working | SGLang 0.5.22, one L4 with 24 GB of memory, in a node whose second L4 ran other tenants | 20 |
 | [A dead rollout engine and a watchdog that kills](dead-engine-and-watchdog/README.md) | 3 Senior | Miles main 08752a12 with its own SGLang 0.5.22 build, one GB10 with 128 GB of unified memory | 25 |
