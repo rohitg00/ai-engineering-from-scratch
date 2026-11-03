@@ -4,9 +4,15 @@ const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 const interviews = require('./build-interviews');
+const code = require('./lib/code');
 const { writeHubSitemaps, hubLlms } = require('./build');
 
-const built = interviews.buildInterviews();
+let built;
+
+test.before(async () => {
+  await code.init();
+  built = interviews.buildInterviews();
+});
 const config = require('../vercel.json');
 const ORIGIN = 'https://aiengineeringfromscratch.com';
 
@@ -67,22 +73,39 @@ test('a scenario page holds every evidence listing in order, each a step for the
       assert.ok(at > last, `${entry.name} order`);
       last = at;
       const evidence = item.evidence.find(file => file.name === entry.name);
-      const first = evidence.listing.split('\n')[0].trim().slice(0, 40).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-      assert.ok(html.includes(first), `${entry.name} listing is missing`);
+      const first = evidence.listing.split('\n')[0].trim().slice(0, 40);
+      assert.ok(interviews.visibleText(html).includes(first), `${entry.name} listing is missing`);
     });
     assert.match(html, /data-ev-next/);
     assert.match(html, /<dl class="iv-spec">/);
   }
 });
 
-test('code blocks go through one renderCode function with the PR 1 signature', () => {
+test('code blocks go through the shared code renderer', () => {
   const block = interviews.renderCode('a = 1', 'python', { label: 'main.py' });
-  assert.match(block, /^<div class="iv-code" data-kind="code" data-lang="python">/);
-  assert.match(block, /main\.py/);
-  assert.match(block, /data-copy/);
-  assert.equal(/data-copy/.test(interviews.renderCode('log line', 'text')), false);
-  assert.equal(/data-copy/.test(interviews.renderCode('x', 'python', { copy: false })), false);
-  assert.equal(/data-code=/.test(block), false, 'Copy reads the code element, so the code is not repeated in an attribute');
+  assert.equal(block, code.render('a = 1', 'python', { label: 'main.py' }));
+  assert.match(block, /^<div class="cb" data-kind="code" data-lang="python">/);
+  assert.match(block, /cb-copy/);
+  assert.equal(/cb-copy/.test(interviews.renderCode('log line', 'text')), false);
+  const html = page('/interviews/inference-serving/kv-pool-users-fit').html;
+  assert.match(html, /<div class="cb" data-kind="output" data-lang="text">/);
+  assert.match(html, /\/code\.css\?v=[0-9a-f]{16}/);
+  assert.match(html, /\/code-copy\.js\?v=[0-9a-f]{16}/);
+});
+
+test('the search index gets every item with the prompt only, never an answer', () => {
+  const records = interviews.searchRecords(built);
+  assert.equal(records.length, built.items.length);
+  for (const item of built.items) {
+    const record = records.find(entry => entry.url === itemHref(item));
+    assert.ok(record, item.id);
+    assert.deepEqual(record.filters.type, ['Interview']);
+    assert.deepEqual(record.filters.level, [String(item.data.level)]);
+    assert.ok(record.filters.topic.length === 1 && record.filters.role.length === item.data.roles.length);
+    const prompt = item.kind === 'scenario' ? item.sections.Situation : item.parsed.preamble;
+    assert.ok(record.content.length > 40 && prompt.replace(/`/g, '').replace(/\s+/g, ' ').includes(record.content.slice(0, 30)), item.id);
+    for (const other of built.items) assert.deepEqual(require('../scripts/interviews/validate').sharedSpans(interviews.answerText(other), record.content + record.meta.title), [], `${record.url} holds an answer of ${other.id}`);
+  }
 });
 
 test('two builds give the same bytes', () => {
@@ -202,4 +225,30 @@ test('the deploy step stamps the social card on every interview page', () => {
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
   }
+});
+
+test('a card tile shows only when one of its items passes every filter', () => {
+  const { cardVisible } = require('./interviews.js');
+  const card = { search: 'inference and serving prefix caching', roles: 'inference-engineer' };
+  const empty = { search: 'rag chunking retrieval', roles: 'applied-ai-engineer' };
+  assert.equal(cardVisible(card, { q: 'prefix', level: '3', role: '' }, 0, 3), false);
+  assert.equal(cardVisible(card, { q: 'prefix', level: '', role: '' }, 1, 3), true);
+  assert.equal(cardVisible(card, { q: 'schedulers', level: '', role: '' }, 0, 3), false);
+  assert.equal(cardVisible(empty, { q: '', level: '', role: '' }, 0, 0), true);
+  assert.equal(cardVisible(empty, { q: 'chunking', level: '', role: '' }, 0, 0), true);
+  assert.equal(cardVisible(empty, { q: '', level: '2', role: '' }, 0, 0), false);
+  assert.equal(cardVisible(card, { q: '', level: '', role: 'applied-ai-engineer' }, 1, 3), true);
+  assert.equal(cardVisible(empty, { q: '', level: '', role: 'applied-ai-engineer' }, 0, 0), true);
+  assert.equal(cardVisible(empty, { q: '', level: '', role: 'inference-engineer' }, 0, 0), false);
+});
+
+test('the API URL sends the same CORS header as the file it rewrites to', () => {
+  for (const source of ['/interviews.json', '/api/interviews.json']) {
+    const rule = config.headers.find(entry => entry.source === source);
+    assert.ok(rule && rule.headers.some(header => header.key === 'Access-Control-Allow-Origin' && header.value === '*'), source);
+  }
+});
+
+test('the header marks Interviews as the current page on every interview route', () => {
+  assert.match(fs.readFileSync(path.join(__dirname, 'header.js'), 'utf8'), /\/\^\\\/interviews\(\?:\\\/\|\$\)\/\.test\(location\.pathname\)/);
 });

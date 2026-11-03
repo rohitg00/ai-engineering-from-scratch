@@ -92,21 +92,6 @@
     }).catch(function () {});
   }
 
-  function bindCopy(root) {
-    $all('.code-copy[data-code]', root).forEach(function (button) {
-      if (button.getAttribute('data-bound')) return;
-      button.setAttribute('data-bound', '1');
-      button.type = 'button';
-      button.addEventListener('click', function () {
-        if (!navigator.clipboard) return;
-        navigator.clipboard.writeText(button.getAttribute('data-code')).then(function () {
-          button.textContent = 'Copied';
-          setTimeout(function () { button.textContent = 'Copy'; }, 1200);
-        }, function () {});
-      });
-    });
-  }
-
   function initIndex(main) {
     var form = $('[data-filters]', main);
     var rows = $all('[data-list] .pr-row', main);
@@ -238,6 +223,12 @@
     var escaped = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     var html = api && api.highlightSyntax ? api.highlightSyntax(escaped, 'python') : escaped;
     return html + '\n';
+  }
+
+  function solutionHtml(code) {
+    var api = window.AIFSLessonMarkdown;
+    if (api && api.renderCodeBlock) return api.renderCodeBlock(code, 'python', { label: 'solution.py' });
+    return '<pre class="pr-solution-code"><code>' + highlight(code) + '</code></pre>';
   }
 
   function lineStart(text, index) {
@@ -627,7 +618,6 @@
       hintList.innerHTML = problem.hints.slice(0, hintsShown).map(function (html, index) {
         return '<li class="pr-hint"><p class="pr-hint-n">Hint ' + (index + 1) + '</p>' + html + '</li>';
       }).join('');
-      bindCopy(hintList);
       renderMath(hintList);
       if (hintsShown >= problem.hints.length) {
         hintButton.hidden = true;
@@ -660,8 +650,7 @@
         lock.setAttribute('data-open', '');
         lockedNote.hidden = true;
         solutionBox.hidden = false;
-        solutionBox.innerHTML = '<h3>Reference solution</h3><pre class="pr-solution-code"><code>' + highlight(solution.solution) + '</code></pre><div class="pr-notes"><h3>Notes</h3>' + solution.notes + '</div>';
-        bindCopy(solutionBox);
+        solutionBox.innerHTML = '<h3>Reference solution</h3>' + solutionHtml(solution.solution) + '<div class="pr-notes"><h3>Notes</h3>' + solution.notes + '</div>';
         renderMath(solutionBox);
         if (fresh) solutionBox.closest('.pr-solution').classList.add('pr-flash');
       }).catch(function () {});
@@ -723,7 +712,6 @@
     var main = $('main');
     if (!main) return;
     renderMath(main);
-    bindCopy(main);
     if (main.hasAttribute('data-practice-index')) initIndex(main);
     if (main.hasAttribute('data-practice-problem')) initProblem(main);
     window.addEventListener('pageshow', function (event) {

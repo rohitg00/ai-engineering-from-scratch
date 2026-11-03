@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="certifications.css?v=20260925a">
   <link rel="stylesheet" href="highlights.css?v=20261023a">
   <link rel="stylesheet" href="lesson-walkthrough.css?v=20261021b">
+  <link rel="stylesheet" href="code.css?v=20261103a">
   <style>
     .scroll-progress {
       position: fixed;
@@ -560,89 +561,6 @@
     .lesson-article .katex-display {
       margin: 0;
     }
-
-    .lesson-article pre {
-      position: relative;
-      margin: 20px 0;
-      padding-top: 44px;
-      overflow: hidden;
-      border: 1px solid var(--rule-soft);
-      background: var(--code-bg);
-    }
-
-    .lesson-article pre code {
-      display: block;
-      background: var(--code-bg);
-      color: var(--ink);
-      padding: 22px 24px;
-      font-size: 0.86rem;
-      line-height: 1.6;
-      overflow-x: auto;
-      border: none;
-    }
-
-    .code-lang {
-      position: absolute;
-      top: 0;
-      left: 0;
-      max-width: calc(100% - 88px);
-      height: 44px;
-      display: inline-flex;
-      align-items: center;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      padding: 0 12px;
-      background: var(--blueprint);
-      color: var(--bg);
-      z-index: 2;
-    }
-
-    .code-copy {
-      position: absolute;
-      top: 0;
-      right: 0;
-      min-width: 88px;
-      min-height: 44px;
-      background: transparent;
-      border: 1px solid var(--rule-soft);
-      padding: 8px 12px;
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      cursor: pointer;
-      z-index: 2;
-      transition:
-        transform var(--motion-press) var(--ease-out),
-        color var(--motion-feedback) var(--ease-out),
-        border-color var(--motion-feedback) var(--ease-out);
-    }
-
-    .code-copy:hover {
-      color: var(--blueprint);
-      border-color: var(--blueprint);
-    }
-
-    .syn-keyword { color: var(--blueprint); font-weight: 500; }
-    .syn-string { color: var(--ink); }
-    .syn-number { color: var(--blueprint); }
-    .syn-comment { color: var(--ink-mute); font-style: italic; }
-    .syn-function { color: var(--ink); font-weight: 500; }
-    .syn-operator { color: var(--ink-soft); }
-
-    [data-theme="dark"] .syn-keyword { color: var(--blueprint); }
-    [data-theme="dark"] .syn-string { color: var(--ink); }
-    [data-theme="dark"] .syn-number { color: var(--blueprint); }
-    [data-theme="dark"] .syn-comment { color: var(--ink-mute); }
-    [data-theme="dark"] .syn-function { color: var(--ink); }
-    [data-theme="dark"] .syn-operator { color: var(--ink-soft); }
 
     .lesson-article .table-wrap {
       overflow-x: auto;
@@ -1438,7 +1356,6 @@
     .lesson-nav-btn:active,
     .output-btn:active,
     .code-card-btn:active,
-    .code-copy:active,
     .mermaid-btn:active {
       transform: scale(0.97);
     }
@@ -2358,7 +2275,6 @@
       .lesson-nav-btn:active,
       .output-btn:active,
       .code-card-btn:active,
-      .code-copy:active,
       .lesson-complete-btn:active,
       .lesson-unmark-btn:active,
       .mermaid-btn:active {
@@ -2542,7 +2458,7 @@
         -webkit-hyphens: none;
       }
       .lesson-article > p:first-of-type::first-letter { font-size: 3rem; }
-      .lesson-article pre code { font-size: 0.78rem; padding: 14px 14px; }
+      .lesson-article .cb pre { font-size: 0.78rem; padding: 12px; }
       .lesson-article table { font-size: 0.84rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
       .lesson-article table th,
       .lesson-article table td { padding: 8px 10px; white-space: nowrap; }
@@ -2806,7 +2722,7 @@
     }());
   </script>
   <script src="content-source.js?v=20260821a"></script>
-  <script src="lesson-markdown.js?v=20261022a"></script>
+  <script src="lesson-markdown.js?v=20261103a"></script>
   <script src="progress.js?v=20260822a"></script>
   <script src="highlights-anchor.js?v=20261018a"></script>
   <script src="highlights-store.js?v=20261018a"></script>
@@ -2912,7 +2828,8 @@
     }(window));
   </script>
   <script src="header.js?v=20261103a" defer></script>
-  <script src="cmdpalette.js?v=20260821a" defer></script>
+  <script src="code-copy.js?v=20261103a" defer></script>
+  <script src="cmdpalette.js?v=20261103a" defer></script>
   <script src="lesson-figures.js?v=843871fd2942"></script>
   <script src="figure-manifest.js?v=46acdc251607"></script>
   <script>
@@ -3995,7 +3912,6 @@
         var article = el.querySelector('.lesson-article');
         renderLessonActionPanel(article);
         renderSectionGuides(article);
-        initCodeCopy();
         renderMermaidBlocks(article);
         renderMathBlocks(article);
         var assetPromise = window.AIFS_loadFigureProviders
@@ -4414,18 +4330,6 @@
 
       function slugify(text) {
         return window.AIFSLessonMarkdown.slugify(text);
-      }
-
-      function initCodeCopy() {
-        document.querySelectorAll('.code-copy').forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            var code = btn.getAttribute('data-code');
-            navigator.clipboard.writeText(code).then(function () {
-              btn.textContent = 'Copied!';
-              setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
-            });
-          });
-        });
       }
 
       function initializeMermaid(mermaid) {

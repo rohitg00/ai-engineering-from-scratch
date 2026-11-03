@@ -645,35 +645,6 @@ a.pr-tag:hover {
   overflow-wrap: normal;
 }
 
-.pr-page .code-lang {
-  position: absolute;
-  top: 4px;
-  right: 56px;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-}
-
-.pr-page .code-copy {
-  position: absolute;
-  top: 2px;
-  right: 4px;
-  padding: 2px 6px;
-  border: 1px solid var(--rule-soft);
-  background: var(--bg);
-  color: var(--ink-soft);
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  cursor: pointer;
-}
-
-.pr-page .syn-keyword { color: var(--blueprint); font-weight: 500; }
-.pr-page .syn-string { color: var(--pr-medium); }
-.pr-page .syn-number { color: var(--blueprint); }
-.pr-page .syn-comment { color: var(--ink-mute); font-style: italic; }
-
 .pr-panel {
   margin-block-start: 28px;
   padding: 16px;
@@ -1153,7 +1124,7 @@ a.pr-tag:hover {
   font-weight: 700;
 }
 
-.pr-support-code {
+.pr-support .cb pre {
   max-height: 360px;
 }
 
