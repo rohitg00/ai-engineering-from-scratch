@@ -16,7 +16,7 @@ related: [cost-capacity/two-cache-layers]
 updated: 2026-11-03
 ---
 
-Read this exact-match cache from the caching lesson. Why does it refuse every request with a temperature above zero, what goes into the key and why, and what would you change before it runs in production?
+Read this exact-match cache from the caching lesson. Why does it refuse every request whose temperature is not zero, what goes into the key and why, and what would you change before it runs in production?
 
 ```python
 class ExactCache:
