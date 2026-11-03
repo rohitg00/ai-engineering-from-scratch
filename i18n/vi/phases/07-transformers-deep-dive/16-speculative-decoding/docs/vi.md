@@ -70,7 +70,7 @@ Lợi thế: không có mô hình thứ hai. Khối thấu: thêm các tham số
 
 ### Eagle  mô tả tốt hơn bằng cách tái sử dụng các trạng thái ẩn
 
-EAGLE-1/2/3 (Li et al., 20242025) làm cho mô hình dự thảo trở thành một biến thể nhỏ (thường là 1 lớp) hấp thụ các trạng thái ẩn lớp cuối cùng của người xác minh. Bởi vì dự thảo thấy đại diện tính năng của người xác minh, dự đoán của nó tương quan chặt chẽ với phân phối đầu ra của người xác minh. Tỷ lệ chấp nhận tăng từ ~ 0.6 (vanilla) lên 0.85+.
+EAGLE-1/2/3 (Li et al., 20242025) làm cho mô hình dự thảo trở thành một bộ biến đổi nhỏ (thường là 1 lớp) nuốt vào trạng thái ẩn lớp cuối cùng của người xác minh. Bởi vì bản thảo thấy đại diện tính năng của người xác minh, dự đoán của nó tương quan chặt chẽ với phân phối đầu ra của người xác minh. Tỷ lệ chấp nhận tăng từ ~ 0,6 (vanilla) lên 0,85+. Đây là tỷ lệ mỗi token trên các tiêu chuẩn trò chuyện, với một bản thảo được đào tạo trên dữ liệu trò chuyện phù hợp. Đối với lưu lượng sản xuất hỗn hợp, giai đoạn 17 · 05 có kế hoạch 0,6 đến 0,8 cho EAGLE-3, và lưu lượng domain có thể thấp hơn.
 
 EAGLE-3 (2025) đã thêm tìm kiếm cây trên các tiếp tục ứng cử viên. vLLM và SGLang tàu EAGLE-2/3 như là con đường thông số mặc định cho Llama 3/4 và Qwen 3.
 
