@@ -20,13 +20,13 @@ After a release, the nightly RAG eval shows recall at 5 unchanged and still high
 
 ## Short answer
 
-The reranker. The gold chunk still arrives in the top 5, so recall holds, but it sits lower in the list, so MRR falls, and the generator stays grounded in what it receives. Confirm it from the per-query trace: compare the rank of the gold chunk before and after the release, then look at what changed in the reranker, such as its weights, its candidate pool size, or the order of the query and the document in the pair.
+The reranker. On average the gold chunk still arrives in the top 5, so recall holds, but it sits lower in the list, so MRR falls, and the generator stays grounded in what it receives. Confirm it from the per-query trace: compare the rank of the gold chunk before and after the release, then look at what changed in the reranker, such as its weights, its candidate pool size, or the order of the query and the document in the pair.
 
 ## Full answer
 
 ### Why the pattern points at one stage
 
-MRR is the mean over queries of one divided by the rank of the first relevant document. Rank 1 contributes 1.0, rank 2 contributes 0.5, rank 10 contributes 0.1, so the metric is dominated by the top of the list. Recall at 5 is blind to position inside the top 5. A move in MRR with recall flat means the right chunk moved down inside the window, and the stage that sets the order inside the window is the reranker.
+MRR is the mean over queries of one divided by the rank of the first relevant document. Rank 1 contributes 1.0, rank 2 contributes 0.5, rank 10 contributes 0.1, so the metric is dominated by the top of the list. Recall at 5 is blind to position inside the top 5. A move in MRR with recall flat suggests that the right chunk moved down inside the window, and the stage that sets the order inside the window is the reranker. A flat average does not prove it: one query can lose its gold chunk from the top 5 while another gains one. The per-query rank trace below separates reranker movement from retrieval loss.
 
 ### The full table
 
@@ -51,7 +51,7 @@ Persist the metric trace per query on every CI run. Then the question is not "wh
 
 ## Wrong answers
 
-- "The retriever regressed." Recall at 5 did not move, so the gold chunk still arrives in the pool.
+- "The retriever regressed." Nobody touched the retriever and recall at 5 did not move; a flat average can still hide a query that lost its gold chunk, so check the per-query rank trace before you blame retrieval.
 - "The model started to hallucinate." Faithfulness did not move; the generator is still grounded in what it receives.
 - "Run it again, it is noise." The eval is offline and deterministic on the fixture; one metric down with the others flat points at one stage.
 

@@ -20,7 +20,7 @@ A teammate turned on the provider's JSON mode and says the extraction output is 
 
 ## Short answer
 
-JSON mode guarantees that the output parses, nothing more. It does not guarantee your keys, your types, your enum values or the absence of extra fields. Turn on the schema mode, where the provider takes a JSON Schema and constrains decoding to it, and keep a check on your side for the values that a schema cannot judge.
+JSON mode guarantees that a finished output parses, nothing more; a response cut at the token limit can still fail, so check the finish reason first. It does not guarantee your keys, your types, your enum values or the absence of extra fields. Turn on the schema mode, where the provider takes a JSON Schema and constrains decoding to it, and keep a check on your side for the values that a schema cannot judge.
 
 ## Full answer
 
@@ -41,11 +41,11 @@ The structured output lesson lists the strict mode rules: every property appears
 
 ### What stays with you
 
-Under strict enforcement two failures disappear, the parse error and the schema violation. Two remain. The model can refuse when the input does not fit the schema, which your code treats as a typed outcome. And the model can fill a field with a value that has the right type and the wrong content; no format layer sees that.
+Under strict enforcement two failures disappear for a response that finishes, the parse error and the schema violation. A response cut at the token limit can still fail to parse, so check the finish reason before you read it. Two more remain. The model can refuse when the input does not fit the schema, which your code treats as a typed outcome. And the model can fill a field with a value that has the right type and the wrong content; no format layer sees that.
 
 ## Follow-ups
 
-- **Level 1:** Which failure remains under strict schema mode? Expected: a refusal, when the model decides the input does not fit the schema; handle it as a typed outcome.
+- **Level 1:** Which failure remains under strict schema mode? Expected: a refusal, when the model decides the input does not fit the schema; handle it as a typed outcome, and route a response cut at the token limit to the error path.
 - **Level 2:** What does strict mode demand of the schema? Expected: every property required, additional properties forbidden, no unresolved references; otherwise the request is rejected with a 400.
 - **Level 2:** The output matches the schema and the price is wrong. Which layer failed? Expected: none of the format layers; the value is invented, and only a semantic check or an eval catches that.
 - **Level 3:** A field is sometimes unknown in the source text. How do you write the schema? Expected: allow null or a sentinel; a grammar that forces a value makes the model invent one, such as a date.

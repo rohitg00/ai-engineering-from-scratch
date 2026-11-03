@@ -20,7 +20,7 @@ A user reports that the document assistant gave a wrong answer. The pipeline has
 
 ## Short answer
 
-Recall at k on the retrieval stage. If the gold chunk is not in the top k, no reranker and no prompt can produce the right answer, so every later metric is noise. Only when recall holds do you move to the rank position and then to the generated text.
+Recall at k on the retrieval stage. If the gold chunk is not in the top k, no reranker can bring it back and the generator usually lacks the evidence for the right answer, unless another chunk happens to hold it, so the later metrics are hard to read. Only when recall holds do you move to the rank position and then to the generated text.
 
 ## Full answer
 

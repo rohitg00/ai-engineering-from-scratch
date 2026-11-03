@@ -20,7 +20,7 @@ Your chunker keeps a 100-token overlap between neighbor chunks. After the last c
 
 ## Short answer
 
-Settle it with an ablation, not an opinion. Run the same recall at 5 eval with the overlap at zero and at the current value on a stratified query set, and keep the overlap only if the number moves. The recent studies found that overlap often adds no measurable benefit while it doubles the index cost.
+Settle it with an ablation, not an opinion. Run the same recall at 5 eval with the overlap at zero and at the current value on a stratified query set, and keep the overlap only if the number moves. The recent studies found that overlap often adds no measurable benefit, while it adds index cost in proportion to its size.
 
 ## Full answer
 
@@ -50,7 +50,7 @@ The chunker skill in the lesson sets overlap to zero by default and refuses an o
 
 ## Wrong answers
 
-- "Overlap is free, embeddings are cheap." Every overlapped token is embedded and stored twice, which the lesson counts as a doubled index cost.
+- "Overlap is free, embeddings are cheap." Every overlapped token is embedded and stored twice, so the index cost grows in proportion to the overlap.
 - "A blog post says 20 percent overlap." The studies found no measurable benefit in the measured case; the answer depends on your corpus, so measure it there.
 - "Remove it everywhere, no test needed." The ablation is cheap and the result is corpus dependent; a slice with real boundary losses would show up in it.
 

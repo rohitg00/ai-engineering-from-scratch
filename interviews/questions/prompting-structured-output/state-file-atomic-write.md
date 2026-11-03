@@ -51,7 +51,7 @@ The state file carries a contract: required keys, an enum of allowed status valu
 
 ### Around the write
 
-- **Idempotency keys.** If a crash lands between a tool call and its checkpoint, recovery retries the call. Fine for a read; dangerous for an email or a database insert. Log every call id to a pending-calls file before execution; on retry, skip a call whose id is present and use the cached result.
+- **Idempotency keys.** If a crash lands between a tool call and its checkpoint, recovery retries the call. Fine for a read; dangerous for an email or a database insert. Log a started record with the call id before execution and a completed record with the result after it. On retry, a call with a completed record is skipped and its stored result is used. A call with only a started record may or may not have run, so reconcile it first, for example by asking the target system whether that idempotency key was applied, before you repeat or skip it.
 - **Small state, separate artifacts.** Transcripts, generated files and data sets live in their own files or in object storage; the state holds only the paths.
 - **Event log plus snapshot.** Append every mutation to an event log and snapshot the state on a schedule; resume reads the snapshot and replays later events, which also lets you replay agent decisions when debugging.
 
@@ -62,7 +62,7 @@ The active task id, the files touched this session, the assumptions made, open b
 ## Follow-ups
 
 - **Level 3:** Why does the temp file live in the same directory as the target? Expected: so the final step is a rename on the same filesystem and stays atomic; the lesson's recipe is a temp file beside the target, write, sync, replace.
-- **Level 4:** An agent crashes after a tool call and before the checkpoint. What goes wrong on recovery, and what fixes it? Expected: the call is retried, which is dangerous for an email or an insert; log every call id before execution and skip calls whose id is already present.
+- **Level 4:** An agent crashes after a tool call and before the checkpoint. What goes wrong on recovery, and what fixes it? Expected: the call is retried, which is dangerous for an email or an insert; log a started record with the call id before execution and a completed record with the result after it; reuse the result of a completed call, and reconcile a call that has only a started record before you repeat it.
 - **Level 4:** Two agents write the same state file within 50 ms. What does the atomic rename save, and what does it not? Expected: it prevents a torn file, so each reader sees one complete version; it does not stop the second write from replacing the first, which needs coordination between the writers.
 - **Level 4:** What belongs in the state file and what does not? Expected: the active task, touched files, assumptions, blockers and the next action; not transcripts, reasoning traces, completions or vendor model ids, and large artifacts only by path.
 

@@ -20,7 +20,7 @@ A math assistant samples five reasoning paths per question and takes a majority 
 
 ## Short answer
 
-At temperature zero every sample is identical, so the five paths are one path counted five times and the vote changes nothing. The lesson samples at 0.7 so the paths differ enough for their errors to cancel. Then check that the final answer comes out in a fixed format, because without a line such as "The answer is" followed by the number the votes cannot be compared, and check that the single-path accuracy sits in the range where a vote helps, about 60 to 85 percent.
+At temperature zero the samples should be identical, and only a nondeterministic serving stack makes them differ a little, so the five paths are close to one path counted five times and the vote changes almost nothing. The lesson samples at 0.7 so the paths differ enough for their errors to cancel. Then check that the final answer comes out in a fixed format, because without a line such as "The answer is" followed by the number the votes cannot be compared, and check that the single-path accuracy sits in the range where a vote helps, about 60 to 85 percent.
 
 ## Full answer
 
@@ -49,7 +49,7 @@ The system prompt asks for the final answer on the last line in a fixed form. Wi
 
 ## Wrong answers
 
-- "Temperature zero makes the vote more reliable." It makes every sample the same, so there is no vote.
+- "Temperature zero makes the vote more reliable." It makes the samples the same or nearly the same, so there is no real vote.
 - "Use forty samples like the paper." Five captures most of the benefit and more than ten shows diminishing returns; forty multiplies the cost for little gain.
 - "Voting fixes a systematic error." If most paths make the same mistake, the majority is wrong with high confidence; the vote cancels independent errors only.
 

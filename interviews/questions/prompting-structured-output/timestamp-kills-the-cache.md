@@ -42,11 +42,11 @@ System prompt, then tool definitions, then few-shot examples, then retrieved doc
 
 ### Turn it into a test
 
-Send two identical requests in CI and assert that the cache read token count is above zero on the second. Split the cost dashboard into cached and uncached input tokens, or a traffic drop looks like a cache win.
+In CI, build two requests through the production prompt builder with the same user input, compare their cacheable prefixes, send both, and assert that the cache read token count is above zero on the second. Two hand-written identical bodies would skip the timestamp or request id that the builder adds. Split the cost dashboard into cached and uncached input tokens, or a traffic drop looks like a cache win.
 
 ## Follow-ups
 
-- **Level 2:** How do you make this a test? Expected: two identical requests in CI, with an assertion that the cache read tokens are above zero on the second; if they stay at zero the keys are drifting.
+- **Level 2:** How do you make this a test? Expected: two requests built by the production prompt builder with the same user input, with an assertion that the cache read tokens are above zero on the second; if they stay at zero the keys are drifting.
 - **Level 2:** Where does the timestamp go instead? Expected: below the breakpoint, with the other per-request fields such as the user message.
 - **Level 3:** The block is below the minimum size. What happens? Expected: nothing is cached and nothing is reported; the floor is 1,024 tokens, and 2,048 on the small model.
 - **Level 3:** Input tokens fell after your change. Is that proof it works? Expected: no; split the input tokens into cached and uncached, or a drop in traffic looks like a cache win.

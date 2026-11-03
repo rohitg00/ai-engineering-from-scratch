@@ -34,7 +34,7 @@ The prompt tells the model to use only the snippets, to cite every claim with it
 
 ### Gate 3: after generation
 
-Parse the answer. A claim without a verifiable anchor is dropped or sent back for a re-ask. An answer that slipped past the score gate still cannot ship unsupported.
+Parse the answer and check each claim against the passage that its anchor cites. A claim without an anchor, or with an anchor whose passage does not state the claim, is dropped or sent back for a re-ask. An answer that slipped past the score gate then cannot ship a claim that its cited passage does not support.
 
 ### How to measure it
 
@@ -49,7 +49,7 @@ Move the threshold on the held-out set, never on production anecdotes, and re-tu
 - **Level 3:** Where does the threshold come from? Expected: the distribution of rank-1 scores on a held-out set with known in-corpus and out-of-corpus questions; it is specific to the corpus.
 - **Level 3:** What does the generator prompt need beyond "use only the context"? Expected: cite each claim with its anchor and say it does not know when the snippets do not answer; the explicit instruction cut hallucination by 40 to 60 percent in the question answering lesson.
 - **Level 4:** Too many refusals are also a failure. How do you balance it? Expected: track the false confidence rate on out-of-corpus questions next to the wrong refusal rate on in-corpus questions, and move the threshold on the held-out set.
-- **Level 4:** How does the citation post-filter work with the refusal gate? Expected: an answer whose claims carry no verifiable anchor is dropped or re-asked, so a weak answer that passed the score gate still cannot ship unsupported.
+- **Level 4:** How does the citation post-filter work with the refusal gate? Expected: each claim is checked against the passage its anchor cites, and a claim with no anchor or with a passage that does not state it is dropped or re-asked, so a weak answer that passed the score gate cannot ship an unsupported claim.
 
 ## Wrong answers
 

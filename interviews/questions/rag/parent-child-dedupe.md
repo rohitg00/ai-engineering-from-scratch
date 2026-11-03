@@ -34,7 +34,7 @@ def retrieve_parent(child_query, mapping, encoder, top_k=3):
 
 ## Short answer
 
-Small child chunks are indexed for a precise match and the larger parent is returned for context, which removes the trade-off between a precise hit and enough surrounding text. The `seen` set drops a parent that several top children map to, so the prompt does not receive the same text twice. The function returns between one and `top_k` parents, fewer when children share a parent.
+Small child chunks are indexed for a precise match and the larger parent is returned for context, which removes the trade-off between a precise hit and enough surrounding text. The `seen` set drops a parent that several top children map to, so the prompt does not receive the same text twice. For a mapping that is not empty and a positive `top_k`, the function returns between one and `top_k` parents, fewer when children share a parent; an empty mapping or a `top_k` of zero returns none.
 
 ## Full answer
 

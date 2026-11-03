@@ -37,7 +37,7 @@ A chunk must be large enough to hold the answer plus its local context, and smal
 ### What the measurements say
 
 - Recursive splitting at 512 tokens beat semantic splitting 69% to 54% in the chunking study.
-- Overlap gave zero measurable benefit in the sparse retrieval study and doubles the index cost.
+- Overlap gave zero measurable benefit in the sparse retrieval study, and every overlapped token is embedded and stored again, so the index cost grows with the overlap.
 - Response quality drops sharply around 2,500 tokens of context, so bigger chunks hit a cliff.
 - Semantic splitting without a minimum size produces 40-token fragments that hurt retrieval.
 
@@ -59,7 +59,7 @@ Build a 50-query eval set, stratified by query type, and read recall at 5 for ea
 ## Wrong answers
 
 - "Semantic splitting is best because it follows meaning." It lost to recursive splitting at 512 tokens in the measured study, and it makes tiny fragments unless you set a floor.
-- "Overlap is a safety margin, keep it." The studies found that overlap often adds nothing and doubles the index cost; justify any overlap with an ablation.
+- "Overlap is a safety margin, keep it." The studies found that overlap often adds nothing, and it adds index cost in proportion to its size; justify any overlap with an ablation.
 - "Bigger chunks give the model more context." Quality drops around 2,500 tokens of context, and a chunk that covers many topics dilutes its own embedding.
 
 ## Taught in

@@ -37,12 +37,12 @@ Run both retrievers in parallel and fuse by rank: each document gets the sum of 
 ### Two details that matter
 
 - **Field weighting.** If the codes live in a title or symbol field, repeat those tokens at index time so a title match counts more than a body match. The math stays the same.
-- **Out-of-vocabulary codes.** A code present in the ticket and absent from every article gets zero from BM25, because its document frequency is zero, while the dense side still returns plausible-looking neighbors. De-duplicate by document so the fusion absorbs this.
+- **Out-of-vocabulary codes.** A code present in the ticket and absent from every article gets zero from BM25, because its document frequency is zero, while the dense side still returns plausible-looking neighbors. De-duplicate by document so the empty lexical side adds no stray rank contributions. Rank fusion still scores the documents that only the dense side returns, so they stay in the fused list and can rank first. Check that a retrieved article contains the code, and when none does, say that no article covers it instead of answering from the neighbors.
 
 ## Follow-ups
 
 - **Level 2:** Why does BM25 give a rare code so much weight? Expected: the inverse document frequency factor; a term in few documents scores high and a term in most documents scores low.
-- **Level 2:** The code is in the ticket but in no article at all. What does each retriever return? Expected: BM25 contributes nothing for that term, and the dense retriever still returns neighbors that look plausible and are wrong; de-duplicate by document so the fusion absorbs it.
+- **Level 2:** The code is in the ticket but in no article at all. What does each retriever return? Expected: BM25 contributes nothing for that term, and the dense retriever still returns neighbors that look plausible and are wrong, and the fusion keeps them; check that a retrieved article contains the code and say so when none does.
 - **Level 3:** How do the paraphrased queries fare after you add the lexical index? Expected: they still win, because the fusion is rank based; in the demo the paraphrased query sat at BM25 rank 6 and dense rank 1 and fused to rank 1.
 - **Level 3:** The codes live in a short title field and the body is long prose. What do you tune? Expected: field weighting, which repeats the title tokens at index time so a title match counts more.
 

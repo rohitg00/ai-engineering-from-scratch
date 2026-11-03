@@ -36,7 +36,7 @@ Instead of describing the format, you show it. Instead of explaining the reasoni
 
 ### The cost side
 
-Few-shot adds 200 to 500 tokens to every call. Two things keep that cheap. Hold the count at the knee, three to five. And put the examples in the stable part of the prompt, after the system message and the tool definitions and before anything that changes per request, so a prefix cache serves them at the discounted rate.
+Few-shot adds 200 to 500 tokens to every call. Two things keep that cheap. Hold the count at the knee, three to five. And if the examples are a fixed set, put them in the stable part of the prompt, after the system message and the tool definitions and before anything that changes per request, so a prefix cache serves them at the discounted rate. Examples picked per query by nearest neighbor change between requests, and a prefix cache stops at the first differing token. Put those below the cache breakpoint: the system message and the tool definitions above them still hit, and the examples pay the full rate.
 
 ### When zero-shot wins
 
@@ -47,7 +47,7 @@ Simple factual questions, creative tasks where examples constrain the output, an
 - **Level 2:** When does zero-shot win? Expected: simple factual questions, creative tasks where examples constrain, and tasks where good examples are harder to find than a good instruction.
 - **Level 2:** What do examples do that an instruction cannot? Expected: they show the format and the reasoning instead of describing them, and the model matches a shown pattern more reliably than it interprets a rule.
 - **Level 3:** How do you choose the examples at request time? Expected: embed a labeled pool and select the nearest examples to the input while keeping label coverage; the lesson measured a 5 to 15 percent gain over random selection.
-- **Level 3:** The examples cost 200 to 500 tokens on every call. How do you contain that? Expected: keep the count at three to five, and place the examples in the stable prefix so the prompt cache serves them at the discounted rate.
+- **Level 3:** The examples cost 200 to 500 tokens on every call. How do you contain that? Expected: keep the count at three to five; place a fixed set of examples in the stable prefix so the prompt cache serves them at the discounted rate, and place examples picked per query below the breakpoint, because they change on every request.
 
 ## Wrong answers
 

@@ -20,7 +20,7 @@ Take-home. You receive a corpus of a few hundred internal documents and a retrie
 
 ## Short answer
 
-Build a labeled query set first, stratified by query type, with gold document ids and gold answer text for each query. Run every configuration against the same set and report recall at 5 for each slice, plus MRR, and read the spread between configurations. Lock the chunker named in the labels, because a change of chunker after labeling moves the gold ids.
+Build a labeled query set first, stratified by query type, with gold document ids and gold answer text for each query. Run every configuration against the same set and report recall at 5 for each slice, plus MRR, and read the spread between configurations. Label at document level so the same labels grade every chunker; if you label at chunk level, record the chunker in the qrels and relabel after any change of chunker.
 
 ## Full answer
 
@@ -38,7 +38,7 @@ The chunking comparison lesson shows the pattern: the structural header splitter
 
 ### Guards that graders look for
 
-- The chunker strategy is recorded in the qrels header, and the gold ids were produced against that strategy.
+- The labeling level is recorded in the qrels header, and chunk-level gold ids name the chunker they were produced against.
 - Any training pairs for a reranker are disjoint from the eval queries.
 - The per-query results are persisted, not only the averages.
 - The write-up names what this eval cannot tell: answer quality, which needs faithfulness and relevance judged by a model from another family or by hand.
@@ -54,7 +54,7 @@ The chunking comparison lesson shows the pattern: the structural header splitter
 
 - "I wrote ten questions myself and ran each configuration." Ten questions of one type cannot separate four configurations or expose a class that always misses.
 - "Here is the average recall for each configuration." One average hides per-slice winners and the class that fails.
-- "I changed the chunker and reused the labels." The gold ids no longer line up with the chunks; the chunker belongs in the qrels header.
+- "I changed the chunker and reused the chunk-level labels." Chunk ids no longer line up with the new chunks; label at document level, or relabel and record the chunker in the qrels header.
 
 ## Taught in
 

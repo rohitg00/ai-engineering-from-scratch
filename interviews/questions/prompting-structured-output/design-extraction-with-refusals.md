@@ -20,7 +20,7 @@ Design the extraction service for purchase-order emails. The input is free text;
 
 ## Short answer
 
-Write one JSON Schema 2020-12 with the constraints that matter: required fields, enums for closed sets, a minimum of zero on the total, additional properties forbidden, and any reasoning field ahead of any decision field. Run it in the provider's strict schema mode so that parse errors and schema violations cannot happen, and treat a refusal as a typed outcome that goes to a review queue. Prove it with a labeled set of real emails scored per field, a refusal check on inputs that must not extract, and a run beside the human process before any record is written.
+Write one JSON Schema 2020-12 with the constraints that matter: required fields, enums for closed sets, a minimum of zero on the total, additional properties forbidden, and any reasoning field ahead of any decision field. Run it in the provider's strict schema mode so that a response that finishes cannot have a parse error or a schema violation, check the stop reason so that a response cut at the token limit goes to the error path, and treat a refusal as a typed outcome that goes to a review queue. Prove it with a labeled set of real emails scored per field, a refusal check on inputs that must not extract, and a run beside the human process before any record is written.
 
 ## Full answer
 
@@ -41,7 +41,7 @@ In Python, a Pydantic model generates this schema; the service keeps the schema 
 | Several providers, retries acceptable | a retry library over the Pydantic model, which is portable and does not touch logits |
 | A local model, validity required | a grammar engine, finite state for a flat schema and context-free for a recursive one |
 
-Strict mode is the default here: the output parses and validates by construction, and the failure set collapses to the refusal.
+Strict mode is the default here: a finished output parses and validates by construction. Two failures remain: the refusal, and a response cut at the token limit, which can still fail to parse. Check the stop reason before you read the output, and send an incomplete response to the error path.
 
 ### Retry and refusal
 
@@ -59,7 +59,7 @@ Outside strict mode: generate, parse, validate, inject the typed errors and retr
 
 - **Level 3:** Why forbid additional properties? Expected: it blocks invented fields, and strict mode requires it everywhere.
 - **Level 3:** You expect to switch providers next year. Which mode do you pick? Expected: a retry library over the Pydantic model for portability, or keep the schema identical across providers so each strict mode receives the same contract.
-- **Level 4:** How do you version the schema once records exist? Expected: a version field on each record and a schema diff that separates breaking changes, removed required fields and changed types, from non-breaking ones, added optional fields and relaxed constraints.
+- **Level 4:** How do you version the schema once records exist? Expected: a version field on each record and a schema diff that separates breaking changes from non-breaking ones. Strict mode makes every field required, so an added field is breaking too, because the records written before it do not contain it; removed fields and changed types are breaking, and relaxed constraints are not.
 - **Level 4:** Which failure can this design not remove, and where does it go? Expected: a wrong value with the right type; it goes to the field-level eval and the confidence flags, and the low-confidence records go to review.
 
 ## Wrong answers

@@ -16,11 +16,11 @@ related: [prompting-structured-output/json-mode-is-not-a-schema, prompting-struc
 updated: 2026-11-03
 ---
 
-An extraction service turns purchase-order emails into typed records. Name the ways a structured output call can fail, say which of them disappear under strict schema enforcement, and describe how the code should treat the one that remains.
+An extraction service turns purchase-order emails into typed records. Name the ways a structured output call can fail, say which of them disappear under strict schema enforcement, and describe how the code should treat what remains.
 
 ## Short answer
 
-Three ways: a parse error, where the output is not JSON; a schema violation, where it parses but breaks a type, a required field, an enum or a range; and a refusal, where the model decides the input does not fit the schema. Strict enforcement removes the first two by construction. The refusal stays, and it must be a typed outcome that the code logs and returns, never a retry.
+Three ways: a parse error, where the output is not JSON; a schema violation, where it parses but breaks a type, a required field, an enum or a range; and a refusal, where the model decides the input does not fit the schema. Strict enforcement removes the first two by construction for a response that finishes. The refusal stays, and it must be a typed outcome that the code logs and returns, never a retry. A response cut at the token limit can still fail to parse, so check the stop reason before you read the output.
 
 ## Full answer
 
@@ -28,7 +28,7 @@ Three ways: a parse error, where the output is not JSON; a schema violation, whe
 
 1. **Prompt for JSON.** Works 85 to 95 percent of the time on a frontier model. Fails six ways: a missing brace, a trailing comma, wrong types, invented fields, truncation at the token limit, and leaked prose such as "here is your JSON".
 2. **Validate after generation.** Generate freely, parse, validate against the schema, and on failure inject the error and retry. Reliable but you pay for every retry.
-3. **Constrained decoding.** The provider masks invalid tokens at decode time, so the output parses and validates by construction. Failure collapses to one mode: refusal.
+3. **Constrained decoding.** The provider masks invalid tokens at decode time, so a finished output parses and validates by construction. The model-side failure collapses to one mode, refusal; a response cut at the token limit and a request error still need their own error path.
 
 ### The retry loop, when you are outside strict mode
 
@@ -56,7 +56,7 @@ The model declines because the input does not fit, for example the email was a p
 ## Wrong answers
 
 - "A refusal is a failed call, retry it." It is a first-class outcome with a reason attached; log it and return it typed.
-- "Strict mode removes every failure." It removes parse errors and schema violations; refusals and wrong values with the right type remain.
+- "Strict mode removes every failure." It removes parse errors and schema violations for a finished response; refusals, truncated responses and wrong values with the right type remain.
 - "Retry until it validates." Past three retries the cost grows and the schema is the real problem.
 
 ## Taught in
