@@ -16,7 +16,7 @@ related: [prompting-structured-output/answer-before-reasoning, prompting-structu
 updated: 2026-11-03
 ---
 
-Read this constrained generation loop from the lesson. Explain what the mask does to the probabilities, what the state machine tracks, and why the loop can end up faster than unconstrained generation.
+Read this constrained generation loop from the lesson. Explain what the mask does to the probabilities, what the machine's state records, and why the loop can end up faster than unconstrained generation.
 
 ```python
 def mask_logits(logits, valid_token_ids):
@@ -60,7 +60,7 @@ The piece between the model and the sampler is the logit processor. Nothing in t
 
 A compiled grammar. A finite state machine built from a regex or a JSON Schema gives a constant-time lookup of the valid tokens per state. A context-free grammar engine handles recursion that a finite machine cannot express. Inference servers ship the same idea as guided decoding, with JSON, regex, choice and grammar modes.
 
-### Why it is often faster
+### Why it can run faster
 
 Two reasons from the lesson. The next-token search space shrinks. And a clever implementation skips the model call for forced tokens: when the grammar leaves exactly one valid token, such as the scaffolding of a key name, the token is appended without generation. This code does not do that yet.
 
