@@ -16,7 +16,7 @@ related: [cost-capacity/warm-pool-or-cold-start, cost-capacity/autoscale-on-the-
 updated: 2026-11-03
 ---
 
-A pod that serves a mixture-of-experts model on a unified-memory machine took about eight minutes from start to ready. Break that time into its parts, say which parts a restart can skip, and estimate what a warm restart looks like on the same machine.
+A pod serving an MoE model on a unified-memory machine took about eight minutes from start to ready. Break that time into its parts, say which parts a restart can skip, and estimate what a warm restart looks like on the same machine.
 
 ## Short answer
 

@@ -16,7 +16,7 @@ related: [cost-capacity/cache-break-even, cost-capacity/two-cache-layers]
 updated: 2026-11-03
 ---
 
-An agent fans out ten tool calls at once for every user question. All ten share the same long system prompt, and prompt caching is on. The bill is several times what the cache should allow, and the usage fields show cache writes on almost every request and almost no cache reads. What is happening?
+An agent fans out ten tool calls at once for every user question. All ten share the same long system prompt, and prompt caching is on. The bill is several times what the cache should allow, and the usage fields show cache writes on nearly all calls and almost no cache reads. What is happening?
 
 ## Short answer
 

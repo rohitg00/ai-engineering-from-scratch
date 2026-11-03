@@ -16,7 +16,7 @@ related: [cost-capacity/batch-lane-triage, cost-capacity/cache-break-even]
 updated: 2026-11-03
 ---
 
-A nightly pipeline summarizes 50,000 documents under one shared system prompt. It runs synchronously against a provider for four hours and costs about 2,000 dollars a night. Estimate what the same job costs on the batch API with the system prompt cached, and say when you would move it onto your own GPU instead.
+A nightly pipeline summarizes 50,000 documents, and every call opens with the same system prompt. It runs synchronously against a provider for four hours and costs about 2,000 dollars a night. Estimate what the same job costs on the batch API with the system prompt cached, and say when you would move it onto your own GPU instead.
 
 ## Short answer
 

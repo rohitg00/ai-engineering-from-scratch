@@ -20,7 +20,7 @@ A teammate says the service already has caching, because the provider's prompt c
 
 ## Short answer
 
-There are two layers. The provider's prefix cache reuses the attention state of a prompt prefix that an earlier request computed, so the shared part of the prompt gets cheaper, but the model still runs. An application-level semantic cache embeds the request and returns a stored answer when a similar question was answered before, so the model call is skipped. The prefix cache cannot serve a repeated question, because the user's part of the prompt still differs token by token and the model still generates the answer.
+There are two layers. The provider's prefix cache reuses the attention state of a prompt prefix that an earlier request computed, so the repeated opening tokens get cheaper, but the model still runs. An application-level semantic cache embeds the request and returns a stored answer when a similar question was answered before, so the model call is skipped. The prefix cache cannot serve a repeated question, because the user's part of the prompt still differs token by token and the model still generates the answer.
 
 ## Full answer
 

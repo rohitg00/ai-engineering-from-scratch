@@ -22,8 +22,8 @@ How a model is tuned after training, served to users, and fit into GPU memory.
 | Card | Items | Planned |
 |---|---|---|
 | Post-training | 0 | 15 |
-| [Inference and serving systems](questions/inference-serving/README.md) | 3 | 30 |
-| GPU memory, quantization and hardware | 0 | 15 |
+| [Inference and serving systems](questions/inference-serving/README.md) | 32 | 30 |
+| [GPU memory, quantization and hardware](questions/gpu-memory-quantization/README.md) | 10 | 15 |
 
 ## Applications
 
@@ -54,8 +54,8 @@ Operating a model service: releases, observability, cost, capacity and safety.
 
 | Card | Items | Planned |
 |---|---|---|
-| Production and MLOps | 0 | 15 |
-| Cost and capacity | 0 | 15 |
+| [Production and MLOps](questions/production-mlops/README.md) | 26 | 15 |
+| [Cost and capacity](questions/cost-capacity/README.md) | 22 | 15 |
 | Safety | 0 | 15 |
 
 ## Rounds
