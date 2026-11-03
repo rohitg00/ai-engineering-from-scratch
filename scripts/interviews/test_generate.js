@@ -161,6 +161,10 @@ test('a near duplicate of an existing question is rejected', () => {
   assert.match(generate.duplicateProblems({ id: 'new', title: 'Other', prompt: 'The trace shows the same shell command again and again. A coding agent has run for two hours on a task.' }, others)[0], /prompt is too close/);
   const code = Array.from({ length: 40 }, (_, index) => `step_${index} = run_${index}()`).join('\n');
   assert.match(generate.duplicateProblems({ id: 'new', title: 'Other', prompt: `A coding agent has run for two hours on a task. The trace shows the same shell command again and again.\n\n\`\`\`python\n${code}\n\`\`\`` }, others)[0], /prompt is too close/);
+  assert.match(generate.duplicateProblems({ id: 'new', title: 'Other', prompt: `A coding agent has run for two hours on a task. The trace shows the same shell command again and again.\n\n~~~python\n${code}\n~~~` }, others)[0], /prompt is too close/);
+  const reading = [{ id: 'read-one', title: 'Read the loop', prompt: `Read this function and say what it returns.\n\n\`\`\`python\n${code}\n\`\`\`` }];
+  const other = Array.from({ length: 40 }, (_, index) => `total_${index} += weight_${index} * value_${index}`).join('\n');
+  assert.deepEqual(generate.duplicateProblems({ id: 'read-two', title: 'Read the sum', prompt: `Read this function and say what it returns.\n\n\`\`\`python\n${other}\n\`\`\`` }, reading), []);
   assert.deepEqual(generate.duplicateProblems({ id: 'new', title: 'Pick a reranker pool size', prompt: 'How many passages go to the cross encoder?' }, others), []);
 });
 

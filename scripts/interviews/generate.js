@@ -35,6 +35,21 @@ function visible(md) {
   return String(md || '').replace(/^\s*(?:```|~~~).*$/gm, ' ').replace(/`([^`]*)`/g, '$1').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_#>|]/g, '').replace(/\s+/g, ' ').trim();
 }
 
+const FENCED = /^\s*(```|~~~)[^\n]*\n[\s\S]*?^\s*\1[^\n]*$/gm;
+
+function prose(md) {
+  return plain(String(md || '').replace(FENCED, ' '));
+}
+
+function hasCode(md) {
+  return new RegExp(FENCED.source, 'm').test(String(md || ''));
+}
+
+function promptScore(a, b) {
+  const full = jaccard(a, b);
+  return hasCode(a) && hasCode(b) ? full : Math.max(full, jaccard(a, b, prose));
+}
+
 function words(text, flatten = visible) {
   return new Set(flatten(text).toLowerCase().split(/[^a-z0-9]+/).filter(word => word.length > 2 && !STOP_WORDS.has(word)));
 }
@@ -144,7 +159,7 @@ function duplicateProblems(draft, others) {
   for (const other of others) {
     if (other.id === draft.id) problems.push(`the id ${draft.id} is taken by an existing question. Pick a new subject and a new id`);
     else if (jaccard(draft.title, other.title) >= TITLE_DUPLICATE) problems.push(`the title is too close to the existing question ${other.id} ("${other.title}"). Ask a different question`);
-    else if (Math.max(jaccard(draft.prompt, other.prompt), jaccard(draft.prompt, other.prompt, plain)) >= PROMPT_DUPLICATE) problems.push(`the prompt is too close to the existing question ${other.id}. Ask a different question`);
+    else if (promptScore(draft.prompt, other.prompt) >= PROMPT_DUPLICATE) problems.push(`the prompt is too close to the existing question ${other.id}. Ask a different question`);
   }
   return problems;
 }
