@@ -20,7 +20,7 @@ A unified next-token model generates a 512 by 512 image as a sequence of discret
 
 ## Short answer
 
-The reference model's tokenizer reduces 8 by 8 pixels to one code, so a 512 by 512 image is 4096 codes; at about 30 codes per second that is about 2 minutes per image, against 2 to 5 seconds for a diffusion model of the same quality tier. A 4-second clip at 8 frames per second is 32 frames; with the same 8 times spatial reduction and a 4-frame temporal reduction, a 256 by 256 clip is 32 times 32 times 8, which is 8,192 codes. The levers are the codes per image, the decode speed through the KV cache and speculative decoding, and a different decoding scheme such as masked parallel decoding, which needs about 16 passes instead of one pass per code.
+The reference model's tokenizer reduces 8 by 8 pixels to one code, so a 512 by 512 image is 4096 codes; at about 30 codes per second that is about 2 minutes per image, against 2 to 5 seconds for a diffusion model of the same quality tier. A 4-second clip at 8 frames per second is 32 frames; with the same 8 times spatial reduction and a 4-frame temporal reduction, a 256 by 256 clip is 32 times 32 times 8, which is 8,192 codes. The levers are the codes per image, the decode speed through speculative decoding or the KV cache, and a different decoding scheme such as masked parallel decoding, which needs about 16 passes instead of one pass per code.
 
 ## Full answer
 
@@ -51,7 +51,7 @@ The same weights do image generation, image understanding and video with one nex
 
 - Classifier-free guidance: generate with and without the caption and mix the logits with a weight, typically 3.0 to 7.0; it doubles the forward passes per code.
 - Temperature: 0.8 for image generation and 1.0 for understanding in the reference recipe.
-- The KV cache and speculative decoding narrow the gap to diffusion but do not close it.
+- Speculative decoding narrows the gap to diffusion, and so does the KV cache, but neither closes it.
 
 ### A different decoding scheme
 
