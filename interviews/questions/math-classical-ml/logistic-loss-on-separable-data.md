@@ -55,4 +55,4 @@ Add an L2 penalty, lambda times the sum of squared weights, to the loss. Its gra
 
 ## Taught in
 
-The [logistic regression lesson](../../../phases/02-ml-fundamentals/03-logistic-regression/) explains why the log loss is convex and what separable data does to it, and the [linear regression lesson](../../../phases/02-ml-fundamentals/02-linear-regression/) introduces the L2 penalty.
+The [logistic regression lesson](../../../phases/02-ml-fundamentals/03-logistic-regression/) explains why the log loss is convex and why separable data has no finite minimizer, and the [linear regression lesson](../../../phases/02-ml-fundamentals/02-linear-regression/) introduces the L2 penalty.

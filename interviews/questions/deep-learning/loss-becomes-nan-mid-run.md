@@ -60,4 +60,4 @@ A clean run that dies late is almost always an oversized update: the peak learni
 
 ## Taught in
 
-The [debugging lesson](../../../phases/03-deep-learning-core/13-debugging-neural-networks/) gives the NaN rows of the master table, the [optimizers lesson](../../../phases/03-deep-learning-core/06-optimizers/) places clipping in the loop, the [learning rate schedules lesson](../../../phases/03-deep-learning-core/09-learning-rate-schedules/) covers warmup and peak, and the [cosine warmup capstone](../../../phases/19-capstone-projects/44-cosine-lr-warmup/) logs the gradient norm beside the rate.
+The [debugging lesson](../../../phases/03-deep-learning-core/13-debugging-neural-networks/) gives the NaN rows of the master table, the [optimizers lesson](../../../phases/03-deep-learning-core/06-optimizers/) places clipping in the loop, the [learning rate schedules lesson](../../../phases/03-deep-learning-core/09-learning-rate-schedules/) covers warmup and peak, and the [cosine warmup capstone](../../../phases/19-capstone-projects/44-cosine-lr-warmup/) logs the norm of the gradient next to the rate.

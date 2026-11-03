@@ -1,6 +1,6 @@
 ---
 id: softmax-cross-entropy-gradient
-title: Three lines that return the gradient of cross-entropy
+title: Three lines that differentiate the cross-entropy loss
 card: deep-learning
 kind: code-reading
 level: 2
@@ -16,7 +16,7 @@ related: [deep-learning/mse-predicts-half-for-everything, deep-learning/loss-stu
 updated: 2026-11-03
 ---
 
-This function claims to return the gradient of the cross-entropy loss with respect to the logits.
+This function claims to return, for each logit, the derivative of the cross-entropy loss.
 
 ```python
 def cce_gradient(logits, target_index):
@@ -26,7 +26,7 @@ def cce_gradient(logits, target_index):
     return grads
 ```
 
-Explain why three lines are enough. Then describe the gradient vector for a confident right answer and for a confident wrong answer.
+Explain why three lines are enough. Then describe the gradient vector when the model is sure and right, and when it is sure and wrong.
 
 ## Short answer
 

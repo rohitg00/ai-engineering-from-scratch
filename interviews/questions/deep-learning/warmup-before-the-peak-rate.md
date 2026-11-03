@@ -16,7 +16,7 @@ related: [deep-learning/adam-bias-correction-first-steps, deep-learning/cosine-w
 updated: 2026-11-03
 ---
 
-A transformer recipe starts the learning rate at zero and ramps it linearly to the peak over the first steps, then decays it with a cosine. A teammate wants to start at the peak to save those steps. Explain what the ramp protects, how long it should be, and how to write it down so the recipe scales to a longer run.
+A transformer recipe starts the learning rate at zero and ramps it linearly up to the peak during the first steps, then decays it with a cosine. A teammate wants to start at the peak to save those steps. Explain what the ramp protects, how long it should be, and how to write it down so the recipe scales to a longer run.
 
 ## Short answer
 

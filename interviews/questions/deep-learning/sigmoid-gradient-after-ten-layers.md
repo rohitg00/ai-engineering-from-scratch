@@ -37,7 +37,7 @@ The 0.25 holds only for a unit whose output is exactly 0.5. A unit near 0 or nea
 - Tanh has a derivative that peaks at 1.0, four times the sigmoid's, but it still falls toward 0 for large inputs, so deep tanh stacks vanish too, only more slowly.
 - ReLU has a derivative of exactly 1 for positive inputs. The gradient passes through unchanged and the product does not shrink. This is the change that made deep networks trainable.
 - GELU keeps a smooth gradient and avoids the dead unit failure of ReLU, which is why transformers use it.
-- The backpropagation lesson also scales its initial weights by the square root of 2 over the input count, to keep early sigmoid units out of saturation.
+- The lesson's own network scales its initial weights by the square root of 2 over the input count, to keep early sigmoid units out of saturation.
 
 ### How to see it in a run
 

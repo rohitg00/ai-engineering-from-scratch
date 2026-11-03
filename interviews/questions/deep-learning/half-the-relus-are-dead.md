@@ -30,7 +30,7 @@ ReLU is max(0, x). Its derivative is 1 for positive inputs and 0 otherwise. A un
 
 ### How the high learning rate did it
 
-One oversized step moves a unit's bias or weights far negative. After that step every input lands below zero. The debugging lesson reproduces the state directly by filling weights with -1.0 and biases with -5.0 and shows a flat loss with most activations at zero. A high learning rate reaches the same state by accident.
+One oversized step moves a unit's bias or weights far negative. After that step every input lands below zero. The debugging lesson's demo builds the state directly by filling weights with -1.0 and biases with -5.0 and shows a flat loss with most activations at zero. A high learning rate reaches the same state by accident.
 
 ### Telling dead from sparse
 

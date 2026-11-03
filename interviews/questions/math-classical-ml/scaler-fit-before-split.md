@@ -26,7 +26,7 @@ The scaler saw the test rows, so the mean and standard deviation carried informa
 
 ### What leaked
 
-Standardization subtracts a mean and divides by a standard deviation. Both are statistics of the rows the scaler saw. When those rows include the test set, the training data has been shaped by the test data. The evaluation lesson lists this as the first example of leakage, next to two others that hide behind the same habit: future rows in a time series that was shuffled before the split, and a feature computed from the target.
+Standardization subtracts a mean and divides by a standard deviation. Both are statistics of the rows the scaler saw. When those rows include the test set, the training data has been shaped by the test data. The evaluation lesson names this as its first example of leakage, next to two others that hide behind the same habit: future rows in a time series that was shuffled before the split, and a feature computed from the target.
 
 ### The three sets and their jobs
 

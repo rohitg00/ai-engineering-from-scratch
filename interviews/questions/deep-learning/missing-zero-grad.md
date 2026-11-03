@@ -52,7 +52,7 @@ On a fixed batch the gradient norm should fall or hold as the loss falls. With t
 
 ### When accumulation is on purpose
 
-Gradient accumulation across several small batches emulates one large batch: run backward on each micro batch without zeroing, then take one step and one zero_grad for the group, with the loss scaled by the group size. The mini framework lesson sets that as an exercise. The difference from the bug is the single step per group and the division.
+Gradient accumulation across several small batches emulates one large batch: run backward on each micro batch without zeroing, then take one step and one zero_grad for the group, with the loss scaled by the group size. That is an exercise in the framework lesson. The difference from the bug is the single step per group and the division.
 
 ## Follow-ups
 

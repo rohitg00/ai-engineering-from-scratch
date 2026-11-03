@@ -56,4 +56,4 @@ Call eval before inference and wrap the pass in no_grad, which also saves memory
 
 ## Taught in
 
-The [regularization lesson](../../../phases/03-deep-learning-core/07-regularization/) builds dropout and batch normalization with both modes, and the [mini framework lesson](../../../phases/03-deep-learning-core/10-mini-framework/) adds the training flag to every module.
+The [regularization lesson](../../../phases/03-deep-learning-core/07-regularization/) builds both layers in both modes, and the [mini framework lesson](../../../phases/03-deep-learning-core/10-mini-framework/) adds the training flag to every module.

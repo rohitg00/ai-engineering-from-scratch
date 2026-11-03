@@ -58,4 +58,4 @@ Write it as a table: for each training row, which fold it belonged to, and which
 
 ## Taught in
 
-The [ensemble methods lesson](../../../phases/02-ml-fundamentals/11-ensemble-methods/) describes stacking and its leakage rule, and the [model evaluation lesson](../../../phases/02-ml-fundamentals/09-model-evaluation/) builds the folds that produce the out-of-fold predictions.
+The [ensemble methods lesson](../../../phases/02-ml-fundamentals/11-ensemble-methods/) describes stacking and its leakage rule, and the [model evaluation lesson](../../../phases/02-ml-fundamentals/09-model-evaluation/) builds the folds behind the meta-features.

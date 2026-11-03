@@ -62,4 +62,4 @@ The lesson lists the other places this pattern appears: subtracting nearly equal
 
 ## Taught in
 
-The [numerical stability lesson](../../../phases/01-math-foundations/13-numerical-stability/) explains catastrophic cancellation and sets this variance as its first exercise.
+The [numerical stability lesson](../../../phases/01-math-foundations/13-numerical-stability/) explains how nearly equal numbers cancel and sets this variance as its first exercise.

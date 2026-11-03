@@ -16,7 +16,7 @@ related: [deep-learning/adam-bias-correction-first-steps, deep-learning/train-mo
 updated: 2026-11-03
 ---
 
-You want weight decay on a transformer trained with Adam. One engineer adds lambda times the sum of squared weights to the loss. Another uses an AdamW optimizer with a weight decay argument. They say the two are the same thing. Are they, and which do you choose?
+You want weight decay on a transformer trained with Adam. One engineer adds an L2 penalty on the weights to the loss. Another uses an AdamW optimizer with a weight decay argument. They say the two are the same thing. Are they, and which do you choose?
 
 ## Short answer
 

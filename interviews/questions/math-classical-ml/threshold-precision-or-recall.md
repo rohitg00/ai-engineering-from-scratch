@@ -35,7 +35,7 @@ Precision is true positives over all predicted positives. Recall is true positiv
 
 ### What the threshold does
 
-The model outputs a probability. The decision compares it with a threshold. A higher threshold predicts positive less often: precision rises and recall falls. A lower threshold does the reverse. The logistic regression lesson sweeps thresholds of 0.3, 0.4, 0.5, 0.6 and 0.7 on one model and prints the four metrics at each, which is the table to show the product owner.
+The model outputs a probability. The decision compares it with a threshold. A higher threshold predicts positive less often: precision rises and recall falls. A lower threshold does the reverse. The lesson on logistic regression sweeps thresholds of 0.3, 0.4, 0.5, 0.6 and 0.7 on one model and prints the four metrics at each, which is the table to show the product owner.
 
 ### Which way to move
 

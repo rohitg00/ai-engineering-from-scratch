@@ -16,7 +16,7 @@ related: [deep-learning/kaiming-factor-of-two, deep-learning/half-the-relus-are-
 updated: 2026-11-03
 ---
 
-A network with a hidden layer of 512 units is initialized with every weight and every bias at zero. Training runs for thousands of epochs and the loss barely moves. The learning rate and the data check out. What is wrong, and why does a small random perturbation of each weight fix it?
+A network with a hidden layer of 512 units is initialized with every weight and every bias at zero. Training runs for thousands of epochs and the loss barely moves. Learning rate and data both check out. What is wrong, and why does a small random perturbation of each weight fix it?
 
 ## Short answer
 
@@ -55,4 +55,4 @@ Random is not enough on its own. The variance of the draw must match the activat
 
 ## Taught in
 
-The [weight initialization lesson](../../../phases/03-deep-learning-core/08-weight-initialization/) opens with the symmetry problem and demonstrates it with four zero-initialized neurons.
+The [weight initialization lesson](../../../phases/03-deep-learning-core/08-weight-initialization/) opens with the symmetry problem and demonstrates it with a tiny layer.

@@ -20,7 +20,7 @@ You add a new layer to a from-scratch network and run a gradient check. The rela
 
 ## Short answer
 
-A relative error near 1e-3 is in the warning band, so first make the check trustworthy. Use the centered difference, set the step to the range from 1e-5 to 1e-7, run the check in float64, and compute the relative error with the max of both magnitudes in the denominator. If the error stays near 1e-3 or grows under those conditions, the backward pass is wrong; if it drops below 1e-5, the check was at fault.
+A relative error near 1e-3 is in the warning band, so first make the check trustworthy. Use the two-sided difference, set the step to the range from 1e-5 to 1e-7, run the check in float64, and compute the relative error with the max of both magnitudes in the denominator. If the error stays near 1e-3 or grows under those conditions, the backward pass is wrong; if it drops below 1e-5, the check was at fault.
 
 ## Full answer
 
