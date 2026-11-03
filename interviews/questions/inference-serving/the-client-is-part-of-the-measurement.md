@@ -1,6 +1,6 @@
 ---
 id: the-client-is-part-of-the-measurement
-title: The benchmark client is part of the measurement
+title: Two clients, two numbers, one server
 card: inference-serving
 kind: concept
 level: 2

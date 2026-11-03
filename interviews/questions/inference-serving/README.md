@@ -23,19 +23,19 @@ Batching, the KV cache, prefix caching, schedulers and how to measure a serving 
 | [Sleep, wake and weight updates for an RL loop](sleep-mode-for-rl-rollouts.md) | Concept | 2 Working | 8 |
 | [Temperature zero gave two different answers](temperature-zero-two-answers.md) | Concept | 2 Working | 8 |
 | [Choose tensor, pipeline or data parallelism](tensor-pipeline-or-data-parallel.md) | Design | 2 Working | 10 |
-| [The benchmark client is part of the measurement](the-client-is-part-of-the-measurement.md) | Concept | 2 Working | 8 |
-| [An admission cap only chooses who waits](a-cap-only-chooses-who-waits.md) | Trade-off | 3 Senior | 10 |
-| [From per-position acceptance to tokens per pass](acceptance-length-on-long-answers.md) | Estimate | 3 Senior | 8 |
+| [Two clients, two numbers, one server](the-client-is-part-of-the-measurement.md) | Concept | 2 Working | 8 |
+| [An admission cap decides who waits](a-cap-only-chooses-who-waits.md) | Trade-off | 3 Senior | 10 |
+| [Acceptance by draft position, tokens per pass](acceptance-length-on-long-answers.md) | Estimate | 3 Senior | 8 |
 | [Pick the EAGLE3 draft depth for your concurrency](eagle3-draft-depth.md) | Trade-off | 3 Senior | 10 |
 | [When an FP8 checkpoint pays](fp8-weights.md) | Trade-off | 3 Senior | 10 |
 | [Pick a concurrency cap when throughput keeps rising](goodput-sets-the-cap.md) | Trade-off | 3 Senior | 12 |
 | [Should the prefill chunk be smaller](smaller-prefill-chunks.md) | Trade-off | 3 Senior | 10 |
 | [Speculation won the benchmark and lost in production](speculation-on-real-prompts.md) | Debug | 3 Senior | 10 |
-| [What the batch-invariant mode costs](the-cost-of-batch-invariance.md) | Trade-off | 3 Senior | 10 |
+| [What determinism costs a live server](the-cost-of-batch-invariance.md) | Trade-off | 3 Senior | 10 |
 | [A larger token budget at low load](token-budget-at-low-load.md) | Trade-off | 3 Senior | 10 |
-| [Two data-parallel copies served less than one card](two-copies-served-less-than-one.md) | Debug | 3 Senior | 10 |
+| [Two data-parallel copies, less output than one card](two-copies-served-less-than-one.md) | Debug | 3 Senior | 10 |
 | [When prefill-decode disaggregation pays](when-to-split-prefill-and-decode.md) | Design | 3 Senior | 12 |
-| [A disaggregated benchmark that counted empty answers](a-benchmark-that-counted-empty-answers.md) | Code reading | 4 Staff | 10 |
+| [A split-server benchmark that counted empty answers](a-benchmark-that-counted-empty-answers.md) | Code reading | 4 Staff | 10 |
 | [Design a chat service on a fleet of L4 cards](design-a-chat-service-on-l4s.md) | Design | 4 Staff | 15 |
 | [Same throughput, two choices at a full pool](same-throughput-two-choices.md) | Trade-off | 4 Staff | 12 |
 

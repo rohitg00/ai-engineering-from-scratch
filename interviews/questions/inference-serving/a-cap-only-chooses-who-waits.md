@@ -1,6 +1,6 @@
 ---
 id: a-cap-only-chooses-who-waits
-title: An admission cap only chooses who waits
+title: An admission cap decides who waits
 card: inference-serving
 kind: tradeoff
 level: 3

@@ -20,7 +20,7 @@ You have twenty fine-tunes of one base model, each a LoRA adapter, and you want 
 
 ## Short answer
 
-Start the server with `--enable-lora`, name the adapters with `--lora-modules`, and let each request pick one in its `model` field. Three limits set the cost: `--max-loras`, which defaults to 1 and caps the adapters that run in one batch, `--max-lora-rank`, which defaults to 16 and reserves memory for the largest rank, and `--max-cpu-loras` for adapters kept in CPU memory ready to load. LoRA also changes the prefix cache, because the adapter is part of every block key, so two adapters never share cached blocks, and it adds CUDA graphs per adapter, so startup takes longer and uses more memory.
+Turn LoRA on at startup with `--enable-lora`, name the adapters with `--lora-modules`, and let each request pick one in its `model` field. Three limits set the cost: `--max-loras`, which defaults to 1 and caps the adapters that run in one batch, `--max-lora-rank`, which defaults to 16 and reserves memory for the largest rank, and `--max-cpu-loras` for adapters kept in CPU memory ready to load. LoRA also changes the prefix cache, because the adapter is part of every block key, so two adapters never share cached blocks, and it adds CUDA graphs per adapter, so startup takes longer and uses more memory.
 
 ## Full answer
 
@@ -77,4 +77,4 @@ The lesson's picking guide says that a 4-bit GPTQ base supports LoRA adapters in
 
 ## Taught in
 
-[Serve many fine-tunes with multi-LoRA](../../../manuals/vllm-101/sections/3-7-serve-many-fine-tunes-with-multi-lora.md) gives the flags and limits, [Prefix-friendly prompts](../../../manuals/sglang-101/sections/3-4-prefix-friendly-prompts.md) notes the tree key, and [the production quantization lesson](../../../phases/17-infrastructure-and-production/09-production-quantization/docs/en.md) pairs the base format with LoRA.
+[Serve many fine-tunes with multi-LoRA](../../../manuals/vllm-101/sections/3-7-serve-many-fine-tunes-with-multi-lora.md) gives the flags and limits, [Prefix-friendly prompts](../../../manuals/sglang-101/sections/3-4-prefix-friendly-prompts.md) notes the tree key, and [the production quantization lesson](../../../phases/17-infrastructure-and-production/09-production-quantization/docs/en.md) pairs a 4-bit base with adapters.

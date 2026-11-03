@@ -1,6 +1,6 @@
 ---
 id: a-benchmark-that-counted-empty-answers
-title: A disaggregated benchmark that counted empty answers
+title: A split-server benchmark that counted empty answers
 card: inference-serving
 kind: code-reading
 level: 4

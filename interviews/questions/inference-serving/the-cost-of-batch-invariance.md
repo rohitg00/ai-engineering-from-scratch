@@ -1,6 +1,6 @@
 ---
 id: the-cost-of-batch-invariance
-title: What the batch-invariant mode costs
+title: What determinism costs a live server
 card: inference-serving
 kind: tradeoff
 level: 3

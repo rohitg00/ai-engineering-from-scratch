@@ -1,6 +1,6 @@
 ---
 id: acceptance-length-on-long-answers
-title: From per-position acceptance to tokens per pass
+title: Acceptance by draft position, tokens per pass
 card: inference-serving
 kind: estimate
 level: 3

@@ -1,6 +1,6 @@
 ---
 id: two-copies-served-less-than-one
-title: Two data-parallel copies served less than one card
+title: Two data-parallel copies, less output than one card
 card: inference-serving
 kind: debug
 level: 3

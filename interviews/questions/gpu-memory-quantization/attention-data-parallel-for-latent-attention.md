@@ -65,4 +65,4 @@ Use tensor parallelism to make the model fit and nothing more. Add capacity with
 
 ## Taught in
 
-[The SGLang parallelism section](../../../manuals/sglang-101/sections/6-1-tp-size-dp-size-and-attn-dp-size.md) explains the two meanings of data parallel, and [The KV pool and bytes per token](../../../manuals/sglang-101/sections/3-1-kv-bytes-per-token-and-the-kv-pool.md) works through the latent size.
+[The SGLang parallelism section](../../../manuals/sglang-101/sections/6-1-tp-size-dp-size-and-attn-dp-size.md) explains both kinds of data parallelism, and [The KV pool and bytes per token](../../../manuals/sglang-101/sections/3-1-kv-bytes-per-token-and-the-kv-pool.md) works through the latent size.
