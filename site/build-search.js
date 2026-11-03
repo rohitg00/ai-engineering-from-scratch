@@ -2,6 +2,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 
 const SITE = __dirname;
 const OUTPUT = 'pagefind';
@@ -63,6 +64,120 @@ function interviewRecord({ url, title, content, topic, level, role, type = 'Inte
   return { url, content, language: 'en', meta: { title }, filters: { type: [type], topic: topics, level: levels, role: roles } };
 }
 
+const LESSON_TEXT_LIMIT = 12000;
+const INLINE_CODE_LIMIT = 40;
+const LESSON_PATH = /(phases\/[^/?#]+\/[^/?#]+)/;
+
+function loadPhases(siteDir = SITE) {
+  const file = path.join(siteDir, 'data.js');
+  if (!fs.existsSync(file)) return [];
+  const source = fs.readFileSync(file, 'utf8');
+  return vm.runInNewContext(`${source}\n;typeof PHASES === 'undefined' ? [] : PHASES`, {}, { filename: file });
+}
+
+function lessonPathOf(lesson) {
+  const match = LESSON_PATH.exec((lesson && lesson.url) || '');
+  return match ? match[1] : '';
+}
+
+function lessonUrl(lessonPath) {
+  return `/lesson?path=${encodeURIComponent(lessonPath)}`;
+}
+
+function stripFences(lines) {
+  const kept = [];
+  let fence = null;
+  let math = false;
+  for (const line of lines) {
+    const open = /^\s*(`{3,}|~{3,})/.exec(line);
+    if (fence) {
+      if (open && open[1][0] === fence[0] && open[1].length >= fence.length && !line.trim().slice(open[1].length).trim()) fence = null;
+      continue;
+    }
+    if (open) {
+      fence = open[1];
+      continue;
+    }
+    if (/^\s*\$\$/.test(line)) {
+      if (!(line.trim().length > 2 && line.trim().endsWith('$$'))) math = !math;
+      continue;
+    }
+    if (math) continue;
+    kept.push(line);
+  }
+  return kept;
+}
+
+function inlineText(line) {
+  const codes = [];
+  let text = line.replace(/(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/g, (_, ticks, value) => {
+    const word = value.trim();
+    codes.push(word.length <= INLINE_CODE_LIMIT ? word : '');
+    return `\u0000${codes.length - 1}\u0000`;
+  });
+  text = text
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/!\[[^\]]*\]\[[^\]]*\]/g, ' ')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/\[([^\]]*)\]\[[^\]]*\]/g, '$1')
+    .replace(/<https?:\/\/[^>]*>/g, ' ')
+    .replace(/https?:\/\/\S+/g, ' ')
+    .replace(/<\/?[a-zA-Z][a-zA-Z0-9-]*(?:\s[^<>]*)?\/?>/g, ' ')
+    .replace(/(\*\*|__|~~)(?=\S)([\s\S]*?\S)\1/g, '$2')
+    .replace(/(^|[^\w*])[*_](?=\S)([^*_]*?\S)[*_](?!\w)/g, '$1$2')
+    .replace(/\\([\\`*_{}[\]()#+\-.!|>~$])/g, '$1');
+  return text.replace(/\u0000(\d+)\u0000/g, (_, index) => codes[Number(index)]);
+}
+
+function markdownText(markdown) {
+  const source = String(markdown || '').replace(/^﻿?---\r?\n[\s\S]*?\r?\n---\r?\n/, '').replace(/<!--[\s\S]*?-->/g, ' ');
+  const lines = stripFences(source.split(/\r?\n/));
+  const out = [];
+  for (const raw of lines) {
+    if (/^\s*\[[^\]]+\]:\s*\S/.test(raw)) continue;
+    if (/^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$/.test(raw)) continue;
+    if (/^\s*([-*_])(\s*\1){2,}\s*$/.test(raw)) continue;
+    let line = raw.replace(/^\s{0,3}(?:>\s?)+/, '').replace(/^\s*#{1,6}\s+/, '').replace(/\s+#+\s*$/, '').replace(/^\s*(?:[-*+]|\d+[.)])\s+(?:\[[ xX]\]\s+)?/, '');
+    if (line.includes('|')) line = line.replace(/^\s*\||\|\s*$/g, '').replace(/\s*\|\s*/g, ' · ');
+    line = inlineText(line).replace(/\s+/g, ' ').trim();
+    if (line) out.push(line);
+  }
+  return out.join('\n');
+}
+
+function capText(text, limit = LESSON_TEXT_LIMIT) {
+  if (text.length <= limit) return text;
+  const cut = text.slice(0, limit);
+  const space = cut.search(/\s\S*$/);
+  return (space > limit * 0.8 ? cut.slice(0, space) : cut).trimEnd();
+}
+
+function lessonRecord({ lessonPath, title, phase, markdown, limit = LESSON_TEXT_LIMIT }) {
+  if (!/^phases\/[^/?#]+\/[^/?#]+$/.test(lessonPath || '')) throw new Error(`lesson record needs a phases/<phase>/<lesson> path: ${lessonPath}`);
+  const heading = /^\s*#\s+(.+?)\s*#*\s*$/m.exec(String(markdown || ''));
+  const name = (heading ? inlineText(heading[1]).replace(/\s+/g, ' ').trim() : '') || title;
+  const content = capText(markdownText(markdown), limit);
+  if (!name || !content) throw new Error(`lesson record ${lessonPath} needs a title and content`);
+  return { url: lessonUrl(lessonPath), content, language: 'en', meta: { title: name }, filters: { type: ['Lesson'], phase: list(phase) } };
+}
+
+function lessonSearchRecords({ siteDir = SITE, repoRoot = path.join(SITE, '..'), phases = loadPhases(siteDir), limit } = {}) {
+  const records = [];
+  const seen = new Set();
+  for (const phase of phases || []) {
+    for (const lesson of (phase && phase.lessons) || []) {
+      if (lesson.status && lesson.status !== 'complete') continue;
+      const lessonPath = lessonPathOf(lesson);
+      if (!lessonPath || seen.has(lessonPath)) continue;
+      const file = path.join(repoRoot, lessonPath, 'docs', 'en.md');
+      if (!fs.existsSync(file)) continue;
+      seen.add(lessonPath);
+      records.push(lessonRecord({ lessonPath, title: lesson.name, phase: phase.name, markdown: fs.readFileSync(file, 'utf8'), limit }));
+    }
+  }
+  return records;
+}
+
 async function loadPagefind() {
   try {
     return await import('pagefind');
@@ -95,15 +210,17 @@ async function buildSearchIndex({ siteDir = SITE, records = [] } = {}) {
 }
 
 async function main() {
-  const result = await buildSearchIndex({ records: require('./build-interviews').interviewSearchRecords() });
+  const interviews = require('./build-interviews').interviewSearchRecords();
+  const lessons = lessonSearchRecords();
+  const result = await buildSearchIndex({ records: interviews.concat(lessons) });
   if (result.skipped) {
     console.log('pagefind is not installed; skipped the search index. Run npm install to build it.');
     return;
   }
-  console.log(`Wrote the search index for ${result.pages} pages and ${result.records} records to site/${OUTPUT}/`);
+  console.log(`Wrote the search index for ${result.pages} pages and ${result.records} records (${interviews.length} interview, ${lessons.length} lesson) to site/${OUTPUT}/`);
 }
 
-module.exports = { collectPages, searchHtml, interviewRecord, buildSearchIndex, SOURCES };
+module.exports = { collectPages, searchHtml, interviewRecord, lessonRecord, lessonSearchRecords, markdownText, buildSearchIndex, SOURCES };
 
 if (require.main === module) {
   main().catch(error => {

@@ -567,7 +567,9 @@
         dest = r.lessonPath
           ? 'lesson?path=' + encodeURIComponent(r.lessonPath)
           : r.url;
-        chip = 'Phase ' + String(r.phaseId).padStart(2, '0');
+        chip = r.phaseId === undefined || r.phaseId === null
+          ? 'Lesson'
+          : 'Phase ' + String(r.phaseId).padStart(2, '0');
       } else if (r.kind === 'certification-lesson') {
         dest = 'lesson?path=' + encodeURIComponent(r.lessonPath);
         chip = 'Certification';
@@ -610,6 +612,7 @@
       } else if (r.kind === 'lesson' || r.kind === 'certification-lesson') {
         if (r.type && r.type !== '—') metaParts.push(r.type);
         if (r.lang && r.lang !== '—') metaParts.push(r.lang);
+        if ((r.phaseId === undefined || r.phaseId === null) && r.phaseName) metaParts.push(r.phaseName);
       } else if (r.kind === 'certification-track') {
         if (r.level) metaParts.push(r.level);
       } else if (r.kind === 'artifact') {
@@ -666,23 +669,55 @@
     return new DOMParser().parseFromString(String(html || ''), 'text/html').body.textContent;
   }
 
+  function lessonPathFromUrl(url) {
+    var match = /^\/?lesson(?:\.html)?\?(?:[^#]*&)?path=([^&#]+)/.exec(String(url || ''));
+    if (!match) return '';
+    try {
+      var value = decodeURIComponent(match[1]);
+      return /^phases\/[^/?#]+\/[^/?#]+$/.test(value) ? value : '';
+    } catch (_) {
+      return '';
+    }
+  }
+
   function pageItem(data) {
     var filters = data.filters || {};
-    return {
+    var pageType = filters.type && filters.type[0] ? filters.type[0] : 'Page';
+    var item = {
       kind: 'page',
       name: (data.meta && data.meta.title) || data.url,
       summary: excerptText(data.excerpt),
       url: data.url,
-      pageType: filters.type && filters.type[0] ? filters.type[0] : 'Page'
+      pageType: pageType
     };
+    var lessonPath = pageType === 'Lesson' ? lessonPathFromUrl(data.url) : '';
+    if (lessonPath) {
+      item.kind = 'lesson';
+      item.lessonPath = lessonPath;
+      item.phaseName = filters.phase && filters.phase[0] ? filters.phase[0] : '';
+    }
+    return item;
   }
 
   function mergePages(local, pages) {
-    var names = {};
-    local.forEach(function (item) { names[String(item.name).toLowerCase()] = true; });
-    return local.concat(pages.map(pageItem).filter(function (item) {
-      return !names[String(item.name).toLowerCase()];
-    }));
+    var seen = {};
+    function mark(item) {
+      if (item.kind === 'lesson' && item.lessonPath) seen['path:' + item.lessonPath] = true;
+      else seen['name:' + String(item.name).toLowerCase()] = true;
+      if (item.url) seen['url:' + item.url] = true;
+    }
+    function isSeen(item) {
+      if (item.kind === 'lesson' && item.lessonPath) return !!seen['path:' + item.lessonPath];
+      return !!(seen['url:' + item.url] || seen['name:' + String(item.name).toLowerCase()]);
+    }
+    local.forEach(mark);
+    var extra = [];
+    pages.map(pageItem).forEach(function (item) {
+      if (isSeen(item)) return;
+      mark(item);
+      extra.push(item);
+    });
+    return local.concat(extra);
   }
 
   function searchPages(query) {
@@ -864,6 +899,7 @@
       resultIndexForEnter: resultIndexForEnter,
       mergePages: mergePages,
       pageItem: pageItem,
+      lessonPathFromUrl: lessonPathFromUrl,
     };
   }
 
