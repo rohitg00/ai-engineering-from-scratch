@@ -20,7 +20,7 @@ interviews/
   loops/<role-id>.md                optional: the rounds of one interview loop
 ```
 
-Do not edit a generated README. Run the validator with `--write` to make it again.
+Do not edit or commit a generated README. CI makes them again on main after each merge, so a pull request that changes one only causes conflicts with the other open pull requests. The interview bank check fails a pull request that changes one.
 
 ## Cards and groups
 
@@ -215,11 +215,10 @@ A loop file `loops/<role-id>.md` gives the rounds of one interview loop for one 
 ## Validate
 
 ```bash
-node scripts/interviews/validate.js --write
 node scripts/interviews/validate.js
 ```
 
-The first command writes the generated READMEs and then checks the bank. The second command checks the bank, as CI does. The validator checks:
+This command checks the bank, as CI does. To preview the generated READMEs, run it with `--write`. Before you commit, restore them with `git checkout -- interviews/README.md interviews/scenarios/README.md 'interviews/questions/*/README.md'`. The validator checks:
 
 - the front matter keys and values, and the order of the body sections;
 - the shape of the follow-ups and the wrong answers;
@@ -229,7 +228,7 @@ The first command writes the generated READMEs and then checks the bank. The sec
 - the denylist, and that no file has an em dash or an en dash;
 - that each evidence listing matches its source;
 - that the prompt does not show a span of an answer;
-- that each generated README is current.
+- with `--check-readmes`, that each generated README is current. The main-only CI job uses this.
 
 ## Site check rules
 
@@ -238,4 +237,4 @@ The first command writes the generated READMEs and then checks the bank. The sec
 1. The title and the prompt of a question go into the search index. They must not share a 24-character span with any answer in the bank, on any card.
 2. The "Taught in" lines are visible text, so the same rule applies to them. Write the lesson name as the link text, in the form "the lesson" then a link such as `[advanced RAG](...)`, and do not copy words from the answer.
 3. The Short answer and the prompt start with plain words, not with a code span. The search index drops some characters from code, so a code span at the start breaks the match between the record and the prompt.
-4. On a branch that has no pull request yet, run `node scripts/interviews/validate.js --write`, then `node site/build-interviews.js --check`, and then revert the generated READMEs before you commit the items. Regenerate the READMEs and commit them in a separate commit after the last merge of main, so that the validator in CI finds them current.
+4. Do not commit the generated READMEs. The validator and the site check do not need them current, and CI makes them on main after each merge.

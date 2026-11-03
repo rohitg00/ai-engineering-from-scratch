@@ -690,10 +690,11 @@ function loadLoops(root, ctx, errors) {
   }).filter(Boolean);
 }
 
-function checkFiles(root, errors) {
+function checkFiles(root, errors, generated) {
   const names = loadDenylist(root);
   for (const full of listFiles(path.join(root, BANK))) {
     const file = rel(root, full);
+    if (isGeneratedPath(file)) continue;
     if (!/\.(?:md|yaml|txt)$/.test(file)) {
       errors.push(`${file}: only .md, .yaml and .txt files belong in ${BANK}/`);
       continue;
@@ -706,25 +707,34 @@ function checkFiles(root, errors) {
     if (hits.length) errors.push(`${file}: names a company from the denylist: ${hits.join(', ')}`);
     if (/https?:\/\//i.test(prose)) errors.push(`${file}: use relative repository links, not http links`);
     if (!file.endsWith('.md')) continue;
-    for (const link of markdownLinks(text)) {
-      if (/^[a-z]+:/i.test(link.target)) {
-        errors.push(`${file}:${link.line}: ${link.target} is not a relative repository link`);
-        continue;
-      }
-      const [target, anchor] = link.target.split('#');
-      const resolved = target ? path.resolve(path.dirname(full), decodeURIComponent(target)) : full;
-      if (!resolved.startsWith(root + path.sep) && resolved !== root) {
-        errors.push(`${file}:${link.line}: ${link.target} leaves the repository`);
-        continue;
-      }
-      if (!fs.existsSync(resolved)) {
-        errors.push(`${file}:${link.line}: ${link.target} does not exist`);
-        continue;
-      }
-      if (anchor === undefined) continue;
-      const doc = fs.statSync(resolved).isDirectory() ? path.join(resolved, 'README.md') : resolved;
-      if (!doc.endsWith('.md') || !fs.existsSync(doc) || !headingSlugs(read(doc)).has(anchor)) errors.push(`${file}:${link.line}: no heading #${anchor} in ${rel(root, doc)}`);
+    checkLinks(root, file, text, errors, generated);
+  }
+  for (const [file, text] of generated) checkLinks(root, file, text, errors, generated);
+}
+
+function checkLinks(root, file, text, errors, generated) {
+  const full = path.join(root, file);
+  for (const link of markdownLinks(text)) {
+    if (/^[a-z]+:/i.test(link.target)) {
+      errors.push(`${file}:${link.line}: ${link.target} is not a relative repository link`);
+      continue;
     }
+    const [target, anchor] = link.target.split('#');
+    const resolved = target ? path.resolve(path.dirname(full), decodeURIComponent(target)) : full;
+    if (!resolved.startsWith(root + path.sep) && resolved !== root) {
+      errors.push(`${file}:${link.line}: ${link.target} leaves the repository`);
+      continue;
+    }
+    const isDir = fs.existsSync(resolved) && fs.statSync(resolved).isDirectory();
+    const doc = isDir ? path.join(resolved, 'README.md') : resolved;
+    const future = generated.get(rel(root, doc));
+    if (!fs.existsSync(resolved) && future === undefined) {
+      errors.push(`${file}:${link.line}: ${link.target} does not exist`);
+      continue;
+    }
+    if (anchor === undefined) continue;
+    const docText = future !== undefined ? future : doc.endsWith('.md') && fs.existsSync(doc) ? read(doc) : null;
+    if (docText === null || !headingSlugs(docText).has(anchor)) errors.push(`${file}:${link.line}: no heading #${anchor} in ${rel(root, doc)}`);
   }
 }
 
@@ -767,8 +777,12 @@ function readmes(bank) {
   return out;
 }
 
+function isGeneratedPath(file) {
+  return file === `${BANK}/README.md` || file === `${BANK}/scenarios/README.md` || /^interviews\/questions\/[^/]+\/README\.md$/.test(file);
+}
+
 function generatedPaths(root) {
-  return listFiles(path.join(root, BANK)).map(full => rel(root, full)).filter(file => file === `${BANK}/README.md` || file === `${BANK}/scenarios/README.md` || /^interviews\/questions\/[^/]+\/README\.md$/.test(file));
+  return listFiles(path.join(root, BANK)).map(full => rel(root, full)).filter(isGeneratedPath);
 }
 
 function loadBank(root = REPO_ROOT) {
@@ -780,9 +794,9 @@ function loadBank(root = REPO_ROOT) {
   const { questions, scenarios } = loadItems(root, ctx);
   for (const item of questions.concat(scenarios)) errors.push(...item.errors);
   const loops = loadLoops(root, ctx, errors);
-  checkFiles(root, errors);
   const bank = { root, groups: topics.groups, cards: topics.cards, roles, questions, scenarios, loops, errors, manualCache: ctx.manualCache };
   bank.readmes = readmes(bank);
+  checkFiles(root, errors, bank.readmes);
   return bank;
 }
 
@@ -812,9 +826,11 @@ function main(argv) {
     writeReadmes(bank);
     bank = loadBank(root);
   }
-  const problems = bank.errors.concat(staleReadmes(bank));
+  const stale = staleReadmes(bank);
+  const problems = argv.includes('--check-readmes') ? bank.errors.concat(stale) : bank.errors;
   console.log(`Checked ${bank.cards.length} cards, ${bank.roles.length} roles, ${bank.questions.length} questions, ${bank.scenarios.length} scenarios and ${bank.loops.length} loops.`);
   for (const problem of problems) console.error(`  ${problem}`);
+  if (stale.length && !argv.includes('--check-readmes')) console.log(`${stale.length} generated README files differ from the items. CI makes them again on main, so a pull request leaves them as they are.`);
   return problems.length ? 1 : 0;
 }
 

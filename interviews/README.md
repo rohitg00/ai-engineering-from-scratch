@@ -10,8 +10,8 @@ The math, the networks and the transformer that every later answer builds on.
 
 | Card | Items | Planned |
 |---|---|---|
-| [Math and classical ML](questions/math-classical-ml/README.md) | 22 | 15 |
-| [Deep learning](questions/deep-learning/README.md) | 22 | 15 |
+| Math and classical ML | 0 | 15 |
+| Deep learning | 0 | 15 |
 | Transformers | 0 | 15 |
 | Tokenization, sampling and decoding | 0 | 15 |
 
