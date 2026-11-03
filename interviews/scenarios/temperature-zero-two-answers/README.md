@@ -30,7 +30,7 @@ source:
 
 ## Situation
 
-An evaluation team runs its benchmark twice against the team's serving endpoint, at temperature 0, with the same prompts in the same order. The two scores differ by about a point. They take one question whose answer changed and send it alone, twice. The two texts are identical. Then they send it alone five times and inside a batch of 16 five times, against a GB10 server with a mixture-of-experts model. The first of the five single requests gives one text. The next four give another text, which leaves the first after a few hundred characters. All five batched requests give the first text again.
+An evaluation team runs its benchmark twice against the team's serving endpoint, at temperature 0, with the same prompts in the same order. The two scores differ by about a point. They take one question whose answer changed and send it alone, twice. The two texts are identical. Then they send it alone five times and inside a batch of 16 five times, against a GB10 server that runs a model with mixture-of-experts layers. The first of the five single requests gives one text. The next four give another text, which leaves the first after a few hundred characters. All five batched requests give the first text again.
 
 The ticket says that the weights or the tokenizer must be corrupt, because temperature 0 is deterministic by definition.
 
