@@ -1,0 +1,11 @@
+title: the same five requests with a stable system prompt
+source: manuals/sglang-101/capture/gpu/out-l4/cache-experiment.txt
+lines: 1-5
+lang: text
+note: The first round fills the cache, so read the four rounds after it.
+---
+{"case": "stable-system-prompt", "round": 1, "ttft_ms": 2143.9, "prompt_tokens": 2999, "cached_tokens": 3}
+{"case": "stable-system-prompt", "round": 2, "ttft_ms": 82.8, "prompt_tokens": 2999, "cached_tokens": 2998}
+{"case": "stable-system-prompt", "round": 3, "ttft_ms": 85.1, "prompt_tokens": 2999, "cached_tokens": 2998}
+{"case": "stable-system-prompt", "round": 4, "ttft_ms": 82.2, "prompt_tokens": 2999, "cached_tokens": 2998}
+{"case": "stable-system-prompt", "round": 5, "ttft_ms": 80.7, "prompt_tokens": 2999, "cached_tokens": 2998}
