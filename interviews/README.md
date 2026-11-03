@@ -73,10 +73,10 @@ Whole interview rounds: system design, incidents, coding and behavioral question
 
 | Role | Cards |
 |---|---|
-| LLM Product Engineering | 12 |
-| Agent Systems Engineering | 12 |
-| AI Evaluation and Reliability | 12 |
-| AI Data Systems | 11 |
-| Customer AI Deployment | 12 |
-| Developer Experience and Education | 8 |
-| Inference Engineering | 12 |
+| LLM Product Engineering | 21 |
+| Agent Systems Engineering | 15 |
+| AI Evaluation and Reliability | 22 |
+| AI Data Systems | 14 |
+| Customer AI Deployment | 18 |
+| Developer Experience and Education | 11 |
+| Inference Engineering | 15 |
