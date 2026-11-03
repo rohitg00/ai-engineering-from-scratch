@@ -36,7 +36,7 @@ cached:  step t computes one new token state    -> N
 cached:  its one query meets t stored keys      -> N (N + 1) / 2 comparisons
 ```
 
-For N equal to 100 the naive count is 5050 token states and the cached count is 100. The lesson's code prints both and confirms that the outputs match. The comparisons of the new query with the stored keys stay at 5050 in both loops, so the attention step itself still grows with the length at each step. For a response of a few thousand tokens the naive count of token states is in the millions, most of them redundant.
+For N equal to 100 the naive count is 5050 token states and the cached count is 100. The lesson's code runs a ten-token example and counts query-key comparisons instead: it prints the same count for both loops and confirms that the outputs match. At 100 tokens those comparisons total 5050 in both loops, so the attention step itself still grows with the length at each step. For a response of a few thousand tokens the naive count of token states is in the millions, most of them redundant.
 
 ### What is stored
 
