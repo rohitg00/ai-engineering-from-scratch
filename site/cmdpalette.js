@@ -567,9 +567,7 @@
         dest = r.lessonPath
           ? 'lesson?path=' + encodeURIComponent(r.lessonPath)
           : r.url;
-        chip = r.phaseId === undefined || r.phaseId === null
-          ? 'Lesson'
-          : 'Phase ' + String(r.phaseId).padStart(2, '0');
+        chip = lessonChip(r);
       } else if (r.kind === 'certification-lesson') {
         dest = 'lesson?path=' + encodeURIComponent(r.lessonPath);
         chip = 'Certification';
@@ -610,9 +608,7 @@
           metaParts.push(((hours ? hours + 'h' : '') + (minutes ? ' ' + minutes + 'm' : '')).trim());
         }
       } else if (r.kind === 'lesson' || r.kind === 'certification-lesson') {
-        if (r.type && r.type !== '—') metaParts.push(r.type);
-        if (r.lang && r.lang !== '—') metaParts.push(r.lang);
-        if ((r.phaseId === undefined || r.phaseId === null) && r.phaseName) metaParts.push(r.phaseName);
+        metaParts = lessonMeta(r);
       } else if (r.kind === 'certification-track') {
         if (r.level) metaParts.push(r.level);
       } else if (r.kind === 'artifact') {
@@ -669,6 +665,22 @@
     return new DOMParser().parseFromString(String(html || ''), 'text/html').body.textContent;
   }
 
+  function hasPhaseId(r) {
+    return r.phaseId !== undefined && r.phaseId !== null;
+  }
+
+  function lessonChip(r) {
+    return hasPhaseId(r) ? 'Phase ' + String(r.phaseId).padStart(2, '0') : 'Lesson';
+  }
+
+  function lessonMeta(r) {
+    var parts = [];
+    if (r.type && r.type !== '—') parts.push(r.type);
+    if (r.lang && r.lang !== '—') parts.push(r.lang);
+    if (!hasPhaseId(r) && r.phaseName) parts.push(r.phaseName);
+    return parts;
+  }
+
   function lessonPathFromUrl(url) {
     var match = /^\/?lesson(?:\.html)?\?(?:[^#]*&)?path=([^&#]+)/.exec(String(url || ''));
     if (!match) return '';
@@ -699,7 +711,7 @@
     return item;
   }
 
-  function mergePages(local, pages) {
+  function mergePages(local, pages, limit) {
     var seen = {};
     function mark(item) {
       if (item.kind === 'lesson' && item.lessonPath) seen['path:' + item.lessonPath] = true;
@@ -713,7 +725,7 @@
     local.forEach(mark);
     var extra = [];
     pages.map(pageItem).forEach(function (item) {
-      if (isSeen(item)) return;
+      if (isSeen(item) || (limit !== undefined && extra.length >= limit)) return;
       mark(item);
       extra.push(item);
     });
@@ -728,10 +740,10 @@
       return pagefind.debouncedSearch(query, {}, 160);
     }).then(function (found) {
       if (!found || _pageQuery !== query) return null;
-      return Promise.all(found.results.slice(0, PAGE_RESULTS).map(function (result) { return result.data(); }));
+      return Promise.all(found.results.slice(0, PAGE_RESULTS * 2).map(function (result) { return result.data(); }));
     }).then(function (pages) {
       if (!pages || !pages.length || _pageQuery !== query || !_isOpen) return;
-      renderResults(mergePages(search(query), pages));
+      renderResults(mergePages(search(query), pages, PAGE_RESULTS));
     }).catch(function () {});
   }
 
@@ -900,6 +912,8 @@
       mergePages: mergePages,
       pageItem: pageItem,
       lessonPathFromUrl: lessonPathFromUrl,
+      lessonChip: lessonChip,
+      lessonMeta: lessonMeta,
     };
   }
 

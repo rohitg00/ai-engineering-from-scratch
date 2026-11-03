@@ -228,6 +228,8 @@ const LESSON_MD = [
 
 test('lesson search records use the lesson route, the lesson name, type and phase filters and plain text', () => {
   const record = lessonRecord({ lessonPath: 'phases/03-deep-learning-core/01-the-perceptron', title: 'From data', phase: 'Deep Learning Core', markdown: LESSON_MD });
+  const fenced = lessonRecord({ lessonPath: 'phases/03-deep-learning-core/01-the-perceptron', title: 'From data', phase: 'P', markdown: '```bash\n# not a title\n```\n\n# Real Title\n\nBody.' });
+  assert.equal(fenced.meta.title, 'Real Title');
   assert.equal(record.url, '/lesson?path=phases%2F03-deep-learning-core%2F01-the-perceptron');
   assert.deepEqual(record.meta, { title: 'The Perceptron Lesson' });
   assert.deepEqual(record.filters, { type: ['Lesson'], phase: ['Deep Learning Core'] });
@@ -321,4 +323,12 @@ test('the palette turns Pagefind lesson records into lessons and shows each less
   ]);
   assert.equal(merged[0], local[0]);
   assert.equal(palette.lessonPathFromUrl('/lesson?path=..%2Fsecret'), '');
+  assert.equal(palette.lessonChip(item), 'Lesson');
+  assert.deepEqual(palette.lessonMeta(item), ['Deep Learning Core']);
+  assert.equal(palette.lessonChip(local[0]), 'Phase 03');
+  assert.deepEqual(palette.lessonMeta({ ...local[0], type: 'Build', lang: 'Python', phaseName: 'Deep Learning Core' }), ['Build', 'Python']);
+  const many = Array.from({ length: 8 }, (_, index) => ({ url: `/practice/p${index}`, meta: { title: `P${index}` }, excerpt: '', filters: { type: ['Practice'] } }));
+  const limited = palette.mergePages(local, [record].concat(many), 6);
+  assert.equal(limited.length, 7);
+  assert.deepEqual(limited.slice(1).map(entry => entry.url), many.slice(0, 6).map(entry => entry.url));
 });

@@ -154,7 +154,7 @@ function capText(text, limit = LESSON_TEXT_LIMIT) {
 
 function lessonRecord({ lessonPath, title, phase, markdown, limit = LESSON_TEXT_LIMIT }) {
   if (!/^phases\/[^/?#]+\/[^/?#]+$/.test(lessonPath || '')) throw new Error(`lesson record needs a phases/<phase>/<lesson> path: ${lessonPath}`);
-  const heading = /^\s*#\s+(.+?)\s*#*\s*$/m.exec(String(markdown || ''));
+  const heading = stripFences(String(markdown || '').split(/\r?\n/)).map(line => /^\s*#\s+(.+?)\s*#*\s*$/.exec(line)).find(Boolean);
   const name = (heading ? inlineText(heading[1]).replace(/\s+/g, ' ').trim() : '') || title;
   const content = capText(markdownText(markdown), limit);
   if (!name || !content) throw new Error(`lesson record ${lessonPath} needs a title and content`);
