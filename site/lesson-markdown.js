@@ -16,7 +16,8 @@
     return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  function parseMd(md) {
+  function parseMd(md, options) {
+    var renderCode = options && options.renderCode || renderCodeBlock;
     var lines = md.split(/\r?\n/);
     var out = '';
     var inCodeBlock = false;
@@ -127,7 +128,7 @@
             out += '</div>';
             out += '</div>';
           } else {
-            out += renderCodeBlock(raw, codeLang);
+            out += renderCode(raw, codeLang);
           }
           codeLines = [];
           codeLang = '';
@@ -559,10 +560,104 @@
     return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   }
 
-  function renderCodeBlock(code, lang) {
-    var highlighted = highlightSyntax(escapeHtml(code), lang);
-    var langLabel = lang ? '<span class="code-lang">' + escapeHtml(lang) + '</span>' : '';
-    return '<pre>' + langLabel + '<button class="code-copy" data-code="' + escapeAttr(code) + '">Copy</button><code>' + highlighted + '</code></pre>';
+  var TERMINAL_LANGS = { console: 1, shellsession: 1, 'shell-session': 1, terminal: 1 };
+  var OUTPUT_LANGS = { text: 1, txt: 1, plaintext: 1, plain: 1, output: 1, log: 1, ansi: 1 };
+  var PROMPT = /^(\s*(?:\([\w.-]+\) ?)?(?:\$|%|>>>)(?: |$))/;
+  var ANSI = /\u001b\[[0-9;]*m/g;
+
+  function codeKind(lang) {
+    lang = String(lang || '').toLowerCase();
+    if (TERMINAL_LANGS[lang]) return 'terminal';
+    if (OUTPUT_LANGS[lang]) return 'output';
+    return 'code';
+  }
+
+  function splitSession(code) {
+    var parts = [];
+    var more = false;
+    var repl = false;
+    String(code).split('\n').forEach(function (line) {
+      if (more) {
+        parts.push({ cmd: true, prompt: '', text: line, lang: 'bash' });
+        more = /\\$/.test(line);
+        return;
+      }
+      if (repl && /^\.\.\.( |$)/.test(line)) {
+        parts.push({ cmd: true, prompt: line.slice(0, 4), text: line.slice(4), lang: 'python' });
+        return;
+      }
+      var match = PROMPT.exec(line);
+      if (match) {
+        var text = line.slice(match[1].length);
+        repl = match[1].indexOf('>>>') >= 0;
+        more = /\\$/.test(text);
+        parts.push({ cmd: true, prompt: match[1], text: text, lang: repl ? 'python' : 'bash' });
+        return;
+      }
+      repl = false;
+      parts.push({ cmd: false, text: line });
+    });
+    return parts;
+  }
+
+  function codeLabel(kind, lang) {
+    if (kind === 'terminal') return 'terminal';
+    if (kind === 'output') return lang === 'ansi' ? 'log' : 'output';
+    return lang || 'code';
+  }
+
+  function codeBlockHtml(block) {
+    var head = '<div class="cb-head"><span class="cb-label">' + escapeHtml(block.label) + '</span>' + (block.extra || '') +
+      (block.copy ? '<button type="button" class="cb-copy">Copy</button>' : '') + '</div>';
+    return '<div class="cb" data-kind="' + block.kind + '"' + (block.lang ? ' data-lang="' + escapeAttr(block.lang) + '"' : '') + '>' +
+      head + '<pre><code>' + block.body + '</code></pre></div>';
+  }
+
+  var regexHighlighter = {
+    block: function (code, lang) { return highlightSyntax(escapeHtml(code), lang); },
+    lines: function (lines, lang) { return lines.map(function (line) { return highlightSyntax(escapeHtml(line), lang); }); },
+    ansi: function (code) { return escapeHtml(code.replace(ANSI, '')); }
+  };
+
+  function renderCodeWith(highlighter, code, lang, options) {
+    options = options || {};
+    lang = String(lang || '').toLowerCase();
+    code = String(code == null ? '' : code);
+    var kind = codeKind(lang);
+    var body;
+    var copy = kind === 'code';
+    if (kind === 'terminal') {
+      var parts = splitSession(code);
+      var lit = {};
+      ['bash', 'python'].forEach(function (name) {
+        var group = parts.filter(function (part) { return part.cmd && part.lang === name; });
+        var html = group.length ? highlighter.lines(group.map(function (part) { return part.text; }), name) : [];
+        group.forEach(function (part, index) { lit[parts.indexOf(part)] = html[index]; });
+      });
+      copy = parts.some(function (part) { return part.cmd; });
+      body = parts.map(function (part, index) {
+        if (!part.cmd) return part.text ? '<span class="cb-o">' + escapeHtml(part.text) + '</span>' : '';
+        return (part.prompt ? '<span class="cb-p">' + escapeHtml(part.prompt) + '</span>' : '') + '<span class="cb-ln">' + lit[index] + '</span>';
+      }).join('\n');
+    } else if (lang === 'ansi') {
+      body = highlighter.ansi(code);
+    } else if (kind === 'output') {
+      body = escapeHtml(code);
+    } else {
+      body = highlighter.block(code, lang);
+    }
+    return codeBlockHtml({
+      kind: kind,
+      lang: lang,
+      label: options.label || codeLabel(kind, lang),
+      extra: options.extra,
+      copy: options.copy === false ? false : copy,
+      body: body
+    });
+  }
+
+  function renderCodeBlock(code, lang, options) {
+    return renderCodeWith(regexHighlighter, code, lang, options);
   }
 
   function highlightSyntax(code, lang) {
@@ -684,6 +779,12 @@
     escapeAttr: escapeAttr,
     inlineFormat: inlineFormat,
     splitTableRow: splitTableRow,
-    highlightSyntax: highlightSyntax
+    highlightSyntax: highlightSyntax,
+    codeKind: codeKind,
+    splitSession: splitSession,
+    codeBlockHtml: codeBlockHtml,
+    renderCodeWith: renderCodeWith,
+    renderCodeBlock: renderCodeBlock,
+    escapeHtml: escapeHtml
   };
 }));
