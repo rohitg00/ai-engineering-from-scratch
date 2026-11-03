@@ -16,7 +16,7 @@ related: [transformers/causal-mask-minus-infinity]
 updated: 2026-11-03
 ---
 
-A new decoder-only language model on a vocabulary of 64 tokens reaches a training loss near zero within a few hundred steps. The sampled text is nonsense. Name the two most likely causes and the check that tells them apart.
+A new decoder-only language model on a vocabulary of 64 tokens reaches a training loss near zero after only some hundreds of steps, and the sampled text is nonsense. Name the two most likely causes and the check that tells them apart.
 
 ## Short answer
 

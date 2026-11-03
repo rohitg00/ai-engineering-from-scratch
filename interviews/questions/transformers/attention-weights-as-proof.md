@@ -16,7 +16,7 @@ related: [transformers/heads-are-nearly-free]
 updated: 2026-11-03
 ---
 
-A paper draft shows attention heatmaps as evidence that the model "reasons over the right tokens". You are the reviewer. What do you say about the heatmaps, and what would convince you that a given head does something specific?
+A paper draft shows attention heatmaps as proof that the model "reasons over the right tokens". You are the reviewer. What do you say about the heatmaps, and what would convince you that a given head does something specific?
 
 ## Short answer
 

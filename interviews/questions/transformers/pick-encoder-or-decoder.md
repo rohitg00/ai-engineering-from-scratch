@@ -34,7 +34,7 @@ Encoder-only for ranking and embeddings, decoder-only for generation, and encode
 
 ### The one line that separates them
 
-A decoder predicts the probability of each token given the tokens before it. An encoder predicts a masked token given the unmasked ones. Same block, same attention, different mask and different target. Only the first loss produces a model that can continue a sequence.
+A decoder predicts each token's probability given the tokens before it. An encoder predicts a masked token given the unmasked ones. Same block, same attention, different mask and different target. Only the first loss produces a model that can continue a sequence.
 
 ### Cross-attention
 
