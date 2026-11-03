@@ -284,6 +284,7 @@
     ensureNavigationLink(nav, 'manuals.html', 'Manuals', '');
     ensureNavigationLink(nav, '/cheatsheets', 'Cheat Sheets', '');
     ensureNavigationLink(nav, '/practice', 'Practice', '');
+    ensureNavigationLink(nav, '/interviews', 'Interviews', '');
     ensureNavigationLink(nav, 'skills.html', 'Skills', '');
     ensureNavigationLink(nav, 'highlights.html', 'My Highlights', '');
     ensureNavigationLink(nav, '/blogs', 'Blogs & Guides', '');
@@ -537,6 +538,7 @@
       ensureNavigationLink(footers[j], '/blogs', 'Blogs & Guides', '');
       ensureNavigationLink(footers[j], 'skills.html', 'Skills', '');
       ensureNavigationLink(footers[j], '/practice', 'Practice', '');
+      ensureNavigationLink(footers[j], '/interviews', 'Interviews', '');
       ensureNavigationLink(footers[j], 'highlights.html', 'My Highlights', '');
     }
     loadStars();

@@ -11,14 +11,15 @@ Batching, the KV cache, prefix caching, schedulers and how to measure a serving 
 | [The knee that the prefix cache hid](flush-before-you-compare.md) | Debug | 2 Working | 8 |
 | [What an FP8 KV cache buys and costs](fp8-kv-cache.md) | Trade-off | 2 Working | 10 |
 | [How speculative decoding keeps the output the same](how-speculation-keeps-the-output.md) | Concept | 2 Working | 8 |
-| [How many users fit in a 24,096-token pool](kv-pool-users-on-a-24-gb-card.md) | Estimate | 2 Working | 8 |
+| [How many users fit in the KV pool](kv-pool-users-fit.md) | Estimate | 2 Working | 10 |
 | [Cached tokens at zero with a stable template](low-hit-rate-with-a-stable-template.md) | Debug | 2 Working | 8 |
 | [What many LoRA adapters cost one server](multi-lora-serving-cost.md) | Design | 2 Working | 8 |
 | [One token budget instead of two phases](one-token-budget-per-step.md) | Concept | 2 Working | 8 |
 | [Why the KV cache is a pool of 16-token blocks](paged-blocks-and-the-hash-chain.md) | Concept | 2 Working | 8 |
-| [Why the shared part of the prompt goes first](prefix-cache-order.md) | Concept | 2 Working | 8 |
+| [Why one ID at the top of a prompt kills the cache](prefix-cache-order.md) | Debug | 2 Working | 8 |
 | [Read the GPU clock before the throughput](read-the-clock-first.md) | Debug | 2 Working | 8 |
 | [Read three scheduler log lines](read-three-scheduler-lines.md) | Code reading | 2 Working | 8 |
+| [Why the shared part of the prompt goes first](shared-prefix-first.md) | Concept | 2 Working | 8 |
 | [Sleep, wake and weight updates for an RL loop](sleep-mode-for-rl-rollouts.md) | Concept | 2 Working | 8 |
 | [Temperature zero gave two different answers](temperature-zero-two-answers.md) | Concept | 2 Working | 8 |
 | [Choose tensor, pipeline or data parallelism](tensor-pipeline-or-data-parallel.md) | Design | 2 Working | 10 |
@@ -27,6 +28,7 @@ Batching, the KV cache, prefix caching, schedulers and how to measure a serving 
 | [From per-position acceptance to tokens per pass](acceptance-length-on-long-answers.md) | Estimate | 3 Senior | 8 |
 | [Pick the EAGLE3 draft depth for your concurrency](eagle3-draft-depth.md) | Trade-off | 3 Senior | 10 |
 | [When an FP8 checkpoint pays](fp8-weights.md) | Trade-off | 3 Senior | 10 |
+| [Pick a concurrency cap when throughput keeps rising](goodput-sets-the-cap.md) | Trade-off | 3 Senior | 12 |
 | [Should the prefill chunk be smaller](smaller-prefill-chunks.md) | Trade-off | 3 Senior | 10 |
 | [Speculation won the benchmark and lost in production](speculation-on-real-prompts.md) | Debug | 3 Senior | 10 |
 | [What the batch-invariant mode costs](the-cost-of-batch-invariance.md) | Trade-off | 3 Senior | 10 |
