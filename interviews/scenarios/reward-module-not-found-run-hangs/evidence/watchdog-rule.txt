@@ -1,0 +1,13 @@
+title: the counting rule of the watchdog
+source: manuals/miles-101/capture/gpu/watchdog.sh
+lines: 21-27
+lang: bash
+note: The script counts the 503 lines of the last 60 s and adds a strike when the count is above the limit, which defaults to 100.
+---
+  if logs=$(docker logs --since 60s "$name" 2>&1); then
+    errors=$(printf '%s\n' "$logs" | grep -c "503 Service Unavailable")
+    if [ "$errors" -gt "$limit" ]; then
+      strikes=$((strikes + 1))
+    else
+      strikes=0
+    fi

@@ -1,0 +1,11 @@
+title: the three rules a verifier follows to rebuild the signed bytes
+source: manuals/a2a-101/sections/2-3-extended-cards-and-signatures.md
+lines: 67-71
+lang: text
+note: Rule 3 says what the signature cannot cover.
+---
+Each entry holds a base64url `protected` header and `signature` {{proto AgentCardSignature}}, and a verifier rebuilds the signed bytes from the received card under three rules {{spec §8.4.1}}:
+
+1. **Field presence.** A field marked `REQUIRED` must always be present, even when its value is the default {{spec §8.4.1}}. A field with the `optional` keyword stays whenever it was set, and any other field at its default value is dropped.
+2. **RFC 8785.** The JSON Canonicalization Scheme sorts object keys, fixes one form for each value, and removes whitespace {{spec §8.4.1}}.
+3. **No signatures.** The `signatures` field must be left out of the signed content, because a signature cannot cover itself {{spec §8.4.1}}.
