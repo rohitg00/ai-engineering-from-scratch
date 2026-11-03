@@ -1,0 +1,23 @@
+title: how many greedy outputs changed with the cache state and with the batch, both engines
+source: manuals/vllm-101/capture/gpu/out-l4/greedy-output-cache-batch-dtype.txt
+lines: 8-24
+lang: text
+note: Read the two zero rows first, then the two rows under them, then the table at a concurrency of 64.
+---
+Concurrency 1, 32 prompts, Qwen3-0.6B:
+
+comparison                     SGLang 0.6B   vLLM 0.6B
+flushed repeat against fresh   0 of 32       0 of 32
+cache off against cache off    0 of 32       0 of 32
+fresh against warm cache       21 of 32 (45) 11 of 32 (57)
+cache on against cache off     25 of 32 (26) 21 of 32 (48)
+
+Concurrency 64, 64 prompts sent at once:
+
+engine, model    fresh vs fresh restart   fresh vs warm   warm vs warm   cache on vs off   off vs off
+SGLang 0.6B      52                       35              32             54                27
+vLLM 0.6B        49                       45              12             48                50
+SGLang 8B-FP8    59                       38              1              63                6
+vLLM 8B-FP8      14                       31              21             34                34
+
+At concurrency 64 the batch changes greedy output even with the cache off, so the cache effect cannot be separated at this load.

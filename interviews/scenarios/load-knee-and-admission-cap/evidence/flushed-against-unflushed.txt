@@ -1,0 +1,18 @@
+title: the share that met the target and the P99 ITL, with and without a cache reset before each run
+source: manuals/vllm-101/capture/gpu/out-l4/load-flushed-vs-unflushed.txt
+lines: 15-26
+lang: text
+note: The number before the slash is the run with a reset. Find the user count where the share falls below half.
+---
+share of requests with TTFT <= 1 s and a mean ITL <= 100 ms, flushed against unflushed
+users   vLLM                  SGLang
+4       100% / 100%           100% / 100%
+8       50% / 75 to 81%       31% / 69 to 75%
+16      25% / 64 to 66%       16 to 17% / 61 to 64%
+32      0% / 6 to 9%          0% / 0%
+
+P99 ITL, flushed: vLLM 69 to 72 ms at 8 users, 522 to 523 ms at 16, 668 to 964 ms at 32.
+SGLang 72 to 73 ms at 8 users, 82 ms at 16, 105 to 106 ms at 32.
+P99 ITL, unflushed at 900 MHz in the same session: vLLM 69 ms at 8 users, 82 to 84 ms at 16, 741 to 1,422 ms at 32.
+SGLang 71 to 72 ms at 8 users, 81 to 82 ms at 16, 102 to 106 ms at 32.
+The time per token and the throughput changed by about 5 to 10 percent between the two sweeps. The cache moved the first token, not the decode.

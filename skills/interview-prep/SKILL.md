@@ -239,7 +239,7 @@ Never predict a hire, an offer or a pass. Report what the answers showed.
 | Missing | a main claim from `Short answer` is not in the answer | measured |
 | Wrong turn | the answer matches an item in `Wrong answers` | measured |
 | Unsupported number | a number that is not in the item or its sources | measured |
-| Shaky reasoning | the claim is right, but the reason does not hold | inferred |
+| Shaky reasoning | the claim is right, but its reasoning is wrong | inferred |
 | Strength pattern | a habit across items, such as asking for a measurement first | inferred |
 
 A measured finding quotes the learner and names the bank section. An

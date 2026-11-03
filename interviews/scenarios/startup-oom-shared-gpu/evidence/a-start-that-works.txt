@@ -1,0 +1,14 @@
+title: a start on the same shared GPU that reached the pool line
+source: manuals/vllm-101/capture/gpu/out-l4/livecheck-2026-10-22.txt
+lines: 6-13
+lang: text
+note: Read the memory fraction in the first line, then the two memory lines near the end.
+---
+== c01 startup lines
+(APIServer pid=2812801) INFO 10-22 21:24:23 [api_utils.py:286] non-default args: {'model_tag': 'Qwen/Qwen3-0.6B', 'port': 8010, 'reasoning_parser': 'qwen3', 'gpu_memory_utilization': 0.5}
+(EngineCore pid=2813854) INFO 10-22 21:24:39 [gpu_worker.py:479] Using V2 Model Runner
+(EngineCore pid=2813854) INFO 10-22 21:24:41 [cuda.py:526] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore pid=2813854) INFO 10-22 21:24:43 [model_runner.py:407] Model loading took 1.12 GiB memory and 3.909338 seconds
+(EngineCore pid=2813854) INFO 10-22 21:25:26 [gpu_worker.py:692] Available KV cache memory: 9.02 GiB
+(EngineCore pid=2813854) INFO 10-22 21:25:26 [kv_cache_utils.py:2464] GPU KV cache size: 84,480 tokens, Maximum concurrency for 40,960 tokens per request: 2.06x
+INFO:     Application startup complete.

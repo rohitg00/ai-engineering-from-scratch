@@ -1,0 +1,7 @@
+title: the summary of the probe on the default GB10 server
+source: manuals/sglang-101/capture/gpu/out-gb10/determinism.txt
+lines: 11-11
+lang: text
+note: Five requests alone gave two texts, five in a batch gave one, and all five batched matched the first request alone.
+---
+{"summary": true, "distinct_alone": 2, "distinct_in_batch": 1, "in_batch_matching_alone": 5, "rounds": 5}

@@ -1,0 +1,11 @@
+title: the same request id moved to the end of the system prompt
+source: manuals/sglang-101/capture/gpu/out-l4/cache-experiment.txt
+lines: 11-15
+lang: text
+note: Compare cached_tokens with prompt_tokens on each line.
+---
+{"case": "id-at-end", "round": 1, "ttft_ms": 98.2, "prompt_tokens": 3033, "cached_tokens": 2983}
+{"case": "id-at-end", "round": 2, "ttft_ms": 98.4, "prompt_tokens": 3032, "cached_tokens": 2987}
+{"case": "id-at-end", "round": 3, "ttft_ms": 99.7, "prompt_tokens": 3033, "cached_tokens": 2986}
+{"case": "id-at-end", "round": 4, "ttft_ms": 97.2, "prompt_tokens": 3030, "cached_tokens": 2985}
+{"case": "id-at-end", "round": 5, "ttft_ms": 93.1, "prompt_tokens": 3032, "cached_tokens": 2987}

@@ -1,0 +1,12 @@
+title: the trainer state estimate by model size, and what happened on the GB10
+source: manuals/miles-101/sections/2-1-pick-a-model-size.md
+lines: 13-18
+lang: text
+note: The estimate counts 16 bytes for each parameter and leaves out activations and the engine.
+---
+| Model | Trainer state, estimate | Result on our GB10 |
+|---|---|---|
+| Qwen3-0.6B | about 10 GB | trains |
+| Qwen3-1.7B | about 27 GB | fits for 4 steps at 256 tokens |
+| Qwen3-4B | about 64 GB | stopped by Ray in the first step at 256 tokens, twice |
+| Qwen3-8B | about 128 GB | not tried, larger than the machine |

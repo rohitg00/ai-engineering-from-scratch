@@ -1,0 +1,9 @@
+title: the summary of the same experiment on a GB10 with a larger model
+source: manuals/sglang-101/capture/gpu/out-gb10/cache-experiment.txt
+lines: 16-18
+lang: text
+note: The times differ from the L4, the cached-token counts do not.
+---
+{"summary": "stable-system-prompt", "median_ttft_ms": 44.75, "min_ttft_ms": 44.2, "max_ttft_ms": 48.4, "median_cached_tokens": 2998.0, "prompt_tokens": 2999}
+{"summary": "id-at-start", "median_ttft_ms": 632.2, "min_ttft_ms": 631.0, "max_ttft_ms": 645.2, "median_cached_tokens": 6, "prompt_tokens": 3030}
+{"summary": "id-at-end", "median_ttft_ms": 143.9, "min_ttft_ms": 139.5, "max_ttft_ms": 148.8, "median_cached_tokens": 2985, "prompt_tokens": 3032}
