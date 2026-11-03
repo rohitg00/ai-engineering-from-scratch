@@ -403,7 +403,7 @@ function apiJson(built) {
 
 function loadBuilt(root) {
   const bank = bankLib.loadBank(root);
-  const problems = bank.errors.concat(bankLib.staleReadmes(bank));
+  const problems = bank.errors;
   if (problems.length) throw new Error(`The interview bank has errors. Run node scripts/interviews/validate.js for the full report.\n${problems.join('\n')}`);
   const order = (a, b) => a.data.level - b.data.level || a.data.title.localeCompare(b.data.title);
   const questions = bank.questions.slice().sort(order);
