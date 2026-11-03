@@ -1,0 +1,12 @@
+title: the true on-policy contract: the models, the kernel and the two checks
+source: manuals/miles-101/sections/4-6-know-the-true-on-policy-limits.md
+lines: 11-16
+lang: text
+note: Both sides must run the same attention kernel, and that kernel has a GPU range.
+---
+The Miles versions we checked have one true on-policy contract. It covers dense Qwen3 models: Qwen3-0.6B and three Qwen3-4B variants. Both sides must run FlashAttention 3: the engine as its attention backend, and the trainer as its attention implementation.
+
+FlashAttention 3 is built for Hopper GPUs. The engine check accepts compute capability 8.0 to 9.0 and refuses newer GPUs. So check two things before you plan the run:
+
+1. Your GPU is a Hopper GPU, such as an H100 or an H200.
+2. Your model is in the contract.

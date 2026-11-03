@@ -1,0 +1,9 @@
+title: the first attempt, in the form the help text gives
+source: manuals/docker-sandboxes-101/capture/out/21-sessions-diff.txt
+lines: 1-3
+lang: console
+note: The parser read the first reference as a flag.
+---
+$ docker-agent sessions diff -1 -2
+Error: unknown shorthand flag: '1' in -1
+[exit 1]

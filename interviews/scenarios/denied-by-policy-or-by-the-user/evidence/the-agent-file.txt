@@ -1,0 +1,23 @@
+title: the toolset, the hook and the two patterns of the guarded agent
+source: manuals/docker-sandboxes-101/capture/fixtures/agents/guarded.yaml
+lines: 12-28
+lang: yaml
+note: One allow pattern for echo, one deny pattern for rm, and a preempting hook on every shell call.
+---
+    toolsets:
+      - type: shell
+    hooks:
+      pre_tool_use:
+        - matcher: shell
+          preempt_yolo: true
+          hooks:
+            - type: command
+              command: ./fixtures/hooks/log-hook.sh
+              env:
+                M101_HOOK_LOG: ./work/hook-stdin.jsonl
+
+permissions:
+  allow:
+    - "shell:cmd=echo*"
+  deny:
+    - "shell:cmd=rm*"

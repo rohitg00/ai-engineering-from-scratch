@@ -1,0 +1,13 @@
+title: the end of the traceback of the refused start
+source: manuals/sglang-101/capture/gpu/out-gb10/server-eagle3-no-env.log
+lines: 44-50
+lang: text
+note: Read the two context lengths in the ValueError and the last sentence of the message.
+---
+  File "/home/rohit/sglang-lab/.venv/lib/python3.12/site-packages/sglang/srt/configs/model_config.py", line 794, in __init__
+    self._derive_context_length(context_length)
+  File "/home/rohit/sglang-lab/.venv/lib/python3.12/site-packages/sglang/srt/configs/model_config.py", line 1205, in _derive_context_length
+    raise ValueError(
+ValueError: Warning: Target model's context_length (262144) is greater than the derived context_length (2048). This may lead to incorrect model outputs or CUDA errors. Note that the derived context_length may differ from max_position_embeddings in the model's config. To allow overriding this maximum, set the env var SGLANG_ALLOW_OVERWRITE_LONGER_CONTEXT_LEN=1
+
+[2026-10-17 15:31:03] Received sigquit from a child process. It usually means the child failed.

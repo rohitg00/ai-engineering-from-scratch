@@ -1,0 +1,16 @@
+title: the benchmark at a concurrency of 32, and the crash
+source: manuals/sglang-101/capture/out/oom-exploratory.log
+lines: 11-20
+lang: text
+note: Read token usage in the decode lines before you read the RuntimeError.
+---
+# run 2, benchmark at --max-concurrency 32
+[2026-10-16 13:42:51] Decode batch, #running-req: 32, #token: 16095, token usage: 0.05, cuda graph: False, gen throughput (token/s): 579.49, #queue-req: 0
+[2026-10-16 13:42:53] Decode batch, #running-req: 32, #token: 16095, token usage: 0.05, cuda graph: False, gen throughput (token/s): 564.55, #queue-req: 0
+[2026-10-16 13:42:55] Prefill batch, #new-seq: 1, #new-token: 511, #cached-token: 0, token usage: 0.00, #running-req: 0, #queue-req: 9, #pending-token: 0, cuda graph: False, input throughput (token/s): 66.85
+RuntimeError: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory).
+
+[2026-10-16 13:42:57] SIGQUIT received. signum=None, frame=None. It usually means one child failed.
+[2026-10-16 13:42:57] Sleeping 5 seconds before crash diagnostics to let GPU activity settle.
+[2026-10-16 13:43:02] No live scheduler processes found; skipping py-spy and CUDA coredump.
+[2026-10-16 13:43:02] kill_process_tree called: parent_pid=81559, include_parent=True, pid=81559

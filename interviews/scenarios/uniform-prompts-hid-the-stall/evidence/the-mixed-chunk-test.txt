@@ -1,0 +1,15 @@
+title: SGLang with the mixed chunk against vLLM, by ratio
+source: manuals/sglang-101/sections/5-3-reading-other-peoples-benchmarks.md
+lines: 289-297
+lang: text
+note: Read the three P99 ITL values on each row, then the cost at fixed lengths.
+---
+| Length ratio | Output tok/s, SGLang mixed chunk / vLLM | Median TPOT, SGLang mixed chunk / vLLM | P99 ITL, SGLang default / mixed chunk / vLLM |
+|---|---|---|---|
+| 1.0, fixed lengths | 182.3 / 181.7 | 73.1 / 76.8 ms | 81 / 203 / 502 ms |
+| 0.5, mixed | 171.8 / 169.6 | 80.8 / 81.4 ms | 363 / 193 / 191 ms |
+| 0.0, mixed | 171.9 / 174.4 | 76.8 / 75.0 ms | 302 / 196 / 202 ms |
+
+**We measured** that the mixed chunk closed the gap. With mixed lengths, SGLang now tied vLLM on throughput, time per token, and P99 ITL, and every seed range overlapped. Against SGLang without the flag, the P99 ITL fell from 363 to 193 ms at 0.5 and from 302 to 196 ms at 0.0. The output rose by about 8 percent.
+
+The flag had a cost with fixed lengths. The median P99 ITL rose from 81 to 203 ms, and the three seeds spread from 83 to 349 ms. When a whole wave arrives together, the prefills now share steps with the decodes, so the stream loses the clean gaps that it had before. The vLLM server stayed worse there, at 502 ms.

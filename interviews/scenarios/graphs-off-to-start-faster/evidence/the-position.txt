@@ -1,0 +1,13 @@
+title: the position of the manual on graphs, memory and startup
+source: manuals/sglang-101/sections/4-1-forwardmode-and-cuda-graphs.md
+lines: 143-149
+lang: text
+note: Read the last paragraph.
+---
+## Our position
+
+Keep CUDA graphs on, and size them to your traffic. The default `max_bs` suits moderate concurrency. If your benchmark or your production peak runs more requests than that, set `--cuda-graph-max-bs-decode` and `--max-running-requests` to your target before you measure. SemiAnalysis InferenceX recipes {{field InferenceX 2026-05}} derive both values from the concurrency they test.
+
+Do not expect graphs to make a slow decode fast on every machine. On the GB10, one decode step of a mixture-of-experts model takes tens of milliseconds, and graphs changed it by 3 percent or less. On the L4, with a dense 8B model, they saved about 1 percent. The worst token gap was shorter without them at 16 and 32 users. Measure the median and the tail, with and without graphs, before you blame the launch path.
+
+Do not turn graphs off to fix memory. If capture runs out of memory, lower `--cuda-graph-max-bs-decode` or `--mem-fraction-static`. A server without decode graphs pays launch time on every token for every user.

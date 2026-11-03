@@ -1,0 +1,11 @@
+title: how the engine turns the fraction into a pool
+source: manuals/sglang-101/sections/3-2-mem-fraction-static-and-startup-sizing.md
+lines: 55-59
+lang: text
+note: The fraction covers the weights and the KV pool together, and the pool gets what is left after the weights load.
+---
+**--mem-fraction-static:** the share of memory that SGLang gives to the model weights plus the KV pool. Everything outside that share is for activations, CUDA graphs, and other programs. The flag defaults to `None`, and SGLang computes a value at startup {{code}}.
+
+On a GPU, the automatic value comes from a reserve. SGLang starts with 512 MB and adds 1.5 MB for each token of the prefill chunk {{code}}. Then it adds more for tensor and pipeline parallelism and for CUDA graphs. On a GPU with more than 60 GB, the reserve is at least 10 GiB. The fraction is then the GPU memory minus the reserve, divided by the GPU memory. When SGLang cannot read the device capacity, it uses 0.95.
+
+After the weights load, SGLang measures free memory again. The KV budget is the free memory minus the `1 - fraction` share of the memory that was free before loading {{code}}. The pool holds that budget divided by the bytes per token from [section 3.1](#s-kv-bytes-per-token-and-the-kv-pool). If the budget is not positive, startup stops and prints the smallest fraction that would work.

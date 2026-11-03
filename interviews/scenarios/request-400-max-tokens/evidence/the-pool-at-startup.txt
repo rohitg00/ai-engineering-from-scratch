@@ -1,0 +1,8 @@
+title: the pool and the maximum length of that server at startup
+source: manuals/vllm-101/capture/gpu/out-l4/livecheck-2026-10-22.txt
+lines: 11-12
+lang: text
+note: The second line gives the longest request the server accepts and how many such requests fit in the pool.
+---
+(EngineCore pid=2813854) INFO 10-22 21:25:26 [gpu_worker.py:692] Available KV cache memory: 9.02 GiB
+(EngineCore pid=2813854) INFO 10-22 21:25:26 [kv_cache_utils.py:2464] GPU KV cache size: 84,480 tokens, Maximum concurrency for 40,960 tokens per request: 2.06x

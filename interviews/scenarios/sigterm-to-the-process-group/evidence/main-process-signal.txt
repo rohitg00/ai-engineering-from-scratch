@@ -1,0 +1,14 @@
+title: SIGTERM to the main process only, with one request running
+source: manuals/sglang-101/capture/out/shutdown-exploratory.log
+lines: 120-127
+lang: text
+note: The decode batches continue after the signal, and the health check returns 503 during the drain.
+---
+[2026-10-16 14:13:54] SIGTERM received. signum=None frame=None. Draining requests and shutting down...
+[2026-10-16 14:13:54] Decode batch, #running-req: 1, #token: 8, token usage: 0.00, cuda graph: False, gen throughput (token/s): 155.12, #queue-req: 0
+[2026-10-16 14:13:54] Decode batch, #running-req: 1, #token: 8, token usage: 0.00, cuda graph: False, gen throughput (token/s): 161.61, #queue-req: 0
+[2026-10-16 14:13:54] Decode batch, #running-req: 1, #token: 8, token usage: 0.00, cuda graph: False, gen throughput (token/s): 182.29, #queue-req: 0
+[2026-10-16 14:13:54] Decode batch, #running-req: 1, #token: 8, token usage: 0.00, cuda graph: False, gen throughput (token/s): 204.07, #queue-req: 0
+[2026-10-16 14:13:55] Decode batch, #running-req: 1, #token: 8, token usage: 0.00, cuda graph: False, gen throughput (token/s): 214.83, #queue-req: 0
+[2026-10-16 14:13:55] Health check request received during shutdown. Returning 503.
+[2026-10-16 14:13:55] INFO:     127.0.0.1:53237 - "GET /health HTTP/1.1" 503 Service Unavailable

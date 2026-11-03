@@ -1,0 +1,15 @@
+title: which rates kept up, which met the target, and which row the manual refuses to compare
+source: manuals/sglang-101/sections/5-3-reading-other-peoples-benchmarks.md
+lines: 240-248
+lang: text
+note: Find the rate from which no request met the target, then the reason the row at 16 is not compared.
+---
+**We measured** a tie up to 2 requests per second. Both engines kept up with the arrivals, so throughput was within 1 percent. SGLang gave the first token sooner at 0.5 and 1 per second, outside the seed spread. The medians were 284 against 317 ms and 166 against 180 ms. vLLM had the shorter time per token. It was 68 against 74 ms at 1 per second, outside the spread, and 89 against 100 ms at 2.
+
+Goodput shows what that means for a target. We set the target at 1 s to the first token and 100 ms per token. At 2 requests per second, vLLM served a median of 1.36 requests per second within the target, and SGLang 0.88. The seed ranges overlapped, 1.09 to 1.44 against 0.54 to 1.18. The SGLang median time per token was 99.9 ms, on the line of the target.
+
+From 4 requests per second, both engines fell behind the arrivals, and no request met the target. The stats lines show the same admission choice as in the closed loop. SGLang ran 37 requests with the pool 93 percent full. The vLLM server ran 43 requests and filled 99.7 percent of its pool.
+
+At 4 per second, vLLM gave 286.6 against 257.5 tok/s, 11 percent more and outside the seed spread. Its median first token came at 8.3 against 9.6 s, but those seed ranges overlapped. The cost was the stream: its P99 time per token was 187 against 127 ms, outside the spread.
+
+The clock does not explain the gap at 4. The vLLM runs had the lower median clock, 1,245 against 1,350 MHz. At 8 per second the throughput ranges overlapped. At 16 per second, every run of both engines stayed under 1,000 MHz after three tries, so we do not compare that row.

@@ -1,0 +1,13 @@
+title: the relationship_coverage block at the end of the record
+source: manuals/reverse-engineering-101/capture/out/10-mcp-09-analyze-function-percent-change-O1.json
+lines: 1899-1905
+lang: json
+note: Read the status, then the diagnostic sentence that says what complete covers.
+---
+        "relationship_coverage": {
+          "status": "complete",
+          "diagnostics": [
+            "Only resolved Ghidra call references are returned; unresolved computed or indirect calls remain unknown, while function classifications distinguish thunks and externals."
+          ]
+        },
+        "locations": [],

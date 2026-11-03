@@ -1,0 +1,14 @@
+title: a server start on the same machine: the probe before and after the ready line
+source: manuals/sglang-101/capture/gpu/out-gb10/server-default.log
+lines: 38-45
+lang: text
+note: The first health check returns 503 during startup, and the probe after the ready line returns 200.
+---
+[2026-10-17 14:19:12] INFO:     127.0.0.1:38426 - "GET /health HTTP/1.1" 503 Service Unavailable
+[2026-10-17 14:19:13] INFO:     127.0.0.1:38432 - "GET /model_info HTTP/1.1" 200 OK
+[2026-10-17 14:19:13] Prefill batch, #new-seq: 1, #new-token: 6, #cached-token: 0, token usage: 0.00, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 3.82
+[2026-10-17 14:19:13] INFO:     127.0.0.1:38444 - "POST /generate HTTP/1.1" 200 OK
+[2026-10-17 14:19:14] INFO:     127.0.0.1:38452 - "POST /freeze_gc HTTP/1.1" 200 OK
+[2026-10-17 14:19:14] The server is fired up and ready to roll!
+[2026-10-17 14:19:14] Prefill batch, #new-seq: 1, #new-token: 1, #cached-token: 0, token usage: 0.00, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: False, input throughput (token/s): 0.88
+[2026-10-17 14:19:15] INFO:     127.0.0.1:38462 - "GET /health HTTP/1.1" 200 OK

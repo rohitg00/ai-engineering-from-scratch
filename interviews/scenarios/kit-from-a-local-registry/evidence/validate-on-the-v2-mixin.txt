@@ -1,0 +1,8 @@
+title: sbx kit validate on the v2 mixin
+source: manuals/docker-sandboxes-101/capture/out/12-validate.txt
+lang: console
+note: The same command, a different kit generation.
+---
+$ sbx kit validate ./fixtures/kits/hello-mixin
+VALID: ./fixtures/kits/hello-mixin (directory)
+[exit 0]

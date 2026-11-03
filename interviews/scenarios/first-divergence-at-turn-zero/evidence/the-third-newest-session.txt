@@ -1,0 +1,9 @@
+title: the first turn of the restricted run of the guarded agent
+source: manuals/docker-sandboxes-101/capture/out/20-restricted.txt
+lines: 1-3
+lang: text
+note: This run came from another agent file, and its first tool call matches one side of the divergence.
+---
+user: Run the shell command: echo m101-ok
+root -> tool_call shell {"cmd": "echo m101-ok"}
+root <- tool_call_response Shell: m101-ok

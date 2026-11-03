@@ -1,0 +1,13 @@
+title: a port published without a protocol, and the listing
+source: manuals/docker-sandboxes-101/capture/out/05-ports.txt
+lang: console
+note: Read the protocol column.
+---
+$ sbx ports m101-demo --publish 18081:8080
+Published 127.0.0.1:18081 -> 8080/tcp4
+[exit 0]
+
+$ sbx ports m101-demo
+HOST IP     HOST PORT   SANDBOX PORT   PROTOCOL
+127.0.0.1   18081       8080           tcp4
+[exit 0]

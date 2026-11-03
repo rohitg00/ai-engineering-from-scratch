@@ -1,0 +1,32 @@
+title: a GetTask for an unknown id over JSON-RPC, status and code
+source: manuals/a2a-101/capture/out/11-errors.http
+lines: 1-26
+lang: text
+note: Read the HTTP status line, then the member that replaced result and its code.
+---
+### 1 · GetTask: an id that does not exist
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "GetTask",
+  "params": {
+    "id": "00000000-0000-4000-8000-000000000000"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "error": {
+    "code": -32001,
+    "message": "Task not found",
+    "data": [
+      {

@@ -1,0 +1,9 @@
+title: the two settings that the refused inspect suggests, and its exit code
+source: manuals/docker-sandboxes-101/capture/out/28-kit-inspect.txt
+lines: 3-5
+lang: console
+note: The error line above these two is cut; it says the kit's source is not in the allowlist and names the current value docker.io/.
+---
+  try: sbx settings set kit.allowedSources '["docker.io/","localhost:15000/m101/"]'
+   or: sbx settings set kit.allowedSources '["*"]'
+[exit 1]

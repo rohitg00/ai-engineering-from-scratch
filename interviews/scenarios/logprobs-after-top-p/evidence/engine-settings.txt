@@ -1,0 +1,12 @@
+title: the engine settings of five Miles runs
+source: manuals/miles-101/capture/gpu/out-gb10/engine-settings.txt
+lines: 4-9
+lang: text
+note: Compare the first row with the last. Only the two sampler flags differ.
+---
+run                    attention_backend  enable_deterministic_inference  sampling_backend  --rollout-top-p  --rollout-top-k
+e6a-base               flashinfer         False                           flashinfer        not set          not set
+e6b-det-triton         triton             True                            pytorch           not set          not set
+e6c-det-flashinfer     flashinfer         True                            pytorch           not set          not set
+e6d-det-triton-repeat  triton             True                            pytorch           not set          not set
+e11-topp-topk          flashinfer         False                           flashinfer        0.95             64
