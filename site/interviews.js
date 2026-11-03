@@ -1,6 +1,21 @@
 (function () {
   'use strict';
 
+  function hasWord(list, word) {
+    return (' ' + list + ' ').indexOf(' ' + word + ' ') >= 0;
+  }
+
+  function cardVisible(card, filters, visibleRows, totalRows) {
+    var text = !filters.q || card.search.indexOf(filters.q) >= 0;
+    var open = totalRows === 0 || !filters.q;
+    if (filters.level) return visibleRows > 0;
+    if (filters.role) return visibleRows > 0 || (hasWord(card.roles, filters.role) && text && open);
+    return visibleRows > 0 || (text && open);
+  }
+
+  if (typeof module === 'object' && module.exports) module.exports = { cardVisible: cardVisible };
+  if (typeof document === 'undefined') return;
+
   function store(key, value) {
     try {
       if (value === undefined) return sessionStorage.getItem(key) || '';
@@ -44,21 +59,15 @@
       rows.forEach(function (row) {
         var ok = (!q || row.getAttribute('data-search').indexOf(q) >= 0)
           && (!level || row.getAttribute('data-level') === level)
-          && (!role || (' ' + row.getAttribute('data-roles') + ' ').indexOf(' ' + role + ' ') >= 0);
+          && (!role || hasWord(row.getAttribute('data-roles'), role));
         row.hidden = !ok;
         if (ok) shown += 1;
       });
       cards.forEach(function (card) {
         var id = card.getAttribute('data-card');
-        var hasItem = rows.some(function (row) {
-          return row.getAttribute('data-card-id') === id
-            && (!level || row.getAttribute('data-level') === level)
-            && (!role || (' ' + row.getAttribute('data-roles') + ' ').indexOf(' ' + role + ' ') >= 0);
-        });
-        var listed = !role || (' ' + card.getAttribute('data-roles') + ' ').indexOf(' ' + role + ' ') >= 0;
-        var ok = (!q || card.getAttribute('data-search').indexOf(q) >= 0)
-          && (level ? hasItem : (listed || hasItem));
-        card.hidden = !ok;
+        var own = rows.filter(function (row) { return row.getAttribute('data-card-id') === id; });
+        var shownRows = own.filter(function (row) { return !row.hidden; }).length;
+        card.hidden = !cardVisible({ search: card.getAttribute('data-search'), roles: card.getAttribute('data-roles') }, { q: q, level: level, role: role }, shownRows, own.length);
       });
       groups.forEach(function (group) {
         group.hidden = !group.querySelector('[data-card]:not([hidden])');

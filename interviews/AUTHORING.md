@@ -156,7 +156,7 @@ The body has these `##` sections, in this order:
 | Section | Rule |
 |---|---|
 | `Situation` | what the candidate sees first: the system, the change, the symptom |
-| `Evidence` | a list of `- [what it shows](evidence/<name>.txt)`. Each file in `evidence/` appears once. The site shows the listings in this order, one at a time |
+| `Evidence` | a list of `- [what it shows](evidence/<name>.txt)`. Each file in `evidence/` appears once. The site shows the listings in this order, one at a time. Without JavaScript, the page shows all of them |
 | `Questions` | 3 to 6 numbered questions for the candidate |
 | `Walkthrough` | how a strong candidate reads the evidence, step by step |
 | `Resolution` | the cause and the fix, with the measurement that proves the fix |
@@ -182,7 +182,7 @@ note: Two prefill batches that admit 29 requests with one new token each.
 |---|---|
 | `title` | what the listing shows |
 | `source` | a repository path from the `source` list of the scenario |
-| `lines` | optional: `N-M`. The listing must equal lines N to M of the source, byte for byte. Without `lines`, the listing must equal the whole source file |
+| `lines` | optional: `N-M`. The text after the `---` line must equal lines N to M of the source, byte for byte, with their line ends. Without `lines`, it must equal the whole source file |
 | `lang` | `text`, `console`, `bash`, `json`, `jsonl`, `python` or `yaml` |
 | `note` | one sentence that tells the reader where to look |
 
@@ -196,7 +196,7 @@ The named sources are:
 
 - `docs/en.md` of each lesson in `lessons`;
 - the section file of each manual section in `manuals`;
-- for a scenario, also each file in `source` and each evidence file.
+- for a scenario, also each file in `source` and the listing of each evidence file. The evidence header does not count as a source.
 
 The validator reads each number as a token. It removes the commas in a number, so `1,213` and `1213` are the same. Do not round a number. Do not compute a new number in the text: copy the measured number, or say the ratio in words.
 
@@ -210,7 +210,7 @@ The validator reads each number as a token. It removes the commas in a number, s
 
 ## Loops
 
-A loop file `loops/<role-id>.md` gives the rounds of one interview loop for one role. Its front matter has `role`, `title`, `minutes` and `updated`. The body is a list. Each item names one round from the `rounds` list, its minutes and a link to a card README. The interview-prep skill uses the loops. The site does not show them yet.
+A loop file `loops/<role-id>.md` gives the rounds of one interview loop for one role. Its front matter has `role`, `title`, `minutes` and `updated`. The body is a list. Each item names one round from the `rounds` list and its minutes, and ends with the card id in the form `(card: <card-id>)`. A link to the card README is optional, because a card has a README only when it has items. The interview-prep skill uses the loops. The site does not show them yet.
 
 ## Validate
 

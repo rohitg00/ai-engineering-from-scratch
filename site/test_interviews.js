@@ -226,3 +226,29 @@ test('the deploy step stamps the social card on every interview page', () => {
     fs.rmSync(temp, { recursive: true, force: true });
   }
 });
+
+test('a card tile shows only when one of its items passes every filter', () => {
+  const { cardVisible } = require('./interviews.js');
+  const card = { search: 'inference and serving prefix caching', roles: 'inference-engineer' };
+  const empty = { search: 'rag chunking retrieval', roles: 'applied-ai-engineer' };
+  assert.equal(cardVisible(card, { q: 'prefix', level: '3', role: '' }, 0, 3), false);
+  assert.equal(cardVisible(card, { q: 'prefix', level: '', role: '' }, 1, 3), true);
+  assert.equal(cardVisible(card, { q: 'schedulers', level: '', role: '' }, 0, 3), false);
+  assert.equal(cardVisible(empty, { q: '', level: '', role: '' }, 0, 0), true);
+  assert.equal(cardVisible(empty, { q: 'chunking', level: '', role: '' }, 0, 0), true);
+  assert.equal(cardVisible(empty, { q: '', level: '2', role: '' }, 0, 0), false);
+  assert.equal(cardVisible(card, { q: '', level: '', role: 'applied-ai-engineer' }, 1, 3), true);
+  assert.equal(cardVisible(empty, { q: '', level: '', role: 'applied-ai-engineer' }, 0, 0), true);
+  assert.equal(cardVisible(empty, { q: '', level: '', role: 'inference-engineer' }, 0, 0), false);
+});
+
+test('the API URL sends the same CORS header as the file it rewrites to', () => {
+  for (const source of ['/interviews.json', '/api/interviews.json']) {
+    const rule = config.headers.find(entry => entry.source === source);
+    assert.ok(rule && rule.headers.some(header => header.key === 'Access-Control-Allow-Origin' && header.value === '*'), source);
+  }
+});
+
+test('the header marks Interviews as the current page on every interview route', () => {
+  assert.match(fs.readFileSync(path.join(__dirname, 'header.js'), 'utf8'), /\/\^\\\/interviews\(\?:\\\/\|\$\)\/\.test\(location\.pathname\)/);
+});

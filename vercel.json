@@ -610,6 +610,19 @@
       ]
     },
     {
+      "source": "/api/interviews.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    },
+    {
       "source": "/practice/:path*",
       "headers": [
         {
