@@ -1,0 +1,12 @@
+title: the tensor parallel start, two seconds after NCCL came up
+source: manuals/sglang-101/capture/gpu/incidents/l4-tp-unbalanced-memory.txt
+lines: 7-12
+lang: text
+note: The RuntimeError gives three numbers: the free memory before loading, the local GPU memory and 90 percent of it.
+---
+# runs/l4/load/tp2/server.log, lines after the NCCL version
+[2026-10-17 05:22:01 TP0] sglang is using nccl==2.30.7
+[2026-10-17 05:22:03 TP0] Scheduler hit an exception: Traceback (most recent call last):
+    raise RuntimeError(msg)
+RuntimeError: The memory capacity is unbalanced. Some GPUs may be occupied by other processes. pre_model_load_memory=18.28375244140625, local_gpu_memory=21.70391845703125, local_gpu_memory * 0.9=19.533526611328124
+[2026-10-17 05:22:03] Received sigquit from a child process. It usually means the child failed.

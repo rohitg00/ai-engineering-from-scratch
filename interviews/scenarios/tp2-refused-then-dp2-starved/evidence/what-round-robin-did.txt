@@ -1,0 +1,9 @@
+title: how the default load balancing method filled the small copy
+source: manuals/sglang-101/sections/6-1-tp-size-dp-size-and-attn-dp-size.md
+lines: 137-139
+lang: text
+note: Read how many requests sat on the small copy at a concurrency of 64.
+---
+The second card had 3.17 GB free after the weights, against 6.59 GB on the first, because the two pods held the rest. **We measured** a pool of 2,925 tokens on that copy, an eighth of the first. Four requests of 640 tokens fill it.
+
+The controller still sent every second request to that copy, because `round_robin` does not look at pools or queues. The benchmark keeps 64 requests open at a time. At concurrency 64, 63 of them sat on the small copy, 4 running and 59 waiting. The large copy had one to three requests and used 2 to 7 percent of its pool. The client could not send it more work until the small copy gave a slot back.
