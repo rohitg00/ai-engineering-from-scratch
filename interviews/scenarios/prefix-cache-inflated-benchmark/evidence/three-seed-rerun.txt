@@ -1,0 +1,10 @@
+title: the same caps again, with three seeds
+source: manuals/sglang-101/sections/5-1-sglang-benchmark-serving.md
+lines: 144-147
+lang: text
+note: The single kit run against a sweep with seeds 1, 2 and 3 on the same machine.
+---
+| Cap | Single kit run, median TTFT | Three seeds, median TTFT (lowest to highest) |
+|---|---|---|
+| 8 | 677.61 ms | 209.98 ms (185.25 to 216.02) |
+| 32 | 390.38 ms | 416.37 ms (338.06 to 434.64) |

@@ -1,0 +1,12 @@
+title: time to first token at a cap of 32
+source: manuals/sglang-101/capture/gpu/out-gb10/bench-random-c32.txt
+lines: 34-39
+lang: text
+note: The first-token block of the report for 128 requests at a cap of 32. Compare the median with the cap of 8.
+---
+---------------Time to First Token----------------
+Mean TTFT (ms):                          1166.51   
+Median TTFT (ms):                        390.38    
+P90 TTFT (ms):                           2887.53   
+P95 TTFT (ms):                           2889.80   
+P99 TTFT (ms):                           2910.22   
