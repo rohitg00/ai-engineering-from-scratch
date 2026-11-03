@@ -34,7 +34,7 @@ Sans décode spécifique, le coût par jeton est un cible à l'avant.`1 + K * al
 
 Les jetons rejetés ne disparaissent pas  ils forcent une deuxième cible à la première jeton rejetée. Pour une charge de travail où l'alpha tombe à 0,4, vous payez des frais généraux de projet plus de vérification plus de ré-roll. À haute simultanéité (disons 256 simultanément), le lot de décode est déjà assez grand pour que l'écart entre "target seul" et "target avec vérifier" diminue. En dessous de l'alpha 0.55 sur la plupart des appareils de 2026, le décode des spécifications est négatif net.
 
-Alpha varie selon la charge de travail. Sur le chat général de style ShareGPT, EAGLE-3 formé sur ShareGPT atteint 0,6-0,8. Sur le trafic spécifique au domaine (code, médical, juridique) le chef de projet formé sur les données générales tombe à 0,4-0,6.
+Alpha varie selon la charge de travail. Sur le chat général de style ShareGPT, EAGLE-3 entraîné sur ShareGPT atteint 0,6-0,8. En ce qui concerne le trafic spécifique au domaine (code, médical, juridique), le chef de projet formé aux données générales tombe à 0,4-0,6. La formation d'un chef de projet spécifique au domaine récupère alpha  c'est un travail de formation léger et rapide par rapport à la finition cible. Les valeurs de la phase 7 · 16 et de la phase 10 · 15 sont plus élevées (0,85 et plus). Ce sont des taux par jeton sur les points de référence de chat qui correspondent aux données de formation du projet. Planifiez avec les bandes de cette page et mesurez alpha sur votre propre trafic.
 
 ### Des générations d'AIGLE à un coup d'œil
 
