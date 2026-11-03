@@ -145,11 +145,11 @@ test('the lesson page uses fragments when present and the regex highlighter when
   assert.ok(missing.includes(markdown.renderCodeBlock(fenced[2], fenced[1])));
 });
 
-function lessonCodeRuntime(template, fetch) {
+function lessonCodeRuntime(template, fetch, timer = () => 0) {
   const start = template.indexOf('var lessonCodeRequests');
   const end = template.indexOf('var lessonFetchSequence');
   assert.ok(start > 0 && end > start);
-  const context = { fetch, setTimeout: () => 0, Promise, Object };
+  const context = { fetch, setTimeout: timer, Promise, Object };
   vm.runInNewContext(template.slice(start, end), context);
   return context.fetchLessonCode;
 }
@@ -176,6 +176,21 @@ test('the browser fetches a lesson fragment and returns null when it cannot', as
   assert.equal(await broken(LESSON), null);
   const offline = lessonCodeRuntime(template, () => Promise.reject(new Error('offline')));
   assert.equal(await offline(CERT_LESSON), null);
+});
+
+test('the browser falls back when the fragment request outlasts its timeout', async () => {
+  const template = fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8');
+  const delays = [];
+  const pending = lessonCodeRuntime(template, () => new Promise(() => {}), (callback, delay) => {
+    delays.push(delay);
+    callback();
+    return 0;
+  });
+  assert.equal(await pending(LESSON), null);
+  assert.deepEqual(delays, [1500]);
+  const output = markdown.parseMd(MD, { renderCode: markdown.prerenderedCode(await pending(LESSON)) });
+  assert.equal(output, markdown.parseMd(MD));
+  assert.deepEqual(delays, [1500, 1500]);
 });
 
 test('the lesson template fetches fragments and keeps the browser fallback', () => {
