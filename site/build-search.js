@@ -95,7 +95,7 @@ async function buildSearchIndex({ siteDir = SITE, records = [] } = {}) {
 }
 
 async function main() {
-  const result = await buildSearchIndex();
+  const result = await buildSearchIndex({ records: require('./build-interviews').interviewSearchRecords() });
   if (result.skipped) {
     console.log('pagefind is not installed; skipped the search index. Run npm install to build it.');
     return;
@@ -103,11 +103,11 @@ async function main() {
   console.log(`Wrote the search index for ${result.pages} pages and ${result.records} records to site/${OUTPUT}/`);
 }
 
+module.exports = { collectPages, searchHtml, interviewRecord, buildSearchIndex, SOURCES };
+
 if (require.main === module) {
   main().catch(error => {
     console.error(`build-search: ${error.message}`);
     process.exitCode = 1;
   });
 }
-
-module.exports = { collectPages, searchHtml, interviewRecord, buildSearchIndex, SOURCES };

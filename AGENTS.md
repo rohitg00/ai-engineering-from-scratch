@@ -202,6 +202,10 @@ pipeline as well.
 
 A manual under `manuals/<id>/` explains one subject at one pinned version, built from offline captures and ranked sources. Read `manuals/AUTHORING.md` before writing one. `node scripts/audit_manuals.js` must report `TOTAL 0`: it checks section shape, prose limits, figure legibility, listing provenance, verbatim quotes, and capture drift. Size commits by judgment, such as one section with its figures and captures as `feat(manual/<id>): <section slug>`. Manuals stay outside the book and translation pipelines; their PDFs are release assets, never committed.
 
+### Interview bank contract
+
+Questions and scenarios under `interviews/` follow `interviews/AUTHORING.md`. Every number of 10 or more, or with a decimal, in an answer must come from a lesson, a manual section or a capture file that the item names. Evidence listings are byte copies of repository files. No company names. `node scripts/interviews/validate.js` must pass, and `node scripts/interviews/validate.js --write` makes the generated READMEs again. The site shows each answer folded behind "Show answer", and `node site/build-interviews.js --check` fails when an answer shows outside a folded section.
+
 ### code/
 
 - Runs end-to-end and exits 0 on the canonical command for the language.

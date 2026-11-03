@@ -190,6 +190,8 @@ jobs:
         run: node --test site/test_highlights_page.js
       - name: practice pages hide the solution and progress survives storage faults
         run: node --test site/test_practice.js site/test_practice_store.js
+      - name: the interview bank follows its contract and its pages fold the answers
+        run: node scripts/interviews/validate.js && node --test scripts/interviews/test_validate.js site/test_interviews.js && node site/build-interviews.js --check
       - name: code blocks render by kind and copy commands only
         run: node --test site/test_code_render.js
       - name: build the static site

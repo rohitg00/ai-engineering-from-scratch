@@ -129,6 +129,9 @@ site/cheatsheet-map.json
 site/sitemap-practice.xml
 site/practice/
 site/practice-map.json
+site/sitemap-interviews.xml
+site/interviews/
+site/interviews.json
 site/manual-*.html
 site/manual/
 site/sitemap-manuals.xml
