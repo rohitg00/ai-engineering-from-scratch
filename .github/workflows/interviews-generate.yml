@@ -78,7 +78,12 @@ jobs:
           [[ "$count" =~ ^[0-9]+$ ]] || { echo "count must be a number"; exit 1; }
           [[ "$budget" =~ ^[0-9]+$ ]] || { echo "token_budget must be a number"; exit 1; }
           if [ "$count" -gt 5 ]; then count=5; fi
-          open="$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 100 --json headRefName --jq '[.[] | select(.headRefName | startswith("interviews/auto-"))] | length')"
+          if [ "$count" -eq 0 ]; then
+            echo "::notice title=Interviews::The count is 0. Nothing to do."
+            echo "card=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          open="$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 100 --json headRefName,isCrossRepository --jq '[.[] | select((.isCrossRepository | not) and (.headRefName | startswith("interviews/auto-")))] | length')"
           if [ "$open" != "0" ]; then
             echo "::notice title=Interviews::An interview bank pull request from this generator is already open. Merge or close it before the next run. Nothing to do."
             echo "card=" >> "$GITHUB_OUTPUT"
@@ -130,7 +135,7 @@ jobs:
             echo "::notice title=Interviews::No question was written."
             exit 0
           fi
-          branch="interviews/auto-${GITHUB_RUN_ID}"
+          branch="interviews/auto-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -c "$branch"

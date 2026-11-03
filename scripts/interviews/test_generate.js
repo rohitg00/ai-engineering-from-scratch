@@ -118,7 +118,7 @@ test('a draft that fails the leak rule is repaired once', async () => {
   assert.equal(code, 0);
   assert.equal(client.calls.length, 2);
   const feedback = client.calls[1].messages[2].content;
-  assert.match(feedback, /the title, the tags or the Taught in line shows an answer span/);
+  assert.match(feedback, /the title, the tags, the prompt, a follow-up question or the Taught in line shows an answer span/);
   assert.match(feedback, /Reply with the complete file in the <item> part/);
   assert.deepEqual(JSON.parse(fs.readFileSync(summary, 'utf8')).items[0].steps, ['draft', 'repair']);
   assert.ok(fs.existsSync(path.join(root, FILE)));
@@ -157,6 +157,7 @@ test('a near duplicate of an existing question is rejected', () => {
   const others = [{ id: 'the-agent-loops-forever', title: 'This agent loops forever, find out why', prompt: 'A coding agent has run for two hours on a task. The trace shows the same shell command again and again.' }];
   assert.match(generate.duplicateProblems({ id: 'the-agent-loops-forever', title: 'x', prompt: 'y' }, others)[0], /is taken/);
   assert.match(generate.duplicateProblems({ id: 'new', title: 'Find out why this agent loops forever', prompt: 'y' }, others)[0], /title is too close/);
+  assert.match(generate.duplicateProblems({ id: 'new', title: 'Other', prompt: 'Read this.\n```text\nThe trace shows the same shell command again and again. A coding agent has run for two hours on a task.\n```' }, others)[0], /prompt is too close/);
   assert.match(generate.duplicateProblems({ id: 'new', title: 'Other', prompt: 'The trace shows the same shell command again and again. A coding agent has run for two hours on a task.' }, others)[0], /prompt is too close/);
   assert.deepEqual(generate.duplicateProblems({ id: 'new', title: 'Pick a reranker pool size', prompt: 'How many passages go to the cross encoder?' }, others), []);
 });
@@ -184,6 +185,44 @@ test('the guards stop a run with no key, with an open bot pull request, and cap 
   assert.equal(many.calls.length, 5);
   assert.equal(JSON.parse(fs.readFileSync(summary, 'utf8')).requested, 5);
   assert.equal(await generate.main(['scenarios'], { client: open, root, out: quiet }), 1);
+  assert.deepEqual(generate.guard({ hasKey: true, openPrs: '0', count: '0' }), { run: false, code: 0, reason: 'The count is 0. Nothing to do.' });
+  assert.equal(await generate.main([CARD, '--count', '0'], { client: open, root, out: quiet }), 0);
+  assert.equal(open.calls.length, 0);
+});
+
+test('a token budget of 0 makes no model call', async () => {
+  const root = fixture();
+  const client = fakeClient([reply(ORIGINAL)]);
+  const summary = path.join(root, 'summary.json');
+  await generate.main([CARD, '--token-budget', '0', '--summary', summary], { client, root, out: quiet, date: DATE });
+  assert.equal(client.calls.length, 0);
+  assert.equal(JSON.parse(fs.readFileSync(summary, 'utf8')).skipped, 1);
+});
+
+test('a failed repair call keeps the tokens of the draft call in the summary', async () => {
+  const root = fixture();
+  const client = fakeClient([reply(leakyTitle())]);
+  const stream = client.beta.messages.stream;
+  client.beta.messages.stream = params => {
+    if (client.calls.length) throw new Error('overloaded');
+    return stream(params);
+  };
+  const summary = path.join(root, 'summary.json');
+  assert.equal(await generate.main([CARD, '--summary', summary], { client, root, out: quiet, date: DATE }), 1);
+  const result = JSON.parse(fs.readFileSync(summary, 'utf8'));
+  assert.equal(result.tokens, 94000);
+  assert.ok(result.cost > 0);
+  assert.deepEqual(result.failed[0].problems, ['overloaded']);
+});
+
+test('an answer span inside a fenced block of the prompt is caught', async () => {
+  const root = fixture();
+  const span = shortAnswer().replace(/`/g, '').split(/\s+/).slice(0, 8).join(' ');
+  const fenced = ORIGINAL.replace('\n\n## Short answer', `\n\n\`\`\`text\n${span}\n\`\`\`\n\n## Short answer`);
+  const client = fakeClient([reply(fenced), reply(fenced)]);
+  await generate.main([CARD], { client, root, out: quiet, date: DATE });
+  assert.match(client.calls[1].messages[2].content, /the prompt, a follow-up question or the Taught in line shows an answer span/);
+  assert.ok(!fs.existsSync(path.join(root, FILE)));
 });
 
 test('the token budget stops the repair and the next items', async () => {
@@ -235,7 +274,7 @@ test('the workflow runs only on demand, skips without a key or with an open bot 
   assert.doesNotMatch(on, /\n  (?:push|pull_request|schedule):/);
   assert.match(flow, /cancel-in-progress: false/);
   assert.match(flow, /if \[ -z "\$ANTHROPIC_API_KEY" \]/);
-  assert.match(flow, /startswith\("interviews\/auto-"\)/);
+  assert.match(flow, /isCrossRepository \| not\) and \(\.headRefName \| startswith\("interviews\/auto-"\)/);
   assert.match(flow, /@anthropic-ai\/sdk@0\.134\.0/);
   assert.match(flow, /--no-save --no-package-lock/);
   assert.match(flow, /report\.js "\$RUNNER_TEMP\/summary\.json" --paths/);

@@ -19,7 +19,7 @@ function table(summary) {
 function report(summary, mode = 'summary') {
   if (mode === 'commit') return `feat(interviews): add ${summary.written.length} questions to ${summary.card}\n\nWritten by scripts/interviews/generate.js with ${shortModel(summary.model)}.\n`;
   if (mode === 'paths') return stagedPaths(summary).map(file => `${file}\n`).join('');
-  const failed = summary.failed.length ? ['Dropped, because the checks still failed after one repair. Nothing was committed for these drafts:', ...summary.failed.map(item => `- ${item.id ? `\`${item.id}\`` : 'draft'}: ${item.problems.slice(0, 3).join(' | ')}`)].join('\n') : 'Every draft passed the checks.';
+  const failed = summary.failed.length ? ['Dropped, because the checks still failed. A draft gets one repair at most, and a refusal or a spent token budget stops it before the repair. Nothing was committed for these drafts:', ...summary.failed.map(item => `- ${item.id ? `\`${item.id}\`` : 'draft'}: ${item.problems.slice(0, 3).join(' | ')}`)].join('\n') : 'Every draft passed the checks.';
   const later = summary.skipped ? `Not started because of the token budget: ${summary.skipped} items.` : '';
   const head = mode === 'pr'
     ? `Interview questions for the card \`${summary.card}\`, written by \`scripts/interviews/generate.js\`. The model is ${shortModel(summary.model)}.`

@@ -31,8 +31,12 @@ function plain(md) {
   return String(md || '').replace(/```[\s\S]*?```/g, ' ').replace(/`([^`]*)`/g, '$1').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_#>|]/g, '').replace(/\s+/g, ' ').trim();
 }
 
+function visible(md) {
+  return String(md || '').replace(/^\s*(?:```|~~~).*$/gm, ' ').replace(/`([^`]*)`/g, '$1').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_#>|]/g, '').replace(/\s+/g, ' ').trim();
+}
+
 function words(text) {
-  return new Set(plain(text).toLowerCase().split(/[^a-z0-9]+/).filter(word => word.length > 2 && !STOP_WORDS.has(word)));
+  return new Set(visible(text).toLowerCase().split(/[^a-z0-9]+/).filter(word => word.length > 2 && !STOP_WORDS.has(word)));
 }
 
 function jaccard(a, b) {
@@ -45,13 +49,13 @@ function jaccard(a, b) {
 }
 
 function cardSources(card, root = ROOT, cache = new Map()) {
-  const files = [];
-  for (const lesson of card.lessons) files.push({ ref: lesson, file: `${lesson}/docs/en.md`, kind: 'lesson' });
+  const groups = [card.lessons.map(lesson => ({ ref: lesson, file: `${lesson}/docs/en.md`, kind: 'lesson' }))];
   for (const id of card.manuals) {
     const manual = bankLib.manualSections(root, id, cache);
-    if (!manual) continue;
-    for (const [slug, file] of manual.sections) files.push({ ref: `${id}#${slug}`, file, kind: 'manual' });
+    if (manual) groups.push(Array.from(manual.sections, ([slug, file]) => ({ ref: `${id}#${slug}`, file, kind: 'manual' })));
   }
+  const files = [];
+  for (let index = 0; groups.some(group => index < group.length); index++) for (const group of groups) if (index < group.length) files.push(group[index]);
   return files.filter(entry => fs.existsSync(path.join(root, entry.file)));
 }
 
@@ -59,8 +63,10 @@ function sourceBundle(card, root = ROOT) {
   const kept = [];
   const omitted = [];
   let total = 0;
-  for (const entry of cardSources(card, root)) {
-    const text = readText(root, entry.file);
+  const entries = cardSources(card, root).map(entry => ({ ...entry, text: readText(root, entry.file) }));
+  const full = entries.reduce((sum, entry) => sum + entry.text.length, 0);
+  for (const entry of entries) {
+    const text = full > MAX_BUNDLE_CHARS && entry.kind === 'manual' ? writer.trimMarkdown(entry.text) : entry.text;
     if (text.length > MAX_FILE_CHARS || total + text.length > MAX_BUNDLE_CHARS) {
       omitted.push(entry);
       continue;
@@ -160,8 +166,9 @@ function siteProblems(item, bank) {
   if (/^`/.test(item.parsed.preamble)) problems.push('the prompt must start with plain words, not with a code span');
   if (/^`/.test(s['Short answer'] || '')) problems.push('the Short answer must start with plain words, not with a code span');
   const answers = answerText(item);
-  const own = bankLib.sharedSpans(answers, plain([item.data.title, item.data.tags.join(' '), s['Taught in']].join('\n')));
-  if (own.length) problems.push(`the title, the tags or the Taught in line shows an answer span: "${own[0]}"`);
+  const asked = (item.followUps || []).filter(entry => entry.question).map(entry => entry.question);
+  const own = bankLib.sharedSpans(answers, visible([item.data.title, item.data.tags.join(' '), item.parsed.preamble].concat(asked, s['Taught in']).join('\n')));
+  if (own.length) problems.push(`the title, the tags, the prompt, a follow-up question or the Taught in line shows an answer span: "${own[0]}"`);
   const cards = plain(bank.cards.map(card => `${card.title}\n${card.summary}`).join('\n'));
   const listed = bankLib.sharedSpans(answers, cards);
   if (listed.length) problems.push(`a card summary shows an answer span: "${listed[0]}"`);
@@ -258,18 +265,23 @@ async function generateItem({ card, client, model, system, prompt, others, sandb
   };
   const finish = (result, evaluation) => ({ usage, steps, model, id: evaluation.draft ? evaluation.draft.id : '', ...result });
   const messages = [{ role: 'user', content: prompt }];
-  let message = await call(messages, 'draft');
-  let evaluation = evaluateReply(message, card, others, sandbox, date);
-  if (!evaluation.problems.length) return finish({ ok: true, problems: [], draft: evaluation.draft, item: evaluation.item }, evaluation);
-  if (evaluation.refused) return finish({ ok: false, problems: evaluation.problems }, evaluation);
-  if (usageTokens(usage) >= budgetLeft) return finish({ ok: false, problems: evaluation.problems.concat(['the token budget ran out before the repair']) }, evaluation);
-  log(`${card.id}: repair ${evaluation.draft ? evaluation.draft.id : 'draft'} for ${evaluation.problems.length} problems`);
-  messages.push({ role: 'assistant', content: message.content });
-  messages.push({ role: 'user', content: `The checks found these problems:\n\n${evaluation.problems.map(problem => `- ${problem}`).join('\n')}\n\nFix every problem. Remove a number or a fact that no named source holds. Reply with the complete file in the <item> part.` });
-  message = await call(messages, 'repair');
-  evaluation = evaluateReply(message, card, others, sandbox, date);
-  if (!evaluation.problems.length) return finish({ ok: true, problems: [], draft: evaluation.draft, item: evaluation.item }, evaluation);
-  return finish({ ok: false, problems: evaluation.problems }, evaluation);
+  let evaluation = {};
+  try {
+    let message = await call(messages, 'draft');
+    evaluation = evaluateReply(message, card, others, sandbox, date);
+    if (!evaluation.problems.length) return finish({ ok: true, problems: [], draft: evaluation.draft, item: evaluation.item }, evaluation);
+    if (evaluation.refused) return finish({ ok: false, problems: evaluation.problems }, evaluation);
+    if (usageTokens(usage) >= budgetLeft) return finish({ ok: false, problems: evaluation.problems.concat(['the token budget ran out before the repair']) }, evaluation);
+    log(`${card.id}: repair ${evaluation.draft ? evaluation.draft.id : 'draft'} for ${evaluation.problems.length} problems`);
+    messages.push({ role: 'assistant', content: message.content });
+    messages.push({ role: 'user', content: `The checks found these problems:\n\n${evaluation.problems.map(problem => `- ${problem}`).join('\n')}\n\nFix every problem. Remove a number or a fact that no named source holds. Reply with the complete file in the <item> part.` });
+    message = await call(messages, 'repair');
+    evaluation = evaluateReply(message, card, others, sandbox, date);
+    if (!evaluation.problems.length) return finish({ ok: true, problems: [], draft: evaluation.draft, item: evaluation.item }, evaluation);
+    return finish({ ok: false, problems: evaluation.problems }, evaluation);
+  } catch (error) {
+    return finish({ ok: false, problems: [String(error && error.message || error)] }, evaluation);
+  }
 }
 
 function itemSources(item) {
@@ -280,7 +292,8 @@ function itemSources(item) {
 function guard({ hasKey, openPrs, count }) {
   if (Number(openPrs) > 0) return { run: false, code: 0, reason: 'An interview bank pull request from this generator is already open. Merge or close it before the next run.' };
   if (!hasKey) return { run: false, code: 2, reason: 'ANTHROPIC_API_KEY is not set.' };
-  const asked = Number(count) || 1;
+  const asked = count === '' || count === undefined ? 1 : Number(count);
+  if (!Number.isInteger(asked) || asked < 1) return { run: false, code: 0, reason: 'The count is 0. Nothing to do.' };
   return { run: true, count: Math.max(1, Math.min(MAX_ITEMS, asked)), capped: asked > MAX_ITEMS };
 }
 
@@ -327,7 +340,7 @@ async function main(argv, { client, root = ROOT, out = console, date = today() }
   if (gate.capped) out.log(`The count is capped at ${MAX_ITEMS} items for one run.`);
   const api = client || createClient();
   const model = resolveModel(value('--model'));
-  const budget = Number(value('--token-budget')) || DEFAULT_TOKEN_BUDGET;
+  const budget = value('--token-budget') === '' ? DEFAULT_TOKEN_BUDGET : Number(value('--token-budget'));
   const roles = bank.roles.filter(role => role.cards.includes(card.id)).map(role => role.id);
   const system = systemPrompt(card, bundle, root);
   const others = existingItems(bank, card.id);
@@ -389,4 +402,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { MAX_ITEMS, DEFAULT_TOKEN_BUDGET, BOT_BRANCH, plain, jaccard, cardSources, sourceBundle, systemPrompt, userPrompt, parseReply, normalizeItem, duplicateProblems, siteProblems, makeSandbox, checkDraft, generateItem, guard, stagedPaths, main };
+module.exports = { MAX_ITEMS, DEFAULT_TOKEN_BUDGET, BOT_BRANCH, plain, visible, jaccard, cardSources, sourceBundle, systemPrompt, userPrompt, parseReply, normalizeItem, duplicateProblems, siteProblems, makeSandbox, checkDraft, generateItem, guard, stagedPaths, main };
