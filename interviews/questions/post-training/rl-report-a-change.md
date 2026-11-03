@@ -16,7 +16,7 @@ related: [scenarios/prefix-cache-inflated-benchmark]
 updated: 2026-11-03
 ---
 
-An engineer shows you two RL training runs. The new one, with a changed offload setting, finished its rollouts twelve percent faster and ended with a reward a few hundredths higher than the old one. They want to ship the change as the new default. Design the review: what do you ask for before you believe either number?
+An engineer shows you two RL training runs. The new one, with a changed offload setting, finished its rollouts twelve percent faster and ended with a reward a few hundredths higher than the old one. They want to ship the change as the new default. Design the review: what do you ask for before you trust either number?
 
 ## Short answer
 
