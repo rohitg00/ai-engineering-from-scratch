@@ -2586,7 +2586,10 @@ function syncCounts(lessons, phaseCount, outputs) {
 }
 
 if (require.main === module) {
-  build();
+  require('./lib/code').init().then(build).catch(error => {
+    console.error(error);
+    process.exitCode = 1;
+  });
 }
 
 module.exports = {

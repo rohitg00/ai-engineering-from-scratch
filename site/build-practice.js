@@ -4,6 +4,7 @@ const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const markdown = require('./lesson-markdown');
+const code = require('./lib/code');
 const { phaseSlug } = require('../lib/hub-routes');
 const { SITE_HEADER } = require('./build-hubs');
 const { versionHtml } = require('./version-assets');
@@ -36,8 +37,8 @@ const META_KEYS = ['id', 'title', 'kind', 'summary', 'difficulty', 'tags', 'less
 const ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const FONT_LINK = 'https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap';
 const THEME_SCRIPT = "(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));function i(){var e=document.getElementById('themeIcon');if(e)e.textContent=r.getAttribute('data-theme')==='light'?'N':'D';}document.addEventListener('DOMContentLoaded',function(){i();var b=document.getElementById('themeToggle');if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}i();});});})();";
-const HEAD_ASSETS = '<link rel="stylesheet" href="/style.css">\n<link rel="stylesheet" href="/practice.css">';
-const BODY_ASSETS = '<script src="/header.js" defer></script>\n<script src="/lesson-markdown.js" defer></script>\n<script src="/practice-store.js" defer></script>\n<script src="/practice.js" defer></script>';
+const HEAD_ASSETS = '<link rel="stylesheet" href="/style.css">\n<link rel="stylesheet" href="/practice.css">\n<link rel="stylesheet" href="/code.css">';
+const BODY_ASSETS = '<script src="/header.js" defer></script>\n<script src="/code-copy.js" defer></script>\n<script src="/lesson-markdown.js" defer></script>\n<script src="/practice-store.js" defer></script>\n<script src="/practice.js" defer></script>';
 const FOOTER_LINKS = [['/practice', 'Practice'], ['/catalog', 'Catalog'], ['/roadmap', 'Roadmap'], ['/cheatsheets', 'Cheat Sheets'], ['/glossary', 'Glossary'], ['/about', 'About']];
 
 function escapeHtml(value) {
@@ -57,7 +58,7 @@ function read(file) {
 }
 
 function renderMarkdown(md) {
-  return markdown.parseMd(md);
+  return markdown.parseMd(md, { renderCode: code.render });
 }
 
 function hintList(md) {
@@ -282,8 +283,8 @@ function problemMain(problem, built, assets) {
   const statement = `<section class="pr-statement" aria-labelledby="statement"><h2 id="statement" class="pr-visually-hidden">Problem</h2>${problem.statementHtml}${meta.kind === 'research' ? citationHtml(meta.paper) : ''}</section>`;
   const hints = `<section class="pr-panel pr-hints" aria-labelledby="hints"><div class="pr-panel-head"><h2 id="hints">Hints</h2><span class="pr-panel-count" data-hint-count>${problem.hintsHtml.length} hints</span></div><ol class="pr-hint-list" data-hints></ol><button class="pr-btn" type="button" data-hint-next>Show hint 1 of ${problem.hintsHtml.length}</button></section>`;
   const solution = `<section class="pr-panel pr-solution" aria-labelledby="solution"><div class="pr-panel-head"><h2 id="solution">Solution and notes</h2><span class="pr-lock" data-lock>Locked</span></div><p class="pr-locked-note" data-locked-note>Pass every check with Submit to open the reference solution and the notes.</p><div data-solution hidden></div></section>`;
-  const support = problem.files['support.py'] ? `<details class="pr-panel pr-support"><summary>Provided code: support.py</summary><p>Your code and the checks import this module with <code>from support import ...</code>. You do not change it.</p><pre class="pr-support-code"><code>${markdown.highlightSyntax(problem.files['support.py'].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'), 'python')}</code></pre></details>` : '';
-  const local = `<details class="pr-panel pr-local"><summary>Run it on your computer</summary><p>Clone the repository, install numpy and run the same checks in a terminal:</p><pre><code>python3 scripts/practice/run.py ${meta.id} my_answer.py\npython3 scripts/practice/run.py ${meta.id} my_answer.py --examples</code></pre><p>Start <code>my_answer.py</code> from <a href="${REPO}/blob/main/practice/${meta.id}/starter.py">starter.py</a>.</p></details>`;
+  const support = problem.files['support.py'] ? `<details class="pr-panel pr-support"><summary>Provided code: support.py</summary><p>Your code and the checks import this module with <code>from support import ...</code>. You do not change it.</p>${code.render(problem.files['support.py'], 'python', { label: 'support.py' })}</details>` : '';
+  const local = `<details class="pr-panel pr-local"><summary>Run it on your computer</summary><p>Clone the repository, install numpy and run the same checks in a terminal:</p>${code.render(`python3 scripts/practice/run.py ${meta.id} my_answer.py\npython3 scripts/practice/run.py ${meta.id} my_answer.py --examples`, 'bash')}<p>Start <code>my_answer.py</code> from <a href="${REPO}/blob/main/practice/${meta.id}/starter.py">starter.py</a>.</p></details>`;
   const pager = `<nav class="pr-pager" aria-label="Problem navigation">${previous ? `<a href="${previous.href}" rel="prev">← ${escapeHtml(previous.meta.title)}</a>` : '<span></span>'}<a href="${BASE}">All problems</a>${next ? `<a href="${next.href}" rel="next">${escapeHtml(next.meta.title)} →</a>` : '<span></span>'}</nav>`;
   const shortcuts = '<details class="pr-keys"><summary>Keyboard shortcuts</summary><dl><dt><kbd>Ctrl</kbd> <kbd>Enter</kbd></dt><dd>Run the examples</dd><dt><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Enter</kbd></dt><dd>Submit</dd><dt><kbd>Tab</kbd> / <kbd>Shift</kbd> <kbd>Tab</kbd></dt><dd>Indent or outdent the lines</dd><dt><kbd>Esc</kbd> then <kbd>Tab</kbd></dt><dd>Move the focus out of the editor</dd><dt><kbd>Alt</kbd> <kbd>H</kbd></dt><dd>Show the next hint</dd></dl><p>On a Mac, use <kbd>Cmd</kbd> in place of <kbd>Ctrl</kbd>.</p></details>';
   const editor = `<section class="pr-work" aria-labelledby="editor-title"><div class="pr-toolbar"><h2 id="editor-title" class="pr-toolbar-title">Your code</h2><span class="pr-runtime" data-runtime aria-live="polite">Python loads on the first run</span><div class="pr-toolbar-actions"><button class="pr-btn" type="button" data-reset title="Replace your code with the starter">Reset</button><button class="pr-btn" type="button" data-run title="Run the examples (Ctrl Enter)">Run</button><button class="pr-btn pr-btn-primary" type="button" data-submit title="Run every check (Ctrl Shift Enter)">Submit</button></div></div><div class="pr-editor" data-editor><pre class="pr-editor-view" aria-hidden="true"><code data-editor-view></code></pre><textarea class="pr-editor-input" data-editor-input spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" aria-label="Python code editor" aria-describedby="editor-help">${escapeHtml(problem.files['starter.py'])}</textarea></div><p class="pr-editor-help" id="editor-help">Your code is saved in this browser as you type. <span class="pr-mobile-note">On a phone you can read and edit the code, but the checks are easier to use on a desktop.</span></p>${shortcuts}${meta.kind === 'train' ? `<figure class="pr-curve" data-curve hidden><figcaption><span>Loss during training</span><span data-curve-label></span></figcaption><svg viewBox="0 0 400 120" preserveAspectRatio="none" role="img" aria-label="Loss curve"><polyline data-curve-line points="" fill="none" stroke="currentColor" stroke-width="1.5" vector-effect="non-scaling-stroke"></polyline></svg></figure>` : ''}<div class="pr-results" data-results aria-live="polite"><p class="pr-results-empty">Select Run to check the examples, or Submit to run every check.</p></div></section>`;
@@ -441,14 +442,19 @@ function solutionLines(problem) {
   return problem.files['solution.py'].split('\n').map(line => line.trim()).filter(line => line.length >= 18 && !/^(?:def |import |from |raise NotImplementedError)/.test(line));
 }
 
+function pageText(html) {
+  return html.replace(/<[^>]*>/g, '').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&nbsp;/g, '\u00a0').replace(/&amp;/g, '&');
+}
+
 function checkPractice(built) {
   const problems = [];
   for (const problem of built.problems) {
     const page = built.pages.find(item => item.href === problem.href);
+    const text = pageText(page.html);
     const starter = new Set(problem.files['starter.py'].split('\n').map(line => line.trim()));
     const lines = solutionLines(problem).filter(line => !starter.has(line));
     for (const line of lines) {
-      if (page.html.includes(line) || page.html.includes(escapeHtml(line))) problems.push(`${problem.href}: the page HTML shows a solution line: ${line}`);
+      if (page.html.includes(line) || page.html.includes(escapeHtml(line)) || text.includes(line)) problems.push(`${problem.href}: the page HTML shows a solution line: ${line}`);
     }
     const shipped = [problem.files['tests.py'], problem.files['hints.md']].join('\n').split('\n').map(line => line.trim());
     for (let i = 0; i + 2 < lines.length; i++) {
@@ -460,7 +466,8 @@ function checkPractice(built) {
   return problems;
 }
 
-function main(argv) {
+async function main(argv) {
+  await code.init();
   if (argv.includes('--check')) {
     const built = buildPractice();
     const second = buildPractice();
@@ -476,6 +483,11 @@ function main(argv) {
   return 0;
 }
 
-if (require.main === module) process.exitCode = main(process.argv.slice(2));
+if (require.main === module) {
+  main(process.argv.slice(2)).then(status => { process.exitCode = status; }, error => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
 
-module.exports = { loadPractice, buildPractice, writePractice, checkPractice, practiceMap, hintList, countChecks, PYODIDE_VERSION, PYODIDE_BASE, BASE };
+module.exports = { loadPractice, buildPractice, writePractice, checkPractice, pageText, practiceMap, hintList, countChecks, PYODIDE_VERSION, PYODIDE_BASE, BASE };
