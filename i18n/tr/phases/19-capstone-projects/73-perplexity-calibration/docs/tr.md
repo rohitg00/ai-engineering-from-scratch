@@ -53,7 +53,7 @@ ECE, kutu sayısına ve örnek boyutuna göre tarafsızdır. On kutu ve yüz tah
 
 ## Brier'in ECE'nin yapmadığı puan
 
-ECE sadece ortalama boşluklar hakkında endişeleniyor. Bir model kutuların yarısına aşırı güvenir ve diğer yarısına güvenirken yerel olarak kötü kalibrelenirken düşük ECE'ye sahip olabilir. Brier puanı, tahmin başına gerçek sonuç karşısında karelerde hata ölçer, bu nedenle doğrudan yayılmayı cezalandırır.
+ECE sadece her kutudaki ortalama boşluğu önemsiyor. Her kutuda mutlak boşluk gerekmektedir, bu yüzden farklı kutularda boşluklar iptal edilmez. Bir kutu içinde yapabilirler: bir kutudaki bazı tahminler aşırı güvenlidir ve diğerleri de güvensizse, kutu ortalamaları eşleşebilir ve kutu ECE'ye neredeyse hiçbir şey eklemez, her tahmin kötü kalibrlenirken. Brier puanı, tahmin başına gerçek sonuç karşısında karelerde hata ölçer, bu yüzden doğrudan yayılmayı cezalandırır.
 
 İkili sonuçlar için Brier `mean((p_i - y_i)^2)`Bu, güvenilirliğe, çözünürlüğüne ve belirsizliklere ayrılır.
 

@@ -68,7 +68,7 @@ emb[p, 2k]     = sin(angle)
 emb[p, 2k + 1] = cos(angle)
 ```
 
-Bu fonksiyonun parametre yoktur. Her pozisyonun benzersiz bir vektörü vardır. Dalga uzunluğu özellik boyutları arasında geometrik olarak değişir, bu nedenle daha düşük boyutlar kaba pozisyonu kodlar ve daha yüksek boyutlar ince pozisyonu kodlar.
+Bu fonksiyonun parametre yoktur. Her pozisyonun benzersiz bir vektörü vardır. Dalga uzunluğu özellik boyutları arasında geometrik olarak değişir. Alt boyutlar en kısa dalga uzunluklarına sahiptir ve ince pozisyonu kodlar. Yüksek boyutlar en uzun dalga uzunluklarına sahiptir ve kaba pozisyonu kodlar.
 
 Seçimden kaynaklanan mülk`sin`ve `cos`birlikte, konumdaki vektördür.`p + k`konumdaki vektörün doğrusal bir fonksiyonu `p`Bu, dikkat katmanına göreceli pozisyon taklitlerini öğrenmek için kolay bir yol sağlar.
 

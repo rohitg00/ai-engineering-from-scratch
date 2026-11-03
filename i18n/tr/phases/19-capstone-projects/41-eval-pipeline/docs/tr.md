@@ -47,7 +47,7 @@ Kafası karışık .`exp(mean negative log-likelihood per token)`Uygulama iki tu
 - Ortalama, seri * sırası üzerinde değil, gerçek simge pozisyonları üzerinde olmalıdır.
 - Modeldeki bir sonraki simgeyi tahmin ediyor, bu yüzden pozisyonunu belirliyor.`i`İşaretleri pozisyonda tahmin et .`i+1`Burada birer hata sessiz: kayıp hala trenler, ama metrik anlamsız hale gelir.
 
-Evaluasyon , bir seri başına `-log p(token)`Bu sayı, sayısal olarak her partiye göre karmaşıklıkların ortalamasından daha güvenli (ki kısa diziler ağırlığı altında) ve ders kitabının tanımına uymaktadır.
+Evaluasyon , bir seri başına `-log p(token)`Bu sayısal olarak her parti için ortalama karmaşıklıklardan daha güvenli (ki her parti için eşit ağırlık sağlar, bu nedenle kısa bir partideki her token uzun bir partideki bir tokenden daha fazla tutar) ve ders kitabının tanımına uymaktadır.
 
 ## Normalleşme ile tam eşleşme
 
