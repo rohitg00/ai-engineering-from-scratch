@@ -44,12 +44,12 @@ Inverted dropout scales the kept units during training so that inference is the 
 ```python
 def dropout_forward(x, p, rng, training):
     if not training:
-        return x, None
+        return x.copy(), np.ones(x.shape, dtype=bool)
     mask = rng.random(x.shape) >= p
     return x * mask / (1 - p), mask
 ```
 
-Keep an entry when the random number is at or above p, so the complement rule is right, and divide the kept entries by one minus p. The backward pass multiplies the incoming gradient by the same mask and divides by the same factor.
+At inference the layer returns a copy of the input and a mask that is true everywhere, and it does not draw. Keep an entry when the random number is at or above p, so the complement rule is right, and divide the kept entries by one minus p. The backward pass multiplies the incoming gradient by the same mask and divides by the same factor.
 
 ### What evaluation expects
 

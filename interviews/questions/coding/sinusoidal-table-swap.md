@@ -29,11 +29,12 @@ Build a table with one row per position and one column per feature, where column
 ```python
 def sinusoidal_pe(max_len, d_model, base):
     pos = np.arange(max_len)[:, None]
-    i = np.arange(0, d_model, 2)
+    end = 2 * (d_model // 2)
+    i = np.arange(0, end, 2)
     angle = pos / base ** (i / d_model)
     pe = np.zeros((max_len, d_model))
-    pe[:, 0::2] = np.sin(angle[:, : (d_model + 1) // 2])
-    pe[:, 1::2] = np.cos(angle[:, : d_model // 2])
+    pe[:, 0:end:2] = np.sin(angle)
+    pe[:, 1:end:2] = np.cos(angle)
     return pe
 
 
@@ -42,7 +43,7 @@ def add_positional_encoding(x, pe):
     return x + pe[:T]
 ```
 
-The exponent is `2i` over the width, so the frequencies fall from one down to one over the base across the columns. The columns alternate between sine and cosine; putting all sines in the first half and all cosines in the second is a different layout and does not match the reference. Positions start at zero, and an odd width gets one more sine column than cosine columns.
+The exponent is `2i` over the width, so the frequencies fall from one down to one over the base across the columns. The columns alternate between sine and cosine; putting all sines in the first half and all cosines in the second is a different layout and does not match the reference. Positions start at zero. An odd width has no pair for its last column, so that column stays zero.
 
 ### Why the forward pass is unchanged
 

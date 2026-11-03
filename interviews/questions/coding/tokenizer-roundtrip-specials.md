@@ -32,7 +32,7 @@ The base symbols are the 256 raw bytes, so every input has an encoding before an
 4. Apply the merge table to each chunk's bytes in training order, with non-overlapping left-to-right replacement.
 5. Concatenate the ids.
 
-Decoding reverses only the last step: expand each id to its bytes, where a merged id expands to the bytes of its two parents, and decode the byte string.
+Decoding reverses steps two to five: expand each id to its bytes, where a merged id expands to the bytes of its two parents, and decode the byte string. Normalization is not reversible. A decomposed accent comes back as the composed character, so the round trip is exact only for text that is already in the normalized form.
 
 ### Why pre-tokenization
 
@@ -46,7 +46,7 @@ The ids after the byte block are reserved by hand. The training loop never sees 
 
 | Guarantee | Test |
 |---|---|
-| Round trip on unseen text | encode then decode returns the exact input bytes |
+| Round trip on unseen text | encode then decode returns the exact bytes of the normalized input |
 | Multi-byte characters | a sentence with a four-byte emoji round-trips |
 | Literal special string, flag off | the string decodes back as text, not as a boundary |
 | Special string, flag on | exactly one id, the reserved one, appears |

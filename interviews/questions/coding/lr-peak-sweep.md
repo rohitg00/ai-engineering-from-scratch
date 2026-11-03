@@ -46,7 +46,7 @@ def run_sweep(rates, train_fn, seed):
 
 def best_lr(results):
     stable = [(loss, lr) for lr, (loss, div) in results.items() if not div]
-    return min(stable)[1]
+    return min(stable)[1] if stable else None
 
 
 def smallest_diverging_lr(results):
@@ -54,7 +54,7 @@ def smallest_diverging_lr(results):
     return min(div) if div else None
 ```
 
-Every run uses the same seed so that the only difference between runs is the rate. The results are keyed by rate, and the divergence filter runs before any argmin, because a NaN final loss compares as neither larger nor smaller and would otherwise be selected.
+Every run uses the same seed so that the only difference between runs is the rate. The results are keyed by rate, and the divergence filter runs before any argmin, because a NaN final loss compares as neither larger nor smaller and would otherwise be selected. When every run diverged, `best_lr` returns `None` and the grid must move lower.
 
 ### What diverged means
 

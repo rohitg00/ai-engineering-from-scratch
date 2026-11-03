@@ -16,7 +16,7 @@ related: [coding/scale-by-sqrt-dk, coding/loss-shift-flatten]
 updated: 2026-11-03
 ---
 
-A decoder's attention returns NaN in the first row of every sequence. The mask code is:
+A decoder's attention returns a zero vector in the first row of every sequence. The mask code is:
 
 ```python
 def causal_mask(T):
@@ -37,7 +37,7 @@ The mask uses a diagonal offset of zero, so every token blocks itself and the fi
 
 ### Bug one: the diagonal
 
-A causal mask lets position `i` see positions zero through `i`, itself included. `np.triu` with `k=0` keeps the diagonal in the blocked set. For the first query every key is blocked, the row has nothing to normalize, and the division produces NaN. Use `k=1` so the diagonal stays visible.
+A causal mask lets position `i` see positions zero through `i`, itself included. `np.triu` with `k=0` keeps the diagonal in the blocked set. For the first query every key is blocked, so this code sets the whole first row of weights to zero and the first output row is zero. If you only move the mask before the softmax and fill with negative infinity, that row has nothing to normalize and the division produces NaN. Use `k=1` so the diagonal stays visible.
 
 ### Bug two: masking after the softmax
 
@@ -56,7 +56,7 @@ out = weights @ V
 
 ### Why both bugs can pass a shape test
 
-Neither bug changes a shape. Only a check of the weights, or a NaN check on the first row, exposes them. The practice task checks the causal weights against a reference and includes the first row.
+Neither bug changes a shape. Only a check of the weights, or a check that the first output row is not zero, exposes them. The practice task checks the causal weights against a reference and includes the first row.
 
 ## Follow-ups
 

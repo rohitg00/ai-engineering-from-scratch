@@ -34,7 +34,7 @@ def apply_merge(symbols, pair, new_id):
 
 ## Short answer
 
-After a match the scan moves one position instead of two, so the second symbol of the match is reused as the first symbol of the next match. Matches must not share a symbol. The correct result is `(300, 7)`: the first two sevens become one new id and the third seven stays.
+After a match the scan moves one position instead of two, so the second symbol of the match is read again: it starts the next match or is copied to the output. Matches must not share a symbol. The correct result is `(300, 7)`: the first two sevens become one new id and the third seven stays.
 
 ## Full answer
 
@@ -63,7 +63,7 @@ The function returns a new tuple. It must not write into the caller's sequence, 
 ## Follow-ups
 
 - **Level 2:** What does the same bug do to the pair counts of the next training step? Expected: it counts pairs that do not exist in the real corpus, so later merges are chosen on wrong numbers.
-- **Level 2:** Give an input where the bug produces a correct answer. Expected: any word with no two adjacent matches, such as `(7, 7, 8, 7, 7)`.
+- **Level 2:** Give an input where the bug produces a correct answer. Expected: only a word with no match for the pair, such as `(7, 8, 7)` with `(7, 7)`; every match leaves an extra copy of its second symbol.
 - **Level 3:** How does a round-trip test catch this bug? Expected: encode a string with a repeated byte, decode the ids, and compare the bytes; the extra merged symbol expands to more bytes than the input had.
 
 ## Wrong answers
