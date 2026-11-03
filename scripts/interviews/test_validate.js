@@ -104,7 +104,7 @@ test('the number rule rejects a number that no named source holds', () => {
 test('links, anchors, dashes, http and company names are checked', () => {
   expectError(temp => edit(temp, QUESTION, '3-4-prefix-friendly-prompts.md)', '3-4-no-such-file.md)'), /does not exist/);
   expectError(temp => edit(temp, 'interviews/questions/inference-serving/goodput-sets-the-cap.md', '#goodput-finds-the-knee-that-throughput-hides', '#no-such-heading'), /no heading #no-such-heading/);
-  expectError(temp => edit(temp, QUESTION, 'Check the chat template too.', 'Check the chat template — too.'), /em dash or en dash/);
+  expectError(temp => edit(temp, QUESTION, 'Check the chat template too.', 'Check the chat template \u2014 too.'), /em dash or en dash/);
   expectError(temp => edit(temp, QUESTION, 'Check the chat template too.', 'Check https://example.test too.'), /not http links/);
   expectError(temp => edit(temp, QUESTION, 'Check the chat template too.', 'Check the OpenAI template too.'), /denylist: openai/);
 });
