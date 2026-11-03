@@ -8,7 +8,7 @@ const lessonApi = require('../api/lesson');
 const certificationApi = require('../api/certification');
 const ogApi = require('../api/og');
 const ogCards = require('../lib/og-cards');
-const { parseMd } = require('../site/lesson-markdown');
+const { parseMd, prerenderedCode } = require('../site/lesson-markdown');
 const manuals = require('../site/build-manuals.js');
 const { buildData: buildProjectData } = require('../site/build-projects.js');
 const translations = require('../lib/lesson-translations');
@@ -494,13 +494,15 @@ test('lesson route serves the full lesson body, headings, and code to crawlers',
 
   const region = fallbackRegion(full.body);
   const markdown = fs.readFileSync(path.join(ROOT, PERCEPTRON, 'docs', 'en.md'), 'utf8');
-  const body = parseMd(markdown).replace(/<h1 id="[^"]*">[\s\S]*?<\/h1>/, '<h1>The Perceptron</h1>');
+  const codeFile = path.join(ROOT, 'site', 'lesson-code', `${PERCEPTRON}.json`);
+  const blocks = fs.existsSync(codeFile) ? JSON.parse(fs.readFileSync(codeFile, 'utf8')).blocks : null;
+  const body = parseMd(markdown, { renderCode: prerenderedCode(blocks) }).replace(/<h1 id="[^"]*">[\s\S]*?<\/h1>/, '<h1>The Perceptron</h1>');
   assert.ok(region.includes(body), 'the server HTML holds the whole rendered lesson');
   assert.equal((region.match(/<h1(?:\s|>)/g) || []).length, 1);
   assert.match(region, /<h1>The Perceptron<\/h1>/);
   assert.match(region, /<h2 id="the-concept" class="">The Concept<\/h2>/);
   assert.match(region, /<h3 id="the-xor-problem">The XOR Problem<\/h3>/);
-  assert.match(region, /<div class="cb" data-kind="code" data-lang="python"><div class="cb-head"><span class="cb-label">python<\/span><button type="button" class="cb-copy">Copy<\/button><\/div><pre><code>[\s\S]*?<span class="syn-keyword">class<\/span> Perceptron:/);
+  assert.match(region, /<div class="cb" data-kind="code" data-lang="python"><div class="cb-head"><span class="cb-label">python<\/span><button type="button" class="cb-copy">Copy<\/button><\/div><pre><code>[\s\S]*?<span class="(?:syn-keyword|k)">class<\/span> (?:<span class="f">)?Perceptron(?:<\/span>)?:/);
   assert.doesNotMatch(region, /data-code=/);
   assert.match(region, /XOR was unsolvable by single-layer networks/);
   assert.match(region, /class="lesson-nav-btn next"/);
@@ -608,7 +610,7 @@ test('lesson template renders through the shared Markdown module', function () {
   const template = fs.readFileSync(path.join(ROOT, 'site', 'lesson.html'), 'utf8');
   const moduleTag = template.indexOf('<script src="lesson-markdown.js?v=');
   assert.ok(moduleTag > 0);
-  assert.ok(moduleTag < template.indexOf('window.AIFSLessonMarkdown.parseMd(md)'));
+  assert.ok(moduleTag < template.indexOf('window.AIFSLessonMarkdown.parseMd(md, { renderCode: window.AIFSLessonMarkdown.prerenderedCode(codeBlocks) })'));
   assert.doesNotMatch(template, /function (?:parseMd|inlineFormat|highlightSyntax|renderCodeBlock|splitTableRow)\(/);
   const config = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
   const included = config.functions['api/lesson.js'].includeFiles;
