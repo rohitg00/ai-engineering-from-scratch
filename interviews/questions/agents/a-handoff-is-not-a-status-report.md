@@ -65,4 +65,4 @@ A perfect packet is useless if the next session opens on a half-applied diff, a 
 
 ## Taught in
 
-The [multi-session handoff lesson](../../../phases/14-agent-engineering/40-multi-session-handoff/) generates the packet from the workbench artifacts and adds the cleanup check.
+The [multi-session handoff lesson](../../../phases/14-agent-engineering/40-multi-session-handoff/) builds the packet out of the workbench files and adds the cleanup check.

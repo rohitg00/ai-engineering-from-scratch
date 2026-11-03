@@ -41,7 +41,7 @@ cases = [
 
 ## Short answer
 
-The first case returns `Ok`. The second returns one error at `/id` with keyword `type`, because a string is not an integer and the validator never coerces. The third returns one error at `/id` with keyword `required`, because the property is missing. The fourth returns one error at `/fields/1` with keyword `enum`, because `phone` is not an allowed value, and the path points at the exact element so the model can fix that one value in the next call.
+The first case passes validation and returns an Ok result. The second returns one error at `/id` with keyword `type`, because a string is not an integer and the validator never coerces. The third returns one error at `/id` with keyword `required`, because the property is missing. The fourth returns one error at `/fields/1` with keyword `enum`, because `phone` is not an allowed value, and the path points at the exact element so the model can fix that one value in the next call.
 
 ## Full answer
 
