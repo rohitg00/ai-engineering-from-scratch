@@ -3,7 +3,7 @@
   cards: [prompting-structured-output, rag, evaluation, tokenization-decoding, cost-capacity, safety, post-training, multimodal, system-design, scenarios, coding, behavioral]
 - id: agentic-ai-engineer
   path: learning-paths/agentic-ai-engineer.json
-  cards: [agents, protocols, multi-agent, sandboxes, prompting-structured-output, evaluation, safety, system-design, scenarios, coding, behavioral]
+  cards: [agents, protocols, multi-agent, sandboxes, prompting-structured-output, evaluation, safety, multimodal, system-design, scenarios, coding, behavioral]
 - id: ai-evaluation-reliability-engineer
   path: learning-paths/ai-evaluation-reliability-engineer.json
   cards: [evaluation, math-classical-ml, rag, agents, production-mlops, safety, post-training, multimodal, system-design, scenarios, coding, behavioral]
@@ -12,7 +12,7 @@
   cards: [math-classical-ml, tokenization-decoding, rag, evaluation, production-mlops, cost-capacity, post-training, multimodal, system-design, coding, behavioral]
 - id: forward-deployed-ai-engineer
   path: learning-paths/forward-deployed-ai-engineer.json
-  cards: [rag, prompting-structured-output, agents, protocols, evaluation, cost-capacity, safety, system-design, scenarios, behavioral]
+  cards: [rag, prompting-structured-output, agents, protocols, evaluation, cost-capacity, safety, post-training, multimodal, system-design, scenarios, behavioral]
 - id: ai-developer-relations-engineer
   path: learning-paths/ai-developer-relations-engineer.json
   cards: [prompting-structured-output, agents, protocols, rag, evaluation, system-design, coding, behavioral]
