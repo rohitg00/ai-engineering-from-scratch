@@ -134,6 +134,7 @@ site/manual/
 site/sitemap-manuals.xml
 site/manuals-data.js
 site/manuals.html
+site/pagefind/
 
 !manuals/*/capture/out/*.log
 !manuals/*/capture/gpu/out-*/*.log
