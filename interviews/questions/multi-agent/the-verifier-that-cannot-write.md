@@ -32,7 +32,7 @@ The checker reads the shared memory like every other agent, re-fetches the sourc
 | Writes | Nothing in the shared memory, only entries on its own verification channel |
 | Method | For each entry with a cited source, fetch the source independently and compare the content |
 | Output | A finding per mismatch with the entry id and the reason, routed to a human or a separate decision agent |
-| Effect | The finding stays on the verification channel with the entry id, and the shared log entry does not change |
+| Effect | The verifier writes nothing to the pool. The caller can attach the finding to the entry as a flag, as the lesson's demo does, but the entry's content does not change, and a correction is a new entry that supersedes it |
 
 In the lesson's code the verifier returns a list of findings and never touches the pool. The caller decides what to do with them.
 
