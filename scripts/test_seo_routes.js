@@ -500,7 +500,8 @@ test('lesson route serves the full lesson body, headings, and code to crawlers',
   assert.match(region, /<h1>The Perceptron<\/h1>/);
   assert.match(region, /<h2 id="the-concept" class="">The Concept<\/h2>/);
   assert.match(region, /<h3 id="the-xor-problem">The XOR Problem<\/h3>/);
-  assert.match(region, /<pre><span class="code-lang">python<\/span>[\s\S]*?<span class="syn-keyword">class<\/span> Perceptron:/);
+  assert.match(region, /<div class="cb" data-kind="code" data-lang="python"><div class="cb-head"><span class="cb-label">python<\/span><button type="button" class="cb-copy">Copy<\/button><\/div><pre><code>[\s\S]*?<span class="syn-keyword">class<\/span> Perceptron:/);
+  assert.doesNotMatch(region, /data-code=/);
   assert.match(region, /XOR was unsolvable by single-layer networks/);
   assert.match(region, /class="lesson-nav-btn next"/);
   assert.ok(visibleWords(region) > 1500, 'full lesson text');
@@ -581,7 +582,7 @@ test('embedded lesson Markdown cannot close its script tag', function () {
   assert.deepEqual(JSON.parse(embedded), { path: 'phases/01-math/01-vectors', lang: 'en', markdown });
   assert.equal((response.body.match(/<script\b/g) || []).length, 2);
   assert.doesNotMatch(fallbackRegion(response.body), /<script>alert|<img src=x/);
-  assert.match(fallbackRegion(response.body), /&lt;\/script&gt;&lt;img src=x onerror=alert\(2\)&gt;/);
+  assert.match(fallbackRegion(response.body).replace(/<\/?span[^>]*>/g, ''), /&lt;\/script&gt;&lt;img src=x onerror=alert\(2\)&gt;/);
   assert.match(fallbackRegion(response.body), /<h1>Vectors &amp; &lt;Matrices&gt; - Math Foundations<\/h1>/);
 });
 

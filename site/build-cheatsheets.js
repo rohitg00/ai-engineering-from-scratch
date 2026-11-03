@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 const markdown = require('./lesson-markdown');
+const code = require('./lib/code');
 const { phaseSlug } = require('../lib/hub-routes');
 const { SITE_HEADER } = require('./build-hubs');
 const { versionHtml } = require('./version-assets');
@@ -42,8 +43,8 @@ const TRACKS = [
 ];
 const FONT_LINK = 'https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap';
 const THEME_SCRIPT = "(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));function i(){var e=document.getElementById('themeIcon');if(e)e.textContent=r.getAttribute('data-theme')==='light'?'N':'D';}document.addEventListener('DOMContentLoaded',function(){i();var b=document.getElementById('themeToggle');if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}i();});});})();";
-const HEAD_ASSETS = '<link rel="stylesheet" href="/style.css">\n<link rel="stylesheet" href="/cheatsheets.css">';
-const BODY_ASSETS = '<script src="/header.js" defer></script>\n<script src="/cheatsheets.js" defer></script>';
+const HEAD_ASSETS = '<link rel="stylesheet" href="/style.css">\n<link rel="stylesheet" href="/cheatsheets.css">\n<link rel="stylesheet" href="/code.css">';
+const BODY_ASSETS = '<script src="/header.js" defer></script>\n<script src="/code-copy.js" defer></script>\n<script src="/cheatsheets.js" defer></script>';
 
 const TYPES = {
   concepts: { group: 'know', label: 'Know' },
@@ -622,20 +623,20 @@ function flowSvg(block) {
 
 function annotatedHtml(block) {
   const pattern = COMMENT[block.lang] || COMMENT.bash;
-  const rows = block.code.map(line => {
-    if (!line.trim()) return '<div class="cs-ann-gap"></div>';
-    if (FULL_COMMENT.test(line) && !/^\s*#!/.test(line)) return `<div class="cs-ann-head">${escapeHtml(line.replace(FULL_COMMENT, ''))}</div>`;
+  const heading = line => FULL_COMMENT.test(line) && !/^\s*#!/.test(line);
+  const parts = block.code.map(line => {
+    if (!line.trim() || heading(line)) return null;
     const match = pattern.exec(line);
-    const code = match ? line.slice(0, match.index) : line;
-    const note = match ? line.slice(match.index + match[0].length) : '';
-    const highlighted = placeholders(markdown.highlightSyntax(code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'), block.lang));
-    return `<div class="cs-ann-row"><code>${highlighted}</code><span>${escapeHtml(note)}</span></div>`;
+    return { code: (match ? line.slice(0, match.index) : line).replace(/\s+$/, ''), note: match ? line.slice(match.index + match[0].length) : '' };
   });
-  const copy = block.code.filter(line => line.trim() && !(FULL_COMMENT.test(line) && !/^\s*#!/.test(line))).map(line => {
-    const match = pattern.exec(line);
-    return (match ? line.slice(0, match.index) : line).replace(/\s+$/, '');
-  }).join('\n');
-  return `<div class="cs-ann" data-lang="${escapeHtml(block.lang)}"><button type="button" class="cs-copy" data-copy="${escapeHtml(copy)}" aria-label="Copy code">Copy</button>${rows.join('')}</div>`;
+  const lit = code.lines(parts.filter(Boolean).map(part => part.code), block.lang);
+  let at = 0;
+  const rows = block.code.map((line, index) => {
+    if (!line.trim()) return '<div class="cs-ann-gap"></div>';
+    if (heading(line)) return `<div class="cs-ann-head">${escapeHtml(line.replace(FULL_COMMENT, ''))}</div>`;
+    return `<div class="cs-ann-row"><code class="cb-ln">${placeholders(lit[at++])}</code><span>${escapeHtml(parts[index].note)}</span></div>`;
+  });
+  return `<div class="cs-ann" data-lang="${escapeHtml(block.lang)}"><button type="button" class="cb-copy" aria-label="Copy code">Copy</button>${rows.join('')}</div>`;
 }
 
 function tableHtml(block) {
@@ -1310,6 +1311,7 @@ function printHtml(built) {
 <link href="${FONT_LINK}" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="cheatsheets.css">
+<link rel="stylesheet" href="code.css">
 <link rel="stylesheet" href="cheatsheets-print.css">
 </head>
 <body class="cs-body cs-print-edition">
@@ -1343,7 +1345,7 @@ function writePrint(outDir, options = {}) {
   fs.mkdirSync(outDir, { recursive: true });
   const html = printHtml(built);
   fs.writeFileSync(path.join(outDir, 'print.html'), options.katex ? prerenderMath(html, options.katex) : html, 'utf8');
-  for (const name of ['style.css', 'cheatsheets.css', 'cheatsheets-print.css', 'cheatsheets.js']) {
+  for (const name of ['style.css', 'cheatsheets.css', 'code.css', 'cheatsheets-print.css', 'cheatsheets.js']) {
     fs.copyFileSync(path.join(__dirname, name), path.join(outDir, name));
   }
   return built;
@@ -1351,7 +1353,8 @@ function writePrint(outDir, options = {}) {
 
 const CLI_FLAGS = new Set(['--check', '--check-topic', '--check-quality', '--status', '--print', '--edition', '--katex']);
 
-function main(argv) {
+async function main(argv) {
+  await code.init();
   const unknown = argv.filter(arg => arg.startsWith('--') && !CLI_FLAGS.has(arg));
   if (unknown.length) {
     console.error(`Unknown option: ${unknown.join(', ')}. Options: ${Array.from(CLI_FLAGS).join(', ')}`);
@@ -1431,6 +1434,11 @@ function main(argv) {
   return 0;
 }
 
-if (require.main === module) process.exitCode = main(process.argv.slice(2));
+if (require.main === module) {
+  main(process.argv.slice(2)).then(status => { process.exitCode = status; }, error => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
 
 module.exports = { qualityReport, QUALITY_RULES, MAINTAINER_ONLY, maintainerContent, incompleteRows, trackOf, parseTopic, loadTopics, buildCheatsheets, writeCheatsheets, writePrint, printHtml, prerenderMath, checkTopic, checkLinks, coverage, layout, factTokens, blockFacts, architectureSvg, architectureLayout, architectureOverlaps, flowSvg, TYPES };

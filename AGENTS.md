@@ -51,7 +51,7 @@ scripts/                      # automation
 1. **Size commits by judgment.** Commit count is a judgment call, not one commit per lesson. A small fix gets 1 to 2 commits. A large change gets a few logical commits, each one a step a reviewer can read on its own.
 2. **Conventional commit subjects** ≤72 chars: `feat(phase-NN/MM): <slug>`. Body explains why, not what.
 3. **Mermaid or SVG only** for diagrams. No ASCII / Unicode box-drawing.
-4. **Every fenced code block needs a language tag.** Use `text`, `json`, `python`, `typescript`, `rust`, `julia`, `bash`, `console`, `mermaid`, `yaml` as appropriate.
+4. **Every fenced code block needs a language tag.** Use `text`, `json`, `python`, `typescript`, `rust`, `julia`, `bash`, `console`, `mermaid`, `yaml` as appropriate. `bash` holds commands, `console` holds a session with `$ ` prompts (Copy takes the commands only), `text` holds output (no Copy), and `ansi` holds coloured logs. See [Code blocks](CONTRIBUTING.md#code-blocks).
 5. **Original implementations only.** Don't cite external curriculum repos in docs, code comments, or commit text. Cite RFCs, official specs, and academic papers when they are the canonical source.
 6. **Dependency allowlist** (see `Dependencies` below). Stdlib-first.
 7. **Never commit generated files**: `catalog.json` is gitignored, `site/data.js` is rebuilt by CI, `package-lock.json` is never tracked.

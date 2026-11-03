@@ -42,7 +42,6 @@
 .m-section-num,
 .m-box-label,
 .m-fig-head,
-.m-listing-head,
 .m-table th {
   font-family: var(--m-font-mono);
   font-size: 11px;
@@ -133,41 +132,12 @@
 .m-plate .m-fig-box { border-left-width: 1px; }
 
 .m-listing { margin: 1.3em 0 1.5em; }
-.m-listing-head {
-  display: flex;
-  gap: 0.9em;
-  align-items: baseline;
-  background: var(--m-panel);
-  border: 1px solid var(--m-panel-edge);
-  border-bottom: 0;
-  padding: 8px 12px;
-  color: var(--m-ink-mute);
-}
+.manual .cb { --cb-bg: var(--m-code-bg); --cb-edge: var(--m-panel-edge); margin: 1.1em 0 1.3em; }
+.m-listing .cb { margin: 0; }
 .m-listing-title { flex: 1; color: var(--m-ink); font-weight: 700; text-transform: none; letter-spacing: 0.02em; }
 .m-evidence { font-size: 0.78em; font-weight: 400; color: var(--m-ink-soft, inherit); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; white-space: nowrap; }
-.m-listing-head .m-evidence { margin-left: 0.75em; text-transform: none; letter-spacing: 0; }
-.m-listing pre,
-.m-code {
-  margin: 0;
-  background: var(--m-code-bg);
-  border: 1px solid var(--m-panel-edge);
-  padding: 12px 14px;
-  overflow-x: auto;
-  font-family: var(--m-font-mono);
-  font-size: 13px;
-  line-height: 1.55;
-  white-space: pre;
-}
-.m-listing pre code,
-.m-code code { color: var(--m-ink); font-size: inherit; }
-.m-code { margin: 1.1em 0 1.3em; }
+.cb-head .m-evidence { font-size: 1em; text-transform: none; letter-spacing: 0.02em; }
 .m-listing-note { font-size: 0.8em; line-height: 1.5; color: var(--m-ink-mute); margin-top: 0.55em; }
-.m-tok-key { color: var(--m-blue-ink); }
-.m-tok-str { color: var(--m-amber-ink); }
-.m-tok-num { color: var(--m-rose-ink); }
-.m-tok-lit { color: var(--m-violet-ink); }
-.m-tok-meta { color: var(--m-teal-ink); font-weight: 700; }
-.m-tok-dim { color: var(--m-ink-mute); }
 
 .m-takeaways,
 .m-rule {
@@ -223,5 +193,5 @@
   .m-part-title { font-size: 54px; }
   .m-cover-title { font-size: 64px; }
   .m-fig-box { padding: 10px; }
-  .m-listing pre, .m-code { font-size: 12px; }
+  .manual .cb pre { font-size: 12px; }
 }

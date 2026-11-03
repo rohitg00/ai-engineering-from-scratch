@@ -442,25 +442,6 @@
   height: 5px;
 }
 
-.cs-copy {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  padding: 1px 6px;
-  border: 1px solid var(--rule-soft);
-  background: var(--bg);
-  color: var(--ink-soft);
-  font-family: var(--font-mono);
-  font-size: 0.82em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.cs-page .syn-keyword { color: var(--g-do); font-weight: 500; }
-.cs-page .syn-string { color: var(--cs-string); }
-.cs-page .syn-number { color: var(--cs-string); }
-.cs-page .syn-comment { color: var(--ink-mute); font-style: italic; }
-
 .cs-defs,
 .cs-qa {
   margin: 0;
@@ -1009,7 +990,7 @@
   .cs-pager,
   .cs-search,
   .cs-anchor,
-  .cs-copy {
+  .cb-copy {
     display: none !important;
   }
 
