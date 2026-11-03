@@ -20,7 +20,7 @@ You fine-tune a model built like Flamingo, with a gated cross-attention block af
 
 ## Short answer
 
-The gates opened too wide too fast. Each gated layer adds the tangent of a learned scalar times the cross-attention output to the residual stream; at zero the layer is a no-op and the model is the pretrained text model. A high learning rate on the gates, or no regularization, lets visual noise flood the residual stream even when the prompt has no image. Confirm it by reading the gate values per layer against the base and by running a text-only eval with the gates forced to zero; fix it with a lower rate or a schedule on the gates, a text-only data mix, and a check that the layers add nothing when no image is present.
+The gates opened too wide too fast. Each gated layer adds the hyperbolic tangent of a learned scalar times the cross-attention output to the residual stream; at zero the layer is a no-op and the model is the pretrained text model. A high learning rate on the gates, or no regularization, lets visual noise flood the residual stream even when the prompt has no image. Confirm it by reading the gate values per layer against the base and by running a text-only eval with the gates forced to zero; fix it with a lower rate or a schedule on the gates, a text-only data mix, and a check that the layers add nothing when no image is present.
 
 ## Full answer
 

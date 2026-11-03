@@ -20,7 +20,7 @@ A product manager asks how much of the context window one image uses in a LLaVA-
 
 ## Short answer
 
-One image costs 576 tokens: the encoder cuts the 336-pixel image into 14-pixel patches, a 24 by 24 grid, and the projector passes every patch token through. In a 2048-token context that leaves 1472 tokens for text; at 32k or 128k it is a small share. Tiling multiplies it: a 2 by 2 or 1 by 3 grid of 336-pixel crops plus one global thumbnail gives about 2880 tokens per image. A query-based bridge compresses any image to a fixed 32 tokens, and a resampler to 64.
+One image costs 576 tokens: the encoder cuts the 336-pixel image into 14-pixel patches, a 24 by 24 grid, and the projector passes every patch token through. In a 2048-token context that leaves 1472 tokens for text; at 32k or 128k it is a small share. Tiling multiplies it: a 2 by 2 grid of 336-pixel crops plus one global thumbnail gives about 2880 tokens per image, and a 1 by 3 grid plus the thumbnail gives fewer, because it has one crop less. A query-based bridge compresses any image to a fixed 32 tokens, and a resampler to 64.
 
 ## Full answer
 

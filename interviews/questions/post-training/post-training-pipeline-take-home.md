@@ -28,7 +28,7 @@ Three stages: first, SFT with QLoRA on the top-rated conversations in one chat t
 
 - Convert every conversation into one chat template, with a fixed system prompt.
 - SFT set: the top-rated answers, filtered for length, vocabulary diversity and a clean instruction-to-answer ratio. Tens of thousands of clean examples are enough; the reference SFT stage in the lesson used about 27,000.
-- Preference set: for prompts with both a high-rated and a low-rated answer, build prompt, chosen and rejected triples. Where the data is thin, sample the rejected side from the SFT model, so that the pairs are in-distribution for the reference. Aim for the 5,000 to 20,000 pairs where DPO works well.
+- Preference set: for prompts with both a high-rated and a low-rated answer, build prompt, chosen and rejected triples. Where the data is thin, sample the rejected side from the SFT model, so that the pairs are in-distribution for the reference. A rater or a judge must confirm that each sampled answer is worse than the chosen one before it becomes a pair, because the SFT model trained on top-rated answers and its samples can be as good. Aim for the 5,000 to 20,000 pairs where DPO works well.
 - A blind eval set of prompts never used in training, plus a forgetting set of tasks outside support, such as short code and arithmetic.
 
 ### Stage 1: SFT with QLoRA

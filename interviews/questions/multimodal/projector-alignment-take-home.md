@@ -55,7 +55,7 @@ About 1.3M in total, next to an encoder of 86M. Both big parts have `requires_gr
 ### Tests
 
 1. The projector output shape matches the configured output width.
-2. The frozen text table has zero parameters that require a gradient.
+2. The frozen text table and the frozen vision encoder have zero parameters that require a gradient.
 3. The cosine loss is 0 on identical vectors and 2 on anti-parallel vectors.
 4. A gradient reaches the projector weights after one backward pass.
 5. The loss at step 200 is lower than at step 0.

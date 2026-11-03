@@ -26,7 +26,7 @@ A discrete image tokenizer is lossy: the decoder can only render what the codes 
 
 ### Why the cap exists
 
-The transformer predicts codes. The decoder turns codes into pixels with no other input. Whatever detail the quantizer threw away at encoding time cannot come back: a perfect transformer that predicts the exact codes of a real image renders the tokenizer's reconstruction of that image, nothing better. The reconstruction quality is therefore an upper bound on the generation quality.
+The transformer predicts codes. The decoder turns codes into pixels with no other input. Whatever detail the quantizer threw away at encoding time cannot come back: a perfect transformer that predicts the exact codes of a real image renders the tokenizer's reconstruction of that image, nothing better. The reconstruction quality is therefore an upper bound on fidelity to a real image, which is what the dB figures below measure. Distribution metrics measure a different property and do not share this bound.
 
 ### What moved the cap
 

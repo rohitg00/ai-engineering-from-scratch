@@ -34,7 +34,7 @@ The sigmoid of the difference is the probability that the preferred answer wins.
 
 ### What accuracy to expect
 
-A random reward model ranks half of the pairs right. The reference pipeline in the RLHF lesson trained its reward model on 33,000 comparisons from 40 raters, about 5 minutes each, and reached about 72 percent accuracy on held-out pairs. That sounds low, but the raters agreed with each other about 73 percent of the time. The ceiling is the agreement of the labels.
+A random reward model ranks half of the pairs right. The reference pipeline in the RLHF lesson trained its reward model on 33,000 comparisons from 40 raters, about 5 minutes each, and reached about 72 percent accuracy on held-out pairs. That sounds low, but the raters agreed with each other about 73 percent of the time. That agreement estimates the noise in the labels. It is not a hard bound, but a score far above it is a reason to look for a leak.
 
 ### Noise in the labels
 
@@ -58,7 +58,7 @@ The same scalar head powers best-of-N sampling at decode time and the reward sid
 ## Wrong answers
 
 - "Regress on a one-to-ten score; it is more information per label." Absolute scores drift between raters and sessions; a pairwise judgment is cheap and consistent, and the Bradley-Terry fit recovers a scale from it.
-- "72 percent accuracy means the reward model is broken." The raters agreed only about 73 percent of the time; the model is near the ceiling of its labels.
+- "72 percent accuracy means the reward model is broken." The raters agreed only about 73 percent of the time; the model is near the agreement of its labels.
 - "Use a small reward model to save compute." A reward model that cannot represent the policy's outputs gives a noisy signal, and the policy exploits its blind spots.
 
 ## Taught in

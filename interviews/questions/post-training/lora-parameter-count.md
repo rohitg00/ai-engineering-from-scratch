@@ -55,7 +55,7 @@ The scale `alpha / r` sets how much the adapter output counts. With alpha equal 
 
 ### Which matrices
 
-The count above is one matrix. Adapters on the query and value projections of every layer are the usual start. Adding the key and output projections and the MLP layers raises quality a little and about doubles the count.
+The count above is one matrix. Adapters on the query and value projections of every layer are the usual start. Adding the key and output projections and the MLP layers raises quality a little and, on the lesson's 7B table, raises the count from 9.4M to 37.7M.
 
 ## Follow-ups
 

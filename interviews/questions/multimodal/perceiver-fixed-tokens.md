@@ -34,7 +34,7 @@ Interleaved prompts have zero, one or many images. With a fixed count per image,
 
 ### The gated bridge
 
-Between every fourth block of the frozen language model sits a new cross-attention layer with a residual gate: the output equals the block output plus the tangent of a learned scalar times the cross-attention. The scalar starts at zero, so at initialization the new layers do nothing, and the model is exactly the pretrained text model.
+Between every fourth block of the frozen language model sits a new cross-attention layer with a residual gate: the output equals the block output plus the hyperbolic tangent of a learned scalar times the cross-attention. The scalar starts at zero, so at initialization the new layers do nothing, and the model is exactly the pretrained text model.
 
 ### The mask
 

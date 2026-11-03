@@ -29,7 +29,7 @@ Decide on the token budget, not on quality in the abstract. At a fixed number of
 | | Query bridge | MLP |
 |---|---|---|
 | Visual tokens per image | 32, fixed | 576 at 336 pixels, about 2880 with tiling |
-| Trainable parameters | 188M plus the language model stage | about 22M plus the language model |
+| Trainable parameters, language model frozen | 188M | about 22M |
 | Pretraining | a representation stage with contrastive, matching and generation losses, then a generative stage | the language-modeling loss throughout |
 | Swap the language model | retrain the bridge | retrain a small head |
 | Many images and video | awkward, but cheap in tokens | natural concatenation, expensive in tokens |

@@ -30,7 +30,7 @@ A multi-scale residual quantizer: encode the image to a latent, quantize it at 1
 
 ### The model
 
-The input sequence is a start token followed by the codes of scale 1, scale 2, and so on. Position embeddings carry the scale index and the position within the scale. The attention mask is block-causal: a code at scale k attends to every code of scales 1 to k, including all positions of its own scale, and to nothing finer. Training is cross-entropy on the codes at each scale given the coarser scales.
+The input for scale 1 is a start token. The input for each later scale k is a grid built from the coarser scales only, upsampled to the size of scale k. The codes of scale k are the targets at those positions, and they enter the input only for the scales after k. Position embeddings carry the scale index and the position within the scale. The attention mask is block-causal: a code at scale k attends to every code of scales 1 to k, including all positions of its own scale, and to nothing finer. Training is cross-entropy on the codes at each scale given the coarser scales.
 
 ### Why it beats raster order
 

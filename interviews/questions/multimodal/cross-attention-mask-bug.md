@@ -82,7 +82,7 @@ def forward(self, text, image_kv, text_mask):
 
 - **Level 2:** Why does the training loss look fine with the first bug? Expected: teacher forcing puts the target token in the input one position later, and an unmasked attention can read it; the loss measures a lookup, not a prediction.
 - **Level 2:** When does cross-attention need a mask? Expected: with several images and text segments interleaved, where a segment may see only the images before it; for one image and one caption, none.
-- **Level 3:** What does the gate from the Flamingo design add to this block, and why? Expected: a learned scalar through a tangent on the cross-attention residual, starting at zero, so that a frozen language model keeps its text behavior at initialization and mixes the image in gradually.
+- **Level 3:** What does the gate from the Flamingo design add to this block, and why? Expected: a learned scalar through a hyperbolic tangent on the cross-attention residual, starting at zero, so that a frozen language model keeps its text behavior at initialization and mixes the image in gradually.
 - **Level 3:** How do you test the cache path? Expected: run the same prompt with and without the cache and assert that the logits match to float tolerance; the capstone ships that test.
 
 ## Wrong answers

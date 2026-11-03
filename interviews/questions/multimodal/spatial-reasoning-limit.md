@@ -39,7 +39,7 @@ The model sees projected patch tokens and reasons in language. It learned what i
 
 | Approach | Strength | Cost |
 |---|---|---|
-| Detector plus box geometry | exact above, under, left and right from coordinates | labels for the object classes; no language interface |
+| Detector plus box geometry | exact image-plane above, under, left and right from coordinates | labels for the object classes; no language interface |
 | Depth model plus detector | distance and stacking | calibration per camera |
 | General VLM, zero-shot | any question in plain language | weak on spatial relations; hallucination risk |
 | General VLM, fine-tuned | a plain-language interface with the domain learned | 5,000 to 50,000 labelled examples and hours of GPU time |

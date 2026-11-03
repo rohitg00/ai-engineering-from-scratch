@@ -50,7 +50,7 @@ The text confidence is the mean per-token probability of the answer. The checker
 
 ### The response plan
 
-1. Route. A flagged answer goes to a review queue, or returns a hedged response that shows the image region, not a confident wrong number.
+1. Route. A flagged answer goes to a review queue, or returns a hedged response that shows the image region, not a confident wrong number. An answer whose numbers fail the text-recognition check also goes to the review queue, even when the whole-image rate does not flag it.
 2. Read. The weekly sample tells you which prompt types fail: numbers, counts, small text.
 3. Fix at the data level. Add grounded examples for the failing prompt types, and tiling or a higher resolution for small text and numbers.
 4. Re-measure with the same metric before and after each change.
