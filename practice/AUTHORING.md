@@ -111,6 +111,8 @@ Do not start with a `#` heading. The page uses the title from `meta.json`. Start
 
 The statement must not contain the solution. The validator fails when a line of `solution.py` appears in `problem.md`.
 
+Tag each fenced block. Use `python` for a call that the learner can paste, `text` for an output, which gets no Copy button, and `console` for a terminal session with `$ ` prompts, where Copy copies the commands only. The build highlights the blocks with the rules in [CONTRIBUTING.md](../CONTRIBUTING.md#code-blocks).
+
 ## starter.py and solution.py
 
 The starter has the imports and the signature of each entry function. Each function body is `raise NotImplementedError`. The solution has the same signatures.
