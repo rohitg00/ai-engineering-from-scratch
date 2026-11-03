@@ -20,7 +20,7 @@ After a few hundred steps at a high learning rate, a ReLU network's loss stops f
 
 ## Short answer
 
-A ReLU unit whose pre-activation is negative for every input outputs zero and has a derivative of zero, so it receives no gradient and its weights never move again. A large update, driven by the high learning rate, pushed those units' weights and biases far enough negative that no input brings them back. Lower the learning rate, re-initialize the dead units or the dead layers, and move to an activation with a gradient on the negative side, such as a leaky variant or GELU.
+First confirm that the units are dead and not only sparse: over a large sample, a dead unit is zero on every input. A ReLU unit whose pre-activation is negative for every input outputs zero and has a derivative of zero, so it receives no gradient and its weights never move again. A large update, driven by the high learning rate, pushed those units' weights and biases far enough negative that no input brings them back. Lower the learning rate, re-initialize the dead units or the dead layers, and move to an activation with a gradient on the negative side, such as a leaky variant or GELU.
 
 ## Full answer
 

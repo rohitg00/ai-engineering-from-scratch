@@ -27,16 +27,16 @@ Write one function with three branches: up to the warmup step, the peak times th
 ### The function
 
 ```text
-if step <= warmup_steps:
+if warmup_steps > 0 and step <= warmup_steps:
     lr = lr_max * step / warmup_steps
 elif step <= total_steps:
-    progress = (step - warmup_steps) / max(1, total_steps - warmup_steps)
+    progress = (step - warmup_steps) / (total_steps - warmup_steps)
     lr = lr_min + 0.5 * (lr_max - lr_min) * (1 + cos(pi * progress))
 else:
     lr = lr_min
 ```
 
-The cosine evaluates to 1 at the end of warmup, which gives the peak and matches the ramp's endpoint, and to -1 at the total, which gives the floor. The capstone lesson makes the point that this continuity is the reason to write one function over the step rather than three pieces glued together: a glued schedule loses a boundary the first time the peak or a step count changes. Two guards: a warmup of zero steps means start at the peak and decay at once, and the max of 1 in the denominator protects a degenerate configuration where warmup equals total.
+The cosine evaluates to 1 at the end of warmup, which gives the peak and matches the ramp's endpoint, and to -1 at the total, which gives the floor. The capstone lesson makes the point that this continuity is the reason to write one function over the step rather than three pieces glued together: a glued schedule loses a boundary the first time the peak or a step count changes. Two guards: the ramp branch runs only when the warmup is above zero, so a warmup of zero steps starts at the peak and decays at once, with no division by zero. The constructor rejects a warmup that is not less than the total, as the lesson's code does with an error, because the rate would hold the peak at the last step and drop to the floor one step later.
 
 ### Why the floor is pinned, not an error
 
@@ -44,7 +44,7 @@ A trainer that overshoots the configured total keeps a usable rate and logs a wa
 
 ### The tests
 
-1. **Fixed points.** lr(0) is 0, lr(warmup) equals the peak from the ramp branch and from the cosine branch, lr(total) equals the floor, lr(total + 1) equals the floor.
+1. **Fixed points.** With a non-zero warmup, lr(0) is 0, lr(warmup) equals the peak from the ramp branch and from the cosine branch, lr(total) equals the floor, lr(total + 1) equals the floor.
 2. **Continuity.** For every step from 0 to total, the change between consecutive steps is at most the larger of the warmup slope, peak over warmup steps, and the steepest cosine slope, pi times the gap over twice the decay length. The lesson's exercise notes that a short cosine segment can be steeper than the ramp, so the ramp slope alone is not a safe bound.
 3. **Resume.** Save a checkpoint with a global step, reload, and assert that the next value equals lr(global step + 1). The schedule reads a monotonic global step from the checkpoint, not an epoch counter or a loop variable, because sharded datasets and restarted loaders break the epoch to step mapping.
 4. **Shape.** Render the schedule to a text plot and a CSV, with one row per step, and check the plot into the run directory so a reviewer can see the curve without running anything.

@@ -36,6 +36,10 @@ Binary cross-entropy is minus y log p minus (1 - y) log (1 - p). Its derivative 
 
 Categorical cross-entropy on a one-hot target reduces to minus the log of the probability of the true class. A random guess among 10 classes puts probability 0.1 there and costs 2.3; a probability of 0.9 costs 0.105. A loss stuck near 2.3 on a 10 class problem is the multi-class twin of the 0.5 symptom.
 
+### When the switch does not help
+
+The switch helps only when the inputs carry signal about the label. On balanced data with no predictive features, both losses are lowest at a constant 0.5, so cross-entropy settles there too. Check that a simple model beats the constant before you blame the loss.
+
 ### Where MSE belongs
 
 Regression on real valued targets, where a linear gradient in the error is what you want. For targets with heavy outliers, MAE or a Huber loss are the lesson's alternatives.

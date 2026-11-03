@@ -20,7 +20,7 @@ A language model has a vocabulary of V tokens. On a held-out text, its mean cros
 
 ## Short answer
 
-Perplexity is the exponential of the mean cross-entropy, so here it equals V. The model is as uncertain as a uniform pick over the whole vocabulary, which means it has learned nothing about this text. A trained model should sit far below V.
+Perplexity is the exponential of the mean cross-entropy, so here it equals V. On average the model is as uncertain as a uniform pick over the whole vocabulary. A trained model should sit far below V. The mean alone does not prove that the model learned nothing, because other per-token predictions can give the same average, so check per-token predictions and the data.
 
 ## Full answer
 
@@ -35,7 +35,7 @@ The two give the same number, because 1 nat is 1.4427 bits and the base of the e
 
 ### The estimate
 
-The loss is ln V. The exponential of ln V is V. Uniform logits over V tokens give exactly this loss and exactly this perplexity, so the model behaves like a uniform guess on this text. The lesson gives a scale: GPT-2 reached about 30 on common benchmarks, and modern models are in the single digits on well-represented domains.
+The loss is ln V. The exponential of ln V is V. Uniform logits over V tokens give exactly this loss and exactly this perplexity. Other per-token predictions can give the same average, so this number alone does not prove that the model learned nothing. Look at the per-token predictions and at the data distribution before you decide. The lesson gives a scale: GPT-2 reached about 30 on common benchmarks, and modern models are in the single digits on well-represented domains.
 
 ### What to check before you blame the model
 

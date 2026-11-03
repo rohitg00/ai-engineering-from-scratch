@@ -36,7 +36,7 @@ The total sum of squares is the error of the simplest model: predict the mean ev
 
 ### How it happens on a test set
 
-The model was fit on the training set. On the test set, a model that overfit the training data, or data whose distribution moved, can give predictions that are further from the targets than the test mean. The evaluation lesson prints a mean baseline next to the model for this reason: the baseline gets an R-squared of about 0, and a model must beat it.
+The model was fit on the training set. On the test set, a model that overfit the training data, or data whose distribution moved, can give predictions that are further from the targets than the test mean. The evaluation lesson prints a mean baseline next to the model for this reason, and a model must beat it. That baseline uses the mean of the training targets. It scores near 0 only when the test mean is close to the training mean, and below 0 when the two means differ.
 
 ### What to do with the number
 
@@ -46,7 +46,7 @@ The model was fit on the training set. On the test set, a model that overfit the
 
 ## Follow-ups
 
-- **Level 1:** What value does a model that predicts the training mean get? Expected: about 0, because the residual and total sums are almost the same.
+- **Level 1:** What value does a model that predicts the training mean get on the test set? Expected: near 0 when the test mean is close to the training mean, because the residual and total sums are almost the same; below 0 when the two means differ.
 - **Level 2:** Training R-squared is high and the test value is negative. What does the gap say? Expected: the model fit the training data and does not transfer; suspect overfitting or a shift between the sets.
 - **Level 2:** Why report R-squared next to RMSE? Expected: RMSE is in the units of the target and shows the size of a typical error; R-squared is a fraction of variance and has no units.
 - **Level 3:** The target has a heavy tail. What else do you check? Expected: MAE next to MSE, because squared errors let a few outliers dominate both MSE and R-squared.

@@ -20,7 +20,7 @@ Adam keeps a running average of the gradient and a running average of its square
 
 ## Short answer
 
-Both averages start at zero, so at step one the first moment is only (1 - beta1) times the gradient, a tenth of it with beta1 at 0.9, and the second moment is a thousandth of the squared gradient with beta2 at 0.999. The divisions rescale both to unbiased estimates. Without them the square root of the second moment is shrunk more than the first moment, so the ratio and the step come out too large while the averages warm up. After about 50 steps the factor is close to 1 and the correction changes nothing.
+Both averages start at zero, so at step one the first moment is only (1 - beta1) times the gradient, a tenth of it with beta1 at 0.9, and the second moment is a thousandth of the squared gradient with beta2 at 0.999. The divisions rescale both to unbiased estimates. Without them the square root of the second moment is shrunk more than the first moment, so the ratio and the step come out too large while the averages warm up. The first moment's factor is close to 1 after about 50 steps, but the second moment's factor, 1 - 0.999 to the t, stays well below 1 for thousands of steps, so without the division the step stays too large for that long.
 
 ## Full answer
 
@@ -38,7 +38,7 @@ The first moment is momentum: with beta1 at 0.9 it averages about the last ten g
 
 ### Why the averages start wrong
 
-At step one, m is 0.1 times the gradient. The average has not warmed up, and the lesson calls that ten times too small. The same holds for v with a factor of 0.001. Dividing m by (1 - 0.9) at step one gives back the gradient. At step 100 the factor (1 - 0.9 to the 100) is about 1.0, so the correction is gone. The lesson's rule: it matters for the first 10 steps or so and is irrelevant after 50.
+At step one, m is 0.1 times the gradient. The average has not warmed up, and the lesson calls that ten times too small. The same holds for v with a factor of 0.001. Dividing m by (1 - 0.9) at step one gives back the gradient. At step 100 the factor (1 - 0.9 to the 100) is about 1.0, so the correction is gone. The lesson's rule for the first moment: it matters for the first 10 steps or so and is irrelevant after 50. The second moment is slower. With beta2 at 0.999 its factor approaches 1 only after thousands of steps, so its correction lasts much longer.
 
 ### What the deletion does
 
@@ -59,7 +59,7 @@ Warmup, a small learning rate that ramps up over the first steps, protects the s
 
 - "The division is a numerical safety term like epsilon." Epsilon guards a zero denominator; the division by one minus beta to the t corrects the zero initialization of the averages.
 - "Without it the first steps are too small, so training is only slower." The second moment's square root is shrunk more than the first moment, so the ratio and the step come out too large.
-- "It matters for the whole run." After about 50 steps the factor is close to 1 and the correction changes nothing.
+- "Both corrections stop mattering after about 50 steps." That holds for the first moment only. With beta2 at 0.999 the second moment's factor stays well below 1 for thousands of steps.
 
 ## Taught in
 

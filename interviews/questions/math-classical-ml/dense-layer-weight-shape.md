@@ -37,7 +37,7 @@ The rows of the weight matrix count the outputs. The columns count the inputs. E
 
 ### The bias
 
-The bias is a vector with one value for each output. Adding it to a 128 by 1 result works because the shapes are equal. When the layer runs on a batch, the bias has fewer dimensions than the output, and broadcasting repeats it across the batch. Broadcasting only stretches a dimension of size 1, so it never fixes a 784 against a 128.
+The bias holds one value for each output. Store it as a 128 by 1 column, as the lesson does, so that it adds to the 128 by 1 result element by element. A flat array of 128 values against a 128 by 1 column broadcasts to 128 by 128 with no error. When the layer runs on a batch, the bias has fewer dimensions than the output, and broadcasting repeats it across the batch. Broadcasting only stretches a dimension of size 1, so it never fixes a 784 against a 128.
 
 ### How to read the error
 
@@ -49,7 +49,7 @@ The lesson makes the same check for a two layer network: the first matrix is 4 b
 
 ## Follow-ups
 
-- **Level 1:** What shape does the bias have? Expected: one value for each output, so 128 values, added to each output column by broadcasting.
+- **Level 1:** What shape does the bias have? Expected: one value for each output, so 128 values, stored as a 128 by 1 column so that it adds to each output column.
 - **Level 2:** A batch of inputs arrives as rows instead of columns. What changes? Expected: the order of the product changes, so the batch matrix times the transposed weight gives one output row for each input.
 - **Level 2:** Why does a transpose appear in the backward pass? Expected: the gradient for the input needs the weight matrix with its rows and columns swapped, so that the shapes agree in the reverse direction.
 - **Level 3:** How does broadcasting hide a shape bug? Expected: a dimension of size 1 is stretched to fit, so a wrong shape can run without an error and give wrong values. An assertion on the shape catches it.

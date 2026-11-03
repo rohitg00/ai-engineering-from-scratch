@@ -51,7 +51,7 @@ A mask entry is 0 with probability p and 1 over (1 - p) otherwise. Its expected 
 
 ### The backward pass
 
-Dropout is an element-wise scale by the mask. The gradient of the input is the gradient of the output times the same mask: dropped units get 0, kept units get the gradient scaled by 1 over (1 - p). The mask must be the one from the matching forward pass, because the backward pass differentiates the function that ran forward. A fresh mask would pass gradient to units that were off and scale units that were on. The guard on a missing mask covers a backward call after an evaluation forward, where no mask exists.
+Dropout is an element-wise scale by the mask. The gradient of the input is the gradient of the output times the same mask: dropped units get 0, kept units get the gradient scaled by 1 over (1 - p). The mask must be the one from the matching forward pass, because the backward pass differentiates the function that ran forward. A fresh mask would pass gradient to units that were off and scale units that were on. The guard on a missing mask covers only a backward call before any training forward. The evaluation branch returns before it changes the mask, so a backward call after an evaluation forward reuses the mask of the last training forward.
 
 ### What dropout buys
 

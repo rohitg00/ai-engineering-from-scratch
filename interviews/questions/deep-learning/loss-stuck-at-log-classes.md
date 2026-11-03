@@ -20,7 +20,7 @@ A ten class classifier trains for many epochs, and the cross-entropy loss sits a
 
 ## Short answer
 
-Minus the natural log of one tenth is about 2.3, so the model assigns the same probability to every class on every input: it predicts the uniform distribution and has learned nothing. A value that clean is not an optimization problem; it points at the data pipeline. Check that labels line up with inputs, run the one batch overfit test, and only then look at the learning rate, the gradients and the architecture.
+Minus the natural log of one tenth is about 2.3, the loss of a model that gives every class the same probability, and the lesson's table reads a loss stuck there as a uniform prediction with no usable signal. The mean alone does not say why. Run the one batch overfit test first: a failure points at the loss, the backward pass, the optimizer hookup or misaligned labels, and a pass sends you to the data path to check that labels line up with inputs. Only then look at the learning rate, the gradients and the architecture.
 
 ## Full answer
 

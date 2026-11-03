@@ -16,11 +16,11 @@ related: [deep-learning/stacked-linear-layers-collapse, deep-learning/half-the-r
 updated: 2026-11-03
 ---
 
-A network has ten hidden layers, each with a sigmoid activation. Estimate the largest factor by which a gradient can keep its size on the way from the loss to the first layer, and say what that number means for training.
+A network has ten hidden layers, each with a sigmoid activation. Estimate the largest factor that the sigmoid derivatives alone let a gradient keep on the way from the loss to the first layer, and say what that number means for training.
 
 ## Short answer
 
-The sigmoid derivative is s times (1 - s), which peaks at 0.25 when the output is 0.5. Backpropagation multiplies by that derivative once per layer, so after ten layers the gradient is at most 0.25 to the tenth power, about one millionth of its size at the loss. The first layers receive almost no signal and stay near their initialization while the last layers learn. That is the vanishing gradient problem.
+The sigmoid derivative is s times (1 - s), which peaks at 0.25 when the output is 0.5. Backpropagation multiplies by that derivative once per layer, so after ten layers the activation factors multiply to at most 0.25 to the tenth power, about one millionth. Each layer also multiplies by its transposed weight matrix, and weights with a norm above 1 can enlarge the gradient, so the figure bounds only the activation part. With the small initial weights of the lesson, the first layers receive almost no signal and stay near their initialization while the last layers learn, which is the vanishing gradient problem.
 
 ## Full answer
 
@@ -30,7 +30,7 @@ At each layer the backward pass computes the gradient of the loss with respect t
 
 ### Why the bound is optimistic
 
-The 0.25 holds only for a unit whose output is exactly 0.5. A unit near 0 or near 1 is saturated and has a derivative near 0. Real networks have many saturated units, so the real shrink is worse than one millionth. A second cost: sigmoid outputs are always positive, so the gradients on a layer's weights share a sign and descent zigzags.
+The 0.25 holds only for a unit whose output is exactly 0.5. A unit near 0 or near 1 is saturated and has a derivative near 0. Real networks have many saturated units, so the activation part shrinks more than one millionth. The bound also leaves out the weight matrices. Backpropagation multiplies by each layer's transposed weights, and weights with a norm above 1 can enlarge the gradient, while small weights shrink it more. A second cost: sigmoid outputs are always positive, so the gradients on a layer's weights share a sign and descent zigzags.
 
 ### What changes the arithmetic
 
