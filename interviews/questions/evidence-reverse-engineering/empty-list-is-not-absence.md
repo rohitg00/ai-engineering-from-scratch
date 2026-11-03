@@ -16,7 +16,7 @@ related: [evidence-reverse-engineering/observed-derived-inferred]
 updated: 2026-11-03
 ---
 
-The dossier of `_grade` lists `callers: []` and `callees: []`, and its `relationship_coverage.status` reads `complete`. The agent writes "nothing calls grade". What does the record support, and what would make the agent's sentence true?
+In the record, the dossier for the function `_grade` lists `callers: []` and `callees: []`, and its `relationship_coverage.status` reads `complete`. The agent writes "nothing calls grade". What does the record support, and what would make the agent's sentence true?
 
 ## Short answer
 

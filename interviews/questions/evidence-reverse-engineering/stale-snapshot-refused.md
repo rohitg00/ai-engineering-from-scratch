@@ -16,7 +16,7 @@ related: [evidence-reverse-engineering/evidence-id-excludes-the-path]
 updated: 2026-11-03
 ---
 
-After a tool upgrade, `open_binary` with the saved snapshot answers `profile_mismatch`, although the target's SHA-256 and the provider are unchanged. The same morning a colleague renamed one function, and later `close_binary` with a snapshot path failed with "Analysis snapshots are unavailable because analysis metadata may have changed". Explain both refusals, and say what a snapshot is and is not.
+After a tool upgrade, a call to `open_binary` with the saved snapshot answers `profile_mismatch`, although the target's SHA-256 and the provider are unchanged. The same morning a colleague renamed one function, and later `close_binary` with a snapshot path failed with "Analysis snapshots are unavailable because analysis metadata may have changed". Explain both refusals, and say what a snapshot is and is not.
 
 ## Short answer
 

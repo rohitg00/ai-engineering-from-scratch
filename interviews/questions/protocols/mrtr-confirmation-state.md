@@ -16,7 +16,7 @@ related: [protocols/roots-are-not-a-sandbox, protocols/header-body-mismatch-orde
 updated: 2026-11-03
 ---
 
-A `notes_delete` tool finds three notes that match the title the user gave. Design the confirmation flow under the current MCP revision: how the server asks the user to pick one and confirm, how the answer comes back, and what stops a client from answering a different question or replaying one confirmation with changed arguments.
+A tool that deletes notes, `notes_delete`, finds three notes that match the title the user gave. Design the confirmation flow under the current MCP revision: how the server asks the user to pick one and confirm, how the answer comes back, and what stops a client from answering a different question or replaying one confirmation with changed arguments.
 
 ## Short answer
 

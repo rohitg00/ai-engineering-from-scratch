@@ -16,7 +16,7 @@ related: [evidence-reverse-engineering/observed-derived-inferred]
 updated: 2026-11-03
 ---
 
-An agent rebuilds `percent_change` from the decompiler's pseudocode, which reads `undefined1 [16] percent_change(int param_1, int param_2, ulong param_3)` with `lVar1 = (long)((param_2 - param_1) * 100)`. The rebuild is `(int)(((long)after - before) * 100 / before)`, and four hand-written tests pass. The listing of the same record reads `IMUL EAX, ESI, 0x64`, `CDQ`, `IDIV EDI`. What went wrong, and what is the rule?
+From the decompiler's pseudocode, an agent rebuilds `percent_change`. The pseudocode reads `undefined1 [16] percent_change(int param_1, int param_2, ulong param_3)` with `lVar1 = (long)((param_2 - param_1) * 100)`. The rebuild is `(int)(((long)after - before) * 100 / before)`, and four hand-written tests pass. The listing of the same record reads `IMUL EAX, ESI, 0x64`, `CDQ`, `IDIV EDI`. What went wrong, and what is the rule?
 
 ## Short answer
 

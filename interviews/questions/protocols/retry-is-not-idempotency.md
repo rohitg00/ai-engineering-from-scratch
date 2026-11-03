@@ -16,7 +16,7 @@ related: [protocols/cancel-signal-per-transport, protocols/draft-lost-across-rep
 updated: 2026-11-03
 ---
 
-A client calls `charge_account` over Streamable HTTP. A reverse proxy buffers the response stream, the client reaches its timeout and disconnects, and the server commits the charge a moment later. The client sends the call again with a fresh JSON-RPC id, and the customer is charged twice. The team proposes to deduplicate on the JSON-RPC id. Design the fix.
+Over Streamable HTTP, a client calls `charge_account`. A reverse proxy buffers the response stream, the client reaches its timeout and disconnects, and the server commits the charge a moment later. The client sends the call again with a fresh JSON-RPC id, and the customer is charged twice. The team proposes to deduplicate on the JSON-RPC id. Design the fix.
 
 ## Short answer
 
