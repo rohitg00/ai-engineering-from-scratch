@@ -70,7 +70,7 @@ Pros: no hay segundo modelo. Los inconvenientes: añade parámetros entrenables;
 
 ### Eagle  mejor dibujo mediante la reutilización de estados ocultos
 
-EAGLE-1/2/3 (Li et al., 20242025) hace que el modelo de proyecto sea un pequeño transformador (típicamente de 1 capa) que ingere los estados ocultos de última capa del verificador. Debido a que el proyecto ve la representación de las características del verificador, sus predicciones se correlacionan fuertemente con la distribución de salida del verificador.
+EAGLE-1/2/3 (Li et al., 20242025) hace que el modelo de proyecto sea un pequeño transformador (típicamente de 1 capa) que ingere los estados ocultos de última capa del verificador. Debido a que el borrador ve la representación de las características del verificador, sus predicciones se correlacionan fuertemente con la distribución de salida del verificador. Las tasas de aceptación aumentan de ~ 0,6 (vanilla) a 0,85+. Estas son tasas por token en los puntos de referencia de chat, con un borrador entrenado en datos de chat correspondientes. En el caso del tráfico de producción mixta, la fase 17 · 05 se plantea con 0,6 a 0,8 para EAGLE-3, y el tráfico de dominio puede ser menor.
 
 EAGLE-3 (2025) añadió la búsqueda de árboles sobre las continuas candidatos. vLLM y SGLang nave EAGLE-2/3 como la ruta de especificación predeterminada para Llama 3/4 y Qwen 3.
 

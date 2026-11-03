@@ -176,9 +176,9 @@ def tiled_softmax_dot(q, K, V, tile=4):
 
 Una salida idéntica a bit `softmax(qK) V`en un solo disparo, pero en cualquier momento el juego de trabajo es un `tile × d_head`Bloqueo, no el completo `N × d_head`¿ Qué ?
 
-### Paso 3: Comparar la descifrado ingenuo vs caché en la generación de 100 tokens
+### Paso 3: Comparar la descifrado ingenuo con caché
 
-Cuenta las operaciones de atención.$O(N^2)$= 5050. En caché: $O(N)$El código imprime ambas cosas.
+Cuenta las operaciones de atención. Ambos decodificadores hacen las mismas comparaciones de clave de consulta: paso `t`Asiste a la reunión .`t`los tokens, por lo que el total es 1 + 2 + ... + N = N(N+1)/2. El código utiliza N = 10 e imprime 55 para cada decodificador. Para una generación de 100 tokens, ambos hacen 5050 comparaciones. La caché guarda las proyecciones K y V. Sin una caché, cada paso calcula K y V de nuevo para el prefijo completo, así que una generación de 100 tokens calcula 5050 estados de tokens. Con la caché, los K y V de cada token se calculan una vez, por lo que la misma generación calcula 100 estados de los tokens.
 
 ## Usalo
 
