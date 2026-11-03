@@ -55,7 +55,7 @@ One teammate blames the image and wants the tracker removed for good. Another wa
 
 ## Resolution
 
-The crash was a missing `--wandb-group`. Add it, keep offline mode until an account and a network are wanted, and check the two signs: the `W&B offline mode enabled` line and the `offline-run-` folder. The run then reaches `step 0` and `step 1` as the check did. For a team with no tracker account, use TensorBoard with a folder and one flag, and open the folder on the host.
+The crash came from one missing flag, `--wandb-group`. Add it, keep offline mode until an account and a network are wanted, and check the two signs: the `W&B offline mode enabled` line and the `offline-run-` folder. The run then reaches `step 0` and `step 1` as the check did. For a team with no tracker account, use TensorBoard with a folder and one flag, and open the folder on the host.
 
 Keep the log in any case. The manual read every number in it from the log, and the log is where the first exception of a broken run sits.
 

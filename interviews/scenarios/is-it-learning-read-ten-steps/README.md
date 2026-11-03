@@ -78,4 +78,4 @@ One number read at one step tells you almost nothing, and the number that everyo
 
 ## Taught in
 
-The Miles manual gives the five numbers and their ranges in [the first ten steps page](../../../manuals/miles-101/sections/1-3-read-your-first-ten-steps.md), the two step-0 values that must be zero in [the first step page](../../../manuals/miles-101/sections/5-2-check-the-first-step.md), the eight signals of a run in [the read the run page](../../../manuals/miles-101/sections/5-1-read-the-run.md), and the noise between seeds in [the repeat page](../../../manuals/miles-101/sections/5-3-repeat-a-run.md).
+The Miles manual gives the five numbers and their ranges in [the first ten steps page](../../../manuals/miles-101/sections/1-3-read-your-first-ten-steps.md), the step-0 zeros of the clip fraction and the KL in [the first step page](../../../manuals/miles-101/sections/5-2-check-the-first-step.md), the eight signals of a run in [the read the run page](../../../manuals/miles-101/sections/5-1-read-the-run.md), and the noise between seeds in [the repeat page](../../../manuals/miles-101/sections/5-3-repeat-a-run.md).

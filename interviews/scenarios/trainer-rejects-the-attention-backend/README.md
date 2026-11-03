@@ -69,4 +69,4 @@ Two components that read the same word do not read the same thing. Each one chec
 
 ## Taught in
 
-The Miles manual lists this error in [the troubleshooting page](../../../manuals/miles-101/sections/7-1-troubleshoot-by-symptom.md) and the contract that both sides must meet in [the true on-policy limits page](../../../manuals/miles-101/sections/4-6-know-the-true-on-policy-limits.md), and the SGLang manual shows the same run and where the flag value came from in [its RL rollout engine page](../../../manuals/sglang-101/sections/7-2-sglang-as-an-rl-rollout-engine.md).
+The Miles manual lists this error in [its symptom table](../../../manuals/miles-101/sections/7-1-troubleshoot-by-symptom.md) and the contract that both sides must meet in [the true on-policy limits page](../../../manuals/miles-101/sections/4-6-know-the-true-on-policy-limits.md), and the SGLang manual shows the same run and where the flag value came from in [its RL rollout engine page](../../../manuals/sglang-101/sections/7-2-sglang-as-an-rl-rollout-engine.md).

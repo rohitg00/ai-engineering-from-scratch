@@ -69,4 +69,4 @@ When a thing you started is gone, ask whether it stopped, failed, or was deleted
 
 ## Taught in
 
-[The lifecycle page](../../../manuals/docker-sandboxes-101/sections/2-1-sbx-run-create-stop-and-rm.md) records the auto-stop and what a stop keeps, and [the claims ledger](../../../manuals/docker-sandboxes-101/sections/7-4-kit-tck-diagnose-and-the-claims-this-manual-checked.md) marks the behaviour as observed and not documented.
+[The lifecycle page](../../../manuals/docker-sandboxes-101/sections/2-1-sbx-run-create-stop-and-rm.md) records the auto-stop and what a stop keeps, and [the claims ledger](../../../manuals/docker-sandboxes-101/sections/7-4-kit-tck-diagnose-and-the-claims-this-manual-checked.md) gives the behaviour the verdict observed, with no vendor page behind it.

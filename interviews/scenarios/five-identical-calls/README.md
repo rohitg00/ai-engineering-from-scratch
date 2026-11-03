@@ -62,7 +62,7 @@ The teammate reads the line as a runtime bug: the model was working, and the run
 
 ## Resolution
 
-The cause is a headless run with a tool whose label is `unknown` and no allow pattern. Every call asked, every ask became a rejection, and the model repeated the call. The limit on consecutive identical calls worked as designed: it turned an endless loop into one exit code.
+The cause is a headless run with a tool whose label is `unknown` and no allow pattern. Every call asked, every ask became a rejection, and the model repeated the call. The repeat limit worked as designed: it turned an endless loop into one exit code.
 
 The fix is a permission, not a higher limit. Add an `allow` pattern for `run_background_agent` to the agent file, and allow patterns for the tools the writer will call, then rerun with `--exec`. The manual did not run the repaired configuration, so the check is yours: the first `run_background_agent` call must return a task id in the stream instead of a rejection, and the run must end with the writer's sentence and exit 0. Keep the limit at its default. Keep the safety mode out of `autonomous`.
 
