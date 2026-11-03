@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-On one L4 with Qwen/Qwen3-8B and the same 24,096-token pool, a closed-loop sweep at 64 users gives vLLM 241 output tokens per second and SGLang 257, so the engines tie on throughput. Yet the chat team says one of them is unusable at that load and the other is fine. What are they seeing, and how do you pick an engine for chat?
+On one L4 with Qwen/Qwen3-8B and the same 24,096-token pool, a closed-loop sweep at 64 users gives vLLM 241 tokens of output per second and SGLang 257, so the engines tie on throughput. Yet the chat team says one of them is unusable at that load and the other is fine. What are they seeing, and which engine do you choose for chat?
 
 ## Short answer
 

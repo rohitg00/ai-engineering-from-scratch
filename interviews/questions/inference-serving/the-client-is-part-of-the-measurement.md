@@ -50,7 +50,7 @@ The first row is the trap. With the default ratio, an input length of 512 gives 
 
 ### Fixed lengths form waves
 
-With the ratio at 1.0 every request has the same length, so requests that start together finish together and their replacements arrive together. At 16 users on the L4, fixed lengths gave a median first token of 1,996 ms and a P99 ITL of 82 ms; mixed lengths gave 291 ms and 300 ms. The two settings measure two different servers. Fixed lengths measure bursts, with a slow first token and smooth tokens. Mixed lengths measure steady traffic, with a fast first token and stalls in the stream. Keep 1.0 to compare two builds, and run your real length mix before you set a latency target.
+With the ratio at 1.0 every request has the same length, so requests that start together finish together and their replacements arrive together. At 16 users on the L4, fixed lengths gave a median time to first token of 1,996 ms and a P99 ITL of 82 ms; mixed lengths gave 291 ms and 300 ms. The two settings measure two different servers. Fixed lengths measure bursts, with a slow first token and smooth tokens. Mixed lengths measure steady traffic, with a fast first token and stalls in the stream. Keep 1.0 to compare two builds, and run your real length mix before you set a latency target.
 
 ### The client's own queue
 

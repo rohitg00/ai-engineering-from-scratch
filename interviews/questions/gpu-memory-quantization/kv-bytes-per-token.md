@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-You are given two model configs. Model A has 36 layers, 8 KV heads and a head size of 128. Model B has 48 layers, 4 KV heads and a head size of 128, and almost four times the parameters. Estimate the KV cache bytes per token of each in BF16, say which one fits more users on the same card, and explain why the parameter count misled you if it did.
+You are given two model configs. Model A: 36 layers, 8 KV heads, head size 128. Model B: 48 layers, 4 KV heads, head size 128, and almost four times the parameters. Estimate the KV cache bytes per token of each in BF16, say which one fits more users on the same card, and explain why the parameter count misled you if it did.
 
 ## Short answer
 

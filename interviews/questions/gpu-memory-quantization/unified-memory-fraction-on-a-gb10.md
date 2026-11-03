@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-You run a 30B mixture-of-experts model in BF16 on a GB10, a machine where the CPU and the GPU share 128 GB of memory and the operating system and other programs live in the same pool. How do you pick the memory fraction, what does the fraction not guarantee on this machine, and why does the pool size differ between two starts with the same command?
+You run a 30B model with mixture-of-experts layers in BF16 on a GB10, a machine where CPU and GPU draw on one 128 GB memory and the operating system and other programs live in the same pool. How do you pick the memory fraction, what does the fraction not guarantee on this machine, and why does the pool size differ between two starts with the same command?
 
 ## Short answer
 

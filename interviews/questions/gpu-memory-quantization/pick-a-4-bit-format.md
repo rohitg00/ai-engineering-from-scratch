@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-A 14B model must run on a 24 GB card and does not fit in FP8 with a usable pool. You can choose AWQ, GPTQ, a compressed-tensors checkpoint, bitsandbytes at load time, or a GGUF file. How do you pick, and what did the manual measure for each?
+A 14B model must run on a 24 GB card and does not fit in FP8 with a usable pool. You can choose AWQ, GPTQ, a checkpoint in the compressed-tensors format, bitsandbytes at load time, or a GGUF file. How do you pick, and what did the manual measure for each?
 
 ## Short answer
 

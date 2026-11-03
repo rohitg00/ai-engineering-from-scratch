@@ -55,7 +55,7 @@ Enforce the knee in the gateway, not only in the engine. The engine admits until
 
 1. Sweep concurrency with a flush and a new seed before every run, and record the cached tokens. The unflushed sweep put the knee between 16 and 32 users; the flushed one put it between 8 and 16.
 2. Record the SM clock and the temperature of every run, cool the card between runs, and set aside runs under a clock floor. Under an open-loop overload the L4 fell from 1,320 to 465 MHz with 70 percent of samples in thermal slowdown, so overload costs throughput as well as latency.
-3. Run your real length mix. Fixed lengths form waves and gave a median first token of 1,996 ms with a P99 ITL of 82 ms at 16 users; mixed lengths gave 291 ms and 300 ms. The two shapes measure two different servers.
+3. Run your real length mix. Fixed lengths form waves and gave a median time to first token of 1,996 ms with a P99 ITL of 82 ms at 16 users; mixed lengths gave 291 ms and 300 ms. The two shapes measure two different servers.
 4. Run a fixed arrival rate as well as the closed loop, because real users do not wait for each other.
 5. Choose the limit from goodput at the target, and read the P99 ITL next to the first token.
 

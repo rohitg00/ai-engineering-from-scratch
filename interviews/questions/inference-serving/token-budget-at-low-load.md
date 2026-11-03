@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-A teammate proposes `--max-num-batched-tokens 16384` so that long prompts get their first token sooner. The server runs a mixture-of-experts model on one card. Requests arrive at about half a request per second, with prompts between 1,024 and 4,096 tokens. What do you expect to change, and what would you measure before you accept the change?
+A teammate proposes `--max-num-batched-tokens 16384` so that long prompts get their first token sooner. The server runs a model with mixture-of-experts layers on one card. Requests arrive at about half a request per second, with prompts between 1,024 and 4,096 tokens. What do you expect to change, and what would you measure before you accept the change?
 
 ## Short answer
 

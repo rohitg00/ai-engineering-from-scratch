@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-On a GB10 a BF16 server of Qwen/Qwen3-30B-A3B-Instruct-2507 loads 57.75 GB of weights and sizes a KV pool of 227,243 tokens. You switch to the FP8 checkpoint with `--kv-cache-dtype fp8_e4m3` at the same memory fraction. Estimate the new pool, and explain why it is not simply twice the old one.
+On a GB10 a BF16 server of Qwen/Qwen3-30B-A3B-Instruct-2507 loads 57.75 GB of weights and sizes a KV pool of 227,243 tokens. You move to the FP8 checkpoint and add `--kv-cache-dtype fp8_e4m3` at the same memory fraction. Estimate the new pool, and explain why it is not simply twice the old one.
 
 ## Short answer
 

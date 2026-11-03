@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-A vLLM server runs Qwen/Qwen3-8B with an EAGLE3 draft of depth 3. Over a run of answers near 2,000 tokens at 8 users, the counters show that the draft at position one was accepted with probability 0.77, position two with 0.54, and position three with 0.38. Estimate the mean number of tokens that one verify pass commits, and say what you would check before you trust the gain on long answers.
+A vLLM server runs Qwen/Qwen3-8B with an EAGLE3 draft of depth 3. Over a run of answers near 2,000 tokens at 8 users, the counters show that the draft at position one was accepted with probability 0.77, position two with 0.54, and position three with 0.38. Estimate the mean number of tokens that one verify pass commits, and say what you would check before you rely on that gain for long answers.
 
 ## Short answer
 

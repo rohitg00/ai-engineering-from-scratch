@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-At 32 concurrent users your L4 chat service streams badly: the P99 gap between tokens is 613 ms, and your target is 100 ms or less per token with a first token within 1 second. A teammate proposes `--max-num-seqs 16` so that fewer requests share each step. What do you expect, and what does the measurement say?
+At 32 concurrent users your L4 chat service streams badly: the P99 inter-token gap is 613 ms, and your target is 100 ms or less per token with a first token within 1 second. A teammate proposes `--max-num-seqs 16` so that each step holds fewer requests. What do you expect, and what does the measurement say?
 
 ## Short answer
 
@@ -62,7 +62,7 @@ No cap brought the vLLM P99 ITL near the SGLang value. At 16 or 32 running reque
 
 ### The small pool is the other queue
 
-A pool of 6,560 tokens against 24,096 at 32 users gave a median first token of 31.6 s against 3.1 s and a P99 first token of 48.0 against 7.1 s. A request of 640 tokens needs 640 tokens of pool by its end, so about 10 requests fit in the small pool and the other 22 waited for a running request to finish. The small-pool run also fell to 248 MHz, but a clock 3.6 times lower cannot explain a first token 10 times later; the queue did.
+A pool of 6,560 tokens against 24,096 at 32 users gave a median time to first token of 31.6 s against 3.1 s and a P99 first token of 48.0 against 7.1 s. A request of 640 tokens needs 640 tokens of pool by its end, so about 10 requests fit in the small pool and the other 22 waited for a running request to finish. The small-pool run also fell to 248 MHz, but a clock 3.6 times lower cannot explain a first token 10 times later; the queue did.
 
 ### How SGLang admits, and why a queue is the honest failure
 

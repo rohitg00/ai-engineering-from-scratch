@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-Your first concurrency sweep on an L4 shows the median first token at 0.3 s up to 16 users and 1.8 s at 32, so you set the production limit at 20 users per replica. A second sweep with a reset before each run puts the first token at 1.6 s already at 16 users. Which sweep do you trust, and why do the two disagree?
+Your first concurrency sweep on an L4 shows a first-token median of 0.3 s up to 16 users and 1.8 s at 32, so you set the production limit at 20 users per replica. A second sweep with a reset before each run puts the first token at 1.6 s already at 16 users. Which sweep do you trust, and why do the two disagree?
 
 ## Short answer
 
@@ -55,7 +55,7 @@ From 32 users the queue dominated and the reset changed little. Below it, the ca
 
 The same 64 prompts at 16 users, four times in a row, median TTFT in ms: vLLM read 925 fresh, 148 on a repeat without a flush, 1,163 on a repeat after a flush, and 184 on another repeat without one. SGLang read 394, 82.5, 289 and 77. The repeat without a flush read a first token about 6 times lower on vLLM and 4.8 times lower on SGLang. The time per token changed by less than 15 percent, because a hit removes prefill work and leaves the decode work the same.
 
-On the GB10 the effect reversed a sweep. A single kit run read a median first token of 677.61 ms at a cap of 8 and 390.38 ms at a cap of 32: more load, a faster first token. The prefill lines showed why. At a cap of 8, 16 of the 64 prompts were in the cache before the run started; at 32, 64 of 128; at 64, 128 of 256. Three seeds with fresh servers put the first token back in order, 209.98 ms at 8 and 416.37 at 32.
+On the GB10 the effect reversed a sweep. A single kit run read 677.61 ms as the median time to first token with a cap of 8 and 390.38 ms with a cap of 32: more load, a faster first token. The prefill lines showed why. At a cap of 8, 16 of the 64 prompts were in the cache before the run started; at 32, 64 of 128; at 64, 128 of 256. Three seeds with fresh servers put the first token back in order, 209.98 ms at 8 and 416.37 at 32.
 
 ### The protocol
 

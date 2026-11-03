@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-An SGLang server on a shared workstation ran for four minutes, and then a benchmark at 32 concurrent requests crashed it with an out-of-memory error. The scheduler log just before the crash shows `token usage: 0.05`. Explain how the pool was 95 percent empty and the server still ran out of memory, and what you set.
+An SGLang server on a shared workstation ran for four minutes, and then a benchmark with 32 requests in flight crashed it with an out-of-memory error. The scheduler log just before the crash shows `token usage: 0.05`. Explain how the pool was 95 percent empty and the server still ran out of memory, and what you set.
 
 ## Short answer
 

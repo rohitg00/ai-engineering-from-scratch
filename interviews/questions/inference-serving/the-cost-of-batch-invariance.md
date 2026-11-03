@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-Your evaluation team wants bit-identical outputs from the live server and asks you to turn on the batch-invariant mode for all traffic. What does the mode change, what does it cost, and what would you say?
+Your evaluation team wants bit-identical outputs from the live server and asks you to enable batch invariance for all traffic. What does it change, what does it cost, and what would you say?
 
 ## Short answer
 

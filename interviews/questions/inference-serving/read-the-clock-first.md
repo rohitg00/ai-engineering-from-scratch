@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-Your first sweep on an L4 says that CUDA graphs do nothing: the median time per token at one user is 103.4 ms with graphs and 103.4 ms without, and the three seeds at that cap spread from 10.0 to 14.9 tokens per second, half the median. What do you check before you report that graphs do nothing?
+Your first sweep on an L4 says that CUDA graphs do nothing: at one user the median per-token time is 103.4 ms with graphs and 103.4 ms without, and the three seeds at that cap spread from 10.0 to 14.9 tokens per second, half the median. What do you check before you report that graphs do nothing?
 
 ## Short answer
 

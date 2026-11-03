@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-A teammate serves a model with multi-head latent attention on eight GPUs with `--tp-size 8` and asks why the server holds so few KV tokens on 640 GB of memory. Explain what tensor parallelism does to that cache, what the attention-group mode changes, and what it changes without a flag of its own.
+A teammate serves a model that uses latent attention (MLA) on eight GPUs with `--tp-size 8` and asks why the server holds so few KV tokens on 640 GB of memory. Explain how a tensor-parallel split treats that cache, what the attention-group mode changes, and what it changes without a flag of its own.
 
 ## Short answer
 

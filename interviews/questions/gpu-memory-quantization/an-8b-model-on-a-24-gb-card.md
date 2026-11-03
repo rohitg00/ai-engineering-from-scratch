@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-Your teammate starts Qwen/Qwen3-8B in BF16 on an L4 with no flags, and the start fails with an error about the KV cache and the maximum model length. The same command works on a larger card. Explain the failure with numbers, and say what you set.
+Your teammate starts Qwen/Qwen3-8B in BF16 on an L4 with no flags, and the start fails with an error about the KV cache and --max-model-len. The same command works on a larger card. Explain the failure with numbers, and say what you set.
 
 ## Short answer
 

@@ -26,7 +26,7 @@ It is a slogan, not a result, because a throughput number without the latency th
 
 ### The same server, two loads
 
-The 255 came from the manual's own capture. The same server gave that throughput with a median first token of 0.8 s at one load and 3.9 s at another:
+The 255 came from the manual's own capture. The same server gave that throughput with a median time to first token of 0.8 s at one load and 3.9 s at another:
 
 | Cap | Output tok/s | Median TTFT | P99 TTFT | Median TPOT |
 |---|---|---|---|---|
@@ -72,7 +72,7 @@ The lesson shows where the time per token comes from on an L4: one decode step r
 
 ## Wrong answers
 
-- "255 tokens per second is the capacity of the server." The same server gave that throughput with a median first token of 0.8 s at one load and 3.9 s at another; the number without its latency is not a result.
+- "255 tokens per second is the capacity of the server." The same server gave that throughput with a median time to first token of 0.8 s at one load and 3.9 s at another; the number without its latency is not a result.
 - "Add users until throughput stops rising, then stop." On the GB10 the BF16 throughput kept rising to a cap of 64 while goodput was zero from a cap of 8; the latency target, not the throughput curve, sets the limit.
 - "Report the mean time per token." The distribution is right-skewed, so a mean of 9 ms can hide a P99 of 65; report the median, P90 and P99.
 - "The engine's own admission limit protects the users." The engine's limit comes from memory, which runs out long after latency is unacceptable; enforce the knee in the client or the gateway.

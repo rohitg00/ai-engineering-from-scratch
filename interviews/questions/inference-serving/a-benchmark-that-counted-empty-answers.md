@@ -16,7 +16,7 @@ related: []
 updated: 2026-11-03
 ---
 
-A team split Qwen/Qwen3-8B into one prefill server and one decode server on two L4s over TCP, ran the open-loop benchmark through the router at 8 requests per second, and posted the result as a win: 751.85 output tokens per second, against 728.61 for the single FP8 server at the same rate. Here are lines from the prefill log, the decode log and the benchmark summary. Read them and tell me what you see.
+A team split Qwen/Qwen3-8B into a prefill server and a decode server on two L4s over TCP, ran the open-loop benchmark through the router at 8 requests per second, and posted the result as a win: 751.85 tokens of output per second, against 728.61 for the single FP8 server at the same rate. Here are lines from the prefill log, the decode log and the benchmark summary. Read them and tell me what you see.
 
 ```text
 … Decode batch, #running-req: 2, #token: 1206, token usage: 0.41, pre-allocated usage: 0.00, #prealloc-req: 19, #transfer-req: 0, #retracted-req: 0
