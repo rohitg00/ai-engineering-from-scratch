@@ -1,0 +1,9 @@
+title: the first token with EAGLE3 and the worst gap with NGRAM at 32 users
+source: manuals/sglang-101/capture/gpu/out-l4/spec-real-prompts.txt
+lines: 25-27
+lang: text
+note: Compare each pair, then read which runs were left out and why.
+---
+median TTFT at 32 users, EAGLE3 against default: random 8.6 to 8.7 s against 3.2 to 3.5 s, ShareGPT 5.7 to 7.0 s against 2.7 to 3.0 s.
+P99 ITL at 32 users with NGRAM: 244 to 779 ms, against 83 to 106 ms for the default.
+The 1-user default runs throttled below 300 MHz and are left out. vLLM EAGLE3 and NGRAM on these datasets did not run.

@@ -1,0 +1,11 @@
+title: median time per output token at 8 users, by dataset and method
+source: manuals/sglang-101/capture/gpu/out-l4/spec-real-prompts.txt
+lines: 7-11
+lang: text
+note: Compare the EAGLE3 column with the default on every row, then do the same for NGRAM.
+---
+median TPOT at 8 users: default / EAGLE3 / NGRAM
+random     67.6 to 68.2 / 33.8 to 39.4 / 68.2 to 71.4 ms
+ShareGPT   66.4 to 68.6 / 39.5 to 43.1 / 69.5 to 72.4 ms
+GSM8K      65.5 / 33.3 to 34.3 / 54.6 to 55.0 ms
+code       65.9 to 66.4 / 36.8 / 58.2 to 58.8 ms
