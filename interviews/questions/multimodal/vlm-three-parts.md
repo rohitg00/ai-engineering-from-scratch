@@ -12,7 +12,7 @@ lessons: [phases/04-computer-vision/25-vision-language-models, phases/19-capston
 manuals: []
 practice: []
 cheatsheet: [vlm-architectures, vlm-from-scratch]
-related: []
+related: [multimodal/train-only-the-projector, multimodal/image-tokens-per-image]
 updated: 2026-11-03
 ---
 

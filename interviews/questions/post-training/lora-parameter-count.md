@@ -12,7 +12,7 @@ lessons: [phases/11-llm-engineering/08-fine-tuning-lora]
 manuals: []
 practice: [lora-forward]
 cheatsheet: [lora-fine-tuning]
-related: []
+related: [post-training/qlora-on-one-gpu]
 updated: 2026-11-03
 ---
 

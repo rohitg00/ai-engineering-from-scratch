@@ -12,7 +12,7 @@ lessons: [phases/10-llms-from-scratch/06-instruction-tuning-sft, phases/19-capst
 manuals: []
 practice: []
 cheatsheet: [llm-pipeline-capstone]
-related: []
+related: [post-training/sft-data-quality-wins, post-training/sft-learning-rate-gap]
 updated: 2026-11-03
 ---
 

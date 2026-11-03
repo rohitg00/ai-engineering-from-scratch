@@ -12,7 +12,7 @@ lessons: [phases/10-llms-from-scratch/07-rlhf, phases/09-reinforcement-learning/
 manuals: []
 practice: []
 cheatsheet: [rlhf-dpo]
-related: []
+related: [post-training/kl-penalty-purpose, post-training/reward-up-humans-flat]
 updated: 2026-11-03
 ---
 

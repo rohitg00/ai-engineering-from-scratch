@@ -12,7 +12,7 @@ lessons: []
 manuals: [miles-101#s-train-with-the-dapo-filter, miles-101#s-read-your-first-ten-steps, miles-101#s-train-math-on-gsm8k, miles-101#s-write-a-custom-reward, miles-101#s-read-the-run]
 practice: [grpo-advantages]
 cheatsheet: [miles-rl]
-related: []
+related: [post-training/rl-custom-reward-take-home, post-training/logprob-gap-at-step-zero]
 updated: 2026-11-03
 ---
 

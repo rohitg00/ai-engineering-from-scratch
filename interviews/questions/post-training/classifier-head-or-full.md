@@ -12,7 +12,7 @@ lessons: [phases/19-capstone-projects/38-classifier-finetuning]
 manuals: []
 practice: []
 cheatsheet: [llm-pipeline-capstone]
-related: []
+related: [post-training/lora-parameter-count]
 updated: 2026-11-03
 ---
 
