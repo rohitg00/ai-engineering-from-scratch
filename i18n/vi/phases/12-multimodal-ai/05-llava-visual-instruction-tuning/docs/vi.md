@@ -87,7 +87,7 @@ LLaVA-1.5 (tháng 10 năm 2023) thêm:
 - Một biến thể HD chia lưới trong báo, mà LLaVA-NeXT sau đó gửi như AnyRes.
 
 LLaVA-NeXT (từ tháng 1 năm 2024) thêm:
-- AnyRes: chia hình ảnh độ phân giải cao thành một lưới 2x2 hoặc 1x3 gồm 336x336 cây trồng, cộng với một hình ảnh nhỏ độ phân giải thấp toàn cầu. Mỗi cây trồng trở thành 576 token; tổng cộng khoảng 2880 token thị giác mỗi hình ảnh.
+- AnyRes: chia hình ảnh độ phân giải cao thành một lưới 2x2 hoặc 1x3 gồm 336x336 cây trồng, cộng với một hình ảnh nhỏ độ phân giải thấp toàn cầu. Mỗi cây trồng trở thành 576 token. Một lưới 2x2 cộng với hình ảnh nhỏ cung cấp khoảng 2880 token hình ảnh cho mỗi hình ảnh. Một lưới 1x3 có ít cây trồng, vì vậy nó tốn ít token hơn.
 - Sự kết hợp dữ liệu hướng dẫn tốt hơn với ShareGPT4V (chữ bản GPT-4V chất lượng cao).
 - Các LLM cơ sở mạnh hơn (Mistral-7B, Yi-34B).
 
@@ -99,7 +99,7 @@ Bài học 12.08 bao gồm OneVision sâu sắc. Phiên bản ngắn: cùng mộ
 
 | | Q-Former (BLIP-2) | MLP (LLaVA) |
 |---|---|---|
-| Visual tokens per image | 32 | 576 (base) or 2880 (AnyRes) |
+| Visual tokens per image | 32 | 576 (base) or about 2880 (AnyRes, 2x2 grid) |
 | Trainable params | 188M + LM | ~22M (7B) + LM |
 | Stage 1 loss | ITC+ITM+ITG | LM only |
 | LLM drop-in | Requires retrain | Swap with minimal retrain |
@@ -115,7 +115,7 @@ MLP thắng về sự đơn giản và tính linh hoạt của token. Q-Former t
 A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. USER: <image> Describe this image in detail. ASSISTANT: The image shows ...
 ```
 
-`<image>`là một token giữ chỗ. Trước khi token hóa, nó được thay thế bằng 576 token thị giác (hoặc 2880 với AnyRes). Tokenizer nhìn thấy một chuỗi dài hơn một chút so với nó được đào tạo, nhưng LLM xử lý đầu vào mới vì giai đoạn 1 đã dạy nó.
+`<image>`là một token giữ chỗ. Trước khi token hóa, nó được thay thế bằng 576 token thị giác (hoặc khoảng 2880 với một lưới AnyRes 2x2). Tokenizer nhìn thấy một chuỗi dài hơn một chút so với nó được đào tạo, nhưng LLM xử lý đầu vào mới vì giai đoạn 1 đã dạy nó.
 
 ### Tỷ lệ số
 
