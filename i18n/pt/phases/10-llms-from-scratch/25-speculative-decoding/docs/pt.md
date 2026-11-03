@@ -85,7 +85,7 @@ Mudanças da EAGLE-1:
 
 A AGLE-2 (2024) adiciona uma topologia dinâmica de árvores: a árvore cresce mais larga onde o rasto é incerto e permanece estreita onde é confiante.`α_effective`sem aumentar o custo de verificação.
 
-AEGLE-3 (Li et al. 2025, "EAGLE-3: Aumenta a aceleração da inferência de grandes modelos de linguagem através do teste de tempo de treinamento") elimina a dependência fixa de recursos de camada superior e treina o projeto com uma nova perda de "simulação de tempo de teste"  o projeto é treinado em resultados que correspondem à distribuição de tempo de teste do alvo, em vez de distribuição de treinamento forçado do professor. A taxa de aceitação aumenta de 0,75 (EAGLE-2) para 0,82 (EAGLE-3), e a média de tokens/verificação de 3,0 para 4,5.
+AEGLE-3 (Li et al. 2025, "EAGLE-3: Aumenta a aceleração da inferência de grandes modelos de linguagem através do teste de tempo de treinamento") elimina a dependência fixa de recursos de camada superior e treina o projeto com uma nova perda de "simulação de tempo de teste"  o projeto é treinado em resultados que correspondem à distribuição de tempo de teste do alvo, em vez de distribuição de treinamento forçado do professor. A taxa de aceitação aumenta de 0,75 (EAGLE-2) para 0,82 (EAGLE-3), e a média de tokens/verificação de 3,0 para 4,5. Estes números provêm de uma configuração de referência. A aceitação depende do par de modelos, da árvore de projeto e do tráfego: Fase 10 · 15 cita 0,88 a 0,92 por token de caminho aceito em benchmarks de chat, e Fase 17 · 05 planos com 0,6 a 0,8 no chat geral de produção.
 
 ### Verificação da Atenção à Árvore
 

@@ -1,6 +1,6 @@
 {
   "phases/10-llms-from-scratch/01-tokenizers/docs/en.md": "a610edfbc9557f582cfcc1fddeefe3e3f34b3dd62da00341836af00579156669",
-  "phases/10-llms-from-scratch/02-building-a-tokenizer/docs/en.md": "3e2af805d324028b1c673be3bebad6f17dc74ca2ffa0f1f050aa2d5d56d61da1",
+  "phases/10-llms-from-scratch/02-building-a-tokenizer/docs/en.md": "a7e4df3e8a19f0a31ae5fb74f4611b1a63165b5905bcaaf76ff577f8fb79893e",
   "phases/10-llms-from-scratch/03-data-pipelines/docs/en.md": "38bf88d7c4a73bd3b6ca0e581adc12e8b0433319c11713b99bbd066174ab749f",
   "phases/10-llms-from-scratch/04-pre-training-mini-gpt/docs/en.md": "ea1017c955dd0366f76cf53f766e5c1c10e41d52e7cca81a7a22f17c03318171",
   "phases/10-llms-from-scratch/05-scaling-distributed/docs/en.md": "b9ae0ccea1f097aa7d3715f6578a007b167d065be32530ebb83dec516b2ca406",
@@ -11,9 +11,9 @@
   "phases/10-llms-from-scratch/10-evaluation/docs/en.md": "89c01fff0229f0f8c3d7bfc6aa3ce18b66785b5961b1dbff1ca775d72c841eae",
   "phases/10-llms-from-scratch/11-quantization/docs/en.md": "859b9d5f9cdb89478daeb224e8e4f6eb20d506bcc36213abf5723190f10217ed",
   "phases/10-llms-from-scratch/12-inference-optimization/docs/en.md": "d502aa75594c7ba543a0093160c851ea1cd5982c529edcfc0efea9d0796a1cfc",
-  "phases/10-llms-from-scratch/13-building-complete-llm-pipeline/docs/en.md": "a106984511edeb8a5eb708cdd400911b8eb7fdbb184d84e097625ed8590e97df",
+  "phases/10-llms-from-scratch/13-building-complete-llm-pipeline/docs/en.md": "5e4ac381d645718e10418cdf7fe19328521a86c7ad269cbe797a105b515275ba",
   "phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/docs/en.md": "a8ed03076dc6b94ead65d2f1b2ca1103c9caef23e22620254f4e47863ea9ac5c",
-  "phases/10-llms-from-scratch/15-speculative-decoding-eagle3/docs/en.md": "60e2c6ad68167b79a2dea85fcfdd05d45df33ee71cb80ca0db5ed131fab6270b",
+  "phases/10-llms-from-scratch/15-speculative-decoding-eagle3/docs/en.md": "bd0ed34419697988b58061aa666e4227869eaeafc335edd0b5f2f135c94c175a",
   "phases/10-llms-from-scratch/16-differential-attention-v2/docs/en.md": "44d4818599b7ddd3dc3da41729fd83e288fda2f00764b11b5cf873d153950833",
   "phases/10-llms-from-scratch/17-native-sparse-attention/docs/en.md": "dfddd42935d6ef205a85aebb07d7d04edbd39d81ae4fffb5427def0c26966c34",
   "phases/10-llms-from-scratch/18-multi-token-prediction/docs/en.md": "2100ba50081d8c8d9556c17a2b43d9b6c4f3d5a995b4eeb7fff3cd8849cf2834",
@@ -21,6 +21,6 @@
   "phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/docs/en.md": "95c34c357dc25aced21ff1e1353cfb26cfd5d2daff68fbecdf6c58344450e002",
   "phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/docs/en.md": "c427ae609267ee362479e3051f7675ea1930dccace1bca817ad8459897d6d0dd",
   "phases/10-llms-from-scratch/22-async-hogwild-inference/docs/en.md": "eab99bd43b48681be62980f75107b88ea5c385cd3d0c7c36dfc20b4521727113",
-  "phases/10-llms-from-scratch/25-speculative-decoding/docs/en.md": "5d358dd85e5945899d91987d375d92beba77f4b38b05341c7b87934d5d0ccaa8",
+  "phases/10-llms-from-scratch/25-speculative-decoding/docs/en.md": "b62292991800cb2662f181c8a58e1928301aa57eca26bdbc1c6eb86ab540ad21",
   "phases/10-llms-from-scratch/34-gradient-checkpointing/docs/en.md": "0e163637633045d697fc1ed0f88f3ad82297086b653f8c1dc909e843a240ab00"
 }

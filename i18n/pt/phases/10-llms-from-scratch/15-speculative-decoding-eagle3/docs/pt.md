@@ -71,6 +71,8 @@ Para a pesquisa de árvores EAGLE-2, o verificador corre a atenção com uma má
 | EAGLE-3 | Multi-layer feature fusion + TTT | 0.88-0.92 | 3.5-6.5× | ~60-200B tokens |
 | Lookahead | No draft (Jacobi iteration) | N/A | 1.3-1.6× | None |
 
+O `α`A coluna é a taxa de aceitação por token ao longo do caminho aceito, em benchmarks de chat, com um esboço treinado em dados de chat correspondentes. É a banda superior. Fase 10 · 25 cita 0,82 para EAGLE-3 de uma configuração diferente, e Fase 17 · 05 planeja implantações de produção com 0,6 a 0,8 no chat geral. Medida `α`em seu próprio tráfego antes de escolher `N`- Não .
+
 Em 2026 produção: vLLM e SGLang padrão para EAGLE-3 quando disponível, EAGLE-2 de outra forma. TensorRT-LLM tem o caminho mais rápido Medusa para os modelos públicos Meta e NVIDIA. llama.cpp navega vanilla draft para implantações de CPU.
 
 ```figure
