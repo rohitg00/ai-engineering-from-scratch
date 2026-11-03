@@ -66,13 +66,13 @@ The team's first guess is a broken proxy, because the reply holds two status lin
 
 ## Resolution
 
-There was no outage. The balanced preset allows 194 hosts, and `example.com` is not among them. The proxy denied the connection as an implicit default and answered inside TLS with a 403 and an approval message. A sandbox-scoped allow rule turned the same request into a tunnelled 200 from the origin. The agent's report was wrong in the way the lesson on failure modes predicts: it read one status code and reported a cause it had not checked.
+There was no outage. `example.com` is not on the allow list of the balanced preset, which has 194 hosts. The proxy denied the connection as an implicit default and answered inside TLS with a 403 and an approval message. A sandbox-scoped allow rule turned the same request into a tunnelled 200 from the origin. The agent's report was wrong in the way the lesson on failure modes predicts: it read one status code and reported a cause it had not checked.
 
 Fixes:
 
 1. Change the agent's instructions so that a 403 with an approval body is reported as a policy decision, with the host and the port, so the operator can add a rule.
 2. Run `sbx policy check network --sandbox NAME host:port --json` before you touch the network, and read `deny_kind` and `rule`.
-3. Add rules with `--sandbox` for one agent, and keep the global policy for hosts every agent needs. Remove an allow before you add a deny for the same host in the same scope.
+3. Add rules with `--sandbox` for one agent, and keep the global policy for hosts every agent needs. Before you add a deny in a scope, remove any allow for that host in that scope.
 
 ## Wrong turns
 

@@ -60,7 +60,7 @@ The first engineer concludes that the server regressed between the two sessions 
 
 ## Resolution
 
-No regression and no broken client. The two reports measured two methods. On this server, the SGLang client reads a median TTFT 3 to 10 percent higher and an output 2 to 8 percent lower than `vllm bench serve` at 16 and 64 users, with a prompt confound inside that gap, and temperature 0.7 costs 10 to 13 percent of the time per token at one user against temperature 0. The two vLLM clients agreed within noise, which is the size of a real difference on this card.
+No regression and no broken client. The two reports measured two methods. On this server, the SGLang client reads a median TTFT 3 to 10 percent higher and an output 2 to 8 percent lower than `vllm bench serve` at 16 and 64 users, with a prompt confound inside that gap, and temperature 0.7 adds 10 to 13 percent to the time per token at one user against temperature 0. The two vLLM clients agreed within noise, which is the size of a real difference on this card.
 
 The rollback is cancelled. The team's rule has four lines: one client, one dataset and one temperature, written next to every number; interleaved rounds, at least two; a cache flush before each run; and the SM clock recorded, because the only reason this comparison held is that the clock stayed at 420 to 495 MHz throughout. A future report that uses a different client or temperature is a new baseline, not a comparison.
 

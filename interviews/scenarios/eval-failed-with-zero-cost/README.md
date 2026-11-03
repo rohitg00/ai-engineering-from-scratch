@@ -33,7 +33,7 @@ source:
 
 A nightly job scores the files agent against two saved eval sessions, with a local model as the judge. Last night the job printed `Errors: 2/2 evaluations failed` and a total cost of zero, and it blocked a pull request. The author of the pull request was told that the agent regressed. The author replied that the change was one word in the instruction and asked for the sessions, and there were none.
 
-The on-call engineer tried again with the models gateway flag on the command, pointed at the address that containers use for the model runner. That attempt exited 1 before it ran anything, with an HTTP 403 in the last line. A third attempt, with the same address handed to the eval containers as an environment variable, ran both evals. You review the three runs and the two scores that came out of the third one.
+The on-call engineer tried again with the models gateway flag on the command, pointed at the address that containers use for the model runner. That attempt exited 1 before it ran anything, with an HTTP 403 in the last line. A third attempt, with the same address set in the environment of the eval containers, ran both evals. You review the three runs and the two scores that came out of the third one.
 
 ## Evidence
 
@@ -60,7 +60,7 @@ The on-call engineer tried again with the models gateway flag on the command, po
 3. **Read the gateway attempt.** The flag moved the model address for the whole command. The judge is validated first, and the judge runs on the host, not in a container. The host cannot reach the container-only name, so the judge check failed with HTTP 403, and the command exited 1 before it built a container. The 403 names the judge request, not the agent.
 4. **Read the container-variable attempt.** `-e DOCKER_AGENT_MODELS_GATEWAY=...` sets the variable inside the eval containers only. The judge kept its host address. Both evals ran. Sizes passed 2 of 2, relevance passed 2 of 2, and tool calls averaged an F1 of 83.3 percent. One eval still failed, on `tool calls score 0.67`.
 5. **Read the expected calls and the extra call.** The list-files eval expects one assistant turn with one `list_directory` call. The agent made that call, and then a second call to `shell` with `wc -l README.md`. One expected call, two actual calls, F1 of 0.67. This is the only number in the three runs that says something about the agent: it did one step more than the saved session.
-6. **Read the base URL table.** One model runner, and a different base URL for each caller: a host process uses `localhost:12434`, a container uses `model-runner.docker.internal`, and an agent inside a sandbox goes through its proxy. The judge and the subject ran in two places, so they needed two addresses.
+6. **Read the base URL table.** One model runner, and a different base URL for each caller: a host process uses `localhost:12434`, a container uses `model-runner.docker.internal`, and a sandboxed agent goes through the sandbox proxy. The judge and the subject ran in two places, so they needed two addresses.
 
 ## Resolution
 

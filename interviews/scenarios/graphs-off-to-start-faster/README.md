@@ -33,7 +33,7 @@ source:
 
 ## Situation
 
-A team runs `Qwen/Qwen3-30B-A3B-Instruct-2507` on GB10 nodes behind an autoscaler. New pods take more than six minutes to become ready, so the autoscaler starts extra pods during every ramp and the bill grows. An engineer reads the startup log, sees two CUDA graph captures in it, and proposes to disable both graph backends: "capture is pure startup cost, and the prefill capture alone takes half a minute". A reviewer blocks the change: "graphs are what make decode fast, you will double the time per token".
+A team runs `Qwen/Qwen3-30B-A3B-Instruct-2507` on GB10 nodes behind an autoscaler. New pods take more than six minutes to become ready, so the autoscaler starts extra pods during every ramp and the bill grows. An engineer reads the startup log, sees that it captures CUDA graphs twice, and proposes to disable both graph backends: "capture is pure startup cost, and the prefill capture alone takes half a minute". A reviewer blocks the change: "graphs are what make decode fast, you will double the time per token".
 
 Both have read the same log and neither has measured. The pod has been restarted with each setting, and the kit output for both servers is on the shared drive.
 

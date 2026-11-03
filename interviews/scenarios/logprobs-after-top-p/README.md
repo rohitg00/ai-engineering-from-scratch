@@ -26,7 +26,7 @@ source:
 
 ## Situation
 
-An RL team samples its rollouts at temperature 1 with top-p 0.9. The trainer scores each sampled token against the whole vocabulary and compares that score with the log probability that the engine returned. The gap between the two, `train/train_rollout_logprob_abs_diff`, has sat between 0.0148 and 0.0157 at step 0 in every healthy run.
+An RL team samples its rollouts at temperature 1 with top-p 0.9. The trainer scores each sampled token against the whole vocabulary and compares that score with the log probability that the engine returned. The gap between the two, `train/train_rollout_logprob_abs_diff`, has sat between 0.0148 and 0.0157 at step 0 in all healthy runs.
 
 The team moves the rollouts to a second engine. That engine has a flag for which log probability it returns, and the engineer picks the processed value, "because that is the distribution we sampled from". The step-0 gap of the new run lands about 0.053 above the old range. One teammate says the new engine's kernels are worse and wants to switch back. Another wants to switch the engine to its deterministic mode. A third says the gap is a constant and the trainer can subtract it. You have a probe that a colleague ran on the lab L4.
 
