@@ -20,7 +20,7 @@ A user reports that the document assistant gave a wrong answer. The pipeline has
 
 ## Short answer
 
-Recall at k on the retrieval stage. If the gold chunk is not in the top k, no reranker can bring it back and the generator usually lacks the evidence for the right answer, unless another chunk happens to hold it, so the later metrics are hard to read. Only when recall holds do you move to the rank position and then to the generated text.
+Recall at k on the retrieval stage. If the gold chunk is not in the top k, no reranker can bring it back and the generator usually lacks the evidence for the right answer, unless another chunk happens to hold it, so the later metrics are hard to read. Recall comes first in the order, but it is not a gate: when recall holds, or when another retrieved chunk holds the evidence, move on to the rank position and then to the generated text, because a failure there stays hidden otherwise.
 
 ## Full answer
 

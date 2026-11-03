@@ -20,7 +20,7 @@ Take-home. You receive a corpus of a few hundred internal documents and a retrie
 
 ## Short answer
 
-Build a labeled query set first, stratified by query type, with gold document ids and gold answer text for each query. Run every configuration against the same set and report recall at 5 for each slice, plus MRR, and read the spread between configurations. Label at document level so the same labels grade every chunker; if you label at chunk level, record the chunker in the qrels and relabel after any change of chunker.
+Build a labeled query set first, stratified by query type, with gold document ids and gold answer text for each query. Run every configuration against the same set and report recall at 5 for each slice, plus MRR and the share of queries whose top 5 holds a chunk with the gold answer text, and read the spread between configurations. Label at document level so the same labels grade every chunker; if you label at chunk level, record the chunker in the qrels and relabel after any change of chunker.
 
 ## Full answer
 
@@ -29,7 +29,7 @@ Build a labeled query set first, stratified by query type, with gold document id
 1. **A qrels file.** One record per query with the query text, the gold document ids, a graded relevance map and the gold answer substring. Label at document level, not at chunk level, so the labels survive a chunker change.
 2. **A stratified set.** The chunking lesson uses a 50-query set split across factoid, analytical and multi-hop questions. Multi-hop queries reveal different winners than factoid queries, and one average hides the losing class.
 3. **The run matrix.** Two chunkers times two retrievers, every cell against the same qrels, same k values.
-4. **The metrics.** Recall at 5 as the primary number, precision at k beside it, MRR for the position of the first hit, nDCG if the labels are graded.
+4. **The metrics.** Recall at 5 as the primary number, precision at k beside it, MRR for the position of the first hit, nDCG if the labels are graded, and an answer hit at 5 that counts a query only when a top-five chunk contains the gold answer substring. Document-level recall cannot tell two chunkers apart when both return chunks of the gold document and only one of them returns the chunk with the answer.
 5. **The report.** One table with one row per configuration and one column per slice, then a recommendation and the reason, then what you would measure next.
 
 ### What to expect

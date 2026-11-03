@@ -55,7 +55,7 @@ In CI, build two requests through the production prompt builder with the same us
 
 - "Caching is automatic, there is nothing to configure." On the explicit providers you mark the block; on the automatic one the prefix still has to be stable and above 1,024 tokens, and a changed user field or tool order breaks it.
 - "Put the user message first so the model reads it early." That places the only part that changes above everything else, and the cache never hits.
-- "Extend the TTL to one hour, the cache is expiring." Expiry would show as writes after quiet periods, not on every request; the one-hour TTL also costs 2x the write premium.
+- "Extend the TTL to one hour, the cache is expiring." Expiry would show as writes after quiet periods, not on every request; the one-hour TTL also charges 2x for the write.
 
 ## Taught in
 

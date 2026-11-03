@@ -48,7 +48,7 @@ Retrieve dense and BM25 in parallel, de-duplicate by repository, path and symbol
 
 ### Incremental freshness
 
-A push triggers a diff of changed files and changed symbols. Only chunks whose text changed re-embed. The cross-file edges of the changed chunks recompute, which covers imports, calls and inheritance, so a changed call or base class does not leave a stale edge. The capstone's target is a 50-file push searchable in under 60 seconds on the 2M line fleet.
+A push triggers a diff of changed files and changed symbols. Only chunks whose text changed re-embed. The cross-file edges of the changed chunks recompute, which covers imports, calls and inheritance, so a changed call or base class does not leave a stale edge. A deleted file or symbol removes its chunks from the dense and lexical indexes and its edges from the graph, so search cannot return it after the push. The capstone's target is a 50-file push searchable in under 60 seconds on the 2M line fleet.
 
 ### Evaluation
 
