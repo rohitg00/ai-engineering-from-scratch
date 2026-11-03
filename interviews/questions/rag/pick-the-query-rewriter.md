@@ -16,7 +16,7 @@ related: [rag/hyde-invents-a-symbol]
 updated: 2026-11-03
 ---
 
-Your pipeline offers three query rewriters: write a hypothetical answer and search with it, write several paraphrases and merge, or break the question into sub-questions and merge. A user asks "what does our team do when uploads fail and the budget is gone?" Which rewriter fits, and when would each of the other two be the right pick?
+Your pipeline offers three query rewriters: write a hypothetical answer and search with it, write several paraphrases and merge, or decompose it into sub-questions and merge. A user asks "what does our team do when uploads fail and the budget is gone?" Which rewriter fits, and when would each of the other two be the right pick?
 
 ## Short answer
 
