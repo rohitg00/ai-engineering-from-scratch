@@ -50,7 +50,7 @@ A perplexity below one is impossible; it means the adapter returned log p instea
 
 ## Follow-ups
 
-- **Level 3:** Why is the off by one silent during training but fatal in the metric? Expected: the model still learns from misaligned targets and the loss still falls, but the metric no longer measures next token likelihood.
+- **Level 3:** Why is the off by one silent during training but fatal in the metric? Expected: the model still learns from misaligned targets and the loss keeps going down, but the metric no longer measures next token likelihood.
 - **Level 3:** The adapter returns per sequence means. Can the harness combine them? Expected: only with the token counts; a mean of means weights sequences equally instead of tokens.
 - **Level 4:** Perplexity on the held out set is far lower than on production text. What do you suspect? Expected: a tokenizer mismatch or a leak of the held out text into training; check both before you claim quality.
 

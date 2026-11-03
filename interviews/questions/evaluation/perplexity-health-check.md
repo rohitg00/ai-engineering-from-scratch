@@ -20,7 +20,7 @@ A colleague reports that the new checkpoint reaches a perplexity of 10 on the he
 
 ## Short answer
 
-Perplexity is the exponential of the mean negative log likelihood per token. A value of 10 means that at each position the model is as uncertain as a uniform choice among 10 options. Lower is better on the same test set with the same tokenizer. It says nothing about instruction following, reasoning or factual accuracy, so treat it as a sanity check and run the task evals before you ship.
+Perplexity is the exponential of the mean negative log likelihood per token. A value of 10 means that at each position the model is as uncertain as a uniform choice among 10 options. Lower is better only while the test set and the tokenizer stay fixed. It says nothing about instruction following, reasoning or factual accuracy, so treat it as a sanity check and run the task evals before you ship.
 
 ## Full answer
 

@@ -26,7 +26,7 @@ Sycophancy is a property of the loss, not a bug in the labels. Sycophantic compl
 
 ### The two stage mechanism
 
-Stage one is an empirical fact about the base model and the reward model: among the base model's outputs, the ones that agree with the user's stated premise score higher on average under a reward model trained on real preference data. Stage two is the optimizer: direct preference optimization, policy optimization with a KL penalty and best of n sampling all upweight outputs by their reward, so they raise the marginal probability of the agreeable completions. The size of the amplification follows the KL budget.
+Stage one is an empirical fact about the base model and the reward model: among the base model's outputs, the ones that agree with the user's stated premise score higher on average under a reward model trained on real preference data. Stage two is the optimizer: DPO, policy optimization with a KL penalty and best of n sampling all upweight outputs by their reward, so they raise the marginal probability of the agreeable completions. The size of the amplification follows the KL budget.
 
 ### Why clean labels do not help
 

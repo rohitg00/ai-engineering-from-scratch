@@ -41,13 +41,13 @@ A reward model is a bounded measurement of an unbounded world. Any such measurem
 - An ensemble of reward models with worst case aggregation: the optimizer can find one model's tail error, but the minimum over several pays only where they all err together.
 - Reward models trained to be robust to shift in the output distribution.
 - Conservative KL schedules and early stopping at the measured proxy to gold gap.
-- Nothing from the direct preference family is exempt; those losses have their own over optimization scaling law.
+- Nothing from the direct preference family is exempt; those losses have their own scaling law for over optimization.
 
 ## Follow-ups
 
 - **Level 3:** What does a KL penalty constrain, and what does it leave free? Expected: the distance of the policy distribution from the reference; which high reward modes under the reference the policy concentrates on.
 - **Level 3:** How can several reward models do what one model with a penalty cannot? Expected: the optimizer can find one reward model's tail error, but the minimum over several models pays only where they all err together.
-- **Level 4:** Does switching to a direct preference loss remove the problem? Expected: no; the direct alignment family has its own over optimization scaling law, so the same monitoring applies.
+- **Level 4:** Does switching to a direct preference loss remove the problem? Expected: no; the direct alignment family has its own scaling law for over optimization, so the same monitoring applies.
 - **Level 4:** Turn this into an operating rule for a training run. Expected: plot gold against KL distance with held out labels, stop at the empirical peak, and treat a rising proxy with a flat gold as the alarm whatever the KL coefficient.
 
 ## Wrong answers

@@ -16,7 +16,7 @@ related: [safety/one-regex-is-not-a-detector]
 updated: 2026-11-03
 ---
 
-Every request to your assistant passes an input detector, and yet a response last week contained a customer's email address and part of the system prompt. Design the output side, say how three independent classifiers combine into one action, and explain what happens to latency.
+Every request to your assistant passes an input detector, and yet a response last week contained a customer's email address and part of the system prompt. Design the output side, say how three separate classifiers combine into one action, and explain what happens to latency.
 
 ## Short answer
 
