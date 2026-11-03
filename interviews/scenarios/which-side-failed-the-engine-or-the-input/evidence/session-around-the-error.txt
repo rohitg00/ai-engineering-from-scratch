@@ -1,0 +1,9 @@
+title: three consecutive calls of the MCP session
+source: manuals/reverse-engineering-101/capture/out/10-mcp-session.txt
+lines: 12-14
+lang: text
+note: The call before and the call after the error both succeeded on the same open target.
+---
+12  tools/call analyze_function         ok     -> 10-mcp-12-analyze-function-grade-label-O1.json  (18 ms)
+13  tools/call analyze_function         error  -> 10-mcp-13-analyze-function-missing.json  (4 ms)
+14  tools/call export_evidence_bundle   ok     -> 10-mcp-14-export-evidence-bundle-O1.json  (18 ms)

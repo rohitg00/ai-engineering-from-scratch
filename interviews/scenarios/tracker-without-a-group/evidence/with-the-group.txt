@@ -1,0 +1,9 @@
+title: the same run with a group name
+source: manuals/miles-101/capture/gpu/out-gb10/tracker-eval-checks.txt
+lines: 5-7
+lang: text
+note: The run reached step 0 and step 1, and the tracker wrote offline runs.
+---
+## wandb with --wandb-group plain (wandb-check.log): step 0: step 1: 
+W&B offline mode enabled. Data will be saved locally.
+debug-internal.log debug.log latest-run offline-run-20261023_034138-mu59u570 offline-run-20261023_034200-mu59u570 offline-run-20261023_034203-mu59u570 

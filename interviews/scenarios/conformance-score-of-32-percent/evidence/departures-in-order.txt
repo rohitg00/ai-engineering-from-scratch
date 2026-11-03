@@ -1,0 +1,14 @@
+title: where the TCK departs from the specification, in order of effect
+source: manuals/a2a-101/research/tck-run.md
+lines: 193-200
+lang: text
+note: Eight numbered items. The first two explain most of the failures in this run.
+---
+1. JSON-RPC requests go to `<url>/`, not the card's `url` (`jsonrpc_client.py:104-105, 138-141`; httpx `_merge_url`). Costs 63 of 85 JSON-RPC records in run 1; `main` only follows redirects.
+2. The JSON-RPC client sends snake_case parameters (`task_id`, `history_length`, `context_id`, `page_size`, `include_artifacts`) against 5.5's MUST camelCase (`spec:1204`); the REST client sends camelCase. With the fixed kit this is the only reason PUSH-CREATE-001 and the five push requirements behind it fail, and it would have neutralised CORE-HIST-002 and the CORE-LIST filters. Unchanged on `main`.
+3. Success and error Content-Type must contain `application/json` (`binding_http_json.py:58-70, 98-110`; checks at `test_transport_behavior.py:260`, `test_error_handling.py:621`, `test_problem_details.py:101`) against 11.1's `application/a2a+json` SHOULD (`spec:2750`). Fails HTTP_JSON-SVC-001 and HTTP_JSON-ERR-001 for a server that follows the specification. Unchanged on `main`.
+4. CORE-SEND-003 carries no `expected_error`, so the required `ContentTypeNotSupportedError` is counted as a failure (`core_operations.py:95-122`).
+5. The wrong-Content-Type test sends a Python `repr` and expects `-32005` where 9.5 says `-32700` (`test_error_codes.py:219-223`); fixed on `main` (`37d4944`), after which the kit's accepting answer makes the test skip.
+6. SHOULD and MAY card-caching tests hard-fail instead of `xfail`/skip (`test_agent_card_caching.py:98, 121, 154, 187`), against the TCK's own `README.md:66-74`.
+7. A `pytest.skip()` in a test body is recorded as FAIL (`conftest.py:251-297`); fixed on `main` (`conftest.py:310-318`). Turns 21 skipped requirements into failures in run 2.
+8. Latent here, from `tck/requirements/base.py:269-331`: `TaskNotCancelableError` 409 (spec 400, `spec:1183`), `ContentTypeNotSupportedError` 415 (spec 400, `spec:1186`), `InvalidAgentResponseError` 502 (spec 500), and `UNIMPLEMENTED` for three errors the spec maps to `FAILED_PRECONDITION`. The kit uses the spec's codes (`a2a_ref.py:20-33`); the only test that touches these accepted 404 for a nonexistent task (`test_http_status.py:78-104`), and the 415 test skipped.

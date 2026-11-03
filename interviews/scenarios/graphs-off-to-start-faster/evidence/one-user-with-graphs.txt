@@ -1,0 +1,24 @@
+title: one kit run at one user with graphs on
+source: manuals/sglang-101/capture/gpu/out-gb10/bench-random-c1.txt
+lines: 34-51
+lang: text
+note: Read the median TPOT and the P99 ITL.
+---
+---------------Time to First Token----------------
+Mean TTFT (ms):                          209.92    
+Median TTFT (ms):                        241.36    
+P90 TTFT (ms):                           268.58    
+P95 TTFT (ms):                           278.05    
+P99 TTFT (ms):                           289.92    
+-----Time per Output Token (excl. 1st token)------
+Mean TPOT (ms):                          30.82     
+Median TPOT (ms):                        30.84     
+P90 TPOT (ms):                           30.92     
+P95 TPOT (ms):                           31.05     
+P99 TPOT (ms):                           31.29     
+---------------Inter-Token Latency----------------
+Mean ITL (ms):                           30.82     
+Median ITL (ms):                         30.79     
+P90 ITL (ms):                            31.45     
+P95 ITL (ms):                            31.67     
+P99 ITL (ms):                            32.21     

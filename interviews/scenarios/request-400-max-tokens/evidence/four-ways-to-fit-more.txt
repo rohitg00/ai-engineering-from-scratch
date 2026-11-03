@@ -1,0 +1,14 @@
+title: the four choices when the pool holds too few users, in order of cost
+source: manuals/vllm-101/sections/2-1-count-the-memory-before-you-pick-a-gpu.md
+lines: 83-90
+lang: text
+note: The first choice is the one that this ticket is about.
+---
+## Decide what to change
+
+If the count is too small for your traffic, you have four choices. They are in order of cost:
+
+1. Lower `--max-model-len` to the longest context that your users send. The pool stays the same size, and one long request can no longer take all of it.
+2. Use an FP8 KV cache. It halves the bytes per token. [The FP8 KV page](#s-fit-more-users-with-an-fp8-kv-cache) shows the cost.
+3. Use FP8 weights. They free memory for the cache. [The FP8 weights page](#s-fit-a-bigger-model-with-fp8-weights) shows when this pays.
+4. Use a GPU with more memory, or split the model across GPUs. [The parallelism page](#s-choose-tensor-pipeline-or-data-parallelism) covers this.

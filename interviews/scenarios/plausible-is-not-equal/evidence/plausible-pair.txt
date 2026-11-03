@@ -1,0 +1,28 @@
+title: the plausible pair over the grid, head and first mismatch
+source: manuals/reverse-engineering-101/capture/out/17-harness-execute-plausible.json
+lines: 1-22
+lang: json
+note: The ten naive cases passed. The first mismatch is an overflow cell.
+---
+{
+  "candidates": {
+    "percent_change": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/percent_change_wide.c",
+    "grade": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/grade_thresholds.c"
+  },
+  "original": "fixtures/ledger.c compiled with the host clang at -O1",
+  "original_kind": "fixture-source",
+  "host": "aarch64 Darwin",
+  "arch": "aarch64",
+  "naive_passed": true,
+  "cells": 92,
+  "mismatches": [
+    {
+      "function": "percent_change",
+      "args": [
+        3,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -133,
+      "candidate": -1431655899,
+      "match": false

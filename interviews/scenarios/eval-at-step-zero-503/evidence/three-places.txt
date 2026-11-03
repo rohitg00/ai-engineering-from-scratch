@@ -1,0 +1,13 @@
+title: the three places where eval can run, and the limits of the fleet
+source: manuals/miles-101/sections/6-2-run-a-separate-eval-fleet.md
+lines: 13-19
+lang: text
+note: Read the cost column, then the two limits after the table.
+---
+| Where | How to select it | Cost |
+|---|---|---|
+| The training engines | the default | rollout production stops while the eval runs |
+| A dedicated fleet | `--eval-num-gpus N` | N GPUs of the job go to eval, and training never stops for it |
+| Your own service | `--eval-function-path` set to a checkpoint eval function | only the checkpoint export |
+
+You cannot select the fleet together with a checkpoint eval function for your own service. Rollout fault tolerance from [section 6.3](#s-survive-failures) also does not work with a fleet.

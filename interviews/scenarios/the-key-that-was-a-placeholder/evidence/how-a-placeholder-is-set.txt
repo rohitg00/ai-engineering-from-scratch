@@ -1,0 +1,11 @@
+title: a custom secret with a chosen placeholder prefix
+source: manuals/docker-sandboxes-101/capture/out/10-placeholder.txt
+lines: 1-5
+lang: console
+note: The third line says what is saved and for which target.
+---
+$ sbx secret set-custom --host api.example.test --env M101_NAMED --placeholder 'sk-{rand}' --value m101-dummy-1111
+Applied secret updates for <n> running sandbox(es)
+Saved custom secret placeholder "sk-<rand>" for target "api.example.test" env "M101_NAMED" in scope "(global)"
+You may need to update environment variable M101_NAMED inside existing sandboxes to "sk-<rand>" (the placeholder value).
+[exit 0]

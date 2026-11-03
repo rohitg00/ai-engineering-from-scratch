@@ -1,0 +1,24 @@
+title: every A2A error with its code in each binding
+source: manuals/a2a-101/sections/r-4-errors.md
+lines: 7-24
+lang: text
+note: Count how many rows share HTTP 400, and which rows have no HTTP status at all.
+---
+| Error | JSON-RPC | HTTP | gRPC |
+|---|---|---|---|
+| TaskNotFoundError | -32001 | 404 | NOT_FOUND |
+| TaskNotCancelableError | -32002 | 400 | FAILED_PRECONDITION |
+| PushNotificationNotSupportedError | -32003 | 400 | FAILED_PRECONDITION |
+| UnsupportedOperationError | -32004 | 400 | FAILED_PRECONDITION |
+| ContentTypeNotSupportedError | -32005 | 400 | INVALID_ARGUMENT |
+| InvalidAgentResponseError | -32006 | 500 | INTERNAL |
+| ExtendedAgentCardNotConfiguredError | -32007 | 400 | FAILED_PRECONDITION |
+| ExtensionSupportRequiredError | -32008 | 400 | FAILED_PRECONDITION |
+| VersionNotSupportedError | -32009 | 400 | FAILED_PRECONDITION |
+| JSONParseError | -32700 | none | none |
+| InvalidRequestError | -32600 | none | none |
+| MethodNotFoundError | -32601 | none | none |
+| InvalidParamsError | -32602 | 400 | INVALID_ARGUMENT |
+| InternalError | -32603 | 500 or 503 | INTERNAL or UNAVAILABLE |
+| Authentication error | custom | 401 | UNAUTHENTICATED |
+| Authorization error | custom | 403 | PERMISSION_DENIED |

@@ -1,0 +1,17 @@
+title: the nine states, their class, and the client's next step
+source: manuals/a2a-101/sections/r-3-task-states.md
+lines: 7-17
+lang: text
+note: Find the two interrupted rows and read their last column.
+---
+| State | Class | Set by | The client does next |
+|---|---|---|---|
+| TASK_STATE_UNSPECIFIED | none | Nobody: the zero value | Treat it, and any unknown name, as an error. |
+| TASK_STATE_SUBMITTED | active | The server, on creation | Wait, poll, or subscribe. |
+| TASK_STATE_WORKING | active | The agent, while it works | As for a submitted task |
+| TASK_STATE_INPUT_REQUIRED | interrupted | The agent, with a question | Answer with a new message that carries the same `taskId` and `contextId`. |
+| TASK_STATE_AUTH_REQUIRED | interrupted | The agent, for an authorization | Pass the request to whoever approves it, outside A2A, and subscribe, register a webhook, or poll. |
+| TASK_STATE_COMPLETED | terminal | The agent, when the work is done | Read the artifacts for the result. Follow up in a new task with `referenceTaskIds`. |
+| TASK_STATE_FAILED | terminal | The agent, unable to do the work | Read the status message, fix the input, and start a new task. |
+| TASK_STATE_CANCELED | terminal | The agent, after `CancelTask` | Start a new task in the same context. |
+| TASK_STATE_REJECTED | terminal | The agent, refusing the task | Stop the loop, and follow the status message. |

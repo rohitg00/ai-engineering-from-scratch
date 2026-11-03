@@ -1,0 +1,10 @@
+title: the 8B target and its draft on an L4, with no override
+source: manuals/sglang-101/capture/gpu/out-l4/server-eagle3-no-env.log
+lines: 27-30
+lang: text
+note: Read the draft type, the available memory after it, and the pool.
+---
+[2026-10-17 03:40:58] Load weight end. elapsed=0.67 s, type=LlamaForCausalLMEagle3, avail mem=4.50 GB, mem usage=1.90 GB.
+[2026-10-17 03:40:59] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 8827, K size: 0.61 GB, V size: 0.61 GB
+[2026-10-17 03:40:59] Memory pool end. avail mem=3.22 GB
+[2026-10-17 03:40:59] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 8827, K size: 0.02 GB, V size: 0.02 GB

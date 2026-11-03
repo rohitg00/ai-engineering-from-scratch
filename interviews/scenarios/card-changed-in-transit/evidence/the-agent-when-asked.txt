@@ -1,0 +1,15 @@
+title: what the deployer itself says to an authenticated caller
+source: manuals/a2a-101/capture/out/18-extended-card.http
+lines: 40-48
+lang: text
+note: Compare this description with the one the planner acted on.
+---
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "name": "deployer",
+    "description": "Deploys a tagged build to staging after an operator approves it.",

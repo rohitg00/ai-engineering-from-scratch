@@ -1,0 +1,11 @@
+title: the troubleshooting entry for this status code
+source: manuals/vllm-101/sections/7-1-troubleshoot-by-symptom.md
+lines: 99-103
+lang: text
+note: Two shapes of the same error, and the fix for each side.
+---
+### A request returns HTTP 400 about the maximum context length
+
+- **Cause:** the prompt tokens plus `max_tokens` are more than `--max-model-len`.
+- **Check:** the error says `This model's maximum context length is` and gives the counts. When `max_tokens` alone is above the limit, the error says that `max_tokens` cannot be greater than `max_model_len`, as it did on our L4.
+- **Fix:** send a shorter prompt or a smaller `max_tokens`, or start the server with a larger maximum length if the pool allows it.

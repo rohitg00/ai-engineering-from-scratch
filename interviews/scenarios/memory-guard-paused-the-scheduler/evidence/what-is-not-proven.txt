@@ -1,0 +1,7 @@
+title: what the manual can and cannot say about the three pauses
+source: manuals/sglang-101/sections/3-2-mem-fraction-static-and-startup-sizing.md
+lines: 123-123
+lang: text
+note: One paragraph. Read which logs were not kept.
+---
+We did not keep the server logs of those three starts. The guard log shows the scheduler growing by 36.7 GiB in 5 seconds, which is the size of a KV pool allocation. The guard was correct by its own rule: the scheduler was the fastest-growing process. Seconds later the guard logged "Back to normal", because the pool was complete. We agreed with the owner of the machine to stop the guard for the time of our runs.

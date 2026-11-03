@@ -1,0 +1,10 @@
+title: the four findings written under the tables
+source: manuals/vllm-101/capture/gpu/out-l4/bench-client-bias.txt
+lines: 26-29
+lang: text
+note: The third line names the confound, and the fourth gives the cost of temperature.
+---
+The two vllm bench clients agree within noise.
+The SGLang client reads 3 to 10 percent higher TTFT than vllm bench. At 16 and 64 users it reads 2 to 8 percent lower throughput. At 1 user, one SGLang round read 39.9 tok/s against about 32 for every other round, so the throughput gap does not hold there. One outlier round reached 18 percent at 16 users and temperature 0.7.
+The clients use different prompt token sets (random-ids against random), which is a confound for small gaps.
+Temperature 0.7 against 0: TPOT about 10 to 13 percent higher at 1 user (34 ms at 0.7 against 30 ms at 0), and 3 to 6 percent higher at 16 and 64 users. Throughput 3 to 10 percent lower.

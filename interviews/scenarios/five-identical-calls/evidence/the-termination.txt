@@ -1,0 +1,7 @@
+title: the last line of the run
+source: manuals/docker-sandboxes-101/capture/out/19-background.txt
+lines: 14-14
+lang: text
+note: The runtime ended the run, not the model.
+---
+stderr: Error: Agent terminated: detected 5 consecutive identical calls to run_background_agent. This indicates a degenerate loop where the model is not making progress.
