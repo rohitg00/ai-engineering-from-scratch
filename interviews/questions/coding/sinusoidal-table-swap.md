@@ -1,6 +1,6 @@
 ---
 id: sinusoidal-table-swap
-title: Replace the learned position table with a fixed one
+title: Swap the learned position table for a fixed one
 card: coding
 kind: take-home
 level: 2

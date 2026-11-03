@@ -34,7 +34,7 @@ Route 10% of traffic to the new version. If quality holds, raise it to 25%, then
 
 ### Deterministic assignment
 
-Hash the user id together with the experiment name and take it modulo 100. Buckets below the traffic share get the variant, the rest get the control. A user then sees the same version across requests inside one experiment, and the assignment can be recomputed later from the log. Random assignment per request mixes versions inside one conversation and makes the comparison noisy.
+Hash the user id combined with the experiment name and take it modulo 100. Buckets below the traffic share get the variant, the rest get the control. A user then sees the same version across requests inside one experiment, and the assignment can be recomputed later from the log. Random assignment per request mixes versions inside one conversation and makes the comparison noisy.
 
 ### What to measure
 

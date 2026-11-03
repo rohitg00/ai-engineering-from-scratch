@@ -37,7 +37,7 @@ The summary is the third retrievable modality: a user asks how something is auth
 
 1. Fire dense and sparse search in parallel, deduplicate by repository, path and symbol.
 2. Rerank the top 50 with a cross-encoder and keep the top 10.
-3. Call the synthesizer with the reranked chunks and the system prompt cached, requiring a file and line anchor on every claim.
+3. Call the synthesizer with the reranked chunks and a cached system prompt, requiring a file and line anchor on every claim.
 4. Parse the output; a claim without an anchor is re-asked or dropped. Only cited claims return.
 
 Naive cosine search alone is poisoned by generated boilerplate, monorepo duplication and rarely imported symbols, which is why the hybrid search, the reranker and the graph exist.

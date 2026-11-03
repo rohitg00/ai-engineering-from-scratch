@@ -1,6 +1,6 @@
 ---
 id: output-projection-missing
-title: Multi-head attention whose heads never mix
+title: Attention heads that never mix
 card: coding
 kind: debug
 level: 3

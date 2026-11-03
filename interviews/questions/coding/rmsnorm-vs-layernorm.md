@@ -59,7 +59,7 @@ Both normalizations reduce over the last axis, the feature axis, independently f
 
 ### Biased variance
 
-LayerNorm uses the biased variance, the mean of the squared deviations over the feature count. The unbiased estimate with one fewer in the denominator is a statistics convention that does not belong here and makes the output disagree with every reference implementation by a factor that depends on the width.
+LayerNorm uses the biased variance, the mean of the squared deviations over the feature count. The unbiased estimate with one fewer in the denominator is a statistics convention that does not belong here and makes the output disagree with every standard library version by a factor that depends on the width.
 
 ### Why the swap is safe in the assembly
 
@@ -75,7 +75,7 @@ The final normalization sits between the last block and the tied head, and both 
 
 - "RMSNorm is LayerNorm with the shift removed." It also removes the mean subtraction; without that difference it would not be a different layer.
 - "Epsilon placement does not matter for normal inputs." It matters exactly for the inputs it exists for, the ones with near-zero variance.
-- "Use the unbiased variance, it is more correct." Reference implementations use the biased form; the choice is a contract, not a statistics question.
+- "Use the unbiased variance, it is more correct." Standard library versions use the biased form; the choice is a contract, not a statistics question.
 
 ## Taught in
 

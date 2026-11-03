@@ -1,6 +1,6 @@
 ---
 id: temperature-knob
-title: What temperature does to the next-token distribution
+title: What temperature does to sampling
 card: coding
 kind: concept
 level: 1

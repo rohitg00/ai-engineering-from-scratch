@@ -16,7 +16,7 @@ related: [coding/loss-shift-flatten, coding/lr-peak-sweep]
 updated: 2026-11-03
 ---
 
-Write a training loop for a table of next-character logits: one row per context character, one column per next character. Train it with gradient descent on a text, under a fixed step budget and a seeded generator, until its held-out negative log-likelihood is lower than a model that ignores the context. Tell me what the held-out check must look like for the comparison to mean anything.
+Write a training loop for a table of next-character logits: one row per context character, one column per next character. Train it with gradient descent on a text, under a fixed step budget and a seeded generator, until its held-out NLL is lower than a model that ignores the context. Tell me what the held-out check must look like for the comparison to mean anything.
 
 ## Short answer
 

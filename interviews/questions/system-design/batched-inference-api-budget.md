@@ -46,11 +46,11 @@ Traffic is 50,000 queries a day, and with the measured cache hit rate about 32,5
 
 ### Observability
 
-Every request writes one structured log line with the request id, the user, the template and version, the model, the token counts, the latency, the cache result, the guardrail results and the cost. Traces across the components show where the time went. The five numbers in the table sit on one dashboard.
+Every request writes one structured log line with the request id, the user, the template and version, the model, the input and output token counts, the latency, the cache result, the guardrail results and the cost. Traces across the components show where the time went. The five numbers in the table sit on one dashboard.
 
 ### If the model is self-hosted
 
-The pipeline lesson's serving stage adds continuous batching, speculative decoding and KV cache eviction, with quantized weights for serving and the eval gate rerun on the quantized model. The same gateway, cache and guardrails sit in front of it.
+The pipeline lesson's serving stage adds continuous batching, KV cache eviction and speculative decoding, with quantized weights for serving and the eval gate rerun on the quantized model. The same gateway, cache and guardrails sit in front of it.
 
 ### Before launch
 

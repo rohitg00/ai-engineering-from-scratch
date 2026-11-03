@@ -50,7 +50,7 @@ def adam_step(params, grad, m, v, t, lr, beta1, beta2, eps, weight_decay):
 
 The decay term is added to the update, not to the gradient. It never passes through the moment estimates.
 
-### Why the difference matters
+### What the difference changes
 
 Adam normalizes every coordinate by its running gradient magnitude. A penalty that enters as part of the gradient is normalized too, so a weight with a large, noisy gradient is barely decayed while a weight with a tiny gradient is decayed hard. Decoupled decay shrinks every weight by the same fraction per step, which is what the regularizer was meant to do. Language model recipes use the decoupled form, and the loop in the training lesson builds its parameter groups around it.
 
@@ -66,7 +66,7 @@ Even with the correct form, the decay belongs on matrix-shaped weights only. Nor
 
 ## Follow-ups
 
-- **Level 2:** What does the bias correction fix in the first steps? Expected: the moment estimates start at zero and are biased low early; dividing by one minus beta to the power of the step rescales them.
+- **Level 2:** What does the bias correction fix in the first steps? Expected: the moment estimates start at zero and are biased low early; dividing by `1 - beta**t` rescales them.
 - **Level 2:** Why return new arrays instead of updating in place? Expected: a pure function keeps the caller's state intact, so a step can be retried or compared and a checkpoint stays consistent.
 - **Level 3:** How does the learning rate schedule interact with decoupled decay? Expected: the decay is multiplied by the current learning rate, so warmup and cosine decay also scale the regularization over training.
 

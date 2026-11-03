@@ -48,7 +48,7 @@ The question the pipeline answers is not whether the model got better but which 
 
 ### Serving measurements
 
-Tokens per second at batch sizes 1, 8 and 32, the acceptance rate of the draft heads, and the cost per million tokens against a hosted alternative at matched quality. Acceptance measured on the domain data, not generic chat, because the draft heads were trained for the domain and the latency budget depends on it.
+Tokens per second at batch sizes 1, 8 and 32, the acceptance rate of the draft heads, and the cost for each million tokens against a hosted alternative at matched quality. Acceptance measured on the domain data, not generic chat, because the draft heads were trained for the domain and the latency budget depends on it.
 
 ### The release
 

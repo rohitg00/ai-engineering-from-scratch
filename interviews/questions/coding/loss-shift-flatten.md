@@ -16,7 +16,7 @@ related: [coding/softmax-shift-max, coding/bigram-beats-unigram]
 updated: 2026-11-03
 ---
 
-A colleague reports that their language model trains to a loss near zero in a few hundred steps, and the generated samples are garbage. The batch code is:
+A colleague reports that their language model reaches a loss near zero very early in training, and the generated samples are garbage. The batch code is:
 
 ```python
 def calc_loss_batch(model, tokens):
@@ -34,7 +34,7 @@ The targets are the inputs, so the model learns to predict the token it was just
 
 ### The alignment
 
-For input tokens `t0, t1, t2, t3` the targets are `t1, t2, t3, t4`. Every position predicts the next token, which is why one training example covers one more raw id than the context length. The batch maker produces the two tensors already shifted, or the loss function shifts them:
+For input tokens `t0, t1, t2, t3` the targets are `t1, t2, t3, t4`. Every position predicts the next token, which is why one training example covers the context length plus one raw id. The batch maker produces the two tensors already shifted, or the loss function shifts them:
 
 ```python
 def calc_loss_batch(model, inputs, targets):

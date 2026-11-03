@@ -16,7 +16,7 @@ related: [coding/gqa-checkpoint-pooling, coding/split-heads-reshape]
 updated: 2026-11-03
 ---
 
-A GQA implementation expands the key and value heads to match the query heads with this line, where `kv` has shape batch, groups, tokens, head size:
+A GQA implementation repeats the key and value heads up to the query head count with this line, where `kv` has shape batch, groups, tokens, head size:
 
 ```python
 kv_full = np.tile(kv, (1, n_heads // n_kv_heads, 1, 1))
@@ -53,7 +53,7 @@ The projection weights of a trained checkpoint were learned under one mapping. T
 
 ### Why it exists
 
-Only `G` key and value heads live in the cache instead of `H`, so the cache shrinks by the factor `H / G` while quality stays close to full multi-head attention. The lesson's example is a large open model that pairs 64 query heads against only 8 shared groups.
+Only `G` key and value heads live in the cache instead of `H`, so the cache shrinks by the factor `H / G` while quality stays close to standard multi-head attention. The lesson's example is a large open model that pairs 64 query heads against only 8 shared groups.
 
 ## Follow-ups
 
