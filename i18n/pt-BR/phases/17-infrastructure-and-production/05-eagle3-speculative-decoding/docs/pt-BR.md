@@ -34,7 +34,7 @@ Sem descodificação de especificações, o custo por token é um objetivo avan�
 
 Os tokens rejeitados não desaparecem  eles forçam um segundo alvo para a primeira token rejeitada. Em uma carga de trabalho onde o alfa cai para 0,4, pagas despesas gerais de projeto mais verificação mais re-roll. Em alta simultânea (digamos 256 simultâneos), o lote de decodificação já é grande o suficiente para que a diferença de largura de banda de memória entre "alvo sozinho" e "alvo com verificação" diminua. Abaixo do alfa 0,55 na maioria dos hardware de 2026, o código de especificações é negativo.
 
-O programa de treinamento de um projeto de trabalho em um grupo de dados de um grupo de trabalho, que é um grupo de treinamento de um grupo de trabalho, é um projeto de treinamento de um grupo de trabalho.
+O Alpha varia de acordo com a carga de trabalho. No chat geral de estilo ShareGPT, a EAGLE-3 treinada no ShareGPT atinge 0,6-0,8. No que diz respeito ao tráfego específico de domínio (código, médico, legal), o projeto de direcção formado em dados gerais cai para 0,4-0,6. Treinar um projeto específico de domínio cabeçalhos recupera alfa  é um trabalho de treinamento leve e rápido em comparação com o objetivo de finalização. As fases 7 · 16 e 10 · 15 apresentam valores mais elevados (0,85 e superior). São taxas por token em parâmetros de chat que correspondem aos dados de treinamento do projecto. Planeje com as bandas desta página e mede o alpha pelo seu próprio tráfego.
 
 ### GERAÇÕES de águia num olhar
 

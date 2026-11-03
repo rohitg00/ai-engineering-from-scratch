@@ -81,7 +81,7 @@ Canary gates verifica a cada 5-15 minutos dependendo do volume de tráfego. 1% d
 
 ### O passo A/B é opcional
 
-Se o novo modelo é claramente diferente (comportamento diferente, curva de custo diferente, tom diferente), teste-o A/B em 50% após canário passar.
+Se o novo modelo é claramente diferente (comportamento diferente, curva de custo diferente, tom diferente), teste-o A/B em 50% após o canário passar. Se for apenas uma versão melhorada do mesmo comportamento, puxe para 100% quando os gatos canários passarem. Melhor significa que o eval offline mostrou o ganho. Os gatos canários não medem a conclusão da tarefa, então o skip confia no eval para isso.
 
 ### Números que você deve lembrar
 
