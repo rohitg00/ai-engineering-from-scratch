@@ -31,8 +31,8 @@ Retrieval, prompts, structured output, evaluation and models that see and hear.
 
 | Card | Items | Planned |
 |---|---|---|
-| [RAG](questions/rag/README.md) | 26 | 15 |
-| [Prompting and structured output](questions/prompting-structured-output/README.md) | 22 | 15 |
+| RAG | 0 | 15 |
+| Prompting and structured output | 0 | 15 |
 | Evaluation | 0 | 15 |
 | Multimodal | 0 | 15 |
 
