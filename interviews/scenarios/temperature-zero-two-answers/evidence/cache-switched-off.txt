@@ -1,0 +1,7 @@
+title: the cache that the GB10 server switched off under the deterministic flag
+source: manuals/sglang-101/capture/gpu/out-gb10/server-deterministic.log
+lines: 6-6
+lang: text
+note: Read which backend the cache is not compatible with in this mode.
+---
+[2026-10-17 15:40:03] Currently radix cache is not compatible with flashinfer attention backend for deterministic inference. It will be supported in the future.

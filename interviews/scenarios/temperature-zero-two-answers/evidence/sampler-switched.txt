@@ -1,0 +1,7 @@
+title: the sampler that the GB10 server switched to under the deterministic flag
+source: manuals/sglang-101/capture/gpu/out-gb10/server-deterministic.log
+lines: 4-4
+lang: text
+note: One startup line.
+---
+[2026-10-17 15:40:03] Sampling backend is set to pytorch for deterministic inference.
