@@ -47,6 +47,10 @@ function renderCode(source, lang, opts = {}) {
   return `<div class="iv-code" data-kind="${output ? 'output' : 'code'}" data-lang="${escapeHtml(name)}"><div class="iv-code-head">${label}${extra}${copy ? '<button class="iv-copy" type="button" data-copy>Copy</button>' : ''}</div><pre><code>${body}</code></pre></div>`;
 }
 
+function manualSlug(text) {
+  return String(text).toLowerCase().replace(/`/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 64);
+}
+
 function siteUrl(repoPath, anchor) {
   const clean = repoPath.replace(/\/+$/, '');
   const hash = anchor ? `#${anchor}` : '';
@@ -55,7 +59,7 @@ function siteUrl(repoPath, anchor) {
   match = /^manuals\/([a-z0-9-]+)\/sections\/(.+)\.md$/.exec(clean);
   if (match) {
     const slug = match[2].replace(/^\d+-\d+-/, '').replace(/^r-\d+-/, 'ref-');
-    return `/manual-${match[1]}/${slug}${hash}`;
+    return `/manual-${match[1]}/${slug}${anchor ? `#s-${slug}-${manualSlug(anchor)}` : ''}`;
   }
   match = /^manuals\/([a-z0-9-]+)$/.exec(clean);
   if (match) return `/manual-${match[1]}`;
@@ -215,7 +219,7 @@ function itemSearch(item, card) {
 function itemRow(item, built, showCard) {
   const card = built.cardMap.get(item.card);
   const roles = item.data.roles.join(' ');
-  return `<li class="iv-row" data-item data-level="${item.data.level}" data-roles="${escapeHtml(roles)}" data-search="${escapeHtml(itemSearch(item, card))}"><a class="iv-row-link" href="${itemHref(item)}"><span class="iv-row-title">${escapeHtml(item.data.title)}</span><span class="iv-row-meta">${levelChip(item.data.level)}${kindChip(item.data.kind)}${showCard ? `<span class="iv-row-card">${escapeHtml(card.title)}</span>` : ''}<span class="iv-row-min">${item.data.minutes} min</span></span></a></li>`;
+  return `<li class="iv-row" data-item data-card-id="${item.card}" data-level="${item.data.level}" data-roles="${escapeHtml(roles)}" data-search="${escapeHtml(itemSearch(item, card))}"><a class="iv-row-link" href="${itemHref(item)}"><span class="iv-row-title">${escapeHtml(item.data.title)}</span><span class="iv-row-meta">${levelChip(item.data.level)}${kindChip(item.data.kind)}${showCard ? `<span class="iv-row-card">${escapeHtml(card.title)}</span>` : ''}<span class="iv-row-min">${item.data.minutes} min</span></span></a></li>`;
 }
 
 function cardTile(card, built) {
@@ -223,11 +227,10 @@ function cardTile(card, built) {
   const group = built.groupMap.get(card.group);
   const roles = built.roles.filter(role => role.cards.includes(card.id)).map(role => role.id).join(' ');
   const search = [card.title, card.summary, group.title].concat(items.map(item => itemSearch(item, card))).join(' ').toLowerCase();
-  const levels = Array.from(new Set(items.map(item => item.data.level))).sort().join(' ');
   const count = items.length;
   const name = count ? `<a href="${BASE}/${card.id}">${escapeHtml(card.title)}</a>` : escapeHtml(card.title);
   const state = count ? `${count} ${count === 1 ? 'item' : 'items'}` : 'Coming soon';
-  return `<li class="iv-card${count ? '' : ' iv-card-empty'}" data-card="${card.id}" data-group="${card.group}" data-roles="${escapeHtml(roles)}" data-levels="${levels}" data-search="${escapeHtml(search)}"><div class="iv-card-top"><span class="iv-kicker">${escapeHtml(group.title)}</span><span class="iv-card-count">${state}</span></div><h3 class="iv-card-name">${name}</h3><p class="iv-card-sum">${escapeHtml(card.summary)}</p>${levelMix(items)}<div class="iv-card-foot"><span class="iv-plan"><span class="iv-plan-bar" aria-hidden="true"><span style="width:${Math.min(100, Math.round((count / card.planned) * 100))}%"></span></span>${count} of ${card.planned} planned</span></div></li>`;
+  return `<li class="iv-card${count ? '' : ' iv-card-empty'}" data-card="${card.id}" data-group="${card.group}" data-roles="${escapeHtml(roles)}" data-search="${escapeHtml(search)}"><div class="iv-card-top"><span class="iv-kicker">${escapeHtml(group.title)}</span><span class="iv-card-count">${state}</span></div><h3 class="iv-card-name">${name}</h3><p class="iv-card-sum">${escapeHtml(card.summary)}</p>${levelMix(items)}<div class="iv-card-foot"><span class="iv-plan"><span class="iv-plan-bar" aria-hidden="true"><span style="width:${Math.min(100, Math.round((count / card.planned) * 100))}%"></span></span>${count} of ${card.planned} planned</span></div></li>`;
 }
 
 function roleChips(built) {

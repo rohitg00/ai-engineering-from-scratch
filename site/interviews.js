@@ -49,9 +49,15 @@
         if (ok) shown += 1;
       });
       cards.forEach(function (card) {
+        var id = card.getAttribute('data-card');
+        var hasItem = rows.some(function (row) {
+          return row.getAttribute('data-card-id') === id
+            && (!level || row.getAttribute('data-level') === level)
+            && (!role || (' ' + row.getAttribute('data-roles') + ' ').indexOf(' ' + role + ' ') >= 0);
+        });
+        var listed = !role || (' ' + card.getAttribute('data-roles') + ' ').indexOf(' ' + role + ' ') >= 0;
         var ok = (!q || card.getAttribute('data-search').indexOf(q) >= 0)
-          && (!level || (' ' + card.getAttribute('data-levels') + ' ').indexOf(' ' + level + ' ') >= 0)
-          && (!role || (' ' + card.getAttribute('data-roles') + ' ').indexOf(' ' + role + ' ') >= 0);
+          && (level ? hasItem : (listed || hasItem));
         card.hidden = !ok;
       });
       groups.forEach(function (group) {

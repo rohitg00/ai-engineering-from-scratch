@@ -33,6 +33,7 @@ test('the grid has a heading for each group, a tile for each card, a level filte
   const html = page('/interviews').html;
   for (const group of built.groups) assert.ok(html.includes(`<h2 id="g-${group.id}">`), group.id);
   for (const card of built.cards) assert.ok(html.includes(`data-card="${card.id}"`), card.id);
+  for (const item of built.items) assert.ok(html.includes(`data-card-id="${item.card}" data-level="${item.data.level}"`), item.id);
   assert.match(html, /<input type="search" name="q"/);
   for (const level of [1, 2, 3, 4]) assert.ok(html.includes(`name="level" value="${level}"`));
   for (const role of built.roles) assert.ok(html.includes(`name="role" value="${role.id}"`), role.id);
@@ -104,7 +105,7 @@ test('no page links out of the site, except to the repository', () => {
 
 test('repository links become site links', () => {
   assert.equal(interviews.siteUrl('phases/17-infrastructure-and-production/06-sglang-radixattention'), '/lesson?path=phases%2F17-infrastructure-and-production%2F06-sglang-radixattention');
-  assert.equal(interviews.siteUrl('manuals/sglang-101/sections/5-1-sglang-benchmark-serving.md', 'goodput'), '/manual-sglang-101/sglang-benchmark-serving#goodput');
+  assert.equal(interviews.siteUrl('manuals/sglang-101/sections/5-1-sglang-benchmark-serving.md', 'goodput-finds-the-knee-that-throughput-hides'), '/manual-sglang-101/sglang-benchmark-serving#s-sglang-benchmark-serving-goodput-finds-the-knee-that-throughput-hides');
   assert.equal(interviews.siteUrl('manuals/vllm-101/sections/r-3-incident-index.md'), '/manual-vllm-101/ref-incident-index');
   assert.equal(interviews.siteUrl('interviews/scenarios/prefix-cache-inflated-benchmark/README.md'), '/interviews/scenarios/prefix-cache-inflated-benchmark');
   assert.equal(interviews.siteUrl('interviews/questions/inference-serving/kv-pool-users-fit.md'), '/interviews/inference-serving/kv-pool-users-fit');
@@ -182,5 +183,23 @@ test('structured data describes each item', () => {
     assert.equal(ld.url, `${ORIGIN}${itemHref(item)}`);
     assert.equal(ld.hasPart[0]['@type'], 'Question');
     assert.ok(ld.hasPart[0].acceptedAnswer.text.length > 40);
+  }
+});
+
+test('the deploy step stamps the social card on every interview page', () => {
+  const { versionSite } = require('./version-assets');
+  const { pageCard } = require('../lib/og-cards');
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-interviews-cards-'));
+  try {
+    fs.writeFileSync(path.join(temp, 'og-cards.json'), JSON.stringify({ version: 1, cards: { 'page/interviews': pageCard('interviews', {}) } }));
+    const file = path.join(temp, 'interviews', 'inference-serving', 'prefix-cache-order.html');
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, built.files.get('inference-serving/prefix-cache-order.html'));
+    versionSite(temp);
+    const html = fs.readFileSync(file, 'utf8');
+    assert.match(html, /og\/page\/interviews\.png\?v=[0-9a-f]+/);
+    assert.match(html, /<meta property="og:image:width" content="1200">/);
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
   }
 });
