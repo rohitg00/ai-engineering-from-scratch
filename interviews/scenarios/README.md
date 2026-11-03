@@ -6,6 +6,7 @@ Measured incidents from our manuals. Read the evidence one listing at a time and
 
 | Scenario | Level | System | Minutes |
 |---|---|---|---|
+| [A five-minute cold start on the GB10](cold-start-on-gb10/README.md) | 2 Working | vLLM 0.31.0 in its release container, one GB10 with 128 GB of unified memory | 15 |
 | [The prefix cache inflated a benchmark](prefix-cache-inflated-benchmark/README.md) | 2 Working | vLLM 0.31.0 and SGLang 0.5.22, one L4 with 24 GB of memory, SM clock locked at 900 MHz | 20 |
 | [A request ID at the top of the prompt](request-id-at-prompt-start/README.md) | 2 Working | SGLang 0.5.22, one L4 with 24 GB of memory, and a GB10 as the second machine | 15 |
 | [Startup out of memory on a shared GPU](startup-oom-shared-gpu/README.md) | 2 Working | vLLM 0.31.0, the shared second L4 of a two-GPU node, with another team's processes on it | 15 |
@@ -16,5 +17,6 @@ Measured incidents from our manuals. Read the evidence one listing at a time and
 | [The load knee and the cap that made it worse](load-knee-and-admission-cap/README.md) | 3 Senior | vLLM 0.31.0 against SGLang 0.5.22, one L4 with 24 GB of memory, SM clock locked at 900 MHz | 25 |
 | [Ray stops the trainer on unified memory](ray-oom-unified-memory/README.md) | 3 Senior | Miles main 08752a12 with its own SGLang 0.5.22 build, one GB10 with 128 GB of unified memory | 20 |
 | [LRU thrash in a small pool, then a crash](small-pool-lru-thrash/README.md) | 3 Senior | SGLang 0.5.22, the shared second L4 of a two-GPU node, with no clock lock | 25 |
+| [Speculation depth against batch size](speculation-depth-vs-batch/README.md) | 3 Senior | vLLM 0.31.0 and SGLang 0.5.22, one L4 with 24 GB of memory, SM clock locked at 900 MHz, and a GB10 as the second machine | 25 |
 
 [All cards](../README.md)

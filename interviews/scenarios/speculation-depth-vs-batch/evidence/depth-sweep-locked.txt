@@ -1,0 +1,15 @@
+title: EAGLE3 at three draft depths against no speculation, with the clock locked
+source: manuals/vllm-101/sections/4-1-speed-up-decode-with-eagle3.md
+lines: 40-48
+lang: text
+note: Read the output column at 32 users from depth 1 to depth 5, then the time per token at one user.
+---
+| Users, L4 locked session | Config | Median TPOT | Output tok/s | Median SM clock |
+|---|---|---|---|---|
+| 32 | no speculation | 119.9 ms | 208.8 | 881 MHz |
+| 32 | depth 1 | 100.4 ms | 271.1 | 900 MHz |
+| 32 | depth 3 | 77.8 ms | 333.6 | 900 MHz |
+| 32 | depth 5 | 83.7 ms | 289.5 | 885 MHz |
+| 1 | depth 1 | 39.4 ms | 22.4 | 900 MHz |
+| 1 | depth 3 | 27.8 ms | 31.3 | 900 MHz |
+| 1 | depth 5 | 26.2 ms | 31.7 | 900 MHz |
