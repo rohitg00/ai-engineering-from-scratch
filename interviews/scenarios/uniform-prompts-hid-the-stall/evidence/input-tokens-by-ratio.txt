@@ -1,0 +1,8 @@
+title: total input tokens sent at each ratio, seed 1
+source: manuals/sglang-101/capture/gpu/out-l4/waves-default-input-tokens.txt
+lang: text
+note: Mixed lengths send fewer tokens than fixed lengths.
+---
+ratio 1.0, seed 1: Total input tokens: 32768 
+ratio 0.5, seed 1: Total input tokens: 24504 
+ratio 0.0, seed 1: Total input tokens: 17870 

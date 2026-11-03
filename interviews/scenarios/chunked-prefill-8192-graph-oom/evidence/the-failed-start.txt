@@ -1,0 +1,12 @@
+title: the last six lines of the failed start
+source: manuals/sglang-101/capture/gpu/incidents/l4-chunk-8192-prefill-graph-oom.txt
+lines: 3-8
+lang: text
+note: Read the line that starts with Capturing and the line below it before you read the PyTorch assert.
+---
+[2026-10-18 07:27:15] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 24094, K size: 1.65 GB, V size: 1.65 GB
+[2026-10-18 07:27:15] Memory pool end. avail mem=2.90 GB
+Capturing prefill shape (num_tokens=8192 avail_mem=2.33 GB)
+torch.AcceleratorError: CUDA error: out of memory
+[2026-10-18 07:28:44] RuntimeError: num_active_captures_ > 0 INTERNAL ASSERT FAILED at "/__w/pytorch/pytorch/c10/cuda/CUDACachingAllocator.cpp":3209, please report a bug to PyTorch. markCaptureEnd called with no captures in progress
+[2026-10-18 07:28:45] Received sigquit from a child process. It usually means the child failed.

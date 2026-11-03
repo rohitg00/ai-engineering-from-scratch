@@ -1,0 +1,19 @@
+title: the equal pair over the grid
+source: manuals/reverse-engineering-101/capture/out/17-harness-execute-equal.json
+lines: 1-13
+lang: json
+note: No mismatch and no oracle disagreement on the same 92 cells.
+---
+{
+  "candidates": {
+    "percent_change": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/percent_change_mul_first.c",
+    "grade": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/grade_switch.c"
+  },
+  "original": "fixtures/ledger.c compiled with the host clang at -O1",
+  "original_kind": "fixture-source",
+  "host": "aarch64 Darwin",
+  "arch": "aarch64",
+  "naive_passed": true,
+  "cells": 92,
+  "mismatches": [],
+  "oracle_disagreements": [],

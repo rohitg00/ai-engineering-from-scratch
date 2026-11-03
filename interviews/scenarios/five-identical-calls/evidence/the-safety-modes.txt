@@ -1,0 +1,14 @@
+title: what each safety mode does with a call that no pattern matched
+source: manuals/docker-sandboxes-101/sections/5-5-permissions-safety-and-hooks.md
+lines: 59-66
+lang: text
+note: Find the row for a run that chose no mode, then read the note below the table in the manual.
+---
+**Safety mode:** what the runtime does with a call that no pattern matched. It reads the call's label, `safe`, `destructive`, or `unknown`, and the mode decides {{docs-agent Permissions}}:
+
+| Mode | `safe` | `destructive` | `unknown` |
+|---|---|---|---|
+| `strict` | ask | ask | ask |
+| `balanced` | allow | ask | ask |
+| `restricted` | allow | deny | deny |
+| `autonomous` | allow | allow | allow |

@@ -1,0 +1,22 @@
+title: the eval run that blocked the pull request
+source: manuals/docker-sandboxes-101/capture/out/22-eval.txt
+lines: 1-16
+lang: console
+note: Read the line under each failed eval before you read the summary.
+---
+$ docker-agent eval fixtures/agents/files.yaml fixtures/evals --judge-model dmr/ai/qwen3:4b -c 1 --output work/eval-results
+Evaluation run: <run>
+Loading evaluation sessions...
+Validating judge model...
+Pre-building 1 container image(s)...
+Running 2 evaluations with concurrency 1
+
+✗ Count the lines of README.md ($0.000000)
+  ✗ running docker agent in container: container failed: exit status 1 (stderr: Error: failed to get models: docker --config=/root/.docker --context=default model status --json: : exec: "docker": executable file not found in $PATH)
+✗ List the files in the working directory ($0.000000)
+  ✗ running docker agent in container: container failed: exit status 1 (stderr: Error: failed to get models: docker --config=/root/.docker --context=default model status --json: : exec: "docker": executable file not found in $PATH)
+[██████████] 100% (2/2) ✓0 ✗2
+
+❌         Errors: 2/2 evaluations failed
+
+Total Cost: $0.000000

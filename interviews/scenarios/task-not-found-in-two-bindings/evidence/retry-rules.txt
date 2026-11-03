@@ -1,0 +1,16 @@
+title: which errors a client may retry
+source: manuals/a2a-101/sections/5-5-errors.md
+lines: 116-125
+lang: text
+note: Each line names the codes and the one action that fits them. The last line is about a retried send.
+---
+Most A2A errors describe the request or the task, so resending the same bytes gets the same answer:
+
+- `-32603`, HTTP `500` or `503`, or a dropped connection: retry with backoff, and honor `Retry-After` {{spec §3.3.2}}.
+- HTTP `401`: get a fresh credential, then retry.
+- `-32600`, `-32602`, `-32005`, `-32009`, and their `400` forms: fix the request before you send it again.
+- `-32001`: stop, because the id is wrong, purged, or hidden from you {{spec §3.3.2}}.
+- `-32002`, or `-32004` on a terminal task: start a new task, as [CancelTask and terminal states](#s-cancel-task-and-terminal-states) shows.
+- `-32003`, `-32007`, or `-32004` from a capability check: read the card again.
+
+A retried `SendMessage` can start a second task, because duplicate detection by `messageId` is optional {{spec §3.3.1}}. Send the same `messageId` anyway, as [Message](#s-message) explains.

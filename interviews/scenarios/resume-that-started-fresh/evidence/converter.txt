@@ -1,0 +1,8 @@
+title: the files that the checkpoint converter wrote
+source: manuals/miles-101/capture/gpu/out-gb10/live-check-summary.txt
+lines: 5-6
+lang: text
+note: The converter turned the step 2 checkpoint into a model folder that a serving engine can load.
+---
+## FSDP to Hugging Face (tools/convert_fsdp_to_hf.py, iter_0000002)
+config.json generation_config.json LICENSE merges.txt model.safetensors README.md tokenizer_config.json tokenizer.json vocab.json 

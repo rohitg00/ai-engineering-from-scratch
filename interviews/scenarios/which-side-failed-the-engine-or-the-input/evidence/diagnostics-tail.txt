@@ -1,0 +1,28 @@
+title: the end of the diagnostics object
+source: manuals/reverse-engineering-101/capture/out/10-mcp-13-analyze-function-missing.json
+lines: 92-113
+lang: json
+note: The engine wrote nothing to stdout or stderr, the capture is complete, and the remote code is not_found.
+---
+          "failure_output": {
+            "stdout": {
+              "text": "",
+              "bytes": 0,
+              "retained_bytes": 0
+            },
+            "stderr": {
+              "text": "",
+              "bytes": 0,
+              "retained_bytes": 0
+            },
+            "complete": true
+          },
+          "failure_cause": {
+            "name": "GhidraRemoteError",
+            "message": "Unknown Ghidra procedure name or address: _nothing",
+            "code": "not_found"
+          },
+          "failure_kind": "remote",
+          "failure_message": "Unknown Ghidra procedure name or address: _nothing",
+          "remote_code": "not_found",
+          "remote_message": "Unknown Ghidra procedure name or address: _nothing"

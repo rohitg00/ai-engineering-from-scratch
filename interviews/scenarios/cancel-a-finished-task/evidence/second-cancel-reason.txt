@@ -1,0 +1,16 @@
+title: the detail inside the second cancel error
+source: manuals/a2a-101/capture/out/10-cancel.http
+lines: 165-174
+lang: text
+note: The reason names the error, and the metadata names the state the task is in.
+---
+        "reason": "TASK_NOT_CANCELABLE",
+        "domain": "a2a-protocol.org",
+        "metadata": {
+          "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+          "state": "TASK_STATE_CANCELED"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+title: a third SubscribeToTask after the task completed, status and code
+source: manuals/a2a-101/capture/out/14-resubscribe.http
+lines: 85-95
+lang: text
+note: Read the content type and the code.
+---
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "error": {
+    "code": -32004,
+    "message": "This operation is not supported",
+    "data": [
+      {

@@ -1,0 +1,7 @@
+title: the engine, the model, the card and the one changed flag
+source: manuals/sglang-101/capture/gpu/incidents/l4-chunk-8192-prefill-graph-oom.txt
+lines: 1-1
+lang: text
+note: The chunk is the only setting that differs from the default start.
+---
+sglang 0.5.22, Qwen/Qwen3-8B, one NVIDIA L4 (22 GB), --chunked-prefill-size 8192, default --mem-fraction-static for the card

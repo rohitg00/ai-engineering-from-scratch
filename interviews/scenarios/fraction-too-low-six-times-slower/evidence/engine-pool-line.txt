@@ -1,0 +1,7 @@
+title: the KV cache line of the slow run at startup
+source: manuals/miles-101/capture/gpu/out-gb10/frac-low-kv.txt
+lines: 6-6
+lang: text
+note: The pool line that the engine prints before the first step.
+---
+frac-low engine line: KV Cache is allocated. dtype: torch.bfloat16, #tokens: 3082, K size: 0.16 GB, V size: 0.16 GB

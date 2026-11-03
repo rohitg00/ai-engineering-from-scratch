@@ -1,0 +1,26 @@
+title: the send that started the suite, and the state it came back in
+source: manuals/a2a-101/capture/out/10-cancel.http
+lines: 21-40
+lang: text
+note: The configuration asks the server to return at once. Read the state and the timestamp of the task that came back.
+---
+    "configuration": {
+      "returnImmediately": true
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "task": {
+      "id": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+      "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+      "status": {
+        "state": "TASK_STATE_SUBMITTED",
+        "timestamp": "2026-10-06T09:00:03.250Z"
+      },

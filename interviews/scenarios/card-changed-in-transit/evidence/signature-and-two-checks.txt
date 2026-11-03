@@ -1,0 +1,14 @@
+title: the published signature entry and two verification results
+source: manuals/a2a-101/capture/out/17-signed-card.txt
+lines: 10-17
+lang: text
+note: The last two lines are the checks: the card as published, and a copy with one word changed.
+---
+# 4. the signature entry published in the card
+{
+  "protected": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJkZXBsb3llci1rZXktMSJ9",
+  "signature": "yPk834ji_dOVmxElhzV3yTYBT9NVp8Bx1j5K0LQmOww"
+}
+
+# 5. verify the published card: True
+# 6. verify after changing the description to name production: False

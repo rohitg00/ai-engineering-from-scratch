@@ -1,0 +1,14 @@
+title: the import and compare commands with their exit codes
+source: manuals/reverse-engineering-101/capture/out/00-commands.txt
+lines: 55-62
+lang: console
+note: Two imports and one compare. Only the import of the old bundle exits 1.
+---
+$ rea evidence-import out/11-bundle-O1.json --format json
+[exit 0] (0.6 s) -> 13-evidence-import.json
+
+$ rea evidence-import fixtures/bundle-rea-6.5.0-O1.json --format json
+[exit 1] (0.6 s) -> 13-evidence-import-rea-6.5.0.json
+
+$ rea compare out/11-bundle-O1.json out/11-bundle-O2.json --format json
+[exit 0] (0.6 s) -> 14-compare-bundles.json

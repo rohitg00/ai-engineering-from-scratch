@@ -1,0 +1,18 @@
+title: the first pauses and the rule change
+source: manuals/miles-101/capture/gpu/out-gb10/thermostat.log
+lines: 1-12
+lang: text
+note: The limits were 80 C and 68 C first, and changed to 84 C and 74 C that morning.
+---
+2026-10-18T10:57:59Z pause at 80C
+2026-10-18T10:58:14Z resume at 68C
+2026-10-18T10:59:05Z pause at 81C
+2026-10-18T10:59:38Z pause at 80C
+2026-10-18T11:00:38Z resume at 65C after 60 s
+2026-10-18T11:01:39Z pause at 80C
+2026-10-18T11:25:29Z resume by hand after rule change
+2026-10-18T11:25:34Z pause at 81C
+2026-10-18T11:26:35Z resume at 70C after 61 s
+2026-10-18T11:26:50Z pause at 80C
+2026-10-18T11:27:45Z resume by hand after rule change to 84/74
+2026-10-18T11:28:16Z pause at 84C

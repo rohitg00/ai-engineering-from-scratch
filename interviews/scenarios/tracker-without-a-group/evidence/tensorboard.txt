@@ -1,0 +1,10 @@
+title: the same run with the other tracker
+source: manuals/miles-101/capture/gpu/out-gb10/tracker-eval-checks.txt
+lines: 8-11
+lang: text
+note: The log line and the two event files.
+---
+## tensorboard (tb-check.log): step 0: step 1: 
+Saving tensorboard log to /root/lab/runs/plain/tb.
+events.out.tfevents.1792727435.c56e30506501.2042.0
+events.out.tfevents.1792727457.c56e30506501.2515.0
