@@ -1,0 +1,11 @@
+title: the two replays compared
+source: manuals/docker-sandboxes-101/capture/out/21-sessions-diff.txt
+lines: 5-9
+lang: console
+note: Five turns and no difference.
+---
+$ docker-agent sessions diff -- -1 -2
+Comparing -1 (5 turns) against -2 (5 turns)
+
+✅ Identical behaviour across all 5 turns.
+[exit 0]
