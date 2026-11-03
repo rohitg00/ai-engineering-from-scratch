@@ -1,0 +1,9 @@
+title: the limitation at the end of the result
+source: manuals/reverse-engineering-101/capture/out/14-compare-bundles.json
+lines: 169-171
+lang: json
+note: One sentence that applies to the whole comparison.
+---
+  "limitations": [
+    "EvidenceBundle has no inventory completeness marker; one-sided membership remains unknown."
+  ]

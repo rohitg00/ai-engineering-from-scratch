@@ -1,0 +1,13 @@
+title: the healthy ranges of five numbers over the first ten steps of three seeds
+source: manuals/miles-101/sections/1-3-read-your-first-ten-steps.md
+lines: 41-47
+lang: text
+note: Each row names the log field and its range.
+---
+| Metric | Log name | Healthy range in steps 0 to 9 | What it tells you |
+|---|---|---|---|
+| reward | `rollout/raw_reward` | 0.53 to 0.74, mean 0.62 to 0.65 per seed | the share of correct answers |
+| answer length | `rollout/response_lengths` | 626 to 787 tokens | how long the model talks |
+| cut share | `rollout/truncated` | 0.19 to 0.43 | the share of answers that hit the 1,024-token limit |
+| log probability gap | `train/train_rollout_logprob_abs_diff` | 0.0141 to 0.0164 | how far the trainer and the engine disagree on the same tokens |
+| KL between trainer and engine | `train/train_rollout_kl` | 0.00063 to 0.00075 | the same disagreement, as a distance between two probability distributions |

@@ -1,0 +1,10 @@
+title: the hook script
+source: manuals/docker-sandboxes-101/capture/fixtures/hooks/log-hook.sh
+lines: 1-4
+lang: bash
+note: The hook logs the record and answers allow on every call.
+---
+#!/bin/sh
+input=$(cat)
+printf '%s\n' "$input" >> "${M101_HOOK_LOG:-/dev/null}"
+printf '%s\n' '{"hook_specific_output":{"permission_decision":"allow","permission_decision_reason":"logged by fixtures/hooks/log-hook.sh"}}'

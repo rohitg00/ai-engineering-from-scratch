@@ -1,0 +1,12 @@
+title: two more pauses in the next hour
+source: manuals/sglang-101/capture/gpu/incidents/gb10-memory-guard-pauses.txt
+lines: 6-11
+lang: text
+note: Compare the growth of the scheduler in each pause.
+---
+2026-10-16T13:22:18+00:00 2026/10/16 13:22:18 guardian level: Critical: 46.8 GiB left before the freeze zone.
+2026-10-16T13:22:18+00:00 2026/10/16 13:22:18 guardian pause: Paused sglang::schedul (pid 3034142, rohit): it grew 9.4 GiB in 5s with 46.8 GiB left. Resume or stop it from the app.
+2026-10-16T13:22:27+00:00 2026/10/16 13:22:27 guardian level: Back to normal: 43.1 GiB available.
+2026-10-16T13:52:10+00:00 2026/10/16 13:52:10 guardian level: Critical: 50.1 GiB left before the freeze zone.
+2026-10-16T13:52:10+00:00 2026/10/16 13:52:10 guardian pause: Paused sglang::schedul (pid 3094220, rohit): it grew 28.1 GiB in 5s with 50.1 GiB left. Resume or stop it from the app.
+2026-10-16T13:52:30+00:00 2026/10/16 13:52:30 guardian level: Back to normal: 44.6 GiB available.

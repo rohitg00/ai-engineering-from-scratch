@@ -1,0 +1,21 @@
+title: the numbers of the two runs, from compatibility.json and pytest
+source: manuals/a2a-101/research/tck-run.md
+lines: 76-90
+lang: text
+note: Compare the two columns row by row. The transport rows count records, and the top rows count requirements.
+---
+| | Run 1, tag as published | Run 2, exact JSON-RPC URL, fixed kit |
+|---|---|---|
+| overall_compatibility | 32.3% | 66.7% |
+| must_compatibility | 35.4% | 72.0% |
+| should_compatibility | 14.3% | 14.3% |
+| may_compatibility | 0.0% | 50.0% |
+| requirements PASS / FAIL / SKIPPED / NOT TESTED (of 129) | 30 / 63 / 11 / 25 | 62 / 31 / 11 / 25 |
+| MUST passed / failed / skipped (of 114) | 29 / 74 / 11 | 59 / 44 / 11 |
+| SHOULD passed / failed / skipped (of 11) | 1 / 10 / 0 | 1 / 10 / 0 |
+| MAY passed / failed / skipped (of 4) | 0 / 4 / 0 | 2 / 2 / 0 |
+| pytest: passed / failed / skipped / xfailed (265 collected) | 70 / 44 / 149 / 2 | 119 / 21 / 125 / 0 |
+| transport jsonrpc: passed / failed / skipped records | 12 / 63 / 10 (85) | 66 / 29 / 7 (102) |
+| transport http_json | 59 / 30 / 6 (95) | 65 / 24 / 6 (95) |
+| transport agent_card | 6 / 4 / 0 (10) | 6 / 4 / 0 (10) |
+| transport grpc | 0 / 0 / 72 (72) | 0 / 0 / 72 (72) |

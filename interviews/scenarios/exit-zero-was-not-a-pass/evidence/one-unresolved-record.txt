@@ -1,0 +1,22 @@
+title: the first of the ten changes
+source: manuals/reverse-engineering-101/capture/out/14-compare-bundles.json
+lines: 17-32
+lang: json
+note: One side has the record and the other side has nothing, and the limitation says why that is not a removal.
+---
+  "changes": [
+    {
+      "entity": "evidence",
+      "key": "ev_142cc943d8259d42ce5d62ad5eb0417fcde4de4ee9a20afbfe1fdbc51ed3d259",
+      "classification": "unknown",
+      "conclusion_kind": "unresolved_branch",
+      "left_evidence_ids": [],
+      "right_evidence_ids": [
+        "ev_142cc943d8259d42ce5d62ad5eb0417fcde4de4ee9a20afbfe1fdbc51ed3d259"
+      ],
+      "left_digest": null,
+      "right_digest": "142cc943d8259d42ce5d62ad5eb0417fcde4de4ee9a20afbfe1fdbc51ed3d259",
+      "limitations": [
+        "EvidenceBundle has no inventory completeness marker; one-sided membership may reflect incomplete capture."
+      ]
+    },

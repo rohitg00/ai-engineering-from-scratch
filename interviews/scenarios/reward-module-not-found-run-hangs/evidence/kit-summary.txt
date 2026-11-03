@@ -1,0 +1,11 @@
+title: the summary that the capture kit wrote for this run
+source: manuals/miles-101/capture/gpu/out-gb10/custom-rm-noenv-hang.txt
+lines: 1-5
+lang: text
+note: The first line names the setting that this run did not pass.
+---
+# custom-rm-noenv: --custom-rm-path my_rewards.custom_rm without -e PYTHONPATH=/root/lab
+# run started 2026-10-23T00:19:01Z, container stopped by hand 2026-10-23T02:17Z
+# lines with 503 Service Unavailable: 44
+# lines with rollout N metrics: 0
+# step lines: 0

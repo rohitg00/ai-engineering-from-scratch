@@ -1,0 +1,22 @@
+title: the start of the build with a docker-container builder
+source: manuals/docker-sandboxes-101/capture/out/28-buildx.txt
+lines: 1-16
+lang: console
+note: Read the driver on the second line and the frontend version on the descriptor line.
+---
+$ docker buildx build --progress=plain -f fixtures/kits/hello-kit/kit.yaml --builder m101-builder -t m101-registry:5000/m101/hello-kit:v1 --push fixtures/kits/hello-kit
+#0 building with "m101-builder" instance using docker-container driver
+#1 [internal] booting buildkit
+#1 pulling image moby/buildkit:buildx-stable-1 done
+#1 creating container buildx_buildkit_m101-builder0 done
+#1 DONE <dur>
+#2 [internal] load build definition from kit.yaml
+#2 DONE <dur>
+#3 resolve image config for docker-image://docker.io/docker/sandbox-kit:3
+#3 DONE <dur>
+#4 docker-image://docker.io/docker/sandbox-kit:3@sha256:<digest>
+#4 DONE <dur>
+#5 [internal] load kit descriptor kit.yaml · sandbox-kit 3.0.0-m.8 (129be2ff)
+#5 DONE <dur>
+#6 [kit] inline build block
+#6 DONE <dur>

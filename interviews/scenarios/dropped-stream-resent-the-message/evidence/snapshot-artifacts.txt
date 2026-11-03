@@ -1,0 +1,27 @@
+title: the artifact inside the first frame of the second stream
+source: manuals/a2a-101/capture/out/14-resubscribe.events.json
+lines: 137-157
+lang: text
+note: Count the parts and compare them with the two the first stream carried.
+---
+            "artifacts": [
+              {
+                "artifactId": "test-log",
+                "name": "test-log.txt",
+                "parts": [
+                  {
+                    "text": "tests/test_suite_01.py ........\n"
+                  },
+                  {
+                    "text": "tests/test_suite_02.py ........\n"
+                  },
+                  {
+                    "text": "tests/test_suite_03.py ........\n"
+                  },
+                  {
+                    "text": "tests/test_suite_04.py ........\n"
+                  }
+                ]
+              }
+            ]
+          }

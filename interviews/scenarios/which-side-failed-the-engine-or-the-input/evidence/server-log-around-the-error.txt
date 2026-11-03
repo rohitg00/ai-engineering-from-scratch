@@ -1,0 +1,9 @@
+title: the server log around the failed call
+source: manuals/reverse-engineering-101/capture/out/10-mcp-server.log
+lines: 10-12
+lang: jsonl
+note: Two error lines at level 40, one per layer, then the next call completes with status ok.
+---
+{"level":40,"time":1792316959970,"application":"rea","mode":"mcp","layer":"ghidra-bridge","method":"analyze_function","status":"error","msg":"Ghidra bridge request completed"}
+{"level":40,"time":1792316959971,"application":"rea","mode":"mcp","layer":"server","tool":"analyze_function","durationMs":2.73,"status":"error","msg":"MCP tool execution completed"}
+{"level":30,"time":1792316960484,"application":"rea","mode":"mcp","layer":"server","tool":"close_binary","durationMs":491.18,"status":"ok","msg":"MCP tool execution completed"}

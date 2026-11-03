@@ -1,0 +1,15 @@
+title: the SGLang table on the L4 by shared length, with the clock caveat
+source: manuals/sglang-101/sections/3-3-radixcache.md
+lines: 86-94
+lang: text
+note: The two paragraphs under the table bound the factor.
+---
+| Shared prompt | Median TTFT, cache on | Median TTFT, cache off | Output tok/s, cache on | Output tok/s, cache off |
+|---|---|---|---|---|
+| 0 | 349 ms | 379 ms | 113.56 | 113.33 |
+| 1,024 | 462 ms | 2,202 ms | 105.76 | 70.15 |
+| 4,096 | 479 ms | 14,706 ms | 88.87 | 20.80 |
+
+The median SM clock was 1,440 MHz with the cache and 930 MHz without it at 4,096 shared tokens. Every seed of the run without the cache stayed under our floor of 1,000 MHz.
+
+**We measured** a 30.7 times shorter median wait and 4.3 times the throughput at 4,096 shared tokens. Treat both factors as upper bounds. The run without the cache had a thermal throttle flag in 62 percent of its samples and a 35 percent lower clock. A cool card would shrink the factor, but a 35 percent clock gap cannot explain a factor of 30. With no shared prompt, the median TTFT differed by 8 percent, inside the seed spread, and the throughput was the same.

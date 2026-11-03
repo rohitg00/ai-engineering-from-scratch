@@ -1,0 +1,11 @@
+title: how the SGLang manual reads the two traffic shapes
+source: manuals/sglang-101/sections/5-3-reading-other-peoples-benchmarks.md
+lines: 270-274
+lang: text
+note: The last paragraph gives the mechanism.
+---
+**We measured** a different winner for each traffic shape. With fixed lengths, the two engines tied on throughput. They made the same trade as at a full pool. The vLLM server gave the first token sooner, 1,499 against 1,775 ms, outside the seed spread. SGLang kept the stream smooth, with a P99 ITL of 81 against 502 ms.
+
+With mixed lengths, vLLM led. At a ratio of 0.5 it gave 169.6 against 159.6 tok/s, 6 percent more and outside the seed spread. Its median time per token was 81.4 against 87.8 ms, and its P99 ITL was 191 against 363 ms. At 0.0 the throughput ranges overlapped, and vLLM still had the lower time per token and the lower P99 ITL. Every median clock was 1,410 MHz or higher.
+
+Our reading: when new prompts arrive one by one, each prefill shares a step with the running decodes. The vLLM server split that work so that the stream stalled less.

@@ -1,0 +1,14 @@
+title: the assembly facet of the same dossier
+source: manuals/reverse-engineering-101/capture/out/10-mcp-09-analyze-function-percent-change-O1.json
+lines: 1017-1024
+lang: json
+note: Six instructions. Count the ones that transfer control to another function.
+---
+          "assembly": [
+            "0x100000500: cbz w0, 0x100000514",
+            "0x100000504: sub w8, w1, w0",
+            "0x100000508: mov w9, #0x64",
+            "0x10000050c: mul w8, w8, w9",
+            "0x100000510: sdiv w0, w8, w0",
+            "0x100000514: ret"
+          ],

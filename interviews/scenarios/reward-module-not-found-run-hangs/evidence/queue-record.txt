@@ -1,0 +1,9 @@
+title: what the run queue recorded for this run
+source: manuals/miles-101/capture/gpu/out-gb10/custom-rm-noenv-hang.txt
+lines: 17-19
+lang: text
+note: RC is the exit code that the queue saw when its time limit came, and steps counts the finished steps.
+---
+queue log:
+2026-10-23T00:19:01Z LC684 RUN custom-rm-noenv
+2026-10-23T02:17:10Z LC684 RC 124 custom-rm-noenv steps=0

@@ -1,0 +1,9 @@
+title: the same benchmark against the kit's server
+source: manuals/sglang-101/capture/out/bench-random-c32.txt
+lines: 14-16
+lang: text
+note: Read the concurrency and the count of successful requests.
+---
+Max request concurrency:                 32        
+Successful requests:                     128       
+Benchmark duration (s):                  64.83     

@@ -1,0 +1,9 @@
+title: completed requests per second as the offered rate rose past the peak
+source: manuals/sglang-101/sections/5-1-sglang-benchmark-serving.md
+lines: 325-327
+lang: text
+note: Read the completed rate at 4, 8 and 16 offered, then the clock and the thermal share.
+---
+**We measured** a different shape on the smaller card. Both servers met the target for every request up to 1 per second. BF16 held 0.88 within the target at 2 offered and none from 4. FP8 held 3.18 within the target at 4 offered, three times the best BF16 point. The FP8 server also had a pool of 142,369 tokens against 24,094 for BF16. From 4 offered, the BF16 pool was the limit.
+
+Past its peak, BF16 completed fewer requests as we offered more: 2.01 per second at 4 offered, 1.91 at 8, and 1.62 at 16. The telemetry shows why. The median SM clock fell from 1,320 MHz at 4 offered to 465 MHz at 16. At 16, 70 percent of the samples showed thermal slowdown. On our passively cooled L4, overload cost throughput as well as latency.

@@ -1,0 +1,10 @@
+title: four decode lines of the two ranks under a load of 64 requests
+source: manuals/sglang-101/capture/gpu/out-l4/server-dp2.log
+lines: 7-10
+lang: text
+note: Compare running requests, token usage, generation throughput and the queue of each rank.
+---
+[2026-10-17 07:26:50 DP1] Decode batch, #running-req: 4, #token: 2385, token usage: 0.82, cuda graph: True, gen throughput (token/s): 25.48, #queue-req: 59
+[2026-10-17 07:26:53 DP0] Decode batch, #running-req: 1, #token: 590, token usage: 0.02, cuda graph: True, gen throughput (token/s): 9.67, #queue-req: 0
+[2026-10-17 07:26:56 DP1] Decode batch, #running-req: 4, #token: 2545, token usage: 0.87, cuda graph: True, gen throughput (token/s): 25.79, #queue-req: 59
+[2026-10-17 07:26:59 DP0] Decode batch, #running-req: 3, #token: 1665, token usage: 0.07, cuda graph: True, gen throughput (token/s): 9.49, #queue-req: 0

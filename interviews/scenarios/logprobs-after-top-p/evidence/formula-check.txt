@@ -1,0 +1,9 @@
+title: what the shifted value is
+source: manuals/miles-101/capture/gpu/out-l4/logprobs-top-p.txt
+lines: 14-16
+lang: text
+note: The residual against the formula is near zero, so the shift is the renormalization.
+---
+vLLM processed_logprobs minus (reference - log of the top-p kept mass): median residual 8e-9.
+So processed_logprobs is the logprob after the nucleus is renormalized, and raw_logprobs is the full-vocabulary logprob.
+SGLang returns the logprob from before top-p. At temperature 1, SGLANG_RETURN_ORIGINAL_LOGPROB set to 0 or 1 gives the same value.

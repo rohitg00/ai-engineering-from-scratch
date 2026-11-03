@@ -1,0 +1,7 @@
+title: the row of the incident index for this line
+source: manuals/sglang-101/sections/r-3-incident-index.md
+lines: 15-15
+lang: text
+note: Symptom, cause, status and section, in that order.
+---
+| Driver `NV_ERR_NO_MEMORY` on a GB10 ([record](manuals/sglang-101/capture/gpu/incidents/gb10-driver-no-memory.txt)) | Bursts of driver out-of-memory lines in the kernel log | The bursts fall on 2026-10-16, the day of our first starts. We did not keep the server logs of that day, so we cannot match each burst to one start | Every server in our later captures became healthy. Alert on health, not on this line | [3.2](#s-mem-fraction-static-and-startup-sizing) |

@@ -1,0 +1,20 @@
+title: what the manual says about the driver line and what it could not match
+source: manuals/sglang-101/sections/3-2-mem-fraction-static-and-startup-sizing.md
+lines: 125-138
+lang: text
+note: Read the paragraph after the listing, then the position at the end.
+---
+The NVIDIA driver also reports memory errors at startup. The kernel log of the GB10 holds bursts of this line:
+
+```listing
+title: the driver line at server startup
+source: capture/gpu/incidents/gb10-driver-no-memory.txt
+lang: text
+note: The last line of the file. The lines above it count the bursts per minute.
+---
+NVRM: nvCheckOkFailedNoLog: Check failed: Out of memory [NV_ERR_NO_MEMORY] (0x00000051) returned from _memdescAllocInternal(pMemDesc) @ mem_desc.c:1359
+```
+
+The bursts are dated 2026-10-16, the day of our first test and sweep starts on the GB10. We did not keep the server logs of that day, so we cannot match each burst to one start. Every server in our later captures became healthy and finished its benchmarks.
+
+**Our position:** on unified memory, the KV pool is memory that the whole machine gives up. Pass `--mem-fraction-static` on purpose, and tell the other users of the machine before you start. Do not alert on the driver line alone. Alert when a server does not become healthy.

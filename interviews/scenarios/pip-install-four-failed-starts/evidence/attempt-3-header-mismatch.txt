@@ -1,0 +1,11 @@
+title: the third start: the compiler and the headers do not match
+source: manuals/sglang-101/capture/gpu/incidents/l4-toolchain-failures.txt
+lines: 9-13
+lang: text
+note: The Ninja build of the FlashInfer kernels stops on one preprocessor check in a bundled header.
+---
+=== attempt: out-l4-jitmismatch/server-default.log
+[2026-10-16 14:23:40] RuntimeError: Ninja build failed. Ninja output:
+<site-packages>/flashinfer/data/cccl/libcudacxx/include/cuda/std/__cccl/cuda_toolkit.h:41:8: error: #error "CUDA compiler and CUDA toolkit headers are incompatible, please check your include paths"
+   41 | #      error "CUDA compiler and CUDA toolkit headers are incompatible, please check your include paths"
+<site-packages>/flashinfer/data/cccl/libcudacxx/include/cuda/std/__cccl/cuda_toolkit.h:41:8: error: #error "CUDA compiler and CUDA toolkit headers are incompatible, please check your include paths"

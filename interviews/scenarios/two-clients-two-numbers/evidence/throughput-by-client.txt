@@ -1,0 +1,13 @@
+title: output tokens per second from three clients
+source: manuals/vllm-101/capture/gpu/out-l4/bench-client-bias.txt
+lines: 18-24
+lang: text
+note: Compare the columns at 16 and 64 users, then look at the first SGLang round at one user.
+---
+Output throughput in tok/s, two rounds per cell:
+
+users   temperature   SGLang client    vllm bench       vllm bench, Rust
+1       0             39.9, 31.0       32.0, 31.9       32.2, 31.8
+16      0             218, 216         222, 222         223, 223
+64      0             359, 348         379, 377         371, 365
+64      0.7           331, 343         360, 363         356, 353

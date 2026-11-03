@@ -1,0 +1,11 @@
+title: the forced exit, the variable name trap and the grace period rule
+source: manuals/sglang-101/sections/7-1-operating-sglang.md
+lines: 157-161
+lang: text
+note: Read which variable name the watchdog reads at 0.5.22, then the rule for the grace period.
+---
+The code has two exits that skip the drain. If the server is already `UnHealthy`, the watchdog exits at once. It also exits at once if the environment variable `SGL_FORCE_SHUTDOWN` is true. At v0.5.22 the watchdog reads that old name directly {{code}}.
+
+The environment module declares the new name `SGLANG_FORCE_SHUTDOWN`. Its compatibility code copies `SGL_` variables to `SGLANG_` names, never the other way. **The code shows** that setting only `SGLANG_FORCE_SHUTDOWN` does not reach the watchdog. We read this in the code and did not run it, so we call it a likely bug. If you need a forced stop, set `SGL_FORCE_SHUTDOWN=1`.
+
+**Our position:** set the termination grace period longer than your longest request at your output cap. A 32K-token answer at 30 tokens per second needs more than 18 minutes. Cap `max_tokens` before you set the grace period, or a drain can never finish in time.
