@@ -1,0 +1,12 @@
+title: EAGLE3 with its own draft on a mixture-of-experts model on the GB10
+source: manuals/sglang-101/sections/4-4-speculative-decoding.md
+lines: 112-117
+lang: text
+note: Divide the baseline time per token by the EAGLE-3 time per token on each row.
+---
+| Concurrency | Baseline median TPOT | EAGLE-3 median TPOT | Baseline output tok/s | EAGLE-3 output tok/s |
+|---|---|---|---|---|
+| 1 | 32.52 ms | 20.30 ms | 29.14 | 40.93 |
+| 8 | 102.21 ms | 59.44 ms | 74.11 | 97.06 |
+| 32 | 201.91 ms | 106.97 ms | 150.66 | 228.78 |
+| 64 | 254.06 ms | 138.41 ms | 235.38 | 276.32 |

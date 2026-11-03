@@ -1,0 +1,14 @@
+title: the acceptance length on answers of about 2,000 tokens, both engines
+source: manuals/vllm-101/capture/gpu/out-l4/eagle3-long-outputs.txt
+lines: 8-15
+lang: text
+note: Read the acceptance per draft position, then the comparison with short answers under the table.
+---
+engine          dataset    mean acceptance length   accepted per draft position 1 / 2 / 3
+SGLang EAGLE3   GSM8K      2.68
+SGLang EAGLE3   ShareGPT   2.32
+vLLM EAGLE3     GSM8K      2.69                     0.77 / 0.54 / 0.38
+vLLM EAGLE3     ShareGPT   2.35                     0.67 / 0.42 / 0.26
+
+Short outputs (128 tokens) in the same session on SGLang: GSM8K 2.69 to 2.78, ShareGPT 2.33 to 2.43.
+Acceptance did not fall from 128 tokens to about 2,000 tokens on these datasets.

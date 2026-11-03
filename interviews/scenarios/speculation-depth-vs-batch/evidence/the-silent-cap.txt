@@ -1,0 +1,7 @@
+title: the one warning that sets the request limit
+source: manuals/sglang-101/capture/gpu/out-gb10/server-eagle3.log
+lines: 4-4
+lang: text
+note: This line prints once at startup and scrolls away before the first request.
+---
+[2026-10-17 15:14:58] Max running requests is reset to 48 for speculative decoding. You can override this by explicitly setting --max-running-requests.

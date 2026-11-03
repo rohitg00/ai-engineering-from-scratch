@@ -1,0 +1,12 @@
+title: the same draft on the other engine, time per token against output on the L4
+source: manuals/sglang-101/sections/4-4-speculative-decoding.md
+lines: 149-154
+lang: text
+note: Compare the two time per token columns with the two output columns at 32 and 64.
+---
+| Concurrency | Default median TPOT | EAGLE-3 median TPOT | Default output tok/s | EAGLE-3 output tok/s |
+|---|---|---|---|---|
+| 1 | 60.16 ms | 25.61 ms | 13.42 | 31.81 |
+| 8 | 66.01 ms | 35.58 ms | 112.62 | 181.55 |
+| 32 | 96.18 ms | 43.82 ms | 270.11 | 269.42 |
+| 64 | 107.42 ms | 51.50 ms | 250.85 | 245.34 |

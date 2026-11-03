@@ -1,0 +1,10 @@
+title: a cap of 16 sequences against the default at 32 users
+source: manuals/vllm-101/sections/3-1-tune-chat-for-many-users.md
+lines: 63-66
+lang: text
+note: Compare the median TTFT, the P99 ITL and the output of the two rows.
+---
+| Users, L4 full-clock session | Config | Output tok/s | Median TTFT | Median ITL | P99 ITL | Median SM clock |
+|---|---|---|---|---|---|---|
+| 32 | default | 275.1 | 1.8 s | 80.5 ms | 613 ms | 1,275 MHz |
+| 32 | `--max-num-seqs 16` | 171.8 | 12.3 s | 69.8 ms | 595 ms | 1,365 MHz |
