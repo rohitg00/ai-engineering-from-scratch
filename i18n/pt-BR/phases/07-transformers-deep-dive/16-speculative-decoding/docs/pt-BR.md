@@ -70,7 +70,7 @@ Pros: nenhum segundo modelo. Cons: adiciona parâmetros treinables; precisa de u
 
 ### A ÁGuila  melhor desenho reutilizando estados ocultos
 
-EAGLE-1/2/3 (Li et al., 20242025) faz do modelo de projeto um pequeno transformador (tipicamente 1 camada) que ingere os estados ocultos da última camada do verificador. Como o projeto vê a representação de características do verificador, suas previsões se correlacionam fortemente com a distribuição de saída do verificador.
+A EAGLE-1/2/3 (Li et al., 20242025) torna o modelo de projeto um pequeno transformador (tipicamente de 1 camada) que ingere os estados ocultos da última camada do verificador. Como o rascunho vê a representação de características do verificador, suas previsões se correlacionam fortemente com a distribuição de saída do verificador. As taxas de aceitação subem de ~ 0,6 (vanilha) para 0,85+. Estas são taxas por token em benchmarks de chat, com um esboço treinado em dados de chat correspondentes. No que diz respeito ao tráfego de produção mista, a fase 17 · 05 prevê um tráfego de 0,6 a 0,8 para a EAGLE-3, e o tráfego de domínio pode ser menor.
 
 A EAGLE-3 (2025) adicionou a busca de árvores sobre as continuações candidatos.
 
