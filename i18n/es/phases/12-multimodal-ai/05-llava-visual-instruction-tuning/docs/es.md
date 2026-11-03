@@ -87,7 +87,7 @@ El artículo 1 del Reglamento (UE) n.o 1095/2013 se modifica en el anexo I del R
 - Una variante de HD que divide la rejilla en el periódico, que LLaVA-NeXT envió más tarde como AnyRes.
 
 El proyecto LLaVA-NeXT (enero 2024) añadió:
-- AnyRes: dividir imágenes de alta resolución en una cuadrícula de 2x2 o 1x3 de 336x336 cultivos, más una miniatura global de baja resolución. Cada cultivo se convierte en 576 tokens; un total de alrededor de 2880 tokens visuales por imagen.
+- AnyRes: dividir imágenes de alta resolución en una cuadrícula de 2x2 o 1x3 de 336x336 cultivos, más una miniatura global de baja resolución. Cada cultivo se convierte en 576 tokens. Una cuadrícula de 2x2 más la miniatura da aproximadamente 2880 tokens visuales por imagen. Una cuadrícula de 1x3 tiene menos cultivos, por lo que cuesta menos tokens.
 - Mejor mezcla de datos de instrucciones con ShareGPT4V (capciones GPT-4V de alta calidad).
 - Métodos de formación en base más sólida (Mistral-7B, Yi-34B).
 
@@ -99,7 +99,7 @@ Lección 12.08 cubre OneVision en profundidad. versión corta: el mismo proyecto
 
 | | Q-Former (BLIP-2) | MLP (LLaVA) |
 |---|---|---|
-| Visual tokens per image | 32 | 576 (base) or 2880 (AnyRes) |
+| Visual tokens per image | 32 | 576 (base) or about 2880 (AnyRes, 2x2 grid) |
 | Trainable params | 188M + LM | ~22M (7B) + LM |
 | Stage 1 loss | ITC+ITM+ITG | LM only |
 | LLM drop-in | Requires retrain | Swap with minimal retrain |
@@ -115,7 +115,7 @@ MLP gana en la simplicidad y la flexibilidad de tokens. Q-Former gana en el pres
 A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. USER: <image> Describe this image in detail. ASSISTANT: The image shows ...
 ```
 
-`<image>`El Tokenizer ve una secuencia ligeramente más larga de lo que se ha entrenado, pero el LLM maneja la entrada nueva porque la etapa 1 lo enseñó.
+`<image>`El Tokenizer ve una secuencia ligeramente más larga de la que se entrenó, pero el LLM maneja la entrada nueva porque la etapa 1 la enseñó a hacerlo.
 
 ### Economía de parámetros
 

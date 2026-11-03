@@ -3,7 +3,7 @@
   "phases/12-multimodal-ai/02-clip-contrastive-pretraining/docs/en.md": "26a13c6ef7e688f621db264252ed4b2f08b80508090b0e56edc74e6cadbde02e",
   "phases/12-multimodal-ai/03-blip2-qformer-bridge/docs/en.md": "7803d89e907ea35e2f8897ceef587941a44380eda955920dab1fcc50754c3928",
   "phases/12-multimodal-ai/04-flamingo-gated-cross-attention/docs/en.md": "2247d15a5a4d0bec8346e14321cf0157f617c089e259ef2dd744b6666eb32867",
-  "phases/12-multimodal-ai/05-llava-visual-instruction-tuning/docs/en.md": "b396054487d1ce686dfbf0bc9b74a29dd68643ab65a29a20416490e1e36de681",
+  "phases/12-multimodal-ai/05-llava-visual-instruction-tuning/docs/en.md": "df0a92928b2290c4989a5d84c4c76efee59c0a665e49d01e49e9564b29256765",
   "phases/12-multimodal-ai/06-any-resolution-patch-n-pack/docs/en.md": "182edb6d6c60231632c10476301bfd85a6da6c387cdb88698ff2cb6878eecd1c",
   "phases/12-multimodal-ai/07-open-weight-vlm-recipes/docs/en.md": "a4fd19938cd04d5e5b3bf9edb2284d4ce7cbf3efb499f58f72e20d7f25442d48",
   "phases/12-multimodal-ai/08-llava-onevision-single-multi-video/docs/en.md": "928dd62c9da89331f8f2f72acbe90ac713967ff51c03782bffd0e5f63169e096",
