@@ -11,7 +11,7 @@ minutes: 20
 lessons: []
 manuals: [vllm-101#s-fit-more-users-with-an-fp8-kv-cache, vllm-101#s-change-the-attention-backend-only-for-a-reason, vllm-101#s-ref-incident-index, sglang-101#s-quantization]
 practice: []
-cheatsheet: []
+cheatsheet: [quantization]
 related: []
 updated: 2026-11-03
 system:

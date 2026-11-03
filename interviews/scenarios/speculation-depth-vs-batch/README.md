@@ -11,7 +11,7 @@ minutes: 25
 lessons: []
 manuals: [vllm-101#s-speed-up-decode-with-eagle3, vllm-101#s-how-speculative-decoding-checks-drafts, sglang-101#s-speculative-decoding]
 practice: []
-cheatsheet: []
+cheatsheet: [speculative-decoding]
 related: [scenarios/thermal-throttle-voided-ab-test]
 updated: 2026-11-03
 system:

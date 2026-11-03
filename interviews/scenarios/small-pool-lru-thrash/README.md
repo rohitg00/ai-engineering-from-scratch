@@ -59,7 +59,7 @@ The fourth listing is the failure tally. With the defaults, CUDA graphs and the 
 
 ## Resolution
 
-Two problems sat on top of each other. The pool was smaller than the working set of the sessions that return, so `lru` thrashed from turn 4 on. Under that heavy eviction, the default path with CUDA graphs and the overlap scheduler hit an illegal memory access or hung in 4 of 6 runs.
+Two problems sat on top of each other. The pool was smaller than the working set of the sessions that return, so `lru` thrashed from turn 4 on. Under that heavy eviction, the default path with CUDA graphs and the overlap scheduler hit the memory fault or hung in 4 of 6 runs.
 
 Grow the pool first. At 16,384 tokens the same trace reached a hit rate of 0.685 with the default policy, and the late turns kept 56 to 160 ms to the first token. On a shared card that means a larger `--mem-fraction-static` or an FP8 KV cache, not a new policy. Then measure the policy again. On this trace a different policy paid only at the pool size that was too small.
 

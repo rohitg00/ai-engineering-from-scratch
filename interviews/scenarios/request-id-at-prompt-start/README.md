@@ -11,8 +11,8 @@ minutes: 15
 lessons: [phases/17-infrastructure-and-production/06-sglang-radixattention]
 manuals: [sglang-101#s-prefix-friendly-prompts, sglang-101#s-radixcache, vllm-101#s-make-repeated-prompts-hit-the-prefix-cache]
 practice: []
-cheatsheet: []
-related: [scenarios/prefix-cache-inflated-benchmark]
+cheatsheet: [sglang-serving]
+related: [scenarios/prefix-cache-inflated-benchmark, inference-serving/prefix-cache-order]
 updated: 2026-11-03
 system:
   version: SGLang 0.5.22

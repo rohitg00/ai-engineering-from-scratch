@@ -76,4 +76,4 @@ When a start is slow, read the phase timings before you change anything, because
 
 ## Taught in
 
-The vLLM manual reads this startup log in [the DGX Spark page](../../../manuals/vllm-101/sections/2-3-size-memory-on-a-dgx-spark.md), weighs the compile and the graphs in [the compile page](../../../manuals/vllm-101/sections/4-3-keep-cuda-graphs-and-compile-on.md) and names the image and the driver in [the version pins](../../../manuals/vllm-101/sections/r-4-version-pins.md), and the SGLang manual gives the cache directories and the field report in [its operating page](../../../manuals/sglang-101/sections/7-1-operating-sglang.md).
+The vLLM manual reads this startup log in [the DGX Spark page](../../../manuals/vllm-101/sections/2-3-size-memory-on-a-dgx-spark.md), weighs compile and graph capture in [the compile page](../../../manuals/vllm-101/sections/4-3-keep-cuda-graphs-and-compile-on.md) and names the image and the driver in [the version pins](../../../manuals/vllm-101/sections/r-4-version-pins.md), and the SGLang manual gives the cache directories and the field report in [its operating page](../../../manuals/sglang-101/sections/7-1-operating-sglang.md).

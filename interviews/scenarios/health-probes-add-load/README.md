@@ -11,7 +11,7 @@ minutes: 15
 lessons: [phases/17-infrastructure-and-production/23-sre-for-ai]
 manuals: [sglang-101#s-check-that-the-server-is-healthy, sglang-101#s-operating-sglang, vllm-101#s-check-that-the-server-is-healthy, vllm-101#s-run-vllm-in-production]
 practice: []
-cheatsheet: []
+cheatsheet: [sre-for-ai]
 related: [scenarios/load-knee-and-admission-cap]
 updated: 2026-11-03
 system:

@@ -11,7 +11,7 @@ minutes: 20
 lessons: [phases/17-infrastructure-and-production/22-load-testing-llm-apis]
 manuals: [sglang-101#s-forwardmode-and-cuda-graphs, sglang-101#s-sglang-benchmark-serving, vllm-101#s-speed-up-decode-with-eagle3, vllm-101#s-ref-lab-notes]
 practice: []
-cheatsheet: []
+cheatsheet: [inference-load-testing]
 related: [scenarios/prefix-cache-inflated-benchmark]
 updated: 2026-11-03
 system:

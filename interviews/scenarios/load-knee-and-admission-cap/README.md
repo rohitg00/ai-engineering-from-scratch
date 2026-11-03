@@ -11,8 +11,8 @@ minutes: 25
 lessons: [phases/17-infrastructure-and-production/08-inference-metrics-goodput]
 manuals: [vllm-101#s-tune-chat-for-many-users, vllm-101#s-why-one-token-budget-replaces-a-prefill-phase, sglang-101#s-admission-and-retraction, sglang-101#s-reading-other-peoples-benchmarks]
 practice: []
-cheatsheet: []
-related: [scenarios/prefix-cache-inflated-benchmark]
+cheatsheet: [inference-load-testing, serving-engines-compared]
+related: [scenarios/prefix-cache-inflated-benchmark, inference-serving/goodput-sets-the-cap]
 updated: 2026-11-03
 system:
   version: vLLM 0.31.0 against SGLang 0.5.22
@@ -36,6 +36,7 @@ An engineer reads that `--max-num-seqs` limits the requests that run at once, an
 ## Evidence
 
 - [the chat sweep with the share of requests that met the target](evidence/chat-target-by-users.txt)
+- [the share that met the target and the P99 ITL, with and without a cache reset before each run](evidence/flushed-against-unflushed.txt)
 - [a cap of 16 sequences against the default at 32 users](evidence/cap-of-16-at-32-users.txt)
 - [two engines with the same pool, from 1 to 64 users](evidence/two-engines-at-a-full-pool.txt)
 - [the SGLang pool and one decode line at a cap of 64](evidence/sglang-stats-at-64.txt)
@@ -55,11 +56,11 @@ An engineer reads that `--max-num-seqs` limits the requests that run at once, an
 
 A chat user feels the time to the first token and the gap between tokens, the inter-token latency. Throughput is the bill, not the experience. One long pause in a stream feels worse than a slightly slower stream, so the number to watch is the P99 ITL, the worst gap in 100.
 
-The first listing is the sweep from the full-clock session. At 8 users, 75 percent of the requests met the target and the P99 ITL was 67 ms. At 16 users the share was 64 percent at 85 ms. At 32 users the output still rose to 275.1 tokens per second, but the P99 ITL grew to 613 ms and no request met the target. At 64 users the first token took 11.18 s and the P99 ITL was 1,233 ms. So the gaps break before the output stops growing. This sweep did not reset the prefix cache between user counts, so the low rows read the first token too fast. With a reset, the stream breaks between 8 and 16 users on this card: 50 percent met the target at 8 users and 25 percent at 16.
+The first listing is the sweep from the full-clock session. At 8 users, 75 percent of the requests met the target and the P99 ITL was 67 ms. At 16 users the share was 64 percent at 85 ms. At 32 users the output still rose to 275.1 tokens per second, but the P99 ITL grew to 613 ms and no request met the target. At 64 users the first token took 11.18 s and the P99 ITL was 1,233 ms. So the gaps break before the output stops growing. This sweep did not reset the prefix cache between user counts, so the low rows read the first token too fast. The second listing holds the rerun with a reset before each run and the clock locked at 900 MHz. At 8 users, 50 percent met the target against 75 to 81 percent without the reset. At 16 users it was 25 percent against 64 to 66 percent, and the P99 ITL was 522 to 523 ms with the reset against 82 to 84 ms without. So the stream breaks between 8 and 16 users on this card.
 
-The second listing shows what the cap did. With `--max-num-seqs 16` at 32 users, the median ITL fell from 80.5 to 69.8 ms and the P99 ITL from 613 to 595 ms. The first token moved from 1.8 s to 12.3 s, and output fell from 275.1 to 171.8 tokens per second, a loss of 38 percent. The cap run had the higher clock, so the clock does not explain the loss. A cap does not make room for more users. It only chooses who waits, and it moves the wait from the stream to the queue.
+The third listing shows what the cap did. With `--max-num-seqs 16` at 32 users, the median ITL fell from 80.5 to 69.8 ms and the P99 ITL from 613 to 595 ms. The first token moved from 1.8 s to 12.3 s, and output fell from 275.1 to 171.8 tokens per second, a loss of 38 percent. The cap run had the higher clock, so the clock does not explain the loss. A cap does not make room for more users. It only chooses who waits, and it moves the wait from the stream to the queue.
 
-The third listing compares two engines on the same pool of 24,096 tokens. Up to 32 users they tie on output. At 64 users SGLang gave 256.62 tokens per second and vLLM 241.39. The medians for the first token were 18,356 ms against 10,953 ms, and the P99 ITL was 114 ms against 1,363 ms. The two log lines say why. SGLang ran 37 requests and kept 27 in its queue with the pool 92 percent full. vLLM ran 40 requests and kept 11 waiting, filled 99.5 percent of its pool and prefilled new prompts at 460.3 tokens per second while the others decoded. Each new prefill shares the step with the running streams, so the streams stall. vLLM chose the first token, SGLang chose the stream.
+The fourth listing compares two engines on the same pool of 24,096 tokens. Up to 32 users they tie on output. At 64 users SGLang gave 256.62 tokens per second and vLLM 241.39. The medians for the first token were 18,356 ms against 10,953 ms, and the P99 ITL was 114 ms against 1,363 ms. The two log lines say why. SGLang ran 37 requests and kept 27 in its queue with the pool 92 percent full. vLLM ran 40 requests and kept 11 waiting, filled 99.5 percent of its pool and prefilled new prompts at 460.3 tokens per second while the others decoded. Each new prefill shares the step with the running streams, so the streams stall. vLLM chose the first token, SGLang chose the stream.
 
 The last listing tries to buy the smooth stream back with caps, with the clock locked and a cache reset before each run. Compare only rows at 900 MHz. The SGLang default gave a P99 ITL of 143 to 153 ms with a first token at 19.4 s. The vLLM default in the same session gave 1,359 ms at 11.8 s. `--max-num-active-seqs 48` gave 1,329 to 1,373 ms at 11.8 s. `--max-num-seqs 32` gave 1,163 to 1,399 ms and pushed the first token to 17.2 to 20.6 s. `--max-num-active-seqs 16` gave 1,133 to 1,139 ms and a first token at 44.8 to 48.8 s with the output down to 129 to 136. No cap brought the P99 ITL under 1.1 s, and every lower cap moved the wait to the first token.
 

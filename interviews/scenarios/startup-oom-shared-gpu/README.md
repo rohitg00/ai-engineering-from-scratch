@@ -11,8 +11,8 @@ minutes: 15
 lessons: []
 manuals: [vllm-101#s-fix-out-of-memory-at-startup, vllm-101#s-count-the-memory-before-you-pick-a-gpu, vllm-101#s-check-that-the-server-is-healthy, sglang-101#s-mem-fraction-static-and-startup-sizing]
 practice: []
-cheatsheet: []
-related: []
+cheatsheet: [serving-engines-compared]
+related: [inference-serving/kv-pool-users-fit]
 updated: 2026-11-03
 system:
   version: vLLM 0.31.0
@@ -72,4 +72,4 @@ A startup check that fails on a limit is a question about your traffic, not abou
 
 ## Taught in
 
-The vLLM manual matches the three errors to three flags in [the startup out of memory page](../../../manuals/vllm-101/sections/2-2-fix-out-of-memory-at-startup.md), counts the pool in [the memory page](../../../manuals/vllm-101/sections/2-1-count-the-memory-before-you-pick-a-gpu.md) and reads the startup lines in [the health page](../../../manuals/vllm-101/sections/1-2-check-that-the-server-is-healthy.md), and the SGLang manual shows the same startup sizing in [its memory fraction page](../../../manuals/sglang-101/sections/3-2-mem-fraction-static-and-startup-sizing.md).
+The vLLM manual matches each startup error to one flag in [the startup out of memory page](../../../manuals/vllm-101/sections/2-2-fix-out-of-memory-at-startup.md), counts the pool in [the memory page](../../../manuals/vllm-101/sections/2-1-count-the-memory-before-you-pick-a-gpu.md) and reads the startup lines in [the health page](../../../manuals/vllm-101/sections/1-2-check-that-the-server-is-healthy.md), and the SGLang manual shows the same startup sizing in [its memory fraction page](../../../manuals/sglang-101/sections/3-2-mem-fraction-static-and-startup-sizing.md).

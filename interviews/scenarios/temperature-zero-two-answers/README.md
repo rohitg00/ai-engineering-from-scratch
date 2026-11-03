@@ -84,4 +84,4 @@ Determinism is a property of the whole execution, not of the sampling rule. Any 
 
 ## Taught in
 
-The SGLang manual runs the probe and lists the switches in [the deterministic inference page](../../../manuals/sglang-101/sections/4-6-deterministic-inference-and-logprobs.md) and gives the flush route in [its benchmark page](../../../manuals/sglang-101/sections/5-1-sglang-benchmark-serving.md), and the vLLM manual counts the three causes and the cost of the batch-invariant mode in [the reproducibility page](../../../manuals/vllm-101/sections/3-8-get-reproducible-outputs.md).
+The SGLang manual runs the probe and lists the switches in [the deterministic inference page](../../../manuals/sglang-101/sections/4-6-deterministic-inference-and-logprobs.md) and gives the flush route in [its benchmark page](../../../manuals/sglang-101/sections/5-1-sglang-benchmark-serving.md), and the vLLM manual counts the three causes and prices its own fix in [the reproducibility page](../../../manuals/vllm-101/sections/3-8-get-reproducible-outputs.md).

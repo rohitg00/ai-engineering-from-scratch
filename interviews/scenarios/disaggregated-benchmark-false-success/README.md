@@ -11,7 +11,7 @@ minutes: 20
 lessons: [phases/17-infrastructure-and-production/22-load-testing-llm-apis]
 manuals: [sglang-101#s-prefill-decode-disaggregation, sglang-101#s-sglang-benchmark-serving, sglang-101#s-sgl-model-gateway, vllm-101#s-split-prefill-and-decode]
 practice: []
-cheatsheet: []
+cheatsheet: [async-disaggregated-inference, inference-load-testing]
 related: [scenarios/prefix-cache-inflated-benchmark]
 updated: 2026-11-03
 system:
