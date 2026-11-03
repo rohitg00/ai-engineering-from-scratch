@@ -1,6 +1,6 @@
 ---
 id: autoscale-on-the-right-signal
-title: Scale a model service on the engine's own signals
+title: Autoscale a model service on queue and cache signals
 card: cost-capacity
 kind: design
 level: 3

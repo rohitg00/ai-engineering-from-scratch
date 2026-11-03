@@ -36,7 +36,7 @@ A route sends a large share of traffic to a weaker model. Over months the task d
 
 Each cause has its own fix: retrain the classifier on recent labeled traffic, pin the model version and log the served model on every call, and refresh the hard set and the cutoff on a new eval.
 
-### The online quality gates
+### Gates on live traffic
 
 The lesson gates routes with live signals, not with the offline set:
 

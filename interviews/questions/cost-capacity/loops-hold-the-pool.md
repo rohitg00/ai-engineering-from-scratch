@@ -62,4 +62,4 @@ A graceful shutdown drains the running requests before it stops. The grace perio
 
 ## Taught in
 
-The [operating section of SGLang 101](../../../manuals/sglang-101/sections/7-1-operating-sglang.md) reports the output cap and the grace period arithmetic, and the [production watching section of vLLM 101](../../../manuals/vllm-101/sections/5-2-watch-vllm-in-production.md) reads preemptions with long answers.
+The [operating section of SGLang 101](../../../manuals/sglang-101/sections/7-1-operating-sglang.md) reports the output cap and the grace period arithmetic, and the [production watching section of vLLM 101](../../../manuals/vllm-101/sections/5-2-watch-vllm-in-production.md) pairs the preemption counter with the length of the answers.

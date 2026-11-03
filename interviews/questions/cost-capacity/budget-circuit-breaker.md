@@ -40,7 +40,7 @@ Each step buys time for the next. The alert gives people a chance to act, the th
 
 ### The per-tenant ladder
 
-The FinOps lesson adds three controls per tenant for a multi-tenant product:
+The FinOps lesson gives three controls per tenant for a multi-tenant product:
 
 1. A rate limit at 2 to 3 times the expected peak, with a rate-limit status and a retry header. The tenant feels friction and gets no surprise bill.
 2. A daily spend cap at 1.5 to 3 times the contracted ceiling. Crossing it tightens the rate limit and alerts customer success.

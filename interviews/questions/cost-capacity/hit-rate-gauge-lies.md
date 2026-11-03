@@ -45,7 +45,7 @@ One caveat from the code: the hit modes add raw hit counts, so after a retractio
 
 ### Why this is a cost question
 
-A hit rate decides whether you restructure prompts, add a cache-aware router or buy memory. A gauge from the last benchmark says the prompts are fine. The counters say that more than a third of the prompt tokens over the run were computed. The caching economics lesson says the same for provider caches: measure your own hit rate from the usage fields on every response, and do not take a published figure as yours.
+A hit rate decides whether you restructure prompts, add a cache-aware router or buy memory. A gauge from the last benchmark says the prompts are fine. The counters say that more than a third of the prompt tokens over the run were computed. The lesson on caching economics says the same for provider caches: measure your own hit rate from the usage fields on every response, and do not take a published figure as yours.
 
 ### What to alert on
 
@@ -66,4 +66,4 @@ Alert on counters and histograms over a window. Alert on a gauge only when the c
 
 ## Taught in
 
-The [metrics endpoint section of SGLang 101](../../../manuals/sglang-101/sections/5-2-the-metrics-endpoint.md) measures the two hit rates on one server, and the [caching economics lesson](../../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) tells you to measure your own hit rate.
+The [metrics endpoint section of SGLang 101](../../../manuals/sglang-101/sections/5-2-the-metrics-endpoint.md) measures the two hit rates on one server, and the [caching economics lesson](../../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) tells you to compute the rate from your own usage fields.

@@ -31,7 +31,7 @@ The gateway retried every rate-limited call, and each waiting retry kept its con
 3. In-flight requests become the traffic multiplied by the attempts. The chaos lesson names this retry-amplified concurrency.
 4. Memory follows the in-flight count, and the service that was healthy a minute ago runs out.
 
-### The policy from the production app lesson
+### The retry policy in the production application capstone
 
 Exponential backoff with jitter: wait about 1 second, then 2, then 4, with a random spread added to each wait, and give up after 3 retries with a fallback response. The lesson's table separates the cases:
 
@@ -69,4 +69,4 @@ The chaos lesson's first model-specific experiment injects a provider rate-limit
 
 ## Taught in
 
-The [production app lesson](../../../phases/11-llm-engineering/13-production-app/) gives the backoff, the retry limits and the fallback chain, and the [chaos engineering lesson](../../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) names retry-amplified concurrency as the failure to test.
+The [production app lesson](../../../phases/11-llm-engineering/13-production-app/) gives the backoff, the retry limits and the fallback chain, and the [chaos engineering lesson](../../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) names the retry storm as the failure to test.

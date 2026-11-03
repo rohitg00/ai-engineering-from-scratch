@@ -34,7 +34,7 @@ Whatever lost users from one arm can be correlated with the outcome. If slow cli
 
 ### Where to look
 
-1. **The assignment function.** The production app lesson assigns with a deterministic hash of the user id, so that one user stays in one arm. A random draw per request, or a hash on a field that changes, breaks the split.
+1. **The assignment function.** The production application capstone assigns with a deterministic hash of the user id, so that one user stays in one arm. A random draw per request, or a hash on a field that changes, breaks the split.
 2. **Exposure logging.** One arm may drop events, for example when the variant path logs after a call that can fail.
 3. **Client errors.** A variant that crashes before it logs removes its users from the count.
 4. **Bots and retries.** A bot or a retry loop that lands in one arm inflates it.
@@ -58,4 +58,4 @@ Fix the cause, discard the data, and restart. Pre-register the mismatch check so
 
 ## Taught in
 
-The [A/B testing lesson](../../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) defines the sample ratio mismatch check, and the [production app lesson](../../../phases/11-llm-engineering/13-production-app/) assigns users with a deterministic hash.
+The [A/B testing lesson](../../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) defines the sample ratio mismatch check, and the [production app lesson](../../../phases/11-llm-engineering/13-production-app/) hashes the user id to pick an arm.

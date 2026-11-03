@@ -34,7 +34,7 @@ Prompts carry personal data, secrets and customer documents. Operators read trac
 
 ### The pattern that works
 
-Store the content outside the trace: in your log store or object store, under your own access control, audit log and retention. Put a reference id on the span. The lesson calls this the external-reference pattern, and it is also the defense against content poisoning, because the poisoned text never enters the observability pipeline.
+Store the content outside the trace: in your log store or object store, under your own access control, audit log and retention. Put a reference id on the span. The lesson calls this the external-reference pattern, and it is also the defense against content poisoning, because the poisoned text never enters the telemetry store.
 
 ### What support gets
 
@@ -58,4 +58,4 @@ A one-click view of the prompt inside the trace UI. That is the price, and it is
 
 ## Taught in
 
-The [conventions lesson](../../../phases/14-agent-engineering/23-otel-genai-conventions/) sets the opt-in rule and the external-reference pattern, and the [OpenTelemetry GenAI lesson](../../../phases/13-tools-and-protocols/20-opentelemetry-genai/) names the content events.
+The [conventions lesson](../../../phases/14-agent-engineering/23-otel-genai-conventions/) sets the opt-in rule and the pattern of storing content outside the span, and the [OpenTelemetry GenAI lesson](../../../phases/13-tools-and-protocols/20-opentelemetry-genai/) names the content events.

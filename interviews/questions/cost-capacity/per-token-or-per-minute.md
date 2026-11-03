@@ -30,7 +30,7 @@ Per-token pricing reflects the platform's own utilization curve across all of it
 
 ### The crossover
 
-The economics lesson gives the rule: above about 30 percent sustained utilization of a dedicated GPU, per-minute starts to beat per-token. Below it, per-token wins because you are not paying for idle. The managed platforms lesson shows the same shape for reserved capacity on a hyperscaler: the break-even sits around 40 to 60 percent sustained utilization, savings reach up to 70 percent at high utilization, and the reservation is billed when idle.
+The economics lesson states the rule: above about 30 percent sustained utilization of a dedicated GPU, per-minute starts to beat per-token. Below it, per-token wins because you are not paying for idle. The lesson on managed platforms shows the same shape for reserved capacity on a hyperscaler: the break-even sits around 40 to 60 percent sustained utilization, savings reach up to 70 percent at high utilization, and the reservation is billed when idle.
 
 ### Compute it for your own traffic
 
@@ -41,7 +41,7 @@ The economics lesson gives the rule: above about 30 percent sustained utilizatio
 
 ### What the price does not show
 
-- Dedicated capacity avoids queueing behind other tenants. The managed platforms lesson measures a lower first-token median on reserved capacity than on shared on-demand for the same model class.
+- Dedicated capacity avoids queueing behind other tenants. The lesson on managed platforms measures a lower first-token median on reserved capacity than on shared on-demand for the same model class.
 - A fine-tuned model can change the per-token price. One platform in the lesson serves a fine-tune at the base model's rate, which is a differentiator. A dedicated GPU serves it at the same hourly price either way.
 - Non-interactive work has a third option: a batch tier at about half the serverless rate.
 
@@ -53,7 +53,7 @@ Rent dedicated capacity for the daytime floor, and send the overflow and the ove
 
 - **Level 2:** Why does per-token pricing cost more per token than your own GPU time at high utilization? Expected: the platform's margin and its idle time are built into the per-token rate. At high utilization you pay for idle that you do not have.
 - **Level 2:** What changes when you scale the dedicated GPU to zero at night? Expected: you stop paying for the night and buy a cold start every morning, so the first requests of the day pay in latency.
-- **Level 3:** Why is the dedicated option faster at the tail? Expected: shared on-demand capacity competes with every other customer's traffic, and dedicated capacity does not. That is the gap the managed platforms lesson measures between reserved and on-demand first-token latency.
+- **Level 3:** Why is the dedicated option faster at the tail? Expected: shared on-demand capacity competes with every other customer's traffic, and dedicated capacity does not. That is the gap the lesson on managed platforms measures between reserved and on-demand first-token latency.
 - **Level 3:** How does a fine-tuned model change the comparison? Expected: a per-token platform may serve the fine-tune at the base rate or charge a premium for it. A dedicated GPU serves it at the same hourly price either way.
 
 ## Wrong answers

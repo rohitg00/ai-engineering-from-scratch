@@ -59,4 +59,4 @@ Read the token usage in the decode lines at peak load, the queue length, and the
 
 ## Taught in
 
-The [memory fraction section of SGLang 101](../../../manuals/sglang-101/sections/3-2-mem-fraction-static-and-startup-sizing.md) measures the same pool under a closed loop and under an open-loop overload.
+The [memory fraction section of SGLang 101](../../../manuals/sglang-101/sections/3-2-mem-fraction-static-and-startup-sizing.md) measures the same pool in a closed-loop sweep and in an overload that arrives faster than the server serves.

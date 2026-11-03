@@ -38,7 +38,7 @@ The prefix cache discounts input tokens on a repeated prefix. If the prefix is s
 
 ### Stack them
 
-Provider caching handles token-identical reuse. Semantic caching handles meaning-identical reuse. The caching and cost lesson combines both, and puts the combined reduction at 50 to 95 percent on a typical application.
+Provider caching handles token-identical reuse. Semantic caching handles meaning-identical reuse. The earlier caching lesson combines both, and puts the combined reduction at 50 to 95 percent on a typical application.
 
 ## Follow-ups
 

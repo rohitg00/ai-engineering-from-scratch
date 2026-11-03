@@ -54,7 +54,7 @@ Every tool that reads the conventions can read the same spans, so the stack is a
 
 - Prompt versions tied to traces. When production regresses, you must be able to bisect to the prompt change that caused it.
 - An eval strategy. Tracing without evaluation is expensive logging.
-- A sampling policy at scale, because full retention costs more than the model calls.
+- A sampling policy at scale, because full retention at volume is more expensive than the calls it records.
 
 ## Follow-ups
 

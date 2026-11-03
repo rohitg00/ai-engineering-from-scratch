@@ -97,4 +97,4 @@ The cache counts hits and misses. The lesson's cost tracker logs a cache status 
 
 ## Taught in
 
-The [caching and cost lesson](../../../phases/11-llm-engineering/11-caching-cost/) builds the exact cache and asks for least-recently-used eviction in its exercises.
+The [caching and cost lesson](../../../phases/11-llm-engineering/11-caching-cost/) builds the exact cache, and its first exercise replaces the eviction policy.

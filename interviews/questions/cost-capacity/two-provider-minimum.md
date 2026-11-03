@@ -26,15 +26,15 @@ Put a gateway in front of the application with one model alias per use case, a p
 
 ### Why two
 
-The managed platforms lesson argues that locking into one platform locks you out of most of the frontier, because the strongest model moves between vendors every few months, and that a single platform's regional outage is a product outage. Its policy is a two-provider minimum for any product-critical call. The cost uplift is negligible because the gateway routes to the better option in normal operation, and the availability gain during an outage is decisive.
+The lesson on managed platforms argues that locking into one platform locks you out of most of the frontier, because the strongest model moves between vendors every few months, and that a single platform's regional outage is a product outage. Its policy is a two-provider minimum for any product-critical call. The cost uplift is negligible because the gateway routes to the better option in normal operation, and the availability gain during an outage is decisive.
 
 ### The gateway in front
 
-The routing layer lesson gives the shape. Everyone speaks one API schema, so the gateway exposes one endpoint and translates behind it. Your code names an alias such as `our_smart_model`, and the gateway maps the alias to a concrete model on a concrete provider. Behind each alias sits a priority list: the primary, then the second provider on a server error or a rate limit, then refuse. Retries count against a budget, so that a failing primary cannot multiply the cost. The gateways lesson lists the rest of what the layer owns: rate limits per tenant, credentials pulled from a vault at runtime, observability and guardrails.
+The lesson on the routing layer gives the shape. Everyone speaks one API schema, so the gateway exposes one endpoint and translates behind it. Your code names an alias such as `our_smart_model`, and the gateway maps the alias to a concrete model on a concrete provider. Behind each alias sits a priority list: the primary, then the second provider on a server error or a rate limit, then refuse. Retries count against a budget, so that a failing primary cannot multiply the cost. The gateways lesson adds the rest of what the layer owns: rate limits per tenant, credentials pulled from a vault at runtime, observability and guardrails.
 
 ### What the two sides share
 
-1. **The cacheable prefix layout.** The prompt caching lesson's rule for cross-provider fallback is to keep the layout identical, so that any hit works on either side. Stable parts first, the user message last.
+1. **The cacheable prefix layout.** The rule for cross-provider fallback in the lesson on prompt caching is to keep the layout identical, so that any hit works on either side. Stable parts first, the user message last.
 2. **The tool serialization order.** A reshuffled tool list breaks the cache on every request.
 3. **The output schema and the parser.** A failover that returns a shape the application cannot parse is still an outage.
 4. **The eval set.** Both providers run the same regression suite on every prompt change, or the fallback path drifts without anyone noticing.

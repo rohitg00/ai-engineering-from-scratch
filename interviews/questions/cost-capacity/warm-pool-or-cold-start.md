@@ -59,4 +59,4 @@ Five layers, each removing a phase: a pre-seeded node image removes the image pu
 
 ## Taught in
 
-The [cold start lesson](../../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) gives the warm-pool arithmetic and the five mitigation layers, and the [production section of vLLM 101](../../../manuals/vllm-101/sections/7-2-run-vllm-in-production.md) measures the weight load and keeps the compile cache.
+The [cold start lesson](../../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) gives the cost of a warm replica and the five mitigation layers, and the [production section of vLLM 101](../../../manuals/vllm-101/sections/7-2-run-vllm-in-production.md) measures the weight load and keeps the compile cache.

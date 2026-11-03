@@ -45,7 +45,7 @@ The compile cache lives under the engine's cache directory. Keep it on a persist
 
 ### Getting under a minute
 
-The cold start lesson maps each phase to a layer: a pre-seeded image removes the image pull, model streaming roughly halves the weight load, and a GPU memory snapshot restores the loaded state about ten times faster than a reload. The SGLang manual quotes a field report with the same shape on a different engine and eight GPUs: a cold start of 695 seconds with 531 of them in weight loading, 88 seconds with kernel caches kept, and 9.6 seconds with a process checkpoint and the weights staged in host memory. Below a minute means a snapshot or staged weights, not a faster disk.
+The lesson on cold starts maps each phase to a layer: a pre-seeded image removes the image pull, model streaming roughly halves the weight load, and a GPU memory snapshot restores the loaded state about ten times faster than a reload. The SGLang manual quotes a field report with the same shape on a different engine and eight GPUs: a cold start of 695 seconds with 531 of them in weight loading, 88 seconds with kernel caches kept, and 9.6 seconds with a process checkpoint and the weights staged in host memory. Below a minute means a snapshot or staged weights, not a faster disk.
 
 ### What the number sets
 

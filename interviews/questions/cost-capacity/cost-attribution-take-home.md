@@ -26,7 +26,7 @@ Price every call from a pricing table, roll the cost up by tenant, by task with 
 
 ### What a complete submission contains
 
-1. **A cost on every call.** A pricing table with the cached input price, as the caching and cost lesson builds it, and a function that turns tokens into dollars per call.
+1. **A cost on every call.** A pricing table with the cached input price, as the earlier caching lesson builds it, and a function that turns tokens into dollars per call.
 2. **Attribution in three dimensions.** Spend by tenant, by task and route, and by user, joined by the trace id as the telemetry joiner pattern does. Nothing is inferred after the fact.
 3. **Four token layers.** Prompt, tool, memory and response per task, as shares. The lesson's typical bands are the sanity check: prompt 40 to 60 percent, tool 20 to 40 percent on agent work, memory and response 10 to 30 percent each.
 4. **The unit metric.** For every tenant and every feature, the spend divided by the resolved tasks, from the resolution field. A task that was not resolved still cost money, and that is the point of the metric.

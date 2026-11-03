@@ -51,7 +51,7 @@ One bucket hides which layer drives the spend, so you cannot pick the lever.
 
 ### The record on every call
 
-The trace carries the trace id, the three dimension keys, the four layer counts, the cost, and two flags: whether the input was cached and whether the call ran on batch. The most accurate attribution pattern joins these traces to the billing export by trace id, which the lesson calls the telemetry joiner.
+The trace carries the trace id, the three dimension keys, the four layer counts, the cost, and two flags, one for a cached input and one for a batch call. The most accurate attribution pattern joins these traces to the billing export by trace id, which the lesson calls the telemetry joiner.
 
 ## Follow-ups
 

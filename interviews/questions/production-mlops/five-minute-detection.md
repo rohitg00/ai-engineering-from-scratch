@@ -39,7 +39,7 @@ The capstone's eval job reads the last fifteen minutes of sampled traces. For a 
 
 ### Make the rare event visible
 
-At one leak in a hundred, a sampler that keeps a tenth of the successes sees one leak in a thousand answers. At high volume that is fine, and at low volume it is blind. Run a pattern check for identifier shapes on every output at the collector, as the production app lesson does in its output guardrail, and keep every trace that the check flags. The judge then handles the paraphrased leaks on the sampled share.
+At one leak in a hundred, a sampler that keeps a tenth of the successes sees one leak in a thousand answers. At high volume that is fine, and at low volume it is blind. Run a pattern check for identifier shapes on every output at the collector, as the production application capstone does in its output guardrail, and keep every trace that the check flags. The judge then handles the paraphrased leaks on the sampled share.
 
 ### The alert chain
 

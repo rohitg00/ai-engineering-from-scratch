@@ -38,7 +38,7 @@ Sample pairs of a new question and the cached answer it would receive at each th
 
 ### A two-tier scheme
 
-The caching and cost lesson's exercise uses two thresholds: hits at 0.98 return at once, and hits at 0.90 return with a disclaimer that the answer comes from a similar earlier question. Log the tier that served each hit, and compare satisfaction per tier. This keeps the strict path strict and still takes the cheap wins.
+The earlier caching lesson's exercise uses two thresholds: hits at 0.98 return at once, and hits at 0.90 return with a disclaimer that the answer comes from a similar earlier question. Log the tier that served each hit, and compare satisfaction per tier. This keeps the strict path strict and still takes the cheap wins.
 
 ### Why some workloads cannot go low
 

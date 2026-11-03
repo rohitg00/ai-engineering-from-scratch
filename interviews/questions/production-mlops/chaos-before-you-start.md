@@ -34,7 +34,7 @@ Five things have to be in place: service level indicators with objectives, obser
 
 ### The first experiments
 
-Start with one pod kill of a decode replica under steady traffic, and watch the rerouting and the recovery. If that looks safe, graduate to network chaos. The first model-specific experiment is one provider returning rate-limit errors for a few minutes, so that you can watch the fallback. Most teams learn here that their fallback was never fully tested.
+Start with one pod kill of a decode replica under steady traffic, and watch the rerouting and the recovery. If that looks safe, graduate to network chaos. The first model-specific experiment is one provider returning rate-limit errors for a few minutes, to see the fallback engage. Most teams learn here that their fallback was never fully tested.
 
 ### The cadence
 
