@@ -71,6 +71,8 @@ EAGLE-2 ağaç arayışı için, injeneri zor ama hesaplama standart bir flaş d
 | EAGLE-3 | Multi-layer feature fusion + TTT | 0.88-0.92 | 3.5-6.5× | ~60-200B tokens |
 | Lookahead | No draft (Jacobi iteration) | N/A | 1.3-1.6× | None |
 
+- Evet .`α`sütun, kabul edilen yol boyunca, sohbet referansları üzerinde, sohbet verilerine eşleşen bir taslakla birlikte, kabul edilen yol boyunca bir token oranıdır. Bu üst banddır. 10 · 25 aşaması farklı bir kurulumdan EAGLE-3 için 0.82 alıntı yapar ve 17 · 05 aşaması genel sohbette 0.6 ila 0.8 ile üretim dağıtımlarını planlar.`α`Seçmeden önce kendi trafikte.`N`- Evet .
+
 2026'da üretimi: vLLM ve SGLang varsayılan EAGLE-3 mevcut olduğunda, EAGLE-2 aksi takdirde. TensorRT-LLM Meta ve NVIDIA kamu modelleri için en hızlı Medusa yolu var. llama.cpp CPU dağıtımları için vanilla taslak gemileri.
 
 ```figure

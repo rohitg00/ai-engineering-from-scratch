@@ -210,10 +210,10 @@ Denemeyin.
 
 ```python
 print(pre_tokenize("Hello, world! Don't stop."))
-# [' Hello', ',', ' world', '!', " Don", "'t", ' stop', '.']
+# ['Hello', ',', ' world', '!', ' Don', "'t", ' stop', '.']
 ```
 
-Önceki boşluk kelimenin yanında kalır. Kısalamalar apostropda bölünür. Noktalama kendi parçası haline gelir. BPE bu sınırları asla birleştirmez.
+Önceki boşluk, ardından gelen kelime ile bağlanır.`Hello`BPE bu sınırları asla birleştirmez.
 
 ### Adım 3: Byte Sequences'te BPE
 

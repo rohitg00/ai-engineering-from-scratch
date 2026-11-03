@@ -72,7 +72,7 @@ stages:
     cost_usd: 12
 ```
 
-N aşamasının çıkış hashı N+1 aşamasının giriş hashıdır. Herhangi bir sapma ve boru hattı durur. Verilerin yolsuzluğunu erken yakalamanın yolu budur. Aynı zamanda farklı bir kıtadaki bir takım arkadaşının tekrarlamanın sizinkiyle aynı eser ürettiğini doğrulamasıdır.
+N aşamasının çıkış hashı N+1 aşamasının giriş hashıdır. Herhangi bir sapma ve boru hattı durur. Verilerin yolsuzluğunu erken yakalamanın bu yoluyla. Aynı zamanda farklı bir kıtadaki bir takım arkadaşının bir belirleyici aşamasının tekrar oynamanın sizinkiyle aynı eser ürettiğini doğrulamasıdır.
 
 Pratikte ekipler, küçük bir YAML şeması ve önceki başarılı çalışmaya karşı farklı bir manifesto kontrolcüsü kullanır.
 
@@ -150,7 +150,7 @@ Llama 3'ün rapor edilen maliyeti $61M. DeepSeek-V3 reported $Ana antrenman önc
 
 Bunlar aynı değildir. * Tekrarlanılabilir* aynı manifesto artı aynı kod artı aynı altyapı, eşdeğer aşağı akım ölçümleri ile bir kontrol noktası üretir. * Deterministik* bit-tıpkı output anlamına gelir.
 
-Modern LLM eğitiminin çoğaltılması mümkün ama belirleyici değildir. dağıtılmış eğitimlerin azaltma sırası, GPU çekirdeği belirsizliği (cuBLAS, flash-attn) ve karışık hassaslık yuvarlaması, koşular arasında 1e-5 düzeyinde farklı olan yüzenler üretmek için birleştirilir. Bu, hareket etmeyen son ölçüler için iyi. Bit seviyesindeki farklılıklarla hata yapmayı denerseniz ölümcül olur. Tedavi, her aşamanın giriş, çıkış ve başlık ölçümlerini kaydetmektir. Eğer bunlar eşleşirse, ağırlıklar bit-tıpkı aynı olmasa bile, koşus "sözlenir".
+Modern LLM eğitiminin çoğaltılması mümkün ama belirleyici değildir. dağıtılmış eğitimlerin azaltma sırası, GPU çekirdeği belirsizliği (cuBLAS, flash-attn) ve karışık hassaslık yuvarlaması, koşular arasında 1e-5 düzeyinde farklı olan yüzenler üretmek için birleştirilir. Bu, hareket etmeyen son ölçüler için iyi. Bit seviyesindeki farklılıklarla hata yapmayı denerseniz ölümcül olur. Tedavi, her aşamanın giriş, çıkış ve başlık ölçümlerini kaydetmektir. Bir tekrarlama sırasında, hashler yalnızca veri işleme ve tokenizasyon gibi belirleyici aşamalar için eşleşir. Bir eğitim aşaması yeni ağırlıklar yazıyor, bu yüzden çıkış hash değişir. Bu aşamalarda, ağırlıklar biraz aynı olmasa da, başlık ölçümleri eşleştiğinde koşular "sözlenir".
 
 ```mermaid
 graph LR

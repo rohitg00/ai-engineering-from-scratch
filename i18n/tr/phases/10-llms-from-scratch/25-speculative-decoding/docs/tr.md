@@ -85,7 +85,7 @@ EAGLE-1 değişiklikleri:
 
 EAGLE-2 (2024) dinamik ağaç topolojisini ekler: ağaç, çizimi belirsiz olduğu yerlerde daha geniş büyür ve güvendiği yerlerde dar kalır.`α_effective`Verifikasyon maliyetini arttırmadan.
 
-EAGLE-3 (Li et al. 2025, "EAGLE-3: Eğitim-Saat Testleri yoluyla Büyük Dil Modellerinin İfratür Hızlandırmasını Ölçeklendirmek") sabit üst katman özellik bağımlılığını ortadan kaldırır ve taslak yeni bir "test zaman simülasyonu" kaybı ile taslaklanır. Kabul oranı 0,75 (EAGLE-2) 'den 0,82'ye (EAGLE-3) ve ortalama token/verification oranı 3,0'dan 4,5'e yükselmektedir.
+EAGLE-3 (Li et al. 2025, "EAGLE-3: Eğitim-Saat Testleri yoluyla Büyük Dil Modellerinin İfratür Hızlandırmasını Ölçeklendirmek") sabit üst katman özellik bağımlılığını ortadan kaldırır ve taslak yeni bir "test zaman simülasyonu" kaybı ile taslaklanır. Kabul oranı 0,75 (EAGLE-2) 'den 0,82'ye (EAGLE-3) ve ortalama token/verification oranı 3,0'dan 4,5'e yükselmektedir. Bu rakamlar bir referans kuruluşu ile elde edilmektedir. Kabul model çiftine, taslak ağacına ve trafiğe bağlıdır: Eğlence 10 · 15 chat referanslarında kabul edilen yol belirtilerine göre 0.88 ila 0.92 oranında alıntı yapar.
 
 ### Ağaç Dikkatini Kontrol Et
 
