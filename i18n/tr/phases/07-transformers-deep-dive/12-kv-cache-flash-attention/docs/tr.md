@@ -176,9 +176,9 @@ def tiled_softmax_dot(q, K, V, tile=4):
 
 Bit-iynet çıkış `softmax(qK) V`Bir çekimde, ama her zaman çalışma seti bir `tile × d_head`- Blok, tam değil.`N × d_head`- Evet .
 
-### Adım 3: 100 token neslinde saf ve önbelleğe alınan kodlama ile karşılaştırın
+### Adım 3: Saçma ile önbelleğe alınan kodlama karşılaştır
 
-Dikkat operasyonlarını say.$O(N^2)$= 5050 .$O(N)$Kodu her ikisini de basıyor.
+İki dekodör de aynı sorgu anahtarı karşılaştırma yapar: adım `t`- Evet .`t`Tokenler, yani toplam 1 + 2 + ... + N = N(N+1)/2. Kod N = 10 kullanır ve her bir dekodör için 55 basar. 100 token nesli için, her ikisi de 5050 karşılaştırma yaparlar. Kaş K ve V projelerini kaydetir. Bir önbelleği olmadan, her adım K ve V'yi tekrar hesaplar ve böylece 100 token jenerasyonu 5050 token durumunu hesaplar. Kaşla, her token'in K ve V'leri bir kez hesaplanır, bu yüzden aynı nesil 100 token durumunu hesaplar.
 
 ## Kullan
 

@@ -70,7 +70,7 @@ Avantajlar: ikinci bir model yok. Eksiler: eğitimli parametreler ekler; denetim
 
 ### KİÇİN  gizli durumları yeniden kullanarak daha iyi bir çizim
 
-EAGLE-1/2/3 (Li et al., 20242025) taslak modelini, doğrulayıcının son katman gizli durumlarını yudumlayan küçük bir transformatör (genellikle 1 katman) yapar.
+EAGLE-1/2/3 (Li et al., 20242025) taslak modelini, doğrulayıcının son katman gizli durumlarını yudumlayan küçük bir transformatör (tipik olarak 1 katman) yapar. Çizgi, doğrulayıcının özellik temsilini gördüğü için tahminleri doğrulayıcının çıkış dağılımıyla güçlü bir şekilde ilişkilidir. Kabul oranları ~0.6 (vanil) 'den 0.85+'e yükseldi. Bunlar sohbet referansları için bir token oranları, sohbet verilerine eşleşen bir taslak ile eğitilmiştir. Karışık üretim trafiği için, EAGLE-3 için 17 · 05 aşaması planları 0.6 ila 0.8 ile ve alan trafiği daha düşük olabilir.
 
 EAGLE-3 (2025) aday devamları üzerinde ağaç arama ekledi. vLLM ve SGLang gemisi EAGLE-2/3 Llama 3/4 ve Qwen 3 için varsayılan özellik yolu olarak.
 
