@@ -1,0 +1,16 @@
+title: the server command, the trace, and the tally of aborts and hangs by variant
+source: manuals/sglang-101/capture/gpu/out-l4/small-pool-crash.txt
+lines: 5-14
+lang: text
+note: Read the clean column against the runs column for each variant.
+---
+Server: sglang serve --model-path Qwen/Qwen3-0.6B --mem-fraction-static 0.55 --context-length 4096 --enable-cache-report --max-total-tokens 8192 --radix-eviction-policy lru
+Trace: 24 sessions x 6 turns, round robin at concurrency 8, greedy, 64-token answers. The context grows each turn, so the 8,192-token pool evicts heavily from turn 4 on.
+Hang rule: no new log line for 5 minutes, or 15 minutes in total. The scheduler stack was saved with py-spy before the server was stopped.
+
+variant                                          runs   aborts   hangs   clean
+lru, CUDA graph and overlap on (default)         6      1        3       2
+lru, CUDA_LAUNCH_BLOCKING=1                      3      0        0       3
+lru, --disable-cuda-graph                        4      0        0       4
+lru, --enable-hierarchical-cache                 3      1        0       2
+lru, HiCache, CUDA_LAUNCH_BLOCKING=1             2      0        0       2

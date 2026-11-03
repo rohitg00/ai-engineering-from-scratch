@@ -1,0 +1,18 @@
+title: the same probe on the L4, default server against the deterministic flag
+source: manuals/sglang-101/capture/gpu/out-l4/livecheck-2026-10-23.txt
+lines: 7-18
+lang: text
+note: Read the pattern of the default row letter by letter, then the backend that the flag chose on this GPU.
+---
+Probe: one prompt 5 times alone, then 5 times in a batch of 16, temperature 0.
+
+server                                    distinct texts   pattern
+default                                   3                A, B, B, B, B, C, B, B, B, B
+--enable-deterministic-inference          1                all ten the same
+
+On the default server the first request alone differs and the four later requests alone match each other.
+One batched request differed. On BF16 Qwen/Qwen3-8B (the earlier L4 run), the batched requests gave two more texts.
+
+Deterministic mode with no --attention-backend, startup log:
+Attention backend not specified. Falling back to 'fa3' for deterministic inference
+The server ran on fa3 on SM 8.9 with no error. The default server on this GPU uses flashinfer.

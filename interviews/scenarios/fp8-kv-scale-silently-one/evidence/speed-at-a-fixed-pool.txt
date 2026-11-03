@@ -1,0 +1,10 @@
+title: the FP8 KV cache with the Triton backend against the BF16 default, pool held fixed
+source: manuals/vllm-101/sections/2-4-fit-more-users-with-an-fp8-kv-cache.md
+lines: 69-72
+lang: text
+note: Compare the clock and the seed count of each row before you read the time per token.
+---
+| Users, L4 throttled session | Median TPOT, BF16 / FP8 | Output tok/s, BF16 / FP8 | Median SM clock, BF16 / FP8 | Seeds, BF16 / FP8 |
+|---|---|---|---|---|
+| 1 | 104.1 / 101.8 ms | 10.59 / 10.75 | 210 / 210 MHz | 3 / 2 |
+| 32 | 142.7 / 138.0 ms | 186.68 / 192.00 | 450 / 480 MHz | 3 / 2 |

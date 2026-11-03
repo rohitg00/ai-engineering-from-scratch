@@ -1,0 +1,7 @@
+title: the SGLang pool and one decode line at a cap of 64
+source: manuals/sglang-101/capture/gpu/out-l4/server-h2h-sglang.log
+lang: text
+note: Count the running requests and the queued requests in the second line.
+---
+[2026-10-17 18:27:40] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 24094, K size: 1.65 GB, V size: 1.65 GB
+[2026-10-17 20:12:04] Decode batch, #running-req: 37, #token: 22162, token usage: 0.92, cuda graph: True, gen throughput (token/s): 432.55, #queue-req: 27

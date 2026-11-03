@@ -1,0 +1,10 @@
+title: the state of both GPUs in the node during that sweep
+source: manuals/sglang-101/capture/gpu/incidents/l4-thermal-throttle.txt
+lines: 1-4
+lang: text
+note: Read the temperature, the current clock against the maximum, and the slowdown flags of the first GPU.
+---
+nvidia-smi on the L4 host during the first load sweep, 2026-10-16 18:10 UTC
+index, temperature.gpu, power.draw [W], power.limit [W], clocks.current.sm [MHz], clocks.max.sm [MHz], clocks_event_reasons.active, clocks_event_reasons.sw_thermal_slowdown, clocks_event_reasons.hw_thermal_slowdown, clocks_event_reasons.sw_power_cap, utilization.gpu [%]
+0, 87, 58.36 W, 72.00 W, 360 MHz, 2040 MHz, 0x0000000000000020, Active, Not Active, Not Active, 100 %
+1, 81, 52.77 W, 72.00 W, 2025 MHz, 2040 MHz, 0x0000000000000004, Not Active, Not Active, Active, 0 %
