@@ -85,7 +85,7 @@ Changements de l'Eagle-1:
 
 L'AIGLE-2 (2024) ajoute une topologie dynamique des arbres: l'arbre s'élargit là où le projet est incertain et reste étroit là où il est sûr.`α_effective`sans augmenter le coût de vérification.
 
-L'AIGLE-3 (Li et coll. 2025, "EAGLE-3: Accélération de l'inférence des grands modèles linguistiques via Test de formation-temps") élimine la dépendance fixe des fonctionnalités de la couche supérieure et entraîne le projet avec une nouvelle perte de "simulation de temps de test"  le projet est formé sur des résultats qui correspondent à la distribution du temps de test de la cible plutôt que la distribution de formation forcée par l'enseignant. Le taux d'acceptation passe de 0,75 (EAGLE-2) à 0,82 (EAGLE-3), et le taux moyen de jetons/vérification passe de 3,0 à 4,5.
+L'AIGLE-3 (Li et coll. 2025, "EAGLE-3: Accélération de l'inférence des grands modèles linguistiques via Test de formation-temps") élimine la dépendance fixe des fonctionnalités de la couche supérieure et entraîne le projet avec une nouvelle perte de "simulation de temps de test"  le projet est formé sur des résultats qui correspondent à la distribution du temps de test de la cible plutôt que la distribution de formation forcée par l'enseignant. Le taux d'acceptation passe de 0,75 (EAGLE-2) à 0,82 (EAGLE-3), et le taux moyen de jetons/vérification passe de 3,0 à 4,5. Ces chiffres proviennent d'une seule configuration de référence. L'acceptation dépend de la paire de modèles, de l'arbre de projet et du trafic: la phase 10 · 15 cite 0,88 à 0,92 par jeton de chemin accepté sur les benchmarks de chat, et la phase 17 · 05 des plans avec 0,6 à 0,8 sur le chat général de production.
 
 ### Vérifie l'attention des arbres
 

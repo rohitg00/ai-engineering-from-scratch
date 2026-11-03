@@ -210,10 +210,10 @@ Essayez !
 
 ```python
 print(pre_tokenize("Hello, world! Don't stop."))
-# [' Hello', ',', ' world', '!', " Don", "'t", ' stop', '.']
+# ['Hello', ',', ' world', '!', ' Don', "'t", ' stop', '.']
 ```
 
-L'espace principal reste attaché au mot. Les contractions se divisent à l'apostrophe. La ponctuation devient sa propre pièce. BPE ne fusionnera jamais des jetons à travers ces frontières.
+Le premier espace reste attaché au mot qui le suit.`Hello`Les contractions se divisent à l'apostrophe. La ponctuation devient sa propre pièce.
 
 ### Étape 3: BPE sur les séquences en octets
 

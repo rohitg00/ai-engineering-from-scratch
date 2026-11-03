@@ -72,7 +72,7 @@ stages:
     cost_usd: 12
 ```
 
-Le hash de sortie de l'étape N est le hash d'entrée de l'étape N + 1. Tout déviation et le pipeline s'arrête. C'est ainsi que vous détectez la corruption des données tôt. C'est aussi comment un collègue d'équipe sur un autre continent vérifie que leur répétition a produit le même artefact que le vôtre.
+Le hash de sortie de l'étape N est le hash d'entrée de l'étape N + 1. Tout déviation et le pipeline s'arrête. C'est ainsi que vous capturez la corruption des données tôt. C'est aussi comment un collègue d'équipe sur un continent différent vérifie que leur répétition d'une étape déterministe a produit le même artefact que le vôtre.
 
 En pratique, les équipes utilisent un petit schéma YAML plus un vérificateur manifeste qui diffère de la conduite réussie précédente.
 
@@ -150,7 +150,7 @@ Le coût déclaré de Llama 3 était $61M. DeepSeek-V3 reported $5,6 millions po
 
 Ces paramètres ne sont pas les mêmes. *Reproducible* signifie le même manifeste plus le même code plus la même infrastructure produit un point de contrôle avec des mesures en aval équivalentes. *Deterministic* signifie une sortie identique à un bit.
 
-La formation moderne en LLM est reproduisable mais non déterministe. Le système de formation distribuée réduit l'ordre, le non-determinisme du noyau GPU (cuBLAS, flash-attn) et l'arrondissement de précision mixte se combinent pour produire des floats qui diffèrent au niveau 1e-5 entre les courses. C'est bon pour les statistiques finales, qui ne bougent pas. Il est fatal si vous essayez de déboguer avec des différences de niveau de bits. Le remède est de noter le hash d'entrée de chaque étape, le hash de sortie et les métriques de titre -- si elles correspondent, la course est "reproducée" même si les poids ne sont pas bit-identiques.
+La formation moderne en LLM est reproduisable mais non déterministe. Le système de formation distribuée réduit l'ordre, le non-determinisme du noyau GPU (cuBLAS, flash-attn) et l'arrondissement de précision mixte se combinent pour produire des floats qui diffèrent au niveau 1e-5 entre les courses. C'est bon pour les statistiques finales, qui ne bougent pas. Il est fatal si vous essayez de déboguer avec des différences de niveau de bits. Le remède est de noter le hash d'entrée, le hash de sortie et les métriques de titre de chaque étape. Lors d'une répétition, les hashs ne correspondent qu'à des étapes déterministes, telles que le traitement des données et la tokenization. Une étape d'entraînement écrit de nouveaux poids, donc son hash de sortie change. Pour ces étapes, la course est "reproducée" lorsque les métriques de titre correspondent, même si les poids ne sont pas un peu identiques.
 
 ```mermaid
 graph LR
