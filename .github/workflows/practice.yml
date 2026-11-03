@@ -12,6 +12,11 @@ on:
       - 'site/practice-worker.js'
       - 'site/test_practice.js'
       - 'site/test_practice_store.js'
+      - 'site/test_code_render.js'
+      - 'site/lib/**'
+      - 'site/lesson-markdown.js'
+      - 'site/code.css'
+      - 'site/code-copy.js'
       - 'research/methods.json'
       - '.github/workflows/practice.yml'
   push:
@@ -50,7 +55,7 @@ jobs:
       - name: The harness reports diverging losses and contains exits from learner code
         run: python3 scripts/practice/test_harness.py
       - name: Pages, run data and storage
-        run: node --test site/test_practice.js site/test_practice_store.js
+        run: node --test site/test_practice.js site/test_practice_store.js site/test_code_render.js
       - name: No page or run file shows the solution, same bytes twice
         run: node site/build-practice.js --check
       - name: Problem generator

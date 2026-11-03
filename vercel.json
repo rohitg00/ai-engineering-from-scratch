@@ -1,8 +1,8 @@
 {
-  "buildCommand": "node site/fetch-translation-coverage.js && node site/build.js && node site/build-projects.js --strict && node site/build-agents.js && node site/build-manuals.js && node site/clean-urls.js && node site/version-assets.js",
+  "buildCommand": "node site/fetch-translation-coverage.js && node site/build.js && node site/build-projects.js --strict && node site/build-agents.js && node site/build-manuals.js && node site/build-search.js && node site/clean-urls.js && node site/version-assets.js",
   "outputDirectory": "site",
   "framework": null,
-  "installCommand": "echo skip",
+  "installCommand": "npm install --no-audit --no-fund",
   "routes": [
     {
       "src": "/blogs(?:\\.html)?/",
@@ -478,6 +478,15 @@
       ]
     },
     {
+      "source": "/pagefind/(.*)\\.(pf_fragment|pf_index|pf_meta|pf_filter)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
       "source": "/(.*)\\.(css|js)",
       "headers": [
         {
@@ -589,6 +598,19 @@
     },
     {
       "source": "/interviews.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    },
+    {
+      "source": "/api/interviews.json",
       "headers": [
         {
           "key": "Cache-Control",

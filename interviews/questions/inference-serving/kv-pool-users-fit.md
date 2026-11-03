@@ -46,7 +46,7 @@ The 2.94 divides the pool by the full 8,192 tokens. A user with 512 prompt token
 
 ### What to change if it is still too small
 
-1. Lower the maximum model length to the longest context that users send. One long request then cannot take the whole pool.
+1. Lower the maximum model length to the longest context that users send. This keeps one long request from taking a large share of the pool. It does not add users here, because the pool stays the same.
 2. Use an FP8 KV cache. It halves the bytes per token.
 3. Use FP8 weights to free memory for the cache.
 4. Use a GPU with more memory, or split the model across GPUs.

@@ -62,7 +62,7 @@
 .iv-page p a, .iv-page li a, .iv-page td a { text-decoration: underline; text-decoration-thickness: 1px; }
 .iv-page .iv-row-link, .iv-page .iv-card-name a, .iv-page .iv-crumbs a, .iv-page .iv-pager a, .iv-page .iv-related a { text-decoration: none; }
 .iv-page :focus-visible { outline: 2px solid var(--iv-accent); outline-offset: 2px; }
-.iv-page code { font-family: var(--font-mono); font-size: 0.86em; overflow-wrap: anywhere; }
+.iv-page :not(pre) > code { font-family: var(--font-mono); font-size: 0.86em; overflow-wrap: anywhere; }
 .iv-page p code, .iv-page li code { background: var(--code-bg); padding: 0.05em 0.3em; }
 .iv-visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .iv-page [hidden] { display: none !important; }
@@ -320,9 +320,9 @@
 .iv-ev-n span { font-size: 20px; color: var(--iv-mute); }
 .iv-ev h3 { margin: 0; font-size: 1.04rem; font-weight: 600; }
 .iv-ev-note { margin: 4px 0 0; color: var(--iv-soft); font-size: 0.92rem; }
-.iv-ev .iv-code { margin: 0; border-left: 0; border-right: 0; }
-.iv-ev .iv-code pre { max-height: 360px; }
-.iv-ev-wrap .iv-code pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.iv-ev .cb { margin: 0; border-left: 0; border-right: 0; }
+.iv-ev .cb pre { max-height: 360px; }
+.iv-ev-wrap .cb pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 .iv-ev-src { margin: 0; padding: 8px 16px 10px; color: var(--iv-mute); overflow-wrap: anywhere; text-transform: none; letter-spacing: 0; }
 .iv-ev-next { display: flex; flex-wrap: wrap; gap: 10px; }
 
@@ -332,17 +332,6 @@
 .iv-btn:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--iv-accent); }
 .iv-btn-quiet { background: var(--iv-paper); color: var(--iv-ink); box-shadow: none; }
 
-.iv-code { border: 1px solid var(--iv-rule); background: var(--code-bg); margin: 1em 0; min-width: 0; }
-.iv-code-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 6px 4px 12px; border-bottom: 1px solid var(--iv-rule); }
-.iv-code-lang { font-family: var(--font-mono); font-size: 0.7rem; color: var(--iv-mute); text-transform: lowercase; overflow-wrap: anywhere; }
-.iv-copy { font-family: var(--font-mono); font-size: 0.7rem; padding: 3px 8px; border: 1px solid var(--iv-rule); background: var(--iv-paper); color: var(--iv-ink); cursor: pointer; }
-.iv-copy:hover { border-color: var(--iv-ink); }
-.iv-code pre { margin: 0; padding: 12px 14px; overflow-x: auto; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.55; font-variant-ligatures: none; tab-size: 2; }
-.iv-code code { font-size: inherit; background: none; padding: 0; overflow-wrap: normal; }
-.iv-page .syn-keyword { color: var(--iv-accent); font-weight: 500; }
-.iv-page .syn-string { color: var(--iv-agents); }
-.iv-page .syn-number { color: var(--iv-models); }
-.iv-page .syn-comment { color: var(--iv-mute); font-style: italic; }
 
 .iv-pager { max-width: 780px; margin: 40px auto 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; border-top: 1px solid var(--iv-ink); padding-top: 14px; }
 .iv-pager a { text-decoration: none; display: grid; gap: 2px; min-width: 0; overflow-wrap: anywhere; }

@@ -75,11 +75,6 @@
   }
 
   function bindCopy() {
-    Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function (button) {
-      button.addEventListener('click', function () {
-        copyText(button.getAttribute('data-copy'), button, 'Copy');
-      });
-    });
     Array.prototype.forEach.call(document.querySelectorAll('.cs-cmd'), function (code) {
       code.addEventListener('click', function () {
         copyText(code.textContent, code, '');

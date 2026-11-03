@@ -1,4 +1,4 @@
-title: the same draft on a mixture-of-experts model on the GB10
+title: EAGLE3 with its own draft on a mixture-of-experts model on the GB10
 source: manuals/sglang-101/sections/4-4-speculative-decoding.md
 lines: 112-117
 lang: text

@@ -45,7 +45,7 @@ Each block starts with a `## ` heading. The heading is the label on the coloured
 | `glossary` | violet | bullets: `- **ABBR**: what it stands for and one line` |
 | `task-table` | blue | table: `\| Task \| Code \|`. Put the code cell in backticks |
 | `command-table` | blue | table: `\| Command \| What it does \|` |
-| `annotated-code` | ink | one fenced code block. Put a comment after two or more spaces. The build aligns the comments in a column |
+| `annotated-code` | ink | one fenced code block with a language tag, such as `bash` or `python`. Put a comment after two or more spaces. The build aligns the comments in a column, and Copy copies the code without the comments |
 | `flow` | teal | numbered list: `1. **Actor**: what happens`. The build draws numbered steps |
 | `architecture` | teal | a fenced `arch` block with `node` and `edge` lines, see below |
 | `defaults` | amber | table: `\| Setting \| Default \| Note \|` |

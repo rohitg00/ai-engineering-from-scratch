@@ -343,7 +343,7 @@ function sourceTexts(item, ctx) {
       const file = path.join(ctx.root, String(source));
       if (fs.existsSync(file) && fs.statSync(file).isFile()) texts.push(read(file));
     }
-    for (const evidence of item.evidence || []) texts.push(evidence.raw);
+    for (const evidence of item.evidence || []) texts.push(evidence.listing);
   }
   return texts;
 }
@@ -416,17 +416,29 @@ function checkQuestionBody(item, ctx) {
 }
 
 function parseEvidence(text, file) {
-  const normal = text.replace(/\r\n/g, '\n');
-  const split = normal.indexOf('\n---\n');
-  if (split < 0) throw new Error(`${file}: the header must end with a --- line`);
+  const separator = /\r?\n---\r?\n/.exec(text);
+  if (!separator) throw new Error(`${file}: the header must end with a --- line`);
   const header = {};
-  for (const line of normal.slice(0, split).split('\n')) {
+  for (const line of text.slice(0, separator.index).split(/\r?\n/)) {
     const match = /^([a-z]+):\s*(.*)$/.exec(line);
     if (!match) throw new Error(`${file}: expected "key: value" in the header, got "${line}"`);
     if (match[1] in header) throw new Error(`${file}: duplicate header ${match[1]}`);
     header[match[1]] = match[2].trim();
   }
-  return { header, listing: normal.slice(split + 5).replace(/\n$/, '') };
+  const body = text.slice(separator.index + separator[0].length);
+  return { header, body, listing: body.replace(/\r?\n$/, '') };
+}
+
+function sourceLines(source) {
+  return source.match(/[^\n]*\n|[^\n]+$/g) || [];
+}
+
+function expectedBody(source, lines) {
+  if (lines === undefined) return { body: source };
+  const match = /^(\d+)-(\d+)$/.exec(lines);
+  const all = sourceLines(source);
+  if (!match || Number(match[1]) < 1 || Number(match[2]) < Number(match[1]) || Number(match[2]) > all.length) return { error: `lines must be N-M inside 1-${all.length}` };
+  return { body: all.slice(Number(match[1]) - 1, Number(match[2])).join('') };
 }
 
 function checkEvidence(item, ctx) {
@@ -447,7 +459,7 @@ function checkEvidence(item, ctx) {
       item.errors.push(error.message);
       continue;
     }
-    const { header, listing } = parsed;
+    const { header, listing, body } = parsed;
     for (const key of ['title', 'source', 'lang', 'note']) if (!header[key]) item.errors.push(`${file}: header has no ${key}`);
     for (const key of Object.keys(header)) if (!EVIDENCE_KEYS.includes(key)) item.errors.push(`${file}: unknown header ${key}`);
     if (header.lang && !EVIDENCE_LANGS.includes(header.lang)) item.errors.push(`${file}: lang must be one of ${EVIDENCE_LANGS.join(', ')}`);
@@ -461,17 +473,12 @@ function checkEvidence(item, ctx) {
       continue;
     }
     const source = read(sourceFile);
-    let expected = source.replace(/\n$/, '');
-    if (header.lines !== undefined) {
-      const match = /^(\d+)-(\d+)$/.exec(header.lines);
-      const total = source.replace(/\n$/, '').split('\n').length;
-      if (!match || Number(match[1]) < 1 || Number(match[2]) < Number(match[1]) || Number(match[2]) > total) {
-        item.errors.push(`${file}: lines must be N-M inside 1-${total}`);
-        continue;
-      }
-      expected = source.split('\n').slice(Number(match[1]) - 1, Number(match[2])).join('\n');
+    const expected = expectedBody(source, header.lines);
+    if (expected.error) {
+      item.errors.push(`${file}: ${expected.error}`);
+      continue;
     }
-    if (listing !== expected) item.errors.push(`${file}: the listing does not match ${header.source}${header.lines ? ` lines ${header.lines}` : ''} byte for byte`);
+    if (body !== expected.body) item.errors.push(`${file}: the listing does not match ${header.source}${header.lines ? ` lines ${header.lines}` : ''} byte for byte`);
   }
   return files;
 }
@@ -675,8 +682,9 @@ function loadLoops(root, ctx, errors) {
     const items = body.split('\n').filter(line => line.startsWith('- '));
     if (!items.length) errors.push(`${file}: list the rounds`);
     for (const line of items) {
-      const match = /^- \*\*([a-z-]+)\*\*, (\d+) minutes: \S/.exec(line);
-      if (!match || !ROUNDS.includes(match[1])) errors.push(`${file}: a round must be - **<round>**, N minutes: text, with a round from the list: ${line}`);
+      const match = /^- \*\*([a-z-]+)\*\*, (\d+) minutes: \S.* \(card: ([a-z0-9-]+)\)$/.exec(line);
+      if (!match || !ROUNDS.includes(match[1])) errors.push(`${file}: a round must be - **<round>**, N minutes: text (card: <card-id>), with a round from the list: ${line}`);
+      else if (!ctx.cards.has(match[3])) errors.push(`${file}: unknown card ${match[3]}`);
     }
     return { id, data, body, file };
   }).filter(Boolean);
@@ -824,6 +832,7 @@ module.exports = {
   headingSlugs,
   markdownLinks,
   parseEvidence,
+  expectedBody,
   parseFollowUps,
   parseWrong,
   denylistHits,
