@@ -33,7 +33,7 @@ The adapter design is late fusion: images enter as projected continuous tokens o
 | Output | text only | text and images, interleaved as the model chooses |
 | Reuse of the pretrained LLM | full | the model trains on the mixed stream from the start |
 | Ceiling for understanding | the encoder | the quantizer's reconstruction |
-| Serving cost per answer | one forward pass | plus 1024 sequential decoding steps per generated image, one per code, then a decoder pass for the pixels |
+| Serving cost per answer | one decoder step per generated text token | one decoder step per generated text token, plus 1024 sequential decoding steps per generated image, one per code, then a decoder pass for the pixels |
 
 ### What early fusion buys
 

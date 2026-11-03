@@ -20,7 +20,7 @@ You are choosing the bridge between a frozen vision encoder and a language model
 
 ## Short answer
 
-Decide on the token budget, not on quality in the abstract. At a fixed number of visual tokens, the ablation studies find the connector architecture a wash, within about a point between an MLP, a query bridge and a resampler. The query bridge caps an image at 32 tokens whatever its resolution and costs 188M parameters plus a two-stage pretraining of its own; the MLP emits every patch, 576 for a 336-pixel image, with about 22M parameters and one language-modeling loss. Pick the compressing bridge when context binds, as with long video or many images; pick the MLP when quality per token and simplicity matter and the context is long enough.
+Decide on the token budget, not on quality in the abstract. At a fixed number of visual tokens, the ablation studies find the connector architecture a wash, within about a point between an MLP on mean-pooled patches, a query bridge and a resampler; a full-patch MLP spends more tokens, so it sits at a different budget. The query bridge caps an image at 32 tokens whatever its resolution and costs 188M parameters plus a two-stage pretraining of its own; the MLP emits every patch, 576 for a 336-pixel image, with about 22M parameters and one language-modeling loss. Pick the compressing bridge when context binds, as with long video or many images; pick the MLP when quality per token and simplicity matter and the context is long enough.
 
 ## Full answer
 

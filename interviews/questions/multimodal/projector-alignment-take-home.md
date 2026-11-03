@@ -72,7 +72,7 @@ The per-pair cosine aligns direction; a contrastive batch loss would also push e
 
 - **Level 2:** Why cosine and not mean squared error? Expected: alignment means the same direction in the joint space, not equal vectors; cosine is scale-invariant, so the projector is not punished for a norm the text table happens to have.
 - **Level 2:** What does a learned temperature on the cosine change? Expected: a sharper or flatter loss surface; too small gives noisy gradients and too large plateaus high, as the exercise shows.
-- **Level 3:** Why does the loss floor near 0.80 on synthetic pairs and not at 0? Expected: the pairs are random, so the text embedding carries no structure that a frozen table and one bend can fully match; on natural pairs the floor is set by the encoder features.
+- **Level 3:** The capstone's run stops near 0.80 after 200 steps. Is that a floor? Expected: no; it is the loss of one run at 200 steps. The projector has 1024 hidden units for 32 pairs, so more steps or a different rate can push the loss lower; on natural pairs, the encoder features set how far the alignment can go.
 - **Level 3:** How does this module relate to a query-based bridge? Expected: that bridge ends in the same kind of projection to the text width; the difference is that it first compresses the tokens through learned queries instead of pooling.
 
 ## Wrong answers
