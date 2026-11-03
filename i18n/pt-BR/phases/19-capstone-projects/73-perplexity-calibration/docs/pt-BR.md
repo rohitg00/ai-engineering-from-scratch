@@ -53,7 +53,7 @@ O ECE é parcialmente calculado pelo número de recipientes e tamanho da amostra
 
 ## O que Brier faz que a ECE não
 
-O ECE só se importa com as lacunas médias. Um modelo que é demasiado confiante em metade dos contentores e pouco confiante na outra metade pode ter um baixo ECE enquanto está mal calibrado localmente.
+A ECE só se importa com a diferença média em cada lixo. É preciso o espaço absoluto por contenedor, por isso, os espaços em diferentes contenedores não se cancelam. Dentro de um canhão eles podem: se algumas previsões em um canhão são demasiado confiantes e outras são pouco confiantes, as médias do canhão podem coincidir e o canhão não adiciona quase nada ao ECE, enquanto cada previsão é mal calibrada. A pontuação Brier mede o erro quadrado contra o resultado verdadeiro por previsão, por isso penaliza a propagação diretamente.
 
 Para resultados binários, Brier é `mean((p_i - y_i)^2)`O corredor informa o escalar mas registra a decomposição para o painel.
 

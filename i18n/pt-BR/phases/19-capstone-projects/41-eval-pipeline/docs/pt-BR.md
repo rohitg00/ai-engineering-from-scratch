@@ -47,7 +47,7 @@ A perplexidade é `exp(mean negative log-likelihood per token)`A implementação
 - A média deve ser sobre posições reais de tokens, não sobre a sequência de lote *.
 - O modelo prevê o próximo token, então logita em posição `i`Previr o token em posição `i+1`Os erros simples aqui são silenciosos: a perda continua a correr, mas a métrica torna-se sem sentido.
 
-O avaliador calcula somas por lote de `-log p(token)`Em termos numéricos, é mais seguro que a média de perplexidades por lote (que subpõe a seqüências curtas) e corresponde à definição do livro de texto.
+O avaliador calcula somas por lote de `-log p(token)`Em termos numéricos, é mais seguro do que a média de perplexidades por lote (que dá a cada lote o mesmo peso, de modo que cada token em um lote curto conta mais do que um token em um lote longo) e corresponde à definição do livro de texto.
 
 ## A correspondência exacta com a normalização
 
