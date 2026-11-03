@@ -1,0 +1,22 @@
+title: the head of the compare result
+source: manuals/reverse-engineering-101/capture/out/14-compare-bundles.json
+lines: 1-16
+lang: json
+note: Read status first, then the unresolved count against the four records_ counters.
+---
+{
+  "status": "unknown",
+  "left_bundle_sha256": "47160c2de738f54a9f9e496d0552b290f34c789ea63523c985c33787d9d30be9",
+  "right_bundle_sha256": "e0a9fe04ebbcaf90eda63c731d9cf9c13b59c41eb8b1995a0204d8015d44fe20",
+  "summary": {
+    "records_unchanged": 0,
+    "records_added": 0,
+    "records_removed": 0,
+    "records_changed": 0,
+    "unknowns_unchanged": 0,
+    "unknowns_added": 0,
+    "unknowns_removed": 0,
+    "unknowns_advanced": 0,
+    "unknowns_diverged": 0,
+    "unresolved": 10
+  },
