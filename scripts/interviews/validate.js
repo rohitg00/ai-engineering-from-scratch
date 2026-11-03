@@ -281,7 +281,11 @@ function checkFront(item, ctx) {
   if (!ctx.cards.has(item.card)) errors.push(`${file}: unknown card ${item.card}`);
   if (kind === 'scenario' ? data.kind !== 'incident' : !KINDS.includes(data.kind)) errors.push(`${file}: kind must be ${kind === 'scenario' ? 'incident' : `one of ${KINDS.join(', ')}`}`);
   if (!Number.isInteger(data.level) || data.level < 1 || data.level > 4) errors.push(`${file}: level must be 1 to 4`);
-  for (const role of checkList(data.roles, 'roles', errors, file, { min: 1 })) if (!ctx.roles.has(role)) errors.push(`${file}: unknown role ${role}`);
+  for (const role of checkList(data.roles, 'roles', errors, file, { min: 1 })) {
+    const entry = ctx.roles.get(role);
+    if (!entry) errors.push(`${file}: unknown role ${role}`);
+    else if (!entry.cards.includes(item.card)) errors.push(`${file}: role ${role} does not list card ${item.card}`);
+  }
   for (const round of checkList(data.rounds, 'rounds', errors, file, { min: 1 })) if (!ROUNDS.includes(round)) errors.push(`${file}: unknown round ${round}`);
   for (const tag of checkList(data.tags, 'tags', errors, file, { min: 1, max: 6 })) if (!ID.test(String(tag))) errors.push(`${file}: tag ${tag} must be lower case hyphenated words`);
   if (!Number.isInteger(data.minutes) || data.minutes < 2 || data.minutes > 60) errors.push(`${file}: minutes must be 2 to 60`);

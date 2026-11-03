@@ -53,7 +53,7 @@ ECE is biased by bin count and sample size. With ten bins and a hundred predicti
 
 ## What Brier score does that ECE does not
 
-ECE only cares about average gaps. A model that is overconfident on half the bins and underconfident on the other half can have low ECE while being poorly calibrated locally. The Brier score measures squared error against the true outcome per prediction, so it penalises spread directly.
+ECE only cares about the average gap in each bin. It takes the absolute gap per bin, so gaps in different bins do not cancel. Inside one bin they can: if some predictions in a bin are overconfident and others are underconfident, the bin averages can match and the bin adds almost nothing to ECE, while each prediction is poorly calibrated. The Brier score measures squared error against the true outcome per prediction, so it penalises spread directly.
 
 For binary outcomes, Brier is `mean((p_i - y_i)^2)`. It decomposes into reliability, resolution, and uncertainty. We compute the score and the decomposition. The runner reports the scalar but logs the decomposition for the dashboard.
 

@@ -47,7 +47,7 @@ The second is `regex_match`. The named file's contents are matched against a reg
 
 The third is `shell_exit_zero`. The harness runs a shell command (through the sandbox from lesson 26) and passes the task only if the command exits zero. This catches "the tests must pass" tasks.
 
-The harness runs each task `k` times. Pass@k is `1 - (1 - p)^k` where p is the empirical pass rate; the harness also reports raw counts so you can spot variance. Latency is wall-clock per sample. Cost is whatever the agent self-reports (token count, USD, or both); the harness sums it across samples and presents the per-task and aggregate numbers.
+The harness runs each task `k` times. Pass@k is `1 - (1 - p)^k` where p is the empirical pass rate; the harness also reports raw counts so you can spot variance. This is the plug-in estimate: it uses the measured rate p as if it were the true rate. Lesson 72 uses the unbiased estimator `1 - C(n - c, k) / C(n, k)` for `n` samples with `c` passes. The plug-in estimate is biased low. With `n = k` samples, as in this harness, the unbiased estimator is 1 when any sample passes and 0 when none pass, so it only shows whether any sample passed. To publish a pass@k number, draw `n > k` samples and use the estimator from lesson 72. Latency is wall-clock per sample. Cost is whatever the agent self-reports (token count, USD, or both); the harness sums it across samples and presents the per-task and aggregate numbers.
 
 ```figure
 pass-at-k

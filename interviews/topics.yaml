@@ -83,6 +83,7 @@ cards:
     lessons:
       - phases/05-nlp-foundations-to-advanced/19-subword-tokenization
       - phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding
+      - phases/07-transformers-deep-dive/07-gpt-causal-language-modeling
       - phases/07-transformers-deep-dive/16-speculative-decoding
       - phases/10-llms-from-scratch/01-tokenizers
       - phases/10-llms-from-scratch/02-building-a-tokenizer
@@ -211,7 +212,9 @@ cards:
       - phases/19-capstone-projects/72-code-exec-metric
       - phases/19-capstone-projects/73-perplexity-calibration
       - phases/19-capstone-projects/74-leaderboard-aggregation
-    manuals: []
+    manuals:
+      - vllm-101
+      - sglang-101
   - id: multimodal
     title: Multimodal
     group: applications
@@ -265,6 +268,11 @@ cards:
       - phases/13-tools-and-protocols/15-mcp-security-tool-poisoning
       - phases/13-tools-and-protocols/16-mcp-security-oauth-2-1
       - phases/13-tools-and-protocols/18-mcp-auth-production
+      - phases/13-tools-and-protocols/22-skills-and-agent-sdks
+      - phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure
+      - phases/13-tools-and-protocols/25-skill-invocation-and-routing
+      - phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust
+      - phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability
       - phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content
       - phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control
       - phases/19-capstone-projects/13-mcp-server-with-registry
@@ -393,6 +401,7 @@ cards:
       - phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew
       - phases/10-llms-from-scratch/13-building-complete-llm-pipeline
       - phases/11-llm-engineering/13-production-app
+      - phases/14-agent-engineering/29-production-runtimes
       - phases/17-infrastructure-and-production/29-model-demo-interfaces
       - phases/19-capstone-projects/02-rag-over-codebase
       - phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline
@@ -423,6 +432,8 @@ cards:
       - sglang-101
       - miles-101
       - docker-sandboxes-101
+      - a2a-101
+      - reverse-engineering-101
   - id: coding
     title: Coding
     group: rounds
