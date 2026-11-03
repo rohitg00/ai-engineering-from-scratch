@@ -43,6 +43,11 @@ learner the task id and its path, and tell them to run the task grader. Do
 not grade the code yourself. Record the result that the grader prints, with
 mode `loop:<role-id>`.
 
+The grader ends with the line `N of M checks pass.` Map it to the Grade
+column: all checks pass is `strong`, some checks pass is `partial`, and no
+check passes, or the code does not load, is `missed`. A check with `ERROR`
+or `SKIP` does not pass.
+
 ## Run the loop
 
 1. Give the plan: each round, its minutes and its mode. Do not give the item
@@ -51,10 +56,11 @@ mode `loop:<role-id>`.
 3. Between rounds, give the level word for the round that ended, in one line.
    Keep the gap routes for the end.
 4. At the end, use Score and close for the whole loop. Write one Attempts
-   row for each round with mode `loop:<role-id>`.
+   row for each round that ran, with mode `loop:<role-id>`. Do not write a
+   row for a skipped round.
 
-Done when: each round has an Attempts row, and the close lists the open gaps
-by round.
+Done when: each round that ran has an Attempts row, and the close lists the
+open gaps by round and the rounds that you skipped.
 
 ## Behavioral rounds
 

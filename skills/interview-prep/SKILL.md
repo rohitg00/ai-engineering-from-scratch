@@ -79,7 +79,10 @@ follow [the scenario steps](references/scenario-mode.md).
 The facts come from the bank. The answers and the decisions come from the
 learner. Do not search the web for an answer, and do not grade against your
 own memory. If a card has no items yet, say so in one line and offer a card
-of the same role that has items. Do not write a new bank item in a session.
+of the same role that has items. If no card of the role has an item at the
+learner's level or one level below, say so, and offer a role that has items.
+Change the role only when the learner agrees, with a new Profile row. Do not
+write a new bank item in a session.
 
 ## Resume routing
 
@@ -103,15 +106,17 @@ to `learn`. The other route files belong to the skills that `learn` lists.
 | Review | due gaps exist, or the learner asks to review | [routing](references/routing.md) |
 | Score and close | the session ends, or the learner asks how ready they are | this file |
 
-If two modes fit, use the first one in the table that fits. A named item
-goes straight to Question or Scenario mode.
+If the learner names a mode, use that mode, even when a session is open.
+Otherwise, if two modes fit, use the first one in the table that fits. A
+named item goes straight to Question or Scenario mode.
 
 ## Setup mode
 
 Ask at most three questions. Each one has a default. If the learner skips a
 question, use its default and say which default you used.
 
-1. Which role? Offer the role ids from `roles.yaml`. Default: the role whose
+1. Which role? Offer only the role ids from `roles.yaml` whose cards hold at
+   least one item. Use the card indexes to count. Default: the role whose
    cards hold the most items.
 2. Which level? 1 screen, 2 working, 3 senior, 4 staff. Default: 2.
 3. How long is a session? Default: three items or 30 minutes.
@@ -120,8 +125,8 @@ Then create `INTERVIEW-LEARNING.md` from
 [the state file template](references/state-file.md), and add one Profile
 row.
 
-Done when: the file exists with one Profile row, and the next reply asks the
-first question.
+Done when: the file exists with one Profile row for a role that has items,
+and the next reply asks the first question.
 
 ## Question mode
 
@@ -167,26 +172,33 @@ strong. Then say what the learner got right in their words, what is
 missing, and which wrong answer they matched, if any. Now you can show the
 `Short answer`. Show the `Full answer` only when the learner asks.
 
+Then append the rows for the main answer, as the
+[state file](references/state-file.md) says: first one Gaps row for each
+gap, with its targets from [routing](references/routing.md), then the
+Attempts row for the item, which names those `G-` ids. The record then holds
+the main answer even when the learner stops here.
+
 ### 6. Ask the follow-ups
 
 Ask the `Follow-ups` one at a time, in the bank order. Each one gets steps
-3 to 5, against its `Expected:` text. Stop after a miss at a level above the
-learner's level, or after the last follow-up.
+3 to 5, against its `Expected:` text, and its own rows, with the item id and
+`#f<N>`. Stop after a miss at a level above the learner's level, or after the
+last follow-up.
 
 ### 7. Route the gaps
 
-Follow [routing](references/routing.md). Each gap goes to one to three
+Show the route of each gap that this item opened. Follow
+[routing](references/routing.md). Each gap goes to one to three
 targets from the item: its `lessons`, its `manuals` sections, its
 `practice` tasks or its `cheatsheet`. Show each target as a repo path and
 the next action in the host form.
 
 ### 8. Record
 
-Append rows to `INTERVIEW-LEARNING.md` as the
-[state file](references/state-file.md) says. Do not change an old row.
+Check that steps 5 and 6 appended their rows. Do not change an old row.
 
-Done when: one Attempts row exists for the item and one Gaps row exists for
-each gap.
+Done when: one Attempts row exists for the item and for each follow-up that
+you asked, and one Gaps row exists for each gap.
 
 ## Scenario mode
 
@@ -203,9 +215,9 @@ loop from the cards of the role in `roles.yaml`.
 
 ## Review mode
 
-Read the Gaps rows that are open and due. Ask one item from the card of each
-gap, at the same level. A grade of working or strong closes the gap with a
-new row. A lower grade sets a new due date with a new row. See
+Read the Gaps rows that are open and due. For each gap, ask an item that
+tests the missed claim. A reply that states the missed claim closes the gap
+with a new row. Otherwise, a new row sets a new due date. See
 [routing](references/routing.md).
 
 ## Score and close

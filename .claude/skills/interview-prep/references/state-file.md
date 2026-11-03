@@ -17,7 +17,9 @@ state file.
 5. Write the learner's words only in the `Note` cells, and keep each note to
    one line.
 6. If the learner asks to start over, rename the file to
-   `INTERVIEW-LEARNING-<YYYY-MM-DD>.md` after they confirm, then run Setup.
+   `INTERVIEW-LEARNING-<YYYY-MM-DD>.md` after they confirm. If that name
+   exists, use `INTERVIEW-LEARNING-<YYYY-MM-DD>-2.md`, then `-3`, and so on.
+   Never overwrite an archive. Then run Setup.
 
 ## Template
 
@@ -50,7 +52,7 @@ state file.
 | Mode | `question`, `scenario`, `loop:<role-id>` or `review` |
 | Grade | `missed`, `partial`, `working` or `strong` |
 | Hints | the number of hints that the learner asked for |
-| Gaps | the `G-` ids that this attempt opened, or `none` |
+| Gaps | the `G-` ids that this attempt opened or closed, or `none` |
 | Gap | a short name of the missing claim, in plain words |
 | Targets | one to three repo paths from the item, split with a comma |
 | Status | `open` or `closed` |

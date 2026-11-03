@@ -21,7 +21,7 @@ Do not show the list.
 | Grade | Word | Rule |
 |-------|------|------|
 | 3 | strong | Every main claim is there, with a reason from `Full answer`. No wrong answer is matched. Each number is from the item or its sources. |
-| 2 | working | The first main claim is there and the reason holds. One claim or one trade-off is missing. No wrong answer is matched. |
+| 2 | working | The first main claim is there and the reason holds. One claim or one trade-off is missing, or each claim is there but a number is unsupported. No wrong answer is matched. |
 | 1 | partial | The answer names the right area, but the first main claim is missing or only half right. |
 | 0 | missed | The answer matches a wrong answer, or it has no main claim. |
 

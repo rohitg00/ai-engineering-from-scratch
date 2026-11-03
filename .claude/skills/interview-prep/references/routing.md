@@ -55,11 +55,15 @@ been open.
 1. Read the current state, as [the state file](state-file.md) says.
 2. List the open gaps that are due, oldest first. Ask the learner if they read
    the target. Do not mark a gap closed on that answer alone.
-3. For each due gap, ask one item from the same card at the same level. Use a
-   new item when one exists. Ask the same item again only when no other item
-   fits, and say so.
-4. A grade of working or strong closes the gap with a new Gaps row. A lower
-   grade adds a new open row with the next due date.
+3. For each due gap, ask an item that tests the missed claim. Use a new item
+   from the same card at the same level when its `Short answer` or
+   `Full answer` holds that claim. Otherwise, ask again the prompt or the
+   follow-up of the old item that tests the claim, and say so. Do not use an
+   item that tests a different claim.
+4. Grade the reply on the missed claim. When the reply states the claim, close
+   the gap with a new Gaps row. Otherwise, add a new open row with the next
+   due date. The review Attempts row lists each `G-` id that it closed or
+   opened in its `Gaps` cell.
 
 Done when: each due gap has a new row, closed or open.
 

@@ -51,8 +51,9 @@ each change of hypothesis.
 
 ### 3. Questions
 
-Ask the numbered `Questions` one at a time. Ask a question after the listing
-that it needs. If a question needs no listing, ask it after the last one.
+Ask the numbered `Questions` one at a time. If you asked question 1 in step
+1, do not ask it again: grade the step 1 reply and start at question 2. Ask a
+question after the listing that it needs. If a question needs no listing, ask it after the last one.
 Grade each reply with [grading](grading.md), against the parts of
 `Walkthrough` and `Resolution` that answer it.
 
