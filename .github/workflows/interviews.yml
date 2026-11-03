@@ -82,28 +82,22 @@ jobs:
         env:
           BOT_COMMIT_PREFIX: "chore(interviews): regenerate the generated READMEs"
         run: |
-          node scripts/interviews/validate.js --write --check-readmes
-          git add -A interviews
-          if git diff --cached --quiet; then
-            echo "the generated READMEs are current"
-            exit 0
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "$BOT_COMMIT_PREFIX"
           branch="${GITHUB_REF#refs/heads/}"
           for attempt in 1 2 3 4 5; do
+            node scripts/interviews/validate.js --write --check-readmes
+            git add -A interviews
+            if git diff --cached --quiet; then
+              echo "the generated READMEs are current"
+              exit 0
+            fi
+            git commit -m "$BOT_COMMIT_PREFIX"
             if git push origin "HEAD:${branch}"; then
               exit 0
             fi
             git fetch origin "${branch}"
             git reset --hard "origin/${branch}"
-            node scripts/interviews/validate.js --write --check-readmes
-            git add -A interviews
-            if git diff --cached --quiet; then
-              echo "main already has current READMEs"
-              exit 0
-            fi
-            git commit -m "$BOT_COMMIT_PREFIX"
           done
-          echo "push failed after 5 attempts; the next push to main makes them again"
+          echo "push failed after 5 attempts"
+          exit 1

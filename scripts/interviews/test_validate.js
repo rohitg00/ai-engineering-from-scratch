@@ -9,7 +9,7 @@ const root = path.resolve(__dirname, '..', '..');
 const QUESTION = 'interviews/questions/inference-serving/prefix-cache-order.md';
 const SCENARIO = 'interviews/scenarios/prefix-cache-inflated-benchmark';
 
-function withCopy(mutate) {
+function withCopy(mutate, { readmes = false } = {}) {
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'aiefs-interviews-'));
   try {
     for (const name of ['phases', 'manuals', 'practice', 'cheatsheets', 'learning-paths']) fs.symlinkSync(path.join(root, name), path.join(temp, name));
@@ -18,7 +18,7 @@ function withCopy(mutate) {
     fs.copyFileSync(path.join(root, 'scripts', 'interviews', 'denylist.txt'), path.join(temp, 'scripts', 'interviews', 'denylist.txt'));
     mutate(temp);
     const loaded = bank.loadBank(temp);
-    return loaded.errors.concat(bank.staleReadmes(loaded));
+    return readmes ? loaded.errors.concat(bank.staleReadmes(loaded)) : loaded.errors;
   } finally {
     fs.rmSync(temp, { recursive: true, force: true });
   }
@@ -31,8 +31,8 @@ function edit(temp, file, from, to) {
   fs.writeFileSync(full, text.replace(from, to));
 }
 
-function expectError(mutate, pattern) {
-  const errors = withCopy(mutate);
+function expectError(mutate, pattern, options) {
+  const errors = withCopy(mutate, options);
   assert.ok(errors.some(error => pattern.test(error)), `expected ${pattern}, got:\n${errors.join('\n')}`);
 }
 
@@ -117,11 +117,11 @@ test('evidence listings must match their source and appear once in Evidence', ()
 });
 
 test('a generated README that is out of date fails, and --write makes it current', () => {
-  expectError(temp => edit(temp, 'interviews/README.md', '# Interviews and scenarios', '# Old title'), /interviews\/README.md is not current/);
+  expectError(temp => edit(temp, 'interviews/README.md', '# Interviews and scenarios', '# Old title'), /interviews\/README.md is not current/, { readmes: true });
   const errors = withCopy(temp => {
     edit(temp, 'interviews/README.md', '# Interviews and scenarios', '# Old title');
     bank.writeReadmes(bank.loadBank(temp));
-  });
+  }, { readmes: true });
   assert.deepEqual(errors, []);
 });
 
