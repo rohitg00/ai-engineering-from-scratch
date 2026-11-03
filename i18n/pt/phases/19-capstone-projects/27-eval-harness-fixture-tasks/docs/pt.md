@@ -47,7 +47,7 @@ O segundo é:`regex_match`O conteúdo do arquivo nomeado é combinado com um reg
 
 O terceiro é:`shell_exit_zero`O arnes executa um comando de shell (através da caixa de areia da lição 26) e passa a tarefa somente se o comando sair de zero.
 
-O arame executa todas as tarefas .`k`Pass@k é `1 - (1 - p)^k`onde p é a taxa de passagem empírica; o arnes também relata contagens brutas para que você possa detectar a variância. A latência é o relógio de parede por amostra. O custo é o que o agente auto-reporte (contagem de tokens, USD ou ambos); o arnes soma-o entre as amostras e apresenta os números por tarefa e agregados.
+O arame executa todas as tarefas .`k`Pass@k é `1 - (1 - p)^k`onde p é a taxa de passagem empírica; o arnes também relata contagens brutas para que você possa detectar a variância. Esta é a estimativa plug-in: usa a taxa medida p como se fosse a taxa verdadeira.`1 - C(n - c, k) / C(n, k)`Para`n`amostras com `c`A estimativa do plug-in é parcialmente baixa.`n = k`As amostras, como neste arnes, são estimadas de modo imparcial com 1 quando qualquer amostra passa e 0 quando nenhuma passa, mostrando assim apenas se qualquer amostra passa.`n > k`A latência é o relógio de parede por amostra. O custo é o que o agente auto-reporta (conto de tokens, USD, ou ambos); o arneso soma-o entre as amostras e apresenta os números por tarefa e agregados.
 
 ```figure
 pass-at-k

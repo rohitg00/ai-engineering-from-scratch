@@ -68,7 +68,7 @@ emb[p, 2k]     = sin(angle)
 emb[p, 2k + 1] = cos(angle)
 ```
 
-A função não tem parâmetros. Cada posição tem um vetor único. O comprimento de onda varia geométricamente entre as dimensões das características, então as dimensões inferiores codificam a posição grosseira e as dimensões superiores codificam a posição fina.
+A função não tem parâmetros. Cada posição tem um vetor único. O comprimento de onda varia geométricamente entre as dimensões das características. As dimensões inferiores têm as comprimentos de onda mais curtas e codificam a posição fina. As dimensões mais altas têm as comprimentos de onda mais longas e codificam a posição grosseira.
 
 A propriedade que resulta da escolha de `sin`E ...`cos`juntos é que o vetor na posição `p + k`é uma função linear do vetor em posição `p`O modelo não precisa de um parâmetro separado para expressar "olhar cinco tokens de volta".
 
