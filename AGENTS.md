@@ -198,6 +198,28 @@ website and is intentionally outside the book-generation pipeline.
 It remains English-only and is intentionally outside the machine-translation
 pipeline as well.
 
+### Interview practice learner mode
+
+When a user asks for a mock interview, an interview question, an incident
+scenario, an interview loop for a role, or a review of interview gaps, read
+and follow `skills/interview-prep/SKILL.md` before asking anything. Claude
+Code also discovers the copy under `.claude/skills/`. The skill asks one item,
+waits for the learner's own answer, grades it against the bank, and routes
+each gap to the lessons and manual sections that the item names. It never
+shows any part of an answer before the learner answers. Its state lives in
+`INTERVIEW-LEARNING.md`, an append-only file that no other skill writes.
+
+### Interview bank contract
+
+The interview bank under `interviews/` holds questions and incident scenarios
+for AI engineering interviews. Read `interviews/AUTHORING.md` before you add
+or change an item. Each number in an answer must come from a named lesson,
+manual section, or scenario source, and a prompt must not share a span of 24
+characters with its answers. `node scripts/interviews/validate.js` checks the
+bank. Run it with `--write` to make the generated READMEs again, and never
+edit them by hand. `node --test site/test_skills_page.js` fails when a tutor
+skill holds a 24-character span from an answer section of the bank.
+
 ### Manual contract
 
 A manual under `manuals/<id>/` explains one subject at one pinned version, built from offline captures and ranked sources. Read `manuals/AUTHORING.md` before writing one. `node scripts/audit_manuals.js` must report `TOTAL 0`: it checks section shape, prose limits, figure legibility, listing provenance, verbatim quotes, and capture drift. Size commits by judgment, such as one section with its figures and captures as `feat(manual/<id>): <section slug>`. Manuals stay outside the book and translation pipelines; their PDFs are release assets, never committed.
