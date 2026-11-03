@@ -12,7 +12,7 @@ lessons: [phases/17-infrastructure-and-production/21-ab-testing-llm-features, ph
 manuals: []
 practice: []
 cheatsheet: [progressive-delivery]
-related: [production-mlops/peeking-at-an-ab-test]
+related: [production-mlops/peeking-at-an-ab-test, production-mlops/hash-bucket-assignment]
 updated: 2026-11-03
 ---
 
