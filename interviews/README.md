@@ -42,9 +42,9 @@ Agent loops, protocols, teams of agents, sandboxes and evidence from binaries.
 
 | Card | Items | Planned |
 |---|---|---|
-| [Agents](questions/agents/README.md) | 26 | 15 |
+| Agents | 0 | 15 |
 | Protocols: MCP, A2A and skills | 0 | 15 |
-| [Multi-agent systems](questions/multi-agent/README.md) | 20 | 15 |
+| Multi-agent systems | 0 | 15 |
 | Sandboxes | 0 | 15 |
 | Evidence and reverse engineering | 0 | 15 |
 
