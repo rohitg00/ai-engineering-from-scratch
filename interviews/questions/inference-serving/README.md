@@ -7,9 +7,14 @@ Batching, the KV cache, prefix caching, schedulers and how to measure a serving 
 | Question | Kind | Level | Minutes |
 |---|---|---|---|
 | [The two phases of one request](prefill-and-decode.md) | Concept | 1 Screen | 6 |
+| [How speculative decoding keeps the output the same](how-speculation-keeps-the-output.md) | Concept | 2 Working | 8 |
 | [How many users fit in a 24,096-token pool](kv-pool-users-on-a-24-gb-card.md) | Estimate | 2 Working | 8 |
+| [Cached tokens at zero with a stable template](low-hit-rate-with-a-stable-template.md) | Debug | 2 Working | 8 |
 | [One token budget instead of two phases](one-token-budget-per-step.md) | Concept | 2 Working | 8 |
 | [Why the KV cache is a pool of 16-token blocks](paged-blocks-and-the-hash-chain.md) | Concept | 2 Working | 8 |
+| [Why the shared part of the prompt goes first](prefix-cache-order.md) | Concept | 2 Working | 8 |
+| [Pick the EAGLE3 draft depth for your concurrency](eagle3-draft-depth.md) | Trade-off | 3 Senior | 10 |
+| [Should the prefill chunk be smaller](smaller-prefill-chunks.md) | Trade-off | 3 Senior | 10 |
 | [A larger token budget at low load](token-budget-at-low-load.md) | Trade-off | 3 Senior | 10 |
 
 [All cards](../../README.md)
