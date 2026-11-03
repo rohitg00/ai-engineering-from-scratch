@@ -1,0 +1,11 @@
+title: the three health endpoints and the two settings behind them
+source: manuals/sglang-101/sections/7-1-operating-sglang.md
+lines: 86-90
+lang: text
+note: Find the endpoint that sends no request to the model, and the default of the generation setting.
+---
+- `/ready` returns 200 when the tokenizer manager is ready and 503 before that.
+- `/health` and `/health_generate` share one handler. They return 503 while the server starts and while it shuts down.
+- Otherwise the handler sends a one-token request with `max_new_tokens` 1 and waits for any output from the detokenizer.
+- `SGLANG_ENABLE_HEALTH_ENDPOINT_GENERATION` defaults to true, so a plain `/health` also generates that token.
+- The wait is `SGLANG_HEALTH_CHECK_TIMEOUT`, 20 s by default. With no output in that time, the handler marks the server `UnHealthy` and returns 503.

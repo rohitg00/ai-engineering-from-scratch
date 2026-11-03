@@ -1,0 +1,15 @@
+title: the same comparison on a cooled card, both servers on one day
+source: manuals/sglang-101/sections/4-1-forwardmode-and-cuda-graphs.md
+lines: 123-131
+lang: text
+note: Read the time per token and the P99 ITL columns, and the note on the last row.
+---
+| Concurrency | Median TPOT with graphs / without | Output tok/s with / without | P99 ITL with / without |
+|---|---|---|---|
+| 1 | 60.15 / 60.64 ms | 13.93 / 14.67 | 104 / 104 ms |
+| 8 | 66.01 / 66.60 ms | 112.60 / 111.67 | 70 / 68 ms |
+| 16 | 70.08 / 70.59 ms | 201.21 / 200.16 | 80 / 73 ms |
+| 32 | 95.65 / 94.12 ms | 270.61 / 270.81 | 103 / 87 ms |
+| 64, see the note below | 103.39 / 103.12 ms | 264.10 / 265.30 | 109 / 90 ms |
+
+The L4 servers captured decode graphs only up to 48 running requests. At 64 users, batches above 48 ran eager on both servers, so the last row does not measure graphs.

@@ -1,0 +1,12 @@
+title: the chat sweep with the share of requests that met the target
+source: manuals/vllm-101/sections/3-1-tune-chat-for-many-users.md
+lines: 19-24
+lang: text
+note: Read the output column and the share column together, row by row.
+---
+| Users, L4 full-clock session | Output tok/s | Median TTFT | P99 ITL | Share of requests that met the target | Median SM clock |
+|---|---|---|---|---|---|
+| 8 | 112.8 | 0.25 s | 67 ms | 75% | 1,485 MHz |
+| 16 | 201.3 | 0.29 s | 85 ms | 64% | 1,455 MHz |
+| 32 | 275.1 | 1.80 s | 613 ms | 0% | 1,275 MHz |
+| 64 | 242.3 | 11.18 s | 1,233 ms | 0% | 1,005 MHz |

@@ -1,0 +1,11 @@
+title: three seeds of the same 48-step run
+source: manuals/miles-101/sections/5-3-repeat-a-run.md
+lines: 15-19
+lang: text
+note: Read the spread of the reward over the last 8 steps.
+---
+| Seed | Reward, first 8 steps | Reward, last 8 steps | Length, first 8 | Length, last 8 | Cut share, first 8 | Cut share, last 8 |
+|---|---|---|---|---|---|---|
+| default (1234) | 0.636 | 0.758 | 724 | 447 | 0.33 | 0.08 |
+| 2 | 0.653 | 0.736 | 712 | 480 | 0.30 | 0.12 |
+| 3 | 0.614 | 0.766 | 734 | 456 | 0.34 | 0.09 |

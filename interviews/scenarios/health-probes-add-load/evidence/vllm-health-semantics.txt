@@ -1,0 +1,9 @@
+title: the first health check of a vLLM server after startup
+source: manuals/vllm-101/sections/1-2-check-that-the-server-is-healthy.md
+lines: 23-25
+lang: text
+note: No prefill batch follows the health request on this engine.
+---
+INFO:     Application startup complete.
+INFO:     127.0.0.1:35152 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34616 - "GET /v1/models HTTP/1.1" 200 OK

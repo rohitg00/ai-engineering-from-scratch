@@ -1,0 +1,11 @@
+title: the count of failed transfers and the benchmark summary at 8 requests per second
+source: manuals/sglang-101/capture/gpu/incidents/l4-pd-mooncake-tcp-queue.txt
+lines: 10-14
+lang: text
+note: Compare the successful requests with the retokenized tokens and the mean TTFT.
+---
+Prefill transfer failed lines: 2902
+Successful requests:                     240       
+Total generated tokens:                  30720     
+Total generated tokens (retokenized):    0         
+Mean TTFT (ms):                          0.00      
