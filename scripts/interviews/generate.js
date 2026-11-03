@@ -35,13 +35,13 @@ function visible(md) {
   return String(md || '').replace(/^\s*(?:```|~~~).*$/gm, ' ').replace(/`([^`]*)`/g, '$1').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_#>|]/g, '').replace(/\s+/g, ' ').trim();
 }
 
-function words(text) {
-  return new Set(visible(text).toLowerCase().split(/[^a-z0-9]+/).filter(word => word.length > 2 && !STOP_WORDS.has(word)));
+function words(text, flatten = visible) {
+  return new Set(flatten(text).toLowerCase().split(/[^a-z0-9]+/).filter(word => word.length > 2 && !STOP_WORDS.has(word)));
 }
 
-function jaccard(a, b) {
-  const left = words(a);
-  const right = words(b);
+function jaccard(a, b, flatten = visible) {
+  const left = words(a, flatten);
+  const right = words(b, flatten);
   if (!left.size || !right.size) return 0;
   let shared = 0;
   for (const word of left) if (right.has(word)) shared += 1;
@@ -144,7 +144,7 @@ function duplicateProblems(draft, others) {
   for (const other of others) {
     if (other.id === draft.id) problems.push(`the id ${draft.id} is taken by an existing question. Pick a new subject and a new id`);
     else if (jaccard(draft.title, other.title) >= TITLE_DUPLICATE) problems.push(`the title is too close to the existing question ${other.id} ("${other.title}"). Ask a different question`);
-    else if (jaccard(draft.prompt, other.prompt) >= PROMPT_DUPLICATE) problems.push(`the prompt is too close to the existing question ${other.id}. Ask a different question`);
+    else if (Math.max(jaccard(draft.prompt, other.prompt), jaccard(draft.prompt, other.prompt, plain)) >= PROMPT_DUPLICATE) problems.push(`the prompt is too close to the existing question ${other.id}. Ask a different question`);
   }
   return problems;
 }
@@ -328,7 +328,7 @@ async function main(argv, { client, root = ROOT, out = console, date = today() }
   const card = cards.get(named[0]);
   const bundle = sourceBundle(card, root);
   if (argv.includes('--dry-run')) {
-    const count = Math.min(MAX_ITEMS, Number(value('--count')) || 1);
+    const count = value('--count') === '' ? 1 : Math.max(0, Math.min(MAX_ITEMS, Number(value('--count')) || 0));
     out.log(`${card.id}: ${count} items, ${bundle.sources.length} sources, ${bundle.chars} characters${bundle.omitted.length ? `, ${bundle.omitted.length} left out` : ''}, ${existingItems(bank, card.id).length} existing questions`);
     return 0;
   }
@@ -338,9 +338,13 @@ async function main(argv, { client, root = ROOT, out = console, date = today() }
     return gate.code;
   }
   if (gate.capped) out.log(`The count is capped at ${MAX_ITEMS} items for one run.`);
+  const budget = value('--token-budget') === '' ? DEFAULT_TOKEN_BUDGET : Number(value('--token-budget'));
+  if (!Number.isInteger(budget) || budget < 0) {
+    out.error('--token-budget must be a whole number of 0 or more.');
+    return 1;
+  }
   const api = client || createClient();
   const model = resolveModel(value('--model'));
-  const budget = value('--token-budget') === '' ? DEFAULT_TOKEN_BUDGET : Number(value('--token-budget'));
   const roles = bank.roles.filter(role => role.cards.includes(card.id)).map(role => role.id);
   const system = systemPrompt(card, bundle, root);
   const others = existingItems(bank, card.id);

@@ -159,6 +159,8 @@ test('a near duplicate of an existing question is rejected', () => {
   assert.match(generate.duplicateProblems({ id: 'new', title: 'Find out why this agent loops forever', prompt: 'y' }, others)[0], /title is too close/);
   assert.match(generate.duplicateProblems({ id: 'new', title: 'Other', prompt: 'Read this.\n```text\nThe trace shows the same shell command again and again. A coding agent has run for two hours on a task.\n```' }, others)[0], /prompt is too close/);
   assert.match(generate.duplicateProblems({ id: 'new', title: 'Other', prompt: 'The trace shows the same shell command again and again. A coding agent has run for two hours on a task.' }, others)[0], /prompt is too close/);
+  const code = Array.from({ length: 40 }, (_, index) => `step_${index} = run_${index}()`).join('\n');
+  assert.match(generate.duplicateProblems({ id: 'new', title: 'Other', prompt: `A coding agent has run for two hours on a task. The trace shows the same shell command again and again.\n\n\`\`\`python\n${code}\n\`\`\`` }, others)[0], /prompt is too close/);
   assert.deepEqual(generate.duplicateProblems({ id: 'new', title: 'Pick a reranker pool size', prompt: 'How many passages go to the cross encoder?' }, others), []);
 });
 
@@ -197,6 +199,16 @@ test('a token budget of 0 makes no model call', async () => {
   await generate.main([CARD, '--token-budget', '0', '--summary', summary], { client, root, out: quiet, date: DATE });
   assert.equal(client.calls.length, 0);
   assert.equal(JSON.parse(fs.readFileSync(summary, 'utf8')).skipped, 1);
+});
+
+test('a token budget that is not a number stops the run before any model call', async () => {
+  const root = fixture();
+  const client = fakeClient([reply(ORIGINAL)]);
+  assert.equal(await generate.main([CARD, '--token-budget', 'typo'], { client, root, out: quiet, date: DATE }), 1);
+  assert.equal(client.calls.length, 0);
+  const lines = [];
+  await generate.main([CARD, '--count', '0', '--dry-run'], { root, out: { log: line => lines.push(line), error() {} } });
+  assert.match(lines[0], /^agents: 0 items,/);
 });
 
 test('a failed repair call keeps the tokens of the draft call in the summary', async () => {
