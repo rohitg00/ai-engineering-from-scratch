@@ -205,7 +205,11 @@ test('numbers figures per part and renders the print edition', () => {
   assert.match(html, /Fig\. 1\.1/);
   assert.match(html, /href="#fig-1-1">1\.1<\/a>/);
   assert.match(html, /string-set: mtitle content\(text\)/);
-  assert.match(html, /<span class="m-tok-key">&quot;kind&quot;<\/span>/);
+  const listing = html.match(/<figure class="m-listing"><div class="cb" data-kind="code" data-lang="json">[\s\S]*?<\/figure>/);
+  assert.ok(listing, 'a json listing renders as a code block inside its figure');
+  assert.match(listing[0], /<span class="m-listing-title">/);
+  assert.match(listing[0].replace(/<[^>]+>/g, ''), /"kind"/);
+  assert.doesNotMatch(listing[0], /data-code=/);
   assert.doesNotMatch(html, /class="m-(sources|listing-src|cite)"|>Sources:</);
   assert.doesNotMatch(html, /<span[^>]*>capture\/out\/task\.json/);
 });
