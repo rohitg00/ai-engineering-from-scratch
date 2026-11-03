@@ -210,10 +210,10 @@ Tenta:
 
 ```python
 print(pre_tokenize("Hello, world! Don't stop."))
-# [' Hello', ',', ' world', '!', " Don", "'t", ' stop', '.']
+# ['Hello', ',', ' world', '!', ' Don', "'t", ' stop', '.']
 ```
 
-O espaço principal permanece ligado à palavra. As contrações se dividem no apóstrofo. A pontuação se torna sua própria peça.
+O espaço principal permanece ligado à palavra que o segue.`Hello`As contrações se dividem no apóstrofo. A pontuação se torna sua própria peça.
 
 ### Passo 3: BPE em sequências de byte
 
