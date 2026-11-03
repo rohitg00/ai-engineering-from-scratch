@@ -32,9 +32,9 @@ With a KL term the gold curve still rises, peaks and falls as the policy moves f
 
 Suppose the proxy's error has heavy tails: somewhere under the reference model there are inputs the proxy loves far more than the gold does. The KL constraint limits the total distance between the policy and the reference. It does not stop the policy from concentrating that allowed distance on exactly those inputs, because they already have support under the reference. The result is a policy that scores arbitrarily well on the proxy and no better than baseline on the gold.
 
-### Why the condition is ordinary
+### Why the condition is plausible
 
-A reward model is a bounded measurement of an unbounded world. Any such measurement has heavy tailed error in its tails; that is what a tail is. The assumption is not exotic.
+A reward model is a bounded measurement of an unbounded world. The lesson argues that such a measurement has heavy tailed error in its tails, so the assumption is not exotic. It is still an assumption: for each proxy, measure the tail of the proxy to gold gap on held out labels before you rely on a KL budget.
 
 ### What helps, partially
 
@@ -53,7 +53,7 @@ A reward model is a bounded measurement of an unbounded world. Any such measurem
 ## Wrong answers
 
 - "Small KL means small reward hacking." KL bounds the drift, not its direction; the policy can spend the budget on the proxy's tail errors.
-- "Heavy tails are an exotic assumption." Any bounded measurement of an unbounded quantity has heavy tailed error in the tails.
+- "Heavy tails are an exotic assumption." The lesson argues they are ordinary for a bounded reward model; measure the proxy to gold gap instead of assuming the tail is light.
 - "Use the direct preference loss, it has no reward model." It has an implicit one and its own over optimization curve.
 
 ## Taught in

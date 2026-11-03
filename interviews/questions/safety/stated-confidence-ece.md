@@ -20,7 +20,7 @@ Your refusal evaluation asks the model to state a confidence with each answer. I
 
 ## Short answer
 
-The gap in that bin is about 0.3: a stated 0.9 against an observed 60 percent. The full ECE bins every prompt by stated confidence in tenths, computes the accuracy in each bin, and averages the absolute gaps weighted by bin size. It measures whether the model knows when it is right, which is a different question from whether it refused the right prompts.
+The gap in that bin is about 0.3: a stated 0.9 against an observed 60 percent. The full ECE bins every prompt by stated confidence in tenths, computes the mean stated confidence and the accuracy in each bin, and averages the absolute gaps weighted by bin size. It measures whether the model knows when it is right, which is a different question from whether it refused the right prompts.
 
 ## Full answer
 
@@ -31,8 +31,8 @@ The harness parses a confidence token from the model output. The scripted mock e
 ### Building the number
 
 1. Put each prompt in a bin by its stated confidence, in tenths.
-2. In each bin compute the accuracy: the share of prompts where the decision was right, refusal on unsafe and an answer on safe.
-3. Take the absolute difference between the bin's confidence and its accuracy.
+2. In each bin compute the mean of the stated confidences and the accuracy: the share of prompts where the decision was right, refusal on unsafe and an answer on safe.
+3. Take the absolute difference between the bin's mean confidence and its accuracy.
 4. Average the differences weighted by the number of prompts in each bin.
 
 A bin that says 0.9 and scores 60 percent contributes a gap of about 0.3 times its share of the prompts.

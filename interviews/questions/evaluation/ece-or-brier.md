@@ -20,7 +20,7 @@ Your multiple choice eval reports an expected calibration error of 0.02 on a hun
 
 ## Short answer
 
-ECE bins predictions by confidence and averages the gap between confidence and accuracy, weighted by bin size. With ten bins and a hundred predictions you cannot tell 0.02 from noise, and the average can be low while some bins are overconfident and others underconfident. Add the Brier score, the mean squared error between confidence and outcome per prediction, and report how many bins were populated.
+ECE bins predictions by confidence and averages the gap between confidence and accuracy, weighted by bin size. With ten bins and a hundred predictions you cannot tell 0.02 from noise, and inside one bin overconfident and underconfident predictions can offset each other in the bin average. Add the Brier score, the mean squared error between confidence and outcome per prediction, and report how many bins were populated.
 
 ## Full answer
 
@@ -30,7 +30,7 @@ Sort the predictions into equal width confidence bins, ten by the publishing con
 
 ### What it misses
 
-ECE is biased by bin count and sample size. It also cancels: a model that is overconfident in half the bins and underconfident in the other half can score a low ECE while it is badly calibrated everywhere.
+ECE is biased by bin count and sample size. The absolute gap per bin stops gaps in different bins from cancelling, but the bin means can hide spread: overconfident and underconfident predictions in the same bin offset each other, so a low ECE can hide poor calibration at the level of single predictions.
 
 ### What Brier adds
 
@@ -47,7 +47,7 @@ For multiple choice, a softmax over the option log likelihoods. For free text, t
 ## Follow-ups
 
 - **Level 3:** A predictor says one half on every item. What is its Brier score, and why? Expected: exactly 0.25, because the squared error is 0.25 whether the outcome is zero or one.
-- **Level 3:** Why can ECE be low while calibration is bad? Expected: overconfident and underconfident bins cancel in the average; Brier penalizes each prediction's error.
+- **Level 3:** Why can ECE be low while calibration is bad? Expected: inside one bin, overconfident and underconfident predictions offset each other in the bin means; the absolute gap stops cancelling only across bins, and Brier penalizes each prediction's error.
 - **Level 4:** Why is calibration a per model report and not a per task metric? Expected: the runner accumulates confidence and correctness pairs across the whole eval and computes it once; per task bins would be nearly empty.
 - **Level 4:** One model has higher accuracy and a worse Brier score than a rival. Which do you deploy? Expected: the capstone argues for the better calibrated one, because it reports its uncertainty reliably; confirm with the reliability diagram.
 

@@ -20,7 +20,7 @@ Design the evaluation gate that runs on every pull request that touches prompts 
 
 ## Short answer
 
-Trigger on changes to the prompt and model paths, run a fixed versioned suite of about 200 cases through the current and the proposed prompt, score four anchored criteria with a frozen calibrated judge, and compare with intervals. Block when any criterion regresses beyond the threshold, and store the results as artifacts. With a small judge tier a 200 case run costs about 4 dollars, so ten merges a week cost about 160 dollars a month.
+Trigger on changes to the prompt and model paths, run a fixed versioned suite of about 200 cases through the proposed prompt, score four anchored criteria with a frozen calibrated judge, and compare with the stored scores of the last known good baseline. Block when any criterion drops beyond the threshold and the interval on the difference excludes zero, and store the results as artifacts. With a small judge tier a 200 case run costs about 4 dollars, so ten merges a week cost about 160 dollars a month.
 
 ## Full answer
 
@@ -32,7 +32,7 @@ Trigger on changes to the prompt and model paths, run a fixed versioned suite of
 
 ### What blocks
 
-Run the baseline prompt and the new prompt on the same suite. For each criterion compute the mean difference with bootstrap intervals and the pass rate at 4 or more with a Wilson interval. The lesson marks a criterion as a regression when the mean falls by more than 0.3, and the decision is block if any criterion regresses. The report lists the cases that degraded so the author can read them.
+Score the baseline once, when it becomes the last known good version, and store its scores. Each pull request scores only the new prompt on the same suite version. For each criterion compute the mean difference with bootstrap intervals and the pass rate at 4 or more with a Wilson interval. The lesson's code marks a criterion as a regression when the mean falls by more than 0.3, and its workflow ships only when no criterion shows a statistically significant regression. Require both before you block: a drop of more than 0.3 and an interval on the difference that excludes zero. The report lists the cases that degraded so the author can read them.
 
 ### What it costs
 
@@ -43,7 +43,7 @@ Run the baseline prompt and the new prompt on the same suite. For each criterion
 | 500 cases, 4 criteria | about 10 dollars | about 10 minutes |
 | 1000 cases, 4 criteria | about 20 dollars | about 20 minutes |
 
-Ten pull requests a week at 200 cases is about 160 dollars a month. The lesson's counter example is a prompt change that cut answer completeness by 34 percent and went unnoticed for 11 days.
+Ten pull requests a week at 200 cases is about 160 dollars a month, because each pull request pays for one run and reuses the stored baseline scores. If you score the baseline again on every pull request, the cost doubles. The lesson's counter example is a prompt change that cut answer completeness by 34 percent and went unnoticed for 11 days.
 
 ### How to keep noise out
 

@@ -20,7 +20,7 @@ Your detector's substring rules catch "ignore all instructions" in plain text. A
 
 ## Short answer
 
-Add a normalize pass that produces a cleaned working copy: strip zero width and bidirectional control characters, lowercase, decode tokens that look like base64, rot13 or hex, and map leet digits back to letters. Run the rules on both the raw and the normalized text, because the zero width insertions are themselves an encoding trick signal that the cleaned copy no longer shows.
+Add a normalize pass that produces a cleaned working copy: strip zero width and bidirectional control characters, decode tokens that look like base64 before you lowercase, because base64 is case sensitive, then lowercase, decode hex and rot13, and map leet digits back to letters. Run the rules on both the raw and the normalized text, because the zero width insertions are themselves an encoding trick signal that the cleaned copy no longer shows.
 
 ## Full answer
 
@@ -31,11 +31,11 @@ Encoding tricks abuse the surface form of forbidden tokens. The words are the sa
 ### The pass
 
 1. Remove zero width characters and bidirectional controls from the working copy.
-2. Lowercase the copy.
-3. For any token of 16 or more characters that looks like base64, try to decode it and replace it with the decoded text on success.
-4. Build the rot13 image of the text and keep it only when it has more dictionary like words than the input, judged against a small built in word list. Every string has a rot13 image, so the check keeps benign text from turning into noise.
-5. Decode hex runs the same way.
-6. Map leet digits to their letters.
+2. For any token of 16 or more characters that looks like base64, try to decode it and replace it with the decoded text on success. Do this before the lowercase step, because base64 is case sensitive and a lowercased token decodes to different bytes.
+3. Lowercase the copy.
+4. Decode hex runs the same way.
+5. Map leet digits to their letters.
+6. Build the rot13 image of the text and keep it only when it has more dictionary like words than the input, judged against a small built in word list. Every string has a rot13 image, so the check keeps benign text from turning into noise.
 
 ### What to keep
 

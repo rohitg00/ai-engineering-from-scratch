@@ -20,7 +20,7 @@ A colleague's perplexity eval computes the cross entropy at every position of ev
 
 ## Short answer
 
-There are three bugs: pad positions sit in the denominator, so the loss is diluted and the number improves with more padding, which is what a larger batch brings. Averaging per batch under weights short sequences. And the targets must shift by one, because the logits at a position predict the next token. Sum the loss over real target positions across the corpus, count those positions, divide once, and exponentiate.
+There are three bugs: pad positions sit in the denominator, so the loss is diluted and the number improves with more padding, which is what a larger batch brings. Averaging per batch gives each token of a short batch more weight than each token of a long batch. And the targets must shift by one, because the logits at a position predict the next token. Sum the loss over real target positions across the corpus, count those positions, divide once, and exponentiate.
 
 ## Full answer
 
@@ -57,7 +57,7 @@ A perplexity below one is impossible; it means the adapter returned log p instea
 ## Wrong answers
 
 - "Masking the loss is enough." The mask must also leave the denominator; counting pad positions dilutes the mean.
-- "Averaging per batch perplexities is close enough." It under weights short sequences and depends on the batch composition; the sum then divide form is the definition.
+- "Averaging per batch perplexities is close enough." It gives short sequences more weight per token and depends on the batch composition; the sum then divide form is the definition.
 - "A lower number is always a better model." It is a better fit to this text; it says nothing about the task.
 
 ## Taught in

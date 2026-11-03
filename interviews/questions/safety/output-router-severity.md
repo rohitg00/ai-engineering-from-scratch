@@ -20,7 +20,7 @@ Every request to your assistant passes an input detector, and yet a response las
 
 ## Short answer
 
-Put three classifiers on the model output behind one router: toxicity by rules, personal data by regexes for emails, phone numbers and card shaped strings, and instruction leakage by trigram overlap with the known system prompt. Each returns a severity, and the router takes the maximum and applies one action: block on high, redact on medium, warn on low, log on none. Run the classifiers in parallel with token streaming and hold the final chunk until the verdict arrives.
+Put three classifiers on the model output behind one router: toxicity by rules, personal data by regexes for emails, phone numbers and card shaped strings, and instruction leakage by trigram overlap with the known system prompt. Each returns a severity, and the router takes the maximum and applies one action: block on high, redact on medium, warn on low, log on none. Run the classifiers in parallel with token streaming and hold the final chunk until the verdict arrives. Earlier chunks have already shipped, so where a block or a redaction must cover the whole response, hold the full response and accept the latency.
 
 ## Full answer
 
@@ -49,14 +49,14 @@ Block wins. Redact plus warn is redact. Each classifier owns its redactor, so an
 
 ### Latency
 
-The classifiers run in parallel with token streaming. The gate buffers the final chunk, applies the verdict and then flushes. With rule based classifiers the added time is close to zero; neural classifiers add their own time, and the plumbing stays the same.
+The classifiers run in parallel with token streaming. The gate buffers the final chunk, applies the verdict and then flushes. The chunks before it have already reached the client, so an email or a system prompt span in an early chunk ships before a block or a redaction can act. When that exposure is not acceptable, hold the full response before the first flush and accept the added latency. With rule based classifiers the added time is close to zero; neural classifiers add their own time, and the plumbing stays the same.
 
 ## Follow-ups
 
 - **Level 2:** Why does block win when two classifiers disagree? Expected: the router takes the maximum severity, so the most dangerous finding sets the action.
 - **Level 2:** Why does each classifier own its redactor? Expected: an output with both a slur and an email must flow through both redactors, and independence makes the composition automatic.
 - **Level 3:** How does the leakage check work without a model? Expected: it holds the system prompt and measures trigram overlap with the output; high overlap is the leak signal and header like lines are removed.
-- **Level 3:** The product team says output checks add latency they cannot afford. Expected: the classifiers run in parallel with streaming and only the final chunk waits; the alternative is a one shot bypass for every new attack family.
+- **Level 3:** The product team says output checks add latency they cannot afford. Expected: the classifiers run in parallel with streaming and only the final chunk waits, but earlier chunks ship before the verdict; hold the full response where that exposure is not acceptable, because the alternative is a one shot bypass for every new attack family.
 
 ## Wrong answers
 

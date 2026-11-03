@@ -58,7 +58,7 @@ Not a sandbox for untrusted code from the open web, not a home for stateful task
 
 ## Follow-ups
 
-- **Level 3:** Why is the denylist not the main control? Expected: determined code can escape any in process guard; the wall clock timeout and the output cap bound the damage whatever the code does.
+- **Level 3:** Why is the denylist not the main control? Expected: determined code can escape any in process guard; the wall clock timeout and the output cap bound run time and output size whatever the code does. They do not bound memory or file writes, so production adds a read only file system and network isolation, or a container.
 - **Level 3:** A candidate prints inside an infinite loop. Which control fires? Expected: the output cap at 256 KB, recorded as an error with the detail output overflow; the timeout would fire later.
 - **Level 4:** How should the leaderboard treat timeouts, zero or missing? Expected: a documented choice; zero if slow code is wrong for the task, missing if you measure correctness alone, and the exit reason lets you report both.
 - **Level 4:** When do assertion strings stop being enough? Expected: when the eval should match production CI; replace them with real unit test files in a container and stop calling the strings tests.
