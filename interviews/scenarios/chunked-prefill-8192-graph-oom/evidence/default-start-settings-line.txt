@@ -1,0 +1,7 @@
+title: the settings line of the default start
+source: manuals/sglang-101/capture/gpu/out-l4/server-default.log
+lines: 27-27
+lang: text
+note: Read chunked_prefill_size and available_gpu_mem.
+---
+[2026-10-17 14:43:36] max_total_num_tokens=22939, chunked_prefill_size=4096, max_prefill_tokens=16384, max_running_requests=2048, context_len=40960, available_gpu_mem=1.31 GB

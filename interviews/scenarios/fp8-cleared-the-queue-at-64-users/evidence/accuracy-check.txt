@@ -1,0 +1,14 @@
+title: GSM8K accuracy on 500 questions for the four SGLang configs
+source: manuals/sglang-101/capture/gpu/out-l4/gsm8k-fp8-accuracy.txt
+lines: 6-13
+lang: text
+note: Read the sentence about scales first, then the width of each interval.
+---
+Neither checkpoint carries KV scales, so the FP8 KV runs used a scale of 1.0.
+vLLM FP8 KV runs used --attention-backend TRITON_ATTN, because the FlashInfer FP8 prefill kernel does not build on this host.
+
+engine   config                     correct   accuracy   Wilson 95% interval
+SGLang   BF16                       458/500   91.6%      88.8 to 93.7
+SGLang   FP8 weights                456/500   91.2%      88.4 to 93.4
+SGLang   FP8 KV cache               458/500   91.6%      88.8 to 93.7
+SGLang   FP8 weights + FP8 KV       460/500   92.0%      89.3 to 94.1

@@ -1,0 +1,10 @@
+title: rea evidence-import on the bundle that 6.7.0 wrote
+source: manuals/reverse-engineering-101/capture/out/13-evidence-import.json
+lang: json
+note: The counts of a bundle that validates.
+---
+{
+  "imported": 8,
+  "unknowns_added": 0,
+  "total": 8
+}

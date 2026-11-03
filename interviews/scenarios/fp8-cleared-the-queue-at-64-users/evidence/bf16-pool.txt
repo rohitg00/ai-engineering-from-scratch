@@ -1,0 +1,7 @@
+title: the BF16 server at startup: weights and pool
+source: manuals/sglang-101/capture/gpu/out-l4/server-load-default.log
+lang: text
+note: The weights take 15.28 GB and the pool holds 24094 tokens.
+---
+[2026-10-16 19:26:38] Load weight end. elapsed=3.92 s, type=Qwen3ForCausalLM, avail mem=6.59 GB, mem usage=15.28 GB.
+[2026-10-16 19:26:40] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 24094, K size: 1.65 GB, V size: 1.65 GB

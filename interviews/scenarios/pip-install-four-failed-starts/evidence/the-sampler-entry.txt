@@ -1,0 +1,11 @@
+title: the troubleshooting entry for the sampler build on the other engine
+source: manuals/vllm-101/sections/7-1-troubleshoot-by-symptom.md
+lines: 61-65
+lang: text
+note: The fix line gives the environment variable that skips the sampler build.
+---
+### The sampler fails to compile after you set CUDA_HOME
+
+- **Cause:** the toolkit on the host does not match the CUDA build of PyTorch, so the FlashInfer sampler cannot compile. With a host toolkit at nvcc 13.4, we saw this on our L4 node.
+- **Check:** the error says `CUDA compiler and CUDA toolkit headers are incompatible`.
+- **Fix:** install the toolkit version that matches your PyTorch build. Or start with `VLLM_USE_FLASHINFER_SAMPLER=0`, as [the FP8 KV cache page](#s-fit-more-users-with-an-fp8-kv-cache) does.

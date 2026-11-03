@@ -1,0 +1,9 @@
+title: how eval on the training engines works, and what happened on the GB10
+source: manuals/miles-101/sections/6-2-run-a-separate-eval-fleet.md
+lines: 31-33
+lang: text
+note: The second paragraph is the manual's own record of this failure.
+---
+Rollout stops while the eval runs, and requests that are already running finish first. The engines already hold the current weights, so no extra weight transfer happens. Use this mode on one GPU, and for small eval sets.
+
+This command did not work on our GB10. We ran it twice on a 2-step run with `--eval-interval 1`. Both times the first eval sent the 1,319 test questions, the router answered with `503 Service Unavailable`, and the job stopped before step 0. We did not find the cause. Test the eval on a 2-step run before you add it to a long run.

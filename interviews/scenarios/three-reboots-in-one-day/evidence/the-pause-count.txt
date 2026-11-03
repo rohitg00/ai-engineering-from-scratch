@@ -1,0 +1,11 @@
+title: the heat guard and the pause count in the lab notes
+source: manuals/miles-101/sections/r-3-lab-notes.md
+lines: 53-57
+lang: text
+note: Read the thresholds and the total number of pauses.
+---
+## The heat guard
+
+The GB10 runs hot under sustained load, so a script pauses the Miles container when the GPU reaches 84 C. It resumes the container when the GPU is at 74 C or below after at least 45 seconds, or after 120 seconds at most. On its first day the limits were 80 C and 68 C, and they changed to 84 C and 74 C that morning. When the guard stops, it resumes a paused container first, so no run stays paused.
+
+The pause log holds 1,005 pauses, each with its resume, up to 2026-10-22.

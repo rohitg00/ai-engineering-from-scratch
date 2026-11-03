@@ -1,0 +1,14 @@
+title: the default chunk and the largest decode batch, by GPU memory
+source: manuals/sglang-101/sections/4-1-forwardmode-and-cuda-graphs.md
+lines: 50-57
+lang: text
+note: Find the row for a card of 20 to 35 GB.
+---
+| GPU memory | Example GPUs | Decode `max_bs` at TP below 4 | At TP 4 or more | `chunked_prefill_size` |
+|---|---|---|---|---|
+| under 20 GB | T4, RTX 4080 | 8 | 8 | 2048 |
+| 20 to 35 GB | A10, RTX 4090, RTX 5090 | 48 | 160 | 4096 |
+| 35 to 60 GB | A100 40 GB, L40 | 32 | 160 | 4096 |
+| 60 to 90 GB | H100, A100 80 GB | 256 | 512 | 8192 |
+| 90 to 160 GB | H200 | 256 | 512 | 8192 |
+| 160 GB and more | B200, MI300X | 512 | 512 | 16384 |

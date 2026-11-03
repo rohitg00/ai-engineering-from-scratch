@@ -1,0 +1,16 @@
+title: the waves workload on the L4 by length ratio, both engines
+source: manuals/vllm-101/sections/r-7-lab-notes.md
+lines: 98-107
+lang: text
+note: Read the P99 ITL column at ratio 1, then at ratio 0.
+---
+### L4, waves: 64 prompts at 16 users, by length ratio (1.0 means equal lengths)
+
+| Ratio | Config | Output tok/s (min to max) | Median TTFT | Median TPOT | P99 ITL (min to max) | Median SM clock |
+|---|---|---|---|---|---|---|
+| 0 | `vllm` | 174.4 (164.1 to 195.0) | 284 ms | 75.0 ms | 202 (180 to 215) ms | 1,493 MHz |
+| 0 | `sglang` | 158.2 (146.7 to 176.9) | 283 ms | 86.7 ms | 302 (287 to 305) ms | 1,485 MHz |
+| 0.5 | `vllm` | 169.6 (165.2 to 173.4) | 353 ms | 81.4 ms | 191 (189 to 219) ms | 1,455 MHz |
+| 0.5 | `sglang` | 159.6 (155.8 to 162.0) | 325 ms | 87.8 ms | 363 (360 to 370) ms | 1,470 MHz |
+| 1 | `vllm` | 181.7 (181.7 to 182.8) | 1,499 ms | 76.8 ms | 502 (500 to 503) ms | 1,410 MHz |
+| 1 | `sglang` | 182.3 (181.5 to 182.7) | 1,775 ms | 74.7 ms | 81 (79 to 81) ms | 1,440 MHz |

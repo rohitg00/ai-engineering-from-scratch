@@ -1,0 +1,9 @@
+title: the weights and the pool of one start on unified memory
+source: manuals/sglang-101/capture/gpu/out-gb10/server-default.log
+lines: 18-20
+lang: text
+note: The pool takes tens of GB in about three seconds, and every other program on the machine sees that memory go.
+---
+[2026-10-17 14:18:29] Load weight end. elapsed=323.61 s, type=Qwen3MoeForCausalLM, avail mem=54.84 GB, mem usage=57.75 GB.
+[2026-10-17 14:18:32] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 227243, K size: 10.40 GB, V size: 10.40 GB
+[2026-10-17 14:18:32] Memory pool end. avail mem=31.22 GB

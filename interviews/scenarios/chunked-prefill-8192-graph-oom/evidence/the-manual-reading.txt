@@ -1,0 +1,7 @@
+title: how the manual reads the failed start
+source: manuals/sglang-101/sections/2-2-the-scheduler-loop-and-schedule-policy.md
+lines: 156-156
+lang: text
+note: One paragraph. The real error is not the last line of the log.
+---
+The other direction failed on the L4 at startup. With a chunk of 8,192, the KV pool took the same 24,094 tokens as before. The prefill graph for 8,192 tokens then needed more than the 2.33 GB that remained. The last line of the log is a PyTorch assert that asks for a bug report. The real error is the out-of-memory line above it.

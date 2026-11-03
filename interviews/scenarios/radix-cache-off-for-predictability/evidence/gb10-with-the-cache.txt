@@ -1,0 +1,35 @@
+title: the shared-prefix run on the GB10 with the radix cache on
+source: manuals/sglang-101/capture/gpu/out-gb10/bench-shared-prefix.txt
+lines: 11-39
+lang: text
+note: Read the duration, the input token count, the output throughput and the median TTFT.
+---
+============ Serving Benchmark Result ============
+Backend:                                 sglang    
+Traffic request rate:                    inf       
+Max request concurrency:                 8         
+Successful requests:                     64        
+Benchmark duration (s):                  28.97     
+Total input tokens:                      146646    
+Total input text tokens:                 146646    
+Total generated tokens:                  4096      
+Total generated tokens (retokenized):    3913      
+Request throughput (req/s):              2.21      
+Input token throughput (tok/s):          5061.63   
+Output token throughput (tok/s):         141.38    
+Peak output token throughput (tok/s):    216.00    
+Peak concurrent requests:                16        
+Total token throughput (tok/s):          5203.01   
+Concurrency:                             8.00      
+----------------End-to-End Latency----------------
+Mean E2E Latency (ms):                   3619.45   
+Median E2E Latency (ms):                 3592.55   
+P90 E2E Latency (ms):                    4616.12   
+P95 E2E Latency (ms):                    4616.30   
+P99 E2E Latency (ms):                    4616.49   
+---------------Time to First Token----------------
+Mean TTFT (ms):                          712.02    
+Median TTFT (ms):                        690.96    
+P90 TTFT (ms):                           1146.81   
+P95 TTFT (ms):                           1944.53   
+P99 TTFT (ms):                           2051.54   

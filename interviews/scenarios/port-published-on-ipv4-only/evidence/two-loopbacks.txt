@@ -1,0 +1,13 @@
+title: the same URL on the two loopback addresses
+source: manuals/docker-sandboxes-101/capture/out/05-ports-curl.txt
+lang: console
+note: Read the status code and the exit code of each request.
+---
+$ curl -sS -o /dev/null -w '%{http_code}\n' http://127.0.0.1:18081/README.md
+200
+[exit 0]
+
+$ curl -sS -o /dev/null -w '%{http_code}\n' 'http://[::1]:18081/README.md'
+curl: (7) Failed to connect to ::1 port 18081 after <n> ms: Couldn't connect to server
+000
+[exit 7]

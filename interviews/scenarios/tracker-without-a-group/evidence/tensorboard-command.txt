@@ -1,0 +1,7 @@
+title: the flags for the other tracker
+source: manuals/miles-101/sections/5-1-read-the-run.md
+lines: 51-51
+lang: text
+note: A folder and one flag.
+---
+-e TENSORBOARD_DIR=/root/lab/runs/plain/tb -e MILES_EXTRA_ARGS="--use-tensorboard"

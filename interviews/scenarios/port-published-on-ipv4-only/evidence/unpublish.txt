@@ -1,0 +1,16 @@
+title: two unpublish calls and the empty listing
+source: manuals/docker-sandboxes-101/capture/out/05-ports-unpublish.txt
+lang: console
+note: The spec of each unpublish matches the spec that published it.
+---
+$ sbx ports m101-demo --unpublish 18081:8080
+Unpublish requested for port 18081 -> 8080
+[exit 0]
+
+$ sbx ports m101-demo --unpublish <port>:8080/tcp
+Unpublish requested for port <port> -> 8080/tcp
+[exit 0]
+
+$ sbx ports m101-demo --json
+[]
+[exit 0]

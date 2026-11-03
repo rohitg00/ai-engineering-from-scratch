@@ -1,0 +1,22 @@
+title: the L4 rate sweep from 0.5 to 16 requests per second
+source: manuals/vllm-101/sections/r-7-lab-notes.md
+lines: 81-96
+lang: text
+note: Follow the median TTFT column down the table, then read the output and the clock columns.
+---
+### L4, rate: requests each second, 512 prompt and 128 output tokens
+
+| Rate | Config | Output tok/s (min to max) | Median TTFT | Median TPOT | P99 ITL (min to max) | Median SM clock |
+|---|---|---|---|---|---|---|
+| 0.5 | `vllm` | 70.6 (67.2 to 92.3) | 317 ms | 72.7 ms | 214 (208 to 215) ms | 1,485 MHz |
+| 0.5 | `sglang` | 70.6 (67.2 to 92.3) | 284 ms | 74.7 ms | 235 (234 to 235) ms | 1,485 MHz |
+| 1 | `vllm` | 123.6 (118.4 to 154.5) | 180 ms | 68.2 ms | 77 (77 to 79) ms | 1,485 MHz |
+| 1 | `sglang` | 123.3 (118.4 to 153.6) | 166 ms | 74.0 ms | 114 (113 to 166) ms | 1,500 MHz |
+| 2 | `vllm` | 227.8 (216.5 to 231.8) | 233 ms | 88.7 ms | 355 (351 to 358) ms | 1,418 MHz |
+| 2 | `sglang` | 226.3 (215.5 to 230.1) | 221 ms | 99.9 ms | 387 (384 to 429) ms | 1,433 MHz |
+| 4 | `vllm` | 286.6 (283.7 to 291.7) | 8,304 ms | 126.9 ms | 621 (620 to 627) ms | 1,245 MHz |
+| 4 | `sglang` | 257.5 (254.9 to 259.7) | 9,575 ms | 115.1 ms | 680 (383 to 811) ms | 1,350 MHz |
+| 8 | `vllm` | 261.8 (259.4 to 264.3) | 27,510 ms | 126.0 ms | 1,184 (1,089 to 1,361) ms | 1,035 MHz |
+| 8 | `sglang` | 253.9 (250.7 to 260.7) | 37,211 ms | 105.2 ms | 277 (259 to 317) ms | 1,215 MHz |
+| 16 | `vllm` | 205.8 (204.8 to 208.4) | 94,322 ms | 185.2 ms | 1,448 (1,448 to 1,483) ms | 450 MHz |
+| 16 | `sglang` | 218.2 (215.6 to 229.0) | 97,542 ms | 115.2 ms | 137 (120 to 163) ms | 600 MHz |

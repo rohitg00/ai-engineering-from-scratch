@@ -1,0 +1,9 @@
+title: what the specification and the implementations say about a repeated cancel
+source: manuals/a2a-101/sections/4-4-cancel-task-and-terminal-states.md
+lines: 61-63
+lang: text
+note: Two sections of the specification disagree, and the last line gives the call that settles it.
+---
+A second `CancelTask` gets `TaskNotCancelableError`, `-32002`, from the kit and the reference SDK {{sdk src/a2a/server/request_handlers/default_request_handler_v2.py}}, as §3.1.5 lists for a finished task {{spec §3.1.5}}. Section 3.3.1 disagrees: it calls Cancel Task idempotent, so several cancel requests have the same effect {{spec §3.3.1}}. A repeat on a deleted task is allowed to return `TaskNotFoundError` {{spec §3.3.1}}.
+
+So after a cancel that errors, call `GetTask`. Canceled means an earlier cancel worked, another terminal state means the task ended first, and running means the server cannot stop it {{spec §3.1.5}}.
