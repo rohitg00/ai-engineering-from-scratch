@@ -70,7 +70,7 @@ Avantages: pas de deuxième modèle. inconvénients: ajoute des paramètres entr
 
 ### L'AIGLE  meilleur dessin en réutilisant les états cachés
 
-EAGLE-1/2/3 (Li et al., 20242025) fait du modèle de projet un minuscule transformateur (typiquement 1 couche) qui ingère les états cachés de la dernière couche du vérificateur.
+EAGLE-1/2/3 (Li et al., 20242025) fait du modèle de projet un minuscule transformateur (typiquement 1 couche) qui absorbe les derniers états cachés de la couche du vérificateur. Parce que le projet voit la représentation des caractéristiques du vérificateur, ses prédictions sont fortement corrélées avec la distribution de sortie du vérificateur. Les taux d'acceptation passent de ~0,6 (vanille) à 0,85+. Ce sont des taux par jeton sur les benchmarks de chat, avec un projet formé sur les données de chat correspondantes. Pour le trafic de production mixte, la phase 17 · 05 prévoit 0,6 à 0,8 pour EAGLE-3, et le trafic de domaine peut être inférieur.
 
 EAGLE-3 (2025) a ajouté la recherche d'arbres sur les continuations candidates. vLLM et SGLang ont utilisé EAGLE-2/3 comme voie de spécification par défaut pour Llama 3/4 et Qwen 3.
 

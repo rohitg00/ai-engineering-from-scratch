@@ -176,9 +176,9 @@ def tiled_softmax_dot(q, K, V, tile=4):
 
 Sortie par bits identiques à `softmax(qK) V`dans un seul coup, mais à tout moment le jeu de travail est un `tile × d_head`Le bloc, pas le plein.`N × d_head`- Je suis désolé .
 
-### Étape 3: comparer le décoding naïf et le décoding en cache sur la génération de 100 jetons
+### Étape 3: comparer le décoding naïf et le décoding en cache
 
-On compte les opérations d'attention.$O(N^2)$- 5050 en caisse:$O(N)$Le code imprime les deux.
+Les deux décodeurs effectuent les mêmes comparaisons de requêtes-clés: étape `t`Il y a des gens qui viennent .`t`Les jetons, donc le total est 1 + 2 + ... + N = N(N+1)/2. Le code utilise N = 10 et imprime 55 pour chaque décodeur. Pour une génération de 100 jetons, les deux font 5050 comparaisons. Le cache garde les projections K et V. Sans cache, chaque étape compute K et V à nouveau pour le préfixe complet, donc une génération de 100 jetons compute 5050 états de jetons. Avec le cache, les K et V de chaque jeton sont calculés une fois, de sorte que la même génération calcule 100 états de jeton.
 
 ## Utilisez-le
 
