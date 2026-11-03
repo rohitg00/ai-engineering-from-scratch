@@ -39,13 +39,13 @@ A model can reach low perplexity by predicting common patterns well while it is 
 ### Two checks before you trust it
 
 1. **Same text, same tokenizer.** The number depends on both. Two models measured on different held out sets cannot be compared.
-2. **Honest counting.** Sum the loss over real token positions and divide once at the end. Pad positions must not be in the denominator, and the logits at one position predict the next token. A value below one is impossible; if the adapter reports a value below one, it returned log p instead of negative log p.
+2. **Honest counting.** Sum the loss over real token positions and divide once at the end. Pad positions must not be in the denominator, and the logits at one position predict the next token. A value below one is impossible. It means the summed negative log likelihood came out negative, and the usual cause is an adapter that returned log p instead of negative log p.
 
 ## Follow-ups
 
 - **Level 1:** Which perplexity value means the model is never surprised? Expected: one, because every real token then has probability one.
 - **Level 2:** Two models were measured on different test sets. Can you compare their perplexities? Expected: no; the number depends on the text and the tokenizer, so measure both on the same set.
-- **Level 2:** The adapter reports a perplexity of 0.8. What happened? Expected: it returned log p instead of negative log p; a perplexity below one is impossible, so the contract was violated.
+- **Level 2:** The adapter reports a perplexity of 0.8. What happened? Expected: the summed loss is negative, most likely because the adapter returned log p instead of negative log p; a perplexity below one is impossible, so the contract was violated.
 - **Level 3:** Why does the eval sum the loss over non pad positions and divide at the end instead of averaging per batch perplexities? Expected: averaging per batch gives each token of a short batch more weight than each token of a long batch, and pad positions shrink the loss; the sum over real tokens matches the definition.
 
 ## Wrong answers

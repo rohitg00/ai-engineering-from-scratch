@@ -32,7 +32,7 @@ Trigger on changes to the prompt and model paths, run a fixed versioned suite of
 
 ### What blocks
 
-Score the baseline once, when it becomes the last known good version, and store its scores. Each pull request scores only the new prompt on the same suite version. For each criterion compute the mean difference with bootstrap intervals and the pass rate at 4 or more with a Wilson interval. The lesson's code marks a criterion as a regression when the mean falls by more than 0.3, and its workflow ships only when no criterion shows a statistically significant regression. Require both before you block: a drop of more than 0.3 and an interval on the difference that excludes zero. The report lists the cases that degraded so the author can read them.
+Score the baseline once, when it becomes the last known good version, and store its scores. Each pull request scores only the new prompt on the same suite version. For each criterion compute the mean difference and the pass rate at 4 or more with a Wilson interval. The lesson's code blocks on any mean drop of more than 0.3. It computes a bootstrap interval for each run separately, not an interval on the difference, so a noisy drop can block. Its written workflow asks for a statistical test, a paired t test or a bootstrap. Add a paired bootstrap on the per case differences to the code, and block only when both hold: a drop of more than 0.3 and an interval on the difference that excludes zero. The report lists the cases that degraded so the author can read them.
 
 ### What it costs
 

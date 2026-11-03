@@ -46,7 +46,7 @@ The shift aligns a prediction with the token that follows it. The mask removes p
 
 ### Contract checks
 
-A perplexity below one is impossible; it means the adapter returned log p instead of negative log p. Zero real tokens must not divide; the capstone returns not a number for that case and lets the runner decide.
+A perplexity below one is impossible; the total loss is negative, which most often means the adapter returned log p instead of negative log p. Zero real tokens must not divide; the capstone returns not a number for that case and lets the runner decide.
 
 ## Follow-ups
 
