@@ -20,7 +20,7 @@ You enabled an FP8 KV cache on a checkpoint that ships calibrated scales, and ac
 
 ## Short answer
 
-The server is running the cache with a scale of 1.0, because the loader did not use the scales in the checkpoint: vLLM prints `Using KV cache scaling factor 1.0` and SGLang prints `Using FP8 KV cache but no scaling factors provided` whenever that is the case. Confirm it by searching the weight index of the checkpoint for tensors that end in `k_scale` or `v_scale`; if they exist and the warning still prints, the loader dropped them, which at 0.31.0 happens for one whole model family and for one draft loader in open issues. The options are another checkpoint or version whose scales load, a scale file passed through the quantization parameter path on SGLang, or a BF16 cache until they do, with an accuracy run on your own task after each change.
+The server is running the cache with a scale of 1.0, because the loader did not use the scales in the checkpoint: vLLM prints `Using KV cache scaling factor 1.0` when that is the case. SGLang prints `Using FP8 KV cache but no scaling factors provided` whenever no `--quantization-param-path` is passed, so its warning alone does not show which scales the server uses. Confirm the vLLM case by searching the weight index of the checkpoint for tensors that end in `k_scale` or `v_scale`; if they exist and vLLM still prints the warning, the loader dropped them, which at 0.31.0 happens for one whole model family and for one draft loader in open issues. The options are another checkpoint or version whose scales load, a scale file passed through the quantization parameter path on SGLang, or a BF16 cache until they do, with an accuracy run on your own task after each change.
 
 ## Full answer
 
@@ -70,7 +70,7 @@ Qwen3-8B has no KV scales, so the manual's FP8 KV runs used a scale of 1.0. On 5
 ## Wrong answers
 
 - "The checkpoint is FP8, so the KV scales are loaded." Weight scales and KV scales are different tensors, and a checkpoint with KV scales can still have them dropped by the loader; the warning tells you what the server uses.
-- "The warning is informational." It means that every KV scale is 1.0, which the vLLM team treats as the worst case for accuracy; with scales in the checkpoint it means that the loader dropped them.
+- "The warning is informational." On vLLM it means that every KV scale is 1.0, which the vLLM team treats as the worst case for accuracy; with scales in the checkpoint it means that the loader dropped them.
 - "A scale of 1.0 worked for Qwen3-8B, so it works." It gave overlapping intervals on 500 GSM8K questions for one model, which cannot rule out a loss of a few points, and another family lost accuracy at 1.0.
 - "Pass --quantization fp8 to load the scales." The weight method and the cache scales are separate; on SGLang the scales come from the checkpoint or from the quantization parameter path file, and a weight flag that does not match the checkpoint raises at startup.
 

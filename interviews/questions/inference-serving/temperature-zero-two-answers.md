@@ -60,7 +60,7 @@ Every fix also needs the same hardware, the same engine version and the same set
 
 ### How to test it
 
-Run the same eval twice and compare the outputs token by token, not only the score. Flush the prefix cache or restart the server between the runs. If the outputs differ, take one prompt that differs and run it alone twice. If the two answers match when alone, the batch causes the difference. SGLang ships a test that sends one prompt in random batch sizes and counts distinct outputs, with modes for a single prompt, shared prefixes and cached against uncached prefill.
+Run the same eval twice and compare the outputs token by token, not only the score. Flush the prefix cache or restart the server before each probe. If the outputs differ, take one prompt that differs and run it alone twice. If the two answers match when alone, and the batched probe started from the same cache state, the batch causes the difference. SGLang ships a test that sends one prompt in random batch sizes and counts distinct outputs, with modes for a single prompt, shared prefixes and cached against uncached prefill.
 
 ## Follow-ups
 

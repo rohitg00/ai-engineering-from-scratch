@@ -20,7 +20,7 @@ Your first sweep on an L4 says that CUDA graphs do nothing: at one user the medi
 
 ## Short answer
 
-Check the GPU clock and the temperature during the run before you believe either number. The manual's L4 sat at 87 C with software thermal slowdown active and an SM clock of 360 MHz out of 2040 during that sweep, so the server under test was not the cause. A sweep with a cool-down to 72 C and the clock recorded gave 60.16 ms per token at one user against 103.38 hot, and 270.11 against 194.16 tokens per second at a cap of 32, up to 28 percent more with the same command on the same card.
+Check the GPU clock and the temperature during the run before you believe either number. The manual's L4 sat at 87 C with software thermal slowdown active and an SM clock of 360 MHz out of 2040 during that sweep, so the server under test was not the cause. A sweep with a cool-down to 72 C and the clock recorded gave 60.16 ms per token at one user against 103.38 hot, and 270.11 against 194.16 tokens per second at a cap of 32: the hot sweep reported up to 28 percent less throughput, with the same command on the same card.
 
 ## Full answer
 

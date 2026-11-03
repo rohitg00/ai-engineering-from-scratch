@@ -63,7 +63,7 @@ The engine exports the proposed and the accepted tokens. Divide accepted by prop
 
 ## Wrong answers
 
-- "Speculation changes the output a little, so you trade some quality for speed." With greedy sampling a guess stays only if it equals the target's top token, and with random sampling the rejection rule keeps the output distribution equal to the target's, so the output does not change.
+- "Speculation changes the output a little, so you trade some quality for speed." With greedy sampling a guess stays only if it equals the target's top token, and with random sampling the rejection rule keeps the output distribution equal to the target's, so the quality does not change, although one sampled run can differ from a run without speculation.
 - "The draft is where the speed comes from, so a faster draft always helps." The gain comes from idle GPU time in a small batch; a fast draft with low acceptance adds checks that cost compute, and at concurrency 20 one report lost a quarter of its throughput.
 - "Turn it on for the stress test too." At batch 1 one report more than doubled its speed and at concurrency 20 it was slower; the maintainer's answer was that speculation is for small batches.
 

@@ -9,7 +9,7 @@ rounds: [screen, ml-breadth]
 tags: [kv-cache, gpu-memory, quantization, capacity]
 minutes: 5
 lessons: [phases/17-infrastructure-and-production/09-production-quantization]
-manuals: [vllm-101#s-count-the-memory-before-you-pick-a-gpu]
+manuals: [vllm-101#s-count-the-memory-before-you-pick-a-gpu, sglang-101#s-kv-bytes-per-token-and-the-kv-pool]
 practice: []
 cheatsheet: []
 related: []
@@ -20,7 +20,7 @@ A teammate says: we quantized the 70B model to 4-bit, so it is 35 GB now and it 
 
 ## Short answer
 
-The KV cache. Weight quantization shrinks the weights, and the cache for the running requests is a separate budget that stays in BF16 or FP8 and grows with every token in flight; at 128 concurrent requests with a 2k context the lesson puts it near 20 GB for a 70B model, plus about 5 GB of activations, so the total is about 60 GB on the 80 GB card. Count the weights, the cache at your peak concurrency and context, and the activations together, and read the pool size in the startup log after the start.
+The KV cache. Weight quantization shrinks the weights, and the cache for the running requests is a separate budget that stays in BF16 or FP8 and grows with every token in flight; at 128 concurrent requests with a 2k context the lesson puts it near 20 GB for a 70B model, plus about 5 GB of activations, so the total is about 60 GB on the 80 GB card. That 20 GB is the lesson's rough figure, so check it against the config: Llama-3.1-70B keeps 320 KiB per token in BF16, and 128 full 2k-token requests then need about four times the lesson's figure, which does not fit beside the weights on one 80 GB card. Count the weights, the cache at your peak concurrency and context, and the activations together, and read the pool size in the startup log after the start.
 
 ## Full answer
 
@@ -35,7 +35,7 @@ The lesson's own count for a 70B model with 4-bit weights:
 | Activations | about 5 GB |
 | Total | about 60 GB |
 
-The sentence "my model is 4 GB now" forgets the other 30 to 50 GB. Budget the card as a whole.
+The sentence "it is 35 GB now" forgets the cache and the activations. Budget the card as a whole, and count the cache from the config of your model: Llama-3.1-70B keeps 320 KiB per token in BF16, so at full 2k contexts its cache alone is about four times the 20 GB in the table.
 
 ### Where the cache goes
 

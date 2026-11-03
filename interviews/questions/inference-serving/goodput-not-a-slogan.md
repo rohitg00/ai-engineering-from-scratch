@@ -49,7 +49,7 @@ The manual's target was a first token under 1 s and a mean time per token under 
 | 16 | 0 | 154.24 ms | 1.10 req/s | 81.90 ms |
 | 32 | 0 | 201.91 ms | 0 | 104.12 ms |
 
-BF16 goodput was highest at a cap of 4. From a cap of 8 the median request took longer than 100 ms per token, so goodput was zero while throughput at that cap was 74.11 tokens per second and still rising. FP8 held the target up to a cap of 16. Choose the cap from goodput at your own target, and use the throughput curve only to explain it.
+BF16 goodput was highest at a cap of 4. At a cap of 8 the median request took longer than 100 ms per token, so at least half of the requests missed the target, and goodput was 0, up to 0.04 in one seed, while throughput at that cap was 74.11 tokens per second and still rising. FP8 held the target up to a cap of 16. Choose the cap from goodput at your own target, and use the throughput curve only to explain it.
 
 ### Why the mean is the wrong statistic
 
@@ -66,14 +66,14 @@ The lesson shows where the time per token comes from on an L4: one decode step r
 ## Follow-ups
 
 - **Level 1:** Which numbers go next to a throughput figure? Expected: the concurrency or request rate, and the median and P99 of the first token and of the time per token at that point, with the client, temperature and clock as context.
-- **Level 2:** Goodput fell to zero at a cap of 8 while throughput still rose. How can both be true? Expected: the server wrote more tokens per second, but the median request took longer than 100 ms per token, so no request met the target; throughput counts tokens and goodput counts requests that arrived on time.
+- **Level 2:** Goodput fell to zero at a cap of 8 while throughput still rose. How can both be true? Expected: the server wrote more tokens per second, but the median request took longer than 100 ms per token, so at least half of the requests missed the target and almost none met every bound; throughput counts tokens and goodput counts requests that arrived on time.
 - **Level 3:** Why is the mean the wrong statistic for the time per token? Expected: the distribution has a long right tail; a batch with one long prefill neighbour can ship most tokens near 7 ms and a few near 60, so the mean reads 9 ms while the P99 reads 65, and users hit the P99 regularly.
 - **Level 4:** Two tools report different time per token for the same run. Why, and what do you do? Expected: one excludes the first token from the inter-token calculation and the other includes it, 7.07 against 12.00 ms in the lesson's example; state the tool and the definition with every number, and keep one tool for every run you compare.
 
 ## Wrong answers
 
 - "255 tokens per second is the capacity of the server." The same server gave that throughput with a median time to first token of 0.8 s at one load and 3.9 s at another; the number without its latency is not a result.
-- "Add users until throughput stops rising, then stop." On the GB10 the BF16 throughput kept rising to a cap of 64 while goodput was zero from a cap of 8; the latency target, not the throughput curve, sets the limit.
+- "Add users until throughput stops rising, then stop." On the GB10 the BF16 throughput kept rising to a cap of 64 while goodput was 0 or close to it from a cap of 8; the latency target, not the throughput curve, sets the limit.
 - "Report the mean time per token." The distribution is right-skewed, so a mean of 9 ms can hide a P99 of 65; report the median, P90 and P99.
 - "The engine's own admission limit protects the users." The engine's limit comes from memory, which runs out long after latency is unacceptable; enforce the knee in the client or the gateway.
 

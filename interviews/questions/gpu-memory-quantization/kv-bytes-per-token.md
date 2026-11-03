@@ -16,11 +16,11 @@ related: []
 updated: 2026-11-03
 ---
 
-You are given two model configs. Model A: 36 layers, 8 KV heads, head size 128. Model B: 48 layers, 4 KV heads, head size 128, and almost four times the parameters. Estimate the KV cache bytes per token of each in BF16, say which one fits more users on the same card, and explain why the parameter count misled you if it did.
+You are given two model configs. Model A: 36 layers, 8 KV heads, head size 128. Model B: 48 layers, 4 KV heads, head size 128, and almost four times the parameters. Estimate the KV cache bytes per token of each in BF16, say which one fits more users in a KV pool of the same size, and explain why the parameter count misled you if it did.
 
 ## Short answer
 
-KV bytes per token are 2 times layers times KV heads times head size times bytes per value, where the 2 counts the key and the value. Model A, which is Qwen/Qwen3-8B, holds 2 x 36 x 8 x 128 x 2 bytes, which is 144 KiB per token; model B, which is Qwen/Qwen3-30B-A3B, holds 2 x 48 x 4 x 128 x 2 bytes, which is 98,304 bytes or 96 KiB. The bigger model keeps fewer bytes per token and fits more users in the same pool, because the KV heads and the layers decide the cost and the parameter count does not.
+KV bytes per token are 2 times layers times KV heads times head size times bytes per value, where the 2 counts the key and the value. Model A, which is Qwen/Qwen3-8B, holds 2 x 36 x 8 x 128 x 2 bytes, which is 144 KiB per token; model B, which is Qwen/Qwen3-30B-A3B, holds 2 x 48 x 4 x 128 x 2 bytes, which is 98,304 bytes or 96 KiB. The bigger model keeps fewer bytes per token and fits more users in the same pool, because the KV heads and the layers decide the cost and the parameter count does not. On one card the bigger model also needs room for weights almost four times larger, so its pool is smaller, and it can fit fewer users in total.
 
 ## Full answer
 

@@ -36,7 +36,7 @@ Before v0.5.22 one flag carried both meanings: `--dp-size` counted copies unless
 
 ### Why attention gets its own mode
 
-Latent attention stores one compressed latent per token and layer, one KV head in effect. Tensor parallelism cannot split one head across GPUs, so with `--tp-size 8` every GPU stores the full latent cache for every token, and eight GPUs hold eight copies. With attention data parallelism each group keeps only its own requests, so the KV capacity grows with the groups. The team that added the mode reported up to 1.9 times more decode throughput for these models, which is their claim. For a dense model with grouped-query attention the reason does not hold: it has several KV heads, and tensor parallelism splits its cache without copies.
+Latent attention stores one compressed latent per token and layer, one KV head in effect. Tensor parallelism cannot split one head across GPUs, so with `--tp-size 8` every GPU stores the full latent cache for every token, and eight GPUs hold eight copies. With attention data parallelism each group keeps only its own requests, so the KV capacity grows with the groups. The team that added the mode reported up to 1.9 times more decode throughput for these models, which is their claim. For a dense model with grouped-query attention the reason does not hold: it has several KV heads, and tensor parallelism splits its cache without copies while the tensor size is at most the number of KV heads. Above that count, each KV head is copied to more than one rank.
 
 ### Two side effects
 
@@ -52,7 +52,7 @@ Use tensor parallelism to make the model fit and nothing more. Add capacity with
 
 ## Follow-ups
 
-- **Level 3:** Why does the same server with a grouped-query dense model not need the attention groups? Expected: that model has several KV heads, so tensor parallelism splits the cache across ranks without copies; the copy problem exists only when the attention keeps one latent that cannot be split.
+- **Level 3:** Why does the same server with a grouped-query dense model not need the attention groups? Expected: that model has several KV heads, so tensor parallelism splits the cache across ranks without copies, as long as there are at least as many KV heads as ranks; the copy problem exists only when the attention keeps one latent that cannot be split.
 - **Level 4:** A recipe from last year passes the old copy flag together with the attention flag. What happens at the pinned version, and what do you write instead? Expected: the server rewrites it to --attn-dp-size with --dp-size 1 and prints a deprecation warning, with the old flag due for removal after the end of 2026; write --attn-dp-size, and know that copies combined with attention groups raise an error.
 - **Level 4:** A team tuned the first token with a chunk of 8192 and then turned on eight attention groups. Why did long prompts get slower? Expected: the chunk size is divided by the group count, so each group now prefills in chunks of 1024 and a long prompt takes more scheduler steps; the log prints the old and new values, and the admission ratio was also multiplied by 0.3.
 

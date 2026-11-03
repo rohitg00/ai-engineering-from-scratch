@@ -53,7 +53,7 @@ The first FP8 start on our L4 failed. FlashAttention in vLLM 0.31.0 reads an FP8
 
 ### Check that your scales load
 
-1. Search the weight index of the checkpoint for tensor names that end in `k_scale` or `v_scale`. No output means no scales.
+1. Search the weight index of the checkpoint for tensor names that end in `k_scale` or `v_scale`. For a checkpoint with an index, no output means no scales. A checkpoint with one weight file has no index; for it, list the tensor names with the `safetensors` Python package.
 2. Read the startup log for the scale warning. If the checkpoint has scales and the warning still prints, the loader dropped them. At 0.31.0 one model family never loads its KV scales, and the issue is open.
 3. Run your own prompts with and without FP8 and compare the answers before you go to production.
 

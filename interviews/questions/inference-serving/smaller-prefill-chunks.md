@@ -20,7 +20,7 @@ Long prompts make the stream pause for the other users of your SGLang server. A 
 
 ## Short answer
 
-Not without a measurement, because the small chunk did not help on either card in the manual's runs. On the GB10 at a low arrival rate a chunk of 1,024 made the P99 ITL worse, 1,977 against 929 ms with the default of 8,192, and at higher rates all chunk sizes tied. I would first try `--enable-mixed-chunk`, which puts the decode tokens into the prefill batch, and measure its trade: on the GB10 it cut the P99 ITL by 15 to 19 percent and raised the median first token by 49 to 74 percent.
+Not without a measurement, because the small chunk did not help on either card in the manual's runs. On the GB10 at a low arrival rate a chunk of 1,024 made the P99 ITL worse, 1,977 against 929 ms with the default of 8,192, and at higher rates all chunk sizes tied. I would first try `--enable-mixed-chunk`, which puts the decode tokens into the prefill batch, and measure its trade: on the GB10 it cut the P99 ITL by 15 to 19 percent and at 1 and 2 requests per second it raised the median first token by 49 to 74 percent.
 
 ## Full answer
 

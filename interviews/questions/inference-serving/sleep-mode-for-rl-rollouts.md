@@ -48,7 +48,7 @@ A level 1 sleep with Qwen3-0.6B on an L4: each POST returned 200 with an empty b
 - A level 2 sleep clears calibrated KV scales on some checkpoints with an FP8 cache. The first request after a reload returned NaN logprobs and a wrong first token. The next release fixes this.
 - A weight update during sleep segfaults the engine. The API server stays up and every later request fails. The issue is open.
 
-So after each level 2 wake, reload the weights, reset the prefix cache and read the speculative acceptance counters. Always wake the server before the trainer sends weights.
+So after each level 2 wake, reload the weights, reset the prefix cache and read the speculative acceptance counters. A reload does not bring back cleared KV scales at 0.31.0; release 0.32.0 fixes that case. Always wake the server before the trainer sends weights.
 
 ### The logprob gap
 
@@ -66,7 +66,7 @@ The trainer compares the logprobs that the server returned with the ones it comp
 - "Expose the sleep and weight routes on the public port." They exist only in development mode, and they free memory, replace weights and run methods on every worker; keep them on the trainer's network, bound to the local host when you test by hand.
 - "Send the new weights while the server sleeps to save time." At 0.31.0 that segfaults the engine; the API server stays up and every later request fails, so always wake before the trainer sends weights.
 - "Logprobs from the server and the trainer should match exactly." The kernels differ, so a small steady gap is normal; track it every step and treat a growing gap as a sign that the weights did not reach the generator.
-- "A level 2 wake restores the server to its state before the sleep." It reloads the target weights only; the speculative draft is not reloaded and calibrated KV scales were cleared on some checkpoints, so reload, reset the cache and read the acceptance after each level 2 wake.
+- "A level 2 wake restores the server to its state before the sleep." It reloads the target weights only; the speculative draft is not reloaded and calibrated KV scales were cleared on some checkpoints, so reload, reset the cache and read the acceptance after each level 2 wake, and on 0.31.0 a reload does not bring back the scales.
 
 ## Taught in
 
