@@ -12,7 +12,7 @@ lessons: [phases/17-infrastructure-and-production/23-sre-for-ai]
 manuals: []
 practice: []
 cheatsheet: [sre-for-ai]
-related: []
+related: [production-mlops/narrow-auto-remediation, production-mlops/prediction-without-action]
 updated: 2026-11-03
 ---
 
@@ -46,7 +46,7 @@ Two models that share training data can agree and be wrong together. Agreement r
 
 ## Follow-ups
 
-- **Level 2:** Why is the disagreement itself useful? Expected: it marks the incident as uncertain and gives the responder two candidate causes with their evidence.
+- **Level 2:** Why is a split verdict useful to the responder? Expected: it marks the incident as uncertain and gives the responder two candidate causes with their evidence.
 - **Level 3:** Both models agree and both are wrong. How do you catch it? Expected: require each hypothesis to cite evidence that the responder can check, and keep the human approval before any action.
 - **Level 3:** What does the pattern cost? Expected: two model runs per incident plus the latency of the slower one, which is small next to the first twenty minutes of a manual investigation that the lesson says are automatable.
 

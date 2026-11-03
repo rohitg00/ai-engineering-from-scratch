@@ -12,7 +12,7 @@ lessons: [phases/19-capstone-projects/11-llm-observability-dashboard]
 manuals: []
 practice: []
 cheatsheet: [genai-observability]
-related: [production-mlops/evals-or-ab-test]
+related: [production-mlops/five-minute-detection, production-mlops/evals-or-ab-test]
 updated: 2026-11-03
 ---
 

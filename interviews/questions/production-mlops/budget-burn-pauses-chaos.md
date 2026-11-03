@@ -12,7 +12,7 @@ lessons: [phases/17-infrastructure-and-production/24-chaos-engineering-llm]
 manuals: []
 practice: []
 cheatsheet: [sre-for-ai]
-related: [production-mlops/chaos-before-you-start]
+related: [production-mlops/chaos-before-you-start, production-mlops/retries-that-amplify]
 updated: 2026-11-03
 ---
 
