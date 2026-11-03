@@ -9,6 +9,7 @@ const root = path.resolve(__dirname, '..');
 const skillsDir = path.join(root, 'skills');
 const { GROUPS, LOADER, build, loadSkills, loaderData } = require('./build-skills.js');
 const CRAFT = ['course-style', 'blueprint-figure', 'motion-figure', 'isometric-explainer', 'write-manual', 'lesson-screen'];
+const TUTOR = ['interview-prep'];
 
 function files(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -60,7 +61,7 @@ test('every skill has frontmatter with its own name, a version and a description
     assert.match(head, new RegExp(`^name: ${name}$`, 'm'), name);
     assert.match(head, /^description:/m, name);
   }
-  for (const name of CRAFT) {
+  for (const name of [...CRAFT, ...TUTOR]) {
     const text = fs.readFileSync(path.join(skillsDir, name, 'SKILL.md'), 'utf8');
     assert.match(text, /^version: \d+\.\d+\.\d+$/m, name);
     assert.ok(text.split('\n').length <= 320, `${name}: SKILL.md stays short`);
@@ -86,9 +87,9 @@ function prose(text) {
     .filter((line) => !/^\s*\|/.test(line));
 }
 
-test('the making skills follow the plain technical English rules', () => {
+test('the making and tutor skills follow the plain technical English rules', () => {
   const problems = [];
-  for (const name of CRAFT) {
+  for (const name of [...CRAFT, ...TUTOR]) {
     for (const file of files(path.join(skillsDir, name)).filter((file) => file.endsWith('.md'))) {
       prose(fs.readFileSync(file, 'utf8')).forEach((line, index) => {
         const where = `${path.relative(root, file)}:${index + 1}`;
@@ -114,8 +115,8 @@ test('the making skills name no outside skill authors and stay vendor neutral', 
   }
 });
 
-test('every relative link inside the making skills points to a real file', () => {
-  for (const name of CRAFT) {
+test('every relative link inside the making and tutor skills points to a real file', () => {
+  for (const name of [...CRAFT, ...TUTOR]) {
     for (const file of files(path.join(skillsDir, name)).filter((file) => file.endsWith('.md'))) {
       const text = withoutFences(fs.readFileSync(file, 'utf8')).replace(/`[^`\n]*`/g, '');
       for (const match of text.matchAll(/\]\((?!https?:|#|mailto:)([^)#\s]+)/g)) {
@@ -199,5 +200,72 @@ test('inline figures style every class they use', () => {
   for (const svg of html.match(/<svg[\s\S]*?<\/svg>/g) || []) {
     if (svg.includes('class="m-serif"')) assert.match(html, /\.m-serif\s*\{\s*font-family/);
     if (/<text(?![^>]*fill=)/.test(svg)) assert.match(html, /\.sk-example svg \{ fill: var\(--m-ink\)/);
+  }
+});
+
+test('the tutor skills give the agent a default prompt that names the skill', () => {
+  for (const name of TUTOR) {
+    const yaml = fs.readFileSync(path.join(skillsDir, name, 'agents', 'openai.yaml'), 'utf8');
+    assert.match(yaml, /^\s+display_name: "[^"]+"$/m, name);
+    assert.match(yaml, new RegExp(`^\\s+default_prompt: "Use ${name} [^"]+"$`, 'm'), name);
+  }
+});
+
+const ANSWER_SECTIONS = new Set(['Short answer', 'Full answer', 'Follow-ups', 'Wrong answers', 'Walkthrough', 'Resolution', 'Wrong turns', 'Generalize', 'Taught in']);
+const SPAN = 24;
+
+function flat(text) {
+  return text.replace(/\]\([^)]*\)/g, ']').replace(/\s+/g, ' ').toLowerCase();
+}
+
+function answerParts(file) {
+  const body = fs.readFileSync(file, 'utf8').replace(/^---\n[\s\S]*?\n---\n?/, '');
+  const parts = [];
+  let current = null;
+  for (const line of body.split('\n')) {
+    const heading = /^## (.+?)\s*$/.exec(line);
+    if (heading) {
+      current = ANSWER_SECTIONS.has(heading[1]) ? { section: heading[1], lines: [] } : null;
+      if (current) parts.push(current);
+    } else if (current) current.lines.push(line);
+  }
+  return parts.map((part) => ({ section: part.section, text: flat(part.lines.join('\n')).trim() }));
+}
+
+function bankFiles() {
+  const bank = path.join(root, 'interviews');
+  const questions = path.join(bank, 'questions');
+  const scenarios = path.join(bank, 'scenarios');
+  const found = [];
+  if (fs.existsSync(questions)) found.push(...files(questions).filter((file) => file.endsWith('.md') && path.basename(file) !== 'README.md'));
+  if (fs.existsSync(scenarios)) {
+    for (const entry of fs.readdirSync(scenarios, { withFileTypes: true })) {
+      const readme = path.join(scenarios, entry.name, 'README.md');
+      if (entry.isDirectory() && fs.existsSync(readme)) found.push(readme);
+    }
+  }
+  return found;
+}
+
+function leaks(parts, skillText) {
+  const windows = new Set();
+  for (let i = 0; i + SPAN <= skillText.length; i++) windows.add(skillText.slice(i, i + SPAN));
+  const hits = [];
+  for (const part of parts) {
+    for (let i = 0; i + SPAN <= part.text.length; i++) {
+      const span = part.text.slice(i, i + SPAN);
+      if (windows.has(span)) { hits.push(`${part.where} ${part.section}: "${span}"`); break; }
+    }
+  }
+  return hits;
+}
+
+test('the tutor skills hold no span of an answer from the interview bank', () => {
+  const parts = bankFiles().flatMap((file) => answerParts(file).map((part) => ({ ...part, where: path.relative(root, file) })));
+  for (const name of TUTOR) {
+    const skillText = flat(files(path.join(skillsDir, name)).filter((file) => /\.(md|yaml)$/.test(file)).map((file) => fs.readFileSync(file, 'utf8')).join('\n'));
+    assert.deepEqual(leaks(parts, skillText), [], name);
+    const planted = skillText.slice(200, 200 + SPAN + 10);
+    assert.equal(leaks([{ where: 'planted', section: 'Short answer', text: planted }], skillText).length, 1, `${name}: the leak check finds a planted span`);
   }
 });
