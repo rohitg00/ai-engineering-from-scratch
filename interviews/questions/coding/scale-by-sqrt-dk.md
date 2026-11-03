@@ -68,4 +68,4 @@ The practice task compares the weights, not only the output shape. A wrong scale
 
 ## Taught in
 
-The [self-attention lesson](../../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) explains the square-root scale factor, and the [attention practice](../../../practice/scaled-dot-product-attention/problem.md) checks the weights against a reference.
+The [self-attention lesson](../../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) explains the square-root scale factor, and the [attention practice](../../../practice/scaled-dot-product-attention/) checks the weights against a reference.

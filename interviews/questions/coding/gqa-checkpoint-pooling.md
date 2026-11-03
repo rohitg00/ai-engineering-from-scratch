@@ -65,4 +65,4 @@ The head size, the query projection, the output projection and the attention fun
 
 ## Taught in
 
-The [multi-head attention lesson](../../../phases/07-transformers-deep-dive/03-multi-head-attention/) gives the grouped-query lineage and the cache factor, and the [grouped-query practice](../../../practice/grouped-query-attention/problem.md) implements the pooling of a multi-head checkpoint.
+The [multi-head attention lesson](../../../phases/07-transformers-deep-dive/03-multi-head-attention/) gives the grouped-query lineage and the cache factor, and the [grouped-query practice](../../../practice/grouped-query-attention/) implements the pooling of a multi-head checkpoint.

@@ -69,4 +69,4 @@ The training loop's evaluation function runs a fixed number of validation batche
 
 ## Taught in
 
-The [training loop lesson](../../../phases/19-capstone-projects/36-training-loop-eval/) requires that evaluation skip gradients and dropout, the [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) places the embedding dropout, and the [inverted dropout practice](../../../practice/inverted-dropout/problem.md) checks the identity at inference.
+The [training loop lesson](../../../phases/19-capstone-projects/36-training-loop-eval/) requires that evaluation skip gradients and dropout, the [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) places the embedding dropout, and the [inverted dropout practice](../../../practice/inverted-dropout/) checks the identity at inference.

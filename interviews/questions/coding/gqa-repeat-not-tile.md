@@ -16,7 +16,7 @@ related: [coding/gqa-checkpoint-pooling, coding/split-heads-reshape]
 updated: 2026-11-03
 ---
 
-A grouped-query attention implementation expands the key and value heads to match the query heads with this line, where `kv` has shape batch, groups, tokens, head size:
+A GQA implementation expands the key and value heads to match the query heads with this line, where `kv` has shape batch, groups, tokens, head size:
 
 ```python
 kv_full = np.tile(kv, (1, n_heads // n_kv_heads, 1, 1))
@@ -69,4 +69,4 @@ Only `G` key and value heads live in the cache instead of `H`, so the cache shri
 
 ## Taught in
 
-The [multi-head attention lesson](../../../phases/07-transformers-deep-dive/03-multi-head-attention/) gives the grouped-query variant and its repeat, and the [grouped-query practice](../../../practice/grouped-query-attention/problem.md) checks the head-to-group mapping.
+The [multi-head attention lesson](../../../phases/07-transformers-deep-dive/03-multi-head-attention/) gives the grouped-query variant and its repeat, and the [grouped-query practice](../../../practice/grouped-query-attention/) checks the head-to-group mapping.

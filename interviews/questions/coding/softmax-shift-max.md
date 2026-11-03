@@ -70,4 +70,4 @@ Softmax of a row divides each exponential by the sum of all exponentials in that
 
 ## Taught in
 
-The [self-attention lesson](../../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) builds the shifted softmax as its first step, and the [softmax and cross-entropy practice](../../../practice/softmax-cross-entropy/problem.md) checks it with large logits.
+The [self-attention lesson](../../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) builds the shifted softmax as its first step, and the [softmax and cross-entropy practice](../../../practice/softmax-cross-entropy/) checks it with large logits.

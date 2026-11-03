@@ -73,4 +73,4 @@ A unit test can walk the named parameters and assert that each scale and bias la
 
 ## Taught in
 
-The [training loop lesson](../../../phases/19-capstone-projects/36-training-loop-eval/) defines the two-group AdamW split and the test for it, and the [Adam practice](../../../practice/adam-step/problem.md) implements the decoupled decay the groups feed into.
+The [training loop lesson](../../../phases/19-capstone-projects/36-training-loop-eval/) defines the two-group AdamW split and the test for it, and the [Adam practice](../../../practice/adam-step/) implements the decoupled decay the groups feed into.

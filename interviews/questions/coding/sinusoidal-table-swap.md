@@ -72,4 +72,4 @@ The learned table holds 1024 rows of 768 values each. Removing it from the param
 
 ## Taught in
 
-The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) sets this swap as an exercise and gives the parameter delta, and the [sinusoidal encoding practice](../../../practice/sinusoidal-positional-encoding/problem.md) checks the interleaved layout.
+The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) sets this swap as an exercise and gives the parameter delta, and the [sinusoidal encoding practice](../../../practice/sinusoidal-positional-encoding/) checks the interleaved layout.

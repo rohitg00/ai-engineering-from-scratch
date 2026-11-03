@@ -79,4 +79,4 @@ The final normalization sits between the last block and the tied head, and both 
 
 ## Taught in
 
-The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) places the final LayerNorm and names the RMSNorm swap, and the [normalization practice](../../../practice/layer-norm-rms-norm/problem.md) checks both functions.
+The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) places the final LayerNorm and names the RMSNorm swap, and the [normalization practice](../../../practice/layer-norm-rms-norm/) checks both functions.

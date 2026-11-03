@@ -70,4 +70,4 @@ The caller's dictionary and tuples stay as they were. Clearing and refilling the
 
 ## Taught in
 
-The [BPE from scratch lesson](../../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) gives the training loop and the merge table contract, the [tokenizers lesson](../../../phases/10-llms-from-scratch/01-tokenizers/) walks a merge sequence by hand, and the [BPE practice](../../../practice/bpe-merge-step/problem.md) checks the tie rule and the stop rule.
+The [BPE from scratch lesson](../../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) gives the training loop and the merge table contract, the [tokenizers lesson](../../../phases/10-llms-from-scratch/01-tokenizers/) walks a merge sequence by hand, and the [BPE practice](../../../practice/bpe-merge-step/) checks the tie rule and the stop rule.

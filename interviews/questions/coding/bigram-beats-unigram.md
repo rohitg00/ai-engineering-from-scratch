@@ -73,4 +73,4 @@ A step budget is part of the contract. A loop that runs more steps than the budg
 
 ## Taught in
 
-The [training loop lesson](../../../phases/19-capstone-projects/36-training-loop-eval/) sets the rules for held-out evaluation and loss alignment, and the [character bigram practice](../../../practice/train-char-bigram/problem.md) trains the smallest model under a step budget.
+The [training loop lesson](../../../phases/19-capstone-projects/36-training-loop-eval/) sets the rules for held-out evaluation and loss alignment, and the [character bigram practice](../../../practice/train-char-bigram/) trains the smallest model under a step budget.

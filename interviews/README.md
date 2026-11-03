@@ -22,8 +22,8 @@ How a model is tuned after training, served to users, and fit into GPU memory.
 | Card | Items | Planned |
 |---|---|---|
 | Post-training | 0 | 15 |
-| [Inference and serving systems](questions/inference-serving/README.md) | 3 | 30 |
-| GPU memory, quantization and hardware | 0 | 15 |
+| [Inference and serving systems](questions/inference-serving/README.md) | 32 | 30 |
+| [GPU memory, quantization and hardware](questions/gpu-memory-quantization/README.md) | 10 | 15 |
 
 ## Applications
 
@@ -64,10 +64,10 @@ Whole interview rounds: system design, incidents, coding and behavioral question
 
 | Card | Items | Planned |
 |---|---|---|
-| System design | 0 | 15 |
+| [System design](questions/system-design/README.md) | 22 | 15 |
 | [Incidents and scenarios](scenarios/README.md) | 1 | 30 |
-| Coding | 0 | 15 |
-| Behavioral | 0 | 15 |
+| [Coding](questions/coding/README.md) | 22 | 15 |
+| [Behavioral](questions/behavioral/README.md) | 16 | 15 |
 
 ## Roles
 

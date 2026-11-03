@@ -78,4 +78,4 @@ The schedule reaches the peak at the end of warmup and decays toward the floor. 
 
 ## Taught in
 
-The [cosine schedule lesson](../../../phases/19-capstone-projects/44-cosine-lr-warmup/) says to sweep the peak first and to record the gradient norm beside the rate, and the [learning rate sweep lab](../../../practice/lab-learning-rate-sweep/problem.md) implements the sweep with its divergence rule.
+The [cosine schedule lesson](../../../phases/19-capstone-projects/44-cosine-lr-warmup/) says to sweep the peak first and to record the gradient norm beside the rate, and the [learning rate sweep lab](../../../practice/lab-learning-rate-sweep/) implements the sweep with its divergence rule.

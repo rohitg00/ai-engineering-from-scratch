@@ -54,6 +54,14 @@ const GROUPS = [
     },
   },
   {
+    id: 'interview',
+    title: 'Interview practice',
+    when: 'Use this to practise for an AI engineering interview, one question or one incident at a time.',
+    skills: {
+      'interview-prep': { line: 'Asks one interview question or one incident scenario and waits for your answer. Then it grades the answer against the interview bank, asks follow-ups one at a time, and sends each gap to the lesson or manual section that teaches it.', say: ['mock interview', 'run an incident scenario'], writes: 'INTERVIEW-LEARNING.md' },
+    },
+  },
+  {
     id: 'make',
     title: 'Make figures and manuals',
     when: 'Use these to make figures and manuals that match this site.',

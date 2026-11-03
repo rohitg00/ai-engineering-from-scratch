@@ -74,4 +74,4 @@ The function returns a new tuple. It must not write into the caller's sequence, 
 
 ## Taught in
 
-The [tokenizers lesson](../../../phases/10-llms-from-scratch/01-tokenizers/) writes the merge loop with the two-position step, the [BPE from scratch lesson](../../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) explains the shared merge contract, and the [BPE practice](../../../practice/bpe-merge-step/problem.md) tests the overlap case.
+The [tokenizers lesson](../../../phases/10-llms-from-scratch/01-tokenizers/) writes the merge loop with the two-position step, the [BPE from scratch lesson](../../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) explains the shared merge contract, and the [BPE practice](../../../practice/bpe-merge-step/) tests the overlap case.

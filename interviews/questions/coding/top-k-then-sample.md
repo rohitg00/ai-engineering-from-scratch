@@ -81,4 +81,4 @@ The filter writes into a new array. Writing negative infinity into the caller's 
 
 ## Taught in
 
-The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) describes the generation step as temperature, top-k mask, softmax and multinomial draw, and the [sampling practice](../../../practice/top-k-top-p-sampling/problem.md) pins the order, the tie rule and the single draw.
+The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) describes the generation step as temperature, top-k mask, softmax and multinomial draw, and the [sampling practice](../../../practice/top-k-top-p-sampling/) pins the order, the tie rule and the single draw.

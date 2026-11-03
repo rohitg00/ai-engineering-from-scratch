@@ -78,4 +78,4 @@ Even with the correct form, the decay belongs on matrix-shaped weights only. Nor
 
 ## Taught in
 
-The [training loop lesson](../../../phases/19-capstone-projects/36-training-loop-eval/) configures AdamW with its decay split, the [cosine schedule lesson](../../../phases/19-capstone-projects/44-cosine-lr-warmup/) pairs it with warmup and decay, and the [Adam practice](../../../practice/adam-step/problem.md) checks the decoupled form.
+The [training loop lesson](../../../phases/19-capstone-projects/36-training-loop-eval/) configures AdamW with its decay split, the [cosine schedule lesson](../../../phases/19-capstone-projects/44-cosine-lr-warmup/) pairs it with warmup and decay, and the [Adam practice](../../../practice/adam-step/) checks the decoupled form.

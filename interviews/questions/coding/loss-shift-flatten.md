@@ -72,4 +72,4 @@ The practice task also checks that the cross-entropy is computed from a shifted 
 
 ## Taught in
 
-The [training loop lesson](../../../phases/19-capstone-projects/36-training-loop-eval/) explains the loss alignment and the qualitative probe, and the [softmax and cross-entropy practice](../../../practice/softmax-cross-entropy/problem.md) checks the batched loss.
+The [training loop lesson](../../../phases/19-capstone-projects/36-training-loop-eval/) explains the loss alignment and the qualitative probe, and the [softmax and cross-entropy practice](../../../practice/softmax-cross-entropy/) checks the batched loss.

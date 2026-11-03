@@ -62,4 +62,4 @@ Two measurements show what a temperature did: the probability of the top token, 
 
 ## Taught in
 
-The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) describes the three temperature regimes in its generation loop, and the [temperature lab](../../../practice/lab-sampling-temperature/problem.md) sweeps them on fixed logits.
+The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) describes the three temperature regimes in its generation loop, and the [temperature lab](../../../practice/lab-sampling-temperature/) sweeps them on fixed logits.

@@ -76,4 +76,4 @@ The full sampler divides by the temperature, applies top-k, applies top-p to tha
 
 ## Taught in
 
-The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) adds nucleus sampling next to top-k in its exercises, and the [sampling practice](../../../practice/top-k-top-p-sampling/problem.md) pins the crossing token and the order of operations.
+The [GPT assembly lesson](../../../phases/19-capstone-projects/35-gpt-model-assembly/) adds nucleus sampling next to top-k in its exercises, and the [sampling practice](../../../practice/top-k-top-p-sampling/) pins the crossing token and the order of operations.
