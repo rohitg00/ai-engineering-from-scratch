@@ -176,9 +176,9 @@ def tiled_softmax_dot(q, K, V, tile=4):
 
 Saída de bits idêntica a `softmax(qK) V`em um tiro, mas a qualquer momento o conjunto de trabalho é um `tile × d_head`Bloco, não o completo.`N × d_head`- Não .
 
-### Passo 3: Compare naívo versus decodificação em cache na geração de 100 tokens
+### Passo 3: Compare a descodificação ingênua com a em cache
 
-Contar operações de atenção.$O(N^2)$= 5050. em cache: $O(N)$O código imprime as duas.
+As duas decodificadoras fazem as mesmas comparações de chave de consulta: passo `t`- Não .`t`Tokens, então o total é 1 + 2 + ... + N = N(N+1)/2. O código usa N = 10 e imprime 55 para cada decodificador. Para uma geração de 100 tokens, ambos fazem 5050 comparações. O cache guarda as projeções K e V. Sem um cache, cada passo calcula K e V novamente para o prefixo completo, então uma geração de 100 tokens calcula 5050 estados de tokens. Com o cache, o K e o V de cada token são calculados uma vez, então a mesma geração calcula 100 estados de token.
 
 ## Usá-lo
 
