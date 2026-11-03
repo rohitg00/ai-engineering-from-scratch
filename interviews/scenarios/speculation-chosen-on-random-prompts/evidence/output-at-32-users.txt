@@ -1,0 +1,11 @@
+title: output tokens per second at 32 users, by dataset and method
+source: manuals/sglang-101/capture/gpu/out-l4/spec-real-prompts.txt
+lines: 19-23
+lang: text
+note: Find the two rows where EAGLE3 gives less output than the default.
+---
+output tok/s at 32 users: default / EAGLE3 / NGRAM
+random     250 to 254 / 239 to 242 / 236 to 250
+ShareGPT   281 to 288 / 277 to 283 / 245 to 256
+GSM8K      397 / 648 to 660 / 433 to 435
+code       365 to 366 / 566 to 581 / 377 to 386

@@ -1,0 +1,9 @@
+title: the first and the last timestamped line, and the size of the log
+source: manuals/miles-101/capture/gpu/out-gb10/custom-rm-noenv-hang.txt
+lines: 11-13
+lang: text
+note: Compare the two timestamps with the queue record, then read the line count.
+---
+first timestamped line: 2026-10-23 00:19:02
+last timestamped line: 2026-10-23 02:17:06
+total log lines: 183248

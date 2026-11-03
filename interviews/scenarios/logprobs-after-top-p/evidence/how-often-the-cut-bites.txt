@@ -1,0 +1,8 @@
+title: how much mass top-p dropped on these tokens
+source: manuals/miles-101/capture/gpu/out-l4/logprobs-top-p.txt
+lines: 18-19
+lang: text
+note: The median of minus the log of the kept mass is the size of the shift.
+---
+The kept mass was below 0.99 for 74 to 79 percent of sampled tokens.
+The median of minus log of the kept mass was 0.055 to 0.067.

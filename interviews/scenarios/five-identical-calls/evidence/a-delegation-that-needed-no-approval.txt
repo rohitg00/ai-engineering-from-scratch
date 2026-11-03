@@ -1,0 +1,8 @@
+title: the same coordinator one run earlier, with transfer_task
+source: manuals/docker-sandboxes-101/capture/out/19-transcript.txt
+lines: 1-2
+lang: text
+note: The transfer_task call ran under --exec with no confirmation.
+---
+user: Ask the writer for one sentence about microVMs.
+root -> tool_call transfer_task {"agent": "writer", "task": "Generate one sentence about microVMs", "expected_output": "A single sentence describing microVMs"}

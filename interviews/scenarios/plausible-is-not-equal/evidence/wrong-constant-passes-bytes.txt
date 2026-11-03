@@ -1,0 +1,46 @@
+title: a rebuild with one wrong table entry in leg two
+source: manuals/reverse-engineering-101/capture/out/17-harness-bytes.json
+lines: 261-300
+lang: json
+note: Masked bytes equal, relocations match, and the status is still fail. Read the two tables.
+---
+      "candidate": "grade_case10_wrong",
+      "source": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/grade_case10_wrong.c",
+      "original_size": 46,
+      "candidate_size": 46,
+      "masked_equal": true,
+      "differing_offsets": [],
+      "masked_ranges": [
+        [
+          38,
+          4
+        ]
+      ],
+      "relocations_match": true,
+      "relocations": [
+        {
+          "offset": 38,
+          "type": "R_X86_64_PC32",
+          "original_target": ".rodata+0x10",
+          "candidate_target": ".rodata-0x4",
+          "same_shape": true
+        }
+      ],
+      "original_table": [
+        1,
+        2,
+        3,
+        4,
+        4
+      ],
+      "candidate_table": [
+        1,
+        2,
+        3,
+        4,
+        3
+      ],
+      "status": "fail",
+      "reasons": [
+        "referenced constants differ: [1, 2, 3, 4, 4] vs [1, 2, 3, 4, 3]"
+      ]

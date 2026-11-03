@@ -1,0 +1,11 @@
+title: the startup phases of the server without graphs
+source: manuals/sglang-101/capture/gpu/out-gb10/server-no-cuda-graph.log
+lines: 21-25
+lang: text
+note: Compare scheduler_e2e and tokenizer_e2e with the default server.
+---
+[2026-10-17 14:36:42] Disable prefill CUDA graph because cuda_graph_config resolved prefill.backend='disabled' (e.g. via --cuda-graph-backend-prefill=disabled or auto-disable rules).
+[2026-10-17 14:36:42] max_total_num_tokens=258017, chunked_prefill_size=8192, max_prefill_tokens=16384, max_running_requests=2048, context_len=262144, available_gpu_mem=31.20 GB
+[2026-10-17 14:36:42] Init Unified Radix Cache. Components: (<ComponentType.FULL: 0>,). Tree Core: RustUnifiedTreeCore
+[2026-10-17 14:36:42] Tree cache initialized: source=default impl=UnifiedRadixCache hybrid_swa=False hybrid_ssm=False hicache_attached=False
+[2026-10-17 14:36:44] Engine startup timings (s): load_weight=322.24, kv_cache_allocation=2.07, scheduler_e2e=341.39, cuda_graph={prefill=0.00, decode=0.00, target_verify=0.00, draft_prefill=0.00, draft_decode=0.00, draft_extend=0.00}, tokenizer_e2e=346.34

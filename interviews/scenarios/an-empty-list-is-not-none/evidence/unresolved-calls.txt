@@ -1,0 +1,8 @@
+title: the unresolved_calls facet of the same dossier
+source: manuals/reverse-engineering-101/capture/out/10-mcp-09-analyze-function-percent-change-O1.json
+lines: 1244-1245
+lang: json
+note: Also empty. Read it together with the coverage block before you decide what empty means.
+---
+          "unresolved_calls": [],
+          "referenced_strings": [],

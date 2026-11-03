@@ -1,0 +1,11 @@
+title: mean acceptance length at 8 users, by dataset
+source: manuals/sglang-101/capture/gpu/out-l4/spec-real-prompts.txt
+lines: 13-17
+lang: text
+note: Read the ShareGPT row against the GSM8K row for each method.
+---
+mean acceptance length at 8 users: EAGLE3 / NGRAM
+random     2.48 to 2.78 / 1.50 to 1.57
+ShareGPT   2.35 to 2.43 / 1.22 to 1.25
+GSM8K      2.69 to 2.78 / 1.44 to 1.46
+code       2.57 to 2.58 / 1.37 to 1.38

@@ -1,0 +1,9 @@
+title: the two pools of the target and the draft
+source: manuals/sglang-101/capture/gpu/out-gb10/server-eagle3.log
+lines: 27-29
+lang: text
+note: The two lines report the same token count with very different sizes.
+---
+[2026-10-17 15:20:23] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 216775, K size: 9.92 GB, V size: 9.92 GB
+[2026-10-17 15:20:23] Memory pool end. avail mem=34.44 GB
+[2026-10-17 15:20:23] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 216775, K size: 0.21 GB, V size: 0.21 GB

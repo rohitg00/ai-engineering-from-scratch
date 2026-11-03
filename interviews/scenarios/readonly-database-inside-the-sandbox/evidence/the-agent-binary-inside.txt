@@ -1,0 +1,9 @@
+title: the version of the agent binary inside the VM
+source: manuals/docker-sandboxes-101/capture/out/27-inside.txt
+lines: 1-3
+lang: console
+note: The template does not run the release that the host runs.
+---
+$ sbx exec docker-agent-<hash> sh -c 'docker-agent version; echo; env | grep -iE '"'"'proxy|gateway|models|safety|yolo'"'"' | sort; echo; docker-agent sandbox list'
+docker-agent version main
+Commit: 154b78f2d517dae1397866dfb7586c4a302a3151

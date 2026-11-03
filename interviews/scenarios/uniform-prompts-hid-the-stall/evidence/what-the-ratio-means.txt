@@ -1,0 +1,7 @@
+title: how the length ratio sets the prompt and output lengths
+source: manuals/vllm-101/sections/r-7-lab-notes.md
+lines: 11-11
+lang: text
+note: At 1.0 every request has the same two lengths.
+---
+- **Waves.** The waves workload sends 64 prompts at 16 users. The length ratio sets how far the prompt and output lengths can vary. At 1.0 every request has 512 prompt and 128 output tokens. At 0 each length is drawn at random from 1 token up to that size.

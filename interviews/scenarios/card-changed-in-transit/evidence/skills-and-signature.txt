@@ -1,0 +1,26 @@
+title: the skills and the signature of the published deployer card
+source: manuals/a2a-101/capture/out/01-agent-cards.http
+lines: 181-200
+lang: text
+note: Read where the skill says the build goes, then the two fields of the signature entry.
+---
+  "skills": [
+    {
+      "id": "deploy",
+      "name": "Deploy a build",
+      "description": "Deploy one tagged build to staging, with operator approval.",
+      "tags": [
+        "deploy",
+        "staging"
+      ],
+      "examples": [
+        "Deploy build 2026.10.06-1 to staging"
+      ]
+    }
+  ],
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJkZXBsb3llci1rZXktMSJ9",
+      "signature": "yPk834ji_dOVmxElhzV3yTYBT9NVp8Bx1j5K0LQmOww"
+    }
+  ]

@@ -1,0 +1,15 @@
+title: sbx ls before and after the last session closed
+source: manuals/docker-sandboxes-101/capture/out/04-auto-stop.txt
+lines: 1-9
+lang: console
+note: The sandbox is still listed, with a new status.
+---
+$ sbx ls
+SANDBOX     AGENT   STATUS    PORTS   WORKSPACE
+m101-demo   shell   running           $CAPTURE/fixtures/repo
+[exit 0]
+
+$ sbx ls
+SANDBOX     AGENT   STATUS    PORTS   WORKSPACE
+m101-demo   shell   stopped           $CAPTURE/fixtures/repo
+[exit 0]

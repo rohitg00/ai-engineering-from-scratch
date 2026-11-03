@@ -1,0 +1,11 @@
+title: the fourth start: the linker cannot find the CUDA runtime library
+source: manuals/sglang-101/capture/gpu/incidents/l4-toolchain-failures.txt
+lines: 14-18
+lang: text
+note: The JIT module of SGLang links against -lcudart and the linker finds no such file.
+---
+=== attempt: out-l4-nolibcudart/server-default.log
+/usr/bin/ld: cannot find -lcudart: No such file or directory
+collect2: error: ld returned 1 exit status
+[2026-10-16 14:26:33] RuntimeError: Failed to build JIT module sgl_kernel_jit_fused_rope_true_128_false_bf16_t_bf16_t in /root/.cache/sglang/jit/sm89/sgl_kernel_jit_fused_rope_true_128_false_bf16_t_bf16_t/build-d129ad15216edb50/.staging-45436f7697ff4fd58892a3e6760bd970
+/usr/bin/ld: cannot find -lcudart: No such file or directory

@@ -1,0 +1,11 @@
+title: the last five lines of the sandboxed run
+source: manuals/docker-sandboxes-101/capture/out/27-sandbox-run.txt
+lines: 24-28
+lang: console
+note: The run ends at the session store, before any model call.
+---
+<ts> WARN Self-update skipped; continuing with current binary error="current version \"main\" is not a release version: invalid semantic version"
+docker-agent: self-update failed (current version "main" is not a release version: invalid semantic version); continuing with current version
+Error: creating session store: migration failed even after database reset: failed to create migrations table: attempt to write a readonly database (1032)
+Error: 
+[exit 1]

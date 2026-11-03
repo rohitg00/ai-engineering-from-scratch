@@ -1,0 +1,20 @@
+title: the summary block of the first run
+source: manuals/docker-sandboxes-101/capture/out/22-eval-run.json
+lines: 14-27
+lang: json
+note: Every total is 0, and sessions is null.
+---
+  "summary": {
+    "total_evals": 2,
+    "failed_evals": 2,
+    "total_cost": 0,
+    "sizes_passed": 0,
+    "sizes_total": 0,
+    "tools_f1_sum": 0,
+    "tools_count": 0,
+    "relevance_passed": 0,
+    "relevance_total": 0,
+    "assertions_passed": 0,
+    "assertions_total": 0
+  },
+  "sessions": null

@@ -1,0 +1,24 @@
+title: the verification status, the summary, and the first claim
+source: manuals/reverse-engineering-101/capture/out/10-mcp-22-verify-reconstruction.json
+lines: 81-98
+lang: json
+note: Two passed and two failed. The first claim reads unchanged on its one dimension.
+---
+          "status": "fail",
+          "specification_sha256": "9e8d22fa6db331994f2e80be5b728575a0e9cb17ff1e63d24ece22d235084bfe",
+          "summary": {
+            "total": 4,
+            "passed": 2,
+            "failed": 2,
+            "unknown": 0,
+            "behavioral": 0,
+            "structural": 4
+          },
+          "claims": {
+            "items": [
+              {
+                "claim_id": "percent-change-assembly",
+                "kind": "structural-function",
+                "dimension": "assembly",
+                "status": "pass",
+                "observed_status": "unchanged",
