@@ -16,7 +16,7 @@ related: [transformers/heads-are-nearly-free, inference-serving/kv-pool-users-fi
 updated: 2026-11-03
 ---
 
-You are choosing the attention variant for a new 70B-class decoder: full multi-head, multi-query, grouped-query or multi-head latent attention. What does each one do to the memory that decoding holds per token, and what do you give up with each?
+You are choosing the attention variant for a new 70B-class decoder: full multi-head, multi-query, grouped-query, or MLA with its compressed latent. What does each one do to the memory that decoding holds per token, and what do you give up with each?
 
 ## Short answer
 

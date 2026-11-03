@@ -42,7 +42,7 @@ def spec_step(prefix, q_model, p_model, N, rng):
     return prefix + [sample(q_dists[N], rng)]
 ```
 
-Why does `q_dists` hold N plus 1 entries, what happens at the first rejection, and why does the residual use `p_model(prefix)` rather than `p_probs[i]`?
+Why does `q_dists` hold N plus 1 entries, what happens when the first draft token fails the test, and why does the residual use `p_model(prefix)` rather than `p_probs[i]`?
 
 ## Short answer
 

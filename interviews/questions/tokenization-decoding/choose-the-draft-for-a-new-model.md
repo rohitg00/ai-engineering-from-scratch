@@ -16,7 +16,7 @@ related: [tokenization-decoding/mtp-sequential-vs-parallel, tokenization-decodin
 updated: 2026-11-03
 ---
 
-You are about to pretrain a model that will later serve a large volume with speculative decoding. Three ways to get a draft are on the table: bake sequential multi-token modules into pretraining, train a hidden-state draft head after pretraining, or reuse a small model of the same family. Give the decision with its costs, and name the gate you measure before you ship the flag.
+You are about to pretrain a model that will later serve a large volume using speculative decoding. Three ways to get a draft are on the table: bake sequential multi-token modules into pretraining, train a hidden-state draft head after pretraining, or reuse a small model of the same family. Give the decision with its costs, and name the gate you measure before you ship the flag.
 
 ## Short answer
 

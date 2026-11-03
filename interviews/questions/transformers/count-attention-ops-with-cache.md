@@ -16,7 +16,7 @@ related: [transformers/causal-mask-minus-infinity, inference-serving/kv-pool-use
 updated: 2026-11-03
 ---
 
-A decoder generates 100 tokens one at a time from an empty prompt. Count the attention operations against the prefix for a naive loop and for a loop that keeps the keys and values of earlier tokens. Then tell me what that store deliberately leaves out.
+A decoder generates 100 tokens one at a time from an empty prompt. Count the attention operations against the prefix for a naive loop and for a loop that caches the key and value vectors of earlier tokens. Then tell me what that store deliberately leaves out.
 
 ## Short answer
 
