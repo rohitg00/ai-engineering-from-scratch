@@ -1,0 +1,10 @@
+title: a request that the server cut at its own cap
+source: manuals/vllm-101/capture/gpu/out-l4/livecheck-2026-10-22.txt
+lines: 19-22
+lang: text
+note: With max_tokens of 64 the finish reason is length, and the reasoning field holds the start of the answer.
+---
+== c03 thinking on, 64 tokens
+finish length
+content None
+reasoning "\nOkay, the user asked me to name three prime numbers. Let me think. First, what's a prime number? A prime number is a nu"

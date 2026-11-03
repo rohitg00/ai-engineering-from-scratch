@@ -1,0 +1,10 @@
+title: two accounting rules of the TCK that change how the numbers read
+source: manuals/a2a-101/research/tck-run.md
+lines: 96-99
+lang: text
+note: The first fact turns skips into failures. Read the counts after the rule on the main branch is applied.
+---
+Two accounting facts change how the numbers read.
+
+1. The tag records a `pytest.skip()` raised inside a test body as a failure. The safety-net hook in `tests/compatibility/conftest.py:251-297` records any call-phase report that did not pass and did not call `record()` as FAIL with the skip tuple as the error text (`:271` tests only `report.passed`; `:292-297` records). `main` adds `if report.skipped: return` with the comment "Auto-recording it as a FAIL would misrepresent it" (`main conftest.py:310-318`). In run 2, 21 of the 31 FAIL requirements are of this kind (section 3.3). With `main`'s rule they are SKIPPED: PASS 62, FAIL 10, SKIPPED 32, NOT TESTED 25, which is overall 86.1% (62/72), MUST 89.4% (59/66), SHOULD 33.3% (1/3), MAY 66.7% (2/3).
+2. The per-transport entry in `per_requirement[...].transports` is the last record written for that transport (`aggregator.py:105-111`), so a requirement with several tests on one transport can show `jsonrpc: PASS` next to a FAIL verdict (`JSONRPC-SSE-002`, `HTTP_JSON-ERR-001`, `HTTP_JSON-SVC-001`, `DM-ART-001`, `DM-MSG-001`). The summary files therefore carry the verdict as the status field and fold the per-transport records into the transport field.

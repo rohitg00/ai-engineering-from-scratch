@@ -1,0 +1,7 @@
+title: why the two starts sized the pool differently
+source: manuals/sglang-101/sections/3-2-mem-fraction-static-and-startup-sizing.md
+lines: 26-26
+lang: text
+note: One paragraph from the manual.
+---
+Nothing changed in SGLang between the runs. Other programs on the Mac used less memory at the second start, so `sys_available` grew from 27.81 GB to 38.29 GB. The pool grew with it, from 24.25 GB to 33.39 GB. Both budgets are 87.2 percent of the free memory, because the automatic `mem_fraction_static` resolved to 0.872.

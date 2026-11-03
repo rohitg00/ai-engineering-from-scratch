@@ -1,0 +1,15 @@
+title: the detail inside the HTTP+JSON error
+source: manuals/a2a-101/capture/out/16-rest-binding.http
+lines: 196-204
+lang: text
+note: Compare the reason with the one in the JSON-RPC reply.
+---
+        "reason": "TASK_NOT_FOUND",
+        "domain": "a2a-protocol.org",
+        "metadata": {
+          "taskId": "00000000-0000-4000-8000-000000000000"
+        }
+      }
+    ]
+  }
+}

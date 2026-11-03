@@ -1,0 +1,21 @@
+title: the sandboxed run, its state flags and the launch summary
+source: manuals/docker-sandboxes-101/capture/out/27-sandbox-run.txt
+lines: 1-15
+lang: console
+note: Read the note after the command for where the three state directories sit, then the four workspace lines and their modes.
+---
+$ docker-agent run --sandbox --exec --working-dir fixtures/repo-sandbox fixtures/agents/files-sandbox.yaml 'List the files in the working directory and count the lines of README.md.'  (--config-dir, --data-dir, --cache-dir under fixtures/repo-sandbox/.m101, inside the workspace)
+Models gateway: none configured
+Models catalog: allowlisting models.dev in the sandbox proxy
+User sandbox allowlist: allowlisting 1 host(s) from `docker agent sandbox allow`:
+  - localhost:12434
+
+sandbox    docker-agent-<hash>
+agent      docker-agent
+workspace  $CAPTURE/fixtures/repo-sandbox (rw)
+           $CAPTURE/fixtures/agents (ro)
+           $CAPTURE/fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash> (ro)
+           $CAPTURE/fixtures/repo-sandbox/.m101/cfg (ro)
+image      docker/docker-agent-sbx-templates:latest
+cpu        10
+memory     32 GiB

@@ -1,0 +1,17 @@
+title: the log probability gap of the first ten steps
+source: manuals/miles-101/capture/gpu/out-gb10/read-steps.txt
+lines: 12-22
+lang: text
+note: The same ten steps. Read the lowest and the highest value.
+---
+$ grep -o "'train/train_rollout_logprob_abs_diff': [0-9.]*" plain.log | head -10
+'train/train_rollout_logprob_abs_diff': 0.015336457639932632
+'train/train_rollout_logprob_abs_diff': 0.01610221341252327
+'train/train_rollout_logprob_abs_diff': 0.014312651939690113
+'train/train_rollout_logprob_abs_diff': 0.015629252418875694
+'train/train_rollout_logprob_abs_diff': 0.015349497087299824
+'train/train_rollout_logprob_abs_diff': 0.01628461480140686
+'train/train_rollout_logprob_abs_diff': 0.014715931378304958
+'train/train_rollout_logprob_abs_diff': 0.015263394452631474
+'train/train_rollout_logprob_abs_diff': 0.01513341348618269
+'train/train_rollout_logprob_abs_diff': 0.016122153028845787

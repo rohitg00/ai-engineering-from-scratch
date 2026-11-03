@@ -1,0 +1,10 @@
+title: the other engine: the engine core fails, and the three packages behind it
+source: manuals/vllm-101/capture/gpu/incidents/l4-vllm-flashinfer-jit.txt
+lines: 5-8
+lang: text
+note: Read the versions of the kernel library, the headers and the compiler, which come from three different packages.
+---
+RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+flashinfer_python-0.7.0.post1.dist-info
+nvidia_cuda_cccl-13.3.4.3.1.dist-info
+nvidia_cuda_nvcc-13.4.92.dist-info

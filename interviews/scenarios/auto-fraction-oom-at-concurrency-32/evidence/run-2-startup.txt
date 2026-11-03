@@ -1,0 +1,12 @@
+title: the pool lines of the second start, minutes later
+source: manuals/sglang-101/capture/out/oom-exploratory.log
+lines: 5-10
+lang: text
+note: Compare sys_available and kv_budget with the first start, and read the resolved fraction.
+---
+# run 2 startup
+'mem_fraction_static': 0.872
+[2026-10-16 13:38:58] Auto-sized attention KV pool: sys_available=38.29 GB, mlx_limit=51.8 GB, mlx_used=0.31 GB, kv_budget=33.39 GB, bytes_per_slot=114688, pool_size=312581
+[2026-10-16 13:38:58] MLX stub: initialized minimal pools (max_total_num_tokens=312581, max_running_requests=4096, zero GPU KV cache allocation)
+[2026-10-16 13:39:00] max_total_num_tokens=312581, chunked_prefill_size=4096, max_prefill_tokens=16384, max_running_requests=4096, context_len=40960, available_gpu_mem=37.92 GB
+[2026-10-16 13:39:02] MlxAttentionKVPool: 312582 slots x 28 layers x 8 heads x 128 dim, dtype=mlx.core.bfloat16, ~34188.7 MB

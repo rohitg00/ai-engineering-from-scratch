@@ -1,0 +1,12 @@
+title: one server, three clients, and the rules of the run
+source: manuals/vllm-101/capture/gpu/out-l4/bench-client-bias.txt
+lines: 1-6
+lang: text
+note: Read the clock line and the last line: the cache was flushed before every run and the clients took turns.
+---
+Three benchmark clients against one server (backlog B-14)
+Date: 2026-10-23
+Machine: NVIDIA L4, the second GPU of the node (GPU1), shared with its owner. The clock was throttled but steady at 420 to 495 MHz for every run.
+Server: one vLLM 0.31.0 server with Qwen/Qwen3-0.6B.
+Clients: the SGLang 0.5.22 client with --backend vllm and the random-ids dataset, vllm bench serve with the random dataset, and vllm bench serve with VLLM_USE_RUST_BENCH=1.
+All runs: 512 tokens in and 128 out, ignore EOS, seed 1, prefix cache flushed before every run, 2 rounds interleaved by client.

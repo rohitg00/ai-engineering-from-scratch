@@ -1,0 +1,8 @@
+title: the callees facet of the _percent_change dossier
+source: manuals/reverse-engineering-101/capture/out/10-mcp-09-analyze-function-percent-change-O1.json
+lines: 1052-1053
+lang: json
+note: The array that the agent read as proof. The incoming references start on the next line.
+---
+          "callees": [],
+          "incoming_references": [

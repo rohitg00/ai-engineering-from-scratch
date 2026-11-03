@@ -1,0 +1,14 @@
+title: what the random dataset is, and what other studies found on real prompts
+source: manuals/sglang-101/sections/4-4-speculative-decoding.md
+lines: 170-177
+lang: text
+note: The first paragraph says where the random text comes from.
+---
+Both sweeps used the `random` dataset of the benchmark client, with 512 tokens in, 128 tokens out, and `ignore_eos` on. At v0.5.22 that dataset takes the first turn of ShareGPT conversations, then cuts or repeats it to 512 tokens {{code}}. It is real text, but it is not your traffic.
+
+Other teams found that tests like ours can overstate the gain. We did not measure these effects ourselves:
+
+- A 2026 benchmark study by NVIDIA researchers, SPEED-Bench, found that synthetic prompts overstated speculative throughput by 23 percent on average. It also found that the best draft length fell to 1 as the batch grew.
+- The same study found that random token ids left 20 to 30 percent of the experts idle in some layers of an MoE target.
+- A 2026 study of EAGLE-3 and other drafts, Test-Time Speculation, found that the acceptance length falls as the answer grows. On MATH answers that ran toward 20,000 tokens, it fell from about 3.7 to about 1.5.
+- A 2025 study of serving benchmarks compared speculation with the baseline. The median TPOT was 1.3 times lower, and the P99 TPOT was 1.16 times higher. TTFT also rose, because the draft runs its own prefill.

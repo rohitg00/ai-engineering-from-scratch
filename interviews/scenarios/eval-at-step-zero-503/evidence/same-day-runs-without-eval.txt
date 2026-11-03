@@ -1,0 +1,13 @@
+title: two 2-step runs of the same day without eval, which reached step 0 and step 1
+source: manuals/miles-101/capture/gpu/out-gb10/tracker-eval-checks.txt
+lines: 5-11
+lang: text
+note: The tracker checks used the same recipe and the same machine, with no eval flags.
+---
+## wandb with --wandb-group plain (wandb-check.log): step 0: step 1: 
+W&B offline mode enabled. Data will be saved locally.
+debug-internal.log debug.log latest-run offline-run-20261023_034138-mu59u570 offline-run-20261023_034200-mu59u570 offline-run-20261023_034203-mu59u570 
+## tensorboard (tb-check.log): step 0: step 1: 
+Saving tensorboard log to /root/lab/runs/plain/tb.
+events.out.tfevents.1792727435.c56e30506501.2042.0
+events.out.tfevents.1792727457.c56e30506501.2515.0

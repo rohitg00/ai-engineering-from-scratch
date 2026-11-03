@@ -1,0 +1,9 @@
+title: what the tensor parallel check does, and why it is right
+source: manuals/sglang-101/sections/6-1-tp-size-dp-size-and-attn-dp-size.md
+lines: 113-115
+lang: text
+note: Two paragraphs from the manual.
+---
+Before it loads weights, each rank measures its free memory, and the group keeps the smallest value. If that value is less than 90 percent of the local free memory, the server stops {{code}}. The second card had 18.28 GB free against the 19.53 GB that the check required. No flag turns the check off at v0.5.22.
+
+The check is right to stop. Each rank of a TP group holds the same share of weights and the same pool. The smallest card sets the size for all of them. On a shared machine, give a TP group whole GPUs. `--dp-size 2` does not have this check, because each copy sizes its own pool, so it started on the same pair.

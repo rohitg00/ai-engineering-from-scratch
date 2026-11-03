@@ -1,0 +1,7 @@
+title: when a client verifies, and with which algorithms
+source: manuals/a2a-101/sections/2-3-extended-cards-and-signatures.md
+lines: 120-120
+lang: text
+note: One sentence on the order of operations, one on the key, one on the algorithm list.
+---
+A client should verify at least one signature before it trusts an Agent Card {{spec §8.4.3}}, and never with an expired or revoked key. Give your verifier an explicit list of allowed algorithms, as the reference SDK does, to prevent algorithm confusion attacks {{sdk src/a2a/utils/signing.py}}. [Security requirements](#s-security-requirements) covers card spoofing.

@@ -1,0 +1,9 @@
+title: where the flag value came from, and the one pair that both sides accept
+source: manuals/sglang-101/sections/7-2-sglang-as-an-rl-rollout-engine.md
+lines: 211-213
+lang: text
+note: The first paragraph explains why the name reached the trainer unchanged.
+---
+The flag value came from the wrong example. In the FSDP actor, the SGLang Triton attention bridge turns on only when `torch.version.hip` is set, which means AMD GPUs {{code}}. On an NVIDIA GPU the value goes straight to transformers, which has no attention named `triton`.
+
+The only true on-policy contract in Miles pairs the SGLang `fa3` backend with `flash_attention_3` in FSDP {{code}}. We ran the job again with the contract flags to see where it stops.

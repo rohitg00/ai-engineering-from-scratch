@@ -1,0 +1,7 @@
+title: the flags that run eval on the training engines
+source: manuals/miles-101/sections/6-2-run-a-separate-eval-fleet.md
+lines: 26-26
+lang: text
+note: The interval counts steps and the data is the test split that the launcher downloads.
+---
+-e MILES_EXTRA_ARGS="--eval-interval 10 --eval-prompt-data gsm8k_test /root/lab/datasets/gsm8k/test.parquet"

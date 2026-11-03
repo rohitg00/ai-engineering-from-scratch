@@ -1,0 +1,9 @@
+title: the other engine on the same host: the sampler choice and the JIT build
+source: manuals/vllm-101/capture/gpu/incidents/l4-vllm-flashinfer-jit.txt
+lines: 1-3
+lang: text
+note: The second line names the component that the third line starts to build.
+---
+INFO 10-17 16:22:09 [api_utils.py:286] non-default args: {'model_tag': 'Qwen/Qwen3-8B', 'host': '127.0.0.1', 'port': 30000, 'model': 'Qwen/Qwen3-8B', 'max_model_len': 8192, 'gpu_memory_utilization': 0.9, 'num_gpu_blocks_override': 1506}
+INFO 10-17 16:22:26 [topk_topp_sampler.py:124] Using FlashInfer for top-p & top-k sampling.
+2026-10-17 16:22:39,316 - INFO - core.py:564 - flashinfer.jit: Building JIT module sampling; this can take several minutes on first use.

@@ -1,0 +1,12 @@
+title: the four numbers to compare on your own traffic
+source: manuals/sglang-101/sections/4-4-speculative-decoding.md
+lines: 58-63
+lang: text
+note: Item 4 asks for the acceptance of your longest answers alone.
+---
+Run a sample of your own traffic with and without speculation. Keep your real output lengths, and pass `--disable-ignore-eos` to the benchmark client. With no traffic sample, `--dataset-name speed-bench` reads a local copy of the SPEED-Bench prompts at v0.5.22 {{code}}. Compare these numbers:
+
+1. The acceptance length, from `sglang:spec_accept_length`.
+2. The median TPOT and the output throughput.
+3. The P99 ITL and the P99 TTFT, because a gain in the median can hide a loss in the tail.
+4. The acceptance length of your longest answers alone. Each `/generate` response gives it as `spec_accept_length` in `meta_info`.
