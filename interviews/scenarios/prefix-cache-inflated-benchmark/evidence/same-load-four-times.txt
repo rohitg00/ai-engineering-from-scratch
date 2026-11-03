@@ -1,0 +1,9 @@
+title: one load sent four times to one server
+source: manuals/vllm-101/capture/gpu/out-l4/prefix-cache-flush.txt
+lines: 9-11
+lang: text
+note: Compare the first column with the second, then look at what the flush did in the third.
+---
+engine        fresh   repeat, not flushed   repeat after a flush   repeat, not flushed
+SGLang 0.6B   394     82.5                  289                    77
+vLLM 0.6B     925     148                   1,163                  184
