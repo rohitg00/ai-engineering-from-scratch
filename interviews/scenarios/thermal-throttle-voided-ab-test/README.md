@@ -27,7 +27,7 @@ source:
 
 ## Situation
 
-A team wants to know whether CUDA graphs help their `Qwen/Qwen3-8B` server on an L4. They run the concurrency sweep with graphs on, then the same sweep with graphs off, one after the other on the same afternoon, three seeds each. The two tables agree within a few percent, and at several points the run with graphs off reads a little faster. They conclude that graphs do nothing on this card and plan to turn them off in production to save startup time and memory.
+A team wants to know whether CUDA graphs help their `Qwen/Qwen3-8B` server on an L4. They run the concurrency sweep with graphs on, then the same sweep with graphs off, one after the other on the same afternoon, three seeds each. The two tables agree within a few percent, and at several points the run with graphs off reads a little faster. They conclude that graphs do nothing on this card and plan to turn them off in production to start faster and save memory.
 
 One teammate mentions that the fans of the node were loud all afternoon, and that the other L4 in the node was running another team's test pods and an FP8 sweep at the same time.
 

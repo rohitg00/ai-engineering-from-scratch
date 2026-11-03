@@ -30,7 +30,7 @@ source:
 
 A team serves `Qwen/Qwen3-8B` on one L4 and wants shorter answers for its users. They turn on EAGLE3 with a trained draft and set the draft depth to 5, because a deeper draft guesses more tokens in each step. At one user the time per token almost halves, and the demo is a success.
 
-The load test at 32 users tells another story. Each token still arrives faster, but the server writes no more tokens per second than it did without speculation, while the first token now takes several seconds. The team concludes that speculation does not scale and schedules its removal. A second team, which serves a different model family on a GB10 with the same method, reports that their gain holds at 64 users and asks what the first team did wrong.
+The load test at 32 users tells another story. Each token still arrives faster, but the server writes no more total tokens each second than it did without speculation, while the first token now takes several seconds. The team concludes that speculation does not scale and schedules its removal. A second team, which serves a different model family on a GB10 with the same method, reports that their gain holds at 64 users and asks what the first team did wrong.
 
 ## Evidence
 

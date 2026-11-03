@@ -29,7 +29,7 @@ source:
 
 A team wants to stop long prompts from pausing other users' streams, so they split `Qwen/Qwen3-8B` into a prefill server on the first L4 and a decode server on the second L4, behind the router. The two cards have no RDMA, so the KV cache moves over TCP. The second card also runs another team's pods.
 
-They run the fixed-rate sweep through the router. At 8 requests per second the summary prints 240 successful requests of 240 and an output throughput of 751.85 tokens per second, higher than the 728.61 of their best single server at the same rate. The slide is ready. A reviewer reads the summary once more and stops at one line: the mean time to first token is 0.00 ms.
+They run the fixed-rate sweep through the router. At a fixed rate of 8 per second, the summary prints 240 successful requests of 240 and output throughput of 751.85 tokens per second, higher than the 728.61 of their best single server at the same rate. The slide is ready. A reviewer reads the summary once more and stops at one line: the mean time to first token is 0.00 ms.
 
 ## Evidence
 

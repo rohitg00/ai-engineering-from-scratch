@@ -29,7 +29,7 @@ source:
 
 A team serves `Qwen/Qwen3-8B` on one L4. Requests queue because the KV pool is full, so they add `--kv-cache-dtype fp8` to store each cached value in one byte instead of two. The first start fails with a compiler error from a kernel library. A colleague adds a backend flag, the server starts, and a quick benchmark shows the time per token a little lower than before.
 
-Before the rollout, the team runs the first 500 GSM8K questions in BF16 and in FP8 and sees the same accuracy within the error bars. They ship. In the review, a staff engineer asks one question: "Which scale did the cache use?" Nobody knows. The production model is not this one, it is a newer family with calibrated scales in the checkpoint.
+Before the rollout, the team runs GSM8K on its first 500 questions in BF16 and in FP8 and sees the same accuracy within the error bars. They ship. In the review, a staff engineer asks one question: "Which scale did the cache use?" Nobody knows. The production model is not this one, it is a newer family whose checkpoint ships calibrated scales.
 
 ## Evidence
 
