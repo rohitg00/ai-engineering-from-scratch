@@ -7,6 +7,7 @@ Batching, the KV cache, prefix caching, schedulers and how to measure a serving 
 | Question | Kind | Level | Minutes |
 |---|---|---|---|
 | [The two phases of one request](prefill-and-decode.md) | Concept | 1 Screen | 6 |
+| [The knee that the prefix cache hid](flush-before-you-compare.md) | Debug | 2 Working | 8 |
 | [What an FP8 KV cache buys and costs](fp8-kv-cache.md) | Trade-off | 2 Working | 10 |
 | [How speculative decoding keeps the output the same](how-speculation-keeps-the-output.md) | Concept | 2 Working | 8 |
 | [How many users fit in a 24,096-token pool](kv-pool-users-on-a-24-gb-card.md) | Estimate | 2 Working | 8 |
@@ -14,8 +15,12 @@ Batching, the KV cache, prefix caching, schedulers and how to measure a serving 
 | [One token budget instead of two phases](one-token-budget-per-step.md) | Concept | 2 Working | 8 |
 | [Why the KV cache is a pool of 16-token blocks](paged-blocks-and-the-hash-chain.md) | Concept | 2 Working | 8 |
 | [Why the shared part of the prompt goes first](prefix-cache-order.md) | Concept | 2 Working | 8 |
+| [Read the GPU clock before the throughput](read-the-clock-first.md) | Debug | 2 Working | 8 |
+| [Sleep, wake and weight updates for an RL loop](sleep-mode-for-rl-rollouts.md) | Concept | 2 Working | 8 |
 | [Temperature zero gave two different answers](temperature-zero-two-answers.md) | Concept | 2 Working | 8 |
 | [Choose tensor, pipeline or data parallelism](tensor-pipeline-or-data-parallel.md) | Design | 2 Working | 10 |
+| [The benchmark client is part of the measurement](the-client-is-part-of-the-measurement.md) | Concept | 2 Working | 8 |
+| [An admission cap only chooses who waits](a-cap-only-chooses-who-waits.md) | Trade-off | 3 Senior | 10 |
 | [From per-position acceptance to tokens per pass](acceptance-length-on-long-answers.md) | Estimate | 3 Senior | 8 |
 | [Pick the EAGLE3 draft depth for your concurrency](eagle3-draft-depth.md) | Trade-off | 3 Senior | 10 |
 | [When an FP8 checkpoint pays](fp8-weights.md) | Trade-off | 3 Senior | 10 |
