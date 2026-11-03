@@ -15,18 +15,14 @@ deepmind
 facebook
 google
 groq
-hugging face
-huggingface
 ibm
 instagram
-intel
 lambda labs
 linkedin
 meta platforms
 microsoft
 mistral ai
 netflix
-nvidia
 openai
 oracle cloud
 palantir
