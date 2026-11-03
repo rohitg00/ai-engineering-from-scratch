@@ -29,6 +29,20 @@ each round from those cards.
 Skip a round when no card of the role has an item for it. Say which round
 you skipped and why.
 
+## Rounds without an item
+
+A loop file can give a round as a task with no item, such as a design task
+with a load and a latency target. Look for an item on the card of that round
+first. If no item fits, tell the learner that the bank has no item for the
+round, and skip it. Do not grade a round that has no bank sections.
+
+## Coding rounds
+
+The `coding` card links to practice tasks under `practice/`. Give the
+learner the task id and its path, and tell them to run the task grader. Do
+not grade the code yourself. Record the result that the grader prints, with
+mode `loop:<role-id>`.
+
 ## Run the loop
 
 1. Give the plan: each round, its minutes and its mode. Do not give the item

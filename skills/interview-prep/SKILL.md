@@ -69,7 +69,8 @@ https://raw.githubusercontent.com/rohitg00/ai-engineering-from-scratch/main/<pat
 | One loop | `interviews/loops/<role-id>.md`, when it exists |
 
 Without a clone, you cannot list a folder. Use the generated `README.md` of a
-card or of `scenarios` as the index of ids.
+card or of `scenarios` as the index of ids. The index shows the titles, so
+use it to pick an id, and do not read a title to the learner.
 
 Read the whole item file before you ask. Show only the prompt: the text
 before the first `##` heading. For a scenario, show only `Situation`, then

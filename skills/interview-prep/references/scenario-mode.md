@@ -28,6 +28,9 @@ model and the hardware. Show `system` with the `Situation`.
 Show the `system` values and the `Situation` text. Then ask: "What is your
 first hypothesis, and what do you want to see first?" Stop.
 
+If question 1 of `Questions` asks for causes before the evidence, ask it here
+in place of the question above. Grade it in step 3 with the other questions.
+
 Done when: the learner has named a hypothesis and a thing to check.
 
 ### 2. Evidence, one listing at a time

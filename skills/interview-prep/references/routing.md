@@ -12,7 +12,7 @@ Take the targets from the item only. Use this order and stop at three.
 | 1 | front matter `manuals`, `<manual-id>#s-<slug>` | `manuals/<manual-id>/sections/<file>.md` | read that section |
 | 2 | front matter `lessons`, `phases/NN-x/MM-y` | the lesson path | `learn` on that lesson, in the host form |
 | 3 | front matter `practice` | `practice/<id>` | do the practice task |
-| 4 | front matter `cheatsheet` | `cheatsheets/<id>` | read the cheat sheet |
+| 4 | front matter `cheatsheet` | `cheatsheets/<id>.md` | read the cheat sheet |
 | 5 | the phase of a lesson target | the phase number | `check-understanding <phase>`, in the host form |
 
 To find the file of a manual section, look in `manuals/<manual-id>/sections/`

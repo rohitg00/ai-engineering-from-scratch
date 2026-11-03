@@ -92,5 +92,7 @@ leaks the next expected answer.
 ## Follow-ups
 
 Grade each follow-up alone, against its `Expected:` text, with the same four
-grades. Record each follow-up as its own Attempts row, with the item id and
+grades. A reply that gives a different cause, which the `Full answer` of the
+item supports, is at most partial. Say that the point is valid, then ask for
+the cause that the follow-up looks for. Record each follow-up as its own Attempts row, with the item id and
 `#f<N>`, where N is its place in the list.
