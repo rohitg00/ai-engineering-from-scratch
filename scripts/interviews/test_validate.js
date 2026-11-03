@@ -125,6 +125,10 @@ test('a generated README that is out of date fails, and --write makes it current
   assert.deepEqual(errors, []);
 });
 
+test('a broken link in a card summary fails in the generated README', () => {
+  expectError(temp => edit(temp, 'interviews/topics.yaml', 'every later answer builds on.', 'every later answer builds on. Read [the guide](../manuals/missing.md).'), /interviews\/README.md:\d+: \.\.\/manuals\/missing.md does not exist/);
+});
+
 test('the card and role lists are checked', () => {
   expectError(temp => edit(temp, 'interviews/roles.yaml', 'cards: [inference-serving,', 'cards: [no-such-card, inference-serving,'), /unknown card no-such-card/);
   expectError(temp => edit(temp, 'interviews/topics.yaml', '    group: models\n    planned: 30', '    group: nowhere\n    planned: 30'), /unknown group nowhere/);

@@ -707,28 +707,34 @@ function checkFiles(root, errors, generated) {
     if (hits.length) errors.push(`${file}: names a company from the denylist: ${hits.join(', ')}`);
     if (/https?:\/\//i.test(prose)) errors.push(`${file}: use relative repository links, not http links`);
     if (!file.endsWith('.md')) continue;
-    for (const link of markdownLinks(text)) {
-      if (/^[a-z]+:/i.test(link.target)) {
-        errors.push(`${file}:${link.line}: ${link.target} is not a relative repository link`);
-        continue;
-      }
-      const [target, anchor] = link.target.split('#');
-      const resolved = target ? path.resolve(path.dirname(full), decodeURIComponent(target)) : full;
-      if (!resolved.startsWith(root + path.sep) && resolved !== root) {
-        errors.push(`${file}:${link.line}: ${link.target} leaves the repository`);
-        continue;
-      }
-      const isDir = fs.existsSync(resolved) && fs.statSync(resolved).isDirectory();
-      const doc = isDir ? path.join(resolved, 'README.md') : resolved;
-      const future = generated.get(rel(root, doc));
-      if (!fs.existsSync(resolved) && future === undefined) {
-        errors.push(`${file}:${link.line}: ${link.target} does not exist`);
-        continue;
-      }
-      if (anchor === undefined) continue;
-      const docText = future !== undefined ? future : doc.endsWith('.md') && fs.existsSync(doc) ? read(doc) : null;
-      if (docText === null || !headingSlugs(docText).has(anchor)) errors.push(`${file}:${link.line}: no heading #${anchor} in ${rel(root, doc)}`);
+    checkLinks(root, file, text, errors, generated);
+  }
+  for (const [file, text] of generated) checkLinks(root, file, text, errors, generated);
+}
+
+function checkLinks(root, file, text, errors, generated) {
+  const full = path.join(root, file);
+  for (const link of markdownLinks(text)) {
+    if (/^[a-z]+:/i.test(link.target)) {
+      errors.push(`${file}:${link.line}: ${link.target} is not a relative repository link`);
+      continue;
     }
+    const [target, anchor] = link.target.split('#');
+    const resolved = target ? path.resolve(path.dirname(full), decodeURIComponent(target)) : full;
+    if (!resolved.startsWith(root + path.sep) && resolved !== root) {
+      errors.push(`${file}:${link.line}: ${link.target} leaves the repository`);
+      continue;
+    }
+    const isDir = fs.existsSync(resolved) && fs.statSync(resolved).isDirectory();
+    const doc = isDir ? path.join(resolved, 'README.md') : resolved;
+    const future = generated.get(rel(root, doc));
+    if (!fs.existsSync(resolved) && future === undefined) {
+      errors.push(`${file}:${link.line}: ${link.target} does not exist`);
+      continue;
+    }
+    if (anchor === undefined) continue;
+    const docText = future !== undefined ? future : doc.endsWith('.md') && fs.existsSync(doc) ? read(doc) : null;
+    if (docText === null || !headingSlugs(docText).has(anchor)) errors.push(`${file}:${link.line}: no heading #${anchor} in ${rel(root, doc)}`);
   }
 }
 
