@@ -1,0 +1,13 @@
+title: the request completes and the server exits
+source: manuals/sglang-101/capture/out/shutdown-exploratory.log
+lines: 176-182
+lang: text
+note: The in-flight request returns 200, the remaining count reaches 0, and the server process finishes.
+---
+[2026-10-16 14:14:04] INFO:     127.0.0.1:53209 - "POST /generate HTTP/1.1" 200 OK
+[2026-10-16 14:14:07] Gracefully exiting... Remaining number of requests 0. Remaining requests remaining_rids=[].
+[2026-10-16 14:14:07] kill_process_tree called: parent_pid=53853, include_parent=False, pid=53853
+[2026-10-16 14:14:07] INFO:     Shutting down
+[2026-10-16 14:14:07] INFO:     Waiting for application shutdown.
+[2026-10-16 14:14:07] INFO:     Application shutdown complete.
+[2026-10-16 14:14:07] INFO:     Finished server process [53853]
