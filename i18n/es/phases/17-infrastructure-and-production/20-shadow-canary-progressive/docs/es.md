@@ -81,7 +81,7 @@ Las puertas de Canary se revisan cada 5-15 minutos dependiendo del volumen de tr
 
 ### El paso A/B es opcional.
 
-Si el nuevo modelo es claramente diferente (comportamiento diferente, curva de costos diferente, tono diferente), A/B prueba a 50% después de que canario pasa.
+Si el nuevo modelo es claramente diferente (comportamiento diferente, curva de costos diferente, tono diferente), A/B prueba a 50% después de que canary pasa. Si es sólo una versión mejorada del mismo comportamiento, salte al 100% cuando canary gates pasan. Mejorado significa que la evaluación fuera de línea mostró la ganancia.
 
 ### Números que debes recordar
 

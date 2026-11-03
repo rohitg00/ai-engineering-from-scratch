@@ -34,7 +34,7 @@ Sin el decodificación de especificaciones, el costo por token es un objetivo ha
 
 Los tokens rechazados no desaparecen  obligan a un segundo objetivo a avanzar para el primer token rechazado. En una carga de trabajo donde el alfa baja a 0,4, pagas gastos generales de proyecto más verificación más re-roll. En alta concurrencia (digamos 256 concurrencias), el lote de decodificación ya es lo suficientemente grande como para que la brecha de ancho de banda de memoria entre "target solo" y "target con verificar" se reduzca. Por debajo de alfa 0.55 en la mayoría de los equipos de 2026, el código de especificaciones es negativo neto.
 
-En el chat general de estilo ShareGPT, EAGLE-3 entrenado en ShareGPT alcanza 0.6-0.8. En el tráfico específico del dominio (código, médico, legal) el jefe de redacción entrenado en datos generales cae a 0.4-0.6.
+Alfa varía según la carga de trabajo. En el chat general de estilo ShareGPT, EAGLE-3 entrenado en ShareGPT alcanza 0.6-0.8. En el tráfico específico de dominio (código, médico, legal) el jefe de proyecto entrenado en datos generales cae a 0,4-0,6. El entrenamiento de un jefe de recarga específico de dominio recupera alfa  es un trabajo de entrenamiento ligero y rápido en comparación con la finalización de objetivos. La fase 7 · 16 y la fase 10 · 15 citan valores más altos (0,85 y superior). Esas son tasas por token en los puntos de referencia de chat que coinciden con los datos de entrenamiento del borrador. Planifique con las bandas de esta página y mide el alfa en su propio tráfico.
 
 ### Las generaciones de águila en un vistazo
 
