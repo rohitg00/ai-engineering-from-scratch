@@ -51,7 +51,7 @@ At a fixed token count, an MLP, a query bridge and a resampler landed within abo
 
 - **Level 2:** Why does a bigger language model help a visual task? Expected: the benchmark asks for reasoning over what the encoder saw, and the reasoning happens in the language model; the visual side sets what it knows, not how well it thinks.
 - **Level 2:** When would a connector change still be the right move? Expected: when the token budget binds, because then the connector decides how many tokens you can afford, which is the axis that matters most.
-- **Level 3:** Which benchmarks move with the encoder and which do not? Expected: vision-centric benchmarks, counting and grounding, move with a self-supervised encoder; the language-heavy reasoning benchmark barely moves.
+- **Level 3:** Which benchmarks move with the encoder and which do not? Expected: vision-centric benchmarks, counting and grounding, move with a self-supervised encoder, by about 5 to 7 points in one study; the reasoning benchmark also moves, by 3 or more points for a stronger contrastive encoder, so the encoder matters for both kinds.
 - **Level 3:** Design the smallest ablation that settles this for your model. Expected: hold the data, the encoder, the token count, the resolution schedule and the training schedule fixed, swap the language model size in one run and the connector in another, and compare both with the baseline on the same eval.
 
 ## Wrong answers

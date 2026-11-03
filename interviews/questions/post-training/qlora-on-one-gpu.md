@@ -38,7 +38,7 @@ The 56 GB comes from two bytes per weight, two bytes per gradient, and two optim
 
 1. NF4. A 4-bit type whose 16 levels sit at the quantiles of a normal distribution, which matches how weights are distributed and loses less than uniform 4-bit integers.
 2. Double quantization. Each block of 64 weights needs a scale in FP32, about 0.4 GB for a 7B model; quantizing the scales to 8 bits brings that down to about 0.1 GB.
-3. Paged optimizers. Optimizer states page to CPU memory when the GPU runs out, which trades some throughput for no out-of-memory crash on long sequences.
+3. Paged optimizers. Optimizer states page to CPU memory when the GPU runs out, which trades some throughput for no out-of-memory crash from optimizer states. Activations stay on the GPU, so a long sequence can still run out of memory.
 
 ### What it costs in quality
 
