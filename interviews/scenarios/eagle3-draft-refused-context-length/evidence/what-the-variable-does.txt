@@ -1,0 +1,9 @@
+title: what the override does and does not do
+source: manuals/sglang-101/sections/4-4-speculative-decoding.md
+lines: 92-94
+lang: text
+note: Two paragraphs. Read why the L4 start needed no override.
+---
+The variable only removes the check. It does not teach the draft to read long prompts, which is the failure in issue #6783 below. Our prompts had 512 tokens, so this run says nothing about long contexts.
+
+We expected the same refusal on a 24 GB L4. We started `Qwen/Qwen3-8B` with the draft `Tengyunw/qwen3_8b_eagle3` and no variable, and the server started. That draft declares 40,960 positions, the same as its target, so the check had nothing to refuse. The variable belongs to one draft config, not to EAGLE-3. Compare `max_position_embeddings` in both configs before you set it.
