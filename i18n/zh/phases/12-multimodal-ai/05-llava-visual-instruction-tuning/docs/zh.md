@@ -87,7 +87,7 @@ decode response
 - 报纸中有一种分网HD变体,后来LLaVA-NeXT以AnyRes为代号.
 
 拉瓦-内XT (2024年1月) 补充道:
-- 任何Res:将高分辨率图像分为336x336种作物的2x2或1x3格式,加上一个全球低分辨率小图片.每个作物成为576个代币;每张图片总共约有2880个视觉代币.OCR和图表任务跳跃.
+- AnyRes:将高分辨率图像分为336x336种植的2x2或1x3网格,加上一个全球低分辨率小图片.每个收获变成576个代币.一个2x2网格加上小图片每张图片产生约2880个视觉代币.一个1x3网格有更少的收获,因此成本更少的代币.OCR和图表任务跳跃.
 - 较好的指令数据混合与 ShareGPT4V (高质量的GPT-4V标题)
 - 强大的基础法学 (Mistral-7B, Yi-34B).
 
@@ -99,7 +99,7 @@ decode response
 
 | | Q-Former (BLIP-2) | MLP (LLaVA) |
 |---|---|---|
-| Visual tokens per image | 32 | 576 (base) or 2880 (AnyRes) |
+| Visual tokens per image | 32 | 576 (base) or about 2880 (AnyRes, 2x2 grid) |
 | Trainable params | 188M + LM | ~22M (7B) + LM |
 | Stage 1 loss | ITC+ITM+ITG | LM only |
 | LLM drop-in | Requires retrain | Swap with minimal retrain |
@@ -115,7 +115,7 @@ decode response
 A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. USER: <image> Describe this image in detail. ASSISTANT: The image shows ...
 ```
 
-`<image>`在代币化之前,它被取代为576个视觉代币 (或2880个随 AnyRes).代币化器看到比它训练的稍长一段序列,但LLM处理新输入,因为第一阶段教了它.
+`<image>`在代币化之前,它被取代为576个视觉代币 (或大约2880个2x2 AnyRes格格).代币化器看到比它训练的序列长一点,但LLM处理新输入,因为第一阶段教了它.
 
 ### 参数经济
 
