@@ -44,7 +44,7 @@ The earlier 224-pixel encoder gave 256 tokens. The move to 336 pixels raised the
 
 ### Tiling for high resolution
 
-Documents and charts need more pixels. The tiling scheme splits the image into a 2 by 2 or 1 by 3 grid of 336-pixel crops, adds one low-resolution global view, and concatenates the tokens of every crop: about 2880 visual tokens per image. Reading and chart scores jumped with it.
+Documents and charts need more pixels. The tiling scheme splits the image into a 2 by 2 or 1 by 3 grid of 336-pixel crops, adds one low-resolution global view, and concatenates the tokens of every crop: about 2880 visual tokens per image for the 2 by 2 grid, and fewer for the 1 by 3 grid, which has one crop less. Reading and chart scores jumped with it.
 
 ### The compressing bridges
 

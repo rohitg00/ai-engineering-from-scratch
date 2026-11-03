@@ -32,7 +32,7 @@ A full update of a 7B model needs about 56 GB: the weights in half precision, th
 | LoRA on an FP16 base | 14 GB | about 18 GB | one 40 GB GPU |
 | QLoRA, 4-bit base | 3.5 GB | about 6 GB | one 24 GB consumer GPU |
 
-The 56 GB comes from two bytes per weight, two bytes per gradient, and two optimizer states per parameter, plus activations. This estimate keeps the optimizer states in half precision too. Standard Adam keeps its states in FP32, so a typical full update needs more memory than this, not less. The adapters remove the gradients and the states for every frozen weight, which is the large part.
+The 56 GB comes from two bytes per weight, two bytes per gradient, and two optimizer states per parameter; activations come on top of that. This estimate keeps the optimizer states in half precision too. Standard Adam keeps its states in FP32, so a typical full update needs more memory than this, not less. The adapters remove the gradients and the states for every frozen weight, which is the large part.
 
 ### What QLoRA adds
 
