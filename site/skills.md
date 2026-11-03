@@ -128,7 +128,20 @@ Tutor for the Model Context Protocol Associate exam: lessons, practical labs, an
 - Install: `npx skills add rohitg00/ai-engineering-from-scratch --skill mcpa-certification`
 - Source: https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/mcpa-certification/SKILL.md
 
-## 05 Make figures and manuals
+## 05 Interview practice
+
+Use this to practise for an AI engineering interview, one question or one incident at a time.
+
+### interview-prep (v1.0.0)
+
+Asks one interview question or one incident scenario and waits for your answer. Then it grades the answer against the interview bank, asks follow-ups one at a time, and sends each gap to the lesson or manual section that teaches it.
+
+- Say: "mock interview", "run an incident scenario"
+- Writes: INTERVIEW-LEARNING.md
+- Install: `npx skills add rohitg00/ai-engineering-from-scratch --skill interview-prep`
+- Source: https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/interview-prep/SKILL.md
+
+## 06 Make figures and manuals
 
 Use these to make figures and manuals that match this site.
 
@@ -177,6 +190,6 @@ A long manual about one tool at one pinned version, with sources, a table of con
 - Install: `npx skills add rohitg00/ai-engineering-from-scratch --skill write-manual`
 - Source: https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/write-manual/SKILL.md
 
-## 06 Lesson artifacts
+## 07 Lesson artifacts
 
 409 skills and 100 prompts live under `phases/**/outputs/`. Install with `python3 scripts/install_skills.py <target> --phase <n>` or `--tag <tag>`.

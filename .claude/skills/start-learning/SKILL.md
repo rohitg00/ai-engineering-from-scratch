@@ -51,6 +51,7 @@ against these supported state files and their route owners:
 - `AGENT-SKILLS-LEARNING.md` belongs to `learn-agent-skills`.
 - `REVERSE-ENGINEERING-LEARNING.md` belongs to `learn-reverse-engineering`.
 - `CLAUDE-CERTIFICATION.md` belongs to `claude-certification`.
+- `INTERVIEW-LEARNING.md` belongs to `interview-prep` for interview practice.
 
 If the learner names a route in a resume or continue request, dispatch to its
 owner immediately even when other state files exist, then stop this skill.

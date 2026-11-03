@@ -22,8 +22,8 @@ How a model is tuned after training, served to users, and fit into GPU memory.
 | Card | Items | Planned |
 |---|---|---|
 | Post-training | 0 | 15 |
-| [Inference and serving systems](questions/inference-serving/README.md) | 3 | 30 |
-| GPU memory, quantization and hardware | 0 | 15 |
+| [Inference and serving systems](questions/inference-serving/README.md) | 32 | 30 |
+| [GPU memory, quantization and hardware](questions/gpu-memory-quantization/README.md) | 10 | 15 |
 
 ## Applications
 
@@ -33,7 +33,7 @@ Retrieval, prompts, structured output, evaluation and models that see and hear.
 |---|---|---|
 | RAG | 0 | 15 |
 | Prompting and structured output | 0 | 15 |
-| Evaluation | 0 | 15 |
+| [Evaluation](questions/evaluation/README.md) | 26 | 15 |
 | Multimodal | 0 | 15 |
 
 ## Agents
@@ -56,7 +56,7 @@ Operating a model service: releases, observability, cost, capacity and safety.
 |---|---|---|
 | Production and MLOps | 0 | 15 |
 | Cost and capacity | 0 | 15 |
-| Safety | 0 | 15 |
+| [Safety](questions/safety/README.md) | 22 | 15 |
 
 ## Rounds
 
