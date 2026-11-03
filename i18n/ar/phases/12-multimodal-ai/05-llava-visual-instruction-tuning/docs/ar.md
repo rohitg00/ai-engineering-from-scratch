@@ -87,7 +87,7 @@ decode response
 - فوهناك نوع من التلفزيونات المختلفة في الورقة، التي أرسلتها LLaVA-NeXT لاحقاً باسم AnyRes.
 
 إضاف LLaVA-NeXT (يناير 2024):
-- AnyRes: تقسيم صور عالية الوصول إلى شبكة 2x2 أو 1x3 من 336x336 محصول ، بالإضافة إلى صورة صغيرة عالمية منخفضة الوصول. كل محصول يصبح 576 رمزًا ؛ إجمالي حوالي 2880 رمزًا بصريًا لكل صورة. قفزت مهام OCR والخطط.
+- AnyRes: تقسيم صور عالية القيام إلى شبكة 2x2 أو 1x3 من 336x336 المحاصيل، بالإضافة إلى صورة صغيرة عالمية منخفضة القيام. كل محصول يصبح 576 رمزا. شبكة 2x2 بالإضافة إلى الرسم الصغري يعطي حوالي 2880 رمزاً بصرياً لكل صورة. شبكة 1x3 لديها عدد أقل من المحاصيل، لذلك تكلف أقل رمزاً. قفزت مهام OCR والخطوط.
 - مزيج أفضل من بيانات التعليمات مع ShareGPT4V (مقاطع GPT-4V عالية الجودة).
 - الدرجات القانونية القوية (Mistral-7B، Yi-34B).
 
@@ -99,7 +99,7 @@ decode response
 
 | | Q-Former (BLIP-2) | MLP (LLaVA) |
 |---|---|---|
-| Visual tokens per image | 32 | 576 (base) or 2880 (AnyRes) |
+| Visual tokens per image | 32 | 576 (base) or about 2880 (AnyRes, 2x2 grid) |
 | Trainable params | 188M + LM | ~22M (7B) + LM |
 | Stage 1 loss | ITC+ITM+ITG | LM only |
 | LLM drop-in | Requires retrain | Swap with minimal retrain |
@@ -115,7 +115,7 @@ decode response
 A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. USER: <image> Describe this image in detail. ASSISTANT: The image shows ...
 ```
 
-`<image>`هو رمز حافظ مكان. قبل التوضيح، يتم استبداله بـ 576 رمزًا بصريًا (أو 2880 مع AnyRes). يرى Tokenizer تسلسلًا أطول قليلاً مما تم تدريبه عليه، ولكن LLM يتعامل مع المدخل الجديد لأن المرحلة 1 تعلمته.
+`<image>`هو رمز حافظ مكان. قبل التوضيح، يتم استبداله بـ 576 رمزًا بصريًا (أو حوالي 2880 مع شبكة 2x2 AnyRes). يرى Tokenizer تسلسلًا أطول قليلاً مما تم تدريبه عليه ، ولكن LLM يتعامل مع المدخل الجديد لأن المرحلة 1 تعلمته.
 
 ### اقتصاد المعلمات
 
