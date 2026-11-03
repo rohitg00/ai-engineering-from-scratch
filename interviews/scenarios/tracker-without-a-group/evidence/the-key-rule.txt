@@ -1,0 +1,7 @@
+title: where the key for an online run goes
+source: manuals/miles-101/sections/5-1-read-the-run.md
+lines: 46-46
+lang: text
+note: The launcher prints the full command in the log, so the key must not be in it.
+---
+For an online run, leave out `--wandb-mode offline`. Keep the key out of the command line, because commands go to the shell history and the process list. Put `WANDB_API_KEY=<your key>` in a file that only you can read, such as `~/miles-lab/wandb.env` with mode 600, and add `--env-file ~/miles-lab/wandb.env` to the `docker run` line. Do not put the key in `MILES_EXTRA_ARGS`, because the launcher prints the full command in the log.

@@ -1,0 +1,9 @@
+title: the run with the tracker on and no group name
+source: manuals/miles-101/capture/gpu/out-gb10/tracker-eval-checks.txt
+lines: 2-4
+lang: text
+note: The error type and the two operand types.
+---
+## wandb without --wandb-group (wandb-tb.log)
+            ~~~~~~~~~~~~~~~~~^~~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'

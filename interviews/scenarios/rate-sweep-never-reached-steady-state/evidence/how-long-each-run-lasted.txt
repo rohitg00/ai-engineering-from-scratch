@@ -1,0 +1,9 @@
+title: the run length of the rate sweep
+source: manuals/sglang-101/sections/5-3-reading-other-peoples-benchmarks.md
+lines: 199-201
+lang: text
+note: The last sentence gives the run length: at least 32 prompts, or 30 seconds of arrivals.
+---
+### The same pair at a fixed arrival rate
+
+A closed loop sends a new request only when one comes back, so the engine sets the pace. Production traffic does not wait for the engine. We ran the rate sweep of [section 5.1](#s-sglang-benchmark-serving) on the same pair, with the same pools and the same rules for heat and clock. Requests arrived at a Poisson rate from 0.5 to 16 per second, with 512 input and 128 output tokens. Each run sent at least 32 prompts, or 30 seconds of arrivals.
