@@ -16,7 +16,7 @@ related: [post-training/reward-model-pairwise]
 updated: 2026-11-03
 ---
 
-In the PPO stage of RLHF, the objective subtracts a KL term between the policy and a frozen copy of the SFT model. A new hire asks why the pipeline keeps a second copy of the model in memory for that one term. Explain what it protects against and how you tune its coefficient.
+In the PPO stage of RLHF, the objective subtracts a KL term between the policy and a frozen copy of the SFT model. A new hire asks why the pipeline keeps a second copy of the model in memory for that one term. Explain the failure it prevents and how you tune its coefficient.
 
 ## Short answer
 
@@ -32,7 +32,7 @@ maximize  E[ R(x, y) ]  -  beta * KL( policy(. | x) || reference(. | x) )
 
 The reference is the SFT checkpoint, frozen. The reward model scores whole answers; the KL is summed over the tokens of each answer and subtracted from the reward.
 
-### What goes wrong without it
+### Without the KL term
 
 The reward model is a finite fit to human preferences and has blind spots. Repeated phrases that signal helpfulness, verbose formal text with no content, bullet points everywhere: each scored high in real pipelines. With no anchor the policy collapses toward a few high-reward modes. The toy three-stage pipeline in the InstructGPT lesson shows this inside 50 update steps when beta is 0.
 

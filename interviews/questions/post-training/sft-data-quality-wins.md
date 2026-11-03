@@ -16,7 +16,7 @@ related: [post-training/sft-loss-mask]
 updated: 2026-11-03
 ---
 
-Your team has a budget to collect SFT data for a new assistant. One plan buys one million scraped question and answer pairs from the web. The other plan pays skilled writers for a much smaller set. Which plan do you pick, and how do you argue it?
+Your team has a budget to collect SFT data for a new assistant. One plan buys one million scraped question-answer pairs from the web. The other plan pays skilled writers for a much smaller set. Which plan do you pick, and how do you argue it?
 
 ## Short answer
 

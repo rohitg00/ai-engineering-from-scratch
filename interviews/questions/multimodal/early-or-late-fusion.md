@@ -31,7 +31,7 @@ The adapter design is late fusion: images enter as projected continuous tokens o
 | Image input | encoder features projected into the embedding space, or read through cross-attention | discrete codes from a learned quantizer, looked up like text tokens |
 | Loss | language-modeling loss on text | a single next-token loss on text and image codes together |
 | Output | text only | text and images, interleaved as the model chooses |
-| Reuse of the pretrained language model | full | the model trains on the mixed stream from the start |
+| Reuse of the pretrained LLM | full | the model trains on the mixed stream from the start |
 | Ceiling for understanding | the encoder | the quantizer's reconstruction |
 | Serving cost per answer | one forward pass | plus a decoder pass per generated image |
 

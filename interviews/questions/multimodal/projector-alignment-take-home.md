@@ -16,7 +16,7 @@ related: [multimodal/train-only-the-projector]
 updated: 2026-11-03
 ---
 
-Take-home. You get a frozen vision encoder that emits 197 tokens of width 768 per image and a frozen text embedding table of width 512. Build the smallest module that lets the two talk, train it on paired samples, and ship tests that prove it works. Describe the design, the loss, the training loop and the tests.
+Take-home. You get a frozen vision encoder that emits 197 tokens of width 768 per image and a frozen text embedding table of width 512. Build the smallest module that lets the two talk, train it on paired samples, and ship tests that prove it works. Describe the design, the loss, how you train it, and the tests.
 
 ## Short answer
 
