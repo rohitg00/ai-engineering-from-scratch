@@ -40,7 +40,7 @@ The lesson asks how to detect contradiction without a model call. Canonicalize t
 
 ### What the lead does with a conflict
 
-1. **Re-ask.** Spawn a worker with a narrower question that targets the disagreement, which adds a round.
+1. **Re-ask.** Spawn a worker on a tighter question aimed at the disagreement, which adds a round.
 2. **Surface it.** Write both values into the answer with their sources and say that they disagree.
 3. **Never pick in silence.** A chosen value with no note is the failure in the prompt.
 

@@ -22,8 +22,8 @@ How a model is tuned after training, served to users, and fit into GPU memory.
 | Card | Items | Planned |
 |---|---|---|
 | Post-training | 0 | 15 |
-| [Inference and serving systems](questions/inference-serving/README.md) | 3 | 30 |
-| GPU memory, quantization and hardware | 0 | 15 |
+| [Inference and serving systems](questions/inference-serving/README.md) | 32 | 30 |
+| [GPU memory, quantization and hardware](questions/gpu-memory-quantization/README.md) | 10 | 15 |
 
 ## Applications
 
@@ -42,9 +42,9 @@ Agent loops, protocols, teams of agents, sandboxes and evidence from binaries.
 
 | Card | Items | Planned |
 |---|---|---|
-| Agents | 0 | 15 |
+| [Agents](questions/agents/README.md) | 26 | 15 |
 | Protocols: MCP, A2A and skills | 0 | 15 |
-| Multi-agent systems | 0 | 15 |
+| [Multi-agent systems](questions/multi-agent/README.md) | 20 | 15 |
 | Sandboxes | 0 | 15 |
 | Evidence and reverse engineering | 0 | 15 |
 
