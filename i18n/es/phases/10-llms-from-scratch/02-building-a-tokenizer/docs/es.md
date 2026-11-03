@@ -210,10 +210,10 @@ Prueba .
 
 ```python
 print(pre_tokenize("Hello, world! Don't stop."))
-# [' Hello', ',', ' world', '!', " Don", "'t", ' stop', '.']
+# ['Hello', ',', ' world', '!', ' Don', "'t", ' stop', '.']
 ```
 
-El espacio principal se mantiene unido a la palabra. las contracciones se dividen en el apóstrofo. La puntuación se convierte en su propia pieza.
+El espacio principal se mantiene unido a la palabra que le sigue. La primera palabra no tiene espacio antes de ella, por lo que su parte es`Hello`Las contracciones se dividen en el apóstrofo. La puntuación se convierte en su propia pieza.
 
 ### Paso 3: BPE en secuencias de byte
 

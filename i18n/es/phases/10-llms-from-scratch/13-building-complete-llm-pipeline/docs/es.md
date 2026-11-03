@@ -72,7 +72,7 @@ stages:
     cost_usd: 12
 ```
 
-El hash de salida de la etapa N es el hash de entrada de la etapa N+1. Cualquier desviación y la tubería se detiene. Así es como se detecta la corrupción de datos temprano. También es cómo un compañero de equipo en un continente diferente verifica que su repetición produjo el mismo artefacto que el tuyo.
+El hash de salida de la etapa N es el hash de entrada de la etapa N+1. Cualquier desviación y la tubería se detiene. Así es como se detecta la corrupción de datos temprano. También es cómo un compañero de equipo en un continente diferente verifica que su repetición de una etapa determinista produjo el mismo artefacto que el tuyo.
 
 En la práctica los equipos utilizan un pequeño esquema YAML más un verificador manifest que difiere de la ejecución exitosa anterior.
 
@@ -150,7 +150,7 @@ El costo reportado de Llama 3 fue $61M. DeepSeek-V3 reported $5.6M para la carre
 
 Estos no son los mismos. *Reproducible* significa el mismo manifiesto más el mismo código más la misma infraestructura produce un punto de control con métricas posteriores equivalentes. *Deterministic* significa salida idéntica a bits.
 
-La formación moderna en LLM es reproducible pero no determinista. El orden reducido del entrenamiento distribuido, el no-determinismo del núcleo de GPU (cuBLAS, flash-attn) y el redondeo de precisión mixta se combinan para producir flotadores que difieren en el nivel 1e-5 entre las carreras. Esto está bien para las métricas finales, que no se mueven. Es fatal si se trata de deshacerse de diferencias de nivel de bits. La cura es registrar el hash de entrada de cada etapa, el hash de salida y las métricas de título -- si coinciden, la carrera se "reproduce" incluso si los pesos no son bit-identicos.
+La formación moderna en LLM es reproducible pero no determinista. El orden reducido del entrenamiento distribuido, el no-determinismo del núcleo de GPU (cuBLAS, flash-attn) y el redondeo de precisión mixta se combinan para producir flotadores que difieren en el nivel 1e-5 entre las carreras. Esto está bien para las métricas finales, que no se mueven. Es fatal si se trata de deshacerse de diferencias de nivel de bits. La cura es registrar el hash de entrada de cada etapa, hash de salida y métricas de título. En una repetición, los hashes coinciden solo para etapas deterministas, como el procesamiento de datos y la tokenización. Una etapa de entrenamiento escribe nuevos pesos, por lo que su hash de salida cambia. Para esas etapas, la carrera se "reproduce" cuando las métricas de los titulares coinciden, aunque los pesos no sean idénticos.
 
 ```mermaid
 graph LR
