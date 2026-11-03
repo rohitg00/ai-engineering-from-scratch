@@ -210,10 +210,10 @@ def pre_tokenize(text):
 
 ```python
 print(pre_tokenize("Hello, world! Don't stop."))
-# [' Hello', ',', ' world', '!', " Don", "'t", ' stop', '.']
+# ['Hello', ',', ' world', '!', ' Don', "'t", ' stop', '.']
 ```
 
-位将保持与词的连接.缩写在位分开.点击成为自己的部分.BPE永远不会将代币融合在这些边界.
+首先,一个词的前面没有空间,所以它的部分是`Hello`缩在位上分开,点击成为自己的部分.
 
 ### 步骤3: 字节序列上的 BPE
 

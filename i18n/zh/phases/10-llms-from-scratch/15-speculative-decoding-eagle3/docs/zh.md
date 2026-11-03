@@ -71,6 +71,8 @@
 | EAGLE-3 | Multi-layer feature fusion + TTT | 0.88-0.92 | 3.5-6.5× | ~60-200B tokens |
 | Lookahead | No draft (Jacobi iteration) | N/A | 1.3-1.6× | None |
 
+其他`α`列是通过聊天基准的路径,每个代币的接受率,一个草案训练在匹配聊天数据.这是上方频段. 10 · 25 阶段引用了 EAGLE-3 的0.82 个不同的设置, 17 · 05 阶段计划在一般聊天中推出产品,0.6 到0.8 个. 测量`α`在选择之前,你自己使用交通.`N`现在,我们要去.
+
 在2026年生产:vLLM和SGLang默认为EAGLE-3,如果有,则EAGLE-2.TensorRT-LLM为Meta和NVIDIA公共模型提供了最快的Medusa路径. llama.cpp为CPU部署提供了草草稿.
 
 ```figure
