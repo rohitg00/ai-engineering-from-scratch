@@ -242,6 +242,8 @@
       target = 'projects.html';
     } else if (current === 'certification.html' || current === 'assessment.html') {
       target = 'certifications.html';
+    } else if (/^\/interviews(?:\/|$)/.test(location.pathname)) {
+      target = 'interviews.html';
     } else if (/^manual-[a-z0-9-]+\.html$/.test(current)) {
       target = 'manuals.html';
     } else if (current === 'lesson.html') {

@@ -19,6 +19,8 @@ on:
       - 'interviews/**'
       - 'scripts/interviews/**'
       - 'site/build-interviews.js'
+      - 'manuals/**'
+      - 'learning-paths/**'
       - '.github/workflows/interviews.yml'
 
 permissions:

@@ -2,8 +2,9 @@
  * Command palette — global search triggered by Cmd/Ctrl+K or the search button.
  *
  * Searches focused paths, lesson titles, summaries, phase names, languages,
- * types, and glossary terms entirely client-side from data already loaded.
- * No network requests. No external dependencies.
+ * types, and glossary terms client-side from data already loaded. Practice,
+ * cheat sheet, manual and hub pages come from the Pagefind index, which loads
+ * on the first focus of the search field.
  *
  * API (attached to window.CmdPalette):
  *   CmdPalette.open()   — open the palette
@@ -18,12 +19,16 @@
   var PALETTE_ID  = 'cmdPalette';
   var MAX_RESULTS = 12;
   var BODY_ATTR   = 'data-palette-open';
+  var PAGEFIND_URL = '/pagefind/pagefind.js';
+  var PAGE_RESULTS = 6;
 
   // ── Module state ─────────────────────────────────────────────────────
   var _index      = null;   // lazy-built flat array of searchable items
   var _activeIdx  = -1;
   var _isOpen     = false;
   var _prevFocus  = null;
+  var _pagefind   = null;
+  var _pageQuery  = '';
 
   function learningPathEntryPath(entry) {
     return typeof entry === 'string' ? entry : entry && entry.path ? entry.path : '';
@@ -432,6 +437,7 @@
 
     var inp = document.getElementById('cpInput');
     inp.addEventListener('input', _onInput);
+    inp.addEventListener('focus', loadPagefind);
     inp.addEventListener('keydown', _onKeyDown);
   }
 
@@ -570,6 +576,10 @@
         dest = r.url;
         chip = r.examCode || 'Certification';
         chipClass += ' cp-item-chip--alt';
+      } else if (r.kind === 'page') {
+        dest = r.url;
+        chip = r.pageType;
+        chipClass += ' cp-item-chip--alt';
       } else if (r.kind === 'artifact') {
         // Jump to the lesson that produced this artifact
         dest = r.lessonPath
@@ -639,11 +649,63 @@
     }
   }
 
+  function loadPagefind() {
+    if (!_pagefind) {
+      _pagefind = import(PAGEFIND_URL).then(function (pagefind) {
+        return Promise.resolve(pagefind.options({ excerptLength: 18 })).then(function () {
+          pagefind.init();
+          return pagefind;
+        });
+      }).catch(function () { return null; });
+    }
+    return _pagefind;
+  }
+
+  function excerptText(html) {
+    if (typeof DOMParser === 'undefined') return String(html || '').replace(/<[^>]*>/g, '');
+    return new DOMParser().parseFromString(String(html || ''), 'text/html').body.textContent;
+  }
+
+  function pageItem(data) {
+    var filters = data.filters || {};
+    return {
+      kind: 'page',
+      name: (data.meta && data.meta.title) || data.url,
+      summary: excerptText(data.excerpt),
+      url: data.url,
+      pageType: filters.type && filters.type[0] ? filters.type[0] : 'Page'
+    };
+  }
+
+  function mergePages(local, pages) {
+    var names = {};
+    local.forEach(function (item) { names[String(item.name).toLowerCase()] = true; });
+    return local.concat(pages.map(pageItem).filter(function (item) {
+      return !names[String(item.name).toLowerCase()];
+    }));
+  }
+
+  function searchPages(query) {
+    _pageQuery = query;
+    if (!query.trim()) return;
+    loadPagefind().then(function (pagefind) {
+      if (!pagefind || _pageQuery !== query) return null;
+      return pagefind.debouncedSearch(query, {}, 160);
+    }).then(function (found) {
+      if (!found || _pageQuery !== query) return null;
+      return Promise.all(found.results.slice(0, PAGE_RESULTS).map(function (result) { return result.data(); }));
+    }).then(function (pages) {
+      if (!pages || !pages.length || _pageQuery !== query || !_isOpen) return;
+      renderResults(mergePages(search(query), pages));
+    }).catch(function () {});
+  }
+
   // ── Event handlers ───────────────────────────────────────────────────
   function _onInput(e) {
     var query = e.target.value;
     renderResults(search(query));
     _activeIdx = -1;
+    searchPages(query.trim());
   }
 
   function _onKeyDown(e) {
@@ -800,6 +862,8 @@
       learningPathDestination: learningPathDestination,
       navigationDestination: navigationDestination,
       resultIndexForEnter: resultIndexForEnter,
+      mergePages: mergePages,
+      pageItem: pageItem,
     };
   }
 

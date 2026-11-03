@@ -32,6 +32,23 @@ should show only the timestamp change if your edit was structural-safe. Then
 restore it with `git checkout -- site/data.js`: CI rebuilds it on every push
 to main, so it never goes in a pull request.
 
+## Code blocks
+
+Every fenced code block needs a language tag. The tag sets how the site shows
+the block and what its Copy button copies:
+
+| Tag | Use it for | The page shows |
+|---|---|---|
+| `bash`, `python`, `json` and other languages | commands or code that the reader runs or pastes | highlighted code with a Copy button |
+| `console` | a terminal session: each command starts with `$ `, and output lines have no prompt | the prompt, the command and the output in different colours. Copy copies the commands only |
+| `text` | program output, logs and plain text | output with no Copy button |
+| `ansi` | logs that keep their ANSI colour codes | coloured output with no Copy button |
+
+Do not put a `$ ` prompt in a `bash` block. Use `console` for a session, or
+remove the prompts. Practice pages, cheat sheets and manuals are highlighted at
+build time by `site/lib/code.js`. Lessons are highlighted in the browser and
+use the same block markup.
+
 ## Ways to contribute
 
 ### 1. Add a new lesson
@@ -238,9 +255,16 @@ tags: [agents, loops]
 The site is static. Build it and run its tests before you push:
 
 ```bash
+npm install --no-audit --no-fund
 node site/build.js
 node --test site/test_*.js
 ```
+
+`npm install` gets the pinned build tools from `package.json`: Shiki for code
+highlighting and Pagefind for the search index. Without them the build still
+runs: code blocks fall back to the regex highlighter and the search index is
+skipped. Do not commit `package-lock.json`. `node site/build-search.js` writes
+the search index to `site/pagefind/` after the manuals build.
 
 `site/build.js` writes `site/data.js` and many other generated files
 (sitemaps, `site/langs.js`, the agent pages, hubs, and more; `.gitignore`

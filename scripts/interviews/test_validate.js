@@ -130,3 +130,31 @@ test('the card and role lists are checked', () => {
   expectError(temp => edit(temp, 'interviews/roles.yaml', 'cards: [inference-serving,', 'cards: [no-such-card, inference-serving,'), /unknown card no-such-card/);
   expectError(temp => edit(temp, 'interviews/topics.yaml', '    group: models\n    planned: 30', '    group: nowhere\n    planned: 30'), /unknown group nowhere/);
 });
+
+test('evidence is compared byte for byte, line ends included', () => {
+  const body = text => bank.parseEvidence(`title: t\nsource: s\nlang: text\nnote: n\n---\n${text}`, 'x').body;
+  assert.equal(body('x\n'), bank.expectedBody('x\n').body);
+  assert.notEqual(body('x\r\n'), bank.expectedBody('x\n').body);
+  assert.notEqual(body('x'), bank.expectedBody('x\n').body);
+  assert.notEqual(body('x\n\n'), bank.expectedBody('x\n').body);
+  assert.notEqual(body('x\n'), bank.expectedBody('x').body);
+  assert.equal(body('x\r\n'), bank.expectedBody('x\r\n').body);
+  assert.equal(body('b\r\n'), bank.expectedBody('a\r\nb\r\nc\r\n', '2-2').body);
+  assert.notEqual(body('b\n'), bank.expectedBody('a\r\nb\r\nc\r\n', '2-2').body);
+  assert.notEqual(body('b'), bank.expectedBody('a\nb\nc\n', '2-2').body);
+  assert.equal(body('c'), bank.expectedBody('a\nb\nc', '3-3').body);
+  assert.match(bank.expectedBody('a\nb\n', '2-3').error, /lines must be N-M inside 1-2/);
+  assert.equal(bank.parseEvidence('title: t\r\nsource: s\r\n---\r\nx\r\n', 'x').header.source, 's');
+});
+
+test('an evidence header does not supply numbers to the number rule', () => {
+  expectError(temp => {
+    edit(temp, `${SCENARIO}/evidence/flush-test.txt`, 'note: A smaller model on another GPU.', 'note: A smaller model on another GPU at 31337 MHz.');
+    edit(temp, `${SCENARIO}/README.md`, 'measured the size of the effect.', 'measured the size of the effect at 31337 MHz.');
+  }, /numbers that no named source holds: 31337/);
+});
+
+test('each loop round names a known card', () => {
+  expectError(temp => edit(temp, 'interviews/loops/inference-engineer.md', ' (card: coding)', ''), /a round must be/);
+  expectError(temp => edit(temp, 'interviews/loops/inference-engineer.md', '(card: coding)', '(card: no-such-card)'), /unknown card no-such-card/);
+});
