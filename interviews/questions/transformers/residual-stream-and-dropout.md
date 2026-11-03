@@ -45,14 +45,14 @@ Attention is the only place tokens exchange information. The MLP is position-wis
 
 ### Dropout in two places, not three
 
-Attention dropout after the softmax and residual dropout after the second linear of the MLP. A dropout on the skip path itself randomly removes part of the identity term, and the gradient path that made depth tractable is no longer reliable.
+Attention dropout after the softmax and residual dropout after the second linear of the MLP. Dropout applied to the identity term randomly removes part of it, and the gradient path that made depth tractable is no longer reliable.
 
 ## Follow-ups
 
 - **Level 2:** Which sublayer would you remove if the model only needed per-token transformations? Expected: attention; the MLP never looks across positions.
 - **Level 3:** Why does the modern FFN use an expansion of about 2.6 instead of 4? Expected: SwiGLU has three weight matrices, so 2.6 times the width matches the parameter count of the two-matrix MLP at 4 times.
 - **Level 3:** Why do modern stacks drop the bias terms in the linear layers? Expected: the lesson reports a slight perplexity improvement and a smaller model.
-- **Level 4:** A reviewer wants dropout on the skip path to regularize a small model. Your answer? Expected: no; keep the two standard dropout points, because the additive identity is what lets the gradient reach early layers.
+- **Level 4:** A reviewer wants to regularize a small model by dropping out the identity term. Your answer? Expected: no; keep the two standard dropout points, because the additive identity is what lets the gradient reach early layers.
 
 ## Wrong answers
 
