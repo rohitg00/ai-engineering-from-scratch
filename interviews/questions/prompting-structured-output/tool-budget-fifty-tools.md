@@ -58,4 +58,4 @@ Pruning risks leaving out a tool that the classifier did not predict. The lesson
 
 ## Taught in
 
-The [context engineering lesson](../../../phases/11-llm-engineering/05-context-engineering/) gives the token breakdown, the tool pruning numbers and the dynamic tool selector.
+The lesson [context engineering](../../../phases/11-llm-engineering/05-context-engineering/) gives the token breakdown, the tool pruning numbers and the dynamic tool selector.

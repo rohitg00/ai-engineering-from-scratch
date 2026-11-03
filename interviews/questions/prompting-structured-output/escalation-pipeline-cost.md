@@ -67,4 +67,4 @@ Run on every question, the vote alone multiplies the bill by five, and the tree 
 
 ## Taught in
 
-The [few-shot and chain-of-thought lesson](../../../phases/11-llm-engineering/02-few-shot-cot/) builds the escalation pipeline and gives the cost of each technique.
+The lesson [few-shot and chain-of-thought](../../../phases/11-llm-engineering/02-few-shot-cot/) builds the escalation pipeline and gives the cost of each technique.

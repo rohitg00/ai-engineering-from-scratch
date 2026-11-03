@@ -61,4 +61,4 @@ A system prompt of 2,000 words of rules leaves the model less room for the task.
 
 ## Taught in
 
-The [prompt engineering lesson](../../../phases/11-llm-engineering/01-prompt-engineering/) gives the anatomy of a call, the prefill and the rules for clear instructions.
+The lesson [prompt engineering](../../../phases/11-llm-engineering/01-prompt-engineering/) gives the anatomy of a call, the prefill and the rules for clear instructions.

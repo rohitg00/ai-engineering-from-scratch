@@ -74,4 +74,4 @@ The active task id, the files touched this session, the assumptions made, open b
 
 ## Taught in
 
-The [repo memory lesson](../../../phases/14-agent-engineering/34-repo-memory-and-state/) gives the atomic write recipe, the schema-first contract, idempotency keys and the event log pattern.
+The lesson [repo memory](../../../phases/14-agent-engineering/34-repo-memory-and-state/) gives the atomic write recipe, the schema-first contract, idempotency keys and the event log pattern.

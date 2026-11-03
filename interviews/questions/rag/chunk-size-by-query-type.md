@@ -64,4 +64,4 @@ Build a 50-query eval set, stratified by query type, and read recall at 5 for ea
 
 ## Taught in
 
-The [chunking strategies lesson](../../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) gives the size table and the measurements, the [RAG lesson](../../../phases/11-llm-engineering/06-rag/) explains the too-small and too-large failures, and the [chunking comparison lesson](../../../phases/19-capstone-projects/64-chunking-strategies-advanced/) picks a default from three properties.
+The lesson [chunking strategies](../../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) gives the size table and the measurements, the lesson [RAG](../../../phases/11-llm-engineering/06-rag/) explains the too-small and too-large failures, and the lesson [chunking comparison](../../../phases/19-capstone-projects/64-chunking-strategies-advanced/) picks a default from three properties.

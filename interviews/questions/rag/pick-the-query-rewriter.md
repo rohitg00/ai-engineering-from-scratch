@@ -61,4 +61,4 @@ The end-to-end lesson picks a strategy from heuristics on query length, conjunct
 
 ## Taught in
 
-The [query rewriting lesson](../../../phases/19-capstone-projects/67-query-rewriting-hyde/) builds the three rewriters and their failure modes, and the [advanced RAG lesson](../../../phases/11-llm-engineering/07-advanced-rag/) gives the latency cost.
+The lesson [query rewriting](../../../phases/19-capstone-projects/67-query-rewriting-hyde/) builds the three rewriters and their failure modes, and the lesson [advanced RAG](../../../phases/11-llm-engineering/07-advanced-rag/) gives the latency cost.

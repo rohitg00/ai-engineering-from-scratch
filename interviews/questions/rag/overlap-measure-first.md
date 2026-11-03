@@ -56,4 +56,4 @@ The chunker skill in the lesson sets overlap to zero by default and refuses an o
 
 ## Taught in
 
-The [chunking strategies lesson](../../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) reports the overlap studies and sets the skill rule, and the [RAG lesson](../../../phases/11-llm-engineering/06-rag/) shows the fixed-window layout that overlap was built for.
+The lesson [chunking strategies](../../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) reports the overlap studies and sets the skill rule, and the lesson [RAG](../../../phases/11-llm-engineering/06-rag/) shows the fixed-window layout that overlap was built for.

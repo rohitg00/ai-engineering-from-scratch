@@ -72,4 +72,4 @@ The function re-encodes every child on each call. A real index stores the child 
 
 ## Taught in
 
-The [chunking strategies lesson](../../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) gives this function and the de-duplication insight, and the [advanced RAG lesson](../../../phases/11-llm-engineering/07-advanced-rag/) draws the parent and child layout.
+The lesson [chunking strategies](../../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) gives this function and the de-duplication insight, and the lesson [advanced RAG](../../../phases/11-llm-engineering/07-advanced-rag/) draws the parent and child layout.

@@ -64,4 +64,4 @@ The structured output lesson notes that grammar enforcement lets a small model b
 
 ## Taught in
 
-The [structured outputs lesson](../../../phases/11-llm-engineering/03-structured-outputs/) lists the failures that survive a schema and sets the labeled extraction eval, the [constrained decoding lesson](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) covers the strict grammar and field order causes, and the [structured output lesson](../../../phases/13-tools-and-protocols/04-structured-output/) separates format reliability from model size.
+The lesson [structured outputs](../../../phases/11-llm-engineering/03-structured-outputs/) lists the failures that survive a schema and sets the labeled extraction eval, the lesson [constrained decoding](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) covers the strict grammar and field order causes, and the lesson [structured output](../../../phases/13-tools-and-protocols/04-structured-output/) separates format reliability from model size.

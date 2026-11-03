@@ -1,6 +1,6 @@
 ---
 id: hyde-invents-a-symbol
-title: The hypothetical answer made code search worse
+title: The invented passage made code search worse
 card: rag
 kind: debug
 level: 3
@@ -54,4 +54,4 @@ Code search is the worst case for the trick. The model invents identifiers with 
 
 ## Taught in
 
-The [query rewriting lesson](../../../phases/19-capstone-projects/67-query-rewriting-hyde/) names the invented identifier failure and its two fixes, and the [hybrid retrieval lesson](../../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) explains what each retriever does with a token that is in no document.
+The lesson [query rewriting](../../../phases/19-capstone-projects/67-query-rewriting-hyde/) names the invented identifier failure and its two fixes, and the lesson [hybrid retrieval](../../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) explains what each retriever does with an out-of-vocabulary token.

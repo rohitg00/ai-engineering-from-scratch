@@ -58,4 +58,4 @@ The chunking comparison lesson shows the pattern: the structural header splitter
 
 ## Taught in
 
-The [chunking strategies lesson](../../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) sets the 50-query stratified set, the [RAG evaluation lesson](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) defines the qrels and the tiers, and the [chunking comparison lesson](../../../phases/19-capstone-projects/64-chunking-strategies-advanced/) shows which splitter wins on which corpus.
+The lesson [chunking strategies](../../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) sets the 50-query stratified set, the lesson [RAG evaluation](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) defines the qrels and the tiers, and the lesson [chunking comparison](../../../phases/19-capstone-projects/64-chunking-strategies-advanced/) shows which splitter wins on which corpus.

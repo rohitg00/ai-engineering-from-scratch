@@ -57,4 +57,4 @@ Persist the metric trace per query on every CI run. Then the question is not "wh
 
 ## Taught in
 
-The [RAG evaluation lesson](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) defines MRR and gives the symptom table.
+The lesson [RAG evaluation](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) defines MRR and gives the symptom table.

@@ -58,4 +58,4 @@ Under strict enforcement two failures disappear, the parse error and the schema 
 
 ## Taught in
 
-The [structured outputs lesson](../../../phases/11-llm-engineering/03-structured-outputs/) lays out the four levels, the [constrained decoding lesson](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) warns against JSON mode without a schema, and the [structured output lesson](../../../phases/13-tools-and-protocols/04-structured-output/) gives the strict mode rules.
+The lesson [structured outputs](../../../phases/11-llm-engineering/03-structured-outputs/) lays out the four levels, the lesson [constrained decoding](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) warns against JSON mode without a schema, and the lesson [structured output](../../../phases/13-tools-and-protocols/04-structured-output/) gives the strict mode rules.

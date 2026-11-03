@@ -59,4 +59,4 @@ Tier the qrels: a smoke set of 20 queries that runs in CI, a regression set of 2
 
 ## Taught in
 
-The [RAG evaluation lesson](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) defines the metrics and the diagnosis table, and the [question answering lesson](../../../phases/05-nlp-foundations-to-advanced/13-question-answering/) says to measure the retriever before the reader.
+The lesson [RAG evaluation](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) defines the metrics and the diagnosis table, and the lesson [question answering](../../../phases/05-nlp-foundations-to-advanced/13-question-answering/) says to measure the retriever before the reader.

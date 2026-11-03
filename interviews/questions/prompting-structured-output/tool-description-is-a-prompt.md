@@ -1,6 +1,6 @@
 ---
 id: tool-description-is-a-prompt
-title: The tool description is a prompt for tool selection
+title: Tool descriptions decide which tool gets called
 card: prompting-structured-output
 kind: concept
 level: 2
@@ -54,4 +54,4 @@ Write a set of queries with the expected tool for each; the lesson's exercise us
 
 ## Taught in
 
-The [function calling lesson](../../../phases/11-llm-engineering/09-function-calling/) gives the tool definition contract, the tool choice modes, structured errors and the selection accuracy exercise.
+The lesson [function calling](../../../phases/11-llm-engineering/09-function-calling/) gives the tool definition contract, the tool choice modes, structured errors and the selection accuracy exercise.

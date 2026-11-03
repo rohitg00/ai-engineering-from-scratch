@@ -55,4 +55,4 @@ The system prompt asks for the final answer on the last line in a fixed form. Wi
 
 ## Taught in
 
-The [few-shot and chain-of-thought lesson](../../../phases/11-llm-engineering/02-few-shot-cot/) builds the self-consistency solver, sets the temperature and the format constraint, and gives the sample counts.
+The lesson [few-shot and chain-of-thought](../../../phases/11-llm-engineering/02-few-shot-cot/) builds the self-consistency solver, sets the temperature and the format constraint, and gives the sample counts.

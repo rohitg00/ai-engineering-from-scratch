@@ -57,4 +57,4 @@ The bi-encoder, the cross-encoder and N are one choice. A change in any of them 
 
 ## Taught in
 
-The [cross-encoder lesson](../../../phases/19-capstone-projects/66-reranker-cross-encoder/) gives the latency against quality curve, the three times K rule and the batching and memory notes.
+The lesson [cross-encoder](../../../phases/19-capstone-projects/66-reranker-cross-encoder/) gives the latency against quality curve, the three times K rule and the batching and memory notes.

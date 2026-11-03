@@ -16,7 +16,7 @@ related: [prompting-structured-output/tool-budget-fifty-tools, prompting-structu
 updated: 2026-11-03
 ---
 
-You assemble a prompt from a system message, ten retrieved documents, the conversation history and the user question. In which order do you place them, and what evidence decides it?
+You assemble a prompt from a system message, ten retrieved documents, the chat history so far and the user question. In which order do you place them, and what evidence decides it?
 
 ## Short answer
 
@@ -65,4 +65,4 @@ The lesson's function sorts the documents by score, sends the odd ranks to the f
 
 ## Taught in
 
-The [context engineering lesson](../../../phases/11-llm-engineering/05-context-engineering/) gives the lost-in-the-middle numbers, the budget table and the reorder function.
+The lesson [context engineering](../../../phases/11-llm-engineering/05-context-engineering/) gives the lost-in-the-middle numbers, the budget table and the reorder function.

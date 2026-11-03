@@ -60,4 +60,4 @@ The capstone's drift dashboard tracks retrieval quality weekly and alerts on a 5
 
 ## Taught in
 
-The [RAG evaluation lesson](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) names the unrepresentative set, per-slice reporting, qrels rot and the tiers, the [production RAG capstone](../../../phases/19-capstone-projects/08-production-rag-chatbot/) sets the golden set and the drift alert, and the [chunking strategies lesson](../../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) stratifies the queries by type.
+The lesson [RAG evaluation](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) names the unrepresentative set, per-slice reporting, qrels rot and the tiers, the capstone [production RAG](../../../phases/19-capstone-projects/08-production-rag-chatbot/) sets the golden set and the drift alert, and the lesson [chunking strategies](../../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) stratifies the queries by type.

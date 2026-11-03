@@ -38,7 +38,7 @@ The eval splits the answer into sentence-shaped claims, asks the judge whether e
 - Change the judge family, then measure the disagreement between the old judge and the new one on the same fixture. The lesson's exercise does the same between the mock judge and a real model.
 - Hand-grade a fixed sample each week and treat it as the calibration set for the automated score.
 - Consider graded faithfulness with three values, unsupported, partially supported and fully supported, instead of a yes or no.
-- Keep answer relevance next to faithfulness. A grounded answer to the wrong question scores high on one and low on the other.
+- Keep answer relevance next to faithfulness. A grounded answer to the wrong question is strong on one metric and weak on the other.
 
 ## Follow-ups
 
@@ -55,4 +55,4 @@ The eval splits the answer into sentence-shaped claims, asks the judge whether e
 
 ## Taught in
 
-The [RAG evaluation lesson](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) names judge bias and the macro-claim gap, and the [question answering lesson](../../../phases/05-nlp-foundations-to-advanced/13-question-answering/) describes entailment-based faithfulness in production.
+The lesson [RAG evaluation](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) names judge bias and the macro-claim gap, and the lesson [question answering](../../../phases/05-nlp-foundations-to-advanced/13-question-answering/) describes entailment-based faithfulness in production.

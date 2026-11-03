@@ -65,4 +65,4 @@ The lesson ships a deterministic judge based on token overlap above a threshold,
 
 ## Taught in
 
-The [RAG evaluation lesson](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) defines both metrics and the stand-in judge, and the [question answering lesson](../../../phases/05-nlp-foundations-to-advanced/13-question-answering/) gives the production forms.
+The lesson [RAG evaluation](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) defines both metrics and the stand-in judge, and the lesson [question answering](../../../phases/05-nlp-foundations-to-advanced/13-question-answering/) gives the production forms.

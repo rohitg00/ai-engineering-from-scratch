@@ -16,7 +16,7 @@ related: [rag/error-code-query-misses, rag/rrf-beats-score-sum]
 updated: 2026-11-03
 ---
 
-Read these four lines from the BM25 scorer in the advanced RAG lesson. Explain the `+ 1` inside the logarithm, say what `k1` and `b` control, and describe what happens to a term that appears in more than half of the documents.
+Read these four lines of a BM25 scorer from the advanced retrieval lesson. Explain the `+ 1` inside the logarithm, say what `k1` and `b` control, and describe what happens to a term that appears in more than half of the documents.
 
 ```python
 idf = math.log((self.n_docs - df + 0.5) / (df + 0.5) + 1)
@@ -62,4 +62,4 @@ The capstone implements field weighting as a multiplier on term counts at index 
 
 ## Taught in
 
-The [advanced RAG lesson](../../../phases/11-llm-engineering/07-advanced-rag/) gives this scorer, and the [hybrid retrieval lesson](../../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) explains the smoothed IDF, the defaults and field weighting.
+The lesson [advanced RAG](../../../phases/11-llm-engineering/07-advanced-rag/) gives this scorer, and the lesson [hybrid retrieval](../../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) explains the smoothed IDF, the defaults and field weighting.

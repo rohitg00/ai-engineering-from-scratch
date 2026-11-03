@@ -26,7 +26,7 @@ Pick retrieval for knowledge. The model never changes, the document store update
 
 ### Why retrieval wins on facts
 
-The lesson compares the two on five concerns:
+The lesson lines the two up on five concerns:
 
 | Concern | Tuned model | Retrieval |
 |---|---|---|
@@ -61,4 +61,4 @@ Retrieval runs in two phases. The index phase chunks each page, embeds each chun
 
 ## Taught in
 
-The [RAG lesson](../../../phases/11-llm-engineering/06-rag/) compares the two approaches and builds the index and query phases.
+The lesson [RAG](../../../phases/11-llm-engineering/06-rag/) compares the two approaches and builds the index and query phases.

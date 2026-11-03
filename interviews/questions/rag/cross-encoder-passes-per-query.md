@@ -57,4 +57,4 @@ Retrieve a larger candidate set with the cheap stage, for example the top 50 fro
 
 ## Taught in
 
-The [cross-encoder lesson](../../../phases/19-capstone-projects/66-reranker-cross-encoder/) counts the passes and sizes the model, and the [advanced RAG lesson](../../../phases/11-llm-engineering/07-advanced-rag/) gives the cost gap and the top 50 to top 5 funnel.
+The lesson [cross-encoder](../../../phases/19-capstone-projects/66-reranker-cross-encoder/) counts the passes and sizes the model, and the lesson [advanced RAG](../../../phases/11-llm-engineering/07-advanced-rag/) gives the cost gap and the top 50 to top 5 funnel.

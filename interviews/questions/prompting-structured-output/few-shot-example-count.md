@@ -57,4 +57,4 @@ Simple factual questions, creative tasks where examples constrain the output, an
 
 ## Taught in
 
-The [few-shot and chain-of-thought lesson](../../../phases/11-llm-engineering/02-few-shot-cot/) gives the counts and the selection principles, the [prompt engineering lesson](../../../phases/11-llm-engineering/01-prompt-engineering/) recommends examples for cross-provider prompts, and the [prompt caching lesson](../../../phases/11-llm-engineering/15-prompt-caching/) places them in the cacheable prefix.
+The lesson [few-shot and chain-of-thought](../../../phases/11-llm-engineering/02-few-shot-cot/) gives the counts and the selection principles, the lesson [prompt engineering](../../../phases/11-llm-engineering/01-prompt-engineering/) recommends examples for cross-provider prompts, and the lesson [prompt caching](../../../phases/11-llm-engineering/15-prompt-caching/) places them in the cacheable prefix.

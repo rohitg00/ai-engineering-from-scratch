@@ -73,4 +73,4 @@ Each write picks one scope: user memory persists across sessions, session memory
 
 ## Taught in
 
-The [hybrid memory lesson](../../../phases/14-agent-engineering/09-hybrid-memory-mem0/) gives the three stores, the fusion formula, the scope taxonomy and the maintenance list, and the [virtual context lesson](../../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) places the pattern among the memory types.
+The lesson [hybrid memory](../../../phases/14-agent-engineering/09-hybrid-memory-mem0/) gives the three stores, the fusion formula, the scope taxonomy and the maintenance list, and the lesson [virtual context](../../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) places the pattern among the memory types.

@@ -59,4 +59,4 @@ Move the threshold on the held-out set, never on production anecdotes, and re-tu
 
 ## Taught in
 
-The [end-to-end RAG lesson](../../../phases/19-capstone-projects/69-end-to-end-rag-system/) builds the refuse path and the cited generator, the [question answering lesson](../../../phases/05-nlp-foundations-to-advanced/13-question-answering/) defines refusal calibration, the [production RAG capstone](../../../phases/19-capstone-projects/08-production-rag-chatbot/) adds the unsure mode, and the [cross-encoder lesson](../../../phases/19-capstone-projects/66-reranker-cross-encoder/) logs the rank-1 score.
+The lesson [end-to-end RAG](../../../phases/19-capstone-projects/69-end-to-end-rag-system/) builds the refuse path and the cited generator, the lesson [question answering](../../../phases/05-nlp-foundations-to-advanced/13-question-answering/) defines refusal calibration, the capstone [production RAG](../../../phases/19-capstone-projects/08-production-rag-chatbot/) adds the unsure mode, and the lesson [cross-encoder](../../../phases/19-capstone-projects/66-reranker-cross-encoder/) logs the rank-1 score.

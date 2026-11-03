@@ -61,4 +61,4 @@ The automatic provider gives 50 percent off reads with no premium, up to an hour
 
 ## Taught in
 
-The [prompt caching lesson](../../../phases/11-llm-engineering/15-prompt-caching/) gives the provider table, the break-even arithmetic and the usage fields.
+The lesson [prompt caching](../../../phases/11-llm-engineering/15-prompt-caching/) gives the provider table, the break-even arithmetic and the usage fields.

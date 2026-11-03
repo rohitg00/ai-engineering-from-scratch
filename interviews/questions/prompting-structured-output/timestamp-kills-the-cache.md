@@ -59,4 +59,4 @@ Send two identical requests in CI and assert that the cache read token count is 
 
 ## Taught in
 
-The [prompt caching lesson](../../../phases/11-llm-engineering/15-prompt-caching/) gives the prefix invariant, the cache-friendly layout, the pitfalls and the CI check.
+The lesson [prompt caching](../../../phases/11-llm-engineering/15-prompt-caching/) gives the prefix invariant, the cache-friendly layout, the pitfalls and the CI check.

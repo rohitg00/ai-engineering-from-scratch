@@ -61,4 +61,4 @@ The model declines because the input does not fit, for example the email was a p
 
 ## Taught in
 
-The [structured output lesson](../../../phases/13-tools-and-protocols/04-structured-output/) names the three failure modes, the retry pattern and the refusal branch, and the [structured outputs lesson](../../../phases/11-llm-engineering/03-structured-outputs/) covers validation with error feedback.
+The lesson [structured output](../../../phases/13-tools-and-protocols/04-structured-output/) names the three failure modes, the retry pattern and the refusal branch, and the lesson [structured outputs](../../../phases/11-llm-engineering/03-structured-outputs/) covers validation with error feedback.

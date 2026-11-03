@@ -70,4 +70,4 @@ Outside strict mode: generate, parse, validate, inject the typed errors and retr
 
 ## Taught in
 
-The [structured output lesson](../../../phases/13-tools-and-protocols/04-structured-output/) gives the schema constructs, the strict mode rules, the retry pattern and the refusal handling, the [structured outputs lesson](../../../phases/11-llm-engineering/03-structured-outputs/) sets the labeled eval and the schema diff, and the [constrained decoding lesson](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) gives the mode table and the field order rule.
+The lesson [structured output](../../../phases/13-tools-and-protocols/04-structured-output/) gives the schema constructs, the strict mode rules, the retry pattern and the refusal handling, the lesson [structured outputs](../../../phases/11-llm-engineering/03-structured-outputs/) sets the labeled eval and the schema diff, and the lesson [constrained decoding](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) gives the mode table and the field order rule.

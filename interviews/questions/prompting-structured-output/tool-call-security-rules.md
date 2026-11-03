@@ -59,4 +59,4 @@ It never executes anything. It emits a name and arguments. Everything after that
 
 ## Taught in
 
-The [function calling lesson](../../../phases/11-llm-engineering/09-function-calling/) states the five security rules, builds the argument validator and the file and code guards, and sets the call budget.
+The lesson [function calling](../../../phases/11-llm-engineering/09-function-calling/) states the five security rules, builds the argument validator and the file and code guards, and sets the call budget.

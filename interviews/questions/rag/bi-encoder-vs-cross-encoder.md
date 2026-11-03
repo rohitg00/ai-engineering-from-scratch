@@ -55,4 +55,4 @@ The production point is a cross-encoder of about 22M parameters. Larger reranker
 
 ## Taught in
 
-The [cross-encoder lesson](../../../phases/19-capstone-projects/66-reranker-cross-encoder/) builds the two-stage pipeline, and the [advanced RAG lesson](../../../phases/11-llm-engineering/07-advanced-rag/) gives the cost gap.
+The lesson [cross-encoder](../../../phases/19-capstone-projects/66-reranker-cross-encoder/) builds the two-stage pipeline, and the lesson [advanced RAG](../../../phases/11-llm-engineering/07-advanced-rag/) gives the cost gap.

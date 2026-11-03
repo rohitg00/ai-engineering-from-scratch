@@ -76,4 +76,4 @@ Label 100 cross-repository questions with gold file and line answers. Measure MR
 
 ## Taught in
 
-The [codebase RAG capstone](../../../phases/19-capstone-projects/02-rag-over-codebase/) sets the syntax-aware chunks, the three forms, the symbol graph, the incremental re-index and the eval, and the [advanced RAG lesson](../../../phases/11-llm-engineering/07-advanced-rag/) supplies hybrid search and reranking.
+The capstone [codebase RAG](../../../phases/19-capstone-projects/02-rag-over-codebase/) sets the syntax-aware chunks, the three forms, the symbol graph, the incremental re-index and the eval, and the lesson [advanced RAG](../../../phases/11-llm-engineering/07-advanced-rag/) supplies hybrid search and reranking.

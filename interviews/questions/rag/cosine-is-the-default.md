@@ -67,4 +67,4 @@ Many embedding models return unit-length vectors, or the caller asks for normali
 
 ## Taught in
 
-The [RAG lesson](../../../phases/11-llm-engineering/06-rag/) defines the three measures and the guard, and the [question answering lesson](../../../phases/05-nlp-foundations-to-advanced/13-question-answering/) ranks normalized vectors with a matrix product.
+The lesson [RAG](../../../phases/11-llm-engineering/06-rag/) defines the three measures and the guard, and the lesson [question answering](../../../phases/05-nlp-foundations-to-advanced/13-question-answering/) ranks normalized vectors with a matrix product.

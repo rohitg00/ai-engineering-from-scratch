@@ -55,4 +55,4 @@ If you have evidence that one retriever beats the other on your data, multiply i
 
 ## Taught in
 
-The [hybrid retrieval lesson](../../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) gives the published formula, the role of k and the case against score interpolation, and the [advanced RAG lesson](../../../phases/11-llm-engineering/07-advanced-rag/) works the two-document example.
+The lesson [hybrid retrieval](../../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) gives the published formula, the role of k and the case against score interpolation, and the lesson [advanced RAG](../../../phases/11-llm-engineering/07-advanced-rag/) works the two-document example.

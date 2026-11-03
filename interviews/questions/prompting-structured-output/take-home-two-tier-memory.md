@@ -70,4 +70,4 @@ Every store record carries the session id and the turn id of its source. Without
 
 ## Taught in
 
-The [virtual context lesson](../../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) gives the operating system analogy, the two tiers, the tool surface and the failure modes.
+The lesson [virtual context](../../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) gives the operating system analogy, the two tiers, the tool surface and the failure modes.

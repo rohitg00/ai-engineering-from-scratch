@@ -54,4 +54,4 @@ Run both retrievers in parallel and fuse by rank: each document gets the sum of 
 
 ## Taught in
 
-The [advanced RAG lesson](../../../phases/11-llm-engineering/07-advanced-rag/) contrasts the two retrievers, and the [hybrid retrieval lesson](../../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) shows the three query classes, field weighting and the out-of-vocabulary case.
+The lesson [advanced RAG](../../../phases/11-llm-engineering/07-advanced-rag/) contrasts the two retrievers, and the lesson [hybrid retrieval](../../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) shows the three query classes, field weighting and the out-of-vocabulary case.

@@ -1,6 +1,6 @@
 ---
 id: jurisdiction-leak-in-shared-index
-title: A clause from the other jurisdiction reached the answer
+title: The other jurisdiction's clause reached the answer
 card: rag
 kind: design
 level: 4
@@ -57,4 +57,4 @@ The capstone runs a pre-release red team of 50 adversarial prompts that include 
 
 ## Taught in
 
-The [production RAG capstone](../../../phases/19-capstone-projects/08-production-rag-chatbot/) filters by role and jurisdiction first and probes the filter in its red team, and the [advanced RAG lesson](../../../phases/11-llm-engineering/07-advanced-rag/) explains metadata pre-filtering.
+The capstone [production RAG](../../../phases/19-capstone-projects/08-production-rag-chatbot/) applies its access filter ahead of retrieval and probes it in its red team, and the lesson [advanced RAG](../../../phases/11-llm-engineering/07-advanced-rag/) explains metadata pre-filtering.

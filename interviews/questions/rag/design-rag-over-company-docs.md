@@ -51,7 +51,7 @@ Build two sides. The ingestion side parses each document, chunks it per document
 - A golden set of 200 question and answer pairs with citations, labeled by a domain expert, as the capstone requires.
 - Qrels in tiers: a smoke set of 20 queries in CI, a regression set of 200 nightly, a deep set of 2000 weekly.
 - Retrieval metrics per query class: recall at k first, then MRR, then nDCG if relevance is graded.
-- Answer metrics: faithfulness and answer relevance with a judge from another model family.
+- Answer metrics: faithfulness and relevance, judged by a model from another family.
 - A red team of 50 adversarial prompts: jailbreaks, data extraction attempts, off-domain questions and cross-unit leaks.
 
 ### The first three production measurements
@@ -76,4 +76,4 @@ Build two sides. The ingestion side parses each document, chunks it per document
 
 ## Taught in
 
-The [RAG lesson](../../../phases/11-llm-engineering/06-rag/) builds the two phases, the [advanced RAG lesson](../../../phases/11-llm-engineering/07-advanced-rag/) adds hybrid search, reranking and metadata filters, the [end-to-end RAG lesson](../../../phases/19-capstone-projects/69-end-to-end-rag-system/) composes the stages with a cited generator, the [production RAG capstone](../../../phases/19-capstone-projects/08-production-rag-chatbot/) sets the golden set, the red team and the cache targets, and the [RAG evaluation lesson](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) tiers the qrels.
+The lesson [RAG](../../../phases/11-llm-engineering/06-rag/) builds the two phases, the lesson [advanced RAG](../../../phases/11-llm-engineering/07-advanced-rag/) adds hybrid search, reranking and metadata filters, the lesson [end-to-end RAG](../../../phases/19-capstone-projects/69-end-to-end-rag-system/) composes the stages with a cited generator, the capstone [production RAG](../../../phases/19-capstone-projects/08-production-rag-chatbot/) sets the golden set, the red team and the cache targets, and the lesson [RAG evaluation](../../../phases/19-capstone-projects/68-rag-eval-precision-recall/) tiers the qrels.

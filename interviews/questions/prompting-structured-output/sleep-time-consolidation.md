@@ -59,4 +59,4 @@ Deduplication of records whose text overlaps by more than 90 percent belongs in 
 
 ## Taught in
 
-The [memory blocks lesson](../../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) gives the three tiers, the block pattern, the background agent and its failure modes, and the [virtual context lesson](../../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) sets the two-tier pattern it extends.
+The lesson [memory blocks](../../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) gives the three tiers, the block pattern, the background agent and its failure modes, and the lesson [virtual context](../../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) sets the two-tier pattern it extends.

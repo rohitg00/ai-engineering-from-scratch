@@ -55,4 +55,4 @@ Log the rank-1 cross-encoder score per query. A top score below a corpus thresho
 
 ## Taught in
 
-The [cross-encoder lesson](../../../phases/19-capstone-projects/66-reranker-cross-encoder/) names the leak, the asymmetry and the pool cap, and the [end-to-end RAG lesson](../../../phases/19-capstone-projects/69-end-to-end-rag-system/) keeps its training triples disjoint from its eval queries.
+The lesson [cross-encoder](../../../phases/19-capstone-projects/66-reranker-cross-encoder/) names the leak, the asymmetry and the pool cap, and the lesson [end-to-end RAG](../../../phases/19-capstone-projects/69-end-to-end-rag-system/) keeps its training triples disjoint from its eval queries.

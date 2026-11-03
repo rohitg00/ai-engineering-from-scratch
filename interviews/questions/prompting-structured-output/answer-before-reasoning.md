@@ -58,4 +58,4 @@ A free-text reply tends to explain before it concludes, so it had the chain by a
 
 ## Taught in
 
-The [constrained decoding lesson](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) names the field order pitfall and the strict grammar pitfall, and the [structured outputs lesson](../../../phases/11-llm-engineering/03-structured-outputs/) covers nesting depth and optional fields.
+The lesson [constrained decoding](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) names the field order pitfall and the strict grammar pitfall, and the lesson [structured outputs](../../../phases/11-llm-engineering/03-structured-outputs/) covers nesting depth and optional fields.

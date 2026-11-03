@@ -60,4 +60,4 @@ A transformer without a visible chain has to compress all the reasoning into the
 
 ## Taught in
 
-The [few-shot and chain-of-thought lesson](../../../phases/11-llm-engineering/02-few-shot-cot/) gives the mechanism, the benchmark table, the cases where the chain hurts and the technique comparison.
+The lesson [few-shot and chain-of-thought](../../../phases/11-llm-engineering/02-few-shot-cot/) gives the mechanism, the benchmark table, the cases where the chain hurts and the technique comparison.

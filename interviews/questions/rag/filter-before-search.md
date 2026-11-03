@@ -1,6 +1,6 @@
 ---
 id: filter-before-search
-title: Filter on metadata before the similarity search
+title: Filter on metadata ahead of the vector search
 card: rag
 kind: design
 level: 2
@@ -62,4 +62,4 @@ Access control that is not tested is a hope. The capstone runs a pre-release red
 
 ## Taught in
 
-The [advanced RAG lesson](../../../phases/11-llm-engineering/07-advanced-rag/) explains metadata pre-filtering, and the [production RAG capstone](../../../phases/19-capstone-projects/08-production-rag-chatbot/) applies role and jurisdiction filters first and probes them in the red team.
+The lesson [advanced RAG](../../../phases/11-llm-engineering/07-advanced-rag/) explains metadata pre-filtering, and the capstone [production RAG](../../../phases/19-capstone-projects/08-production-rag-chatbot/) applies the access filters ahead of retrieval and probes them in the red team.

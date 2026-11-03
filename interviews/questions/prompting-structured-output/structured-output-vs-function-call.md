@@ -58,4 +58,4 @@ A record gets schema validation and a semantic check. An action gets argument va
 
 ## Taught in
 
-The [function calling lesson](../../../phases/11-llm-engineering/09-function-calling/) separates data from action and gives the five-step loop, and the [structured outputs lesson](../../../phases/11-llm-engineering/03-structured-outputs/) covers tool use as a way to choose among schemas.
+The lesson [function calling](../../../phases/11-llm-engineering/09-function-calling/) separates data from action and gives the five-step loop, and the lesson [structured outputs](../../../phases/11-llm-engineering/03-structured-outputs/) covers tool use as a way to choose among schemas.

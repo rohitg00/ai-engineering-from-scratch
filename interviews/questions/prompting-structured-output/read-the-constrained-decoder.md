@@ -83,4 +83,4 @@ A grammar that is too strict makes the model invent a value, because no valid to
 
 ## Taught in
 
-The [constrained decoding lesson](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) gives this loop, the logit processor, the speed argument and the grammar pitfalls.
+The lesson [constrained decoding](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) gives this loop, the logit processor, the speed argument and the grammar pitfalls.
