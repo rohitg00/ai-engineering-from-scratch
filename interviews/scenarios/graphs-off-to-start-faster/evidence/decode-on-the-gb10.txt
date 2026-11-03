@@ -1,0 +1,17 @@
+title: median TPOT and output with and without graphs, three seeds, 1 to 64 users
+source: manuals/sglang-101/sections/4-1-forwardmode-and-cuda-graphs.md
+lines: 95-105
+lang: text
+note: Read the two TPOT columns row by row, then the reading under the table.
+---
+**We measured** two servers with three seeds at each concurrency from 1 to 64. The default server replayed a decode graph on every decode batch, and its log says `cuda graph: True`. The server with both graph backends set to `disabled` logged `cuda graph: False`. The results were almost the same:
+
+| Concurrency | Median TPOT with graphs | Median TPOT without | Output tok/s with graphs | Output tok/s without |
+|---|---|---|---|---|
+| 1 | 32.52 ms | 33.09 ms | 29.14 | 28.72 |
+| 8 | 102.21 ms | 104.77 ms | 74.11 | 73.46 |
+| 64 | 254.06 ms | 253.77 ms | 235.38 | 235.79 |
+
+The two lines lie on top of each other in [figure 5.1c](#fig-5-1c). The graphs still cost startup time and memory. The decode capture took 4.61 s and 1.73 GB, and the prefill capture took 35.06 s and 2.14 GB.
+
+Our reading of this result: one decode step of this model takes about 32 ms at batch 1. The launch time that a graph removes is small next to that step. Each step reads the weights of the experts that its tokens chose, and memory bandwidth sets the time.

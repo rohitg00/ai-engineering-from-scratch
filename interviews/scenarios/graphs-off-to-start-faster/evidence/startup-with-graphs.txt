@@ -1,0 +1,11 @@
+title: the end of startup on the default server, with the timings line
+source: manuals/sglang-101/capture/gpu/out-gb10/server-default.log
+lines: 28-32
+lang: text
+note: Read the decode capture line, the pool size, and the startup timings with the two capture times inside them.
+---
+[2026-10-17 14:19:12] Capture target decode CUDA graph end. bs=[1, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256], elapsed=4.61 s, mem usage=1.73 GB, avail mem=26.95 GB.
+[2026-10-17 14:19:12] max_total_num_tokens=227243, chunked_prefill_size=8192, max_prefill_tokens=16384, max_running_requests=2048, context_len=262144, available_gpu_mem=26.95 GB
+[2026-10-17 14:19:12] Init Unified Radix Cache. Components: (<ComponentType.FULL: 0>,). Tree Core: RustUnifiedTreeCore
+[2026-10-17 14:19:12] Tree cache initialized: source=default impl=UnifiedRadixCache hybrid_swa=False hybrid_ssm=False hicache_attached=False
+[2026-10-17 14:19:12] Engine startup timings (s): load_weight=323.61, kv_cache_allocation=2.09, scheduler_e2e=369.03, cuda_graph={prefill=35.06, decode=4.61, target_verify=0.00, draft_prefill=0.00, draft_decode=0.00, draft_extend=0.00}, tokenizer_e2e=373.52
