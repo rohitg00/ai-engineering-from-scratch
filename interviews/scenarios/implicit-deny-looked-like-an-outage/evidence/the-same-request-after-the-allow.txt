@@ -1,0 +1,13 @@
+title: the HEAD request after the allow rule
+source: manuals/docker-sandboxes-101/capture/out/09-allowed.txt
+lines: 1-7
+lang: console
+note: Compare the first status line with the one in the first listing.
+---
+$ sbx exec m101-policy sh -c 'curl -sS --max-time 10 -I https://example.com; echo exit=$?'
+HTTP/1.0 200 Connection established
+
+HTTP/2 200 
+date: <value>
+content-type: text/html; charset=utf-8
+server: cloudflare
