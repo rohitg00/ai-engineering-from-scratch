@@ -31,7 +31,7 @@ Read the trace for the pair of action and observation that repeats, then ask why
 3. **Check whether the observation carries information.** An observation of `ok` after a write that did nothing, or a test runner that prints nothing on failure, gives the model no reason to change its plan. The observation formatter must include the exit code and the tail of the output.
 4. **Check the stop conditions.** A loop that ends only on an explicit finish call runs until the context is full when the model never calls finish. A loop with no turn budget runs until someone pages you.
 
-### Fix it so it cannot happen again
+### Fix it so the loop cannot recur
 
 - **A turn budget per task class.** Agents run 40 to 400 steps per task, so pick a cap for the class, not one cap for every task. In the harness contract the budget is not a kill switch. When a limit is reached the loop fires `on_budget_exceeded`, emits `budget.warn`, and yields to the caller. The caller extends the budget or closes the session.
 - **A repeat detector.** The permission-mode lesson describes a classifier that sees action N+1 as almost equal to action N five times in a row. You do not need a model for the simple case. Hash the action and the observation, keep the last few hashes, and pause when one repeats.
