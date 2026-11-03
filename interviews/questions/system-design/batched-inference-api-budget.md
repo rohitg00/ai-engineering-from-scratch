@@ -50,7 +50,7 @@ Every request writes one structured log line with the request id, the user, the 
 
 ### If the model is self-hosted
 
-The pipeline lesson's serving stage adds continuous batching, KV cache eviction and speculative decoding, with quantized weights for serving and the eval gate rerun on the quantized model. The same gateway, cache and guardrails sit in front of it.
+The pipeline lesson's serving stage adds continuous batching, speculative decoding, and KV cache eviction, with quantized weights for serving and the eval gate rerun on the quantized model. The same gateway, cache and guardrails sit in front of it.
 
 ### Before launch
 
