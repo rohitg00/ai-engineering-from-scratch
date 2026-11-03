@@ -12,8 +12,8 @@ The math, the networks and the transformer that every later answer builds on.
 |---|---|---|
 | Math and classical ML | 0 | 15 |
 | Deep learning | 0 | 15 |
-| [Transformers](questions/transformers/README.md) | 24 | 15 |
-| [Tokenization, sampling and decoding](questions/tokenization-decoding/README.md) | 22 | 15 |
+| Transformers | 0 | 15 |
+| Tokenization, sampling and decoding | 0 | 15 |
 
 ## Models
 
