@@ -81,7 +81,7 @@ Canary gate kiểm tra mỗi 5-15 phút tùy thuộc vào khối lượng giao t
 
 ### Bước A/B là tùy chọn
 
-Nếu mô hình mới khác biệt rõ ràng (hành vi khác nhau, đường cong chi phí khác nhau, âm thanh khác nhau), A / B kiểm tra nó ở 50% sau khi canary vượt qua.
+Nếu mô hình mới khác rõ ràng (hành vi khác nhau, đường cong chi phí khác nhau, âm thanh khác nhau), A / B kiểm tra nó ở 50% sau khi canary vượt qua. Nếu nó chỉ là một phiên bản cải thiện của hành vi tương tự, hãy bỏ qua 100% khi canary gate vượt qua.
 
 ### Những con số mà bạn nên nhớ
 

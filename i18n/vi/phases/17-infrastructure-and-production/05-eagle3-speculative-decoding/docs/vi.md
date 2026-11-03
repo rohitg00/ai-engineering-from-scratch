@@ -34,7 +34,7 @@ Nếu không có mã hóa đặc điểm, chi phí mỗi token là một mục t
 
 Các token bị từ chối không biến mất  họ buộc một mục tiêu thứ hai đi về phía trước cho token bị từ chối đầu tiên. Với khối lượng làm việc mà alpha giảm xuống 0,4, bạn phải trả chi phí tổng hợp cộng với xác minh cộng với việc tái đóng. Ở đồng thời cao (chẳng hạn 256 đồng thời), lô decode đã đủ lớn để khoảng cách băng thông bộ nhớ giữa "chỉ mục tiêu" và "chỉ mục tiêu với xác minh" giảm đi. Dưới alpha 0.55 trên hầu hết phần cứng 2026, mã giải mã đặc điểm là âm tính.
 
-Alpha thay đổi theo khối lượng công việc. Trong cuộc trò chuyện chung kiểu ShareGPT, EAGLE-3 được đào tạo trên ShareGPT đạt 0,6-0,8. Trên lưu lượng truy cập cụ thể về miền (điều mã, y tế, pháp lý) đầu dự thảo được đào tạo về dữ liệu chung giảm xuống 0,4-0,6.
+Alpha khác nhau theo khối lượng công việc. Trong cuộc trò chuyện chung kiểu ShareGPT, EAGLE-3 được đào tạo trên ShareGPT đạt 0,6-0,8. Đối với giao thông cụ thể về lĩnh vực (điều lệ, y tế, pháp lý) người dự thảo được đào tạo về dữ liệu chung giảm xuống 0,4-0,6. Trình luyện một bộ phận cụ thể về đầu dự thảo phục hồi alpha  nó là một công việc đào tạo nhẹ, nhanh chóng so với mục tiêu fine tuning. Giai đoạn 7 · 16 và Giai đoạn 10 · 15 trích dẫn các giá trị cao hơn (0,85 và trên). Đó là tỷ lệ cho mỗi token trên các tiêu chuẩn trò chuyện phù hợp với dữ liệu đào tạo dự thảo. Hãy lập kế hoạch với các băng nhóm trên trang này và đo alpha theo lưu lượng truy cập của riêng bạn.
 
 ### Những thế hệ của đại bàng một lần
 
