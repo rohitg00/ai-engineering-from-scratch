@@ -16,7 +16,7 @@ related: [evidence-reverse-engineering/sweep-trap-addq-at-0x13]
 updated: 2026-11-03
 ---
 
-An agent runs four tools on one relocatable object and reports that `grade` sits at `0x08000050` in one, `0x400010` in another and `0x100010` in a third, so the tools disagree about where the function is. On the unoptimized build it then reports 3, 8, 8 and 9 basic blocks for the same function. Explain both reports, and say what a block count measures.
+An agent runs four tools on one relocatable object and reports that `grade` sits at `0x08000050` in one, `0x400010` in another and `0x100010` in a third, so the tools disagree about where the function is. On the `-O0` object it then reports 3, 8, 8 and 9 basic blocks for the same function. Explain both reports, and say what a block count measures.
 
 ## Short answer
 

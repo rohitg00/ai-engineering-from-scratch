@@ -16,7 +16,7 @@ related: [evidence-reverse-engineering/listing-before-pseudocode, evidence-rever
 updated: 2026-11-03
 ---
 
-Design the second leg of a rebuild proof: compile each candidate with the original compiler and flags and compare it with the original function. Eight candidates are on the table, among them a pair of `percent_change` rebuilds whose source lines are written differently, a `grade` candidate whose 46 code bytes and relocation shape match the original but whose `case 10` returns 3, and candidates whose relocation addend differs from the original. Say what the compare does at each step, which candidate each step stops, and what a pass means.
+Design the second leg of a rebuild proof: build every candidate under the compiler and flags that produced the original, then compare it with the original function. Eight candidates are on the table, among them a pair of `percent_change` rebuilds whose source lines are written differently, a `grade` candidate whose 46 code bytes and relocation shape match the original but whose `case 10` returns 3, and candidates whose relocation addend differs from the original. Say what the compare does at each step, which candidate each step stops, and what a pass means.
 
 ## Short answer
 

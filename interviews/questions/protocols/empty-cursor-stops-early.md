@@ -1,6 +1,6 @@
 ---
 id: empty-cursor-stops-early
-title: The pagination loop that drops the last pages
+title: The pagination loop that ends two pages short
 card: protocols
 kind: code-reading
 level: 2

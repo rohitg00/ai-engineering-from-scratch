@@ -16,7 +16,7 @@ related: [sandboxes/blocked-host-reads-as-timeout]
 updated: 2026-11-03
 ---
 
-`sbx policy init balanced` gave one global policy with 194 allow entries. A developer adds `example.com` with `--sandbox m101-policy`, later tries a deny for the same host in the same scope, and the CLI refuses it. Explain the rule grammar, the two scopes, and the order in which the authorizer decides one connection.
+`sbx policy init balanced` gave one global policy with 194 allow entries. A developer adds `example.com` with `--sandbox m101-policy`, later tries a deny for the same host at the same level, and gets a refusal. Explain the rule grammar, the two scopes, and the order in which the authorizer decides one connection.
 
 ## Short answer
 
