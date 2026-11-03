@@ -134,6 +134,11 @@ test('the card and role lists are checked', () => {
   expectError(temp => edit(temp, 'interviews/topics.yaml', '    group: models\n    planned: 30', '    group: nowhere\n    planned: 30'), /unknown group nowhere/);
 });
 
+test('an item tags only roles whose card list holds its card', () => {
+  expectError(temp => edit(temp, QUESTION, 'roles: [inference-engineer, applied-ai-engineer, agentic-ai-engineer]', 'roles: [inference-engineer, ai-data-engineer]'), /role ai-data-engineer does not list card inference-serving/);
+  expectError(temp => edit(temp, 'interviews/roles.yaml', 'cards: [inference-serving, gpu-memory-quantization,', 'cards: [gpu-memory-quantization,'), /prefix-cache-order.md: role inference-engineer does not list card inference-serving/);
+});
+
 test('evidence is compared byte for byte, line ends included', () => {
   const body = text => bank.parseEvidence(`title: t\nsource: s\nlang: text\nnote: n\n---\n${text}`, 'x').body;
   assert.equal(body('x\n'), bank.expectedBody('x\n').body);

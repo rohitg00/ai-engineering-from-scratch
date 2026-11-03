@@ -24,7 +24,7 @@
         "0.60"
       ],
       "correct": 2,
-      "explanation": "pass@k = 1 - (1 - p)^k = 1 - (1 - 0.6)^5 = 1 - 0.4^5 = 1 - 0.01024 = 0.98976, which rounds to 0.99. The raw per-sample rate (0.6) is the value option (a) names, but the formula amplifies it across k samples."
+      "explanation": "pass@k = 1 - (1 - p)^k = 1 - (1 - 0.6)^5 = 1 - 0.4^5 = 1 - 0.01024 = 0.98976, which rounds to 0.99. The raw per-sample rate (0.6) is the value option (d) names, but the formula amplifies it across k samples. Lesson 72's unbiased estimator gives 1.00 for the same counts, because with n = k = 5 any pass makes the value 1."
     },
     {
       "stage": "check",

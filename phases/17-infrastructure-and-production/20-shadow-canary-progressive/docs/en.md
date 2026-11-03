@@ -81,7 +81,7 @@ Canary gates check every 5-15 minutes depending on traffic volume. 1% of 1,000 r
 
 ### The A/B step is optional
 
-If the new model is distinctly different (different behavior, different cost curve, different tone), A/B test it at 50% after canary passes. If it's just an improved version, skip to 100% when canary gates pass.
+If the new model is distinctly different (different behavior, different cost curve, different tone), A/B test it at 50% after canary passes. If it's just an improved version of the same behavior, skip to 100% when canary gates pass. Improved means the offline eval showed the gain. The canary gates do not measure task completion, so the skip trusts the eval for it.
 
 ### Numbers you should remember
 

@@ -87,7 +87,7 @@ LLaVA-1.5 (October 2023) added:
 - A grid-splitting HD variant in the paper, which LLaVA-NeXT later shipped as AnyRes.
 
 LLaVA-NeXT (January 2024) added:
-- AnyRes: split high-res images into a 2x2 or 1x3 grid of 336x336 crops, plus one global low-res thumbnail. Each crop becomes 576 tokens; total around 2880 visual tokens per image. OCR and chart tasks jumped.
+- AnyRes: split high-res images into a 2x2 or 1x3 grid of 336x336 crops, plus one global low-res thumbnail. Each crop becomes 576 tokens. A 2x2 grid plus the thumbnail gives about 2880 visual tokens per image. A 1x3 grid has fewer crops, so it costs fewer tokens. OCR and chart tasks jumped.
 - Better instruction data mixture with ShareGPT4V (high-quality GPT-4V captions).
 - Stronger base LLMs (Mistral-7B, Yi-34B).
 
@@ -99,7 +99,7 @@ Lesson 12.08 covers OneVision in depth. Short version: same projector, but train
 
 | | Q-Former (BLIP-2) | MLP (LLaVA) |
 |---|---|---|
-| Visual tokens per image | 32 | 576 (base) or 2880 (AnyRes) |
+| Visual tokens per image | 32 | 576 (base) or about 2880 (AnyRes, 2x2 grid) |
 | Trainable params | 188M + LM | ~22M (7B) + LM |
 | Stage 1 loss | ITC+ITM+ITG | LM only |
 | LLM drop-in | Requires retrain | Swap with minimal retrain |
@@ -115,7 +115,7 @@ MLP wins on simplicity and token flexibility. Q-Former wins on token budget. By 
 A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. USER: <image> Describe this image in detail. ASSISTANT: The image shows ...
 ```
 
-`<image>` is a placeholder token. Before tokenization, it is replaced with the 576 visual tokens (or 2880 with AnyRes). Tokenizer sees a slightly longer sequence than it was trained on, but the LLM handles the novel input because stage 1 taught it to.
+`<image>` is a placeholder token. Before tokenization, it is replaced with the 576 visual tokens (or about 2880 with a 2x2 AnyRes grid). Tokenizer sees a slightly longer sequence than it was trained on, but the LLM handles the novel input because stage 1 taught it to.
 
 ### Parameter economy
 

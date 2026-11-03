@@ -60,7 +60,7 @@
         "It penalises local miscalibration directly, since it is the per-prediction squared error"
       ],
       "correct": 3,
-      "explanation": "ECE only looks at averages per bin. Brier squares the error per prediction, so it catches the case where bins cancel out on average but are individually miscalibrated."
+      "explanation": "ECE only looks at averages per bin. Brier squares the error per prediction, so it catches the case where errors cancel inside one bin: the bin average matches but the predictions in it are individually miscalibrated."
     },
     {
       "stage": "post",

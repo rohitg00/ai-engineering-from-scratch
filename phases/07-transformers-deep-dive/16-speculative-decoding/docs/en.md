@@ -70,7 +70,7 @@ Pros: no second model. Cons: adds trainable parameters; needs a supervised fine-
 
 ### EAGLE — better draft by reusing hidden states
 
-EAGLE-1/2/3 (Li et al., 2024–2025) makes the draft model a tiny transformer (typically 1 layer) that ingests the verifier's last-layer hidden states. Because the draft sees the verifier's feature representation, its predictions correlate strongly with the verifier's output distribution. Acceptance rates climb from ~0.6 (vanilla) to 0.85+.
+EAGLE-1/2/3 (Li et al., 2024–2025) makes the draft model a tiny transformer (typically 1 layer) that ingests the verifier's last-layer hidden states. Because the draft sees the verifier's feature representation, its predictions correlate strongly with the verifier's output distribution. Acceptance rates climb from ~0.6 (vanilla) to 0.85+. These are per-token rates on chat benchmarks, with a draft trained on matching chat data. On mixed production traffic, Phase 17 · 05 plans with 0.6 to 0.8 for EAGLE-3, and domain traffic can be lower.
 
 EAGLE-3 (2025) added tree search over candidate continuations. vLLM and SGLang ship EAGLE-2/3 as the default spec pathway for Llama 3/4 and Qwen 3.
 
