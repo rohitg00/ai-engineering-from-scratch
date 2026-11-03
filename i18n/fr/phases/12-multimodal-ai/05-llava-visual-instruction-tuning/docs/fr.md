@@ -87,7 +87,7 @@ LLaVA-1.5 (octobre 2023) a ajouté:
 - Une variante HD qui divise la grille dans le journal, que LLaVA-NeXT expédia plus tard sous le nom d'AnyRes.
 
 LLaVA-NeXT (janvier 2024) a ajouté:
-- AnyRes: divisez les images haute résolution en une grille de 2x2 ou 1x3 de 336x336 cultures, plus une miniature globale de basse résolution. Chaque culture devient 576 jetons; total d'environ 2880 jetons visuels par image.
+- AnyRes: divisez les images haute résolution en une grille de 2x2 ou 1x3 de 336 cultures, plus une miniature mondiale de basse résolution. Chaque culture devient 576 jetons. Une grille de 2x2 plus la miniature donne environ 2880 jetons visuels par image. Une grille de 1x3 a moins de cultures, donc elle coûte moins de jetons. Les tâches OCR et graphiques ont augmenté.
 - Meilleur mélange de données d'instruction avec ShareGPT4V (titres GPT-4V de haute qualité).
 - Les mécanismes de droit de base plus forts (Mistral-7B, Yi-34B).
 
@@ -99,7 +99,7 @@ Leçon 12.08 couvre OneVision en profondeur. version courte: même projecteur, m
 
 | | Q-Former (BLIP-2) | MLP (LLaVA) |
 |---|---|---|
-| Visual tokens per image | 32 | 576 (base) or 2880 (AnyRes) |
+| Visual tokens per image | 32 | 576 (base) or about 2880 (AnyRes, 2x2 grid) |
 | Trainable params | 188M + LM | ~22M (7B) + LM |
 | Stage 1 loss | ITC+ITM+ITG | LM only |
 | LLM drop-in | Requires retrain | Swap with minimal retrain |
