@@ -69,7 +69,7 @@ State the measured multiplier: the pattern costs about 15 times the tokens of a 
 
 ### With half the budget
 
-Keep the lead's scaling rule and lower its thresholds, so that more questions go to one agent. Keep provenance and the verifier, because they are cheap and they protect the cited answer. Cut worker count per question before you cut the verifier, and cut debate rounds entirely.
+Keep the lead's scaling rule and raise the complexity that a question must reach before the lead adds workers, so that more questions go to one agent. Keep provenance and the verifier, because they are cheap and they protect the cited answer. Cut worker count per question before you cut the verifier, and cut debate rounds entirely.
 
 ### What we grade
 

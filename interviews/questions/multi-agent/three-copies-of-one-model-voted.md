@@ -60,7 +60,7 @@ The lesson cites a study of scalar agreement across frontier models: even with n
 
 ## Follow-ups
 
-- **Level 3:** Why does the geometric median beat the mean for this case? Expected: the mean moves toward the three correlated wrong answers, while the median moves toward the dense cluster and discounts outliers, so it helps while the wrong cluster is under half.
+- **Level 3:** Does the geometric median rescue this case? Expected: no. The median discounts outliers and moves toward the dense cluster, which helps only while the wrong cluster is under half. Here three of five votes are wrong, so the dense cluster is the wrong one and the median selects it.
 - **Level 3:** The three wrong agents are also the most confident. What now? Expected: no aggregator fixes a wrong cluster that is both larger and more confident, so the system needs diversity of base models or an independent verifier.
 - **Level 4:** Why bound the rounds at two or three? Expected: agents that observe earlier rounds start to mimic each other regardless of truth, so more rounds reward conformity.
 - **Level 4:** What do you monitor in production? Expected: the agreement rate, where a sharp rise means conformity and a sharp fall means model drift, and the minority clusters with their provenance.

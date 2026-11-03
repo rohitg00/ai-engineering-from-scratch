@@ -16,7 +16,7 @@ related: [multi-agent/three-copies-of-one-model-voted]
 updated: 2026-11-03
 ---
 
-Read the clustering and the plurality aggregator from the consensus lesson. Five agents vote on a percentage from a study. Three agents that share a base model answer `42%` with moderate confidence, and two agents answer `4.2%` with higher confidence. Say what the plurality returns, what the aggregator that weighs each vote by its confidence returns, and what the canonicalization does with the answer `4.2 percent`.
+Read the clustering and the plurality aggregator from the consensus lesson. Five agents vote on a percentage from a study. Three agents that share a base model answer `42%`, and two agents answer `4.2%`. Each of the two is more confident than any of the three, but the three still carry more confidence in total. Say what the plurality returns, what the aggregator that weighs each vote by its confidence returns, and what the canonicalization does with the answer `4.2 percent`.
 
 ```python
 @dataclass
@@ -42,7 +42,7 @@ def plurality(votes: list[Vote]) -> tuple[str, dict[str, int]]:
 
 ## Short answer
 
-Plurality counts three votes for `42%` and two for `4.2%` and returns the wrong answer, because it counts heads and the wrong cluster has more heads. The confidence-weighted aggregator sums confidence per cluster and compares the top cluster's share with a threshold, so it can favor the two confident right answers when the three wrong ones are moderate, and it returns no winner when no cluster passes the threshold. The canonicalization keeps letters, digits, dots and percent signs, so `4.2 percent` becomes `4.2percent` and lands in a different cluster from `4.2%`, which splits the right answer's votes.
+Plurality counts three votes for `42%` and two for `4.2%` and returns the wrong answer, because it counts heads and the wrong cluster has more heads. The confidence-weighted aggregator sums confidence per cluster and compares the top cluster's share with a threshold. The wrong cluster has the larger sum, so with a threshold of 0.5 it also returns `42%`, and with a higher threshold it can return no winner. The canonicalization keeps letters, digits, dots and percent signs, so `4.2 percent` becomes `4.2percent` and lands in a different cluster from `4.2%`, which splits the right answer's votes.
 
 ## Full answer
 
@@ -55,8 +55,8 @@ Plurality counts three votes for `42%` and two for `4.2%` and returns the wrong 
 | Aggregator | Rule | Result here |
 |---|---|---|
 | Plurality | Most votes | Wrong, because three correlated votes beat two |
-| Confidence-weighted | Sum of confidence per cluster, top cluster must pass a threshold share | Can be right when the wrong cluster's confidence is moderate, and returns none when no cluster passes |
-| Geometric-median style | Score each cluster by its size and how tight its confidences are | Helps when the dissenting agents are at least as confident as the majority |
+| Confidence-weighted | Sum of confidence per cluster, top cluster must pass a threshold share | Wrong, because the three votes carry more total confidence, or none when the share is under the threshold |
+| Geometric-median style | Score each cluster by its size and how tight its confidences are | Wrong, because the cluster of three is larger and its confidences are also tight |
 
 The lesson's own takeaway is the limit: no aggregator solves a wrong cluster that is both larger and more confident than the right one. That case needs diversity of models or verification, not a better vote.
 
@@ -70,7 +70,7 @@ The values in the scenario are the memory-poisoning numbers from the shared-memo
 
 ### What the plurality code cannot see
 
-It has no idea which agents share a base model, no confidence, no source. It is correct exactly when the voters are independent, and the prompt's three agents are not.
+It has no idea which agents share a base model, no confidence, no source. It returns the answer with the most votes and does not check whether the voters are independent or accurate. Independence makes a right majority more likely but does not guarantee it, and the prompt's three agents share a base model, so their errors are correlated.
 
 ## Follow-ups
 

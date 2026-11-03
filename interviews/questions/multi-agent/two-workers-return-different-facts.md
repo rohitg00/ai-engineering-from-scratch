@@ -36,7 +36,7 @@ The third is the one the user saw. The first two made it happen.
 
 ### Detect the conflict without a model
 
-The lesson asks how to detect contradiction without a model call. Canonicalize the claims: extract each number with its unit and the entity it describes, key it by sub-question, and compare. Two different values under one key is a conflict. For non-numeric claims, a cheap check is two workers citing different sources for the same key. Flag the key, and let the lead handle it.
+The lesson asks how to detect contradiction without a model call. Canonicalize the claims: extract each number with its unit and the entity it describes, key it by sub-question, and compare. Two different values under one key is a conflict. For non-numeric claims, flag a key only when the two workers state different claims. Different cited sources alone are not a conflict. Let the lead handle a flagged key.
 
 ### What the lead does with a conflict
 

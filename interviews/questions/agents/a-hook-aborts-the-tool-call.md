@@ -41,7 +41,7 @@ if step.requires_tool:
 
 ## Short answer
 
-The abort is handled inside the loop, not thrown to the caller. The loop records the error on the step, emits `tool.error`, fires `on_error`, moves to the reflecting state and calls itself again. Reflecting advances the cursor and counts a turn, so the denied step is skipped, not retried, and the loop goes on to the third step. The caller never sees the abort as an exception; it sees the next pull request for the third step's tool call, or the completion, and it can read the denied step in the event stream.
+The abort is handled inside the loop, not thrown to the caller. The loop records the error on the step, emits `tool.error`, fires `on_error`, moves to the reflecting state and calls itself again. Reflecting advances the cursor and counts a turn, so the denied step is skipped, not retried, and the loop goes on to the third step. The caller never sees the abort as an exception: it sees the next pull request for the third step's tool call or the completion, or a pause with a budget-exceeded reason if a budget limit ran out first, and it can read the denied step in the event stream.
 
 ## Full answer
 

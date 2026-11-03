@@ -47,7 +47,7 @@ A prompt that says "always run the tests" asks the model to be honest about some
 ## Follow-ups
 
 - **Level 2:** Why does the record keep stdout and stderr in separate fields? Expected: a test runner writes the failure summary to one stream and progress to the other, and a merged tail can hide the summary behind progress lines.
-- **Level 2:** The agent runs the acceptance command, it fails, and a retry passes. What does the gate see? Expected: two records for the same command, and it should pass only if the latest run exited zero, while the retry chain stays visible through the parent command id.
+- **Level 2:** The agent runs the acceptance command, it fails, and a retry passes. What does the gate see? Expected: two records for the same command, linked by the parent command id. The gate blocks on the failed record and does not report `passed: true`, even though the retry exited zero. Only a signed human override gets past it, and the chain keeps the failure history visible.
 - **Level 3:** Why must the gate be deterministic and not a model judge? Expected: the gate answers whether the task is complete, which must give the same verdict for the same artifacts every time, while a judge gives a qualitative opinion that belongs on the review side.
 - **Level 4:** Where do you place the gate so that it cannot be bypassed? Expected: in layers, with a pre-commit hook, a CI status check, and a pre-merge gate, so that a failure in one layer is caught by the next.
 

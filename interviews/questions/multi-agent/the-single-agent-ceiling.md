@@ -26,7 +26,7 @@ The task exceeds what one loop, one window and one system prompt can carry, and 
 
 ### Three things break
 
-1. **Context saturation.** Tool results accumulate. By turn 30 the agent has consumed about 150k tokens of file contents, command output and its own reasoning, and the detail from turn 5 is lost. Reading 50 files is already past a 200k window.
+1. **Context saturation.** Tool results accumulate. By turn 30 the agent has consumed about 150k tokens of file contents, command output and its own reasoning, and the detail from turn 5 is lost. Reading 50 large files can pass a 200k window.
 2. **Role confusion.** A system prompt that says you are a researcher, a coder, a reviewer and a tester produces an agent that half-researches, half-codes and never finishes the review.
 3. **Sequential bottleneck.** The agent reads three files in three serial model calls and three serial tool executions. Nothing runs at the same time.
 

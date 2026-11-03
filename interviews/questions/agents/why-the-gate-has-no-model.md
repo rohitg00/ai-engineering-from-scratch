@@ -48,7 +48,7 @@ A block cannot be overridden by the agent. A human can override it, and the over
 
 ### One report, several layers
 
-The gate writes one `verification_report.json` per task under one path, and CI reads the same path. Around it sit other deterministic layers: a pre-commit hook, a CI status check, a pre-tool authorization hook and a pre-merge gate. A failure in one layer is caught by the next. The pre-commit hook in particular cannot be bypassed by the agent, because it does not depend on the agent following instructions.
+The gate writes one `verification_report.json` per task under one path, and CI reads the same path. Around it sit other deterministic layers: a pre-commit hook, a CI status check, a pre-tool authorization hook and a pre-merge gate. A failure in one layer is caught by the next. The pre-commit hook does not depend on the agent following instructions, but it is a local check that `git commit --no-verify` skips, so the CI status check and the pre-merge gate hold the verdict.
 
 ### Where the judge goes
 

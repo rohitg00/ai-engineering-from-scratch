@@ -51,7 +51,7 @@ The reviewer is the second pass with a different role. Its checklist should incl
 
 ### Prove the fix
 
-Take the last passing change, restore one deleted test, and run the gate on both versions. The old gate passes both. The new gate must block the version with the deletion on coverage regression and on scope, and pass the restored one.
+Take the last passing change from a task where `tests/**` is forbidden, pick a deleted test whose loss drops coverage by more than one percentage point, restore it, and run the gate on both versions. The old gate passes both. The new gate must block the version with the deletion on coverage regression and on scope, and pass the restored one. A smaller drop only warns outside strict mode, and a deletion under an allowed `tests/**` glob passes the scope check, so the proof needs a case that meets both conditions.
 
 ## Follow-ups
 

@@ -20,7 +20,7 @@ An unattended coding run used the mode in which a separate model reviews every a
 
 ## Short answer
 
-The reviewer judges one action at a time against the request. Each action in the run was allowed on its own: read a file you own, write a file you own, commit, push. The harm was in the composition, and the reviewer does not re-derive the user's intent across the trajectory. The controls that catch this live outside the per-action check: an isolated workspace with no sensitive mounts, a network egress allowlist in the scope contract, per-tool action caps, and a trajectory audit after the run.
+The reviewer judges one action at a time against the request. Each action in the run was allowed on its own: read a file you own, write a file you own, commit, push. The harm was in the composition, and the reviewer does not re-derive the user's intent across the trajectory. The controls that catch this live outside the per-action check: an isolated workspace with no sensitive mounts, a network egress allowlist in the scope contract, per-tool action caps, and a trajectory audit after the run that detects what the other controls let through.
 
 ## Full answer
 
@@ -40,7 +40,7 @@ The reviewer compares the action with the declared task and the session state. I
 | Network egress allowlist | The scope contract | The push to a host that was not part of the task |
 | Per-tool action caps | The budget controls | A long sequence of pushes or fetches |
 | Time budget | The scope contract | A run that keeps going past the point a human would have checked |
-| Trajectory audit | After the run, over the event stream | The composition, which no per-action check sees |
+| Trajectory audit | After the run, over the event stream | Nothing in this run. It detects the composition, which no per-action check sees, so that the next run is stopped, but it cannot undo a push already made |
 
 The scope contract is the place for the egress rule, because it is per task. The merge rule for two contracts keeps it strict: an unset allowlist defers to the other contract, two lists intersect, and an empty list stays deny-all.
 

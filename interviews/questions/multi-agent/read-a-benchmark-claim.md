@@ -29,7 +29,7 @@ Ask which benchmark and which split, whether the benchmark was released after th
 | Question | Why it matters |
 |---|---|
 | Which benchmark, which split | The newer split was built to resist contamination, and scores differ by a factor of three between splits |
-| Contamination | A benchmark released before the model's cutoff has leaked into training, and the score inflates |
+| Contamination | A benchmark released before the model's cutoff can have leaked into training, so the score can be inflated |
 | Baseline | Against a single-agent baseline, random, and prior multi-agent work, not against an untuned version of the same system |
 | Significance | Number of trials and a confidence interval, because frontier models are high-variance and single runs mislead |
 | Task diversity | One task or many, because production needs generalization |

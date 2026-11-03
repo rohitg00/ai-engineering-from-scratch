@@ -32,7 +32,7 @@ The checker reads the shared memory like every other agent, re-fetches the sourc
 | Writes | Nothing in the shared memory, only entries on its own verification channel |
 | Method | For each entry with a cited source, fetch the source independently and compare the content |
 | Output | A finding per mismatch with the entry id and the reason, routed to a human or a separate decision agent |
-| Effect | The caller flags the entry; the entry stays, with the flag, in the append-only log |
+| Effect | The finding stays on the verification channel with the entry id, and the shared log entry does not change |
 
 In the lesson's code the verifier returns a list of findings and never touches the pool. The caller decides what to do with them.
 
@@ -46,7 +46,7 @@ An in-place fix destroys the audit trail. The lesson's rule is append-only: a co
 
 ### What it protects against, and what it does not
 
-It catches an entry that cites a source and does not match it, which is the poisoning case. It does not catch an entry with no citation, an entry whose source is itself wrong, or a wrong conclusion drawn correctly from flagged inputs. For those you need provenance so that uncited claims are weighed lower, a diversity of sources, and a decision agent that reads the flags.
+It catches an entry that cites a source and does not match it, which is the poisoning case. It does not catch an entry with no citation, an entry whose source is itself wrong, or a wrong conclusion drawn correctly from flagged inputs. For those you need provenance so that uncited claims are weighed lower, a diversity of sources, and a decision agent that reads the findings.
 
 ### How it fits the rest
 
@@ -54,7 +54,7 @@ Provenance on every write gives the verifier something to check. The append-only
 
 ## Follow-ups
 
-- **Level 3:** The verifier flags an entry that the analyst already used. What happens to the analyst's entry? Expected: it stays in the log, a new entry can supersede it with the flag as the reason, and the final report carries the retraction.
+- **Level 3:** The verifier flags an entry that the analyst already used. What happens to the analyst's entry? Expected: it stays in the log, a new entry can supersede it with the finding as the reason, and the final report carries the retraction.
 - **Level 3:** How many verifiers do you deploy? Expected: at least one, and more if the pool is partitioned by topic, with each verifier subscribed to the topics it can check.
 - **Level 4:** How do you keep the verifier's source access independent? Expected: it fetches from the original location with its own tools, not from a cache that a writer filled, otherwise it checks the entry against a copy of itself.
 - **Level 4:** What metric tells you the verifier is doing useful work? Expected: the share of writes that are supersessions and the share of flagged entries, read together, with a rising flag rate as an early sign of a writer that hallucinates.
@@ -63,7 +63,7 @@ Provenance on every write gives the verifier something to check. The append-only
 
 - "Let the checker fix the entry, since it has the source." The fix overwrites the audit trail and gives the checker a write path that a poisoned pool can turn against it.
 - "A second reviewer agent that reads the pool is enough." A reviewer that only reads the pool compares entries with each other and inherits the same poisoned facts; the verifier must re-fetch the source.
-- "Route the verifier's findings into the pool so every agent sees them." The findings then become shared facts, and a wrong finding poisons the pool in a new way; the flag on the entry is the visible signal, not a new entry.
+- "Route the verifier's findings into the pool so every agent sees them." The findings then become shared facts, and a wrong finding poisons the pool in a new way; the finding on the verification channel, keyed by entry id, is the visible signal, not a new entry in the pool.
 
 ## Taught in
 
