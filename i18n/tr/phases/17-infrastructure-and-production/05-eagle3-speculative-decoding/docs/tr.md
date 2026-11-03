@@ -34,7 +34,7 @@ Spec kodlaması olmadan, bir token maliyeti bir hedef ileri.`1 + K * alpha`Hızl
 
 reddedilen tokenler kaybolmaz  ilk reddedilen token için ikinci bir hedef zorlar. Alfa'nın 0.4'e düştüğü bir iş yükünde, çekim ödemesi artı doğrulama artı yeniden çalıştırma ödenir. Yüksek eşzamanlılık (deyelim 256 eşzamanlı), dekodlama parti zaten "tek hedef" ve "target verify" arasındaki hafıza-bandwidth boşluğu küçülmeye yeterlidir. 2026 donanımlarının çoğunda alfa 0.55'in altında, spesifikasyon çözümü net negatif.
 
-Alpha iş yüküne göre değişir. ShareGPT tarzındaki genel sohbette, ShareGPT'de eğitilmiş EAGLE-3 0.6-0.8'e ulaşır. Alan-özel trafiğe (kod, tıbbi, yasal) genel veri üzerine eğitilmiş taslak başı 0.4-0.6'a düşer.
+Alfa iş yüküne göre değişir. ShareGPT tarzındaki genel sohbette, ShareGPT'de eğitilmiş EAGLE-3 0.6-0.8'e ulaştı. Alan-specifik trafik (kod, tıbbi, hukuki) genel veri eğitimi alanı başkanının sayısı 0.4-0.6'a düşüyor. Alan-specifik bir taslak başını eğitmek, hedef inceleme ile karşılaştırıldığında hafif ve hızlı bir eğitim işidir. 7 · 16 ve 10 · 15 aşamaları daha yüksek değerlere (0,85 ve üstü) değerdir. Bu, çekimdeki eğitim verilerine uyan sohbet referansları için bir token oranları. Bu sayfadaki bantlarla plan yapın ve Alpha'yı kendi trafiğinizle ölçün.
 
 ### KİÇİN nesilleri bir bakışta
 

@@ -81,7 +81,7 @@ Kanarya kapıları trafik hacmine bağlı olarak her 5-15 dakikada bir kontrol e
 
 ### A/B adımı seçeneğe bağlıdır.
 
-Yeni model belirgin bir şekilde farklı ise (farklı davranış, farklı maliyet eğri, farklı ton), kanary geçtikten sonra %50'de A/B testini yapın.
+Yeni model belirgin bir şekilde farklı ise (farklı davranış, farklı maliyet eğri, farklı ton), A/B testini kanary geçtikten sonra %50'de yapın. Eğer aynı davranışın sadece geliştirilmiş bir versiyonu ise, kanary kapıları geçtiğinde %100'e atlayın.
 
 ### Hatırlamalısın numaralar
 
