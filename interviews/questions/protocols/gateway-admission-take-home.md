@@ -41,6 +41,7 @@ Run the five gates in order and keep them separate. Discover with an opaque curs
 3. Reject a descriptor whose mirrored property is named `password`, `secret`, `token`, `api_key` or `authorization`.
 4. Run the static scanner for role tags, instruction overrides, concealment, secret access and obscured destinations. Treat a hit as review evidence, not as a verdict.
 5. A descriptor without an input schema object is rejected; a tool with no arguments declares `{"type": "object", "additionalProperties": false}`.
+6. Store the verified publisher namespace and the live `server/discover` identity with the approved record. On a later refresh, quarantine a server whose namespace or live identity differs, even when every descriptor digest still matches.
 
 ### Namespacing and merge
 
@@ -56,13 +57,14 @@ Validate arguments before the call. Encode mirrored header values as plain visib
 - One unsafe descriptor is rejected and every valid descriptor on the same server is admitted.
 - An annotation under `oneOf`, `items`, a nested `properties` or a `$ref` definition is rejected even when that branch is never used.
 - Changing `inputSchema` without changing the description fails the pin.
+- An unchanged descriptor behind a changed `server/discover` identity is quarantined.
 - Two servers that both expose `search` become two qualified names and two digests.
 - An array result passes an array output schema and an object fails it.
 - Header audit events contain names and no values, checked by a test that greps for the value.
 
 ### Evidence for the reviewer
 
-The capstone grades admission evidence: deterministic and complete paginated discovery, descriptor validation before model exposure, validated structured output, and routing metadata that preserves authorization boundaries. Capture the descriptor, the page trace, the admitted set, the rejected set with a reason per descriptor, the digest ledger and one validated result. Do not claim gateway compatibility from a successful `tools/call` alone.
+The capstone grades admission evidence: verified publisher namespace and live `server/discover` identity, deterministic and complete paginated discovery, descriptor validation before model exposure, validated structured output, and routing metadata that preserves authorization boundaries. Capture the descriptor, the page trace, the admitted set, the rejected set with a reason per descriptor, the digest ledger and one validated result. Do not claim gateway compatibility from a successful `tools/call` alone.
 
 ## Follow-ups
 

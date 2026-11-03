@@ -20,7 +20,7 @@ A teammate spent an hour installing a toolchain inside a sandbox and wants every
 
 ## Short answer
 
-A template is a snapshot of the container filesystem stored as an image, reused with `sbx run --pull never -t TAG` and carried to another host as an OCI tar through `sbx template load`; it is fast and exact, and it is bytes nobody reviews. A kit declares install commands, files, hosts and credentials, so it is readable, signable and re-resolved at creation, and a template holds none of those runtime settings. The template does hold every file an agent wrote inside, including any key written to disk, which is why credentials belong in `sbx secret` and not in a saved sandbox.
+A template is a snapshot of the container filesystem stored as an image, reused with `sbx run --pull never -t TAG AGENT` and carried to another host as an OCI tar through `sbx template load`; it is fast and exact, and it is bytes nobody reviews. A kit declares install commands, files, hosts and credentials, so it is readable, signable and re-resolved at creation, and a template holds none of those runtime settings. The template does hold every file an agent wrote inside, including any key written to disk, which is why credentials belong in `sbx secret` and not in a saved sandbox.
 
 ## Full answer
 
@@ -46,7 +46,7 @@ Moving a sandbox to the cloud captures the filesystem as a template image and up
 
 ## Follow-ups
 
-- **Level 2:** `sbx template save` on the running sandbox failed. What is the sequence? Expected: `sbx stop`, then save with `--output` for the tar, then `sbx run --pull never -t TAG` with the same agent.
+- **Level 2:** `sbx template save` on the running sandbox failed. What is the sequence? Expected: `sbx stop`, then save with `--output` for the tar, then `sbx run --pull never -t TAG AGENT` with the same agent.
 - **Level 2:** The host's `docker image ls` does not list the template. Where is it? Expected: in the sandbox runtime's image store, which the host daemon does not share; use `sbx template ls`.
 - **Level 3:** An agent signed in to a service interactively inside the sandbox. What happens to that credential on `sbx move` or `template save`? Expected: it is a file in the container filesystem and travels in the image unless deleted first.
 - **Level 3:** A colleague wants the same allowed hosts as the template's author. Does the template give them that? Expected: no; network rules come from a kit or a policy, and a template carries image content only.

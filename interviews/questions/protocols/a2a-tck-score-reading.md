@@ -20,7 +20,7 @@ You run the official A2A conformance kit against your server twice. The first ru
 
 ## Short answer
 
-Neither percentage measures the server alone. The first run lost 63 of 85 JSON-RPC records because the kit posted to the card URL with a trailing slash, which is the kit's defect. In the second run, 21 of the failures are skips inside a test body that the tagged kit records as FAIL, so under the main-branch rule the run reads 62 PASS, 10 FAIL and 32 SKIPPED, or 86.1 percent, and of those ten failures only one belonged to the server.
+Neither percentage measures the server alone. The first run lost 63 of 85 JSON-RPC records because the kit posted to the card URL with a trailing slash, which is the kit's defect. In the second run, 21 of the failures are skips inside a test body that the tagged kit records as FAIL, so under the main-branch rule the run reads 62 PASS, 10 FAIL and 32 SKIPPED, or 86.1 percent, and of those ten failures three belonged to the server: the missing REST push routes and, at SHOULD level, the missing `Cache-Control` and `ETag` on the card.
 
 ## Full answer
 

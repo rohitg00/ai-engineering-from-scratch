@@ -34,9 +34,9 @@ After `sbx policy allow network --sandbox NAME example.com`, the same request ge
 
 Each `blocked_hosts` row carries `host`, `vm_name`, `proxy_type`, `rule`, `reason`, `last_seen`, `since` and `count_since`. The `rule` text names the operation, `op(action=net:connect:tcp, resource=net:domain:example.com:443)`, and either `no applicable policies` or the rule that matched. An allowed row may carry an empty `rule`, so the log says that a host passed and `check network` says why. `PROXY` takes five values: `forward`, `forward-bypass`, `transparent`, `network` and `browser-open`.
 
-### Why npm could not even resolve the host
+### When npm cannot resolve the host
 
-A deny covers more than TCP. Since v0.33.0 a sandboxed process cannot resolve a domain that policy denies, loopback names excepted, and since v0.45.0 DNS stops when no rule permits the host. Outgoing ICMP stays blocked and cannot be allowed. The connection error from npm is the lookup failing, which looks like a network fault and is a policy decision.
+A deny covers more than TCP. Since v0.33.0 a sandboxed process cannot resolve a domain that policy denies, loopback names excepted, and since v0.45.0 DNS stops when no rule permits the host. Outgoing ICMP stays blocked and cannot be allowed. The card so far shows a denial only for `example.com`, and `registry.npmjs.org:443` is on the `balanced` default allowlist, so find the npm host in `blocked_hosts` first. If a row names it, the connection error from npm is the lookup failing, which looks like a network fault and is a policy decision. If no row names it, look for another cause.
 
 ### The bypass that is not one
 

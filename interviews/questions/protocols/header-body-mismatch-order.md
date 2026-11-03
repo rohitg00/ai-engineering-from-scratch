@@ -36,7 +36,7 @@ Header names are case-insensitive. Header values are case-sensitive. A non-ASCII
 
 ### The order and the codes
 
-1. Parse one envelope. Confirm `jsonrpc` is `"2.0"`, an `id` exists, `method` is a string and `params` is an object.
+1. Parse one envelope. Confirm `jsonrpc` is `"2.0"`, an `id` exists on a request (a notification has none), `method` is a string and `params` is an object.
 2. Require the version string and the capability object in `params._meta`. Missing or malformed metadata is `-32602`.
 3. Compare each mirrored header with the body. A mismatch is HTTP `400` with `-32020`, even when one value is unsupported.
 4. With equality established, reject a matched but unsupported version with HTTP `400` and `-32022`, with data exactly `{"supported":["2026-07-28"],"requested":"<actual>"}`.

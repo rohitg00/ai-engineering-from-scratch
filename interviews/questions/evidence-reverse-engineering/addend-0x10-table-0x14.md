@@ -33,7 +33,7 @@ Only the ELF header has a fixed position in the file. Every other structure is f
 | Type | Formula | What the link editor does |
 |---|---|---|
 | `R_X86_64_PC32` to a defined symbol | `S + A - P` | writes the distance and the record is gone |
-| `R_X86_64_PLT32` to an undefined function | `L + A - P` | makes a PLT entry and a GOT slot |
+| `R_X86_64_PLT32` to an undefined function | `L + A - P` | makes a PLT entry and a GOT slot when the symbol stays preemptible; when the link binds the symbol, writes the direct distance |
 | `R_X86_64_64` in a position-independent image | `S + A` | keeps a relative record for the loader |
 
 The same compensation appears on every RIP-relative operand in the fixtures: a call to `grade` carries `grade-0x4` for the same reason. The five words at `.rodata+0x14` read `1, 2, 3, 4, 4`, which is how the compiler turned the `switch` into a table of return values at `-O1`.

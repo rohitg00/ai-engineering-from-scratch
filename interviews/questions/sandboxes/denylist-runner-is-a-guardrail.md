@@ -26,9 +26,12 @@ def run(self, argv, *, shell=False, cwd=None):
         return denied("interpreter")
     if not shell and any(ch in " ".join(argv) for ch in ";|&<>`$"):
         return denied("metachar")
+    root = realpath(self.root)
     for a in argv[1:]:
-        p, root = realpath(a), realpath(self.root)
-        if looks_like_path(a) and p != root and not p.startswith(root + sep):
+        if not looks_like_path(a) and not lexists(join(root, a)):
+            continue
+        p = realpath(join(root, a))
+        if p != root and not p.startswith(root + sep):
             return denied("path")
     return spawn(argv, timeout=self.timeout, max_output=self.max_output)
 ```

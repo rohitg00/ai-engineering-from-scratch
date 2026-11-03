@@ -16,7 +16,7 @@ related: [protocols/a2a-card-before-the-call, protocols/a2a-rejected-task-loop]
 updated: 2026-11-03
 ---
 
-A client written for an older A2A release calls a current agent. Its first `SendMessage` carries only `Host` and `Content-Type` headers and gets HTTP 200 with a JSON-RPC error, code `-32009`. Its second call names the method `message/send` and gets code `-32601`. Explain both replies, and name the two changes the client needs.
+A client written for an older A2A release calls a current agent. Its first `SendMessage` carries only `Host` and `Content-Type` headers and gets HTTP 200 with a JSON-RPC error, code `-32009`. Its second call sends `A2A-Version: 1.0`, names the method `message/send` and gets code `-32601`. Explain both replies, and name the two changes the client needs.
 
 ## Short answer
 

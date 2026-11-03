@@ -20,7 +20,7 @@ You let an agent work on a repository overnight in a sandbox with the default wo
 
 ## Short answer
 
-The default mount is the host path mounted read-write inside the VM at the same absolute path, so the agent can edit anything in the tree, and Git hooks, CI configuration, `package.json` scripts and agent settings never appear in `git diff`. `--clone` at creation runs the agent on a private clone while the host repository enters the VM read-only at `/run/sandbox/source`, so a push back is refused. The commits come home through a git daemon in the VM that `sbx` publishes on a loopback port and registers as the remote `sandbox-<name>` in the host repository, so you fetch that remote before you remove the sandbox.
+The default mount is the host path mounted read-write inside the VM at the same absolute path, so the agent can edit anything in the tree, including Git hooks, CI configuration, `package.json` scripts and agent settings, and a hook under `.git/hooks` never appears in `git diff`. `--clone` at creation runs the agent on a private clone while the host repository enters the VM read-only at `/run/sandbox/source`, so a push back is refused. The commits come home through a git daemon in the VM that `sbx` publishes on a loopback port and registers as the remote `sandbox-<name>` in the host repository, so you fetch that remote before you remove the sandbox.
 
 ## Full answer
 
@@ -36,7 +36,7 @@ Extra paths follow the first one, and `:ro` makes one read-only, even a single f
 
 ### What the recorded clone run showed
 
-Inside, `touch /run/sandbox/source/x` failed with `Read-only file system`, and a `git push` to `origin` ended with `remote unpack failed`. The git daemon listens on 9418 inside, and the CLI writes two fetch refspecs into the host's `.git/config`, so one fetch updates `refs/remotes/sandbox-<name>/<branch>` and `refs/sandboxes/<name>/<branch>`. `sbx rm` removes the remote and the daemon and prints the recovery command, and the `refs/sandboxes` copy survived the removal. `sbx stop` stops the daemon, and a restart assigns a new port and rewrites the remote URL.
+Inside, `touch /run/sandbox/source/x` failed with `Read-only file system`, and a `git push` to `origin` ended with `remote unpack failed`. The git daemon listens on 9418 inside, and the CLI writes two fetch refspecs into the host's `.git/config`, so one fetch updates `refs/remotes/sandbox-<name>/<branch>` and `refs/sandboxes/<name>/<branch>`. `sbx rm` removes the remote and the daemon and prints the recovery command, and the `refs/sandboxes` copy from the earlier fetch survived the removal. `sbx stop` stops the daemon, and a restart assigns a new port and rewrites the remote URL.
 
 ### What clone mode does not do
 
@@ -46,7 +46,7 @@ It stops writes, not reads. An untracked `.env` under the repository is readable
 
 - **Level 2:** Can you switch an existing sandbox to clone mode? Expected: no; the mode is fixed at creation and the flag does nothing on re-attach, so remove and recreate.
 - **Level 3:** The agent committed on `main` inside. Where is that commit on the host after a fetch? Expected: on `refs/remotes/sandbox-<name>/main` and `refs/sandboxes/<name>/main`, not on the host's own `main`.
-- **Level 3:** You removed the sandbox before fetching. Is the work gone? Expected: no; `refs/sandboxes/<name>/<branch>` survives, and `git branch <local> refs/sandboxes/<name>/<branch>` recovers it.
+- **Level 3:** You fetched once, then removed the sandbox. What can you recover? Expected: the fetched commits; `refs/sandboxes/<name>/<branch>` survives and `git branch <local> refs/sandboxes/<name>/<branch>` recovers it. Commits made after the last fetch go with the clone, so fetch before `sbx rm`.
 - **Level 4:** Which risk does clone mode leave open, and how do you close it? Expected: reading; untracked files such as `.env` are visible through the read-only mount, so keep them outside the repository or mount a narrower path.
 
 ## Wrong answers

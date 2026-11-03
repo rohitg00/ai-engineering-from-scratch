@@ -38,14 +38,14 @@ The decoder must agree with `llvm-objdump -d` on every instruction of every fixt
 
 ### Byte accounting
 
-Compare the two methods byte by byte. Bytes that only the sweep claims are padding or data. Bytes that neither claims are unreachable or belong to a function you have not found. Bytes the descent claims are the ones that run from that entry.
+Compare the two methods byte by byte. Bytes that only the sweep claims are padding, data, code behind an indirect jump, or code of a function with no known entry. The sweep decodes the whole section, so these are the bytes to account for. Bytes the descent claims are the ones it reaches from that entry; that is reachability, not proof that they run.
 
 ## Follow-ups
 
 - **Level 2:** Change the last table byte from `48` to `e8` and rebuild. What does the sweep print? Expected: a `callq` that swallows the `addl` and the `retq`, with a target outside the section; the function appears to have no return.
 - **Level 3:** Why does the descent stop at `jmpq *%rax` in the unoptimized `grade`, and what fixes it? Expected: no target is in the bytes; the resolver reads the five relocations of the table and pushes four distinct targets.
 - **Level 3:** What does "fail silently" mean in operational terms? Expected: the decoder re-synchronises within a few bytes and detects nothing unless it hits an invalid opcode, so a wrong listing looks complete.
-- **Level 4:** How do you classify bytes that neither method claims? Expected: unreachable from the entry, or part of a function you have not found; account for every byte as claimed, padding, data or unreachable.
+- **Level 4:** How do you classify bytes that the descent does not claim? Expected: padding, data, code behind an indirect jump, or part of a function with no known entry; account for every byte as one of these or as reached by the descent.
 
 ## Wrong answers
 

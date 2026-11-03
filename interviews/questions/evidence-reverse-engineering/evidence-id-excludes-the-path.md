@@ -50,7 +50,7 @@ Every error has the same five fields: `code`, `category`, `message`, `retryable`
 ## Wrong answers
 
 - "Ids are random identifiers assigned at write time." They are content hashes, which is why two machines agree.
-- "Trim limitations to save context tokens." Each one is hashed; the record is refused and the reader loses what the fact does not cover.
+- "Trim limitations to save context tokens." Each one is hashed. A trimmed record with the old `evidence_id` is refused, and the reader loses what the fact does not cover.
 - "Fix the id field so the bundle imports." The validator recomputes the hash from content, and a patched id is still a mismatch.
 
 ## Taught in

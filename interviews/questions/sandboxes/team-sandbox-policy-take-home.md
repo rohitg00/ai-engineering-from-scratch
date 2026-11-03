@@ -26,7 +26,7 @@ Initialize one global preset and record `sbx policy ls --wide --json` before tru
 
 ### Policy preset
 
-`policy init` sets the first global policy once. `deny-all` makes every unmatched host an approval request; `balanced` ships a long default allowlist that changes between releases without a changelog. Either way, the recorded listing with the version and the date is part of the deliverable. Team rules go in the kit, not in global rules, because a local allow is inactive the day governance arrives and a kit rule is not editable by the sandbox owner.
+`policy init` sets the first global policy once. `deny-all` makes every unmatched host an approval request; `balanced` ships a long default allowlist that changes between releases without a changelog. Either way, the recorded listing with the version and the date is part of the deliverable. Team rules go in the kit, not in global rules, because a kit rule travels with the reference and is not editable by the sandbox owner. Under organization governance, local and kit allow rules are both inactive, so the registry and API hosts then also need organization allow rules.
 
 ### Kit
 
@@ -54,7 +54,7 @@ The plan output, the policy listing with version and date, the kit descriptor an
 
 ## Follow-ups
 
-- **Level 3:** Why not let each engineer add the two hosts with `sbx policy allow network`? Expected: six copies drift, they are editable, and they stop granting under governance; a kit rule travels with the reference and is provisioned.
+- **Level 3:** Why not let each engineer add the two hosts with `sbx policy allow network`? Expected: six copies drift and they are editable; a kit rule travels with the reference and is provisioned. Under governance both stop granting, and only organization allow rules apply.
 - **Level 4:** How do you prove the method rule holds when the check command cannot see methods? Expected: send a real request from inside and expect the proxy's `403`; the log records hosts and counts only.
 - **Level 4:** A contributor's plan shows a `!` row. What does it mean? Expected: a resource the environment applied earlier and no longer declares; review before applying.
 - **Level 4:** The file keeps a `lifecycle` block. What do you tell the team? Expected: it runs on the host with their privileges, it prompts on every invocation, approving it trusts the script, and `--skip-host-commands` exists for a dry pass.
