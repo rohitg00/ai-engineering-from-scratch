@@ -20,7 +20,7 @@ const HEAD_ASSETS = '<link rel="stylesheet" href="/style.css">\n<link rel="style
 const BODY_ASSETS = '<script src="/header.js" defer></script>';
 const EXPLORE_LINKS = [
   ['/catalog', 'Course catalog'], ['/roadmap', 'Roadmap'], ['/learning-paths', 'Learning paths'], ['/projects', 'Projects'],
-  ['/manuals', 'Manuals'], ['/cheatsheets', 'Cheat sheets'], ['/practice', 'Practice'], ['/certifications', 'Certification prep'], ['/glossary', 'Glossary'],
+  ['/manuals', 'Manuals'], ['/cheatsheets', 'Cheat sheets'], ['/practice', 'Practice'], ['/interviews', 'Interviews'], ['/certifications', 'Certification prep'], ['/glossary', 'Glossary'],
   ['/about', 'About'], ['/developer', 'Developer docs'], ['/sponsors', 'Sponsor us'],
 ];
 
