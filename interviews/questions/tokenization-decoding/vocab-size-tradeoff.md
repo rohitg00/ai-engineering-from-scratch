@@ -20,7 +20,7 @@ A team wants to grow the vocabulary of a new model from 32K to 128K tokens. The 
 
 ## Short answer
 
-The embedding matrix goes from 32,000 by 4,096, about 131 million parameters, to 128,000 by 4,096, about 524 million, so about 400M more parameters from the tokenizer alone, and an untied output head costs the same again. In return the text compresses: an English paragraph of about 100 tokens at 32K takes about 70 tokens at 128K, about 30 percent fewer forward passes per answer, and non-English scripts gain the most. The lesson's rule of thumb is 32k under 1B parameters, 50 to 100k from 1 to 10B, and 200k and above for multilingual or frontier models.
+The embedding matrix goes from 32,000 by 4,096, about 131 million parameters, to 128,000 by 4,096, about 524 million, so about 400M more parameters from the tokenizer alone, and an untied output head costs the same again. In return the text compresses: an English paragraph of about 100 tokens at 32K takes about 70 tokens at 128K. Generating that same paragraph then needs about 30 percent fewer forward passes, and non-English scripts gain the most. The lesson's rule of thumb is 32k under 1B parameters, 50 to 100k from 1 to 10B, and 200k and above for multilingual or frontier models.
 
 ## Full answer
 
@@ -44,7 +44,7 @@ Each row is an embedding the model has to learn, and rare rows receive few gradi
 | 128,256 | about 1.1 |
 | 200,019 | about 1.0 |
 
-Fewer tokens per word means shorter sequences, so each answer needs fewer forward passes and each context window holds more text. For a model that serves millions of requests the 30 percent is a direct compute saving.
+Fewer tokens per word means shorter sequences, so each answer needs fewer forward passes and each context window holds more text. For a model that serves millions of requests, output of that kind needs about 30 percent fewer forward passes.
 
 ### Who gains the most
 

@@ -38,7 +38,7 @@ A head trained on general chat sits at 0.6 to 0.8 acceptance there and at 0.4 to
 
 ### The diagnosis
 
-1. Pull accepted tokens per request from the engine, divide by the draft length, and split by target version and by customer or request class. One number for the whole cluster hides both causes.
+1. Pull accepted draft tokens and proposed draft tokens per request from the engine, divide the first by the second, and split by target version and by customer or request class. One number for the whole cluster hides both causes.
 2. Compare the chat slice before and after the upgrade: if it fell, the version drift is real.
 3. Compare the code slice against the chat slice at the same version: if it sits far lower, the domain shift is real.
 4. Confirm the tail story by bucketing P99 by acceptance; the slow tail should be the low-acceptance slice.

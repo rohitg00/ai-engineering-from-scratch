@@ -49,7 +49,7 @@ The fitted exponents drift slowly, about 0.45 for N and 0.55 for D with the cons
 | Compute-optimal | 70B | 1.4T | 20 |
 | Inference-optimized | 8B | 15T | 1,875 |
 
-The last row is a production model family that trained a small model ninety-four times past the compute-optimal ratio. For a service that answers a trillion tokens a month, inference dominates total cost, and a model that fits consumer hardware with a fraction of the latency wins even though its training loss per training FLOP was worse. The lesson's range for inference-dominated workloads is 100 to 500 tokens per parameter depending on serving volume.
+The rows do not share one budget: the second and third rows use about twice the compute of the first, so they compare ratios, not alternatives at the same cost. The last row is a production model family that trained a small model ninety-four times past the compute-optimal ratio. For a service that answers a trillion tokens a month, inference dominates total cost, and a model that fits consumer hardware with a fraction of the latency wins even though its training loss per training FLOP was worse. The lesson's range for inference-dominated workloads is 100 to 500 tokens per parameter depending on serving volume.
 
 ### How to defend it
 
@@ -63,7 +63,7 @@ Data curation can shift the curves by more than 2 times effective compute. A mix
 
 ### The fine-tuning corollary
 
-If your task data holds fewer than 20 tokens per parameter of the base model, expect a loss floor from saturation, and prefer a smaller base or more data.
+The lesson's rule of thumb: if your task data holds fewer than 20 tokens per parameter of the base model, expect saturation at some loss floor. Treat it as a warning to measure, not as a rule for the base size.
 
 ## Follow-ups
 

@@ -32,7 +32,7 @@ next few ids      <|endoftext|>, <|pad|>
 then              one id per merge, in training order
 ```
 
-- **Normalize** with compatibility normalization so that a ligature or a fullwidth letter maps to its plain form before anything else.
+- **Keep the input bytes** as they are, so that the round trip is byte-exact. Compatibility normalization maps a ligature or a fullwidth letter to its plain form and is lossy, so add it only if the write-up limits the round-trip promise to normalized text.
 - **Pre-split** into words and punctuation so that merges stay inside a word; the regex pattern of the large production tokenizers is an optional extension.
 - **Train**: count adjacent pairs across the split corpus weighted by word frequency, merge the top pair into the next free id, record the merge, repeat to the target size. Break ties on the pair itself so two runs give the same table.
 - **Encode**: match special tokens exactly first when the allow flag is on; for ordinary text start from the bytes and repeatedly apply the lowest-ranked applicable merge.

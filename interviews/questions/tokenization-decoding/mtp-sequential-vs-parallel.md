@@ -39,7 +39,7 @@ L_MTP = (lambda / D) · sum over k of L_k
 
 ### Why the chain matters
 
-To predict two tokens ahead, module one sees what the next token actually was. At inference you feed it the drafted token instead, and it predicts the one after. That is exactly how a hidden-state draft works, so the trained module is a draft network for free. Parallel heads fire from one hidden state, so head two cannot use head one's answer, and its prediction is not a continuation of a sequence.
+To predict two tokens ahead, module one sees what the next token actually was. At inference you feed it the drafted token instead, and it predicts the one after. That is exactly how a hidden-state draft works, so the trained module is a draft network for free. Parallel heads fire from one hidden state, so head two cannot use head one's answer. A verifier can still check their guesses, but they are accepted less often.
 
 ### The accounting
 
@@ -71,7 +71,6 @@ Use the baked-in design when you control pretraining and the hidden size is at l
 
 ## Wrong answers
 
-- "Parallel heads can be used as the draft." Their predictions are not conditioned on each other, so they do not form a sequence a verifier can check.
 - "The extra loss replaces next-token prediction." It is added to the main loss with a small weight; the main objective stays.
 - "The module can be bolted onto a trained model with a quick fine-tune." The design is a pretraining choice; existing weights get a post-hoc draft instead.
 

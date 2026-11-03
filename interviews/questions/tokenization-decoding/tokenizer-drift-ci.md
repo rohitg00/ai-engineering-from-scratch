@@ -47,7 +47,7 @@ Take a fixed sample of prompts from the evaluation. Encode them in both environm
 
 1. Pin the tokenizer file by hash in the deployment and fail the build when it changes.
 2. Store golden token ids for a fixed corpus that covers English, non-Latin scripts, code, emoji and a prompt with a leading space; the test encodes the corpus and compares.
-3. Assert a byte-exact round trip, encode then decode, on the same corpus.
+3. Assert a round trip, encode then decode, on the same corpus. Compare against the text that the configured normalizer produces, and require byte-exact equality for text that the normalizer leaves unchanged.
 4. Record the tokenizer settings next to the weights, so the serving config cannot drift from the training config.
 
 ### The validation plan from the lesson

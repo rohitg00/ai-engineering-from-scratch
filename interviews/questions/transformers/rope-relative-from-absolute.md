@@ -64,14 +64,14 @@ s2 = dot(apply_rope(a, pos_a + k), apply_rope(b, pos_b + k))
 assert abs(s1 - s2) < tolerance
 ```
 
-The property is the whole point of the method. If the test fails, the rotation was applied to only one side or to the wrong coordinate pairs.
+The property is the whole point of the method. If the test fails, the rotation was applied to only one side, or the two sides use different pairs or angles. A pass does not prove the pairing or the angles match the reference: a consistent wrong pairing passes too, so also compare one rotated vector with a value computed by hand.
 
 ## Follow-ups
 
 - **Level 2:** Why rotate Q and K but not V? Expected: position should shape the match between tokens, not the content that is returned once a token is picked.
 - **Level 3:** What happens at a position the model never saw in training? Expected: the fast-turning pairs reach angles the model never learned to read; scaling the base or interpolating positions brings them back into the trained range.
 - **Level 3:** How does linear-bias attention get relative position without any rotation? Expected: it adds a penalty proportional to `|i - j|` to the scores, one slope per head.
-- **Level 4:** Why does increasing the base help a longer context? Expected: a larger base lowers every frequency, so the high-frequency pairs are not squeezed into unseen angles when the context grows; the NTK-aware rule rescales the base by the extension factor raised to `d / (d - 2)`.
+- **Level 4:** Why does increasing the base help a longer context? Expected: a larger base lowers every frequency except the first pair, which always turns at one radian per position, so the high-frequency pairs are not squeezed into unseen angles when the context grows; the NTK-aware rule rescales the base by the extension factor raised to `d / (d - 2)`.
 
 ## Wrong answers
 

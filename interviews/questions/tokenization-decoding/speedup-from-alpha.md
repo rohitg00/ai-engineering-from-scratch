@@ -20,7 +20,7 @@ A draft is accepted 80 percent of the time per token and proposes four tokens pe
 
 ## Short answer
 
-The expected tokens per verifier pass are `(1 - alpha^(K + 1)) / (1 - alpha)`; at an acceptance of 0.8 and K of 4 that is 3.36, so about 3.36 times fewer big-model calls. The wall time per token is `(K c + 1)` over that expectation, where c is the draft's cost relative to the verifier, so a longer draft adds cost linearly while the geometric series saturates; at 0.8 acceptance and c of 0.05 the optimum sits around 5 to 7 drafts for about 3.2 times. The lever that matters is the acceptance rate: at K of 5, going from 0.6 to 0.9 moves the expectation from 2.2 to 4.1 tokens per pass.
+The expected tokens per verifier pass are `(1 - alpha^(K + 1)) / (1 - alpha)`; at an acceptance of 0.8 and K of 4 that is 3.36, so about 3.36 times fewer big-model calls. The wall time per token is `(K c + 1)` over that expectation, where c is the draft's cost relative to the verifier, so a longer draft adds cost linearly while the geometric series saturates; at 0.8 acceptance and c of 0.05 the optimum sits around 5 to 7 drafts for about 3.2 times. The lever that matters is the acceptance rate: at a fixed K, a rise from 0.6 to 0.9 about doubles the expected tokens per pass.
 
 ## Full answer
 
@@ -35,12 +35,12 @@ E[tokens per verifier pass] = (1 - alpha^(K + 1)) / (1 - alpha)
 | alpha | K | tokens per pass |
 |---|---|---|
 | 0.8 | 4 | 3.36 |
-| 0.6 | 5 | about 2.2 |
-| 0.9 | 5 | about 4.1 |
+
+At a fixed K, a higher alpha raises every term of the series, so the expectation climbs steeply as alpha nears one.
 
 ### Where the draft's cost enters
 
-One step costs K draft forwards plus one verifier forward, `K c + 1` in verifier units. Divide by the expected tokens and you have the time per token. For a verifier at about 30 ms and a draft at about 3 ms, five drafts plus one verify is about 45 ms for up to five accepted tokens, against 150 ms for five plain steps. As K grows the numerator grows linearly and the expectation flattens toward `1 / (1 - alpha)`, so there is an optimum.
+One step costs K draft forwards plus one verifier forward, `K c + 1` in verifier units. Divide by the expected tokens and you have the time per token. For a verifier at about 30 ms and a draft at about 3 ms, five drafts plus one verify is about 45 ms per step. The step emits between one and six tokens, so divide the 45 ms by the expected tokens per pass and compare the result with 30 ms for one plain token. As K grows the numerator grows linearly and the expectation flattens toward `1 / (1 - alpha)`, so there is an optimum.
 
 | alpha | c | best K | speedup |
 |---|---|---|---|
@@ -60,7 +60,7 @@ At high concurrency the verify pass is no longer free: the decode batch already 
 - **Level 3:** At an acceptance of 0.95 and a draft cost of 0.02, where is the optimum? Expected: around 8 to 10 drafts, with the speedup pushing toward 5 times.
 - **Level 3:** Why does the expectation saturate as K grows? Expected: it is a geometric series; the probability that all drafts up to position K are accepted falls as alpha to the K, so late positions add almost nothing.
 - **Level 4:** How does batch size change the arithmetic? Expected: the verifier's extra work per draft is no longer hidden behind idle bandwidth, so the effective cost of verification and of a rejection rises, and the break-even acceptance climbs toward 0.45 to 0.55.
-- **Level 4:** What single measurement do you add to the dashboard? Expected: accepted tokens per request divided by the draft length, per traffic slice, so alpha is visible where the formula needs it.
+- **Level 4:** What single measurement do you add to the dashboard? Expected: accepted draft tokens divided by proposed draft tokens, per traffic slice, so alpha is visible where the formula needs it.
 
 ## Wrong answers
 

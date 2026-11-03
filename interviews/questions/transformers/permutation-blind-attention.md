@@ -33,12 +33,12 @@ The score matrix is `softmax(Q K^T / sqrt(d)) V`, built from dot products betwee
 A learned table has one row per position, so it adds `max_context_length` times D parameters and has no row for a position past the trained length. A fixed sinusoid uses the formula
 
 ```text
-angle = p / (10000 ** (2 * (i // 2) / D))
+angle = p / (10000 ** (2 * k / D))
 emb[p, 2k]     = sin(angle)
 emb[p, 2k + 1] = cos(angle)
 ```
 
-with no parameters. The wavelength changes geometrically across dimensions, so low dimensions encode coarse position and high dimensions encode fine position. The vector at position p plus k is a linear function of the vector at p, which gives attention an easy way to learn relative offsets. The position vector is summed with the token vector, not concatenated, so D stays constant and the model decides per feature how much position matters.
+with no parameters. The wavelength changes geometrically across dimensions. Low dimensions have the largest angle per position and the shortest wavelength, so they encode fine position; high dimensions have the longest wavelength and encode coarse position. The vector at position p plus k is a linear function of the vector at p, which gives attention an easy way to learn relative offsets. The position vector is summed with the token vector, not concatenated, so D stays constant and the model decides per feature how much position matters.
 
 ### Fix two: rotate the queries and keys
 
@@ -56,7 +56,7 @@ The first family changes the input to the first layer. The other two act inside 
 
 - **Level 1:** Why add the two vectors instead of concatenating them? Expected: the sum keeps D constant through the network and lets the model weigh token and position per feature.
 - **Level 2:** What does a learned position table cost that a sinusoid does not? Expected: `max_context_length` times D parameters, and it cannot be indexed past the trained length.
-- **Level 2:** Why do the low dimensions of the sinusoid encode coarse position? Expected: their wavelength is longest, so they change slowly across positions.
+- **Level 2:** Why do the high dimensions of the sinusoid encode coarse position? Expected: their wavelength is longest, so they change slowly across positions.
 - **Level 3:** Where in the block does the rotation apply? Expected: to Q and K inside attention, after the projection and before the score matmul, never to V.
 
 ## Wrong answers

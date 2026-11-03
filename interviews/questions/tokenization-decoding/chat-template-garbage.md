@@ -42,7 +42,7 @@ ids_service  = ids the service sent to the engine
 diff the two lists; the first difference is the bug
 ```
 
-Then decode each id back to its string and look for a marker that decoded as several pieces instead of one reserved id.
+Then decode each id back to its string and look for a marker that decoded as several pieces instead of one reserved id. If the two lists match, the input is fine and the stop token is next: compare the stop ids in the service config with the end-of-turn id that the template puts after each message.
 
 ### The fix
 

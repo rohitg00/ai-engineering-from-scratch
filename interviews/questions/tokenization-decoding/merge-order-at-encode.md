@@ -39,7 +39,7 @@ def encode_bpe(word, merges):
     return symbols
 ```
 
-It walks the whole table for every word, so the cost is the word length times the number of merges. Correct, and slow.
+It walks the whole table for every word, so the cost is the word length times the number of merges. Correct for a merge table trained on characters, and slow.
 
 ### The rank-based encoder
 

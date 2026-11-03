@@ -47,7 +47,7 @@ The encoder-decoder attention of 2014 used the previous decoder state as the que
 
 ### What a transformer changed
 
-Self-attention queries a sequence against itself, and it separates keys from values with different learned projections. Multi-head attention runs several of these in parallel. The math and the shapes are the same; the move from the 2014 attention to scaled dot-product attention is mostly notation.
+Self-attention queries a sequence against itself, and it separates keys from values with different learned projections. Multi-head attention runs several of these in parallel. The weighted sum of values is the same idea. The score function changes: the additive tanh score and the plain dot product give way to a dot product divided by the square root of the key width.
 
 ## Follow-ups
 

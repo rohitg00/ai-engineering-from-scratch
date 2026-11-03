@@ -20,7 +20,7 @@ You change an attention layer from one head to eight heads and keep the model wi
 
 ## Short answer
 
-The parameters do not change: the four projections are still `d_model` by `d_model`, and the heads are only a reshape of the same matrices into slices of width `d_model / n_heads`. The compute stays about the same because the per-head attention runs as one batched matmul over the head axis. Each head can specialize on its own relation, and the output projection is where the heads mix. Below a width of 32 a head has too few dimensions to score against the `sqrt` scaling, and above 256 you lose the benefit of many small specialists.
+The parameters do not change: the four projections are still `d_model` by `d_model`, and the heads are only a reshape of the same matrices into slices of width `d_model / n_heads`. The compute stays about the same because the per-head attention runs as one batched matmul over the head axis. Each head can specialize on its own relation, and the output projection is where the heads mix. The lesson's rule of thumb keeps a head at a width of 32 or more, because a narrower head sees too few dimensions, and above 256 you lose the benefit of many small specialists, while the `sqrt` scaling itself keeps the score variance constant at any width.
 
 ## Full answer
 
@@ -73,7 +73,7 @@ One linear layer maps D to 3D and is sliced into Q, K and V. Three separate laye
 
 - "More heads mean more parameters." The projections keep their size; the heads are a reshape of the same matrices.
 - "Heads exchange information while they attend." They work on separate subspaces; mixing happens only in the output projection and in later layers.
-- "Use as many heads as the width allows." Narrow heads below 32 fight the scaling factor and see too little; the common widths are 64 and 128.
+- "Use as many heads as the width allows." Heads narrower than the lesson's rule of thumb of 32 see too little; the common widths are 64 and 128.
 
 ## Taught in
 

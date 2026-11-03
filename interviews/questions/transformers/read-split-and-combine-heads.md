@@ -34,7 +34,7 @@ Both return a tensor of shape `(n_heads, n, d_head)` and both run without error.
 
 ## Short answer
 
-The first version is the right one: `split_a` groups the `d` features of each token into `n_heads` slices of width `d_head` and then moves the head axis to the front. `split_b` reads the same memory in the wrong order: it cuts the sequence into `n_heads` chunks of consecutive tokens and calls each chunk a head, so one head now holds different tokens' features mixed together and the columns no longer line up with the projection that produced them. The test is the round trip: combining the split must return `X` exactly, and head `h` must equal the column slice `X[:, h * d_head:(h + 1) * d_head]`.
+The first version is the right one: `split_a` groups the `d` features of each token into `n_heads` slices of width `d_head` and then moves the head axis to the front. `split_b` reads the same memory in the wrong order: it cuts the flat buffer into `n_heads` equal chunks and calls each chunk a head, so one head now holds runs of consecutive tokens, a chunk can end inside a token, and the columns no longer line up with the projection that produced them. The test is the round trip: combining the split must return `X` exactly, and head `h` must equal the column slice `X[:, h * d_head:(h + 1) * d_head]`.
 
 ## Full answer
 
@@ -44,7 +44,7 @@ After the projection, each token's `d` features are the concatenation of `n_head
 
 ### Why the wrong version still runs
 
-Both tensors have `n * d` elements, so NumPy and PyTorch are happy to reinterpret the memory. A reshape never moves data; it only changes how the flat buffer is indexed. `split_b` therefore assigns the first `n / n_heads` tokens, all of their features, to head zero. The scores inside that head compare the wrong vectors, and the model trains to something, which is why this bug can survive for weeks.
+Both tensors have `n * d` elements, so NumPy and PyTorch are happy to reinterpret the memory. A reshape of a contiguous array does not move data; it only changes how the flat buffer is indexed. `split_b` therefore cuts the buffer into `n_heads` equal chunks. When `n` is divisible by `n_heads`, head zero holds the first `n / n_heads` tokens with all of their features; otherwise a chunk ends inside a token. The scores inside that head compare the wrong vectors, and the model trains to something, which is why this bug can survive for weeks.
 
 ### The combine must be the exact inverse
 

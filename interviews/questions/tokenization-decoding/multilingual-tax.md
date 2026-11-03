@@ -45,7 +45,7 @@ The lesson's phrase is that a user of such a script effectively has a context wi
 
 ### How to measure it
 
-Take 10 sentences each in English, Spanish, Chinese, Korean and Arabic, tokenize each with the candidate vocabulary, and compare the average tokens per character. The ratios are the tax.
+Take the same 10 meaning-aligned sentences in English, Spanish, Chinese, Korean and Arabic, from one parallel corpus, tokenize each with the candidate vocabulary, and compare the average tokens per character. The ratios are the tax; with sentences that do not match, report them as a spot check only.
 
 ## Follow-ups
 

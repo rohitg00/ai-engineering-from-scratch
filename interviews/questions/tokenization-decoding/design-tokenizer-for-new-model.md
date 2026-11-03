@@ -54,7 +54,7 @@ Sample the training text for the tokenizer in the proportions you want the model
 1. Tokens per word, per language and for code, on held-out text; this is the fertility table you publish.
 2. Unknown rate, which must be zero with byte fallback.
 3. Compression ratio against a reference encoder on the same held-out text.
-4. Byte-exact round trip, encode then decode, on all of it, including emoji and literal special-token strings.
+4. Round trip, encode then decode, on all of it, including emoji and literal special-token strings. Byte-exact when the tokenizer has no normalizer; with a normalizer such as NFKC, compare against the normalized text.
 5. A frozen tokenizer file hash and golden token ids in CI, so that nothing drifts between training and serving.
 
 Flag a monolingual vocabulary under 16k as under-specified, and refuse to ship a vocabulary without the hash check.

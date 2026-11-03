@@ -38,7 +38,7 @@ Batched over decoder steps, the weights are `(batch, T_dec, T_enc)` and the cont
 
 ### How the wrong shape appears
 
-The context is `weights @ H`. If the code computed `H @ weights`, or built the scores as `H @ H.T` because the query tensor was replaced by the encoder states, the shapes still multiply and the result has the encoder length where the decoder length belongs. Nothing raises. Downstream layers broadcast or reshape the tensor and the loss keeps falling, just more slowly.
+The context is `weights @ H`. If the code built the scores as `H @ H.T` because the query tensor was replaced by the encoder states, the shapes still multiply and the result has the encoder length where the decoder length belongs. Nothing raises. Downstream layers broadcast or reshape the tensor and the loss keeps falling, just more slowly.
 
 ### The diagnosis steps
 

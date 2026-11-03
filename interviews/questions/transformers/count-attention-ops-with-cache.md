@@ -16,11 +16,11 @@ related: [transformers/causal-mask-minus-infinity, inference-serving/kv-pool-use
 updated: 2026-11-03
 ---
 
-A decoder generates 100 tokens one at a time from an empty prompt. Count the attention operations against the prefix for a naive loop and for a loop that caches the key and value vectors of earlier tokens. Then tell me what that store deliberately leaves out.
+A decoder generates 100 tokens one at a time from an empty prompt. Count the token states each loop computes for the prefix: a naive loop, and a loop that caches the key and value vectors of earlier tokens. Then count the query-key comparisons that remain with the store, and name what the store deliberately leaves out.
 
 ## Short answer
 
-The naive loop recomputes attention over the whole prefix at every step, so the work is 1 plus 2 plus 3 and so on up to 100, which is 5050 operations and grows with the square of the length. With the stored keys and values, each step runs only the new token's query against what is already there, 100 operations in total, linear in the length. The store holds no queries, because a past token never asks a question again; only the newest token does.
+The naive loop runs every prefix token through the layer again at every step, so it computes 1 plus 2 plus 3 and so on up to 100 token states, which is 5050 and grows with the square of the length. With the stored keys and values, each step computes the state of the new token only, 100 in total. The new query still meets every stored key, so the cached loop still makes 5050 query-key comparisons: the store removes the recomputed key and value vectors, not the comparisons. The store holds no queries, because a past token never asks a question again; only the newest token does.
 
 ## Full answer
 
@@ -31,11 +31,12 @@ Every hidden state of a prefix token is deterministic once it is computed, and t
 ### The two loops
 
 ```text
-naive:   step t attends over t tokens        -> 1 + 2 + ... + N = N (N + 1) / 2
-cached:  step t attends with one new query    -> N
+naive:   step t recomputes t token states       -> 1 + 2 + ... + N = N (N + 1) / 2
+cached:  step t computes one new token state    -> N
+cached:  its one query meets t stored keys      -> N (N + 1) / 2 comparisons
 ```
 
-For N equal to 100 the naive count is 5050 and the cached count is 100. The lesson's code prints both and confirms that the outputs match. For a 4K-token response the naive approach costs about 16M attention operations, most of them redundant.
+For N equal to 100 the naive count is 5050 token states and the cached count is 100. The lesson's code prints both and confirms that the outputs match. The comparisons of the new query with the stored keys stay at 5050 in both loops, so the attention step itself still grows with the length at each step. For a response of a few thousand tokens the naive count of token states is in the millions, most of them redundant.
 
 ### What is stored
 
@@ -48,7 +49,7 @@ class KVCache:
         self.V[layer][head].append(v)
 ```
 
-The memory grows linearly with the generated length; that is the price for the linear compute.
+The memory grows linearly with the generated length; that is the price for not recomputing the prefix.
 
 ### Why queries are not stored
 
@@ -68,7 +69,7 @@ Generation is still serial: step t needs the token from step t minus one. The le
 ## Wrong answers
 
 - "The store keeps the attention weights." It keeps keys and values; the weights are recomputed from the new query every step.
-- "The store saves memory." It costs memory and saves compute; the trade is linear memory for linear time.
+- "The store saves memory." It costs memory and saves compute; the trade is memory for the recomputed key and value vectors.
 - "Queries must be stored too." A past token's query is never used again.
 
 ## Taught in

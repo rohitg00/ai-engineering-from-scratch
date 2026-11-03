@@ -20,7 +20,7 @@ Design the attention stack of a new 70B-class decoder that must serve 128K-token
 
 ## Short answer
 
-Start from the memory, because it decides the rest. With 8 key-value heads, 80 layers and a head size of 128 in a 16-bit type, the stored keys and values cost 4096 bytes per token per layer, about 10 GiB at 32K and 40 GiB at 128K before a single weight is loaded. So the head layout is grouped-query or latent attention, the stored type is reduced to FP8 to halve those bytes, the positional scheme is rotation with base scaling so that the model reaches 128K without a position table, and the kernel is a tiled one so that the N by N scores never touch main memory. Then count again: weights plus cache must fit in the 80 GB with room for activations.
+Start from the memory, because it decides the rest. With 8 key-value heads, 80 layers and a head size of 128 in a 16-bit type, the stored keys and values cost 4096 bytes per token per layer, about 10 GiB at 32K and 40 GiB at 128K before a single weight is loaded. So the head layout is grouped-query or latent attention, the stored type is reduced to FP8 to halve those bytes, the positional scheme is rotation with base scaling so that the model reaches 128K without a position table, and the kernel is a tiled one so that the N by N scores never touch main memory. Then count again: at 16 bits the weights of a 70B-class model alone are larger than the 80 GB card, so the weights also need a 4-bit type before the cache and the activations can fit beside them.
 
 ## Full answer
 
@@ -37,7 +37,7 @@ per token per layer = 2 * n_kv_heads * d_head * bytes
 128K context        = about 40 GiB
 ```
 
-Halve the bytes per value with an FP8 cache and the 128K figure halves. Add the weights for the model, which dwarf the cache at short contexts and lose to it at 128K. Batch size one is the stated requirement; every additional concurrent request adds another cache.
+Halve the bytes per value with an FP8 cache and the 128K figure halves. Then add the weights. At 16 bits a 70B-class model needs two bytes per parameter, which is more than the whole 80 GB card before any cache is stored. At 8 bits the weights still fill most of the card. Only a 4-bit weight type leaves room for the FP8 cache at 128K and for the activations. Batch size one is the stated requirement; every additional concurrent request adds another cache.
 
 ### Positional scheme
 
@@ -50,7 +50,7 @@ Attention is memory-bound from about 2K tokens, so a tiled kernel is not optiona
 ### What to measure before committing
 
 1. Perplexity at the target length and at the original short length after the long-context fine-tune.
-2. Peak memory at 128K with weights, cache and activations on the card.
+2. Peak memory at 128K with the quantized weights, the cache and the activations on the card, and the quality loss from the 4-bit weights.
 3. Time per token at 128K against 8K, to confirm the kernel and the cache behave linearly.
 
 ## Follow-ups

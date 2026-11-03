@@ -44,7 +44,7 @@ Speculation is opt-in on the production engine, and the production lesson's rule
 
 1. Serve the target plain and record time to first token, inter-token latency and throughput at the target concurrency.
 2. Enable the draft and rerun the same benchmark.
-3. Read accepted tokens per request from the engine and divide by the draft length to get acceptance.
+3. Read accepted draft tokens and proposed draft tokens per request from the engine and divide the first by the second to get acceptance.
 4. Below about 0.55 at production concurrency, disable the flag or train a domain-specific head.
 5. Confirm that the tail inter-token latency did not get worse, because a rejected draft costs a verify and a re-roll.
 

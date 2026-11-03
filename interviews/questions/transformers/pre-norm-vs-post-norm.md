@@ -39,7 +39,7 @@ Same shapes, different training behavior. In the post-norm block the residual ad
 2. Feed the same random input to both variants with identical weights.
 3. Run one backward pass and print the gradient norm at the embedding.
 
-The pre-norm stack shows an embedding gradient about an order of magnitude larger than the post-norm stack at the same learning rate. The lesson's other version of the test measures the activation norm after twelve stacked layers on random input: post-norm activations explode and pre-norm activations stay bounded.
+The pre-norm stack shows an embedding gradient about an order of magnitude larger than the post-norm stack at the same learning rate.
 
 ### What pre-norm needs that post-norm did not
 
@@ -51,7 +51,7 @@ LayerNorm subtracts the mean and divides by the standard deviation. RMSNorm divi
 
 ### Where dropout goes
 
-After the attention softmax and after the second linear of the MLP. Never on the skip path itself, because that breaks the additive identity that lets the gradient flow at depth.
+After the attention softmax, on the attention output before the residual add, and after the second linear of the MLP. Never on the skip path itself, because that breaks the additive identity that lets the gradient flow at depth.
 
 ## Follow-ups
 

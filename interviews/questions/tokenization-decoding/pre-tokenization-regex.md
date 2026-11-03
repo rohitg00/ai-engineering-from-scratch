@@ -20,7 +20,7 @@ Before any merge runs, a production tokenizer cuts the text into chunks with a r
 
 ## Short answer
 
-The pattern cuts the sentence into eight chunks, ` Hello`, `,`, ` world`, `!`, ` Don`, `'t`, ` stop` and `.`: each word keeps the space in front of it, contractions split at the apostrophe, and punctuation stands alone. The merges then run inside each chunk and can never join symbols across a chunk boundary. Without the cut, training learns merges that span words, the vocabulary fills with whole phrases, and the pieces generalize worse to new text.
+The pattern cuts the sentence into eight chunks, `Hello`, `,`, ` world`, `!`, ` Don`, `'t`, ` stop` and `.`: each word after the first keeps the space in front of it, contractions split at the apostrophe, and punctuation stands alone. The merges then run inside each chunk and can never join symbols across a chunk boundary. Without the cut, training learns merges that span words, the vocabulary fills with whole phrases, and the pieces generalize worse to new text.
 
 ## Full answer
 

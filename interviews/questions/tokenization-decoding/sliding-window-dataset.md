@@ -37,7 +37,7 @@ Why does each window need one more id than the context length, how does the coun
 
 ## Short answer
 
-The target is the input shifted left by one, so an example of T input ids needs T plus 1 ids, and the count is 1 plus the floor of (N minus T minus 1) over the stride, or zero when the stream is too short. Halving the stride from T to T over 2 gives about twice the examples with half of each window shared with its neighbor, and a stride of 1 multiplies the count by about T. The loader seeds a generator with the base seed plus the epoch index, so the shuffle is the same on every restart and different in every epoch.
+The target is the input shifted left by one, so an example of T input ids needs T plus 1 ids, and the count is 1 plus the floor of (N minus T minus 1) over the stride, or zero when the stream is too short. Halving the stride from T to T over 2 gives about twice the examples with half of each window shared with its neighbor, and a stride of 1 multiplies the count by about T. The loader seeds a generator with the base seed plus the epoch index, so the shuffle is the same on every restart and each epoch gets a new shuffle.
 
 ## Full answer
 
@@ -74,19 +74,19 @@ generator = torch.Generator()
 generator.manual_seed(base_seed + epoch)
 ```
 
-The same base seed gives the same order in every epoch of every run, and the epoch index gives a new order each epoch. Without this, two runs that differ in one hyperparameter also differ in data order, and the loss curves diverge for reasons unrelated to the change.
+The same base seed gives the same order in every epoch of every run, and the epoch index gives each epoch a new shuffle. Without this, two runs that differ in one hyperparameter also differ in data order, and the loss curves diverge for reasons unrelated to the change.
 
 ## Follow-ups
 
 - **Level 2:** Why not pad the last window instead of dropping it? Expected: padding needs a loss mask so the pad positions do not count; dropping keeps the loss simple.
-- **Level 3:** Why seed per epoch and not once per run? Expected: a single seed would repeat the same order every epoch; adding the epoch index gives a fresh order that is still reproducible.
+- **Level 3:** Why seed per epoch and not once per run? Expected: a generator seeded once and advanced across epochs is also reproducible, but epoch k's order then depends on replaying every earlier epoch; seeding with the base seed plus the epoch index builds epoch k's order directly, which a resumed run needs.
 - **Level 3:** What does a stride of 1 cost and buy? Expected: about T times the compute per epoch and heavy redundancy, against maximum boundary diversity.
 - **Level 4:** You split the id stream into train and validation after windowing. What goes wrong? Expected: overlapping windows straddle the split, so validation text appears in training; split the stream first, then window each part.
 
 ## Wrong answers
 
 - "The number of examples is N divided by T." That ignores the extra id per window and the stride; the formula has both.
-- "A fixed seed makes every epoch see the same order." The epoch index is added to the seed, so each epoch is different and each run is reproducible.
+- "A fixed seed makes every epoch see the same order." The epoch index is added to the seed, so each epoch gets a new shuffle and each run is reproducible.
 - "The target is the same window as the input." It is the window shifted left by one; the same ids give both tensors from one slice.
 
 ## Taught in

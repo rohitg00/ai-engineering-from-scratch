@@ -51,8 +51,8 @@ Log the training and validation loss on the same axis. Sample after training wit
 ### What a reviewer checks
 
 1. **Correctness of the objective.** The causal mask is applied before the softmax and the targets are the inputs shifted by one. A unit test that perturbs a later token and checks earlier outputs is a strong signal.
-2. **The first loss.** About 4.2 at step zero, the logarithm of 65. A lower start means a leak.
-3. **Validation discipline.** A held-out split, logged at intervals, that tracks the training loss; at this size and budget there is no overfitting, so a validation loss far below training means the split leaks.
+2. **The first loss.** About 4.2 at step zero, the uniform baseline, the logarithm of 65. A start well below it is a reason to check for a leak.
+3. **Validation discipline.** A held-out split, logged at intervals, that tracks the training loss; the lesson records no overfitting at this size and budget. A validation loss far below training is a reason to check the split and the loss code, because the final 10 percent of text can also be easier.
 4. **Training hygiene.** Gradient clipping, a schedule, a fixed seed, and a run that reproduces.
 5. **Reading the samples.** Line breaks, archaic words and speaker names in capitals appear; the text is corpus-shaped, not the corpus.
 

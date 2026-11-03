@@ -41,7 +41,7 @@ weights = softmax(Q @ K.T / sqrt(d_k))
 output  = weights @ V
 ```
 
-In multi-head attention the dimension under the root is the head width, `d_head = d_model / n_heads`, not the model width. Production models land `d_head` at 64 or 128. Below 32 the heads start to fight the scaling factor, and above 256 you lose the benefit of many small specialists.
+In multi-head attention the dimension under the root is the head width, `d_head = d_model / n_heads`, not the model width. Production models land `d_head` at 64 or 128. The scaling keeps the score variance constant at any width. The lesson's rule of thumb keeps heads at 32 or wider, because a narrower head sees too few dimensions, and below 256, because wider heads lose the benefit of many small specialists.
 
 ### The ten-minute demonstration
 

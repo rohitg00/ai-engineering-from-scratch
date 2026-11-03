@@ -20,7 +20,7 @@ A new decoder-only language model on a vocabulary of 64 tokens reaches a trainin
 
 ## Short answer
 
-A loss far below the logarithm of the vocabulary size this early means the model can see its own target. Either the causal mask is missing, so position i reads the token at i plus one through attention, or the targets were never shifted, so the input and the target are the same sequence. Check the attention weights: if any mass sits above the diagonal the mask is gone; if the weights are triangular, print one batch and compare the input and target columns.
+On real text, a loss far below the logarithm of the vocabulary size this early, with nonsense samples, most likely means the model can see its own target. Either the causal mask is missing, so position i reads the token at i plus one through attention, or the targets were never shifted, so the input and the target are the same sequence. Check the attention weights: if any mass sits above the diagonal the mask is gone; if the weights are triangular, print one batch and compare the input and target columns.
 
 ## Full answer
 
@@ -41,6 +41,7 @@ Given tokens `[t1, t2, t3, t4]`, the input is `[t1, t2, t3]` and the target is `
 1. **Causality test.** Perturb a token at position j and assert that the outputs at positions before j do not change. The lesson's test suite pins this property.
 2. **Triangle test.** Return the attention weights for one head and confirm the upper triangle is exactly zero after the softmax.
 3. **Batch inspection.** Print one input and target pair and confirm the target is the input shifted left by one.
+4. **Held-out check.** Compute the loss on held-out text with the same pipeline. A model that memorized a small corpus has a high held-out loss and samples that copy the training text; a leak gives nonsense samples.
 
 ### Why sampling exposes it
 

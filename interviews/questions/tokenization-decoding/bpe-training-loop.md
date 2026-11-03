@@ -46,7 +46,7 @@ Recount, and the next step sees (we,s) and (s,t) tied at 8. The lesson's impleme
 ### The three facts the loop encodes
 
 1. Frequency weighting makes the pairs of common words win early.
-2. A word-end marker, or a pre-split on whitespace and punctuation, keeps merges inside a word, so "low" as a whole word and "low" as the start of "lower" stay distinct.
+2. A pre-split on whitespace and punctuation keeps merges inside a word. A word-end marker also keeps "low" as a whole word distinct from "low" as the start of "lower".
 3. The merge list is ordered. Encoding applies merges in training order, so the order is part of the artifact.
 
 ### Byte level
