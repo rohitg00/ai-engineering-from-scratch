@@ -346,7 +346,7 @@ const html = `<!DOCTYPE html>
       });
     })();
   </script>
-  <script src="header.js?v=20261021a" defer></script>
+  <script src="header.js?v=20261103a" defer></script>
   <script>${wrapped.replace(/<\/(script)/gi, "<\\/$1")}</script>
 </body>
 </html>

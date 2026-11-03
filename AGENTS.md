@@ -51,7 +51,7 @@ scripts/                      # automation
 1. **Size commits by judgment.** Commit count is a judgment call, not one commit per lesson. A small fix gets 1 to 2 commits. A large change gets a few logical commits, each one a step a reviewer can read on its own.
 2. **Conventional commit subjects** ≤72 chars: `feat(phase-NN/MM): <slug>`. Body explains why, not what.
 3. **Mermaid or SVG only** for diagrams. No ASCII / Unicode box-drawing.
-4. **Every fenced code block needs a language tag.** Use `text`, `json`, `python`, `typescript`, `rust`, `julia`, `bash`, `console`, `mermaid`, `yaml` as appropriate.
+4. **Every fenced code block needs a language tag.** Use `text`, `json`, `python`, `typescript`, `rust`, `julia`, `bash`, `console`, `mermaid`, `yaml` as appropriate. `bash` holds commands, `console` holds a session with `$ ` prompts (Copy takes the commands only), `text` holds output (no Copy), and `ansi` holds coloured logs. See [Code blocks](CONTRIBUTING.md#code-blocks).
 5. **Original implementations only.** Don't cite external curriculum repos in docs, code comments, or commit text. Cite RFCs, official specs, and academic papers when they are the canonical source.
 6. **Dependency allowlist** (see `Dependencies` below). Stdlib-first.
 7. **Never commit generated files**: `catalog.json` is gitignored, `site/data.js` is rebuilt by CI, `package-lock.json` is never tracked.
@@ -209,20 +209,13 @@ each gap to the lessons and manual sections that the item names. It never
 shows any part of an answer before the learner answers. Its state lives in
 `INTERVIEW-LEARNING.md`, an append-only file that no other skill writes.
 
-### Interview bank contract
-
-The interview bank under `interviews/` holds questions and incident scenarios
-for AI engineering interviews. Read `interviews/AUTHORING.md` before you add
-or change an item. Each number in an answer must come from a named lesson,
-manual section, or scenario source, and a prompt must not share a span of 24
-characters with its answers. `node scripts/interviews/validate.js` checks the
-bank. Run it with `--write` to make the generated READMEs again, and never
-edit them by hand. `node --test site/test_skills_page.js` fails when a tutor
-skill holds a 24-character span from an answer section of the bank.
-
 ### Manual contract
 
 A manual under `manuals/<id>/` explains one subject at one pinned version, built from offline captures and ranked sources. Read `manuals/AUTHORING.md` before writing one. `node scripts/audit_manuals.js` must report `TOTAL 0`: it checks section shape, prose limits, figure legibility, listing provenance, verbatim quotes, and capture drift. Size commits by judgment, such as one section with its figures and captures as `feat(manual/<id>): <section slug>`. Manuals stay outside the book and translation pipelines; their PDFs are release assets, never committed.
+
+### Interview bank contract
+
+Questions and scenarios under `interviews/` follow `interviews/AUTHORING.md`. Every number of 10 or more, or with a decimal, in an answer must come from a lesson, a manual section or a capture file that the item names. Evidence listings are byte copies of repository files. No company names. `node scripts/interviews/validate.js` must pass, and `node scripts/interviews/validate.js --write` makes the generated READMEs again. The site shows each answer folded behind "Show answer", and `node site/build-interviews.js --check` fails when an answer shows outside a folded section. Never edit the generated READMEs by hand. `node --test site/test_skills_page.js` fails when a tutor skill holds a 24-character span from an answer section of the bank.
 
 ### code/
 

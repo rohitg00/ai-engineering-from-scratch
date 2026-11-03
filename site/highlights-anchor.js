@@ -31,7 +31,7 @@
     IFRAME: 1, VIDEO: 1, AUDIO: 1, OBJECT: 1, EMBED: 1
   };
   var SKIP_CLASSES = [
-    'ai-panels', 'aifs-hl-ui', 'code-copy', 'code-lang', 'lesson-nav-bottom', 'lesson-section-guide',
+    'ai-panels', 'aifs-hl-ui', 'code-copy', 'code-lang', 'cb-label', 'cb-copy', 'lesson-nav-bottom', 'lesson-section-guide',
     'lesson-action-run', 'lesson-action-tags', 'lesson-action-status', 'quiz-marker', 'quiz-reset-status',
     'mermaid-toolbar', 'mermaid-source', 'm-dither', 'tts-from-here'
   ];

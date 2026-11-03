@@ -16,6 +16,7 @@ build/
 *.ipynb_metadata/
 
 node_modules/
+package-lock.json
 .next/
 out/
 !manuals/*/capture/out/
@@ -130,11 +131,15 @@ site/cheatsheet-map.json
 site/sitemap-practice.xml
 site/practice/
 site/practice-map.json
+site/sitemap-interviews.xml
+site/interviews/
+site/interviews.json
 site/manual-*.html
 site/manual/
 site/sitemap-manuals.xml
 site/manuals-data.js
 site/manuals.html
+site/pagefind/
 
 !manuals/*/capture/out/*.log
 !manuals/*/capture/gpu/out-*/*.log

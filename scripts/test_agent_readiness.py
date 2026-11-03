@@ -76,8 +76,8 @@ def main() -> None:
         assert html_pages[rule["source"]].endswith(".html"), f"{rule['source']} must default to HTML"
         for published in (rule["destination"], html_pages[rule["source"]]):
             target = published.lstrip("/")
-            if ":page" in target:
-                assert list(SITE.glob(target.replace(":page", "*"))), f"build did not publish {published}"
+            if ":" in target:
+                assert list(SITE.glob(re.sub(r":[a-z]+", "*", target))), f"build did not publish {published}"
             else:
                 assert (SITE / target).is_file(), f"build did not publish {published}"
     functions = config["functions"]

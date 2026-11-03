@@ -107,7 +107,7 @@ body { margin: 0; }
 .m-section-num,
 .m-box-label,
 .m-fig-head,
-.m-listing-head,
+.cb-head,
 .m-table th,
 
 .m-fig,
@@ -121,9 +121,9 @@ body { margin: 0; }
 .m-fig-cap { font-size: 8pt; }
 
 .m-listing { break-inside: avoid; margin: 8pt 0 9pt; }
-.m-listing-head { padding: 4pt 8pt; }
-.m-listing pre,
-.m-code { font-size: 7.6pt; line-height: 1.45; padding: 6pt 8pt; white-space: pre-wrap; overflow: visible; }
+.manual .cb { break-inside: avoid; }
+.cb-head { min-height: 0; padding: 4pt 8pt; }
+.manual .cb pre { font-size: 7.6pt; line-height: 1.45; padding: 6pt 8pt; white-space: pre-wrap; overflow: visible; }
 .m-listing-note { font-size: 7.6pt; }
 
 .m-table-wrap { overflow: visible; }
