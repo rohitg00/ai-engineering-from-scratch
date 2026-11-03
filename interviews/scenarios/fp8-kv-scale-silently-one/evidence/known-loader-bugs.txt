@@ -1,0 +1,9 @@
+title: three rows of the incident index at 0.31.0
+source: manuals/vllm-101/sections/r-3-incident-index.md
+lines: 16-18
+lang: text
+note: The first and the third row name a loader that drops scales, and both issues are open.
+---
+| 54623 | the Qwen3.5 family never loads checkpoint KV scales, so an FP8 KV cache runs at scale 1.0 | open | [FP8 KV cache](#s-fit-more-users-with-an-fp8-kv-cache) |
+| 57853 | a weight update sent while the engine sleeps segfaults the engine core | open | [RL rollouts](#s-use-vllm-as-an-rl-rollout-engine) |
+| 60333 | one MTP draft loader drops FP8 KV scales, and the draft layers use scale 1.0 | open | [FP8 KV cache](#s-fit-more-users-with-an-fp8-kv-cache) |

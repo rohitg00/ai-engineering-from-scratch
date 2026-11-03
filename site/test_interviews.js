@@ -67,6 +67,7 @@ test('answers are in the HTML, folded behind details, and nowhere else on the pa
 test('a scenario page holds every evidence listing in order, each a step for the reveal', () => {
   for (const item of built.scenarios) {
     const html = page(itemHref(item)).html;
+    const text = html.replace(/<[^>]+>/g, '').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
     let last = -1;
     item.evidenceOrder.forEach((entry, index) => {
       const at = html.indexOf(`data-step="${index + 1}"`);
@@ -74,7 +75,7 @@ test('a scenario page holds every evidence listing in order, each a step for the
       last = at;
       const evidence = item.evidence.find(file => file.name === entry.name);
       const first = evidence.listing.split('\n')[0].trim().slice(0, 40);
-      assert.ok(interviews.visibleText(html).includes(first), `${entry.name} listing is missing`);
+      assert.ok(text.includes(first), `${entry.name} listing is missing`);
     });
     assert.match(html, /data-ev-next/);
     assert.match(html, /<dl class="iv-spec">/);

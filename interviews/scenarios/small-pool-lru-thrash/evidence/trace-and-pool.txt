@@ -1,0 +1,10 @@
+title: the engine, the model and the multi-turn trace
+source: manuals/sglang-101/capture/gpu/out-l4/eviction-multiturn.txt
+lines: 4-7
+lang: text
+note: Count the sessions and the turns, and note that each turn resends the whole history.
+---
+Engine: SGLang 0.5.22. Model: Qwen/Qwen3-0.6B.
+Trace: 24 sessions, each with its own system prompt, 6 turns of ShareGPT questions, 64-token answers, thinking off. Sessions run round robin at concurrency 8. Each turn resends the whole history.
+Hit rate = cached prompt tokens / prompt tokens, from the cache report.
+The 8,192-token lru row holds two clean runs of the same config: run 1 and run 2 gave 0.19 each over the whole trace. The summary keeps one set of per-turn rates and one clock for the pair.
