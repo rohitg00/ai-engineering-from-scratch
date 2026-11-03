@@ -87,7 +87,7 @@ LLaVA-1.5 (اکتبر 2023) اضافه شده است:
 - یک نوع HD تقسیم شبکه در روزنامه که LLaVA-Next بعدا به عنوان AnyRes ارسال کرد.
 
 LLaVA-NeXT (جنوری 2024) اضافه کرد:
-- AnyRes: تصاویر با رزولوشن بالا را به یک شبکه 2x2 یا 1x3 از 336x336 محصول و یک تمبینه کم رزولوشن جهانی تقسیم کنید. هر محصول به 576 توکن تبدیل می شود؛ مجموع حدود 2880 توکن بصری در هر تصویر. وظایف OCR و نمودار به بالا رفت.
+- AnyRes: تصاویر با رزولوشن بالا را به یک شبکه 2x2 یا 1x3 336 محصول، به علاوه یک تمبینه کم رزولوشن جهانی تقسیم کنید. هر محصول به 576 توکن تبدیل می شود. یک شبکه 2x2 به علاوه تمبینه تقریباً 2880 توکن بصری در هر تصویر را می دهد. یک شبکه 1x3 محصول کمتری دارد، بنابراین هزینه توکن کمتری دارد. وظایف OCR و نمودار به بالا رفت.
 - ترکیب بهتر اطلاعات دستورالعمل با ShareGPT4V (تاریخ های GPT-4V با کیفیت بالا)
 - پایه قوی تر LLM (Mistral-7B، Yi-34B).
 
@@ -99,7 +99,7 @@ LLaVA-NeXT (جنوری 2024) اضافه کرد:
 
 | | Q-Former (BLIP-2) | MLP (LLaVA) |
 |---|---|---|
-| Visual tokens per image | 32 | 576 (base) or 2880 (AnyRes) |
+| Visual tokens per image | 32 | 576 (base) or about 2880 (AnyRes, 2x2 grid) |
 | Trainable params | 188M + LM | ~22M (7B) + LM |
 | Stage 1 loss | ITC+ITM+ITG | LM only |
 | LLM drop-in | Requires retrain | Swap with minimal retrain |
@@ -115,7 +115,7 @@ MLP بر سادگی و انعطاف پذیری توکن برنده می شود. 
 A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. USER: <image> Describe this image in detail. ASSISTANT: The image shows ...
 ```
 
-`<image>`Tokenizer یک ردیف کمی طولانی تر از آنچه که آموزش داده شده است را می بیند، اما LLM ورودی جدید را به دلیل مرحله 1 آموزش داده است.
+`<image>`Tokenizer یک ردیف کمی طولانی تر از آنچه که آموزش داده شده است را می بیند، اما LLM ورودی جدید را به دلیل مرحله 1 یاد می دهد.
 
 ### اقتصاد پارامتر
 
