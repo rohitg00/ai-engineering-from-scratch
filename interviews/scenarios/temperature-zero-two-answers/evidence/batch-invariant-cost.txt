@@ -1,0 +1,16 @@
+title: the speed cost of the batch-invariant mode on vLLM, clock locked
+source: manuals/vllm-101/capture/gpu/out-l4/batch-invariant-cost.txt
+lines: 7-16
+lang: text
+note: Read the ratio in brackets on each row, then how it changes with more users.
+---
+Qwen/Qwen3-0.6B, every run at a median clock of 900 MHz. The two default blocks agree within 1 percent:
+users   median TPOT default / batch-invariant   output tok/s default / batch-invariant
+1       6.9 / 16.9 ms (2.4x)                    140.6 / 58.7 (58% lower)
+8       9.9 / 18.2 ms (1.8x)                    755 / 420 (44% lower)
+32      18.8 / 25.9 ms (1.4x)                   1,565 / 1,154 (26% lower)
+
+Qwen/Qwen3-8B, rows where all three blocks ran at a median clock of 900 MHz:
+users   median TPOT default / batch-invariant   output tok/s default / batch-invariant
+8       70.0 / 97.4 ms (1.4x)                   103.4 / 75.1 (27% lower)
+32      109 / 139 ms (1.3x)                     245 / 188 (23% lower)

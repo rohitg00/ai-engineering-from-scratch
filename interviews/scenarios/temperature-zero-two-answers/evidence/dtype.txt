@@ -1,0 +1,14 @@
+title: how many greedy outputs changed between BF16 and FP16
+source: manuals/vllm-101/capture/gpu/out-l4/greedy-output-cache-batch-dtype.txt
+lines: 26-33
+lang: text
+note: The sentence before the table says what a repeat in one dtype gave.
+---
+BF16 against FP16 (B-09): 64 ShareGPT questions, greedy, 256 tokens, concurrency 1, prefix cache off.
+A repeat in the same dtype gave 0 of 64 different outputs on every engine and model.
+
+engine, model   BF16 against FP16
+SGLang 0.6B     51 of 64 (41)
+SGLang 1.7B     57 of 64 (54)
+vLLM 0.6B       48 of 64 (51)
+vLLM 1.7B       56 of 64 (56)

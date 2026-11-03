@@ -1,0 +1,8 @@
+title: the compile and the warmup
+source: manuals/vllm-101/capture/gpu/out-gb10/server-load-vllm.log
+lines: 54-55
+lang: text
+note: Compare these seconds with the weight load.
+---
+(EngineCore pid=143) INFO 10-21 10:59:05 [monitor.py:53] torch.compile took 18.67 s in total
+(EngineCore pid=143) INFO 10-21 10:59:05 [monitor.py:81] Initial profiling/warmup run took 0.40 s
