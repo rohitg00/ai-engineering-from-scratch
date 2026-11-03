@@ -1,0 +1,4 @@
+interface:
+  display_name: "Interview Prep Coach"
+  short_description: "Mock AI engineering interviews graded against the bank"
+  default_prompt: "Use interview-prep to ask me one interview question for my role, wait for my answer, and grade it."

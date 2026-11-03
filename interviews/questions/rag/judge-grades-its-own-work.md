@@ -44,7 +44,7 @@ The eval splits the answer into sentence-shaped claims, asks the judge whether e
 
 - **Level 3:** How do you size the judge problem before you change anything? Expected: hand-grade a sample of claims and measure the disagreement between the judge and the human labels.
 - **Level 3:** Every sentence passes but the answer as a whole misleads. Which check catches that? Expected: a sample-level qualitative review in addition to the per-claim metric.
-- **Level 4:** Why can a high faithfulness score sit next to a useless answer? Expected: faithfulness grades the answer against the context and not against the question, so a grounded off-topic answer scores high on faithfulness and low on relevance.
+- **Level 4:** Why can a high faithfulness score sit next to a useless answer? Expected: faithfulness compares the answer with the context and not with the question, so a grounded off-topic answer scores high on faithfulness and low on relevance.
 - **Level 4:** The team wants the strongest model available as judge, and it is also the generator. What do you say? Expected: pick the judge for independence first; a strong judge of its own family is still biased, so use another family and keep a human-graded calibration sample.
 
 ## Wrong answers

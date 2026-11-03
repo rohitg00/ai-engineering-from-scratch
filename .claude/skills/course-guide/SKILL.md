@@ -75,6 +75,12 @@ route to `learn-reverse-engineering`. Its source of truth is
 `learning-paths/reverse-engineering.json`, and its state lives in
 `REVERSE-ENGINEERING-LEARNING.md`. Every target is a program the learner built.
 
+Interview practice has its own tutor. For a mock interview, an interview
+question, an incident scenario, a debugging or system design round, or an
+interview loop for a role, route to `interview-prep`. Its source of truth is
+the bank under `interviews/`, and `INTERVIEW-LEARNING.md` belongs to
+`interview-prep`. Do not mix interview gaps into `LEARNING.md`.
+
 ## How to route
 
 1. **Interpret the ask**, which arrives in one of six shapes:
@@ -133,3 +139,5 @@ Use `learn-mcp` for the focused MCP route and its
 manifest.
 Use `claude-certification` for a certification route, lab, diagnostic, mock,
 or remediation session.
+Use `interview-prep` for interview practice and its `INTERVIEW-LEARNING.md`
+state.
