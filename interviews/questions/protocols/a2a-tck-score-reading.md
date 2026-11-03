@@ -70,4 +70,4 @@ Say this: one MUST defect, found and fixed; two SHOULD gaps on card caching; a p
 
 ## Taught in
 
-The [conformance testing section](../../../manuals/a2a-101/sections/7-3-conformance-testing.md) records both runs, and the [errors reference](../../../manuals/a2a-101/sections/r-4-errors.md) lists where the kit's table departs from the specification.
+The [conformance testing section](../../../manuals/a2a-101/sections/7-3-conformance-testing.md) records both runs, and the [errors reference](../../../manuals/a2a-101/sections/r-4-errors.md) sets the kit's status table beside the canonical one.

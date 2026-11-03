@@ -20,7 +20,7 @@ You publish `18081:8080` with `sbx ports`. A client on the host that connects to
 
 ## Short answer
 
-Without a protocol, publishing uses `tcp4`, so the host binding is `127.0.0.1` alone; that changed in v0.42.0, and the recorded `curl` to `::1` failed with exit 7. Publish `8080/tcp` to bind both loopbacks, each on an ephemeral host port, and unpublish without a protocol removes either form. The other two verbs are `sbx exec`, which runs as the `agent` user, starts a stopped sandbox and has no detached mode, and `sbx cp`, which needs one side written as `SANDBOX:PATH` and refuses a copy between two sandboxes.
+Without a protocol in the spec, the publish command uses `tcp4`, so the host binding is `127.0.0.1` alone; that changed in v0.42.0, and the recorded `curl` to `::1` failed with exit 7. Publish `8080/tcp` to bind both loopbacks, each on an ephemeral host port, and unpublish without a protocol removes either form. The other two verbs are `sbx exec`, which runs as the `agent` user, starts a stopped sandbox and has no detached mode, and `sbx cp`, which needs one side written as `SANDBOX:PATH` and refuses a copy between two sandboxes.
 
 ## Full answer
 

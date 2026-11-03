@@ -60,4 +60,4 @@ What remains open is stated plainly: a bounded `POST` to the one write path is s
 
 ## Taught in
 
-The [proxy section](../../../manuals/docker-sandboxes-101/sections/3-4-sbx-policy-log-and-the-proxy.md) records the tunnel and states what a host rule cannot see, the [capabilities section](../../../manuals/docker-sandboxes-101/sections/4-2-com-docker-sandbox-capabilities.md) defines the bounded entries, and the [governance section](../../../manuals/docker-sandboxes-101/sections/7-2-org-policies-profiles-and-the-audit-log.md) shows the `http_request` audit payload.
+The [proxy section](../../../manuals/docker-sandboxes-101/sections/3-4-sbx-policy-log-and-the-proxy.md) records the tunnel and the limits of a host-level allow, the [capabilities section](../../../manuals/docker-sandboxes-101/sections/4-2-com-docker-sandbox-capabilities.md) defines the bounded entries, and the [governance section](../../../manuals/docker-sandboxes-101/sections/7-2-org-policies-profiles-and-the-audit-log.md) shows the `http_request` audit payload.

@@ -20,7 +20,7 @@ Two machines analyze the same object in different folders and get the same `ev_`
 
 ## Short answer
 
-The id is `ev_` plus a SHA-256 over the RFC 8785 canonical JSON of a projection of the record: the projection keeps the subject's `digest`, `format` and `architecture`, drops `name` and `local_path`, and hashes everything else, `raw_result` and every limitation included. So a moved file keeps its id, a dropped limitation changes the content and the validator refuses it with "Evidence semantic identifier does not match its record", and the older bundle fails because the id rule itself moved: the older release left a `null` `relationship_coverage` out of the hash and the current one hashes it, so the first record with `null` coverage fails `evidence_integrity_mismatch`. Saved evidence is not migrated; regenerate it with the release you run.
+The id is a content hash: `ev_` plus a SHA-256 over the RFC 8785 canonical JSON of a projection of the record, where the projection keeps the subject's `digest`, `format` and `architecture`, drops `name` and `local_path`, and hashes everything else, `raw_result` and every limitation included. So a moved file keeps its id, a dropped limitation changes the content and the validator refuses it with "Evidence semantic identifier does not match its record", and the older bundle fails because the id rule itself moved: the older release left a `null` `relationship_coverage` out of the hash and the current one hashes it, so the first record with `null` coverage fails `evidence_integrity_mismatch`. Saved evidence is not migrated; regenerate it with the release you run.
 
 ## Full answer
 

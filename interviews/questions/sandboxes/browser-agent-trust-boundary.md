@@ -26,7 +26,7 @@ Assume five classes: instructions in page text, payloads in URL fragments or que
 
 ### Why the class stays open
 
-The attack is isomorphic to the capability: the agent must read untrusted content, any content it reads could contain instructions, and any instruction it follows could be misaligned with the user. That is the reasoning behind the public statement that indirect prompt injection is not a bug that can be fully patched. Defenses raise the cost and shrink the blast radius. Design for containment, not for a closed class.
+The attack is isomorphic to the capability: the agent must read untrusted content, any content it reads could contain instructions, and any instruction it follows could be misaligned with the user. That is the reasoning behind the public statement that indirect injection is not a bug that can be fully patched. Defenses raise the cost and shrink the blast radius. Design for containment, not for a closed class.
 
 ### The boundary, piece by piece
 

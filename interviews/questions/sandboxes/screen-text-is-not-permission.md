@@ -32,7 +32,7 @@ The agent must read untrusted content to do its job, and any content it reads co
 
 | Attack | Where the instruction hides |
 |---|---|
-| indirect prompt injection | visible page text |
+| indirect injection | visible page text |
 | fragment or query injection | the `#fragment` or query string of a URL, never rendered, still in context |
 | memory binding | a page tells the agent to write a durable memory that fires next session |
 | CSRF-shaped | an authenticated session issues state-changing requests with the user's cookies |

@@ -20,7 +20,7 @@ After a tool upgrade, `open_binary` with the saved snapshot answers `profile_mis
 
 ## Short answer
 
-The cache key is `query_` plus a SHA-256 over the target identity, the binding, the operation and the parameters, and the binding includes the analysis profile digest over 25 parameter version strings; the upgrade moved two of those values, so the digest changed and no stored entry can match, which the import reports as `profile_mismatch`. A rename is a mutating call, and the session empties the cache and sets a flag before the call is dispatched, even when the reply fails, because a failed reply cannot prove that the write never reached the provider, so the export is refused and the way out is to export the evidence bundle, close without a snapshot, and reopen. A snapshot is a file of exact past answers plus their evidence bundle, not a saved provider database.
+The cache key is the string `query_` plus a SHA-256 over the target identity, the binding, the operation and the parameters, and the binding includes the analysis profile digest over 25 parameter version strings; the upgrade moved two of those values, so the digest changed and no stored entry can match, which the import reports as `profile_mismatch`. A rename is a mutating call, and the session empties the cache and sets a flag before the call is dispatched, even when the reply fails, because a failed reply cannot prove that the write never reached the provider, so the export is refused and the way out is to export the evidence bundle, close without a snapshot, and reopen. A snapshot is a file of exact past answers plus their evidence bundle, not a saved provider database.
 
 ## Full answer
 
