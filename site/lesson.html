@@ -3692,7 +3692,7 @@
         }
         return Promise.race([
           lessonCodeRequests[path],
-          new Promise(function (resolve) { setTimeout(function () { resolve(null); }, 3000); })
+          new Promise(function (resolve) { setTimeout(function () { resolve(null); }, 1500); })
         ]);
       }
 

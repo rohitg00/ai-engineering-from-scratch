@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
+const vm = require('node:vm');
 const markdown = require('./lesson-markdown');
 const code = require('./lib/code');
 const { buildLessonCode, writeLessonCode, lessonBlocks } = require('./build-lessons');
@@ -116,22 +117,65 @@ test('lessons render the fragments and fall back to the regex highlighter', () =
 });
 
 test('the lesson page uses fragments when present and the regex highlighter when they are missing', async () => {
-  const assets = lessonApi.loadProductionAssets();
-  const entry = Object.values(assets.manifest.lessons).find(lesson => lesson.context && lesson.context.kind === 'course');
-  const source = fs.readFileSync(path.join(__dirname, '..', entry.path, 'docs', 'en.md'), 'utf8');
+  const lessonPath = 'phases/03-deep-learning-core/01-the-perceptron';
+  const entry = { path: lessonPath, title: 'The Perceptron', context: { kind: 'course', phaseId: 3, phaseName: 'Deep Learning Core' } };
+  const source = fs.readFileSync(path.join(__dirname, '..', lessonPath, 'docs', 'en.md'), 'utf8');
+  const assets = {
+    template: fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8'),
+    manifest: { lessons: { [lessonPath]: entry } },
+    lessonTerms: {},
+    cheatsheets: {},
+    practice: {},
+    readMarkdown: () => source,
+    languageCodes: ['en'],
+  };
   const fenced = /^```(\w*)\n([\s\S]*?)\n```$/m.exec(source.replace(/^```(?:mermaid|math|figure)\n[\s\S]*?\n```$/gm, ''));
   assert.ok(fenced, entry.path);
   const marker = '<div class="cb" data-kind="code" data-lang="marker">MARKER</div>';
   const render = readCode => new Promise(resolve => {
     const response = { headers: {}, setHeader(name, value) { this.headers[name] = value; }, end(body) { resolve(String(body)); } };
     const handler = lessonApi.createHandler({ loadAssets: () => Object.assign({}, assets, { readCode }) });
-    handler({ method: 'GET', url: `/lesson?path=${encodeURIComponent(entry.path)}`, headers: {} }, response);
+    handler({ method: 'GET', url: `/lesson?path=${encodeURIComponent(lessonPath)}`, headers: {} }, response);
   });
   const withCode = await render(() => ({ [markdown.codeKey(fenced[2], fenced[1])]: marker }));
+  assert.match(withCode, /data-server-rendered="true"/);
   assert.ok(withCode.includes(marker));
   const missing = await render(() => { throw new Error('ENOENT'); });
   assert.ok(!missing.includes(marker));
   assert.ok(missing.includes(markdown.renderCodeBlock(fenced[2], fenced[1])));
+});
+
+function lessonCodeRuntime(template, fetch) {
+  const start = template.indexOf('var lessonCodeRequests');
+  const end = template.indexOf('var lessonFetchSequence');
+  assert.ok(start > 0 && end > start);
+  const context = { fetch, setTimeout: () => 0, Promise, Object };
+  vm.runInNewContext(template.slice(start, end), context);
+  return context.fetchLessonCode;
+}
+
+test('the browser fetches a lesson fragment and returns null when it cannot', async () => {
+  const template = fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8');
+  const blocks = lessonBlocks(MD);
+  const urls = [];
+  const ok = lessonCodeRuntime(template, url => {
+    urls.push(url);
+    return Promise.resolve({ ok: true, json: () => Promise.resolve({ engine: 'shiki', lang: 'en', blocks }) });
+  });
+  const fetched = await ok(LESSON);
+  assert.deepEqual(urls, [`lesson-code/${LESSON}.json`]);
+  assert.deepEqual(fetched, blocks);
+  assert.equal(markdown.parseMd(MD, { renderCode: markdown.prerenderedCode(fetched) }), markdown.parseMd(MD, { renderCode: code.render }));
+  await ok(LESSON);
+  assert.equal(urls.length, 1);
+  assert.equal(await ok('../secrets'), null);
+  assert.equal(urls.length, 1);
+  const missing = lessonCodeRuntime(template, () => Promise.resolve({ ok: false, json: () => Promise.reject(new Error('404')) }));
+  assert.equal(await missing(LESSON), null);
+  const broken = lessonCodeRuntime(template, () => Promise.resolve({ ok: true, json: () => Promise.resolve({ blocks: 'x' }) }));
+  assert.equal(await broken(LESSON), null);
+  const offline = lessonCodeRuntime(template, () => Promise.reject(new Error('offline')));
+  assert.equal(await offline(CERT_LESSON), null);
 });
 
 test('the lesson template fetches fragments and keeps the browser fallback', () => {
@@ -139,7 +183,8 @@ test('the lesson template fetches fragments and keeps the browser fallback', () 
   assert.match(template, /fetch\('lesson-code\/' \+ path \+ '\.json'\)/);
   assert.match(template, /parseMd\(md, \{ renderCode: window\.AIFSLessonMarkdown\.prerenderedCode\(codeBlocks\) \}\)/);
   const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'vercel.json'), 'utf8'));
-  assert.match(config.functions['api/lesson.js'].includeFiles, /site\/lesson-code\/phases\/\*\/\*\.json/);
+  assert.match(config.functions['api/lesson.js'].includeFiles, /site\/lesson\{[^{}]*,-code\/\*\*\}/);
+  for (const [name, settings] of Object.entries(config.functions)) assert.ok(String(settings.includeFiles || '').length <= 256, name);
   assert.match(fs.readFileSync(path.join(__dirname, '..', '.gitignore'), 'utf8'), /^site\/lesson-code\/$/m);
 });
 
