@@ -87,7 +87,7 @@ LLaVA-1.5 (Oktyabr 2023) eklendi:
 - Gazetede bir şebeke bölücü HD varianti, daha sonra LLaVA-NeXT'in AnyRes olarak gönderdiği.
 
 LLaVA-NeXT (Ocak 2024) ekledi:
-- AnyRes: yüksek çözünürlüklü görüntüleri 336x336 üründen oluşan 2x2 veya 1x3 şablonuna bölünerek, bir küresel düşük çözünürlüklü küçük resim eklenir. Her ürün 576 jeton olur; toplamda her görüntü için yaklaşık 2880 görsel jeton. OCR ve grafik görevleri atladı.
+- AnyRes: yüksek çözünürlüklü görüntüleri 336x336 bitkiyi 2x2 veya 1x3 şebekesine bölünerek, bir küresel düşük çözünürlüklü küçük resimler ekleyerek. Her bir biçim 576 jeton olur. 2x2 şebekesi ekleyerek küçük resimler görüntü başına yaklaşık 2880 görsel jeton verir. 1x3 şebekesi daha az bitkiye sahip, bu nedenle daha az jeton maliyetini artırır. OCR ve grafik görevleri atladı.
 - Daha iyi talimat verileri karışımı ShareGPT4V ile (yüksek kaliteli GPT-4V başlıkları)
 - Daha güçlü temel LLM (Mistral-7B, Yi-34B).
 
@@ -99,7 +99,7 @@ LLaVA-NeXT (Ocak 2024) ekledi:
 
 | | Q-Former (BLIP-2) | MLP (LLaVA) |
 |---|---|---|
-| Visual tokens per image | 32 | 576 (base) or 2880 (AnyRes) |
+| Visual tokens per image | 32 | 576 (base) or about 2880 (AnyRes, 2x2 grid) |
 | Trainable params | 188M + LM | ~22M (7B) + LM |
 | Stage 1 loss | ITC+ITM+ITG | LM only |
 | LLM drop-in | Requires retrain | Swap with minimal retrain |
