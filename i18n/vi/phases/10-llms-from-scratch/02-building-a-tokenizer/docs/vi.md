@@ -210,10 +210,10 @@ Hãy thử đi.
 
 ```python
 print(pre_tokenize("Hello, world! Don't stop."))
-# [' Hello', ',', ' world', '!', " Don", "'t", ' stop', '.']
+# ['Hello', ',', ' world', '!', ' Don', "'t", ' stop', '.']
 ```
 
-Không gian dẫn tiếp tục gắn liền với từ. Khác nét chia ở chữ ký. Vị trí trở thành một phần của nó. BPE sẽ không bao giờ hợp nhất các token qua các ranh giới này.
+Không gian dẫn tiếp vẫn gắn liền với từ sau nó.`Hello`BPE sẽ không bao giờ hợp nhất các token qua những ranh giới này.
 
 ### Bước 3: BPE trên các chuỗi byte
 

@@ -72,7 +72,7 @@ stages:
     cost_usd: 12
 ```
 
-Hash đầu ra của giai đoạn N là hash đầu vào của giai đoạn N + 1. Bất kỳ sự khinh bệ nào và đường ống dừng lại. Đây là cách bạn bắt được sự tham nhũng dữ liệu sớm. Đây cũng là cách một đồng đội trên lục địa khác xác minh rằng việc lặp lại của họ đã tạo ra cùng một đồ tạo ra như của bạn.
+Các phân tích đầu ra của giai đoạn N là phân tích đầu vào của giai đoạn N + 1. Bất kỳ sự lệch nào và đường ống dừng lại. Đây là cách bạn bắt được sự tham nhũng dữ liệu sớm. Đây cũng là cách một đồng đội trên lục địa khác xác minh rằng việc lặp lại một giai đoạn xác định tạo ra cùng một tạo vật như của bạn.
 
 Trong thực tế, các nhóm sử dụng một sơ đồ YAML nhỏ cộng với một kiểm tra biểu hiện khác với chạy thành công trước đó.
 
@@ -150,7 +150,7 @@ Chi phí báo cáo của Llama 3 là $61M. DeepSeek-V3 reported $5,6m cho cuộc
 
 Những điều này không giống nhau. *Reproducible* có nghĩa là cùng một biểu hiện cộng với cùng một mã cộng với cùng một cơ sở hạ tầng tạo ra một điểm kiểm soát với các số liệu tiếp theo tương đương. *Deterministic* có nghĩa là đầu ra bit-tương tự.
 
-Việc đào tạo LLM hiện đại có thể tái tạo nhưng không xác định. Việc tập luyện phân tán giảm trật tự, không xác định hạt nhân GPU (cuBLAS, flash-attn) và tròn độ chính xác hỗn hợp kết hợp để tạo ra các float khác nhau ở mức 1e-5 giữa các chạy. Điều này tốt cho các số liệu cuối cùng, không di chuyển. Nó là chết người nếu bạn đang cố gắng để che lỗi với bit-level khác biệt. Cách chữa trị là ghi lại các metrics đầu vào, đầu ra và tiêu đề của từng giai đoạn -- nếu chúng phù hợp, chạy được "tái tạo" ngay cả khi trọng lượng không giống nhau.
+Việc đào tạo LLM hiện đại có thể tái tạo nhưng không xác định. Việc tập luyện phân tán giảm trật tự, không xác định hạt nhân GPU (cuBLAS, flash-attn) và tròn độ chính xác hỗn hợp kết hợp để tạo ra các float khác nhau ở mức 1e-5 giữa các chạy. Điều này tốt cho các số liệu cuối cùng, không di chuyển. Nó là chết người nếu bạn đang cố gắng để che lỗi với bit-level khác biệt. Chữa bệnh là ghi lại các metrics đầu vào, đầu ra và tiêu đề của từng giai đoạn. Trong một lần lặp lại, các hash chỉ phù hợp với các giai đoạn xác định, chẳng hạn như xử lý dữ liệu và token hóa. Một giai đoạn huấn luyện viết cân nặng mới, vì vậy hash đầu ra của nó thay đổi. Đối với những giai đoạn đó, chạy được "tái tạo" khi các số liệu tiêu đề phù hợp, mặc dù trọng lượng không giống nhau.
 
 ```mermaid
 graph LR

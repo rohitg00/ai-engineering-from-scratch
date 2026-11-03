@@ -71,6 +71,8 @@ Truyển chứng mở rộng cache KV của người xác minh bằng `N`Nếu t
 | EAGLE-3 | Multi-layer feature fusion + TTT | 0.88-0.92 | 3.5-6.5× | ~60-200B tokens |
 | Lookahead | No draft (Jacobi iteration) | N/A | 1.3-1.6× | None |
 
+- `α`Cột là tỷ lệ chấp nhận mỗi token dọc theo con đường được chấp nhận, trên các tiêu chuẩn trò chuyện, với một bản thảo được đào tạo dựa trên dữ liệu trò chuyện phù hợp. Đó là băng thông trên. Giai đoạn 10 · 25 trích dẫn 0,82 cho EAGLE-3 từ một thiết lập khác, và Giai đoạn 17 · 05 lên kế hoạch triển khai sản xuất với 0,6 đến 0,8 trên trò chuyện chung.`α`trên giao thông của riêng bạn trước khi bạn chọn `N`- Tôi không biết.
+
 Trong sản xuất năm 2026, vLLM và SGLang mặc định là EAGLE-3 khi có sẵn, EAGLE-2 nếu không. TensorRT-LLM có con đường Medusa nhanh nhất cho các mô hình công cộng Meta và NVIDIA. llama.cpp cung cấp vanilla draft cho việc triển khai CPU.
 
 ```figure

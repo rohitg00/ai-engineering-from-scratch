@@ -85,7 +85,7 @@ Thay đổi của EAGLE-1:
 
 EAGLE-2 (2024) thêm topology cây động: cây phát triển rộng hơn nơi có dự án không chắc chắn và duy trì hẹp khi nó tự tin.`α_effective`không tăng chi phí xác minh.
 
-Eagle-3 (Li et al. 2025, "EAGLE-3: Scaling Up Inference Acceleration of Large Language Models via Training-Time Test") loại bỏ sự phụ thuộc tính năng lớp trên cố định và đào tạo bản thảo với một lỗ hổng "simulans thời gian thử nghiệm" mới. Tỷ lệ chấp nhận tăng từ 0,75 (EAGLE-2) lên 0,82 (EAGLE-3), và trung bình token / xác minh từ 3,0 lên 4,5.
+Eagle-3 (Li et al. 2025, "EAGLE-3: Scaling Up Inference Acceleration of Large Language Models via Training-Time Test") loại bỏ sự phụ thuộc tính năng lớp trên cố định và đào tạo bản thảo với một lỗ hổng "simulans thời gian thử nghiệm" mới. Tỷ lệ chấp nhận tăng từ 0,75 (EAGLE-2) lên 0,82 (EAGLE-3), và trung bình token / xác minh từ 3,0 lên 4,5. Những con số này đến từ một thiết lập tham chiếu. Việc chấp nhận phụ thuộc vào cặp mô hình, cây dự thảo và lưu lượng truy cập: Giai đoạn 10 · 15 trích dẫn 0,88 đến 0,92 cho mỗi token đường được chấp nhận trên các tiêu chuẩn trò chuyện, và Giai đoạn 17 · 05 kế hoạch với 0,6 đến 0,8 trên trò chuyện chung sản xuất.
 
 ### Kiểm tra sự chú ý của cây
 
