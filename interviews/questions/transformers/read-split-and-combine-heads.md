@@ -34,7 +34,7 @@ Both return a tensor of shape `(n_heads, n, d_head)` and both run without error.
 
 ## Short answer
 
-`split_a` is right: it first groups the `d` features of each token into `n_heads` slices of width `d_head` and then moves the head axis to the front. `split_b` reads the same memory in the wrong order: it cuts the sequence into `n_heads` chunks of consecutive tokens and calls each chunk a head, so one head now holds different tokens' features mixed together and the columns no longer line up with the projection that produced them. The test is the round trip: combining the split must return `X` exactly, and head `h` must equal the column slice `X[:, h * d_head:(h + 1) * d_head]`.
+The first version is the right one: `split_a` groups the `d` features of each token into `n_heads` slices of width `d_head` and then moves the head axis to the front. `split_b` reads the same memory in the wrong order: it cuts the sequence into `n_heads` chunks of consecutive tokens and calls each chunk a head, so one head now holds different tokens' features mixed together and the columns no longer line up with the projection that produced them. The test is the round trip: combining the split must return `X` exactly, and head `h` must equal the column slice `X[:, h * d_head:(h + 1) * d_head]`.
 
 ## Full answer
 

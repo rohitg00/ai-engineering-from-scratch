@@ -1,6 +1,6 @@
 ---
 id: speedup-from-alpha
-title: Tokens per verifier pass from the acceptance rate
+title: From acceptance rate to tokens per pass
 card: tokenization-decoding
 kind: estimate
 level: 3
@@ -26,7 +26,7 @@ The expected tokens per verifier pass are `(1 - alpha^(K + 1)) / (1 - alpha)`; a
 
 ### The formula
 
-Each drafted token is accepted independently with probability alpha, and the step stops at the first rejection, so the number of accepted drafts is a truncated geometric variable. Add the bonus token on full acceptance and the expectation is
+Each drafted token is accepted independently with probability alpha, and the step ends on the first rejected token, so the number of accepted drafts is a truncated geometric variable. Add the bonus token on full acceptance and the expectation is
 
 ```text
 E[tokens per verifier pass] = (1 - alpha^(K + 1)) / (1 - alpha)

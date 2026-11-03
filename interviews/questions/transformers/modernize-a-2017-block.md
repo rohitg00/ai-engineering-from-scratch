@@ -16,7 +16,7 @@ related: [transformers/pre-norm-vs-post-norm, transformers/residual-stream-and-d
 updated: 2026-11-03
 ---
 
-You inherit a decoder block written in the 2017 style: layer normalization after the residual add, a ReLU feed-forward network at four times the width, sinusoidal absolute positions added to the embedding, bias terms on every linear layer, and full multi-head attention. Review it against what production decoders ship today and justify each change you ask for.
+You inherit a decoder block written in the 2017 style: layer normalization after the residual add, a ReLU feed-forward network at four times the width, sinusoidal absolute positions summed into the input, bias terms on every linear layer, and full multi-head attention. Review it against what production decoders ship today and justify each change you ask for.
 
 ## Short answer
 

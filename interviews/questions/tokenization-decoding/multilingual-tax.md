@@ -20,7 +20,7 @@ A customer in Korea reports that the same prompt uses up far more of the context
 
 ## Short answer
 
-The vocabulary was trained on English-heavy text, so its merges cover English and other scripts fall back to short pieces or raw bytes. Korean averages 2 to 3 tokens per word on an older vocabulary, and non-Latin text can cost 5 to 10 times more tokens than English for the same meaning; a Chinese character is 3 bytes in UTF-8, so without merges each character is several tokens. The builder's fix is a larger vocabulary trained on multilingual data, which is why one model family went from 32K to 128K tokens.
+The vocabulary was trained on English-heavy text, so its merges cover English and other scripts fall back to short pieces or raw bytes. Korean averages 2 to 3 tokens per word on an older vocabulary, and non-Latin text can cost 5 to 10 times more tokens than English for the same meaning; a Chinese character is 3 bytes in UTF-8, so without merges each character is several tokens. The builder's fix is a larger vocabulary trained on multilingual data, which is why one model family grew its vocabulary from 32K to 128K.
 
 ## Full answer
 

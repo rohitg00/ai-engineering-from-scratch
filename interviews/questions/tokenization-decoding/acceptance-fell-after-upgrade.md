@@ -65,4 +65,4 @@ A head trained on general chat sits at 0.6 to 0.8 acceptance there and at 0.4 to
 
 ## Taught in
 
-The [speculative decoding server capstone](../../../phases/19-capstone-projects/14-speculative-decoding-server/) sets the drift measurement and the fallback exercises, the [production EAGLE-3 lesson](../../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) explains the tail and the acceptance floor, and the [EAGLE-3 lesson](../../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) explains why a hidden-state draft is tied to its target.
+The [speculative decoding server capstone](../../../phases/19-capstone-projects/14-speculative-decoding-server/) sets the drift measurement and the fallback exercises, the [production EAGLE-3 lesson](../../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) explains the tail and the acceptance floor, and the [EAGLE-3 lesson](../../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) explains why the draft is tied to one target version.

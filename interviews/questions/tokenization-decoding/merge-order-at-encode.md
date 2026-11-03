@@ -1,6 +1,6 @@
 ---
 id: merge-order-at-encode
-title: Why the encoder replays the merges in training order
+title: Why the encoder replays the merge list in order
 card: tokenization-decoding
 kind: concept
 level: 2

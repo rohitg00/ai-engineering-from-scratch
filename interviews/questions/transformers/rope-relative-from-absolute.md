@@ -16,7 +16,7 @@ related: [transformers/permutation-blind-attention]
 updated: 2026-11-03
 ---
 
-Rotary position embedding rotates every query and every key by an angle that is proportional to the token's absolute position. Yet everyone says it encodes relative position. Resolve the apparent contradiction, and tell me the one unit test you would write to prove the property.
+The rotary scheme rotates every query and every key by an angle that is proportional to the token's absolute position. Yet everyone says it encodes relative position. Resolve the apparent contradiction, and tell me the one unit test you would write to prove the property.
 
 ## Short answer
 
@@ -53,7 +53,7 @@ The rotation applies to Q and K after their projection and before the score matm
 
 ### Why it won
 
-It slots into attention without a change to the architecture. Its `base` is a clean knob: scale it and the model reaches longer contexts, which is how one model family went from 8K to 128K context with scaling schemes such as NTK-aware interpolation and YaRN.
+It slots into attention without a change to the architecture. Its `base` is a clean knob: scale it and the model reaches longer contexts, which is how one model family reached a 128K context from 8K with scaling schemes such as NTK-aware interpolation and YaRN.
 
 ### The unit test
 

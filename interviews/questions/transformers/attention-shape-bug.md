@@ -16,7 +16,7 @@ related: [transformers/query-key-value-lookup]
 updated: 2026-11-03
 ---
 
-An encoder-decoder attention module runs without any exception, but the model's accuracy slowly falls behind the reference implementation. When you print the context tensor, its second dimension is the encoder length instead of the decoder length. Walk me through the diagnosis.
+An attention module between an encoder and a decoder runs without any exception, but the model's accuracy slowly falls behind the reference implementation. When you print the context tensor, its second dimension is the encoder length instead of the decoder length. Walk me through the diagnosis.
 
 ## Short answer
 

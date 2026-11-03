@@ -80,4 +80,4 @@ If your task data holds fewer than 20 tokens per parameter of the base model, ex
 
 ## Taught in
 
-The [scaling laws lesson](../../../phases/07-transformers-deep-dive/13-scaling-laws/) gives the law, the compute-optimal ratio and the case for over-training.
+The [scaling laws lesson](../../../phases/07-transformers-deep-dive/13-scaling-laws/) gives the law, the optimal split and the case for over-training.

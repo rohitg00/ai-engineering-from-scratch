@@ -20,7 +20,7 @@ Before any merge runs, a production tokenizer cuts the text into chunks with a r
 
 ## Short answer
 
-The pattern yields the chunks ` Hello`, `,`, ` world`, `!`, ` Don`, `'t`, ` stop` and `.`: each word keeps the space in front of it, contractions split at the apostrophe, and punctuation stands alone. The merges then run inside each chunk and can never join symbols across a chunk boundary. Without the cut, training learns merges that span words, the vocabulary fills with whole phrases, and the pieces generalize worse to new text.
+The pattern cuts the sentence into eight chunks, ` Hello`, `,`, ` world`, `!`, ` Don`, `'t`, ` stop` and `.`: each word keeps the space in front of it, contractions split at the apostrophe, and punctuation stands alone. The merges then run inside each chunk and can never join symbols across a chunk boundary. Without the cut, training learns merges that span words, the vocabulary fills with whole phrases, and the pieces generalize worse to new text.
 
 ## Full answer
 
@@ -46,7 +46,7 @@ A tokenizer that works on raw text treats the space as an ordinary symbol and le
 
 ### The capstone's version
 
-A small split on whitespace and punctuation. It is enough to keep merges inside words on a small corpus, and the rest of the pipeline is the same.
+A small split on whitespace and punctuation. It is enough to keep merges inside words for a small training set, and the rest of the pipeline stays the same.
 
 ## Follow-ups
 

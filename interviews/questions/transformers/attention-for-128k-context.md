@@ -26,7 +26,7 @@ Start from the memory, because it decides the rest. With 8 key-value heads, 80 l
 
 ### Head layout
 
-Full multi-head attention at this scale would hold about 8 times more, about 80 GiB at 32K, which is the whole card. Grouped-query with 8 key-value heads is the production default and keeps nearly full quality. If the memory still does not close, latent attention compresses the keys and values to a low-rank vector and pays FLOPs at each step to decompress. The query heads stay at 64 with a head size of 128 in either case.
+Plain multi-head attention with 64 key-value heads at this scale would hold about 8 times more, about 80 GiB at 32K, which is the whole card. Grouped-query with 8 key-value heads is the production default and keeps nearly full quality. If the memory still does not close, latent attention compresses the keys and values to a low-rank vector and pays FLOPs at each step to decompress. The query heads stay at 64 with a head size of 128 in either case.
 
 ### The memory table
 

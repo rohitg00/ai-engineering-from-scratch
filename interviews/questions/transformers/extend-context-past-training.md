@@ -1,6 +1,6 @@
 ---
 id: extend-context-past-training
-title: Take a model from 8K to 128K context
+title: Take a model from 8K to 128K
 card: transformers
 kind: design
 level: 3
@@ -57,7 +57,7 @@ The positional scheme is the gate. A rotary model gives you a clean knob and a s
 - **Level 3:** Why does a rotary model fail when you just run it at 128K with no change? Expected: the fast-turning coordinate pairs reach angles the model never saw, so the scores at long distance are noise.
 - **Level 3:** What two measurements do you insist on before shipping? Expected: perplexity or task quality at the new length, and the same at the original length to catch a regression.
 - **Level 4:** The team proposes to switch the model to linear-bias attention because it extrapolates well. Your answer? Expected: that is a training-time choice; a checkpoint trained with rotation cannot be swapped to a score bias without retraining.
-- **Level 4:** What breaks on the serving side at 128K even if quality is fine? Expected: memory for the keys and values of each token, which grows with the context; the attention stack needs grouped-query or latent attention and a tiled kernel.
+- **Level 4:** What breaks on the serving side at 128K even if quality is fine? Expected: memory for each token's keys and values, which grows with the context; the attention stack needs grouped-query or latent attention and a tiled kernel.
 
 ## Wrong answers
 

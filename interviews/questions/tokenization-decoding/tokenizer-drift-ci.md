@@ -69,4 +69,4 @@ Average tokens per word on a held-out set, the unknown rate, the compression rat
 
 ## Taught in
 
-The [subword tokenization lesson](../../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) lists the drift and whitespace pitfalls and the validation plan, and the [tokenizer build lesson](../../../phases/10-llms-from-scratch/02-building-a-tokenizer/) covers normalization and the pre-tokenizer engines.
+The [subword tokenization lesson](../../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) lists the drift and whitespace pitfalls and the validation plan, and the [tokenizer build lesson](../../../phases/10-llms-from-scratch/02-building-a-tokenizer/) covers normalization and the regex engines.

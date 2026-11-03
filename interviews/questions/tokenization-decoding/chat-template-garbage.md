@@ -52,7 +52,7 @@ Use the model's own template function, pass special tokens through the reserved-
 
 - **Level 2:** What does the end-of-turn token do at inference? Expected: it is the model's signal that the answer is complete; the server must stop on that id, or generation runs to the limit.
 - **Level 3:** A user types the literal string of a special token into the chat box. What should happen? Expected: with the allow flag off it becomes ordinary bytes, which is the safe default for user text; with it on, the user could inject a control marker.
-- **Level 3:** How do you test a template implementation? Expected: build the sequence for a fixed message list and compare it id by id with the reference implementation for that model.
+- **Level 3:** How do you test a template implementation? Expected: build the sequence for a fixed message list and compare it id by id with the output of the model's own template code.
 - **Level 4:** The template is correct and the ids still differ between notebook and service. What else? Expected: a different tokenizer file version, a different normalization step, or a different setting for adding special tokens at the start; hash the tokenizer file and compare the flags.
 
 ## Wrong answers

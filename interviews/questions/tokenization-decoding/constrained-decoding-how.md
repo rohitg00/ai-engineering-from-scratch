@@ -75,4 +75,4 @@ A retry-based client formats the schema into the prompt, parses the output, and 
 
 ## Taught in
 
-The [structured outputs and constrained decoding lesson](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) builds the logit processor and compares the three layers.
+The [structured outputs lesson](../../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) builds the logit processor and compares the three layers.

@@ -56,7 +56,7 @@ At inference only the `n_kv_heads` copies live in the cache, not the repeated on
 
 ### The pick
 
-For a 70B decoder that must serve long contexts, grouped-query with a small group is the safe default. Latent attention is the choice when memory is the binding constraint and you accept the compute cost and the engineering.
+For a 70B decoder with long contexts to serve, grouped-query with a small group is the safe default. Latent attention is the choice when memory is the binding constraint and you accept the compute cost and the engineering.
 
 ## Follow-ups
 

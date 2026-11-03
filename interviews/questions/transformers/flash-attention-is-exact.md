@@ -20,7 +20,7 @@ A colleague refuses to enable Flash Attention on a quality-sensitive model becau
 
 ## Short answer
 
-It is exact. The kernel tiles the computation so the full N by N score matrix never lands in the GPU's main memory; each tile is scored, exponentiated and accumulated in on-chip memory with a running maximum and a running sum, and the final normalization equals the one-shot softmax up to floating-point reordering. What changes is the memory traffic: three round trips to main memory become one write per output tile, and the footprint drops from N squared to N. The numbers that leave the kernel are the same as standard attention.
+It is exact. The kernel tiles the computation so the full N by N score matrix never lands in the GPU's main memory; each tile is scored, exponentiated and accumulated in on-chip memory with a running maximum and a running sum, and the final normalization matches the single-pass softmax up to floating-point reordering. What changes is the memory traffic: three round trips to main memory become one write per output tile, and the footprint drops from N squared to N. The numbers that leave the kernel are the same as standard attention.
 
 ## Full answer
 

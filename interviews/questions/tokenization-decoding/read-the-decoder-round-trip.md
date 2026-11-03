@@ -31,7 +31,7 @@ Both pass the English tests. Which one is correct for an emoji whose bytes were 
 
 ## Short answer
 
-`decode_a` is correct: join all the bytes first and decode once. A multi-byte character such as an emoji, 4 bytes in UTF-8, can be split across two or more tokens, so decoding each token's bytes alone hits an incomplete sequence and raises or emits replacement characters. The join works because every id is either one of the 256 raw bytes or the concatenation of two earlier ids, so expanding ids to bytes always ends in raw bytes, and the full byte string is valid UTF-8 whenever the input was. The `replace` option keeps the decoder from raising when a model emits a partial character at the end of a stream.
+Join all the bytes first and decode once, which is what `decode_a` does. A multi-byte character such as an emoji, 4 bytes in UTF-8, can be split across two or more tokens, so decoding each token's bytes alone hits an incomplete sequence and raises or emits replacement characters. The join works because every id is either one of the 256 raw bytes or the concatenation of two earlier ids, so expanding ids to bytes always ends in raw bytes, and the full byte string is valid UTF-8 whenever the input was. The `replace` option keeps the decoder from raising when a model emits a partial character at the end of a stream.
 
 ## Full answer
 
