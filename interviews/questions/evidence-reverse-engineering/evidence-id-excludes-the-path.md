@@ -43,7 +43,7 @@ Every error has the same five fields: `code`, `category`, `message`, `retryable`
 ## Follow-ups
 
 - **Level 2:** Why leave the path out of the hash at all? Expected: the same observation of the same bytes should carry one id on any machine and in any folder; identity belongs to the content, not to where the file sits.
-- **Level 3:** A producer writes an absolute path into `locations`. What happens when a colleague imports the bundle? Expected: the id recomputes differently on their machine and the import is refused; locations hold addresses and relative artifact paths, not host paths.
+- **Level 3:** A producer writes an absolute path into `locations`. What happens when a colleague imports the bundle? Expected: the unchanged bundle still imports, because the stored path hashes to the stored id; but the same observation made on the colleague's machine carries their path and gets a different id, and any edit that masks the path breaks the id. Locations hold addresses and relative artifact paths, not host paths.
 - **Level 3:** Why does a limitation count as content and not as a comment? Expected: without it the record claims more than the provider did, and nobody downstream can tell.
 - **Level 4:** How do you handle the older bundle? Expected: regenerate it with the current release, since the rule changed and ids are not migrated; never patch an id by hand.
 

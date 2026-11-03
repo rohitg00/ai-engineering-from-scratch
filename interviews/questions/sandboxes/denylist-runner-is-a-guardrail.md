@@ -27,7 +27,8 @@ def run(self, argv, *, shell=False, cwd=None):
     if not shell and any(ch in " ".join(argv) for ch in ";|&<>`$"):
         return denied("metachar")
     for a in argv[1:]:
-        if looks_like_path(a) and not realpath(a).startswith(realpath(self.root)):
+        p, root = realpath(a), realpath(self.root)
+        if looks_like_path(a) and p != root and not p.startswith(root + sep):
             return denied("path")
     return spawn(argv, timeout=self.timeout, max_output=self.max_output)
 ```

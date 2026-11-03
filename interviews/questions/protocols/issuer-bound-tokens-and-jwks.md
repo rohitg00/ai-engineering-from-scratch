@@ -20,7 +20,7 @@ You deploy a remote MCP server that accepts tokens from two authorization server
 
 ## Short answer
 
-Publish RFC 9728 protected-resource metadata that names both issuers, and treat that list as the issuer allow-list. Enroll clients with a Client ID Metadata Document first, a pre-registered client second, and deprecated dynamic registration only as an explicit fallback with the correct `application_type`. On every request validate the pinned `iss`, an `aud` equal to this server's canonical resource URI, `exp` and the scope the tool needs, and answer `401` on any failure. Refresh the JWKS on a schedule and re-fetch once on an unknown `kid`, and let the client record the issuer before it redirects and compare the RFC 9207 `iss` in the authorization response exactly before it redeems the code.
+Publish RFC 9728 protected-resource metadata that names both issuers, and treat that list as the issuer allow-list. Enroll a client with its pre-registered credentials when it has an explicit relationship with that issuer, otherwise with a Client ID Metadata Document when the issuer advertises support, and use deprecated dynamic registration only as an explicit fallback with the correct `application_type`. On every request validate the pinned `iss`, an `aud` equal to this server's canonical resource URI, `exp` and the scope the tool needs, and answer `401` on any failure. Refresh the JWKS on a schedule and re-fetch once on an unknown `kid`, and let the client record the issuer before it redirects and compare the RFC 9207 `iss` in the authorization response exactly before it redeems the code.
 
 ## Full answer
 
