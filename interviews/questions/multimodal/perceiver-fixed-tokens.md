@@ -63,4 +63,4 @@ The query-based bridge from the earlier lesson also uses learned queries, but on
 
 ## Taught in
 
-The [Flamingo lesson](../../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) walks the resampler, the gated layers and the interleaved mask, and the [BLIP-2 lesson](../../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) gives the single-input bridge it is compared with.
+The [Flamingo lesson](../../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) walks the resampler, the gated layers and the interleaved mask, and the [BLIP-2 lesson](../../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) gives the query bridge that it is compared with.

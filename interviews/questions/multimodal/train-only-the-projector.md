@@ -16,7 +16,7 @@ related: [multimodal/vlm-three-parts]
 updated: 2026-11-03
 ---
 
-In the first training stage of most open vision-language models, the vision encoder and the language model are frozen and only the small projector learns. A junior engineer asks why anyone would train the smallest part first instead of the parts that matter. Answer them.
+In the first training stage of most open vision-language models, both the vision encoder and the decoder are frozen, and only the small projector learns. A junior engineer asks why anyone would train the smallest part first instead of the parts that matter. Answer them.
 
 ## Short answer
 

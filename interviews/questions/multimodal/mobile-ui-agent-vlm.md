@@ -16,7 +16,7 @@ related: [multimodal/which-knob-first, multimodal/spatial-reasoning-limit]
 updated: 2026-11-03
 ---
 
-Design a vision-language model for an on-device mobile assistant that reads the phone screen and taps, types and scrolls. The language model must stay at about 2B parameters. Choose the encoder, the bridge, the resolution schedule and the data mix, justify each choice with the ablation evidence, and name the capability you would guard against over-promising.
+Design a vision-language model for an on-device mobile assistant that reads the phone screen and taps, types and scrolls. Keep the language model at about 2B parameters. Choose the encoder, the bridge, the resolution plan and the data mix, justify each choice with the ablation evidence, and name the capability you would guard against over-promising.
 
 ## Short answer
 

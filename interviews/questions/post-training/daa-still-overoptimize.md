@@ -16,7 +16,7 @@ related: [post-training/dpo-chosen-logprob-falls, post-training/reward-up-humans
 updated: 2026-11-03
 ---
 
-A staff engineer argues that moving the whole alignment stack from PPO to direct preference methods ends the reward-hacking problem, because there is no reward model left to hack. Make the counter-argument with the mechanism, and say what survives in your pipeline either way.
+A staff engineer argues that moving every alignment run from PPO to direct preference methods ends the reward-hacking problem, because there is no reward model left to hack. Make the counter-argument with the mechanism, and say what survives in your pipeline either way.
 
 ## Short answer
 

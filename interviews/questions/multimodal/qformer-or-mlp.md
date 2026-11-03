@@ -1,6 +1,6 @@
 ---
 id: qformer-or-mlp
-title: A compressing bridge or an MLP that keeps every patch
+title: Query bridge or MLP for the connector
 card: multimodal
 kind: tradeoff
 level: 2
@@ -16,7 +16,7 @@ related: [multimodal/image-tokens-per-image]
 updated: 2026-11-03
 ---
 
-You are choosing the bridge between a frozen vision encoder and a frozen language model for a new product. One architect wants a query-based transformer that compresses each image to a fixed set of tokens. Another wants a plain MLP that passes every patch through. How do you decide?
+You are choosing the bridge between a frozen vision encoder and a language model that stays frozen, for a new product. One architect wants a query-based transformer that compresses each image to a fixed set of tokens. Another wants a plain MLP that passes every patch through. How do you decide?
 
 ## Short answer
 

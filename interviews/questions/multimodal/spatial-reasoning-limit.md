@@ -67,4 +67,4 @@ Ship a measured system, not a demo. Ten images is a smoke test. The eval decides
 
 ## Taught in
 
-The [vision-language models lesson](../../../phases/04-computer-vision/25-vision-language-models/) gives the spatial reasoning figure, the fine-tuning budget and the hallucination monitor.
+The [vision-language models lesson](../../../phases/04-computer-vision/25-vision-language-models/) gives the spatial reasoning figure, the fine-tuning budget and the cross-modal error rate.

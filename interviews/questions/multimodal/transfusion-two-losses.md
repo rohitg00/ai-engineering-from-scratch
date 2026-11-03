@@ -16,7 +16,7 @@ related: [multimodal/vq-tokenizer-ceiling, multimodal/show-o-parallel-decoding]
 updated: 2026-11-03
 ---
 
-Explain how a single transformer can train a next-token loss on text and a diffusion loss on images in one gradient step. Cover the input representation, the attention mask, how the loss is routed per position, and the balance problem that follows. Then say what a sibling architecture changed.
+Explain how a single transformer can train the text objective of next-token prediction together with a denoising loss on images in one gradient step. Cover the input representation, the attention mask, how the loss is routed per position, and the balance problem that follows. Then say what a sibling architecture changed.
 
 ## Short answer
 
@@ -78,4 +78,4 @@ Discrete-code designs trade this plumbing for one loss and a tokenizer ceiling; 
 
 ## Taught in
 
-The [Transfusion lesson](../../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) builds the two-loss trainer and the mask and names the sibling architecture, and the [Show-o lesson](../../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) places it against the discrete designs.
+The [Transfusion lesson](../../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) builds the two-loss trainer and the mask and names its sibling design, and the [Show-o lesson](../../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) places it against the discrete designs.

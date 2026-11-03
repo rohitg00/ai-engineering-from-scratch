@@ -48,7 +48,7 @@ Keep the image continuous. Project patches with a linear layer, as a vision tran
 
 ### Which to pick
 
-Discrete codes when one next-token stack must do understanding, image and video generation with one loss, and you accept the tokenizer's ceiling. Continuous patches when image fidelity is the priority and the two-loss plumbing is acceptable.
+Discrete codes when one next-token stack must handle understanding and the generation of images and video with one loss, and you accept the tokenizer's ceiling. Continuous patches when image fidelity is the priority and the two-loss plumbing is acceptable.
 
 ## Follow-ups
 

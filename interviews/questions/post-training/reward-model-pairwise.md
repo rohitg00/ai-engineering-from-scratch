@@ -63,4 +63,4 @@ The same scalar head powers best-of-N sampling at decode time and the reward sid
 
 ## Taught in
 
-The [RLHF lesson](../../../phases/10-llms-from-scratch/07-rlhf/) builds the reward model and the Bradley-Terry loss, and the [reward modeling lesson](../../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) places it in the full pipeline.
+The [RLHF lesson](../../../phases/10-llms-from-scratch/07-rlhf/) builds the reward model and its pairwise loss, and the [reward modeling lesson](../../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) places it in the full pipeline.

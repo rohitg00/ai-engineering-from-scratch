@@ -16,7 +16,7 @@ related: [multimodal/emu3-generation-cost, multimodal/vq-tokenizer-ceiling]
 updated: 2026-11-03
 ---
 
-Your team needs one open model for visual question answering, text-to-image generation and inpainting, with a usable generation latency. One candidate generates images one code at a time; another denoises continuous patches; a third keeps discrete codes but fills them in parallel over a few passes. Compare the three on passes, training complexity and what comes for free.
+Your team needs one open model for answering questions about images, text-to-image generation and inpainting, with a usable generation latency. One candidate generates images one code at a time; another denoises continuous patches; a third stays with discrete codes and fills them in parallel over a few passes. Compare the three on passes, training complexity and what comes for free.
 
 ## Short answer
 

@@ -16,7 +16,7 @@ related: [post-training/dpo-chosen-logprob-falls]
 updated: 2026-11-03
 ---
 
-Four teams bring you four datasets. One has thumbs-up and thumbs-down clicks on single answers. One has paired comparisons whose preferred answers are mostly twice as long as the rejected ones. One has no SFT checkpoint and wants a single training stage from the base model. One has pairs where some preferences are near coin flips and others are unanimous. Which preference loss do you recommend to each team, and why?
+Four teams bring you four datasets. One has thumbs-up and thumbs-down clicks on single answers. One has paired comparisons whose preferred answers are mostly twice the length of the rejected ones. One has no SFT checkpoint and wants a single training stage from the base model. One has pairs where some preferences are near coin flips and others are unanimous. Which preference loss do you recommend to each team, and why?
 
 ## Short answer
 

@@ -26,7 +26,7 @@ Stop, and treat it as reward hacking. The policy has found outputs that the rewa
 
 ### The signature
 
-Reward up, human eval flat or down. The reward model was trained on in-distribution answers; the policy under optimization leaves that distribution and the reward model extrapolates. The RLHF lesson tabulates what real pipelines saw:
+Reward up, human eval flat or down. The reward model was trained on in-distribution answers; the policy under optimization leaves that distribution and the reward model extrapolates. The RLHF lesson's table of what real pipelines saw:
 
 | Failure | What the samples show | Why the reward model liked it |
 |---|---|---|
@@ -37,7 +37,7 @@ Reward up, human eval flat or down. The reward model was trained on in-distribut
 
 ### The checks
 
-1. The mean KL to the reference per answer. The reward modeling lesson's warning line is 5 to 10 nats summed over tokens; past it, the policy has drifted far from SFT.
+1. The mean KL to the reference per answer. The warning line in the lesson on reward modeling is 5 to 10 nats summed over tokens; past it, the policy has drifted far from SFT.
 2. The response length by checkpoint. Length hacking is the most common form.
 3. Fifty samples read side by side across checkpoints. The failure modes above are visible to the eye.
 4. The blind human eval you already have. Keep it blind and held out; it is the one measure the policy cannot game.

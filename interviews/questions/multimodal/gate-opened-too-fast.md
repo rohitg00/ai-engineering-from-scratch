@@ -16,7 +16,7 @@ related: [multimodal/perceiver-fixed-tokens, multimodal/cross-attention-mask-bug
 updated: 2026-11-03
 ---
 
-You fine-tune a model built like Flamingo, with gated cross-attention layers between the blocks of a frozen language model, on a small captioning dataset. Captions improve, but text-only quality degrades: the model rambles on plain prompts and loses facts it knew. What is the likely cause, how do you confirm it, and how do you fix it?
+You fine-tune a model built like Flamingo, with a gated cross-attention block after every few layers of a frozen language model, on a small captioning dataset. Captions improve, but text-only quality degrades: the model rambles on plain prompts and loses facts it knew. What is the likely cause, how do you confirm it, and how do you fix it?
 
 ## Short answer
 

@@ -34,15 +34,15 @@ The reference is the SFT checkpoint, frozen. The reward model scores whole answe
 
 ### What goes wrong without it
 
-The reward model is a finite fit to human preferences and has blind spots. Repeated phrases that signal helpfulness, verbose formal text with no content, bullet points everywhere: each scored high in real pipelines. With no anchor the policy collapses toward a few high-reward modes. The toy pipeline in the alignment signal lesson shows this inside 50 update steps when beta is 0.
+The reward model is a finite fit to human preferences and has blind spots. Repeated phrases that signal helpfulness, verbose formal text with no content, bullet points everywhere: each scored high in real pipelines. With no anchor the policy collapses toward a few high-reward modes. The toy three-stage pipeline in the InstructGPT lesson shows this inside 50 update steps when beta is 0.
 
 ### Reading the KL
 
-Track the mean KL per answer on every update. The reward modeling lesson gives 5 to 10 nats, summed over tokens, as the point where the policy has drifted far from SFT: either beta is too low, or reward hacking has started.
+Track the mean KL per answer on every update. The lesson on reward modeling gives 5 to 10 nats, summed over tokens, as the point where the policy has drifted far from SFT: either beta is too low, or reward hacking has started.
 
 ### Tuning beta
 
-Reference values: 0.01 to 0.05 in the reward modeling lesson, 0.02 in the pipeline that the RLHF lesson describes. The common trick is an adaptive beta with a target KL. When the observed KL passes the target, beta doubles; when it falls under half the target, beta halves. The library the lesson shows uses a target of 6.0 with the adaptive controller on.
+Reference values: 0.01 to 0.05 in the lesson on reward modeling, 0.02 in the pipeline that the RLHF lesson describes. The common trick is an adaptive beta with a target KL. When the observed KL passes the target, beta doubles; when it falls under half the target, beta halves. The library the lesson shows uses a target of 6.0 with the adaptive controller on.
 
 ### The second anchor
 

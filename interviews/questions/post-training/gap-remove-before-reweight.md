@@ -16,7 +16,7 @@ related: [post-training/logprob-gap-at-step-zero]
 updated: 2026-11-03
 ---
 
-Your RL run shows a steady disagreement between the trainer and the rollout engine on the probability of each sampled token. One engineer wants to turn on the capped importance-sampling correction right away. Another says it is a kernel artifact and should be ignored. Lay out how you decide, and what you would try first.
+Your RL run shows a steady disagreement between trainer and rollout engine on the probability of each sampled token. One engineer wants to turn on a capped importance weighting right away. Another says it is a kernel artifact and should be ignored. Lay out how you decide, and what you would try first.
 
 ## Short answer
 

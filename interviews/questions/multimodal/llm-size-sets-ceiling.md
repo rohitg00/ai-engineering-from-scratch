@@ -20,7 +20,7 @@ Your 7B vision-language model trails a competitor on a multimodal reasoning benc
 
 ## Short answer
 
-Against. Across the controlled studies, swapping the connector moved a reasoning benchmark by less than a point at a fixed token count, while swapping the encoder moved it by three or more, and doubling the language model from 7B to 13B added two to four points. The reasoning ceiling of a vision-language model is the text reasoning ceiling of its language model; the visual side can only feed it. Spend the effort on the language model size, the encoder, the token count and the data before the connector.
+Against. Across the controlled studies, swapping the connector moved a reasoning benchmark by less than a point at a fixed token count, while swapping the encoder moved it by three or more, and doubling the language model from 7B to 13B added two to four points. The reasoning ceiling of such a model is the text reasoning ceiling of its language model; the visual side can only feed it. Spend the effort on the language model size, the encoder, the token count and the data before the connector.
 
 ## Full answer
 

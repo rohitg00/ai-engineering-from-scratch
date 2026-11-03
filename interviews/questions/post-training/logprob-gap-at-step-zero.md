@@ -68,4 +68,4 @@ It stays flat. In the manual's three baseline seeds, every step over 48 steps st
 
 ## Taught in
 
-[Section 5.2 of Miles 101](../../../manuals/miles-101/sections/5-2-check-the-first-step.md) gives the step-0 checks and ranges, [section 4.5](../../../manuals/miles-101/sections/4-5-use-deterministic-inference.md) measures what deterministic inference does and does not fix, and [section 7.1](../../../manuals/miles-101/sections/7-1-troubleshoot-by-symptom.md) lists the symptom.
+[Section 5.2 of Miles 101](../../../manuals/miles-101/sections/5-2-check-the-first-step.md) gives the step-0 checks and ranges, [section 4.5](../../../manuals/miles-101/sections/4-5-use-deterministic-inference.md) measures what the deterministic mode does and does not fix, and [section 7.1](../../../manuals/miles-101/sections/7-1-troubleshoot-by-symptom.md) lists the symptom.

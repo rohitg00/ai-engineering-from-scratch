@@ -16,7 +16,7 @@ related: [multimodal/early-or-late-fusion]
 updated: 2026-11-03
 ---
 
-Autoregressive image generation used to mean predicting one code after another in raster order. A newer method predicts whole grids at increasing resolution instead. Explain what it predicts at each step, why that fixes the old method's main weakness, and how it compares with diffusion in the number of network passes.
+Token-by-token image generation used to mean predicting one code after another in raster order. A newer method predicts whole grids at increasing resolution instead. Explain what it predicts at each step, why that fixes the old method's main weakness, and how it compares with diffusion in the number of network passes.
 
 ## Short answer
 

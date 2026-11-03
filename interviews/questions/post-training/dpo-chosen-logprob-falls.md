@@ -1,6 +1,6 @@
 ---
 id: dpo-chosen-logprob-falls
-title: The DPO margin grows while the chosen answers fade
+title: Margin up, chosen answers down, in a DPO run
 card: post-training
 kind: debug
 level: 3
@@ -16,7 +16,7 @@ related: [post-training/dpo-implicit-reward]
 updated: 2026-11-03
 ---
 
-During a DPO run the loss falls and the implicit reward margin grows every epoch. Yet the model's samples get shorter and less fluent, and the policy now gives the chosen training answers a lower probability than the reference did. Explain the mechanism and what you change.
+During a DPO run the loss falls and the reward margin that the trainer logs grows every epoch. Yet the model's samples get shorter and less fluent, and the policy now gives the chosen training answers a lower probability than they had under the reference. Explain the mechanism and what you change.
 
 ## Short answer
 
@@ -60,4 +60,4 @@ Direct alignment methods remove the explicit reward model, not the proxy. The qu
 
 ## Taught in
 
-The [DPO family lesson](../../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) names the degraded chosen response failure and the variants that fix it, and the [DPO capstone](../../../phases/19-capstone-projects/40-dpo-from-scratch/) derives the gradient that pushes the chosen up and the rejected down.
+The [DPO family lesson](../../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) names this chosen-answer failure and the variants that fix it, and the [DPO capstone](../../../phases/19-capstone-projects/40-dpo-from-scratch/) derives the gradient that pushes the chosen up and the rejected down.
