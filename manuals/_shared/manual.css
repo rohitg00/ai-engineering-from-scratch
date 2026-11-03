@@ -136,7 +136,7 @@
 .m-listing .cb { margin: 0; }
 .m-listing-title { flex: 1; color: var(--m-ink); font-weight: 700; text-transform: none; letter-spacing: 0.02em; }
 .m-evidence { font-size: 0.78em; font-weight: 400; color: var(--m-ink-soft, inherit); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; white-space: nowrap; }
-.cb-head .m-evidence { text-transform: none; letter-spacing: 0; }
+.cb-head .m-evidence { font-size: 1em; text-transform: none; letter-spacing: 0.02em; }
 .m-listing-note { font-size: 0.8em; line-height: 1.5; color: var(--m-ink-mute); margin-top: 0.55em; }
 
 .m-takeaways,
