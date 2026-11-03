@@ -87,4 +87,4 @@ It has no idea which agents share a base model, no confidence, no source. It is 
 
 ## Taught in
 
-The [consensus and fault tolerance lesson](../../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) ships these aggregators, and the [shared memory lesson](../../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) is where the two percentages come from.
+The [consensus and fault tolerance lesson](../../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) ships these aggregators, and the [shared memory lesson](../../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) is the source of both percentages.

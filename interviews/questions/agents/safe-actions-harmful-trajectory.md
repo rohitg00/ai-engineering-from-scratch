@@ -63,4 +63,4 @@ The documentation ships the classifier mode as a research preview and says it is
 
 ## Taught in
 
-The [permission modes lesson](../../../phases/15-autonomous-systems/10-claude-code-permission-modes/) lists what the classifier misses, and the [scope contracts lesson](../../../phases/14-agent-engineering/36-scope-contracts/) adds the egress and time budgets to the contract.
+The [permission modes lesson](../../../phases/15-autonomous-systems/10-claude-code-permission-modes/) names the gaps in the classifier, and the [scope contracts lesson](../../../phases/14-agent-engineering/36-scope-contracts/) adds the egress and time budgets to the contract.

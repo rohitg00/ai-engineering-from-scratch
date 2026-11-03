@@ -57,4 +57,4 @@ Replay the saved trace through the fixed loop. The harness contract is a determi
 
 ## Taught in
 
-The [agent loop lesson](../../../phases/14-agent-engineering/01-the-agent-loop/) names the turn budget and the observation formatter, the [harness loop contract](../../../phases/19-capstone-projects/20-agent-harness-loop-contract/) makes the budget a yield, and the [permission modes lesson](../../../phases/15-autonomous-systems/10-claude-code-permission-modes/) describes the repeated-action classifier.
+The [agent loop lesson](../../../phases/14-agent-engineering/01-the-agent-loop/) names the turn budget and the formatter for observations, the [harness loop contract](../../../phases/19-capstone-projects/20-agent-harness-loop-contract/) makes the budget a yield, and the [permission modes lesson](../../../phases/15-autonomous-systems/10-claude-code-permission-modes/) describes the repeated-action classifier.

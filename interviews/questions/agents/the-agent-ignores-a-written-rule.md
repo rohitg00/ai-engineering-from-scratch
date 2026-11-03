@@ -62,4 +62,4 @@ Run the checker over this week's two runs. The rule report must show the approva
 
 ## Taught in
 
-The [executable constraints lesson](../../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) sets the two-hop rule and the five categories, and the [minimal workbench lesson](../../../phases/14-agent-engineering/32-minimal-agent-workbench/) measures the cost of conflicting instructions.
+The [executable constraints lesson](../../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) sets the two-hop rule and the five categories, and the [minimal workbench lesson](../../../phases/14-agent-engineering/32-minimal-agent-workbench/) measures the cost of instructions that contradict each other.

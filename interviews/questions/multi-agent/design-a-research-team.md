@@ -90,4 +90,4 @@ The outlined prompts, the memory schema with provenance fields, the failure tabl
 
 ## Taught in
 
-The [supervisor pattern lesson](../../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) gives the lead, the workers and the limits, the [shared memory lesson](../../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) gives provenance and the verifier, and the [failure modes lesson](../../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) gives the breaker and the audit.
+The [supervisor pattern lesson](../../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) gives the lead, the workers and the limits, the [shared memory lesson](../../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) gives the provenance fields and the read-only checker, and the [failure modes lesson](../../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) gives the breaker and the audit.
