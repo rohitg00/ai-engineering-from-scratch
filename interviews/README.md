@@ -31,9 +31,9 @@ Retrieval, prompts, structured output, evaluation and models that see and hear.
 
 | Card | Items | Planned |
 |---|---|---|
-| RAG | 0 | 15 |
-| Prompting and structured output | 0 | 15 |
-| Evaluation | 0 | 15 |
+| [RAG](questions/rag/README.md) | 26 | 15 |
+| [Prompting and structured output](questions/prompting-structured-output/README.md) | 22 | 15 |
+| [Evaluation](questions/evaluation/README.md) | 26 | 15 |
 | Multimodal | 0 | 15 |
 
 ## Agents
@@ -56,7 +56,7 @@ Operating a model service: releases, observability, cost, capacity and safety.
 |---|---|---|
 | [Production and MLOps](questions/production-mlops/README.md) | 26 | 15 |
 | [Cost and capacity](questions/cost-capacity/README.md) | 22 | 15 |
-| Safety | 0 | 15 |
+| [Safety](questions/safety/README.md) | 22 | 15 |
 
 ## Rounds
 
@@ -64,10 +64,10 @@ Whole interview rounds: system design, incidents, coding and behavioral question
 
 | Card | Items | Planned |
 |---|---|---|
-| System design | 0 | 15 |
+| [System design](questions/system-design/README.md) | 22 | 15 |
 | [Incidents and scenarios](scenarios/README.md) | 60 | 30 |
-| Coding | 0 | 15 |
-| Behavioral | 0 | 15 |
+| [Coding](questions/coding/README.md) | 22 | 15 |
+| [Behavioral](questions/behavioral/README.md) | 16 | 15 |
 
 ## Roles
 
