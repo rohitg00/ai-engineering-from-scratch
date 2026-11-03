@@ -20,7 +20,7 @@ A `notes_delete` tool finds three notes that match the title the user gave. Desi
 
 ## Short answer
 
-The server returns `resultType: "input_required"` with an embedded `elicitation/create` form request that lists the three candidate ids and a `confirm` boolean, plus an integrity-protected `requestState`. The client shows the form and retries the original `tools/call` with a new request id, echoing `requestState` and the `inputResponses`. The server signs the state over the principal, the method, a digest of the arguments, the candidate set, the phase and an expiry, verifies the echo, checks that the chosen id was in the signed set, re-authorizes the workspace and re-checks containment, and consumes a one-time nonce in a shared replay store before it deletes.
+The server answers with a result typed `input_required` that embeds an `elicitation/create` form request listing the three candidate ids and a `confirm` boolean, plus an integrity-protected `requestState`. The client shows the form and retries the original `tools/call` with a new request id, echoing `requestState` and the `inputResponses`. The server signs the state over the principal, the method, a digest of the arguments, the candidate set, the phase and an expiry, verifies the echo, checks that the chosen id was in the signed set, re-authorizes the workspace and re-checks containment, and consumes a one-time nonce in a shared replay store before it deletes.
 
 ## Full answer
 
