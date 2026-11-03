@@ -1,0 +1,17 @@
+title: the default run settings of the manual
+source: manuals/miles-101/sections/r-3-lab-notes.md
+lines: 23-33
+lang: text
+note: Read the prompts per step, the answers per prompt and the answer limit, then the engine memory fraction.
+---
+| Setting | Value |
+|---|---|
+| Prompts per step | 32 (`--rollout-batch-size`) |
+| Answers per prompt | 8 (`--n-samples-per-prompt`) |
+| Samples per optimizer step | 256 (`--global-batch-size`) |
+| Answer limit | 1,024 tokens |
+| Temperature | 1 |
+| Learning rate | 1e-6, constant |
+| Trainer | FSDP on one GPU, colocated with the engine |
+| Engine memory fraction | 0.4 |
+| Weight update bucket | 536870912 bytes, 512 MiB |
