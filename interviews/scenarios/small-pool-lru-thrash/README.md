@@ -61,7 +61,7 @@ The fourth listing is the failure tally. With the defaults, CUDA graphs and the 
 
 Two problems sat on top of each other. The pool was smaller than the working set of the sessions that return, so `lru` thrashed from turn 4 on. Under that heavy eviction, the default path with CUDA graphs and the overlap scheduler hit the memory fault or hung in 4 of 6 runs.
 
-Grow the pool first. At 16,384 tokens the same trace reached a hit rate of 0.685 with the default policy, and the late turns kept 56 to 160 ms to the first token. On a shared card that means a larger `--mem-fraction-static` or an FP8 KV cache, not a new policy. Then measure the policy again. On this trace a different policy paid only at the pool size that was too small.
+Grow the pool first. At 16,384 tokens the same trace reached a hit rate of 0.685 with the default policy, and the late turns kept 56 to 160 ms to the first token. If a cap such as `--max-total-tokens` sets the pool, raise the cap. If memory sets it, on a shared card that means a larger `--mem-fraction-static` or an FP8 KV cache, not a new policy. Then read `max_total_num_tokens` in the startup log to confirm the new size. Then measure the policy again. On this trace a different policy paid only at the pool size that was too small.
 
 For the crash, ship `--disable-cuda-graph` as the workaround while the pool is small. On our L4 with an 8B model, graphs saved about 1 percent of each decode step, so measure the cost on your model. A larger pool stopped the thrash, but we did not count crashes at the larger pools, so treat it as untested for the fault. Keep `CUDA_LAUNCH_BLOCKING=1` for debugging only.
 

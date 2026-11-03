@@ -17,7 +17,7 @@ updated: 2026-11-03
 system:
   version: vLLM 0.31.0 against SGLang 0.5.22
   model: Qwen/Qwen3-8B
-  hardware: one L4 with 24 GB of memory, SM clock locked at 900 MHz
+  hardware: one L4 with 24 GB of memory; the first sweep ran at the full clock, and the reruns locked the SM clock at 900 MHz
 source:
   - manuals/vllm-101/sections/3-1-tune-chat-for-many-users.md
   - manuals/sglang-101/sections/5-3-reading-other-peoples-benchmarks.md
@@ -62,7 +62,7 @@ The third listing shows what the cap did. With `--max-num-seqs 16` at 32 users, 
 
 The fourth listing compares two engines on the same pool of 24,096 tokens. Up to 32 users they tie on output. At 64 users SGLang gave 256.62 tokens per second and vLLM 241.39. The medians for the first token were 18,356 ms against 10,953 ms, and the P99 ITL was 114 ms against 1,363 ms. The two log lines say why. SGLang ran 37 requests and kept 27 in its queue with the pool 92 percent full. vLLM ran 40 requests and kept 11 waiting, filled 99.5 percent of its pool and prefilled new prompts at 460.3 tokens per second while the others decoded. Each new prefill shares the step with the running streams, so the streams stall. vLLM chose the first token, SGLang chose the stream.
 
-The last listing tries to buy the smooth stream back with caps, with the clock locked and a cache reset before each run. Compare only rows at 900 MHz. The SGLang default gave a P99 ITL of 143 to 153 ms with a first token at 19.4 s. The vLLM default in the same session gave 1,359 ms at 11.8 s. `--max-num-active-seqs 48` gave 1,329 to 1,373 ms at 11.8 s. `--max-num-seqs 32` gave 1,163 to 1,399 ms and pushed the first token to 17.2 to 20.6 s. `--max-num-active-seqs 16` gave 1,133 to 1,139 ms and a first token at 44.8 to 48.8 s with the output down to 129 to 136. No cap brought the P99 ITL under 1.1 s, and every lower cap moved the wait to the first token.
+The last listing tries to buy the smooth stream back with caps. The clock did not hold at 900 MHz in every run, so read the clock column before the cap. Three rows ran at 900 MHz. The SGLang default gave a P99 ITL of 143 to 153 ms with a first token at 19.4 s. The vLLM default gave 1,359 ms at 11.8 s. `--max-num-active-seqs 48` gave 1,329 to 1,373 ms at the same 11.8 s, so that cap changed nothing. `--max-num-seqs 32` ran at 900 and 795 MHz, gave 1,163 to 1,399 ms and pushed the first token to 17.2 to 20.6 s. `--max-num-active-seqs 16` ran at 795 and 683 MHz, so it is not a matched result, but it gave 1,133 to 1,139 ms with a first token at 44.8 to 48.8 s and the output down to 129 to 136. No cap brought the P99 ITL under 1.1 s, and the caps that changed anything moved the wait to the first token.
 
 ## Resolution
 

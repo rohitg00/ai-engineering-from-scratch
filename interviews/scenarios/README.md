@@ -14,7 +14,7 @@ Measured incidents from our manuals. Read the evidence one listing at a time and
 | [A dead rollout engine and a watchdog that kills](dead-engine-and-watchdog/README.md) | 3 Senior | Miles main 08752a12 with its own SGLang 0.5.22 build, one GB10 with 128 GB of unified memory | 25 |
 | [A split benchmark that counted failures as wins](disaggregated-benchmark-false-success/README.md) | 3 Senior | SGLang 0.5.22 with the mooncake_tcp transfer backend, two L4s in one node, the second shared with another team | 20 |
 | [FP8 KV scales silently at 1.0](fp8-kv-scale-silently-one/README.md) | 3 Senior | vLLM 0.31.0, one L4 with 24 GB of memory | 20 |
-| [The load knee and the cap that made it worse](load-knee-and-admission-cap/README.md) | 3 Senior | vLLM 0.31.0 against SGLang 0.5.22, one L4 with 24 GB of memory, SM clock locked at 900 MHz | 25 |
+| [The load knee and the cap that made it worse](load-knee-and-admission-cap/README.md) | 3 Senior | vLLM 0.31.0 against SGLang 0.5.22, one L4 with 24 GB of memory; the first sweep ran at the full clock, and the reruns locked the SM clock at 900 MHz | 25 |
 | [More load gave a faster first token](prefix-cache-inflated-benchmark/README.md) | 3 Senior | SGLang 0.5.22, one GB10 (DGX Spark) | 25 |
 | [Ray stops the trainer on unified memory](ray-oom-unified-memory/README.md) | 3 Senior | Miles main 08752a12 with its own SGLang 0.5.22 build, one GB10 with 128 GB of unified memory | 20 |
 | [An RL speedup that was not an effect](rl-experiment-hygiene/README.md) | 3 Senior | Miles main 08752a12 with its own SGLang 0.5.22 build, one GB10 with 128 GB of unified memory, with a heat guard that pauses the run at 84 C | 25 |
