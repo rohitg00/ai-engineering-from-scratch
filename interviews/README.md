@@ -10,8 +10,8 @@ The math, the networks and the transformer that every later answer builds on.
 
 | Card | Items | Planned |
 |---|---|---|
-| Math and classical ML | 0 | 15 |
-| Deep learning | 0 | 15 |
+| [Math and classical ML](questions/math-classical-ml/README.md) | 22 | 15 |
+| [Deep learning](questions/deep-learning/README.md) | 22 | 15 |
 | Transformers | 0 | 15 |
 | Tokenization, sampling and decoding | 0 | 15 |
 
@@ -22,8 +22,8 @@ How a model is tuned after training, served to users, and fit into GPU memory.
 | Card | Items | Planned |
 |---|---|---|
 | Post-training | 0 | 15 |
-| [Inference and serving systems](questions/inference-serving/README.md) | 3 | 30 |
-| GPU memory, quantization and hardware | 0 | 15 |
+| [Inference and serving systems](questions/inference-serving/README.md) | 32 | 30 |
+| [GPU memory, quantization and hardware](questions/gpu-memory-quantization/README.md) | 10 | 15 |
 
 ## Applications
 
