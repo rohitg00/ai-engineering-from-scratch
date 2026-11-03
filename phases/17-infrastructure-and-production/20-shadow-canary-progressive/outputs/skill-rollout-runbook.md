@@ -16,7 +16,7 @@ Produce:
 3. Five gates. Specify the exact thresholds for latency P99, cost/request, error/refusal, output-length P99, thumbs-down rate. Set above noise floor (expect 15% irreducible variance).
 4. Tooling. Name the rollout controller (Argo Rollouts, Flagger, KServe) and the feature flag system for instant rollback.
 5. Rollback path. Document the three actions: flip flag → revert pinned digest → verify. Target time: under 60 seconds end to end.
-6. Skip A/B? Justify. Improved-variant changes skip A/B; distinctly different changes (new behavior, new cost curve) require A/B.
+6. Skip A/B? Justify. Improved-variant changes skip A/B only when the offline eval shows the gain, because the canary gates do not measure task completion; distinctly different changes (new behavior, new cost curve) require A/B.
 
 Hard rejects:
 - Skipping shadow mode. Refuse — cost spikes and length regressions slip past offline eval.

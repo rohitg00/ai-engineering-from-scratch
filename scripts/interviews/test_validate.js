@@ -137,6 +137,7 @@ test('the card and role lists are checked', () => {
 test('an item tags only roles whose card list holds its card', () => {
   expectError(temp => edit(temp, QUESTION, 'roles: [inference-engineer, applied-ai-engineer, agentic-ai-engineer]', 'roles: [inference-engineer, ai-data-engineer]'), /role ai-data-engineer does not list card inference-serving/);
   expectError(temp => edit(temp, 'interviews/roles.yaml', 'cards: [inference-serving, gpu-memory-quantization,', 'cards: [gpu-memory-quantization,'), /prefix-cache-order.md: role inference-engineer does not list card inference-serving/);
+  expectError(temp => edit(temp, `${SCENARIO}/README.md`, 'roles: [inference-engineer, ai-evaluation-reliability-engineer]', 'roles: [ai-data-engineer]'), /role ai-data-engineer does not list card scenarios/);
 });
 
 test('evidence is compared byte for byte, line ends included', () => {
