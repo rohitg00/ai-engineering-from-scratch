@@ -1,0 +1,26 @@
+title: the two grade cells that the threshold rebuild got wrong
+source: manuals/reverse-engineering-101/capture/out/17-harness-execute-plausible.json
+lines: 299-318
+lang: json
+note: Both cells sit beyond the last case of the switch.
+---
+    {
+      "function": "grade",
+      "args": [
+        110
+      ],
+      "kind": "beyond the switch",
+      "original": 0,
+      "candidate": 4,
+      "match": false
+    },
+    {
+      "function": "grade",
+      "args": [
+        2147483647
+      ],
+      "kind": "beyond the switch",
+      "original": 0,
+      "candidate": 4,
+      "match": false
+    }

@@ -1,0 +1,11 @@
+title: the total-assembly claim
+source: manuals/reverse-engineering-101/capture/out/10-mcp-22-verify-reconstruction.json
+lines: 195-199
+lang: json
+note: The observed status is the status of one dimension of one comparison record.
+---
+                "claim_id": "total-assembly",
+                "kind": "structural-function",
+                "dimension": "assembly",
+                "status": "fail",
+                "observed_status": "changed",
