@@ -812,9 +812,11 @@ function main(argv) {
     writeReadmes(bank);
     bank = loadBank(root);
   }
-  const problems = bank.errors.concat(staleReadmes(bank));
+  const stale = staleReadmes(bank);
+  const problems = argv.includes('--check-readmes') ? bank.errors.concat(stale) : bank.errors;
   console.log(`Checked ${bank.cards.length} cards, ${bank.roles.length} roles, ${bank.questions.length} questions, ${bank.scenarios.length} scenarios and ${bank.loops.length} loops.`);
   for (const problem of problems) console.error(`  ${problem}`);
+  if (stale.length && !argv.includes('--check-readmes')) console.log(`${stale.length} generated README files differ from the items. CI makes them again on main, so a pull request leaves them as they are.`);
   return problems.length ? 1 : 0;
 }
 

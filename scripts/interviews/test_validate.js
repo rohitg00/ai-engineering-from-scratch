@@ -36,10 +36,9 @@ function expectError(mutate, pattern) {
   assert.ok(errors.some(error => pattern.test(error)), `expected ${pattern}, got:\n${errors.join('\n')}`);
 }
 
-test('the bank in the repository passes and its READMEs are current', () => {
+test('the bank in the repository passes', () => {
   const loaded = bank.loadBank(root);
   assert.deepEqual(loaded.errors, []);
-  assert.deepEqual(bank.staleReadmes(loaded), []);
   assert.equal(loaded.cards.length, 23);
   assert.equal(loaded.groups.length, 6);
   assert.ok(loaded.roles.some(role => role.id === 'inference-engineer'));

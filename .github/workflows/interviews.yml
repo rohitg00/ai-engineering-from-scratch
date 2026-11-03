@@ -38,10 +38,22 @@ jobs:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Front matter, sections, links, numbers, denylist, evidence and generated READMEs
+      - name: A pull request leaves the generated READMEs to main
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          changed=$(git diff --name-only "origin/${BASE_REF}...HEAD" | grep -E '^interviews/(README\.md|scenarios/README\.md|questions/[^/]+/README\.md)$' || true)
+          if [ -n "$changed" ]; then
+            echo "These files are generated on main after each merge. Restore them with git checkout origin/${BASE_REF} -- <file>:"
+            echo "$changed"
+            exit 1
+          fi
+      - name: Front matter, sections, links, numbers, denylist and evidence
         run: node scripts/interviews/validate.js
       - name: Each validator rule fails with a clear message
         run: node --test scripts/interviews/test_validate.js
@@ -49,3 +61,49 @@ jobs:
         run: node --test site/test_interviews.js
       - name: No answer shows outside a folded answer, same bytes twice
         run: node site/build-interviews.js --check
+
+  readmes:
+    name: generated READMEs (main only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: validate
+    if: github.event_name == 'push'
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          ref: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: make the READMEs and push them if they changed
+        env:
+          BOT_COMMIT_PREFIX: "chore(interviews): regenerate the generated READMEs"
+        run: |
+          node scripts/interviews/validate.js --write --check-readmes
+          git add -A interviews
+          if git diff --cached --quiet; then
+            echo "the generated READMEs are current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "$BOT_COMMIT_PREFIX"
+          branch="${GITHUB_REF#refs/heads/}"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${branch}"; then
+              exit 0
+            fi
+            git fetch origin "${branch}"
+            git reset --hard "origin/${branch}"
+            node scripts/interviews/validate.js --write --check-readmes
+            git add -A interviews
+            if git diff --cached --quiet; then
+              echo "main already has current READMEs"
+              exit 0
+            fi
+            git commit -m "$BOT_COMMIT_PREFIX"
+          done
+          echo "push failed after 5 attempts; the next push to main makes them again"

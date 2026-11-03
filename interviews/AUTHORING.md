@@ -20,7 +20,7 @@ interviews/
   loops/<role-id>.md                optional: the rounds of one interview loop
 ```
 
-Do not edit a generated README. Run the validator with `--write` to make it again.
+Do not edit or commit a generated README. CI makes them again on main after each merge, so a pull request that changes one only causes conflicts with the other open pull requests. The interview bank check fails a pull request that changes one.
 
 ## Cards and groups
 
@@ -215,11 +215,10 @@ A loop file `loops/<role-id>.md` gives the rounds of one interview loop for one 
 ## Validate
 
 ```bash
-node scripts/interviews/validate.js --write
 node scripts/interviews/validate.js
 ```
 
-The first command writes the generated READMEs and then checks the bank. The second command checks the bank, as CI does. The validator checks:
+This command checks the bank, as CI does. To preview the generated READMEs, run it with `--write`. Before you commit, restore them with `git checkout -- interviews/README.md interviews/scenarios/README.md 'interviews/questions/*/README.md'`. The validator checks:
 
 - the front matter keys and values, and the order of the body sections;
 - the shape of the follow-ups and the wrong answers;
@@ -229,4 +228,4 @@ The first command writes the generated READMEs and then checks the bank. The sec
 - the denylist, and that no file has an em dash or an en dash;
 - that each evidence listing matches its source;
 - that the prompt does not show a span of an answer;
-- that each generated README is current.
+- with `--check-readmes`, that each generated README is current. The main-only CI job uses this.
