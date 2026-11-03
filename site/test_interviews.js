@@ -4,9 +4,15 @@ const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 const interviews = require('./build-interviews');
+const code = require('./lib/code');
 const { writeHubSitemaps, hubLlms } = require('./build');
 
-const built = interviews.buildInterviews();
+let built;
+
+test.before(async () => {
+  await code.init();
+  built = interviews.buildInterviews();
+});
 const config = require('../vercel.json');
 const ORIGIN = 'https://aiengineeringfromscratch.com';
 
@@ -67,22 +73,39 @@ test('a scenario page holds every evidence listing in order, each a step for the
       assert.ok(at > last, `${entry.name} order`);
       last = at;
       const evidence = item.evidence.find(file => file.name === entry.name);
-      const first = evidence.listing.split('\n')[0].trim().slice(0, 40).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-      assert.ok(html.includes(first), `${entry.name} listing is missing`);
+      const first = evidence.listing.split('\n')[0].trim().slice(0, 40);
+      assert.ok(interviews.visibleText(html).includes(first), `${entry.name} listing is missing`);
     });
     assert.match(html, /data-ev-next/);
     assert.match(html, /<dl class="iv-spec">/);
   }
 });
 
-test('code blocks go through one renderCode function with the PR 1 signature', () => {
+test('code blocks go through the shared code renderer', () => {
   const block = interviews.renderCode('a = 1', 'python', { label: 'main.py' });
-  assert.match(block, /^<div class="iv-code" data-kind="code" data-lang="python">/);
-  assert.match(block, /main\.py/);
-  assert.match(block, /data-copy/);
-  assert.equal(/data-copy/.test(interviews.renderCode('log line', 'text')), false);
-  assert.equal(/data-copy/.test(interviews.renderCode('x', 'python', { copy: false })), false);
-  assert.equal(/data-code=/.test(block), false, 'Copy reads the code element, so the code is not repeated in an attribute');
+  assert.equal(block, code.render('a = 1', 'python', { label: 'main.py' }));
+  assert.match(block, /^<div class="cb" data-kind="code" data-lang="python">/);
+  assert.match(block, /cb-copy/);
+  assert.equal(/cb-copy/.test(interviews.renderCode('log line', 'text')), false);
+  const html = page('/interviews/inference-serving/kv-pool-users-fit').html;
+  assert.match(html, /<div class="cb" data-kind="output" data-lang="text">/);
+  assert.match(html, /\/code\.css\?v=[0-9a-f]{16}/);
+  assert.match(html, /\/code-copy\.js\?v=[0-9a-f]{16}/);
+});
+
+test('the search index gets every item with the prompt only, never an answer', () => {
+  const records = interviews.searchRecords(built);
+  assert.equal(records.length, built.items.length);
+  for (const item of built.items) {
+    const record = records.find(entry => entry.url === itemHref(item));
+    assert.ok(record, item.id);
+    assert.deepEqual(record.filters.type, ['Interview']);
+    assert.deepEqual(record.filters.level, [String(item.data.level)]);
+    assert.ok(record.filters.topic.length === 1 && record.filters.role.length === item.data.roles.length);
+    const prompt = item.kind === 'scenario' ? item.sections.Situation : item.parsed.preamble;
+    assert.ok(record.content.length > 40 && prompt.replace(/`/g, '').replace(/\s+/g, ' ').includes(record.content.slice(0, 30)), item.id);
+    for (const other of built.items) assert.deepEqual(require('../scripts/interviews/validate').sharedSpans(interviews.answerText(other), record.content + record.meta.title), [], `${record.url} holds an answer of ${other.id}`);
+  }
 });
 
 test('two builds give the same bytes', () => {

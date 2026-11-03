@@ -119,28 +119,11 @@
     render(false);
   }
 
-  function setupCopy() {
-    document.addEventListener('click', function (event) {
-      var button = event.target.closest && event.target.closest('[data-copy]');
-      if (!button) return;
-      var block = button.closest('.iv-code');
-      var code = block && block.querySelector('code');
-      if (!code || !navigator.clipboard) return;
-      navigator.clipboard.writeText(code.textContent).then(function () {
-        button.textContent = 'Copied';
-        setTimeout(function () { button.textContent = 'Copy'; }, 1400);
-      }, function () {
-        button.textContent = 'Select and copy';
-      });
-    });
-  }
-
   function start() {
     var page = document.querySelector('.iv-page');
     if (!page) return;
     setupFilters(page);
     setupEvidence(page);
-    setupCopy();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);

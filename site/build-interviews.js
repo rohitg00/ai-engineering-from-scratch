@@ -4,6 +4,7 @@ const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const markdown = require('./lesson-markdown');
+const code = require('./lib/code');
 const bankLib = require('../scripts/interviews/validate');
 const { SITE_HEADER } = require('./build-hubs');
 const { versionHtml } = require('./version-assets');
@@ -17,8 +18,8 @@ const CARD = 'page/interviews';
 const API_FILE = 'interviews.json';
 const FONT_LINK = 'https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap';
 const THEME_SCRIPT = "(function(){var r=document.documentElement,s='';try{s=localStorage.getItem('theme')||'';}catch(_){}r.setAttribute('data-theme',s||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));function i(){var e=document.getElementById('themeIcon');if(e)e.textContent=r.getAttribute('data-theme')==='light'?'N':'D';}document.addEventListener('DOMContentLoaded',function(){i();var b=document.getElementById('themeToggle');if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}i();});});})();";
-const HEAD_ASSETS = '<link rel="stylesheet" href="/style.css">\n<link rel="stylesheet" href="/interviews.css">';
-const BODY_ASSETS = '<script src="/header.js" defer></script>\n<script src="/interviews.js" defer></script>';
+const HEAD_ASSETS = '<link rel="stylesheet" href="/style.css">\n<link rel="stylesheet" href="/code.css">\n<link rel="stylesheet" href="/interviews.css">';
+const BODY_ASSETS = '<script src="/header.js" defer></script>\n<script src="/code-copy.js" defer></script>\n<script src="/interviews.js" defer></script>';
 const FOOTER_LINKS = [['/interviews', 'Interviews'], ['/practice', 'Practice'], ['/cheatsheets', 'Cheat Sheets'], ['/manuals', 'Manuals'], ['/catalog', 'Catalog'], ['/roadmap', 'Roadmap'], ['/glossary', 'Glossary'], ['/about', 'About']];
 const ROUND_LABELS = { screen: 'Screen', coding: 'Coding', 'take-home': 'Take-home', 'system-design': 'System design', 'design-review': 'Design review', debugging: 'Debugging', 'ml-depth': 'ML depth', 'ml-breadth': 'ML breadth', behavioral: 'Behavioral', customer: 'Customer' };
 const { KIND_LABELS, LEVELS, SCENARIO_CARD } = bankLib;
@@ -36,15 +37,8 @@ function sha(text) {
   return crypto.createHash('sha256').update(text).digest('hex').slice(0, 16);
 }
 
-function renderCode(source, lang, opts = {}) {
-  const name = lang || 'text';
-  const output = ['text', 'log', 'ansi'].includes(name);
-  const plain = output || name === 'console';
-  const copy = opts.copy === undefined ? !output : opts.copy;
-  const body = plain ? escapeHtml(source) : markdown.highlightSyntax(escapeHtml(source), name);
-  const label = `<span class="iv-code-lang">${escapeHtml(opts.label || name)}</span>`;
-  const extra = opts.extra || '';
-  return `<div class="iv-code" data-kind="${output ? 'output' : 'code'}" data-lang="${escapeHtml(name)}"><div class="iv-code-head">${label}${extra}${copy ? '<button class="iv-copy" type="button" data-copy>Copy</button>' : ''}</div><pre><code>${body}</code></pre></div>`;
+function renderCode(source, lang, opts) {
+  return code.render(source, lang, opts);
 }
 
 function manualSlug(text) {
@@ -94,35 +88,7 @@ function localizeLinks(html) {
 }
 
 function renderMarkdown(md, file, root) {
-  const text = rewriteLinks(md, file, root);
-  const out = [];
-  let prose = [];
-  let code = null;
-  const flush = () => {
-    if (prose.join('').trim()) out.push(localizeLinks(markdown.parseMd(prose.join('\n'))));
-    prose = [];
-  };
-  for (const line of text.split('\n')) {
-    if (code) {
-      if (/^```\s*$/.test(line)) {
-        out.push(renderCode(code.lines.join('\n'), code.lang));
-        code = null;
-      } else {
-        code.lines.push(line);
-      }
-      continue;
-    }
-    const open = /^```([a-z0-9-]*)\s*$/.exec(line);
-    if (open) {
-      flush();
-      code = { lang: open[1], lines: [] };
-      continue;
-    }
-    prose.push(line);
-  }
-  if (code) out.push(renderCode(code.lines.join('\n'), code.lang));
-  flush();
-  return out.join('\n');
+  return localizeLinks(markdown.parseMd(rewriteLinks(md, file, root), { renderCode }));
 }
 
 function inline(md, file, root) {
@@ -533,10 +499,35 @@ function checkInterviews(built) {
     const apiLeaks = bankLib.sharedSpans(answers, built.api);
     if (apiLeaks.length) problems.push(`${API_FILE}: shows an answer of ${item.card}/${item.id}: "${apiLeaks[0]}"`);
   }
+  const records = searchRecords(built);
+  for (const item of built.items) {
+    const answers = answerText(item);
+    for (const record of records) {
+      const recordLeaks = bankLib.sharedSpans(answers, `${record.meta.title}\n${record.content}`);
+      if (recordLeaks.length) problems.push(`search record ${record.url}: shows an answer of ${item.card}/${item.id}: "${recordLeaks[0]}"`);
+    }
+  }
   return problems;
 }
 
-function main(argv) {
+function searchRecords(built) {
+  const { interviewRecord } = require('./build-search');
+  return built.items.map(item => interviewRecord({
+    url: itemHref(item),
+    title: item.data.title,
+    content: plainText(item.kind === 'scenario' ? item.sections.Situation : item.parsed.preamble),
+    topic: built.cardMap.get(item.card).title,
+    level: String(item.data.level),
+    role: item.data.roles.map(id => built.roles.find(role => role.id === id).title),
+  }));
+}
+
+function interviewSearchRecords(root = REPO_ROOT) {
+  return searchRecords(loadBuilt(root));
+}
+
+async function main(argv) {
+  await code.init();
   if (argv.includes('--check')) {
     const built = buildInterviews();
     const second = buildInterviews();
@@ -552,6 +543,11 @@ function main(argv) {
   return 0;
 }
 
-if (require.main === module) process.exitCode = main(process.argv.slice(2));
+if (require.main === module) {
+  main(process.argv.slice(2)).then(status => { process.exitCode = status; }, error => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
 
-module.exports = { buildInterviews, writeInterviews, checkInterviews, renderCode, renderMarkdown, siteUrl, visibleText, answerText, BASE, API_FILE };
+module.exports = { buildInterviews, writeInterviews, checkInterviews, searchRecords, interviewSearchRecords, renderCode, renderMarkdown, siteUrl, visibleText, answerText, BASE, API_FILE };
