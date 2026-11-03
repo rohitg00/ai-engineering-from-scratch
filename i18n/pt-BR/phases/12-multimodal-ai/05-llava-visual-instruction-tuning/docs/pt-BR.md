@@ -87,7 +87,7 @@ LLaVA-1.5 (outubro de 2023) acrescentou:
 - Uma variante HD que divide a grade no jornal, que LLaVA-NeXT enviou mais tarde como AnyRes.
 
 LLaVA-NeXT ( janeiro de 2024) acrescentou:
-- AnyRes: dividir imagens de alta resolução em uma grade de 2x2 ou 1x3 de 336x336 culturas, mais uma miniatura global de baixa resolução. Cada cultura se torna 576 tokens; total de cerca de 2880 tokens visuais por imagem.
+- AnyRes: divide imagens de alta resolução em uma grade de 2x2 ou 1x3 de 336x336 culturas, mais uma miniatura global de baixa resolução. Cada colheita se torna 576 tokens. Uma grade de 2x2 mais a miniatura dá cerca de 2880 tokens visuais por imagem. Uma grade de 1x3 tem menos culturas, por isso custa menos tokens. As tarefas OCR e gráfico saltaram.
 - Melhor mistura de dados de instrução com ShareGPT4V (captions GPT-4V de alta qualidade).
 - Mestrado em Direito Jurídico de base mais forte (Mistral-7B, Yi-34B).
 
@@ -99,7 +99,7 @@ A lição 12.08 abrange OneVision em profundidade. versão curta: o mesmo projet
 
 | | Q-Former (BLIP-2) | MLP (LLaVA) |
 |---|---|---|
-| Visual tokens per image | 32 | 576 (base) or 2880 (AnyRes) |
+| Visual tokens per image | 32 | 576 (base) or about 2880 (AnyRes, 2x2 grid) |
 | Trainable params | 188M + LM | ~22M (7B) + LM |
 | Stage 1 loss | ITC+ITM+ITG | LM only |
 | LLM drop-in | Requires retrain | Swap with minimal retrain |
@@ -115,7 +115,7 @@ O MLP ganha na simplicidade e flexibilidade de tokens. Q-Former ganha no orçame
 A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. USER: <image> Describe this image in detail. ASSISTANT: The image shows ...
 ```
 
-`<image>`O Tokenizer vê uma sequência ligeiramente mais longa do que foi treinado, mas o LLM lida com a nova entrada porque a etapa 1 ensinou a.
+`<image>`O Tokenizer vê uma sequência ligeiramente mais longa do que foi treinado, mas o LLM lida com a nova entrada porque a etapa 1 ensinou-o a.
 
 ### Economia de parâmetros
 
