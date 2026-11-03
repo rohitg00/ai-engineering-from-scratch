@@ -29,9 +29,9 @@ source:
 
 ## Situation
 
-A team trains with GRPO on one GB10. Their runs with a 0.6B model work, so they move to `Qwen/Qwen3-4B` for better rewards. The run starts, loads both the trainer and the engine, and finishes its first rollout. Then it stops in the training phase of that same step, about 15 minutes after the start. The log has no CUDA out-of-memory error.
+A team trains with GRPO on one GB10. Their runs with a 0.6B model work, so they move to `Qwen/Qwen3-4B` for better rewards. The run starts, loads the trainer, loads the engine, and finishes its first rollout. Then it stops in the training phase of that same step, about 15 minutes after the start. The log has no CUDA out-of-memory error.
 
-The on-call engineer finds a Ray message that names the node, not a GPU, and lists three processes. The plan on the ticket has two steps: raise the Ray memory threshold, and lower the engine memory fraction so the trainer gets more room. A second run with the fraction at 0.2 dies the same way.
+The on-call engineer finds a Ray message that names the node, not a GPU, and lists three processes. The plan on the ticket has two steps: raise the Ray memory threshold, and give the engine a smaller memory fraction so the trainer gets more room. A second run with the fraction at 0.2 dies the same way.
 
 ## Evidence
 

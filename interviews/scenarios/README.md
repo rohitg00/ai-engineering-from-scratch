@@ -28,7 +28,7 @@ Measured incidents from our manuals. Read the evidence one listing at a time and
 | [Four failed starts after a pip install](pip-install-four-failed-starts/README.md) | 2 Working | SGLang 0.5.22 from pip, and vLLM 0.31.0 from a uv install, a node with two L4 GPUs, an NVIDIA driver and no CUDA toolkit | 20 |
 | [An hour of polling a task that waited for us](polling-a-parked-task/README.md) | 2 Working | A2A 1.0.1 with the manual's capture kit (the test-runner, code-reviewer and deployer agents), one machine, localhost, no network | 20 |
 | [The radix cache turned off for predictability](radix-cache-off-for-predictability/README.md) | 2 Working | SGLang 0.5.22, with vLLM 0.31.0 as the second engine, one GB10 with 128 GB of unified memory, and one L4 with 24 GB of memory | 20 |
-| [A request ID at the top of the prompt](request-id-at-prompt-start/README.md) | 2 Working | SGLang 0.5.22, one L4 with 24 GB of memory, and a GB10 as the second machine | 15 |
+| [A request ID that opens the prompt](request-id-at-prompt-start/README.md) | 2 Working | SGLang 0.5.22, one L4 with 24 GB of memory, and a GB10 as the second machine | 15 |
 | [A resumed run that started from step 0 in silence](resume-that-started-fresh/README.md) | 2 Working | Miles main 08752a12 with its own SGLang 0.5.22 build, one GB10 with 128 GB of unified memory | 20 |
 | [A reward import error and a run that never stopped](reward-module-not-found-run-hangs/README.md) | 2 Working | Miles main 08752a12 with its own SGLang 0.5.22 build, one GB10 with 128 GB of unified memory | 20 |
 | [A rolling update that dropped every running answer](sigterm-to-the-process-group/README.md) | 2 Working | SGLang 0.5.22 on its MLX path, one laptop with unified memory, which captures no CUDA graphs | 20 |
