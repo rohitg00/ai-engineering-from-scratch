@@ -54,7 +54,7 @@ Read the usage fields on every response: the tokens written to the cache and the
 ## Wrong answers
 
 - "Caching always saves money." A prefix written once and never read costs 25 percent more than no cache.
-- "Pick the one-hour cache, it lasts longer." It doubles the write premium, so a block read once costs more than without the cache.
+- "Pick the one-hour cache, it lasts longer." It writes at twice the normal input price, so a block read once costs more than without the cache.
 - "Mark the whole prompt as cacheable." The user message changes every time, so the match ends at the first differing token, and a block below the minimum size does not cache at all.
 
 ## Taught in

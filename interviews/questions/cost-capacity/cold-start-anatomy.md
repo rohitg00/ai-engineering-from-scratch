@@ -20,7 +20,7 @@ A pod serving an MoE model on a unified-memory machine took about eight minutes 
 
 ## Short answer
 
-Most of the time was the weight load. The manual's log shows about 330 seconds to copy 57 GiB of weights into memory on that machine, one tensor at a time from a file-backed page. The two CUDA graph captures took 39 and 38 seconds, and the compile share of the engine init was 18.67 seconds. A restart reuses the compile cache and nothing else, so a warm restart on that machine is only a little shorter than the cold one, unless the weights are staged in host memory or a process snapshot exists, which a field report took from a cold start of 695 seconds to 9.6 seconds.
+Most of the time was the weight load. The manual's log shows about 330 seconds to copy 57 GiB of weights into memory on that machine, one tensor at a time from a file-backed page. The engine init took 127.54 seconds, and it holds the two CUDA graph captures of 39 and 38 seconds and a compile share of 18.67 seconds. A restart reuses the compile cache and nothing else, so a warm restart on that machine is only a little shorter than the cold one, unless the weights are staged in host memory or a process snapshot exists, which a field report took from a cold start of 695 seconds to 9.6 seconds.
 
 ## Full answer
 
@@ -29,9 +29,11 @@ Most of the time was the weight load. The manual's log shows about 330 seconds t
 | Phase | Measured | Where it is logged |
 |---|---|---|
 | weight load | 56.93 GiB in about 330 seconds | the model loading line |
-| first graph capture | 39 seconds, 1.17 GiB | the first graph capturing line |
-| second graph capture | 38 seconds, 0.31 GiB | the second graph capturing line |
-| engine init, profile, KV cache, warmup | 127.54 seconds, of which compilation 18.67 | the init engine line |
+| engine init, profile, KV cache, warmup, with both graph captures | 127.54 seconds, of which compilation 18.67 | the init engine line |
+| first graph capture, inside engine init | 39 seconds, 1.17 GiB | the first graph capturing line |
+| second graph capture, inside engine init | 38 seconds, 0.31 GiB | the second graph capturing line |
+
+The two captures finish before the init line, so they are part of its 127.54 seconds. Do not add them to it.
 
 The server reported ready about eight minutes after it read its arguments. The load alone is more than two thirds of it.
 

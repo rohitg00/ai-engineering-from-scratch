@@ -20,7 +20,7 @@ Last quarter a bad model launch took three hours to undo, because the only way b
 
 ## Short answer
 
-Separate the policy from the model. Keep the traffic split in a feature flag that a configuration change flips, and keep the model in a registry under a pinned digest that never upgrades on its own. A rollback is then two actions: revert the flag, and point the pin at the previous digest. Nothing is rebuilt and nothing is redeployed.
+Separate the policy from the model. Keep the traffic split in a feature flag that a configuration change flips, and keep the model in a registry under a pinned digest that never upgrades on its own. A rollback is then two actions: revert the flag, and point the pin at the previous digest, which also restores the prompt and template version pinned with that model. Nothing is rebuilt and nothing is redeployed.
 
 ## Full answer
 

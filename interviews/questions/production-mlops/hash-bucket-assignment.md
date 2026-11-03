@@ -31,6 +31,8 @@ AB_EXPERIMENTS = {
 
 def select_prompt(template_name, user_id, variables):
     versions = PROMPT_TEMPLATES.get(template_name)
+    if not versions:
+        raise ValueError(f"Unknown template: {template_name}")
     version = "v1"
     for exp_name, exp in AB_EXPERIMENTS.items():
         if exp["template"] == template_name:

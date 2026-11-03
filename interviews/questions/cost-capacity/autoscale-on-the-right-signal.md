@@ -37,7 +37,7 @@ GPU load is not CPU load. A saturated engine shows waiting requests above zero a
 | slow first token with nothing waiting | long prompts or a slow tokenizer, not a capacity problem |
 | preemptions with long answers | running requests grow until the pool runs out |
 
-Only the second row is a reason to add a replica. The first row is a configuration change on the existing ones.
+The second row is a reason to add a replica, because the pool is full. On the first row, raise the batch limit or the token budget first, while the pool has room. If the queue stays after that, or the limit is already where the latency target needs it, add a replica, because each replica brings its own batch limit and token budget.
 
 ### Probes that match a slow start
 

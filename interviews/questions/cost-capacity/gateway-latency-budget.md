@@ -26,7 +26,7 @@ The gateway has at most 20 ms at the tail. An edge-managed gateway at 1 to 3 ms 
 
 ### The budget
 
-The target is 320 ms and the model takes 300 ms, so the gateway may add 20 ms, and that is at the tail. A P99 target means the gateway's own P99, not its median, and a gateway that is quick when idle can be slow under load.
+The target is 320 ms and the model takes 300 ms, so the gateway may add 20 ms, and that is at the tail. A P99 target means the gateway's own P99, not its median, and a gateway that is quick when idle can be slow under load. The sum of the two tails is a screening estimate only. Before you commit to the SLA, measure the end-to-end first-token P99 through the gateway under load.
 
 ### The classes
 

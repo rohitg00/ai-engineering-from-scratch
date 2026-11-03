@@ -20,7 +20,7 @@ A team runs its nightly report pipeline through the same synchronous endpoint as
 
 ## Short answer
 
-Sort every workload by the latency its user accepts, not by where it runs. Interactive work has a user waiting for the first token and stays synchronous with prompt caching, and semi-interactive work returns in minutes through an async queue. Anything a user accepts by morning belongs on the batch API, which gives a 50 percent discount with a return promised within 24 hours and typical in a few hours. The nightly report is batch.
+Sort every workload by the latency its user accepts, not by where it runs. Interactive work has a user waiting for the first token and stays synchronous with prompt caching, and semi-interactive work returns in minutes through an async queue. Anything whose user can wait for the full promise belongs on the batch API, which gives a 50 percent discount with a return promised within 24 hours and typical in a few hours. The nightly report is batch when a return at the 24-hour limit still meets its deadline, or when a synchronous fallback covers a late batch.
 
 ## Full answer
 

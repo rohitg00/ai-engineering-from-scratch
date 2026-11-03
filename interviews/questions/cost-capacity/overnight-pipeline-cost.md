@@ -39,7 +39,7 @@ The lesson's conclusion: batch plus cache comes to about 10 percent of the synch
 - Output tokens take the batch discount only. Caching reuses the prompt's attention state and does nothing for generated tokens, so a job with long outputs and a short prompt saves much less.
 - The first call of a batch pays the cache write premium. Against tens of thousands of reads, it is noise. If the batch runs longer than the cache lifetime, the one-hour variant with its 2x write is worth it once the reads pass five.
 - Check the usage fields on a sample of the results. A batch whose requests all missed the cache shows writes and no reads, and then the second discount never happened.
-- The return is promised within 24 hours and typical within a few hours. By morning is the only requirement here.
+- The return is promised within 24 hours and typical within a few hours. A night is shorter than the promise, so the morning deadline holds only on the typical return. Submit the batch a day ahead, or keep a synchronous fallback for a late batch.
 
 ### When your own GPU wins
 
@@ -60,7 +60,7 @@ The vLLM manual's recipe for an offline job: pass the whole prompt list to the o
 
 - "Batch alone gets you to a tenth of the cost." Batch alone halves the bill. The other factor is the cached shared prompt.
 - "Caching saves the same on output as on input." The cache reuses the prompt's attention state. Every output token is generated and billed in full, less the batch discount.
-- "Batch is too slow for a nightly job." The promise is a day and the typical return is hours. The job is done by morning either way.
+- "Batch is too slow for a nightly job." The promise is a day and the typical return is hours. Submit a day ahead, or keep a synchronous fallback for the rare late batch.
 
 ## Taught in
 

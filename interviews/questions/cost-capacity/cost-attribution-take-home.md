@@ -16,7 +16,7 @@ related: [cost-capacity/cost-per-outcome, cost-capacity/budget-circuit-breaker]
 updated: 2026-11-03
 ---
 
-Take-home. You receive one day of request logs from a multi-tenant assistant. Each record has the tenant, the user, the feature, the model, the token counts, whether the input was cached, and whether the task was resolved. Build a simulator that attributes spend by tenant, task and user, splits the tokens into layers, computes a cost per resolved task per tenant, and enforces a rate limit, a daily spend cap and a kill switch. Inject one abusive tenant and show when each control fires.
+Take-home. You receive one day of request logs from a multi-tenant assistant. Each record follows the lesson's attribution trace: a trace id, a timestamp, the tenant, the user, the task id and its route, the model, the token counts for each of the four layers in the lesson's trace, whether the input was cached, and whether the task was resolved. You also receive the daily spend of each tenant over the previous weeks, as the baseline for the kill switch. Build a simulator that attributes spend by tenant, task and user, splits the tokens into layers, computes a cost per resolved task per tenant, and enforces a rate limit, a daily spend cap and a kill switch. Inject one abusive tenant and show when each control fires.
 
 ## Short answer
 

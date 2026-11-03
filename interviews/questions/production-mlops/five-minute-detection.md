@@ -20,7 +20,7 @@ A regression ships. One of your prompts starts to leak fake customer identifiers
 
 ## Short answer
 
-Instrument every model call with GenAI-convention spans and ship them over OTLP to a collector. Run a cheap pattern check on every output at the collector, run a judge over the sampled traces on a short schedule, write the scores back as eval spans, export the aggregates as metrics, and alert when the leak score crosses a threshold. The five minutes are the sum of the scrape interval, the judge batch window and the alert routing, so each stage has to be short, and the sampler must keep enough traffic to see a one-in-a-hundred event.
+Instrument every model call with GenAI-convention spans and ship them over OTLP to a collector. Run a cheap pattern check on every output at the collector, run a judge over the sampled traces on a short schedule, write the scores back as eval spans, export the aggregates as metrics, and alert when the leak score crosses a threshold. The five minutes are the sum of the scrape interval, the judge batch window and the alert routing, so each stage has to be short, and the sampler must keep enough traffic to see a one-in-a-hundred event. The five-minute target covers only the leaks that the pattern flags or the sampler keeps.
 
 ## Full answer
 
@@ -39,7 +39,7 @@ The capstone's eval job reads the last fifteen minutes of sampled traces. For a 
 
 ### Make the rare event visible
 
-At one leak in a hundred, a sampler that keeps a tenth of the successes sees one leak in a thousand answers. At high volume that is fine, and at low volume it is blind. Run a pattern check for identifier shapes on every output at the collector, as the production application capstone does in its output guardrail, and keep every trace that the check flags. The judge then handles the paraphrased leaks on the sampled share.
+At one leak in a hundred, a sampler that keeps a tenth of the successes sees one leak in a thousand answers. At high volume that is fine, and at low volume it is blind. Run a pattern check for identifier shapes on every output at the collector, as the production application capstone does in its output guardrail, and keep every trace that the check flags. The judge then scores the paraphrased leaks on the sampled share only. A paraphrased leak in an unsampled trace gets no score and fires no alert.
 
 ### The alert chain
 

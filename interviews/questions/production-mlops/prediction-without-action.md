@@ -20,7 +20,7 @@ A model trained on your logs, GPU temperatures and error patterns predicts most 
 
 ## Short answer
 
-A prediction with no action is a dashboard, and nobody watches a dashboard at three in the morning. Write a policy per prediction class: page the on-call, drain the suspect node or pool before it fails, or scale within approved bounds, and record every prediction with its outcome. Start with the page, measure the precision on live incidents, and promote a class to an automatic drain only when its false alarm rate is acceptable.
+A prediction with no action is a dashboard, and nobody watches a dashboard at three in the morning. Write a policy per prediction class: page the on-call, drain the suspect node or pool before it fails, or scale within approved bounds, and record every prediction with its outcome. Start with the page, measure the precision on live incidents, and promote a class to an automatic drain only when its false alarm rate is acceptable and a person has approved that drain as a pre-approved action in the runbook.
 
 ## Full answer
 
@@ -31,7 +31,7 @@ The lesson cites a research result: a model trained on past log lines, GPU tempe
 ### The design
 
 1. **Classify the prediction.** Which failure is coming: a memory exhaustion, a thermal slowdown, a provider error burst. Attach the confidence.
-2. **Map each class to an action from the safe set.** Drain the pod from the load balancer and restart it before it falls over. Scale the pool within approved bounds. Page a person with the prediction and the evidence.
+2. **Map each class to an action.** The lesson's safe set is narrow: restart a pod, revert a deploy, scale within pre-approved bounds. A drain is not on that list, so it needs approval before it runs on its own. Drain the pod from the load balancer and restart it before it falls over. Scale the pool within approved bounds. Page a person with the prediction and the evidence.
 3. **Fit the action into the lead time.** A drain plus a replacement must complete inside the ten to fifteen minutes, so the replacement has to be warm already. A cold start of a large model takes minutes and can eat the whole window.
 4. **Record outcomes.** Every prediction, its class, the action taken and whether the outage happened. Precision and recall per class come from this log, not from the paper.
 5. **Guard the blast radius.** Never run two automatic drains in the same pool at once, and never drain under a load spike without a warm spare.

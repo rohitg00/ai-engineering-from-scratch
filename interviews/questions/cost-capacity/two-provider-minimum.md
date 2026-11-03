@@ -20,7 +20,7 @@ The CTO wants every product-critical model call to survive a full outage of one 
 
 ## Short answer
 
-Put a gateway in front of the application with one model alias per use case, a priority list of two providers behind each alias, and a fallback rule on server errors and rate limits with a bounded retry budget. Keep the cacheable prefix layout, the tool order and the output schema identical on both providers, so that a request that fails over still hits the second provider's cache and still parses. The steady-state uplift is small, because the gateway sends traffic to the preferred provider most of the time, and the real price is paid in evals and prompt tests that run twice.
+Put a gateway in front of the application with one model alias per use case, a priority list of two providers behind each alias, and a fallback rule on server errors and rate limits with a bounded retry budget. Keep the cacheable prefix layout, the tool order and the output schema identical on both providers, so that a failed-over request can hit the second provider's cache once that prefix is cached there, and still parses. The steady-state uplift is small, because the gateway sends traffic to the preferred provider most of the time, and the real price is paid in evals and prompt tests that run twice.
 
 ## Full answer
 

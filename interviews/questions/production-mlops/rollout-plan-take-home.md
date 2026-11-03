@@ -16,7 +16,7 @@ related: [production-mlops/canary-gates-above-noise, production-mlops/canary-sam
 updated: 2026-11-03
 ---
 
-Take-home. You receive a candidate model, a baseline model, and one week of production request logs with the latency, the token counts and the user feedback of each request. Deliver a rollout plan and a simulator that executes it: a shadow phase, a canary ramp with gates, and a rollback. Inject at least two regressions and show where the plan halts for each one.
+Take-home. You receive a candidate model, a baseline model, and one week of production request logs with the latency, the token counts and the user feedback of each request. Deliver a rollout plan and a simulator that executes it: a shadow phase, a canary ramp with gates, and a rollback. Inject at least two regressions and show where the plan halts for each one. The logs hold user feedback only for the responses that users saw, so state how the simulator produces feedback for the candidate.
 
 ## Short answer
 

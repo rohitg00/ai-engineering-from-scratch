@@ -44,7 +44,7 @@ The lesson names three testable axes:
 
 ### The order
 
-Eval first. Then shadow and a canary to prove the variant is stable. Then an A/B test at a 50 percent split when the variant is a distinct alternative. When it is only an improved version of the same behavior, the canary can go to 100 percent without the A/B step.
+Eval first. Then shadow and a canary to prove the variant is stable. Then an A/B test at a 50 percent split when the variant is a distinct alternative. When it is only an improved version of the same behavior, the canary can go to 100 percent without the A/B step. Improved means that the eval showed the gain. The canary gates do not measure task completion, so the skip trusts the eval for it.
 
 ## Follow-ups
 

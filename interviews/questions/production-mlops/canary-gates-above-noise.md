@@ -44,7 +44,7 @@ Before the canary, run two arms of the same baseline model and record the spread
 
 ### Hold each step long enough
 
-The progression runs 1, 10, 25, 50, 75 and 100 percent. Gates check every 5 to 15 minutes. At 1 percent of a load of 1,000 per minute, the canary sees 10 requests per minute, which is 50 to 150 data points per window. That is enough for latency and too few for user feedback. Each step must pause until the gate has its samples.
+The progression runs 1, 10, 25, 50, 75 and 100 percent. Gates check every 5 to 15 minutes. At 1 percent of a load of 1,000 per minute, the canary sees 10 requests per minute, which is 50 to 150 data points per window. That is enough to read latency and errors, but one or two samples decide the P99, so the P99 gate must hold for more than one window. It is too few for user feedback. Each step must pause until the gate has its samples.
 
 ### Keep the exit cheap
 
