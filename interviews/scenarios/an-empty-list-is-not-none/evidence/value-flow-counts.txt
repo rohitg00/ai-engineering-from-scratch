@@ -1,0 +1,25 @@
+title: the _percent_change row of the bundle summary
+source: manuals/reverse-engineering-101/capture/out/11-inspect-evidence-bundle-O1.json
+lines: 237-255
+lang: json
+note: The value_flow object gives counts with a truncated flag, which the callees array does not.
+---
+      "operation": "analyze_function",
+      "confidence": "observed",
+      "authority": "shipped-artifact",
+      "analysis_profile_digest": "3fc72c9b4b78498fb992b938f8f3389dc670244a293c1d40abf5e1d10162ed3b",
+      "retention": "complete-record",
+      "limitation_count": 10,
+      "native_dossier": {
+        "available": true,
+        "procedure_address": "0x100000500",
+        "procedure_name": "_percent_change",
+        "value_flow": {
+          "status": "observed",
+          "truncated": false,
+          "omitted_operations_lower_bound": 0,
+          "known_omitted_inputs": 0,
+          "known_omitted_edges": 0
+        }
+      }
+    }

@@ -1,0 +1,17 @@
+title: the same test on the other engine, cache on and off by shared length
+source: manuals/vllm-101/sections/3-2-make-repeated-prompts-hit-the-prefix-cache.md
+lines: 13-23
+lang: text
+note: Read the 1,024-token row first; the text under the table says why the last two rows need care.
+---
+| Shared prompt tokens, L4 full-clock session | Median TTFT, cache on | Median TTFT, cache off | Output tok/s, on / off |
+|---|---|---|---|
+| none | 408 ms | 392 ms | 113.8 / 113.6 |
+| 256 | 488 ms | 753 ms | 111.5 / 99.1 |
+| 1,024 | 396 ms | 1,213 ms | 106.0 / 70.9 |
+| 2,048 | 410 ms | 2,550 ms | 100.2 / 46.6 |
+| 4,096 | 375 ms | 13,353 ms | 86.8 / 19.6 |
+
+With the cache on, the first token took about 400 ms at every prefix length. With the cache off, the first token grew with the shared part, because every request computed the whole prompt again.
+
+Read the last two rows with care. Without the cache, the GPU throttled. The median clock fell to 1,035 MHz at 2,048 tokens and to 675 MHz at 4,096 tokens. The cleanest comparison is the 1,024-token row, where both runs held 1,410 MHz or more. There the cache cut the first token about 3 times and gave 50 percent more output. The runs with the cache on were on 2026-10-17 and 2026-10-18, and the runs with it off on 2026-10-21.

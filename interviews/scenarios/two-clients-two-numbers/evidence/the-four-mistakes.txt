@@ -1,0 +1,12 @@
+title: the four mistakes that make two runs disagree
+source: manuals/vllm-101/sections/5-1-benchmark-your-server-in-15-minutes.md
+lines: 79-84
+lang: text
+note: Each item is one variable to hold fixed.
+---
+## Avoid the four mistakes
+
+1. **Reusing a warm cache.** With the random dataset and a fixed seed, a second run sends the same prompts. The prefix cache then serves part of them, and the second run looks faster. The next section gives the protocol.
+2. **Letting the model stop early.** Without `--ignore-eos`, some answers end before the output length. The run then measures fewer tokens than you asked for.
+3. **Skipping the warmup.** The first requests after a start pay for compiled kernels and cold caches. Use `--num-warmups` or send a few requests before you measure.
+4. **Ignoring the clock.** A GPU that throttles or that other work shares runs slower. Record `nvidia-smi --query-gpu=clocks.sm,temperature.gpu --format=csv -l 1` during the run. Compare two runs only at similar clocks.

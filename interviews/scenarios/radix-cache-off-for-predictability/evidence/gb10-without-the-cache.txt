@@ -1,0 +1,35 @@
+title: the same run on the GB10 with --disable-radix-cache
+source: manuals/sglang-101/capture/gpu/out-gb10/no-radix-cache-bench-shared-prefix.txt
+lines: 11-39
+lang: text
+note: The input token count is the same as before; compare the duration, the output and the TTFT block.
+---
+============ Serving Benchmark Result ============
+Backend:                                 sglang    
+Traffic request rate:                    inf       
+Max request concurrency:                 8         
+Successful requests:                     64        
+Benchmark duration (s):                  50.26     
+Total input tokens:                      146646    
+Total input text tokens:                 146646    
+Total generated tokens:                  4096      
+Total generated tokens (retokenized):    3916      
+Request throughput (req/s):              1.27      
+Input token throughput (tok/s):          2917.46   
+Output token throughput (tok/s):         81.49     
+Peak output token throughput (tok/s):    200.00    
+Peak concurrent requests:                16        
+Total token throughput (tok/s):          2998.95   
+Concurrency:                             7.99      
+----------------End-to-End Latency----------------
+Mean E2E Latency (ms):                   6278.45   
+Median E2E Latency (ms):                 6122.43   
+P90 E2E Latency (ms):                    6648.68   
+P95 E2E Latency (ms):                    6652.19   
+P99 E2E Latency (ms):                    6653.05   
+---------------Time to First Token----------------
+Mean TTFT (ms):                          2391.67   
+Median TTFT (ms):                        2542.06   
+P90 TTFT (ms):                           3272.33   
+P95 TTFT (ms):                           3299.83   
+P99 TTFT (ms):                           3304.86   

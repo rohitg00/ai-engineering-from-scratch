@@ -1,0 +1,7 @@
+title: the pool line of the kit's server, with an explicit fraction
+source: manuals/sglang-101/capture/out/server-default.log
+lines: 61-61
+lang: text
+note: Divide kv_budget by sys_available.
+---
+[2026-10-16 13:58:03] Auto-sized attention KV pool: sys_available=48.49 GB, mlx_limit=51.8 GB, mlx_used=0.31 GB, kv_budget=19.39 GB, bytes_per_slot=114688, pool_size=181574

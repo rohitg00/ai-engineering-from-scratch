@@ -1,0 +1,9 @@
+title: what the manual records about the load of that day and the guard
+source: manuals/sglang-101/sections/7-2-sglang-as-an-rl-rollout-engine.md
+lines: 172-174
+lang: text
+note: Read the share of time the container spent paused, and which numbers the authors still trust.
+---
+We ran the same 48 steps twice more, with `MILES_SEED=2` and `MILES_SEED=3`. The variable sets the train seed and the rollout seed. The GB10 shut down three times under this load on 2026-10-18, and its boot list shows three short boots that day. So these runs had a guard. A script paused the container when the GPU reached 84 C, or 80 C in the first 30 minutes. It resumed the container after about 45 to 60 seconds, at 72 C or below.
+
+Over the 9.3 hours of seeds 2 and 3, the container was paused for about 58 percent of the time. A pause stops the process and does not change its arithmetic. So we read the reward, the lengths, the cut share, and the log-probability gap as valid. We did not test this with a paused and an unpaused run of the same seed. The rollout times are not, and we do not report them for seeds 2 and 3.

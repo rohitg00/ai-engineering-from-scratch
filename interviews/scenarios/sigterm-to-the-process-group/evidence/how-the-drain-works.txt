@@ -1,0 +1,7 @@
+title: what the server does on a SIGTERM to its main process
+source: manuals/sglang-101/sections/7-1-operating-sglang.md
+lines: 98-98
+lang: text
+note: Read the flag, the two timers and the order of the steps.
+---
+On SIGTERM, the HTTP server sets `gracefully_exit`, and `/health` starts to return 503. A watchdog in the tokenizer manager checks the flag every 5 s {{code}}. It then logs the remaining requests every 5 s until none remain. Then it sends `ShutdownReq` to the schedulers and gives them 15 s to exit before it kills them. [Figure 7.1](#fig-7-1) shows this path and the two paths that skip the drain.

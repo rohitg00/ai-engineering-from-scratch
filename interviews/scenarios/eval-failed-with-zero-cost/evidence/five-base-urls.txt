@@ -1,0 +1,13 @@
+title: the base URL of the model runner for each caller
+source: manuals/docker-sandboxes-101/sections/6-5-dmr-compose-models-and-the-mcp-gateway-service.md
+lines: 34-40
+lang: text
+note: The host and a container do not share a base URL.
+---
+| Caller | Base URL | Evidence |
+|---|---|---|
+| a process on the host | `http://localhost:12434` | [capture](manuals/docker-sandboxes-101/capture/out/25-models.json) |
+| a container on Docker Desktop | `http://model-runner.docker.internal` | [capture](manuals/docker-sandboxes-101/capture/out/26-compose-up.txt) |
+| a container on Docker Engine | `http://172.17.0.1:12434` | {{docs-dmr DMR REST API}}, not captured |
+| a process on the host, through the Docker socket | `http://localhost/exp/vDD4.40` | [capture](manuals/docker-sandboxes-101/capture/out/25-model-status.json), `endpointHost` |
+| `docker-agent` inside a sandbox, through its proxy | `http://host.docker.internal:12434` | [capture](manuals/docker-sandboxes-101/capture/out/27-inside-run.txt) |

@@ -1,0 +1,8 @@
+title: sbx kit validate on the v3 source kit
+source: manuals/docker-sandboxes-101/capture/out/13-kit-v3-validate.txt
+lang: console
+note: The error names the generation and the missing builder.
+---
+$ sbx kit validate ./fixtures/kits/hello-kit
+error: kit ./fixtures/kits/hello-kit is a v3 source kit and this load path has no kit builder configured; artifact validation failed
+[exit 1]

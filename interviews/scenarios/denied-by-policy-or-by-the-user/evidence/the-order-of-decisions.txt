@@ -1,0 +1,13 @@
+title: the order the runtime applies to every tool call
+source: manuals/docker-sandboxes-101/sections/5-5-permissions-safety-and-hooks.md
+lines: 86-92
+lang: text
+note: Find the step that decided each of the three commands.
+---
+1. `preempt_yolo` `pre_tool_use` hooks run first, and no mode or allow rule can bypass their deny or ask.
+2. A `deny` pattern blocks the call.
+3. An `allow` pattern approves it.
+4. An `ask` pattern prompts the user.
+5. With no match, the safety mode applies to the call's label.
+6. On a mode ask, default `pre_tool_use` hooks can allow, deny, or ask.
+7. With no decision, the user is asked.

@@ -1,0 +1,8 @@
+title: the two custom lines of the environment inside m101-secret
+source: manuals/docker-sandboxes-101/capture/out/10-env-sentinel.txt
+lines: 4-5
+lang: console
+note: The value of M101_RECV_KEY is the only one that is not the word proxy-managed.
+---
+M101_RECV_KEY=sbx-cs-<rand>
+MCP_SENTINEL_TOKEN_NAME=proxy-managed

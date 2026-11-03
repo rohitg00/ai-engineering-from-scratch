@@ -1,0 +1,7 @@
+title: the FP8 server at startup: weights and pool
+source: manuals/sglang-101/capture/gpu/out-l4/server-load-fp8.log
+lang: text
+note: The weights take 8.81 GB and the pool holds 142369 tokens in one byte per value.
+---
+[2026-10-16 20:33:02] Load weight end. elapsed=2.54 s, type=Qwen3ForCausalLM, quant=fp8, fmt=e4m3, avail mem=13.06 GB, mem usage=8.81 GB.
+[2026-10-16 20:33:05] KV Cache is allocated. dtype: torch.float8_e4m3fn, #tokens: 142369, K size: 4.89 GB, V size: 4.89 GB

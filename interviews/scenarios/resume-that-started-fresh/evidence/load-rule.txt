@@ -1,0 +1,7 @@
+title: the manual's rule for the load flag and the log file
+source: manuals/miles-101/sections/6-3-survive-failures.md
+lines: 25-25
+lang: text
+note: Read what --load must name and what the redirect does to the old log.
+---
+Start the same command again after a failure, with a new log file, such as `> runs/plain-resume.log`. The redirect of [section 1.1](#s-run-grpo-on-one-gpu) empties the old log, and you need it to find the cause of the failure. `--load` names the parent folder, never one `iter_` folder inside it. Miles reads its tracker file to find the last saved step. On the first run, the folder is empty, and Miles starts fresh.

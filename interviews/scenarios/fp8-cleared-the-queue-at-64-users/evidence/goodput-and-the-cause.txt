@@ -1,0 +1,11 @@
+title: what the scheduler log says about 64 users, and the goodput result
+source: manuals/sglang-101/sections/4-3-quantization.md
+lines: 179-183
+lang: text
+note: The target was a first token under 1 s and a time per token under 100 ms.
+---
+The scheduler log of the sweep shows the cause at concurrency 64. The BF16 server ran at most 38 requests, with token usage at 0.99 and 26 requests in the queue. The FP8 server ran all 64 requests at token usage 0.29 with an empty queue. The BF16 throughput fell from 32 to 64 because more requests waited, and each waiting request added its wait to TTFT.
+
+At concurrency 1 the pool size does not matter, and FP8 was still faster: 39.66 ms per token against 60.16 ms. That is the GB10 effect again. Decode on an L4 reads every weight for every token, and FP8 weights are half the bytes.
+
+On this card the goodput result is clear. Our target was TTFT under 1 s and TPOT under 100 ms. BF16 served 0 requests per second within target at concurrency 32 and 64. FP8 served 2.87 requests per second within target at 64.

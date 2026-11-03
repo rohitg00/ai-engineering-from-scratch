@@ -1,0 +1,14 @@
+title: the first two starts: a missing Python header, then no CUDA compiler
+source: manuals/sglang-101/capture/gpu/incidents/l4-toolchain-failures.txt
+lines: 1-8
+lang: text
+note: Read the first error line under each attempt header. The progress bar line repeats the first error.
+---
+=== attempt: out-l4-nopyheaders/server-default.log
+<site-packages>/triton/backends/nvidia/driver.c:9:10: fatal error: Python.h: No such file or directory
+<site-packages>/triton/backends/nvidia/driver.c:9:10: fatal error: Python.h: No such file or directory
+  0%|          | 0/50 [00:00<?, ?it/s]Capturing prefill shape (num_tokens=4096 avail_mem=2.28 GB):   0%|          | 0/50 [00:00<?, ?it/s]<site-packages>/triton/backends/nvidia/driver.c:9:10: fatal error: Python.h: No such file or directory
+=== attempt: out-l4-nonvcc/server-default.log
+[2026-10-16 14:21:19] RuntimeError: Could not find nvcc and default cuda_home='/usr/local/cuda' doesn't exist
+    raise RuntimeError(
+RuntimeError: Could not find nvcc and default cuda_home='/usr/local/cuda' doesn't exist
