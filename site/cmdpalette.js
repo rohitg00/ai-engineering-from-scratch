@@ -732,18 +732,36 @@
     return local.concat(extra);
   }
 
+  function loadPageBatches(results, local, limit, isCurrent) {
+    var pages = [];
+    function next(start) {
+      if (start >= results.length || !isCurrent()) return Promise.resolve(pages);
+      var batch = results.slice(start, start + limit);
+      return Promise.all(batch.map(function (result) { return result.data(); })).then(function (data) {
+        pages = pages.concat(data);
+        if (mergePages(local, pages, limit).length - local.length >= limit) return pages;
+        return next(start + batch.length);
+      });
+    }
+    return next(0);
+  }
+
   function searchPages(query) {
     _pageQuery = query;
     if (!query.trim()) return;
+    function isCurrent() { return _pageQuery === query; }
     loadPagefind().then(function (pagefind) {
-      if (!pagefind || _pageQuery !== query) return null;
+      if (!pagefind || !isCurrent()) return null;
       return pagefind.debouncedSearch(query, {}, 160);
     }).then(function (found) {
-      if (!found || _pageQuery !== query) return null;
-      return Promise.all(found.results.slice(0, PAGE_RESULTS * 2).map(function (result) { return result.data(); }));
-    }).then(function (pages) {
-      if (!pages || !pages.length || _pageQuery !== query || !_isOpen) return;
-      renderResults(mergePages(search(query), pages, PAGE_RESULTS));
+      if (!found || !isCurrent()) return null;
+      var local = search(query);
+      return loadPageBatches(found.results, local, PAGE_RESULTS, isCurrent).then(function (pages) {
+        return { local: local, pages: pages };
+      });
+    }).then(function (merged) {
+      if (!merged || !merged.pages.length || !isCurrent() || !_isOpen) return;
+      renderResults(mergePages(merged.local, merged.pages, PAGE_RESULTS));
     }).catch(function () {});
   }
 
@@ -914,6 +932,7 @@
       lessonPathFromUrl: lessonPathFromUrl,
       lessonChip: lessonChip,
       lessonMeta: lessonMeta,
+      loadPageBatches: loadPageBatches,
     };
   }
 

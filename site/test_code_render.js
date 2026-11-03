@@ -332,3 +332,17 @@ test('the palette turns Pagefind lesson records into lessons and shows each less
   assert.equal(limited.length, 7);
   assert.deepEqual(limited.slice(1).map(entry => entry.url), many.slice(0, 6).map(entry => entry.url));
 });
+
+test('the palette loads Pagefind hits in batches until the extra results are full', async () => {
+  const lessonPath = 'phases/01-math/01-vectors';
+  const local = [{ kind: 'lesson', name: 'Vectors', phaseId: 1, lessonPath, url: '' }];
+  const hit = data => ({ loaded: 0, data() { this.loaded += 1; return Promise.resolve(data); } });
+  const dupes = Array.from({ length: 7 }, () => hit({ url: `/lesson?path=${encodeURIComponent(lessonPath)}`, meta: { title: 'Vectors' }, excerpt: '', filters: { type: ['Lesson'], phase: ['Math'] } }));
+  const unique = Array.from({ length: 9 }, (_, index) => hit({ url: `/practice/p${index}`, meta: { title: `P${index}` }, excerpt: '', filters: { type: ['Practice'] } }));
+  const results = dupes.concat(unique);
+  const pages = await palette.loadPageBatches(results, local, 3, () => true);
+  assert.equal(pages.length, 12);
+  assert.deepEqual(palette.mergePages(local, pages, 3).slice(1).map(entry => entry.url), ['/practice/p0', '/practice/p1', '/practice/p2']);
+  assert.equal(results.slice(12).some(result => result.loaded), false);
+  assert.deepEqual(await palette.loadPageBatches(results, local, 3, () => false), []);
+});
