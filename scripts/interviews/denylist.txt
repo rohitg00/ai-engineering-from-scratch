@@ -1,0 +1,43 @@
+airbnb
+alibaba
+alphabet
+amazon
+anthropic
+apple
+aws
+azure
+baidu
+bytedance
+cerebras
+coreweave
+databricks
+deepmind
+facebook
+google
+groq
+hugging face
+huggingface
+ibm
+instagram
+intel
+lambda labs
+linkedin
+meta platforms
+microsoft
+mistral ai
+netflix
+nvidia
+openai
+oracle cloud
+palantir
+runpod
+salesforce
+scale ai
+snowflake
+stripe
+tencent
+tesla
+tiktok
+together ai
+uber
+xai
