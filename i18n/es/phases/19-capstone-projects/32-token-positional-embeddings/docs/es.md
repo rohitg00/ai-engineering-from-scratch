@@ -68,7 +68,7 @@ emb[p, 2k]     = sin(angle)
 emb[p, 2k + 1] = cos(angle)
 ```
 
-La función no tiene parámetros. Cada posición tiene un vector único. La longitud de onda varía geométricamente entre las dimensiones de las características, por lo que las dimensiones inferiores codifican la posición gruesa y las dimensiones superiores codifican la posición fina.
+La función no tiene parámetros. Cada posición tiene un vector único. La longitud de onda varía geométricamente entre las dimensiones de las características. Las dimensiones inferiores tienen las longitudes de onda más cortas y codifican la posición fina. Las dimensiones superiores tienen las longitudes de onda más largas y codifican la posición gruesa.
 
 La propiedad que se deriva de la elección de `sin`y `cos`juntos es que el vector en posición `p + k`es una función lineal del vector en posición `p`El modelo no necesita un parámetro separado para expresar "mirar cinco tokens atrás".
 

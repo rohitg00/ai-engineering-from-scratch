@@ -47,7 +47,7 @@ La perplejidad es `exp(mean negative log-likelihood per token)`La aplicación ti
 - La media debe estar sobre las posiciones reales de los tokens, no sobre la secuencia de lote.
 - El modelo predice el siguiente token, así que logits en posición `i`predecir el token en posición `i+1`Los errores de una vez a otra aquí son silenciosos: la pérdida sigue en marcha, pero la métrica se vuelve sin sentido.
 
-La evaluación calcula las sumas por lote de `-log p(token)`En el caso de las posiciones que no son de pad y un recuento de tokens por lote, se divide al final. Esto es numéricamente más seguro que la media de perplejidades por lote (que subposa secuencias cortas) y coincide con la definición del libro de texto.
+La evaluación calcula las sumas por lote de `-log p(token)`Esto es numéricamente más seguro que la media de perplejidades por lote (que da a cada lote el mismo peso, por lo que cada token en un lote corto cuenta más que un token en un lote largo) y coincide con la definición del libro de texto.
 
 ## Compatibilidad exacta con la normalización
 
