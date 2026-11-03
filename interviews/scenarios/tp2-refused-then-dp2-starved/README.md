@@ -62,7 +62,7 @@ The second attempt is `--dp-size 2`, two copies of the model behind one controll
 
 The node is not broken. The second card carries another tenant, and both layouts answered that fact in their own way: the balance check stopped the first layout before it loaded, and the second layout gave one copy a pool of 2,925 tokens and then fed it every second request. The team went back to one L4 for production traffic, because it beat the pair at every load, and asked for the pods to move. With two whole cards, they will start `--dp-size 2` again and accept it only after the two `#tokens` lines of the `DP0` and `DP1` ranks read about the same.
 
-The measurement that proves the reading is the pair of decode lines: the rank with the small pool held 59 waiting requests while the rank with the large pool used 2 to 7 percent of its pool. Routing by token count raised the pair from 41.7 to 114.7 tokens per second at 64 users and still lost to the single card, so the pool, and not the router, is the limit to fix.
+The pair of decode lines is the evidence for this reading: the rank with the small pool held 59 waiting requests while the rank with the large pool used 2 to 7 percent of its pool. Routing by token count raised the pair from 41.7 to 114.7 tokens per second at 64 users and still lost to the single card, so the pool, and not the router, is the limit to fix.
 
 ## Wrong turns
 
