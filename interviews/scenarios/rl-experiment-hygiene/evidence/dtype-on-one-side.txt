@@ -1,0 +1,17 @@
+title: the log probability gap between the engine and a trainer forward pass, by dtype
+source: manuals/miles-101/capture/gpu/out-l4/logprob-gap-by-dtype.txt
+lines: 10-20
+lang: text
+note: Compare the rows that change the dtype on one side with the row that changes it on both.
+---
+engine   trainer   median    p90      mean     max
+BF16     BF16      0.0073    0.087    0.027    0.355
+BF16     FP16      0.0079    0.053    0.019    0.279
+BF16     FP32      0.0076    0.053    0.019    0.280
+FP16     BF16      0.0085    0.061    0.021    0.265
+FP16     FP16      0.00094   0.010    0.0032   0.033
+FP16     FP32      0.0010    0.0068   0.0024   0.023
+
+FP16 on both sides cuts the median gap about 7.8x against BF16 on both sides, the mean about 8.4x, and the worst token about 10x.
+FP16 on one side only does not help: 0.0079 and 0.0085.
+The BF16 engine stays at about 0.0076 even against FP32, so the BF16 rounding of the engine sets that floor.
