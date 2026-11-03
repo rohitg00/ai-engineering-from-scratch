@@ -20,7 +20,7 @@ Tell me about a project where the evidence turned against your plan. What did yo
 
 ## Short answer
 
-I separate what I observed from what was reported and what I inferred, name the setback and the evidence that changed my understanding, and move the reversible work I am allowed to do while the blocked decision waits. Then I write a short brief for the decision owner: the user problem and the new evidence, at least two options including a cheaper manual or no-build option, the tradeoffs in quality, effort, cost and risk, my recommendation with its remaining uncertainty, and the decision needed with its owner and date.
+I separate what I observed from what was reported and what I inferred, name the setback and the evidence that changed my understanding, and move the reversible work I am allowed to do while the blocked decision waits. Then I write a short brief for the decision owner: the user problem and the new evidence, at least two options including a cheaper manual or no-build option where it is credible, the tradeoffs in quality, effort, cost and risk, my recommendation with its remaining uncertainty, and the decision needed with its owner and date.
 
 ## Full answer
 
@@ -50,7 +50,7 @@ I recommend continue, change or stop against criteria declared in advance. If th
 
 ## Follow-ups
 
-- **Level 3:** Why include a no-build option in every brief? Expected: narrowing the workflow or keeping a manual step can be the better decision; without that option the brief only asks for permission to continue.
+- **Level 3:** Why include a no-build option whenever it is credible? Expected: narrowing the workflow or keeping a manual step can be the better decision; without that option the brief only asks for permission to continue.
 - **Level 3:** What goes next to each number in the outcome comparison? Expected: the sample counts, the exclusions and the evidence links, with the same metric definition and comparable windows for baseline and follow-up.
 - **Level 4:** A simulated walkthrough passed every step. What claim can you make? Expected: a bounded learning claim only; unobserved real-user behavior stays a named gap with the next observation needed to close it.
 - **Level 4:** How do you turn the setback into a change in how the team delivers? Expected: pick one process improvement with an owner and a review date, then keep, revise or retire it on evidence.

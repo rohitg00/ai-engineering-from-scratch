@@ -32,7 +32,7 @@ The base symbols are the 256 raw bytes, so every input has an encoding before an
 4. Apply the merge table to each chunk's bytes in training order, with non-overlapping left-to-right replacement.
 5. Concatenate the ids.
 
-Decoding reverses steps two to five: expand each id to its bytes, where a merged id expands to the bytes of its two parents, and decode the byte string. Normalization is not reversible. A decomposed accent comes back as the composed character, so the round trip is exact only for text that is already in the normalized form.
+Decoding reverses steps two to five: expand each id to its bytes, where a merged id expands to the bytes of its two parents and a reserved special id expands to the UTF-8 bytes of its string, and decode the byte string. Normalization is not reversible. A decomposed accent comes back as the composed character, so the round trip is exact only for text that is already in the normalized form.
 
 ### Why pre-tokenization
 

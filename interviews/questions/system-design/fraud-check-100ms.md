@@ -20,7 +20,7 @@ A payment service must approve, review or block each payment within 100 ms, at 4
 
 ## Short answer
 
-The task is binary classification of fraud probability with three thresholds for approve, review and block, served online because the decision needs the data of the request. At 400 requests a second and 50 ms per request about 20 requests are in flight at any moment, so the service is small, and the budget leaves room for a feature fetch plus the model. Chargeback labels come weeks after the payment, so training uses a time split and features that exist at payment time, and the rollout goes shadow, then canary on a small share, with the heuristic rule as the default on timeout. The two quiet failures are the feedback loop, where blocked payments never get a label, and concept drift, where the same basket changes its fraud risk and only outcome monitors see it.
+The task is binary classification of fraud probability with two thresholds that split the score into approve, review and block, served online because the decision needs the data of the request. At 400 requests a second and 50 ms per request about 20 requests are in flight at any moment, so the service is small, and the budget leaves room for a feature fetch plus the model. Chargeback labels come weeks after the payment, so training uses a time split and features that exist at payment time, and the rollout goes shadow, then canary on a small share, with the heuristic rule as the default on timeout. The two quiet failures are the feedback loop, where blocked payments never get a label, and concept drift, where the same basket changes its fraud risk and only outcome monitors see it.
 
 ## Full answer
 

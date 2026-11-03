@@ -48,7 +48,7 @@ When the entries of a query and a key have unit variance, their dot product has 
 ### Two neighbors of this bug
 
 - No scale at all: at a head size of 64 the raw scores reach the tens and the softmax saturates to one hot rows.
-- `K.T` on a batched tensor: `.T` reverses every axis, so a shape of batch by tokens by features becomes features by tokens by batch and the matmul mixes batches. Swap only the last two axes.
+- `K.T` on a batched tensor: `.T` reverses every axis, so a shape of batch by tokens by features becomes features by tokens by batch. With distinct sizes the matmul raises a shape error, and when the sizes happen to line up it mixes batches without an error. Swap only the last two axes.
 
 ### How the practice checks it
 

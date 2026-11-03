@@ -64,7 +64,7 @@ A second wrong version gives head `h` the columns `h`, `h + H`, `h + 2H` and so 
 
 ## Follow-ups
 
-- **Level 2:** Why does the round-trip test alone not catch the plain reshape bug? Expected: a reshape back to the same shape restores the same bytes, so the inverse passes while the per-element check fails.
+- **Level 2:** Why does the round-trip test catch the plain reshape bug? Expected: `merge_heads` transposes the head and token axes before it reshapes, so it does not undo a plain reshape and the features come back in a different order; only a merge written as a plain reshape would hide the bug.
 - **Level 2:** What does the scale factor become after the split? Expected: the square root of the head size, not of the full feature dimension.
 - **Level 3:** After the split, how does attention run for all heads at once? Expected: as one batched matmul over the leading batch and head axes, so adding heads costs no extra kernel launches.
 

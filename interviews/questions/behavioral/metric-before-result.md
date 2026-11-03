@@ -52,7 +52,7 @@ Speed alone is not enough. Correctness, production writes, operator workload and
 
 ### Decide before you measure
 
-The lesson's example: pass when the correct-service rate is at least 0.9 and the median time is at most 120 seconds; fail on any production write or a correct rate below 0.75; ambiguous when the gain is small with wide variance, which calls for a larger replay set. Offline replay gives repeatability and edge coverage. A bounded pilot gives real behavior and trust. I use the cheapest evidence that answers the current decision and do not expose real users only because the code is ready.
+The lesson's example: pass when the correct-service rate is at least 0.9 and the median time is at most 120 seconds; fail on any production write or a correct rate below 0.75; ambiguous when the gain is small with wide variance, which calls for a larger replay set. A stable correct rate between 0.75 and 0.9 matches none of the three rules, so I also write a rule for it before the replay: it does not pass, and it names the next test. Offline replay gives repeatability and edge coverage. A bounded pilot gives real behavior and trust. I use the cheapest evidence that answers the current decision and do not expose real users only because the code is ready.
 
 ## Follow-ups
 

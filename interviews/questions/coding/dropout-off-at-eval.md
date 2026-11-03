@@ -30,7 +30,7 @@ Find every problem with the inference path and explain what the evaluation funct
 
 ## Short answer
 
-Inverted dropout scales the kept units during training so that inference is the identity, but this inference path multiplies the input by one minus p, which belongs to the non-inverted form and shrinks every activation. It also draws from the generator in inference mode, which changes every later random number and makes two evaluations of the same batches differ. Inference must return the input unchanged and must not touch the generator.
+Inverted dropout scales the kept units during training so that inference is the identity, but this inference path multiplies the input by one minus p, which belongs to the non-inverted form and shrinks every activation. It also draws from the generator in inference mode, which changes every later random number in the run, such as the next training mask and the next probe sample. Inference must return the input unchanged and must not touch the generator.
 
 ## Full answer
 

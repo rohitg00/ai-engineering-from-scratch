@@ -16,7 +16,7 @@ related: [system-design/when-not-ml, system-design/ab-test-prompt-rollout, syste
 updated: 2026-11-03
 ---
 
-You are the reviewer for ML design documents before any training starts. A team hands you a document for a payment fraud check that proposes batch scoring with a three-minute staleness limit, reports an offline AUC, lists a majority-class baseline, and has no rollout section. Walk me through your review: the sections you expect, which gaps block, how you score it, and what you tell the team.
+You are the reviewer for ML design documents before any training starts. A team hands you a document for a payment fraud check that proposes batch scoring, where one job takes an hour, with a three-minute staleness limit, reports an offline AUC, lists a majority-class baseline, and has no rollout section. Walk me through your review: the sections you expect, which gaps block, how you score it, and what you tell the team.
 
 ## Short answer
 

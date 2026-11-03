@@ -26,7 +26,7 @@ Run it in shadow first, on all traffic, logging its answers without showing them
 
 ### Shadow mode
 
-The new prompt runs on 100% of traffic but only its logs are kept. Nobody sees its output. This gives a full comparison of latency, cost per request, guardrail block rate and quality scores against the current version, with no user risk. It is the same first stage that the ML design lesson calls shadow deployment for a model.
+The new prompt runs on 100% of traffic but only its logs are kept. Nobody sees its output. This gives a full comparison of latency, cost per request, guardrail block rate and quality scores against the current version, and users never see a shadow answer. Shadow calls can share the provider quota with live calls, so give them a separate quota or key; otherwise a quota limit can slow or fail live requests. It is the same first stage that the ML design lesson calls shadow deployment for a model.
 
 ### Percentage rollout
 

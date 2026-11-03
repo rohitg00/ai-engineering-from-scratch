@@ -66,7 +66,7 @@ The signals only mean something against metrics defined before the result: outco
 ## Wrong answers
 
 - "Build a dashboard so everyone can see the signals." Visibility without promotion and ownership changes nothing.
-- "Add each lesson learned to the system prompt." Prose is the weakest layer; a test or a permission makes the failure impossible.
+- "Add each lesson learned to the system prompt." Prose is the weakest layer; a permission boundary can make the unsafe action impossible, and a test can block a release that repeats the failure.
 - "Keep every control forever since it was earned." Controls decay and conflict; each one needs a retirement condition and periodic review.
 
 ## Taught in

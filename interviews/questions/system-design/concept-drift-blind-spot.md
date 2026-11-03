@@ -48,7 +48,7 @@ Retraining answers covariate drift into regions with little data. Concept drift 
 
 ### What to do tonight
 
-Move the decision threshold or route more cases to review if the business impact is large, since prior drift and concept drift both respond to a threshold change in the short term. Keep the model; replace it only with labels that describe the new relation.
+Route more cases to review if the business impact is large, as a temporary measure while labels from after the change arrive. A threshold move is the lesson's action for prior drift. For concept drift it helps only when the boundary moved on the same score, and it cannot restore a risk order that changed. Keep the model; replace it only with labels that describe the new relation.
 
 ## Follow-ups
 

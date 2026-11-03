@@ -43,7 +43,7 @@ The reference is the training data or a hand-checked production period, fixed un
 
 - PSI over ten reference-decile bins, with shares clipped to a small value so no bin is empty; conventional bands read below 0.1 as stable and above 0.25 as a significant shift, with the caveat that PSI grows with bins and shrinks with sample size.
 - KS statistic D as the effect size for numeric features, with its p-value from the effective sample size; with large samples the p-value alone flags gaps nobody cares about.
-- Chi-square with Cramér's V for categorical features, which also reacts to a category that appears only in the current window.
+- Chi-square with Cramér's V for categorical features, which also reacts to a category that appears only in the current window. With few events in a cell the p-value is not reliable, so pool rare categories into one bin before the test.
 
 ### Alert policy
 

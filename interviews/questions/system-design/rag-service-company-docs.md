@@ -38,13 +38,13 @@ The summary is the third retrievable modality: a user asks how something is auth
 1. Fire dense and sparse search in parallel, deduplicate by repository, path and symbol.
 2. Rerank the top 50 with a cross-encoder and keep the top 10.
 3. Call the synthesizer with the reranked chunks and a cached system prompt, requiring a file and line anchor on every claim.
-4. Parse the output; a claim without an anchor is re-asked or dropped. Only cited claims return.
+4. Parse the output and check each anchor against the span at the indexed commit; a claim without an anchor, or with a span that is missing or does not support it, is re-asked or dropped. Only verified claims return.
 
 Naive cosine search alone is poisoned by generated boilerplate, monorepo duplication and rarely imported symbols, which is why the hybrid search, the reranker and the graph exist.
 
 ### Freshness
 
-On each webhook compute the symbol-level diff. Re-embed only the chunks whose text changed and recompute graph edges only where imports changed. The budget is a 50-file push searchable in under 60 seconds for the whole fleet, without reprocessing the 2M lines.
+On each webhook compute the symbol-level diff. Re-embed only the chunks whose text changed, recompute the import, call and inheritance edges of the changed symbols, and delete the chunks, summaries and edges of removed files and symbols from every store. The budget is a 50-file push searchable in under 60 seconds for the whole fleet, without reprocessing the 2M lines.
 
 ### Evaluation and budgets
 

@@ -53,7 +53,7 @@ On 800 examples and a tiny body, head only is the right call. On 80,000 examples
 
 - **Level 2:** Why does the frozen body rarely overfit here? Expected: only the head's few parameters move, so the model cannot memorize 640 examples through the body.
 - **Level 2:** Why stratify the split? Expected: so the test set keeps the class balance and precision and recall mean what they say.
-- **Level 3:** Precision matters more than recall for this product. What changes in the design? Expected: the decision threshold on the spam logit, chosen on validation data to trade recall for precision; the training regime stays the same.
+- **Level 3:** Precision matters more than recall for this product. What changes in the design? Expected: the decision threshold on the spam logit, chosen on a validation split held out from the 640 training messages to trade recall for precision, so the 160 test messages stay untouched for the final numbers; the training regime stays the same.
 - **Level 3:** The messages are in a domain the body never saw. Which regime and why? Expected: full or partial fine-tuning, because the frozen features do not carry the domain and the head alone underfits.
 
 ## Wrong answers
