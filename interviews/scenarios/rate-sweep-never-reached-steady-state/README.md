@@ -29,9 +29,9 @@ source:
 
 ## Situation
 
-A platform team must size a fleet of L4 cards for a new chat API. They run a rate sweep against one card with `Qwen/Qwen3-8B`: requests arrive at a fixed rate from 0.5 to 16 per second, each with 512 prompt tokens and 128 output tokens. Every run completes and no request fails. The output rises to 286.6 tokens per second at 4 per second and is still 205.8 at 16. The capacity report concludes that one card serves 16 requests per second, and the fleet plan divides the expected peak by 16.
+A platform team must size a fleet of L4 cards for a new chat API. They run a rate sweep against one card with `Qwen/Qwen3-8B`: requests arrive at a fixed rate from 0.5 to 16 per second, each request with a 512-token prompt and a 128-token answer. Every run completes and no request fails. The output rises to 286.6 tokens per second at 4 per second and is still 205.8 at 16. The capacity report concludes that one card can take 16 requests each second, so the fleet plan divides the expected peak by 16.
 
-You get the report the evening before the purchase order goes out. It shows throughput per rate and the median first token per rate, and it labels that column "latency under load, expected". Nothing in the report says how long each run lasted or what the GPU clock did.
+You get the report the evening before the purchase order goes out. It shows throughput per rate and the median wait for the first token at each rate, and it labels that column "latency under load, expected". Nothing in the report says how long each run lasted or what the GPU clock did.
 
 ## Evidence
 

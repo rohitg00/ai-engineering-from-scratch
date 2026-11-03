@@ -29,7 +29,7 @@ source:
 
 An engineer wants to shrink the log probability gap between the rollout engine and the trainer. The engine runs its Triton attention backend, so she sets the trainer's attention implementation to `triton` as well, with a name she copied from an example. The idea is that two sides with one kernel name agree on more numbers.
 
-The run ends about a minute after the launcher's first line. The trainer prints a `ValueError`, and a fault-tolerance line reports that the trainer's init failed. She asks whether the image is broken and whether to pull another tag.
+The run ends about a minute after the launcher's first line. The trainer prints a `ValueError`, and a line from the fault-tolerance layer says that the trainer's init failed. She asks whether the image is broken and whether to pull another tag.
 
 ## Evidence
 
@@ -48,7 +48,7 @@ The run ends about a minute after the launcher's first line. The trainer prints 
 
 ## Walkthrough
 
-1. **Read the error.** The trainer raised `ValueError: Specified attn_implementation="triton" is not supported`, and it printed the names it accepts: `eager`, `flash_attention_2`, `flash_attention_3`, `flash_attention_4`, `sdpa`, `flex_attention`, and their paged forms. The next line, from the trainer controller, reads `phase=fail` for `fn=init` after 0.7 s. The trainer never came up, and the job said so and stopped. The launcher line at 16:28:41 and the fail line at 16:29:42 are one minute apart. A dead rollout engine, by contrast, leaves the job running for an hour with HTTP 503 errors.
+1. **Read the error.** The trainer raised `ValueError: Specified attn_implementation="triton" is not supported`, and it printed the names it accepts: `eager`, `flash_attention_2`, `flash_attention_3`, `flash_attention_4`, `sdpa`, `flex_attention`, and their paged forms. The next line, from the trainer controller, reads `phase=fail` for `fn=init` after 0.7 s. The trainer never came up, and the job said so and stopped. The launcher line and the fail line are one minute apart. A dead rollout engine, by contrast, leaves the job running for an hour with HTTP 503 errors.
 2. **Match the manual entry.** The troubleshooting page has this symptom: a trainer attention name that the installed transformers library does not accept, such as `triton`. The check is a `ValueError` that lists the accepted implementations, and the fix is to pick one from that list. The manual's runs left the trainer setting at its default.
 3. **See where the name came from.** The engine and the trainer keep two different lists. In the FSDP actor, a bridge to the engine's Triton attention turns on only when the build reports an AMD GPU. On an NVIDIA GPU the value goes straight to the transformers library, which has no attention named `triton`. The example that the engineer copied was for the other kind of GPU.
 4. **Read the contract.** Miles has one pairing where both sides run one kernel: the engine on its `fa3` backend and the trainer on `flash_attention_3`, for the dense Qwen3 models in the contract, and that kernel accepts GPUs with compute capability 8.0 to 9.0. The GB10 is outside that range, so on this machine no setting puts one kernel on the two sides. The manual's advice outside the contract is to watch the gap and lower its sampler part.

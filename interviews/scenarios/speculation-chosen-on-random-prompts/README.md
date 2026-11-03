@@ -29,7 +29,7 @@ source:
 
 An inference team serves `Qwen/Qwen3-8B` on L4 cards to three internal products: a support chat, a math tutor and a code assistant. To pick one decode setting for all three, they benchmark the engine on the random dataset of the benchmark client at 8 users. EAGLE3 roughly halves the time between tokens, and the n-gram method changes nothing. They turn EAGLE3 on for every product and close the n-gram ticket as "no gain".
 
-Two weeks later the support chat reports that at busy hours the first token arrives seconds later than before the change, with no more answers per minute. The math tutor reports the opposite: the service got much faster under load. The code assistant team, which never got n-gram, reads a paper that says n-gram pays on code and asks why it was rejected. You are asked whether one setting can serve all three.
+Two weeks later the support chat reports that at busy hours the first token comes seconds later than before the change, with no more answers per minute. The math tutor reports the opposite: the service got much faster under load. The code assistant team, which never got n-gram, reads a paper that says n-gram pays on code and asks why it was rejected. You are asked whether one setting can serve all three.
 
 ## Evidence
 

@@ -63,7 +63,7 @@ On Monday a customer whose assistant sends a system prompt of about two thousand
 
 ## Resolution
 
-The policy caused the incident. The cache was never what made the benchmark lie; the method was, because the kit reused one seed on one server and never flushed between runs. Removing the cache from production removed the work-saving that the customer's traffic depends on. On the GB10, the shared-prefix run went from a median first token of 690.96 ms to 2542.06 ms and from 141.38 to 81.49 output tokens per second, for the same 146646 input tokens.
+The policy caused the incident. The cache was never what made the benchmark lie; the method was, because the kit reused one seed on one server and never flushed between runs. Removing the cache from production removed the work-saving that the customer's traffic depends on. On the GB10, the shared-prefix run saw its median TTFT go from 690.96 ms to 2542.06 ms, and its output went from 141.38 to 81.49 tokens per second, for the same 146646 input tokens.
 
 The fix is to turn the cache back on, on both engines, and to make the benchmarks predictable by protocol: flush the cache before each run that you compare, use a new seed per run, and record the cached tokens next to the result. Prove the production fix with `#cached-token` in the prefill lines, which should carry most of each shared prompt, and with the median TTFT of the customer's traffic back near the cached level. Keep the manual's one exception: turn the cache off only to test whether a wrong answer comes from reused KV, and try `--kv-canary log` first.
 

@@ -30,7 +30,7 @@ source:
 
 ## Situation
 
-A team that serves `Qwen/Qwen3-8B` on L4 cards runs an engine evaluation before a contract renewal. The load test is the benchmark client's default shape: 64 prompts at 16 users, every prompt 512 tokens and every answer 128 tokens. Engine A reads a P99 inter-token gap of 502 ms and a median first token of 1,499 ms. Engine B reads 81 ms and 1,775 ms. The output is the same, 181.7 against 182.3 tokens per second. The evaluation calls engine A's stream "unusable" and schedules a migration to engine B.
+A team that serves `Qwen/Qwen3-8B` on L4 cards runs an engine evaluation before a contract renewal. The load test is the benchmark client's default shape: 64 prompts with 16 users at once, every prompt 512 tokens and every answer 128 tokens. Engine A reads a P99 inter-token gap of 502 ms and a median first-token wait of 1,499 ms. Engine B reads 81 ms and 1,775 ms. The output is the same, 181.7 against 182.3 tokens per second. The evaluation calls engine A's stream "unusable" and schedules a migration to engine B.
 
 A support engineer points out that production prompts run from a few tokens to several thousand, and that nobody has seen a 500 ms gap in production on engine A. The team repeats the test with the client's length ratio at 0.5 and at 0, where lengths vary, and the two engines change places on the stream metric. You are asked which result is the one to act on.
 

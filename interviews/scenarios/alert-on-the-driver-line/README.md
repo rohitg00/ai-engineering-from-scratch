@@ -30,7 +30,7 @@ source:
 
 A platform team runs SGLang on desktop machines with unified memory, which several teams share. After a memory incident elsewhere, they add an alert rule to the kernel log: page on-call whenever the GPU driver logs `NV_ERR_NO_MEMORY`. On the first afternoon the rule pages nine times between 13:52 and 16:46. Each page is a burst of 3 to 13 identical lines inside one minute, then silence.
 
-On-call finds no user complaint, no failed request and every server healthy. The team proposes to keep the rule and raise its threshold so that only a long burst pages. You review the alert design before the next on-call week, with the burst table, the server log of a start on the same machine and the manual.
+On-call finds no user complaint, no failed request and every server healthy. The team proposes to keep the rule and raise its threshold so that only a long burst pages. You review the alert design before the next on-call week, with the burst table, the server log of one start on that machine and the manual.
 
 ## Evidence
 

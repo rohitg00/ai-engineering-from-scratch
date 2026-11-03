@@ -28,7 +28,7 @@ source:
 
 ## Situation
 
-An engineer wants a faster first token for long prompts on an L4 server that runs `Qwen/Qwen3-8B`. The idea is simple: a prefill chunk twice as large means half as many scheduler turns for a long prompt. They start the server with `--chunked-prefill-size 8192` and leave every other flag at its default.
+An engineer wants long prompts to get their first token sooner on an L4 server that runs `Qwen/Qwen3-8B`. The idea is simple: a prefill chunk twice as large means half as many scheduler turns for a long prompt. They start the server with `--chunked-prefill-size 8192` and leave every other flag at its default.
 
 The server never becomes ready. The log ends with a `RuntimeError` from PyTorch that reads `INTERNAL ASSERT FAILED` and asks the reader to report a bug to PyTorch. The engineer opens a bug report with the PyTorch project and proposes to pin an older PyTorch for the whole fleet. The same server with no chunk flag has served every benchmark run on this card.
 
@@ -56,11 +56,11 @@ The server never becomes ready. The log ends with a `RuntimeError` from PyTorch 
 2. **Check what the pool took.** The failed start allocated a pool of 24,094 tokens, with 1.65 GB each for K and V, the same pool that the sweep servers on this card had. After the pool, 2.90 GB was free. So the pool did not grow with the chunk, and the memory that ran out was memory outside the pool.
 3. **Find the step that failed.** The line `Capturing prefill shape (num_tokens=8192 avail_mem=2.33 GB)` names it. Since the breakable graph for prefill arrived in the CUDA builds, startup captures a prefill graph for each shape up to the chunk size. The largest shape is the chunk itself. A capture of 8192 tokens holds the activations of an 8192-token prefill, and that needed more than the 2.33 GB that was left.
 4. **Compare with a start that worked.** The default start on this card shows the same sequence with a smaller shape. Its pool held 22,939 tokens that day, 2.86 GB was free after the pool, and the first captured shape was `num_tokens=4096` with 2.28 GB available. That capture ended after 48.33 s with 0.83 GB used and 1.45 GB still free. Twice the tokens in the capture asked for more than the whole remainder.
-5. **Read where the default comes from.** The table in the CUDA graphs page gives a chunk of 4096 for a card of 20 to 35 GB, and 8192 only from 60 GB upward. The default is sized to the memory that a capture can expect on that card. The scheduler page measured chunk changes on the GB10 and found no gain at 1 and 2 requests per second, and a loss at 0.5 with a smaller chunk. On the L4 the larger chunk never started, so there is no measurement of its gain.
+5. **Read where the default comes from.** The table in the CUDA graphs page gives a chunk of 4096 for a card of 20 to 35 GB, and 8192 only from 60 GB upward. The default is sized to the memory that a capture can expect on that card. The scheduler page measured chunk changes on the GB10 and found no gain at 1 and 2 requests each second, and a loss at 0.5 with a smaller chunk. On the L4 the larger chunk never started, so there is no measurement of its gain.
 
 ## Resolution
 
-Close the PyTorch report. The assert is a symptom of a capture that an out-of-memory error interrupted, and the cause is the prefill graph for 8192 tokens on a card with 2.33 GB left after the pool. The team kept the default chunk of 4096, and the same server on the same card started and served every run, which is the control that the incident record states.
+Close the PyTorch report. The assert is a symptom of a capture that an out-of-memory error interrupted, and the cause is the prefill graph for 8192 tokens on a card with 2.33 GB left after the pool. The team kept the default chunk of 4096, and that server, on that card, started and served every run, which is the control that the incident record states.
 
 If a larger chunk is still wanted on this card, make room for the capture instead of removing it. Lower `--mem-fraction-static` by one step, so the pool shrinks and the capture has more than 2.33 GB, then read the `Capture target prefill CUDA graph end` line for the memory the capture used. The CUDA graphs page gives the order: fix capture memory with a smaller graph batch size or a lower fraction, and keep graphs on. Then measure the first token at the team's prompt lengths with both chunks before the change ships, because the manual found no gain from a chunk change on the machine where it could run both.
 

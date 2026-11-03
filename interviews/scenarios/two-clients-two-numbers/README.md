@@ -26,7 +26,7 @@ source:
 
 ## Situation
 
-Two engineers evaluate the same vLLM server with `Qwen/Qwen3-0.6B` on a shared L4, for a report that decides whether the team keeps the engine. The first uses the SGLang benchmark client at temperature 0.7, the temperature of the product, and files a median first token of 1,212 ms at 16 users and an output of 331 tokens per second at 64 users. The second uses `vllm bench serve` at temperature 0 and files 1,027 ms and 379 tokens per second for the same server.
+Two engineers evaluate one vLLM server that serves `Qwen/Qwen3-0.6B` on a shared L4, for a report that decides whether the team keeps the engine. The first uses the SGLang benchmark client at temperature 0.7, the temperature of the product, and files a median wait of 1,212 ms for the first token at 16 users and 331 output tokens each second at 64 users. The second uses `vllm bench serve` at temperature 0 and files 1,027 ms and 379 output tokens each second on that server.
 
 The first engineer concludes that the server regressed between the two sessions and asks for a rollback of the last image. The second says the first client is broken. A third teammate ran all three clients, the SGLang client and the two versions of the vLLM client, against one server in interleaved rounds, and hands you the output.
 

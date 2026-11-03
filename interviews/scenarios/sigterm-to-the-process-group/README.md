@@ -29,7 +29,7 @@ source:
 
 A platform team deploys SGLang pods with a rolling update. The container starts the server through a small wrapper script. When the orchestrator asks the pod to stop, the wrapper forwards the signal it receives to its whole process group. Every deploy produces a burst of failed requests. The users who were in the middle of an answer get a broken stream, and the pod log of each stopped server reports a crash, although nothing was wrong with the model.
 
-The on-call engineer reads the end of one log and finds the crash in it. The team has two proposals: raise the termination grace period from 30 s to five minutes, and add a retry in the gateway for the broken streams. You review the evidence before either change ships.
+The on-call engineer reads the end of one log and finds the crash in it. The team has two proposals: raise the grace period for termination from 30 s to five minutes, and add a retry in the gateway for the broken streams. You review the evidence before either change ships.
 
 ## Evidence
 
