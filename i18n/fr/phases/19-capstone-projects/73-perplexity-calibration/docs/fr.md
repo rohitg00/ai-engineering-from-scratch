@@ -53,7 +53,7 @@ L'ECE est biaisée par le nombre de poubelles et la taille de l'échantillon. Av
 
 ## Quel score Brier donne que l'ECE ne donne pas
 
-L'ECE ne se soucie que des lacunes moyennes. Un modèle qui est trop confiant sur la moitié des poubelles et peu confiant sur l'autre moitié peut avoir une faible ECE tout en étant mal calibré localement.
+L'ECE ne se soucie que de l'écart moyen dans chaque poubelle. Il faut l'écart absolu par poubelle, donc les écartés dans les différents poubelles ne s'annulent pas. À l'intérieur d'un coffre, ils peuvent: si certaines prédictions dans un coffre sont trop confiantes et d'autres sont peu confiantes, les moyennes de coffre peuvent correspondre et le coffre n'ajoute presque rien à l'ECE, alors que chaque prédiction est mal calibrée. Le score Brier mesure l'erreur carré contre le vrai résultat par prédiction, donc il pénalise la propagation directement.
 
 Pour les résultats binaires, Brier est `mean((p_i - y_i)^2)`Il se décompose en fiabilité, résolution et incertitude. On calcule le score et la décomposition. Le coureur rapporte le scalaire mais enregistre la décomposition pour le tableau de bord.
 

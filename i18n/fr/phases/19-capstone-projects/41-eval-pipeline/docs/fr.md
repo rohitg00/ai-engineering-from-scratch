@@ -47,7 +47,7 @@ La perplexité est `exp(mean negative log-likelihood per token)`La mise en œuvr
 - La moyenne doit être au-dessus des positions de jetons réels, pas au-dessus de la séquence de lot.
 - Le modèle prédit le prochain jeton, donc logits à position `i`Prédire le jeton en position `i+1`Les erreurs simples sont silencieuses: la perte continue, mais la métrique devient sans sens.
 
-L'évaluation compute des sommes par lot de `-log p(token)`Il est plus sûr que de calculer la moyenne des perplexités par lot (qui sous-pilote les courtes séquences) et correspond à la définition du manuel.
+L'évaluation compute des sommes par lot de `-log p(token)`Il est numériquement plus sûr que la moyenne des perplexités par lot (qui donne à chaque lot un poids égal, donc chaque token dans un court lot compte plus que un token dans un long lot) et correspond à la définition du manuel.
 
 ## Parallèle exacte, avec normalisation
 

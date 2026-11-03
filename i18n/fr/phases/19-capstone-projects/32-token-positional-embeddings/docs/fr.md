@@ -68,7 +68,7 @@ emb[p, 2k]     = sin(angle)
 emb[p, 2k + 1] = cos(angle)
 ```
 
-La fonction n'a pas de paramètres. Chaque position a un vecteur unique. La longueur d'onde varie géométriquement entre les dimensions de la fonction, de sorte que les dimensions inférieures codent la position grossière et les dimensions supérieures codent la position fine.
+La fonction n'a pas de paramètres. Chaque position a un vecteur unique. La longueur d'onde varie géométriquement entre les dimensions de la fonction. Les dimensions inférieures ont les longitudes d'onde les plus courtes et encodent la position fine. Les dimensions supérieures ont les longitudes d'onde les plus longues et encodent la position grossière.
 
 La propriété qui résulte du choix de `sin`et `cos`ensemble est que le vecteur à position `p + k`est une fonction linéaire du vecteur à position `p`Le modèle n'a pas besoin d'un paramètre séparé pour exprimer "regarder cinq jetons".
 
