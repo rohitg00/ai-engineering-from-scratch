@@ -21,7 +21,7 @@ How a model is tuned after training, served to users, and fit into GPU memory.
 
 | Card | Items | Planned |
 |---|---|---|
-| Post-training | 0 | 15 |
+| [Post-training](questions/post-training/README.md) | 24 | 15 |
 | [Inference and serving systems](questions/inference-serving/README.md) | 32 | 30 |
 | [GPU memory, quantization and hardware](questions/gpu-memory-quantization/README.md) | 10 | 15 |
 
@@ -34,7 +34,7 @@ Retrieval, prompts, structured output, evaluation and models that see and hear.
 | [RAG](questions/rag/README.md) | 26 | 15 |
 | [Prompting and structured output](questions/prompting-structured-output/README.md) | 22 | 15 |
 | [Evaluation](questions/evaluation/README.md) | 26 | 15 |
-| Multimodal | 0 | 15 |
+| [Multimodal](questions/multimodal/README.md) | 22 | 15 |
 
 ## Agents
 
@@ -73,10 +73,10 @@ Whole interview rounds: system design, incidents, coding and behavioral question
 
 | Role | Cards |
 |---|---|
-| LLM Product Engineering | 10 |
-| Agent Systems Engineering | 11 |
-| AI Evaluation and Reliability | 10 |
-| AI Data Systems | 9 |
-| Customer AI Deployment | 10 |
+| LLM Product Engineering | 12 |
+| Agent Systems Engineering | 12 |
+| AI Evaluation and Reliability | 12 |
+| AI Data Systems | 11 |
+| Customer AI Deployment | 12 |
 | Developer Experience and Education | 8 |
-| Inference Engineering | 10 |
+| Inference Engineering | 12 |
