@@ -1,0 +1,9 @@
+title: the driver bursts and the position of the manual
+source: manuals/sglang-101/sections/3-2-mem-fraction-static-and-startup-sizing.md
+lines: 136-138
+lang: text
+note: Read the last sentence of the position.
+---
+The bursts are dated 2026-10-16, the day of our first test and sweep starts on the GB10. We did not keep the server logs of that day, so we cannot match each burst to one start. Every server in our later captures became healthy and finished its benchmarks.
+
+**Our position:** on unified memory, the KV pool is memory that the whole machine gives up. Pass `--mem-fraction-static` on purpose, and tell the other users of the machine before you start. Do not alert on the driver line alone. Alert when a server does not become healthy.

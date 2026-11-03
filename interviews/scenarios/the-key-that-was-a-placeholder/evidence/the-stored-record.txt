@@ -1,0 +1,16 @@
+title: the record of M101_RECV_KEY in sbx secret ls
+source: manuals/docker-sandboxes-101/capture/out/10-placeholder.txt
+lines: 20-29
+lang: json
+note: Compare the placeholder field with the masked secret field.
+---
+    {
+      "scope": "global",
+      "targets": [
+        "host.docker.internal",
+        "localhost"
+      ],
+      "env": "M101_RECV_KEY",
+      "placeholder": "sbx-cs-<rand>",
+      "secret": "m101-d**************0000"
+    }

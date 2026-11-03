@@ -1,0 +1,7 @@
+title: why there is a second run: where the TCK posted its JSON-RPC requests
+source: manuals/a2a-101/research/tck-run.md
+lines: 44-44
+lang: text
+note: One paragraph. Find the URL the client built, what the server answered, and how many records that cost.
+---
+Why there is a run 2. The TCK's JSON-RPC client is an `httpx.Client(base_url=<interface url>)` that posts to `"/"` (`tck/transport/jsonrpc_client.py:81-85, 104-105, 138-141`). httpx appends a slash to every base URL and strips the leading slash of the request path (`httpx/_client.py:234` `_enforce_trailing_slash`, `:391-409` `_merge_url`), so every JSON-RPC request went to `http://localhost:41251/a2a/jsonrpc/`, which is not the URL in the card. The kit routes JSON-RPC only at the exact path (`a2a_ref.py:549`) and answers `404 {"error": {"code": 404, "status": "NOT_FOUND", "message": "No such path"}}`; the TCK's own reference SUT declares its JSON-RPC interface at the host root (`sut/a2a-python/sut_agent.py:199`), where `/` and `` are the same URL, so the TCK never meets this itself. 63 of the 85 JSON-RPC records in run 1 fail or skip for this one reason, which says nothing about the kit. Run 2 replaces `"/"` with `self.base_url` in the two `post`/`build_request` calls (`tck-run/tck-jsonrpc-url.patch`), nothing else. On `main` the client still posts to `"/"` but sets `follow_redirects=True` (`main jsonrpc_client.py:85`, commit `c478be0`), which rescues servers that redirect `/path/` to `/path`; the kit answers 404 rather than redirecting, so `main` would see the same 63 failures.

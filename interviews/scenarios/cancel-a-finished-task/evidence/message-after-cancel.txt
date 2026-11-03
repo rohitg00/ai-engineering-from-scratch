@@ -1,0 +1,42 @@
+title: a message sent to the canceled task, and the code it got
+source: manuals/a2a-101/capture/out/10-cancel.http
+lines: 176-211
+lang: text
+note: The message carries the task id and the context id of the canceled task.
+---
+### 4 · SendMessage: to the canceled task
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "766bad07-34c2-4a80-83cc-0f2793fdcab8",
+      "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+      "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Try again"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "error": {
+    "code": -32004,
+    "message": "This operation is not supported",
+    "data": [
+      {

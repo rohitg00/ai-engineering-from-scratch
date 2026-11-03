@@ -1,0 +1,8 @@
+title: the one flag that differed between the runs
+source: manuals/miles-101/capture/gpu/out-gb10/frac-low-kv.txt
+lines: 1-2
+lang: text
+note: The second line gives the fraction of each run.
+---
+# Live check 2026-10-23, Qwen3-0.6B, 1 step, launcher defaults plus one flag.
+# frac-low: --sglang-mem-fraction-static 0.02. frac-check: 0.25. plain: launcher default 0.4.

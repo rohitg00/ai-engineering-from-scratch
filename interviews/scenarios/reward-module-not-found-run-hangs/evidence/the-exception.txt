@@ -1,0 +1,8 @@
+title: the exception from the rollout executor
+source: manuals/miles-101/capture/gpu/out-gb10/custom-rm-noenv-hang.txt
+lines: 6-7
+lang: text
+note: Read the module name in the error and the time of the line.
+---
+(RolloutExecutor pid=2515) [2026-10-23 00:21:09.569 rollout_executor] inference_rollout_train.py:143 - [rollout] Task raised exception: ModuleNotFoundError("No module named 'my_rewards'")
+(RolloutExecutor pid=2515) ModuleNotFoundError: No module named 'my_rewards'

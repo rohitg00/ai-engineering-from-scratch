@@ -1,0 +1,14 @@
+title: the one fact behind the four failures, and the repair for each
+source: manuals/sglang-101/sections/7-1-operating-sglang.md
+lines: 50-57
+lang: text
+note: One numbered item per failed start, in the order the starts failed.
+---
+All four failures come from one fact. SGLang, Triton, and FlashInfer compile kernels on the target machine at startup, and a compiler needs a complete toolchain.
+
+1. Triton compiles a small C helper against the Python headers. The system Python of Ubuntu has no `Python.h`. We changed to a Python build that includes its headers, from `uv`.
+2. SGLang looks for `nvcc` under `/usr/local/cuda`. The pip wheels include `nvcc` 13.4 under `nvidia/cu13` in site-packages, but nothing points to it. We set `CUDA_HOME` to that directory.
+3. FlashInfer then compiled its attention kernels with that `nvcc` against its own bundled headers, and the versions did not match. We installed `flashinfer-jit-cache`, which holds kernels compiled in advance for SM 8.9.
+4. The JIT kernels of SGLang link with `-lcudart` from `$CUDA_HOME/lib64`. The wheel has only `lib/libcudart.so.13`. We made a `CUDA_HOME` with a `lib64` directory that holds `libcudart.so`.
+
+The fifth start served requests. Our GB10 never had this problem, because its DGX operating system has a full toolkit in `/usr/local/cuda`.

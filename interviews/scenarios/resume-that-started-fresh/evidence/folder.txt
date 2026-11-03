@@ -1,0 +1,11 @@
+title: what the checkpoint folder holds after both runs
+source: manuals/miles-101/capture/gpu/out-gb10/resume-check.txt
+lines: 12-16
+lang: text
+note: One tracker file sits next to the iter folders.
+---
+## folder
+iter_0000002
+iter_0000004
+latest_checkpointed_iteration.txt
+rollout

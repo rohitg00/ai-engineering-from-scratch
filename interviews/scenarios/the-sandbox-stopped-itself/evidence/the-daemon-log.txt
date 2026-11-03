@@ -1,0 +1,9 @@
+title: the two auto-stop lines of the daemon log for m101-demo
+source: manuals/docker-sandboxes-101/capture/out/04-auto-stop.txt
+lines: 11-13
+lang: console
+note: Read the level and the msg field of each line.
+---
+$ grep auto-stop daemon.log | grep m101-demo | tail -2
+{"time":"<ts>","level":"INFO","msg":"auto-stop grace period expired, stopping runtime","version":"v0.47.0 0411f50ee4700fe7bd37e6e7e3aced563e850ca9","runtime":"m101-demo"}
+{"time":"<ts>","level":"INFO","msg":"auto-stopped runtime after last session disconnected","version":"v0.47.0 0411f50ee4700fe7bd37e6e7e3aced563e850ca9","runtime":"m101-demo"}

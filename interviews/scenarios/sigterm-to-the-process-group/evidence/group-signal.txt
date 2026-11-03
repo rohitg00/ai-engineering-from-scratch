@@ -1,0 +1,12 @@
+title: the end of the default run, after a SIGTERM to the whole process group
+source: manuals/sglang-101/capture/out/server-default.log
+lines: 565-570
+lang: text
+note: The scheduler child died with exit code -15 before the parent could drain, so the parent took the crash path and killed the tree.
+---
+[2026-10-16 14:01:45] SIGTERM received. signum=None frame=None. Draining requests and shutting down...
+[2026-10-16 14:01:45] Subprocess scheduler_0 (pid=5909) crashed with exit code -15. Triggering SIGQUIT for cleanup...
+[2026-10-16 14:01:45] SIGQUIT received. signum=None, frame=None. It usually means one child failed.
+[2026-10-16 14:01:46] Sleeping 5 seconds before crash diagnostics to let GPU activity settle.
+[2026-10-16 14:01:51] No live scheduler processes found; skipping py-spy and CUDA coredump.
+[2026-10-16 14:01:51] kill_process_tree called: parent_pid=5782, include_parent=True, pid=5782

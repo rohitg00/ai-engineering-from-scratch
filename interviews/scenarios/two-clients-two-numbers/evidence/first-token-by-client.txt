@@ -1,0 +1,15 @@
+title: median TTFT in ms from three clients at two temperatures
+source: manuals/vllm-101/capture/gpu/out-l4/bench-client-bias.txt
+lines: 8-16
+lang: text
+note: Compare the SGLang client column with the vllm bench column on each row.
+---
+Median TTFT in ms, two rounds per cell:
+
+users   temperature   SGLang client    vllm bench       vllm bench, Rust
+1       0             154, 164         149, 150         144, 144
+1       0.7           165, 165         149, 150         150, 150
+16      0             1,077, 1,045     1,033, 1,027     1,088, 1,038
+16      0.7           1,212, 1,089     1,027, 1,038     1,066, 1,042
+64      0             1,688, 1,838     1,624, 1,667     1,674, 1,789
+64      0.7           1,765, 1,726     1,705, 1,675     1,687, 1,879

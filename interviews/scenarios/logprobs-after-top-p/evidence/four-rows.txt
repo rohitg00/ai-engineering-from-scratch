@@ -1,0 +1,11 @@
+title: returned logprob minus the reference, by engine and mode
+source: manuals/miles-101/capture/gpu/out-l4/logprobs-top-p.txt
+lines: 8-12
+lang: text
+note: One row differs from the other three in its median.
+---
+engine and mode                                  returned minus reference, median   median absolute
+vLLM --logprobs-mode raw_logprobs                0.0000                             0.005
+vLLM --logprobs-mode processed_logprobs          +0.0527
+SGLang return_logprob, ORIGINAL_LOGPROB=0        0.0000                             0.0066
+SGLang return_logprob, ORIGINAL_LOGPROB=1        0.0000                             0.0066

@@ -1,0 +1,7 @@
+title: the two runs of the restart check
+source: manuals/miles-101/capture/gpu/out-gb10/resume-check.txt
+lines: 1-1
+lang: text
+note: The first run saves at step 2 on an empty folder. The second run starts with the same flags and runs 4 steps.
+---
+# Live check 2026-10-23, Qwen3-0.6B. ckpt-a: 2 steps with --save /ckpt/run-a --save-interval 20 --load /ckpt/run-a on an empty folder. ckpt-a-resume: same flags, 4 steps.

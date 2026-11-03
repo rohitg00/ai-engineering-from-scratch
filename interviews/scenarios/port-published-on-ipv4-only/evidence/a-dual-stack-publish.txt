@@ -1,0 +1,32 @@
+title: a publish with the protocol named, and the JSON listing
+source: manuals/docker-sandboxes-101/capture/out/05-ports-tcp.txt
+lang: console
+note: Read the host_ip of each record.
+---
+$ sbx ports m101-demo --publish 8080/tcp
+Published 127.0.0.1:<port> -> 8080/tcp
+Published [::1]:<port> -> 8080/tcp
+[exit 0]
+
+$ sbx ports m101-demo --json
+[
+  {
+    "host_ip": "127.0.0.1",
+    "host_port": 18081,
+    "sandbox_port": 8080,
+    "protocol": "tcp4"
+  },
+  {
+    "host_ip": "127.0.0.1",
+    "host_port": "<port>",
+    "sandbox_port": 8080,
+    "protocol": "tcp"
+  },
+  {
+    "host_ip": "::1",
+    "host_port": "<port>",
+    "sandbox_port": 8080,
+    "protocol": "tcp"
+  }
+]
+[exit 0]

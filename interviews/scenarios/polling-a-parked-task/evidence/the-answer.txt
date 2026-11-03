@@ -1,0 +1,24 @@
+title: the message that answers the question
+source: manuals/a2a-101/capture/out/06-input-required.http
+lines: 82-99
+lang: text
+note: Read which ids the message carries and where they came from.
+---
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "096d3737-42f9-4039-8320-a4737c2b3abe",
+      "contextId": "49c5a238-4158-455d-8d63-b2cb39c0ecac",
+      "taskId": "e5c95b09-6d4b-4b3b-8693-91e81472d12f",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "main"
+        }
+      ]
+    }
+  }
+}

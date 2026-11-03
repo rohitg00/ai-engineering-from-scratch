@@ -1,0 +1,24 @@
+title: the expected tool calls of the list-files eval
+source: manuals/docker-sandboxes-101/capture/fixtures/evals/list-files.json
+lines: 13-30
+lang: json
+note: One call to list_directory, and nothing else.
+---
+    {
+      "message": {
+        "agent_name": "root",
+        "message": {
+          "role": "assistant",
+          "tool_calls": [
+            {
+              "id": "call_m101_ls",
+              "type": "function",
+              "function": {
+                "name": "list_directory",
+                "arguments": "{\"path\":\".\"}"
+              }
+            }
+          ]
+        }
+      }
+    },
