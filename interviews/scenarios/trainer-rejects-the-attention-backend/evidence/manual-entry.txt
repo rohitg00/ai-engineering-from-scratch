@@ -1,0 +1,11 @@
+title: the troubleshooting entry for this error
+source: manuals/miles-101/sections/7-1-troubleshoot-by-symptom.md
+lines: 41-45
+lang: text
+note: Cause, check and fix in three lines.
+---
+## The trainer rejects the attention implementation
+
+- **Cause:** a trainer attention name that the installed transformers library does not accept, such as `triton`.
+- **Check:** a `ValueError` that lists the attention implementations transformers accepts.
+- **Fix:** pick one from that list. On our GB10 we left the trainer setting at its default.
