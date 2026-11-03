@@ -54,8 +54,8 @@ Operating a model service: releases, observability, cost, capacity and safety.
 
 | Card | Items | Planned |
 |---|---|---|
-| [Production and MLOps](questions/production-mlops/README.md) | 26 | 15 |
-| [Cost and capacity](questions/cost-capacity/README.md) | 22 | 15 |
+| Production and MLOps | 0 | 15 |
+| Cost and capacity | 0 | 15 |
 | Safety | 0 | 15 |
 
 ## Rounds
