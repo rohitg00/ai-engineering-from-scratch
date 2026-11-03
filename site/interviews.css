@@ -59,6 +59,8 @@
 
 .iv-page a { color: inherit; text-decoration-color: var(--iv-accent); text-underline-offset: 3px; }
 .iv-page a:hover { color: var(--iv-accent); }
+.iv-page p a, .iv-page li a, .iv-page td a { text-decoration: underline; text-decoration-thickness: 1px; }
+.iv-page .iv-row-link, .iv-page .iv-card-name a, .iv-page .iv-crumbs a, .iv-page .iv-pager a, .iv-page .iv-related a { text-decoration: none; }
 .iv-page :focus-visible { outline: 2px solid var(--iv-accent); outline-offset: 2px; }
 .iv-page code { font-family: var(--font-mono); font-size: 0.86em; overflow-wrap: anywhere; }
 .iv-page p code, .iv-page li code { background: var(--code-bg); padding: 0.05em 0.3em; }
@@ -172,6 +174,7 @@
 .iv-card:not(.iv-card-empty):focus-within { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--iv-group, var(--iv-accent)); }
 .iv-card-empty { border-color: var(--iv-rule); box-shadow: none; border-top-color: var(--iv-rule); background: transparent; }
 .iv-card-empty .iv-card-name { color: var(--iv-mute); }
+.iv-card-empty .iv-mix { display: none; }
 .iv-card-top { display: flex; justify-content: space-between; gap: 8px; }
 .iv-card-count { color: var(--iv-mute); }
 .iv-card:not(.iv-card-empty) .iv-card-count { color: var(--iv-ink); }
@@ -226,7 +229,7 @@
 
 .iv-how ol { padding-left: 1.3em; max-width: 46em; }
 .iv-how li { margin: 0.3em 0; }
-.iv-how h2, .iv-sources h2, .iv-related h2 { font-family: var(--font-display); font-weight: 400; font-size: 36px; margin: 0 0 12px; }
+.iv-how h2, .iv-sources h2 { font-family: var(--font-display); font-weight: 400; font-size: 36px; margin: 0 0 12px; }
 
 .iv-crumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0 0 18px; color: var(--iv-mute); }
 .iv-crumbs li + li::before { content: '/'; margin-right: 6px; }
@@ -303,7 +306,11 @@
 
 .iv-taught { border-top: 1px solid var(--iv-ink); padding-top: 14px; }
 .iv-taught p { margin: 0; }
-.iv-related ul { padding-left: 1.1em; }
+.iv-related { padding-top: 0; margin-bottom: 8px; }
+.iv-related h2 { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; color: var(--iv-mute); margin: 0 0 10px; }
+.iv-related ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.iv-related li a { display: inline-block; border: 1px solid var(--iv-rule); padding: 6px 10px; text-decoration: none; font-size: 0.92rem; }
+.iv-related li a:hover { border-color: var(--iv-ink); }
 
 .iv-questions { padding-left: 1.4em; margin: 0; }
 .iv-questions li { margin: 0.4em 0; padding-left: 4px; }
@@ -314,7 +321,8 @@
 .iv-ev h3 { margin: 0; font-size: 1.04rem; font-weight: 600; }
 .iv-ev-note { margin: 4px 0 0; color: var(--iv-soft); font-size: 0.92rem; }
 .iv-ev .iv-code { margin: 0; border-left: 0; border-right: 0; }
-.iv-ev .iv-code pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 360px; }
+.iv-ev .iv-code pre { max-height: 360px; }
+.iv-ev-wrap .iv-code pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 .iv-ev-src { margin: 0; padding: 8px 16px 10px; color: var(--iv-mute); overflow-wrap: anywhere; text-transform: none; letter-spacing: 0; }
 .iv-ev-next { display: flex; flex-wrap: wrap; gap: 10px; }
 
@@ -370,6 +378,11 @@
   .iv-pager-up, .iv-pager a[rel="next"] { text-align: left; }
   .iv-answer-body { padding: 4px 14px 14px; }
   .iv-stats dd { font-size: 36px; }
+  .iv-grid { gap: 12px; }
+  .iv-card-empty { padding: 12px 14px 10px; }
+  .iv-card-empty .iv-card-sum { display: none; }
+  .iv-card-empty .iv-card-name { font-size: 24px; margin: 6px 0 4px; }
+  .iv-card-empty .iv-card-foot { padding-top: 4px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -329,7 +329,8 @@ function evidenceHtml(item, built) {
     const { header } = evidence;
     const anchor = header.lines ? `#L${header.lines.replace('-', '-L')}` : '';
     const source = `<a href="${REPO}/blob/main/${header.source}${anchor}">${escapeHtml(header.source)}${header.lines ? `, lines ${escapeHtml(header.lines)}` : ''}</a>`;
-    return `<section class="iv-ev" data-step="${index + 1}" aria-labelledby="ev-${index + 1}"><div class="iv-ev-head"><span class="iv-ev-n">${index + 1}<span>/${total}</span></span><div><h3 id="ev-${index + 1}">${escapeHtml(entry.label)}</h3><p class="iv-ev-note">${escapeHtml(header.note)}</p></div></div>${renderCode(evidence.listing, header.lang, { label: `evidence/${entry.name}` })}<p class="iv-ev-src">Source: ${source}</p></section>`;
+    const wrap = evidence.listing.split('\n').some(line => line.length > 160) ? ' iv-ev-wrap' : '';
+    return `<section class="iv-ev${wrap}" data-step="${index + 1}" aria-labelledby="ev-${index + 1}"><div class="iv-ev-head"><span class="iv-ev-n">${index + 1}<span>/${total}</span></span><div><h3 id="ev-${index + 1}">${escapeHtml(entry.label)}</h3><p class="iv-ev-note">${escapeHtml(header.note)}</p></div></div>${renderCode(evidence.listing, header.lang, { label: `evidence/${entry.name}` })}<p class="iv-ev-src">Source: ${source}</p></section>`;
   }).join('') + (total > 1 ? `<div class="iv-ev-next" data-ev-controls hidden><button class="iv-btn" type="button" data-ev-next>Show evidence 2 of ${total}</button><button class="iv-btn iv-btn-quiet" type="button" data-ev-all>Show all</button></div>` : '');
 }
 
@@ -515,7 +516,7 @@ function checkInterviews(built) {
     const answers = answerText(item);
     const page = built.pages.find(entry => entry.href === itemHref(item));
     const head = page.html.slice(0, page.html.indexOf('<body'));
-    const shown = visibleText(page.html.slice(page.html.indexOf('<body')).replace(/<section class="iv-ev"[\s\S]*?<\/section>/g, ' '));
+    const shown = visibleText(page.html.slice(page.html.indexOf('<body')).replace(/<section class="iv-ev[ "][\s\S]*?<\/section>/g, ' '));
     const leaks = bankLib.sharedSpans(answers, shown);
     if (leaks.length) problems.push(`${page.href}: an answer shows outside a folded answer: "${leaks[0]}"`);
     const headLeaks = bankLib.sharedSpans(answers, visibleText(head.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, '')));
