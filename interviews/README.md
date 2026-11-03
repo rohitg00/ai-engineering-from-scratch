@@ -10,10 +10,10 @@ The math, the networks and the transformer that every later answer builds on.
 
 | Card | Items | Planned |
 |---|---|---|
-| Math and classical ML | 0 | 15 |
-| Deep learning | 0 | 15 |
-| Transformers | 0 | 15 |
-| Tokenization, sampling and decoding | 0 | 15 |
+| [Math and classical ML](questions/math-classical-ml/README.md) | 22 | 15 |
+| [Deep learning](questions/deep-learning/README.md) | 22 | 15 |
+| [Transformers](questions/transformers/README.md) | 24 | 15 |
+| [Tokenization, sampling and decoding](questions/tokenization-decoding/README.md) | 22 | 15 |
 
 ## Models
 
@@ -42,9 +42,9 @@ Agent loops, protocols, teams of agents, sandboxes and evidence from binaries.
 
 | Card | Items | Planned |
 |---|---|---|
-| Agents | 0 | 15 |
+| [Agents](questions/agents/README.md) | 26 | 15 |
 | Protocols: MCP, A2A and skills | 0 | 15 |
-| Multi-agent systems | 0 | 15 |
+| [Multi-agent systems](questions/multi-agent/README.md) | 20 | 15 |
 | Sandboxes | 0 | 15 |
 | Evidence and reverse engineering | 0 | 15 |
 
@@ -54,8 +54,8 @@ Operating a model service: releases, observability, cost, capacity and safety.
 
 | Card | Items | Planned |
 |---|---|---|
-| Production and MLOps | 0 | 15 |
-| Cost and capacity | 0 | 15 |
+| [Production and MLOps](questions/production-mlops/README.md) | 26 | 15 |
+| [Cost and capacity](questions/cost-capacity/README.md) | 22 | 15 |
 | Safety | 0 | 15 |
 
 ## Rounds
