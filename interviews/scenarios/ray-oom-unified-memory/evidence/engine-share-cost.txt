@@ -1,0 +1,10 @@
+title: what a very small engine share did to the pool and the rollout time
+source: manuals/miles-101/capture/gpu/out-gb10/frac-low-kv.txt
+lines: 3-6
+lang: text
+note: Compare the token pool and the rollout time of the three rows.
+---
+frac-low: max_total_num_tokens=3082 perf/rollout_time': 385.5003604888916 rollout/raw_reward': 0.61328125 steps=1
+frac-check: max_total_num_tokens=211813 perf/rollout_time': 60.696292877197266 rollout/raw_reward': 0.66015625 steps=1
+plain: max_total_num_tokens=347841 perf/rollout_time': 63.839099407196045 rollout/raw_reward': 0.625 steps=12
+frac-low engine line: KV Cache is allocated. dtype: torch.bfloat16, #tokens: 3082, K size: 0.16 GB, V size: 0.16 GB
