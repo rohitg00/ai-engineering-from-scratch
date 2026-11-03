@@ -218,17 +218,6 @@
       "destination": "/practice/:page.html"
     },
     {
-      "source": "/interviews",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": "(?i).*text/markdown.*"
-        }
-      ],
-      "destination": "/agent-pages/interviews/index.md"
-    },
-    {
       "source": "/interviews/:card([a-z0-9-]+)/:page([a-z0-9-]+)",
       "has": [
         {
@@ -592,15 +581,6 @@
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
         },
-        {
-          "key": "Vary",
-          "value": "Accept, Accept-Encoding"
-        }
-      ]
-    },
-    {
-      "source": "/interviews",
-      "headers": [
         {
           "key": "Vary",
           "value": "Accept, Accept-Encoding"

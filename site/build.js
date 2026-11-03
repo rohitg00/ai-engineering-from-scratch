@@ -2638,4 +2638,6 @@ module.exports = {
   renderSponsorsMarkdown,
   serializeFigureProviderManifest,
   writeFigureManifest,
+  writeHubSitemaps,
+  hubLlms,
 };
