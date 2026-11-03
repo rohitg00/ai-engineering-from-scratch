@@ -14,12 +14,17 @@ Batching, the KV cache, prefix caching, schedulers and how to measure a serving 
 | [One token budget instead of two phases](one-token-budget-per-step.md) | Concept | 2 Working | 8 |
 | [Why the KV cache is a pool of 16-token blocks](paged-blocks-and-the-hash-chain.md) | Concept | 2 Working | 8 |
 | [Why the shared part of the prompt goes first](prefix-cache-order.md) | Concept | 2 Working | 8 |
+| [Temperature zero gave two different answers](temperature-zero-two-answers.md) | Concept | 2 Working | 8 |
 | [Choose tensor, pipeline or data parallelism](tensor-pipeline-or-data-parallel.md) | Design | 2 Working | 10 |
 | [From per-position acceptance to tokens per pass](acceptance-length-on-long-answers.md) | Estimate | 3 Senior | 8 |
 | [Pick the EAGLE3 draft depth for your concurrency](eagle3-draft-depth.md) | Trade-off | 3 Senior | 10 |
 | [When an FP8 checkpoint pays](fp8-weights.md) | Trade-off | 3 Senior | 10 |
 | [Should the prefill chunk be smaller](smaller-prefill-chunks.md) | Trade-off | 3 Senior | 10 |
 | [Speculation won the benchmark and lost in production](speculation-on-real-prompts.md) | Debug | 3 Senior | 10 |
+| [What the batch-invariant mode costs](the-cost-of-batch-invariance.md) | Trade-off | 3 Senior | 10 |
 | [A larger token budget at low load](token-budget-at-low-load.md) | Trade-off | 3 Senior | 10 |
+| [Two data-parallel copies served less than one card](two-copies-served-less-than-one.md) | Debug | 3 Senior | 10 |
+| [When prefill-decode disaggregation pays](when-to-split-prefill-and-decode.md) | Design | 3 Senior | 12 |
+| [A disaggregated benchmark that counted empty answers](a-benchmark-that-counted-empty-answers.md) | Code reading | 4 Staff | 10 |
 
 [All cards](../../README.md)

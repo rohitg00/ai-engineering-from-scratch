@@ -22,7 +22,7 @@ How a model is tuned after training, served to users, and fit into GPU memory.
 | Card | Items | Planned |
 |---|---|---|
 | Post-training | 0 | 15 |
-| [Inference and serving systems](questions/inference-serving/README.md) | 15 | 30 |
+| [Inference and serving systems](questions/inference-serving/README.md) | 20 | 30 |
 | GPU memory, quantization and hardware | 0 | 15 |
 
 ## Applications
