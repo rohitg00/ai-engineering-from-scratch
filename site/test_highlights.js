@@ -710,7 +710,7 @@ test('the lesson page loads the highlight scripts and mounts after the table of 
   assert.ok(order.every(at => at > 0));
   assert.deepEqual([...order].sort((a, b) => a - b), order);
   assert.match(html, /<link rel="stylesheet" href="highlights\.css\?v=/);
-  const render = html.slice(html.indexOf('function renderLesson(md)'), html.indexOf('function currentFocusedPathEntry()'));
+  const render = html.slice(html.indexOf('function renderLesson('), html.indexOf('function currentFocusedPathEntry()'));
   assert.ok(render.indexOf('buildTOC();') < render.indexOf('AIFSHighlights.mount('));
   assert.ok(render.indexOf('AIFSHighlights.mount(') < render.indexOf('restoreHeadingHash();'));
   const dispose = html.slice(html.indexOf('function disposeRenderedLesson(root)'), html.indexOf('function restoreHeadingHash()'));

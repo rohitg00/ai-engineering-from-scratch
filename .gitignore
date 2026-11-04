@@ -140,6 +140,7 @@ site/sitemap-manuals.xml
 site/manuals-data.js
 site/manuals.html
 site/pagefind/
+site/lesson-code/
 
 !manuals/*/capture/out/*.log
 !manuals/*/capture/gpu/out-*/*.log

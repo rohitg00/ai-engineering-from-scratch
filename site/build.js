@@ -19,6 +19,7 @@ const { phaseHubPath, phaseLabel, glossaryLookupKey } = require('../lib/hub-rout
 const { writeHubs } = require('./build-hubs.js');
 const { writeCheatsheets, loadTopics, coverage } = require('./build-cheatsheets.js');
 const { writePractice } = require('./build-practice.js');
+const { writeLessonCode } = require('./build-lessons.js');
 const { writeInterviews } = require('./build-interviews.js');
 const { lessonNumber } = require('./catalog.js');
 
@@ -2251,6 +2252,9 @@ function build() {
   hubs.practicePages = practice.pages;
   hubs.practice = practice;
   console.log(`   wrote ${practice.problems.length} practice problems in ${practice.tracks.length} tracks`);
+  console.log('Writing pre-rendered lesson code...');
+  const lessonCode = writeLessonCode({ siteDir: __dirname });
+  console.log(lessonCode.skipped ? '   skipped: Shiki is not installed' : `   wrote ${lessonCode.blocks} code blocks for ${lessonCode.files.size} lessons`);
   console.log('Writing interview pages...');
   const interviews = writeInterviews({ siteDir: __dirname });
   hubs.interviewPages = interviews.pages;

@@ -660,6 +660,30 @@
     return renderCodeWith(regexHighlighter, code, lang, options);
   }
 
+  function codeKey(code, lang) {
+    var text = String(lang || '').toLowerCase() + '\n' + String(code == null ? '' : code);
+    var h1 = 0xdeadbeef;
+    var h2 = 0x41c6ce57;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return (h2 >>> 0).toString(36) + (h1 >>> 0).toString(36) + '-' + text.length.toString(36);
+  }
+
+  function prerenderedCode(blocks) {
+    if (!blocks || typeof blocks !== 'object') return renderCodeBlock;
+    return function (code, lang) {
+      var key = codeKey(code, lang);
+      return Object.prototype.hasOwnProperty.call(blocks, key) && typeof blocks[key] === 'string'
+        ? blocks[key]
+        : renderCodeBlock(code, lang);
+    };
+  }
+
   function highlightSyntax(code, lang) {
     var keywords, commentPattern;
 
@@ -785,6 +809,8 @@
     codeBlockHtml: codeBlockHtml,
     renderCodeWith: renderCodeWith,
     renderCodeBlock: renderCodeBlock,
+    codeKey: codeKey,
+    prerenderedCode: prerenderedCode,
     escapeHtml: escapeHtml
   };
 }));

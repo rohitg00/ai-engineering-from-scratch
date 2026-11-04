@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { parseMd } = require('../site/lesson-markdown');
+const { parseMd, prerenderedCode } = require('../site/lesson-markdown');
 const { representation } = require('../lib/agent-http');
 const { lessonDocumentSeo, seoTitleFor } = require('../lib/lesson-document');
 const { cardTags, cardUrl, lessonCard } = require('../lib/og-cards');
@@ -48,6 +48,9 @@ function loadProductionAssets() {
       practice,
       readMarkdown: function (lessonPath) {
         return fs.readFileSync(path.join(REPO_ROOT, lessonPath, 'docs', 'en.md'), 'utf8');
+      },
+      readCode: function (lessonPath) {
+        return JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'site', 'lesson-code', `${lessonPath}.json`), 'utf8')).blocks;
       },
       languageCodes: ['en'].concat(TRANSLATION_LANGUAGES),
     };
@@ -298,9 +301,19 @@ function readEnglishMarkdown(assets, lessonPath) {
   }
 }
 
-function renderBody(markdown, heading) {
+function readLessonCode(assets, lessonPath) {
+  if (typeof assets.readCode !== 'function') return null;
+  try {
+    const blocks = assets.readCode(lessonPath);
+    return blocks && typeof blocks === 'object' ? blocks : null;
+  } catch (_) {
+    return null;
+  }
+}
+
+function renderBody(markdown, heading, blocks) {
   if (!markdown) return null;
-  return { markdown, html: `<h1>${escapeHtml(heading)}</h1>` + parseMd(markdown).replace(/<h1 id="[^"]*">[\s\S]*?<\/h1>/, '') };
+  return { markdown, html: `<h1>${escapeHtml(heading)}</h1>` + parseMd(markdown, { renderCode: prerenderedCode(blocks) }).replace(/<h1 id="[^"]*">[\s\S]*?<\/h1>/, '') };
 }
 
 function languageLinks(page, lessonPath, contextParams) {
@@ -548,7 +561,7 @@ function createHandler(options) {
           return;
         }
         const page = pageInfo(entry, lessonPath, heading, servedLang, markdown);
-        const body = renderBody(markdown, page.heading);
+        const body = renderBody(markdown, page.heading, readLessonCode(assets, lessonPath));
         let html = replaceMarkedRegion(localizedTemplate(template, servedLang), SEO_START, SEO_END, lessonHead(entry, page));
         html = replaceMarkedRegion(html, FALLBACK_START, FALLBACK_END, lessonFallback(entry, lessonPath, contextParams, page, body));
         html = replaceMarkedRegion(html, HUBS_START, HUBS_END, lessonHubLinks(entry, page, assets.lessonTerms, assets.cheatsheets, assets.practice));
