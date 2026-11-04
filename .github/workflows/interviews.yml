@@ -13,6 +13,8 @@ on:
       - 'manuals/**'
       - 'learning-paths/**'
       - '.github/workflows/interviews.yml'
+      - '.github/workflows/interviews-generate.yml'
+      - 'scripts/cheatsheets/generate.js'
   push:
     branches: [main]
     paths:
@@ -57,6 +59,8 @@ jobs:
         run: node scripts/interviews/validate.js
       - name: Each validator rule fails with a clear message
         run: node --test scripts/interviews/test_validate.js
+      - name: The generator drafts, repairs or drops each item, with the model mocked
+        run: node --test scripts/interviews/test_generate.js
       - name: Pages, folded answers, routes and discovery
         run: node --test site/test_interviews.js
       - name: No answer shows outside a folded answer, same bytes twice
