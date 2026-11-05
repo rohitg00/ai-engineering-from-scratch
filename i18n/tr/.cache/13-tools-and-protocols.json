@@ -43,5 +43,5 @@
   "phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/docs/en.md": "d769b2a28273558b3d1116c4f0ff0acb4017f0563a7cf80aa2a2c1c09f47298e",
   "phases/13-tools-and-protocols/43-bytecode-and-managed-formats/docs/en.md": "243b7ceaa5937a57f2394c2d782665f269fea71ee77136a8d502eef38618b999",
   "phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/docs/en.md": "43f7d2f24296423d771d3ea04c052277bbce603115b759886207713b619714f6",
-  "phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/docs/en.md": "4ec0a4eaa8d80ad1b8364289b8627752ba888cb57c892a207e2022fee67b501e"
+  "phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/docs/en.md": "205a7e22a5c08dae27cc2583bcf6d7e947882f8e56bc3465d6c75e544e3371d5"
 }

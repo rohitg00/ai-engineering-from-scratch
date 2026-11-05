@@ -220,7 +220,7 @@ cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
 ```
 
-Clang'ın yol üzerinde olduğu zaman demo, her adayı sabit bayraklarla birleştirir, sekiz farklılık programı oluşturur, her biri 92 hücre ve 256 corpus girişi ile çalışır, DWARF'yi okuyor, her alıntıyı kontrol ediyor ve kartı yazdırırır.`grid`ve `fuzz`okudukları alanlar `unknown`Her yargıda da öyle.
+Clang'ın yol üzerinde olması ile demo, her adayı sabit bayraklarla birleştirir, sekiz farklılık programı oluşturur, her biri 92 hücre ve 256 corpus girişi ile çalışır, DWARF'yi okuyor, her alıntıyı kontrol eder ve kartı yazdırır.`grid`ve `fuzz`okudukları alanlar `unknown`Bu , bir dizi metin kompayillerinden başka bir ses .`code/fixtures/build-record.json`Yapılan nesnelere sadece bayt karşılaştırma bırakır.`grid`ve `fuzz`alanlar hala her adayı host kompili ile yeniden oluşturur. Byte karşılaştırması, herhangi bir şey ifade etmek için aynı kompili ve bayraklara ihtiyaç duyar ve görevli nesne sadece bir süre içinde durur `code/fixtures/build-record.json`hala disk üzerindeki aday kaynakla eşleştirilir: kaynakı düzenle ve bayt alanı okunuyor `unknown`Eski baytları yargılamak yerine.
 
 Beklenen şekil:
 
@@ -300,7 +300,7 @@ card = score_candidate(load_candidate("f1_base_64"), Path("/tmp/re45"), run_prog
 card["fields"]["bytes"]["evidence"], card["fields"]["citations"]["evidence"]
 ```
 
-Yaratmak`/tmp/re45`Önce, sonra da geç.`None`Bağlı nesneyi kullanmak için.`fixtures/candidates/f1_base_64.c`Yani çarpıcı 100'e çıkar, aynı iki satırı çalıştır ve izle.`bytes`Dönün .`pass`- Ne ?`citations`Raporda 64'i belirlerken, alıntıyı 100'e değiştirir ve tekrar çalıştırır.
+Yaratmak`/tmp/re45`Önce, sonra da geç.`None`Bağlı nesneyi kullanmak için.`fixtures/candidates/f1_base_64.c`Yani çarpıcı 100'e çıkar, aynı iki satırı çalıştır ve izle.`bytes`Dönün .`pass`- Ne ?`citations`Raporda 64'ün adını hâlâ kullanıyor.`bytes`- ...`pass`sadece `code/fixtures/build-record.json`; başka bir ses altında veya `None`, editiniz , yapılmış nesneyi geride bırakır ve `bytes`okur `unknown`Bu yüzden, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede, bu sayede,
 
 ### Laboratuvar C: analitiğe yönlendiren bir dizil
 
