@@ -220,7 +220,7 @@ cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
 ```
 
-Com o clang no caminho, a demonstração compila cada candidato com as bandeiras do dispositivo, constrói oito programas diferenciais, executa 92 células e 256 entradas de corpus através de cada uma, lê o DWARF, verifica cada citação e imprime o cartão.`grid`E ...`fuzz`campos de leitura `unknown`E todos os veredictos também.
+Com o clang no caminho, a demonstração compila cada candidato com as bandeiras do dispositivo, constrói oito programas diferenciais, executa 92 células e 256 entradas de corpus através de cada uma, lê o DWARF, verifica cada citação e imprime o cartão.`grid`E ...`fuzz`campos de leitura `unknown`Um som diferente do compilador de fichas gravado em`code/fixtures/build-record.json`O `grid`E ...`fuzz`Os campos ainda recompilam cada candidato com o compilador host. A comparação de bytes precisa do mesmo compilador e bandeiras para significar qualquer coisa, e o objeto comprometido só fica em tempo `code/fixtures/build-record.json`ainda corresponde à fonte candidata no disco: editar a fonte e o campo de byte lê `unknown`Em vez de julgar bytes obsoletos.
 
 Forma esperada:
 
@@ -300,7 +300,7 @@ card = score_candidate(load_candidate("f1_base_64"), Path("/tmp/re45"), run_prog
 card["fields"]["bytes"]["evidence"], card["fields"]["citations"]["evidence"]
 ```
 
-Criar`/tmp/re45`Primeiro ou depois.`None`para usar o objeto comprometido. Agora editar `fixtures/candidates/f1_base_64.c`Então o multiplicador lê 100, corre as mesmas duas linhas, e olha `bytes`- Vai para o`pass`enquanto`citations`O código e o relatório tiveram de ser alterados.
+Criar`/tmp/re45`Primeiro ou depois.`None`para usar o objeto comprometido. Agora editar `fixtures/candidates/f1_base_64.c`Então o multiplicador lê 100, corre as mesmas duas linhas, e olha `bytes`- Vai para o`pass`enquanto`citations`Ainda é o caso do relatório.`bytes`- Não .`pass`funciona apenas no compilador nomeado em `code/fixtures/build-record.json`• sob qualquer outro clang, ou com`None`, a sua edição deixa o objeto comprometido para trás e `bytes`lê `unknown`Em vez de comparar bytes obsoletos, alterar a citação para 100 e executar novamente.
 
 ### Laboratório C: a cadeia que se dirige ao analista
 
