@@ -204,11 +204,55 @@ class CandidateTests(unittest.TestCase):
 
     @unittest.skipUnless(shutil.which("clang"), "clang is needed to rebuild the candidates")
     def test_committed_candidate_objects_match_a_fresh_build(self) -> None:
+        if main.compiler_version() != main.fixture_compiler():
+            self.skipTest(
+                f"the committed objects were captured with {main.fixture_compiler()}, "
+                f"found {main.compiler_version()}; the byte comparison needs the fixture compiler"
+            )
         with tempfile.TemporaryDirectory() as tmp:
             for candidate in main.load_candidates():
                 fresh = main.compile_candidate_object(candidate, Path(tmp))
                 assert fresh is not None
                 self.assertEqual(text_section(fresh), text_section(candidate.committed_object), candidate.id)
+
+
+class BuildRecordTests(unittest.TestCase):
+    def test_the_build_record_binds_every_committed_object_to_its_source(self) -> None:
+        record = json.loads(main.BUILD_RECORD.read_text(encoding="utf-8"))
+        self.assertEqual(sorted(record["candidates"]), sorted(main.CANDIDATE_IDS))
+        self.assertEqual(record["flags"], list(main.FIXTURE_FLAGS))
+        for candidate in main.load_candidates():
+            entry = record["candidates"][candidate.id]
+            self.assertEqual(entry["source_sha256"], main.file_sha256(candidate.source), candidate.id)
+            self.assertEqual(entry["object_sha256"], main.file_sha256(candidate.committed_object), candidate.id)
+
+    def test_fixture_compiler_is_committed_metadata_and_survives_a_bad_record(self) -> None:
+        self.assertEqual(main.fixture_compiler(), "Apple clang version 17.0.0 (clang-1700.6.3.2)")
+        original = main.BUILD_RECORD
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                main.BUILD_RECORD = Path(tmp) / "missing.json"
+                self.assertIsNone(main.fixture_compiler())
+                main.BUILD_RECORD = Path(tmp) / "build-record.json"
+                for text in ("{not json", "[1, 2]", "{}"):
+                    main.BUILD_RECORD.write_text(text)
+                    self.assertIsNone(main.fixture_compiler(), text)
+        finally:
+            main.BUILD_RECORD = original
+
+    def test_save_runs_rewrites_the_run_snapshot_and_never_the_fixture_identity(self) -> None:
+        identity = main.fixture_compiler()
+        record_before = main.BUILD_RECORD.read_bytes()
+        runs = main.RUNS
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                main.RUNS = Path(tmp) / "runs"
+                saved = main.save_scorecards([])
+        finally:
+            main.RUNS = runs
+        self.assertEqual(main.fixture_compiler(), identity)
+        self.assertEqual(main.BUILD_RECORD.read_bytes(), record_before)
+        self.assertNotEqual(saved, main.BUILD_RECORD)
 
 
 class ByteFieldTests(unittest.TestCase):
@@ -227,6 +271,29 @@ class ByteFieldTests(unittest.TestCase):
         self.assertEqual(wrong["detail"]["differing_offsets"], [])
         base = main.field_bytes(main.load_candidate("f1_base_64"))
         self.assertEqual((base["status"], base["evidence"]), ("fail", "size 16 vs 18 bytes"))
+
+    def test_an_edited_candidate_source_scores_unknown_instead_of_stale_committed_bytes(self) -> None:
+        candidate = main.load_candidate("f1_base_64")
+        with tempfile.TemporaryDirectory() as tmp:
+            edited = Path(tmp) / "f1_base_64.c"
+            edited.write_text(candidate.source.read_text().replace("* 64", "* 100"))
+            candidate.source = edited
+            repaired = main.field_bytes(candidate)
+        self.assertEqual(repaired["status"], "unknown")
+        self.assertEqual(
+            repaired["evidence"],
+            "the committed object does not match the current candidate source, and the fixture compiler is not available to rebuild it",
+        )
+        self.assertEqual(repaired["detail"], {})
+
+    def test_a_swapped_committed_object_scores_unknown(self) -> None:
+        candidate = main.load_candidate("f1_base_64")
+        with tempfile.TemporaryDirectory() as tmp:
+            swapped = Path(tmp) / "f1_base_64.o"
+            swapped.write_bytes(main.load_candidate("f1_mul_first").committed_object.read_bytes())
+            candidate.committed_object = swapped
+            result = main.field_bytes(candidate)
+        self.assertEqual(result["status"], "unknown")
 
     def test_invented_helper_can_compile_to_the_original_bytes(self) -> None:
         safe = main.field_bytes(main.load_candidate("f1_safe_div"))

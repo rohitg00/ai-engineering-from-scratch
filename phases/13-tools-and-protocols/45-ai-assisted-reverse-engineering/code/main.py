@@ -32,6 +32,7 @@ ORIGINAL_SOURCE = FIXTURES / "ledger.c"
 TARGET_LISTING = FIXTURES / "ledger-x86_64-O1-renamed.objdump.txt"
 DRIVER_SOURCE = HERE / "driver.c"
 RECORDED_SCORECARDS = RUNS / "scorecards-aarch64-darwin.json"
+BUILD_RECORD = FIXTURES / "build-record.json"
 FIXTURE_FLAGS = ("-target", "x86_64-unknown-linux-gnu", "-O1", "-fno-asynchronous-unwind-tables", "-c")
 RENAMES = ("-Dpercent_change=f1", "-Dgrade=f2", "-Dtotal=f3", "-Dgrade_label=f4")
 FIXTURE_OBJECTS = ("ledger-x86_64-O1-renamed.o", "ledger-x86_64-O1-g.o", "ledger-x86_64-O1-poisoned.o")
@@ -716,13 +717,37 @@ def read_table(obj: ElfObject, reloc: Reloc, entries: int, width: int) -> list[i
 TABLE_CLAIMS = {"f2": {"entries": 5, "width": 4}}
 
 
+def committed_object_matches_source(candidate: Candidate) -> bool:
+    """True only while the build record proves the committed object was built from the
+    candidate source as it sits on disk. Both digests must match: an edited source (the
+    lab B repair) or a swapped object has no committed counterpart, and the byte field
+    must read unknown rather than score stale bytes left over from the shipped source.
+    """
+    try:
+        entry = json.loads(BUILD_RECORD.read_text(encoding="utf-8"))["candidates"][candidate.id]
+        return file_sha256(candidate.source) == entry["source_sha256"] and file_sha256(candidate.committed_object) == entry["object_sha256"]
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return False
+
+
 def compile_candidate_object(candidate: Candidate, workdir: Path | None) -> Path | None:
+    """Rebuild with the fixture flags only under the fixture compiler.
+
+    The byte-comparison contract is "same compiler and flags" (see code/fixtures/README.md),
+    so a rebuild counts as fresh evidence only when the installed clang reports the fixture
+    compiler identity recorded in code/fixtures/build-record.json. Any other clang generates
+    different code and would turn byte diffs into bogus fails, so it falls back to the
+    committed object like a host without clang — but only while the build record still
+    matches that object to the current source. An edited candidate has no comparable
+    object without the fixture compiler, and scores unknown instead of stale bytes.
+    """
     clang = shutil.which("clang")
-    if clang and workdir is not None:
+    identity = fixture_compiler()
+    if clang and workdir is not None and identity is not None and compiler_version() == identity:
         out = workdir / (candidate.source.stem + ".o")
         subprocess.run([clang, *FIXTURE_FLAGS, str(candidate.source), "-o", str(out)], check=True)
         return out
-    return candidate.committed_object if candidate.committed_object.exists() else None
+    return candidate.committed_object if candidate.committed_object.exists() and committed_object_matches_source(candidate) else None
 
 
 def field_bytes(candidate: Candidate, workdir: Path | None = None, target: Path = TARGET_OBJECT) -> dict[str, Any]:
@@ -730,7 +755,9 @@ def field_bytes(candidate: Candidate, workdir: Path | None = None, target: Path 
     shape, and the same constants behind every relocation."""
     object_path = compile_candidate_object(candidate, workdir)
     if object_path is None:
-        return {"status": "unknown", "evidence": "no clang and no committed object", "detail": {}}
+        if candidate.committed_object.exists():
+            return {"status": "unknown", "evidence": "the committed object does not match the current candidate source, and the fixture compiler is not available to rebuild it", "detail": {}}
+        return {"status": "unknown", "evidence": "no fixture-compiler rebuild and no committed object", "detail": {}}
     original = ElfObject(target).function(candidate.function)
     rebuilt_obj = ElfObject(object_path)
     try:
@@ -1056,6 +1083,22 @@ def compiler_version() -> str | None:
         return None
     completed = subprocess.run([compiler, "--version"], capture_output=True, text=True)
     return completed.stdout.splitlines()[0] if completed.stdout else compiler
+
+
+def fixture_compiler() -> str | None:
+    """The compiler identity the committed fixture objects were captured with.
+
+    ``code/fixtures/build-record.json`` records it next to the digests that bind each
+    committed candidate object to its source, so the rebuild gate reads committed
+    fixture metadata that no command rewrites — ``--save-runs`` only overwrites run
+    snapshots in ``code/fixtures/runs/``. A missing or malformed record reads as no
+    fixture compiler: the rebuild gate stays closed and the committed objects stand in.
+    """
+    try:
+        record = json.loads(BUILD_RECORD.read_text(encoding="utf-8"))
+    except (OSError, ValueError, AttributeError):
+        return None
+    return record.get("compiler") if isinstance(record, dict) else None
 
 
 def compact_scorecard(card: dict[str, Any]) -> dict[str, Any]:

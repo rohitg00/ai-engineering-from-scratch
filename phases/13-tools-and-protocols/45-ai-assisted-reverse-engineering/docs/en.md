@@ -220,7 +220,7 @@ cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
 ```
 
-With clang on the path the demo compiles every candidate with the fixture flags, builds eight differential programs, runs 92 cells and 256 corpus inputs through each, reads the DWARF, checks every citation, and prints the card. Without clang the `grid` and `fuzz` fields read `unknown`, and so does every verdict.
+With clang on the path the demo compiles every candidate with the fixture flags, builds eight differential programs, runs 92 cells and 256 corpus inputs through each, reads the DWARF, checks every citation, and prints the card. When neither clang nor cc is on the path the `grid` and `fuzz` fields read `unknown`, and so does every verdict. A clang other than the fixture compiler recorded in `code/fixtures/build-record.json` leaves only the byte comparison on the committed objects. The `grid` and `fuzz` fields still recompile each candidate with the host compiler. The byte comparison needs the same compiler and flags to mean anything, and the committed object stands in only while `code/fixtures/build-record.json` still matches it to the candidate source on disk: edit the source and the byte field reads `unknown` instead of judging stale bytes.
 
 Expected shape:
 
@@ -300,7 +300,7 @@ card = score_candidate(load_candidate("f1_base_64"), Path("/tmp/re45"), run_prog
 card["fields"]["bytes"]["evidence"], card["fields"]["citations"]["evidence"]
 ```
 
-Create `/tmp/re45` first, or pass `None` to use the committed object. Now edit `fixtures/candidates/f1_base_64.c` so the multiplier reads 100, run the same two lines, and watch `bytes` turn to `pass` while `citations` still names the 64 in the report. Then change the citation to 100 and run again. Both the code and the report had to change.
+Create `/tmp/re45` first, or pass `None` to use the committed object. Now edit `fixtures/candidates/f1_base_64.c` so the multiplier reads 100, run the same two lines, and watch `bytes` turn to `pass` while `citations` still names the 64 in the report. The rebuild that turns `bytes` to `pass` runs only under the compiler named in `code/fixtures/build-record.json`; under any other clang, or with `None`, your edit leaves the committed object behind and `bytes` reads `unknown` rather than comparing stale bytes. Then change the citation to 100 and run again. Both the code and the report had to change.
 
 ### Lab C: the string that addresses the analyst
 

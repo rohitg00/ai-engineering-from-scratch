@@ -24,6 +24,7 @@ The compiler flags for every object are `clang -target x86_64-unknown-linux-gnu 
 | `candidates/<id>.c` | one candidate reconstruction per file, four per target function |
 | `candidates/<id>.report.json` | the candidate's report: target, claims, citations, label, tool, cost |
 | `candidates/<id>.o`, `candidates/<id>.objdump.txt` | each candidate compiled with the fixture flags, and its listing |
+| `build-record.json` | the capture record: the compiler identity, the flags, and the source and object digests that bind each committed candidate object to its source |
 | `runs/scorecards-aarch64-darwin.json` | one run of `python3 code/main.py --save-runs` on an arm64 Mac, the source of the figure data |
 
 Candidates by target and kind:
@@ -39,4 +40,4 @@ Candidates by target and kind:
 | `f2_case10_wrong` | `f2` | wrong constant | one table entry wrong |
 | `f2_clamp` | `f2` | invented helper | a clamp helper and a message that do not exist |
 
-The tests read the committed objects, listings, and the recorded run, so they pass on a host without clang. With clang present they also rebuild every candidate and rerun the grid and the corpus.
+The tests read the committed objects, listings, and the recorded run, so they pass on a host without clang. With clang present they also rebuild every candidate and rerun the grid and the corpus. The rebuild comparison runs only when the installed clang reports the identity recorded above and in `build-record.json`: the byte-comparison contract is the same compiler and flags, so any other clang is treated like no clang and the committed objects stand in while `build-record.json` still matches them to the candidate sources. An edited source leaves the byte field `unknown` instead of judging the stale committed object. `build-record.json` is committed fixture metadata — `--save-runs` rewrites only the snapshots in `runs/`, never the capture record.
