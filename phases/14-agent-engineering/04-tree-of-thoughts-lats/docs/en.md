@@ -26,12 +26,15 @@ What reasoning needs is the ability to propose multiple candidates, evaluate the
 
 Each node is a coherent intermediate step ("a thought"). Each node can expand to K child thoughts. The LLM self-evaluates each node with a scoring prompt. Search explores the tree — BFS, DFS, or beam.
 
-```
-                     (root: "find 24 from 4 6 4 1")
-                    /               |            \
-           ("6 - 4 = 2")    ("4 + 1 = 5")    ("4 * 6 = 24")  <- Score: HIGH
-              /   \              |                  |
-          ...    ...          ...                finish
+```mermaid
+flowchart TD
+    R["root: find 24 from 4 6 4 1"] --> A["6 - 4 = 2"]
+    R --> B["4 + 1 = 5"]
+    R --> C["4 * 6 = 24<br/>score: HIGH"]
+    A --> A1["..."]
+    A --> A2["..."]
+    B --> B1["..."]
+    C --> F["finish"]
 ```
 
 Self-evaluation is the load-bearing piece. The paper shows three variants: `sure / likely / impossible` classification, `1..10` numeric score, and vote among candidates. All three beat CoT substantially on Game of 24 (4% -> 74% with GPT-4).
@@ -91,11 +94,53 @@ tree-of-thoughts
 
 Run it:
 
-```
+```bash
 python3 code/main.py
 ```
 
 The trace shows ToT expanding three candidates per node with BFS, compared to LATS converging on the best rollout via MCTS. Token counts printed for both.
+
+### Exercises 1-3: UCT, noisy values, beam ToT
+
+`main.py` also sweeps three knobs on the same toy search (seeds averaged). Exercise 1, UCT `c`:
+
+```text
+c      root-visit entropy (bits)   top child share
+0.1                         4.26             15.0%
+0.5                         4.54              6.1%
+1.4                         4.57              5.3%
+2.0                         4.57              5.1%
+```
+
+The best trace barely changes; where visits go does. A low `c` commits to one branch, and `c >= 1.4` spreads visits almost evenly over the 24 root children. Compare visit counts, not only the final trace.
+
+Exercise 2, jitter added to the value function (400 iterations, 30 seeds):
+
+```text
+noise sigma    signal/noise    solve rate
+0.0                     inf         96.7%
+0.1                     1.7         93.3%
+0.3                     0.55        90.0%
+1.0                     0.17         6.7%
+```
+
+The spread of leaf values is about 0.165, so MCTS holds up to a signal-to-noise ratio near 0.5 and collapses below it.
+
+Exercise 3, ToT under an expansion budget (one expansion = one scored child):
+
+```text
+strategy   solved at 460 expansions   expansions used
+bfs                             yes              460
+beam-8                           no              152
+beam-32                          no              438
+beam-64                         yes              460
+```
+
+The value function rewards states near 24, which can be a dead end, so narrow beams prune the winning branch. Below 460 expansions nothing solves it; widen the beam before cutting the budget.
+
+### Exercise 5: when to use which search
+
+Use plain ReAct or Reflexion when the task is short, one attempt usually works, or tokens and latency are tight, because LATS costs far more compute. Use LATS only when all three hold: the task has several plausible routes and a wrong early step is costly; you can score partial progress with a test, a verifier or a reliable judge; and the environment lets you return to an earlier state and retry. The last condition rules out actions that cannot be undone, such as sending an email or making a payment. If you can score and reset but cannot afford MCTS, use beam search with a wide enough beam, because a narrow beam drops good branches when the scorer is misleading. LATS helps less when the scorer is unreliable or the task cannot be reset, and it is not worth the cost when one pass already solves the task.
 
 ## Use It
 
