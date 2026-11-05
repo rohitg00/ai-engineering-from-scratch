@@ -142,6 +142,7 @@ Once you have embeddings, you need somewhere to store and search them. Options:
 | Weaviate | Open source DB | Self-hosted production |
 | pgvector | Postgres extension | Already using Postgres |
 | Qdrant | Open source DB | High-performance self-hosted |
+| Pixeltable | Multimodal DB | Incremental indexes on images, video, audio, docs |
 
 For this lesson, we build a simple in-memory vector store. It stores vectors in a list and does brute-force cosine similarity search. This is equivalent to FAISS with a flat index. It scales to maybe 100,000 vectors before getting slow. Production systems use approximate nearest neighbor (ANN) algorithms like HNSW to search millions of vectors in milliseconds.
 
