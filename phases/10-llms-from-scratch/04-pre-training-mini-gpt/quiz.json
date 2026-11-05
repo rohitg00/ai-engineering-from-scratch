@@ -29,7 +29,7 @@
   },
   {
     "question": "Why does pre-training require significantly more compute than fine-tuning?",
-    "options": ["Pre-training processes trillions of tokens from scratch to learn general language patterns, while fine-tuning adjusts an already-capable model on thousands of examples", "Pre-training uses a different, larger architecture, and fine-tuning later strips out the extra layers and heads that a single downstream task does not use", "Pre-training uses much larger batch sizes, and the cost of each step grows with the size of the batch, while fine-tuning runs on batches of just a few examples", "Fine-tuning doesn't use gradients: it solves for the new output-layer weights in closed form, which skips the backward pass through the rest of the network"],
+    "options": ["Pre-training processes trillions of tokens from scratch to learn general language patterns, while fine-tuning adjusts an already-capable model on thousands of examples", "Pre-training uses a different, larger architecture, and fine-tuning later strips out the extra layers and heads that a single downstream task does not use", "Pre-training uses much larger batch sizes, and a larger batch needs more optimizer steps to converge, so pre-training runs far more steps than fine-tuning does", "Fine-tuning doesn't use gradients: it solves for the new output-layer weights in closed form, which skips the backward pass through the rest of the network"],
     "correct": 0,
     "explanation": "Pre-training builds all language knowledge from random weights over trillions of tokens. Fine-tuning starts from these learned weights and adjusts them on a much smaller dataset (thousands to millions of examples).",
     "stage": "post"
