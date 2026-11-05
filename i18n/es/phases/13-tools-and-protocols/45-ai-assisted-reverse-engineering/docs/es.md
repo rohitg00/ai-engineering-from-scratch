@@ -220,7 +220,7 @@ cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
 ```
 
-Con el clang en el camino la demostración recopila a cada candidato con las banderas fijas, construye ocho programas diferenciales, ejecuta 92 celdas y 256 entradas de corpus a través de cada una, lee el DWARF, verifica cada citación e imprime la tarjeta.`grid`y `fuzz`campos leídos `unknown`, y también lo hace cada veredicto.
+Con el clang en el camino la demostración recopila a cada candidato con las banderas fijas, construye ocho programas diferenciales, ejecuta 92 celdas y 256 entradas de corpus a través de cada una, lee el DWARF, verifica cada citación y imprime la tarjeta.`grid`y `fuzz`campos leídos `unknown`Un sonido distinto al compilador de fijos grabado en`code/fixtures/build-record.json`Las observaciones realizadas en los objetos comprometidos sólo permiten la comparación de bytes.`grid`y `fuzz`Los campos todavía recompilan cada candidato con el compilador host. La comparación de bytes necesita el mismo compilador y banderas para significar algo, y el objeto comprometido sólo se mantiene en el tiempo `code/fixtures/build-record.json`todavía se ajusta al candidato fuente en disco: editar la fuente y el campo de byte se lee `unknown`en lugar de juzgar bytes obsoletos.
 
 Forma esperada:
 
@@ -300,7 +300,7 @@ card = score_candidate(load_candidate("f1_base_64"), Path("/tmp/re45"), run_prog
 card["fields"]["bytes"]["evidence"], card["fields"]["citations"]["evidence"]
 ```
 
-Crear`/tmp/re45`Primero, o pasar.`None`para usar el objeto comprometido. Ahora editar `fixtures/candidates/f1_base_64.c`Así que el multiplicador lee 100, ejecuta las mismas dos líneas, y ver `bytes`¿ Qué pasa ?`pass`Mientras que`citations`El código y el informe tuvieron que cambiar.
+Crear`/tmp/re45`Primero, o pasar.`None`para usar el objeto comprometido. Ahora editar `fixtures/candidates/f1_base_64.c`Así que el multiplicador lee 100, ejecuta las mismas dos líneas, y ver `bytes`¿ Qué pasa ?`pass`Mientras que`citations`El reedificio que gira.`bytes`¿ Qué ?`pass`sólo se ejecuta bajo el compilador de nombre en `code/fixtures/build-record.json`; bajo cualquier otro clang, o con `None`, su edición deja el objeto comprometido detrás y `bytes`Leía`unknown`En vez de comparar bytes obsoletos, cambia la cita a 100 y ejecuta de nuevo.
 
 ### Laboratorio C: la cadena que se dirige al analista
 
