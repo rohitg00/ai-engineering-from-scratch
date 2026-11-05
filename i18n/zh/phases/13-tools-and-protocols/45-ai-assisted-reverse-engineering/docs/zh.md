@@ -220,7 +220,7 @@ cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
 ```
 
-通过在路径上的声,演示程序将每个候选人与固定标志编译,构建八个差异程序,通过每个运行92个细胞和256个体积输入,阅读DWARF,检查每一个引用,打印卡.`grid`其他`fuzz`读取的字段`unknown`任何判决都一样.
+通过在路径上的clang,演示程序将每个候选人与固定标志编译,构建八个差异程序,通过每个程序运行92个细胞和256个体输入,阅读DWARF,检查每个引用,并打印卡.当没有clang或cc在路径上时,`grid`其他`fuzz`读取的字段`unknown`其他声音,除了在""中录制的编译器.`code/fixtures/build-record.json`只有对提交的对象进行字节比较.`grid`其他`fuzz`字节比较需要相同的编译器和旗来意味着任何东西,而承诺的对象只能在时间内停留.`code/fixtures/build-record.json`仍然与磁盘上的候选源匹配:编辑源,字节字段读取`unknown`而不是判断过时的字节.
 
 预期的形状:
 
@@ -300,7 +300,7 @@ card = score_candidate(load_candidate("f1_base_64"), Path("/tmp/re45"), run_prog
 card["fields"]["bytes"]["evidence"], card["fields"]["citations"]["evidence"]
 ```
 
-创建`/tmp/re45`首先,或者通过`None`现在编辑`fixtures/candidates/f1_base_64.c`所以乘法读到100,运行两个相同的行,然后看`bytes`转到`pass`在此期间`citations`报道中的64个字符仍然被命名,然后将引用改为100个,然后再运行.
+创建`/tmp/re45`首先,或者通过`None`现在编辑`fixtures/candidates/f1_base_64.c`所以乘法读到100,运行两个相同的行,然后看`bytes`转到`pass`在此期间`citations`报告中仍有64个名字.`bytes`为了`pass`仅运行在该编译器中`code/fixtures/build-record.json`任何其他语音或`None`您的编辑将提交的对象留下来,`bytes`读书`unknown`转换引用为100,然后再运行. 代码和报告都必须改变.
 
 ### 实验室C:向分析师的字符串
 
