@@ -57,7 +57,7 @@ Reinventing this at the app layer couples every service to every provider. A gat
 
 - Automatic retries with configurable backoff.
 - Fallback to Anthropic on OpenAI 429 is a canonical recipe.
-- Newer entrant; commercial.
+- Apache 2.0 OSS, written in Go, self-hosted. Paid Enterprise tier adds clustering, guardrails, and SSO.
 
 ### Cloudflare AI Gateway / Vercel AI Gateway
 
@@ -122,7 +122,7 @@ This lesson produces `outputs/skill-gateway-picker.md`. Given scale, ops posture
 | LiteLLM | "the MIT one" | Python OSS, 100+ providers, breaks at 2K RPS |
 | Portkey | "guardrails gateway" | Control plane + observability, Apache 2.0 |
 | Kong AI Gateway | "the scale one" | Built on Kong Gateway, benchmark leader |
-| Bifrost | "Maxim's gateway" | Retries + Anthropic fallback recipe |
+| Bifrost | "Maxim's gateway" | Go gateway, Apache 2.0 OSS; retries + fallback |
 | Cloudflare AI Gateway | "edge managed" | Edge-deployed managed gateway, zero-ops |
 | PII redaction | "data scrub" | Regex + NER mask before sending to model |
 | Jailbreak detection | "prompt injection guard" | Classifier on user input |
@@ -137,4 +137,5 @@ This lesson produces `outputs/skill-gateway-picker.md`. Given scale, ops posture
 - [Techsy — Top LLM Gateway Tools 2026](https://techsy.io/en/blog/best-llm-gateway-tools)
 - [LiteLLM GitHub](https://github.com/BerriAI/litellm)
 - [Portkey GitHub](https://github.com/Portkey-AI/gateway)
+- [Bifrost GitHub](https://github.com/maximhq/bifrost)
 - [Kong AI Gateway docs](https://docs.konghq.com/gateway/latest/ai-gateway/)
