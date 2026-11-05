@@ -1,7 +1,7 @@
 [
   {
     "question": "What training objective does GPT use during pre-training?",
-    "options": ["Sentence classification", "Next-token prediction: given previous tokens, predict the next one", "Image-text alignment", "Masked language modeling (predicting masked tokens)"],
+    "options": ["Sentence classification: predict which topic each training passage is about", "Next-token prediction: given previous tokens, predict the next one", "Image-text alignment: match each caption to the image it was written for", "Masked language modeling: hide random tokens and predict them from both sides"],
     "correct": 1,
     "explanation": "GPT is a causal (autoregressive) language model trained with next-token prediction. Given tokens [t1, t2, ..., tn], it learns to predict tn+1. The loss is cross-entropy between predicted and actual next tokens.",
     "stage": "pre"
@@ -15,21 +15,21 @@
   },
   {
     "question": "What is the role of the causal attention mask in GPT?",
-    "options": ["It prevents each token from attending to future tokens, ensuring the model can only use past context for predictions", "It reduces memory usage during training", "It masks out low-confidence attention scores", "It prevents attention to padding tokens"],
+    "options": ["It prevents each token from attending to future tokens, ensuring the model can only use past context for predictions", "It reduces memory usage during training by keeping attention scores just for the most recent tokens of each sequence", "It masks out low-confidence attention scores, so each token attends mainly to the few positions it is most sure about", "It prevents attention to padding tokens, so the filler added to make short sequences the same length is ignored"],
     "correct": 0,
     "explanation": "The causal mask is a triangular matrix that sets future positions to -infinity before softmax. Token at position 5 can attend to positions 1-5 but not 6+. This ensures the model generates tokens left-to-right.",
     "stage": "post"
   },
   {
     "question": "What does 'temperature' control during text generation?",
-    "options": ["The randomness of token selection: lower temperature makes outputs more deterministic, higher makes them more diverse", "The speed of generation", "The number of tokens generated", "The model's confidence threshold"],
+    "options": ["The randomness of token selection: lower temperature makes outputs more deterministic, higher makes them more diverse", "The speed of generation: a higher temperature samples each next token faster, so long replies finish noticeably sooner", "The number of tokens generated: a higher temperature lets the model keep writing for longer before it chooses to stop", "The model's confidence threshold: tokens whose probability falls below the temperature are skipped when sampling"],
     "correct": 0,
     "explanation": "Temperature divides logits before softmax. Temperature=0.1 makes the distribution very peaked (nearly deterministic). Temperature=1.0 is the training distribution. Temperature>1.0 flattens it, increasing randomness.",
     "stage": "post"
   },
   {
     "question": "Why does pre-training require significantly more compute than fine-tuning?",
-    "options": ["Pre-training processes trillions of tokens from scratch to learn general language patterns, while fine-tuning adjusts an already-capable model on thousands of examples", "Pre-training uses a different architecture", "Pre-training uses larger batch sizes", "Fine-tuning doesn't use gradients"],
+    "options": ["Pre-training processes trillions of tokens from scratch to learn general language patterns, while fine-tuning adjusts an already-capable model on thousands of examples", "Pre-training uses a different, larger architecture, and fine-tuning later strips out the extra layers and heads that a single downstream task does not use", "Pre-training uses much larger batch sizes, and a larger batch needs more optimizer steps to converge, so pre-training runs far more steps than fine-tuning does", "Fine-tuning doesn't use gradients: it solves for the new output-layer weights in closed form, which skips the backward pass through the rest of the network"],
     "correct": 0,
     "explanation": "Pre-training builds all language knowledge from random weights over trillions of tokens. Fine-tuning starts from these learned weights and adjusts them on a much smaller dataset (thousands to millions of examples).",
     "stage": "post"
