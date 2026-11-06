@@ -137,6 +137,30 @@
     return persistenceAvailable;
   }
 
+  function canWrite() {
+    if (persistenceAvailable !== true) persistenceAvailable = null;
+    return isPersistent();
+  }
+
+  function isReadable() {
+    try {
+      localStorage.getItem(LEGACY_STORAGE_KEY);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function volatileAttempts(key) {
+    return Array.isArray(volatileState.attempts[key]) ? volatileState.attempts[key] : [];
+  }
+
+  function newestFirst(attempts) {
+    return attempts.slice().sort(function (left, right) {
+      return right.submittedAt - left.submittedAt;
+    });
+  }
+
   function readJson(storageKey) {
     try {
       return JSON.parse(localStorage.getItem(storageKey) || 'null');
@@ -172,14 +196,12 @@
         var key = localStorage.key(index);
         if (key && key.indexOf(prefix) === 0) keys.push(key);
       }
-    } catch (_) {
-      persistenceAvailable = false;
-    }
+    } catch (_) {}
     return keys;
   }
 
   function readLegacy() {
-    if (!isPersistent()) return emptyState();
+    if (!isReadable()) return emptyState();
     return normalizeState(readJson(LEGACY_STORAGE_KEY));
   }
 
@@ -242,19 +264,20 @@
     if (migratedKeys[key]) return;
     var legacy = legacyState || readLegacy();
     var history = Array.isArray(legacy.attempts[key]) ? legacy.attempts[key] : [];
+    var complete = true;
 
     history.forEach(function (attempt, index) {
       var entryKey = attemptPrefix(key) + legacyEntryId(attempt, index);
-      if (localStorage.getItem(entryKey) === null) writeJson(entryKey, attempt);
+      if (readJson(entryKey) === null && !writeJson(entryKey, attempt)) complete = false;
     });
 
     if (legacy.bests[key]) {
       var summaryKey = summaryPrefix(key) + 'legacy-best';
       var existing = bestSummary(readJson(summaryKey));
       var merged = betterBest(bestSummary(legacy.bests[key]), existing);
-      if (merged && (!existing || merged.percent !== existing.percent)) writeJson(summaryKey, merged);
+      if (merged && (!existing || merged.percent !== existing.percent) && !writeJson(summaryKey, merged)) complete = false;
     }
-    migratedKeys[key] = true;
+    if (complete) migratedKeys[key] = true;
   }
 
   function listAttempts(key) {
@@ -307,8 +330,22 @@
     return Object.keys(found);
   }
 
+  function mergeVolatile(state) {
+    Object.keys(volatileState.drafts).forEach(function (key) {
+      state.drafts[key] = volatileState.drafts[key];
+    });
+    Object.keys(volatileState.attempts).forEach(function (key) {
+      state.attempts[key] = newestFirst((state.attempts[key] || []).concat(volatileAttempts(key))).slice(0, HISTORY_LIMIT);
+    });
+    Object.keys(volatileState.bests).forEach(function (key) {
+      state.bests[key] = betterBest(volatileState.bests[key], state.bests[key]);
+    });
+    state.updatedAt = Math.max(state.updatedAt, volatileState.updatedAt);
+    return state;
+  }
+
   function readAllState() {
-    if (!isPersistent()) return normalizeState(volatileState);
+    if (!isReadable()) return normalizeState(volatileState);
     var legacy = readLegacy();
     var state = emptyState();
 
@@ -334,7 +371,7 @@
       if (meta) state.updatedAt = Math.max(state.updatedAt, meta.updatedAt);
     });
     state.updatedAt = Math.max(state.updatedAt, legacy.updatedAt);
-    return state;
+    return mergeVolatile(state);
   }
 
   function notify(state) {
@@ -344,85 +381,88 @@
     });
   }
 
-  function getDraft(id, version) {
-    var key = assessmentKey(id, version);
-    if (!key) return null;
-    if (!isPersistent()) {
-      var volatileDraft = volatileState.drafts[key] || null;
-      return volatileDraft && isDraftShape(volatileDraft, version) ? volatileDraft : null;
-    }
+  function storedDraft(key, version) {
+    if (!isReadable()) return null;
     var meta = readAssessmentMeta(key);
     if (meta) return meta.draft;
     var draft = readLegacy().drafts[key] || null;
     return draft && isDraftShape(draft, version) ? draft : null;
   }
 
+  function getDraft(id, version) {
+    var key = assessmentKey(id, version);
+    if (!key) return null;
+    var volatileDraft = volatileState.drafts[key] || null;
+    if (volatileDraft && isDraftShape(volatileDraft, version)) return volatileDraft;
+    return storedDraft(key, version);
+  }
+
   function saveDraft(id, version, draft) {
     var key = assessmentKey(id, version);
     if (!key || !isDraftShape(draft, version)) return;
-    if (!isPersistent()) {
-      volatileState.drafts[key] = draft;
-      volatileState.updatedAt = Date.now();
-      notify(normalizeState(volatileState));
+    if (canWrite() && writeAssessmentMeta(key, draft)) {
+      delete volatileState.drafts[key];
+      notify();
       return;
     }
-    if (writeAssessmentMeta(key, draft)) notify();
+    volatileState.drafts[key] = draft;
+    volatileState.updatedAt = Date.now();
+    notify();
   }
 
   function clearDraft(id, version) {
     var key = assessmentKey(id, version);
     if (!key) return;
-    if (!isPersistent()) {
-      if (!volatileState.drafts[key]) return;
+    var changed = false;
+    if (volatileState.drafts[key]) {
       delete volatileState.drafts[key];
       volatileState.updatedAt = Date.now();
-      notify(normalizeState(volatileState));
-      return;
+      changed = true;
     }
-    if (!getDraft(id, version)) return;
-    if (writeAssessmentMeta(key, null)) notify();
+    if (storedDraft(key, version) && canWrite() && writeAssessmentMeta(key, null)) changed = true;
+    if (changed) notify();
   }
 
   function recordAttempt(id, version, attempt) {
     var key = assessmentKey(id, version);
-    if (!key || !isAttemptShape(attempt, version)) return;
-    if (!isPersistent()) {
-      var volatileHistory = Array.isArray(volatileState.attempts[key]) ? volatileState.attempts[key] : [];
-      volatileHistory.unshift(attempt);
-      volatileState.attempts[key] = volatileHistory.slice(0, HISTORY_LIMIT);
-      volatileState.bests[key] = betterBest(bestSummary(attempt), volatileState.bests[key]);
-      delete volatileState.drafts[key];
-      volatileState.updatedAt = Date.now();
-      notify(normalizeState(volatileState));
-      return;
+    if (!key || !isAttemptShape(attempt, version)) return false;
+    delete volatileState.drafts[key];
+    if (canWrite()) {
+      ensureLegacyEntries(key);
+      if (writeJson(attemptPrefix(key) + nextEntryId(), attempt)) {
+        writeAssessmentMeta(key, null);
+        compactAttempts(key);
+        notify();
+        return true;
+      }
     }
-
-    ensureLegacyEntries(key);
-    if (!writeJson(attemptPrefix(key) + nextEntryId(), attempt)) return;
-    writeAssessmentMeta(key, null);
-    compactAttempts(key);
+    var volatileHistory = volatileAttempts(key);
+    volatileHistory.unshift(attempt);
+    volatileState.attempts[key] = volatileHistory.slice(0, HISTORY_LIMIT);
+    volatileState.bests[key] = betterBest(bestSummary(attempt), volatileState.bests[key]);
+    volatileState.updatedAt = Date.now();
     notify();
+    return false;
   }
 
   function getAttempts(id, version) {
     var key = assessmentKey(id, version);
     if (!key) return [];
-    if (!isPersistent()) {
-      var volatileHistory = volatileState.attempts[key];
-      return Array.isArray(volatileHistory) ? volatileHistory : [];
-    }
+    var extra = volatileAttempts(key);
+    if (!isReadable()) return extra;
     ensureLegacyEntries(key);
-    return listAttempts(key).slice(0, HISTORY_LIMIT).map(function (record) {
+    var stored = listAttempts(key).map(function (record) {
       return record.attempt;
     });
+    return (extra.length ? newestFirst(stored.concat(extra)) : stored).slice(0, HISTORY_LIMIT);
   }
 
   function getBest(id, version) {
     var key = assessmentKey(id, version);
     if (!key) return null;
-    if (!isPersistent()) return volatileState.bests[key] || null;
+    var best = volatileState.bests[key] || null;
+    if (!isReadable()) return best;
     ensureLegacyEntries(key);
-    var best = null;
     listAttempts(key).forEach(function (record) {
       best = betterBest(bestSummary(record.attempt), best);
     });

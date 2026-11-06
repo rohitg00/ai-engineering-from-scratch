@@ -9,6 +9,7 @@
   var RTL = {};
   LANGS.forEach(function (l) { if (l.dir === 'rtl') RTL[l.code] = 1; });
   var pickerId = 0;
+  var applied = '';
 
   function isCertificationLesson() {
     try {
@@ -26,6 +27,7 @@
     if (isCertificationLesson()) return 'en';
     var q = new URLSearchParams(location.search).get('lang');
     if (supported(q)) return q;
+    if (applied) return applied;
     var saved = '';
     try { saved = localStorage.getItem('lang') || ''; } catch (_) {}
     return supported(saved) ? saved : 'en';
@@ -35,6 +37,7 @@
     return 'English';
   }
   function applyDir(code) {
+    applied = supported(code) ? code : 'en';
     document.documentElement.lang = code;
     document.documentElement.dir = RTL[code] ? 'rtl' : 'ltr';
   }
@@ -131,6 +134,7 @@
       filter.value = '';
       panel.hidden = false;
       btn.setAttribute('aria-expanded', 'true');
+      try { document.dispatchEvent(new CustomEvent('aifs:overlayopen', { detail: { source: id } })); } catch (_) {}
       filter.setAttribute('aria-expanded', 'true');
       if (typeof optionIndex === 'number') focusOption(optionIndex < 0 ? options().length - 1 : optionIndex);
       else filter.focus();
@@ -210,6 +214,9 @@
       choose(item.dataset.code);
     });
     document.addEventListener('click', function (e) { if (!host.contains(e.target)) close(false); });
+    document.addEventListener('aifs:overlayopen', function (e) {
+      if (!panel.hidden && !(e.detail && e.detail.source === id)) close(false);
+    });
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape' || panel.hidden || e.defaultPrevented) return;
       e.preventDefault();

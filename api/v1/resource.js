@@ -1,4 +1,4 @@
-const { readResource, readTranslatedResource, InputError } = require('../../lib/agent-content');
+const { readResource, readTranslatedResource, isStaleResource, InputError } = require('../../lib/agent-content');
 const { quality, send, problem, apiHeaders, cacheable, createLimiter } = require('../../lib/agent-http');
 
 function createHandler({ read = readResource, readTranslated = readTranslatedResource, limit = createLimiter() } = {}) {
@@ -17,6 +17,7 @@ function createHandler({ read = readResource, readTranslated = readTranslatedRes
       if (!entry && query.lang !== undefined && query.lang !== 'en') return problem(req, res, 404, 'resource_not_found', 'No published translation matches this path and lang.', 'Use a language from the resource translations, or omit lang for the English original.');
       if (!entry) return problem(req, res, 404, 'resource_not_found', 'No published resource matches this path.', 'Search /api/v1/catalog and use a returned path.');
       cacheable(res);
+      if (isStaleResource(entry)) res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=300, must-revalidate');
       send(req, res, 200, 'application/json', JSON.stringify(entry) + '\n');
     } catch (error) {
       if (error instanceof InputError) return problem(req, res, 400, 'invalid_parameter', error.message);

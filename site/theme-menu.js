@@ -71,16 +71,19 @@
     }
   }
 
-  function announce(mode, theme) {
-    var detail = { mode: mode, theme: theme };
+  function emit(name, detail) {
     var event;
     try {
-      event = new root.CustomEvent('aifs:themechange', { detail: detail });
+      event = new root.CustomEvent(name, { detail: detail });
     } catch (e) {
       event = doc.createEvent('CustomEvent');
-      event.initCustomEvent('aifs:themechange', false, false, detail);
+      event.initCustomEvent(name, false, false, detail);
     }
     doc.dispatchEvent(event);
+  }
+
+  function announce(mode, theme) {
+    emit('aifs:themechange', { mode: mode, theme: theme });
   }
 
   function apply(mode) {
@@ -167,6 +170,7 @@
       panel.hidden = !next;
       button.setAttribute('aria-expanded', String(next));
       if (next) {
+        emit('aifs:overlayopen', { source: 'theme-menu' });
         place();
         if (moveFocus) {
           var current = items.filter(function (item) { return item.getAttribute('aria-checked') === 'true'; })[0] || items[0];
@@ -228,6 +232,14 @@
         setOpen(false, false);
       }
     }, true);
+
+    doc.addEventListener('aifs:overlayopen', function (event) {
+      if (open && !(event.detail && event.detail.source === 'theme-menu')) setOpen(false, false);
+    });
+
+    api.close = function () {
+      if (open) setOpen(false, panel.contains(doc.activeElement));
+    };
 
     root.addEventListener('resize', function () { if (open) place(); });
     doc.addEventListener('scroll', function () { if (open) place(); }, { capture: true, passive: true });

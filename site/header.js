@@ -399,6 +399,7 @@
     }
 
     function syncLayout() {
+      if (window.AIFSThemeMenu && typeof window.AIFSThemeMenu.close === 'function') window.AIFSThemeMenu.close();
       var isNarrow = narrow ? narrow.matches : false;
       var menuHadFocus = nav.contains(document.activeElement);
       var priorityHadFocus = priorityNav.contains(document.activeElement);
@@ -423,10 +424,13 @@
       if (open && !header.contains(event.target)) setOpen(false, false);
     });
     document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && open && !event.defaultPrevented) {
+      if (event.key === 'Escape' && open && !event.defaultPrevented && !document.querySelector('.lang-panel:not([hidden]), #aifsThemeMenu:not([hidden])')) {
         event.preventDefault();
         setOpen(false, true);
       }
+    });
+    document.addEventListener('aifs:overlayopen', function (event) {
+      if (open && event.detail && event.detail.source === 'palette') setOpen(false, false);
     });
 
     if (narrow) {

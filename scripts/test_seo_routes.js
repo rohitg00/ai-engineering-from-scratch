@@ -532,8 +532,8 @@ test('lesson route keeps the summary fallback when Markdown is unreadable', func
   assert.match(fallbackRegion(unreadable.body), /<p class="motto">/);
 
   const english = invoke(lessonApi, { method: 'GET', url: '/lesson?path=' + encodeURIComponent(PERCEPTRON) + '&lang=en' });
-  assert.equal(english.statusCode, 200);
-  assert.ok(embeddedMarkdown(english.body));
+  assert.equal(english.statusCode, 308);
+  assert.equal(english.headers.location, '/lesson?path=' + encodeURIComponent(PERCEPTRON));
 });
 
 test('lesson route never reads Markdown for paths outside the manifest', function () {

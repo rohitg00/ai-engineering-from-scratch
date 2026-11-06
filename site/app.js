@@ -281,12 +281,19 @@
 
   var currentPhaseIdx = -1;
   var modalReturnFocus = null;
+  var modalReturnPhase = null;
+
+  function phaseRow(idx) {
+    return document.querySelector('.toc-row[data-phase="' + idx + '"], .phase-card[data-phase="' + idx + '"]');
+  }
 
   function openModal(idx, fromKeyboard) {
     var p = PHASES[idx];
     if (!p) return;
     currentPhaseIdx = idx;
     modalReturnFocus = document.activeElement;
+    var origin = modalReturnFocus && modalReturnFocus.closest ? modalReturnFocus.closest('.toc-row, .phase-card') : null;
+    modalReturnPhase = origin ? origin.getAttribute('data-phase') : null;
 
     document.getElementById('modalPhaseNum').textContent = 'PHASE ' + String(p.id).padStart(2, '0');
     document.getElementById('modalTitle').textContent = p.name;
@@ -411,7 +418,11 @@
   if (window.AIFSProgress) {
     window.AIFSProgress.onChange(function () {
       if (currentPhaseIdx >= 0 && PHASES[currentPhaseIdx]) {
+        var focused = document.activeElement;
+        var focusedPath = focused && focused.classList && focused.classList.contains('modal-lesson-toggle') ? focused.getAttribute('data-path') : '';
         renderModalLessons(PHASES[currentPhaseIdx]);
+        var again = focusedPath ? document.querySelector('#modalLessons .modal-lesson-toggle[data-path="' + focusedPath + '"]') : null;
+        if (again) again.focus();
       }
       populateStats();
       renderPhases();
@@ -425,10 +436,12 @@
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    if (modalReturnFocus && modalReturnFocus.isConnected && typeof modalReturnFocus.focus === 'function') {
-      modalReturnFocus.focus();
-    }
+    var returnTo = modalReturnFocus && modalReturnFocus.isConnected ? modalReturnFocus : null;
+    if (!returnTo && modalReturnPhase !== null) returnTo = phaseRow(modalReturnPhase);
+    if (returnTo && typeof returnTo.focus === 'function') returnTo.focus();
     modalReturnFocus = null;
+    modalReturnPhase = null;
+    currentPhaseIdx = -1;
     requestAnimationFrame(function () {
       overlay.classList.remove('no-motion');
     });

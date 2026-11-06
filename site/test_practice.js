@@ -206,3 +206,149 @@ test('answer engines get a Markdown page for the list, each track and each task,
   assert.equal(markdownRule.destination, '/agent-pages/practice/:page.md');
   assert.ok(config.rewrites.indexOf(markdownRule) < htmlRule);
 });
+
+function practicePage(options = {}) {
+  const vm = require('node:vm');
+  const Store = require('./practice-store');
+  const nodes = {};
+  const listeners = { window: {}, document: {} };
+  const timers = new Map();
+  let timerSeq = 0;
+  const workers = [];
+  function on(table, type, fn) {
+    (table[type] = table[type] || []).push(fn);
+  }
+  function element(attributes = {}) {
+    const own = { ...attributes };
+    const events = {};
+    return {
+      value: '', textContent: '', innerHTML: '', hidden: false, disabled: false, scrollTop: 0, scrollLeft: 0,
+      parentNode: { scrollTop: 0, scrollLeft: 0 },
+      classList: { contains: () => false, add() {} },
+      style: {},
+      getAttribute: name => (name in own ? own[name] : null),
+      setAttribute: (name, value) => { own[name] = String(value); },
+      hasAttribute: name => name in own,
+      toggleAttribute: (name, force) => { if (force) own[name] = ''; else delete own[name]; },
+      addEventListener: (type, fn) => on(events, type, fn),
+      fire: (type, event = {}) => (events[type] || []).forEach(fn => fn(event)),
+      querySelector: selector => nodes[selector] || null,
+      querySelectorAll: selector => (selector === '[data-status-for]' && nodes.status ? [nodes.status] : []),
+      focus() {},
+    };
+  }
+  const main = element({ 'data-practice-problem': 'rope', 'data-version': options.version || 'v1', 'data-limit': '10', 'data-data': '/practice/data/rope.json', 'data-worker': '/practice-worker.js', 'data-pyodide': '/py/', 'data-harness': '/h.py' });
+  for (const name of ['results', 'runtime', 'hints', 'hint-next', 'solution', 'lock', 'locked-note', 'run', 'submit', 'reset', 'editor', 'editor-view', 'editor-input']) nodes[`[data-${name}]`] = element();
+  nodes['[data-editor-input]'].value = 'starter';
+  nodes.status = element({ 'data-status-for': 'rope' });
+  nodes.main = main;
+  const storage = options.storage || new Map();
+  const localStorage = { getItem: key => (storage.has(key) ? storage.get(key) : null), setItem: (key, value) => storage.set(key, String(value)), removeItem: key => storage.delete(key) };
+  class FakeWorker {
+    constructor() {
+      this.sent = [];
+      workers.push(this);
+    }
+    postMessage(message) { this.sent.push(message); }
+    terminate() { this.terminated = true; }
+  }
+  const window = {
+    localStorage,
+    confirm: () => true,
+    addEventListener: (type, fn) => on(listeners.window, type, fn),
+  };
+  const document = {
+    readyState: 'complete',
+    visibilityState: 'visible',
+    querySelector: selector => (selector === 'main' ? main : nodes[selector] || null),
+    querySelectorAll: selector => main.querySelectorAll(selector),
+    addEventListener: (type, fn) => on(listeners.document, type, fn),
+  };
+  const problem = { tests: 't', fixtures: '{}', support: '', limit: 10, hints: ['a', 'b'] };
+  const context = {
+    window, document, URLSearchParams, Promise, JSON, Math, String, Number, Array, Object, Error,
+    Worker: FakeWorker,
+    performance: { now: () => 0 },
+    requestAnimationFrame: () => 1,
+    setTimeout: (fn, ms) => { timerSeq += 1; timers.set(timerSeq, { fn, ms }); return timerSeq; },
+    clearTimeout: id => timers.delete(id),
+    fetch: () => Promise.resolve({ ok: true, json: () => Promise.resolve(problem) }),
+  };
+  window.window = window;
+  vm.createContext(context);
+  vm.runInContext(fs.readFileSync(path.join(__dirname, 'practice-store.js'), 'utf8'), context);
+  if (options.before) options.before(context.window.AIFSPracticeStore);
+  vm.runInContext(fs.readFileSync(path.join(__dirname, 'practice.js'), 'utf8'), context);
+  return {
+    nodes, main, storage, workers, timers, Store,
+    store: context.window.AIFSPracticeStore,
+    runTimers: ms => {
+      for (const [id, timer] of Array.from(timers)) {
+        if (timer.ms <= ms) {
+          timers.delete(id);
+          timer.fn();
+        }
+      }
+    },
+    type: text => {
+      nodes['[data-editor-input]'].value = text;
+      nodes['[data-editor-input]'].fire('input');
+    },
+  };
+}
+
+const settle = () => new Promise(resolve => setImmediate(resolve));
+
+test('reset cancels a pending save so the old code does not come back', () => {
+  const page = practicePage();
+  page.type('my code');
+  page.nodes['[data-reset]'].fire('click');
+  page.runTimers(250);
+  assert.equal(page.nodes['[data-editor-input]'].value, 'starter');
+  assert.equal(page.store.loadCode('rope'), null);
+});
+
+test('a second run while the first is starting is ignored and keeps the buttons busy', async () => {
+  const page = practicePage();
+  page.nodes['[data-run]'].fire('click');
+  page.nodes['[data-submit]'].fire('click');
+  await settle();
+  assert.equal(page.workers.length, 1);
+  const runs = page.workers[0].sent.filter(message => message.type === 'run');
+  assert.equal(runs.length, 1);
+  assert.equal(page.nodes['[data-run]'].disabled, true);
+  assert.equal(page.main.hasAttribute('data-busy'), true);
+  page.workers[0].onmessage({ data: { type: 'result', id: runs[0].id, report: { summary: { ok: true, passed: 3, total: 3 }, results: [] } } });
+  await settle();
+  assert.equal(page.nodes['[data-run]'].disabled, false);
+  assert.equal(page.main.getAttribute('data-last'), 'run:pass');
+});
+
+test('a Python download failure shows on the label and the next run starts a new worker', async () => {
+  const page = practicePage();
+  page.nodes['[data-run]'].fire('click');
+  await settle();
+  page.workers[0].onmessage({ data: { type: 'status', phase: 'failed', message: 'The Python runtime did not download.' } });
+  await settle();
+  assert.equal(page.nodes['[data-runtime]'].getAttribute('data-phase'), 'failed');
+  assert.equal(page.workers[0].terminated, true);
+  assert.equal(page.nodes['[data-run]'].disabled, false);
+  assert.match(page.nodes['[data-results]'].innerHTML, /did not download/);
+  page.nodes['[data-run]'].fire('click');
+  await settle();
+  assert.equal(page.workers.length, 2);
+  const worker = fs.readFileSync(path.join(__dirname, 'practice-worker.js'), 'utf8');
+  assert.match(worker, /type: 'status', phase: 'failed'/);
+});
+
+test('a solved badge is repainted when a new task version asks for a new pass', () => {
+  const page = practicePage({
+    version: 'v2',
+    before: store => {
+      store.open('rope', 'v1');
+      store.record('rope', 'submit', 2, 2);
+    },
+  });
+  assert.equal(page.store.status('rope'), 'attempted');
+  assert.equal(page.nodes.status.getAttribute('data-status'), 'attempted');
+});

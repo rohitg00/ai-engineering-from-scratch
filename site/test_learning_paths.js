@@ -280,3 +280,66 @@ test('learning paths shares the site theme preference', () => {
   assert.match(learningPathsJs, /prefers-color-scheme: dark/);
   assert.match(learningPathsJs, /addEventListener\('storage'/);
 });
+
+function loadCareerPage(initialHash) {
+  const vm = require('node:vm');
+  const listeners = { document: {}, window: {} };
+  const attrs = el => ({
+    setAttribute(name, value) { el.attributes[name] = String(value); },
+    getAttribute(name) { return name in el.attributes ? el.attributes[name] : null; },
+    removeAttribute(name) { delete el.attributes[name]; },
+  });
+  const link = { attributes: { href: '#career-route-ai-data-engineer' }, addEventListener() {} };
+  Object.assign(link, attrs(link));
+  const guide = {
+    id: 'career-route-ai-data-engineer',
+    open: false,
+    listeners: {},
+    matches: selector => selector === 'details.career-guide',
+    addEventListener(type, fn) { this.listeners[type] = fn; },
+    querySelector: () => null,
+    scrollIntoView() {},
+  };
+  const location = { pathname: '/learning-paths.html', search: '', hash: initialHash };
+  const history = { state: null, length: 1, calls: [], replaceState(state, title, url) { this.calls.push(url); location.hash = url.includes('#') ? url.slice(url.indexOf('#')) : ''; } };
+  const documentElement = { attributes: {} };
+  Object.assign(documentElement, attrs(documentElement));
+  const document = {
+    documentElement,
+    addEventListener: (type, fn) => { listeners.document[type] = fn; },
+    getElementById: id => (id === guide.id ? guide : null),
+    querySelectorAll: selector => (selector === '[data-career-choice]' ? [link] : selector === 'details.career-guide' ? [guide] : []),
+  };
+  const window = {
+    location,
+    history,
+    matchMedia: () => ({ matches: false }),
+    requestAnimationFrame: () => 0,
+    addEventListener: (type, fn) => { listeners.window[type] = fn; },
+  };
+  vm.runInContext(learningPathsJs, vm.createContext({ window, document, localStorage: { getItem: () => null, setItem() {} } }));
+  listeners.document.DOMContentLoaded();
+  return { guide, link, location, history };
+}
+
+test('opening and closing a career guide keeps the hash and chooser state in step without new history entries', () => {
+  const page = loadCareerPage('');
+  page.guide.open = true;
+  page.guide.listeners.toggle();
+  assert.equal(page.link.getAttribute('aria-current'), 'location');
+  assert.equal(page.location.hash, '#career-route-ai-data-engineer');
+  page.guide.open = false;
+  page.guide.listeners.toggle();
+  assert.equal(page.link.getAttribute('aria-current'), null);
+  assert.equal(page.location.hash, '');
+  assert.deepEqual(page.history.calls, ['/learning-paths.html#career-route-ai-data-engineer', '/learning-paths.html']);
+  assert.equal(page.history.length, 1);
+});
+
+test('closing a guide that is not the current hash leaves the hash alone', () => {
+  const page = loadCareerPage('#overview');
+  page.guide.open = false;
+  page.guide.listeners.toggle();
+  assert.equal(page.location.hash, '#overview');
+  assert.deepEqual(page.history.calls, []);
+});

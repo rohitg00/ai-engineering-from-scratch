@@ -59,3 +59,17 @@ test('the shared header loads the nudge on every page', () => {
   assert.match(header, /script\.src = 'star-nudge\.js\?v=' \+ STAR_NUDGE_VERSION/);
   assert.match(header, /ensureStarNudge\(\);/);
 });
+
+test('only overlays that are actually open hold the note back', () => {
+  const { BUSY, busyIn } = nudge;
+  assert.doesNotMatch(BUSY, /aria-modal/, 'the home modal and the palette always carry aria-modal, so it says nothing about open state');
+  for (const open of ['dialog[open]', 'body[data-palette-open]', '#cmdPalette.cp-open', '#modalOverlay.open', '.header-menu-toggle[aria-expanded="true"]']) {
+    assert.ok(BUSY.split(', ').includes(open), open);
+  }
+  const seen = [];
+  assert.equal(busyIn({ querySelector: (selector) => { seen.push(selector); return null; } }), false);
+  assert.deepEqual(seen, [BUSY]);
+  assert.equal(busyIn({ querySelector: () => ({}) }), true);
+  const source = fs.readFileSync(path.join(__dirname, 'star-nudge.js'), 'utf8');
+  assert.match(source, /event\.key === 'Escape' && !event\.defaultPrevented/);
+});

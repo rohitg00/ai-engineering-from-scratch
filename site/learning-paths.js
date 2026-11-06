@@ -63,6 +63,25 @@
     });
   }
 
+  function replaceCareerHash(hash) {
+    if (!window.history || typeof window.history.replaceState !== 'function') return;
+    var url = window.location.pathname + window.location.search + hash;
+    window.history.replaceState(window.history.state, '', url);
+  }
+
+  function trackCareerGuide(guide) {
+    guide.addEventListener('toggle', function () {
+      var hash = '#' + guide.id;
+      if (guide.open) {
+        syncCareerChoice(guide);
+        if (window.location.hash !== hash) replaceCareerHash(hash);
+      } else if (window.location.hash === hash) {
+        syncCareerChoice(null);
+        replaceCareerHash('');
+      }
+    });
+  }
+
   function revealCareerGuide(hash, moveFocus) {
     var guide = careerGuideFromHash(hash);
     if (!guide) return false;
@@ -108,6 +127,8 @@
         else window.location.hash = hash;
       });
     });
+
+    document.querySelectorAll('details.career-guide').forEach(trackCareerGuide);
 
     if (!revealCareerGuide(window.location.hash, false)) syncCareerChoice(null);
   });

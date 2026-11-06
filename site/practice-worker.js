@@ -86,7 +86,7 @@ self.onmessage = function (event) {
   var message = event.data || {};
   if (message.type === 'boot') {
     boot(message.pyodide).then(function () {}, function (error) {
-      post({ type: 'error', id: message.id, message: String(error && error.message || error) });
+      post({ type: 'status', phase: 'failed', message: String(error && error.message || error) });
     });
     return;
   }

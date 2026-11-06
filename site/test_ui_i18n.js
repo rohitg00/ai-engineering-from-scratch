@@ -114,3 +114,31 @@ test('dictionaries come from the translations branch, English and unknown langua
     delete globalThis.fetch;
   }
 });
+
+test('a failed dictionary keeps the language the picker applied instead of forcing English', async () => {
+  const dirCalls = [];
+  const body = { nodeType: 1, nodeName: 'BODY', parentNode: null, matches: () => false, hasAttribute: () => false };
+  body.ownerDocument = { createTreeWalker: () => ({ nextNode: () => null }) };
+  globalThis.document = body.ownerDocument;
+  globalThis.document.body = body;
+  globalThis.AIFS_applyLangDir = (lang) => dirCalls.push(lang);
+  globalThis.fetch = async () => ({ ok: false, json: async () => ({}) });
+  try {
+    i18n.preload('ar', { Contents: 'المحتويات' });
+    i18n.setLanguage('ar');
+    assert.deepEqual(dirCalls, ['ar']);
+    i18n.setLanguage('qq');
+    await new Promise((resolve) => setTimeout(resolve, 20));
+    assert.deepEqual(dirCalls, ['ar'], 'html lang and dir stay with the requested language');
+  } finally {
+    delete globalThis.document;
+    delete globalThis.AIFS_applyLangDir;
+    delete globalThis.fetch;
+  }
+});
+
+test('the picker marks the language the page applied, not a newer stored choice', () => {
+  const source = fs.readFileSync(path.join(SITE, 'lang-picker.js'), 'utf8');
+  assert.match(source, /if \(supported\(q\)\) return q;\s*if \(applied\) return applied;/);
+  assert.match(source, /applied = supported\(code\) \? code : 'en';/);
+});

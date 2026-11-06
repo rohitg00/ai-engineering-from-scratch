@@ -24,20 +24,27 @@
   function mount(host, project) {
     host.innerHTML = '<div class="pj-eyebrow">PROJECT CERTIFICATE</div><h3>Keep evidence of your work.</h3><p>Pass every stage in your workspace, then import the grader report to download a completion certificate.</p><pre class="pj-cmd"><code>python3 scripts/project_test.py ' + escape(project.id) + ' --all --strict --path my-' + escape(project.id) + ' --report completion.json</code></pre><div class="pj-certificate-fields"><label>Your name<input id="pjCertificateName" maxlength="100" autocomplete="name"></label><label>Grader report<input id="pjCertificateFile" type="file" accept="application/json,.json"></label><button type="button" class="pj-action" id="pjCertificateDownload" disabled>Download certificate</button></div><p id="pjCertificateStatus" role="status">Certificates use local evidence. They are not proctored or vendor credentials.</p>';
     var report = null;
+    var readToken = 0;
     var status = host.querySelector('#pjCertificateStatus');
     var button = host.querySelector('#pjCertificateDownload');
     var name = host.querySelector('#pjCertificateName');
     function enabled() { button.disabled = !report || !name.value.trim(); }
     name.addEventListener('input', enabled);
     host.querySelector('#pjCertificateFile').addEventListener('change', async function (event) {
+      var token = ++readToken;
       report = null; enabled();
       try {
         var file = event.target.files[0];
         if (!file || file.size > 2000000) throw new Error('Choose a grader JSON report smaller than 2 MB.');
-        var parsed = JSON.parse(await file.text());
+        var text = await file.text();
+        if (token !== readToken) return;
+        var parsed = JSON.parse(text);
         validate(parsed, project); report = parsed;
         status.textContent = 'All stages passed in the imported learner report. Enter your name to download.';
-      } catch (error) { status.textContent = error.message; }
+      } catch (error) {
+        if (token !== readToken) return;
+        status.textContent = error.message;
+      }
       enabled();
     });
     button.addEventListener('click', function () {
