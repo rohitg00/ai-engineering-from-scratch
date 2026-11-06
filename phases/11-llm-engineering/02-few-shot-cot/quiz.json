@@ -1,7 +1,7 @@
 [
   {
     "question": "What is the key difference between zero-shot and few-shot prompting?",
-    "options": ["Zero-shot gives only the instruction; few-shot includes example input-output demonstrations before the actual query", "Zero-shot doesn't use a system prompt, while few-shot always requires one to hold the example demonstrations", "Few-shot uses a different model that was fine-tuned on examples, while zero-shot uses the base pretrained model", "Zero-shot is faster and cheaper because the provider skips the extra prefill work caused by example tokens in the prompt"],
+    "options": ["Zero-shot gives only the instruction; few-shot includes example input-output demonstrations before the actual query", "Zero-shot doesn't use a system prompt, while few-shot always requires one to hold the example demonstrations", "Few-shot uses a different model that was fine-tuned on examples, while zero-shot uses the base pretrained model", "Zero-shot is slower and more expensive because the provider has to write the missing demonstrations before it can answer"],
     "correct": 0,
     "explanation": "Few-shot prompting includes worked examples (demonstrations) that show the model the expected pattern. This is like showing someone how to fill out a form before asking them to fill out their own.",
     "stage": "pre"

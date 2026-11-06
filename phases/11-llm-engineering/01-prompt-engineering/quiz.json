@@ -1,7 +1,7 @@
 [
   {
     "question": "What is the most common mistake people make when writing prompts for LLMs?",
-    "options": ["Not using enough examples in the prompt, so the model never sees a demonstration of the expected input-output mapping", "Writing vague, underspecified instructions that leave the model guessing about format, scope, and constraints", "Using the wrong API endpoint or model family, so the request is served by a model that was never trained for this task", "Using too many tokens in the prompt, which wastes the context budget and dilutes the instruction with irrelevant filler"],
+    "options": ["Not using enough examples in the prompt, so the model never sees the expected input-output mapping", "Writing vague, underspecified instructions that leave the model guessing about format, scope, and constraints", "Using the wrong API endpoint or model family, so the request is served by a model that was never trained for this task", "Using too many tokens in the prompt, which wastes the context budget and dilutes the instruction with irrelevant filler"],
     "correct": 1,
     "explanation": "LLMs follow instructions literally. 'Write me a marketing email' gives the model no constraints. Specifying tone, audience, length, format, and constraints produces dramatically better results.",
     "stage": "pre"
@@ -22,7 +22,7 @@
   },
   {
     "question": "What is the purpose of a system prompt?",
-    "options": ["To set persistent behavioral rules, role, and constraints that apply to the entire conversation", "To define the model's architecture, including layer counts and attention heads, before any training begins", "To authenticate the API call by supplying the secret key that identifies the developer account and its quota", "To compress the conversation history so that longer chats fit inside the model's fixed context window budget"],
+    "options": ["To set persistent behavioral rules, role, and constraints that apply to the entire conversation", "To define the model's architecture, including layer counts and attention heads", "To authenticate the API call by supplying the secret key that identifies the developer account and its quota", "To compress the conversation history so that longer chats fit inside the model's fixed context window budget"],
     "correct": 0,
     "explanation": "The system prompt establishes the model's persona, rules, and constraints for the entire session. It runs before every user turn and is the primary mechanism for controlling model behavior in production.",
     "stage": "post"
