@@ -1,0 +1,78 @@
+{
+  "lesson": "06-hierarchical-architecture",
+  "title": "Hierarchical Architecture and Its Failure Mode",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A task has departments with separate responsibilities, and each department can break its work into smaller jobs. What architecture mirrors that structure?",
+      "options": [
+        "A hierarchy with managers, sub-managers, and worker leaves",
+        "A flat list where every agent receives every task",
+        "A round-robin chat where roles change each turn",
+        "A single worker with no decomposition or delegation"
+      ],
+      "correct": 0,
+      "explanation": "Nested managers mirror departments that can decompose work into their own sub-jobs, with worker leaves doing the final tasks. A flat list sends work to peers but does not represent that real responsibility structure."
+    },
+    {
+      "stage": "check",
+      "question": "When does the lesson recommend a sequential pipeline instead of a hierarchy?",
+      "options": [
+        "When departments have truly independent sub-teams",
+        "When every leaf has a distinct and necessary role",
+        "When sub-managers can summarize their own outputs",
+        "When the task is one linear flow pretending to be a tree"
+      ],
+      "correct": 3,
+      "explanation": "A tree adds value when real independent sub-teams can work under sub-managers. If the job is one linear sequence with dependencies, manager layers add routing and summaries without exposing independent branches."
+    },
+    {
+      "stage": "check",
+      "question": "The top manager sends a legal review task to a finance sub-manager. What is the likely failure path?",
+      "options": [
+        "The legal result is verified because the branch name is similar",
+        "The top manager is forced to stop before collecting any output",
+        "Finance does its assigned work, leaving the legal question unanswered",
+        "The finance worker rewrites the original user request automatically"
+      ],
+      "correct": 2,
+      "explanation": "The finance branch can faithfully complete the task it received while leaving the legal question unanswered; the failure begins in top-level decomposition. A similar branch name does not validate that the sub-manager owns the requested domain."
+    },
+    {
+      "stage": "check",
+      "question": "Two sub-managers disagree and the top manager repeatedly re-delegates work. Which control limits this loop?",
+      "options": [
+        "An explicit reconciliation-round or step budget",
+        "A rule that every worker must accept the first answer",
+        "A deeper tree with additional manager layers",
+        "A longer shared transcript for all workers"
+      ],
+      "correct": 0,
+      "explanation": "A reconciliation-round or step budget limits how often managers can reassign disputed work, so disagreement eventually exits to a decision or escalation. Adding tree depth creates more delegation points and can extend the loop."
+    },
+    {
+      "stage": "post",
+      "question": "A top-level summary states that a claim is false, while the sub-manager only said it could not be verified. What safeguard helps catch this meaning drift?",
+      "options": [
+        "Let the same top manager review its own conclusion",
+        "Attach provenance from each synthesis back to leaf outputs",
+        "Increase the manager's confidence in the summary",
+        "Remove the uncertain wording before storing the output"
+      ],
+      "correct": 1,
+      "explanation": "Provenance links each summary claim back to the leaf output that supports it, allowing a reviewer to see where “could not verify” became “false.” Asking the same manager to check its own conclusion does not restore the lost evidence."
+    },
+    {
+      "stage": "post",
+      "question": "A project has only a few clear steps and no true departments. Which design choice best follows the lesson?",
+      "options": [
+        "Create a finance branch to test a second manager",
+        "Use a sequential or flat supervisor pattern instead of nested managers",
+        "Let all managers debate freely until they reach agreement naturally",
+        "Add more hierarchy levels to improve observability"
+      ],
+      "correct": 1,
+      "explanation": "A few clear sequential steps fit a pipeline or flat supervisor: each stage passes its result to the next without inventing departments. More levels increase coordination work without adding genuine parallel branches."
+    }
+  ]
+}

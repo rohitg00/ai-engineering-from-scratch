@@ -1,0 +1,78 @@
+{
+  "lesson": "05-dqn",
+  "title": "Deep Q-Networks (DQN)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An environment has far too many state-action pairs for a separate table entry per pair. What DQN change makes value estimates practical?",
+      "options": [
+        "Keep one independent table entry for every possible state and action.",
+        "Replace value estimates with a fixed action ranking for all states.",
+        "Store only terminal rewards and skip function approximation.",
+        "Represent Q(s,a) with a neural network that shares parameters across states."
+      ],
+      "correct": 3,
+      "explanation": "A tabular method stores a separate value for each state-action pair, so its storage grows with the number of pairs. DQN maps (s,a) through shared network parameters instead, letting experience at one state inform estimates at related inputs."
+    },
+    {
+      "stage": "check",
+      "question": "Why does DQN sample a random minibatch from a replay buffer instead of training only on the latest consecutive transitions?",
+      "options": [
+        "The buffer removes the need to estimate a next-state value.",
+        "Random sampling makes the reward function known before each transition.",
+        "Random sampling reduces temporal correlation and reuses rare rewarding transitions.",
+        "The buffer guarantees that every minibatch contains terminal states."
+      ],
+      "correct": 2,
+      "explanation": "Adjacent transitions are correlated because successive frames are similar; training only on them produces correlated gradient updates. Uniform replay samples older and rarer rewards again, while it neither supplies missing transition probabilities nor guarantees terminal examples in each batch."
+    },
+    {
+      "stage": "check",
+      "question": "What is the target network's role in the DQN Bellman update?",
+      "options": [
+        "It holds frozen weights between periodic copies to stabilize the bootstrap target.",
+        "It stores all transitions so the online network can avoid replay.",
+        "It clips the reward before the environment returns its transition.",
+        "It chooses every exploratory action and replaces the online network."
+      ],
+      "correct": 0,
+      "explanation": "The target network’s frozen weights keep the bootstrap side of the Bellman loss stable while the online network changes. Periodic copies refresh that target; the target network does not replace the online network for ordinary exploratory action selection."
+    },
+    {
+      "stage": "check",
+      "question": "An Atari task only cares whether a reward is positive, zero, or negative, not its magnitude. Which reward treatment fits the lesson's stated clipping condition?",
+      "options": [
+        "Multiply each reward by the current Q value before clipping.",
+        "Preserve every magnitude because clipping always changes the optimal policy.",
+        "Clip rewards to {-1, 0, +1} to limit gradient scale.",
+        "Add a large constant to each reward to make gradients comparable."
+      ],
+      "correct": 2,
+      "explanation": "When the task depends only on reward sign, clipping to −1, 0, or +1 limits gradient scale without discarding a magnitude distinction the objective cares about. If magnitude defines success, clipping can change the learning problem; it is not universally safe."
+    },
+    {
+      "stage": "post",
+      "question": "Noisy Q estimates create upward bias from the maximum. In Double DQN, which network selects the next action and which evaluates it?",
+      "options": [
+        "The online network selects and evaluates with the same noisy maximum.",
+        "The online network selects the action; the target network evaluates it.",
+        "The replay buffer selects the action; the target network evaluates it.",
+        "The target network selects the action; the online network evaluates it."
+      ],
+      "correct": 1,
+      "explanation": "Double DQN uses the online network to choose argmax_a Q(s′,a), then the target network to evaluate that chosen action. Splitting those roles reduces the upward bias caused when one noisy set of estimates both selects and scores its maximum."
+    },
+    {
+      "stage": "post",
+      "question": "A camera observation omits velocity, so identical frames can lead to different next states. What state-input adjustment does the lesson suggest?",
+      "options": [
+        "Clip the reward and keep the single-frame observation unchanged.",
+        "Stack recent frames or use a recurrent state to recover missing history.",
+        "Increase replay capacity and keep the single-frame observation unchanged.",
+        "Copy the target network more often and keep the single-frame observation unchanged."
+      ],
+      "correct": 1,
+      "explanation": "If a single camera frame omits velocity, the observation is not sufficient to predict the next state: the same image may hide different motion. Stacking recent frames or carrying recurrent state supplies history; replay capacity and target-copy frequency do not."
+    }
+  ]
+}

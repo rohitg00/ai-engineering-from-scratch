@@ -1,0 +1,78 @@
+{
+  "lesson": "24-multimodal-rag-cross-modal",
+  "title": "Multimodal RAG and Cross-Modal Retrieval",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What additional system pieces does multimodal RAG need beyond a text-only retrieve-and-generate pipeline?",
+      "options": [
+        "A single image classifier that replaces all retrieval indexes.",
+        "Multiple modality retrievers, fusion, grounding, and evaluation.",
+        "Only a larger language model and a longer text chunk size.",
+        "A speech decoder that converts every retrieved item into audio."
+      ],
+      "correct": 1,
+      "explanation": "Multimodal RAG needs a retrieval head for each relevant modality, a way to fuse results, generation that grounds claims in retrieved sources, and evaluation that measures cross-modal performance. A larger language model alone does not create image or audio retrieval indexes."
+    },
+    {
+      "stage": "check",
+      "question": "A text query must retrieve matching images directly. Which setup supports cross-modal similarity without a translator?",
+      "options": [
+        "A shared text-image embedding space such as CLIP or SigLIP.",
+        "A speech residual-VQ codebook shared with image patches.",
+        "Independent text and image spaces with unrelated vector coordinates.",
+        "An OCR pipeline that turns every image into an invoice schema."
+      ],
+      "correct": 0,
+      "explanation": "CLIP and SigLIP align text and image representations in a shared embedding space, making cross-modal cosine comparisons meaningful without a separate translator. Independent spaces have unrelated coordinates, so comparing their vectors directly does not establish semantic similarity."
+    },
+    {
+      "stage": "check",
+      "question": "Text, image, and audio retrievers return normalized scores 0.8, 0.6, and 0.4 with weights 0.3, 0.4, and 0.3. What score fusion result is produced?",
+      "options": [
+        "0.60",
+        "1.80",
+        "0.80",
+        "0.36"
+      ],
+      "correct": 0,
+      "explanation": "Score fusion multiplies each normalized score by its modality weight and sums: 0.3×0.8 + 0.4×0.6 + 0.3×0.4 = 0.24+0.24+0.12 = 0.60. The 0.36 distractor includes text and audio terms but omits the weighted image score."
+    },
+    {
+      "stage": "check",
+      "question": "Which citation best grounds a claim drawn from an audio retrieval result?",
+      "options": [
+        "A text-only confidence score with no source index.",
+        "[img 2], even though the retrieved item is sound.",
+        "[audio 2 at 0:34], identifying the clip and timestamp.",
+        "[2], with no indication that the source is audio."
+      ],
+      "correct": 2,
+      "explanation": "The lesson's audio citation identifies both the retrieved audio item and the relevant timestamp, for example [audio 2 at 0:34]. An image citation mislabels the source type, while a bare [2] loses modality and time grounding."
+    },
+    {
+      "stage": "post",
+      "question": "A brunch query asks for vegan menu options, natural light, and a quiet room. Which retrieval-and-fusion plan uses each modality's evidence?",
+      "options": [
+        "Retrieve the loudest audio and darkest photos, then choose the highest raw score.",
+        "Search reviews for vegan brunch, photos for natural light, audio for low noise, then fuse scores.",
+        "Search photos for vegan menu text, audio for window placement, and ignore reviews.",
+        "Use one text retriever for all evidence because images and sound contain no useful signal."
+      ],
+      "correct": 1,
+      "explanation": "The query's menu constraint belongs in review text, natural light in image features, and quietness in ambient audio; score fusion then combines their independent evidence. The single-text-retriever option cannot observe the visual or acoustic clues it claims are irrelevant."
+    },
+    {
+      "stage": "post",
+      "question": "The first retrieval round has low confidence and misses a relevant clip. What is the agentic multimodal RAG response?",
+      "options": [
+        "Replace all retrieval with a larger text embedding model.",
+        "Generate citations for the missing clip without retrieving it.",
+        "Retry with a reformulated query when confidence is low.",
+        "Return the low-confidence answer because retries change the original evidence."
+      ],
+      "correct": 2,
+      "explanation": "When first-pass confidence is low, the agentic pattern reformulates the query and retrieves again, potentially finding missed evidence at the cost of another round trip. Generating a citation without retrieving its clip would fabricate rather than ground a source."
+    }
+  ]
+}

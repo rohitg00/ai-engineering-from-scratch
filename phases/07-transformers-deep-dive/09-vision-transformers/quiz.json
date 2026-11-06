@@ -1,0 +1,78 @@
+{
+  "lesson": "09-vision-transformers",
+  "title": "Vision Transformers (ViT)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What becomes a transformer token in a standard Vision Transformer?",
+      "options": [
+        "A pixel coordinate paired with a word",
+        "A flattened image patch",
+        "A convolutional feature map per class",
+        "A whole image caption"
+      ],
+      "correct": 1,
+      "explanation": "ViT cuts the image into non-overlapping patches, flattens each patch’s pixel channels, and projects each vector to the model width. A caption is a possible output task, not the input token representation used by the patch encoder."
+    },
+    {
+      "stage": "check",
+      "question": "A 224×224 image uses 16×16 non-overlapping patches. How many patch tokens are created?",
+      "options": [
+        "256 patches",
+        "14 patches",
+        "196 patches",
+        "224 patches"
+      ],
+      "correct": 2,
+      "explanation": "Each side has 224 ÷ 16 = 14 patches, so the grid contains 14 × 14 = 196 patch tokens. The 224 value is the image side length; it is not the count of patches, and [CLS] is additional."
+    },
+    {
+      "stage": "check",
+      "question": "What is the usual role of the prepended [CLS] token in ViT classification?",
+      "options": [
+        "Its final hidden state summarizes the image",
+        "It replaces every patch positional embedding",
+        "It stores the first patch’s raw pixel values",
+        "It marks the start of a caption decoder"
+      ],
+      "correct": 0,
+      "explanation": "For classification, ViT uses the final [CLS] hidden state as the image representation passed to a linear head. It does not hold a patch’s raw pixels; patch tokens carry the projected image regions."
+    },
+    {
+      "stage": "check",
+      "question": "What cost follows from reducing ViT patch size while holding image resolution fixed?",
+      "options": [
+        "The same tokens with a larger class vocabulary",
+        "Fewer tokens and lower quadratic attention cost",
+        "More channels without changing sequence length",
+        "More tokens and higher quadratic attention cost"
+      ],
+      "correct": 3,
+      "explanation": "With resolution fixed, halving patch width doubles patches along each axis and quadruples N; full self-attention then scales roughly as N². Smaller patches therefore mean more tokens and higher attention cost, not fewer."
+    },
+    {
+      "stage": "post",
+      "question": "A dataset is small and no large pretraining set is available. Which lesson caveat matters when choosing ViT over a CNN?",
+      "options": [
+        "ViT patch tokens eliminate the need for positional signals",
+        "ViT uses local convolution by default for each patch",
+        "ViT lacks CNN locality bias and needs more data",
+        "CNNs require more images because they lack spatial priors"
+      ],
+      "correct": 2,
+      "explanation": "CNNs encode locality and translation-related priors, while ViT starts with global token attention and relies more on data to learn spatial structure. Thus limited training data weakens ViT’s advantage; CNNs do not lack spatial priors."
+    },
+    {
+      "stage": "post",
+      "question": "A segmentation model needs denser spatial detail than ViT-B/16 provides. Which direction does the lesson suggest?",
+      "options": [
+        "Pool the image to one [CLS] token before the head",
+        "Use larger patches such as 32×32 or 64×64",
+        "Remove all position embeddings from patch tokens",
+        "Use smaller patches such as 8×8 or 14×14"
+      ],
+      "correct": 3,
+      "explanation": "Dense prediction needs finer patch granularity, and the lesson suggests 8×8 or 14×14 patches for segmentation. Larger 32×32 or 64×64 patches merge more pixels into each token and coarsen spatial detail."
+    }
+  ]
+}

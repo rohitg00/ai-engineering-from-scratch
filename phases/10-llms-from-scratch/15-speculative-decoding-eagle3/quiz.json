@@ -1,0 +1,78 @@
+{
+  "lesson": "15-speculative-decoding-eagle3",
+  "title": "Speculative Decoding and EAGLE-3",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A small draft proposes several tokens and a large verifier checks them together. What makes this usable without changing the verifier's output distribution?",
+      "options": [
+        "The system removes rejected tokens without sampling a replacement.",
+        "The verifier always accepts drafts, so the small model sets output quality.",
+        "The draft is trained to copy hidden states, so no correction is required.",
+        "The rejection rule accepts or corrects drafts so samples still follow the verifier."
+      ],
+      "correct": 3,
+      "explanation": "The algorithm accepts d with min(1, P_verifier(d)/P_draft(d)); on rejection it samples from the normalized positive residual (P_verifier−P_draft)+. Removing a rejected token without that correction changes the output distribution; using explicit distribution names avoids the source sections’ conflicting p/q labels."
+    },
+    {
+      "stage": "check",
+      "question": "For one drafted token, let the verifier probability be 0.3 and the draft probability be 0.6. What is the acceptance probability under this lesson's rule?",
+      "options": [
+        "0.5, from min(1, verifier probability divided by draft probability).",
+        "1.0, because the verifier probability is below the draft probability.",
+        "0.3, because acceptance equals the verifier probability alone.",
+        "2.0, because draft probability is divided by verifier probability."
+      ],
+      "correct": 0,
+      "explanation": "The verifier-to-draft probability ratio is 0.3/0.6=0.5, below 1, so it is the acceptance probability. Reversing it gives 2 and clips to 1; using 0.3 alone ignores how likely the draft was to propose the token."
+    },
+    {
+      "stage": "check",
+      "question": "What changed in EAGLE-3 training-time test compared with a draft trained only on teacher-forced inputs?",
+      "options": [
+        "The target model uses no key/value cache during verification.",
+        "The draft is trained only to predict hidden features, not output tokens.",
+        "Train the draft on its own predictions to match inference inputs.",
+        "The verifier stops checking draft tokens during training and inference."
+      ],
+      "correct": 2,
+      "explanation": "EAGLE-3 training-time test feeds the draft its own earlier predictions over several steps, like inference, instead of relying only on teacher-forced inputs. This exposes the draft to its own errors during training and reduces exposure bias."
+    },
+    {
+      "stage": "check",
+      "question": "The verifier prefix has logical cache length 10 and the step drafted N=5 tokens. Draft position j=2 is rejected using zero-based indexing, and the correction token is emitted. What logical length should the cache keep?",
+      "options": [
+        "12, because the rejected position is excluded from the correction.",
+        "10, because every rejection discards the correction token too.",
+        "15, because all five speculative entries remain valid.",
+        "13, equal to prefix length plus the correction token's position."
+      ],
+      "correct": 3,
+      "explanation": "The correction token is emitted after two accepted drafts at positions 0 and 1, so the kept cache length is prefix 10 + 2 accepted + 1 correction = 13. The five-token draft suffix cannot all remain valid after a rejection at position 2."
+    },
+    {
+      "stage": "post",
+      "question": "A draft is uncertain at some prefixes and confident at others. Which EAGLE generation change adapts candidate-tree shape to that uncertainty?",
+      "options": [
+        "EAGLE-1 adds a dynamic tree while using only raw-token inputs.",
+        "EAGLE-2 adapts tree width to draft uncertainty.",
+        "Vanilla speculation chooses a wider tree whenever the verifier is slower.",
+        "EAGLE-3 removes all candidate branching and verifies one token at a time."
+      ],
+      "correct": 1,
+      "explanation": "EAGLE-2 adds a dynamic draft tree and makes draft depth adaptive per step, so it can branch differently when confidence varies across prefixes. EAGLE-1’s defining change is a hidden-state-conditioned draft, not this tree adaptation."
+    },
+    {
+      "stage": "post",
+      "question": "A workload uses a very small verifier model or high-temperature creative sampling, where draft acceptance is low. What should an inference engineer expect?",
+      "options": [
+        "The target model accepts every token once the draft is larger.",
+        "The verifier distribution changes because rejection sampling is approximate.",
+        "The draft overhead may outweigh the limited accepted-token benefit.",
+        "The KV cache can skip rollback because few tokens are accepted."
+      ],
+      "correct": 2,
+      "explanation": "When acceptance is low, the verifier still corrects samples exactly, but few draft tokens survive to amortize draft cost. For a small verifier or high-temperature sampling, that overhead may exceed the limited tokens saved; exactness is not a speedup guarantee."
+    }
+  ]
+}

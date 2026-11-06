@@ -1,0 +1,78 @@
+{
+  "lesson": "20-marl-maddpg-qmix-mappo",
+  "title": "MARL — MADDPG, QMIX, MAPPO",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "During training, a team can inspect every agent's state, but each deployed policy sees only local observations. What MARL pattern is this?",
+      "options": [
+        "Independent training and centralized execution",
+        "Independent execution with a shared action controller",
+        "Fully centralized training and execution",
+        "Centralized Training, Decentralized Execution"
+      ],
+      "correct": 3,
+      "explanation": "CTDE uses team-wide information during training, then restricts each deployed policy to its local observation. Fully centralized execution would keep the central controller at runtime, violating the decentralized half of the pattern."
+    },
+    {
+      "stage": "check",
+      "question": "In MADDPG, what information does the centralized critic receive during training?",
+      "options": [
+        "Only the current agent's local observation",
+        "Joint observations and actions from all agents",
+        "The other agents' prompts but not their actions",
+        "Only the global reward without any actions"
+      ],
+      "correct": 1,
+      "explanation": "During training, MADDPG’s critic receives joint observations and actions so it can evaluate an agent in the context of the team’s choices. At deployment its actor uses local observation; a reward scalar alone omits the joint action inputs."
+    },
+    {
+      "stage": "check",
+      "question": "What property of QMIX enables decentralized action selection from per-agent values?",
+      "options": [
+        "An unconstrained sum that allows arbitrary interactions",
+        "A confidence weight assigned to each agent's message",
+        "A single shared policy that observes every action at runtime",
+        "A monotonic mixing function over per-agent Q values"
+      ],
+      "correct": 3,
+      "explanation": "QMIX constrains the mixing function to be monotonic in each agent’s Q value, so independently maximizing local values aligns with maximizing the joint value. An unconstrained interaction can break that decentralized argmax property."
+    },
+    {
+      "stage": "check",
+      "question": "What distinguishes MAPPO in the lesson's summary?",
+      "options": [
+        "A shared queue with per-agent work states",
+        "A geometric-median vote over parallel proposals",
+        "A deterministic offer generator plus LLM narrator",
+        "PPO policies paired with a centralized value function"
+      ],
+      "correct": 3,
+      "explanation": "MAPPO pairs PPO policies with a centralized value function used during training, while agents still execute local policies. A geometric-median proposal vote is a different consensus method, not the MARL algorithm described."
+    },
+    {
+      "stage": "post",
+      "question": "A team has little interaction data and no reliable reward signal for coordination. What deployment approach does the lesson suggest first?",
+      "options": [
+        "Use prompt-level policies before investing in MARL training",
+        "Choose QMIX because every task is cooperative",
+        "Train a centralized critic without observed rewards",
+        "Use any algorithm and infer quality from agent count"
+      ],
+      "correct": 0,
+      "explanation": "With little interaction data and no trustworthy reward, the lesson recommends trying prompt-level policies before training. QMIX assumes a cooperative task with usable reward structure; the scenario supplies neither a reliable signal nor training evidence."
+    },
+    {
+      "stage": "post",
+      "question": "A policy learns to maximize a poorly designed team reward by exploiting a loophole. Which caution does the lesson highlight?",
+      "options": [
+        "Reward shaping can teach agents to exploit the scoring rule",
+        "Value decomposition removes the need for adversarial tests",
+        "Decentralized execution prevents reward hacking during training",
+        "Centralized critics make every reward specification safe"
+      ],
+      "correct": 0,
+      "explanation": "If agents exploit a loophole, the reward definition is teaching the wrong target; changing a critic’s visibility does not repair that objective. The lesson therefore calls for reward-design scrutiny and adversarial tests."
+    }
+  ]
+}

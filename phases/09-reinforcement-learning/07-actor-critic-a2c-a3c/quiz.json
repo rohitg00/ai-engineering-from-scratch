@@ -1,0 +1,78 @@
+{
+  "lesson": "07-actor-critic-a2c-a3c",
+  "title": "Actor-Critic — A2C and A3C",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "REINFORCE updates vary sharply because episode returns are noisy. What state-dependent quantity can be subtracted without changing the expected policy gradient?",
+      "options": [
+        "The transition probability for every possible next state.",
+        "A baseline b(s) that does not depend on the selected action.",
+        "The maximum reward observed in a separate environment.",
+        "A different action probability chosen after observing the return."
+      ],
+      "correct": 1,
+      "explanation": "For any baseline b(s) independent of the sampled action, its expected score-gradient contribution is b(s)∇Σaπ(a|s)=b(s)∇1=0, so the expected policy gradient is unchanged. A well-fitted value baseline can reduce variance; an action-dependent correction would not cancel this way."
+    },
+    {
+      "stage": "check",
+      "question": "In actor-critic, which pairing correctly describes the actor and critic roles?",
+      "options": [
+        "The actor selects terminal states; the critic enumerates the model.",
+        "The actor stores transitions; the critic chooses the reward function.",
+        "The actor estimates state value; the critic samples policy actions.",
+        "The actor samples policy actions; the critic estimates state value."
+      ],
+      "correct": 3,
+      "explanation": "The actor is πθ(a|s), the policy that samples actions; the critic is Vφ(s), the expected-return estimate trained by regression. Swapping them assigns policy selection to the value model and value prediction to the policy."
+    },
+    {
+      "stage": "check",
+      "question": "Which advantage target is the Monte Carlo form, with lower bias but higher variance than the one-step TD form?",
+      "options": [
+        "r_{t+1} plus gamma V_phi(s_{t+1}) minus V_phi(s_t).",
+        "The current value estimate minus the next action probability.",
+        "G_t minus V_phi(s_t), using the full return from time t.",
+        "The maximum action value minus the mean reward over the batch."
+      ],
+      "correct": 2,
+      "explanation": "The Monte Carlo advantage subtracts the critic from the full return, A=Gt−Vφ(st), so it avoids bootstrapping bias but retains full-return variance. The one-step TD option uses r+γVφ(s′)−Vφ(s), which bootstraps and trades some bias for lower variance."
+    },
+    {
+      "stage": "check",
+      "question": "For generalized advantage estimation, what do lambda = 0 and lambda = 1 represent?",
+      "options": [
+        "Both values produce the same n-step estimate.",
+        "Lambda 0 removes the critic; lambda 1 removes the actor.",
+        "Lambda 0 is Monte Carlo; lambda 1 is one-step TD.",
+        "Lambda 0 is one-step TD; lambda 1 is Monte Carlo."
+      ],
+      "correct": 3,
+      "explanation": "GAE weights TD residuals by (γλ)^l. At λ=0 only the current one-step residual remains; for a completed episode, λ=1 sums the residual sequence to the Monte Carlo return. The reversed-endpoints option swaps the low-variance TD and higher-variance MC cases."
+    },
+    {
+      "stage": "post",
+      "question": "A team wants synchronous batched updates across many GPU environments, with one update per combined rollout. Which architecture fits the lesson?",
+      "options": [
+        "A3C, which pushes worker gradients asynchronously to a shared server.",
+        "REINFORCE, which requires a different policy for every worker.",
+        "Independent Q-learning, which updates separate tables without a batch.",
+        "A2C, which gathers parallel environments and updates synchronously."
+      ],
+      "correct": 3,
+      "explanation": "A2C gathers rollout steps from N parallel environments into a combined batch, then applies a synchronous update. A3C instead has workers push gradients asynchronously, so that design does not match the requested GPU-batched update."
+    },
+    {
+      "stage": "post",
+      "question": "An A2C trainer wants to reuse each rollout for many gradient epochs. What method change addresses the on-policy data constraint described in the lesson?",
+      "options": [
+        "Remove the critic and keep reusing the same actor samples.",
+        "Switch to A3C because asynchronous gradients make old data on-policy.",
+        "Keep A2C unchanged because its gradient remains on-policy indefinitely.",
+        "Use PPO's clipped importance ratio to support multiple rollout epochs."
+      ],
+      "correct": 3,
+      "explanation": "A2C’s data is on-policy, so after its single update the actor has changed and the old rollout no longer matches the current policy. PPO’s clipped importance ratio corrects for that policy change during multiple epochs; asynchronous workers alone do not make stale data on-policy."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "13-shared-memory-blackboard",
+  "title": "Shared Memory and Blackboard Patterns",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "After one agent records a finding, a later agent needs to read it. Which component enables that?",
+      "options": [
+        "A scheduler that stores only speaker order",
+        "A tool result discarded after the turn",
+        "A shared state that both agents can read",
+        "A private prompt visible to one agent"
+      ],
+      "correct": 2,
+      "explanation": "Shared state carries an earlier agent’s finding into a later agent’s readable view, giving the workflow continuity across turns. A private prompt is visible only to its owner, so it cannot serve as shared memory for both agents."
+    },
+    {
+      "stage": "check",
+      "question": "How does a full message pool differ from a topic-based blackboard?",
+      "options": [
+        "A full pool has one writer; a blackboard prevents all writes",
+        "A full pool stores only numbers; a blackboard stores natural language",
+        "A full pool exposes all messages; a blackboard routes subscribed topics",
+        "A full pool is durable; a blackboard is always in memory"
+      ],
+      "correct": 2,
+      "explanation": "A message pool exposes its full append-only log; a blackboard uses topic subscriptions so agents read relevant areas. Whether a store is durable or in-memory is a separate persistence choice, not the topology distinction."
+    },
+    {
+      "stage": "check",
+      "question": "Which fields strengthen provenance for an entry written to shared state?",
+      "options": [
+        "Writer, timestamp, prompt hash, and source URI",
+        "The number of agents that read the entry",
+        "Only the final answer and the reader's role",
+        "A model alias and its token price"
+      ],
+      "correct": 0,
+      "explanation": "Writer, timestamp, prompt hash, and source URI let a downstream reader trace who added a claim, when, under what prompt, and from which source. Reader count describes exposure, not the origin or evidence behind the entry."
+    },
+    {
+      "stage": "check",
+      "question": "Which access rule keeps a verifier's own findings from re-entering the potentially poisoned shared pool?",
+      "options": [
+        "It uses the same source claim without re-fetching it",
+        "It only checks whether the entry is formatted as JSON",
+        "It can read the pool but cannot write back into it",
+        "It writes its findings into the same pool for everyone"
+      ],
+      "correct": 2,
+      "explanation": "A verifier should read the potentially poisoned pool but write findings to a separate channel, preventing its own output from being treated as another pool fact. Writing back into the same pool collapses that separation."
+    },
+    {
+      "stage": "post",
+      "question": "A stored research note says 42%, while re-fetching its cited source returns 4.2%. What should an independent verifier do?",
+      "options": [
+        "Accept the later note because two agents repeated it",
+        "Rewrite the original entry in place without preserving history",
+        "Remove the cited source so downstream agents cannot compare",
+        "Flag the mismatch and return it through a separate channel"
+      ],
+      "correct": 3,
+      "explanation": "The verifier should flag the mismatch while preserving the original entry and provenance; corrections are appended as superseding records. Rewriting in place erases the audit trail needed to see how the false 42% spread."
+    },
+    {
+      "stage": "post",
+      "question": "Several agents need to publish different kinds of updates concurrently, and write contention is appearing. Which pattern can reduce contention?",
+      "options": [
+        "Send every update through every subscriber as a new write",
+        "Partition ownership by topic so different agents write separate areas",
+        "Remove version numbers so updates always succeed",
+        "Let every agent overwrite the complete shared log"
+      ],
+      "correct": 1,
+      "explanation": "Assigning different agents distinct topic ownership can reduce simultaneous writes to the same area, assuming the partition boundaries keep their updates separate. Letting every agent overwrite the full log increases write collisions rather than isolating them."
+    }
+  ]
+}

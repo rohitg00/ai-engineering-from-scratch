@@ -1,0 +1,78 @@
+{
+  "lesson": "11-mixture-of-experts",
+  "title": "Mixture of Experts (MoE)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A dense transformer applies its feed-forward network to every token. What does a sparse MoE change?",
+      "options": [
+        "A position embedding selects one encoder layer",
+        "A router selects a subset of experts per token",
+        "A tokenizer maps each word to several subwords",
+        "A decoder generates more than one token at once"
+      ],
+      "correct": 1,
+      "explanation": "A sparse MoE replaces the dense FFN with experts plus a router, which selects k experts for each token. A position embedding does not choose computation paths; the router’s top-k decision creates conditional sparsity."
+    },
+    {
+      "stage": "check",
+      "question": "With E = 256 experts and top-k = 8, what percentage of routed experts is active for one token?",
+      "options": [
+        "0.39% of routed experts",
+        "3.125% of routed experts",
+        "100% of routed experts",
+        "0.03125% of routed experts"
+      ],
+      "correct": 1,
+      "explanation": "Eight of 256 routed experts gives 8/256 = 0.03125 of the experts, or 3.125%. The 0.39% option is the percentage for one expert out of 256, not the selected group of eight."
+    },
+    {
+      "stage": "check",
+      "question": "In auxiliary-loss-free balancing, how does the per-expert bias affect routing?",
+      "options": [
+        "It changes gate weights, not top-k selection",
+        "It replaces raw router scores in the main objective",
+        "It updates expert parameters through a new loss",
+        "It changes top-k selection, not gate weights"
+      ],
+      "correct": 3,
+      "explanation": "The balancing bias is added to router scores to alter top-k selection, but gates are computed from the original scores. Changing gates rather than selection would change mixture weights without correcting which experts receive traffic."
+    },
+    {
+      "stage": "check",
+      "question": "What is the role of a shared expert in DeepSeek-V3’s split?",
+      "options": [
+        "It stores the key and value cache for all tokens",
+        "It replaces the decoder’s cross-attention layer",
+        "Every token passes through it for common knowledge",
+        "Only tokens with the highest router score pass through it"
+      ],
+      "correct": 2,
+      "explanation": "A shared expert processes every token and captures common knowledge, while top-k routed experts specialize. Restricting it to highest-scoring tokens would make it routed rather than shared."
+    },
+    {
+      "stage": "post",
+      "question": "A 671B MoE uses only 37B active parameters per token. What deployment constraint still matters?",
+      "options": [
+        "The active parameter count is the total VRAM requirement",
+        "Only the selected experts need to be stored anywhere",
+        "All expert weights must fit across the serving GPUs",
+        "The router removes network communication between GPUs"
+      ],
+      "correct": 2,
+      "explanation": "The 37B active figure describes computation per token, not the model’s full weight storage. All experts must reside across the serving GPUs even when a particular token uses only a few of them."
+    },
+    {
+      "stage": "post",
+      "question": "A team wants frontier quality at lower per-token compute and has expert-parallel GPU capacity. Which architecture is the lesson’s fit?",
+      "options": [
+        "A tiny encoder with a fixed classifier head",
+        "A dense transformer with every FFN active",
+        "A mixture of experts with top-k routing",
+        "A recurrent model with one shared hidden state"
+      ],
+      "correct": 2,
+      "explanation": "MoE fits this constraint because top-k routing activates only a subset of expert FFNs per token while retaining a large total parameter pool. A dense transformer activates every FFN, so its per-token compute does not get that sparsity benefit."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "03-gans-generator-discriminator",
+  "title": "GANs — Generator vs Discriminator",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In a GAN, which network maps random noise into a candidate sample?",
+      "options": [
+        "The text encoder T",
+        "The posterior encoder q",
+        "The generator G",
+        "The discriminator D"
+      ],
+      "correct": 2,
+      "explanation": "The generator G maps a latent noise sample z into a candidate data sample. The discriminator judges realness, while a VAE posterior encoder maps an observed input into a latent distribution rather than generating from noise."
+    },
+    {
+      "stage": "check",
+      "question": "What does the discriminator learn to distinguish during its update?",
+      "options": [
+        "Noise vectors from latent means",
+        "Training images from held-out validation images",
+        "Real samples from generated samples",
+        "Conditional labels from image captions"
+      ],
+      "correct": 2,
+      "explanation": "During its update, D is trained with real examples as positive and G(z) outputs as negative, so it learns the real-versus-generated distinction. Train/validation separation measures generalization and is not the discriminator’s classification task."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the non-saturating generator loss use −log D(G(z))?",
+      "options": [
+        "It preserves a strong gradient when D confidently rejects fakes",
+        "It converts the GAN into an exact likelihood model",
+        "It makes the discriminator stop seeing generated samples",
+        "It removes the need to train the discriminator"
+      ],
+      "correct": 0,
+      "explanation": "When D confidently rejects G(z), the original saturating generator objective can provide a very small gradient. The non-saturating −log D(G(z)) keeps a strong learning signal; it does not make the GAN an exact-likelihood model."
+    },
+    {
+      "stage": "check",
+      "question": "A generator trained on a two-mode distribution produces samples from just one mode. What failure is this?",
+      "options": [
+        "Color-channel aliasing",
+        "Posterior collapse",
+        "Mode collapse",
+        "Likelihood underflow"
+      ],
+      "correct": 2,
+      "explanation": "Mode collapse occurs when a generator covers only a few outputs despite a multimodal training distribution, such as producing one Gaussian cluster and omitting the other. Posterior collapse instead describes an uninformative VAE latent."
+    },
+    {
+      "stage": "post",
+      "question": "The discriminator update used one batch of fake samples. What should the next generator update use?",
+      "options": [
+        "The target labels from the previous discriminator step",
+        "Fresh fake samples generated from new noise",
+        "The same fake batch with stale gradients",
+        "The discriminator’s real training examples only"
+      ],
+      "correct": 1,
+      "explanation": "After updating D, the lesson draws new noise and generates fresh fake samples for G’s update, so the gradient reflects current G parameters. Reusing the prior fake batch would use samples from before that update."
+    },
+    {
+      "stage": "post",
+      "question": "A product generates many open-domain images from varied text prompts. What does the lesson recommend instead of a standalone GAN?",
+      "options": [
+        "An unconditional one-shot generator without text input",
+        "A fixed-domain StyleGAN face model",
+        "A discriminator-only perceptual network",
+        "A diffusion or flow-matching model"
+      ],
+      "correct": 3,
+      "explanation": "GANs are sharp and fast for narrow domains, but the lesson recommends diffusion or flow matching for open-ended multimodal prompts. A fixed-domain StyleGAN face model cannot cover the varied prompt space in the stem."
+    }
+  ]
+}

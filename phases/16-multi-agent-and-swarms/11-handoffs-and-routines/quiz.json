@@ -1,0 +1,78 @@
+{
+  "lesson": "11-handoffs-and-routines",
+  "title": "Handoffs and Routines — Stateless Orchestration",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A triage agent decides that a user needs a refund specialist. What mechanism transfers control in the Swarm pattern?",
+      "options": [
+        "A shared queue assigns the task to any worker",
+        "A handoff tool returns the next Agent object",
+        "A reviewer emits a TERMINATE token",
+        "A static edge is selected from a fixed graph"
+      ],
+      "correct": 1,
+      "explanation": "In the Swarm pattern, the active agent calls a handoff tool whose return value is the next Agent; the runtime changes who is active. A fixed graph instead chooses from declared edges, so it does not describe this agent-driven transfer."
+    },
+    {
+      "stage": "check",
+      "question": "What is Swarm's main state-management limitation between runs?",
+      "options": [
+        "The next agent receives a complete durable database snapshot",
+        "A handoff automatically checkpoints every external side effect",
+        "The caller must persist memory and long-running task state",
+        "The runtime stores every conversation indefinitely by default"
+      ],
+      "correct": 2,
+      "explanation": "Swarm preserves conversation history during a run but does not persist memory or long-running state between runs; the caller must store it. A durable database snapshot is therefore an added design, not something the handoff itself guarantees."
+    },
+    {
+      "stage": "check",
+      "question": "In GroupChat, who selects the next speaker compared with Swarm handoffs?",
+      "options": [
+        "GroupChat's current agent returns an Agent object; Swarm uses round-robin",
+        "Both use a separate manager that picks from a shared pool",
+        "GroupChat's manager selects; the active Swarm agent chooses its successor",
+        "Neither uses a routing decision during conversation"
+      ],
+      "correct": 2,
+      "explanation": "GroupChat’s manager or selector chooses the next speaker from outside the active agent. In Swarm, the current agent chooses its successor by calling a handoff tool, so the routing authority differs."
+    },
+    {
+      "stage": "check",
+      "question": "Two agents repeatedly hand control back and forth. What guard should a production handoff loop add?",
+      "options": [
+        "Allow the loop to run until the context is full",
+        "Detect repeated recent handoffs and force a bounded exit",
+        "Remove all handoff logs so the loop can continue",
+        "Retry each transfer with a new random agent name"
+      ],
+      "correct": 1,
+      "explanation": "A recent-transfer ring can detect a ping-pong pair, and a transfer limit forces a bounded exit or fallback. Letting the loop run until context fills only detects the problem after wasting tokens and possibly repeating side effects."
+    },
+    {
+      "stage": "post",
+      "question": "A triage agent can transfer to a specialist with more powerful tools. What should the system check at that boundary?",
+      "options": [
+        "Disable all loop detection for the specialist session",
+        "Authenticate the handoff to a specialist with different tool permissions",
+        "Copy the full prompt to every agent without filtering",
+        "Assume the user approved every specialist permission in advance"
+      ],
+      "correct": 1,
+      "explanation": "Moving to a specialist with different tools crosses a permission boundary, so authenticate that handoff and control what context transfers. Assuming the user approved every permission would let prompt injection escalate access without a fresh check."
+    },
+    {
+      "stage": "post",
+      "question": "A short support interaction uses stateless handoffs, but the product must resume a case next week. What additional design is needed?",
+      "options": [
+        "A new tool name for every handoff",
+        "Caller-managed durable session state",
+        "A longer routine prompt for the triage agent",
+        "An unlimited number of agent transfers"
+      ],
+      "correct": 1,
+      "explanation": "Because the handoff primitive is stateless between runs, resuming next week requires caller-managed durable session state or checkpoints. A longer prompt can describe the case, but it does not persist updates reliably across executions."
+    }
+  ]
+}

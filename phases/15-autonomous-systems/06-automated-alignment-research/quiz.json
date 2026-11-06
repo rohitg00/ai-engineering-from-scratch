@@ -1,0 +1,78 @@
+{
+  "lesson": "06-automated-alignment-research",
+  "title": "Automated Alignment Research (Anthropic AAR)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A research group wants to parallelize an alignment study while preserving a record that agents cannot erase. What architecture fits?",
+      "options": [
+        "One shared writable filesystem used by every agent",
+        "Independent agent sandboxes plus an externally stored shared forum",
+        "A single in-memory log controlled by the research agent",
+        "A private transcript stored only in each agent's context"
+      ],
+      "correct": 1,
+      "explanation": "Parallel AARs explore work in separate sandboxes while an externally stored forum preserves findings beyond each agent’s write access. A shared writable filesystem lets an agent erase records the team needs to audit."
+    },
+    {
+      "stage": "check",
+      "question": "Why does the shared forum's out-of-sandbox storage matter?",
+      "options": [
+        "It guarantees the posted research conclusion is correct",
+        "It lets the agent directly control every experiment result",
+        "It makes it harder for an agent to erase or rewrite its own record",
+        "It removes the need to record who produced each finding"
+      ],
+      "correct": 2,
+      "explanation": "External append-only records make silent edits detectable and preserve an audit trail, but do not prove the conclusion is true. A correct hash chain verifies record integrity, not scientific validity."
+    },
+    {
+      "stage": "check",
+      "question": "According to the lesson, what is the tradeoff between prescribed workflows and free decomposition?",
+      "options": [
+        "Free decomposition guarantees every agent reaches the same result",
+        "Prescribed steps always outperform agent-chosen plans",
+        "Free decomposition removes the need for external logs",
+        "Prescribed steps can be easier to audit but can constrain AAR performance"
+      ],
+      "correct": 3,
+      "explanation": "Prescribed steps are easier to audit but can constrain decomposition and reduce performance; free decomposition offers more flexibility with more audit work. The lesson does not claim agent-chosen plans always produce the same result."
+    },
+    {
+      "stage": "check",
+      "question": "Which part of the alignment research pipeline remains human-owned in the described setup?",
+      "options": [
+        "Replace external measurement with the AAR's self-report",
+        "Edit agent logs after each experiment",
+        "Humans set tasks and decide what to publish",
+        "Run every intermediate model call by hand"
+      ],
+      "correct": 2,
+      "explanation": "Humans retain task allocation, result review, and publication decisions while AARs accelerate the middle of the pipeline. Replacing external measurement with self-report would remove the independent evidence the loop needs."
+    },
+    {
+      "stage": "post",
+      "question": "A record in the shared forum is altered after publication. What can the simulator's hash chain do?",
+      "options": [
+        "Prevent every agent from proposing a new experiment",
+        "A hash mismatch flags an altered record",
+        "Restore the original experiment automatically from the model",
+        "Prove the agent's scientific claim was false"
+      ],
+      "correct": 1,
+      "explanation": "The chain recomputes each record hash from its contents and predecessor, so a changed result creates a mismatch. Detection flags tampering; it does not prove the claim false or restore the original record."
+    },
+    {
+      "stage": "post",
+      "question": "AAR agents perform better with flexibility but may drift into unplanned tool use. What design response follows the lesson's tradeoff?",
+      "options": [
+        "Keep independent sandboxes and tamper-evident logs, then review outputs",
+        "Remove task allocation and all human review to maximize speed",
+        "Allow agents to modify forum history as part of their decomposition",
+        "Force every research step into a fixed script regardless of measured loss"
+      ],
+      "correct": 0,
+      "explanation": "The lesson pairs flexible decomposition with sandboxing, immutable records, and human review so agents can explore while remaining auditable. Removing human review discards the publication gate; a fully fixed script also loses useful flexibility."
+    }
+  ]
+}

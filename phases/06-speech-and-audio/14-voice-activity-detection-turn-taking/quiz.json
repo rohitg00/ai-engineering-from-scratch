@@ -1,0 +1,78 @@
+{
+  "lesson": "14-voice-activity-detection-turn-taking",
+  "title": "Voice Activity Detection & Turn-Taking — Silero, Cobra, and the Flush Trick",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A voice agent must decide whether an incoming 20 ms frame contains speech. Which component makes that per-frame decision?",
+      "options": [
+        "Word-level alignment",
+        "Turn-end prediction",
+        "Voice activity detection",
+        "Speaker diarization"
+      ],
+      "correct": 2,
+      "explanation": "Voice activity detection makes a binary speech-or-nonspeech decision on each incoming frame; endpointing adds a separate decision about whether the turn has ended. Turn detection uses VAD plus timing or semantic cues to decide completion, not just per-frame speech presence."
+    },
+    {
+      "stage": "check",
+      "question": "Why does an energy-only VAD often trigger on traffic or a keyboard?",
+      "options": [
+        "It responds to loudness without identifying speech",
+        "It requires a speaker embedding for every frame",
+        "It waits for a watermark before opening the gate",
+        "It compares the last sentence with language context"
+      ],
+      "correct": 0,
+      "explanation": "An energy gate compares loudness with a threshold; traffic or a keyboard can be loud without containing speech patterns. Energy-only VAD has no transcript or linguistic context, so its amplitude threshold can fire on nonspeech noise."
+    },
+    {
+      "stage": "check",
+      "question": "What does a 500 ms silence hangover do after VAD stops detecting speech?",
+      "options": [
+        "Raises the speech probability threshold by 500 ms",
+        "Waits before declaring the user’s turn finished",
+        "Adds 500 ms of audio before the utterance starts",
+        "Flushes the STT model on every active frame"
+      ],
+      "correct": 1,
+      "explanation": "A 500 ms hangover waits after VAD turns off before declaring the utterance finished, allowing short pauses within a sentence. The “adds 500 ms of audio before the utterance starts” option describes pre-roll; hangover delays the end-of-turn decision."
+    },
+    {
+      "stage": "check",
+      "question": "What does the flush trick do when an STT model has look-ahead audio buffered?",
+      "options": [
+        "Sends an end signal to force immediate transcript output",
+        "Repeats the last audio frame until latency increases",
+        "Replaces the transcript with a silence token",
+        "Resets the VAD state before processing each frame"
+      ],
+      "correct": 0,
+      "explanation": "A flush message tells a compatible streaming STT system to emit its buffered transcript instead of waiting through its full look-ahead delay. Repeating input adds audio and delay; a flush is a control signal requesting output from the existing buffer."
+    },
+    {
+      "stage": "post",
+      "question": "A speaker pauses mid-thought for 650 ms. Which endpointing configuration best matches the lesson?",
+      "options": [
+        "Use energy threshold alone for all environments",
+        "Wait 2.5 seconds after every pause",
+        "End the turn at the first nonspeech frame",
+        "Use a 500–800 ms hangover with semantic turn cues"
+      ],
+      "correct": 3,
+      "explanation": "A 650 ms pause is longer than a 500 ms hangover but shorter than an 800 ms one, so choose a value near the upper end of the stated range; semantic cues help classify the pause as mid-thought. Ending on the first nonspeech frame would cut the turn off immediately."
+    },
+    {
+      "stage": "post",
+      "question": "A streaming STT vendor does not support flush messages. How should the pipeline handle end-of-speech?",
+      "options": [
+        "Treat the final VAD probability as the transcript",
+        "Disable VAD and decode the entire session at once",
+        "Keep its block-based chunking behavior and wait for output",
+        "Send an unsupported flush call after every frame"
+      ],
+      "correct": 2,
+      "explanation": "Flush is an optional interface capability; when a recognizer does not support it, the pipeline must continue using that model’s chunking and output timing. An unsupported command cannot force the model to emit earlier and may fail the request."
+    }
+  ]
+}

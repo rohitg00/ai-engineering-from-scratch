@@ -1,0 +1,78 @@
+{
+  "lesson": "02-function-calling-deep-dive",
+  "title": "Function Calling Deep Dive — OpenAI, Anthropic, Gemini",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team ports one weather tool between three providers. What is the main reason to put a canonical tool shape between provider APIs?",
+      "options": [
+        "Provider responses all use the same argument encoding already",
+        "Canonical tools prevent models from ever refusing a request",
+        "Each provider requires a different business rule for weather lookup",
+        "Provider envelopes differ while the underlying tool meaning can stay stable"
+      ],
+      "correct": 3,
+      "explanation": "Provider adapters should translate envelopes, field names, and argument encodings while leaving the tool’s intent and business rules unchanged. Requiring new weather rules per provider confuses wire-format differences with the stable operation being called."
+    },
+    {
+      "stage": "check",
+      "question": "Before canonical normalization, which provider's raw tool arguments arrive as a JSON string in the lesson's comparison?",
+      "options": [
+        "All three return the same object shape",
+        "Gemini args are a parsed object",
+        "OpenAI arguments are stringified JSON",
+        "Anthropic input is a parsed object"
+      ],
+      "correct": 2,
+      "explanation": "OpenAI puts arguments in a JSON string, which the host parses before normalization; Anthropic input and Gemini args are already objects. The “same object shape” option overlooks this transport difference even though all three can represent the same call."
+    },
+    {
+      "stage": "check",
+      "question": "A canonical choice means the model must call at least one tool. Which mapping preserves that meaning?",
+      "options": [
+        "OpenAI force, Anthropic auto, Gemini mode NONE",
+        "OpenAI required, Anthropic any, Gemini mode ANY",
+        "OpenAI none, Anthropic auto, Gemini mode NONE",
+        "OpenAI auto, Anthropic none, Gemini mode AUTO"
+      ],
+      "correct": 1,
+      "explanation": "Required means at least one tool call: OpenAI uses required, Anthropic uses any, and Gemini uses mode ANY. Mapping OpenAI to force narrows the rule to one named tool, while none explicitly forbids calls."
+    },
+    {
+      "stage": "check",
+      "question": "A Gemini response uses an enum on an object field. What should a robust host do?",
+      "options": [
+        "Assume the provider enforces every JSON Schema keyword",
+        "Convert the result into OpenAI's string argument format",
+        "Validate the enum server-side because the subset may ignore it",
+        "Remove the enum from the canonical tool permanently"
+      ],
+      "correct": 2,
+      "explanation": "Gemini’s OpenAPI subset may silently ignore enum on object fields, so validate that constraint on the server before executing the call. Assuming the provider enforces every JSON Schema keyword could let an unsupported enum value through."
+    },
+    {
+      "stage": "post",
+      "question": "Two same-tool Gemini calls complete out of order. Which response feature supports clean correlation in Gemini 3 and up?",
+      "options": [
+        "A unique call id carried into each functionResponse",
+        "The position of each result in the original request",
+        "The tool name alone, because all calls have distinct names",
+        "The order in which functionDeclarations were listed"
+      ],
+      "correct": 0,
+      "explanation": "Gemini 3’s unique call id is echoed in functionResponse, allowing two calls to the same tool to be matched independently. The shared name “get_weather” cannot distinguish parallel requests, and their completion order may change."
+    },
+    {
+      "stage": "post",
+      "question": "A non-strict OpenAI call returns malformed JSON arguments. What recovery follows the lesson's pattern?",
+      "options": [
+        "Catch the parse error, send useful feedback, and retry within a bound",
+        "Execute the malformed string as a shell command for repair",
+        "Silently replace every missing field with an empty string",
+        "Treat malformed JSON as a model refusal and stop permanently"
+      ],
+      "correct": 0,
+      "explanation": "Malformed JSON must be parsed before schema validation, so the host should catch the parse error, return useful feedback, and retry within a bound before execution. Replacing missing fields with empty strings presumes a valid object and may alter the requested operation."
+    }
+  ]
+}
