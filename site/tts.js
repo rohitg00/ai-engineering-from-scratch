@@ -716,6 +716,11 @@
     return true;
   }
 
+  function keptChunk(before) {
+    var after = state.chunks[state.index];
+    return !!(before && after && after.text === before.text);
+  }
+
   function nonNarrationClasses(value) {
     return String(value || '')
       .split(/\s+/)
@@ -914,8 +919,15 @@
   function resume() {
     if (!isPaused()) return;
     state.mode = 'playing';
+    var before = state.chunks[state.index];
     if (applyPendingRefresh()) {
       if (!isActive()) return;
+      if (keptChunk(before)) {
+        highlight(state.chunks[state.index].el);
+        synth.resume();
+        render();
+        return;
+      }
       cancelSpeech();
       render();
       speakCurrent();
@@ -1056,9 +1068,12 @@
 
   function jump(delta) {
     if (!isPlaying() && !isPaused()) return;
-    applyPendingRefresh();
+    var before = state.chunks[state.index];
+    var was = state.index;
+    var lost = applyPendingRefresh() && !keptChunk(before);
     if (!isActive()) return;
     var next = state.index + delta;
+    if (lost) next = delta > 0 ? was + delta - 1 : was + delta;
     if (next < 0) next = 0;
     if (next >= state.chunks.length) {
       stop();

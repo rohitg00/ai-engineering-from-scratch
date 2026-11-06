@@ -328,6 +328,19 @@ test('a failed attempt write shows the result without a resumable latest-result 
   tab.submit();
   assert.match(tab.el('assessmentMount').innerHTML, /PRACTICE RESULT/);
   assert.ok(!tab.historyUrls.some(url => url.includes('result=latest')));
+  assert.doesNotMatch(tab.el('assessmentMount').innerHTML, /Revisit latest result/);
+  assert.match(tab.el('assessmentMount').innerHTML, /Result not saved/);
+});
+
+test('a saved attempt keeps the revisit link and shows no unsaved warning', () => {
+  const storage = sharedStorage();
+  const clock = makeClock(START);
+  const certifications = certificationData(30);
+  const tab = loadTab({ storage, clock, page: 'assessment', search: '?id=mock-a', certifications });
+  tab.answer('q1', 0);
+  tab.submit();
+  assert.match(tab.el('assessmentMount').innerHTML, /Revisit latest result/);
+  assert.doesNotMatch(tab.el('assessmentMount').innerHTML, /Result not saved/);
 });
 
 test('track progress refreshes the attempted count when an attempt is recorded', () => {

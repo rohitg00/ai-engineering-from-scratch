@@ -274,3 +274,20 @@ test('a solve kept in memory survives another tab opening the same problem later
   assert.equal(saved.problems.rope.status, 'solved');
   assert.equal(saved.problems.rope.openedAt, NOON + 1000);
 });
+
+test('an attempt kept in memory survives another tab opening the same problem later', () => {
+  const storage = memoryStorage();
+  const tab = Store.create({ localStorage: storage, now: () => NOON });
+  const setItem = storage.setItem;
+  storage.setItem = () => { throw new Error('quota'); };
+  tab.record('rope', 'run', 0, 1);
+  storage.setItem = setItem;
+  const other = Store.create({ localStorage: storage, now: () => NOON + 1000 });
+  other.open('rope');
+  assert.equal(JSON.parse(storage.getItem(Store.STORAGE_KEY)).problems.rope.status, 'new');
+  tab.record('kmeans-step', 'run', 0, 1);
+  const saved = JSON.parse(storage.getItem(Store.STORAGE_KEY));
+  assert.equal(saved.problems.rope.status, 'attempted');
+  assert.equal(saved.problems.rope.attemptedAt, NOON);
+  assert.equal(saved.problems.rope.openedAt, NOON + 1000);
+});

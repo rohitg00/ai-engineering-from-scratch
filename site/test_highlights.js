@@ -990,6 +990,23 @@ test('a note that cannot be saved keeps its editor open with the typed text and 
   assert.equal(page.note().value, 'note b');
 });
 
+test('a note kept only in memory after a quota failure moves on and says the tab must stay open', () => {
+  const page = uiPage();
+  const a = page.store.add(UI_PATH, uiItem('first passage', 'old a'));
+  const b = page.store.add(UI_PATH, uiItem('second passage', 'note b'));
+  page.mount();
+  page.openPanel();
+  page.win.setTimeout = fn => { fn(); return 0; };
+  page.rowButton(a.id, 'edit').click();
+  page.note().value = 'typed for a';
+  page.storage.setItem = () => { const error = new Error('full'); error.name = 'QuotaExceededError'; throw error; };
+  page.rowButton(b.id, 'edit').click();
+  assert.equal(page.store.items(UI_PATH).find(item => item.id === a.id).note, 'typed for a');
+  assert.equal(page.note().value, 'note b');
+  assert.equal(page.store.info().lastError, 'quota');
+  assert.match(page.find('.aifs-hl-sr').textContent, /Browser storage is full/);
+});
+
 test('saving a dirty note before showing the toolbar puts back the selection the repaint dropped', () => {
   const saved = { buildModel: anchorStub.buildModel, normalizedToRaw: anchorStub.normalizedToRaw, rawToNormalized: anchorStub.rawToNormalized };
   const page = uiPage();

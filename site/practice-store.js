@@ -99,6 +99,8 @@
       if (rest.status === 'solved' && base.status !== 'solved' && rest.version === base.version) {
         base.status = 'solved';
         base.solvedAt = rest.solvedAt;
+      } else if (rest.status !== 'new' && base.status === 'new') {
+        base.status = 'attempted';
       }
       state.problems[id] = base;
     });

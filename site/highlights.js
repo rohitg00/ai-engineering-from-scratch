@@ -1135,7 +1135,7 @@
         announce(ui.editorStatus.textContent);
         return false;
       }
-      announce('Note saved.');
+      announce(operationMessage() || 'Note saved.');
     }
     var target = state.editor.returnFocus;
     var id = state.editor.id;
