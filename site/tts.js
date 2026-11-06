@@ -716,6 +716,23 @@
     return true;
   }
 
+  function chunkIndexByText(text) {
+    for (var i = 0; i < state.chunks.length; i++) {
+      if (state.chunks[i].text === text) return i;
+    }
+    return -1;
+  }
+
+  function neighbourIndex(old, was, delta) {
+    var target = old[was + delta];
+    var found = target ? chunkIndexByText(target.text) : -1;
+    if (found >= 0) return found;
+    var anchor = old[was - (delta > 0 ? 1 : -1)];
+    var at = anchor ? chunkIndexByText(anchor.text) : -1;
+    if (at >= 0) return at + (delta > 0 ? 1 : -1);
+    return delta > 0 ? (target ? state.index + delta : state.chunks.length) : state.index + delta;
+  }
+
   function keptChunk(before) {
     var after = state.chunks[state.index];
     return !!(before && after && after.text === before.text);
@@ -1070,10 +1087,10 @@
     if (!isPlaying() && !isPaused()) return;
     var before = state.chunks[state.index];
     var was = state.index;
+    var old = state.chunks.slice();
     var lost = applyPendingRefresh() && !keptChunk(before);
     if (!isActive()) return;
-    var next = state.index + delta;
-    if (lost) next = delta > 0 ? was + delta - 1 : was + delta;
+    var next = lost ? neighbourIndex(old, was, delta) : state.index + delta;
     if (next < 0) next = 0;
     if (next >= state.chunks.length) {
       stop();
