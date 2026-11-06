@@ -1,35 +1,35 @@
 [
   {
     "question": "What is the key difference between zero-shot and few-shot prompting?",
-    "options": ["Zero-shot gives only the instruction; few-shot includes example input-output demonstrations before the actual query", "Zero-shot doesn't use a system prompt", "Few-shot uses a different model", "Zero-shot is faster"],
+    "options": ["Zero-shot gives only the instruction; few-shot includes example input-output demonstrations before the actual query", "Zero-shot doesn't use a system prompt, while few-shot always requires one to hold the example demonstrations", "Few-shot uses a different model that was fine-tuned on examples, while zero-shot uses the base pretrained model", "Zero-shot is faster and cheaper because the provider skips the extra prefill work caused by example tokens in the prompt"],
     "correct": 0,
     "explanation": "Few-shot prompting includes worked examples (demonstrations) that show the model the expected pattern. This is like showing someone how to fill out a form before asking them to fill out their own.",
     "stage": "pre"
   },
   {
     "question": "What does 'Chain of Thought' prompting do?",
-    "options": ["It instructs the model to show intermediate reasoning steps before giving the final answer, improving accuracy on multi-step problems", "It generates longer responses", "It chains multiple API calls together", "It connects multiple models in sequence"],
+    "options": ["It instructs the model to show intermediate reasoning steps before giving the final answer, improving accuracy on multi-step problems", "It generates longer responses, and the extra tokens are billed as output, so any accuracy gain comes purely from spending more compute", "It chains multiple API calls together, sending each intermediate step to the model as a separate request in sequence", "It connects multiple models in sequence, where one model performs the reasoning and a second model verifies the answer"],
     "correct": 0,
     "explanation": "CoT prompting (e.g., 'Let's think step by step') gives the model 'scratch paper' to work through problems. On GSM8K math problems, this alone improved GPT-4o accuracy from 78% to 91%.",
     "stage": "pre"
   },
   {
     "question": "How does Tree-of-Thought differ from Chain-of-Thought?",
-    "options": ["It explores multiple reasoning paths in parallel and evaluates which path leads to the best answer", "It uses a tree data structure for storage", "It uses a different model", "It's just a longer chain of thought"],
+    "options": ["It explores multiple reasoning paths in parallel and evaluates which path leads to the best answer", "It uses a tree data structure for storage, organizing each thought as a node that is saved and reloaded later", "It uses a different model for each reasoning path, then compares their answers to pick the majority opinion", "It's just a longer chain of thought, with more intermediate steps written out in a single sequential pass"],
     "correct": 0,
     "explanation": "CoT follows a single reasoning path. Tree-of-Thought generates multiple candidate paths, evaluates them (possibly with the LLM itself), and selects the best one. This helps on problems where the first reasoning path might be wrong.",
     "stage": "post"
   },
   {
     "question": "When selecting few-shot examples, what matters most?",
-    "options": ["Using the shortest examples", "Choosing diverse examples that cover different cases and demonstrate the exact format and reasoning pattern you want", "Using as many examples as possible", "Using examples from the test set"],
+    "options": ["Using the shortest examples so the prompt stays compact and leaves more context room for the user's actual question", "Choosing diverse examples that cover different cases and demonstrate the exact format and reasoning pattern you want", "Using as many examples as possible, since more demonstrations always produce better reasoning regardless of their quality", "Using examples from the test set so the model has already seen the exact questions it will be asked to answer"],
     "correct": 1,
     "explanation": "Example quality trumps quantity. 3-5 diverse, well-formatted examples that cover different edge cases teach the model the pattern better than 20 repetitive examples that waste context window tokens.",
     "stage": "post"
   },
   {
     "question": "Why does CoT prompting improve accuracy even though the model has the same knowledge with or without it?",
-    "options": ["It uses more compute", "It activates hidden model capabilities", "It changes the model weights", "Generating intermediate tokens creates a larger effective context for the final answer, allowing the model to condition on its own reasoning"],
+    "options": ["It uses more compute, and the additional forward passes alone account for the improvement regardless of the text produced", "It activates hidden model capabilities that emerge only when the output exceeds a certain length, unlocking latent skills and knowledge stored in the network", "It changes the model weights at inference time, fine-tuning the network on its own intermediate tokens before answering", "Generating intermediate tokens creates a larger effective context for the final answer, allowing the model to condition on its own reasoning"],
     "correct": 3,
     "explanation": "Without CoT, the model must jump directly to the answer in one token. With CoT, each intermediate step is a token the model conditions on for the next step. The model essentially 'thinks out loud,' building up to the answer.",
     "stage": "post"
