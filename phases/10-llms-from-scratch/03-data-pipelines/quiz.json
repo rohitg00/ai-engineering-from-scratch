@@ -8,7 +8,7 @@
   },
   {
     "question": "Why is data deduplication important for pre-training?",
-    "options": ["It saves disk space, since removing duplicate documents shrinks the stored corpus before tokenization begins", "Duplicate documents cause the model to memorize specific text verbatim and waste training compute on repeated content", "It reduces the vocabulary size because repeated documents would otherwise push rare words over the merge threshold too often", "It speeds up tokenization because every removed duplicate is text the tokenizer never has to process again"],
+    "options": ["It saves no disk space at all, because the raw duplicates must be kept alongside the deduplicated corpus", "Duplicate documents cause the model to memorize specific text verbatim and waste training compute on repeated content", "It reduces the vocabulary size because repeated documents would otherwise push rare words over the merge threshold too often", "It slows down tokenization because each surviving document must be tokenized twice to verify it is not a duplicate"],
     "correct": 1,
     "explanation": "Near-duplicate content (boilerplate, scraped duplicates) causes the model to memorize rather than generalize. Deduplication reduces training compute waste and improves model quality by ensuring diverse training signal.",
     "stage": "pre"
@@ -22,14 +22,14 @@
   },
   {
     "question": "What happens if the data pipeline is slower than GPU training speed?",
-    "options": ["Nothing -- the pipeline runs asynchronously, so a batch is always ready when the GPU is", "Training automatically slows down to match the data pipeline, keeping the two in sync", "The model trains on the same batch repeatedly until the pipeline catches up with it", "The GPU sits idle waiting for batches, wasting expensive compute time"],
+    "options": ["Nothing -- the pipeline runs asynchronously, so a batch is always ready when the GPU is", "Training speeds up to absorb the pipeline gap, so the GPU never waits for any batch", "The model trains on the same batch repeatedly until the pipeline catches up with it", "The GPU sits idle waiting for batches, wasting expensive compute time"],
     "correct": 3,
     "explanation": "If the dataloader can't serve batches fast enough, the GPU stalls between steps. On A100 clusters costing $30+/hour, pipeline bottlenecks directly waste money. Profiling pipeline throughput is essential.",
     "stage": "post"
   },
   {
     "question": "Why is data quality filtering (language detection, content filtering) applied before tokenization?",
-    "options": ["It reduces tokenization time, because filtered-out text never reaches the tokenizer's merge loop", "Low-quality data (spam, boilerplate, toxic content) degrades model capabilities proportional to its share of training data", "Filtering after tokenization is impossible because token IDs no longer record where the text came from or how clean it was", "Tokenizers can't handle low-quality text and will crash on spam, boilerplate, or malformed markup"],
+    "options": ["It increases tokenization time, because every filtered document must still be tokenized once before being thrown away", "Low-quality data (spam, boilerplate, toxic content) degrades model capabilities proportional to its share of training data", "Filtering after tokenization is impossible because token IDs no longer record where the text came from or how clean it was", "Tokenizers can't handle low-quality text and will crash on spam, boilerplate, or malformed markup"],
     "correct": 1,
     "explanation": "The model learns from whatever data it sees. If 10% of training data is spam or low-quality content, the model allocates 10% of its capacity to reproducing those patterns. Filtering early ensures only high-quality signal reaches the model.",
     "stage": "post"

@@ -1,28 +1,28 @@
 [
   {
     "question": "What is the primary purpose of a tokenizer in an LLM pipeline?",
-    "options": ["To translate text between languages by mapping each word to its equivalent in the target language", "To compress text for storage so the raw corpus takes up less disk space before training begins", "To convert text into a sequence of integers that the model can process", "To remove stop words and other high-frequency words from text so the model never has to predict them"],
+    "options": ["To translate text between languages by mapping words to target words", "To compress text for storage so the raw corpus takes up much less disk space", "To convert text into a sequence of integers that the model can process", "To remove stop words and other high-frequency words from text before training begins"],
     "correct": 2,
     "explanation": "LLMs process numbers, not text. The tokenizer converts every character, word, and symbol into integer IDs from a fixed vocabulary. This conversion is not neutral -- it determines how the model 'sees' language.",
     "stage": "pre"
   },
   {
     "question": "What does BPE (Byte Pair Encoding) do to build its vocabulary?",
-    "options": ["Randomly assigns IDs to substrings at the start of training, then freezes that random mapping for all later use", "Uses a dictionary lookup for whole words, where every distinct word in the corpus gets one fixed vocabulary entry", "Splits text into individual characters only and never merges them, keeping the vocabulary at a few hundred entries", "Iteratively merges the most frequent adjacent pair of tokens until reaching the target vocabulary size"],
+    "options": ["Randomly assigns IDs to substrings at the start of training, then freezes that mapping for all later use", "Uses a dictionary lookup for whole words, where every distinct word in the corpus gets one vocabulary entry", "Splits text into individual characters only and never merges them, keeping a vocabulary of a few hundred entries", "Iteratively merges the most frequent adjacent pair of tokens until reaching the target vocabulary size"],
     "correct": 3,
     "explanation": "BPE starts with individual bytes/characters and repeatedly merges the most common adjacent pair. 'th' + 'e' becomes 'the'. After thousands of merges, common words become single tokens while rare words are split into subword pieces.",
     "stage": "pre"
   },
   {
     "question": "Why does vocabulary size create a tradeoff in LLM design?",
-    "options": ["Vocabulary size doesn't affect model performance because the transformer adapts to whatever vocabulary it is given", "Smaller vocabularies are always more efficient because they shrink the embedding table and every layer that touches it", "Larger vocabularies always perform better because each extra token lets the model encode one more common word in a single step", "Too small creates long sequences (more computation); too large wastes embedding parameters on rare tokens"],
+    "options": ["Vocabulary size doesn't affect model performance because the transformer adapts to any vocabulary", "Smaller vocabularies are always more efficient because they shrink the embedding table and every layer that uses it", "Larger vocabularies always perform better because each extra token lets the model encode one more common word", "Too small creates long sequences (more computation); too large wastes embedding parameters on rare tokens"],
     "correct": 3,
     "explanation": "Small vocabulary (e.g., character-level) means every word is many tokens, increasing sequence length and computation. Large vocabulary wastes parameters on tokens that rarely appear in training data. Most LLMs use 32K-100K tokens.",
     "stage": "post"
   },
   {
     "question": "What problem does byte-level fallback solve in tokenization?",
-    "options": ["It ensures any input (emoji, rare scripts, binary data) can be encoded without 'unknown' tokens", "It improves model accuracy by exposing the model to raw byte statistics that word-level vocabularies throw away", "It reduces vocabulary size by replacing thousands of rare-word entries with the 256 raw byte values that cover them", "It speeds up tokenization by skipping the merge table entirely and emitting one token per byte for any rare input"],
+    "options": ["It ensures any input (emoji, rare scripts, binary data) can be encoded without 'unknown' tokens", "It improves model accuracy by exposing the model to raw byte statistics that word-level vocabularies miss", "It reduces vocabulary size by replacing thousands of rare-word entries with the 256 raw byte values", "It speeds up tokenization by skipping the merge table and emitting one token per byte"],
     "correct": 0,
     "explanation": "With byte-level fallback, the tokenizer can fall back to raw byte values (256 possible) for any character not in the vocabulary. This guarantees complete coverage -- no input is ever 'unknown.'",
     "stage": "post"
