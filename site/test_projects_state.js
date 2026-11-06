@@ -109,6 +109,7 @@ function page(kind, search, storage = new Map()) {
   vm.runInContext(source, context);
   return {
     nodes,
+    document,
     storage,
     fetches: () => fetches,
     fire: (type, event = {}) => (windowEvents[type] || []).forEach(fn => fn(event)),
@@ -135,6 +136,25 @@ test('a progress change in another tab redraws the rail and the done button', as
   view.fire('storage', { key: PROGRESS_KEY });
   assert.equal(view.nodes.pjToggleDone.textContent, 'Mark as not done');
   assert.match(view.nodes.pjProgress.innerHTML, /<strong>1 \/ 2<\/strong>/);
+});
+
+test('a progress change in another tab keeps focus on the stage link the reader was on', async () => {
+  const view = page('project', '?id=mini-rag&stage=ingest');
+  await settle();
+  const list = view.nodes.pjStageList;
+  const before = element('');
+  before.setAttribute('data-stage-index', '1');
+  const after = element('');
+  let focused = before;
+  after.focus = () => { focused = after; };
+  let selector = '';
+  list.contains = node => node === before;
+  list.querySelector = value => { selector = value; return after; };
+  view.document.activeElement = before;
+  view.storage.set(PROGRESS_KEY, JSON.stringify({ 'mini-rag': { ingest: '2026-11-01' } }));
+  view.fire('storage', { key: PROGRESS_KEY });
+  assert.equal(selector, '[data-stage-index="1"]');
+  assert.equal(focused, after);
 });
 
 test('a fragment link does not reload the stage, a stage change does', async () => {

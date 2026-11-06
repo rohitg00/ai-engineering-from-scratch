@@ -552,7 +552,10 @@
         '<div class="pj-progress-head"><span>Your progress</span><strong>' + done + ' / ' + project.stages.length + '</strong></div>' +
         '<div class="pj-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><span style="width:' + pct + '%"></span></div>' +
         '<p class="pj-small">Self-reported progress, saved in this browser. Import grader evidence below for a certificate.</p>';
-      document.getElementById('pjStageList').innerHTML = project.stages.map(function (stage, index) {
+      var list = document.getElementById('pjStageList');
+      var active = document.activeElement;
+      var focusedIndex = active && list.contains && list.contains(active) ? active.getAttribute('data-stage-index') : null;
+      list.innerHTML = project.stages.map(function (stage, index) {
         var isDone = !!progress[stage.id];
         return '<li><a href="' + projectHref(project.id, stage.id) + '" data-stage-index="' + index + '" class="pj-stage-link' +
           (index === stageIndex ? ' is-current' : '') + (isDone ? ' is-done' : '') + '"' + (index === stageIndex ? ' aria-current="step"' : '') + '>' +
@@ -560,6 +563,9 @@
           '<span class="pj-stage-text"><span class="pj-stage-title">' + esc(stage.title) + '</span>' +
           '<span class="pj-stage-sub">' + esc(stage.difficulty || '') + (stage.hours ? ' · ~' + stage.hours + 'h' : '') + (stageLanguages(stage).length ? ' · ' + esc(stageLanguages(stage).join(' + ')) : '') + '</span></span></a></li>';
       }).join('');
+      if (focusedIndex === null) return;
+      var link = list.querySelector('[data-stage-index="' + focusedIndex + '"]');
+      if (link) link.focus({ preventScroll: true });
     }
 
     function paintToggle() {

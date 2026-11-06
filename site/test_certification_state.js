@@ -352,3 +352,96 @@ test('legacy v1 attempts are still migrated and read', () => {
   assert.equal(tab.api.getAttempts('mock-a', 1).length, 1);
   assert.equal(tab.api.getBest('mock-a', 1).percent, 50);
 });
+
+test('a draft held in memory after a failed write does not overwrite a newer sitting from another tab', () => {
+  const storage = sharedStorage();
+  const clock = makeClock(START);
+  const certifications = certificationData(0);
+  const tabA = loadTab({ storage, clock, page: 'assessment', search: '?id=mock-a', certifications });
+  storage.failWrites = true;
+  tabA.answer('q1', 0);
+  assert.equal(storedMeta(storage), null);
+  storage.failWrites = false;
+  clock.time += MINUTE;
+  const tabB = loadTab({ storage, clock, page: 'assessment', search: '?id=mock-a', certifications });
+  tabB.answer('q1', 1);
+  assert.equal(storedMeta(storage).draft.startedAt, START + MINUTE);
+  tabA.answer('q2', 1);
+  assert.equal(storedMeta(storage).draft.startedAt, START + MINUTE);
+  assert.deepEqual(storedMeta(storage).draft.answers.q1, [1]);
+  tabA.answer('q2', 1);
+  assert.deepEqual(storedMeta(storage).draft.answers, { q1: [1], q2: [1] });
+});
+
+test('a retake after failed writes does not restore the submitted sitting', () => {
+  const storage = sharedStorage();
+  const clock = makeClock(START);
+  const certifications = certificationData(0);
+  const tab = loadTab({ storage, clock, page: 'assessment', search: '?id=mock-a', certifications });
+  tab.answer('q1', 0);
+  storage.failWrites = true;
+  clock.time += MINUTE;
+  tab.submit();
+  assert.match(tab.el('assessmentMount').innerHTML, /PRACTICE RESULT/);
+  const form = tab.el('assessmentForm');
+  Object.keys(form.listeners).forEach(type => { form.listeners[type] = []; });
+  tab.el('assessmentRetake').dispatch('click', {});
+  assert.doesNotMatch(tab.el('assessmentMount').innerHTML, / checked/);
+  clock.time += MINUTE;
+  tab.answer('q2', 1);
+  assert.doesNotMatch(tab.el('assessmentMount').innerHTML, /PRACTICE RESULT/);
+  assert.equal(tab.api.getDraft('mock-a', 1).startedAt, START + 2 * MINUTE);
+});
+
+test('legacy v1 history stays visible when migration writes fail', () => {
+  const storage = sharedStorage();
+  storage.data.set('aifs:cert-progress:v1', JSON.stringify({
+    drafts: {},
+    attempts: { 'mock-a@1': [validAttempt()] },
+    bests: {},
+    updatedAt: START,
+  }));
+  storage.failWrites = true;
+  const tab = loadTab({ storage, clock: makeClock(START) });
+  assert.equal(tab.api.getAttempts('mock-a', 1).length, 1);
+  assert.equal(tab.api.getBest('mock-a', 1).percent, 50);
+  storage.failWrites = false;
+  assert.equal(tab.api.getAttempts('mock-a', 1).length, 1);
+  assert.equal(storedAttempts(storage).length, 1);
+  assert.equal(tab.api.getAttempts('mock-a', 1).length, 1);
+});
+
+test('an untouched draft from before the upgrade is reset even before its deadline', () => {
+  const storage = sharedStorage();
+  const clock = makeClock(START);
+  const certifications = certificationData(30);
+  storage.data.set('aifs:cert-progress:v2:' + encodeURIComponent('mock-a@1'), JSON.stringify({
+    schemaVersion: 2,
+    draft: { answers: {}, startedAt: START, deadlineAt: START + 30 * MINUTE, version: 1 },
+    updatedAt: START,
+  }));
+  clock.time += 20 * MINUTE;
+  const tab = loadTab({ storage, clock, page: 'assessment', search: '?id=mock-a', certifications });
+  assert.equal(storedMeta(storage).draft, null);
+  assert.equal(tab.activeTimers(), 0);
+  assert.match(tab.el('assessmentMount').innerHTML, /<strong id="assessmentTimerValue">30:00<\/strong>/);
+  tab.answer('q1', 0);
+  assert.equal(storedMeta(storage).draft.deadlineAt, START + 50 * MINUTE);
+});
+
+test('a started sitting whose answers were all cleared still records a timeout after reload', () => {
+  const storage = sharedStorage();
+  const clock = makeClock(START);
+  const certifications = certificationData(30);
+  certifications.assessmentsById['mock-a'].questions.push({ id: 'q3', domain: 'd1', type: 'multiple', prompt: 'Three?', options: ['a', 'b', 'c'], correct: [0, 1] });
+  const tab = loadTab({ storage, clock, page: 'assessment', search: '?id=mock-a', certifications });
+  tab.answer('q3', 0);
+  assert.deepEqual(storedMeta(storage).draft.answers, { q3: [] });
+  clock.time += 31 * MINUTE;
+  const back = loadTab({ storage, clock, page: 'assessment', search: '?id=mock-a', certifications });
+  back.tick();
+  const attempts = storedAttempts(storage);
+  assert.equal(attempts.length, 1);
+  assert.equal(attempts[0].timedOut, true);
+  assert.match(back.el('assessmentMount').innerHTML, /PRACTICE RESULT/);
+});

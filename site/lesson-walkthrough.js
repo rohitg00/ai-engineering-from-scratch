@@ -114,7 +114,12 @@
   }
 
   function writeJson(key, value) {
-    try { root.localStorage.setItem(key, JSON.stringify(value)); } catch (_) {}
+    try {
+      root.localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
   function headerOffset() {
@@ -393,8 +398,11 @@
 
     function finish(outcome, message) {
       if (recorded) return;
+      if (!writeJson(REVISIT_KEY, recordRevisit(readJson(REVISIT_KEY) || {}, path, outcome, Date.now()))) {
+        status.textContent = 'This browser did not save your answer. Try again.';
+        return;
+      }
       recorded = true;
-      writeJson(REVISIT_KEY, recordRevisit(readJson(REVISIT_KEY) || {}, path, outcome, Date.now()));
       actions.hidden = true;
       status.textContent = message;
     }

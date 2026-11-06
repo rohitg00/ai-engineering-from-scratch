@@ -218,7 +218,10 @@ test('a limiter full of exhausted clients refuses new clients', () => {
   };
   assert.equal(call('192.0.2.1'), 200);
   assert.equal(call('192.0.2.2'), 200);
-  assert.equal(call('192.0.2.3'), 429);
+  const { output, res } = recorder();
+  limiter({ method: 'GET', headers: { 'x-vercel-forwarded-for': '192.0.2.3' } }, res);
+  assert.equal(output.statusCode, 429);
+  assert.match(output.headers.ratelimit, /r=0;/);
   assert.equal(call('192.0.2.1'), 429);
 });
 

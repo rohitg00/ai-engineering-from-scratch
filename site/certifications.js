@@ -751,6 +751,10 @@
     });
   }
 
+  function sittingStarted(draft) {
+    return hasAnswers(draft) || (isRecord(draft) && draft.touched === true);
+  }
+
   function stopAssessmentTimer() {
     if (!assessmentTimer) return;
     clearInterval(assessmentTimer);
@@ -768,7 +772,7 @@
     try {
       stored = typeof progress.getDraft === 'function' ? progress.getDraft(assessment.id, version) : null;
     } catch (_) {}
-    if (isRecord(stored) && stored.startedAt !== draft.startedAt && String(stored.version) === String(version) && hasAnswers(stored)) return { draft: stored };
+    if (isRecord(stored) && stored.startedAt !== draft.startedAt && String(stored.version) === String(version) && sittingStarted(stored)) return { draft: stored };
     return null;
   }
 
@@ -813,7 +817,7 @@
 
     var limit = Number(assessment.timeLimitMinutes || 0);
     var draft = window.AIFSCertProgress && window.AIFSCertProgress.getDraft(assessment.id, version);
-    var abandoned = draft && draft.deadlineAt && draft.deadlineAt <= Date.now() && !hasAnswers(draft);
+    var abandoned = draft && !sittingStarted(draft);
     if (draft && (abandoned || !validDraftForAssessment(draft, version, questions, limit))) {
       if (window.AIFSCertProgress) window.AIFSCertProgress.clearDraft(assessment.id, version);
       draft = null;
@@ -842,6 +846,7 @@
         draft.startedAt = Date.now();
         draft.deadlineAt = limit ? draft.startedAt + limit * 60000 : 0;
       }
+      draft.touched = true;
       if (question.type === 'multiple') {
         draft.answers[qid] = Array.from(form.querySelectorAll('input[data-question="' + cssEscape(qid) + '"]:checked')).map(function (node) { return Number(node.value); });
       } else {
@@ -915,7 +920,7 @@
       return;
     }
     assessmentView = null;
-    if (timedOut && !hasAnswers(draft)) {
+    if (timedOut && !sittingStarted(draft)) {
       if (progress) progress.clearDraft(assessment.id, version);
       renderAssessmentLoaded(mount, assessment, track, true);
       return;

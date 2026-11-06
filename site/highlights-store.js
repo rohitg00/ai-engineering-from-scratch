@@ -809,6 +809,7 @@
         var changed = localPage.items.filter(function (item) {
           return known[path + '\u0000' + item.id] !== JSON.stringify(item);
         });
+        if (own(base.pages, path) && !base.pages[path].title && localPage.title) base.pages[path].title = localPage.title;
         if (!changed.length) continue;
         if (!own(base.pages, path)) base.pages[path] = { kind: localPage.kind, title: localPage.title, url: localPage.url, items: [] };
         var target = base.pages[path];

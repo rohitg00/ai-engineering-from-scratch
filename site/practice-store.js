@@ -92,9 +92,14 @@
         return;
       }
       var base = touched(item) >= touched(other) ? item : other;
-      ['runs', 'submits', 'hints', 'best', 'total'].forEach(function (field) {
+      var rest = base === item ? other : item;
+      ['runs', 'submits', 'hints', 'best', 'total', 'openedAt', 'attemptedAt'].forEach(function (field) {
         base[field] = Math.max(item[field], other[field]);
       });
+      if (rest.status === 'solved' && base.status !== 'solved' && rest.version === base.version) {
+        base.status = 'solved';
+        base.solvedAt = rest.solvedAt;
+      }
       state.problems[id] = base;
     });
     Object.keys(ours.days).forEach(function (day) {

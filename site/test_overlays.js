@@ -95,6 +95,25 @@ test('the open palette takes Escape before any other overlay can see it', () => 
   assert.equal(reachedOthers, true);
 });
 
+test('an Escape that cancels IME composition leaves the palette open', () => {
+  const { win, doc } = paletteHarness();
+  win.CmdPalette.open();
+  const dialog = doc.getElementById('cmdPalette');
+  for (const fields of [{ isComposing: true }, { keyCode: 229 }]) {
+    const escape = new Event('keydown', { cancelable: true });
+    Object.assign(escape, { key: 'Escape' }, fields);
+    win.dispatchEvent(escape);
+    dialog.dispatchEvent(escape);
+    assert.equal(escape.defaultPrevented, false);
+    assert.equal(dialog.classList.contains('cp-open'), true);
+    assert.ok(doc.body.hasAttribute('data-palette-open'));
+  }
+  const escape = new Event('keydown', { cancelable: true });
+  escape.key = 'Escape';
+  dialog.dispatchEvent(escape);
+  assert.equal(dialog.classList.contains('cp-open'), false);
+});
+
 test('overlays close each other and the header steps aside for open popups', () => {
   const theme = read('theme-menu.js');
   assert.match(theme, /emit\('aifs:overlayopen', \{ source: 'theme-menu' \}\)/);

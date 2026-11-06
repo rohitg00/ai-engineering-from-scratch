@@ -970,6 +970,70 @@ test('opening the editor on another highlight saves the note typed for the first
   assert.equal(page.editor().hidden, false);
 });
 
+test('a note that cannot be saved keeps its editor open with the typed text and says why', () => {
+  const page = uiPage();
+  const a = page.store.add(UI_PATH, uiItem('first passage', 'old a'));
+  const b = page.store.add(UI_PATH, uiItem('second passage', 'note b'));
+  page.mount();
+  page.openPanel();
+  page.rowButton(a.id, 'edit').click();
+  page.note().value = 'typed for a';
+  const realUpdate = page.store.update;
+  page.store.update = () => null;
+  page.rowButton(b.id, 'edit').click();
+  assert.equal(page.note().value, 'typed for a');
+  assert.equal(page.editor().hidden, false);
+  assert.match(page.find('.aifs-hl-editor-status').textContent, /could not be saved/);
+  page.store.update = realUpdate;
+  page.rowButton(b.id, 'edit').click();
+  assert.equal(page.store.items(UI_PATH).find(item => item.id === a.id).note, 'typed for a');
+  assert.equal(page.note().value, 'note b');
+});
+
+test('saving a dirty note before showing the toolbar puts back the selection the repaint dropped', () => {
+  const saved = { buildModel: anchorStub.buildModel, normalizedToRaw: anchorStub.normalizedToRaw, rawToNormalized: anchorStub.rawToNormalized };
+  const page = uiPage();
+  const textNode = page.article.appendChild(new UiText('select these words please'));
+  const segments = [{ node: textNode, start: 0, end: textNode.nodeValue.length, atomic: false, unit: false }];
+  anchorStub.buildModel = () => ({ text: textNode.nodeValue, normalized: { text: textNode.nodeValue }, segments, sections: [] });
+  anchorStub.normalizedToRaw = (_, start, end) => ({ start, end });
+  anchorStub.rawToNormalized = (_, start, end) => ({ start, end });
+  try {
+    const makeRange = (startOffset, endOffset) => ({
+      startContainer: textNode, startOffset, endContainer: textNode, endOffset, commonAncestorContainer: textNode,
+      intersectsNode: node => node === textNode,
+      getBoundingClientRect: () => ({ top: 200, bottom: 220, left: 0, right: 10, width: 10, height: 20 }),
+    });
+    let current = makeRange(7, 12);
+    const selection = {
+      get isCollapsed() { return !current || current.startOffset === current.endOffset; },
+      get rangeCount() { return current ? 1 : 0; },
+      getRangeAt: () => current,
+      removeAllRanges() { current = null; },
+      addRange(range) { current = range; },
+    };
+    page.win.getSelection = () => selection;
+    page.doc.createRange = () => {
+      const range = makeRange(0, 0);
+      range.setStart = (node, offset) => { range.startContainer = node; range.startOffset = offset; };
+      range.setEnd = (node, offset) => { range.endContainer = node; range.endOffset = offset; };
+      return range;
+    };
+    const a = page.store.add(UI_PATH, uiItem('first passage', 'old a'));
+    page.mount();
+    page.openPanel();
+    page.rowButton(a.id, 'edit').click();
+    page.note().value = 'typed for a';
+    page.store.onChange(() => { current = makeRange(0, 0); });
+    page.doc.listeners.keydown.forEach(fn => fn({ altKey: true, ctrlKey: false, metaKey: false, code: 'KeyH', key: 'h', target: page.article, preventDefault() {} }));
+    assert.equal(page.store.items(UI_PATH)[0].note, 'typed for a');
+    assert.deepEqual([current.startOffset, current.endOffset], [7, 12]);
+    assert.equal(page.find('.aifs-hl-toolbar').hidden, false);
+  } finally {
+    Object.assign(anchorStub, saved);
+  }
+});
+
 test('closing an untouched editor keeps a note another tab changed, and typed text still wins', () => {
   const page = uiPage();
   const a = page.store.add(UI_PATH, uiItem('first passage', 'base'));

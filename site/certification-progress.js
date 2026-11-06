@@ -19,6 +19,7 @@
   var persistenceAvailable = null;
   var volatileState = emptyState();
   var migratedKeys = Object.create(null);
+  var clearedDrafts = Object.create(null);
   var writerId = Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
   var writeCounter = 0;
 
@@ -356,7 +357,7 @@
       var records = listAttempts(key);
       var best = null;
 
-      if (draft && isDraftShape(draft, versionFromKey(key))) state.drafts[key] = draft;
+      if (draft && isDraftShape(draft, versionFromKey(key)) && clearedDrafts[key] !== draft.startedAt) state.drafts[key] = draft;
       state.attempts[key] = records.slice(0, HISTORY_LIMIT).map(function (record) {
         return record.attempt;
       });
@@ -384,17 +385,18 @@
   function storedDraft(key, version) {
     if (!isReadable()) return null;
     var meta = readAssessmentMeta(key);
-    if (meta) return meta.draft;
-    var draft = readLegacy().drafts[key] || null;
-    return draft && isDraftShape(draft, version) ? draft : null;
+    var draft = meta ? meta.draft : readLegacy().drafts[key] || null;
+    if (!draft || !isDraftShape(draft, version) || clearedDrafts[key] === draft.startedAt) return null;
+    return draft;
   }
 
   function getDraft(id, version) {
     var key = assessmentKey(id, version);
     if (!key) return null;
     var volatileDraft = volatileState.drafts[key] || null;
-    if (volatileDraft && isDraftShape(volatileDraft, version)) return volatileDraft;
-    return storedDraft(key, version);
+    var stored = storedDraft(key, version);
+    if (!volatileDraft || !isDraftShape(volatileDraft, version)) return stored;
+    return stored && stored.startedAt > volatileDraft.startedAt ? stored : volatileDraft;
   }
 
   function saveDraft(id, version, draft) {
@@ -419,7 +421,11 @@
       volatileState.updatedAt = Date.now();
       changed = true;
     }
-    if (storedDraft(key, version) && canWrite() && writeAssessmentMeta(key, null)) changed = true;
+    var stored = storedDraft(key, version);
+    if (stored) {
+      if (!canWrite() || !writeAssessmentMeta(key, null)) clearedDrafts[key] = stored.startedAt;
+      changed = true;
+    }
     if (changed) notify();
   }
 
@@ -445,6 +451,18 @@
     return false;
   }
 
+  function unmigratedLegacy(key) {
+    if (migratedKeys[key]) return { attempts: [], best: null };
+    var legacy = readLegacy();
+    var history = Array.isArray(legacy.attempts[key]) ? legacy.attempts[key] : [];
+    return {
+      attempts: history.filter(function (attempt, index) {
+        return isAttemptShape(attempt, versionFromKey(key)) && readJson(attemptPrefix(key) + legacyEntryId(attempt, index)) === null;
+      }),
+      best: bestSummary(legacy.bests[key]),
+    };
+  }
+
   function getAttempts(id, version) {
     var key = assessmentKey(id, version);
     if (!key) return [];
@@ -454,6 +472,7 @@
     var stored = listAttempts(key).map(function (record) {
       return record.attempt;
     });
+    extra = extra.concat(unmigratedLegacy(key).attempts);
     return (extra.length ? newestFirst(stored.concat(extra)) : stored).slice(0, HISTORY_LIMIT);
   }
 
@@ -463,6 +482,7 @@
     var best = volatileState.bests[key] || null;
     if (!isReadable()) return best;
     ensureLegacyEntries(key);
+    best = betterBest(unmigratedLegacy(key).best, best);
     listAttempts(key).forEach(function (record) {
       best = betterBest(bestSummary(record.attempt), best);
     });

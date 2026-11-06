@@ -832,6 +832,7 @@
   }
 
   function _onDialogKeyDown(e) {
+    if (e.isComposing || e.keyCode === 229) return;
     if (e.key === 'Escape') {
       e.preventDefault();
       e.stopPropagation();
@@ -893,7 +894,7 @@
   // ── Global keyboard shortcut (Cmd/Ctrl+K) ────────────────────────────
   if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
     window.addEventListener('keydown', function (e) {
-      if (!_isOpen || e.key !== 'Escape') return;
+      if (!_isOpen || e.key !== 'Escape' || e.isComposing || e.keyCode === 229) return;
       e.preventDefault();
       e.stopImmediatePropagation();
       close();

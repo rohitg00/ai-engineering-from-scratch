@@ -257,3 +257,20 @@ test('after a failed write the store still reads other tabs and merges before it
   assert.equal(saved.problems.rope.status, 'solved');
   assert.equal(saved.problems['kmeans-step'].status, 'attempted');
 });
+
+test('a solve kept in memory survives another tab opening the same problem later', () => {
+  const storage = memoryStorage();
+  const tab = Store.create({ localStorage: storage, now: () => NOON });
+  tab.record('rope', 'run', 0, 1);
+  const setItem = storage.setItem;
+  storage.setItem = () => { throw new Error('quota'); };
+  tab.record('rope', 'submit', 4, 4);
+  storage.setItem = setItem;
+  const other = Store.create({ localStorage: storage, now: () => NOON + 1000 });
+  other.open('rope');
+  assert.equal(JSON.parse(storage.getItem(Store.STORAGE_KEY)).problems.rope.status, 'attempted');
+  tab.record('kmeans-step', 'run', 0, 1);
+  const saved = JSON.parse(storage.getItem(Store.STORAGE_KEY));
+  assert.equal(saved.problems.rope.status, 'solved');
+  assert.equal(saved.problems.rope.openedAt, NOON + 1000);
+});

@@ -712,7 +712,7 @@
   function applyPendingRefresh() {
     if (!state.refreshPending) return false;
     state.refreshPending = false;
-    refreshQueue(false);
+    if (!refreshQueue(false)) stop();
     return true;
   }
 
@@ -915,6 +915,7 @@
     if (!isPaused()) return;
     state.mode = 'playing';
     if (applyPendingRefresh()) {
+      if (!isActive()) return;
       cancelSpeech();
       render();
       speakCurrent();
@@ -1056,6 +1057,7 @@
   function jump(delta) {
     if (!isPlaying() && !isPaused()) return;
     applyPendingRefresh();
+    if (!isActive()) return;
     var next = state.index + delta;
     if (next < 0) next = 0;
     if (next >= state.chunks.length) {

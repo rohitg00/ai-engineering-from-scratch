@@ -386,6 +386,24 @@ test('an import that only fills a missing page title is saved', () => {
   assert.ok(item);
 });
 
+test('a page title imported while storage was full survives a reload from another tab', () => {
+  const storage = memoryStorage();
+  const win = fakeWindow(storage);
+  const store = StoreModule.create(win);
+  store.add(LESSON_PATH, sampleItem());
+  const exported = JSON.parse(store.exportJson());
+  exported.pages[LESSON_PATH].title = 'Gradient Descent';
+  const realSet = storage.setItem;
+  storage.setItem = () => { const error = new Error('quota'); error.name = 'QuotaExceededError'; throw error; };
+  store.importJson(JSON.stringify(exported));
+  storage.setItem = realSet;
+  StoreModule.create(fakeWindow(storage)).add(MANUAL_PATH, sampleItem({ note: 'other tab' }));
+  win.dispatch('storage', { key: KEY });
+  assert.equal(store.page(LESSON_PATH).title, 'Gradient Descent');
+  store.add(LESSON_PATH, sampleItem({ quote: { exact: 'later' } }));
+  assert.equal(JSON.parse(storage.getItem(KEY)).pages[LESSON_PATH].title, 'Gradient Descent');
+});
+
 test('markdown export escapes notes and quotes so they stay plain text', () => {
   const { store } = storeWith();
   store.add(LESSON_PATH, sampleItem({ note: '<img src=x onerror=alert(1)> [click](javascript:alert(1)) `code` *bold*', quote: { exact: '<script>x</script> & more' } }), { title: '<b>Title</b>' });

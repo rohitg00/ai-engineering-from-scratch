@@ -157,6 +157,8 @@ function mountRevisitCard() {
   const card = article.children[0];
   return {
     store,
+    window,
+    status: card.children[card.children.length - 1],
     actions: findByText(card, 'I could explain it').parentNode,
     recalled: findByText(card, 'I could explain it'),
     open: findByText(card, 'Not yet. Open the lesson'),
@@ -176,5 +178,19 @@ test('a recalled revisit cannot also be recorded as forgotten', () => {
   const card = mountRevisitCard();
   card.recalled.click();
   card.open.click();
+  assert.equal(JSON.parse(card.store.get('aifs:revisit:v1'))['phases/a/old'].step, 1);
+});
+
+test('a revisit answer that storage refuses keeps the choice open for a retry', () => {
+  const card = mountRevisitCard();
+  const setItem = card.window.localStorage.setItem;
+  card.window.localStorage.setItem = () => { throw new Error('quota'); };
+  card.recalled.click();
+  assert.equal(card.actions.hidden, false);
+  assert.equal(card.store.has('aifs:revisit:v1'), false);
+  assert.match(card.status.textContent, /did not save/);
+  card.window.localStorage.setItem = setItem;
+  card.recalled.click();
+  assert.equal(card.actions.hidden, true);
   assert.equal(JSON.parse(card.store.get('aifs:revisit:v1'))['phases/a/old'].step, 1);
 });

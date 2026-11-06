@@ -470,10 +470,35 @@
   function selectionForToolbar() {
     var info = selectionInfo();
     if (info && state.editor && !ui.editor.hidden) {
-      closeEditor(false);
-      info = selectionInfo();
+      if (!closeEditor(false)) return null;
+      info = restoreSelection(info);
     }
     return info;
+  }
+
+  function rawPoint(model, offset, isEnd) {
+    for (var i = 0; i < model.segments.length; i++) {
+      var segment = model.segments[i];
+      if (!segment.node || segment.atomic || offset < segment.start || offset > segment.end) continue;
+      if (isEnd ? offset > segment.start : offset < segment.end) return { node: segment.node, offset: offset - segment.start };
+    }
+    return null;
+  }
+
+  function restoreSelection(info) {
+    var model = Anchor.buildModel(state.article);
+    var raw = model.normalized ? Anchor.normalizedToRaw(model.normalized, info.start, info.end) : null;
+    var start = raw && rawPoint(model, raw.start, false);
+    var end = raw && rawPoint(model, raw.end, true);
+    var selection = window.getSelection();
+    if (start && end && selection && selection.addRange) {
+      var range = document.createRange();
+      range.setStart(start.node, start.offset);
+      range.setEnd(end.node, end.offset);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    return selectionInfo();
   }
 
   function updateToolbar() {
@@ -1045,7 +1070,7 @@
   function openEditor(id, focusNote, anchorEl) {
     if (!sharedItem(id) && !findItem(id)) return;
     var fromPanel = !!(anchorEl && ui.panel.contains(anchorEl));
-    if (state.editor) closeEditor(false);
+    if (state.editor && !closeEditor(false)) return;
     var shared = sharedItem(id);
     var item = shared || findItem(id);
     if (!item) return;
@@ -1102,24 +1127,30 @@
   }
 
   function closeEditor(restoreFocus) {
-    if (!state.editor) return;
+    if (!state.editor) return true;
     var editing = state.editor;
     if (!editing.shared && state.ctx && !Store.info().readOnly && ui.editorNote.value !== editing.baseNote && findItem(editing.id)) {
-      if (Store.update(state.ctx.path, editing.id, { note: ui.editorNote.value })) announce('Note saved.');
+      if (!Store.update(state.ctx.path, editing.id, { note: ui.editorNote.value })) {
+        ui.editorStatus.textContent = ('The note could not be saved. ' + storageMessage()).trim();
+        announce(ui.editorStatus.textContent);
+        return false;
+      }
+      announce('Note saved.');
     }
     var target = state.editor.returnFocus;
     var id = state.editor.id;
     var fromPanel = state.editor.fromPanel;
     state.editor = null;
     ui.editor.hidden = true;
-    if (!restoreFocus) return;
+    if (!restoreFocus) return true;
     if (fromPanel && !ui.panel.hidden) {
       var row = ui.list.querySelector('.aifs-hl-item[data-hl-id="' + id + '"] button[data-action="edit"]');
       (row || ui.list).focus();
-      return;
+      return true;
     }
     if (!target || !target.isConnected) target = firstMark(id);
     if (target && target.focus) target.focus({ preventScroll: true });
+    return true;
   }
 
   function saveEditor(patch, closeAfter) {
@@ -1637,7 +1668,10 @@
 
   function unmount() {
     hideToolbar();
-    if (state.editor) closeEditor(false);
+    if (state.editor && !closeEditor(false)) {
+      state.editor = null;
+      ui.editor.hidden = true;
+    }
     stopObserving();
     window.clearTimeout(state.settleTimer);
     window.clearTimeout(state.mutationTimer);
