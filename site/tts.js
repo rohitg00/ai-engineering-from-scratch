@@ -716,19 +716,23 @@
     return true;
   }
 
-  function chunkIndexByText(text) {
+  function chunkIndexFor(chunk, near) {
+    var best = -1;
     for (var i = 0; i < state.chunks.length; i++) {
-      if (state.chunks[i].text === text) return i;
+      var candidate = state.chunks[i];
+      if (candidate.text !== chunk.text) continue;
+      if (chunk.el && candidate.el === chunk.el) return i;
+      if (best < 0 || Math.abs(i - near) < Math.abs(best - near)) best = i;
     }
-    return -1;
+    return best;
   }
 
   function neighbourIndex(old, was, delta) {
     var target = old[was + delta];
-    var found = target ? chunkIndexByText(target.text) : -1;
+    var found = target ? chunkIndexFor(target, was + delta) : -1;
     if (found >= 0) return found;
     var anchor = old[was - (delta > 0 ? 1 : -1)];
-    var at = anchor ? chunkIndexByText(anchor.text) : -1;
+    var at = anchor ? chunkIndexFor(anchor, was - (delta > 0 ? 1 : -1)) : -1;
     if (at >= 0) return at + (delta > 0 ? 1 : -1);
     return delta > 0 ? (target ? state.index + delta : state.chunks.length) : state.index + delta;
   }

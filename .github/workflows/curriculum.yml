@@ -177,7 +177,7 @@ jobs:
       - name: assessment attempts survive reloads, expired timers, and a second tab
         run: node --test site/test_certification_state.js
       - name: the theme menu offers system, light, and dark on every page
-        run: node --test site/test_theme_menu.js site/test_overlays.js
+        run: node --test site/test_theme_menu.js site/test_overlays.js site/test_tts_navigation.js
       - name: lesson walkthrough syncs steps and schedules revisits
         run: node --test site/test_lesson_walkthrough.js
       - name: lesson quizzes are placed once, before the footer, in every language
