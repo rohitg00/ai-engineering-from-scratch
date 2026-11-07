@@ -101,7 +101,7 @@ The key settings for AI work:
 
 Why these matter:
 
-- **Type checking on basic**: Catches wrong argument types before you run. Saves debugging time on tensor shape mismatches and wrong API parameters.
+- **Type checking on basic**: Catches wrong argument types before you run. Saves debugging time on wrong argument types and incorrect API parameters.
 - **Format on save**: Never think about formatting again. Black handles it.
 - **Rulers at 88 and 120**: Black wraps at 88. The 120 marker shows when docstrings and comments are getting too long.
 - **Notebook output scrolling**: Training loops print thousands of lines. Without scrolling, the output panel explodes.
